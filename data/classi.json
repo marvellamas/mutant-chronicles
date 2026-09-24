@@ -1,0 +1,1795 @@
+{
+  "versione_manuale": "Giocatore 0.43",
+  "fonte": "§3.4, §3.6, §3.8 (profili); §3.5.2–3.5.11, §3.7, §3.9 (Talenti)",
+  "_nota": "PV e PM per Grado: fisso + 1d<dado> (dado 0 = nessun dado). Al 1° livello il dado dei PV è massimizzato (§2.12, §3.3). Le quote incantesimi valgono per le Classi taumaturgiche (§3.8).",
+  "classi": [
+    {
+      "nome": "Agente",
+      "addestramento": "Avventuriero",
+      "fonte": "§3.4; Talenti §3.5.2",
+      "specializzazioni": [
+        "Sicurezza",
+        "Spionaggio"
+      ],
+      "abilita": [
+        "Armi leggere",
+        "Cultura",
+        "Furtività",
+        "Percezione",
+        "Raggirare"
+      ],
+      "pv_per_grado": {
+        "fisso": 4,
+        "dado": 6
+      },
+      "pm_per_grado": {
+        "fisso": 2,
+        "dado": 0
+      },
+      "talenti_fissi": [
+        {
+          "grado": 1,
+          "nome": "Fuoco Controllato",
+          "testo": "Quando spara contro un avversario ingaggiato in Ravvicinato, protetto da un alleato o che usa un ostaggio come scudo, l’Agente elimina la penalità specifica e non effettua la seconda Prova di controllo. Un normale fallimento non colpisce l’alleato o l’ostaggio; un Fallimento Maldestro produce una complicazione non collaterale. Restano gli altri modificatori pertinenti, comprese distanza e Copertura."
+        },
+        {
+          "grado": 3,
+          "nome": "Rete di Informatori",
+          "testo": "Una volta per sessione, dedicando almeno un’ora ai propri contatti in un luogo abitato o tramite una rete di comunicazione, ottiene un’informazione attendibile e pertinente su una persona, un’organizzazione, un luogo, un crimine, un evento recente, beni o servizi. Se l’informazione è protetta e non può essere ottenuta direttamente, riceve +4 VA alla prossima Prova pertinente di Cultura, Oratoria o Raggirare effettuata per ottenerla."
+        },
+        {
+          "grado": 5,
+          "nome": "Ottime Credenziali",
+          "testo": "Con credenziali autentiche o un’autorità reale riconosciuta, ottiene +4 VA alle Prove Sociali pertinenti. Una volta per sessione può ottenere automaticamente una concessione ordinaria coerente con il proprio ruolo: accesso a un’area controllata, documenti non segreti, collaborazione temporanea di personale o equipaggiamento comune. La concessione non comprende risorse rare, segreti senza restrizioni, ordini suicidi o autorità superiore alla propria."
+        }
+      ],
+      "talenti_a_scelta": [
+        {
+          "specializzazione": "Sicurezza",
+          "nome": "Reazione Operativa",
+          "testo": "Una volta per combattimento, quando un nemico visibile abbandona volontariamente una Copertura, anche per esporsi e attaccare, l’Agente può effettuare immediatamente un Tiro Singolo con un’arma pronta. Spende le Azioni Principali richieste e già disponibili, comprese quelle aggiuntive dovute a distanza e mirino. Il bersaglio non beneficia della Copertura appena abbandonata; gli altri modificatori si applicano normalmente. Non occorre preparare l’azione."
+        },
+        {
+          "specializzazione": "Sicurezza",
+          "nome": "Mira Selettiva",
+          "testo": "Quando effettua un Tiro Mirato e rimane fermo per tutto il Round in cui spara, riduce di 2 la penalità dovuta alla Copertura del bersaglio: Leggera diventa 0 e Media diventa −2. La Copertura Totale impedisce ancora il tiro. Si applicano normalmente costi e benefici del Tiro Mirato. Il Talento riguarda la Copertura del bersaglio; Copertura Tattica riguarda invece la penalità per sparare dalla propria Copertura."
+        },
+        {
+          "specializzazione": "Spionaggio",
+          "nome": "Analisi Rapida",
+          "testo": "Spendendo un’Azione Principale, senza Prova, studia un nemico visibile. Ottiene +2 VA alla prima Prova per colpirlo con un’arma a distanza effettuata entro la fine della propria Iniziativa successiva. Il bonus si consuma con quella Prova: può valere per una Raffica o per il primo tiro di Tiro Rapido, ma non per più Prove. Analisi ripetute non sommano il bonus."
+        },
+        {
+          "specializzazione": "Spionaggio",
+          "nome": "Doppia Identità",
+          "testo": "Mantiene due identità alternative stabili, ciascuna con una storia credibile, contatti ordinari e documenti di base. Ottiene +3 VA alle Prove di Cultura, Oratoria e Raggirare per utilizzare o difendere tali identità. La compromissione di una non espone automaticamente l’altra. Ricostruire un’identità richiede una settimana e contatti, documenti o sistemi appropriati. Le identità non conferiscono automaticamente autorità autentica o privilegi."
+        },
+        {
+          "specializzazione": "Comune",
+          "nome": "Posizionamento Operativo",
+          "testo": "Una volta per combattimento, dopo l’Iniziativa e prima del primo Round, può spostarsi gratuitamente fino a 3 Q, senza consumare l’Azione di Movimento. Si applicano terreno, ostacoli e Attacchi di Opportunità ordinari. Durante questo spostamento non svolge altri attacchi o azioni. Non può utilizzarlo se è Sorpreso."
+        }
+      ]
+    },
+    {
+      "nome": "Cacciatore",
+      "addestramento": "Avventuriero",
+      "fonte": "§3.4; Talenti §3.5.2",
+      "specializzazioni": [
+        "Naturale",
+        "Occulto"
+      ],
+      "abilita": [
+        "Armi medie",
+        "Armi da mischia",
+        "Furtività",
+        "Percezione",
+        "Sopravvivenza"
+      ],
+      "pv_per_grado": {
+        "fisso": 4,
+        "dado": 6
+      },
+      "pm_per_grado": {
+        "fisso": 3,
+        "dado": 0
+      },
+      "talenti_fissi": [
+        {
+          "grado": 1,
+          "nome": "Predatore",
+          "testo": "Quando scopre, segue o colpisce una creatura, può dichiararla propria Preda fino alla fine della scena. Può avere una sola Preda alla volta; una nuova dichiarazione sostituisce la precedente. Una volta per Round, quando colpisce la Preda, sceglie uno dei seguenti benefici: +1 al danno ai PV; spostamento di 1 Q senza Attacchi di Opportunità; segnalazione di un punto debole, che concede +1 alla prossima Prova per colpire la Preda effettuata da un alleato prima della fine del Round. L’alleato deve poter ricevere la segnalazione."
+        },
+        {
+          "grado": 3,
+          "nome": "Segugio",
+          "testo": "Dopo una Prova riuscita di Percezione o Sopravvivenza relativa a tracce, ricava un dettaglio pertinente aggiuntivo rispetto all’esito normale, per esempio numero, tempo trascorso, andatura, feriti o carichi. Il dettaglio deve essere deducibile dalle tracce. Con un Successo Magistrale, nella scena successiva il gruppo non può essere sorpreso dalla Preda o dal gruppo seguito, salvo un occultamento eccezionale o un intervento imprevedibile."
+        },
+        {
+          "grado": 5,
+          "nome": "Maestro della Caccia",
+          "testo": "Una volta per combattimento, quando percepisce la Preda muoversi, attaccare un alleato o tentare di nascondersi, può spendere un’Azione Principale disponibile e scegliere: Attacco, Inseguimento oppure Pressione.\nAttacco: effettua immediatamente un attacco contro la Preda; eventuali ulteriori Azioni richieste dal tiro devono essere disponibili e spese. Inseguimento: si muove fino a 3 Q verso la Preda senza Attacchi di Opportunità. Pressione: se colpisce la Preda nello stesso Round, essa subisce −2 VA alle Prove fisiche fino alla fine del Round; l’attacco richiede le proprie normali Azioni."
+        }
+      ],
+      "talenti_a_scelta": [
+        {
+          "specializzazione": "Naturale",
+          "nome": "Trappola Improvvisata",
+          "testo": "Con un’Azione Principale, materiali adeguati e una Prova riuscita di Sopravvivenza, oppure Tecnologia per un dispositivo tecnico, prepara una trappola semplice. Per individuarla si usa Percezione con i modificatori delle circostanze. Chi la attiva effettua Riflessi: se fallisce, subisce l’effetto scelto durante la preparazione, ossia −2 VA alle Prove fisiche fino alla fine del Round oppure l’arresto immediato del Movimento, perdendone la parte rimanente. La trappola dura fino alla fine della scena o finché viene attivata o disinnescata."
+        },
+        {
+          "specializzazione": "Naturale",
+          "nome": "Cacciatore Instancabile",
+          "testo": "Durante un inseguimento o una marcia forzata può guidare il gruppo. La prima Prova Salvezza richiesta al gruppo per sforzo, ritmo sostenuto, fame, sete o terreno ostile riceve +5 a Tempra.\nIl +5 di Cacciatore Instancabile si applica alla prima PS di Tempra pertinente già richiesta dalla fonte. Non trasforma un peggioramento automatico dell’Affaticamento in una Prova Salvezza (§5.19)."
+        },
+        {
+          "specializzazione": "Occulto",
+          "nome": "Sangue Freddo",
+          "testo": "Una volta al giorno, quando subisce una penalità al VA causata dalla paura o da un altro effetto mentale, può ridurla di 2, fino ad annullarla, per tutta la durata dell’effetto e senza spendere Azioni. Restano le altre restrizioni dell’effetto: per esempio, Terrorizzato passa da −4 a −2 VA, ma conserva i vincoli di comportamento. Il Talento non annulla la Corruzione Oscura."
+        },
+        {
+          "specializzazione": "Occulto",
+          "nome": "Senso dell’Occulto",
+          "testo": "Spendendo 2 PM, avverte la presenza di creature mistiche o Oscure nell’area pertinente alla scena e ottiene +2 VA a Occultismo per comprenderne la possibile natura. Non identifica automaticamente numero, posizione o specie."
+        },
+        {
+          "specializzazione": "Comune",
+          "nome": "Colpo di Abbattimento",
+          "testo": "Quando colpisce la propria Preda, raddoppia il danno se essa è A Terra, Immobilizzata oppure soggetta alla penalità fisica di Trappola Improvvisata o Pressione di Maestro della Caccia. Una generica penalità al VA non soddisfa quest’ultima condizione. Si applicano le regole comuni: il danno ×2 diventa ×3 con un Magistrale; gli altri moltiplicatori non si sommano e si usa il più alto. Negli attacchi con più istanze di danno il beneficio riguarda soltanto la prima."
+        }
+      ]
+    },
+    {
+      "nome": "Esploratore",
+      "addestramento": "Avventuriero",
+      "fonte": "§3.4; Talenti §3.5.2",
+      "specializzazioni": [
+        "Terrestre",
+        "Spaziale"
+      ],
+      "abilita": [
+        "Atletica",
+        "Furtività",
+        "Percezione",
+        "Pilotare",
+        "Sopravvivenza"
+      ],
+      "pv_per_grado": {
+        "fisso": 2,
+        "dado": 6
+      },
+      "pm_per_grado": {
+        "fisso": 3,
+        "dado": 0
+      },
+      "talenti_fissi": [
+        {
+          "grado": 1,
+          "nome": "Apripista",
+          "testo": "Quando entra in un’area sconosciuta o inizia un combattimento in un ambiente complesso, può indicare una linea di avanzamento sicura. Prima del tiro di Iniziativa o all’inizio della scena, fino a tre alleati entro 6 Q possono muoversi di 1 Q senza consumare Azioni, purché seguano l’indicazione."
+        },
+        {
+          "grado": 3,
+          "nome": "Occhio del Terreno",
+          "testo": "Una volta per scena, il giocatore indica un percorso o una caratteristica osservabile del terreno e spiega come intende sfruttarla. Il primo alleato che segue l’indicazione riduce di 2 punti complessivi, fino a un minimo di 0, le penalità ambientali alla prima Prova necessaria per percorrere quel tratto. Non rivela pericoli nascosti, non garantisce la sicurezza del percorso e non modifica il costo del Movimento. Non richiede una Prova aggiuntiva per ricevere il beneficio."
+        },
+        {
+          "grado": 5,
+          "nome": "Padrone del Cammino",
+          "testo": "Una volta per sessione può dichiarare l’esistenza di una rotta difficile ma praticabile: un passaggio laterale, una via di evacuazione, un guado, una cresta, un condotto o un percorso alternativo. La rotta non annulla il pericolo, ma permette di evitare uno scontro frontale, aggirare un ostacolo o ritirarsi senza trasformare la scena in una fuga disperata."
+        }
+      ],
+      "talenti_a_scelta": [
+        {
+          "specializzazione": "TODO(Davide)",
+          "nome": "Segni di Passaggio",
+          "testo": "Può lasciare segnali comprensibili soltanto agli alleati o a chi ne conosce il metodo. I segnali comunicano direzione, pericolo, ritardo, presenza nemica o punto di raccolta."
+        },
+        {
+          "specializzazione": "TODO(Davide)",
+          "nome": "Adattamento Estremo",
+          "testo": "All’inizio di una scena ambientale sceglie una minaccia dominante fra caldo, freddo, fumo, oscurità, pioggia, gravità instabile o terreno instabile. Fino alla fine della scena protegge il gruppo dalla prima conseguenza minore di quella minaccia."
+        },
+        {
+          "specializzazione": "TODO(Davide)",
+          "nome": "Mappa Mentale",
+          "testo": "Dopo aver attraversato un’area, può ricostruirne mentalmente la struttura principale. Il gruppo può tornare all’ultimo punto sicuro senza nuove Prove, salvo modifiche reali dell’ambiente."
+        },
+        {
+          "specializzazione": "TODO(Davide)",
+          "nome": "Rotta Alternativa",
+          "testo": "Quando il gruppo cadrebbe in un’imboscata o incontrerebbe un ostacolo prevedibile, può proporre un percorso alternativo. Evita il problema principale, ma aumenta tempo, consumo di risorse o esposizione a un rischio secondario."
+        },
+        {
+          "specializzazione": "TODO(Davide)",
+          "nome": "Avanguardia",
+          "testo": "Una volta per combattimento, durante la propria Iniziativa nel primo Round, se deve ancora agire almeno un nemico, può spendere un’Azione Principale per permettere a un alleato entro 6 Q di muoversi immediatamente fino a 4 Q. Lo spostamento segue le regole del Passo e non consuma l’Azione di Movimento dell’alleato. Rispetta ostacoli, terreno ed eventuali Attacchi di Opportunità e permette soltanto il movimento."
+        }
+      ]
+    },
+    {
+      "nome": "Lestofante",
+      "addestramento": "Avventuriero",
+      "fonte": "§3.4; Talenti §3.5.2",
+      "specializzazioni": [
+        "Ladro",
+        "Truffatore"
+      ],
+      "abilita": [
+        "Armi da mischia",
+        "Difese",
+        "Furtività",
+        "Raggirare",
+        "Tecnologia"
+      ],
+      "pv_per_grado": {
+        "fisso": 3,
+        "dado": 6
+      },
+      "pm_per_grado": {
+        "fisso": 2,
+        "dado": 0
+      },
+      "talenti_fissi": [
+        {
+          "grado": 1,
+          "nome": "Colpo Sleale",
+          "testo": "Una volta per Round, quando colpisce un bersaglio che ignora la sua presenza, è ingaggiato con un altro avversario oppure ha esaurito le proprie Azioni Principali, può scegliere uno dei seguenti benefici: Ferire, +2 al danno; Spostare, spostamento del bersaglio di 1 Q se fisicamente possibile, con le regole del Movimento forzato; Distrarre, il bersaglio non può effettuare Attacchi di Opportunità fino all’arrivo dell’Iniziativa successiva del Lestofante. Il beneficio fa parte dell’attacco e non richiede altre Azioni."
+        },
+        {
+          "grado": 3,
+          "nome": "Opportunista",
+          "testo": "Una volta per Round, quando un avversario entro 6 Q fallisce una Prova, manca un attacco oppure termina la propria ultima Azione Principale disponibile, può spendere immediatamente un’Azione Principale disponibile, anche fuori dalla propria Iniziativa, per effettuare un Passo fino a 6 Q, utilizzare un piccolo oggetto, nascondersi se la posizione lo permette oppure interagire con l’ambiente.\nL’azione si svolge dopo la risoluzione dell’evento e richiede le eventuali Prove ordinarie. Il Passo non consuma l’Azione di Movimento; eventuali Attacchi di Opportunità si applicano normalmente. Non si possono utilizzare Azioni dei Round successivi."
+        },
+        {
+          "grado": 5,
+          "nome": "Scambio Sporco",
+          "testo": "Quando applica Colpo Sleale, può sostituirne il beneficio con uno dei seguenti effetti, mantenendo il danno normale dell’attacco: Disarmare, un oggetto impugnato cade nel Q del bersaglio; Atterrare, il bersaglio cade A Terra; Sbilanciare, il bersaglio subisce −2 VA alle Prove fisiche fino all’arrivo dell’Iniziativa successiva del Lestofante; Ostacolare, il bersaglio perde l’Azione di Movimento della propria Iniziativa successiva. Disarmare e Atterrare devono essere fisicamente possibili. Ogni attivazione applica un solo effetto; applicazioni ripetute non sommano la stessa penalità."
+        }
+      ],
+      "talenti_a_scelta": [
+        {
+          "specializzazione": "Ladro",
+          "nome": "Filo Nascosto",
+          "testo": "Tiene occultata una piccola lama, un filo, un ago o un piccolo strumento. La prima volta per scena che utilizza questo oggetto contro un bersaglio, quest’ultimo non può effettuare Manovre di Difesa o Attacchi di Opportunità contro quell’azione, fino alla sua completa risoluzione. L’utilizzo richiede le normali Azioni. Restano valide l’Armatura, le protezioni passive e le eventuali Prove Salvezza."
+        },
+        {
+          "specializzazione": "Ladro",
+          "nome": "Mano Fantasma",
+          "testo": "Una volta per Round, quando applica Colpo Sleale con un attacco ravvicinato, può sostituirne il beneficio con la possibilità di sottrarre, sganciare o far cadere un piccolo oggetto visibile e accessibile sul bersaglio, come una chiave, un comunicatore o un caricatore di riserva. Mantiene il danno normale dell’attacco, ma rinuncia agli altri benefici di Colpo Sleale. Non richiede Azioni o Prove aggiuntive."
+        },
+        {
+          "specializzazione": "Truffatore",
+          "nome": "Fumo e Specchi",
+          "testo": "Spendendo un’Azione Principale, crea una distrazione plausibile utilizzando rumori, luci, folla, polvere, fumo o oggetti lanciati. Fino alla fine del Round, un alleato entro 6 Q può sfruttare la distrazione per sottrarsi alla vista degli avversari raggiungendo una Copertura con il proprio Movimento."
+        },
+        {
+          "specializzazione": "Truffatore",
+          "nome": "Ricatto Operativo",
+          "testo": "Dopo avere ottenuto informazioni compromettenti su un personaggio non giocante, una squadra o una fazione minore, può utilizzarle una volta per ottenere accesso, ritardo, esitazione o collaborazione forzata. Dopo l’uso, il bersaglio diventa ostile o cerca vendetta."
+        },
+        {
+          "specializzazione": "Comune",
+          "nome": "Fuga tra la Folla",
+          "testo": "In un ambiente affollato, in rovina o ricco di Coperture, quando utilizza un’Azione di Movimento può confondersi con l’ambiente. Il primo attacco contro di lui prima della sua Iniziativa successiva deve scegliere un altro bersaglio valido oppure subisce una complicazione stabilita dal Direttore."
+        }
+      ]
+    },
+    {
+      "nome": "Paramedico",
+      "addestramento": "Avventuriero",
+      "fonte": "§3.4; Talenti §3.5.2",
+      "specializzazioni": [
+        "Soccorritore",
+        "Traumatologo"
+      ],
+      "abilita": [
+        "Atletica",
+        "Medicina",
+        "Percezione",
+        "Sopravvivenza",
+        "Tecnologia"
+      ],
+      "pv_per_grado": {
+        "fisso": 2,
+        "dado": 6
+      },
+      "pm_per_grado": {
+        "fisso": 2,
+        "dado": 0
+      },
+      "talenti_fissi": [
+        {
+          "grado": 1,
+          "nome": "Soccorso Immediato",
+          "testo": "Completa il trattamento di Pronto Soccorso per arrestare il Sanguinamento in 2 Round consecutivi, impegnando le proprie Azioni Principali e usando strumenti medici. Durante il trattamento il Sanguinamento è sospeso; il Paramedico resta adiacente e rispetta i vincoli ordinari del trattamento. Effettua Medicina alla fine del secondo Round, con i modificatori di Sanguinamento e strumenti. Un’interruzione fa riprendere il Sanguinamento e richiede di ricominciare.\nSi applicano gli esiti del kit effettivamente utilizzato (§5.15). Con un kit Improvvisato il successo ordinario sospende soltanto il Sanguinamento. Il trattamento è ripetibile, rispettando tempo, materiali e condizioni della procedura."
+        },
+        {
+          "grado": 3,
+          "nome": "Strumentazione Efficace",
+          "testo": "Ottiene +2 VA a Medicina per Pronto Soccorso eseguito con strumenti. Il bonus si aggiunge al modificatore degli strumenti utilizzati: quelli improvvisati passano da −2 a 0, quelli standard da 0 a +2. Il Talento non permette di intervenire senza gli strumenti necessari."
+        },
+        {
+          "grado": 5,
+          "nome": "Triage Estremo",
+          "testo": "Una volta per combattimento, quando il Paramedico oppure un bersaglio adiacente morirebbe per l’avanzamento delle Ferite oltre lo stato Grave, può intervenire dopo la PS di Tempra e il conteggio delle Ferite, immediatamente prima che la morte venga applicata. Spende un’Azione Principale disponibile, anche fuori dalla propria Iniziativa, e usa strumenti medici almeno standard, pronti all’uso, consumando i materiali necessari. Non effettua una Prova.\nIl beneficiario rimane vivo a 0 PV, con Ferita Grave e penalità −8. Il suo eventuale Sanguinamento termina. Il Talento non restituisce PV né elimina le Ferite o le Menomazioni; eventuali danni successivi si risolvono normalmente. Interviene esclusivamente sulla morte causata dall’avanzamento delle Ferite e non contrasta effetti che provocano direttamente la morte o la distruzione del corpo.\nTriage Estremo può intervenire anche dopo un colpo da 26+ danni, quando la morte deriva dalle Ferite accumulate. Il beneficiario effettua l’eventuale PS per Menomazione ancora dovuta per il raggiungimento di Grave; il Talento non esenta da tale Prova (§5.14.1)."
+        }
+      ],
+      "talenti_a_scelta": [
+        {
+          "specializzazione": "Soccorritore",
+          "nome": "Protocollo Shock",
+          "testo": "Con un’Azione Principale e strumenti medici almeno standard, risveglia un bersaglio adiacente Svenuto a causa di una ferita. Il beneficio dura 1d3 Round; se al termine persiste la causa che richiede la perdita di coscienza, il bersaglio sviene nuovamente. Ogni beneficiario può ricevere questo intervento una volta per combattimento. Il Talento non agisce sui morti e non rende immune a successivi svenimenti causati da altre situazioni. Senza gli strumenti richiesti non può essere eseguito.\nProtocollo Shock richiede una reale condizione di Svenuto: raggiungere 0 PV o subire una delle Menomazioni descritte nel §5.14 non provoca automaticamente lo svenimento."
+        },
+        {
+          "specializzazione": "Soccorritore",
+          "nome": "Evacuazione Medica",
+          "testo": "Quando il Sovraccarico deriva dal trasporto di un ferito, elimina il −2 Q al Movimento dovuto al carico. Restano il limite massimo di peso, la penalità alle Prove, la disponibilità del solo Passo e le penalità proprie di armatura e scudo. Si conteggiano il ferito e il suo equipaggiamento secondo il §5.2.6. Una volta per Round può spendere un’Azione Principale disponibile, anche fuori dalla propria Iniziativa, per diventare il bersaglio di un attacco diretto al ferito, purché si trovi fra aggressore e ferito. Deve dichiararlo prima della Prova per colpire."
+        },
+        {
+          "specializzazione": "Traumatologo",
+          "nome": "Campo Sterile",
+          "testo": "Con 10 minuti e strumenti medici appropriati prepara un’area di 2 Q. All’interno ottiene +2 VA a Medicina e, una volta per scena, può trasformare un proprio Fallimento Maldestro in un fallimento normale. L’area dura finché non viene abbandonata, contaminata, distrutta o spostata.\nIl bonus di Campo Sterile si applica anche ai trattamenti delle Menomazioni che il personaggio è autorizzato a eseguire. Nel trattamento di una Menomazione temporanea, trasformare un Fallimento Maldestro in un fallimento normale aumenta di 1 mese il recupero residuo, anziché portarlo a 6 mesi. Il tentativo rimane consumato. I benefici appartengono al Paramedico stesso e non si trasferiscono automaticamente agli altri operatori presenti nell’area."
+        },
+        {
+          "specializzazione": "Traumatologo",
+          "nome": "Diagnosi sul Campo",
+          "testo": "Con un’Azione Principale esamina sé stesso oppure un bersaglio entro 3 Q chiaramente percepibile. Valuta le condizioni di Ferita, le eventuali Menomazioni osservabili, il Sanguinamento e i pericoli immediati deducibili. Ottiene +2 VA alla prossima Prova pertinente di Medicina sul bersaglio effettuata entro la fine della scena. Il bonus si usa una volta e non si accumula con sé stesso.\nIl bonus può essere utilizzato anche per trattare la Menomazione esaminata, purché la Prova sia pertinente, effettuata dal Paramedico stesso entro la stessa scena e accessibile al personaggio. Un multiclasse Paramedico/Medico può applicare Diagnosi sul Campo e Campo Sterile anche agli interventi specialistici per cui possiede i requisiti."
+        },
+        {
+          "specializzazione": "Comune",
+          "nome": "Controllo del Trauma",
+          "testo": "Una volta per combattimento, senza spendere Azioni Principali o PM, sceglie sé stesso oppure un bersaglio cosciente adiacente. Per 5 Round il beneficiario ignora, a scelta, la penalità da Ferite oppure i modificatori negativi dell’Affaticamento. Il Talento non modifica PV o stati di Ferita, non arresta il Sanguinamento, non elimina Menomazioni e non impedisce morte o perdita di coscienza. Quando viene scelta l’AFT, ne sospende le penalità alle Prove, comprese le PS di Tempra contro ulteriori peggioramenti, ma non modifica lo Stato posseduto (§5.19).\nSe Controllo del Trauma è già attivo e sospende la penalità generale delle Ferite, il beneficio si applica anche alle PS di Tempra per limitare nuove Ferite o evitare Menomazioni. Le penalità e gli impedimenti delle Menomazioni già presenti continuano ad applicarsi."
+        }
+      ],
+      "note": [
+        "Accesso alle cure delle Menomazioni. Il Paramedico può eseguire il trattamento delle Menomazioni temporanee (§5.16.5). L’intervento specialistico sulle permanenti richiede la Classe Medico (§5.16.4)."
+      ]
+    },
+    {
+      "nome": "Artigliere",
+      "addestramento": "Combattente",
+      "fonte": "§3.4; Talenti §3.5.3",
+      "specializzazioni": [
+        "Pesante",
+        "Cecchino"
+      ],
+      "abilita": [
+        "Armi leggere",
+        "Armi medie",
+        "Armi pesanti",
+        "Atletica",
+        "Percezione"
+      ],
+      "pv_per_grado": {
+        "fisso": 4,
+        "dado": 8
+      },
+      "pm_per_grado": {
+        "fisso": 2,
+        "dado": 0
+      },
+      "talenti_fissi": [
+        {
+          "grado": 1,
+          "nome": "Ottimizzare Gittata",
+          "testo": "Con Armi medie o pesanti riduce di 2 la penalità dovuta alla distanza. Si cumula con mirini e Tiro a Lunga Distanza, senza produrre bonus positivo, estendere la gittata massima o ridurre le Azioni richieste."
+        },
+        {
+          "grado": 3,
+          "nome": "Ottimizzare Proiettili",
+          "testo": "Una Raffica Breve consuma 2 colpi, una Media 4, una Lunga 8 e il Fuoco di Soppressione 8; il numero di colpi a segno non cambia."
+        },
+        {
+          "grado": 5,
+          "nome": "Armaiolo da Campo",
+          "testo": "Ottiene +2 VA a Tecnologia per manutenzione e riparazione delle armi da fuoco. Dopo un fallimento normale può rendere utilizzabile per il resto della scena un’arma Danneggiata o inutilizzabile, con −2 VA. Non opera dopo un Fallimento Maldestro."
+        }
+      ],
+      "talenti_a_scelta": [
+        {
+          "specializzazione": "Pesante",
+          "nome": "Postura d’Assedio",
+          "testo": "Se non utilizza l’Azione di Movimento nel Round, l’Artigliere considera automaticamente Imbracciata l’Arma Pesante o il lanciagranate che impugna e infligge +1 danno con essa. Il beneficio comprende i lanciagranate anche se appartengono alle Armi Medie."
+        },
+        {
+          "specializzazione": "Pesante",
+          "nome": "Raffica Estesa",
+          "testo": "Con Raffica Media o Lunga può distribuire i colpi fra bersagli entro 2 Q dal principale, almeno un colpo per bersaglio. Si usa la penalità più alta; Difese e Armatura si risolvono separatamente."
+        },
+        {
+          "specializzazione": "Cecchino",
+          "nome": "Occhio del Tiratore",
+          "testo": "Se non utilizza l’Azione di Movimento e impiega un mirino, il mirino riduce di altri 2 punti la penalità di distanza."
+        },
+        {
+          "specializzazione": "Cecchino",
+          "nome": "Bersaglio Designato",
+          "testo": "Ogni Azione Principale di preparazione prima del tiro concede +1 danno dopo l’Armatura, se almeno 1 danno l’ha superata, fino a +2. Solo Tiro Singolo o Raffica Breve."
+        },
+        {
+          "specializzazione": "Comune",
+          "nome": "Fuoco di Disturbo",
+          "testo": "Una volta per Round, un bersaglio colpito da un’arma da fuoco subisce −2 VA al prossimo attacco effettuato entro la fine della propria Iniziativa successiva."
+        }
+      ]
+    },
+    {
+      "nome": "Assaltatore",
+      "addestramento": "Combattente",
+      "fonte": "§3.4; Talenti §3.5.4",
+      "specializzazioni": [
+        "Agile",
+        "Corazzato"
+      ],
+      "abilita": [
+        "Armi leggere",
+        "Armi da guerra",
+        "Armi da mischia",
+        "Atletica",
+        "Difese"
+      ],
+      "pv_per_grado": {
+        "fisso": 5,
+        "dado": 8
+      },
+      "pm_per_grado": {
+        "fisso": 1,
+        "dado": 0
+      },
+      "talenti_fissi": [
+        {
+          "grado": 1,
+          "nome": "Mantenere la Posizione",
+          "testo": "Ottiene +3 al valore delle Prove o delle Prove Salvezza previste per resistere o liberarsi da sbilanciamenti, spinte, spostamenti forzati, immobilizzazioni e disarmi. Si utilizza la Prova indicata dalla Manovra o dall’effetto.\nQuando un attacco impone uno spostamento senza una Prova per resistere, può effettuare una Prova Salvezza gratuita di Tempra con +3. Il successo evita soltanto lo spostamento; danni e altri effetti si applicano normalmente."
+        },
+        {
+          "grado": 3,
+          "nome": "Assalto Armato",
+          "testo": "Riduce di 2 Q complessivi, fino a un minimo di 0, la penalità al Movimento prodotta dall’armatura indossata e dallo scudo impugnato. Si applicano prima le proprietà che riducono le penalità dei singoli oggetti, poi il Talento alla penalità residua complessiva. Armatura media e scudo enorme passano da −2 Q a 0; armatura pesante e scudo enorme da −3 Q a −1 Q (Manuale degli Armamenti, §§7.4 e 7.11.1).\nIl beneficio non riduce le penalità delle armi, del Sovraccarico, degli Stati o del terreno e non modifica le penalità al VA, comprese quelle di Corsa e Scatto."
+        },
+        {
+          "grado": 5,
+          "nome": "Presidio di Combattimento",
+          "testo": "All’arrivo della propria Iniziativa sceglie, senza spendere Azioni, un alleato adiacente. Entrambi ottengono +2 VA a Difese fino all’arrivo dell’Iniziativa successiva dell’Assaltatore, mentre rimangono adiacenti, l’Assaltatore è cosciente e almeno uno dei due è ingaggiato in Ravvicinato. Il beneficio riguarda un solo alleato e termina se si separano. Restano validi i normali costi e requisiti delle Difese."
+        }
+      ],
+      "talenti_a_scelta": [
+        {
+          "specializzazione": "Agile",
+          "nome": "Carica Brutale",
+          "testo": "Ottiene +2 al danno base della Carica, prima di applicare il moltiplicatore. Valgono le regole comuni sui moltiplicatori: si applica quello più alto e il danno ×2 diventa ×3 con un Magistrale (§1.6)."
+        },
+        {
+          "specializzazione": "Agile",
+          "nome": "Spinta d’Impatto",
+          "testo": "Una volta per Round, dopo un attacco ravvicinato che infligge almeno 1 danno dopo l’Armatura, può spingere il bersaglio di 1 Q allontanandolo da sé, senza Azioni aggiuntive. Lo spostamento deve essere fisicamente possibile e terminare in uno spazio libero e raggiungibile; non provoca Attacchi di Opportunità. Se l’attacco produce già uno spostamento, si applica solo quello maggiore. Valgono le capacità di resistenza agli spostamenti forzati."
+        },
+        {
+          "specializzazione": "Corazzato",
+          "nome": "Scudo Aggressivo",
+          "testo": "Una volta per Round, dopo aver risolto un attacco con lo scudo andato a segno, impone al bersaglio −2 VA alla prossima Prova di Difese effettuata prima dell’inizio dell’Iniziativa successiva dell’Assaltatore. La penalità si consuma con quella sola Prova e non si cumula con sé stessa."
+        },
+        {
+          "specializzazione": "Corazzato",
+          "nome": "Interposizione Armata",
+          "testo": "Quando un alleato adiacente è bersaglio di un attacco diretto che l’Assaltatore percepisce, quest’ultimo può spendere un’Azione Principale disponibile, anche fuori dalla propria Iniziativa, e diventare il nuovo bersaglio se può fisicamente interporsi. Deve dichiararlo prima della Prova per colpire.\nNon si applica agli attacchi ad Area o inevitabili. Le eventuali Difese richiedono i propri costi: il Talento non concede una Parata o una Schivata gratuita. Ogni utilizzo richiede l’Azione prevista, senza ulteriori limiti per Round o per combattimento."
+        },
+        {
+          "specializzazione": "Comune",
+          "nome": "Coordinazione Offensiva",
+          "testo": "Ottiene +1 alla Prova per colpire in Ravvicinato un bersaglio adiacente a un alleato cosciente e capace di agire. La presenza di più alleati non aumenta il bonus."
+        }
+      ]
+    },
+    {
+      "nome": "Incursore",
+      "addestramento": "Combattente",
+      "fonte": "§3.4; Talenti §3.5.4",
+      "specializzazioni": [
+        "Assassino",
+        "Guastatore"
+      ],
+      "abilita": [
+        "Armi leggere",
+        "Armi da mischia",
+        "Furtività",
+        "Percezione",
+        "Tecnologia"
+      ],
+      "pv_per_grado": {
+        "fisso": 3,
+        "dado": 8
+      },
+      "pm_per_grado": {
+        "fisso": 2,
+        "dado": 0
+      },
+      "talenti_fissi": [
+        {
+          "grado": 1,
+          "nome": "Movimento Tattico",
+          "testo": "Riduce di 2, fino a un minimo di 0, le penalità alle proprie Prove dovute esclusivamente al tipo di Movimento: Passo 0, Corsa 0, Scatto −4. Restano valide le altre penalità, comprese quelle di terreno, Stati, Equipaggiamento e Manovre.\nLe penalità degli avversari per colpirlo restano quelle ordinarie: Corsa −2 e Scatto −4, con la normale durata. Il beneficio è sempre attivo, senza costi o limiti di utilizzo."
+        },
+        {
+          "grado": 3,
+          "nome": "Rapidità Operativa",
+          "testo": "Ottiene sempre +2 Iniziativa. Inoltre, in ogni combattimento ottiene +2 VA al primo attacco che esegue, se è un attacco ravvicinato oppure un attacco a distanza entro 10 Q. Il bonus si applica a una sola Prova per colpire, indipendentemente dal Round in cui attacca e dall’ordine delle Iniziative degli avversari."
+        },
+        {
+          "grado": 5,
+          "nome": "Colpisci e Sparisci",
+          "testo": "Una volta per Round, durante la propria Iniziativa, può suddividere il Passo prima e dopo un proprio attacco, utilizzando la propria Azione di Movimento e percorrendo complessivamente fino a 6 Q. Il Movimento effettuato dopo l’attacco non provoca Attacchi di Opportunità.\nSe termina il Movimento in una posizione adatta a nascondersi, può effettuare una Prova di Furtività senza spendere un’ulteriore Azione Principale. Restano necessarie le normali condizioni ambientali e la riuscita della Prova: raggiungere una Copertura non lo rende automaticamente nascosto. Il Talento funziona anche se l’attacco fallisce. L’attacco può essere ravvicinato o a distanza e conserva i normali costi in Azioni."
+        }
+      ],
+      "talenti_a_scelta": [
+        {
+          "specializzazione": "Assassino",
+          "nome": "Attacco Silenzioso",
+          "testo": "Ottiene +2 VA a Furtività per avvicinarsi a un avversario senza essere individuato. Quando attacca un bersaglio ignaro della sua presenza, ottiene +2 VA alla Prova per colpire con un attacco ravvicinato oppure con un’arma a distanza silenziata entro 10 Q. Restano i normali costi in Azioni. Il bonus si somma a Rapidità Operativa quando sono soddisfatte le condizioni di entrambi i Talenti."
+        },
+        {
+          "specializzazione": "Assassino",
+          "nome": "Punto Vitale",
+          "testo": "Una volta per Round, quando colpisce con un Colpo Mirato o un Tiro Mirato un bersaglio entro 10 Q, infligge +2 danni ai PV dopo l’applicazione dell’Armatura, soltanto se almeno 1 danno ha superato la protezione. Il bonus si applica solo alla prima istanza di danno e non viene moltiplicato dal Successo Magistrale.\nEsempio: 8 danni contro AR 5 lasciano passare 3 danni; Punto Vitale porta il totale a 5. Se l’Armatura assorbe tutto il danno, il Talento non aggiunge danni."
+        },
+        {
+          "specializzazione": "Guastatore",
+          "nome": "Carica Ottimizzata",
+          "testo": "Disponendo di un esplosivo, con 1 minuto di preparazione e una Prova riuscita di Tecnologia prepara e colloca una carica contro un oggetto o una struttura su cui sia fisicamente possibile posizionarla. La carica infligge il doppio dei danni all’oggetto o alla porzione di struttura scelta. Si applicano normalmente l’Armatura e le regole sui moltiplicatori, utilizzando quello più alto, con la progressione ×2 a ×3 in caso di Magistrale prevista dal §1.6. L’Area, la gittata dell’esplosione e i danni agli altri bersagli restano quelli ordinari."
+        },
+        {
+          "specializzazione": "Guastatore",
+          "nome": "Sabotaggio Rapido",
+          "testo": "Ottiene +2 VA a Tecnologia per sabotare o disattivare dispositivi, allarmi, macchinari e sistemi di sicurezza. Dimezza il tempo operativo richiesto, fino a un minimo di un’Azione Principale; quando il tempo si misura in Round o Azioni, si arrotonda per eccesso. Restano necessari l’accesso al dispositivo e gli strumenti adeguati. Esempio: un’operazione da 4 Azioni Principali ne richiede 2."
+        },
+        {
+          "specializzazione": "Comune",
+          "nome": "Piano di Riserva",
+          "testo": "Una volta per sessione, dopo aver fallito una Prova di Furtività, una Prova di Tecnologia oppure una Prova Salvezza di Riflessi, può ritirare il dado prima che siano applicate le conseguenze. Deve accettare il secondo risultato. Si tratta dello stesso tentativo e non richiede ulteriori Azioni o risorse. Restano valide le regole generali sui nuovi tiri e sui Distintivi."
+        }
+      ]
+    },
+    {
+      "nome": "Lottatore",
+      "addestramento": "Combattente",
+      "fonte": "§3.4; Talenti §3.5.5",
+      "specializzazioni": [
+        "Marziale",
+        "Spirituale"
+      ],
+      "abilita": [
+        "Armi da mischia",
+        "Atletica",
+        "Corpo a corpo",
+        "Difese",
+        "Percezione"
+      ],
+      "pv_per_grado": {
+        "fisso": 3,
+        "dado": 8
+      },
+      "pm_per_grado": {
+        "fisso": 4,
+        "dado": 0
+      },
+      "talenti_fissi": [
+        {
+          "grado": 1,
+          "nome": "Addestramento al Combattimento Senz’Armi",
+          "testo": "Il Lottatore sceglie permanentemente una Disciplina: Potenza, Rapidità, Controllo o Guardia. Il danno dei suoi attacchi senz’armi dipende dalla Disciplina e dal Grado nella Classe.\nDisciplina Potenza Rapidità Controllo Guardia\nGradi I–II 1d8 1d4 1d4 1d6\nGradi III–IV 1d10 1d6 1d6 1d8\nGradi V–VI 1d12 1d8 1d8 1d10\nPotenza. Dopo aver effettuato un attacco senz’armi, subisce −1 VA a Difese fino all’arrivo della propria Iniziativa successiva. Più attacchi non aumentano questa penalità.\nRapidità. Ottiene sempre +3 Iniziativa. Una volta per Round, durante la propria Iniziativa, può muoversi di 1 Q aggiuntivo senza spendere Azioni. Si applicano normalmente gli Attacchi di Opportunità. Questo movimento aggiuntivo non modifica la distanza o la continuità della normale Azione di Movimento.\nControllo. Ottiene +2 VA ai Gradi I–II, +4 VA ai Gradi III–IV e +6 VA ai Gradi V–VI alle Prove offensive di Corpo a corpo per Immobilizzare, Sbilanciare, Disarmare, Incalzare e Stordire. Restano validi costi, requisiti e penalità delle Manovre.\nGuardia. Ottiene un bonus a Difese contro gli attacchi ravvicinati: +1 VA ai Gradi I–II, +2 VA ai Gradi III–IV e +3 VA ai Gradi V–VI."
+        },
+        {
+          "grado": 3,
+          "nome": "Raffica di Colpi",
+          "testo": "Con una sola Azione Principale effettua due attacchi senz’armi, ciascuno con −2 VA. Può colpire lo stesso bersaglio oppure due bersagli differenti entro portata. Ogni attacco richiede una Prova distinta e viene risolto separatamente, comprese Difese, danno e Armatura.\nNon richiede PM e non può essere combinata con altre Manovre offensive nella stessa Azione. Dal 12° livello può utilizzare entrambe le Azioni Principali per eseguire due Raffiche di Colpi, per un totale di quattro attacchi."
+        },
+        {
+          "grado": 5,
+          "nome": "Combattimento Multiplo",
+          "testo": "Con un’Azione Principale effettua una Spazzata senz’armi contro tutti gli avversari adiacenti raggiungibili dai suoi colpi, superando il normale limite di tre bersagli. Effettua una sola Prova di Corpo a corpo: −4 VA contro due bersagli, −6 VA contro tre o più bersagli.\nCon un successo, ogni bersaglio subisce un colpo e applica separatamente le proprie Difese e l’Armatura. Spazzata Migliorata riduce di 2 la penalità. Restano valide le regole generali sul Successo Magistrale per gli attacchi con più istanze di danno.\nNon richiede PM e non può essere combinato con Raffica di Colpi nella stessa Azione."
+        }
+      ],
+      "talenti_a_scelta": [
+        {
+          "specializzazione": "Marziale",
+          "nome": "Punto Debole",
+          "testo": "Spende un’Azione Principale per studiare un avversario che percepisce chiaramente, senza effettuare una Prova. Il successivo attacco normale senz’armi contro quel bersaglio infligge danno ×2 se riesce, oppure danno ×3 con un Successo Magistrale. Il moltiplicatore si applica prima dell’Armatura; il ×3 sostituisce il normale raddoppio del Successo Magistrale e non produce un ×4.\nL’attacco deve essere effettuato entro la fine della propria Iniziativa successiva. Se dispone di due Azioni Principali, può prepararsi e attaccare durante la stessa Iniziativa. Il beneficio si consuma con l’attacco, anche se fallisce, e si perde se il bersaglio non è più percepibile.\nNon richiede PM e non si combina con Raffica di Colpi, Combattimento Multiplo o altre Manovre offensive."
+        },
+        {
+          "specializzazione": "Marziale",
+          "nome": "Padronanza della Disciplina",
+          "testo": "Perfeziona la Disciplina scelta al I Grado, senza acquisirne una seconda. Non richiede PM.\nPotenza. Elimina la penalità di −1 VA a Difese dopo aver attaccato.\nRapidità. Il movimento aggiuntivo gratuito di 1 Q non provoca Attacchi di Opportunità.\nControllo. Il bonus della Disciplina si applica anche alle Prove previste per resistere a Immobilizzare, Sbilanciare, Disarmare, Incalzare e Stordire, per mantenere una presa o per liberarsi da Immobilizzato. Si utilizza la Prova indicata dalla Manovra o dall’effetto; il Talento non introduce una Prova dove non è prevista.\nGuardia. Il bonus a Difese si applica a tutti gli attacchi diretti percepibili, anche a distanza. Restano necessari i normali requisiti della Difesa: il Talento non consente da solo di parare a mani nude un attacco a distanza. Sono esclusi gli effetti ad Area, gli effetti automatici e gli attacchi normalmente imparabili."
+        },
+        {
+          "specializzazione": "Spirituale",
+          "nome": "Risorse Interiori",
+          "testo": "Acquisisce l’accesso alle Risorse Interiori e apprende un numero di Tecniche pari a 2 + Mod SAG, con un minimo di una Tecnica. Può scegliere Tecniche Interiori generiche, Tecniche esclusive del Lottatore e Tecniche di una Scuola Mishima alla quale abbia accesso.\nLe Tecniche Interiori consumano PM personali, ma non sono Incantesimi. Risorse Interiori segue le modalità di acquisizione e le incompatibilità del §8.6.10. Il Lottatore che lo possiede come Talento Libero può scegliere anche le proprie Tecniche esclusive; non può acquisirlo nuovamente come scelta di Classe per ricevere una seconda dotazione iniziale. Le regole comuni e il catalogo sono nel §8.9."
+        },
+        {
+          "specializzazione": "Spirituale",
+          "nome": "Tecniche Interiori Supplementari",
+          "testo": "Requisito: Risorse Interiori. Apprende tre Tecniche Interiori aggiuntive, scelte fra quelle alle quali possiede accesso. Questa scelta di Classe è acquisibile una sola volta; ulteriori acquisizioni utilizzano Talenti Liberi (§8.6.10).\nA Umanità 0 il personaggio non può utilizzare Risorse Interiori o le Tecniche che ne dipendono, salvo un effetto che superi espressamente questo limite (§5.21)."
+        },
+        {
+          "specializzazione": "Comune",
+          "nome": "Parata a Mani Nude",
+          "testo": "Può utilizzare Difese per parare attacchi ravvicinati senza impugnare armi o scudi, purché disponga di almeno una mano libera e possa fisicamente intervenire sul colpo.\nLa Parata richiede un’Azione Principale disponibile, utilizzabile anche fuori dalla propria Iniziativa, e segue le normali regole: il successo dimezza per eccesso il danno prima dell’Armatura; il Successo Magistrale annulla il danno. Con un Fallimento Maldestro la Parata fallisce e il personaggio subisce −2 VA a tutte le Prove fino all’arrivo della propria Iniziativa successiva.\nNon permette di parare attacchi a distanza, effetti ad Area o attacchi normalmente imparabili. Se possiede Parata Istintiva, può utilizzare anche a mani nude la Parata gratuita concessa una volta per Round, entro lo stesso limite complessivo. Non richiede PM."
+        }
+      ]
+    },
+    {
+      "nome": "Soldato",
+      "addestramento": "Combattente",
+      "fonte": "§3.4; Talenti §3.5.6",
+      "specializzazioni": [
+        "Supporto tattico",
+        "Logistico"
+      ],
+      "abilita": [
+        "Armi leggere",
+        "Armi medie",
+        "Difese",
+        "Percezione",
+        "Sopravvivenza"
+      ],
+      "pv_per_grado": {
+        "fisso": 4,
+        "dado": 8
+      },
+      "pm_per_grado": {
+        "fisso": 2,
+        "dado": 0
+      },
+      "talenti_fissi": [
+        {
+          "grado": 1,
+          "nome": "Addestramento Militare",
+          "testo": "Il Soldato ottiene +3 alle Prove Salvezza di Volontà contro paura, panico, Fuoco di Soppressione e altre pressioni provocate dal combattimento. In caso di fallimento subisce normalmente gli effetti previsti dalla regola applicabile."
+        },
+        {
+          "grado": 3,
+          "nome": "Coordinamento di Squadra",
+          "testo": "Una volta per Round, prima che un alleato entro 6 Q effettui una Prova richiesta da una Manovra di combattimento, il Soldato può ridurre di 2 la penalità propria della Manovra, fino a un minimo di 0.\nIl beneficio deve essere dichiarato prima del tiro, si applica a una sola Prova e non può essere utilizzato dal Soldato stesso. Restano applicabili le penalità di distanza, Movimento, Copertura, equipaggiamento, Ferite e altre condizioni.\nEsempio: un alleato effettua Tiro Rapido con due attacchi a −4 VA. Il Soldato riduce a −2 la penalità di uno dei due attacchi; l’altro rimane a −4. Una Manovra senza penalità non riceve un bonus positivo."
+        },
+        {
+          "grado": 5,
+          "nome": "Disciplina di Ferro",
+          "testo": "Una volta per combattimento, il Soldato può richiamare alla disciplina sé stesso e tutti gli alleati entro 6 Q che possano percepirlo. Fino all’arrivo della sua Iniziativa successiva, i beneficiari ignorano le penalità numeriche causate dalle Ferite e dall’Affaticamento.\nI beneficiari vengono individuati all’attivazione e conservano l’effetto anche se successivamente si allontanano oltre 6 Q. Il Talento non recupera PV, non cura Ferite, non arresta il Sanguinamento e non impedisce perdita di coscienza o morte. La sospensione comprende la penalità da AFT alle Prove Salvezza, ma non modifica lo Stato di Affaticamento né impedisce i peggioramenti automatici (§5.19)."
+        }
+      ],
+      "talenti_a_scelta": [
+        {
+          "specializzazione": "Supporto tattico",
+          "nome": "Supporto d’Attacco",
+          "testo": "Una volta per Round, il Soldato designa un avversario che può percepire e sceglie un alleato entro 6 Q. La prima Prova offensiva effettuata dall’alleato contro il bersaglio designato prima dell’inizio dell’Iniziativa successiva del Soldato ottiene +2 VA. Il beneficio si consuma anche se la Prova fallisce."
+        },
+        {
+          "specializzazione": "Supporto tattico",
+          "nome": "Supporto di Difesa",
+          "testo": "Una volta per Round, il Soldato sceglie sé stesso oppure un alleato entro 6 Q. Il beneficiario ottiene +2 VA alle Prove di Difese fino all’arrivo dell’Iniziativa successiva del Soldato. Il bonus non si applica contro attacchi ad Area, inevitabili o non percepiti.\nIl beneficiario continua a spendere le azioni normalmente richieste per parare o schivare: il Talento migliora la Prova, ma non concede una Difesa gratuita."
+        },
+        {
+          "specializzazione": "Logistico",
+          "nome": "Supporto Logistico",
+          "testo": "Il Soldato ottiene +2 VA alle Prove di Pilotare, Sopravvivenza o Tecnologia effettuate per costruire o riparare ripari e fortificazioni campali; organizzare un accampamento; gestire scorte, munizioni ed equipaggiamento; preparare mezzi e convogli; trasferire personale o materiali.\nIl bonus non si applica alla progettazione industriale o alle attività prive di finalità logistiche."
+        },
+        {
+          "specializzazione": "Logistico",
+          "nome": "Base Operativa",
+          "testo": "Requisito: Supporto Logistico. Con spazio e materiali adeguati, il Soldato può allestire una Base Operativa in un’ora. Può ospitare il Soldato e un numero di altre creature pari a 2 + Grado di Soldato.\nFinché si trovano nella Base, gli ospiti ottengono +2 VA a Percezione contro minacce provenienti dall’esterno. Una volta al giorno per ciascun ospite, la prima ora di Attività leggera trascorsa nella Base viene considerata Riposo breve ai fini del recupero di PV e PM. Quest’ora conta nel limite giornaliero del Riposo breve. Le Ferite seguono i tempi ordinari.\nLe fortificazioni costruite dal Soldato ottengono +1 AR non magica. Il beneficio si applica ai danni subiti dalla struttura prima di determinare l’eventuale perdita di PI. Non aumenta i PI o la PS Integrità, non modifica la categoria di Copertura e non concede direttamente Armatura alle creature riparate dietro la struttura. Non protegge dal Danno Etereo. I benefici strutturali di Base Operativa e Meccanizzazione Agricola non si sommano sulla stessa struttura: si applica un solo +1 AR."
+        },
+        {
+          "specializzazione": "Comune",
+          "nome": "Supporto Avanzato",
+          "testo": "Requisito: Supporto d’Attacco, Supporto di Difesa oppure Supporto Logistico. Il Soldato sceglie permanentemente uno dei Supporti posseduti e ne migliora gli effetti.\nAttacco: può concedere il bonus a due alleati contro lo stesso bersaglio. Ciascuno lo utilizza per la propria prima Prova offensiva pertinente, secondo i limiti di Supporto d’Attacco.\nDifesa: può proteggere due bersagli con +2 VA alle Prove di Difese oppure un solo bersaglio con +4 VA. Durata ed esclusioni restano quelle di Supporto di Difesa.\nLogistico: dimezza i tempi delle attività logistiche e concede +2 alle Prove Salvezza di Tempra del gruppo contro l’Affaticamento causato dai viaggi organizzati dal Soldato. Il +2 si applica soltanto alle PS richieste; non evita né trasforma in Prove i peggioramenti automatici (§5.19)."
+        }
+      ],
+      "note": [
+        "Attivazione dei Talenti di comando. Coordinamento di Squadra, Disciplina di Ferro, Supporto d’Attacco e Supporto di Difesa non richiedono la spesa di azioni. Coordinamento di Squadra si attiva immediatamente prima della Prova dell’alleato; gli altri si attivano durante l’Iniziativa del Soldato. Il Soldato deve essere cosciente e gli alleati devono poter percepire le sue indicazioni. Restano valide le rispettive frequenze e durate."
+      ]
+    },
+    {
+      "nome": "Agricoltore",
+      "addestramento": "Lavoratore",
+      "fonte": "§3.4; Talenti §3.5.7",
+      "specializzazioni": [
+        "Coltivatore",
+        "Allevatore"
+      ],
+      "abilita": [
+        "Atletica",
+        "Medicina",
+        "Percezione",
+        "Sopravvivenza",
+        "Tecnologia"
+      ],
+      "pv_per_grado": {
+        "fisso": 4,
+        "dado": 6
+      },
+      "pm_per_grado": {
+        "fisso": 3,
+        "dado": 0
+      },
+      "talenti_fissi": [
+        {
+          "grado": 1,
+          "nome": "Addestramento Rurale",
+          "testo": "L’Agricoltore ottiene +3 alle Prove Salvezza di Tempra contro l’Affaticamento causato da lavoro fisico prolungato, attività agricole, trasporto manuale di materiali e condizioni climatiche sfavorevoli.\nUna volta al giorno riduce di 1 Stato il peggioramento di Affaticamento ricevuto per una di queste cause, fino a un minimo di 0 Stati ricevuti. Può quindi evitare un peggioramento di un solo Stato, anche automatico. Il beneficio non si applica a combattimento, fame, sete, malattie, veleni o effetti mistici. Il +3 alle PS di Tempra si applica soltanto quando una Prova è già prevista; non trasforma un peggioramento automatico in una Salvezza (§5.19)."
+        },
+        {
+          "grado": 3,
+          "nome": "Risorse del Territorio",
+          "testo": "Dopo avere esaminato per almeno 10 minuti un terreno, una coltivazione, una fonte d’acqua o degli animali, l’Agricoltore riconosce senza Prova le condizioni immediatamente osservabili: fertilità, disponibilità d’acqua, salute ordinaria e presenza evidente di risorse.\nQuando supera una Prova per coltivare, raccogliere, cacciare, pescare o procurare acqua, ottiene il doppio della quantità ordinaria di risorse, nei limiti della disponibilità effettiva dell’ambiente. Il beneficio si applica anche ad Autosufficienza.\nIl Talento non accelera la crescita naturale delle colture e non rivela contaminazioni nascoste. Il Successo Magistrale mantiene i suoi effetti ordinari. Non sono previste opzioni alternative di riduzione del tempo o miglioramento della qualità."
+        },
+        {
+          "grado": 5,
+          "nome": "Autosufficienza",
+          "testo": "Una volta al giorno, dedicando 4 ore all’attività e superando una Prova pertinente, l’Agricoltore procura cibo e acqua sufficienti per un giorno per sé stesso e un numero massimo di altre creature pari a 2 + Grado di Agricoltore.\nIl Talento richiede un ambiente contenente risorse utilizzabili. In ambienti poveri, contaminati o privi d’acqua il Direttore può applicare penalità, ridurre il risultato o dichiarare impossibile la Prova. Si applica il beneficio di Risorse del Territorio.\nEsempio: al V Grado, il risultato ordinario sostiene 8 persone, compreso l’Agricoltore. Risorse del Territorio raddoppia la quantità fino a 16 persone, se le risorse sono sufficienti. Caccia, Pesca e Raccolta porta il lavoro da 4 a 2 ore quando si impiegano risorse selvatiche."
+        }
+      ],
+      "talenti_a_scelta": [
+        {
+          "specializzazione": "Coltivatore",
+          "nome": "Coltivatore Esperto",
+          "testo": "Ottiene +3 VA alle Prove pertinenti di Scienza, Sopravvivenza o Tecnologia per preparare e fertilizzare il terreno; seminare, irrigare e curare coltivazioni; riconoscere carenze e malattie ordinarie delle piante; raccogliere e selezionare prodotti agricoli coltivati.\nDimezza i tempi delle operazioni preparatorie e dei trattamenti, ma non accelera il naturale ciclo di crescita. Gli interventi sul funzionamento tecnico di macchinari e impianti appartengono invece a Meccanizzazione Agricola."
+        },
+        {
+          "specializzazione": "Coltivatore",
+          "nome": "Meccanizzazione Agricola",
+          "testo": "Ottiene +3 VA a Pilotare e Tecnologia per utilizzare, costruire o riparare macchinari agricoli, pompe, serre, impianti d’irrigazione, recinzioni, silos e veicoli agricoli. Il bonus riguarda il pilotaggio dei mezzi e il funzionamento, la costruzione, la manutenzione o la riparazione degli impianti.\nDimezza i tempi d’intervento. Le strutture agricole costruite o dirette personalmente dall’Agricoltore ottengono inoltre +1 AR non magica. Il beneficio si applica ai danni subiti dalla struttura prima di determinare l’eventuale perdita di PI. Non aumenta i PI o la PS Integrità, non modifica la categoria di Copertura e non concede direttamente Armatura alle creature riparate dietro la struttura. Non protegge dal Danno Etereo. I benefici strutturali di Base Operativa e Meccanizzazione Agricola non si sommano sulla stessa struttura: si applica un solo +1 AR."
+        },
+        {
+          "specializzazione": "Allevatore",
+          "nome": "Allevatore Esperto",
+          "testo": "Ottiene +3 VA alle Prove pertinenti di Medicina, Percezione o Sopravvivenza per allevare, nutrire, condurre, addestrare o curare animali domestici. Le operazioni ordinarie con animali abituati alla sua presenza riescono senza Prova.\nDedicando un’ora alle loro cure, seleziona fino a 2 + Grado di Agricoltore animali. Questi ottengono +3 alle Prove Salvezza di Tempra contro Malattie e Affaticamento fino al termine del loro successivo Riposo completo. Ulteriori applicazioni non sommano il bonus.\nAl termine del loro successivo Riposo completo, gli animali trattati ottengono 1 punto aggiuntivo complessivo di recupero dell’Affaticamento, secondo il §5.19. Il punto si aggiunge al recupero di quel riposo una sola volta, non a ogni ora; più applicazioni del Talento non sommano questo beneficio."
+        },
+        {
+          "specializzazione": "Allevatore",
+          "nome": "Caccia, Pesca e Raccolta",
+          "testo": "Ottiene +3 VA a Percezione e Sopravvivenza per seguire tracce, preparare trappole da cattura, cacciare, pescare e raccogliere risorse commestibili selvatiche.\nQuando utilizza Autosufficienza esclusivamente mediante risorse selvatiche, il tempo necessario scende da 4 a 2 ore. Il Talento non modifica la disponibilità reale delle risorse."
+        },
+        {
+          "specializzazione": "Comune",
+          "nome": "Conservazione delle Provviste",
+          "testo": "Ottiene +3 VA alle Prove pertinenti di Scienza, Sopravvivenza o Tecnologia per riconoscere deterioramenti, conservare alimenti, purificare acqua e organizzare scorte. Il suo ambito riguarda il trattamento e il controllo delle risorse già raccolte, oltre alla purificazione dell’acqua.\nDedicando un’ora al trattamento delle provviste, ne raddoppia la durata ordinaria. Il Talento non elimina automaticamente veleni, malattie, radiazioni, contaminazioni industriali o effetti mistici."
+        }
+      ],
+      "note": [
+        "Ambiti dei Talenti. Il Talento pertinente dipende dall’obiettivo della Prova. Coltivatore Esperto riguarda terreno e prodotti coltivati; Meccanizzazione Agricola riguarda mezzi e impianti; Allevatore Esperto riguarda animali domestici; Caccia, Pesca e Raccolta riguarda risorse selvatiche; Conservazione delle Provviste riguarda risorse già raccolte e purificazione dell’acqua. Curare una coltura e riparare il suo impianto d’irrigazione sono attività distinte."
+      ]
+    },
+    {
+      "nome": "Artigiano",
+      "addestramento": "Lavoratore",
+      "fonte": "§3.4; Talenti §3.5.8",
+      "specializzazioni": [
+        "Armaiolo",
+        "Manifattore"
+      ],
+      "abilita": [
+        "Cultura",
+        "Percezione",
+        "Raggirare",
+        "Scienza",
+        "Tecnologia"
+      ],
+      "pv_per_grado": {
+        "fisso": 3,
+        "dado": 6
+      },
+      "pm_per_grado": {
+        "fisso": 3,
+        "dado": 0
+      },
+      "talenti_fissi": [
+        {
+          "grado": 1,
+          "nome": "Addestramento di Bottega",
+          "testo": "L’Artigiano ottiene +3 VA alle Prove pertinenti di Cultura, Percezione, Scienza o Tecnologia per riconoscere materiali e tecniche di fabbricazione; individuare difetti, usura e riparazioni; determinare strumenti e materiali necessari; valutare qualità e autenticità di un manufatto, compreso il riconoscimento di restauri e falsificazioni.\nRiduce inoltre di 2 le penalità causate da strumenti incompleti o improvvisati, fino a un minimo di 0. Non può sostituire attrezzature indispensabili come forge, forni o impianti industriali."
+        },
+        {
+          "grado": 3,
+          "nome": "Lavoro a Regola d’Arte",
+          "testo": "Quando costruisce da zero un oggetto non consumabile, questo ottiene +1 Integrità massima. Quando ripara completamente un oggetto, può invece rinforzarlo: la prima volta che dovrebbe perdere Integrità, ne perde 1 in meno, fino a un minimo di 0. Dopo l’applicazione, il rinforzo termina.\nIl Talento non si applica a munizioni, alimenti o oggetti monouso e non può essere applicato ripetutamente allo stesso oggetto. L’incremento aumenta i PI massimi del profilo; la Qualità determina separatamente la PS Integrità (Manuale degli Armamenti, §7.2.1).\nQuando rinforza un veicolo completamente riparato, il beneficio è unico per il mezzo e riduce di 1 PI, fino a 0, la prima perdita subita da una delle sue tre strutture. Può ridurre le perdite di Spinta al Limite e Sovraccarico Tecnico; un’arma con PI autonomi richiede un rinforzo applicato a quell’arma (Manuale dei Veicoli, §§7.2 e 7.4)."
+        },
+        {
+          "grado": 5,
+          "nome": "Capolavoro",
+          "testo": "Prima di costruire un oggetto pertinente alle proprie competenze, l’Artigiano può dichiarare di voler realizzare un Capolavoro. La lavorazione richiede il doppio del tempo, il 50% di materiali in più e una Prova pertinente con −6 VA.\nCon successo, il Capolavoro ottiene +2 Integrità massima oltre a Lavoro a Regola d’Arte; concede +1 VA alle Prove non offensive nelle quali viene utilizzato come strumento principale; una volta per sessione permette di ripetere una di queste Prove, accettando il secondo risultato.\nCon un fallimento normale viene realizzato un oggetto normale, consumando comunque tempo e materiali aggiuntivi. Con un Fallimento Maldestro si applica anche una complicazione pertinente, secondo le regole delle Prove di Abilità.\nLavoro a Regola d’Arte e Capolavoro concedono complessivamente +3 PI massimi all’oggetto costruito. La PS Integrità resta quella della sua Qualità (Manuale degli Armamenti, §7.2.1). Tempi, costi e procedure generali di costruzione verranno integrati successivamente nel Manuale degli Equipaggiamenti."
+        }
+      ],
+      "talenti_a_scelta": [
+        {
+          "specializzazione": "Armaiolo",
+          "nome": "Armaiolo",
+          "testo": "Ottiene +3 VA alle Prove pertinenti di Percezione, Scienza e Tecnologia per progettare, costruire o riparare armi, munizioni e componenti. Le attività di esame e valutazione utilizzano Addestramento di Bottega.\nCon un’ora di manutenzione, disponendo degli strumenti necessari, tratta fino a 2 + Grado di Artigiano armi. La manutenzione conta come Attività leggera. Per un giorno, ciascuna arma evita una sola volta l’acquisizione della condizione Inceppata oppure Danneggiata provocata da un Fallimento Maldestro. L’attacco fallisce comunque e si applicano le altre conseguenze. Il beneficio non impedisce che l’arma diventi Rotta o Distrutta. Un’arma trasformata in Capolavoro infligge inoltre +1 danno a una sola istanza per attacco. Ai profili del Manuale degli Armamenti si applicano questo bonus e i +3 PI massimi complessivi previsti dai Talenti; gli altri dati restano quelli del profilo, salvo proprietà espresse."
+        },
+        {
+          "specializzazione": "Armaiolo",
+          "nome": "Corazzaio",
+          "testo": "Ottiene +3 VA alle Prove pertinenti di Percezione, Scienza e Tecnologia per costruire, riparare o adattare armature, scudi e protezioni. Le attività di esame e valutazione utilizzano Addestramento di Bottega.\nDedicando un’ora ad adattare una protezione a uno specifico utilizzatore, riduce di 1 una sua penalità al Movimento o alle Prove, fino a un minimo di 0. Un’armatura realizzata come Capolavoro ottiene +1 Protezione contro una tipologia di danno scelta. Questo beneficio resta da raccordare alle regole definitive delle protezioni nel Manuale degli Armamenti. Uno Scudo Capolavoro concede +1 VA alle Prove di Difese effettuate per parare con quello Scudo. Si applicano normalmente costi, penalità ed effetti della Parata."
+        },
+        {
+          "specializzazione": "Manifattore",
+          "nome": "Artefice di Precisione",
+          "testo": "Ottiene +3 VA alle Prove pertinenti di Percezione e Tecnologia per progettare, costruire o riparare serrature, trappole, strumenti di misura e di precisione e piccoli meccanismi non elettronici. Dimezza i relativi tempi di lavorazione.\nQuando realizza un Capolavoro di Precisione sceglie uno dei seguenti benefici. Strumento: il bonus alle Prove non offensive aumenta da +1 a +2 VA. Congegno: le Prove per individuarlo, comprenderlo o disattivarlo subiscono −4 VA."
+        },
+        {
+          "specializzazione": "Manifattore",
+          "nome": "Maestro Manifattore",
+          "testo": "Ottiene +3 VA alle Prove pertinenti di Cultura e Tecnologia per realizzare utensili ordinari, abiti, accessori, mobili, contenitori e manufatti ornamentali. La valutazione di tali oggetti utilizza Addestramento di Bottega. Consuma un quinto dei materiali in meno. Per questi oggetti, il bonus non offensivo di Capolavoro aumenta da +1 a +2 VA per una funzione stabilita durante la costruzione. Il bonus può applicarsi a una Prova Sociale soltanto quando qualità, abbigliamento o prestigio dell’oggetto siano direttamente pertinenti."
+        },
+        {
+          "specializzazione": "Comune",
+          "nome": "Restauratore e Falsario",
+          "testo": "Ottiene +3 VA alle Prove pertinenti di Cultura, Percezione, Raggirare o Tecnologia per restaurare un manufatto, riprodurne materiali e tecniche oppure creare copie e contraffazioni. Il riconoscimento di restauri e falsificazioni utilizza Addestramento di Bottega. Chi esamina una falsificazione realizzata dall’Artigiano subisce −4 VA alla Prova per riconoscerla. Una replica realizzata come Capolavoro non può essere distinta dall’originale mediante un esame ordinario. Archivi, identificatori digitali, analisi scientifiche o mezzi mistici possono comunque rivelarne la natura."
+        }
+      ],
+      "note": [
+        "Ambiti dei Talenti. Addestramento di Bottega comprende i bonus per esaminare, riconoscere e valutare materiali, manufatti, restauri e falsificazioni. I bonus dei Talenti a scelta riguardano le operazioni pratiche nei rispettivi ambiti: progettare, costruire, riparare, adattare, restaurare e contraffare. Artefice di Precisione riguarda strumenti di misura e meccanismi di precisione; Maestro Manifattore riguarda utensili ordinari, abbigliamento, arredi e manufatti ornamentali."
+      ]
+    },
+    {
+      "nome": "Operaio",
+      "addestramento": "Lavoratore",
+      "fonte": "§3.4; Talenti §3.5.9",
+      "specializzazioni": [
+        "Costruttore",
+        "Riparatore"
+      ],
+      "abilita": [
+        "Armi da mischia",
+        "Atletica",
+        "Percezione",
+        "Pilotare",
+        "Tecnologia"
+      ],
+      "pv_per_grado": {
+        "fisso": 4,
+        "dado": 6
+      },
+      "pm_per_grado": {
+        "fisso": 2,
+        "dado": 0
+      },
+      "talenti_fissi": [
+        {
+          "grado": 1,
+          "nome": "Duro Lavoro",
+          "testo": "L’Operaio ottiene +3 VA alle Prove pertinenti di Atletica, Pilotare o Tecnologia effettuate durante costruzioni e demolizioni, lavori pesanti, carico e scarico di materiali, trasporto industriale, impiego di macchinari da lavoro e riparazioni strutturali o meccaniche.\nIl bonus non si applica alla progettazione teorica o alla guida ordinaria di un veicolo."
+        },
+        {
+          "grado": 3,
+          "nome": "Resistenza Operaia",
+          "testo": "Una volta per scena, prima di effettuare una Prova fisica o lavorativa, l’Operaio può ignorare per quella Prova tutte le penalità numeriche causate da Ferite e Affaticamento.\nIl Talento non recupera PV, non elimina Ferite o condizioni e non impedisce altre conseguenze del lavoro. La sospensione delle penalità vale soltanto per la Prova fisica o lavorativa scelta e non modifica lo Stato di Affaticamento (§5.19)."
+        },
+        {
+          "grado": 5,
+          "nome": "Colonna Portante",
+          "testo": "Una volta per scena, quando collabora concretamente a un’attività lavorativa di gruppo, l’Operaio può permettere all’alleato responsabile di ritirare la Prova appena fallita, prima che ne siano applicate le conseguenze.\nL’alleato deve accettare il secondo risultato. Il ritiro riguarda lo stesso tentativo e non richiede ulteriori tempi o materiali. Il Talento non può essere usato dall’Operaio su sé stesso e non si applica ad attacchi, Difese, Salvezze o lancio di Incantesimi."
+        }
+      ],
+      "talenti_a_scelta": [
+        {
+          "specializzazione": "Costruttore",
+          "nome": "Forza da Lavoro",
+          "testo": "L’Operaio raddoppia la quantità di peso che può normalmente sollevare, trasportare, spingere o trascinare mediante il lavoro manuale: carico ordinario fino a FOR × 20 kg; massimo sollevabile e trasportabile FOR × 40 kg; spinta e trascinamento FOR × 80 kg (§5.2.6). Le eventuali Prove restano necessarie e utilizzano i normali valori. Il Talento non modifica attacchi, danni o Manovre di combattimento.\nLe limitazioni del Sovraccarico e l’Affaticamento si determinano usando le soglie aumentate dal Talento."
+        },
+        {
+          "specializzazione": "Costruttore",
+          "nome": "Ritmo di Produzione",
+          "testo": "Riduce di un quinto il tempo necessario per lavori fisici ripetitivi, scavi e demolizioni, movimentazione di materiali, catene di montaggio e produzioni manuali seriali.\nUn lavoro che richiederebbe cinque ore viene completato in quattro. La riduzione complessiva ottenuta sommando più effetti non può superare la metà del tempo originario."
+        },
+        {
+          "specializzazione": "Riparatore",
+          "nome": "Riparazione d’Emergenza",
+          "testo": "Una volta per scena, con 1 minuto di lavoro e una Prova riuscita di Tecnologia, l’Operaio ripristina temporaneamente il funzionamento di un oggetto danneggiato: un macchinario, veicolo, dispositivo o struttura.\nL’intervento deve essere concretamente eseguibile con gli strumenti e i componenti disponibili. Sono ammessi strumenti improvvisati, con la loro normale penalità. Fino alla fine della scena, l’oggetto funziona ma impone −2 VA alle Prove effettuate utilizzandolo. Alla scadenza termina il ripristino temporaneo; restano registrati i danni e le riparazioni ordinarie intervenuti nel frattempo.\nL’intervento non recupera Integrità, non ripristina oggetti Distrutti e non sostituisce componenti essenziali mancanti.\nSui veicoli l’intervento interessa una sola struttura, anche a 0 PI se materialmente riparabile: sostituisce temporaneamente la sua penalità o il suo impedimento al funzionamento con −2 VA a Pilotare. Le altre strutture conservano le proprie condizioni e si applica la penalità peggiore. Il ripristino termina anche quando la struttura subisce una nuova perdita di PI (Manuale dei Veicoli, §7.3)."
+        },
+        {
+          "specializzazione": "Riparatore",
+          "nome": "Cannibalizzazione",
+          "testo": "Recuperando componenti da oggetti tecnologicamente compatibili, l’Operaio sceglie un solo beneficio per la riparazione: reperire i ricambi mancanti necessari a renderla possibile; dimezzare il costo dei materiali; oppure dimezzare il tempo dell’intervento. Il beneficio si applica una sola volta alla stessa riparazione, anche utilizzando più oggetti donatori. Gli oggetti smontati diventano inutilizzabili finché le parti rimosse non vengono sostituite. Il Talento non permette di adattare componenti manifestamente incompatibili."
+        },
+        {
+          "specializzazione": "Comune",
+          "nome": "Lavoro di Squadra",
+          "testo": "Quando l’Operaio Aiuta in un’attività non offensiva, aumenta di +1 il bonus fornito dal proprio aiuto. Con VA 1– 8 fornisce +2 invece di +1; con VA 9–14 fornisce +3 invece di +2; con VA 15–19 fornisce +4 invece di +3; con VA 20 o più fornisce +5 invece di +4. Il bonus complessivo fornito da tutti gli aiutanti non può comunque superare +5. Restano applicabili i requisiti della regola Assistenza: l’Operaio deve poter partecipare concretamente con il tempo, la posizione e gli strumenti necessari."
+        }
+      ]
+    },
+    {
+      "nome": "Pilota",
+      "addestramento": "Lavoratore",
+      "fonte": "§3.4; Talenti §3.5.10",
+      "specializzazioni": [
+        "Civile",
+        "Militare"
+      ],
+      "abilita": [
+        "Armi leggere",
+        "Percezione",
+        "Pilotare",
+        "Sopravvivenza",
+        "Tecnologia"
+      ],
+      "pv_per_grado": {
+        "fisso": 3,
+        "dado": 6
+      },
+      "pm_per_grado": {
+        "fisso": 2,
+        "dado": 0
+      },
+      "talenti_fissi": [
+        {
+          "grado": 1,
+          "nome": "Pilota Nato",
+          "testo": "Una volta per Round, il Pilota può spendere un’Azione Principale per preparare una correzione di rotta o una manovra del veicolo. Ottiene +2 VA alla successiva Prova di Pilotare o Tecnologia relativa alla manovra preparata, effettuata entro la fine della propria Iniziativa successiva. Il beneficio vale per una sola Prova e non è cumulabile con ulteriori preparazioni dello stesso Talento. La preparazione non sostituisce le Azioni necessarie per eseguire la manovra."
+        },
+        {
+          "grado": 3,
+          "nome": "Controllo Assoluto",
+          "testo": "Una volta per scena, prima di applicarne le conseguenze, il Pilota può trasformare un proprio fallimento ordinario in un successo normale in una Prova di Pilotare o Tecnologia relativa al veicolo. Non può modificare un 20 naturale."
+        },
+        {
+          "grado": 5,
+          "nome": "Sincronia Tattica",
+          "testo": "All’arrivo della propria Iniziativa, mentre occupa una postazione dalla quale può effettivamente controllare il veicolo, il Pilota sceglie un assetto senza spendere Azioni: Difensivo, ottenendo +2 VA alle proprie Prove di Pilotare per evitare attacchi, collisioni e pericoli; oppure Aggressivo, ottenendo +2 VA alla prima Prova offensiva che effettua personalmente con un’arma del veicolo. L’assetto dura fino all’arrivo dell’Iniziativa successiva. Non concede Azioni aggiuntive, non modifica le Prove Salvezza e non trasferisce automaticamente il bonus agli altri membri dell’equipaggio."
+        }
+      ],
+      "talenti_a_scelta": [
+        {
+          "specializzazione": "Civile",
+          "nome": "Atterraggio Impossibile",
+          "testo": "Una volta per scena, quando il veicolo che sta pilotando subisce un incidente dovuto a precipitazione, ribaltamento o collisione, il Pilota può limitare le conseguenze senza spendere Azioni, prima di applicare i danni.\nOgni struttura coinvolta che possiede almeno 1 PI prima dell’incidente non scende sotto 1 PI per quell’incidente. Le strutture già a 0 PI non vengono ripristinate. Gli occupanti dimezzano per eccesso il danno dopo le altre riduzioni e non vengono automaticamente espulsi dal mezzo.\nIl Talento richiede almeno 1 PI nel Corpo principale e non riduce direttamente i danni degli attacchi. Non raddrizza un mezzo ribaltato, non ripara componenti già fuori uso e non elimina impedimenti materiali (Manuale dei Veicoli, §5.7)."
+        },
+        {
+          "specializzazione": "Civile",
+          "nome": "Meccanico di Bordo",
+          "testo": "Il Pilota ottiene +2 VA a Tecnologia per diagnosticare e riparare il veicolo sul quale si trova e dimezza i tempi necessari. Può intervenire su guida e controlli, propulsione, sensori e comunicazioni, sistemi energetici e armamenti di bordo.\nPuò utilizzare strumenti improvvisati quando l’intervento è concretamente realizzabile con tali strumenti, applicando la normale penalità di −2 VA. Il bonus del Talento si applica normalmente.\nNon può sostituire attrezzature indispensabili o componenti mancanti. Il Talento non rende istantanee le riparazioni e non ripristina automaticamente un veicolo distrutto.\nLa riparazione ordinaria di una struttura richiede 1 ora e Tecnologia: recupera 1 PI con successo o 2 con Magistrale. Meccanico di Bordo riduce l’intervento a 30 minuti. Le riduzioni combinate non scendono sotto metà del tempo ordinario; esiti completi, attrezzi e ricambi sono nel Manuale dei Veicoli, §7.1."
+        },
+        {
+          "specializzazione": "Militare",
+          "nome": "Manovra Evasiva",
+          "testo": "Dopo che un attacco ha colpito il veicolo e prima di applicare il danno, il Pilota può spendere un’Azione Principale disponibile, anche fuori dalla propria Iniziativa, ed effettuare una Prova di Pilotare con −4 VA. Con un successo evita l’attacco. Il veicolo deve poter effettuare concretamente la manovra.\nContro un Successo Magistrale serve un Successo Magistrale. Contro una Raffica si applica un ulteriore −2 VA e una sola Prova riuscita evita tutti i colpi. Un Fallimento Maldestro impone −2 VA fino all’arrivo dell’Iniziativa successiva. Non si può tentare una seconda Difesa contro lo stesso attacco.\nNon permette di evitare attacchi ad Area, inevitabili o non percepiti. Non consente di utilizzare Azioni del Round successivo.\nAlle Prove si applicano la Manovrabilità del veicolo, l’andatura e gli altri modificatori pertinenti. Il Talento permette anche di evitare uno Speronamento, alle medesime condizioni, senza concedere Movimento aggiuntivo (Manuale dei Veicoli, §§3.3 e 6.3)."
+        },
+        {
+          "specializzazione": "Militare",
+          "nome": "Spinta al Limite",
+          "testo": "Una volta per scena, durante la propria Iniziativa, il Pilota può attivare il Talento senza spendere Azioni. Fino all’arrivo dell’Iniziativa successiva, il veicolo ottiene +2 Q di Movimento e il Pilota riceve +2 VA alle Prove di Pilotare per eseguire manovre evasive. Restano i normali costi delle manovre.\nAl termine dell’effetto effettua una Prova di Pilotare con −4 VA. Con successo non subisce perdite; con fallimento ordinario il Motore perde 1 PI; con Fallimento Maldestro ne perde 2. La perdita è diretta, senza PS Integrità e senza riduzioni di AR o Corazzato. Si aggiorna immediatamente lo stato del Motore. Il +2 Q si aggiunge dopo il moltiplicatore dell’andatura (Manuale dei Veicoli, §7.4)."
+        },
+        {
+          "specializzazione": "Comune",
+          "nome": "Coordinazione di Bordo",
+          "testo": "All’inizio di un combattimento o di un’emergenza che coinvolge il veicolo, il Pilota sceglie, senza spendere Azioni, un numero massimo di alleati pari al proprio Mod INT, minimo uno, che possano ricevere le sue indicazioni.\nDurante il primo Round, quando questi alleati forniscono assistenza a Prove di Pilotare, Tecnologia, impiego delle armi di bordo o riparazioni d’emergenza, aumentano di 1 il bonus del proprio Aiuto.\nDevono possedere un VA pertinente di almeno 1 e poter contribuire concretamente, di persona oppure tramite sistemi e comunicazioni adeguati. Restano i normali tempi e requisiti dell’assistenza e il limite complessivo di +5. La comunicazione a distanza non permette di eseguire materialmente una riparazione senza accesso ai componenti.\nConduzione, Manovrabilità, velocità, attacchi, tre strutture con PI separati, collisioni e riparazioni sono nel Manuale dei Veicoli. I profili delle armi di bordo mantengono le regole del Manuale degli Armamenti."
+        }
+      ]
+    },
+    {
+      "nome": "Tecnico",
+      "addestramento": "Lavoratore",
+      "fonte": "§3.4; Talenti §3.5.11",
+      "specializzazioni": [
+        "Meccatronico",
+        "Informatico"
+      ],
+      "abilita": [
+        "Percezione",
+        "Pilotare",
+        "Raggirare",
+        "Scienza",
+        "Tecnologia"
+      ],
+      "pv_per_grado": {
+        "fisso": 3,
+        "dado": 6
+      },
+      "pm_per_grado": {
+        "fisso": 2,
+        "dado": 0
+      },
+      "talenti_fissi": [
+        {
+          "grado": 1,
+          "nome": "Mani Esperte",
+          "testo": "Il Tecnico ottiene +3 VA a Tecnologia per utilizzare, diagnosticare, configurare o riparare macchinari, sistemi elettronici, impianti energetici, computer e dispositivi automatizzati."
+        },
+        {
+          "grado": 3,
+          "nome": "Intervento Rapido",
+          "testo": "Una volta per Round, durante la propria Iniziativa, il Tecnico può effettuare una semplice interazione tecnica senza spendere un’Azione Principale: riavviare un dispositivo, collegare un componente, aprire un pannello o impartire un comando semplice a un sistema accessibile. Le eventuali Prove richieste vengono effettuate normalmente.\nNon permette riparazioni, modifiche o intrusioni complete. Non permette di far compiere gratuitamente a un drone o robot un Movimento, un attacco o un’operazione: questo beneficio appartiene a Controllo Parallelo."
+        },
+        {
+          "grado": 5,
+          "nome": "Controllo Parallelo",
+          "testo": "Una volta per Round, durante la propria Iniziativa, il Tecnico può impartire un comando a un solo drone, robot o dispositivo remoto senza spendere la propria Azione Principale.\nIl comando permette al dispositivo di effettuare una normale azione compatibile con le sue capacità: muoversi, utilizzare sensori, manipolare un oggetto, azionare un sistema, attaccare o svolgere un’operazione tecnica.\nSono necessari un controller compatibile, un collegamento attivo e sufficiente, la portata necessaria e le eventuali autorizzazioni o credenziali. Le Prove si effettuano normalmente. Il Tecnico conserva le proprie Azioni e può utilizzarle liberamente.\nIl Talento elimina il costo del comando per il Tecnico, ma non aumenta le Azioni disponibili al dispositivo. Un eventuale attacco viene eseguito dal dispositivo utilizzando la propria normale Azione: non è un ulteriore attacco gratuito del personaggio."
+        }
+      ],
+      "talenti_a_scelta": [
+        {
+          "specializzazione": "Meccatronico",
+          "nome": "Manutenzione Preventiva",
+          "testo": "Dedicando un’ora alla manutenzione di un macchinario, robot o dispositivo, con strumenti e accesso adeguati, il Tecnico lo protegge per un giorno.\nLa prima volta che un fallimento provoca un inceppamento, un malfunzionamento temporaneo oppure una perdita di Integrità, può evitare l’inceppamento o il malfunzionamento temporaneo oppure ridurre di 1 la perdita di Integrità. Dopo l’applicazione, il beneficio termina. Ulteriori manutenzioni non accumulano protezioni sullo stesso dispositivo.\nPuò intervenire anche su una conseguenza di un Fallimento Maldestro, ma non annulla il fallimento, le altre conseguenze o gli esiti Rotto e Distrutto.\nLa riduzione può applicarsi alle perdite provocate da un fallimento di riparazione o di Spinta al Limite; non al PI perso volontariamente per attivare Sovraccarico Tecnico (Manuale dei Veicoli, §7.4)."
+        },
+        {
+          "specializzazione": "Meccatronico",
+          "nome": "Sovraccarico Tecnico",
+          "testo": "Una volta per scena, il Tecnico spende un’Azione Principale per sovraccaricare un dispositivo al quale può accedere fisicamente o attraverso un collegamento autorizzato. Il dispositivo perde immediatamente 1 Integrità e riceve per 10 Round uno dei benefici seguenti: un motore o una propulsione ottiene +2 Q al Movimento; sensori o strumenti concedono +2 VA a una funzione scelta; i servomeccanismi concedono +2 VA alle operazioni fisiche assistite; un’arma installata infligge +1 danno a una sola istanza per attacco; un sistema energetico alimenta una funzione già presente, normalmente inattiva per insufficiente potenza disponibile.\nIl beneficio energetico richiede comunque una fonte di energia utilizzabile: non crea energia, cariche o PM. Il Talento non può essere utilizzato su un dispositivo con 1 o meno Integrità, né ripetuto sullo stesso dispositivo durante la medesima scena. Non concede Azioni aggiuntive.\nSui veicoli si sottrae il PI da una sola riserva: Motore per motore o impianto energetico; Propulsione per gli organi propulsivi; Corpo principale per sensori, comunicazioni, comandi e servomeccanismi integrati, salvo diversa scheda; PI propri per armi e dispositivi autonomi. Il requisito di almeno 2 PI riguarda quella riserva, senza sommare le strutture. Non si effettuano PS Integrità e AR o Corazzato non riducono la perdita. Il rinforzo di Lavoro a Regola d’Arte può ridurla, ma non elimina il requisito iniziale (Manuale dei Veicoli, §7.4)."
+        },
+        {
+          "specializzazione": "Informatico",
+          "nome": "Intrusione Rapida",
+          "testo": "Una volta per scena, il Tecnico può tentare con un’Azione Principale un’intrusione informatica che normalmente richiederebbe alcuni minuti, effettuando una Prova di Tecnologia con −4 VA.\nCon un successo può ottenere un singolo risultato immediato: aprire o bloccare un accesso; disattivare un sistema di sicurezza; ottenere credenziali temporanee; modificare o cancellare un’informazione specifica; impartire un comando a un dispositivo collegato.\nDeve disporre di un punto d’accesso utilizzabile e degli strumenti necessari. Non permette di controllare istantaneamente un’intera rete o di superare protezioni prive di un punto d’accesso utilizzabile."
+        },
+        {
+          "specializzazione": "Informatico",
+          "nome": "Contromisure Elettroniche",
+          "testo": "Quando rileva un’intrusione, un disturbo, un comando ostile o un tentativo di controllo contro un dispositivo collegato, il Tecnico può spendere un’Azione Principale disponibile, anche fuori dalla propria Iniziativa, prima che l’effetto venga applicato.\nEffettua una Prova di Tecnologia: con un successo annulla quel singolo effetto. Se la fonte è rintracciabile attraverso il collegamento, ne individua anche la provenienza approssimativa. Può proteggere un dispositivo alleato raggiungibile attraverso la stessa rete o comunicazione, purché disponga dell’accesso tecnico necessario.\nSi considera una Difesa: contro un Successo Magistrale serve un Successo Magistrale; un Fallimento Maldestro impone −2 VA fino all’arrivo dell’Iniziativa successiva. Non consente di utilizzare Azioni del Round successivo e non concede immunità ai tentativi successivi."
+        },
+        {
+          "specializzazione": "Comune",
+          "nome": "Sistema Ottimizzato",
+          "testo": "Dedicando almeno un’ora alla configurazione, riparazione o modifica di un dispositivo tecnologico e superando una Prova di Tecnologia, il Tecnico può ottimizzarne una specifica funzione non offensiva. L’ora può essere compresa in un intervento più lungo.\nIl dispositivo concede +2 VA alle Prove direttamente collegate alla funzione scelta finché perde almeno 1 Integrità, viene nuovamente modificato oppure riceve una nuova ottimizzazione.\nOgni dispositivo mantiene una sola ottimizzazione. Il beneficio vale per chi lo utilizza, ma non aumenta attacchi, danni o Protezioni.\nLa PS Integrità degli oggetti è nel Manuale degli Armamenti, §7.2.1; le strutture dei veicoli e le relative riparazioni sono nel Manuale dei Veicoli, §§4 e 7. Schede e prestazioni dei dispositivi sono nei rispettivi cataloghi. Controllo Parallelo rimane distinto da Interfaccia Remota del Tecnomante (§3.9.5): quest’ultimo attiva proprietà di Artefatti sintonizzati senza controller, conserva le normali Azioni e non concede attacchi ordinari a distanza attraverso l’oggetto."
+        }
+      ]
+    },
+    {
+      "nome": "Accademico",
+      "addestramento": "Studioso",
+      "fonte": "§3.6; Talenti §3.7; Talenti §3.7.1",
+      "specializzazioni": [
+        "Scientifico",
+        "Umanistico"
+      ],
+      "abilita": [
+        "Cultura",
+        "Oratoria",
+        "Percezione",
+        "Scienza",
+        "Tecnologia"
+      ],
+      "pv_per_grado": {
+        "fisso": 2,
+        "dado": 4
+      },
+      "pm_per_grado": {
+        "fisso": 3,
+        "dado": 0
+      },
+      "talenti_fissi": [
+        {
+          "grado": 1,
+          "nome": "Formazione Classica",
+          "testo": "Una volta per scena, prima del tiro, l’Accademico ottiene +2 VA a una Prova di Cultura o Scienza riguardante conoscenze teoriche o accademiche."
+        },
+        {
+          "grado": 3,
+          "nome": "Autorità Intellettuale",
+          "testo": "In ambienti accademici, scientifici o culturali, le interazioni ordinarie basate sulle sue qualifiche riconosciute riescono automaticamente. Nelle situazioni rischiose o contrastate ottiene +2 VA a Oratoria, purché la propria competenza sia pertinente. Il Talento non si applica a minacce o menzogne e non concede automaticamente informazioni segrete, accessi riservati o risorse costose."
+        },
+        {
+          "grado": 5,
+          "nome": "Dottrina Consolidata",
+          "testo": "Una volta per scena, anche dopo il tiro, l’Accademico può ridurre di un livello la penalità di difficoltà applicata a una Prova di Cultura o Scienza: −2 diventa 0; −4 diventa −2; −6 diventa −4; −8 diventa −6. Il beneficio modifica soltanto la penalità di difficoltà e non compensa penalità da Ferite, Stati, Equipaggiamento o altre cause."
+        }
+      ],
+      "talenti_a_scelta": [
+        {
+          "specializzazione": "Scientifico",
+          "nome": "Metodo di Ricerca",
+          "testo": "Quando consulta pubblicazioni, banche dati, campioni o archivi con fonti e strumenti adeguati, l’Accademico ottiene +2 VA alla Prova pertinente di Scienza o Tecnologia e dimezza il tempo necessario alla ricerca."
+        },
+        {
+          "specializzazione": "Scientifico",
+          "nome": "Analisi Critica",
+          "testo": "Una volta per scena, dopo almeno un minuto di analisi, il giocatore formula un’ipotesi sulla base degli elementi disponibili. Ottiene +2 VA a una Prova pertinente di Scienza o Tecnologia per verificarla. Il successo fornisce risultati e riscontri ricavabili dall’esame: non rende vera l’ipotesi e non obbliga il Direttore a suggerire una soluzione."
+        },
+        {
+          "specializzazione": "Umanistico",
+          "nome": "Interpretazione Storica",
+          "testo": "Quando supera una Prova di Cultura relativa a storia, tradizioni o Corporazioni, l’Accademico individua anche un precedente o un collegamento utile alla situazione presente: interessi, alleanze, conflitti o possibili conseguenze."
+        },
+        {
+          "specializzazione": "Umanistico",
+          "nome": "Memoria Fotografica",
+          "testo": "Dopo avere esaminato con attenzione per almeno un minuto testi, immagini, mappe o documenti, l’Accademico ne ricorda fedelmente il contenuto. Il Talento non permette di ricordare particolari che non aveva realmente osservato, nascosti o illeggibili."
+        },
+        {
+          "specializzazione": "Comune",
+          "nome": "Mente Enciclopedica",
+          "testo": "Una volta per scena, l’Accademico può ottenere senza tiro un’informazione generale di Cultura o Scienza che potrebbe ragionevolmente avere appreso. Informazioni rare, segrete o altamente specialistiche richiedono comunque una Prova. Ricercare informazioni non costituisce un’Abilità separata: si usa Cultura per archivi e istituzioni, Scienza per pubblicazioni e dati, Tecnologia per reti e banche dati. Con le fonti personali si usa Oratoria per domandare o persuadere e Raggirare quando si ricorre a menzogne o inganni."
+        }
+      ]
+    },
+    {
+      "nome": "Amministrativo",
+      "addestramento": "Studioso",
+      "fonte": "§3.6; Talenti §3.7; Talenti §3.7.2",
+      "specializzazioni": [
+        "Burocrate",
+        "Contabile"
+      ],
+      "abilita": [
+        "Cultura",
+        "Oratoria",
+        "Percezione",
+        "Raggirare",
+        "Tecnologia"
+      ],
+      "pv_per_grado": {
+        "fisso": 2,
+        "dado": 4
+      },
+      "pm_per_grado": {
+        "fisso": 2,
+        "dado": 0
+      },
+      "talenti_fissi": [
+        {
+          "grado": 1,
+          "nome": "Burocrazia Efficiente",
+          "testo": "Le pratiche e procedure amministrative ordinarie riescono senza Prova e richiedono metà del tempo di lavorazione, quando l’Amministrativo possiede dati, documenti e autorizzazioni necessari. Le procedure complesse, irregolari o urgenti richiedono normalmente una Prova di Cultura o Tecnologia.\nIl Talento non riduce scadenze imposte, attese degli uffici o tempi che dipendono dalle decisioni di altre persone."
+        },
+        {
+          "grado": 3,
+          "nome": "Canali Interni",
+          "testo": "Una volta per scena, l’Amministrativo può ottenere un’autorizzazione minore, un accesso ordinario, una proroga o un appuntamento, purché siano plausibili e rientrino nelle competenze dell’organizzazione. Deve poter contattare l’ufficio o il canale competente.\nPer richieste riservate o eccezionali, lo stesso utilizzo concede +2 VA a Oratoria invece del successo automatico. Il Talento non crea qualifiche, credenziali o autorizzazioni che il personaggio non possiede."
+        },
+        {
+          "grado": 5,
+          "nome": "Macchina Amministrativa",
+          "testo": "Una volta per scena, prima che ne vengano applicate le conseguenze, l’Amministrativo può sospendere o rinviare una conseguenza legale o procedurale immediata, quando esiste una procedura plausibile: un ricorso, un’udienza, una nuova ispezione, una scadenza successiva o una verifica supplementare.\nIl Talento non cancella l’obbligo o la responsabilità originaria e non annulla crimini evidenti, condanne definitive o provvedimenti di sicurezza motivati. Il Direttore stabilisce la nuova scadenza in base alla procedura; il rinvio non termina automaticamente con la scena."
+        }
+      ],
+      "talenti_a_scelta": [
+        {
+          "specializzazione": "Burocrate",
+          "nome": "Burocrate Esperto",
+          "testo": "L’Amministrativo ottiene +2 VA a Cultura per conoscere regolamenti, procedure, competenze degli uffici e cavilli legali. Il bonus serve a individuare la procedura corretta, non a convincere chi deve applicarla."
+        },
+        {
+          "specializzazione": "Burocrate",
+          "nome": "Rete Istituzionale",
+          "testo": "Una volta per scena, l’Amministrativo può dichiarare di conoscere un funzionario o impiegato plausibile. Se raggiungibile, il contatto può procurare informazioni non segrete, fissare un incontro o indicare il canale corretto, ma non concede automaticamente favori illegali o accessi riservati."
+        },
+        {
+          "specializzazione": "Contabile",
+          "nome": "Gestione Operativa",
+          "testo": "Avendo tempo per esaminare bilanci, forniture e necessità dell’operazione, l’Amministrativo riduce del 10% il costo economico di un acquisto, servizio o approvvigionamento pianificato. Per le armi standard del catalogo Commerciale si applica la riduzione e si arrotonda il prezzo finale per eccesso all’intero: 1.300 diventa 1.170. Gli altri beni e le esclusioni restano da precisare nel Manuale degli Armamenti."
+        },
+        {
+          "specializzazione": "Contabile",
+          "nome": "Pianificazione Strategica",
+          "testo": "Una volta per scena, dopo aver studiato dati, costi e risorse di un piano amministrativo, economico od organizzativo, il giocatore sceglie un’attività specifica e il personaggio incaricato di eseguirla. Prima della Prova gli concede +2 VA a una singola Prova di Abilità pertinente. Il bonus si consuma anche se la Prova fallisce; non richiede al Direttore di individuare la soluzione migliore.\nPuò riguardare, per esempio, la preparazione di un convoglio, una trattativa o un approvvigionamento. Non si applica ad attacchi, Difese, lancio di Incantesimi o Prove Salvezza."
+        },
+        {
+          "specializzazione": "Comune",
+          "nome": "Documentazione Perfetta",
+          "testo": "L’Amministrativo può compilare documenti autentici formalmente impeccabili quando possiede dati e autorizzazioni adeguati. La correttezza formale non rende vere informazioni false e non crea autorizzazioni mancanti.\nOttiene +2 VA a Raggirare per preparare documenti falsi. È necessaria anche una Prova di Tecnologia se deve introdursi in un sistema protetto o alterare un archivio elettronico; il normale uso di strumenti di scrittura e stampa non richiede una Prova aggiuntiva."
+        }
+      ]
+    },
+    {
+      "nome": "Artista",
+      "addestramento": "Studioso",
+      "fonte": "§3.6; Talenti §3.7; Talenti §3.7.3",
+      "specializzazioni": [
+        "Scenico",
+        "Mediatico"
+      ],
+      "abilita": [
+        "Cultura",
+        "Intrattenere",
+        "Oratoria",
+        "Percezione",
+        "Tecnologia"
+      ],
+      "pv_per_grado": {
+        "fisso": 2,
+        "dado": 4
+      },
+      "pm_per_grado": {
+        "fisso": 3,
+        "dado": 0
+      },
+      "talenti_fissi": [
+        {
+          "grado": 1,
+          "nome": "Espressione Potente",
+          "testo": "Una volta per scena, prima di una Prova di Intrattenere o Oratoria rivolta a un pubblico, l’Artista ottiene +2 VA. Se riesce, il messaggio viene compreso anche in presenza di rumore, distrazioni o pubblico poco attento, purché possa essere visto o udito e utilizzi una lingua o forma espressiva comprensibile. Il Talento non rende percepibile un messaggio impossibile da ricevere e non obbliga il pubblico a condividerlo."
+        },
+        {
+          "grado": 3,
+          "nome": "Impatto Emotivo",
+          "testo": "Una volta per scena, dopo almeno un minuto di esibizione o discorso e una Prova riuscita di Intrattenere o Oratoria, l’Artista sceglie un interlocutore o il pubblico che ha seguito la sua comunicazione.\nFino alla fine della scena, i soggetti coinvolti subiscono −2 VA alle Prove Sociali ostili contro l’Artista e gli alleati chiaramente associati a lui. Il beneficio non si somma con ulteriori applicazioni dello stesso Talento. Non modifica attacchi, Difese o Prove Salvezza e non obbliga qualcuno ad agire contro interessi, convinzioni o istinti fondamentali."
+        },
+        {
+          "grado": 5,
+          "nome": "Icona",
+          "testo": "Una volta per scena, quando la sua identità artistica è conosciuta oppure dopo un’esibizione riuscita, l’Artista può ottenere automaticamente una concessione ragionevole: l’attenzione del pubblico, la possibilità di parlare o esibirsi, un breve incontro, l’accesso a un evento pubblico oppure la collaborazione ordinaria di un ammiratore o di un addetto del settore. Se la richiesta è riservata, rischiosa o insolita, non ottiene il successo automatico ma riceve +2 VA a Oratoria. Icona non concede accessi protetti, informazioni segrete o favori illegali e non obbliga nessuno ad agire contro i propri interessi."
+        }
+      ],
+      "talenti_a_scelta": [
+        {
+          "specializzazione": "Scenico",
+          "nome": "Carisma Artistico",
+          "testo": "Una volta per scena, dopo una Prova riuscita di Intrattenere, l’Artista ottiene +2 VA alla successiva Prova di Oratoria rivolta alla persona o al pubblico che ha seguito l’esibizione. Deve utilizzare il beneficio entro la fine della scena; il bonus si consuma anche se la Prova fallisce."
+        },
+        {
+          "specializzazione": "Scenico",
+          "nome": "Performance Coinvolgente",
+          "testo": "Dopo una Prova riuscita di Intrattenere, gli spettatori coinvolti subiscono −2 VA a Percezione per accorgersi delle azioni discrete compiute dagli altri personaggi mentre l’esibizione continua. Restano necessarie le eventuali Prove di Furtività.\nIl Talento non nasconde azioni evidenti. Il beneficio termina nei confronti di chi smette di seguire l’esibizione, viene attaccato o direttamente minacciato."
+        },
+        {
+          "specializzazione": "Mediatico",
+          "nome": "Empatia Creativa",
+          "testo": "Una volta per scena, l’Artista può effettuare una Prova di Percezione per comprendere l’emozione dominante e le aspettative di un interlocutore o di un pubblico sulla base dei segnali osservabili. Se riesce, ottiene +2 VA alla successiva Prova di Intrattenere o Oratoria rivolta a esso entro la fine della scena. Non permette di leggere i pensieri o scoprire informazioni nascoste prive di indizi. Richiede il tempo necessario a osservare e non concede un’Azione gratuita durante il combattimento."
+        },
+        {
+          "specializzazione": "Mediatico",
+          "nome": "Presenza Mediatica",
+          "testo": "L’Artista ottiene +2 VA a Cultura o Tecnologia per preparare, produrre, trasmettere o distribuire contenuti attraverso i mezzi di comunicazione e dimezza i relativi tempi di preparazione.\nLe Prove di Intrattenere o Oratoria attraverso trasmissioni, registrazioni e altri mezzi si risolvono normalmente. Una registrazione non può adattarsi alle reazioni del pubblico e non trasferisce automaticamente gli effetti degli altri Talenti a chi la riceve."
+        },
+        {
+          "specializzazione": "Comune",
+          "nome": "Ispirazione",
+          "testo": "Una volta per scena, durante la propria Iniziativa e senza spendere Azioni, l’Artista può incoraggiare un alleato mediante parole o espressione artistica. L’alleato deve poterlo percepire e ottiene +2 al Valore della successiva Prova effettuata prima dell’inizio dell’Iniziativa successiva dell’Artista.\nIl beneficio si dichiara prima del tiro e si consuma anche se la Prova fallisce. Non si somma con Assistenza o con un’altra Ispirazione: si applica il bonus più alto."
+        }
+      ]
+    },
+    {
+      "nome": "Medico",
+      "addestramento": "Studioso",
+      "fonte": "§3.6; Talenti §3.7; Talenti §3.7.4",
+      "specializzazioni": [
+        "Clinico",
+        "Ricercatore"
+      ],
+      "abilita": [
+        "Cultura",
+        "Medicina",
+        "Percezione",
+        "Scienza",
+        "Tecnologia"
+      ],
+      "pv_per_grado": {
+        "fisso": 2,
+        "dado": 4
+      },
+      "pm_per_grado": {
+        "fisso": 3,
+        "dado": 0
+      },
+      "talenti_fissi": [
+        {
+          "grado": 1,
+          "nome": "Diagnosi Clinica",
+          "testo": "Dopo un breve esame, il Medico conosce automaticamente i PV attuali del paziente, il suo eventuale stato di Ferita e le penalità prodotte, se le condizioni sono stabili e la presenza di sintomi evidenti di malattie, veleni o traumi. Diagnosi Clinica comprende le Menomazioni osservabili, la funzione compromessa e le penalità riconoscibili. Le lesioni nascoste e le cause non evidenti richiedono la normale indagine diagnostica.\nDeterminare la causa precisa di una patologia, di un avvelenamento o di sintomi sconosciuti richiede una Prova di Medicina o Scienza."
+        },
+        {
+          "grado": 3,
+          "nome": "Intervento Mirato",
+          "testo": "Con almeno 10 minuti di trattamento, strumenti medici almeno standard e una Prova riuscita di Medicina, il Medico riduce lo Stato di Ferita del paziente di uno stato. La progressione comprende anche Superficiale → guarita. Non può essere eseguito durante un combattimento. Non restituisce PV e non modifica lo stadio, gli effetti o i tempi di recupero delle Menomazioni. Si applica il limite condiviso con Terapia Intensiva descritto di seguito."
+        },
+        {
+          "grado": 5,
+          "nome": "Terapia Intensiva",
+          "testo": "In un ambiente sanitario attrezzato, con strumenti e materiali adeguati, il Medico può effettuare un trattamento approfondito della durata di un’ora. Con una Prova riuscita di Medicina riduce lo Stato di Ferita del paziente di due stati, fino alla completa guarigione.\nIl trattamento non può essere eseguito durante un combattimento o con il solo kit medico. Non restituisce PV e non modifica lo stadio, gli effetti o i tempi di recupero delle Menomazioni.\nLimite condiviso: ogni paziente può essere sottoposto a un solo tentativo di Intervento Mirato oppure Terapia Intensiva ogni sette giorni, indipendentemente dal numero di Medici presenti. Il tentativo conta anche se la Prova fallisce. Terapia Intensiva sostituisce Intervento Mirato per quel trattamento: i due benefici non si sommano.\nIl recupero ordinario continua a seguire il §5.16: uno stato ogni sette giorni con attività mista, ogni cinque giorni con riposo assoluto oppure ogni tre giorni con ricovero ospedaliero. Per esempio, Terapia Intensiva porta una Ferita Grave a Profonda; il paziente prosegue poi la convalescenza e non può ricevere immediatamente altri trattamenti dei due Talenti.\nLa cura delle Menomazioni richiede il trattamento dedicato, con una propria Prova di Medicina e i propri esiti. I limiti dei tentativi di cura delle Ferite, di intervento sulle Menomazioni permanenti e di trattamento delle temporanee sono distinti (§5.16.6).\nIl recupero dell’Umanità richiede un intervento che lo preveda espressamente (§5.21). I trattamenti delle Ferite e delle Menomazioni qui descritti non restituiscono automaticamente UMN."
+        }
+      ],
+      "talenti_a_scelta": [
+        {
+          "specializzazione": "Clinico",
+          "nome": "Mano Sicura",
+          "testo": "Durante una Prova di Medicina, il Medico ignora la prima penalità di −2 provocata da urgenza, scarsa illuminazione, movimento o ambiente inadatto. Non compensa la mancanza di strumenti o medicinali indispensabili.\nMano Sicura si applica anche alle Prove di Medicina per trattare le Menomazioni. Le penalità personali del Medico dovute a Ferite o Menomazioni seguono le proprie regole e non sono penalità ambientali eliminate dal Talento."
+        },
+        {
+          "specializzazione": "Clinico",
+          "nome": "Chirurgia Precisa",
+          "testo": "Il Medico riduce del 20% il tempo necessario per operazioni chirurgiche e trattamenti medici prolungati, compresi Intervento Mirato, Terapia Intensiva e gli interventi sulle Menomazioni. Il beneficio riguarda il tempo operativo; non modifica i mesi di recupero delle Menomazioni, la convalescenza, gli intervalli o il numero dei tentativi consentiti."
+        },
+        {
+          "specializzazione": "Ricercatore",
+          "nome": "Diagnosi Rapida",
+          "testo": "Il Medico può utilizzare Diagnosi Clinica osservando direttamente un paziente, senza effettuare un esame ravvicinato. Ottiene inoltre +2 VA a Medicina o Scienza per identificare malattie, infezioni, veleni e sostanze sconosciute.\nIl bonus di Diagnosi Rapida riguarda l’identificazione della condizione; non si applica automaticamente alla successiva Prova per eseguire il trattamento."
+        },
+        {
+          "specializzazione": "Ricercatore",
+          "nome": "Resistenza Clinica",
+          "testo": "Il Medico ottiene +2 alle Prove Salvezza di Tempra contro malattie, infezioni e veleni."
+        },
+        {
+          "specializzazione": "Comune",
+          "nome": "Stabilizzazione",
+          "testo": "Il Medico ottiene +2 VA a Medicina per eseguire Pronto Soccorso e arrestare il Sanguinamento. Si applicano integralmente le regole del §5.15: almeno un minuto continuativo, strumenti necessari e sospensione del Sanguinamento durante l’intervento.\nSi applicano gli esiti del kit effettivamente utilizzato, compresi quelli del Successo Magistrale, secondo il §5.15. Il Talento concede il bonus alla Prova e non sostituisce gli effetti del kit.\nUn Sanguinamento arrestato non riprende soltanto perché cambia la scena. Nuove lesioni possono provocarne un altro."
+        }
+      ],
+      "note": [
+        "Accesso alle cure delle Menomazioni. Il Medico può eseguire sia il trattamento delle temporanee (§5.16.5) sia l’intervento specialistico sulle permanenti (§5.16.4), con i requisiti previsti dalle rispettive procedure."
+      ]
+    },
+    {
+      "nome": "Predicatore",
+      "addestramento": "Studioso",
+      "fonte": "§3.6; Talenti §3.7; Talenti §3.7.5",
+      "specializzazioni": [
+        "Missionario",
+        "Teologo"
+      ],
+      "abilita": [
+        "Cultura",
+        "Occultismo",
+        "Oratoria",
+        "Percezione",
+        "Rituali"
+      ],
+      "pv_per_grado": {
+        "fisso": 1,
+        "dado": 4
+      },
+      "pm_per_grado": {
+        "fisso": 4,
+        "dado": 0
+      },
+      "talenti_fissi": [
+        {
+          "grado": 1,
+          "nome": "Parola Ispiratrice",
+          "testo": "Il Predicatore ottiene +2 VA a Oratoria quando cerca di incoraggiare, consolare, guidare, richiamare a un principio morale o rafforzare la determinazione di una creatura o di un gruppo."
+        },
+        {
+          "grado": 3,
+          "nome": "Guida Morale",
+          "testo": "Una volta per scena, quando un alleato entro 6 Q, capace di udirlo, fallisce una Prova Salvezza di Volontà contro paura o demoralizzazione oppure di Magia contro Corruzione od Oscura Simmetria, il Predicatore può permettergli di ripeterla.\nIl Talento si utilizza immediatamente dopo il tiro e prima di applicarne le conseguenze, senza spendere Azioni Principali o PM. L’alleato deve accettare il secondo risultato. Può intervenire anche su un Fallimento Maldestro. Non può essere utilizzato dal Predicatore su sé stesso."
+        },
+        {
+          "grado": 5,
+          "nome": "Fede Incrollabile",
+          "testo": "Una volta per scena per ciascun beneficiario, quando il Predicatore oppure un alleato entro 6 Q, capace di percepirlo, ottiene un 20 naturale in una delle Prove Salvezza indicate in Guida Morale, può trattarlo come un fallimento normale.\nLa Prova rimane fallita, ma perde la conseguenza aggiuntiva del Fallimento Maldestro: nelle Salvezze generiche non applica il −4 alla prossima Prova simile nella stessa scena; contro la Corruzione subisce soltanto gli Stati indicati dall’Intensità, senza lo Stato aggiuntivo (§5.20). Il beneficio non richiede Azioni Principali o PM. Il Distintivo viene comunque ottenuto."
+        }
+      ],
+      "talenti_a_scelta": [
+        {
+          "specializzazione": "Missionario",
+          "nome": "Sermone Coinvolgente",
+          "testo": "Parlando per almeno un minuto a un gruppo di almeno tre creature, il Predicatore può risolvere con una sola Prova di Oratoria il tentativo di presentare il medesimo messaggio all’intero gruppo. Ogni ascoltatore conserva le proprie convinzioni e può reagire diversamente."
+        },
+        {
+          "specializzazione": "Missionario",
+          "nome": "Autorità Morale",
+          "testo": "Il Predicatore ottiene +2 VA a Oratoria con fedeli, comunità religiose e persone che riconoscono la sua autorità spirituale. Una volta per scena può ottenere da una comunità favorevole un aiuto ordinario: ospitalità modesta, un’udienza, informazioni pubbliche o assistenza non pericolosa."
+        },
+        {
+          "specializzazione": "Teologo",
+          "nome": "Devozione",
+          "testo": "Il Predicatore ottiene +2 VA a Occultismo per riconoscere religioni, culti, dottrine, riti, manifestazioni spirituali, segni di Corruzione e tradizioni religiose. Il Talento non concede Incantesimi o capacità taumaturgiche."
+        },
+        {
+          "specializzazione": "Teologo",
+          "nome": "Purificazione",
+          "testo": "Dopo 10 minuti di rito su una creatura presente, il Predicatore spende 2 PM ed effettua una normale Prova di Rituali, con gli eventuali modificatori delle condizioni in cui si svolge il trattamento.\nCon un successo sceglie una penalità numerica alle Prove causata da Corruzione, magia od Oscura Simmetria: il beneficiario ne ignora 2 punti, fino al massimo dell’intera penalità, per il resto della scena.\nIl Talento non elimina la fonte della penalità, non rimuove Stati né dissolve Incantesimi. Non si somma con altre applicazioni di Purificazione sullo stesso beneficiario. I PM vengono consumati anche se la Prova fallisce.\nQuando attenua la Corruzione, Purificazione riduce temporaneamente la sua penalità alle Prove, comprese le PS contro nuove esposizioni, senza cambiare lo Stato di CROS. Non attenua le riduzioni o la penalità causate dalla perdita di Umanità (§§5.20–5.21).\nEsempio: una maledizione impone −4 alle Prove. Purificazione porta temporaneamente la penalità a −2; un secondo trattamento non può annullare i due punti rimanenti."
+        },
+        {
+          "specializzazione": "Comune",
+          "nome": "Consolazione",
+          "testo": "Dopo almeno 10 minuti di dialogo, preghiera o conforto, il Predicatore concede il beneficio a un numero massimo di creature partecipanti pari a 1 + Modificatore di Carisma, minimo una.\nOgni beneficiario ottiene +2 alla successiva Prova Salvezza pertinente: Volontà contro paura o demoralizzazione, oppure Magia contro Corruzione od Oscura Simmetria. Il bonus si consuma con quella Prova, anche se fallisce, e scade alla fine della scena successiva a quella del trattamento.\nIl Talento non richiede una Prova né PM. Ogni creatura può ricevere Consolazione una sola volta per scena; più applicazioni non accumulano bonus."
+        }
+      ],
+      "note": [
+        "Possedere Rituali non concede Incantesimi. Purificazione è un utilizzo specifico dell’Abilità autorizzato dal Talento, disponibile anche mentre le regole generali dei Rituali verranno integrate successivamente (Manuale della Magia).",
+        "Raccordi. Guida Morale, Fede Incrollabile e Consolazione si applicano alle PS di Magia contro la Corruzione secondo il §5.20, con gli eventuali modificatori dell’Umanità (§5.21). Le altre procedure dell’Oscura Simmetria e i Rituali generali verranno integrati successivamente nel Manuale della Magia."
+      ]
+    },
+    {
+      "nome": "Arcanista",
+      "addestramento": "Taumaturgo",
+      "fonte": "§3.8; Talenti §3.9; Talenti §3.9.1",
+      "specializzazioni": [
+        "Plasmatore",
+        "Canalizzatore"
+      ],
+      "abilita": [
+        "Artefatti",
+        "Occultismo",
+        "Percezione",
+        "Potere",
+        "Rituali"
+      ],
+      "pv_per_grado": {
+        "fisso": 1,
+        "dado": 4
+      },
+      "pm_per_grado": {
+        "fisso": 5,
+        "dado": 4
+      },
+      "incantesimi": {
+        "primo_grado": {
+          "Fisica": 3,
+          "Mentale": 3,
+          "Spirituale": 3
+        },
+        "ogni_grado_successivo": {
+          "Fisica": 2,
+          "Mentale": 2,
+          "Spirituale": 2
+        }
+      },
+      "talenti_fissi": [
+        {
+          "grado": 1,
+          "nome": "Armonizzazione Arcana",
+          "testo": "L’Arcanista riduce di 1 PM il costo di tutti gli Incantesimi che lancia, fino a un minimo di 1 PM. Il livello dichiarato, gli effetti e le Azioni necessarie non cambiano. La Prova di Potere e la relativa penalità dipendono dal livello dichiarato, non dal costo ridotto."
+        },
+        {
+          "grado": 3,
+          "nome": "Controllo Superiore",
+          "testo": "Una volta per scena, immediatamente dopo una Prova di Potere fallita per lanciare un Incantesimo e prima di applicarne le conseguenze, l’Arcanista può ripetere la Prova. Non spende nuovamente Azioni o PM e conserva Incantesimo, versione, bersagli e modificatori del tentativo originale. Deve accettare il secondo risultato.\nPuò ripetere anche un 20 naturale. Il primo tiro concede comunque il Distintivo, mentre la riuscita del lancio e l’eventuale Fallimento Maldestro vengono determinati dal secondo risultato. Il Talento non permette di ripetere la distinta Prova per colpire."
+        },
+        {
+          "grado": 5,
+          "nome": "Architetto Arcano",
+          "testo": "L’Arcanista riduce di 2 punti, fino a un minimo di 0, la penalità alla Prova di Potere dovuta al livello dell’Incantesimo. Non modifica livello, costo, effetti o Azioni e non elimina una Prova obbligatoria. Non compensa penalità derivanti da altre cause."
+        }
+      ],
+      "talenti_a_scelta": [
+        {
+          "specializzazione": "Plasmatore",
+          "nome": "Geometria Arcana",
+          "testo": "Quando lancia un Incantesimo ad Area, l’Arcanista può escluderne un numero di creature pari al proprio Modificatore di Intelligenza, con un minimo di una. Le creature devono essere percepibili e vengono scelte prima del lancio; può scegliere anche sé stesso.\nLe creature scelte sono escluse da tutti gli effetti di quell’Incantesimo per l’intera durata, anche se escono dall’Area e vi rientrano. Non può cambiare le esclusioni dopo il lancio. Il Talento non richiede Azioni o PM aggiuntivi."
+        },
+        {
+          "specializzazione": "Plasmatore",
+          "nome": "Calcolo Arcano",
+          "testo": "Una volta per scena, prima di lanciare un Incantesimo, l’Arcanista può usare un solo parametro della versione successiva già presente nella scheda e già accessibile al personaggio: Gittata, dimensione dell’Area oppure Durata. La versione successiva non deve necessariamente trovarsi un livello sopra quella scelta.\nCosto, livello, Prova e tutti gli altri effetti restano quelli della versione lanciata. Il Talento non aumenta danno, guarigione, numero di bersagli o colpi e non modifica Prove Salvezza, forma dell’Area, necessità di colpire o obbligo di Concentrazione."
+        },
+        {
+          "specializzazione": "Canalizzatore",
+          "nome": "Riserva Tecnica",
+          "testo": "Una volta per scena, prima del lancio, l’Arcanista riduce di altri 2 PM il costo di un singolo Incantesimo, fino a un minimo di 1 PM. Il beneficio si cumula con Armonizzazione Arcana. Livello, effetti e Prova rimangono invariati."
+        },
+        {
+          "specializzazione": "Canalizzatore",
+          "nome": "Canalizzazione Sicura",
+          "testo": "Una volta per scena, dopo il fallimento definitivo di una Prova di Potere per lanciare un Incantesimo, l’Arcanista recupera metà dei PM effettivamente spesi, arrotondando per difetto e senza superare il proprio massimo. Il rimborso si applica dopo eventuali ripetizioni o modifiche del risultato e non restituisce Azioni.\nIn caso di Fallimento Maldestro, il rimborso precede la risoluzione della tabella della Magia e non ne annulla le conseguenze. Il Talento non si applica se l’Incantesimo è stato lanciato ma manca il bersaglio, viene contrastato dalla Contromagia oppure il bersaglio resiste con una Prova Salvezza."
+        },
+        {
+          "specializzazione": "Comune",
+          "nome": "Controllo dei Flussi",
+          "testo": "Quando ottiene un Successo Magistrale definitivo in una Prova di Potere per lanciare un Incantesimo, l’Arcanista recupera 1 PM, senza superare il proprio massimo. Il beneficio si aggiunge alla normale riduzione del costo dovuta al Successo Magistrale; i Distintivi seguono il §1.8.3 e sono assegnati soltanto con 1 o 20 naturali.\nGli Incantesimi lanciati senza Prova non attivano questo Talento. Non è possibile richiedere una Prova facoltativa soltanto per tentare di ottenere il beneficio."
+        }
+      ],
+      "note": [
+        "Ordine dei costi: si parte dal costo del livello dichiarato; si applicano Armonizzazione Arcana ed eventualmente Riserva Tecnica, con minimo 1 PM; un Successo Magistrale dimezza per difetto il costo risultante, sempre con minimo 1 PM; infine si applica Controllo dei Flussi. Un Incantesimo di livello 7 costa 6 PM con Armonizzazione Arcana, ma mantiene la Prova a −2 VA; Architetto Arcano elimina questa penalità, non la Prova."
+      ]
+    },
+    {
+      "nome": "Custode",
+      "addestramento": "Taumaturgo",
+      "fonte": "§3.8; Talenti §3.9; Talenti §3.9.2",
+      "specializzazioni": [
+        "Guerriero",
+        "Sentinella"
+      ],
+      "abilita": [
+        "Armi da mischia",
+        "Atletica",
+        "Difese",
+        "Percezione",
+        "Potere"
+      ],
+      "pv_per_grado": {
+        "fisso": 4,
+        "dado": 4
+      },
+      "pm_per_grado": {
+        "fisso": 3,
+        "dado": 4
+      },
+      "incantesimi": {
+        "primo_grado": {
+          "Fisica": 3,
+          "Mentale": 3,
+          "Spirituale": 0
+        },
+        "ogni_grado_successivo": {
+          "Fisica": 2,
+          "Mentale": 2,
+          "Spirituale": 0
+        }
+      },
+      "talenti_fissi": [
+        {
+          "grado": 1,
+          "nome": "Arma Astrale",
+          "testo": "Con un’Azione Principale e 2 PM, il Custode evoca un’Arma Astrale per 10 Round. L’arma usa Armi da mischia, infligge danno Magico e non richiede Concentrazione. Il danno dipende dal Grado di Custode, secondo la tabella seguente.\nNon esiste un limite al numero di evocazioni. Ogni nuova evocazione richiede il costo previsto e ha una nuova durata; il termine della scena o della sessione non costituisce un limite al numero degli utilizzi.\nDanno dell’Arma Astrale per Grado di Custode: I 1d6; II 1d8; III 1d10; IV 1d10 + 1; V 1d10 + 2; VI 1d10 + 3."
+        },
+        {
+          "grado": 3,
+          "nome": "Maestro d’Arma",
+          "testo": "Il Custode ottiene o costruisce una CyberArma personale. Quando la utilizza per evocare l’Arma Astrale, il costo scende a 1 PM e l’evocazione può essere compresa nell’Azione del primo attacco. Ciascuna evocazione dura 15 Round e l’Arma Astrale infligge +1 danno.\nNessun altro personaggio può evocare l’Arma Astrale del Custode mediante la sua CyberArma. Rimane illimitato il numero delle evocazioni, pagando ogni volta il costo previsto."
+        },
+        {
+          "grado": 5,
+          "nome": "Scudo Assoluto",
+          "testo": "Una volta per scena, prima delle proprie Difese, Prove Salvezza o dell’applicazione degli effetti, il Custode può annullare completamente su di sé un singolo Incantesimo, diretto o ad Area. Deve essere cosciente e percepire la minaccia. Non richiede Azioni, PM o Prove aggiuntive.\nLa protezione comprende tutti i colpi di quel lancio e l’intera durata dei suoi eventuali effetti persistenti. L’Incantesimo continua a risolversi normalmente sugli altri bersagli e sull’ambiente. Il Talento non rimuove effetti già applicati e non protegge dalle conseguenze indirette, come il crollo di una struttura colpita."
+        }
+      ],
+      "talenti_a_scelta": [
+        {
+          "specializzazione": "Guerriero",
+          "nome": "Maestria Astrale",
+          "testo": "Il Custode ottiene +2 VA agli attacchi con l’Arma Astrale e infligge +1 danno con essa. Il bonus al danno si cumula con quello della CyberArma."
+        },
+        {
+          "specializzazione": "Guerriero",
+          "nome": "Fenditura Mistica",
+          "testo": "Una volta per scena, dopo aver colpito con l’Arma Astrale ma prima di tirare il danno, il Custode può rendere Etereo il danno di quel singolo colpo. Non richiede Azioni o PM aggiuntivi. Se un attacco comprende più colpi, il beneficio si applica a uno soltanto.\nIl danno viene assorbito esclusivamente dalla componente magica dell’Armatura. Per esempio, contro AR totale 6, di cui 1 magica, la Fenditura Mistica incontra soltanto 1 AR."
+        },
+        {
+          "specializzazione": "Sentinella",
+          "nome": "Guardiano Instancabile",
+          "testo": "Dopo una Parata riuscita con l’Arma Astrale, gli attacchi successivi contro il Custode subiscono −2 VA alla Prova per colpire fino all’arrivo della sua Iniziativa seguente. Il beneficio si attiva anche con la Parata gratuita di Difesa Astrale e non si cumula con sé stesso.\nNon modifica la Prova di Potere per lanciare un Incantesimo e non ostacola effetti che non richiedono una Prova per colpire."
+        },
+        {
+          "specializzazione": "Sentinella",
+          "nome": "Intercettazione Astrale",
+          "testo": "All’arrivo della propria Iniziativa, il Custode può scegliere gratuitamente un alleato entro 1 Q. Il primo attacco diretto che lo colpirebbe prima dell’inizio dell’Iniziativa successiva del Custode viene risolto contro il Custode, purché sia cosciente, percepisca l’attacco, si trovi ancora entro 1 Q dall’alleato e possa interporsi fisicamente.\nSi applica ad attacchi ravvicinati, proiettili e manifestazioni magiche che raggiungono fisicamente il bersaglio. Non si applica agli effetti ad Area o che si manifestano direttamente sul bersaglio senza poter essere intercettati.\nL’attaccante non ripete la Prova per colpire. Il Custode può effettuare una sola Difesa, pagando i normali costi oppure utilizzando Difesa Astrale se disponibile; l’alleato non può prima tentare una propria Difesa. Se entrambi sono investiti da un’Area, ciascuno ne subisce normalmente gli effetti."
+        },
+        {
+          "specializzazione": "Comune",
+          "nome": "Difesa Astrale",
+          "testo": "Una volta per Round, mentre impugna l’Arma Astrale, il Custode può effettuare gratuitamente una Parata con Difese contro un attacco parabile, anche quando non dispone più di Azioni. Non concede una seconda Difesa dopo il fallimento di un’altra Difesa contro lo stesso attacco.\nSi applicano le regole ordinarie della Parata: un successo dimezza per eccesso il danno prima dell’Armatura; un Successo Magistrale lo annulla; un Fallimento Maldestro comporta −2 VA fino all’arrivo dell’Iniziativa successiva. Contro gli attacchi a distanza si applica −8 VA con l’arma, con un ulteriore −2 contro le Raffiche. Non rende parabili attacchi o effetti normalmente imparabili."
+        }
+      ]
+    },
+    {
+      "nome": "Invocatore",
+      "addestramento": "Taumaturgo",
+      "fonte": "§3.8; Talenti §3.9; Talenti §3.9.3",
+      "specializzazioni": [
+        "Dirompente",
+        "Telecineta"
+      ],
+      "abilita": [
+        "Artefatti",
+        "Occultismo",
+        "Oratoria",
+        "Percezione",
+        "Potere"
+      ],
+      "pv_per_grado": {
+        "fisso": 2,
+        "dado": 4
+      },
+      "pm_per_grado": {
+        "fisso": 4,
+        "dado": 4
+      },
+      "incantesimi": {
+        "primo_grado": {
+          "Fisica": 4,
+          "Mentale": 2,
+          "Spirituale": 0
+        },
+        "ogni_grado_successivo": {
+          "Fisica": 3,
+          "Mentale": 1,
+          "Spirituale": 0
+        }
+      },
+      "talenti_fissi": [
+        {
+          "grado": 1,
+          "nome": "Incantesimi Aggressivi",
+          "testo": "Gli Incantesimi offensivi dell’Invocatore infliggono +1 danno ai Gradi I–II, +2 ai Gradi III–IV e +3 ai Gradi V– VI. Il bonus si applica una sola volta per bersaglio, al primo colpo o alla prima applicazione del danno, e non si ripete nei Round successivi di un effetto persistente."
+        },
+        {
+          "grado": 3,
+          "nome": "Sovraccarico Controllato",
+          "testo": "Una volta per combattimento, prima di lanciare un Incantesimo offensivo che infligge danno con dadi, l’Invocatore può aggiungere un dado dello stesso tipo. Livello, costo, penalità e Azioni rimangono invariati. L’utilizzo viene consumato anche se il lancio fallisce o non viene inflitto danno.\nIl dado aggiuntivo si applica una sola volta per bersaglio, al primo colpo o alla prima applicazione del danno. Non si ripete sui colpi successivi o nei Round di danno persistente. Per esempio, 2d6 + 5 diventano 3d6 + 5; se l’Incantesimo produce tre colpi contro lo stesso bersaglio, soltanto il primo riceve il dado aggiuntivo."
+        },
+        {
+          "grado": 5,
+          "nome": "Controllo Arcano",
+          "testo": "Quando lancia un Incantesimo ad Area, l’Invocatore può escludere 1 + Modificatore di Intelligenza creature, con un minimo di una. Le creature devono essere percepibili e vengono scelte prima del lancio; può includere sé stesso. Sono escluse da tutti gli effetti per l’intera durata, anche uscendo dall’Area e rientrandovi, e non possono essere sostituite dopo il lancio.\nSe l’Incantesimo infligge danni ai PV, ogni creatura ostile interessata subisce inoltre +1 danno alla prima applicazione, una sola volta per quel lancio. Il Talento non richiede Azioni o PM aggiuntivi."
+        }
+      ],
+      "talenti_a_scelta": [
+        {
+          "specializzazione": "Dirompente",
+          "nome": "Potere Travolgente",
+          "testo": "Una volta per Round, una creatura che subisce almeno 5 danni effettivi da un Incantesimo dell’Invocatore riceve −2 VA a Difese fino alla fine dell’Iniziativa successiva dell’Invocatore. I danni effettivi si calcolano dopo Difese, Prove Salvezza e Armatura."
+        },
+        {
+          "specializzazione": "Dirompente",
+          "nome": "Eco Primordiale",
+          "testo": "Una volta per Round, quando un suo Incantesimo riduce una creatura ostile a 0 PV, l’Invocatore recupera 2 PM senza superare il proprio massimo. Più creature sconfitte dallo stesso Incantesimo concedono un solo recupero."
+        },
+        {
+          "specializzazione": "Telecineta",
+          "nome": "Impatto Arcano",
+          "testo": "Una volta per Round, quando un Incantesimo Mentale infligge almeno 1 danno effettivo dopo Difese, Prove Salvezza e Armatura, l’Invocatore può scegliere una creatura danneggiata e spostarla orizzontalmente fino a 2 Q oppure farla cadere a terra. Non richiede Azioni o PM aggiuntivi.\nLo spostamento forzato non provoca Attacchi di Opportunità e non attraversa ostacoli o spazi occupati. Prima di una caduta letale o dell’ingresso in un pericolo analogo, il bersaglio può effettuare una Prova Salvezza di Riflessi: con successo rimane a terra nell’ultimo Q sicuro. Creature troppo grandi, ancorate o impossibili da sbilanciare non vengono spostate né atterrate."
+        },
+        {
+          "specializzazione": "Telecineta",
+          "nome": "Mano Invisibile",
+          "testo": "Con un’Azione Principale, l’Invocatore può manipolare un oggetto incustodito entro 6 Q con la forza di una mano. Se è necessaria una Prova di Atletica, utilizza Potere al suo posto. Il Talento non permette di attaccare, scassinare o utilizzare dispositivi complessi."
+        },
+        {
+          "specializzazione": "Comune",
+          "nome": "Canalizzazione Implacabile",
+          "testo": "Una volta per scena, immediatamente dopo una Prova di Potere fallita per lanciare un Incantesimo offensivo e prima delle conseguenze, l’Invocatore può ripetere la Prova. Non spende nuovamente Azioni o PM; mantiene Incantesimo, versione, bersagli e modificatori originali e deve accettare il secondo risultato.\nPuò ripetere anche un 20 naturale, conservando il Distintivo ottenuto dal primo tiro. Il lancio e l’eventuale Fallimento Maldestro dipendono dal secondo risultato. Non permette di ripetere una Prova di Armi da lancio o Corpo a Corpo per colpire."
+        }
+      ],
+      "note": [
+        "Incantesimi Aggressivi, Sovraccarico Controllato e il danno aggiuntivo di Controllo Arcano sono cumulabili. Si applicano prima dei moltiplicatori, delle Difese e dell’Armatura, rispettando per ciascuno il limite di una sola applicazione per bersaglio e per Incantesimo. Il Successo Magistrale segue la regola generale sulla prima istanza di danno."
+      ]
+    },
+    {
+      "nome": "Mistico",
+      "addestramento": "Taumaturgo",
+      "fonte": "§3.8; Talenti §3.9; Talenti §3.9.4",
+      "specializzazioni": [
+        "Guaritore",
+        "Divinatore"
+      ],
+      "abilita": [
+        "Medicina",
+        "Occultismo",
+        "Percezione",
+        "Potere",
+        "Rituali"
+      ],
+      "pv_per_grado": {
+        "fisso": 3,
+        "dado": 4
+      },
+      "pm_per_grado": {
+        "fisso": 4,
+        "dado": 4
+      },
+      "incantesimi": {
+        "primo_grado": {
+          "Fisica": 0,
+          "Mentale": 2,
+          "Spirituale": 4
+        },
+        "ogni_grado_successivo": {
+          "Fisica": 0,
+          "Mentale": 1,
+          "Spirituale": 3
+        }
+      },
+      "talenti_fissi": [
+        {
+          "grado": 1,
+          "nome": "Tocco Sacro",
+          "testo": "Quando il Mistico usa Cura Ferite a Contatto, i dadi che ripristinano PV ottengono il risultato massimo. I bonus fissi rimangono invariati. Il Talento non aumenta la riduzione delle Ferite."
+        },
+        {
+          "grado": 3,
+          "nome": "Purificatore",
+          "testo": "Quando un Incantesimo del Mistico riduce effettivamente la Corruzione, elimina 1 Stato aggiuntivo, fino al massimo di Umano. Il beneficio si applica soltanto agli Stati che quell’Incantesimo può curare; non supera l’irrecuperabilità di Oscuro. Non si applica a effetti che attenuano soltanto penalità o alla Purificazione del Predicatore, che non è un Incantesimo. Non restituisce Umanità (§§5.20–5.21)."
+        },
+        {
+          "grado": 5,
+          "nome": "Aura di Equilibrio",
+          "testo": "Finché il Mistico è cosciente, gli alleati entro 3 Q ignorano fino a 2 punti della penalità complessiva al VA causata da Ferite e Corruzione. Il beneficio non si applica separatamente a ogni causa e non trasforma una penalità in un bonus positivo.\nSpendendo 2 PM, senza Azione Principale né Prova, il Mistico aumenta il beneficio a 4 punti complessivi per 10 Round. Deve attivarlo prima della Prova interessata e può farlo anche fuori dalla propria Iniziativa. L’Aura non cura PV o Ferite, non rimuove condizioni e non impedisce aggravamento, perdita di coscienza o morte. Per esempio, la penalità −6 di una Ferita Seria diventa −4 con l’Aura ordinaria e −2 con quella potenziata. La Corruzione segue il §5.20: l’Aura ne attenua soltanto la penalità al VA, entro il limite complessivo previsto. Non attenua l’Affaticamento o gli effetti della perdita di Umanità."
+        }
+      ],
+      "talenti_a_scelta": [
+        {
+          "specializzazione": "Guaritore",
+          "nome": "Canale Vitale",
+          "testo": "Ogni Incantesimo di cura lanciato dal Mistico ripristina 1 PV aggiuntivo a ciascun bersaglio, una sola volta per lancio. Il Talento non aumenta il numero di stati di Ferita rimossi."
+        },
+        {
+          "specializzazione": "Guaritore",
+          "nome": "Flusso Sacro",
+          "testo": "Una volta al giorno, quando un suo Incantesimo riduce effettivamente una Ferita, il Mistico recupera 1 PM senza superare il proprio massimo."
+        },
+        {
+          "specializzazione": "Divinatore",
+          "nome": "Occhio Interiore",
+          "testo": "Il Mistico ottiene +2 VA a Potere nelle Prove richieste per lanciare Incantesimi di Divinazione. Il Talento non introduce una Prova quando il lancio è automatico."
+        },
+        {
+          "specializzazione": "Divinatore",
+          "nome": "Presagio",
+          "testo": "Una volta per combattimento, dopo una Prova propria o di un alleato percepibile entro 6 Q, ma prima di applicarne le conseguenze, il Mistico può spendere 1 PM per farla ripetere. Deve essere cosciente; l’attivazione è gratuita e può avvenire anche fuori dalla propria Iniziativa. Si applica a Prove di Caratteristica, Salvezza o Abilità, comprese quelle di attacco, Difese e lancio degli Incantesimi. Non si applica a tiri per determinare quantità, danni o risultati sulle tabelle.\nLa Prova viene ripetuta con gli stessi modificatori, senza pagare nuovamente il costo dell’azione originale. Il secondo risultato è definitivo, anche se peggiore. Un 1 o 20 naturale del primo tiro concede comunque il Distintivo."
+        },
+        {
+          "specializzazione": "Comune",
+          "nome": "Scudo Spirituale",
+          "testo": "Finché il Mistico è cosciente, lui e gli alleati entro 3 Q ottengono +1 alle Prove Salvezza di Volontà e Magia. Spendendo 2 PM, senza Azione Principale né Prova, il Mistico aumenta il bonus a +3 complessivo per 10 Round. Il potenziamento deve essere attivato prima della Prova interessata e può essere attivato anche fuori dall’Iniziativa del Mistico. Il Talento non richiede Concentrazione."
+        }
+      ],
+      "note": [
+        "Regole comuni delle aure. Aura di Equilibrio e Scudo Spirituale sono automatici nella forma base, non consumano PM e non richiedono Concentrazione. Uscire dai 3 Q fa perdere il beneficio; entrarvi permette di ricevere il beneficio attualmente attivo. I due potenziamenti sono indipendenti: attivarli entrambi costa 4 PM. Una nuova attivazione rinnova la durata a 10 Round, senza sommare il potenziamento.\nSe il Mistico perde conoscenza, terminano entrambe le aure e i relativi potenziamenti. Quando torna cosciente, riprendono automaticamente soltanto i benefici di base. Più aure dello stesso tipo non si sommano: si applica il beneficio maggiore.\nScudo Spirituale si applica anche alle PS di Magia contro Corruzione. Le penalità da CROS e da perdita di UMN si applicano normalmente prima di determinare il Valore finale della Salvezza (§§5.20–5.21)."
+      ]
+    },
+    {
+      "nome": "Tecnomante",
+      "addestramento": "Taumaturgo",
+      "fonte": "§3.8; Talenti §3.9; Talenti §3.9.5",
+      "specializzazioni": [
+        "Forgiatore",
+        "Artefice"
+      ],
+      "abilita": [
+        "Artefatti",
+        "Potere",
+        "Rituali",
+        "Scienza",
+        "Tecnologia"
+      ],
+      "pv_per_grado": {
+        "fisso": 2,
+        "dado": 4
+      },
+      "pm_per_grado": {
+        "fisso": 2,
+        "dado": 4
+      },
+      "incantesimi": {
+        "primo_grado": {
+          "Fisica": 2,
+          "Mentale": 3,
+          "Spirituale": 1
+        },
+        "ogni_grado_successivo": {
+          "Fisica": 1,
+          "Mentale": 2,
+          "Spirituale": 1
+        }
+      },
+      "talenti_fissi": [
+        {
+          "grado": 1,
+          "nome": "Architetto TecnoMistico",
+          "testo": "Il Tecnomante ottiene Analisi avanzata, Sintonizzazione automatica, Capacità superiore e accesso alla Creazione TecnoMistica, descritti di seguito. Tutti i benefici si ottengono anche acquisendo il Tecnomante come ulteriore Classe; il Talento non cambia l’Addestramento originario.\nAnalisi avanzata. Dopo 10 minuti di esame diretto di un Artefatto Mistico o TecnoMistico, il Tecnomante può effettuare una Prova di Artefatti. Prima del tiro si stabiliscono l’obiettivo dell’analisi e gli eventuali modificatori dovuti a complessità e condizioni dell’esame. Con un successo ottiene le informazioni pertinenti all’obiettivo nelle categorie Struttura, Proprietà e Riserva energetica.\nStruttura: tipologia, materiali, componenti, stato di conservazione, anomalie, manomissioni, funzionamento tecnico e procedure, materiali o componenti necessari per le riparazioni.\nProprietà: classificazione di potenza, costo di sintonizzazione, numero delle proprietà, distinzione fra passive e attive, necessità di Prove di attivazione, requisiti e limiti di utilizzo.\nRiserva energetica: presenza, natura dell’energia, capacità massima, PM disponibili e modalità generali di ricarica. Queste informazioni appartengono all’analisi delle Proprietà.\nLe proprietà nascoste, dormienti o bloccate richiedono condizioni e indizi realmente esaminabili e la normale difficoltà pertinente: non vengono rivelate automaticamente. Gli effetti precisi, come danno, guarigione, costo di una singola attivazione, bersagli, Gittata, Area, Durata e altri valori magici, richiedono l’Incantesimo di Identificazione.\nSi applicano le regole generali delle Prove Aperte, dei nuovi tentativi, del Successo Magistrale e del Fallimento Maldestro. Un vantaggio aggiuntivo può fornire ulteriori informazioni nelle categorie accessibili, ma non sostituisce l’Identificazione. L’analisi non attiva o ripara l’oggetto e non rivela automaticamente una formula di creazione.\nEsempio: esaminando un bracciale, il Tecnomante può apprendere che possiede una proprietà passiva e una attiva, che quest’ultima richiede una Prova e che la riserva universale contiene 3 PM su 8. Per sapere che la proprietà crea una barriera con AR 4 per 10 Round al costo di 2 PM occorre identificarne l’effetto.\nSintonizzazione automatica. Il Tecnomante completa la preparazione di un minuto a contatto con l’Artefatto senza effettuare la Prova di Artefatti. Rispetta normalmente capacità di sintonizzazione, requisiti, costi e le eventuali Prove di attivazione espressamente richieste dalle proprietà (Manuale degli Equipaggiamenti, §7.10). La sintonizzazione non concede l’identificazione completa.\nCapacità superiore. Il Tecnomante ottiene +2 alla capacità complessiva di sintonizzazione, una sola volta. Con un Grado complessivo parte da 6; con sei Gradi complessivi arriva a 11. Nel multiclasse il +2 si aggiunge alla capacità già determinata dai Gradi complessivi, senza ricominciare la progressione e senza concedere una capacità separata. A questo totale si applica la riduzione dovuta all’Umanità, fino a un minimo di 0; la sintonizzazione automatica rispetta la capacità risultante (§§5.21 e 6.12).\nCreazione TecnoMistica. Il Talento concede l’accesso esclusivo alla creazione degli Artefatti TecnoMistici mediante le procedure di costruzione e il Rituale finale. Le procedure complete verranno integrate successivamente nel Manuale della Magia; il Talento non le sostituisce con una singola Prova."
+        },
+        {
+          "grado": 3,
+          "nome": "Ricarica Efficiente",
+          "testo": "Requisito per utilizzare il beneficio: Addestramento Taumaturgo. Ricarica Efficiente porta il rapporto ordinario delle conversioni da 3:1 a 2:1, compresa la ricarica dei cristalli e delle batterie. Con Conversione Migliorata il rapporto diventa 1:1.\nSi applica la procedura del Manuale della Magia: nella stessa Azione Principale si dichiara il numero di gruppi; un gruppo è automatico, mentre per più gruppi si effettua una sola Prova di Potere con la penalità corrispondente. Rimangono validi requisiti, riserve disponibili e capacità della destinazione. I trasferimenti fra PM personali e Chroma Bianco conservano il rapporto 2:1 in entrambe le direzioni, anche possedendo entrambi i Talenti.\nAcquisire Gradi da Tecnomante senza possedere l’Addestramento Taumaturgo non concede da solo la capacità di convertire o ricaricare i contenitori."
+        },
+        {
+          "grado": 5,
+          "nome": "Sovrascrittura",
+          "testo": "Una volta per combattimento, prima delle Prove, il Tecnomante può convertire in Etereo qualsiasi danno prodotto da un Artefatto Mistico o TecnoMistico in un singolo attacco oppure in una singola attivazione, indipendentemente dalla natura originaria Naturale o Magica.\nPuò modificare anche l’attacco ordinario di un’arma mistica, senza attivare una proprietà. Non richiede Azioni, PM o Prove aggiuntive e conserva quantità di danno, Gittata, bersagli, Area e Durata. Se l’attivazione produce danni ripetuti, la conversione vale per l’intera durata di quell’effetto.\nL’utilizzo viene consumato anche se l’attacco o l’attivazione falliscono. Tutte le componenti del danno vengono convertite: per esempio, sia il danno Naturale dell’arma sia il suo danno Magico aggiuntivo. Il danno Etereo viene assorbito soltanto dalla componente magica delle protezioni."
+        }
+      ],
+      "talenti_a_scelta": [
+        {
+          "specializzazione": "Forgiatore",
+          "nome": "Meccanica Potenziata",
+          "testo": "Il Tecnomante ottiene +1 al danno di ogni colpo inflitto con un’arma Mistica o TecnoMistica utilizzata personalmente. Il bonus entra nel normale calcolo del danno, prima dei moltiplicatori e dell’Armatura, e si applica a ciascun colpo andato a segno, comprese le Raffiche.\nSe l’attacco genera danni persistenti, il bonus si applica al danno iniziale e non si ripete nei Round successivi. È compatibile con Sovrascrittura: anche il danno aggiuntivo diventa Etereo. Il beneficio è passivo e non richiede Azioni o PM."
+        },
+        {
+          "specializzazione": "Forgiatore",
+          "nome": "Corazza Potenziata",
+          "testo": "Quando indossa un’armatura o utilizza uno scudo Mistico o TecnoMistico, il Tecnomante ottiene +1 AR magica. Aumentano di 1 sia l’AR totale sia la sua componente magica.\nIl beneficio è personale e si applica una sola volta, anche utilizzando contemporaneamente armatura e scudo. Per esempio, AR totale 5 con componente magica 1 diventa AR totale 6 con componente magica 2. È passivo e non richiede Azioni o PM."
+        },
+        {
+          "specializzazione": "Artefice",
+          "nome": "Scarica d’Emergenza",
+          "testo": "Una volta al giorno, il Tecnomante può forzare un contenitore sintonizzato con almeno 1 PM residuo, utilizzandolo per pagare integralmente una singola attivazione di un Artefatto. Il costo dell’attivazione non può superare la capacità massima del contenitore e deve essere rispettata la compatibilità energetica.\nSi utilizzano normalmente l’Azione e le eventuali Prove dell’Artefatto. Dopo il tentativo, il contenitore si scarica completamente, anche in caso di fallimento. L’energia ottenuta alimenta esclusivamente quell’attivazione.\nEsempio: un contenitore con capacità massima 10 PM, ma soltanto 1 PM rimasto, può alimentare una proprietà da 6 PM e poi scende a 0 PM. Non può alimentare una proprietà da 12 PM, perché il costo supera la sua capacità massima."
+        },
+        {
+          "specializzazione": "Artefice",
+          "nome": "Schema Ridondante",
+          "testo": "Una volta al giorno, dopo un fallimento ordinario in una Prova di Artefatti per attivare una proprietà di una Batteria Mistica o di un Accessorio Mistico o TecnoMistico, il Tecnomante può ripetere la Prova.\nNon spende nuovamente l’Azione o i PM dell’attivazione e deve accettare il secondo risultato. Non può utilizzare il Talento su un Fallimento Maldestro. Il Talento si applica soltanto alle proprietà che richiedono espressamente una Prova di Artefatti: le normali attivazioni dopo la Sintonizzazione sono automatiche (Manuale degli Equipaggiamenti, §7.10)."
+        },
+        {
+          "specializzazione": "Comune",
+          "nome": "Interfaccia Remota",
+          "testo": "Il Tecnomante può attivare a distanza una proprietà di un Artefatto Mistico o TecnoMistico con cui è sintonizzato. La gittata massima è 6 Q; deve percepire l’Artefatto e avere una linea d’effetto libera.\nNon deve toccare, impugnare o indossare l’oggetto, salvo che la proprietà lo richieda espressamente per produrre il proprio effetto. L’attivazione conserva la normale Azione, il costo in PM e le eventuali Prove. L’energia viene prelevata dalla fonte normalmente utilizzata dall’Artefatto.\nIl Talento non permette di muovere l’oggetto, impugnarlo a distanza o effettuare attacchi ordinari attraverso di esso. Può attivare una proprietà esplosiva, accendere una barriera TecnoMistica, comandare l’apertura di un dispositivo sintonizzato o attivare una protezione su un oggetto indossato da un alleato.\nNon permette di sparare con un fucile TecnoMistico abbandonato a terra, a meno che il fucile possieda una specifica proprietà di fuoco remoto. È distinto da Controllo Parallelo del Tecnico: non concede un comando gratuito per Round."
+        }
+      ]
+    }
+  ]
+}

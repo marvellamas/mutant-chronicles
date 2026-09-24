@@ -1,0 +1,753 @@
+{
+  "versione_manuale": "Magia 1.1",
+  "fonte": "Manuale della Magia, sezione 11 (indice degli incantesimi)",
+  "_nota": "Solo indice: il testo delle schede non è ancora incluso.",
+  "macrofamiglie": [
+    {
+      "nome": "Fisica",
+      "specializzazioni": [
+        "Elementi",
+        "Cambiamento",
+        "Manifestazione"
+      ]
+    },
+    {
+      "nome": "Mentale",
+      "specializzazioni": [
+        "Psionica",
+        "Influenza",
+        "Sintonia"
+      ]
+    },
+    {
+      "nome": "Spirituale",
+      "specializzazioni": [
+        "Esorcismo",
+        "Incantamento",
+        "Trascendenza"
+      ]
+    }
+  ],
+  "incantesimi": [
+    {
+      "scheda": "13.1",
+      "nome": "Colpo Elementale",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Elementi",
+      "livello_base": 1,
+      "pagina": 24
+    },
+    {
+      "scheda": "13.2",
+      "nome": "Controllo Elementale",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Elementi",
+      "livello_base": 1,
+      "pagina": 25
+    },
+    {
+      "scheda": "13.3",
+      "nome": "Muro Elementale",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Elementi",
+      "livello_base": 1,
+      "pagina": 27
+    },
+    {
+      "scheda": "13.4",
+      "nome": "Protezione dagli Elementi",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Elementi",
+      "livello_base": 1,
+      "pagina": 28
+    },
+    {
+      "scheda": "13.5",
+      "nome": "Armatura Elementale",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Elementi",
+      "livello_base": 3,
+      "pagina": 28
+    },
+    {
+      "scheda": "13.6",
+      "nome": "Esplosione Elementale",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Elementi",
+      "livello_base": 3,
+      "pagina": 29
+    },
+    {
+      "scheda": "13.7",
+      "nome": "Cono Elementale",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Elementi",
+      "livello_base": 3,
+      "pagina": 30
+    },
+    {
+      "scheda": "13.8",
+      "nome": "Evoca Elementale",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Elementi",
+      "livello_base": 6,
+      "pagina": 31
+    },
+    {
+      "scheda": "13.9",
+      "nome": "Forma Elementale",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Elementi",
+      "livello_base": 6,
+      "pagina": 32
+    },
+    {
+      "scheda": "13.10",
+      "nome": "Devastazione Elementale",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Elementi",
+      "livello_base": 9,
+      "pagina": 33
+    },
+    {
+      "scheda": "16.1",
+      "nome": "Irrobustire",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Cambiamento",
+      "livello_base": 1,
+      "pagina": 50
+    },
+    {
+      "scheda": "16.2",
+      "nome": "Agilità Mutata",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Cambiamento",
+      "livello_base": 1,
+      "pagina": 51
+    },
+    {
+      "scheda": "16.3",
+      "nome": "Resistenza Fisica",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Cambiamento",
+      "livello_base": 1,
+      "pagina": 52
+    },
+    {
+      "scheda": "16.4",
+      "nome": "Respiro Adattivo",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Cambiamento",
+      "livello_base": 1,
+      "pagina": 53
+    },
+    {
+      "scheda": "16.5",
+      "nome": "Efficienza",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Cambiamento",
+      "livello_base": 3,
+      "pagina": 54
+    },
+    {
+      "scheda": "16.6",
+      "nome": "Pelle Corazzata",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Cambiamento",
+      "livello_base": 3,
+      "pagina": 55
+    },
+    {
+      "scheda": "16.7",
+      "nome": "Riflessi Potenziati",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Cambiamento",
+      "livello_base": 3,
+      "pagina": 56
+    },
+    {
+      "scheda": "16.8",
+      "nome": "Corpo Adattivo",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Cambiamento",
+      "livello_base": 6,
+      "pagina": 57
+    },
+    {
+      "scheda": "16.9",
+      "nome": "Mimetismo",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Cambiamento",
+      "livello_base": 6,
+      "pagina": 58
+    },
+    {
+      "scheda": "16.10",
+      "nome": "Trasformazione Totale",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Cambiamento",
+      "livello_base": 9,
+      "pagina": 59
+    },
+    {
+      "scheda": "17.1",
+      "nome": "Telecinesi",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Manifestazione",
+      "livello_base": 1,
+      "pagina": 60
+    },
+    {
+      "scheda": "17.2",
+      "nome": "Scudo",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Manifestazione",
+      "livello_base": 1,
+      "pagina": 61
+    },
+    {
+      "scheda": "17.3",
+      "nome": "Armatura di Forza",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Manifestazione",
+      "livello_base": 1,
+      "pagina": 62
+    },
+    {
+      "scheda": "17.4",
+      "nome": "Respingere",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Manifestazione",
+      "livello_base": 1,
+      "pagina": 63
+    },
+    {
+      "scheda": "17.5",
+      "nome": "Barriera di Forza",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Manifestazione",
+      "livello_base": 3,
+      "pagina": 64
+    },
+    {
+      "scheda": "17.6",
+      "nome": "Catene di Forza",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Manifestazione",
+      "livello_base": 3,
+      "pagina": 65
+    },
+    {
+      "scheda": "17.7",
+      "nome": "Piattaforma Levitante",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Manifestazione",
+      "livello_base": 3,
+      "pagina": 66
+    },
+    {
+      "scheda": "17.8",
+      "nome": "Campo di Forza",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Manifestazione",
+      "livello_base": 6,
+      "pagina": 67
+    },
+    {
+      "scheda": "17.9",
+      "nome": "Teletrasporto",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Manifestazione",
+      "livello_base": 6,
+      "pagina": 68
+    },
+    {
+      "scheda": "17.10",
+      "nome": "Prigione Dimensionale",
+      "macrofamiglia": "Fisica",
+      "specializzazione": "Manifestazione",
+      "livello_base": 9,
+      "pagina": 69
+    },
+    {
+      "scheda": "18.1",
+      "nome": "Ampliare Sensi",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Psionica",
+      "livello_base": 1,
+      "pagina": 70
+    },
+    {
+      "scheda": "18.2",
+      "nome": "Barriera Mentale",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Psionica",
+      "livello_base": 1,
+      "pagina": 71
+    },
+    {
+      "scheda": "18.3",
+      "nome": "Biomanipolazione",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Psionica",
+      "livello_base": 1,
+      "pagina": 72
+    },
+    {
+      "scheda": "18.4",
+      "nome": "Dardo Psichico",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Psionica",
+      "livello_base": 1,
+      "pagina": 73
+    },
+    {
+      "scheda": "18.5",
+      "nome": "Ectoplasma",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Psionica",
+      "livello_base": 3,
+      "pagina": 74
+    },
+    {
+      "scheda": "18.6",
+      "nome": "Indurre Sonno",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Psionica",
+      "livello_base": 3,
+      "pagina": 75
+    },
+    {
+      "scheda": "18.7",
+      "nome": "Psicometabolismo",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Psionica",
+      "livello_base": 3,
+      "pagina": 76
+    },
+    {
+      "scheda": "18.8",
+      "nome": "Telemeccanica",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Psionica",
+      "livello_base": 6,
+      "pagina": 77
+    },
+    {
+      "scheda": "18.9",
+      "nome": "Sovraccarico Sinaptico",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Psionica",
+      "livello_base": 6,
+      "pagina": 78
+    },
+    {
+      "scheda": "18.10",
+      "nome": "Mente Disincarnata",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Psionica",
+      "livello_base": 9,
+      "pagina": 79
+    },
+    {
+      "scheda": "19.1",
+      "nome": "Alterare Immagine",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Influenza",
+      "livello_base": 1,
+      "pagina": 83
+    },
+    {
+      "scheda": "19.2",
+      "nome": "Comando",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Influenza",
+      "livello_base": 1,
+      "pagina": 84
+    },
+    {
+      "scheda": "19.3",
+      "nome": "Distrazione",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Influenza",
+      "livello_base": 1,
+      "pagina": 86
+    },
+    {
+      "scheda": "19.4",
+      "nome": "Illusione",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Influenza",
+      "livello_base": 1,
+      "pagina": 87
+    },
+    {
+      "scheda": "19.5",
+      "nome": "Memoria",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Influenza",
+      "livello_base": 3,
+      "pagina": 88
+    },
+    {
+      "scheda": "19.6",
+      "nome": "Silenzio Mentale",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Influenza",
+      "livello_base": 3,
+      "pagina": 89
+    },
+    {
+      "scheda": "19.7",
+      "nome": "Terrore",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Influenza",
+      "livello_base": 3,
+      "pagina": 91
+    },
+    {
+      "scheda": "19.8",
+      "nome": "Ipnosi",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Influenza",
+      "livello_base": 6,
+      "pagina": 92
+    },
+    {
+      "scheda": "19.9",
+      "nome": "Velo Psichico",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Influenza",
+      "livello_base": 6,
+      "pagina": 93
+    },
+    {
+      "scheda": "19.10",
+      "nome": "Possessione",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Influenza",
+      "livello_base": 9,
+      "pagina": 95
+    },
+    {
+      "scheda": "20.1",
+      "nome": "Empatia",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Sintonia",
+      "livello_base": 1,
+      "pagina": 98
+    },
+    {
+      "scheda": "20.2",
+      "nome": "Linguaggi",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Sintonia",
+      "livello_base": 1,
+      "pagina": 99
+    },
+    {
+      "scheda": "20.3",
+      "nome": "Presenza",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Sintonia",
+      "livello_base": 1,
+      "pagina": 100
+    },
+    {
+      "scheda": "20.4",
+      "nome": "Telepatia",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Sintonia",
+      "livello_base": 1,
+      "pagina": 102
+    },
+    {
+      "scheda": "20.5",
+      "nome": "Armonia Animale",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Sintonia",
+      "livello_base": 3,
+      "pagina": 103
+    },
+    {
+      "scheda": "20.6",
+      "nome": "Comunione",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Sintonia",
+      "livello_base": 3,
+      "pagina": 104
+    },
+    {
+      "scheda": "20.7",
+      "nome": "Psicometria",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Sintonia",
+      "livello_base": 3,
+      "pagina": 106
+    },
+    {
+      "scheda": "20.8",
+      "nome": "Marchio Psichico",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Sintonia",
+      "livello_base": 6,
+      "pagina": 107
+    },
+    {
+      "scheda": "20.9",
+      "nome": "Sesto Senso",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Sintonia",
+      "livello_base": 6,
+      "pagina": 108
+    },
+    {
+      "scheda": "20.10",
+      "nome": "Vista Superiore",
+      "macrofamiglia": "Mentale",
+      "specializzazione": "Sintonia",
+      "livello_base": 9,
+      "pagina": 109
+    },
+    {
+      "scheda": "21.1",
+      "nome": "Cura Ferite",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Esorcismo",
+      "livello_base": 1,
+      "pagina": 112
+    },
+    {
+      "scheda": "21.2",
+      "nome": "Cura Malattie",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Esorcismo",
+      "livello_base": 1,
+      "pagina": 114
+    },
+    {
+      "scheda": "21.3",
+      "nome": "Cura Avvelenamenti",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Esorcismo",
+      "livello_base": 1,
+      "pagina": 115
+    },
+    {
+      "scheda": "21.4",
+      "nome": "Cura Spirituale",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Esorcismo",
+      "livello_base": 1,
+      "pagina": 116
+    },
+    {
+      "scheda": "21.5",
+      "nome": "Esorcizzare Corruzione",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Esorcismo",
+      "livello_base": 3,
+      "pagina": 117
+    },
+    {
+      "scheda": "21.6",
+      "nome": "Guarigione",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Esorcismo",
+      "livello_base": 3,
+      "pagina": 118
+    },
+    {
+      "scheda": "21.7",
+      "nome": "Recupero Rapido",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Esorcismo",
+      "livello_base": 3,
+      "pagina": 119
+    },
+    {
+      "scheda": "21.8",
+      "nome": "Esorcizzare Oscurità",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Esorcismo",
+      "livello_base": 6,
+      "pagina": 120
+    },
+    {
+      "scheda": "21.9",
+      "nome": "Esorcizzare Possessione",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Esorcismo",
+      "livello_base": 6,
+      "pagina": 121
+    },
+    {
+      "scheda": "21.10",
+      "nome": "Rigenerazione",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Esorcismo",
+      "livello_base": 9,
+      "pagina": 122
+    },
+    {
+      "scheda": "22.1",
+      "nome": "Arma Mistica",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Incantamento",
+      "livello_base": 1,
+      "pagina": 125
+    },
+    {
+      "scheda": "22.2",
+      "nome": "Armatura Mistica",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Incantamento",
+      "livello_base": 1,
+      "pagina": 126
+    },
+    {
+      "scheda": "22.3",
+      "nome": "Sigillo",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Incantamento",
+      "livello_base": 1,
+      "pagina": 127
+    },
+    {
+      "scheda": "22.4",
+      "nome": "Trappola Mistica",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Incantamento",
+      "livello_base": 1,
+      "pagina": 128
+    },
+    {
+      "scheda": "22.5",
+      "nome": "Barriera Mistica",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Incantamento",
+      "livello_base": 3,
+      "pagina": 130
+    },
+    {
+      "scheda": "22.6",
+      "nome": "Batteria Mistica",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Incantamento",
+      "livello_base": 3,
+      "pagina": 131
+    },
+    {
+      "scheda": "22.7",
+      "nome": "Identificare Potere",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Incantamento",
+      "livello_base": 3,
+      "pagina": 132
+    },
+    {
+      "scheda": "22.8",
+      "nome": "Rompere Vincolo",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Incantamento",
+      "livello_base": 6,
+      "pagina": 133
+    },
+    {
+      "scheda": "22.9",
+      "nome": "Vincolo Spirituale",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Incantamento",
+      "livello_base": 6,
+      "pagina": 134
+    },
+    {
+      "scheda": "22.10",
+      "nome": "Impronta Mistica",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Incantamento",
+      "livello_base": 9,
+      "pagina": 135
+    },
+    {
+      "scheda": "23.1",
+      "nome": "Scudo Spirituale",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Trascendenza",
+      "livello_base": 1,
+      "pagina": 139
+    },
+    {
+      "scheda": "23.2",
+      "nome": "Luce Mistica",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Trascendenza",
+      "livello_base": 1,
+      "pagina": 140
+    },
+    {
+      "scheda": "23.3",
+      "nome": "Benedizione",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Trascendenza",
+      "livello_base": 1,
+      "pagina": 141
+    },
+    {
+      "scheda": "23.4",
+      "nome": "Maledizione",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Trascendenza",
+      "livello_base": 1,
+      "pagina": 142
+    },
+    {
+      "scheda": "23.5",
+      "nome": "Dardo Spirituale",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Trascendenza",
+      "livello_base": 3,
+      "pagina": 143
+    },
+    {
+      "scheda": "23.6",
+      "nome": "Negare Potere",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Trascendenza",
+      "livello_base": 3,
+      "pagina": 144
+    },
+    {
+      "scheda": "23.7",
+      "nome": "Nascondere Aura",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Trascendenza",
+      "livello_base": 3,
+      "pagina": 146
+    },
+    {
+      "scheda": "23.8",
+      "nome": "Premonizione",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Trascendenza",
+      "livello_base": 6,
+      "pagina": 147
+    },
+    {
+      "scheda": "23.9",
+      "nome": "Individuare",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Trascendenza",
+      "livello_base": 6,
+      "pagina": 148
+    },
+    {
+      "scheda": "23.10",
+      "nome": "Alterare Aura",
+      "macrofamiglia": "Spirituale",
+      "specializzazione": "Trascendenza",
+      "livello_base": 9,
+      "pagina": 150
+    }
+  ]
+}

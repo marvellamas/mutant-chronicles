@@ -1,0 +1,78 @@
+{
+  "versione_manuale": "Giocatore 0.43; Magia 1.1",
+  "fonte": "Giocatore §1.2.3, §2.1, §2.3, §2.10, §2.12–2.15, §3.3; Magia sezioni 1 e 11",
+  "creazione": {
+    "punti_caratteristica": 5,
+    "massimo_caratteristica": 7,
+    "punti_abilita_liberi": 5,
+    "avanzamento_massimo_iniziale": 3,
+    "va_minimo_per_punti_liberi": 1,
+    "bonus_classe_per_grado": 1,
+    "dado_pv_massimizzato": true,
+    "_nota": "§2.1: 5 punti, nessuna Caratteristica oltre 7 alla creazione, i valori iniziali non si riducono. §2.13: Avanzamento iniziale ≤ 3 incluso il +1 di Classe; l'Abilità deve avere VA almeno 1 prima dei punti liberi (i punti di Classe si assegnano prima, §3.1). §2.12 e §3.3: dado dei PV massimizzato solo al 1° livello."
+  },
+  "salvezze": {
+    "base": 8,
+    "avanzamento_per_livello": [
+      { "da": 1, "a": 2, "bonus": 0 },
+      { "da": 3, "a": 10, "bonus": 1 },
+      { "da": 11, "a": 18, "bonus": 2 },
+      { "da": 19, "a": 20, "bonus": 3 }
+    ],
+    "_nota": "§1.2.3: 8 + modificatore specifico + Addestramento + Avanzamento + Corporazione. Al 1° livello l'Avanzamento è 0 (§2.11)."
+  },
+  "punti_eroe": {
+    "formula": "2d3+1",
+    "dadi": 2,
+    "facce": 3,
+    "fisso": 1,
+    "minimo": 3,
+    "massimo": 7,
+    "riserva_massima": 10,
+    "_nota": "§2.15"
+  },
+  "movimento": {
+    "unita": "Q",
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18,
+    "_nota": "§2.14"
+  },
+  "azioni_primo_livello": {
+    "movimento": 1,
+    "principali": 1,
+    "_nota": "§2.14; la seconda Azione Principale si ottiene al 12° livello."
+  },
+  "iniziativa": {
+    "formula": "Mod DES + Mod INT",
+    "caratteristiche": ["DES", "INT"],
+    "dado_in_combattimento": "1d10",
+    "_nota": "§2.14: usa i modificatori ordinari."
+  },
+  "addestramento": {
+    "punti_totali": 48,
+    "schema": { "4": 4, "3": 4, "2": 8, "1": 4, "0": 4 },
+    "_nota": "§2.3: valore base → numero di Abilità con quel valore."
+  },
+  "taumaturgo": {
+    "addestramento": "Taumaturgo",
+    "incantesimi_liberi": {
+      "formula": "2 + Mod INT",
+      "fisso": 2,
+      "caratteristica": "INT"
+    },
+    "livello_massimo_per_grado_taumaturgico": 3,
+    "_nota": "Giocatore §2.10 e §3.8; Magia sezione 1: 2 + Mod INT incantesimi liberi una sola volta, livello massimo = 3 × Gradi taumaturgici (fino a 18).",
+    "TODO(Davide)": [
+      "Con INT 1 o 2 la formula 2 + Mod INT dà un numero negativo: il minimo è 0? (il calcolo per ora non scende sotto 0)",
+      "Le quote di Classe per macrofamiglia (es. 3 Fisici) si possono distribuire liberamente fra le 3 specializzazioni della macrofamiglia?",
+      "I 2 + Mod INT incantesimi liberi possono essere di qualunque macrofamiglia e specializzazione?",
+      "Con 1 Grado il livello massimo è 3: al 1° livello si possono conoscere solo incantesimi con livello base 1 e 3?"
+    ]
+  },
+  "incantesimi": {
+    "per_specializzazione": 10,
+    "schema_livello_base": { "1": 4, "3": 3, "6": 2, "9": 1 },
+    "_nota": "Magia sezione 11: livello base → numero di incantesimi per specializzazione."
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "versione_manuale": "Giocatore 0.43",
+  "fonte": "§1.2.3, §2.1",
+  "valore_minimo": 1,
+  "valore_massimo": 10,
+  "caratteristiche": [
+    {
+      "sigla": "FOR",
+      "nome": "Forza"
+    },
+    {
+      "sigla": "COS",
+      "nome": "Costituzione"
+    },
+    {
+      "sigla": "DES",
+      "nome": "Destrezza"
+    },
+    {
+      "sigla": "INT",
+      "nome": "Intelligenza"
+    },
+    {
+      "sigla": "SAG",
+      "nome": "Saggezza"
+    },
+    {
+      "sigla": "CAR",
+      "nome": "Carisma"
+    }
+  ],
+  "modificatore_ordinario": {
+    "_nota": "§2.1: valore − 5. Usato da Abilità, Iniziativa, Prove di Caratteristica.",
+    "1": -4,
+    "2": -3,
+    "3": -2,
+    "4": -1,
+    "5": 0,
+    "6": 1,
+    "7": 2,
+    "8": 3,
+    "9": 4,
+    "10": 5
+  },
+  "modificatore_salvezza": {
+    "_nota": "§1.2.3: scala specifica, usata solo nelle Prove Salvezza.",
+    "1": -2,
+    "2": -2,
+    "3": -1,
+    "4": -1,
+    "5": 0,
+    "6": 1,
+    "7": 1,
+    "8": 2,
+    "9": 2,
+    "10": 3
+  },
+  "salvezze": [
+    {
+      "id": "tempra",
+      "nome": "Tempra",
+      "caratteristica": "COS"
+    },
+    {
+      "id": "riflessi",
+      "nome": "Riflessi",
+      "caratteristica": "DES"
+    },
+    {
+      "id": "volonta",
+      "nome": "Volontà",
+      "caratteristica": "INT"
+    },
+    {
+      "id": "magia",
+      "nome": "Magia",
+      "caratteristica": "SAG"
+    }
+  ]
+}

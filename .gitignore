@@ -1,3 +1,20 @@
-# Godot 4+ specific ignores
-.godot/
-/android/
+# Dipendenze e cache di Node (solo per i test: nessuna dipendenza a runtime)
+node_modules/
+.npm/
+npm-debug.log*
+*.log
+coverage/
+
+# File di sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Variabili locali
+.env
+.env.*

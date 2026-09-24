@@ -1,0 +1,158 @@
+{
+  "versione_manuale": "Giocatore 0.43",
+  "fonte": "§4.3 (verificato con §4.6)",
+  "categorie": [
+    "Distanza",
+    "Ravvicinato",
+    "Mistiche",
+    "Operative",
+    "Sociali",
+    "Professionali"
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da lancio",
+      "categoria": "Distanza",
+      "caratteristica": "DES",
+      "ambito": "Armi scagliate, archi, balestre e granate lanciate a mano."
+    },
+    {
+      "nome": "Armi leggere",
+      "categoria": "Distanza",
+      "caratteristica": "DES",
+      "ambito": "Pistole, revolver e armi da fuoco compatte."
+    },
+    {
+      "nome": "Armi medie",
+      "categoria": "Distanza",
+      "caratteristica": "INT",
+      "ambito": "Fucili, mitra e armi individuali impiegate con mira e controllo."
+    },
+    {
+      "nome": "Armi pesanti",
+      "categoria": "Distanza",
+      "caratteristica": "FOR",
+      "ambito": "Mitragliatrici, lanciatori, armi di supporto e sistemi montati."
+    },
+    {
+      "nome": "Armi da guerra",
+      "categoria": "Ravvicinato",
+      "caratteristica": "FOR",
+      "ambito": "Armi marziali, pesanti, potenziate o specialistiche."
+    },
+    {
+      "nome": "Armi da mischia",
+      "categoria": "Ravvicinato",
+      "caratteristica": "DES",
+      "ambito": "Armi personali, semplici o improvvisate da combattimento ravvicinato."
+    },
+    {
+      "nome": "Corpo a corpo",
+      "categoria": "Ravvicinato",
+      "caratteristica": "FOR",
+      "ambito": "Colpi senz'armi, prese, lotta, immobilizzazioni e disarmi a mani nude. Comprende anche i tre profili di Tirapugni del §7.1.1; i benefici riservati agli attacchi senz’armi conservano tale requisito."
+    },
+    {
+      "nome": "Difese",
+      "categoria": "Ravvicinato",
+      "caratteristica": "DES",
+      "ambito": "Schivare, parare, deviare un colpo e utilizzare uno scudo."
+    },
+    {
+      "nome": "Artefatti",
+      "categoria": "Mistiche",
+      "caratteristica": "SAG",
+      "ambito": "Comprendere, analizzare e utilizzare oggetti mistici; sintonizzarsi con essi nei limiti dei requisiti previsti."
+    },
+    {
+      "nome": "Occultismo",
+      "categoria": "Mistiche",
+      "caratteristica": "INT",
+      "ambito": "Conoscere e interpretare fenomeni soprannaturali, entità, simboli e Oscura Simmetria."
+    },
+    {
+      "nome": "Potere",
+      "categoria": "Mistiche",
+      "caratteristica": "SAG",
+      "ambito": "Lanciare e controllare Incantesimi; mantenere la Concentrazione, meditare e convertire Potere."
+    },
+    {
+      "nome": "Rituali",
+      "categoria": "Mistiche",
+      "caratteristica": "INT",
+      "ambito": "Comprendere e preparare procedure rituali; eseguire gli usi specifici consentiti. Le procedure generali verranno integrate successivamente."
+    },
+    {
+      "nome": "Atletica",
+      "categoria": "Operative",
+      "caratteristica": "FOR",
+      "ambito": "Correre, saltare, scalare, nuotare e superare ostacoli fisici."
+    },
+    {
+      "nome": "Furtività",
+      "categoria": "Operative",
+      "caratteristica": "DES",
+      "ambito": "Nascondersi, infiltrarsi, pedinare, scassinare dispositivi meccanici e agire senza essere notati."
+    },
+    {
+      "nome": "Percezione",
+      "categoria": "Operative",
+      "caratteristica": "SAG",
+      "ambito": "Osservare, cercare, ascoltare e individuare pericoli o menzogne."
+    },
+    {
+      "nome": "Sopravvivenza",
+      "categoria": "Operative",
+      "caratteristica": "SAG",
+      "ambito": "Orientarsi, seguire piste e affrontare ambienti ostili."
+    },
+    {
+      "nome": "Cultura",
+      "categoria": "Sociali",
+      "caratteristica": "CAR",
+      "ambito": "Muoversi tra lingue, usanze, istituzioni, Corporazioni e protocolli."
+    },
+    {
+      "nome": "Intrattenere",
+      "categoria": "Sociali",
+      "caratteristica": "CAR",
+      "ambito": "Coinvolgere un pubblico mediante esibizioni e rappresentazioni."
+    },
+    {
+      "nome": "Oratoria",
+      "categoria": "Sociali",
+      "caratteristica": "CAR",
+      "ambito": "Persuadere, negoziare, comandare, motivare o intimidire apertamente."
+    },
+    {
+      "nome": "Raggirare",
+      "categoria": "Sociali",
+      "caratteristica": "CAR",
+      "ambito": "Mentire, simulare, camuffarsi e indurre a credere qualcosa di falso."
+    },
+    {
+      "nome": "Medicina",
+      "categoria": "Professionali",
+      "caratteristica": "SAG",
+      "ambito": "Diagnosticare, curare, stabilizzare ed eseguire procedure mediche."
+    },
+    {
+      "nome": "Pilotare",
+      "categoria": "Professionali",
+      "caratteristica": "INT",
+      "ambito": "Condurre mezzi, leggere strumenti e scegliere manovre e traiettorie."
+    },
+    {
+      "nome": "Scienza",
+      "categoria": "Professionali",
+      "caratteristica": "INT",
+      "ambito": "Analizzare fenomeni naturali mediante conoscenza e metodo scientifico."
+    },
+    {
+      "nome": "Tecnologia",
+      "categoria": "Professionali",
+      "caratteristica": "INT",
+      "ambito": "Costruire, riparare, programmare, sabotare e modificare dispositivi."
+    }
+  ]
+}

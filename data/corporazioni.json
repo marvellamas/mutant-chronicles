@@ -1,0 +1,203 @@
+{
+  "versione_manuale": "Giocatore 0.43",
+  "fonte": "§2.9 (valori e Abilità +1), §2.9.1–2.9.7 (testi), §2.11 (Salvezze)",
+  "_nota": "L'Alleanza non è una scelta iniziale (§2.9).",
+  "corporazioni": [
+    {
+      "nome": "Bauhaus",
+      "caratteristiche": {
+        "FOR": 5,
+        "COS": 6,
+        "DES": 5,
+        "INT": 6,
+        "SAG": 5,
+        "CAR": 4
+      },
+      "abilita_bonus": [
+        "Armi medie",
+        "Armi da guerra",
+        "Pilotare",
+        "Tecnologia"
+      ],
+      "salvezze": {
+        "tempra": 1,
+        "riflessi": 0,
+        "volonta": 1,
+        "magia": 0
+      },
+      "descrizione": "Bauhaus è l’aristocrazia industriale del Sistema Solare. Disciplina, tradizione e gerarchia sono i pilastri della sua cultura. Governata da casate nobiliari con un forte retaggio militare, Bauhaus unisce industria pesante e strategia raffinata. I suoi cittadini crescono in un ambiente rigoroso, dove l’onore si misura con la competenza e il servizio alla casata. Le sue armate sono ordinate, metodiche e inesorabili.",
+      "filosofia": "Ordine, disciplina, aristocrazia militare.",
+      "sistema_politico": "Struttura feudale-industriale guidata da casate nobiliari.",
+      "economia": "Industria pesante, armamenti di precisione, artigianato tecnico.",
+      "cultura": "Gerarchica, formale, orientata alla strategia."
+    },
+    {
+      "nome": "Capitol",
+      "caratteristiche": {
+        "FOR": 5,
+        "COS": 5,
+        "DES": 6,
+        "INT": 5,
+        "SAG": 4,
+        "CAR": 6
+      },
+      "abilita_bonus": [
+        "Armi leggere",
+        "Pilotare",
+        "Intrattenere",
+        "Oratoria"
+      ],
+      "salvezze": {
+        "tempra": 0,
+        "riflessi": 1,
+        "volonta": 1,
+        "magia": 0
+      },
+      "descrizione": "Capitol è potenza, spettacolo e propaganda. È la Corporazione dell’espansione economica, della produzione di massa e della visibilità mediatica. Patriottica e competitiva, costruisce eroi tanto per la guerra quanto per le telecamere. I suoi soldati sono audaci, i suoi piloti aggressivi e i suoi funzionari carismatici. Capitol crede nel successo, nel consumo e nella superiorità tecnologica come simboli di dominio.",
+      "filosofia": "Espansione, potenza, spettacolo.",
+      "sistema_politico": "Corporazione populista e mediaticamente dominante.",
+      "economia": "Industria bellica, trasporti, comunicazione di massa.",
+      "cultura": "Patriottica, competitiva, orientata al successo."
+    },
+    {
+      "nome": "Cybertronic",
+      "caratteristiche": {
+        "FOR": 4,
+        "COS": 6,
+        "DES": 5,
+        "INT": 6,
+        "SAG": 5,
+        "CAR": 5
+      },
+      "abilita_bonus": [
+        "Armi medie",
+        "Pilotare",
+        "Scienza",
+        "Tecnologia"
+      ],
+      "salvezze": {
+        "tempra": 1,
+        "riflessi": 0,
+        "volonta": 0,
+        "magia": 1
+      },
+      "descrizione": "Cybertronic rappresenta il futuro oltre l’umano. Fredda, calcolatrice e altamente segreta, è la Corporazione della cibernetica e dell’intelligenza artificiale. La sua società è orientata all’efficienza e al superamento dei limiti biologici. Molti dei suoi membri sono potenziati o collegati a reti neurali avanzate. Per Cybertronic l’emozione è un rumore di fondo; ciò che conta è l’evoluzione.",
+      "filosofia": "Evoluzione tecnologica oltre l’umano.",
+      "sistema_politico": "Struttura corporativa opaca e altamente centralizzata.",
+      "economia": "Cibernetica, intelligenze artificiali, sistemi avanzati e automazione totale.",
+      "cultura": "Fredda, razionale, orientata all’efficienza."
+    },
+    {
+      "nome": "Fratellanza",
+      "caratteristiche": {
+        "FOR": 5,
+        "COS": 5,
+        "DES": 4,
+        "INT": 5,
+        "SAG": 6,
+        "CAR": 6
+      },
+      "abilita_bonus": [
+        "Cultura",
+        "Oratoria",
+        "Occultismo",
+        "Percezione"
+      ],
+      "salvezze": {
+        "tempra": 0,
+        "riflessi": 0,
+        "volonta": 1,
+        "magia": 1
+      },
+      "descrizione": "La Fratellanza è l’unica autorità spirituale riconosciuta nel Sistema. Custode dei misteri mistici e baluardo contro l’Oscura Simmetria, guida l’umanità nella lotta contro la corruzione. Ascetica e disciplinata, non è una Corporazione industriale, ma una teocrazia che influenza politica e morale. I suoi membri dedicano la vita alla purificazione e alla difesa spirituale dell’umanità.",
+      "filosofia": "Fede, purificazione, lotta contro l’Oscura Simmetria.",
+      "sistema_politico": "Teocrazia spirituale indipendente.",
+      "economia": "Autonoma, ma sostenuta dalle Corporazioni.",
+      "cultura": "Ascetica, disciplinata, moralmente rigorosa."
+    },
+    {
+      "nome": "Imperiali",
+      "caratteristiche": {
+        "FOR": 6,
+        "COS": 6,
+        "DES": 5,
+        "INT": 4,
+        "SAG": 5,
+        "CAR": 5
+      },
+      "abilita_bonus": [
+        "Armi medie",
+        "Armi da guerra",
+        "Atletica",
+        "Sopravvivenza"
+      ],
+      "salvezze": {
+        "tempra": 1,
+        "riflessi": 0,
+        "volonta": 1,
+        "magia": 0
+      },
+      "descrizione": "Gli Imperiali sono guerrieri forgiati nella sopravvivenza. Provenienti da ambienti ostili e segnati da conflitti costanti, incarnano forza, onore e determinazione. La loro cultura è spartana, pragmatica e profondamente militare. Combattono frontalmente, senza esitazioni, e considerano la disciplina un dovere naturale. Per loro la guerra non è spettacolo: è necessità.",
+      "filosofia": "Onore, guerra, resistenza.",
+      "sistema_politico": "Militarismo diretto e cultura della sopravvivenza.",
+      "economia": "Industria bellica pesante.",
+      "cultura": "Spartana, pragmatica, orientata al combattimento."
+    },
+    {
+      "nome": "Mishima",
+      "caratteristiche": {
+        "FOR": 5,
+        "COS": 4,
+        "DES": 6,
+        "INT": 5,
+        "SAG": 6,
+        "CAR": 5
+      },
+      "abilita_bonus": [
+        "Armi da mischia",
+        "Corpo a corpo",
+        "Atletica",
+        "Occultismo"
+      ],
+      "salvezze": {
+        "tempra": 0,
+        "riflessi": 1,
+        "volonta": 0,
+        "magia": 1
+      },
+      "descrizione": "Mishima è equilibrio tra tradizione e tecnologia. Organizzata in clan industriali, unisce precisione ingegneristica e rigido codice d’onore. La disciplina personale è centrale nella sua cultura, così come il rispetto per la gerarchia e la spiritualità. I suoi guerrieri combinano arte marziale e tecnologia avanzata, incarnando una filosofia in cui mente e lama sono una sola cosa.",
+      "filosofia": "Onore, disciplina spirituale, tradizione.",
+      "sistema_politico": "Struttura clanica-industriale.",
+      "economia": "Tecnologia raffinata e precisione ingegneristica.",
+      "cultura": "Codice d’onore rigoroso, equilibrio tra spirito e tecnica."
+    },
+    {
+      "nome": "Freelance",
+      "caratteristiche": {
+        "FOR": 5,
+        "COS": 6,
+        "DES": 5,
+        "INT": 5,
+        "SAG": 5,
+        "CAR": 6
+      },
+      "abilita_bonus": [
+        "Armi leggere",
+        "Pilotare",
+        "Raggirare",
+        "Sopravvivenza"
+      ],
+      "salvezze": {
+        "tempra": 1,
+        "riflessi": 1,
+        "volonta": 0,
+        "magia": 0
+      },
+      "descrizione": "I Freelance non appartengono a nessuno. Sono mercenari, contrabbandieri, specialisti e sopravvissuti che operano tra le Corporazioni senza legami permanenti. La loro lealtà è personale, non ideologica. Vivono ai margini dei grandi poteri, adattandosi a ogni situazione. In un mondo dominato da megastrutture corporative, rappresentano l’unica vera espressione di libertà, oppure di opportunismo.",
+      "filosofia": "Autonomia, sopravvivenza, profitto personale.",
+      "sistema_politico": "Nessuna fedeltà permanente.",
+      "economia": "Mercenariato, contrabbando, lavori su commissione.",
+      "cultura": "Pragmatica, adattabile."
+    }
+  ]
+}

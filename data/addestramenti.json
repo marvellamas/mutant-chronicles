@@ -1,0 +1,212 @@
+{
+  "versione_manuale": "Giocatore 0.43",
+  "fonte": "§2.2–2.8 (valori base), §2.10 (vantaggi), §2.11 (Salvezze)",
+  "_nota_vantaggi": "§2.10: per Sopravvissuto, Mestiere Solido e Mente Analitica il limite di una volta per sessione è complessivo tra le Abilità elencate.",
+  "addestramenti": [
+    {
+      "nome": "Avventuriero",
+      "fonte": "§2.4",
+      "identita": "Versatilità, autonomia, esplorazione e adattamento agli ambienti ostili.",
+      "valori_base": {
+        "Armi da lancio": 2,
+        "Armi leggere": 3,
+        "Armi medie": 2,
+        "Armi pesanti": 0,
+        "Armi da guerra": 1,
+        "Armi da mischia": 2,
+        "Corpo a corpo": 2,
+        "Difese": 3,
+        "Artefatti": 1,
+        "Occultismo": 0,
+        "Potere": 0,
+        "Rituali": 0,
+        "Atletica": 3,
+        "Furtività": 4,
+        "Percezione": 4,
+        "Sopravvivenza": 4,
+        "Cultura": 2,
+        "Intrattenere": 2,
+        "Oratoria": 1,
+        "Raggirare": 4,
+        "Medicina": 2,
+        "Pilotare": 3,
+        "Scienza": 1,
+        "Tecnologia": 2
+      },
+      "vantaggio": {
+        "nome": "Sopravvissuto",
+        "testo": "Una volta per sessione può ripetere una Prova fallita di Percezione o Sopravvivenza. Deve accettare il secondo risultato."
+      },
+      "salvezze": {
+        "tempra": 1,
+        "riflessi": 1,
+        "volonta": 1,
+        "magia": 0
+      }
+    },
+    {
+      "nome": "Combattente",
+      "fonte": "§2.5",
+      "identita": "Preparazione nelle armi, nella difesa e nelle attività operative dello scontro.",
+      "valori_base": {
+        "Armi da lancio": 2,
+        "Armi leggere": 4,
+        "Armi medie": 4,
+        "Armi pesanti": 3,
+        "Armi da guerra": 4,
+        "Armi da mischia": 3,
+        "Corpo a corpo": 3,
+        "Difese": 4,
+        "Artefatti": 1,
+        "Occultismo": 0,
+        "Potere": 0,
+        "Rituali": 0,
+        "Atletica": 3,
+        "Furtività": 2,
+        "Percezione": 2,
+        "Sopravvivenza": 2,
+        "Cultura": 1,
+        "Intrattenere": 1,
+        "Oratoria": 1,
+        "Raggirare": 2,
+        "Medicina": 2,
+        "Pilotare": 2,
+        "Scienza": 0,
+        "Tecnologia": 2
+      },
+      "vantaggio": {
+        "nome": "Colpo Perentorio",
+        "testo": "Una volta per combattimento può massimizzare tutti i dadi di una singola istanza di danno inflitta da un proprio attacco. Si dichiara dopo aver colpito e prima di tirare i danni; i bonus fissi si applicano normalmente. In una Raffica vale per un solo colpo, in un attacco ad Area per un solo bersaglio."
+      },
+      "salvezze": {
+        "tempra": 1,
+        "riflessi": 1,
+        "volonta": 0,
+        "magia": 0
+      }
+    },
+    {
+      "nome": "Lavoratore",
+      "fonte": "§2.6",
+      "identita": "Competenza pratica, tecnica, produttiva e professionale.",
+      "valori_base": {
+        "Armi da lancio": 2,
+        "Armi leggere": 3,
+        "Armi medie": 2,
+        "Armi pesanti": 1,
+        "Armi da guerra": 0,
+        "Armi da mischia": 4,
+        "Corpo a corpo": 2,
+        "Difese": 2,
+        "Artefatti": 2,
+        "Occultismo": 0,
+        "Potere": 0,
+        "Rituali": 0,
+        "Atletica": 4,
+        "Furtività": 1,
+        "Percezione": 3,
+        "Sopravvivenza": 3,
+        "Cultura": 1,
+        "Intrattenere": 2,
+        "Oratoria": 1,
+        "Raggirare": 2,
+        "Medicina": 3,
+        "Pilotare": 4,
+        "Scienza": 2,
+        "Tecnologia": 4
+      },
+      "vantaggio": {
+        "nome": "Mestiere Solido",
+        "testo": "Una volta per sessione può ripetere una Prova fallita di Atletica, Pilotare o Tecnologia. Deve accettare il secondo risultato."
+      },
+      "salvezze": {
+        "tempra": 1,
+        "riflessi": 0,
+        "volonta": 1,
+        "magia": 0
+      }
+    },
+    {
+      "nome": "Studioso",
+      "fonte": "§2.7",
+      "identita": "Conoscenza, analisi, ricerca e applicazione metodica del sapere.",
+      "valori_base": {
+        "Armi da lancio": 1,
+        "Armi leggere": 2,
+        "Armi medie": 0,
+        "Armi pesanti": 0,
+        "Armi da guerra": 0,
+        "Armi da mischia": 1,
+        "Corpo a corpo": 1,
+        "Difese": 2,
+        "Artefatti": 3,
+        "Occultismo": 3,
+        "Potere": 1,
+        "Rituali": 2,
+        "Atletica": 0,
+        "Furtività": 2,
+        "Percezione": 3,
+        "Sopravvivenza": 2,
+        "Cultura": 4,
+        "Intrattenere": 2,
+        "Oratoria": 4,
+        "Raggirare": 2,
+        "Medicina": 4,
+        "Pilotare": 2,
+        "Scienza": 4,
+        "Tecnologia": 3
+      },
+      "vantaggio": {
+        "nome": "Mente Analitica",
+        "testo": "Una volta per sessione può ripetere una Prova fallita di Cultura, Medicina o Scienza. Deve accettare il secondo risultato."
+      },
+      "salvezze": {
+        "tempra": 0,
+        "riflessi": 0,
+        "volonta": 1,
+        "magia": 1
+      }
+    },
+    {
+      "nome": "Taumaturgo",
+      "fonte": "§2.8",
+      "identita": "Percezione, conoscenza e manipolazione delle forze mistiche.",
+      "valori_base": {
+        "Armi da lancio": 1,
+        "Armi leggere": 2,
+        "Armi medie": 0,
+        "Armi pesanti": 0,
+        "Armi da guerra": 0,
+        "Armi da mischia": 1,
+        "Corpo a corpo": 1,
+        "Difese": 2,
+        "Artefatti": 4,
+        "Occultismo": 4,
+        "Potere": 4,
+        "Rituali": 4,
+        "Atletica": 0,
+        "Furtività": 2,
+        "Percezione": 3,
+        "Sopravvivenza": 2,
+        "Cultura": 3,
+        "Intrattenere": 2,
+        "Oratoria": 3,
+        "Raggirare": 2,
+        "Medicina": 2,
+        "Pilotare": 1,
+        "Scienza": 3,
+        "Tecnologia": 2
+      },
+      "vantaggio": {
+        "nome": "Manipolare il Potere",
+        "testo": "Concede l’accesso alla magia e 2 + Mod INT Incantesimi liberi conosciuti, oltre a quelli della Classe. Si applicano le regole del Capitolo 6."
+      },
+      "salvezze": {
+        "tempra": 0,
+        "riflessi": 0,
+        "volonta": 1,
+        "magia": 1
+      }
+    }
+  ]
+}

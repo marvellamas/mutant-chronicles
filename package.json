@@ -1,0 +1,13 @@
+{
+  "name": "mutant",
+  "version": "0.1.0",
+  "description": "Creatore assistito di personaggi per SIMPLY RPG (uso interno del gruppo)",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
