@@ -62,7 +62,12 @@ export function trovaTodo(dati) {
     else if (Array.isArray(v)) v.forEach((x, i) => visita(x, `${percorso}[${i}]`));
     else if (isOggetto(v)) {
       for (const [k, x] of Object.entries(v)) {
-        if (k.startsWith('TODO(')) trovati.push({ percorso: `${percorso}.${k}`, testo: JSON.stringify(x) });
+        if (k.startsWith('TODO(')) {
+          // una chiave TODO(...) con una lista di domande: una voce per domanda
+          const domande = Array.isArray(x) ? x : [x];
+          domande.forEach((d, i) => trovati.push({ percorso: `${percorso}.${k}${Array.isArray(x) ? `[${i}]` : ''}`, testo: String(d) }));
+          continue;
+        }
         visita(x, `${percorso}.${k}`);
       }
     }

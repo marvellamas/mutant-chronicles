@@ -1,0 +1,280 @@
+// Modello delle scelte del giocatore: stato iniziale, invalidazione a valle, anteprima dei
+// valori derivati, serializzazione. Tutto ciò che è calcolato si ricava da calc.js: qui non
+// si conservano mai valori derivati.
+import {
+  validaScelte, modOrdinario, modSalvezza, salvezza, puntiVita, puntiMagia, iniziativa,
+  bonusAvanzamentoSalvezze,
+} from './calc.js';
+import { statoIncantesimi } from './incantesimi.js';
+
+export const FORMATO_FILE = 'mutant-personaggio';
+export const VERSIONE_FORMATO = 1;
+
+/** Scelte di un personaggio nuovo. È l'unico stato che si salva. */
+export function nuoveScelte() {
+  return {
+    nome: '',
+    concetto: '',
+    corporazione: null,
+    puntiCaratteristica: {},
+    addestramento: null,
+    classe: null,
+    tiroDadoPM: null,
+    puntiAbilitaLiberi: {},
+    incantesimi: [],
+    puntiEroe: null,
+    equipaggiamento: '',
+  };
+}
+
+const CAMPI = Object.keys(nuoveScelte());
+const trova = (lista, nome) => lista.find((x) => x.nome === nome);
+const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
+const somma = (obj) => Object.values(obj ?? {}).reduce((s, v) => s + v, 0);
+
+export function eTaumaturgo(scelte, dati) {
+  return scelte?.addestramento === dati.regole.taumaturgo.addestramento;
+}
+
+/** Applica una modifica parziale e riporta a coerenza ciò che sta a valle. */
+export function applicaModifica(scelte, modifica, dati) {
+  return normalizza({ ...scelte, ...modifica }, dati);
+}
+
+/**
+ * Rende coerenti le scelte con i dati e fra loro. Ciò che non è più ammesso a valle di una
+ * modifica viene azzerato o ridotto, e ogni intervento produce un avviso leggibile.
+ * Serve anche all'import e al caricamento: se Davide cambia una tabella, le scelte che non
+ * tornano più vengono segnalate invece di produrre una scheda sbagliata.
+ * @returns {{scelte: object, avvisi: string[]}}
+ */
+export function normalizza(scelteIn, dati) {
+  const s = { ...nuoveScelte(), ...structuredClone(isOggetto(scelteIn) ? scelteIn : {}) };
+  for (const k of Object.keys(s)) if (!CAMPI.includes(k)) delete s[k];
+  const avvisi = [];
+  const r = dati.regole;
+
+  for (const k of ['nome', 'concetto', 'equipaggiamento']) if (typeof s[k] !== 'string') s[k] = '';
+  for (const k of ['puntiCaratteristica', 'puntiAbilitaLiberi']) if (!isOggetto(s[k])) s[k] = {};
+  if (!Array.isArray(s.incantesimi)) s.incantesimi = [];
+
+  // Riferimenti ai dati
+  const riferimenti = [
+    ['corporazione', dati.corporazioni.corporazioni, 'La Corporazione'],
+    ['addestramento', dati.addestramenti.addestramenti, 'L’Addestramento'],
+    ['classe', dati.classi.classi, 'La Classe'],
+  ];
+  for (const [campo, lista, etichetta] of riferimenti) {
+    if (s[campo] === undefined || s[campo] === '') s[campo] = null;
+    if (s[campo] !== null && !trova(lista, s[campo])) {
+      avvisi.push(`${etichetta} "${s[campo]}" non esiste nei dati attuali: scelta azzerata.`);
+      s[campo] = null;
+    }
+  }
+  const corp = trova(dati.corporazioni.corporazioni, s.corporazione);
+  const addestr = trova(dati.addestramenti.addestramenti, s.addestramento);
+  let classe = trova(dati.classi.classi, s.classe);
+
+  // §2.2 e §2.12: la prima Classe appartiene all'Addestramento.
+  if (classe && classe.addestramento !== s.addestramento) {
+    avvisi.push(s.addestramento
+      ? `La Classe ${classe.nome} appartiene all’Addestramento ${classe.addestramento}: con ${s.addestramento} va scelta di nuovo.`
+      : `La Classe ${classe.nome} è stata azzerata perché manca l’Addestramento.`);
+    s.classe = null;
+    classe = undefined;
+  }
+
+  // §2.12 e §3.3: il tiro del dado dei PM vale solo per una Classe che lo prevede.
+  const dadoPM = classe?.pm_per_grado.dado ?? 0;
+  if (s.tiroDadoPM !== null && s.tiroDadoPM !== undefined) {
+    if (dadoPM === 0) s.tiroDadoPM = null;
+    else if (!Number.isInteger(s.tiroDadoPM) || s.tiroDadoPM < 1 || s.tiroDadoPM > dadoPM) {
+      avvisi.push(`Il tiro dei PM (${s.tiroDadoPM}) non è valido per 1d${dadoPM}: va rifatto.`);
+      s.tiroDadoPM = null;
+    }
+  } else {
+    s.tiroDadoPM = null;
+  }
+
+  // §2.1: Punti Caratteristica
+  const sigle = dati.caratteristiche.caratteristiche.map((c) => c.sigla);
+  const massimo = r.creazione.massimo_caratteristica;
+  for (const [k, v] of Object.entries(s.puntiCaratteristica)) {
+    if (!sigle.includes(k) || !Number.isInteger(v) || v <= 0) {
+      if (v !== 0) avvisi.push(`Punti Caratteristica "${k}": valore ${JSON.stringify(v)} non ammesso, rimosso.`);
+      delete s.puntiCaratteristica[k];
+      continue;
+    }
+    if (corp && corp.caratteristiche[k] + v > massimo) {
+      const nuovo = Math.max(0, massimo - corp.caratteristiche[k]);
+      avvisi.push(`${k}: con ${corp.nome} parte da ${corp.caratteristiche[k]}; i punti assegnati scendono da ${v} a ${nuovo} per non superare ${massimo}.`);
+      if (nuovo > 0) s.puntiCaratteristica[k] = nuovo;
+      else delete s.puntiCaratteristica[k];
+    }
+  }
+  if (somma(s.puntiCaratteristica) > r.creazione.punti_caratteristica) {
+    avvisi.push(`I Punti Caratteristica assegnati superano ${r.creazione.punti_caratteristica}: sono stati azzerati.`);
+    s.puntiCaratteristica = {};
+  }
+
+  // §2.13: Punti Abilità Liberi
+  const nomiAbilita = dati.abilita.abilita.map((a) => a.nome);
+  for (const [k, v] of Object.entries(s.puntiAbilitaLiberi)) {
+    if (!nomiAbilita.includes(k) || !Number.isInteger(v) || v <= 0) {
+      if (v !== 0) avvisi.push(`Punti Abilità "${k}": valore ${JSON.stringify(v)} non ammesso, rimosso.`);
+      delete s.puntiAbilitaLiberi[k];
+    }
+  }
+  if (somma(s.puntiAbilitaLiberi) > r.creazione.punti_abilita_liberi) {
+    avvisi.push(`I Punti Abilità Liberi assegnati superano ${r.creazione.punti_abilita_liberi}: sono stati azzerati.`);
+    s.puntiAbilitaLiberi = {};
+  }
+  if (corp && addestr && classe) {
+    // Toglie un punto alla volta dove validaScelte segnala una violazione (Avanzamento > 3, VA < 1).
+    const ridotti = new Map();
+    for (let giro = 0; giro < 50; giro++) {
+      const v = validaScelte(s, dati).find((e) => e.tipo === 'violazione' && e.campo.startsWith('puntiAbilitaLiberi.'));
+      if (!v) break;
+      const nome = v.campo.slice('puntiAbilitaLiberi.'.length);
+      if (!ridotti.has(nome)) ridotti.set(nome, { prima: s.puntiAbilitaLiberi[nome], motivo: v.problema });
+      if (s.puntiAbilitaLiberi[nome] > 1) s.puntiAbilitaLiberi[nome] -= 1;
+      else delete s.puntiAbilitaLiberi[nome];
+    }
+    for (const [nome, { prima, motivo }] of ridotti) {
+      avvisi.push(`${nome}: punti liberi ridotti da ${prima} a ${s.puntiAbilitaLiberi[nome] ?? 0} (${motivo}).`);
+    }
+  }
+
+  // Incantesimi: solo con l'Addestramento Taumaturgo (§2.10).
+  if (!eTaumaturgo(s, dati)) {
+    if (s.incantesimi.length) avvisi.push(`Gli incantesimi scelti (${s.incantesimi.length}) sono stati rimossi: servono l’Addestramento ${r.taumaturgo.addestramento}.`);
+    s.incantesimi = [];
+  } else {
+    const catalogo = dati.incantesimi.incantesimi;
+    const visti = new Set();
+    s.incantesimi = s.incantesimi.filter((n) => {
+      if (visti.has(n)) return false;
+      visti.add(n);
+      if (!trova(catalogo, n)) { avvisi.push(`L’incantesimo "${n}" non esiste nei dati attuali: rimosso.`); return false; }
+      return true;
+    });
+    const stato = statoIncantesimi(s, dati);
+    if (stato) {
+      const troppoAlti = s.incantesimi.filter((n) => trova(catalogo, n).livello_base > stato.livelloMassimo);
+      for (const n of troppoAlti) avvisi.push(`${n}: livello base oltre il massimo ${stato.livelloMassimo}, rimosso.`);
+      s.incantesimi = s.incantesimi.filter((n) => !troppoAlti.includes(n));
+      // Se le quote non bastano più (cambio di Classe o di INT) si tolgono gli ultimi aggiunti in eccesso.
+      const rimossi = [];
+      for (let st = statoIncantesimi(s, dati); st && (st.eccesso || st.scelti > st.totale); st = statoIncantesimi(s, dati)) {
+        const i = s.incantesimi.findLastIndex((n) => {
+          const m = st.perMacro[trova(catalogo, n).macrofamiglia];
+          return m.scelti > m.quota;
+        });
+        rimossi.push(...s.incantesimi.splice(i === -1 ? s.incantesimi.length - 1 : i, 1));
+      }
+      if (rimossi.length) avvisi.push(`Quote incantesimi superate: rimossi ${rimossi.join(', ')}.`);
+    }
+  }
+
+  // §2.15: Punti Eroe
+  const pe = r.punti_eroe;
+  if (s.puntiEroe !== null && (!Number.isInteger(s.puntiEroe) || s.puntiEroe < pe.minimo || s.puntiEroe > pe.massimo)) {
+    avvisi.push(`Punti Eroe ${JSON.stringify(s.puntiEroe)} fuori dall’intervallo ${pe.minimo}–${pe.massimo}: da rideterminare.`);
+    s.puntiEroe = null;
+  }
+  if (s.puntiEroe === undefined) s.puntiEroe = null;
+
+  return { scelte: s, avvisi };
+}
+
+/**
+ * Valori derivati disponibili anche con scelte parziali (per il riepilogo durante il wizard):
+ * Caratteristiche con la sola Corporazione, Salvezze con Corporazione e Addestramento,
+ * PV/PM con Corporazione e Classe. Usa solo le funzioni di calc.js.
+ */
+export function anteprima(scelte, dati) {
+  const r = dati.regole;
+  const corp = trova(dati.corporazioni.corporazioni, scelte.corporazione);
+  const addestr = trova(dati.addestramenti.addestramenti, scelte.addestramento);
+  const classe = trova(dati.classi.classi, scelte.classe);
+  const out = {
+    caratteristiche: null, salvezze: null, pv: null, pm: null, iniziativa: null,
+    puntiCaratteristicaRimasti: r.creazione.punti_caratteristica - somma(scelte.puntiCaratteristica),
+    puntiAbilitaRimasti: r.creazione.punti_abilita_liberi - somma(scelte.puntiAbilitaLiberi),
+    incantesimi: statoIncantesimi(scelte, dati),
+  };
+  if (!corp) return out;
+  const { modificatore_ordinario: tabOrd, modificatore_salvezza: tabSal } = dati.caratteristiche;
+  out.caratteristiche = {};
+  for (const { sigla, nome } of dati.caratteristiche.caratteristiche) {
+    const valore = corp.caratteristiche[sigla] + (scelte.puntiCaratteristica?.[sigla] ?? 0);
+    const leggibile = valore >= dati.caratteristiche.valore_minimo && valore <= dati.caratteristiche.valore_massimo;
+    out.caratteristiche[sigla] = {
+      nome, valore,
+      mod: leggibile ? modOrdinario(valore, tabOrd) : null,
+      modSalvezza: leggibile ? modSalvezza(valore, tabSal) : null,
+    };
+  }
+  const car = out.caratteristiche;
+  const mods = r.iniziativa.caratteristiche.map((s) => car[s].mod);
+  if (mods.every(Number.isInteger)) out.iniziativa = iniziativa(...mods);
+  if (addestr) {
+    out.salvezze = {};
+    const avanz = bonusAvanzamentoSalvezze(1, r);
+    for (const { id, nome, caratteristica } of dati.caratteristiche.salvezze) {
+      const m = car[caratteristica].modSalvezza;
+      out.salvezze[id] = {
+        nome,
+        totale: m === null ? null : salvezza({
+          base8: r.salvezze.base, modSpecifico: m, addestramento: addestr.salvezze[id],
+          corporazione: corp.salvezze[id], avanzamento: avanz,
+        }),
+      };
+    }
+  }
+  if (classe) {
+    out.pv = puntiVita(car.COS.valore, classe, { dadoMassimizzato: r.creazione.dado_pv_massimizzato });
+    const dado = classe.pm_per_grado.dado;
+    if (dado === 0 || (Number.isInteger(scelte.tiroDadoPM) && scelte.tiroDadoPM >= 1 && scelte.tiroDadoPM <= dado)) {
+      out.pm = puntiMagia(car.SAG.valore, classe, { tiro: scelte.tiroDadoPM ?? undefined });
+    }
+  }
+  return out;
+}
+
+// ---------------------------------------------------------------------------
+// Serializzazione: il file contiene solo le scelte.
+
+export function serializza(scelte, { versioniDati } = {}) {
+  const pulite = {};
+  for (const k of CAMPI) pulite[k] = scelte?.[k] ?? nuoveScelte()[k];
+  const file = { formato: FORMATO_FILE, versione: VERSIONE_FORMATO };
+  if (versioniDati) file.versioni_dati = versioniDati;
+  file.scelte = pulite;
+  return JSON.stringify(file, null, 2);
+}
+
+/**
+ * Legge un file esportato. Lancia un Error con messaggio leggibile se il file non è valido.
+ * Restituisce le scelte grezze: vanno poi passate a normalizza() con i dati correnti.
+ */
+export function deserializza(testo) {
+  let obj;
+  try {
+    obj = JSON.parse(testo);
+  } catch {
+    throw new Error('Il file non è un JSON valido.');
+  }
+  if (!isOggetto(obj)) throw new Error('Il file non contiene un personaggio.');
+  if (obj.formato !== undefined && obj.formato !== FORMATO_FILE) {
+    throw new Error(`Formato "${obj.formato}" sconosciuto: atteso "${FORMATO_FILE}".`);
+  }
+  if (Number.isInteger(obj.versione) && obj.versione > VERSIONE_FORMATO) {
+    throw new Error(`Il file è stato creato con una versione più recente dell’app (formato ${obj.versione}).`);
+  }
+  const scelte = obj.formato === FORMATO_FILE ? obj.scelte : obj;
+  if (!isOggetto(scelte) || !CAMPI.some((k) => k in scelte)) throw new Error('Il file non contiene le scelte di un personaggio.');
+  const out = {};
+  for (const k of CAMPI) if (k in scelte) out[k] = scelte[k];
+  return { ...nuoveScelte(), ...out };
+}
