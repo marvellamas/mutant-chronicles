@@ -6,27 +6,33 @@
   "caratteristiche": [
     {
       "sigla": "FOR",
-      "nome": "Forza"
+      "nome": "Forza",
+      "descrizione": "TODO(Davide)"
     },
     {
       "sigla": "COS",
-      "nome": "Costituzione"
+      "nome": "Costituzione",
+      "descrizione": "TODO(Davide)"
     },
     {
       "sigla": "DES",
-      "nome": "Destrezza"
+      "nome": "Destrezza",
+      "descrizione": "TODO(Davide)"
     },
     {
       "sigla": "INT",
-      "nome": "Intelligenza"
+      "nome": "Intelligenza",
+      "descrizione": "TODO(Davide)"
     },
     {
       "sigla": "SAG",
-      "nome": "Saggezza"
+      "nome": "Saggezza",
+      "descrizione": "TODO(Davide)"
     },
     {
       "sigla": "CAR",
-      "nome": "Carisma"
+      "nome": "Carisma",
+      "descrizione": "TODO(Davide)"
     }
   ],
   "modificatore_ordinario": {
@@ -76,5 +82,6 @@
       "nome": "Magia",
       "caratteristica": "SAG"
     }
-  ]
+  ],
+  "_nota_descrizioni": "Il Manuale del Giocatore 0.43 non descrive le singole Caratteristiche: descrizioni da fornire (TODO)."
 }

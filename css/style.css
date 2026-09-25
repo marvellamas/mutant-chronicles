@@ -401,6 +401,77 @@ dl.voci.in-linea dt::after { content: ":"; }
 .pagina-errori li { margin: 0.3rem 0; }
 .pagina-errori pre { white-space: pre-wrap; background: var(--superficie); padding: 0.75rem; border-radius: var(--raggio); }
 
+/* ---------------------------------------------------------------- tooltip e scheda completa */
+
+/* Nome con descrizione: sottolineatura tratteggiata discreta, stesso testo del contesto */
+.voce-info {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  text-align: inherit;
+  cursor: help;
+  text-decoration: underline dotted;
+  text-decoration-color: var(--tenue);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  border-radius: 2px;
+}
+.voce-info:hover, .voce-info.attiva { text-decoration-color: var(--accento); color: var(--accento); }
+.voce-info:focus-visible { outline: 2px solid var(--accento); outline-offset: 1px; }
+.incantesimo .voce-info { cursor: pointer; }
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  width: max-content;
+  max-width: min(360px, calc(100vw - 16px));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0.6rem 0.8rem;
+  background: var(--superficie);
+  color: var(--testo);
+  border: 1px solid var(--bordo);
+  border-radius: var(--raggio);
+  box-shadow: 0 6px 24px rgb(0 0 0 / 0.18);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  font-weight: 400;
+  text-align: left;
+  text-transform: none;
+  letter-spacing: normal;
+}
+.tooltip[hidden] { display: none; }
+.tooltip p { margin: 0.35em 0; }
+.tooltip-titolo { font-weight: 700; font-size: 1rem; margin-top: 0 !important; }
+.tooltip-sottotitolo { color: var(--tenue); font-size: 0.82rem; }
+.tooltip-etichetta { font-weight: 600; font-size: 0.8rem; color: var(--tenue); text-transform: uppercase; letter-spacing: 0.03em; }
+.tooltip .tabella { font-size: 0.8rem; }
+.tooltip .tabella th { text-transform: none; letter-spacing: normal; }
+.tooltip-apri { margin-top: 0.5rem; min-height: 2rem; padding: 0.3rem 0.7rem; }
+
+.pannello-scheda {
+  width: min(760px, calc(100vw - 16px));
+  max-height: calc(100vh - 32px);
+  padding: 0;
+  border: 1px solid var(--bordo);
+  border-radius: var(--raggio);
+  background: var(--superficie);
+  color: var(--testo);
+  box-shadow: 0 12px 40px rgb(0 0 0 / 0.3);
+}
+.pannello-scheda::backdrop { background: rgb(0 0 0 / 0.45); }
+.pannello-contenuto { padding: 0.5rem 1.25rem 1.25rem; }
+.pannello-testa { display: flex; justify-content: space-between; align-items: center; gap: 1rem; position: sticky; top: 0; background: var(--superficie); padding-top: 0.5rem; }
+.pannello-testa h2 { margin: 0.5rem 0; }
+.tabella tr.evidenziata td { background: var(--accento-tenue); font-weight: 600; }
+
+.incantesimo-scheda { break-inside: avoid; margin: 0.75rem 0 1rem; }
+.incantesimo-scheda h4 { margin: 0 0 0.2rem; }
+.piccolo { font-size: 0.85rem; color: var(--tenue); margin: 0.15rem 0; }
+
 /* ---------------------------------------------------------------- stampa: solo la scheda */
 
 @media print {
@@ -408,7 +479,10 @@ dl.voci.in-linea dt::after { content: ":"; }
   :root { --sfondo: #fff; --superficie: #fff; --testo: #000; --tenue: #444; --bordo: #999; color-scheme: light; }
   body { font-size: 10pt; background: #fff; color: #000; }
   main { padding: 0; max-width: none; }
-  .testata, .passi, .riepilogo, .passo-testa, .passo-piede, .avvisi, .no-stampa, .riquadro { display: none !important; }
+  .testata, .passi, .riepilogo, .passo-testa, .passo-piede, .avvisi, .no-stampa, .riquadro,
+  .tooltip, .pannello-scheda { display: none !important; }
+  .voce-info { text-decoration: none; color: inherit; }
+  .piccolo { color: #333; }
   .layout { display: block; }
   .passo > :not(.scheda) { display: none !important; }
   .scheda { border: 0; padding: 0; margin: 0; }

@@ -4,6 +4,7 @@ import { validaScelte } from '../calc.js';
 import { eTaumaturgo } from '../character.js';
 import { statoIncantesimi, motivoBloccoIncantesimo, IPOTESI_INCANTESIMI } from '../incantesimi.js';
 import { renderScheda } from './scheda.js';
+import { info, elencoInfo } from './tooltip.js';
 
 const trova = (lista, nome) => lista.find((x) => x.nome === nome);
 const GRADI = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI' };
@@ -171,7 +172,7 @@ function passoConcetto(ctx) {
 
 function tabellaValori(ctx, valori) {
   const sigle = ctx.dati.caratteristiche.caratteristiche.map((c) => c.sigla);
-  return h('dl', { class: 'valori' }, sigle.map((s) => h('div', {}, h('dt', {}, s), h('dd', {}, String(valori[s])))));
+  return h('dl', { class: 'valori' }, sigle.map((s) => h('div', {}, h('dt', {}, info('caratteristica', s)), h('dd', {}, String(valori[s])))));
 }
 
 function passoCorporazione(ctx) {
@@ -182,7 +183,7 @@ function passoCorporazione(ctx) {
       return carta(sel,
         h('header', {}, h('h3', {}, c.nome), bottoneScelta(sel, () => ctx.aggiorna({ corporazione: c.nome }))),
         tabellaValori(ctx, c.caratteristiche),
-        h('p', {}, h('strong', {}, 'Abilità +1: '), c.abilita_bonus.join(', ')),
+        h('p', {}, h('strong', {}, 'Abilità +1: '), elencoInfo('abilita', c.abilita_bonus)),
         h('p', {}, h('strong', {}, 'Salvezze: '), bonusSalvezze(ctx, c.salvezze)),
         dettagli(ctx, `corp:${c.nome}`, 'Descrizione',
           h('p', {}, c.descrizione),
@@ -214,7 +215,7 @@ function passoCaratteristiche(ctx) {
     // Il motivo "punti esauriti" vale per tutte le righe: lo spiega il contatore, non la riga.
     const inRiga = blocco && blocco.campo !== 'puntiCaratteristica' ? motivoPiu : null;
     return h('tr', {},
-      h('th', { scope: 'row' }, nome, h('span', { class: 'sigla' }, ` ${sigla}`),
+      h('th', { scope: 'row' }, info('caratteristica', sigla, nome), h('span', { class: 'sigla' }, ` ${sigla}`),
         h('small', { class: 'formula' }, `Iniziale ${corp.caratteristiche[sigla]} · Mod Salv. ${segno(a.modSalvezza)}`),
         inRiga ? h('small', { class: 'motivo' }, inRiga) : null),
       h('td', { class: 'dettaglio' }, String(corp.caratteristiche[sigla])),
@@ -250,7 +251,7 @@ function tabellaValoriBase(ctx, valori) {
     categorie.map((cat) => h('tbody', {},
       h('tr', { class: 'categoria' }, h('th', { colspan: 3 }, cat)),
       abilita.filter((a) => a.categoria === cat).map((a) => h('tr', {},
-        h('td', {}, a.nome), h('td', {}, a.caratteristica),
+        h('td', {}, info('abilita', a.nome)), h('td', {}, a.caratteristica),
         h('td', { class: `base base-${valori[a.nome]}` }, String(valori[a.nome])))))));
 }
 
@@ -305,7 +306,7 @@ function passoClasse(ctx) {
       return carta(sel,
         h('header', {}, h('h3', {}, c.nome), bottoneScelta(sel, () => ctx.aggiorna({ classe: c.nome }))),
         h('p', { class: 'identita' }, c.specializzazioni.join(' / ')),
-        h('p', {}, h('strong', {}, 'Abilità di Classe: '), c.abilita.join(', ')),
+        h('p', {}, h('strong', {}, 'Abilità di Classe: '), elencoInfo('abilita', c.abilita)),
         h('dl', { class: 'voci in-linea' },
           h('div', {}, h('dt', {}, 'PV/Grado'), h('dd', {}, dadi(c.pv_per_grado),
             h('small', {}, ` (1° livello: ${cos ? `${cos} COS + ${pv1} = ${cos + pv1}` : `+${pv1}`})`))),
@@ -339,7 +340,7 @@ function passoAbilita(ctx) {
     const motivoPiu = blocco?.campo === 'puntiAbilitaLiberi' ? 'Nessun Punto Abilità Libero rimasto da spendere.' : blocco?.problema ?? null;
     const inRiga = blocco && blocco.campo !== 'puntiAbilitaLiberi' ? motivoPiu : null;
     return h('tr', { class: a.daClasse ? 'di-classe' : null },
-      h('th', { scope: 'row' }, a.nome, h('span', { class: 'sigla' }, ` ${a.caratteristica}`),
+      h('th', { scope: 'row' }, info('abilita', a.nome), h('span', { class: 'sigla' }, ` ${a.caratteristica}`),
         a.daClasse ? h('span', { class: 'etichetta' }, 'Classe') : null,
         // su telefono le quattro colonne diventano una riga di testo
         h('small', { class: 'formula' }, `${segno(a.mod)} Mod + ${a.base} Base + ${a.corporazione} Corp + ${a.avanzamento} Avanz`),
@@ -410,7 +411,7 @@ function passoIncantesimi(ctx) {
             const motivo = motivoBloccoIncantesimo(i, st, scelte);
             return h('label', { class: `incantesimo${motivo ? ' bloccato' : ''}` },
               h('input', { type: 'checkbox', checked: preso, disabled: !!motivo, onchange: (e) => cambia(i.nome, e.target.checked) }),
-              h('span', {}, h('strong', {}, i.nome), h('small', {}, ` liv. base ${i.livello_base} · scheda ${i.scheda}, p. ${i.pagina}`),
+              h('span', {}, h('strong', {}, info('incantesimo', i.nome)), h('small', {}, ` liv. base ${i.livello_base} · scheda ${i.scheda}, p. ${i.pagina}`),
                 motivo ? h('small', { class: 'motivo' }, motivo) : null));
           }));
       }))),

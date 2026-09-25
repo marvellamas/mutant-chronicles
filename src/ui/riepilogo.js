@@ -1,5 +1,6 @@
 // Riepilogo live: colonna laterale su desktop, barra richiudibile su telefono.
 import { h, segno } from './dom.js';
+import { info } from './tooltip.js';
 
 export function renderRiepilogo(ctx) {
   const { dati, scelte, ante, ui } = ctx;
@@ -33,7 +34,7 @@ export function renderRiepilogo(ctx) {
       h('h3', {}, 'Caratteristiche'),
       ante.caratteristiche
         ? h('dl', { class: 'valori' }, Object.entries(ante.caratteristiche).map(([s, c]) => h('div', {},
-          h('dt', {}, s), h('dd', {}, String(c.valore), h('small', {}, ` ${segno(c.mod)}`)))))
+          h('dt', {}, info('caratteristica', s)), h('dd', {}, String(c.valore), h('small', {}, ` ${segno(c.mod)}`)))))
         : h('p', { class: 'vuoto' }, 'Scegli la Corporazione.'),
 
       h('dl', { class: 'voci in-linea' },

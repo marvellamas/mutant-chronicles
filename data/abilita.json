@@ -1,6 +1,6 @@
 {
   "versione_manuale": "Giocatore 0.43",
-  "fonte": "§4.3 (verificato con §4.6)",
+  "fonte": "§4.3 (quadro e ambito), §4.4 (descrizione); verificato con §4.6",
   "categorie": [
     "Distanza",
     "Ravvicinato",
@@ -14,145 +14,169 @@
       "nome": "Armi da lancio",
       "categoria": "Distanza",
       "caratteristica": "DES",
-      "ambito": "Armi scagliate, archi, balestre e granate lanciate a mano."
+      "ambito": "Armi scagliate, archi, balestre e granate lanciate a mano.",
+      "descrizione": "Comprende coltelli e asce da lancio, giavellotti, lance, archi, balestre, fionde, granate lanciate a mano e oggetti scagliati come attacco. Preparare o disinnescare esplosivi richiede Tecnologia. Gittata dei lanci a mano. La gittata massima delle armi e degli oggetti scagliati mediante la propria forza è pari a Forza × 3 Q. Un Q equivale a 1,5 metri. Entro questo limite si applicano le normali penalità della distanza; oltre il limite non è possibile effettuare l’attacco. Archi, balestre e fionde utilizzano la gittata indicata nell’Equipaggiamento. Gli Incantesimi mantengono quella indicata nella propria descrizione."
     },
     {
       "nome": "Armi leggere",
       "categoria": "Distanza",
       "caratteristica": "DES",
-      "ambito": "Pistole, revolver e armi da fuoco compatte."
+      "ambito": "Pistole, revolver e armi da fuoco compatte.",
+      "descrizione": "Comprende pistole, revolver, pistole automatiche, pistole mitragliatrici, armi compatte a energia e dispositivi stordenti portatili."
     },
     {
       "nome": "Armi medie",
       "categoria": "Distanza",
       "caratteristica": "INT",
-      "ambito": "Fucili, mitra e armi individuali impiegate con mira e controllo."
+      "ambito": "Fucili, mitra e armi individuali impiegate con mira e controllo.",
+      "descrizione": "Comprende fucili, carabine, fucili d'assalto, fucili a pompa, mitra, fucili di precisione e armi individuali a energia. Intelligenza rappresenta mira controllata, valutazione della distanza e gestione delle modalità di fuoco."
     },
     {
       "nome": "Armi pesanti",
       "categoria": "Distanza",
       "caratteristica": "FOR",
-      "ambito": "Mitragliatrici, lanciatori, armi di supporto e sistemi montati."
+      "ambito": "Mitragliatrici, lanciatori, armi di supporto e sistemi montati.",
+      "descrizione": "Comprende mitragliatrici, lanciagranate, lanciarazzi, lanciafiamme, mortai, cannoni portatili, torrette e armi pesanti montate su veicoli o postazioni. Installare un’arma su un mezzo non cambia automaticamente la sua Abilità: si utilizza quella del profilo (Manuale dei Veicoli, §3.1)."
     },
     {
       "nome": "Armi da guerra",
       "categoria": "Ravvicinato",
       "caratteristica": "FOR",
-      "ambito": "Armi marziali, pesanti, potenziate o specialistiche."
+      "ambito": "Armi marziali, pesanti, potenziate o specialistiche.",
+      "descrizione": "Comprende armi militari o marziali che richiedono addestramento specifico: spade lunghe e pesanti, asce da battaglia, martelli da guerra, armi inastate, lame a energia e armi potenziate. Le assegnazioni dei singoli profili sono indicate nel Manuale degli Armamenti, §7.1.1: Lancia e Spada bastarda utilizzano Armi da guerra con entrambe le impugnature."
     },
     {
       "nome": "Armi da mischia",
       "categoria": "Ravvicinato",
       "caratteristica": "DES",
-      "ambito": "Armi personali, semplici o improvvisate da combattimento ravvicinato."
+      "ambito": "Armi personali, semplici o improvvisate da combattimento ravvicinato.",
+      "descrizione": "Comprende coltelli, pugnali, spade leggere, manganelli, mazze, bastoni, machete, accette, fruste, attrezzi e armi improvvisate. La classificazione del catalogo comprende Ascia leggera, Martello ordinario, Stocco, Tonfa e Artigli (Manuale degli Armamenti, §7.1.1)."
     },
     {
       "nome": "Corpo a corpo",
       "categoria": "Ravvicinato",
       "caratteristica": "FOR",
-      "ambito": "Colpi senz'armi, prese, lotta, immobilizzazioni e disarmi a mani nude. Comprende anche i tre profili di Tirapugni del §7.1.1; i benefici riservati agli attacchi senz’armi conservano tale requisito."
+      "ambito": "Colpi senz'armi, prese, lotta, immobilizzazioni e disarmi a mani nude. Comprende anche i tre profili di Tirapugni del §7.1.1; i benefici riservati agli attacchi senz’armi conservano tale requisito.",
+      "descrizione": "Comprende pugni, calci, prese, lotta, immobilizzazioni, strangolamenti, spinte, sbilanciamenti e disarmi eseguiti a mani nude. Comprende inoltre Tirapugni, Tirapugni chiodato e Tirapugni concussivo. I benefici che richiedono specificamente attacchi senz’armi mantengono quel requisito."
     },
     {
       "nome": "Difese",
       "categoria": "Ravvicinato",
       "caratteristica": "DES",
-      "ambito": "Schivare, parare, deviare un colpo e utilizzare uno scudo."
+      "ambito": "Schivare, parare, deviare un colpo e utilizzare uno scudo.",
+      "descrizione": "Comprende schivare, parare, deviare un colpo, utilizzare uno scudo e reagire a un attacco percepito. La frequenza e il costo delle Difese sono descritti nel Capitolo 5."
     },
     {
       "nome": "Artefatti",
       "categoria": "Mistiche",
       "caratteristica": "SAG",
-      "ambito": "Comprendere, analizzare e utilizzare oggetti mistici; sintonizzarsi con essi nei limiti dei requisiti previsti."
+      "ambito": "Comprendere, analizzare e utilizzare oggetti mistici; sintonizzarsi con essi nei limiti dei requisiti previsti.",
+      "descrizione": "Artefatti (Saggezza) permette di comprendere e utilizzare artefatti, reliquie, sigilli e dispositivi dotati di proprietà mistiche, nei limiti delle rispettive caratteristiche. Le proprietà passive non richiedono sintonizzazione. Per utilizzare le proprietà attive occorre sintonizzarsi mediante una Prova di Artefatti, salvo quanto previsto da specifici Talenti (Manuale degli Equipaggiamenti, §7.10). Una volta sintonizzati, l’attivazione è automatica e non richiede Componenti; si rispettano costi e condizioni. Soltanto una proprietà che lo specifichi nella propria scheda richiede una Prova di attivazione (Manuale degli Equipaggiamenti, §7.10). L’analisi mistica mediante questa Abilità richiede l’Addestramento Taumaturgo oppure almeno un Grado in una Classe taumaturgica. Una Prova riuscita permette di ricavare informazioni sulla Struttura dell’oggetto. Gli altri personaggi possono rilevare gli indizi apertamente osservabili, ma non effettuare un’analisi mistica tramite una Prova di Artefatti.\nIl Tecnomante dotato del Talento Architetto TecnoMistico può effettuare un’Analisi avanzata: dopo 10 minuti di esame e una Prova di Artefatti riuscita, ottiene informazioni sulla Struttura, sulle Proprietà e sulla Riserva energetica, secondo quanto previsto dal Talento (§3.9.5). La sintonizzazione automatica non fornisce automaticamente queste informazioni.\nL’analisi non attiva né ripara l’oggetto e non sostituisce l’Incantesimo di Identificazione, necessario per conoscerne gli effetti esatti.\nLe eventuali componenti meccaniche o elettroniche ricadono nell’Abilità Tecnologia. Le regole di creazione degli Artefatti e del relativo Rituale finale verranno integrate successivamente nel Manuale della Magia."
     },
     {
       "nome": "Occultismo",
       "categoria": "Mistiche",
       "caratteristica": "INT",
-      "ambito": "Conoscere e interpretare fenomeni soprannaturali, entità, simboli e Oscura Simmetria."
+      "ambito": "Conoscere e interpretare fenomeni soprannaturali, entità, simboli e Oscura Simmetria.",
+      "descrizione": "Occultismo (Intelligenza) rappresenta la conoscenza del soprannaturale, delle tradizioni mistiche e delle manifestazioni dell’Oscura Simmetria. Permette di interpretare indizi e fenomeni attraverso lo studio e le conoscenze acquisite.\nRiconoscere creature ed entità soprannaturali. Richiamare conoscenze sulla loro natura e sulle manifestazioni che le caratterizzano.\nInterpretare simboli, scritti e tradizioni occulte. Collegarli a culti, dottrine o pratiche mistiche.\nRiconoscere Incantesimi ed effetti mistici osservabili. Cercare di comprenderne la natura attraverso gesti, formule e manifestazioni.\nEsaminare indizi di maledizioni, possessioni e contaminazioni. Valutarne la possibile origine soprannaturale.\nRicostruire l’origine e il significato di reliquie e luoghi misteriosi. Mettere in relazione gli elementi osservati con leggende e conoscenze occulte.\nOccultismo interpreta ciò che il personaggio può osservare o conoscere; non permette di percepire automaticamente magia nascosta. L’attivazione e l’analisi mistica degli oggetti di potere ricadono nell’Abilità Artefatti."
     },
     {
       "nome": "Potere",
       "categoria": "Mistiche",
       "caratteristica": "SAG",
-      "ambito": "Lanciare e controllare Incantesimi; mantenere la Concentrazione, meditare e convertire Potere."
+      "ambito": "Lanciare e controllare Incantesimi; mantenere la Concentrazione, meditare e convertire Potere.",
+      "descrizione": "Potere (Saggezza) rappresenta la capacità di incanalare e controllare l’energia mistica. È l’unica Abilità usata per lanciare e controllare gli Incantesimi. Possedere un valore in Potere non concede automaticamente l’accesso alla magia: Classi e Talenti stabiliscono quali Poteri e quali Incantesimi il personaggio possa apprendere e utilizzare.\nLanciare Incantesimi. Potere viene utilizzata per manifestare gli Incantesimi conosciuti quando le circostanze richiedono una Prova di lancio. La Prova di Potere determina la riuscita del lancio; l’eventuale Prova per colpire, le Difese e le Prove Salvezza si risolvono separatamente secondo il Manuale della Magia.\nMantenere la Concentrazione. Potere permette di mantenere attivo un Incantesimo a Concentrazione quando i danni subiti o altre circostanze previste ne mettono a rischio il controllo.\nMeditare. Potere permette di recuperare Punti Magia attraverso la meditazione, dedicandosi alla pratica in condizioni di tranquillità e senza svolgere altre attività, quando il personaggio possiede i requisiti necessari.\nConvertire Potere. I personaggi con Addestramento Taumaturgo utilizzano Potere per convertire Punti Magia universali in specifici e viceversa, oppure per trasformare parte dei propri Punti Vita in Punti Magia universali. L’Abilità interviene quando si tenta di convertire più gruppi nella stessa Azione Principale; la procedura è descritta nel Manuale della Magia.\nLe modalità di utilizzo, le Prove, i costi e i limiti sono descritti nel Manuale della Magia. Anche la Focalizzazione, la Contromagia e le condizioni particolari di lancio sono trattate nel Manuale della Magia."
     },
     {
       "nome": "Rituali",
       "categoria": "Mistiche",
       "caratteristica": "INT",
-      "ambito": "Comprendere e preparare procedure rituali; eseguire gli usi specifici consentiti. Le procedure generali verranno integrate successivamente."
+      "ambito": "Comprendere e preparare procedure rituali; eseguire gli usi specifici consentiti. Le procedure generali verranno integrate successivamente.",
+      "descrizione": "Rituali (Intelligenza) rappresenta la conoscenza delle procedure, delle preparazioni e delle pratiche cerimoniali necessarie a realizzare opere mistiche complesse.\nComprendere procedure rituali. Interpretare istruzioni, formule e sequenze cerimoniali. Riconoscere le fasi di un Rituale. Cercare di comprenderne lo svolgimento e la finalità attraverso gli elementi osservabili. Valutare preparazioni e componenti. Verificare la disposizione di simboli, strumenti e materiali e individuare eventuali omissioni o incongruenze. Preparare ed eseguire pratiche rituali consentite. Utilizzare l’Abilità quando il personaggio possiede le conoscenze e i requisiti previsti da una specifica capacità o dalle regole del Rituale. Il possesso dell’Abilità non concede automaticamente la conoscenza o la possibilità di eseguire qualsiasi Rituale. Le procedure operative sono descritte nel Manuale della Magia e nelle capacità che ne autorizzano l’utilizzo. L’esecuzione generale dei Rituali verrà integrata successivamente (Manuale della Magia); rimangono utilizzabili le pratiche già autorizzate espressamente, come la Purificazione del Predicatore (§3.7.5). Quando l’esecuzione sarà accessibile, si userà questa Abilità anche per il Rituale finale di creazione degli Artefatti."
     },
     {
       "nome": "Atletica",
       "categoria": "Operative",
       "caratteristica": "FOR",
-      "ambito": "Correre, saltare, scalare, nuotare e superare ostacoli fisici."
+      "ambito": "Correre, saltare, scalare, nuotare e superare ostacoli fisici.",
+      "descrizione": "Comprende corsa, salto, arrampicata, nuoto, equilibrio, acrobazia, sollevamento e superamento degli ostacoli. Le resistenze involontarie a veleno, malattia o fatica dipenderanno da Costituzione."
     },
     {
       "nome": "Furtività",
       "categoria": "Operative",
       "caratteristica": "DES",
-      "ambito": "Nascondersi, infiltrarsi, pedinare, scassinare dispositivi meccanici e agire senza essere notati."
+      "ambito": "Nascondersi, infiltrarsi, pedinare, scassinare dispositivi meccanici e agire senza essere notati.",
+      "descrizione": "Comprende nascondersi, muoversi silenziosamente, pedinare, infiltrarsi, occultare oggetti, borseggiare, scassinare serrature o dispositivi meccanici e preparare nascondigli o imboscate."
     },
     {
       "nome": "Percezione",
       "categoria": "Operative",
       "caratteristica": "SAG",
-      "ambito": "Osservare, cercare, ascoltare e individuare pericoli o menzogne."
+      "ambito": "Osservare, cercare, ascoltare e individuare pericoli o menzogne.",
+      "descrizione": "Comprende cercare, osservare, ascoltare, individuare pericoli, scoprire tracce, accorgersi di pedinamenti e riconoscere comportamenti sospetti o menzogne."
     },
     {
       "nome": "Sopravvivenza",
       "categoria": "Operative",
       "caratteristica": "SAG",
-      "ambito": "Orientarsi, seguire piste e affrontare ambienti ostili."
+      "ambito": "Orientarsi, seguire piste e affrontare ambienti ostili.",
+      "descrizione": "Comprende orientamento, piste, risorse, ripari, meteorologia, caccia, gestione degli animali e attraversamento di ambienti ostili o alieni."
     },
     {
       "nome": "Cultura",
       "categoria": "Sociali",
       "caratteristica": "CAR",
-      "ambito": "Muoversi tra lingue, usanze, istituzioni, Corporazioni e protocolli."
+      "ambito": "Muoversi tra lingue, usanze, istituzioni, Corporazioni e protocolli.",
+      "descrizione": "Comprende lingue, usanze, storia, politica, leggi, Corporazioni, organizzazioni, titoli, gerarchie ed etichetta. Carisma rappresenta la capacità di applicare tali conoscenze nei rapporti sociali."
     },
     {
       "nome": "Intrattenere",
       "categoria": "Sociali",
       "caratteristica": "CAR",
-      "ambito": "Coinvolgere un pubblico mediante esibizioni e rappresentazioni."
+      "ambito": "Coinvolgere un pubblico mediante esibizioni e rappresentazioni.",
+      "descrizione": "Comprende cantare, suonare, recitare, danzare, raccontare storie, improvvisare e creare distrazioni mediante un'esibizione."
     },
     {
       "nome": "Oratoria",
       "categoria": "Sociali",
       "caratteristica": "CAR",
-      "ambito": "Persuadere, negoziare, comandare, motivare o intimidire apertamente."
+      "ambito": "Persuadere, negoziare, comandare, motivare o intimidire apertamente.",
+      "descrizione": "Permette di persuadere, negoziare, comandare, motivare, tranquillizzare, mediare, sedurre o intimidire apertamente mediante parole e presenza."
     },
     {
       "nome": "Raggirare",
       "categoria": "Sociali",
       "caratteristica": "CAR",
-      "ambito": "Mentire, simulare, camuffarsi e indurre a credere qualcosa di falso."
+      "ambito": "Mentire, simulare, camuffarsi e indurre a credere qualcosa di falso.",
+      "descrizione": "Permette di mentire, simulare, impersonare, camuffarsi, utilizzare false identità o documenti falsi e nascondere le proprie intenzioni."
     },
     {
       "nome": "Medicina",
       "categoria": "Professionali",
       "caratteristica": "SAG",
-      "ambito": "Diagnosticare, curare, stabilizzare ed eseguire procedure mediche."
+      "ambito": "Diagnosticare, curare, stabilizzare ed eseguire procedure mediche.",
+      "descrizione": "Comprende primo soccorso, diagnosi, trattamento delle ferite, chirurgia, farmacologia, veleni, antidoti, autopsie, veterinaria e interventi su protesi o impianti. Saggezza rappresenta osservazione e giudizio clinico."
     },
     {
       "nome": "Pilotare",
       "categoria": "Professionali",
       "caratteristica": "INT",
-      "ambito": "Condurre mezzi, leggere strumenti e scegliere manovre e traiettorie."
+      "ambito": "Condurre mezzi, leggere strumenti e scegliere manovre e traiettorie.",
+      "descrizione": "Comprende veicoli terrestri, acquatici, atmosferici e spaziali, oltre a decollo, atterraggio, attracco, inseguimenti, manovre evasive e controllo di mezzi danneggiati. Conduzione, Manovrabilità, Azioni e procedure si trovano nel Manuale dei Veicoli."
     },
     {
       "nome": "Scienza",
       "categoria": "Professionali",
       "caratteristica": "INT",
-      "ambito": "Analizzare fenomeni naturali mediante conoscenza e metodo scientifico."
+      "ambito": "Analizzare fenomeni naturali mediante conoscenza e metodo scientifico.",
+      "descrizione": "Comprende matematica, fisica, chimica, biologia, geologia, astronomia, analisi di materiali, esperimenti e interpretazione dei dati."
     },
     {
       "nome": "Tecnologia",
       "categoria": "Professionali",
       "caratteristica": "INT",
-      "ambito": "Costruire, riparare, programmare, sabotare e modificare dispositivi."
+      "ambito": "Costruire, riparare, programmare, sabotare e modificare dispositivi.",
+      "descrizione": "Riunisce Costruire, Riparare e Artificiere. Comprende meccanica, elettronica, informatica, serrature, sicurezza, esplosivi, robotica, veicoli e componenti cibernetiche."
     }
   ]
 }

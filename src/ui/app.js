@@ -8,6 +8,7 @@ import { nuoveScelte, normalizza, applicaModifica, anteprima, serializza, deseri
 import { h, svuota, scaricaFile, nomeFileSicuro } from './dom.js';
 import * as archivio from './storage.js';
 import { PASSI, passoVisibile, requisitoPasso } from './passi.js';
+import { inizializzaTooltip, nascondiTooltip } from './tooltip.js';
 import { renderRiepilogo } from './riepilogo.js';
 
 const radice = document.getElementById('app');
@@ -21,6 +22,7 @@ const stato = {
   avvisi: [], // avvisi dell'ultima modifica che ha invalidato scelte a valle
   precedente: null, // scelte prima di quella modifica, per "Annulla"
   messaggioHome: null,
+  avvisiDati: [],
   salvataggioOk: true,
   ui: { aperti: new Set(), riepilogoAperto: false, tiroPE: null },
 };
@@ -38,6 +40,8 @@ async function avvia() {
   stato.versioni = versioniDati(risultato.dati);
   document.getElementById('versioni').textContent = stato.versioni ? `Dati: ${stato.versioni}` : '';
   if (risultato.errori.length) return mostraErroriDati(risultato.errori);
+  stato.avvisiDati = risultato.avvisi ?? [];
+  inizializzaTooltip(stato.dati);
   window.addEventListener('hashchange', daIndirizzo);
   daIndirizzo();
 }
@@ -147,6 +151,7 @@ async function importa(file) {
 // Home
 
 function renderHome() {
+  nascondiTooltip();
   document.title = 'Mutant — Creazione personaggio';
   const personaggi = archivio.elenco();
   const todo = trovaTodo(stato.dati);
@@ -171,6 +176,8 @@ function renderHome() {
     h('section', { class: 'info-dati' },
       h('h2', {}, 'Dati delle regole'),
       h('p', {}, stato.versioni),
+      stato.avvisiDati.length ? h('details', {}, h('summary', {}, `${stato.avvisiDati.length} avvisi sui dati (non bloccanti)`),
+        h('ul', {}, stato.avvisiDati.map((a) => h('li', {}, h('code', {}, `${a.file} › ${a.chiave}`), ': ', a.problema)))) : null,
       todo.length ? h('details', {}, h('summary', {}, `${todo.length} valori o domande marcati TODO(Davide) nei dati`),
         h('ul', {}, todo.map((t) => h('li', {}, h('code', {}, t.percorso), ' — ', t.testo)))) : null)));
 }
@@ -253,6 +260,7 @@ function ridisegnaRiepilogo() {
 }
 
 function renderWizard() {
+  nascondiTooltip();
   const ctx = contesto();
   const visibili = PASSI.map((_, i) => i).filter((i) => passoVisibile(i, ctx));
   if (!visibili.includes(stato.passo)) stato.passo = visibili.find((i) => i > stato.passo) ?? visibili.at(-1);

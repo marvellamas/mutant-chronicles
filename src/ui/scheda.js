@@ -2,6 +2,8 @@
 import { h, segno } from './dom.js';
 import { checklist } from '../checklist.js';
 import { statoIncantesimi } from '../incantesimi.js';
+import { rigaAlLivello } from '../descrizioni.js';
+import { info } from './tooltip.js';
 
 const trova = (lista, nome) => lista.find((x) => x.nome === nome);
 const GRADI = { 1: 'I', 3: 'III', 5: 'V' };
@@ -42,7 +44,7 @@ export function renderScheda(ctx) {
           h('table', { class: 'tabella compatta' },
             h('thead', {}, h('tr', {}, h('th', {}, ''), h('th', {}, 'Valore'), h('th', {}, 'Mod'), h('th', {}, 'Mod Salv.'))),
             h('tbody', {}, Object.entries(s.caratteristiche).map(([sigla, c]) => h('tr', {},
-              h('th', { scope: 'row' }, `${c.nome} (${sigla})`), h('td', { class: 'forte' }, String(c.valore)),
+              h('th', { scope: 'row' }, info('caratteristica', sigla, `${c.nome} (${sigla})`)), h('td', { class: 'forte' }, String(c.valore)),
               h('td', {}, segno(c.mod)), h('td', {}, segno(c.modSalvezza))))))),
         h('section', {},
           h('h3', {}, 'Valori derivati'),
@@ -69,7 +71,7 @@ export function renderScheda(ctx) {
           dati.abilita.categorie.map((cat) => h('tbody', {},
             h('tr', { class: 'categoria' }, h('th', { colspan: 6 }, cat)),
             s.abilita.filter((a) => a.categoria === cat).map((a) => h('tr', { class: a.daClasse ? 'di-classe' : null },
-              h('th', { scope: 'row' }, a.nome, h('span', { class: 'sigla' }, ` ${a.caratteristica}`), a.daClasse ? ' •' : null),
+              h('th', { scope: 'row' }, info('abilita', a.nome), h('span', { class: 'sigla' }, ` ${a.caratteristica}`), a.daClasse ? ' •' : null),
               h('td', {}, segno(a.mod)), h('td', {}, String(a.base)), h('td', {}, String(a.corporazione)),
               h('td', {}, String(a.avanzamento)), h('td', { class: 'forte' }, String(a.totale)))))),
           h('tfoot', {}, h('tr', {}, h('td', { colspan: 6 }, '• Abilità di Classe. VA = Mod + Base + Corp + Avanz.'))))),
@@ -86,13 +88,9 @@ export function renderScheda(ctx) {
 
       inc ? h('section', {},
         h('h3', {}, `Incantesimi conosciuti (${inc.scelti} / ${inc.totale})`),
-        incantesimi.length ? h('table', { class: 'tabella compatta' },
-          h('thead', {}, h('tr', {}, h('th', {}, 'Incantesimo'), h('th', {}, 'Famiglia'), h('th', {}, 'Liv. base'), h('th', {}, 'Scheda'))),
-          h('tbody', {}, incantesimi.map((i) => h('tr', {},
-            h('th', { scope: 'row' }, i.nome), h('td', {}, `${i.macrofamiglia} / ${i.specializzazione}`),
-            h('td', {}, String(i.livello_base)), h('td', {}, `${i.scheda} (p. ${i.pagina})`)))))
+        incantesimi.length ? incantesimi.map((i) => bloccoIncantesimo(i))
           : h('p', {}, 'Nessuno scelto.'),
-        h('p', { class: 'nota' }, `Livello massimo di lancio: ${inc.livelloMassimo}. Testo completo nel Manuale della Magia alle schede indicate.`)) : null,
+        h('p', { class: 'nota' }, `Livello massimo di lancio: ${inc.livelloMassimo}. Scheda completa: clic sul nome, oppure Manuale della Magia alla scheda indicata.`)) : null,
 
       h('section', {},
         h('h3', {}, 'Equipaggiamento'),
@@ -100,6 +98,19 @@ export function renderScheda(ctx) {
 
       h('footer', { class: 'scheda-piede' }, `Dati: ${ctx.versioni}.`)),
   ];
+}
+
+/** Incantesimo conosciuto: intestazione, lancio e riga del livello base (anche in stampa). */
+function bloccoIncantesimo(i) {
+  const riga = rigaAlLivello(i, i.livello_base);
+  return h('div', { class: 'incantesimo-scheda' },
+    h('h4', {}, info('incantesimo', i.nome), h('span', { class: 'sigla' }, ` · ${i.macrofamiglia} / ${i.specializzazione} · livello base ${i.livello_base}`)),
+    i.intestazione ? h('p', { class: 'piccolo' }, i.intestazione) : null,
+    i.lancio ? h('p', { class: 'piccolo' }, i.lancio) : null,
+    riga ? h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },
+      h('thead', {}, h('tr', {}, Object.keys(riga).map((k) => h('th', {}, k)))),
+      h('tbody', {}, h('tr', {}, Object.values(riga).map((v) => h('td', {}, v))))))
+      : h('p', { class: 'nota' }, `Tabella non disponibile: Manuale della Magia, scheda ${i.scheda}.`));
 }
 
 function voce(etichetta, valore) {

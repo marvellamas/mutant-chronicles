@@ -102,7 +102,11 @@ function validaCaratteristiche(c, err) {
   const F = 'caratteristiche';
   const lista = listaNominata(F, c, 'caratteristiche', err);
   if (lista.length !== NUM_CARATTERISTICHE) err(F, 'caratteristiche', `attese ${NUM_CARATTERISTICHE} Caratteristiche, trovate ${lista.length}`);
-  lista.forEach((x, i) => { if (!isTesto(x.sigla) || !isTesto(x.nome)) err(F, `caratteristiche[${i}]`, 'servono "sigla" e "nome"'); });
+  lista.forEach((x, i) => {
+    if (!isTesto(x.sigla) || !isTesto(x.nome)) err(F, `caratteristiche[${i}]`, 'servono "sigla" e "nome"');
+    // la descrizione può valere "TODO(Davide)": in quel caso è un avviso (avvisiDati), non un errore
+    if (!isTesto(x.descrizione)) err(F, `caratteristiche[${i}] (${x.sigla}).descrizione`, 'descrizione mancante o vuota (usa "TODO(Davide)" se non è ancora disponibile)');
+  });
   const sigle = new Set(lista.map((x) => x.sigla));
 
   const { valore_minimo: min, valore_massimo: max } = c;
@@ -135,6 +139,8 @@ function validaAbilita(a, sigle, err) {
     const k = `abilita[${i}] (${x.nome})`;
     if (!sigle.has(x.caratteristica)) err(F, `${k}.caratteristica`, `"${x.caratteristica}" non è una Caratteristica esistente`);
     if (!categorie.has(x.categoria)) err(F, `${k}.categoria`, `"${x.categoria}" non è fra le categorie`);
+    // §4.4: ogni Abilità ha una descrizione estesa (mostrata nei tooltip)
+    if (!isTesto(x.descrizione)) err(F, `${k}.descrizione`, 'descrizione mancante o vuota (§4.4)');
   });
   return new Set(lista.map((x) => x.nome));
 }
@@ -255,6 +261,7 @@ function validaIncantesimi(inc, regole, err) {
       return;
     }
     if (!isIntero(x.livello_base)) err(F, `${k}.livello_base`, 'deve essere un intero');
+    validaSchedaIncantesimo(F, k, x, err);
     if (schede.has(x.scheda)) err(F, `${k}.scheda`, `scheda ${x.scheda} duplicata`);
     schede.add(x.scheda);
     const chiave = `${x.macrofamiglia} / ${x.specializzazione}`;
@@ -281,6 +288,48 @@ function validaIncantesimi(inc, regole, err) {
     }
   }
   return macro;
+}
+
+/**
+ * Scheda di un incantesimo (Magia, sezioni 13 e 16–23). La descrizione è obbligatoria;
+ * gli altri campi possono valere "TODO(Davide)" se l'estrazione non è certa.
+ */
+function validaSchedaIncantesimo(F, k, x, err) {
+  if (!isTesto(x.descrizione)) err(F, `${k}.descrizione`, 'descrizione mancante o vuota');
+  for (const campo of ['intestazione', 'lancio']) {
+    if (x[campo] !== undefined && !isTesto(x[campo])) err(F, `${k}.${campo}`, 'deve essere un testo non vuoto');
+  }
+  if (x.versioni === undefined || isTodo(x.versioni)) return;
+  if (!Array.isArray(x.versioni) || x.versioni.length === 0 || !x.versioni.every(isOggetto)) {
+    err(F, `${k}.versioni`, 'deve essere una lista di righe {intestazione: valore} oppure "TODO(Davide)"');
+    return;
+  }
+  const colonne = Object.keys(x.versioni[0]);
+  if (!/^Livello/.test(colonne[0] ?? '')) err(F, `${k}.versioni`, `la prima colonna deve essere il Livello, trovato "${colonne[0]}"`);
+  x.versioni.forEach((r, j) => {
+    if (Object.keys(r).join('|') !== colonne.join('|')) err(F, `${k}.versioni[${j}]`, 'colonne diverse dalla prima riga');
+  });
+  if (isIntero(x.livello_base) && !x.versioni.some((r) => String(Object.values(r)[0]).trim() === String(x.livello_base))) {
+    err(F, `${k}.versioni`, `manca la riga del livello base ${x.livello_base}`);
+  }
+}
+
+/**
+ * Avvisi non bloccanti: valori marcati TODO in campi descrittivi. L'app parte lo stesso,
+ * ma li segnala (per esempio le descrizioni delle Caratteristiche, che il manuale non ha).
+ */
+export function avvisiDati(dati) {
+  const avvisi = [];
+  const avv = (file, chiave, problema) => avvisi.push({ file: `${file}.json`, chiave, problema });
+  (dati?.caratteristiche?.caratteristiche ?? []).forEach((c, i) => {
+    if (isTodo(c?.descrizione)) avv('caratteristiche', `caratteristiche[${i}] (${c.sigla}).descrizione`, 'descrizione da completare (TODO)');
+  });
+  (dati?.incantesimi?.incantesimi ?? []).forEach((x, i) => {
+    for (const campo of ['intestazione', 'lancio', 'descrizione', 'versioni', 'regole']) {
+      if (isTodo(x?.[campo])) avv('incantesimi', `incantesimi[${i}] (${x.nome}).${campo}`, 'da completare (TODO)');
+    }
+  });
+  return avvisi;
 }
 
 function validaDadi(F, chiave, v, err) {

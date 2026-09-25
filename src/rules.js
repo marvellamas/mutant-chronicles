@@ -1,5 +1,5 @@
 // Caricamento dei dati delle regole (data/*.json) e validazione all'avvio.
-import { validaDati } from './validate.js';
+import { validaDati, avvisiDati } from './validate.js';
 
 export const FILE_DATI = ['caratteristiche', 'abilita', 'corporazioni', 'addestramenti', 'classi', 'incantesimi', 'regole'];
 
@@ -15,7 +15,8 @@ export function lettoreFetch(base = 'data/') {
 /**
  * Carica e valida tutti i file dati.
  * @param {(nome: string) => Promise<string>} leggi restituisce il testo del file <nome>.json
- * @returns {Promise<{dati: object, errori: {file: string, chiave: string, problema: string}[]}>}
+ * @returns {Promise<{dati: object, errori: {file: string, chiave: string, problema: string}[], avvisi: object[]}>}
+ *   errori: bloccanti; avvisi: punti da completare (TODO) che non impediscono l'avvio
  */
 export async function caricaDati(leggi = lettoreFetch()) {
   const dati = {};
@@ -36,5 +37,5 @@ export async function caricaDati(leggi = lettoreFetch()) {
   }));
   // Se un file non si legge, validaDati lo segnala come mancante: evitiamo il doppione.
   const errori = [...erroriLettura, ...validaDati(dati).filter((e) => !erroriLettura.some((l) => l.file === e.file && e.chiave === ''))];
-  return { dati, errori };
+  return { dati, errori, avvisi: errori.length ? [] : avvisiDati(dati) };
 }
