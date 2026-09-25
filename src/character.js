@@ -8,6 +8,11 @@ import {
 import { statoIncantesimi } from './incantesimi.js';
 import { specTiro, migraTiro, motivoFuoriIntervallo, valoreTiro, tiroValido } from './tiri.js';
 
+// Personaggio a livelli { creazione, livelli } (cap. 8): modello e funzioni in avanzamento.js.
+export {
+  migraPersonaggio, livelloAttuale, prossimoLivello, applicaLivello, annullaUltimoLivello, VERSIONE_PERSONAGGIO,
+} from './avanzamento.js';
+
 export const FORMATO_FILE = 'mutant-personaggio';
 // 2: i tiri di dado sono { valore, origine } (src/tiri.js); i file della versione 1 si migrano.
 export const VERSIONE_FORMATO = 2;

@@ -1,7 +1,8 @@
 // Caricamento dei dati delle regole (data/*.json) e validazione all'avvio.
 import { validaDati, avvisiDati } from './validate.js';
 
-export const FILE_DATI = ['caratteristiche', 'abilita', 'corporazioni', 'addestramenti', 'classi', 'incantesimi', 'regole'];
+export const FILE_DATI = ['caratteristiche', 'abilita', 'corporazioni', 'addestramenti', 'classi', 'incantesimi', 'regole',
+  'talenti_liberi', 'specializzazioni', 'tecniche_interiori'];
 
 /** Lettore per il browser: scarica data/<nome>.json accanto a index.html. */
 export function lettoreFetch(base = 'data/') {

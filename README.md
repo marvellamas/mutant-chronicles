@@ -22,6 +22,13 @@ python -m http.server 8000
 
 e poi <http://localhost:8000>.
 
+**Aggiornamenti e cache del browser.** Con `npm start` il file `serve.json` fa rispondere il
+server con `Cache-Control: no-cache` (e un ETag) per i file `.js`, `.css` e `.json`: il browser
+chiede ogni volta se il file è cambiato, costa pochissimo e prende sempre la versione nuova.
+Con altri server (`python -m http.server`, GitHub Pages) il browser può tenere in cache i file
+vecchi per un po': dopo un aggiornamento dell'app, se qualcosa non torna, ricarica la pagina
+con **Ctrl+F5** (su Mac **Cmd+Shift+R**).
+
 **Non funziona aprendo `index.html` con un doppio clic** (indirizzo `file://`): i browser
 bloccano i moduli JavaScript e la lettura dei file `data/*.json` da `file://`. In quel caso la
 pagina resta sul messaggio «Caricamento…», che spiega cosa fare.
@@ -46,8 +53,9 @@ npm test
 
 Serve Node 20 o successivo, senza dipendenze. I test coprono il motore di calcolo, il
 validatore, gli esempi numerici del manuale, l'invalidazione delle scelte, la
-serializzazione e il contenuto dei tooltip (`src/descrizioni.js`). L'interfaccia non ha
-test automatici.
+serializzazione, il contenuto dei tooltip (`src/descrizioni.js`) e l'avanzamento di
+livello (un Agente portato dal 1° al 20°, multiclasse, incompatibilità fra magia e Risorse
+Interiori). L'interfaccia non ha test automatici.
 
 ## Modificare le regole (per Davide)
 
@@ -61,7 +69,10 @@ Tutte le regole numeriche stanno in `data/`:
 | `addestramenti.json` | valori base delle 24 Abilità, vantaggio, Salvezze |
 | `classi.json` | Classi, PV/PM per Grado, quote incantesimi, Talenti con testo |
 | `incantesimi.json` | i 90 incantesimi: indice e scheda (intestazione, lancio, descrizione, tabella delle versioni, regole) |
-| `regole.json` | costanti della creazione (punti, massimi, Punti Eroe, Movimento…) |
+| `regole.json` | costanti della creazione (punti, massimi, Punti Eroe, Movimento…) e dell'avanzamento (eventi per livello, massimi, limiti) |
+| `talenti_liberi.json` | gli 87 Talenti Liberi del §8.6 e i Talenti di magia (provvisori) |
+| `specializzazioni.json` | le 84 Specializzazioni del §8.8 (armi, mistiche, operative/sociali/professionali) |
+| `tecniche_interiori.json` | le 28 Tecniche Interiori del §8.9 e le regole comuni |
 
 Si modificano con un editor di testo (anche direttamente su GitHub). Ogni file ha il campo
 `versione_manuale`, che l'app mostra in alto: aggiornalo quando i dati seguono una nuova
@@ -88,6 +99,17 @@ JSON: per cambiarli si modifica il campo `descrizione` (o, per gli incantesimi, 
 una per livello, con le stesse intestazioni di colonna della scheda del manuale; la prima
 colonna è sempre il Livello.
 
+### Avanzamento di livello
+
+Il motore dell'avanzamento (cap. 8) è pronto, l'interfaccia arriverà in seguito. Un
+personaggio è `{ "creazione": {…scelte…}, "livelli": [ {"livello": 2, …}, … ] }`: la scheda si
+ricalcola rigiocando la creazione e i livelli dall'inizio, con i limiti di ciascun livello.
+Cosa succede a ogni livello sta in `regole.json` → `avanzamento.eventi` (tabella del §8.1):
+cambiando la tabella cambiano gli eventi. Si sale un livello alla volta e si può annullare
+solo l'ultimo. I Talenti Liberi con effetti sulla scheda (Iniziativa Migliorata, Buona
+Costituzione, Prova Salvezza Migliorata, Scattante, Risorse Interiori, Talenti di magia)
+hanno il campo `effetti`; gli altri si mostrano con il testo ma non cambiano i numeri.
+
 I personaggi salvati contengono solo le scelte del giocatore: dopo una modifica ai dati,
 riaprendoli i valori si ricalcolano. Se una scelta non è più ammessa (per esempio un
 valore iniziale cambiato che porta una Caratteristica oltre 7), l'app la corregge e lo
@@ -101,6 +123,13 @@ I dubbi sul manuale sono marcati `TODO(Davide)` nei dati. La home li elenca tutt
 - `classi.json`, Esploratore: a quale Specializzazione appartengono i 5 Talenti a scelta.
 - `regole.json` → `taumaturgo`: le quattro domande sugli incantesimi al 1° livello.
 - `caratteristiche.json`: la descrizione delle sei Caratteristiche (il manuale non le descrive).
+- `talenti_liberi.json`: i 12 Talenti di magia (`"provvisorio": true`) citati nel Manuale della
+  Magia senza scheda, con tipo e prerequisiti da definire; il tipo (passivo o attivo) di
+  Attivazione Tempestiva, Risorse Interiori e Tecniche Interiori Supplementari.
+- `tecniche_interiori.json`: la durata di Vipera dal Cappuccio, Presa dell'Anima e
+  Contraccolpo Interiore, che le schede non indicano.
+- Potenziale Mistico Migliorato: il motore lo applica solo al limite di Usufruitore di Magia
+  (`src/avanzamento.js`).
 
 Finché non c'è risposta, per gli incantesimi l'app applica l'ipotesi più permissiva e lo
 dice nel passo Incantesimi (`src/incantesimi.js`):
@@ -122,8 +151,10 @@ src/incantesimi.js  quote e scelta degli incantesimi
 src/checklist.js  controllo finale §2.17
 src/descrizioni.js  contenuto dei tooltip e della scheda completa degli incantesimi
 src/tiri.js       tiri di dado { valore, origine }: formula, intervallo, migrazione
+src/avanzamento.js  personaggio a livelli: ricalcolo, validazione di un livello, prossimo livello
 src/ui/           interfaccia (wizard, riepilogo, scheda, home, tooltip, tiro di dado)
 data/             regole in JSON
 tests/            node --test
-docs/             studio di fattibilità
+docs/             studio di fattibilità, ricognizione dell'avanzamento
+serve.json        intestazioni di cache per npm start
 ```

@@ -1,6 +1,10 @@
 // Motore di calcolo: funzioni pure. Le costanti numeriche arrivano dai dati (data/*.json);
 // qui stanno solo le formule, ciascuna con il paragrafo del Manuale del Giocatore.
 import { valoreTiro, motivoFuoriIntervallo, specTiro } from './tiri.js';
+import { calcolaSchedaPersonaggio } from './avanzamento.js';
+
+// Avanzamento di livello (cap. 8): la validazione di un livello sta in avanzamento.js.
+export { validaLivello } from './avanzamento.js';
 
 /** §2.1: modificatore ordinario (tabella in caratteristiche.json, oggi valore − 5). */
 export function modOrdinario(valore, tabella) {
@@ -198,10 +202,13 @@ export function validaScelte(scelte, dati) {
 }
 
 /**
- * Calcola la scheda completa al 1° livello a partire dalle sole scelte.
+ * Calcola la scheda completa a partire dalle sole scelte: al 1° livello dalle scelte della
+ * creazione, oppure dal personaggio { creazione, livelli } rigiocando i livelli.
  * Non lancia eccezioni per scelte errate: le segnala in `errori` e calcola ciò che può.
  */
 export function calcolaScheda(scelte, dati) {
+  // Personaggio v2 { creazione, livelli }: si rigiocano creazione e livelli (cap. 8).
+  if (scelte?.creazione) return calcolaSchedaPersonaggio(scelte, dati);
   const errori = validaScelte(scelte, dati);
   const { corp, addestr, classe } = risolvi(scelte, dati);
   const bloccanti = errori.filter((e) => e.tipo === 'violazione' && (['corporazione', 'addestramento', 'classe'].includes(e.campo) || e.campo.startsWith('puntiCaratteristica.')));

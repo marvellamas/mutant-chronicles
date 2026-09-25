@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { validaDati, formattaErrore, trovaTodo } from '../src/validate.js';
+import { validaDati, formattaErrore, trovaTodo, avvisiDati } from '../src/validate.js';
 import { caricaDati } from '../src/rules.js';
 import { datiReali, leggiDaDisco, copia } from './helpers.js';
 
@@ -105,4 +105,69 @@ test('validaDati non lancia eccezioni su dati vuoti o assurdi', () => {
   assert.doesNotThrow(() => validaDati({}));
   assert.doesNotThrow(() => validaDati(null));
   assert.doesNotThrow(() => validaDati({ classi: { versione_manuale: 'x', classi: [null, 3, {}] } }));
+});
+
+// --- cap. 8: Talenti Liberi, Specializzazioni, Tecniche Interiori, avanzamento ---------------
+
+test('conteggi del cap. 8: 87 Talenti del §8.6 + Talenti di magia provvisori, 84 Specializzazioni, 28 Tecniche', () => {
+  const t = dati.talenti_liberi.talenti;
+  assert.equal(t.filter((x) => x.sezione.startsWith('8.6')).length, 87);
+  const magia = t.filter((x) => x.sezione === 'magia');
+  assert.equal(magia.length, 12);
+  assert.ok(magia.every((x) => x.provvisorio === true && x.prerequisiti === 'TODO(Davide)'));
+  assert.equal(dati.specializzazioni.specializzazioni.length, 84);
+  assert.equal(dati.tecniche_interiori.tecniche.length, 28);
+  assert.equal(dati.regole.avanzamento.eventi.length, 20);
+});
+
+test('Talenti con effetti sulla scheda', () => {
+  const eff = Object.fromEntries(dati.talenti_liberi.talenti.filter((x) => x.effetti).map((x) => [x.id, x.effetti]));
+  assert.deepEqual(eff['iniziativa-migliorata'], { iniziativa: 3 });
+  assert.deepEqual(eff['buona-costituzione'], { pv: 5 });
+  assert.deepEqual(eff['prova-salvezza-migliorata'], { salvezza: 1 });
+  assert.equal(eff['usufruitore-di-magia'].accessoMagia, true);
+  assert.equal(eff['usufruitore-di-magia'].livelloMax, 3);
+  assert.deepEqual(eff['incrementare-incantesimi'], { incantesimi: 2 });
+  assert.deepEqual(eff['potenziale-mistico-migliorato'], { livelloMaxIncantesimi: 3 });
+  const ri = dati.talenti_liberi.talenti.find((x) => x.id === 'risorse-interiori');
+  assert.deepEqual(ri.incompatibile_con, ['addestramento:taumaturgo', 'classi:taumaturgiche', 'talenti:accesso_magia']);
+});
+
+test('validatore: prerequisito inesistente, id duplicato, molteplicità incoerente', () => {
+  const e = erroriDopo((d) => {
+    const t = d.talenti_liberi.talenti;
+    t.find((x) => x.id === 'parata-multipla').prerequisiti = ['parata-istintivaa'];
+    t.find((x) => x.id === 'ambidestro').id = 'sempre-allerta';
+    t.find((x) => x.id === 'prova-salvezza-migliorata').parametro = null;
+  });
+  assert.ok(e.some((x) => x.file === 'talenti_liberi.json' && /"parata-istintivaa" non è l'id/.test(x.problema)));
+  assert.ok(e.some((x) => /id "sempre-allerta" duplicato/.test(x.problema)));
+  assert.ok(e.some((x) => x.chiave.includes('Prova Salvezza Migliorata') && /parametro/.test(x.chiave)));
+});
+
+test('validatore: tabella degli eventi con un buco e fasce che non coprono i 20 livelli', () => {
+  const e = erroriDopo((d) => {
+    d.regole.avanzamento.eventi = d.regole.avanzamento.eventi.filter((x) => x.livello !== 7);
+    d.regole.avanzamento.massimo_caratteristica.pop();
+    d.regole.avanzamento.eventi.find((x) => x.livello === 11).eventi = ['talento_libero'];
+  });
+  assert.ok(e.some((x) => x.file === 'regole.json' && /il livello 7 deve comparire una volta, compare 0/.test(x.problema)));
+  assert.ok(e.some((x) => x.chiave === 'avanzamento.massimo_caratteristica' && /arrivare al livello 20/.test(x.problema)));
+  assert.ok(e.some((x) => /al livello 11 gli eventi danno Salvezze \+1, la tabella/.test(x.problema)));
+});
+
+test('validatore: Specializzazione con Abilità inesistente, Tecnica senza costo', () => {
+  const e = erroriDopo((d) => {
+    d.specializzazioni.specializzazioni[30].abilita = ['Cucina'];
+    d.tecniche_interiori.tecniche[0].costo = '';
+  });
+  assert.ok(e.some((x) => x.file === 'specializzazioni.json' && /"Cucina"/.test(x.problema)));
+  assert.ok(e.some((x) => x.file === 'tecniche_interiori.json' && x.chiave.endsWith('.costo')));
+});
+
+test('avvisi (non bloccanti): Talenti provvisori, tipi e durate da definire', () => {
+  const t = avvisiDati(dati);
+  assert.equal(t.filter((x) => /provvisorio/.test(x.problema)).length, 12);
+  assert.equal(t.filter((x) => x.file === 'talenti_liberi.json' && x.chiave.endsWith('.tipo')).length, 3);
+  assert.equal(t.filter((x) => x.file === 'tecniche_interiori.json').length, 3);
 });

@@ -1,0 +1,1156 @@
+{
+  "versione_manuale": "Giocatore 0.43; Magia 1.1",
+  "fonte": "Manuale del Giocatore §8.6 (8.6.1–8.6.10); Manuale della Magia sezioni 1, 2, 3, 6 (Talenti di magia, provvisori)",
+  "_nota": "molteplicita: una | per_caratteristica | per_salvezza_max2 | illimitata | limitata (con max_acquisizioni). parametro: null | caratteristica | salvezza. effetti solo per i Talenti che modificano valori della scheda.",
+  "attesi": {
+    "_nota": "Numero di Talenti per sezione, controllato dal validatore: aggiornarlo se si aggiungono Talenti.",
+    "8.6": 87
+  },
+  "sezioni": {
+    "8.6": {
+      "titolo": "Talenti Liberi",
+      "note": [
+        "Si acquisisce un Talento Libero ai livelli 3, 5, 7, 9, 11, 13, 15, 17 e 19, per un totale di nove. Si rispettano i prerequisiti del Talento. Ogni Talento si acquisisce una sola volta, salvo che la descrizione consenta acquisizioni multiple. I Talenti di Classe restano distinti e non sono selezionabili come Liberi salvo autorizzazione esplicita nella loro regola. Prova Salvezza Migliorata concede +1 alla Salvezza scelta per ciascuna acquisizione, fino a due acquisizioni per Salvezza. Le Resistenze specifiche concedono +2 alle Prove pertinenti, senza sommare più Resistenze sulla stessa Prova. La somma del valore strutturale della Salvezza, degli incrementi di Prova Salvezza Migliorata e del bonus di Resistenza specifica non può superare 18. Gli altri modificatori previsti dalle regole si applicano successivamente. Le descrizioni complete sono nei §§8.6.2–8.6.3."
+      ]
+    },
+    "8.6.1": {
+      "titolo": "Talenti generici",
+      "note": []
+    },
+    "8.6.2": {
+      "titolo": "Talenti per Caratteristiche e Salvezze",
+      "note": []
+    },
+    "8.6.3": {
+      "titolo": "Resistenze specifiche",
+      "note": [
+        "Ogni Resistenza concede +2 alla Prova Salvezza richiesta dalla fonte contro il pericolo indicato. La fonte determina quale Salvezza usare e gli esiti: la Resistenza non concede una Prova se la regola non la prevede, non rende immuni e non rimuove condizioni già presenti. Se più Resistenze specifiche riguardano la stessa Prova, il bonus complessivo di questa famiglia rimane +2.",
+        "La somma del valore strutturale della Salvezza, degli incrementi di Prova Salvezza Migliorata e del bonus di Resistenza specifica non può superare 18. Gli altri modificatori previsti dalle regole si applicano successivamente. Il limite riguarda queste tre componenti, non costituisce un tetto generale a ogni altro Talento o modificatore."
+      ]
+    },
+    "8.6.4": {
+      "titolo": "Talenti di Movimento e preparazione delle armi",
+      "note": [
+        "I Talenti seguenti modificano le procedure del Capitolo 5. Estrazione Rapida, Cambio Rapido, Imbracciatura Rapida e Ricarica Rapida hanno ciascuno un proprio utilizzo per Round, disponibile soltanto durante la propria Iniziativa."
+      ]
+    },
+    "8.6.5": {
+      "titolo": "Talenti di Combattimento a Distanza",
+      "note": []
+    },
+    "8.6.6": {
+      "titolo": "Talenti di Combattimento Ravvicinato",
+      "note": []
+    },
+    "8.6.7": {
+      "titolo": "Talenti di Difesa e Copertura",
+      "note": []
+    },
+    "8.6.8": {
+      "titolo": "Talenti di Combattimento Magico",
+      "note": [
+        "I Talenti relativi a lancio, Componenti, Concentrazione, Contromagia, conversione e Meditazione si consultano nel Manuale della Magia. Si acquisiscono mediante le normali scelte di Talenti Liberi, rispettando i requisiti indicati dalle rispettive schede. Le Tecniche Interiori sono descritte separatamente nel §8.9."
+      ]
+    },
+    "8.6.9": {
+      "titolo": "Talenti per attività specialistiche",
+      "note": []
+    },
+    "8.6.10": {
+      "titolo": "Talenti per le Tecniche Interiori",
+      "note": [
+        "Accesso del Lottatore Il Lottatore può acquisire Risorse Interiori e Tecniche Interiori Supplementari attraverso le scelte di Classe previste dal §3.5.5. Risorse Interiori concede la stessa dotazione di 2 + Mod SAG Tecniche, minimo 1. Il Lottatore che possiede Risorse Interiori, acquisito come Talento Libero oppure di Classe, può scegliere anche le Tecniche esclusive del Lottatore. Risorse Interiori non può essere acquisito nuovamente attraverso l’altra modalità per ricevere una seconda dotazione iniziale. La scelta di Classe Tecniche Interiori Supplementari è acquisibile una sola volta; ulteriori acquisizioni utilizzano Talenti Liberi.",
+        "Compatibilità con la magia: Addestramento Taumaturgo, uno o più Gradi in Classi taumaturgiche e Talenti che concedono la capacità personale di lanciare Incantesimi sono incompatibili con Risorse Interiori; sintonizzazione e utilizzo degli Artefatti, Abilità Mistiche e conoscenze dell’occulto, e ricevere gli effetti di Incantesimi altrui sono compatibili.",
+        "L’incompatibilità vale in entrambe le direzioni, anche nelle acquisizioni successive: chi possiede Risorse Interiori non può acquisire le capacità incompatibili, e chi possiede una di queste capacità non può acquisire Risorse Interiori.",
+        "Restano valide le regole del §8.9: una Tecnica attivata per Round, costi e Azioni indicati nelle schede, requisiti delle Scuole Mishima e impossibilità di utilizzare Risorse Interiori a Umanità 0, salvo eccezioni espresse."
+      ]
+    },
+    "magia": {
+      "titolo": "Talenti di magia (Manuale della Magia)",
+      "note": [
+        "Il §8.6.8 rimanda al Manuale della Magia, che cita questi Talenti nel testo delle regole senza schede. Il testo è ricavato dalle citazioni; tipo e prerequisiti sono da definire (TODO). Molteplicità: una sola acquisizione (regola generale del §8.6), salvo i due Talenti che il manuale dichiara acquisibili fino a cinque volte."
+      ]
+    }
+  },
+  "talenti": [
+    {
+      "id": "attivazione-tempestiva",
+      "nome": "Attivazione Tempestiva",
+      "sezione": "8.6",
+      "tipo": "TODO(Davide)",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Il personaggio può dichiarare l’attivazione di una proprietà a carica della propria arma dopo aver conosciuto l’esito della Prova per colpire, ma prima delle Difese e della determinazione del danno. L’attivazione conserva i costi ordinari e non richiede Azioni aggiuntive. Il Talento non modifica retroattivamente la Prova già effettuata. Le regole generali delle proprietà a carica sono descritte nel Manuale degli Armamenti, §7.1.4.",
+      "_nota_tipo": "Il manuale non indica Passivo o Attivo: l'intestazione è «Talento Libero. Prerequisiti: nessuno aggiuntivo. Acquisibile una sola volta.»"
+    },
+    {
+      "id": "ambidestro",
+      "nome": "Ambidestro",
+      "sezione": "8.6.1",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Elimina il normale −4 VA quando il personaggio utilizza soltanto la mano non dominante. Non concede Azioni o attacchi aggiuntivi. Non modifica la manovra Combattere con due armi e non si somma ai benefici di Duellante, Schermidore o Pistolero (§5.7)."
+    },
+    {
+      "id": "iniziativa-migliorata",
+      "nome": "Iniziativa Migliorata",
+      "sezione": "8.6.1",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Il personaggio ottiene un bonus permanente di +3 all’Iniziativa.",
+      "effetti": {
+        "iniziativa": 3
+      }
+    },
+    {
+      "id": "sempre-allerta",
+      "nome": "Sempre Allerta",
+      "sezione": "8.6.1",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Ottiene +3 VA alle Prove di Percezione per individuare imboscate, aggressori nascosti e pericoli improvvisi. Può effettuare la Prova anche quando non sta cercando attivamente la minaccia, purché questa sia concretamente percepibile. Il Talento non rivela minacce impercettibili e non concede immunità automatica alla Sorpresa."
+    },
+    {
+      "id": "sonno-leggero",
+      "nome": "Sonno Leggero",
+      "sezione": "8.6.1",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Il personaggio si sveglia immediatamente quando percepisce un rumore, un movimento o un evento anomalo. Se è necessaria una Prova di Percezione, deve comunque superarla. Il risveglio non identifica automaticamente la minaccia e non concede immunità alla Sorpresa."
+    },
+    {
+      "id": "buona-costituzione",
+      "nome": "Buona Costituzione",
+      "sezione": "8.6.1",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Aumenta di 5 i PV massimi del personaggio. Al momento dell’acquisizione aumentano di 5 anche i PV attuali. Il Talento non modifica Ferite o Menomazioni.",
+      "effetti": {
+        "pv": 5
+      }
+    },
+    {
+      "id": "struttura-robusta",
+      "nome": "Struttura Robusta",
+      "sezione": "8.6.1",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Ottiene +3 alla PS di Tempra effettuata per evitare una Menomazione. Si applicano tutte le penalità ordinarie, comprese quelle dello Stato di Ferita appena raggiunto. Il bonus riguarda la Prova distinta per la Menomazione, non quella per limitare le nuove Ferite."
+    },
+    {
+      "id": "duro-a-morire",
+      "nome": "Duro a Morire",
+      "sezione": "8.6.1",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Quando si trova a 0 PV, ottiene +3 alle PS di Tempra per evitare o ridurre nuove Ferite, sia a causa di un danno sia per Sanguinamento. Il beneficio non si applica alla distinta PS per evitare una Menomazione."
+    },
+    {
+      "id": "guarigione-migliorata",
+      "nome": "Guarigione Migliorata",
+      "sezione": "8.6.1",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Dimezza, arrotondando per eccesso, i giorni necessari per migliorare di uno Stato di Ferita con il recupero ordinario: attività mista 4 giorni anziché 7; riposo assoluto 3 anziché 5; degenza ospedaliera 2 anziché 3. L’attività pesante continua a non consentire questo recupero. Restano le interruzioni previste dalle regole: una nuova Ferita azzera il periodo in corso e il Sanguinamento impedisce la guarigione. Il Talento non modifica il recupero dei PV, quello delle Menomazioni, la rimozione diretta di Ferite mediante cure o Incantesimi, né il limite di un tentativo medico ogni sette giorni."
+    },
+    {
+      "id": "mulo-da-soma",
+      "nome": "Mulo da Soma",
+      "sezione": "8.6.1",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Ottiene +3 VA alle Prove di Atletica per sollevare, sostenere, spingere, trascinare o trasportare carichi. Ottiene inoltre +3 alle PS di Tempra effettivamente richieste per resistere all’Affaticamento dovuto al trasporto di un carico. Il Talento non concede una Prova quando il peggioramento dell’Affaticamento è automatico. Non modifica i limiti di peso, la Forza, il danno o i requisiti delle armi e non riduce ulteriormente le penalità del carico."
+    },
+    {
+      "id": "sport",
+      "nome": "Sport",
+      "sezione": "8.6.1",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "All’acquisizione sceglie una sola disciplina sportiva. Ottiene +3 VA alle Prove di Atletica direttamente pertinenti a quella disciplina, anche fuori da una competizione. Il bonus non si applica ad attacchi, Difese o Prove Salvezza. Scegliendo Nuoto, per esempio, si applica alle relative Prove di Atletica per Corsa e Scatto.",
+      "annotazione": "disciplina sportiva scelta all'acquisizione"
+    },
+    {
+      "id": "visione-perfetta",
+      "nome": "Visione Perfetta",
+      "sezione": "8.6.1",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Riduce di 3 punti complessivi, fino a un minimo di 0, le penalità alle Prove di Percezione visiva dovute a distanza, scarsa illuminazione, fumo o nebbia. Rimane necessaria una possibilità concreta di vedere. Il Talento non permette di vedere attraverso ostacoli, nel buio totale o attraverso l’invisibilità e non modifica le penalità alle Prove per colpire."
+    },
+    {
+      "id": "controllo-del-fallimento",
+      "nome": "Controllo del Fallimento",
+      "sezione": "8.6.1",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Annullare un proprio 20 naturale costa 2 Punti Eroe anziché 3, secondo il §1.8.2. Il risultato diventa un fallimento normale e conserva il Distintivo. Lo sconto riguarda soltanto il proprio Fallimento Maldestro; annullare il Successo Magistrale di un avversario continua a costare 3 Punti Eroe. Non è previsto un limite di utilizzi distinto dalla disponibilità di Punti Eroe."
+    },
+    {
+      "id": "successo-magistrale-migliorato",
+      "nome": "Successo Magistrale Migliorato",
+      "sezione": "8.6.1",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Un 2 naturale che supera la Prova viene considerato un Successo Magistrale. Il beneficio si applica a tutti i tipi di Prova. Con Valore finale 1, un risultato di 2 rimane un fallimento. Il 2 naturale non assegna Distintivi.\nSi applicano gli effetti ordinari del Magistrale previsti dalla Prova, comprese le regole sulle applicazioni multiple del danno: il danno normalmente ×2 diventa ×3, mentre un ×3 già previsto non aumenta ulteriormente. Il Talento non consente tiri volontari per attività automatiche o prive di incertezza.\nUn avversario direttamente coinvolto può spendere 3 Punti Eroe per trasformare questo Magistrale in un successo normale, alle stesse condizioni previste per un Magistrale ottenuto con 1 naturale (§1.8.2)."
+    },
+    {
+      "id": "prova-di-caratteristica-migliorata",
+      "nome": "Prova di Caratteristica Migliorata",
+      "sezione": "8.6.2",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "per_caratteristica",
+      "parametro": "caratteristica",
+      "testo": "Sceglie Forza, Costituzione, Destrezza, Intelligenza, Saggezza o Carisma e ottiene +3 alle Prove dirette di quella Caratteristica. Il valore della Caratteristica non cambia. Il bonus non si applica alle Abilità, alle Prove Salvezza, ai valori derivati di PV, PM, Iniziativa o danno, né ai requisiti dell’Equipaggiamento.\nPuò acquisire nuovamente il Talento scegliendo ogni volta una Caratteristica diversa. Ogni acquisizione utilizza una normale scelta di Talento Libero."
+    },
+    {
+      "id": "prova-salvezza-migliorata",
+      "nome": "Prova Salvezza Migliorata",
+      "sezione": "8.6.2",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "per_salvezza_max2",
+      "parametro": "salvezza",
+      "testo": "Sceglie Tempra, Riflessi, Volontà o Magia e aumenta di 1 il valore della Salvezza scelta. Può acquisirlo al massimo due volte per ciascuna Salvezza, fino a +2 complessivo sulla stessa. Ogni acquisizione utilizza una normale scelta di Talento Libero; sulla Scheda si annota la Salvezza, per esempio Tempra Migliorata.\nSi applica il limite di 18 alla somma del valore strutturale, degli incrementi di questo Talento e dell’eventuale Resistenza specifica, come indicato nel §1.2.3.",
+      "effetti": {
+        "salvezza": 1
+      }
+    },
+    {
+      "id": "resistenza-ai-veleni",
+      "nome": "Resistenza ai Veleni",
+      "sezione": "8.6.3",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Ottiene +2 alla PS per evitare o attenuare l’avvelenamento. Il bonus non si applica alle successive PS di Tempra per nuove Ferite causate dal danno del veleno quando il personaggio è già a 0 PV."
+    },
+    {
+      "id": "resistenza-alle-malattie",
+      "nome": "Resistenza alle Malattie",
+      "sezione": "8.6.3",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Ottiene +2 alle PS contro malattie e infezioni."
+    },
+    {
+      "id": "resistenza-all-affaticamento",
+      "nome": "Resistenza all’Affaticamento",
+      "sezione": "8.6.3",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Ottiene +2 alle PS per evitare o limitare il peggioramento dell’Affaticamento. I peggioramenti automatici restano automatici."
+    },
+    {
+      "id": "resistenza-alla-paura",
+      "nome": "Resistenza alla Paura",
+      "sezione": "8.6.3",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Ottiene +2 alle PS contro paura, terrore, panico e demoralizzazione."
+    },
+    {
+      "id": "resistenza-al-controllo-mentale",
+      "nome": "Resistenza al Controllo Mentale",
+      "sezione": "8.6.3",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Ottiene +2 alle PS contro suggestioni e altri effetti che impongono o controllano le decisioni del personaggio. Non si applica alla normale persuasione."
+    },
+    {
+      "id": "resistenza-alla-corruzione",
+      "nome": "Resistenza alla Corruzione",
+      "sezione": "8.6.3",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Ottiene +2 alle PS per evitare di acquisire Corruzione Oscura o limitarne il peggioramento. Si usa la Salvezza indicata dall’effetto; nella procedura ordinaria di Corruzione è Magia (§5.20)."
+    },
+    {
+      "id": "mezzofondista",
+      "nome": "Mezzofondista",
+      "sezione": "8.6.4",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Una volta al giorno, quando sta per subire un peggioramento dell’Affaticamento dovuto a Corsa o Scatto prolungati, marcia forzata o viaggio continuativo, può ridurlo di uno Stato, fino a un minimo di 0. Dichiara l’uso quando il peggioramento deve essere applicato; un aumento di due Stati diventa di uno. Il beneficio vale anche per un peggioramento automatico. Non recupera Affaticamento già accumulato e non si applica a fame, sete, privazione del sonno o altre cause."
+    },
+    {
+      "id": "movimento-fluido",
+      "nome": "Movimento Fluido",
+      "sezione": "8.6.4",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Riduce di 2 punti complessivi per Prova, fino a un minimo di 0, le penalità dovute ad andatura, terreno o appoggi instabili. Vale per le Prove di Atletica del Movimento e per le altre Prove penalizzate da quelle condizioni: la penalità personale di Corsa passa da −2 a 0, quella di Scatto da −6 a −4; una Prova di movimento a −4 passa a −2.\nLa riduzione è di 2 complessivi, non di 2 per ciascuna causa. Non modifica il costo dei Q, le penalità degli avversari per colpire o gli impedimenti al Movimento e non supera divieti come quello di lanciare Incantesimi durante Corsa e Scatto nei casi previsti."
+    },
+    {
+      "id": "scattante",
+      "nome": "Scattante",
+      "sezione": "8.6.4",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Durante Scatto aumenta di 6 Q la disponibilità di Movimento, prima di applicare il costo del terreno. La disponibilità ordinaria passa da 18 a 24 Q: su terreno normale o in volo permette fino a 24 Q effettivi; interamente a nuoto, con costo 2, fino a 12 Q. In un percorso misto si utilizza una sola disponibilità comune di 24 Q. Si applicano gli altri modificatori di Movimento, gli esiti delle Prove e tutti i costi in Azioni, le penalità e i limiti ordinari.",
+      "effetti": {
+        "movimento": {
+          "scatto": 6
+        }
+      }
+    },
+    {
+      "id": "carica-migliorata",
+      "nome": "Carica Migliorata",
+      "sezione": "8.6.4",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Porta a ×3 il danno di Carica e Controcarica. Il ×3 rimane tale anche con un Successo Magistrale. Restano Azioni, Prove, distanze, penalità e incompatibilità delle manovre (§5.6)."
+    },
+    {
+      "id": "imboscata-migliorata",
+      "nome": "Imboscata Migliorata",
+      "sezione": "8.6.4",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Elimina il −2 VA all’Azione Principale eseguita quando si verifica l’evento dichiarato mediante Imboscata. Restano il costo e le condizioni della manovra (§5.4)."
+    },
+    {
+      "id": "incalzare-migliorato",
+      "nome": "Incalzare Migliorato",
+      "sezione": "8.6.4",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Con Incalzare infligge anche il danno normale al bersaglio, oltre allo spostamento previsto. Conserva il costo di 1 AzP e il −4 VA alla Prova per colpire. Ostacoli, caduta A Terra e pericoli seguono la manovra ordinaria (§5.5)."
+    },
+    {
+      "id": "movimento-evasivo-migliorato",
+      "nome": "Movimento Evasivo Migliorato",
+      "sezione": "8.6.4",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Quando effettua Movimento Evasivo, le penalità degli avversari per colpirlo diventano −4 VA al Passo, −6 in Corsa e −8 in Scatto. Restano i costi, le penalità personali e le eventuali Prove di Movimento. Non evita gli attacchi di opportunità (§5.2)."
+    },
+    {
+      "id": "ritirata-migliorata",
+      "nome": "Ritirata Migliorata",
+      "sezione": "8.6.4",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Durante il Movimento effettuato con Ritirata evita tutti gli attacchi di opportunità, anche quelli di avversari con cui non era impegnato all’inizio del Movimento. Si applicano gli altri costi, limiti e incompatibilità di Ritirata (§5.2)."
+    },
+    {
+      "id": "estrazione-rapida",
+      "nome": "Estrazione Rapida",
+      "sezione": "8.6.4",
+      "tipo": "attivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Un utilizzo per Round, durante la propria Iniziativa. Una volta per Round, durante la propria Iniziativa, estrae un’arma accessibile senza spendere Azioni. Questa estrazione non impone la penalità per incorporare l’operazione nell’attacco. Restano necessari accessibilità dell’arma e requisiti dell’impugnatura. Ogni Talento di preparazione rapida ha il proprio utilizzo distinto."
+    },
+    {
+      "id": "cambio-rapido",
+      "nome": "Cambio Rapido",
+      "sezione": "8.6.4",
+      "tipo": "attivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Un utilizzo per Round, durante la propria Iniziativa.\nUna volta per Round, durante la propria Iniziativa, ripone l’arma utilizzata ed estrae un’altra arma accessibile senza spendere Azioni. Questo cambio non impone la penalità per incorporare l’operazione nell’attacco. Restano i requisiti dell’impugnatura. Ogni Talento di preparazione rapida ha il proprio utilizzo distinto."
+    },
+    {
+      "id": "imbracciatura-rapida",
+      "nome": "Imbracciatura Rapida",
+      "sezione": "8.6.4",
+      "tipo": "attivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Un utilizzo per Round, durante la propria Iniziativa. Una volta per Round, durante la propria Iniziativa, imbraccia l’arma senza spendere Azioni. L’Imbracciatura può essere persa normalmente, per esempio con un Movimento successivo. Il Talento non concede il +1 danno di Postura d’Assedio dell’Artigliere. Ogni Talento di preparazione rapida ha il proprio utilizzo distinto."
+    },
+    {
+      "id": "ricarica-rapida",
+      "nome": "Ricarica Rapida",
+      "sezione": "8.6.4",
+      "tipo": "attivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Un utilizzo per Round, durante la propria Iniziativa. Una volta per Round, durante la propria Iniziativa, esegue senza spendere Azioni una singola operazione di ricarica che normalmente richiede 1 AzM oppure 1 AzP. Deve disporre delle munizioni, delle mani libere e degli altri requisiti necessari. Non si applica a procedure che richiedono più Azioni, a conversioni di PM o a ricariche mistiche. Ogni Talento di preparazione rapida ha il proprio utilizzo distinto."
+    },
+    {
+      "id": "ricarica-migliorata",
+      "nome": "Ricarica Migliorata",
+      "sezione": "8.6.4",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Quando una ricarica prevede l’inserimento di una munizione alla volta, può inserirne fino a tre con la stessa operazione, senza superare la capacità dell’arma. Il costo ordinario dell’operazione resta quello previsto dall’arma, normalmente 1 AzP. Con Ricarica Rapida può inserire fino a tre munizioni gratuitamente una volta per Round, durante la propria Iniziativa. Se incorpora la ricarica nell’attacco, può inserirne fino a tre applicando −4 VA a tutte le Prove per colpire di quell’attacco; resta il limite di una sola operazione incorporata. Non modifica la sostituzione di caricatori, celle o serbatoi completi, le ricariche di PM o le procedure che richiedono più Azioni per una singola munizione. Non concede attacchi aggiuntivi. Un’arma con capacità di sei munizioni da inserire singolarmente richiede due operazioni da tre."
+    },
+    {
+      "id": "pistolero",
+      "nome": "Pistolero",
+      "sezione": "8.6.5",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Con due Armi leggere a distanza, la penalità di Combattere con due armi passa da −4 a −2 VA a ciascuno dei due attacchi. Gli attacchi conservano Prove e risoluzioni separate. Restano 1 AzP, i requisiti delle armi e tutte le incompatibilità della manovra (§5.7). Ambidestro non aggiunge un’ulteriore riduzione."
+    },
+    {
+      "id": "duellante",
+      "nome": "Duellante",
+      "sezione": "8.6.5",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Con una combinazione mista di un’arma ravvicinata a una mano e un’Arma leggera a distanza, la penalità di Combattere con due armi passa da −4 a −2 VA a ciascun attacco. Gli attacchi conservano Prove e risoluzioni separate. Contro un bersaglio impegnato si applicano anche le regole del Tiro Ravvicinato. Restano 1 AzP e le incompatibilità della manovra; Ambidestro non aggiunge un’ulteriore riduzione (§5.7)."
+    },
+    {
+      "id": "raffica-breve-migliorata",
+      "nome": "Raffica Breve Migliorata",
+      "sezione": "8.6.5",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Porta il bonus della Raffica Breve da +2 a +4 VA. L’arma deve possedere questa modalità. Restano 1 AzP, il consumo di munizioni e il numero di colpi. Il bonus si applica anche quando la Raffica Breve è abbinata a una manovra compatibile."
+    },
+    {
+      "id": "raffica-media-migliorata",
+      "nome": "Raffica Media Migliorata",
+      "sezione": "8.6.5",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Elimina il −2 VA della Raffica Media, portando il modificatore a 0. L’arma deve possedere questa modalità. Restano 1 AzP, il consumo di munizioni e il numero di colpi. Si applica anche alla Prova con cui l’Artigliere utilizza Raffica Estesa."
+    },
+    {
+      "id": "raffica-lunga-migliorata",
+      "nome": "Raffica Lunga Migliorata",
+      "sezione": "8.6.5",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Riduce la penalità della Raffica Lunga da −6 a −4 VA. L’arma deve possedere questa modalità. Restano 1 AzP, il consumo di munizioni e il numero di colpi. Si applica anche alla Prova con cui l’Artigliere utilizza Raffica Estesa."
+    },
+    {
+      "id": "fuoco-di-soppressione-migliorato",
+      "nome": "Fuoco di Soppressione Migliorato",
+      "sezione": "8.6.5",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Consuma 5 munizioni anziché 10 quando effettua Fuoco di Soppressione. Restano necessari un’arma capace di Raffica Lunga, 1 AzP e la Prova a −4 VA; Area, durata ed effetti non cambiano. Le cinque munizioni sono consumate anche in caso di fallimento. La manovra è utilizzabile anche con sole cinque munizioni rimaste nell’arma. Ottimizzare Proiettili dell’Artigliere stabilisce invece un consumo di otto. Con entrambi i Talenti si applica il consumo più favorevole, cinque, senza sommare le riduzioni. Ottimizzare Proiettili conserva i propri benefici sulle Raffiche."
+    },
+    {
+      "id": "tiro-ravvicinato-istintivo",
+      "nome": "Tiro Ravvicinato Istintivo",
+      "sezione": "8.6.5",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Riduce di 2 la penalità alla Prova per colpire con Tiro Ravvicinato: con Armi leggere passa da −2 a 0 VA; con Armi medie da −4 a −2 VA. Restano requisiti e costo della manovra. È cumulabile con Tiro Ravvicinato Migliorato."
+    },
+    {
+      "id": "tiro-ravvicinato-migliorato",
+      "nome": "Tiro Ravvicinato Migliorato",
+      "sezione": "8.6.5",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Porta il bonus al danno di Tiro Ravvicinato da +3 a +5, applicato prima dell’Armatura. Restano bersaglio entro 3 Q, Arma leggera o media, Tiro Singolo o Raffica Breve. È cumulabile con Tiro Ravvicinato Istintivo, che riduce la penalità alla Prova. Il bonus non si somma al moltiplicatore di Tiro a Bruciapelo."
+    },
+    {
+      "id": "tiro-a-bruciapelo-migliorato",
+      "nome": "Tiro a Bruciapelo Migliorato",
+      "sezione": "8.6.5",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Permette di usare Tiro a Bruciapelo contro un bersaglio consapevole e capace di reagire, che conserva le proprie Difese. Restano il Contatto, l’Arma leggera o media, il Tiro Singolo o la Raffica Breve e il danno ×2 della manovra. Si applicano le regole ordinarie del Magistrale (§§1.6 e 5.10)."
+    },
+    {
+      "id": "tiro-rapido-migliorato",
+      "nome": "Tiro Rapido Migliorato",
+      "sezione": "8.6.5",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Riduce da −4 a −2 VA la penalità di ciascuno dei due Tiri Singoli effettuati mediante Tiro Rapido. Conserva il costo di 1 AzP, il consumo di due munizioni, i requisiti della scheda dell’arma e le incompatibilità della manovra. Ogni tiro e le sue conseguenze si risolvono separatamente (§5.10)."
+    },
+    {
+      "id": "tiro-mirato-migliorato",
+      "nome": "Tiro Mirato Migliorato",
+      "sezione": "8.6.5",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Porta entrambi i bonus di Tiro Mirato da +2 a +4: +4 VA alla Prova per colpire e +4 danni. Conserva le Azioni di preparazione ed esecuzione e le condizioni che interrompono la preparazione. È consentito con Tiro Singolo o Raffica Breve. Alle Azioni richieste dalla distanza aggiunge una sola AzP, come Tiro Mirato (§5.10)."
+    },
+    {
+      "id": "tiro-a-lunga-distanza",
+      "nome": "Tiro a Lunga Distanza",
+      "sezione": "8.6.5",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Riduce di 2 punti la penalità dovuta alla distanza quando il bersaglio si trova oltre 80 Q. Si cumula con i mirini e con Ottimizzare Gittata dell’Artigliere, fino ad annullare la penalità, senza trasformarla in un bonus. Non estende la gittata massima dell’arma e non riduce le Azioni richieste (§5.11)."
+    },
+    {
+      "id": "mira-rapida",
+      "nome": "Mira Rapida",
+      "sezione": "8.6.5",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Riduce di 1, fino a un minimo di 1, le Azioni Principali complessivamente richieste dalla distanza e dal mirino. Non riduce l’Azione aggiuntiva necessaria per Tiro Mirato. Un tiro a 800 Q richiede normalmente tre AzP; con Mira Rapida ne richiede due. Aggiungendo Tiro Mirato il totale diventa tre AzP. La preparazione segue le normali condizioni del §5.11."
+    },
+    {
+      "id": "fuoco-di-precisione",
+      "nome": "Fuoco di Precisione",
+      "sezione": "8.6.5",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Riduce da −4 a −2 VA entrambe le penalità previste quando si spara contro un bersaglio impegnato in Ravvicinato, protetto da un alleato o che utilizza un ostaggio: quella della Prova per colpire e quella dell’eventuale seconda Prova dopo un fallimento. Gli esiti seguono il §5.10. Fuoco Controllato dell’Agente continua a eliminare queste penalità e la seconda Prova secondo la propria descrizione."
+    },
+    {
+      "id": "schermidore",
+      "nome": "Schermidore",
+      "sezione": "8.6.6",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Con due armi ravvicinate a una mano, la penalità di Combattere con due armi passa da −4 a −2 VA a ciascuno dei due attacchi. Restano 1 AzP, le Prove distinte, i requisiti e le incompatibilità della manovra. Ambidestro non aggiunge un’ulteriore riduzione (§5.7)."
+    },
+    {
+      "id": "affondo-migliorato",
+      "nome": "Affondo Migliorato",
+      "sezione": "8.6.6",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Con Affondo porta il bonus al danno da +1 a +2 e applica Sanguinamento 2 anziché 1, se almeno 1 danno supera l’AR. Restano 1 AzP, −4 VA, l’arma compatibile e le altre condizioni della manovra."
+    },
+    {
+      "id": "apertura-tattica",
+      "nome": "Apertura Tattica",
+      "sezione": "8.6.6",
+      "tipo": "attivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Una volta per Round, quando un alleato colpisce un bersaglio adiacente al personaggio, può spendere 1 AzP ancora disponibile per effettuare immediatamente un Colpo Singolo Ravvicinato contro lo stesso bersaglio. È consentito anche prima o dopo la propria Iniziativa. Usa la normale Prova per colpire e il normale danno; non concede un’Azione aggiuntiva."
+    },
+    {
+      "id": "arti-marziali",
+      "nome": "Arti Marziali",
+      "sezione": "8.6.6",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Il danno base degli attacchi senz’armi diventa 1d6. Non si somma al dado della Disciplina del Lottatore: si usa il dado più alto applicabile."
+    },
+    {
+      "id": "arti-marziali-migliorate",
+      "nome": "Arti Marziali Migliorate",
+      "sezione": "8.6.6",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "arti-marziali"
+      ],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Ottiene +1 VA agli attacchi senz’armi e alle Prove di Difese contro attacchi Ravvicinati mentre combatte senz’armi. Non concede da solo la possibilità di parare a mani nude."
+    },
+    {
+      "id": "colpo-di-opportunita-istintivo",
+      "nome": "Colpo di Opportunità Istintivo",
+      "sezione": "8.6.6",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Può effettuare due Attacchi di Opportunità gratuiti per Round, contro avversari differenti, rispettando le condizioni che li provocano. Non permette due attacchi contro lo stesso avversario nel medesimo Round."
+    },
+    {
+      "id": "colpo-mirato-migliorato",
+      "nome": "Colpo Mirato Migliorato",
+      "sezione": "8.6.6",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Porta i bonus di Colpo Mirato a +4 VA e +4 danni. Restano due AzP complessive, anche su più Round, e le normali condizioni che interrompono la preparazione."
+    },
+    {
+      "id": "combattere-alla-cieca",
+      "nome": "Combattere alla Cieca",
+      "sezione": "8.6.6",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Riduce da −8 a −4 VA le penalità per attaccare o difendersi contro un avversario non visibile. Una Prova riuscita di Percezione può localizzarlo mediante indizi concretamente percepibili: finché ne segue la posizione, quell’avversario non beneficia del +4 VA per attaccarlo senza essere percepito, ma resta la penalità di −4 dovuta alla mancanza della vista. Non permette di vedere, leggere o individuare una presenza priva di indizi percepibili."
+    },
+    {
+      "id": "disarmare-migliorato",
+      "nome": "Disarmare Migliorato",
+      "sezione": "8.6.6",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Riduce la penalità di Disarmare da −4 a −2 VA. Restano costo, Prova contrapposta, portata e conseguenze della manovra."
+    },
+    {
+      "id": "immobilizzare-istintivo",
+      "nome": "Immobilizzare Istintivo",
+      "sezione": "8.6.6",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Quando riesce nella presa iniziale senz’armi di Immobilizzare, infligge anche il normale danno senz’armi, con l’AR pertinente. Il danno avviene una sola volta per la presa iniziale e non si ripete automaticamente mantenendola."
+    },
+    {
+      "id": "immobilizzare-migliorato",
+      "nome": "Immobilizzare Migliorato",
+      "sezione": "8.6.6",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Impone −2 VA alle Prove con cui il bersaglio tenta di liberarsi dalla propria Immobilizzazione. Restano Prova contrapposta, Azioni e requisiti della manovra o dell’arma compatibile."
+    },
+    {
+      "id": "sbilanciare-migliorato",
+      "nome": "Sbilanciare Migliorato",
+      "sezione": "8.6.6",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Riduce la penalità di Sbilanciare da −4 a −2 VA. Non modifica il costo, l’opposizione o gli effetti della manovra."
+    },
+    {
+      "id": "spazzata-migliorata",
+      "nome": "Spazzata Migliorata",
+      "sezione": "8.6.6",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Riduce di 2 la penalità di Spazzata: −2 VA contro due bersagli, −4 contro tre o più quando una capacità consente di superare il limite ordinario. Non aumenta da solo il numero massimo di bersagli."
+    },
+    {
+      "id": "stordire-migliorato",
+      "nome": "Stordire Migliorato",
+      "sezione": "8.6.6",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Riduce la penalità della manovra Stordire da −6 a −4 VA. Restano costo, danno, arma compatibile, almeno 1 danno oltre AR e PS Tempra prevista dalla manovra."
+    },
+    {
+      "id": "copertura-migliorata",
+      "nome": "Copertura Migliorata",
+      "sezione": "8.6.7",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Quando beneficia di Copertura Leggera, la penalità avversaria per colpirlo diventa −4 VA e il bonus pertinente a Riflessi +4; con Copertura Media diventano −6 VA e +6. Non rende evitabile un effetto che ignora la copertura e non modifica Copertura Totale."
+    },
+    {
+      "id": "copertura-tattica",
+      "nome": "Copertura Tattica",
+      "sezione": "8.6.7",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Riduce di 2 punti la penalità al proprio attacco dalla Copertura: Leggera 0 VA, Media −2 VA. Non permette di attaccare attraverso Copertura Totale."
+    },
+    {
+      "id": "difesa-con-due-armi",
+      "nome": "Difesa con Due Armi",
+      "sezione": "8.6.7",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "schermidore"
+      ],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Mentre impugna due armi ravvicinate a una mano, gli attacchi Ravvicinati contro di lui subiscono −2 VA. Non costituisce una Prova di Parata e non concede Difese aggiuntive."
+    },
+    {
+      "id": "parata-a-distanza",
+      "nome": "Parata a Distanza",
+      "sezione": "8.6.7",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Quando para con uno scudo, riduce di 2 le penalità della Parata a Distanza: da −4 a −2 VA contro un attacco ordinario e da −6 a −4 contro una Raffica. Non modifica la Parata effettuata con un’arma."
+    },
+    {
+      "id": "parata-istintiva",
+      "nome": "Parata Istintiva",
+      "sezione": "8.6.7",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Una volta per Round effettua una Parata senza spendere Azioni, anche prima o dopo la propria Iniziativa. Restano Prova, requisiti, penalità e limiti della Parata."
+    },
+    {
+      "id": "parata-migliorata",
+      "nome": "Parata Migliorata",
+      "sezione": "8.6.7",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Dopo una Parata riuscita con un’arma, dimezza per eccesso il danno e lo riduce di altri 2 punti, fino a un minimo di 0, prima di applicare l’AR. Il Magistrale continua ad annullare il danno. Non si applica alla Parata con scudo."
+    },
+    {
+      "id": "parata-multipla",
+      "nome": "Parata Multipla",
+      "sezione": "8.6.7",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "parata-istintiva"
+      ],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Porta a due il numero complessivo di Parate gratuite per Round concesso da Parata Istintiva. Restano i requisiti e il divieto di tentare due Difese contro lo stesso attacco."
+    },
+    {
+      "id": "schivata-istintiva",
+      "nome": "Schivata Istintiva",
+      "sezione": "8.6.7",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Una volta per Round effettua una Schivata spendendo soltanto l’AzM, anche prima o dopo la propria Iniziativa. Restano la Prova, la possibilità fisica di spostarsi e le penalità pertinenti."
+    },
+    {
+      "id": "schivata-migliorata",
+      "nome": "Schivata Migliorata",
+      "sezione": "8.6.7",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "La penalità alla Schivata contro attacchi a Distanza diventa −4 VA; contro una Raffica diventa −6 VA. Restano il costo della Difesa e gli altri requisiti."
+    },
+    {
+      "id": "schivata-multipla",
+      "nome": "Schivata Multipla",
+      "sezione": "8.6.7",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "schivata-istintiva"
+      ],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Dopo la Schivata concessa da Schivata Istintiva, può effettuare una seconda Schivata nello stesso Round spendendo 1 AzP ancora disponibile. Non consente un secondo tentativo contro il medesimo attacco."
+    },
+    {
+      "id": "hacker",
+      "nome": "Hacker",
+      "sezione": "8.6.9",
+      "tipo": "attivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Una volta per sessione per ciascun sistema, dichiara prima della Prova l’uso del Talento e ottiene +2 VA a Tecnologia per intrusione informatica o sorveglianza elettronica. L’utilizzo si consuma anche se fallisce. Si somma a Specializzazione in Informatica quando pertinente, per +4 complessivo."
+    },
+    {
+      "id": "mani-abili",
+      "nome": "Mani Abili",
+      "sezione": "8.6.9",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Riduce di 2, fino a un minimo di 0, la penalità degli strumenti improvvisati nelle prove di Tecnologia e di Furtività per scasso meccanico. Servono comunque strumenti almeno parzialmente adatti; non sostituisce materiali indispensabili. Se un’altra capacità riduce la stessa penalità, come Addestramento di Bottega, si usa la riduzione migliore senza sommarle."
+    },
+    {
+      "id": "ingegneria-d-emergenza",
+      "nome": "Ingegneria d’Emergenza",
+      "sezione": "8.6.9",
+      "tipo": "attivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Una volta per sessione, con 1 AzP e una Prova riuscita di Tecnologia, rende temporaneamente funzionante per 1d6 Round un dispositivo Rotto, anche a 0 PI. Le prove per utilizzarlo subiscono −2 VA. Non recupera PI e non funziona su un oggetto Distrutto o privo di componenti indispensabili. L’utilizzo si consuma con il tentativo."
+    },
+    {
+      "id": "commerciante-esperto",
+      "nome": "Commerciante Esperto",
+      "sezione": "8.6.9",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "specializzazione-commercio"
+      ],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Negli scambi ordinari di beni dal prezzo negoziabile acquista al 10% in meno e vende al 10% in più rispetto al prezzo applicabile. Non richiede una Prova aggiuntiva e non modifica prezzi imposti o non negoziabili. Fra benefici diretti sul medesimo prezzo si applica il più favorevole, senza sommarli."
+    },
+    {
+      "id": "diligente",
+      "nome": "Diligente",
+      "sezione": "8.6.9",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Riduce del 25% il tempo di una ricerca strutturata. Non riduce tempi minimi espressamente obbligatori e non garantisce il successo. Fra riduzioni del tempo della stessa attività si applica la migliore: Metodo di Ricerca dell’Accademico conserva il proprio dimezzamento e il bonus alla Prova."
+    },
+    {
+      "id": "lettura-veloce",
+      "nome": "Lettura Veloce",
+      "sezione": "8.6.9",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Legge un testo in un terzo del tempo ordinario. Comprensione, traduzione e individuazione delle informazioni conservano le relative prove e condizioni. Non rivela automaticamente indizi. Sullo stesso tempo non moltiplica il beneficio di Diligente: si applica quello più favorevole."
+    },
+    {
+      "id": "poliglotta",
+      "nome": "Poliglotta",
+      "sezione": "8.6.9",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Apprende due lingue aggiuntive. Non concede un bonus generale per comprendere qualsiasi lingua sconosciuta.",
+      "annotazione": "le due lingue apprese"
+    },
+    {
+      "id": "autosufficiente",
+      "nome": "Autosufficiente",
+      "sezione": "8.6.9",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Una volta al giorno, quando sta per subire un peggioramento dell’Affaticamento dovuto a fame, sete o sonno insufficiente, lo riduce di uno stato, fino a un minimo di 0. Non recupera Affaticamento già accumulato e non sostituisce cibo, acqua o riposo."
+    },
+    {
+      "id": "tiratore-imboscato",
+      "nome": "Tiratore Imboscato",
+      "sezione": "8.6.9",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Una volta per Round, il primo attacco a Distanza effettuato mentre è nascosto contro un bersaglio inconsapevole ottiene +2 danni e riduce di 2 la penalità di Copertura Leggera, fino a 0. Il danno aggiuntivo riguarda soltanto il primo colpo. Non vale per attacchi ad Area e non riduce Copertura Media o Totale. La condizione nascosta segue Furtività; la Specializzazione nell’arma si somma normalmente."
+    },
+    {
+      "id": "controllo-d-emergenza",
+      "nome": "Controllo d’Emergenza",
+      "sezione": "8.6.9",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Riduce di 2 punti complessivi per Prova, fino a 0, le penalità a Pilotare dovute a maltempo, turbolenze, visibilità, guasti, danni o perdita parziale di controllo. Non riduce le penalità proprie delle manovre o dei Talenti, compreso il −4 di Manovra Evasiva. Se più capacità riducono la stessa penalità, usa la migliore."
+    },
+    {
+      "id": "inseguimento",
+      "nome": "Inseguimento",
+      "sezione": "8.6.9",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Ottiene +2 VA a Pilotare per inseguire o seminare un altro mezzo, indipendentemente dal tipo di veicolo. Si somma alla Specializzazione pertinente al veicolo, per +4 complessivo. Non impone penalità automatiche all’avversario. Il beneficio riguarda le manovre effettuate per mantenere o interrompere l’inseguimento; non aumenta il Movimento, non modifica Percezione e non si estende automaticamente a tutte le Prove della scena (Manuale dei Veicoli, §6.1)."
+    },
+    {
+      "id": "pilotaggio-acrobatico",
+      "nome": "Pilotaggio Acrobatico",
+      "sezione": "8.6.9",
+      "tipo": "attivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Una volta per scena, dichiarandolo prima della Prova, ottiene un normale successo automatico in una singola manovra acrobatica possibile del veicolo, come passaggio stretto, atterraggio o inversione. Restano Azioni e risorse richieste. Non vale per attacchi, Difese, Prove contrapposte o manovre impossibili e non produce un Magistrale."
+    },
+    {
+      "id": "risorse-interiori",
+      "nome": "Risorse Interiori",
+      "sezione": "8.6.10",
+      "tipo": "TODO(Davide)",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Si applicano le incompatibilità descritte in questa sezione. Il personaggio apprende 2 + Mod SAG Tecniche Interiori, minimo 1, scelte fra le Tecniche generiche e quelle delle Scuole Mishima alle quali possiede accesso. Il numero si determina al momento dell’acquisizione: successivi aumenti di SAG non concedono automaticamente nuove Tecniche. Le Tecniche utilizzano i PM personali secondo le rispettive schede (§8.9). Il Talento non aumenta la riserva di PM.",
+      "_nota_tipo": "Il manuale non indica Passivo o Attivo: l'intestazione è «Talento Libero. Nessun requisito numerico di Caratteristica. Acquisibile una sola volta.»",
+      "effetti": {
+        "tecniche": {
+          "formula": "2 + Mod SAG, min 1",
+          "fisso": 2,
+          "caratteristica": "SAG",
+          "minimo": 1,
+          "_nota": "Il numero si determina al momento dell'acquisizione (§8.6.10)."
+        }
+      },
+      "incompatibile_con": [
+        "addestramento:taumaturgo",
+        "classi:taumaturgiche",
+        "talenti:accesso_magia"
+      ]
+    },
+    {
+      "id": "tecniche-interiori-supplementari",
+      "nome": "Tecniche Interiori Supplementari",
+      "sezione": "8.6.10",
+      "tipo": "TODO(Davide)",
+      "prerequisiti": [
+        "risorse-interiori"
+      ],
+      "molteplicita": "illimitata",
+      "parametro": null,
+      "testo": "Il personaggio apprende 3 Tecniche Interiori aggiuntive, scelte fra quelle alle quali possiede accesso. A ogni acquisizione sceglie Tecniche diverse. Ogni acquisizione consuma una normale scelta di Talento Libero; resta il limite di una sola attivazione di Tecnica Interiore per Round.",
+      "_nota_tipo": "Il manuale non indica Passivo o Attivo: l'intestazione è «Talento Libero. Requisito: Risorse Interiori. Acquisibile più volte.»",
+      "effetti": {
+        "tecniche": 3
+      }
+    },
+    {
+      "id": "usufruitore-di-magia",
+      "nome": "Usufruitore di Magia",
+      "sezione": "magia",
+      "tipo": "TODO(Davide)",
+      "prerequisiti": "TODO(Davide)",
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Usufruitore di Magia concede agli altri personaggi 2 + Mod INT incantesimi e accesso fino al livello 3. Con i cinque Talenti liberi ordinari, Usufruitore più quattro miglioramenti consentono il livello massimo 15.\nConvertire Potere è riservato ai personaggi con Addestramento Taumaturgo. Richiede 1 Azione Principale. Il personaggio deve essere cosciente; quando utilizza un contenitore, deve toccarlo ed essere sintonizzato. Usufruitore di Magia o l’acquisizione di una Classe taumaturgica senza il relativo Addestramento non concedono questa capacità.\nLa Meditazione è accessibile con l’Addestramento Taumaturgo, con Recupero Meditativo o con una capacità che la conceda espressamente. Usufruitore di Magia, da solo, non concede questa possibilità.",
+      "provvisorio": true,
+      "fonte": "Magia, sezioni 1, 6 e 9",
+      "effetti": {
+        "accessoMagia": true,
+        "incantesimi": {
+          "formula": "2 + Mod INT",
+          "fisso": 2,
+          "caratteristica": "INT"
+        },
+        "livelloMax": 3
+      }
+    },
+    {
+      "id": "potenziale-mistico-migliorato",
+      "nome": "Potenziale Mistico Migliorato",
+      "sezione": "magia",
+      "tipo": "TODO(Davide)",
+      "prerequisiti": "TODO(Davide)",
+      "molteplicita": "limitata",
+      "parametro": null,
+      "testo": "Potenziale Mistico Migliorato aumenta il limite di 3 per acquisizione, fino a cinque acquisizioni, mantenendo sempre la scala più difficile.",
+      "provvisorio": true,
+      "fonte": "Magia, sezione 1",
+      "max_acquisizioni": 5,
+      "effetti": {
+        "livelloMaxIncantesimi": 3
+      }
+    },
+    {
+      "id": "incrementare-incantesimi",
+      "nome": "Incrementare Incantesimi",
+      "sezione": "magia",
+      "tipo": "TODO(Davide)",
+      "prerequisiti": "TODO(Davide)",
+      "molteplicita": "limitata",
+      "parametro": null,
+      "testo": "Incrementare Incantesimi aggiunge due incantesimi conosciuti ed è acquisibile fino a cinque volte. Gli apprendimenti concessi da Addestramento, Classe o Talento sono automatici. Gli aumenti permanenti di Mod INT incrementano la relativa quota; quelli temporanei non concedono incantesimi.",
+      "provvisorio": true,
+      "fonte": "Magia, sezione 1",
+      "max_acquisizioni": 5,
+      "effetti": {
+        "incantesimi": 2
+      }
+    },
+    {
+      "id": "lancio-in-combattimento",
+      "nome": "Lancio in Combattimento",
+      "sezione": "magia",
+      "tipo": "TODO(Davide)",
+      "prerequisiti": "TODO(Davide)",
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Durante l’Ingaggio richiede sempre Potere, anche ai livelli 1–3, con un ulteriore −2 VA. Lancio in Combattimento elimina il −2 da Ingaggio, mantenendo l’obbligo della Prova.",
+      "provvisorio": true,
+      "fonte": "Magia, sezione 2"
+    },
+    {
+      "id": "focalizzazione-migliorata",
+      "nome": "Focalizzazione Migliorata",
+      "sezione": "magia",
+      "tipo": "TODO(Davide)",
+      "prerequisiti": "TODO(Davide)",
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Focalizzazione impiega 1 Azione Principale preparatoria, senza Prova né PM, e concede +4 VA a Potere per l’incantesimo e il livello dichiarati. Il lancio deve occupare la successiva Azione Principale disponibile; impiegarla diversamente fa perdere il beneficio. Fra preparazione e lancio è consentito soltanto Passo. Non si cumula. Focalizzazione Migliorata porta il bonus a +6. Se non serve Potere, non produce un vantaggio.",
+      "provvisorio": true,
+      "fonte": "Magia, sezione 2"
+    },
+    {
+      "id": "contromagia",
+      "nome": "Contromagia",
+      "sezione": "magia",
+      "tipo": "TODO(Davide)",
+      "prerequisiti": "TODO(Davide)",
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Contromagia richiede il Talento omonimo, 1 Azione Principale disponibile e visibilità del lancio entro 10 Q dal lanciatore avversario. Non richiede preparazione. Si pagano PM pari al livello dell’incantesimo da contrastare e si effettua sempre Potere, con penalità di livello e un ulteriore −2 VA. Il successo annulla l’incantesimo; Azioni e PM restano spesi. Si possono contrastare livelli superiori al proprio accesso se si hanno i PM necessari.",
+      "provvisorio": true,
+      "fonte": "Magia, sezione 2"
+    },
+    {
+      "id": "contromagia-migliorata",
+      "nome": "Contromagia Migliorata",
+      "sezione": "magia",
+      "tipo": "TODO(Davide)",
+      "prerequisiti": "TODO(Davide)",
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Contromagia Migliorata elimina il −2 aggiuntivo.",
+      "provvisorio": true,
+      "fonte": "Magia, sezione 2"
+    },
+    {
+      "id": "incantesimi-da-lancio",
+      "nome": "Incantesimi da Lancio",
+      "sezione": "magia",
+      "tipo": "TODO(Davide)",
+      "prerequisiti": "TODO(Davide)",
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Se lo richiede, si tira Armi da lancio +2 anche senza Copertura; Incantesimi da Lancio aggiunge un ulteriore +2, per un totale di +4.",
+      "provvisorio": true,
+      "fonte": "Magia, sezione 3"
+    },
+    {
+      "id": "conversione-migliorata",
+      "nome": "Conversione Migliorata",
+      "sezione": "magia",
+      "tipo": "TODO(Davide)",
+      "prerequisiti": "TODO(Davide)",
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Ricarica Efficiente e Conversione Migliorata portano ciascuna il rapporto da 3:1 a 2:1. Possedendole entrambe, il rapporto diventa 1:1. I Talenti modificano il costo di ogni gruppo, senza cambiare il numero di gruppi dichiarati, la penalità o gli esiti della Prova. I trasferimenti con il Chroma Bianco rimangono 2:1 in entrambe le direzioni, anche con entrambi i Talenti.",
+      "provvisorio": true,
+      "fonte": "Magia, sezione 6"
+    },
+    {
+      "id": "recupero-meditativo",
+      "nome": "Recupero Meditativo",
+      "sezione": "magia",
+      "tipo": "TODO(Davide)",
+      "prerequisiti": "TODO(Davide)",
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "La Meditazione è accessibile con l’Addestramento Taumaturgo, con Recupero Meditativo o con una capacità che la conceda espressamente. Usufruitore di Magia, da solo, non concede questa possibilità.",
+      "provvisorio": true,
+      "fonte": "Magia, sezione 6"
+    },
+    {
+      "id": "meditazione-migliorata",
+      "nome": "Meditazione Migliorata",
+      "sezione": "magia",
+      "tipo": "TODO(Davide)",
+      "prerequisiti": "TODO(Davide)",
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Meditazione Migliorata richiede accesso alla Meditazione, è acquisibile una sola volta e aggiunge 2 PM al recupero di ogni ora completa, dopo aver applicato il minimo di 3.",
+      "provvisorio": true,
+      "fonte": "Magia, sezione 6"
+    },
+    {
+      "id": "meditazione-estesa",
+      "nome": "Meditazione Estesa",
+      "sezione": "magia",
+      "tipo": "TODO(Davide)",
+      "prerequisiti": "TODO(Davide)",
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Meditazione Estesa richiede accesso alla Meditazione e raddoppia le ore giornaliere utili al recupero, dopo aver applicato il minimo di 1 ora. Non richiede Meditazione Migliorata. Permette inoltre ritiri meditativi che possono protrarsi per più giorni, mantenendo le normali necessità di sostentamento: le ore oltre il limite giornaliero raddoppiato non concedono ulteriori PM in quel giorno.",
+      "provvisorio": true,
+      "fonte": "Magia, sezione 6"
+    }
+  ]
+}

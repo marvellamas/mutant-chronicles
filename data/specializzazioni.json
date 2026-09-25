@@ -1,0 +1,1087 @@
+{
+  "versione_manuale": "Giocatore 0.43",
+  "fonte": "§8.8 (8.8.1 armi, 8.8.2 mistiche, 8.8.3 operative, sociali e professionali)",
+  "regole": [
+    "Ogni Specializzazione è un Talento Libero e si acquisisce una sola volta. Si annota come «Specializzazione in» seguita dal nome dell’ambito. Quando indica più Abilità, il singolo Talento vale per tutti gli impieghi descritti (§8.8).",
+    "Le Specializzazioni ordinarie concedono +2 VA alla Prova di Abilità pertinente; più Specializzazioni ordinarie sulla stessa Prova danno comunque +2 (§8.8).",
+    "Armi: +1 VA e +1 danno nell’impiego delle armi della categoria; si usa sempre l’Abilità della scheda dell’arma. Lanciagranate: Armi medie; Lanciarazzi: Armi pesanti; Armi da Lancio, Archi e Balestre, Granate: Armi da lancio (§8.8.1).",
+    "Mistiche: le quattro in Artefatti e quelle in Occultismo e Rituali +2 VA; le nove sottofamiglie di Potere +1 VA e −1 PM, costo minimo 1, anche quando il lancio non richiede la Prova (§8.8.2)."
+  ],
+  "_nota": "effetto: bonus situazionali, validi solo negli impieghi descritti. La scheda li elenca, non li somma al VA generale.",
+  "specializzazioni": [
+    {
+      "id": "specializzazione-coltelli-e-pugnali",
+      "nome": "Coltelli e Pugnali",
+      "gruppo": "armi",
+      "sottogruppo": "ravvicinato",
+      "abilita": [],
+      "ambito": "Armi della categoria Coltelli e Pugnali. Si usa l’Abilità indicata dalla scheda dell’arma (Manuale degli Armamenti).",
+      "effetto": {
+        "va": 1,
+        "danno": 1
+      }
+    },
+    {
+      "id": "specializzazione-spade",
+      "nome": "Spade",
+      "gruppo": "armi",
+      "sottogruppo": "ravvicinato",
+      "abilita": [],
+      "ambito": "Armi della categoria Spade. Si usa l’Abilità indicata dalla scheda dell’arma (Manuale degli Armamenti).",
+      "effetto": {
+        "va": 1,
+        "danno": 1
+      }
+    },
+    {
+      "id": "specializzazione-asce",
+      "nome": "Asce",
+      "gruppo": "armi",
+      "sottogruppo": "ravvicinato",
+      "abilita": [],
+      "ambito": "Armi della categoria Asce. Si usa l’Abilità indicata dalla scheda dell’arma (Manuale degli Armamenti).",
+      "effetto": {
+        "va": 1,
+        "danno": 1
+      }
+    },
+    {
+      "id": "specializzazione-martelli",
+      "nome": "Martelli",
+      "gruppo": "armi",
+      "sottogruppo": "ravvicinato",
+      "abilita": [],
+      "ambito": "Armi della categoria Martelli. Si usa l’Abilità indicata dalla scheda dell’arma (Manuale degli Armamenti).",
+      "effetto": {
+        "va": 1,
+        "danno": 1
+      }
+    },
+    {
+      "id": "specializzazione-mazze-e-bastoni",
+      "nome": "Mazze e Bastoni",
+      "gruppo": "armi",
+      "sottogruppo": "ravvicinato",
+      "abilita": [],
+      "ambito": "Armi della categoria Mazze e Bastoni. Si usa l’Abilità indicata dalla scheda dell’arma (Manuale degli Armamenti).",
+      "effetto": {
+        "va": 1,
+        "danno": 1
+      }
+    },
+    {
+      "id": "specializzazione-armi-inastate",
+      "nome": "Armi Inastate",
+      "gruppo": "armi",
+      "sottogruppo": "ravvicinato",
+      "abilita": [],
+      "ambito": "Armi della categoria Armi Inastate. Si usa l’Abilità indicata dalla scheda dell’arma (Manuale degli Armamenti).",
+      "effetto": {
+        "va": 1,
+        "danno": 1
+      }
+    },
+    {
+      "id": "specializzazione-armi-flessibili",
+      "nome": "Armi Flessibili",
+      "gruppo": "armi",
+      "sottogruppo": "ravvicinato",
+      "abilita": [],
+      "ambito": "Armi della categoria Armi Flessibili. Si usa l’Abilità indicata dalla scheda dell’arma (Manuale degli Armamenti).",
+      "effetto": {
+        "va": 1,
+        "danno": 1
+      }
+    },
+    {
+      "id": "specializzazione-armi-da-pugno",
+      "nome": "Armi da Pugno",
+      "gruppo": "armi",
+      "sottogruppo": "ravvicinato",
+      "abilita": [],
+      "ambito": "Armi della categoria Armi da Pugno. Si usa l’Abilità indicata dalla scheda dell’arma (Manuale degli Armamenti).",
+      "effetto": {
+        "va": 1,
+        "danno": 1
+      }
+    },
+    {
+      "id": "specializzazione-scudi",
+      "nome": "Scudi",
+      "gruppo": "armi",
+      "sottogruppo": "ravvicinato",
+      "abilita": [],
+      "ambito": "Armi della categoria Scudi. Si usa l’Abilità indicata dalla scheda dell’arma (Manuale degli Armamenti).",
+      "effetto": {
+        "va": 1,
+        "danno": 1
+      }
+    },
+    {
+      "id": "specializzazione-pistole",
+      "nome": "Pistole",
+      "gruppo": "armi",
+      "sottogruppo": "distanza",
+      "abilita": [],
+      "ambito": "Armi della categoria Pistole. Si usa l’Abilità indicata dalla scheda dell’arma (Manuale degli Armamenti).",
+      "effetto": {
+        "va": 1,
+        "danno": 1
+      }
+    },
+    {
+      "id": "specializzazione-carabine",
+      "nome": "Carabine",
+      "gruppo": "armi",
+      "sottogruppo": "distanza",
+      "abilita": [],
+      "ambito": "Armi della categoria Carabine. Si usa l’Abilità indicata dalla scheda dell’arma (Manuale degli Armamenti).",
+      "effetto": {
+        "va": 1,
+        "danno": 1
+      }
+    },
+    {
+      "id": "specializzazione-fucili-d-assalto",
+      "nome": "Fucili d’Assalto",
+      "gruppo": "armi",
+      "sottogruppo": "distanza",
+      "abilita": [],
+      "ambito": "Armi della categoria Fucili d’Assalto. Si usa l’Abilità indicata dalla scheda dell’arma (Manuale degli Armamenti).",
+      "effetto": {
+        "va": 1,
+        "danno": 1
+      }
+    },
+    {
+      "id": "specializzazione-fucili-di-precisione",
+      "nome": "Fucili di Precisione",
+      "gruppo": "armi",
+      "sottogruppo": "distanza",
+      "abilita": [],
+      "ambito": "Armi della categoria Fucili di Precisione. Si usa l’Abilità indicata dalla scheda dell’arma (Manuale degli Armamenti).",
+      "effetto": {
+        "va": 1,
+        "danno": 1
+      }
+    },
+    {
+      "id": "specializzazione-fucili-a-pompa-e-doppiette",
+      "nome": "Fucili a Pompa e Doppiette",
+      "gruppo": "armi",
+      "sottogruppo": "distanza",
+      "abilita": [],
+      "ambito": "Armi della categoria Fucili a Pompa e Doppiette. Si usa l’Abilità indicata dalla scheda dell’arma (Manuale degli Armamenti).",
+      "effetto": {
+        "va": 1,
+        "danno": 1
+      }
+    },
+    {
+      "id": "specializzazione-mitragliatori",
+      "nome": "Mitragliatori",
+      "gruppo": "armi",
+      "sottogruppo": "distanza",
+      "abilita": [],
+      "ambito": "Armi della categoria Mitragliatori. Si usa l’Abilità indicata dalla scheda dell’arma (Manuale degli Armamenti).",
+      "effetto": {
+        "va": 1,
+        "danno": 1
+      }
+    },
+    {
+      "id": "specializzazione-lanciagranate",
+      "nome": "Lanciagranate",
+      "gruppo": "armi",
+      "sottogruppo": "distanza",
+      "abilita": [
+        "Armi medie"
+      ],
+      "ambito": "Armi della categoria Lanciagranate.",
+      "effetto": {
+        "va": 1,
+        "danno": 1
+      }
+    },
+    {
+      "id": "specializzazione-lanciarazzi",
+      "nome": "Lanciarazzi",
+      "gruppo": "armi",
+      "sottogruppo": "distanza",
+      "abilita": [
+        "Armi pesanti"
+      ],
+      "ambito": "Armi della categoria Lanciarazzi.",
+      "effetto": {
+        "va": 1,
+        "danno": 1
+      }
+    },
+    {
+      "id": "specializzazione-armi-da-lancio",
+      "nome": "Armi da Lancio",
+      "gruppo": "armi",
+      "sottogruppo": "distanza",
+      "abilita": [
+        "Armi da lancio"
+      ],
+      "ambito": "Armi della categoria Armi da Lancio.",
+      "effetto": {
+        "va": 1,
+        "danno": 1
+      }
+    },
+    {
+      "id": "specializzazione-archi-e-balestre",
+      "nome": "Archi e Balestre",
+      "gruppo": "armi",
+      "sottogruppo": "distanza",
+      "abilita": [
+        "Armi da lancio"
+      ],
+      "ambito": "Armi della categoria Archi e Balestre.",
+      "effetto": {
+        "va": 1,
+        "danno": 1
+      }
+    },
+    {
+      "id": "specializzazione-armi-al-plasma",
+      "nome": "Armi al Plasma",
+      "gruppo": "armi",
+      "sottogruppo": "distanza",
+      "abilita": [],
+      "ambito": "Armi della categoria Armi al Plasma. Si usa l’Abilità indicata dalla scheda dell’arma (Manuale degli Armamenti).",
+      "effetto": {
+        "va": 1,
+        "danno": 1
+      }
+    },
+    {
+      "id": "specializzazione-lanciafiamme",
+      "nome": "Lanciafiamme",
+      "gruppo": "armi",
+      "sottogruppo": "distanza",
+      "abilita": [],
+      "ambito": "Armi della categoria Lanciafiamme. Si usa l’Abilità indicata dalla scheda dell’arma (Manuale degli Armamenti).",
+      "effetto": {
+        "va": 1,
+        "danno": 1
+      }
+    },
+    {
+      "id": "specializzazione-granate",
+      "nome": "Granate",
+      "gruppo": "armi",
+      "sottogruppo": "distanza",
+      "abilita": [
+        "Armi da lancio"
+      ],
+      "ambito": "Armi della categoria Granate.",
+      "effetto": {
+        "va": 1,
+        "danno": 1
+      }
+    },
+    {
+      "id": "specializzazione-armature-mistiche",
+      "nome": "Armature Mistiche",
+      "gruppo": "mistiche",
+      "abilita": [
+        "Artefatti"
+      ],
+      "ambito": "Armature e protezioni mistiche. +2 alle Prove di Artefatti effettivamente richieste sul tipo di oggetto. Non introduce una Prova di attivazione aggiuntiva né modifica capacità di Sintonizzazione, Potere o costi energetici.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-armi-mistiche",
+      "nome": "Armi Mistiche",
+      "gruppo": "mistiche",
+      "abilita": [
+        "Artefatti"
+      ],
+      "ambito": "Armi mistiche. +2 alle Prove di Artefatti effettivamente richieste sul tipo di oggetto. Non introduce una Prova di attivazione aggiuntiva né modifica capacità di Sintonizzazione, Potere o costi energetici.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-batterie-mistiche",
+      "nome": "Batterie Mistiche",
+      "gruppo": "mistiche",
+      "abilita": [
+        "Artefatti"
+      ],
+      "ambito": "Batterie e contenitori mistici. +2 alle Prove di Artefatti effettivamente richieste sul tipo di oggetto. Non introduce una Prova di attivazione aggiuntiva né modifica capacità di Sintonizzazione, Potere o costi energetici.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-accessori-mistici",
+      "nome": "Accessori Mistici",
+      "gruppo": "mistiche",
+      "abilita": [
+        "Artefatti"
+      ],
+      "ambito": "Accessori mistici diversi dalle altre categorie. +2 alle Prove di Artefatti effettivamente richieste sul tipo di oggetto. Non introduce una Prova di attivazione aggiuntiva né modifica capacità di Sintonizzazione, Potere o costi energetici.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-alchimia",
+      "nome": "Alchimia",
+      "gruppo": "mistiche",
+      "abilita": [
+        "Occultismo"
+      ],
+      "ambito": "Conoscenze e impieghi alchemici di pozioni, reagenti e piante rituali. Non sostituisce Farmacologia o le procedure di produzione del Manuale della Magia.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-misticismo",
+      "nome": "Misticismo",
+      "gruppo": "mistiche",
+      "abilita": [
+        "Occultismo"
+      ],
+      "ambito": "Astrologia, linguaggi mistici, fenomeni taumaturgici e creature soprannaturali non propri dell’Oscura Simmetria.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-oscura-simmetria",
+      "nome": "Oscura Simmetria",
+      "gruppo": "mistiche",
+      "abilita": [
+        "Occultismo"
+      ],
+      "ambito": "Conoscenza di manifestazioni, creature e fenomeni dell’Oscura Simmetria. Non concede resistenza alla Corruzione o bonus alle Prove Salvezza.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-elementi",
+      "nome": "Elementi",
+      "gruppo": "mistiche",
+      "abilita": [
+        "Potere"
+      ],
+      "ambito": "+1 VA alle Prove di Potere per gli Incantesimi della sottofamiglia e −1 PM al loro costo, minimo 1. La riduzione vale anche quando il lancio non richiede una Prova. Non si applica automaticamente alle Tecniche Interiori.",
+      "effetto": {
+        "va": 1,
+        "pm": -1,
+        "pm_minimo": 1,
+        "sottofamiglia": "Elementi"
+      }
+    },
+    {
+      "id": "specializzazione-cambiamento",
+      "nome": "Cambiamento",
+      "gruppo": "mistiche",
+      "abilita": [
+        "Potere"
+      ],
+      "ambito": "+1 VA alle Prove di Potere per gli Incantesimi della sottofamiglia e −1 PM al loro costo, minimo 1. La riduzione vale anche quando il lancio non richiede una Prova. Non si applica automaticamente alle Tecniche Interiori.",
+      "effetto": {
+        "va": 1,
+        "pm": -1,
+        "pm_minimo": 1,
+        "sottofamiglia": "Cambiamento"
+      }
+    },
+    {
+      "id": "specializzazione-manifestazione",
+      "nome": "Manifestazione",
+      "gruppo": "mistiche",
+      "abilita": [
+        "Potere"
+      ],
+      "ambito": "+1 VA alle Prove di Potere per gli Incantesimi della sottofamiglia e −1 PM al loro costo, minimo 1. La riduzione vale anche quando il lancio non richiede una Prova. Non si applica automaticamente alle Tecniche Interiori.",
+      "effetto": {
+        "va": 1,
+        "pm": -1,
+        "pm_minimo": 1,
+        "sottofamiglia": "Manifestazione"
+      }
+    },
+    {
+      "id": "specializzazione-psionica",
+      "nome": "Psionica",
+      "gruppo": "mistiche",
+      "abilita": [
+        "Potere"
+      ],
+      "ambito": "+1 VA alle Prove di Potere per gli Incantesimi della sottofamiglia e −1 PM al loro costo, minimo 1. La riduzione vale anche quando il lancio non richiede una Prova. Non si applica automaticamente alle Tecniche Interiori.",
+      "effetto": {
+        "va": 1,
+        "pm": -1,
+        "pm_minimo": 1,
+        "sottofamiglia": "Psionica"
+      }
+    },
+    {
+      "id": "specializzazione-influenza",
+      "nome": "Influenza",
+      "gruppo": "mistiche",
+      "abilita": [
+        "Potere"
+      ],
+      "ambito": "+1 VA alle Prove di Potere per gli Incantesimi della sottofamiglia e −1 PM al loro costo, minimo 1. La riduzione vale anche quando il lancio non richiede una Prova. Non si applica automaticamente alle Tecniche Interiori.",
+      "effetto": {
+        "va": 1,
+        "pm": -1,
+        "pm_minimo": 1,
+        "sottofamiglia": "Influenza"
+      }
+    },
+    {
+      "id": "specializzazione-sintonia",
+      "nome": "Sintonia",
+      "gruppo": "mistiche",
+      "abilita": [
+        "Potere"
+      ],
+      "ambito": "+1 VA alle Prove di Potere per gli Incantesimi della sottofamiglia e −1 PM al loro costo, minimo 1. La riduzione vale anche quando il lancio non richiede una Prova. Non si applica automaticamente alle Tecniche Interiori. Sintonia è la sottofamiglia degli Incantesimi e non la Sintonizzazione con Artefatti.",
+      "effetto": {
+        "va": 1,
+        "pm": -1,
+        "pm_minimo": 1,
+        "sottofamiglia": "Sintonia"
+      }
+    },
+    {
+      "id": "specializzazione-esorcismo",
+      "nome": "Esorcismo",
+      "gruppo": "mistiche",
+      "abilita": [
+        "Potere"
+      ],
+      "ambito": "+1 VA alle Prove di Potere per gli Incantesimi della sottofamiglia e −1 PM al loro costo, minimo 1. La riduzione vale anche quando il lancio non richiede una Prova. Non si applica automaticamente alle Tecniche Interiori.",
+      "effetto": {
+        "va": 1,
+        "pm": -1,
+        "pm_minimo": 1,
+        "sottofamiglia": "Esorcismo"
+      }
+    },
+    {
+      "id": "specializzazione-trascendenza",
+      "nome": "Trascendenza",
+      "gruppo": "mistiche",
+      "abilita": [
+        "Potere"
+      ],
+      "ambito": "+1 VA alle Prove di Potere per gli Incantesimi della sottofamiglia e −1 PM al loro costo, minimo 1. La riduzione vale anche quando il lancio non richiede una Prova. Non si applica automaticamente alle Tecniche Interiori.",
+      "effetto": {
+        "va": 1,
+        "pm": -1,
+        "pm_minimo": 1,
+        "sottofamiglia": "Trascendenza"
+      }
+    },
+    {
+      "id": "specializzazione-incantamento",
+      "nome": "Incantamento",
+      "gruppo": "mistiche",
+      "abilita": [
+        "Potere"
+      ],
+      "ambito": "+1 VA alle Prove di Potere per gli Incantesimi della sottofamiglia e −1 PM al loro costo, minimo 1. La riduzione vale anche quando il lancio non richiede una Prova. Non si applica automaticamente alle Tecniche Interiori.",
+      "effetto": {
+        "va": 1,
+        "pm": -1,
+        "pm_minimo": 1,
+        "sottofamiglia": "Incantamento"
+      }
+    },
+    {
+      "id": "specializzazione-cerimoniale",
+      "nome": "Cerimoniale",
+      "gruppo": "mistiche",
+      "abilita": [
+        "Rituali"
+      ],
+      "ambito": "Preparazione e celebrazione di cerimonie e Rituali, quando la procedura richiede una Prova pertinente. Non aggiunge fasi o Prove alla procedura.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-controllo-rituale",
+      "nome": "Controllo Rituale",
+      "gruppo": "mistiche",
+      "abilita": [
+        "Rituali"
+      ],
+      "ambito": "Canalizzazione e stabilizzazione di un Rituale, quando richieste dalla sua procedura. Non impone Prove aggiuntive.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-ambienti-artici",
+      "nome": "Ambienti Artici",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Furtività",
+        "Sopravvivenza"
+      ],
+      "ambito": "Freddo, ghiaccio e territori artici. Furtività per mimetizzarsi sfruttando l’ambiente; Sopravvivenza per orientarsi, trovare risorse e riparo. Non si applica a tutte le Prove soltanto perché avvengono nell’ambiente scelto.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-ambienti-forestali",
+      "nome": "Ambienti Forestali",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Furtività",
+        "Sopravvivenza"
+      ],
+      "ambito": "Foreste, boschi e giungle. Furtività per mimetizzarsi sfruttando l’ambiente; Sopravvivenza per orientarsi, trovare risorse e riparo. Non si applica a tutte le Prove soltanto perché avvengono nell’ambiente scelto.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-ambienti-desertici",
+      "nome": "Ambienti Desertici",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Furtività",
+        "Sopravvivenza"
+      ],
+      "ambito": "Deserti e territori aridi. Furtività per mimetizzarsi sfruttando l’ambiente; Sopravvivenza per orientarsi, trovare risorse e riparo. Non si applica a tutte le Prove soltanto perché avvengono nell’ambiente scelto.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-ambienti-urbani",
+      "nome": "Ambienti Urbani",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Furtività",
+        "Sopravvivenza"
+      ],
+      "ambito": "Insediamenti e territori urbanizzati. Furtività per mimetizzarsi sfruttando l’ambiente; Sopravvivenza per orientarsi, trovare risorse e riparo. Non si applica a tutte le Prove soltanto perché avvengono nell’ambiente scelto.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-pianure",
+      "nome": "Pianure",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Furtività",
+        "Sopravvivenza"
+      ],
+      "ambito": "Praterie e territori aperti di pianura. Furtività per mimetizzarsi sfruttando l’ambiente; Sopravvivenza per orientarsi, trovare risorse e riparo. Non si applica a tutte le Prove soltanto perché avvengono nell’ambiente scelto.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-sottosuolo",
+      "nome": "Sottosuolo",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Furtività",
+        "Sopravvivenza"
+      ],
+      "ambito": "Grotte, cavità e percorsi sotterranei. Furtività per mimetizzarsi sfruttando l’ambiente; Sopravvivenza per orientarsi, trovare risorse e riparo. Non si applica a tutte le Prove soltanto perché avvengono nell’ambiente scelto.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-ambienti-apocalittici",
+      "nome": "Ambienti Apocalittici",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Furtività",
+        "Sopravvivenza"
+      ],
+      "ambito": "Territori devastati, rovine e ambienti postcatastrofe. Furtività per mimetizzarsi sfruttando l’ambiente; Sopravvivenza per orientarsi, trovare risorse e riparo. Non si applica a tutte le Prove soltanto perché avvengono nell’ambiente scelto.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-acrobatiche",
+      "nome": "Acrobatiche",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Atletica",
+        "Pilotare"
+      ],
+      "ambito": "Atletica per arrampicate, capriole, salti e acrobazie; Pilotare soltanto per Paracadutismo. Non è una riduzione automatica dei danni da caduta.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-resistenza",
+      "nome": "Resistenza",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Atletica"
+      ],
+      "ambito": "Prove di Corsa e Nuoto. Non concede bonus alle PS contro Affaticamento o alle prove di sollevamento.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-manipolazione",
+      "nome": "Manipolazione",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Atletica",
+        "Furtività",
+        "Intrattenere"
+      ],
+      "ambito": "Atletica per liberarsi fisicamente da legature; Furtività per borseggio e rapidità di mano; Intrattenere per prestidigitazione. Non concede automaticamente un bonus per liberarsi da prese di combattimento.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-sicurezza",
+      "nome": "Sicurezza",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Furtività",
+        "Sopravvivenza",
+        "Tecnologia"
+      ],
+      "ambito": "Furtività per serrature e scasso meccanico; Sopravvivenza per trappole naturali; Tecnologia per sistemi elettronici di sicurezza. Non sostituisce strumenti o accessi necessari.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-spionaggio",
+      "nome": "Spionaggio",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Furtività",
+        "Percezione",
+        "Oratoria",
+        "Raggirare"
+      ],
+      "ambito": "Furtività per pedinamenti e infiltrazione; Percezione per osservazione e sorveglianza; Oratoria per interrogare; Raggirare per coperture e identità fittizie. Non rivela automaticamente menzogne o informazioni.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-ricercare",
+      "nome": "Ricercare",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Percezione"
+      ],
+      "ambito": "Ascoltare, cercare e osservare per individuare elementi concretamente percepibili. Non obbliga il Direttore a suggerire soluzioni.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-seguire-tracce",
+      "nome": "Seguire Tracce",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Percezione",
+        "Sopravvivenza"
+      ],
+      "ambito": "Percezione per individuare le tracce; Sopravvivenza per seguirle e ricostruire il percorso.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-attivita-domestiche",
+      "nome": "Attività Domestiche",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Sopravvivenza"
+      ],
+      "ambito": "Allevare, coltivare, cucinare, pescare e gestire risorse ordinarie per il sostentamento.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-erboristeria",
+      "nome": "Erboristeria",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Sopravvivenza",
+        "Scienza",
+        "Medicina"
+      ],
+      "ambito": "Sopravvivenza per individuare e raccogliere piante utili o commestibili; Scienza per studiarle e identificarle; Medicina per impieghi curativi erboristici. Gli usi mistici e rituali rientrano in Alchimia.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-amministrazione",
+      "nome": "Amministrazione",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Cultura"
+      ],
+      "ambito": "Burocrazia, contabilità, finanza e conoscenze sull’organizzazione politica, militare e corporativa. La conduzione tattica resta distinta.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-arti-e-spettacolo",
+      "nome": "Arti e Spettacolo",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Cultura",
+        "Intrattenere"
+      ],
+      "ambito": "Cultura per conoscenza e produzione delle arti visive; Intrattenere per esibizioni artistiche e spettacolo.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-commercio",
+      "nome": "Commercio",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Cultura",
+        "Oratoria",
+        "Raggirare"
+      ],
+      "ambito": "Cultura per stimare e valutare beni; Oratoria per negoziare apertamente; Raggirare per trattative basate sull’inganno.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-informazione-e-media",
+      "nome": "Informazione e Media",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Cultura",
+        "Oratoria",
+        "Raggirare",
+        "Tecnologia"
+      ],
+      "ambito": "Cultura per fonti e archivi; Oratoria per contatti e comunicazione; Raggirare per disinformazione; Tecnologia per strumenti e mezzi digitali.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-relazioni-sociali",
+      "nome": "Relazioni Sociali",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Cultura",
+        "Oratoria"
+      ],
+      "ambito": "Cultura per etichetta e convenzioni; Oratoria per diplomazia e seduzione. Non impone decisioni ai personaggi altrui.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-studi-umanistici",
+      "nome": "Studi Umanistici",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Cultura"
+      ],
+      "ambito": "Storia, filosofia, religioni, antropologia, linguistica e letteratura. Non assegna nuove lingue conosciute.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-tattiche-militari",
+      "nome": "Tattiche Militari",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Cultura"
+      ],
+      "ambito": "Conoscenza e analisi delle tattiche militari. Il giocatore formula il piano: il bonus non obbliga il Direttore a indicare una soluzione.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-oratoria",
+      "nome": "Oratoria",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Oratoria"
+      ],
+      "ambito": "Comandare, parlare in pubblico, predicare e motivare mediante la parola.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-falsificare",
+      "nome": "Falsificare",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Raggirare"
+      ],
+      "ambito": "Falsificazione di documenti, denaro, opere e oggetti di valore. Eventuali lavorazioni o intrusioni tecniche richiedono separatamente Tecnologia.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-gioco-d-azzardo",
+      "nome": "Gioco d’Azzardo",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Raggirare"
+      ],
+      "ambito": "Carte, dadi e scommesse quando l’attività richiede abilità, inganno o gestione degli avversari. Non modifica automaticamente un risultato puramente casuale.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-medicina-clinica",
+      "nome": "Medicina Clinica",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Medicina"
+      ],
+      "ambito": "Medicina generale, farmacologia e pronto soccorso. Non sostituisce i requisiti degli interventi chirurgici.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-chirurgia",
+      "nome": "Chirurgia",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Medicina"
+      ],
+      "ambito": "Interventi chirurgici e procedure invasive, rispettando requisiti, strumenti e condizioni della procedura.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-veterinaria",
+      "nome": "Veterinaria",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Medicina"
+      ],
+      "ambito": "Diagnosi, cura e pronto soccorso sugli animali.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-cibernetica",
+      "nome": "Cibernetica",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Medicina",
+        "Tecnologia"
+      ],
+      "ambito": "Medicina per gli aspetti clinici e l’interazione con l’organismo; Tecnologia per componenti, impianti e manutenzione tecnica.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-laboratorio",
+      "nome": "Laboratorio",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Medicina",
+        "Scienza"
+      ],
+      "ambito": "Analisi e lavorazioni mediche, chimiche e forensi effettuate in laboratorio, secondo la competenza richiesta.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-strumentazione",
+      "nome": "Strumentazione",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Medicina",
+        "Pilotare",
+        "Tecnologia"
+      ],
+      "ambito": "Medicina e Tecnologia per strumentazione sanitaria secondo l’attività; Pilotare per navigazione e apparati di bordo; Tecnologia per comunicazioni e strumenti tecnici.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-veicoli-terrestri",
+      "nome": "Veicoli Terrestri",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Pilotare"
+      ],
+      "ambito": "Condurre e manovrare mezzi terrestri, quando è richiesta una Prova di Pilotare.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-veicoli-marini",
+      "nome": "Veicoli Marini",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Pilotare"
+      ],
+      "ambito": "Condurre e manovrare mezzi marini e subacquei, quando è richiesta una Prova di Pilotare.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-veicoli-aerei",
+      "nome": "Veicoli Aerei",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Pilotare"
+      ],
+      "ambito": "Condurre e manovrare mezzi aerei, quando è richiesta una Prova di Pilotare.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-veicoli-spaziali",
+      "nome": "Veicoli Spaziali",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Pilotare"
+      ],
+      "ambito": "Condurre e manovrare mezzi spaziali, quando è richiesta una Prova di Pilotare.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-astronavigazione",
+      "nome": "Astronavigazione",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Scienza"
+      ],
+      "ambito": "Calcoli e conoscenze per la navigazione astronomica; le manovre del mezzo richiedono Pilotare.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-materie-scientifiche",
+      "nome": "Materie Scientifiche",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Scienza"
+      ],
+      "ambito": "Matematica, fisica, chimica, geologia, biologia, botanica e zoologia, quando pertinenti all’attività.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-armamenti-e-protezioni",
+      "nome": "Armamenti e Protezioni",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Tecnologia"
+      ],
+      "ambito": "Progettare, costruire, esaminare e riparare armi e protezioni secondo le procedure disponibili. Non modifica gli attacchi.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-meccatronica",
+      "nome": "Meccatronica",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Tecnologia"
+      ],
+      "ambito": "Meccanica, elettronica, robotica, droni, sistemi energetici e componenti tecnici dei veicoli.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-informatica",
+      "nome": "Informatica",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Tecnologia"
+      ],
+      "ambito": "Sistemi informatici, programmazione, reti e intrusione digitale. Non elimina credenziali, strumenti o accessi indispensabili.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-costruzioni",
+      "nome": "Costruzioni",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Tecnologia"
+      ],
+      "ambito": "Edifici, opere e strutture costruite, secondo materiali e procedure pertinenti.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-artigianato",
+      "nome": "Artigianato",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Tecnologia"
+      ],
+      "ambito": "Produzione, lavorazione e riparazione di beni artigianali; distinto dalla costruzione di edifici e strutture.",
+      "effetto": {
+        "va": 2
+      }
+    },
+    {
+      "id": "specializzazione-artificiere",
+      "nome": "Artificiere",
+      "gruppo": "operative_sociali_professionali",
+      "abilita": [
+        "Tecnologia"
+      ],
+      "ambito": "Preparazione, impiego tecnico e disinnesco di esplosivi. Per colpire con un’arma o lanciare una granata si usa l’Abilità del relativo profilo.",
+      "effetto": {
+        "va": 2
+      }
+    }
+  ]
+}

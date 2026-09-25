@@ -1,0 +1,316 @@
+{
+  "versione_manuale": "Giocatore 0.43",
+  "fonte": "§8.9 (8.9.1 regole comuni, 8.9.2 generiche, 8.9.3 Scuole Mishima, 8.9.4 Lottatore)",
+  "regole_comuni": [
+    "Le Tecniche Interiori impiegano l’energia personale per produrre effetti fisici, percettivi e spirituali. Non sono Incantesimi. Si apprendono attraverso Risorse Interiori o una capacità che ne conceda espressamente l’accesso; il Lottatore segue il §3.5.5. I Talenti di accesso e apprendimento, con le incompatibilità rispetto alla magia, sono nel §8.6.10.",
+    "Si può attivare una sola Tecnica Interiore per Round, comprese le reazioni prima e dopo la propria Iniziativa. La seconda AzP non aumenta il limite. Gli effetti già attivi proseguono secondo la propria durata; quando una scheda lo prevede, il loro funzionamento nei Round successivi non costituisce una nuova attivazione.",
+    "Il costo si paga con PM personali all’attivazione e non viene restituito se una prova o un attacco fallisce. Le batterie non lo pagano direttamente, salvo eccezione espressa: possono essere impiegati PM già trasferiti nella riserva personale. Se, dopo la risoluzione completa dell’azione, la riserva resta a 0 PM, si applica Svenuto fino al recupero di almeno 1 PM. A Umanità 0 le Tecniche dipendenti da Risorse Interiori non sono utilizzabili, salvo eccezione espressa.",
+    "Ogni scheda indica il costo in AzM o AzP, oppure l’attivazione senza Azioni aggiuntive. Le attivazioni autonome gratuite avvengono durante la propria Iniziativa; quelle reattive soltanto nel momento espressamente consentito. Le prove o manovre associate conservano il proprio costo, salvo un’eccezione nella scheda. Non si possono spendere Azioni già consumate o anticipare quelle del Round successivo.",
+    "Normalmente non si effettua Potere per attivare una Tecnica. Restano le eccezioni espressamente previste, come Silenzio Mentale. Le Specializzazioni negli Incantesimi non riducono automaticamente i costi delle Tecniche; le prove effettivamente richieste ricevono i bonus pertinenti.",
+    "Tempra e Volontà richieste da Colpo del Cobra e Sguardo del Corvo non subiscono una penalità propria della Tecnica: si applicano i normali modificatori del bersaglio e delle circostanze. Ogni attacco usa la normale prova per colpire, con le Difese consentite. Una reazione difensiva non permette un secondo tentativo contro lo stesso attacco.",
+    "Le durate in Round iniziano all’attivazione e terminano alla fine del Round R + N: una Tecnica attivata nel Round 2 con durata 3 Round termina alla fine del Round 5. Le conseguenze iniziali si applicano immediatamente; quelle periodiche all’Iniziativa della fonte, una sola volta per Round per la medesima conseguenza. Le durate in minuti o ore e le finestre espresse seguono la rispettiva scheda."
+  ],
+  "gruppi": {
+    "generica": "Tecniche generiche (§8.9.2): accessibili con Risorse Interiori.",
+    "scuola": "Le Tecniche delle Scuole possono essere scelte quando si apprende una Tecnica aggiuntiva, purché il personaggio appartenga a Mishima, sia iniziato nella Scuola e abbia prestato giuramento al suo Overlord. L’appartenenza concede accesso alle scelte, non l’apprendimento automatico di tutte le Tecniche. Si può appartenere a una sola Scuola, salvo eccezione espressa.",
+    "lottatore": "Le Tecniche seguenti richiedono l’accesso alle Risorse Interiori del Lottatore. Il danno senz’armi dipende dalla Disciplina e dal Grado, secondo il §3.5.5."
+  },
+  "_nota": "Il manuale v0.43 contiene 28 schede (12 generiche, 4 per ciascuna Scuola, 4 del Lottatore).",
+  "tecniche": [
+    {
+      "id": "meditazione-profonda",
+      "nome": "Meditazione Profonda",
+      "gruppo": "generica",
+      "costo": "0 PM",
+      "azione": "almeno un’ora completa",
+      "bersaglio": "se stesso",
+      "durata": "fino all’interruzione",
+      "altri_campi": {
+        "Limite": "1 + Mod SAG + Mod COS ore al giorno, minimo 1"
+      },
+      "testo": "Durante la trance, ogni ora completa recupera 3 PV, 2 PM e 1 punto di recupero dell’Affaticamento. Sono i recuperi specifici della Tecnica. Non si aggiunge anche il recupero ordinario della medesima ora. Restano i massimi personali, il limite ordinario di tre ore utili giornaliere al recupero dei PV mediante Riposo breve e il divieto di recuperare PV durante un Sanguinamento attivo. Le eventuali ore successive consentite dalla Tecnica recuperano soltanto PM e punti di recupero dell’Affaticamento.\nI punti di recupero dell’Affaticamento si spendono secondo le normali soglie degli stati; quelli residui ottenuti con la Tecnica non si perdono interrompendo la trance e possono sommarsi agli altri ottenuti prima del ripristino giornaliero. Gli avanzi insufficienti a migliorare lo stato vengono persi al ripristino, senza annullare miglioramenti già ottenuti. Un’ora incompleta non produce recupero.\nNon richiede Recupero Meditativo né una prova e non è modificata da Meditazione Migliorata."
+    },
+    {
+      "id": "imposizione-della-mano-curativa",
+      "nome": "Imposizione della Mano Curativa",
+      "gruppo": "generica",
+      "costo": "variabili",
+      "azione": "variabile",
+      "bersaglio": "se stesso oppure una creatura vivente adiacente, mediante contatto",
+      "durata": "istantanea, salvo la sospensione del Sanguinamento",
+      "testo": "Tabella — Costo: 1 PM; Tempo: 1 AzP; Effetto: Sospende il Sanguinamento per 10 Round. / Costo: 2 PM; Tempo: 1 AzP; Effetto: Arresta il Sanguinamento. / Costo: 4 PM; Tempo: 1 AzP; Effetto: Recupera 1d4 + Mod SAG PV, minimo 0. / Costo: 10 PM; Tempo: 5 minuti; Effetto: Migliora di uno stato la Ferita; una Superficiale guarisce.\nL’effetto è automatico e non richiede prove o kit. I cinque minuti sono il tempo di esecuzione dell’ultima opzione. Il recupero non supera i PV massimi e non avviene durante Sanguinamento attivo. Curare una Ferita non elimina Menomazioni e non ricostruisce parti mancanti. Ogni opzione produce soltanto l’effetto indicato.\nLe applicazioni possono essere ripetute pagando nuovamente PM e tempo. Il limite settimanale di Intervento Mirato e Terapia Intensiva non si applica alla Tecnica."
+    },
+    {
+      "id": "purificazione-del-corpo",
+      "nome": "Purificazione del Corpo",
+      "gruppo": "generica",
+      "costo": "3 PM",
+      "azione": "1 AzP",
+      "bersaglio": "se stesso o una creatura vivente adiacente",
+      "durata": "istantanea, salvo la sospensione temporanea",
+      "testo": "Il bersaglio ripete immediatamente la PS Tempra contro una singola sostanza nociva già presente nell’organismo, con +5 VA e i modificatori dell’esposizione originale. Se non sono indicati modificatori, la Tecnica non aggiunge una penalità propria. È consentito un solo tentativo per bersaglio, sostanza ed esposizione.\nSuccesso e Magistrale neutralizzano la sostanza e fanno cessare gli effetti che essa mantiene. Fallimento e Maldestro sospendono tali effetti fino alla fine della prossima Iniziativa del bersaglio, senza aggravare l’intossicazione.\nNon protegge da nuove esposizioni, non restituisce PV e non annulla danni già subiti. Non elimina dipendenze, malattie, radiazioni, Corruzione, danni Corrosivi o modificazioni permanenti già prodotte. Restare in un gas nocivo può quindi causare una nuova esposizione."
+    },
+    {
+      "id": "volonta-adamantina",
+      "nome": "Volontà Adamantina",
+      "gruppo": "generica",
+      "costo": "4 PM",
+      "azione": "dopo un normale fallimento di PS Volontà contro un tentativo di controllo mentale, prima delle conseguenze; anche fuori Iniziativa e senza Azioni aggiuntive",
+      "bersaglio": "se stesso",
+      "durata": "istantanea",
+      "testo": "Trasforma quel fallimento in un successo. Non modifica un Maldestro, non interrompe un controllo già stabilito e non riguarda paura, dolore, insanità, morale o altre cause soltanto perché usano anch’esse Volontà. Vale indipendentemente dall’origine magica, tecnologica, psionica o biologica del controllo. Non aggiunge una frequenza oltre ai PM e alla sola Tecnica per Round."
+    },
+    {
+      "id": "visione-del-vero",
+      "nome": "Visione del Vero",
+      "gruppo": "generica",
+      "costo": "5 PM",
+      "azione": "1 AzP",
+      "bersaglio": "se stesso",
+      "durata": "10 minuti",
+      "testo": "Concede +5 VA a Percezione per distinguere camuffamenti visivi, illusioni, immagini artificiali e alterazioni osservabili direttamente prodotte dall’Oscura Simmetria. Si applicano le regole d’individuazione o dell’illusione pertinente; non concede una Prova che la fonte esclude espressamente. In assenza di una procedura specifica si usa una normale Prova di Percezione.\nRiconoscere un’anomalia non rivela automaticamente origine, intenzioni o capacità. Non dissolve illusioni per gli altri, non individua persone soltanto corrotte o eretiche, non legge mente o aura, non supera automaticamente Velo Psichico o Nascondere Aura e non vede attraverso Copertura Totale. Le Prove Salvezza contro le conseguenze dell’Oscura Simmetria rimangono distinte."
+    },
+    {
+      "id": "pelle-camaleontica",
+      "nome": "Pelle Camaleontica",
+      "gruppo": "generica",
+      "costo": "3 PM",
+      "azione": "1 AzP",
+      "bersaglio": "se stesso",
+      "durata": "10 minuti",
+      "testo": "La pigmentazione di corpo, indumenti ed equipaggiamento aderente si adatta all’ambiente. L’attivazione comprende una prova di Furtività con +5 VA per mimetizzarsi. L’individuazione segue il confronto ordinario con Percezione.\nPuò tentare anche senza copertura, restando fermo o muovendosi al massimo per metà del proprio movimento al Passo nel Round. Attaccare, usare capacità chiaramente percepibili, correre, scattare, superare tale distanza o alterare evidentemente l’ambiente interrompe l’occultamento. La durata della Tecnica prosegue: una nuova AzP consente una nuova prova.\nNon rende invisibili e non nasconde rumori, odori, calore, mente o aura. Equipaggiamenti non aderenti o ingombranti conservano le penalità pertinenti."
+    },
+    {
+      "id": "vista-felina",
+      "nome": "Vista Felina",
+      "gruppo": "generica",
+      "costo": "2 PM",
+      "azione": "durante la propria Iniziativa, senza Azioni aggiuntive",
+      "bersaglio": "se stesso",
+      "durata": "1 ora",
+      "testo": "Ignora le penalità visive della penombra e vede nell’oscurità naturale entro 20 Q, ignorando le penalità alle prove e agli attacchi causate esclusivamente dalla mancanza di luce entro tale distanza. Nell’oscurità completa distingue forme e profondità, non colori.\nNon supera fumo, nebbia, ostacoli, coperture o oscurità soprannaturale. Non funziona con occhi coperti o inutilizzabili e non elimina Accecato prodotto da altre cause."
+    },
+    {
+      "id": "eco-del-pipistrello",
+      "nome": "Eco del Pipistrello",
+      "gruppo": "generica",
+      "costo": "3 PM",
+      "azione": "durante la propria Iniziativa, senza Azioni aggiuntive",
+      "bersaglio": "se stesso",
+      "durata": "10 minuti",
+      "altri_campi": {
+        "Raggio sensoriale": "12 Q"
+      },
+      "testo": "Interpreta gli echi di impulsi sonori impercettibili. Individua superfici e ostacoli senza la vista; contro soggetti nascosti usa Percezione uditiva +5 VA secondo le normali regole d’individuazione. Dopo aver individuato un bersaglio, ne conosce il Q e può attaccarlo ignorando soltanto le penalità dovute all’assenza della vista; restano copertura, distanza e altre penalità.\nAttraverso pannelli, porte e pareti sottili percepisce soltanto presenza e posizione approssimativa di creature che si muovono o producono vibrazioni, senza superare Copertura Totale. Non permette di leggere o riconoscere colori e immagini. Non funziona nel vuoto, nel silenzio assoluto o senza udito; rumori intensi possono ostacolare le prove."
+    },
+    {
+      "id": "passo-della-mangusta",
+      "nome": "Passo della Mangusta",
+      "gruppo": "generica",
+      "costo": "2 PM",
+      "azione": "dopo un attacco riuscito contro il personaggio, prima del danno; anche fuori Iniziativa, senza Azioni aggiuntive",
+      "bersaglio": "se stesso",
+      "durata": "istantanea",
+      "testo": "Applica −3 VA all’attacco già tirato, senza ritirare il dado. Se con il VA ridotto l’attacco fallisce, viene evitato e il personaggio può spostarsi di 1 Q in uno spazio libero senza Attacchi di Opportunità. Se rimane riuscito, si risolve normalmente e non avviene lo spostamento. Il Successo Magistrale naturale non diventa un fallimento per questa penalità.\nQuesta reazione occupa l’unica possibilità di Difesa contro quell’attacco: non permette un successivo tentativo di Parata o Schivata e non si aggiunge a un loro tentativo già effettuato. Non è una Schivata e non riceve i relativi Talenti.\nRichiede di percepire l’attacco e di poter raggiungere un Q adiacente libero. Non funziona se Immobilizzato, contro effetti privi di prova per colpire, inevitabili o che coprono interamente lo spazio disponibile."
+    },
+    {
+      "id": "aura-di-resistenza",
+      "nome": "Aura di Resistenza",
+      "gruppo": "generica",
+      "costo": "4 PM",
+      "azione": "1 AzP",
+      "bersaglio": "se stesso",
+      "durata": "3 Round",
+      "testo": "Concede +1 AR di natura magica, efficace contro danni Naturali, Magici ed Eterei secondo le normali regole. Si aggiunge alle protezioni indossate; più applicazioni della stessa Tecnica non si sommano.\nNon modifica le PS o le Contromisure e non protegge dagli effetti che ignorano espressamente anche questa componente d’Armatura."
+    },
+    {
+      "id": "salto-della-tigre",
+      "nome": "Salto della Tigre",
+      "gruppo": "generica",
+      "costo": "6 PM",
+      "azione": "durante la propria Iniziativa, senza Azioni aggiuntive",
+      "bersaglio": "se stesso",
+      "durata": "istantanea",
+      "altri_campi": {
+        "Gittata": "6 Q"
+      },
+      "testo": "Si trasferisce in un Q libero visibile, fisicamente accessibile e con una superficie capace di sostenerlo. Deve esserci linea d’effetto libera: niente pareti, porte chiuse, vetri integri o altre barriere solide. Ignora terreno, dislivelli e Q intermedi; trasporta il proprio equipaggiamento indossato o impugnato, non altre creature.\nNon consuma AzM o movimento, non provoca Attacchi di Opportunità ed è utilizzabile mentre Ingaggiato. Non conta come distanza percorsa per Carica, Corsa, Scatto o altre manovre."
+    },
+    {
+      "id": "colpo-interiore",
+      "nome": "Colpo Interiore",
+      "gruppo": "generica",
+      "costo": "4 PM",
+      "azione": "durante la propria Iniziativa, senza Azioni aggiuntive",
+      "bersaglio": "se stesso",
+      "durata": "fino alla fine della propria Iniziativa",
+      "testo": "Il primo Colpo Singolo riuscito entro questa finestra, senz’armi o con arma ravvicinata, infligge il normale danno trasformato in Etereo. La prova per colpire rimane normale e il danno viene assorbito soltanto dalla componente magica dell’Armatura. Un attacco fallito non esaurisce l’effetto prima della scadenza.\nFunziona soltanto contro creature. Non trasforma danni secondari separati, quali veleno o fiamme. Se nessun attacco riesce, la Tecnica termina senza rimborso."
+    },
+    {
+      "id": "colpo-del-cobra",
+      "nome": "Colpo del Cobra",
+      "gruppo": "scuola:Sole",
+      "costo": "4 PM",
+      "azione": "1 AzP",
+      "bersaglio": "creatura adiacente",
+      "durata": "istantanea; lo Stato segue la durata indicata",
+      "testo": "Effettua un Colpo Singolo senz’armi o con Coltello, Pugnale, Daga, Pugnale da Combattimento, Spada leggera, Randello, Tonfa o Artigli, comprese le varianti dello stesso profilo. Sceglie una delle due modalità prima della Prova per colpire.\nCobra paralizzante. Infligge il normale danno. Se rimane almeno 1 danno dopo AR, il bersaglio effettua PS Tempra senza una penalità propria della Tecnica. Successo o Magistrale evitano lo Stato; Fallimento applica Stordito per 1+1d3 Round; Maldestro per 4 Round. Si applicano integralmente le regole di Stordito, compresa la Prova Potere per conservare Concentrazione o Focalizzazione.\nCobra distruttivo. Infligge il normale danno e applica normalmente l’AR. Se rimane almeno 1 danno, aggiunge 1d4 al residuo nella stessa applicazione. Il dado aggiuntivo non è Etereo, non subisce una seconda applicazione di AR e non si applica se il danno iniziale è interamente assorbito. Essendo aggiunto dopo l’AR, non viene moltiplicato.\nI PM rimangono spesi se l’attacco fallisce."
+    },
+    {
+      "id": "sguardo-del-corvo",
+      "nome": "Sguardo del Corvo",
+      "gruppo": "scuola:Sole",
+      "costo": "4 PM",
+      "azione": "1 AzP",
+      "bersaglio": "una creatura entro 6 Q che vede gli occhi del personaggio",
+      "durata": "secondo l’esito",
+      "testo": "Il bersaglio effettua PS Volontà contro Paura, senza una penalità propria della Tecnica. Con Successo o Magistrale resiste. Con Fallimento è Stordito per 1+1d3 Round. Con Maldestro subisce la stessa durata e, alla prima Iniziativa utile, deve impiegare il Passo per allontanarsi lungo il percorso sicuro più breve; se non può farlo, non effettua quel movimento. L’obbligo aggiuntivo si applica una sola volta.\nOgni creatura può essere sottoposta allo Sguardo dello stesso utilizzatore una sola volta per scena, indipendentemente dall’esito. Non funziona contro creature prive di mente, incapaci di vedere il personaggio o immuni alla Paura. Non costituisce controllo mentale continuativo."
+    },
+    {
+      "id": "pelle-di-rinoceronte",
+      "nome": "Pelle di Rinoceronte",
+      "gruppo": "scuola:Sole",
+      "costo": "6 PM",
+      "azione": "1 AzP",
+      "bersaglio": "se stesso",
+      "durata": "3 Round",
+      "testo": "Concede +1 AR contro attacchi Ravvicinati Naturali o Magici, +3 alle prove di FOR, +3 ad Atletica e alle prove di Corpo a Corpo nelle manovre in cui si impiega direttamente la forza fisica, e +2 al danno Ravvicinato. Il +3 alle manovre non è un bonus generale alle prove per colpire. La protezione non si applica ai danni Eterei.\nNon aumenta FOR e non ricalcola modificatori o capacità di carico. È compatibile con Aura di Resistenza; applicazioni multiple della stessa Tecnica non si sommano."
+    },
+    {
+      "id": "vipera-dal-cappuccio",
+      "nome": "Vipera dal Cappuccio",
+      "gruppo": "scuola:Sole",
+      "costo": "6 PM",
+      "azione": "1 AzP",
+      "bersaglio": "creatura adiacente",
+      "durata": "TODO(Davide)",
+      "testo": "Colpo Singolo senz’armi o con Coltello, Pugnale, Daga, Pugnale da Combattimento, Spada leggera, Randello, Tonfa o Artigli, comprese le varianti dello stesso profilo. Non può essere Parato con arma o scudo; restano la protezione passiva dello scudo, Schivata e altre difese compatibili, compreso Passo della Mangusta se disponibile. La prova per colpire è normale.\nSe infligge almeno 1 danno dopo AR applica Sanguinamento 2 secondo le sue regole, senza durata arbitraria. A danno nullo o con attacco fallito non applica Sanguinamento; i PM restano spesi."
+    },
+    {
+      "id": "passo-dell-ombra",
+      "nome": "Passo dell’Ombra",
+      "gruppo": "scuola:Luna",
+      "costo": "5 PM",
+      "azione": "AzM, compresa nello spostamento",
+      "bersaglio": "se stesso",
+      "durata": "3 Round",
+      "testo": "Si attiva usando l’AzM per Passo, Corsa o Scatto. Il personaggio è incorporeo soltanto mentre si muove e ritorna corporeo alla fine dello spostamento. Nei Round successivi torna incorporeo durante il nuovo movimento senza un’altra attivazione o spesa di PM.\nDurante l’incorporeità non produce rumori di movimento, attraversa Q occupati e aperture come grate, sbarre o porte socchiuse e non attiva sensori acustici, a contatto o a pressione. È danneggiabile soltanto da attacchi Magici o Eterei; i primi incontrano l’AR pertinente, i secondi soltanto la componente magica. Gli Attacchi di Opportunità vengono provocati normalmente, ma quelli Naturali lo attraversano senza effetto.\nRimane visibile e rilevabile da sensori ottici, termici, mistici o di prossimità. Non attraversa superfici solide continue, non vola e non termina in un Q occupato o senza sostegno. Un’azione compiuta durante lo spostamento, inclusa l’attivazione di un’altra Tecnica, interrompe l’incorporeità prima della sua risoluzione; la durata complessiva continua. Dopo tale interruzione non torna incorporeo per il resto della medesima AzM, neppure riprendendo un segmento di Passo. Una nuova AzM nei Round successivi segue normalmente la Tecnica."
+    },
+    {
+      "id": "corsa-di-nomura",
+      "nome": "Corsa di Nomura",
+      "gruppo": "scuola:Luna",
+      "costo": "6 PM",
+      "azione": "durante la propria Iniziativa, senza Azioni aggiuntive",
+      "bersaglio": "se stesso",
+      "durata": "3 Round",
+      "testo": "Raddoppia il movimento attuale: con valori base, Passo 12 Q, Corsa 24 Q, Scatto 36 Q. Consente di percorrere liquidi e pareti verticali e di superare aperture e superfici instabili entro il movimento disponibile; considera normale il Terreno Difficile.\nQueste capacità non richiedono prove aggiuntive per la superficie, ma Corsa e Scatto mantengono le proprie prove di Atletica (rispettivamente senza penalità propria e −2), gli esiti e i modificatori. Occorre terminare su una superficie capace di sostenere il personaggio, altrimenti cade o affonda. Non attraversa solidi e non evita Attacchi di Opportunità."
+    },
+    {
+      "id": "illusione-lunare",
+      "nome": "Illusione Lunare",
+      "gruppo": "scuola:Luna",
+      "costo": "5 PM",
+      "azione": "durante la propria Iniziativa, senza Azioni aggiuntive",
+      "bersaglio": "se stesso",
+      "durata": "3 Round",
+      "testo": "In ciascun Round in cui percorre volontariamente almeno 2 Q con Passo, Corsa o Scatto, il primo attacco diretto contro di lui prima della propria Iniziativa successiva subisce −3 VA. Dopo quell’attacco le immagini si disperdono; il movimento idoneo di un Round successivo può generarle di nuovo. Non si accumulano più protezioni.\nVale contro attacchi Ravvicinati e a Distanza; se una Raffica usa un’unica prova, penalizza quella prova. Non rimborsa munizioni. Non agisce contro aree, effetti inevitabili, effetti senza prova per colpire o contro chi individua il personaggio senza la vista o vede oltre l’illusione. Movimenti forzati e teletrasporti non la attivano."
+    },
+    {
+      "id": "mani-di-yorama",
+      "nome": "Mani di Yorama",
+      "gruppo": "scuola:Luna",
+      "costo": "5 PM",
+      "azione": "reazione a un attacco fisico diretto, senza Azioni aggiuntive, anche fuori dalla propria Iniziativa",
+      "bersaglio": "se stesso",
+      "durata": "istantanea",
+      "altri_campi": {
+        "Requisito": "almeno una mano libera"
+      },
+      "testo": "Effettua Difese per Parata a mani nude: senza penalità propria contro un attacco Ravvicinato, a −5 VA contro un singolo proiettile fisico di Pistola, arma da lancio, arco o balestra. Non richiede Parata a Distanza. Restano gli altri modificatori pertinenti, compreso quello contro Raffica.\nUna Parata riuscita con la Tecnica annulla il singolo colpo. Contro un attacco Magistrale è necessaria una Parata Magistrale. Contro una Raffica neutralizza un solo colpo consentito dalla Tecnica; gli altri si risolvono normalmente.\nCon Magistrale contro un’arma Ravvicinata, oltre a deviare il colpo, la fa cadere in un Q a sua scelta entro 2 Q dall’attaccante, compreso quello occupato dall’attaccante. Fallimento e Maldestro seguono le conseguenze della Parata.\nNon devia attacchi energetici, Eterei, esplosioni, coni, aree, proiettili di armi pesanti o attacchi non percepiti. Essendo una Tecnica Interiore, non permette Contraccolpo Interiore nello stesso Round."
+    },
+    {
+      "id": "radici-della-montagna",
+      "nome": "Radici della Montagna",
+      "gruppo": "scuola:Terra",
+      "costo": "4 PM",
+      "azione": "durante la propria Iniziativa, senza Azioni aggiuntive",
+      "bersaglio": "se stesso",
+      "durata": "3 Round",
+      "altri_campi": {
+        "Requisito": "contatto con superficie solida"
+      },
+      "testo": "Il personaggio si ancora: non può essere Sbilanciato, fatto cadere A Terra, spinto, trascinato o spostato fisicamente; è immune allo spostamento da Sbalzante e supera le prove richieste esclusivamente per mantenere la posizione. Il movimento disponibile diventa 0.\nSubisce normalmente danni e altre conseguenze degli attacchi. Voler muoversi termina la Tecnica prima del movimento; termina anche se il sostegno viene distrutto o viene meno. Non impedisce trasferimenti dimensionali o teletrasporti."
+    },
+    {
+      "id": "salto-della-rana",
+      "nome": "Salto della Rana",
+      "gruppo": "scuola:Terra",
+      "costo": "3 PM",
+      "azione": "1 AzM",
+      "bersaglio": "se stesso",
+      "durata": "istantanea",
+      "testo": "Compie un balzo entro la propria distanza attuale al Passo, con dislivello massimo pari alla metà arrotondata per difetto: normalmente 6 Q e 3 Q. Richiede una traiettoria libera e un arrivo capace di sostenerlo. Può superare Q occupati, aperture e Terreno Difficile senza Prova di Atletica e senza danni da caduta per la distanza coperta dalla Tecnica. Segue le regole del Passo, può provocare Attacchi di Opportunità e non è utilizzabile da Immobilizzato.\nIn Carica. Il balzo può sostituire il movimento della Carica: attivazione e salto sono compresi nella sua AzM, mentre l’attacco richiede la normale AzP. Occorrono almeno 3 Q effettivi verso il bersaglio e si deve terminare entro portata. Si applicano modificatori e moltiplicatori ordinari della Carica in base alla distanza percorsa; se colpisce, aggiunge +3 danni dopo il moltiplicatore e prima dell’AR. Questo +3 non viene moltiplicato."
+    },
+    {
+      "id": "pugno-di-pietra",
+      "nome": "Pugno di Pietra",
+      "gruppo": "scuola:Terra",
+      "costo": "5 PM",
+      "azione": "1 AzP",
+      "bersaglio": "oggetto, struttura o veicolo adiacente",
+      "durata": "istantanea",
+      "testo": "Effettua un normale attacco senz’armi. Se colpisce, impone sempre una PS Integrità con −2 al valore determinato dalla Qualità dell’oggetto. Se la PS fallisce, il bersaglio perde i PI dovuti al danno residuo, 1 ogni 5 danni o frazione, più 1 PI della Tecnica e l’eventuale 1 PI aggiuntivo dell’attacco Magistrale. Si effettua una sola PS per tutte le perdite applicabili: se riesce, non perde PI.\nL’obbligo di PS e il +1 PI della Tecnica valgono anche se il danno ordinario non produce una perdita di PI. Il danno non viene contato due volte per cause sovrapposte. Si possono colpire soltanto protezioni, sezioni o componenti visibili e accessibili; non raggiunge occupanti o parti interne protette. Non concede effetti aggiuntivi contro creature. Per veicoli e Integrità si applicano anche le rispettive regole specifiche."
+    },
+    {
+      "id": "respiro-della-terra",
+      "nome": "Respiro della Terra",
+      "gruppo": "scuola:Terra",
+      "costo": "5 PM",
+      "azione": "1 AzP",
+      "bersaglio": "se stesso",
+      "durata": "1 + Mod COS ore, minimo 1",
+      "testo": "Sospende il bisogno di respirare. Impedisce soffocamento e annegamento dovuti alla mancanza d’aria e gli effetti di sostanze che agiscono soltanto per inalazione. Protegge anche dalla mancanza di pressione nel vuoto.\nNon neutralizza sostanze già inalate e non protegge da contatto, Corrosivo, radiazioni, temperature estreme, pressione delle profondità, fame, sete, Affaticamento o altri pericoli. Alla scadenza riprendono le normali conseguenze dell’ambiente."
+    },
+    {
+      "id": "onda-interiore",
+      "nome": "Onda Interiore",
+      "gruppo": "lottatore",
+      "costo": "5 PM",
+      "azione": "1 AzP",
+      "bersaglio": "creatura entro 6 Q",
+      "durata": "istantanea",
+      "testo": "Una prova di Corpo a Corpo per colpire proietta il pugno a distanza. Entro 6 Q nessuna penalità propria di Gittata; restano copertura e altri modificatori. Vettore Distanza, danno Magico assorbito normalmente, non Etereo. Schivabile secondo le regole degli attacchi a distanza, non Parabile con un’arma ordinaria.\nInfligge il danno senz’armi della propria Disciplina e del Grado nella Classe, più i bonus pertinenti al singolo attacco.\nTabella — Disciplina: Potenza; Gradi I–II: 1d8; Gradi III–IV: 1d10; Gradi V–VI: 1d12 / Disciplina: Rapidità; Gradi I–II: 1d4; Gradi III–IV: 1d6; Gradi V–VI: 1d8 / Disciplina: Controllo; Gradi I–II: 1d4; Gradi III–IV: 1d6; Gradi V–VI: 1d8 / Disciplina: Guardia; Gradi I–II: 1d6; Gradi III–IV: 1d8; Gradi V–VI: 1d10\nNormali esiti della prova per colpire. Un singolo attacco: non estende a distanza Raffica di Colpi o Combattimento Multiplo."
+    },
+    {
+      "id": "presa-dell-anima",
+      "nome": "Presa dell’Anima",
+      "gruppo": "lottatore",
+      "costo": "3 PM",
+      "azione": "durante la propria Iniziativa, immediatamente prima della prova interessata, senza Azioni aggiuntive rispetto alla manovra",
+      "bersaglio": "se stesso",
+      "durata": "TODO(Davide)",
+      "testo": "Concede +3 VA a una prova senz’armi per Immobilizzare, Sbilanciare, Disarmare o liberarsi da una presa/Immobilizzazione. Si usano l’abilità, la prova contrapposta, le penalità, il Contatto/portata, le mani libere e le Azioni richieste dalla specifica manovra.\nConsente di interessare creature incorporee, Eteree o altrimenti non afferrabili. Se una di esse viene Immobilizzata, la presa può essere mantenuta normalmente senza altri PM finché non si interrompe. Il +3 riguarda soltanto la prova di attivazione, non tutte quelle successive."
+    },
+    {
+      "id": "contraccolpo-interiore",
+      "nome": "Contraccolpo Interiore",
+      "gruppo": "lottatore",
+      "costo": "4 PM",
+      "azione": "immediatamente dopo la Difesa idonea, anche fuori Iniziativa, senza AzP aggiuntive; la Difesa mantiene il proprio costo",
+      "bersaglio": "attaccante adiacente ancora entro portata",
+      "durata": "TODO(Davide)",
+      "testo": "Si attiva dopo Schivata riuscita, oppure dopo Parata riuscita che lasci 0 danni dopo l’AR. La Parata Magistrale soddisfa la condizione; una Parata che lascia danni da subire no.\nConsente un singolo attacco senz’armi con normale prova e normale danno, senza associarlo a una Manovra offensiva. Non è utilizzabile dopo Passo della Mangusta, Mani di Yorama o un’altra Tecnica attivata nello stesso Round."
+    },
+    {
+      "id": "corpo-infrangibile",
+      "nome": "Corpo Infrangibile",
+      "gruppo": "lottatore",
+      "costo": "4 PM",
+      "azione": "dopo AR, prima di sottrarre PV, anche fuori Iniziativa, senza Azioni aggiuntive",
+      "bersaglio": "se stesso",
+      "durata": "istantanea",
+      "testo": "Riduce una sola applicazione di danno Naturale o Magico di 1d4 + Mod COS, riduzione minima 1; il danno non scende sotto 0. Non riduce Etereo, Sanguinamento, danni continuati o perdite da Affaticamento, sostanze o ambiente. Contro Raffiche e altri attacchi multipli si sceglie un solo colpo.\nSe il danno viene azzerato, non si attivano conseguenze che richiedono un danno effettivamente subito. Le Contromisure seguono le proprie regole e non sono trattate come un’ulteriore riduzione del danno."
+    }
+  ]
+}

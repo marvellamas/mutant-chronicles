@@ -17,6 +17,9 @@ const isTesto = (v) => typeof v === 'string' && v.trim() !== '';
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const isTodo = (v) => typeof v === 'string' && v.startsWith('TODO(');
 
+const FILE_VALIDATI = ['caratteristiche', 'abilita', 'corporazioni', 'addestramenti', 'classi', 'incantesimi', 'regole',
+  'talenti_liberi', 'specializzazioni', 'tecniche_interiori'];
+
 /** Formatta un errore come riga leggibile. */
 export function formattaErrore(e) {
   return `${e.file}${e.chiave ? ' › ' + e.chiave : ''}: ${e.problema}`;
@@ -24,7 +27,8 @@ export function formattaErrore(e) {
 
 /**
  * Valida l'insieme dei dati delle regole.
- * @param {object} dati { caratteristiche, abilita, corporazioni, addestramenti, classi, incantesimi, regole }
+ * @param {object} dati { caratteristiche, abilita, corporazioni, addestramenti, classi, incantesimi, regole,
+ *   talenti_liberi, specializzazioni, tecniche_interiori }
  *   ciascuno col contenuto del rispettivo file JSON.
  * @returns {{file: string, chiave: string, problema: string}[]} lista vuota se tutto torna.
  */
@@ -37,7 +41,7 @@ export function validaDati(dati) {
     return errori;
   }
 
-  for (const file of ['caratteristiche', 'abilita', 'corporazioni', 'addestramenti', 'classi', 'incantesimi', 'regole']) {
+  for (const file of FILE_VALIDATI) {
     if (!isOggetto(dati[file])) err(file, '', 'file mancante o non è un oggetto JSON');
     else if (!isTesto(dati[file].versione_manuale)) err(file, 'versione_manuale', 'campo mancante o vuoto');
   }
@@ -50,6 +54,10 @@ export function validaDati(dati) {
   const nomiAddestramenti = validaAddestramenti(dati.addestramenti, nomiAbilita, idSalvezze, dati.regole, err);
   const macrofamiglie = validaIncantesimi(dati.incantesimi, dati.regole, err);
   validaClassi(dati.classi, nomiAddestramenti, nomiAbilita, macrofamiglie, dati.regole, err);
+  validaAvanzamento(dati.regole, err);
+  const idSpec = validaSpecializzazioni(dati.specializzazioni, nomiAbilita, err);
+  validaTalentiLiberi(dati.talenti_liberi, idSpec, err);
+  validaTecniche(dati.tecniche_interiori, err);
 
   return errori;
 }
@@ -329,7 +337,157 @@ export function avvisiDati(dati) {
       if (isTodo(x?.[campo])) avv('incantesimi', `incantesimi[${i}] (${x.nome}).${campo}`, 'da completare (TODO)');
     }
   });
+  (dati?.talenti_liberi?.talenti ?? []).forEach((x, i) => {
+    if (x?.provvisorio) avv('talenti_liberi', `talenti[${i}] (${x.nome})`, 'Talento provvisorio: ricavato dalle citazioni del Manuale della Magia, prerequisiti da definire (TODO)');
+    else if (isTodo(x?.tipo)) avv('talenti_liberi', `talenti[${i}] (${x.nome}).tipo`, 'passivo o attivo da definire (TODO)');
+  });
+  (dati?.tecniche_interiori?.tecniche ?? []).forEach((x, i) => {
+    for (const c of ['costo', 'azione', 'bersaglio', 'durata']) if (isTodo(x?.[c])) avv('tecniche_interiori', `tecniche[${i}] (${x.nome}).${c}`, 'non indicato nella scheda (TODO)');
+  });
   return avvisi;
+}
+
+// ---------------------------------------------------------------------------
+// Avanzamento (cap. 8)
+
+const EVENTO = /^(creazione|talento_libero|grado_classe|(caratteristiche|salvezze|azione_principale):\+\d+|punti_abilita:\d+)$/;
+
+/** Fasce {da, a, <campo>} che coprono 1..max senza buchi né sovrapposizioni. */
+function validaFasce(F, chiave, fasce, campo, max, err) {
+  if (!Array.isArray(fasce) || !fasce.length) { err(F, chiave, 'tabella mancante'); return; }
+  let atteso = 1;
+  fasce.forEach((f, i) => {
+    if (!isIntero(f?.da) || !isIntero(f?.a) || !isIntero(f?.[campo]) || f.da > f.a) {
+      err(F, `${chiave}[${i}]`, `servono da, a e ${campo} interi con da ≤ a`);
+      return;
+    }
+    if (f.da !== atteso) err(F, `${chiave}[${i}]`, `la fascia dovrebbe iniziare dal livello ${atteso}, inizia da ${f.da}`);
+    atteso = f.a + 1;
+  });
+  if (atteso !== max + 1) err(F, chiave, `le fasce devono arrivare al livello ${max}, arrivano al ${atteso - 1}`);
+}
+
+function validaAvanzamento(r, err) {
+  if (!isOggetto(r)) return;
+  const F = 'regole';
+  const av = r.avanzamento;
+  if (!isOggetto(av)) { err(F, 'avanzamento', 'blocco mancante (cap. 8)'); return; }
+  const max = av.livello_massimo;
+  if (!isIntero(max) || max < 1) { err(F, 'avanzamento.livello_massimo', 'intero ≥ 1 mancante'); return; }
+  const eventi = Array.isArray(av.eventi) ? av.eventi : [];
+  // §8.1: una voce per ogni livello, senza buchi
+  for (let l = 1; l <= max; l++) {
+    const voce = eventi.filter((e) => e?.livello === l);
+    if (voce.length !== 1) { err(F, 'avanzamento.eventi', `il livello ${l} deve comparire una volta, compare ${voce.length} volte`); continue; }
+    if (!Array.isArray(voce[0].eventi)) { err(F, `avanzamento.eventi (livello ${l})`, 'serve una lista di eventi'); continue; }
+    for (const e of voce[0].eventi) if (!EVENTO.test(e)) err(F, `avanzamento.eventi (livello ${l})`, `evento "${e}" sconosciuto`);
+  }
+  if (!eventi.find((e) => e?.livello === 1)?.eventi?.includes('creazione')) err(F, 'avanzamento.eventi', 'il livello 1 deve essere la creazione');
+  for (const e of eventi) if (!isIntero(e?.livello) || e.livello < 1 || e.livello > max) err(F, 'avanzamento.eventi', `livello ${JSON.stringify(e?.livello)} fuori da 1–${max}`);
+  validaFasce(F, 'avanzamento.massimo_caratteristica', av.massimo_caratteristica, 'massimo', max, err);
+  validaFasce(F, 'avanzamento.avanzamento_massimo_abilita', av.avanzamento_massimo_abilita, 'massimo', max, err);
+  validaFasce(F, 'salvezze.avanzamento_per_livello', r.salvezze?.avanzamento_per_livello, 'bonus', max, err);
+  // coerenza fra gli eventi "salvezze:+N" e la tabella del §1.2.3
+  let cumulato = 0;
+  for (let l = 1; l <= max; l++) {
+    for (const e of eventi.find((x) => x?.livello === l)?.eventi ?? []) {
+      const m = /^salvezze:\+(\d+)$/.exec(e);
+      if (m) cumulato += Number(m[1]);
+    }
+    const tab = (r.salvezze?.avanzamento_per_livello ?? []).find((f) => l >= f.da && l <= f.a)?.bonus;
+    if (isIntero(tab) && tab !== cumulato) {
+      err(F, 'avanzamento.eventi', `al livello ${l} gli eventi danno Salvezze +${cumulato}, la tabella salvezze.avanzamento_per_livello +${tab}`);
+      break;
+    }
+  }
+  for (const k of ['classi_massime', 'grado_massimo', 'livello_massimo_incantesimi', 'tetto_salvezza']) {
+    if (!isIntero(av[k]) || av[k] < 1) err(F, `avanzamento.${k}`, 'intero ≥ 1 mancante');
+  }
+  for (const k of ['gradi_talento_fisso', 'gradi_talento_a_scelta']) {
+    if (!Array.isArray(av[k]) || !av[k].every(isIntero)) err(F, `avanzamento.${k}`, 'lista di Gradi mancante');
+  }
+}
+
+function validaSpecializzazioni(s, nomiAbilita, err) {
+  const ids = new Set();
+  if (!isOggetto(s)) return ids;
+  const F = 'specializzazioni';
+  const lista = Array.isArray(s.specializzazioni) ? s.specializzazioni : [];
+  if (!lista.length) err(F, 'specializzazioni', 'lista mancante');
+  lista.forEach((x, i) => {
+    const k = `specializzazioni[${i}] (${x?.nome})`;
+    if (!isTesto(x?.id) || !isTesto(x?.nome)) { err(F, `specializzazioni[${i}]`, 'servono "id" e "nome"'); return; }
+    if (ids.has(x.id)) err(F, `${k}.id`, `id "${x.id}" duplicato`);
+    ids.add(x.id);
+    if (!['armi', 'mistiche', 'operative_sociali_professionali'].includes(x.gruppo)) err(F, `${k}.gruppo`, `gruppo "${x.gruppo}" sconosciuto`);
+    if (!Array.isArray(x.abilita)) err(F, `${k}.abilita`, 'deve essere una lista');
+    else x.abilita.forEach((a) => { if (!nomiAbilita.has(a)) err(F, `${k}.abilita`, `"${a}" non è un'Abilità esistente`); });
+    if (x.gruppo !== 'armi' && !(x.abilita?.length)) err(F, `${k}.abilita`, 'serve almeno un’Abilità interessata');
+    if (!isTesto(x.ambito)) err(F, `${k}.ambito`, 'ambito mancante');
+    if (!isOggetto(x.effetto)) err(F, `${k}.effetto`, 'effetto mancante');
+  });
+  return ids;
+}
+
+const MOLTEPLICITA = { una: null, per_caratteristica: 'caratteristica', per_salvezza_max2: 'salvezza', illimitata: null, limitata: null };
+const EFFETTI_NOTI = new Set(['iniziativa', 'pv', 'salvezza', 'movimento', 'tecniche', 'accessoMagia', 'incantesimi', 'livelloMax', 'livelloMaxIncantesimi']);
+
+function validaTalentiLiberi(t, idSpec, err) {
+  if (!isOggetto(t)) return;
+  const F = 'talenti_liberi';
+  const lista = Array.isArray(t.talenti) ? t.talenti : [];
+  const ids = new Set();
+  lista.forEach((x, i) => {
+    if (!isTesto(x?.id) || !isTesto(x?.nome)) { err(F, `talenti[${i}]`, 'servono "id" e "nome"'); return; }
+    if (ids.has(x.id) || idSpec.has(x.id)) err(F, `talenti[${i}] (${x.nome}).id`, `id "${x.id}" duplicato (anche fra le Specializzazioni)`);
+    ids.add(x.id);
+  });
+  const esiste = (id) => ids.has(id) || idSpec.has(id);
+  const sezioni = isOggetto(t.sezioni) ? t.sezioni : {};
+  lista.forEach((x, i) => {
+    if (!isOggetto(x)) return;
+    const k = `talenti[${i}] (${x.nome})`;
+    if (!(x.sezione in sezioni)) err(F, `${k}.sezione`, `sezione "${x.sezione}" non descritta in "sezioni"`);
+    if (!['passivo', 'attivo'].includes(x.tipo) && !isTodo(x.tipo)) err(F, `${k}.tipo`, 'deve essere "passivo", "attivo" o "TODO(Davide)"');
+    if (!isTesto(x.testo)) err(F, `${k}.testo`, 'testo mancante');
+    if (Array.isArray(x.prerequisiti)) {
+      x.prerequisiti.forEach((p) => { if (!esiste(p)) err(F, `${k}.prerequisiti`, `"${p}" non è l'id di un Talento o di una Specializzazione`); });
+    } else if (!(isTodo(x.prerequisiti) && x.provvisorio === true)) {
+      err(F, `${k}.prerequisiti`, 'lista di id (vuota se nessun prerequisito); "TODO(Davide)" solo per i Talenti provvisori');
+    }
+    if (!(x.molteplicita in MOLTEPLICITA)) err(F, `${k}.molteplicita`, `"${x.molteplicita}" sconosciuta`);
+    else if ((MOLTEPLICITA[x.molteplicita] ?? null) !== (x.parametro ?? null)) {
+      err(F, `${k}.parametro`, `con molteplicità "${x.molteplicita}" il parametro deve essere ${JSON.stringify(MOLTEPLICITA[x.molteplicita])}`);
+    }
+    if (x.molteplicita === 'limitata' && (!isIntero(x.max_acquisizioni) || x.max_acquisizioni < 2)) err(F, `${k}.max_acquisizioni`, 'intero ≥ 2 richiesto con molteplicità "limitata"');
+    if (x.effetti !== undefined) {
+      if (!isOggetto(x.effetti)) err(F, `${k}.effetti`, 'deve essere un oggetto');
+      else for (const e of Object.keys(x.effetti)) if (!EFFETTI_NOTI.has(e)) err(F, `${k}.effetti.${e}`, 'effetto sconosciuto al motore di calcolo');
+    }
+    for (const inc of x.incompatibile_con ?? []) {
+      if (!/^(addestramento|classi|talenti):.+$/.test(inc)) err(F, `${k}.incompatibile_con`, `"${inc}": atteso "addestramento:…", "classi:…" o "talenti:…"`);
+    }
+  });
+  for (const [sez, n] of Object.entries(t.attesi ?? {})) {
+    if (sez.startsWith('_')) continue;
+    const trovati = lista.filter((x) => x?.sezione === sez || x?.sezione?.startsWith(`${sez}.`)).length;
+    if (trovati !== n) err(F, 'talenti', `attesi ${n} Talenti nel §${sez} (campo "attesi"), trovati ${trovati}`);
+  }
+}
+
+function validaTecniche(t, err) {
+  if (!isOggetto(t)) return;
+  const F = 'tecniche_interiori';
+  if (!Array.isArray(t.regole_comuni) || !t.regole_comuni.length) err(F, 'regole_comuni', 'regole comuni del §8.9.1 mancanti');
+  const ids = new Set();
+  (Array.isArray(t.tecniche) ? t.tecniche : []).forEach((x, i) => {
+    const k = `tecniche[${i}] (${x?.nome})`;
+    if (!isTesto(x?.id) || !isTesto(x?.nome)) { err(F, `tecniche[${i}]`, 'servono "id" e "nome"'); return; }
+    if (ids.has(x.id)) err(F, `${k}.id`, `id "${x.id}" duplicato`);
+    ids.add(x.id);
+    if (!/^(generica|lottatore|scuola:.+)$/.test(x.gruppo ?? '')) err(F, `${k}.gruppo`, 'atteso "generica", "lottatore" o "scuola:<nome>"');
+    for (const c of ['costo', 'azione', 'bersaglio', 'durata', 'testo']) if (!isTesto(x[c])) err(F, `${k}.${c}`, 'campo mancante o vuoto');
+  });
 }
 
 function validaDadi(F, chiave, v, err) {
