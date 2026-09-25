@@ -10,7 +10,8 @@
 //   talentoClasse: 'Reazione Operativa' (Gradi II, IV, VI), puntiAbilita: { Furtività: 2 }   "grado_classe"
 //   incantesimi: [nomi], tecniche: [id]                    quando una quota cresce
 import {
-  validaScelte, calcolaScheda, modOrdinario, modSalvezza, valoreAbilita, salvezza, iniziativa as sommaIniziativa,
+  calcolaScheda, modOrdinario, modSalvezza, valoreAbilita, salvezza, iniziativa as sommaIniziativa,
+  puntiMagiaCreazione, incantesimiLiberi, livelloMassimoIncantesimi,
 } from './calc.js';
 import { specTiro, valoreTiro, motivoFuoriIntervallo } from './tiri.js';
 
@@ -120,8 +121,8 @@ function statoCreazione(creazione, dati) {
   const abil = Object.fromEntries(s1.abilita.map((a) => [a.nome, { daClasse: a.daClasse, liberi: a.liberi }]));
   const { fisso, dado } = classe.pv_per_grado;
   const pvCreazione = fisso + (dati.regole.creazione.dado_pv_massimizzato ? dado : 0);
-  const tiroPM = valoreTiro(creazione.tiroDadoPM);
-  const pmCreazione = classe.pm_per_grado.dado === 0 ? classe.pm_per_grado.fisso : (tiroPM === null ? null : classe.pm_per_grado.fisso + tiroPM);
+  // anche il dado dei PM è massimizzato alla creazione (decisione 6 del master)
+  const pmCreazione = puntiMagiaCreazione(0, classe, dati.regole);
   return {
     errori,
     stato: {
@@ -195,19 +196,19 @@ function quoteIncantesimi(stato, dati) {
   const intMod = modDi(stato, r.taumaturgo.incantesimi_liberi.caratteristica, dati);
   // §2.10 e Magia sez. 1: 2 + Mod INT una sola volta, solo con l'Addestramento Taumaturgo
   const conAddestramento = stato.addestr.nome === r.taumaturgo.addestramento;
-  let liberi = conAddestramento ? Math.max(0, r.taumaturgo.incantesimi_liberi.fisso + intMod) : 0;
+  let liberi = conAddestramento ? incantesimiLiberi(intMod, r.taumaturgo.incantesimi_liberi) : 0;
   let livelloTalenti = 0;
   let potenziale = 0;
   let accessoTalenti = false;
   for (const t of talentiConEffetti(stato, dati)) {
     const e = t.effetti ?? {};
     if (typeof e.incantesimi === 'number') liberi += e.incantesimi;
-    else if (isOggetto(e.incantesimi)) liberi += Math.max(0, e.incantesimi.fisso + modDi(stato, e.incantesimi.caratteristica, dati));
+    else if (isOggetto(e.incantesimi)) liberi += incantesimiLiberi(modDi(stato, e.incantesimi.caratteristica, dati), e.incantesimi);
     if (e.accessoMagia) { accessoTalenti = true; livelloTalenti = Math.max(livelloTalenti, e.livelloMax ?? 0); }
     if (e.livelloMaxIncantesimi) potenziale += e.livelloMaxIncantesimi;
   }
   const tetto = r.avanzamento.livello_massimo_incantesimi;
-  const daGradi = Math.min(tetto, r.taumaturgo.livello_massimo_per_grado_taumaturgico * gradiTaum);
+  const daGradi = Math.min(tetto, livelloMassimoIncantesimi(gradiTaum, r));
   // TODO(Davide): Potenziale Mistico Migliorato è applicato soltanto al limite di Usufruitore di Magia
   const daTalenti = accessoTalenti ? Math.min(tetto, livelloTalenti + potenziale) : 0;
   const totale = somma(perMacro) + liberi;
@@ -502,7 +503,7 @@ function controllaIncantesimi(prima, dopo, v, dati) {
     if (!i) { err(`"${nome}" non è un incantesimo`); continue; }
     if (prima.incantesimi.includes(nome) || visti.has(nome)) err(`${nome} è già conosciuto`);
     visti.add(nome);
-    if (i.livello_base > q.livelloMassimo) err(`${nome}: livello base ${i.livello_base} oltre il livello massimo ${q.livelloMassimo} (Magia, sezione 1)`);
+    if (i.livello_base > q.livelloMassimo) err(`${nome}: livello base ${i.livello_base} oltre il livello massimo ${q.livelloMassimo} (tabella dei Gradi taumaturgici)`);
   }
   if (nuovi.length && !q.accesso) err('il personaggio non ha accesso alla magia');
   if (q.liberiUsati > q.liberi || q.noti.length > q.totale) {

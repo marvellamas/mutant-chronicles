@@ -1,8 +1,8 @@
 // I passi del wizard (sequenza §2.0 del Manuale del Giocatore). Ogni passo si genera dai dati.
 import { h, segno, dadi } from './dom.js';
 import { validaScelte } from '../calc.js';
-import { eTaumaturgo, specTiroPM, specTiroPuntiEroe } from '../character.js';
-import { statoIncantesimi, motivoBloccoIncantesimo, IPOTESI_INCANTESIMI } from '../incantesimi.js';
+import { eTaumaturgo, specTiroPuntiEroe } from '../character.js';
+import { statoIncantesimi, motivoBloccoIncantesimo, regoleIncantesimi } from '../incantesimi.js';
 import { renderScheda } from './scheda.js';
 import { info, elencoInfo } from './tooltip.js';
 import { componenteTiro } from './tiro.js';
@@ -42,7 +42,7 @@ export const PASSI = [
   {
     titolo: 'Classe', rif: '§2.12, cap. 3',
     requisito: ({ scelte }) => (scelte.addestramento ? null : 'Scegli prima l’Addestramento.'),
-    completo: ({ scheda }) => !scheda.errori.some((e) => e.campo === 'classe' || e.campo === 'tiroDadoPM'),
+    completo: ({ scheda }) => !scheda.errori.some((e) => e.campo === 'classe'),
     render: passoClasse,
   },
   {
@@ -259,23 +259,13 @@ function talento(ctx, chiave, titolo, testo) {
   return dettagli(ctx, chiave, titolo, testo.split('\n').map((p) => h('p', {}, p)));
 }
 
-function pannelloDadoPM(ctx, classe) {
-  const t = ctx.scelte.tiroDadoPM;
-  return h('section', { class: `riquadro ${t ? 'ok' : 'attenzione'}` },
-    h('h3', {}, `Dado dei PM di ${classe.nome}`),
-    h('p', {}, `Al 1° livello solo il dado dei PV è massimizzato; per i PM si applica il contributo del profilo (${dadi(classe.pm_per_grado)}), quindi il dado va tirato (§2.12, §3.3).`),
-    componenteTiro({ id: 'tiro-pm', spec: specTiroPM(classe), tiro: t, memoria: ctx.ui,
-      imposta: (tiro) => ctx.aggiorna({ tiroDadoPM: tiro }) }));
-}
-
 function passoClasse(ctx) {
   const { dati, scelte } = ctx;
   const classi = dati.classi.classi.filter((c) => c.addestramento === scelte.addestramento);
   const scelta = trova(classi, scelte.classe);
   const cos = ctx.ante.caratteristiche?.COS.valore;
   return [
-    h('p', { class: 'guida' }, `Le Classi dell’Addestramento ${scelte.addestramento}. Il I Grado concede +1 alle cinque Abilità di Classe, il Talento fisso del I Grado e i contributi a PV e PM; il dado dei PV è massimizzato.`),
-    scelta && scelta.pm_per_grado.dado > 0 ? pannelloDadoPM(ctx, scelta) : null,
+    h('p', { class: 'guida' }, `Le Classi dell’Addestramento ${scelte.addestramento}. Il I Grado concede +1 alle cinque Abilità di Classe, il Talento fisso del I Grado e i contributi a PV e PM; al 1° livello i dadi di PV e PM sono massimizzati.`),
     h('div', { class: 'griglia-carte' }, classi.map((c) => {
       const sel = scelte.classe === c.nome;
       const pv1 = c.pv_per_grado.fisso + c.pv_per_grado.dado;
@@ -355,7 +345,6 @@ function passoIncantesimi(ctx) {
   const { dati, scelte } = ctx;
   const st = statoIncantesimi(scelte, dati);
   if (!st) return [h('p', { class: 'nota errore' }, 'Correggi prima le scelte precedenti.')];
-  const todo = dati.regole.taumaturgo['TODO(Davide)'] ?? [];
   const catalogo = dati.incantesimi.incantesimi;
   const nascosti = catalogo.filter((i) => i.livello_base > st.livelloMassimo).length;
   const cambia = (nome, aggiungi) => ctx.aggiorna({
@@ -364,11 +353,7 @@ function passoIncantesimi(ctx) {
 
   return [
     h('p', { class: 'guida' }, `L’Addestramento Taumaturgo concede ${dati.regole.taumaturgo.incantesimi_liberi.formula} incantesimi liberi; la Classe aggiunge le sue quote per macrofamiglia. Con 1 Grado taumaturgico il livello massimo è ${st.livelloMassimo}.`),
-    todo.length ? h('aside', { class: 'riquadro attenzione' },
-      h('h3', {}, 'Regole ancora da chiarire con il master'),
-      h('p', {}, 'Finché Davide non conferma, l’app applica le ipotesi più permissive:'),
-      h('ul', {}, IPOTESI_INCANTESIMI.map((t) => h('li', {}, t))),
-      dettagli(ctx, 'todo-incantesimi', 'Le domande aperte (TODO in regole.json)', h('ul', {}, todo.map((t) => h('li', {}, t))))) : null,
+    dettagli(ctx, 'regole-incantesimi', 'Regole della scelta (confermate dal master)', h('ul', {}, regoleIncantesimi(dati).map((t) => h('li', {}, t)))),
     h('div', { class: 'contatori' },
       h('p', { class: `contatore ${st.completo ? 'ok' : st.eccesso ? 'errore' : 'attenzione'}` },
         h('strong', {}, `${st.scelti} / ${st.totale}`), ' incantesimi scelti'),

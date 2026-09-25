@@ -45,6 +45,8 @@ Fuori dalla v1: avanzamento 2–20, catalogo armi/armature, combattimento. L'equ
 ## Riferimenti
 
 - `docs/studio-fattibilita.md`: analisi dei manuali, formule, punti da chiarire con Davide, stima.
+- `docs/risposte-master.md`: decisioni di Davide sui punti ambigui o errati dei manuali, con data. **In caso di conflitto fra un manuale e `docs/risposte-master.md`, vale `docs/risposte-master.md`.**
+- `docs/ricognizione-avanzamento.md`: analisi dell'avanzamento di livello (cap. 8) e modello a eventi.
 - Manuale del Giocatore v0.43: cap. 1 (meccaniche, formule Salvezze §1.2.3), cap. 2 (creazione), cap. 3 (Classi: tabelle §3.4, §3.6, §3.8), cap. 4 (Abilità: quadro §4.3), cap. 8 (avanzamento, per la v2).
 - Manuale della Magia v1.1: sezione 1 (accesso e quote incantesimi), sezione 11 (indice dei 90 incantesimi: 3 macrofamiglie × 3 specializzazioni × 10).
 - Manuale degli Armamenti v0.50: non serve per la v1.
@@ -53,4 +55,5 @@ Fuori dalla v1: avanzamento 2–20, catalogo armi/armature, combattimento. L'equ
 
 - Prima di scrivere codice che tocca una regola, citare il paragrafo del manuale nel commento (es. `// §2.13: Avanzamento iniziale ≤ 3, incluso il +1 di Classe`).
 - Quando un dato del manuale è ambiguo, non inventare: mettere un `TODO(Davide)` nel JSON o nel codice e segnalarlo a Marcello a fine sessione.
+- Quando Davide risponde a un `TODO(Davide)`, registrare la decisione con la data in `docs/risposte-master.md`, applicarla nei dati e togliere il TODO.
 - Commit piccoli e descrittivi, in italiano.

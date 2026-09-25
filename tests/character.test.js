@@ -30,7 +30,6 @@ const ARCANISTA = {
   puntiCaratteristica: { INT: 2, SAG: 1, COS: 2 },
   addestramento: 'Taumaturgo',
   classe: 'Arcanista',
-  tiroDadoPM: { valore: 3, origine: 'app' },
   puntiAbilitaLiberi: { 'Potere': 2, 'Occultismo': 2, 'Cultura': 1 },
   puntiEroe: { valore: 6, origine: 'app' },
 };
@@ -41,6 +40,18 @@ test('le scelte di esempio sono già coerenti: normalizza non cambia nulla', () 
     assert.deepEqual(r.avvisi, []);
     assert.deepEqual(r.scelte, s);
   }
+});
+
+test('decisione 6 del master: il tiro dei PM alla creazione sparisce dalle scelte e i PM si ricalcolano', () => {
+  const salvato = { ...ARCANISTA, tiroDadoPM: { valore: 1, origine: 'manuale' } };
+  const r = normalizza(salvato, dati);
+  assert.deepEqual(r.avvisi, []);
+  assert.equal('tiroDadoPM' in r.scelte, false);
+  assert.deepEqual(r.scelte, ARCANISTA);
+  assert.equal(calcolaScheda(r.scelte, dati).pm, 7 + 5 + 4); // dado massimizzato, non il vecchio 1
+  // anche nel formato numerico più vecchio
+  assert.equal('tiroDadoPM' in normalizza({ ...ARCANISTA, tiroDadoPM: 3 }, dati).scelte, false);
+  assert.equal('tiroDadoPM' in nuoveScelte(), false);
 });
 
 // --- invalidazione a valle ----------------------------------------------------------------
@@ -54,11 +65,10 @@ test('cambio di Addestramento: la Classe viene azzerata con un avviso', () => {
   assert.deepEqual(r.scelte.puntiAbilitaLiberi, MISHIMA_AGENTE.puntiAbilitaLiberi);
 });
 
-test('cambio di Addestramento da Taumaturgo: via Classe, tiro dei PM e incantesimi', () => {
+test('cambio di Addestramento da Taumaturgo: via Classe e incantesimi', () => {
   const conIncantesimi = { ...ARCANISTA, incantesimi: ['Colpo Elementale', 'Telecinesi'] };
   const r = applicaModifica(conIncantesimi, { addestramento: 'Studioso' }, dati);
   assert.equal(r.scelte.classe, null);
-  assert.equal(r.scelte.tiroDadoPM, null);
   assert.deepEqual(r.scelte.incantesimi, []);
   assert.ok(r.avvisi.some((a) => /incantesimi/.test(a)));
 });

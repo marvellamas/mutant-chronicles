@@ -161,7 +161,7 @@ function validaRegole(r, err) {
     'creazione.avanzamento_massimo_iniziale', 'creazione.va_minimo_per_punti_liberi', 'creazione.bonus_classe_per_grado',
     'salvezze.base', 'punti_eroe.dadi', 'punti_eroe.facce', 'punti_eroe.fisso', 'punti_eroe.minimo',
     'punti_eroe.massimo', 'punti_eroe.riserva_massima', 'movimento.passo', 'movimento.corsa', 'movimento.scatto',
-    'addestramento.punti_totali', 'taumaturgo.incantesimi_liberi.fisso', 'taumaturgo.livello_massimo_per_grado_taumaturgico',
+    'addestramento.punti_totali', 'taumaturgo.incantesimi_liberi.fisso', 'taumaturgo.incantesimi_liberi.minimo',
     'incantesimi.per_specializzazione',
   ];
   for (const percorso of interi) {
@@ -178,6 +178,20 @@ function validaRegole(r, err) {
   for (const tab of ['addestramento.schema', 'incantesimi.schema_livello_base']) {
     const v = tab.split('.').reduce((o, k) => o?.[k], r);
     if (!isOggetto(v) || !Object.values(v).every(isIntero)) err(F, tab, 'tabella {valore: quantità} mancante o non numerica');
+  }
+  if (typeof r.creazione?.dado_pm_massimizzato !== 'boolean') err(F, 'creazione.dado_pm_massimizzato', 'vero o falso mancante');
+  // Livello massimo degli incantesimi per Gradi taumaturgici (tabella del master): Gradi da 1,
+  // senza buchi, livelli non decrescenti
+  const t = r.taumaturgo?.livello_massimo_per_gradi;
+  if (!Array.isArray(t) || !t.length) err(F, 'taumaturgo.livello_massimo_per_gradi', 'tabella {gradi, livello} mancante');
+  else {
+    t.forEach((x, i) => {
+      if (x?.gradi !== i + 1) err(F, `taumaturgo.livello_massimo_per_gradi[${i}]`, `atteso gradi ${i + 1}, trovato ${JSON.stringify(x?.gradi)}`);
+      if (!isIntero(x?.livello) || x.livello < 1) err(F, `taumaturgo.livello_massimo_per_gradi[${i}]`, 'livello intero ≥ 1 mancante');
+      else if (i && isIntero(t[i - 1]?.livello) && x.livello < t[i - 1].livello) err(F, `taumaturgo.livello_massimo_per_gradi[${i}]`, 'il livello non può scendere al crescere dei Gradi');
+    });
+    const gm = r.avanzamento?.grado_massimo;
+    if (isIntero(gm) && t.length < gm) err(F, 'taumaturgo.livello_massimo_per_gradi', `servono le righe fino a ${gm} Gradi`);
   }
 }
 

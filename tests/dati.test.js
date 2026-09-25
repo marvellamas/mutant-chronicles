@@ -30,8 +30,18 @@ test('conteggi attesi: 6 Caratteristiche, 24 Abilità, 7 Corporazioni, 5 Addestr
 
 test('i TODO(Davide) sono elencabili', () => {
   const todo = trovaTodo(dati);
-  assert.ok(todo.some((t) => t.percorso.startsWith('classi.json')), 'atteso il TODO sulle Specializzazioni dell\'Esploratore');
-  assert.ok(todo.some((t) => t.percorso.startsWith('regole.json')));
+  assert.ok(todo.some((t) => t.percorso.startsWith('caratteristiche.json')));
+  assert.ok(todo.some((t) => t.percorso.startsWith('talenti_liberi.json')));
+  // chiusi dalle risposte del master (docs/risposte-master.md)
+  assert.equal(todo.some((t) => t.percorso.startsWith('classi.json') || t.percorso.startsWith('regole.json')), false);
+});
+
+test('risposte del master: Specializzazioni dei Talenti dell’Esploratore', () => {
+  const e = dati.classi.classi.find((c) => c.nome === 'Esploratore');
+  assert.deepEqual(Object.fromEntries(e.talenti_a_scelta.map((t) => [t.nome, t.specializzazione])), {
+    'Segni di Passaggio': 'Terrestre', 'Adattamento Estremo': 'Terrestre',
+    'Mappa Mentale': 'Spaziale', 'Rotta Alternativa': 'Spaziale', 'Avanguardia': 'Comune',
+  });
 });
 
 // --- il validatore trova gli errori e dice dove -------------------------------------------

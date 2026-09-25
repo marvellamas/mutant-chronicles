@@ -1,6 +1,5 @@
 // Motore di calcolo: funzioni pure. Le costanti numeriche arrivano dai dati (data/*.json);
 // qui stanno solo le formule, ciascuna con il paragrafo del Manuale del Giocatore.
-import { valoreTiro, motivoFuoriIntervallo, specTiro } from './tiri.js';
 import { calcolaSchedaPersonaggio } from './avanzamento.js';
 
 // Avanzamento di livello (cap. 8): la validazione di un livello sta in avanzamento.js.
@@ -58,6 +57,30 @@ function contributoDado(dado, risultato, cosa) {
   return risultato;
 }
 
+/**
+ * PM al 1° livello: SAG + contributo della Classe con il dado massimizzato. Il §2.12 e il §3.3
+ * massimizzano solo i PV; il master ha corretto (docs/risposte-master.md, decisione 6).
+ */
+export function puntiMagiaCreazione(sag, classe, regole) {
+  const { dado } = classe.pm_per_grado;
+  return puntiMagia(sag, classe, { tiro: dado > 0 && regole.creazione.dado_pm_massimizzato ? dado : undefined });
+}
+
+/** Incantesimi liberi «2 + Mod INT», con il minimo della formula (1, decisione 2 del master). */
+export function incantesimiLiberi(mod, formula) {
+  return Math.max(formula.minimo ?? 0, formula.fisso + mod);
+}
+
+/**
+ * Livello massimo degli incantesimi conosciuti per Gradi taumaturgici complessivi: tabella del
+ * master in regole.taumaturgo.livello_massimo_per_gradi (decisione 5). 0 senza Gradi.
+ */
+export function livelloMassimoIncantesimi(gradi, regole) {
+  if (!gradi || gradi < 1) return 0;
+  const tabella = [...regole.taumaturgo.livello_massimo_per_gradi].sort((a, b) => a.gradi - b.gradi);
+  return (tabella.find((r) => r.gradi === gradi) ?? tabella.filter((r) => r.gradi <= gradi).at(-1)).livello;
+}
+
 /** §2.14: Iniziativa = Mod DES + Mod INT (modificatori ordinari). Somma i modificatori passati. */
 export function iniziativa(...modificatori) {
   return modificatori.reduce((s, m) => s + m, 0);
@@ -81,7 +104,6 @@ export function bonusAvanzamentoSalvezze(livello, regole) {
  *   addestramento: 'Avventuriero',
  *   classe: 'Agente',
  *   puntiAbilitaLiberi: { 'Furtività': 2, 'Percezione': 2, 'Medicina': 1 },
- *   tiroDadoPM: { valore: 3, origine: 'app' }  // solo se la Classe ha un dado nei PM (src/tiri.js)
  * }
  */
 
@@ -188,16 +210,8 @@ export function validaScelte(scelte, dati) {
     }
   }
 
-  // §2.12 e §3.3: il dado dei PM (Classi taumaturgiche) si tira anche al 1° livello.
-  const dadoPM = classe?.pm_per_grado?.dado ?? 0;
-  if (dadoPM > 0) {
-    const t = scelte?.tiroDadoPM;
-    if (t === undefined || t === null) err('tiroDadoPM', `manca il tiro di 1d${dadoPM} per i PM`, 'incompleto');
-    else {
-      const motivo = motivoFuoriIntervallo(valoreTiro(t), specTiro({ facce: dadoPM }));
-      if (motivo) err('tiroDadoPM', `tiro dei PM non valido: ${motivo}`);
-    }
-  }
+  // Al 1° livello anche il dado dei PM è massimizzato (docs/risposte-master.md, decisione 6):
+  // la creazione non ha tiri da validare.
   return errori;
 }
 
@@ -233,10 +247,7 @@ export function calcolaScheda(scelte, dati) {
   }
 
   const pv = puntiVita(car.COS.valore, classe, { dadoMassimizzato: r.creazione.dado_pv_massimizzato });
-  const dadoPM = classe.pm_per_grado.dado;
-  const tiroPM = valoreTiro(scelte.tiroDadoPM);
-  const tiroPMValido = dadoPM === 0 || motivoFuoriIntervallo(tiroPM, specTiro({ facce: dadoPM })) === null;
-  const pm = tiroPMValido ? puntiMagia(car.SAG.valore, classe, { tiro: tiroPM ?? undefined }) : null;
+  const pm = puntiMagiaCreazione(car.SAG.valore, classe, r);
 
   const scheda = {
     livello,
@@ -263,10 +274,9 @@ export function calcolaScheda(scelte, dati) {
   if (addestr.nome === r.taumaturgo.addestramento) {
     const liberi = r.taumaturgo.incantesimi_liberi;
     scheda.incantesimi = {
-      // TODO(Davide): con Mod INT ≤ −3 la formula è negativa; per ora non si scende sotto 0.
-      liberi: Math.max(0, liberi.fisso + car[liberi.caratteristica].mod),
+      liberi: incantesimiLiberi(car[liberi.caratteristica].mod, liberi),
       diClasse: classe.incantesimi?.primo_grado ?? {},
-      livelloMassimo: r.taumaturgo.livello_massimo_per_grado_taumaturgico * scheda.grado,
+      livelloMassimo: livelloMassimoIncantesimi(scheda.grado, r),
     };
   }
   return scheda;

@@ -2,8 +2,9 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { specTiro, tira, tiroManuale, migraTiro, valoreTiro } from '../src/tiri.js';
 import { nuoveScelte, normalizza, deserializza, serializza, specTiroPM, specTiroPuntiEroe } from '../src/character.js';
-import { calcolaScheda, validaScelte } from '../src/calc.js';
+import { calcolaScheda, validaLivello } from '../src/calc.js';
 import { datiReali } from './helpers.js';
+import { ARCANISTA as ARCANISTA_COMPLETA } from './personaggi.js';
 
 const { dati } = await datiReali();
 
@@ -52,17 +53,26 @@ test('inserimento manuale: rifiuta i valori fuori intervallo spiegando il motivo
   assert.equal(tiroManuale(8, pe).tiro, undefined);
 });
 
-test('validaScelte rifiuta un tiro dei PM fuori intervallo, anche se inserito a mano', () => {
-  const e = validaScelte({ ...ARCANISTA, tiroDadoPM: { valore: 5, origine: 'manuale' } }, dati);
-  assert.ok(e.some((x) => x.campo === 'tiroDadoPM' && x.tipo === 'violazione' && /5 non è possibile con 1d4/.test(x.problema)));
-  const ok = calcolaScheda({ ...ARCANISTA, tiroDadoPM: { valore: 4, origine: 'manuale' } }, dati);
-  assert.equal(ok.pm, 7 + 5 + 4);
+test('un tiro dei PM fuori intervallo inserito a mano è rifiutato (Grado successivo al primo)', () => {
+  // Alla creazione il dado dei PM è massimizzato (decisione 6): i tiri restano nei Gradi successivi.
+  const p = {
+    versione: 2, creazione: ARCANISTA_COMPLETA, // con i 13 incantesimi della creazione
+    livelli: [
+      { livello: 2, caratteristiche: { COS: 1, DES: 1 } },
+      { livello: 3, talentoLibero: { id: 'sempre-allerta' } },
+    ],
+  };
+  const voce = { grado: { classe: 'Arcanista' }, tiroPV: { valore: 3, origine: 'app' }, tiroPM: { valore: 5, origine: 'manuale' },
+    talentoClasse: 'Geometria Arcana', puntiAbilita: { 'Percezione': 2, 'Rituali': 2, 'Artefatti': 1 },
+    incantesimi: ['Protezione dagli Elementi', 'Irrobustire', 'Distrazione', 'Empatia', 'Cura Spirituale', 'Arma Mistica'] };
+  const e = validaLivello(p, voce, dati);
+  assert.ok(e.some((x) => x.campo === 'tiroPM' && x.tipo === 'violazione' && /5 non è possibile con 1d4/.test(x.problema)), JSON.stringify(e));
+  assert.deepEqual(validaLivello(p, { ...voce, tiroPM: { valore: 4, origine: 'manuale' } }, dati), []);
 });
 
 test('normalizza scarta con avviso un tiro salvato fuori intervallo', () => {
-  const r = normalizza({ ...ARCANISTA, tiroDadoPM: { valore: 3, origine: 'app' }, puntiEroe: { valore: 9, origine: 'manuale' } }, dati);
+  const r = normalizza({ ...ARCANISTA, puntiEroe: { valore: 9, origine: 'manuale' } }, dati);
   assert.equal(r.scelte.puntiEroe, null);
-  assert.deepEqual(r.scelte.tiroDadoPM, { valore: 3, origine: 'app' });
   assert.deepEqual(r.avvisi, ['Punti Eroe (2d3+1): 9 non è possibile con 2d3+1: il risultato va da 3 a 7. Da rideterminare.']);
 });
 
@@ -84,22 +94,22 @@ test('personaggio salvato col formato vecchio: i tiri numerici migrano senza avv
   const vecchio = { ...ARCANISTA, tiroDadoPM: 3, puntiEroe: 6 };
   const r = normalizza(vecchio, dati);
   assert.deepEqual(r.avvisi, []);
-  assert.deepEqual(r.scelte.tiroDadoPM, { valore: 3, origine: 'app' });
   assert.deepEqual(r.scelte.puntiEroe, { valore: 6, origine: 'app' });
-  assert.equal(calcolaScheda(r.scelte, dati).pm, 15);
+  // il tiro dei PM della creazione viene ignorato: dado massimizzato (decisione 6)
+  assert.equal('tiroDadoPM' in r.scelte, false);
+  assert.equal(calcolaScheda(r.scelte, dati).pm, 7 + 5 + 4);
 });
 
 test('personaggio vecchio con tiro non valido: scartato con avviso', () => {
   const r = normalizza({ ...ARCANISTA, tiroDadoPM: 9, puntiEroe: 'tanti' }, dati);
-  assert.equal(r.scelte.tiroDadoPM, null);
   assert.equal(r.scelte.puntiEroe, null);
-  assert.equal(r.avvisi.length, 2);
+  assert.equal(r.avvisi.length, 1); // il vecchio tiro dei PM sparisce senza avviso
 });
 
 test('file esportato in formato 1 (tiri numerici): si importa e si migra', () => {
   const file = JSON.stringify({ formato: 'mutant-personaggio', versione: 1, scelte: { ...ARCANISTA, tiroDadoPM: 2, puntiEroe: 4 } });
   const r = normalizza(deserializza(file), dati);
-  assert.deepEqual(r.scelte.tiroDadoPM, { valore: 2, origine: 'app' });
+  assert.equal('tiroDadoPM' in r.scelte, false);
   assert.deepEqual(r.scelte.puntiEroe, { valore: 4, origine: 'app' });
   // riesportato, il file è nel formato attuale e conserva l'origine
   const nuovo = JSON.parse(serializza({ ...r.scelte, puntiEroe: { valore: 4, origine: 'manuale' } }));

@@ -142,7 +142,7 @@
     {
       "nome": "Esploratore",
       "addestramento": "Avventuriero",
-      "fonte": "§3.4; Talenti §3.5.2",
+      "fonte": "§3.4; Talenti §3.5.2; Specializzazioni dei Talenti a scelta: risposte del master (docs/risposte-master.md)",
       "specializzazioni": [
         "Terrestre",
         "Spaziale"
@@ -181,27 +181,27 @@
       ],
       "talenti_a_scelta": [
         {
-          "specializzazione": "TODO(Davide)",
+          "specializzazione": "Terrestre",
           "nome": "Segni di Passaggio",
           "testo": "Può lasciare segnali comprensibili soltanto agli alleati o a chi ne conosce il metodo. I segnali comunicano direzione, pericolo, ritardo, presenza nemica o punto di raccolta."
         },
         {
-          "specializzazione": "TODO(Davide)",
+          "specializzazione": "Terrestre",
           "nome": "Adattamento Estremo",
           "testo": "All’inizio di una scena ambientale sceglie una minaccia dominante fra caldo, freddo, fumo, oscurità, pioggia, gravità instabile o terreno instabile. Fino alla fine della scena protegge il gruppo dalla prima conseguenza minore di quella minaccia."
         },
         {
-          "specializzazione": "TODO(Davide)",
+          "specializzazione": "Spaziale",
           "nome": "Mappa Mentale",
           "testo": "Dopo aver attraversato un’area, può ricostruirne mentalmente la struttura principale. Il gruppo può tornare all’ultimo punto sicuro senza nuove Prove, salvo modifiche reali dell’ambiente."
         },
         {
-          "specializzazione": "TODO(Davide)",
+          "specializzazione": "Spaziale",
           "nome": "Rotta Alternativa",
           "testo": "Quando il gruppo cadrebbe in un’imboscata o incontrerebbe un ostacolo prevedibile, può proporre un percorso alternativo. Evita il problema principale, ma aumenta tempo, consumo di risorse o esposizione a un rischio secondario."
         },
         {
-          "specializzazione": "TODO(Davide)",
+          "specializzazione": "Comune",
           "nome": "Avanguardia",
           "testo": "Una volta per combattimento, durante la propria Iniziativa nel primo Round, se deve ancora agire almeno un nemico, può spendere un’Azione Principale per permettere a un alleato entro 6 Q di muoversi immediatamente fino a 4 Q. Lo spostamento segue le regole del Passo e non consuma l’Azione di Movimento dell’alleato. Rispetta ostacoli, terreno ed eventuali Attacchi di Opportunità e permette soltanto il movimento."
         }

@@ -1,16 +1,20 @@
-// Scelta degli incantesimi conosciuti al 1° livello (Addestramento Taumaturgo).
-// Funzioni pure. Dove il manuale non è chiaro (TODO(Davide) in regole.json) si applica
-// l'ipotesi più permissiva:
-//  - la quota di Classe di una macrofamiglia copre qualunque sua specializzazione;
-//  - gli incantesimi liberi (2 + Mod INT) possono essere di qualunque macrofamiglia;
-//  - con 1 Grado sono ammessi tutti gli incantesimi con livello base ≤ 3 × Gradi (Magia, sezione 1).
+// Scelta degli incantesimi conosciuti al 1° livello (Addestramento Taumaturgo). Funzioni pure.
+// Regole confermate dal master (docs/risposte-master.md, decisioni 2–5):
+//  - la quota di Classe di una macrofamiglia si spende in una qualunque delle sue specializzazioni;
+//  - gli incantesimi liberi (2 + Mod INT, minimo 1) possono essere di qualunque macrofamiglia;
+//  - sono ammessi gli incantesimi con livello base ≤ livello massimo della tabella per Gradi.
 import { calcolaScheda } from './calc.js';
 
-export const IPOTESI_INCANTESIMI = [
-  'La quota di Classe di una macrofamiglia si può spendere in una qualunque delle sue tre specializzazioni.',
-  'Gli incantesimi liberi dell’Addestramento possono essere di qualunque macrofamiglia e specializzazione.',
-  'Sono ammessi gli incantesimi con livello base non superiore al livello massimo (3 × Gradi taumaturgici).',
-];
+/** Testo delle regole mostrato nel passo Incantesimi (i dati sono in regole.json). */
+export function regoleIncantesimi(dati) {
+  const t = dati.regole.taumaturgo;
+  return [
+    t.quote_classe,
+    t.famiglie_incantesimi_liberi,
+    `Incantesimi liberi: ${t.incantesimi_liberi.formula}, minimo ${t.incantesimi_liberi.minimo}.`,
+    `Sono ammessi gli incantesimi con livello base fino al livello massimo: ${t.livello_massimo_per_gradi.map((r) => `${r.gradi} Grad${r.gradi === 1 ? 'o' : 'i'} → ${r.livello}`).join(', ')}.`,
+  ].filter(Boolean);
+}
 
 /**
  * Stato della scelta degli incantesimi, oppure null se il personaggio non ha accesso alla magia

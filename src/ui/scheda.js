@@ -51,7 +51,7 @@ export function renderScheda(ctx) {
           h('h3', {}, 'Valori derivati'),
           h('dl', { class: 'voci griglia-voci' },
             voce('Punti Vita', s.pv),
-            voce('Punti Magia', s.pm === null ? 'da tirare' : `${s.pm}${scelte.tiroDadoPM?.origine === 'manuale' ? ' (dado tirato dal vivo)' : ''}`),
+            voce('Punti Magia', s.pm === null ? 'da tirare' : String(s.pm)),
             voce('Iniziativa', `${segno(s.iniziativa)} (+1d10)`),
             voce('Movimento', `Passo ${s.movimento.passo} ${s.movimento.unita} · Corsa ${s.movimento.corsa} ${s.movimento.unita} · Scatto ${s.movimento.scatto} ${s.movimento.unita}`),
             voce('Azioni', `${s.azioni.movimento} di Movimento, ${s.azioni.principali} Principale`),

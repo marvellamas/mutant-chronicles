@@ -2,11 +2,11 @@
 // valori derivati, serializzazione. Tutto ciò che è calcolato si ricava da calc.js: qui non
 // si conservano mai valori derivati.
 import {
-  validaScelte, modOrdinario, modSalvezza, salvezza, puntiVita, puntiMagia, iniziativa,
+  validaScelte, modOrdinario, modSalvezza, salvezza, puntiVita, puntiMagiaCreazione, iniziativa,
   bonusAvanzamentoSalvezze,
 } from './calc.js';
 import { statoIncantesimi } from './incantesimi.js';
-import { specTiro, migraTiro, motivoFuoriIntervallo, valoreTiro, tiroValido } from './tiri.js';
+import { specTiro, migraTiro, motivoFuoriIntervallo } from './tiri.js';
 
 // Personaggio a livelli { creazione, livelli } (cap. 8): modello e funzioni in avanzamento.js.
 export {
@@ -26,7 +26,6 @@ export function nuoveScelte() {
     puntiCaratteristica: {},
     addestramento: null,
     classe: null,
-    tiroDadoPM: null, // { valore, origine: 'app' | 'manuale' }
     puntiAbilitaLiberi: {},
     incantesimi: [],
     puntiEroe: null, // { valore, origine: 'app' | 'manuale' }
@@ -34,6 +33,9 @@ export function nuoveScelte() {
   };
 }
 
+// Le chiavi non elencate qui vengono scartate da normalizza(): così i personaggi salvati con
+// tiroDadoPM alla creazione (prima della decisione 6 del master) perdono il tiro e i PM si
+// ricalcolano con il dado massimizzato.
 const CAMPI = Object.keys(nuoveScelte());
 const trova = (lista, nome) => lista.find((x) => x.nome === nome);
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
@@ -120,11 +122,6 @@ export function normalizza(scelteIn, dati) {
     s.classe = null;
     classe = undefined;
   }
-
-  // §2.12 e §3.3: il tiro del dado dei PM vale solo per una Classe che lo prevede.
-  // Un numero semplice (formato precedente) diventa { valore, origine: "app" }.
-  const specPM = specTiroPM(classe);
-  s.tiroDadoPM = specPM ? normalizzaTiro(s.tiroDadoPM, specPM, `Tiro dei PM (${specPM.formula})`, avvisi) : null;
 
   // §2.1: Punti Caratteristica
   const sigle = dati.caratteristiche.caratteristiche.map((c) => c.sigla);
@@ -260,10 +257,7 @@ export function anteprima(scelte, dati) {
   }
   if (classe) {
     out.pv = puntiVita(car.COS.valore, classe, { dadoMassimizzato: r.creazione.dado_pv_massimizzato });
-    const spec = specTiroPM(classe);
-    if (!spec || tiroValido(scelte.tiroDadoPM, spec)) {
-      out.pm = puntiMagia(car.SAG.valore, classe, { tiro: valoreTiro(scelte.tiroDadoPM) ?? undefined });
-    }
+    out.pm = puntiMagiaCreazione(car.SAG.valore, classe, r);
   }
   return out;
 }

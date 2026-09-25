@@ -355,3 +355,27 @@ test('Taumaturgo: le quote del Grado II si sommano a quelle già possedute', () 
   assert.deepEqual(calcolaScheda(p2bis, dati).errori, []);
   assert.equal(calcolaScheda(p2bis, dati).incantesimi.quote.totale, 14);
 });
+
+test('decisione 5 del master: al Grado II di Arcanista il livello massimo è 8, non 6', () => {
+  const liv = [
+    { livello: 2, caratteristiche: { COS: 1, DES: 1 } },
+    { livello: 3, talentoLibero: { id: 'sempre-allerta' } },
+  ];
+  const p3 = fino(ARCANISTA, liv, 2);
+  const voce4 = {
+    grado: { classe: 'Arcanista' }, tiroPV: tiro(2), tiroPM: tiro(3), talentoClasse: 'Riserva Tecnica',
+    puntiAbilita: { 'Percezione': 2, 'Rituali': 2, 'Artefatti': 1 },
+    // +2 per macrofamiglia; Evoca Elementale ha livello base 6
+    incantesimi: ['Evoca Elementale', 'Irrobustire', 'Distrazione', 'Empatia', 'Cura Spirituale', 'Arma Mistica'],
+  };
+  assert.deepEqual(validaLivello(p3, voce4, dati), []);
+  const s = calcolaScheda(applicaLivello(p3, voce4), dati);
+  assert.equal(s.incantesimi.livelloMassimo, 8);
+  assert.equal(s.incantesimi.quote.totale, 13 + 6);
+  // Devastazione Elementale (livello base 9) resta oltre il limite
+  const troppo = validaLivello(p3, { ...voce4, incantesimi: [...voce4.incantesimi.slice(1), 'Devastazione Elementale'] }, dati);
+  assert.ok(troppo.some((x) => /Devastazione Elementale: livello base 9 oltre il livello massimo 8/.test(x.problema)), JSON.stringify(troppo));
+  // alla creazione PM con il dado massimizzato: 7 SAG + 5 + 4; al Grado II il dado si tira (3)
+  assert.equal(calcolaScheda(fino(ARCANISTA, [], 0), dati).pm, 16);
+  assert.equal(s.pm, 16 + 5 + 3);
+});

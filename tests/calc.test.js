@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   modOrdinario, modSalvezza, valoreAbilita, salvezza, puntiVita, puntiMagia, iniziativa,
-  calcolaScheda, validaScelte,
+  calcolaScheda, validaScelte, incantesimiLiberi, livelloMassimoIncantesimi,
 } from '../src/calc.js';
 import { datiReali } from './helpers.js';
 
@@ -133,7 +133,7 @@ test('§2.13: il VA per i punti liberi include il +1 di Classe (§3.1: prima i p
   // Capitol (FOR 5) Taumaturgo Custode:
   // Atletica = FOR 0 + base 0, ma è Abilità di Classe (+1) → VA 1 → ammessa;
   // Armi pesanti = FOR 0 + base 0, non di Classe → VA 0 → vietata.
-  const base = { corporazione: 'Capitol', puntiCaratteristica: { INT: 2, SAG: 2, CAR: 1 }, addestramento: 'Taumaturgo', classe: 'Custode', tiroDadoPM: { valore: 2, origine: 'manuale' } };
+  const base = { corporazione: 'Capitol', puntiCaratteristica: { INT: 2, SAG: 2, CAR: 1 }, addestramento: 'Taumaturgo', classe: 'Custode' };
   const ok = validaScelte({ ...base, puntiAbilitaLiberi: { 'Atletica': 1, 'Potere': 2, 'Percezione': 2 } }, dati);
   assert.deepEqual(ok, []);
   const no = validaScelte({ ...base, puntiAbilitaLiberi: { 'Armi pesanti': 1, 'Potere': 2, 'Percezione': 2 } }, dati);
@@ -155,7 +155,7 @@ test('scelte inesistenti o incomplete non fanno crashare calcolaScheda', () => {
   assert.equal(s.pv, 16);
 });
 
-test('Taumaturgo: dado dei PM richiesto, incantesimi liberi 2 + Mod INT, quote di Classe', () => {
+test('Taumaturgo: PM con il dado massimizzato, incantesimi liberi 2 + Mod INT, quote di Classe', () => {
   const scelte = {
     corporazione: 'Fratellanza', // INT 5, SAG 6
     puntiCaratteristica: { INT: 2, SAG: 1, COS: 2 },
@@ -163,15 +163,30 @@ test('Taumaturgo: dado dei PM richiesto, incantesimi liberi 2 + Mod INT, quote d
     classe: 'Arcanista',
     puntiAbilitaLiberi: { 'Potere': 2, 'Occultismo': 2, 'Cultura': 1 },
   };
-  const senzaTiro = calcolaScheda(scelte, dati);
-  assert.ok(senzaTiro.errori.some((x) => x.campo === 'tiroDadoPM' && x.tipo === 'incompleto'));
-  assert.equal(senzaTiro.pm, null);
-
-  const s = calcolaScheda({ ...scelte, tiroDadoPM: { valore: 3, origine: 'app' } }, dati);
+  const s = calcolaScheda(scelte, dati);
   assert.deepEqual(s.errori, []);
-  assert.equal(s.pm, 7 + 5 + 3);
+  // decisione 6 del master: al 1° livello anche il dado dei PM è massimizzato (5 + 1d4 → 9)
+  assert.equal(s.pm, 7 + 5 + 4);
   assert.equal(s.pv, 7 + 1 + 4);
   assert.equal(s.incantesimi.liberi, 2 + 2);
   assert.deepEqual(s.incantesimi.diClasse, { Fisica: 3, Mentale: 3, Spirituale: 3 });
   assert.equal(s.incantesimi.livelloMassimo, 3);
+});
+
+test('decisione 2 del master: gli incantesimi liberi «2 + Mod INT» sono almeno 1', () => {
+  const formula = dati.regole.taumaturgo.incantesimi_liberi;
+  assert.equal(incantesimiLiberi(-4, formula), 1); // INT 1
+  assert.equal(incantesimiLiberi(-1, formula), 1); // INT 4
+  assert.equal(incantesimiLiberi(0, formula), 2);
+  assert.equal(incantesimiLiberi(3, formula), 5);
+});
+
+test('decisione 5 del master: livello massimo degli incantesimi dalla tabella per Gradi', () => {
+  const r = dati.regole;
+  assert.deepEqual([0, 1, 2, 3, 4, 5, 6].map((g) => livelloMassimoIncantesimi(g, r)), [0, 3, 8, 11, 14, 17, 18]);
+  assert.match(r.taumaturgo._nota_livello_massimo, /3 volte i Gradi/); // la nota cita la discrepanza col manuale
+  // è un dato: cambiando la tabella cambia il risultato
+  const d = structuredClone(r);
+  d.taumaturgo.livello_massimo_per_gradi[1].livello = 6;
+  assert.equal(livelloMassimoIncantesimi(2, d), 6);
 });

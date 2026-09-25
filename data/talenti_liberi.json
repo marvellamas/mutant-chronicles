@@ -1007,7 +1007,8 @@
         "incantesimi": {
           "formula": "2 + Mod INT",
           "fisso": 2,
-          "caratteristica": "INT"
+          "caratteristica": "INT",
+          "minimo": 1
         },
         "livelloMax": 3
       }
