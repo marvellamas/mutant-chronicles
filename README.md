@@ -4,6 +4,39 @@ Creatore assistito di personaggi per SIMPLY RPG, per uso interno del gruppo. Gui
 creazione al 1° livello seguendo la sequenza del §2.0 del Manuale del Giocatore, poi
 l'avanzamento fino al 20° livello (cap. 8), e produce una scheda stampabile.
 
+## Per il master: doppio clic su avvia.bat
+
+Su Windows basta un doppio clic su **`avvia.bat`**, nella cartella principale di Mutant:
+
+1. se manca Node.js, la finestra lo dice e apre <https://nodejs.org>: scarica e installa la
+   versione **LTS** con le opzioni proposte, poi fai di nuovo doppio clic su `avvia.bat`;
+2. alla prima accensione installa da solo i componenti necessari (serve internet, un minuto);
+3. apre il browser su <http://localhost:3000>. Se la pagina resta vuota, aspetta qualche
+   secondo e premi F5.
+
+Mutant resta acceso finché è aperta la finestra nera intitolata «Mutant - chiudi questa
+finestra per spegnere»: chiudendola si spegne. I personaggi restano salvati nel browser.
+Se la finestra dice che la porta 3000 è già in uso, Mutant è già acceso in un'altra finestra.
+
+## Aggiornare l'app
+
+Quando Marcello pubblica una versione nuova (regole, correzioni, funzioni):
+
+- **con Git**: nella cartella di Mutant esegui
+
+  ```bash
+  git pull
+  ```
+
+  Se il file `package.json` è cambiato, esegui anche `npm install` (oppure cancella la
+  cartella `node_modules`: `avvia.bat` la ricrea da solo).
+- **senza Git**: riscarica la cartella (su GitHub, *Code → Download ZIP*) e sostituisci la
+  vecchia. Se hai modificato i file in `data/`, copiali da parte prima e rimettili dopo.
+
+I personaggi non si perdono: stanno nel browser, non nella cartella. Per sicurezza, prima
+di aggiornare esportali con **Esporta**. Dopo l'aggiornamento ricarica la pagina (con
+`avvia.bat` basta F5; con altri server Ctrl+F5, vedi sotto).
+
 ## Avvio in locale
 
 L'app è una pagina statica: basta un qualunque server statico nella cartella del progetto.
@@ -162,5 +195,6 @@ src/ui/sali.js    schermata «Sali di livello»
 data/             regole in JSON
 tests/            node --test
 docs/             studio di fattibilità, ricognizione dell'avanzamento, risposte del master
-serve.json        intestazioni di cache per npm start
+serve.json        intestazioni di cache per npm start e avvia.bat
+avvia.bat         avvio con doppio clic su Windows
 ```

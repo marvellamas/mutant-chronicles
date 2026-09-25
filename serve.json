@@ -1,9 +1,13 @@
 {
-  "etag": true,
   "headers": [
     {
       "source": "**/*.@(js|css|json)",
-      "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
+      ]
     }
   ]
 }
