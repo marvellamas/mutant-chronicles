@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  nuoveScelte, applicaModifica, normalizza, anteprima, serializza, deserializza, FORMATO_FILE,
+  nuoveScelte, applicaModifica, normalizza, anteprima, serializza, deserializza, deserializzaPersonaggio, FORMATO_FILE,
 } from '../src/character.js';
 import { statoIncantesimi, motivoBloccoIncantesimo } from '../src/incantesimi.js';
 import { checklist } from '../src/checklist.js';
@@ -189,4 +189,17 @@ test('import: scelte grezze senza involucro sono accettate e poi normalizzate', 
   assert.equal(r.scelte.corporazione, 'Mishima');
   assert.equal(r.scelte.classe, null);
   assert.equal(r.avvisi.length, 1);
+});
+
+test('serializza con i livelli → deserializzaPersonaggio restituisce creazione e livelli', () => {
+  const livelli = [{ livello: 2, caratteristiche: { DES: 2 } }, { livello: 3, talentoLibero: { id: 'sempre-allerta' } }];
+  const testo = serializza(MISHIMA_AGENTE, { livelli });
+  const obj = JSON.parse(testo);
+  assert.equal(obj.versione, 3);
+  assert.deepEqual(obj.livelli, livelli);
+  assert.deepEqual(deserializzaPersonaggio(testo), { creazione: deserializza(testo), livelli });
+  // al 1° livello il file non ha "livelli"; i file vecchi si leggono con livelli vuoti
+  assert.equal('livelli' in JSON.parse(serializza(MISHIMA_AGENTE, { livelli: [] })), false);
+  assert.deepEqual(deserializzaPersonaggio(JSON.stringify(MISHIMA_AGENTE)).livelli, []);
+  assert.throws(() => deserializzaPersonaggio(JSON.stringify({ formato: FORMATO_FILE, versione: 3, scelte: MISHIMA_AGENTE, livelli: 'x' })), /livelli/);
 });

@@ -12,8 +12,9 @@ export function rigaAlLivello(incantesimo, livello) {
 
 /**
  * Contenuto del tooltip.
- * @param {'abilita'|'caratteristica'|'incantesimo'} tipo
- * @param {string} id nome dell'Abilità, sigla della Caratteristica, nome dell'incantesimo
+ * @param {'abilita'|'caratteristica'|'incantesimo'|'talento'|'tecnica'} tipo
+ * @param {string} id nome dell'Abilità, sigla della Caratteristica, nome dell'incantesimo,
+ *   id del Talento Libero o della Specializzazione, id della Tecnica Interiore
  * @returns {{tipo, titolo, sottotitolo, sezioni: {etichetta: string|null, testo: string}[],
  *   tabella: {colonne: string[], righe: object[]}|null, apriScheda: boolean}|null}
  */
@@ -21,7 +22,75 @@ export function contenutoTooltip(tipo, id, dati) {
   if (tipo === 'abilita') return tooltipAbilita(id, dati);
   if (tipo === 'caratteristica') return tooltipCaratteristica(id, dati);
   if (tipo === 'incantesimo') return tooltipIncantesimo(id, dati);
+  if (tipo === 'talento') return tooltipTalento(id, dati);
+  if (tipo === 'tecnica') return tooltipTecnica(id, dati);
   return null;
+}
+
+const MOLTEPLICITA = {
+  una: 'Acquisibile una sola volta',
+  per_caratteristica: 'Acquisibile una volta per ciascuna Caratteristica',
+  per_salvezza_max2: 'Acquisibile fino a due volte per ciascuna Salvezza',
+  illimitata: 'Acquisibile più volte',
+};
+
+/** Talento Libero (§8.6), Talento di magia (provvisorio) o Specializzazione (§8.8), per id. */
+function tooltipTalento(id, dati) {
+  const t = dati.talenti_liberi.talenti.find((x) => x.id === id);
+  if (t) {
+    const sezione = dati.talenti_liberi.sezioni[t.sezione]?.titolo ?? t.sezione;
+    const prerequisiti = Array.isArray(t.prerequisiti)
+      ? (t.prerequisiti.length ? t.prerequisiti.map((p) => nomeTalento(p, dati)).join(', ') : 'nessuno')
+      : 'da definire con il master';
+    const molt = t.molteplicita === 'limitata' ? `Acquisibile fino a ${t.max_acquisizioni} volte` : MOLTEPLICITA[t.molteplicita] ?? t.molteplicita;
+    const sezioni = [];
+    if (t.provvisorio) sezioni.push({ etichetta: 'Provvisorio', testo: 'ricavato dalle citazioni del Manuale della Magia: tipo e prerequisiti da definire con il master.' });
+    sezioni.push({ etichetta: 'Prerequisiti', testo: prerequisiti });
+    sezioni.push({ etichetta: null, testo: t.testo });
+    return {
+      tipo: 'talento', titolo: t.nome,
+      sottotitolo: [t.sezione.startsWith('8.') ? `§${t.sezione} ${sezione}` : sezione, eTodo(t.tipo) ? null : t.tipo === 'attivo' ? 'Attivo' : 'Passivo', molt].filter(Boolean).join(' · '),
+      sezioni, tabella: null, apriScheda: false,
+    };
+  }
+  const s = dati.specializzazioni.specializzazioni.find((x) => x.id === id);
+  if (!s) return null;
+  return {
+    tipo: 'talento', titolo: `Specializzazione in ${s.nome}`,
+    sottotitolo: `§8.8 · ${s.abilita.length ? s.abilita.join(', ') : 'Abilità indicata dalla scheda dell’arma'} · Acquisibile una sola volta`,
+    sezioni: [
+      { etichetta: 'Effetto', testo: [s.effetto.va ? `+${s.effetto.va} VA` : null, s.effetto.danno ? `+${s.effetto.danno} danno` : null,
+        s.effetto.pm ? `${s.effetto.pm} PM al costo (minimo ${s.effetto.pm_minimo})` : null].filter(Boolean).join(', ') + ' negli impieghi descritti' },
+      { etichetta: null, testo: s.ambito },
+    ],
+    tabella: null, apriScheda: false,
+  };
+}
+
+function nomeTalento(id, dati) {
+  const t = dati.talenti_liberi.talenti.find((x) => x.id === id);
+  if (t) return t.nome;
+  const s = dati.specializzazioni.specializzazioni.find((x) => x.id === id);
+  return s ? `Specializzazione in ${s.nome}` : id;
+}
+
+/** Tecnica Interiore (§8.9). */
+function tooltipTecnica(id, dati) {
+  const t = dati.tecniche_interiori.tecniche.find((x) => x.id === id);
+  if (!t) return null;
+  const gruppo = t.gruppo === 'generica' ? 'Tecnica generica' : t.gruppo === 'lottatore' ? 'Tecnica del Lottatore' : `Scuola Mishima ${t.gruppo.slice(7)}`;
+  const campo = (v) => (eTodo(v) ? 'non indicato' : v);
+  return {
+    tipo: 'tecnica', titolo: t.nome, sottotitolo: `§8.9 · ${gruppo}`,
+    sezioni: [
+      { etichetta: 'Costo', testo: campo(t.costo) },
+      { etichetta: 'Azione', testo: campo(t.azione) },
+      { etichetta: 'Bersaglio', testo: campo(t.bersaglio) },
+      { etichetta: 'Durata', testo: campo(t.durata) },
+      { etichetta: null, testo: t.testo },
+    ],
+    tabella: null, apriScheda: false,
+  };
 }
 
 function nomeCaratteristica(sigla, dati) {

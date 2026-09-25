@@ -1,15 +1,21 @@
-// Avvio dell'app: carica e valida i dati, poi mostra home o wizard.
-// Stato: un solo oggetto "scelte" per il personaggio aperto; tutto il resto si ricalcola
-// a ogni disegno con calcolaScheda / anteprima.
+// Avvio dell'app: carica e valida i dati, poi mostra home, wizard o "Sali di livello".
+// Stato: le scelte della creazione e i livelli acquisiti (cap. 8) del personaggio aperto; tutto
+// il resto si ricalcola a ogni disegno con calcolaScheda / anteprima.
 import { caricaDati } from '../rules.js';
 import { formattaErrore, trovaTodo } from '../validate.js';
-import { calcolaScheda } from '../calc.js';
-import { nuoveScelte, normalizza, applicaModifica, anteprima, serializza, deserializza } from '../character.js';
+import { calcolaScheda, validaLivello } from '../calc.js';
+import { nuoveScelte, normalizza, applicaModifica, anteprima, serializza, deserializzaPersonaggio, applicaLivello, annullaUltimoLivello } from '../character.js';
 import { h, svuota, scaricaFile, nomeFileSicuro } from './dom.js';
 import * as archivio from './storage.js';
 import { PASSI, passoVisibile, requisitoPasso } from './passi.js';
 import { inizializzaTooltip, nascondiTooltip } from './tooltip.js';
 import { renderRiepilogo } from './riepilogo.js';
+import { renderSali } from './sali.js';
+
+// Dopo la creazione si possono ancora cambiare solo i campi descrittivi: le altre scelte
+// determinano i livelli successivi (ricognizione dell'avanzamento, §8).
+const CAMPI_LIBERI_DOPO_LIVELLI = ['nome', 'concetto', 'equipaggiamento'];
+const PASSO_SCHEDA = PASSI.length - 1;
 
 const radice = document.getElementById('app');
 
@@ -18,6 +24,8 @@ const stato = {
   versioni: '',
   id: null,
   scelte: null,
+  livelli: [], // scelte dei livelli dal 2° in poi (cap. 8)
+  sali: null, // bozza del livello successivo: { voce, passo, ui }. Non si salva fino alla conferma.
   passo: 0,
   avvisi: [], // avvisi dell'ultima modifica che ha invalidato scelte a valle
   precedente: null, // scelte prima di quella modifica, per "Annulla"
@@ -43,6 +51,9 @@ async function avvia() {
   stato.avvisiDati = risultato.avvisi ?? [];
   inizializzaTooltip(stato.dati);
   window.addEventListener('hashchange', daIndirizzo);
+  window.addEventListener('beforeunload', (e) => {
+    if (bozzaModificata()) e.preventDefault();
+  });
   daIndirizzo();
 }
 
@@ -79,11 +90,30 @@ function vai(indirizzo) {
   else location.hash = indirizzo;
 }
 
+const bozzaModificata = () => !!stato.sali && Object.keys(stato.sali.voce).length > 0;
+const MSG_USCITA = 'Uscire da «Sali di livello»? Le scelte di questo livello non sono salvate e andranno perse.';
+let hashDaIgnorare = null;
+
 function daIndirizzo() {
-  const m = location.hash.match(/^#\/p\/([\w-]+)\/(\d+)$/);
+  if (hashDaIgnorare !== null && location.hash === hashDaIgnorare) {
+    hashDaIgnorare = null;
+    return;
+  }
+  const sali = location.hash.match(/^#\/p\/([\w-]+)\/sali\/(\d+)$/);
+  // Uscire dalla bozza del livello (tasto Indietro, link, indirizzo) chiede conferma.
+  if (stato.sali && !(sali && sali[1] === stato.id)) {
+    if (bozzaModificata() && !confirm(MSG_USCITA)) {
+      hashDaIgnorare = `#/p/${stato.id}/sali/${stato.sali.passo}`;
+      location.hash = hashDaIgnorare;
+      return;
+    }
+    stato.sali = null;
+  }
+  const m = sali ?? location.hash.match(/^#\/p\/([\w-]+)\/(\d+)$/);
   if (!m) {
     stato.id = null;
     stato.scelte = null;
+    stato.livelli = [];
     return renderHome();
   }
   const [, id, passoTesto] = m;
@@ -97,12 +127,14 @@ function daIndirizzo() {
     const { scelte, avvisi } = normalizza(salvato.scelte, stato.dati);
     stato.id = id;
     stato.scelte = scelte;
+    stato.livelli = Array.isArray(salvato.livelli) ? salvato.livelli : [];
     stato.avvisi = avvisi.length ? ['Il personaggio salvato non era più coerente con i dati attuali:', ...avvisi] : [];
     stato.precedente = null;
     stato.ui.aperti.clear();
     stato.ui.tiroPE = null;
     if (avvisi.length) persisti();
   }
+  if (sali) return apriSali(Number(passoTesto));
   const passo = Math.min(Number(passoTesto), PASSI.length - 1);
   // Gli avvisi riguardano l'ultima modifica: cambiando passo non servono più.
   if (!appenaCaricato && passo !== stato.passo) {
@@ -117,25 +149,30 @@ function daIndirizzo() {
 
 const vaiAlPasso = (i) => vai(`#/p/${stato.id}/${i}`);
 
+const personaggio = () => ({ creazione: stato.scelte, livelli: stato.livelli });
+
 // ---------------------------------------------------------------------------
 // Persistenza
 
 function persisti() {
   if (!stato.id) return;
-  stato.salvataggioOk = archivio.salva({ id: stato.id, scelte: stato.scelte, passo: stato.passo });
+  stato.salvataggioOk = archivio.salva({ id: stato.id, scelte: stato.scelte, livelli: stato.livelli, passo: stato.passo });
 }
 
-function esporta(scelte) {
+function esporta(scelte, livelli = []) {
   const versioniDatiFile = Object.fromEntries(Object.entries(stato.dati).map(([k, v]) => [k, v.versione_manuale]));
-  scaricaFile(nomeFileSicuro(scelte.nome), serializza(scelte, { versioniDati: versioniDatiFile }));
+  scaricaFile(nomeFileSicuro(scelte.nome), serializza(scelte, { versioniDati: versioniDatiFile, livelli }));
 }
 
 async function importa(file) {
   try {
-    const grezze = deserializza(await file.text());
-    const { scelte, avvisi } = normalizza(grezze, stato.dati);
+    const { creazione, livelli } = deserializzaPersonaggio(await file.text());
+    const { scelte, avvisi } = normalizza(creazione, stato.dati);
     const id = archivio.nuovoId();
-    if (!archivio.salva({ id, scelte, passo: 0 })) throw new Error('Impossibile salvare nel browser (spazio o permessi).');
+    // I livelli non si correggono in automatico: eventuali errori compaiono nella scheda.
+    const errLivelli = livelli.length ? calcolaScheda({ creazione: scelte, livelli }, stato.dati).errori.filter((e) => e.campo.startsWith('livelli')) : [];
+    if (errLivelli.length) avvisi.push(`Livelli con errori rispetto ai dati attuali: ${errLivelli[0].problema}`);
+    if (!archivio.salva({ id, scelte, livelli, passo: livelli.length ? PASSO_SCHEDA : 0 })) throw new Error('Impossibile salvare nel browser (spazio o permessi).');
     stato.messaggioHome = {
       tipo: avvisi.length ? 'attenzione' : 'ok',
       testo: `Importato «${scelte.nome || file.name}».`,
@@ -184,15 +221,16 @@ function renderHome() {
 
 function rigaPersonaggio(p) {
   const s = p.scelte ?? {};
+  const livelli = Array.isArray(p.livelli) ? p.livelli : [];
   const data = p.aggiornato ? new Date(p.aggiornato).toLocaleString('it-IT', { dateStyle: 'short', timeStyle: 'short' }) : '';
   return h('li', { class: 'carta personaggio' },
     h('div', {},
       h('h2', {}, s.nome?.trim() || 'Senza nome'),
-      h('p', {}, [s.corporazione, s.addestramento, s.classe].filter(Boolean).join(' · ') || 'Appena iniziato'),
+      h('p', {}, h('strong', {}, `Livello ${1 + livelli.length}`), ' · ', [s.corporazione, s.addestramento, s.classe].filter(Boolean).join(' · ') || 'Appena iniziato'),
       h('p', { class: 'nota' }, `Modificato ${data}`)),
     h('div', { class: 'riga-azioni' },
       h('button', { type: 'button', class: 'btn primario', onclick: () => vai(`#/p/${p.id}/${p.passo ?? 0}`) }, 'Apri'),
-      h('button', { type: 'button', class: 'btn', onclick: () => esporta(normalizza(s, stato.dati).scelte) }, 'Esporta'),
+      h('button', { type: 'button', class: 'btn', onclick: () => esporta(normalizza(s, stato.dati).scelte, livelli) }, 'Esporta'),
       h('button', { type: 'button', class: 'btn pericolo', onclick: () => {
         if (confirm(`Eliminare «${s.nome?.trim() || 'Senza nome'}» da questo browser? L’operazione non si annulla (esporta prima il file se vuoi conservarlo).`)) {
           archivio.elimina(p.id);
@@ -215,15 +253,23 @@ function nuovoPersonaggio() {
 
 function contesto() {
   const { dati, scelte } = stato;
+  const scheda = calcolaScheda(scelte, dati);
+  const schedaPersonaggio = calcolaScheda(personaggio(), dati);
   const ctx = {
     dati,
     scelte,
-    scheda: calcolaScheda(scelte, dati),
+    scheda,
+    schedaPersonaggio,
+    livelli: stato.livelli,
+    motivoNoSalita: !scheda.completa ? 'Completa la creazione (passi precedenti) prima di salire di livello.'
+      : schedaPersonaggio.errori.length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
+    saliDiLivello,
+    annullaUltimoLivello: annullaLivello,
     ante: anteprima(scelte, dati),
     ui: stato.ui,
     versioni: stato.versioni,
     aggiorna,
-    esporta: () => esporta(stato.scelte),
+    esporta: () => esporta(stato.scelte, stato.livelli),
     ridisegnaRiepilogo,
   };
   return ctx;
@@ -231,6 +277,13 @@ function contesto() {
 
 /** Applica una modifica alle scelte, invalida ciò che non torna più a valle e salva. */
 function aggiorna(modifica, { ridisegna = true } = {}) {
+  // Con livelli acquisiti la creazione è bloccata: cambiarla renderebbe incoerenti i livelli.
+  const bloccati = Object.keys(modifica).filter((k) => !CAMPI_LIBERI_DOPO_LIVELLI.includes(k));
+  if (stato.livelli.length && bloccati.length) {
+    stato.avvisi = [`La creazione è bloccata perché il personaggio è al ${1 + stato.livelli.length}° livello. Per cambiarla annulla prima i livelli dalla scheda finale.`];
+    stato.precedente = null;
+    return renderWizard();
+  }
   const prima = stato.scelte;
   const { scelte, avvisi } = applicaModifica(prima, modifica, stato.dati);
   stato.scelte = scelte;
@@ -306,6 +359,8 @@ function renderWizard() {
           h('p', { class: 'sopratitolo' }, `Passo ${pos} di ${visibili.length - 1} · ${passo.rif}`),
           h('h1', { id: 'titolo-passo' }, passo.titolo)),
         stato.salvataggioOk ? null : h('p', { class: 'riquadro attenzione' }, 'Il browser non permette il salvataggio automatico: usa Esporta per non perdere il personaggio.'),
+        stato.livelli.length && stato.passo !== PASSO_SCHEDA ? h('p', { class: 'riquadro attenzione no-stampa' },
+          `Personaggio al ${1 + stato.livelli.length}° livello: la creazione si può consultare ma non modificare (tranne nome, background ed equipaggiamento). Per cambiarla annulla i livelli dalla scheda finale.`) : null,
         avvisi,
         corpo,
         h('footer', { class: 'passo-piede no-stampa' },
@@ -325,4 +380,65 @@ function renderWizard() {
     const n = nav.getBoundingClientRect();
     nav.scrollLeft += a.left + a.width / 2 - (n.left + n.width / 2);
   }
+}
+
+// ---------------------------------------------------------------------------
+// Sali di livello (cap. 8): bozza in memoria, salvata solo con "Conferma"
+
+function saliDiLivello() {
+  stato.sali = { voce: {}, passo: 0, ui: { aperti: new Set(), filtroTalenti: null } };
+  vai(`#/p/${stato.id}/sali/0`);
+}
+
+function annullaLivello() {
+  const n = 1 + stato.livelli.length;
+  if (!stato.livelli.length || !confirm(`Annullare il ${n}° livello? Le sue scelte andranno perse (si torna al ${n - 1}° livello).`)) return;
+  stato.livelli = annullaUltimoLivello(personaggio()).livelli;
+  persisti();
+  renderWizard();
+}
+
+function apriSali(passo) {
+  if (!stato.sali) stato.sali = { voce: {}, passo: 0, ui: { aperti: new Set(), filtroTalenti: null } };
+  stato.sali.passo = passo;
+  renderSaliPagina();
+  window.scrollTo(0, 0);
+}
+
+function renderSaliPagina() {
+  nascondiTooltip();
+  const { dati } = stato;
+  const bozza = stato.sali;
+  document.title = `${stato.scelte.nome.trim() || 'Personaggio'} — Sali al livello ${2 + stato.livelli.length} · Mutant`;
+  svuota(radice, ...renderSali({
+    dati,
+    personaggio: personaggio(),
+    voce: bozza.voce,
+    passo: bozza.passo,
+    ui: bozza.ui,
+    aggiornaVoce(modifica) {
+      const voce = { ...bozza.voce, ...modifica };
+      // le chiavi vuote si tolgono: il motore rifiuta le scelte non previste dal livello
+      for (const [k, v] of Object.entries(voce)) {
+        if (v === undefined || v === null || (typeof v === 'object' && !Array.isArray(v) && !Object.keys(v).length) || (Array.isArray(v) && !v.length)) delete voce[k];
+      }
+      bozza.voce = voce;
+      renderSaliPagina();
+    },
+    vaiPasso: (i) => vai(`#/p/${stato.id}/sali/${i}`),
+    conferma() {
+      if (validaLivello(personaggio(), bozza.voce, dati).length) return renderSaliPagina();
+      stato.livelli = applicaLivello(personaggio(), bozza.voce).livelli;
+      stato.sali = null;
+      stato.passo = PASSO_SCHEDA;
+      persisti();
+      if (!stato.salvataggioOk) alert('Livello aggiunto, ma il browser non permette il salvataggio: usa Esporta per non perderlo.');
+      vai(`#/p/${stato.id}/${PASSO_SCHEDA}`);
+    },
+    esci() {
+      if (bozzaModificata() && !confirm(MSG_USCITA)) return;
+      stato.sali = null;
+      vai(`#/p/${stato.id}/${PASSO_SCHEDA}`);
+    },
+  }));
 }

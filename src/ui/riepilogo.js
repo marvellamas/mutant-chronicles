@@ -24,6 +24,7 @@ export function renderRiepilogo(ctx) {
     h('div', { class: 'riepilogo-corpo' },
       h('h2', {}, scelte.nome.trim() || 'Nuovo personaggio'),
       h('p', { class: 'identita' }, [scelte.corporazione, scelte.addestramento, scelte.classe].map((x) => x ?? '…').join(' · ')),
+      ctx.livelli?.length ? h('p', { class: 'nota' }, `Valori della creazione (1° livello). Il personaggio è al ${1 + ctx.livelli.length}° livello: vedi la scheda finale.`) : null,
 
       h('h3', {}, 'Da spendere'),
       h('ul', { class: 'da-spendere' },

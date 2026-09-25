@@ -1,8 +1,8 @@
 # Mutant
 
 Creatore assistito di personaggi per SIMPLY RPG, per uso interno del gruppo. Guida la
-creazione al 1° livello seguendo la sequenza del §2.0 del Manuale del Giocatore e produce
-una scheda stampabile.
+creazione al 1° livello seguendo la sequenza del §2.0 del Manuale del Giocatore, poi
+l'avanzamento fino al 20° livello (cap. 8), e produce una scheda stampabile.
 
 ## Avvio in locale
 
@@ -55,7 +55,8 @@ Serve Node 20 o successivo, senza dipendenze. I test coprono il motore di calcol
 validatore, gli esempi numerici del manuale, l'invalidazione delle scelte, la
 serializzazione, il contenuto dei tooltip (`src/descrizioni.js`) e l'avanzamento di
 livello (un Agente portato dal 1° al 20°, multiclasse, incompatibilità fra magia e Risorse
-Interiori). L'interfaccia non ha test automatici.
+Interiori, i passi di «Sali di livello» generati dagli eventi). Il DOM dell'interfaccia non
+ha test automatici.
 
 ## Modificare le regole (per Davide)
 
@@ -101,8 +102,17 @@ colonna è sempre il Livello.
 
 ### Avanzamento di livello
 
-Il motore dell'avanzamento (cap. 8) è pronto, l'interfaccia arriverà in seguito. Un
-personaggio è `{ "creazione": {…scelte…}, "livelli": [ {"livello": 2, …}, … ] }`: la scheda si
+Dalla scheda finale, «Sali al livello N+1» apre una sequenza di passi generata dagli
+eventi del livello: Caratteristiche, Talento Libero (o Specializzazione), Grado di Classe con
+i tiri di PV e PM, Tecniche Interiori e Incantesimi quando le scelte li concedono, Punti
+Abilità, riepilogo. Nulla si salva fino a «Conferma»; uscire prima chiede conferma. La
+scheda mostra la Progressione (una riga per livello, anche in stampa) e «Annulla l'ultimo
+livello». Con dei livelli acquisiti la creazione resta consultabile ma bloccata, tranne
+nome, background ed equipaggiamento. La home mostra il livello di ogni personaggio. Il file
+esportato (formato 3) contiene anche i livelli; i file dei formati 1 e 2 si importano come
+personaggi al 1° livello.
+
+Un personaggio è `{ "creazione": {…scelte…}, "livelli": [ {"livello": 2, …}, … ] }`: la scheda si
 ricalcola rigiocando la creazione e i livelli dall'inizio, con i limiti di ciascun livello.
 Cosa succede a ogni livello sta in `regole.json` → `avanzamento.eventi` (tabella del §8.1):
 cambiando la tabella cambiano gli eventi. Si sale un livello alla volta e si può annullare
@@ -120,8 +130,6 @@ segnala.
 I dubbi sul manuale sono marcati `TODO(Davide)` nei dati. La home li elenca tutti (sezione
 «Dati delle regole»). Oggi sono:
 
-- `classi.json`, Esploratore: a quale Specializzazione appartengono i 5 Talenti a scelta.
-- `regole.json` → `taumaturgo`: le quattro domande sugli incantesimi al 1° livello.
 - `caratteristiche.json`: la descrizione delle sei Caratteristiche (il manuale non le descrive).
 - `talenti_liberi.json`: i 12 Talenti di magia (`"provvisorio": true`) citati nel Manuale della
   Magia senza scheda, con tipo e prerequisiti da definire; il tipo (passivo o attivo) di
@@ -131,12 +139,9 @@ I dubbi sul manuale sono marcati `TODO(Davide)` nei dati. La home li elenca tutt
 - Potenziale Mistico Migliorato: il motore lo applica solo al limite di Usufruitore di Magia
   (`src/avanzamento.js`).
 
-Finché non c'è risposta, per gli incantesimi l'app applica l'ipotesi più permissiva e lo
-dice nel passo Incantesimi (`src/incantesimi.js`):
-
-- la quota di Classe di una macrofamiglia vale per una qualunque delle sue tre specializzazioni;
-- gli incantesimi liberi (2 + Mod INT, minimo 0) valgono per qualunque macrofamiglia;
-- sono ammessi gli incantesimi con livello base fino a 3 × Gradi taumaturgici.
+Le risposte del master già date (Esploratore, incantesimi, dado dei PM al 1° livello) sono
+in `docs/risposte-master.md`, con la data: in caso di conflitto con i manuali valgono
+quelle.
 
 ## Struttura
 
@@ -153,8 +158,9 @@ src/descrizioni.js  contenuto dei tooltip e della scheda completa degli incantes
 src/tiri.js       tiri di dado { valore, origine }: formula, intervallo, migrazione
 src/avanzamento.js  personaggio a livelli: ricalcolo, validazione di un livello, prossimo livello
 src/ui/           interfaccia (wizard, riepilogo, scheda, home, tooltip, tiro di dado)
+src/ui/sali.js    schermata «Sali di livello»
 data/             regole in JSON
 tests/            node --test
-docs/             studio di fattibilità, ricognizione dell'avanzamento
+docs/             studio di fattibilità, ricognizione dell'avanzamento, risposte del master
 serve.json        intestazioni di cache per npm start
 ```

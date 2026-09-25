@@ -15,7 +15,8 @@ export {
 
 export const FORMATO_FILE = 'mutant-personaggio';
 // 2: i tiri di dado sono { valore, origine } (src/tiri.js); i file della versione 1 si migrano.
-export const VERSIONE_FORMATO = 2;
+// 3: il file può contenere i livelli successivi al 1° ("livelli"); senza, è un personaggio al 1°.
+export const VERSIONE_FORMATO = 3;
 
 /** Scelte di un personaggio nuovo. È l'unico stato che si salva. */
 export function nuoveScelte() {
@@ -263,15 +264,28 @@ export function anteprima(scelte, dati) {
 }
 
 // ---------------------------------------------------------------------------
-// Serializzazione: il file contiene solo le scelte.
+// Serializzazione: il file contiene solo le scelte (creazione e livelli), mai valori calcolati.
 
-export function serializza(scelte, { versioniDati } = {}) {
+export function serializza(scelte, { versioniDati, livelli } = {}) {
   const pulite = {};
   for (const k of CAMPI) pulite[k] = scelte?.[k] ?? nuoveScelte()[k];
   const file = { formato: FORMATO_FILE, versione: VERSIONE_FORMATO };
   if (versioniDati) file.versioni_dati = versioniDati;
   file.scelte = pulite;
+  if (Array.isArray(livelli) && livelli.length) file.livelli = livelli;
   return JSON.stringify(file, null, 2);
+}
+
+/**
+ * Legge un file esportato con i livelli: { creazione, livelli }. I file senza livelli (formati
+ * 1 e 2, o personaggi al 1° livello) danno livelli: []. La creazione va poi normalizzata.
+ */
+export function deserializzaPersonaggio(testo) {
+  const creazione = deserializza(testo);
+  const obj = JSON.parse(testo);
+  const livelli = obj?.formato === FORMATO_FILE && obj.livelli !== undefined ? obj.livelli : [];
+  if (!Array.isArray(livelli) || !livelli.every(isOggetto)) throw new Error('I livelli del personaggio nel file non sono validi.');
+  return { creazione, livelli };
 }
 
 /**

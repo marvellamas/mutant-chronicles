@@ -4,6 +4,7 @@ import { calcolaScheda, validaLivello } from '../src/calc.js';
 import {
   migraPersonaggio, livelloAttuale, prossimoLivello, applicaLivello, annullaUltimoLivello,
 } from '../src/character.js';
+import { passiDelLivello, descriviVoce, progressione } from '../src/avanzamento.js';
 import { datiReali, copia } from './helpers.js';
 import { MISHIMA_AGENTE, ARCANISTA, LIVELLI_AGENTE, tiro } from './personaggi.js';
 
@@ -188,7 +189,7 @@ const MULTI = [
   { livello: 16, grado: { classe: 'Soldato' }, tiroPV: tiro(4), talentoClasse: 'Supporto d’Attacco', puntiAbilita: { 'Armi medie': 3, 'Difese': 2 } },
   { livello: 17, talentoLibero: { id: 'autosufficiente' } },
   { livello: 18, caratteristiche: { FOR: 2 } },
-  { livello: 19, talentoLibero: { id: 'poliglotta' } },
+  { livello: 19, talentoLibero: { id: 'poliglotta', annotazione: 'Imperiale, Venusiano' } },
 ];
 
 test('multiclasse: al 4° una nuova Classe di un altro Addestramento, al 20° la quarta è rifiutata', () => {
@@ -378,4 +379,95 @@ test('decisione 5 del master: al Grado II di Arcanista il livello massimo è 8, 
   // alla creazione PM con il dado massimizzato: 7 SAG + 5 + 4; al Grado II il dado si tira (3)
   assert.equal(calcolaScheda(fino(ARCANISTA, [], 0), dati).pm, 16);
   assert.equal(s.pm, 16 + 5 + 3);
+});
+
+// --- passi dell'interfaccia "Sali di livello" (senza DOM) -------------------------------------
+
+const idPassi = (x) => x.passi.map((p) => p.id);
+
+test('passiDelLivello: un passo per evento di regole.json, gli eventi automatici come informazioni', () => {
+  const l2 = passiDelLivello(agente(1), {}, dati);
+  assert.equal(l2.livello, 2);
+  assert.deepEqual(idPassi(l2), ['caratteristiche', 'riepilogo']);
+  assert.equal(l2.passi[0].punti, 2);
+  assert.deepEqual(l2.informazioni, []);
+
+  const l3 = passiDelLivello(agente(2), {}, dati);
+  assert.deepEqual(idPassi(l3), ['talento', 'riepilogo']);
+  assert.equal(l3.informazioni.length, 1);
+  assert.match(l3.informazioni[0], /\+1 a tutte le Prove Salvezza/);
+
+  const l4 = passiDelLivello(agente(3), {}, dati);
+  assert.deepEqual(idPassi(l4), ['grado', 'abilita', 'riepilogo']);
+  assert.equal(l4.passi.find((p) => p.id === 'abilita').punti, 5);
+
+  const l12 = passiDelLivello(agente(11), {}, dati);
+  assert.deepEqual(idPassi(l12), ['grado', 'abilita', 'riepilogo']);
+  assert.match(l12.informazioni.join('\n'), /Azioni Principali per Round: 2/);
+
+  // al 20° livello non si sale più
+  assert.equal(passiDelLivello(agente(20), {}, dati), null);
+});
+
+test('passiDelLivello: il passo Tecniche Interiori compare quando il Talento le concede', () => {
+  const senza = passiDelLivello(agente(2), { talentoLibero: { id: 'sempre-allerta' } }, dati);
+  assert.deepEqual(idPassi(senza), ['talento', 'riepilogo']);
+  const con = passiDelLivello(agente(2), { talentoLibero: { id: 'risorse-interiori' } }, dati);
+  assert.deepEqual(idPassi(con), ['talento', 'tecniche', 'riepilogo']);
+});
+
+test('passiDelLivello: il passo Incantesimi compare con un Grado taumaturgico o con INT che sale', () => {
+  const arcanista3 = { versione: 2, creazione: ARCANISTA, livelli: [
+    { livello: 2, caratteristiche: { COS: 1, DES: 1 } }, { livello: 3, talentoLibero: { id: 'sempre-allerta' } },
+  ] };
+  assert.deepEqual(idPassi(passiDelLivello(arcanista3, {}, dati)), ['grado', 'abilita', 'riepilogo']);
+  assert.deepEqual(idPassi(passiDelLivello(arcanista3, { grado: { classe: 'Arcanista' } }, dati)), ['grado', 'incantesimi', 'abilita', 'riepilogo']);
+  // un Grado non taumaturgico non aggiunge incantesimi
+  assert.deepEqual(idPassi(passiDelLivello(arcanista3, { grado: { classe: 'Agente' } }, dati)), ['grado', 'abilita', 'riepilogo']);
+  // al 2° livello: +2 INT alza il Mod e quindi gli incantesimi liberi dell'Addestramento (2 + Mod INT)
+  const arcanista1 = { versione: 2, creazione: ARCANISTA, livelli: [] };
+  assert.deepEqual(idPassi(passiDelLivello(arcanista1, { caratteristiche: { COS: 2 } }, dati)), ['caratteristiche', 'riepilogo']);
+  assert.deepEqual(idPassi(passiDelLivello(arcanista1, { caratteristiche: { INT: 2 } }, dati)), ['caratteristiche', 'incantesimi', 'riepilogo']);
+});
+
+test('descriviVoce e progressione: una riga leggibile per scelta e per livello', () => {
+  assert.deepEqual(descriviVoce(voce(2), dati), ['Caratteristiche: DES +2']);
+  const r5 = descriviVoce(voce(5), dati);
+  assert.equal(r5.length, 1);
+  assert.match(r5[0], /^Talento Libero: .+ \(Tempra\)$/);
+  const r4 = descriviVoce(voce(4), dati, { Agente: 1 });
+  assert.match(r4[0], /^Grado: Agente II — Talento a scelta Reazione Operativa; PV 1d6 = 4/);
+  assert.equal(r4[1], 'Punti Abilità: Medicina +3, Sopravvivenza +2');
+
+  const pr = progressione(agente(4), dati);
+  assert.deepEqual(pr.map((x) => x.livello), [1, 2, 3, 4]);
+  assert.equal(pr[0].righe[0], 'Creazione: Mishima · Avventuriero · Agente I');
+  assert.ok(pr[2].righe.includes('Prove Salvezza +1'));
+  assert.match(pr[3].righe[0], /Agente II/);
+  assert.deepEqual(calcolaScheda(agente(4), dati).progressione, pr);
+});
+
+test('Talento con annotazione (Sport): obbligatoria, ma il Talento resta acquisibile nell’elenco', () => {
+  const senza = validaLivello(agente(2), { talentoLibero: { id: 'sport' } }, dati);
+  assert.ok(senza.some((e) => e.campo === 'talentoLibero' && e.tipo === 'incompleto' && /Sport: indica/.test(e.problema)));
+  assert.deepEqual(validaLivello(agente(2), { talentoLibero: { id: 'sport', annotazione: 'Scherma' } }, dati), []);
+  const candidato = prossimoLivello(agente(2), dati).talentiLiberi.find((t) => t.id === 'sport');
+  assert.equal(candidato.ammesso, true);
+  const s = calcolaScheda(applicaLivello(agente(2), { talentoLibero: { id: 'sport', annotazione: 'Scherma' } }), dati);
+  assert.equal(s.talentiLiberi.find((t) => t.id === 'sport').annotazione, 'Scherma');
+});
+
+test('Scuole Mishima: Tecniche solo con l’iniziazione dichiarata, una sola Scuola', () => {
+  const base = { talentoLibero: { id: 'risorse-interiori' } };
+  const tecnicheLuna = ['meditazione-profonda', 'imposizione-della-mano-curativa', 'passo-dell-ombra', 'corsa-di-nomura'];
+  const conScuola = { ...base, scuolaMishima: 'Luna', tecniche: tecnicheLuna };
+  assert.deepEqual(validaLivello(agente(2), conScuola, dati), []);
+  assert.ok(validaLivello(agente(2), { ...base, tecniche: tecnicheLuna }, dati).some((e) => /iniziazione/.test(e.problema)));
+  const altraScuola = { ...conScuola, tecniche: [...tecnicheLuna.slice(0, 3), 'colpo-del-cobra'] };
+  assert.ok(violazioni(validaLivello(agente(2), altraScuola, dati)).some((e) => /iniziazione/.test(e.problema)));
+  const s = calcolaScheda(applicaLivello(agente(2), conScuola), dati);
+  assert.deepEqual(s.scuolaMishima, { nome: 'Luna', livello: 3 });
+  assert.equal(s.tecniche.length, 4);
+  assert.ok(s.annotazioni.some((a) => /Iniziato alla Scuola Luna/.test(a)));
+  assert.ok(validaLivello(agente(2), { ...conScuola, scuolaMishima: 'Inesistente' }, dati).length > 0);
 });

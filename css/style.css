@@ -520,3 +520,52 @@ dl.voci.in-linea dt::after { content: ":"; }
 .tiro-valore strong { font-size: 1.25rem; }
 .origine-manuale { background: var(--attenzione-tenue); color: var(--attenzione); }
 .background h3 { margin: 0.6rem 0 0.1rem; font-size: 0.95rem; }
+
+/* ---------------------------------------------------------------- avanzamento di livello (src/ui/sali.js, cap. 8) */
+
+.sali .passo { max-width: 60rem; }
+.filtri { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; margin: 1rem 0 0.5rem; }
+.filtri select, .filtri input[type="search"], .riquadro select, .riquadro input[type="text"] {
+  font: inherit;
+  padding: 0.4rem 0.55rem;
+  border: 1px solid var(--bordo);
+  border-radius: var(--raggio);
+  background: var(--superficie);
+  color: var(--testo);
+  max-width: 100%;
+}
+.filtri input[type="search"] { width: 14rem; }
+.riquadro input[type="text"] { width: 18rem; }
+.elenco-talenti { list-style: none; padding: 0; margin: 0.5rem 0; display: grid; gap: 0.35rem; }
+.voce-talento {
+  display: flex; justify-content: space-between; align-items: center; gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--bordo);
+  border-radius: var(--raggio);
+  background: var(--superficie);
+}
+.voce-talento > div { min-width: 0; }
+.voce-talento .motivo { display: block; }
+.voce-talento.bloccato { opacity: 0.75; }
+.voce-talento.selezionata { border-color: var(--ok); box-shadow: 0 0 0 2px var(--ok-tenue); }
+.voce-talento details { margin: 0; }
+.confronto td, .confronto th { text-align: left; }
+.tabella tr.evidenziata th { background: var(--accento-tenue); }
+.riquadro.avanzamento h3 { margin-top: 0; }
+
+/* scheda: classi, note e progressione */
+.annotazioni ul { margin: 0.25rem 0; padding-left: 1.2rem; }
+.classe-scheda { margin-bottom: 0.75rem; }
+.progressione { margin-top: 1.25rem; }
+.righe-livello { margin: 0; padding-left: 1.1rem; }
+.righe-livello li { margin: 0.1rem 0; }
+
+@media (max-width: 600px) {
+  .voce-talento { flex-direction: column; align-items: stretch; }
+  .filtri input[type="search"], .riquadro input[type="text"] { width: 100%; }
+}
+
+@media print {
+  .progressione { break-before: auto; }
+  .progressione tr { break-inside: avoid; }
+}

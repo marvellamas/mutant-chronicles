@@ -87,24 +87,24 @@ export const requisitoPasso = (i, ctx) => PASSI[i].requisito?.(ctx) ?? null;
 // componenti comuni
 
 /** <details> che ricorda se era aperto fra un ridisegno e l'altro. */
-function dettagli(ctx, chiave, sommario, ...contenuto) {
+export function dettagli(ctx, chiave, sommario, ...contenuto) {
   const d = h('details', { open: ctx.ui.aperti.has(chiave) }, h('summary', {}, sommario), ...contenuto);
   d.addEventListener('toggle', () => (d.open ? ctx.ui.aperti.add(chiave) : ctx.ui.aperti.delete(chiave)));
   return d;
 }
 
-function bottoneScelta(selezionato, onclick, etichetta = 'Scegli') {
+export function bottoneScelta(selezionato, onclick, etichetta = 'Scegli') {
   return selezionato
     ? h('button', { type: 'button', class: 'btn scelto', disabled: true, 'aria-pressed': 'true' }, 'Scelta ✓')
     : h('button', { type: 'button', class: 'btn primario', onclick }, etichetta);
 }
 
-function bonusSalvezze(ctx, obj) {
+export function bonusSalvezze(ctx, obj) {
   const v = ctx.dati.caratteristiche.salvezze.filter((s) => obj[s.id]).map((s) => `+${obj[s.id]} ${s.nome}`);
   return v.length ? v.join(', ') : 'nessuno';
 }
 
-function carta(selezionata, ...figli) {
+export function carta(selezionata, ...figli) {
   return h('article', { class: `carta${selezionata ? ' selezionata' : ''}` }, ...figli);
 }
 
@@ -117,13 +117,13 @@ function vietato(ctx, proposta, campi) {
     .find((x) => x.tipo === 'violazione' && campi.includes(x.campo)) ?? null;
 }
 
-function contatore(rimasti, totale, etichetta) {
+export function contatore(rimasti, totale, etichetta) {
   const classe = rimasti === 0 ? 'ok' : rimasti < 0 ? 'errore' : 'attenzione';
   return h('p', { class: `contatore ${classe}`, role: 'status' },
     h('strong', {}, String(rimasti)), ` ${etichetta} da spendere su ${totale}`);
 }
 
-function stepper(valore, { meno, piu, motivoMeno, motivoPiu, etichetta }) {
+export function stepper(valore, { meno, piu, motivoMeno, motivoPiu, etichetta }) {
   return h('span', { class: 'stepper' },
     h('button', { type: 'button', class: 'btn tondo', onclick: meno, disabled: !!motivoMeno, title: motivoMeno ?? `Togli un punto a ${etichetta}`, 'aria-label': `Togli un punto a ${etichetta}` }, '−'),
     h('output', { class: 'valore-stepper' }, String(valore)),
@@ -150,7 +150,7 @@ function passoBackground(ctx) {
 // ---------------------------------------------------------------------------
 // 1 Corporazione
 
-function tabellaValori(ctx, valori) {
+export function tabellaValori(ctx, valori) {
   const sigle = ctx.dati.caratteristiche.caratteristiche.map((c) => c.sigla);
   return h('dl', { class: 'valori' }, sigle.map((s) => h('div', {}, h('dt', {}, info('caratteristica', s)), h('dd', {}, String(valori[s])))));
 }

@@ -135,6 +135,7 @@ function statoCreazione(creazione, dati) {
       tecniche: [],
       incantesimi: [...(creazione.incantesimi ?? [])],
       persi: [],
+      scuola: null, // { nome, livello }: iniziazione dichiarata con la spunta (§8.9.3)
     },
   };
 }
@@ -280,7 +281,10 @@ function applicaVoce(prima, voce, dati) {
 
   // §8.6: Talento Libero
   if (isOggetto(v.talentoLibero) && talentoLiberoDef(v.talentoLibero.id, dati)) {
-    stato.talentiLiberi.push({ id: v.talentoLibero.id, parametro: v.talentoLibero.parametro ?? null, livello: n });
+    stato.talentiLiberi.push({
+      id: v.talentoLibero.id, parametro: v.talentoLibero.parametro ?? null, livello: n,
+      ...(typeof v.talentoLibero.annotazione === 'string' && v.talentoLibero.annotazione.trim() ? { annotazione: v.talentoLibero.annotazione.trim() } : {}),
+    });
     aggiungiDotazione(stato, v.talentoLibero.id, n, 'libero', dati);
   }
 
@@ -289,6 +293,7 @@ function applicaVoce(prima, voce, dati) {
     if (a in stato.abil && Number.isInteger(p) && p > 0) stato.abil[a].liberi += p;
   }
 
+  if (typeof v.scuolaMishima === 'string' && v.scuolaMishima && !stato.scuola) stato.scuola = { nome: v.scuolaMishima, livello: n };
   for (const i of Array.isArray(v.incantesimi) ? v.incantesimi : []) if (!stato.incantesimi.includes(i)) stato.incantesimi.push(i);
   for (const t of Array.isArray(v.tecniche) ? v.tecniche : []) if (!stato.tecniche.some((x) => x.id === t)) stato.tecniche.push({ id: t, livello: n });
   return stato;
@@ -336,6 +341,8 @@ export function controllaTalentoLibero(stato, scelta, dati) {
     err(`${nome} non richiede un parametro`);
   }
   if (def.molteplicita === 'una' && possiede(stato, def.id)) err(`${nome} è già posseduto: si acquisisce una sola volta`);
+  // Sport, Poliglotta: la scelta (disciplina, lingue) si annota come testo
+  if (def.annotazione && !(typeof scelta.annotazione === 'string' && scelta.annotazione.trim())) err(`${nome}: indica ${def.annotazione}`, 'incompleto');
   if (def.molteplicita === 'limitata' && presi.length >= def.max_acquisizioni) err(`${nome}: al massimo ${def.max_acquisizioni} acquisizioni`);
 
   // prerequisiti (i Talenti provvisori hanno prerequisiti ancora da definire)
@@ -371,7 +378,7 @@ function controllaVoce(prima, voce, dati) {
   const conGrado = eventi.includes('grado_classe');
   const conTalento = eventi.includes('talento_libero');
 
-  const ammesse = new Set(['livello', 'incantesimi', 'tecniche']);
+  const ammesse = new Set(['livello', 'incantesimi', 'tecniche', 'scuolaMishima']);
   if (kCar) ammesse.add('caratteristiche');
   if (conTalento) ammesse.add('talentoLibero');
   if (conGrado) for (const k of ['grado', 'tiroPV', 'tiroPM', 'talentoClasse']) ammesse.add(k);
@@ -528,6 +535,15 @@ function controllaTecniche(prima, dopo, v, dati) {
     // §8.9.4: Tecniche del Lottatore; §8.9.3: Scuole Mishima
     if (t.gruppo === 'lottatore' && !dopo.classi.some((c) => c.nome === 'Lottatore')) err(`${t.nome} è una Tecnica del Lottatore`);
     if (t.gruppo.startsWith('scuola:') && dopo.corp.nome !== 'Mishima') err(`${t.nome} appartiene a una Scuola Mishima: serve la Corporazione Mishima (§8.9.3)`);
+    else if (t.gruppo.startsWith('scuola:') && dopo.scuola?.nome !== t.gruppo.slice(7)) {
+      err(`${t.nome} è della Scuola ${t.gruppo.slice(7)}: serve l’iniziazione a quella Scuola (§8.9.3)`);
+    }
+  }
+  if (v.scuolaMishima !== undefined) {
+    const scuoleNote = new Set(catalogo.filter((t) => t.gruppo.startsWith('scuola:')).map((t) => t.gruppo.slice(7)));
+    if (!scuoleNote.has(v.scuolaMishima)) err(`"${v.scuolaMishima}" non è una Scuola Mishima (${[...scuoleNote].join(', ')})`);
+    else if (dopo.corp.nome !== 'Mishima') err('le Scuole Mishima richiedono la Corporazione Mishima (§8.9.3)');
+    else if (prima.scuola && prima.scuola.nome !== v.scuolaMishima) err(`il personaggio è già iniziato alla Scuola ${prima.scuola.nome}: si appartiene a una sola Scuola (§8.9.3)`);
   }
   const scuole = new Set(dopo.tecniche.map((x) => catalogo.find((t) => t.id === x.id)?.gruppo).filter((g) => g?.startsWith('scuola:')));
   if (scuole.size > 1) err(`si può appartenere a una sola Scuola Mishima, trovate: ${[...scuole].map((s) => s.slice(7)).join(', ')} (§8.9.3)`);
@@ -618,10 +634,12 @@ export function prossimoLivello(personaggio, dati) {
       ...dati.specializzazioni.specializzazioni.map((s) => ({ ...s, specializzazione: true, parametro: null })),
     ];
     const valori = { caratteristica: Object.keys(stato.car), salvezza: dati.caratteristiche.salvezze.map((s) => s.id) };
+    // Contano solo le violazioni: l'annotazione mancante (es. Sport) si completa dopo la scelta.
+    const violazioni = (scelta) => controllaTalentoLibero(stato, scelta, dati).filter((e) => e.tipo === 'violazione');
     for (const t of candidati) {
-      const parametri = t.parametro ? valori[t.parametro].filter((p) => !controllaTalentoLibero(stato, { id: t.id, parametro: p }, dati).length) : null;
-      const errori = t.parametro ? (parametri.length ? [] : controllaTalentoLibero(stato, { id: t.id, parametro: valori[t.parametro][0] }, dati))
-        : controllaTalentoLibero(stato, { id: t.id }, dati);
+      const parametri = t.parametro ? valori[t.parametro].filter((p) => !violazioni({ id: t.id, parametro: p }).length) : null;
+      const errori = t.parametro ? (parametri.length ? [] : violazioni({ id: t.id, parametro: valori[t.parametro][0] }))
+        : violazioni({ id: t.id });
       out.talentiLiberi.push({
         id: t.id, nome: t.specializzazione ? `Specializzazione in ${t.nome}` : t.nome, specializzazione: t.specializzazione,
         provvisorio: !!t.provvisorio, ammesso: !errori.length, motivo: errori[0]?.problema ?? null, parametri,
@@ -689,7 +707,8 @@ export function calcolaSchedaPersonaggio(personaggio, dati) {
     annotazioni.push('Classi taumaturgiche senza Addestramento Taumaturgo: nessun incantesimo libero dell’Addestramento e Prove di Potere con la scala «altri utilizzatori» (Magia, sezione 1).');
   }
   const scuole = new Set(stato.tecniche.map((x) => catalogoTec.find((t) => t.id === x.id)?.gruppo).filter((g) => g?.startsWith('scuola:')));
-  for (const s of scuole) annotazioni.push(`Tecniche della Scuola ${s.slice(7)}: richiedono iniziazione e giuramento all’Overlord (§8.9.3), da verificare con il master.`);
+  if (stato.scuola) annotazioni.push(`Iniziato alla Scuola ${stato.scuola.nome} (dichiarato al ${stato.scuola.livello}° livello): iniziazione e giuramento all’Overlord si verificano con il master (§8.9.3).`);
+  for (const s of scuole) if (s.slice(7) !== stato.scuola?.nome) annotazioni.push(`Tecniche della Scuola ${s.slice(7)} senza iniziazione dichiarata (§8.9.3).`);
   for (const x of stato.persi) annotazioni.push(`${x.livello}° livello: il +1 di ${x.classe} a ${x.abilita} non si applica perché l’Avanzamento è già al limite ${x.limite} (§8.3).`);
   const provvisori = talenti.filter((t) => t.provvisorio);
   if (provvisori.length) annotazioni.push(`Talenti provvisori, con prerequisiti da definire: ${provvisori.map((t) => t.nome).join(', ')}.`);
@@ -717,7 +736,7 @@ export function calcolaSchedaPersonaggio(personaggio, dati) {
     talenti: stato.classi.flatMap((c) => c.talenti.map((t) => ({ ...t, classe: c.nome }))),
     talentiLiberi: stato.talentiLiberi.filter((t) => !talentoLiberoDef(t.id, dati).specializzazione).map((t) => {
       const d = talentoLiberoDef(t.id, dati);
-      return { id: t.id, nome: d.nome, parametro: t.parametro, livello: t.livello, provvisorio: !!d.provvisorio, testo: d.testo };
+      return { id: t.id, nome: d.nome, parametro: t.parametro, annotazione: t.annotazione ?? null, livello: t.livello, provvisorio: !!d.provvisorio, testo: d.testo };
     }),
     specializzazioni: stato.talentiLiberi.filter((t) => talentoLiberoDef(t.id, dati).specializzazione).map((t) => {
       const d = talentoLiberoDef(t.id, dati);
@@ -731,8 +750,123 @@ export function calcolaSchedaPersonaggio(personaggio, dati) {
       quote: { perMacro: q.perMacro, liberi: q.liberi, totale: q.totale, liberiUsati: q.liberiUsati },
       scalaPotere: q.scalaPotere,
     },
+    scuolaMishima: stato.scuola,
+    progressione: progressione(personaggio, dati),
     annotazioni,
     errori,
     completa: errori.length === 0,
   };
+}
+
+// ---------------------------------------------------------------------------
+// Passi dell'interfaccia "Sali di livello" e descrizione dei livelli (funzioni pure)
+
+/**
+ * Passi dell'interfaccia per il prossimo livello, generati dagli eventi di regole.json
+ * (avanzamento.eventi). Gli eventi automatici (Salvezze, Azioni Principali) diventano righe
+ * informative, non passi. Tecniche Interiori e incantesimi compaiono quando le scelte già
+ * fatte nella voce (Talento, Grado, Caratteristiche) ne aumentano il numero.
+ * @returns {{livello, eventi, passi: {id, titolo, rif, punti?}[], informazioni: string[]}|null}
+ */
+export function passiDelLivello(personaggio, voce, dati) {
+  const { stato: prima } = ricalcola(personaggio, dati);
+  if (!prima) return null;
+  const n = prima.livello + 1;
+  if (n > dati.regole.avanzamento.livello_massimo) return null;
+  const eventi = eventiLivello(n, dati);
+  const v = isOggetto(voce) ? voce : {};
+  const passi = [];
+  const informazioni = [];
+  let puntiAbilita = 0;
+  for (const e of eventi) {
+    let m;
+    if ((m = /^caratteristiche:\+(\d+)$/.exec(e))) passi.push({ id: 'caratteristiche', titolo: 'Caratteristiche', rif: '§8.2', punti: Number(m[1]) });
+    else if (e === 'talento_libero') passi.push({ id: 'talento', titolo: 'Talento Libero', rif: '§8.6, §8.8' });
+    else if (e === 'grado_classe') passi.push({ id: 'grado', titolo: 'Grado di Classe', rif: '§8.7, cap. 3' });
+    else if ((m = /^punti_abilita:(\d+)$/.exec(e))) puntiAbilita = Number(m[1]);
+    else if ((m = /^salvezze:\+(\d+)$/.exec(e))) informazioni.push(`+${m[1]} a tutte le Prove Salvezza (§8.1.1)`);
+    else if ((m = /^azione_principale:\+(\d+)$/.exec(e))) {
+      const totale = dati.regole.azioni_primo_livello.principali + cumulato('azione_principale', n, dati);
+      informazioni.push(`Azioni Principali per Round: ${totale} (§8.5)`);
+    }
+  }
+  const dopo = applicaVoce(prima, v, dati);
+  if (tecnicheAmmesse(dopo) > tecnicheAmmesse(prima) || (Array.isArray(v.tecniche) && v.tecniche.length)) {
+    passi.push({ id: 'tecniche', titolo: 'Tecniche Interiori', rif: '§8.9' });
+  }
+  if (quoteIncantesimi(dopo, dati).totale > quoteIncantesimi(prima, dati).totale || (Array.isArray(v.incantesimi) && v.incantesimi.length)) {
+    passi.push({ id: 'incantesimi', titolo: 'Incantesimi', rif: 'Magia, sezione 1' });
+  }
+  if (puntiAbilita) passi.push({ id: 'abilita', titolo: 'Punti Abilità', rif: '§8.3', punti: puntiAbilita });
+  passi.push({ id: 'riepilogo', titolo: 'Riepilogo', rif: '§8.1' });
+  return { livello: n, eventi, passi, informazioni };
+}
+
+const tiroTesto = (t, spec) => {
+  const n = valoreTiro(t);
+  if (n === null) return 'da tirare';
+  return `${spec.formula} = ${n}${t?.origine === 'manuale' ? ' (tirato dal vivo)' : ''}`;
+};
+
+/**
+ * Descrizione leggibile delle scelte di un livello, per la Progressione della scheda e per il
+ * riepilogo prima della conferma. `gradi` sono i Gradi delle Classi prima di questo livello.
+ */
+export function descriviVoce(voce, dati, gradi = {}) {
+  const v = isOggetto(voce) ? voce : {};
+  const righe = [];
+  const nomeSalvezza = (id) => dati.caratteristiche.salvezze.find((s) => s.id === id)?.nome ?? id;
+  const pc = Object.entries(isOggetto(v.caratteristiche) ? v.caratteristiche : {}).filter(([, p]) => p > 0);
+  if (pc.length) righe.push(`Caratteristiche: ${pc.map(([s, p]) => `${s} +${p}`).join(', ')}`);
+  if (isOggetto(v.talentoLibero) && v.talentoLibero.id) {
+    const d = talentoLiberoDef(v.talentoLibero.id, dati);
+    const nome = d ? (d.specializzazione ? `Specializzazione in ${d.nome}` : d.nome) : v.talentoLibero.id;
+    const dettagli = [
+      v.talentoLibero.parametro ? (d?.parametro === 'salvezza' ? nomeSalvezza(v.talentoLibero.parametro) : v.talentoLibero.parametro) : null,
+      v.talentoLibero.annotazione || null,
+    ].filter(Boolean);
+    righe.push(`Talento Libero: ${nome}${dettagli.length ? ` (${dettagli.join(', ')})` : ''}${d?.provvisorio ? ' — provvisorio' : ''}`);
+  }
+  const def = trova(dati.classi.classi, v.grado?.classe);
+  if (def) {
+    const grado = (gradi[def.nome] ?? 0) + 1;
+    const av = dati.regole.avanzamento;
+    const iFisso = av.gradi_talento_fisso.indexOf(grado);
+    const talento = iFisso >= 0 ? `Talento fisso ${def.talenti_fissi[iFisso]?.nome}` : v.talentoClasse ? `Talento a scelta ${v.talentoClasse}` : 'Talento a scelta da scegliere';
+    const tiri = [`PV ${tiroTesto(v.tiroPV, specTiro({ facce: def.pv_per_grado.dado }))}`];
+    if (def.pm_per_grado.dado) tiri.push(`PM ${tiroTesto(v.tiroPM, specTiro({ facce: def.pm_per_grado.dado }))}`);
+    righe.push(`Grado: ${def.nome} ${GRADI_ROMANI[grado] ?? grado}${grado === 1 ? ' (nuova Classe)' : ''} — ${talento}; ${tiri.join(', ')}`);
+  }
+  const pa = Object.entries(isOggetto(v.puntiAbilita) ? v.puntiAbilita : {}).filter(([, p]) => p > 0);
+  if (pa.length) righe.push(`Punti Abilità: ${pa.map(([a, p]) => `${a} +${p}`).join(', ')}`);
+  if (v.scuolaMishima) righe.push(`Iniziato alla Scuola ${v.scuolaMishima}`);
+  if (Array.isArray(v.tecniche) && v.tecniche.length) {
+    righe.push(`Tecniche Interiori: ${v.tecniche.map((id) => dati.tecniche_interiori.tecniche.find((t) => t.id === id)?.nome ?? id).join(', ')}`);
+  }
+  if (Array.isArray(v.incantesimi) && v.incantesimi.length) righe.push(`Incantesimi: ${v.incantesimi.join(', ')}`);
+  return righe;
+}
+
+/** Una riga per livello, dal 1° (creazione) all'attuale: cosa è stato scelto. */
+export function progressione(personaggio, dati) {
+  const p = migraPersonaggio(personaggio);
+  const c = p.creazione;
+  const out = [{
+    livello: 1,
+    righe: [`Creazione: ${[c.corporazione, c.addestramento, c.classe ? `${c.classe} I` : null].filter(Boolean).join(' · ')}`],
+  }];
+  const gradi = c.classe ? { [c.classe]: 1 } : {};
+  p.livelli.forEach((voce, i) => {
+    const n = i + 2;
+    const righe = descriviVoce(voce, dati, gradi);
+    for (const e of eventiLivello(n, dati)) {
+      const m = /^salvezze:\+(\d+)$/.exec(e);
+      if (m) righe.push(`Prove Salvezza +${m[1]}`);
+      if (/^azione_principale:/.test(e)) righe.push('Seconda Azione Principale');
+    }
+    const cl = voce?.grado?.classe;
+    if (cl) gradi[cl] = (gradi[cl] ?? 0) + 1;
+    out.push({ livello: n, righe });
+  });
+  return out;
 }
