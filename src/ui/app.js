@@ -11,6 +11,8 @@ import { PASSI, passoVisibile, requisitoPasso } from './passi.js';
 import { inizializzaTooltip, nascondiTooltip } from './tooltip.js';
 import { renderRiepilogo } from './riepilogo.js';
 import { renderSali } from './sali.js';
+import { renderStampa, esciDallaStampa } from './stampa.js';
+import { preparaStampa } from '../stampa.js';
 
 // Dopo la creazione si possono ancora cambiare solo i campi descrittivi: le altre scelte
 // determinano i livelli successivi (ricognizione dell'avanzamento, §8).
@@ -99,6 +101,7 @@ function daIndirizzo() {
     hashDaIgnorare = null;
     return;
   }
+  esciDallaStampa();
   const sali = location.hash.match(/^#\/p\/([\w-]+)\/sali\/(\d+)$/);
   // Uscire dalla bozza del livello (tasto Indietro, link, indirizzo) chiede conferma.
   if (stato.sali && !(sali && sali[1] === stato.id)) {
@@ -109,7 +112,8 @@ function daIndirizzo() {
     }
     stato.sali = null;
   }
-  const m = sali ?? location.hash.match(/^#\/p\/([\w-]+)\/(\d+)$/);
+  const stampa = location.hash.match(/^#\/p\/([\w-]+)\/(stampa)$/);
+  const m = sali ?? stampa ?? location.hash.match(/^#\/p\/([\w-]+)\/(\d+)$/);
   if (!m) {
     stato.id = null;
     stato.scelte = null;
@@ -135,6 +139,7 @@ function daIndirizzo() {
     if (avvisi.length) persisti();
   }
   if (sali) return apriSali(Number(passoTesto));
+  if (stampa) return apriStampa();
   const passo = Math.min(Number(passoTesto), PASSI.length - 1);
   // Gli avvisi riguardano l'ultima modifica: cambiando passo non servono più.
   if (!appenaCaricato && passo !== stato.passo) {
@@ -264,6 +269,7 @@ function contesto() {
     motivoNoSalita: !scheda.completa ? 'Completa la creazione (passi precedenti) prima di salire di livello.'
       : schedaPersonaggio.errori.length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
     saliDiLivello,
+    stampa: () => vai(`#/p/${stato.id}/stampa`),
     annullaUltimoLivello: annullaLivello,
     ante: anteprima(scelte, dati),
     ui: stato.ui,
@@ -441,4 +447,15 @@ function renderSaliPagina() {
       vai(`#/p/${stato.id}/${PASSO_SCHEDA}`);
     },
   }));
+}
+
+// ---------------------------------------------------------------------------
+// Vista di stampa: quattro fogli A4 orizzontali dai soli valori calcolati
+
+function apriStampa() {
+  nascondiTooltip();
+  document.title = `${stato.scelte.nome.trim() || 'Personaggio'} — Stampa · Mutant`;
+  const stampa = preparaStampa(personaggio(), stato.dati, { versioniDati: stato.versioni });
+  svuota(radice, ...renderStampa({ stampa, torna: () => vai(`#/p/${stato.id}/${PASSO_SCHEDA}`) }));
+  window.scrollTo(0, 0);
 }

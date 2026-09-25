@@ -1,6 +1,6 @@
 {
   "versione_manuale": "Giocatore 0.43; Magia 1.1",
-  "fonte": "Giocatore §1.2.3, §2.1, §2.3, §2.10, §2.12–2.15, §3.3, cap. 8; Magia sezioni 1 e 11; docs/risposte-master.md",
+  "fonte": "Giocatore §1.2.3, §2.1, §2.3, §2.10, §2.12–2.15, §3.3, §5.14, §5.18, cap. 8; Magia sezioni 1 e 11; docs/risposte-master.md",
   "creazione": {
     "punti_caratteristica": 5,
     "massimo_caratteristica": 7,
@@ -365,5 +365,83 @@
     "_nota_incantesimi": "Livello massimo per Gradi taumaturgici: tabella regole.taumaturgo.livello_massimo_per_gradi. Questo è il tetto assoluto (anche per Usufruitore di Magia con Potenziale Mistico Migliorato, Magia sezione 1).",
     "tetto_salvezza": 18,
     "_nota_tetto_salvezza": "§1.2.3, §8.6.2–8.6.3: valore strutturale + Prova Salvezza Migliorata + Resistenza specifica ≤ 18. La Resistenza è un bonus situazionale: la scheda applica il tetto a strutturale + Migliorata."
+  },
+  "ferite": {
+    "stati": [
+      {
+        "nome": "Superficiale",
+        "penalita": -1
+      },
+      {
+        "nome": "Importante",
+        "penalita": -2
+      },
+      {
+        "nome": "Profonda",
+        "penalita": -4,
+        "menomazione": "Temporanea leggera (−2 VA alla parte colpita)"
+      },
+      {
+        "nome": "Seria",
+        "penalita": -6,
+        "menomazione": "Temporanea seria (−4 VA alla parte colpita)"
+      },
+      {
+        "nome": "Grave",
+        "penalita": -8,
+        "menomazione": "Permanente (funzione colpita impedita)"
+      }
+    ],
+    "oltre": "Morte",
+    "_nota": "§5.14: penalità cumulativa a VA e Prove Salvezza; §5.14.1: PS di Tempra per le Menomazioni al primo raggiungimento di Profonda, Seria, Grave. Usato dalla scheda stampata."
+  },
+  "stati": {
+    "elenco": [
+      {
+        "nome": "A Terra",
+        "durata": "fino a quando si rialza"
+      },
+      {
+        "nome": "Accecato",
+        "durata": "1+1d3 Round"
+      },
+      {
+        "nome": "Assordato",
+        "durata": "1+1d3 Round"
+      },
+      {
+        "nome": "Avvelenato",
+        "durata": "1+1d3 Round, salvo la fonte"
+      },
+      {
+        "nome": "Immobilizzato",
+        "durata": "1+1d3 Round o fino alla liberazione"
+      },
+      {
+        "nome": "Incendiato",
+        "durata": "1+1d3 Round"
+      },
+      {
+        "nome": "Rallentato",
+        "durata": "1+1d3 Round"
+      },
+      {
+        "nome": "Sanguinamento",
+        "durata": "fino a quando viene fermato"
+      },
+      {
+        "nome": "Stordito",
+        "durata": "1+1d3 Round"
+      },
+      {
+        "nome": "Svenuto",
+        "durata": "1+1d3 Round, salvo la fonte"
+      },
+      {
+        "nome": "Terrorizzato",
+        "durata": "1+1d3 Round"
+      }
+    ],
+    "_nota": "§5.18, tabella «Durate e tempi di risoluzione»: gli Stati sono undici. Usato dalla scheda stampata."
   }
 }

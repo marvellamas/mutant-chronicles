@@ -1,5 +1,5 @@
 /* Mutant — stile sobrio, senza librerie. Colonna singola su telefono,
-   colonna laterale di riepilogo su desktop, stampa pulita della sola scheda. */
+   colonna laterale di riepilogo su desktop, stampa nella vista dedicata (css/stampa.css). */
 
 :root {
   --sfondo: #f7f6f3;
@@ -472,31 +472,6 @@ dl.voci.in-linea dt::after { content: ":"; }
 .incantesimo-scheda h4 { margin: 0 0 0.2rem; }
 .piccolo { font-size: 0.85rem; color: var(--tenue); margin: 0.15rem 0; }
 
-/* ---------------------------------------------------------------- stampa: solo la scheda */
-
-@media print {
-  @page { margin: 12mm; }
-  :root { --sfondo: #fff; --superficie: #fff; --testo: #000; --tenue: #444; --bordo: #999; color-scheme: light; }
-  body { font-size: 10pt; background: #fff; color: #000; }
-  main { padding: 0; max-width: none; }
-  .testata, .passi, .riepilogo, .passo-testa, .passo-piede, .avvisi, .no-stampa, .riquadro,
-  .tooltip, .pannello-scheda { display: none !important; }
-  .voce-info { text-decoration: none; color: inherit; }
-  .piccolo { color: #333; }
-  .layout { display: block; }
-  .passo > :not(.scheda) { display: none !important; }
-  .scheda { border: 0; padding: 0; margin: 0; }
-  .scheda section { break-inside: avoid; }
-  .scheda .talento { break-inside: avoid; }
-  .scheda-griglia { grid-template-columns: 1fr 1fr; }
-  .tabella { background: none; }
-  .tabella-scorre, .scheda > section, .scheda-griglia > section { overflow: visible; }
-  .tabella .dettaglio { display: table-cell !important; }
-  .tabella .formula { display: none !important; }
-  .tabella tr.categoria th { background: #eee; }
-  h3 { margin-top: 0.8em; }
-}
-
 /* ---------------------------------------------------------------- tiri di dado (src/ui/tiro.js) */
 
 .tiro { margin: 0.75rem 0; }
@@ -563,9 +538,4 @@ dl.voci.in-linea dt::after { content: ":"; }
 @media (max-width: 600px) {
   .voce-talento { flex-direction: column; align-items: stretch; }
   .filtri input[type="search"], .riquadro input[type="text"] { width: 100%; }
-}
-
-@media print {
-  .progressione { break-before: auto; }
-  .progressione tr { break-inside: avoid; }
 }

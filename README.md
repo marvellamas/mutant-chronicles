@@ -69,6 +69,10 @@ pagina resta sul messaggio «Caricamento…», che spiega cosa fare.
 I personaggi si salvano automaticamente nel browser (localStorage). Per passarli a un altro
 dispositivo o al master si usano **Esporta** (file JSON con le sole scelte) e **Importa**.
 
+**Stampa e PDF.** Nella scheda finale, **Stampa** apre l'anteprima dei fogli A4 orizzontali
+(3, o 4 con la Magia); lì **Stampa** apre il dialogo del browser, dove per il PDF si sceglie
+la stampante «Salva come PDF» (lascia orientamento e margini come proposti, scala 100%).
+
 Il passo 0 del wizard si chiama **Background** (nel manuale, §2.0, «Concetto»; nei file
 salvati il campo resta `concetto`).
 
@@ -139,7 +143,7 @@ Dalla scheda finale, «Sali al livello N+1» apre una sequenza di passi generata
 eventi del livello: Caratteristiche, Talento Libero (o Specializzazione), Grado di Classe con
 i tiri di PV e PM, Tecniche Interiori e Incantesimi quando le scelte li concedono, Punti
 Abilità, riepilogo. Nulla si salva fino a «Conferma»; uscire prima chiede conferma. La
-scheda mostra la Progressione (una riga per livello, anche in stampa) e «Annulla l'ultimo
+scheda mostra la Progressione (una riga per livello) e «Annulla l'ultimo
 livello». Con dei livelli acquisiti la creazione resta consultabile ma bloccata, tranne
 nome, background ed equipaggiamento. La home mostra il livello di ogni personaggio. Il file
 esportato (formato 3) contiene anche i livelli; i file dei formati 1 e 2 si importano come
@@ -180,7 +184,8 @@ quelle.
 
 ```
 index.html        pagina unica
-css/style.css     stile, versione telefono e stampa
+css/style.css     stile e versione telefono
+css/stampa.css    fogli di stampa (caricato solo nella vista di stampa)
 src/rules.js      carica e valida i dati
 src/validate.js   invarianti dei dati
 src/calc.js       motore di calcolo (funzioni pure)
@@ -192,6 +197,8 @@ src/tiri.js       tiri di dado { valore, origine }: formula, intervallo, migrazi
 src/avanzamento.js  personaggio a livelli: ricalcolo, validazione di un livello, prossimo livello
 src/ui/           interfaccia (wizard, riepilogo, scheda, home, tooltip, tiro di dado)
 src/ui/sali.js    schermata «Sali di livello»
+src/stampa.js     dati dei fogli di stampa (funzioni pure)
+src/ui/stampa.js  vista di stampa A4 orizzontale, con css/stampa.css
 data/             regole in JSON
 tests/            node --test
 docs/             studio di fattibilità, ricognizione dell'avanzamento, risposte del master

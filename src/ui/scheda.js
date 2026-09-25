@@ -1,4 +1,4 @@
-// Passo 9: scheda finale, stampabile. Tutti i valori vengono da calcolaScheda(personaggio, dati):
+// Passo 9: scheda finale (la stampa è la vista dedicata src/ui/stampa.js). Tutti i valori vengono da calcolaScheda(personaggio, dati):
 // la creazione più i livelli acquisiti (cap. 8). Il controllo §2.17 riguarda la creazione.
 import { h, segno } from './dom.js';
 import { checklist } from '../checklist.js';
@@ -23,7 +23,7 @@ export function renderScheda(ctx) {
 
   return [
     h('div', { class: 'riga-azioni no-stampa' },
-      h('button', { type: 'button', class: 'btn primario', onclick: () => window.print() }, 'Stampa'),
+      h('button', { type: 'button', class: 'btn primario', onclick: ctx.stampa }, 'Stampa'),
       h('button', { type: 'button', class: 'btn', onclick: ctx.esporta }, 'Esporta JSON')),
 
     // Avanzamento (cap. 8): un livello alla volta, si annulla solo l'ultimo

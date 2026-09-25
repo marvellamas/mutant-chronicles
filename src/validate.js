@@ -180,6 +180,16 @@ function validaRegole(r, err) {
     if (!isOggetto(v) || !Object.values(v).every(isIntero)) err(F, tab, 'tabella {valore: quantità} mancante o non numerica');
   }
   if (typeof r.creazione?.dado_pm_massimizzato !== 'boolean') err(F, 'creazione.dado_pm_massimizzato', 'vero o falso mancante');
+  // §5.14 e §5.18: Stati di Ferita e Stati, stampati sul foglio Combattimento
+  const fer = r.ferite?.stati;
+  if (!Array.isArray(fer) || !fer.length) err(F, 'ferite.stati', 'elenco {nome, penalita} mancante');
+  else fer.forEach((x, i) => {
+    if (!isTesto(x?.nome)) err(F, `ferite.stati[${i}].nome`, 'nome mancante');
+    if (!isIntero(x?.penalita) || x.penalita > 0) err(F, `ferite.stati[${i}].penalita`, 'penalità intera ≤ 0 mancante');
+  });
+  const st = r.stati?.elenco;
+  if (!Array.isArray(st) || !st.length) err(F, 'stati.elenco', 'elenco {nome, durata} mancante');
+  else st.forEach((x, i) => { if (!isTesto(x?.nome)) err(F, `stati.elenco[${i}].nome`, 'nome mancante'); });
   // Livello massimo degli incantesimi per Gradi taumaturgici (tabella del master): Gradi da 1,
   // senza buchi, livelli non decrescenti
   const t = r.taumaturgo?.livello_massimo_per_gradi;

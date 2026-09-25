@@ -1,0 +1,151 @@
+/* Vista di stampa (src/ui/stampa.js): quattro fogli A4 orizzontali.
+   Caricato solo in questa vista, così @page non tocca le altre pagine.
+   Pagina 297×210 mm con margine 10 mm: l'area utile è 277×190 mm, uguale a schermo e in stampa,
+   così l'adattamento del carattere fatto a schermo vale anche sulla carta. */
+
+@page { size: A4 landscape; margin: 10mm; }
+
+body.vista-stampa {
+  --inchiostro: #000;
+  --grigio: #555;
+  --linea: #888;
+  --linea-tenue: #bbb;
+  color-scheme: light;
+  background: #e6e6e6;
+  color: var(--inchiostro);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+body.vista-stampa .testata { display: none; }
+body.vista-stampa main { max-width: none; padding: 0; margin: 0; }
+
+/* barra in alto, solo a schermo */
+.barra-stampa {
+  position: sticky; top: 0; z-index: 5;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem;
+  padding: 0.6rem 1rem;
+  background: #fff;
+  border-bottom: 1px solid #ccc;
+  color: #1d1d1f;
+  font-size: 0.95rem;
+}
+.barra-stampa .nota { color: #555; }
+.barra-avvisi { flex-basis: 100%; }
+.barra-avvisi:empty { display: none; }
+.barra-avvisi p { margin: 0.15rem 0; font-size: 0.85rem; color: #6a4a00; }
+.barra-avvisi .motivo { color: #a3261b; }
+
+/* anteprima: i fogli con la geometria reale, uno sotto l'altro */
+.fogli { padding: 10mm 0; overflow-x: auto; }
+.foglio {
+  box-sizing: border-box;
+  width: 297mm; height: 210mm;
+  padding: 10mm;
+  margin: 0 auto 10mm;
+  background: #fff;
+  outline: 1px dashed #777;
+  outline-offset: -1px;
+}
+.pagina {
+  box-sizing: border-box;
+  width: 277mm; height: 189mm; /* 1 mm di margine: un contenuto alto esattamente quanto la pagina può generarne una vuota */
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+.foglio-testa {
+  display: flex; justify-content: space-between; align-items: baseline;
+  border-bottom: 1.5pt solid var(--inchiostro);
+  padding-bottom: 1mm; margin-bottom: 2mm;
+  font-size: 9pt; text-transform: uppercase; letter-spacing: 0.06em;
+}
+.foglio-titolo { font-weight: 700; }
+.foglio-nome { color: var(--grigio); }
+.foglio-corpo { flex: 1; min-height: 0; overflow: hidden; font-size: 9pt; line-height: 1.25; }
+.foglio-piede {
+  border-top: 0.5pt solid var(--linea);
+  padding-top: 1mm; margin-top: 2mm;
+  font-size: 7pt; color: var(--grigio);
+}
+
+/* elementi comuni: solo bordi e testo, niente campiture */
+.foglio h1 { font-size: 1.9em; margin: 0; line-height: 1.1; }
+.foglio h2 {
+  font-size: 0.95em; margin: 0 0 1mm; text-transform: uppercase; letter-spacing: 0.05em;
+  border-bottom: 0.5pt solid var(--linea); padding-bottom: 0.5mm;
+}
+.foglio h3, .foglio h4 { margin: 0; font-size: 1em; }
+.foglio p { margin: 0 0 1mm; }
+.foglio ul { margin: 0; padding-left: 1.1em; }
+.foglio .piccolo { font-size: 0.85em; color: var(--grigio); }
+.foglio .sigla { font-size: 0.8em; color: var(--grigio); font-weight: 400; }
+.foglio .forte { font-weight: 700; }
+.riquadro-stampa { border: 0.75pt solid var(--linea); border-radius: 1.5mm; padding: 1.5mm 2mm; margin-bottom: 2mm; break-inside: avoid; }
+.colonna { display: flex; flex-direction: column; min-width: 0; }
+
+.tabella-stampa { width: 100%; border-collapse: collapse; }
+.tabella-stampa th, .tabella-stampa td { border-bottom: 0.5pt solid var(--linea-tenue); padding: 0.3mm 1mm; text-align: left; vertical-align: top; }
+.tabella-stampa thead th { font-size: 0.85em; color: var(--grigio); font-weight: 600; border-bottom: 0.75pt solid var(--linea); }
+.tabella-stampa tbody th { font-weight: 500; }
+.tabella-stampa.numeri td { text-align: center; }
+.tabella-stampa tr.categoria th { padding-top: 1mm; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.05em; color: var(--grigio); border-bottom: 0.75pt solid var(--linea); }
+.tabella-stampa.da-penna td, .tabella-stampa.da-penna th { border: 0.5pt solid var(--linea); height: 6.5mm; }
+
+.casella { display: inline-block; width: 3.5mm; height: 3.5mm; border: 0.75pt solid var(--inchiostro); border-radius: 0.5mm; vertical-align: middle; }
+.caselle { display: flex; flex-wrap: wrap; gap: 1.5mm; margin-top: 1mm; }
+.caselle .casella { width: 5mm; height: 5mm; }
+.casella-grande { border: 0.75pt solid var(--inchiostro); border-radius: 1mm; height: 12mm; position: relative; }
+.casella-grande span { position: absolute; left: 1.5mm; top: 0.5mm; font-size: 0.8em; color: var(--grigio); }
+.casella-lunga { display: inline-block; width: 20mm; height: 5mm; border-bottom: 0.75pt solid var(--inchiostro); vertical-align: bottom; }
+.casella-lunga.corta { width: 8mm; }
+.righe-vuote .riga-vuota { height: 6mm; border-bottom: 0.5pt solid var(--linea-tenue); }
+.valore-grande { font-size: 1.5em; font-weight: 700; }
+.voci-stampa { display: grid; grid-template-columns: auto 1fr; gap: 0.8mm 3mm; margin: 0; }
+.voci-stampa dt { font-weight: 600; }
+.voci-stampa dd { margin: 0; }
+
+/* Foglio 1 */
+.intestazione-personaggio { margin-bottom: 2mm; }
+.intestazione-personaggio p { font-size: 1.15em; margin: 0.5mm 0 0; }
+.griglia-identita { display: grid; grid-template-columns: 1fr 1fr 1.25fr; gap: 3mm; }
+.coppia { display: grid; grid-template-columns: 1fr 1fr; gap: 2mm; }
+.coppia .riquadro-stampa { margin-bottom: 2mm; }
+.testo-background { white-space: pre-line; }
+
+/* Foglio 2 */
+.griglia-abilita { display: grid; grid-template-columns: 150mm 1fr; gap: 3mm; height: 100%; }
+.abilita-affiancate { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; align-items: start; }
+.abilita-stampa th, .abilita-stampa td { padding-top: 0.15mm; padding-bottom: 0.15mm; }
+.elenco-talenti-stampa { list-style: none; padding: 0; }
+.elenco-talenti-stampa li { margin-bottom: 1mm; break-inside: avoid; }
+
+/* Foglio 3 */
+.griglia-combattimento { display: grid; grid-template-columns: 1fr 1.7fr 1fr; grid-template-rows: auto 1fr; gap: 0 3mm; }
+.griglia-combattimento > .riquadro-stampa:first-child { grid-column: 1 / -1; }
+.ferite td:first-child { width: 5mm; }
+.stati-stampa { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.8mm 2mm; }
+.stati-stampa li { display: grid; grid-template-columns: 4mm 1fr auto; line-height: 1.15; align-items: center; gap: 1.5mm; border-bottom: 0.5pt solid var(--linea-tenue); padding-bottom: 0.5mm; }
+.stati-stampa .round { font-size: 0.8em; color: var(--grigio); white-space: nowrap; }
+.equip-stampa { padding-left: 1.1em; }
+
+/* Foglio 4 */
+.testa-magia { display: grid; grid-template-columns: 40mm 45mm 1fr; gap: 3mm; align-items: start; }
+.tabella-stampa.scala td, .tabella-stampa.scala th { font-size: 0.85em; text-align: center; border: 0.5pt solid var(--linea-tenue); }
+.foglio-magia .foglio-corpo { display: flex; flex-direction: column; }
+.colonne-incantesimi { flex: 1; min-height: 0; column-count: 3; column-gap: 4mm; column-fill: auto; }
+.colonne-incantesimi .macro { break-after: avoid; margin-top: 1mm; }
+.colonne-incantesimi .spec { font-size: 0.9em; font-style: italic; margin: 1mm 0 0.5mm; break-after: avoid; }
+.incantesimo-stampa { break-inside: avoid; margin-bottom: 2mm; }
+.incantesimo-stampa h4 { font-size: 1.05em; }
+.tabella-stampa.versioni { font-size: 0.85em; margin-top: 0.5mm; }
+.tabella-stampa.versioni th, .tabella-stampa.versioni td { padding: 0.1mm 0.6mm; text-align: center; }
+
+@media print {
+  body.vista-stampa { background: #fff; }
+  .barra-stampa { display: none !important; }
+  .fogli { padding: 0; overflow: visible; }
+  .foglio {
+    width: auto; height: auto; padding: 0; margin: 0; outline: none;
+    page-break-after: always; break-after: page;
+  }
+  .foglio:last-child { page-break-after: auto; break-after: auto; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
