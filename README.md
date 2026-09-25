@@ -29,6 +29,15 @@ pagina resta sul messaggio «Caricamento…», che spiega cosa fare.
 I personaggi si salvano automaticamente nel browser (localStorage). Per passarli a un altro
 dispositivo o al master si usano **Esporta** (file JSON con le sole scelte) e **Importa**.
 
+Il passo 0 del wizard si chiama **Background** (nel manuale, §2.0, «Concetto»; nei file
+salvati il campo resta `concetto`).
+
+**Tiri di dado.** Dove serve un tiro (dado dei PM delle Classi taumaturgiche, Punti Eroe
+2d3+1) si può premere **Tira** oppure inserire il risultato tirato dal vivo: l'app rifiuta
+i valori impossibili spiegando perché e ricorda se il risultato è «tirato dall'app» o
+«inserito a mano». Nei file ogni tiro è `{ "valore": 3, "origine": "app" | "manuale" }`;
+i personaggi salvati prima, con un numero semplice, vengono convertiti da soli.
+
 ## Test
 
 ```bash
@@ -112,7 +121,8 @@ src/character.js  modello delle scelte, invalidazione a valle, import/export
 src/incantesimi.js  quote e scelta degli incantesimi
 src/checklist.js  controllo finale §2.17
 src/descrizioni.js  contenuto dei tooltip e della scheda completa degli incantesimi
-src/ui/           interfaccia (wizard, riepilogo, scheda, home, tooltip)
+src/tiri.js       tiri di dado { valore, origine }: formula, intervallo, migrazione
+src/ui/           interfaccia (wizard, riepilogo, scheda, home, tooltip, tiro di dado)
 data/             regole in JSON
 tests/            node --test
 docs/             studio di fattibilità

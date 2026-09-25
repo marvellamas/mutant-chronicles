@@ -46,12 +46,6 @@ export function dadi({ fisso, dado }) {
   return fisso ? `${fisso} + 1d${dado}` : `1d${dado}`;
 }
 
-export function tira(facce) {
-  const buf = new Uint32Array(1);
-  crypto.getRandomValues(buf);
-  return (buf[0] % facce) + 1;
-}
-
 /** Scarica un testo come file. */
 export function scaricaFile(nomeFile, testo, tipo = 'application/json') {
   const url = URL.createObjectURL(new Blob([testo], { type: tipo }));

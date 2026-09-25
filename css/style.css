@@ -496,3 +496,27 @@ dl.voci.in-linea dt::after { content: ":"; }
   .tabella tr.categoria th { background: #eee; }
   h3 { margin-top: 0.8em; }
 }
+
+/* ---------------------------------------------------------------- tiri di dado (src/ui/tiro.js) */
+
+.tiro { margin: 0.75rem 0; }
+.tiro-formula { margin: 0.25rem 0 0.5rem; }
+.tiro-formula strong { font-size: 1.1rem; }
+.tiro-modi { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem; }
+.tiro-oppure { color: var(--tenue); }
+.tiro-manuale { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; }
+.tiro-manuale label { color: var(--tenue); }
+.tiro-manuale input {
+  font: inherit;
+  width: 5rem;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--bordo);
+  border-radius: var(--raggio);
+  background: var(--superficie);
+  color: var(--testo);
+}
+.tiro-manuale input[aria-invalid="true"] { border-color: var(--errore); }
+.tiro-valore { margin: 0.6rem 0 0; }
+.tiro-valore strong { font-size: 1.25rem; }
+.origine-manuale { background: var(--attenzione-tenue); color: var(--attenzione); }
+.background h3 { margin: 0.6rem 0 0.1rem; font-size: 0.95rem; }

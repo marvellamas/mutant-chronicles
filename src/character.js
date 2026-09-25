@@ -6,9 +6,11 @@ import {
   bonusAvanzamentoSalvezze,
 } from './calc.js';
 import { statoIncantesimi } from './incantesimi.js';
+import { specTiro, migraTiro, motivoFuoriIntervallo, valoreTiro, tiroValido } from './tiri.js';
 
 export const FORMATO_FILE = 'mutant-personaggio';
-export const VERSIONE_FORMATO = 1;
+// 2: i tiri di dado sono { valore, origine } (src/tiri.js); i file della versione 1 si migrano.
+export const VERSIONE_FORMATO = 2;
 
 /** Scelte di un personaggio nuovo. È l'unico stato che si salva. */
 export function nuoveScelte() {
@@ -19,10 +21,10 @@ export function nuoveScelte() {
     puntiCaratteristica: {},
     addestramento: null,
     classe: null,
-    tiroDadoPM: null,
+    tiroDadoPM: null, // { valore, origine: 'app' | 'manuale' }
     puntiAbilitaLiberi: {},
     incantesimi: [],
-    puntiEroe: null,
+    puntiEroe: null, // { valore, origine: 'app' | 'manuale' }
     equipaggiamento: '',
   };
 }
@@ -31,6 +33,36 @@ const CAMPI = Object.keys(nuoveScelte());
 const trova = (lista, nome) => lista.find((x) => x.nome === nome);
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const somma = (obj) => Object.values(obj ?? {}).reduce((s, v) => s + v, 0);
+
+/** Tiro dei PM di una Classe (1d<dado>), o null se la Classe non ha dado nei PM. */
+export function specTiroPM(classe) {
+  const dado = classe?.pm_per_grado?.dado ?? 0;
+  return dado > 0 ? specTiro({ facce: dado }) : null;
+}
+
+/** Tiro dei Punti Eroe iniziali (§2.15), dalla formula in regole.json. */
+export function specTiroPuntiEroe(dati) {
+  const { dadi, facce, fisso } = dati.regole.punti_eroe;
+  return specTiro({ dadi, facce, fisso });
+}
+
+/** Migra un tiro al formato { valore, origine } e lo scarta, con avviso, se non è ammesso. */
+function normalizzaTiro(v, spec, etichetta, avvisi) {
+  let t;
+  try {
+    t = migraTiro(v);
+  } catch {
+    avvisi.push(`${etichetta}: valore ${JSON.stringify(v)} non interpretabile, da rideterminare.`);
+    return null;
+  }
+  if (!t) return null;
+  const motivo = motivoFuoriIntervallo(t.valore, spec);
+  if (motivo) {
+    avvisi.push(`${etichetta}: ${motivo} Da rideterminare.`);
+    return null;
+  }
+  return t;
+}
 
 export function eTaumaturgo(scelte, dati) {
   return scelte?.addestramento === dati.regole.taumaturgo.addestramento;
@@ -85,16 +117,9 @@ export function normalizza(scelteIn, dati) {
   }
 
   // §2.12 e §3.3: il tiro del dado dei PM vale solo per una Classe che lo prevede.
-  const dadoPM = classe?.pm_per_grado.dado ?? 0;
-  if (s.tiroDadoPM !== null && s.tiroDadoPM !== undefined) {
-    if (dadoPM === 0) s.tiroDadoPM = null;
-    else if (!Number.isInteger(s.tiroDadoPM) || s.tiroDadoPM < 1 || s.tiroDadoPM > dadoPM) {
-      avvisi.push(`Il tiro dei PM (${s.tiroDadoPM}) non è valido per 1d${dadoPM}: va rifatto.`);
-      s.tiroDadoPM = null;
-    }
-  } else {
-    s.tiroDadoPM = null;
-  }
+  // Un numero semplice (formato precedente) diventa { valore, origine: "app" }.
+  const specPM = specTiroPM(classe);
+  s.tiroDadoPM = specPM ? normalizzaTiro(s.tiroDadoPM, specPM, `Tiro dei PM (${specPM.formula})`, avvisi) : null;
 
   // §2.1: Punti Caratteristica
   const sigle = dati.caratteristiche.caratteristiche.map((c) => c.sigla);
@@ -177,12 +202,8 @@ export function normalizza(scelteIn, dati) {
   }
 
   // §2.15: Punti Eroe
-  const pe = r.punti_eroe;
-  if (s.puntiEroe !== null && (!Number.isInteger(s.puntiEroe) || s.puntiEroe < pe.minimo || s.puntiEroe > pe.massimo)) {
-    avvisi.push(`Punti Eroe ${JSON.stringify(s.puntiEroe)} fuori dall’intervallo ${pe.minimo}–${pe.massimo}: da rideterminare.`);
-    s.puntiEroe = null;
-  }
-  if (s.puntiEroe === undefined) s.puntiEroe = null;
+  const specPE = specTiroPuntiEroe(dati);
+  s.puntiEroe = normalizzaTiro(s.puntiEroe, specPE, `Punti Eroe (${specPE.formula})`, avvisi);
 
   return { scelte: s, avvisi };
 }
@@ -234,9 +255,9 @@ export function anteprima(scelte, dati) {
   }
   if (classe) {
     out.pv = puntiVita(car.COS.valore, classe, { dadoMassimizzato: r.creazione.dado_pv_massimizzato });
-    const dado = classe.pm_per_grado.dado;
-    if (dado === 0 || (Number.isInteger(scelte.tiroDadoPM) && scelte.tiroDadoPM >= 1 && scelte.tiroDadoPM <= dado)) {
-      out.pm = puntiMagia(car.SAG.valore, classe, { tiro: scelte.tiroDadoPM ?? undefined });
+    const spec = specTiroPM(classe);
+    if (!spec || tiroValido(scelte.tiroDadoPM, spec)) {
+      out.pm = puntiMagia(car.SAG.valore, classe, { tiro: valoreTiro(scelte.tiroDadoPM) ?? undefined });
     }
   }
   return out;

@@ -133,7 +133,7 @@ test('§2.13: il VA per i punti liberi include il +1 di Classe (§3.1: prima i p
   // Capitol (FOR 5) Taumaturgo Custode:
   // Atletica = FOR 0 + base 0, ma è Abilità di Classe (+1) → VA 1 → ammessa;
   // Armi pesanti = FOR 0 + base 0, non di Classe → VA 0 → vietata.
-  const base = { corporazione: 'Capitol', puntiCaratteristica: { INT: 2, SAG: 2, CAR: 1 }, addestramento: 'Taumaturgo', classe: 'Custode', tiroDadoPM: 2 };
+  const base = { corporazione: 'Capitol', puntiCaratteristica: { INT: 2, SAG: 2, CAR: 1 }, addestramento: 'Taumaturgo', classe: 'Custode', tiroDadoPM: { valore: 2, origine: 'manuale' } };
   const ok = validaScelte({ ...base, puntiAbilitaLiberi: { 'Atletica': 1, 'Potere': 2, 'Percezione': 2 } }, dati);
   assert.deepEqual(ok, []);
   const no = validaScelte({ ...base, puntiAbilitaLiberi: { 'Armi pesanti': 1, 'Potere': 2, 'Percezione': 2 } }, dati);
@@ -167,7 +167,7 @@ test('Taumaturgo: dado dei PM richiesto, incantesimi liberi 2 + Mod INT, quote d
   assert.ok(senzaTiro.errori.some((x) => x.campo === 'tiroDadoPM' && x.tipo === 'incompleto'));
   assert.equal(senzaTiro.pm, null);
 
-  const s = calcolaScheda({ ...scelte, tiroDadoPM: 3 }, dati);
+  const s = calcolaScheda({ ...scelte, tiroDadoPM: { valore: 3, origine: 'app' } }, dati);
   assert.deepEqual(s.errori, []);
   assert.equal(s.pm, 7 + 5 + 3);
   assert.equal(s.pv, 7 + 1 + 4);

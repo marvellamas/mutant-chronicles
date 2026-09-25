@@ -1,10 +1,12 @@
 // I passi del wizard (sequenza §2.0 del Manuale del Giocatore). Ogni passo si genera dai dati.
-import { h, segno, dadi, tira } from './dom.js';
+import { h, segno, dadi } from './dom.js';
 import { validaScelte } from '../calc.js';
-import { eTaumaturgo } from '../character.js';
+import { eTaumaturgo, specTiroPM, specTiroPuntiEroe } from '../character.js';
 import { statoIncantesimi, motivoBloccoIncantesimo, IPOTESI_INCANTESIMI } from '../incantesimi.js';
 import { renderScheda } from './scheda.js';
 import { info, elencoInfo } from './tooltip.js';
+import { componenteTiro } from './tiro.js';
+import { valoreTiro } from '../tiri.js';
 
 const trova = (lista, nome) => lista.find((x) => x.nome === nome);
 const GRADI = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI' };
@@ -16,9 +18,10 @@ const somma = (obj) => Object.values(obj ?? {}).reduce((s, v) => s + v, 0);
  */
 export const PASSI = [
   {
-    titolo: 'Concetto', rif: '§2.0',
+    // Il manuale (§2.0) lo chiama «Concetto»; la chiave nelle scelte resta `concetto`.
+    titolo: 'Background', rif: '§2.0',
     completo: ({ scelte }) => !!scelte.nome.trim() && !!scelte.concetto.trim(),
-    render: passoConcetto,
+    render: passoBackground,
   },
   {
     titolo: 'Corporazione', rif: '§2.9, §2.11',
@@ -60,7 +63,7 @@ export const PASSI = [
   },
   {
     titolo: 'Punti Eroe', rif: '§2.15',
-    completo: ({ scelte }) => Number.isInteger(scelte.puntiEroe),
+    completo: ({ scelte }) => Number.isInteger(valoreTiro(scelte.puntiEroe)),
     render: passoPuntiEroe,
   },
   {
@@ -128,40 +131,17 @@ function stepper(valore, { meno, piu, motivoMeno, motivoPiu, etichetta }) {
   );
 }
 
-/**
- * Campo numerico per inserire a mano un tiro di dado: un valore fuori intervallo resta nel
- * campo con un messaggio d'errore e non modifica le scelte.
- */
-function campoTiro({ etichetta, min, max, valore, imposta }) {
-  const errore = h('small', { class: 'motivo', role: 'alert' });
-  const input = h('input', {
-    type: 'number', min, max, step: 1, inputmode: 'numeric', value: Number.isInteger(valore) ? String(valore) : '',
-    onchange: (e) => {
-      const testo = e.target.value.trim();
-      const n = Number(testo);
-      if (testo === '') return imposta(null);
-      if (!Number.isInteger(n) || n < min || n > max) {
-        errore.textContent = `Inserisci un numero intero da ${min} a ${max}.`;
-        e.target.setAttribute('aria-invalid', 'true');
-        return;
-      }
-      imposta(n);
-    },
-  });
-  return h('label', { class: 'campo-inline' }, etichetta, input, errore);
-}
-
 // ---------------------------------------------------------------------------
-// 0 Concetto
+// 0 Background
 
-function passoConcetto(ctx) {
+function passoBackground(ctx) {
   const { scelte } = ctx;
   return [
-    h('p', { class: 'guida' }, 'Bastano poche righe per definire nome e identità, aspetto generale, passato, motivazioni, obiettivi e rapporto con la Corporazione. Il concetto non assegna bonus e non impone Addestramento o Classe.'),
+    h('p', { class: 'guida' }, 'Bastano poche righe per definire nome e identità, aspetto generale, passato, motivazioni, obiettivi e rapporto con la Corporazione. Il background non assegna bonus e non impone Addestramento o Classe.'),
     h('label', { class: 'campo' }, h('span', {}, 'Nome'),
       h('input', { type: 'text', value: scelte.nome, autocomplete: 'off', maxlength: 80,
         oninput: (e) => ctx.aggiorna({ nome: e.target.value }, { ridisegna: false }) })),
-    h('label', { class: 'campo' }, h('span', {}, 'Concetto'),
+    h('label', { class: 'campo' }, h('span', {}, 'Background'),
       h('textarea', { rows: 6, value: scelte.concetto,
         oninput: (e) => ctx.aggiorna({ concetto: e.target.value }, { ridisegna: false }) })),
   ];
@@ -280,16 +260,12 @@ function talento(ctx, chiave, titolo, testo) {
 }
 
 function pannelloDadoPM(ctx, classe) {
-  const dado = classe.pm_per_grado.dado;
   const t = ctx.scelte.tiroDadoPM;
-  return h('section', { class: `riquadro ${Number.isInteger(t) ? 'ok' : 'attenzione'}` },
-    h('h3', {}, `Dado dei PM di ${classe.nome}: 1d${dado}`),
+  return h('section', { class: `riquadro ${t ? 'ok' : 'attenzione'}` },
+    h('h3', {}, `Dado dei PM di ${classe.nome}`),
     h('p', {}, `Al 1° livello solo il dado dei PV è massimizzato; per i PM si applica il contributo del profilo (${dadi(classe.pm_per_grado)}), quindi il dado va tirato (§2.12, §3.3).`),
-    h('div', { class: 'riga-azioni' },
-      h('button', { type: 'button', class: 'btn primario', onclick: () => ctx.aggiorna({ tiroDadoPM: tira(dado) }) }, `Tira 1d${dado}`),
-      campoTiro({ etichetta: 'oppure inserisci il risultato: ', min: 1, max: dado, valore: t,
-        imposta: (n) => ctx.aggiorna({ tiroDadoPM: n }) }),
-      Number.isInteger(t) ? h('strong', {}, `Risultato: ${t}`) : h('span', { class: 'motivo' }, 'Da tirare')));
+    componenteTiro({ id: 'tiro-pm', spec: specTiroPM(classe), tiro: t, memoria: ctx.ui,
+      imposta: (tiro) => ctx.aggiorna({ tiroDadoPM: tiro }) }));
 }
 
 function passoClasse(ctx) {
@@ -424,22 +400,10 @@ function passoIncantesimi(ctx) {
 
 function passoPuntiEroe(ctx) {
   const pe = ctx.dati.regole.punti_eroe;
-  const v = ctx.scelte.puntiEroe;
-  const tiraPE = () => {
-    const d = Array.from({ length: pe.dadi }, () => tira(pe.facce));
-    const tot = d.reduce((s, x) => s + x, 0) + pe.fisso;
-    ctx.ui.tiroPE = `${d.join(' + ')} + ${pe.fisso} = ${tot}`;
-    ctx.aggiorna({ puntiEroe: tot });
-  };
   return [
-    h('p', { class: 'guida' }, `Tira ${pe.formula}: il risultato va da ${pe.minimo} a ${pe.massimo}. Il massimo posseduto resta sempre ${pe.riserva_massima}. Spesa, recupero e Distintivi seguono il §1.8.`),
-    h('div', { class: 'riga-azioni' },
-      h('button', { type: 'button', class: 'btn primario', onclick: tiraPE }, `Tira ${pe.formula}`),
-      campoTiro({ etichetta: 'oppure inserisci il valore: ', min: pe.minimo, max: pe.massimo, valore: v,
-        imposta: (n) => { ctx.ui.tiroPE = null; ctx.aggiorna({ puntiEroe: n }); } })),
-    Number.isInteger(v)
-      ? h('p', { class: 'risultato' }, 'Punti Eroe iniziali: ', h('strong', {}, String(v)), ctx.ui.tiroPE ? h('small', {}, ` (tiro: ${ctx.ui.tiroPE})`) : null)
-      : h('p', { class: 'motivo' }, 'Da determinare.'),
+    h('p', { class: 'guida' }, `I Punti Eroe iniziali si determinano con ${pe.formula}. Il massimo posseduto resta sempre ${pe.riserva_massima}. Spesa, recupero e Distintivi seguono il §1.8.`),
+    componenteTiro({ id: 'tiro-pe', spec: specTiroPuntiEroe(ctx.dati), tiro: ctx.scelte.puntiEroe, memoria: ctx.ui,
+      imposta: (tiro) => ctx.aggiorna({ puntiEroe: tiro }) }),
   ];
 }
 

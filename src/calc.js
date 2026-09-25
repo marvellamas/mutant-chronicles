@@ -1,5 +1,6 @@
 // Motore di calcolo: funzioni pure. Le costanti numeriche arrivano dai dati (data/*.json);
 // qui stanno solo le formule, ciascuna con il paragrafo del Manuale del Giocatore.
+import { valoreTiro, motivoFuoriIntervallo, specTiro } from './tiri.js';
 
 /** §2.1: modificatore ordinario (tabella in caratteristiche.json, oggi valore − 5). */
 export function modOrdinario(valore, tabella) {
@@ -76,7 +77,7 @@ export function bonusAvanzamentoSalvezze(livello, regole) {
  *   addestramento: 'Avventuriero',
  *   classe: 'Agente',
  *   puntiAbilitaLiberi: { 'Furtività': 2, 'Percezione': 2, 'Medicina': 1 },
- *   tiroDadoPM: 3            // solo se la Classe ha un dado nei PM
+ *   tiroDadoPM: { valore: 3, origine: 'app' }  // solo se la Classe ha un dado nei PM (src/tiri.js)
  * }
  */
 
@@ -188,7 +189,10 @@ export function validaScelte(scelte, dati) {
   if (dadoPM > 0) {
     const t = scelte?.tiroDadoPM;
     if (t === undefined || t === null) err('tiroDadoPM', `manca il tiro di 1d${dadoPM} per i PM`, 'incompleto');
-    else if (!Number.isInteger(t) || t < 1 || t > dadoPM) err('tiroDadoPM', `il tiro di 1d${dadoPM} deve essere fra 1 e ${dadoPM}`);
+    else {
+      const motivo = motivoFuoriIntervallo(valoreTiro(t), specTiro({ facce: dadoPM }));
+      if (motivo) err('tiroDadoPM', `tiro dei PM non valido: ${motivo}`);
+    }
   }
   return errori;
 }
@@ -223,8 +227,9 @@ export function calcolaScheda(scelte, dati) {
 
   const pv = puntiVita(car.COS.valore, classe, { dadoMassimizzato: r.creazione.dado_pv_massimizzato });
   const dadoPM = classe.pm_per_grado.dado;
-  const tiroPMValido = dadoPM === 0 || (Number.isInteger(scelte.tiroDadoPM) && scelte.tiroDadoPM >= 1 && scelte.tiroDadoPM <= dadoPM);
-  const pm = tiroPMValido ? puntiMagia(car.SAG.valore, classe, { tiro: scelte.tiroDadoPM }) : null;
+  const tiroPM = valoreTiro(scelte.tiroDadoPM);
+  const tiroPMValido = dadoPM === 0 || motivoFuoriIntervallo(tiroPM, specTiro({ facce: dadoPM })) === null;
+  const pm = tiroPMValido ? puntiMagia(car.SAG.valore, classe, { tiro: tiroPM ?? undefined }) : null;
 
   const scheda = {
     livello,

@@ -1,6 +1,7 @@
 // Riepilogo live: colonna laterale su desktop, barra richiudibile su telefono.
 import { h, segno } from './dom.js';
 import { info } from './tooltip.js';
+import { valoreTiro } from '../tiri.js';
 
 export function renderRiepilogo(ctx) {
   const { dati, scelte, ante, ui } = ctx;
@@ -29,7 +30,7 @@ export function renderRiepilogo(ctx) {
         rimasti('Punti Caratteristica', ante.puntiCaratteristicaRimasti, cr.punti_caratteristica),
         rimasti('Punti Abilità Liberi', ante.puntiAbilitaRimasti, cr.punti_abilita_liberi),
         inc ? rimasti('Incantesimi', inc.totale - inc.scelti, inc.totale) : null,
-        Number.isInteger(scelte.puntiEroe) ? null : h('li', { class: 'attenzione' }, 'Punti Eroe da determinare')),
+        Number.isInteger(valoreTiro(scelte.puntiEroe)) ? null : h('li', { class: 'attenzione' }, 'Punti Eroe da determinare')),
 
       h('h3', {}, 'Caratteristiche'),
       ante.caratteristiche

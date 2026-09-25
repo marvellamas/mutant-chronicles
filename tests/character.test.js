@@ -19,7 +19,7 @@ const MISHIMA_AGENTE = {
   addestramento: 'Avventuriero',
   classe: 'Agente',
   puntiAbilitaLiberi: { 'Furtività': 2, 'Percezione': 2, 'Medicina': 1 },
-  puntiEroe: 5,
+  puntiEroe: { valore: 5, origine: 'manuale' },
 };
 
 const ARCANISTA = {
@@ -30,9 +30,9 @@ const ARCANISTA = {
   puntiCaratteristica: { INT: 2, SAG: 1, COS: 2 },
   addestramento: 'Taumaturgo',
   classe: 'Arcanista',
-  tiroDadoPM: 3,
+  tiroDadoPM: { valore: 3, origine: 'app' },
   puntiAbilitaLiberi: { 'Potere': 2, 'Occultismo': 2, 'Cultura': 1 },
-  puntiEroe: 6,
+  puntiEroe: { valore: 6, origine: 'app' },
 };
 
 test('le scelte di esempio sono già coerenti: normalizza non cambia nulla', () => {

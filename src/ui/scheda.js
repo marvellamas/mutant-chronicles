@@ -4,6 +4,7 @@ import { checklist } from '../checklist.js';
 import { statoIncantesimi } from '../incantesimi.js';
 import { rigaAlLivello } from '../descrizioni.js';
 import { info } from './tooltip.js';
+import { valoreTiro } from '../tiri.js';
 
 const trova = (lista, nome) => lista.find((x) => x.nome === nome);
 const GRADI = { 1: 'I', 3: 'III', 5: 'V' };
@@ -36,7 +37,7 @@ export function renderScheda(ctx) {
       h('header', { class: 'scheda-testa' },
         h('h2', {}, scelte.nome.trim() || 'Personaggio senza nome'),
         h('p', {}, `${s.corporazione} · ${s.addestramento} · ${s.classe} (I Grado) · ${s.livello}° livello`),
-        scelte.concetto.trim() ? h('p', { class: 'concetto' }, scelte.concetto) : null),
+        scelte.concetto.trim() ? h('div', { class: 'background' }, h('h3', {}, 'Background'), h('p', { class: 'concetto' }, scelte.concetto)) : null),
 
       h('div', { class: 'scheda-griglia' },
         h('section', {},
@@ -50,11 +51,11 @@ export function renderScheda(ctx) {
           h('h3', {}, 'Valori derivati'),
           h('dl', { class: 'voci griglia-voci' },
             voce('Punti Vita', s.pv),
-            voce('Punti Magia', s.pm ?? 'da tirare'),
+            voce('Punti Magia', s.pm === null ? 'da tirare' : `${s.pm}${scelte.tiroDadoPM?.origine === 'manuale' ? ' (dado tirato dal vivo)' : ''}`),
             voce('Iniziativa', `${segno(s.iniziativa)} (+1d10)`),
             voce('Movimento', `Passo ${s.movimento.passo} ${s.movimento.unita} · Corsa ${s.movimento.corsa} ${s.movimento.unita} · Scatto ${s.movimento.scatto} ${s.movimento.unita}`),
             voce('Azioni', `${s.azioni.movimento} di Movimento, ${s.azioni.principali} Principale`),
-            voce('Punti Eroe', Number.isInteger(scelte.puntiEroe) ? `${scelte.puntiEroe} (max ${dati.regole.punti_eroe.riserva_massima})` : 'da determinare'),
+            voce('Punti Eroe', Number.isInteger(valoreTiro(scelte.puntiEroe)) ? `${valoreTiro(scelte.puntiEroe)} (max ${dati.regole.punti_eroe.riserva_massima}${scelte.puntiEroe.origine === 'manuale' ? ', tirato dal vivo' : ''})` : 'da determinare'),
             voce('Distintivi', '')),
           h('h3', {}, 'Prove Salvezza'),
           h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },
