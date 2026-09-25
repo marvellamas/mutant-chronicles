@@ -2,7 +2,9 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   preparaStampa, tronca, primaFrase, versioniAccessibili, vociEquipaggiamento, intestazioneBreve, LIMITI_STAMPA,
+  preparaTab, spezzaMagia, contaIncantesimi, rinumera,
 } from '../src/stampa.js';
+import { CAMPI_ANAGRAFICA } from '../src/character.js';
 import { datiReali } from './helpers.js';
 import { MISHIMA_AGENTE, ARCANISTA, tiro } from './personaggi.js';
 
@@ -115,4 +117,83 @@ test('creazione non calcolabile: nessun foglio', () => {
   const st = preparaStampa({ nome: 'Vuoto' }, dati);
   assert.equal(st.fogli.length, 0);
   assert.equal(st.completa, false);
+});
+
+// --- anagrafica, tab della scheda digitale, foglio Magia su più pagine ---------------------
+
+test('anagrafica nel foglio 1: i campi vuoti restano vuoti (riga da compilare), PX numerici o null', () => {
+  const vuota = foglio(preparaStampa(MISHIMA_AGENTE, dati), 'identita').dati;
+  assert.deepEqual(vuota.anagrafica.map((x) => x.campo), CAMPI_ANAGRAFICA.map((c) => c.campo));
+  assert.ok(vuota.anagrafica.every((x) => x.valore === ''));
+  assert.equal(vuota.puntiEsperienza, null);
+  const piena = foglio(preparaStampa({ ...MISHIMA_AGENTE, soprannome: 'Ombra', manoDominante: 'sinistra', puntiEsperienza: 1200 }, dati), 'identita').dati;
+  assert.equal(piena.anagrafica.find((x) => x.campo === 'soprannome').valore, 'Ombra');
+  assert.equal(piena.anagrafica.find((x) => x.campo === 'manoDominante').valore, 'sinistra');
+  assert.equal(piena.puntiEsperienza, 1200);
+});
+
+test('preparaTab: stesse sezioni della stampa senza troncamenti, con Progressione e §2.17 in Identità', () => {
+  const lungo = { creazione: { ...MISHIMA_AGENTE, concetto: 'parola '.repeat(400).trim() }, livelli: [] };
+  const t = preparaTab(lungo, dati);
+  assert.deepEqual(t.tab.map((x) => x.titolo), ['Identità', 'Abilità', 'Combattimento']);
+  const id = t.tab[0].dati;
+  assert.equal(id.background, 'parola '.repeat(400).trim()); // intero
+  assert.equal(id.backgroundTroncato, false);
+  assert.deepEqual(id.progressione.map((r) => r.livello), [1]);
+  assert.ok(id.checklist.length >= 9);
+  // i Talenti hanno il testo completo, non la prima frase
+  const classe = dati.classi.classi.find((c) => c.nome === 'Agente');
+  assert.equal(t.tab[1].dati.talentiClasse[0].frase, classe.talenti_fissi[0].testo.trim());
+  // la tab Magia c'è solo con accesso agli incantesimi
+  assert.deepEqual(preparaTab(ARCANISTA, dati).tab.map((x) => x.id), ['identita', 'abilita', 'combattimento', 'magia']);
+  // i fogli di stampa invece troncano
+  const st = preparaStampa(lungo, dati);
+  assert.ok(foglio(st, 'identita').dati.background.endsWith('…'));
+});
+
+test('spezzaMagia: pagine con i tagli indicati, intestazioni dei gruppi ripetute con «continua»', () => {
+  const magia = foglio(preparaStampa(ARCANISTA, dati), 'magia').dati;
+  const totale = contaIncantesimi(magia.macrofamiglie);
+  assert.equal(totale, ARCANISTA.incantesimi.length);
+  const nomi = (pagina) => pagina.macrofamiglie.flatMap((m) => m.specializzazioni.flatMap((s) => s.incantesimi.map((i) => i.nome)));
+  const tutti = nomi(magia);
+
+  // un'unica pagina senza tagli: tutto come prima
+  const una = spezzaMagia(magia, []);
+  assert.equal(una.length, 1);
+  assert.deepEqual(nomi(una[0]), tutti);
+  assert.equal(una[0].prima, true);
+
+  // due pagine: 4 incantesimi nella prima, il resto nella seconda, nell'ordine
+  const due = spezzaMagia(magia, [4]);
+  assert.equal(due.length, 2);
+  assert.deepEqual(nomi(due[0]), tutti.slice(0, 4));
+  assert.deepEqual(nomi(due[1]), tutti.slice(4));
+  assert.equal(due[0].prima, true);
+  assert.equal(due[1].continuazione, true);
+  // il gruppo spezzato fra le due pagine si ripete, marcato «continua»
+  const ultimoM = due[0].macrofamiglie.at(-1);
+  const ultimaSp = ultimoM.specializzazioni.at(-1);
+  const primoM2 = due[1].macrofamiglie[0];
+  assert.equal(primoM2.nome, ultimoM.nome);
+  assert.equal(primoM2.continua, true);
+  assert.equal(primoM2.specializzazioni[0].nome, ultimaSp.nome);
+  assert.equal(primoM2.specializzazioni[0].continua, true);
+  assert.equal(due[0].macrofamiglie[0].continua, false);
+
+  // tre pagine; tagli oltre il totale non creano pagine vuote
+  const tre = spezzaMagia(magia, [5, 5]);
+  assert.equal(tre.length, 3);
+  assert.equal(tre.flatMap(nomi).length, totale);
+  assert.equal(spezzaMagia(magia, [totale, 3]).length, 1);
+  // le pagine conservano i dati dell'intestazione del foglio (PM, scala)
+  assert.equal(tre[2].pm, magia.pm);
+});
+
+test('rinumera: «foglio N di M» dopo aver aggiunto pagine Magia', () => {
+  const st = preparaStampa(ARCANISTA, dati);
+  const magia = foglio(st, 'magia');
+  const pagine = spezzaMagia(magia.dati, [6]).map((d) => ({ ...magia, dati: d }));
+  const fogli = rinumera([...st.fogli.filter((f) => f.id !== 'magia'), ...pagine]);
+  assert.deepEqual(fogli.map((f) => `${f.numero} di ${f.totale}`), ['1 di 5', '2 di 5', '3 di 5', '4 di 5', '5 di 5']);
 });

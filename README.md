@@ -69,12 +69,30 @@ pagina resta sul messaggio «Caricamento…», che spiega cosa fare.
 I personaggi si salvano automaticamente nel browser (localStorage). Per passarli a un altro
 dispositivo o al master si usano **Esporta** (file JSON con le sole scelte) e **Importa**.
 
-**Stampa e PDF.** Nella scheda finale, **Stampa** apre l'anteprima dei fogli A4 orizzontali
+**Stampa e PDF.** Nella scheda, *Azioni → Stampa* apre l'anteprima dei fogli A4 orizzontali
 (3, o 4 con la Magia); lì **Stampa** apre il dialogo del browser, dove per il PDF si sceglie
 la stampante «Salva come PDF» (lascia orientamento e margini come proposti, scala 100%).
+Ogni foglio sta in una pagina; solo il foglio Magia di un Taumaturgo con molti incantesimi
+continua su altre pagine («foglio 5 di 6»), con le intestazioni dei gruppi ripetute.
 
-Il passo 0 del wizard si chiama **Background** (nel manuale, §2.0, «Concetto»; nei file
-salvati il campo resta `concetto`).
+**Scheda a tab e modalità tavolo.** Finita la creazione, la scheda (`#/p/<id>`) ha quattro tab
+come i fogli stampati: Identità, Abilità, Combattimento e Magia (solo con accesso agli
+incantesimi). Le tab stanno a sinistra sugli schermi larghi e in basso su telefono e tablet;
+l'ingranaggio ⚙ permette di sceglierne la posizione (salvata nel browser). Il menu *Azioni*
+raccoglie Stampa, Esporta, Modifica creazione, Annulla l'ultimo livello e Nuova sessione.
+Durante il gioco la scheda tiene i **valori attuali** della sessione: PV, PM, Punti Eroe,
+Distintivi (con la conversione 5 → 1 Punto Eroe del §1.8.3), Ferite, Affaticamento, Stati
+attivi e note, con pulsanti grandi per il dito. Si salvano con il personaggio in un blocco
+`sessione` separato dalle scelte: non si ricalcolano, e se un massimo cambia (nuovo livello,
+tabella modificata) vengono solo limitati al nuovo massimo. «Nuova sessione» riporta PV e PM
+ai massimi e azzera Stati, Ferite e Affaticamento (note, Punti Eroe e Distintivi restano);
+«↶ Annulla» annulla l'ultima modifica di sessione. Le penalità di Ferite, Affaticamento e
+Stati compaiono come promemoria: i VA della scheda non le includono.
+
+Il passo 0 del wizard si chiama **Background e anagrafica** (nel manuale, §2.0, «Concetto»;
+nei file salvati il testo resta `concetto`). L'anagrafica (soprannome, età, città di nascita,
+altezza, peso, occhi, capelli, mano dominante, segni distintivi) e i punti esperienza sono
+facoltativi; i PX sono un numero libero senza regole, modificabile anche dalla scheda.
 
 **Tiri di dado.** Dove serve un tiro (dado dei PM delle Classi taumaturgiche, Punti Eroe
 2d3+1) si può premere **Tira** oppure inserire il risultato tirato dal vivo: l'app rifiuta
@@ -145,9 +163,10 @@ i tiri di PV e PM, Tecniche Interiori e Incantesimi quando le scelte li concedon
 Abilità, riepilogo. Nulla si salva fino a «Conferma»; uscire prima chiede conferma. La
 scheda mostra la Progressione (una riga per livello) e «Annulla l'ultimo
 livello». Con dei livelli acquisiti la creazione resta consultabile ma bloccata, tranne
-nome, background ed equipaggiamento. La home mostra il livello di ogni personaggio. Il file
-esportato (formato 3) contiene anche i livelli; i file dei formati 1 e 2 si importano come
-personaggi al 1° livello.
+nome, Background, anagrafica ed equipaggiamento. La home mostra il livello di ogni personaggio.
+Il file esportato (formato 4) contiene anche i livelli, l'anagrafica e la sessione; i file dei
+formati 1 e 2 si importano come personaggi al 1° livello, e senza sessione la si inizializza ai
+massimi.
 
 Un personaggio è `{ "creazione": {…scelte…}, "livelli": [ {"livello": 2, …}, … ] }`: la scheda si
 ricalcola rigiocando la creazione e i livelli dall'inizio, con i limiti di ciascun livello.
@@ -195,9 +214,11 @@ src/checklist.js  controllo finale §2.17
 src/descrizioni.js  contenuto dei tooltip e della scheda completa degli incantesimi
 src/tiri.js       tiri di dado { valore, origine }: formula, intervallo, migrazione
 src/avanzamento.js  personaggio a livelli: ricalcolo, validazione di un livello, prossimo livello
-src/ui/           interfaccia (wizard, riepilogo, scheda, home, tooltip, tiro di dado)
+src/ui/           interfaccia (wizard, riepilogo, home, tooltip, tiro di dado)
+src/ui/tab.js     scheda a tab e modalità tavolo
+src/sessione.js   valori attuali della sessione (funzioni pure)
 src/ui/sali.js    schermata «Sali di livello»
-src/stampa.js     dati dei fogli di stampa (funzioni pure)
+src/stampa.js     dati dei fogli di stampa e delle tab (funzioni pure)
 src/ui/stampa.js  vista di stampa A4 orizzontale, con css/stampa.css
 data/             regole in JSON
 tests/            node --test

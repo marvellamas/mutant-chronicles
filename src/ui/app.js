@@ -1,10 +1,14 @@
-// Avvio dell'app: carica e valida i dati, poi mostra home, wizard o "Sali di livello".
-// Stato: le scelte della creazione e i livelli acquisiti (cap. 8) del personaggio aperto; tutto
-// il resto si ricalcola a ogni disegno con calcolaScheda / anteprima.
+// Avvio dell'app: carica e valida i dati, poi mostra home, wizard, scheda a tab, "Sali di
+// livello" o stampa. Stato: le scelte della creazione, i livelli acquisiti (cap. 8) e i valori
+// di sessione (modalità tavolo) del personaggio aperto; tutto il resto si ricalcola a ogni
+// disegno con calcolaScheda / anteprima.
 import { caricaDati } from '../rules.js';
 import { formattaErrore, trovaTodo } from '../validate.js';
 import { calcolaScheda, validaLivello } from '../calc.js';
-import { nuoveScelte, normalizza, applicaModifica, anteprima, serializza, deserializzaPersonaggio, applicaLivello, annullaUltimoLivello } from '../character.js';
+import {
+  nuoveScelte, normalizza, applicaModifica, anteprima, serializza, deserializzaPersonaggio, applicaLivello, annullaUltimoLivello,
+  CAMPI_ANAGRAFICA,
+} from '../character.js';
 import { h, svuota, scaricaFile, nomeFileSicuro } from './dom.js';
 import * as archivio from './storage.js';
 import { PASSI, passoVisibile, requisitoPasso } from './passi.js';
@@ -12,12 +16,20 @@ import { inizializzaTooltip, nascondiTooltip } from './tooltip.js';
 import { renderRiepilogo } from './riepilogo.js';
 import { renderSali } from './sali.js';
 import { renderStampa, esciDallaStampa } from './stampa.js';
-import { preparaStampa } from '../stampa.js';
+import { preparaStampa, preparaTab } from '../stampa.js';
+import { renderTab } from './tab.js';
+import {
+  massimiSessione, allineaSessione, variaSessione, modificaSessione, commutaStato, nuovaSessione, convertiDistintivi,
+  penalitaSessione,
+} from '../sessione.js';
 
 // Dopo la creazione si possono ancora cambiare solo i campi descrittivi: le altre scelte
 // determinano i livelli successivi (ricognizione dell'avanzamento, §8).
-const CAMPI_LIBERI_DOPO_LIVELLI = ['nome', 'concetto', 'equipaggiamento'];
+const CAMPI_LIBERI_DOPO_LIVELLI = ['nome', 'concetto', 'equipaggiamento', 'puntiEsperienza', ...CAMPI_ANAGRAFICA.map((c) => c.campo)];
+// L'ultimo passo del wizard è la scheda: si apre come vista a tab (#/p/<id>).
 const PASSO_SCHEDA = PASSI.length - 1;
+const PASSO_EQUIPAGGIAMENTO = PASSI.findIndex((p) => p.titolo === 'Equipaggiamento');
+const TAB = ['identita', 'abilita', 'combattimento', 'magia'];
 
 const radice = document.getElementById('app');
 
@@ -28,6 +40,10 @@ const stato = {
   scelte: null,
   livelli: [], // scelte dei livelli dal 2° in poi (cap. 8)
   sali: null, // bozza del livello successivo: { voce, passo, ui }. Non si salva fino alla conferma.
+  sessione: null, // valori attuali della modalità tavolo (src/sessione.js); null finché non si apre la scheda
+  sessionePrecedente: null, // per «Annulla ultima modifica» (una sola, in memoria)
+  tab: 'identita',
+  messaggioScheda: null,
   passo: 0,
   avvisi: [], // avvisi dell'ultima modifica che ha invalidato scelte a valle
   precedente: null, // scelte prima di quella modifica, per "Annulla"
@@ -53,6 +69,10 @@ async function avvia() {
   stato.avvisiDati = risultato.avvisi ?? [];
   inizializzaTooltip(stato.dati);
   window.addEventListener('hashchange', daIndirizzo);
+  // I menu della scheda (Azioni, impostazioni) si chiudono toccando altrove
+  document.addEventListener('click', (e) => {
+    for (const d of document.querySelectorAll('details.menu-azioni[open]')) if (!d.contains(e.target)) d.open = false;
+  });
   window.addEventListener('beforeunload', (e) => {
     if (bozzaModificata()) e.preventDefault();
   });
@@ -113,7 +133,8 @@ function daIndirizzo() {
     stato.sali = null;
   }
   const stampa = location.hash.match(/^#\/p\/([\w-]+)\/(stampa)$/);
-  const m = sali ?? stampa ?? location.hash.match(/^#\/p\/([\w-]+)\/(\d+)$/);
+  const scheda = location.hash.match(/^#\/p\/([\w-]+)(?:\/t\/(\w+))?$/);
+  const m = sali ?? stampa ?? scheda ?? location.hash.match(/^#\/p\/([\w-]+)\/(\d+)$/);
   if (!m) {
     stato.id = null;
     stato.scelte = null;
@@ -132,6 +153,9 @@ function daIndirizzo() {
     stato.id = id;
     stato.scelte = scelte;
     stato.livelli = Array.isArray(salvato.livelli) ? salvato.livelli : [];
+    stato.sessione = salvato.sessione ?? null;
+    stato.sessionePrecedente = null;
+    stato.messaggioScheda = null;
     stato.avvisi = avvisi.length ? ['Il personaggio salvato non era più coerente con i dati attuali:', ...avvisi] : [];
     stato.precedente = null;
     stato.ui.aperti.clear();
@@ -140,7 +164,10 @@ function daIndirizzo() {
   }
   if (sali) return apriSali(Number(passoTesto));
   if (stampa) return apriStampa();
+  if (scheda) return apriScheda(TAB.includes(passoTesto) ? passoTesto : null);
   const passo = Math.min(Number(passoTesto), PASSI.length - 1);
+  // L'ultimo passo del wizard è la scheda a tab
+  if (passo === PASSO_SCHEDA) return vai(`#/p/${id}`);
   // Gli avvisi riguardano l'ultima modifica: cambiando passo non servono più.
   if (!appenaCaricato && passo !== stato.passo) {
     stato.avvisi = [];
@@ -161,23 +188,32 @@ const personaggio = () => ({ creazione: stato.scelte, livelli: stato.livelli });
 
 function persisti() {
   if (!stato.id) return;
-  stato.salvataggioOk = archivio.salva({ id: stato.id, scelte: stato.scelte, livelli: stato.livelli, passo: stato.passo });
+  stato.salvataggioOk = archivio.salva({ id: stato.id, scelte: stato.scelte, livelli: stato.livelli, sessione: stato.sessione, passo: stato.passo });
 }
 
-function esporta(scelte, livelli = []) {
+function esporta(scelte, livelli = [], sessione = null) {
   const versioniDatiFile = Object.fromEntries(Object.entries(stato.dati).map(([k, v]) => [k, v.versione_manuale]));
-  scaricaFile(nomeFileSicuro(scelte.nome), serializza(scelte, { versioniDati: versioniDatiFile, livelli }));
+  scaricaFile(nomeFileSicuro(scelte.nome), serializza(scelte, { versioniDati: versioniDatiFile, livelli, sessione }));
+}
+
+/** Sessione allineata ai massimi attuali (inizializzata se manca), o null se la scheda non si calcola. */
+function sessioneAllineata(creazione, livelli, sessione) {
+  const scheda = calcolaScheda({ creazione, livelli }, stato.dati);
+  if (!scheda.caratteristiche) return sessione ?? null;
+  return allineaSessione(sessione, massimiSessione(scheda, creazione, stato.dati));
 }
 
 async function importa(file) {
   try {
-    const { creazione, livelli } = deserializzaPersonaggio(await file.text());
+    const { creazione, livelli, sessione: sessioneFile } = deserializzaPersonaggio(await file.text());
     const { scelte, avvisi } = normalizza(creazione, stato.dati);
     const id = archivio.nuovoId();
     // I livelli non si correggono in automatico: eventuali errori compaiono nella scheda.
     const errLivelli = livelli.length ? calcolaScheda({ creazione: scelte, livelli }, stato.dati).errori.filter((e) => e.campo.startsWith('livelli')) : [];
     if (errLivelli.length) avvisi.push(`Livelli con errori rispetto ai dati attuali: ${errLivelli[0].problema}`);
-    if (!archivio.salva({ id, scelte, livelli, passo: livelli.length ? PASSO_SCHEDA : 0 })) throw new Error('Impossibile salvare nel browser (spazio o permessi).');
+    // senza `sessione` nel file la si inizializza ai massimi; altrimenti la si limita ai massimi attuali
+    const sessione = sessioneAllineata(scelte, livelli, sessioneFile);
+    if (!archivio.salva({ id, scelte, livelli, sessione, passo: livelli.length || calcolaScheda(scelte, stato.dati).completa ? PASSO_SCHEDA : 0 })) throw new Error('Impossibile salvare nel browser (spazio o permessi).');
     stato.messaggioHome = {
       tipo: avvisi.length ? 'attenzione' : 'ok',
       testo: `Importato «${scelte.nome || file.name}».`,
@@ -234,8 +270,8 @@ function rigaPersonaggio(p) {
       h('p', {}, h('strong', {}, `Livello ${1 + livelli.length}`), ' · ', [s.corporazione, s.addestramento, s.classe].filter(Boolean).join(' · ') || 'Appena iniziato'),
       h('p', { class: 'nota' }, `Modificato ${data}`)),
     h('div', { class: 'riga-azioni' },
-      h('button', { type: 'button', class: 'btn primario', onclick: () => vai(`#/p/${p.id}/${p.passo ?? 0}`) }, 'Apri'),
-      h('button', { type: 'button', class: 'btn', onclick: () => esporta(normalizza(s, stato.dati).scelte, livelli) }, 'Esporta'),
+      h('button', { type: 'button', class: 'btn primario', onclick: () => vai(p.passo === PASSO_SCHEDA ? `#/p/${p.id}` : `#/p/${p.id}/${p.passo ?? 0}`) }, 'Apri'),
+      h('button', { type: 'button', class: 'btn', onclick: () => esporta(normalizza(s, stato.dati).scelte, livelli, p.sessione ?? null) }, 'Esporta'),
       h('button', { type: 'button', class: 'btn pericolo', onclick: () => {
         if (confirm(`Eliminare «${s.nome?.trim() || 'Senza nome'}» da questo browser? L’operazione non si annulla (esporta prima il file se vuoi conservarlo).`)) {
           archivio.elimina(p.id);
@@ -366,7 +402,7 @@ function renderWizard() {
           h('h1', { id: 'titolo-passo' }, passo.titolo)),
         stato.salvataggioOk ? null : h('p', { class: 'riquadro attenzione' }, 'Il browser non permette il salvataggio automatico: usa Esporta per non perdere il personaggio.'),
         stato.livelli.length && stato.passo !== PASSO_SCHEDA ? h('p', { class: 'riquadro attenzione no-stampa' },
-          `Personaggio al ${1 + stato.livelli.length}° livello: la creazione si può consultare ma non modificare (tranne nome, background ed equipaggiamento). Per cambiarla annulla i livelli dalla scheda finale.`) : null,
+          `Personaggio al ${1 + stato.livelli.length}° livello: la creazione si può consultare ma non modificare (tranne nome, Background, anagrafica ed equipaggiamento). Per cambiarla annulla i livelli dalla scheda finale.`) : null,
         avvisi,
         corpo,
         h('footer', { class: 'passo-piede no-stampa' },
@@ -401,7 +437,8 @@ function annullaLivello() {
   if (!stato.livelli.length || !confirm(`Annullare il ${n}° livello? Le sue scelte andranno perse (si torna al ${n - 1}° livello).`)) return;
   stato.livelli = annullaUltimoLivello(personaggio()).livelli;
   persisti();
-  renderWizard();
+  stato.messaggioScheda = { tipo: 'ok', testo: `${n}° livello annullato.` };
+  renderScheda();
 }
 
 function apriSali(passo) {
@@ -439,12 +476,12 @@ function renderSaliPagina() {
       stato.passo = PASSO_SCHEDA;
       persisti();
       if (!stato.salvataggioOk) alert('Livello aggiunto, ma il browser non permette il salvataggio: usa Esporta per non perderlo.');
-      vai(`#/p/${stato.id}/${PASSO_SCHEDA}`);
+      vai(`#/p/${stato.id}`);
     },
     esci() {
       if (bozzaModificata() && !confirm(MSG_USCITA)) return;
       stato.sali = null;
-      vai(`#/p/${stato.id}/${PASSO_SCHEDA}`);
+      vai(`#/p/${stato.id}`);
     },
   }));
 }
@@ -456,6 +493,118 @@ function apriStampa() {
   nascondiTooltip();
   document.title = `${stato.scelte.nome.trim() || 'Personaggio'} — Stampa · Mutant`;
   const stampa = preparaStampa(personaggio(), stato.dati, { versioniDati: stato.versioni });
-  svuota(radice, ...renderStampa({ stampa, torna: () => vai(`#/p/${stato.id}/${PASSO_SCHEDA}`) }));
+  svuota(radice, ...renderStampa({ stampa, torna: () => vai(`#/p/${stato.id}`) }));
   window.scrollTo(0, 0);
+}
+
+// ---------------------------------------------------------------------------
+// Scheda a tab (#/p/<id>) e modalità tavolo
+
+function apriScheda(tab) {
+  if (tab) stato.tab = tab;
+  stato.passo = PASSO_SCHEDA;
+  persisti();
+  renderScheda();
+  window.scrollTo(0, 0);
+}
+
+/** Cambia tab senza aggiungere voci alla cronologia: il tasto Indietro non scorre le tab. */
+function vaiTab(id) {
+  stato.tab = id;
+  history.replaceState(null, '', `#/p/${stato.id}/t/${id}`);
+  renderScheda();
+  window.scrollTo(0, 0);
+}
+
+function renderScheda({ mantieniScorrimento = false } = {}) {
+  nascondiTooltip();
+  const y = window.scrollY;
+  const { dati } = stato;
+  const tab = preparaTab(personaggio(), dati);
+  document.title = `${stato.scelte.nome.trim() || 'Personaggio'} — Scheda · Mutant`;
+  if (!tab.tab.length) {
+    svuota(radice, h('section', { class: 'passo' },
+      h('h1', {}, stato.scelte.nome.trim() || 'Personaggio'),
+      h('p', { class: 'nota errore' }, 'La scheda non si può ancora calcolare: completa la creazione.'),
+      h('button', { type: 'button', class: 'btn primario', onclick: () => vaiAlPasso(0) }, 'Continua la creazione')));
+    return;
+  }
+  const massimi = massimiSessione(tab.scheda, stato.scelte, dati);
+  // Se i massimi sono cambiati (nuovo livello, tabella modificata) i valori attuali si limitano,
+  // senza riazzerarli; alla prima apertura la sessione si inizializza ai massimi.
+  const allineata = allineaSessione(stato.sessione, massimi);
+  if (JSON.stringify(allineata) !== JSON.stringify(stato.sessione)) {
+    stato.sessione = allineata;
+    persisti();
+  }
+  const attiva = tab.tab.some((t) => t.id === stato.tab) ? stato.tab : 'identita';
+  const schedaCreazione = calcolaScheda(stato.scelte, dati);
+  const messaggio = stato.messaggioScheda;
+  stato.messaggioScheda = null;
+
+  // Ogni modifica di sessione salva subito e tiene da parte lo stato precedente per «Annulla».
+  const cambiaSessione = (nuova, { ridisegna = true } = {}) => {
+    if (!nuova) return;
+    stato.sessionePrecedente = stato.sessione;
+    stato.sessione = nuova;
+    persisti();
+    if (ridisegna) renderScheda({ mantieniScorrimento: true });
+  };
+
+  svuota(radice, ...renderTab({
+    dati,
+    tab,
+    attiva,
+    scelte: stato.scelte,
+    livelli: stato.livelli,
+    sessione: stato.sessione,
+    massimi,
+    penalita: penalitaSessione(stato.sessione, dati),
+    posizione: archivio.leggiImpostazioni().posizioneTab,
+    puoAnnullareSessione: !!stato.sessionePrecedente,
+    motivoNoSalita: !schedaCreazione.completa ? 'Completa la creazione prima di salire di livello.'
+      : tab.errori.length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
+    messaggio: messaggio ?? (stato.salvataggioOk ? null : { tipo: 'attenzione', testo: 'Il browser non permette il salvataggio: usa Esporta per non perdere il personaggio.' }),
+    passi: { background: 0, equipaggiamento: PASSO_EQUIPAGGIAMENTO },
+    ui: stato.ui,
+    azioni: {
+      vaiTab,
+      sali: saliDiLivello,
+      annullaLivello,
+      stampa: () => vai(`#/p/${stato.id}/stampa`),
+      esporta: () => esporta(stato.scelte, stato.livelli, stato.sessione),
+      modificaCreazione: (passo = 0) => vaiAlPasso(passo),
+      nuovaSessione: () => {
+        if (!confirm('Nuova sessione: PV e PM tornano ai massimi, Stati, Ferite e Affaticamento si azzerano. Note, Punti Eroe e Distintivi restano. Procedere?')) return;
+        cambiaSessione(nuovaSessione(stato.sessione, massimi));
+      },
+      annullaSessione: () => {
+        if (!stato.sessionePrecedente) return;
+        stato.sessione = stato.sessionePrecedente;
+        stato.sessionePrecedente = null;
+        persisti();
+        renderScheda({ mantieniScorrimento: true });
+      },
+      varia: (campo, delta) => cambiaSessione(variaSessione(stato.sessione, campo, delta, massimi)),
+      imposta: (campo, valore) => cambiaSessione(modificaSessione(stato.sessione, { [campo]: valore }, massimi)),
+      commutaStato: (id) => cambiaSessione(commutaStato(stato.sessione, id, massimi)),
+      convertiDistintivi: () => cambiaSessione(convertiDistintivi(stato.sessione, massimi)),
+      // le note si salvano a ogni tasto; l'annullamento riporta al testo di prima della modifica
+      inizioNote: () => { stato.sessionePrecedente = stato.sessione; },
+      note: (testo) => {
+        stato.sessione = modificaSessione(stato.sessione, { note: testo }, massimi);
+        persisti();
+      },
+      puntiEsperienza: (valore) => {
+        stato.scelte = applicaModifica(stato.scelte, { puntiEsperienza: valore }, dati).scelte;
+        persisti();
+        renderScheda({ mantieniScorrimento: true });
+      },
+      posizione: (valore) => {
+        archivio.salvaImpostazioni({ ...archivio.leggiImpostazioni(), posizioneTab: valore });
+        renderScheda({ mantieniScorrimento: true });
+      },
+    },
+  }));
+  if (mantieniScorrimento) window.scrollTo(0, y);
 }

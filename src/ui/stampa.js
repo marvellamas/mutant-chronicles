@@ -1,11 +1,13 @@
-// Vista di stampa dedicata (#/p/<id>/stampa): quattro fogli A4 orizzontali, separati dalla vista
+// Vista di stampa dedicata (#/p/<id>/stampa): fogli A4 orizzontali, separati dalla vista
 // digitale (docs/roadmap-equipaggiamento-e-scheda.md, §2.2). I contenuti vengono da
 // preparaStampa() (src/stampa.js); qui solo HTML e adattamento: se un foglio non entra nella
-// sua pagina si riduce il carattere di quel foglio, mai si aggiunge una pagina.
+// sua pagina si riduce il carattere di quel foglio. Solo il foglio Magia, se non entra neanche
+// al carattere minimo, continua su altre pagine (spezzaMagia), con le intestazioni ripetute.
 import { h, segno } from './dom.js';
+import { spezzaMagia, contaIncantesimi } from '../stampa.js';
 
 const FOGLIO_STILE = 'css/stampa.css';
-const CARATTERE = { iniziale: 9, minimo: 5.5, passo: 0.25 }; // pt
+const CARATTERE = { iniziale: 9, minimo: 5.5, passo: 0.25, continuazione: 7 }; // pt
 
 /** Carica css/stampa.css solo in questa vista: il suo @page non deve toccare le altre pagine. */
 function caricaStile() {
@@ -23,8 +25,31 @@ export function esciDallaStampa() {
   document.getElementById('stile-stampa')?.remove();
 }
 
+const corpi = { identita: foglioIdentita, abilita: foglioAbilita, combattimento: foglioCombattimento, magia: foglioMagia };
+
+function creaFoglio(id, titolo, dati, piede) {
+  return h('section', { class: `foglio foglio-${id}`, 'aria-label': titolo },
+    h('div', { class: 'pagina' },
+      h('header', { class: 'foglio-testa' },
+        h('span', { class: 'foglio-titolo' }, titolo),
+        h('span', { class: 'foglio-nome' }, piede.nome)),
+      h('div', { class: 'foglio-corpo' }, corpi[id](dati)),
+      h('footer', { class: 'foglio-piede' })));
+}
+
+/** Scrive «foglio N di M» in tutti i piè di pagina, dopo l'eventuale divisione del foglio Magia. */
+function numeraPiedi(contenitore, piede) {
+  const fogli = [...contenitore.querySelectorAll('.foglio')];
+  fogli.forEach((f, i) => {
+    f.querySelector('.foglio-piede').textContent =
+      `${piede.nome} · ${piede.livello}° livello · foglio ${i + 1} di ${fogli.length}${piede.versioni ? ` · Dati: ${piede.versioni}` : ''}`;
+  });
+}
+
+const eccede = (corpo) => corpo.scrollHeight > corpo.clientHeight + 1 || corpo.scrollWidth > corpo.clientWidth + 1;
+
 /**
- * @param {object} o { stampa: risultato di preparaStampa, torna(), titolo }
+ * @param {object} o { stampa: risultato di preparaStampa, torna() }
  * @returns {Node[]} nodi da mettere nella pagina; l'adattamento parte da solo dopo il caricamento dello stile
  */
 export function renderStampa({ stampa, torna }) {
@@ -40,42 +65,72 @@ export function renderStampa({ stampa, torna }) {
   }
   if (!stampa.completa) avvisi.append(h('p', {}, 'Scheda non ancora completa: alcuni valori possono mancare.'));
 
-  const corpi = { identita: foglioIdentita, abilita: foglioAbilita, combattimento: foglioCombattimento, magia: foglioMagia };
-  const fogli = stampa.fogli.map((f) => h('section', { class: `foglio foglio-${f.id}`, 'aria-label': `Foglio ${f.numero}: ${f.titolo}` },
-    h('div', { class: 'pagina' },
-      h('header', { class: 'foglio-testa' },
-        h('span', { class: 'foglio-titolo' }, f.titolo),
-        h('span', { class: 'foglio-nome' }, stampa.piede.nome)),
-      h('div', { class: 'foglio-corpo' }, corpi[f.id](f.dati)),
-      h('footer', { class: 'foglio-piede' },
-        `${stampa.piede.nome} · ${stampa.piede.livello}° livello · foglio ${f.numero} di ${f.totale}${stampa.piede.versioni ? ` · Dati: ${stampa.piede.versioni}` : ''}`))));
-
-  const contenitore = h('div', { class: 'fogli' }, fogli);
+  const contenitore = h('div', { class: 'fogli' }, stampa.fogli.map((f) => creaFoglio(f.id, f.titolo, f.dati, stampa.piede)));
+  numeraPiedi(contenitore, stampa.piede);
   caricaStile().then(() => (document.fonts?.ready ?? Promise.resolve())).then(() => {
     const ridotti = [];
-    const troppi = [];
     for (const f of contenitore.querySelectorAll('.foglio')) {
       const esito = adatta(f.querySelector('.foglio-corpo'));
       const titolo = f.querySelector('.foglio-titolo').textContent;
-      if (esito.ridotto) ridotti.push(`${titolo} (${esito.pt} pt)`);
-      if (esito.eccede) troppi.push(titolo);
+      if (f.classList.contains('foglio-magia') && esito.eccede) {
+        const pagine = impaginaMagia(contenitore, stampa.fogli.find((x) => x.id === 'magia').dati, stampa.piede);
+        f.replaceWith(...pagine);
+        avvisi.append(h('p', {}, `Il foglio Magia continua su ${pagine.length} pagine.`));
+      } else if (esito.ridotto) ridotti.push(`${titolo} (${esito.pt} pt)`);
     }
+    numeraPiedi(contenitore, stampa.piede);
     if (ridotti.length) avvisi.append(h('p', {}, `Carattere ridotto per stare nella pagina: ${ridotti.join(', ')}.`));
-    if (troppi.length) avvisi.append(h('p', { class: 'motivo' }, `Anche al carattere minimo non entra tutto: ${troppi.join(', ')}. La parte in eccesso non viene stampata.`));
   });
   return [barra, contenitore];
 }
 
 /** Riduce il carattere del corpo finché il contenuto non esce dalla pagina. */
-function adatta(corpo) {
-  let pt = CARATTERE.iniziale;
-  const eccede = () => corpo.scrollHeight > corpo.clientHeight + 1 || corpo.scrollWidth > corpo.clientWidth + 1;
+function adatta(corpo, iniziale = CARATTERE.iniziale) {
+  let pt = iniziale;
   corpo.style.fontSize = `${pt}pt`;
-  while (eccede() && pt > CARATTERE.minimo) {
+  while (eccede(corpo) && pt > CARATTERE.minimo) {
     pt = Math.max(CARATTERE.minimo, pt - CARATTERE.passo);
     corpo.style.fontSize = `${pt}pt`;
   }
-  return { pt, ridotto: pt < CARATTERE.iniziale, eccede: eccede() };
+  return { pt, ridotto: pt < iniziale, eccede: eccede(corpo) };
+}
+
+/**
+ * Divide gli incantesimi su più pagine Magia, riempiendo ciascuna al carattere di continuazione:
+ * per ogni pagina aggiunge incantesimi finché entrano (misurando nel DOM), poi passa alla
+ * successiva. La divisione in gruppi con intestazioni ripetute è di spezzaMagia (funzione pura).
+ */
+function impaginaMagia(contenitore, magia, piede) {
+  const totale = contaIncantesimi(magia.macrofamiglie);
+  const tagli = [];
+  let usati = 0;
+  const entra = (pagina, titolo) => {
+    const el = creaFoglio('magia', titolo, pagina, piede);
+    contenitore.append(el);
+    const corpo = el.querySelector('.foglio-corpo');
+    corpo.style.fontSize = `${CARATTERE.continuazione}pt`;
+    const ok = !eccede(corpo);
+    el.remove();
+    return ok;
+  };
+  while (usati < totale) {
+    let n = 1;
+    for (let prova = 2; usati + prova <= totale; prova++) {
+      const pagina = spezzaMagia(magia, [...tagli, prova])[tagli.length];
+      if (!entra(pagina, 'Magia')) break;
+      n = prova;
+    }
+    tagli.push(n);
+    usati += n;
+  }
+  return spezzaMagia(magia, tagli).map((pagina, k) => {
+    const el = creaFoglio('magia', k ? 'Magia (continua)' : 'Magia', pagina, piede);
+    contenitore.append(el);
+    // un incantesimo da solo più alto della pagina: si riduce il carattere di quella pagina
+    adatta(el.querySelector('.foglio-corpo'), CARATTERE.continuazione);
+    el.remove();
+    return el;
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -125,7 +180,10 @@ function foglioIdentita(d) {
             h('dt', {}, 'Azioni'), h('dd', {}, `${d.azioni.movimento} di Movimento, ${d.azioni.principali} ${d.azioni.principali === 1 ? 'Principale' : 'Principali'} per Round`)))),
       h('div', { class: 'colonna' },
         riquadro('Vantaggio dell’Addestramento', h('p', {}, h('strong', {}, `${d.vantaggio.nome}. `), d.vantaggio.testo)),
-        riquadro('Aspetto', righeVuote(3)),
+        riquadro('Anagrafica',
+          h('dl', { class: 'anagrafica-stampa' },
+            d.anagrafica.map((x) => [h('dt', {}, x.etichetta), h('dd', { class: x.valore ? null : 'da-compilare' }, x.valore || ' ')]),
+            h('dt', {}, 'Punti esperienza'), h('dd', { class: d.puntiEsperienza === null ? 'da-compilare' : null }, d.puntiEsperienza === null ? ' ' : String(d.puntiEsperienza)))),
         riquadro('Background', d.background ? h('p', { class: 'testo-background' }, d.background) : righeVuote(4),
           d.backgroundTroncato ? h('p', { class: 'piccolo' }, 'Testo completo nella scheda digitale.') : null),
         d.annotazioni.length ? riquadro('Note', h('ul', { class: 'piccolo' }, d.annotazioni.map((a) => h('li', {}, a)))) : null)),
@@ -197,8 +255,9 @@ function foglioCombattimento(d) {
 // Foglio 4 — Magia
 
 function foglioMagia(d) {
+  // nelle pagine di continuazione (spezzaMagia) l'intestazione del foglio non si ripete
   return [
-    h('div', { class: 'testa-magia' },
+    d.continuazione ? null : h('div', { class: 'testa-magia' },
       riquadro('Punti Magia', h('p', { class: 'valore-grande' }, `max ${d.pm ?? '—'}`), h('div', { class: 'casella-grande' }, h('span', {}, 'attuali'))),
       riquadro('Incantesimi',
         h('p', {}, `Conosciuti ${d.conosciuti} / ${d.quota}`),
@@ -210,9 +269,9 @@ function foglioMagia(d) {
             h('tr', {}, h('th', {}, 'Prova'), d.scala.map((r) => h('td', {}, r.prova))))))),
     h('div', { class: 'colonne-incantesimi' },
       d.macrofamiglie.length ? d.macrofamiglie.map((m) => [
-        h('h2', { class: 'macro' }, m.nome),
+        h('h2', { class: 'macro' }, m.nome, m.continua ? h('span', { class: 'sigla' }, ' (continua)') : null),
         m.specializzazioni.map((sp) => [
-          h('h3', { class: 'spec' }, sp.nome),
+          h('h3', { class: 'spec' }, sp.nome, sp.continua ? ' (continua)' : null),
           sp.incantesimi.map((i) => h('article', { class: 'incantesimo-stampa' },
             h('h4', {}, i.nome, h('span', { class: 'sigla' }, ` · livello base ${i.livelloBase}`)),
             i.intestazione ? h('p', { class: 'piccolo' }, i.intestazione) : null,

@@ -1,9 +1,8 @@
 // I passi del wizard (sequenza §2.0 del Manuale del Giocatore). Ogni passo si genera dai dati.
 import { h, segno, dadi } from './dom.js';
 import { validaScelte } from '../calc.js';
-import { eTaumaturgo, specTiroPuntiEroe } from '../character.js';
+import { eTaumaturgo, specTiroPuntiEroe, CAMPI_ANAGRAFICA } from '../character.js';
 import { statoIncantesimi, motivoBloccoIncantesimo, regoleIncantesimi } from '../incantesimi.js';
-import { renderScheda } from './scheda.js';
 import { info, elencoInfo } from './tooltip.js';
 import { componenteTiro } from './tiro.js';
 import { valoreTiro } from '../tiri.js';
@@ -19,7 +18,8 @@ const somma = (obj) => Object.values(obj ?? {}).reduce((s, v) => s + v, 0);
 export const PASSI = [
   {
     // Il manuale (§2.0) lo chiama «Concetto»; la chiave nelle scelte resta `concetto`.
-    titolo: 'Background', rif: '§2.0',
+    // L'anagrafica è facoltativa e descrittiva: non entra nel controllo di completezza.
+    titolo: 'Background e anagrafica', rif: '§2.0',
     completo: ({ scelte }) => !!scelte.nome.trim() && !!scelte.concetto.trim(),
     render: passoBackground,
   },
@@ -76,7 +76,8 @@ export const PASSI = [
     requisito: ({ scelte }) => (scelte.corporazione && scelte.addestramento && scelte.classe
       ? null : 'Servono almeno Corporazione, Addestramento e Classe.'),
     completo: ({ scheda }) => scheda.completa === true,
-    render: renderScheda,
+    // la scheda finale è la vista a tab (src/ui/tab.js, #/p/<id>): app.js ci reindirizza
+    render: () => [],
   },
 ];
 
@@ -144,6 +145,20 @@ function passoBackground(ctx) {
     h('label', { class: 'campo' }, h('span', {}, 'Background'),
       h('textarea', { rows: 6, value: scelte.concetto,
         oninput: (e) => ctx.aggiorna({ concetto: e.target.value }, { ridisegna: false }) })),
+    h('h3', {}, 'Anagrafica'),
+    h('p', { class: 'nota' }, 'Tutti facoltativi. Corporazione, Classe e livello non si scrivono: li calcola l’app e compaiono accanto a questi dati nella scheda. Nella stampa un campo vuoto diventa una riga da compilare a penna.'),
+    h('div', { class: 'griglia-anagrafica' },
+      CAMPI_ANAGRAFICA.map(({ campo, etichetta, scelte: opzioni }) => h('label', { class: `campo${campo === 'segniDistintivi' ? ' largo' : ''}` }, h('span', {}, etichetta),
+        opzioni
+          ? h('select', { onchange: (e) => ctx.aggiorna({ [campo]: e.target.value }, { ridisegna: false }) },
+            h('option', { value: '', selected: !scelte[campo] }, '—'),
+            opzioni.map((o) => h('option', { value: o, selected: scelte[campo] === o }, o)))
+          : h('input', { type: 'text', value: scelte[campo], maxlength: 120, autocomplete: 'off',
+            oninput: (e) => ctx.aggiorna({ [campo]: e.target.value }, { ridisegna: false }) }))),
+      h('label', { class: 'campo' }, h('span', {}, 'Punti esperienza'),
+        h('input', { type: 'number', inputmode: 'numeric', step: 'any', value: scelte.puntiEsperienza ?? '',
+          oninput: (e) => ctx.aggiorna({ puntiEsperienza: e.target.value === '' || !Number.isFinite(Number(e.target.value)) ? null : Number(e.target.value) }, { ridisegna: false }) }),
+        h('small', { class: 'nota' }, 'Numero libero, senza regole: il manuale non prevede PX. Si aggiorna anche dalla scheda.'))),
   ];
 }
 

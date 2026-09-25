@@ -189,7 +189,25 @@ function validaRegole(r, err) {
   });
   const st = r.stati?.elenco;
   if (!Array.isArray(st) || !st.length) err(F, 'stati.elenco', 'elenco {nome, durata} mancante');
-  else st.forEach((x, i) => { if (!isTesto(x?.nome)) err(F, `stati.elenco[${i}].nome`, 'nome mancante'); });
+  else {
+    const ids = new Set();
+    st.forEach((x, i) => {
+      if (!isTesto(x?.nome)) err(F, `stati.elenco[${i}].nome`, 'nome mancante');
+      if (!isTesto(x?.id)) err(F, `stati.elenco[${i}].id`, 'id mancante (serve a salvare gli Stati attivi della sessione)');
+      else if (ids.has(x.id)) err(F, `stati.elenco[${i}].id`, `id "${x.id}" ripetuto`);
+      else ids.add(x.id);
+    });
+  }
+  // §5.19: Affaticamento, un unico Stato con la sua penalità
+  const aft = r.affaticamento?.stati;
+  if (!Array.isArray(aft) || !aft.length) err(F, 'affaticamento.stati', 'elenco {nome, penalita} mancante');
+  else aft.forEach((x, i) => {
+    if (!isTesto(x?.nome)) err(F, `affaticamento.stati[${i}].nome`, 'nome mancante');
+    if (!isIntero(x?.penalita) || x.penalita > 0) err(F, `affaticamento.stati[${i}].penalita`, 'penalità intera ≤ 0 mancante');
+  });
+  if (!isIntero(r.punti_eroe?.distintivi_per_punto_eroe) || r.punti_eroe.distintivi_per_punto_eroe < 1) {
+    err(F, 'punti_eroe.distintivi_per_punto_eroe', 'numero intero ≥ 1 mancante (§1.8.3)');
+  }
   // Livello massimo degli incantesimi per Gradi taumaturgici (tabella del master): Gradi da 1,
   // senza buchi, livelli non decrescenti
   const t = r.taumaturgo?.livello_massimo_per_gradi;

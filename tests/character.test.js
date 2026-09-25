@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  nuoveScelte, applicaModifica, normalizza, anteprima, serializza, deserializza, deserializzaPersonaggio, FORMATO_FILE,
+  nuoveScelte, applicaModifica, normalizza, anteprima, serializza, deserializza, deserializzaPersonaggio, FORMATO_FILE, CAMPI_ANAGRAFICA,
 } from '../src/character.js';
 import { statoIncantesimi, motivoBloccoIncantesimo } from '../src/incantesimi.js';
 import { checklist } from '../src/checklist.js';
@@ -195,11 +195,36 @@ test('serializza con i livelli → deserializzaPersonaggio restituisce creazione
   const livelli = [{ livello: 2, caratteristiche: { DES: 2 } }, { livello: 3, talentoLibero: { id: 'sempre-allerta' } }];
   const testo = serializza(MISHIMA_AGENTE, { livelli });
   const obj = JSON.parse(testo);
-  assert.equal(obj.versione, 3);
+  assert.equal(obj.versione, 4);
   assert.deepEqual(obj.livelli, livelli);
-  assert.deepEqual(deserializzaPersonaggio(testo), { creazione: deserializza(testo), livelli });
+  assert.deepEqual(deserializzaPersonaggio(testo), { creazione: deserializza(testo), livelli, sessione: null });
   // al 1° livello il file non ha "livelli"; i file vecchi si leggono con livelli vuoti
   assert.equal('livelli' in JSON.parse(serializza(MISHIMA_AGENTE, { livelli: [] })), false);
   assert.deepEqual(deserializzaPersonaggio(JSON.stringify(MISHIMA_AGENTE)).livelli, []);
   assert.throws(() => deserializzaPersonaggio(JSON.stringify({ formato: FORMATO_FILE, versione: 3, scelte: MISHIMA_AGENTE, livelli: 'x' })), /livelli/);
+});
+
+test('anagrafica: i personaggi salvati prima la hanno vuota; valori non validi svuotati con avviso', () => {
+  const vecchio = structuredClone(MISHIMA_AGENTE);
+  for (const { campo } of CAMPI_ANAGRAFICA) delete vecchio[campo];
+  delete vecchio.puntiEsperienza;
+  const { scelte, avvisi } = normalizza(vecchio, dati);
+  assert.deepEqual(avvisi, []);
+  for (const { campo } of CAMPI_ANAGRAFICA) assert.equal(scelte[campo], '');
+  assert.equal(scelte.puntiEsperienza, null);
+  assert.equal('aspetto' in scelte, false); // il vecchio campo «aspetto» non esiste
+
+  const strano = normalizza({ ...MISHIMA_AGENTE, manoDominante: 'coda', puntiEsperienza: 'molti', occhi: 'verdi' }, dati);
+  assert.equal(strano.scelte.manoDominante, '');
+  assert.equal(strano.scelte.puntiEsperienza, null);
+  assert.equal(strano.scelte.occhi, 'verdi');
+  assert.equal(strano.avvisi.length, 2);
+  // PX: numero libero, anche con la virgola o negativo; le modifiche non toccano il resto
+  const px = applicaModifica(MISHIMA_AGENTE, { puntiEsperienza: 1250.5 }, dati);
+  assert.equal(px.scelte.puntiEsperienza, 1250.5);
+  assert.deepEqual(px.avvisi, []);
+  // i campi viaggiano nel file
+  const file = JSON.parse(serializza({ ...MISHIMA_AGENTE, soprannome: 'Ombra', puntiEsperienza: 300 }));
+  assert.equal(file.scelte.soprannome, 'Ombra');
+  assert.equal(file.scelte.puntiEsperienza, 300);
 });

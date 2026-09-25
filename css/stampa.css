@@ -149,3 +149,8 @@ body.vista-stampa main { max-width: none; padding: 0; margin: 0; }
   .foglio:last-child { page-break-after: auto; break-after: auto; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
+
+/* anagrafica del foglio 1: i campi vuoti diventano righe da compilare a penna */
+.anagrafica-stampa { display: grid; grid-template-columns: auto 1fr; gap: 0 3mm; margin: 0; }
+.anagrafica-stampa dt { font-weight: 600; padding-top: 1.2mm; }
+.anagrafica-stampa dd { margin: 0; padding-top: 1.2mm; border-bottom: 0.5pt solid var(--linea-tenue); min-height: 4.5mm; }

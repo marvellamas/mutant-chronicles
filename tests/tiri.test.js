@@ -113,6 +113,6 @@ test('file esportato in formato 1 (tiri numerici): si importa e si migra', () =>
   assert.deepEqual(r.scelte.puntiEroe, { valore: 4, origine: 'app' });
   // riesportato, il file è nel formato attuale e conserva l'origine
   const nuovo = JSON.parse(serializza({ ...r.scelte, puntiEroe: { valore: 4, origine: 'manuale' } }));
-  assert.equal(nuovo.versione, 3);
+  assert.equal(nuovo.versione, 4);
   assert.deepEqual(nuovo.scelte.puntiEroe, { valore: 4, origine: 'manuale' });
 });

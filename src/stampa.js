@@ -6,6 +6,8 @@ import { calcolaScheda } from './calc.js';
 import { migraPersonaggio } from './avanzamento.js';
 import { valoreTiro } from './tiri.js';
 import { rigaAlLivello } from './descrizioni.js';
+import { CAMPI_ANAGRAFICA } from './character.js';
+import { checklist } from './checklist.js';
 
 /** Limiti di impaginazione (non regole di gioco): lunghezze massime dei testi stampati. */
 export const LIMITI_STAMPA = {
@@ -76,19 +78,24 @@ function effettoSpecializzazione(e) {
 }
 
 /**
- * Prepara i fogli da stampare.
+ * Prepara i fogli da stampare. Con `completo: true` (le tab della scheda digitale) i testi non si
+ * troncano: Background, Talenti ed equipaggiamento restano interi.
  * @param personaggio { creazione, livelli } oppure le sole scelte della creazione
- * @param {object} opzioni { versioniDati: testo delle versioni dei manuali (per il piede) }
- * @returns {{ completa, errori, fogli: {id, titolo, numero, totale, dati}[], piede: {nome, livello, versioni} }}
+ * @param {object} opzioni { versioniDati: testo delle versioni dei manuali (per il piede), completo }
+ * @returns {{ completa, errori, scheda, fogli: {id, titolo, numero, totale, dati}[], piede: {nome, livello, versioni} }}
  */
-export function preparaStampa(personaggio, dati, { versioniDati = '' } = {}) {
+export function preparaStampa(personaggio, dati, { versioniDati = '', completo = false } = {}) {
   const p = migraPersonaggio(personaggio);
   const c = p.creazione;
   const s = calcolaScheda(p, dati);
-  if (!s.caratteristiche) return { completa: false, errori: s.errori ?? [], fogli: [], piede: null };
+  if (!s.caratteristiche) return { completa: false, errori: s.errori ?? [], scheda: s, fogli: [], piede: null };
 
   const nome = String(c.nome ?? '').trim() || 'Personaggio senza nome';
   const pe = valoreTiro(c.puntiEroe);
+  const testo = (t) => String(t ?? '').trim();
+  const frase = (t) => (completo ? testo(t) : primaFrase(t));
+  const bg = String(c.concetto ?? '').trim().replace(/\s+/g, ' ');
+  const equip = vociEquipaggiamento(c.equipaggiamento);
 
   const identita = {
     nome,
@@ -96,8 +103,11 @@ export function preparaStampa(personaggio, dati, { versioniDati = '' } = {}) {
     corporazione: s.corporazione,
     addestramento: s.addestramento,
     classi: s.classi.map((x) => ({ nome: x.nome, grado: GRADI_ROMANI[x.grado] ?? String(x.grado), addestramento: x.addestramento })),
+    // Anagrafica facoltativa: un campo vuoto si stampa come riga da compilare a penna
+    anagrafica: CAMPI_ANAGRAFICA.map(({ campo, etichetta }) => ({ campo, etichetta, valore: testo(c[campo]) })),
+    puntiEsperienza: typeof c.puntiEsperienza === 'number' && Number.isFinite(c.puntiEsperienza) ? c.puntiEsperienza : null,
     caratteristiche: Object.entries(s.caratteristiche).map(([sigla, x]) => ({ sigla, nome: x.nome, valore: x.valore, mod: x.mod, modSalvezza: x.modSalvezza })),
-    salvezze: Object.values(s.salvezze).map((x) => ({ nome: x.nome, caratteristica: x.caratteristica, totale: x.totale, limitato: x.limitato, tetto: x.tetto })),
+    salvezze: Object.entries(s.salvezze).map(([id, x]) => ({ id, nome: x.nome, caratteristica: x.caratteristica, totale: x.totale, limitato: x.limitato, tetto: x.tetto })),
     pv: s.pv,
     pm: s.pm,
     puntiEroe: { valore: Number.isInteger(pe) ? pe : null, massimo: dati.regole.punti_eroe.riserva_massima },
@@ -106,8 +116,8 @@ export function preparaStampa(personaggio, dati, { versioniDati = '' } = {}) {
     movimento: s.movimento,
     azioni: s.azioni,
     vantaggio: s.vantaggio,
-    background: tronca(c.concetto, LIMITI_STAMPA.background),
-    backgroundTroncato: String(c.concetto ?? '').trim().replace(/\s+/g, ' ').length > LIMITI_STAMPA.background,
+    background: completo ? testo(c.concetto) : tronca(c.concetto, LIMITI_STAMPA.background),
+    backgroundTroncato: !completo && bg.length > LIMITI_STAMPA.background,
     annotazioni: s.annotazioni,
   };
 
@@ -121,23 +131,25 @@ export function preparaStampa(personaggio, dati, { versioniDati = '' } = {}) {
     })),
     limiteAvanzamento: s.abilita[0]?.limite ?? null,
     talentiClasse: s.classi.flatMap((cl) => cl.talenti.map((t) => ({
-      nome: t.nome, classe: cl.nome, grado: GRADI_ROMANI[t.grado] ?? String(t.grado), scelto: !!t.scelto, frase: primaFrase(t.testo),
+      nome: t.nome, classe: cl.nome, grado: GRADI_ROMANI[t.grado] ?? String(t.grado), scelto: !!t.scelto, frase: frase(t.testo),
     }))),
     talentiLiberi: s.talentiLiberi.map((t) => ({
+      id: t.id,
       nome: t.nome,
       parametro: t.parametro ? (dati.caratteristiche.salvezze.some((x) => x.id === t.parametro) ? nomeSalvezza(t.parametro, dati) : t.parametro) : null,
       annotazione: t.annotazione ?? null,
       livello: t.livello,
       provvisorio: t.provvisorio,
-      frase: primaFrase(t.testo),
+      frase: frase(t.testo),
     })),
     specializzazioni: s.specializzazioni.map((x) => ({
+      id: x.id,
       nome: `Specializzazione in ${x.nome}`,
       abilita: x.abilita.length ? x.abilita.join(', ') : 'Abilità della scheda dell’arma',
       effetto: effettoSpecializzazione(x.effetto),
       livello: x.livello,
     })),
-    tecniche: s.tecniche.map((t) => ({ nome: t.nome, costo: t.costo, azione: t.azione })),
+    tecniche: s.tecniche.map((t) => ({ id: t.id, nome: t.nome, costo: t.costo, azione: t.azione, durata: t.durata })),
     tecnicheAmmesse: s.tecnicheAmmesse,
   };
 
@@ -149,9 +161,10 @@ export function preparaStampa(personaggio, dati, { versioniDati = '' } = {}) {
     protezioni: { colonne: ['Protezione', 'AR', 'Zone', 'Note'], righe: [], righeVuote: LIMITI_STAMPA.righeProtezioni },
     difese: difese ? { va: difese.totale, caratteristica: difese.caratteristica } : null,
     ferite: { stati: dati.regole.ferite.stati, oltre: dati.regole.ferite.oltre },
+    affaticamento: dati.regole.affaticamento.stati,
     stati: dati.regole.stati.elenco,
-    equipaggiamento: vociEquipaggiamento(c.equipaggiamento).slice(0, LIMITI_STAMPA.righeEquipaggiamento),
-    equipaggiamentoTroncato: vociEquipaggiamento(c.equipaggiamento).length > LIMITI_STAMPA.righeEquipaggiamento,
+    equipaggiamento: completo ? equip : equip.slice(0, LIMITI_STAMPA.righeEquipaggiamento),
+    equipaggiamentoTroncato: !completo && equip.length > LIMITI_STAMPA.righeEquipaggiamento,
     pv: s.pv,
   };
 
@@ -196,11 +209,81 @@ export function preparaStampa(personaggio, dati, { versioniDati = '' } = {}) {
     });
   }
 
-  const totale = fogli.length;
   return {
     completa: s.completa,
     errori: s.errori,
-    fogli: fogli.map((f, i) => ({ ...f, numero: i + 1, totale })),
+    scheda: s,
+    fogli: rinumera(fogli),
     piede: { nome, livello: s.livello, versioni: versioniDati },
   };
+}
+
+/** Numera i fogli: «foglio N di M». */
+export function rinumera(fogli) {
+  return fogli.map((f, i) => ({ ...f, numero: i + 1, totale: fogli.length }));
+}
+
+/** Numero di incantesimi nei gruppi del foglio Magia. */
+export function contaIncantesimi(macrofamiglie) {
+  return macrofamiglie.reduce((n, m) => n + m.specializzazioni.reduce((k, sp) => k + sp.incantesimi.length, 0), 0);
+}
+
+/**
+ * Spezza gli incantesimi del foglio Magia su più pagine: `tagli` è il numero di incantesimi di
+ * ogni pagina tranne l'ultima, che prende il resto. Le intestazioni di macrofamiglia e
+ * specializzazione si ripetono in ogni pagina in cui il gruppo compare (con `continua: true` se
+ * il gruppo era già iniziato). La prima pagina conserva l'intestazione del foglio (PM, scala).
+ * @returns {object[]} i dati di ciascuna pagina Magia
+ */
+export function spezzaMagia(magia, tagli) {
+  const tutti = magia.macrofamiglie.flatMap((m) => m.specializzazioni.flatMap((sp) => sp.incantesimi.map((i) => ({ m: m.nome, sp: sp.nome, i }))));
+  const limiti = [];
+  let inizio = 0;
+  for (const t of tagli) {
+    const fine = Math.min(tutti.length, inizio + Math.max(1, t));
+    limiti.push([inizio, fine]);
+    inizio = fine;
+  }
+  if (inizio < tutti.length || !limiti.length) limiti.push([inizio, tutti.length]);
+  const iniziati = new Set();
+  return limiti.filter(([a, b], k) => b > a || k === 0).map(([a, b], k) => {
+    const macrofamiglie = [];
+    for (const { m, sp, i } of tutti.slice(a, b)) {
+      let gm = macrofamiglie.at(-1);
+      if (gm?.nome !== m) {
+        gm = { nome: m, continua: iniziati.has(m), specializzazioni: [] };
+        macrofamiglie.push(gm);
+        iniziati.add(m);
+      }
+      let gs = gm.specializzazioni.at(-1);
+      const chiave = `${m}/${sp}`;
+      if (gs?.nome !== sp) {
+        gs = { nome: sp, continua: iniziati.has(chiave), incantesimi: [] };
+        gm.specializzazioni.push(gs);
+        iniziati.add(chiave);
+      }
+      gs.incantesimi.push(i);
+    }
+    return { ...magia, prima: k === 0, continuazione: k > 0, macrofamiglie };
+  });
+}
+
+const TITOLI_TAB = { identita: 'Identità', abilita: 'Abilità', combattimento: 'Combattimento', magia: 'Magia' };
+
+/**
+ * Dati delle tab della scheda digitale (roadmap §3): gli stessi fogli della stampa, senza
+ * troncamenti, più Progressione e controllo §2.17 nella tab Identità. La tab Magia c'è solo con
+ * accesso agli incantesimi.
+ * @returns {{ completa, errori, scheda, tab: {id, titolo, dati}[] }}
+ */
+export function preparaTab(personaggio, dati) {
+  const st = preparaStampa(personaggio, dati, { completo: true });
+  const p = migraPersonaggio(personaggio);
+  const tab = st.fogli.map((f) => ({ id: f.id, titolo: TITOLI_TAB[f.id], dati: { ...f.dati } }));
+  const identita = tab.find((t) => t.id === 'identita');
+  if (identita) {
+    identita.dati.progressione = st.scheda.progressione ?? [];
+    identita.dati.checklist = checklist(p.creazione, dati);
+  }
+  return { completa: st.completa, errori: st.errori, scheda: st.scheda, tab };
 }

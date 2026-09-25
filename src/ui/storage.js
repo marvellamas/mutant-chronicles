@@ -1,5 +1,6 @@
-// Salvataggio dei personaggi in localStorage. Ogni voce contiene solo le scelte (creazione e
-// livelli) e il passo raggiunto. Tutte le letture/scritture sono protette: in navigazione privata o con lo
+// Salvataggio dei personaggi in localStorage. Ogni voce contiene le scelte (creazione e
+// livelli), i valori di sessione della modalità tavolo e il passo raggiunto.
+// Tutte le letture/scritture sono protette: in navigazione privata o con lo
 // storage bloccato l'app funziona lo stesso, senza salvare.
 
 const CHIAVE = 'mutant.personaggi.v1';
@@ -37,9 +38,9 @@ export function carica(id) {
  * dell'avanzamento non hanno "livelli": si leggono come personaggi al 1° livello.
  * @returns {boolean} false se il salvataggio non è riuscito
  */
-export function salva({ id, scelte, livelli = [], passo }) {
+export function salva({ id, scelte, livelli = [], sessione = null, passo }) {
   const tutti = leggiTutti();
-  tutti[id] = { id, scelte, livelli, passo, aggiornato: new Date().toISOString() };
+  tutti[id] = { id, scelte, livelli, sessione, passo, aggiornato: new Date().toISOString() };
   return scriviTutti(tutti);
 }
 
@@ -51,4 +52,31 @@ export function elimina(id) {
 
 export function nuovoId() {
   return `p${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
+}
+
+// ---------------------------------------------------------------------------
+// Impostazioni dell'interfaccia (per browser, non per personaggio)
+
+const CHIAVE_IMPOSTAZIONI = 'mutant.impostazioni.v1';
+const IMPOSTAZIONI_PREDEFINITE = { posizioneTab: 'automatica' };
+const POSIZIONI = ['automatica', 'sinistra', 'basso', 'alto'];
+
+export function leggiImpostazioni() {
+  try {
+    const v = JSON.parse(localStorage.getItem(CHIAVE_IMPOSTAZIONI) ?? '{}');
+    const out = { ...IMPOSTAZIONI_PREDEFINITE, ...(v && typeof v === 'object' ? v : {}) };
+    if (!POSIZIONI.includes(out.posizioneTab)) out.posizioneTab = IMPOSTAZIONI_PREDEFINITE.posizioneTab;
+    return out;
+  } catch {
+    return { ...IMPOSTAZIONI_PREDEFINITE };
+  }
+}
+
+export function salvaImpostazioni(impostazioni) {
+  try {
+    localStorage.setItem(CHIAVE_IMPOSTAZIONI, JSON.stringify(impostazioni));
+    return true;
+  } catch {
+    return false;
+  }
 }

@@ -16,13 +16,43 @@ export {
 export const FORMATO_FILE = 'mutant-personaggio';
 // 2: i tiri di dado sono { valore, origine } (src/tiri.js); i file della versione 1 si migrano.
 // 3: il file può contenere i livelli successivi al 1° ("livelli"); senza, è un personaggio al 1°.
-export const VERSIONE_FORMATO = 3;
+// 4: anagrafica nella creazione e blocco "sessione" (valori attuali della modalità tavolo).
+export const VERSIONE_FORMATO = 4;
+
+/**
+ * Anagrafica del passo «Background e anagrafica»: tutti campi facoltativi e descrittivi, senza
+ * regole. Classe, livello e Corporazione non sono qui: si calcolano. I Punti Esperienza sono
+ * un numero libero (il manuale non prevede PX; il master li usa a modo suo).
+ */
+export const CAMPI_ANAGRAFICA = [
+  { campo: 'soprannome', etichetta: 'Soprannome' },
+  { campo: 'eta', etichetta: 'Età' },
+  { campo: 'cittaNascita', etichetta: 'Città di nascita' },
+  { campo: 'altezza', etichetta: 'Altezza' },
+  { campo: 'peso', etichetta: 'Peso' },
+  { campo: 'occhi', etichetta: 'Occhi' },
+  { campo: 'capelli', etichetta: 'Capelli' },
+  { campo: 'manoDominante', etichetta: 'Mano dominante', scelte: ['destra', 'sinistra', 'ambidestro'] },
+  { campo: 'segniDistintivi', etichetta: 'Segni distintivi' },
+];
+export const MANI_DOMINANTI = ['destra', 'sinistra', 'ambidestro'];
+const LUNGHEZZA_ANAGRAFICA = 120;
 
 /** Scelte di un personaggio nuovo. È l'unico stato che si salva. */
 export function nuoveScelte() {
   return {
     nome: '',
     concetto: '',
+    soprannome: '',
+    eta: '',
+    cittaNascita: '',
+    altezza: '',
+    peso: '',
+    occhi: '',
+    capelli: '',
+    manoDominante: '', // '' | 'destra' | 'sinistra' | 'ambidestro'
+    segniDistintivi: '',
+    puntiEsperienza: null, // numero libero o null
     corporazione: null,
     puntiCaratteristica: {},
     addestramento: null,
@@ -95,6 +125,19 @@ export function normalizza(scelteIn, dati) {
   const r = dati.regole;
 
   for (const k of ['nome', 'concetto', 'equipaggiamento']) if (typeof s[k] !== 'string') s[k] = '';
+  // Anagrafica: facoltativa; i personaggi salvati prima l'hanno vuota.
+  for (const { campo } of CAMPI_ANAGRAFICA) {
+    if (typeof s[campo] !== 'string') s[campo] = '';
+    else if (s[campo].length > LUNGHEZZA_ANAGRAFICA) s[campo] = s[campo].slice(0, LUNGHEZZA_ANAGRAFICA);
+  }
+  if (s.manoDominante && !MANI_DOMINANTI.includes(s.manoDominante)) {
+    avvisi.push(`Mano dominante "${s.manoDominante}" non riconosciuta: campo svuotato.`);
+    s.manoDominante = '';
+  }
+  if (s.puntiEsperienza !== null && !(typeof s.puntiEsperienza === 'number' && Number.isFinite(s.puntiEsperienza))) {
+    if (s.puntiEsperienza !== undefined && s.puntiEsperienza !== '') avvisi.push(`Punti esperienza ${JSON.stringify(s.puntiEsperienza)} non numerici: campo svuotato.`);
+    s.puntiEsperienza = null;
+  }
   for (const k of ['puntiCaratteristica', 'puntiAbilitaLiberi']) if (!isOggetto(s[k])) s[k] = {};
   if (!Array.isArray(s.incantesimi)) s.incantesimi = [];
 
@@ -266,26 +309,29 @@ export function anteprima(scelte, dati) {
 // ---------------------------------------------------------------------------
 // Serializzazione: il file contiene solo le scelte (creazione e livelli), mai valori calcolati.
 
-export function serializza(scelte, { versioniDati, livelli } = {}) {
+export function serializza(scelte, { versioniDati, livelli, sessione } = {}) {
   const pulite = {};
   for (const k of CAMPI) pulite[k] = scelte?.[k] ?? nuoveScelte()[k];
   const file = { formato: FORMATO_FILE, versione: VERSIONE_FORMATO };
   if (versioniDati) file.versioni_dati = versioniDati;
   file.scelte = pulite;
   if (Array.isArray(livelli) && livelli.length) file.livelli = livelli;
+  if (isOggetto(sessione)) file.sessione = sessione;
   return JSON.stringify(file, null, 2);
 }
 
 /**
- * Legge un file esportato con i livelli: { creazione, livelli }. I file senza livelli (formati
- * 1 e 2, o personaggi al 1° livello) danno livelli: []. La creazione va poi normalizzata.
+ * Legge un file esportato con i livelli: { creazione, livelli, sessione }. I file senza livelli
+ * (formati 1 e 2, o personaggi al 1° livello) danno livelli: []; senza sessione, sessione: null
+ * (va inizializzata con allineaSessione). La creazione va poi normalizzata.
  */
 export function deserializzaPersonaggio(testo) {
   const creazione = deserializza(testo);
   const obj = JSON.parse(testo);
   const livelli = obj?.formato === FORMATO_FILE && obj.livelli !== undefined ? obj.livelli : [];
   if (!Array.isArray(livelli) || !livelli.every(isOggetto)) throw new Error('I livelli del personaggio nel file non sono validi.');
-  return { creazione, livelli };
+  const sessione = obj?.formato === FORMATO_FILE && isOggetto(obj.sessione) ? obj.sessione : null;
+  return { creazione, livelli, sessione };
 }
 
 /**

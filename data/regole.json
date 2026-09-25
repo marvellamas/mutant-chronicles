@@ -1,6 +1,6 @@
 {
   "versione_manuale": "Giocatore 0.43; Magia 1.1",
-  "fonte": "Giocatore §1.2.3, §2.1, §2.3, §2.10, §2.12–2.15, §3.3, §5.14, §5.18, cap. 8; Magia sezioni 1 e 11; docs/risposte-master.md",
+  "fonte": "Giocatore §1.2.3, §2.1, §2.3, §2.10, §2.12–2.15, §3.3, §1.8.3, §5.5, §5.14, §5.18, §5.19, cap. 8; Magia sezioni 1 e 11; docs/risposte-master.md",
   "creazione": {
     "punti_caratteristica": 5,
     "massimo_caratteristica": 7,
@@ -46,7 +46,8 @@
     "minimo": 3,
     "massimo": 7,
     "riserva_massima": 10,
-    "_nota": "§2.15"
+    "_nota": "§2.15; §1.8.3: cinque Distintivi si convertono in 1 Punto Eroe, senza superare la riserva massima.",
+    "distintivi_per_punto_eroe": 5
   },
   "movimento": {
     "unita": "Q",
@@ -398,50 +399,105 @@
   "stati": {
     "elenco": [
       {
+        "id": "a-terra",
         "nome": "A Terra",
-        "durata": "fino a quando si rialza"
+        "durata": "fino a quando si rialza",
+        "promemoria": "−4 VA ad azioni fisiche ravvicinate, di equilibrio e alle Difese; niente Corsa o Scatto; contro di lui +2 VA in ravvicinato, −2 VA a distanza (§5.5)."
       },
       {
+        "id": "accecato",
         "nome": "Accecato",
-        "durata": "1+1d3 Round"
+        "durata": "1+1d3 Round",
+        "promemoria": "−8 VA alle Prove che richiedono la vista, Difese comprese; niente Tiro o Colpo Mirato; i nemici non percepiti hanno +4 VA."
       },
       {
+        "id": "assordato",
         "nome": "Assordato",
-        "durata": "1+1d3 Round"
+        "durata": "1+1d3 Round",
+        "promemoria": "Fallisce le azioni basate solo sull’udito; −4 VA quando l’udito è importante."
       },
       {
+        "id": "avvelenato",
         "nome": "Avvelenato",
-        "durata": "1+1d3 Round, salvo la fonte"
+        "durata": "1+1d3 Round, salvo la fonte",
+        "promemoria": "Effetti, danno e frequenza indicati dal veleno; l’antidoto adeguato lo termina."
       },
       {
+        "id": "immobilizzato",
         "nome": "Immobilizzato",
-        "durata": "1+1d3 Round o fino alla liberazione"
+        "durata": "1+1d3 Round o fino alla liberazione",
+        "promemoria": "Non può muoversi né usare Corsa o Scatto; −4 VA alle azioni fisiche."
       },
       {
+        "id": "incendiato",
         "nome": "Incendiato",
-        "durata": "1+1d3 Round"
+        "durata": "1+1d3 Round",
+        "promemoria": "1d4 danni da fuoco ai PV ogni Round, ignorando l’Armatura; −2 VA; 1 AzP e Riflessi per spegnersi."
       },
       {
+        "id": "rallentato",
         "nome": "Rallentato",
-        "durata": "1+1d3 Round"
+        "durata": "1+1d3 Round",
+        "promemoria": "Passo 3 Q, niente Corsa o Scatto; −2 VA alle Prove fisiche e alle Difese."
       },
       {
+        "id": "sanguinamento",
         "nome": "Sanguinamento",
-        "durata": "fino a quando viene fermato"
+        "durata": "fino a quando viene fermato",
+        "promemoria": "Perde PV secondo il §5.15, all’Iniziativa della fonte, finché non viene fermato."
       },
       {
+        "id": "stordito",
         "nome": "Stordito",
-        "durata": "1+1d3 Round"
+        "durata": "1+1d3 Round",
+        "promemoria": "Solo Passo, nessuna Azione Principale; niente Difese che consumano Azioni."
       },
       {
+        "id": "svenuto",
         "nome": "Svenuto",
-        "durata": "1+1d3 Round, salvo la fonte"
+        "durata": "1+1d3 Round, salvo la fonte",
+        "promemoria": "Nessuna Azione né Movimento, cade A Terra, niente Difese attive; perde la Concentrazione."
       },
       {
+        "id": "terrorizzato",
         "nome": "Terrorizzato",
-        "durata": "1+1d3 Round"
+        "durata": "1+1d3 Round",
+        "promemoria": "−4 VA a tutte le Prove; deve allontanarsi dalla fonte e non può attaccarla."
       }
     ],
-    "_nota": "§5.18, tabella «Durate e tempi di risoluzione»: gli Stati sono undici. Usato dalla scheda stampata."
+    "_nota": "§5.18, tabella «Durate e tempi di risoluzione»: gli Stati sono undici. «promemoria» riassume gli effetti descritti nel §5.18 (A Terra: §5.5) per la scheda e la modalità tavolo; il testo del manuale resta quello di riferimento."
+  },
+  "affaticamento": {
+    "stati": [
+      {
+        "nome": "Riposato",
+        "penalita": 0
+      },
+      {
+        "nome": "Normale",
+        "penalita": 0
+      },
+      {
+        "nome": "Affaticato",
+        "penalita": -1
+      },
+      {
+        "nome": "Stanco",
+        "penalita": -2
+      },
+      {
+        "nome": "Spossato",
+        "penalita": -4
+      },
+      {
+        "nome": "Sfinito",
+        "penalita": -6
+      },
+      {
+        "nome": "Stremato",
+        "penalita": -8
+      }
+    ],
+    "_nota": "§5.19: un unico Stato di Affaticamento; si applica solo la penalità dello Stato attuale, a tutte le Prove di Caratteristica, Abilità e Salvezza. Riposato è la riserva iniziale."
   }
 }
