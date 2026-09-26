@@ -164,3 +164,8 @@ Per la dotazione dell'Agente, i profili di armi e armatura esistono nel catalogo
 
 - **Giocatore**: il testo esportato è identico a quello delle 16:17. La modifica non tocca il contenuto.
 - **E&L**: aggiunge **A.5.2 Dotazione iniziale dell'Agente**, con lo stesso contenuto del §2.16.2. La modifica «non annunciata» del §2.16.2 ora è approvata (decisione 14). Come la 13, non è ancora nell'app.
+
+### Controllo successivo (Giocatore 16:51:15, E&L 16:52:11)
+
+- **Giocatore**: aggiunge il §2.16.3, la dotazione iniziale del Cacciatore (23 righe), e nient'altro.
+- **E&L**: aggiunge **A.5.3**, con lo stesso contenuto del §2.16.3; la modifica è quindi annunciata. Registrata come decisione 15; non è ancora nell'app.

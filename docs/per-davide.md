@@ -12,7 +12,7 @@ Le voci A.1–A.4 (descrizioni delle Caratteristiche e Volontà su CAR, 14 sched
 
 Dalle versioni del pomeriggio dello stesso Doc:
 - **durata di tre Tecniche Interiori** (la vecchia A.5): recepita;
-- **struttura dell'equipaggiamento iniziale**, **dotazione comune** e **dotazione dell'Agente** (A.6): registrate, in attesa del passo guidato nell'app.
+- **struttura dell'equipaggiamento iniziale**, **dotazione comune** e **dotazioni di Agente e Cacciatore** (A.6): registrate, in attesa del passo guidato nell'app.
 
 ---
 
@@ -48,7 +48,7 @@ Il manuale non lo dice.
 
 ### Regole generali
 
-**A.6 — Equipaggiamento iniziale (§2.16): le tabelle delle altre Classi.** La forma è decisa (scelte guidate); la dotazione comune (A.5.1) e quella dell'Agente (A.5.2) sono approvate. Servono le altre Classi, le varianti di Corporazione e l'eventuale denaro iniziale.
+**A.6 — Equipaggiamento iniziale (§2.16): le tabelle delle altre Classi.** La forma è decisa (scelte guidate); sono approvate la dotazione comune (A.5.1) e quelle di Agente (A.5.2) e Cacciatore (A.5.3). Servono le altre Classi, le varianti di Corporazione e l'eventuale denaro iniziale.
 *Nel frattempo:* inserimento manuale, voce per voce.
 
 **A.30 — Pesi degli oggetti (Equipaggiamento §1.6, §1.10).** Il carico si calcola sul peso di tutto ciò che si porta, e la scheda standard del §1.10 prevede il campo Peso, ma il Manuale degli Armamenti non dà pesi per armi, armature e scudi. Li aggiungerai ai cataloghi?

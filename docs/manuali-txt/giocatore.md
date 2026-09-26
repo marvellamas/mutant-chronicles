@@ -1042,6 +1042,29 @@ Il registratore comprende batteria carica, cavo e alimentatore, con 24 ore di au
 
 Questa dotazione utilizza i profili commerciali dei manuali. Le eventuali sostituzioni con modelli di Corporazione saranno specificate nelle relative dotazioni.
 
+### **2.16.3 Dotazione iniziale — Cacciatore**
+
+Oltre alla dotazione comune, il Cacciatore riceve:
+
+| Dotazione | Quantità e opzioni |
+| :---- | :---- |
+| Arma da fuoco | Una Carabina oppure un Fucile a pompa |
+| Munizioni e caricatori | Per la carabina: tre caricatori compatibili da 15 proiettili ordinari ciascuno, per 45 colpi complessivi. Per il fucile a pompa: 18 cartucce ordinarie a pallini, di cui 6 nel serbatoio e 12 di riserva |
+| Arma da mischia | Un Pugnale, anche da caccia, oppure un’Ascia leggera, anche nella forma di accetta |
+| Protezione | Un’Armatura civile leggera, comprensiva dell’elmetto standard |
+| Osservazione | Un Binocolo |
+| Sopravvivenza | Un Corredo di sopravvivenza ambientale |
+
+Requisiti: Carabina, Fucile a pompa e Ascia leggera richiedono FOR 4; l’armatura richiede FOR 3; il Pugnale richiede FOR 2\.
+
+L’armatura concede AR 1\. L’elmetto standard incluso non aggiunge AR.
+
+Per il corredo si sceglie un ambiente: Artico, Forestale, Desertico, Urbano, Pianure, Sottosuolo oppure Apocalittico. Nell’ambiente scelto concede \+2 VA a Sopravvivenza per orientamento, raccolta di risorse e preparazione di un riparo, secondo la propria scheda.
+
+Il binocolo non richiede batterie. Acqua e viveri sono quelli della dotazione comune.
+
+Questa dotazione utilizza i profili commerciali dei manuali. Le eventuali sostituzioni con modelli di Corporazione saranno specificate nelle relative dotazioni.
+
 ## **2.17 Controllo finale della Scheda**
 
 Prima di iniziare a giocare, verifica le voci seguenti:

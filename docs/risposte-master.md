@@ -132,3 +132,13 @@ condivisi (Giocatore §§1.2.3, 2.1, 2.11, 2.14, §8.6, §8.6.10; Magia sezioni 
     varianti di Corporazione arriveranno con le rispettive dotazioni. Chiude la domanda sul
     §2.16.2 non annunciato.
     → Non ancora nell’app, come la 13: serve il passo guidato.
+
+15. **Dotazione iniziale del Cacciatore** (E&L A.5.3, Doc delle 16:52 UTC; Giocatore §2.16.3).
+    Oltre alla dotazione comune: Carabina (tre caricatori da 15) oppure Fucile a pompa (18
+    cartucce a pallini, 6 nel serbatoio e 12 di riserva); Pugnale (anche da caccia) oppure Ascia
+    leggera (anche accetta); Armatura civile leggera con elmetto standard (AR 1); Binocolo;
+    Corredo di sopravvivenza ambientale con un ambiente a scelta fra Artico, Forestale,
+    Desertico, Urbano, Pianure, Sottosuolo, Apocalittico (+2 VA a Sopravvivenza in
+    quell’ambiente, secondo la sua scheda). Requisiti: Carabina, Fucile a pompa e Ascia leggera
+    FOR 4, armatura FOR 3, Pugnale FOR 2.
+    → Non ancora nell’app, come la 13 e la 14: serve il passo guidato.

@@ -1,6 +1,6 @@
 # E&L – Risposte e correzioni approvate
 
-Copia del Google Doc del master «E&L – Risposte e correzioni approvate» (Davide), letta il 26 settembre 2026 e riletta alla versione delle 16:19:45 UTC, che aggiunge A.4, A.5, A.5.1 e A.5.2. Testo del documento, non riscritto: è la fonte delle decisioni registrate in `docs/risposte-master.md`.
+Copia del Google Doc del master «E&L – Risposte e correzioni approvate» (Davide), letta il 26 settembre 2026 e riletta alla versione delle 16:52:11 UTC, che aggiunge A.4 e A.5–A.5.3. Testo del documento, non riscritto: è la fonte delle decisioni registrate in `docs/risposte-master.md`.
 
 Decisioni approvate e aggiornamenti dei manuali condivisi.
 
@@ -383,3 +383,35 @@ Questa dotazione utilizza i profili commerciali dei manuali. Le eventuali sostit
 Applicazione: dotazione inserita nella tabella del §2.16.2 del Manuale del Giocatore. Restano da definire e approvare le dotazioni delle altre Classi, le varianti di Corporazione e l’eventuale denaro iniziale.
 
 Scheda digitale: da recepire. Per chi sceglie Agente come Classe iniziale, proporre la scelta fra Pistola semiautomatica e Revolver e fra Coltello e Randello. Assegnare le munizioni e gli eventuali caricatori corrispondenti all’arma scelta, l’Armatura civile leggera con elmetto standard, il Binocolo e il Registratore audiovisivo con batteria carica, cavo e alimentatore. Verificare i requisiti FOR indicati e aggiungere gli oggetti alla dotazione comune senza duplicarla. Riportare la decisione in docs/risposte-master.md; l’aggiornamento dell’app resta da verificare.
+
+## A.5.3 — Dotazione iniziale del Cacciatore
+
+Approvato il: set 26, 2026
+
+Oltre alla dotazione comune, il Cacciatore riceve:
+
+Arma da fuoco: Una Carabina oppure un Fucile a pompa.
+
+Munizioni e caricatori: Per la carabina: tre caricatori compatibili da 15 proiettili ordinari ciascuno, per 45 colpi complessivi. Per il fucile a pompa: 18 cartucce ordinarie a pallini, di cui 6 nel serbatoio e 12 di riserva.
+
+Arma da mischia: Un Pugnale, anche da caccia, oppure un’Ascia leggera, anche nella forma di accetta.
+
+Protezione: Un’Armatura civile leggera, comprensiva dell’elmetto standard.
+
+Osservazione: Un Binocolo.
+
+Sopravvivenza: Un Corredo di sopravvivenza ambientale.
+
+Requisiti: Carabina, Fucile a pompa e Ascia leggera richiedono FOR 4; l’armatura richiede FOR 3; il Pugnale richiede FOR 2.
+
+L’armatura concede AR 1. L’elmetto standard incluso non aggiunge AR.
+
+Per il corredo si sceglie un ambiente: Artico, Forestale, Desertico, Urbano, Pianure, Sottosuolo oppure Apocalittico. Nell’ambiente scelto concede +2 VA a Sopravvivenza per orientamento, raccolta di risorse e preparazione di un riparo, secondo la propria scheda.
+
+Il binocolo non richiede batterie. Acqua e viveri sono quelli della dotazione comune.
+
+Questa dotazione utilizza i profili commerciali dei manuali. Le eventuali sostituzioni con modelli di Corporazione saranno specificate nelle relative dotazioni.
+
+Applicazione: dotazione inserita nella tabella del §2.16.3 del Manuale del Giocatore. Restano da definire e approvare le dotazioni delle altre Classi, le varianti di Corporazione e l’eventuale denaro iniziale.
+
+Scheda digitale: da recepire. Per chi sceglie Cacciatore come Classe iniziale, proporre la scelta fra Carabina e Fucile a pompa e fra Pugnale e Ascia leggera. Assegnare munizioni e caricatori corrispondenti all’arma scelta, l’Armatura civile leggera con elmetto standard, il Binocolo e un Corredo di sopravvivenza ambientale, registrando l’ambiente scelto fra i sette previsti. Verificare i requisiti FOR indicati e aggiungere gli oggetti alla dotazione comune senza duplicarla. Riportare la decisione in docs/risposte-master.md; l’aggiornamento dell’app resta da verificare.
