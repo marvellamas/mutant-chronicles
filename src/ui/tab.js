@@ -7,6 +7,8 @@
 import { h, segno } from './dom.js';
 import { info } from './tooltip.js';
 import { descriviFerite } from '../sessione.js';
+import { renderEquipaggiamento } from './equipaggiamento.js';
+import { testoDanno } from '../stampa.js';
 
 export const POSIZIONI_TAB = [
   { id: 'automatica', etichetta: 'Automatica (sinistra su schermi larghi, in basso su telefono e tablet)' },
@@ -179,7 +181,8 @@ function tabIdentita(ctx, d) {
     sezione('Combattimento e movimento',
       h('dl', { class: 'voci griglia-voci' },
         h('div', {}, h('dt', {}, 'Iniziativa'), h('dd', {}, `${segno(d.iniziativa)} + ${d.dadoIniziativa}`)),
-        h('div', {}, h('dt', {}, 'Movimento'), h('dd', {}, `Passo ${mov.passo} ${mov.unita} · Corsa ${mov.corsa} ${mov.unita} · Scatto ${mov.scatto} ${mov.unita}`)),
+        h('div', {}, h('dt', {}, 'Movimento'), h('dd', {}, `Passo ${mov.passo} ${mov.unita} · Corsa ${mov.corsa} ${mov.unita} · Scatto ${mov.scatto} ${mov.unita}`,
+          ctx.tab.scheda.equipaggiamento?.movimentoQ ? h('small', { class: 'nota' }, ` · armatura MOV ${segno(ctx.tab.scheda.equipaggiamento.movimentoQ)} Q, una volta sul budget della modalità scelta (§7.11.1)`) : null)),
         h('div', {}, h('dt', {}, 'Azioni'), h('dd', {}, `${d.azioni.movimento} di Movimento, ${d.azioni.principali} ${d.azioni.principali === 1 ? 'Principale' : 'Principali'} per Round`)))),
 
     sezione('Vantaggio dell’Addestramento', h('p', {}, h('strong', {}, `${d.vantaggio.nome}. `), d.vantaggio.testo)),
@@ -217,18 +220,18 @@ function tabIdentita(ctx, d) {
 function tabAbilita(ctx, d) {
   const meta = Math.ceil(d.categorie.length / 2);
   const tabella = (categorie) => h('table', { class: 'tabella compatta abilita-tab' },
-    h('thead', {}, h('tr', {}, ['Abilità', 'Mod', 'Base', 'Corp', 'Avanz', 'VA'].map((c) => h('th', {}, c)))),
+    h('thead', {}, h('tr', {}, ['Abilità', 'Mod', 'Base', 'Corp', 'Avanz', 'Equip', 'VA'].map((c) => h('th', {}, c)))),
     categorie.map((cat) => h('tbody', {},
-      h('tr', { class: 'categoria' }, h('th', { colspan: 6 }, cat.nome)),
+      h('tr', { class: 'categoria' }, h('th', { colspan: 7 }, cat.nome)),
       cat.abilita.map((a) => h('tr', { class: a.diClasse ? 'di-classe' : null },
         h('th', { scope: 'row' }, info('abilita', a.nome), h('span', { class: 'sigla' }, ` ${a.caratteristica}`), a.diClasse ? ' •' : null),
         h('td', {}, segno(a.mod)), h('td', {}, String(a.base)), h('td', {}, String(a.corporazione)),
-        h('td', {}, String(a.avanzamento)), h('td', { class: 'forte' }, String(a.va)))))));
+        h('td', {}, String(a.avanzamento)), h('td', { title: a.equip ? 'Equipaggiamento indossato (§7.11.1)' : null }, a.equip ? segno(a.equip) : '0'), h('td', { class: 'forte' }, String(a.va)))))));
   return [
     promemoriaPenalita(ctx),
     sezione('Abilità',
       h('div', { class: 'abilita-affiancate' }, tabella(d.categorie.slice(0, meta)), tabella(d.categorie.slice(meta))),
-      h('p', { class: 'nota' }, `• Abilità di Classe. VA = Mod + Base + Corp + Avanz. Avanzamento massimo: ${d.limiteAvanzamento ?? '—'}.`)),
+      h('p', { class: 'nota' }, `• Abilità di Classe. VA = Mod + Base + Corp + Avanz + Equip (equipaggiamento indossato). Avanzamento massimo: ${d.limiteAvanzamento ?? '—'}.`)),
     sezione('Talenti di Classe', d.talentiClasse.map((t) => h('div', { class: 'talento' },
       h('h3', {}, t.nome, h('span', { class: 'sigla' }, ` · ${t.classe} ${t.grado}${t.scelto ? ', a scelta' : ''}`)),
       paragrafi(t.frase)))),
@@ -253,10 +256,30 @@ function tabCombattimento(ctx, d) {
   const gradini = Array.from({ length: m.ferite + 1 }, (_, n) => ({ n, ...descriviFerite(n, ctx.dati) }));
   return [
     promemoriaPenalita(ctx),
+    d.avvisiEquipaggiamento.length ? h('div', { class: 'riquadro attenzione' },
+      h('p', {}, h('strong', {}, 'Equipaggiamento da controllare (avvisi, non blocchi: decide il master):')),
+      h('ul', {}, d.avvisiEquipaggiamento.map((a) => h('li', {}, a)))) : null,
     h('div', { class: 'griglia-tavolo' },
       contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv }),
       d.difese ? h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Difese'),
-        h('p', { class: 'valore-tavolo' }, h('strong', {}, `VA ${d.difese.va}`)), h('p', { class: 'nota' }, `(${d.difese.caratteristica}) senza penalità di sessione`)) : null),
+        h('p', { class: 'valore-tavolo' }, h('strong', {}, `VA ${d.difese.va}`)),
+        h('p', { class: 'nota' }, `(${d.difese.caratteristica}) con l’equipaggiamento, senza penalità di sessione`)) : null),
+
+    sezione('Armi impugnate', d.armiCalcolate.length
+      ? h('div', { class: 'armi-tab' }, d.armiCalcolate.map((a) => schedaArma(ctx, a)))
+      : h('p', { class: 'vuoto' }, 'Nessuna arma impugnata: cambia lo stato di un’arma in «Impugnata» qui sotto.')),
+
+    sezione('Protezioni', d.protezioniCalcolate.length
+      ? h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },
+        h('thead', {}, h('tr', {}, ['Protezione', 'AR', 'Categoria', 'Penalità', 'FOR'].map((c) => h('th', {}, c)))),
+        h('tbody', {}, d.protezioniCalcolate.map((p) => h('tr', {},
+          h('th', { scope: 'row' }, p.nome),
+          h('td', { class: 'forte' }, p.ar ? `${p.ar.totale}${p.ar.magica ? ` (${p.ar.magica} magica)` : ''}` : '—'),
+          h('td', {}, p.categoria ?? '—'),
+          h('td', {}, testoPenalitaTab(p.penalita)),
+          h('td', {}, p.forRichiesta ? `${p.forRichiesta}${p.forMancante ? ` (−${p.forMancante} VA)` : ''}` : '—'))))))
+      : h('p', { class: 'vuoto' }, 'Nessuna protezione indossata o imbracciata.'),
+      d.protezioniCalcolate.length ? h('p', { class: 'nota' }, 'Agilità vale per Schivata e Prove fisiche di Atletica e Furtività ostacolate (già nel VA di quelle Abilità, colonna Equip); non per la Parata. La penalità MOV si sottrae una volta al budget di movimento (§7.11.1).') : null),
 
     sezione('Ferite (§5.14)',
       h('p', { class: 'nota' }, 'Ogni nuova Ferita fa avanzare di un gradino. La penalità è cumulativa a VA e Prove Salvezza.'),
@@ -280,13 +303,50 @@ function tabCombattimento(ctx, d) {
           h('span', {}, h('strong', {}, st.nome), h('small', {}, ` · ${st.durata}`), h('br', {}), h('span', { class: 'promemoria-stato' }, st.promemoria, st.riassunto ? h('em', { class: 'riassunto' }, ' (riassunto, non testo del manuale)') : null))));
       }))),
 
-    sezione('Armi e protezioni',
-      h('p', { class: 'nota' }, 'Il catalogo dell’equipaggiamento (Manuale degli Armamenti) non è ancora nell’app: per ora armi, protezioni e munizioni si annotano nell’equipaggiamento o sulla scheda stampata.')),
-
     sezione('Equipaggiamento',
-      d.equipaggiamento.length ? h('ul', {}, d.equipaggiamento.map((x) => h('li', {}, x))) : h('p', { class: 'vuoto' }, 'Nessun equipaggiamento annotato.'),
-      h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.modificaCreazione(ctx.passi.equipaggiamento) }, 'Modifica equipaggiamento')),
+      h('p', { class: 'nota' }, 'Solo gli oggetti impugnati, imbracciati o indossati cambiano i valori. L’inserimento è manuale: l’equipaggiamento iniziale (§2.16) non ha ancora regole.'),
+      renderEquipaggiamento({
+        dati: ctx.dati, voci: ctx.scelte.equipaggiamento, ui: ctx.ui,
+        aggiorna: ctx.azioni.equipaggiamento, ridisegna: ctx.azioni.ridisegna,
+      })),
   ];
+}
+
+function testoPenalitaTab(pen = {}) {
+  const parti = [];
+  if (pen.attacchi_ravvicinati) parti.push(`attacchi ravvicinati ${segno(pen.attacchi_ravvicinati)}`);
+  if (pen.attacchi_distanza) parti.push(`a distanza ${segno(pen.attacchi_distanza)}`);
+  if (pen.agilita) parti.push(`Agilità ${segno(pen.agilita)}`);
+  if (pen.movimento_q) parti.push(`MOV ${segno(pen.movimento_q)} Q`);
+  if (pen.lancio_potere) parti.push(`lancio con Potere ${segno(pen.lancio_potere)}`);
+  return parti.join(' · ') || 'nessuna';
+}
+
+/** Numero con il segno meno tipografico, senza «+» (per i VA). */
+const numero = (n) => (n < 0 ? `−${-n}` : String(n));
+
+/** Arma impugnata: VA per colpire con la scomposizione, danno, portata o gittata, Parata, munizioni. */
+function schedaArma(ctx, a) {
+  const munizioni = ctx.sessione.munizioni[a.uid] ?? 0;
+  return h('article', { class: 'arma-tab' },
+    h('h3', {}, a.nome, h('small', { class: 'sigla' }, ` · ${a.abilita ?? 'Abilità non indicata'}`)),
+    h('div', { class: 'arma-valori' },
+      h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), h('strong', {}, a.va === null ? '—' : numero(a.va))),
+      h('p', {}, h('span', { class: 'sigla' }, 'Danno '), h('strong', {}, testoDanno(a.danno))),
+      a.portataQ ? h('p', {}, h('span', { class: 'sigla' }, 'Portata '), `${a.portataQ} Q`) : null,
+      a.gittataQ ? h('p', {}, h('span', { class: 'sigla' }, 'Gittata '), `${a.gittataQ} Q`) : null,
+      a.parata ? h('p', {}, h('span', { class: 'sigla' }, 'Parata '), h('strong', {}, numero(a.parata.va))) : null),
+    a.componenti.length ? h('p', { class: 'nota' }, a.componenti.map((c) => `${c.nome} ${segno(c.valore)}`).join(' · '),
+      a.bonusDanno ? ` · danno +${a.bonusDanno} (${a.specializzazione})` : null) : null,
+    a.proprieta.length ? h('p', { class: 'proprieta-arma' }, a.proprieta.map((p) => h('span', { class: 'etichetta', title: p.testo }, p.nome))) : null,
+    a.tipo === 'arma_distanza' ? h('div', { class: 'munizioni-tavolo' },
+      h('span', {}, 'Munizioni: ', h('strong', {}, String(munizioni))),
+      [-10, -1, 1, 10].map((d) => h('button', {
+        type: 'button', class: 'btn-tavolo', disabled: d < 0 && munizioni <= 0,
+        'aria-label': `${d > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(d)} munizioni a ${a.nome}`,
+        onclick: () => ctx.azioni.munizioni(a.uid, d),
+      }, d > 0 ? `+${d}` : `−${-d}`)),
+      h('small', { class: 'nota' }, 'Contatore libero: caricatori e ricariche arriveranno con il catalogo delle armi a distanza.')) : null);
 }
 
 // ---------------------------------------------------------------------------
@@ -299,7 +359,8 @@ function tabMagia(ctx, d) {
       contatoreTavolo(ctx, { titolo: 'Punti Magia', campo: 'pmAttuali', attuale: s.pmAttuali, massimo: ctx.massimi.pm }),
       h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Incantesimi'),
         h('p', { class: 'valore-tavolo' }, h('strong', {}, String(d.conosciuti)), h('span', {}, ` / ${d.quota}`)),
-        h('p', { class: 'nota' }, `Livello massimo di lancio: ${d.livelloMassimo}`))),
+        h('p', { class: 'nota' }, `Livello massimo di lancio: ${d.livelloMassimo}`),
+        ctx.tab.scheda.equipaggiamento?.lancioPotere ? h('p', { class: 'nota' }, `Armatura: ${segno(ctx.tab.scheda.equipaggiamento.lancioPotere)} VA alle Prove di Potere per lanciare (§7.11.1)`) : null)),
     sezione(`Prove di Potere (scala ${d.scalaPotere})`,
       h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },
         h('thead', {}, h('tr', {}, h('th', {}, 'Livello'), h('th', {}, 'Prova'))),

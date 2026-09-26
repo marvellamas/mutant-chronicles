@@ -6,6 +6,7 @@ import { statoIncantesimi, motivoBloccoIncantesimo, regoleIncantesimi } from '..
 import { info, elencoInfo } from './tooltip.js';
 import { componenteTiro } from './tiro.js';
 import { valoreTiro } from '../tiri.js';
+import { renderEquipaggiamento } from './equipaggiamento.js';
 
 const trova = (lista, nome) => lista.find((x) => x.nome === nome);
 const GRADI = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI' };
@@ -412,9 +413,12 @@ function passoPuntiEroe(ctx) {
 
 function passoEquipaggiamento(ctx) {
   return [
-    h('p', { class: 'nota' }, 'Le regole dell’equipaggiamento iniziale non sono ancora scritte (§2.16: «integrazione successiva»). Per ora annota qui ciò che concordi con il master.'),
-    h('label', { class: 'campo' }, h('span', {}, 'Equipaggiamento'),
-      h('textarea', { rows: 8, value: ctx.scelte.equipaggiamento,
-        oninput: (e) => ctx.aggiorna({ equipaggiamento: e.target.value }, { ridisegna: false }) })),
+    h('p', { class: 'riquadro attenzione' }, 'L’equipaggiamento iniziale non ha ancora regole (§2.16: «integrazione successiva»): nessuna dotazione automatica. Inserisci a mano, voce per voce, ciò che concordi con il master.'),
+    h('p', { class: 'nota' }, 'Il catalogo contiene per ora le armi ravvicinate commerciali e le armature civili del Manuale degli Armamenti; il resto si aggiunge come oggetto personalizzato. Nella scheda, solo gli oggetti impugnati, imbracciati o indossati cambiano i valori.'),
+    renderEquipaggiamento({
+      dati: ctx.dati, voci: ctx.scelte.equipaggiamento, ui: ctx.ui,
+      aggiorna: (voci) => ctx.aggiorna({ equipaggiamento: voci }),
+      ridisegna: ctx.ridisegna,
+    }),
   ];
 }

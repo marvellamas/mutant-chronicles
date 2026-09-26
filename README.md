@@ -129,6 +129,17 @@ Tutte le regole numeriche stanno in `data/`:
 | `talenti_liberi.json` | gli 87 Talenti Liberi del §8.6 e i Talenti di magia (provvisori) |
 | `specializzazioni.json` | le 84 Specializzazioni del §8.8 (armi, mistiche, operative/sociali/professionali) |
 | `tecniche_interiori.json` | le 28 Tecniche Interiori del §8.9 e le regole comuni |
+| `equipaggiamento/index.json` | l'elenco dei file del catalogo dell'equipaggiamento e le sigle di reperibilità (Armamenti §7.1.8) |
+| `equipaggiamento/armi.json` | armi ravvicinate del catalogo Commerciale (Armamenti §7.1.1–7.1.3) |
+| `equipaggiamento/armature.json` | armature commerciali civili e penalità per categoria (Armamenti §7.11.1–7.11.3) |
+
+**Catalogo dell'equipaggiamento.** Cresce a lotti (lista in `docs/equipaggiamento-lotti.md`):
+aggiungere un lotto significa aggiungere un file in `data/equipaggiamento/` e una riga in
+`index.json`. Ogni oggetto ha `id`, `nome`, `tipo`, `catalogo`, `famiglia`,
+`nomi_alternativi`, `note_manuale`, `paragrafo` e `versione_manuale`, più i campi del suo tipo
+(per le armi: `abilita`, `specializzazione`, `mani`, `danno`, `portata_q`, `for_richiesta`…).
+Nei personaggi un oggetto è indicato come `"armi:spada-leggera"`: se lo togli dal catalogo, nei
+personaggi che lo avevano resta in lista come «non più in catalogo», senza effetti.
 
 Si modificano con un editor di testo (anche direttamente su GitHub). Ogni file ha il campo
 `versione_manuale`, che l'app mostra in alto: aggiornalo quando i dati seguono una nuova
@@ -164,9 +175,23 @@ Abilità, riepilogo. Nulla si salva fino a «Conferma»; uscire prima chiede con
 scheda mostra la Progressione (una riga per livello) e «Annulla l'ultimo
 livello». Con dei livelli acquisiti la creazione resta consultabile ma bloccata, tranne
 nome, Background, anagrafica ed equipaggiamento. La home mostra il livello di ogni personaggio.
-Il file esportato (formato 4) contiene anche i livelli, l'anagrafica e la sessione; i file dei
-formati 1 e 2 si importano come personaggi al 1° livello, e senza sessione la si inizializza ai
-massimi.
+Il file esportato (formato 5) contiene anche i livelli, l'anagrafica, l'equipaggiamento e la
+sessione; i file dei formati 1 e 2 si importano come personaggi al 1° livello, e senza sessione
+la si inizializza ai massimi. Il vecchio campo di testo dell'equipaggiamento diventa un oggetto
+personalizzato «altro» con quel testo nelle note.
+
+**Equipaggiamento.** Nel passo Equipaggiamento del wizard e nella tab Combattimento si aggiungono
+oggetti dal catalogo (cascata Tipo → Catalogo → Famiglia → Profilo, oppure ricerca per nome,
+anche con i nomi alternativi come «alabarda») o come oggetti personalizzati. Ogni oggetto ha uno
+stato (impugnata, addosso, nello zaino; imbracciato; indossata), la quantità e le note. Solo gli
+oggetti attivi cambiano i valori:
+- le armi impugnate mostrano il VA per colpire (VA dell'Abilità dell'arma, Specializzazione della
+  famiglia, penalità se la FOR è inferiore al requisito, penalità dell'armatura), il danno e la
+  Parata;
+- l'armatura indossata applica l'AR e le penalità di categoria (colonna «Equip» delle Abilità).
+
+Le incoerenze (due armature, arma a due mani con scudo) sono avvisi, non blocchi. Finché il
+§2.16 non esiste, l'equipaggiamento iniziale si inserisce a mano.
 
 Un personaggio è `{ "creazione": {…scelte…}, "livelli": [ {"livello": 2, …}, … ] }`: la scheda si
 ricalcola rigiocando la creazione e i livelli dall'inizio, con i limiti di ciascun livello.
@@ -217,6 +242,8 @@ src/avanzamento.js  personaggio a livelli: ricalcolo, validazione di un livello,
 src/ui/           interfaccia (wizard, riepilogo, home, tooltip, tiro di dado)
 src/ui/tab.js     scheda a tab e modalità tavolo
 src/sessione.js   valori attuali della sessione (funzioni pure)
+src/equipaggiamento.js  catalogo, voci del personaggio ed effetti dell'equipaggiamento (funzioni pure)
+src/ui/equipaggiamento.js  elenco e «Aggiungi oggetto» (wizard e tab Combattimento)
 src/ui/sali.js    schermata «Sali di livello»
 src/stampa.js     dati dei fogli di stampa e delle tab (funzioni pure)
 src/ui/stampa.js  vista di stampa A4 orizzontale, con css/stampa.css
@@ -224,6 +251,7 @@ data/             regole in JSON
 tests/            node --test
 docs/             studio di fattibilità, ricognizione dell'avanzamento, risposte del master
 serve.json        intestazioni di cache per npm start e avvia.bat
-tools/            estrazione di testo e tabelle dai PDF dei manuali (Python + pdfplumber); non fa parte dell'app
+tools/            estrazione di testo e tabelle dai PDF dei manuali (Python + pdfplumber) e generatori
+                  dei lotti del catalogo (tools/lotti/); non fa parte dell'app
 avvia.bat         avvio con doppio clic su Windows
 ```

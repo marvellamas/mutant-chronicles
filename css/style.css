@@ -687,3 +687,53 @@ details.sezione-tab > summary { font-weight: 700; cursor: pointer; min-height: 4
   .griglia-tavolo { grid-template-columns: 1fr 1fr; }
   .griglia-tavolo > :first-child, .griglia-tavolo > :nth-child(2) { grid-column: 1 / -1; }
 }
+
+/* ---------------------------------------------------------------- equipaggiamento (src/ui/equipaggiamento.js) */
+
+.elenco-equip { list-style: none; padding: 0; margin: 0.5rem 0 1rem; display: grid; gap: 0.5rem; }
+.voce-equip { background: var(--superficie); border: 1px solid var(--bordo); border-radius: var(--raggio); padding: 0.6rem 0.75rem; display: grid; gap: 0.5rem; }
+.voce-equip.attiva { border-color: var(--ok); box-shadow: 0 0 0 1px var(--ok); }
+.voce-equip.fuori { border-style: dashed; opacity: 0.85; }
+.equip-testa { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem; }
+.equip-testa .motivo { margin: 0.2rem 0 0; }
+.piccolo-btn { min-height: 44px; padding: 0.3rem 0.8rem; }
+.stati-equip { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.stato-equip {
+  font: inherit; min-height: 44px; padding: 0.4rem 0.8rem; cursor: pointer; touch-action: manipulation;
+  border: 1px solid var(--bordo); border-radius: var(--raggio); background: var(--sfondo); color: var(--testo);
+}
+.stato-equip.attivo { border-color: var(--accento); background: var(--accento-tenue); color: var(--accento); font-weight: 700; }
+.equip-riga { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: center; }
+.quantita { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--tenue); }
+.quantita output { min-width: 1.5rem; text-align: center; font-weight: 700; color: var(--testo); }
+.btn-tavolo.piccolo { min-width: 44px; min-height: 44px; font-size: 1rem; }
+.note-equip {
+  flex: 1 1 14rem; min-width: 0; min-height: 44px; box-sizing: border-box;
+  font: inherit; padding: 0.4rem 0.6rem; border: 1px solid var(--bordo); border-radius: var(--raggio);
+  background: var(--superficie); color: var(--testo);
+}
+.aggiungi-equip { border-top: 1px solid var(--bordo); padding-top: 0.5rem; }
+.aggiungi-equip h3 { margin: 0.25rem 0; }
+.aggiungi-equip input[type="search"], .aggiungi-equip select, .personalizzato input {
+  font: inherit; min-height: 44px; box-sizing: border-box; padding: 0.4rem 0.6rem;
+  border: 1px solid var(--bordo); border-radius: var(--raggio); background: var(--superficie); color: var(--testo); max-width: 100%;
+}
+.cascata { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: 0 1rem; }
+.cascata .campo { margin: 0.4rem 0; }
+.risultati-ricerca { list-style: none; padding: 0; margin: 0.25rem 0; display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.risultati-ricerca .btn { min-height: 44px; }
+.profilo-scelto p { margin: 0.2rem 0; }
+.personalizzato { margin-top: 0.75rem; }
+.personalizzato > summary { font-weight: 700; cursor: pointer; min-height: 44px; display: flex; align-items: center; }
+
+/* armi impugnate nella tab Combattimento */
+.armi-tab { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 0.75rem; }
+.arma-tab { background: var(--superficie); border: 1px solid var(--bordo); border-radius: var(--raggio); padding: 0.6rem 0.75rem; }
+.arma-tab h3 { margin: 0 0 0.3rem; font-size: 1.05rem; }
+.arma-valori { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 1.25rem; }
+.arma-valori p { margin: 0; }
+.arma-valori .valore-tavolo strong { font-size: 1.9rem; }
+.proprieta-arma { display: flex; flex-wrap: wrap; gap: 0.3rem; margin: 0.35rem 0 0; }
+.proprieta-arma .etichetta { margin-left: 0; cursor: help; }
+.munizioni-tavolo { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin-top: 0.5rem; }
+.munizioni-tavolo small { flex-basis: 100%; }

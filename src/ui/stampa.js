@@ -198,18 +198,18 @@ function foglioAbilita(d) {
   // occuperebbero tutta l'altezza del foglio
   const meta = Math.ceil(d.categorie.length / 2);
   const tabellaAbilita = (categorie) => h('table', { class: 'tabella-stampa numeri abilita-stampa' },
-    h('thead', {}, h('tr', {}, ['Abilità', 'Mod', 'Base', 'Corp', 'Avanz', 'VA'].map((c) => h('th', {}, c)))),
+    h('thead', {}, h('tr', {}, ['Abilità', 'Mod', 'Base', 'Corp', 'Avanz', 'Equip', 'VA'].map((c) => h('th', {}, c)))),
     categorie.map((cat) => h('tbody', {},
-      h('tr', { class: 'categoria' }, h('th', { colspan: 6 }, cat.nome)),
+      h('tr', { class: 'categoria' }, h('th', { colspan: 7 }, cat.nome)),
       cat.abilita.map((a) => h('tr', {},
         h('th', { scope: 'row' }, `${a.nome} `, h('span', { class: 'sigla' }, a.caratteristica), a.diClasse ? ' •' : null),
         h('td', {}, segno(a.mod)), h('td', {}, String(a.base)), h('td', {}, String(a.corporazione)),
-        h('td', {}, String(a.avanzamento)), h('td', { class: 'forte' }, String(a.va)))))));
+        h('td', {}, String(a.avanzamento)), h('td', { title: a.equip ? 'Equipaggiamento indossato (§7.11.1)' : null }, a.equip ? segno(a.equip) : '0'), h('td', { class: 'forte' }, String(a.va)))))));
   return h('div', { class: 'griglia-abilita' },
     h('div', { class: 'colonna' },
       riquadro('Abilità',
         h('div', { class: 'abilita-affiancate' }, tabellaAbilita(d.categorie.slice(0, meta)), tabellaAbilita(d.categorie.slice(meta))),
-        h('p', { class: 'piccolo' }, `• Abilità di Classe. VA = Mod + Base + Corp + Avanz. Avanzamento massimo: ${d.limiteAvanzamento ?? '—'}.`)),
+        h('p', { class: 'piccolo' }, `• Abilità di Classe. VA = Mod + Base + Corp + Avanz + Equip (equipaggiamento indossato). Avanzamento massimo: ${d.limiteAvanzamento ?? '—'}.`)),
       d.specializzazioni.length ? riquadro('Specializzazioni', h('ul', { class: 'elenco-talenti-stampa' }, d.specializzazioni.map((x) => h('li', {},
         h('strong', {}, x.nome), ` — ${x.abilita}; ${x.effetto}`)))) : null,
       d.tecniche.length || d.tecnicheAmmesse ? riquadro(`Tecniche Interiori (${d.tecniche.length} / ${d.tecnicheAmmesse})`,

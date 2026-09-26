@@ -313,6 +313,7 @@ function contesto() {
     aggiorna,
     esporta: () => esporta(stato.scelte, stato.livelli),
     ridisegnaRiepilogo,
+    ridisegna: () => renderWizard(),
   };
   return ctx;
 }
@@ -594,6 +595,19 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       note: (testo) => {
         stato.sessione = modificaSessione(stato.sessione, { note: testo }, massimi);
         persisti();
+      },
+      // equipaggiamento: modificabile anche con livelli acquisiti (campo descrittivo della creazione)
+      equipaggiamento: (voci) => {
+        const { scelte, avvisi } = applicaModifica(stato.scelte, { equipaggiamento: voci }, dati);
+        stato.scelte = scelte;
+        if (avvisi.length) stato.messaggioScheda = { tipo: 'attenzione', testo: avvisi.join(' ') };
+        persisti();
+        renderScheda({ mantieniScorrimento: true });
+      },
+      ridisegna: () => renderScheda({ mantieniScorrimento: true }),
+      munizioni: (uid, delta) => {
+        const attuali = stato.sessione.munizioni[uid] ?? 0;
+        cambiaSessione(modificaSessione(stato.sessione, { munizioni: { ...stato.sessione.munizioni, [uid]: Math.max(0, attuali + delta) } }, massimi));
       },
       puntiEsperienza: (valore) => {
         stato.scelte = applicaModifica(stato.scelte, { puntiEsperienza: valore }, dati).scelte;
