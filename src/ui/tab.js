@@ -220,23 +220,25 @@ const FONTI = { regole: 'regole', equipaggiamento: 'equipaggiamento', ferite: 'F
  * valore da regole: rosso ▼ (malus) o verde ▲ (bonus); il segno resta leggibile senza colore.
  * Con più di una voce, un tocco o il passaggio del mouse mostra la scomposizione.
  */
-function valoreEffettivo(nome, effettivo, daRegole, scomposizione = []) {
+function valoreEffettivo(nome, effettivo, daRegole, scomposizione = [], { pillola = false, dettaglio = null } = {}) {
   if (effettivo === null || effettivo === undefined) return '—';
   const diff = daRegole === null || daRegole === undefined ? 0 : effettivo - daRegole;
   const verso = diff < 0 ? 'malus' : diff > 0 ? 'bonus' : '';
   const figli = [numero(effettivo),
     verso ? h('span', { class: 'segno-verso', 'aria-hidden': 'true' }, diff < 0 ? '▼' : '▲') : null,
     verso ? h('span', { class: 'sr' }, ` (${segno(diff)} rispetto al valore da regole ${numero(daRegole)})`) : null];
-  if (scomposizione.length <= 1) return h('span', { class: `val-eff ${verso}`.trim() }, figli);
+  // pillola: il VA finale in evidenza, sempre toccabile (anche con la sola voce «da regole»)
+  const classe = `val-eff${pillola ? ' pillola-va' : ''} ${verso}`.trim();
+  if (scomposizione.length <= 1 && !pillola) return h('span', { class: classe }, figli);
   return infoValore(figli, {
     titolo: `${nome}: ${numero(effettivo)}`,
     sottotitolo: `Valore da regole ${numero(daRegole)}`,
-    sezioni: [{ testo: formulaScomposizione(nome, scomposizione) }],
+    sezioni: [dettaglio ? { etichetta: 'Da regole', testo: dettaglio } : null, scomposizione.length > 1 ? { testo: formulaScomposizione(nome, scomposizione) } : null].filter(Boolean),
     tabella: {
       titolo: 'Scomposizione', colonne: ['Voce', 'Valore', 'Fonte'],
       righe: scomposizione.map((x, i) => ({ Voce: x.etichetta, Valore: i ? segno(x.valore) : numero(x.valore), Fonte: FONTI[x.fonte] ?? x.fonte })),
     },
-  }, { classe: `val-eff ${verso}` });
+  }, { classe });
 }
 
 const sezione = (titolo, ...contenuto) => h('section', { class: 'sezione-tab' }, h('h2', {}, titolo), ...contenuto);
@@ -293,8 +295,8 @@ function tabIdentita(ctx, d) {
           h('thead', {}, h('tr', {}, h('th', {}, ''), h('th', {}, 'Car.'), h('th', {}, 'Valore'))),
           h('tbody', {}, d.salvezze.map((x) => h('tr', {},
             h('th', { scope: 'row' }, x.nome), h('td', {}, x.caratteristica),
-            h('td', { class: 'forte', title: x.limitato ? `Limitato a ${x.tetto} (§1.2.3)` : null },
-              valoreEffettivo(x.nome, x.effettivo, x.totale, x.scomposizione), x.limitato ? '*' : null))))),
+            h('td', { class: 'cella-va', title: x.limitato ? `Limitato a ${x.tetto} (§1.2.3)` : null },
+              valoreEffettivo(x.nome, x.effettivo, x.totale, x.scomposizione, { pillola: true }), x.limitato ? '*' : null))))),
         d.salvezze.some((x) => x.effettivo !== x.totale) ? h('p', { class: 'nota' }, 'Con le condizioni della sessione (Ferite, Affaticamento, Stati).') : null)),
 
     sezione('Combattimento e movimento',
@@ -347,7 +349,10 @@ function tabAbilita(ctx, d) {
         h('th', { scope: 'row' }, info('abilita', a.nome), h('span', { class: 'sigla' }, ` ${a.caratteristica}`), a.diClasse ? ' •' : null,
           h('small', { class: 'formula' }, `${segno(a.mod)} Mod + ${a.base} Base + ${a.corporazione} Corp + ${a.avanzamento} Avanz${a.equip ? ` ${segno(a.equip)} Equip` : ''}`)),
         h('td', { class: 'dettaglio' }, segno(a.mod)), h('td', { class: 'dettaglio' }, String(a.base)), h('td', { class: 'dettaglio' }, String(a.corporazione)),
-        h('td', { class: 'dettaglio' }, String(a.avanzamento)), h('td', { class: 'dettaglio', title: a.equip ? 'Equipaggiamento indossato (§7.11.1)' : null }, a.equip ? segno(a.equip) : '0'), h('td', { class: 'forte' }, valoreEffettivo(a.nome, a.effettivo, a.totale, a.scomposizione)))))));
+        h('td', { class: 'dettaglio' }, String(a.avanzamento)), h('td', { class: 'dettaglio', title: a.equip ? 'Equipaggiamento indossato (§7.11.1)' : null }, a.equip ? segno(a.equip) : '0'),
+        h('td', { class: 'cella-va' }, valoreEffettivo(a.nome, a.effettivo, a.totale, a.scomposizione, {
+          pillola: true, dettaglio: `${segno(a.mod)} Mod + ${a.base} Base + ${a.corporazione} Corp + ${a.avanzamento} Avanz = ${a.totale}`,
+        })))))));
   const condizioni = condizioniAttiveAbilita(ctx.tab.scheda, ctx.dati);
   return [
     condizioni.length ? h('section', { class: 'riquadro condizioni-attive', 'aria-label': 'Condizioni attive' },
@@ -390,7 +395,7 @@ function tabCombattimento(ctx, d) {
     h('div', { class: 'griglia-tavolo' },
       contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true, classe: 'riquadro-pv' }),
       d.difese ? h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Difese'),
-        h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), h('strong', {}, valoreEffettivo('Difese', d.difese.effettivo, d.difese.totale, d.difese.scomposizione))),
+        h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), valoreEffettivo('Difese', d.difese.effettivo, d.difese.totale, d.difese.scomposizione, { pillola: true })),
         h('p', { class: 'nota' }, `(${d.difese.caratteristica}) con l’equipaggiamento e le condizioni della sessione`)) : null),
 
     sezione('Armi impugnate', d.armiCalcolate.length
@@ -522,7 +527,7 @@ function schedaArma(ctx, a) {
     h('h3', {}, a.nome, h('small', { class: 'sigla' }, ` · ${a.abilita ?? 'Abilità non indicata'}`)),
     a.moduloDi ? h('p', { class: 'nota' }, `Modulo integrato di ${a.moduloDi}: si sceglie il profilo prima di ogni attacco; alimentazione separata (§7.8).`) : null,
     h('div', { class: 'arma-valori' },
-      h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), h('strong', {}, a.va === null ? '—' : valoreEffettivo(`VA per colpire (${a.nome})`, a.vaEffettivo ?? a.va, a.vaDaRegole ?? a.va, a.scomposizione))),
+      h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), a.va === null ? h('strong', {}, '—') : valoreEffettivo(`VA per colpire (${a.nome})`, a.vaEffettivo ?? a.va, a.vaDaRegole ?? a.va, a.scomposizione, { pillola: true })),
       h('p', {}, h('span', { class: 'sigla' }, 'Danno '), h('strong', {}, dannoTesto)),
       a.ac !== null && a.ac !== 1 ? h('p', {}, h('span', { class: 'sigla', title: 'Applicazioni di danno per colpo a segno' }, 'AC '), a.ac === 'munizione' ? (mr ? String(mr.ac) : 'dalla munizione') : String(a.ac)) : null,
       mr ? h('p', {}, h('span', { class: 'sigla', title: 'Raggio di scoppio della munizione (§5.10)' }, 'RS '), `${mr.rs_q} Q`) : null,
