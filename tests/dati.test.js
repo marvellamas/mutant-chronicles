@@ -30,7 +30,8 @@ test('conteggi attesi: 6 Caratteristiche, 24 Abilità, 7 Corporazioni, 5 Addestr
 
 test('i TODO(Davide) sono elencabili', () => {
   const todo = trovaTodo(dati);
-  assert.ok(todo.some((t) => t.percorso.startsWith('caratteristiche.json')));
+  // descrizioni delle Caratteristiche: date dal master il 26/09/2026
+  assert.equal(todo.some((t) => t.percorso.startsWith('caratteristiche.json')), false);
   assert.ok(todo.some((t) => t.percorso.startsWith('talenti_liberi.json')));
   // chiusi dalle risposte del master (docs/risposte-master.md)
   assert.equal(todo.some((t) => t.percorso.startsWith('classi.json')), false);

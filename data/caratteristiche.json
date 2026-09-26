@@ -7,32 +7,32 @@
     {
       "sigla": "FOR",
       "nome": "Forza",
-      "descrizione": "TODO(Davide)"
+      "descrizione": "Misura la potenza muscolare e la capacità di applicare forza fisica. È importante per sollevare e spostare pesi, superare ostacoli, lottare e controllare armi pesanti o da guerra."
     },
     {
       "sigla": "COS",
       "nome": "Costituzione",
-      "descrizione": "TODO(Davide)"
+      "descrizione": "Rappresenta la robustezza dell’organismo e la resistenza alle sollecitazioni fisiche. Contribuisce ai Punti Vita e alla Prova Salvezza Tempra, aiutando a sopportare fatica e condizioni avverse."
     },
     {
       "sigla": "DES",
       "nome": "Destrezza",
-      "descrizione": "TODO(Davide)"
+      "descrizione": "Esprime agilità, coordinazione e precisione dei movimenti. Sostiene le azioni che richiedono controllo del corpo, rapidità e manualità, comprese diverse forme di attacco, difesa e furtività."
     },
     {
       "sigla": "INT",
       "nome": "Intelligenza",
-      "descrizione": "TODO(Davide)"
+      "descrizione": "Misura ragionamento, memoria e capacità di analizzare informazioni e risolvere problemi. Sostiene le competenze tecniche e scientifiche, la comprensione di procedure complesse e la valutazione tattica."
     },
     {
       "sigla": "SAG",
       "nome": "Saggezza",
-      "descrizione": "TODO(Davide)"
+      "descrizione": "Rappresenta intuito, attenzione e sensibilità verso l’ambiente, gli esseri viventi e le energie mistiche. Sostiene percezione, sopravvivenza e medicina, oltre all’uso del Potere; contribuisce ai Punti Magia e alla Prova Salvezza Magia."
     },
     {
       "sigla": "CAR",
       "nome": "Carisma",
-      "descrizione": "TODO(Davide)"
+      "descrizione": "Esprime presenza personale, capacità comunicativa e forza di carattere. Permette di coinvolgere, persuadere, guidare o ingannare gli altri, ma anche di affermare la propria volontà, opporsi alle pressioni e affrontare situazioni avverse con fermezza. È la Caratteristica associata alla Prova Salvezza Volontà."
     }
   ],
   "modificatore_ordinario": {
@@ -75,7 +75,7 @@
     {
       "id": "volonta",
       "nome": "Volontà",
-      "caratteristica": "INT"
+      "caratteristica": "CAR"
     },
     {
       "id": "magia",
@@ -83,5 +83,6 @@
       "caratteristica": "SAG"
     }
   ],
-  "_nota_descrizioni": "Il Manuale del Giocatore 0.43 non descrive le singole Caratteristiche: descrizioni da fornire (TODO)."
+  "_nota_descrizioni": "Descrizioni del master (§2.1 del Manuale del Giocatore condiviso), approvate il 26/09/2026: docs/risposte-master.md.",
+  "_nota_salvezze": "Volontà usa CAR al posto di INT, con il modificatore specifico delle Salvezze (decisione del master del 26/09/2026; §§1.2.3, 2.11 e 2.14 del manuale condiviso)."
 }

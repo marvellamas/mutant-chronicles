@@ -29,9 +29,10 @@ test('collaudo a: Imperiali Combattente Assaltatore, 8° livello', () => {
   assert.deepEqual(s.errori, []);
   // §2.9 Imperiali 6/6/5/4/5/5; §2.1 +1 FOR, +1 COS, +2 DES, +1 SAG; §8.2 livello 2 FOR+1 COS+1, livello 6 DES+1 SAG+1
   assert.deepEqual(car(s), { FOR: 8, COS: 8, DES: 8, INT: 4, SAG: 7, CAR: 5 });
-  // §1.2.3: 8 + Mod Salvezza (8 → +2, 7 → +1, 4 → −1) + Combattente (+1 Tempra, +1 Riflessi, §2.11)
-  // + Imperiali (+1 Tempra, +1 Volontà) + Avanzamento +1 (livelli 3–10)
-  assert.deepEqual(salv(s), { tempra: 13, riflessi: 12, volonta: 9, magia: 10 });
+  // §1.2.3: 8 + Mod Salvezza (8 → +2, 7 → +1, 5 → 0) + Combattente (+1 Tempra, +1 Riflessi, §2.11)
+  // + Imperiali (+1 Tempra, +1 Volontà) + Avanzamento +1 (livelli 3–10). Volontà usa CAR (master, 26/09/2026):
+  // 8 + 0 (CAR 5) + 1 + 1 = 10; con INT 4 era 9
+  assert.deepEqual(salv(s), { tempra: 13, riflessi: 12, volonta: 10, magia: 10 });
   // §3.3: PV = COS 8 + Assaltatore I 13 (5 + 1d8 massimizzato) + II (5 + 5) + III (5 + 6) + Buona Costituzione 5 (§8.6.1)
   assert.equal(s.pv, 47);
   // §3.3: PM = SAG 7 + 1 per Grado × 3
@@ -79,7 +80,8 @@ test('collaudo b: Fratellanza Taumaturgo Arcanista, 12° livello, Mistico II', (
   // §2.9 Fratellanza 5/5/4/5/6/6; +2 INT, +1 SAG, +1 COS, +1 DES; livelli 2 e 6 INT+1 SAG+1; livello 10 SAG+1 COS+1
   assert.deepEqual(car(s), { FOR: 5, COS: 7, DES: 5, INT: 9, SAG: 10, CAR: 6 });
   // §1.2.3: Taumaturgo +1 Volontà +1 Magia; Fratellanza +1 Volontà +1 Magia; Avanzamento +2 (livelli 11–18)
-  assert.deepEqual(salv(s), { tempra: 11, riflessi: 10, volonta: 14, magia: 15 }); // 8+1+2, 8+0+2, 8+2+1+2+1, 8+3+1+2+1
+  // Volontà usa CAR (master, 26/09/2026): CAR 6 → +1 al posto di INT 9 → +2
+  assert.deepEqual(salv(s), { tempra: 11, riflessi: 10, volonta: 13, magia: 15 }); // 8+1+2, 8+0+2, 8+1+1+2+1, 8+3+1+2+1
   // §3.3: COS 7 + Arcanista I 5 (1 + 1d4 max) + Mistico I 6 (3 + 3) + Mistico II 5 (3 + 2) + Arcanista II 5 (1 + 4) + Buona Costituzione 5
   assert.equal(s.pv, 33);
   // SAG 10 + Arcanista I 9 (5 + 4) + Mistico I 6 (4 + 2) + Mistico II 7 (4 + 3) + Arcanista II 9 (5 + 4)
@@ -114,7 +116,8 @@ test('collaudo c: Freelance Lavoratore Tecnico, 5° livello, Risorse Interiori, 
   // §2.9 Freelance 5/6/5/5/5/6; +2 INT, +2 DES, +1 SAG; livello 2 INT+1 DES+1
   assert.deepEqual(car(s), { FOR: 5, COS: 6, DES: 8, INT: 8, SAG: 6, CAR: 6 });
   // Lavoratore +1 Tempra +1 Volontà; Freelance +1 Tempra +1 Riflessi; Avanzamento +1
-  assert.deepEqual(salv(s), { tempra: 12, riflessi: 12, volonta: 12, magia: 10 });
+  // Volontà usa CAR (master, 26/09/2026): 8 + 1 (CAR 6) + 1 + 1 = 11; con INT 8 era 12
+  assert.deepEqual(salv(s), { tempra: 12, riflessi: 12, volonta: 11, magia: 10 });
   assert.equal(s.pv, 22); // COS 6 + Tecnico I 9 (3 + 1d6 massimizzato) + II 7 (3 + 4)
   assert.equal(s.pm, 10); // SAG 6 + 2 + 2
   assert.equal(s.iniziativa, 6); // Mod DES +3 + Mod INT +3

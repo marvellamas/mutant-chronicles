@@ -26,12 +26,19 @@ test('tooltip Abilità: le Mistiche hanno descrizioni su più paragrafi', () => 
 
 // --- tooltip: Caratteristica --------------------------------------------------------------
 
-test('tooltip Caratteristica: descrizione (TODO), Abilità collegate e Salvezza', () => {
+test('tooltip Caratteristica: descrizione del master, Abilità collegate e Salvezza', () => {
   const t = testoTooltip('caratteristica', 'DES', dati);
   assert.match(t, /^Destrezza \(DES\)/);
-  assert.match(t, /non ancora disponibile/); // il manuale non descrive le Caratteristiche
+  // testo del master, parola per parola (docs/risposte-master.md, 26/09/2026)
+  assert.match(t, /Esprime agilità, coordinazione e precisione dei movimenti\./);
   assert.match(t, /Abilità: Armi da lancio, Armi leggere, Armi da mischia, Difese, Furtività/);
   assert.match(t, /Salvezza: Riflessi/);
+});
+
+test('tooltip Caratteristica: Volontà è la Salvezza del Carisma (master, 26/09/2026)', () => {
+  assert.match(testoTooltip('caratteristica', 'CAR', dati), /Salvezza: Volontà/);
+  assert.doesNotMatch(testoTooltip('caratteristica', 'INT', dati), /Salvezza: Volontà/);
+  assert.equal(dati.caratteristiche.salvezze.find((s) => s.id === 'volonta').caratteristica, 'CAR');
 });
 
 test('tooltip Caratteristica: Costituzione non ha Abilità ma ha Tempra', () => {
@@ -91,11 +98,10 @@ test('id sconosciuti: nessun contenuto, nessuna eccezione', () => {
 
 // --- validatore sulle descrizioni ---------------------------------------------------------
 
-test('dati reali: le Caratteristiche con TODO sono avvisi, non errori', () => {
+test('dati reali: le Caratteristiche hanno tutte la descrizione, nessun avviso', () => {
   assert.deepEqual(validaDati(dati), []);
-  const car = avvisi.filter((a) => a.file === 'caratteristiche.json');
-  assert.equal(car.length, 6);
-  assert.ok(car.every((a) => /TODO/.test(a.problema)));
+  assert.deepEqual(avvisi.filter((a) => a.file === 'caratteristiche.json'), []);
+  assert.ok(dati.caratteristiche.caratteristiche.every((c) => c.descrizione.length > 100));
 });
 
 test('validatore: Abilità o incantesimo senza descrizione sono errori', () => {
