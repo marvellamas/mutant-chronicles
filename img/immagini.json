@@ -1,0 +1,182 @@
+{
+  "_nota": "Generato da tools/genera_immagini.py. «sfondi» si può aggiornare anche a mano (README, «Ritratto e sfondi»).",
+  "corporazioni": {
+    "alleanza": {
+      "96": {
+        "png": "img/corporazioni/alleanza-96.png",
+        "byte_png": 5454
+      },
+      "512": {
+        "png": "img/corporazioni/alleanza-512.png",
+        "byte_png": 99679,
+        "webp": "img/corporazioni/alleanza-512.webp",
+        "byte_webp": 94150
+      },
+      "512-grigio": {
+        "png": "img/corporazioni/alleanza-512-grigio.png",
+        "byte_png": 68281
+      }
+    },
+    "bauhaus": {
+      "96": {
+        "png": "img/corporazioni/bauhaus-96.png",
+        "byte_png": 5228
+      },
+      "512": {
+        "png": "img/corporazioni/bauhaus-512.png",
+        "byte_png": 99629,
+        "webp": "img/corporazioni/bauhaus-512.webp",
+        "byte_webp": 89830
+      },
+      "512-grigio": {
+        "png": "img/corporazioni/bauhaus-512-grigio.png",
+        "byte_png": 74643
+      }
+    },
+    "capitol": {
+      "96": {
+        "png": "img/corporazioni/capitol-96.png",
+        "byte_png": 4627
+      },
+      "512": {
+        "png": "img/corporazioni/capitol-512.png",
+        "byte_png": 65602
+      },
+      "512-grigio": {
+        "png": "img/corporazioni/capitol-512-grigio.png",
+        "byte_png": 46118
+      }
+    },
+    "cybertronic": {
+      "96": {
+        "png": "img/corporazioni/cybertronic-96.png",
+        "byte_png": 5550
+      },
+      "512": {
+        "png": "img/corporazioni/cybertronic-512.png",
+        "byte_png": 94909,
+        "webp": "img/corporazioni/cybertronic-512.webp",
+        "byte_webp": 83602
+      },
+      "512-grigio": {
+        "png": "img/corporazioni/cybertronic-512-grigio.png",
+        "byte_png": 66615
+      }
+    },
+    "fratellanza": {
+      "96": {
+        "png": "img/corporazioni/fratellanza-96.png",
+        "byte_png": 5327
+      },
+      "512": {
+        "png": "img/corporazioni/fratellanza-512.png",
+        "byte_png": 97229,
+        "webp": "img/corporazioni/fratellanza-512.webp",
+        "byte_webp": 87432
+      },
+      "512-grigio": {
+        "png": "img/corporazioni/fratellanza-512-grigio.png",
+        "byte_png": 70609
+      }
+    },
+    "imperial": {
+      "96": {
+        "png": "img/corporazioni/imperial-96.png",
+        "byte_png": 5260
+      },
+      "512": {
+        "png": "img/corporazioni/imperial-512.png",
+        "byte_png": 90076,
+        "webp": "img/corporazioni/imperial-512.webp",
+        "byte_webp": 79702
+      },
+      "512-grigio": {
+        "png": "img/corporazioni/imperial-512-grigio.png",
+        "byte_png": 62462
+      }
+    },
+    "mishima": {
+      "96": {
+        "png": "img/corporazioni/mishima-96.png",
+        "byte_png": 5471
+      },
+      "512": {
+        "png": "img/corporazioni/mishima-512.png",
+        "byte_png": 91775,
+        "webp": "img/corporazioni/mishima-512.webp",
+        "byte_webp": 86940
+      },
+      "512-grigio": {
+        "png": "img/corporazioni/mishima-512-grigio.png",
+        "byte_png": 68897
+      }
+    }
+  },
+  "pagine": {
+    "identita": {
+      "96": {
+        "png": "img/pagine/identita-96.png",
+        "byte_png": 5515
+      },
+      "512": {
+        "png": "img/pagine/identita-512.png",
+        "byte_png": 103101,
+        "webp": "img/pagine/identita-512.webp",
+        "byte_webp": 96928
+      },
+      "512-grigio": {
+        "png": "img/pagine/identita-512-grigio.png",
+        "byte_png": 74979
+      }
+    },
+    "abilita": {
+      "96": {
+        "png": "img/pagine/abilita-96.png",
+        "byte_png": 5872
+      },
+      "512": {
+        "png": "img/pagine/abilita-512.png",
+        "byte_png": 106465,
+        "webp": "img/pagine/abilita-512.webp",
+        "byte_webp": 96952
+      },
+      "512-grigio": {
+        "png": "img/pagine/abilita-512-grigio.png",
+        "byte_png": 76063
+      }
+    },
+    "combattimento": {
+      "96": {
+        "png": "img/pagine/combattimento-96.png",
+        "byte_png": 5298
+      },
+      "512": {
+        "png": "img/pagine/combattimento-512.png",
+        "byte_png": 88916,
+        "webp": "img/pagine/combattimento-512.webp",
+        "byte_webp": 85214
+      },
+      "512-grigio": {
+        "png": "img/pagine/combattimento-512-grigio.png",
+        "byte_png": 63266
+      }
+    },
+    "magia": {
+      "96": {
+        "png": "img/pagine/magia-96.png",
+        "byte_png": 6188
+      },
+      "512": {
+        "png": "img/pagine/magia-512.png",
+        "byte_png": 107899,
+        "webp": "img/pagine/magia-512.webp",
+        "byte_webp": 98320
+      },
+      "512-grigio": {
+        "png": "img/pagine/magia-512-grigio.png",
+        "byte_png": 76708
+      }
+    }
+  },
+  "sfondi": {}
+}

@@ -21,3 +21,7 @@ desktop.ini
 
 # Impostazioni locali di Claude Code
 .claude/
+
+# Originali delle immagini (1254×1254, 2–3 MB l'uno): non si servono e non si tracciano.
+# Le versioni per l'app si generano con tools/genera_immagini.py (README, «Immagini»).
+img/originali/
