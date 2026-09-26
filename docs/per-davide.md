@@ -51,6 +51,13 @@ Le risposte già date (Esploratore, minimo 1 incantesimi, quote per macrofamigli
 16. **Quali Abilità sono «fisiche»?** Immobilizzato (−4 VA alle azioni fisiche) e Rallentato (−2 VA alle Prove fisiche e alle Difese) del §5.18, e il carico del §5.2 («Prove fisiche, compresi attacchi e Difese»), non dicono quali Abilità contano. L'app ora applica queste penalità ai valori della scheda in modalità tavolo e usa: tutte le Abilità di Distanza e Ravvicinato (attacchi e Difese), Atletica e Furtività. La lista è in `data/regole.json` (`stati.abilita_fisiche`): se va cambiata, dicci come.
 
 17. **Terrorizzato vale anche per le Prove Salvezza?** Il §5.18 dice «−4 VA a tutte le Prove». L'app lo applica alle Abilità (quindi agli attacchi) e anche alle quattro Salvezze. Per Incendiato («−2 VA») applica il malus solo alle Abilità, non alle Salvezze; per le Ferite e l'Affaticamento il manuale nomina esplicitamente le Salvezze. Confermi?
+18. **Le riserve integrate nelle armi pagano gli incantesimi?** La Magia, sez. 6, chiama contenitore «qualunque oggetto che racchiuda un Chroma». Il §7.5.1 descrive invece la riserva del Bordone Templare (e di Spada Vindicator, Spada Deliverer, Lancia Castigator, Lama Demontooth e Scudo delle Guardie Sacre) come «cinque cariche» per le attivazioni. Un Taumaturgo può usarla per lanciare incantesimi Fisici, o convertirla in PM personali? Oppure alimenta solo le attivazioni dell'oggetto? L'app oggi la mostra come contenitore integrato, con i PM contati a mano, e non la usa per nessun lancio.
+
+19. **Un contenitore acquistato o trovato è carico?** Il manuale non lo dice. L'app oggi lo considera pieno, anche quando è personalizzato (PM attuali = capacità); il giocatore può poi scalarlo con il pulsante −. Se va considerato vuoto, basta cambiare `contenitore_nuovo` in `regole.json`.
+
+20. **Prelievo dal Chroma Bianco senza Addestramento Taumaturgo.** «Un personaggio cosciente può prelevare PM da un contenitore Bianco sintonizzato»: vale per chiunque, anche per un Combattente senza magia (con la Prova di Potere da 2 gruppi in su)? Oppure serve almeno l'accesso alla magia?
+
+21. **Chroma Viola.** Le regole sono rimandate. L'app oggi permette di registrare un contenitore Viola personalizzato come oggetto inerte (capacità e PM, sintonizzazione, nessun Incantesimo alimentato). Va bene, o è meglio non prevederlo finché non escono le regole?
 
 ## B. Da correggere nella prossima edizione dei manuali
 
