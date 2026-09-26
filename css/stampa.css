@@ -92,6 +92,9 @@ body.vista-stampa main { max-width: none; padding: 0; margin: 0; }
 .casella { display: inline-block; width: 3.5mm; height: 3.5mm; border: 0.75pt solid var(--inchiostro); border-radius: 0.5mm; vertical-align: middle; }
 .caselle { display: flex; flex-wrap: wrap; gap: 1.5mm; margin-top: 1mm; }
 .caselle .casella { width: 5mm; height: 5mm; }
+.caselle.piccole { gap: 0.8mm; margin-top: 0; }
+.caselle.piccole .casella { width: 3.2mm; height: 3.2mm; }
+.tabella-stampa.riserve td { vertical-align: middle; }
 .casella-grande { border: 0.75pt solid var(--inchiostro); border-radius: 1mm; height: 12mm; position: relative; }
 .casella-grande span { position: absolute; left: 1.5mm; top: 0.5mm; font-size: 0.8em; color: var(--grigio); }
 .casella-lunga { display: inline-block; width: 20mm; height: 5mm; border-bottom: 0.75pt solid var(--inchiostro); vertical-align: bottom; }

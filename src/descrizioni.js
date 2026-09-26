@@ -148,7 +148,7 @@ function tooltipOggetto(rif, dati) {
   if (o.esplosivo) sezioni.push({ etichetta: 'Carico', testo: `danno ${o.esplosivo.danno}, AC ${o.esplosivo.ac}, RS ${o.esplosivo.rs_q} Q; ${o.esplosivo.proprieta.join(', ')}` });
   if (o.cella) sezioni.push({ etichetta: 'Capacità', testo: `${o.cella.capacita} ${o.cella.unita}; riempirla o ricaricarla costa ${o.cella.ricarica_costo.toLocaleString('it-IT')}` });
   const art = infoArtefatto(o, dati);
-  if (art) sezioni.push({ etichetta: 'Artefatto', testo: `${art.tipologia}; potenza ${art.potenza}, costo di sintonizzazione ${art.sintonizzazione}${art.riserva ? `; riserva di ${art.riserva.pm} PM (Chroma ${art.riserva.chroma})` : ''} (§7.10).` });
+  if (art) sezioni.push({ etichetta: 'Artefatto', testo: `${art.tipologia}; potenza ${art.potenza}, costo di sintonizzazione ${art.sintonizzazione}${art.contenitore ? `; ${art.contenitore.integrato ? 'riserva integrata' : 'contenitore'} di ${art.contenitore.capacita_pm} PM (Chroma ${art.contenitore.energia})` : ''} (§7.10).` });
   if (o.strumenti) sezioni.push({ etichetta: 'Strumenti', testo: `${o.strumenti.va > 0 ? '+' : o.strumenti.va < 0 ? '−' : ''}${Math.abs(o.strumenti.va)} VA a ${o.strumenti.prova}; un solo modificatore degli strumenti per Prova.` });
   if (o.esiti) sezioni.push({ etichetta: 'Successo', testo: o.esiti.successo }, { etichetta: 'Magistrale', testo: o.esiti.magistrale });
   if (o.effetto) sezioni.push({ etichetta: 'Effetto', testo: o.effetto });

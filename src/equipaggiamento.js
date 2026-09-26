@@ -29,7 +29,8 @@ export const STATI = {
   accessorio: ['in_uso', 'zaino'],
   munizioni: [],
   sanitario: [],
-  artefatto: [],
+  // Magia sez. 6: il contenitore deve essere trasportato per alimentare un lancio
+  artefatto: ['trasportato', 'zaino'],
   altro: [],
 };
 
@@ -40,6 +41,7 @@ export const NOMI_STATI = {
   imbracciato: 'Imbracciato',
   indossata: 'Indossata',
   in_uso: 'In uso / montato',
+  trasportato: 'Trasportato',
 };
 
 const ATTIVI = new Set(['impugnata', 'imbracciato', 'indossata', 'in_uso']);
@@ -61,10 +63,6 @@ export function legendaModalita(dati) {
   return out;
 }
 
-/**
- * Capacità del caricatore di ogni arma a distanza della lista (uid → numero o null), per il
- * contatore munizioni della modalità tavolo.
- */
 /** Regole di sintonizzazione (§7.10) dal file del catalogo che le definisce. */
 export function regoleSintonizzazione(dati) {
   for (const f of Object.values(dati?.equipaggiamento?.file ?? {})) if (f.sintonizzazione) return f.sintonizzazione;
@@ -86,6 +84,60 @@ export function infoArtefatto(def, dati) {
 }
 
 /**
+ * Dati di Artefatto di una voce risolta: dal catalogo (infoArtefatto) oppure dall'oggetto
+ * personalizzato di tipo «artefatto» (§7.5: «qualunque forma e materiale»). Il costo di
+ * sintonizzazione si ricava dalla potenza (§7.10); energia e capacita_pm ne fanno un contenitore.
+ */
+export function infoArtefattoVoce(r, dati) {
+  if (r.def) return infoArtefatto(r.def, dati);
+  const p = r.voce?.personalizzato;
+  if (!p || p.tipo !== 'artefatto' || !p.potenza) return null;
+  const costo = regoleSintonizzazione(dati)?.potenze?.[p.potenza];
+  if (!Number.isInteger(costo)) return null;
+  const contenitore = p.energia && Number.isInteger(p.capacita_pm) ? { energia: p.energia, capacita_pm: p.capacita_pm } : undefined;
+  return { tipologia: contenitore ? 'Batterie e contenitori' : 'Accessori', potenza: p.potenza, sintonizzazione: costo, sintonizzabile: true, ...(contenitore ? { contenitore } : {}) };
+}
+
+/** Colori del Chroma (regole.json → chroma.colori), con il loro nome. */
+export function coloriChroma(dati) {
+  return dati?.regole?.chroma?.colori ?? {};
+}
+
+/**
+ * Contenitori di Chroma della lista (Magia sez. 6; Armamenti §7.5, §7.5.1): uno per voce, con
+ * energia, capacità, macrofamiglie alimentate, sintonizzazione e trasporto. I contenitori
+ * «integrati» sono la riserva di un oggetto (Bordone Templare, Scudo delle Guardie Sacre…): hanno
+ * lo stesso uid dell'oggetto e un solo costo di sintonizzazione, quello dell'oggetto.
+ */
+export function contenitori(voci, dati) {
+  const cat = catalogo(dati);
+  return contenitoriRisolti((voci ?? []).map((v) => risolvi(v, cat)), dati);
+}
+
+function contenitoriRisolti(oggetti, dati) {
+  const colori = coloriChroma(dati);
+  const out = [];
+  for (const r of oggetti) {
+    if (r.fuoriCatalogo) continue;
+    const a = infoArtefattoVoce(r, dati);
+    const c = a?.contenitore;
+    if (!c) continue;
+    const colore = colori[c.energia] ?? {};
+    out.push({
+      uid: r.uid, nome: r.nome, tipo: r.tipo, integrato: !!c.integrato,
+      energia: c.energia, energiaNome: colore.energia ?? null, macrofamiglie: colore.macrofamiglie ?? [], regoleRimandate: !!colore.regole_rimandate,
+      capacita: c.capacita_pm, potenza: a.potenza, costo: a.sintonizzazione,
+      sintonizzato: r.voce.sintonizzato === true,
+      stato: r.voce.stato,
+      // un contenitore a sé è trasportato nello stato omonimo; uno integrato segue l'oggetto
+      trasportato: c.integrato ? ['impugnata', 'imbracciato', 'pronta', 'indossata', 'in_uso'].includes(r.voce.stato) : r.voce.stato === 'trasportato',
+      personalizzato: r.personalizzato,
+    });
+  }
+  return out;
+}
+
+/**
  * Oggetti con applicazioni da contare in modalità tavolo (kit di pronto soccorso, Spray, set
  * chirurgici, §7.19): uid → { nome, capacita (applicazioni × quantità), unita, ricarica }.
  */
@@ -95,22 +147,26 @@ export function consumabili(voci, dati) {
   for (const r of (voci ?? []).map((v) => risolvi(v, cat))) {
     if (r.def?.applicazioni) {
       out.push({ uid: r.uid, nome: r.nome, capacita: r.def.applicazioni * (r.voce.quantita ?? 1), unita: r.def.nome_applicazioni ?? 'applicazioni', ricarica: r.def.ricarica ?? null, gruppo: 'sanitario' });
-    } else {
-      // §7.5.1: riserva di PM di un Artefatto che non ha già un contatore da arma (Scudo delle Guardie Sacre, batterie)
-      const a = infoArtefatto(r.def, dati);
-      if (a?.riserva && !r.def.munizioni) out.push({ uid: r.uid, nome: r.nome, capacita: a.riserva.pm, unita: 'PM', ricarica: null, gruppo: 'artefatto', chroma: a.riserva.chroma });
     }
+    // le riserve di PM degli Artefatti sono contenitori di Chroma: vedi contenitori()
   }
   return out;
 }
 
+/**
+ * Capacità del caricatore di ogni arma della lista (uid → numero o null), per il contatore munizioni
+ * della modalità tavolo, più le applicazioni dei consumabili sanitari. Le riserve di PM (Chroma
+ * integrato, §7.5.1) non sono caricatori: non si ricaricano sostituendo la cella, ma solo
+ * convertendo PM (Magia sez. 6). Stanno in contenitori().
+ */
 export function caricatori(voci, dati) {
   const cat = catalogo(dati);
   const out = {};
   for (const v of voci ?? []) {
     const r = risolvi(v, cat);
-    // armi a distanza (caricatore) e armi ravvicinate con cariche a cella o riserva di PM (§7.1.4)
-    if (r.tipo === 'arma_distanza' || (r.tipo === 'arma_ravvicinata' && r.def?.munizioni?.capacita)) out[v.uid] = r.def?.munizioni?.capacita ?? null;
+    // armi a distanza (caricatore) e armi ravvicinate con cariche a cella (§7.1.4)
+    const integrato = !!infoArtefatto(r.def, dati)?.contenitore?.integrato;
+    if (!integrato && (r.tipo === 'arma_distanza' || (r.tipo === 'arma_ravvicinata' && r.def?.munizioni?.capacita))) out[v.uid] = r.def?.munizioni?.capacita ?? null;
     // §7.8: i moduli integrati hanno un'alimentazione separata dall'arma principale
     for (const m of moduliDi(r.def, cat)) out[`${v.uid}:${m.id}`] = m.munizioni?.capacita ?? null;
   }
@@ -223,6 +279,10 @@ export function normalizzaEquipaggiamento(valore) {
         ...(testo(p.danno) ? { danno: p.danno } : {}),
         ...(Number.isInteger(p.ar) && p.ar >= 0 ? { ar: p.ar } : {}),
         ...(testo(p.testo) ? { testo: p.testo } : {}),
+        // Artefatto personalizzato (§7.5, §7.10): potenza → costo di sintonizzazione; contenitore di Chroma
+        ...(testo(p.potenza) ? { potenza: p.potenza } : {}),
+        ...(testo(p.energia) ? { energia: p.energia } : {}),
+        ...(Number.isInteger(p.capacita_pm) && p.capacita_pm >= 1 ? { capacita_pm: p.capacita_pm } : {}),
       };
     }
     if (typeof v.montato_su === 'string' && v.montato_su) out.montato_su = v.montato_su;
@@ -534,6 +594,8 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       munizioni: d?.munizioni ?? null,
       attivazione: d?.attivazione ?? null, manovre: d?.manovre ?? [], naturaDanno: d?.natura_danno ?? null,
       proprieta: d?.proprieta ?? [], parata, personalizzato: o.personalizzato,
+      // §7.5.1: riserva di Chroma integrata (Bordone Templare…), mostrata accanto all'arma
+      contenitore: extra.moduloDi ? null : (infoArtefatto(d, dati)?.contenitore ?? null),
       specializzazione: spec ? `Specializzazione in ${spec.nome}` : null,
       ...extra,
     });
@@ -607,7 +669,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
 
   // §7.10: la somma dei costi degli Artefatti sintonizzati non supera la capacità del personaggio
   const rs = regoleSintonizzazione(dati);
-  const artefatti = oggetti.map((o) => ({ o, a: infoArtefatto(o.def, dati) })).filter((x) => x.a);
+  const artefatti = oggetti.filter((o) => !o.fuoriCatalogo).map((o) => ({ o, a: infoArtefattoVoce(o, dati) })).filter((x) => x.a);
   let sintonizzazione = null;
   if (rs && artefatti.length) {
     const gradi = Math.min(Math.max(base.gradiComplessivi ?? 1, 1), rs.capacita_per_gradi.length);
@@ -636,6 +698,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     zaino: oggetti.filter((o) => !o.attivo),
     equipAbilita,
     componentiEquip,
+    contenitori: contenitoriRisolti(oggetti, dati),
     abilitaDifese: difeseAbilita,
     movimentoQ,
     lancioPotere,

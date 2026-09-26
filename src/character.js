@@ -7,7 +7,7 @@ import {
 } from './calc.js';
 import { statoIncantesimi } from './incantesimi.js';
 import { specTiro, migraTiro, motivoFuoriIntervallo } from './tiri.js';
-import { normalizzaEquipaggiamento, catalogo, risolvi, STATI, NOMI_TIPI } from './equipaggiamento.js';
+import { normalizzaEquipaggiamento, catalogo, risolvi, STATI, NOMI_TIPI, infoArtefattoVoce } from './equipaggiamento.js';
 
 // Personaggio a livelli { creazione, livelli } (cap. 8): modello e funzioni in avanzamento.js.
 export {
@@ -102,6 +102,34 @@ export function eTaumaturgo(scelte, dati) {
   return scelte?.addestramento === dati.regole.taumaturgo.addestramento;
 }
 
+/**
+ * Magia sez. 6 e §7.10: ogni contenitore di Chroma si sintonizza e si ricarica da solo, quindi è una
+ * voce con quantità 1. Una voce salvata con quantità N diventa N voci: la prima conserva uid, note
+ * e sintonizzazione (così il budget del §7.10 non cambia); le altre hanno uid «<uid>-2», «<uid>-3»…
+ * e partono non sintonizzate. I contenitori integrati (Bordone Templare…) seguono l'oggetto.
+ */
+function dividiContenitori(voci, dati, avvisi) {
+  const cat = catalogo(dati);
+  const usati = new Set(voci.map((v) => v.uid));
+  const out = [];
+  for (const v of voci) {
+    const r = risolvi(v, cat);
+    const c = r.fuoriCatalogo ? null : infoArtefattoVoce(r, dati)?.contenitore;
+    if (!c || c.integrato || v.quantita <= 1) { out.push(v); continue; }
+    out.push({ ...v, quantita: 1 });
+    for (let k = 2; k <= v.quantita; k++) {
+      let uid = `${v.uid}-${k}`;
+      while (usati.has(uid)) uid = `${uid}x`;
+      usati.add(uid);
+      const copia = { ...v, uid, quantita: 1, note: '' };
+      delete copia.sintonizzato;
+      out.push(copia);
+    }
+    avvisi.push(`${r.nome} ×${v.quantita}: diviso in ${v.quantita} voci, una per contenitore (ognuno si sintonizza e si ricarica da solo, Magia sez. 6). Resta sintonizzato solo il primo.`);
+  }
+  return out;
+}
+
 /** Applica una modifica parziale e riporta a coerenza ciò che sta a valle. */
 export function applicaModifica(scelte, modifica, dati) {
   return normalizza({ ...scelte, ...modifica }, dati);
@@ -129,11 +157,14 @@ export function normalizza(scelteIn, dati) {
     const r = risolvi(v, cat);
     if (r.fuoriCatalogo) continue; // resta com'è: «non più in catalogo», senza effetti
     const stati = STATI[r.tipo] ?? [];
+    // gli Artefatti salvati prima degli stati (batterie) erano con il personaggio: «trasportato»
+    if (r.tipo === 'artefatto' && v.stato === null && stati.includes('trasportato')) { v.stato = 'trasportato'; continue; }
     if (stati.length ? !stati.includes(v.stato) : v.stato !== null) {
       if (v.stato !== null) avvisi.push(`${r.nome}: stato «${v.stato}» non valido per ${NOMI_TIPI[r.tipo]}, rimesso ${stati.length ? 'nello zaino' : 'senza stato'}.`);
       v.stato = stati.length ? stati.at(-1) : null;
     }
   }
+  s.equipaggiamento = dividiContenitori(s.equipaggiamento, dati, avvisi);
   // Anagrafica: facoltativa; i personaggi salvati prima l'hanno vuota.
   for (const { campo } of CAMPI_ANAGRAFICA) {
     if (typeof s[campo] !== 'string') s[campo] = '';

@@ -2,6 +2,8 @@
 
 26 settembre 2026. Ricognizione per la voce 3 del backlog. Non cambia né codice né dati.
 
+**Stato.** Sessione 1 fatta il 26 settembre 2026: `regole.json` → `chroma`, schema `contenitore` nel catalogo e nei personalizzati, stati `trasportato`/`zaino`, una voce per contenitore (con migrazione), `sessione.chroma` con i PM attuali, «Ricarica» che non tocca più le riserve di PM, «Riserve esterne» nella tab Magia e in stampa. Rispetto al §3 i nomi scelti sono: `contenitore: { energia, capacita_pm, integrato }` al posto di `riserva`, `sessione.chroma[uid].pmAttuali`, stati `trasportato`/`zaino`. Le sessioni 2 e 3 (Convertire Potere, PV → PM, Umanità sulla capacità di sintonizzazione) aspettano le risposte ad A.18–A.20.
+
 Fonti:
 - **Manuale della Magia v1.1**, sezione 6 «Punti Magia, Chroma e recupero», pp. 8–12, e scheda 22.6 «Batteria Mistica», pp. 131–132.
 - **Manuale degli Armamenti v0.50**: §7.5 e §7.5.1 «Profili con riserva mistica» (pp. 30–31) e §7.10 «Artefatti e sintonizzazione» (pp. 58–60).

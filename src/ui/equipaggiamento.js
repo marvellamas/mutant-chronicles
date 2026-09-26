@@ -5,7 +5,8 @@
 import { h } from './dom.js';
 import { info } from './tooltip.js';
 import {
-  TIPI, NOMI_TIPI, STATI, NOMI_STATI, catalogo, risolvi, opzioniCascata, cercaNelCatalogo, statoIniziale, puoMontare, infoArtefatto,
+  TIPI, NOMI_TIPI, STATI, NOMI_STATI, catalogo, risolvi, opzioniCascata, cercaNelCatalogo, statoIniziale, puoMontare, infoArtefattoVoce,
+  regoleSintonizzazione, coloriChroma,
 } from '../equipaggiamento.js';
 
 const nuovoUid = () => `e${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
@@ -31,6 +32,9 @@ function elencoVoci(ctx) {
   return h('ul', { class: 'elenco-equip' }, risolte.map((r) => {
     const v = r.voce;
     const stati = STATI[r.tipo] ?? [];
+    const art = r.fuoriCatalogo ? null : infoArtefattoVoce(r, dati);
+    // Magia sez. 6: ogni contenitore si sintonizza e si ricarica da solo, quindi una voce ciascuno
+    const contenitoreSingolo = art?.contenitore && !art.contenitore.integrato;
     return h('li', { class: `voce-equip${r.attivo ? ' attiva' : ''}${r.fuoriCatalogo ? ' fuori' : ''}` },
       h('div', { class: 'equip-testa' },
         h('div', {},
@@ -47,18 +51,20 @@ function elencoVoci(ctx) {
           type: 'button', role: 'radio', 'aria-checked': String(v.stato === st),
           class: `stato-equip${v.stato === st ? ' attivo' : ''}`, onclick: () => cambia(v.uid, { stato: st }),
         }, NOMI_STATI[st]))) : null,
-      infoArtefatto(r.def, dati) ? h('label', { class: 'campo-inline' },
+      art ? h('label', { class: 'campo-inline' },
         h('input', { type: 'checkbox', checked: v.sintonizzato === true, onchange: (e) => cambia(v.uid, { sintonizzato: e.target.checked || undefined }) }),
-        ` Sintonizzato (costo ${infoArtefatto(r.def, dati).sintonizzazione}, §7.10)`) : null,
+        ` Sintonizzato (costo ${art.sintonizzazione}, §7.10)`) : null,
+      art?.contenitore ? h('p', { class: 'nota' }, `Chroma ${art.contenitore.energia}, ${art.contenitore.capacita_pm} PM${art.contenitore.integrato ? ', riserva integrata' : ''}.`) : null,
       r.tipo === 'accessorio' && risolte.some((t) => puoMontare(r, t)) ? h('label', { class: 'campo-inline' }, 'Montato su ',
         h('select', { onchange: (e) => cambia(v.uid, { montato_su: e.target.value || undefined }) },
           h('option', { value: '' }, '—'),
           risolte.filter((t) => puoMontare(r, t)).map((a) => h('option', { value: a.uid, selected: v.montato_su === a.uid }, a.nome)))) : null,
       h('div', { class: 'equip-riga' },
-        h('span', { class: 'quantita' }, 'Quantità ',
-          h('button', { type: 'button', class: 'btn-tavolo piccolo', disabled: v.quantita <= 1, 'aria-label': `Togli uno a ${r.nome}`, onclick: () => cambia(v.uid, { quantita: v.quantita - 1 }) }, '−'),
-          h('output', {}, String(v.quantita)),
-          h('button', { type: 'button', class: 'btn-tavolo piccolo', 'aria-label': `Aggiungi uno a ${r.nome}`, onclick: () => cambia(v.uid, { quantita: v.quantita + 1 }) }, '+')),
+        contenitoreSingolo ? h('span', { class: 'quantita nota' }, 'Un contenitore per voce: per averne un altro, aggiungilo di nuovo.')
+          : h('span', { class: 'quantita' }, 'Quantità ',
+            h('button', { type: 'button', class: 'btn-tavolo piccolo', disabled: v.quantita <= 1, 'aria-label': `Togli uno a ${r.nome}`, onclick: () => cambia(v.uid, { quantita: v.quantita - 1 }) }, '−'),
+            h('output', {}, String(v.quantita)),
+            h('button', { type: 'button', class: 'btn-tavolo piccolo', 'aria-label': `Aggiungi uno a ${r.nome}`, onclick: () => cambia(v.uid, { quantita: v.quantita + 1 }) }, '+')),
         h('input', {
           type: 'text', class: 'note-equip', value: v.note, placeholder: 'Note (es. «danneggiata», «regalo di…»)', 'aria-label': `Note su ${r.nome}`,
           onchange: (e) => cambia(v.uid, { note: e.target.value }),
@@ -72,7 +78,7 @@ function elencoVoci(ctx) {
 
 function pannelloAggiungi(ctx) {
   const { dati, ui } = ctx;
-  ui.equip ??= { tipo: null, catalogo: null, famiglia: null, rif: null, cerca: '', pers: { nome: '', tipo: 'altro', abilita: '', danno: '', ar: '' } };
+  ui.equip ??= { tipo: null, catalogo: null, famiglia: null, rif: null, cerca: '', pers: { nome: '', tipo: 'altro', abilita: '', danno: '', ar: '', potenza: '', energia: '', capacita: '' } };
   const s = ui.equip;
   const op = opzioniCascata(dati, s);
   const scelto = s.rif ? catalogo(dati).perRif.get(s.rif) : null;
@@ -97,6 +103,8 @@ function pannelloAggiungi(ctx) {
       opzioni.map((o) => h('option', { value: o, selected: o === valore }, nomeOpzione(o)))));
 
   const p = s.pers;
+  const potenze = Object.keys(regoleSintonizzazione(dati)?.potenze ?? {});
+  const colori = Object.entries(coloriChroma(dati)).filter(([, x]) => !x.esausto).map(([nome]) => nome);
   const difese = dati.equipaggiamento?.file?.armature?.abilita_difese;
   const abilitaArmi = dati.abilita.abilita.filter((a) => ['Distanza', 'Ravvicinato'].includes(a.categoria) && a.nome !== difese).map((a) => a.nome);
   return h('section', { class: 'aggiungi-equip' },
@@ -129,7 +137,16 @@ function pannelloAggiungi(ctx) {
         armiTipi.includes(p.tipo) ? h('label', { class: 'campo' }, h('span', {}, 'Abilità'),
           h('select', { onchange: (e) => { p.abilita = e.target.value; } }, h('option', { value: '' }, '—'), abilitaArmi.map((a) => h('option', { value: a, selected: p.abilita === a }, a)))) : null,
         armiTipi.includes(p.tipo) ? h('label', { class: 'campo' }, h('span', {}, 'Danno'), h('input', { type: 'text', value: p.danno, placeholder: 'es. 1d6+1', oninput: (e) => { p.danno = e.target.value; } })) : null,
-        ['armatura', 'scudo'].includes(p.tipo) ? h('label', { class: 'campo' }, h('span', {}, 'AR'), h('input', { type: 'number', min: 0, step: 1, value: p.ar, oninput: (e) => { p.ar = e.target.value; } })) : null),
+        ['armatura', 'scudo'].includes(p.tipo) ? h('label', { class: 'campo' }, h('span', {}, 'AR'), h('input', { type: 'number', min: 0, step: 1, value: p.ar, oninput: (e) => { p.ar = e.target.value; } })) : null,
+        // §7.10: la potenza dà il costo di sintonizzazione; Magia sez. 6: colore e capacità del Chroma
+        p.tipo === 'artefatto' ? h('label', { class: 'campo' }, h('span', {}, 'Potenza'),
+          h('select', { onchange: (e) => { p.potenza = e.target.value; } }, h('option', { value: '' }, '—'),
+            potenze.map((x) => h('option', { value: x, selected: p.potenza === x }, `${x} (costo ${regoleSintonizzazione(dati).potenze[x]})`)))) : null,
+        p.tipo === 'artefatto' ? h('label', { class: 'campo' }, h('span', {}, 'Chroma (contenitore)'),
+          h('select', { onchange: (e) => { p.energia = e.target.value; } }, h('option', { value: '' }, 'nessuno'),
+            colori.map((x) => h('option', { value: x, selected: p.energia === x }, x)))) : null,
+        p.tipo === 'artefatto' ? h('label', { class: 'campo' }, h('span', {}, 'Capacità (PM)'),
+          h('input', { type: 'number', min: 1, step: 1, value: p.capacita, oninput: (e) => { p.capacita = e.target.value; } })) : null),
       h('button', {
         type: 'button', class: 'btn',
         onclick: () => {
@@ -138,7 +155,16 @@ function pannelloAggiungi(ctx) {
           if (armiTipi.includes(p.tipo) && p.abilita) personalizzato.abilita = p.abilita;
           if (armiTipi.includes(p.tipo) && p.danno.trim()) personalizzato.danno = p.danno.trim();
           if (['armatura', 'scudo'].includes(p.tipo) && p.ar !== '' && Number.isInteger(Number(p.ar))) personalizzato.ar = Number(p.ar);
-          Object.assign(p, { nome: '', abilita: '', danno: '', ar: '' });
+          if (p.tipo === 'artefatto') {
+            if (!p.potenza) { alert('Scegli la potenza dell’Artefatto: dà il costo di sintonizzazione (§7.10).'); return; }
+            personalizzato.potenza = p.potenza;
+            if (p.energia) {
+              const capacita = Number(p.capacita);
+              if (!Number.isInteger(capacita) || capacita < 1) { alert('Indica la capacità del contenitore in PM (intero ≥ 1).'); return; }
+              Object.assign(personalizzato, { energia: p.energia, capacita_pm: capacita });
+            }
+          }
+          Object.assign(p, { nome: '', abilita: '', danno: '', ar: '', potenza: '', energia: '', capacita: '' });
           aggiungiVoce({ uid: nuovoUid(), rif: null, personalizzato, stato: statoIniziale(personalizzato.tipo, ctx.voci, dati), quantita: 1, note: '' });
         },
       }, 'Aggiungi oggetto personalizzato')));

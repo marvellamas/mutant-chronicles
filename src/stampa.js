@@ -304,6 +304,11 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
         conosciuti: inc.conosciuti.length,
         quota: inc.quote.totale,
         macrofamiglie: macro,
+        // Magia sez. 6: riserve esterne, con le caselle per i PM attuali (a penna)
+        riserve: (s.equipaggiamento?.contenitori ?? []).map((c) => ({
+          nome: c.nome, energia: c.energia, capacita: c.capacita, macrofamiglie: c.macrofamiglie,
+          regoleRimandate: c.regoleRimandate, integrato: c.integrato, sintonizzato: c.sintonizzato, costo: c.costo,
+        })),
       },
     });
   }

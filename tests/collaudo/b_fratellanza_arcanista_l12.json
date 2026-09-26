@@ -79,7 +79,7 @@
       {
         "uid": "emui9pzefde6r",
         "rif": "artefatti:batteria-da-5-pm-chroma-bianco",
-        "stato": null,
+        "stato": "trasportato",
         "quantita": 1,
         "note": "",
         "sintonizzato": true
@@ -244,17 +244,17 @@
     "ferite": 0,
     "affaticamento": 0,
     "munizioni": {
-      "emui9pykakubk": {
-        "colpi": 5,
-        "riserve": 0
-      },
-      "emui9pzefde6r": {
-        "colpi": 5,
-        "riserve": 0
-      },
       "emui9qmqgigth": {
         "colpi": 5,
         "riserve": 0
+      }
+    },
+    "chroma": {
+      "emui9pykakubk": {
+        "pmAttuali": 5
+      },
+      "emui9pzefde6r": {
+        "pmAttuali": 5
       }
     },
     "note": ""

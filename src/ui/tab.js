@@ -10,7 +10,7 @@ import { formulaScomposizione } from '../condizioni.js';
 import { descriviFerite } from '../sessione.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
 import { testoDanno } from '../stampa.js';
-import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, consumabili, normalizzaEquipaggiamento } from '../equipaggiamento.js';
+import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento } from '../equipaggiamento.js';
 
 export const POSIZIONI_TAB = [
   { id: 'automatica', etichetta: 'Automatica (sinistra su schermi larghi, in basso su telefono e tablet)' },
@@ -339,14 +339,15 @@ function tabCombattimento(ctx, d) {
     ...(() => {
       const st = ctx.tab.scheda.equipaggiamento?.sintonizzazione;
       if (!st) return [];
-      const riserve = consumabili(normalizzaEquipaggiamento(ctx.scelte.equipaggiamento), ctx.dati).filter((c) => c.gruppo === 'artefatto');
+      // i contenitori delle armi stanno accanto all'arma; gli altri nella tab Magia, se c'è, altrimenti qui
+      const conMagia = ctx.tab.tab.some((t) => t.id === 'magia');
+      const riserve = conMagia ? [] : (ctx.tab.scheda.equipaggiamento?.contenitori ?? []).filter((c) => !['arma_ravvicinata', 'arma_distanza'].includes(c.tipo));
       return [sezione('Artefatti e sintonizzazione (§7.10)',
         h('p', { class: `valore-tavolo${st.usata > st.capacita ? ' oltre' : ''}` }, h('span', {}, 'Sintonizzazione '), h('strong', {}, String(st.usata)), h('span', {}, ` / ${st.capacita}`)),
         h('p', { class: 'nota' }, `Capacità per ${st.gradi} Grad${st.gradi === 1 ? 'o' : 'i'} complessiv${st.gradi === 1 ? 'o' : 'i'}${st.talento ? ` con ${st.talento}` : ''}, prima dell’eventuale riduzione per Umanità (§5.21). Si segna «Sintonizzato» nella lista dell’equipaggiamento.`),
         h('ul', { class: 'elenco-sintonie' }, st.artefatti.map((x) => h('li', {}, `${x.sintonizzato ? '✔' : '○'} ${x.nome} · ${x.potenza}, costo ${x.costo}`))),
-        riserve.length ? h('div', { class: 'armi-tab' }, riserve.map((c) => h('article', { class: 'arma-tab' },
-          h('h3', {}, c.nome, h('small', { class: 'sigla' }, ` · Chroma ${c.chroma}`)),
-          pannelloMunizioni(ctx, { uid: c.uid, nome: c.nome, munizioni: { capacita: c.capacita, unita: 'PM', ricarica: 'con PM personali secondo il §7.5.1' } })))) : null)];
+        conMagia && (ctx.tab.scheda.equipaggiamento?.contenitori ?? []).length ? h('p', { class: 'nota' }, 'Le riserve di Chroma sono nella tab Magia, «Riserve esterne».') : null,
+        riserve.length ? h('div', { class: 'armi-tab' }, riserve.map((c) => schedaContenitore(ctx, c))) : null)];
     })(),
 
     sezione('Ferite (§5.14)',
@@ -436,7 +437,9 @@ function schedaArma(ctx, a) {
     a.manovre.length ? h('p', { class: 'nota' }, h('strong', {}, 'Manovre compatibili: '), a.manovre.join(', ')) : null,
     a.proprieta.length ? h('p', { class: 'proprieta-arma' }, a.proprieta.map((p) => h('span', { class: 'etichetta', title: p.testo }, p.nome))) : null,
     mr ? h('p', { class: 'nota' }, `Con ${mr.nome}: ${mr.proprieta.join('; ')}. Danno, AC e RS sono della munizione, non bonus del lanciatore (§7.8).`) : null,
-    a.tipo === 'arma_distanza' || a.munizioni?.capacita ? pannelloMunizioni(ctx, a) : null);
+    // §7.5.1: la riserva di Chroma integrata non è un caricatore: +/− manuali, niente «Ricarica»
+    a.contenitore ? pannelloChroma(ctx, (ctx.tab.scheda.equipaggiamento?.contenitori ?? []).find((c) => c.uid === a.uid))
+      : a.tipo === 'arma_distanza' || a.munizioni?.capacita ? pannelloMunizioni(ctx, a) : null);
 }
 
 const ETICHETTE_MUNIZIONI = { colpi: 'Caricatore', cariche: 'Cariche nella cella', PM: 'PM nella riserva', applicazioni: 'Applicazioni', dosi: 'Dosi', set: 'Set di materiali' };
@@ -475,10 +478,60 @@ function pannelloMunizioni(ctx, a) {
 }
 
 // ---------------------------------------------------------------------------
+// Contenitori di Chroma (Magia sez. 6; Armamenti §7.5, §7.5.1, §7.10)
+
+const AGGETTIVI_MACRO = { Fisica: 'Fisici', Mentale: 'Mentali', Spirituale: 'Spirituali' };
+
+/** Quali Incantesimi può alimentare un contenitore, dal colore (regole.json → chroma.colori). */
+function testoAlimenta(c) {
+  if (c.regoleRimandate) return `Chroma ${c.energia} (energia ${c.energiaNome ?? '—'}): regole di impiego rimandate (Magia sez. 6).`;
+  // §7.5.1: la riserva integrata alimenta le attivazioni; per i lanci si attende Davide (per-davide A.18)
+  if (c.integrato) return `Energia ${c.energiaNome}: alimenta le attivazioni dell’oggetto (§7.5.1); se alimenti anche gli Incantesimi è da confermare (per-davide A.18).`;
+  if (!c.macrofamiglie.length) return 'Non alimenta Incantesimi.';
+  if (c.macrofamiglie.length >= 3) return `Energia ${c.energiaNome}: alimenta Incantesimi di ogni macrofamiglia.`;
+  return `Energia ${c.energiaNome}: alimenta Incantesimi ${c.macrofamiglie.map((m) => AGGETTIVI_MACRO[m] ?? m).join(' e ')}.`;
+}
+
+/** PM attuali di un contenitore con +/− manuali. A 0 PM il Chroma è Trasparente, con l'alone del colore. */
+function pannelloChroma(ctx, c) {
+  if (!c) return null;
+  const pm = ctx.sessione.chroma?.[c.uid]?.pmAttuali ?? 0;
+  const esausto = pm === 0;
+  const pulsante = (d) => h('button', {
+    type: 'button', class: 'btn-tavolo', disabled: d < 0 ? pm <= 0 : pm >= c.capacita,
+    'aria-label': `${d > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(d)} PM a ${c.nome}`,
+    onclick: () => ctx.azioni.chroma(c.uid, d),
+  }, d > 0 ? `+${d}` : `−${-d}`);
+  return h('div', { class: 'munizioni-tavolo chroma-tavolo' },
+    h('div', { class: 'riga-munizioni' },
+      h('span', {},
+        h('span', { class: `chroma-punto chroma-${c.energia.toLowerCase()}${esausto ? ' esausto' : ''}`, 'aria-hidden': 'true' }),
+        esausto ? `Trasparente (alone ${c.energia}) ` : `Chroma ${c.energia} `,
+        h('strong', {}, String(pm)), ` / ${c.capacita} PM`),
+      pulsante(-1), pulsante(1)),
+    h('small', { class: 'nota' }, [
+      testoAlimenta(c),
+      'Si ricarica solo con Convertire Potere (Magia sez. 6): «Nuova sessione» e il riposo non la riempiono.',
+    ].join(' ')));
+}
+
+/** Scheda di un contenitore: nome, colore, PM, sintonizzazione, trasporto. */
+function schedaContenitore(ctx, c) {
+  return h('article', { class: 'arma-tab contenitore-tab' },
+    h('h3', {}, c.nome, h('small', { class: 'sigla' }, c.integrato ? ' · riserva integrata nell’oggetto' : ` · ${c.potenza}`)),
+    h('p', { class: 'nota' },
+      c.sintonizzato ? `✔ Sintonizzato (costo ${c.costo}, §7.10)` : `○ Non sintonizzato (costo ${c.costo}): senza sintonizzazione non alimenta lanci`,
+      ' · ', c.trasportato ? 'trasportato' : c.integrato ? `oggetto ${NOMI_STATI[c.stato]?.toLowerCase() ?? 'non trasportato'}` : 'nello zaino'),
+    pannelloChroma(ctx, c));
+}
+
+// ---------------------------------------------------------------------------
 // Magia
 
 function tabMagia(ctx, d) {
   const s = ctx.sessione;
+  const contenitori = ctx.tab.scheda.equipaggiamento?.contenitori ?? [];
+  const perLancio = ctx.dati.regole.chroma?.contenitori_per_lancio ?? 1;
   return [
     h('div', { class: 'griglia-tavolo' },
       contatoreTavolo(ctx, { titolo: 'Punti Magia', campo: 'pmAttuali', attuale: s.pmAttuali, massimo: ctx.massimi.pm }),
@@ -486,6 +539,9 @@ function tabMagia(ctx, d) {
         h('p', { class: 'valore-tavolo' }, h('strong', {}, String(d.conosciuti)), h('span', {}, ` / ${d.quota}`)),
         h('p', { class: 'nota' }, `Livello massimo di lancio: ${d.livelloMassimo}`),
         ctx.tab.scheda.equipaggiamento?.lancioPotere ? h('p', { class: 'nota' }, `Armatura: ${segno(ctx.tab.scheda.equipaggiamento.lancioPotere)} VA alle Prove di Potere per lanciare (§7.11.1)`) : null)),
+    contenitori.length ? sezione('Riserve esterne',
+      h('p', { class: 'nota' }, `Magia sez. 6: il costo di un lancio si paga con i PM personali, con ${perLancio === 1 ? 'un solo contenitore' : `al massimo ${perLancio} contenitori`} trasportato, sintonizzato e compatibile, o con entrambi. Possedere PM in un contenitore non evita lo svenimento a 0 PM personali.`),
+      h('div', { class: 'armi-tab' }, contenitori.map((c) => schedaContenitore(ctx, c)))) : null,
     sezione(`Prove di Potere (scala ${d.scalaPotere})`,
       h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },
         h('thead', {}, h('tr', {}, h('th', {}, 'Livello'), h('th', {}, 'Prova'))),

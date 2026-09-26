@@ -906,9 +906,12 @@ test('lotto 12: regole di sintonizzazione, profili con riserva mistica, batterie
   assert.deepEqual(f.sintonizzazione.talento, { nome: 'Architetto TecnoMistico', bonus: 2 });
   assert.equal(f.sintonizzazione.potenze.Leggendaria, 6);
   assert.equal(f.artefatti_catalogo.length, 6);
-  assert.deepEqual(f.artefatti_catalogo.find((a) => a.rif === 'scudi:scudo-delle-guardie-sacre'), { rif: 'scudi:scudo-delle-guardie-sacre', tipologia: 'Protezioni', potenza: 'Rara', sintonizzazione: 3, riserva: { pm: 5, chroma: 'Rosso' } });
+  assert.deepEqual(f.artefatti_catalogo.find((a) => a.rif === 'scudi:scudo-delle-guardie-sacre'), {
+    rif: 'scudi:scudo-delle-guardie-sacre', tipologia: 'Protezioni', potenza: 'Rara', sintonizzazione: 3, sintonizzabile: true,
+    contenitore: { energia: 'Rosso', capacita_pm: 5, integrato: true },
+  });
   const b = catalogo(dati).perRif.get('artefatti:batteria-da-5-pm-chroma-bianco');
-  assert.deepEqual(b.artefatto, { tipologia: 'Batterie e contenitori', potenza: 'Non Comune', sintonizzazione: 2, riserva: { pm: 5, chroma: 'Bianco' } });
+  assert.deepEqual(b.artefatto, { tipologia: 'Batterie e contenitori', potenza: 'Non Comune', sintonizzazione: 2, sintonizzabile: true, contenitore: { energia: 'Bianco', capacita_pm: 5 } });
   assert.equal(b.costo, null);
   assert.ok(trovaTodo(dati).some((t) => /Batterie da 5 PM/.test(t.testo)));
 });
@@ -929,11 +932,13 @@ test('sintonizzazione: capacità per Gradi e Talento, somma dei costi, avviso ol
   const s = scheda(MISHIMA_AGENTE, []);
   const base = { caratteristiche: s.caratteristiche, abilita: s.abilita, specializzazioni: [], gradiComplessivi: 3, talenti: ['Architetto TecnoMistico'] };
   assert.equal(calcolaEquipaggiamento(base, [art('b', 'artefatti:batteria-da-5-pm-chroma-verde')], dati).sintonizzazione.capacita, 8);
-  // la scelta «sintonizzato» si conserva; riserve di PM in modalità tavolo (non per le armi, che hanno già il contatore)
+  // la scelta «sintonizzato» si conserva; le riserve di PM sono contenitori di Chroma, non caricatori
   assert.equal(normalizzaEquipaggiamento([art('b', 'artefatti:batteria-da-5-pm-chroma-verde')])[0].sintonizzato, true);
   const creazione = { ...MISHIMA_AGENTE, equipaggiamento: [art('b', 'artefatti:batteria-da-5-pm-chroma-verde'), art('s', 'scudi:scudo-delle-guardie-sacre', { stato: 'pronta' }), art('v', 'armi_corporative:spada-vindicator', { stato: 'pronta' })] };
-  assert.deepEqual(massimiSessione(calcolaScheda({ creazione, livelli: [] }, dati), creazione, dati).caricatori, { b: 5, s: 5, v: 5 });
-  assert.match(testoTooltip('oggetto', 'armi_corporative:spada-deliverer', dati), /Artefatto: Armi; potenza Non Comune, costo di sintonizzazione 2; riserva di 5 PM \(Chroma Rosso\)/);
+  const m = massimiSessione(calcolaScheda({ creazione, livelli: [] }, dati), creazione, dati);
+  assert.deepEqual(m.caricatori, {});
+  assert.deepEqual(m.contenitori, { b: 5, s: 5, v: 5 });
+  assert.match(testoTooltip('oggetto', 'armi_corporative:spada-deliverer', dati), /Artefatto: Armi; potenza Non Comune, costo di sintonizzazione 2; riserva integrata di 5 PM \(Chroma Rosso\)/);
 });
 
 test('validatore degli Artefatti: costo = potenza, riferimenti, regole', () => {

@@ -163,7 +163,7 @@ Tutte le regole numeriche stanno in `data/`:
 | `addestramenti.json` | valori base delle 24 Abilità, vantaggio, Salvezze |
 | `classi.json` | Classi, PV/PM per Grado, quote incantesimi, Talenti con testo |
 | `incantesimi.json` | i 90 incantesimi: indice e scheda (intestazione, lancio, descrizione, tabella delle versioni, regole) |
-| `regole.json` | costanti della creazione (punti, massimi, Punti Eroe, Movimento…) e dell'avanzamento (eventi per livello, massimi, limiti) |
+| `regole.json` | costanti della creazione (punti, massimi, Punti Eroe, Movimento…) e dell'avanzamento (eventi per livello, massimi, limiti); Ferite, Affaticamento e Stati con i loro effetti; `chroma`: colori del Chroma con le macrofamiglie alimentate, rapporti di conversione e Talenti che li riducono, Prova per gruppi (Magia sez. 6) |
 | `talenti_liberi.json` | gli 87 Talenti Liberi del §8.6 e i Talenti di magia (provvisori) |
 | `specializzazioni.json` | le 84 Specializzazioni del §8.8 (armi, mistiche, operative/sociali/professionali) |
 | `tecniche_interiori.json` | le 28 Tecniche Interiori del §8.9 e le regole comuni |
@@ -176,7 +176,7 @@ Tutte le regole numeriche stanno in `data/`:
 | `equipaggiamento/rinforzi.json` | kit di rinforzo delle armature e soprabiti corporativi, montati su un'armatura (Armamenti §7.11.2) |
 | `equipaggiamento/munizioni.json` | munizioni ordinarie e speciali, caricatori, razzi, celle, combustibile, dardi chimici, con la famiglia di munizioni di ogni arma (Armamenti §7.20) |
 | `equipaggiamento/sanitario.json` | kit di pronto soccorso, cartucce, UMC, dispositivi portatili, diagnostica e chirurgia, con le applicazioni contate in modalità tavolo (Armamenti §7.19) |
-| `equipaggiamento/artefatti.json` | regole di sintonizzazione (capacità per Gradi, costo per potenza), Artefatti con riserva mistica, batterie (Armamenti §7.5, §7.10) |
+| `equipaggiamento/artefatti.json` | regole di sintonizzazione (capacità per Gradi, costo per potenza), batterie e riserve integrate negli oggetti come contenitori di Chroma (`contenitore`: energia, capacita_pm, integrato) (Armamenti §7.5, §7.5.1, §7.10) |
 | `equipaggiamento/unita_robotiche.json` | Cuirassier Attila e Generatore di risonanza RF366, con i VA del robot (Armamenti §7.18) |
 | `equipaggiamento/armi_distanza_corporative.json` | armi a distanza dei cataloghi corporativi, con i moduli integrati (lanciagranate, lanciafiamme) e le munizioni di riferimento dei lanciatori (Armamenti §7.8) |
 | `equipaggiamento/armi_distanza.json` | armi a distanza del catalogo Commerciale, con gittata, caricatore, modalità di fuoco, INC (Armamenti §7.7) |
@@ -241,6 +241,16 @@ oggetti attivi cambiano i valori:
 - l'armatura indossata applica l'AR e le penalità di categoria (colonna «Equip» delle Abilità);
 - per le armi a distanza impugnate la modalità tavolo tiene i colpi nel caricatore (partono dalla
   capacità del catalogo, «Ricarica» li riporta al massimo) e le riserve, contate a mano.
+
+**Contenitori di Chroma** (Magia sez. 6). Batterie, cristalli e riserve dentro gli oggetti (Bordone
+Templare, Scudo delle Guardie Sacre…) hanno colore, capacità in PM e potenza, che dà il costo di
+sintonizzazione (§7.10). Un contenitore personalizzato si crea come Artefatto con potenza, colore
+e capacità. Ogni contenitore è una voce a sé (quantità 1), trasportato o nello zaino, con la
+spunta «Sintonizzato». In modalità tavolo la tab Magia ha le «Riserve esterne» con i PM attuali
+(+/− manuali; a 0 PM il Chroma è «Trasparente» con l'alone del colore) e la tab Combattimento
+mostra la riserva integrata accanto all'arma. «Ricarica» non riempie le riserve di PM: si
+ricaricano solo con Convertire Potere, che arriverà nella prossima sessione di lavoro. La stampa
+elenca le riserve nel foglio Magia, con una casella per PM.
 
 Le incoerenze (due armature, arma a due mani con scudo) sono avvisi, non blocchi. Finché il
 §2.16 non esiste, l'equipaggiamento iniziale si inserisce a mano.

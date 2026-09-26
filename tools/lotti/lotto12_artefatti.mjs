@@ -12,10 +12,10 @@
 //    +2 di Architetto TecnoMistico, potenza → costo di sintonizzazione e tipologie (p. 60). La
 //    tabella della potenza non è riconosciuta da pdfplumber: si legge dal testo in prosa.
 // 2. I sei profili con riserva mistica del §7.5.1 sono già nel catalogo (lotti 3 e 4): diventano la
-//    tabella `artefatti_catalogo` con tipologia, potenza, sintonizzazione e riserva. Il generatore
+//    tabella `artefatti_catalogo` con tipologia, potenza, sintonizzazione e contenitore integrato. Il generatore
 //    controlla che l'attivazione e la riserva già estratte coincidano con il §7.5.1.
 // 3. Le quattro batterie da 5 PM sono gli esempi del §7.10 («Rosso, Blu o Verde sono Comuni…
-//    Bianco è Non Comune»): oggetti «artefatto» con riserva e sintonizzazione, senza prezzo. Il
+//    Bianco è Non Comune»): oggetti «artefatto» con contenitore e sintonizzazione, senza prezzo. Il
 //    Manuale della Magia (22.6) dice che le batterie permanenti saranno integrate più avanti:
 //    prezzo, PI e reperibilità restano TODO(Davide).
 // 4. Ogni costo di sintonizzazione deve coincidere con la potenza dichiarata.
@@ -99,12 +99,12 @@ const artefattiCatalogo = [];
     const o = trova('armi_corporative', nome);
     verifica(o.attivazione?.sintonizzazione === potenze['Non Comune'], `${nome}: Sintonizzazione del lotto 4 = ${potenze['Non Comune']}`);
     verifica(o.munizioni?.capacita === 5 && o.munizioni.unita === 'PM', `${nome}: riserva di 5 PM nel lotto 4`);
-    artefattiCatalogo.push({ rif: `armi_corporative:${o.id}`, tipologia: 'Armi', potenza: 'Non Comune', sintonizzazione: 2, riserva: { pm: 5, chroma: 'Rosso' } });
+    artefattiCatalogo.push({ rif: `armi_corporative:${o.id}`, tipologia: 'Armi', potenza: 'Non Comune', sintonizzazione: 2, sintonizzabile: true, contenitore: { energia: 'Rosso', capacita_pm: 5, integrato: true } });
   }
   verifica(u75.includes('La potenza è Rara e il costo totale di Sintonizzazione è 3, riserva compresa'), 'potenza e costo dello Scudo delle Guardie Sacre');
   const s = trova('scudi', 'Scudo delle Guardie Sacre');
   verifica(/la potenza è Rara e il costo totale di Sintonizzazione è 3/.test(s.note_manuale), 'Scudo delle Guardie Sacre: nota del lotto 3');
-  artefattiCatalogo.push({ rif: `scudi:${s.id}`, tipologia: 'Protezioni', potenza: 'Rara', sintonizzazione: 3, riserva: { pm: 5, chroma: 'Rosso' } });
+  artefattiCatalogo.push({ rif: `scudi:${s.id}`, tipologia: 'Protezioni', potenza: 'Rara', sintonizzazione: 3, sintonizzabile: true, contenitore: { energia: 'Rosso', capacita_pm: 5, integrato: true } });
 }
 
 // --- regola 3: batterie da 5 PM --------------------------------------------------------------------
@@ -120,7 +120,7 @@ const oggetti = [];
       id: `batteria-da-5-pm-chroma-${chroma.toLowerCase()}`, nome: `Batteria da 5 PM (Chroma ${chroma})`, tipo: 'artefatto', catalogo: 'Commerciale', famiglia: 'Batterie e contenitori',
       nomi_alternativi: [], note_manuale: note, paragrafo: '§7.10', versione_manuale: VERSIONE,
       costo: null,
-      artefatto: { tipologia: 'Batterie e contenitori', potenza, sintonizzazione: potenze[potenza], riserva: { pm: 5, chroma } },
+      artefatto: { tipologia: 'Batterie e contenitori', potenza, sintonizzazione: potenze[potenza], sintonizzabile: true, contenitore: { energia: chroma, capacita_pm: 5 } },
       proprieta: [],
     });
   }

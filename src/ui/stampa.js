@@ -267,6 +267,16 @@ function foglioMagia(d) {
           h('tbody', {},
             h('tr', {}, h('th', {}, 'Livello'), d.scala.map((r) => h('td', {}, r.livelli))),
             h('tr', {}, h('th', {}, 'Prova'), d.scala.map((r) => h('td', {}, r.prova))))))),
+    !d.continuazione && d.riserve?.length ? riquadro('Riserve esterne (Magia sez. 6)',
+      h('table', { class: 'tabella-stampa riserve' },
+        h('thead', {}, h('tr', {}, ['Contenitore', 'Chroma', 'Alimenta', 'Sint.', 'PM attuali'].map((c) => h('th', {}, c)))),
+        h('tbody', {}, d.riserve.map((r) => h('tr', {},
+          h('td', {}, r.nome, r.integrato ? h('span', { class: 'sigla' }, ' (integrata)') : null),
+          h('td', {}, r.energia),
+          h('td', {}, r.integrato ? 'attivazioni (A.18)' : r.regoleRimandate ? 'regole rimandate' : r.macrofamiglie.length >= 3 ? 'tutte' : r.macrofamiglie.join(', ') || '—'),
+          h('td', {}, r.sintonizzato ? `✔ ${r.costo}` : `○ ${r.costo}`),
+          // una casella per PM fino a 25; oltre, una riga da compilare
+          h('td', {}, r.capacita <= 25 ? caselle(r.capacita, 'piccole') : [h('span', { class: 'casella-lunga corta' }), ` / ${r.capacita}`])))))) : null,
     h('div', { class: 'colonne-incantesimi' },
       d.macrofamiglie.length ? d.macrofamiglie.map((m) => [
         h('h2', { class: 'macro' }, m.nome, m.continua ? h('span', { class: 'sigla' }, ' (continua)') : null),

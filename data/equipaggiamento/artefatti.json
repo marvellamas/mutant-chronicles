@@ -1,7 +1,7 @@
 {
   "versione_manuale": "Armamenti 0.50",
   "fonte": "Manuale degli Armamenti v0.50, §7.5 Artefatti (pp. 30–31) e §7.10 Artefatti e sintonizzazione (pp. 58–60); lotto 12",
-  "_nota": "Generato da tools/lotti/lotto12_artefatti.mjs; da qui in poi si modifica questo file. «sintonizzazione» contiene le regole del §7.10: capacità per Gradi complessivi (indice 0 = Grado I), bonus del Talento, costo per potenza. «artefatti_catalogo» dà tipologia, potenza e riserva agli Artefatti già presenti in altri file.",
+  "_nota": "Generato da tools/lotti/lotto12_artefatti.mjs; da qui in poi si modifica questo file. «sintonizzazione» contiene le regole del §7.10: capacità per Gradi complessivi (indice 0 = Grado I), bonus del Talento, costo per potenza. «artefatti_catalogo» dà tipologia e potenza agli Artefatti già presenti in altri file. «contenitore» descrive la riserva di Chroma (Magia sez. 6): energia (colore di regole.json → chroma.colori), capacita_pm; «integrato»: true quando la riserva è dentro l'oggetto (§7.5.1: Bordone Templare, Spade Vindicator e Deliverer, Lancia Castigator, Lama Demontooth, Scudo delle Guardie Sacre), con un solo costo di sintonizzazione. «sintonizzabile»: le proprietà attive richiedono sintonizzazione (§7.10).",
   "TODO(Davide)": [
     "Batterie da 5 PM (§7.10): il manuale le cita come esempio di potenza, ma non dà prezzo, PI, Qualità e reperibilità; il Manuale della Magia (22.6) dice che le batterie permanenti saranno integrate più avanti. L’app le mostra senza prezzo."
   ],
@@ -40,9 +40,11 @@
       "tipologia": "Armi",
       "potenza": "Non Comune",
       "sintonizzazione": 2,
-      "riserva": {
-        "pm": 5,
-        "chroma": "Rosso"
+      "sintonizzabile": true,
+      "contenitore": {
+        "energia": "Rosso",
+        "capacita_pm": 5,
+        "integrato": true
       }
     },
     {
@@ -50,9 +52,11 @@
       "tipologia": "Armi",
       "potenza": "Non Comune",
       "sintonizzazione": 2,
-      "riserva": {
-        "pm": 5,
-        "chroma": "Rosso"
+      "sintonizzabile": true,
+      "contenitore": {
+        "energia": "Rosso",
+        "capacita_pm": 5,
+        "integrato": true
       }
     },
     {
@@ -60,9 +64,11 @@
       "tipologia": "Armi",
       "potenza": "Non Comune",
       "sintonizzazione": 2,
-      "riserva": {
-        "pm": 5,
-        "chroma": "Rosso"
+      "sintonizzabile": true,
+      "contenitore": {
+        "energia": "Rosso",
+        "capacita_pm": 5,
+        "integrato": true
       }
     },
     {
@@ -70,9 +76,11 @@
       "tipologia": "Armi",
       "potenza": "Non Comune",
       "sintonizzazione": 2,
-      "riserva": {
-        "pm": 5,
-        "chroma": "Rosso"
+      "sintonizzabile": true,
+      "contenitore": {
+        "energia": "Rosso",
+        "capacita_pm": 5,
+        "integrato": true
       }
     },
     {
@@ -80,9 +88,11 @@
       "tipologia": "Armi",
       "potenza": "Non Comune",
       "sintonizzazione": 2,
-      "riserva": {
-        "pm": 5,
-        "chroma": "Rosso"
+      "sintonizzabile": true,
+      "contenitore": {
+        "energia": "Rosso",
+        "capacita_pm": 5,
+        "integrato": true
       }
     },
     {
@@ -90,9 +100,11 @@
       "tipologia": "Protezioni",
       "potenza": "Rara",
       "sintonizzazione": 3,
-      "riserva": {
-        "pm": 5,
-        "chroma": "Rosso"
+      "sintonizzabile": true,
+      "contenitore": {
+        "energia": "Rosso",
+        "capacita_pm": 5,
+        "integrato": true
       }
     }
   ],
@@ -112,9 +124,10 @@
         "tipologia": "Batterie e contenitori",
         "potenza": "Comune",
         "sintonizzazione": 1,
-        "riserva": {
-          "pm": 5,
-          "chroma": "Rosso"
+        "sintonizzabile": true,
+        "contenitore": {
+          "energia": "Rosso",
+          "capacita_pm": 5
         }
       },
       "proprieta": []
@@ -134,9 +147,10 @@
         "tipologia": "Batterie e contenitori",
         "potenza": "Comune",
         "sintonizzazione": 1,
-        "riserva": {
-          "pm": 5,
-          "chroma": "Blu"
+        "sintonizzabile": true,
+        "contenitore": {
+          "energia": "Blu",
+          "capacita_pm": 5
         }
       },
       "proprieta": []
@@ -156,9 +170,10 @@
         "tipologia": "Batterie e contenitori",
         "potenza": "Comune",
         "sintonizzazione": 1,
-        "riserva": {
-          "pm": 5,
-          "chroma": "Verde"
+        "sintonizzabile": true,
+        "contenitore": {
+          "energia": "Verde",
+          "capacita_pm": 5
         }
       },
       "proprieta": []
@@ -178,9 +193,10 @@
         "tipologia": "Batterie e contenitori",
         "potenza": "Non Comune",
         "sintonizzazione": 2,
-        "riserva": {
-          "pm": 5,
-          "chroma": "Bianco"
+        "sintonizzabile": true,
+        "contenitore": {
+          "energia": "Bianco",
+          "capacita_pm": 5
         }
       },
       "proprieta": []

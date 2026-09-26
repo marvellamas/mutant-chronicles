@@ -20,7 +20,7 @@ import { preparaStampa, preparaTab } from '../stampa.js';
 import { renderTab } from './tab.js';
 import {
   massimiSessione, allineaSessione, variaSessione, modificaSessione, commutaStato, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
-  penalitaSessione, variaMunizioni, ricaricaArma,
+  penalitaSessione, variaMunizioni, ricaricaArma, variaChroma,
 } from '../sessione.js';
 import { conOrdinale } from '../lingua.js';
 
@@ -623,6 +623,7 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       ridisegna: () => renderScheda({ mantieniScorrimento: true }),
       munizioni: (uid, campo, delta) => cambiaSessione(variaMunizioni(stato.sessione, uid, campo, delta, massimi)),
       ricarica: (uid) => cambiaSessione(ricaricaArma(stato.sessione, uid, massimi)),
+      chroma: (uid, delta) => cambiaSessione(variaChroma(stato.sessione, uid, delta, massimi)),
       puntiEsperienza: (valore) => {
         stato.scelte = applicaModifica(stato.scelte, { puntiEsperienza: valore }, dati).scelte;
         persisti();

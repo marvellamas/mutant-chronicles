@@ -60,7 +60,8 @@ export function validaDati(dati) {
   const idSpec = validaSpecializzazioni(dati.specializzazioni, nomiAbilita, err);
   validaTalentiLiberi(dati.talenti_liberi, idSpec, err);
   validaTecniche(dati.tecniche_interiori, err);
-  validaEquipaggiamento(dati.equipaggiamento, [...nomiAbilita], [...(idSpec ?? [])], err);
+  validaEquipaggiamento(dati.equipaggiamento, [...nomiAbilita], [...(idSpec ?? [])], err, Object.keys(dati.regole?.chroma?.colori ?? {}).filter((c) => !dati.regole.chroma.colori[c]?.esausto));
+  if (dati.regole?.chroma !== undefined) validaChroma(dati, err);
 
   return errori;
 }
@@ -650,7 +651,55 @@ const FAMIGLIE_MUNIZIONI = ['pistola', 'fucile', 'pesanti', 'pallini', 'frecce',
 const CAMPI_PENALITA = ['attacchi_distanza', 'attacchi_ravvicinati', 'agilita', 'movimento_q', 'lancio_potere'];
 
 let nomiAbilitaPenalita = null; // per validaPenalita: le Abilità esistenti
-function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
+/**
+ * Blocco «chroma» di regole.json (Magia sez. 6; Armamenti §7.5.1; Giocatore §3.9.5): colori con
+ * energia e macrofamiglie esistenti, rapporti di conversione, Talenti esistenti, Prova per gruppi,
+ * Addestramento richiesto.
+ */
+function validaChroma(dati, err) {
+  const F = 'regole.json';
+  const c = dati.regole.chroma;
+  if (!isOggetto(c)) { err(F, 'chroma', 'oggetto mancante'); return; }
+  const macro = new Set((dati.incantesimi?.incantesimi ?? []).map((i) => i.macrofamiglia));
+  if (!isOggetto(c.colori) || !Object.keys(c.colori).length) err(F, 'chroma.colori', 'elenco dei colori mancante');
+  else {
+    for (const [nome, x] of Object.entries(c.colori)) {
+      const K = `chroma.colori.${nome}`;
+      if (!isTesto(x?.energia)) err(F, `${K}.energia`, 'energia mancante');
+      if (!Array.isArray(x?.macrofamiglie)) err(F, `${K}.macrofamiglie`, 'lista (anche vuota) delle macrofamiglie alimentate');
+      else for (const m of x.macrofamiglie) if (macro.size && !macro.has(m)) err(F, `${K}.macrofamiglie`, `"${m}" non è una macrofamiglia degli incantesimi`);
+    }
+    if (!Object.values(c.colori).some((x) => x?.esausto === true)) err(F, 'chroma.colori', 'manca il colore del contenitore esausto ("esausto": true, Trasparente)');
+  }
+  const cv = c.conversione;
+  if (!isOggetto(cv)) { err(F, 'chroma.conversione', 'oggetto mancante'); return; }
+  if (!isIntero(cv.rapporto_ordinario) || cv.rapporto_ordinario < 1) err(F, 'chroma.conversione.rapporto_ordinario', 'intero ≥ 1 mancante');
+  for (const [nome, v] of Object.entries(cv.rapporti_fissi ?? {})) {
+    if (!c.colori?.[nome]) err(F, `chroma.conversione.rapporti_fissi.${nome}`, 'colore inesistente');
+    if (!isIntero(v) || v < 1) err(F, `chroma.conversione.rapporti_fissi.${nome}`, 'intero ≥ 1 atteso');
+  }
+  const talenti = new Set([
+    ...(dati.talenti_liberi?.talenti ?? []).map((t) => t.nome),
+    ...(dati.classi?.classi ?? []).flatMap((cl) => [...(cl.talenti_fissi ?? []), ...(cl.talenti_a_scelta ?? [])].map((t) => t.nome)),
+  ]);
+  if (!Array.isArray(cv.talenti_riduzione)) err(F, 'chroma.conversione.talenti_riduzione', 'lista dei Talenti mancante');
+  else for (const t of cv.talenti_riduzione) if (!talenti.has(t)) err(F, 'chroma.conversione.talenti_riduzione', `"${t}" non è un Talento (Liberi o di Classe)`);
+  const r = cv.rapporto_per_talenti;
+  if (!Array.isArray(r) || r.length !== (cv.talenti_riduzione?.length ?? 0) + 1 || !r.every((x) => isIntero(x) && x >= 1) || r[0] !== cv.rapporto_ordinario || r.some((x, i) => i && x > r[i - 1])) {
+    err(F, 'chroma.conversione.rapporto_per_talenti', 'un rapporto per 0, 1, … Talenti: il primo è quello ordinario, poi non crescente, interi ≥ 1');
+  }
+  if (!(dati.addestramenti?.addestramenti ?? []).some((a) => a.nome === cv.addestramento_richiesto)) err(F, 'chroma.conversione.addestramento_richiesto', `"${cv.addestramento_richiesto}" non è un Addestramento`);
+  const pg = cv.prova_gruppi;
+  if (!isOggetto(pg) || !isIntero(pg.automatici) || pg.automatici < 1 || !isOggetto(pg.penalita) || !isIntero(pg.per_gruppo_oltre)) {
+    err(F, 'chroma.conversione.prova_gruppi', 'serve { automatici ≥ 1, penalita: {gruppi: VA}, per_gruppo_oltre }');
+  } else {
+    for (const [k, v] of Object.entries(pg.penalita)) if (!/^\d+$/.test(k) || Number(k) <= pg.automatici || !isIntero(v) || v > 0) err(F, `chroma.conversione.prova_gruppi.penalita.${k}`, 'numero di gruppi oltre quelli automatici, penalità intera ≤ 0');
+  }
+  if (!isIntero(c.contenitori_per_lancio) || c.contenitori_per_lancio < 1) err(F, 'chroma.contenitori_per_lancio', 'intero ≥ 1 mancante');
+  if (!['pieno', 'vuoto'].includes(c.contenitore_nuovo)) err(F, 'chroma.contenitore_nuovo', 'deve essere "pieno" o "vuoto"');
+}
+
+function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = []) {
   nomiAbilitaPenalita = nomiAbilita;
   const FI = 'equipaggiamento/index';
   if (!isOggetto(eq) || !isOggetto(eq.indice)) {
@@ -982,9 +1031,21 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
   }
   for (const [F, k, r] of rimandiArtefatti) if (!rif.has(r)) err(F, k, `"${r}" non è un oggetto del catalogo (formato "file:id")`);
   for (const [F, k, a] of artefattiDaControllare) {
-    if (!isOggetto(a) || !isTesto(a.tipologia) || !isTesto(a.potenza) || !isIntero(a.sintonizzazione)) { err(F, k, 'serve { tipologia, potenza, sintonizzazione, riserva? }'); continue; }
+    if (!isOggetto(a) || !isTesto(a.tipologia) || !isTesto(a.potenza) || !isIntero(a.sintonizzazione)) { err(F, k, 'serve { tipologia, potenza, sintonizzazione, sintonizzabile, contenitore? }'); continue; }
+    if (a.sintonizzabile !== true) err(F, `${k}.sintonizzabile`, 'deve valere true: le proprietà attive richiedono sintonizzazione (§7.10)');
+    if (a.riserva !== undefined) err(F, `${k}.riserva`, 'campo sostituito da "contenitore": { energia, capacita_pm, integrato? }');
     if (potenzeArtefatti && potenzeArtefatti[a.potenza] !== a.sintonizzazione) err(F, `${k}.sintonizzazione`, `potenza ${a.potenza}: il costo di sintonizzazione è ${potenzeArtefatti[a.potenza] ?? 'sconosciuto'} (§7.10), trovato ${a.sintonizzazione}`);
-    if (a.riserva !== undefined && !(isOggetto(a.riserva) && isIntero(a.riserva.pm) && a.riserva.pm >= 1 && isTesto(a.riserva.chroma))) err(F, `${k}.riserva`, 'serve { pm ≥ 1, chroma }');
+    // Magia sez. 6: contenitore di Chroma (colore di regole.json → chroma.colori, non l'esausto)
+    if (a.contenitore !== undefined) {
+      const c = a.contenitore;
+      if (!isOggetto(c)) err(F, `${k}.contenitore`, 'serve { energia, capacita_pm, integrato? }');
+      else {
+        if (coloriChroma.length && !coloriChroma.includes(c.energia)) err(F, `${k}.contenitore.energia`, `"${c.energia}" non è un colore del Chroma (${coloriChroma.join(', ')})`);
+        if (!isIntero(c.capacita_pm) || c.capacita_pm < 1) err(F, `${k}.contenitore.capacita_pm`, 'intero ≥ 1 atteso');
+        if (c.integrato !== undefined && typeof c.integrato !== 'boolean') err(F, `${k}.contenitore.integrato`, 'vero o falso');
+        for (const x of Object.keys(c)) if (!['energia', 'capacita_pm', 'integrato'].includes(x)) err(F, `${k}.contenitore.${x}`, 'campo sconosciuto');
+      }
+    }
   }
   for (const [F, k, r] of rimandiMunizioni) {
     const t = tipoDi.get(r);

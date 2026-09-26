@@ -431,6 +431,15 @@ dl.voci.in-linea dt::after { content: ":"; }
 .val-eff .segno-verso { font-size: 0.75em; margin-left: 0.15em; vertical-align: 0.1em; }
 .voce-info.valore-info { font-weight: inherit; }
 
+/* Contenitori di Chroma (Magia sez. 6): pallino del colore; esausto = Trasparente con l'alone */
+.chroma-punto { display: inline-block; width: 0.8em; height: 0.8em; border-radius: 50%; margin-right: 0.35em; vertical-align: -0.05em; border: 2px solid transparent; }
+.chroma-bianco { background: #f2f2f2; border-color: #9a9a9a; }
+.chroma-rosso { background: #c0392b; border-color: #c0392b; }
+.chroma-blu { background: #2e6fd8; border-color: #2e6fd8; }
+.chroma-verde { background: #2e9e57; border-color: #2e9e57; }
+.chroma-viola { background: #7d3c98; border-color: #7d3c98; }
+.chroma-punto.esausto { background: transparent; }
+
 .tooltip {
   position: fixed;
   z-index: 50;
