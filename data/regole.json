@@ -1,6 +1,6 @@
 {
-  "versione_manuale": "Giocatore 0.43; Magia 1.1",
-  "fonte": "Giocatore §1.2.3, §2.1, §2.3, §2.10, §2.12–2.15, §3.3, §1.8.3, §5.5, §5.9, §5.14, §5.18, §5.19, cap. 8; Magia sezioni 1 e 11; docs/risposte-master.md",
+  "versione_manuale": "Giocatore 0.43; Magia 1.1; Equipaggiamento 0.1",
+  "fonte": "Giocatore §1.2.3, §2.1, §2.3, §2.10, §2.12–2.15, §3.3, §1.8.3, §5.2.6, §5.5, §5.9, §5.14, §5.18, §5.19, cap. 8; Magia sezioni 1 e 11; Equipaggiamento §1.6, §1.7; docs/risposte-master.md",
   "creazione": {
     "punti_caratteristica": 5,
     "massimo_caratteristica": 7,
@@ -680,6 +680,62 @@
     ],
     "si_applica_a": ["abilita", "salvezze"],
     "_nota": "§5.19: un unico Stato di Affaticamento; si applica solo la penalità dello Stato attuale, a tutte le Prove di Caratteristica, Abilità e Salvezza. Riposato è la riserva iniziale."
+  },
+  "carico": {
+    "versione_manuale": "Equipaggiamento 0.1",
+    "fonte": "Giocatore §5.2.6 «Capacità di carico» (PDF 0.43, invariato nel Google Doc del 26/09/2026) ed Equipaggiamento 0.1 §1.6 «Peso e capacità di carico»: la stessa tabella nei due manuali.",
+    "caratteristica": "FOR",
+    "livelli": [
+      {
+        "id": "ordinario",
+        "nome": "Ordinario",
+        "fino_a_kg_per_punto": 10,
+        "effetto": null,
+        "promemoria": "Nessuna penalità dovuta al peso."
+      },
+      {
+        "id": "sovraccarico",
+        "nome": "Sovraccarico",
+        "fino_a_kg_per_punto": 20,
+        "effetto": { "va_gruppi": { "fisiche": -2 }, "fonte": "§5.2.6, §1.6: −2 VA alle Prove fisiche, compresi attacchi e Difese; non modifica le Prove Salvezza" },
+        "movimento_q": -2,
+        "solo_passo": true,
+        "affaticamento_ogni_ora": true,
+        "promemoria": "−2 VA alle Prove fisiche, compresi attacchi e Difese (non alle Prove Salvezza). Soltanto Passo, con −2 Q al Movimento disponibile (minimo 0). Ogni ora completa di trasporto peggiora automaticamente l’Affaticamento, senza Salvezza (§5.19)."
+      },
+      {
+        "id": "oltre_il_massimo",
+        "nome": "Oltre il massimo",
+        "fino_a_kg_per_punto": null,
+        "effetto": { "va_gruppi": { "fisiche": -2 }, "fonte": "§5.2.6: oltre FOR × 20 kg non si trasporta; l’app applica intanto le penalità del Sovraccarico" },
+        "movimento_q": -2,
+        "solo_passo": true,
+        "affaticamento_ogni_ora": true,
+        "promemoria": "Non può essere sollevato o trasportato senza aiuto o strumenti adeguati: bisogna lasciare qualcosa. Finché non si riduce il peso l’app applica le penalità del Sovraccarico."
+      }
+    ],
+    "spinta_kg_per_punto": 40,
+    "moltiplicatori": [
+      { "talento": "Forza da Lavoro", "fattore": 2, "fonte": "§5.2.6, «Interazioni con le capacità»: raddoppia tutte le soglie (ordinario FOR × 20, massimo FOR × 40, spinta FOR × 80 kg)" }
+    ],
+    "TODO(Davide)": [
+      "Pesi degli oggetti (per-davide A.30): il Manuale degli Armamenti non dà pesi; il carico conta solo gli oggetti personalizzati con «peso» e il peso aggiuntivo della sessione.",
+      "Oltre il massimo (per-davide A.31): che cosa subisce chi supera FOR × 20 kg finché non lascia qualcosa? L’app applica le penalità del Sovraccarico."
+    ],
+    "_nota": "Soglie = valore di FOR (non il modificatore) × kg per punto, moltiplicate dai Talenti di «moltiplicatori». Le Prove fisiche sono quelle di regole.json → stati.abilita_fisiche (domanda aperta A.16). Il peso trasportato è la somma dei pesi dell’equipaggiamento (campo «peso» del catalogo, in kg per unità, o dell’oggetto personalizzato) più il peso aggiuntivo della sessione. Mulo da Soma ed Evacuazione Medica non cambiano le soglie: restano nel testo dei Talenti. «Oltre il massimo» con le penalità del Sovraccarico è una scelta dell’app: il manuale dice solo che il carico non si trasporta."
+  },
+  "integrita": {
+    "versione_manuale": "Equipaggiamento 0.1",
+    "fonte": "Equipaggiamento 0.1 §1.7 «Integrità e manutenzione», che rimanda ad Armamenti §7.2.1: stessa tabella.",
+    "ps_per_qualita": {
+      "Scarsa": 8,
+      "Comune": 10,
+      "Non comune": 12,
+      "Rara": 14,
+      "Molto rara": 16,
+      "Leggendaria": 18
+    },
+    "_nota": "La Qualità costruttiva determina la PS Integrità dell’oggetto, separata dalle Salvezze del personaggio. Il validatore controlla che «ps_int» di ogni oggetto del catalogo corrisponda alla sua «qualita». A 0 PI un oggetto ordinario è Rotto (§1.7, §7.2.1)."
   },
   "difese": {
     "parata_distanza_arma": -8,

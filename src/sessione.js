@@ -4,19 +4,24 @@
 // viene solo limitato al nuovo massimo, mai riazzerato. Funzioni pure.
 //
 // sessione = { pvAttuali, pmAttuali, puntiEroe, distintivi, statiAttivi: [id], ferite,
-//              affaticamento, munizioni: { uid: { colpi, riserve } }, chroma: { uid: { pmAttuali } }, note }
+//              affaticamento, munizioni: { uid: { colpi, riserve } }, chroma: { uid: { pmAttuali } },
+//              caricoExtra, note }
 // munizioni: per ogni arma a distanza della lista, i colpi nel caricatore (limitati alla sua
 // capacità, dal catalogo) e le riserve (caricatori di scorta: quantità libera).
 // chroma: PM attuali di ogni contenitore di Chroma (Magia sez. 6), limitati alla sua capacità. Non
 // si ricaricano con «Ricarica» né con «Nuova sessione»: solo convertendo PM (Magia sez. 6, §7.5.1).
 // ferite: 0 = nessuna, 1…5 = gli Stati di Ferita di regole.json (§5.14), 6 = oltre Grave.
 // affaticamento: indice in regole.json → affaticamento.stati (§5.19), 0 = Riposato.
+// caricoExtra: kg trasportati oltre all'equipaggiamento (bottino, una creatura trasportata con il
+// suo equipaggiamento: §5.2.6), sommati al peso degli oggetti per il carico (src/carico.js).
 import { valoreTiro } from './tiri.js';
 import { caricatori, contenitori, normalizzaEquipaggiamento } from './equipaggiamento.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const limita = (v, min, max) => Math.min(max, Math.max(min, v));
 const intero = (v, predefinito) => (Number.isInteger(v) ? v : predefinito);
+/** kg ≥ 0 con un decimale; altro → 0. */
+const chili = (v) => (typeof v === 'number' && Number.isFinite(v) && v > 0 ? Math.round(v * 10) / 10 : 0);
 
 /**
  * Massimi e limiti della sessione per il personaggio attuale.
@@ -98,6 +103,7 @@ export function inizializzaSessione(m) {
     affaticamento: 0,
     munizioni: allineaMunizioni({}, m),
     chroma: allineaChroma({}, {}, m),
+    caricoExtra: 0,
     note: '',
   };
 }
@@ -119,6 +125,7 @@ export function allineaSessione(sessione, m) {
     affaticamento: limita(intero(sessione.affaticamento, 0), 0, m.affaticamento),
     munizioni,
     chroma: allineaChroma(sessione.chroma, sessione.munizioni, m),
+    caricoExtra: chili(sessione.caricoExtra),
     note: typeof sessione.note === 'string' ? sessione.note : '',
   };
 }
@@ -182,7 +189,7 @@ export function commutaStato(sessione, id, m) {
 
 /**
  * «Nuova sessione / riposo completo»: PV e PM ai massimi, Stati, Ferite e Affaticamento a zero.
- * Restano note, Punti Eroe, Distintivi e munizioni.
+ * Restano note, Punti Eroe, Distintivi, munizioni e peso aggiuntivo.
  */
 export function nuovaSessione(sessione, m) {
   return { ...allineaSessione(sessione, m), pvAttuali: m.pv, pmAttuali: m.pm, statiAttivi: [], ferite: 0, affaticamento: 0 };

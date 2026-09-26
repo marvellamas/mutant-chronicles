@@ -67,6 +67,16 @@ function elencoVoci(ctx) {
             h('button', { type: 'button', class: 'btn-tavolo piccolo', disabled: v.quantita <= 1, 'aria-label': `Togli uno a ${r.nome}`, onclick: () => cambia(v.uid, { quantita: v.quantita - 1 }) }, '−'),
             h('output', {}, String(v.quantita)),
             h('button', { type: 'button', class: 'btn-tavolo piccolo', 'aria-label': `Aggiungi uno a ${r.nome}`, onclick: () => cambia(v.uid, { quantita: v.quantita + 1 }) }, '+')),
+        // §1.6: il peso degli oggetti personalizzati si corregge qui (quelli del catalogo vengono dai dati)
+        r.personalizzato ? h('label', { class: 'campo-inline peso-equip' }, 'Peso kg ',
+          h('input', {
+            type: 'number', min: 0, step: 0.1, value: v.personalizzato?.peso ?? '', 'aria-label': `Peso di ${r.nome} in kg per unità`,
+            onchange: (e) => {
+              const { peso, ...resto } = v.personalizzato ?? {};
+              const n = e.target.value === '' ? null : Number(e.target.value);
+              cambia(v.uid, { personalizzato: n !== null && Number.isFinite(n) && n >= 0 ? { ...resto, peso: n } : resto });
+            },
+          })) : null,
         h('input', {
           type: 'text', class: 'note-equip', value: v.note, placeholder: 'Note (es. «danneggiata», «regalo di…»)', 'aria-label': `Note su ${r.nome}`,
           onchange: (e) => cambia(v.uid, { note: e.target.value }),
@@ -80,7 +90,7 @@ function elencoVoci(ctx) {
 
 function pannelloAggiungi(ctx) {
   const { dati, ui } = ctx;
-  ui.equip ??= { tipo: null, catalogo: null, famiglia: null, rif: null, cerca: '', pers: { nome: '', tipo: 'altro', abilita: '', danno: '', ar: '', potenza: '', energia: '', capacita: '' } };
+  ui.equip ??= { tipo: null, catalogo: null, famiglia: null, rif: null, cerca: '', pers: { nome: '', tipo: 'altro', abilita: '', danno: '', ar: '', potenza: '', energia: '', capacita: '', peso: '' } };
   const s = ui.equip;
   const op = opzioniCascata(dati, s);
   const scelto = s.rif ? catalogo(dati).perRif.get(s.rif) : null;
@@ -148,7 +158,10 @@ function pannelloAggiungi(ctx) {
           h('select', { onchange: (e) => { p.energia = e.target.value; } }, h('option', { value: '' }, 'nessuno'),
             colori.map((x) => h('option', { value: x, selected: p.energia === x }, x)))) : null,
         p.tipo === 'artefatto' ? h('label', { class: 'campo' }, h('span', {}, 'Capacità (PM)'),
-          h('input', { type: 'number', min: 1, step: 1, value: p.capacita, oninput: (e) => { p.capacita = e.target.value; } })) : null),
+          h('input', { type: 'number', min: 1, step: 1, value: p.capacita, oninput: (e) => { p.capacita = e.target.value; } })) : null,
+        // Equipaggiamento §1.6: peso per unità, per il carico della modalità tavolo
+        h('label', { class: 'campo' }, h('span', {}, 'Peso (kg per unità)'),
+          h('input', { type: 'number', min: 0, step: 0.1, value: p.peso ?? '', oninput: (e) => { p.peso = e.target.value; } }))),
       h('button', {
         type: 'button', class: 'btn',
         onclick: () => {
@@ -157,6 +170,11 @@ function pannelloAggiungi(ctx) {
           if (armiTipi.includes(p.tipo) && p.abilita) personalizzato.abilita = p.abilita;
           if (armiTipi.includes(p.tipo) && p.danno.trim()) personalizzato.danno = p.danno.trim();
           if (['armatura', 'scudo'].includes(p.tipo) && p.ar !== '' && Number.isInteger(Number(p.ar))) personalizzato.ar = Number(p.ar);
+          if ((p.peso ?? '') !== '') {
+            const peso = Number(p.peso);
+            if (!Number.isFinite(peso) || peso < 0) { alert('Il peso è in kg, un numero ≥ 0.'); return; }
+            personalizzato.peso = peso;
+          }
           if (p.tipo === 'artefatto') {
             if (!p.potenza) { alert('Scegli la potenza dell’Artefatto: dà il costo di sintonizzazione (§7.10).'); return; }
             personalizzato.potenza = p.potenza;
@@ -166,7 +184,7 @@ function pannelloAggiungi(ctx) {
               Object.assign(personalizzato, { energia: p.energia, capacita_pm: capacita });
             }
           }
-          Object.assign(p, { nome: '', abilita: '', danno: '', ar: '', potenza: '', energia: '', capacita: '' });
+          Object.assign(p, { nome: '', abilita: '', danno: '', ar: '', potenza: '', energia: '', capacita: '', peso: '' });
           aggiungiVoce({ uid: nuovoUid(), rif: null, personalizzato, stato: statoIniziale(personalizzato.tipo, ctx.voci, dati), quantita: 1, note: '' });
         },
       }, 'Aggiungi oggetto personalizzato')));

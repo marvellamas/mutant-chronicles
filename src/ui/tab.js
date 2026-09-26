@@ -427,6 +427,24 @@ function tabCombattimento(ctx, d) {
         onclick: () => ctx.azioni.imposta('affaticamento', n),
       }, h('strong', {}, a.nome), h('span', {}, a.penalita ? segno(a.penalita) : '0'))))),
 
+    // §5.2.6 e Equipaggiamento §1.6: peso trasportato e soglie; la penalità entra nei valori effettivi
+    ...(() => {
+      const c = ctx.tab.scheda.carico;
+      if (!c) return [];
+      const kg = (v) => v.toLocaleString('it-IT', { maximumFractionDigits: 1 });
+      const penalita = !!c.livello.effetto;
+      const forza = ctx.tab.scheda.caratteristiche.FOR.valore;
+      const nomi = c.senzaPeso.length > 10 ? [...c.senzaPeso.slice(0, 10), '…'] : c.senzaPeso;
+      return [sezione('Carico (§5.2.6)',
+        h('p', { class: `valore-tavolo${penalita ? ' oltre' : ''}` }, h('span', {}, 'Peso trasportato '), h('strong', {}, `${kg(c.peso)} kg`), h('span', {}, ` · ${c.livello.nome}`)),
+        h('p', { class: 'nota' }, `Ordinario fino a ${kg(c.soglie.ordinario)} kg, Sovraccarico fino a ${kg(c.soglie.massimo)} kg; spingere o trascinare su terreno piano fino a ${kg(c.soglie.spinta)} kg (FOR ${forza}${c.soglie.talento ? `, soglie raddoppiate da ${c.soglie.talento}` : ''}).`),
+        h('p', { class: penalita ? 'avviso-carico' : 'nota' }, c.livello.promemoria, c.livello.movimento_q && c.passo !== null ? ` Passo ${c.passo} Q, prima delle altre penalità.` : ''),
+        h('label', { class: 'campo-inline' }, 'Peso aggiuntivo (kg) ',
+          h('input', { type: 'number', min: 0, step: 0.5, value: c.pesoExtra, 'aria-label': 'Peso aggiuntivo in kg', onchange: (e) => ctx.azioni.imposta('caricoExtra', Number(e.target.value) || 0) }),
+          h('small', { class: 'nota' }, 'bottino, una creatura trasportata con il suo equipaggiamento…')),
+        c.senzaPeso.length ? h('p', { class: 'nota' }, `Senza peso, non contati (${c.senzaPeso.length}): ${nomi.join(', ')}. Il catalogo degli Armamenti non riporta i pesi; per un oggetto personalizzato si indica nel campo «Peso».`) : null)];
+    })(),
+
     sezione('Stati attivi (§5.18)',
       h('ul', { class: 'stati-tavolo' }, d.stati.map((st) => {
         const attivo = s.statiAttivi.includes(st.id);

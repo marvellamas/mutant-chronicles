@@ -164,7 +164,7 @@ function validaAbilita(a, sigle, err) {
  * valori interi.
  */
 function validaEffettiCondizioni(dati, err) {
-  const F = 'regole.json';
+  const F = 'regole';
   const r = dati.regole;
   const nomi = new Set((dati.abilita.abilita ?? []).map((a) => a.nome));
   const categorie = new Set(dati.abilita.categorie ?? []);
@@ -178,10 +178,7 @@ function validaEffettiCondizioni(dati, err) {
     if (!Array.isArray(l)) err(F, `stati.abilita_${g}`, 'lista di Abilità mancante');
     else l.forEach((n) => { if (!nomi.has(n)) err(F, `stati.abilita_${g}`, `"${n}" non è un'Abilità`); });
   }
-  (r.stati?.elenco ?? []).forEach((x, i) => {
-    if (x?.effetto === undefined) return;
-    const P = `stati.elenco[${i}] (${x.nome}).effetto`;
-    const e = x.effetto;
+  const validaEffetto = (e, P) => {
     if (!isOggetto(e)) { err(F, P, 'deve essere un oggetto'); return; }
     const noti = ['va', 'salvezze', 'va_categorie', 'va_abilita', 'va_gruppi', 'fonte'];
     for (const k of Object.keys(e)) if (!noti.includes(k)) err(F, `${P}.${k}`, `campo sconosciuto (ammessi: ${noti.join(', ')})`);
@@ -198,7 +195,70 @@ function validaEffettiCondizioni(dati, err) {
     mappa('va_abilita', nomi, 'Abilità');
     mappa('va_gruppi', new Set(gruppi), 'gruppo (serve stati.abilita_<gruppo>)');
     if (!isTesto(e.fonte)) err(F, `${P}.fonte`, 'paragrafo del manuale mancante');
+  };
+  (r.stati?.elenco ?? []).forEach((x, i) => {
+    if (x?.effetto !== undefined) validaEffetto(x.effetto, `stati.elenco[${i}] (${x.nome}).effetto`);
   });
+  if (r.carico !== undefined) validaCarico(dati, validaEffetto, err);
+  if (r.integrita !== undefined) validaIntegrita(dati, err);
+}
+
+/**
+ * Blocco «carico» di regole.json (Giocatore §5.2.6, Equipaggiamento §1.6): Caratteristica esistente,
+ * tre livelli (ordinario, sovraccarico, oltre il massimo) con soglie crescenti e l'ultimo senza
+ * soglia, effetti nella forma delle condizioni, Talenti moltiplicatori esistenti.
+ */
+function validaCarico(dati, validaEffetto, err) {
+  const F = 'regole';
+  const c = dati.regole.carico;
+  if (!isOggetto(c)) { err(F, 'carico', 'oggetto mancante'); return; }
+  if (!isTesto(c.versione_manuale)) err(F, 'carico.versione_manuale', 'campo mancante o vuoto');
+  if (!(dati.caratteristiche?.caratteristiche ?? []).some((x) => x.sigla === c.caratteristica)) err(F, 'carico.caratteristica', `"${c.caratteristica}" non è una Caratteristica`);
+  const l = c.livelli;
+  if (!Array.isArray(l) || l.length !== 3) { err(F, 'carico.livelli', 'servono tre livelli: ordinario, sovraccarico, oltre il massimo (§5.2.6)'); return; }
+  l.forEach((x, i) => {
+    const K = `carico.livelli[${i}]`;
+    if (!isOggetto(x)) { err(F, K, 'oggetto atteso'); return; }
+    for (const k of ['id', 'nome', 'promemoria']) if (!isTesto(x[k])) err(F, `${K}.${k}`, 'testo mancante');
+    const ultimo = i === l.length - 1;
+    if (ultimo ? x.fino_a_kg_per_punto !== null : !(isIntero(x.fino_a_kg_per_punto) && x.fino_a_kg_per_punto > (i ? l[i - 1].fino_a_kg_per_punto : 0))) {
+      err(F, `${K}.fino_a_kg_per_punto`, ultimo ? 'l’ultimo livello non ha soglia (null)' : 'intero positivo, maggiore della soglia precedente');
+    }
+    if (x.effetto !== null && x.effetto !== undefined) validaEffetto(x.effetto, `carico.livelli[${i}] (${x.nome}).effetto`);
+    if (x.movimento_q !== undefined && !(isIntero(x.movimento_q) && x.movimento_q <= 0)) err(F, `${K}.movimento_q`, 'intero ≤ 0 atteso');
+  });
+  if (l[0]?.effetto) err(F, 'carico.livelli[0].effetto', 'il carico ordinario non ha penalità (null)');
+  if (!(isIntero(c.spinta_kg_per_punto) && c.spinta_kg_per_punto >= (l[1]?.fino_a_kg_per_punto ?? 0))) err(F, 'carico.spinta_kg_per_punto', 'intero non inferiore alla soglia massima');
+  const talenti = new Set((dati.classi?.classi ?? []).flatMap((cl) => [...(cl.talenti_fissi ?? []), ...(cl.talenti_a_scelta ?? [])].map((t) => t.nome)));
+  (Array.isArray(c.moltiplicatori) ? c.moltiplicatori : []).forEach((m, i) => {
+    if (!talenti.has(m?.talento)) err(F, `carico.moltiplicatori[${i}].talento`, `"${m?.talento}" non è un Talento di Classe`);
+    if (!(typeof m?.fattore === 'number' && m.fattore > 0)) err(F, `carico.moltiplicatori[${i}].fattore`, 'numero positivo atteso');
+  });
+  if (c.moltiplicatori !== undefined && !Array.isArray(c.moltiplicatori)) err(F, 'carico.moltiplicatori', 'lista attesa');
+}
+
+/**
+ * Blocco «integrita» di regole.json (Equipaggiamento §1.7, Armamenti §7.2.1): PS Integrità per
+ * Qualità costruttiva, interi crescenti; ogni oggetto del catalogo con «qualita» deve avere la
+ * «ps_int» corrispondente.
+ */
+function validaIntegrita(dati, err) {
+  const F = 'regole';
+  const t = dati.regole.integrita;
+  if (!isOggetto(t)) { err(F, 'integrita', 'oggetto mancante'); return; }
+  if (!isTesto(t.versione_manuale)) err(F, 'integrita.versione_manuale', 'campo mancante o vuoto');
+  const ps = t.ps_per_qualita;
+  if (!isOggetto(ps) || !Object.keys(ps).length) { err(F, 'integrita.ps_per_qualita', 'tabella Qualità → PS Integrità mancante'); return; }
+  const valori = Object.values(ps);
+  if (!valori.every((v, i) => isIntero(v) && v > 0 && (i === 0 || v > valori[i - 1]))) err(F, 'integrita.ps_per_qualita', 'PS intere positive e crescenti con la Qualità');
+  for (const [id, f] of Object.entries(dati.equipaggiamento?.file ?? {})) {
+    (f.oggetti ?? []).forEach((o, i) => {
+      if (o?.qualita === undefined || o.qualita === null) return;
+      const K = `oggetti[${i}] (${o.nome})`;
+      if (!(o.qualita in ps)) err(`equipaggiamento/${id}`, `${K}.qualita`, `"${o.qualita}" non è una Qualità di regole.json → integrita (${Object.keys(ps).join(', ')})`);
+      else if (o.ps_int !== undefined && o.ps_int !== null && o.ps_int !== ps[o.qualita]) err(`equipaggiamento/${id}`, `${K}.ps_int`, `Qualità ${o.qualita} vuole PS Integrità ${ps[o.qualita]}, trovata ${o.ps_int} (§1.7)`);
+    });
+  }
 }
 
 function validaRegole(r, err) {
@@ -683,7 +743,7 @@ let nomiAbilitaPenalita = null; // per validaPenalita: le Abilità esistenti
  * Addestramento richiesto.
  */
 function validaChroma(dati, err) {
-  const F = 'regole.json';
+  const F = 'regole';
   const c = dati.regole.chroma;
   if (!isOggetto(c)) { err(F, 'chroma', 'oggetto mancante'); return; }
   const macro = new Set((dati.incantesimi?.incantesimi ?? []).map((i) => i.macrofamiglia));
@@ -731,7 +791,7 @@ function validaChroma(dati, err) {
  * catalogo. Nel catalogo, «effetto_breve» è un testo non vuoto.
  */
 function validaSchedaDigitale(dati, err) {
-  const F = 'regole.json';
+  const F = 'regole';
   const b = dati.regole.interfaccia?.barre_pv_pm;
   const frazione = (v) => typeof v === 'number' && v >= 0 && v <= 1;
   if (!isOggetto(b) || !frazione(b.verde_sopra) || !frazione(b.rosso_sotto) || b.rosso_sotto >= b.verde_sopra) {
@@ -878,6 +938,7 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = []) 
       if (o.note_manuale !== undefined && typeof o.note_manuale !== 'string') err(F, `${k}.note_manuale`, 'deve essere testo');
       numeroOpz(F, `${k}.pi`, o.pi, 0, 999, err);
       numeroOpz(F, `${k}.ps_int`, o.ps_int, 1, 30, err);
+      if (o.peso !== undefined && o.peso !== null && !(typeof o.peso === 'number' && Number.isFinite(o.peso) && o.peso >= 0)) err(F, `${k}.peso`, 'peso in kg per unità: numero ≥ 0 (§1.6, §1.10)');
       numeroOpz(F, `${k}.costo`, o.costo, 0, 1e9, err);
       if (o.for_richiesta !== undefined && o.for_richiesta !== null && !(isIntero(o.for_richiesta) && o.for_richiesta >= 1 && o.for_richiesta <= 10)) {
         err(F, `${k}.for_richiesta`, `deve essere un intero da 1 a 10, trovato ${JSON.stringify(o.for_richiesta)}`);

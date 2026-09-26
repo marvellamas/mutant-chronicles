@@ -1,17 +1,20 @@
-// Condizioni di sessione nei valori: Ferite (§5.14), Affaticamento (§5.19) e Stati (§5.18).
+// Condizioni di sessione nei valori: Ferite (§5.14), Affaticamento (§5.19), Stati (§5.18) e carico
+// (Giocatore §5.2.6, Equipaggiamento §1.6).
 // Funzioni pure. Il valore EFFETTIVO = valore da regole + equipaggiamento + condizioni attive;
 // il `totale` da regole non cambia (serve all'avanzamento) e la stampa resta a riposo.
 
 import { descriviFerite } from './sessione.js';
+import { calcolaCarico } from './carico.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 
 /**
  * Condizioni attive della sessione, con effetto strutturato:
- * [{ etichetta, fonte: 'ferite'|'affaticamento'|'stato', effetto: { va, salvezze, va_categorie, va_abilita, va_gruppi } }].
- * Gli Stati senza `effetto` nei dati non compaiono: restano promemoria.
+ * [{ etichetta, fonte: 'ferite'|'affaticamento'|'stato'|'carico', effetto: { va, salvezze, va_categorie, va_abilita, va_gruppi } }].
+ * Gli Stati senza `effetto` nei dati non compaiono: restano promemoria. Con la scheda (per il peso
+ * dell'equipaggiamento e FOR) si aggiunge il carico, se supera la soglia ordinaria.
  */
-export function condizioniAttive(sessione, dati) {
+export function condizioniAttive(sessione, dati, scheda = null) {
   if (!isOggetto(sessione)) return [];
   const r = dati.regole;
   const out = [];
@@ -24,6 +27,11 @@ export function condizioniAttive(sessione, dati) {
   // §5.18: solo gli Stati con un effetto numerico nei dati
   const attivi = new Set(Array.isArray(sessione.statiAttivi) ? sessione.statiAttivi : []);
   for (const s of r.stati.elenco) if (attivi.has(s.id) && s.effetto) out.push({ etichetta: s.nome, fonte: 'stato', effetto: s.effetto });
+  // §5.2.6: il Sovraccarico penalizza le Prove fisiche, compresi attacchi e Difese
+  if (scheda && r.carico) {
+    const c = calcolaCarico(scheda, sessione, dati);
+    if (c.livello.effetto) out.push({ etichetta: c.livello.nome, fonte: 'carico', effetto: c.livello.effetto });
+  }
   return out;
 }
 
@@ -73,11 +81,11 @@ function vociCondizioniAbilita(condizioni, abilita, dati) {
  *   distanzaEffettiva, vaDaRegole, scomposizione;
  * - equipaggiamento.protezioni[i].parata: ravvicinataEffettiva, distanzaEffettiva, daRegole,
  *   scomposizioneRavvicinata, scomposizioneDistanza;
- * - condizioni: le condizioni attive.
- * Ogni scomposizione è [{ etichetta, valore, fonte: 'regole'|'equipaggiamento'|'ferite'|'affaticamento'|'stato' }].
+ * - condizioni: le condizioni attive; carico: il carico trasportato (src/carico.js), con la sessione.
+ * Ogni scomposizione è [{ etichetta, valore, fonte: 'regole'|'equipaggiamento'|'ferite'|'affaticamento'|'stato'|'carico' }].
  */
 export function applicaCondizioni(scheda, sessione, dati) {
-  const condizioni = condizioniAttive(sessione, dati);
+  const condizioni = condizioniAttive(sessione, dati, scheda);
   const perNome = new Map();
   scheda.abilita = scheda.abilita.map((a) => {
     const cond = vociCondizioniAbilita(condizioni, a, dati);
@@ -135,5 +143,6 @@ export function applicaCondizioni(scheda, sessione, dati) {
     }
   }
   scheda.condizioni = condizioni;
+  scheda.carico = isOggetto(sessione) && dati.regole.carico ? calcolaCarico(scheda, sessione, dati) : null;
   return scheda;
 }

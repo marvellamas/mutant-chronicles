@@ -4,7 +4,8 @@
 // incoerenze (due armature, mani impegnate…) sono avvisi, non blocchi: decide il master.
 //
 // Voce del personaggio: { uid, rif: "armi:spada-leggera" | null, personalizzato?: { nome, tipo,
-//   abilita?, danno?, ar?, testo? }, stato, quantita, montato_su?: uid, note }
+//   abilita?, danno?, ar?, testo?, peso? }, stato, quantita, montato_su?: uid, note }
+// peso: kg per unità (Equipaggiamento §1.6, §1.10), per il carico (src/carico.js).
 
 export const TIPI = ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'altro'];
 
@@ -283,6 +284,8 @@ export function normalizzaEquipaggiamento(valore) {
         ...(testo(p.potenza) ? { potenza: p.potenza } : {}),
         ...(testo(p.energia) ? { energia: p.energia } : {}),
         ...(Number.isInteger(p.capacita_pm) && p.capacita_pm >= 1 ? { capacita_pm: p.capacita_pm } : {}),
+        // §1.6: peso in kg per unità, per il carico
+        ...(typeof p.peso === 'number' && Number.isFinite(p.peso) && p.peso >= 0 ? { peso: Math.round(p.peso * 100) / 100 } : {}),
       };
     }
     if (typeof v.montato_su === 'string' && v.montato_su) out.montato_su = v.montato_su;

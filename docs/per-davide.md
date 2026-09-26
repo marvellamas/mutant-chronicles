@@ -49,6 +49,12 @@ Il manuale non lo dice.
 **A.6 — Equipaggiamento iniziale (§2.16).** "Verrà integrato successivamente". Quando lo scrivi, dicci prima la forma (lista fissa per Addestramento? budget? scelte guidate?): cambia il passo del wizard.
 *Nel frattempo:* inserimento manuale, voce per voce.
 
+**A.30 — Pesi degli oggetti (Equipaggiamento §1.6, §1.10).** Il carico si calcola sul peso di tutto ciò che si porta, e la scheda standard del §1.10 prevede il campo Peso, ma il Manuale degli Armamenti non dà pesi per armi, armature e scudi. Li aggiungerai ai cataloghi?
+*Nel frattempo:* l'app conta solo il peso degli oggetti personalizzati (campo «Peso») e il peso aggiuntivo scritto in modalità tavolo; elenca gli oggetti senza peso.
+
+**A.31 — Carico oltre il massimo (§5.2.6).** Oltre FOR × 20 kg il carico "non può essere sollevato o trasportato". Se la lista dell'equipaggiamento supera il massimo, il personaggio che cosa subisce finché non lascia qualcosa?
+*Nel frattempo:* le stesse penalità del Sovraccarico, con l'avviso che il carico non si trasporta.
+
 **A.15 — Salendo di livello aumentano anche PV e PM attuali?** Il cap. 8 dice di quanto crescono i massimi, non cosa succede agli attuali di un personaggio ferito. Solo Buona Costituzione lo dice ("i PV attuali aumentano di 5").
 *Nel frattempo:* se i massimi salgono di N, anche gli attuali salgono di N (40/47 + 6 PV → 46/53); annullando un livello, l'inverso.
 

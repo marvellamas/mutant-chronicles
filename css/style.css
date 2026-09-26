@@ -674,7 +674,8 @@ details.sezione-tab > summary { font-weight: 700; cursor: pointer; min-height: 4
 .contatore-tavolo h3 { margin: 0; font-size: 0.95rem; color: var(--tenue); }
 .valore-tavolo { margin: 0.1rem 0 0.5rem; font-size: 1.1rem; }
 .valore-tavolo strong { font-size: 2.1rem; line-height: 1.1; }
-.valore-tavolo.oltre strong { color: var(--errore); } /* §7.10: sintonizzazioni oltre la capacità */
+.valore-tavolo.oltre strong { color: var(--errore); } /* §7.10: sintonizzazioni oltre la capacità; §5.2.6: Sovraccarico */
+.avviso-carico { background: var(--attenzione-tenue); color: var(--attenzione); border-radius: var(--raggio); padding: 0.4rem 0.6rem; }
 .elenco-sintonie { list-style: none; padding: 0; margin: 0.3rem 0; }
 .pulsanti-tavolo { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 0.4rem; }
 .btn-tavolo {
@@ -741,6 +742,7 @@ details.sezione-tab > summary { font-weight: 700; cursor: pointer; min-height: 4
   font: inherit; padding: 0.4rem 0.6rem; border: 1px solid var(--bordo); border-radius: var(--raggio);
   background: var(--superficie); color: var(--testo);
 }
+.peso-equip input { width: 5.5rem; min-height: 44px; box-sizing: border-box; }
 .aggiungi-equip { border-top: 1px solid var(--bordo); padding-top: 0.5rem; }
 .aggiungi-equip h3 { margin: 0.25rem 0; }
 .aggiungi-equip input[type="search"], .aggiungi-equip select, .personalizzato input {
