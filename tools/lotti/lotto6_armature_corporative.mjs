@@ -28,6 +28,7 @@
 // 6. Controllo incrociato: ogni riga di tabella deve comparire identica nel testo in prosa
 //    (estrazione indipendente dello stesso PDF); altrimenti il generatore si ferma.
 import { readFileSync, writeFileSync, readdirSync, mkdirSync } from 'node:fs';
+import { penalitaConEffetti } from '../../src/equipaggiamento.js';
 
 const RADICE = new URL('../../', import.meta.url);
 const LOTTO = new URL('docs/lotti/lotto6-armature-corporative/', RADICE);
@@ -160,15 +161,17 @@ const CATEGORIE = { // §7.11.1
   Media: { attacchi_distanza: -1, attacchi_ravvicinati: -1, agilita: -1, movimento_q: -1, lancio_potere: -3 },
   Pesante: { attacchi_distanza: -2, attacchi_ravvicinati: -2, agilita: -2, movimento_q: -2, lancio_potere: -5 },
 };
-const riduci = (v, x) => Math.min(0, v + x);
-// effetti delle proprietà sulle penalità proprie dell'armatura (§7.11.4, §7.13.2, §7.17.1)
+// effetti delle proprietà sulle penalità proprie dell'armatura (§7.11.4, §7.13.2, §7.17.1). Diventano
+// `effetto.penalita` della proprietà, così l'app ricalcola le penalità quando un rinforzo cambia
+// categoria (§7.11.2, lotto 9); il calcolo è quello dell'app (penalitaConEffetti).
 const EFFETTI = [
-  [/^Assetto da (pattuglia|incursione)$|^Assetto anfibio$/, (p) => { p.movimento_q = 0; }],
-  [/^Articolazione d’assalto$/, (p) => { p.attacchi_ravvicinati = riduci(p.attacchi_ravvicinati, 1); }],
-  [/^Articolazione d[ai] tiro$/, (p) => { p.attacchi_distanza = riduci(p.attacchi_distanza, 1); }],
-  [/^Articolazione da ricognizione$/, (p) => { p.agilita = 0; }],
-  [/^Assetto mistico (\d)$/, (p, m) => { p.lancio_potere = riduci(p.lancio_potere, Number(m[1])); }],
+  [/^Assetto da (pattuglia|incursione)$|^Assetto anfibio$/, () => ({ annulla: ['movimento_q'] })],
+  [/^Articolazione d’assalto$/, () => ({ riduce: { attacchi_ravvicinati: 1 } })],
+  [/^Articolazione d[ai] tiro$/, () => ({ riduce: { attacchi_distanza: 1 } })],
+  [/^Articolazione da ricognizione$/, () => ({ annulla: ['agilita'] })],
+  [/^Assetto mistico (\d)$/, (m) => ({ riduce: { lancio_potere: Number(m[1]) } })],
 ];
+const effettoPenalita = (nome) => { for (const [re, f] of EFFETTI) { const m = re.exec(nome); if (m) return f(m); } return null; };
 // tabelle del manuale per le armature servoassistite: [acceso, spento]
 const trattino = (s) => Number(String(s).replace(/[−-]/, '-').replace(/\s*(VA|Q)$/, ''));
 const PEN = (r) => ({ attacchi_ravvicinati: trattino(r[1]), attacchi_distanza: trattino(r[2]), agilita: trattino(r[3]), movimento_q: trattino(r[4]), lancio_potere: trattino(r[5]) });
@@ -359,8 +362,7 @@ const oggetti = pulito.map((r) => {
     penalita = { attacchi_distanza: 0, attacchi_ravvicinati: 0, agilita: 0, movimento_q: Number(r.MOV.replace('−', '-')), lancio_potere: -5 };
     conteggio.penalita_da_tabella++;
   } else {
-    penalita = { ...CATEGORIE[catBase] };
-    for (const p of prop) for (const [re, f] of EFFETTI) { const m = re.exec(p.nome); if (m) f(penalita, m); }
+    penalita = penalitaConEffetti(CATEGORIE[catBase], prop.map((p) => ({ effetto: { penalita: effettoPenalita(p.nome) } })));
     conteggio.penalita_da_proprieta++;
   }
   const rinforzi = RINFORZI_A_MANO[r.Modello] ?? RINFORZI.get(r.Modello) ?? rinforziDaTesto(nota);
@@ -389,7 +391,7 @@ const oggetti = pulito.map((r) => {
     penalita,
     ...(alternativi ? { profili_alternativi: alternativi } : {}),
     ...(eso ? { supporti: r.Supporti } : {}),
-    proprieta: prop.map((p) => ({ nome: p.nome, testo: testoProprieta(p, nota) })),
+    proprieta: prop.map((p) => { const e = effettoPenalita(p.nome); return { nome: p.nome, testo: testoProprieta(p, nota), ...(e ? { effetto: { penalita: e } } : {}) }; }),
   };
 });
 

@@ -139,6 +139,7 @@ function tooltipOggetto(rif, dati) {
     const si = o.scudo_integrato;
     sezioni.push({ etichetta: `Scudo, ${si.condizione}`, testo: `AR ${si.ar.totale}, Parata ${conSegno(si.parata.ravvicinata)} ravv. / ${conSegno(si.parata.distanza)} dist. (con Difese)` });
   }
+  if (o.rinforzo) sezioni.push({ etichetta: `Kit ${o.rinforzo.kit}`, testo: `AR +${o.rinforzo.ar}, FOR richiesta +${o.rinforzo.for}; PI e PS propri. Una Leggera portata fisicamente ad AR 3 o più usa le penalità della Media (§7.11.2).` });
   if (o.mirino) sezioni.push({ etichetta: 'Mirino', testo: `riduce di ${o.mirino.riduzione} la penalità di distanza, fino a 0. ${o.mirino.testo}` });
   if (o.effetto_arma && (o.effetto_arma.va || o.effetto_arma.danno)) sezioni.push({ etichetta: 'Sull’arma', testo: [o.effetto_arma.va ? `VA per colpire ${conSegno(o.effetto_arma.va)}` : null, o.effetto_arma.danno ? `danno ${conSegno(o.effetto_arma.danno)}` : null].filter(Boolean).join(', ') });
   if (o.percezione) sezioni.push({ etichetta: 'Percezione dello sparo', testo: o.percezione });

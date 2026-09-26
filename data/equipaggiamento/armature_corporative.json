@@ -166,7 +166,14 @@
       "proprieta": [
         {
           "nome": "Assetto da pattuglia",
-          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4)."
+          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "annulla": [
+                "movimento_q"
+              ]
+            }
+          }
         },
         {
           "nome": "Mimetica ambientale 1",
@@ -220,11 +227,25 @@
         },
         {
           "nome": "Articolazione d’assalto",
-          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "attacchi_ravvicinati": 1
+              }
+            }
+          }
         },
         {
           "nome": "Assetto da incursione",
-          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4)."
+          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "annulla": [
+                "movimento_q"
+              ]
+            }
+          }
         }
       ]
     },
@@ -562,7 +583,14 @@
         },
         {
           "nome": "Articolazione d’assalto",
-          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "attacchi_ravvicinati": 1
+              }
+            }
+          }
         }
       ]
     },
@@ -780,7 +808,14 @@
         },
         {
           "nome": "Articolazione d’assalto",
-          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "attacchi_ravvicinati": 1
+              }
+            }
+          }
         },
         {
           "nome": "Protezione occulta 1",
@@ -872,11 +907,25 @@
       "proprieta": [
         {
           "nome": "Assetto da incursione",
-          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4)."
+          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "annulla": [
+                "movimento_q"
+              ]
+            }
+          }
         },
         {
           "nome": "Articolazione da ricognizione",
-          "testo": "Elimina il −1 VA di Agilità della Media, comprese Schivata e Prove fisiche ostacolate. Non elimina il −1 agli attacchi né le penalità di lancio (§7.11.4)."
+          "testo": "Elimina il −1 VA di Agilità della Media, comprese Schivata e Prove fisiche ostacolate. Non elimina il −1 agli attacchi né le penalità di lancio (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "annulla": [
+                "agilita"
+              ]
+            }
+          }
         },
         {
           "nome": "Mimetismo 1",
@@ -1009,7 +1058,14 @@
         },
         {
           "nome": "Articolazione da tiro",
-          "testo": "Riduce di 1 la penalità propria dell’armatura agli attacchi a distanza: il −2 della Pesante diventa −1. Restano le altre penalità della categoria e quelle dovute a FOR insufficiente (§7.13.2, Tortoise Mk II)."
+          "testo": "Riduce di 1 la penalità propria dell’armatura agli attacchi a distanza: il −2 della Pesante diventa −1. Restano le altre penalità della categoria e quelle dovute a FOR insufficiente (§7.13.2, Tortoise Mk II).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "attacchi_distanza": 1
+              }
+            }
+          }
         }
       ]
     },
@@ -1047,7 +1103,14 @@
       "proprieta": [
         {
           "nome": "Assetto da pattuglia",
-          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4)."
+          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "annulla": [
+                "movimento_q"
+              ]
+            }
+          }
         },
         {
           "nome": "Mimetica ambientale 1",
@@ -1139,7 +1202,14 @@
         },
         {
           "nome": "Articolazione d’assalto",
-          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "attacchi_ravvicinati": 1
+              }
+            }
+          }
         }
       ]
     },
@@ -1185,7 +1255,14 @@
         },
         {
           "nome": "Articolazione d’assalto",
-          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "attacchi_ravvicinati": 1
+              }
+            }
+          }
         }
       ]
     },
@@ -1265,7 +1342,14 @@
       "proprieta": [
         {
           "nome": "Assetto da pattuglia",
-          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4)."
+          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "annulla": [
+                "movimento_q"
+              ]
+            }
+          }
         },
         {
           "nome": "Mimetica ambientale 1",
@@ -1311,7 +1395,14 @@
       "proprieta": [
         {
           "nome": "Articolazione d’assalto",
-          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "attacchi_ravvicinati": 1
+              }
+            }
+          }
         },
         {
           "nome": "Ignifuga 2",
@@ -1355,7 +1446,14 @@
       "proprieta": [
         {
           "nome": "Assetto anfibio",
-          "testo": "Assetto anfibio elimina soltanto le penalità proprie dell’armatura al MOV e alle Prove di Atletica per nuotare."
+          "testo": "Assetto anfibio elimina soltanto le penalità proprie dell’armatura al MOV e alle Prove di Atletica per nuotare.",
+          "effetto": {
+            "penalita": {
+              "annulla": [
+                "movimento_q"
+              ]
+            }
+          }
         },
         {
           "nome": "Tenuta subacquea",
@@ -1662,11 +1760,25 @@
       "proprieta": [
         {
           "nome": "Articolazione d’assalto",
-          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "attacchi_ravvicinati": 1
+              }
+            }
+          }
         },
         {
           "nome": "Assetto da incursione",
-          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4)."
+          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "annulla": [
+                "movimento_q"
+              ]
+            }
+          }
         },
         {
           "nome": "Filtro respiratorio 2",
@@ -1799,7 +1911,14 @@
         },
         {
           "nome": "Articolazione d’assalto",
-          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "attacchi_ravvicinati": 1
+              }
+            }
+          }
         },
         {
           "nome": "Stabile 1",
@@ -2092,7 +2211,14 @@
         },
         {
           "nome": "Assetto da pattuglia",
-          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4)."
+          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "annulla": [
+                "movimento_q"
+              ]
+            }
+          }
         }
       ]
     },
@@ -2316,7 +2442,14 @@
         },
         {
           "nome": "Articolazione di tiro",
-          "testo": "Riduce di 1 la penalità propria dell’armatura agli attacchi a distanza: il −2 della Pesante diventa −1. Restano le altre penalità della categoria e quelle dovute a FOR insufficiente (§7.13.2, Tortoise Mk II)."
+          "testo": "Riduce di 1 la penalità propria dell’armatura agli attacchi a distanza: il −2 della Pesante diventa −1. Restano le altre penalità della categoria e quelle dovute a FOR insufficiente (§7.13.2, Tortoise Mk II).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "attacchi_distanza": 1
+              }
+            }
+          }
         },
         {
           "nome": "SIN 2",
@@ -2356,11 +2489,25 @@
       "proprieta": [
         {
           "nome": "Articolazione d’assalto",
-          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "attacchi_ravvicinati": 1
+              }
+            }
+          }
         },
         {
           "nome": "Assetto da incursione",
-          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4)."
+          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "annulla": [
+                "movimento_q"
+              ]
+            }
+          }
         },
         {
           "nome": "SIN 2",
@@ -2404,7 +2551,14 @@
         },
         {
           "nome": "Articolazione d’assalto",
-          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "attacchi_ravvicinati": 1
+              }
+            }
+          }
         },
         {
           "nome": "Filtro respiratorio 2",
@@ -2448,11 +2602,25 @@
       "proprieta": [
         {
           "nome": "Articolazione da ricognizione",
-          "testo": "Elimina il −1 VA di Agilità della Media, comprese Schivata e Prove fisiche ostacolate. Non elimina il −1 agli attacchi né le penalità di lancio (§7.11.4)."
+          "testo": "Elimina il −1 VA di Agilità della Media, comprese Schivata e Prove fisiche ostacolate. Non elimina il −1 agli attacchi né le penalità di lancio (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "annulla": [
+                "agilita"
+              ]
+            }
+          }
         },
         {
           "nome": "Assetto da incursione",
-          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4)."
+          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "annulla": [
+                "movimento_q"
+              ]
+            }
+          }
         },
         {
           "nome": "SIN 2",
@@ -2623,7 +2791,14 @@
       "proprieta": [
         {
           "nome": "Articolazione d’assalto",
-          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "attacchi_ravvicinati": 1
+              }
+            }
+          }
         },
         {
           "nome": "Imbottita 1",
@@ -2665,7 +2840,14 @@
       "proprieta": [
         {
           "nome": "Articolazione di tiro",
-          "testo": "Riduce di 1 la penalità propria dell’armatura agli attacchi a distanza: il −2 della Pesante diventa −1. Restano le altre penalità della categoria e quelle dovute a FOR insufficiente (§7.13.2, Tortoise Mk II)."
+          "testo": "Riduce di 1 la penalità propria dell’armatura agli attacchi a distanza: il −2 della Pesante diventa −1. Restano le altre penalità della categoria e quelle dovute a FOR insufficiente (§7.13.2, Tortoise Mk II).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "attacchi_distanza": 1
+              }
+            }
+          }
         },
         {
           "nome": "Imbottita 1",
@@ -2713,7 +2895,14 @@
         },
         {
           "nome": "Articolazione d’assalto",
-          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "attacchi_ravvicinati": 1
+              }
+            }
+          }
         }
       ]
     },
@@ -2751,11 +2940,25 @@
       "proprieta": [
         {
           "nome": "Assetto da incursione",
-          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4)."
+          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "annulla": [
+                "movimento_q"
+              ]
+            }
+          }
         },
         {
           "nome": "Articolazione d’assalto",
-          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "attacchi_ravvicinati": 1
+              }
+            }
+          }
         },
         {
           "nome": "Mimetismo 1",
@@ -3292,7 +3495,14 @@
       "proprieta": [
         {
           "nome": "Articolazione d’assalto",
-          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "attacchi_ravvicinati": 1
+              }
+            }
+          }
         },
         {
           "nome": "Imbottita 1",
@@ -3342,11 +3552,25 @@
         },
         {
           "nome": "Assetto mistico 2",
-          "testo": "Riduce di 2 la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede un bonus positivo e non riduce penalità causate da altri fattori (§7.17.1)."
+          "testo": "Riduce di 2 la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede un bonus positivo e non riduce penalità causate da altri fattori (§7.17.1).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "lancio_potere": 2
+              }
+            }
+          }
         },
         {
           "nome": "Articolazione d’assalto",
-          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "attacchi_ravvicinati": 1
+              }
+            }
+          }
         },
         {
           "nome": "Imbottita 1",
@@ -3396,7 +3620,14 @@
         },
         {
           "nome": "Assetto mistico 3",
-          "testo": "Riduce di 3 la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede un bonus positivo e non riduce penalità causate da altri fattori (§7.17.1)."
+          "testo": "Riduce di 3 la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede un bonus positivo e non riduce penalità causate da altri fattori (§7.17.1).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "lancio_potere": 3
+              }
+            }
+          }
         },
         {
           "nome": "Imbottita 1",
@@ -3444,11 +3675,25 @@
         },
         {
           "nome": "Assetto mistico 2",
-          "testo": "Riduce di 2 la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede un bonus positivo e non riduce penalità causate da altri fattori (§7.17.1)."
+          "testo": "Riduce di 2 la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede un bonus positivo e non riduce penalità causate da altri fattori (§7.17.1).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "lancio_potere": 2
+              }
+            }
+          }
         },
         {
           "nome": "Articolazione d’assalto",
-          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "attacchi_ravvicinati": 1
+              }
+            }
+          }
         },
         {
           "nome": "Imbottita 2",
@@ -3500,15 +3745,36 @@
         },
         {
           "nome": "Assetto mistico 2",
-          "testo": "Riduce di 2 la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede un bonus positivo e non riduce penalità causate da altri fattori (§7.17.1)."
+          "testo": "Riduce di 2 la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede un bonus positivo e non riduce penalità causate da altri fattori (§7.17.1).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "lancio_potere": 2
+              }
+            }
+          }
         },
         {
           "nome": "Articolazione d’assalto",
-          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "attacchi_ravvicinati": 1
+              }
+            }
+          }
         },
         {
           "nome": "Assetto da incursione",
-          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4)."
+          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "annulla": [
+                "movimento_q"
+              ]
+            }
+          }
         },
         {
           "nome": "Imbottita 2",
@@ -3558,15 +3824,36 @@
         },
         {
           "nome": "Assetto mistico 2",
-          "testo": "Riduce di 2 la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede un bonus positivo e non riduce penalità causate da altri fattori (§7.17.1)."
+          "testo": "Riduce di 2 la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede un bonus positivo e non riduce penalità causate da altri fattori (§7.17.1).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "lancio_potere": 2
+              }
+            }
+          }
         },
         {
           "nome": "Articolazione d’assalto",
-          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "attacchi_ravvicinati": 1
+              }
+            }
+          }
         },
         {
           "nome": "Assetto da incursione",
-          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4)."
+          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "annulla": [
+                "movimento_q"
+              ]
+            }
+          }
         },
         {
           "nome": "Imbottita 1",
@@ -3612,7 +3899,14 @@
         },
         {
           "nome": "Assetto mistico 1",
-          "testo": "Riduce di 1 la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede un bonus positivo e non riduce penalità causate da altri fattori (§7.17.1)."
+          "testo": "Riduce di 1 la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede un bonus positivo e non riduce penalità causate da altri fattori (§7.17.1).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "lancio_potere": 1
+              }
+            }
+          }
         },
         {
           "nome": "Mimetismo 2",
@@ -3668,7 +3962,14 @@
         },
         {
           "nome": "Assetto mistico 5",
-          "testo": "Riduce di 5 la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede un bonus positivo e non riduce penalità causate da altri fattori (§7.17.1)."
+          "testo": "Riduce di 5 la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede un bonus positivo e non riduce penalità causate da altri fattori (§7.17.1).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "lancio_potere": 5
+              }
+            }
+          }
         },
         {
           "nome": "Imbottita 2",
@@ -3716,11 +4017,25 @@
         },
         {
           "nome": "Assetto mistico 2",
-          "testo": "Riduce di 2 la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede un bonus positivo e non riduce penalità causate da altri fattori (§7.17.1)."
+          "testo": "Riduce di 2 la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede un bonus positivo e non riduce penalità causate da altri fattori (§7.17.1).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "lancio_potere": 2
+              }
+            }
+          }
         },
         {
           "nome": "Articolazione di tiro",
-          "testo": "Riduce di 1 la penalità propria dell’armatura agli attacchi a distanza: il −2 della Pesante diventa −1. Restano le altre penalità della categoria e quelle dovute a FOR insufficiente (§7.13.2, Tortoise Mk II)."
+          "testo": "Riduce di 1 la penalità propria dell’armatura agli attacchi a distanza: il −2 della Pesante diventa −1. Restano le altre penalità della categoria e quelle dovute a FOR insufficiente (§7.13.2, Tortoise Mk II).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "attacchi_distanza": 1
+              }
+            }
+          }
         },
         {
           "nome": "Imbottita 2",
@@ -3774,15 +4089,36 @@
         },
         {
           "nome": "Assetto mistico 1",
-          "testo": "Riduce di 1 la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede un bonus positivo e non riduce penalità causate da altri fattori (§7.17.1)."
+          "testo": "Riduce di 1 la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede un bonus positivo e non riduce penalità causate da altri fattori (§7.17.1).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "lancio_potere": 1
+              }
+            }
+          }
         },
         {
           "nome": "Articolazione di tiro",
-          "testo": "Riduce di 1 la penalità propria dell’armatura agli attacchi a distanza: il −2 della Pesante diventa −1. Restano le altre penalità della categoria e quelle dovute a FOR insufficiente (§7.13.2, Tortoise Mk II)."
+          "testo": "Riduce di 1 la penalità propria dell’armatura agli attacchi a distanza: il −2 della Pesante diventa −1. Restano le altre penalità della categoria e quelle dovute a FOR insufficiente (§7.13.2, Tortoise Mk II).",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "attacchi_distanza": 1
+              }
+            }
+          }
         },
         {
           "nome": "Assetto da pattuglia",
-          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4)."
+          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4).",
+          "effetto": {
+            "penalita": {
+              "annulla": [
+                "movimento_q"
+              ]
+            }
+          }
         },
         {
           "nome": "Imbottita 1",

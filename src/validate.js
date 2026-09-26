@@ -599,7 +599,8 @@ function validaClassi(c, nomiAddestramenti, nomiAbilita, macrofamiglie, regole, 
 // formule di danno: «1d6+1», «2», anche somme di dadi come «1d6+1d4» (lama delle Guardie Sacre)
 const DADI = /^(\d+d\d+(\+\d+d\d+)*([+-]\d+)?|\d+)$/;
 // effetti strutturati delle proprietà: parata_va (Difensiva X, §7.1.3), va (Precisa X, §7.1.3: VA per colpire)
-const EFFETTI_PROPRIETA = ['parata_va', 'va'];
+// penalita (armature, §7.11.4): { annulla: [campi], riduce: { campo: n } }
+const EFFETTI_PROPRIETA = ['parata_va', 'va', 'penalita'];
 const CAMPI_PENALITA = ['attacchi_distanza', 'attacchi_ravvicinati', 'agilita', 'movimento_q', 'lancio_potere'];
 
 let nomiAbilitaPenalita = null; // per validaPenalita: le Abilità esistenti
@@ -715,6 +716,10 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
         err(F, `${k}.si_monta_su`, 'elenco fra arma_distanza, arma_ravvicinata, armatura, mirino');
       }
       if (o.gruppo_esclusivo !== undefined && !isTesto(o.gruppo_esclusivo)) err(F, `${k}.gruppo_esclusivo`, 'testo');
+      // §7.11.2: kit di rinforzo
+      if (o.rinforzo !== undefined && !(isOggetto(o.rinforzo) && ['Leggero', 'Pesante'].includes(o.rinforzo.kit) && isIntero(o.rinforzo.ar) && o.rinforzo.ar >= 1 && isIntero(o.rinforzo.for) && o.rinforzo.for >= 0)) {
+        err(F, `${k}.rinforzo`, 'serve { kit: "Leggero"|"Pesante", ar ≥ 1, for ≥ 0 }');
+      }
       if (o.mirino !== undefined) {
         const m = o.mirino;
         if (!isOggetto(m) || !(isIntero(m.riduzione) && m.riduzione >= 1) || !isTesto(m.testo)) err(F, `${k}.mirino`, 'serve { riduzione ≥ 1, distanza_max_q, azp_minime, testo }');
@@ -740,7 +745,11 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
             if (!isOggetto(p.effetto)) err(F, `${k}.proprieta[${j}].effetto`, 'deve essere un oggetto');
             else for (const [e, v] of Object.entries(p.effetto)) {
               if (!EFFETTI_PROPRIETA.includes(e)) err(F, `${k}.proprieta[${j}].effetto.${e}`, `effetto sconosciuto (ammessi: ${EFFETTI_PROPRIETA.join(', ')})`);
-              else if (!isIntero(v)) err(F, `${k}.proprieta[${j}].effetto.${e}`, 'deve essere un numero intero');
+              else if (e === 'penalita') {
+                const ok = isOggetto(v) && (v.annulla ?? []).every((c) => CAMPI_PENALITA.includes(c))
+                  && Object.entries(v.riduce ?? {}).every(([c, x]) => CAMPI_PENALITA.includes(c) && isIntero(x) && x > 0);
+                if (!ok) err(F, `${k}.proprieta[${j}].effetto.penalita`, `serve { annulla: [campi], riduce: { campo: intero > 0 } } con campi fra ${CAMPI_PENALITA.join(', ')}`);
+              } else if (!isIntero(v)) err(F, `${k}.proprieta[${j}].effetto.${e}`, 'deve essere un numero intero');
             }
           }
         });

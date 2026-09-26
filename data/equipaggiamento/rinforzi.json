@@ -1,0 +1,120 @@
+{
+  "versione_manuale": "Armamenti 0.50",
+  "fonte": "Manuale degli Armamenti v0.50, §7.11.2 Rinforzi e sovrapponibilità (p. 62), soprabiti dei §7.11.5 e §7.11.7; lotto 9",
+  "_nota": "Generato da tools/lotti/lotto9_rinforzi.mjs; da qui in poi si modifica questo file. Un kit «in uso» e montato su un’armatura indossata ne aumenta AR e FOR richiesta, se l’armatura lo ammette («rinforzi_ammessi», e «compatibile_con» del kit). Una Leggera portata fisicamente ad AR 3 o più usa le penalità della Media, con gli effetti delle proprietà native (§7.11.2).",
+  "oggetti": [
+    {
+      "id": "rinforzo-leggero",
+      "nome": "Rinforzo Leggero",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [
+        "Rinforzi Leggeri",
+        "Kit di rinforzo leggero"
+      ],
+      "note_manuale": "Si può montare un solo kit di Rinforzi compatibile. Non si sommano più kit e non si sovrappongono due armature complete. Il kit aumenta AR e requisito FOR dell’armatura; conserva PI e PS propri, registrati separatamente. Non si sommano i suoi PI a quelli della protezione. Le proprietà native restano applicabili nei rispettivi ambiti. La Leggera commerciale accetta Rinforzi Leggeri o Pesanti; la Media commerciale soltanto Leggeri; la Pesante commerciale nessuno. Per i modelli corporativi prevale la compatibilità indicata nella scheda. Un’armatura Leggera portata fisicamente ad AR 3 o superiore da un rinforzo utilizza le penalità di una Media. Un incremento della sola AR magica non cambia categoria. Un modello nativamente Leggero con AR superiore, come la Divisa operativa ASA, mantiene invece la categoria dichiarata fino all’aggiunta del rinforzo.",
+      "paragrafo": "§7.11.2",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 1000,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "proprieta": []
+    },
+    {
+      "id": "rinforzo-pesante",
+      "nome": "Rinforzo Pesante",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [
+        "Rinforzi Pesanti",
+        "Kit di rinforzo pesante"
+      ],
+      "note_manuale": "Si può montare un solo kit di Rinforzi compatibile. Non si sommano più kit e non si sovrappongono due armature complete. Il kit aumenta AR e requisito FOR dell’armatura; conserva PI e PS propri, registrati separatamente. Non si sommano i suoi PI a quelli della protezione. Le proprietà native restano applicabili nei rispettivi ambiti. La Leggera commerciale accetta Rinforzi Leggeri o Pesanti; la Media commerciale soltanto Leggeri; la Pesante commerciale nessuno. Per i modelli corporativi prevale la compatibilità indicata nella scheda. Un’armatura Leggera portata fisicamente ad AR 3 o superiore da un rinforzo utilizza le penalità di una Media. Un incremento della sola AR magica non cambia categoria. Un modello nativamente Leggero con AR superiore, come la Divisa operativa ASA, mantiene invece la categoria dichiarata fino all’aggiunta del rinforzo.",
+      "paragrafo": "§7.11.2",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 8,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 2000,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Pesante",
+        "ar": 2,
+        "for": 2
+      },
+      "proprieta": []
+    },
+    {
+      "id": "soprabito-blu-di-ordinanza",
+      "nome": "Soprabito blu di ordinanza",
+      "tipo": "accessorio",
+      "catalogo": "Bauhaus",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Soprabito blu di ordinanza è un Rinforzo Leggero opzionale, con AR +1, FOR +1, PI 6, Qualità Comune, PS 10, REP NC e costo 1.000. Con il Soprabito: AR 3, FOR 5, penalità Media e costo totale 5.500. Occupa l’unico posto per rinforzi.",
+      "paragrafo": "§7.11.5",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 1000,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "compatibile_con": [
+        "armature_corporative:armatura-d-ordinanza-bleu"
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "soprabito-asa",
+      "nome": "Soprabito ASA",
+      "tipo": "accessorio",
+      "catalogo": "Alleanza",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Soprabito ASA Rinforzo Leggero opzionale: AR +1, FOR +1, PI 6, Qualità Comune, PS Integrità 10, REP NC, costo 1.000. Con la Divisa d’ordinanza: AR 3, FOR 4, penalità Media e costo totale 5.000. Con la Divisa operativa: AR 4, FOR 5, penalità Media e costo totale 8.000. Non concede AR magica né Protezione occulta; mantiene Integrità propria e occupa l’unico posto per rinforzi.",
+      "paragrafo": "§7.11.7",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 1000,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "compatibile_con": [
+        "armature_corporative:divisa-d-ordinanza-asa",
+        "armature_corporative:divisa-operativa-asa"
+      ],
+      "proprieta": []
+    }
+  ]
+}

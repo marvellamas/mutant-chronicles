@@ -1,0 +1,324 @@
+7.11 Armature e rinforzi
+Le armature commerciali civili hanno tre profili: Leggera, Media e Pesante. I modelli corporativi iconici hanno
+invece una sola categoria e un solo profilo, costruiti per il loro impiego. La categoria governa le penalità; AR,
+FOR e PI sono dati distinti. La FOR indicata è il valore della Caratteristica richiesto, non il suo Modificatore. I
+cataloghi Capitol (§7.13) e Imperial (§7.14) seguono queste regole comuni.
+AR totale comprende l’eventuale componente magica: AR 6, di cui 1 magica, assorbe 6 danni Naturali o Magici e
+1 danno Etereo. Gli Scudi impugnati aggiungono la propria AR secondo il §7.4. Qualità determina la PS Integrità,
+mentre PI misura la resistenza strutturale (§7.2.1). I costi di questo catalogo non comprendono armi, Scudi,
+munizioni o strumenti separati, salvo dotazioni espressamente incluse.
+7.11.1 Categorie requisiti e penalità
+Attacchi a Attacchi
+Categoria Agilità MOV Lancio con Potere
+distanza ravvicinati
+Leggera 0 0 0 0 −1 VA
+Media −1 VA −1 VA −1 VA −1 Q −3 VA
+Pesante −2 VA −2 VA −2 VA −2 Q −5 VA
+Agilità comprende Schivata e Prove fisiche di Atletica o Furtività effettivamente ostacolate dall’armatura; non
+comprende la Parata. Non si conta due volte la stessa penalità su un attacco aggiungendo anche quella di Agilità.
+La penalità al lancio riguarda soltanto le Prove di Potere per lanciare Incantesimi, non tutte le Prove mistiche o
+professionali.
+La penalità MOV si sottrae una sola volta al budget della modalità di movimento scelta. Una proprietà che
+elimina la penalità MOV dell’armatura non elimina quella di un’arma impugnata, salvo espressa indicazione.
+Assalto Armato dell’Assaltatore riduce di 2 Q complessivi, fino a 0, la penalità residua di armatura e scudo dopo
+le proprietà dei singoli oggetti. Non riduce le penalità di armi, Sovraccarico, Stati o terreno e non modifica il VA
+(Manuale del Giocatore, §3.5.4).
+Per ogni punto di FOR mancante rispetto al requisito si applica un ulteriore −1 VA agli attacchi, alle Difese e alle
+Prove fisiche ostacolate dalla protezione. Soddisfare il requisito non elimina le penalità ordinarie della categoria. I
+PI non dipendono automaticamente dalla categoria.
+7.11.2 Rinforzi e sovrapponibilità
+Rinforzo AR FOR richiesta PI Qualità PS INT REP Costo
+Leggero +1 +1 6 Comune 10 NC 1.000
+Pesante +2 +2 8 Comune 10 NC 2.000
+Si può montare un solo kit di Rinforzi compatibile. Non si sommano più kit e non si sovrappongono due armature
+complete. Il kit aumenta AR e requisito FOR dell’armatura; conserva PI e PS propri, registrati separatamente.
+Non si sommano i suoi PI a quelli della protezione. Le proprietà native restano applicabili nei rispettivi ambiti.
+La Leggera commerciale accetta Rinforzi Leggeri o Pesanti; la Media commerciale soltanto Leggeri; la Pesante
+commerciale nessuno. Per i modelli corporativi prevale la compatibilità indicata nella scheda. Un’armatura
+Leggera portata fisicamente ad AR 3 o superiore da un rinforzo utilizza le penalità di una Media. Un incremento
+della sola AR magica non cambia categoria. Un modello nativamente Leggero con AR superiore, come la Divisa
+operativa ASA, mantiene invece la categoria dichiarata fino all’aggiunta del rinforzo.
+Configurazione commerciale AR finale FOR finale Penalità
+Leggera + Rinforzi Leggeri 2 4 Leggera
+Leggera + Rinforzi Pesanti 3 5 Media
+Media + Rinforzi Leggeri 4 6 Media
+7.11.3 Armature commerciali civili
+Modello Categoria AR FOR PI
+Armatura civile leggera Leggera 1 3 6
+Armatura civile media Media 3 5 8
+Armatura civile pesante Pesante 5 7 10
+Modello Qualità PS INT REP Costo
+Armatura civile leggera Comune 10 CO 1.500
+Armatura civile media Comune 10 NC 3.500
+Armatura civile pesante Comune 10 RA 7.000
+Questi sono i tre profili Standard commerciali. Non hanno AR magica né proprietà specialistiche native. Standard,
+Migliorata e Potenziata descrivono configurazioni del prodotto e sono concetti distinti dalla Qualità costruttiva.
+Le proprietà native delle armature iconiche sono già comprese nella loro configurazione Standard; non richiedono
+di acquistare una versione Migliorata. Gli incrementi, i requisiti e i prezzi delle configurazioni Migliorata e
+Potenziata restano da sviluppare.
+7.11.4 Proprietà delle armature
+Mimetismo X
+Concede +X VA alla Prova unica di Furtività per nascondersi o muoversi senza essere individuati, quando
+esistono condizioni concrete per farlo. Il bonus si applica una sola volta: non si effettuano Prove separate per vista
+e udito.
+Mimetica ambientale X
+Concede +X VA alla Prova unica di Furtività nell’ambiente per il quale la mimetica è predisposta, quando
+esistono condizioni concrete per nascondersi. Si sceglie l’ambiente della livrea, per esempio artico, boscoso,
+desertico o urbano. Non rende invisibili e non elimina i rumori prodotti; le limitazioni specifiche del modello
+restano valide.
+Discreta
+La protezione è integrata nell’abito o nella divisa e non risulta evidente a una semplice osservazione casuale. Un
+esame ravvicinato o una perquisizione possono rivelarla. Componenti corazzati visibili non vengono nascosti da
+questa proprietà.
+Assetto da pattuglia e Assetto da incursione
+Eliminano soltanto la penalità MOV propria dell’armatura. Non eliminano le penalità agli attacchi, ad Agilità, al
+lancio o quelle degli altri oggetti trasportati.
+Articolazione da ricognizione
+Elimina il −1 VA di Agilità della Media, comprese Schivata e Prove fisiche ostacolate. Non elimina il −1 agli
+attacchi né le penalità di lancio.
+Articolazione d’assalto
+Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a
+−1. Non modifica gli attacchi a distanza o le Difese.
+Filtro respiratorio 2
+Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata. Richiede aria
+respirabile; non costituisce una riserva d’ossigeno né una tenuta per vuoto o immersione.
+Manutenzione semplice
+Concede +1 VA alle Prove di Tecnologia per riparare quell’armatura. Restano necessari strumenti e materiali
+adatti; la proprietà non abbrevia automaticamente i tempi e non aumenta i PI ripristinati.
+Struttura robusta
+Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli
+che possiedono questa proprietà e non si aggiungono nuovamente.
+Interfaccia da equipaggio 1
+Concede +1 VA alle Prove di Pilotare di mezzi terrestri corazzati quando la protezione è collegata a comandi
+compatibili e alimentati. Non concede bonus agli attacchi.
+Imbracatura da sella 1
+Concede +1 VA alle Prove di Pilotare già richieste per mantenere il controllo della motocicletta dopo un urto o
+evitare di essere disarcionati, mentre è agganciata a una sella compatibile. Non introduce una Prova quando la
+situazione non la richiede.
+Protezione acustica 2
+Concede +2 alla Prova Salvezza espressamente richiesta contro un effetto sonoro o un rumore dannoso. Non è un
+bonus generale contro esplosioni.
+Antiesplosione 1
+Aumenta di 1 l’AR fornita dall’armatura contro danni Naturali o Magici di esplosioni, comprese granate, razzi e
+cariche da demolizione. Si applica a ciascuna applicazione di danno dell’esplosione e non protegge dal danno
+Etereo. Fra Antiesplosione di scudo e armatura si usa soltanto il valore maggiore (§7.4.3).
+Stabile X
+Concede +X alla Prova di Caratteristica FOR o DES richiesta contro Sbilanciante. Non è una Prova Salvezza e
+non si estende automaticamente ad altri tentativi di mantenere l’equilibrio o agli spostamenti di Sbalzante. Più
+proprietà Stabile applicabili, comprese quelle di scudo e armatura, non si sommano: si usa il valore maggiore
+(§7.4.3).
+Ignifuga Imbottita e Isolante
+Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo
+l’Armatura, non un’ulteriore riduzione dei danni. Ignifuga contrasta Fuoco, Imbottita contrasta Concussivo,
+Isolante contrasta Elettricità.
+Protezione occulta 1
+Concede +1 al valore della PS Magia contro Oscura Simmetria, Corruzione o Paura. Il bonus vale una sola volta
+anche se la stessa fonte appartiene a più di questi ambiti. Non crea una Salvezza dove non è prevista e non
+sostituisce una Salvezza diversa: una Paura che richiede Volontà non ottiene questo bonus.
+7.11.5 Armature Bauhaus
+I tredici modelli seguenti sono configurazioni Standard iconiche, ciascuna con il proprio impiego e una categoria
+fissa. Tutte hanno AR magica 0. La Milizia Ducale è un unico corpo di riserva e non genera profili duplicati. Le
+proprietà comprendono i benefici descritti nel §7.11.4.
+Fanteria e reparti operativi
+Modello Categoria AR FOR PI
+Armatura della Milizia Ducale Leggera 1 3 6
+Corazza Ussara Hussar Mk I Media 3 5 10
+Corazza dei Dragoni Wolfheads Pesante 5 7 12
+Armatura dei Ranger Venusiani Media 3 5 8
+Modello Categoria AR FOR PI
+Armatura d’assalto Blitzer Media 3 5 8
+Tuta delle Étoiles Mortants Leggera 2 3 6
+Armatura d’ordinanza BLEU Leggera 2 4 8
+Armatura dell’Artillery Korps Media 3 5 8
+Armatura da cavalleria Vorreiter Leggera 2 4 8
+Modello Qualità PS INT REP Costo
+Armatura della Milizia Ducale Comune 10 CO 1.800
+Corazza Ussara Hussar Mk I Non comune 12 NC 5.000
+Corazza dei Dragoni Wolfheads Non comune 12 RA 12.000
+Armatura dei Ranger Venusiani Non comune 12 RA 8.000
+Armatura d’assalto Blitzer Non comune 12 RA 9.500
+Tuta delle Étoiles Mortants Non comune 12 RA 6.500
+Armatura d’ordinanza BLEU Non comune 12 NC 4.500
+Armatura dell’Artillery Korps Non comune 12 NC 6.500
+Armatura da cavalleria Vorreiter Non comune 12 RA 5.000
+Agenti equipaggi e Guardie
+Modello Categoria AR FOR PI
+Abito protettivo dell’Agente Bauhaus Leggera 2 3 6
+Armatura da equipaggio dei Dragoni Leggera 2 4 8
+Armatura dei Jungle Kommandos Leggera 2 4 8
+Corazza delle Guardie Ducali Pesante 5 7 12
+Modello Qualità PS INT REP Costo
+Abito protettivo dell’Agente Bauhaus Non comune 12 RA 6.000
+Armatura da equipaggio dei Dragoni Non comune 12 NC 5.500
+Armatura dei Jungle Kommandos Non comune 12 RA 6.500
+Corazza delle Guardie Ducali Non comune 12 RA 12.500
+Armatura della Milizia Ducale
+Protezione delle riserve mobilitate. Proprietà: Manutenzione semplice. Accetta Rinforzi Leggeri oppure
+Pesanti, con le regole della Leggera commerciale.
+Corazza Ussara Hussar Mk I
+Protezione della fanteria di linea. Proprietà: Struttura robusta, già inclusa nei 10 PI; Imbottita 1. Accetta
+soltanto Rinforzi Leggeri: AR 4, FOR 6, penalità Media.
+Corazza dei Dragoni Wolfheads
+Protezione pesante dei Wolfheads. Proprietà: Ignifuga 2, Stabile 2, Interfaccia da equipaggio 1. Mantiene tutte
+le penalità Pesanti, senza Articolazione d’assalto. Non accetta rinforzi esterni.
+Armatura dei Ranger Venusiani
+Proprietà: Assetto da pattuglia, Mimetica ambientale 1, Filtro respiratorio 2. La livrea si sceglie per l’ambiente
+operativo; i diversi ambienti non cambiano profilo o costo. MOV dell’armatura 0; le altre penalità Medie restano.
+Accetta soltanto Rinforzi Leggeri: AR 4, FOR 6.
+Armatura d’assalto Blitzer
+Proprietà: Antiesplosione 1, Ignifuga 2, Articolazione d’assalto, Assetto da incursione. Penalità ravvicinata 0 e
+MOV 0; restano −1 agli attacchi a distanza e ad Agilità, −3 al lancio. Accetta soltanto Rinforzi Leggeri: AR 4,
+FOR 6. Le specialità anticarro degli Incursori Bauhaus utilizzano questo profilo nell’adattamento.
+Tuta delle Étoiles Mortants
+Proprietà unica: Mimetismo 2. AR 2 è nativa e conserva categoria Leggera e FOR 3. Accetta soltanto Rinforzi
+Leggeri: AR 3, FOR 4, penalità Media. La tuta non concede automaticamente addestramento, capacità delle
+doppie lame o poteri dell’Arte.
+Armatura d’ordinanza BLEU
+Protezione leggera del corpo di polizia corporativa. Proprietà: Imbottita 2 e Isolante 2. Il Soprabito blu di
+ordinanza è un Rinforzo Leggero opzionale, con AR +1, FOR +1, PI 6, Qualità Comune, PS 10, REP NC e costo
+1.000. Con il Soprabito: AR 3, FOR 5, penalità Media e costo totale 5.500. Occupa l’unico posto per rinforzi.
+Armatura dell’Artillery Korps
+Per artiglieri e squadre mortai. Proprietà: Antiesplosione 1 e Protezione acustica 2. Accetta soltanto Rinforzi
+Leggeri: AR 4, FOR 6. I bonus non migliorano direttamente gli attacchi con le armi di supporto.
+Armatura da cavalleria Vorreiter
+Proprietà: Imbottita 2 e Imbracatura da sella 1. La motocicletta è un mezzo separato. Accetta soltanto Rinforzi
+Leggeri: AR 3, FOR 5, penalità Media.
+Abito protettivo dell’Agente Bauhaus
+Proprietà: Discreta e Mimetismo 1. Accetta soltanto Rinforzi Leggeri: AR 3, FOR 4, penalità Media, costo totale
+7.000. Un rinforzo visibile rende riconoscibile la protezione e non beneficia di Discreta.
+Armatura da equipaggio dei Dragoni
+Protezione per gli equipaggi della forza corazzata, distinta dalla Corazza dei Dragoni Wolfheads. Proprietà:
+Ignifuga 2, Imbottita 2, Interfaccia da equipaggio 1. Accetta soltanto Rinforzi Leggeri: AR 3, FOR 5, penalità
+Media, costo totale 6.500.
+Armatura dei Jungle Kommandos
+Proprietà: Mimetica ambientale 1 per giungla e vegetazione tropicale compatibile; Filtro respiratorio 2. La
+mimetica non si estende automaticamente ad altri ambienti. Accetta soltanto Rinforzi Leggeri: AR 3, FOR 5,
+penalità Media, costo totale 7.500.
+Corazza delle Guardie Ducali
+Proprietà: Imbottita 2, Isolante 2, Articolazione d’assalto. Penalità ravvicinata −1; restano le altre penalità
+Pesanti. Non accetta rinforzi esterni. Scudi, armi e insegne non sono compresi nel prezzo.
+Ordini e livree delle Guardie
+La seguente assegnazione è l’adattamento di equipaggiamento adottato in SIMPLY RPG. Una livrea o una forma
+di elmo non cambia da sola i valori; addestramento, poteri e caratteristiche personali non sono proprietà della
+protezione. Il ramo corazzato dei Dragoni, i Wolfheads e l’Ordine del Dragone restano denominazioni distinte.
+Casata e simbolo Profilo di riferimento
+Romanov — Lupo Corazza dei Dragoni Wolfheads
+Bernheim — Orso Corazza delle Guardie Ducali
+Saglielli — Condor Tuta delle Étoiles Mortants con propria livrea
+Richthausen — Dragone Corazza delle Guardie Ducali
+Giraud — Grifone Armatura d’assalto Blitzer
+Fieldhausen — Unicorno Corazza dei Dragoni Wolfheads
+Salvatore — Ragno Armatura d’assalto Blitzer
+7.11.6 Esoscheletri Bauhaus
+AR
+Modello AR FOR pilota PI MOV Supporti
+magica
+Juggernaut XO-102 Steel Strider 6 0 3 16 −1 1 arma pesante
+Vulkan 7 0 4 20 −2 2 armi pesanti
+Modello Qualità PS INT REP Costo
+Juggernaut XO-102 Steel Strider Rara 14 MR 45.000
+Vulkan Rara 14 MR 90.000
+Il prezzo comprende esoscheletro, attuatori, comandi, supporti d’arma e una batteria da otto ore di funzionamento.
+Le armi montate sono escluse. XO-102 possiede Imbottita 2 e Stabile 2; Vulkan possiede Ignifuga 3, Imbottita 3 e
+Stabile 2. Nessuno dei due accetta rinforzi esterni.
+L’AR del telaio sostituisce quella di qualsiasi armatura indossata dal pilota: non si sommano. I danni che
+superano la protezione si applicano ai PV del pilota. PI, PS e deterioramento seguono le regole degli oggetti; a 0
+PI il telaio è Rotto.
+Le Prove fisiche eseguite mediante il telaio usano Pilotare al posto di Atletica. Il movimento ordinario non
+impone una Prova aggiuntiva oltre alle regole già previste per la modalità scelta. Per Schivare si usa Pilotare con
+−2 VA nello XO-102 e −4 VA nel Vulkan. MOV è rispettivamente −1 e −2; il lancio di Incantesimi con Potere
+subisce −5 VA.
+I servocomandi soddisfano il requisito FOR delle armi pesanti montate e annullano la penalità MOV di quelle
+armi. Per attaccare si usa la normale Abilità dell’arma e si pagano le normali Azioni. Avere due supporti non
+concede attacchi aggiuntivi. I comandi richiedono entrambe le mani; durante il pilotaggio non si impugnano Scudi
+o altre armi manuali.
+Una batteria alimenta otto ore operative e richiede otto ore di ricarica. La sostituzione richiede un minuto. Una
+batteria di ricambio costa 1.500 per XO-102 e 3.000 per Vulkan. A energia esaurita l’AR resta, ma il telaio non
+può muoversi, Schivare, puntare o sparare. Uscire richiede 1 AzP e una casella adiacente libera.
+7.11.7 Armature dell’Alleanza
+Le divise ASA sono Rare; le tre armature dei Doomtroopers sono Molto rare e normalmente reperibili soltanto
+attraverso canali eccezionali dell’Alleanza. Il costo è un valore di catalogo e non garantisce la disponibilità. Le
+categorie sono fisse: i nomi Marte, Vulcano e Mercurio identificano i tre modelli dell’adattamento SIMPLY RPG.
+Modello Categoria AR totale AR magica FOR PI
+Divisa d’ordinanza ASA Leggera 2 0 3 6
+Divisa operativa ASA Leggera 3 0 4 8
+Armatura Marte Pesante 6 1 7 12
+Armatura Vulcano Media 4 1 5 10
+Armatura Mercurio Media 4 1 5 8
+Modello Qualità PS INT REP Costo
+Divisa d’ordinanza ASA Non comune 12 RA 4.000
+Divisa operativa ASA Non comune 12 RA 7.000
+Armatura Marte Rara 14 MR 20.000
+Armatura Vulcano Rara 14 MR 17.500
+Armatura Mercurio Rara 14 MR 16.500
+Marte, Vulcano e Mercurio comprendono AR magica 1 nel totale e possiedono Protezione occulta 1. Il beneficio
+alla PS Magia è passivo e vale una sola volta contro Oscura Simmetria, Corruzione o Paura, nei limiti del §7.11.4.
+Le due divise ASA non hanno questi benefici mistici.
+Divisa d’ordinanza ASA
+Proprietà: Discreta e Imbottita 1. Protezione da indagine e servizio, categoria Leggera. Può aggiungere il
+Soprabito ASA come unico Rinforzo Leggero.
+Divisa operativa ASA
+Proprietà: Mimetismo 1 e Imbottita 1. AR 3 è nativa: la divisa conserva categoria Leggera, FOR 4 e penalità di
+lancio −1. Può aggiungere il Soprabito ASA come unico Rinforzo Leggero.
+Soprabito ASA
+Rinforzo Leggero opzionale: AR +1, FOR +1, PI 6, Qualità Comune, PS Integrità 10, REP NC, costo 1.000.
+Con la Divisa d’ordinanza: AR 3, FOR 4, penalità Media e costo totale 5.000. Con la Divisa operativa: AR 4,
+FOR 5, penalità Media e costo totale 8.000. Non concede AR magica né Protezione occulta; mantiene Integrità
+propria e occupa l’unico posto per rinforzi.
+Armatura Marte
+Per gli Assaltatori. Proprietà: Antiesplosione 1, Imbottita 2, Stabile 2 e Articolazione d’assalto, oltre a
+Protezione occulta 1. La penalità ravvicinata è −1; restano −2 a distanza e ad Agilità, MOV −2 e −5 al lancio. Non
+accetta rinforzi esterni.
+Armatura Vulcano
+Per gli Artiglieri. Proprietà: Imbracatura da artigliere, Antiesplosione 1, Protezione acustica 2 e Protezione
+occulta 1.
+Imbracatura da artigliere. Con una sola arma pesante compatibile agganciata, elimina il −1 VA dell’armatura
+all’attacco a distanza effettuato con quell’arma e riduce di 1 Q la penalità MOV dell’arma, fino a 0. Non elimina il
+MOV −1 dell’armatura. Agganciare o sganciare costa 1 AzP; requisito FOR dell’arma e impugnatura a due mani
+restano. Le altre penalità Medie si applicano normalmente.
+Accetta soltanto Rinforzi Leggeri: AR totale 5, di cui 1 magica, FOR 6 e costo totale 18.500. Le proprietà
+native restano applicabili.
+Armatura Mercurio
+Per gli Incursori. Proprietà: Assetto da incursione, Articolazione da ricognizione, Mimetismo 1, Filtro
+respiratorio 2 e Protezione occulta 1. MOV e penalità di Agilità dell’armatura sono 0, compresa Schivata; restano
+−1 agli attacchi a distanza e ravvicinati e −3 al lancio.
+Accetta soltanto Rinforzi Leggeri: AR totale 5, di cui 1 magica, FOR 6 e costo totale 17.500. Conserva i
+benefici nativi di movimento e ricognizione.
+7.11.8 Reparti e dotazioni dell’Alleanza
+Gli Agenti Speciali dell’Alleanza svolgono intelligence, investigazione e contrasto alle infiltrazioni. I
+Doomtroopers operano in squadre d’assalto intercorporative. Le assegnazioni seguenti indicano equipaggiamento
+e impiego: non creano nuove Classi e non concedono automaticamente Abilità, Talenti o poteri.
+Impiego Protezione Dotazione caratteristica
+ASA investigazione Divisa d’ordinanza Valigetta investigativa ASA
+ASA operazioni clandestine Divisa operativa Corredo d’intrusione ASA
+ASA controspionaggio Divisa d’ordinanza Kit di controsorveglianza ASA
+Combinazione Punisher; corredo da artificiere per gli
+Doomtroopers Assaltatori Marte
+specialisti di breccia
+Combinazione Punisher e arma pesante scelta per la
+Doomtroopers Artiglieri Vulcano
+missione
+Combinazione Punisher, strumenti d’intrusione e dotazioni
+Doomtroopers Incursori Mercurio
+ambientali
+Medici da combattimento
+Mercurio Kit trauma e armamento individuale
+aggregati
+Specialisti dell’Arte
+Mercurio Armamento individuale e dotazione mistica pertinente
+aggregati
+L’armamento di ordinanza ASA comprende AXIS 227, Carabina Punisher e Pugnale di ordinanza. Il Soprabito è
+opzionale. Il Pugnale di ordinanza usa il profilo commerciale: Armi da Mischia, una mano, 1d4+1, FOR 2, PI 4,
+Qualità Comune, PS 10, REP CO e costo 150; per il lancio usa il profilo a distanza dello stesso oggetto.
+La combinazione Punisher comprende Carabina, Pistola, Spada e Scudo. Non concede bonus automatici di
+insieme. La disponibilità di tutti gli oggetti non consente di usarli contemporaneamente senza rispettare mani e
+Azioni. Il lanciagranate della Carabina è già incluso nel suo costo.
+Componente Costo
+Carabina Punisher 8.000
+Pistola Punisher 3.150
+Spada Punisher 6.500
+Scudo Punisher 6.000
+Totale combinazione 23.650
+Le armi pesanti di riferimento dell’Alleanza restano quelle del §7.8, comprese Deathlock Drum, Nimrod
+Autocannon e Gehemmapuker. Non sono incluse nel prezzo delle armature. Gli specialisti dell’Arte che
+indossano Mercurio conservano il −3 VA al lancio: l’assegnazione di reparto non lo annulla.

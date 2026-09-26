@@ -1,6 +1,6 @@
 # Catalogo dell'equipaggiamento: lotti da estrarre
 
-Stato al 26 settembre 2026 (lotti 2–8 fatti). Fonte: Manuale degli Armamenti v0.50. Metodo: `tools/estrai_manuali.py`
+Stato al 26 settembre 2026 (lotti 2–9 fatti). Fonte: Manuale degli Armamenti v0.50. Metodo: `tools/estrai_manuali.py`
 e `docs/pilota-estrazione-armamenti.md`.
 
 Questa è la lista dei prompt successivi: **un lotto per prompt**, nell'ordine di utilità al
@@ -23,15 +23,38 @@ su quelle pagine: le tabelle impilate contano come una.
 | `armature_corporative.json` | 83 armature dei cataloghi corporativi, esoscheletri compresi (lotto 6) | §7.11.5–7.17.5 | 64–103 |
 | `corredi_dispositivi.json` | 60 corredi, dispositivi, esoscheletro APE, Iron Mastiff, armi e granate Imperial; tabella SIN (lotto 7) | §7.12–7.17 | 69–105 |
 | `accessori_armi.json` | 15 accessori delle armi: mirini, riduzione del rumore, supporti, illuminazione e visione (lotto 8) | §7.3 | 19–22 |
+| `rinforzi.json` | 2 kit di rinforzo commerciali e 2 soprabiti corporativi (lotto 9) | §7.11.2 | 62 |
 | `armi_distanza_corporative.json` | 81 armi a distanza corporative, 19 moduli integrati, 6 munizioni di riferimento (lotto 5) | §7.8 | 36–52 |
 
 Da completare nello stesso ambito, a basso costo:
 - **Manovre compatibili** dei profili commerciali, §7.1.7, pp. 9–10: una tabella Modello →
   Manovre. Diventa un campo `manovre` in `armi.json`.
-- **Rinforzi** delle armature, §7.11.2, p. 62: 2 kit (Leggero, Pesante) con AR, FOR, PI e
-  costo, più la compatibilità per categoria (già in `rinforzi_ammessi`). Diventano oggetti
-  `accessorio` montabili su un'armatura: servirà estendere il calcolo, che oggi gestisce
-  `montato_su` solo per le armi.
+- ✔ **Rinforzi** delle armature — §7.11.2, p. 62 (lotto 9, fatto il 26 settembre 2026, commit
+  «Lotto 9 del catalogo: kit di rinforzo delle armature»).
+  - **Fonte:** `docs/lotti/lotto9-rinforzi/`, generatore `tools/lotti/lotto9_rinforzi.mjs`, dati
+    `data/equipaggiamento/rinforzi.json`.
+  - **Oggetti:** 4, cioè i kit Leggero e Pesante e i due soprabiti che il manuale descrive come
+    Rinforzi Leggeri riservati: Soprabito blu di ordinanza per la BLEU (§7.11.5) e Soprabito ASA
+    per le due divise ASA (§7.11.7).
+  - **Estrazione:** 2 righe su 2 dalla tabella, ritrovate nel testo. I valori dei soprabiti si
+    leggono dalla loro frase e il generatore controlla che coincidano col kit Leggero. **0
+    correzioni a mano.**
+  - **Calcolo:**
+    - un kit «in uso» montato su un'armatura indossata aggiunge AR e FOR richiesta, se il
+      modello lo ammette (`rinforzi_ammessi`, `compatibile_con`);
+    - una Leggera portata fisicamente ad AR 3 o più usa le penalità della Media, ricalcolate con
+      gli effetti delle proprietà native;
+    - un solo kit per armatura; gli altri danno un avviso, come i kit non ammessi.
+  - **Armature corporative rigenerate:** Articolazioni, Assetti e Assetto mistico hanno ora
+    `effetto.penalita` (`annulla` / `riduce`). Le calcola la stessa funzione dell'app
+    (`penalitaConEffetti`), usata anche dal generatore del lotto 6. Le penalità salvate non sono
+    cambiate: 0 differenze su 83 modelli.
+  - **Test dal manuale:**
+    - le tre configurazioni commerciali della tabella di p. 62;
+    - il Mortificator rinforzato del §7.17.5 (Media, −1 attacchi e Agilità, −1 MOV, −2 al
+      lancio);
+    - la Divisa operativa ASA col Soprabito del §7.11.7 (AR 4, FOR 5, Media).
+  - **Dubbi per Davide:** nessuno.
 
 ## Da estrarre, in ordine di utilità
 

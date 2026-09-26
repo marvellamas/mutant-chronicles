@@ -275,9 +275,10 @@ function tabCombattimento(ctx, d) {
         h('thead', {}, h('tr', {}, ['Protezione', 'AR', 'Categoria o taglia', 'Parata', 'Penalità', 'FOR'].map((c) => h('th', {}, c)))),
         h('tbody', {}, d.protezioniCalcolate.flatMap((p) => [
           h('tr', {},
-            h('th', { scope: 'row' }, p.nome),
+            h('th', { scope: 'row' }, p.nome, p.rinforzo ? h('small', { class: 'sigla' }, ` + ${p.rinforzo.nome}`) : null),
             h('td', { class: 'forte' }, testoAr(p.ar)),
-            h('td', {}, p.categoria ?? p.taglia ?? '—'),
+            h('td', { title: p.categoriaBase && p.categoria !== p.categoriaBase ? 'Leggera portata ad AR 3 o più da un rinforzo: penalità della Media (§7.11.2)' : null },
+              p.categoria !== p.categoriaBase && p.categoriaBase ? `${p.categoriaBase} → ${p.categoria}` : p.categoria ?? p.taglia ?? '—'),
             h('td', { title: p.parata ? `Difese ${p.parata.difese} + modificatori dello Scudo ${segno(p.parata.modificatori.ravvicinata)} / ${segno(p.parata.modificatori.distanza)} (§7.4.11)` : null },
               p.parata ? `${numero(p.parata.ravvicinata)} ravv. · ${numero(p.parata.distanza)} dist.` : '—'),
             h('td', {}, testoPenalitaTab({ ...p.penalita, movimento_q: (p.penalita?.movimento_q ?? 0) + (p.mov ?? 0) || undefined })),

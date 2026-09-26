@@ -17,7 +17,7 @@ const voce = (uid, rif, stato, extra = {}) => ({ uid, rif, stato, quantita: 1, n
 const scheda = (creazione, equipaggiamento, livelli = []) => calcolaScheda({ creazione: { ...creazione, equipaggiamento }, livelli }, dati);
 
 test('catalogo: caricato dall’indice, un lotto = un file e una riga; riferimenti "file:id"', () => {
-  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armi_corporative', 'armi_distanza', 'armi_distanza_corporative', 'accessori_armi', 'armature', 'armature_corporative', 'scudi', 'corredi_dispositivi']);
+  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armi_corporative', 'armi_distanza', 'armi_distanza_corporative', 'accessori_armi', 'armature', 'armature_corporative', 'rinforzi', 'scudi', 'corredi_dispositivi']);
   const cat = catalogo(dati);
   assert.equal(cat.oggetti.filter((o) => o.tipo === 'arma_ravvicinata' && o.catalogo === 'Commerciale').length, 28); // §7.1.1: 28 profili
   assert.equal(cat.oggetti.filter((o) => o.tipo === 'armatura' && o.catalogo === 'Commerciale').length, 3); // §7.11.3
@@ -717,4 +717,65 @@ test('validatore degli accessori: si monta su, mirino, effetti', () => {
   assert.match(e((d) => { o(d, 'mirino-reflex').mirino.riduzione = 0; }), /mirino: serve/);
   assert.match(e((d) => { o(d, 'silenziatore').effetto_arma = { va: 'tanto' }; }), /effetto_arma: serve/);
   assert.match(e((d) => { o(d, 'treppiede').bonus_condizionato = { va: 2 }; }), /bonus_condizionato: serve/);
+});
+
+// --- Lotto 9: kit di rinforzo (§7.11.2) ---------------------------------------------------
+
+const rinforzata = (armatura, kit, extra = []) => {
+  const s = scheda(MISHIMA_AGENTE, [voce('a', armatura, 'indossata'), voce('k', `rinforzi:${kit}`, 'in_uso', { montato_su: 'a' }), ...extra]);
+  return { p: s.equipaggiamento.protezioni[0], eq: s.equipaggiamento };
+};
+
+test('lotto 9: rinforzi commerciali e soprabiti; la tabella del §7.11.2 è il test del calcolo', () => {
+  const tutti = catalogo(dati).oggetti.filter((o) => o.file === 'rinforzi');
+  assert.deepEqual(tutti.map((o) => o.nome), ['Rinforzo Leggero', 'Rinforzo Pesante', 'Soprabito blu di ordinanza', 'Soprabito ASA']);
+  // «Configurazione commerciale | AR finale | FOR finale | Penalità» (p. 62)
+  for (const [armatura, kit, ar, forR, cat] of [
+    ['armature:armatura-civile-leggera', 'rinforzo-leggero', 2, 4, 'Leggera'],
+    ['armature:armatura-civile-leggera', 'rinforzo-pesante', 3, 5, 'Media'],
+    ['armature:armatura-civile-media', 'rinforzo-leggero', 4, 6, 'Media'],
+  ]) {
+    const { p } = rinforzata(armatura, kit);
+    assert.deepEqual([p.ar.totale, p.forRichiesta, p.categoria], [ar, forR, cat], `${armatura} + ${kit}`);
+  }
+  // la Leggera diventata Media usa le penalità della Media
+  const { eq } = rinforzata('armature:armatura-civile-leggera', 'rinforzo-pesante');
+  assert.equal(eq.movimentoQ, -1);
+  assert.equal(eq.equipAbilita.Furtività, -1);
+});
+
+test('rinforzi sulle armature corporative: proprietà native con le penalità della Media, soprabiti, kit non ammessi', () => {
+  // §7.17.5: «Mortificator rinforzato: −1 VA ad attacchi e Agilità, −1 MOV e −2 VA al lancio dopo Assetto mistico 1»
+  let { p } = rinforzata('armature_corporative:tuta-del-mortificator', 'rinforzo-leggero');
+  assert.deepEqual(p.ar, { totale: 4, magica: 1 });
+  assert.equal(p.forRichiesta, 5);
+  assert.equal(p.categoria, 'Media');
+  assert.deepEqual(p.penalita, { attacchi_distanza: -1, attacchi_ravvicinati: -1, agilita: -1, movimento_q: -1, lancio_potere: -2 });
+  // §7.11.7: «Con la Divisa operativa: AR 4, FOR 5, penalità Media»
+  ({ p } = rinforzata('armature_corporative:divisa-operativa-asa', 'soprabito-asa'));
+  assert.deepEqual([p.ar.totale, p.forRichiesta, p.categoria, p.rinforzo.nome], [4, 5, 'Media', 'Soprabito ASA']);
+  // Mercurio (Media) resta Media e conserva Assetto da incursione e Articolazione da ricognizione
+  ({ p } = rinforzata('armature_corporative:armatura-mercurio', 'rinforzo-leggero'));
+  assert.deepEqual([p.ar.totale, p.forRichiesta, p.categoria, p.penalita.movimento_q, p.penalita.agilita], [5, 6, 'Media', 0, 0]);
+  // kit non ammessi: nessun effetto e un avviso
+  let r = rinforzata('armature_corporative:armatura-d-ordinanza-bleu', 'soprabito-asa');
+  assert.equal(r.p.ar.totale, 2);
+  assert.ok(r.eq.avvisi.some((a) => /Soprabito ASA non è ammesso su Armatura d’ordinanza BLEU/.test(a)));
+  r = rinforzata('armature:armatura-civile-media', 'rinforzo-pesante');
+  assert.equal(r.p.ar.totale, 3);
+  assert.ok(r.eq.avvisi.some((a) => /Rinforzo Pesante non è ammesso/.test(a)));
+  // due kit: vale il primo
+  r = rinforzata('armature:armatura-civile-leggera', 'rinforzo-leggero', [voce('k2', 'rinforzi:rinforzo-pesante', 'in_uso', { montato_su: 'a' })]);
+  assert.equal(r.p.ar.totale, 2);
+  assert.ok(r.eq.avvisi.some((a) => /più kit di rinforzo: vale soltanto Rinforzo Leggero/.test(a)));
+  // stampa
+  const creazione = { ...MISHIMA_AGENTE, equipaggiamento: [voce('a', 'armature:armatura-civile-leggera', 'indossata'), voce('k', 'rinforzi:rinforzo-pesante', 'in_uso', { montato_su: 'a' })] };
+  const riga = preparaStampa(creazione, dati).fogli.find((x) => x.id === 'combattimento').dati.protezioni.righe[0];
+  assert.deepEqual(riga.slice(0, 3), ['Armatura civile leggera + Rinforzo Pesante', '3', 'Media']);
+});
+
+test('validatore dei rinforzi e degli effetti sulle penalità', () => {
+  const e = (modifica) => { const d = copia(dati); modifica(d); return validaDati(d).map((x) => `${x.chiave}: ${x.problema}`).join('\n'); };
+  assert.match(e((d) => { d.equipaggiamento.file.rinforzi.oggetti[0].rinforzo.kit = 'Medio'; }), /rinforzo: serve/);
+  assert.match(e((d) => { d.equipaggiamento.file.armature_corporative.oggetti.find((o) => o.id === 'armatura-d-assalto-blitzer').proprieta.find((p) => p.effetto).effetto.penalita = { annulla: ['volo'] }; }), /effetto\.penalita: serve/);
 });

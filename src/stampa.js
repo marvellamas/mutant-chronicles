@@ -224,7 +224,7 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
   ]);
   const meno = (n) => (n < 0 ? `−${-n}` : String(n));
   const righeProtezioni = eq.protezioni.map((p) => [
-    p.nome,
+    p.rinforzo ? `${p.nome} + ${p.rinforzo.nome}` : p.nome,
     p.ar ? `${p.ar.totale}${p.ar.magica ? ` (${p.ar.magica} magica)` : ''}` : '—',
     p.categoria ?? p.taglia ?? '—',
     [

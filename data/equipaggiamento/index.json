@@ -56,6 +56,11 @@
       "descrizione": "Armature dei cataloghi corporativi (§7.11.5–7.17.5)"
     },
     {
+      "id": "rinforzi",
+      "file": "rinforzi.json",
+      "descrizione": "Kit di rinforzo delle armature e soprabiti corporativi (§7.11.2)"
+    },
+    {
       "id": "scudi",
       "file": "scudi.json",
       "descrizione": "Scudi commerciali e corporativi (§7.4)"

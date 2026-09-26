@@ -228,6 +228,37 @@ export function puoMontare(acc, su) {
   return dove.some((k) => (k === 'mirino' ? !!su.def?.mirino : su.tipo === k));
 }
 
+/**
+ * Penalità di una categoria d'armatura con gli effetti delle proprietà native (§7.11.4, §7.17.1):
+ * `effetto.penalita.annulla` porta a 0 le penalità indicate, `riduce` le avvicina a 0 del valore
+ * indicato (Articolazione d'assalto: −2 → −1; Assetto mistico 2: −3 → −1).
+ */
+export function penalitaConEffetti(base, proprieta = []) {
+  const out = { ...base };
+  for (const p of proprieta) {
+    const e = p.effetto?.penalita;
+    if (!e) continue;
+    for (const k of e.annulla ?? []) out[k] = 0;
+    for (const [k, x] of Object.entries(e.riduce ?? {})) out[k] = Math.min(0, (out[k] ?? 0) + x);
+  }
+  return out;
+}
+
+/**
+ * Il kit di rinforzo che vale per l'armatura (§7.11.2): il primo compatibile. Avvisi per kit non
+ * ammessi dal modello («rinforzi_ammessi», «compatibile_con» del kit) e per più kit insieme.
+ */
+function rinforzoValido(armatura, kits, avvisi) {
+  const d = armatura.def;
+  const validi = kits.filter((x) => {
+    const ammesso = (d.rinforzi_ammessi ?? []).includes(x.def.rinforzo.kit) && (!x.def.compatibile_con || x.def.compatibile_con.includes(d.rif));
+    if (!ammesso) avvisi.push(`${x.nome} non è ammesso su ${armatura.nome} (rinforzi ammessi: ${(d.rinforzi_ammessi ?? []).join(', ') || 'nessuno'}): nessun effetto (§7.11.2).`);
+    return ammesso;
+  });
+  if (validi.length > 1) avvisi.push(`Su ${armatura.nome} ci sono più kit di rinforzo: vale soltanto ${validi[0].nome} (§7.11.2).`);
+  return validi[0] ?? null;
+}
+
 /** Tabella SIN delle armi (§7.15.1), raccolta dai file del catalogo: rif → { valore, prova }. */
 export function tabellaSin(dati) {
   const out = new Map();
@@ -249,6 +280,9 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   const agilitaAbilita = fileArmature.abilita_agilita ?? [];
   const difeseAbilita = fileArmature.abilita_difese ?? null;
   const avvisi = [];
+  // accessori in uso montati su un altro oggetto (§7.3 sulle armi, §7.11.2 sulle armature)
+  const accessoriMontati = oggetti.filter((x) => x.attivo && x.tipo === 'accessorio' && x.voce.montato_su);
+  const montatiSu = (uid) => accessoriMontati.filter((x) => x.voce.montato_su === uid);
 
   // Protezioni (armature indossate, scudi imbracciati) — §7.11.1
   const protezioni = [];
@@ -261,12 +295,27 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   let forMancanteArmature = 0;
   for (const o of oggetti.filter((x) => x.attivo && (x.tipo === 'armatura' || x.tipo === 'scudo'))) {
     const d = o.def;
-    const penalita = d ? { ...(fileArmature.categorie?.[d.categoria] ?? {}), ...(d.penalita ?? {}) } : {};
-    const forMancante = d?.for_richiesta ? Math.max(0, d.for_richiesta - FOR) : 0;
+    let penalita = d ? { ...(fileArmature.categorie?.[d.categoria] ?? {}), ...(d.penalita ?? {}) } : {};
+    let ar = d?.ar ?? (Number.isInteger(o.voce.personalizzato?.ar) ? { totale: o.voce.personalizzato.ar, magica: 0 } : null);
+    let forRichiesta = d?.for_richiesta ?? null;
+    let categoria = d?.categoria ?? null;
+    // §7.11.2: un solo kit di rinforzo compatibile; aumenta AR e FOR richiesta. Una Leggera portata
+    // fisicamente ad AR 3 o più usa le penalità della Media; le proprietà native restano applicabili
+    const kit = o.tipo === 'armatura' && d ? rinforzoValido(o, montatiSu(o.uid).filter((x) => x.def?.rinforzo && puoMontare(x, o)), avvisi) : null;
+    if (kit) {
+      const k = kit.def.rinforzo;
+      ar = { totale: (ar?.totale ?? 0) + k.ar, magica: ar?.magica ?? 0 };
+      forRichiesta = (forRichiesta ?? 0) + k.for;
+      if (d.categoria === 'Leggera' && ar.totale - ar.magica >= 3 && fileArmature.categorie?.Media) {
+        categoria = 'Media';
+        penalita = { ...penalitaConEffetti(fileArmature.categorie.Media, d.proprieta), ...(d.penalita?.abilita ? { abilita: d.penalita.abilita } : {}) };
+      }
+    }
+    const forMancante = forRichiesta ? Math.max(0, forRichiesta - FOR) : 0;
     protezioni.push({
-      uid: o.uid, nome: o.nome, tipo: o.tipo, categoria: d?.categoria ?? null, taglia: d?.taglia ?? null,
-      ar: d?.ar ?? (Number.isInteger(o.voce.personalizzato?.ar) ? { totale: o.voce.personalizzato.ar, magica: 0 } : null),
-      penalita, forRichiesta: d?.for_richiesta ?? null, forMancante, personalizzato: o.personalizzato,
+      uid: o.uid, nome: o.nome, tipo: o.tipo, categoria, taglia: d?.taglia ?? null,
+      categoriaBase: d?.categoria ?? null, rinforzo: kit ? { nome: kit.nome, kit: kit.def.rinforzo.kit } : null,
+      ar, penalita, forRichiesta, forMancante, personalizzato: o.personalizzato,
       mov: d?.mov ?? 0, parata: null, proprieta: d?.proprieta ?? [],
       // §7.14.2, §7.16.3: armature servoassistite a sistema spento (FOR e penalità proprie), mostrate
       // come promemoria; il calcolo usa il profilo acceso
@@ -324,8 +373,6 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   // §7.3: accessori in uso montati su un'arma, oppure su un mirino montato su un'arma (moduli di
   // visione, §7.3.3). Per ogni gruppo esclusivo (mirino, riduzione del rumore, supporto, modulo di
   // visione) vale un solo accessorio per arma: il primo della lista.
-  const accessoriMontati = oggetti.filter((x) => x.attivo && x.tipo === 'accessorio' && x.voce.montato_su);
-  const montatiSu = (uid) => accessoriMontati.filter((x) => x.voce.montato_su === uid);
   const accessoriArma = (w) => {
     const diretti = montatiSu(w.uid).filter((x) => puoMontare(x, w));
     const suMirini = diretti.filter((x) => x.def?.mirino).flatMap((m) => montatiSu(m.uid).filter((x) => puoMontare(x, m)));
