@@ -1,6 +1,6 @@
 # E&L – Risposte e correzioni approvate
 
-Copia del Google Doc del master «E&L – Risposte e correzioni approvate» (Davide), letta il 26 settembre 2026 e riletta alla versione delle 15:20:54 UTC, che aggiunge A.4 e A.5. Testo del documento, non riscritto: è la fonte delle decisioni registrate in `docs/risposte-master.md`.
+Copia del Google Doc del master «E&L – Risposte e correzioni approvate» (Davide), letta il 26 settembre 2026 e riletta alla versione delle 16:07:44 UTC, che aggiunge A.4, A.5 e A.5.1. Testo del documento, non riscritto: è la fonte delle decisioni registrate in `docs/risposte-master.md`.
 
 Decisioni approvate e aggiornamenti dei manuali condivisi.
 
@@ -317,3 +317,39 @@ Comportamento approvato per la scheda digitale: il giocatore seleziona le opzion
 Applicazione: struttura inserita nel §2.16 del Manuale del Giocatore, sostituendo il rinvio generico a un’integrazione futura e conservando i rimandi ai manuali degli Armamenti e degli Equipaggiamenti. Le dotazioni concrete e le relative tabelle sono ancora da definire e approvare.
 
 Scheda digitale: da recepire. Predisporre scelte guidate basate sulla dotazione comune, sulla Classe iniziale e sulle varianti della Corporazione, verificando i requisiti e trasferendo gli oggetti selezionati nell’inventario con quantità, munizioni e cariche. La struttura è approvata; il contenuto delle dotazioni e l’eventuale denaro iniziale restano aperti. Riportare la decisione in docs/risposte-master.md; l’aggiornamento dell’app resta da verificare.
+
+## A.5.1 — Dotazione iniziale comune
+
+Approvato il: set 26, 2026
+
+Ogni personaggio riceve la seguente dotazione comune:
+
+Abiti comuni, comprese le calzature — 1 completo.
+
+Zaino da viaggio — 1.
+
+Cintura attrezzata — 1.
+
+Borraccia da un litro, piena d’acqua — 2.
+
+Torcia elettrica — 1.
+
+Comunicatore personale — 1.
+
+Corredo personale per igiene e piccoli rammendi — 1.
+
+Utensile multiuso — 1.
+
+Accendino — 1.
+
+Sacco a pelo — 1.
+
+Razione da viaggio — 3.
+
+Torcia e comunicatore comprendono ciascuno una batteria carica, cavo e alimentatore, con 24 ore di autonomia per dispositivo.
+
+Le scorte iniziali comprendono tre giorni di cibo e due litri d’acqua. L’acqua copre un giorno di consumo ordinario e richiede rifornimenti durante il viaggio.
+
+Applicazione: dotazione inserita in una tabella del §2.16.1 del Manuale del Giocatore, con quantità e precisazioni su batterie, cibo e acqua. Restano da definire e approvare le dotazioni delle Classi, i modelli o le varianti di Corporazione e l’eventuale denaro iniziale.
+
+Scheda digitale: da recepire. Assegnare automaticamente a ogni personaggio gli undici tipi di oggetti elencati, con le quantità approvate. Le due borracce contengono un litro d’acqua ciascuna; torcia e comunicatore comprendono ciascuno batteria carica, cavo e alimentatore e hanno 24 ore di autonomia per dispositivo. Registrare tre razioni da viaggio. Riportare la decisione in docs/risposte-master.md; l’aggiornamento dell’app resta da verificare.

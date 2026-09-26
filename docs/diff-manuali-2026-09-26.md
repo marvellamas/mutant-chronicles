@@ -4,11 +4,11 @@ Prima esecuzione della procedura di `docs/manuali-drive.md`. Ogni Google Doc è 
 
 | Manuale | Doc (modifiedTime UTC) | PDF di confronto | Testo salvato |
 |---|---|---|---|
-| Giocatore | 2026-09-26T15:18:45Z | `Manuale_del_Giocatore_v0.43.pdf` | `docs/manuali-txt/giocatore.md` |
+| Giocatore | 2026-09-26T15:18:45Z (poi 16:17:27Z, in fondo) | `Manuale_del_Giocatore_v0.43.pdf` | `docs/manuali-txt/giocatore.md` |
 | Magia | 2026-09-26T13:26:03Z | `Manuale_della_Magia_v1.1.pdf` | `docs/manuali-txt/magia.md` |
 | Armamenti | 2026-09-26T09:32:57Z | `Manuale_degli_Armamenti_v0.50.pdf` | `docs/manuali-txt/armamenti.md` |
 | Equipaggiamento | 2026-09-26T09:33:06Z | nessuno (0.1 esiste solo come Doc) | `docs/manuali-txt/equipaggiamento.md` |
-| E&L – Risposte e correzioni approvate | 2026-09-26T15:20:54Z | copia precedente, `docs/risposte-master-2026-09-26.md` | la copia stessa, aggiornata |
+| E&L – Risposte e correzioni approvate | 2026-09-26T15:20:54Z (poi 16:07:44Z, in fondo) | copia precedente, `docs/risposte-master-2026-09-26.md` | la copia stessa, aggiornata |
 
 ## Metodo
 
@@ -142,3 +142,20 @@ Nel senso richiesto (diverse dal PDF e non presenti nelle risposte del 26/09) so
 2. Magia sez. 1: «minimo 1» agli Incantesimi di Usufruitore di Magia (decisione 2 del 25/09).
 
 **Nessuna modifica di regola nuova e sconosciuta** in nessuno dei quattro manuali.
+
+---
+
+## Aggiornamento durante la sessione: Giocatore delle 16:17, E&L delle 16:07
+
+Prima di chiudere il registro, due Doc risultavano modificati di nuovo e sono stati riletti. Il confronto è fatto con `git diff` sui file di `docs/manuali-txt/`.
+
+**E&L** — una voce nuova, **A.5.1 Dotazione iniziale comune**: undici tipi di oggetti con le quantità; batterie di torcia e comunicatore; tre giorni di cibo e due litri d'acqua. Registrata come decisione 13.
+
+**Giocatore** — 41 righe nuove nel §2.16, nient'altro:
+
+| Paragrafo | Differenza | Classe | Origine | Nei dati |
+|---|---|---|---|---|
+| §2.16.1 Dotazione iniziale comune | Tabella degli undici oggetti, con le note su batterie, cibo e acqua | regola | E&L A.5.1 | Non ancora: serve il passo guidato dell'equipaggiamento iniziale |
+| §2.16.2 Dotazione iniziale — Agente | Pistola semiautomatica (tre caricatori da 15) oppure Revolver (18 colpi); Coltello oppure Randello; Armatura civile leggera con elmetto (AR 1); Binocolo; Registratore audiovisivo; requisiti di FOR | regola | **Non annunciata**: E&L dice ancora che le dotazioni delle Classi sono da approvare | Non applicata; chiesto a Davide se è approvata (per-davide A.6) |
+
+Per la dotazione dell'Agente, i profili di armi e armatura esistono nel catalogo (`armi`, `armi_distanza`, `armature`). Binocolo e registratore no: aspettano il Manuale dell'Equipaggiamento.

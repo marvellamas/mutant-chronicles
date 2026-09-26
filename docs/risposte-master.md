@@ -107,3 +107,18 @@ condivisi (Giocatore §§1.2.3, 2.1, 2.11, 2.14, §8.6, §8.6.10; Magia sezioni 
     scrivere** (Giocatore §2.16 del Google Doc).
     → Nessun dato ancora: il passo del wizard resta a inserimento manuale finché non arrivano le
     tabelle; la forma decisa guida il lavoro successivo (per-davide A.6 aggiornata).
+
+13. **Dotazione iniziale comune** (E&L A.5.1, Doc delle 16:07 UTC; Giocatore §2.16.1 del Google
+    Doc). Ogni personaggio riceve:
+    - abiti comuni, calzature comprese (1 completo);
+    - zaino da viaggio, cintura attrezzata (1 ciascuno);
+    - borraccia da un litro piena d’acqua (2);
+    - torcia elettrica, comunicatore personale (1 ciascuno);
+    - corredo per igiene e piccoli rammendi, utensile multiuso, accendino, sacco a pelo (1 ciascuno);
+    - razione da viaggio (3).
+
+    Torcia e comunicatore hanno ciascuno batteria carica, cavo e alimentatore, con 24 ore di
+    autonomia. Le scorte sono tre giorni di cibo e due litri d’acqua (un giorno di consumo).
+    Dotazioni delle Classi, varianti di Corporazione e denaro iniziale restano da approvare.
+    → **Non ancora nell’app**: serve il passo guidato dell’equipaggiamento iniziale (A.5), da
+    pianificare. Gli oggetti non sono nel catalogo degli Armamenti.

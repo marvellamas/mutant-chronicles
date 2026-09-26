@@ -10,7 +10,9 @@ Come rispondere: a voce a Marcello, oppure scrivendo direttamente sotto la doman
 
 Le voci A.1–A.4 (descrizioni delle Caratteristiche e Volontà su CAR, 14 schede dei Talenti di magia, Potenziale Mistico solo per gli Usufruitori, tipo di tre Talenti Liberi) sono **recepite nell'app** e registrate con la data in `docs/risposte-master.md`; i testi completi sono in `docs/risposte-master-2026-09-26.md` (copia del Google Doc *E&L – Risposte e correzioni approvate*).
 
-Dalla versione delle 15:20 dello stesso Doc: **durata di tre Tecniche Interiori** (la vecchia A.5) recepita; **struttura dell'equipaggiamento iniziale** (A.6) registrata, in attesa delle tabelle.
+Dalle versioni del pomeriggio dello stesso Doc:
+- **durata di tre Tecniche Interiori** (la vecchia A.5): recepita;
+- **struttura dell'equipaggiamento iniziale** e **dotazione comune** (A.6): registrate, in attesa del passo guidato nell'app.
 
 ---
 
@@ -46,7 +48,7 @@ Il manuale non lo dice.
 
 ### Regole generali
 
-**A.6 — Equipaggiamento iniziale (§2.16): le tabelle.** La forma è decisa (scelte guidate: dotazione comune, dotazione della Classe iniziale, varianti della Corporazione). Servono le tabelle: oggetti, quantità, munizioni, cariche ed eventuale denaro iniziale.
+**A.6 — Equipaggiamento iniziale (§2.16): le tabelle delle Classi.** La forma è decisa (scelte guidate) e la dotazione comune è approvata (A.5.1). Nel Manuale del Giocatore condiviso c'è già il §2.16.2, la dotazione dell'Agente, che però non compare fra le risposte approvate (E&L dice «restano da definire e approvare le dotazioni delle Classi»). È approvata? Servono poi le altre Classi, le varianti di Corporazione e l'eventuale denaro iniziale.
 *Nel frattempo:* inserimento manuale, voce per voce.
 
 **A.30 — Pesi degli oggetti (Equipaggiamento §1.6, §1.10).** Il carico si calcola sul peso di tutto ciò che si porta, e la scheda standard del §1.10 prevede il campo Peso, ma il Manuale degli Armamenti non dà pesi per armi, armature e scudi. Li aggiungerai ai cataloghi?

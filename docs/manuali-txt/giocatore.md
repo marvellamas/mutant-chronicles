@@ -1001,6 +1001,47 @@ Ogni scelta deve rispettare i requisiti degli oggetti. Le tabelle delle dotazion
 
 I profili degli oggetti e le relative regole si consultano nel Manuale degli Armamenti e nel Manuale degli Equipaggiamenti.
 
+### **2.16.1 Dotazione iniziale comune**
+
+| Oggetto | Quantità |
+| :---- | :---- |
+| Abiti comuni, comprese le calzature | 1 completo |
+| Zaino da viaggio | 1 |
+| Cintura attrezzata | 1 |
+| Borraccia da un litro, piena d’acqua | 2 |
+| Torcia elettrica | 1 |
+| Comunicatore personale | 1 |
+| Corredo personale per igiene e piccoli rammendi | 1 |
+| Utensile multiuso | 1 |
+| Accendino | 1 |
+| Sacco a pelo | 1 |
+| Razione da viaggio | 3 |
+
+Torcia e comunicatore comprendono ciascuno una batteria carica, cavo e alimentatore, con 24 ore di autonomia per dispositivo.
+
+Le scorte iniziali comprendono tre giorni di cibo e due litri d’acqua. L’acqua copre un giorno di consumo ordinario e richiede rifornimenti durante il viaggio.
+
+### **2.16.2 Dotazione iniziale — Agente**
+
+Oltre alla dotazione comune, l’Agente riceve:
+
+| Dotazione | Quantità e opzioni |
+| :---- | :---- |
+| Arma da fuoco | Una Pistola semiautomatica oppure un Revolver |
+| Munizioni e caricatori | Per la semiautomatica: tre caricatori compatibili, ciascuno con 15 proiettili ordinari, per 45 colpi complessivi. Per il revolver: 18 proiettili ordinari, di cui 6 nel tamburo e 12 di riserva |
+| Arma da mischia | Un Coltello oppure un Randello, anche nella forma di manganello |
+| Protezione | Un’Armatura civile leggera, comprensiva dell’elmetto standard |
+| Osservazione | Un Binocolo |
+| Registrazione | Un Registratore audiovisivo |
+
+Requisiti: entrambe le armi da fuoco, il Randello e l’Armatura civile leggera richiedono FOR 3; il Coltello richiede FOR 2\.
+
+L’armatura concede AR 1\. L’elmetto standard incluso non aggiunge AR.
+
+Il registratore comprende batteria carica, cavo e alimentatore, con 24 ore di autonomia. Il binocolo non richiede batterie.
+
+Questa dotazione utilizza i profili commerciali dei manuali. Le eventuali sostituzioni con modelli di Corporazione saranno specificate nelle relative dotazioni.
+
 ## **2.17 Controllo finale della Scheda**
 
 Prima di iniziare a giocare, verifica le voci seguenti:
