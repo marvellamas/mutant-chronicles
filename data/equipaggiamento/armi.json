@@ -838,6 +838,18 @@
       "gittata_q": null,
       "for_richiesta": 6,
       "inc": null,
+      "munizioni": {
+        "capacita": 5,
+        "unita": "cariche",
+        "ricarica": "sostituire la cella pronta richiede 1 AzP (§7.1.4)",
+        "consumo": "una carica per attivazione (§7.1.4)",
+        "riferimento": "cella energetica sostituibile (§7.20.5)"
+      },
+      "attivazione": {
+        "testo": "+1d6 Concussivo; 5 cariche a cella",
+        "danno_extra": "1d6",
+        "natura": "Concussivo"
+      },
       "pi": 4,
       "qualita": "Non comune",
       "ps_int": 12,

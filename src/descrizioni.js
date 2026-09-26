@@ -1,6 +1,6 @@
 // Contenuto dei tooltip e della scheda completa degli incantesimi, ricavato solo dai dati.
 // Funzioni pure: la UI (src/ui/tooltip.js) trasforma il risultato in DOM.
-import { catalogo, NOMI_TIPI, moduliDi, munizioneDiRiferimento, tabellaSin } from './equipaggiamento.js';
+import { catalogo, NOMI_TIPI, moduliDi, munizioneDiRiferimento, tabellaSin, tabellaMunizioniArmi, NOMI_FAMIGLIE_MUNIZIONI } from './equipaggiamento.js';
 
 const trova = (lista, nome) => lista.find((x) => x.nome === nome);
 const eTodo = (v) => typeof v === 'string' && v.startsWith('TODO(');
@@ -139,6 +139,14 @@ function tooltipOggetto(rif, dati) {
     const si = o.scudo_integrato;
     sezioni.push({ etichetta: `Scudo, ${si.condizione}`, testo: `AR ${si.ar.totale}, Parata ${conSegno(si.parata.ravvicinata)} ravv. / ${conSegno(si.parata.distanza)} dist. (con Difese)` });
   }
+  const famMun = tabellaMunizioniArmi(dati).get(rif);
+  if (famMun) sezioni.push({ etichetta: 'Munizioni', testo: `${NOMI_FAMIGLIE_MUNIZIONI[famMun]} (§7.20.9)` });
+  if (o.munizione) {
+    riga.Confezione = `${o.munizione.confezione.quantita} × ${o.munizione.confezione.costo.toLocaleString('it-IT')}`;
+    sezioni.push({ etichetta: 'Famiglia', testo: `${NOMI_FAMIGLIE_MUNIZIONI[o.munizione.famiglia]}${o.munizione.variante ? `, variante ${o.munizione.variante}` : ''}` });
+  }
+  if (o.esplosivo) sezioni.push({ etichetta: 'Carico', testo: `danno ${o.esplosivo.danno}, AC ${o.esplosivo.ac}, RS ${o.esplosivo.rs_q} Q; ${o.esplosivo.proprieta.join(', ')}` });
+  if (o.cella) sezioni.push({ etichetta: 'Capacità', testo: `${o.cella.capacita} ${o.cella.unita}; riempirla o ricaricarla costa ${o.cella.ricarica_costo.toLocaleString('it-IT')}` });
   if (o.rinforzo) sezioni.push({ etichetta: `Kit ${o.rinforzo.kit}`, testo: `AR +${o.rinforzo.ar}, FOR richiesta +${o.rinforzo.for}; PI e PS propri. Una Leggera portata fisicamente ad AR 3 o più usa le penalità della Media (§7.11.2).` });
   if (o.mirino) sezioni.push({ etichetta: 'Mirino', testo: `riduce di ${o.mirino.riduzione} la penalità di distanza, fino a 0. ${o.mirino.testo}` });
   if (o.effetto_arma && (o.effetto_arma.va || o.effetto_arma.danno)) sezioni.push({ etichetta: 'Sull’arma', testo: [o.effetto_arma.va ? `VA per colpire ${conSegno(o.effetto_arma.va)}` : null, o.effetto_arma.danno ? `danno ${conSegno(o.effetto_arma.danno)}` : null].filter(Boolean).join(', ') });

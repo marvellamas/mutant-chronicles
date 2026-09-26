@@ -601,6 +601,8 @@ const DADI = /^(\d+d\d+(\+\d+d\d+)*([+-]\d+)?|\d+)$/;
 // effetti strutturati delle proprietà: parata_va (Difensiva X, §7.1.3), va (Precisa X, §7.1.3: VA per colpire)
 // penalita (armature, §7.11.4): { annulla: [campi], riduce: { campo: n } }
 const EFFETTI_PROPRIETA = ['parata_va', 'va', 'penalita'];
+// §7.20.1 e §7.20.9: famiglie di munizioni
+const FAMIGLIE_MUNIZIONI = ['pistola', 'fucile', 'pesanti', 'pallini', 'frecce', 'dardi_balestra_piccola', 'dardi_balestra_grande', 'nimrod', 'combustibile'];
 const CAMPI_PENALITA = ['attacchi_distanza', 'attacchi_ravvicinati', 'agilita', 'movimento_q', 'lancio_potere'];
 
 let nomiAbilitaPenalita = null; // per validaPenalita: le Abilità esistenti
@@ -630,8 +632,11 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
   const rif = new Set();
   const rimandi = []; // [file, chiave, riferimento] di «stesso_oggetto», controllati alla fine
   const moduli = []; // [file, chiave, riferimento] di «modulo_di» (§7.8), controllati alla fine
+  const rimandiMunizioni = []; // [file, chiave, riferimento] di «munizioni_armi» (§7.20.9)
   const rimandiArmi = []; // [file, chiave, riferimento] di «sin_armi» (§7.15.1): devono essere armi
-  const rimandiArmature = []; // [file, chiave, riferimento] di «compatibile_con» (§7.15.4): devono essere armature
+  // [file, chiave, riferimento, tipi ammessi] di «compatibile_con»: armature per gli accessori
+  // (moduli IAS §7.15.4, soprabiti §7.11.2), armi per munizioni, celle e serbatoi (§7.20)
+  const rimandiCompatibili = [];
   const tipoDi = new Map(); // rif → { tipo, modulo }
   for (const { id: fileId, file: nomeFile } of ind.file) {
     if (!isTesto(nomeFile) || !nomeFile.endsWith('.json')) continue;
@@ -648,6 +653,15 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
       if (f[k] !== undefined && (!Array.isArray(f[k]) || f[k].some((a) => !nomiAbilita.includes(a)))) err(F, k, 'elenco di Abilità esistenti');
     }
     if (f.abilita_difese !== undefined && !nomiAbilita.includes(f.abilita_difese)) err(F, 'abilita_difese', `Abilità "${f.abilita_difese}" inesistente`);
+    // §7.20.9: famiglia di munizioni delle armi balistiche
+    if (f.munizioni_armi !== undefined) {
+      if (!Array.isArray(f.munizioni_armi)) err(F, 'munizioni_armi', 'deve essere un elenco');
+      else f.munizioni_armi.forEach((x, j) => {
+        if (!isTesto(x?.rif)) err(F, `munizioni_armi[${j}].rif`, 'riferimento "file:id" mancante');
+        else rimandiMunizioni.push([F, `munizioni_armi[${j}].rif`, x.rif]);
+        if (!FAMIGLIE_MUNIZIONI.includes(x?.famiglia)) err(F, `munizioni_armi[${j}].famiglia`, `famiglia fra ${FAMIGLIE_MUNIZIONI.join(', ')}`);
+      });
+    }
     // §7.15.1: tabella SIN delle armi
     if (f.sin_armi !== undefined) {
       if (!Array.isArray(f.sin_armi)) err(F, 'sin_armi', 'deve essere un elenco');
@@ -708,6 +722,19 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
           else t.righe.forEach((r, n) => { if (!Array.isArray(r) || r.length !== t.colonne.length) err(F, `${kk}.righe[${n}]`, `servono ${t.colonne.length} celle`); });
         });
       }
+      // §7.20: munizioni, esplosivi, celle e serbatoi
+      if (o.munizione !== undefined) {
+        const m = o.munizione;
+        if (!isOggetto(m) || !FAMIGLIE_MUNIZIONI.includes(m.famiglia)) err(F, `${k}.munizione.famiglia`, `famiglia fra ${FAMIGLIE_MUNIZIONI.join(', ')}`);
+        else if (!(isOggetto(m.confezione) && isIntero(m.confezione.quantita) && m.confezione.quantita >= 1 && isIntero(m.confezione.costo))) err(F, `${k}.munizione.confezione`, 'serve { quantita ≥ 1, costo }');
+      }
+      if (o.esplosivo !== undefined) {
+        const x = o.esplosivo;
+        if (!isOggetto(x) || !DADI.test(String(x.danno)) || !(isIntero(x.ac) || DADI.test(String(x.ac))) || !(isIntero(x.rs_q) && x.rs_q >= 0) || !Array.isArray(x.proprieta)) err(F, `${k}.esplosivo`, 'serve { danno, ac, rs_q, proprieta }');
+      }
+      if (o.cella !== undefined && !(isOggetto(o.cella) && isIntero(o.cella.capacita) && o.cella.capacita >= 1 && ['cariche', 'colpi', 'getti'].includes(o.cella.unita) && isIntero(o.cella.ricarica_costo))) {
+        err(F, `${k}.cella`, 'serve { capacita ≥ 1, unita: cariche|colpi|getti, ricarica_costo }');
+      }
       // §7.19: applicazioni dei kit sanitari e ricarica
       if (o.applicazioni !== undefined && !(isIntero(o.applicazioni) && o.applicazioni >= 1)) err(F, `${k}.applicazioni`, 'intero ≥ 1');
       if (o.ricarica !== undefined && !(isOggetto(o.ricarica) && isIntero(o.ricarica.applicazioni) && isIntero(o.ricarica.costo))) err(F, `${k}.ricarica`, 'serve { applicazioni, costo }');
@@ -734,7 +761,7 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
       if (o.innesto !== undefined && !['interfaccia_neurale'].includes(o.innesto)) err(F, `${k}.innesto`, 'innesto sconosciuto (ammesso: interfaccia_neurale)');
       if (o.compatibile_con !== undefined) {
         if (!Array.isArray(o.compatibile_con) || !o.compatibile_con.length) err(F, `${k}.compatibile_con`, 'elenco di riferimenti "file:id"');
-        else o.compatibile_con.forEach((r, j) => rimandiArmature.push([F, `${k}.compatibile_con[${j}]`, r]));
+        else o.compatibile_con.forEach((r, j) => rimandiCompatibili.push([F, `${k}.compatibile_con[${j}]`, r, o.tipo === 'munizioni' ? ['arma_ravvicinata', 'arma_distanza'] : ['armatura']]));
       }
       if (o.reperibilita !== undefined && !(modulo && o.reperibilita === null) && !rep.includes(o.reperibilita)) err(F, `${k}.reperibilita`, `sigla "${o.reperibilita}" non in index.json (${rep.join(', ')})`);
       if (o.proprieta !== undefined) {
@@ -879,10 +906,15 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
     if (!t) err(F, k, `"${r}" non è un oggetto del catalogo (formato "file:id")`);
     else if (!['arma_ravvicinata', 'arma_distanza'].includes(t.tipo)) err(F, k, `"${r}" non è un'arma`);
   }
-  for (const [F, k, r] of rimandiArmature) {
+  for (const [F, k, r, tipi] of rimandiCompatibili) {
     const t = tipoDi.get(r);
     if (!t) err(F, k, `"${r}" non è un oggetto del catalogo (formato "file:id")`);
-    else if (t.tipo !== 'armatura') err(F, k, `"${r}" non è un'armatura`);
+    else if (!tipi.includes(t.tipo)) err(F, k, `"${r}" non è ${tipi.includes('armatura') ? 'un\'armatura' : 'un\'arma'}`);
+  }
+  for (const [F, k, r] of rimandiMunizioni) {
+    const t = tipoDi.get(r);
+    if (!t) err(F, k, `"${r}" non è un oggetto del catalogo (formato "file:id")`);
+    else if (!['arma_ravvicinata', 'arma_distanza'].includes(t.tipo)) err(F, k, `"${r}" non è un'arma`);
   }
   for (const [F, k, r] of moduli) {
     const t = tipoDi.get(r);

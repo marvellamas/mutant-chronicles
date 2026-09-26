@@ -1,6 +1,6 @@
 # Catalogo dell'equipaggiamento: lotti da estrarre
 
-Stato al 26 settembre 2026 (lotti 2–9 fatti). Fonte: Manuale degli Armamenti v0.50. Metodo: `tools/estrai_manuali.py`
+Stato al 26 settembre 2026 (lotti 2–10 fatti). Fonte: Manuale degli Armamenti v0.50. Metodo: `tools/estrai_manuali.py`
 e `docs/pilota-estrazione-armamenti.md`.
 
 Questa è la lista dei prompt successivi: **un lotto per prompt**, nell'ordine di utilità al
@@ -24,6 +24,7 @@ su quelle pagine: le tabelle impilate contano come una.
 | `corredi_dispositivi.json` | 60 corredi, dispositivi, esoscheletro APE, Iron Mastiff, armi e granate Imperial; tabella SIN (lotto 7) | §7.12–7.17 | 69–105 |
 | `accessori_armi.json` | 15 accessori delle armi: mirini, riduzione del rumore, supporti, illuminazione e visione (lotto 8) | §7.3 | 19–22 |
 | `rinforzi.json` | 2 kit di rinforzo commerciali e 2 soprabiti corporativi (lotto 9) | §7.11.2 | 62 |
+| `munizioni.json` | 49 munizioni, caricatori, granata pesante, razzi, celle, combustibile, dardi chimici; tabella delle famiglie delle armi (lotto 10) | §7.20 | 114–121 |
 | `armi_distanza_corporative.json` | 81 armi a distanza corporative, 19 moduli integrati, 6 munizioni di riferimento (lotto 5) | §7.8 | 36–52 |
 
 Da completare nello stesso ambito, a basso costo:
@@ -410,22 +411,57 @@ Fatto il 26 settembre 2026, commit «Lotto 8 del catalogo: accessori delle armi�
   la preparazione in Azioni, gli effetti di luce e visione.
 - **Dubbi per Davide:** nessuno.
 
-### 5. Munizioni e alimentazioni — §7.20, pp. 114–121
+### 5. ✔ Munizioni e alimentazioni — §7.20, pp. 114–121 (lotto 10, fatto)
 
-- **Contenuto:**
-  - famiglie e consumo (§7.20.1);
-  - caricatori e scorte (§7.20.2);
-  - granate (§7.20.3);
-  - razzi (§7.20.4);
-  - celle energetiche (§7.20.5);
-  - combustibile (§7.20.6);
-  - munizioni speciali (§7.20.7);
-  - dardi chimici Bauhaus (§7.20.8);
-  - compatibilità balistiche (§7.20.9).
-- **Campi:** tipo `munizioni` (solo quantità), compatibilità con le armi, prezzo per caricatore
-  o unità.
-- **Effetti sulla scheda:** il contatore munizioni della sessione collegato al caricatore
-  dell'arma; eventuali modificatori al danno delle munizioni speciali.
+Fatto il 26 settembre 2026, commit «Lotto 10 del catalogo: munizioni e alimentazioni».
+
+- **Fonte:** `docs/lotti/lotto10-munizioni/`:
+  - `grezzo/`: 17 CSV, pp. 114–121;
+  - `prosa/`: il §7.20;
+  - `pulito/munizioni.csv`.
+
+  Generatore `tools/lotti/lotto10_munizioni.mjs`, dati `data/equipaggiamento/munizioni.json`.
+- **Oggetti:** 49 di tipo `munizioni`, più il caricatore da campo:
+  - 7 famiglie ordinarie e 14 varianti speciali per famiglia;
+  - cartucce Nimrod, ordinarie e con le 4 varianti;
+  - caricatori vuoti e contenitori;
+  - granata a frammentazione pesante e 4 razzi;
+  - 4 celle;
+  - combustibile e 5 serbatoi;
+  - 2 dardi chimici.
+
+  Granata standard, Fumogena ed Elettroshock sono già nel catalogo (lotti 2 e 7) e non si
+  duplicano.
+- **Estrazione:** pdfplumber trova tutte le 17 tabelle; la tabella dei prezzi speciali è
+  spezzata su due pagine. **93 righe su 93 giuste al primo colpo**, ritrovate nel testo in
+  prosa; **0 correzioni a mano** sui dati del lotto.
+- **Controlli incrociati (107, tutti superati):**
+  - prezzi speciali = ordinario × moltiplicatore, Nimrod compreso;
+  - costi per colpo delle tabelle del §7.20.9 = costi unitari del §7.20.1;
+  - granate e razzi = munizioni di riferimento e granate già estratte nei lotti 2, 5 e 7;
+  - capacità di celle, serbatoi e dardi = capacità delle armi compatibili.
+- **Un errore trovato nei dati del lotto 1:** il Tirapugni concussivo non aveva le 5 cariche
+  né l'attivazione strutturate, che pure sono nel suo testo (§7.1.1). Il §7.20.5 lo mette fra
+  le 17 armi della cella ravvicinata e il controllo si è fermato. Corretto a mano in
+  `armi.json`: `munizioni` 5 cariche e `attivazione` +1d6 Concussivo, come le armi corporative
+  a cella.
+- **Regole nuove del generatore:**
+  1. nomi delle armi confrontati senza spazi e trattini, dentro il Catalogo della riga («CAR 24»
+     → CAR24, «Ronin 45 AP» → Ronin 45AP); un alias («Pistola Punisher» → Punisher);
+  2. le armi della cella ravvicinata si ricavano dai dati (cella da 5 cariche) e si controllano
+     nel numero (17) e nei cataloghi della tabella;
+  3. catalogo di celle, serbatoi e razzi = catalogo delle armi compatibili, quando è uno solo.
+- **Schema e calcolo:**
+  - `munizione` (famiglia, variante, confezione), `esplosivo` (danno, AC, RS), `cella`
+    (capacità, unità, costo di ricarica);
+  - `compatibile_con` vale anche per le munizioni (verso le armi);
+  - `munizioni_armi`: la tabella del §7.20.9 con 71 armi corporative.
+  - Nella scheda dell'arma impugnata compaiono la famiglia di munizioni e le scorte
+    compatibili della lista, con la quantità.
+- **Restano testo:** gli effetti delle varianti (Perforante sull'AR del bersaglio, Incendiaria
+  −1 al danno, Concussiva) e dei dardi. Il contatore di sessione non sa quale variante è
+  caricata; il caricamento misto si annota a mano, come dice il manuale.
+- **Dubbi per Davide:** nessuno.
 
 ### 6. Equipaggiamento sanitario — §7.19, pp. 109–113
 

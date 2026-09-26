@@ -17,7 +17,7 @@ const voce = (uid, rif, stato, extra = {}) => ({ uid, rif, stato, quantita: 1, n
 const scheda = (creazione, equipaggiamento, livelli = []) => calcolaScheda({ creazione: { ...creazione, equipaggiamento }, livelli }, dati);
 
 test('catalogo: caricato dall’indice, un lotto = un file e una riga; riferimenti "file:id"', () => {
-  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armi_corporative', 'armi_distanza', 'armi_distanza_corporative', 'accessori_armi', 'armature', 'armature_corporative', 'rinforzi', 'scudi', 'corredi_dispositivi']);
+  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armi_corporative', 'armi_distanza', 'armi_distanza_corporative', 'accessori_armi', 'munizioni', 'armature', 'armature_corporative', 'rinforzi', 'scudi', 'corredi_dispositivi']);
   const cat = catalogo(dati);
   assert.equal(cat.oggetti.filter((o) => o.tipo === 'arma_ravvicinata' && o.catalogo === 'Commerciale').length, 28); // §7.1.1: 28 profili
   assert.equal(cat.oggetti.filter((o) => o.tipo === 'armatura' && o.catalogo === 'Commerciale').length, 3); // §7.11.3
@@ -32,7 +32,7 @@ test('catalogo: caricato dall’indice, un lotto = un file e una riga; riferimen
 
 test('cascata e ricerca: solo ciò che esiste; i nomi alternativi portano al profilo', () => {
   const o = opzioniCascata(dati, { tipo: 'arma_ravvicinata', catalogo: 'Commerciale', famiglia: 'Spade' });
-  assert.deepEqual(o.tipi, ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'accessorio', 'sanitario', 'altro']);
+  assert.deepEqual(o.tipi, ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'accessorio', 'munizioni', 'sanitario', 'altro']);
   assert.deepEqual(o.cataloghi, ['Commerciale', 'Bauhaus', 'Capitol', 'Cybertronic', 'Fratellanza', 'Imperial', 'Mishima', 'Alleanza']);
   assert.ok(o.famiglie.includes('Armi da pugno'));
   assert.deepEqual(o.profili.map((p) => p.nome), ['Spada leggera', 'Stocco', 'Spada lunga', 'Spada bastarda', 'Spadone']);
@@ -778,4 +778,69 @@ test('validatore dei rinforzi e degli effetti sulle penalità', () => {
   const e = (modifica) => { const d = copia(dati); modifica(d); return validaDati(d).map((x) => `${x.chiave}: ${x.problema}`).join('\n'); };
   assert.match(e((d) => { d.equipaggiamento.file.rinforzi.oggetti[0].rinforzo.kit = 'Medio'; }), /rinforzo: serve/);
   assert.match(e((d) => { d.equipaggiamento.file.armature_corporative.oggetti.find((o) => o.id === 'armatura-d-assalto-blitzer').proprieta.find((p) => p.effetto).effetto.penalita = { annulla: ['volo'] }; }), /effetto\.penalita: serve/);
+});
+
+// --- Lotto 10: munizioni e alimentazioni (§7.20) -------------------------------------------
+
+test('lotto 10: munizioni, celle, combustibile e compatibilità balistiche del §7.20', () => {
+  const tutti = catalogo(dati).oggetti.filter((o) => o.file === 'munizioni');
+  assert.equal(tutti.length, 49);
+  const r = (id) => catalogo(dati).perRif.get(`munizioni:${id}`);
+  assert.deepEqual(r('proiettili-da-fucile').munizione, { famiglia: 'fucile', confezione: { quantita: 50, costo: 150 } });
+  // §7.20.7: prezzo speciale = ordinario × moltiplicatore; confezione da dieci
+  assert.equal(r('proiettili-pesanti-perforante-2').costo, 48);
+  assert.deepEqual(r('proiettili-pesanti-perforante-2').munizione.confezione, { quantita: 10, costo: 480 });
+  assert.ok(!tutti.some((o) => /pallini, perforante/.test(o.nome))); // «per i fucili a pallini … non Perforante»
+  assert.deepEqual(r('granata-a-frammentazione-pesante').compatibile_con, ['armi_distanza_corporative:lanciagranate-deathlock-drum']);
+  assert.deepEqual(r('razzo-standard').compatibile_con, ['armi_distanza:lanciarazzi', 'armi_distanza_corporative:lanciarazzi-deuce', 'armi_distanza_corporative:lanciarazzi-daimyo']);
+  const cella = r('cella-ravvicinata-comune');
+  assert.equal(cella.compatibile_con.length, 17);
+  assert.ok(cella.compatibile_con.includes('armi:tirapugni-concussivo'));
+  assert.deepEqual(r('serbatoio-vuoto-gehemmapuker').cella, { capacita: 50, unita: 'getti', ricarica_costo: 500 });
+  // granate standard, Fumogena ed Elettroshock sono già nel catalogo: niente doppioni
+  assert.ok(!tutti.some((o) => /fumogena|elettroshock|frammentazione standard/i.test(o.nome)));
+  const tab = dati.equipaggiamento.file.munizioni.munizioni_armi;
+  assert.equal(tab.length, 71);
+  const fam = (rif) => tab.find((x) => x.rif === rif)?.famiglia;
+  assert.equal(fam('armi_distanza_corporative:mg40'), 'fucile'); // «La loro funzione di mitragliatrice leggera non li sposta nei pesanti»
+  assert.equal(fam('corredi_dispositivi:rainy-dayer'), 'pistola');
+  assert.equal(fam('armi_distanza_corporative:nimrod-autocannon'), 'nimrod');
+  assert.equal(fam('armi_distanza_corporative:ronin-45ap'), 'pistola'); // «Ronin 45 AP» nel §7.20.9
+});
+
+test('Tirapugni concussivo: 5 cariche della cella ravvicinata comune (§7.1.1, §7.20.5), contatore in sessione', () => {
+  const t = catalogo(dati).perRif.get('armi:tirapugni-concussivo');
+  assert.equal(t.munizioni.capacita, 5);
+  assert.equal(t.attivazione.danno_extra, '1d6');
+  const creazione = { ...MISHIMA_AGENTE, equipaggiamento: [voce('t', 'armi:tirapugni-concussivo', 'impugnata')] };
+  assert.deepEqual(massimiSessione(calcolaScheda({ creazione, livelli: [] }, dati), creazione, dati).caricatori, { t: 5 });
+});
+
+test('scorte di munizioni nella scheda dell’arma: stessa famiglia o compatibilità espressa', () => {
+  const s = scheda(MISHIMA_AGENTE, [
+    voce('m', 'armi_distanza_corporative:mg40', 'impugnata'),
+    voce('d', 'armi_distanza_corporative:lanciarazzi-deuce', 'pronta'),
+    { ...voce('f', 'munizioni:proiettili-da-fucile', null), quantita: 60 },
+    { ...voce('p', 'munizioni:proiettili-da-fucile-perforante-1', null), quantita: 10 },
+    { ...voce('h', 'munizioni:proiettili-pesanti', null), quantita: 20 },
+    { ...voce('r', 'munizioni:razzo-standard', null), quantita: 2 },
+  ]).equipaggiamento;
+  const mg = s.armi[0];
+  assert.equal(mg.famigliaMunizioni, 'fucile');
+  assert.deepEqual(mg.scorte, [{ uid: 'f', nome: 'Proiettili da fucile', quantita: 60 }, { uid: 'p', nome: 'Proiettili da fucile, perforante 1', quantita: 10 }]);
+  const deuce = scheda(MISHIMA_AGENTE, [voce('d', 'armi_distanza_corporative:lanciarazzi-deuce', 'impugnata'), { ...voce('r', 'munizioni:razzo-standard', null), quantita: 2 }]).equipaggiamento.armi[0];
+  assert.deepEqual(deuce.scorte, [{ uid: 'r', nome: 'Razzo standard', quantita: 2 }]);
+  assert.match(testoTooltip('oggetto', 'munizioni:razzo-ssw5500', dati), /Carico: danno 1d10\+1, AC 1d3, RS 4 Q; Sbilanciante, Sbalzante 2/);
+  assert.match(testoTooltip('oggetto', 'armi_distanza_corporative:m50', dati), /Munizioni: proiettili da fucile \(§7\.20\.9\)/);
+});
+
+test('validatore delle munizioni: famiglia, esplosivo, cella, compatibilità, tabella del §7.20.9', () => {
+  const e = (modifica) => { const d = copia(dati); modifica(d); return validaDati(d).map((x) => `${x.chiave}: ${x.problema}`).join('\n'); };
+  const f = (d) => d.equipaggiamento.file.munizioni;
+  const o = (d, id) => f(d).oggetti.find((x) => x.id === id);
+  assert.match(e((d) => { o(d, 'frecce').munizione.famiglia = 'sassi'; }), /munizione\.famiglia: famiglia fra/);
+  assert.match(e((d) => { o(d, 'razzo-standard').esplosivo.danno = 'tanto'; }), /esplosivo: serve/);
+  assert.match(e((d) => { o(d, 'cella-hellblazer').cella.unita = 'litri'; }), /cella: serve/);
+  assert.match(e((d) => { o(d, 'cella-hellblazer').compatibile_con = ['armature:armatura-civile-leggera']; }), /non è un'arma/);
+  assert.match(e((d) => { f(d).munizioni_armi[0].rif = 'munizioni:frecce'; }), /munizioni_armi\[0\]\.rif: .* non è un'arma/);
 });

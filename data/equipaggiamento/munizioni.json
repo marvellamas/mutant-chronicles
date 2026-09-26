@@ -1,0 +1,1472 @@
+{
+  "versione_manuale": "Armamenti 0.50",
+  "fonte": "Manuale degli Armamenti v0.50, §7.20 Munizioni e alimentazioni (pp. 114–121); lotto 10",
+  "_nota": "Generato da tools/lotti/lotto10_munizioni.mjs; da qui in poi si modifica questo file. Le munizioni si contano con la quantità della voce; «costo» è il prezzo unitario, «munizione.confezione» la confezione del manuale. «munizioni_armi» è la tabella del §7.20.9: famiglia di munizioni ordinarie di ogni arma balistica dei cataloghi corporativi. Granata standard, Fumogena ed Elettroshock sono già nel catalogo come armi da lancio.",
+  "munizioni_armi": [
+    {
+      "rif": "armi_distanza_corporative:axis-227",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza_corporative:piranha",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza_corporative:punisher",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza_corporative:hg10",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza_corporative:hg12",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza_corporative:equalizer",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza_corporative:mp105",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza_corporative:hd14m",
+      "famiglia": "pallini"
+    },
+    {
+      "rif": "armi_distanza_corporative:hg14",
+      "famiglia": "pallini"
+    },
+    {
+      "rif": "armi_distanza_corporative:bolter-10",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza_corporative:bolter-09",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza_corporative:enforcer",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza_corporative:jemson-45",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza_corporative:bolter-13",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza_corporative:bolter-20",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza_corporative:ironfist-15",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza_corporative:m310",
+      "famiglia": "pallini"
+    },
+    {
+      "rif": "armi_distanza_corporative:m510",
+      "famiglia": "pallini"
+    },
+    {
+      "rif": "armi_distanza_corporative:m516s",
+      "famiglia": "pallini"
+    },
+    {
+      "rif": "armi_distanza_corporative:m516d",
+      "famiglia": "pallini"
+    },
+    {
+      "rif": "armi_distanza_corporative:m410",
+      "famiglia": "pallini"
+    },
+    {
+      "rif": "armi_distanza_corporative:p500",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza_corporative:p1000",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza_corporative:sa-sg2001",
+      "famiglia": "pallini"
+    },
+    {
+      "rif": "armi_distanza_corporative:nemesis-100",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza_corporative:eliminator",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza_corporative:nemesis-210",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza_corporative:nemesis-214",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza_corporative:nemesis-221",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza_corporative:belliger",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza_corporative:aggressor",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "corredi_dispositivi:rainy-dayer",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza_corporative:ronin-25ap",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza_corporative:ronin-45ap",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza_corporative:carabina-punisher",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:deathlock-drum",
+      "famiglia": "pesanti"
+    },
+    {
+      "rif": "armi_distanza_corporative:mp105gw",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:panzerknacker",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:psg99",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:mg40",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:mg80",
+      "famiglia": "pesanti"
+    },
+    {
+      "rif": "armi_distanza_corporative:car24",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:m50",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:sr30",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:sr50",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:m606",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:improved-m89",
+      "famiglia": "pesanti"
+    },
+    {
+      "rif": "armi_distanza_corporative:caw2000",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:ar3000",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:sr3500",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:tsw4000",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:ssw4200p",
+      "famiglia": "pesanti"
+    },
+    {
+      "rif": "armi_distanza_corporative:nemesis-21",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:volcano",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:eruptor",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:mefisto",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:justifier",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:purifier",
+      "famiglia": "pesanti"
+    },
+    {
+      "rif": "armi_distanza_corporative:mandible",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:interceptor",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:invader",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:assailant",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:destroyer",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:charger",
+      "famiglia": "pesanti"
+    },
+    {
+      "rif": "armi_distanza_corporative:airbrush",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:windrider-n4",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:shogun",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:archer",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:kensai",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza_corporative:dragonfire",
+      "famiglia": "pesanti"
+    },
+    {
+      "rif": "armi_distanza_corporative:nimrod-autocannon",
+      "famiglia": "nimrod"
+    }
+  ],
+  "oggetti": [
+    {
+      "id": "proiettili-da-pistola",
+      "nome": "Proiettili da pistola",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Munizioni ordinarie",
+      "nomi_alternativi": [],
+      "note_manuale": "Le munizioni ordinarie della stessa famiglia sono intercambiabili fra produttori e Corporazioni. I caricatori devono invece essere compatibili con il modello dell’arma. La munizione ordinaria mantiene danno, gittata e proprietà del profilo dell’arma e non modifica INC. La famiglia da fucile comprende carabine, fucili d’assalto e di precisione e mitragliatrici leggere. I dardi da balestra sono distinti dai dardi chimici monouso Bauhaus del §7.20.8. Le cartucce del Nimrod costituiscono una famiglia dedicata (§7.20.9). Ogni colpo effettivamente sparato consuma una munizione anche se manca il bersaglio; le modalità di tiro consumano il numero di colpi previsto. AC indica le applicazioni del danno e non moltiplica il consumo: un fucile a pallini con AC 2 consuma una cartuccia per colpo; due colpi consumano due cartucce. È ammesso caricare munizioni di varianti differenti nello stesso caricatore, annotandone l’ordine prima di sparare. Ogni colpo applica esclusivamente la variante della munizione consumata. Recupero di frecce e dardi Dopo lo scontro, cercare per un minuto nell’area accessibile permette di recuperare metà delle frecce e dei dardi da balestra utilizzati, arrotondando per difetto. Gli altri sono persi o danneggiati; non si recuperano quelli inaccessibili o distrutti. Proiettili, cartucce e dardi chimici sparati non sono recuperabili come munizioni pronte. Le armi da lancio recuperabili, come coltelli e shuriken, mantengono il recupero quando sono accessibili: non applicano automaticamente il dimezzamento previsto per frecce e dardi da balestra.",
+      "paragrafo": "§7.20.1",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "CO",
+      "costo": 2,
+      "munizione": {
+        "famiglia": "pistola",
+        "confezione": {
+          "quantita": 50,
+          "costo": 100
+        }
+      },
+      "proprieta": []
+    },
+    {
+      "id": "proiettili-da-fucile",
+      "nome": "Proiettili da fucile",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Munizioni ordinarie",
+      "nomi_alternativi": [],
+      "note_manuale": "Le munizioni ordinarie della stessa famiglia sono intercambiabili fra produttori e Corporazioni. I caricatori devono invece essere compatibili con il modello dell’arma. La munizione ordinaria mantiene danno, gittata e proprietà del profilo dell’arma e non modifica INC. La famiglia da fucile comprende carabine, fucili d’assalto e di precisione e mitragliatrici leggere. I dardi da balestra sono distinti dai dardi chimici monouso Bauhaus del §7.20.8. Le cartucce del Nimrod costituiscono una famiglia dedicata (§7.20.9). Ogni colpo effettivamente sparato consuma una munizione anche se manca il bersaglio; le modalità di tiro consumano il numero di colpi previsto. AC indica le applicazioni del danno e non moltiplica il consumo: un fucile a pallini con AC 2 consuma una cartuccia per colpo; due colpi consumano due cartucce. È ammesso caricare munizioni di varianti differenti nello stesso caricatore, annotandone l’ordine prima di sparare. Ogni colpo applica esclusivamente la variante della munizione consumata. Recupero di frecce e dardi Dopo lo scontro, cercare per un minuto nell’area accessibile permette di recuperare metà delle frecce e dei dardi da balestra utilizzati, arrotondando per difetto. Gli altri sono persi o danneggiati; non si recuperano quelli inaccessibili o distrutti. Proiettili, cartucce e dardi chimici sparati non sono recuperabili come munizioni pronte. Le armi da lancio recuperabili, come coltelli e shuriken, mantengono il recupero quando sono accessibili: non applicano automaticamente il dimezzamento previsto per frecce e dardi da balestra.",
+      "paragrafo": "§7.20.1",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "CO",
+      "costo": 3,
+      "munizione": {
+        "famiglia": "fucile",
+        "confezione": {
+          "quantita": 50,
+          "costo": 150
+        }
+      },
+      "proprieta": []
+    },
+    {
+      "id": "proiettili-pesanti",
+      "nome": "Proiettili pesanti",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Munizioni ordinarie",
+      "nomi_alternativi": [],
+      "note_manuale": "Le munizioni ordinarie della stessa famiglia sono intercambiabili fra produttori e Corporazioni. I caricatori devono invece essere compatibili con il modello dell’arma. La munizione ordinaria mantiene danno, gittata e proprietà del profilo dell’arma e non modifica INC. La famiglia da fucile comprende carabine, fucili d’assalto e di precisione e mitragliatrici leggere. I dardi da balestra sono distinti dai dardi chimici monouso Bauhaus del §7.20.8. Le cartucce del Nimrod costituiscono una famiglia dedicata (§7.20.9). Ogni colpo effettivamente sparato consuma una munizione anche se manca il bersaglio; le modalità di tiro consumano il numero di colpi previsto. AC indica le applicazioni del danno e non moltiplica il consumo: un fucile a pallini con AC 2 consuma una cartuccia per colpo; due colpi consumano due cartucce. È ammesso caricare munizioni di varianti differenti nello stesso caricatore, annotandone l’ordine prima di sparare. Ogni colpo applica esclusivamente la variante della munizione consumata. Recupero di frecce e dardi Dopo lo scontro, cercare per un minuto nell’area accessibile permette di recuperare metà delle frecce e dei dardi da balestra utilizzati, arrotondando per difetto. Gli altri sono persi o danneggiati; non si recuperano quelli inaccessibili o distrutti. Proiettili, cartucce e dardi chimici sparati non sono recuperabili come munizioni pronte. Le armi da lancio recuperabili, come coltelli e shuriken, mantengono il recupero quando sono accessibili: non applicano automaticamente il dimezzamento previsto per frecce e dardi da balestra.",
+      "paragrafo": "§7.20.1",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "NC",
+      "costo": 8,
+      "munizione": {
+        "famiglia": "pesanti",
+        "confezione": {
+          "quantita": 20,
+          "costo": 160
+        }
+      },
+      "proprieta": []
+    },
+    {
+      "id": "cartucce-a-pallini",
+      "nome": "Cartucce a pallini",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Munizioni ordinarie",
+      "nomi_alternativi": [],
+      "note_manuale": "Le munizioni ordinarie della stessa famiglia sono intercambiabili fra produttori e Corporazioni. I caricatori devono invece essere compatibili con il modello dell’arma. La munizione ordinaria mantiene danno, gittata e proprietà del profilo dell’arma e non modifica INC. La famiglia da fucile comprende carabine, fucili d’assalto e di precisione e mitragliatrici leggere. I dardi da balestra sono distinti dai dardi chimici monouso Bauhaus del §7.20.8. Le cartucce del Nimrod costituiscono una famiglia dedicata (§7.20.9). Ogni colpo effettivamente sparato consuma una munizione anche se manca il bersaglio; le modalità di tiro consumano il numero di colpi previsto. AC indica le applicazioni del danno e non moltiplica il consumo: un fucile a pallini con AC 2 consuma una cartuccia per colpo; due colpi consumano due cartucce. È ammesso caricare munizioni di varianti differenti nello stesso caricatore, annotandone l’ordine prima di sparare. Ogni colpo applica esclusivamente la variante della munizione consumata. Recupero di frecce e dardi Dopo lo scontro, cercare per un minuto nell’area accessibile permette di recuperare metà delle frecce e dei dardi da balestra utilizzati, arrotondando per difetto. Gli altri sono persi o danneggiati; non si recuperano quelli inaccessibili o distrutti. Proiettili, cartucce e dardi chimici sparati non sono recuperabili come munizioni pronte. Le armi da lancio recuperabili, come coltelli e shuriken, mantengono il recupero quando sono accessibili: non applicano automaticamente il dimezzamento previsto per frecce e dardi da balestra.",
+      "paragrafo": "§7.20.1",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "CO",
+      "costo": 4,
+      "munizione": {
+        "famiglia": "pallini",
+        "confezione": {
+          "quantita": 25,
+          "costo": 100
+        }
+      },
+      "proprieta": []
+    },
+    {
+      "id": "frecce",
+      "nome": "Frecce",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Munizioni ordinarie",
+      "nomi_alternativi": [],
+      "note_manuale": "Le munizioni ordinarie della stessa famiglia sono intercambiabili fra produttori e Corporazioni. I caricatori devono invece essere compatibili con il modello dell’arma. La munizione ordinaria mantiene danno, gittata e proprietà del profilo dell’arma e non modifica INC. La famiglia da fucile comprende carabine, fucili d’assalto e di precisione e mitragliatrici leggere. I dardi da balestra sono distinti dai dardi chimici monouso Bauhaus del §7.20.8. Le cartucce del Nimrod costituiscono una famiglia dedicata (§7.20.9). Ogni colpo effettivamente sparato consuma una munizione anche se manca il bersaglio; le modalità di tiro consumano il numero di colpi previsto. AC indica le applicazioni del danno e non moltiplica il consumo: un fucile a pallini con AC 2 consuma una cartuccia per colpo; due colpi consumano due cartucce. È ammesso caricare munizioni di varianti differenti nello stesso caricatore, annotandone l’ordine prima di sparare. Ogni colpo applica esclusivamente la variante della munizione consumata. Recupero di frecce e dardi Dopo lo scontro, cercare per un minuto nell’area accessibile permette di recuperare metà delle frecce e dei dardi da balestra utilizzati, arrotondando per difetto. Gli altri sono persi o danneggiati; non si recuperano quelli inaccessibili o distrutti. Proiettili, cartucce e dardi chimici sparati non sono recuperabili come munizioni pronte. Le armi da lancio recuperabili, come coltelli e shuriken, mantengono il recupero quando sono accessibili: non applicano automaticamente il dimezzamento previsto per frecce e dardi da balestra.",
+      "paragrafo": "§7.20.1",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "CO",
+      "costo": 10,
+      "munizione": {
+        "famiglia": "frecce",
+        "confezione": {
+          "quantita": 10,
+          "costo": 100
+        }
+      },
+      "proprieta": []
+    },
+    {
+      "id": "dardi-da-balestra-piccola",
+      "nome": "Dardi da balestra piccola",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Munizioni ordinarie",
+      "nomi_alternativi": [],
+      "note_manuale": "Le munizioni ordinarie della stessa famiglia sono intercambiabili fra produttori e Corporazioni. I caricatori devono invece essere compatibili con il modello dell’arma. La munizione ordinaria mantiene danno, gittata e proprietà del profilo dell’arma e non modifica INC. La famiglia da fucile comprende carabine, fucili d’assalto e di precisione e mitragliatrici leggere. I dardi da balestra sono distinti dai dardi chimici monouso Bauhaus del §7.20.8. Le cartucce del Nimrod costituiscono una famiglia dedicata (§7.20.9). Ogni colpo effettivamente sparato consuma una munizione anche se manca il bersaglio; le modalità di tiro consumano il numero di colpi previsto. AC indica le applicazioni del danno e non moltiplica il consumo: un fucile a pallini con AC 2 consuma una cartuccia per colpo; due colpi consumano due cartucce. È ammesso caricare munizioni di varianti differenti nello stesso caricatore, annotandone l’ordine prima di sparare. Ogni colpo applica esclusivamente la variante della munizione consumata. Recupero di frecce e dardi Dopo lo scontro, cercare per un minuto nell’area accessibile permette di recuperare metà delle frecce e dei dardi da balestra utilizzati, arrotondando per difetto. Gli altri sono persi o danneggiati; non si recuperano quelli inaccessibili o distrutti. Proiettili, cartucce e dardi chimici sparati non sono recuperabili come munizioni pronte. Le armi da lancio recuperabili, come coltelli e shuriken, mantengono il recupero quando sono accessibili: non applicano automaticamente il dimezzamento previsto per frecce e dardi da balestra.",
+      "paragrafo": "§7.20.1",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "CO",
+      "costo": 5,
+      "munizione": {
+        "famiglia": "dardi_balestra_piccola",
+        "confezione": {
+          "quantita": 10,
+          "costo": 50
+        }
+      },
+      "proprieta": []
+    },
+    {
+      "id": "dardi-da-balestra-grande",
+      "nome": "Dardi da balestra grande",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Munizioni ordinarie",
+      "nomi_alternativi": [],
+      "note_manuale": "Le munizioni ordinarie della stessa famiglia sono intercambiabili fra produttori e Corporazioni. I caricatori devono invece essere compatibili con il modello dell’arma. La munizione ordinaria mantiene danno, gittata e proprietà del profilo dell’arma e non modifica INC. La famiglia da fucile comprende carabine, fucili d’assalto e di precisione e mitragliatrici leggere. I dardi da balestra sono distinti dai dardi chimici monouso Bauhaus del §7.20.8. Le cartucce del Nimrod costituiscono una famiglia dedicata (§7.20.9). Ogni colpo effettivamente sparato consuma una munizione anche se manca il bersaglio; le modalità di tiro consumano il numero di colpi previsto. AC indica le applicazioni del danno e non moltiplica il consumo: un fucile a pallini con AC 2 consuma una cartuccia per colpo; due colpi consumano due cartucce. È ammesso caricare munizioni di varianti differenti nello stesso caricatore, annotandone l’ordine prima di sparare. Ogni colpo applica esclusivamente la variante della munizione consumata. Recupero di frecce e dardi Dopo lo scontro, cercare per un minuto nell’area accessibile permette di recuperare metà delle frecce e dei dardi da balestra utilizzati, arrotondando per difetto. Gli altri sono persi o danneggiati; non si recuperano quelli inaccessibili o distrutti. Proiettili, cartucce e dardi chimici sparati non sono recuperabili come munizioni pronte. Le armi da lancio recuperabili, come coltelli e shuriken, mantengono il recupero quando sono accessibili: non applicano automaticamente il dimezzamento previsto per frecce e dardi da balestra.",
+      "paragrafo": "§7.20.1",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "CO",
+      "costo": 10,
+      "munizione": {
+        "famiglia": "dardi_balestra_grande",
+        "confezione": {
+          "quantita": 10,
+          "costo": 100
+        }
+      },
+      "proprieta": []
+    },
+    {
+      "id": "caricatore-vuoto-per-arma-leggera",
+      "nome": "Caricatore vuoto per Arma Leggera",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Caricatori e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Il prezzo del caricatore ordinario amovibile vuoto dipende dalla categoria dell’arma. Serve sempre un caricatore compatibile con il modello. Questi prezzi non introducono caricatori amovibili per revolver o serbatoi fissi; celle, serbatoi di combustibile e contenitori per nastri hanno le proprie voci.",
+      "paragrafo": "§7.20.2",
+      "versione_manuale": "Armamenti 0.50",
+      "costo": 50,
+      "proprieta": []
+    },
+    {
+      "id": "caricatore-vuoto-per-arma-media",
+      "nome": "Caricatore vuoto per Arma Media",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Caricatori e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Il prezzo del caricatore ordinario amovibile vuoto dipende dalla categoria dell’arma. Serve sempre un caricatore compatibile con il modello. Questi prezzi non introducono caricatori amovibili per revolver o serbatoi fissi; celle, serbatoi di combustibile e contenitori per nastri hanno le proprie voci.",
+      "paragrafo": "§7.20.2",
+      "versione_manuale": "Armamenti 0.50",
+      "costo": 100,
+      "proprieta": []
+    },
+    {
+      "id": "caricatore-vuoto-per-arma-pesante",
+      "nome": "Caricatore vuoto per Arma Pesante",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Caricatori e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Il prezzo del caricatore ordinario amovibile vuoto dipende dalla categoria dell’arma. Serve sempre un caricatore compatibile con il modello. Questi prezzi non introducono caricatori amovibili per revolver o serbatoi fissi; celle, serbatoi di combustibile e contenitori per nastri hanno le proprie voci.",
+      "paragrafo": "§7.20.2",
+      "versione_manuale": "Armamenti 0.50",
+      "costo": 200,
+      "proprieta": []
+    },
+    {
+      "id": "contenitore-di-alimentazione-vuoto",
+      "nome": "Contenitore di alimentazione vuoto",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Caricatori e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Le maglie dei nastri sono comprese nel prezzo delle munizioni e non vengono conteggiate singolarmente. Un contenitore di alimentazione vuoto compatibile costa 200; quello del Nimrod costa 500. Il contenitore non comprende le munizioni.",
+      "paragrafo": "§7.20.2",
+      "versione_manuale": "Armamenti 0.50",
+      "costo": 200,
+      "proprieta": []
+    },
+    {
+      "id": "contenitore-di-alimentazione-nimrod",
+      "nome": "Contenitore di alimentazione Nimrod",
+      "tipo": "munizioni",
+      "catalogo": "Alleanza",
+      "famiglia": "Caricatori e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Le maglie dei nastri sono comprese nel prezzo delle munizioni e non vengono conteggiate singolarmente. Un contenitore di alimentazione vuoto compatibile costa 200; quello del Nimrod costa 500. Il contenitore non comprende le munizioni.",
+      "paragrafo": "§7.20.9",
+      "versione_manuale": "Armamenti 0.50",
+      "costo": 500,
+      "compatibile_con": [
+        "armi_distanza_corporative:nimrod-autocannon"
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "granata-a-frammentazione-pesante",
+      "nome": "Granata a frammentazione pesante",
+      "tipo": "munizioni",
+      "catalogo": "Alleanza",
+      "famiglia": "Granate",
+      "nomi_alternativi": [
+        "Granata pesante a frammentazione"
+      ],
+      "note_manuale": "La granata standard si usa sia a mano sia nei lanciagranate standard compatibili. Quella pesante è riservata al modulo Deathlock Drum e non si lancia a mano. Sono tutte monouso; si acquistano singole o in confezioni da cinque, senza sconto. Le granate a frammentazione hanno Sbilanciante e Sbalzante 1; Elettroshock ha Elettricità. I danni sono Naturali. Per ciascuna esplosione si tira AC una sola volta e si applica il risultato a tutti i bersagli nell’area; ciascuno risolve separatamente le proprie difese. Numero di bersagli e AC non aumentano il consumo: ogni lancio usa una granata. Il modulo del Deathlock Drum usa esclusivamente il formato pesante qui definito: non accetta automaticamente granate standard o varianti speciali non descritte.",
+      "paragrafo": "§7.20.3",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "RA",
+      "costo": 180,
+      "esplosivo": {
+        "danno": "1d10+1",
+        "ac": "1d3",
+        "rs_q": 2,
+        "proprieta": [
+          "Sbilanciante",
+          "Sbalzante 1"
+        ]
+      },
+      "compatibile_con": [
+        "armi_distanza_corporative:lanciagranate-deathlock-drum"
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "razzo-standard",
+      "nome": "Razzo standard",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Razzi",
+      "nomi_alternativi": [
+        "Razzo standard"
+      ],
+      "note_manuale": "I razzi si acquistano singolarmente come munizioni complete; il prezzo non comprende lanciatore o caricatore di ricambio. Ogni lancio consuma un razzo, indipendentemente da AC e numero di bersagli. Non si lanciano a mano. Tutti i profili seguenti infliggono danni Naturali e hanno Sbilanciante e Sbalzante 2. Il lanciatore stabilisce Abilità, VA, FOR, gittata, INC, CC e modalità di tiro. Il razzo stabilisce danno, AC, RS e proprietà del carico; restano le proprietà native pertinenti del lanciatore. Si tira AC una sola volta per esplosione, con lo stesso risultato per tutti i bersagli.",
+      "paragrafo": "§7.20.4",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "RA",
+      "costo": 300,
+      "esplosivo": {
+        "danno": "1d10+1",
+        "ac": "1d3",
+        "rs_q": 2,
+        "proprieta": [
+          "Sbilanciante",
+          "Sbalzante 2"
+        ]
+      },
+      "compatibile_con": [
+        "armi_distanza:lanciarazzi",
+        "armi_distanza_corporative:lanciarazzi-deuce",
+        "armi_distanza_corporative:lanciarazzi-daimyo"
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "razzo-a-carica-maggiorata",
+      "nome": "Razzo a carica maggiorata",
+      "tipo": "munizioni",
+      "catalogo": "Imperial",
+      "famiglia": "Razzi",
+      "nomi_alternativi": [
+        "Razzo a carica maggiorata"
+      ],
+      "note_manuale": "I razzi si acquistano singolarmente come munizioni complete; il prezzo non comprende lanciatore o caricatore di ricambio. Ogni lancio consuma un razzo, indipendentemente da AC e numero di bersagli. Non si lanciano a mano. Tutti i profili seguenti infliggono danni Naturali e hanno Sbilanciante e Sbalzante 2. Il lanciatore stabilisce Abilità, VA, FOR, gittata, INC, CC e modalità di tiro. Il razzo stabilisce danno, AC, RS e proprietà del carico; restano le proprietà native pertinenti del lanciatore. Si tira AC una sola volta per esplosione, con lo stesso risultato per tutti i bersagli.",
+      "paragrafo": "§7.20.4",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "RA",
+      "costo": 350,
+      "esplosivo": {
+        "danno": "1d10+2",
+        "ac": "1d3",
+        "rs_q": 2,
+        "proprieta": [
+          "Sbilanciante",
+          "Sbalzante 2"
+        ]
+      },
+      "compatibile_con": [
+        "armi_distanza_corporative:lanciarazzi-southpaw"
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "razzo-arg17",
+      "nome": "Razzo ARG17",
+      "tipo": "munizioni",
+      "catalogo": "Bauhaus",
+      "famiglia": "Razzi",
+      "nomi_alternativi": [
+        "Razzo arg-17"
+      ],
+      "note_manuale": "I razzi si acquistano singolarmente come munizioni complete; il prezzo non comprende lanciatore o caricatore di ricambio. Ogni lancio consuma un razzo, indipendentemente da AC e numero di bersagli. Non si lanciano a mano. Tutti i profili seguenti infliggono danni Naturali e hanno Sbilanciante e Sbalzante 2. Il lanciatore stabilisce Abilità, VA, FOR, gittata, INC, CC e modalità di tiro. Il razzo stabilisce danno, AC, RS e proprietà del carico; restano le proprietà native pertinenti del lanciatore. Si tira AC una sola volta per esplosione, con lo stesso risultato per tutti i bersagli.",
+      "paragrafo": "§7.20.4",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "MR",
+      "costo": 500,
+      "esplosivo": {
+        "danno": "1d10+2",
+        "ac": "1d3",
+        "rs_q": 3,
+        "proprieta": [
+          "Sbilanciante",
+          "Sbalzante 2"
+        ]
+      },
+      "compatibile_con": [
+        "armi_distanza_corporative:arg17"
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "razzo-ssw5500",
+      "nome": "Razzo SSW5500",
+      "tipo": "munizioni",
+      "catalogo": "Cybertronic",
+      "famiglia": "Razzi",
+      "nomi_alternativi": [
+        "Razzo ssw5500"
+      ],
+      "note_manuale": "I razzi si acquistano singolarmente come munizioni complete; il prezzo non comprende lanciatore o caricatore di ricambio. Ogni lancio consuma un razzo, indipendentemente da AC e numero di bersagli. Non si lanciano a mano. Tutti i profili seguenti infliggono danni Naturali e hanno Sbilanciante e Sbalzante 2. Il lanciatore stabilisce Abilità, VA, FOR, gittata, INC, CC e modalità di tiro. Il razzo stabilisce danno, AC, RS e proprietà del carico; restano le proprietà native pertinenti del lanciatore. Si tira AC una sola volta per esplosione, con lo stesso risultato per tutti i bersagli.",
+      "paragrafo": "§7.20.4",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "MR",
+      "costo": 650,
+      "esplosivo": {
+        "danno": "1d10+1",
+        "ac": "1d3",
+        "rs_q": 4,
+        "proprieta": [
+          "Sbilanciante",
+          "Sbalzante 2"
+        ]
+      },
+      "compatibile_con": [
+        "armi_distanza_corporative:lanciarazzi-ssw5500"
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "cella-ravvicinata-comune",
+      "nome": "Cella ravvicinata comune",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Celle energetiche",
+      "nomi_alternativi": [],
+      "note_manuale": "Le celle tecnologiche sono riutilizzabili e si acquistano cariche. Il costo di ricarica comprende energia e materiali di servizio. Il produttore della cella non modifica danni, INC, SIN o proprietà dell’arma. Carica indica il prezzo della cella piena. Il formato ravvicinato da cinque cariche è comune ai modelli elencati sotto. Le tre celle delle armi a distanza sono invece specifiche: Hellblazer e Intruder non sono intercambiabili anche se entrambe contengono trenta colpi. Per le armi ravvicinate si dichiara l’attivazione prima dell’attacco e si applica la PS Riflessi per risparmiare la carica in caso di Prova per colpire fallita (§7.1.4). Un attacco riuscito ma poi evitato o assorbito consuma la carica. Ogni attivazione ordinaria consuma una carica; a zero cariche resta il profilo non attivato dell’arma. Per le armi a energia a distanza ogni colpo sparato consuma una carica anche se manca il bersaglio. AC non moltiplica il consumo e non è prevista la PS per risparmiare il colpo. A zero cariche l’arma non può sparare. Sostituzione e ricarica Sostituire una cella compatibile già pronta richiede 1 AzP, senza Prova, disponendo delle mani necessarie. Ricaricare da vuota una delle celle in tabella richiede un’ora, un caricatore adatto e una fonte di energia adeguata. In condizioni ordinarie non occorre una Prova. Tempo e costo di una ricarica parziale sono proporzionali alle cariche ripristinate. Se la ricarica si interrompe, restano soltanto le cariche completate. Esempio: la cella ravvicinata ripristina una carica ogni 12 minuti, al costo di 8 per carica.",
+      "paragrafo": "§7.20.5",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "NC",
+      "costo": 200,
+      "cella": {
+        "capacita": 5,
+        "unita": "cariche",
+        "ricarica_costo": 40
+      },
+      "compatibile_con": [
+        "armi:tirapugni-concussivo",
+        "armi_corporative:tonfa-stella-cadente",
+        "armi_corporative:artigli-elettrificati",
+        "armi_corporative:baionetta-elettrificata",
+        "armi_corporative:elettrosega-csb600",
+        "armi_corporative:frusta-elettrificata",
+        "armi_corporative:manganello-elettrificato",
+        "armi_corporative:spada-elettrificata-csa-404",
+        "armi_corporative:tirapugni-elettrificato",
+        "armi_corporative:ascia-tagliateste-a-una-mano",
+        "armi_corporative:ascia-tagliateste-a-due-mani",
+        "armi_corporative:martello-spaccateste-a-una-mano",
+        "armi_corporative:martello-spaccateste-a-due-mani",
+        "armi_corporative:spada-violator",
+        "armi_corporative:lancia-duskdealer",
+        "armi_corporative:nunchaku-elettrificato",
+        "armi_corporative:spada-punisher"
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "cella-del-fucile-al-plasma-commerciale",
+      "nome": "Cella del fucile al plasma commerciale",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Celle energetiche",
+      "nomi_alternativi": [],
+      "note_manuale": "Le celle tecnologiche sono riutilizzabili e si acquistano cariche. Il costo di ricarica comprende energia e materiali di servizio. Il produttore della cella non modifica danni, INC, SIN o proprietà dell’arma. Carica indica il prezzo della cella piena. Il formato ravvicinato da cinque cariche è comune ai modelli elencati sotto. Le tre celle delle armi a distanza sono invece specifiche: Hellblazer e Intruder non sono intercambiabili anche se entrambe contengono trenta colpi. Per le armi ravvicinate si dichiara l’attivazione prima dell’attacco e si applica la PS Riflessi per risparmiare la carica in caso di Prova per colpire fallita (§7.1.4). Un attacco riuscito ma poi evitato o assorbito consuma la carica. Ogni attivazione ordinaria consuma una carica; a zero cariche resta il profilo non attivato dell’arma. Per le armi a energia a distanza ogni colpo sparato consuma una carica anche se manca il bersaglio. AC non moltiplica il consumo e non è prevista la PS per risparmiare il colpo. A zero cariche l’arma non può sparare. Sostituzione e ricarica Sostituire una cella compatibile già pronta richiede 1 AzP, senza Prova, disponendo delle mani necessarie. Ricaricare da vuota una delle celle in tabella richiede un’ora, un caricatore adatto e una fonte di energia adeguata. In condizioni ordinarie non occorre una Prova. Tempo e costo di una ricarica parziale sono proporzionali alle cariche ripristinate. Se la ricarica si interrompe, restano soltanto le cariche completate. Esempio: la cella ravvicinata ripristina una carica ogni 12 minuti, al costo di 8 per carica.",
+      "paragrafo": "§7.20.5",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "RA",
+      "costo": 400,
+      "cella": {
+        "capacita": 20,
+        "unita": "colpi",
+        "ricarica_costo": 80
+      },
+      "compatibile_con": [
+        "armi_distanza:fucile-al-plasma"
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "cella-hellblazer",
+      "nome": "Cella Hellblazer",
+      "tipo": "munizioni",
+      "catalogo": "Alleanza",
+      "famiglia": "Celle energetiche",
+      "nomi_alternativi": [],
+      "note_manuale": "Le celle tecnologiche sono riutilizzabili e si acquistano cariche. Il costo di ricarica comprende energia e materiali di servizio. Il produttore della cella non modifica danni, INC, SIN o proprietà dell’arma. Carica indica il prezzo della cella piena. Il formato ravvicinato da cinque cariche è comune ai modelli elencati sotto. Le tre celle delle armi a distanza sono invece specifiche: Hellblazer e Intruder non sono intercambiabili anche se entrambe contengono trenta colpi. Per le armi ravvicinate si dichiara l’attivazione prima dell’attacco e si applica la PS Riflessi per risparmiare la carica in caso di Prova per colpire fallita (§7.1.4). Un attacco riuscito ma poi evitato o assorbito consuma la carica. Ogni attivazione ordinaria consuma una carica; a zero cariche resta il profilo non attivato dell’arma. Per le armi a energia a distanza ogni colpo sparato consuma una carica anche se manca il bersaglio. AC non moltiplica il consumo e non è prevista la PS per risparmiare il colpo. A zero cariche l’arma non può sparare. Sostituzione e ricarica Sostituire una cella compatibile già pronta richiede 1 AzP, senza Prova, disponendo delle mani necessarie. Ricaricare da vuota una delle celle in tabella richiede un’ora, un caricatore adatto e una fonte di energia adeguata. In condizioni ordinarie non occorre una Prova. Tempo e costo di una ricarica parziale sono proporzionali alle cariche ripristinate. Se la ricarica si interrompe, restano soltanto le cariche completate. Esempio: la cella ravvicinata ripristina una carica ogni 12 minuti, al costo di 8 per carica.",
+      "paragrafo": "§7.20.5",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "RA",
+      "costo": 450,
+      "cella": {
+        "capacita": 30,
+        "unita": "colpi",
+        "ricarica_costo": 90
+      },
+      "compatibile_con": [
+        "armi_distanza_corporative:hellblazer"
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "cella-intruder",
+      "nome": "Cella Intruder",
+      "tipo": "munizioni",
+      "catalogo": "Alleanza",
+      "famiglia": "Celle energetiche",
+      "nomi_alternativi": [],
+      "note_manuale": "Le celle tecnologiche sono riutilizzabili e si acquistano cariche. Il costo di ricarica comprende energia e materiali di servizio. Il produttore della cella non modifica danni, INC, SIN o proprietà dell’arma. Carica indica il prezzo della cella piena. Il formato ravvicinato da cinque cariche è comune ai modelli elencati sotto. Le tre celle delle armi a distanza sono invece specifiche: Hellblazer e Intruder non sono intercambiabili anche se entrambe contengono trenta colpi. Per le armi ravvicinate si dichiara l’attivazione prima dell’attacco e si applica la PS Riflessi per risparmiare la carica in caso di Prova per colpire fallita (§7.1.4). Un attacco riuscito ma poi evitato o assorbito consuma la carica. Ogni attivazione ordinaria consuma una carica; a zero cariche resta il profilo non attivato dell’arma. Per le armi a energia a distanza ogni colpo sparato consuma una carica anche se manca il bersaglio. AC non moltiplica il consumo e non è prevista la PS per risparmiare il colpo. A zero cariche l’arma non può sparare. Sostituzione e ricarica Sostituire una cella compatibile già pronta richiede 1 AzP, senza Prova, disponendo delle mani necessarie. Ricaricare da vuota una delle celle in tabella richiede un’ora, un caricatore adatto e una fonte di energia adeguata. In condizioni ordinarie non occorre una Prova. Tempo e costo di una ricarica parziale sono proporzionali alle cariche ripristinate. Se la ricarica si interrompe, restano soltanto le cariche completate. Esempio: la cella ravvicinata ripristina una carica ogni 12 minuti, al costo di 8 per carica.",
+      "paragrafo": "§7.20.5",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "RA",
+      "costo": 600,
+      "cella": {
+        "capacita": 30,
+        "unita": "colpi",
+        "ricarica_costo": 120
+      },
+      "compatibile_con": [
+        "armi_distanza_corporative:plasma-intruder"
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "caricatore-da-campo",
+      "nome": "Caricatore da campo",
+      "tipo": "altro",
+      "catalogo": "Commerciale",
+      "famiglia": "Celle energetiche",
+      "nomi_alternativi": [],
+      "note_manuale": "Caricatore da campo Costa 500, Reperibilità Non comune, PI 4, Qualità Comune e PS Integrità 10. Comprende i connettori per tutte le celle della tabella e ricarica una cella alla volta. Richiede una fonte esterna: non contiene una riserva propria. Non ricarica Chroma né converte PM personali in energia tecnologica. Riserve mistiche, PM e Chroma mantengono le regole del §7.5.1 e del Manuale della Magia. Robot, esoscheletri, propulsori e altri moduli seguono le capacità e le alimentazioni delle proprie schede; non adottano automaticamente questi formati. Le celle di trazione dei veicoli sono a base Chroma, non ricaricabili e sostituibili. Non adottano i tempi e i formati di ricarica delle celle delle armi. Alimentazione e autonomia dei mezzi seguono il Manuale dei Veicoli, §1.5, e le rispettive schede.",
+      "paragrafo": "§7.20.5",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 500,
+      "proprieta": []
+    },
+    {
+      "id": "combustibile-per-lanciafiamme",
+      "nome": "Combustibile per lanciafiamme",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Combustibile e serbatoi",
+      "nomi_alternativi": [],
+      "note_manuale": "Il combustibile standard è compatibile con tutti i lanciafiamme seguenti e si contabilizza in getti: una scorta da 10 getti costa 100, Reperibilità Non comune, pari a 10 per getto. Il serbatoio deve essere compatibile con il modello. Il prezzo dell’arma comprende il serbatoio, mentre il combustibile è separato. Ogni attacco consuma un getto anche se manca il bersaglio. AC 1d3 non moltiplica il consumo. Il combustibile non cambia danno, gittata, INC o proprietà del lanciafiamme. Sostituire un serbatoio compatibile già pieno e pronto richiede 1 AzP, entrambe le mani e nessuna Prova. Riempire un serbatoio dalle scorte richiede un minuto ogni 10 getti o frazione, senza Prova in condizioni ordinarie. Serbatoio e pieno si acquistano separatamente quando serve un ricambio aggiuntivo.",
+      "paragrafo": "§7.20.6",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "NC",
+      "costo": 10,
+      "munizione": {
+        "famiglia": "combustibile",
+        "confezione": {
+          "quantita": 10,
+          "costo": 100
+        }
+      },
+      "compatibile_con": [
+        "armi_distanza_corporative:lanciafiamme-nemesis-214",
+        "armi_distanza:lanciafiamme",
+        "armi_distanza_corporative:lanciafiamme-eruptor",
+        "armi_distanza_corporative:lanciafiamme-purifier",
+        "armi_distanza_corporative:gehemmapuker"
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "serbatoio-vuoto-nemesis-214",
+      "nome": "Serbatoio vuoto Nemesis 214",
+      "tipo": "munizioni",
+      "catalogo": "Fratellanza",
+      "famiglia": "Combustibile e serbatoi",
+      "nomi_alternativi": [],
+      "note_manuale": "Il combustibile standard è compatibile con tutti i lanciafiamme seguenti e si contabilizza in getti: una scorta da 10 getti costa 100, Reperibilità Non comune, pari a 10 per getto. Il serbatoio deve essere compatibile con il modello. Il prezzo dell’arma comprende il serbatoio, mentre il combustibile è separato. Ogni attacco consuma un getto anche se manca il bersaglio. AC 1d3 non moltiplica il consumo. Il combustibile non cambia danno, gittata, INC o proprietà del lanciafiamme. Sostituire un serbatoio compatibile già pieno e pronto richiede 1 AzP, entrambe le mani e nessuna Prova. Riempire un serbatoio dalle scorte richiede un minuto ogni 10 getti o frazione, senza Prova in condizioni ordinarie. Serbatoio e pieno si acquistano separatamente quando serve un ricambio aggiuntivo.",
+      "paragrafo": "§7.20.6",
+      "versione_manuale": "Armamenti 0.50",
+      "costo": 100,
+      "cella": {
+        "capacita": 5,
+        "unita": "getti",
+        "ricarica_costo": 50
+      },
+      "compatibile_con": [
+        "armi_distanza_corporative:lanciafiamme-nemesis-214"
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "serbatoio-vuoto-del-lanciafiamme-commerciale",
+      "nome": "Serbatoio vuoto del lanciafiamme commerciale",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Combustibile e serbatoi",
+      "nomi_alternativi": [],
+      "note_manuale": "Il combustibile standard è compatibile con tutti i lanciafiamme seguenti e si contabilizza in getti: una scorta da 10 getti costa 100, Reperibilità Non comune, pari a 10 per getto. Il serbatoio deve essere compatibile con il modello. Il prezzo dell’arma comprende il serbatoio, mentre il combustibile è separato. Ogni attacco consuma un getto anche se manca il bersaglio. AC 1d3 non moltiplica il consumo. Il combustibile non cambia danno, gittata, INC o proprietà del lanciafiamme. Sostituire un serbatoio compatibile già pieno e pronto richiede 1 AzP, entrambe le mani e nessuna Prova. Riempire un serbatoio dalle scorte richiede un minuto ogni 10 getti o frazione, senza Prova in condizioni ordinarie. Serbatoio e pieno si acquistano separatamente quando serve un ricambio aggiuntivo.",
+      "paragrafo": "§7.20.6",
+      "versione_manuale": "Armamenti 0.50",
+      "costo": 100,
+      "cella": {
+        "capacita": 10,
+        "unita": "getti",
+        "ricarica_costo": 100
+      },
+      "compatibile_con": [
+        "armi_distanza:lanciafiamme"
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "serbatoio-vuoto-eruptor",
+      "nome": "Serbatoio vuoto Eruptor",
+      "tipo": "munizioni",
+      "catalogo": "Fratellanza",
+      "famiglia": "Combustibile e serbatoi",
+      "nomi_alternativi": [],
+      "note_manuale": "Il combustibile standard è compatibile con tutti i lanciafiamme seguenti e si contabilizza in getti: una scorta da 10 getti costa 100, Reperibilità Non comune, pari a 10 per getto. Il serbatoio deve essere compatibile con il modello. Il prezzo dell’arma comprende il serbatoio, mentre il combustibile è separato. Ogni attacco consuma un getto anche se manca il bersaglio. AC 1d3 non moltiplica il consumo. Il combustibile non cambia danno, gittata, INC o proprietà del lanciafiamme. Sostituire un serbatoio compatibile già pieno e pronto richiede 1 AzP, entrambe le mani e nessuna Prova. Riempire un serbatoio dalle scorte richiede un minuto ogni 10 getti o frazione, senza Prova in condizioni ordinarie. Serbatoio e pieno si acquistano separatamente quando serve un ricambio aggiuntivo.",
+      "paragrafo": "§7.20.6",
+      "versione_manuale": "Armamenti 0.50",
+      "costo": 100,
+      "cella": {
+        "capacita": 10,
+        "unita": "getti",
+        "ricarica_costo": 100
+      },
+      "compatibile_con": [
+        "armi_distanza_corporative:lanciafiamme-eruptor"
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "serbatoio-vuoto-purifier",
+      "nome": "Serbatoio vuoto Purifier",
+      "tipo": "munizioni",
+      "catalogo": "Fratellanza",
+      "famiglia": "Combustibile e serbatoi",
+      "nomi_alternativi": [],
+      "note_manuale": "Il combustibile standard è compatibile con tutti i lanciafiamme seguenti e si contabilizza in getti: una scorta da 10 getti costa 100, Reperibilità Non comune, pari a 10 per getto. Il serbatoio deve essere compatibile con il modello. Il prezzo dell’arma comprende il serbatoio, mentre il combustibile è separato. Ogni attacco consuma un getto anche se manca il bersaglio. AC 1d3 non moltiplica il consumo. Il combustibile non cambia danno, gittata, INC o proprietà del lanciafiamme. Sostituire un serbatoio compatibile già pieno e pronto richiede 1 AzP, entrambe le mani e nessuna Prova. Riempire un serbatoio dalle scorte richiede un minuto ogni 10 getti o frazione, senza Prova in condizioni ordinarie. Serbatoio e pieno si acquistano separatamente quando serve un ricambio aggiuntivo.",
+      "paragrafo": "§7.20.6",
+      "versione_manuale": "Armamenti 0.50",
+      "costo": 150,
+      "cella": {
+        "capacita": 15,
+        "unita": "getti",
+        "ricarica_costo": 150
+      },
+      "compatibile_con": [
+        "armi_distanza_corporative:lanciafiamme-purifier"
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "serbatoio-vuoto-gehemmapuker",
+      "nome": "Serbatoio vuoto Gehemmapuker",
+      "tipo": "munizioni",
+      "catalogo": "Alleanza",
+      "famiglia": "Combustibile e serbatoi",
+      "nomi_alternativi": [],
+      "note_manuale": "Il combustibile standard è compatibile con tutti i lanciafiamme seguenti e si contabilizza in getti: una scorta da 10 getti costa 100, Reperibilità Non comune, pari a 10 per getto. Il serbatoio deve essere compatibile con il modello. Il prezzo dell’arma comprende il serbatoio, mentre il combustibile è separato. Ogni attacco consuma un getto anche se manca il bersaglio. AC 1d3 non moltiplica il consumo. Il combustibile non cambia danno, gittata, INC o proprietà del lanciafiamme. Sostituire un serbatoio compatibile già pieno e pronto richiede 1 AzP, entrambe le mani e nessuna Prova. Riempire un serbatoio dalle scorte richiede un minuto ogni 10 getti o frazione, senza Prova in condizioni ordinarie. Serbatoio e pieno si acquistano separatamente quando serve un ricambio aggiuntivo.",
+      "paragrafo": "§7.20.6",
+      "versione_manuale": "Armamenti 0.50",
+      "costo": 500,
+      "cella": {
+        "capacita": 50,
+        "unita": "getti",
+        "ricarica_costo": 500
+      },
+      "compatibile_con": [
+        "armi_distanza_corporative:gehemmapuker"
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "proiettili-da-pistola-perforante-1",
+      "nome": "Proiettili da pistola, perforante 1",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Munizioni speciali",
+      "nomi_alternativi": [],
+      "note_manuale": "Le varianti speciali mantengono capacità del caricatore, gittata, INC e modalità di tiro della munizione ordinaria. Ogni proiettile o cartuccia ha una sola variante: non si costruiscono munizioni ibride sommando effetti e prezzi. Restano le proprietà native pertinenti dell’arma, senza duplicare la stessa proprietà. Le confezioni speciali contengono dieci munizioni e costano dieci volte il prezzo unitario. Le varianti seguenti non si trasferiscono automaticamente a celle, dardi chimici, frecce, dardi da balestra, granate o razzi. Le Contromisure seguono il §5.24 del Manuale del Giocatore: si considera la soglia pertinente maggiore, appartenente a una protezione che abbia contribuito almeno 1 AR all’assorbimento. Una PS riuscita contro l’effetto secondario non annulla il danno già inflitto.",
+      "paragrafo": "§7.20.7",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "RA",
+      "costo": 6,
+      "munizione": {
+        "famiglia": "pistola",
+        "variante": "Perforante 1",
+        "confezione": {
+          "quantita": 10,
+          "costo": 60
+        }
+      },
+      "proprieta": [
+        {
+          "nome": "Perforante 1",
+          "testo": "Perforante X Ignora X punti dell’AR non magica applicabile, compreso il contributo ordinario dello Scudo, fino a un minimo di 0 per questa componente. La componente magica rimane interamente applicabile. L’effetto si risolve per ogni colpo e non infligge danni aggiuntivi a bersagli senza armatura né perdite automatiche di PI. Perforante dell’arma e della munizione non si sommano: si applica il valore maggiore. Contro AR 5 interamente ordinaria, Perforante 1 lascia AR 4 e Perforante 2 lascia AR 3. Contro AR 2 interamente magica, entrambe lasciano AR 2. Le cartucce a pallini non hanno una variante Perforante in questo catalogo."
+        }
+      ]
+    },
+    {
+      "id": "proiettili-da-pistola-perforante-2",
+      "nome": "Proiettili da pistola, perforante 2",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Munizioni speciali",
+      "nomi_alternativi": [],
+      "note_manuale": "Le varianti speciali mantengono capacità del caricatore, gittata, INC e modalità di tiro della munizione ordinaria. Ogni proiettile o cartuccia ha una sola variante: non si costruiscono munizioni ibride sommando effetti e prezzi. Restano le proprietà native pertinenti dell’arma, senza duplicare la stessa proprietà. Le confezioni speciali contengono dieci munizioni e costano dieci volte il prezzo unitario. Le varianti seguenti non si trasferiscono automaticamente a celle, dardi chimici, frecce, dardi da balestra, granate o razzi. Le Contromisure seguono il §5.24 del Manuale del Giocatore: si considera la soglia pertinente maggiore, appartenente a una protezione che abbia contribuito almeno 1 AR all’assorbimento. Una PS riuscita contro l’effetto secondario non annulla il danno già inflitto.",
+      "paragrafo": "§7.20.7",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "MR",
+      "costo": 12,
+      "munizione": {
+        "famiglia": "pistola",
+        "variante": "Perforante 2",
+        "confezione": {
+          "quantita": 10,
+          "costo": 120
+        }
+      },
+      "proprieta": [
+        {
+          "nome": "Perforante 2",
+          "testo": "Perforante X Ignora X punti dell’AR non magica applicabile, compreso il contributo ordinario dello Scudo, fino a un minimo di 0 per questa componente. La componente magica rimane interamente applicabile. L’effetto si risolve per ogni colpo e non infligge danni aggiuntivi a bersagli senza armatura né perdite automatiche di PI. Perforante dell’arma e della munizione non si sommano: si applica il valore maggiore. Contro AR 5 interamente ordinaria, Perforante 1 lascia AR 4 e Perforante 2 lascia AR 3. Contro AR 2 interamente magica, entrambe lasciano AR 2. Le cartucce a pallini non hanno una variante Perforante in questo catalogo."
+        }
+      ]
+    },
+    {
+      "id": "proiettili-da-pistola-incendiaria",
+      "nome": "Proiettili da pistola, incendiaria",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Munizioni speciali",
+      "nomi_alternativi": [],
+      "note_manuale": "Le varianti speciali mantengono capacità del caricatore, gittata, INC e modalità di tiro della munizione ordinaria. Ogni proiettile o cartuccia ha una sola variante: non si costruiscono munizioni ibride sommando effetti e prezzi. Restano le proprietà native pertinenti dell’arma, senza duplicare la stessa proprietà. Le confezioni speciali contengono dieci munizioni e costano dieci volte il prezzo unitario. Le varianti seguenti non si trasferiscono automaticamente a celle, dardi chimici, frecce, dardi da balestra, granate o razzi. Le Contromisure seguono il §5.24 del Manuale del Giocatore: si considera la soglia pertinente maggiore, appartenente a una protezione che abbia contribuito almeno 1 AR all’assorbimento. Una PS riuscita contro l’effetto secondario non annulla il danno già inflitto.",
+      "paragrafo": "§7.20.7",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "RA",
+      "costo": 8,
+      "munizione": {
+        "famiglia": "pistola",
+        "variante": "Incendiaria",
+        "confezione": {
+          "quantita": 10,
+          "costo": 80
+        }
+      },
+      "proprieta": [
+        {
+          "nome": "Incendiaria",
+          "testo": "Incendiaria Riduce di 1 il danno base di ogni colpo o applicazione, prima di moltiplicatori, Difese e AR, fino a un minimo di 0, e aggiunge Fuoco. Dopo l’AR, se resta almeno 1 danno e il residuo supera l’eventuale Ignifugo X, il bersaglio effettua una PS Riflessi. Il Successo evita lo Stato; il Fallimento applica Incendiato per 1+1d3 Round. Incendiato infligge 1d4 danni immediati e periodici e impone −2 VA, con ricorrenze ed estinzione del §5.24 del Manuale del Giocatore. Il −1 della munizione non riduce questi danni periodici. Si effettua una sola PS per bersaglio e attacco; i residui di più applicazioni non si sommano per superare Ignifugo. Applicazioni ripetute conservano la scadenza più lontana senza sommare danni o penalità dello Stato."
+        }
+      ]
+    },
+    {
+      "id": "proiettili-da-pistola-concussiva",
+      "nome": "Proiettili da pistola, concussiva",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Munizioni speciali",
+      "nomi_alternativi": [],
+      "note_manuale": "Le varianti speciali mantengono capacità del caricatore, gittata, INC e modalità di tiro della munizione ordinaria. Ogni proiettile o cartuccia ha una sola variante: non si costruiscono munizioni ibride sommando effetti e prezzi. Restano le proprietà native pertinenti dell’arma, senza duplicare la stessa proprietà. Le confezioni speciali contengono dieci munizioni e costano dieci volte il prezzo unitario. Le varianti seguenti non si trasferiscono automaticamente a celle, dardi chimici, frecce, dardi da balestra, granate o razzi. Le Contromisure seguono il §5.24 del Manuale del Giocatore: si considera la soglia pertinente maggiore, appartenente a una protezione che abbia contribuito almeno 1 AR all’assorbimento. Una PS riuscita contro l’effetto secondario non annulla il danno già inflitto.",
+      "paragrafo": "§7.20.7",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "RA",
+      "costo": 6,
+      "munizione": {
+        "famiglia": "pistola",
+        "variante": "Concussiva",
+        "confezione": {
+          "quantita": 10,
+          "costo": 60
+        }
+      },
+      "proprieta": [
+        {
+          "nome": "Concussiva",
+          "testo": "Concussiva Mantiene il danno ordinario e aggiunge Concussivo. Dopo l’AR, se resta almeno 1 danno e il residuo supera l’eventuale Imbottita X, il bersaglio effettua una PS Tempra. Il Successo evita l’effetto secondario; il Fallimento impone −2 VA alle sole Prove di Difese per 1+1d3 Round. La penalità non riduce AR o PS, non modifica Elusione e non applica automaticamente Stordito o A terra. Si effettua una sola PS per bersaglio e attacco; i residui non si sommano per superare Imbottita. Applicazioni ripetute mantengono la scadenza più lontana senza sommare le penalità."
+        }
+      ]
+    },
+    {
+      "id": "proiettili-da-fucile-perforante-1",
+      "nome": "Proiettili da fucile, perforante 1",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Munizioni speciali",
+      "nomi_alternativi": [],
+      "note_manuale": "Le varianti speciali mantengono capacità del caricatore, gittata, INC e modalità di tiro della munizione ordinaria. Ogni proiettile o cartuccia ha una sola variante: non si costruiscono munizioni ibride sommando effetti e prezzi. Restano le proprietà native pertinenti dell’arma, senza duplicare la stessa proprietà. Le confezioni speciali contengono dieci munizioni e costano dieci volte il prezzo unitario. Le varianti seguenti non si trasferiscono automaticamente a celle, dardi chimici, frecce, dardi da balestra, granate o razzi. Le Contromisure seguono il §5.24 del Manuale del Giocatore: si considera la soglia pertinente maggiore, appartenente a una protezione che abbia contribuito almeno 1 AR all’assorbimento. Una PS riuscita contro l’effetto secondario non annulla il danno già inflitto.",
+      "paragrafo": "§7.20.7",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "RA",
+      "costo": 9,
+      "munizione": {
+        "famiglia": "fucile",
+        "variante": "Perforante 1",
+        "confezione": {
+          "quantita": 10,
+          "costo": 90
+        }
+      },
+      "proprieta": [
+        {
+          "nome": "Perforante 1",
+          "testo": "Perforante X Ignora X punti dell’AR non magica applicabile, compreso il contributo ordinario dello Scudo, fino a un minimo di 0 per questa componente. La componente magica rimane interamente applicabile. L’effetto si risolve per ogni colpo e non infligge danni aggiuntivi a bersagli senza armatura né perdite automatiche di PI. Perforante dell’arma e della munizione non si sommano: si applica il valore maggiore. Contro AR 5 interamente ordinaria, Perforante 1 lascia AR 4 e Perforante 2 lascia AR 3. Contro AR 2 interamente magica, entrambe lasciano AR 2. Le cartucce a pallini non hanno una variante Perforante in questo catalogo."
+        }
+      ]
+    },
+    {
+      "id": "proiettili-da-fucile-perforante-2",
+      "nome": "Proiettili da fucile, perforante 2",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Munizioni speciali",
+      "nomi_alternativi": [],
+      "note_manuale": "Le varianti speciali mantengono capacità del caricatore, gittata, INC e modalità di tiro della munizione ordinaria. Ogni proiettile o cartuccia ha una sola variante: non si costruiscono munizioni ibride sommando effetti e prezzi. Restano le proprietà native pertinenti dell’arma, senza duplicare la stessa proprietà. Le confezioni speciali contengono dieci munizioni e costano dieci volte il prezzo unitario. Le varianti seguenti non si trasferiscono automaticamente a celle, dardi chimici, frecce, dardi da balestra, granate o razzi. Le Contromisure seguono il §5.24 del Manuale del Giocatore: si considera la soglia pertinente maggiore, appartenente a una protezione che abbia contribuito almeno 1 AR all’assorbimento. Una PS riuscita contro l’effetto secondario non annulla il danno già inflitto.",
+      "paragrafo": "§7.20.7",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "MR",
+      "costo": 18,
+      "munizione": {
+        "famiglia": "fucile",
+        "variante": "Perforante 2",
+        "confezione": {
+          "quantita": 10,
+          "costo": 180
+        }
+      },
+      "proprieta": [
+        {
+          "nome": "Perforante 2",
+          "testo": "Perforante X Ignora X punti dell’AR non magica applicabile, compreso il contributo ordinario dello Scudo, fino a un minimo di 0 per questa componente. La componente magica rimane interamente applicabile. L’effetto si risolve per ogni colpo e non infligge danni aggiuntivi a bersagli senza armatura né perdite automatiche di PI. Perforante dell’arma e della munizione non si sommano: si applica il valore maggiore. Contro AR 5 interamente ordinaria, Perforante 1 lascia AR 4 e Perforante 2 lascia AR 3. Contro AR 2 interamente magica, entrambe lasciano AR 2. Le cartucce a pallini non hanno una variante Perforante in questo catalogo."
+        }
+      ]
+    },
+    {
+      "id": "proiettili-da-fucile-incendiaria",
+      "nome": "Proiettili da fucile, incendiaria",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Munizioni speciali",
+      "nomi_alternativi": [],
+      "note_manuale": "Le varianti speciali mantengono capacità del caricatore, gittata, INC e modalità di tiro della munizione ordinaria. Ogni proiettile o cartuccia ha una sola variante: non si costruiscono munizioni ibride sommando effetti e prezzi. Restano le proprietà native pertinenti dell’arma, senza duplicare la stessa proprietà. Le confezioni speciali contengono dieci munizioni e costano dieci volte il prezzo unitario. Le varianti seguenti non si trasferiscono automaticamente a celle, dardi chimici, frecce, dardi da balestra, granate o razzi. Le Contromisure seguono il §5.24 del Manuale del Giocatore: si considera la soglia pertinente maggiore, appartenente a una protezione che abbia contribuito almeno 1 AR all’assorbimento. Una PS riuscita contro l’effetto secondario non annulla il danno già inflitto.",
+      "paragrafo": "§7.20.7",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "RA",
+      "costo": 12,
+      "munizione": {
+        "famiglia": "fucile",
+        "variante": "Incendiaria",
+        "confezione": {
+          "quantita": 10,
+          "costo": 120
+        }
+      },
+      "proprieta": [
+        {
+          "nome": "Incendiaria",
+          "testo": "Incendiaria Riduce di 1 il danno base di ogni colpo o applicazione, prima di moltiplicatori, Difese e AR, fino a un minimo di 0, e aggiunge Fuoco. Dopo l’AR, se resta almeno 1 danno e il residuo supera l’eventuale Ignifugo X, il bersaglio effettua una PS Riflessi. Il Successo evita lo Stato; il Fallimento applica Incendiato per 1+1d3 Round. Incendiato infligge 1d4 danni immediati e periodici e impone −2 VA, con ricorrenze ed estinzione del §5.24 del Manuale del Giocatore. Il −1 della munizione non riduce questi danni periodici. Si effettua una sola PS per bersaglio e attacco; i residui di più applicazioni non si sommano per superare Ignifugo. Applicazioni ripetute conservano la scadenza più lontana senza sommare danni o penalità dello Stato."
+        }
+      ]
+    },
+    {
+      "id": "proiettili-da-fucile-concussiva",
+      "nome": "Proiettili da fucile, concussiva",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Munizioni speciali",
+      "nomi_alternativi": [],
+      "note_manuale": "Le varianti speciali mantengono capacità del caricatore, gittata, INC e modalità di tiro della munizione ordinaria. Ogni proiettile o cartuccia ha una sola variante: non si costruiscono munizioni ibride sommando effetti e prezzi. Restano le proprietà native pertinenti dell’arma, senza duplicare la stessa proprietà. Le confezioni speciali contengono dieci munizioni e costano dieci volte il prezzo unitario. Le varianti seguenti non si trasferiscono automaticamente a celle, dardi chimici, frecce, dardi da balestra, granate o razzi. Le Contromisure seguono il §5.24 del Manuale del Giocatore: si considera la soglia pertinente maggiore, appartenente a una protezione che abbia contribuito almeno 1 AR all’assorbimento. Una PS riuscita contro l’effetto secondario non annulla il danno già inflitto.",
+      "paragrafo": "§7.20.7",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "RA",
+      "costo": 9,
+      "munizione": {
+        "famiglia": "fucile",
+        "variante": "Concussiva",
+        "confezione": {
+          "quantita": 10,
+          "costo": 90
+        }
+      },
+      "proprieta": [
+        {
+          "nome": "Concussiva",
+          "testo": "Concussiva Mantiene il danno ordinario e aggiunge Concussivo. Dopo l’AR, se resta almeno 1 danno e il residuo supera l’eventuale Imbottita X, il bersaglio effettua una PS Tempra. Il Successo evita l’effetto secondario; il Fallimento impone −2 VA alle sole Prove di Difese per 1+1d3 Round. La penalità non riduce AR o PS, non modifica Elusione e non applica automaticamente Stordito o A terra. Si effettua una sola PS per bersaglio e attacco; i residui non si sommano per superare Imbottita. Applicazioni ripetute mantengono la scadenza più lontana senza sommare le penalità."
+        }
+      ]
+    },
+    {
+      "id": "proiettili-pesanti-perforante-1",
+      "nome": "Proiettili pesanti, perforante 1",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Munizioni speciali",
+      "nomi_alternativi": [],
+      "note_manuale": "Le varianti speciali mantengono capacità del caricatore, gittata, INC e modalità di tiro della munizione ordinaria. Ogni proiettile o cartuccia ha una sola variante: non si costruiscono munizioni ibride sommando effetti e prezzi. Restano le proprietà native pertinenti dell’arma, senza duplicare la stessa proprietà. Le confezioni speciali contengono dieci munizioni e costano dieci volte il prezzo unitario. Le varianti seguenti non si trasferiscono automaticamente a celle, dardi chimici, frecce, dardi da balestra, granate o razzi. Le Contromisure seguono il §5.24 del Manuale del Giocatore: si considera la soglia pertinente maggiore, appartenente a una protezione che abbia contribuito almeno 1 AR all’assorbimento. Una PS riuscita contro l’effetto secondario non annulla il danno già inflitto.",
+      "paragrafo": "§7.20.7",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "RA",
+      "costo": 24,
+      "munizione": {
+        "famiglia": "pesanti",
+        "variante": "Perforante 1",
+        "confezione": {
+          "quantita": 10,
+          "costo": 240
+        }
+      },
+      "proprieta": [
+        {
+          "nome": "Perforante 1",
+          "testo": "Perforante X Ignora X punti dell’AR non magica applicabile, compreso il contributo ordinario dello Scudo, fino a un minimo di 0 per questa componente. La componente magica rimane interamente applicabile. L’effetto si risolve per ogni colpo e non infligge danni aggiuntivi a bersagli senza armatura né perdite automatiche di PI. Perforante dell’arma e della munizione non si sommano: si applica il valore maggiore. Contro AR 5 interamente ordinaria, Perforante 1 lascia AR 4 e Perforante 2 lascia AR 3. Contro AR 2 interamente magica, entrambe lasciano AR 2. Le cartucce a pallini non hanno una variante Perforante in questo catalogo."
+        }
+      ]
+    },
+    {
+      "id": "proiettili-pesanti-perforante-2",
+      "nome": "Proiettili pesanti, perforante 2",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Munizioni speciali",
+      "nomi_alternativi": [],
+      "note_manuale": "Le varianti speciali mantengono capacità del caricatore, gittata, INC e modalità di tiro della munizione ordinaria. Ogni proiettile o cartuccia ha una sola variante: non si costruiscono munizioni ibride sommando effetti e prezzi. Restano le proprietà native pertinenti dell’arma, senza duplicare la stessa proprietà. Le confezioni speciali contengono dieci munizioni e costano dieci volte il prezzo unitario. Le varianti seguenti non si trasferiscono automaticamente a celle, dardi chimici, frecce, dardi da balestra, granate o razzi. Le Contromisure seguono il §5.24 del Manuale del Giocatore: si considera la soglia pertinente maggiore, appartenente a una protezione che abbia contribuito almeno 1 AR all’assorbimento. Una PS riuscita contro l’effetto secondario non annulla il danno già inflitto.",
+      "paragrafo": "§7.20.7",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "MR",
+      "costo": 48,
+      "munizione": {
+        "famiglia": "pesanti",
+        "variante": "Perforante 2",
+        "confezione": {
+          "quantita": 10,
+          "costo": 480
+        }
+      },
+      "proprieta": [
+        {
+          "nome": "Perforante 2",
+          "testo": "Perforante X Ignora X punti dell’AR non magica applicabile, compreso il contributo ordinario dello Scudo, fino a un minimo di 0 per questa componente. La componente magica rimane interamente applicabile. L’effetto si risolve per ogni colpo e non infligge danni aggiuntivi a bersagli senza armatura né perdite automatiche di PI. Perforante dell’arma e della munizione non si sommano: si applica il valore maggiore. Contro AR 5 interamente ordinaria, Perforante 1 lascia AR 4 e Perforante 2 lascia AR 3. Contro AR 2 interamente magica, entrambe lasciano AR 2. Le cartucce a pallini non hanno una variante Perforante in questo catalogo."
+        }
+      ]
+    },
+    {
+      "id": "proiettili-pesanti-incendiaria",
+      "nome": "Proiettili pesanti, incendiaria",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Munizioni speciali",
+      "nomi_alternativi": [],
+      "note_manuale": "Le varianti speciali mantengono capacità del caricatore, gittata, INC e modalità di tiro della munizione ordinaria. Ogni proiettile o cartuccia ha una sola variante: non si costruiscono munizioni ibride sommando effetti e prezzi. Restano le proprietà native pertinenti dell’arma, senza duplicare la stessa proprietà. Le confezioni speciali contengono dieci munizioni e costano dieci volte il prezzo unitario. Le varianti seguenti non si trasferiscono automaticamente a celle, dardi chimici, frecce, dardi da balestra, granate o razzi. Le Contromisure seguono il §5.24 del Manuale del Giocatore: si considera la soglia pertinente maggiore, appartenente a una protezione che abbia contribuito almeno 1 AR all’assorbimento. Una PS riuscita contro l’effetto secondario non annulla il danno già inflitto.",
+      "paragrafo": "§7.20.7",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "RA",
+      "costo": 32,
+      "munizione": {
+        "famiglia": "pesanti",
+        "variante": "Incendiaria",
+        "confezione": {
+          "quantita": 10,
+          "costo": 320
+        }
+      },
+      "proprieta": [
+        {
+          "nome": "Incendiaria",
+          "testo": "Incendiaria Riduce di 1 il danno base di ogni colpo o applicazione, prima di moltiplicatori, Difese e AR, fino a un minimo di 0, e aggiunge Fuoco. Dopo l’AR, se resta almeno 1 danno e il residuo supera l’eventuale Ignifugo X, il bersaglio effettua una PS Riflessi. Il Successo evita lo Stato; il Fallimento applica Incendiato per 1+1d3 Round. Incendiato infligge 1d4 danni immediati e periodici e impone −2 VA, con ricorrenze ed estinzione del §5.24 del Manuale del Giocatore. Il −1 della munizione non riduce questi danni periodici. Si effettua una sola PS per bersaglio e attacco; i residui di più applicazioni non si sommano per superare Ignifugo. Applicazioni ripetute conservano la scadenza più lontana senza sommare danni o penalità dello Stato."
+        }
+      ]
+    },
+    {
+      "id": "proiettili-pesanti-concussiva",
+      "nome": "Proiettili pesanti, concussiva",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Munizioni speciali",
+      "nomi_alternativi": [],
+      "note_manuale": "Le varianti speciali mantengono capacità del caricatore, gittata, INC e modalità di tiro della munizione ordinaria. Ogni proiettile o cartuccia ha una sola variante: non si costruiscono munizioni ibride sommando effetti e prezzi. Restano le proprietà native pertinenti dell’arma, senza duplicare la stessa proprietà. Le confezioni speciali contengono dieci munizioni e costano dieci volte il prezzo unitario. Le varianti seguenti non si trasferiscono automaticamente a celle, dardi chimici, frecce, dardi da balestra, granate o razzi. Le Contromisure seguono il §5.24 del Manuale del Giocatore: si considera la soglia pertinente maggiore, appartenente a una protezione che abbia contribuito almeno 1 AR all’assorbimento. Una PS riuscita contro l’effetto secondario non annulla il danno già inflitto.",
+      "paragrafo": "§7.20.7",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "RA",
+      "costo": 24,
+      "munizione": {
+        "famiglia": "pesanti",
+        "variante": "Concussiva",
+        "confezione": {
+          "quantita": 10,
+          "costo": 240
+        }
+      },
+      "proprieta": [
+        {
+          "nome": "Concussiva",
+          "testo": "Concussiva Mantiene il danno ordinario e aggiunge Concussivo. Dopo l’AR, se resta almeno 1 danno e il residuo supera l’eventuale Imbottita X, il bersaglio effettua una PS Tempra. Il Successo evita l’effetto secondario; il Fallimento impone −2 VA alle sole Prove di Difese per 1+1d3 Round. La penalità non riduce AR o PS, non modifica Elusione e non applica automaticamente Stordito o A terra. Si effettua una sola PS per bersaglio e attacco; i residui non si sommano per superare Imbottita. Applicazioni ripetute mantengono la scadenza più lontana senza sommare le penalità."
+        }
+      ]
+    },
+    {
+      "id": "cartucce-a-pallini-incendiaria",
+      "nome": "Cartucce a pallini, incendiaria",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Munizioni speciali",
+      "nomi_alternativi": [],
+      "note_manuale": "Le varianti speciali mantengono capacità del caricatore, gittata, INC e modalità di tiro della munizione ordinaria. Ogni proiettile o cartuccia ha una sola variante: non si costruiscono munizioni ibride sommando effetti e prezzi. Restano le proprietà native pertinenti dell’arma, senza duplicare la stessa proprietà. Le confezioni speciali contengono dieci munizioni e costano dieci volte il prezzo unitario. Le varianti seguenti non si trasferiscono automaticamente a celle, dardi chimici, frecce, dardi da balestra, granate o razzi. Le Contromisure seguono il §5.24 del Manuale del Giocatore: si considera la soglia pertinente maggiore, appartenente a una protezione che abbia contribuito almeno 1 AR all’assorbimento. Una PS riuscita contro l’effetto secondario non annulla il danno già inflitto.",
+      "paragrafo": "§7.20.7",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "RA",
+      "costo": 16,
+      "munizione": {
+        "famiglia": "pallini",
+        "variante": "Incendiaria",
+        "confezione": {
+          "quantita": 10,
+          "costo": 160
+        }
+      },
+      "proprieta": [
+        {
+          "nome": "Incendiaria",
+          "testo": "Incendiaria Riduce di 1 il danno base di ogni colpo o applicazione, prima di moltiplicatori, Difese e AR, fino a un minimo di 0, e aggiunge Fuoco. Dopo l’AR, se resta almeno 1 danno e il residuo supera l’eventuale Ignifugo X, il bersaglio effettua una PS Riflessi. Il Successo evita lo Stato; il Fallimento applica Incendiato per 1+1d3 Round. Incendiato infligge 1d4 danni immediati e periodici e impone −2 VA, con ricorrenze ed estinzione del §5.24 del Manuale del Giocatore. Il −1 della munizione non riduce questi danni periodici. Si effettua una sola PS per bersaglio e attacco; i residui di più applicazioni non si sommano per superare Ignifugo. Applicazioni ripetute conservano la scadenza più lontana senza sommare danni o penalità dello Stato."
+        }
+      ]
+    },
+    {
+      "id": "cartucce-a-pallini-concussiva",
+      "nome": "Cartucce a pallini, concussiva",
+      "tipo": "munizioni",
+      "catalogo": "Commerciale",
+      "famiglia": "Munizioni speciali",
+      "nomi_alternativi": [],
+      "note_manuale": "Le varianti speciali mantengono capacità del caricatore, gittata, INC e modalità di tiro della munizione ordinaria. Ogni proiettile o cartuccia ha una sola variante: non si costruiscono munizioni ibride sommando effetti e prezzi. Restano le proprietà native pertinenti dell’arma, senza duplicare la stessa proprietà. Le confezioni speciali contengono dieci munizioni e costano dieci volte il prezzo unitario. Le varianti seguenti non si trasferiscono automaticamente a celle, dardi chimici, frecce, dardi da balestra, granate o razzi. Le Contromisure seguono il §5.24 del Manuale del Giocatore: si considera la soglia pertinente maggiore, appartenente a una protezione che abbia contribuito almeno 1 AR all’assorbimento. Una PS riuscita contro l’effetto secondario non annulla il danno già inflitto.",
+      "paragrafo": "§7.20.7",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "RA",
+      "costo": 12,
+      "munizione": {
+        "famiglia": "pallini",
+        "variante": "Concussiva",
+        "confezione": {
+          "quantita": 10,
+          "costo": 120
+        }
+      },
+      "proprieta": [
+        {
+          "nome": "Concussiva",
+          "testo": "Concussiva Mantiene il danno ordinario e aggiunge Concussivo. Dopo l’AR, se resta almeno 1 danno e il residuo supera l’eventuale Imbottita X, il bersaglio effettua una PS Tempra. Il Successo evita l’effetto secondario; il Fallimento impone −2 VA alle sole Prove di Difese per 1+1d3 Round. La penalità non riduce AR o PS, non modifica Elusione e non applica automaticamente Stordito o A terra. Si effettua una sola PS per bersaglio e attacco; i residui non si sommano per superare Imbottita. Applicazioni ripetute mantengono la scadenza più lontana senza sommare le penalità."
+        }
+      ]
+    },
+    {
+      "id": "cartucce-nimrod",
+      "nome": "Cartucce Nimrod",
+      "tipo": "munizioni",
+      "catalogo": "Alleanza",
+      "famiglia": "Munizioni ordinarie",
+      "nomi_alternativi": [],
+      "note_manuale": "Nimrod Autocannon Il Nimrod impiega cartucce per autocannone dedicate. La munizione ordinaria mantiene il profilo dell’arma: danno 2d8+5, AC 1, bersaglio singolo e capacità di 300 colpi. Non usa proiettili pesanti ordinari e non genera automaticamente un’esplosione.",
+      "paragrafo": "§7.20.9",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "RA",
+      "costo": 20,
+      "munizione": {
+        "famiglia": "nimrod",
+        "confezione": {
+          "quantita": 20,
+          "costo": 400
+        }
+      },
+      "compatibile_con": [
+        "armi_distanza_corporative:nimrod-autocannon"
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "cartucce-nimrod-perforante-1",
+      "nome": "Cartucce Nimrod, perforante 1",
+      "tipo": "munizioni",
+      "catalogo": "Alleanza",
+      "famiglia": "Munizioni speciali",
+      "nomi_alternativi": [],
+      "note_manuale": "Nimrod Autocannon Il Nimrod impiega cartucce per autocannone dedicate. La munizione ordinaria mantiene il profilo dell’arma: danno 2d8+5, AC 1, bersaglio singolo e capacità di 300 colpi. Non usa proiettili pesanti ordinari e non genera automaticamente un’esplosione.",
+      "paragrafo": "§7.20.9",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "RA",
+      "costo": 60,
+      "munizione": {
+        "famiglia": "nimrod",
+        "variante": "Perforante 1",
+        "confezione": {
+          "quantita": 10,
+          "costo": 600
+        }
+      },
+      "compatibile_con": [
+        "armi_distanza_corporative:nimrod-autocannon"
+      ],
+      "proprieta": [
+        {
+          "nome": "Perforante 1",
+          "testo": "Perforante X Ignora X punti dell’AR non magica applicabile, compreso il contributo ordinario dello Scudo, fino a un minimo di 0 per questa componente. La componente magica rimane interamente applicabile. L’effetto si risolve per ogni colpo e non infligge danni aggiuntivi a bersagli senza armatura né perdite automatiche di PI. Perforante dell’arma e della munizione non si sommano: si applica il valore maggiore. Contro AR 5 interamente ordinaria, Perforante 1 lascia AR 4 e Perforante 2 lascia AR 3. Contro AR 2 interamente magica, entrambe lasciano AR 2. Le cartucce a pallini non hanno una variante Perforante in questo catalogo."
+        }
+      ]
+    },
+    {
+      "id": "cartucce-nimrod-perforante-2",
+      "nome": "Cartucce Nimrod, perforante 2",
+      "tipo": "munizioni",
+      "catalogo": "Alleanza",
+      "famiglia": "Munizioni speciali",
+      "nomi_alternativi": [],
+      "note_manuale": "Nimrod Autocannon Il Nimrod impiega cartucce per autocannone dedicate. La munizione ordinaria mantiene il profilo dell’arma: danno 2d8+5, AC 1, bersaglio singolo e capacità di 300 colpi. Non usa proiettili pesanti ordinari e non genera automaticamente un’esplosione.",
+      "paragrafo": "§7.20.9",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "MR",
+      "costo": 120,
+      "munizione": {
+        "famiglia": "nimrod",
+        "variante": "Perforante 2",
+        "confezione": {
+          "quantita": 10,
+          "costo": 1200
+        }
+      },
+      "compatibile_con": [
+        "armi_distanza_corporative:nimrod-autocannon"
+      ],
+      "proprieta": [
+        {
+          "nome": "Perforante 2",
+          "testo": "Perforante X Ignora X punti dell’AR non magica applicabile, compreso il contributo ordinario dello Scudo, fino a un minimo di 0 per questa componente. La componente magica rimane interamente applicabile. L’effetto si risolve per ogni colpo e non infligge danni aggiuntivi a bersagli senza armatura né perdite automatiche di PI. Perforante dell’arma e della munizione non si sommano: si applica il valore maggiore. Contro AR 5 interamente ordinaria, Perforante 1 lascia AR 4 e Perforante 2 lascia AR 3. Contro AR 2 interamente magica, entrambe lasciano AR 2. Le cartucce a pallini non hanno una variante Perforante in questo catalogo."
+        }
+      ]
+    },
+    {
+      "id": "cartucce-nimrod-incendiaria",
+      "nome": "Cartucce Nimrod, incendiaria",
+      "tipo": "munizioni",
+      "catalogo": "Alleanza",
+      "famiglia": "Munizioni speciali",
+      "nomi_alternativi": [],
+      "note_manuale": "Nimrod Autocannon Il Nimrod impiega cartucce per autocannone dedicate. La munizione ordinaria mantiene il profilo dell’arma: danno 2d8+5, AC 1, bersaglio singolo e capacità di 300 colpi. Non usa proiettili pesanti ordinari e non genera automaticamente un’esplosione.",
+      "paragrafo": "§7.20.9",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "RA",
+      "costo": 80,
+      "munizione": {
+        "famiglia": "nimrod",
+        "variante": "Incendiaria",
+        "confezione": {
+          "quantita": 10,
+          "costo": 800
+        }
+      },
+      "compatibile_con": [
+        "armi_distanza_corporative:nimrod-autocannon"
+      ],
+      "proprieta": [
+        {
+          "nome": "Incendiaria",
+          "testo": "Incendiaria Riduce di 1 il danno base di ogni colpo o applicazione, prima di moltiplicatori, Difese e AR, fino a un minimo di 0, e aggiunge Fuoco. Dopo l’AR, se resta almeno 1 danno e il residuo supera l’eventuale Ignifugo X, il bersaglio effettua una PS Riflessi. Il Successo evita lo Stato; il Fallimento applica Incendiato per 1+1d3 Round. Incendiato infligge 1d4 danni immediati e periodici e impone −2 VA, con ricorrenze ed estinzione del §5.24 del Manuale del Giocatore. Il −1 della munizione non riduce questi danni periodici. Si effettua una sola PS per bersaglio e attacco; i residui di più applicazioni non si sommano per superare Ignifugo. Applicazioni ripetute conservano la scadenza più lontana senza sommare danni o penalità dello Stato."
+        }
+      ]
+    },
+    {
+      "id": "cartucce-nimrod-concussiva",
+      "nome": "Cartucce Nimrod, concussiva",
+      "tipo": "munizioni",
+      "catalogo": "Alleanza",
+      "famiglia": "Munizioni speciali",
+      "nomi_alternativi": [],
+      "note_manuale": "Nimrod Autocannon Il Nimrod impiega cartucce per autocannone dedicate. La munizione ordinaria mantiene il profilo dell’arma: danno 2d8+5, AC 1, bersaglio singolo e capacità di 300 colpi. Non usa proiettili pesanti ordinari e non genera automaticamente un’esplosione.",
+      "paragrafo": "§7.20.9",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "RA",
+      "costo": 60,
+      "munizione": {
+        "famiglia": "nimrod",
+        "variante": "Concussiva",
+        "confezione": {
+          "quantita": 10,
+          "costo": 600
+        }
+      },
+      "compatibile_con": [
+        "armi_distanza_corporative:nimrod-autocannon"
+      ],
+      "proprieta": [
+        {
+          "nome": "Concussiva",
+          "testo": "Concussiva Mantiene il danno ordinario e aggiunge Concussivo. Dopo l’AR, se resta almeno 1 danno e il residuo supera l’eventuale Imbottita X, il bersaglio effettua una PS Tempra. Il Successo evita l’effetto secondario; il Fallimento impone −2 VA alle sole Prove di Difese per 1+1d3 Round. La penalità non riduce AR o PS, non modifica Elusione e non applica automaticamente Stordito o A terra. Si effettua una sola PS per bersaglio e attacco; i residui non si sommano per superare Imbottita. Applicazioni ripetute mantengono la scadenza più lontana senza sommare le penalità."
+        }
+      ]
+    },
+    {
+      "id": "dardo-stordente",
+      "nome": "Dardo stordente",
+      "tipo": "munizioni",
+      "catalogo": "Bauhaus",
+      "famiglia": "Dardi chimici",
+      "nomi_alternativi": [],
+      "note_manuale": "SA30 e SA50F utilizzano gli stessi dardi chimici completi e monouso. Entrambe hanno CC 4 e includono quattro dardi Stordenti. Il caricamento misto è ammesso annotando l’ordine. Non sono munizioni da balestra e non sono intercambiabili con proiettili da pistola o fucile. Danno calibrato. Il lanciatore determina danno e gittata. I bonus ordinari al danno di Classi, Talenti e Manovre non modificano il danno del dardo; il Magistrale si applica normalmente. Tiro Mirato concede il bonus al VA ma non quello ordinario al danno. Sono ammessi modificatori specifici della munizione. Il contenuto agisce soltanto se almeno 1 danno supera Difese e AR. La PS contro la sostanza non elimina il danno della penetrazione. I dardi interessano soltanto fisiologie biologiche compatibili: robot e bersagli immuni alla sostanza non subiscono l’effetto chimico. Immunità e dosi ripetute Si applicano immunità e bonus pertinenti contro veleni o sedativi. Per entrambi i dardi una PS riuscita evita completamente l’effetto chimico: questa è un’eccezione espressa all’eventuale dimezzamento previsto dalle regole generali dei veleni. Più dosi dello stesso tipo non sommano penalità o durate; mantengono la scadenza più lontana. Se lo stesso attacco somministra più dardi con il medesimo effetto, si effettua una sola PS per quell’effetto. Dopo l’uso il dardo è consumato e non si recupera come munizione pronta.",
+      "paragrafo": "§7.20.8",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "RA",
+      "costo": 100,
+      "compatibile_con": [
+        "armi_distanza_corporative:sa30-a-dardi",
+        "armi_distanza_corporative:sa50f-a-dardi"
+      ],
+      "proprieta": [
+        {
+          "nome": "Stordente",
+          "testo": "Neuromuscolare immediato. Dopo l’iniezione il bersaglio effettua immediatamente una PS Tempra senza modificatore proprio della munizione. Con Successo evita l’effetto; con Fallimento diventa Stordito per 1+1d3 Round. All’inizio di ogni propria Iniziativa può effettuare una nuova PS Tempra gratuita: il Successo termina lo Stato."
+        }
+      ]
+    },
+    {
+      "id": "dardo-sedativo",
+      "nome": "Dardo sedativo",
+      "tipo": "munizioni",
+      "catalogo": "Bauhaus",
+      "famiglia": "Dardi chimici",
+      "nomi_alternativi": [],
+      "note_manuale": "SA30 e SA50F utilizzano gli stessi dardi chimici completi e monouso. Entrambe hanno CC 4 e includono quattro dardi Stordenti. Il caricamento misto è ammesso annotando l’ordine. Non sono munizioni da balestra e non sono intercambiabili con proiettili da pistola o fucile. Danno calibrato. Il lanciatore determina danno e gittata. I bonus ordinari al danno di Classi, Talenti e Manovre non modificano il danno del dardo; il Magistrale si applica normalmente. Tiro Mirato concede il bonus al VA ma non quello ordinario al danno. Sono ammessi modificatori specifici della munizione. Il contenuto agisce soltanto se almeno 1 danno supera Difese e AR. La PS contro la sostanza non elimina il danno della penetrazione. I dardi interessano soltanto fisiologie biologiche compatibili: robot e bersagli immuni alla sostanza non subiscono l’effetto chimico. Immunità e dosi ripetute Si applicano immunità e bonus pertinenti contro veleni o sedativi. Per entrambi i dardi una PS riuscita evita completamente l’effetto chimico: questa è un’eccezione espressa all’eventuale dimezzamento previsto dalle regole generali dei veleni. Più dosi dello stesso tipo non sommano penalità o durate; mantengono la scadenza più lontana. Se lo stesso attacco somministra più dardi con il medesimo effetto, si effettua una sola PS per quell’effetto. Dopo l’uso il dardo è consumato e non si recupera come munizione pronta.",
+      "paragrafo": "§7.20.8",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "RA",
+      "costo": 200,
+      "compatibile_con": [
+        "armi_distanza_corporative:sa30-a-dardi",
+        "armi_distanza_corporative:sa50f-a-dardi"
+      ],
+      "proprieta": [
+        {
+          "nome": "Sedativo",
+          "testo": "Sedazione differita. L’effetto si risolve alla prima Iniziativa del bersaglio successiva alla somministrazione; prima di quel momento non impone penalità. Il bersaglio effettua una PS Tempra, con +2 alla PS se partecipa al combattimento. Il Successo evita l’effetto; il Fallimento applica Svenuto per 1d3 minuti. Nuovi danni permettono una nuova PS immediata per svegliarsi. Un alleato adiacente può spendere 1 AzP per scuotere il bersaglio e concedergli una nuova PS; si può ottenere al massimo una PS per Round in questo modo. Si applicano le normali regole di Stordito e Svenuto del Manuale del Giocatore."
+        }
+      ]
+    }
+  ]
+}

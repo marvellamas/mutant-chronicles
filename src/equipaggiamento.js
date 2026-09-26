@@ -259,6 +259,18 @@ function rinforzoValido(armatura, kits, avvisi) {
   return validi[0] ?? null;
 }
 
+/** Famiglia di munizioni delle armi (§7.20.9), raccolta dai file del catalogo: rif → famiglia. */
+export function tabellaMunizioniArmi(dati) {
+  const out = new Map();
+  for (const f of Object.values(dati?.equipaggiamento?.file ?? {})) for (const x of f.munizioni_armi ?? []) out.set(x.rif, x.famiglia);
+  return out;
+}
+
+export const NOMI_FAMIGLIE_MUNIZIONI = {
+  pistola: 'proiettili da pistola', fucile: 'proiettili da fucile', pesanti: 'proiettili pesanti', pallini: 'cartucce a pallini', frecce: 'frecce',
+  dardi_balestra_piccola: 'dardi da balestra piccola', dardi_balestra_grande: 'dardi da balestra grande', nimrod: 'cartucce Nimrod', combustibile: 'combustibile',
+};
+
 /** Tabella SIN delle armi (§7.15.1), raccolta dai file del catalogo: rif → { valore, prova }. */
 export function tabellaSin(dati) {
   const out = new Map();
@@ -390,6 +402,19 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     return out;
   };
 
+  // §7.20: scorte di munizioni della lista compatibili con un'arma: stessa famiglia (§7.20.9) oppure
+  // compatibilità espressa (razzi, celle, serbatoi, dardi)
+  const famigliaMunizioni = tabellaMunizioniArmi(dati);
+  const munizioniInLista = oggetti.filter((x) => x.tipo === 'munizioni' && x.def);
+  const scorteDi = (rif) => {
+    const fam = famigliaMunizioni.get(rif) ?? null;
+    return {
+      famiglia: fam,
+      scorte: munizioniInLista.filter((x) => (fam && x.def.munizione?.famiglia === fam) || x.def.compatibile_con?.includes(rif))
+        .map((x) => ({ uid: x.uid, nome: x.nome, quantita: x.voce.quantita })),
+    };
+  };
+
   // Armi impugnate: VA per colpire, danno, Parata
   const armi = [];
   const profiloArma = (o, d, extra = {}) => {
@@ -436,6 +461,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       uid: o.uid, nome: o.nome, tipo: o.tipo, abilita: nomeAbilita, va, componenti,
       danno: dannoBase ? { una_mano: aggiungiDanno(dannoBase.una_mano, bonusDanno + dannoAccessori), due_mani: aggiungiDanno(dannoBase.due_mani, bonusDanno + dannoAccessori) } : null,
       dannoAccessori,
+      ...(d?.rif ? (({ famiglia, scorte }) => ({ famigliaMunizioni: famiglia, scorte }))(scorteDi(d.rif)) : { famigliaMunizioni: null, scorte: [] }),
       accessori: acc.map((x) => ({ uid: x.uid, nome: x.nome, rif: x.def?.rif ?? null })),
       // §7.3: il mirino riduce la sola penalità di distanza, entro il proprio limite
       mirino: (() => { const m = acc.find((x) => x.def?.mirino); return m ? { nome: m.nome, ...m.def.mirino } : null; })(),

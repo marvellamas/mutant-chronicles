@@ -1,0 +1,299 @@
+7.20 Munizioni e alimentazioni
+Questa sezione raccoglie munizioni ordinarie e speciali, granate, razzi, celle energetiche e combustibili. La
+famiglia di alimentazione è distinta dall’Abilità impiegata: un’arma che usa Armi Medie può impiegare proiettili
+da pistola. Le compatibilità dei singoli modelli sono nel §7.20.9.
+Le sigle REP seguono il §7.1.8: CO Comune, NC Non comune, RA Rara, MR Molto rara. I prezzi sono per il
+contenuto indicato; armi, caricatori vuoti e contenitori separati non sono compresi, salvo indicazione espressa.
+7.20.1 Famiglie ordinarie e consumo
+Le munizioni ordinarie della stessa famiglia sono intercambiabili fra produttori e Corporazioni. I caricatori
+devono invece essere compatibili con il modello dell’arma. La munizione ordinaria mantiene danno, gittata e
+proprietà del profilo dell’arma e non modifica INC.
+Famiglia Confezione Costo confezione Costo unitario REP
+Proiettili da pistola 50 100 2 CO
+Proiettili da fucile 50 150 3 CO
+Proiettili pesanti 20 160 8 NC
+Cartucce a pallini 25 100 4 CO
+Frecce 10 100 10 CO
+Dardi da balestra piccola 10 50 5 CO
+Dardi da balestra grande 10 100 10 CO
+La famiglia da fucile comprende carabine, fucili d’assalto e di precisione e mitragliatrici leggere. I dardi da
+balestra sono distinti dai dardi chimici monouso Bauhaus del §7.20.8. Le cartucce del Nimrod costituiscono una
+famiglia dedicata (§7.20.9).
+Ogni colpo effettivamente sparato consuma una munizione anche se manca il bersaglio; le modalità di tiro
+consumano il numero di colpi previsto. AC indica le applicazioni del danno e non moltiplica il consumo: un fucile
+a pallini con AC 2 consuma una cartuccia per colpo; due colpi consumano due cartucce.
+È ammesso caricare munizioni di varianti differenti nello stesso caricatore, annotandone l’ordine prima di sparare.
+Ogni colpo applica esclusivamente la variante della munizione consumata.
+Recupero di frecce e dardi
+Dopo lo scontro, cercare per un minuto nell’area accessibile permette di recuperare metà delle frecce e dei dardi
+da balestra utilizzati, arrotondando per difetto. Gli altri sono persi o danneggiati; non si recuperano quelli
+inaccessibili o distrutti. Proiettili, cartucce e dardi chimici sparati non sono recuperabili come munizioni pronte.
+Le armi da lancio recuperabili, come coltelli e shuriken, mantengono il recupero quando sono accessibili: non
+applicano automaticamente il dimezzamento previsto per frecce e dardi da balestra.
+7.20.2 Caricatori e preparazione delle scorte
+Il prezzo del caricatore ordinario amovibile vuoto dipende dalla categoria dell’arma. Serve sempre un caricatore
+compatibile con il modello. Questi prezzi non introducono caricatori amovibili per revolver o serbatoi fissi; celle,
+serbatoi di combustibile e contenitori per nastri hanno le proprie voci.
+Caricatore vuoto Costo
+Per Arma Leggera 50
+Per Arma Media 100
+Per Arma Pesante 200
+Un caricatore pieno costa quanto il caricatore vuoto più le munizioni contenute. Esempio: 30 proiettili da fucile
+costano 90; un caricatore per Arma Media costa 100. L’insieme costa 190, mentre rifornire un caricatore già
+posseduto costa soltanto 90.
+Preparare un caricatore o un nastro partendo da munizioni sciolte richiede un minuto ogni 50 colpi o frazione,
+senza Prova in condizioni ordinarie. È preparazione delle scorte: la sostituzione in combattimento di un caricatore
+già pronto segue le normali regole di ricarica e le eventuali eccezioni dell’arma.
+Le maglie dei nastri sono comprese nel prezzo delle munizioni e non vengono conteggiate singolarmente. Un
+contenitore di alimentazione vuoto compatibile costa 200; quello del Nimrod costa 500. Il contenitore non
+comprende le munizioni.
+7.20.3 Granate
+La granata standard si usa sia a mano sia nei lanciagranate standard compatibili. Quella pesante è riservata al
+modulo Deathlock Drum e non si lancia a mano. Sono tutte monouso; si acquistano singole o in confezioni da
+cinque, senza sconto.
+Granata Danno AC RS REP Costo
+Frammentazione standard 1d6+1 1d3 1 Q NC 80
+Frammentazione pesante 1d10+1 1d3 2 Q RA 180
+Fumogena — — 2 Q NC 120
+Elettroshock 2d4 1 1 Q RA 200
+Le granate a frammentazione hanno Sbilanciante e Sbalzante 1; Elettroshock ha Elettricità. I danni sono Naturali.
+Per ciascuna esplosione si tira AC una sola volta e si applica il risultato a tutti i bersagli nell’area; ciascuno risolve
+separatamente le proprie difese. Numero di bersagli e AC non aumentano il consumo: ogni lancio usa una granata.
+La granata a frammentazione standard e la Fumogena hanno PI 4, Qualità Comune e PS Integrità 10; Elettroshock
+ha PI 4, Qualità Non comune e PS Integrità 12.
+Lancio a mano e con lanciagranate
+Il lancio a mano usa Armi da Lancio, VA 0, FOR 3, gittata massima FOR × 3 Q e INC 8. Attivare e lanciare una
+granata pronta costa 1 AzP. Con lanciagranate si usano Abilità, VA, FOR, gittata, INC, CC e modalità dell’arma;
+la granata stabilisce danno, AC, RS e proprietà.
+Si applicano dispersione, Elusione e aree del Manuale del Giocatore, §5.10, e il raccordo del §7.14.7. Le proprietà
+native pertinenti dell’arma, come Purificatrice, restano applicabili. Un modulo lanciagranate mantiene
+un’alimentazione distinta da quella dell’arma principale.
+Compatibilità del formato standard
+Tutti i modelli seguenti accettano Frammentazione standard, Fumogena ed Elettroshock. Le munizioni sono
+compatibili; capacità, cadenza, gittata e tempi specifici rimangono quelli del singolo lanciatore.
+Catalogo Lanciatori e moduli standard
+Commerciale Lanciagranate commerciale
+Alleanza Lanciagranate dell’Alleanza; modulo della Carabina Punisher
+Bauhaus Moduli MP105GW e Panzerknacker
+Capitol Moduli Bolter 20, Ironfist 15, CAR 24 e M50
+Cybertronic Moduli CAW2000 e AR3000
+Fratellanza Moduli Nemesis 221 e Volcano
+Imperial Howler; moduli Interceptor e Invader
+Mishima Moduli Windrider N4 e Shogun
+Il modulo del Deathlock Drum usa esclusivamente il formato pesante qui definito: non accetta automaticamente
+granate standard o varianti speciali non descritte.
+Fumogena
+La nube si forma all’impatto e dura 5 Round, contando quello di attivazione come primo; termina alla fine del
+quinto. Pareti e ostacoli solidi ne delimitano la diffusione. Vento forte o ventilazione intensa possono disperderla
+prima.
+Gli attacchi a distanza basati sulla vista ordinaria subiscono −4 VA se la linea di tiro attraversa la nube, anche con
+tiratore o bersaglio al suo interno. La penalità interessa anche gli alleati e non si somma fra più nubi.
+L’occultamento permette una normale Prova unica di Furtività, senza bonus aggiuntivo; la nube non infligge
+danni e non concede AR.
+Elettroshock
+Dopo Difese e AR, se rimane almeno 1 danno e il residuo supera l’eventuale Isolante X, il bersaglio effettua una
+PS Tempra. Il Successo evita l’effetto secondario, non il danno. Il Fallimento impedisce per 1+1d3 Round di
+spendere Azioni fuori dalla propria Iniziativa; durante il proprio turno il bersaglio agisce normalmente. PS, difese
+passive ed Elusione senza Azioni restano disponibili.
+Si effettua una sola PS per bersaglio e attacco. Applicazioni ripetute mantengono la scadenza più lontana senza
+sommare le durate. L’effetto non applica Stordito e non è uno spegnimento EMP automatico. Può interessare
+robot compatibili, che usano la PS pertinente: l’Iron Mastiff usa PS Tempra 8. Restano le normali soglie di PV e
+PI.
+7.20.4 Razzi
+I razzi si acquistano singolarmente come munizioni complete; il prezzo non comprende lanciatore o caricatore di
+ricambio. Ogni lancio consuma un razzo, indipendentemente da AC e numero di bersagli. Non si lanciano a mano.
+Tutti i profili seguenti infliggono danni Naturali e hanno Sbilanciante e Sbalzante 2.
+Razzo Danno AC RS REP Costo
+Standard 1d10+1 1d3 2 Q RA 300
+A carica maggiorata 1d10+2 1d3 2 Q RA 350
+ARG-17 1d10+2 1d3 3 Q MR 500
+SSW5500 1d10+1 1d3 4 Q MR 650
+Il lanciatore stabilisce Abilità, VA, FOR, gittata, INC, CC e modalità di tiro. Il razzo stabilisce danno, AC, RS e
+proprietà del carico; restano le proprietà native pertinenti del lanciatore. Si tira AC una sola volta per esplosione,
+con lo stesso risultato per tutti i bersagli.
+Formato Lanciatori compatibili
+Standard Lanciarazzi commerciale; Deuce; Daimyo
+A carica maggiorata Southpaw
+ARG-17 ARG-17
+SSW5500 SSW5500
+7.20.5 Celle energetiche
+Le celle tecnologiche sono riutilizzabili e si acquistano cariche. Il costo di ricarica comprende energia e materiali
+di servizio. Il produttore della cella non modifica danni, INC, SIN o proprietà dell’arma.
+Cella Capacità Carica Ricarica completa REP
+Ravvicinata comune 5 attivazioni 200 40 NC
+Fucile al plasma commerciale 20 colpi 400 80 RA
+Hellblazer 30 colpi 450 90 RA
+Intruder 30 colpi 600 120 RA
+Carica indica il prezzo della cella piena. Il formato ravvicinato da cinque cariche è comune ai modelli elencati
+sotto. Le tre celle delle armi a distanza sono invece specifiche: Hellblazer e Intruder non sono intercambiabili
+anche se entrambe contengono trenta colpi.
+Catalogo Armi compatibili con la cella ravvicinata da 5
+Commerciale Tirapugni concussivo
+Bauhaus Tonfa Stella Cadente
+Artigli, Baionetta, Frusta, Manganello e Tirapugni elettrificati; Elettrosega CSB600; Spada
+Cybertronic
+CSA404
+Imperial Asce Tagliateste e mazze Spaccateste, a una e due mani; Violator
+Mishima Duskdealer; Nunchaku elettrificato
+Alleanza Spada Punisher
+Per le armi ravvicinate si dichiara l’attivazione prima dell’attacco e si applica la PS Riflessi per risparmiare la
+carica in caso di Prova per colpire fallita (§7.1.4). Un attacco riuscito ma poi evitato o assorbito consuma la
+carica. Ogni attivazione ordinaria consuma una carica; a zero cariche resta il profilo non attivato dell’arma.
+Per le armi a energia a distanza ogni colpo sparato consuma una carica anche se manca il bersaglio. AC non
+moltiplica il consumo e non è prevista la PS per risparmiare il colpo. A zero cariche l’arma non può sparare.
+Sostituzione e ricarica
+Sostituire una cella compatibile già pronta richiede 1 AzP, senza Prova, disponendo delle mani necessarie.
+Ricaricare da vuota una delle celle in tabella richiede un’ora, un caricatore adatto e una fonte di energia adeguata.
+In condizioni ordinarie non occorre una Prova.
+Tempo e costo di una ricarica parziale sono proporzionali alle cariche ripristinate. Se la ricarica si interrompe,
+restano soltanto le cariche completate. Esempio: la cella ravvicinata ripristina una carica ogni 12 minuti, al costo
+di 8 per carica.
+Caricatore da campo
+Costa 500, Reperibilità Non comune, PI 4, Qualità Comune e PS Integrità 10. Comprende i connettori per tutte le
+celle della tabella e ricarica una cella alla volta. Richiede una fonte esterna: non contiene una riserva propria. Non
+ricarica Chroma né converte PM personali in energia tecnologica.
+Riserve mistiche, PM e Chroma mantengono le regole del §7.5.1 e del Manuale della Magia. Robot, esoscheletri,
+propulsori e altri moduli seguono le capacità e le alimentazioni delle proprie schede; non adottano
+automaticamente questi formati.
+Le celle di trazione dei veicoli sono a base Chroma, non ricaricabili e sostituibili. Non adottano i tempi e i formati
+di ricarica delle celle delle armi. Alimentazione e autonomia dei mezzi seguono il Manuale dei Veicoli, §1.5, e le
+rispettive schede.
+7.20.6 Combustibile per lanciafiamme
+Il combustibile standard è compatibile con tutti i lanciafiamme seguenti e si contabilizza in getti: una scorta da 10
+getti costa 100, Reperibilità Non comune, pari a 10 per getto. Il serbatoio deve essere compatibile con il modello.
+Il prezzo dell’arma comprende il serbatoio, mentre il combustibile è separato.
+Arma Getti Pieno Serbatoio vuoto
+Nemesis 214 5 50 100
+Lanciafiamme commerciale 10 100 100
+Eruptor 10 100 100
+Purifier 15 150 150
+Gehemmapuker 50 500 500
+Ogni attacco consuma un getto anche se manca il bersaglio. AC 1d3 non moltiplica il consumo. Il combustibile
+non cambia danno, gittata, INC o proprietà del lanciafiamme.
+Sostituire un serbatoio compatibile già pieno e pronto richiede 1 AzP, entrambe le mani e nessuna Prova.
+Riempire un serbatoio dalle scorte richiede un minuto ogni 10 getti o frazione, senza Prova in condizioni
+ordinarie. Serbatoio e pieno si acquistano separatamente quando serve un ricambio aggiuntivo.
+7.20.7 Munizioni balistiche speciali
+Le varianti speciali mantengono capacità del caricatore, gittata, INC e modalità di tiro della munizione ordinaria.
+Ogni proiettile o cartuccia ha una sola variante: non si costruiscono munizioni ibride sommando effetti e prezzi.
+Restano le proprietà native pertinenti dell’arma, senza duplicare la stessa proprietà.
+Le confezioni speciali contengono dieci munizioni e costano dieci volte il prezzo unitario. Le varianti seguenti
+non si trasferiscono automaticamente a celle, dardi chimici, frecce, dardi da balestra, granate o razzi.
+Variante Famiglie Costo ordinario × REP
+Perforante 1 Pistola, fucile, pesanti 3 RA
+Perforante 2 Pistola, fucile, pesanti 6 MR
+Incendiaria Pistola, fucile, pesanti, pallini 4 RA
+Concussiva Pistola, fucile, pesanti, pallini 3 RA
+Il Nimrod dispone delle stesse quattro varianti per la propria famiglia dedicata (§7.20.9). I prezzi unitari delle altre
+famiglie sono i seguenti.
+Famiglia Perforante 1 Perforante 2 Incendiaria Concussiva
+Pistola 6 12 8 6
+Fucile 9 18 12 9
+Famiglia Perforante 1 Perforante 2 Incendiaria Concussiva
+Pesanti 24 48 32 24
+Pallini — — 16 12
+Perforante X
+Ignora X punti dell’AR non magica applicabile, compreso il contributo ordinario dello Scudo, fino a un minimo di
+0 per questa componente. La componente magica rimane interamente applicabile. L’effetto si risolve per ogni
+colpo e non infligge danni aggiuntivi a bersagli senza armatura né perdite automatiche di PI.
+Perforante dell’arma e della munizione non si sommano: si applica il valore maggiore. Contro AR 5 interamente
+ordinaria, Perforante 1 lascia AR 4 e Perforante 2 lascia AR 3. Contro AR 2 interamente magica, entrambe
+lasciano AR 2. Le cartucce a pallini non hanno una variante Perforante in questo catalogo.
+Incendiaria
+Riduce di 1 il danno base di ogni colpo o applicazione, prima di moltiplicatori, Difese e AR, fino a un minimo di
+0, e aggiunge Fuoco. Dopo l’AR, se resta almeno 1 danno e il residuo supera l’eventuale Ignifugo X, il bersaglio
+effettua una PS Riflessi. Il Successo evita lo Stato; il Fallimento applica Incendiato per 1+1d3 Round.
+Incendiato infligge 1d4 danni immediati e periodici e impone −2 VA, con ricorrenze ed estinzione del §5.24 del
+Manuale del Giocatore. Il −1 della munizione non riduce questi danni periodici. Si effettua una sola PS per
+bersaglio e attacco; i residui di più applicazioni non si sommano per superare Ignifugo. Applicazioni ripetute
+conservano la scadenza più lontana senza sommare danni o penalità dello Stato.
+Concussiva
+Mantiene il danno ordinario e aggiunge Concussivo. Dopo l’AR, se resta almeno 1 danno e il residuo supera
+l’eventuale Imbottita X, il bersaglio effettua una PS Tempra. Il Successo evita l’effetto secondario; il Fallimento
+impone −2 VA alle sole Prove di Difese per 1+1d3 Round.
+La penalità non riduce AR o PS, non modifica Elusione e non applica automaticamente Stordito o A terra. Si
+effettua una sola PS per bersaglio e attacco; i residui non si sommano per superare Imbottita. Applicazioni
+ripetute mantengono la scadenza più lontana senza sommare le penalità.
+Le Contromisure seguono il §5.24 del Manuale del Giocatore: si considera la soglia pertinente maggiore,
+appartenente a una protezione che abbia contribuito almeno 1 AR all’assorbimento. Una PS riuscita contro
+l’effetto secondario non annulla il danno già inflitto.
+7.20.8 Dardi chimici Bauhaus
+SA30 e SA50F utilizzano gli stessi dardi chimici completi e monouso. Entrambe hanno CC 4 e includono quattro
+dardi Stordenti. Il caricamento misto è ammesso annotando l’ordine. Non sono munizioni da balestra e non sono
+intercambiabili con proiettili da pistola o fucile.
+Lanciatore Danno Gittata massima CC
+SA30 1d4+1 10 Q 4
+SA50F 1d6+1 50 Q 4
+Danno calibrato. Il lanciatore determina danno e gittata. I bonus ordinari al danno di Classi, Talenti e Manovre
+non modificano il danno del dardo; il Magistrale si applica normalmente. Tiro Mirato concede il bonus al VA ma
+non quello ordinario al danno. Sono ammessi modificatori specifici della munizione.
+Il contenuto agisce soltanto se almeno 1 danno supera Difese e AR. La PS contro la sostanza non elimina il danno
+della penetrazione. I dardi interessano soltanto fisiologie biologiche compatibili: robot e bersagli immuni alla
+sostanza non subiscono l’effetto chimico.
+Dardo completo Effetto REP Costo unitario
+Stordente Neuromuscolare immediato RA 100
+Sedativo Sedazione differita RA 200
+Stordente
+Dopo l’iniezione il bersaglio effettua immediatamente una PS Tempra senza modificatore proprio della
+munizione. Con Successo evita l’effetto; con Fallimento diventa Stordito per 1+1d3 Round. All’inizio di ogni
+propria Iniziativa può effettuare una nuova PS Tempra gratuita: il Successo termina lo Stato.
+Sedativo
+L’effetto si risolve alla prima Iniziativa del bersaglio successiva alla somministrazione; prima di quel momento
+non impone penalità. Il bersaglio effettua una PS Tempra, con +2 alla PS se partecipa al combattimento. Il
+Successo evita l’effetto; il Fallimento applica Svenuto per 1d3 minuti.
+Nuovi danni permettono una nuova PS immediata per svegliarsi. Un alleato adiacente può spendere 1 AzP per
+scuotere il bersaglio e concedergli una nuova PS; si può ottenere al massimo una PS per Round in questo modo.
+Si applicano le normali regole di Stordito e Svenuto del Manuale del Giocatore.
+Immunità e dosi ripetute
+Si applicano immunità e bonus pertinenti contro veleni o sedativi. Per entrambi i dardi una PS riuscita evita
+completamente l’effetto chimico: questa è un’eccezione espressa all’eventuale dimezzamento previsto dalle
+regole generali dei veleni.
+Più dosi dello stesso tipo non sommano penalità o durate; mantengono la scadenza più lontana. Se lo stesso
+attacco somministra più dardi con il medesimo effetto, si effettua una sola PS per quell’effetto. Dopo l’uso il
+dardo è consumato e non si recupera come munizione pronta.
+7.20.9 Compatibilità balistiche dei cataloghi
+Le tabelle assegnano la famiglia del tiro balistico principale. Eventuali lanciagranate, lanciafiamme e altre
+funzioni integrate mantengono alimentazioni separate. Tutti i modelli balistici elencati accettano le varianti
+previste per la propria famiglia; per i fucili a pallini sono disponibili Incendiaria e Concussiva, non Perforante.
+Proiettili da pistola e cartucce a pallini
+Catalogo Pistola — 2 per colpo Pallini — 4 per cartuccia
+Alleanza AXIS 227; Piranha; Pistola Punisher —
+Bauhaus HG10; HG12; Equalizer; MP105 HD14M; HG14
+Bolter 10; Bolter 09; Enforcer; Jemson 45; Bolter 13; Bolter M310; M510; M516S; M516D;
+Capitol
+20; Ironfist 15 M410
+Cybertronic P500; P1000 SA SG2001
+Nemesis 100; Eliminator; Nemesis 210; Nemesis 214;
+Fratellanza —
+Nemesis 221
+Imperial Belliger; Aggressor; Rainy Dayer —
+Mishima Ronin 25AP; Ronin 45 AP —
+HG10, Bolter 10, P500, Nemesis 100, Belliger e Ronin 25AP usano proiettili da pistola ordinari, intercambiabili
+fra Corporazioni. Ciascun modello impiega un caricatore specifico: la compatibilità con il modello superiore non
+è automatica. Il caricatore vuoto aggiuntivo costa 50; ogni proiettile ordinario costa 2 (§§7.20.1–7.20.2).
+La Rainy Dayer usa proiettili da pistola ma conserva Armi Medie, tiro a due mani, CC 5 e gittata massima 30 Q.
+La famiglia della munizione non cambia l’impugnatura o l’Abilità dell’arma.
+Proiettili da fucile e pesanti
+Catalogo Fucile — 3 per colpo Pesanti — 8 per colpo
+Alleanza Carabina Punisher Deathlock Drum
+Bauhaus MP105GW; Panzerknacker; PSG99; MG40 MG80
+Capitol CAR 24; M50; SR30; SR50; M606 Improved M89
+Cybertronic CAW2000; AR3000; SR3500; TSW4000 SSW4200P
+Fratellanza Nemesis 21; Volcano; Eruptor; Mefisto; Justifier Purifier
+Imperial Mandible; Interceptor; Invader; Assailant; Destroyer Charger
+Mishima Airbrush; Windrider N4; Shogun; Archer; Kensai Dragonfire
+MG40, M606, TSW4000, Justifier, Destroyer e Kensai usano proiettili da fucile. La loro funzione di
+mitragliatrice leggera non li sposta nella famiglia dei proiettili pesanti.
+Nimrod Autocannon
+Il Nimrod impiega cartucce per autocannone dedicate. La munizione ordinaria mantiene il profilo dell’arma:
+danno 2d8+5, AC 1, bersaglio singolo e capacità di 300 colpi. Non usa proiettili pesanti ordinari e non genera
+automaticamente un’esplosione.
+Cartuccia Nimrod Confezione Costo confezione Costo unitario REP
+Ordinaria 20 400 20 RA
+Perforante 1 10 600 60 RA
+Perforante 2 10 1.200 120 MR
+Incendiaria 10 800 80 RA
+Concussiva 10 600 60 RA
+Le varianti seguono il §7.20.7. Un pieno di 300 cartucce ordinarie costa 6.000. Il contenitore di alimentazione
+vuoto costa 500; maglie e preparazione del nastro seguono il §7.20.2. Prezzo della scorta e prezzo del contenitore
+rimangono distinti.

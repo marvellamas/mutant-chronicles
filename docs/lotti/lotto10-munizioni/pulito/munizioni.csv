@@ -1,0 +1,50 @@
+catalogo,famiglia,nome,reperibilita,costo
+Commerciale,Munizioni ordinarie,Proiettili da pistola,CO,2
+Commerciale,Munizioni ordinarie,Proiettili da fucile,CO,3
+Commerciale,Munizioni ordinarie,Proiettili pesanti,NC,8
+Commerciale,Munizioni ordinarie,Cartucce a pallini,CO,4
+Commerciale,Munizioni ordinarie,Frecce,CO,10
+Commerciale,Munizioni ordinarie,Dardi da balestra piccola,CO,5
+Commerciale,Munizioni ordinarie,Dardi da balestra grande,CO,10
+Commerciale,Caricatori e contenitori,Caricatore vuoto per Arma Leggera,,50
+Commerciale,Caricatori e contenitori,Caricatore vuoto per Arma Media,,100
+Commerciale,Caricatori e contenitori,Caricatore vuoto per Arma Pesante,,200
+Commerciale,Caricatori e contenitori,Contenitore di alimentazione vuoto,,200
+Alleanza,Caricatori e contenitori,Contenitore di alimentazione Nimrod,,500
+Alleanza,Granate,Granata a frammentazione pesante,RA,180
+Commerciale,Razzi,Razzo standard,RA,300
+Imperial,Razzi,Razzo a carica maggiorata,RA,350
+Bauhaus,Razzi,Razzo ARG17,MR,500
+Cybertronic,Razzi,Razzo SSW5500,MR,650
+Commerciale,Celle energetiche,Cella ravvicinata comune,NC,200
+Commerciale,Celle energetiche,Cella del fucile al plasma commerciale,RA,400
+Alleanza,Celle energetiche,Cella Hellblazer,RA,450
+Alleanza,Celle energetiche,Cella Intruder,RA,600
+Commerciale,Celle energetiche,Caricatore da campo,NC,500
+Commerciale,Combustibile e serbatoi,Combustibile per lanciafiamme,NC,10
+Fratellanza,Combustibile e serbatoi,Serbatoio vuoto Nemesis 214,,100
+Commerciale,Combustibile e serbatoi,Serbatoio vuoto del lanciafiamme commerciale,,100
+Fratellanza,Combustibile e serbatoi,Serbatoio vuoto Eruptor,,100
+Fratellanza,Combustibile e serbatoi,Serbatoio vuoto Purifier,,150
+Alleanza,Combustibile e serbatoi,Serbatoio vuoto Gehemmapuker,,500
+Commerciale,Munizioni speciali,Proiettili da pistola, perforante 1,RA,6
+Commerciale,Munizioni speciali,Proiettili da pistola, perforante 2,MR,12
+Commerciale,Munizioni speciali,Proiettili da pistola, incendiaria,RA,8
+Commerciale,Munizioni speciali,Proiettili da pistola, concussiva,RA,6
+Commerciale,Munizioni speciali,Proiettili da fucile, perforante 1,RA,9
+Commerciale,Munizioni speciali,Proiettili da fucile, perforante 2,MR,18
+Commerciale,Munizioni speciali,Proiettili da fucile, incendiaria,RA,12
+Commerciale,Munizioni speciali,Proiettili da fucile, concussiva,RA,9
+Commerciale,Munizioni speciali,Proiettili pesanti, perforante 1,RA,24
+Commerciale,Munizioni speciali,Proiettili pesanti, perforante 2,MR,48
+Commerciale,Munizioni speciali,Proiettili pesanti, incendiaria,RA,32
+Commerciale,Munizioni speciali,Proiettili pesanti, concussiva,RA,24
+Commerciale,Munizioni speciali,Cartucce a pallini, incendiaria,RA,16
+Commerciale,Munizioni speciali,Cartucce a pallini, concussiva,RA,12
+Alleanza,Munizioni ordinarie,Cartucce Nimrod,RA,20
+Alleanza,Munizioni speciali,Cartucce Nimrod, perforante 1,RA,60
+Alleanza,Munizioni speciali,Cartucce Nimrod, perforante 2,MR,120
+Alleanza,Munizioni speciali,Cartucce Nimrod, incendiaria,RA,80
+Alleanza,Munizioni speciali,Cartucce Nimrod, concussiva,RA,60
+Bauhaus,Dardi chimici,Dardo stordente,RA,100
+Bauhaus,Dardi chimici,Dardo sedativo,RA,200

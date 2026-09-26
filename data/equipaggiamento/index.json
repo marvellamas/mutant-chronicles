@@ -46,6 +46,11 @@
       "descrizione": "Mirini, riduzione del rumore, supporti di tiro, illuminazione e visione (§7.3)"
     },
     {
+      "id": "munizioni",
+      "file": "munizioni.json",
+      "descrizione": "Munizioni ordinarie e speciali, granate, razzi, celle, combustibile, dardi chimici; compatibilità balistiche (§7.20)"
+    },
+    {
       "id": "armature",
       "file": "armature.json",
       "descrizione": "Armature commerciali civili (§7.11.3)"

@@ -9,7 +9,7 @@ import { info } from './tooltip.js';
 import { descriviFerite } from '../sessione.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
 import { testoDanno } from '../stampa.js';
-import { legendaModalita, aggiungiDanno } from '../equipaggiamento.js';
+import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI } from '../equipaggiamento.js';
 
 export const POSIZIONI_TAB = [
   { id: 'automatica', etichetta: 'Automatica (sinistra su schermi larghi, in basso su telefono e tablet)' },
@@ -365,6 +365,9 @@ function schedaArma(ctx, a) {
     a.modalita.length ? h('p', { class: 'proprieta-arma' }, h('span', { class: 'sigla' }, 'Modalità '),
       a.modalita.map((m) => h('span', { class: 'etichetta', title: legenda[m] ?? m }, m))) : null,
     a.mov ? h('p', { class: 'nota' }, `MOV ${segno(a.mov)} Q mentre è impugnata (§7.7)`) : null,
+    a.famigliaMunizioni || a.scorte?.length ? h('p', { class: 'nota' }, h('strong', {}, 'Munizioni: '),
+      a.famigliaMunizioni ? `${NOMI_FAMIGLIE_MUNIZIONI[a.famigliaMunizioni]} (§7.20.9)` : null,
+      a.scorte?.length ? `${a.famigliaMunizioni ? ' · ' : ''}in lista: ${a.scorte.map((x) => `${x.nome} ×${x.quantita}`).join(', ')}` : null) : null,
     a.accessori?.length ? h('p', { class: 'nota' }, h('strong', {}, 'Accessori: '), a.accessori.map((x) => x.nome).join(', '),
       a.dannoAccessori ? ` · danno ${segno(a.dannoAccessori)}` : null) : null,
     a.mirino ? h('p', { class: 'nota', title: a.mirino.testo }, `${a.mirino.nome}: −${a.mirino.riduzione} alla penalità di distanza (fino a 0), ${a.mirino.distanza_max_q ? `fino a ${a.mirino.distanza_max_q} Q` : 'entro la gittata'}${a.mirino.azp_minime ? `, almeno ${a.mirino.azp_minime} AzP` : ''} (§7.3)`) : null,
