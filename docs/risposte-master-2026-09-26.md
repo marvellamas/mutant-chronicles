@@ -1,6 +1,6 @@
 # E&L – Risposte e correzioni approvate
 
-Copia del Google Doc del master «E&L – Risposte e correzioni approvate» (Davide), letta il 26 settembre 2026. Testo del documento, non riscritto: è la fonte delle decisioni registrate in `docs/risposte-master.md`.
+Copia del Google Doc del master «E&L – Risposte e correzioni approvate» (Davide), letta il 26 settembre 2026 e riletta alla versione delle 15:20:54 UTC, che aggiunge A.4 e A.5. Testo del documento, non riscritto: è la fonte delle decisioni registrate in `docs/risposte-master.md`.
 
 Decisioni approvate e aggiornamenti dei manuali condivisi.
 
@@ -287,3 +287,33 @@ L’attivazione delle proprietà dell’arma e delle singole Tecniche segue i co
 Applicazione: classificazione inserita nelle tre schede del Manuale del Giocatore (§8.6 e §8.6.10). Sostituita la sola dicitura iniziale «Talento Libero.» con «Passivo.», conservando prerequisiti, acquisizioni ed effetti.
 
 Scheda digitale: da recepire. Classificare Attivazione Tempestiva, Risorse Interiori e Tecniche Interiori Supplementari come Talenti passivi. Le proprietà a carica e le singole Tecniche conservano le proprie attivazioni e i costi previsti dalle rispettive regole. Riportare la decisione in docs/risposte-master.md; l’aggiornamento dell’app resta da verificare.
+
+## A.4 — Durata di tre Tecniche Interiori
+
+Approvato il: set 26, 2026
+
+Vipera dal Cappuccio — Istantanea: un singolo attacco. L’eventuale Sanguinamento 2 prosegue secondo le regole dello Stato.
+
+Presa dell’Anima — Una singola Prova per il bonus di +3 VA. L’eventuale presa su creature incorporee, Eteree o altrimenti non afferrabili può essere mantenuta senza ulteriori PM finché non si interrompe. Il bonus non si applica alle Prove successive.
+
+Contraccolpo Interiore — Istantanea: un singolo attacco reattivo, effettuato immediatamente dopo la Difesa che permette di attivare la Tecnica.
+
+Applicazione: aggiunto il campo Durata alle schede di Vipera dal Cappuccio, Presa dell’Anima e Contraccolpo Interiore nel §8.9 del Manuale del Giocatore. Le precisazioni su Sanguinamento, mantenimento della presa, costo in PM e applicazione del bonus restano coerenti con il testo delle schede.
+
+Scheda digitale: da recepire. Vipera dal Cappuccio ha durata istantanea per il singolo attacco; l’eventuale Sanguinamento 2 segue le regole dello Stato. Presa dell’Anima concede +3 VA per una singola Prova; l’eventuale presa su creature incorporee, Eteree o altrimenti non afferrabili può proseguire senza ulteriori PM finché non si interrompe, senza estendere il bonus alle Prove successive. Contraccolpo Interiore ha durata istantanea per un singolo attacco reattivo immediatamente dopo la Difesa idonea. Riportare la decisione in docs/risposte-master.md; l’aggiornamento dell’app resta da verificare.
+
+## A.5 — Equipaggiamento iniziale: struttura
+
+Approvato il: set 26, 2026
+
+L’equipaggiamento iniziale viene assegnato attraverso scelte guidate.
+
+Ogni personaggio riceve una dotazione comune, con gli oggetti essenziali per tutti; una dotazione legata alla Classe iniziale, con scelte predefinite fra armi, protezioni e strumenti adatti al ruolo; modelli e varianti legati alla Corporazione, indicati nelle rispettive dotazioni.
+
+Ogni scelta deve rispettare i requisiti degli oggetti. Le tabelle specificheranno quantità, munizioni, cariche ed eventuale denaro iniziale.
+
+Comportamento approvato per la scheda digitale: il giocatore seleziona le opzioni consentite e gli oggetti scelti vengono aggiunti automaticamente all’inventario.
+
+Applicazione: struttura inserita nel §2.16 del Manuale del Giocatore, sostituendo il rinvio generico a un’integrazione futura e conservando i rimandi ai manuali degli Armamenti e degli Equipaggiamenti. Le dotazioni concrete e le relative tabelle sono ancora da definire e approvare.
+
+Scheda digitale: da recepire. Predisporre scelte guidate basate sulla dotazione comune, sulla Classe iniziale e sulle varianti della Corporazione, verificando i requisiti e trasferendo gli oggetti selezionati nell’inventario con quantità, munizioni e cariche. La struttura è approvata; il contenuto delle dotazioni e l’eventuale denaro iniziale restano aperti. Riportare la decisione in docs/risposte-master.md; l’aggiornamento dell’app resta da verificare.
