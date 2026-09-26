@@ -150,8 +150,11 @@ function riquadroPM(ctx) {
   const s = ctx.sessione;
   const contenitori = [...(ctx.tab.scheda.equipaggiamento?.contenitori ?? [])]
     .sort((x, y) => Number(y.trasportato && y.sintonizzato) - Number(x.trasportato && x.sintonizzato));
+  // Magia sez. 6 e Talenti di Meditazione: valori calcolati, le ore non si contano
+  const med = ctx.tab.scheda.magia?.meditazione;
   return contatoreTavolo(ctx, {
     titolo: 'Punti Magia', campo: 'pmAttuali', attuale: s.pmAttuali, massimo: ctx.massimi.pm, barra: true, classe: 'riquadro-pm',
+    nota: med ? `Recupero PM con Meditazione: ${med.pmPerOra} PM/ora, ${med.orePerGiorno} ${med.orePerGiorno === 1 ? 'ora' : 'ore'}/giorno` : null,
     extra: contenitori.length ? h('div', { class: 'cristalli' },
       h('h4', {}, 'Cristalli e riserve di Chroma'),
       h('p', { class: 'nota' }, 'Riserve separate: non si sommano ai PM personali.'),
@@ -636,6 +639,15 @@ function tabMagia(ctx, d) {
       h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Incantesimi'),
         h('p', { class: 'valore-tavolo' }, h('strong', {}, String(d.conosciuti)), h('span', {}, ` / ${d.quota}`)),
         h('p', { class: 'nota' }, `Livello massimo di lancio: ${d.livelloMassimo}`),
+        // Magia sez. 2 e 3, con i Talenti di magia (regole.json → lancio)
+        (() => {
+          const mg = ctx.tab.scheda.magia;
+          if (!mg) return null;
+          return h('p', { class: 'nota' },
+            `Focalizzazione ${segno(mg.focalizzazioneVa)} a Potere · Ingaggio ${segno(mg.penalitaIngaggio)} a Potere · Armi da lancio negli Incantesimi ${segno(mg.tiroArmiDaLancio)}`,
+            mg.contromagia ? ` · Contromagia ${segno(mg.contromagia.penalita)} VA${mg.contromagia.serveConoscenza ? ', solo Incantesimi conosciuti' : ', anche Incantesimi non conosciuti'}` : null,
+            mg.magiaOccultata ? ' · Magia Occultata: per contrastarti serve una Prova di Occultismo' : null);
+        })(),
         ctx.tab.scheda.equipaggiamento?.lancioPotere ? h('p', { class: 'nota' }, `Armatura: ${segno(ctx.tab.scheda.equipaggiamento.lancioPotere)} VA alle Prove di Potere per lanciare (§7.11.1)`) : null)),
     sezione(`Prove di Potere (scala ${d.scalaPotere})`,
       h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },

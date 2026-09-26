@@ -58,7 +58,7 @@ export function validaDati(dati) {
   validaClassi(dati.classi, nomiAddestramenti, nomiAbilita, macrofamiglie, dati.regole, err);
   validaAvanzamento(dati.regole, err);
   const idSpec = validaSpecializzazioni(dati.specializzazioni, nomiAbilita, err);
-  validaTalentiLiberi(dati.talenti_liberi, idSpec, err);
+  validaTalentiLiberi(dati.talenti_liberi, idSpec, err, (dati.addestramenti?.addestramenti ?? []).map((a) => a.nome));
   validaTecniche(dati.tecniche_interiori, err);
   validaEquipaggiamento(dati.equipaggiamento, [...nomiAbilita], [...(idSpec ?? [])], err, Object.keys(dati.regole?.chroma?.colori ?? {}).filter((c) => !dati.regole.chroma.colori[c]?.esausto));
   if (dati.regole?.chroma !== undefined) validaChroma(dati, err);
@@ -523,9 +523,12 @@ function validaSpecializzazioni(s, nomiAbilita, err) {
 }
 
 const MOLTEPLICITA = { una: null, per_caratteristica: 'caratteristica', per_salvezza_max2: 'salvezza', illimitata: null, limitata: null };
-const EFFETTI_NOTI = new Set(['iniziativa', 'pv', 'salvezza', 'movimento', 'tecniche', 'accessoMagia', 'incantesimi', 'livelloMax', 'livelloMaxIncantesimi']);
+const EFFETTI_NOTI = new Set(['iniziativa', 'pv', 'salvezza', 'movimento', 'tecniche', 'accessoMagia', 'incantesimi', 'livelloMax', 'livelloMaxIncantesimi', 'magia', 'meditazione']);
+// effetti.magia: valori che sostituiscono la base di regole.json → lancio (numeri) o capacità (true)
+const EFFETTI_MAGIA = { focalizzazione_va: 'numero', penalita_ingaggio: 'numero', penalita_contromagia: 'numero', tiro_armi_da_lancio: 'numero', contromagia: 'vero', contromagia_senza_conoscenza: 'vero', occultata: 'vero' };
+const EFFETTI_MEDITAZIONE = { accesso: 'vero', pm_per_ora: 'numero', moltiplicatore_ore: 'numero' };
 
-function validaTalentiLiberi(t, idSpec, err) {
+function validaTalentiLiberi(t, idSpec, err, addestramenti = []) {
   if (!isOggetto(t)) return;
   const F = 'talenti_liberi';
   const lista = Array.isArray(t.talenti) ? t.talenti : [];
@@ -535,7 +538,21 @@ function validaTalentiLiberi(t, idSpec, err) {
     if (ids.has(x.id) || idSpec.has(x.id)) err(F, `talenti[${i}] (${x.nome}).id`, `id "${x.id}" duplicato (anche fra le Specializzazioni)`);
     ids.add(x.id);
   });
-  const esiste = (id) => ids.has(id) || idSpec.has(id);
+  const condizioni = isOggetto(t.condizioni_prerequisiti) ? t.condizioni_prerequisiti : {};
+  for (const [c, v] of Object.entries(condizioni)) {
+    if (c.startsWith('_')) continue;
+    if (!isOggetto(v) || !isTesto(v.descrizione)) err(F, `condizioni_prerequisiti.${c}`, 'serve { descrizione, addestramento?, talenti? }');
+    else {
+      if (v.addestramento !== undefined && !addestramenti.includes(v.addestramento)) err(F, `condizioni_prerequisiti.${c}.addestramento`, `"${v.addestramento}" non è un Addestramento`);
+      for (const id of v.talenti ?? []) if (!ids.has(id)) err(F, `condizioni_prerequisiti.${c}.talenti`, `"${id}" non è un Talento`);
+    }
+  }
+  // un prerequisito è un Talento o una Specializzazione, una condizione, «addestramento:<nome>»; «non:» lo nega
+  const esiste = (p) => {
+    const base = p.startsWith('non:') ? p.slice(4) : p;
+    if (base.startsWith('addestramento:')) return addestramenti.includes(base.slice('addestramento:'.length));
+    return ids.has(base) || idSpec.has(base) || (!base.startsWith('_') && base in condizioni);
+  };
   const sezioni = isOggetto(t.sezioni) ? t.sezioni : {};
   lista.forEach((x, i) => {
     if (!isOggetto(x)) return;
@@ -544,7 +561,7 @@ function validaTalentiLiberi(t, idSpec, err) {
     if (!['passivo', 'attivo'].includes(x.tipo) && !isTodo(x.tipo)) err(F, `${k}.tipo`, 'deve essere "passivo", "attivo" o "TODO(Davide)"');
     if (!isTesto(x.testo)) err(F, `${k}.testo`, 'testo mancante');
     if (Array.isArray(x.prerequisiti)) {
-      x.prerequisiti.forEach((p) => { if (!esiste(p)) err(F, `${k}.prerequisiti`, `"${p}" non è l'id di un Talento o di una Specializzazione`); });
+      x.prerequisiti.forEach((p) => { if (!esiste(p)) err(F, `${k}.prerequisiti`, `"${p}" non è un Talento, una Specializzazione, una condizione di «condizioni_prerequisiti» o un Addestramento`); });
     } else if (!(isTodo(x.prerequisiti) && x.provvisorio === true)) {
       err(F, `${k}.prerequisiti`, 'lista di id (vuota se nessun prerequisito); "TODO(Davide)" solo per i Talenti provvisori');
     }
@@ -555,7 +572,15 @@ function validaTalentiLiberi(t, idSpec, err) {
     if (x.molteplicita === 'limitata' && (!isIntero(x.max_acquisizioni) || x.max_acquisizioni < 2)) err(F, `${k}.max_acquisizioni`, 'intero ≥ 2 richiesto con molteplicità "limitata"');
     if (x.effetti !== undefined) {
       if (!isOggetto(x.effetti)) err(F, `${k}.effetti`, 'deve essere un oggetto');
-      else for (const e of Object.keys(x.effetti)) if (!EFFETTI_NOTI.has(e)) err(F, `${k}.effetti.${e}`, 'effetto sconosciuto al motore di calcolo');
+      else for (const e of Object.keys(x.effetti)) {
+        if (!EFFETTI_NOTI.has(e)) err(F, `${k}.effetti.${e}`, 'effetto sconosciuto al motore di calcolo');
+        const tabella = e === 'magia' ? EFFETTI_MAGIA : e === 'meditazione' ? EFFETTI_MEDITAZIONE : null;
+        if (!tabella) continue;
+        for (const [c, v] of Object.entries(isOggetto(x.effetti[e]) ? x.effetti[e] : {})) {
+          if (!(c in tabella)) err(F, `${k}.effetti.${e}.${c}`, 'effetto sconosciuto al motore di calcolo');
+          else if (tabella[c] === 'numero' ? !isIntero(v) : v !== true) err(F, `${k}.effetti.${e}.${c}`, tabella[c] === 'numero' ? 'numero intero atteso' : 'deve valere true');
+        }
+      }
     }
     for (const inc of x.incompatibile_con ?? []) {
       if (!/^(addestramento|classi|talenti):.+$/.test(inc)) err(F, `${k}.incompatibile_con`, `"${inc}": atteso "addestramento:…", "classi:…" o "talenti:…"`);

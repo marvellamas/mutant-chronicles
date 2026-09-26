@@ -32,7 +32,8 @@ test('i TODO(Davide) sono elencabili', () => {
   const todo = trovaTodo(dati);
   // descrizioni delle Caratteristiche: date dal master il 26/09/2026
   assert.equal(todo.some((t) => t.percorso.startsWith('caratteristiche.json')), false);
-  assert.ok(todo.some((t) => t.percorso.startsWith('talenti_liberi.json')));
+  // Talenti di magia e tipo di tre Talenti Liberi: decisi dal master il 26/09/2026
+  assert.equal(todo.some((t) => t.percorso.startsWith('talenti_liberi.json')), false);
   // chiusi dalle risposte del master (docs/risposte-master.md)
   assert.equal(todo.some((t) => t.percorso.startsWith('classi.json')), false);
   // in regole.json restano solo le domande sugli effetti degli Stati (§5.18, per-davide A.16–A.17)
@@ -123,12 +124,15 @@ test('validaDati non lancia eccezioni su dati vuoti o assurdi', () => {
 
 // --- cap. 8: Talenti Liberi, Specializzazioni, Tecniche Interiori, avanzamento ---------------
 
-test('conteggi del cap. 8: 87 Talenti del §8.6 + Talenti di magia provvisori, 84 Specializzazioni, 28 Tecniche', () => {
+test('conteggi del cap. 8: 87 Talenti del §8.6 + 14 Talenti di magia, 84 Specializzazioni, 28 Tecniche', () => {
   const t = dati.talenti_liberi.talenti;
   assert.equal(t.filter((x) => x.sezione.startsWith('8.6')).length, 87);
   const magia = t.filter((x) => x.sezione === 'magia');
-  assert.equal(magia.length, 12);
-  assert.ok(magia.every((x) => x.provvisorio === true && x.prerequisiti === 'TODO(Davide)'));
+  // 12 schede del Manuale della Magia più Contromagia Universale e Magia Occultata (master, 26/09/2026)
+  assert.equal(magia.length, 14);
+  assert.ok(magia.some((x) => x.id === 'contromagia-universale') && magia.some((x) => x.id === 'magia-occultata'));
+  assert.ok(magia.every((x) => !x.provvisorio && Array.isArray(x.prerequisiti) && ['passivo', 'attivo'].includes(x.tipo)));
+  assert.ok(t.every((x) => ['passivo', 'attivo'].includes(x.tipo)));
   assert.equal(dati.specializzazioni.specializzazioni.length, 84);
   assert.equal(dati.tecniche_interiori.tecniche.length, 28);
   assert.equal(dati.regole.avanzamento.eventi.length, 20);
@@ -154,7 +158,7 @@ test('validatore: prerequisito inesistente, id duplicato, molteplicità incoeren
     t.find((x) => x.id === 'ambidestro').id = 'sempre-allerta';
     t.find((x) => x.id === 'prova-salvezza-migliorata').parametro = null;
   });
-  assert.ok(e.some((x) => x.file === 'talenti_liberi.json' && /"parata-istintivaa" non è l'id/.test(x.problema)));
+  assert.ok(e.some((x) => x.file === 'talenti_liberi.json' && /"parata-istintivaa" non è un Talento/.test(x.problema)));
   assert.ok(e.some((x) => /id "sempre-allerta" duplicato/.test(x.problema)));
   assert.ok(e.some((x) => x.chiave.includes('Prova Salvezza Migliorata') && /parametro/.test(x.chiave)));
 });
@@ -179,10 +183,10 @@ test('validatore: Specializzazione con Abilità inesistente, Tecnica senza costo
   assert.ok(e.some((x) => x.file === 'tecniche_interiori.json' && x.chiave.endsWith('.costo')));
 });
 
-test('avvisi (non bloccanti): Talenti provvisori, tipi e durate da definire', () => {
+test('avvisi (non bloccanti): nessun Talento provvisorio o di tipo da definire; durate delle Tecniche da definire', () => {
   const t = avvisiDati(dati);
-  assert.equal(t.filter((x) => /provvisorio/.test(x.problema)).length, 12);
-  assert.equal(t.filter((x) => x.file === 'talenti_liberi.json' && x.chiave.endsWith('.tipo')).length, 3);
+  assert.equal(t.filter((x) => /provvisorio/.test(x.problema)).length, 0);
+  assert.equal(t.filter((x) => x.file === 'talenti_liberi.json').length, 0);
   assert.equal(t.filter((x) => x.file === 'tecniche_interiori.json').length, 3);
 });
 

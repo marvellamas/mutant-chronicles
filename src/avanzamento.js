@@ -162,6 +162,23 @@ function talentiConEffetti(stato, dati) {
 }
 
 const haAccessoMagiaDaTalenti = (stato, dati) => talentiConEffetti(stato, dati).some((t) => t.effetti?.accessoMagia);
+
+/**
+ * Un prerequisito di Talento: id di un Talento posseduto, «addestramento:<nome>», oppure una
+ * condizione di talenti_liberi.json → condizioni_prerequisiti (per esempio la capacità personale
+ * di lanciare Incantesimi: Addestramento Taumaturgo oppure Usufruitore di Magia; master, 26/09/2026).
+ */
+function soddisfaPrerequisito(stato, p, dati) {
+  if (p.startsWith('addestramento:')) return stato.addestr.nome === p.slice('addestramento:'.length);
+  const c = dati.talenti_liberi.condizioni_prerequisiti?.[p];
+  if (c) return (c.addestramento && stato.addestr.nome === c.addestramento) || (c.talenti ?? []).some((id) => possiede(stato, id));
+  return possiede(stato, p);
+}
+
+function descriviPrerequisito(p, dati) {
+  if (p.startsWith('addestramento:')) return `l’Addestramento ${p.slice('addestramento:'.length)}`;
+  return dati.talenti_liberi.condizioni_prerequisiti?.[p]?.descrizione ?? talentoLiberoDef(p, dati)?.nome ?? p;
+}
 const possiedeRisorseInteriori = (stato) => possiede(stato, 'risorse-interiori');
 
 /** Motivi per cui Risorse Interiori è incompatibile con quanto già posseduto (§8.6.10). */
@@ -213,7 +230,8 @@ function quoteIncantesimi(stato, dati) {
   }
   const tetto = r.avanzamento.livello_massimo_incantesimi;
   const daGradi = Math.min(tetto, livelloMassimoIncantesimi(gradiTaum, r));
-  // TODO(Davide): Potenziale Mistico Migliorato è applicato soltanto al limite di Usufruitore di Magia
+  // Potenziale Mistico Migliorato vale solo per il limite di Usufruitore di Magia, non per i
+  // Taumaturghi (master, 26/09/2026, A.2.2): il tetto è quello di regole.json (18)
   const daTalenti = accessoTalenti ? Math.min(tetto, livelloTalenti + potenziale) : 0;
   const totale = somma(perMacro) + liberi;
   return {
@@ -348,10 +366,14 @@ export function controllaTalentoLibero(stato, scelta, dati) {
   if (def.annotazione && !(typeof scelta.annotazione === 'string' && scelta.annotazione.trim())) err(`${nome}: indica ${def.annotazione}`, 'incompleto');
   if (def.molteplicita === 'limitata' && presi.length >= def.max_acquisizioni) err(`${nome}: al massimo ${def.max_acquisizioni} acquisizioni`);
 
-  // prerequisiti (i Talenti provvisori hanno prerequisiti ancora da definire)
+  // prerequisiti: Talenti, Addestramento, capacità; «non:» esprime un'incompatibilità
   if (Array.isArray(def.prerequisiti)) {
     for (const p of def.prerequisiti) {
-      if (!possiede(stato, p)) err(`${nome} richiede ${talentoLiberoDef(p, dati)?.nome ?? p}`);
+      const negato = p.startsWith('non:');
+      const base = negato ? p.slice(4) : p;
+      const ok = soddisfaPrerequisito(stato, base, dati);
+      if (negato && ok) err(`${nome} è incompatibile con ${descriviPrerequisito(base, dati)}`);
+      if (!negato && !ok) err(`${nome} richiede ${descriviPrerequisito(base, dati)}`);
     }
   }
 
@@ -359,7 +381,6 @@ export function controllaTalentoLibero(stato, scelta, dati) {
   if (def.id === 'risorse-interiori') {
     for (const c of conflittiRisorseInteriori(stato, dati)) err(`Risorse Interiori è incompatibile con ${c} (§8.6.10)`);
   }
-  if (def.effetti?.accessoMagia && possiedeRisorseInteriori(stato)) err(`${nome} concede il lancio di Incantesimi: incompatibile con Risorse Interiori (§8.6.10)`);
   return errori;
 }
 
@@ -677,6 +698,35 @@ function salvezzeDi(stato, dati) {
 }
 
 /**
+ * Valori di lancio e di Meditazione del personaggio (Magia sez. 2, 3, 6; schede dei Talenti di
+ * magia approvate dal master il 26/09/2026). Base in regole.json → lancio e meditazione; i
+ * Talenti la modificano con effetti.magia e effetti.meditazione.
+ */
+function magiaDelPersonaggio(stato, caratteristiche, dati) {
+  const base = dati.regole.lancio;
+  const talenti = talentiConEffetti(stato, dati);
+  const m = (k) => talenti.map((t) => t.effetti?.magia?.[k]).filter((v) => v !== undefined);
+  const sostituisci = (k) => (m(k).length ? m(k).at(-1) : base[k]);
+  const contromagia = m('contromagia').includes(true);
+  const med = dati.regole.meditazione;
+  let meditazione = null;
+  if (soddisfaPrerequisito(stato, 'capacita:meditazione', dati)) {
+    const formula = (f) => Math.max(f.minimo, f.fisso + f.caratteristiche.reduce((s, c) => s + caratteristiche[c].mod, 0));
+    const pmExtra = talenti.reduce((s, t) => s + (t.effetti?.meditazione?.pm_per_ora ?? 0), 0);
+    const molt = talenti.reduce((s, t) => s * (t.effetti?.meditazione?.moltiplicatore_ore ?? 1), 1);
+    meditazione = { pmPerOra: formula(med.pm_per_ora) + pmExtra, orePerGiorno: formula(med.ore_al_giorno) * molt };
+  }
+  return {
+    focalizzazioneVa: sostituisci('focalizzazione_va'),
+    penalitaIngaggio: sostituisci('penalita_ingaggio'),
+    tiroArmiDaLancio: base.tiro_armi_da_lancio + m('tiro_armi_da_lancio').reduce((s, v) => s + v, 0),
+    contromagia: contromagia ? { penalita: sostituisci('penalita_contromagia'), serveConoscenza: !m('contromagia_senza_conoscenza').includes(true) } : null,
+    magiaOccultata: m('occultata').includes(true),
+    meditazione,
+  };
+}
+
+/**
  * Scheda completa del personaggio al livello attuale (chiamata da calcolaScheda in calc.js).
  * Con `personaggio.sessione` i valori effettivi includono Ferite, Affaticamento e Stati attivi
  * (src/condizioni.js); senza, coincidono con quelli a riposo (regole + equipaggiamento).
@@ -779,6 +829,7 @@ function schedaARiposo(personaggio, dati) {
       scalaPotere: q.scalaPotere,
     },
     scuolaMishima: stato.scuola,
+    magia: magiaDelPersonaggio(stato, caratteristiche, dati),
     progressione: progressione(personaggio, dati),
     annotazioni,
     errori,

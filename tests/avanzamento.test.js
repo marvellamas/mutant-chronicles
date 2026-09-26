@@ -300,7 +300,7 @@ test('personaggio con Risorse Interiori che prende un Grado di Arcanista → err
   // anche nell'altra direzione con i Talenti che concedono il lancio
   const p4 = fino(MISHIMA_AGENTE, [...liv, voce(4)], 3);
   const e2 = validaLivello(p4, { talentoLibero: { id: 'usufruitore-di-magia' } }, dati);
-  assert.ok(problemi(e2).some((x) => /Usufruitore di Magia concede il lancio di Incantesimi: incompatibile con Risorse Interiori/.test(x)), JSON.stringify(e2));
+  assert.ok(problemi(e2).some((x) => /Usufruitore di Magia è incompatibile con Risorse Interiori/.test(x)), JSON.stringify(e2));
 });
 
 test('Risorse Interiori: le Tecniche vanno scelte, e le Scuole richiedono Mishima', () => {

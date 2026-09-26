@@ -484,6 +484,20 @@
     },
     "_nota": "Manuale del Giocatore §5.10: per ogni sigla usata nel catalogo (campo modalita delle armi) nome, colpi consumati, Azioni Principali, modificatore al VA, colpi a segno, testo della regola e note dal manuale. «migliorata»: il Talento che la modifica. Il validatore controlla che ogni sigla del catalogo abbia la sua voce."
   },
+  "lancio": {
+    "focalizzazione_va": 4,
+    "penalita_ingaggio": -2,
+    "tiro_armi_da_lancio": 2,
+    "penalita_contromagia": -2,
+    "fonte": "Magia sez. 2 («Durante l’Ingaggio richiede sempre Potere, anche ai livelli 1–3, con un ulteriore −2 VA»; Focalizzazione «+4 VA a Potere»; Contromagia «un ulteriore −2 VA») e sez. 3 («si tira Armi da lancio +2»)",
+    "_nota": "Valori base; i Talenti di magia li cambiano con effetti.magia: focalizzazione_va e penalita_ingaggio e penalita_contromagia sostituiscono il valore base, tiro_armi_da_lancio si aggiunge (master, 26/09/2026)."
+  },
+  "meditazione": {
+    "pm_per_ora": { "fisso": 3, "caratteristiche": ["SAG"], "minimo": 3 },
+    "ore_al_giorno": { "fisso": 2, "caratteristiche": ["SAG", "COS"], "minimo": 1 },
+    "fonte": "Magia sez. 6, «Meditazione»: recupero per ora completa 3 + Mod SAG PM, minimo 3; ore utili al giorno 2 + Mod SAG + Mod COS, minimo 1. Schede di Recupero Meditativo, Meditazione Migliorata e Meditazione Estesa approvate dal master il 26/09/2026.",
+    "_nota": "Chi ha la capacità di Meditazione: talenti_liberi.json → condizioni_prerequisiti → capacita:meditazione. I Talenti aggiungono pm_per_ora dopo il minimo e moltiplicano le ore dopo il minimo. L’app mostra i valori; le ore non si contano."
+  },
   "chroma": {
     "colori": {
       "Bianco": { "energia": "Universale", "macrofamiglie": ["Fisica", "Mentale", "Spirituale"] },

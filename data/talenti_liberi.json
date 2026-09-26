@@ -1,7 +1,7 @@
 {
   "versione_manuale": "Giocatore 0.43; Magia 1.1",
   "fonte": "Manuale del Giocatore §8.6 (8.6.1–8.6.10); Manuale della Magia sezioni 1, 2, 3, 6 (Talenti di magia, provvisori)",
-  "_nota": "molteplicita: una | per_caratteristica | per_salvezza_max2 | illimitata | limitata (con max_acquisizioni). parametro: null | caratteristica | salvezza. effetti solo per i Talenti che modificano valori della scheda.",
+  "_nota": "molteplicita: una | per_caratteristica | per_salvezza_max2 | illimitata | limitata (con max_acquisizioni). parametro: null | caratteristica | salvezza. prerequisiti: id di Talenti o condizioni di «condizioni_prerequisiti», eventualmente precedute da «non:». effetti solo per i Talenti che modificano valori della scheda.",
   "attesi": {
     "_nota": "Numero di Talenti per sezione, controllato dal validatore: aggiornarlo se si aggiungono Talenti.",
     "8.6": 87
@@ -68,7 +68,7 @@
     "magia": {
       "titolo": "Talenti di magia (Manuale della Magia)",
       "note": [
-        "Il §8.6.8 rimanda al Manuale della Magia, che cita questi Talenti nel testo delle regole senza schede. Il testo è ricavato dalle citazioni; tipo e prerequisiti sono da definire (TODO). Molteplicità: una sola acquisizione (regola generale del §8.6), salvo i due Talenti che il manuale dichiara acquisibili fino a cinque volte."
+        "Schede del Manuale della Magia, sezione 1, approvate dal master il 26/09/2026 (docs/risposte-master.md): tipo, prerequisiti, molteplicità e testo. Contromagia Universale e Magia Occultata sono Talenti nuovi."
       ]
     }
   },
@@ -77,7 +77,7 @@
       "id": "attivazione-tempestiva",
       "nome": "Attivazione Tempestiva",
       "sezione": "8.6",
-      "tipo": "TODO(Davide)",
+      "tipo": "passivo",
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
@@ -954,7 +954,7 @@
       "id": "risorse-interiori",
       "nome": "Risorse Interiori",
       "sezione": "8.6.10",
-      "tipo": "TODO(Davide)",
+      "tipo": "passivo",
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
@@ -979,7 +979,7 @@
       "id": "tecniche-interiori-supplementari",
       "nome": "Tecniche Interiori Supplementari",
       "sezione": "8.6.10",
-      "tipo": "TODO(Davide)",
+      "tipo": "passivo",
       "prerequisiti": [
         "risorse-interiori"
       ],
@@ -995,13 +995,15 @@
       "id": "usufruitore-di-magia",
       "nome": "Usufruitore di Magia",
       "sezione": "magia",
-      "tipo": "TODO(Davide)",
-      "prerequisiti": "TODO(Davide)",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "non:addestramento:Taumaturgo",
+        "non:risorse-interiori"
+      ],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Usufruitore di Magia concede agli altri personaggi 2 + Mod INT incantesimi e accesso fino al livello 3. Con i cinque Talenti liberi ordinari, Usufruitore più quattro miglioramenti consentono il livello massimo 15.\nConvertire Potere è riservato ai personaggi con Addestramento Taumaturgo. Richiede 1 Azione Principale. Il personaggio deve essere cosciente; quando utilizza un contenitore, deve toccarlo ed essere sintonizzato. Usufruitore di Magia o l’acquisizione di una Classe taumaturgica senza il relativo Addestramento non concedono questa capacità.\nLa Meditazione è accessibile con l’Addestramento Taumaturgo, con Recupero Meditativo o con una capacità che la conceda espressamente. Usufruitore di Magia, da solo, non concede questa possibilità.",
-      "provvisorio": true,
-      "fonte": "Magia, sezioni 1, 6 e 9",
+      "testo": "Il personaggio acquisisce la capacità personale di lanciare Incantesimi e apprende 2 + Mod INT Incantesimi, minimo 1, scelti liberamente fra le famiglie magiche. Può utilizzare le versioni degli Incantesimi conosciuti fino al livello 3, rispettando i requisiti delle rispettive schede.\nIl lancio richiede sempre una Prova di Potere, anche ai livelli 1–3. Si applicano i normali costi in Azioni e PM, le Componenti e gli altri modificatori previsti.\nGli aumenti permanenti del Modificatore di INT incrementano la quota di Incantesimi conosciuti; quelli temporanei non concedono nuovi Incantesimi.\nIl Talento non aumenta i PM e non concede le capacità di Meditazione o Convertire Potere. Il livello massimo accessibile può essere aumentato mediante Potenziale Mistico Migliorato; ulteriori Incantesimi possono essere appresi mediante Incrementare Incantesimi.\nSintonizzazione del Focus. Chi possiede Usufruitore di Magia può sintonizzare il proprio Focus con tre ore di preparazione senza Prova. Questa preparazione non concede il recupero di PM della Meditazione.",
+      "fonte": "Manuale della Magia, sezione 1: scheda approvata dal master il 26/09/2026 (docs/risposte-master.md)",
       "effetti": {
         "accessoMagia": true,
         "incantesimi": {
@@ -1017,13 +1019,14 @@
       "id": "potenziale-mistico-migliorato",
       "nome": "Potenziale Mistico Migliorato",
       "sezione": "magia",
-      "tipo": "TODO(Davide)",
-      "prerequisiti": "TODO(Davide)",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "usufruitore-di-magia"
+      ],
       "molteplicita": "limitata",
       "parametro": null,
-      "testo": "Potenziale Mistico Migliorato aumenta il limite di 3 per acquisizione, fino a cinque acquisizioni, mantenendo sempre la scala più difficile.",
-      "provvisorio": true,
-      "fonte": "Magia, sezione 1",
+      "testo": "Ogni acquisizione aumenta di 3 il livello massimo degli Incantesimi accessibili tramite Usufruitore di Magia, fino a un massimo di 18.\nPartendo dal limite iniziale di 3, le cinque acquisizioni portano il limite rispettivamente a 6, 9, 12, 15 e 18.\nIl personaggio può utilizzare le versioni degli Incantesimi già conosciuti comprese nel nuovo limite, rispettando le rispettive schede. Il Talento non concede nuovi Incantesimi né PM aggiuntivi.\nIl lancio continua a utilizzare la scala di difficoltà prevista per chi non possiede l’Addestramento Taumaturgo.\nAmbito: il Talento è riservato agli Usufruitori di Magia e non si applica all’Addestramento Taumaturgo.",
+      "fonte": "Manuale della Magia, sezione 1: scheda approvata dal master il 26/09/2026 (docs/risposte-master.md)",
       "max_acquisizioni": 5,
       "effetti": {
         "livelloMaxIncantesimi": 3
@@ -1033,13 +1036,14 @@
       "id": "incrementare-incantesimi",
       "nome": "Incrementare Incantesimi",
       "sezione": "magia",
-      "tipo": "TODO(Davide)",
-      "prerequisiti": "TODO(Davide)",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "capacita:lanciare_incantesimi"
+      ],
       "molteplicita": "limitata",
       "parametro": null,
-      "testo": "Incrementare Incantesimi aggiunge due incantesimi conosciuti ed è acquisibile fino a cinque volte. Gli apprendimenti concessi da Addestramento, Classe o Talento sono automatici. Gli aumenti permanenti di Mod INT incrementano la relativa quota; quelli temporanei non concedono incantesimi.",
-      "provvisorio": true,
-      "fonte": "Magia, sezione 1",
+      "testo": "Ogni acquisizione permette di apprendere automaticamente due nuovi Incantesimi, scelti liberamente fra le famiglie magiche.\nIl personaggio può utilizzare le versioni degli Incantesimi appresi comprese nel proprio livello massimo accessibile, rispettando i requisiti delle rispettive schede.\nIl Talento non aumenta il livello massimo degli Incantesimi accessibili e non concede PM aggiuntivi.",
+      "fonte": "Manuale della Magia, sezione 1: scheda approvata dal master il 26/09/2026 (docs/risposte-master.md)",
       "max_acquisizioni": 5,
       "effetti": {
         "incantesimi": 2
@@ -1049,109 +1053,212 @@
       "id": "lancio-in-combattimento",
       "nome": "Lancio in Combattimento",
       "sezione": "magia",
-      "tipo": "TODO(Davide)",
-      "prerequisiti": "TODO(Davide)",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "capacita:lanciare_incantesimi"
+      ],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Durante l’Ingaggio richiede sempre Potere, anche ai livelli 1–3, con un ulteriore −2 VA. Lancio in Combattimento elimina il −2 da Ingaggio, mantenendo l’obbligo della Prova.",
-      "provvisorio": true,
-      "fonte": "Magia, sezione 2"
+      "testo": "Quando lancia un Incantesimo durante l’Ingaggio, il personaggio non applica la penalità di −2 al VA di Potere dovuta all’Ingaggio.\nLa Prova di Potere rimane obbligatoria, anche per gli Incantesimi di livello 1–3. Si applicano normalmente tutti gli altri modificatori previsti.",
+      "fonte": "Manuale della Magia, sezione 1: scheda approvata dal master il 26/09/2026 (docs/risposte-master.md)",
+      "effetti": {
+        "magia": {
+          "penalita_ingaggio": 0
+        }
+      }
     },
     {
       "id": "focalizzazione-migliorata",
       "nome": "Focalizzazione Migliorata",
       "sezione": "magia",
-      "tipo": "TODO(Davide)",
-      "prerequisiti": "TODO(Davide)",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "capacita:lanciare_incantesimi"
+      ],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Focalizzazione impiega 1 Azione Principale preparatoria, senza Prova né PM, e concede +4 VA a Potere per l’incantesimo e il livello dichiarati. Il lancio deve occupare la successiva Azione Principale disponibile; impiegarla diversamente fa perdere il beneficio. Fra preparazione e lancio è consentito soltanto Passo. Non si cumula. Focalizzazione Migliorata porta il bonus a +6. Se non serve Potere, non produce un vantaggio.",
-      "provvisorio": true,
-      "fonte": "Magia, sezione 2"
+      "testo": "Quando utilizza la manovra Focalizzazione, il personaggio ottiene +6 al VA di Potere, anziché +4, per l’Incantesimo e il livello dichiarati.\nLa preparazione richiede 1 Azione Principale, senza Prova né consumo di PM. Il lancio deve occupare la successiva Azione Principale disponibile; impiegarla diversamente fa perdere il beneficio. Fra preparazione e lancio è consentito soltanto Passo.\nRipetere la manovra non cumula il bonus. Se il lancio non richiede una Prova di Potere, il Talento non concede benefici.",
+      "fonte": "Manuale della Magia, sezione 1: scheda approvata dal master il 26/09/2026 (docs/risposte-master.md)",
+      "effetti": {
+        "magia": {
+          "focalizzazione_va": 6
+        }
+      }
     },
     {
       "id": "contromagia",
       "nome": "Contromagia",
       "sezione": "magia",
-      "tipo": "TODO(Davide)",
-      "prerequisiti": "TODO(Davide)",
+      "tipo": "attivo",
+      "prerequisiti": [
+        "capacita:lanciare_incantesimi"
+      ],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Contromagia richiede il Talento omonimo, 1 Azione Principale disponibile e visibilità del lancio entro 10 Q dal lanciatore avversario. Non richiede preparazione. Si pagano PM pari al livello dell’incantesimo da contrastare e si effettua sempre Potere, con penalità di livello e un ulteriore −2 VA. Il successo annulla l’incantesimo; Azioni e PM restano spesi. Si possono contrastare livelli superiori al proprio accesso se si hanno i PM necessari.",
-      "provvisorio": true,
-      "fonte": "Magia, sezione 2"
+      "testo": "Quando vede un avversario lanciare un Incantesimo entro 10 Q, il personaggio può usare Contromagia se conosce l’Incantesimo. Il riconoscimento non richiede una Prova. Solo se il lanciatore possiede Magia Occultata occorre prima superare una Prova di Occultismo senza costo in Azioni; con un fallimento non si può tentare Contromagia contro quel lancio.\nSoddisfatti questi requisiti, il personaggio può procedere con Contromagia, spendendo 1 Azione Principale disponibile, senza preparazione. Contromagia Universale elimina il requisito della conoscenza dell’Incantesimo; la Prova di Occultismo resta necessaria soltanto contro chi possiede Magia Occultata.\nPaga PM pari al livello dell’Incantesimo da contrastare ed effettua una Prova di Potere, applicando la penalità di livello prevista per il proprio tipo di utilizzatore e un ulteriore −2 al VA. La Prova è sempre necessaria, anche ai livelli 1–3.\nIl successo annulla l’Incantesimo. Anche se il tentativo fallisce, l’Azione e i PM spesi per Contromagia restano consumati.\nSi possono contrastare anche Incantesimi di livello superiore al proprio massimo accessibile, purché si disponga dei PM necessari e siano rispettati i requisiti di conoscenza e l’eventuale riconoscimento richiesto da Magia Occultata. Contromagia interviene durante il lancio: non rimuove effetti già attivi.",
+      "fonte": "Manuale della Magia, sezione 1: scheda approvata dal master il 26/09/2026 (docs/risposte-master.md)",
+      "effetti": {
+        "magia": {
+          "contromagia": true
+        }
+      }
+    },
+    {
+      "id": "contromagia-universale",
+      "nome": "Contromagia Universale",
+      "sezione": "magia",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "contromagia"
+      ],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Il personaggio può utilizzare Contromagia anche contro Incantesimi che non conosce, senza una Prova di Occultismo. Solo se il lanciatore possiede Magia Occultata deve prima riconoscere l’Incantesimo superando una Prova di Occultismo senza costo in Azioni; con un fallimento non può tentare Contromagia contro quel lancio.\nRestano valide le condizioni, i costi e la Prova di Potere previsti da Contromagia. Questo Talento non elimina la penalità aggiuntiva di −2 al VA, rimossa invece da Contromagia Migliorata.",
+      "fonte": "Manuale della Magia, sezione 1: scheda approvata dal master il 26/09/2026 (docs/risposte-master.md)",
+      "effetti": {
+        "magia": {
+          "contromagia_senza_conoscenza": true
+        }
+      }
     },
     {
       "id": "contromagia-migliorata",
       "nome": "Contromagia Migliorata",
       "sezione": "magia",
-      "tipo": "TODO(Davide)",
-      "prerequisiti": "TODO(Davide)",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "contromagia"
+      ],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Contromagia Migliorata elimina il −2 aggiuntivo.",
-      "provvisorio": true,
-      "fonte": "Magia, sezione 2"
+      "testo": "Quando utilizza Contromagia, il personaggio non applica la penalità aggiuntiva di −2 al VA di Potere prevista dalla manovra.\nLa Prova di Potere rimane obbligatoria, anche contro Incantesimi di livello 1–3. Si applicano normalmente le penalità di livello e gli altri modificatori previsti.\nRestano invariati i costi e i requisiti di Contromagia: occorre conoscere l’Incantesimo, salvo possedere Contromagia Universale. La Prova di Occultismo è richiesta soltanto contro un lanciatore che possiede Magia Occultata e non consuma Azioni.",
+      "fonte": "Manuale della Magia, sezione 1: scheda approvata dal master il 26/09/2026 (docs/risposte-master.md)",
+      "effetti": {
+        "magia": {
+          "penalita_contromagia": 0
+        }
+      }
     },
     {
       "id": "incantesimi-da-lancio",
       "nome": "Incantesimi da Lancio",
       "sezione": "magia",
-      "tipo": "TODO(Davide)",
-      "prerequisiti": "TODO(Davide)",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "capacita:lanciare_incantesimi"
+      ],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Se lo richiede, si tira Armi da lancio +2 anche senza Copertura; Incantesimi da Lancio aggiunge un ulteriore +2, per un totale di +4.",
-      "provvisorio": true,
-      "fonte": "Magia, sezione 3"
+      "testo": "Quando un Incantesimo richiede un tiro per colpire con Armi da lancio, il personaggio ottiene un ulteriore +2 al VA, portando il bonus previsto per questo tiro da +2 a +4.\nIl beneficio si applica esclusivamente al tiro per colpire con Armi da lancio. Non modifica la Prova di Potere né i tiri di Corpo a corpo richiesti dagli Incantesimi a Contatto.",
+      "fonte": "Manuale della Magia, sezione 1: scheda approvata dal master il 26/09/2026 (docs/risposte-master.md)",
+      "effetti": {
+        "magia": {
+          "tiro_armi_da_lancio": 2
+        }
+      }
+    },
+    {
+      "id": "magia-occultata",
+      "nome": "Magia Occultata",
+      "sezione": "magia",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "capacita:lanciare_incantesimi"
+      ],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Chi vuole contrastare con Contromagia un Incantesimo lanciato dal personaggio deve prima riconoscerlo superando una Prova di Occultismo senza costo in Azioni.\nLa Prova è necessaria anche se l’avversario conosce l’Incantesimo o possiede Contromagia Universale.\nSe il riconoscimento fallisce, l’avversario non può tentare Contromagia contro quel lancio. Se riesce, può procedere rispettando i normali requisiti e costi di Contromagia ed effettuando la relativa Prova di Potere.\nChi usa Contromagia deve comunque conoscere l’Incantesimo, salvo possedere Contromagia Universale.\nIl beneficio di Magia Occultata è sempre attivo e non richiede Azioni o PM aggiuntivi.",
+      "fonte": "Manuale della Magia, sezione 1: scheda approvata dal master il 26/09/2026 (docs/risposte-master.md)",
+      "effetti": {
+        "magia": {
+          "occultata": true
+        }
+      }
     },
     {
       "id": "conversione-migliorata",
       "nome": "Conversione Migliorata",
       "sezione": "magia",
-      "tipo": "TODO(Davide)",
-      "prerequisiti": "TODO(Davide)",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "addestramento:Taumaturgo"
+      ],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Ricarica Efficiente e Conversione Migliorata portano ciascuna il rapporto da 3:1 a 2:1. Possedendole entrambe, il rapporto diventa 1:1. I Talenti modificano il costo di ogni gruppo, senza cambiare il numero di gruppi dichiarati, la penalità o gli esiti della Prova. I trasferimenti con il Chroma Bianco rimangono 2:1 in entrambe le direzioni, anche con entrambi i Talenti.",
-      "provvisorio": true,
-      "fonte": "Magia, sezione 6"
+      "testo": "Nelle operazioni di Convertire Potere e ricarica dei contenitori, il rapporto ordinario migliora da 3:1 a 2:1: ogni gruppo produce 1 PM consumando 2 punti della risorsa di origine.\nSe il personaggio possiede anche Ricarica Efficiente, il rapporto diventa 1:1.\nI trasferimenti con il Chroma Bianco mantengono il rapporto 2:1 in entrambe le direzioni, anche possedendo entrambi i Talenti.\nIl Talento modifica il costo di ciascun gruppo. Restano invariati la procedura, le Azioni richieste, le Prove, le penalità, gli esiti e i limiti delle riserve.",
+      "fonte": "Manuale della Magia, sezione 1: scheda approvata dal master il 26/09/2026 (docs/risposte-master.md)"
     },
     {
       "id": "recupero-meditativo",
       "nome": "Recupero Meditativo",
       "sezione": "magia",
-      "tipo": "TODO(Davide)",
-      "prerequisiti": "TODO(Davide)",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "non:capacita:meditazione"
+      ],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "La Meditazione è accessibile con l’Addestramento Taumaturgo, con Recupero Meditativo o con una capacità che la conceda espressamente. Usufruitore di Magia, da solo, non concede questa possibilità.",
-      "provvisorio": true,
-      "fonte": "Magia, sezione 6"
+      "testo": "Il personaggio acquisisce la capacità di Meditazione.\nOgni ora completa permette di recuperare 3 + Mod SAG PM, con un minimo di 3 PM, senza effettuare Prove.\nLe ore giornaliere utili al recupero sono 2 + Mod SAG + Mod COS, con un minimo di 1 ora.\nDurante la Meditazione il personaggio deve restare fermo e tranquillo: non può esplorare, sorvegliare, ricaricare contenitori o mantenere la Concentrazione su un Incantesimo.\nLa Meditazione sostituisce il recupero naturale della stessa ora. Un’ora interrotta non concede PM; restano validi i recuperi delle ore già completate. Non si può superare il massimo personale di PM.",
+      "fonte": "Manuale della Magia, sezione 1: scheda approvata dal master il 26/09/2026 (docs/risposte-master.md)",
+      "effetti": {
+        "meditazione": {
+          "accesso": true
+        }
+      }
     },
     {
       "id": "meditazione-migliorata",
       "nome": "Meditazione Migliorata",
       "sezione": "magia",
-      "tipo": "TODO(Davide)",
-      "prerequisiti": "TODO(Davide)",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "capacita:meditazione"
+      ],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Meditazione Migliorata richiede accesso alla Meditazione, è acquisibile una sola volta e aggiunge 2 PM al recupero di ogni ora completa, dopo aver applicato il minimo di 3.",
-      "provvisorio": true,
-      "fonte": "Magia, sezione 6"
+      "testo": "Il recupero di ogni ora completa di Meditazione aumenta di 2 PM, aggiunti dopo aver applicato il minimo di 3 PM previsto dalla regola base. Il recupero minimo diventa quindi 5 PM per ora completa.\nRestano invariati il numero di ore giornaliere disponibili e le condizioni della Meditazione. Il recupero sostituisce quello naturale della stessa ora e non può superare il massimo personale di PM. Un’ora interrotta non concede PM; restano validi i recuperi delle ore già completate.",
+      "fonte": "Manuale della Magia, sezione 1: scheda approvata dal master il 26/09/2026 (docs/risposte-master.md)",
+      "effetti": {
+        "meditazione": {
+          "pm_per_ora": 2
+        }
+      }
     },
     {
       "id": "meditazione-estesa",
       "nome": "Meditazione Estesa",
       "sezione": "magia",
-      "tipo": "TODO(Davide)",
-      "prerequisiti": "TODO(Davide)",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "capacita:meditazione"
+      ],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Meditazione Estesa richiede accesso alla Meditazione e raddoppia le ore giornaliere utili al recupero, dopo aver applicato il minimo di 1 ora. Non richiede Meditazione Migliorata. Permette inoltre ritiri meditativi che possono protrarsi per più giorni, mantenendo le normali necessità di sostentamento: le ore oltre il limite giornaliero raddoppiato non concedono ulteriori PM in quel giorno.",
-      "provvisorio": true,
-      "fonte": "Magia, sezione 6"
+      "testo": "Il personaggio raddoppia le ore giornaliere di Meditazione utili al recupero dei PM. Il raddoppio si applica dopo aver calcolato 2 + Mod SAG + Mod COS, con un minimo iniziale di 1 ora. Il minimo finale diventa quindi 2 ore giornaliere.\nIl Talento non richiede Meditazione Migliorata. Possedendoli entrambi, si applicano sia il raddoppio delle ore sia il bonus di 2 PM per ora completa.\nSono possibili ritiri meditativi di più giorni, mantenendo le normali necessità di sostentamento. Le ore oltre il limite giornaliero raddoppiato non concedono ulteriori PM.\nRestano valide le condizioni della Meditazione e il limite massimo personale di PM.",
+      "fonte": "Manuale della Magia, sezione 1: scheda approvata dal master il 26/09/2026 (docs/risposte-master.md)",
+      "effetti": {
+        "meditazione": {
+          "moltiplicatore_ore": 2
+        }
+      }
     }
-  ]
+  ],
+  "condizioni_prerequisiti": {
+    "_nota": "Prerequisiti diversi da un Talento. «non:<prerequisito>» li nega (vale anche per gli id dei Talenti). «addestramento:<nome>» richiede l’Addestramento. Le capacità sotto sono possedute con l’Addestramento indicato oppure con uno dei Talenti elencati (master, 26/09/2026).",
+    "capacita:lanciare_incantesimi": {
+      "descrizione": "la capacità personale di lanciare Incantesimi",
+      "addestramento": "Taumaturgo",
+      "talenti": [
+        "usufruitore-di-magia"
+      ]
+    },
+    "capacita:meditazione": {
+      "descrizione": "la capacità di Meditazione",
+      "addestramento": "Taumaturgo",
+      "talenti": [
+        "recupero-meditativo"
+      ],
+      "fonte": "Magia sez. 6: «La Meditazione è accessibile con l’Addestramento Taumaturgo, con Recupero Meditativo o con una capacità che la conceda espressamente.» Nessuna Classe la concede."
+    }
+  }
 }
