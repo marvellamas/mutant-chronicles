@@ -224,5 +224,6 @@ data/             regole in JSON
 tests/            node --test
 docs/             studio di fattibilità, ricognizione dell'avanzamento, risposte del master
 serve.json        intestazioni di cache per npm start e avvia.bat
+tools/            estrazione di testo e tabelle dai PDF dei manuali (Python + pdfplumber); non fa parte dell'app
 avvia.bat         avvio con doppio clic su Windows
 ```

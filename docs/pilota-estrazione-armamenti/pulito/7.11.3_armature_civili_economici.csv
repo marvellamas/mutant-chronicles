@@ -1,0 +1,4 @@
+modello,qualita,ps_int,rep,costo
+Armatura civile leggera,Comune,10,CO,1500
+Armatura civile media,Comune,10,NC,3500
+Armatura civile pesante,Comune,10,RA,7000

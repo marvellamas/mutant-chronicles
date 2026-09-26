@@ -1,0 +1,29 @@
+famiglia,profilo,abilita,mani,danno_base,q,proprieta
+Coltelli e pugnali,Coltello,Mischia,1,1d4,1,—
+Coltelli e pugnali,Pugnale,Mischia,1,1d4+1,1,—
+Coltelli e pugnali,Daga,Mischia,1,1d6,1,—
+Coltelli e pugnali,Pugnale da combattimento,Mischia,1,1d6+1,1,—
+Spade,Spada leggera,Mischia,1,1d6+1,1,—
+Spade,Stocco,Mischia,1,1d6,1,Sanguinante 1
+Spade,Spada lunga,Guerra,1,1d8+1,1,—
+Spade,Spada bastarda,Guerra,1 / 2,1d8+1 / 2d6,1,Versatile
+Spade,Spadone,Guerra,2,2d6+1,1,—
+Asce,Ascia leggera,Mischia,1,1d6+1,1,—
+Asce,Ascia bipenne,Guerra,2,2d6+1,1,—
+Martelli,Martello,Mischia,1,1d6+2,1,—
+Martelli,Martello da guerra,Guerra,1,1d8+1,1,—
+Martelli,Martello a due mani,Guerra,2,2d6,1,—
+Mazze e bastoni,Randello,Mischia,1,1d6,1,—
+Mazze e bastoni,Mazza ferrata,Mischia,1,1d6+1,1,—
+Mazze e bastoni,Tonfa,Mischia,1,1d4+1,1,Difensiva +2
+Armi inastate,Baionetta montata,Guerra,2,1d4+1,1,Montata
+Armi inastate,Lancia,Guerra,1 / 2,1d6+1 / 1d6+3,2,Versatile
+Armi inastate,Picca,Guerra,2,1d6+1,3,—
+Armi inastate,Tridente,Guerra,1,1d8+1,2,—
+Armi inastate,Arma inastata pesante,Guerra,2,1d8+1,2,—
+Armi flessibili,Frusta,Mischia,1,1d4,3,Immobilizzare a distanza
+Armi flessibili,Mazzafrusto,Guerra,1,1d6+1,1,−2 VA alla Parata avversaria
+Armi da pugno,Artigli,Mischia,1,1d4+1,1,Sanguinante 1
+Armi da pugno,Tirapugni,Corpo a corpo,1,1,1,—
+Armi da pugno,Tirapugni chiodato,Corpo a corpo,1,3,1,—
+Armi da pugno,Tirapugni concussivo,Corpo a corpo,1,2,1,Concussivo; +1d6 a carica; 5 cariche a cella
