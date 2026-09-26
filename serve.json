@@ -1,7 +1,7 @@
 {
   "headers": [
     {
-      "source": "**/*.@(js|css|json)",
+      "source": "**/*.@(js|css|json|html)",
       "headers": [
         {
           "key": "Cache-Control",

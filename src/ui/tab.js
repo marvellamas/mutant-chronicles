@@ -37,7 +37,11 @@ export function renderTab(ctx) {
   const id = tab.tab[0].dati;
   const livelloMax = ctx.dati.regole.avanzamento.livello_massimo;
 
-  const barra = h('header', { class: 'barra-scheda' },
+  const ritratto = ctx.scelte.ritratto;
+  // ingranaggio: il ritratto, sfumato, anche come sfondo dell'intestazione
+  const conSfondo = ritratto && ctx.ritrattoIntestazione;
+  const barra = h('header', { class: `barra-scheda${conSfondo ? ' con-ritratto' : ''}`, style: conSfondo ? `--ritratto: url("${ritratto}")` : null },
+    ritratto ? h('img', { class: 'ritratto-testa', src: ritratto, alt: '' }) : null,
     h('div', { class: 'barra-titolo' },
       h('h1', {}, id.nome),
       h('p', {}, h('strong', {}, `${id.livello}° livello`), ` · ${id.corporazione} · ${id.addestramento} · ${id.classi.map((c) => `${c.nome} ${c.grado}`).join(', ')}`),
@@ -102,6 +106,18 @@ function menuImpostazioni(ctx) {
         [['compatta', 'Compatta (colonna centrale)'], ['piena', 'Piena (usa gli schermi larghi)']].map(([v, etichetta]) => h('label', { class: 'scelta-radio' },
           h('input', { type: 'radio', name: 'larghezza-scheda', value: v, checked: (ctx.larghezza ?? 'piena') === v, onchange: () => ctx.azioni.larghezza(v) }),
           ` ${etichetta}`))),
+      // sfondi di Corporazione: solo quelli con il file in img/sfondi/ (README)
+      ctx.sfondi?.length ? h('fieldset', {},
+        h('legend', {}, 'Sfondo'),
+        [{ id: 'nessuno', nome: 'Nessuno' }, ...ctx.sfondi].map((s) => h('label', { class: 'scelta-radio' },
+          h('input', { type: 'radio', name: 'sfondo-scheda', value: s.id, checked: (ctx.sfondo ?? 'nessuno') === s.id, onchange: () => ctx.azioni.sfondo(s.id) }),
+          ` ${s.nome}`))) : null,
+      h('fieldset', {},
+        h('legend', {}, 'Ritratto'),
+        h('label', { class: 'scelta-radio' },
+          h('input', { type: 'checkbox', checked: !!ctx.ritrattoIntestazione, disabled: !ctx.scelte.ritratto, onchange: (e) => ctx.azioni.ritrattoIntestazione(e.target.checked) }),
+          ' Ritratto come sfondo dell’intestazione'),
+        ctx.scelte.ritratto ? null : h('p', { class: 'nota' }, 'Nessun ritratto: si carica nel passo Background.')),
       h('p', { class: 'nota' }, 'Salvate in questo browser.')));
 }
 
@@ -235,6 +251,7 @@ function tabIdentita(ctx, d) {
         }, `Converti ${m.distintiviPerPuntoEroe} Distintivi in 1 Punto Eroe`))),
 
     sezione('Anagrafica',
+      ctx.scelte.ritratto ? h('img', { class: 'ritratto-identita', src: ctx.scelte.ritratto, alt: `Ritratto di ${d.nome}` }) : null,
       // due colonne su desktop e tablet (le righe vanno giù per colonna), una sola su telefono
       h('dl', { class: 'anagrafica anagrafica-colonne', style: `--righe: ${Math.ceil((d.anagrafica.length + 5) / 2)}` },
         h('div', {}, h('dt', {}, 'Corporazione'), h('dd', {}, d.corporazione)),

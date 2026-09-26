@@ -8,6 +8,7 @@ import {
 import { statoIncantesimi } from './incantesimi.js';
 import { specTiro, migraTiro, motivoFuoriIntervallo } from './tiri.js';
 import { normalizzaEquipaggiamento, catalogo, risolvi, STATI, NOMI_TIPI, infoArtefattoVoce } from './equipaggiamento.js';
+import { ritrattoValido } from './ritratto.js';
 
 // Personaggio a livelli { creazione, livelli } (cap. 8): modello e funzioni in avanzamento.js.
 export {
@@ -63,6 +64,7 @@ export function nuoveScelte() {
     incantesimi: [],
     puntiEroe: null, // { valore, origine: 'app' | 'manuale' }
     equipaggiamento: [], // voci { uid, rif, personalizzato?, stato, quantita, montato_su?, note } (src/equipaggiamento.js)
+    ritratto: null, // data URL JPEG o PNG, ridimensionato nel browser (src/ritratto.js)
   };
 }
 
@@ -177,6 +179,11 @@ export function normalizza(scelteIn, dati) {
   if (s.puntiEsperienza !== null && !(typeof s.puntiEsperienza === 'number' && Number.isFinite(s.puntiEsperienza))) {
     if (s.puntiEsperienza !== undefined && s.puntiEsperienza !== '') avvisi.push(`Punti esperienza ${JSON.stringify(s.puntiEsperienza)} non numerici: campo svuotato.`);
     s.puntiEsperienza = null;
+  }
+  // Ritratto: solo un'immagine JPEG o PNG entro il peso massimo; altrimenti si toglie
+  if (s.ritratto !== null && !ritrattoValido(s.ritratto)) {
+    avvisi.push('Ritratto non valido o troppo pesante: rimosso (caricalo di nuovo dal passo Background).');
+    s.ritratto = null;
   }
   for (const k of ['puntiCaratteristica', 'puntiAbilitaLiberi']) if (!isOggetto(s[k])) s[k] = {};
   if (!Array.isArray(s.incantesimi)) s.incantesimi = [];
@@ -370,6 +377,8 @@ export function nomeFileEsportazione(nome, livello, data = new Date()) {
 export function serializza(scelte, { versioniDati, livelli, sessione } = {}) {
   const pulite = {};
   for (const k of CAMPI) pulite[k] = scelte?.[k] ?? nuoveScelte()[k];
+  // senza ritratto il campo non si scrive: i file di prima restano identici byte per byte
+  if (pulite.ritratto === null) delete pulite.ritratto;
   const file = { formato: FORMATO_FILE, versione: VERSIONE_FORMATO };
   // in ordine alfabetico: l'ordine di caricamento dei file dati varia, il file esportato no
   if (versioniDati) file.versioni_dati = Object.fromEntries(Object.entries(versioniDati).sort(([a], [b]) => a.localeCompare(b)));

@@ -16,6 +16,7 @@ import { inizializzaTooltip, nascondiTooltip } from './tooltip.js';
 import { renderRiepilogo } from './riepilogo.js';
 import { renderSali } from './sali.js';
 import { renderStampa, esciDallaStampa } from './stampa.js';
+import { cercaSfondi, applicaSfondo } from './sfondi.js';
 import { preparaStampa, preparaTab } from '../stampa.js';
 import { renderTab } from './tab.js';
 import {
@@ -26,7 +27,7 @@ import { conOrdinale } from '../lingua.js';
 
 // Dopo la creazione si possono ancora cambiare solo i campi descrittivi: le altre scelte
 // determinano i livelli successivi (ricognizione dell'avanzamento, §8).
-const CAMPI_LIBERI_DOPO_LIVELLI = ['nome', 'concetto', 'equipaggiamento', 'puntiEsperienza', ...CAMPI_ANAGRAFICA.map((c) => c.campo)];
+const CAMPI_LIBERI_DOPO_LIVELLI = ['nome', 'concetto', 'equipaggiamento', 'puntiEsperienza', 'ritratto', ...CAMPI_ANAGRAFICA.map((c) => c.campo)];
 // L'ultimo passo del wizard è la scheda: si apre come vista a tab (#/p/<id>).
 const PASSO_SCHEDA = PASSI.length - 1;
 const PASSO_EQUIPAGGIAMENTO = PASSI.findIndex((p) => p.titolo === 'Equipaggiamento');
@@ -51,6 +52,7 @@ const stato = {
   messaggioHome: null,
   avvisiDati: [],
   salvataggioOk: true,
+  sfondi: [], // sfondi di Corporazione presenti in img/sfondi/ (src/ui/sfondi.js)
   ui: { aperti: new Set(), riepilogoAperto: false, tiroPE: null },
 };
 
@@ -69,6 +71,7 @@ async function avvia() {
   if (risultato.errori.length) return mostraErroriDati(risultato.errori);
   stato.avvisiDati = risultato.avvisi ?? [];
   inizializzaTooltip(stato.dati);
+  stato.sfondi = await cercaSfondi(stato.dati.corporazioni.corporazioni.map((c) => c.nome));
   window.addEventListener('hashchange', daIndirizzo);
   // I menu della scheda (Azioni, impostazioni) si chiudono toccando altrove
   document.addEventListener('click', (e) => {
@@ -123,6 +126,7 @@ function daIndirizzo() {
     return;
   }
   esciDallaStampa();
+  applicaSfondo(null); // lo sfondo scelto vale solo nella SD (renderScheda)
   const sali = location.hash.match(/^#\/p\/([\w-]+)\/sali\/(\d+)$/);
   // Uscire dalla bozza del livello (tasto Indietro, link, indirizzo) chiede conferma.
   if (stato.sali && !(sali && sali[1] === stato.id)) {
@@ -187,6 +191,13 @@ const personaggio = () => ({ creazione: stato.scelte, livelli: stato.livelli });
 // ---------------------------------------------------------------------------
 // Persistenza
 
+/** Avviso quando il salvataggio nel browser non riesce: spazio esaurito o storage bloccato. */
+function testoSalvataggioFallito() {
+  return archivio.erroreSalvataggio() === 'quota'
+    ? 'Spazio del browser esaurito: le ultime modifiche NON sono salvate. Usa «SALVA PG (Esporta JSON)» subito, poi esporta e rimuovi i personaggi vecchi (o i ritratti) dalla pagina iniziale.'
+    : 'Il browser non permette il salvataggio: usa «SALVA PG (Esporta JSON)» per non perdere il personaggio.';
+}
+
 function persisti() {
   if (!stato.id) return;
   stato.salvataggioOk = archivio.salva({ id: stato.id, scelte: stato.scelte, livelli: stato.livelli, sessione: stato.sessione, passo: stato.passo });
@@ -214,7 +225,9 @@ async function importa(file) {
     if (errLivelli.length) avvisi.push(`Livelli con errori rispetto ai dati attuali: ${errLivelli[0].problema}`);
     // senza `sessione` nel file la si inizializza ai massimi; altrimenti la si limita ai massimi attuali
     const sessione = sessioneAllineata(scelte, livelli, sessioneFile);
-    if (!archivio.salva({ id, scelte, livelli, sessione, passo: livelli.length || calcolaScheda(scelte, stato.dati).completa ? PASSO_SCHEDA : 0 })) throw new Error('Impossibile salvare nel browser (spazio o permessi).');
+    if (!archivio.salva({ id, scelte, livelli, sessione, passo: livelli.length || calcolaScheda(scelte, stato.dati).completa ? PASSO_SCHEDA : 0 })) {
+      throw new Error(archivio.erroreSalvataggio() === 'quota' ? 'spazio del browser esaurito: esporta e rimuovi personaggi vecchi, poi riprova.' : 'il browser non permette di salvare (navigazione privata o permessi).');
+    }
     stato.messaggioHome = {
       tipo: avvisi.length ? 'attenzione' : 'ok',
       testo: `Importato «${scelte.nome || file.name}».`,
@@ -402,9 +415,9 @@ function renderWizard() {
         h('header', { class: 'passo-testa' },
           h('p', { class: 'sopratitolo' }, `Passo ${pos} di ${visibili.length - 1} · ${passo.rif}`),
           h('h1', { id: 'titolo-passo' }, passo.titolo)),
-        stato.salvataggioOk ? null : h('p', { class: 'riquadro attenzione' }, 'Il browser non permette il salvataggio automatico: usa «SALVA PG (Esporta JSON)» per non perdere il personaggio.'),
+        stato.salvataggioOk ? null : h('p', { class: 'riquadro errore', role: 'alert' }, testoSalvataggioFallito()),
         stato.livelli.length && stato.passo !== PASSO_SCHEDA ? h('p', { class: 'riquadro attenzione no-stampa' },
-          `Personaggio ${conOrdinale('al', 1 + stato.livelli.length)} livello: la creazione si può consultare ma non modificare (tranne nome, Background, anagrafica ed equipaggiamento). Per cambiarla annulla i livelli dalla scheda finale.`) : null,
+          `Personaggio ${conOrdinale('al', 1 + stato.livelli.length)} livello: la creazione si può consultare ma non modificare (tranne nome, Background, ritratto, anagrafica ed equipaggiamento). Per cambiarla annulla i livelli dalla scheda finale.`) : null,
         avvisi,
         corpo,
         h('footer', { class: 'passo-piede no-stampa' },
@@ -491,7 +504,7 @@ function renderSaliPagina() {
       stato.sali = null;
       stato.passo = PASSO_SCHEDA;
       persisti();
-      if (!stato.salvataggioOk) alert('Livello aggiunto, ma il browser non permette il salvataggio: usa «SALVA PG (Esporta JSON)» per non perderlo.');
+      if (!stato.salvataggioOk) alert(`Livello aggiunto, ma non salvato nel browser. ${testoSalvataggioFallito()}`);
       vai(`#/p/${stato.id}`);
     },
     esci() {
@@ -555,6 +568,8 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
     persisti();
   }
   const attiva = tab.tab.some((t) => t.id === stato.tab) ? stato.tab : 'identita';
+  const impostazioni = archivio.leggiImpostazioni();
+  applicaSfondo(stato.sfondi.find((s) => s.id === impostazioni.sfondo)?.url ?? null);
   const schedaCreazione = calcolaScheda(stato.scelte, dati);
   const messaggio = stato.messaggioScheda;
   stato.messaggioScheda = null;
@@ -577,12 +592,15 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
     sessione: stato.sessione,
     massimi,
     penalita: penalitaSessione(stato.sessione, dati),
-    posizione: archivio.leggiImpostazioni().posizioneTab,
-    larghezza: archivio.leggiImpostazioni().larghezzaScheda,
+    posizione: impostazioni.posizioneTab,
+    larghezza: impostazioni.larghezzaScheda,
+    sfondi: stato.sfondi,
+    sfondo: impostazioni.sfondo,
+    ritrattoIntestazione: impostazioni.ritrattoIntestazione,
     puoAnnullareSessione: !!stato.sessionePrecedente,
     motivoNoSalita: !schedaCreazione.completa ? 'Completa la creazione prima di salire di livello.'
       : tab.errori.length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
-    messaggio: messaggio ?? (stato.salvataggioOk ? null : { tipo: 'attenzione', testo: 'Il browser non permette il salvataggio: usa «SALVA PG (Esporta JSON)» per non perdere il personaggio.' }),
+    messaggio: messaggio ?? (stato.salvataggioOk ? null : { tipo: 'errore', testo: testoSalvataggioFallito() }),
     passi: { background: 0, equipaggiamento: PASSO_EQUIPAGGIAMENTO },
     ui: stato.ui,
     azioni: {
@@ -636,6 +654,14 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       },
       larghezza: (valore) => {
         archivio.salvaImpostazioni({ ...archivio.leggiImpostazioni(), larghezzaScheda: valore });
+        renderScheda({ mantieniScorrimento: true });
+      },
+      sfondo: (valore) => {
+        archivio.salvaImpostazioni({ ...archivio.leggiImpostazioni(), sfondo: valore });
+        renderScheda({ mantieniScorrimento: true });
+      },
+      ritrattoIntestazione: (valore) => {
+        archivio.salvaImpostazioni({ ...archivio.leggiImpostazioni(), ritrattoIntestazione: valore });
         renderScheda({ mantieniScorrimento: true });
       },
     },

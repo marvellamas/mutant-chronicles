@@ -14,12 +14,33 @@ function leggiTutti() {
   }
 }
 
+// Motivo dell'ultimo salvataggio fallito: 'quota' (spazio del browser esaurito, per esempio con
+// molti ritratti) oppure 'bloccato' (navigazione privata, storage disattivato). null se è riuscito.
+let ultimoErrore = null;
+
+/** Perché l'ultimo salvataggio non è riuscito: 'quota', 'bloccato' o null. */
+export const erroreSalvataggio = () => ultimoErrore;
+
+const eQuota = (e) => e?.name === 'QuotaExceededError' || e?.name === 'NS_ERROR_DOM_QUOTA_REACHED' || e?.code === 22 || e?.code === 1014;
+
 function scriviTutti(tutti) {
   try {
     localStorage.setItem(CHIAVE, JSON.stringify(tutti));
+    ultimoErrore = null;
     return true;
-  } catch {
+  } catch (e) {
+    // il salvataggio precedente resta intatto: si perde solo l'ultima modifica, e lo si dice
+    ultimoErrore = eQuota(e) ? 'quota' : 'bloccato';
     return false;
+  }
+}
+
+/** Caratteri occupati dai personaggi salvati (localStorage conta caratteri, circa 5 milioni per sito). */
+export function spazioOccupato() {
+  try {
+    return (localStorage.getItem(CHIAVE) ?? '').length;
+  } catch {
+    return 0;
   }
 }
 
@@ -58,7 +79,9 @@ export function nuovoId() {
 // Impostazioni dell'interfaccia (per browser, non per personaggio)
 
 const CHIAVE_IMPOSTAZIONI = 'mutant.impostazioni.v1';
-const IMPOSTAZIONI_PREDEFINITE = { posizioneTab: 'automatica', larghezzaScheda: 'piena' };
+// sfondo: 'nessuno' o l'id di uno sfondo di Corporazione (src/ui/sfondi.js); ritrattoIntestazione:
+// il ritratto sfumato dietro l'intestazione della SD
+const IMPOSTAZIONI_PREDEFINITE = { posizioneTab: 'automatica', larghezzaScheda: 'piena', sfondo: 'nessuno', ritrattoIntestazione: false };
 const POSIZIONI = ['automatica', 'sinistra', 'basso', 'alto'];
 const LARGHEZZE = ['compatta', 'piena'];
 
@@ -68,6 +91,8 @@ export function leggiImpostazioni() {
     const out = { ...IMPOSTAZIONI_PREDEFINITE, ...(v && typeof v === 'object' ? v : {}) };
     if (!POSIZIONI.includes(out.posizioneTab)) out.posizioneTab = IMPOSTAZIONI_PREDEFINITE.posizioneTab;
     if (!LARGHEZZE.includes(out.larghezzaScheda)) out.larghezzaScheda = IMPOSTAZIONI_PREDEFINITE.larghezzaScheda;
+    if (typeof out.sfondo !== 'string' || !/^[a-z0-9-]+$/.test(out.sfondo)) out.sfondo = IMPOSTAZIONI_PREDEFINITE.sfondo;
+    out.ritrattoIntestazione = out.ritrattoIntestazione === true;
     return out;
   } catch {
     return { ...IMPOSTAZIONI_PREDEFINITE };

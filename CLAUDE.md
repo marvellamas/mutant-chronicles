@@ -42,7 +42,7 @@ Drive si usa **in sola lettura**: mai scrivere nei Doc di Davide, nemmeno commen
 
 ```
 index.html
-css/            style.css (app e telefono), stampa.css (fogli A4)
+css/            palette.css (colori con un significato, docs/palette.md), style.css (app e telefono), stampa.css (fogli A4)
 src/
   rules.js      carica data/*.json, espone i dati validati
   validate.js   invarianti dei dati

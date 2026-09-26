@@ -282,6 +282,32 @@ riaprendoli i valori si ricalcolano. Se una scelta non è più ammessa (per esem
 valore iniziale cambiato che porta una Caratteristica oltre 7), l'app la corregge e lo
 segnala.
 
+## Ritratto e sfondi
+
+**Ritratto.** Si carica nel passo Background («Carica immagine»). Il browser:
+- lo riduce a 600 px sul lato lungo;
+- lo salva in JPEG qualità 0.8, oppure in PNG se l'immagine ha parti trasparenti;
+- lo tiene dentro il personaggio, quindi anche nel file esportato;
+- lo rifiuta se, dopo la riduzione, supera 200 KB.
+
+Il ritratto compare nell'intestazione della scheda digitale e nella tab Identità. Nell'ingranaggio (⚙) della scheda si può usarlo anche come sfondo sfumato dell'intestazione.
+
+Un ritratto occupa circa 100–270 mila caratteri del localStorage, secondo il peso. Il browser ne concede in genere circa 5 milioni per sito. Se lo spazio finisce, l'app lo dice e non salva l'ultima modifica: si esportano e si tolgono i personaggi vecchi.
+
+**Sfondi di Corporazione.** Nell'ingranaggio della scheda, «Sfondo» offre «Nessuno» e una voce per ogni Corporazione che ha il suo file. Lo sfondo è fisso, a bassa opacità, dietro le card, solo nella scheda digitale. L'app non contiene immagini: si mettono a mano in `img/sfondi/`. Il nome del file è quello della Corporazione in minuscolo, senza accenti, con i trattini al posto degli spazi:
+
+```
+img/sfondi/bauhaus.jpg
+img/sfondi/capitol.jpg
+img/sfondi/cybertronic.jpg
+img/sfondi/fratellanza.jpg
+img/sfondi/imperiali.jpg
+img/sfondi/mishima.jpg
+img/sfondi/freelance.jpg
+```
+
+Dimensioni consigliate: 1920×1080, JPEG sotto i 300 KB. Immagini scure o poco contrastate rendono meglio; l'app le mostra comunque molto attenuate. Se un file manca, la sua voce non compare. Dopo aver aggiunto un file si ricarica la pagina.
+
 ## Punti da chiarire (TODO)
 
 Le domande aperte per Davide, gli errata dei manuali e i testi da rileggere sono in
@@ -293,6 +319,7 @@ Le domande aperte per Davide, gli errata dei manuali e i testi da rileggere sono
 
 ```
 index.html        pagina unica
+css/palette.css   colori con un significato (PV, PM, Punti Eroe, magia, categorie): docs/palette.md
 css/style.css     stile e versione telefono
 css/stampa.css    fogli di stampa (caricato solo nella vista di stampa)
 src/rules.js      carica e valida i dati
@@ -307,6 +334,9 @@ src/lingua.js     piccole regole di italiano nei testi generati (all’8°, dell
 src/avanzamento.js  personaggio a livelli: ricalcolo, validazione di un livello, prossimo livello
 src/ui/           interfaccia (wizard, riepilogo, home, tooltip, tiro di dado)
 src/ui/tab.js     scheda a tab e modalità tavolo
+src/palette.js    mappe dei colori e calcolo del contrasto (funzioni pure)
+src/ritratto.js   ritratto: dimensioni, peso, validità (funzioni pure); canvas in src/ui/ritratto.js
+src/ui/sfondi.js  sfondi di Corporazione da img/sfondi/
 src/sessione.js   valori attuali della sessione (funzioni pure)
 src/equipaggiamento.js  catalogo, voci del personaggio ed effetti dell'equipaggiamento (funzioni pure)
 src/ui/equipaggiamento.js  elenco e «Aggiungi oggetto» (wizard e tab Combattimento)
@@ -320,6 +350,7 @@ docs/             studio di fattibilità, ricognizione dell'avanzamento, lotti d
 serve.json        intestazioni di cache per npm start e avvia.bat
 tools/            estrazione di testo e tabelle dai PDF dei manuali (Python + pdfplumber) e generatori
                   dei lotti del catalogo (tools/lotti/), PDF di collaudo; non fa parte dell'app
+img/sfondi/       sfondi della scheda per Corporazione, da aggiungere a mano (vedi «Ritratto e sfondi»)
 avvia.bat         avvio con doppio clic su Windows
 distribuzione/    pacchetto per il master: guida e tre file .bat (vedi «Per il master»)
 ```

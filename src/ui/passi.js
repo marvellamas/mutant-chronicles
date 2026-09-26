@@ -6,6 +6,7 @@ import { statoIncantesimi, motivoBloccoIncantesimo, regoleIncantesimi } from '..
 import { info, elencoInfo, etichettaMacro } from './tooltip.js';
 import { classeMacrofamiglia } from '../palette.js';
 import { componenteTiro } from './tiro.js';
+import { campoRitratto } from './ritratto.js';
 import { valoreTiro } from '../tiri.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
 
@@ -147,6 +148,7 @@ function passoBackground(ctx) {
     h('label', { class: 'campo' }, h('span', {}, 'Background'),
       h('textarea', { rows: 6, value: scelte.concetto,
         oninput: (e) => ctx.aggiorna({ concetto: e.target.value }, { ridisegna: false }) })),
+    campoRitratto(ctx),
     h('h3', {}, 'Anagrafica'),
     h('p', { class: 'nota' }, 'Tutti facoltativi. Corporazione, Classe e livello non si scrivono: li calcola l’app e compaiono accanto a questi dati nella scheda. Nella stampa un campo vuoto diventa una riga da compilare a penna.'),
     h('div', { class: 'griglia-anagrafica' },
