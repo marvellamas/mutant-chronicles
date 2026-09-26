@@ -1,0 +1,1806 @@
+{
+  "versione_manuale": "Armamenti 0.50",
+  "fonte": "Manuale degli Armamenti v0.50, §7.1.9 Cataloghi delle Corporazioni (pp. 11–17): 39 armi ravvicinate; definizioni delle proprietà dal §7.1.3–7.1.4 e dal Giocatore §5.24; lotto 4",
+  "_nota": "Generato da tools/lotti/lotto4_armi_ravvicinate_corporative.mjs; da qui in poi si modifica questo file. Lo Scudo delle Guardie Sacre, elencato nel §7.1.9, è in scudi.json. «attivazione» è il danno aggiuntivo a carica (§7.1.4); «munizioni» sono le cariche della cella o i PM della riserva; «manovre» le Manovre compatibili della scheda.",
+  "TODO(Davide)": [
+    "Famiglia (e quindi Specializzazione del §8.8.1) di 12 armi corporative che non la dichiarano e non hanno nel nome una famiglia commerciale: Bordone Templare (Bauhaus), Elettrosega CSB600 (Cybertronic), Sbudellatrice (Fratellanza), Catena chiodata (Imperial), Chainreaper (Imperial), Kriss (Mishima), Wakizashi (Mishima), Katana (Mishima), Lama Mushashi (Mishima), Lama Demontooth (Mishima), Nunchaku (Mishima), Nunchaku elettrificato (Mishima). Proposta: Katana, Wakizashi, Lama Mushashi e Lama Demontooth → Spade; Kriss → Coltelli e pugnali; Nunchaku, Nunchaku elettrificato e Catena chiodata → Armi flessibili; Bordone Templare → Mazze e bastoni; Elettrosega CSB600, Chainreaper e Sbudellatrice → ?"
+  ],
+  "note_per_catalogo": {
+    "Bauhaus": "Il Bordone Templare adotta il profilo di carica magica del §7.5.1: Qualità Rara e potenza mistica Non comune sono dati distinti. Il costo totale di Sintonizzazione è 2, inclusa la riserva. Il Tonfa Stella Cadente conserva Difensiva +2 anche senza attivazione. La carica applica Elettricità; non causa automaticamente Stordito. Affondo, Spazzata e Stordire rimangono le Manovre specifiche del modello.",
+    "Capitol": "La Spada dell’Onore è una lama ordinaria priva di cariche: non richiede Sintonizzazione e non riceve una penalità meccanica di affidabilità per la sola appartenenza al catalogo Capitol.",
+    "Cybertronic": "Tutti questi modelli possiedono Affidabile +2 e cinque cariche a cella; non richiedono Sintonizzazione. La sostituzione della cella richiede 1 AzP. La Baionetta deve essere montata ed estratta per essere usata. L’Elettrosega CSB600 applica Demolitrice 1 soltanto durante l’attivazione e solo contro oggetti attaccati per romperli. La Frusta elettrificata può Immobilizzare entro 3 Q, ma la presa non infligge danno e non produce Elettricità.",
+    "Fratellanza": "Scudo delle Guardie Sacre. Proprietà: Scudo grande AR 2; Lama Retrattile. Attivazione: Scudo Magico; 5 PM; Sintonizzazione 3. Manovre compatibili: quelle generali. La Deathdealer infligge sempre danno Magico. Contro creature o servitori dell’Oscura Simmetria il danno è ×2, oppure ×3 con un Magistrale. Non aggiunge anche Purificatrice 1. Il beneficio è passivo e non richiede Sintonizzazione. Vindicator, Deliverer e Castigator adottano il profilo di carica magica del §7.5.1: Chroma Rosso da 5 PM, un PM per +1d6 Magico e costo totale di Sintonizzazione 2. Purificatrice 1 resta passiva. La Sbudellatrice mantiene Sanguinante 1 e Demolitrice 1 passive, senza cariche. Lo Scudo delle Guardie Sacre si usa con una mano. Gli attacchi impiegano Armi da guerra (FOR); le Parate impiegano Difese (DES). L’AR ordinaria è 2, la Parata ravvicinata non ha bonus e la Parata a distanza subisce −4 VA. Lama Retrattile dello Scudo. Estrarre o ritrarre la lama costa 1 AzP. Quando è estratta, il danno dell’attacco diventa 1d6+1+1d4 Naturale. La lama non consuma cariche per colpo e non richiede Sintonizzazione. Scudo Magico. Dopo la Sintonizzazione, 1 AzP e una carica attivano per 5 Round +2 AR magica, +2 VA alle Parate ravvicinate e +1 VA alle Parate a distanza effettuate con lo Scudo. L’AR dello Scudo diventa 4, di cui 2 magica; la penalità della sua Parata a distanza diventa −3 VA. L’AR resta passiva anche se non si para, si fallisce la Parata o si para con un’altra arma. I bonus alla Prova valgono soltanto parando con lo Scudo. Lo Scudo Magico scade alla fine del Round di attivazione +5. Una nuova attivazione rinnova la durata e non somma i benefici. La riserva è un Chroma Rosso da 5 PM: un PM alimenta un’attivazione. La potenza è Rara e il costo totale di Sintonizzazione è 3, inclusa la riserva. Ricarica e attivazione seguono il §7.5.1; la PS Integrità segue il §7.2.1.",
+    "Imperial": "Affidabilità ridotta −2 si applica agli otto modelli meccanici indicati; Catena chiodata e Claymore ne sono prive. La proprietà modifica le Complicazioni ravvicinate e non la Prova per colpire né la PS Integrità. Le due Tagliateste e la Violator applicano Plasma soltanto attivando la carica; i due Spaccateste applicano Concussivo nello stesso modo. Tutti e cinque i modelli usano celle da cinque cariche, senza Sintonizzazione. Stordire +1 del Martello Spaccateste a due mani concede +1 VA alla Manovra Stordire: la penalità ordinaria diventa −5 VA, quella di Stordire Migliorato −3 VA. Non richiede l’attivazione di una carica. La Catena chiodata Immobilizza entro 2 Q con la procedura della Frusta, senza danno né Sanguinamento durante la presa. Chainreaper mantiene Demolitrice 1 passiva. L’Ascia Tagliateste a due mani conserva il danno base 2d8+1.",
+    "Mishima": "Tutti i modelli hanno Precisa 1, salvo la Mushashi che ha Precisa 2. Non si applica alle armi ravvicinate la minore affidabilità prevista dalla convenzione Mishima per le armi a distanza. La Mushashi infligge danno Magico passivo, senza necessità di Sintonizzazione. La nota «Utilizzo Potere KI» resta da raccordare alle Tecniche Interiori del Lottatore: non introduce una nuova Abilità e non concede automaticamente Tecniche. Risorse Interiori continua a usare PM secondo il §3.5.5. La Demontooth adotta il profilo del §7.5.1: +1d6 Magico per un PM del Chroma Rosso da 5 PM, con costo totale di Sintonizzazione 2. Il suo Affondo è una compatibilità specifica del modello. La Duskdealer aggiunge +1d6 Plasma quando si attiva una carica. Il Nunchaku elettrificato aggiunge +1d4 Elettricità. Entrambi usano celle da cinque cariche e non richiedono Sintonizzazione. I due Nunchaku conservano il requisito di Contatto per Stordire, anche se la loro portata ordinaria è 2 Q.",
+    "Alleanza": "La Punisher ha Precisa 1 e Affidabile +1 passive. Spendendo una delle cinque cariche a cella aggiunge +2d4 danni e applica Plasma allo stesso colpo. Non richiede Sintonizzazione. Si applicano la dichiarazione preventiva e la PS Riflessi in caso di attacco fallito, salvo Attivazione Tempestiva (§7.1.4)."
+  },
+  "oggetti": [
+    {
+      "id": "baionetta-ussara",
+      "nome": "Baionetta Ussara",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Bauhaus",
+      "famiglia": "Armi inastate",
+      "nomi_alternativi": [],
+      "note_manuale": "Baionetta Ussara. Proprietà: Montata. Manovre compatibili: Affondo.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da guerra",
+      "specializzazione": "specializzazione-armi-inastate",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d4+2"
+      },
+      "portata_q": 2,
+      "gittata_q": null,
+      "for_richiesta": 6,
+      "inc": null,
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 400,
+      "proprieta": [
+        {
+          "nome": "Montata",
+          "testo": "Il profilo si utilizza con la baionetta fissata al fucile, impugnato a due mani (§7.1.3, Montata)."
+        }
+      ],
+      "manovre": [
+        "Affondo"
+      ]
+    },
+    {
+      "id": "bordone-templare",
+      "nome": "Bordone Templare",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Bauhaus",
+      "famiglia": "Da classificare",
+      "nomi_alternativi": [],
+      "note_manuale": "Bordone Templare. Attivazione: +1d6 Magico; 5 PM; Sintonizzazione 2. Manovre compatibili: Spazzata, Stordire.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da guerra",
+      "specializzazione": null,
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d8+1"
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 5,
+      "inc": null,
+      "pi": 6,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "RA",
+      "costo": 6500,
+      "proprieta": [],
+      "manovre": [
+        "Spazzata",
+        "Stordire"
+      ],
+      "attivazione": {
+        "testo": "+1d6 Magico; 5 PM; Sintonizzazione 2",
+        "danno_extra": "1d6",
+        "natura": "Magico",
+        "sintonizzazione": 2
+      },
+      "munizioni": {
+        "capacita": 5,
+        "unita": "PM",
+        "ricarica": "secondo il §7.5.1",
+        "consumo": "un PM per attivazione",
+        "riferimento": "Chroma Rosso da 5 PM (§7.5.1)"
+      }
+    },
+    {
+      "id": "sciabola-da-duello",
+      "nome": "Sciabola da Duello",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Bauhaus",
+      "famiglia": "Spade",
+      "nomi_alternativi": [],
+      "note_manuale": "Sciabola da Duello. Proprietà: Difensiva +1. Manovre compatibili: Affondo, Spazzata.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da mischia",
+      "specializzazione": "specializzazione-spade",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+2",
+        "due_mani": null
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 3,
+      "inc": null,
+      "pi": 5,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 850,
+      "proprieta": [
+        {
+          "nome": "Difensiva +1",
+          "testo": "Difensiva X. Concede +X VA esclusivamente alle Parate effettuate con quell’arma. Non aumenta l’Armatura e non trasferisce il bonus alle Parate effettuate con un altro oggetto (§7.1.3).",
+          "effetto": {
+            "parata_va": 1
+          }
+        }
+      ],
+      "manovre": [
+        "Affondo",
+        "Spazzata"
+      ]
+    },
+    {
+      "id": "tonfa-stella-cadente",
+      "nome": "Tonfa Stella Cadente",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Bauhaus",
+      "famiglia": "Mazze e bastoni",
+      "nomi_alternativi": [],
+      "note_manuale": "Tonfa Stella Cadente. Proprietà: Difensiva +2. Attivazione: +1d6 Elettricità; 5 cariche a cella. Manovre compatibili: Affondo, Spazzata, Stordire.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da mischia",
+      "specializzazione": "specializzazione-mazze-e-bastoni",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+1",
+        "due_mani": null
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 4,
+      "inc": null,
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 2000,
+      "proprieta": [
+        {
+          "nome": "Difensiva +2",
+          "testo": "Difensiva X. Concede +X VA esclusivamente alle Parate effettuate con quell’arma. Non aumenta l’Armatura e non trasferisce il bonus alle Parate effettuate con un altro oggetto (§7.1.3).",
+          "effetto": {
+            "parata_va": 2
+          }
+        }
+      ],
+      "manovre": [
+        "Affondo",
+        "Spazzata",
+        "Stordire"
+      ],
+      "attivazione": {
+        "testo": "+1d6 Elettricità; 5 cariche a cella",
+        "danno_extra": "1d6",
+        "natura": "Elettricità"
+      },
+      "munizioni": {
+        "capacita": 5,
+        "unita": "cariche",
+        "ricarica": "sostituire la cella pronta richiede 1 AzP (§7.1.4)",
+        "consumo": "una carica per attivazione (§7.1.4)",
+        "riferimento": "cella energetica sostituibile (§7.20.5)"
+      }
+    },
+    {
+      "id": "spada-dell-onore",
+      "nome": "Spada dell’Onore",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Capitol",
+      "famiglia": "Spade",
+      "nomi_alternativi": [],
+      "note_manuale": "Spada dell’Onore. Manovre compatibili: Affondo, Spazzata.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da mischia",
+      "specializzazione": "specializzazione-spade",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+2",
+        "due_mani": null
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 3,
+      "inc": null,
+      "pi": 5,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 550,
+      "proprieta": [],
+      "manovre": [
+        "Affondo",
+        "Spazzata"
+      ]
+    },
+    {
+      "id": "artigli-elettrificati",
+      "nome": "Artigli elettrificati",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Cybertronic",
+      "famiglia": "Armi da pugno",
+      "nomi_alternativi": [],
+      "note_manuale": "Artigli elettrificati. Proprietà: Sanguinante 1; Affidabile +2. Attivazione: +2d4 Elettricità; 5 cariche a cella. Manovre compatibili: Affondo.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da mischia",
+      "specializzazione": "specializzazione-armi-da-pugno",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d4+1",
+        "due_mani": null
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 3,
+      "inc": null,
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2400,
+      "proprieta": [
+        {
+          "nome": "Sanguinante 1",
+          "testo": "Sanguinamento 1 immediato; ricorrenze all’Iniziativa della fonte. Fino a quando viene fermato (Giocatore §5.24, §5.15)."
+        },
+        {
+          "nome": "Affidabile +2",
+          "testo": "Affidabile +X. Aggiunge X al tiro di 1d20 + modificatore di Caratteristica sulla tabella delle Complicazioni ravvicinate, fino a un massimo di 20. Affidabilità ridotta −2 sottrae invece 2, fino a un minimo di 1. L’attacco rimane fallito; queste proprietà non modificano il VA per colpire né la PS Integrità (§7.1.3)."
+        }
+      ],
+      "manovre": [
+        "Affondo"
+      ],
+      "attivazione": {
+        "testo": "+2d4 Elettricità; 5 cariche a cella",
+        "danno_extra": "2d4",
+        "natura": "Elettricità"
+      },
+      "munizioni": {
+        "capacita": 5,
+        "unita": "cariche",
+        "ricarica": "sostituire la cella pronta richiede 1 AzP (§7.1.4)",
+        "consumo": "una carica per attivazione (§7.1.4)",
+        "riferimento": "cella energetica sostituibile (§7.20.5)"
+      }
+    },
+    {
+      "id": "baionetta-elettrificata",
+      "nome": "Baionetta elettrificata",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Cybertronic",
+      "famiglia": "Armi inastate",
+      "nomi_alternativi": [],
+      "note_manuale": "Baionetta elettrificata. Proprietà: Montata; Retrattile; Affidabile +2. Attivazione: +2d4 Elettricità; 5 cariche a cella. Manovre compatibili: Affondo.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da guerra",
+      "specializzazione": "specializzazione-armi-inastate",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d4+1"
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 6,
+      "inc": null,
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 1800,
+      "proprieta": [
+        {
+          "nome": "Montata",
+          "testo": "Il profilo si utilizza con la baionetta fissata al fucile, impugnato a due mani (§7.1.3, Montata)."
+        },
+        {
+          "nome": "Retrattile",
+          "testo": "Retrattile. Estrarre o ritrarre la lama richiede 1 Azione Principale. Per attaccare con la lama essa deve essere estratta (§7.1.3)."
+        },
+        {
+          "nome": "Affidabile +2",
+          "testo": "Affidabile +X. Aggiunge X al tiro di 1d20 + modificatore di Caratteristica sulla tabella delle Complicazioni ravvicinate, fino a un massimo di 20. Affidabilità ridotta −2 sottrae invece 2, fino a un minimo di 1. L’attacco rimane fallito; queste proprietà non modificano il VA per colpire né la PS Integrità (§7.1.3)."
+        }
+      ],
+      "manovre": [
+        "Affondo"
+      ],
+      "attivazione": {
+        "testo": "+2d4 Elettricità; 5 cariche a cella",
+        "danno_extra": "2d4",
+        "natura": "Elettricità"
+      },
+      "munizioni": {
+        "capacita": 5,
+        "unita": "cariche",
+        "ricarica": "sostituire la cella pronta richiede 1 AzP (§7.1.4)",
+        "consumo": "una carica per attivazione (§7.1.4)",
+        "riferimento": "cella energetica sostituibile (§7.20.5)"
+      }
+    },
+    {
+      "id": "elettrosega-csb600",
+      "nome": "Elettrosega CSB600",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Cybertronic",
+      "famiglia": "Da classificare",
+      "nomi_alternativi": [],
+      "note_manuale": "Elettrosega CSB600. Proprietà: Sanguinante 1; Affidabile +2. Attivazione: +2d4 Elettricità e Demolitrice 1; 5 cariche a cella. Manovre compatibili: quelle generali.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da guerra",
+      "specializzazione": null,
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6",
+        "due_mani": null
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 4,
+      "inc": null,
+      "pi": 5,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 3600,
+      "proprieta": [
+        {
+          "nome": "Sanguinante 1",
+          "testo": "Sanguinamento 1 immediato; ricorrenze all’Iniziativa della fonte. Fino a quando viene fermato (Giocatore §5.24, §5.15)."
+        },
+        {
+          "nome": "Affidabile +2",
+          "testo": "Affidabile +X. Aggiunge X al tiro di 1d20 + modificatore di Caratteristica sulla tabella delle Complicazioni ravvicinate, fino a un massimo di 20. Affidabilità ridotta −2 sottrae invece 2, fino a un minimo di 1. L’attacco rimane fallito; queste proprietà non modificano il VA per colpire né la PS Integrità (§7.1.3)."
+        }
+      ],
+      "manovre": [
+        "generali"
+      ],
+      "attivazione": {
+        "testo": "+2d4 Elettricità e Demolitrice 1; 5 cariche a cella",
+        "danno_extra": "2d4",
+        "natura": "Elettricità",
+        "anche": "Demolitrice 1"
+      },
+      "munizioni": {
+        "capacita": 5,
+        "unita": "cariche",
+        "ricarica": "sostituire la cella pronta richiede 1 AzP (§7.1.4)",
+        "consumo": "una carica per attivazione (§7.1.4)",
+        "riferimento": "cella energetica sostituibile (§7.20.5)"
+      }
+    },
+    {
+      "id": "frusta-elettrificata",
+      "nome": "Frusta elettrificata",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Cybertronic",
+      "famiglia": "Armi flessibili",
+      "nomi_alternativi": [],
+      "note_manuale": "Frusta elettrificata. Proprietà: Immobilizzare entro 3 Q; Affidabile +2. Attivazione: +1d4 Elettricità; 5 cariche a cella. Manovre compatibili: quelle generali.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da mischia",
+      "specializzazione": "specializzazione-armi-flessibili",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d4+1",
+        "due_mani": null
+      },
+      "portata_q": 3,
+      "gittata_q": null,
+      "for_richiesta": 4,
+      "inc": null,
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 1800,
+      "proprieta": [
+        {
+          "nome": "Immobilizzare entro 3 Q",
+          "testo": "Permette l’impiego descritto nel §7.1.5 (Immobilizzare con la Frusta) entro 3 Q."
+        },
+        {
+          "nome": "Affidabile +2",
+          "testo": "Affidabile +X. Aggiunge X al tiro di 1d20 + modificatore di Caratteristica sulla tabella delle Complicazioni ravvicinate, fino a un massimo di 20. Affidabilità ridotta −2 sottrae invece 2, fino a un minimo di 1. L’attacco rimane fallito; queste proprietà non modificano il VA per colpire né la PS Integrità (§7.1.3)."
+        }
+      ],
+      "manovre": [
+        "generali"
+      ],
+      "attivazione": {
+        "testo": "+1d4 Elettricità; 5 cariche a cella",
+        "danno_extra": "1d4",
+        "natura": "Elettricità"
+      },
+      "munizioni": {
+        "capacita": 5,
+        "unita": "cariche",
+        "ricarica": "sostituire la cella pronta richiede 1 AzP (§7.1.4)",
+        "consumo": "una carica per attivazione (§7.1.4)",
+        "riferimento": "cella energetica sostituibile (§7.20.5)"
+      }
+    },
+    {
+      "id": "manganello-elettrificato",
+      "nome": "Manganello elettrificato",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Cybertronic",
+      "famiglia": "Mazze e bastoni",
+      "nomi_alternativi": [],
+      "note_manuale": "Manganello elettrificato. Proprietà: Affidabile +2. Attivazione: +1d3 Elettricità; 5 cariche a cella. Manovre compatibili: Stordire.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da mischia",
+      "specializzazione": "specializzazione-mazze-e-bastoni",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+1",
+        "due_mani": null
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 3,
+      "inc": null,
+      "pi": 5,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 1200,
+      "proprieta": [
+        {
+          "nome": "Affidabile +2",
+          "testo": "Affidabile +X. Aggiunge X al tiro di 1d20 + modificatore di Caratteristica sulla tabella delle Complicazioni ravvicinate, fino a un massimo di 20. Affidabilità ridotta −2 sottrae invece 2, fino a un minimo di 1. L’attacco rimane fallito; queste proprietà non modificano il VA per colpire né la PS Integrità (§7.1.3)."
+        }
+      ],
+      "manovre": [
+        "Stordire"
+      ],
+      "attivazione": {
+        "testo": "+1d3 Elettricità; 5 cariche a cella",
+        "danno_extra": "1d3",
+        "natura": "Elettricità"
+      },
+      "munizioni": {
+        "capacita": 5,
+        "unita": "cariche",
+        "ricarica": "sostituire la cella pronta richiede 1 AzP (§7.1.4)",
+        "consumo": "una carica per attivazione (§7.1.4)",
+        "riferimento": "cella energetica sostituibile (§7.20.5)"
+      }
+    },
+    {
+      "id": "spada-elettrificata-csa-404",
+      "nome": "Spada elettrificata CSA 404",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Cybertronic",
+      "famiglia": "Spade",
+      "nomi_alternativi": [],
+      "note_manuale": "Spada elettrificata CSA 404. Proprietà: Affidabile +2. Attivazione: +2d6 Elettricità; 5 cariche a cella. Manovre compatibili: Affondo, Spazzata.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da mischia",
+      "specializzazione": "specializzazione-spade",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+1",
+        "due_mani": null
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 3,
+      "inc": null,
+      "pi": 5,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 5000,
+      "proprieta": [
+        {
+          "nome": "Affidabile +2",
+          "testo": "Affidabile +X. Aggiunge X al tiro di 1d20 + modificatore di Caratteristica sulla tabella delle Complicazioni ravvicinate, fino a un massimo di 20. Affidabilità ridotta −2 sottrae invece 2, fino a un minimo di 1. L’attacco rimane fallito; queste proprietà non modificano il VA per colpire né la PS Integrità (§7.1.3)."
+        }
+      ],
+      "manovre": [
+        "Affondo",
+        "Spazzata"
+      ],
+      "attivazione": {
+        "testo": "+2d6 Elettricità; 5 cariche a cella",
+        "danno_extra": "2d6",
+        "natura": "Elettricità"
+      },
+      "munizioni": {
+        "capacita": 5,
+        "unita": "cariche",
+        "ricarica": "sostituire la cella pronta richiede 1 AzP (§7.1.4)",
+        "consumo": "una carica per attivazione (§7.1.4)",
+        "riferimento": "cella energetica sostituibile (§7.20.5)"
+      }
+    },
+    {
+      "id": "tirapugni-elettrificato",
+      "nome": "Tirapugni elettrificato",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Cybertronic",
+      "famiglia": "Armi da pugno",
+      "nomi_alternativi": [],
+      "note_manuale": "Tirapugni elettrificato. Proprietà: Affidabile +2. Attivazione: +1d6 Elettricità; 5 cariche a cella. Manovre compatibili: Stordire.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Corpo a corpo",
+      "specializzazione": "specializzazione-armi-da-pugno",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1",
+        "due_mani": null
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 2,
+      "inc": null,
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 1100,
+      "proprieta": [
+        {
+          "nome": "Affidabile +2",
+          "testo": "Affidabile +X. Aggiunge X al tiro di 1d20 + modificatore di Caratteristica sulla tabella delle Complicazioni ravvicinate, fino a un massimo di 20. Affidabilità ridotta −2 sottrae invece 2, fino a un minimo di 1. L’attacco rimane fallito; queste proprietà non modificano il VA per colpire né la PS Integrità (§7.1.3)."
+        }
+      ],
+      "manovre": [
+        "Stordire"
+      ],
+      "attivazione": {
+        "testo": "+1d6 Elettricità; 5 cariche a cella",
+        "danno_extra": "1d6",
+        "natura": "Elettricità"
+      },
+      "munizioni": {
+        "capacita": 5,
+        "unita": "cariche",
+        "ricarica": "sostituire la cella pronta richiede 1 AzP (§7.1.4)",
+        "consumo": "una carica per attivazione (§7.1.4)",
+        "riferimento": "cella energetica sostituibile (§7.20.5)"
+      }
+    },
+    {
+      "id": "spada-avenger",
+      "nome": "Spada Avenger",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Fratellanza",
+      "famiglia": "Spade",
+      "nomi_alternativi": [],
+      "note_manuale": "Spada Avenger. Proprietà: Purificatrice 1. Manovre compatibili: Affondo, Spazzata.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da mischia",
+      "specializzazione": "specializzazione-spade",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+1",
+        "due_mani": null
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 3,
+      "inc": null,
+      "pi": 5,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2200,
+      "proprieta": [
+        {
+          "nome": "Purificatrice 1",
+          "testo": "Purificatrice 1. Aggiunge 1 danno contro creature o servitori identificati come appartenenti all’Oscura Simmetria nella propria scheda. Il bonus si applica a ciascuna applicazione immediata di danno, prima dei moltiplicatori, delle Difese e dell’Armatura; non aumenta i danni periodici di Fuoco. È passivo, non consuma PM, non richiede Sintonizzazione e non rende da solo Magico il danno. La semplice presenza di Corruzione non rende un bersaglio valido. Il bonus è separato dal danno riportato in tabella (§7.1.3)."
+        }
+      ],
+      "manovre": [
+        "Affondo",
+        "Spazzata"
+      ]
+    },
+    {
+      "id": "spada-mortis",
+      "nome": "Spada Mortis",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Fratellanza",
+      "famiglia": "Spade",
+      "nomi_alternativi": [],
+      "note_manuale": "Spada Mortis. Proprietà: Purificatrice 1. Manovre compatibili: Affondo, Spazzata.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da guerra",
+      "specializzazione": "specializzazione-spade",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d8+1",
+        "due_mani": null
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 4,
+      "inc": null,
+      "pi": 5,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 3000,
+      "proprieta": [
+        {
+          "nome": "Purificatrice 1",
+          "testo": "Purificatrice 1. Aggiunge 1 danno contro creature o servitori identificati come appartenenti all’Oscura Simmetria nella propria scheda. Il bonus si applica a ciascuna applicazione immediata di danno, prima dei moltiplicatori, delle Difese e dell’Armatura; non aumenta i danni periodici di Fuoco. È passivo, non consuma PM, non richiede Sintonizzazione e non rende da solo Magico il danno. La semplice presenza di Corruzione non rende un bersaglio valido. Il bonus è separato dal danno riportato in tabella (§7.1.3)."
+        }
+      ],
+      "manovre": [
+        "Affondo",
+        "Spazzata"
+      ]
+    },
+    {
+      "id": "spada-deathdealer",
+      "nome": "Spada Deathdealer",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Fratellanza",
+      "famiglia": "Spade",
+      "nomi_alternativi": [],
+      "note_manuale": "Spada Deathdealer. Proprietà: Danno Magico; ×2 contro Oscura Simmetria, ×3 con Magistrale. Manovre compatibili: Affondo, Spazzata.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da mischia",
+      "specializzazione": "specializzazione-spade",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+2",
+        "due_mani": null
+      },
+      "natura_danno": "Magico",
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 3,
+      "inc": null,
+      "pi": 5,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 18000,
+      "proprieta": [
+        {
+          "nome": "Danno Magico",
+          "testo": "Il danno Magico resta distinto dal danno Etereo: l’Armatura ordinaria assorbe Naturale e Magico, mentre contro Etereo si applica soltanto la componente magica (§7.1.4)."
+        },
+        {
+          "nome": "Contro l’Oscura Simmetria",
+          "testo": "Contro creature o servitori dell’Oscura Simmetria il danno è ×2, oppure ×3 con un Magistrale. Non aggiunge anche Purificatrice 1. Il beneficio è passivo e non richiede Sintonizzazione (§7.1.9)."
+        }
+      ],
+      "manovre": [
+        "Affondo",
+        "Spazzata"
+      ]
+    },
+    {
+      "id": "spada-vindicator",
+      "nome": "Spada Vindicator",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Fratellanza",
+      "famiglia": "Spade",
+      "nomi_alternativi": [],
+      "note_manuale": "Spada Vindicator. Proprietà: Purificatrice 1. Attivazione: +1d6 Magico; 5 PM; Sintonizzazione 2. Manovre compatibili: Affondo, Spazzata.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da mischia",
+      "specializzazione": "specializzazione-spade",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+1",
+        "due_mani": null
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 3,
+      "inc": null,
+      "pi": 5,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "RA",
+      "costo": 9000,
+      "proprieta": [
+        {
+          "nome": "Purificatrice 1",
+          "testo": "Purificatrice 1. Aggiunge 1 danno contro creature o servitori identificati come appartenenti all’Oscura Simmetria nella propria scheda. Il bonus si applica a ciascuna applicazione immediata di danno, prima dei moltiplicatori, delle Difese e dell’Armatura; non aumenta i danni periodici di Fuoco. È passivo, non consuma PM, non richiede Sintonizzazione e non rende da solo Magico il danno. La semplice presenza di Corruzione non rende un bersaglio valido. Il bonus è separato dal danno riportato in tabella (§7.1.3)."
+        }
+      ],
+      "manovre": [
+        "Affondo",
+        "Spazzata"
+      ],
+      "attivazione": {
+        "testo": "+1d6 Magico; 5 PM; Sintonizzazione 2",
+        "danno_extra": "1d6",
+        "natura": "Magico",
+        "sintonizzazione": 2
+      },
+      "munizioni": {
+        "capacita": 5,
+        "unita": "PM",
+        "ricarica": "secondo il §7.5.1",
+        "consumo": "un PM per attivazione",
+        "riferimento": "Chroma Rosso da 5 PM (§7.5.1)"
+      }
+    },
+    {
+      "id": "spada-deliverer",
+      "nome": "Spada Deliverer",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Fratellanza",
+      "famiglia": "Spade",
+      "nomi_alternativi": [],
+      "note_manuale": "Spada Deliverer. Proprietà: Versatile; Purificatrice 1. Attivazione: +1d6 Magico; 5 PM; Sintonizzazione 2. Manovre compatibili: Affondo, Spazzata.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da guerra",
+      "specializzazione": "specializzazione-spade",
+      "mani": "1/2",
+      "danno": {
+        "una_mano": "1d8+1",
+        "due_mani": "2d6"
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 5,
+      "inc": null,
+      "pi": 6,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "RA",
+      "costo": 11500,
+      "proprieta": [
+        {
+          "nome": "Versatile",
+          "testo": "Può essere impugnata a una oppure a due mani, infliggendo il danno corrispondente riportato nel catalogo (§7.1.3, Versatile)."
+        },
+        {
+          "nome": "Purificatrice 1",
+          "testo": "Purificatrice 1. Aggiunge 1 danno contro creature o servitori identificati come appartenenti all’Oscura Simmetria nella propria scheda. Il bonus si applica a ciascuna applicazione immediata di danno, prima dei moltiplicatori, delle Difese e dell’Armatura; non aumenta i danni periodici di Fuoco. È passivo, non consuma PM, non richiede Sintonizzazione e non rende da solo Magico il danno. La semplice presenza di Corruzione non rende un bersaglio valido. Il bonus è separato dal danno riportato in tabella (§7.1.3)."
+        }
+      ],
+      "manovre": [
+        "Affondo",
+        "Spazzata"
+      ],
+      "attivazione": {
+        "testo": "+1d6 Magico; 5 PM; Sintonizzazione 2",
+        "danno_extra": "1d6",
+        "natura": "Magico",
+        "sintonizzazione": 2
+      },
+      "munizioni": {
+        "capacita": 5,
+        "unita": "PM",
+        "ricarica": "secondo il §7.5.1",
+        "consumo": "un PM per attivazione",
+        "riferimento": "Chroma Rosso da 5 PM (§7.5.1)"
+      }
+    },
+    {
+      "id": "lancia-castigator",
+      "nome": "Lancia Castigator",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Fratellanza",
+      "famiglia": "Armi inastate",
+      "nomi_alternativi": [],
+      "note_manuale": "Lancia Castigator. Proprietà: Purificatrice 1. Attivazione: +1d6 Magico; 5 PM; Sintonizzazione 2. Manovre compatibili: Affondo, Spazzata.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da guerra",
+      "specializzazione": "specializzazione-armi-inastate",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "2d6"
+      },
+      "portata_q": 2,
+      "gittata_q": null,
+      "for_richiesta": 6,
+      "inc": null,
+      "pi": 6,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "RA",
+      "costo": 12000,
+      "proprieta": [
+        {
+          "nome": "Purificatrice 1",
+          "testo": "Purificatrice 1. Aggiunge 1 danno contro creature o servitori identificati come appartenenti all’Oscura Simmetria nella propria scheda. Il bonus si applica a ciascuna applicazione immediata di danno, prima dei moltiplicatori, delle Difese e dell’Armatura; non aumenta i danni periodici di Fuoco. È passivo, non consuma PM, non richiede Sintonizzazione e non rende da solo Magico il danno. La semplice presenza di Corruzione non rende un bersaglio valido. Il bonus è separato dal danno riportato in tabella (§7.1.3)."
+        }
+      ],
+      "manovre": [
+        "Affondo",
+        "Spazzata"
+      ],
+      "attivazione": {
+        "testo": "+1d6 Magico; 5 PM; Sintonizzazione 2",
+        "danno_extra": "1d6",
+        "natura": "Magico",
+        "sintonizzazione": 2
+      },
+      "munizioni": {
+        "capacita": 5,
+        "unita": "PM",
+        "ricarica": "secondo il §7.5.1",
+        "consumo": "un PM per attivazione",
+        "riferimento": "Chroma Rosso da 5 PM (§7.5.1)"
+      }
+    },
+    {
+      "id": "sbudellatrice",
+      "nome": "Sbudellatrice",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Fratellanza",
+      "famiglia": "Da classificare",
+      "nomi_alternativi": [],
+      "note_manuale": "Sbudellatrice. Proprietà: Purificatrice 1; Sanguinante 1; Demolitrice 1. Manovre compatibili: quelle generali.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da guerra",
+      "specializzazione": null,
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+3",
+        "due_mani": null
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 4,
+      "inc": null,
+      "pi": 5,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 5000,
+      "proprieta": [
+        {
+          "nome": "Purificatrice 1",
+          "testo": "Purificatrice 1. Aggiunge 1 danno contro creature o servitori identificati come appartenenti all’Oscura Simmetria nella propria scheda. Il bonus si applica a ciascuna applicazione immediata di danno, prima dei moltiplicatori, delle Difese e dell’Armatura; non aumenta i danni periodici di Fuoco. È passivo, non consuma PM, non richiede Sintonizzazione e non rende da solo Magico il danno. La semplice presenza di Corruzione non rende un bersaglio valido. Il bonus è separato dal danno riportato in tabella (§7.1.3)."
+        },
+        {
+          "nome": "Sanguinante 1",
+          "testo": "Sanguinamento 1 immediato; ricorrenze all’Iniziativa della fonte. Fino a quando viene fermato (Giocatore §5.24, §5.15)."
+        },
+        {
+          "nome": "Demolitrice 1",
+          "testo": "Demolitrice 1. Quando l’arma attacca intenzionalmente un oggetto per romperlo, aggiunge 1 PI alla perdita se l’oggetto fallisce la propria PS Integrità. Si effettua una sola PS per tutte le cause di quel colpo, compreso il +1 PI del Magistrale (§7.2.1). Quando la scheda indica Demolitrice soltanto nell’attivazione, il beneficio richiede la spesa della carica (§7.1.3)."
+        }
+      ],
+      "manovre": [
+        "generali"
+      ]
+    },
+    {
+      "id": "artiglio-del-lupo",
+      "nome": "Artiglio del Lupo",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Imperial",
+      "famiglia": "Armi da pugno",
+      "nomi_alternativi": [],
+      "note_manuale": "Artiglio del Lupo. Proprietà: Sanguinante 1; Retrattile; Affidabilità ridotta −2. Manovre compatibili: Affondo.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da mischia",
+      "specializzazione": "specializzazione-armi-da-pugno",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d4+2",
+        "due_mani": null
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 4,
+      "inc": null,
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 700,
+      "proprieta": [
+        {
+          "nome": "Sanguinante 1",
+          "testo": "Sanguinamento 1 immediato; ricorrenze all’Iniziativa della fonte. Fino a quando viene fermato (Giocatore §5.24, §5.15)."
+        },
+        {
+          "nome": "Retrattile",
+          "testo": "Retrattile. Estrarre o ritrarre la lama richiede 1 Azione Principale. Per attaccare con la lama essa deve essere estratta (§7.1.3)."
+        },
+        {
+          "nome": "Affidabilità ridotta −2",
+          "testo": "Affidabile +X. Aggiunge X al tiro di 1d20 + modificatore di Caratteristica sulla tabella delle Complicazioni ravvicinate, fino a un massimo di 20. Affidabilità ridotta −2 sottrae invece 2, fino a un minimo di 1. L’attacco rimane fallito; queste proprietà non modificano il VA per colpire né la PS Integrità (§7.1.3)."
+        }
+      ],
+      "manovre": [
+        "Affondo"
+      ]
+    },
+    {
+      "id": "ascia-tagliateste-a-una-mano",
+      "nome": "Ascia Tagliateste a una mano",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Imperial",
+      "famiglia": "Asce",
+      "nomi_alternativi": [],
+      "note_manuale": "Ascia Tagliateste a una mano. Proprietà: Affidabilità ridotta −2. Attivazione: +1d6 Plasma; 5 cariche a cella. Manovre compatibili: Spazzata.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da mischia",
+      "specializzazione": "specializzazione-asce",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+3",
+        "due_mani": null
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 5,
+      "inc": null,
+      "pi": 5,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 2500,
+      "proprieta": [
+        {
+          "nome": "Affidabilità ridotta −2",
+          "testo": "Affidabile +X. Aggiunge X al tiro di 1d20 + modificatore di Caratteristica sulla tabella delle Complicazioni ravvicinate, fino a un massimo di 20. Affidabilità ridotta −2 sottrae invece 2, fino a un minimo di 1. L’attacco rimane fallito; queste proprietà non modificano il VA per colpire né la PS Integrità (§7.1.3)."
+        }
+      ],
+      "manovre": [
+        "Spazzata"
+      ],
+      "attivazione": {
+        "testo": "+1d6 Plasma; 5 cariche a cella",
+        "danno_extra": "1d6",
+        "natura": "Plasma"
+      },
+      "munizioni": {
+        "capacita": 5,
+        "unita": "cariche",
+        "ricarica": "sostituire la cella pronta richiede 1 AzP (§7.1.4)",
+        "consumo": "una carica per attivazione (§7.1.4)",
+        "riferimento": "cella energetica sostituibile (§7.20.5)"
+      }
+    },
+    {
+      "id": "ascia-tagliateste-a-due-mani",
+      "nome": "Ascia Tagliateste a due mani",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Imperial",
+      "famiglia": "Asce",
+      "nomi_alternativi": [],
+      "note_manuale": "Ascia Tagliateste a due mani. Proprietà: Affidabilità ridotta −2. Attivazione: +1d6 Plasma; 5 cariche a cella. Manovre compatibili: Spazzata.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da guerra",
+      "specializzazione": "specializzazione-asce",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "2d8+1"
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 8,
+      "inc": null,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 3800,
+      "proprieta": [
+        {
+          "nome": "Affidabilità ridotta −2",
+          "testo": "Affidabile +X. Aggiunge X al tiro di 1d20 + modificatore di Caratteristica sulla tabella delle Complicazioni ravvicinate, fino a un massimo di 20. Affidabilità ridotta −2 sottrae invece 2, fino a un minimo di 1. L’attacco rimane fallito; queste proprietà non modificano il VA per colpire né la PS Integrità (§7.1.3)."
+        }
+      ],
+      "manovre": [
+        "Spazzata"
+      ],
+      "attivazione": {
+        "testo": "+1d6 Plasma; 5 cariche a cella",
+        "danno_extra": "1d6",
+        "natura": "Plasma"
+      },
+      "munizioni": {
+        "capacita": 5,
+        "unita": "cariche",
+        "ricarica": "sostituire la cella pronta richiede 1 AzP (§7.1.4)",
+        "consumo": "una carica per attivazione (§7.1.4)",
+        "riferimento": "cella energetica sostituibile (§7.20.5)"
+      }
+    },
+    {
+      "id": "baionetta-retrattile",
+      "nome": "Baionetta retrattile",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Imperial",
+      "famiglia": "Armi inastate",
+      "nomi_alternativi": [],
+      "note_manuale": "Baionetta retrattile. Proprietà: Montata; Retrattile; Affidabilità ridotta −2. Manovre compatibili: Affondo.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da guerra",
+      "specializzazione": "specializzazione-armi-inastate",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d4+1"
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 6,
+      "inc": null,
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 450,
+      "proprieta": [
+        {
+          "nome": "Montata",
+          "testo": "Il profilo si utilizza con la baionetta fissata al fucile, impugnato a due mani (§7.1.3, Montata)."
+        },
+        {
+          "nome": "Retrattile",
+          "testo": "Retrattile. Estrarre o ritrarre la lama richiede 1 Azione Principale. Per attaccare con la lama essa deve essere estratta (§7.1.3)."
+        },
+        {
+          "nome": "Affidabilità ridotta −2",
+          "testo": "Affidabile +X. Aggiunge X al tiro di 1d20 + modificatore di Caratteristica sulla tabella delle Complicazioni ravvicinate, fino a un massimo di 20. Affidabilità ridotta −2 sottrae invece 2, fino a un minimo di 1. L’attacco rimane fallito; queste proprietà non modificano il VA per colpire né la PS Integrità (§7.1.3)."
+        }
+      ],
+      "manovre": [
+        "Affondo"
+      ]
+    },
+    {
+      "id": "catena-chiodata",
+      "nome": "Catena chiodata",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Imperial",
+      "famiglia": "Da classificare",
+      "nomi_alternativi": [],
+      "note_manuale": "Catena chiodata. Proprietà: Sanguinante 1; Immobilizzare entro 2 Q. Manovre compatibili: quelle generali.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da mischia",
+      "specializzazione": null,
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d4+2",
+        "due_mani": null
+      },
+      "portata_q": 2,
+      "gittata_q": null,
+      "for_richiesta": 5,
+      "inc": null,
+      "pi": 5,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 300,
+      "proprieta": [
+        {
+          "nome": "Sanguinante 1",
+          "testo": "Sanguinamento 1 immediato; ricorrenze all’Iniziativa della fonte. Fino a quando viene fermato (Giocatore §5.24, §5.15)."
+        },
+        {
+          "nome": "Immobilizzare entro 2 Q",
+          "testo": "Permette l’impiego descritto nel §7.1.5 (Immobilizzare con la Frusta) entro 2 Q."
+        }
+      ],
+      "manovre": [
+        "generali"
+      ]
+    },
+    {
+      "id": "chainreaper",
+      "nome": "Chainreaper",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Imperial",
+      "famiglia": "Da classificare",
+      "nomi_alternativi": [],
+      "note_manuale": "Chainreaper. Proprietà: Sanguinante 1; Demolitrice 1; Affidabilità ridotta −2. Manovre compatibili: Spazzata.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da guerra",
+      "specializzazione": null,
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+2",
+        "due_mani": null
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 5,
+      "inc": null,
+      "pi": 5,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 2000,
+      "proprieta": [
+        {
+          "nome": "Sanguinante 1",
+          "testo": "Sanguinamento 1 immediato; ricorrenze all’Iniziativa della fonte. Fino a quando viene fermato (Giocatore §5.24, §5.15)."
+        },
+        {
+          "nome": "Demolitrice 1",
+          "testo": "Demolitrice 1. Quando l’arma attacca intenzionalmente un oggetto per romperlo, aggiunge 1 PI alla perdita se l’oggetto fallisce la propria PS Integrità. Si effettua una sola PS per tutte le cause di quel colpo, compreso il +1 PI del Magistrale (§7.2.1). Quando la scheda indica Demolitrice soltanto nell’attivazione, il beneficio richiede la spesa della carica (§7.1.3)."
+        },
+        {
+          "nome": "Affidabilità ridotta −2",
+          "testo": "Affidabile +X. Aggiunge X al tiro di 1d20 + modificatore di Caratteristica sulla tabella delle Complicazioni ravvicinate, fino a un massimo di 20. Affidabilità ridotta −2 sottrae invece 2, fino a un minimo di 1. L’attacco rimane fallito; queste proprietà non modificano il VA per colpire né la PS Integrità (§7.1.3)."
+        }
+      ],
+      "manovre": [
+        "Spazzata"
+      ]
+    },
+    {
+      "id": "martello-spaccateste-a-una-mano",
+      "nome": "Martello Spaccateste a una mano",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Imperial",
+      "famiglia": "Martelli",
+      "nomi_alternativi": [],
+      "note_manuale": "Martello Spaccateste a una mano. Proprietà: Affidabilità ridotta −2. Attivazione: +1d6 Concussivo; 5 cariche a cella. Manovre compatibili: Stordire.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da guerra",
+      "specializzazione": "specializzazione-martelli",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d8+2",
+        "due_mani": null
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 6,
+      "inc": null,
+      "pi": 5,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 2400,
+      "proprieta": [
+        {
+          "nome": "Affidabilità ridotta −2",
+          "testo": "Affidabile +X. Aggiunge X al tiro di 1d20 + modificatore di Caratteristica sulla tabella delle Complicazioni ravvicinate, fino a un massimo di 20. Affidabilità ridotta −2 sottrae invece 2, fino a un minimo di 1. L’attacco rimane fallito; queste proprietà non modificano il VA per colpire né la PS Integrità (§7.1.3)."
+        }
+      ],
+      "manovre": [
+        "Stordire"
+      ],
+      "attivazione": {
+        "testo": "+1d6 Concussivo; 5 cariche a cella",
+        "danno_extra": "1d6",
+        "natura": "Concussivo"
+      },
+      "munizioni": {
+        "capacita": 5,
+        "unita": "cariche",
+        "ricarica": "sostituire la cella pronta richiede 1 AzP (§7.1.4)",
+        "consumo": "una carica per attivazione (§7.1.4)",
+        "riferimento": "cella energetica sostituibile (§7.20.5)"
+      }
+    },
+    {
+      "id": "martello-spaccateste-a-due-mani",
+      "nome": "Martello Spaccateste a due mani",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Imperial",
+      "famiglia": "Martelli",
+      "nomi_alternativi": [],
+      "note_manuale": "Martello Spaccateste a due mani. Proprietà: Stordire +1; Affidabilità ridotta −2. Attivazione: +1d6 Concussivo; 5 cariche a cella. Manovre compatibili: Spazzata, Stordire.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da guerra",
+      "specializzazione": "specializzazione-martelli",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "2d6+2"
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 7,
+      "inc": null,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 3600,
+      "proprieta": [
+        {
+          "nome": "Stordire +1",
+          "testo": "Stordire +1 del Martello Spaccateste a due mani concede +1 VA alla Manovra Stordire: la penalità ordinaria diventa −5 VA, quella di Stordire Migliorato −3 VA. Non richiede l’attivazione di una carica (§7.1.9)."
+        },
+        {
+          "nome": "Affidabilità ridotta −2",
+          "testo": "Affidabile +X. Aggiunge X al tiro di 1d20 + modificatore di Caratteristica sulla tabella delle Complicazioni ravvicinate, fino a un massimo di 20. Affidabilità ridotta −2 sottrae invece 2, fino a un minimo di 1. L’attacco rimane fallito; queste proprietà non modificano il VA per colpire né la PS Integrità (§7.1.3)."
+        }
+      ],
+      "manovre": [
+        "Spazzata",
+        "Stordire"
+      ],
+      "attivazione": {
+        "testo": "+1d6 Concussivo; 5 cariche a cella",
+        "danno_extra": "1d6",
+        "natura": "Concussivo"
+      },
+      "munizioni": {
+        "capacita": 5,
+        "unita": "cariche",
+        "ricarica": "sostituire la cella pronta richiede 1 AzP (§7.1.4)",
+        "consumo": "una carica per attivazione (§7.1.4)",
+        "riferimento": "cella energetica sostituibile (§7.20.5)"
+      }
+    },
+    {
+      "id": "spada-violator",
+      "nome": "Spada Violator",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Imperial",
+      "famiglia": "Spade",
+      "nomi_alternativi": [],
+      "note_manuale": "Spada Violator. Proprietà: Versatile; Affidabilità ridotta −2. Attivazione: +1d6 Plasma; 5 cariche a cella. Manovre compatibili: Affondo, Spazzata.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da guerra",
+      "specializzazione": "specializzazione-spade",
+      "mani": "1/2",
+      "danno": {
+        "una_mano": "1d8+1",
+        "due_mani": "2d6"
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 6,
+      "inc": null,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 3200,
+      "proprieta": [
+        {
+          "nome": "Versatile",
+          "testo": "Può essere impugnata a una oppure a due mani, infliggendo il danno corrispondente riportato nel catalogo (§7.1.3, Versatile)."
+        },
+        {
+          "nome": "Affidabilità ridotta −2",
+          "testo": "Affidabile +X. Aggiunge X al tiro di 1d20 + modificatore di Caratteristica sulla tabella delle Complicazioni ravvicinate, fino a un massimo di 20. Affidabilità ridotta −2 sottrae invece 2, fino a un minimo di 1. L’attacco rimane fallito; queste proprietà non modificano il VA per colpire né la PS Integrità (§7.1.3)."
+        }
+      ],
+      "manovre": [
+        "Affondo",
+        "Spazzata"
+      ],
+      "attivazione": {
+        "testo": "+1d6 Plasma; 5 cariche a cella",
+        "danno_extra": "1d6",
+        "natura": "Plasma"
+      },
+      "munizioni": {
+        "capacita": 5,
+        "unita": "cariche",
+        "ricarica": "sostituire la cella pronta richiede 1 AzP (§7.1.4)",
+        "consumo": "una carica per attivazione (§7.1.4)",
+        "riferimento": "cella energetica sostituibile (§7.20.5)"
+      }
+    },
+    {
+      "id": "spadone-claymore",
+      "nome": "Spadone Claymore",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Imperial",
+      "famiglia": "Spade",
+      "nomi_alternativi": [],
+      "note_manuale": "Spadone Claymore. Manovre compatibili: Spazzata.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da guerra",
+      "specializzazione": "specializzazione-spade",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "2d6+2"
+      },
+      "portata_q": 2,
+      "gittata_q": null,
+      "for_richiesta": 7,
+      "inc": null,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 1100,
+      "proprieta": [],
+      "manovre": [
+        "Spazzata"
+      ]
+    },
+    {
+      "id": "kriss",
+      "nome": "Kriss",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Mishima",
+      "famiglia": "Da classificare",
+      "nomi_alternativi": [],
+      "note_manuale": "Kriss. Proprietà: Precisa 1. Manovre compatibili: Affondo.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da mischia",
+      "specializzazione": null,
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6",
+        "due_mani": null
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 3,
+      "inc": null,
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 350,
+      "proprieta": [
+        {
+          "nome": "Precisa 1",
+          "testo": "Precisa X. Concede +X VA alle Prove per colpire con l’arma, comprese le Manovre che richiedono una Prova per colpire. Non si applica a Parate, Salvezze o altre Prove contrapposte (§7.1.3).",
+          "effetto": {
+            "va": 1
+          }
+        }
+      ],
+      "manovre": [
+        "Affondo"
+      ]
+    },
+    {
+      "id": "wakizashi",
+      "nome": "Wakizashi",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Mishima",
+      "famiglia": "Da classificare",
+      "nomi_alternativi": [],
+      "note_manuale": "Wakizashi. Proprietà: Precisa 1. Manovre compatibili: Affondo, Spazzata.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da mischia",
+      "specializzazione": null,
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+1",
+        "due_mani": null
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 3,
+      "inc": null,
+      "pi": 5,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 900,
+      "proprieta": [
+        {
+          "nome": "Precisa 1",
+          "testo": "Precisa X. Concede +X VA alle Prove per colpire con l’arma, comprese le Manovre che richiedono una Prova per colpire. Non si applica a Parate, Salvezze o altre Prove contrapposte (§7.1.3).",
+          "effetto": {
+            "va": 1
+          }
+        }
+      ],
+      "manovre": [
+        "Affondo",
+        "Spazzata"
+      ]
+    },
+    {
+      "id": "katana",
+      "nome": "Katana",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Mishima",
+      "famiglia": "Da classificare",
+      "nomi_alternativi": [],
+      "note_manuale": "Katana. Proprietà: Precisa 1. Manovre compatibili: Affondo, Spazzata.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da guerra",
+      "specializzazione": null,
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d8+1",
+        "due_mani": null
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 4,
+      "inc": null,
+      "pi": 5,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 1700,
+      "proprieta": [
+        {
+          "nome": "Precisa 1",
+          "testo": "Precisa X. Concede +X VA alle Prove per colpire con l’arma, comprese le Manovre che richiedono una Prova per colpire. Non si applica a Parate, Salvezze o altre Prove contrapposte (§7.1.3).",
+          "effetto": {
+            "va": 1
+          }
+        }
+      ],
+      "manovre": [
+        "Affondo",
+        "Spazzata"
+      ]
+    },
+    {
+      "id": "lama-mushashi",
+      "nome": "Lama Mushashi",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Mishima",
+      "famiglia": "Da classificare",
+      "nomi_alternativi": [],
+      "note_manuale": "Lama Mushashi. Proprietà: Precisa 2; Danno Magico. Manovre compatibili: Affondo, Spazzata. Il raccordo con il KI sarà integrato successivamente.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da guerra",
+      "specializzazione": null,
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d8+2",
+        "due_mani": null
+      },
+      "natura_danno": "Magico",
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 4,
+      "inc": null,
+      "pi": 5,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 16000,
+      "proprieta": [
+        {
+          "nome": "Precisa 2",
+          "testo": "Precisa X. Concede +X VA alle Prove per colpire con l’arma, comprese le Manovre che richiedono una Prova per colpire. Non si applica a Parate, Salvezze o altre Prove contrapposte (§7.1.3).",
+          "effetto": {
+            "va": 2
+          }
+        },
+        {
+          "nome": "Danno Magico",
+          "testo": "Il danno Magico resta distinto dal danno Etereo: l’Armatura ordinaria assorbe Naturale e Magico, mentre contro Etereo si applica soltanto la componente magica (§7.1.4)."
+        }
+      ],
+      "manovre": [
+        "Affondo",
+        "Spazzata"
+      ]
+    },
+    {
+      "id": "lama-demontooth",
+      "nome": "Lama Demontooth",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Mishima",
+      "famiglia": "Da classificare",
+      "nomi_alternativi": [],
+      "note_manuale": "Lama Demontooth. Proprietà: Precisa 1. Attivazione: +1d6 Magico; 5 PM; Sintonizzazione 2. Manovre compatibili: Affondo, Spazzata.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da guerra",
+      "specializzazione": null,
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "2d6+2"
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 6,
+      "inc": null,
+      "pi": 6,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "RA",
+      "costo": 14500,
+      "proprieta": [
+        {
+          "nome": "Precisa 1",
+          "testo": "Precisa X. Concede +X VA alle Prove per colpire con l’arma, comprese le Manovre che richiedono una Prova per colpire. Non si applica a Parate, Salvezze o altre Prove contrapposte (§7.1.3).",
+          "effetto": {
+            "va": 1
+          }
+        }
+      ],
+      "manovre": [
+        "Affondo",
+        "Spazzata"
+      ],
+      "attivazione": {
+        "testo": "+1d6 Magico; 5 PM; Sintonizzazione 2",
+        "danno_extra": "1d6",
+        "natura": "Magico",
+        "sintonizzazione": 2
+      },
+      "munizioni": {
+        "capacita": 5,
+        "unita": "PM",
+        "ricarica": "secondo il §7.5.1",
+        "consumo": "un PM per attivazione",
+        "riferimento": "Chroma Rosso da 5 PM (§7.5.1)"
+      }
+    },
+    {
+      "id": "lancia-naginata",
+      "nome": "Lancia Naginata",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Mishima",
+      "famiglia": "Armi inastate",
+      "nomi_alternativi": [],
+      "note_manuale": "Lancia Naginata. Proprietà: Precisa 1. Manovre compatibili: Affondo, Spazzata.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da guerra",
+      "specializzazione": "specializzazione-armi-inastate",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d8+1"
+      },
+      "portata_q": 2,
+      "gittata_q": null,
+      "for_richiesta": 6,
+      "inc": null,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 1900,
+      "proprieta": [
+        {
+          "nome": "Precisa 1",
+          "testo": "Precisa X. Concede +X VA alle Prove per colpire con l’arma, comprese le Manovre che richiedono una Prova per colpire. Non si applica a Parate, Salvezze o altre Prove contrapposte (§7.1.3).",
+          "effetto": {
+            "va": 1
+          }
+        }
+      ],
+      "manovre": [
+        "Affondo",
+        "Spazzata"
+      ]
+    },
+    {
+      "id": "lancia-duskdealer",
+      "nome": "Lancia Duskdealer",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Mishima",
+      "famiglia": "Armi inastate",
+      "nomi_alternativi": [],
+      "note_manuale": "Lancia Duskdealer. Proprietà: Precisa 1. Attivazione: +1d6 Plasma; 5 cariche a cella. Manovre compatibili: Spazzata.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da guerra",
+      "specializzazione": "specializzazione-armi-inastate",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "2d6+2"
+      },
+      "portata_q": 2,
+      "gittata_q": null,
+      "for_richiesta": 7,
+      "inc": null,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 4200,
+      "proprieta": [
+        {
+          "nome": "Precisa 1",
+          "testo": "Precisa X. Concede +X VA alle Prove per colpire con l’arma, comprese le Manovre che richiedono una Prova per colpire. Non si applica a Parate, Salvezze o altre Prove contrapposte (§7.1.3).",
+          "effetto": {
+            "va": 1
+          }
+        }
+      ],
+      "manovre": [
+        "Spazzata"
+      ],
+      "attivazione": {
+        "testo": "+1d6 Plasma; 5 cariche a cella",
+        "danno_extra": "1d6",
+        "natura": "Plasma"
+      },
+      "munizioni": {
+        "capacita": 5,
+        "unita": "cariche",
+        "ricarica": "sostituire la cella pronta richiede 1 AzP (§7.1.4)",
+        "consumo": "una carica per attivazione (§7.1.4)",
+        "riferimento": "cella energetica sostituibile (§7.20.5)"
+      }
+    },
+    {
+      "id": "nunchaku",
+      "nome": "Nunchaku",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Mishima",
+      "famiglia": "Da classificare",
+      "nomi_alternativi": [],
+      "note_manuale": "Nunchaku. Proprietà: Precisa 1. Manovre compatibili: Spazzata, Stordire.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da mischia",
+      "specializzazione": null,
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d4+1",
+        "due_mani": null
+      },
+      "portata_q": 2,
+      "gittata_q": null,
+      "for_richiesta": 3,
+      "inc": null,
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 180,
+      "proprieta": [
+        {
+          "nome": "Precisa 1",
+          "testo": "Precisa X. Concede +X VA alle Prove per colpire con l’arma, comprese le Manovre che richiedono una Prova per colpire. Non si applica a Parate, Salvezze o altre Prove contrapposte (§7.1.3).",
+          "effetto": {
+            "va": 1
+          }
+        }
+      ],
+      "manovre": [
+        "Spazzata",
+        "Stordire"
+      ]
+    },
+    {
+      "id": "nunchaku-elettrificato",
+      "nome": "Nunchaku elettrificato",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Mishima",
+      "famiglia": "Da classificare",
+      "nomi_alternativi": [],
+      "note_manuale": "Nunchaku elettrificato. Proprietà: Precisa 1. Attivazione: +1d4 Elettricità; 5 cariche a cella. Manovre compatibili: Spazzata, Stordire.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da mischia",
+      "specializzazione": null,
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d4+1",
+        "due_mani": null
+      },
+      "portata_q": 2,
+      "gittata_q": null,
+      "for_richiesta": 3,
+      "inc": null,
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 1500,
+      "proprieta": [
+        {
+          "nome": "Precisa 1",
+          "testo": "Precisa X. Concede +X VA alle Prove per colpire con l’arma, comprese le Manovre che richiedono una Prova per colpire. Non si applica a Parate, Salvezze o altre Prove contrapposte (§7.1.3).",
+          "effetto": {
+            "va": 1
+          }
+        }
+      ],
+      "manovre": [
+        "Spazzata",
+        "Stordire"
+      ],
+      "attivazione": {
+        "testo": "+1d4 Elettricità; 5 cariche a cella",
+        "danno_extra": "1d4",
+        "natura": "Elettricità"
+      },
+      "munizioni": {
+        "capacita": 5,
+        "unita": "cariche",
+        "ricarica": "sostituire la cella pronta richiede 1 AzP (§7.1.4)",
+        "consumo": "una carica per attivazione (§7.1.4)",
+        "riferimento": "cella energetica sostituibile (§7.20.5)"
+      }
+    },
+    {
+      "id": "spada-punisher",
+      "nome": "Spada Punisher",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Alleanza",
+      "famiglia": "Spade",
+      "nomi_alternativi": [],
+      "note_manuale": "Spada Punisher. Proprietà: Precisa 1; Affidabile +1. Attivazione: +2d4 Plasma; 5 cariche a cella. Manovre compatibili: Affondo, Spazzata.",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da mischia",
+      "specializzazione": "specializzazione-spade",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+2",
+        "due_mani": null
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 3,
+      "inc": null,
+      "pi": 6,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 6500,
+      "proprieta": [
+        {
+          "nome": "Precisa 1",
+          "testo": "Precisa X. Concede +X VA alle Prove per colpire con l’arma, comprese le Manovre che richiedono una Prova per colpire. Non si applica a Parate, Salvezze o altre Prove contrapposte (§7.1.3).",
+          "effetto": {
+            "va": 1
+          }
+        },
+        {
+          "nome": "Affidabile +1",
+          "testo": "Affidabile +X. Aggiunge X al tiro di 1d20 + modificatore di Caratteristica sulla tabella delle Complicazioni ravvicinate, fino a un massimo di 20. Affidabilità ridotta −2 sottrae invece 2, fino a un minimo di 1. L’attacco rimane fallito; queste proprietà non modificano il VA per colpire né la PS Integrità (§7.1.3)."
+        }
+      ],
+      "manovre": [
+        "Affondo",
+        "Spazzata"
+      ],
+      "attivazione": {
+        "testo": "+2d4 Plasma; 5 cariche a cella",
+        "danno_extra": "2d4",
+        "natura": "Plasma"
+      },
+      "munizioni": {
+        "capacita": 5,
+        "unita": "cariche",
+        "ricarica": "sostituire la cella pronta richiede 1 AzP (§7.1.4)",
+        "consumo": "una carica per attivazione (§7.1.4)",
+        "riferimento": "cella energetica sostituibile (§7.20.5)"
+      }
+    }
+  ]
+}

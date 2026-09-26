@@ -8,7 +8,7 @@ import {
 import { preparaStampa } from '../src/stampa.js';
 import { testoTooltip } from '../src/descrizioni.js';
 import { massimiSessione, inizializzaSessione, allineaSessione, variaMunizioni, ricaricaArma } from '../src/sessione.js';
-import { validaDati } from '../src/validate.js';
+import { validaDati, trovaTodo } from '../src/validate.js';
 import { datiReali, copia } from './helpers.js';
 import { MISHIMA_AGENTE, ARCANISTA } from './personaggi.js';
 
@@ -17,9 +17,9 @@ const voce = (uid, rif, stato, extra = {}) => ({ uid, rif, stato, quantita: 1, n
 const scheda = (creazione, equipaggiamento, livelli = []) => calcolaScheda({ creazione: { ...creazione, equipaggiamento }, livelli }, dati);
 
 test('catalogo: caricato dall’indice, un lotto = un file e una riga; riferimenti "file:id"', () => {
-  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armi_distanza', 'armature', 'scudi']);
+  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armi_corporative', 'armi_distanza', 'armature', 'scudi']);
   const cat = catalogo(dati);
-  assert.equal(cat.oggetti.filter((o) => o.tipo === 'arma_ravvicinata').length, 28); // §7.1.1: 28 profili
+  assert.equal(cat.oggetti.filter((o) => o.tipo === 'arma_ravvicinata' && o.catalogo === 'Commerciale').length, 28); // §7.1.1: 28 profili
   assert.equal(cat.oggetti.filter((o) => o.tipo === 'armatura').length, 3); // §7.11.3
   const lancia = cat.perRif.get('armi:lancia');
   assert.deepEqual(lancia.danno, { una_mano: '1d6+1', due_mani: '1d6+3' });
@@ -33,11 +33,11 @@ test('catalogo: caricato dall’indice, un lotto = un file e una riga; riferimen
 test('cascata e ricerca: solo ciò che esiste; i nomi alternativi portano al profilo', () => {
   const o = opzioniCascata(dati, { tipo: 'arma_ravvicinata', catalogo: 'Commerciale', famiglia: 'Spade' });
   assert.deepEqual(o.tipi, ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura']);
-  assert.deepEqual(o.cataloghi, ['Commerciale']);
+  assert.deepEqual(o.cataloghi, ['Commerciale', 'Bauhaus', 'Capitol', 'Cybertronic', 'Fratellanza', 'Imperial', 'Mishima', 'Alleanza']);
   assert.ok(o.famiglie.includes('Armi da pugno'));
   assert.deepEqual(o.profili.map((p) => p.nome), ['Spada leggera', 'Stocco', 'Spada lunga', 'Spada bastarda', 'Spadone']);
   assert.deepEqual(cercaNelCatalogo(dati, 'alabarda').map((x) => x.rif), ['armi:arma-inastata-pesante']);
-  assert.deepEqual(cercaNelCatalogo(dati, 'sciabola').map((x) => x.rif), ['armi:spada-leggera']);
+  assert.deepEqual(cercaNelCatalogo(dati, 'sciabola').map((x) => x.rif), ['armi:spada-leggera', 'armi_corporative:sciabola-da-duello']);
   assert.deepEqual(cercaNelCatalogo(dati, 'x'), []); // almeno due caratteri
 });
 
@@ -391,4 +391,72 @@ test('validatore degli scudi: Parata, profili alternativi, attacco', () => {
   assert.match(e((d) => { sc(d).find((o) => o.id === 'scudo-punisher').attacco.abilita = 'Scudi'; }), /attacco\.abilita: Abilità "Scudi" inesistente/);
   assert.match(e((d) => { sc(d)[2].mov = 2; }), /penalità MOV/);
   assert.match(e((d) => { delete d.regole.difese; }), /difese\.parata_distanza_arma/);
+});
+
+// --- Lotto 4: armi ravvicinate corporative (§7.1.9) --------------------------------------
+
+test('lotto 4: 39 armi ravvicinate corporative in 7 cataloghi; lo Scudo delle Guardie Sacre resta negli scudi', () => {
+  const armi = catalogo(dati).oggetti.filter((o) => o.file === 'armi_corporative');
+  assert.equal(armi.length, 39); // §7.1.9: «39 armi ravvicinate e uno Scudo corporativo»
+  assert.deepEqual([...new Set(armi.map((o) => o.catalogo))], ['Bauhaus', 'Capitol', 'Cybertronic', 'Fratellanza', 'Imperial', 'Mishima', 'Alleanza']);
+  assert.ok(!armi.some((o) => o.nome === 'Scudo delle Guardie Sacre'));
+  const r = (id) => catalogo(dati).perRif.get(`armi_corporative:${id}`);
+  assert.deepEqual(r('spada-violator').danno, { una_mano: '1d8+1', due_mani: '2d6' });
+  assert.equal(r('spada-violator').specializzazione, 'specializzazione-spade');
+  assert.equal(r('manganello-elettrificato').famiglia, 'Mazze e bastoni'); // «Manganello» è nome alternativo del Randello
+  assert.equal(r('katana').famiglia, 'Da classificare'); // famiglia non dichiarata: TODO(Davide)
+  assert.equal(r('katana').specializzazione, null);
+  assert.deepEqual(r('kriss').proprieta[0].effetto, { va: 1 }); // Precisa 1
+  assert.deepEqual(r('tonfa-stella-cadente').proprieta[0].effetto, { parata_va: 2 });
+  assert.deepEqual(r('spada-punisher').munizioni.capacita, 5);
+  assert.equal(r('spada-punisher').munizioni.unita, 'cariche');
+  assert.deepEqual(r('bordone-templare').attivazione, { testo: '+1d6 Magico; 5 PM; Sintonizzazione 2', danno_extra: '1d6', natura: 'Magico', sintonizzazione: 2 });
+  assert.equal(r('bordone-templare').munizioni.unita, 'PM');
+  assert.equal(r('spada-deathdealer').natura_danno, 'Magico');
+  assert.deepEqual(r('elettrosega-csb600').manovre, ['generali']);
+  assert.equal(r('lama-mushashi').note_manuale, 'Lama Mushashi. Proprietà: Precisa 2; Danno Magico. Manovre compatibili: Affondo, Spazzata. Il raccordo con il KI sarà integrato successivamente.');
+  // le domande sulle famiglie mancanti compaiono fra i TODO della home
+  assert.ok(trovaTodo(dati).some((t) => /Katana/.test(t.testo)));
+});
+
+test('arma corporativa impugnata: Precisa nel VA per colpire, Difensiva nella Parata, cariche in sessione', () => {
+  const s = scheda(MISHIMA_AGENTE, [voce('k', 'armi_corporative:kriss', 'impugnata'), voce('t', 'armi_corporative:tonfa-stella-cadente', 'impugnata')]);
+  const [kriss, tonfa] = s.equipaggiamento.armi;
+  const mischia = s.abilita.find((a) => a.nome === 'Armi da mischia').totale;
+  assert.equal(kriss.va, mischia + 1); // Precisa 1, FOR 3 ≤ 6
+  assert.ok(kriss.componenti.some((c) => c.nome === 'Precisa 1' && c.valore === 1));
+  const difese = s.abilita.find((a) => a.nome === 'Difese').vaEquip;
+  assert.equal(tonfa.parata.va, difese + 2); // Difensiva +2, FOR 4 ≤ 6
+  assert.equal(tonfa.attivazione.natura, 'Elettricità');
+  assert.deepEqual(tonfa.manovre, ['Affondo', 'Spazzata', 'Stordire']);
+  // la Spada Punisher ha cinque cariche a cella: contatore in sessione, «Ricarica» sostituisce la cella
+  const creazione = { ...MISHIMA_AGENTE, equipaggiamento: [voce('p', 'armi_corporative:spada-punisher', 'impugnata')] };
+  const m = massimiSessione(calcolaScheda({ creazione, livelli: [] }, dati), creazione, dati);
+  assert.deepEqual(m.caricatori, { p: 5 });
+  let ses = variaMunizioni(inizializzaSessione(m), 'p', 'colpi', -2, m);
+  assert.equal(ses.munizioni.p.colpi, 3);
+  ses = ricaricaArma(ses, 'p', m);
+  assert.equal(ses.munizioni.p.colpi, 5);
+  // stampa: cariche e attivazione nella riga dell'arma
+  const f3 = preparaStampa(creazione, dati).fogli.find((f) => f.id === 'combattimento').dati;
+  assert.equal(f3.armi.righe[0][5], '5 cariche');
+  assert.match(f3.armi.righe[0][6], /att\. \+2d4 Plasma/);
+  assert.match(f3.armi.righe[0][6], /Precisa 1/);
+});
+
+test('Scudo delle Guardie Sacre: attacco senza lama dal §7.1.9, danno con la lama in TODO(Davide)', () => {
+  const gs = catalogo(dati).perRif.get('scudi:scudo-delle-guardie-sacre');
+  assert.equal(gs.attacco.danno, '1d6+1');
+  assert.match(gs.attacco.note, /1d6\+1\+1d4.*§7\.1\.9.*1d6\+1d4.*§7\.4\.10/);
+  assert.ok(trovaTodo(dati).some((t) => /Guardie Sacre, danno con la lama/.test(t.testo)));
+});
+
+test('validatore delle armi corporative: effetti, attivazione, unità delle cariche, Manovre', () => {
+  const e = (modifica) => { const d = copia(dati); modifica(d); return validaDati(d).map((x) => `${x.chiave}: ${x.problema}`).join('\n'); };
+  const ac = (d) => d.equipaggiamento.file.armi_corporative.oggetti;
+  assert.match(e((d) => { ac(d)[0].proprieta[0].effetto = { boh: 1 }; }), /effetto sconosciuto/);
+  assert.match(e((d) => { ac(d).find((o) => o.id === 'spada-punisher').attivazione.danno_extra = 'tanto'; }), /danno_extra: "tanto" non è una formula/);
+  assert.match(e((d) => { ac(d).find((o) => o.id === 'spada-punisher').munizioni.unita = 'litri'; }), /colpi, cariche o PM/);
+  assert.match(e((d) => { ac(d)[0].manovre = []; }), /elenco delle Manovre compatibili/);
+  assert.match(e((d) => { ac(d).find((o) => o.id === 'spada-deathdealer').natura_danno = 'Sacro'; }), /Naturale, Magico o Etereo/);
 });

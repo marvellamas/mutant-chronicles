@@ -1,6 +1,6 @@
 # Catalogo dell'equipaggiamento: lotti da estrarre
 
-Stato al 26 settembre 2026 (lotti 2 e 3 fatti). Fonte: Manuale degli Armamenti v0.50. Metodo: `tools/estrai_manuali.py`
+Stato al 26 settembre 2026 (lotti 2, 3 e 4 fatti). Fonte: Manuale degli Armamenti v0.50. Metodo: `tools/estrai_manuali.py`
 e `docs/pilota-estrazione-armamenti.md`.
 
 Questa è la lista dei prompt successivi: **un lotto per prompt**, nell'ordine di utilità al
@@ -19,6 +19,7 @@ su quelle pagine: le tabelle impilate contano come una.
 | `armature.json` | 3 armature commerciali civili, penalità per categoria | §7.11.1–7.11.3 | 62–63 |
 | `armi_distanza.json` | 22 armi a distanza del catalogo Commerciale (lotto 2) | §7.7 | 33–36 |
 | `scudi.json` | 26 scudi commerciali e corporativi (lotto 3) | §7.4 | 23–30 |
+| `armi_corporative.json` | 39 armi ravvicinate dei cataloghi corporativi (lotto 4) | §7.1.9 | 11–17 |
 
 Da completare nello stesso ambito, a basso costo:
 - **Manovre compatibili** dei profili commerciali, §7.1.7, pp. 9–10: una tabella Modello →
@@ -165,9 +166,50 @@ Fatto il 26 settembre 2026, commit «Lotto 3 del catalogo: scudi (§7.4, pp. 23�
 
 In ordine di peso:
 
-- **Armi ravvicinate corporative** — §7.1.9, pp. 11–17: 39 armi e uno Scudo (Guardie Sacre).
-  Stesse colonne del catalogo Commerciale più proprietà e Manovre proprie. Estende `armi.json`
-  oppure un file per Corporazione.
+- ✔ **Armi ravvicinate corporative** — §7.1.9, pp. 11–17 (lotto 4, fatto il 26 settembre 2026,
+  commit «Lotto 4 del catalogo: armi ravvicinate corporative»).
+  - **Fonte:** `docs/lotti/lotto4-armi-ravvicinate-corporative/`:
+    - `grezzo/`: 16 CSV, pp. 11–17;
+    - `prosa/`: il §7.1 da `--prosa`;
+    - `pulito/armi_ravvicinate_corporative.csv`.
+
+    Generatore `tools/lotti/lotto4_armi_ravvicinate_corporative.mjs`, dati
+    `data/equipaggiamento/armi_corporative.json` (39 armi).
+  - **Estrazione:** pdfplumber trova tutte le 14 tabelle del §7.1.9, due per Corporazione
+    (profilo e dati economici), senza unirle. **40 righe su 40 giuste al primo colpo**,
+    controllate sulle immagini delle pp. 11–17; **0 correzioni a mano**.
+
+    Unico errore strutturale: l'intestazione «Costo / proposto» su due righe, in 6 tabelle su 7.
+    La riga «proposto» si salta.
+
+    Lo Scudo delle Guardie Sacre (40ª riga) è già in `scudi.json`.
+  - **Prosa:** le righe «Proprietà e impiego» di ogni modello («Nome. Proprietà: …. Attivazione:
+    …. Manovre compatibili: ….») si leggono con un'espressione regolare, **39 su 39** senza
+    correzioni. La nota di ogni modello va dall'inizio della sua riga all'inizio della
+    successiva, così comprende frasi come «Il raccordo con il KI sarà integrato
+    successivamente». I paragrafi dopo le righe dei modelli sono note del catalogo
+    (`note_per_catalogo`, mostrate nel tooltip).
+  - **Regole nuove del generatore:**
+    1. le Corporazioni sono titoli fuori dalle tabelle, elencate in ordine e controllate nel
+       numero (7);
+    2. «Imperiali» diventa «Imperial», come nel §7.4.8 e nel §7.14;
+    3. ogni proprietà deve avere una definizione, altrimenti il generatore si ferma. Sono 15
+       tipi, tutti con il testo del §7.1.3–7.1.4 o del Giocatore §5.24;
+    4. «Attivazione: +XdY Natura; 5 cariche a cella | 5 PM; Sintonizzazione N» diventa
+       `attivazione` { danno_extra, natura, sintonizzazione } e `munizioni` { capacita,
+       unita: cariche | PM };
+    5. **la famiglia (e la Specializzazione) non è nelle tabelle corporative**: si assegna solo
+       se il nome contiene una famiglia commerciale o un suo nome alternativo (§7.1.1). Gli altri
+       12 modelli restano «Da classificare», senza Specializzazione, con `TODO(Davide)`.
+  - **Schema esteso:**
+    - effetto `va` (Precisa X, nel VA per colpire);
+    - `attivazione`, `manovre`, `natura_danno`;
+    - `munizioni.unita` (colpi, cariche, PM): le cariche delle celle e i PM delle riserve usano
+      il contatore di sessione, con «Ricarica» che sostituisce la cella.
+  - **Dubbi per Davide:** famiglia di 12 armi (A.9); danno della lama dello Scudo delle Guardie
+    Sacre, diverso fra §7.1.9 e §7.4.10 (A.10). Per quest'ultimo `scudi.json` ora ha
+    l'attacco senza lama dalla tabella del §7.1.9 (1d6+1).
+
 - **Armi a distanza corporative** — §7.8, pp. 36–51: il blocco più grande (16 pagine), stessa
   struttura a tre sottotabelle del §7.7 più proprietà in prosa.
 - **Armature corporative:**

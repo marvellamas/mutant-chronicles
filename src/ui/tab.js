@@ -357,9 +357,16 @@ function schedaArma(ctx, a) {
     a.modalita.length ? h('p', { class: 'proprieta-arma' }, h('span', { class: 'sigla' }, 'Modalità '),
       a.modalita.map((m) => h('span', { class: 'etichetta', title: legenda[m] ?? m }, m))) : null,
     a.mov ? h('p', { class: 'nota' }, `MOV ${segno(a.mov)} Q mentre è impugnata (§7.7)`) : null,
+    a.attivazione ? h('p', { class: 'nota', title: 'Proprietà a carica: si dichiara prima della Prova per colpire (§7.1.4)' },
+      h('strong', {}, 'Attivazione: '), `+${a.attivazione.danno_extra} ${a.attivazione.natura}${a.attivazione.anche ? ` e ${a.attivazione.anche}` : ''} al danno del colpo`,
+      a.attivazione.sintonizzazione ? ` · Sintonizzazione ${a.attivazione.sintonizzazione}` : null) : null,
+    a.naturaDanno && a.naturaDanno !== 'Naturale' ? h('p', { class: 'nota' }, `Danno ${a.naturaDanno}.`) : null,
+    a.manovre.length ? h('p', { class: 'nota' }, h('strong', {}, 'Manovre compatibili: '), a.manovre.join(', ')) : null,
     a.proprieta.length ? h('p', { class: 'proprieta-arma' }, a.proprieta.map((p) => h('span', { class: 'etichetta', title: p.testo }, p.nome))) : null,
-    a.tipo === 'arma_distanza' ? pannelloMunizioni(ctx, a) : null);
+    a.tipo === 'arma_distanza' || a.munizioni?.capacita ? pannelloMunizioni(ctx, a) : null);
 }
+
+const ETICHETTE_MUNIZIONI = { colpi: 'Caricatore', cariche: 'Cariche nella cella', PM: 'PM nella riserva' };
 
 /**
  * Modalità tavolo: colpi nel caricatore (dalla capacità del catalogo, «Ricarica» lo riporta al
@@ -375,7 +382,7 @@ function pannelloMunizioni(ctx, a) {
   }, d > 0 ? `+${d}` : `−${-d}`);
   return h('div', { class: 'munizioni-tavolo' },
     h('div', { class: 'riga-munizioni' },
-      h('span', {}, 'Caricatore ', h('strong', {}, String(m.colpi)), capacita !== null ? ` / ${capacita}` : ''),
+      h('span', {}, ETICHETTE_MUNIZIONI[a.munizioni?.unita ?? 'colpi'] ?? 'Caricatore', ' ', h('strong', {}, String(m.colpi)), capacita !== null ? ` / ${capacita}` : ''),
       pulsante('colpi', -1, 'colpi'),
       capacita !== null && capacita >= 10 ? pulsante('colpi', -5, 'colpi') : null,
       capacita !== null ? h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.ricarica(a.uid), disabled: m.colpi >= capacita }, 'Ricarica') : pulsante('colpi', 1, 'colpi')),
@@ -385,9 +392,9 @@ function pannelloMunizioni(ctx, a) {
     h('small', { class: 'nota' }, [
       capacita === null ? 'Nessun caricatore nella scheda dell’arma: contatore libero.' : null,
       a.munizioni?.ricarica ? `Ricarica: ${a.munizioni.ricarica}.` : null,
-      a.munizioni?.consumo ? `${a.munizioni.consumo}.` : null,
+      a.munizioni?.consumo ? `${a.munizioni.consumo.replace(/^./, (c) => c.toUpperCase())}.` : null,
       a.munizioni?.riferimento ? `Munizione di riferimento: ${a.munizioni.riferimento}.` : null,
-      'Le riserve (caricatori di scorta) si contano a mano: «Ricarica» non le scala.',
+      a.munizioni?.unita === 'PM' ? 'Le riserve si contano a mano.' : 'Le riserve (caricatori o celle di scorta) si contano a mano: «Ricarica» non le scala.',
     ].filter(Boolean).join(' ')));
 }
 

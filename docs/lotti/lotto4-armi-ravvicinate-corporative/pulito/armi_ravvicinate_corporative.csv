@@ -1,0 +1,41 @@
+Catalogo,Modello,Abilità,Mani,Danno base,Q,FOR,PI,Qualità,PS INT,REP,Costo
+Bauhaus,Baionetta Ussara,Guerra,2,1d4+2,2,6,4,Non comune,12,NC,400
+Bauhaus,Bordone Templare,Guerra,2,1d8+1,1,5,6,Rara,14,RA,6500
+Bauhaus,Sciabola da Duello,Mischia,1,1d6+2,1,3,5,Non comune,12,NC,850
+Bauhaus,Tonfa Stella Cadente,Mischia,1,1d6+1,1,4,4,Non comune,12,NC,2000
+Capitol,Spada dell’Onore,Mischia,1,1d6+2,1,3,5,Comune,10,CO,550
+Cybertronic,Artigli elettrificati,Mischia,1,1d4+1,1,3,4,Non comune,12,RA,2400
+Cybertronic,Baionetta elettrificata,Guerra,2,1d4+1,1,6,4,Non comune,12,RA,1800
+Cybertronic,Elettrosega CSB600,Guerra,1,1d6,1,4,5,Non comune,12,RA,3600
+Cybertronic,Frusta elettrificata,Mischia,1,1d4+1,3,4,4,Non comune,12,RA,1800
+Cybertronic,Manganello elettrificato,Mischia,1,1d6+1,1,3,5,Non comune,12,RA,1200
+Cybertronic,Spada elettrificata CSA 404,Mischia,1,1d6+1,1,3,5,Non comune,12,RA,5000
+Cybertronic,Tirapugni elettrificato,Corpo,1,1,1,2,4,Non comune,12,RA,1100
+Fratellanza,Spada Avenger,Mischia,1,1d6+1,1,3,5,Non comune,12,RA,2200
+Fratellanza,Spada Mortis,Guerra,1,1d8+1,1,4,5,Non comune,12,RA,3000
+Fratellanza,Spada Deathdealer,Mischia,1,1d6+2,1,3,5,Rara,14,MR,18000
+Fratellanza,Spada Vindicator,Mischia,1,1d6+1,1,3,5,Rara,14,RA,9000
+Fratellanza,Spada Deliverer,Guerra,1/2,1d8+1 / 2d6,1,5,6,Rara,14,RA,11500
+Fratellanza,Lancia Castigator,Guerra,2,2d6,2,6,6,Rara,14,RA,12000
+Fratellanza,Sbudellatrice,Guerra,1,1d6+3,1,4,5,Non comune,12,RA,5000
+Fratellanza,Scudo delle Guardie Sacre,Guerra,1,1d6+1,1,5,6,Rara,14,MR,18000
+Imperial,Artiglio del Lupo,Mischia,1,1d4+2,1,4,4,Non comune,12,NC,700
+Imperial,Ascia Tagliateste a una mano,Mischia,1,1d6+3,1,5,5,Non comune,12,NC,2500
+Imperial,Ascia Tagliateste a due mani,Guerra,2,2d8+1,1,8,6,Non comune,12,NC,3800
+Imperial,Baionetta retrattile,Guerra,2,1d4+1,1,6,4,Comune,10,NC,450
+Imperial,Catena chiodata,Mischia,1,1d4+2,2,5,5,Comune,10,NC,300
+Imperial,Chainreaper,Guerra,1,1d6+2,1,5,5,Non comune,12,NC,2000
+Imperial,Martello Spaccateste a una mano,Guerra,1,1d8+2,1,6,5,Non comune,12,NC,2400
+Imperial,Martello Spaccateste a due mani,Guerra,2,2d6+2,1,7,6,Non comune,12,NC,3600
+Imperial,Spada Violator,Guerra,1/2,1d8+1 / 2d6,1,6,6,Non comune,12,NC,3200
+Imperial,Spadone Claymore,Guerra,2,2d6+2,2,7,6,Non comune,12,NC,1100
+Mishima,Kriss,Mischia,1,1d6,1,3,4,Comune,10,NC,350
+Mishima,Wakizashi,Mischia,1,1d6+1,1,3,5,Non comune,12,NC,900
+Mishima,Katana,Guerra,1,1d8+1,1,4,5,Non comune,12,NC,1700
+Mishima,Lama Mushashi,Guerra,1,1d8+2,1,4,5,Rara,14,MR,16000
+Mishima,Lama Demontooth,Guerra,2,2d6+2,1,6,6,Rara,14,RA,14500
+Mishima,Lancia Naginata,Guerra,2,1d8+1,2,6,6,Non comune,12,NC,1900
+Mishima,Lancia Duskdealer,Guerra,2,2d6+2,2,7,6,Non comune,12,RA,4200
+Mishima,Nunchaku,Mischia,1,1d4+1,2,3,4,Comune,10,NC,180
+Mishima,Nunchaku elettrificato,Mischia,1,1d4+1,2,3,4,Non comune,12,RA,1500
+Alleanza,Spada Punisher,Mischia,1,1d6+2,1,3,6,Rara,14,MR,6500

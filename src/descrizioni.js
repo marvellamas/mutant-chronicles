@@ -111,10 +111,14 @@ function tooltipOggetto(rif, dati) {
   for (const a of o.profili_alternativi ?? []) {
     sezioni.push({ etichetta: a.condizione.replace(/^./, (c) => c.toUpperCase()), testo: [a.ar ? `AR ${a.ar.totale}${a.ar.magica ? ` (${a.ar.magica} magica)` : ''}` : null, a.parata ? `Parata ${conSegno(a.parata.ravvicinata)} ravv. / ${conSegno(a.parata.distanza)} dist.` : null].filter(Boolean).join(', ') });
   }
+  if (o.attivazione) sezioni.push({ etichetta: 'Attivazione', testo: o.attivazione.testo });
+  if (o.manovre?.length) sezioni.push({ etichetta: 'Manovre compatibili', testo: o.manovre.join(', ') });
   if (o.attacco) sezioni.push({ etichetta: 'Attacco', testo: `${o.attacco.abilita}, ${o.attacco.mani === 1 ? 'una mano' : 'due mani'}, danno ${o.attacco.danno}, portata ${o.attacco.portata_q} Q${o.attacco.condizione ? `, ${o.attacco.condizione}` : ''}.` });
   if (o.munizioni?.riferimento) sezioni.push({ etichetta: 'Munizione di riferimento', testo: o.munizioni.riferimento });
   if (o.munizioni?.ricarica) sezioni.push({ etichetta: 'Ricarica', testo: o.munizioni.ricarica });
   if (o.note_manuale) sezioni.push({ etichetta: null, testo: o.note_manuale });
+  const noteCatalogo = dati.equipaggiamento.file?.[o.file]?.note_per_catalogo?.[o.catalogo];
+  if (noteCatalogo) sezioni.push({ etichetta: `Note del catalogo ${o.catalogo}`, testo: Array.isArray(noteCatalogo) ? noteCatalogo.join(' ') : noteCatalogo });
   return {
     tipo: 'oggetto', titolo: o.nome,
     sottotitolo: `${NOMI_TIPI[o.tipo]} · ${o.catalogo} · ${o.famiglia} · ${o.paragrafo} (${o.versione_manuale})`,

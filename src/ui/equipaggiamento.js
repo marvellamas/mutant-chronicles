@@ -150,7 +150,7 @@ function riassuntoProfilo(o) {
   if (o.portata_q) parti.push(`portata ${o.portata_q} Q`);
   if (o.gittata_q) parti.push(`gittata ${o.gittata_q} Q`);
   if (o.gittata_per_for) parti.push(`gittata FOR × ${o.gittata_per_for} Q`);
-  if (o.munizioni?.capacita) parti.push(`CC ${o.munizioni.capacita}`);
+  if (o.munizioni?.capacita) parti.push(o.munizioni.unita === 'cariche' ? `${o.munizioni.capacita} cariche` : o.munizioni.unita === 'PM' ? `riserva ${o.munizioni.capacita} PM` : `CC ${o.munizioni.capacita}`);
   if (o.modalita?.length) parti.push(o.modalita.join(' '));
   if (o.ar) parti.push(`AR ${o.ar.totale}`);
   if (o.taglia) parti.push(o.taglia);

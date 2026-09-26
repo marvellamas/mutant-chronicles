@@ -22,6 +22,17 @@ Le risposte già date (Esploratore, minimo 1 incantesimi, quote per macrofamigli
 
 8. **Pugnale e Ascia leggera lanciati: quale Specializzazione?** Il §7.7 dice che sono lo stesso oggetto del catalogo ravvicinato, lanciato con Armi da Lancio. L'app oggi applica al lancio la Specializzazione in Armi da Lancio e, in corpo a corpo, quella della famiglia (Coltelli e Pugnali, Asce). Se al lancio vale invece la Specializzazione della famiglia, o entrambe, dillo.
 
+9. **Famiglia di 12 armi corporative (§7.1.9).** Le tabelle corporative non dicono la famiglia dell'arma, che serve per la Specializzazione (§8.8.1). L'app la ricava dal nome quando contiene una famiglia commerciale (Spada, Ascia, Lancia, Baionetta, Tonfa, Manganello, Frusta, Artigli, Tirapugni…); per gli altri 12 modelli serve la tua scelta. Proposta:
+   - Katana, Wakizashi, Lama Mushashi, Lama Demontooth → Spade;
+   - Kriss → Coltelli e pugnali;
+   - Nunchaku, Nunchaku elettrificato, Catena chiodata → Armi flessibili;
+   - Bordone Templare → Mazze e bastoni;
+   - Elettrosega CSB600, Chainreaper, Sbudellatrice → ?
+
+   Finché non rispondi sono «Da classificare» e nessuna Specializzazione dà +1 con queste armi.
+
+10. **Scudo delle Guardie Sacre: danno con la lama estratta.** Il §7.1.9 dice che con la lama il danno diventa 1d6+1+1d4; il §7.4.10 dice 1d6+1d4. Quale vale? L'app mostra l'attacco senza lama (1d6+1, dalla tabella del §7.1.9) e riporta i due valori nella nota.
+
 ## B. Da correggere nella prossima edizione dei manuali
 
 Sono le cose che hai già deciso a voce o che sono errori evidenti: l'app segue la tua decisione, ma il testo stampato dice ancora un'altra cosa e prima o poi qualcuno al tavolo lo aprirà.
@@ -33,6 +44,7 @@ Sono le cose che hai già deciso a voce o che sono errori evidenti: l'app segue 
 - **Giocatore §8.6, Attivazione Tempestiva**: sta prima del §8.6.1, fuori da ogni sottosezione, con un'intestazione diversa dagli altri.
 - **Magia, sezione 1**: la frase "con i cinque Talenti liberi ordinari, Usufruitore più quattro miglioramenti consentono il livello massimo 15" confonde: i Talenti Liberi sono nove (§8.6) e Potenziale Mistico si prende fino a cinque volte. Riformulare come esempio, non come regola.
 - **Giocatore §3.5.3, Bersaglio Designato**: impaginazione rotta nel PDF (il nome del Talento finisce dentro una frase).
+- **Armamenti §7.1.9**: il catalogo si intitola «Imperiali», mentre gli scudi (§7.4.8) e il catalogo generale (§7.14) usano «Imperial». L'app usa «Imperial» ovunque.
 - **Armamenti §7.4.1 e §7.4.2, Scudo Punisher**: la scheda del §7.4.1 dice «Taglia Grande», il catalogo del §7.4.2 e la scheda del §7.4.5 dicono «Medio». Il manuale stesso dice che Medio e Grande sono denominazioni equivalenti, ma conviene usare una sola parola.
 - **Giocatore §3.2**: dice che ogni Classe ha due Talenti per Specializzazione e uno Comune; l'Esploratore non li assegnava (vedi sopra).
 
@@ -44,7 +56,7 @@ Sono le cose che hai già deciso a voce o che sono errori evidenti: l'app segue 
 ## D. Manuali che l'app aspetta
 
 - Manuale degli Equipaggiamenti e Manuale dei Veicoli (in stesura): diversi Talenti li citano. Quando esistono, ce li passi come PDF nella cartella `Manuali/`.
-- Manuale degli Armamenti v0.50: lo stiamo estraendo a lotti (stato in `docs/equipaggiamento-lotti.md`: fatti armi ravvicinate e a distanza commerciali, armature civili, scudi). Se pubblichi una v0.51 prima che abbiamo finito, avvisaci: le tabelle cambiate vanno ri-estratte.
+- Manuale degli Armamenti v0.50: lo stiamo estraendo a lotti (stato in `docs/equipaggiamento-lotti.md`: fatti armi ravvicinate e a distanza commerciali, armature civili, scudi, armi ravvicinate corporative). Se pubblichi una v0.51 prima che abbiamo finito, avvisaci: le tabelle cambiate vanno ri-estratte.
 
 ## Come ci rispondi
 

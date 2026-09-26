@@ -203,13 +203,15 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     a.dannoDaMunizione ? 'munizione' : testoDanno(a.danno),
     a.gittataQ ? `${a.gittataQ} Q${a.gittataFormula ? ` (${a.gittataFormula})` : ''}` : a.portataQ ? `portata ${a.portataQ} Q` : '—',
     // capacità del caricatore; i colpi rimasti si segnano a penna
-    a.munizioni?.capacita ? `CC ${a.munizioni.capacita}` : '',
+    a.munizioni?.capacita ? (a.munizioni.unita === 'cariche' ? `${a.munizioni.capacita} cariche` : a.munizioni.unita === 'PM' ? `${a.munizioni.capacita} PM` : `CC ${a.munizioni.capacita}`) : '',
     [
       a.ac !== null && a.ac !== 1 ? `AC ${a.ac === 'munizione' ? 'mun.' : a.ac}` : null,
       a.inc ? `INC ${a.inc}` : null,
       a.modalita.length ? a.modalita.join(' ') : null,
       a.mov ? `MOV ${a.mov < 0 ? `−${-a.mov}` : a.mov} Q` : null,
       a.specializzazione ? `+${a.bonusDanno} danno (Spec.)` : null,
+      a.attivazione ? `att. +${a.attivazione.danno_extra} ${a.attivazione.natura}` : null,
+      a.naturaDanno && a.naturaDanno !== 'Naturale' ? `danno ${a.naturaDanno}` : null,
       ...a.proprieta.map((p) => p.nome),
       a.parata ? `Parata ${a.parata.va < 0 ? `−${-a.parata.va}` : a.parata.va}${a.parata.distanza !== null && a.parata.distanza !== undefined ? ` (dist. ${a.parata.distanza < 0 ? `−${-a.parata.distanza}` : a.parata.distanza})` : ''}` : null,
     ].filter(Boolean).join('; '),

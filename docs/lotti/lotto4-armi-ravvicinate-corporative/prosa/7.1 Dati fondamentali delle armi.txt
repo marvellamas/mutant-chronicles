@@ -1,0 +1,563 @@
+7.1 Dati fondamentali delle armi
+Dato Funzione
+Abilità Determina quale VA viene usato per attaccare.
+Danno Dadi e bonus ordinari inflitti da un colpo.
+Gittata massima Distanza oltre la quale l’arma non può colpire.
+Munizioni Capacità, consumo e modalità di ricarica.
+Modalità di fuoco Tiro Singolo ed eventuali Raffiche Breve, Media e Lunga.
+Affidabilità da 1 a 10 usata nella tabella di Inceppamento; valori più alti sono più
+INC
+sicuri.
+Proprietà Regole sintetiche specifiche, comprese eventuali capacità perforanti.
+Numero di mani nell’impugnatura ordinaria; l’impiego a una mano di un’arma a
+Impugnatura
+due mani segue il §7.1.6.
+Portata ravvicinata Distanza massima in Q alla quale il profilo effettua attacchi ravvicinati (§7.1.2).
+FOR Requisito di Forza; se insufficiente, penalità pari alla differenza (§7.1.6).
+PI Punti Integrità massimi del modello; tenere nota dei PI attuali (§7.2.1).
+Qualità e PS INT Qualità costruttiva e corrispondente PS Integrità; distinte dalla potenza mistica.
+REP e Costo Reperibilità e prezzo; ricerca del venditore nel §7.1.8.
+Ogni arma a distanza riporta la propria gittata massima; la scala delle penalità e le Azioni necessarie sono comuni
+e si trovano nel Capitolo 5 del Manuale del Giocatore. Le armi prive di INC utilizzano la tabella delle
+Complicazioni ravvicinate.
+7.1.1 Catalogo Commerciale delle armi ravvicinate
+Il catalogo Commerciale, disponibile presso produttori e venditori indipendenti, comprende 28 profili, ordinati per
+famiglia. Ogni profilo possiede una sola scheda: i nomi alternativi sono esempi descrittivi e condividono Abilità,
+requisiti, proprietà e dati economici. La famiglia serve a ordinare il catalogo; l’Abilità utilizzata dipende dal
+singolo profilo.
+La tabella seguente riporta i profili unici e i nomi descrittivi compresi. Ascia leggera comprende anche l’accetta;
+Tonfa comprende i modelli militari. I modelli della stessa voce condividono le Manovre della scheda comune
+(§7.1.7).
+Profilo unico Nomi descrittivi compresi
+Coltello Coltello; Pugnale triangolare
+Pugnale Pugnale; Pugnale da caccia
+Spada leggera Spada corta; Sciabola
+Randello Bastone; Manganello
+Arma inastata pesante Alabarda; Azza
+Mischia indica Armi da mischia (DES), Guerra indica Armi da guerra (FOR), Corpo indica Corpo a corpo (FOR).
+Nelle righe con due impugnature, i danni sono indicati nello stesso ordine: prima una mano, poi due mani. I danni
+sono quelli base, prima dei modificatori pertinenti; 1, 2 e 3 senza dado sono valori fissi. FOR è il requisito della
+Caratteristica; PI è l’Integrità massima del profilo nuovo e integro. Qualità, reperibilità e potenza di un Artefatto
+sono dati distinti. Le sigle della reperibilità e i costi seguono il §7.1.8.
+Famiglia Profilo Abilità Mani Danno base Q Proprietà
+Coltelli e
+Coltello Mischia 1 1d4 1 —
+pugnali
+Coltelli e
+Pugnale Mischia 1 1d4+1 1 —
+pugnali
+Coltelli e
+Daga Mischia 1 1d6 1 —
+pugnali
+Coltelli e Pugnale da
+Mischia 1 1d6+1 1 —
+pugnali combattimento
+Spade Spada leggera Mischia 1 1d6+1 1 —
+Spade Stocco Mischia 1 1d6 1 Sanguinante 1
+Spade Spada lunga Guerra 1 1d8+1 1 —
+Spade Spada bastarda Guerra 1 / 2 1d8+1 / 2d6 1 Versatile
+Spade Spadone Guerra 2 2d6+1 1 —
+Asce Ascia leggera Mischia 1 1d6+1 1 —
+Asce Ascia bipenne Guerra 2 2d6+1 1 —
+Martelli Martello Mischia 1 1d6+2 1 —
+Martelli Martello da guerra Guerra 1 1d8+1 1 —
+Martelli Martello a due mani Guerra 2 2d6 1 —
+Mazze e
+Randello Mischia 1 1d6 1 —
+bastoni
+Mazze e
+Mazza ferrata Mischia 1 1d6+1 1 —
+bastoni
+Mazze e
+Tonfa Mischia 1 1d4+1 1 Difensiva +2
+bastoni
+Armi inastate Baionetta montata Guerra 2 1d4+1 1 Montata
+Armi inastate Lancia Guerra 1 / 2 1d6+1 / 1d6+3 2 Versatile
+Armi inastate Picca Guerra 2 1d6+1 3 —
+Armi inastate Tridente Guerra 1 1d8+1 2 —
+Armi inastate Arma inastata pesante Guerra 2 1d8+1 2 —
+Famiglia Profilo Abilità Mani Danno base Q Proprietà
+Armi flessibili Frusta Mischia 1 1d4 3 Immobilizzare a distanza
+Armi flessibili Mazzafrusto Guerra 1 1d6+1 1 −2 VA alla Parata avversaria
+Armi da
+Artigli Mischia 1 1d4+1 1 Sanguinante 1
+pugno
+Armi da Corpo a
+Tirapugni 1 1 1 —
+pugno corpo
+Armi da Corpo a
+Tirapugni chiodato 1 3 1 —
+pugno corpo
+Armi da Corpo a Concussivo; +1d6 a carica; 5
+Tirapugni concussivo 1 2 1
+pugno corpo cariche a cella
+Requisiti Integrità e dati economici del catalogo Commerciale
+Costo
+Modello FOR PI Qualità PS INT REP
+proposto
+Coltello 2 4 Comune 10 CO 80
+Pugnale 2 4 Comune 10 CO 150
+Daga 3 4 Comune 10 NC 220
+Pugnale da combattimento 3 4 Comune 10 NC 300
+Spada leggera 3 5 Comune 10 NC 350
+Stocco 3 5 Comune 10 NC 450
+Spada lunga 4 5 Comune 10 NC 500
+Spada bastarda 5 6 Comune 10 NC 700
+Spadone 6 6 Comune 10 NC 850
+Ascia leggera 4 5 Comune 10 CO 180
+Ascia bipenne 7 6 Comune 10 NC 500
+Martello 4 5 Comune 10 CO 80
+Martello da guerra 5 5 Comune 10 NC 280
+Martello a due mani 6 6 Comune 10 CO 180
+Randello 3 5 Comune 10 CO 40
+Mazza ferrata 4 5 Comune 10 NC 160
+Tonfa 3 4 Comune 10 NC 90
+Baionetta montata 6 4 Comune 10 NC 180
+Lancia 5 6 Comune 10 CO 220
+Picca 6 6 Comune 10 NC 250
+Tridente 4 6 Comune 10 NC 320
+Arma inastata pesante 7 6 Comune 10 NC 450
+Frusta 4 4 Comune 10 CO 100
+Mazzafrusto 4 5 Comune 10 NC 350
+Artigli 3 4 Comune 10 NC 250
+Tirapugni 2 4 Comune 10 CO 35
+Costo
+Modello FOR PI Qualità PS INT REP
+proposto
+Tirapugni chiodato 3 4 Comune 10 NC 70
+Tirapugni concussivo 6 4 Non comune 12 RA 1200
+7.1.2 Portata ravvicinata
+La portata indica la distanza massima alla quale un’arma può effettuare un attacco ravvicinato. Può colpire anche
+bersagli più vicini, compresi quelli adiacenti, senza penalità dovute alla lunghezza dell’arma. Una portata
+superiore a 1 Q non consente di attaccare attraverso ostacoli che impediscono il colpo.
+Lancia, con entrambe le impugnature, Tridente e Arma inastata pesante hanno portata 2 Q; Picca e Frusta hanno
+portata 3 Q. Tutte le altre armi del catalogo Commerciale, compresa la Baionetta montata, hanno portata 1 Q.
+Ingaggio e Attacchi di Opportunità utilizzano questa portata secondo il §5.3. Le Manovre che richiedono
+espressamente il Contatto conservano quel requisito, salvo eccezioni specifiche come la Frusta (§7.1.5).
+7.1.3 Proprietà dei profili
+I modelli commerciali hanno soltanto le proprietà indicate nella propria riga del catalogo. Sanguinante e
+Concussivo seguono integralmente il §5.24, comprese condizioni di applicazione, Contromisure, Prove Salvezza e
+durata.
+Sanguinante 1. Stocco e Artigli applicano Sanguinamento 1 quando infliggono almeno 1 danno dopo l’Armatura.
+Restano la perdita immediata, le ricorrenze all’Iniziativa della fonte e le regole di cumulo e arresto del §5.15.
+Versatile. Spada bastarda e Lancia possono essere impugnate a una oppure a due mani, infliggendo il danno
+corrispondente riportato nel catalogo. Entrambe utilizzano sempre Armi da guerra.
+Difensiva +2. Il Tonfa concede +2 VA alla Prova di Parata effettuata con quest’arma. Il beneficio non aumenta
+direttamente l’Armatura. Il confronto e l’impiego insieme agli Scudi sono descritti nel §7.4.
+Montata. Il profilo della Baionetta montata si utilizza con la baionetta fissata al fucile, impugnato a due mani.
+Concussivo e Cariche 5. Il Tirapugni concussivo dispone di cinque cariche in una cella energetica sostituibile.
+Spendendone una aggiunge 1d6 danni al danno base di 2 e applica Concussivo all’attacco. A zero cariche
+conserva il danno ordinario di 2. La dichiarazione e l’eventuale risparmio della carica seguono il §7.1.4. Può usare
+la Manovra Stordire anche senza carica; Concussivo resta un effetto distinto.
+Immobilizzare a distanza. La Frusta permette l’impiego descritto nel §7.1.5 entro la propria portata di 3 Q.
+Parata avversaria −2 VA. Il Mazzafrusto impone −2 VA a ogni Prova di Parata contro i propri attacchi, sia con
+arma sia con Scudo. La proprietà non elimina l’AR passiva dello Scudo.
+Precisa X. Concede +X VA alle Prove per colpire con l’arma, comprese le Manovre che richiedono una Prova per
+colpire. Non si applica a Parate, Salvezze o altre Prove contrapposte.
+Affidabile +X. Aggiunge X al tiro di 1d20 + modificatore di Caratteristica sulla tabella delle Complicazioni
+ravvicinate, fino a un massimo di 20. Affidabilità ridotta −2 sottrae invece 2, fino a un minimo di 1. L’attacco
+rimane fallito; queste proprietà non modificano il VA per colpire né la PS Integrità.
+Difensiva X. Concede +X VA esclusivamente alle Parate effettuate con quell’arma. Non aumenta l’Armatura e
+non trasferisce il bonus alle Parate effettuate con un altro oggetto.
+Demolitrice 1. Quando l’arma attacca intenzionalmente un oggetto per romperlo, aggiunge 1 PI alla perdita se
+l’oggetto fallisce la propria PS Integrità. Si effettua una sola PS per tutte le cause di quel colpo, compreso il +1 PI
+del Magistrale (§7.2.1). Quando la scheda indica Demolitrice soltanto nell’attivazione, il beneficio richiede la
+spesa della carica.
+Retrattile. Estrarre o ritrarre la lama richiede 1 Azione Principale. Per attaccare con la lama essa deve essere
+estratta.
+Purificatrice 1. Aggiunge 1 danno contro creature o servitori identificati come appartenenti all’Oscura Simmetria
+nella propria scheda. Il bonus si applica a ciascuna applicazione immediata di danno, prima dei moltiplicatori,
+delle Difese e dell’Armatura; non aumenta i danni periodici di Fuoco. È passivo, non consuma PM, non richiede
+Sintonizzazione e non rende da solo Magico il danno. La semplice presenza di Corruzione non rende un bersaglio
+valido. Il bonus è separato dal danno riportato in tabella.
+Le proprietà Sanguinante, Plasma, Concussivo ed Elettricità seguono il §5.24. Sanguinante 1 e Affondo non
+sommano due sanguinamenti: si applica l’intensità maggiore, comprese le regole di durata e ricorrenza del §5.15.
+7.1.4 Proprietà a carica
+Quando un’arma possiede una proprietà a carica, l’attivazione deve essere dichiarata prima della Prova per
+colpire. Se la Prova riesce, la proprietà si attiva e consuma le cariche previste.
+Se la Prova per colpire fallisce, il personaggio può effettuare una PS di Riflessi senza consumare Azioni. Con
+successo impedisce l’attivazione e risparmia le cariche; con fallimento le cariche vengono consumate. L’attacco
+rimane fallito: la Salvezza riguarda soltanto il consumo delle cariche.
+Questa possibilità riguarda il fallimento della Prova per colpire. Un attacco riuscito, successivamente evitato con
+una Difesa o assorbito dall’Armatura, consuma normalmente le cariche.
+Il Talento Libero Attivazione Tempestiva (§8.6) permette di dichiarare l’attivazione dopo aver conosciuto l’esito
+della Prova per colpire, prima delle Difese e della determinazione del danno. Restano i costi ordinari e non sono
+richieste Azioni aggiuntive. Non modifica retroattivamente la Prova già effettuata.
+Sostituire una cella pronta richiede 1 Azione Principale. Formati compatibili, prezzi e ricarica delle celle
+tecnologiche sono nel §7.20.5. La PS per risparmiare la carica delle armi ravvicinate non si applica ai colpi sparati
+dalle armi a energia.
+La capacità ordinaria delle armi a carica è 5. Il danno speciale è un danno aggiuntivo attivato: si somma al danno
+del medesimo colpo e non genera un secondo attacco. Salvo diversa indicazione della scheda, l’attivazione
+offensiva consuma una carica e non aggiunge un’Azione al normale attacco.
+Le cariche che aggiungono danno Magico utilizzano PM Universali e seguono le regole degli Artefatti. Le altre
+cariche provengono da celle energetiche sostituibili come normali caricatori. Un meccanismo tecnologico
+alimentato a cella non richiede per questo solo fatto Sintonizzazione; non può essere ricaricato spendendo
+direttamente PM personali.
+Elettricità, Plasma e Concussivo delle armi tecnologiche conservano natura Naturale, salvo diversa indicazione
+esplicita. Il danno Magico resta distinto dal danno Etereo: l’Armatura ordinaria assorbe Naturale e Magico,
+mentre contro Etereo si applica soltanto la componente magica.
+Le armi con riserva magica e lo Scudo delle Guardie Sacre sono descritti nei §§7.1.9 e 7.5.1. Dopo la
+Sintonizzazione le proprietà attive si attivano automaticamente, senza Componenti; restano costi, requisiti e Prove
+per colpire. Le proprietà degli Artefatti non sono contrastabili da Contromagia (§7.10).
+7.1.5 Immobilizzare con la Frusta
+La Frusta permette di applicare Immobilizzato entro 3 Q spendendo 1 Azione Principale ed effettuando una Prova
+contrapposta di Armi da mischia contro Corpo a corpo oppure Atletica del bersaglio. Si utilizza la mano che
+impugna la Frusta al posto della mano libera richiesta dalla presa. Con successo applica Immobilizzato senza
+infliggere danno; lo Stato segue il §5.18.
+Il mantenimento non consuma Azioni, ma impegna la Frusta e la mano che la impugna: non possono essere
+utilizzate per altri attacchi o Parate. Liberarsi richiede 1 Azione Principale e una nuova Prova contrapposta di
+Corpo a corpo oppure Atletica contro Armi da mischia; i pareggi favoriscono chi trattiene.
+L’effetto termina con la liberazione, il rilascio, la perdita del controllo della Frusta o l’uscita del bersaglio dalla
+sua portata. Questo impiego non permette di infliggere il danno senz’armi previsto dalla presa. Non viene
+assegnato un locativo e non viene reintrodotto uno Stato separato di Imbrigliato.
+7.1.6 Requisito di Forza
+Un personaggio può utilizzare un’arma anche se la propria Forza è inferiore al requisito. Subisce una penalità al
+VA pari alla differenza fra FOR richiesta e Forza posseduta, applicata ad attacchi, Parate e Manovre effettuati con
+quell’arma. Si confrontano i valori della Caratteristica, non i modificatori. Soddisfare o superare il requisito non
+concede un bonus.
+Il requisito FOR della scheda si riferisce all’impugnatura ordinaria dell’arma. Lancia e Spada bastarda
+mantengono lo stesso requisito con entrambe le impugnature consentite da Versatile. Le stesse regole valgono per
+i profili corporativi e per lo Scudo delle Guardie Sacre.
+Esempio: FOR richiesta 6 e Forza 4 comportano −2 VA a tutte le Prove pertinenti effettuate con l’arma.
+Impugnatura a una mano di un’arma a due mani. Quando il funzionamento dell’arma lo consente, il personaggio
+può utilizzare a una mano un’arma normalmente impugnata a due mani. Per verificare il requisito si considera
+metà della FOR del personaggio, arrotondata per difetto. Se il valore ottenuto è inferiore alla FOR richiesta, la
+differenza costituisce una penalità al VA di attacchi, Parate e Manovre effettuati con quell’arma. Soddisfare o
+superare il requisito non concede un bonus.
+Esempio: un fucile con requisito FOR 4 utilizzato a una mano da un personaggio con FOR 5 considera FOR 2 e
+applica −2 VA. Con FOR 6 considera FOR 3 e applica −1 VA; con FOR 8 considera FOR 4 e non applica penalità
+da Forza.
+Il dimezzamento serve soltanto a verificare il requisito: non modifica la Caratteristica effettiva, il VA di base, il
+modificatore al danno, la capacità di carico o gli altri valori derivati. Le altre penalità pertinenti si applicano
+normalmente. Le armi già utilizzabili ordinariamente a una mano, comprese quelle Versatili, confrontano il
+requisito con la FOR intera; armature e scudi utilizzati secondo il proprio profilo mantengono i normali requisiti.
+La Forza non sostituisce operazioni che richiedono materialmente entrambe le mani, come tendere un arco.
+Ricarica, riarmo, Imbracciatura e altre procedure conservano i propri requisiti. L’impiego a una mano non cambia
+l’Abilità dell’arma né estende le categorie ammesse da Combattere con due armi (Manuale del Giocatore, §§5.1.1,
+5.7 e 5.10).
+7.1.7 Compatibilità con le Manovre
+La tabella indica Affondo, Spazzata e Stordire per i profili commerciali. Le schede corporative riportano le
+proprie compatibilità. Restano le Manovre generali, nei rispettivi requisiti: Sbilanciare e Disarmare non ricevono
+nuove limitazioni per famiglia d’arma. Le Manovre continuano a usare i costi e le procedure del Capitolo 5.
+Modello Manovre compatibili
+Coltello Affondo
+Pugnale Affondo
+Daga Affondo
+Pugnale da combattimento Affondo
+Spada leggera Affondo, Spazzata
+Stocco Affondo
+Spada lunga Affondo, Spazzata
+Spada bastarda Affondo, Spazzata
+Spadone Spazzata
+Ascia leggera Spazzata
+Ascia bipenne Spazzata
+Martello Stordire
+Modello Manovre compatibili
+Martello da guerra Stordire
+Martello a due mani Spazzata, Stordire
+Randello Stordire
+Mazza ferrata Stordire
+Tonfa Stordire
+Baionetta montata Affondo
+Lancia Affondo
+Picca Affondo
+Tridente Affondo
+Arma inastata pesante Affondo, Spazzata
+Frusta —
+Mazzafrusto Spazzata
+Artigli Affondo
+Tirapugni Stordire
+Tirapugni chiodato Stordire
+Tirapugni concussivo Stordire
+Affondo richiede 1 AzP e impone −4 VA; aggiunge 1 danno e, se almeno 1 danno supera l’Armatura,
+Sanguinamento 1. Affondo Migliorato porta i benefici a +2 danni e Sanguinamento 2. Si usa l’Abilità del profilo.
+Spazzata richiede 1 AzP e una sola Prova per colpire: −4 VA contro due bersagli adiacenti, −6 VA contro tre.
+Ogni bersaglio riceve un solo colpo e risolve separatamente Difesa e Armatura. Spazzata Migliorata riduce la
+penalità di 2. Resta disponibile la Spazzata senz’armi.
+Combattimento Multiplo del Lottatore conserva la propria eccezione: con attacchi senz’armi raggiunge tutti i
+bersagli adiacenti alla propria portata, con −4 VA contro due e −6 VA contro tre o più, una sola Prova di Corpo a
+corpo e Difese e Armature separate.
+Stordire richiede 1 AzP e Contatto anche se l’arma ha portata maggiore. Si usa Corpo a corpo per gli attacchi
+senz’armi e i Tirapugni, oppure l’Abilità indicata per l’arma compatibile. La penalità è −6 VA, ridotta a −4 VA da
+Stordire Migliorato. Si infligge il danno normale; se almeno 1 danno supera l’Armatura, una PS Tempra fallita
+causa Stordito per 1+1d3 Round.
+L’elettrificazione non assegna automaticamente la Manovra Stordire: l’effetto di Elettricità è distinto dallo Stato
+Stordito. I modelli che indicano Stordire possono usarlo anche senza attivare le cariche.
+Immobilizzare con Frusta elettrificata e Catena chiodata segue il §7.1.5, rispettivamente entro 3 Q e 2 Q. La presa
+non infligge danno: non attiva Sanguinamento né le conseguenze dell’Elettricità. Mano e arma restano impegnate
+fino al rilascio, alla fuga, alla perdita di controllo o all’uscita dalla portata.
+7.1.8 Qualità reperibilità e costi
+La Qualità determina la PS Integrità (§7.2.1); la Reperibilità indica la difficoltà di trovare un venditore. Il costo
+usa la scala economica del catalogo; il nome dell’unità monetaria sarà integrato successivamente. I valori indicati
+come «Costo proposto» restano proposte economiche. Il §7.9 riunisce i prezzi di riferimento delle armi.
+La ricerca richiede una Prova di Oratoria soltanto quando trovare un venditore è incerto. Un successo permette di
+individuare un’offerta: rimangono prezzo, eventuali autorizzazioni e tempi di consegna.
+REP Reperibilità Ricerca del venditore
+CO Comune Disponibile presso un venditore appropriato; nessuna Prova.
+NC Non comune Oratoria senza penalità.
+RA Rara Oratoria −2 VA.
+MR Molto rara Oratoria −4 VA.
+Gestione Operativa dell’Amministrativo riduce del 10% un acquisto pianificato di armi standard del catalogo
+Commerciale, rispettando la preparazione richiesta dal Talento. Si arrotonda il prezzo finale per eccesso all’intero:
+costo 1.300, prezzo ridotto 1.170. Altri beni, esclusioni e raccordi economici restano da completare.
+7.1.9 Cataloghi delle Corporazioni
+I cataloghi seguenti comprendono 39 armi ravvicinate e uno Scudo corporativo. Le caratteristiche della
+Corporazione orientano i singoli modelli e sono già espresse nelle schede; non assegnano modificatori automatici
+aggiuntivi a tutti gli oggetti del marchio. I profili indipendenti costituiscono il catalogo Commerciale.
+Corporazione Indirizzo del catalogo
+Alleanza Armi generalmente migliori, con reperibilità più difficile.
+Bauhaus Specializzazione nelle armi a distanza: precisione, robustezza e affidabilità.
+Capitol Armi standard, leggermente meno affidabili e più reperibili.
+Cybertronic Più proprietà, maggiore affidabilità e reperibilità più difficile.
+Fratellanza Maggiore efficacia contro l’Oscura Simmetria e reperibilità più difficile.
+Imperiali Danno maggiore, maggiore pesantezza e affidabilità inferiore.
+Mishima Specializzazione nelle armi ravvicinate; minore affidabilità delle armi a distanza.
+Indipendenti Catalogo Commerciale.
+Le tabelle separano il profilo d’impiego dai dati economici. PS INT indica la PS Integrità; PI indica il massimo
+del modello. Le proprietà e le Manovre di ciascuna scheda si aggiungono alle regole generali. Quando non è
+indicato un danno Magico o Etereo, il danno è Naturale.
+Bauhaus
+Modello Abilità Mani Danno base Q FOR PI
+Baionetta Ussara Guerra 2 1d4+2 2 6 4
+Bordone Templare Guerra 2 1d8+1 1 5 6
+Sciabola da Duello Mischia 1 1d6+2 1 3 5
+Tonfa Stella Cadente Mischia 1 1d6+1 1 4 4
+Qualità reperibilità e costi Bauhaus
+Costo
+Modello Qualità PS INT REP
+proposto
+Baionetta Ussara Non comune 12 NC 400
+Bordone Templare Rara 14 RA 6500
+Sciabola da Duello Non comune 12 NC 850
+Tonfa Stella Cadente Non comune 12 NC 2000
+Proprietà e impiego Bauhaus
+Baionetta Ussara. Proprietà: Montata. Manovre compatibili: Affondo.
+Bordone Templare. Attivazione: +1d6 Magico; 5 PM; Sintonizzazione 2. Manovre compatibili: Spazzata,
+Stordire.
+Sciabola da Duello. Proprietà: Difensiva +1. Manovre compatibili: Affondo, Spazzata.
+Tonfa Stella Cadente. Proprietà: Difensiva +2. Attivazione: +1d6 Elettricità; 5 cariche a cella. Manovre
+compatibili: Affondo, Spazzata, Stordire.
+Il Bordone Templare adotta il profilo di carica magica del §7.5.1: Qualità Rara e potenza mistica Non comune
+sono dati distinti. Il costo totale di Sintonizzazione è 2, inclusa la riserva.
+Il Tonfa Stella Cadente conserva Difensiva +2 anche senza attivazione. La carica applica Elettricità; non causa
+automaticamente Stordito. Affondo, Spazzata e Stordire rimangono le Manovre specifiche del modello.
+Capitol
+Modello Abilità Mani Danno base Q FOR PI
+Spada dell’Onore Mischia 1 1d6+2 1 3 5
+Qualità reperibilità e costi Capitol
+Costo
+Modello Qualità PS INT REP
+proposto
+Spada dell’Onore Comune 10 CO 550
+Proprietà e impiego Capitol
+Spada dell’Onore. Manovre compatibili: Affondo, Spazzata.
+La Spada dell’Onore è una lama ordinaria priva di cariche: non richiede Sintonizzazione e non riceve una
+penalità meccanica di affidabilità per la sola appartenenza al catalogo Capitol.
+Cybertronic
+Modello Abilità Mani Danno base Q FOR PI
+Artigli elettrificati Mischia 1 1d4+1 1 3 4
+Baionetta elettrificata Guerra 2 1d4+1 1 6 4
+Elettrosega CSB600 Guerra 1 1d6 1 4 5
+Frusta elettrificata Mischia 1 1d4+1 3 4 4
+Manganello elettrificato Mischia 1 1d6+1 1 3 5
+Spada elettrificata CSA 404 Mischia 1 1d6+1 1 3 5
+Tirapugni elettrificato Corpo 1 1 1 2 4
+Qualità reperibilità e costi Cybertronic
+Costo
+Modello Qualità PS INT REP
+proposto
+Artigli elettrificati Non comune 12 RA 2400
+Baionetta elettrificata Non comune 12 RA 1800
+Elettrosega CSB600 Non comune 12 RA 3600
+Frusta elettrificata Non comune 12 RA 1800
+Manganello elettrificato Non comune 12 RA 1200
+Spada elettrificata CSA 404 Non comune 12 RA 5000
+Tirapugni elettrificato Non comune 12 RA 1100
+Proprietà e impiego Cybertronic
+Artigli elettrificati. Proprietà: Sanguinante 1; Affidabile +2. Attivazione: +2d4 Elettricità; 5 cariche a cella.
+Manovre compatibili: Affondo.
+Baionetta elettrificata. Proprietà: Montata; Retrattile; Affidabile +2. Attivazione: +2d4 Elettricità; 5 cariche a
+cella. Manovre compatibili: Affondo.
+Elettrosega CSB600. Proprietà: Sanguinante 1; Affidabile +2. Attivazione: +2d4 Elettricità e Demolitrice 1; 5
+cariche a cella. Manovre compatibili: quelle generali.
+Frusta elettrificata. Proprietà: Immobilizzare entro 3 Q; Affidabile +2. Attivazione: +1d4 Elettricità; 5 cariche a
+cella. Manovre compatibili: quelle generali.
+Manganello elettrificato. Proprietà: Affidabile +2. Attivazione: +1d3 Elettricità; 5 cariche a cella. Manovre
+compatibili: Stordire.
+Spada elettrificata CSA 404. Proprietà: Affidabile +2. Attivazione: +2d6 Elettricità; 5 cariche a cella. Manovre
+compatibili: Affondo, Spazzata.
+Tirapugni elettrificato. Proprietà: Affidabile +2. Attivazione: +1d6 Elettricità; 5 cariche a cella. Manovre
+compatibili: Stordire.
+Tutti questi modelli possiedono Affidabile +2 e cinque cariche a cella; non richiedono Sintonizzazione. La
+sostituzione della cella richiede 1 AzP. La Baionetta deve essere montata ed estratta per essere usata.
+L’Elettrosega CSB600 applica Demolitrice 1 soltanto durante l’attivazione e solo contro oggetti attaccati per
+romperli. La Frusta elettrificata può Immobilizzare entro 3 Q, ma la presa non infligge danno e non produce
+Elettricità.
+Fratellanza
+Modello Abilità Mani Danno base Q FOR PI
+Spada Avenger Mischia 1 1d6+1 1 3 5
+Spada Mortis Guerra 1 1d8+1 1 4 5
+Spada Deathdealer Mischia 1 1d6+2 1 3 5
+Spada Vindicator Mischia 1 1d6+1 1 3 5
+Spada Deliverer Guerra 1/2 1d8+1 / 2d6 1 5 6
+Lancia Castigator Guerra 2 2d6 2 6 6
+Sbudellatrice Guerra 1 1d6+3 1 4 5
+Scudo delle Guardie Sacre Guerra 1 1d6+1 1 5 6
+Qualità reperibilità e costi Fratellanza
+Modello Qualità PS INT REP Costo
+Spada Avenger Non comune 12 RA 2200
+Spada Mortis Non comune 12 RA 3000
+Spada Deathdealer Rara 14 MR 18000
+Spada Vindicator Rara 14 RA 9000
+Spada Deliverer Rara 14 RA 11500
+Lancia Castigator Rara 14 RA 12000
+Sbudellatrice Non comune 12 RA 5000
+Scudo delle Guardie Sacre Rara 14 MR 18000
+Per le armi, i costi della tabella sono proposti. Lo Scudo delle Guardie Sacre costa 18.000 e segue anche la scheda
+difensiva del §7.4.10.
+Proprietà e impiego Fratellanza
+Spada Avenger. Proprietà: Purificatrice 1. Manovre compatibili: Affondo, Spazzata.
+Spada Mortis. Proprietà: Purificatrice 1. Manovre compatibili: Affondo, Spazzata.
+Spada Deathdealer. Proprietà: Danno Magico; ×2 contro Oscura Simmetria, ×3 con Magistrale. Manovre
+compatibili: Affondo, Spazzata.
+Spada Vindicator. Proprietà: Purificatrice 1. Attivazione: +1d6 Magico; 5 PM; Sintonizzazione 2. Manovre
+compatibili: Affondo, Spazzata.
+Spada Deliverer. Proprietà: Versatile; Purificatrice 1. Attivazione: +1d6 Magico; 5 PM; Sintonizzazione 2.
+Manovre compatibili: Affondo, Spazzata.
+Lancia Castigator. Proprietà: Purificatrice 1. Attivazione: +1d6 Magico; 5 PM; Sintonizzazione 2. Manovre
+compatibili: Affondo, Spazzata.
+Sbudellatrice. Proprietà: Purificatrice 1; Sanguinante 1; Demolitrice 1. Manovre compatibili: quelle generali.
+Scudo delle Guardie Sacre. Proprietà: Scudo grande AR 2; Lama Retrattile. Attivazione: Scudo Magico; 5 PM;
+Sintonizzazione 3. Manovre compatibili: quelle generali.
+La Deathdealer infligge sempre danno Magico. Contro creature o servitori dell’Oscura Simmetria il danno è ×2,
+oppure ×3 con un Magistrale. Non aggiunge anche Purificatrice 1. Il beneficio è passivo e non richiede
+Sintonizzazione.
+Vindicator, Deliverer e Castigator adottano il profilo di carica magica del §7.5.1: Chroma Rosso da 5 PM, un PM
+per +1d6 Magico e costo totale di Sintonizzazione 2. Purificatrice 1 resta passiva. La Sbudellatrice mantiene
+Sanguinante 1 e Demolitrice 1 passive, senza cariche.
+Lo Scudo delle Guardie Sacre si usa con una mano. Gli attacchi impiegano Armi da guerra (FOR); le Parate
+impiegano Difese (DES). L’AR ordinaria è 2, la Parata ravvicinata non ha bonus e la Parata a distanza subisce −4
+VA.
+Lama Retrattile dello Scudo. Estrarre o ritrarre la lama costa 1 AzP. Quando è estratta, il danno dell’attacco
+diventa 1d6+1+1d4 Naturale. La lama non consuma cariche per colpo e non richiede Sintonizzazione.
+Scudo Magico. Dopo la Sintonizzazione, 1 AzP e una carica attivano per 5 Round +2 AR magica, +2 VA alle
+Parate ravvicinate e +1 VA alle Parate a distanza effettuate con lo Scudo. L’AR dello Scudo diventa 4, di cui 2
+magica; la penalità della sua Parata a distanza diventa −3 VA. L’AR resta passiva anche se non si para, si fallisce
+la Parata o si para con un’altra arma. I bonus alla Prova valgono soltanto parando con lo Scudo.
+Lo Scudo Magico scade alla fine del Round di attivazione +5. Una nuova attivazione rinnova la durata e non
+somma i benefici. La riserva è un Chroma Rosso da 5 PM: un PM alimenta un’attivazione. La potenza è Rara e il
+costo totale di Sintonizzazione è 3, inclusa la riserva. Ricarica e attivazione seguono il §7.5.1; la PS Integrità
+segue il §7.2.1.
+Imperiali
+Modello Abilità Mani Danno base Q FOR PI
+Artiglio del Lupo Mischia 1 1d4+2 1 4 4
+Ascia Tagliateste a una mano Mischia 1 1d6+3 1 5 5
+Ascia Tagliateste a due mani Guerra 2 2d8+1 1 8 6
+Baionetta retrattile Guerra 2 1d4+1 1 6 4
+Catena chiodata Mischia 1 1d4+2 2 5 5
+Chainreaper Guerra 1 1d6+2 1 5 5
+Martello Spaccateste a una mano Guerra 1 1d8+2 1 6 5
+Martello Spaccateste a due mani Guerra 2 2d6+2 1 7 6
+Spada Violator Guerra 1/2 1d8+1 / 2d6 1 6 6
+Spadone Claymore Guerra 2 2d6+2 2 7 6
+Qualità reperibilità e costi Imperiali
+Costo
+Modello Qualità PS INT REP
+proposto
+Artiglio del Lupo Non comune 12 NC 700
+Ascia Tagliateste a una mano Non comune 12 NC 2500
+Ascia Tagliateste a due mani Non comune 12 NC 3800
+Baionetta retrattile Comune 10 NC 450
+Catena chiodata Comune 10 NC 300
+Chainreaper Non comune 12 NC 2000
+Martello Spaccateste a una mano Non comune 12 NC 2400
+Martello Spaccateste a due mani Non comune 12 NC 3600
+Spada Violator Non comune 12 NC 3200
+Spadone Claymore Non comune 12 NC 1100
+Proprietà e impiego Imperiali
+Artiglio del Lupo. Proprietà: Sanguinante 1; Retrattile; Affidabilità ridotta −2. Manovre compatibili: Affondo.
+Ascia Tagliateste a una mano. Proprietà: Affidabilità ridotta −2. Attivazione: +1d6 Plasma; 5 cariche a cella.
+Manovre compatibili: Spazzata.
+Ascia Tagliateste a due mani. Proprietà: Affidabilità ridotta −2. Attivazione: +1d6 Plasma; 5 cariche a cella.
+Manovre compatibili: Spazzata.
+Baionetta retrattile. Proprietà: Montata; Retrattile; Affidabilità ridotta −2. Manovre compatibili: Affondo.
+Catena chiodata. Proprietà: Sanguinante 1; Immobilizzare entro 2 Q. Manovre compatibili: quelle generali.
+Chainreaper. Proprietà: Sanguinante 1; Demolitrice 1; Affidabilità ridotta −2. Manovre compatibili: Spazzata.
+Martello Spaccateste a una mano. Proprietà: Affidabilità ridotta −2. Attivazione: +1d6 Concussivo; 5 cariche a
+cella. Manovre compatibili: Stordire.
+Martello Spaccateste a due mani. Proprietà: Stordire +1; Affidabilità ridotta −2. Attivazione: +1d6 Concussivo;
+5 cariche a cella. Manovre compatibili: Spazzata, Stordire.
+Spada Violator. Proprietà: Versatile; Affidabilità ridotta −2. Attivazione: +1d6 Plasma; 5 cariche a cella.
+Manovre compatibili: Affondo, Spazzata.
+Spadone Claymore. Manovre compatibili: Spazzata.
+Affidabilità ridotta −2 si applica agli otto modelli meccanici indicati; Catena chiodata e Claymore ne sono prive.
+La proprietà modifica le Complicazioni ravvicinate e non la Prova per colpire né la PS Integrità.
+Le due Tagliateste e la Violator applicano Plasma soltanto attivando la carica; i due Spaccateste applicano
+Concussivo nello stesso modo. Tutti e cinque i modelli usano celle da cinque cariche, senza Sintonizzazione.
+Stordire +1 del Martello Spaccateste a due mani concede +1 VA alla Manovra Stordire: la penalità ordinaria
+diventa −5 VA, quella di Stordire Migliorato −3 VA. Non richiede l’attivazione di una carica.
+La Catena chiodata Immobilizza entro 2 Q con la procedura della Frusta, senza danno né Sanguinamento durante
+la presa. Chainreaper mantiene Demolitrice 1 passiva. L’Ascia Tagliateste a due mani conserva il danno base
+2d8+1.
+Mishima
+Modello Abilità Mani Danno base Q FOR PI
+Kriss Mischia 1 1d6 1 3 4
+Wakizashi Mischia 1 1d6+1 1 3 5
+Katana Guerra 1 1d8+1 1 4 5
+Lama Mushashi Guerra 1 1d8+2 1 4 5
+Lama Demontooth Guerra 2 2d6+2 1 6 6
+Lancia Naginata Guerra 2 1d8+1 2 6 6
+Lancia Duskdealer Guerra 2 2d6+2 2 7 6
+Nunchaku Mischia 1 1d4+1 2 3 4
+Nunchaku elettrificato Mischia 1 1d4+1 2 3 4
+Qualità reperibilità e costi Mishima
+Costo
+Modello Qualità PS INT REP
+proposto
+Kriss Comune 10 NC 350
+Wakizashi Non comune 12 NC 900
+Katana Non comune 12 NC 1700
+Lama Mushashi Rara 14 MR 16000
+Lama Demontooth Rara 14 RA 14500
+Lancia Naginata Non comune 12 NC 1900
+Lancia Duskdealer Non comune 12 RA 4200
+Nunchaku Comune 10 NC 180
+Nunchaku elettrificato Non comune 12 RA 1500
+Proprietà e impiego Mishima
+Kriss. Proprietà: Precisa 1. Manovre compatibili: Affondo.
+Wakizashi. Proprietà: Precisa 1. Manovre compatibili: Affondo, Spazzata.
+Katana. Proprietà: Precisa 1. Manovre compatibili: Affondo, Spazzata.
+Lama Mushashi. Proprietà: Precisa 2; Danno Magico. Manovre compatibili: Affondo, Spazzata. Il raccordo con il
+KI sarà integrato successivamente.
+Lama Demontooth. Proprietà: Precisa 1. Attivazione: +1d6 Magico; 5 PM; Sintonizzazione 2. Manovre
+compatibili: Affondo, Spazzata.
+Lancia Naginata. Proprietà: Precisa 1. Manovre compatibili: Affondo, Spazzata.
+Lancia Duskdealer. Proprietà: Precisa 1. Attivazione: +1d6 Plasma; 5 cariche a cella. Manovre compatibili:
+Spazzata.
+Nunchaku. Proprietà: Precisa 1. Manovre compatibili: Spazzata, Stordire.
+Nunchaku elettrificato. Proprietà: Precisa 1. Attivazione: +1d4 Elettricità; 5 cariche a cella. Manovre
+compatibili: Spazzata, Stordire.
+Tutti i modelli hanno Precisa 1, salvo la Mushashi che ha Precisa 2. Non si applica alle armi ravvicinate la minore
+affidabilità prevista dalla convenzione Mishima per le armi a distanza.
+La Mushashi infligge danno Magico passivo, senza necessità di Sintonizzazione. La nota «Utilizzo Potere KI»
+resta da raccordare alle Tecniche Interiori del Lottatore: non introduce una nuova Abilità e non concede
+automaticamente Tecniche. Risorse Interiori continua a usare PM secondo il §3.5.5.
+La Demontooth adotta il profilo del §7.5.1: +1d6 Magico per un PM del Chroma Rosso da 5 PM, con costo
+totale di Sintonizzazione 2. Il suo Affondo è una compatibilità specifica del modello.
+La Duskdealer aggiunge +1d6 Plasma quando si attiva una carica. Il Nunchaku elettrificato aggiunge +1d4
+Elettricità. Entrambi usano celle da cinque cariche e non richiedono Sintonizzazione. I due Nunchaku conservano
+il requisito di Contatto per Stordire, anche se la loro portata ordinaria è 2 Q.
+Alleanza
+Modello Abilità Mani Danno base Q FOR PI
+Spada Punisher Mischia 1 1d6+2 1 3 6
+Qualità reperibilità e costi Alleanza
+Costo
+Modello Qualità PS INT REP
+proposto
+Spada Punisher Rara 14 MR 6500
+Proprietà e impiego Alleanza
+Spada Punisher. Proprietà: Precisa 1; Affidabile +1. Attivazione: +2d4 Plasma; 5 cariche a cella. Manovre
+compatibili: Affondo, Spazzata.
+La Punisher ha Precisa 1 e Affidabile +1 passive. Spendendo una delle cinque cariche a cella aggiunge +2d4
+danni e applica Plasma allo stesso colpo. Non richiede Sintonizzazione. Si applicano la dichiarazione preventiva e
+la PS Riflessi in caso di attacco fallito, salvo Attivazione Tempestiva (§7.1.4).

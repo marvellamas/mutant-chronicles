@@ -181,7 +181,9 @@ const PROPRIETA = {
 // Attacchi con lo scudo (§7.4.1, §7.4.10)
 const ATTACCHI = {
   'Scudo Punisher': { abilita: 'Armi da guerra', mani: 1, danno: '1d6+1', portata_q: 1, condizione: null, note: 'Sono compatibili le Manovre generali pertinenti e Stordire (§7.4.1).' },
-  'Scudo delle Guardie Sacre': { abilita: 'Armi da guerra', mani: 1, danno: '1d6+1d4', portata_q: 1, condizione: 'con la lama estratta (1 AzP)', note: 'Requisiti e regole offensive complete nel §7.1.9.' },
+  // §7.1.9 (tabella della Fratellanza): attacco con lo Scudo, Armi da guerra, una mano, 1d6+1, Q 1.
+  // Con la lama estratta il §7.1.9 dice 1d6+1+1d4, il §7.4.10 dice 1d6+1d4: TODO(Davide) nel file.
+  'Scudo delle Guardie Sacre': { abilita: 'Armi da guerra', mani: 1, danno: '1d6+1', portata_q: 1, condizione: null, note: 'Con la lama estratta (1 AzP) il danno diventa 1d6+1+1d4 secondo il §7.1.9, 1d6+1d4 secondo il §7.4.10: da chiarire con il master.' },
 };
 
 // ---------------------------------------------------------------------------
@@ -277,6 +279,9 @@ const json = {
   versione_manuale: VERSIONE,
   fonte: 'Manuale degli Armamenti v0.50, §7.4 Scudi e protezioni (pp. 23–30): tabelle §7.4.2 e §7.4.11, schede in prosa §7.4.1, §7.4.4–7.4.10, proprietà §7.4.3; lotto 3',
   _nota: 'Generato da tools/lotti/lotto3_scudi.mjs; da qui in poi si modifica questo file. «parata» sono i modificatori propri dello Scudo alle Parate (§7.4.11), prima di armatura, FOR insufficiente e altri effetti; «profili_alternativi» sono le condizioni che li cambiano (SIN collegato, Scudo Magico, Contenimento, Antiesplosione). Le proprietà e le note delle schede corporative sono trascritte dal testo in prosa.',
+  'TODO(Davide)': [
+    'Scudo delle Guardie Sacre, danno con la lama estratta: il §7.1.9 dice 1d6+1+1d4, il §7.4.10 dice 1d6+1d4. Quale vale? (L’attacco senza lama è 1d6+1, dalla tabella del §7.1.9.)',
+  ],
   regole: [
     'La protezione passiva dello Scudo si aggiunge all’AR dell’armatura mentre è impugnato e utilizzabile. Due scudi non sommano la protezione: si utilizza soltanto il contributo maggiore (§7.4).',
     'Il requisito FOR segue il §7.1.6 per le Parate e gli attacchi effettuati con lo Scudo (§7.4).',

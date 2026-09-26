@@ -26,6 +26,11 @@
       "descrizione": "Armi ravvicinate del catalogo Commerciale (§7.1.1)"
     },
     {
+      "id": "armi_corporative",
+      "file": "armi_corporative.json",
+      "descrizione": "Armi ravvicinate dei cataloghi corporativi (§7.1.9)"
+    },
+    {
       "id": "armi_distanza",
       "file": "armi_distanza.json",
       "descrizione": "Armi a distanza del catalogo Commerciale (§7.7)"

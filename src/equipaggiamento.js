@@ -70,7 +70,8 @@ export function caricatori(voci, dati) {
   const out = {};
   for (const v of voci ?? []) {
     const r = risolvi(v, cat);
-    if (r.tipo === 'arma_distanza') out[v.uid] = r.def?.munizioni?.capacita ?? null;
+    // armi a distanza (caricatore) e armi ravvicinate con cariche a cella o riserva di PM (§7.1.4)
+    if (r.tipo === 'arma_distanza' || (r.tipo === 'arma_ravvicinata' && r.def?.munizioni?.capacita)) out[v.uid] = r.def?.munizioni?.capacita ?? null;
   }
   return out;
 }
@@ -284,6 +285,8 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     const componenti = a ? [
       { nome: `VA ${a.nome}`, valore: a.totale },
       spec ? { nome: `Specializzazione in ${spec.nome}`, valore: spec.effetto.va ?? 0 } : null,
+      // §7.1.3: Precisa X concede +X VA alle Prove per colpire con l'arma
+      ...(d?.proprieta ?? []).filter((p) => p.effetto?.va).map((p) => ({ nome: p.nome, valore: p.effetto.va })),
       d?.modificatore_va ? { nome: 'Modificatore VA dell’arma', valore: d.modificatore_va } : null,
       forPen ? { nome: `FOR ${FOR} su ${d.for_richiesta} richiesta (§7.1.6)`, valore: -forPen } : null,
       armatura ? { nome: 'Armatura (§7.11.1)', valore: armatura } : null,
@@ -316,6 +319,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       gittataFormula: d?.gittata_per_for ? `FOR ${FOR} × ${d.gittata_per_for}` : null,
       ac: d?.ac ?? null, inc: d?.inc ?? null, mov: d?.mov ?? 0, modalita: d?.modalita ?? [],
       munizioni: d?.munizioni ?? null,
+      attivazione: d?.attivazione ?? null, manovre: d?.manovre ?? [], naturaDanno: d?.natura_danno ?? null,
       proprieta: d?.proprieta ?? [], parata, personalizzato: o.personalizzato,
       specializzazione: spec ? `Specializzazione in ${spec.nome}` : null,
     });
