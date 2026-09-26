@@ -1,6 +1,6 @@
 # Catalogo dell'equipaggiamento: lotti da estrarre
 
-Stato al 26 settembre 2026 (lotti 2–10 fatti). Fonte: Manuale degli Armamenti v0.50. Metodo: `tools/estrai_manuali.py`
+Stato al 26 settembre 2026 (lotti 2–11 fatti). Fonte: Manuale degli Armamenti v0.50. Metodo: `tools/estrai_manuali.py`
 e `docs/pilota-estrazione-armamenti.md`.
 
 Questa è la lista dei prompt successivi: **un lotto per prompt**, nell'ordine di utilità al
@@ -25,6 +25,7 @@ su quelle pagine: le tabelle impilate contano come una.
 | `accessori_armi.json` | 15 accessori delle armi: mirini, riduzione del rumore, supporti, illuminazione e visione (lotto 8) | §7.3 | 19–22 |
 | `rinforzi.json` | 2 kit di rinforzo commerciali e 2 soprabiti corporativi (lotto 9) | §7.11.2 | 62 |
 | `munizioni.json` | 49 munizioni, caricatori, granata pesante, razzi, celle, combustibile, dardi chimici; tabella delle famiglie delle armi (lotto 10) | §7.20 | 114–121 |
+| `sanitario.json` | 16 oggetti sanitari: kit, cartucce, UMC, dispositivi portatili, diagnostica e chirurgia (lotto 11) | §7.19 | 109–113 |
 | `armi_distanza_corporative.json` | 81 armi a distanza corporative, 19 moduli integrati, 6 munizioni di riferimento (lotto 5) | §7.8 | 36–52 |
 
 Da completare nello stesso ambito, a basso costo:
@@ -463,18 +464,42 @@ Fatto il 26 settembre 2026, commit «Lotto 10 del catalogo: munizioni e alimenta
   caricata; il caricamento misto si annota a mano, come dice il manuale.
 - **Dubbi per Davide:** nessuno.
 
-### 6. Equipaggiamento sanitario — §7.19, pp. 109–113
+### 6. ✔ Equipaggiamento sanitario — §7.19, pp. 109–113 (lotto 11, fatto)
 
-- **Contenuto:**
-  - kit di pronto soccorso (§7.19.1);
-  - cartucce sanitarie (§7.19.2);
-  - UMC (§7.19.3);
-  - dispositivi portatili (§7.19.4);
-  - diagnostica e chirurgia (§7.19.5);
-  - i corredi dell'Alleanza e i Kit trauma dei cataloghi sono già nel catalogo (lotto 7): qui
-    serve il §7.19, a cui rimandano.
-- **Campi:** tipo `sanitario` (quantità, usi), bonus alle Prove di Medicina. Si collegano alle
-  Ferite e al Sanguinamento della modalità tavolo (§5.14, §5.15).
+Fatto il 26 settembre 2026, commit «Lotto 11 del catalogo: equipaggiamento sanitario».
+
+- **Fonte:** `docs/lotti/lotto11-sanitario/`:
+  - `grezzo/`: 9 CSV, pp. 109–113;
+  - `prosa/`: il §7.19;
+  - `pulito/sanitario.csv`.
+
+  Generatore `tools/lotti/lotto11_sanitario.mjs`, dati `data/equipaggiamento/sanitario.json`.
+- **Oggetti:** 16 in tutto:
+  - 3 kit di pronto soccorso: improvvisato, standard, professionale;
+  - 3 cartucce;
+  - 3 UMC (tipo `accessorio`, montate su un'armatura);
+  - iniettore, pistola sanitaria e Spray;
+  - 2 scanner, kit chirurgico e postazione medica.
+- **Estrazione:** 28 righe, ritrovate nel testo in prosa.
+  - La tabella degli esiti dei kit (p. 109) esce storta: pdfplumber sposta 10 celle di una o
+    due colonne e ne stacca due frammenti in tabelle a parte.
+  - **Regola nuova:** ogni cella va alla colonna dell'intestazione più vicina, e i frammenti
+    devono risultare già contenuti nella tabella ricostruita. Con questa regola le 3 righe
+    tornano giuste; **0 correzioni a mano**.
+- **Controlli incrociati (54, tutti superati):**
+  - i 5 Kit trauma dei cataloghi (lotto 7) hanno esattamente il profilo Professionale;
+  - i carichi di esempio delle UMC tornano con i prezzi delle cartucce, entro la capacità;
+  - i bonus degli strumenti compaiono nel testo di ogni dispositivo.
+- **Modalità tavolo:** `applicazioni` (con `nome_applicazioni`: dosi, set) diventa un contatore
+  nella nuova sezione «Sanitario» della tab Combattimento, con «Ricarica» e «Riserve» come per
+  le armi. Vale per kit, Kit trauma, Spray, kit chirurgico, postazione e Corredo Dr. Diana. La
+  capacità è applicazioni × quantità.
+- **Schema:** `strumenti` (modificatore alla Prova indicata: promemoria, non entra nei VA),
+  `esiti` (successo e Magistrale), `capacita_cartucce`, `effetto`, `uno_per_personaggio` (UMC:
+  avviso se ne sono in uso due).
+- **Restano testo:** procedure di medicazione, limite di una somministrazione rapida per Round,
+  protocolli automatici delle UMC, carichi misti di cartucce.
+- **Dubbi per Davide:** nessuno.
 
 ### 7. Artefatti — §7.5, pp. 30–31; §7.10, pp. 58–60
 

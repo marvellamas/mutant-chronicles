@@ -65,6 +65,18 @@ export function legendaModalita(dati) {
  * Capacità del caricatore di ogni arma a distanza della lista (uid → numero o null), per il
  * contatore munizioni della modalità tavolo.
  */
+/**
+ * Oggetti con applicazioni da contare in modalità tavolo (kit di pronto soccorso, Spray, set
+ * chirurgici, §7.19): uid → { nome, capacita (applicazioni × quantità), unita, ricarica }.
+ */
+export function consumabili(voci, dati) {
+  const cat = catalogo(dati);
+  return (voci ?? []).map((v) => risolvi(v, cat)).filter((r) => r.def?.applicazioni).map((r) => ({
+    uid: r.uid, nome: r.nome, capacita: r.def.applicazioni * (r.voce.quantita ?? 1),
+    unita: r.def.nome_applicazioni ?? 'applicazioni', ricarica: r.def.ricarica ?? null,
+  }));
+}
+
 export function caricatori(voci, dati) {
   const cat = catalogo(dati);
   const out = {};
@@ -75,6 +87,8 @@ export function caricatori(voci, dati) {
     // §7.8: i moduli integrati hanno un'alimentazione separata dall'arma principale
     for (const m of moduliDi(r.def, cat)) out[`${v.uid}:${m.id}`] = m.munizioni?.capacita ?? null;
   }
+  // §7.19: applicazioni dei kit e dei dispositivi sanitari, con lo stesso contatore
+  for (const c of consumabili(voci, dati)) out[c.uid] = c.capacita;
   return out;
 }
 
@@ -544,6 +558,14 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     if (!su) avvisi.push(`${x.nome} è montato su un oggetto che non è più nella lista.`);
     else if (!puoMontare(x, su)) avvisi.push(`${x.nome} non si monta su ${su.nome}: nessun effetto.`);
     else if (!operativo(su)) avvisi.push(`${x.nome} è montato su ${su.nome}, che non è ${NON_ATTIVO[su.tipo] ?? 'impugnata'}: nessun effetto.`);
+  }
+
+  // §7.19.3: «È consentita una sola UMC operativa per utilizzatore»
+  const unici = new Map();
+  for (const x of oggetti.filter((o) => o.attivo && o.def?.uno_per_personaggio)) {
+    const k = x.def.uno_per_personaggio;
+    if (unici.has(k)) avvisi.push(`${x.nome}: ne vale una sola per personaggio, già in uso ${unici.get(k).nome}.`);
+    else unici.set(k, x);
   }
 
   for (const x of oggetti.filter((o) => o.fuoriCatalogo)) avvisi.push(`«${x.voce.rif}» non è più nel catalogo: resta in lista senza effetti.`);

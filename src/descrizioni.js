@@ -100,7 +100,7 @@ function tooltipOggetto(rif, dati) {
   if (o.ar) riga.AR = `${o.ar.totale}${o.ar.magica ? ` (${o.ar.magica} magica)` : ''}`;
   if (o.supporti) riga.Supporti = o.supporti;
   if (o.autonomia) riga.Autonomia = o.autonomia;
-  if (o.applicazioni) riga.Applicazioni = String(o.applicazioni);
+  if (o.applicazioni) riga[(o.nome_applicazioni ?? 'applicazioni').replace(/^./, (c) => c.toUpperCase())] = String(o.applicazioni);
   if (o.for_richiesta) riga.FOR = String(o.for_richiesta);
   if (o.inc) riga.INC = String(o.inc);
   if (o.pi !== undefined && o.pi !== null) riga.PI = String(o.pi);
@@ -147,6 +147,10 @@ function tooltipOggetto(rif, dati) {
   }
   if (o.esplosivo) sezioni.push({ etichetta: 'Carico', testo: `danno ${o.esplosivo.danno}, AC ${o.esplosivo.ac}, RS ${o.esplosivo.rs_q} Q; ${o.esplosivo.proprieta.join(', ')}` });
   if (o.cella) sezioni.push({ etichetta: 'Capacità', testo: `${o.cella.capacita} ${o.cella.unita}; riempirla o ricaricarla costa ${o.cella.ricarica_costo.toLocaleString('it-IT')}` });
+  if (o.strumenti) sezioni.push({ etichetta: 'Strumenti', testo: `${o.strumenti.va > 0 ? '+' : o.strumenti.va < 0 ? '−' : ''}${Math.abs(o.strumenti.va)} VA a ${o.strumenti.prova}; un solo modificatore degli strumenti per Prova.` });
+  if (o.esiti) sezioni.push({ etichetta: 'Successo', testo: o.esiti.successo }, { etichetta: 'Magistrale', testo: o.esiti.magistrale });
+  if (o.effetto) sezioni.push({ etichetta: 'Effetto', testo: o.effetto });
+  if (o.capacita_cartucce) riga.Cartucce = String(o.capacita_cartucce);
   if (o.rinforzo) sezioni.push({ etichetta: `Kit ${o.rinforzo.kit}`, testo: `AR +${o.rinforzo.ar}, FOR richiesta +${o.rinforzo.for}; PI e PS propri. Una Leggera portata fisicamente ad AR 3 o più usa le penalità della Media (§7.11.2).` });
   if (o.mirino) sezioni.push({ etichetta: 'Mirino', testo: `riduce di ${o.mirino.riduzione} la penalità di distanza, fino a 0. ${o.mirino.testo}` });
   if (o.effetto_arma && (o.effetto_arma.va || o.effetto_arma.danno)) sezioni.push({ etichetta: 'Sull’arma', testo: [o.effetto_arma.va ? `VA per colpire ${conSegno(o.effetto_arma.va)}` : null, o.effetto_arma.danno ? `danno ${conSegno(o.effetto_arma.danno)}` : null].filter(Boolean).join(', ') });

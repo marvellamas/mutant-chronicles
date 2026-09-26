@@ -137,6 +137,7 @@ Tutte le regole numeriche stanno in `data/`:
 | `equipaggiamento/accessori_armi.json` | mirini, riduzione del rumore, supporti di tiro, illuminazione e moduli di visione, montati su un'arma (Armamenti §7.3) |
 | `equipaggiamento/rinforzi.json` | kit di rinforzo delle armature e soprabiti corporativi, montati su un'armatura (Armamenti §7.11.2) |
 | `equipaggiamento/munizioni.json` | munizioni ordinarie e speciali, caricatori, razzi, celle, combustibile, dardi chimici, con la famiglia di munizioni di ogni arma (Armamenti §7.20) |
+| `equipaggiamento/sanitario.json` | kit di pronto soccorso, cartucce, UMC, dispositivi portatili, diagnostica e chirurgia, con le applicazioni contate in modalità tavolo (Armamenti §7.19) |
 | `equipaggiamento/armi_distanza_corporative.json` | armi a distanza dei cataloghi corporativi, con i moduli integrati (lanciagranate, lanciafiamme) e le munizioni di riferimento dei lanciatori (Armamenti §7.8) |
 | `equipaggiamento/armi_distanza.json` | armi a distanza del catalogo Commerciale, con gittata, caricatore, modalità di fuoco, INC (Armamenti §7.7) |
 | `equipaggiamento/scudi.json` | scudi commerciali e corporativi, con Parata ravvicinata e a distanza e profili alternativi (Armamenti §7.4) |

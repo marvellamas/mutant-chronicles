@@ -1,0 +1,210 @@
+7.19 Equipaggiamento sanitario
+Questa sezione riunisce pronto soccorso, kit trauma, cartucce, UMC, dispositivi portatili e strumenti diagnostici e
+chirurgici. Recuperare Punti Vita, arrestare il Sanguinamento e curare stati di Ferita sono effetti distinti. Un
+oggetto produce soltanto gli effetti indicati dalla propria scheda. Le procedure personali, i Talenti sanitari e le
+Menomazioni si consultano nel Manuale del Giocatore.
+7.19.1 Kit di pronto soccorso e medicazione
+VA
+Kit Usi Successo Magistrale
+strumenti
+Sospende il Sanguinamento
+Improvvisato −2 1 Arresta il Sanguinamento
+per 10 Round
+Arresta il Sanguinamento e
+Standard 0 5 Arresta il Sanguinamento
+recupera 1d4 PV
+Arresta il Sanguinamento e
+Professionale / Kit Arresta il Sanguinamento e
++2 5 recupera il doppio del risultato di
+trauma recupera 1d4 PV
+1d4 PV
+Il kit Professionale cura Punti Vita, non stati di Ferita. Con Magistrale si tira una volta 1d4 e si raddoppia il
+risultato: 2, 4, 6 oppure 8 PV; non si tirano 2d4. Nessun recupero supera i PV massimi. Il pronto soccorso non
+elimina automaticamente Menomazioni e non restituisce automaticamente conoscenza.
+Kit PI Qualità PS INT REP Costo Ricarica
+Improvvisato — — — — Materiali disponibili Una sola applicazione
+Standard 4 Comune 10 CO 1.000 150 / 5 applicazioni
+Professionale 6 Non comune 12 RA 3.000 300 / 5 applicazioni
+Standard e Professionale comprendono cinque applicazioni miste di materiali da medicazione e gli strumenti
+riutilizzabili. Improvvisato indica una singola medicazione predisposta con materiali adatti disponibili sul posto,
+senza un prezzo o un profilo strutturale fisso. Il Kit trauma, anche nelle versioni corporative, usa sempre il profilo
+Professionale.
+Procedura della medicazione
+Occorrono un minuto continuativo, pari a 10 Round, un kit utilizzabile e accesso al paziente. Il soccorritore resta
+adiacente, impiega la propria AzP in ogni Round e può muoversi soltanto al Passo mantenendo l’accesso; il
+paziente non può correre o scattare. L’automedicazione è possibile se il personaggio è cosciente, fisicamente
+capace e può raggiungere la zona da trattare.
+Si consuma un’applicazione all’inizio del tentativo. Durante la medicazione il Sanguinamento viene sospeso; alla
+fine si effettua una Prova di Medicina. Il modificatore degli strumenti si somma a quello dell’intensità del
+Sanguinamento: X 1 concede +2 VA, X 2 non modifica il VA, X 3 o superiore impone −2 VA. In assenza di
+Sanguinamento non si applica questo modificatore.
+Con successo si applica l’esito del kit. Per l’Improvvisato i 10 Round di sospensione decorrono dal
+completamento della medicazione; al termine il Sanguinamento riprende, se non è stato arrestato da un altro
+effetto. Un Magistrale applica la colonna corrispondente. Una perdita di PV già avvenuta non viene annullata
+dalla sospensione.
+Con fallimento il trattamento non produce il proprio beneficio e il Sanguinamento riprende. Con Maldestro il
+paziente perde inoltre 1d4 PV, senza scendere sotto 0 PV e senza subire una Ferita diretta per questa perdita. Se il
+trattamento viene interrotto non si effettua la Prova finale e il Sanguinamento riprende. In ogni caso
+l’applicazione spesa non viene restituita.
+Ripresa e sospensione rispettano il limite di una sola perdita periodica da Sanguinamento per Round e le normali
+regole della sua fonte. L’applicazione iniziale del danno, le eventuali Salvezze e le conseguenze già risolte non
+vengono cancellate dal trattamento.
+Ripetizione e disponibilità dei materiali
+Il Professionale può trattare la perdita di PV anche senza Sanguinamento. Ogni nuovo tentativo richiede tempo,
+Prova e una nuova applicazione; non esiste un limite settimanale per il solo recupero di PV. Standard e
+Improvvisato non possono essere usati ripetutamente su un Sanguinamento già arrestato per cercare un Magistrale
+curativo.
+Una semplice diagnosi non consuma applicazioni. Esauriti i materiali restano utilizzabili gli strumenti per le
+attività che non richiedono quanto manca; non è possibile effettuare una medicazione senza materiali adatti. Si
+applica un solo modificatore complessivo degli strumenti per Prova. Talenti e altri benefici pertinenti restano
+distinti.
+Raccordo con Talenti e cura delle Ferite
+Soccorso Immediato del Paramedico riduce il pronto soccorso a due Round consecutivi e usa gli esiti del kit
+effettivamente impiegato: l’Improvvisato con successo ordinario sospende soltanto il Sanguinamento.
+Strumentazione Efficace aggiunge il proprio +2 VA al pronto soccorso quando applicabile, separatamente dal
+modificatore del kit. Triage Estremo e Protocollo Shock mantengono requisiti e procedure del Manuale del
+Giocatore.
+Intervento Mirato del Medico riduce di uno stato una Ferita con una Prova riuscita di Medicina, dieci minuti fuori
+combattimento e strumenti almeno Standard appropriati. Terapia Intensiva riduce di due stati una Ferita con la
+propria procedura di un’ora e una struttura sanitaria adatta. Questi Talenti condividono il limite di un tentativo
+ogni sette giorni sullo stesso paziente, anche in caso di fallimento. Il limite riguarda le cure delle Ferite dei
+Talenti, non il pronto soccorso ai PV.
+Possedere un kit Professionale o chirurgico non concede quei Talenti. Il Magistrale del pronto soccorso non
+raddoppia gli stati di Ferita curati da una procedura diversa. Le Menomazioni seguono requisiti, tempi e
+trattamenti propri del Manuale del Giocatore.
+7.19.2 Cartucce sanitarie e somministrazione rapida
+Cartuccia Effetto REP Costo unitario
+Emostatica Sospende il Sanguinamento per 5 Round NC 200
+Coagulante Arresta il Sanguinamento RA 600
+Curativa Recupera 1d6 PV, fino ai PV massimi RA 500
+Le cartucce sono compatibili con UMC, iniettori e pistole sanitarie descritti in questa sezione. Ogni cartuccia
+fornisce una sola somministrazione e occupa un posto nella capacità del dispositivo. I carichi possono essere misti
+e si annotano separatamente per tipo.
+L’emostatica sospende le ricorrenze del Sanguinamento senza arrestarlo: dopo cinque Round riprende se nessun
+effetto lo ha arrestato. La coagulante lo arresta, ma un nuovo effetto Sanguinante può applicarlo nuovamente.
+Nessuna cartuccia restituisce la perdita iniziale già subita o annulla conseguenze già risolte.
+La Curativa e lo Spray rimarginante recuperano PV soltanto se il paziente non è in Sanguinamento attivo: il
+recupero è possibile anche durante una sospensione valida del Sanguinamento. Non curano stati di Ferita o
+Menomazioni. I PV recuperati non superano il massimo del paziente.
+Un’unica somministrazione rapida per Round
+Ogni destinatario può ricevere una sola somministrazione medica rapida per Round complessivamente da UMC,
+Iniettore sanitario, Pistola sanitaria e Spray rimarginante. Il limite riguarda il paziente, anche se intervengono più
+persone o dispositivi. Un’attivazione automatica e una manuale non aggirano questo limite.
+Se il paziente ha già ricevuto una Curativa nel Round, l’emergenza automatica della UMC deve attendere il
+Round successivo; se ha ricevuto l’emostatica automatica, non può ricevere anche una Curativa nello stesso
+Round. Medicazioni, Talenti e magia seguono le rispettive procedure e limiti; non sono trasformati in
+somministrazioni rapide.
+Quando una ferita attiva un protocollo d’emergenza, prima si risolvono interamente attacco, perdita iniziale da
+Sanguinamento, Prove Salvezza, Ferite ed eventuale morte. Poi interviene il dispositivo, se il paziente è ancora
+assistibile e il limite del Round lo consente. Il trattamento non annulla retroattivamente una morte già risolta.
+7.19.3 Unità Medica di Combattimento — UMC
+La UMC è un modulo sanitario applicabile alle armature compatibili, con un collegamento effettivo al corpo
+dell’utilizzatore. I tre modelli usano le stesse cartucce. I prezzi del modulo sono a vuoto; non si conteggia una
+durata di batteria per il funzionamento ordinario della UMC.
+Modello Cartucce PI Qualità PS INT REP Costo vuoto
+Passiva 5 4 Non comune 12 NC 4.000
+Attiva 10 6 Rara 14 RA 9.000
+Automatica 10 8 Molto rara 16 MR 18.000
+UMC Passiva
+Il giocatore sceglie una cartuccia caricata e spende 1 AzP. Occorre una Prova di Medicina oppure Tecnologia–
+Strumentazione. Con successo la cartuccia viene somministrata; un Magistrale applica il normale effetto, senza
+aumentarlo. Con fallimento l’Azione è spesa ma la cartuccia resta disponibile; con Maldestro vengono persi
+Azione e cartuccia. Non dispone di attivazione automatica.
+UMC Attiva
+Modalità Emergenza: dopo aver subito il Sanguinamento, somministra automaticamente una cartuccia emostatica
+caricata, senza Prova e senza Azione. Questa modalità usa soltanto emostatiche. Non consuma una nuova
+emostatica mentre è già in corso una sospensione valida; al suo termine può intervenire nuovamente, rispettando il
+limite di somministrazione.
+Modalità Somministrazione: il giocatore sceglie una qualsiasi cartuccia caricata, spende 1 AzP e ne applica
+l’effetto senza Prova. Coagulanti e Curative sono utilizzabili in questa modalità anche se non sono impiegate dal
+protocollo d’emergenza.
+UMC Automatica
+Dopo il Sanguinamento, il protocollo d’emergenza usa automaticamente una cartuccia emostatica oppure
+coagulante secondo la priorità impostata e la disponibilità delle cartucce. Non richiede Prove o Azioni. La
+coagulante arresta il Sanguinamento; l’emostatica lo sospende. Il sistema non spreca emostatiche mentre la
+sospensione è già valida.
+Il giocatore può comandare una Curativa senza Prova e senza Azione, anche fuori dalla propria Iniziativa, se chi
+indossa il modulo è cosciente. Restano necessari una cartuccia, un paziente curabile e il rispetto dell’unica
+somministrazione rapida per Round. In caso di incoscienza continua a funzionare il protocollo d’emergenza
+programmato; non viene impartito un comando volontario di cura.
+Compatibilità, montaggio e ricarica
+Il modulo è applicabile a Leggere, Medie e Pesanti con spazio e accesso al corpo adeguati. È consentita una sola
+UMC operativa per utilizzatore. Non occupa il posto del rinforzo, non modifica AR, FOR richiesta o categoria e
+mantiene PI propri. A 0 PI perde la funzione.
+Su un’armatura Discreta un’installazione esterna resta visibile; un alloggiamento interno idoneo ne conserva la
+discrezione. Gli esoscheletri indossabili possono ospitare una UMC collegata al pilota. Un abitacolo richiede
+invece un’installazione dedicata. Occorre compatibilità biologica con il destinatario: il modulo non ripara robot o
+componenti meccanici.
+Su armatura predisposta il montaggio richiede dieci minuti. Negli altri casi servono un adattamento da 500, un’ora
+in officina e una Prova di Tecnologia–Strumentazione, purché il modello consenta materialmente l’installazione.
+Rifornire il contenitore richiede un minuto con modulo disattivato; si annota il nuovo carico misto.
+Il bonus +2 del Kit trauma non si trasferisce automaticamente alla Prova di attivazione della UMC. Il kit resta uno
+strumento separato per le proprie procedure. Droghe da Combattimento e protocolli specifici saranno integrati
+successivamente: le cartucce compatibili occuperanno un posto ciascuna e manterranno il limite complessivo di
+una somministrazione rapida per Round.
+Carico di esempio Emost. Coag. Curative Cartucce Totale con UMC
+Passiva 2 1 2 2.000 6.000
+Attiva 4 2 4 4.000 13.000
+Automatica 2 3 5 4.700 22.700
+I carichi sono esempi, non combinazioni obbligatorie. La Passiva è adatta anche a investigatori e operatori;
+l’Attiva alla prima linea; l’Automatica a reparti d’élite, Mistici e Custodi. Questi impieghi non sono requisiti di
+Classe o Corporazione.
+7.19.4 Dispositivi sanitari portatili
+Dispositivo Capacità PI Qualità PS INT REP Costo
+Iniettore sanitario manuale 1 cartuccia 2 Comune 10 NC 600
+Pistola sanitaria 5 miste 4 Non comune 12 RA 3.500
+Spray rimarginante 5 dosi 2 Comune 10 NC 1.200
+Iniettore e Pistola sono venduti vuoti; lo Spray comprende cinque dosi. Richiedono una mano e il dispositivo
+pronto. Possono essere usati su sé stessi o su un paziente adiacente, anche incosciente, purché il soccorritore possa
+raggiungerlo e somministrare il trattamento. Vale il limite di una sola somministrazione rapida per destinatario e
+Round.
+Iniettore sanitario manuale
+Somministrare richiede 1 AzP e una Prova di Medicina oppure Tecnologia–Strumentazione. Con successo si
+applica l’effetto ordinario della cartuccia; il Magistrale non lo aumenta. Un fallimento spende l’Azione e conserva
+la cartuccia; un Maldestro perde anche la cartuccia. Inserire una nuova cartuccia richiede 1 AzP.
+Pistola sanitaria
+Somministrare una delle cartucce caricate richiede 1 AzP, senza Prova. Il giocatore sceglie il tipo; il dispositivo
+non ha protocolli automatici. Rifornire interamente il contenitore richiede un minuto; inserire una singola
+cartuccia in combattimento richiede 1 AzP.
+Spray rimarginante
+Spendendo 1 AzP e una dose, senza Prova, recupera 1d3 PV fino al massimo. Richiede accesso alla lesione e non
+si applica attraverso un’armatura sigillata. Non arresta il Sanguinamento e recupera PV soltanto quando questo è
+assente, arrestato o validamente sospeso. Non cura Ferite o Menomazioni. Un contenitore di ricambio da cinque
+dosi costa 1.000; sostituirlo richiede un minuto.
+7.19.5 Diagnostica e chirurgia da campo
+Dispositivo PI Qualità PS INT REP Costo
+Scanner diagnostico portatile 4 Non comune 12 RA 5.000
+Scanner diagnostico Cybertronic 4 Rara 14 RA 8.000
+Kit chirurgico da campo 6 Non comune 12 RA 8.000
+Postazione medica da campo 12 Rara 14 MR 28.000
+Scanner diagnostico portatile
+Richiede una mano e contatto con il corpo o con porte diagnostiche compatibili dell’armatura. Una scansione
+rapida di 1 AzP rileva automaticamente parametri vitali di base, come battito, respirazione e temperatura. Non
+identifica automaticamente la causa di un’anomalia.
+Una diagnosi richiede almeno un minuto e una Prova di Medicina con +2 VA degli strumenti, per lesioni e
+anomalie rilevabili dall’apparecchio. Analisi più approfondite possono richiedere tempo, campioni o un
+laboratorio. Il bonus vale per la diagnosi, non si trasferisce alla successiva cura e non si somma ad altri bonus
+degli strumenti alla stessa Prova.
+Scanner diagnostico Cybertronic
+Mantiene le funzioni e il +2 VA diagnostico del modello portatile; SIN 1 concede un ulteriore +1 alla Prova
+diagnostica con interfaccia compatibile attiva, per +3 complessivo prima di altri modificatori. Senza connessione
+mantiene +2. Una scansione automatica non riceve bonus numerici. Abbinamento e limite di un solo SIN per
+Prova seguono il §7.15.1.
+Kit chirurgico da campo
+Richiede dieci minuti di preparazione e una superficie di lavoro stabile in condizioni adatte. È una dotazione
+Professionale: +2 VA a Medicina per interventi chirurgici e procedure pertinenti eseguibili sul campo. Fornisce
+gli strumenti per Intervento Mirato e altri trattamenti portatili quando il personaggio possiede i requisiti necessari;
+da solo non costituisce la struttura sanitaria richiesta da Terapia Intensiva.
+Comprende cinque set di materiali per procedura. Un set viene consumato all’inizio di ogni intervento anche in
+caso di fallimento o interruzione. Un set di ricambio costa 500; una confezione da cinque costa 2.500. Protesi,
+farmaci specifici e componenti speciali sono separati. Il kit non cura automaticamente Ferite e non raddoppia gli
+stati curati con un Magistrale.
+Postazione medica da campo
+Richiede un’ora di montaggio da parte di due persone, un’area riparata di 2 × 2 Q e alimentazione continua da rete
+o generatore separato. Accoglie un paziente alla volta. Comprende scanner diagnostico standard, strumenti
+chirurgici e cinque set di materiali per procedura; i ricambi seguono i prezzi del Kit chirurgico.
+Fornisce una struttura sanitaria utilizzabile per Terapia Intensiva e per trattamenti di Menomazioni permanenti
+compatibili con le attrezzature presenti e le competenze del personale. Concede +3 VA a Medicina per chirurgia e
+trattamenti delle Ferite o delle Menomazioni; la diagnostica mantiene il +2 del proprio scanner. Si applica un solo
+bonus degli strumenti per Prova, senza sommare postazione, scanner e kit. Restano tempi, consumi, Talenti e
+limiti delle procedure effettuate.

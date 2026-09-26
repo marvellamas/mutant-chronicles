@@ -17,7 +17,7 @@ const voce = (uid, rif, stato, extra = {}) => ({ uid, rif, stato, quantita: 1, n
 const scheda = (creazione, equipaggiamento, livelli = []) => calcolaScheda({ creazione: { ...creazione, equipaggiamento }, livelli }, dati);
 
 test('catalogo: caricato dall’indice, un lotto = un file e una riga; riferimenti "file:id"', () => {
-  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armi_corporative', 'armi_distanza', 'armi_distanza_corporative', 'accessori_armi', 'munizioni', 'armature', 'armature_corporative', 'rinforzi', 'scudi', 'corredi_dispositivi']);
+  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armi_corporative', 'armi_distanza', 'armi_distanza_corporative', 'accessori_armi', 'munizioni', 'sanitario', 'armature', 'armature_corporative', 'rinforzi', 'scudi', 'corredi_dispositivi']);
   const cat = catalogo(dati);
   assert.equal(cat.oggetti.filter((o) => o.tipo === 'arma_ravvicinata' && o.catalogo === 'Commerciale').length, 28); // §7.1.1: 28 profili
   assert.equal(cat.oggetti.filter((o) => o.tipo === 'armatura' && o.catalogo === 'Commerciale').length, 3); // §7.11.3
@@ -843,4 +843,56 @@ test('validatore delle munizioni: famiglia, esplosivo, cella, compatibilità, ta
   assert.match(e((d) => { o(d, 'cella-hellblazer').cella.unita = 'litri'; }), /cella: serve/);
   assert.match(e((d) => { o(d, 'cella-hellblazer').compatibile_con = ['armature:armatura-civile-leggera']; }), /non è un'arma/);
   assert.match(e((d) => { f(d).munizioni_armi[0].rif = 'munizioni:frecce'; }), /munizioni_armi\[0\]\.rif: .* non è un'arma/);
+});
+
+// --- Lotto 11: equipaggiamento sanitario (§7.19) -------------------------------------------
+
+test('lotto 11: kit, cartucce, UMC, dispositivi, diagnostica e chirurgia del §7.19', () => {
+  const tutti = catalogo(dati).oggetti.filter((o) => o.file === 'sanitario');
+  assert.equal(tutti.length, 16);
+  const r = (id) => catalogo(dati).perRif.get(`sanitario:${id}`);
+  // tabella degli esiti ricostruita per colonna più vicina (p. 109)
+  assert.deepEqual(r('kit-di-pronto-soccorso-improvvisato').esiti, { successo: 'Sospende il Sanguinamento per 10 Round', magistrale: 'Arresta il Sanguinamento' });
+  assert.deepEqual(r('kit-di-pronto-soccorso-professionale').esiti.magistrale, 'Arresta il Sanguinamento e recupera il doppio del risultato di 1d4 PV');
+  assert.deepEqual(r('kit-di-pronto-soccorso-professionale').strumenti, { va: 2, prova: 'Medicina (pronto soccorso)' });
+  assert.equal(r('kit-di-pronto-soccorso-improvvisato').costo, null); // «senza un prezzo o un profilo strutturale fisso»
+  assert.deepEqual(r('kit-di-pronto-soccorso-standard').ricarica, { applicazioni: 5, costo: 150 });
+  assert.equal(r('cartuccia-curativa').effetto, 'Recupera 1d6 PV, fino ai PV massimi');
+  assert.deepEqual([r('umc-automatica').capacita_cartucce, r('umc-automatica').costo, r('umc-automatica').si_monta_su], [10, 18000, ['armatura']]);
+  assert.equal(r('spray-rimarginante').nome_applicazioni, 'dosi');
+  assert.equal(r('postazione-medica-da-campo').strumenti.va, 3);
+});
+
+test('modalità tavolo: applicazioni di kit e Spray con il contatore; una sola UMC in uso', () => {
+  const creazione = { ...MISHIMA_AGENTE, equipaggiamento: [
+    { ...voce('k', 'sanitario:kit-di-pronto-soccorso-standard', null), quantita: 2 },
+    voce('s', 'sanitario:spray-rimarginante', null),
+    voce('t', 'corredi_dispositivi:kit-trauma-capitol', null),
+  ] };
+  const m = massimiSessione(calcolaScheda({ creazione, livelli: [] }, dati), creazione, dati);
+  assert.deepEqual(m.caricatori, { k: 10, s: 5, t: 5 }); // applicazioni × quantità
+  let ses = variaMunizioni(inizializzaSessione(m), 'k', 'colpi', -1, m);
+  assert.equal(ses.munizioni.k.colpi, 9);
+  ses = ricaricaArma(ses, 'k', m);
+  assert.equal(ses.munizioni.k.colpi, 10);
+  // due UMC in uso sulla stessa armatura: avviso
+  const eq = scheda(MISHIMA_AGENTE, [
+    voce('a', 'armature:armatura-civile-media', 'indossata'),
+    voce('u1', 'sanitario:umc-attiva', 'in_uso', { montato_su: 'a' }),
+    voce('u2', 'sanitario:umc-passiva', 'in_uso', { montato_su: 'a' }),
+  ]).equipaggiamento;
+  assert.ok(eq.avvisi.some((x) => /UMC Passiva: ne vale una sola per personaggio, già in uso UMC Attiva/.test(x)));
+  assert.equal(eq.protezioni[0].ar.totale, 3); // la UMC non modifica AR (§7.19.3)
+  const t = testoTooltip('oggetto', 'sanitario:kit-di-pronto-soccorso-professionale', dati);
+  assert.match(t, /Strumenti: \+2 VA a Medicina \(pronto soccorso\)/);
+  assert.match(t, /Magistrale: Arresta il Sanguinamento e recupera il doppio/);
+});
+
+test('validatore del sanitario', () => {
+  const e = (modifica) => { const d = copia(dati); modifica(d); return validaDati(d).map((x) => `${x.chiave}: ${x.problema}`).join('\n'); };
+  const o = (d, id) => d.equipaggiamento.file.sanitario.oggetti.find((x) => x.id === id);
+  assert.match(e((d) => { o(d, 'spray-rimarginante').nome_applicazioni = 'litri'; }), /applicazioni, dosi o set/);
+  assert.match(e((d) => { o(d, 'kit-chirurgico-da-campo').strumenti = { va: 2 }; }), /strumenti: serve/);
+  assert.match(e((d) => { o(d, 'kit-di-pronto-soccorso-standard').esiti = { successo: 'x' }; }), /esiti: serve/);
+  assert.match(e((d) => { o(d, 'umc-passiva').capacita_cartucce = 0; }), /capacita_cartucce: intero/);
 });

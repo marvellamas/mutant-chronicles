@@ -1,0 +1,17 @@
+famiglia,nome,pi,qualita,ps_int,reperibilita,costo
+Pronto soccorso,Kit di pronto soccorso improvvisato,,,,,
+Pronto soccorso,Kit di pronto soccorso standard,4,Comune,10,CO,1000
+Pronto soccorso,Kit di pronto soccorso professionale,6,Non comune,12,RA,3000
+Cartucce sanitarie,Cartuccia emostatica,,,,NC,200
+Cartucce sanitarie,Cartuccia coagulante,,,,RA,600
+Cartucce sanitarie,Cartuccia curativa,,,,RA,500
+Unità Medica di Combattimento,UMC Passiva,4,Non comune,12,NC,4000
+Unità Medica di Combattimento,UMC Attiva,6,Rara,14,RA,9000
+Unità Medica di Combattimento,UMC Automatica,8,Molto rara,16,MR,18000
+Dispositivi portatili,Iniettore sanitario manuale,2,Comune,10,NC,600
+Dispositivi portatili,Pistola sanitaria,4,Non comune,12,RA,3500
+Dispositivi portatili,Spray rimarginante,2,Comune,10,NC,1200
+Diagnostica e chirurgia,Scanner diagnostico portatile,4,Non comune,12,RA,5000
+Diagnostica e chirurgia,Scanner diagnostico Cybertronic,4,Rara,14,RA,8000
+Diagnostica e chirurgia,Kit chirurgico da campo,6,Non comune,12,RA,8000
+Diagnostica e chirurgia,Postazione medica da campo,12,Rara,14,MR,28000

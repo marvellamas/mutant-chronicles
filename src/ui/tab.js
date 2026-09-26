@@ -9,7 +9,7 @@ import { info } from './tooltip.js';
 import { descriviFerite } from '../sessione.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
 import { testoDanno } from '../stampa.js';
-import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI } from '../equipaggiamento.js';
+import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, consumabili, normalizzaEquipaggiamento } from '../equipaggiamento.js';
 
 export const POSIZIONI_TAB = [
   { id: 'automatica', etichetta: 'Automatica (sinistra su schermi larghi, in basso su telefono e tablet)' },
@@ -293,6 +293,14 @@ function tabCombattimento(ctx, d) {
       : h('p', { class: 'vuoto' }, 'Nessuna protezione indossata o imbracciata.'),
       d.protezioniCalcolate.length ? h('p', { class: 'nota' }, 'Agilità vale per Schivata e Prove fisiche di Atletica e Furtività ostacolate (già nel VA di quelle Abilità, colonna Equip); non per la Parata. La penalità MOV si sottrae una volta al budget di movimento (§7.11.1). La Parata con lo Scudo è già calcolata: Difese con l’equipaggiamento, modificatori propri dello Scudo (§7.4.11) e FOR insufficiente (§7.1.6). L’AR dello Scudo vale anche senza Parata, purché sia imbracciato; due scudi non si sommano (§7.4).') : null),
 
+    // §7.19: applicazioni di kit e dispositivi sanitari, con il contatore delle munizioni
+    ...(() => {
+      const lista = consumabili(normalizzaEquipaggiamento(ctx.scelte.equipaggiamento), ctx.dati);
+      return lista.length ? [sezione('Sanitario (§7.19)', h('div', { class: 'armi-tab' }, lista.map((c) => h('article', { class: 'arma-tab' },
+        h('h3', {}, c.nome),
+        pannelloMunizioni(ctx, { uid: c.uid, nome: c.nome, munizioni: { capacita: c.capacita, unita: c.unita, ricarica: c.ricarica ? `${c.ricarica.applicazioni} ${c.unita} costano ${c.ricarica.costo.toLocaleString('it-IT')}` : null } })))))] : [];
+    })(),
+
     sezione('Ferite (§5.14)',
       h('p', { class: 'nota' }, 'Ogni nuova Ferita fa avanzare di un gradino. La penalità è cumulativa a VA e Prove Salvezza.'),
       h('div', { class: 'selettore-livelli', role: 'radiogroup', 'aria-label': 'Ferite' }, gradini.map((g) => h('button', {
@@ -382,7 +390,8 @@ function schedaArma(ctx, a) {
     a.tipo === 'arma_distanza' || a.munizioni?.capacita ? pannelloMunizioni(ctx, a) : null);
 }
 
-const ETICHETTE_MUNIZIONI = { colpi: 'Caricatore', cariche: 'Cariche nella cella', PM: 'PM nella riserva' };
+const ETICHETTE_MUNIZIONI = { colpi: 'Caricatore', cariche: 'Cariche nella cella', PM: 'PM nella riserva', applicazioni: 'Applicazioni', dosi: 'Dosi', set: 'Set di materiali' };
+const SANITARI = ['applicazioni', 'dosi', 'set'];
 
 /**
  * Modalità tavolo: colpi nel caricatore (dalla capacità del catalogo, «Ricarica» lo riporta al
@@ -410,7 +419,9 @@ function pannelloMunizioni(ctx, a) {
       a.munizioni?.ricarica ? `Ricarica: ${a.munizioni.ricarica}.` : null,
       a.munizioni?.consumo ? `${a.munizioni.consumo.replace(/^./, (c) => c.toUpperCase())}.` : null,
       a.munizioni?.riferimento ? `Munizione di riferimento: ${a.munizioni.riferimento}.` : null,
-      a.munizioni?.unita === 'PM' ? 'Le riserve si contano a mano.' : 'Le riserve (caricatori o celle di scorta) si contano a mano: «Ricarica» non le scala.',
+      a.munizioni?.unita === 'PM' ? 'Le riserve si contano a mano.'
+        : SANITARI.includes(a.munizioni?.unita) ? 'Si consuma all’inizio di ogni tentativo, anche se fallisce. Le ricariche di scorta si contano a mano.'
+          : 'Le riserve (caricatori o celle di scorta) si contano a mano: «Ricarica» non le scala.',
     ].filter(Boolean).join(' ')));
 }
 

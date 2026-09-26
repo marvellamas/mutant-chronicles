@@ -51,6 +51,11 @@
       "descrizione": "Munizioni ordinarie e speciali, granate, razzi, celle, combustibile, dardi chimici; compatibilità balistiche (§7.20)"
     },
     {
+      "id": "sanitario",
+      "file": "sanitario.json",
+      "descrizione": "Kit di pronto soccorso, cartucce, UMC, dispositivi portatili, diagnostica e chirurgia (§7.19)"
+    },
+    {
       "id": "armature",
       "file": "armature.json",
       "descrizione": "Armature commerciali civili (§7.11.3)"
