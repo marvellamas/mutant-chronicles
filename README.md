@@ -208,21 +208,10 @@ segnala.
 
 ## Punti da chiarire (TODO)
 
-I dubbi sul manuale sono marcati `TODO(Davide)` nei dati. La home li elenca tutti (sezione
-«Dati delle regole»). Oggi sono:
-
-- `caratteristiche.json`: la descrizione delle sei Caratteristiche (il manuale non le descrive).
-- `talenti_liberi.json`: i 12 Talenti di magia (`"provvisorio": true`) citati nel Manuale della
-  Magia senza scheda, con tipo e prerequisiti da definire; il tipo (passivo o attivo) di
-  Attivazione Tempestiva, Risorse Interiori e Tecniche Interiori Supplementari.
-- `tecniche_interiori.json`: la durata di Vipera dal Cappuccio, Presa dell'Anima e
-  Contraccolpo Interiore, che le schede non indicano.
-- Potenziale Mistico Migliorato: il motore lo applica solo al limite di Usufruitore di Magia
-  (`src/avanzamento.js`).
-
-Le risposte del master già date (Esploratore, incantesimi, dado dei PM al 1° livello) sono
-in `docs/risposte-master.md`, con la data: in caso di conflitto con i manuali valgono
-quelle.
+Le domande aperte per Davide, gli errata dei manuali e i testi da rileggere sono in
+**`docs/per-davide.md`**, l'unico elenco da tenere aggiornato. Nei dati i dubbi sono marcati
+`TODO(Davide)` e la home li elenca (sezione «Dati delle regole»). Le risposte già date sono in
+`docs/risposte-master.md`, con la data: in caso di conflitto con i manuali valgono quelle.
 
 ## Struttura
 

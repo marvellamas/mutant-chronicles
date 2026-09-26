@@ -77,10 +77,24 @@ Sì, è possibile e consigliato: **la stampa non è la vista digitale con un CSS
 - Logo/intestazione del gruppo, se ne avete uno.
 - Versione "compatta" a 2 fogli per i PNG del master (più avanti).
 
-## 3. Dipendenze e ordine complessivo
+### 2.4 Stato al 25/09 (dopo il Prompt 8)
 
-1. Avanzamento di livello (Prompt 6) e pacchetto avvia.bat / push / GitHub Pages.
+Vista di stampa dedicata realizzata (`#/p/<id>/stampa`, `src/stampa.js`, `css/stampa.css`), A4 orizzontale, 3 o 4 fogli, verificata con PDF generati da Edge. Da sistemare: il foglio Magia di un Taumaturgo di alto livello deve poter continuare su un secondo foglio invece di essere tagliato; aggiungere il campo "Aspetto" al passo Background. Stati (§5.18) e Ferite (§5.14) ora sono in `regole.json`.
+
+## 3. Scheda digitale a tab e "modalità tavolo"
+
+Decisione del 25/09: la scheda digitale adotta la stessa suddivisione in quattro sezioni della stampa, così il gruppo ha un'abitudine sola.
+
+- **Quattro tab**: Identità, Abilità, Combattimento, Magia (la quarta assente per chi non ha accesso alla magia). Riusano la funzione pura che prepara i dati dei fogli di stampa; i contenuti possono essere più ricchi (testi completi dei Talenti, tooltip, Progressione in Identità).
+- **Posizione delle tab**: a sinistra su desktop, in basso su tablet e telefono (raggiungibili col pollice). Configurabile dall'utente (impostazione salvata nel browser), con quel default.
+- **Modalità tavolo**: la scheda si usa dal tablet durante la sessione. Servono **valori attuali** separati dalle scelte del personaggio: PV e PM correnti, Punti Eroe e Distintivi, munizioni, Stati attivi, Ferite, Affaticamento, annotazioni di sessione. Non si ricalcolano e non sono parte della progressione; si salvano con il personaggio in un blocco `sessione` e un pulsante "Nuova sessione / riposo completo" li riporta ai massimi. Controlli grandi (+/−, spunte) pensati per il dito; niente conferme per ogni tocco, ma "Annulla ultima modifica".
+- La vista digitale resta responsabile della modifica (Background, equipaggiamento, "Sali di livello"); le tab sono consultazione + modalità tavolo.
+
+## 4. Dipendenze e ordine complessivo
+
+1. ✅ Avanzamento di livello (Prompt 6) e pacchetto avvia.bat (Prompt 7). Push / GitHub Pages a cura di Marcello.
 2. Conferma di Davide sulla tabella dei livelli incantesimi.
-3. Scheda stampabile a 4 fogli (non dipende dall'equipaggiamento: il foglio 3 parte con la sola sezione manuale e si riempie dopo).
-4. Estrazione Armamenti (pilota, poi completa).
-5. Equipaggiamento nella scheda ed effetti sui valori.
+3. ✅ Scheda stampabile a 4 fogli (Prompt 8), con le due correzioni del §2.4.
+4. Scheda digitale a tab + modalità tavolo (Prompt 9): prima dell'equipaggiamento, così la tab Combattimento nasce con lo spazio per armi e protezioni.
+5. Estrazione Armamenti: pilota con pdfplumber su due tabelle, poi completa (Prompt 10).
+6. Equipaggiamento nella scheda ed effetti sui valori (§1).

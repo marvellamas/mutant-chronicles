@@ -36,15 +36,24 @@ docs/           studio di fattibilità, note per Davide su come modificare i dat
 Manuali/        PDF dei manuali (fonte). Non modificare.
 ```
 
-## Perimetro v1
+## Perimetro
 
-Creazione al 1° livello completa (sequenza §2.0), Incantesimi per Taumaturghi, scheda riepilogo stampabile (CSS `@media print`), salva/carica in `localStorage` + export/import file JSON, dati modificabili da Davide con validatore.
+La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 
-Fuori dalla v1: avanzamento 2–20, catalogo armi/armature, combattimento. L'equipaggiamento iniziale è un campo di testo libero (§2.16 del manuale non è ancora scritto).
+- creazione completa (sequenza §2.0), con Incantesimi per i Taumaturghi;
+- avanzamento dal 2° al 20° livello (cap. 8), un livello alla volta, annullabile;
+- scheda digitale a tab (Identità, Abilità, Combattimento, Magia) con modalità tavolo: valori di sessione separati dalle scelte (`src/sessione.js`);
+- stampa dedicata A4 orizzontale (`#/p/<id>/stampa`, `css/stampa.css`);
+- equipaggiamento con catalogo a lotti dal Manuale degli Armamenti (`data/equipaggiamento/`, lista dei lotti in `docs/equipaggiamento-lotti.md`); l'equipaggiamento iniziale si inserisce a mano finché il §2.16 non è scritto;
+- salva/carica in `localStorage`, export/import JSON, dati modificabili da Davide con validatore.
+
+Fuori perimetro per ora: combattimento automatizzato (le penalità di sessione sono promemoria, non modificano i VA), veicoli, Manuale degli Equipaggiamenti.
 
 ## Riferimenti
 
 - `docs/studio-fattibilita.md`: analisi dei manuali, formule, punti da chiarire con Davide, stima.
+- `docs/per-davide.md`: domande aperte per Davide, errata dei manuali, testi da rileggere.
+- `docs/equipaggiamento-lotti.md`: tabelle del Manuale degli Armamenti da estrarre, in ordine, con lo stato di ogni lotto.
 - `docs/risposte-master.md`: decisioni di Davide sui punti ambigui o errati dei manuali, con data. **In caso di conflitto fra un manuale e `docs/risposte-master.md`, vale `docs/risposte-master.md`.**
 - `docs/ricognizione-avanzamento.md`: analisi dell'avanzamento di livello (cap. 8) e modello a eventi.
 - Manuale del Giocatore v0.43: cap. 1 (meccaniche, formule Salvezze §1.2.3), cap. 2 (creazione), cap. 3 (Classi: tabelle §3.4, §3.6, §3.8), cap. 4 (Abilità: quadro §4.3), cap. 8 (avanzamento, per la v2).
@@ -55,5 +64,5 @@ Fuori dalla v1: avanzamento 2–20, catalogo armi/armature, combattimento. L'equ
 
 - Prima di scrivere codice che tocca una regola, citare il paragrafo del manuale nel commento (es. `// §2.13: Avanzamento iniziale ≤ 3, incluso il +1 di Classe`).
 - Quando un dato del manuale è ambiguo, non inventare: mettere un `TODO(Davide)` nel JSON o nel codice e segnalarlo a Marcello a fine sessione.
-- Quando Davide risponde a un `TODO(Davide)`, registrare la decisione con la data in `docs/risposte-master.md`, applicarla nei dati e togliere il TODO.
+- `docs/per-davide.md` è l'unico elenco delle domande aperte per Davide. Ogni volta che si **crea** un `TODO(Davide)`, si aggiunge la voce nella sezione A di `docs/per-davide.md`. Ogni volta che se ne **chiude** uno (Davide ha risposto): si toglie la voce da `docs/per-davide.md`, si aggiunge una riga datata in `docs/risposte-master.md`, si applica la decisione nei dati e si toglie il TODO.
 - Commit piccoli e descrittivi, in italiano.
