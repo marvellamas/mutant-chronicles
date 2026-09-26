@@ -110,8 +110,8 @@ ai massimi e azzera Stati, Ferite e Affaticamento (note, Punti Eroe e Distintivi
 «↶ Annulla» annulla l'ultima modifica di sessione.
 
 **Scheda digitale (SD) su schermi larghi.** Nell'ingranaggio, «Larghezza»: piena (predefinita,
-fino a 1650 px, e sopra 1300 px più colonne affiancate: tre riquadri in Magia, Talenti su due
-colonne, incantesimi su due colonne) oppure compatta (colonna centrale). Sotto i 1300 px le due
+fino a 1650 px, e sopra 1300 px più colonne affiancate: Talenti su due
+colonne, incantesimi su due colonne; da 1500 px tre riquadri in Magia) oppure compatta (colonna centrale). Sotto i 1300 px le due
 scelte sono identiche. PV e PM hanno una barra che si accorcia e cambia colore (verde, giallo,
 rosso; soglie in `regole.json` → `interfaccia`), con il numero sempre accanto; il riepilogo PV/PM
 sta anche nell'intestazione della scheda. Il riquadro Punti Magia elenca sotto la riserva
@@ -119,7 +119,7 @@ personale i cristalli di Chroma, separati: è il posto dove si modificano i loro
 apre con «Condizioni attive» quando Ferite, Affaticamento, Stati o armatura toccano le Abilità.
 Le sigle delle modalità di fuoco mostrano la regola del §5.10 al tocco; gli oggetti di sanitario,
 accessori e munizioni hanno sotto il nome una riga con l'effetto preso dal manuale
-(`effetto_breve`, popolato da `tools/lotti/effetto_breve.mjs`, che controlla che ogni frase sia
+(`effetto_breve`, anche per corredi professionali e Kit trauma, popolato da `tools/lotti/effetto_breve.mjs`, che controlla che ogni frase sia
 davvero nel testo). La scheda da stampare (SS) non cambia.
 
 **Valori effettivi.** Nelle tab Abilità e Combattimento e nelle Salvezze di Identità ogni valore è

@@ -1,4 +1,4 @@
-// Popola «effetto_breve» per sanitario, accessori delle armi e munizioni con frasi del manuale:
+// Popola «effetto_breve» per sanitario, accessori delle armi, munizioni, corredi e kit con frasi del manuale:
 // è la riga sotto il nome dell'oggetto nella scheda digitale. Uso: node tools/lotti/effetto_breve.mjs
 // Ogni frase deve comparire alla lettera nei testi del manuale (prosa dei lotti 8, 10 e 11,
 // note_manuale, proprieta, esiti, cella del mirino); granate, razzi e riduttori di rumore usano le
@@ -7,7 +7,7 @@ import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 const REPO = fileURLToPath(new URL('../..', import.meta.url));
-const PROSE = ['lotto8-accessori-armi', 'lotto10-munizioni', 'lotto11-sanitario'].map((l) => `${REPO}/docs/lotti/${l}/prosa`);
+const PROSE = ['lotto7-corredi-dispositivi', 'lotto8-accessori-armi', 'lotto10-munizioni', 'lotto11-sanitario'].map((l) => `${REPO}/docs/lotti/${l}/prosa`);
 const norm = (t) => String(t).replace(/\s+/g, ' ').replace(/–\s/g, '–').trim();
 const prosa = norm(PROSE.flatMap((d) => readdirSync(d).map((f) => readFileSync(`${d}/${f}`, 'utf8'))).join(' '));
 
@@ -85,6 +85,18 @@ aggiorna('accessori_armi', (o) => {
     return { testo: `Percezione dello sparo: ${o.percezione}; VA per colpire ${s(o.effetto_arma?.va ?? 0)}; danno ${s(o.effetto_arma?.danno ?? 0)}.`, composto: true };
   }
   return MAPPA.accessori_armi[o.id] ? { testo: MAPPA.accessori_armi[o.id] } : null;
+});
+// Corredi professionali e Kit trauma (§7.12–7.17): la prima frase di note_manuale con un
+// modificatore «±N VA»; se manca, la prima frase che contiene un numero.
+const FAMIGLIE_CORREDI = ['Corredi professionali', 'Kit trauma'];
+function fraseConNumero(testo) {
+  const frasi = String(testo ?? '').replace(/\s+/g, ' ').split(/(?<=\.)\s+(?=[A-ZÀ-Ý+«])/);
+  return frasi.find((f) => /[+−-]\s?\d+\s*VA/.test(f)) ?? frasi.find((f) => /\d/.test(f)) ?? null;
+}
+aggiorna('corredi_dispositivi', (o) => {
+  if (!FAMIGLIE_CORREDI.includes(o.famiglia)) return null;
+  const f = fraseConNumero(o.note_manuale);
+  return f ? { testo: f } : null;
 });
 aggiorna('munizioni', (o) => {
   if (o.munizione?.variante && VARIANTI[o.munizione.variante]) return { testo: `${o.munizione.variante}: ${VARIANTI[o.munizione.variante]}`, composto: false, verifica: VARIANTI[o.munizione.variante] };

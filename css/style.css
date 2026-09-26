@@ -17,7 +17,7 @@
   --errore: #a3261b;
   --errore-tenue: #fbe4e1;
   --barra-verde: #2e8b4e;
-  --barra-giallo: #d19a00;
+  --barra-giallo: #a87400; /* 3,2:1 sulla traccia, 4,1:1 sul bianco */
   --barra-rosso: #c23b2c;
   --barra-traccia: #e6e3dc;
   --raggio: 8px;
@@ -780,7 +780,8 @@ details.sezione-tab > summary { font-weight: 700; cursor: pointer; min-height: 4
 .barra-traccia { flex: 1; min-width: 3.5rem; height: 0.55rem; background: var(--barra-traccia); border-radius: 999px; overflow: hidden; }
 .barra-riempimento { display: block; height: 100%; background: var(--tenue); border-radius: 999px; transition: width 0.2s; }
 .barra-riempimento.verde { background: var(--barra-verde); }
-.barra-riempimento.giallo { background: var(--barra-giallo); }
+/* il giallo ha la luminanza del verde: una tratteggiatura lo distingue anche senza colori */
+.barra-riempimento.giallo { background-color: var(--barra-giallo); background-image: repeating-linear-gradient(135deg, rgb(0 0 0 / 0.22) 0 3px, transparent 3px 6px); }
 .barra-riempimento.rosso { background: var(--barra-rosso); }
 .barra-numero { font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--tenue); }
 .barra-risorsa.grande { margin: -0.2rem 0 0.55rem; }
@@ -827,12 +828,16 @@ details.sezione-tab > summary { font-weight: 700; cursor: pointer; min-height: 4
   .larghezza-piena .armi-tab { grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr)); }
   .larghezza-piena .griglia-tavolo > .riquadro-pm:has(.cristalli) { grid-column: span 2; }
   .larghezza-piena .colonne-larghe { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 2rem; align-items: start; }
-  .larghezza-piena .magia-testa { display: grid; grid-template-columns: minmax(0, 2fr) minmax(18rem, 1fr); gap: 0 1.5rem; align-items: start; }
-  .larghezza-piena .magia-testa .griglia-tavolo { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .larghezza-piena .magia-testa .griglia-tavolo > .riquadro-pm { grid-column: auto; }
-  .larghezza-piena .magia-testa > .sezione-tab { margin-top: 0.75rem; }
   .larghezza-piena .incantesimi-griglia { display: grid; grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr)); gap: 0 1.5rem; align-items: start; }
   .larghezza-piena .incantesimi-griglia > .spec { grid-column: 1 / -1; }
   .larghezza-piena .talento p, .larghezza-piena .testo-lungo p, .larghezza-piena .effetto-breve { max-width: 75ch; }
   .larghezza-piena .note-sessione { max-width: 75ch; display: block; }
+}
+/* Tre riquadri affiancati in Magia (PM, Incantesimi, Prove di Potere) solo da 1500 px: sotto, i
+   nomi dei cristalli nel riquadro PM andrebbero a capo (tablet orizzontale, 1366 px) */
+@media (min-width: 1500px) {
+  .larghezza-piena .magia-testa { display: grid; grid-template-columns: minmax(0, 2fr) minmax(18rem, 1fr); gap: 0 1.5rem; align-items: start; }
+  .larghezza-piena .magia-testa .griglia-tavolo { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .larghezza-piena .magia-testa .griglia-tavolo > .riquadro-pm { grid-column: auto; }
+  .larghezza-piena .magia-testa > .sezione-tab { margin-top: 0.75rem; }
 }
