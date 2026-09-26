@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  preparaStampa, tronca, primaFrase, versioniAccessibili, vociEquipaggiamento, intestazioneBreve, LIMITI_STAMPA,
+  preparaStampa, tronca, primaFrase, versioniAccessibili, vociEquipaggiamento, elencoZaino, intestazioneBreve, LIMITI_STAMPA,
   preparaTab, spezzaMagia, contaIncantesimi, rinumera,
 } from '../src/stampa.js';
 import { CAMPI_ANAGRAFICA } from '../src/character.js';
@@ -18,6 +18,9 @@ test('tronca e primaFrase: taglio sulle parole con «…»', () => {
   assert.ok(tronca('x'.repeat(50), 10).length <= 10);
   assert.equal(primaFrase('Prima frase. Seconda frase.'), 'Prima frase.');
   assert.equal(primaFrase('Senza punto finale'), 'Senza punto finale');
+  // collaudo, Risorse Interiori: la frase di rimando non basta a dire cosa fa il Talento
+  assert.equal(primaFrase('Si applicano le incompatibilità descritte in questa sezione. Il personaggio apprende 2 + Mod SAG Tecniche Interiori.'),
+    'Il personaggio apprende 2 + Mod SAG Tecniche Interiori.');
   assert.ok(primaFrase(`${'parola '.repeat(80)}fine.`).endsWith('…'));
   assert.ok(primaFrase(`${'parola '.repeat(80)}fine.`).length <= LIMITI_STAMPA.frase);
 });
@@ -39,6 +42,14 @@ test('intestazioneBreve: toglie Scheda, Macrofamiglia e Specializzazione, già d
 test('vociEquipaggiamento: una voce per riga o per «;», senza trattini', () => {
   assert.deepEqual(vociEquipaggiamento('- Pistola\n• Coltello; corda\n\n'), ['Pistola', 'Coltello', 'corda']);
   assert.deepEqual(vociEquipaggiamento(''), []);
+});
+
+test('elencoZaino: solo il vecchio testo libero si spezza; un oggetto personalizzato con «;» tiene il nome', () => {
+  const voce = (nome, note) => ({ nome, tipo: 'altro', personalizzato: true, voce: { quantita: 1, stato: null, note } });
+  assert.deepEqual(elencoZaino([voce('Equipaggiamento (testo precedente)', 'Pistola\nCorda; torcia')]), ['Pistola', 'Corda', 'torcia']);
+  // collaudo, Dex Moreau: prima si stampavano le due note senza «Multiattrezzo di famiglia»
+  assert.deepEqual(elencoZaino([voce('Multiattrezzo di famiglia', 'regalo del padre; conta come attrezzi da lavoro')]),
+    ['Multiattrezzo di famiglia — regalo del padre; conta come attrezzi da lavoro']);
 });
 
 test('senza accesso alla magia: tre fogli, numerati «di 3», con il piede', () => {

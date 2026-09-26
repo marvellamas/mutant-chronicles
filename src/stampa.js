@@ -8,7 +8,7 @@ import { valoreTiro } from './tiri.js';
 import { rigaAlLivello } from './descrizioni.js';
 import { CAMPI_ANAGRAFICA } from './character.js';
 import { checklist } from './checklist.js';
-import { aggiungiDanno } from './equipaggiamento.js';
+import { aggiungiDanno, NOME_TESTO_PRECEDENTE } from './equipaggiamento.js';
 
 /** Limiti di impaginazione (non regole di gioco): lunghezze massime dei testi stampati. */
 export const LIMITI_STAMPA = {
@@ -30,9 +30,13 @@ export function tronca(testo, max) {
   return `${(spazio > 0 ? taglio.slice(0, spazio) : taglio).replace(/[\s,;:.–—-]+$/, '')}…`;
 }
 
+// Frasi di rimando che da sole non dicono cosa fa il Talento (Risorse Interiori, §8.6):
+// la stampa passa alla frase successiva.
+const FRASI_DI_RIMANDO = /^Si applicano le incompatibilità descritte in questa sezione\.\s+(?=\S)/;
+
 /** Prima frase di un testo (fino al primo punto seguito da spazio), entro `max` caratteri. */
 export function primaFrase(testo, max = LIMITI_STAMPA.frase) {
-  const t = String(testo ?? '').trim().replace(/\s+/g, ' ');
+  const t = String(testo ?? '').trim().replace(/\s+/g, ' ').replace(FRASI_DI_RIMANDO, '');
   const m = /^(.+?[.!?])(\s|$)/.exec(t);
   const frase = m ? m[1] : t;
   return frase.length > max ? tronca(frase, max) : frase;
@@ -86,7 +90,9 @@ export function elencoZaino(zaino) {
     const q = o.voce.quantita > 1 ? ` ×${o.voce.quantita}` : '';
     const stato = o.fuoriCatalogo ? ' (non più in catalogo)' : o.voce.stato === 'pronta' ? ' (addosso)' : '';
     const note = String(o.voce.note ?? '').trim();
-    if (o.personalizzato && o.tipo === 'altro' && vociEquipaggiamento(note).length > 1) {
+    // solo il vecchio testo libero migrato si spezza in voci: un oggetto personalizzato con «;»
+    // nelle note resta una voce sola, con il suo nome
+    if (o.personalizzato && o.nome === NOME_TESTO_PRECEDENTE && vociEquipaggiamento(note).length > 1) {
       out.push(...vociEquipaggiamento(note));
       continue;
     }

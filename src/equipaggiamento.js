@@ -185,6 +185,9 @@ export function statoIniziale(tipo, voci = [], dati = null) {
   return stati.includes('pronta') ? 'pronta' : stati[0];
 }
 
+/** Nome dell'oggetto che raccoglie il vecchio campo di testo libero (formato 4 e precedenti). */
+export const NOME_TESTO_PRECEDENTE = 'Equipaggiamento (testo precedente)';
+
 /**
  * Porta il campo `equipaggiamento` delle scelte alla forma attuale. Il vecchio campo di testo
  * diventa un unico oggetto personalizzato di tipo «altro» con quel testo nelle note.
@@ -193,7 +196,7 @@ export function statoIniziale(tipo, voci = [], dati = null) {
 export function normalizzaEquipaggiamento(valore) {
   if (typeof valore === 'string') {
     const t = valore.trim();
-    return t ? [{ uid: 'e1', rif: null, personalizzato: { nome: 'Equipaggiamento (testo precedente)', tipo: 'altro' }, stato: null, quantita: 1, note: t }] : [];
+    return t ? [{ uid: 'e1', rif: null, personalizzato: { nome: NOME_TESTO_PRECEDENTE, tipo: 'altro' }, stato: null, quantita: 1, note: t }] : [];
   }
   if (!Array.isArray(valore)) return [];
   const usati = new Set();
