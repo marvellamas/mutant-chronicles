@@ -58,7 +58,8 @@ Sono le cose che hai già deciso a voce o che sono errori evidenti: l'app segue 
 - **Giocatore §8.6, Attivazione Tempestiva**: sta prima del §8.6.1, fuori da ogni sottosezione, con un'intestazione diversa dagli altri.
 - **Magia, sezione 1**: la frase "con i cinque Talenti liberi ordinari, Usufruitore più quattro miglioramenti consentono il livello massimo 15" confonde: i Talenti Liberi sono nove (§8.6) e Potenziale Mistico si prende fino a cinque volte. Riformulare come esempio, non come regola.
 - **Giocatore §3.5.3, Bersaglio Designato**: impaginazione rotta nel PDF (il nome del Talento finisce dentro una frase).
-- **Armamenti §7.1.9 e §7.8**: i cataloghi si intitolano «Imperiali», mentre gli scudi (§7.4.8) e il catalogo generale (§7.14) usano «Imperial». L'app usa «Imperial» ovunque.
+- **Armamenti §7.1.9, §7.8 e §7.9**: i cataloghi si intitolano «Imperiali», mentre gli scudi (§7.4.8) e il catalogo generale (§7.14) usano «Imperial». L'app usa «Imperial» ovunque.
+- **Armamenti §7.9, prezzi di riferimento**: le tabelle si fermano alle armi a distanza Cybertronic; mancano quelle a distanza di Fratellanza, Imperiali e Mishima (i prezzi ci sono nelle schede del §7.8, e l'app usa quelli). Le 146 righe presenti coincidono tutte con le schede.
 - **Armamenti §7.13.2 e §7.15.3, §7.16.2, §7.17.3**: la stessa proprietà si chiama «Articolazione da tiro» nel catalogo Capitol e «Articolazione di tiro» negli altri. Conviene un solo nome (l'app li tratta come la stessa proprietà).
 - **Armamenti §7.16.2, Armatura Ashigaru**: «Manutenzione agevolata» ha lo stesso effetto di «Manutenzione semplice» (§7.11.4), usata da tutti gli altri cataloghi. Se sono la stessa proprietà, conviene un solo nome.
 - **Armamenti §7.11.5**: il titolo del secondo gruppo Bauhaus è stampato «Agenti equipaggi e Guardie», senza la virgola dopo «Agenti». L'app scrive «Agenti, equipaggi e Guardie».

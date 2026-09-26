@@ -1,0 +1,229 @@
+7.9 Prezzi di riferimento delle armi
+Le tabelle riuniscono i prezzi di riferimento delle armi. Dove la scheda indica «Costo proposto», il valore
+conserva tale indicazione; per gli altri modelli valgono i costi riportati nelle rispettive schede. La combinazione
+Punisher è nel §7.11.8. I prezzi non modificano danni, Abilità, requisiti, Qualità, proprietà, Reperibilità o modalità
+di tiro.
+La nuova scala usa una pistola semiautomatica commerciale da 1.300 unità come riferimento. È il parametro
+indicato dall’autore, prendendo come confronto la Beretta 92FS da circa 1.300 euro; viene usato come ancoraggio
+progettuale, non come certificazione di un listino corrente. Un’unità ha quindi, in questa proposta, un ordine di
+grandezza vicino a un euro. Il nome della moneta resta da definire.
+Lame e attrezzi semplici, armi da fuoco, armi pesanti, sistemi a energia e oggetti mistici appartengono a fasce
+produttive differenti. I prezzi tengono conto di materiali, lavorazione, capacità e proprietà del singolo modello.
+I prezzi incorporano già caratteristiche, qualità e dotazione del modello: non si applica un secondo sovrapprezzo
+automatico per la Corporazione o per la Qualità. La reperibilità determina la ricerca del venditore e rimane
+distinta dal prezzo. Il costo degli oggetti mistici è una valutazione di ambientazione, non un prezzo ricavato da un
+corrispettivo reale.
+Prima di chiudere l’economia generale occorrerà confrontare questi prezzi con redditi, ricompense, spese
+ordinarie, valore dell’equipaggiamento iniziale, riparazioni, consumabili e disponibilità effettiva. Questi aspetti
+restano aperti; il catalogo delle armi non stabilisce automaticamente stipendi o ricompense.
+Gestione Operativa conserva il beneficio: −10% sugli acquisti pianificati delle armi standard del catalogo
+Commerciale, con arrotondamento per eccesso all’intero. Per esempio 1.300 diventa 1.170. Non viene esteso
+automaticamente ai cataloghi corporativi o agli altri beni ancora da raccordare.
+Prezzi delle pistole corporative di base
+Modello e Corporazione Costo
+HG10 — Bauhaus 1.400
+Bolter 10 — Capitol 1.000
+P500 — Cybertronic 1.500
+Nemesis 100 — Fratellanza 1.500
+Belliger — Imperiali 1.300
+Ronin 25AP — Mishima 1.000
+Il prezzo comprende un caricatore vuoto specifico. Le munizioni e i caricatori aggiuntivi seguono il §7.20. Le
+schede complete e le proprietà sono nei rispettivi cataloghi del §7.8.
+Prezzi ravvicinati Commerciale
+Costo di
+Modello
+riferimento
+Coltello 80
+Pugnale 150
+Daga 220
+Pugnale da combattimento 300
+Spada leggera 350
+Stocco 450
+Spada lunga 500
+Spada bastarda 700
+Spadone 850
+Costo di
+Modello
+riferimento
+Ascia leggera 180
+Ascia bipenne 500
+Martello 80
+Martello da guerra 280
+Martello a due mani 180
+Randello 40
+Mazza ferrata 160
+Tonfa 90
+Baionetta montata 180
+Lancia 220
+Picca 250
+Tridente 320
+Arma inastata pesante 450
+Frusta 100
+Mazzafrusto 350
+Artigli 250
+Tirapugni 35
+Tirapugni chiodato 70
+Tirapugni concussivo 1.200
+Prezzi ravvicinati Bauhaus
+Costo di
+Modello
+riferimento
+Baionetta Ussara 400
+Bordone Templare 6.500
+Sciabola da Duello 850
+Tonfa Stella Cadente 2.000
+Prezzi ravvicinati Capitol
+Costo di
+Modello
+riferimento
+Spada dell’Onore 550
+Prezzi ravvicinati Cybertronic
+Costo di
+Modello
+riferimento
+Artigli elettrificati 2.400
+Baionetta elettrificata 1.800
+Elettrosega CSB600 3.600
+Frusta elettrificata 1.800
+Manganello elettrificato 1.200
+Spada elettrificata CSA 404 5.000
+Tirapugni elettrificato 1.100
+Prezzi ravvicinati Fratellanza
+Costo di
+Modello
+riferimento
+Spada Avenger 2.200
+Spada Mortis 3.000
+Spada Deathdealer 18.000
+Spada Vindicator 9.000
+Spada Deliverer 11.500
+Lancia Castigator 12.000
+Sbudellatrice 5.000
+Scudo delle Guardie Sacre 18.000
+Prezzi ravvicinati Imperiali
+Costo di
+Modello
+riferimento
+Artiglio del Lupo 700
+Ascia Tagliateste a una mano 2.500
+Ascia Tagliateste a due mani 3.800
+Baionetta retrattile 450
+Catena chiodata 300
+Chainreaper 2.000
+Martello Spaccateste a una mano 2.400
+Martello Spaccateste a due mani 3.600
+Spada Violator 3.200
+Spadone Claymore 1.100
+Prezzi ravvicinati Mishima
+Costo di
+Modello
+riferimento
+Kriss 350
+Wakizashi 900
+Katana 1.700
+Lama Mushashi 16.000
+Lama Demontooth 14.500
+Lancia Naginata 1.900
+Lancia Duskdealer 4.200
+Nunchaku 180
+Nunchaku elettrificato 1.500
+Prezzi ravvicinati Alleanza
+Costo di
+Modello
+riferimento
+Spada Punisher 6.500
+Prezzi a distanza Commerciale
+Costo di
+Modello o insieme
+riferimento
+Pistola semiautomatica 1.300
+Revolver 1.600
+Pistola pesante 2.100
+Pistola mitragliatrice compatta 2.600
+Carabina 1.800
+Fucile d’assalto 4.000
+Fucile di precisione 5.500
+Fucile a pompa 1.200
+Doppietta 1.200
+Mitragliatore leggero 15.000
+Mitragliatore pesante 30.000
+Lanciagranate 6.000
+Lanciarazzi 14.000
+Shuriken 25
+Arco da guerra 500
+Balestra grande 700
+Balestra piccola 300
+Fucile al plasma 12.000
+Costo di
+Modello o insieme
+riferimento
+Lanciafiamme 9.000
+Granata a frammentazione 80
+Prezzi a distanza Alleanza
+Costo di
+Modello o insieme
+riferimento
+AXIS 227 2.350
+Piranha 2.100
+Punisher 3.150
+Hellblazer 9.000
+Carabina Punisher con modulo 8.000
+Plasma Intruder 18.000
+Lanciagranate Alleanza 7.800
+Deathlock Drum con modulo 54.000
+Nimrod Autocannon 98.000
+Gehemmapuker 18.000
+Prezzi a distanza Bauhaus
+Costo di
+Modello o insieme
+riferimento
+HG10 1.400
+HG12 2.350
+Equalizer 3.650
+MP105 5.750
+SA30 a dardi 2.600
+HD14M 1.700
+HG14 2.200
+MP105GW con modulo 7.000
+Panzerknacker con modulo 9.500
+PSG99 10.500
+SA50F a dardi 5.500
+MG40 25.000
+MG80 48.000
+ARG17 36.000
+Prezzi a distanza Capitol
+Costo di
+Modello o insieme
+riferimento
+Bolter 09 1.450
+Enforcer 1.200
+Jemson 45 1.600
+Bolter 10 1.000
+Bolter 13 1.300
+Bolter 20 con modulo 3.600
+Ironfist 15 con modulo 5.100
+M310 1.350
+M510 1.000
+M516S 1.100
+M516D 1.200
+M410 1.000
+CAR24 con modulo 4.500
+M50 con modulo 5.500
+SR30 2.800
+SR50 7.000
+M606 19.000
+Improved M89 42.000
+Lanciarazzi Deuce 20.000
+Prezzi a distanza Cybertronic
+Costo di
+Modello o insieme
+riferimento
+P500 1.500
+P1000 4.700
+SA SG2001 3.150
+CAW2000 con modulo 8.000
+AR3000 con modulo 10.500
+SR3500 10.000
+TSW4000 32.500
+SSW4200P 60.000
+Lanciarazzi SSW5500 36.000
