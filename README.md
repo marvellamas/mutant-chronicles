@@ -84,7 +84,9 @@ bloccano i moduli JavaScript e la lettura dei file `data/*.json` da `file://`. I
 pagina resta sul messaggio «Caricamento…», che spiega cosa fare.
 
 I personaggi si salvano automaticamente nel browser (localStorage). Per passarli a un altro
-dispositivo o al master si usano **Esporta** (file JSON con le sole scelte) e **Importa**.
+dispositivo o al master si usano **Esporta** (file JSON con le sole scelte, di nome
+`<nome>_liv<N>_<AAAA-MM-GG>.json`, per esempio `Varek-McCraig_liv8_2026-09-26.json`) e **Importa**,
+che legge il contenuto e non dipende dal nome del file.
 
 **Stampa e PDF.** Nella scheda, *Azioni → Stampa* apre l'anteprima dei fogli A4 orizzontali
 (3, o 4 con la Magia); lì **Stampa** apre il dialogo del browser, dove per il PDF si sceglie
@@ -105,8 +107,17 @@ attuali cambiano della stessa quantità dei massimi (un personaggio a 40/47 che 
 passa a 46/53; ipotesi da confermare, `docs/per-davide.md` A.15); se invece un massimo cambia
 per una tabella modificata vengono solo limitati al nuovo massimo. «Nuova sessione» riporta PV e PM
 ai massimi e azzera Stati, Ferite e Affaticamento (note, Punti Eroe e Distintivi restano);
-«↶ Annulla» annulla l'ultima modifica di sessione. Le penalità di Ferite, Affaticamento e
-Stati compaiono come promemoria: i VA della scheda non le includono.
+«↶ Annulla» annulla l'ultima modifica di sessione.
+
+**Valori effettivi.** Nelle tab Abilità e Combattimento e nelle Salvezze di Identità ogni valore è
+quello **effettivo**: regole + equipaggiamento + condizioni della sessione (Ferite §5.14,
+Affaticamento §5.19, Stati del §5.18 con un effetto numerico: A Terra, Accecato, Immobilizzato,
+Incendiato, Rallentato, Terrorizzato). Se differisce dal valore da regole è rosso con ▼ (malus) o
+verde con ▲ (bonus); un tocco o il passaggio del mouse mostra la scomposizione («Furtività 6 = 11
+(Valore da regole) − 2 (Agilità …) − 2 (Ferita Importante) …»). Gli effetti stanno in `regole.json`
+(`stati.elenco[].effetto`, `ferite.si_applica_a`, `affaticamento.si_applica_a`, `stati.abilita_fisiche`);
+gli Stati senza effetto numerico restano promemoria. Il totale da regole non cambia (l'avanzamento
+usa quello) e la **stampa** mostra i valori a riposo, con l'equipaggiamento ma senza condizioni.
 
 Il passo 0 del wizard si chiama **Background e anagrafica** (nel manuale, §2.0, «Concetto»;
 nei file salvati il testo resta `concetto`). L'anagrafica (soprannome, età, città di nascita,

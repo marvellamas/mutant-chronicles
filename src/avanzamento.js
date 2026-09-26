@@ -16,6 +16,7 @@ import {
 import { specTiro, valoreTiro, motivoFuoriIntervallo } from './tiri.js';
 import { calcolaEquipaggiamento, normalizzaEquipaggiamento } from './equipaggiamento.js';
 import { conOrdinale } from './lingua.js';
+import { applicaCondizioni } from './condizioni.js';
 
 export const VERSIONE_PERSONAGGIO = 2;
 
@@ -675,8 +676,17 @@ function salvezzeDi(stato, dati) {
   return out;
 }
 
-/** Scheda completa del personaggio al livello attuale (chiamata da calcolaScheda in calc.js). */
+/**
+ * Scheda completa del personaggio al livello attuale (chiamata da calcolaScheda in calc.js).
+ * Con `personaggio.sessione` i valori effettivi includono Ferite, Affaticamento e Stati attivi
+ * (src/condizioni.js); senza, coincidono con quelli a riposo (regole + equipaggiamento).
+ */
 export function calcolaSchedaPersonaggio(personaggio, dati) {
+  const scheda = schedaARiposo(personaggio, dati);
+  return scheda.abilita ? applicaCondizioni(scheda, personaggio?.sessione ?? null, dati) : scheda;
+}
+
+function schedaARiposo(personaggio, dati) {
   const { stato, errori } = ricalcola(personaggio, dati);
   if (!stato) return { livello: 1, errori, completa: false };
   const r = dati.regole;
@@ -710,7 +720,7 @@ export function calcolaSchedaPersonaggio(personaggio, dati) {
     normalizzaEquipaggiamento(migraPersonaggio(personaggio).creazione.equipaggiamento), dati);
   const abilitaEquip = abilita.map((a) => {
     const equip = equipaggiamento.equipAbilita[a.nome] ?? 0;
-    return { ...a, equip, vaEquip: a.totale + equip };
+    return { ...a, equip, vaEquip: a.totale + equip, componentiEquip: equipaggiamento.componentiEquip[a.nome] ?? [] };
   });
 
   const pmMancanti = stato.contributiPM.some((c) => c.valore === null);

@@ -424,7 +424,8 @@ test('arma corporativa impugnata: Precisa nel VA per colpire, Difensiva nella Pa
   const [kriss, tonfa] = s.equipaggiamento.armi;
   const mischia = s.abilita.find((a) => a.nome === 'Armi da mischia').totale;
   assert.equal(kriss.va, mischia + 1); // Precisa 1, FOR 3 ≤ 6
-  assert.ok(kriss.componenti.some((c) => c.nome === 'Precisa 1' && c.valore === 1));
+  assert.ok(kriss.componenti.some((c) => /^Precisa \(/.test(c.nome) && c.valore === 1));
+  assert.ok(tonfa.parata.componenti.some((c) => /^Difensiva \(/.test(c.nome) && c.valore === 2));
   const difese = s.abilita.find((a) => a.nome === 'Difese').vaEquip;
   assert.equal(tonfa.parata.va, difese + 2); // Difensiva +2, FOR 4 ≤ 6
   assert.equal(tonfa.attivazione.natura, 'Elettricità');

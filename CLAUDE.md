@@ -52,9 +52,10 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 - scheda digitale a tab (Identità, Abilità, Combattimento, Magia) con modalità tavolo: valori di sessione separati dalle scelte (`src/sessione.js`);
 - stampa dedicata A4 orizzontale (`#/p/<id>/stampa`, `css/stampa.css`);
 - equipaggiamento con catalogo a lotti dal Manuale degli Armamenti (`data/equipaggiamento/`, lista dei lotti in `docs/equipaggiamento-lotti.md`); l'equipaggiamento iniziale si inserisce a mano finché il §2.16 non è scritto;
-- salva/carica in `localStorage`, export/import JSON, dati modificabili da Davide con validatore.
+- salva/carica in `localStorage`, export/import JSON, dati modificabili da Davide con validatore;
+- valori effettivi in modalità tavolo: Ferite, Affaticamento e Stati con effetto numerico (`regole.json`) entrano nei VA, nelle Salvezze e nella Parata mostrati nelle tab, con la scomposizione (`src/condizioni.js`); il totale da regole e la stampa restano a riposo.
 
-Fuori perimetro per ora: combattimento automatizzato (le penalità di sessione sono promemoria, non modificano i VA), veicoli, Manuale degli Equipaggiamenti.
+Fuori perimetro per ora: combattimento automatizzato (tiri, bersagli, danni), veicoli, Manuale degli Equipaggiamenti.
 
 ## Riferimenti
 

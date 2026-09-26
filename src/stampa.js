@@ -127,13 +127,14 @@ function effettoSpecializzazione(e) {
  * Prepara i fogli da stampare. Con `completo: true` (le tab della scheda digitale) i testi non si
  * troncano: Background, Talenti ed equipaggiamento restano interi.
  * @param personaggio { creazione, livelli } oppure le sole scelte della creazione
- * @param {object} opzioni { versioniDati: testo delle versioni dei manuali (per il piede), completo }
+ * @param {object} opzioni { versioniDati: testo delle versioni dei manuali (per il piede), completo,
+ *   sessione: solo per le tab, valori effettivi con le condizioni; la stampa resta a riposo }
  * @returns {{ completa, errori, scheda, fogli: {id, titolo, numero, totale, dati}[], piede: {nome, livello, versioni} }}
  */
-export function preparaStampa(personaggio, dati, { versioniDati = '', completo = false } = {}) {
+export function preparaStampa(personaggio, dati, { versioniDati = '', completo = false, sessione = null } = {}) {
   const p = migraPersonaggio(personaggio);
   const c = p.creazione;
-  const s = calcolaScheda(p, dati);
+  const s = calcolaScheda(sessione ? { ...p, sessione } : p, dati);
   if (!s.caratteristiche) return { completa: false, errori: s.errori ?? [], scheda: s, fogli: [], piede: null };
 
   const nome = String(c.nome ?? '').trim() || 'Personaggio senza nome';
@@ -153,7 +154,10 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     anagrafica: CAMPI_ANAGRAFICA.map(({ campo, etichetta }) => ({ campo, etichetta, valore: testo(c[campo]) })),
     puntiEsperienza: typeof c.puntiEsperienza === 'number' && Number.isFinite(c.puntiEsperienza) ? c.puntiEsperienza : null,
     caratteristiche: Object.entries(s.caratteristiche).map(([sigla, x]) => ({ sigla, nome: x.nome, valore: x.valore, mod: x.mod, modSalvezza: x.modSalvezza })),
-    salvezze: Object.entries(s.salvezze).map(([id, x]) => ({ id, nome: x.nome, caratteristica: x.caratteristica, totale: x.totale, limitato: x.limitato, tetto: x.tetto })),
+    salvezze: Object.entries(s.salvezze).map(([id, x]) => ({
+      id, nome: x.nome, caratteristica: x.caratteristica, totale: x.totale, limitato: x.limitato, tetto: x.tetto,
+      effettivo: x.effettivo ?? x.totale, scomposizione: x.scomposizione ?? [],
+    })),
     pv: s.pv,
     pm: s.pm,
     puntiEroe: { valore: Number.isInteger(pe) ? pe : null, massimo: dati.regole.punti_eroe.riserva_massima },
@@ -173,6 +177,7 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
       abilita: s.abilita.filter((a) => a.categoria === cat).map((a) => ({
         nome: a.nome, caratteristica: a.caratteristica, mod: a.mod, base: a.base, corporazione: a.corporazione,
         avanzamento: a.avanzamento, equip: a.equip ?? 0, va: a.vaEquip ?? a.totale, diClasse: a.daClasse > 0,
+        totale: a.totale, effettivo: a.effettivo ?? a.vaEquip ?? a.totale, scomposizione: a.scomposizione ?? [],
       })),
     })),
     limiteAvanzamento: s.abilita[0]?.limite ?? null,
@@ -249,7 +254,11 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     avvisiEquipaggiamento: eq.avvisi,
     movimentoQ: eq.movimentoQ,
     lancioPotere: eq.lancioPotere,
-    difese: difese ? { va: difese.vaEquip ?? difese.totale, caratteristica: difese.caratteristica } : null,
+    difese: difese ? {
+      va: difese.vaEquip ?? difese.totale, caratteristica: difese.caratteristica,
+      totale: difese.totale, effettivo: difese.effettivo ?? difese.vaEquip ?? difese.totale, scomposizione: difese.scomposizione ?? [],
+    } : null,
+    condizioni: s.condizioni ?? [],
     ferite: { stati: dati.regole.ferite.stati, oltre: dati.regole.ferite.oltre },
     affaticamento: dati.regole.affaticamento.stati,
     stati: dati.regole.stati.elenco,
@@ -366,8 +375,8 @@ const TITOLI_TAB = { identita: 'Identità', abilita: 'Abilità', combattimento: 
  * accesso agli incantesimi.
  * @returns {{ completa, errori, scheda, tab: {id, titolo, dati}[] }}
  */
-export function preparaTab(personaggio, dati) {
-  const st = preparaStampa(personaggio, dati, { completo: true });
+export function preparaTab(personaggio, dati, { sessione = null } = {}) {
+  const st = preparaStampa(personaggio, dati, { completo: true, sessione });
   const p = migraPersonaggio(personaggio);
   const tab = st.fogli.map((f) => ({ id: f.id, titolo: TITOLI_TAB[f.id], dati: { ...f.dati } }));
   const identita = tab.find((t) => t.id === 'identita');

@@ -188,6 +188,9 @@ export function statoIniziale(tipo, voci = [], dati = null) {
 /** Nome dell'oggetto che raccoglie il vecchio campo di testo libero (formato 4 e precedenti). */
 export const NOME_TESTO_PRECEDENTE = 'Equipaggiamento (testo precedente)';
 
+/** «Difensiva +2» → «Difensiva»: il valore compare già accanto all'etichetta nella scomposizione. */
+const nomeProprieta = (p) => String(p.nome).replace(/\s*[+−-]?\s*\d+$/, '');
+
 /**
  * Porta il campo `equipaggiamento` delle scelte alla forma attuale. Il vecchio campo di testo
  * diventa un unico oggetto personalizzato di tipo «altro» con quel testo nelle note.
@@ -344,7 +347,13 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   // Protezioni (armature indossate, scudi imbracciati) — §7.11.1
   const protezioni = [];
   const equipAbilita = {};
-  const aggiungi = (nome, v) => { if (nome && v) equipAbilita[nome] = (equipAbilita[nome] ?? 0) + v; };
+  // per la scomposizione dei valori effettivi: ogni contributo con etichetta e oggetto di origine
+  const componentiEquip = {};
+  const aggiungi = (nome, v, etichetta) => {
+    if (!nome || !v) return;
+    equipAbilita[nome] = (equipAbilita[nome] ?? 0) + v;
+    (componentiEquip[nome] ??= []).push({ etichetta, valore: v, fonte: 'equipaggiamento' });
+  };
   let attacchiRavv = 0;
   let attacchiDist = 0;
   let movimentoQ = 0;
@@ -388,10 +397,13 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       continue;
     }
     // §7.11.1: armature — penalità di categoria e FOR mancante su Agilità, Difese e attacchi
-    for (const a of agilitaAbilita) aggiungi(a, (penalita.agilita ?? 0) - forMancante);
+    for (const a of agilitaAbilita) {
+      aggiungi(a, penalita.agilita ?? 0, `Agilità (${o.nome})`);
+      aggiungi(a, -forMancante, `FOR insufficiente (${o.nome})`);
+    }
     // penalità proprie del modello su singole Abilità (APE: Furtività −2, §7.13.6)
-    for (const [a, v] of Object.entries(penalita.abilita ?? {})) aggiungi(a, v);
-    aggiungi(difeseAbilita, -forMancante);
+    for (const [a, v] of Object.entries(penalita.abilita ?? {})) aggiungi(a, v, o.nome);
+    aggiungi(difeseAbilita, -forMancante, `FOR insufficiente (${o.nome})`);
     attacchiRavv += (penalita.attacchi_ravvicinati ?? 0) - forMancante;
     attacchiDist += (penalita.attacchi_distanza ?? 0) - forMancante;
     movimentoQ += penalita.movimento_q ?? 0;
@@ -472,10 +484,10 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     const armatura = o.tipo === 'arma_ravvicinata' ? attacchiRavv : attacchiDist;
     const acc = accessoriArma(o);
     const componenti = a ? [
-      { nome: `VA ${a.nome}`, valore: a.totale },
-      spec ? { nome: `Specializzazione in ${spec.nome}`, valore: spec.effetto.va ?? 0 } : null,
+      { nome: `VA ${a.nome}`, valore: a.totale, fonte: 'regole' },
+      spec ? { nome: `Specializzazione in ${spec.nome}`, valore: spec.effetto.va ?? 0, fonte: 'regole' } : null,
       // §7.1.3: Precisa X concede +X VA alle Prove per colpire con l'arma
-      ...(d?.proprieta ?? []).filter((p) => p.effetto?.va).map((p) => ({ nome: p.nome, valore: p.effetto.va })),
+      ...(d?.proprieta ?? []).filter((p) => p.effetto?.va).map((p) => ({ nome: `${nomeProprieta(p)} (${o.nome})`, valore: p.effetto.va })),
       d?.modificatore_va ? { nome: 'Modificatore VA dell’arma', valore: d.modificatore_va } : null,
       sin.has(d?.rif) ? { nome: `SIN ${sin.get(d.rif).valore} (${interfaccia.nome}, §7.15.1)`, valore: sin.get(d.rif).valore } : null,
       forPen ? { nome: `FOR ${FOR} su ${d.for_richiesta} richiesta (§7.1.6)`, valore: -forPen } : null,
@@ -487,7 +499,8 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     const bonusDanno = spec?.effetto.danno ?? 0;
     const dannoAccessori = acc.reduce((s, x) => s + (x.def?.effetto_arma?.danno ?? 0), 0);
     const dannoBase = d?.danno ?? (o.voce.personalizzato?.danno ? { una_mano: o.voce.personalizzato.danno, due_mani: null } : null);
-    const parataVa = (d?.proprieta ?? []).reduce((s, p) => s + (p.effetto?.parata_va ?? 0), 0);
+    const proprietaParata = (d?.proprieta ?? []).filter((p) => p.effetto?.parata_va);
+    const parataVa = proprietaParata.reduce((s, p) => s + p.effetto.parata_va, 0);
     const difese = difeseVa;
     // Parata con l'arma: Difese + proprietà difensive − penalità FOR dell'arma (§7.1.3, §7.1.6);
     // a distanza si aggiunge la penalità del Giocatore §5.9 (−8 VA con un'arma)
@@ -495,9 +508,10 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       va: difese + parataVa - forPen,
       distanza: parataDistanzaArma === null ? null : difese + parataVa - forPen + parataDistanzaArma,
       componenti: [
-        { nome: `VA ${difeseAbilita}`, valore: difese },
-        parataVa ? { nome: 'Proprietà difensive', valore: parataVa } : null,
-        forPen ? { nome: 'FOR insufficiente', valore: -forPen } : null,
+        { nome: `VA ${difeseAbilita}`, valore: abilitaPer(difeseAbilita).totale, fonte: 'regole' },
+        ...(componentiEquip[difeseAbilita] ?? []).map((c) => ({ nome: c.etichetta, valore: c.valore })),
+        ...proprietaParata.map((p) => ({ nome: `${nomeProprieta(p)} (${o.nome})`, valore: p.effetto.parata_va })),
+        forPen ? { nome: `FOR insufficiente (${o.nome})`, valore: -forPen } : null,
       ].filter(Boolean),
     } : null;
     // §7.7: «FOR × 3» nella colonna Max Q: la gittata dipende dalla Forza del personaggio
@@ -557,7 +571,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     if (!att) continue;
     const a = abilitaPer(att.abilita);
     const componenti = a ? [
-      { nome: `VA ${a.nome}`, valore: a.totale },
+      { nome: `VA ${a.nome}`, valore: a.totale, fonte: 'regole' },
       p.forMancante ? { nome: `FOR ${FOR} su ${d.for_richiesta} richiesta (§7.1.6)`, valore: -p.forMancante } : null,
       attacchiRavv ? { nome: 'Armatura (§7.11.1)', valore: attacchiRavv } : null,
     ].filter(Boolean) : [];
@@ -621,6 +635,8 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     protezioni,
     zaino: oggetti.filter((o) => !o.attivo),
     equipAbilita,
+    componentiEquip,
+    abilitaDifese: difeseAbilita,
     movimentoQ,
     lancioPotere,
     forMancanteArmature,

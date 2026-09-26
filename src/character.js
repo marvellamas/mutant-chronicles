@@ -318,6 +318,24 @@ export function anteprima(scelte, dati) {
 // ---------------------------------------------------------------------------
 // Serializzazione: il file contiene solo le scelte (creazione e livelli), mai valori calcolati.
 
+/**
+ * Nome del file esportato: «<nome>_liv<N>_<AAAA-MM-GG>.json», così la cartella dei backup racconta
+ * la storia da sola. Dal nome si tolgono i caratteri non ammessi nei file (Windows compreso) e gli
+ * spazi diventano trattini; maiuscole e accenti restano. Nome vuoto: «personaggio». L'import non
+ * dipende dal nome del file.
+ */
+export function nomeFileEsportazione(nome, livello, data = new Date()) {
+  const pulito = String(nome ?? '')
+    .replace(/[\\/:*?"<>|\u0000-\u001f\u007f]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-{2,}/g, '-')
+    .replace(/^[.-]+|[.-]+$/g, '');
+  const due = (n) => String(n).padStart(2, '0');
+  const giorno = `${data.getFullYear()}-${due(data.getMonth() + 1)}-${due(data.getDate())}`;
+  return `${pulito || 'personaggio'}_liv${Number.isInteger(livello) && livello > 0 ? livello : 1}_${giorno}.json`;
+}
+
 export function serializza(scelte, { versioniDati, livelli, sessione } = {}) {
   const pulite = {};
   for (const k of CAMPI) pulite[k] = scelte?.[k] ?? nuoveScelte()[k];

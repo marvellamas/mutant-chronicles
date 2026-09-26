@@ -6,10 +6,10 @@ import { caricaDati } from '../rules.js';
 import { formattaErrore, trovaTodo } from '../validate.js';
 import { calcolaScheda, validaLivello } from '../calc.js';
 import {
-  nuoveScelte, normalizza, applicaModifica, anteprima, serializza, deserializzaPersonaggio, applicaLivello, annullaUltimoLivello,
+  nuoveScelte, normalizza, applicaModifica, anteprima, serializza, nomeFileEsportazione, deserializzaPersonaggio, applicaLivello, annullaUltimoLivello,
   CAMPI_ANAGRAFICA,
 } from '../character.js';
-import { h, svuota, scaricaFile, nomeFileSicuro } from './dom.js';
+import { h, svuota, scaricaFile } from './dom.js';
 import * as archivio from './storage.js';
 import { PASSI, passoVisibile, requisitoPasso } from './passi.js';
 import { inizializzaTooltip, nascondiTooltip } from './tooltip.js';
@@ -194,7 +194,7 @@ function persisti() {
 
 function esporta(scelte, livelli = [], sessione = null) {
   const versioniDatiFile = Object.fromEntries(Object.entries(stato.dati).map(([k, v]) => [k, v.versione_manuale]));
-  scaricaFile(nomeFileSicuro(scelte.nome), serializza(scelte, { versioniDati: versioniDatiFile, livelli, sessione }));
+  scaricaFile(nomeFileEsportazione(scelte.nome, 1 + livelli.length), serializza(scelte, { versioniDati: versioniDatiFile, livelli, sessione }));
 }
 
 /** Sessione allineata ai massimi attuali (inizializzata se manca), o null se la scheda non si calcola. */
@@ -536,7 +536,8 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
   nascondiTooltip();
   const y = window.scrollY;
   const { dati } = stato;
-  const tab = preparaTab(personaggio(), dati);
+  // le tab mostrano i valori effettivi con le condizioni della sessione; la stampa no
+  const tab = preparaTab(personaggio(), dati, { sessione: stato.sessione });
   document.title = `${stato.scelte.nome.trim() || 'Personaggio'} — Scheda · Mutant`;
   if (!tab.tab.length) {
     svuota(radice, h('section', { class: 'passo' },

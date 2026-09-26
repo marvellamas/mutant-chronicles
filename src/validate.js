@@ -51,6 +51,7 @@ export function validaDati(dati) {
   const nomiAbilita = validaAbilita(dati.abilita, sigle, err);
   const idSalvezze = (dati.caratteristiche?.salvezze ?? []).map((s) => s?.id);
   validaRegole(dati.regole, err);
+  if (dati.regole && dati.abilita) validaEffettiCondizioni(dati, err);
   validaCorporazioni(dati.corporazioni, sigle, nomiAbilita, idSalvezze, dati.caratteristiche, err);
   const nomiAddestramenti = validaAddestramenti(dati.addestramenti, nomiAbilita, idSalvezze, dati.regole, err);
   const macrofamiglie = validaIncantesimi(dati.incantesimi, dati.regole, err);
@@ -153,6 +154,49 @@ function validaAbilita(a, sigle, err) {
     if (!isTesto(x.descrizione)) err(F, `${k}.descrizione`, 'descrizione mancante o vuota (§4.4)');
   });
   return new Set(lista.map((x) => x.nome));
+}
+
+/**
+ * Effetti strutturati di Ferite, Affaticamento e Stati (§5.14, §5.18, §5.19), usati per i valori
+ * effettivi della modalità tavolo (src/condizioni.js): nomi di Abilità, categorie e gruppi esistenti,
+ * valori interi.
+ */
+function validaEffettiCondizioni(dati, err) {
+  const F = 'regole.json';
+  const r = dati.regole;
+  const nomi = new Set((dati.abilita.abilita ?? []).map((a) => a.nome));
+  const categorie = new Set(dati.abilita.categorie ?? []);
+  for (const k of ['ferite', 'affaticamento']) {
+    const a = r[k]?.si_applica_a;
+    if (!Array.isArray(a) || !a.length || !a.every((x) => ['abilita', 'salvezze'].includes(x))) err(F, `${k}.si_applica_a`, 'lista di "abilita" e/o "salvezze" mancante');
+  }
+  const gruppi = Object.keys(r.stati ?? {}).filter((k) => k.startsWith('abilita_')).map((k) => k.slice(8));
+  for (const g of gruppi) {
+    const l = r.stati[`abilita_${g}`];
+    if (!Array.isArray(l)) err(F, `stati.abilita_${g}`, 'lista di Abilità mancante');
+    else l.forEach((n) => { if (!nomi.has(n)) err(F, `stati.abilita_${g}`, `"${n}" non è un'Abilità`); });
+  }
+  (r.stati?.elenco ?? []).forEach((x, i) => {
+    if (x?.effetto === undefined) return;
+    const P = `stati.elenco[${i}] (${x.nome}).effetto`;
+    const e = x.effetto;
+    if (!isOggetto(e)) { err(F, P, 'deve essere un oggetto'); return; }
+    const noti = ['va', 'salvezze', 'va_categorie', 'va_abilita', 'va_gruppi', 'fonte'];
+    for (const k of Object.keys(e)) if (!noti.includes(k)) err(F, `${P}.${k}`, `campo sconosciuto (ammessi: ${noti.join(', ')})`);
+    for (const k of ['va', 'salvezze']) if (e[k] !== undefined && !isIntero(e[k])) err(F, `${P}.${k}`, 'numero intero atteso');
+    const mappa = (k, validi, cosa) => {
+      if (e[k] === undefined) return;
+      if (!isOggetto(e[k])) { err(F, `${P}.${k}`, 'oggetto {nome: valore} atteso'); return; }
+      for (const [n, v] of Object.entries(e[k])) {
+        if (!validi.has(n)) err(F, `${P}.${k}.${n}`, `${cosa} inesistente`);
+        if (!isIntero(v)) err(F, `${P}.${k}.${n}`, 'numero intero atteso');
+      }
+    };
+    mappa('va_categorie', categorie, 'categoria di Abilità');
+    mappa('va_abilita', nomi, 'Abilità');
+    mappa('va_gruppi', new Set(gruppi), 'gruppo (serve stati.abilita_<gruppo>)');
+    if (!isTesto(e.fonte)) err(F, `${P}.fonte`, 'paragrafo del manuale mancante');
+  });
 }
 
 function validaRegole(r, err) {

@@ -33,7 +33,9 @@ test('i TODO(Davide) sono elencabili', () => {
   assert.ok(todo.some((t) => t.percorso.startsWith('caratteristiche.json')));
   assert.ok(todo.some((t) => t.percorso.startsWith('talenti_liberi.json')));
   // chiusi dalle risposte del master (docs/risposte-master.md)
-  assert.equal(todo.some((t) => t.percorso.startsWith('classi.json') || t.percorso.startsWith('regole.json')), false);
+  assert.equal(todo.some((t) => t.percorso.startsWith('classi.json')), false);
+  // in regole.json restano solo le domande sugli effetti degli Stati (§5.18, per-davide A.16–A.17)
+  assert.deepEqual([...new Set(todo.filter((t) => t.percorso.startsWith('regole.json')).map((t) => t.percorso.split('.TODO')[0]))], ['regole.json.stati']);
 });
 
 test('risposte del master: Specializzazioni dei Talenti dell’Esploratore', () => {

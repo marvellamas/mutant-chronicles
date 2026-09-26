@@ -5,7 +5,8 @@
 // Le penalità di Ferite, Affaticamento e Stati sono solo promemoria: i VA mostrati non le
 // includono (le regole del cap. 5 sono situazionali).
 import { h, segno } from './dom.js';
-import { info } from './tooltip.js';
+import { info, infoValore } from './tooltip.js';
+import { formulaScomposizione } from '../condizioni.js';
 import { descriviFerite } from '../sessione.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
 import { testoDanno } from '../stampa.js';
@@ -119,9 +120,37 @@ function promemoriaPenalita(ctx) {
   if (p.affaticamento.penalita) parti.push(`Affaticamento: ${p.affaticamento.nome} ${segno(p.affaticamento.penalita)} a tutte le Prove`);
   if (p.stati.length) parti.push(`Stati: ${p.stati.map((s) => s.nome).join(', ')}`);
   if (!parti.length) return null;
+  const soloTesto = p.stati.filter((s) => !s.effetto);
   return h('div', { class: 'riquadro attenzione promemoria' },
-    h('p', {}, h('strong', {}, 'Promemoria di sessione. '), parti.join(' · '), '.'),
-    p.totale ? h('p', { class: 'nota' }, `Totale alle Prove: ${segno(p.totale)}. I valori della scheda non includono queste penalità: applicale al tiro (cap. 5).`) : null);
+    h('p', {}, h('strong', {}, 'Condizioni di sessione. '), parti.join(' · '), '.'),
+    h('p', { class: 'nota' }, 'I valori della scheda le includono già: ▼ in rosso i malus, ▲ in verde i bonus rispetto al valore da regole; tocca un valore per la scomposizione. La stampa resta a riposo.',
+      soloTesto.length ? ` Senza effetto numerico, da applicare al tiro: ${soloTesto.map((s) => `${s.nome}: ${s.promemoria}`).join(' ')}` : null));
+}
+
+const FONTI = { regole: 'regole', equipaggiamento: 'equipaggiamento', ferite: 'Ferite (§5.14)', affaticamento: 'Affaticamento (§5.19)', stato: 'Stato (§5.18)' };
+
+/**
+ * Valore effettivo della modalità tavolo (regole + equipaggiamento + condizioni). Se differisce dal
+ * valore da regole: rosso ▼ (malus) o verde ▲ (bonus); il segno resta leggibile senza colore.
+ * Con più di una voce, un tocco o il passaggio del mouse mostra la scomposizione.
+ */
+function valoreEffettivo(nome, effettivo, daRegole, scomposizione = []) {
+  if (effettivo === null || effettivo === undefined) return '—';
+  const diff = daRegole === null || daRegole === undefined ? 0 : effettivo - daRegole;
+  const verso = diff < 0 ? 'malus' : diff > 0 ? 'bonus' : '';
+  const figli = [numero(effettivo),
+    verso ? h('span', { class: 'segno-verso', 'aria-hidden': 'true' }, diff < 0 ? '▼' : '▲') : null,
+    verso ? h('span', { class: 'sr' }, ` (${segno(diff)} rispetto al valore da regole ${numero(daRegole)})`) : null];
+  if (scomposizione.length <= 1) return h('span', { class: `val-eff ${verso}`.trim() }, figli);
+  return infoValore(figli, {
+    titolo: `${nome}: ${numero(effettivo)}`,
+    sottotitolo: `Valore da regole ${numero(daRegole)}`,
+    sezioni: [{ testo: formulaScomposizione(nome, scomposizione) }],
+    tabella: {
+      titolo: 'Scomposizione', colonne: ['Voce', 'Valore', 'Fonte'],
+      righe: scomposizione.map((x, i) => ({ Voce: x.etichetta, Valore: i ? segno(x.valore) : numero(x.valore), Fonte: FONTI[x.fonte] ?? x.fonte })),
+    },
+  }, { classe: `val-eff ${verso}` });
 }
 
 const sezione = (titolo, ...contenuto) => h('section', { class: 'sezione-tab' }, h('h2', {}, titolo), ...contenuto);
@@ -176,8 +205,9 @@ function tabIdentita(ctx, d) {
           h('thead', {}, h('tr', {}, h('th', {}, ''), h('th', {}, 'Car.'), h('th', {}, 'Valore'))),
           h('tbody', {}, d.salvezze.map((x) => h('tr', {},
             h('th', { scope: 'row' }, x.nome), h('td', {}, x.caratteristica),
-            h('td', { class: 'forte', title: x.limitato ? `Limitato a ${x.tetto} (§1.2.3)` : null }, `${x.totale}${x.limitato ? '*' : ''}`))))),
-        ctx.penalita.totale ? h('p', { class: 'nota' }, `Promemoria: ${segno(ctx.penalita.totale)} per Ferite e Affaticamento, non incluso.`) : null)),
+            h('td', { class: 'forte', title: x.limitato ? `Limitato a ${x.tetto} (§1.2.3)` : null },
+              valoreEffettivo(x.nome, x.effettivo, x.totale, x.scomposizione), x.limitato ? '*' : null))))),
+        d.salvezze.some((x) => x.effettivo !== x.totale) ? h('p', { class: 'nota' }, 'Con le condizioni della sessione (Ferite, Affaticamento, Stati).') : null)),
 
     sezione('Combattimento e movimento',
       h('dl', { class: 'voci griglia-voci' },
@@ -229,12 +259,12 @@ function tabAbilita(ctx, d) {
         h('th', { scope: 'row' }, info('abilita', a.nome), h('span', { class: 'sigla' }, ` ${a.caratteristica}`), a.diClasse ? ' •' : null,
           h('small', { class: 'formula' }, `${segno(a.mod)} Mod + ${a.base} Base + ${a.corporazione} Corp + ${a.avanzamento} Avanz${a.equip ? ` ${segno(a.equip)} Equip` : ''}`)),
         h('td', { class: 'dettaglio' }, segno(a.mod)), h('td', { class: 'dettaglio' }, String(a.base)), h('td', { class: 'dettaglio' }, String(a.corporazione)),
-        h('td', { class: 'dettaglio' }, String(a.avanzamento)), h('td', { class: 'dettaglio', title: a.equip ? 'Equipaggiamento indossato (§7.11.1)' : null }, a.equip ? segno(a.equip) : '0'), h('td', { class: 'forte' }, String(a.va)))))));
+        h('td', { class: 'dettaglio' }, String(a.avanzamento)), h('td', { class: 'dettaglio', title: a.equip ? 'Equipaggiamento indossato (§7.11.1)' : null }, a.equip ? segno(a.equip) : '0'), h('td', { class: 'forte' }, valoreEffettivo(a.nome, a.effettivo, a.totale, a.scomposizione)))))));
   return [
     promemoriaPenalita(ctx),
     sezione('Abilità',
       h('div', { class: 'abilita-affiancate' }, tabella(d.categorie.slice(0, meta)), tabella(d.categorie.slice(meta))),
-      h('p', { class: 'nota' }, `• Abilità di Classe. VA = Mod + Base + Corp + Avanz + Equip (equipaggiamento indossato). Avanzamento massimo: ${d.limiteAvanzamento ?? '—'}.`)),
+      h('p', { class: 'nota' }, `• Abilità di Classe. VA = Mod + Base + Corp + Avanz + Equip (equipaggiamento indossato), più le condizioni della sessione (▼/▲ rispetto al valore da regole). Avanzamento massimo: ${d.limiteAvanzamento ?? '—'}.`)),
     sezione('Talenti di Classe', d.talentiClasse.map((t) => h('div', { class: 'talento' },
       h('h3', {}, t.nome, h('span', { class: 'sigla' }, ` · ${t.classe} ${t.grado}${t.scelto ? ', a scelta' : ''}`)),
       paragrafi(t.frase)))),
@@ -265,8 +295,8 @@ function tabCombattimento(ctx, d) {
     h('div', { class: 'griglia-tavolo' },
       contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv }),
       d.difese ? h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Difese'),
-        h('p', { class: 'valore-tavolo' }, h('strong', {}, `VA ${d.difese.va}`)),
-        h('p', { class: 'nota' }, `(${d.difese.caratteristica}) con l’equipaggiamento, senza penalità di sessione`)) : null),
+        h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), h('strong', {}, valoreEffettivo('Difese', d.difese.effettivo, d.difese.totale, d.difese.scomposizione))),
+        h('p', { class: 'nota' }, `(${d.difese.caratteristica}) con l’equipaggiamento e le condizioni della sessione`)) : null),
 
     sezione('Armi impugnate', d.armiCalcolate.length
       ? h('div', { class: 'armi-tab' }, d.armiCalcolate.map((a) => schedaArma(ctx, a)))
@@ -282,7 +312,10 @@ function tabCombattimento(ctx, d) {
             h('td', { title: p.categoriaBase && p.categoria !== p.categoriaBase ? 'Leggera portata ad AR 3 o più da un rinforzo: penalità della Media (§7.11.2)' : null },
               p.categoria !== p.categoriaBase && p.categoriaBase ? `${p.categoriaBase} → ${p.categoria}` : p.categoria ?? p.taglia ?? '—'),
             h('td', { title: p.parata ? `Difese ${p.parata.difese} + modificatori dello Scudo ${segno(p.parata.modificatori.ravvicinata)} / ${segno(p.parata.modificatori.distanza)} (§7.4.11)` : null },
-              p.parata ? `${numero(p.parata.ravvicinata)} ravv. · ${numero(p.parata.distanza)} dist.` : '—'),
+              p.parata ? [
+                valoreEffettivo(`Parata ravvicinata (${p.nome})`, p.parata.ravvicinataEffettiva ?? p.parata.ravvicinata, p.parata.daRegole, p.parata.scomposizioneRavvicinata), ' ravv. · ',
+                valoreEffettivo(`Parata a distanza (${p.nome})`, p.parata.distanzaEffettiva ?? p.parata.distanza, p.parata.daRegole, p.parata.scomposizioneDistanza), ' dist.',
+              ] : '—'),
             h('td', {}, testoPenalitaTab({ ...p.penalita, movimento_q: (p.penalita?.movimento_q ?? 0) + (p.mov ?? 0) || undefined })),
             h('td', {}, p.forRichiesta ? `${p.forRichiesta}${p.forMancante ? ` (−${p.forMancante} VA${p.tipo === 'scudo' ? ' a Parate e attacchi con lo Scudo' : ''})` : ''}` : '—')),
           ...p.alternative.map((a) => h('tr', { class: 'alternativa' },
@@ -374,15 +407,16 @@ function schedaArma(ctx, a) {
     h('h3', {}, a.nome, h('small', { class: 'sigla' }, ` · ${a.abilita ?? 'Abilità non indicata'}`)),
     a.moduloDi ? h('p', { class: 'nota' }, `Modulo integrato di ${a.moduloDi}: si sceglie il profilo prima di ogni attacco; alimentazione separata (§7.8).`) : null,
     h('div', { class: 'arma-valori' },
-      h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), h('strong', {}, a.va === null ? '—' : numero(a.va))),
+      h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), h('strong', {}, a.va === null ? '—' : valoreEffettivo(`VA per colpire (${a.nome})`, a.vaEffettivo ?? a.va, a.vaDaRegole ?? a.va, a.scomposizione))),
       h('p', {}, h('span', { class: 'sigla' }, 'Danno '), h('strong', {}, dannoTesto)),
       a.ac !== null && a.ac !== 1 ? h('p', {}, h('span', { class: 'sigla', title: 'Applicazioni di danno per colpo a segno' }, 'AC '), a.ac === 'munizione' ? (mr ? String(mr.ac) : 'dalla munizione') : String(a.ac)) : null,
       mr ? h('p', {}, h('span', { class: 'sigla', title: 'Raggio di scoppio della munizione (§5.10)' }, 'RS '), `${mr.rs_q} Q`) : null,
       a.portataQ ? h('p', {}, h('span', { class: 'sigla' }, 'Portata '), `${a.portataQ} Q`) : null,
       a.gittataQ ? h('p', {}, h('span', { class: 'sigla' }, 'Gittata '), `${a.gittataQ} Q`, a.gittataFormula ? h('small', { class: 'sigla' }, ` (${a.gittataFormula})`) : null) : null,
       a.inc ? h('p', {}, h('span', { class: 'sigla', title: 'Affidabilità (tabella di Inceppamento)' }, 'INC '), String(a.inc)) : null,
-      a.parata ? h('p', {}, h('span', { class: 'sigla' }, 'Parata '), h('strong', {}, numero(a.parata.va)),
-        a.parata.distanza !== null && a.parata.distanza !== undefined ? h('small', { class: 'sigla', title: 'Parata a distanza con un’arma: −8 VA (Giocatore §5.9)' }, ` · a distanza ${numero(a.parata.distanza)}`) : null) : null),
+      a.parata ? h('p', {}, h('span', { class: 'sigla' }, 'Parata '),
+        h('strong', {}, valoreEffettivo(`Parata (${a.nome})`, a.parata.vaEffettivo ?? a.parata.va, a.parata.vaDaRegole ?? a.parata.va, a.parata.scomposizione)),
+        a.parata.distanza !== null && a.parata.distanza !== undefined ? h('small', { class: 'sigla', title: 'Parata a distanza con un’arma: −8 VA (Giocatore §5.9)' }, ` · a distanza ${numero(a.parata.distanzaEffettiva ?? a.parata.distanza)}`) : null) : null),
     a.componenti.length ? h('p', { class: 'nota' }, a.componenti.map((c) => `${c.nome} ${segno(c.valore)}`).join(' · '),
       a.bonusDanno ? ` · danno +${a.bonusDanno} (${a.specializzazione})` : null) : null,
     a.modalita.length ? h('p', { class: 'proprieta-arma' }, h('span', { class: 'sigla' }, 'Modalità '),

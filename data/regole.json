@@ -394,6 +394,7 @@
       }
     ],
     "oltre": "Morte",
+    "si_applica_a": ["abilita", "salvezze"],
     "_nota": "§5.14: penalità cumulativa a VA e Prove Salvezza; §5.14.1: PS di Tempra per le Menomazioni al primo raggiungimento di Profonda, Seria, Grave. Usato dalla scheda stampata."
   },
   "stati": {
@@ -403,14 +404,16 @@
         "nome": "A Terra",
         "durata": "fino a quando si rialza",
         "promemoria": "−4 VA ad azioni fisiche ravvicinate, di equilibrio e alle Difese; niente Corsa o Scatto; contro di lui +2 VA in ravvicinato, −2 VA a distanza (§5.5).",
-        "riassunto": true
+        "riassunto": true,
+        "effetto": { "va_categorie": { "Ravvicinato": -4 }, "fonte": "§5.5: −4 VA alle azioni fisiche ravvicinate e alle Difese (categoria Ravvicinato, Difese compresa); l’equilibrio resta promemoria" }
       },
       {
         "id": "accecato",
         "nome": "Accecato",
         "durata": "1+1d3 Round",
         "promemoria": "−8 VA alle Prove che richiedono la vista, Difese comprese; niente Tiro o Colpo Mirato; i nemici non percepiti hanno +4 VA.",
-        "riassunto": true
+        "riassunto": true,
+        "effetto": { "va_abilita": { "Difese": -8 }, "fonte": "§5.18: −8 VA alle Prove che richiedono la vista, comprese le Difese; le altre Prove dipendono dalla situazione e restano promemoria" }
       },
       {
         "id": "assordato",
@@ -431,21 +434,24 @@
         "nome": "Immobilizzato",
         "durata": "1+1d3 Round o fino alla liberazione",
         "promemoria": "Non può muoversi né usare Corsa o Scatto; −4 VA alle azioni fisiche.",
-        "riassunto": true
+        "riassunto": true,
+        "effetto": { "va_gruppi": { "fisiche": -4 }, "fonte": "§5.18: −4 VA alle azioni fisiche" }
       },
       {
         "id": "incendiato",
         "nome": "Incendiato",
         "durata": "1+1d3 Round",
         "promemoria": "1d4 danni da fuoco ai PV ogni Round, ignorando l’Armatura; −2 VA; 1 AzP e Riflessi per spegnersi.",
-        "riassunto": true
+        "riassunto": true,
+        "effetto": { "va": -2, "fonte": "§5.18: −2 VA continuo fino al termine dello Stato" }
       },
       {
         "id": "rallentato",
         "nome": "Rallentato",
         "durata": "1+1d3 Round",
         "promemoria": "Passo 3 Q, niente Corsa o Scatto; −2 VA alle Prove fisiche e alle Difese.",
-        "riassunto": true
+        "riassunto": true,
+        "effetto": { "va_gruppi": { "fisiche": -2 }, "fonte": "§5.18: −2 VA alle Prove fisiche e alle Difese (Difese è fra le Abilità fisiche)" }
       },
       {
         "id": "sanguinamento",
@@ -473,9 +479,16 @@
         "nome": "Terrorizzato",
         "durata": "1+1d3 Round",
         "promemoria": "−4 VA a tutte le Prove; deve allontanarsi dalla fonte e non può attaccarla.",
-        "riassunto": true
+        "riassunto": true,
+        "effetto": { "va": -4, "salvezze": -4, "fonte": "§5.18: −4 VA a tutte le Prove; Prove Salvezza comprese per ipotesi (per-davide A.17)" }
       }
     ],
+    "abilita_fisiche": ["Armi da lancio", "Armi leggere", "Armi medie", "Armi pesanti", "Armi da guerra", "Armi da mischia", "Corpo a corpo", "Difese", "Atletica", "Furtività"],
+    "TODO(Davide)": [
+      "Quali Abilità sono «fisiche» per Immobilizzato e Rallentato (§5.18) e per il carico del §5.2 («Prove fisiche, compresi attacchi e Difese»)? L'app usa: tutte le Abilità di Distanza e Ravvicinato (attacchi e Difese), Atletica e Furtività.",
+      "Terrorizzato (§5.18, «−4 VA a tutte le Prove»): vale anche per le Prove Salvezza? L'app lo applica anche alle Salvezze."
+    ],
+    "_nota_effetti": "«effetto» (solo dove il §5.18 dà un numero) entra nei valori effettivi della modalità tavolo: va = tutte le Abilità (e quindi gli attacchi); va_categorie / va_abilita / va_gruppi = solo quelle Abilità (gruppi: abilita_fisiche); salvezze = le 4 Prove Salvezza. Gli Stati senza effetto restano promemoria. La stampa non li applica.",
     "_nota": "§5.18, tabella «Durate e tempi di risoluzione»: gli Stati sono undici. «promemoria» (con \"riassunto\": true) riassume gli effetti descritti nel §5.18 (A Terra: §5.5) per la scheda e la modalità tavolo; il testo del manuale resta quello di riferimento."
   },
   "affaticamento": {
@@ -509,6 +522,7 @@
         "penalita": -8
       }
     ],
+    "si_applica_a": ["abilita", "salvezze"],
     "_nota": "§5.19: un unico Stato di Affaticamento; si applica solo la penalità dello Stato attuale, a tutte le Prove di Caratteristica, Abilità e Salvezza. Riposato è la riserva iniziale."
   },
   "difese": {

@@ -26,6 +26,19 @@ export function info(tipo, id, testo = id) {
   return h('button', { type: 'button', class: 'voce-info', dataset: { infoTipo: tipo, infoId: id } }, testo);
 }
 
+// Contenuti liberi dei valori con scomposizione (tipo «valore»), legati all'elemento
+const contenutiValore = new WeakMap();
+
+/**
+ * Valore con tooltip di contenuto libero { titolo, sottotitolo, sezioni: [{testo}], tabella }:
+ * la scomposizione dei valori effettivi della scheda. Stesso comportamento dei nomi (tocco, tastiera).
+ */
+export function infoValore(figli, contenuto, { classe = '' } = {}) {
+  const el = h('button', { type: 'button', class: `voce-info valore-info ${classe}`.trim(), dataset: { infoTipo: 'valore' } }, figli);
+  contenutiValore.set(el, contenuto);
+  return el;
+}
+
 /** Elenco di nomi con tooltip separati da virgole. */
 export function elencoInfo(tipo, nomi) {
   return nomi.flatMap((n, i) => (i ? [', ', info(tipo, n)] : [info(tipo, n)]));
@@ -111,7 +124,7 @@ export function nascondiTooltip() {
 
 function mostra(el) {
   if (!dati || !el.isConnected) return;
-  const c = contenutoTooltip(el.dataset.infoTipo, el.dataset.infoId, dati);
+  const c = el.dataset.infoTipo === 'valore' ? contenutiValore.get(el) : contenutoTooltip(el.dataset.infoTipo, el.dataset.infoId, dati);
   if (!c) return;
   clearTimeout(timerChiudi);
   origine?.removeAttribute('aria-describedby');

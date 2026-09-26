@@ -15,6 +15,7 @@ Dopo il collaudo del 26 settembre (tre personaggi di riferimento creati dalla UI
 - **Scheda stampabile (§2):** vista `#/p/<id>/stampa`, A4 orizzontale, 3 fogli o 4 con la Magia. Il foglio Magia continua su più pagine («foglio 5 di 6»). Anagrafica nel passo Background.
 - **Scheda a tab e modalità tavolo (§3):** quattro tab, posizione configurabile, blocco `sessione` con PV, PM, Punti Eroe, Distintivi, Ferite, Affaticamento, Stati, caricatori e applicazioni, «Nuova sessione» e «Annulla». Salendo o annullando un livello PV e PM attuali seguono i massimi (ipotesi, `per-davide.md` A.15).
 - Pacchetto per il master (`distribuzione/`) e file personaggio al formato 5.
+- Valori effettivi in modalità tavolo (aggiunti dopo il collaudo): Ferite, Affaticamento e Stati con effetto numerico dentro VA, Salvezze e Parata, con scomposizione e ▼/▲; la stampa resta a riposo. File esportato `<nome>_liv<N>_<data>.json`.
 
 **Resta**
 
@@ -22,7 +23,7 @@ Dopo il collaudo del 26 settembre (tre personaggi di riferimento creati dalla UI
 - **Equipaggiamento iniziale (§2.16):** il manuale non c'è; finché manca, inserimento a mano.
 - **Integrità degli oggetti (§7.2.1):** PI attuali in modalità tavolo, non ancora estratta.
 - **Restano testo, senza calcolo:** effetti delle munizioni speciali e dei dardi, compatibilità degli accessori per modello, riduzione della sintonizzazione per Umanità (§5.21).
-- **Fuori perimetro per ora:** penalità di sessione dentro i VA (oggi promemoria), veicoli, Manuale degli Equipaggiamenti (in stesura), versione compatta a 2 fogli per i PNG, logo del gruppo (§2.3).
+- **Fuori perimetro per ora:** veicoli, Manuale degli Equipaggiamenti (in stesura), versione compatta a 2 fogli per i PNG, logo del gruppo (§2.3).
 
 ## 1. Equipaggiamento nella scheda
 

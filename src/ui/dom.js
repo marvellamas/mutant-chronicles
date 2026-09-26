@@ -56,8 +56,3 @@ export function scaricaFile(nomeFile, testo, tipo = 'application/json') {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-export function nomeFileSicuro(testo) {
-  const base = (testo || 'personaggio').normalize('NFD').replace(/[̀-ͯ]/g, '')
-    .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-  return `${base || 'personaggio'}.json`;
-}
