@@ -9,6 +9,7 @@ import { passiDelLivello, descriviVoce } from '../avanzamento.js';
 import { info } from './tooltip.js';
 import { componenteTiro } from './tiro.js';
 import { dettagli, bottoneScelta, contatore, stepper } from './passi.js';
+import { conOrdinale } from '../lingua.js';
 
 const trova = (lista, nome) => lista.find((x) => x.nome === nome);
 const GRADI_ROMANI = ['', 'I', 'II', 'III', 'IV', 'V', 'VI'];
@@ -78,7 +79,7 @@ export function renderSali(ctx) {
         h('p', { class: 'sopratitolo' }, `Sali al livello ${struttura.livello} · passo ${i + 1} di ${passi.length} · ${passo.rif}`),
         h('h1', { id: 'titolo-passo' }, passo.titolo)),
       struttura.informazioni.length ? h('div', { class: 'riquadro ok' },
-        h('p', {}, h('strong', {}, `Al ${struttura.livello}° livello, automaticamente:`)),
+        h('p', {}, h('strong', {}, `${conOrdinale('Al', struttura.livello)} livello, automaticamente:`)),
         h('ul', {}, struttura.informazioni.map((x) => h('li', {}, x)))) : null,
       corpo,
       passo.id !== 'riepilogo' && erroriPasso.length ? h('div', { class: 'riquadro attenzione' },
@@ -108,7 +109,7 @@ function passoCaratteristiche(c, passo) {
   };
   const alMassimo = Object.entries(prossimo.caratteristiche).filter(([, x]) => x.valore >= max).map(([s]) => s);
   return [
-    h('p', { class: 'guida' }, `Distribuisci ${k} Punti Caratteristica, anche sulla stessa Caratteristica. Al ${prossimo.livello}° livello il massimo è ${max}.`),
+    h('p', { class: 'guida' }, `Distribuisci ${k} Punti Caratteristica, anche sulla stessa Caratteristica. ${conOrdinale('Al', prossimo.livello)} livello il massimo è ${max}.`),
     contatore(rimasti, k, 'Punti Caratteristica'),
     alMassimo.length ? h('p', { class: 'nota' }, `${alMassimo.join(', ')} ${alMassimo.length > 1 ? 'sono' : 'è'} già a ${max}: il punto che lo supererebbe va su un’altra Caratteristica (§8.2).`) : null,
     h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella' },
@@ -119,7 +120,7 @@ function passoCaratteristiche(c, passo) {
         const valore = attuale + punti;
         // stesse regole di validaLivello: somma dei punti e massimo del livello
         const motivoPiu = rimasti <= 0 ? 'Nessun Punto Caratteristica rimasto da spendere.'
-          : valore + 1 > max ? `${sigla} arriverebbe a ${valore + 1}: al ${prossimo.livello}° livello il massimo è ${max} (§8.2).` : null;
+          : valore + 1 > max ? `${sigla} arriverebbe a ${valore + 1}: ${conOrdinale('al', prossimo.livello)} livello il massimo è ${max} (§8.2).` : null;
         return h('tr', {},
           h('th', { scope: 'row' }, info('caratteristica', sigla, nome), h('span', { class: 'sigla' }, ` ${sigla}`),
             motivoPiu && rimasti > 0 ? h('small', { class: 'motivo' }, motivoPiu) : null),
@@ -379,7 +380,7 @@ function passoAbilita(c, passo) {
     const avanz = a.avanzamento + punti;
     // stesse regole di validaLivello: limite del livello e VA ≥ 1 prima dei punti liberi
     const motivoPiu = rimasti <= 0 ? 'Nessun Punto Abilità Libero rimasto da spendere.'
-      : avanz + 1 > limite ? `Avanzamento ${avanz + 1}: al ${prossimo.livello}° livello il massimo è ${limite} (§8.3).`
+      : avanz + 1 > limite ? `Avanzamento ${avanz + 1}: ${conOrdinale('al', prossimo.livello)} livello il massimo è ${limite} (§8.3).`
         : a.totale < minimo ? `VA ${a.totale} prima dei punti liberi: serve almeno ${minimo} (§2.13).` : null;
     const inRiga = motivoPiu && rimasti > 0 ? motivoPiu : null;
     return h('tr', { class: a.daClasse ? 'di-classe' : null },
@@ -398,7 +399,7 @@ function passoAbilita(c, passo) {
       })));
   });
   return [
-    h('p', { class: 'guida' }, `Distribuisci ${k} Punti Abilità Liberi. Al ${prossimo.livello}° livello l’Avanzamento massimo è ${limite}, compresi i +1 di Classe già applicati; l’Abilità deve avere VA almeno ${minimo} prima dei punti liberi.`),
+    h('p', { class: 'guida' }, `Distribuisci ${k} Punti Abilità Liberi. ${conOrdinale('Al', prossimo.livello)} livello l’Avanzamento massimo è ${limite}, compresi i +1 di Classe già applicati; l’Abilità deve avere VA almeno ${minimo} prima dei punti liberi.`),
     contatore(rimasti, k, 'Punti Abilità Liberi'),
     h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella abilita' },
       h('thead', {}, h('tr', {}, h('th', {}, 'Abilità'),
@@ -425,7 +426,7 @@ function passoRiepilogo(c) {
     ['Azioni Principali', prima.azioni.principali, dopo.azioni.principali],
   ];
   return [
-    h('h3', {}, `Scelte del ${struttura.livello}° livello`),
+    h('h3', {}, `Scelte ${conOrdinale('del', struttura.livello)} livello`),
     righe.length ? h('ul', {}, righe.map((x) => h('li', {}, x))) : h('p', { class: 'vuoto' }, 'Nessuna scelta.'),
     h('h3', {}, 'Cosa cambia'),
     h('table', { class: 'tabella compatta confronto' },

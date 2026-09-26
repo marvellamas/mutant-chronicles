@@ -19,9 +19,10 @@ import { renderStampa, esciDallaStampa } from './stampa.js';
 import { preparaStampa, preparaTab } from '../stampa.js';
 import { renderTab } from './tab.js';
 import {
-  massimiSessione, allineaSessione, variaSessione, modificaSessione, commutaStato, nuovaSessione, convertiDistintivi,
+  massimiSessione, allineaSessione, variaSessione, modificaSessione, commutaStato, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
   penalitaSessione, variaMunizioni, ricaricaArma,
 } from '../sessione.js';
+import { conOrdinale } from '../lingua.js';
 
 // Dopo la creazione si possono ancora cambiare solo i campi descrittivi: le altre scelte
 // determinano i livelli successivi (ricognizione dell'avanzamento, §8).
@@ -323,7 +324,7 @@ function aggiorna(modifica, { ridisegna = true } = {}) {
   // Con livelli acquisiti la creazione è bloccata: cambiarla renderebbe incoerenti i livelli.
   const bloccati = Object.keys(modifica).filter((k) => !CAMPI_LIBERI_DOPO_LIVELLI.includes(k));
   if (stato.livelli.length && bloccati.length) {
-    stato.avvisi = [`La creazione è bloccata perché il personaggio è al ${1 + stato.livelli.length}° livello. Per cambiarla annulla prima i livelli dalla scheda finale.`];
+    stato.avvisi = [`La creazione è bloccata perché il personaggio è ${conOrdinale('al', 1 + stato.livelli.length)} livello. Per cambiarla annulla prima i livelli dalla scheda finale.`];
     stato.precedente = null;
     return renderWizard();
   }
@@ -403,7 +404,7 @@ function renderWizard() {
           h('h1', { id: 'titolo-passo' }, passo.titolo)),
         stato.salvataggioOk ? null : h('p', { class: 'riquadro attenzione' }, 'Il browser non permette il salvataggio automatico: usa Esporta per non perdere il personaggio.'),
         stato.livelli.length && stato.passo !== PASSO_SCHEDA ? h('p', { class: 'riquadro attenzione no-stampa' },
-          `Personaggio al ${1 + stato.livelli.length}° livello: la creazione si può consultare ma non modificare (tranne nome, Background, anagrafica ed equipaggiamento). Per cambiarla annulla i livelli dalla scheda finale.`) : null,
+          `Personaggio ${conOrdinale('al', 1 + stato.livelli.length)} livello: la creazione si può consultare ma non modificare (tranne nome, Background, anagrafica ed equipaggiamento). Per cambiarla annulla i livelli dalla scheda finale.`) : null,
         avvisi,
         corpo,
         h('footer', { class: 'passo-piede no-stampa' },
@@ -433,10 +434,24 @@ function saliDiLivello() {
   vai(`#/p/${stato.id}/sali/0`);
 }
 
+/** Massimi di sessione del personaggio attuale (null se la scheda non si calcola). */
+function massimiAttuali() {
+  const scheda = calcolaScheda(personaggio(), stato.dati);
+  return scheda.caratteristiche ? massimiSessione(scheda, stato.scelte, stato.dati) : null;
+}
+
+/** Cambia i livelli e porta PV e PM attuali insieme ai massimi (sessioneDopoLivello). */
+function cambiaLivelli(livelli) {
+  const prima = massimiAttuali();
+  stato.livelli = livelli;
+  const dopo = massimiAttuali();
+  if (prima && dopo && stato.sessione) stato.sessione = sessioneDopoLivello(stato.sessione, prima, dopo);
+}
+
 function annullaLivello() {
   const n = 1 + stato.livelli.length;
-  if (!stato.livelli.length || !confirm(`Annullare il ${n}° livello? Le sue scelte andranno perse (si torna al ${n - 1}° livello).`)) return;
-  stato.livelli = annullaUltimoLivello(personaggio()).livelli;
+  if (!stato.livelli.length || !confirm(`Annullare ${conOrdinale('il', n)} livello? Le sue scelte andranno perse (si torna ${conOrdinale('al', n - 1)} livello).`)) return;
+  cambiaLivelli(annullaUltimoLivello(personaggio()).livelli);
   persisti();
   stato.messaggioScheda = { tipo: 'ok', testo: `${n}° livello annullato.` };
   renderScheda();
@@ -472,7 +487,7 @@ function renderSaliPagina() {
     vaiPasso: (i) => vai(`#/p/${stato.id}/sali/${i}`),
     conferma() {
       if (validaLivello(personaggio(), bozza.voce, dati).length) return renderSaliPagina();
-      stato.livelli = applicaLivello(personaggio(), bozza.voce).livelli;
+      cambiaLivelli(applicaLivello(personaggio(), bozza.voce).livelli);
       stato.sali = null;
       stato.passo = PASSO_SCHEDA;
       persisti();

@@ -15,6 +15,7 @@ import {
 } from './calc.js';
 import { specTiro, valoreTiro, motivoFuoriIntervallo } from './tiri.js';
 import { calcolaEquipaggiamento, normalizzaEquipaggiamento } from './equipaggiamento.js';
+import { conOrdinale } from './lingua.js';
 
 export const VERSIONE_PERSONAGGIO = 2;
 
@@ -384,7 +385,7 @@ function controllaVoce(prima, voce, dati) {
   if (conTalento) ammesse.add('talentoLibero');
   if (conGrado) for (const k of ['grado', 'tiroPV', 'tiroPM', 'talentoClasse']) ammesse.add(k);
   if (kAbil) ammesse.add('puntiAbilita');
-  for (const k of Object.keys(v)) if (!ammesse.has(k)) err(k, `al ${n}° livello non si sceglie «${k}» (eventi: ${eventi.join(', ') || 'nessuno'})`);
+  for (const k of Object.keys(v)) if (!ammesse.has(k)) err(k, `${conOrdinale('al', n)} livello non si sceglie «${k}» (eventi: ${eventi.join(', ') || 'nessuno'})`);
 
   // §8.2: Punti Caratteristica e massimo per livello
   if (kCar) {
@@ -393,10 +394,10 @@ function controllaVoce(prima, voce, dati) {
     for (const [s, p] of Object.entries(pc)) {
       if (!(s in prima.car)) err(`caratteristiche.${s}`, `"${s}" non è una Caratteristica`);
       else if (!Number.isInteger(p) || p < 0) err(`caratteristiche.${s}`, 'i punti devono essere interi ≥ 0');
-      else if (prima.car[s] + p > max) err(`caratteristiche.${s}`, `${s} arriverebbe a ${prima.car[s] + p}: al ${n}° livello il massimo è ${max} (§8.2)`);
+      else if (prima.car[s] + p > max) err(`caratteristiche.${s}`, `${s} arriverebbe a ${prima.car[s] + p}: ${conOrdinale('al', n)} livello il massimo è ${max} (§8.2)`);
     }
     const spesi = somma(pc);
-    if (spesi > kCar) err('caratteristiche', `assegnati ${spesi} Punti Caratteristica, al ${n}° livello se ne ricevono ${kCar}`);
+    if (spesi > kCar) err('caratteristiche', `assegnati ${spesi} Punti Caratteristica, ${conOrdinale('al', n)} livello se ne ricevono ${kCar}`);
     if (spesi < kCar) err('caratteristiche', `assegnati ${spesi} Punti Caratteristica su ${kCar}`, 'incompleto');
   }
   // lo stato con le nuove Caratteristiche serve per VA, dotazioni e quote
@@ -465,12 +466,12 @@ function controllaVoce(prima, voce, dati) {
       if (!Number.isInteger(p) || p < 0) { err(`puntiAbilita.${a}`, 'i punti devono essere interi ≥ 0'); continue; }
       if (p === 0) continue;
       const avanz = x.daClasse + x.liberi;
-      if (avanz + p > limite) err(`puntiAbilita.${a}`, `Avanzamento ${avanz + p}: al ${n}° livello il massimo è ${limite} (§8.3)`);
+      if (avanz + p > limite) err(`puntiAbilita.${a}`, `Avanzamento ${avanz + p}: ${conOrdinale('al', n)} livello il massimo è ${limite} (§8.3)`);
       const va = vaDi(conGradoApplicato, a, avanz, dati);
       if (va < minimo) err(`puntiAbilita.${a}`, `VA ${va} prima dei punti liberi: serve almeno ${minimo} (§2.13)`);
     }
     const spesi = somma(pa);
-    if (spesi > kAbil) err('puntiAbilita', `assegnati ${spesi} Punti Abilità Liberi, al ${n}° livello se ne ricevono ${kAbil}`);
+    if (spesi > kAbil) err('puntiAbilita', `assegnati ${spesi} Punti Abilità Liberi, ${conOrdinale('al', n)} livello se ne ricevono ${kAbil}`);
     if (spesi < kAbil) err('puntiAbilita', `assegnati ${spesi} Punti Abilità Liberi su ${kAbil}`, 'incompleto');
   }
 
@@ -723,7 +724,7 @@ export function calcolaSchedaPersonaggio(personaggio, dati) {
     annotazioni.push('Classi taumaturgiche senza Addestramento Taumaturgo: nessun incantesimo libero dell’Addestramento e Prove di Potere con la scala «altri utilizzatori» (Magia, sezione 1).');
   }
   const scuole = new Set(stato.tecniche.map((x) => catalogoTec.find((t) => t.id === x.id)?.gruppo).filter((g) => g?.startsWith('scuola:')));
-  if (stato.scuola) annotazioni.push(`Iniziato alla Scuola ${stato.scuola.nome} (dichiarato al ${stato.scuola.livello}° livello): iniziazione e giuramento all’Overlord si verificano con il master (§8.9.3).`);
+  if (stato.scuola) annotazioni.push(`Iniziato alla Scuola ${stato.scuola.nome} (dichiarato ${conOrdinale('al', stato.scuola.livello)} livello): iniziazione e giuramento all’Overlord si verificano con il master (§8.9.3).`);
   for (const s of scuole) if (s.slice(7) !== stato.scuola?.nome) annotazioni.push(`Tecniche della Scuola ${s.slice(7)} senza iniziazione dichiarata (§8.9.3).`);
   for (const x of stato.persi) annotazioni.push(`${x.livello}° livello: il +1 di ${x.classe} a ${x.abilita} non si applica perché l’Avanzamento è già al limite ${x.limite} (§8.3).`);
   const provvisori = talenti.filter((t) => t.provvisorio);

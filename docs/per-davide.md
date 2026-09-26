@@ -47,6 +47,8 @@ Le risposte già date (Esploratore, minimo 1 incantesimi, quote per macrofamigli
 
 14. **Batterie da 5 PM: prezzo e profilo (§7.10).** Il §7.10 cita le batterie da 5 PM come esempio di potenza (Rosso, Blu e Verde Comuni, costo di sintonizzazione 1; Bianco Non Comune, costo 2), ma nessun manuale dà prezzo, PI, Qualità e reperibilità; il Manuale della Magia (Batteria Mistica, 22.6) dice che le batterie permanenti saranno integrate più avanti. L'app le mostra senza prezzo. Ci dai i valori, o le togliamo finché non escono?
 
+15. **Salendo di livello aumentano anche i PV e PM attuali?** Il cap. 8 dice di quanto crescono i massimi, ma non cosa succede ai valori attuali di un personaggio ferito. Solo Buona Costituzione (§8.6.1) lo dice esplicitamente («i PV attuali aumentano di 5»). L'app applica la stessa logica a ogni livello: se i massimi salgono di N, anche gli attuali salgono di N (un personaggio a 40/47 che guadagna 6 PV passa a 46/53); annullando un livello li riduce della stessa quantità. Se invece al passaggio di livello si torna al massimo, o gli attuali restano fermi, dillo.
+
 ## B. Da correggere nella prossima edizione dei manuali
 
 Sono le cose che hai già deciso a voce o che sono errori evidenti: l'app segue la tua decisione, ma il testo stampato dice ancora un'altra cosa e prima o poi qualcuno al tavolo lo aprirà.
