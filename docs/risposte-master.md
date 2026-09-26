@@ -46,3 +46,47 @@ dove è stata applicata nei dati o nel codice.
    tiro dei PM alla creazione lo perdono al caricamento e i PM si ricalcolano.
    → `data/regole.json` (`creazione.dado_pm_massimizzato`), `puntiMagiaCreazione()` in
    `src/calc.js`, `src/character.js`.
+
+## 26 settembre 2026
+
+Testi completi, parola per parola: `docs/risposte-master-2026-09-26.md` (copia del Google Doc
+«E&L – Risposte e correzioni approvate»). Il master dice di averli già inseriti nei manuali
+condivisi (Giocatore §§1.2.3, 2.1, 2.11, 2.14, §8.6, §8.6.10; Magia sezioni 1, 2, 6).
+
+7. **Descrizioni delle sei Caratteristiche** (A.1): due-tre frasi ciascuna, per il §2.1 e i
+   tooltip.
+   → `data/caratteristiche.json` (`descrizione`), testo del master parola per parola.
+
+8. **La Prova Salvezza Volontà usa Carisma (CAR) al posto di Intelligenza (INT)** (A.1), con
+   il modificatore specifico delle Salvezze; restano base 8, Addestramento, Avanzamento e
+   Corporazione. Differenza per i personaggi esistenti: modificatore di CAR meno quello di INT.
+   → `data/caratteristiche.json` (`salvezze`, Volontà → CAR); calcolo, tooltip e stampa
+   seguono il dato. Esempio del §2.14 (Agente, INT 5 e CAR 5): Volontà resta 9. Collaudo:
+   Varek 9 → 10, Sorella Ilaria 14 → 13, Dex 12 → 11.
+
+9. **Schede dei Talenti di magia** (A.2.1–A.2.14): tipo, prerequisiti, molteplicità e testo di
+   Usufruitore di Magia, Potenziale Mistico Migliorato, Incrementare Incantesimi, Lancio in
+   Combattimento, Focalizzazione Migliorata, Contromagia, Contromagia Migliorata, Incantesimi da
+   Lancio, Conversione Migliorata, Recupero Meditativo, Meditazione Migliorata, Meditazione
+   Estesa, più i nuovi **Contromagia Universale** e **Magia Occultata**. Punti da ricordare:
+   - «capacità personale di lanciare Incantesimi» = Addestramento Taumaturgo oppure Usufruitore
+     di Magia; Usufruitore è incompatibile con l'Addestramento Taumaturgo e con Risorse
+     Interiori;
+   - Potenziale Mistico Migliorato vale solo per gli Usufruitori (non per i Taumaturghi):
+     +3 per acquisizione, fino a 18, al massimo cinque volte;
+   - Incrementare Incantesimi: +2 Incantesimi, fino a cinque volte, anche per i Taumaturghi;
+   - Recupero Meditativo richiede di non avere già la Meditazione, che di base ha solo chi ha
+     l'Addestramento Taumaturgo (Magia sez. 6; nessuna Classe la concede);
+   - Focalizzazione Migliorata +6 (base +4), Lancio in Combattimento toglie il −2 d'Ingaggio,
+     Incantesimi da Lancio +2 (base +2 → +4), Contromagia Migliorata toglie il −2, Conversione
+     Migliorata 2:1 (1:1 con Ricarica Efficiente, Bianco sempre 2:1);
+   - Meditazione: 3 + Mod SAG PM per ora (minimo 3), 2 + Mod SAG + Mod COS ore al giorno
+     (minimo 1); Migliorata +2 PM/ora, Estesa raddoppia le ore.
+   → `data/talenti_liberi.json` (schede, `condizioni_prerequisiti`, `effetti`),
+   `data/regole.json` (`lancio`, `meditazione`, `chroma.conversione`), prerequisiti in
+   `controllaTalentoLibero()` e valori in `magiaDelPersonaggio()` (`src/avanzamento.js`). La
+   scheda digitale mostra il recupero con Meditazione e i modificatori di lancio.
+
+10. **Tipo di tre Talenti Liberi** (A.3): Attivazione Tempestiva, Risorse Interiori e Tecniche
+    Interiori Supplementari sono **Passivi**.
+    → `data/talenti_liberi.json` (`tipo`).
