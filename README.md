@@ -139,6 +139,7 @@ Tutte le regole numeriche stanno in `data/`:
 | `equipaggiamento/munizioni.json` | munizioni ordinarie e speciali, caricatori, razzi, celle, combustibile, dardi chimici, con la famiglia di munizioni di ogni arma (Armamenti §7.20) |
 | `equipaggiamento/sanitario.json` | kit di pronto soccorso, cartucce, UMC, dispositivi portatili, diagnostica e chirurgia, con le applicazioni contate in modalità tavolo (Armamenti §7.19) |
 | `equipaggiamento/artefatti.json` | regole di sintonizzazione (capacità per Gradi, costo per potenza), Artefatti con riserva mistica, batterie (Armamenti §7.5, §7.10) |
+| `equipaggiamento/unita_robotiche.json` | Cuirassier Attila e Generatore di risonanza RF366, con i VA del robot (Armamenti §7.18) |
 | `equipaggiamento/armi_distanza_corporative.json` | armi a distanza dei cataloghi corporativi, con i moduli integrati (lanciagranate, lanciafiamme) e le munizioni di riferimento dei lanciatori (Armamenti §7.8) |
 | `equipaggiamento/armi_distanza.json` | armi a distanza del catalogo Commerciale, con gittata, caricatore, modalità di fuoco, INC (Armamenti §7.7) |
 | `equipaggiamento/scudi.json` | scudi commerciali e corporativi, con Parata ravvicinata e a distanza e profili alternativi (Armamenti §7.4) |

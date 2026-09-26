@@ -17,7 +17,7 @@ const voce = (uid, rif, stato, extra = {}) => ({ uid, rif, stato, quantita: 1, n
 const scheda = (creazione, equipaggiamento, livelli = []) => calcolaScheda({ creazione: { ...creazione, equipaggiamento }, livelli }, dati);
 
 test('catalogo: caricato dall’indice, un lotto = un file e una riga; riferimenti "file:id"', () => {
-  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armi_corporative', 'armi_distanza', 'armi_distanza_corporative', 'accessori_armi', 'munizioni', 'sanitario', 'artefatti', 'armature', 'armature_corporative', 'rinforzi', 'scudi', 'corredi_dispositivi']);
+  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armi_corporative', 'armi_distanza', 'armi_distanza_corporative', 'accessori_armi', 'munizioni', 'sanitario', 'artefatti', 'unita_robotiche', 'armature', 'armature_corporative', 'rinforzi', 'scudi', 'corredi_dispositivi']);
   const cat = catalogo(dati);
   assert.equal(cat.oggetti.filter((o) => o.tipo === 'arma_ravvicinata' && o.catalogo === 'Commerciale').length, 28); // §7.1.1: 28 profili
   assert.equal(cat.oggetti.filter((o) => o.tipo === 'armatura' && o.catalogo === 'Commerciale').length, 3); // §7.11.3
@@ -956,4 +956,18 @@ test('lotto 13: Manovre compatibili su tutti i 28 profili commerciali (§7.1.7)'
   assert.deepEqual(r('tirapugni-concussivo'), ['Stordire']);
   const arma = scheda(MISHIMA_AGENTE, [voce('l', 'armi:lancia', 'impugnata')]).equipaggiamento.armi[0];
   assert.deepEqual(arma.manovre, ['Affondo']);
+});
+
+// --- Lotto 14: unità robotiche (§7.18) -----------------------------------------------------
+
+test('lotto 14: Cuirassier Attila e Generatore RF366, con i VA del robot in tabella', () => {
+  const r = (id) => catalogo(dati).perRif.get(`unita_robotiche:${id}`);
+  const attila = r('cuirassier-attila');
+  assert.deepEqual([attila.tipo, attila.costo, attila.pi, attila.reperibilita], ['altro', 75000, 16, 'MR']);
+  assert.deepEqual(attila.tabelle[0].righe, [['6', '0', '8', '30']]);
+  assert.deepEqual(attila.tabelle[1].righe.at(-1), ['Furtività', '4']);
+  assert.deepEqual(attila.tabelle[2].righe.map((x) => x[2]), ['85.500', '107.500', '135.000']);
+  assert.equal(r('generatore-di-risonanza-rf366').costo, 12000);
+  assert.deepEqual(cercaNelCatalogo(dati, 'attila').map((x) => x.rif), ['unita_robotiche:cuirassier-attila']);
+  assert.match(testoTooltip('oggetto', 'unita_robotiche:cuirassier-attila', dati), /VA del robot: Armi leggere \/ medie \/ pesanti: 10/);
 });

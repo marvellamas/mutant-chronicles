@@ -61,6 +61,11 @@
       "descrizione": "Regole di sintonizzazione, Artefatti con riserva mistica, batterie (§7.5, §7.10)"
     },
     {
+      "id": "unita_robotiche",
+      "file": "unita_robotiche.json",
+      "descrizione": "Cuirassier Attila e Generatore di risonanza RF366 (§7.18)"
+    },
+    {
       "id": "armature",
       "file": "armature.json",
       "descrizione": "Armature commerciali civili (§7.11.3)"

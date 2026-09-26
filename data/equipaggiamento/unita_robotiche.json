@@ -1,0 +1,127 @@
+{
+  "versione_manuale": "Armamenti 0.50",
+  "fonte": "Manuale degli Armamenti v0.50, §7.18 Unità robotiche e accessori (pp. 107–108); lotto 14",
+  "_nota": "Generato da tools/lotti/lotto14_unita_robotiche.mjs; da qui in poi si modifica questo file. I VA delle tabelle sono del robot, non del personaggio. Il manuale rimanda a un’integrazione successiva le Prove Salvezza del robot, i tempi di ricarica e il costo dei ricambi energetici.",
+  "oggetti": [
+    {
+      "id": "cuirassier-attila",
+      "nome": "Cuirassier Attila",
+      "tipo": "altro",
+      "catalogo": "Cybertronic",
+      "famiglia": "Unità robotiche",
+      "nomi_alternativi": [
+        "Attila"
+      ],
+      "note_manuale": "Le unità robotiche sono equipaggiamenti speciali autonomi, separati dalle armature indossabili. L’Iron Mastiff Imperial è nel §7.14.5. I PV meccanici descrivono l’efficienza operativa; PI e PS Integrità descrivono il deterioramento dell’oggetto e seguono regole distinte. Iniziativa 1d10; dispone di 1 AzM e 1 AzP per Round. Movimento Passo/Corsa/Scatto: 5/11/17 Q. La batteria compresa fornisce otto ore di autonomia. I dati specifici delle Prove Salvezza del robot, i tempi di ricarica e il costo dei ricambi energetici saranno integrati successivamente. L’Attila impiega armi compatibili rispettandone requisiti, impugnature, munizioni, ricariche e Azioni. Dispone di supporto per l’armamento pesante compatibile. Il SIN interno utilizza il grado dell’arma connessa: il VA finale comprende VA del robot, modificatore nativo dell’arma, un solo bonus SIN pertinente e gli altri modificatori. Il SIN del controllore non aggiunge un secondo bonus. Armamento e munizioni sono separati dal prezzo del telaio. Direttive e controllo In modalità autonoma il robot esegue le direttive del referente come unità separata. Impostare o modificare una direttiva richiede 1 AzP del referente tramite controller abbinato, entro 100 Q. Con collegamento interrotto completa la direttiva in corso, quindi mantiene la posizione e si difende. Il comando diretto richiede 1 AzP del controllore e utilizza le normali Azioni disponibili del robot: non genera un secondo turno. Controllo Parallelo concede il comando gratuito previsto dal relativo Talento, una volta per Round durante l’Iniziativa del controllore, secondo il Manuale del Giocatore. Restano portata, collegamento e limiti di Azioni dell’Attila. Danni e manutenzione L’AR si applica ai danni che la prevedono; i danni residui riducono i PV meccanici. A 0 PV meccanici l’unità è fuori servizio; a 0 PI è rotta. La perdita di PV non si converte automaticamente in perdita di PI. Riparazioni e manutenzione richiedono Tecnologia e strumenti e ricambi pertinenti: cure biologiche, kit sanitari e UMC non riparano il robot. Il telaio non indossa armature personali o rinforzi sovrapposti e non occupa UMN del referente. I totali utilizzano i prezzi di riferimento delle armi del §7.9; munizioni e accessori ulteriori si aggiungono separatamente. Il Generatore RF366 non è compreso in queste configurazioni.",
+      "paragrafo": "§7.18.1",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 16,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 75000,
+      "tabelle": [
+        {
+          "titolo": "Profilo",
+          "colonne": [
+            "AR",
+            "AR magica",
+            "FOR",
+            "PV meccanici"
+          ],
+          "righe": [
+            [
+              "6",
+              "0",
+              "8",
+              "30"
+            ]
+          ]
+        },
+        {
+          "titolo": "VA del robot",
+          "colonne": [
+            "Abilità",
+            "VA"
+          ],
+          "righe": [
+            [
+              "Armi leggere / medie / pesanti",
+              "10"
+            ],
+            [
+              "Armi da Lancio",
+              "8"
+            ],
+            [
+              "Corpo a corpo",
+              "8"
+            ],
+            [
+              "Difese",
+              "6"
+            ],
+            [
+              "Atletica",
+              "8"
+            ],
+            [
+              "Percezione",
+              "8"
+            ],
+            [
+              "Furtività",
+              "4"
+            ]
+          ]
+        },
+        {
+          "titolo": "Configurazioni",
+          "colonne": [
+            "Configurazione",
+            "Componenti compresi",
+            "Costo"
+          ],
+          "righe": [
+            [
+              "Fuciliere",
+              "Attila + AR3000 con lanciagranate",
+              "85.500"
+            ],
+            [
+              "Supporto",
+              "Attila + TSW4000",
+              "107.500"
+            ],
+            [
+              "Supporto pesante",
+              "Attila + SSW4200P",
+              "135.000"
+            ]
+          ]
+        }
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "generatore-di-risonanza-rf366",
+      "nome": "Generatore di risonanza RF366",
+      "tipo": "altro",
+      "catalogo": "Cybertronic",
+      "famiglia": "Unità robotiche",
+      "nomi_alternativi": [
+        "RF366"
+      ],
+      "note_manuale": "Modulo robotico con una cella IAS da 20 cariche compresa. Attivarlo richiede 1 AzP dell’Attila. Consuma una carica per Round e il campo dura fino alla successiva Iniziativa dell’unità. Il campo mobile ha raggio 2 Q ed è bloccato da pareti e ostacoli solidi. Alimentazione, sostituzione e ricambi seguono il §7.15.4. Nel campo riduce di 1, fino a un minimo di 0, la componente non magica dell’AR fornita da armature e telai di altre marche. Coinvolge alleati e avversari; equipaggiamenti Cybertronic e leghe compatibili sono immuni. Non modifica AR magica, armatura naturale, Scudi o Coperture. Più campi RF366 non sommano la riduzione. La riduzione vale soltanto finché l’oggetto è esposto al campo attivo e non infligge una perdita permanente di PI. L’Interfaccia di comando non aggiunge un bonus SIN al funzionamento automatico del generatore. A 0 PI o senza alimentazione il modulo non genera il campo.",
+      "paragrafo": "§7.18.2",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 12000,
+      "compatibilita": "Cuirassier Attila (modulo robotico).",
+      "proprieta": []
+    }
+  ]
+}

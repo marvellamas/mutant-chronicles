@@ -1,6 +1,6 @@
 # Catalogo dell'equipaggiamento: lotti da estrarre
 
-Stato al 26 settembre 2026 (lotti 2–13 fatti). Fonte: Manuale degli Armamenti v0.50. Metodo: `tools/estrai_manuali.py`
+Stato al 26 settembre 2026 (lotti 2–14 fatti: tutti i lotti di oggetti del manuale). Fonte: Manuale degli Armamenti v0.50. Metodo: `tools/estrai_manuali.py`
 e `docs/pilota-estrazione-armamenti.md`.
 
 Questa è la lista dei prompt successivi: **un lotto per prompt**, nell'ordine di utilità al
@@ -27,6 +27,7 @@ su quelle pagine: le tabelle impilate contano come una.
 | `munizioni.json` | 49 munizioni, caricatori, granata pesante, razzi, celle, combustibile, dardi chimici; tabella delle famiglie delle armi (lotto 10) | §7.20 | 114–121 |
 | `sanitario.json` | 16 oggetti sanitari: kit, cartucce, UMC, dispositivi portatili, diagnostica e chirurgia (lotto 11) | §7.19 | 109–113 |
 | `artefatti.json` | regole di sintonizzazione, 6 Artefatti già nel catalogo, 4 batterie da 5 PM (lotto 12) | §7.5, §7.10 | 30–31, 58–60 |
+| `unita_robotiche.json` | Cuirassier Attila e Generatore RF366 (lotto 14) | §7.18 | 107–108 |
 | `armi_distanza_corporative.json` | 81 armi a distanza corporative, 19 moduli integrati, 6 munizioni di riferimento (lotto 5) | §7.8 | 36–52 |
 
 Da completare nello stesso ambito, a basso costo:
@@ -553,8 +554,20 @@ Fatto il 26 settembre 2026, commit «Lotto 12 del catalogo: artefatti e sintoniz
   dei costi estratti dagli altri lotti, non come dati nuovi.
 - **Integrità degli oggetti** — §7.2.1, p. 18: regole di PI e PS INT. Servirà quando la
   modalità tavolo terrà i PI attuali degli oggetti.
-- **Unità robotiche** — §7.18, pp. 107–108 (Cuirassier Attila, Generatore RF366): schede
-  singole, da decidere se entrano nel catalogo o restano testo.
+- ✔ **Unità robotiche** — §7.18, pp. 107–108 (lotto 14, fatto il 26 settembre 2026, commit
+  «Lotto 14 del catalogo: unità robotiche»).
+  - **Fonte:** `docs/lotti/lotto14-unita-robotiche/`, generatore
+    `tools/lotti/lotto14_unita_robotiche.mjs`, dati `data/equipaggiamento/unita_robotiche.json`.
+  - **Scelta:** entrano nel catalogo come l'Iron Mastiff del lotto 7, cioè oggetti «altro» della
+    famiglia «Unità robotiche» con profilo, VA del robot e configurazioni in `tabelle`. Il
+    Generatore RF366 è un modulo del robot: la compatibilità resta testo.
+  - **Estrazione:** 3 tabelle, una con due tabelle impilate (profilo e Abilità | VA). **15 righe
+    su 15 giuste**, ritrovate nel testo; **0 correzioni a mano**.
+  - **Controllo incrociato:** il costo di ogni configurazione (Fuciliere, Supporto, Supporto
+    pesante) = telaio 75.000 + prezzo dell'arma già nel catalogo (lotto 5).
+  - **Restano da integrare nel manuale:** Prove Salvezza del robot, tempi di ricarica, ricambi
+    energetici (il §7.18.1 le rimanda). Segnalato in `per-davide.md`, sezione D.
+  - **Dubbi per Davide:** nessuno.
 - **Contenuti ancora da sviluppare** — §7.6, p. 32: niente da estrarre; da ricontrollare alla
   prossima edizione.
 
