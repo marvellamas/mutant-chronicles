@@ -1,0 +1,178 @@
+﻿MUTANT - CREATORE DI PERSONAGGI PER SIMPLY RPG
+Guida all'installazione e all'uso
+==============================================================
+
+Questa guida è per chi non ha mai installato niente di simile.
+Segui i passi in ordine. Non serve sapere nulla di informatica.
+
+
+COSA C'È IN QUESTA CARTELLA
+--------------------------------------------------------------
+
+Ci sono quattro file:
+
+  LEGGIMI.txt                    questa guida.
+  1_scarica_o_aggiorna_app.bat   scarica l'app da internet (e la aggiorna).
+  2_installa_node.bat            installa Node.js, il programma che fa girare l'app.
+  3_avvia.bat                    accende l'app e la apre nel browser.
+
+I file che finiscono con ".bat" sono piccoli programmi.
+Si usano con un doppio clic.
+Al doppio clic si apre una finestra nera con delle scritte.
+Le scritte dicono cosa sta succedendo, passo per passo.
+Leggile: se qualcosa va storto, la finestra resta aperta e spiega cosa fare.
+
+Se non vedi ".bat" alla fine dei nomi, va bene lo stesso:
+Windows spesso nasconde questa parte del nome.
+
+
+PRIMA DI TUTTO: METTI LA CARTELLA AL SUO POSTO
+--------------------------------------------------------------
+
+1. Se hai ricevuto uno zip, fai clic destro sullo zip e scegli "Estrai tutto".
+2. Sposta la cartella estratta dove preferisci, per esempio in Documenti.
+3. Non lanciare i file da dentro lo zip: prima estraili.
+
+
+INSTALLAZIONE (SI FA UNA VOLTA SOLA)
+--------------------------------------------------------------
+
+Passo 1 - Scarica l'app
+  Fai doppio clic su 1_scarica_o_aggiorna_app.bat
+  Serve la connessione a internet.
+  Accanto ai file compare una nuova cartella chiamata "mutant".
+  Dentro c'è l'app: non serve aprirla né toccare i file.
+  Alla fine la finestra dice "Fatto". Premi un tasto per chiuderla.
+
+Passo 2 - Installa Node.js
+  Fai doppio clic su 2_installa_node.bat
+  Se Node.js c'è già, la finestra lo dice e hai finito questo passo.
+  Altrimenti lo scarica dal sito ufficiale (circa 30 MB) e apre l'installazione.
+  Nella finestra di installazione:
+    - premi "Next" in ogni schermata;
+    - accetta la licenza;
+    - lascia tutte le opzioni come sono;
+    - se Windows chiede "Consentire a questa app di apportare modifiche?", rispondi "Sì";
+    - alla fine premi "Finish".
+  Poi chiudi tutte le finestre nere aperte.
+
+Passo 3 - Accendi l'app
+  Fai doppio clic su 3_avvia.bat
+  La prima volta installa alcuni componenti: serve circa un minuto e internet.
+  Poi si apre il browser con l'app.
+  Se la pagina resta bianca, aspetta qualche secondo e premi F5.
+
+
+USO DI TUTTI I GIORNI
+--------------------------------------------------------------
+
+Per accendere l'app: doppio clic su 3_avvia.bat
+Per spegnere l'app: chiudi la finestra nera (la X in alto a destra).
+
+Finché la finestra nera è aperta, l'app funziona.
+Se la chiudi, l'app si spegne: la pagina nel browser smette di rispondere.
+I personaggi non si perdono quando spegni: restano salvati (vedi sotto).
+
+
+SE WINDOWS MOSTRA "WINDOWS HA PROTETTO IL PC" (SMARTSCREEN)
+--------------------------------------------------------------
+
+La prima volta che fai doppio clic su un file .bat, Windows può mostrare
+una finestra blu con scritto "Windows ha protetto il PC".
+Succede con i file scaricati che Windows non conosce. I file sono sicuri.
+
+1. Fai clic su "Ulteriori informazioni" (è una scritta piccola, sotto il testo).
+2. Compare il pulsante "Esegui comunque": fai clic lì.
+
+Windows lo chiede una volta per file.
+
+
+SE IL FIREWALL CHIEDE IL PERMESSO A NODE.JS
+--------------------------------------------------------------
+
+Alla prima accensione Windows può chiedere:
+"Consentire a Node.js JavaScript Runtime di accedere a queste reti?"
+
+- Spunta "Reti private" (casa, Wi-Fi di fiducia).
+- Premi "Consenti".
+
+Serve per usare l'app dal telefono. Se premi "Annulla", l'app funziona
+lo stesso sul computer, ma non dal telefono.
+
+
+USARE L'APP DAL TELEFONO
+--------------------------------------------------------------
+
+Il telefono deve essere collegato alla stessa Wi-Fi del computer.
+L'app deve essere accesa sul computer (finestra nera aperta).
+
+1. Guarda la finestra nera: sotto "Dal telefono" c'è un indirizzo
+   come http://192.168.1.23:3000
+2. Scrivi quell'indirizzo nel browser del telefono, così com'è.
+
+Se vedi più indirizzi, prova prima quello che comincia con 192.168.
+Se non funziona:
+- controlla che il telefono sia sulla stessa Wi-Fi (non sui dati mobili);
+- controlla di aver premuto "Consenti" nella domanda del firewall (vedi sopra).
+
+
+DOVE STANNO I PERSONAGGI
+--------------------------------------------------------------
+
+I personaggi si salvano da soli, dentro il browser che usi.
+Non stanno nella cartella "mutant".
+
+Attenzione:
+- un altro browser o un altro computer non li vede;
+- se cancelli i dati di navigazione del browser, i personaggi si perdono.
+
+Per tenerli al sicuro usa "Esporta":
+1. apri il personaggio;
+2. apri il menu "Azioni" e scegli "Esporta JSON";
+3. il browser scarica un file: tienilo in una cartella sicura.
+
+Per rimetterli nell'app (anche su un altro computer o telefono):
+nella pagina iniziale premi "Importa file JSON" e scegli il file.
+
+Consiglio: esporta i personaggi dopo ogni sessione di gioco.
+
+
+AGGIORNARE L'APP
+--------------------------------------------------------------
+
+Quando Marcello ti dice che c'è una versione nuova:
+
+1. Spegni l'app (chiudi la finestra nera, se è aperta).
+2. Fai doppio clic su 1_scarica_o_aggiorna_app.bat
+   - Se c'è una versione nuova, la scarica e sostituisce la vecchia.
+   - Se non c'è niente di nuovo, la finestra dice "già aggiornata".
+3. Riaccendi con 3_avvia.bat
+
+I personaggi non si toccano: stanno nel browser, non nella cartella.
+
+Se avevi modificato i file delle regole (la cartella "data" dentro "mutant"),
+l'aggiornamento li sostituisce con quelli nuovi. La tua versione non si perde:
+viene copiata nella cartella "backup_dati", accanto ai file .bat, con la data
+e l'ora dell'aggiornamento. La finestra nera lo dice quando succede.
+
+
+SE QUALCOSA NON VA
+--------------------------------------------------------------
+
+La finestra si chiude subito
+  Riapri il file: le finestre degli errori restano aperte e dicono cosa fare.
+
+"Non riesco a collegarmi a internet"
+  Controlla la Wi-Fi o il cavo, poi riprova.
+
+"Node.js non risulta installato" (anche dopo averlo installato)
+  Chiudi tutte le finestre nere e riapri 3_avvia.bat.
+  Se non basta, riavvia il computer.
+
+"La porta 3000 è già in uso"
+  L'app è già accesa in un'altra finestra nera. Usa quella.
+
+La pagina del browser è bianca o dice "impossibile raggiungere il sito"
+  Controlla che la finestra nera sia aperta. Aspetta qualche secondo e premi F5.
+
+Per tutto il resto: scrivi a Marcello e, se puoi, manda una foto della finestra nera.

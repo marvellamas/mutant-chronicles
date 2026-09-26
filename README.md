@@ -4,12 +4,29 @@ Creatore assistito di personaggi per SIMPLY RPG, per uso interno del gruppo. Gui
 creazione al 1° livello seguendo la sequenza del §2.0 del Manuale del Giocatore, poi
 l'avanzamento fino al 20° livello (cap. 8), e produce una scheda stampabile.
 
-## Per il master: doppio clic su avvia.bat
+## Per il master
 
-Su Windows basta un doppio clic su **`avvia.bat`**, nella cartella principale di Mutant:
+Il pacchetto per il master è la cartella [`distribuzione/`](distribuzione/): Marcello la
+comprime in uno zip e la manda. Dentro c'è la guida passo per passo,
+[`distribuzione/LEGGIMI.txt`](distribuzione/LEGGIMI.txt), e tre file da usare con un doppio
+clic, senza terminale, Git o Node già installati:
 
-1. se manca Node.js, la finestra lo dice e apre <https://nodejs.org>: scarica e installa la
-   versione **LTS** con le opzioni proposte, poi fai di nuovo doppio clic su `avvia.bat`;
+1. `1_scarica_o_aggiorna_app.bat`: scarica l'app da GitHub nella cartella `mutant` accanto a
+   sé, oppure la aggiorna se c'è un commit nuovo su `main`. Conserva `node_modules` e salva in
+   `backup_dati` una copia della cartella `data` se il master l'aveva modificata.
+2. `2_installa_node.bat`: installa Node.js 22 LTS dal sito ufficiale, controllando
+   l'impronta SHA-256 dell'installer.
+3. `3_avvia.bat`: accende l'app su <http://localhost:3000> e mostra l'indirizzo per il
+   telefono sulla stessa Wi-Fi.
+
+Il file 1 scarica senza autenticazione, quindi funziona solo se il repository GitHub è
+pubblico.
+
+### Avvio diretto dal repo: avvia.bat
+
+Chi lavora sul repo può fare doppio clic su **`avvia.bat`**, nella cartella principale:
+
+1. se manca Node.js, la finestra lo dice e apre <https://nodejs.org>;
 2. alla prima accensione installa da solo i componenti necessari (serve internet, un minuto);
 3. apre il browser su <http://localhost:3000>. Se la pagina resta vuota, aspetta qualche
    secondo e premi F5.
@@ -30,8 +47,8 @@ Quando Marcello pubblica una versione nuova (regole, correzioni, funzioni):
 
   Se il file `package.json` è cambiato, esegui anche `npm install` (oppure cancella la
   cartella `node_modules`: `avvia.bat` la ricrea da solo).
-- **senza Git**: riscarica la cartella (su GitHub, *Code → Download ZIP*) e sostituisci la
-  vecchia. Se hai modificato i file in `data/`, copiali da parte prima e rimettili dopo.
+- **senza Git**: doppio clic su `1_scarica_o_aggiorna_app.bat` del pacchetto
+  `distribuzione/` (vedi sopra).
 
 I personaggi non si perdono: stanno nel browser, non nella cartella. Per sicurezza, prima
 di aggiornare esportali con **Esporta**. Dopo l'aggiornamento ricarica la pagina (con

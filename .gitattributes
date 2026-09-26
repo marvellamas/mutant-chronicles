@@ -3,3 +3,6 @@
 
 # I file .bat di Windows vogliono CRLF
 *.bat text eol=crlf
+
+# La guida del pacchetto per il master si apre con il Blocco note di Windows
+distribuzione/*.txt text eol=crlf
