@@ -6,7 +6,8 @@ import { h, segno, dadi } from './dom.js';
 import { calcolaScheda, validaLivello, modOrdinario } from '../calc.js';
 import { prossimoLivello, applicaLivello } from '../character.js';
 import { passiDelLivello, descriviVoce } from '../avanzamento.js';
-import { info } from './tooltip.js';
+import { info, etichettaMacro } from './tooltip.js';
+import { classeMacrofamiglia } from '../palette.js';
 import { componenteTiro } from './tiro.js';
 import { dettagli, bottoneScelta, contatore, stepper } from './passi.js';
 import { conOrdinale } from '../lingua.js';
@@ -350,9 +351,9 @@ function passoIncantesimi(c) {
           const preso = giaNoto || nuovi.includes(i.nome);
           const pieno = perMacro[m.nome] >= (q.quote.perMacro[m.nome] ?? 0) && q.quote.liberiUsati >= q.quote.liberi;
           const motivo = giaNoto ? null : !preso && pieno ? `Quota ${m.nome} e incantesimi liberi esauriti.` : null;
-          return h('label', { class: `incantesimo${motivo ? ' bloccato' : ''}` },
+          return h('label', { class: `incantesimo ${classeMacrofamiglia(m.nome)}${motivo ? ' bloccato' : ''}` },
             h('input', { type: 'checkbox', checked: preso, disabled: giaNoto || !!motivo, onchange: (e) => cambia(i.nome, e.target.checked) }),
-            h('span', {}, h('strong', {}, info('incantesimo', i.nome)), h('small', {}, ` liv. base ${i.livello_base}${giaNoto ? ' · già conosciuto' : ''}`),
+            h('span', {}, h('strong', {}, info('incantesimo', i.nome)), ' ', etichettaMacro(m.nome), h('small', {}, ` liv. base ${i.livello_base}${giaNoto ? ' · già conosciuto' : ''}`),
               motivo ? h('small', { class: 'motivo' }, motivo) : null));
         }))))),
   ];

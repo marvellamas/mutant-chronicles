@@ -298,6 +298,21 @@ dl.voci.in-linea dt::after { content: ":"; }
 .incantesimo.bloccato { cursor: not-allowed; opacity: 0.7; }
 .incantesimo .motivo { opacity: 1; }
 
+/* Macrofamiglie (css/palette.css, docs/palette.md): tinta leggera, barra laterale ed etichetta
+   con il nome. Il testo resta --testo pieno. Elenco, Sali di livello, tab Magia, tooltip, scheda. */
+.macro-fisica { --macro: var(--fisica); --macro-tenue: var(--fisica-tenue); --macro-testo: var(--fisica-testo); }
+.macro-mentale { --macro: var(--mentale); --macro-tenue: var(--mentale-tenue); --macro-testo: var(--mentale-testo); }
+.macro-spirituale { --macro: var(--spirituale); --macro-tenue: var(--spirituale-tenue); --macro-testo: var(--spirituale-testo); }
+.incantesimo[class*="macro-"], .incantesimo-scheda[class*="macro-"], .tooltip.tooltip-incantesimo, .pannello-contenuto[class*="macro-"] {
+  background: var(--macro-tenue); color: var(--testo); border-left: 4px solid var(--macro);
+}
+.incantesimo[class*="macro-"] { padding: 0.4rem 0.5rem; margin: 0.3rem 0; border-bottom: 0; border-radius: 4px; }
+.incantesimo-scheda[class*="macro-"] { padding: 0.5rem 0.75rem; border-radius: var(--raggio); }
+.etichetta-macro {
+  display: inline-block; padding: 0 0.45rem; border: 1px solid var(--macro); border-radius: 999px;
+  background: var(--macro-tenue); color: var(--macro-testo); font-size: 0.7rem; font-weight: 700; line-height: 1.5; vertical-align: 0.12em; white-space: nowrap;
+}
+
 /* ---------------------------------------------------------------- riepilogo */
 
 .riepilogo { background: var(--superficie); }
@@ -728,6 +743,14 @@ details.sezione-tab > summary { font-weight: 700; cursor: pointer; min-height: 4
 /* ---------------------------------------------------------------- equipaggiamento (src/ui/equipaggiamento.js) */
 
 .elenco-equip { list-style: none; padding: 0; margin: 0.5rem 0 1rem; display: grid; gap: 0.5rem; }
+/* Gruppi per tipo (docs/palette.md): etichetta del colore della categoria, contatore, stato
+   ricordato nel browser; a gruppo chiuso gli oggetti attivi restano in una riga compatta */
+.gruppi-equip { display: grid; gap: 0.35rem; margin: 0.5rem 0 1rem; }
+.gruppo-equip > details > summary { cursor: pointer; padding: 0.45rem 0; min-height: 44px; font-weight: 700; color: var(--tenue); }
+.gruppo-equip > details > .elenco-equip { margin-top: 0.25rem; }
+.etichetta-cat { display: inline-block; padding: 0.1rem 0.6rem; border-radius: 999px; background: var(--cat); color: var(--cat-testo); font-size: 0.85rem; font-weight: 700; }
+.elenco-compatto { list-style: none; padding: 0; margin: 0 0 0.35rem; display: grid; gap: 0.3rem; }
+.elenco-compatto li { padding: 0.3rem 0.6rem; background: var(--superficie); border: 1px solid var(--ok); border-left-width: 4px; border-radius: var(--raggio); }
 .voce-equip { background: var(--superficie); border: 1px solid var(--bordo); border-radius: var(--raggio); padding: 0.6rem 0.75rem; display: grid; gap: 0.5rem; }
 .voce-equip.attiva { border-color: var(--ok); box-shadow: 0 0 0 1px var(--ok); }
 .voce-equip.fuori { border-style: dashed; opacity: 0.85; }

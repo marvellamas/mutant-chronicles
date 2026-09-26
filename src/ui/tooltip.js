@@ -8,6 +8,7 @@
 //  - clic (mouse o tastiera) sul nome di un incantesimo: apre la scheda completa.
 import { h, svuota } from './dom.js';
 import { contenutoTooltip, schedaIncantesimo } from '../descrizioni.js';
+import { classeMacrofamiglia } from '../palette.js';
 
 const RITARDO = 300;
 const RITARDO_CHIUSURA = 150;
@@ -38,6 +39,17 @@ export function infoValore(figli, contenuto, { classe = '' } = {}) {
   contenutiValore.set(el, contenuto);
   return el;
 }
+
+/**
+ * Etichetta con il nome della macrofamiglia di un incantesimo (docs/palette.md): accompagna il
+ * colore, per chi non distingue i colori.
+ */
+export function etichettaMacro(macrofamiglia) {
+  return macrofamiglia ? h('span', { class: 'etichetta-macro' }, macrofamiglia) : null;
+}
+
+/** Macrofamiglia di un incantesimo del catalogo, dal nome. */
+const macroDi = (nome) => dati?.incantesimi?.incantesimi.find((i) => i.nome === nome)?.macrofamiglia ?? null;
 
 /** Elenco di nomi con tooltip separati da virgole. */
 export function elencoInfo(tipo, nomi) {
@@ -130,7 +142,10 @@ function mostra(el) {
   origine?.removeAttribute('aria-describedby');
   origine?.classList.remove('attiva');
   origine = el;
-  svuota(riquadro, contenuto(c, el.dataset.infoId));
+  // incantesimi: tinta e barra laterale della macrofamiglia (css/palette.css)
+  const macro = el.dataset.infoTipo === 'incantesimo' ? macroDi(el.dataset.infoId) : null;
+  riquadro.className = `tooltip${macro ? ` tooltip-incantesimo ${classeMacrofamiglia(macro)}` : ''}`;
+  svuota(riquadro, contenuto(c, el.dataset.infoId, macro));
   riquadro.hidden = false;
   riquadro.scrollTop = 0;
   el.setAttribute('aria-describedby', 'tooltip');
@@ -138,9 +153,9 @@ function mostra(el) {
   posiziona(el);
 }
 
-function contenuto(c, id) {
+function contenuto(c, id, macro = null) {
   return [
-    h('p', { class: 'tooltip-titolo' }, c.titolo),
+    h('p', { class: 'tooltip-titolo' }, c.titolo, macro ? ' ' : null, etichettaMacro(macro)),
     c.sottotitolo ? h('p', { class: 'tooltip-sottotitolo' }, c.sottotitolo) : null,
     c.sezioni.map((s) => paragrafi(s.testo, s.etichetta)),
     c.tabella ? h('div', { class: 'tooltip-tabella' },
@@ -203,9 +218,10 @@ export function apriScheda(nome) {
     pannello.addEventListener('click', (e) => { if (e.target === pannello) pannello.close(); });
     document.body.append(pannello);
   }
-  pannello.replaceChildren(h('div', { class: 'pannello-contenuto' },
+  const macro = macroDi(nome);
+  pannello.replaceChildren(h('div', { class: `pannello-contenuto ${classeMacrofamiglia(macro)}`.trim() },
     h('header', { class: 'pannello-testa' },
-      h('h2', { id: 'pannello-titolo' }, s.titolo),
+      h('h2', { id: 'pannello-titolo' }, s.titolo, macro ? ' ' : null, etichettaMacro(macro)),
       h('button', { type: 'button', class: 'btn tondo chiudi', 'aria-label': 'Chiudi', onclick: () => pannello.close() }, '×')),
     h('p', { class: 'tooltip-sottotitolo' }, s.intestazione),
     paragrafi(s.lancio),

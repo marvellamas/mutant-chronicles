@@ -9,6 +9,9 @@ import {
   regoleSintonizzazione, coloriChroma,
 } from '../equipaggiamento.js';
 
+import { GRUPPI_EQUIPAGGIAMENTO } from '../palette.js';
+import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
+
 const nuovoUid = () => `e${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
 const armiTipi = ['arma_ravvicinata', 'arma_distanza'];
 
@@ -29,60 +32,87 @@ function elencoVoci(ctx) {
   const risolte = voci.map((v) => risolvi(v, cat));
   if (!risolte.length) return h('p', { class: 'vuoto' }, 'Nessun oggetto. Aggiungili dal catalogo o come oggetti personalizzati.');
   const cambia = (uid, modifica) => ctx.aggiorna(voci.map((v) => (v.uid === uid ? { ...v, ...modifica } : v)));
-  return h('ul', { class: 'elenco-equip' }, risolte.map((r) => {
-    const v = r.voce;
-    const stati = STATI[r.tipo] ?? [];
-    const art = r.fuoriCatalogo ? null : infoArtefattoVoce(r, dati);
-    // Magia sez. 6: ogni contenitore si sintonizza e si ricarica da solo, quindi una voce ciascuno
-    const contenitoreSingolo = art?.contenitore && !art.contenitore.integrato;
-    return h('li', { class: `voce-equip${r.attivo ? ' attiva' : ''}${r.fuoriCatalogo ? ' fuori' : ''}` },
-      h('div', { class: 'equip-testa' },
-        h('div', {},
-          h('strong', {}, r.def ? info('oggetto', r.def.rif, r.nome) : r.nome),
-          h('small', { class: 'sigla' }, ` · ${NOMI_TIPI[r.tipo]}${r.def ? ` · ${r.def.catalogo}` : ''}`),
-          r.personalizzato ? h('span', { class: 'etichetta' }, 'personalizzato') : null,
-          // riga breve con l'effetto dal manuale (catalogo → effetto_breve)
-          r.def?.effetto_breve ? h('p', { class: 'effetto-breve' }, r.def.effetto_breve) : null,
-          r.fuoriCatalogo ? h('p', { class: 'motivo' }, 'Non più in catalogo: resta in lista, senza effetti.') : null),
-        h('button', {
-          type: 'button', class: 'btn pericolo piccolo-btn', 'aria-label': `Togli ${r.nome}`,
-          onclick: () => { if (confirm(`Togliere «${r.nome}» dall’equipaggiamento?`)) ctx.aggiorna(voci.filter((x) => x.uid !== v.uid)); },
-        }, 'Togli')),
-      stati.length && !r.fuoriCatalogo ? h('div', { class: 'stati-equip', role: 'radiogroup', 'aria-label': `Stato di ${r.nome}` },
-        stati.map((st) => h('button', {
-          type: 'button', role: 'radio', 'aria-checked': String(v.stato === st),
-          class: `stato-equip${v.stato === st ? ' attivo' : ''}`, onclick: () => cambia(v.uid, { stato: st }),
-        }, NOMI_STATI[st]))) : null,
-      art ? h('label', { class: 'campo-inline' },
-        h('input', { type: 'checkbox', checked: v.sintonizzato === true, onchange: (e) => cambia(v.uid, { sintonizzato: e.target.checked || undefined }) }),
-        ` Sintonizzato (costo ${art.sintonizzazione}, §7.10)`) : null,
-      art?.contenitore ? h('p', { class: 'nota' }, `Chroma ${art.contenitore.energia}, ${art.contenitore.capacita_pm} PM${art.contenitore.integrato ? ', riserva integrata' : ''}.`) : null,
-      r.tipo === 'accessorio' && risolte.some((t) => puoMontare(r, t)) ? h('label', { class: 'campo-inline' }, 'Montato su ',
-        h('select', { onchange: (e) => cambia(v.uid, { montato_su: e.target.value || undefined }) },
-          h('option', { value: '' }, '—'),
-          risolte.filter((t) => puoMontare(r, t)).map((a) => h('option', { value: a.uid, selected: v.montato_su === a.uid }, a.nome)))) : null,
-      h('div', { class: 'equip-riga' },
-        contenitoreSingolo ? h('span', { class: 'quantita nota' }, 'Un contenitore per voce: per averne un altro, aggiungilo di nuovo.')
-          : h('span', { class: 'quantita' }, 'Quantità ',
-            h('button', { type: 'button', class: 'btn-tavolo piccolo', disabled: v.quantita <= 1, 'aria-label': `Togli uno a ${r.nome}`, onclick: () => cambia(v.uid, { quantita: v.quantita - 1 }) }, '−'),
-            h('output', {}, String(v.quantita)),
-            h('button', { type: 'button', class: 'btn-tavolo piccolo', 'aria-label': `Aggiungi uno a ${r.nome}`, onclick: () => cambia(v.uid, { quantita: v.quantita + 1 }) }, '+')),
-        // §1.6: il peso degli oggetti personalizzati si corregge qui (quelli del catalogo vengono dai dati)
-        r.personalizzato ? h('label', { class: 'campo-inline peso-equip' }, 'Peso kg ',
-          h('input', {
-            type: 'number', min: 0, step: 0.1, value: v.personalizzato?.peso ?? '', 'aria-label': `Peso di ${r.nome} in kg per unità`,
-            onchange: (e) => {
-              const { peso, ...resto } = v.personalizzato ?? {};
-              const n = e.target.value === '' ? null : Number(e.target.value);
-              cambia(v.uid, { personalizzato: n !== null && Number.isFinite(n) && n >= 0 ? { ...resto, peso: n } : resto });
-            },
-          })) : null,
-        h('input', {
-          type: 'text', class: 'note-equip', value: v.note, placeholder: 'Note (es. «danneggiata», «regalo di…»)', 'aria-label': `Note su ${r.nome}`,
-          onchange: (e) => cambia(v.uid, { note: e.target.value }),
-        })),
-      r.personalizzato && v.personalizzato?.testo ? h('p', { class: 'nota' }, v.personalizzato.testo) : null);
+  // gruppi per tipo (docs/palette.md): espandibili, con lo stato ricordato nel browser. A gruppo
+  // chiuso gli oggetti attivi restano visibili in una riga compatta: cambiano i valori della scheda.
+  const chiusi = new Set(leggiImpostazioni().gruppiEquipChiusi ?? []);
+  return h('div', { class: 'gruppi-equip' }, GRUPPI_EQUIPAGGIAMENTO.map((g) => {
+    const delGruppo = risolte.filter((r) => (TIPI.includes(r.tipo) ? r.tipo : 'altro') === g.tipo);
+    if (!delGruppo.length) return null;
+    const aperto = !chiusi.has(g.tipo);
+    const attivi = delGruppo.filter((r) => r.attivo);
+    return h('section', { class: `gruppo-equip${aperto ? '' : ' chiuso'}` },
+      h('details', {
+        open: aperto,
+        ontoggle: (e) => {
+          if (e.target.open === aperto) return; // il toggle iniziale non è un cambio
+          const nuovi = new Set(leggiImpostazioni().gruppiEquipChiusi ?? []);
+          if (e.target.open) nuovi.delete(g.tipo); else nuovi.add(g.tipo);
+          salvaImpostazioni({ ...leggiImpostazioni(), gruppiEquipChiusi: [...nuovi] });
+          ctx.ridisegna?.();
+        },
+      },
+      h('summary', {}, h('span', { class: 'etichetta-cat', style: `--cat: var(--${g.colore})` }, g.titolo), ` (${delGruppo.length})`),
+      h('ul', { class: 'elenco-equip' }, delGruppo.map((r) => voceEquip(ctx, r, risolte, cambia)))),
+      !aperto && attivi.length ? h('ul', { class: 'elenco-compatto', 'aria-label': `${g.titolo}: oggetti attivi` }, attivi.map((r) => h('li', {},
+        h('strong', {}, r.nome), h('small', { class: 'sigla' }, ` · ${NOMI_STATI[r.voce.stato] ?? ''}${r.voce.quantita > 1 ? ` · ×${r.voce.quantita}` : ''}`)))) : null);
   }));
+}
+
+/** Una voce dell'elenco, completa di stato, quantità, peso e note. */
+function voceEquip(ctx, r, risolte, cambia) {
+  const { dati, voci } = ctx;
+  const v = r.voce;
+  const stati = STATI[r.tipo] ?? [];
+  const art = r.fuoriCatalogo ? null : infoArtefattoVoce(r, dati);
+  // Magia sez. 6: ogni contenitore si sintonizza e si ricarica da solo, quindi una voce ciascuno
+  const contenitoreSingolo = art?.contenitore && !art.contenitore.integrato;
+  return h('li', { class: `voce-equip${r.attivo ? ' attiva' : ''}${r.fuoriCatalogo ? ' fuori' : ''}` },
+    h('div', { class: 'equip-testa' },
+      h('div', {},
+        h('strong', {}, r.def ? info('oggetto', r.def.rif, r.nome) : r.nome),
+        h('small', { class: 'sigla' }, ` · ${NOMI_TIPI[r.tipo]}${r.def ? ` · ${r.def.catalogo}` : ''}`),
+        r.personalizzato ? h('span', { class: 'etichetta' }, 'personalizzato') : null,
+        // riga breve con l'effetto dal manuale (catalogo → effetto_breve)
+        r.def?.effetto_breve ? h('p', { class: 'effetto-breve' }, r.def.effetto_breve) : null,
+        r.fuoriCatalogo ? h('p', { class: 'motivo' }, 'Non più in catalogo: resta in lista, senza effetti.') : null),
+      h('button', {
+        type: 'button', class: 'btn pericolo piccolo-btn', 'aria-label': `Togli ${r.nome}`,
+        onclick: () => { if (confirm(`Togliere «${r.nome}» dall’equipaggiamento?`)) ctx.aggiorna(voci.filter((x) => x.uid !== v.uid)); },
+      }, 'Togli')),
+    stati.length && !r.fuoriCatalogo ? h('div', { class: 'stati-equip', role: 'radiogroup', 'aria-label': `Stato di ${r.nome}` },
+      stati.map((st) => h('button', {
+        type: 'button', role: 'radio', 'aria-checked': String(v.stato === st),
+        class: `stato-equip${v.stato === st ? ' attivo' : ''}`, onclick: () => cambia(v.uid, { stato: st }),
+      }, NOMI_STATI[st]))) : null,
+    art ? h('label', { class: 'campo-inline' },
+      h('input', { type: 'checkbox', checked: v.sintonizzato === true, onchange: (e) => cambia(v.uid, { sintonizzato: e.target.checked || undefined }) }),
+      ` Sintonizzato (costo ${art.sintonizzazione}, §7.10)`) : null,
+    art?.contenitore ? h('p', { class: 'nota' }, `Chroma ${art.contenitore.energia}, ${art.contenitore.capacita_pm} PM${art.contenitore.integrato ? ', riserva integrata' : ''}.`) : null,
+    r.tipo === 'accessorio' && risolte.some((t) => puoMontare(r, t)) ? h('label', { class: 'campo-inline' }, 'Montato su ',
+      h('select', { onchange: (e) => cambia(v.uid, { montato_su: e.target.value || undefined }) },
+        h('option', { value: '' }, '—'),
+        risolte.filter((t) => puoMontare(r, t)).map((a) => h('option', { value: a.uid, selected: v.montato_su === a.uid }, a.nome)))) : null,
+    h('div', { class: 'equip-riga' },
+      contenitoreSingolo ? h('span', { class: 'quantita nota' }, 'Un contenitore per voce: per averne un altro, aggiungilo di nuovo.')
+        : h('span', { class: 'quantita' }, 'Quantità ',
+          h('button', { type: 'button', class: 'btn-tavolo piccolo', disabled: v.quantita <= 1, 'aria-label': `Togli uno a ${r.nome}`, onclick: () => cambia(v.uid, { quantita: v.quantita - 1 }) }, '−'),
+          h('output', {}, String(v.quantita)),
+          h('button', { type: 'button', class: 'btn-tavolo piccolo', 'aria-label': `Aggiungi uno a ${r.nome}`, onclick: () => cambia(v.uid, { quantita: v.quantita + 1 }) }, '+')),
+      // §1.6: il peso degli oggetti personalizzati si corregge qui (quelli del catalogo vengono dai dati)
+      r.personalizzato ? h('label', { class: 'campo-inline peso-equip' }, 'Peso kg ',
+        h('input', {
+          type: 'number', min: 0, step: 0.1, value: v.personalizzato?.peso ?? '', 'aria-label': `Peso di ${r.nome} in kg per unità`,
+          onchange: (e) => {
+            const { peso, ...resto } = v.personalizzato ?? {};
+            const n = e.target.value === '' ? null : Number(e.target.value);
+            cambia(v.uid, { personalizzato: n !== null && Number.isFinite(n) && n >= 0 ? { ...resto, peso: n } : resto });
+          },
+        })) : null,
+      h('input', {
+        type: 'text', class: 'note-equip', value: v.note, placeholder: 'Note (es. «danneggiata», «regalo di…»)', 'aria-label': `Note su ${r.nome}`,
+        onchange: (e) => cambia(v.uid, { note: e.target.value }),
+      })),
+    r.personalizzato && v.personalizzato?.testo ? h('p', { class: 'nota' }, v.personalizzato.testo) : null);
 }
 
 // ---------------------------------------------------------------------------

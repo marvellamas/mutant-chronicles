@@ -5,7 +5,8 @@
 // Le penalità di Ferite, Affaticamento e Stati sono solo promemoria: i VA mostrati non le
 // includono (le regole del cap. 5 sono situazionali).
 import { h, segno } from './dom.js';
-import { info, infoValore } from './tooltip.js';
+import { info, infoValore, etichettaMacro } from './tooltip.js';
+import { classeMacrofamiglia } from '../palette.js';
 import { formulaScomposizione } from '../condizioni.js';
 import { colore, riempimento, condizioniAttiveAbilita } from '../interfaccia.js';
 import { descriviFerite } from '../sessione.js';
@@ -455,7 +456,7 @@ function tabCombattimento(ctx, d) {
       }))),
 
     sezione('Equipaggiamento',
-      h('p', { class: 'nota' }, 'Solo gli oggetti impugnati, imbracciati o indossati cambiano i valori. L’inserimento è manuale: l’equipaggiamento iniziale (§2.16) non ha ancora regole.'),
+      h('p', { class: 'nota' }, 'Solo gli oggetti impugnati, imbracciati o indossati cambiano i valori. L’inserimento è manuale: le dotazioni iniziali del §2.16 non sono ancora automatiche.'),
       renderEquipaggiamento({
         dati: ctx.dati, voci: ctx.scelte.equipaggiamento, ui: ctx.ui,
         aggiorna: ctx.azioni.equipaggiamento, ridisegna: ctx.azioni.ridisegna,
@@ -678,8 +679,8 @@ function tabMagia(ctx, d) {
     d.macrofamiglie.length ? d.macrofamiglie.map((mf) => sezione(mf.nome,
       mf.specializzazioni.map((sp) => h('div', { class: 'incantesimi-griglia' },
         h('h3', { class: 'spec' }, sp.nome),
-        sp.incantesimi.map((i) => h('article', { class: 'incantesimo-scheda' },
-          h('h4', {}, info('incantesimo', i.nome), h('span', { class: 'sigla' }, ` · livello base ${i.livelloBase} · scheda ${i.scheda}`)),
+        sp.incantesimi.map((i) => h('article', { class: `incantesimo-scheda ${classeMacrofamiglia(mf.nome)}` },
+          h('h4', {}, info('incantesimo', i.nome), ' ', etichettaMacro(mf.nome), h('span', { class: 'sigla' }, ` · livello base ${i.livelloBase} · scheda ${i.scheda}`)),
           i.intestazione ? h('p', { class: 'piccolo' }, i.intestazione) : null,
           i.lancio ? h('p', { class: 'piccolo' }, i.lancio) : null,
           i.righe.length ? h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },

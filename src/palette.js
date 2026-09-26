@@ -42,6 +42,7 @@ export const COPPIE_CONTRASTO = [
     [`${c}-testo`, `${c}-tenue`, 4.5], // etichetta con il nome della macrofamiglia
     [`${c}-testo`, 'superficie', 4.5],
     ['testo', `${c}-tenue`, 4.5], // il testo dell'incantesimo resta pieno
+    ['tenue', `${c}-tenue`, 4.5], // note e livello base (--tenue) sulla tinta
   ]),
   ...GRUPPI_EQUIPAGGIAMENTO.map((g) => ['cat-testo', g.colore, 4.5]),
 ];

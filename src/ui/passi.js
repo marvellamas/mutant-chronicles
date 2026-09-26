@@ -3,7 +3,8 @@ import { h, segno, dadi } from './dom.js';
 import { validaScelte } from '../calc.js';
 import { eTaumaturgo, specTiroPuntiEroe, CAMPI_ANAGRAFICA } from '../character.js';
 import { statoIncantesimi, motivoBloccoIncantesimo, regoleIncantesimi } from '../incantesimi.js';
-import { info, elencoInfo } from './tooltip.js';
+import { info, elencoInfo, etichettaMacro } from './tooltip.js';
+import { classeMacrofamiglia } from '../palette.js';
 import { componenteTiro } from './tiro.js';
 import { valoreTiro } from '../tiri.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
@@ -386,9 +387,9 @@ function passoIncantesimi(ctx) {
           lista.map((i) => {
             const preso = scelte.incantesimi.includes(i.nome);
             const motivo = motivoBloccoIncantesimo(i, st, scelte);
-            return h('label', { class: `incantesimo${motivo ? ' bloccato' : ''}` },
+            return h('label', { class: `incantesimo ${classeMacrofamiglia(m.nome)}${motivo ? ' bloccato' : ''}` },
               h('input', { type: 'checkbox', checked: preso, disabled: !!motivo, onchange: (e) => cambia(i.nome, e.target.checked) }),
-              h('span', {}, h('strong', {}, info('incantesimo', i.nome)), h('small', {}, ` liv. base ${i.livello_base} · scheda ${i.scheda}, p. ${i.pagina}`),
+              h('span', {}, h('strong', {}, info('incantesimo', i.nome)), ' ', etichettaMacro(m.nome), h('small', {}, ` liv. base ${i.livello_base} · scheda ${i.scheda}, p. ${i.pagina}`),
                 motivo ? h('small', { class: 'motivo' }, motivo) : null));
           }));
       }))),
@@ -413,7 +414,7 @@ function passoPuntiEroe(ctx) {
 
 function passoEquipaggiamento(ctx) {
   return [
-    h('p', { class: 'riquadro attenzione' }, 'L’equipaggiamento iniziale non ha ancora regole (§2.16: «integrazione successiva»): nessuna dotazione automatica. Inserisci a mano, voce per voce, ciò che concordi con il master.'),
+    h('p', { class: 'riquadro attenzione' }, 'Le dotazioni iniziali (§2.16: dotazione comune e della Classe, approvate dal master per ora solo per l’Agente) non sono ancora automatiche: inseriscile a mano, voce per voce.'),
     h('p', { class: 'nota' }, 'Il catalogo contiene gli oggetti del Manuale degli Armamenti (armi, armature, scudi, accessori, munizioni, corredi, equipaggiamento sanitario, artefatti); ciò che manca si aggiunge come oggetto personalizzato. Nella scheda cambiano i valori solo gli oggetti impugnati, imbracciati, indossati o in uso.'),
     renderEquipaggiamento({
       dati: ctx.dati, voci: ctx.scelte.equipaggiamento, ui: ctx.ui,
