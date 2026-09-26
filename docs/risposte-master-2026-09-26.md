@@ -1,6 +1,6 @@
 # E&L – Risposte e correzioni approvate
 
-Copia del Google Doc del master «E&L – Risposte e correzioni approvate» (Davide), letta il 26 settembre 2026 e riletta alla versione delle 16:07:44 UTC, che aggiunge A.4, A.5 e A.5.1. Testo del documento, non riscritto: è la fonte delle decisioni registrate in `docs/risposte-master.md`.
+Copia del Google Doc del master «E&L – Risposte e correzioni approvate» (Davide), letta il 26 settembre 2026 e riletta alla versione delle 16:19:45 UTC, che aggiunge A.4, A.5, A.5.1 e A.5.2. Testo del documento, non riscritto: è la fonte delle decisioni registrate in `docs/risposte-master.md`.
 
 Decisioni approvate e aggiornamenti dei manuali condivisi.
 
@@ -353,3 +353,33 @@ Le scorte iniziali comprendono tre giorni di cibo e due litri d’acqua. L’acq
 Applicazione: dotazione inserita in una tabella del §2.16.1 del Manuale del Giocatore, con quantità e precisazioni su batterie, cibo e acqua. Restano da definire e approvare le dotazioni delle Classi, i modelli o le varianti di Corporazione e l’eventuale denaro iniziale.
 
 Scheda digitale: da recepire. Assegnare automaticamente a ogni personaggio gli undici tipi di oggetti elencati, con le quantità approvate. Le due borracce contengono un litro d’acqua ciascuna; torcia e comunicatore comprendono ciascuno batteria carica, cavo e alimentatore e hanno 24 ore di autonomia per dispositivo. Registrare tre razioni da viaggio. Riportare la decisione in docs/risposte-master.md; l’aggiornamento dell’app resta da verificare.
+
+## A.5.2 — Dotazione iniziale dell’Agente
+
+Approvato il: set 26, 2026
+
+Oltre alla dotazione comune, l’Agente riceve:
+
+Arma da fuoco: Una Pistola semiautomatica oppure un Revolver.
+
+Munizioni e caricatori: Per la semiautomatica: tre caricatori compatibili, ciascuno con 15 proiettili ordinari, per 45 colpi complessivi. Per il revolver: 18 proiettili ordinari, di cui 6 nel tamburo e 12 di riserva.
+
+Arma da mischia: Un Coltello oppure un Randello, anche nella forma di manganello.
+
+Protezione: Un’Armatura civile leggera, comprensiva dell’elmetto standard.
+
+Osservazione: Un Binocolo.
+
+Registrazione: Un Registratore audiovisivo.
+
+Requisiti: entrambe le armi da fuoco, il Randello e l’Armatura civile leggera richiedono FOR 3; il Coltello richiede FOR 2.
+
+L’armatura concede AR 1. L’elmetto standard incluso non aggiunge AR.
+
+Il registratore comprende batteria carica, cavo e alimentatore, con 24 ore di autonomia. Il binocolo non richiede batterie.
+
+Questa dotazione utilizza i profili commerciali dei manuali. Le eventuali sostituzioni con modelli di Corporazione saranno specificate nelle relative dotazioni.
+
+Applicazione: dotazione inserita nella tabella del §2.16.2 del Manuale del Giocatore. Restano da definire e approvare le dotazioni delle altre Classi, le varianti di Corporazione e l’eventuale denaro iniziale.
+
+Scheda digitale: da recepire. Per chi sceglie Agente come Classe iniziale, proporre la scelta fra Pistola semiautomatica e Revolver e fra Coltello e Randello. Assegnare le munizioni e gli eventuali caricatori corrispondenti all’arma scelta, l’Armatura civile leggera con elmetto standard, il Binocolo e il Registratore audiovisivo con batteria carica, cavo e alimentatore. Verificare i requisiti FOR indicati e aggiungere gli oggetti alla dotazione comune senza duplicarla. Riportare la decisione in docs/risposte-master.md; l’aggiornamento dell’app resta da verificare.

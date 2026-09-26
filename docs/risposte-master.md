@@ -122,3 +122,13 @@ condivisi (Giocatore §§1.2.3, 2.1, 2.11, 2.14, §8.6, §8.6.10; Magia sezioni 
     Dotazioni delle Classi, varianti di Corporazione e denaro iniziale restano da approvare.
     → **Non ancora nell’app**: serve il passo guidato dell’equipaggiamento iniziale (A.5), da
     pianificare. Gli oggetti non sono nel catalogo degli Armamenti.
+
+14. **Dotazione iniziale dell’Agente** (E&L A.5.2, Doc delle 16:19 UTC; Giocatore §2.16.2).
+    Oltre alla dotazione comune: Pistola semiautomatica (tre caricatori da 15 proiettili
+    ordinari) oppure Revolver (18 proiettili, 6 nel tamburo e 12 di riserva); Coltello oppure
+    Randello (anche manganello); Armatura civile leggera con elmetto standard (AR 1, l’elmetto non
+    aggiunge AR); Binocolo; Registratore audiovisivo (batteria, cavo e alimentatore, 24 ore).
+    Requisiti: armi da fuoco, Randello e armatura FOR 3, Coltello FOR 2. Profili commerciali; le
+    varianti di Corporazione arriveranno con le rispettive dotazioni. Chiude la domanda sul
+    §2.16.2 non annunciato.
+    → Non ancora nell’app, come la 13: serve il passo guidato.

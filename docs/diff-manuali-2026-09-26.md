@@ -159,3 +159,8 @@ Prima di chiudere il registro, due Doc risultavano modificati di nuovo e sono st
 | §2.16.2 Dotazione iniziale — Agente | Pistola semiautomatica (tre caricatori da 15) oppure Revolver (18 colpi); Coltello oppure Randello; Armatura civile leggera con elmetto (AR 1); Binocolo; Registratore audiovisivo; requisiti di FOR | regola | **Non annunciata**: E&L dice ancora che le dotazioni delle Classi sono da approvare | Non applicata; chiesto a Davide se è approvata (per-davide A.6) |
 
 Per la dotazione dell'Agente, i profili di armi e armatura esistono nel catalogo (`armi`, `armi_distanza`, `armature`). Binocolo e registratore no: aspettano il Manuale dell'Equipaggiamento.
+
+### Controllo successivo (Giocatore 16:18:37, E&L 16:19:45)
+
+- **Giocatore**: il testo esportato è identico a quello delle 16:17. La modifica non tocca il contenuto.
+- **E&L**: aggiunge **A.5.2 Dotazione iniziale dell'Agente**, con lo stesso contenuto del §2.16.2. La modifica «non annunciata» del §2.16.2 ora è approvata (decisione 14). Come la 13, non è ancora nell'app.
