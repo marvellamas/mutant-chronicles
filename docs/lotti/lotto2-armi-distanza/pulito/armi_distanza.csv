@@ -1,0 +1,23 @@
+Gruppo,Modello,Danno,AC,VA,FOR,Max Q,CC,INC,Abilità,Mani,PI,MOV,Modalità,Qualità,PS INT,REP,Costo proposto
+Pistole,Pistola semiautomatica,1d6,1,0,3,30,15,6,Leggere,1,4,0,S TR,Comune,10,CO,1.300
+Pistole,Revolver,1d6+1,1,0,3,30,6,8,Leggere,1,4,0,S TR,Comune,10,CO,1.600
+Pistole,Pistola pesante,1d6+2,1,0,4,30,10,6,Leggere,1,4,0,S TR,Comune,10,NC,2.100
+Pistole,Pistola mitragliatrice compatta,1d6,1,0,4,40,20,5,Leggere,1,4,0,S RB RM TR,Comune,10,NC,2.600
+Fucili,Carabina,1d6+1,1,0,4,80,15,7,Medie,2,6,0,S TR,Comune,10,CO,1.800
+Fucili,Fucile d’assalto,1d6+2,1,0,5,160,30,6,Medie,2,6,0,S RB RM RL TR FS,Comune,10,NC,4.000
+Fucili,Fucile di precisione,1d6+3,1,0,5,1000,5,7,Medie,2,6,0,S TR,Comune,10,NC,5.500
+Fucili,Fucile a pompa,1d6,2,0,4,30,6,6,Medie,2,6,0,S,Comune,10,CO,1.200
+Fucili,Doppietta,1d6+1,2,0,4,20,2,8,Medie,2,6,0,S TR DC,Comune,10,CO,1.200
+Armi pesanti,Mitragliatore leggero,1d8+2,1,0,6,500,100,6,Pesanti,2,8,-1,RM RL FS,Comune,10,NC,15.000
+Armi pesanti,Mitragliatore pesante,1d10+3,1,0,7,800,200,5,Pesanti,2,8,-2,RM RL FS,Comune,10,RA,30.000
+Lanciatori,Lanciagranate,Munizione,Mun.,0,5,60,6,6,Medie,2,6,0,S TR,Comune,10,NC,6.000
+Lanciatori,Lanciarazzi,Munizione,Mun.,0,7,200,1,5,Pesanti,2,8,-1,S,Comune,10,RA,14.000
+Armi da lancio,Pugnale,1d4+1,1,0,2,FOR × 3,1,—,Lancio,1,4,0,S TR,Comune,10,CO,150
+Armi da lancio,Ascia leggera,1d6+1,1,0,4,FOR × 3,1,—,Lancio,1,5,0,S,Comune,10,CO,180
+Armi da lancio,Shuriken,1d4+1,1,0,2,FOR × 3,1,—,Lancio,1,4,0,S TR,Comune,10,CO,25
+Archi e balestre,Arco da guerra,1d6+1,1,0,5,100,—,—,Lancio,2,6,0,S TR,Comune,10,CO,500
+Archi e balestre,Balestra grande,1d6+3,1,0,5,120,1,8,Lancio,2,6,0,S,Comune,10,CO,700
+Archi e balestre,Balestra piccola,1d4+1,1,0,3,30,1,8,Lancio,1,4,0,S,Comune,10,CO,300
+Armi speciali,Fucile al plasma,1d6+1,2,0,5,50,20,6,Medie,2,6,0,S RB TR,Comune,10,RA,12.000
+Armi speciali,Lanciafiamme,1d10,1d3,0,6,10,10,6,Pesanti,2,8,-1,S,Comune,10,RA,9.000
+Granate,Granata a frammentazione,1d6+1,1d3,0,3,FOR × 3,1,8,Lancio,1,4,0,S,Comune,10,NC,80

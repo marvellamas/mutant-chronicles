@@ -146,7 +146,12 @@ function riassuntoProfilo(o) {
   const parti = [];
   if (o.abilita) parti.push(o.abilita);
   if (o.danno) parti.push(`danno ${[o.danno.una_mano, o.danno.due_mani].filter(Boolean).join(' / ')}`);
+  if (o.danno_da_munizione) parti.push('danno dalla munizione');
   if (o.portata_q) parti.push(`portata ${o.portata_q} Q`);
+  if (o.gittata_q) parti.push(`gittata ${o.gittata_q} Q`);
+  if (o.gittata_per_for) parti.push(`gittata FOR × ${o.gittata_per_for} Q`);
+  if (o.munizioni?.capacita) parti.push(`CC ${o.munizioni.capacita}`);
+  if (o.modalita?.length) parti.push(o.modalita.join(' '));
   if (o.ar) parti.push(`AR ${o.ar.totale}`);
   if (o.categoria) parti.push(o.categoria);
   if (o.for_richiesta) parti.push(`FOR ${o.for_richiesta}`);

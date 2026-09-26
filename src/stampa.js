@@ -200,10 +200,19 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     a.nome,
     a.abilita ?? '—',
     a.va === null ? '—' : a.va < 0 ? `−${-a.va}` : String(a.va),
-    testoDanno(a.danno),
-    a.gittataQ ? `${a.gittataQ} Q` : a.portataQ ? `portata ${a.portataQ} Q` : '—',
-    '',
-    [a.specializzazione ? `+${a.bonusDanno} danno (Spec.)` : null, ...a.proprieta.map((p) => p.nome), a.parata ? `Parata ${a.parata.va < 0 ? `−${-a.parata.va}` : a.parata.va}` : null].filter(Boolean).join('; '),
+    a.dannoDaMunizione ? 'munizione' : testoDanno(a.danno),
+    a.gittataQ ? `${a.gittataQ} Q${a.gittataFormula ? ` (${a.gittataFormula})` : ''}` : a.portataQ ? `portata ${a.portataQ} Q` : '—',
+    // capacità del caricatore; i colpi rimasti si segnano a penna
+    a.munizioni?.capacita ? `CC ${a.munizioni.capacita}` : '',
+    [
+      a.ac !== null && a.ac !== 1 ? `AC ${a.ac === 'munizione' ? 'mun.' : a.ac}` : null,
+      a.inc ? `INC ${a.inc}` : null,
+      a.modalita.length ? a.modalita.join(' ') : null,
+      a.mov ? `MOV ${a.mov < 0 ? `−${-a.mov}` : a.mov} Q` : null,
+      a.specializzazione ? `+${a.bonusDanno} danno (Spec.)` : null,
+      ...a.proprieta.map((p) => p.nome),
+      a.parata ? `Parata ${a.parata.va < 0 ? `−${-a.parata.va}` : a.parata.va}` : null,
+    ].filter(Boolean).join('; '),
   ]);
   const righeProtezioni = eq.protezioni.map((p) => [
     p.nome,

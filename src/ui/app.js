@@ -20,7 +20,7 @@ import { preparaStampa, preparaTab } from '../stampa.js';
 import { renderTab } from './tab.js';
 import {
   massimiSessione, allineaSessione, variaSessione, modificaSessione, commutaStato, nuovaSessione, convertiDistintivi,
-  penalitaSessione,
+  penalitaSessione, variaMunizioni, ricaricaArma,
 } from '../sessione.js';
 
 // Dopo la creazione si possono ancora cambiare solo i campi descrittivi: le altre scelte
@@ -605,10 +605,8 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
         renderScheda({ mantieniScorrimento: true });
       },
       ridisegna: () => renderScheda({ mantieniScorrimento: true }),
-      munizioni: (uid, delta) => {
-        const attuali = stato.sessione.munizioni[uid] ?? 0;
-        cambiaSessione(modificaSessione(stato.sessione, { munizioni: { ...stato.sessione.munizioni, [uid]: Math.max(0, attuali + delta) } }, massimi));
-      },
+      munizioni: (uid, campo, delta) => cambiaSessione(variaMunizioni(stato.sessione, uid, campo, delta, massimi)),
+      ricarica: (uid) => cambiaSessione(ricaricaArma(stato.sessione, uid, massimi)),
       puntiEsperienza: (valore) => {
         stato.scelte = applicaModifica(stato.scelte, { puntiEsperienza: valore }, dati).scelte;
         persisti();

@@ -1,6 +1,6 @@
 # Catalogo dell'equipaggiamento: lotti da estrarre
 
-Stato al 26 settembre 2026. Fonte: Manuale degli Armamenti v0.50. Metodo: `tools/estrai_manuali.py`
+Stato al 26 settembre 2026 (lotto 2 fatto). Fonte: Manuale degli Armamenti v0.50. Metodo: `tools/estrai_manuali.py`
 e `docs/pilota-estrazione-armamenti.md`.
 
 Questa è la lista dei prompt successivi: **un lotto per prompt**, nell'ordine di utilità al
@@ -17,6 +17,7 @@ su quelle pagine: le tabelle impilate contano come una.
 |---|---|---|---|
 | `armi.json` | 28 armi ravvicinate del catalogo Commerciale | §7.1.1–7.1.3 | 4–7 |
 | `armature.json` | 3 armature commerciali civili, penalità per categoria | §7.11.1–7.11.3 | 62–63 |
+| `armi_distanza.json` | 22 armi a distanza del catalogo Commerciale (lotto 2) | §7.7 | 33–36 |
 
 Da completare nello stesso ambito, a basso costo:
 - **Manovre compatibili** dei profili commerciali, §7.1.7, pp. 9–10: una tabella Modello →
@@ -28,7 +29,48 @@ Da completare nello stesso ambito, a basso costo:
 
 ## Da estrarre, in ordine di utilità
 
-### 1. Armi a distanza commerciali — §7.7, pp. 33–35
+### 1. ✔ Armi a distanza commerciali — §7.7, pp. 33–36 (lotto 2, fatto)
+
+Il lotto finisce a p. 36, non a p. 35 come scritto in origine: su p. 36 stanno la tabella
+economica di Archi e balestre, le Armi speciali e le Granate.
+
+- **Fonte:** `docs/lotti/lotto2-armi-distanza/grezzo/` (10 CSV di pdfplumber, pp. 33–36),
+  `pulito/armi_distanza.csv`, generatore `tools/lotti/lotto2_armi_distanza.mjs`, dati
+  `data/equipaggiamento/armi_distanza.json`.
+- **Estrazione:** 8 gruppi × 3 sottotabelle = 24 sottotabelle reali. pdfplumber ne trova 10:
+  - le sottotabelle di un gruppo impilate si leggono come una sola (p. 33: 1 invece di 3);
+  - due gruppi sono spezzati fra due pagine: Lanciatori 34→35, Archi e balestre 35→36.
+- **Regola di separazione (generica, nel generatore):**
+  - via righe e celle vuote;
+  - ogni riga che comincia con «Modello» apre una nuova sottotabella con la sua intestazione;
+  - i record si riuniscono per nome del modello attraverso tutti i file del lotto;
+  - ogni blocco «Modello | Danno …» apre un gruppo, con i nomi dei titoli del §7.7 (fuori
+    dalle tabelle) elencati nel generatore e controllati nel numero (8).
+- **Righe:** 22 armi, 66 righe di sottotabella. Dopo la regola generica **22 su 22 giuste al
+  primo colpo**, controllate riga per riga sulle immagini delle pp. 33–36; **0 correzioni a
+  mano**. Nessuna cella andata a capo, nessuna colonna spostata.
+- **Conversioni** (regole del generatore, non correzioni):
+  - 15 costi con il punto delle migliaia;
+  - «Munizione» / «Mun.» nelle colonne Danno e AC (Lanciagranate, Lanciarazzi) →
+    `danno_da_munizione`, `ac: "munizione"`;
+  - «FOR × 3» in Max Q (Pugnale, Ascia leggera, Shuriken, Granata) → `gittata_per_for: 3`,
+    calcolata con la FOR del personaggio;
+  - «—» in CC e INC → `null`;
+  - MOV scritto con il trattino ASCII «-1», «-2» → interi negativi.
+- **Testo sotto le tabelle** (proprietà, munizione di riferimento, ricarica, consumo): annotato
+  a mano nel generatore, parola per parola. Le proprietà con nome (Sbilanciante, Plasma, Fuoco,
+  RS 1, Sbalzante 1) hanno il testo del Giocatore §5.10/§5.24. Nessuna tocca VA, danno, Difese
+  o AR, quindi nessun `effetto` strutturato.
+- **Schema esteso:** `ac`, `modificatore_va`, `gittata_per_for`, `munizioni` { capacita,
+  ricarica, consumo, riferimento }, `inc`, `mov`, `modalita` con legenda nel file,
+  `danno_da_munizione`, `stesso_oggetto` (Pugnale e Ascia leggera: `armi:pugnale`,
+  `armi:ascia-leggera`).
+- **Dubbi per Davide:** Specializzazione della Pistola mitragliatrice compatta e delle armi
+  ravvicinate lanciate (`docs/per-davide.md`, A.7 e A.8; `TODO(Davide)` in
+  `armi_distanza.json`).
+
+Scheda originale del lotto:
+
 
 - **Contenuto:** pistole, fucili, armi medie, lanciagranate, armi da lancio (compresi Pugnale e
   Ascia leggera lanciati).

@@ -7,6 +7,7 @@ import {
 } from '../src/equipaggiamento.js';
 import { preparaStampa } from '../src/stampa.js';
 import { testoTooltip } from '../src/descrizioni.js';
+import { massimiSessione, inizializzaSessione, allineaSessione, variaMunizioni, ricaricaArma } from '../src/sessione.js';
 import { validaDati } from '../src/validate.js';
 import { datiReali, copia } from './helpers.js';
 import { MISHIMA_AGENTE, ARCANISTA } from './personaggi.js';
@@ -16,7 +17,7 @@ const voce = (uid, rif, stato, extra = {}) => ({ uid, rif, stato, quantita: 1, n
 const scheda = (creazione, equipaggiamento, livelli = []) => calcolaScheda({ creazione: { ...creazione, equipaggiamento }, livelli }, dati);
 
 test('catalogo: caricato dall’indice, un lotto = un file e una riga; riferimenti "file:id"', () => {
-  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armature']);
+  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armi_distanza', 'armature']);
   const cat = catalogo(dati);
   assert.equal(cat.oggetti.filter((o) => o.tipo === 'arma_ravvicinata').length, 28); // §7.1.1: 28 profili
   assert.equal(cat.oggetti.filter((o) => o.tipo === 'armatura').length, 3); // §7.11.3
@@ -31,7 +32,7 @@ test('catalogo: caricato dall’indice, un lotto = un file e una riga; riferimen
 
 test('cascata e ricerca: solo ciò che esiste; i nomi alternativi portano al profilo', () => {
   const o = opzioniCascata(dati, { tipo: 'arma_ravvicinata', catalogo: 'Commerciale', famiglia: 'Spade' });
-  assert.deepEqual(o.tipi, ['arma_ravvicinata', 'armatura']);
+  assert.deepEqual(o.tipi, ['arma_ravvicinata', 'arma_distanza', 'armatura']);
   assert.deepEqual(o.cataloghi, ['Commerciale']);
   assert.ok(o.famiglie.includes('Armi da pugno'));
   assert.deepEqual(o.profili.map((p) => p.nome), ['Spada leggera', 'Stocco', 'Spada lunga', 'Spada bastarda', 'Spadone']);
@@ -216,4 +217,97 @@ test('validatore del catalogo: Abilità, FOR 1–10, id ripetuti, tipo, numeri',
   assert.match(e((d) => { d.equipaggiamento.file.armature.oggetti[0].categoria = 'Leggerissima'; }), /categoria "Leggerissima" senza penalità/);
   assert.match(e((d) => { d.equipaggiamento.indice.file.push({ id: 'armi', file: 'armi.json' }); }), /id "armi" ripetuto/);
   assert.equal(e(() => {}), '');
+});
+
+// --- Lotto 2: armi a distanza commerciali (§7.7) -----------------------------------------
+
+test('lotto 2: 22 armi a distanza commerciali in 8 gruppi, con i valori del §7.7', () => {
+  const armi = catalogo(dati).oggetti.filter((o) => o.tipo === 'arma_distanza');
+  assert.equal(armi.length, 22);
+  assert.deepEqual([...new Set(armi.map((o) => o.famiglia))], ['Pistole', 'Fucili', 'Armi pesanti', 'Lanciatori', 'Armi da lancio', 'Archi e balestre', 'Armi speciali', 'Granate']);
+  const fa = catalogo(dati).perRif.get('armi_distanza:fucile-d-assalto');
+  assert.equal(fa.abilita, 'Armi medie');
+  assert.equal(fa.gittata_q, 160);
+  assert.deepEqual(fa.munizioni, { capacita: 30, ricarica: null, consumo: null, riferimento: null });
+  assert.deepEqual(fa.modalita, ['S', 'RB', 'RM', 'RL', 'TR', 'FS']);
+  assert.equal(fa.costo, 4000);
+  const lg = catalogo(dati).perRif.get('armi_distanza:lanciagranate');
+  assert.equal(lg.danno, null);
+  assert.equal(lg.danno_da_munizione, true);
+  assert.equal(lg.ac, 'munizione');
+  assert.equal(lg.munizioni.riferimento, 'Granata standard a frammentazione');
+  const arco = catalogo(dati).perRif.get('armi_distanza:arco-da-guerra');
+  assert.equal(arco.munizioni.capacita, null); // CC «—»
+  assert.equal(arco.inc, null);
+  assert.equal(catalogo(dati).perRif.get('armi_distanza:pugnale').stesso_oggetto, 'armi:pugnale');
+  assert.equal(catalogo(dati).perRif.get('armi_distanza:mitragliatore-pesante').mov, -2);
+});
+
+test('arma a distanza impugnata: VA per colpire, gittata (anche FOR × 3), MOV, stampa con la capacità', () => {
+  const s = scheda(MISHIMA_AGENTE, [
+    voce('p', 'armi_distanza:pistola-semiautomatica', 'impugnata'),
+    voce('g', 'armi_distanza:granata-a-frammentazione', 'impugnata'),
+  ]);
+  const [pistola, granata] = s.equipaggiamento.armi;
+  assert.equal(pistola.va, s.abilita.find((a) => a.nome === 'Armi leggere').totale); // FOR 3 ≤ 6, VA della scheda 0
+  assert.equal(pistola.gittataQ, 30);
+  assert.equal(pistola.munizioni.capacita, 15);
+  assert.equal(pistola.inc, 6);
+  assert.equal(pistola.parata, null); // la Parata si calcola solo per le armi ravvicinate
+  assert.equal(granata.gittataQ, 6 * 3); // FOR 6 × 3
+  assert.equal(granata.gittataFormula, 'FOR 6 × 3');
+  assert.equal(granata.ac, '1d3');
+  // FOR insufficiente e MOV dell'arma impugnata
+  const m = scheda(MISHIMA_AGENTE, [voce('m', 'armi_distanza:mitragliatore-pesante', 'impugnata')]);
+  assert.equal(m.equipaggiamento.armi[0].va, m.abilita.find((a) => a.nome === 'Armi pesanti').totale - 1); // FOR 7, Agente 6
+  assert.equal(m.equipaggiamento.movimentoQ, -2);
+  // stampa: gittata e capacità nella riga dell'arma
+  const f3 = preparaStampa({ ...MISHIMA_AGENTE, equipaggiamento: [voce('p', 'armi_distanza:pistola-semiautomatica', 'impugnata')] }, dati)
+    .fogli.find((f) => f.id === 'combattimento').dati;
+  assert.deepEqual(f3.armi.righe[0].slice(0, 6), ['Pistola semiautomatica', 'Armi leggere', String(pistola.va), '1d6', '30 Q', 'CC 15']);
+  assert.match(f3.armi.righe[0][6], /INC 6; S TR/);
+});
+
+test('Specializzazione Pistole sulla pistola; il danno «dalla munizione» resta senza bonus', () => {
+  const livelli = [{ livello: 2, caratteristiche: { DES: 2 } }, { livello: 3, talentoLibero: { id: 'specializzazione-pistole' } }];
+  const s = scheda(MISHIMA_AGENTE, [voce('p', 'armi_distanza:revolver', 'impugnata'), voce('l', 'armi_distanza:lanciagranate', 'impugnata')], livelli);
+  const base = s.abilita.find((a) => a.nome === 'Armi leggere').totale;
+  assert.equal(s.equipaggiamento.armi[0].va, base + 1);
+  assert.deepEqual(s.equipaggiamento.armi[0].danno, { una_mano: '1d6+2', due_mani: null });
+  assert.equal(s.equipaggiamento.armi[1].dannoDaMunizione, true);
+  assert.equal(s.equipaggiamento.armi[1].danno, null);
+});
+
+test('munizioni in sessione: il contatore parte dalla capacità, «Ricarica» lo riporta al massimo, riserve libere', () => {
+  const creazione = { ...MISHIMA_AGENTE, equipaggiamento: [voce('p', 'armi_distanza:pistola-semiautomatica', 'impugnata'), voce('a', 'armi_distanza:arco-da-guerra', 'zaino')] };
+  const m = massimiSessione(calcolaScheda({ creazione, livelli: [] }, dati), creazione, dati);
+  assert.deepEqual(m.caricatori, { p: 15, a: null });
+  let s = inizializzaSessione(m);
+  assert.deepEqual(s.munizioni, { p: { colpi: 15, riserve: 0 }, a: { colpi: 0, riserve: 0 } });
+  s = variaMunizioni(s, 'p', 'colpi', -4, m);
+  assert.equal(s.munizioni.p.colpi, 11);
+  s = variaMunizioni(s, 'p', 'colpi', +10, m);
+  assert.equal(s.munizioni.p.colpi, 15); // mai oltre la capacità
+  s = variaMunizioni(s, 'p', 'riserve', +3, m);
+  s = variaMunizioni(s, 'p', 'colpi', -15, m);
+  s = ricaricaArma(s, 'p', m);
+  assert.deepEqual(s.munizioni.p, { colpi: 15, riserve: 3 }); // la ricarica non scala le riserve
+  s = variaMunizioni(s, 'a', 'colpi', +20, m); // arco: nessun caricatore, contatore libero
+  assert.equal(s.munizioni.a.colpi, 20);
+  assert.equal(ricaricaArma(s, 'a', m).munizioni.a.colpi, 20);
+  // un'arma tolta dalla lista sparisce dalle munizioni; una aggiunta parte piena
+  const m2 = { ...m, caricatori: { g: 1 } };
+  assert.deepEqual(allineaSessione(s, m2).munizioni, { g: { colpi: 1, riserve: 0 } });
+});
+
+test('validatore delle armi a distanza: modalità, capacità, AC, danno dalla munizione, stesso oggetto', () => {
+  const e = (modifica) => { const d = copia(dati); modifica(d); return validaDati(d).map((x) => `${x.chiave}: ${x.problema}`).join('\n'); };
+  const dist = (d) => d.equipaggiamento.file.armi_distanza.oggetti;
+  assert.match(e((d) => { dist(d)[0].modalita = ['S', 'ZZ']; }), /modalità "ZZ" non nella legenda/);
+  assert.match(e((d) => { dist(d)[0].munizioni.capacita = 0; }), /capacita: intero ≥ 1 oppure null/);
+  assert.match(e((d) => { dist(d)[0].ac = 'tanti'; }), /applicazioni di danno/);
+  assert.match(e((d) => { dist(d).find((o) => o.id === 'lanciagranate').danno = { una_mano: null, due_mani: '1d6' }; }), /il danno deve essere null/);
+  assert.match(e((d) => { dist(d).find((o) => o.id === 'pugnale').stesso_oggetto = 'armi:pugnalone'; }), /"armi:pugnalone" non è un oggetto del catalogo/);
+  assert.match(e((d) => { dist(d)[0].gittata_q = null; }), /senza gittata/);
+  assert.match(e((d) => { dist(d)[0].mov = 1; }), /penalità MOV: intero ≤ 0/);
 });

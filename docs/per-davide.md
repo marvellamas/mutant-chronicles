@@ -18,6 +18,10 @@ Le risposte già date (Esploratore, minimo 1 incantesimi, quote per macrofamigli
 
 6. **Equipaggiamento iniziale (§2.16).** "Verrà integrato successivamente". Finché non esiste, l'inserimento nell'app è manuale (voce per voce). Quando lo scrivi, dicci la forma (lista fissa per Addestramento? budget in denaro? scelte guidate?) prima di impaginarlo: cambia il passo del wizard.
 
+7. **Pistola mitragliatrice compatta: quale Specializzazione?** Nel §7.7 sta nel gruppo delle Pistole, ma il nome e le modalità (Raffica Breve e Media) la avvicinano ai mitragliatori. L'app oggi applica la Specializzazione in Pistole (§8.8.1). Se vale Mitragliatori, o entrambe, dillo.
+
+8. **Pugnale e Ascia leggera lanciati: quale Specializzazione?** Il §7.7 dice che sono lo stesso oggetto del catalogo ravvicinato, lanciato con Armi da Lancio. L'app oggi applica al lancio la Specializzazione in Armi da Lancio e, in corpo a corpo, quella della famiglia (Coltelli e Pugnali, Asce). Se al lancio vale invece la Specializzazione della famiglia, o entrambe, dillo.
+
 ## B. Da correggere nella prossima edizione dei manuali
 
 Sono le cose che hai già deciso a voce o che sono errori evidenti: l'app segue la tua decisione, ma il testo stampato dice ancora un'altra cosa e prima o poi qualcuno al tavolo lo aprirà.
@@ -39,7 +43,7 @@ Sono le cose che hai già deciso a voce o che sono errori evidenti: l'app segue 
 ## D. Manuali che l'app aspetta
 
 - Manuale degli Equipaggiamenti e Manuale dei Veicoli (in stesura): diversi Talenti li citano. Quando esistono, ce li passi come PDF nella cartella `Manuali/`.
-- Manuale degli Armamenti v0.50: lo stiamo estraendo a lotti. Se pubblichi una v0.51 prima che abbiamo finito, avvisaci: le tabelle cambiate vanno ri-estratte.
+- Manuale degli Armamenti v0.50: lo stiamo estraendo a lotti (stato in `docs/equipaggiamento-lotti.md`: fatti armi ravvicinate e a distanza commerciali, armature civili). Se pubblichi una v0.51 prima che abbiamo finito, avvisaci: le tabelle cambiate vanno ri-estratte.
 
 ## Come ci rispondi
 

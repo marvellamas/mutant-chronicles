@@ -9,6 +9,7 @@ import { info } from './tooltip.js';
 import { descriviFerite } from '../sessione.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
 import { testoDanno } from '../stampa.js';
+import { legendaModalita } from '../equipaggiamento.js';
 
 export const POSIZIONI_TAB = [
   { id: 'automatica', etichetta: 'Automatica (sinistra su schermi larghi, in basso su telefono e tablet)' },
@@ -327,26 +328,55 @@ const numero = (n) => (n < 0 ? `−${-n}` : String(n));
 
 /** Arma impugnata: VA per colpire con la scomposizione, danno, portata o gittata, Parata, munizioni. */
 function schedaArma(ctx, a) {
-  const munizioni = ctx.sessione.munizioni[a.uid] ?? 0;
+  const legenda = legendaModalita(ctx.dati);
+  const dannoTesto = a.dannoDaMunizione ? `dalla munizione${a.munizioni?.riferimento ? ` (${a.munizioni.riferimento})` : ''}` : testoDanno(a.danno);
   return h('article', { class: 'arma-tab' },
     h('h3', {}, a.nome, h('small', { class: 'sigla' }, ` · ${a.abilita ?? 'Abilità non indicata'}`)),
     h('div', { class: 'arma-valori' },
       h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), h('strong', {}, a.va === null ? '—' : numero(a.va))),
-      h('p', {}, h('span', { class: 'sigla' }, 'Danno '), h('strong', {}, testoDanno(a.danno))),
+      h('p', {}, h('span', { class: 'sigla' }, 'Danno '), h('strong', {}, dannoTesto)),
+      a.ac !== null && a.ac !== 1 ? h('p', {}, h('span', { class: 'sigla', title: 'Applicazioni di danno per colpo a segno' }, 'AC '), a.ac === 'munizione' ? 'dalla munizione' : String(a.ac)) : null,
       a.portataQ ? h('p', {}, h('span', { class: 'sigla' }, 'Portata '), `${a.portataQ} Q`) : null,
-      a.gittataQ ? h('p', {}, h('span', { class: 'sigla' }, 'Gittata '), `${a.gittataQ} Q`) : null,
+      a.gittataQ ? h('p', {}, h('span', { class: 'sigla' }, 'Gittata '), `${a.gittataQ} Q`, a.gittataFormula ? h('small', { class: 'sigla' }, ` (${a.gittataFormula})`) : null) : null,
+      a.inc ? h('p', {}, h('span', { class: 'sigla', title: 'Affidabilità (tabella di Inceppamento)' }, 'INC '), String(a.inc)) : null,
       a.parata ? h('p', {}, h('span', { class: 'sigla' }, 'Parata '), h('strong', {}, numero(a.parata.va))) : null),
     a.componenti.length ? h('p', { class: 'nota' }, a.componenti.map((c) => `${c.nome} ${segno(c.valore)}`).join(' · '),
       a.bonusDanno ? ` · danno +${a.bonusDanno} (${a.specializzazione})` : null) : null,
+    a.modalita.length ? h('p', { class: 'proprieta-arma' }, h('span', { class: 'sigla' }, 'Modalità '),
+      a.modalita.map((m) => h('span', { class: 'etichetta', title: legenda[m] ?? m }, m))) : null,
+    a.mov ? h('p', { class: 'nota' }, `MOV ${segno(a.mov)} Q mentre è impugnata (§7.7)`) : null,
     a.proprieta.length ? h('p', { class: 'proprieta-arma' }, a.proprieta.map((p) => h('span', { class: 'etichetta', title: p.testo }, p.nome))) : null,
-    a.tipo === 'arma_distanza' ? h('div', { class: 'munizioni-tavolo' },
-      h('span', {}, 'Munizioni: ', h('strong', {}, String(munizioni))),
-      [-10, -1, 1, 10].map((d) => h('button', {
-        type: 'button', class: 'btn-tavolo', disabled: d < 0 && munizioni <= 0,
-        'aria-label': `${d > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(d)} munizioni a ${a.nome}`,
-        onclick: () => ctx.azioni.munizioni(a.uid, d),
-      }, d > 0 ? `+${d}` : `−${-d}`)),
-      h('small', { class: 'nota' }, 'Contatore libero: caricatori e ricariche arriveranno con il catalogo delle armi a distanza.')) : null);
+    a.tipo === 'arma_distanza' ? pannelloMunizioni(ctx, a) : null);
+}
+
+/**
+ * Modalità tavolo: colpi nel caricatore (dalla capacità del catalogo, «Ricarica» lo riporta al
+ * massimo) e riserve (caricatori di scorta, quantità libera).
+ */
+function pannelloMunizioni(ctx, a) {
+  const m = ctx.sessione.munizioni[a.uid] ?? { colpi: 0, riserve: 0 };
+  const capacita = a.munizioni?.capacita ?? null;
+  const pulsante = (campo, d, etichetta) => h('button', {
+    type: 'button', class: 'btn-tavolo', disabled: (d < 0 && m[campo] <= 0) || (campo === 'colpi' && d > 0 && capacita !== null && m.colpi >= capacita),
+    'aria-label': `${d > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(d)} ${etichetta} a ${a.nome}`,
+    onclick: () => ctx.azioni.munizioni(a.uid, campo, d),
+  }, d > 0 ? `+${d}` : `−${-d}`);
+  return h('div', { class: 'munizioni-tavolo' },
+    h('div', { class: 'riga-munizioni' },
+      h('span', {}, 'Caricatore ', h('strong', {}, String(m.colpi)), capacita !== null ? ` / ${capacita}` : ''),
+      pulsante('colpi', -1, 'colpi'),
+      capacita !== null && capacita >= 10 ? pulsante('colpi', -5, 'colpi') : null,
+      capacita !== null ? h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.ricarica(a.uid), disabled: m.colpi >= capacita }, 'Ricarica') : pulsante('colpi', 1, 'colpi')),
+    h('div', { class: 'riga-munizioni' },
+      h('span', {}, 'Riserve ', h('strong', {}, String(m.riserve))),
+      pulsante('riserve', -1, 'riserve'), pulsante('riserve', 1, 'riserve')),
+    h('small', { class: 'nota' }, [
+      capacita === null ? 'Nessun caricatore nella scheda dell’arma: contatore libero.' : null,
+      a.munizioni?.ricarica ? `Ricarica: ${a.munizioni.ricarica}.` : null,
+      a.munizioni?.consumo ? `${a.munizioni.consumo}.` : null,
+      a.munizioni?.riferimento ? `Munizione di riferimento: ${a.munizioni.riferimento}.` : null,
+      'Le riserve (caricatori di scorta) si contano a mano: «Ricarica» non le scala.',
+    ].filter(Boolean).join(' ')));
 }
 
 // ---------------------------------------------------------------------------

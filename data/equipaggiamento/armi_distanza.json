@@ -1,0 +1,960 @@
+{
+  "versione_manuale": "Armamenti 0.50",
+  "fonte": "Manuale degli Armamenti v0.50, §7.7 Catalogo Commerciale delle armi a distanza (pp. 33–36); definizioni delle proprietà dal Manuale del Giocatore §5.10 e §5.24; lotto 2",
+  "_nota": "Generato da tools/lotti/lotto2_armi_distanza.mjs; da qui in poi si modifica questo file. «ac» è il numero di applicazioni di danno (anche «1d3», o «munizione»); «modificatore_va» è la colonna VA della scheda; «gittata_per_for» sostituisce la gittata con FOR × valore; «mov» è la penalità MOV dell’arma impugnata (§7.7).",
+  "TODO(Davide)": [
+    "Pistola mitragliatrice compatta: vale la Specializzazione Pistole (il suo gruppo nel §7.7, scelta attuale) o Mitragliatori?",
+    "Pugnale e Ascia leggera lanciati: vale la Specializzazione Armi da Lancio (scelta attuale) o quella dell’arma ravvicinata (Coltelli e Pugnali, Asce)?"
+  ],
+  "modalita": {
+    "S": "Colpo Singolo",
+    "RB": "Raffica Breve",
+    "RM": "Raffica Media",
+    "RL": "Raffica Lunga",
+    "TR": "Tiro Rapido",
+    "FS": "Fuoco di Soppressione",
+    "DC": "Doppio Colpo"
+  },
+  "oggetti": [
+    {
+      "id": "pistola-semiautomatica",
+      "nome": "Pistola semiautomatica",
+      "tipo": "arma_distanza",
+      "catalogo": "Commerciale",
+      "famiglia": "Pistole",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.7",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 30,
+      "munizioni": {
+        "capacita": 15,
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 3,
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1300,
+      "proprieta": []
+    },
+    {
+      "id": "revolver",
+      "nome": "Revolver",
+      "tipo": "arma_distanza",
+      "catalogo": "Commerciale",
+      "famiglia": "Pistole",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.7",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+1",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 30,
+      "munizioni": {
+        "capacita": 6,
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 8,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 3,
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1600,
+      "proprieta": []
+    },
+    {
+      "id": "pistola-pesante",
+      "nome": "Pistola pesante",
+      "tipo": "arma_distanza",
+      "catalogo": "Commerciale",
+      "famiglia": "Pistole",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.7",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+2",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 30,
+      "munizioni": {
+        "capacita": 10,
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 4,
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 2100,
+      "proprieta": []
+    },
+    {
+      "id": "pistola-mitragliatrice-compatta",
+      "nome": "Pistola mitragliatrice compatta",
+      "tipo": "arma_distanza",
+      "catalogo": "Commerciale",
+      "famiglia": "Pistole",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.7",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 40,
+      "munizioni": {
+        "capacita": 20,
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 5,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "TR"
+      ],
+      "for_richiesta": 4,
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 2600,
+      "proprieta": []
+    },
+    {
+      "id": "carabina",
+      "nome": "Carabina",
+      "tipo": "arma_distanza",
+      "catalogo": "Commerciale",
+      "famiglia": "Fucili",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.7",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-carabine",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+1"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 80,
+      "munizioni": {
+        "capacita": 15,
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 4,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1800,
+      "proprieta": []
+    },
+    {
+      "id": "fucile-d-assalto",
+      "nome": "Fucile d’assalto",
+      "tipo": "arma_distanza",
+      "catalogo": "Commerciale",
+      "famiglia": "Fucili",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.7",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-d-assalto",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+2"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 160,
+      "munizioni": {
+        "capacita": 30,
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "RL",
+        "TR",
+        "FS"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 4000,
+      "proprieta": []
+    },
+    {
+      "id": "fucile-di-precisione",
+      "nome": "Fucile di precisione",
+      "tipo": "arma_distanza",
+      "catalogo": "Commerciale",
+      "famiglia": "Fucili",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.7",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-di-precisione",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+3"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 1000,
+      "munizioni": {
+        "capacita": 5,
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 5500,
+      "proprieta": []
+    },
+    {
+      "id": "fucile-a-pompa",
+      "nome": "Fucile a pompa",
+      "tipo": "arma_distanza",
+      "catalogo": "Commerciale",
+      "famiglia": "Fucili",
+      "nomi_alternativi": [],
+      "note_manuale": "Fucile a pompa. Proprietà: Sbilanciante. Non può eseguire Tiro Rapido (§7.7: «Tutti i fucili possono eseguire Tiro Rapido eccetto quelli a pompa»).",
+      "paragrafo": "§7.7",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-a-pompa-e-doppiette",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6"
+      },
+      "ac": 2,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 30,
+      "munizioni": {
+        "capacita": 6,
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 4,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1200,
+      "proprieta": [
+        {
+          "nome": "Sbilanciante",
+          "testo": "Dopo due colpi penetranti dello stesso attacco: Prova di Forza o Destrezza; fallimento A Terra. Prova immediata; A Terra fino a quando si rialza (Giocatore §5.24)."
+        }
+      ]
+    },
+    {
+      "id": "doppietta",
+      "nome": "Doppietta",
+      "tipo": "arma_distanza",
+      "catalogo": "Commerciale",
+      "famiglia": "Fucili",
+      "nomi_alternativi": [],
+      "note_manuale": "Doppietta. Proprietà: Sbilanciante. Le doppiette usano Tiro Rapido contro due bersagli differenti e Doppio Colpo contro un unico bersaglio (§7.7).",
+      "paragrafo": "§7.7",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-a-pompa-e-doppiette",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+1"
+      },
+      "ac": 2,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 20,
+      "munizioni": {
+        "capacita": 2,
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 8,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR",
+        "DC"
+      ],
+      "for_richiesta": 4,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1200,
+      "proprieta": [
+        {
+          "nome": "Sbilanciante",
+          "testo": "Dopo due colpi penetranti dello stesso attacco: Prova di Forza o Destrezza; fallimento A Terra. Prova immediata; A Terra fino a quando si rialza (Giocatore §5.24)."
+        }
+      ]
+    },
+    {
+      "id": "mitragliatore-leggero",
+      "nome": "Mitragliatore leggero",
+      "tipo": "arma_distanza",
+      "catalogo": "Commerciale",
+      "famiglia": "Armi pesanti",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.7",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi pesanti",
+      "specializzazione": "specializzazione-mitragliatori",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d8+2"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 500,
+      "munizioni": {
+        "capacita": 100,
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": -1,
+      "modalita": [
+        "RM",
+        "RL",
+        "FS"
+      ],
+      "for_richiesta": 6,
+      "pi": 8,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 15000,
+      "proprieta": []
+    },
+    {
+      "id": "mitragliatore-pesante",
+      "nome": "Mitragliatore pesante",
+      "tipo": "arma_distanza",
+      "catalogo": "Commerciale",
+      "famiglia": "Armi pesanti",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.7",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi pesanti",
+      "specializzazione": "specializzazione-mitragliatori",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d10+3"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 800,
+      "munizioni": {
+        "capacita": 200,
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 5,
+      "mov": -2,
+      "modalita": [
+        "RM",
+        "RL",
+        "FS"
+      ],
+      "for_richiesta": 7,
+      "pi": 8,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "RA",
+      "costo": 30000,
+      "proprieta": []
+    },
+    {
+      "id": "lanciagranate",
+      "nome": "Lanciagranate",
+      "tipo": "arma_distanza",
+      "catalogo": "Commerciale",
+      "famiglia": "Lanciatori",
+      "nomi_alternativi": [],
+      "note_manuale": "Lanciagranate. Richiede Imbracciatura; si applica Postura.",
+      "paragrafo": "§7.7",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-lanciagranate",
+      "mani": 2,
+      "danno": null,
+      "danno_da_munizione": true,
+      "ac": "munizione",
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 60,
+      "munizioni": {
+        "capacita": 6,
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": "Granata standard a frammentazione"
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 6000,
+      "proprieta": []
+    },
+    {
+      "id": "lanciarazzi",
+      "nome": "Lanciarazzi",
+      "tipo": "arma_distanza",
+      "catalogo": "Commerciale",
+      "famiglia": "Lanciatori",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.7",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi pesanti",
+      "specializzazione": "specializzazione-lanciarazzi",
+      "mani": 2,
+      "danno": null,
+      "danno_da_munizione": true,
+      "ac": "munizione",
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 200,
+      "munizioni": {
+        "capacita": 1,
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": "Razzo standard"
+      },
+      "inc": 5,
+      "mov": -1,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 7,
+      "pi": 8,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "RA",
+      "costo": 14000,
+      "proprieta": []
+    },
+    {
+      "id": "pugnale",
+      "nome": "Pugnale",
+      "tipo": "arma_distanza",
+      "catalogo": "Commerciale",
+      "famiglia": "Armi da lancio",
+      "nomi_alternativi": [],
+      "note_manuale": "Pugnale. Stesso oggetto del catalogo ravvicinato. Tiro Rapido richiede due pugnali già pronti, uno per mano.",
+      "paragrafo": "§7.7",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da lancio",
+      "specializzazione": "specializzazione-armi-da-lancio",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d4+1",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": null,
+      "gittata_per_for": 3,
+      "munizioni": {
+        "capacita": 1,
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": null,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 2,
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 150,
+      "proprieta": [],
+      "stesso_oggetto": "armi:pugnale"
+    },
+    {
+      "id": "ascia-leggera",
+      "nome": "Ascia leggera",
+      "tipo": "arma_distanza",
+      "catalogo": "Commerciale",
+      "famiglia": "Armi da lancio",
+      "nomi_alternativi": [],
+      "note_manuale": "Ascia leggera. Stesso oggetto del catalogo ravvicinato.",
+      "paragrafo": "§7.7",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da lancio",
+      "specializzazione": "specializzazione-armi-da-lancio",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+1",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": null,
+      "gittata_per_for": 3,
+      "munizioni": {
+        "capacita": 1,
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": null,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 4,
+      "pi": 5,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 180,
+      "proprieta": [],
+      "stesso_oggetto": "armi:ascia-leggera"
+    },
+    {
+      "id": "shuriken",
+      "nome": "Shuriken",
+      "tipo": "arma_distanza",
+      "catalogo": "Commerciale",
+      "famiglia": "Armi da lancio",
+      "nomi_alternativi": [],
+      "note_manuale": "Shuriken. Prezzo per un esemplare. Tiro Rapido impiega due shuriken già pronti, anche nella stessa mano.",
+      "paragrafo": "§7.7",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da lancio",
+      "specializzazione": "specializzazione-armi-da-lancio",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d4+1",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": null,
+      "gittata_per_for": 3,
+      "munizioni": {
+        "capacita": 1,
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": null,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 2,
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 25,
+      "proprieta": []
+    },
+    {
+      "id": "arco-da-guerra",
+      "nome": "Arco da guerra",
+      "tipo": "arma_distanza",
+      "catalogo": "Commerciale",
+      "famiglia": "Archi e balestre",
+      "nomi_alternativi": [],
+      "note_manuale": "Arco da guerra. Incoccare è compreso nell’attacco; Tiro Rapido consuma due frecce.",
+      "paragrafo": "§7.7",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da lancio",
+      "specializzazione": "specializzazione-archi-e-balestre",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+1"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 100,
+      "munizioni": {
+        "capacita": null,
+        "ricarica": null,
+        "consumo": "Tiro Rapido consuma due frecce",
+        "riferimento": null
+      },
+      "inc": null,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 500,
+      "proprieta": []
+    },
+    {
+      "id": "balestra-grande",
+      "nome": "Balestra grande",
+      "tipo": "arma_distanza",
+      "catalogo": "Commerciale",
+      "famiglia": "Archi e balestre",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.7",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da lancio",
+      "specializzazione": "specializzazione-archi-e-balestre",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+3"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 120,
+      "munizioni": {
+        "capacita": 1,
+        "ricarica": "1 AzM",
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 8,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 700,
+      "proprieta": []
+    },
+    {
+      "id": "balestra-piccola",
+      "nome": "Balestra piccola",
+      "tipo": "arma_distanza",
+      "catalogo": "Commerciale",
+      "famiglia": "Archi e balestre",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.7",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da lancio",
+      "specializzazione": "specializzazione-archi-e-balestre",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d4+1",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 30,
+      "munizioni": {
+        "capacita": 1,
+        "ricarica": "1 AzM e una mano libera",
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 8,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 3,
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 300,
+      "proprieta": []
+    },
+    {
+      "id": "fucile-al-plasma",
+      "nome": "Fucile al plasma",
+      "tipo": "arma_distanza",
+      "catalogo": "Commerciale",
+      "famiglia": "Armi speciali",
+      "nomi_alternativi": [],
+      "note_manuale": "Fucile al plasma. Proprietà: Plasma. Include una cella standard da 20 colpi. Ogni colpo a segno applica AC 2.",
+      "paragrafo": "§7.7",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-armi-al-plasma",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+1"
+      },
+      "ac": 2,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 50,
+      "munizioni": {
+        "capacita": 20,
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "TR"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "RA",
+      "costo": 12000,
+      "proprieta": [
+        {
+          "nome": "Plasma",
+          "testo": "La Contromisura è Dissipante X. Dopo almeno 1 danno oltre l’Armatura e il superamento dell’eventuale Dissipante, il bersaglio effettua una PS di Tempra con i modificatori della fonte. Con successo evita l’effetto aggiuntivo; con fallimento subisce −2 VA per 1+1d3 Round (Giocatore §5.24)."
+        }
+      ]
+    },
+    {
+      "id": "lanciafiamme",
+      "nome": "Lanciafiamme",
+      "tipo": "arma_distanza",
+      "catalogo": "Commerciale",
+      "famiglia": "Armi speciali",
+      "nomi_alternativi": [],
+      "note_manuale": "Lanciafiamme. Proprietà: Fuoco. Getto diretto contro un solo bersaglio, con Prova per Colpire e una Difesa ordinaria a distanza. Un getto è consumato anche se manca. Serbatoio incluso; combustibile separato.",
+      "paragrafo": "§7.7",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi pesanti",
+      "specializzazione": "specializzazione-lanciafiamme",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d10"
+      },
+      "ac": "1d3",
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 10,
+      "munizioni": {
+        "capacita": 10,
+        "ricarica": null,
+        "consumo": "Un getto è consumato anche se manca",
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": -1,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 6,
+      "pi": 8,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "RA",
+      "costo": 9000,
+      "proprieta": [
+        {
+          "nome": "Fuoco",
+          "testo": "La Contromisura è Ignifugo X. Dopo almeno 1 danno oltre l’Armatura e il superamento dell’eventuale Ignifugo, il bersaglio effettua una PS di Riflessi, salvo eccezione esplicita. Con successo evita lo Stato; con fallimento è Incendiato per 1+1d3 Round (Giocatore §5.24)."
+        }
+      ]
+    },
+    {
+      "id": "granata-a-frammentazione",
+      "nome": "Granata a frammentazione",
+      "tipo": "arma_distanza",
+      "catalogo": "Commerciale",
+      "famiglia": "Granate",
+      "nomi_alternativi": [],
+      "note_manuale": "Granata a frammentazione. Proprietà: RS 1; Sbilanciante; Sbalzante 1. Attivare e lanciare una granata già pronta costa 1 AzP. Si distrugge all’esplosione. Fallimento ordinario: Scarto; Maldestro: Inceppamento con INC 8.",
+      "paragrafo": "§7.7",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da lancio",
+      "specializzazione": "specializzazione-granate",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+1",
+        "due_mani": null
+      },
+      "ac": "1d3",
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": null,
+      "gittata_per_for": 3,
+      "munizioni": {
+        "capacita": 1,
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 8,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 3,
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 80,
+      "proprieta": [
+        {
+          "nome": "RS 1",
+          "testo": "Raggio di Scoppio 1. Il punto effettivo di esplosione determina il Raggio di Scoppio. Chiunque sia compreso nell’Area viene coinvolto, senza una nuova Prova per colpire (Giocatore §5.10)."
+        },
+        {
+          "nome": "Sbilanciante",
+          "testo": "Dopo due colpi penetranti dello stesso attacco: Prova di Forza o Destrezza; fallimento A Terra. Prova immediata; A Terra fino a quando si rialza (Giocatore §5.24)."
+        },
+        {
+          "nome": "Sbalzante 1",
+          "testo": "Spostamento forzato immediato di X Q dopo un colpo penetrante. Istantaneo; PS Riflessi prima di un pericolo letale (Giocatore §5.24)."
+        }
+      ]
+    }
+  ]
+}

@@ -65,7 +65,10 @@ test('limiti: niente sotto 0 né sopra i massimi; Stati sconosciuti scartati', (
   const rotta = allineaSessione({ pvAttuali: 'tanti', distintivi: -2, munizioni: { frecce: 12, rotte: -1 }, note: 5 }, m);
   assert.equal(rotta.pvAttuali, m.pv);
   assert.equal(rotta.distintivi, 0);
-  assert.deepEqual(rotta.munizioni, { frecce: 12 });
+  assert.deepEqual(rotta.munizioni, {}); // nessuna arma a distanza nella lista: le munizioni di armi sconosciute spariscono
+  // senza l'elenco dei caricatori (massimi vecchi) i valori numerici diventano { colpi, riserve }
+  const { caricatori: _, ...senza } = m;
+  assert.deepEqual(allineaSessione({ munizioni: { frecce: 12, rotte: -1 } }, senza).munizioni, { frecce: { colpi: 12, riserve: 0 } });
   assert.equal(rotta.note, '');
 });
 

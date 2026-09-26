@@ -4,7 +4,7 @@
 //   node tools/lotti/lotto1_pilota.mjs            prova a vuoto
 //   node tools/lotti/lotto1_pilota.mjs --scrivi   scrive i file
 // Testi e annotazioni vengono dal Manuale degli Armamenti v0.50, paragrafi citati accanto.
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 
 const RADICE = new URL('../../', import.meta.url);
 const PULITO = new URL('docs/pilota-estrazione-armamenti/pulito/', RADICE);
@@ -164,7 +164,10 @@ const indice = {
 };
 
 const scrivi = process.argv.includes('--scrivi');
-for (const [nome, contenuto] of [['index.json', indice], ['armi.json', fileArmi], ['armature.json', fileArmature]]) {
+// index.json si crea solo la prima volta: i lotti successivi vi aggiungono le proprie righe
+const fileDaScrivere = [['armi.json', fileArmi], ['armature.json', fileArmature]];
+if (!existsSync(new URL('index.json', DEST))) fileDaScrivere.unshift(['index.json', indice]);
+for (const [nome, contenuto] of fileDaScrivere) {
   const testo = `${JSON.stringify(contenuto, null, 2)}\n`;
   if (scrivi) {
     mkdirSync(DEST, { recursive: true });

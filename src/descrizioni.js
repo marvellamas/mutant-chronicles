@@ -81,13 +81,19 @@ function tooltipOggetto(rif, dati) {
   const o = catalogo(dati).perRif.get(rif);
   if (!o) return null;
   const rep = dati.equipaggiamento.indice.reperibilita?.[o.reperibilita];
-  const danno = o.danno ? [o.danno.una_mano ? `${o.danno.una_mano} a una mano` : null, o.danno.due_mani ? `${o.danno.due_mani} a due mani` : null].filter(Boolean).join(', ') : null;
+  const danno = o.danno_da_munizione ? 'dalla munizione' : o.danno ? [o.danno.una_mano ? `${o.danno.una_mano} a una mano` : null, o.danno.due_mani ? `${o.danno.due_mani} a due mani` : null].filter(Boolean).join(', ') : null;
   const riga = {};
   if (o.abilita) riga['Abilità'] = o.abilita;
   if (o.mani !== undefined) riga.Mani = String(o.mani).replace('1/2', '1 / 2');
   if (danno) riga.Danno = danno;
   if (o.portata_q) riga.Portata = `${o.portata_q} Q`;
   if (o.gittata_q) riga.Gittata = `${o.gittata_q} Q`;
+  if (o.gittata_per_for) riga.Gittata = `FOR × ${o.gittata_per_for} Q`;
+  if (o.ac !== undefined && o.ac !== 1) riga.AC = o.ac === 'munizione' ? 'dalla munizione' : String(o.ac);
+  if (o.modificatore_va) riga.VA = o.modificatore_va > 0 ? `+${o.modificatore_va}` : `−${-o.modificatore_va}`;
+  if (o.munizioni?.capacita) riga.CC = String(o.munizioni.capacita);
+  if (o.modalita?.length) riga['Modalità'] = o.modalita.join(' ');
+  if (o.mov) riga.MOV = `−${-o.mov} Q`;
   if (o.categoria) riga.Categoria = o.categoria;
   if (o.ar) riga.AR = `${o.ar.totale}${o.ar.magica ? ` (${o.ar.magica} magica)` : ''}`;
   if (o.for_richiesta) riga.FOR = String(o.for_richiesta);
@@ -99,6 +105,8 @@ function tooltipOggetto(rif, dati) {
   const sezioni = [];
   if (o.nomi_alternativi?.length) sezioni.push({ etichetta: 'Comprende', testo: o.nomi_alternativi.join(', ') });
   for (const p of o.proprieta ?? []) sezioni.push({ etichetta: p.nome, testo: p.testo });
+  if (o.munizioni?.riferimento) sezioni.push({ etichetta: 'Munizione di riferimento', testo: o.munizioni.riferimento });
+  if (o.munizioni?.ricarica) sezioni.push({ etichetta: 'Ricarica', testo: o.munizioni.ricarica });
   if (o.note_manuale) sezioni.push({ etichetta: null, testo: o.note_manuale });
   return {
     tipo: 'oggetto', titolo: o.nome,

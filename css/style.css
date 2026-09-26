@@ -719,7 +719,8 @@ details.sezione-tab > summary { font-weight: 700; cursor: pointer; min-height: 4
   border: 1px solid var(--bordo); border-radius: var(--raggio); background: var(--superficie); color: var(--testo); max-width: 100%;
 }
 .cascata { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: 0 1rem; }
-.cascata .campo { margin: 0.4rem 0; }
+.cascata .campo { margin: 0.4rem 0; min-width: 0; }
+.cascata select { width: 100%; }
 .risultati-ricerca { list-style: none; padding: 0; margin: 0.25rem 0; display: flex; flex-wrap: wrap; gap: 0.35rem; }
 .risultati-ricerca .btn { min-height: 44px; }
 .profilo-scelto p { margin: 0.2rem 0; }
@@ -737,3 +738,6 @@ details.sezione-tab > summary { font-weight: 700; cursor: pointer; min-height: 4
 .proprieta-arma .etichetta { margin-left: 0; cursor: help; }
 .munizioni-tavolo { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin-top: 0.5rem; }
 .munizioni-tavolo small { flex-basis: 100%; }
+
+.riga-munizioni { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.6rem; flex-basis: 100%; }
+.riga-munizioni .btn { min-height: 48px; }

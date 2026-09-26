@@ -54,6 +54,27 @@ const normalizzaTesto = (s) => String(s).normalize('NFD').replace(/[̀-ͯ]/g, ''
  * Catalogo piatto degli oggetti di tutti i file elencati in data/equipaggiamento/index.json.
  * Ogni oggetto riceve `rif` ("<file>:<id>") e un riferimento alle tabelle del suo file.
  */
+/** Legenda delle modalità di fuoco (§7.7) raccolta dai file del catalogo. */
+export function legendaModalita(dati) {
+  const out = {};
+  for (const f of Object.values(dati?.equipaggiamento?.file ?? {})) Object.assign(out, f.modalita ?? {});
+  return out;
+}
+
+/**
+ * Capacità del caricatore di ogni arma a distanza della lista (uid → numero o null), per il
+ * contatore munizioni della modalità tavolo.
+ */
+export function caricatori(voci, dati) {
+  const cat = catalogo(dati);
+  const out = {};
+  for (const v of voci ?? []) {
+    const r = risolvi(v, cat);
+    if (r.tipo === 'arma_distanza') out[v.uid] = r.def?.munizioni?.capacita ?? null;
+  }
+  return out;
+}
+
 export function catalogo(dati) {
   const eq = dati?.equipaggiamento;
   const oggetti = [];
@@ -239,6 +260,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     const componenti = a ? [
       { nome: `VA ${a.nome}`, valore: a.totale },
       spec ? { nome: `Specializzazione in ${spec.nome}`, valore: spec.effetto.va ?? 0 } : null,
+      d?.modificatore_va ? { nome: 'Modificatore VA dell’arma', valore: d.modificatore_va } : null,
       forPen ? { nome: `FOR ${FOR} su ${d.for_richiesta} richiesta (§7.1.6)`, valore: -forPen } : null,
       armatura ? { nome: 'Armatura (§7.11.1)', valore: armatura } : null,
     ].filter(Boolean) : [];
@@ -256,10 +278,18 @@ export function calcolaEquipaggiamento(base, voci, dati) {
         forPen ? { nome: 'FOR insufficiente', valore: -forPen } : null,
       ].filter(Boolean),
     } : null;
+    // §7.7: «FOR × 3» nella colonna Max Q: la gittata dipende dalla Forza del personaggio
+    const gittataQ = d?.gittata_q ?? (d?.gittata_per_for ? FOR * d.gittata_per_for : null);
+    // §7.7: le penalità MOV delle armi impugnate si sottraggono una sola volta al budget di movimento
+    if (d?.mov) movimentoQ += d.mov;
     armi.push({
       uid: o.uid, nome: o.nome, tipo: o.tipo, abilita: nomeAbilita, va, componenti,
       danno: dannoBase ? { una_mano: aggiungiDanno(dannoBase.una_mano, bonusDanno), due_mani: aggiungiDanno(dannoBase.due_mani, bonusDanno) } : null,
-      bonusDanno, mani: d?.mani ?? null, portataQ: d?.portata_q ?? null, gittataQ: d?.gittata_q ?? null,
+      dannoDaMunizione: !!d?.danno_da_munizione,
+      bonusDanno, mani: d?.mani ?? null, portataQ: d?.portata_q ?? null, gittataQ,
+      gittataFormula: d?.gittata_per_for ? `FOR ${FOR} × ${d.gittata_per_for}` : null,
+      ac: d?.ac ?? null, inc: d?.inc ?? null, mov: d?.mov ?? 0, modalita: d?.modalita ?? [],
+      munizioni: d?.munizioni ?? null,
       proprieta: d?.proprieta ?? [], parata, personalizzato: o.personalizzato,
       specializzazione: spec ? `Specializzazione in ${spec.nome}` : null,
     });

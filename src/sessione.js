@@ -4,10 +4,13 @@
 // viene solo limitato al nuovo massimo, mai riazzerato. Funzioni pure.
 //
 // sessione = { pvAttuali, pmAttuali, puntiEroe, distintivi, statiAttivi: [id], ferite,
-//              affaticamento, munizioni: { nome: numero }, note }
+//              affaticamento, munizioni: { uid: { colpi, riserve } }, note }
+// munizioni: per ogni arma a distanza della lista, i colpi nel caricatore (limitati alla sua
+// capacità, dal catalogo) e le riserve (caricatori di scorta: quantità libera).
 // ferite: 0 = nessuna, 1…5 = gli Stati di Ferita di regole.json (§5.14), 6 = oltre Grave.
 // affaticamento: indice in regole.json → affaticamento.stati (§5.19), 0 = Riposato.
 import { valoreTiro } from './tiri.js';
+import { caricatori, normalizzaEquipaggiamento } from './equipaggiamento.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const limita = (v, min, max) => Math.min(max, Math.max(min, v));
@@ -28,7 +31,35 @@ export function massimiSessione(scheda, creazione, dati) {
     ferite: dati.regole.ferite.stati.length + 1, // l'ultimo gradino è «oltre Grave»
     affaticamento: dati.regole.affaticamento.stati.length - 1,
     stati: dati.regole.stati.elenco.map((s) => s.id),
+    // capacità del caricatore di ogni arma a distanza della lista (uid → numero o null)
+    caricatori: caricatori(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati),
   };
+}
+
+/** Munizioni di un'arma: { colpi, riserve }; i vecchi valori numerici sono i colpi. */
+function voceMunizioni(v) {
+  if (Number.isInteger(v) && v >= 0) return { colpi: v, riserve: 0 };
+  if (!isOggetto(v)) return null;
+  return { colpi: Number.isInteger(v.colpi) && v.colpi >= 0 ? v.colpi : 0, riserve: Number.isInteger(v.riserve) && v.riserve >= 0 ? v.riserve : 0 };
+}
+
+/**
+ * Munizioni allineate alle armi a distanza della lista: le armi nuove partono dal caricatore
+ * pieno, i colpi non superano la capacità, le armi tolte dalla lista spariscono.
+ */
+function allineaMunizioni(sorgente, m) {
+  const src = isOggetto(sorgente) ? sorgente : {};
+  const out = {};
+  if (!m.caricatori) {
+    for (const [k, v] of Object.entries(src)) { const x = voceMunizioni(v); if (x) out[k] = x; }
+    return out;
+  }
+  for (const [uid, capacita] of Object.entries(m.caricatori)) {
+    const x = voceMunizioni(src[uid]) ?? { colpi: capacita ?? 0, riserve: 0 };
+    if (capacita !== null) x.colpi = Math.min(x.colpi, capacita);
+    out[uid] = x;
+  }
+  return out;
 }
 
 /** Sessione nuova: PV e PM ai massimi, Punti Eroe iniziali (§2.15), il resto a zero. */
@@ -41,7 +72,7 @@ export function inizializzaSessione(m) {
     statiAttivi: [],
     ferite: 0,
     affaticamento: 0,
-    munizioni: {},
+    munizioni: allineaMunizioni({}, m),
     note: '',
   };
 }
@@ -52,10 +83,7 @@ export function inizializzaSessione(m) {
  */
 export function allineaSessione(sessione, m) {
   if (!isOggetto(sessione)) return inizializzaSessione(m);
-  const munizioni = {};
-  if (isOggetto(sessione.munizioni)) {
-    for (const [k, v] of Object.entries(sessione.munizioni)) if (Number.isInteger(v) && v >= 0) munizioni[k] = v;
-  }
+  const munizioni = allineaMunizioni(sessione.munizioni, m);
   return {
     pvAttuali: limita(intero(sessione.pvAttuali, m.pv), 0, m.pv),
     pmAttuali: limita(intero(sessione.pmAttuali, m.pm), 0, m.pm),
@@ -78,6 +106,21 @@ export function modificaSessione(sessione, modifica, m) {
 export function variaSessione(sessione, campo, delta, m) {
   const s = allineaSessione(sessione, m);
   return modificaSessione(s, { [campo]: s[campo] + delta }, m);
+}
+
+/** Varia i colpi o le riserve di un'arma a distanza, entro 0 e la capacità del caricatore. */
+export function variaMunizioni(sessione, uid, campo, delta, m) {
+  const s = allineaSessione(sessione, m);
+  const x = s.munizioni[uid] ?? { colpi: 0, riserve: 0 };
+  return modificaSessione(s, { munizioni: { ...s.munizioni, [uid]: { ...x, [campo]: Math.max(0, x[campo] + delta) } } }, m);
+}
+
+/** «Ricarica»: il caricatore torna alla capacità. Le riserve restano come sono (quantità libera). */
+export function ricaricaArma(sessione, uid, m) {
+  const s = allineaSessione(sessione, m);
+  const capacita = m.caricatori?.[uid];
+  if (capacita === null || capacita === undefined) return s;
+  return modificaSessione(s, { munizioni: { ...s.munizioni, [uid]: { ...(s.munizioni[uid] ?? { riserve: 0 }), colpi: capacita } } }, m);
 }
 
 /** Attiva o disattiva uno Stato. */

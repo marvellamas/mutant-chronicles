@@ -131,6 +131,7 @@ Tutte le regole numeriche stanno in `data/`:
 | `tecniche_interiori.json` | le 28 Tecniche Interiori del §8.9 e le regole comuni |
 | `equipaggiamento/index.json` | l'elenco dei file del catalogo dell'equipaggiamento e le sigle di reperibilità (Armamenti §7.1.8) |
 | `equipaggiamento/armi.json` | armi ravvicinate del catalogo Commerciale (Armamenti §7.1.1–7.1.3) |
+| `equipaggiamento/armi_distanza.json` | armi a distanza del catalogo Commerciale, con gittata, caricatore, modalità di fuoco, INC (Armamenti §7.7) |
 | `equipaggiamento/armature.json` | armature commerciali civili e penalità per categoria (Armamenti §7.11.1–7.11.3) |
 
 **Catalogo dell'equipaggiamento.** Cresce a lotti (lista in `docs/equipaggiamento-lotti.md`):
@@ -188,7 +189,9 @@ oggetti attivi cambiano i valori:
 - le armi impugnate mostrano il VA per colpire (VA dell'Abilità dell'arma, Specializzazione della
   famiglia, penalità se la FOR è inferiore al requisito, penalità dell'armatura), il danno e la
   Parata;
-- l'armatura indossata applica l'AR e le penalità di categoria (colonna «Equip» delle Abilità).
+- l'armatura indossata applica l'AR e le penalità di categoria (colonna «Equip» delle Abilità);
+- per le armi a distanza impugnate la modalità tavolo tiene i colpi nel caricatore (partono dalla
+  capacità del catalogo, «Ricarica» li riporta al massimo) e le riserve, contate a mano.
 
 Le incoerenze (due armature, arma a due mani con scudo) sono avvisi, non blocchi. Finché il
 §2.16 non esiste, l'equipaggiamento iniziale si inserisce a mano.

@@ -621,6 +621,8 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
     if (!isTesto(v?.file) || !v.file.endsWith('.json')) err(FI, `file[${i}].file`, 'nome del file .json mancante');
   });
 
+  const rif = new Set();
+  const rimandi = []; // [file, chiave, riferimento] di «stesso_oggetto», controllati alla fine
   for (const { id: fileId, file: nomeFile } of ind.file) {
     if (!isTesto(nomeFile) || !nomeFile.endsWith('.json')) continue;
     const F = `equipaggiamento/${nomeFile.slice(0, -5)}`;
@@ -643,7 +645,8 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
       if (!isOggetto(o)) { err(F, k, 'non è un oggetto'); return; }
       if (!isTesto(o.id) || !/^[a-z0-9-]+$/.test(o.id)) err(F, `${k}.id`, 'id mancante (minuscole, cifre e trattini)');
       else if (ids.has(o.id)) err(F, `${k}.id`, `id "${o.id}" ripetuto`);
-      else ids.add(o.id);
+      else { ids.add(o.id); rif.add(`${fileId}:${o.id}`); }
+      if (o.stesso_oggetto !== undefined) rimandi.push([F, `${k}.stesso_oggetto`, o.stesso_oggetto]);
       for (const c of ['nome', 'catalogo', 'famiglia', 'paragrafo', 'versione_manuale']) if (!isTesto(o[c])) err(F, `${k}.${c}`, 'testo mancante');
       if (!TIPI_EQUIP.includes(o.tipo)) err(F, `${k}.tipo`, `tipo "${o.tipo}" non ammesso (${TIPI_EQUIP.join(', ')})`);
       if (!Array.isArray(o.nomi_alternativi) || o.nomi_alternativi.some((n) => !isTesto(n))) err(F, `${k}.nomi_alternativi`, 'elenco di nomi (anche vuoto)');
@@ -672,7 +675,10 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
         if (!nomiAbilita.includes(o.abilita)) err(F, `${k}.abilita`, `Abilità "${o.abilita}" inesistente in abilita.json`);
         if (o.specializzazione !== undefined && o.specializzazione !== null && !idSpec.includes(o.specializzazione)) err(F, `${k}.specializzazione`, `Specializzazione "${o.specializzazione}" inesistente`);
         if (![1, 2, '1/2'].includes(o.mani)) err(F, `${k}.mani`, 'deve essere 1, 2 oppure "1/2"');
-        if (!isOggetto(o.danno)) err(F, `${k}.danno`, 'serve { una_mano, due_mani }');
+        if (o.danno_da_munizione === true) {
+          // §7.7: «Munizione» nella colonna Danno: il danno viene dalla munizione caricata
+          if (o.danno !== null) err(F, `${k}.danno`, 'con "danno_da_munizione": true il danno deve essere null');
+        } else if (!isOggetto(o.danno)) err(F, `${k}.danno`, 'serve { una_mano, due_mani } (oppure "danno_da_munizione": true)');
         else {
           for (const m of ['una_mano', 'due_mani']) if (o.danno[m] !== null && o.danno[m] !== undefined && !DADI.test(o.danno[m])) err(F, `${k}.danno.${m}`, `"${o.danno[m]}" non è una formula di dadi (es. 1d6+1, 2)`);
           if (!o.danno.una_mano && !o.danno.due_mani) err(F, `${k}.danno`, 'manca il danno');
@@ -683,6 +689,25 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
         numeroOpz(F, `${k}.portata_q`, o.portata_q, 1, 99, err);
         numeroOpz(F, `${k}.gittata_q`, o.gittata_q, 1, 9999, err);
         numeroOpz(F, `${k}.inc`, o.inc, 1, 10, err);
+        if (o.modificatore_va !== undefined && !isIntero(o.modificatore_va)) err(F, `${k}.modificatore_va`, 'deve essere un intero');
+        if (o.ac !== undefined && !((isIntero(o.ac) && o.ac >= 1) || (typeof o.ac === 'string' && (DADI.test(o.ac) || o.ac === 'munizione')))) {
+          err(F, `${k}.ac`, `applicazioni di danno: intero ≥ 1, formula di dadi o "munizione", trovato ${JSON.stringify(o.ac)}`);
+        }
+        if (o.gittata_per_for !== undefined && !(isIntero(o.gittata_per_for) && o.gittata_per_for >= 1)) err(F, `${k}.gittata_per_for`, 'moltiplicatore intero ≥ 1 della FOR');
+        if (o.tipo === 'arma_distanza' && !o.gittata_q && !o.gittata_per_for) err(F, `${k}.gittata_q`, 'arma a distanza senza gittata (gittata_q o gittata_per_for)');
+        if (o.mov !== undefined && !(isIntero(o.mov) && o.mov <= 0)) err(F, `${k}.mov`, 'penalità MOV: intero ≤ 0');
+        if (o.munizioni !== undefined) {
+          if (!isOggetto(o.munizioni)) err(F, `${k}.munizioni`, 'serve { capacita, ricarica, consumo, riferimento }');
+          else {
+            if (o.munizioni.capacita !== null && !(isIntero(o.munizioni.capacita) && o.munizioni.capacita >= 1)) err(F, `${k}.munizioni.capacita`, 'intero ≥ 1 oppure null');
+            for (const c of ['ricarica', 'consumo', 'riferimento']) if (o.munizioni[c] !== null && o.munizioni[c] !== undefined && !isTesto(o.munizioni[c])) err(F, `${k}.munizioni.${c}`, 'testo oppure null');
+          }
+        }
+        if (o.modalita !== undefined) {
+          const legenda = isOggetto(f.modalita) ? Object.keys(f.modalita) : [];
+          if (!Array.isArray(o.modalita) || !o.modalita.length) err(F, `${k}.modalita`, 'elenco delle modalità di fuoco');
+          else for (const m of o.modalita) if (!legenda.includes(m)) err(F, `${k}.modalita`, `modalità "${m}" non nella legenda «modalita» del file`);
+        }
       }
       if (o.tipo === 'armatura' || o.tipo === 'scudo') {
         if (!isOggetto(o.ar) || !isIntero(o.ar.totale) || o.ar.totale < 0) err(F, `${k}.ar`, 'serve { totale, magica } con numeri interi');
@@ -694,6 +719,7 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
       }
     });
   }
+  for (const [F, k, r] of rimandi) if (!rif.has(r)) err(F, k, `"${r}" non è un oggetto del catalogo (formato "file:id")`);
 }
 
 function validaPenalita(F, k, p, err) {
