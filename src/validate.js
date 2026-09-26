@@ -626,6 +626,8 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
 
   const rif = new Set();
   const rimandi = []; // [file, chiave, riferimento] di «stesso_oggetto», controllati alla fine
+  const moduli = []; // [file, chiave, riferimento] di «modulo_di» (§7.8), controllati alla fine
+  const tipoDi = new Map(); // rif → { tipo, modulo }
   for (const { id: fileId, file: nomeFile } of ind.file) {
     if (!isTesto(nomeFile) || !nomeFile.endsWith('.json')) continue;
     const F = `equipaggiamento/${nomeFile.slice(0, -5)}`;
@@ -641,6 +643,20 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
       if (f[k] !== undefined && (!Array.isArray(f[k]) || f[k].some((a) => !nomiAbilita.includes(a)))) err(F, k, 'elenco di Abilità esistenti');
     }
     if (f.abilita_difese !== undefined && !nomiAbilita.includes(f.abilita_difese)) err(F, 'abilita_difese', `Abilità "${f.abilita_difese}" inesistente`);
+    // §7.8: «Munizioni di riferimento dei lanciatori» (dati della munizione, non del lanciatore)
+    const nomiMunizioni = [];
+    if (f.munizioni_riferimento !== undefined) {
+      if (!Array.isArray(f.munizioni_riferimento)) err(F, 'munizioni_riferimento', 'deve essere un elenco');
+      else f.munizioni_riferimento.forEach((m, j) => {
+        const k = `munizioni_riferimento[${j}]${isTesto(m?.nome) ? ` (${m.nome})` : ''}`;
+        if (!isTesto(m?.nome)) { err(F, k, 'nome mancante'); return; }
+        nomiMunizioni.push(m.nome);
+        if (!DADI.test(String(m.danno))) err(F, `${k}.danno`, `"${m.danno}" non è una formula di dadi`);
+        if (!((isIntero(m.ac) && m.ac >= 1) || (typeof m.ac === 'string' && DADI.test(m.ac)))) err(F, `${k}.ac`, 'intero ≥ 1 o formula di dadi');
+        if (!(isIntero(m.rs_q) && m.rs_q >= 0)) err(F, `${k}.rs_q`, 'raggio di scoppio in Q: intero ≥ 0');
+        if (!Array.isArray(m.proprieta) || m.proprieta.some((x) => !isTesto(x))) err(F, `${k}.proprieta`, 'elenco di proprietà (anche vuoto)');
+      });
+    }
 
     const ids = new Set();
     f.oggetti.forEach((o, i) => {
@@ -648,8 +664,15 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
       if (!isOggetto(o)) { err(F, k, 'non è un oggetto'); return; }
       if (!isTesto(o.id) || !/^[a-z0-9-]+$/.test(o.id)) err(F, `${k}.id`, 'id mancante (minuscole, cifre e trattini)');
       else if (ids.has(o.id)) err(F, `${k}.id`, `id "${o.id}" ripetuto`);
-      else { ids.add(o.id); rif.add(`${fileId}:${o.id}`); }
+      else { ids.add(o.id); rif.add(`${fileId}:${o.id}`); tipoDi.set(`${fileId}:${o.id}`, { tipo: o.tipo, modulo: o.modulo_di !== undefined }); }
       if (o.stesso_oggetto !== undefined) rimandi.push([F, `${k}.stesso_oggetto`, o.stesso_oggetto]);
+      // §7.8: il modulo integrato non si compra da solo; PI, Qualità e MOV sono dell'arma principale
+      const modulo = o.modulo_di !== undefined;
+      if (modulo) {
+        moduli.push([F, `${k}.modulo_di`, o.modulo_di]);
+        for (const c of ['pi', 'reperibilita', 'costo']) if (o[c] !== null) err(F, `${k}.${c}`, 'un modulo integrato ha PI, reperibilità e costo dell’arma principale: deve essere null');
+        if (o.tipo !== 'arma_distanza') err(F, `${k}.tipo`, 'un modulo integrato è un’arma a distanza');
+      }
       for (const c of ['nome', 'catalogo', 'famiglia', 'paragrafo', 'versione_manuale']) if (!isTesto(o[c])) err(F, `${k}.${c}`, 'testo mancante');
       if (!TIPI_EQUIP.includes(o.tipo)) err(F, `${k}.tipo`, `tipo "${o.tipo}" non ammesso (${TIPI_EQUIP.join(', ')})`);
       if (!Array.isArray(o.nomi_alternativi) || o.nomi_alternativi.some((n) => !isTesto(n))) err(F, `${k}.nomi_alternativi`, 'elenco di nomi (anche vuoto)');
@@ -660,7 +683,7 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
       if (o.for_richiesta !== undefined && o.for_richiesta !== null && !(isIntero(o.for_richiesta) && o.for_richiesta >= 1 && o.for_richiesta <= 10)) {
         err(F, `${k}.for_richiesta`, `deve essere un intero da 1 a 10, trovato ${JSON.stringify(o.for_richiesta)}`);
       }
-      if (o.reperibilita !== undefined && !rep.includes(o.reperibilita)) err(F, `${k}.reperibilita`, `sigla "${o.reperibilita}" non in index.json (${rep.join(', ')})`);
+      if (o.reperibilita !== undefined && !(modulo && o.reperibilita === null) && !rep.includes(o.reperibilita)) err(F, `${k}.reperibilita`, `sigla "${o.reperibilita}" non in index.json (${rep.join(', ')})`);
       if (o.proprieta !== undefined) {
         if (!Array.isArray(o.proprieta)) err(F, `${k}.proprieta`, 'deve essere un elenco');
         else o.proprieta.forEach((p, j) => {
@@ -705,6 +728,9 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
             if (o.munizioni.unita !== undefined && !['colpi', 'cariche', 'PM'].includes(o.munizioni.unita)) err(F, `${k}.munizioni.unita`, 'colpi, cariche o PM');
             if (o.munizioni.capacita !== null && !(isIntero(o.munizioni.capacita) && o.munizioni.capacita >= 1)) err(F, `${k}.munizioni.capacita`, 'intero ≥ 1 oppure null');
             for (const c of ['ricarica', 'consumo', 'riferimento']) if (o.munizioni[c] !== null && o.munizioni[c] !== undefined && !isTesto(o.munizioni[c])) err(F, `${k}.munizioni.${c}`, 'testo oppure null');
+            if (nomiMunizioni.length && o.danno_da_munizione === true && !nomiMunizioni.includes(o.munizioni.riferimento)) {
+              err(F, `${k}.munizioni.riferimento`, `"${o.munizioni.riferimento}" non è fra le munizioni_riferimento del file (${nomiMunizioni.join(', ')})`);
+            }
           }
         }
         if (o.attivazione !== undefined) {
@@ -761,6 +787,11 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
     });
   }
   for (const [F, k, r] of rimandi) if (!rif.has(r)) err(F, k, `"${r}" non è un oggetto del catalogo (formato "file:id")`);
+  for (const [F, k, r] of moduli) {
+    const t = tipoDi.get(r);
+    if (!t) err(F, k, `"${r}" non è un oggetto del catalogo (formato "file:id")`);
+    else if (!['arma_ravvicinata', 'arma_distanza'].includes(t.tipo) || t.modulo) err(F, k, `"${r}" non è un'arma principale: un modulo si integra in un'arma che non è a sua volta un modulo`);
+  }
 }
 
 function validaPenalita(F, k, p, err) {

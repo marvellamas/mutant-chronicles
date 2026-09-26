@@ -9,7 +9,7 @@ import { info } from './tooltip.js';
 import { descriviFerite } from '../sessione.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
 import { testoDanno } from '../stampa.js';
-import { legendaModalita } from '../equipaggiamento.js';
+import { legendaModalita, aggiungiDanno } from '../equipaggiamento.js';
 
 export const POSIZIONI_TAB = [
   { id: 'automatica', etichetta: 'Automatica (sinistra su schermi larghi, in basso su telefono e tablet)' },
@@ -340,13 +340,19 @@ const numero = (n) => (n < 0 ? `−${-n}` : String(n));
 /** Arma impugnata: VA per colpire con la scomposizione, danno, portata o gittata, Parata, munizioni. */
 function schedaArma(ctx, a) {
   const legenda = legendaModalita(ctx.dati);
-  const dannoTesto = a.dannoDaMunizione ? `dalla munizione${a.munizioni?.riferimento ? ` (${a.munizioni.riferimento})` : ''}` : testoDanno(a.danno);
-  return h('article', { class: 'arma-tab' },
+  const mr = a.munizioneRiferimento;
+  // §7.8: il danno dei lanciatori è quello della munizione caricata (qui la munizione di riferimento)
+  const dannoTesto = a.dannoDaMunizione
+    ? (mr ? aggiungiDanno(mr.danno, a.bonusDanno) : `dalla munizione${a.munizioni?.riferimento ? ` (${a.munizioni.riferimento})` : ''}`)
+    : testoDanno(a.danno);
+  return h('article', { class: `arma-tab${a.moduloDi ? ' modulo' : ''}` },
     h('h3', {}, a.nome, h('small', { class: 'sigla' }, ` · ${a.abilita ?? 'Abilità non indicata'}`)),
+    a.moduloDi ? h('p', { class: 'nota' }, `Modulo integrato di ${a.moduloDi}: si sceglie il profilo prima di ogni attacco; alimentazione separata (§7.8).`) : null,
     h('div', { class: 'arma-valori' },
       h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), h('strong', {}, a.va === null ? '—' : numero(a.va))),
       h('p', {}, h('span', { class: 'sigla' }, 'Danno '), h('strong', {}, dannoTesto)),
-      a.ac !== null && a.ac !== 1 ? h('p', {}, h('span', { class: 'sigla', title: 'Applicazioni di danno per colpo a segno' }, 'AC '), a.ac === 'munizione' ? 'dalla munizione' : String(a.ac)) : null,
+      a.ac !== null && a.ac !== 1 ? h('p', {}, h('span', { class: 'sigla', title: 'Applicazioni di danno per colpo a segno' }, 'AC '), a.ac === 'munizione' ? (mr ? String(mr.ac) : 'dalla munizione') : String(a.ac)) : null,
+      mr ? h('p', {}, h('span', { class: 'sigla', title: 'Raggio di scoppio della munizione (§5.10)' }, 'RS '), `${mr.rs_q} Q`) : null,
       a.portataQ ? h('p', {}, h('span', { class: 'sigla' }, 'Portata '), `${a.portataQ} Q`) : null,
       a.gittataQ ? h('p', {}, h('span', { class: 'sigla' }, 'Gittata '), `${a.gittataQ} Q`, a.gittataFormula ? h('small', { class: 'sigla' }, ` (${a.gittataFormula})`) : null) : null,
       a.inc ? h('p', {}, h('span', { class: 'sigla', title: 'Affidabilità (tabella di Inceppamento)' }, 'INC '), String(a.inc)) : null,
@@ -363,6 +369,7 @@ function schedaArma(ctx, a) {
     a.naturaDanno && a.naturaDanno !== 'Naturale' ? h('p', { class: 'nota' }, `Danno ${a.naturaDanno}.`) : null,
     a.manovre.length ? h('p', { class: 'nota' }, h('strong', {}, 'Manovre compatibili: '), a.manovre.join(', ')) : null,
     a.proprieta.length ? h('p', { class: 'proprieta-arma' }, a.proprieta.map((p) => h('span', { class: 'etichetta', title: p.testo }, p.nome))) : null,
+    mr ? h('p', { class: 'nota' }, `Con ${mr.nome}: ${mr.proprieta.join('; ')}. Danno, AC e RS sono della munizione, non bonus del lanciatore (§7.8).`) : null,
     a.tipo === 'arma_distanza' || a.munizioni?.capacita ? pannelloMunizioni(ctx, a) : null);
 }
 

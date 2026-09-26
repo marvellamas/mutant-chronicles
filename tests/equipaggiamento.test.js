@@ -17,7 +17,7 @@ const voce = (uid, rif, stato, extra = {}) => ({ uid, rif, stato, quantita: 1, n
 const scheda = (creazione, equipaggiamento, livelli = []) => calcolaScheda({ creazione: { ...creazione, equipaggiamento }, livelli }, dati);
 
 test('catalogo: caricato dall’indice, un lotto = un file e una riga; riferimenti "file:id"', () => {
-  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armi_corporative', 'armi_distanza', 'armature', 'scudi']);
+  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armi_corporative', 'armi_distanza', 'armi_distanza_corporative', 'armature', 'scudi']);
   const cat = catalogo(dati);
   assert.equal(cat.oggetti.filter((o) => o.tipo === 'arma_ravvicinata' && o.catalogo === 'Commerciale').length, 28); // §7.1.1: 28 profili
   assert.equal(cat.oggetti.filter((o) => o.tipo === 'armatura').length, 3); // §7.11.3
@@ -222,7 +222,7 @@ test('validatore del catalogo: Abilità, FOR 1–10, id ripetuti, tipo, numeri',
 // --- Lotto 2: armi a distanza commerciali (§7.7) -----------------------------------------
 
 test('lotto 2: 22 armi a distanza commerciali in 8 gruppi, con i valori del §7.7', () => {
-  const armi = catalogo(dati).oggetti.filter((o) => o.tipo === 'arma_distanza');
+  const armi = catalogo(dati).oggetti.filter((o) => o.file === 'armi_distanza');
   assert.equal(armi.length, 22);
   assert.deepEqual([...new Set(armi.map((o) => o.famiglia))], ['Pistole', 'Fucili', 'Armi pesanti', 'Lanciatori', 'Armi da lancio', 'Archi e balestre', 'Armi speciali', 'Granate']);
   const fa = catalogo(dati).perRif.get('armi_distanza:fucile-d-assalto');
@@ -459,4 +459,80 @@ test('validatore delle armi corporative: effetti, attivazione, unità delle cari
   assert.match(e((d) => { ac(d).find((o) => o.id === 'spada-punisher').munizioni.unita = 'litri'; }), /colpi, cariche o PM/);
   assert.match(e((d) => { ac(d)[0].manovre = []; }), /elenco delle Manovre compatibili/);
   assert.match(e((d) => { ac(d).find((o) => o.id === 'spada-deathdealer').natura_danno = 'Sacro'; }), /Naturale, Magico o Etereo/);
+});
+
+// --- Lotto 5: armi a distanza corporative (§7.8) ------------------------------------------
+
+test('lotto 5: 81 armi a distanza corporative e 19 moduli integrati in 7 cataloghi, con i valori del §7.8', () => {
+  const tutte = catalogo(dati).oggetti.filter((o) => o.file === 'armi_distanza_corporative');
+  assert.equal(tutte.length, 100);
+  assert.equal(tutte.filter((o) => o.modulo_di).length, 19);
+  assert.deepEqual([...new Set(tutte.map((o) => o.catalogo))], ['Alleanza', 'Bauhaus', 'Capitol', 'Cybertronic', 'Fratellanza', 'Imperial', 'Mishima']);
+  const r = (id) => catalogo(dati).perRif.get(`armi_distanza_corporative:${id}`);
+  assert.equal(r('mefisto').gittata_q, 1700); // «1.700» con il separatore delle migliaia
+  assert.equal(r('charger').munizioni.capacita, 1000);
+  assert.equal(r('charger').costo, 55000);
+  assert.equal(r('charger').mov, -3);
+  assert.deepEqual(r('eliminator').proprieta.map((p) => p.nome), ['Purificatrice 1', 'Silenziatore incorporato']);
+  assert.equal(r('hg10').specializzazione, 'specializzazione-pistole'); // «Pistole corporative di base»
+  assert.equal(r('hellblazer').specializzazione, 'specializzazione-armi-al-plasma');
+  assert.equal(r('m50').specializzazione, null); // non dichiarata: TODO(Davide)
+  // modulo integrato: PI, reperibilità e costo sono quelli dell'arma principale
+  const lg = r('lanciagranate-mp105gw');
+  assert.equal(lg.modulo_di, 'armi_distanza_corporative:mp105gw');
+  assert.equal(lg.costo, null);
+  assert.equal(lg.munizioni.riferimento, 'Granata standard a frammentazione');
+  assert.equal(r('lanciarazzi-southpaw').munizioni.riferimento, 'Razzo a carica maggiorata'); // «Compatibilità dei nuovi cataloghi»
+  const mr = dati.equipaggiamento.file.armi_distanza_corporative.munizioni_riferimento;
+  assert.equal(mr.length, 6);
+  assert.deepEqual(mr[0], { nome: 'Granata standard a frammentazione', danno: '1d6+1', ac: '1d3', rs_q: 1, proprieta: ['Sbilanciante', 'Sbalzante 1'] });
+  // i moduli non si scelgono da soli
+  assert.ok(!opzioniCascata(dati, { tipo: 'arma_distanza', catalogo: 'Bauhaus', famiglia: 'Lanciagranate integrato' }).profili.length);
+  assert.ok(!opzioniCascata(dati, { tipo: 'arma_distanza', catalogo: 'Bauhaus' }).famiglie.includes('Lanciagranate integrato'));
+  assert.deepEqual(cercaNelCatalogo(dati, 'mp105gw').map((x) => x.rif), ['armi_distanza_corporative:mp105gw']);
+  assert.ok(trovaTodo(dati).some((t) => /Panzerknacker/.test(t.testo)));
+});
+
+test('arma con modulo integrato impugnata: due profili, alimentazioni separate, danno della munizione di riferimento', () => {
+  const s = scheda(MISHIMA_AGENTE, [voce('g', 'armi_distanza_corporative:mp105gw', 'impugnata')]);
+  const [arma, modulo] = s.equipaggiamento.armi;
+  const medie = s.abilita.find((a) => a.nome === 'Armi medie').totale;
+  assert.equal(arma.nome, 'MP105GW');
+  assert.equal(modulo.nome, 'Lanciagranate MP105GW');
+  assert.equal(modulo.uid, 'g:lanciagranate-mp105gw');
+  assert.equal(modulo.moduloDi, 'MP105GW');
+  assert.equal(modulo.va, medie - Math.max(0, 4 - 6)); // FOR 4 richiesta, Mishima FOR 6
+  assert.equal(modulo.dannoDaMunizione, true);
+  assert.equal(modulo.munizioneRiferimento.danno, '1d6+1');
+  assert.equal(modulo.gittataQ, 30);
+  // un solo MOV e due mani contate una volta
+  assert.equal(s.equipaggiamento.avvisi.length, 0);
+  const creazione = { ...MISHIMA_AGENTE, equipaggiamento: [voce('g', 'armi_distanza_corporative:mp105gw', 'impugnata')] };
+  const m = massimiSessione(calcolaScheda({ creazione, livelli: [] }, dati), creazione, dati);
+  assert.deepEqual(m.caricatori, { g: 40, 'g:lanciagranate-mp105gw': 1 });
+  let ses = variaMunizioni(inizializzaSessione(m), 'g:lanciagranate-mp105gw', 'colpi', -1, m);
+  assert.equal(ses.munizioni['g:lanciagranate-mp105gw'].colpi, 0);
+  assert.equal(ses.munizioni.g.colpi, 40);
+  ses = ricaricaArma(ses, 'g:lanciagranate-mp105gw', m);
+  assert.equal(ses.munizioni['g:lanciagranate-mp105gw'].colpi, 1);
+  // stampa: riga del modulo con il danno della munizione, AC e RS
+  const f3 = preparaStampa(creazione, dati).fogli.find((f) => f.id === 'combattimento').dati;
+  const riga = f3.armi.righe.find((x) => x[0] === 'Lanciagranate MP105GW');
+  assert.equal(riga[3], '1d6+1 (mun.)');
+  assert.match(riga[6], /modulo di MP105GW; AC 1d3; RS 1 Q/);
+  // tooltip dell'arma principale: elenca il modulo
+  const t = testoTooltip('oggetto', 'armi_distanza_corporative:mp105gw', dati);
+  assert.match(t, /Modulo integrato: Lanciagranate MP105GW: Armi medie, gittata 30 Q, CC 1/);
+  assert.match(testoTooltip('oggetto', 'armi_distanza_corporative:lanciagranate-mp105gw', dati), /Costo: compreso nell’arma/);
+});
+
+test('validatore dei moduli integrati e delle munizioni di riferimento', () => {
+  const e = (modifica) => { const d = copia(dati); modifica(d); return validaDati(d).map((x) => `${x.chiave}: ${x.problema}`).join('\n'); };
+  const f = (d) => d.equipaggiamento.file.armi_distanza_corporative;
+  const o = (d, id) => f(d).oggetti.find((x) => x.id === id);
+  assert.match(e((d) => { o(d, 'lanciagranate-mp105gw').costo = 100; }), /costo: un modulo integrato/);
+  assert.match(e((d) => { o(d, 'lanciagranate-mp105gw').modulo_di = 'armi_distanza_corporative:boh'; }), /modulo_di: "armi_distanza_corporative:boh" non è un oggetto/);
+  assert.match(e((d) => { o(d, 'lanciagranate-mp105gw').modulo_di = 'armi_distanza_corporative:lanciagranate-ar3000'; }), /non è un'arma principale/);
+  assert.match(e((d) => { o(d, 'arg17').munizioni.riferimento = 'Razzo fantasma'; }), /"Razzo fantasma" non è fra le munizioni_riferimento/);
+  assert.match(e((d) => { f(d).munizioni_riferimento[0].danno = 'tanto'; }), /munizioni_riferimento\[0\] \(Granata standard a frammentazione\)\.danno/);
 });

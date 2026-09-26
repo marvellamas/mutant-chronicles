@@ -72,8 +72,26 @@ export function caricatori(voci, dati) {
     const r = risolvi(v, cat);
     // armi a distanza (caricatore) e armi ravvicinate con cariche a cella o riserva di PM (§7.1.4)
     if (r.tipo === 'arma_distanza' || (r.tipo === 'arma_ravvicinata' && r.def?.munizioni?.capacita)) out[v.uid] = r.def?.munizioni?.capacita ?? null;
+    // §7.8: i moduli integrati hanno un'alimentazione separata dall'arma principale
+    for (const m of moduliDi(r.def, cat)) out[`${v.uid}:${m.id}`] = m.munizioni?.capacita ?? null;
   }
   return out;
+}
+
+/** Moduli integrati (§7.8) dell'arma del catalogo `def`: oggetti con `modulo_di` uguale al suo rif. */
+export function moduliDi(def, cat) {
+  if (!def?.rif) return [];
+  return cat.oggetti.filter((o) => o.modulo_di === def.rif);
+}
+
+/** Dati della munizione di riferimento di un lanciatore (§7.8, «Munizioni di riferimento dei lanciatori»). */
+export function munizioneDiRiferimento(nome, dati) {
+  if (!nome) return null;
+  for (const f of Object.values(dati?.equipaggiamento?.file ?? {})) {
+    const m = (f.munizioni_riferimento ?? []).find((x) => x.nome === nome);
+    if (m) return m;
+  }
+  return null;
 }
 
 export function catalogo(dati) {
@@ -88,7 +106,7 @@ export function catalogo(dati) {
 
 /** Voci per la cascata Tipo → Catalogo → Famiglia → Profilo: ogni livello solo ciò che esiste. */
 export function opzioniCascata(dati, { tipo = null, catalogo: cat = null, famiglia = null } = {}) {
-  const tutti = catalogo(dati).oggetti;
+  const tutti = catalogo(dati).oggetti.filter((o) => !o.modulo_di); // §7.8: il modulo integrato è compreso nell'arma
   const unici = (lista) => [...new Set(lista)];
   const perTipo = tipo ? tutti.filter((o) => o.tipo === tipo) : [];
   const perCatalogo = cat ? perTipo.filter((o) => o.catalogo === cat) : [];
@@ -106,6 +124,7 @@ export function cercaNelCatalogo(dati, testoCercato, massimo = 12) {
   const q = normalizzaTesto(testoCercato.trim());
   if (q.length < 2) return [];
   return catalogo(dati).oggetti
+    .filter((o) => !o.modulo_di)
     .filter((o) => [o.nome, ...(o.nomi_alternativi ?? [])].some((n) => normalizzaTesto(n).includes(q)))
     .slice(0, massimo);
 }
@@ -273,8 +292,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
 
   // Armi impugnate: VA per colpire, danno, Parata
   const armi = [];
-  for (const o of oggetti.filter((x) => x.attivo && (x.tipo === 'arma_ravvicinata' || x.tipo === 'arma_distanza'))) {
-    const d = o.def;
+  const profiloArma = (o, d, extra = {}) => {
     const nomeAbilita = d?.abilita ?? o.voce.personalizzato?.abilita ?? null;
     const a = nomeAbilita ? abilitaPer(nomeAbilita) : null;
     const spec = d?.specializzazione && specPosseduti.has(d.specializzazione)
@@ -309,12 +327,11 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     } : null;
     // §7.7: «FOR × 3» nella colonna Max Q: la gittata dipende dalla Forza del personaggio
     const gittataQ = d?.gittata_q ?? (d?.gittata_per_for ? FOR * d.gittata_per_for : null);
-    // §7.7: le penalità MOV delle armi impugnate si sottraggono una sola volta al budget di movimento
-    if (d?.mov) movimentoQ += d.mov;
     armi.push({
       uid: o.uid, nome: o.nome, tipo: o.tipo, abilita: nomeAbilita, va, componenti,
       danno: dannoBase ? { una_mano: aggiungiDanno(dannoBase.una_mano, bonusDanno), due_mani: aggiungiDanno(dannoBase.due_mani, bonusDanno) } : null,
       dannoDaMunizione: !!d?.danno_da_munizione,
+      munizioneRiferimento: d?.danno_da_munizione ? munizioneDiRiferimento(d.munizioni?.riferimento, dati) : null,
       bonusDanno, mani: d?.mani ?? null, portataQ: d?.portata_q ?? null, gittataQ,
       gittataFormula: d?.gittata_per_for ? `FOR ${FOR} × ${d.gittata_per_for}` : null,
       ac: d?.ac ?? null, inc: d?.inc ?? null, mov: d?.mov ?? 0, modalita: d?.modalita ?? [],
@@ -322,8 +339,19 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       attivazione: d?.attivazione ?? null, manovre: d?.manovre ?? [], naturaDanno: d?.natura_danno ?? null,
       proprieta: d?.proprieta ?? [], parata, personalizzato: o.personalizzato,
       specializzazione: spec ? `Specializzazione in ${spec.nome}` : null,
+      ...extra,
     });
     if (!a && o.personalizzato) avvisi.push(`${o.nome}: arma personalizzata senza Abilità, VA non calcolato.`);
+  };
+  for (const o of oggetti.filter((x) => x.attivo && (x.tipo === 'arma_ravvicinata' || x.tipo === 'arma_distanza'))) {
+    profiloArma(o, o.def);
+    // §7.7: le penalità MOV delle armi impugnate si sottraggono una sola volta al budget di movimento
+    if (o.def?.mov) movimentoQ += o.def.mov;
+    // §7.8: un modulo integrato usa la propria Abilità, gittata, INC, capacità e modalità; si sceglie
+    // il profilo prima di ogni attacco. PI, Qualità e MOV sono quelli dell'arma principale.
+    for (const m of moduliDi(o.def, cat)) {
+      profiloArma({ ...o, uid: `${o.uid}:${m.id}`, nome: m.nome, tipo: m.tipo, personalizzato: false }, m, { moduloDi: o.nome, mov: 0 });
+    }
   }
 
   // Attacchi con lo Scudo imbracciato (Scudo Punisher §7.4.1, lama delle Guardie Sacre §7.4.10)

@@ -1,6 +1,6 @@
 // Contenuto dei tooltip e della scheda completa degli incantesimi, ricavato solo dai dati.
 // Funzioni pure: la UI (src/ui/tooltip.js) trasforma il risultato in DOM.
-import { catalogo, NOMI_TIPI } from './equipaggiamento.js';
+import { catalogo, NOMI_TIPI, moduliDi, munizioneDiRiferimento } from './equipaggiamento.js';
 
 const trova = (lista, nome) => lista.find((x) => x.nome === nome);
 const eTodo = (v) => typeof v === 'string' && v.startsWith('TODO(');
@@ -78,7 +78,8 @@ function nomeTalento(id, dati) {
 
 /** Oggetto del catalogo dell'equipaggiamento (Manuale degli Armamenti), per riferimento "file:id". */
 function tooltipOggetto(rif, dati) {
-  const o = catalogo(dati).perRif.get(rif);
+  const cat = catalogo(dati);
+  const o = cat.perRif.get(rif);
   if (!o) return null;
   const rep = dati.equipaggiamento.indice.reperibilita?.[o.reperibilita];
   const danno = o.danno_da_munizione ? 'dalla munizione' : o.danno ? [o.danno.una_mano ? `${o.danno.una_mano} a una mano` : null, o.danno.due_mani ? `${o.danno.due_mani} a due mani` : null].filter(Boolean).join(', ') : null;
@@ -99,10 +100,11 @@ function tooltipOggetto(rif, dati) {
   if (o.ar) riga.AR = `${o.ar.totale}${o.ar.magica ? ` (${o.ar.magica} magica)` : ''}`;
   if (o.for_richiesta) riga.FOR = String(o.for_richiesta);
   if (o.inc) riga.INC = String(o.inc);
-  if (o.pi !== undefined) riga.PI = String(o.pi);
+  if (o.pi !== undefined && o.pi !== null) riga.PI = String(o.pi);
   if (o.qualita) riga['Qualità'] = `${o.qualita}${o.ps_int ? ` (PS INT ${o.ps_int})` : ''}`;
   if (o.reperibilita) riga.REP = rep ? `${o.reperibilita} ${rep.nome}` : o.reperibilita;
-  if (o.costo !== undefined) riga.Costo = o.costo.toLocaleString('it-IT');
+  if (o.costo !== undefined && o.costo !== null) riga.Costo = o.costo.toLocaleString('it-IT');
+  if (o.modulo_di) riga.Costo = 'compreso nell’arma';
   const sezioni = [];
   if (o.nomi_alternativi?.length) sezioni.push({ etichetta: 'Comprende', testo: o.nomi_alternativi.join(', ') });
   for (const p of o.proprieta ?? []) sezioni.push({ etichetta: p.nome, testo: p.testo });
@@ -114,7 +116,12 @@ function tooltipOggetto(rif, dati) {
   if (o.attivazione) sezioni.push({ etichetta: 'Attivazione', testo: o.attivazione.testo });
   if (o.manovre?.length) sezioni.push({ etichetta: 'Manovre compatibili', testo: o.manovre.join(', ') });
   if (o.attacco) sezioni.push({ etichetta: 'Attacco', testo: `${o.attacco.abilita}, ${o.attacco.mani === 1 ? 'una mano' : 'due mani'}, danno ${o.attacco.danno}, portata ${o.attacco.portata_q} Q${o.attacco.condizione ? `, ${o.attacco.condizione}` : ''}.` });
-  if (o.munizioni?.riferimento) sezioni.push({ etichetta: 'Munizione di riferimento', testo: o.munizioni.riferimento });
+  if (o.modulo_di) sezioni.push({ etichetta: 'Modulo integrato', testo: `Compreso in ${cat.perRif.get(o.modulo_di)?.nome ?? o.modulo_di}: propria Abilità, gittata, INC, capacità e modalità; PI, Qualità e MOV dell’arma principale (§7.8).` });
+  for (const m of moduliDi(o, cat)) sezioni.push({ etichetta: `Modulo integrato: ${m.nome}`, testo: `${m.abilita}, gittata ${m.gittata_q} Q, CC ${m.munizioni?.capacita ?? '—'}, INC ${m.inc}, ${m.modalita.join(' ')}${m.munizioni?.riferimento ? `; ${m.munizioni.riferimento}` : ''}.` });
+  if (o.munizioni?.riferimento) {
+    const mr = munizioneDiRiferimento(o.munizioni.riferimento, dati);
+    sezioni.push({ etichetta: 'Munizione di riferimento', testo: mr ? `${mr.nome}: danno ${mr.danno}, AC ${mr.ac}, RS ${mr.rs_q} Q; ${mr.proprieta.join('; ')}.` : o.munizioni.riferimento });
+  }
   if (o.munizioni?.ricarica) sezioni.push({ etichetta: 'Ricarica', testo: o.munizioni.ricarica });
   if (o.note_manuale) sezioni.push({ etichetta: null, testo: o.note_manuale });
   const noteCatalogo = dati.equipaggiamento.file?.[o.file]?.note_per_catalogo?.[o.catalogo];

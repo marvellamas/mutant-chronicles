@@ -1,0 +1,101 @@
+Catalogo,Gruppo,Modello,Danno,AC,VA,FOR,Max Q,CC,INC,Abilità,Mani,PI,MOV,Modalità,Qualità,PS INT,REP,Costo
+Alleanza,Armi leggere,AXIS 227,1d6,1,+1,4,30,15,7,Leggere,1,4,0,S RB TR,Non comune,12,NC,2.350
+Alleanza,Armi leggere,Piranha,1d6+1,1,0,2,35,8,8,Leggere,1,4,0,S TR,Comune,10,NC,2.100
+Alleanza,Armi leggere,Punisher,1d6+2,1,0,4,25,10,6,Leggere,1,4,0,S RB TR,Non comune,12,RA,3.150
+Alleanza,Armi leggere,Hellblazer,1d6+1,1,0,3,30,30,6,Leggere,1,4,0,S TR,Non comune,12,RA,9.000
+Alleanza,Armi medie,Carabina Punisher,1d6+3,1,0,5,70,30,6,Medie,2,6,0,S RB RM RL TR FS,Non comune,12,RA,8.000
+Alleanza,Armi medie,Plasma Intruder,1d6+2,2,0,5,50,30,6,Medie,2,6,0,S RB TR,Non comune,12,MR,18.000
+Alleanza,Armi medie,Lanciagranate Alleanza,Munizione,Mun.,0,5,60,6,7,Medie,2,6,0,S TR,Non comune,12,RA,7.800
+Alleanza,Lanciagranate integrato,Lanciagranate Carabina Punisher,Munizione,Mun.,0,5,70,2,6,Medie,2,Condivisi,0,S,Non comune,12,Come arma,Incluso
+Alleanza,Lanciagranate integrato,Lanciagranate Deathlock Drum,Munizione,Mun.,0,8,100,6,6,Medie,2,Condivisi,-3,S TR,Non comune,12,Come arma,Incluso
+Alleanza,Armi pesanti,Deathlock Drum,1d10+3,1,0,8,1000,750,6,Pesanti,2,8,-3,RM RL FS,Non comune,12,MR,54.000
+Alleanza,Armi pesanti,Nimrod Autocannon,2d8+5,1,+1,9,150,300,7,Pesanti,2,8,-3,RM RL FS,Rara,14,MR,98.000
+Alleanza,Armi pesanti,Gehemmapuker,2d6,1d3,0,7,15,50,7,Pesanti,2,6,0,S,Rara,14,MR,18.000
+Bauhaus,Armi leggere,HG10,1d6,1,+1,3,10,4,7,Leggere,1,4,0,S TR,Comune,10,CO,1.400
+Bauhaus,Armi leggere,HG12,1d6+1,1,+1,2,10,4,8,Leggere,1,5,0,S TR,Non comune,12,NC,2.350
+Bauhaus,Armi leggere,Equalizer,1d6+3,1,+1,4,20,4,8,Leggere,1,5,0,S TR,Non comune,12,RA,3.650
+Bauhaus,Armi leggere,MP105,1d6+1,1,+1,4,45,30,9,Leggere,1,5,0,S RB RM TR,Non comune,12,RA,5.750
+Bauhaus,Armi leggere,SA30 a dardi,1d4+1,1,+1,2,10,4,6,Leggere,1,5,0,S,Non comune,12,NC,2.600
+Bauhaus,Fucili a pompa,HD14M,1d6,2,+1,4,10,6,6,Medie,2,7,0,S TR,Non comune,12,NC,1.700
+Bauhaus,Fucili a pompa,HG14,1d6+1,2,0,6,30,6,8,Medie,2,7,0,S,Non comune,12,RA,2.200
+Bauhaus,Armi medie,MP105GW,1d6+1,1,0,4,70,40,8,Medie,2,7,0,S RB RM RL TR FS,Non comune,12,RA,7.000
+Bauhaus,Armi medie,Panzerknacker,1d6+2,1,0,5,100,50,8,Medie,2,7,0,S RB RM RL TR FS,Non comune,12,RA,9.500
+Bauhaus,Lanciagranate integrato,Lanciagranate MP105GW,Munizione,Mun.,0,4,30,1,7,Medie,2,Condivisi,0,S,Non comune,12,Come arma,Incluso
+Bauhaus,Lanciagranate integrato,Lanciagranate Panzerknacker,Munizione,Mun.,0,5,50,2,7,Medie,2,Condivisi,0,S,Non comune,12,Come arma,Incluso
+Bauhaus,Fucili di precisione,PSG99,1d6+3,1,0,5,1400,30,9,Medie,2,7,0,S RB TR,Non comune,12,MR,10.500
+Bauhaus,Fucili di precisione,SA50F a dardi,1d6+1,1,+1,4,50,4,7,Medie,2,7,0,S TR,Non comune,12,RA,5.500
+Bauhaus,Armi pesanti,MG40,1d8+3,1,0,6,450,300,9,Pesanti,2,9,-1,RM RL FS,Non comune,12,RA,25.000
+Bauhaus,Armi pesanti,MG80,1d10+4,1,0,7,650,750,8,Pesanti,2,9,-2,RM RL FS,Non comune,12,MR,48.000
+Bauhaus,Armi pesanti,ARG17,Munizione,Mun.,0,7,150,10,8,Pesanti,2,9,-1,S TR,Non comune,12,MR,36.000
+Capitol,Revolver,Bolter 09,1d6,1,0,3,60,10,6,Leggere,1,4,0,S TR,Comune,10,CO,1.450
+Capitol,Revolver,Enforcer,1d6+1,1,0,2,15,6,6,Leggere,1,4,0,S TR,Comune,10,CO,1.200
+Capitol,Revolver,Jemson 45,1d6+2,1,0,3,15,6,6,Leggere,1,4,0,S TR,Comune,10,CO,1.600
+Capitol,Pistole semiautomatiche e automatiche,Bolter 10,1d6,1,0,3,15,15,5,Leggere,1,4,0,S TR,Comune,10,CO,1.000
+Capitol,Pistole semiautomatiche e automatiche,Bolter 13,1d6,1,0,3,15,20,6,Leggere,1,4,0,S RB TR,Comune,10,CO,1.300
+Capitol,Pistole semiautomatiche e automatiche,Bolter 20,1d6+1,1,-1,4,15,25,4,Leggere,1,6,0,S RB TR,Comune,10,CO,3.600
+Capitol,Pistole semiautomatiche e automatiche,Ironfist 15,1d6,1,0,5,25,30,4,Leggere,1,6,0,S RB TR,Comune,10,CO,5.100
+Capitol,Lanciagranate integrato,Lanciagranate Bolter 20,Munizione,Mun.,-1,4,25,1,4,Medie,1,Condivisi,0,S,Comune,10,Come arma,Incluso
+Capitol,Lanciagranate integrato,Lanciagranate Ironfist 15,Munizione,Mun.,0,5,30,4,4,Medie,2,Condivisi,0,S,Comune,10,Come arma,Incluso
+Capitol,Lanciagranate integrato,Lanciagranate CAR24,Munizione,Mun.,0,4,30,1,5,Medie,2,Condivisi,0,S,Comune,10,Come arma,Incluso
+Capitol,Lanciagranate integrato,Lanciagranate M50,Munizione,Mun.,0,5,70,1,3,Medie,2,Condivisi,0,S,Comune,10,Come arma,Incluso
+Capitol,Fucili a pompa e doppiette,M310,1d6,2,0,5,20,20,3,Medie,2,6,0,S,Comune,10,CO,1.350
+Capitol,Fucili a pompa e doppiette,M510,1d6,2,0,4,15,6,5,Medie,2,6,0,S,Comune,10,CO,1.000
+Capitol,Fucili a pompa e doppiette,M516S,1d6,2,0,4,15,6,6,Medie,2,6,0,S,Comune,10,CO,1.100
+Capitol,Fucili a pompa e doppiette,M516D,2d4,2,0,5,10,6,3,Medie,2,6,0,S,Comune,10,CO,1.200
+Capitol,Fucili a pompa e doppiette,M410,1d6+2,2,0,4,7,2,5,Medie,2,6,0,S TR DC,Comune,10,CO,1.000
+Capitol,Carabine e fucili d’assalto,CAR24,1d6+1,1,0,4,60,20,5,Medie,2,6,0,S RB RM TR,Comune,10,CO,4.500
+Capitol,Carabine e fucili d’assalto,M50,1d6+2,1,0,5,100,30,4,Medie,2,6,0,S RB RM RL TR FS,Comune,10,CO,5.500
+Capitol,Carabine e fucili d’assalto,SR30,1d6+2,1,0,5,120,30,5,Medie,2,6,0,S TR,Comune,10,CO,2.800
+Capitol,Fucili di precisione,SR50,1d6+4,1,0,5,1300,15,4,Medie,2,6,0,S RB TR,Comune,10,CO,7.000
+Capitol,Armi pesanti,M606,1d8+3,1,0,6,600,400,6,Pesanti,2,8,-1,RM RL FS,Comune,10,CO,19.000
+Capitol,Armi pesanti,Improved M89,1d10+5,1,0,8,650,1000,3,Pesanti,2,8,-2,RM RL FS,Comune,10,CO,42.000
+Capitol,Armi pesanti,Lanciarazzi Deuce,Munizione,Mun.,0,7,200,6,3,Pesanti,2,8,-2,S TR,Comune,10,CO,20.000
+Cybertronic,Armi leggere,P500,1d6,1,0,3,30,12,7,Leggere,1,4,0,S TR,Comune,10,NC,1.500
+Cybertronic,Armi leggere,P1000,1d6,1,+1,3,60,30,7,Leggere,1,4,0,S RB RM TR,Non comune,12,RA,4.700
+Cybertronic,Fucili a pompa,SA SG2001,2d4,2,0,5,30,10,9,Medie,2,6,0,S TR,Non comune,12,RA,3.150
+Cybertronic,Carabine e fucili d’assalto,CAW2000,1d6+1,1,+1,4,80,30,8,Medie,2,6,0,S RB RM TR,Non comune,12,RA,8.000
+Cybertronic,Carabine e fucili d’assalto,AR3000,1d6+2,1,0,5,150,50,7,Medie,2,6,0,S RB RM RL TR FS,Non comune,12,RA,10.500
+Cybertronic,Lanciagranate integrato,Lanciagranate CAW2000,Munizione,Mun.,+1,4,40,2,7,Medie,2,Condivisi,0,S,Non comune,12,Come arma,Incluso
+Cybertronic,Lanciagranate integrato,Lanciagranate AR3000,Munizione,Mun.,0,5,70,4,7,Medie,2,Condivisi,0,S TR,Non comune,12,Come arma,Incluso
+Cybertronic,Fucili di precisione,SR3500,1d6+3,1,0,5,1500,20,8,Medie,2,6,0,S RB TR,Non comune,12,MR,10.000
+Cybertronic,Armi pesanti,TSW4000,1d8+3,1,0,6,800,750,8,Pesanti,2,8,-1,RM RL FS,Non comune,12,MR,32.500
+Cybertronic,Armi pesanti,SSW4200P,1d10+4,1,0,7,1000,1000,8,Pesanti,2,8,-2,RM RL FS,Non comune,12,MR,60.000
+Cybertronic,Armi pesanti,Lanciarazzi SSW5500,Munizione,Mun.,0,7,160,10,6,Pesanti,2,8,-1,S TR,Non comune,12,MR,36.000
+Fratellanza,Armi leggere e carabina Nemesis,Eliminator,1d6+1,1,−2,3,70,15,7,Leggere,1,4,0,S RB TR,Non comune,12,MR,6.500
+Fratellanza,Armi leggere e carabina Nemesis,Nemesis 100,1d6,1,0,3,15,8,5,Leggere,1,4,0,S TR,Comune,10,NC,1.500
+Fratellanza,Armi leggere e carabina Nemesis,Nemesis 210,1d6,1,+1,3,20,20,7,Leggere,1,4,0,S RB TR,Non comune,12,RA,3.800
+Fratellanza,Armi leggere e carabina Nemesis,Nemesis 214,1d6,1,+1,4,40,20,7,Leggere,1,4,0,S RB TR,Non comune,12,RA,9.000
+Fratellanza,Armi leggere e carabina Nemesis,Nemesis 221,1d6,1,+1,4,40,20,7,Leggere,1,4,0,S RB TR,Non comune,12,RA,7.500
+Fratellanza,Armi leggere e carabina Nemesis,Nemesis 21,1d6+1,1,+1,4,60,20,7,Medie,2,6,0,S RB TR,Non comune,12,RA,5.000
+Fratellanza,Fucili e armi pesanti,Volcano,1d6+2,1,0,5,150,30,7,Medie,2,6,0,S RB RM RL TR FS,Non comune,12,RA,12.000
+Fratellanza,Fucili e armi pesanti,Eruptor,1d6+3,1,0,6,600,20,8,Medie,2,6,0,S RB TR,Non comune,12,RA,16.500
+Fratellanza,Fucili e armi pesanti,Mefisto,1d6+4,1,0,6,1.700,20,8,Medie,2,6,0,S RB TR,Non comune,12,MR,15.500
+Fratellanza,Fucili e armi pesanti,Justifier,1d8+1,1,0,5,100,400,8,Pesanti,2,8,0,RM RL FS,Non comune,12,RA,24.000
+Fratellanza,Fucili e armi pesanti,Purifier,1d10+4,1,0,7,400,750,7,Pesanti,2,8,−3,RM RL FS,Non comune,12,MR,62.000
+Fratellanza,Moduli integrati della Fratellanza,Lanciafiamme Nemesis 214,2d4,1d3,+1,4,8,5,8,Pesanti,1,Condivisi,0,S,Non comune,12,Come arma,Incluso
+Fratellanza,Moduli integrati della Fratellanza,Lanciagranate Nemesis 221,Munizione,Mun.,+1,4,30,1,7,Medie,1,Condivisi,0,S,Non comune,12,Come arma,Incluso
+Fratellanza,Moduli integrati della Fratellanza,Lanciagranate Volcano,Munizione,Mun.,0,5,50,1,7,Medie,2,Condivisi,0,S,Non comune,12,Come arma,Incluso
+Fratellanza,Moduli integrati della Fratellanza,Lanciafiamme Eruptor,1d10,1d3,0,6,12,10,8,Pesanti,2,Condivisi,0,S,Non comune,12,Come arma,Incluso
+Fratellanza,Moduli integrati della Fratellanza,Lanciafiamme Purifier,1d10+2,1d3,0,7,20,15,7,Pesanti,2,Condivisi,−3,S,Non comune,12,Come arma,Incluso
+Imperial,Armi leggere e medie,Belliger,1d6+1,1,−1,3,15,10,4,Leggere,1,4,0,S TR,Comune,10,CO,1.300
+Imperial,Armi leggere e medie,Aggressor,1d6+1,1,−1,4,25,25,4,Leggere,1,4,0,S RB TR,Non comune,12,NC,2.200
+Imperial,Armi leggere e medie,Mandible,1d6+2,1,0,5,80,20,5,Medie,2,6,0,S TR,Non comune,12,NC,2.600
+Imperial,Armi leggere e medie,Interceptor,1d6+2,1,0,5,50,40,4,Medie,2,6,0,S RB RM TR,Non comune,12,NC,6.500
+Imperial,Armi leggere e medie,Invader,1d6+3,1,0,6,80,40,5,Medie,2,6,0,S RB RM RL TR FS,Non comune,12,RA,12.000
+Imperial,Armi leggere e medie,Assailant,1d6+4,1,0,6,400,15,3,Medie,2,6,0,S RB TR,Non comune,12,NC,6.000
+Imperial,Armi pesanti,Destroyer,1d8+4,1,0,7,600,500,5,Pesanti,2,8,−2,RM RL FS,Non comune,12,RA,24.000
+Imperial,Armi pesanti,Charger,1d10+6,1,0,9,450,1.000,4,Pesanti,2,8,−3,RM RL FS,Non comune,12,MR,55.000
+Imperial,Armi pesanti,Lanciarazzi Southpaw,Munizione,Mun.,0,8,80,20,5,Pesanti,2,8,−3,S TR,Non comune,12,RA,32.000
+Imperial,Lanciagranate integrati Imperiali,Lanciagranate Interceptor,Munizione,Mun.,0,5,40,1,3,Medie,2,Condivisi,0,S,Non comune,12,Come arma,Incluso
+Imperial,Lanciagranate integrati Imperiali,Lanciagranate Invader,Munizione,Mun.,0,6,100,10,3,Medie,2,Condivisi,0,S,Non comune,12,Come arma,Incluso
+Mishima,Armi leggere e medie,Ronin 25AP,1d6,1,0,2,25,10,2,Leggere,1,4,0,S TR,Comune,10,CO,1.000
+Mishima,Armi leggere e medie,Ronin 45AP,1d6,1,0,3,25,15,2,Leggere,1,4,0,S RB TR,Comune,10,CO,1.200
+Mishima,Armi leggere e medie,Airbrush,1d6,1,0,4,40,10,1,Medie,2,6,0,S TR,Comune,10,CO,800
+Mishima,Armi leggere e medie,Windrider N4,1d6,1,0,4,40,25,3,Medie,2,6,0,S RB RM TR,Comune,10,NC,3.000
+Mishima,Armi leggere e medie,Shogun,1d6+1,1,0,5,80,30,2,Medie,2,6,0,S RB RM RL TR FS,Comune,10,NC,4.500
+Mishima,Armi leggere e medie,Archer,1d6+2,1,0,5,1.100,15,3,Medie,2,6,0,S RB TR,Comune,10,NC,4.500
+Mishima,Armi pesanti,Kensai,1d8+2,1,0,6,550,400,5,Pesanti,2,8,−1,RM RL FS,Comune,10,NC,16.000
+Mishima,Armi pesanti,Dragonfire,1d10+3,1,0,6,600,500,4,Pesanti,2,8,−1,RM RL FS,Comune,10,RA,26.000
+Mishima,Armi pesanti,Lanciarazzi Daimyo,Munizione,Mun.,0,6,200,6,2,Pesanti,2,8,−2,S TR,Comune,10,RA,18.000
+Mishima,Lanciagranate integrati Mishima,Lanciagranate Windrider N4,Munizione,Mun.,0,4,20,1,7,Medie,2,Condivisi,0,S,Comune,10,Come arma,Incluso
+Mishima,Lanciagranate integrati Mishima,Lanciagranate Shogun,Munizione,Mun.,0,5,40,1,2,Medie,2,Condivisi,0,S,Comune,10,Come arma,Incluso

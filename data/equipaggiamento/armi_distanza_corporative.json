@@ -1,0 +1,4473 @@
+{
+  "versione_manuale": "Armamenti 0.50",
+  "fonte": "Manuale degli Armamenti v0.50, §7.8 Cataloghi corporativi delle armi a distanza (pp. 36–52): armi, moduli integrati, munizioni di riferimento dei lanciatori; lotto 5",
+  "_nota": "Generato da tools/lotti/lotto5_armi_distanza_corporative.mjs; da qui in poi si modifica questo file. I moduli integrati (modulo_di) non si comprano da soli: la scheda li mostra come profilo aggiuntivo dell’arma impugnata, con alimentazione separata; PI, Qualità e MOV sono quelli dell’arma. «munizioni_riferimento» sono i dati della munizione dei lanciatori (danno, AC, RS), non bonus del lanciatore.",
+  "TODO(Davide)": [
+    "Specializzazione (§8.8.1) di 16 armi a distanza corporative che non la dichiarano: Panzerknacker (Bauhaus), M50 (Capitol), AR3000 (Cybertronic), Volcano (Fratellanza), Eruptor (Fratellanza), Mefisto (Fratellanza), Justifier (Fratellanza), Purifier (Fratellanza), Mandible (Imperial), Interceptor (Imperial), Invader (Imperial), Assailant (Imperial), Airbrush (Mishima), Windrider N4 (Mishima), Shogun (Mishima), Archer (Mishima). Proposta: gittata molto lunga (Eruptor, Mefisto, Archer, Assailant) → Fucili di precisione; con Raffica Lunga e Fuoco di Soppressione (M50, AR3000, Volcano, Invader, Shogun) → Fucili d’assalto; Armi pesanti con RM RL FS (Justifier, Purifier) → Mitragliatori; le altre (Panzerknacker, Mandible, Interceptor, Airbrush, Windrider N4) → Carabine.",
+    "Specializzazioni assegnate per analogia con il §7.7, da confermare: le armi con Abilità Armi leggere → Pistole (come la Pistola mitragliatrice compatta, vedi anche la domanda sul §7.7); il gruppo Armi pesanti con modalità RM RL FS → Mitragliatori; la proprietà Plasma → Armi al Plasma, anche per la pistola Hellblazer."
+  ],
+  "modalita": {
+    "S": "Colpo Singolo",
+    "RB": "Raffica Breve",
+    "RM": "Raffica Media",
+    "RL": "Raffica Lunga",
+    "TR": "Tiro Rapido",
+    "FS": "Fuoco di Soppressione",
+    "DC": "Doppio Colpo"
+  },
+  "munizioni_riferimento": [
+    {
+      "nome": "Granata standard a frammentazione",
+      "danno": "1d6+1",
+      "ac": "1d3",
+      "rs_q": 1,
+      "proprieta": [
+        "Sbilanciante",
+        "Sbalzante 1"
+      ]
+    },
+    {
+      "nome": "Granata pesante a frammentazione",
+      "danno": "1d10+1",
+      "ac": "1d3",
+      "rs_q": 2,
+      "proprieta": [
+        "Sbilanciante",
+        "Sbalzante 1"
+      ]
+    },
+    {
+      "nome": "Razzo standard",
+      "danno": "1d10+1",
+      "ac": "1d3",
+      "rs_q": 2,
+      "proprieta": [
+        "Sbilanciante",
+        "Sbalzante 2"
+      ]
+    },
+    {
+      "nome": "Razzo ARG17",
+      "danno": "1d10+2",
+      "ac": "1d3",
+      "rs_q": 3,
+      "proprieta": [
+        "Sbilanciante",
+        "Sbalzante 2"
+      ]
+    },
+    {
+      "nome": "Razzo SSW5500",
+      "danno": "1d10+1",
+      "ac": "1d3",
+      "rs_q": 4,
+      "proprieta": [
+        "Sbilanciante",
+        "Sbalzante 2"
+      ]
+    },
+    {
+      "nome": "Razzo a carica maggiorata",
+      "danno": "1d10+2",
+      "ac": "1d3",
+      "rs_q": 2,
+      "proprieta": [
+        "Sbilanciante",
+        "Sbalzante 2"
+      ]
+    }
+  ],
+  "oggetti": [
+    {
+      "id": "axis-227",
+      "nome": "AXIS 227",
+      "tipo": "arma_distanza",
+      "catalogo": "Alleanza",
+      "famiglia": "Armi leggere",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 1,
+      "portata_q": null,
+      "gittata_q": 30,
+      "munizioni": {
+        "capacita": 15,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "TR"
+      ],
+      "for_richiesta": 4,
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 2350,
+      "proprieta": []
+    },
+    {
+      "id": "piranha",
+      "nome": "Piranha",
+      "tipo": "arma_distanza",
+      "catalogo": "Alleanza",
+      "famiglia": "Armi leggere",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+1",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 35,
+      "munizioni": {
+        "capacita": 8,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 8,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 2,
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 2100,
+      "proprieta": []
+    },
+    {
+      "id": "punisher",
+      "nome": "Punisher",
+      "tipo": "arma_distanza",
+      "catalogo": "Alleanza",
+      "famiglia": "Armi leggere",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+2",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 25,
+      "munizioni": {
+        "capacita": 10,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "TR"
+      ],
+      "for_richiesta": 4,
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 3150,
+      "proprieta": []
+    },
+    {
+      "id": "hellblazer",
+      "nome": "Hellblazer",
+      "tipo": "arma_distanza",
+      "catalogo": "Alleanza",
+      "famiglia": "Armi leggere",
+      "nomi_alternativi": [],
+      "note_manuale": "Hellblazer. Proprietà: Plasma. Include una cella standard da 30 colpi.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-armi-al-plasma",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+1",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 30,
+      "munizioni": {
+        "capacita": 30,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 3,
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 9000,
+      "proprieta": [
+        {
+          "nome": "Plasma",
+          "testo": "La Contromisura è Dissipante X. Dopo almeno 1 danno oltre l’Armatura e il superamento dell’eventuale Dissipante, il bersaglio effettua una PS di Tempra con i modificatori della fonte. Con successo evita l’effetto aggiuntivo; con fallimento subisce −2 VA per 1+1d3 Round (Giocatore §5.24)."
+        }
+      ]
+    },
+    {
+      "id": "carabina-punisher",
+      "nome": "Carabina Punisher",
+      "tipo": "arma_distanza",
+      "catalogo": "Alleanza",
+      "famiglia": "Armi medie",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-carabine",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+3"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 70,
+      "munizioni": {
+        "capacita": 30,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "RL",
+        "TR",
+        "FS"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 8000,
+      "proprieta": []
+    },
+    {
+      "id": "plasma-intruder",
+      "nome": "Plasma Intruder",
+      "tipo": "arma_distanza",
+      "catalogo": "Alleanza",
+      "famiglia": "Armi medie",
+      "nomi_alternativi": [],
+      "note_manuale": "Plasma Intruder. Proprietà: Plasma. Include una cella standard da 30 colpi.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-armi-al-plasma",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+2"
+      },
+      "ac": 2,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 50,
+      "munizioni": {
+        "capacita": 30,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "TR"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "MR",
+      "costo": 18000,
+      "proprieta": [
+        {
+          "nome": "Plasma",
+          "testo": "La Contromisura è Dissipante X. Dopo almeno 1 danno oltre l’Armatura e il superamento dell’eventuale Dissipante, il bersaglio effettua una PS di Tempra con i modificatori della fonte. Con successo evita l’effetto aggiuntivo; con fallimento subisce −2 VA per 1+1d3 Round (Giocatore §5.24)."
+        }
+      ]
+    },
+    {
+      "id": "lanciagranate-alleanza",
+      "nome": "Lanciagranate Alleanza",
+      "tipo": "arma_distanza",
+      "catalogo": "Alleanza",
+      "famiglia": "Armi medie",
+      "nomi_alternativi": [],
+      "note_manuale": "Lanciagranate Alleanza. Richiede Imbracciatura; si applica Postura. Munizione di riferimento: Granata standard a frammentazione.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-lanciagranate",
+      "mani": 2,
+      "danno": null,
+      "danno_da_munizione": true,
+      "ac": "munizione",
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 60,
+      "munizioni": {
+        "capacita": 6,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": "Granata standard a frammentazione"
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 7800,
+      "proprieta": []
+    },
+    {
+      "id": "lanciagranate-carabina-punisher",
+      "nome": "Lanciagranate Carabina Punisher",
+      "tipo": "arma_distanza",
+      "catalogo": "Alleanza",
+      "famiglia": "Lanciagranate integrato",
+      "nomi_alternativi": [],
+      "note_manuale": "Lanciagranate Carabina Punisher. Munizione di riferimento: Granata standard a frammentazione.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-lanciagranate",
+      "mani": 2,
+      "danno": null,
+      "danno_da_munizione": true,
+      "ac": "munizione",
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 70,
+      "munizioni": {
+        "capacita": 2,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": "Granata standard a frammentazione"
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 5,
+      "pi": null,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": null,
+      "costo": null,
+      "proprieta": [],
+      "modulo_di": "armi_distanza_corporative:carabina-punisher"
+    },
+    {
+      "id": "lanciagranate-deathlock-drum",
+      "nome": "Lanciagranate Deathlock Drum",
+      "tipo": "arma_distanza",
+      "catalogo": "Alleanza",
+      "famiglia": "Lanciagranate integrato",
+      "nomi_alternativi": [],
+      "note_manuale": "Lanciagranate Deathlock Drum. Munizione di riferimento: Granata pesante a frammentazione.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-lanciagranate",
+      "mani": 2,
+      "danno": null,
+      "danno_da_munizione": true,
+      "ac": "munizione",
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 100,
+      "munizioni": {
+        "capacita": 6,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": "Granata pesante a frammentazione"
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 8,
+      "pi": null,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": null,
+      "costo": null,
+      "proprieta": [],
+      "modulo_di": "armi_distanza_corporative:deathlock-drum"
+    },
+    {
+      "id": "deathlock-drum",
+      "nome": "Deathlock Drum",
+      "tipo": "arma_distanza",
+      "catalogo": "Alleanza",
+      "famiglia": "Armi pesanti",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi pesanti",
+      "specializzazione": "specializzazione-mitragliatori",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d10+3"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 1000,
+      "munizioni": {
+        "capacita": 750,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": -3,
+      "modalita": [
+        "RM",
+        "RL",
+        "FS"
+      ],
+      "for_richiesta": 8,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "MR",
+      "costo": 54000,
+      "proprieta": []
+    },
+    {
+      "id": "nimrod-autocannon",
+      "nome": "Nimrod Autocannon",
+      "tipo": "arma_distanza",
+      "catalogo": "Alleanza",
+      "famiglia": "Armi pesanti",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi pesanti",
+      "specializzazione": "specializzazione-mitragliatori",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "2d8+5"
+      },
+      "ac": 1,
+      "modificatore_va": 1,
+      "portata_q": null,
+      "gittata_q": 150,
+      "munizioni": {
+        "capacita": 300,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 7,
+      "mov": -3,
+      "modalita": [
+        "RM",
+        "RL",
+        "FS"
+      ],
+      "for_richiesta": 9,
+      "pi": 8,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 98000,
+      "proprieta": []
+    },
+    {
+      "id": "gehemmapuker",
+      "nome": "Gehemmapuker",
+      "tipo": "arma_distanza",
+      "catalogo": "Alleanza",
+      "famiglia": "Armi pesanti",
+      "nomi_alternativi": [],
+      "note_manuale": "Gehemmapuker. Proprietà: Fuoco. Getto diretto contro un solo bersaglio; segue il Lanciafiamme commerciale. Combustibile separato.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi pesanti",
+      "specializzazione": "specializzazione-lanciafiamme",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "2d6"
+      },
+      "ac": "1d3",
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 15,
+      "munizioni": {
+        "capacita": 50,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 7,
+      "pi": 6,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 18000,
+      "proprieta": [
+        {
+          "nome": "Fuoco",
+          "testo": "La Contromisura è Ignifugo X. Dopo almeno 1 danno oltre l’Armatura e il superamento dell’eventuale Ignifugo, il bersaglio effettua una PS di Riflessi, salvo eccezione esplicita. Con successo evita lo Stato; con fallimento è Incendiato per 1+1d3 Round (Giocatore §5.24)."
+        }
+      ]
+    },
+    {
+      "id": "hg10",
+      "nome": "HG10",
+      "tipo": "arma_distanza",
+      "catalogo": "Bauhaus",
+      "famiglia": "Armi leggere",
+      "nomi_alternativi": [],
+      "note_manuale": "HG10. Pistola compatta da servizio, precisa e affidabile, con gittata breve e caricatore da quattro colpi. Il +1 VA è già incluso nel profilo e non si applica nuovamente come proprietà. La HG12 offre maggiore danno e affidabilità, Qualità Non comune, 5 PI e requisito FOR 2.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 1,
+      "portata_q": null,
+      "gittata_q": 10,
+      "munizioni": {
+        "capacita": 4,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 3,
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1400,
+      "proprieta": []
+    },
+    {
+      "id": "hg12",
+      "nome": "HG12",
+      "tipo": "arma_distanza",
+      "catalogo": "Bauhaus",
+      "famiglia": "Armi leggere",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+1",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 1,
+      "portata_q": null,
+      "gittata_q": 10,
+      "munizioni": {
+        "capacita": 4,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 8,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 2,
+      "pi": 5,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 2350,
+      "proprieta": []
+    },
+    {
+      "id": "equalizer",
+      "nome": "Equalizer",
+      "tipo": "arma_distanza",
+      "catalogo": "Bauhaus",
+      "famiglia": "Armi leggere",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+3",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 1,
+      "portata_q": null,
+      "gittata_q": 20,
+      "munizioni": {
+        "capacita": 4,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 8,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 4,
+      "pi": 5,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 3650,
+      "proprieta": []
+    },
+    {
+      "id": "mp105",
+      "nome": "MP105",
+      "tipo": "arma_distanza",
+      "catalogo": "Bauhaus",
+      "famiglia": "Armi leggere",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+1",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 1,
+      "portata_q": null,
+      "gittata_q": 45,
+      "munizioni": {
+        "capacita": 30,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 9,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "TR"
+      ],
+      "for_richiesta": 4,
+      "pi": 5,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 5750,
+      "proprieta": []
+    },
+    {
+      "id": "sa30-a-dardi",
+      "nome": "SA30 a dardi",
+      "tipo": "arma_distanza",
+      "catalogo": "Bauhaus",
+      "famiglia": "Armi leggere",
+      "nomi_alternativi": [],
+      "note_manuale": "SA30 a dardi. Proprietà: Danno calibrato. Include quattro dardi stordenti; caricamento misto ammesso annotando l’ordine.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d4+1",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 1,
+      "portata_q": null,
+      "gittata_q": 10,
+      "munizioni": {
+        "capacita": 4,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 2,
+      "pi": 5,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 2600,
+      "proprieta": [
+        {
+          "nome": "Danno calibrato",
+          "testo": "Per SA30 e SA50F, i bonus ordinari al danno di Classi, Talenti e Manovre non modificano il danno del dardo. Il Magistrale si applica normalmente; sono ammessi modificatori specifici della munizione. Tiro Mirato concede il bonus al VA ma non il bonus ordinario al danno. L’effetto del contenuto del dardo si applica soltanto se almeno 1 danno supera l’Armatura. Il lanciatore determina danno e gittata, il carico del dardo determina l’effetto aggiuntivo (§7.8)."
+        }
+      ]
+    },
+    {
+      "id": "hd14m",
+      "nome": "HD14M",
+      "tipo": "arma_distanza",
+      "catalogo": "Bauhaus",
+      "famiglia": "Fucili a pompa",
+      "nomi_alternativi": [],
+      "note_manuale": "HD14M. Proprietà: Sbilanciante. Eccezione: può eseguire Tiro Rapido.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-a-pompa-e-doppiette",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6"
+      },
+      "ac": 2,
+      "modificatore_va": 1,
+      "portata_q": null,
+      "gittata_q": 10,
+      "munizioni": {
+        "capacita": 6,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 4,
+      "pi": 7,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 1700,
+      "proprieta": [
+        {
+          "nome": "Sbilanciante",
+          "testo": "Dopo due colpi penetranti dello stesso attacco: Prova di Forza o Destrezza; fallimento A Terra. Prova immediata; A Terra fino a quando si rialza (Giocatore §5.24)."
+        }
+      ]
+    },
+    {
+      "id": "hg14",
+      "nome": "HG14",
+      "tipo": "arma_distanza",
+      "catalogo": "Bauhaus",
+      "famiglia": "Fucili a pompa",
+      "nomi_alternativi": [],
+      "note_manuale": "HG14. Proprietà: Sbilanciante.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-a-pompa-e-doppiette",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+1"
+      },
+      "ac": 2,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 30,
+      "munizioni": {
+        "capacita": 6,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 8,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 6,
+      "pi": 7,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2200,
+      "proprieta": [
+        {
+          "nome": "Sbilanciante",
+          "testo": "Dopo due colpi penetranti dello stesso attacco: Prova di Forza o Destrezza; fallimento A Terra. Prova immediata; A Terra fino a quando si rialza (Giocatore §5.24)."
+        }
+      ]
+    },
+    {
+      "id": "mp105gw",
+      "nome": "MP105GW",
+      "tipo": "arma_distanza",
+      "catalogo": "Bauhaus",
+      "famiglia": "Armi medie",
+      "nomi_alternativi": [],
+      "note_manuale": "MP105GW. Carabina automatica; modello distinto dalla pistola MP105.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-carabine",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+1"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 70,
+      "munizioni": {
+        "capacita": 40,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 8,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "RL",
+        "TR",
+        "FS"
+      ],
+      "for_richiesta": 4,
+      "pi": 7,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 7000,
+      "proprieta": []
+    },
+    {
+      "id": "panzerknacker",
+      "nome": "Panzerknacker",
+      "tipo": "arma_distanza",
+      "catalogo": "Bauhaus",
+      "famiglia": "Armi medie",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": null,
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+2"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 100,
+      "munizioni": {
+        "capacita": 50,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 8,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "RL",
+        "TR",
+        "FS"
+      ],
+      "for_richiesta": 5,
+      "pi": 7,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 9500,
+      "proprieta": []
+    },
+    {
+      "id": "lanciagranate-mp105gw",
+      "nome": "Lanciagranate MP105GW",
+      "tipo": "arma_distanza",
+      "catalogo": "Bauhaus",
+      "famiglia": "Lanciagranate integrato",
+      "nomi_alternativi": [],
+      "note_manuale": "Lanciagranate MP105GW. Munizione di riferimento: Granata standard a frammentazione.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-lanciagranate",
+      "mani": 2,
+      "danno": null,
+      "danno_da_munizione": true,
+      "ac": "munizione",
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 30,
+      "munizioni": {
+        "capacita": 1,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": "Granata standard a frammentazione"
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 4,
+      "pi": null,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": null,
+      "costo": null,
+      "proprieta": [],
+      "modulo_di": "armi_distanza_corporative:mp105gw"
+    },
+    {
+      "id": "lanciagranate-panzerknacker",
+      "nome": "Lanciagranate Panzerknacker",
+      "tipo": "arma_distanza",
+      "catalogo": "Bauhaus",
+      "famiglia": "Lanciagranate integrato",
+      "nomi_alternativi": [],
+      "note_manuale": "Lanciagranate Panzerknacker. Munizione di riferimento: Granata standard a frammentazione.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-lanciagranate",
+      "mani": 2,
+      "danno": null,
+      "danno_da_munizione": true,
+      "ac": "munizione",
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 50,
+      "munizioni": {
+        "capacita": 2,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": "Granata standard a frammentazione"
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 5,
+      "pi": null,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": null,
+      "costo": null,
+      "proprieta": [],
+      "modulo_di": "armi_distanza_corporative:panzerknacker"
+    },
+    {
+      "id": "psg99",
+      "nome": "PSG99",
+      "tipo": "arma_distanza",
+      "catalogo": "Bauhaus",
+      "famiglia": "Fucili di precisione",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-di-precisione",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+3"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 1400,
+      "munizioni": {
+        "capacita": 30,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 9,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "TR"
+      ],
+      "for_richiesta": 5,
+      "pi": 7,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "MR",
+      "costo": 10500,
+      "proprieta": []
+    },
+    {
+      "id": "sa50f-a-dardi",
+      "nome": "SA50F a dardi",
+      "tipo": "arma_distanza",
+      "catalogo": "Bauhaus",
+      "famiglia": "Fucili di precisione",
+      "nomi_alternativi": [],
+      "note_manuale": "SA50F a dardi. Proprietà: Danno calibrato. Usa le munizioni della SA30; include quattro dardi stordenti e ammette caricamento misto annotato.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-di-precisione",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+1"
+      },
+      "ac": 1,
+      "modificatore_va": 1,
+      "portata_q": null,
+      "gittata_q": 50,
+      "munizioni": {
+        "capacita": 4,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 4,
+      "pi": 7,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 5500,
+      "proprieta": [
+        {
+          "nome": "Danno calibrato",
+          "testo": "Per SA30 e SA50F, i bonus ordinari al danno di Classi, Talenti e Manovre non modificano il danno del dardo. Il Magistrale si applica normalmente; sono ammessi modificatori specifici della munizione. Tiro Mirato concede il bonus al VA ma non il bonus ordinario al danno. L’effetto del contenuto del dardo si applica soltanto se almeno 1 danno supera l’Armatura. Il lanciatore determina danno e gittata, il carico del dardo determina l’effetto aggiuntivo (§7.8)."
+        }
+      ]
+    },
+    {
+      "id": "mg40",
+      "nome": "MG40",
+      "tipo": "arma_distanza",
+      "catalogo": "Bauhaus",
+      "famiglia": "Armi pesanti",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi pesanti",
+      "specializzazione": "specializzazione-mitragliatori",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d8+3"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 450,
+      "munizioni": {
+        "capacita": 300,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 9,
+      "mov": -1,
+      "modalita": [
+        "RM",
+        "RL",
+        "FS"
+      ],
+      "for_richiesta": 6,
+      "pi": 9,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 25000,
+      "proprieta": []
+    },
+    {
+      "id": "mg80",
+      "nome": "MG80",
+      "tipo": "arma_distanza",
+      "catalogo": "Bauhaus",
+      "famiglia": "Armi pesanti",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi pesanti",
+      "specializzazione": "specializzazione-mitragliatori",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d10+4"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 650,
+      "munizioni": {
+        "capacita": 750,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 8,
+      "mov": -2,
+      "modalita": [
+        "RM",
+        "RL",
+        "FS"
+      ],
+      "for_richiesta": 7,
+      "pi": 9,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "MR",
+      "costo": 48000,
+      "proprieta": []
+    },
+    {
+      "id": "arg17",
+      "nome": "ARG17",
+      "tipo": "arma_distanza",
+      "catalogo": "Bauhaus",
+      "famiglia": "Armi pesanti",
+      "nomi_alternativi": [],
+      "note_manuale": "ARG17. Munizione di riferimento: Razzo ARG17. Nessuna Raffica Breve.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi pesanti",
+      "specializzazione": "specializzazione-lanciarazzi",
+      "mani": 2,
+      "danno": null,
+      "danno_da_munizione": true,
+      "ac": "munizione",
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 150,
+      "munizioni": {
+        "capacita": 10,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": "Razzo ARG17"
+      },
+      "inc": 8,
+      "mov": -1,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 7,
+      "pi": 9,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "MR",
+      "costo": 36000,
+      "proprieta": []
+    },
+    {
+      "id": "bolter-09",
+      "nome": "Bolter 09",
+      "tipo": "arma_distanza",
+      "catalogo": "Capitol",
+      "famiglia": "Revolver",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 60,
+      "munizioni": {
+        "capacita": 10,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 3,
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1450,
+      "proprieta": []
+    },
+    {
+      "id": "enforcer",
+      "nome": "Enforcer",
+      "tipo": "arma_distanza",
+      "catalogo": "Capitol",
+      "famiglia": "Revolver",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+1",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 15,
+      "munizioni": {
+        "capacita": 6,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 2,
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1200,
+      "proprieta": []
+    },
+    {
+      "id": "jemson-45",
+      "nome": "Jemson 45",
+      "tipo": "arma_distanza",
+      "catalogo": "Capitol",
+      "famiglia": "Revolver",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+2",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 15,
+      "munizioni": {
+        "capacita": 6,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 3,
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1600,
+      "proprieta": []
+    },
+    {
+      "id": "bolter-10",
+      "nome": "Bolter 10",
+      "tipo": "arma_distanza",
+      "catalogo": "Capitol",
+      "famiglia": "Pistole semiautomatiche e automatiche",
+      "nomi_alternativi": [],
+      "note_manuale": "Bolter 10. Pistola semiautomatica economica di larga produzione, con caricatore da quindici colpi e gittata 15 Q. Non possiede proprietà aggiuntive. La Bolter 13 porta il caricatore a venti colpi e INC a 6, aggiungendo Raffica Breve.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 15,
+      "munizioni": {
+        "capacita": 15,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 5,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 3,
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1000,
+      "proprieta": []
+    },
+    {
+      "id": "bolter-13",
+      "nome": "Bolter 13",
+      "tipo": "arma_distanza",
+      "catalogo": "Capitol",
+      "famiglia": "Pistole semiautomatiche e automatiche",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 15,
+      "munizioni": {
+        "capacita": 20,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "TR"
+      ],
+      "for_richiesta": 3,
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1300,
+      "proprieta": []
+    },
+    {
+      "id": "bolter-20",
+      "nome": "Bolter 20",
+      "tipo": "arma_distanza",
+      "catalogo": "Capitol",
+      "famiglia": "Pistole semiautomatiche e automatiche",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+1",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": -1,
+      "portata_q": null,
+      "gittata_q": 15,
+      "munizioni": {
+        "capacita": 25,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 4,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "TR"
+      ],
+      "for_richiesta": 4,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 3600,
+      "proprieta": []
+    },
+    {
+      "id": "ironfist-15",
+      "nome": "Ironfist 15",
+      "tipo": "arma_distanza",
+      "catalogo": "Capitol",
+      "famiglia": "Pistole semiautomatiche e automatiche",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 25,
+      "munizioni": {
+        "capacita": 30,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 4,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "TR"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 5100,
+      "proprieta": []
+    },
+    {
+      "id": "lanciagranate-bolter-20",
+      "nome": "Lanciagranate Bolter 20",
+      "tipo": "arma_distanza",
+      "catalogo": "Capitol",
+      "famiglia": "Lanciagranate integrato",
+      "nomi_alternativi": [],
+      "note_manuale": "Lanciagranate Bolter 20. Munizione di riferimento: Granata standard a frammentazione.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-lanciagranate",
+      "mani": 1,
+      "danno": null,
+      "danno_da_munizione": true,
+      "ac": "munizione",
+      "modificatore_va": -1,
+      "portata_q": null,
+      "gittata_q": 25,
+      "munizioni": {
+        "capacita": 1,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": "Granata standard a frammentazione"
+      },
+      "inc": 4,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 4,
+      "pi": null,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": null,
+      "costo": null,
+      "proprieta": [],
+      "modulo_di": "armi_distanza_corporative:bolter-20"
+    },
+    {
+      "id": "lanciagranate-ironfist-15",
+      "nome": "Lanciagranate Ironfist 15",
+      "tipo": "arma_distanza",
+      "catalogo": "Capitol",
+      "famiglia": "Lanciagranate integrato",
+      "nomi_alternativi": [],
+      "note_manuale": "Lanciagranate Ironfist 15. Munizione di riferimento: Granata standard a frammentazione.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-lanciagranate",
+      "mani": 2,
+      "danno": null,
+      "danno_da_munizione": true,
+      "ac": "munizione",
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 30,
+      "munizioni": {
+        "capacita": 4,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": "Granata standard a frammentazione"
+      },
+      "inc": 4,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 5,
+      "pi": null,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": null,
+      "costo": null,
+      "proprieta": [],
+      "modulo_di": "armi_distanza_corporative:ironfist-15"
+    },
+    {
+      "id": "lanciagranate-car24",
+      "nome": "Lanciagranate CAR24",
+      "tipo": "arma_distanza",
+      "catalogo": "Capitol",
+      "famiglia": "Lanciagranate integrato",
+      "nomi_alternativi": [],
+      "note_manuale": "Lanciagranate CAR24. Munizione di riferimento: Granata standard a frammentazione.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-lanciagranate",
+      "mani": 2,
+      "danno": null,
+      "danno_da_munizione": true,
+      "ac": "munizione",
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 30,
+      "munizioni": {
+        "capacita": 1,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": "Granata standard a frammentazione"
+      },
+      "inc": 5,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 4,
+      "pi": null,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": null,
+      "costo": null,
+      "proprieta": [],
+      "modulo_di": "armi_distanza_corporative:car24"
+    },
+    {
+      "id": "lanciagranate-m50",
+      "nome": "Lanciagranate M50",
+      "tipo": "arma_distanza",
+      "catalogo": "Capitol",
+      "famiglia": "Lanciagranate integrato",
+      "nomi_alternativi": [],
+      "note_manuale": "Lanciagranate M50. Munizione di riferimento: Granata standard a frammentazione.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-lanciagranate",
+      "mani": 2,
+      "danno": null,
+      "danno_da_munizione": true,
+      "ac": "munizione",
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 70,
+      "munizioni": {
+        "capacita": 1,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": "Granata standard a frammentazione"
+      },
+      "inc": 3,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 5,
+      "pi": null,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": null,
+      "costo": null,
+      "proprieta": [],
+      "modulo_di": "armi_distanza_corporative:m50"
+    },
+    {
+      "id": "m310",
+      "nome": "M310",
+      "tipo": "arma_distanza",
+      "catalogo": "Capitol",
+      "famiglia": "Fucili a pompa e doppiette",
+      "nomi_alternativi": [],
+      "note_manuale": "M310. Proprietà: Sbilanciante.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-a-pompa-e-doppiette",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6"
+      },
+      "ac": 2,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 20,
+      "munizioni": {
+        "capacita": 20,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 3,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1350,
+      "proprieta": [
+        {
+          "nome": "Sbilanciante",
+          "testo": "Dopo due colpi penetranti dello stesso attacco: Prova di Forza o Destrezza; fallimento A Terra. Prova immediata; A Terra fino a quando si rialza (Giocatore §5.24)."
+        }
+      ]
+    },
+    {
+      "id": "m510",
+      "nome": "M510",
+      "tipo": "arma_distanza",
+      "catalogo": "Capitol",
+      "famiglia": "Fucili a pompa e doppiette",
+      "nomi_alternativi": [],
+      "note_manuale": "M510. Proprietà: Sbilanciante.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-a-pompa-e-doppiette",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6"
+      },
+      "ac": 2,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 15,
+      "munizioni": {
+        "capacita": 6,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 5,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 4,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1000,
+      "proprieta": [
+        {
+          "nome": "Sbilanciante",
+          "testo": "Dopo due colpi penetranti dello stesso attacco: Prova di Forza o Destrezza; fallimento A Terra. Prova immediata; A Terra fino a quando si rialza (Giocatore §5.24)."
+        }
+      ]
+    },
+    {
+      "id": "m516s",
+      "nome": "M516S",
+      "tipo": "arma_distanza",
+      "catalogo": "Capitol",
+      "famiglia": "Fucili a pompa e doppiette",
+      "nomi_alternativi": [],
+      "note_manuale": "M516S. Proprietà: Sbilanciante.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-a-pompa-e-doppiette",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6"
+      },
+      "ac": 2,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 15,
+      "munizioni": {
+        "capacita": 6,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 4,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1100,
+      "proprieta": [
+        {
+          "nome": "Sbilanciante",
+          "testo": "Dopo due colpi penetranti dello stesso attacco: Prova di Forza o Destrezza; fallimento A Terra. Prova immediata; A Terra fino a quando si rialza (Giocatore §5.24)."
+        }
+      ]
+    },
+    {
+      "id": "m516d",
+      "nome": "M516D",
+      "tipo": "arma_distanza",
+      "catalogo": "Capitol",
+      "famiglia": "Fucili a pompa e doppiette",
+      "nomi_alternativi": [],
+      "note_manuale": "M516D. Proprietà: Sbilanciante.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-a-pompa-e-doppiette",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "2d4"
+      },
+      "ac": 2,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 10,
+      "munizioni": {
+        "capacita": 6,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 3,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1200,
+      "proprieta": [
+        {
+          "nome": "Sbilanciante",
+          "testo": "Dopo due colpi penetranti dello stesso attacco: Prova di Forza o Destrezza; fallimento A Terra. Prova immediata; A Terra fino a quando si rialza (Giocatore §5.24)."
+        }
+      ]
+    },
+    {
+      "id": "m410",
+      "nome": "M410",
+      "tipo": "arma_distanza",
+      "catalogo": "Capitol",
+      "famiglia": "Fucili a pompa e doppiette",
+      "nomi_alternativi": [],
+      "note_manuale": "M410. Proprietà: Sbilanciante.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-a-pompa-e-doppiette",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+2"
+      },
+      "ac": 2,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 7,
+      "munizioni": {
+        "capacita": 2,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 5,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR",
+        "DC"
+      ],
+      "for_richiesta": 4,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1000,
+      "proprieta": [
+        {
+          "nome": "Sbilanciante",
+          "testo": "Dopo due colpi penetranti dello stesso attacco: Prova di Forza o Destrezza; fallimento A Terra. Prova immediata; A Terra fino a quando si rialza (Giocatore §5.24)."
+        }
+      ]
+    },
+    {
+      "id": "car24",
+      "nome": "CAR24",
+      "tipo": "arma_distanza",
+      "catalogo": "Capitol",
+      "famiglia": "Carabine e fucili d’assalto",
+      "nomi_alternativi": [],
+      "note_manuale": "CAR24. Carabina automatica.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-carabine",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+1"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 60,
+      "munizioni": {
+        "capacita": 20,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 5,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "TR"
+      ],
+      "for_richiesta": 4,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 4500,
+      "proprieta": []
+    },
+    {
+      "id": "m50",
+      "nome": "M50",
+      "tipo": "arma_distanza",
+      "catalogo": "Capitol",
+      "famiglia": "Carabine e fucili d’assalto",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": null,
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+2"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 100,
+      "munizioni": {
+        "capacita": 30,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 4,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "RL",
+        "TR",
+        "FS"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 5500,
+      "proprieta": []
+    },
+    {
+      "id": "sr30",
+      "nome": "SR30",
+      "tipo": "arma_distanza",
+      "catalogo": "Capitol",
+      "famiglia": "Carabine e fucili d’assalto",
+      "nomi_alternativi": [],
+      "note_manuale": "SR30. Carabina priva di Raffiche Breve, Media e Lunga.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-carabine",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+2"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 120,
+      "munizioni": {
+        "capacita": 30,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 5,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 2800,
+      "proprieta": []
+    },
+    {
+      "id": "sr50",
+      "nome": "SR50",
+      "tipo": "arma_distanza",
+      "catalogo": "Capitol",
+      "famiglia": "Fucili di precisione",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-di-precisione",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+4"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 1300,
+      "munizioni": {
+        "capacita": 15,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 4,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "TR"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 7000,
+      "proprieta": []
+    },
+    {
+      "id": "m606",
+      "nome": "M606",
+      "tipo": "arma_distanza",
+      "catalogo": "Capitol",
+      "famiglia": "Armi pesanti",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi pesanti",
+      "specializzazione": "specializzazione-mitragliatori",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d8+3"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 600,
+      "munizioni": {
+        "capacita": 400,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": -1,
+      "modalita": [
+        "RM",
+        "RL",
+        "FS"
+      ],
+      "for_richiesta": 6,
+      "pi": 8,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 19000,
+      "proprieta": []
+    },
+    {
+      "id": "improved-m89",
+      "nome": "Improved M89",
+      "tipo": "arma_distanza",
+      "catalogo": "Capitol",
+      "famiglia": "Armi pesanti",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi pesanti",
+      "specializzazione": "specializzazione-mitragliatori",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d10+5"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 650,
+      "munizioni": {
+        "capacita": 1000,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 3,
+      "mov": -2,
+      "modalita": [
+        "RM",
+        "RL",
+        "FS"
+      ],
+      "for_richiesta": 8,
+      "pi": 8,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 42000,
+      "proprieta": []
+    },
+    {
+      "id": "lanciarazzi-deuce",
+      "nome": "Lanciarazzi Deuce",
+      "tipo": "arma_distanza",
+      "catalogo": "Capitol",
+      "famiglia": "Armi pesanti",
+      "nomi_alternativi": [],
+      "note_manuale": "Lanciarazzi Deuce. Munizione di riferimento: Razzo standard.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi pesanti",
+      "specializzazione": "specializzazione-lanciarazzi",
+      "mani": 2,
+      "danno": null,
+      "danno_da_munizione": true,
+      "ac": "munizione",
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 200,
+      "munizioni": {
+        "capacita": 6,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": "Razzo standard"
+      },
+      "inc": 3,
+      "mov": -2,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 7,
+      "pi": 8,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 20000,
+      "proprieta": []
+    },
+    {
+      "id": "p500",
+      "nome": "P500",
+      "tipo": "arma_distanza",
+      "catalogo": "Cybertronic",
+      "famiglia": "Armi leggere",
+      "nomi_alternativi": [],
+      "note_manuale": "P500. Pistola semiautomatica convenzionale con gittata 30 Q e INC 7. Non possiede SIN: funziona senza innesti e non riceve bonus da un’interfaccia neurale del tiratore. La P1000 offre +1 VA nativo, gittata 60 Q, capacità trenta colpi, Raffica Breve e Media, Qualità Non comune e SIN 1 con un innesto compatibile.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 30,
+      "munizioni": {
+        "capacita": 12,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 3,
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 1500,
+      "proprieta": []
+    },
+    {
+      "id": "p1000",
+      "nome": "P1000",
+      "tipo": "arma_distanza",
+      "catalogo": "Cybertronic",
+      "famiglia": "Armi leggere",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 1,
+      "portata_q": null,
+      "gittata_q": 60,
+      "munizioni": {
+        "capacita": 30,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "TR"
+      ],
+      "for_richiesta": 3,
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 4700,
+      "proprieta": []
+    },
+    {
+      "id": "sa-sg2001",
+      "nome": "SA SG2001",
+      "tipo": "arma_distanza",
+      "catalogo": "Cybertronic",
+      "famiglia": "Fucili a pompa",
+      "nomi_alternativi": [],
+      "note_manuale": "SA SG2001. Proprietà: Sbilanciante. Eccezione: può eseguire Tiro Rapido.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-a-pompa-e-doppiette",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "2d4"
+      },
+      "ac": 2,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 30,
+      "munizioni": {
+        "capacita": 10,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 9,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 3150,
+      "proprieta": [
+        {
+          "nome": "Sbilanciante",
+          "testo": "Dopo due colpi penetranti dello stesso attacco: Prova di Forza o Destrezza; fallimento A Terra. Prova immediata; A Terra fino a quando si rialza (Giocatore §5.24)."
+        }
+      ]
+    },
+    {
+      "id": "caw2000",
+      "nome": "CAW2000",
+      "tipo": "arma_distanza",
+      "catalogo": "Cybertronic",
+      "famiglia": "Carabine e fucili d’assalto",
+      "nomi_alternativi": [],
+      "note_manuale": "CAW2000. Carabina automatica.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-carabine",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+1"
+      },
+      "ac": 1,
+      "modificatore_va": 1,
+      "portata_q": null,
+      "gittata_q": 80,
+      "munizioni": {
+        "capacita": 30,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 8,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "TR"
+      ],
+      "for_richiesta": 4,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 8000,
+      "proprieta": []
+    },
+    {
+      "id": "ar3000",
+      "nome": "AR3000",
+      "tipo": "arma_distanza",
+      "catalogo": "Cybertronic",
+      "famiglia": "Carabine e fucili d’assalto",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": null,
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+2"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 150,
+      "munizioni": {
+        "capacita": 50,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "RL",
+        "TR",
+        "FS"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 10500,
+      "proprieta": []
+    },
+    {
+      "id": "lanciagranate-caw2000",
+      "nome": "Lanciagranate CAW2000",
+      "tipo": "arma_distanza",
+      "catalogo": "Cybertronic",
+      "famiglia": "Lanciagranate integrato",
+      "nomi_alternativi": [],
+      "note_manuale": "Lanciagranate CAW2000. Munizione di riferimento: Granata standard a frammentazione.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-lanciagranate",
+      "mani": 2,
+      "danno": null,
+      "danno_da_munizione": true,
+      "ac": "munizione",
+      "modificatore_va": 1,
+      "portata_q": null,
+      "gittata_q": 40,
+      "munizioni": {
+        "capacita": 2,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": "Granata standard a frammentazione"
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 4,
+      "pi": null,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": null,
+      "costo": null,
+      "proprieta": [],
+      "modulo_di": "armi_distanza_corporative:caw2000"
+    },
+    {
+      "id": "lanciagranate-ar3000",
+      "nome": "Lanciagranate AR3000",
+      "tipo": "arma_distanza",
+      "catalogo": "Cybertronic",
+      "famiglia": "Lanciagranate integrato",
+      "nomi_alternativi": [],
+      "note_manuale": "Lanciagranate AR3000. Munizione di riferimento: Granata standard a frammentazione.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-lanciagranate",
+      "mani": 2,
+      "danno": null,
+      "danno_da_munizione": true,
+      "ac": "munizione",
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 70,
+      "munizioni": {
+        "capacita": 4,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": "Granata standard a frammentazione"
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 5,
+      "pi": null,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": null,
+      "costo": null,
+      "proprieta": [],
+      "modulo_di": "armi_distanza_corporative:ar3000"
+    },
+    {
+      "id": "sr3500",
+      "nome": "SR3500",
+      "tipo": "arma_distanza",
+      "catalogo": "Cybertronic",
+      "famiglia": "Fucili di precisione",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-di-precisione",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+3"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 1500,
+      "munizioni": {
+        "capacita": 20,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 8,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "TR"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "MR",
+      "costo": 10000,
+      "proprieta": []
+    },
+    {
+      "id": "tsw4000",
+      "nome": "TSW4000",
+      "tipo": "arma_distanza",
+      "catalogo": "Cybertronic",
+      "famiglia": "Armi pesanti",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi pesanti",
+      "specializzazione": "specializzazione-mitragliatori",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d8+3"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 800,
+      "munizioni": {
+        "capacita": 750,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 8,
+      "mov": -1,
+      "modalita": [
+        "RM",
+        "RL",
+        "FS"
+      ],
+      "for_richiesta": 6,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "MR",
+      "costo": 32500,
+      "proprieta": []
+    },
+    {
+      "id": "ssw4200p",
+      "nome": "SSW4200P",
+      "tipo": "arma_distanza",
+      "catalogo": "Cybertronic",
+      "famiglia": "Armi pesanti",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi pesanti",
+      "specializzazione": "specializzazione-mitragliatori",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d10+4"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 1000,
+      "munizioni": {
+        "capacita": 1000,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 8,
+      "mov": -2,
+      "modalita": [
+        "RM",
+        "RL",
+        "FS"
+      ],
+      "for_richiesta": 7,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "MR",
+      "costo": 60000,
+      "proprieta": []
+    },
+    {
+      "id": "lanciarazzi-ssw5500",
+      "nome": "Lanciarazzi SSW5500",
+      "tipo": "arma_distanza",
+      "catalogo": "Cybertronic",
+      "famiglia": "Armi pesanti",
+      "nomi_alternativi": [],
+      "note_manuale": "Lanciarazzi SSW5500. Munizione di riferimento: Razzo SSW5500. Nessuna Raffica Breve.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi pesanti",
+      "specializzazione": "specializzazione-lanciarazzi",
+      "mani": 2,
+      "danno": null,
+      "danno_da_munizione": true,
+      "ac": "munizione",
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 160,
+      "munizioni": {
+        "capacita": 10,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": "Razzo SSW5500"
+      },
+      "inc": 6,
+      "mov": -1,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 7,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "MR",
+      "costo": 36000,
+      "proprieta": []
+    },
+    {
+      "id": "eliminator",
+      "nome": "Eliminator",
+      "tipo": "arma_distanza",
+      "catalogo": "Fratellanza",
+      "famiglia": "Armi leggere e carabina Nemesis",
+      "nomi_alternativi": [],
+      "note_manuale": "Eliminator. Silenziatore incorporato: lo sparo non è percepibile uditivamente. VA −2 e danno 1d6+1 comprendono già le penalità del dispositivo; non si applicano una seconda volta. Il costo di 6.500 comprende il Silenziatore. Resta Purificatrice 1 separata dal danno tabellare. I lanciagranate Nemesis 221 e Volcano usano granate standard a frammentazione, Fumogene ed Elettroshock (§7.20.3). I lanciafiamme Nemesis 214, Eruptor e Purifier producono un getto diretto contro un solo bersaglio e seguono il Lanciafiamme commerciale. Il modulo della Nemesis 214 è utilizzabile a una mano come eccezione esplicita. Combustibile e munizioni si acquistano separatamente. Nemesis 21 è una carabina a due mani. Il +1 VA dei modelli Nemesis che lo riportano è già incluso nel profilo e non si aggiunge nuovamente come Precisa; la Nemesis 100 ha VA 0. Justifier non impone penalità MOV; Purifier impone MOV −3 anche quando usa il modulo integrato.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+1",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": -2,
+      "portata_q": null,
+      "gittata_q": 70,
+      "munizioni": {
+        "capacita": 15,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "TR"
+      ],
+      "for_richiesta": 3,
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "MR",
+      "costo": 6500,
+      "proprieta": [
+        {
+          "nome": "Purificatrice 1",
+          "testo": "Purificatrice 1. Aggiunge 1 danno contro creature o servitori identificati come appartenenti all’Oscura Simmetria nella propria scheda. Il bonus si applica a ciascuna applicazione immediata di danno, prima dei moltiplicatori, delle Difese e dell’Armatura; non aumenta i danni periodici di Fuoco. È passivo, non consuma PM, non richiede Sintonizzazione e non rende da solo Magico il danno. La semplice presenza di Corruzione non rende un bersaglio valido. Il bonus è separato dal danno riportato in tabella (§7.1.3)."
+        },
+        {
+          "nome": "Silenziatore incorporato",
+          "testo": "Lo sparo non è percepibile uditivamente. VA −2 e danno 1d6+1 comprendono già le penalità del dispositivo; non si applicano una seconda volta (§7.8, Eliminator)."
+        }
+      ]
+    },
+    {
+      "id": "nemesis-100",
+      "nome": "Nemesis 100",
+      "tipo": "arma_distanza",
+      "catalogo": "Fratellanza",
+      "famiglia": "Armi leggere e carabina Nemesis",
+      "nomi_alternativi": [],
+      "note_manuale": "Nemesis 100. Pistola di servizio con caricatore da otto colpi, gittata 15 Q e nessun bonus alla precisione. Possiede Purificatrice 1 (§7.1.3): il +1 danno contro i bersagli validi dell’Oscura Simmetria è separato dal danno in tabella, non richiede PM o Sintonizzazione e non rende Magico il danno. La sola Corruzione non rende valido un bersaglio. La Nemesis 210 offre +1 VA, gittata 20 Q, capacità venti colpi, INC 7, Qualità Non comune e Raffica Breve.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 15,
+      "munizioni": {
+        "capacita": 8,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 5,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 3,
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 1500,
+      "proprieta": [
+        {
+          "nome": "Purificatrice 1",
+          "testo": "Purificatrice 1. Aggiunge 1 danno contro creature o servitori identificati come appartenenti all’Oscura Simmetria nella propria scheda. Il bonus si applica a ciascuna applicazione immediata di danno, prima dei moltiplicatori, delle Difese e dell’Armatura; non aumenta i danni periodici di Fuoco. È passivo, non consuma PM, non richiede Sintonizzazione e non rende da solo Magico il danno. La semplice presenza di Corruzione non rende un bersaglio valido. Il bonus è separato dal danno riportato in tabella (§7.1.3)."
+        }
+      ]
+    },
+    {
+      "id": "nemesis-210",
+      "nome": "Nemesis 210",
+      "tipo": "arma_distanza",
+      "catalogo": "Fratellanza",
+      "famiglia": "Armi leggere e carabina Nemesis",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 1,
+      "portata_q": null,
+      "gittata_q": 20,
+      "munizioni": {
+        "capacita": 20,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "TR"
+      ],
+      "for_richiesta": 3,
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 3800,
+      "proprieta": [
+        {
+          "nome": "Purificatrice 1",
+          "testo": "Purificatrice 1. Aggiunge 1 danno contro creature o servitori identificati come appartenenti all’Oscura Simmetria nella propria scheda. Il bonus si applica a ciascuna applicazione immediata di danno, prima dei moltiplicatori, delle Difese e dell’Armatura; non aumenta i danni periodici di Fuoco. È passivo, non consuma PM, non richiede Sintonizzazione e non rende da solo Magico il danno. La semplice presenza di Corruzione non rende un bersaglio valido. Il bonus è separato dal danno riportato in tabella (§7.1.3)."
+        }
+      ]
+    },
+    {
+      "id": "nemesis-214",
+      "nome": "Nemesis 214",
+      "tipo": "arma_distanza",
+      "catalogo": "Fratellanza",
+      "famiglia": "Armi leggere e carabina Nemesis",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 1,
+      "portata_q": null,
+      "gittata_q": 40,
+      "munizioni": {
+        "capacita": 20,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "TR"
+      ],
+      "for_richiesta": 4,
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 9000,
+      "proprieta": [
+        {
+          "nome": "Purificatrice 1",
+          "testo": "Purificatrice 1. Aggiunge 1 danno contro creature o servitori identificati come appartenenti all’Oscura Simmetria nella propria scheda. Il bonus si applica a ciascuna applicazione immediata di danno, prima dei moltiplicatori, delle Difese e dell’Armatura; non aumenta i danni periodici di Fuoco. È passivo, non consuma PM, non richiede Sintonizzazione e non rende da solo Magico il danno. La semplice presenza di Corruzione non rende un bersaglio valido. Il bonus è separato dal danno riportato in tabella (§7.1.3)."
+        }
+      ]
+    },
+    {
+      "id": "nemesis-221",
+      "nome": "Nemesis 221",
+      "tipo": "arma_distanza",
+      "catalogo": "Fratellanza",
+      "famiglia": "Armi leggere e carabina Nemesis",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 1,
+      "portata_q": null,
+      "gittata_q": 40,
+      "munizioni": {
+        "capacita": 20,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "TR"
+      ],
+      "for_richiesta": 4,
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 7500,
+      "proprieta": [
+        {
+          "nome": "Purificatrice 1",
+          "testo": "Purificatrice 1. Aggiunge 1 danno contro creature o servitori identificati come appartenenti all’Oscura Simmetria nella propria scheda. Il bonus si applica a ciascuna applicazione immediata di danno, prima dei moltiplicatori, delle Difese e dell’Armatura; non aumenta i danni periodici di Fuoco. È passivo, non consuma PM, non richiede Sintonizzazione e non rende da solo Magico il danno. La semplice presenza di Corruzione non rende un bersaglio valido. Il bonus è separato dal danno riportato in tabella (§7.1.3)."
+        }
+      ]
+    },
+    {
+      "id": "nemesis-21",
+      "nome": "Nemesis 21",
+      "tipo": "arma_distanza",
+      "catalogo": "Fratellanza",
+      "famiglia": "Armi leggere e carabina Nemesis",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-carabine",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+1"
+      },
+      "ac": 1,
+      "modificatore_va": 1,
+      "portata_q": null,
+      "gittata_q": 60,
+      "munizioni": {
+        "capacita": 20,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "TR"
+      ],
+      "for_richiesta": 4,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 5000,
+      "proprieta": [
+        {
+          "nome": "Purificatrice 1",
+          "testo": "Purificatrice 1. Aggiunge 1 danno contro creature o servitori identificati come appartenenti all’Oscura Simmetria nella propria scheda. Il bonus si applica a ciascuna applicazione immediata di danno, prima dei moltiplicatori, delle Difese e dell’Armatura; non aumenta i danni periodici di Fuoco. È passivo, non consuma PM, non richiede Sintonizzazione e non rende da solo Magico il danno. La semplice presenza di Corruzione non rende un bersaglio valido. Il bonus è separato dal danno riportato in tabella (§7.1.3)."
+        }
+      ]
+    },
+    {
+      "id": "volcano",
+      "nome": "Volcano",
+      "tipo": "arma_distanza",
+      "catalogo": "Fratellanza",
+      "famiglia": "Fucili e armi pesanti",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": null,
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+2"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 150,
+      "munizioni": {
+        "capacita": 30,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "RL",
+        "TR",
+        "FS"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 12000,
+      "proprieta": [
+        {
+          "nome": "Purificatrice 1",
+          "testo": "Purificatrice 1. Aggiunge 1 danno contro creature o servitori identificati come appartenenti all’Oscura Simmetria nella propria scheda. Il bonus si applica a ciascuna applicazione immediata di danno, prima dei moltiplicatori, delle Difese e dell’Armatura; non aumenta i danni periodici di Fuoco. È passivo, non consuma PM, non richiede Sintonizzazione e non rende da solo Magico il danno. La semplice presenza di Corruzione non rende un bersaglio valido. Il bonus è separato dal danno riportato in tabella (§7.1.3)."
+        }
+      ]
+    },
+    {
+      "id": "eruptor",
+      "nome": "Eruptor",
+      "tipo": "arma_distanza",
+      "catalogo": "Fratellanza",
+      "famiglia": "Fucili e armi pesanti",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": null,
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+3"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 600,
+      "munizioni": {
+        "capacita": 20,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 8,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "TR"
+      ],
+      "for_richiesta": 6,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 16500,
+      "proprieta": [
+        {
+          "nome": "Purificatrice 1",
+          "testo": "Purificatrice 1. Aggiunge 1 danno contro creature o servitori identificati come appartenenti all’Oscura Simmetria nella propria scheda. Il bonus si applica a ciascuna applicazione immediata di danno, prima dei moltiplicatori, delle Difese e dell’Armatura; non aumenta i danni periodici di Fuoco. È passivo, non consuma PM, non richiede Sintonizzazione e non rende da solo Magico il danno. La semplice presenza di Corruzione non rende un bersaglio valido. Il bonus è separato dal danno riportato in tabella (§7.1.3)."
+        }
+      ]
+    },
+    {
+      "id": "mefisto",
+      "nome": "Mefisto",
+      "tipo": "arma_distanza",
+      "catalogo": "Fratellanza",
+      "famiglia": "Fucili e armi pesanti",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": null,
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+4"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 1700,
+      "munizioni": {
+        "capacita": 20,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 8,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "TR"
+      ],
+      "for_richiesta": 6,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "MR",
+      "costo": 15500,
+      "proprieta": [
+        {
+          "nome": "Purificatrice 1",
+          "testo": "Purificatrice 1. Aggiunge 1 danno contro creature o servitori identificati come appartenenti all’Oscura Simmetria nella propria scheda. Il bonus si applica a ciascuna applicazione immediata di danno, prima dei moltiplicatori, delle Difese e dell’Armatura; non aumenta i danni periodici di Fuoco. È passivo, non consuma PM, non richiede Sintonizzazione e non rende da solo Magico il danno. La semplice presenza di Corruzione non rende un bersaglio valido. Il bonus è separato dal danno riportato in tabella (§7.1.3)."
+        }
+      ]
+    },
+    {
+      "id": "justifier",
+      "nome": "Justifier",
+      "tipo": "arma_distanza",
+      "catalogo": "Fratellanza",
+      "famiglia": "Fucili e armi pesanti",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi pesanti",
+      "specializzazione": null,
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d8+1"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 100,
+      "munizioni": {
+        "capacita": 400,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 8,
+      "mov": 0,
+      "modalita": [
+        "RM",
+        "RL",
+        "FS"
+      ],
+      "for_richiesta": 5,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 24000,
+      "proprieta": [
+        {
+          "nome": "Purificatrice 1",
+          "testo": "Purificatrice 1. Aggiunge 1 danno contro creature o servitori identificati come appartenenti all’Oscura Simmetria nella propria scheda. Il bonus si applica a ciascuna applicazione immediata di danno, prima dei moltiplicatori, delle Difese e dell’Armatura; non aumenta i danni periodici di Fuoco. È passivo, non consuma PM, non richiede Sintonizzazione e non rende da solo Magico il danno. La semplice presenza di Corruzione non rende un bersaglio valido. Il bonus è separato dal danno riportato in tabella (§7.1.3)."
+        }
+      ]
+    },
+    {
+      "id": "purifier",
+      "nome": "Purifier",
+      "tipo": "arma_distanza",
+      "catalogo": "Fratellanza",
+      "famiglia": "Fucili e armi pesanti",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi pesanti",
+      "specializzazione": null,
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d10+4"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 400,
+      "munizioni": {
+        "capacita": 750,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 7,
+      "mov": -3,
+      "modalita": [
+        "RM",
+        "RL",
+        "FS"
+      ],
+      "for_richiesta": 7,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "MR",
+      "costo": 62000,
+      "proprieta": [
+        {
+          "nome": "Purificatrice 1",
+          "testo": "Purificatrice 1. Aggiunge 1 danno contro creature o servitori identificati come appartenenti all’Oscura Simmetria nella propria scheda. Il bonus si applica a ciascuna applicazione immediata di danno, prima dei moltiplicatori, delle Difese e dell’Armatura; non aumenta i danni periodici di Fuoco. È passivo, non consuma PM, non richiede Sintonizzazione e non rende da solo Magico il danno. La semplice presenza di Corruzione non rende un bersaglio valido. Il bonus è separato dal danno riportato in tabella (§7.1.3)."
+        }
+      ]
+    },
+    {
+      "id": "lanciafiamme-nemesis-214",
+      "nome": "Lanciafiamme Nemesis 214",
+      "tipo": "arma_distanza",
+      "catalogo": "Fratellanza",
+      "famiglia": "Moduli integrati della Fratellanza",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi pesanti",
+      "specializzazione": "specializzazione-lanciafiamme",
+      "mani": 1,
+      "danno": {
+        "una_mano": "2d4",
+        "due_mani": null
+      },
+      "ac": "1d3",
+      "modificatore_va": 1,
+      "portata_q": null,
+      "gittata_q": 8,
+      "munizioni": {
+        "capacita": 5,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 8,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 4,
+      "pi": null,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": null,
+      "costo": null,
+      "proprieta": [
+        {
+          "nome": "Purificatrice 1",
+          "testo": "Purificatrice 1. Aggiunge 1 danno contro creature o servitori identificati come appartenenti all’Oscura Simmetria nella propria scheda. Il bonus si applica a ciascuna applicazione immediata di danno, prima dei moltiplicatori, delle Difese e dell’Armatura; non aumenta i danni periodici di Fuoco. È passivo, non consuma PM, non richiede Sintonizzazione e non rende da solo Magico il danno. La semplice presenza di Corruzione non rende un bersaglio valido. Il bonus è separato dal danno riportato in tabella (§7.1.3)."
+        },
+        {
+          "nome": "Fuoco",
+          "testo": "La Contromisura è Ignifugo X. Dopo almeno 1 danno oltre l’Armatura e il superamento dell’eventuale Ignifugo, il bersaglio effettua una PS di Riflessi, salvo eccezione esplicita. Con successo evita lo Stato; con fallimento è Incendiato per 1+1d3 Round (Giocatore §5.24)."
+        }
+      ],
+      "modulo_di": "armi_distanza_corporative:nemesis-214"
+    },
+    {
+      "id": "lanciagranate-nemesis-221",
+      "nome": "Lanciagranate Nemesis 221",
+      "tipo": "arma_distanza",
+      "catalogo": "Fratellanza",
+      "famiglia": "Moduli integrati della Fratellanza",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-lanciagranate",
+      "mani": 1,
+      "danno": null,
+      "danno_da_munizione": true,
+      "ac": "munizione",
+      "modificatore_va": 1,
+      "portata_q": null,
+      "gittata_q": 30,
+      "munizioni": {
+        "capacita": 1,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": "Granata standard a frammentazione"
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 4,
+      "pi": null,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": null,
+      "costo": null,
+      "proprieta": [
+        {
+          "nome": "Purificatrice 1",
+          "testo": "Purificatrice 1. Aggiunge 1 danno contro creature o servitori identificati come appartenenti all’Oscura Simmetria nella propria scheda. Il bonus si applica a ciascuna applicazione immediata di danno, prima dei moltiplicatori, delle Difese e dell’Armatura; non aumenta i danni periodici di Fuoco. È passivo, non consuma PM, non richiede Sintonizzazione e non rende da solo Magico il danno. La semplice presenza di Corruzione non rende un bersaglio valido. Il bonus è separato dal danno riportato in tabella (§7.1.3)."
+        }
+      ],
+      "modulo_di": "armi_distanza_corporative:nemesis-221"
+    },
+    {
+      "id": "lanciagranate-volcano",
+      "nome": "Lanciagranate Volcano",
+      "tipo": "arma_distanza",
+      "catalogo": "Fratellanza",
+      "famiglia": "Moduli integrati della Fratellanza",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-lanciagranate",
+      "mani": 2,
+      "danno": null,
+      "danno_da_munizione": true,
+      "ac": "munizione",
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 50,
+      "munizioni": {
+        "capacita": 1,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": "Granata standard a frammentazione"
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 5,
+      "pi": null,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": null,
+      "costo": null,
+      "proprieta": [
+        {
+          "nome": "Purificatrice 1",
+          "testo": "Purificatrice 1. Aggiunge 1 danno contro creature o servitori identificati come appartenenti all’Oscura Simmetria nella propria scheda. Il bonus si applica a ciascuna applicazione immediata di danno, prima dei moltiplicatori, delle Difese e dell’Armatura; non aumenta i danni periodici di Fuoco. È passivo, non consuma PM, non richiede Sintonizzazione e non rende da solo Magico il danno. La semplice presenza di Corruzione non rende un bersaglio valido. Il bonus è separato dal danno riportato in tabella (§7.1.3)."
+        }
+      ],
+      "modulo_di": "armi_distanza_corporative:volcano"
+    },
+    {
+      "id": "lanciafiamme-eruptor",
+      "nome": "Lanciafiamme Eruptor",
+      "tipo": "arma_distanza",
+      "catalogo": "Fratellanza",
+      "famiglia": "Moduli integrati della Fratellanza",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi pesanti",
+      "specializzazione": "specializzazione-lanciafiamme",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d10"
+      },
+      "ac": "1d3",
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 12,
+      "munizioni": {
+        "capacita": 10,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 8,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 6,
+      "pi": null,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": null,
+      "costo": null,
+      "proprieta": [
+        {
+          "nome": "Purificatrice 1",
+          "testo": "Purificatrice 1. Aggiunge 1 danno contro creature o servitori identificati come appartenenti all’Oscura Simmetria nella propria scheda. Il bonus si applica a ciascuna applicazione immediata di danno, prima dei moltiplicatori, delle Difese e dell’Armatura; non aumenta i danni periodici di Fuoco. È passivo, non consuma PM, non richiede Sintonizzazione e non rende da solo Magico il danno. La semplice presenza di Corruzione non rende un bersaglio valido. Il bonus è separato dal danno riportato in tabella (§7.1.3)."
+        },
+        {
+          "nome": "Fuoco",
+          "testo": "La Contromisura è Ignifugo X. Dopo almeno 1 danno oltre l’Armatura e il superamento dell’eventuale Ignifugo, il bersaglio effettua una PS di Riflessi, salvo eccezione esplicita. Con successo evita lo Stato; con fallimento è Incendiato per 1+1d3 Round (Giocatore §5.24)."
+        }
+      ],
+      "modulo_di": "armi_distanza_corporative:eruptor"
+    },
+    {
+      "id": "lanciafiamme-purifier",
+      "nome": "Lanciafiamme Purifier",
+      "tipo": "arma_distanza",
+      "catalogo": "Fratellanza",
+      "famiglia": "Moduli integrati della Fratellanza",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi pesanti",
+      "specializzazione": "specializzazione-lanciafiamme",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d10+2"
+      },
+      "ac": "1d3",
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 20,
+      "munizioni": {
+        "capacita": 15,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 7,
+      "pi": null,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": null,
+      "costo": null,
+      "proprieta": [
+        {
+          "nome": "Purificatrice 1",
+          "testo": "Purificatrice 1. Aggiunge 1 danno contro creature o servitori identificati come appartenenti all’Oscura Simmetria nella propria scheda. Il bonus si applica a ciascuna applicazione immediata di danno, prima dei moltiplicatori, delle Difese e dell’Armatura; non aumenta i danni periodici di Fuoco. È passivo, non consuma PM, non richiede Sintonizzazione e non rende da solo Magico il danno. La semplice presenza di Corruzione non rende un bersaglio valido. Il bonus è separato dal danno riportato in tabella (§7.1.3)."
+        },
+        {
+          "nome": "Fuoco",
+          "testo": "La Contromisura è Ignifugo X. Dopo almeno 1 danno oltre l’Armatura e il superamento dell’eventuale Ignifugo, il bersaglio effettua una PS di Riflessi, salvo eccezione esplicita. Con successo evita lo Stato; con fallimento è Incendiato per 1+1d3 Round (Giocatore §5.24)."
+        }
+      ],
+      "modulo_di": "armi_distanza_corporative:purifier"
+    },
+    {
+      "id": "belliger",
+      "nome": "Belliger",
+      "tipo": "arma_distanza",
+      "catalogo": "Imperial",
+      "famiglia": "Armi leggere e medie",
+      "nomi_alternativi": [],
+      "note_manuale": "Belliger. Pistola compatta che privilegia la potenza del colpo: danno 1d6+1 e −1 VA sono già compresi nel profilo. Capacità dieci colpi, gittata 15 Q, requisito FOR 3. L’Aggressor mantiene danno e modificatore al tiro, ma offre capacità venticinque colpi, gittata 25 Q, Qualità Non comune e Raffica Breve; richiede FOR 4.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+1",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": -1,
+      "portata_q": null,
+      "gittata_q": 15,
+      "munizioni": {
+        "capacita": 10,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 4,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 3,
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1300,
+      "proprieta": []
+    },
+    {
+      "id": "aggressor",
+      "nome": "Aggressor",
+      "tipo": "arma_distanza",
+      "catalogo": "Imperial",
+      "famiglia": "Armi leggere e medie",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+1",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": -1,
+      "portata_q": null,
+      "gittata_q": 25,
+      "munizioni": {
+        "capacita": 25,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 4,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "TR"
+      ],
+      "for_richiesta": 4,
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 2200,
+      "proprieta": []
+    },
+    {
+      "id": "mandible",
+      "nome": "Mandible",
+      "tipo": "arma_distanza",
+      "catalogo": "Imperial",
+      "famiglia": "Armi leggere e medie",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": null,
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+2"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 80,
+      "munizioni": {
+        "capacita": 20,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 5,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 2600,
+      "proprieta": []
+    },
+    {
+      "id": "interceptor",
+      "nome": "Interceptor",
+      "tipo": "arma_distanza",
+      "catalogo": "Imperial",
+      "famiglia": "Armi leggere e medie",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": null,
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+2"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 50,
+      "munizioni": {
+        "capacita": 40,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 4,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "TR"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 6500,
+      "proprieta": []
+    },
+    {
+      "id": "invader",
+      "nome": "Invader",
+      "tipo": "arma_distanza",
+      "catalogo": "Imperial",
+      "famiglia": "Armi leggere e medie",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": null,
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+3"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 80,
+      "munizioni": {
+        "capacita": 40,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 5,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "RL",
+        "TR",
+        "FS"
+      ],
+      "for_richiesta": 6,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 12000,
+      "proprieta": []
+    },
+    {
+      "id": "assailant",
+      "nome": "Assailant",
+      "tipo": "arma_distanza",
+      "catalogo": "Imperial",
+      "famiglia": "Armi leggere e medie",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": null,
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+4"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 400,
+      "munizioni": {
+        "capacita": 15,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 3,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "TR"
+      ],
+      "for_richiesta": 6,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 6000,
+      "proprieta": []
+    },
+    {
+      "id": "destroyer",
+      "nome": "Destroyer",
+      "tipo": "arma_distanza",
+      "catalogo": "Imperial",
+      "famiglia": "Armi pesanti",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi pesanti",
+      "specializzazione": "specializzazione-mitragliatori",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d8+4"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 600,
+      "munizioni": {
+        "capacita": 500,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 5,
+      "mov": -2,
+      "modalita": [
+        "RM",
+        "RL",
+        "FS"
+      ],
+      "for_richiesta": 7,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 24000,
+      "proprieta": []
+    },
+    {
+      "id": "charger",
+      "nome": "Charger",
+      "tipo": "arma_distanza",
+      "catalogo": "Imperial",
+      "famiglia": "Armi pesanti",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi pesanti",
+      "specializzazione": "specializzazione-mitragliatori",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d10+6"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 450,
+      "munizioni": {
+        "capacita": 1000,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 4,
+      "mov": -3,
+      "modalita": [
+        "RM",
+        "RL",
+        "FS"
+      ],
+      "for_richiesta": 9,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "MR",
+      "costo": 55000,
+      "proprieta": []
+    },
+    {
+      "id": "lanciarazzi-southpaw",
+      "nome": "Lanciarazzi Southpaw",
+      "tipo": "arma_distanza",
+      "catalogo": "Imperial",
+      "famiglia": "Armi pesanti",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi pesanti",
+      "specializzazione": "specializzazione-lanciarazzi",
+      "mani": 2,
+      "danno": null,
+      "danno_da_munizione": true,
+      "ac": "munizione",
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 80,
+      "munizioni": {
+        "capacita": 20,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": "Razzo a carica maggiorata"
+      },
+      "inc": 5,
+      "mov": -3,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 8,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 32000,
+      "proprieta": []
+    },
+    {
+      "id": "lanciagranate-interceptor",
+      "nome": "Lanciagranate Interceptor",
+      "tipo": "arma_distanza",
+      "catalogo": "Imperial",
+      "famiglia": "Lanciagranate integrati Imperiali",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-lanciagranate",
+      "mani": 2,
+      "danno": null,
+      "danno_da_munizione": true,
+      "ac": "munizione",
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 40,
+      "munizioni": {
+        "capacita": 1,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": "Granata standard a frammentazione"
+      },
+      "inc": 3,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 5,
+      "pi": null,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": null,
+      "costo": null,
+      "proprieta": [],
+      "modulo_di": "armi_distanza_corporative:interceptor"
+    },
+    {
+      "id": "lanciagranate-invader",
+      "nome": "Lanciagranate Invader",
+      "tipo": "arma_distanza",
+      "catalogo": "Imperial",
+      "famiglia": "Lanciagranate integrati Imperiali",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-lanciagranate",
+      "mani": 2,
+      "danno": null,
+      "danno_da_munizione": true,
+      "ac": "munizione",
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 100,
+      "munizioni": {
+        "capacita": 10,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": "Granata standard a frammentazione"
+      },
+      "inc": 3,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 6,
+      "pi": null,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": null,
+      "costo": null,
+      "proprieta": [],
+      "modulo_di": "armi_distanza_corporative:invader"
+    },
+    {
+      "id": "ronin-25ap",
+      "nome": "Ronin 25AP",
+      "tipo": "arma_distanza",
+      "catalogo": "Mishima",
+      "famiglia": "Armi leggere e medie",
+      "nomi_alternativi": [],
+      "note_manuale": "Ronin 25AP. Pistola leggera da difesa personale con requisito FOR 2, gittata 25 Q e caricatore da dieci colpi. INC 2 rappresenta la sua scarsa affidabilità; la sigla AP non concede proprietà perforanti. La Ronin 45AP porta la capacità a quindici colpi e aggiunge Raffica Breve, richiedendo FOR 3 e conservando INC 2.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 25,
+      "munizioni": {
+        "capacita": 10,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 2,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 2,
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1000,
+      "proprieta": []
+    },
+    {
+      "id": "ronin-45ap",
+      "nome": "Ronin 45AP",
+      "tipo": "arma_distanza",
+      "catalogo": "Mishima",
+      "famiglia": "Armi leggere e medie",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 25,
+      "munizioni": {
+        "capacita": 15,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 2,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "TR"
+      ],
+      "for_richiesta": 3,
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1200,
+      "proprieta": []
+    },
+    {
+      "id": "airbrush",
+      "nome": "Airbrush",
+      "tipo": "arma_distanza",
+      "catalogo": "Mishima",
+      "famiglia": "Armi leggere e medie",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": null,
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 40,
+      "munizioni": {
+        "capacita": 10,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 1,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 4,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 800,
+      "proprieta": []
+    },
+    {
+      "id": "windrider-n4",
+      "nome": "Windrider N4",
+      "tipo": "arma_distanza",
+      "catalogo": "Mishima",
+      "famiglia": "Armi leggere e medie",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": null,
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 40,
+      "munizioni": {
+        "capacita": 25,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 3,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "TR"
+      ],
+      "for_richiesta": 4,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 3000,
+      "proprieta": []
+    },
+    {
+      "id": "shogun",
+      "nome": "Shogun",
+      "tipo": "arma_distanza",
+      "catalogo": "Mishima",
+      "famiglia": "Armi leggere e medie",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": null,
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+1"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 80,
+      "munizioni": {
+        "capacita": 30,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 2,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "RL",
+        "TR",
+        "FS"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 4500,
+      "proprieta": []
+    },
+    {
+      "id": "archer",
+      "nome": "Archer",
+      "tipo": "arma_distanza",
+      "catalogo": "Mishima",
+      "famiglia": "Armi leggere e medie",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": null,
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+2"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 1100,
+      "munizioni": {
+        "capacita": 15,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 3,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "TR"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 4500,
+      "proprieta": []
+    },
+    {
+      "id": "kensai",
+      "nome": "Kensai",
+      "tipo": "arma_distanza",
+      "catalogo": "Mishima",
+      "famiglia": "Armi pesanti",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi pesanti",
+      "specializzazione": "specializzazione-mitragliatori",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d8+2"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 550,
+      "munizioni": {
+        "capacita": 400,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 5,
+      "mov": -1,
+      "modalita": [
+        "RM",
+        "RL",
+        "FS"
+      ],
+      "for_richiesta": 6,
+      "pi": 8,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 16000,
+      "proprieta": []
+    },
+    {
+      "id": "dragonfire",
+      "nome": "Dragonfire",
+      "tipo": "arma_distanza",
+      "catalogo": "Mishima",
+      "famiglia": "Armi pesanti",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi pesanti",
+      "specializzazione": "specializzazione-mitragliatori",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d10+3"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 600,
+      "munizioni": {
+        "capacita": 500,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 4,
+      "mov": -1,
+      "modalita": [
+        "RM",
+        "RL",
+        "FS"
+      ],
+      "for_richiesta": 6,
+      "pi": 8,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "RA",
+      "costo": 26000,
+      "proprieta": []
+    },
+    {
+      "id": "lanciarazzi-daimyo",
+      "nome": "Lanciarazzi Daimyo",
+      "tipo": "arma_distanza",
+      "catalogo": "Mishima",
+      "famiglia": "Armi pesanti",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi pesanti",
+      "specializzazione": "specializzazione-lanciarazzi",
+      "mani": 2,
+      "danno": null,
+      "danno_da_munizione": true,
+      "ac": "munizione",
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 200,
+      "munizioni": {
+        "capacita": 6,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": "Razzo standard"
+      },
+      "inc": 2,
+      "mov": -2,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 6,
+      "pi": 8,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "RA",
+      "costo": 18000,
+      "proprieta": []
+    },
+    {
+      "id": "lanciagranate-windrider-n4",
+      "nome": "Lanciagranate Windrider N4",
+      "tipo": "arma_distanza",
+      "catalogo": "Mishima",
+      "famiglia": "Lanciagranate integrati Mishima",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-lanciagranate",
+      "mani": 2,
+      "danno": null,
+      "danno_da_munizione": true,
+      "ac": "munizione",
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 20,
+      "munizioni": {
+        "capacita": 1,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": "Granata standard a frammentazione"
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 4,
+      "pi": null,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": null,
+      "costo": null,
+      "proprieta": [],
+      "modulo_di": "armi_distanza_corporative:windrider-n4"
+    },
+    {
+      "id": "lanciagranate-shogun",
+      "nome": "Lanciagranate Shogun",
+      "tipo": "arma_distanza",
+      "catalogo": "Mishima",
+      "famiglia": "Lanciagranate integrati Mishima",
+      "nomi_alternativi": [],
+      "note_manuale": "",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-lanciagranate",
+      "mani": 2,
+      "danno": null,
+      "danno_da_munizione": true,
+      "ac": "munizione",
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 40,
+      "munizioni": {
+        "capacita": 1,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": "Granata standard a frammentazione"
+      },
+      "inc": 2,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 5,
+      "pi": null,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": null,
+      "costo": null,
+      "proprieta": [],
+      "modulo_di": "armi_distanza_corporative:shogun"
+    }
+  ]
+}

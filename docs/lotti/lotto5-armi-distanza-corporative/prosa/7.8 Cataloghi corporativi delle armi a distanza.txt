@@ -1,0 +1,580 @@
+7.8 Cataloghi corporativi delle armi a distanza
+I cataloghi comprendono Alleanza, Bauhaus, Capitol, Cybertronic, Fratellanza, Imperiali e Mishima. Gli indirizzi
+corporativi del §7.1.9 sono rappresentati nelle singole schede e non aggiungono bonus automatici. Sigle e
+procedure comuni seguono il §7.7. Il Sistema di Interfaccia Neurale Cybertronic è descritto nel §7.15.1.
+Pistole corporative di base. HG10, Bolter 10, P500, Nemesis 100, Belliger e Ronin 25AP sono modelli autonomi
+utilizzabili senza un livello minimo. Tutte usano Armi leggere (DES), si impugnano a una mano, infliggono
+danno Naturale con AC 1 e hanno 4 PI, Qualità Comune, PS Integrità 10 e MOV 0. Dispongono di Colpo Singolo
+e Tiro Rapido, senza Raffiche. I profili riportano le differenze di danno, VA, FOR, gittata, capacità e affidabilità.
+Il prezzo di ciascuna pistola di base comprende un caricatore vuoto specifico; munizioni e caricatori aggiuntivi si
+acquistano separatamente. Tutte utilizzano proiettili da pistola (§7.20.9). La ricarica ordinaria costa 1 AzP e
+richiede un caricatore pronto e la mano libera; le operazioni incorporate nell’attacco seguono il Manuale del
+Giocatore, §5.1.1. Nessuno dei sei modelli possiede SIN. Le proprietà corporative non concedono ulteriori bonus
+oltre a quelli espressamente indicati.
+Un modulo integrato usa la propria Abilità, gittata, INC, capacità e modalità di tiro. Prima di ogni attacco si
+sceglie il profilo da usare. Le alimentazioni sono separate; il passaggio di profilo non concede attacchi gratuiti. Il
+costo dell’insieme comprende il modulo. PI, Qualità e MOV sono condivisi con l’arma principale e non si
+sommano.
+Le granate a mano utilizzano Armi da Lancio (DES); i lanciagranate autonomi e integrati utilizzano Armi Medie
+(INT), anche quando montati su una pistola o su un’Arma Pesante. I lanciarazzi utilizzano Armi Pesanti (FOR). Il
+modulo dell’Ironfist 15 richiede due mani; quelli del Bolter 20 e della Nemesis 221 una mano. Imbracciatura e
+Postura si applicano ai lanciagranate secondo il §5.10.
+Danno calibrato. Per SA30 e SA50F, i bonus ordinari al danno di Classi, Talenti e Manovre non modificano il
+danno del dardo. Il Magistrale si applica normalmente; sono ammessi modificatori specifici della munizione. Tiro
+Mirato concede il bonus al VA ma non il bonus ordinario al danno. L’effetto del contenuto del dardo si applica
+soltanto se almeno 1 danno supera l’Armatura. Il lanciatore determina danno e gittata, il carico del dardo
+determina l’effetto aggiuntivo. Le due armi usano gli stessi dardi e includono quattro dardi stordenti; effetti, Prove
+Salvezza e prezzi dei dardi sono nel §7.20.8.
+Alleanza
+Armi leggere
+Modello Danno AC VA FOR Max Q CC INC
+AXIS 227 1d6 1 +1 4 30 15 7
+Piranha 1d6+1 1 0 2 35 8 8
+Punisher 1d6+2 1 0 4 25 10 6
+Hellblazer 1d6+1 1 0 3 30 30 6
+Modello Abilità Mani PI MOV Modalità
+AXIS 227 Leggere 1 4 0 S RB TR
+Piranha Leggere 1 4 0 S TR
+Punisher Leggere 1 4 0 S RB TR
+Hellblazer Leggere 1 4 0 S TR
+Modello Qualità PS INT REP Costo proposto
+AXIS 227 Non comune 12 NC 2.350
+Piranha Comune 10 NC 2.100
+Punisher Non comune 12 RA 3.150
+Hellblazer Non comune 12 RA 9.000
+Hellblazer. Proprietà: Plasma. Include una cella standard da 30 colpi.
+Armi medie
+Modello Danno AC VA FOR Max Q CC INC
+Carabina Punisher 1d6+3 1 0 5 70 30 6
+Plasma Intruder 1d6+2 2 0 5 50 30 6
+Lanciagranate Alleanza Munizione Mun. 0 5 60 6 7
+Modello Abilità Mani PI MOV Modalità
+Carabina Punisher Medie 2 6 0 S RB RM RL TR FS
+Plasma Intruder Medie 2 6 0 S RB TR
+Lanciagranate Alleanza Medie 2 6 0 S TR
+Modello Qualità PS INT REP Costo proposto
+Carabina Punisher Non comune 12 RA 8.000
+Plasma Intruder Non comune 12 MR 18.000
+Lanciagranate Alleanza Non comune 12 RA 7.800
+Plasma Intruder. Proprietà: Plasma. Include una cella standard da 30 colpi.
+Lanciagranate Alleanza. Richiede Imbracciatura; si applica Postura. Munizione di riferimento: Granata standard a
+frammentazione.
+Lanciagranate integrato
+Modello Danno AC VA FOR Max Q CC INC
+Lanciagranate Carabina Punisher Munizione Mun. 0 5 70 2 6
+Lanciagranate Deathlock Drum Munizione Mun. 0 8 100 6 6
+Modello Abilità Mani PI MOV Modalità
+Lanciagranate Carabina Punisher Medie 2 Condivisi 0 S
+Lanciagranate Deathlock Drum Medie 2 Condivisi -3 S TR
+Modello Qualità PS INT REP Costo proposto
+Lanciagranate Carabina Punisher Non comune 12 Come arma Incluso
+Lanciagranate Deathlock Drum Non comune 12 Come arma Incluso
+Lanciagranate Carabina Punisher. Munizione di riferimento: Granata standard a frammentazione.
+Lanciagranate Deathlock Drum. Munizione di riferimento: Granata pesante a frammentazione.
+Armi pesanti
+Modello Danno AC VA FOR Max Q CC INC
+Deathlock Drum 1d10+3 1 0 8 1000 750 6
+Nimrod Autocannon 2d8+5 1 +1 9 150 300 7
+Gehemmapuker 2d6 1d3 0 7 15 50 7
+Modello Abilità Mani PI MOV Modalità
+Deathlock Drum Pesanti 2 8 -3 RM RL FS
+Nimrod Autocannon Pesanti 2 8 -3 RM RL FS
+Gehemmapuker Pesanti 2 6 0 S
+Modello Qualità PS INT REP Costo proposto
+Deathlock Drum Non comune 12 MR 54.000
+Nimrod Autocannon Rara 14 MR 98.000
+Gehemmapuker Rara 14 MR 18.000
+Gehemmapuker. Proprietà: Fuoco. Getto diretto contro un solo bersaglio; segue il Lanciafiamme commerciale.
+Combustibile separato.
+Bauhaus
+Armi leggere
+Modello Danno AC VA FOR Max Q CC INC
+HG10 1d6 1 +1 3 10 4 7
+HG12 1d6+1 1 +1 2 10 4 8
+Equalizer 1d6+3 1 +1 4 20 4 8
+MP105 1d6+1 1 +1 4 45 30 9
+SA30 a dardi 1d4+1 1 +1 2 10 4 6
+Modello Abilità Mani PI MOV Modalità
+HG10 Leggere 1 4 0 S TR
+HG12 Leggere 1 5 0 S TR
+Equalizer Leggere 1 5 0 S TR
+MP105 Leggere 1 5 0 S RB RM TR
+SA30 a dardi Leggere 1 5 0 S
+Modello Qualità PS INT REP Costo
+HG10 Comune 10 CO 1.400
+HG12 Non comune 12 NC 2.350
+Equalizer Non comune 12 RA 3.650
+MP105 Non comune 12 RA 5.750
+SA30 a dardi Non comune 12 NC 2.600
+HG10. Pistola compatta da servizio, precisa e affidabile, con gittata breve e caricatore da quattro colpi. Il +1 VA è
+già incluso nel profilo e non si applica nuovamente come proprietà. La HG12 offre maggiore danno e affidabilità,
+Qualità Non comune, 5 PI e requisito FOR 2.
+SA30 a dardi. Proprietà: Danno calibrato. Include quattro dardi stordenti; caricamento misto ammesso
+annotando l’ordine.
+Fucili a pompa
+Modello Danno AC VA FOR Max Q CC INC
+HD14M 1d6 2 +1 4 10 6 6
+HG14 1d6+1 2 0 6 30 6 8
+Modello Abilità Mani PI MOV Modalità
+HD14M Medie 2 7 0 S TR
+HG14 Medie 2 7 0 S
+Modello Qualità PS INT REP Costo proposto
+HD14M Non comune 12 NC 1.700
+HG14 Non comune 12 RA 2.200
+HD14M. Proprietà: Sbilanciante. Eccezione: può eseguire Tiro Rapido.
+HG14. Proprietà: Sbilanciante.
+Armi medie
+Modello Danno AC VA FOR Max Q CC INC
+MP105GW 1d6+1 1 0 4 70 40 8
+Panzerknacker 1d6+2 1 0 5 100 50 8
+Modello Abilità Mani PI MOV Modalità
+MP105GW Medie 2 7 0 S RB RM RL TR FS
+Panzerknacker Medie 2 7 0 S RB RM RL TR FS
+Modello Qualità PS INT REP Costo proposto
+MP105GW Non comune 12 RA 7.000
+Panzerknacker Non comune 12 RA 9.500
+MP105GW. Carabina automatica; modello distinto dalla pistola MP105.
+Lanciagranate integrato
+Modello Danno AC VA FOR Max Q CC INC
+Lanciagranate MP105GW Munizione Mun. 0 4 30 1 7
+Lanciagranate Panzerknacker Munizione Mun. 0 5 50 2 7
+Modello Abilità Mani PI MOV Modalità
+Lanciagranate MP105GW Medie 2 Condivisi 0 S
+Lanciagranate Panzerknacker Medie 2 Condivisi 0 S
+Modello Qualità PS INT REP Costo proposto
+Lanciagranate MP105GW Non comune 12 Come arma Incluso
+Lanciagranate Panzerknacker Non comune 12 Come arma Incluso
+Lanciagranate MP105GW. Munizione di riferimento: Granata standard a frammentazione.
+Lanciagranate Panzerknacker. Munizione di riferimento: Granata standard a frammentazione.
+Fucili di precisione
+Modello Danno AC VA FOR Max Q CC INC
+PSG99 1d6+3 1 0 5 1400 30 9
+SA50F a dardi 1d6+1 1 +1 4 50 4 7
+Modello Abilità Mani PI MOV Modalità
+PSG99 Medie 2 7 0 S RB TR
+SA50F a dardi Medie 2 7 0 S TR
+Modello Qualità PS INT REP Costo proposto
+PSG99 Non comune 12 MR 10.500
+SA50F a dardi Non comune 12 RA 5.500
+SA50F a dardi. Proprietà: Danno calibrato. Usa le munizioni della SA30; include quattro dardi stordenti e
+ammette caricamento misto annotato.
+Armi pesanti
+Modello Danno AC VA FOR Max Q CC INC
+MG40 1d8+3 1 0 6 450 300 9
+MG80 1d10+4 1 0 7 650 750 8
+ARG17 Munizione Mun. 0 7 150 10 8
+Modello Abilità Mani PI MOV Modalità
+MG40 Pesanti 2 9 -1 RM RL FS
+MG80 Pesanti 2 9 -2 RM RL FS
+ARG17 Pesanti 2 9 -1 S TR
+Modello Qualità PS INT REP Costo proposto
+MG40 Non comune 12 RA 25.000
+MG80 Non comune 12 MR 48.000
+ARG17 Non comune 12 MR 36.000
+ARG17. Munizione di riferimento: Razzo ARG17. Nessuna Raffica Breve.
+Capitol
+Revolver
+Modello Danno AC VA FOR Max Q CC INC
+Bolter 09 1d6 1 0 3 60 10 6
+Enforcer 1d6+1 1 0 2 15 6 6
+Jemson 45 1d6+2 1 0 3 15 6 6
+Modello Abilità Mani PI MOV Modalità
+Bolter 09 Leggere 1 4 0 S TR
+Enforcer Leggere 1 4 0 S TR
+Jemson 45 Leggere 1 4 0 S TR
+Modello Qualità PS INT REP Costo proposto
+Bolter 09 Comune 10 CO 1.450
+Enforcer Comune 10 CO 1.200
+Jemson 45 Comune 10 CO 1.600
+Pistole semiautomatiche e automatiche
+Modello Danno AC VA FOR Max Q CC INC
+Bolter 10 1d6 1 0 3 15 15 5
+Bolter 13 1d6 1 0 3 15 20 6
+Bolter 20 1d6+1 1 -1 4 15 25 4
+Ironfist 15 1d6 1 0 5 25 30 4
+Modello Abilità Mani PI MOV Modalità
+Bolter 10 Leggere 1 4 0 S TR
+Bolter 13 Leggere 1 4 0 S RB TR
+Bolter 20 Leggere 1 6 0 S RB TR
+Ironfist 15 Leggere 1 6 0 S RB TR
+Modello Qualità PS INT REP Costo
+Bolter 10 Comune 10 CO 1.000
+Bolter 13 Comune 10 CO 1.300
+Bolter 20 Comune 10 CO 3.600
+Ironfist 15 Comune 10 CO 5.100
+Bolter 10. Pistola semiautomatica economica di larga produzione, con caricatore da quindici colpi e gittata 15 Q.
+Non possiede proprietà aggiuntive. La Bolter 13 porta il caricatore a venti colpi e INC a 6, aggiungendo Raffica
+Breve.
+Lanciagranate integrato
+Modello Danno AC VA FOR Max Q CC INC
+Lanciagranate Bolter 20 Munizione Mun. -1 4 25 1 4
+Lanciagranate Ironfist 15 Munizione Mun. 0 5 30 4 4
+Lanciagranate CAR24 Munizione Mun. 0 4 30 1 5
+Lanciagranate M50 Munizione Mun. 0 5 70 1 3
+Modello Abilità Mani PI MOV Modalità
+Lanciagranate Bolter 20 Medie 1 Condivisi 0 S
+Lanciagranate Ironfist 15 Medie 2 Condivisi 0 S
+Lanciagranate CAR24 Medie 2 Condivisi 0 S
+Lanciagranate M50 Medie 2 Condivisi 0 S
+Modello Qualità PS INT REP Costo proposto
+Lanciagranate Bolter 20 Comune 10 Come arma Incluso
+Lanciagranate Ironfist 15 Comune 10 Come arma Incluso
+Lanciagranate CAR24 Comune 10 Come arma Incluso
+Lanciagranate M50 Comune 10 Come arma Incluso
+Lanciagranate Bolter 20. Munizione di riferimento: Granata standard a frammentazione.
+Lanciagranate Ironfist 15. Munizione di riferimento: Granata standard a frammentazione.
+Lanciagranate CAR24. Munizione di riferimento: Granata standard a frammentazione.
+Lanciagranate M50. Munizione di riferimento: Granata standard a frammentazione.
+Fucili a pompa e doppiette
+Modello Danno AC VA FOR Max Q CC INC
+M310 1d6 2 0 5 20 20 3
+M510 1d6 2 0 4 15 6 5
+M516S 1d6 2 0 4 15 6 6
+M516D 2d4 2 0 5 10 6 3
+M410 1d6+2 2 0 4 7 2 5
+Modello Abilità Mani PI MOV Modalità
+M310 Medie 2 6 0 S
+M510 Medie 2 6 0 S
+M516S Medie 2 6 0 S
+M516D Medie 2 6 0 S
+M410 Medie 2 6 0 S TR DC
+Modello Qualità PS INT REP Costo proposto
+M310 Comune 10 CO 1.350
+M510 Comune 10 CO 1.000
+M516S Comune 10 CO 1.100
+M516D Comune 10 CO 1.200
+M410 Comune 10 CO 1.000
+M310. Proprietà: Sbilanciante.
+M510. Proprietà: Sbilanciante.
+M516S. Proprietà: Sbilanciante.
+M516D. Proprietà: Sbilanciante.
+M410. Proprietà: Sbilanciante.
+Carabine e fucili d’assalto
+Modello Danno AC VA FOR Max Q CC INC
+CAR24 1d6+1 1 0 4 60 20 5
+M50 1d6+2 1 0 5 100 30 4
+SR30 1d6+2 1 0 5 120 30 5
+Modello Abilità Mani PI MOV Modalità
+CAR24 Medie 2 6 0 S RB RM TR
+M50 Medie 2 6 0 S RB RM RL TR FS
+SR30 Medie 2 6 0 S TR
+Modello Qualità PS INT REP Costo proposto
+CAR24 Comune 10 CO 4.500
+M50 Comune 10 CO 5.500
+SR30 Comune 10 CO 2.800
+CAR24. Carabina automatica.
+SR30. Carabina priva di Raffiche Breve, Media e Lunga.
+Fucili di precisione
+Modello Danno AC VA FOR Max Q CC INC
+SR50 1d6+4 1 0 5 1300 15 4
+Modello Abilità Mani PI MOV Modalità
+SR50 Medie 2 6 0 S RB TR
+Modello Qualità PS INT REP Costo proposto
+SR50 Comune 10 CO 7.000
+Armi pesanti
+Modello Danno AC VA FOR Max Q CC INC
+M606 1d8+3 1 0 6 600 400 6
+Improved M89 1d10+5 1 0 8 650 1000 3
+Lanciarazzi Deuce Munizione Mun. 0 7 200 6 3
+Modello Abilità Mani PI MOV Modalità
+M606 Pesanti 2 8 -1 RM RL FS
+Improved M89 Pesanti 2 8 -2 RM RL FS
+Lanciarazzi Deuce Pesanti 2 8 -2 S TR
+Modello Qualità PS INT REP Costo proposto
+M606 Comune 10 CO 19.000
+Improved M89 Comune 10 CO 42.000
+Lanciarazzi Deuce Comune 10 CO 20.000
+Lanciarazzi Deuce. Munizione di riferimento: Razzo standard.
+Cybertronic
+Armi leggere
+Modello Danno AC VA FOR Max Q CC INC
+P500 1d6 1 0 3 30 12 7
+P1000 1d6 1 +1 3 60 30 7
+Modello Abilità Mani PI MOV Modalità
+P500 Leggere 1 4 0 S TR
+P1000 Leggere 1 4 0 S RB RM TR
+Modello Qualità PS INT REP Costo
+P500 Comune 10 NC 1.500
+P1000 Non comune 12 RA 4.700
+P500. Pistola semiautomatica convenzionale con gittata 30 Q e INC 7. Non possiede SIN: funziona senza innesti
+e non riceve bonus da un’interfaccia neurale del tiratore. La P1000 offre +1 VA nativo, gittata 60 Q, capacità
+trenta colpi, Raffica Breve e Media, Qualità Non comune e SIN 1 con un innesto compatibile.
+Fucili a pompa
+Modello Danno AC VA FOR Max Q CC INC
+SA SG2001 2d4 2 0 5 30 10 9
+Modello Abilità Mani PI MOV Modalità
+SA SG2001 Medie 2 6 0 S TR
+Modello Qualità PS INT REP Costo proposto
+SA SG2001 Non comune 12 RA 3.150
+SA SG2001. Proprietà: Sbilanciante. Eccezione: può eseguire Tiro Rapido.
+Carabine e fucili d’assalto
+Modello Danno AC VA FOR Max Q CC INC
+CAW2000 1d6+1 1 +1 4 80 30 8
+AR3000 1d6+2 1 0 5 150 50 7
+Modello Abilità Mani PI MOV Modalità
+CAW2000 Medie 2 6 0 S RB RM TR
+AR3000 Medie 2 6 0 S RB RM RL TR FS
+Modello Qualità PS INT REP Costo proposto
+CAW2000 Non comune 12 RA 8.000
+AR3000 Non comune 12 RA 10.500
+CAW2000. Carabina automatica.
+Lanciagranate integrato
+Modello Danno AC VA FOR Max Q CC INC
+Lanciagranate CAW2000 Munizione Mun. +1 4 40 2 7
+Lanciagranate AR3000 Munizione Mun. 0 5 70 4 7
+Modello Abilità Mani PI MOV Modalità
+Lanciagranate CAW2000 Medie 2 Condivisi 0 S
+Lanciagranate AR3000 Medie 2 Condivisi 0 S TR
+Modello Qualità PS INT REP Costo proposto
+Lanciagranate CAW2000 Non comune 12 Come arma Incluso
+Lanciagranate AR3000 Non comune 12 Come arma Incluso
+Lanciagranate CAW2000. Munizione di riferimento: Granata standard a frammentazione.
+Lanciagranate AR3000. Munizione di riferimento: Granata standard a frammentazione.
+Fucili di precisione
+Modello Danno AC VA FOR Max Q CC INC
+SR3500 1d6+3 1 0 5 1500 20 8
+Modello Abilità Mani PI MOV Modalità
+SR3500 Medie 2 6 0 S RB TR
+Modello Qualità PS INT REP Costo proposto
+SR3500 Non comune 12 MR 10.000
+Armi pesanti
+Modello Danno AC VA FOR Max Q CC INC
+TSW4000 1d8+3 1 0 6 800 750 8
+SSW4200P 1d10+4 1 0 7 1000 1000 8
+Lanciarazzi SSW5500 Munizione Mun. 0 7 160 10 6
+Modello Abilità Mani PI MOV Modalità
+TSW4000 Pesanti 2 8 -1 RM RL FS
+SSW4200P Pesanti 2 8 -2 RM RL FS
+Lanciarazzi SSW5500 Pesanti 2 8 -1 S TR
+Modello Qualità PS INT REP Costo proposto
+TSW4000 Non comune 12 MR 32.500
+SSW4200P Non comune 12 MR 60.000
+Lanciarazzi SSW5500 Non comune 12 MR 36.000
+Lanciarazzi SSW5500. Munizione di riferimento: Razzo SSW5500. Nessuna Raffica Breve.
+Fratellanza
+Tutti i modelli e i moduli possiedono Purificatrice 1, con il bonus separato dai danni in tabella. La Nemesis 100
+ha Qualità Comune e PS Integrità 10; gli altri modelli hanno Qualità Non comune e PS Integrità 12. Il danno del
+profilo principale resta Naturale; i moduli lanciafiamme applicano Fuoco. Alimentazioni separate, PI, Qualità e
+MOV condivisi e costo del modulo incluso seguono le regole iniziali del §7.8.
+Armi leggere e carabina Nemesis
+Modello Danno AC VA FOR Max Q CC INC
+Eliminator 1d6+1 1 −2 3 70 15 7
+Nemesis 100 1d6 1 0 3 15 8 5
+Nemesis 210 1d6 1 +1 3 20 20 7
+Nemesis 214 1d6 1 +1 4 40 20 7
+Nemesis 221 1d6 1 +1 4 40 20 7
+Nemesis 21 1d6+1 1 +1 4 60 20 7
+Modello Abilità Mani PI MOV Modalità
+Eliminator Leggere 1 4 0 S RB TR
+Nemesis 100 Leggere 1 4 0 S TR
+Nemesis 210 Leggere 1 4 0 S RB TR
+Nemesis 214 Leggere 1 4 0 S RB TR
+Nemesis 221 Leggere 1 4 0 S RB TR
+Nemesis 21 Medie 2 6 0 S RB TR
+Modello Qualità PS INT REP Costo
+Eliminator Non comune 12 MR 6.500
+Nemesis 100 Comune 10 NC 1.500
+Nemesis 210 Non comune 12 RA 3.800
+Nemesis 214 Non comune 12 RA 9.000
+Nemesis 221 Non comune 12 RA 7.500
+Nemesis 21 Non comune 12 RA 5.000
+Nemesis 100. Pistola di servizio con caricatore da otto colpi, gittata 15 Q e nessun bonus alla precisione. Possiede
+Purificatrice 1 (§7.1.3): il +1 danno contro i bersagli validi dell’Oscura Simmetria è separato dal danno in tabella,
+non richiede PM o Sintonizzazione e non rende Magico il danno. La sola Corruzione non rende valido un
+bersaglio. La Nemesis 210 offre +1 VA, gittata 20 Q, capacità venti colpi, INC 7, Qualità Non comune e Raffica
+Breve.
+Fucili e armi pesanti
+Modello Danno AC VA FOR Max Q CC INC
+Volcano 1d6+2 1 0 5 150 30 7
+Eruptor 1d6+3 1 0 6 600 20 8
+Mefisto 1d6+4 1 0 6 1.700 20 8
+Justifier 1d8+1 1 0 5 100 400 8
+Purifier 1d10+4 1 0 7 400 750 7
+Modello Abilità Mani PI MOV Modalità
+Volcano Medie 2 6 0 S RB RM RL TR FS
+Eruptor Medie 2 6 0 S RB TR
+Mefisto Medie 2 6 0 S RB TR
+Justifier Pesanti 2 8 0 RM RL FS
+Purifier Pesanti 2 8 −3 RM RL FS
+Modello Qualità PS INT REP Costo
+Volcano Non comune 12 RA 12.000
+Eruptor Non comune 12 RA 16.500
+Mefisto Non comune 12 MR 15.500
+Justifier Non comune 12 RA 24.000
+Purifier Non comune 12 MR 62.000
+Moduli integrati della Fratellanza
+Modello Danno AC VA FOR Max Q CC INC
+Lanciafiamme Nemesis 214 2d4 1d3 +1 4 8 5 8
+Lanciagranate Nemesis 221 Munizione Mun. +1 4 30 1 7
+Lanciagranate Volcano Munizione Mun. 0 5 50 1 7
+Lanciafiamme Eruptor 1d10 1d3 0 6 12 10 8
+Lanciafiamme Purifier 1d10+2 1d3 0 7 20 15 7
+Modello Abilità Mani PI MOV Modalità
+Lanciafiamme Nemesis 214 Pesanti 1 Condivisi 0 S
+Lanciagranate Nemesis 221 Medie 1 Condivisi 0 S
+Lanciagranate Volcano Medie 2 Condivisi 0 S
+Lanciafiamme Eruptor Pesanti 2 Condivisi 0 S
+Lanciafiamme Purifier Pesanti 2 Condivisi −3 S
+Modello Qualità PS INT REP Costo
+Come
+Lanciafiamme Nemesis 214 Non comune 12 Incluso
+arma
+Come
+Lanciagranate Nemesis 221 Non comune 12 Incluso
+arma
+Come
+Lanciagranate Volcano Non comune 12 Incluso
+arma
+Come
+Lanciafiamme Eruptor Non comune 12 Incluso
+arma
+Come
+Lanciafiamme Purifier Non comune 12 Incluso
+arma
+Eliminator. Silenziatore incorporato: lo sparo non è percepibile uditivamente. VA −2 e danno 1d6+1
+comprendono già le penalità del dispositivo; non si applicano una seconda volta. Il costo di 6.500 comprende il
+Silenziatore. Resta Purificatrice 1 separata dal danno tabellare.
+I lanciagranate Nemesis 221 e Volcano usano granate standard a frammentazione, Fumogene ed Elettroshock
+(§7.20.3). I lanciafiamme Nemesis 214, Eruptor e Purifier producono un getto diretto contro un solo bersaglio e
+seguono il Lanciafiamme commerciale. Il modulo della Nemesis 214 è utilizzabile a una mano come eccezione
+esplicita. Combustibile e munizioni si acquistano separatamente.
+Nemesis 21 è una carabina a due mani. Il +1 VA dei modelli Nemesis che lo riportano è già incluso nel profilo e
+non si aggiunge nuovamente come Precisa; la Nemesis 100 ha VA 0. Justifier non impone penalità MOV; Purifier
+impone MOV −3 anche quando usa il modulo integrato.
+Imperiali
+La Belliger ha Qualità Comune e PS Integrità 10; gli altri modelli hanno Qualità Non comune e PS Integrità 12.
+La Reperibilità resta distinta. Interceptor e Invader includono i rispettivi lanciagranate. Il Southpaw è un
+lanciarazzi e utilizza Armi Pesanti. Le schede complete delle armi specialistiche Howler e Rainy Dayer sono nel
+§7.14.6; le munizioni Fumogena ed Elettroshock nel §7.14.7.
+Armi leggere e medie
+Modello Danno AC VA FOR Max Q CC INC
+Belliger 1d6+1 1 −1 3 15 10 4
+Aggressor 1d6+1 1 −1 4 25 25 4
+Mandible 1d6+2 1 0 5 80 20 5
+Interceptor 1d6+2 1 0 5 50 40 4
+Invader 1d6+3 1 0 6 80 40 5
+Assailant 1d6+4 1 0 6 400 15 3
+Modello Abilità Mani PI MOV Modalità
+Belliger Leggere 1 4 0 S TR
+Aggressor Leggere 1 4 0 S RB TR
+Mandible Medie 2 6 0 S TR
+Interceptor Medie 2 6 0 S RB RM TR
+Invader Medie 2 6 0 S RB RM RL TR FS
+Assailant Medie 2 6 0 S RB TR
+Modello Qualità PS INT REP Costo
+Belliger Comune 10 CO 1.300
+Aggressor Non comune 12 NC 2.200
+Mandible Non comune 12 NC 2.600
+Interceptor Non comune 12 NC 6.500
+Invader Non comune 12 RA 12.000
+Assailant Non comune 12 NC 6.000
+Belliger. Pistola compatta che privilegia la potenza del colpo: danno 1d6+1 e −1 VA sono già compresi nel
+profilo. Capacità dieci colpi, gittata 15 Q, requisito FOR 3. L’Aggressor mantiene danno e modificatore al tiro,
+ma offre capacità venticinque colpi, gittata 25 Q, Qualità Non comune e Raffica Breve; richiede FOR 4.
+Armi pesanti
+Modello Danno AC VA FOR Max Q CC INC
+Destroyer 1d8+4 1 0 7 600 500 5
+Charger 1d10+6 1 0 9 450 1.000 4
+Lanciarazzi Southpaw Munizione Mun. 0 8 80 20 5
+Modello Abilità Mani PI MOV Modalità
+Destroyer Pesanti 2 8 −2 RM RL FS
+Charger Pesanti 2 8 −3 RM RL FS
+Lanciarazzi Southpaw Pesanti 2 8 −3 S TR
+Modello Qualità PS INT REP Costo
+Destroyer Non comune 12 RA 24.000
+Charger Non comune 12 MR 55.000
+Lanciarazzi Southpaw Non comune 12 RA 32.000
+Lanciagranate integrati Imperiali
+Modello Danno AC VA FOR Max Q CC INC
+Lanciagranate Interceptor Munizione Mun. 0 5 40 1 3
+Lanciagranate Invader Munizione Mun. 0 6 100 10 3
+Modello Abilità Mani PI MOV Modalità
+Lanciagranate Interceptor Medie 2 Condivisi 0 S
+Lanciagranate Invader Medie 2 Condivisi 0 S
+Modello Qualità PS INT REP Costo
+Come
+Lanciagranate Interceptor Non comune 12 Incluso
+arma
+Come
+Lanciagranate Invader Non comune 12 Incluso
+arma
+I moduli Interceptor e Invader utilizzano granate compatibili, compresa la Granata standard a frammentazione;
+Fumogena ed Elettroshock sono descritte nel §7.14.7. Mantengono alimentazioni separate e condividono PI,
+Qualità e MOV con l’arma principale. Il costo è incluso nell’insieme; le munizioni sono separate. Il caricatore da
+dieci del modulo Invader non concede modalità ulteriori rispetto a S.
+Mandible non dispone di Raffiche. Assailant conserva la gittata massima di 400 Q e INC 3. Southpaw usa il
+Razzo a carica maggiorata: 1d10+2, AC 1d3, RS 2 Q, Sbilanciante e Sbalzante 2. La sua modalità TR segue le
+normali regole del Tiro Rapido.
+Mishima
+I modelli del catalogo hanno Qualità Comune e PS Integrità 10. Le caratteristiche produttive della Corporazione
+sono già rappresentate dai valori delle schede; non concedono ulteriori modificatori automatici.
+Armi leggere e medie
+Modello Danno AC VA FOR Max Q CC INC
+Ronin 25AP 1d6 1 0 2 25 10 2
+Ronin 45AP 1d6 1 0 3 25 15 2
+Airbrush 1d6 1 0 4 40 10 1
+Windrider N4 1d6 1 0 4 40 25 3
+Shogun 1d6+1 1 0 5 80 30 2
+Archer 1d6+2 1 0 5 1.100 15 3
+Modello Abilità Mani PI MOV Modalità
+Ronin 25AP Leggere 1 4 0 S TR
+Ronin 45AP Leggere 1 4 0 S RB TR
+Airbrush Medie 2 6 0 S TR
+Windrider N4 Medie 2 6 0 S RB RM TR
+Shogun Medie 2 6 0 S RB RM RL TR FS
+Archer Medie 2 6 0 S RB TR
+Modello Qualità PS INT REP Costo
+Ronin 25AP Comune 10 CO 1.000
+Ronin 45AP Comune 10 CO 1.200
+Airbrush Comune 10 CO 800
+Windrider N4 Comune 10 NC 3.000
+Shogun Comune 10 NC 4.500
+Archer Comune 10 NC 4.500
+Ronin 25AP. Pistola leggera da difesa personale con requisito FOR 2, gittata 25 Q e caricatore da dieci colpi.
+INC 2 rappresenta la sua scarsa affidabilità; la sigla AP non concede proprietà perforanti. La Ronin 45AP porta la
+capacità a quindici colpi e aggiunge Raffica Breve, richiedendo FOR 3 e conservando INC 2.
+Armi pesanti
+Modello Danno AC VA FOR Max Q CC INC
+Kensai 1d8+2 1 0 6 550 400 5
+Dragonfire 1d10+3 1 0 6 600 500 4
+Lanciarazzi Daimyo Munizione Mun. 0 6 200 6 2
+Modello Abilità Mani PI MOV Modalità
+Kensai Pesanti 2 8 −1 RM RL FS
+Dragonfire Pesanti 2 8 −1 RM RL FS
+Lanciarazzi Daimyo Pesanti 2 8 −2 S TR
+Modello Qualità PS INT REP Costo
+Kensai Comune 10 NC 16.000
+Dragonfire Comune 10 RA 26.000
+Lanciarazzi Daimyo Comune 10 RA 18.000
+Lanciagranate integrati Mishima
+Modello Danno AC VA FOR Max Q CC INC
+Lanciagranate Windrider N4 Munizione Mun. 0 4 20 1 7
+Lanciagranate Shogun Munizione Mun. 0 5 40 1 2
+Modello Abilità Mani PI MOV Modalità
+Lanciagranate Windrider N4 Medie 2 Condivisi 0 S
+Lanciagranate Shogun Medie 2 Condivisi 0 S
+Modello Qualità PS INT REP Costo
+Come
+Lanciagranate Windrider N4 Comune 10 Incluso
+arma
+Come
+Lanciagranate Shogun Comune 10 Incluso
+arma
+Windrider N4 e Shogun includono il lanciagranate, con alimentazione separata e PI, Qualità e MOV condivisi.
+Entrambi i moduli utilizzano granate standard a frammentazione, Fumogene ed Elettroshock (§7.20.3). Daimyo
+usa il Razzo standard. Le munizioni sono separate dal costo dell’arma. Lo Shuriken resta il profilo commerciale
+del §7.7: Armi da Lancio, senza un secondo profilo corporativo automatico.
+Munizioni di riferimento dei lanciatori
+I seguenti dati appartengono alla munizione, non sono bonus permanenti del lanciatore. Prezzi e compatibilità di
+granate e razzi sono nei §§7.20.3 e 7.20.4. Il danno di questi profili è Naturale; AC si tira una sola volta per
+esplosione e il risultato vale per tutti i bersagli nel RS (§5.10 del Manuale del Giocatore).
+Munizione Danno AC RS Proprietà
+Granata standard a frammentazione 1d6+1 1d3 1 Q Sbilanciante; Sbalzante 1
+Granata pesante a frammentazione 1d10+1 1d3 2 Q Sbilanciante; Sbalzante 1
+Razzo standard 1d10+1 1d3 2 Q Sbilanciante; Sbalzante 2
+Razzo ARG17 1d10+2 1d3 3 Q Sbilanciante; Sbalzante 2
+Razzo SSW5500 1d10+1 1d3 4 Q Sbilanciante; Sbalzante 2
+Razzo a carica maggiorata 1d10+2 1d3 2 Q Sbilanciante; Sbalzante 2
+Compatibilità dei nuovi cataloghi: i lanciagranate Nemesis 221, Volcano, Interceptor, Invader, Windrider N4 e
+Shogun usano la Granata standard a frammentazione; Daimyo usa il Razzo standard; Southpaw usa il Razzo a
+carica maggiorata.

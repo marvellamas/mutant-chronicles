@@ -158,7 +158,7 @@ function riassuntoProfilo(o) {
   if (o.mov) parti.push(`MOV −${-o.mov} Q`);
   if (o.categoria) parti.push(o.categoria);
   if (o.for_richiesta) parti.push(`FOR ${o.for_richiesta}`);
-  if (o.costo !== undefined) parti.push(`costo ${o.costo.toLocaleString('it-IT')}`);
+  if (o.costo !== undefined && o.costo !== null) parti.push(`costo ${o.costo.toLocaleString('it-IT')}`);
   if (o.proprieta?.length) parti.push(o.proprieta.map((p) => p.nome).join(', '));
   return parti.join(' · ');
 }

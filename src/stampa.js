@@ -8,6 +8,7 @@ import { valoreTiro } from './tiri.js';
 import { rigaAlLivello } from './descrizioni.js';
 import { CAMPI_ANAGRAFICA } from './character.js';
 import { checklist } from './checklist.js';
+import { aggiungiDanno } from './equipaggiamento.js';
 
 /** Limiti di impaginazione (non regole di gioco): lunghezze massime dei testi stampati. */
 export const LIMITI_STAMPA = {
@@ -200,12 +201,14 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     a.nome,
     a.abilita ?? '—',
     a.va === null ? '—' : a.va < 0 ? `−${-a.va}` : String(a.va),
-    a.dannoDaMunizione ? 'munizione' : testoDanno(a.danno),
+    a.dannoDaMunizione ? (a.munizioneRiferimento ? `${aggiungiDanno(a.munizioneRiferimento.danno, a.bonusDanno)} (mun.)` : 'munizione') : testoDanno(a.danno),
     a.gittataQ ? `${a.gittataQ} Q${a.gittataFormula ? ` (${a.gittataFormula})` : ''}` : a.portataQ ? `portata ${a.portataQ} Q` : '—',
     // capacità del caricatore; i colpi rimasti si segnano a penna
     a.munizioni?.capacita ? (a.munizioni.unita === 'cariche' ? `${a.munizioni.capacita} cariche` : a.munizioni.unita === 'PM' ? `${a.munizioni.capacita} PM` : `CC ${a.munizioni.capacita}`) : '',
     [
-      a.ac !== null && a.ac !== 1 ? `AC ${a.ac === 'munizione' ? 'mun.' : a.ac}` : null,
+      a.moduloDi ? `modulo di ${a.moduloDi}` : null,
+      a.ac !== null && a.ac !== 1 ? `AC ${a.ac === 'munizione' ? (a.munizioneRiferimento ? a.munizioneRiferimento.ac : 'mun.') : a.ac}` : null,
+      a.munizioneRiferimento ? `RS ${a.munizioneRiferimento.rs_q} Q` : null,
       a.inc ? `INC ${a.inc}` : null,
       a.modalita.length ? a.modalita.join(' ') : null,
       a.mov ? `MOV ${a.mov < 0 ? `−${-a.mov}` : a.mov} Q` : null,

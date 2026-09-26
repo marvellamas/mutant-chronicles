@@ -36,6 +36,11 @@
       "descrizione": "Armi a distanza del catalogo Commerciale (§7.7)"
     },
     {
+      "id": "armi_distanza_corporative",
+      "file": "armi_distanza_corporative.json",
+      "descrizione": "Armi a distanza dei cataloghi corporativi, con i moduli integrati (§7.8)"
+    },
+    {
       "id": "armature",
       "file": "armature.json",
       "descrizione": "Armature commerciali civili (§7.11.3)"

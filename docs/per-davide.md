@@ -33,6 +33,16 @@ Le risposte già date (Esploratore, minimo 1 incantesimi, quote per macrofamigli
 
 10. **Scudo delle Guardie Sacre: danno con la lama estratta.** Il §7.1.9 dice che con la lama il danno diventa 1d6+1+1d4; il §7.4.10 dice 1d6+1d4. Quale vale? L'app mostra l'attacco senza lama (1d6+1, dalla tabella del §7.1.9) e riporta i due valori nella nota.
 
+11. **Specializzazione di 16 armi a distanza corporative (§7.8).** Come per le armi ravvicinate (A.9), le tabelle non dicono la categoria dell'arma. L'app la ricava dal nome («Lanciagranate…», «Carabina…»), dalla munizione di riferimento, dal gruppo del manuale («Revolver», «Fucili a pompa…», «Fucili di precisione») o dal testo («Carabina automatica»). Per queste 16 serve la tua scelta. Proposta:
+   - gittata molto lunga (Eruptor, Mefisto, Archer, Assailant) → Fucili di precisione;
+   - con Raffica Lunga e Fuoco di Soppressione (M50, AR3000, Volcano, Invader, Shogun) → Fucili d'assalto;
+   - armi pesanti con RM RL FS (Justifier, Purifier) → Mitragliatori;
+   - le altre (Panzerknacker, Mandible, Interceptor, Airbrush, Windrider N4) → Carabine.
+
+   Finché non rispondi nessuna Specializzazione dà +1 con queste armi.
+
+12. **Specializzazioni date per analogia con il §7.7: le confermi?** Nel catalogo Commerciale tutte le armi con Abilità Armi leggere sono Pistole e le armi pesanti a raffica sono Mitragliatori. L'app fa lo stesso con le corporative: 26 armi, fra cui MP105, P1000 e Nemesis 210 (Pistole) e MG40, Deathlock Drum, Kensai (Mitragliatori). Con la proprietà Plasma usa Armi al Plasma, anche per la pistola Hellblazer. Se una di queste va altrove, dillo (vedi anche la domanda 7).
+
 ## B. Da correggere nella prossima edizione dei manuali
 
 Sono le cose che hai già deciso a voce o che sono errori evidenti: l'app segue la tua decisione, ma il testo stampato dice ancora un'altra cosa e prima o poi qualcuno al tavolo lo aprirà.
@@ -44,7 +54,7 @@ Sono le cose che hai già deciso a voce o che sono errori evidenti: l'app segue 
 - **Giocatore §8.6, Attivazione Tempestiva**: sta prima del §8.6.1, fuori da ogni sottosezione, con un'intestazione diversa dagli altri.
 - **Magia, sezione 1**: la frase "con i cinque Talenti liberi ordinari, Usufruitore più quattro miglioramenti consentono il livello massimo 15" confonde: i Talenti Liberi sono nove (§8.6) e Potenziale Mistico si prende fino a cinque volte. Riformulare come esempio, non come regola.
 - **Giocatore §3.5.3, Bersaglio Designato**: impaginazione rotta nel PDF (il nome del Talento finisce dentro una frase).
-- **Armamenti §7.1.9**: il catalogo si intitola «Imperiali», mentre gli scudi (§7.4.8) e il catalogo generale (§7.14) usano «Imperial». L'app usa «Imperial» ovunque.
+- **Armamenti §7.1.9 e §7.8**: i cataloghi si intitolano «Imperiali», mentre gli scudi (§7.4.8) e il catalogo generale (§7.14) usano «Imperial». L'app usa «Imperial» ovunque.
 - **Armamenti §7.4.1 e §7.4.2, Scudo Punisher**: la scheda del §7.4.1 dice «Taglia Grande», il catalogo del §7.4.2 e la scheda del §7.4.5 dicono «Medio». Il manuale stesso dice che Medio e Grande sono denominazioni equivalenti, ma conviene usare una sola parola.
 - **Giocatore §3.2**: dice che ogni Classe ha due Talenti per Specializzazione e uno Comune; l'Esploratore non li assegnava (vedi sopra).
 
@@ -56,7 +66,7 @@ Sono le cose che hai già deciso a voce o che sono errori evidenti: l'app segue 
 ## D. Manuali che l'app aspetta
 
 - Manuale degli Equipaggiamenti e Manuale dei Veicoli (in stesura): diversi Talenti li citano. Quando esistono, ce li passi come PDF nella cartella `Manuali/`.
-- Manuale degli Armamenti v0.50: lo stiamo estraendo a lotti (stato in `docs/equipaggiamento-lotti.md`: fatti armi ravvicinate e a distanza commerciali, armature civili, scudi, armi ravvicinate corporative). Se pubblichi una v0.51 prima che abbiamo finito, avvisaci: le tabelle cambiate vanno ri-estratte.
+- Manuale degli Armamenti v0.50: lo stiamo estraendo a lotti (stato in `docs/equipaggiamento-lotti.md`: fatti armi ravvicinate e a distanza commerciali, armature civili, scudi, armi ravvicinate e a distanza corporative). Se pubblichi una v0.51 prima che abbiamo finito, avvisaci: le tabelle cambiate vanno ri-estratte.
 
 ## Come ci rispondi
 

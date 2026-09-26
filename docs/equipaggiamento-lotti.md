@@ -1,6 +1,6 @@
 # Catalogo dell'equipaggiamento: lotti da estrarre
 
-Stato al 26 settembre 2026 (lotti 2, 3 e 4 fatti). Fonte: Manuale degli Armamenti v0.50. Metodo: `tools/estrai_manuali.py`
+Stato al 26 settembre 2026 (lotti 2, 3, 4 e 5 fatti). Fonte: Manuale degli Armamenti v0.50. Metodo: `tools/estrai_manuali.py`
 e `docs/pilota-estrazione-armamenti.md`.
 
 Questa è la lista dei prompt successivi: **un lotto per prompt**, nell'ordine di utilità al
@@ -20,6 +20,7 @@ su quelle pagine: le tabelle impilate contano come una.
 | `armi_distanza.json` | 22 armi a distanza del catalogo Commerciale (lotto 2) | §7.7 | 33–36 |
 | `scudi.json` | 26 scudi commerciali e corporativi (lotto 3) | §7.4 | 23–30 |
 | `armi_corporative.json` | 39 armi ravvicinate dei cataloghi corporativi (lotto 4) | §7.1.9 | 11–17 |
+| `armi_distanza_corporative.json` | 81 armi a distanza corporative, 19 moduli integrati, 6 munizioni di riferimento (lotto 5) | §7.8 | 36–52 |
 
 Da completare nello stesso ambito, a basso costo:
 - **Manovre compatibili** dei profili commerciali, §7.1.7, pp. 9–10: una tabella Modello →
@@ -210,8 +211,48 @@ In ordine di peso:
     Sacre, diverso fra §7.1.9 e §7.4.10 (A.10). Per quest'ultimo `scudi.json` ora ha
     l'attacco senza lama dalla tabella del §7.1.9 (1d6+1).
 
-- **Armi a distanza corporative** — §7.8, pp. 36–51: il blocco più grande (16 pagine), stessa
-  struttura a tre sottotabelle del §7.7 più proprietà in prosa.
+- ✔ **Armi a distanza corporative** — §7.8, pp. 36–52 (lotto 5, fatto il 26 settembre 2026,
+  commit «Lotto 5 del catalogo: armi a distanza corporative»).
+  - **Fonte:** `docs/lotti/lotto5-armi-distanza-corporative/`:
+    - `grezzo/`: i CSV delle pp. 37–52;
+    - `prosa/`: il §7.8 da `--prosa`;
+    - `pulito/armi_distanza_corporative.csv`.
+
+    Generatore `tools/lotti/lotto5_armi_distanza_corporative.mjs`, dati
+    `data/equipaggiamento/armi_distanza_corporative.json`.
+  - **Estrazione:** 100 righe (81 armi e 19 moduli integrati) più le 6 munizioni di riferimento
+    dei lanciatori (p. 52). **106 righe su 106 giuste al primo colpo**, controllate sulle immagini
+    delle pp. 36–52; **0 correzioni a mano** sui valori.
+
+    Errori strutturali, tutti risolti da regole generiche:
+    - tre sottotabelle impilate per gruppo (profilo, impiego, dati economici), a volte spezzate
+      fra due pagine (Bolter 09, Kensai/Dragonfire/Daimyo);
+    - 9 righe di continuazione: la cella «Come arma» dei moduli va a capo in 3 tabelle;
+    - separatore delle migliaia anche in Max Q e CC («1.700», «1.000»);
+    - intestazione «Costo» oppure «Costo proposto»; segni meno misti «-» e «−».
+  - **Regole nuove del generatore:**
+    1. una riga con meno celle della precedente, tutte in colonne dove la precedente ha testo, è
+       una continuazione e si unisce per indice di colonna;
+    2. Corporazione e gruppo vengono dai titoli del testo in prosa: il gruppo è la riga prima
+       dell'intestazione «Modello Danno AC…»;
+    3. i moduli integrati (PI «Condivisi», REP «Come arma», Costo «Incluso») diventano oggetti con
+       `modulo_di` e PI/reperibilità/costo null. L'arma principale si ricava dal nome
+       («Lanciagranate <arma>»);
+    4. la munizione di riferimento viene dalla frase del modello oppure dal paragrafo
+       «Compatibilità dei nuovi cataloghi»;
+    5. la Specializzazione segue un ordine di regole scritto nel generatore: nome, munizione,
+       proprietà Plasma, gruppo, testo, analogia con il §7.7. Il conteggio è: 25 per nome, 1 per
+       munizione, 2 per proprietà, 19 per gruppo, 11 per testo, 26 per analogia, 16 da
+       classificare.
+  - **Schema esteso:**
+    - `modulo_di`: il modulo non compare nella cascata né nella ricerca. Con l'arma impugnata
+      diventa un secondo profilo d'attacco, con un contatore munizioni proprio (`uid:modulo`);
+    - `munizioni_riferimento` nel file: danno, AC e RS dei lanciatori «Munizione», mostrati nella
+      scheda, nella stampa e nel tooltip. Servono anche per il Lanciagranate e il Lanciarazzi
+      commerciali;
+    - il validatore controlla `modulo_di`, i campi null dei moduli e la munizione di riferimento.
+  - **Dubbi per Davide:** Specializzazione di 16 armi (A.11) e conferma di quelle date per
+    analogia con il §7.7 (A.12). In B aggiunto «Imperiali» anche nel §7.8.
 - **Armature corporative:**
   - §7.11.5 Armature Bauhaus (pp. 64–66);
   - §7.11.6 Esoscheletri Bauhaus (p. 67);
