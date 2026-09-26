@@ -4,6 +4,20 @@ Tool interno per il gruppo di gioco di ruolo. Non va pubblicato. Il master (Davi
 
 Lingua del progetto: italiano (UI, commenti, commit, documentazione). Terminologia: quella dei manuali (Caratteristica, Abilità, Addestramento, Classe, Grado, Talento, VA, PV, PM, Salvezza).
 
+## All'inizio di OGNI sessione: controllo dei manuali
+
+Prima di qualunque altro lavoro, eseguire la procedura di controllo di `docs/manuali-drive.md` su:
+
+- i quattro Google Doc dei manuali: Giocatore, Magia, Armamenti, Equipaggiamento;
+- il Doc «E&L – Risposte e correzioni approvate» (ID `1VaqZaAe4NK5P8A956Eahua_ZT60eh3ohnR2xSqh-tVs`).
+
+Si confronta il `modifiedTime` di ciascuno con il registro.
+
+- Se nessuno è cambiato: riferire in una riga «manuali e risposte invariati».
+- Altrimenti applicare la procedura, poi riferire che cosa è cambiato e che cosa è stato applicato. La procedura: testo in `docs/manuali-txt/`, diff, classificazione regola / testo / cosmetica, dati, `docs/risposte-master.md` e `docs/per-davide.md`, registro.
+
+Drive si usa **in sola lettura**: mai scrivere nei Doc di Davide, nemmeno commenti (`docs/protocollo-davide.md`). Se un Doc non è leggibile, segnalarlo subito senza inventare.
+
 ## Glossario
 
 - **SD** = scheda digitale: la scheda a tab dell'app (Identità, Abilità, Combattimento, Magia), con la modalità tavolo (`src/ui/tab.js`).
@@ -45,7 +59,7 @@ tests/          node --test; tests/collaudo/ tre personaggi di riferimento con P
 tools/          estrazione dai manuali, generatori dei lotti (tools/lotti/), collaudo_pdf.mjs
 docs/           studio di fattibilità, lotti, domande e risposte del master, roadmap
 distribuzione/  pacchetto per il master (guida e .bat)
-Manuali/        PDF dei manuali (fonte). Non modificare.
+Manuali/        PDF di partenza dei manuali (riferimento storico). Non modificare. La fonte corrente sono i Google Doc (docs/manuali-drive.md), con il testo in docs/manuali-txt/.
 ```
 
 ## Perimetro
@@ -56,11 +70,12 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 - avanzamento dal 2° al 20° livello (cap. 8), un livello alla volta, annullabile (PV e PM attuali seguono i massimi: per-davide A.15);
 - scheda digitale a tab (Identità, Abilità, Combattimento, Magia) con modalità tavolo: valori di sessione separati dalle scelte (`src/sessione.js`);
 - stampa dedicata A4 orizzontale (`#/p/<id>/stampa`, `css/stampa.css`);
-- equipaggiamento con catalogo a lotti dal Manuale degli Armamenti (`data/equipaggiamento/`, lista dei lotti in `docs/equipaggiamento-lotti.md`); l'equipaggiamento iniziale si inserisce a mano finché il §2.16 non è scritto;
+- equipaggiamento con catalogo a lotti dal Manuale degli Armamenti (`data/equipaggiamento/`, lista dei lotti in `docs/equipaggiamento-lotti.md`); l'equipaggiamento iniziale si inserisce a mano finché non c'è il passo guidato (§2.16: struttura e dotazione comune approvate, risposte-master 12–13);
 - salva/carica in `localStorage`, export/import JSON, dati modificabili da Davide con validatore;
-- valori effettivi in modalità tavolo: Ferite, Affaticamento e Stati con effetto numerico (`regole.json`) entrano nei VA, nelle Salvezze e nella Parata mostrati nelle tab, con la scomposizione (`src/condizioni.js`); il totale da regole e la stampa restano a riposo.
+- valori effettivi in modalità tavolo: Ferite, Affaticamento, Stati con effetto numerico e carico (`regole.json`) entrano nei VA, nelle Salvezze e nella Parata mostrati nelle tab, con la scomposizione (`src/condizioni.js`, `src/carico.js`); il totale da regole e la stampa restano a riposo;
+- Manuale dell'Equipaggiamento 0.1, cap. 1: carico (§1.6 = Giocatore §5.2.6) e PS Integrità per Qualità (§1.7) in `regole.json`.
 
-Fuori perimetro per ora: combattimento automatizzato (tiri, bersagli, danni), veicoli, Manuale degli Equipaggiamenti.
+Fuori perimetro per ora: combattimento automatizzato (tiri, bersagli, danni), veicoli, capitoli 2–8 del Manuale dell'Equipaggiamento (non ancora scritti).
 
 ## Riferimenti
 
@@ -69,6 +84,8 @@ Fuori perimetro per ora: combattimento automatizzato (tiri, bersagli, danni), ve
 - `docs/equipaggiamento-lotti.md`: tabelle del Manuale degli Armamenti da estrarre, in ordine, con lo stato di ogni lotto.
 - `docs/risposte-master.md`: decisioni di Davide sui punti ambigui o errati dei manuali, con data. **In caso di conflitto fra un manuale e `docs/risposte-master.md`, vale `docs/risposte-master.md`.**
 - `docs/ricognizione-avanzamento.md`: analisi dell'avanzamento di livello (cap. 8) e modello a eventi.
+- `docs/manuali-drive.md`: ID dei Google Doc dei manuali, registro delle versioni viste, procedura di controllo. `docs/manuali-txt/`: testo dei Doc all'ultimo controllo. `docs/diff-manuali-2026-09-26.md`: confronto Doc ↔ PDF della prima esecuzione.
+- `docs/protocollo-davide.md`: canali con Davide e forma delle proposte di modifica ai manuali.
 - Manuale del Giocatore v0.43: cap. 1 (meccaniche, formule Salvezze §1.2.3), cap. 2 (creazione), cap. 3 (Classi: tabelle §3.4, §3.6, §3.8), cap. 4 (Abilità: quadro §4.3), cap. 8 (avanzamento, per la v2).
 - Manuale della Magia v1.1: sezione 1 (accesso e quote incantesimi), sezione 11 (indice dei 90 incantesimi: 3 macrofamiglie × 3 specializzazioni × 10).
 - Manuale degli Armamenti v0.50: fonte del catalogo dell'equipaggiamento (lotti in `docs/equipaggiamento-lotti.md`).
