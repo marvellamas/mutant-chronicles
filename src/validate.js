@@ -348,8 +348,13 @@ function validaCorporazioni(c, sigle, nomiAbilita, idSalvezze, car, err) {
   if (!isOggetto(c)) return;
   const F = 'corporazioni';
   const min = car?.valore_minimo, max = car?.valore_massimo;
+  const ids = new Set();
   listaNominata(F, c, 'corporazioni', err).forEach((x, i) => {
     const k = `corporazioni[${i}] (${x.nome})`;
+    // id stabile per file e immagini (img/corporazioni/<id>-96.png, img/sfondi/<id>.jpg)
+    if (!isTesto(x.id) || !/^[a-z0-9-]+$/.test(x.id)) err(F, `${k}.id`, 'id mancante (minuscole, cifre e trattini)');
+    else if (ids.has(x.id)) err(F, `${k}.id`, `id "${x.id}" ripetuto`);
+    else ids.add(x.id);
     const valori = isOggetto(x.caratteristiche) ? x.caratteristiche : {};
     if (!isOggetto(x.caratteristiche)) err(F, `${k}.caratteristiche`, 'valori mancanti');
     for (const s of sigle) {

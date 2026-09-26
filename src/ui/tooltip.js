@@ -9,6 +9,7 @@
 import { h, svuota } from './dom.js';
 import { contenutoTooltip, schedaIncantesimo } from '../descrizioni.js';
 import { classeMacrofamiglia } from '../palette.js';
+import { gruppiPallini, testoLivelloBase } from '../incantesimi.js';
 
 const RITARDO = 300;
 const RITARDO_CHIUSURA = 150;
@@ -48,8 +49,23 @@ export function etichettaMacro(macrofamiglia) {
   return macrofamiglia ? h('span', { class: 'etichetta-macro' }, macrofamiglia) : null;
 }
 
+/**
+ * Pallini del livello base di un incantesimo (dai dati: livello_base), a gruppi di tre, nel colore
+ * della macrofamiglia; «Livello base N: costa almeno N PM» (Magia sez. 1). Stanno su una riga e,
+ * se accanto al nome non c'è posto, vanno a capo tutti insieme: mai troncati.
+ */
+export function pallini(livelloBase) {
+  const gruppi = gruppiPallini(livelloBase);
+  if (!gruppi.length) return null;
+  const t = testoLivelloBase(livelloBase);
+  return h('span', { class: 'pallini-livello', title: t, role: 'img', 'aria-label': t },
+    gruppi.map((n) => h('span', { class: 'gruppo-pallini' }, Array.from({ length: n }, () => h('span', { class: 'pallino' })))));
+}
+
+/** Voce del catalogo di un incantesimo, dal nome. */
+const incantesimoDi = (nome) => dati?.incantesimi?.incantesimi.find((i) => i.nome === nome) ?? null;
 /** Macrofamiglia di un incantesimo del catalogo, dal nome. */
-const macroDi = (nome) => dati?.incantesimi?.incantesimi.find((i) => i.nome === nome)?.macrofamiglia ?? null;
+const macroDi = (nome) => incantesimoDi(nome)?.macrofamiglia ?? null;
 
 /** Elenco di nomi con tooltip separati da virgole. */
 export function elencoInfo(tipo, nomi) {
@@ -145,7 +161,7 @@ function mostra(el) {
   // incantesimi: tinta e barra laterale della macrofamiglia (css/palette.css)
   const macro = el.dataset.infoTipo === 'incantesimo' ? macroDi(el.dataset.infoId) : null;
   riquadro.className = `tooltip${macro ? ` tooltip-incantesimo ${classeMacrofamiglia(macro)}` : ''}`;
-  svuota(riquadro, contenuto(c, el.dataset.infoId, macro));
+  svuota(riquadro, contenuto(c, el.dataset.infoId, macro, macro ? incantesimoDi(el.dataset.infoId)?.livello_base : null));
   riquadro.hidden = false;
   riquadro.scrollTop = 0;
   el.setAttribute('aria-describedby', 'tooltip');
@@ -153,9 +169,9 @@ function mostra(el) {
   posiziona(el);
 }
 
-function contenuto(c, id, macro = null) {
+function contenuto(c, id, macro = null, livelloBase = null) {
   return [
-    h('p', { class: 'tooltip-titolo' }, c.titolo, macro ? ' ' : null, etichettaMacro(macro)),
+    h('p', { class: 'tooltip-titolo' }, c.titolo, macro ? ' ' : null, pallini(livelloBase), livelloBase ? ' ' : null, etichettaMacro(macro)),
     c.sottotitolo ? h('p', { class: 'tooltip-sottotitolo' }, c.sottotitolo) : null,
     c.sezioni.map((s) => paragrafi(s.testo, s.etichetta)),
     c.tabella ? h('div', { class: 'tooltip-tabella' },
@@ -221,7 +237,7 @@ export function apriScheda(nome) {
   const macro = macroDi(nome);
   pannello.replaceChildren(h('div', { class: `pannello-contenuto ${classeMacrofamiglia(macro)}`.trim() },
     h('header', { class: 'pannello-testa' },
-      h('h2', { id: 'pannello-titolo' }, s.titolo, macro ? ' ' : null, etichettaMacro(macro)),
+      h('h2', { id: 'pannello-titolo' }, s.titolo, macro ? ' ' : null, pallini(incantesimoDi(nome)?.livello_base), ' ', etichettaMacro(macro)),
       h('button', { type: 'button', class: 'btn tondo chiudi', 'aria-label': 'Chiudi', onclick: () => pannello.close() }, '×')),
     h('p', { class: 'tooltip-sottotitolo' }, s.intestazione),
     paragrafi(s.lancio),

@@ -3,7 +3,8 @@ import { h, segno, dadi } from './dom.js';
 import { validaScelte } from '../calc.js';
 import { eTaumaturgo, specTiroPuntiEroe, CAMPI_ANAGRAFICA } from '../character.js';
 import { statoIncantesimi, motivoBloccoIncantesimo, regoleIncantesimi } from '../incantesimi.js';
-import { info, elencoInfo, etichettaMacro } from './tooltip.js';
+import { info, elencoInfo, etichettaMacro, pallini } from './tooltip.js';
+import { stemma } from './immagini.js';
 import { classeMacrofamiglia } from '../palette.js';
 import { componenteTiro } from './tiro.js';
 import { campoRitratto } from './ritratto.js';
@@ -180,7 +181,7 @@ function passoCorporazione(ctx) {
     h('div', { class: 'griglia-carte' }, ctx.dati.corporazioni.corporazioni.map((c) => {
       const sel = ctx.scelte.corporazione === c.nome;
       return carta(sel,
-        h('header', {}, h('h3', {}, c.nome), bottoneScelta(sel, () => ctx.aggiorna({ corporazione: c.nome }))),
+        h('header', {}, h('h3', { class: 'titolo-con-stemma' }, stemma(c.nome, '96', { classe: 'stemma-carta', alt: '', lato: 56 }), c.nome), bottoneScelta(sel, () => ctx.aggiorna({ corporazione: c.nome }))),
         tabellaValori(ctx, c.caratteristiche),
         h('p', {}, h('strong', {}, 'Abilità +1: '), elencoInfo('abilita', c.abilita_bonus)),
         h('p', {}, h('strong', {}, 'Salvezze: '), bonusSalvezze(ctx, c.salvezze)),
@@ -391,7 +392,7 @@ function passoIncantesimi(ctx) {
             const motivo = motivoBloccoIncantesimo(i, st, scelte);
             return h('label', { class: `incantesimo ${classeMacrofamiglia(m.nome)}${motivo ? ' bloccato' : ''}` },
               h('input', { type: 'checkbox', checked: preso, disabled: !!motivo, onchange: (e) => cambia(i.nome, e.target.checked) }),
-              h('span', {}, h('strong', {}, info('incantesimo', i.nome)), ' ', etichettaMacro(m.nome), h('small', {}, ` liv. base ${i.livello_base} · scheda ${i.scheda}, p. ${i.pagina}`),
+              h('span', {}, h('strong', {}, info('incantesimo', i.nome)), ' ', pallini(i.livello_base), ' ', etichettaMacro(m.nome), h('small', {}, ` liv. base ${i.livello_base} · scheda ${i.scheda}, p. ${i.pagina}`),
                 motivo ? h('small', { class: 'motivo' }, motivo) : null));
           }));
       }))),

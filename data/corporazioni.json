@@ -1,9 +1,10 @@
 {
   "versione_manuale": "Giocatore 0.43",
   "fonte": "§2.9 (valori e Abilità +1), §2.9.1–2.9.7 (testi), §2.11 (Salvezze)",
-  "_nota": "L'Alleanza non è una scelta iniziale (§2.9).",
+  "_nota": "L'Alleanza non è una scelta iniziale (§2.9). «id»: nome stabile per file e immagini (img/corporazioni/<id>-96.png, img/sfondi/<id>.jpg); «imperial» come negli Armamenti.",
   "corporazioni": [
     {
+      "id": "bauhaus",
       "nome": "Bauhaus",
       "caratteristiche": {
         "FOR": 5,
@@ -32,6 +33,7 @@
       "cultura": "Gerarchica, formale, orientata alla strategia."
     },
     {
+      "id": "capitol",
       "nome": "Capitol",
       "caratteristiche": {
         "FOR": 5,
@@ -60,6 +62,7 @@
       "cultura": "Patriottica, competitiva, orientata al successo."
     },
     {
+      "id": "cybertronic",
       "nome": "Cybertronic",
       "caratteristiche": {
         "FOR": 4,
@@ -88,6 +91,7 @@
       "cultura": "Fredda, razionale, orientata all’efficienza."
     },
     {
+      "id": "fratellanza",
       "nome": "Fratellanza",
       "caratteristiche": {
         "FOR": 5,
@@ -116,6 +120,7 @@
       "cultura": "Ascetica, disciplinata, moralmente rigorosa."
     },
     {
+      "id": "imperial",
       "nome": "Imperiali",
       "caratteristiche": {
         "FOR": 6,
@@ -144,6 +149,7 @@
       "cultura": "Spartana, pragmatica, orientata al combattimento."
     },
     {
+      "id": "mishima",
       "nome": "Mishima",
       "caratteristiche": {
         "FOR": 5,
@@ -172,6 +178,7 @@
       "cultura": "Codice d’onore rigoroso, equilibrio tra spirito e tecnica."
     },
     {
+      "id": "freelance",
       "nome": "Freelance",
       "caratteristiche": {
         "FOR": 5,

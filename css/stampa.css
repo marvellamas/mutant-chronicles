@@ -157,3 +157,13 @@ body.vista-stampa main { max-width: none; padding: 0; margin: 0; }
 .anagrafica-stampa { display: grid; grid-template-columns: auto 1fr; gap: 0 3mm; margin: 0; }
 .anagrafica-stampa dt { font-weight: 600; padding-top: 1.2mm; }
 .anagrafica-stampa dd { margin: 0; padding-top: 1.2mm; border-bottom: 0.5pt solid var(--linea-tenue); min-height: 4.5mm; }
+
+/* Stemma e badge di pagina: sono <img>, quindi escono anche senza «grafica di sfondo» */
+.figura { display: contents; }
+.foglio-titolo .badge-foglio { margin-right: 1.2mm; }
+.badge-foglio { width: 1.2em; height: 1.2em; object-fit: contain; vertical-align: -0.28em; } /* dentro la riga della testata: non ruba spazio al foglio */
+.foglio h1 .stemma-foglio { width: 16mm; height: 16mm; object-fit: contain; vertical-align: middle; margin-right: 2.5mm; }
+/* pallini del livello base, in nero */
+.foglio .pallino { background: var(--inchiostro); width: 1.3mm; height: 1.3mm; }
+.foglio .pallini-livello { gap: 0.9mm; cursor: auto; }
+.foglio .gruppo-pallini { gap: 0.4mm; }

@@ -917,3 +917,30 @@ body.con-sfondo::before {
   background: var(--img-sfondo) center / cover no-repeat; opacity: 0.12;
 }
 @media (prefers-color-scheme: dark) { body.con-sfondo::before { opacity: 0.16; } }
+
+/* ---------------------------------------------------------------- stemmi, icone delle pagine, filigrana */
+/* Immagini generate da tools/genera_immagini.py (img/immagini.json); senza file resta il testo/emoji */
+.figura { display: contents; }
+.titolo-con-stemma { display: flex; align-items: center; gap: 0.5rem; }
+.stemma-testa { width: 40px; height: 40px; flex: none; object-fit: contain; }
+.stemma-carta { width: 56px; height: 56px; flex: none; object-fit: contain; }
+.carta header .titolo-con-stemma { margin: 0; }
+.tab-icona-img { width: 30px; height: 30px; flex: none; object-fit: contain; }
+.titolo-tab { display: flex; align-items: center; gap: 0.6rem; margin: 0.25rem 0 0.5rem; }
+.titolo-tab h2 { margin: 0; }
+.badge-pagina { width: 48px; height: 48px; flex: none; object-fit: contain; }
+@media (max-width: 480px) {
+  .stemma-testa { width: 32px; height: 32px; }
+  .tab-icona-img { width: 28px; height: 28px; }
+}
+/* filigrana in Identità: stemma grigio nell'angolo, dietro il contenuto e mai sopra le card */
+.tab-pannello.con-filigrana { position: relative; isolation: isolate; }
+.filigrana-contenitore { position: absolute; top: 0; right: 0; z-index: -1; pointer-events: none; }
+.filigrana { display: block; width: min(45vw, 360px); height: auto; opacity: 0.07; }
+@media (prefers-color-scheme: dark) { .filigrana { opacity: 0.05; } }
+
+/* ---------------------------------------------------------------- pallini del livello base (Magia sez. 1) */
+/* un pallino per livello, a gruppi di tre, nel colore della macrofamiglia; atomici: vanno a capo interi */
+.pallini-livello { display: inline-flex; gap: 0.3em; align-items: center; vertical-align: 0.05em; white-space: nowrap; cursor: help; }
+.gruppo-pallini { display: inline-flex; gap: 0.14em; }
+.pallino { display: inline-block; width: 0.42em; height: 0.42em; border-radius: 50%; background: var(--macro, currentColor); }

@@ -17,6 +17,7 @@ import { renderRiepilogo } from './riepilogo.js';
 import { renderSali } from './sali.js';
 import { renderStampa, esciDallaStampa } from './stampa.js';
 import { cercaSfondi, applicaSfondo } from './sfondi.js';
+import { caricaImmagini } from './immagini.js';
 import { preparaStampa, preparaTab } from '../stampa.js';
 import { renderTab } from './tab.js';
 import {
@@ -71,7 +72,8 @@ async function avvia() {
   if (risultato.errori.length) return mostraErroriDati(risultato.errori);
   stato.avvisiDati = risultato.avvisi ?? [];
   inizializzaTooltip(stato.dati);
-  stato.sfondi = await cercaSfondi(stato.dati.corporazioni.corporazioni.map((c) => c.nome));
+  await caricaImmagini(stato.dati);
+  stato.sfondi = cercaSfondi(stato.dati.corporazioni.corporazioni);
   window.addEventListener('hashchange', daIndirizzo);
   // I menu della scheda (Azioni, impostazioni) si chiudono toccando altrove
   document.addEventListener('click', (e) => {
@@ -597,6 +599,7 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
     sfondi: stato.sfondi,
     sfondo: impostazioni.sfondo,
     ritrattoIntestazione: impostazioni.ritrattoIntestazione,
+    filigrana: impostazioni.filigranaCorporazione,
     puoAnnullareSessione: !!stato.sessionePrecedente,
     motivoNoSalita: !schedaCreazione.completa ? 'Completa la creazione prima di salire di livello.'
       : tab.errori.length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
@@ -662,6 +665,10 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       },
       ritrattoIntestazione: (valore) => {
         archivio.salvaImpostazioni({ ...archivio.leggiImpostazioni(), ritrattoIntestazione: valore });
+        renderScheda({ mantieniScorrimento: true });
+      },
+      filigrana: (valore) => {
+        archivio.salvaImpostazioni({ ...archivio.leggiImpostazioni(), filigranaCorporazione: valore });
         renderScheda({ mantieniScorrimento: true });
       },
     },

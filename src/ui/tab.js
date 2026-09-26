@@ -5,7 +5,8 @@
 // Le penalità di Ferite, Affaticamento e Stati sono solo promemoria: i VA mostrati non le
 // includono (le regole del cap. 5 sono situazionali).
 import { h, segno } from './dom.js';
-import { info, infoValore, etichettaMacro } from './tooltip.js';
+import { info, infoValore, etichettaMacro, pallini } from './tooltip.js';
+import { stemma, iconaPagina } from './immagini.js';
 import { classeMacrofamiglia } from '../palette.js';
 import { formulaScomposizione } from '../condizioni.js';
 import { colore, riempimento, condizioniAttiveAbilita } from '../interfaccia.js';
@@ -43,7 +44,8 @@ export function renderTab(ctx) {
   const barra = h('header', { class: `barra-scheda${conSfondo ? ' con-ritratto' : ''}`, style: conSfondo ? `--ritratto: url("${ritratto}")` : null },
     ritratto ? h('img', { class: 'ritratto-testa', src: ritratto, alt: '' }) : null,
     h('div', { class: 'barra-titolo' },
-      h('h1', {}, id.nome),
+      // stemma della Corporazione accanto al nome (img/corporazioni/<id>-96; senza file, niente)
+      h('h1', { class: 'titolo-con-stemma' }, stemma(id.corporazione, '96', { classe: 'stemma-testa', alt: '', lato: 40 }), id.nome),
       h('p', {}, h('strong', {}, `${id.livello}° livello`), ` · ${id.corporazione} · ${id.addestramento} · ${id.classi.map((c) => `${c.nome} ${c.grado}`).join(', ')}`),
       // riepilogo sempre visibile, in ogni tab: PV e PM attuali con la barra
       h('div', { class: 'riepilogo-risorse' },
@@ -63,10 +65,17 @@ export function renderTab(ctx) {
       type: 'button', role: 'tab', id: `tab-${t.id}`, class: `tab-bottone${t.id === corrente.id ? ' attiva' : ''}`,
       'aria-selected': String(t.id === corrente.id), 'aria-controls': 'pannello-tab',
       onclick: () => azioni.vaiTab(t.id),
-    }, h('span', { class: 'tab-icona', 'aria-hidden': 'true' }, ICONE_TAB[t.id] ?? '•'), h('span', { class: 'tab-etichetta' }, t.titolo)))));
+    }, iconaPagina(t.id, '96', { classe: 'tab-icona-img', lato: 30 }) ?? h('span', { class: 'tab-icona', 'aria-hidden': 'true' }, ICONE_TAB[t.id] ?? '•'),
+    h('span', { class: 'tab-etichetta' }, t.titolo)))));
 
   const contenuti = { identita: tabIdentita, abilita: tabAbilita, combattimento: tabCombattimento, magia: tabMagia };
-  const pannello = h('section', { class: 'tab-pannello', id: 'pannello-tab', role: 'tabpanel', 'aria-labelledby': `tab-${corrente.id}` },
+  // badge della pagina accanto al titolo della tab (solo con l'immagine: senza, il titolo è già nella barra delle tab)
+  const badge = iconaPagina(corrente.id, '96', { classe: 'badge-pagina', lato: 48 });
+  // filigrana: stemma in grigio nell'angolo di Identità (ingranaggio, predefinito sì)
+  const filigrana = corrente.id === 'identita' && ctx.filigrana !== false ? stemma(id.corporazione, '512-grigio', { classe: 'filigrana', alt: '' }) : null;
+  const pannello = h('section', { class: `tab-pannello${filigrana ? ' con-filigrana' : ''}`, id: 'pannello-tab', role: 'tabpanel', 'aria-labelledby': `tab-${corrente.id}` },
+    filigrana ? h('div', { class: 'filigrana-contenitore', 'aria-hidden': 'true' }, filigrana) : null,
+    badge ? h('div', { class: 'titolo-tab' }, badge, h('h2', {}, corrente.titolo)) : null,
     ctx.messaggio ? h('p', { class: `riquadro ${ctx.messaggio.tipo}`, role: 'status' }, ctx.messaggio.testo) : null,
     tab.errori?.length ? h('div', { class: 'riquadro attenzione' },
       h('p', {}, h('strong', {}, 'Scheda non ancora completa:')),
@@ -112,6 +121,11 @@ function menuImpostazioni(ctx) {
         [{ id: 'nessuno', nome: 'Nessuno' }, ...ctx.sfondi].map((s) => h('label', { class: 'scelta-radio' },
           h('input', { type: 'radio', name: 'sfondo-scheda', value: s.id, checked: (ctx.sfondo ?? 'nessuno') === s.id, onchange: () => ctx.azioni.sfondo(s.id) }),
           ` ${s.nome}`))) : null,
+      h('fieldset', {},
+        h('legend', {}, 'Filigrana'),
+        h('label', { class: 'scelta-radio' },
+          h('input', { type: 'checkbox', checked: ctx.filigrana !== false, onchange: (e) => ctx.azioni.filigrana(e.target.checked) }),
+          ' Filigrana Corporazione in Identità')),
       h('fieldset', {},
         h('legend', {}, 'Ritratto'),
         h('label', { class: 'scelta-radio' },
@@ -697,7 +711,7 @@ function tabMagia(ctx, d) {
       mf.specializzazioni.map((sp) => h('div', { class: 'incantesimi-griglia' },
         h('h3', { class: 'spec' }, sp.nome),
         sp.incantesimi.map((i) => h('article', { class: `incantesimo-scheda ${classeMacrofamiglia(mf.nome)}` },
-          h('h4', {}, info('incantesimo', i.nome), ' ', etichettaMacro(mf.nome), h('span', { class: 'sigla' }, ` · livello base ${i.livelloBase} · scheda ${i.scheda}`)),
+          h('h4', {}, info('incantesimo', i.nome), ' ', pallini(i.livelloBase), ' ', etichettaMacro(mf.nome), h('span', { class: 'sigla' }, ` · livello base ${i.livelloBase} · scheda ${i.scheda}`)),
           i.intestazione ? h('p', { class: 'piccolo' }, i.intestazione) : null,
           i.lancio ? h('p', { class: 'piccolo' }, i.lancio) : null,
           i.righe.length ? h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },

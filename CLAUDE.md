@@ -56,7 +56,8 @@ src/
   ui/           wizard a passi (fasi 0–9 del §2.0), scheda a tab, Sali di livello, stampa, import/export
 data/           JSON delle regole (fonte di verità): 10 file in data/, catalogo in data/equipaggiamento/ (index.json + 14 file)
 tests/          node --test; tests/collaudo/ tre personaggi di riferimento con PDF
-tools/          estrazione dai manuali, generatori dei lotti (tools/lotti/), collaudo_pdf.mjs
+tools/          estrazione dai manuali, generatori dei lotti (tools/lotti/), collaudo_pdf.mjs, genera_immagini.py
+img/            stemmi e icone generati (img/immagini.json li elenca); originali in img/originali/, non tracciati
 docs/           studio di fattibilità, lotti, domande e risposte del master, roadmap
 distribuzione/  pacchetto per il master (guida e .bat)
 Manuali/        PDF di partenza dei manuali (riferimento storico). Non modificare. La fonte corrente sono i Google Doc (docs/manuali-drive.md), con il testo in docs/manuali-txt/.

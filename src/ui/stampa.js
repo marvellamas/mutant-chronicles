@@ -5,6 +5,8 @@
 // al carattere minimo, continua su altre pagine (spezzaMagia), con le intestazioni ripetute.
 import { h, segno } from './dom.js';
 import { spezzaMagia, contaIncantesimi } from '../stampa.js';
+import { stemma, iconaPagina } from './immagini.js';
+import { pallini } from './tooltip.js';
 
 const FOGLIO_STILE = 'css/stampa.css';
 const CARATTERE = { iniziale: 9, minimo: 5.5, passo: 0.25, continuazione: 7 }; // pt
@@ -31,7 +33,8 @@ function creaFoglio(id, titolo, dati, piede) {
   return h('section', { class: `foglio foglio-${id}`, 'aria-label': titolo },
     h('div', { class: 'pagina' },
       h('header', { class: 'foglio-testa' },
-        h('span', { class: 'foglio-titolo' }, titolo),
+        // badge della pagina accanto al titolo (un <img>: si stampa anche senza «grafica di sfondo»)
+        h('span', { class: 'foglio-titolo' }, iconaPagina(id, '96', { classe: 'badge-foglio', lato: 48 }), titolo),
         h('span', { class: 'foglio-nome' }, piede.nome)),
       h('div', { class: 'foglio-corpo' }, corpi[id](dati)),
       h('footer', { class: 'foglio-piede' })));
@@ -155,7 +158,7 @@ function foglioIdentita(d) {
   const mov = d.movimento;
   return [
     h('div', { class: 'intestazione-personaggio' },
-      h('h1', {}, d.nome),
+      h('h1', {}, stemma(d.corporazione, '512', { classe: 'stemma-foglio', alt: '' }), d.nome),
       h('p', {}, h('strong', {}, `${d.livello}° livello`), ` · ${d.corporazione} · ${d.addestramento} · `,
         d.classi.map((c) => `${c.nome} ${c.grado}`).join(', '))),
     h('div', { class: 'griglia-identita' },
@@ -283,7 +286,7 @@ function foglioMagia(d) {
         m.specializzazioni.map((sp) => [
           h('h3', { class: 'spec' }, sp.nome, sp.continua ? ' (continua)' : null),
           sp.incantesimi.map((i) => h('article', { class: 'incantesimo-stampa' },
-            h('h4', {}, i.nome, h('span', { class: 'sigla' }, ` · livello base ${i.livelloBase}`)),
+            h('h4', {}, i.nome, ' ', pallini(i.livelloBase), h('span', { class: 'sigla' }, ` · livello base ${i.livelloBase}`)),
             i.intestazione ? h('p', { class: 'piccolo' }, i.intestazione) : null,
             i.lancio ? h('p', {}, i.lancio) : null,
             i.righe.length ? tabella(i.colonne, i.righe, { classe: 'versioni' })

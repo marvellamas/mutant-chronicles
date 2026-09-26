@@ -59,3 +59,19 @@ export function motivoBloccoIncantesimo(incantesimo, stato, scelte) {
   if (stato.liberiUsati < stato.liberi) return null;
   return `Quota ${incantesimo.macrofamiglia} della Classe esaurita e nessun incantesimo libero rimasto.`;
 }
+
+/**
+ * Pallini del livello base di un incantesimo, a gruppi di tre per leggerli a colpo d'occhio:
+ * 1 → [1], 3 → [3], 6 → [3, 3], 9 → [3, 3, 3]; qualunque intero ≥ 1 (7 → [3, 3, 1]).
+ * Magia sez. 1: il livello dichiarato coincide con il costo in PM, quindi il livello base è anche
+ * il costo minimo del lancio. Il numero viene dai dati (livello_base).
+ */
+export function gruppiPallini(livelloBase, perGruppo = 3) {
+  const n = Number.isInteger(livelloBase) && livelloBase > 0 ? livelloBase : 0;
+  const gruppi = [];
+  for (let resto = n; resto > 0; resto -= perGruppo) gruppi.push(Math.min(perGruppo, resto));
+  return gruppi;
+}
+
+/** «Livello base N: costa almeno N PM» (Magia sez. 1). */
+export const testoLivelloBase = (livelloBase) => `Livello base ${livelloBase}: costa almeno ${livelloBase} PM`;

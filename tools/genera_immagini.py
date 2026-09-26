@@ -121,7 +121,7 @@ def main(prova=False):
     print('\n'.join(righe))
     print(f"Totale PNG {totale['png'] / 1024:.0f} KB · WebP {totale['webp'] / 1024:.0f} KB · servito (WebP dove c'è) {totale['servito'] / 1024:.0f} KB")
     if not prova:
-        (RADICE / 'img' / 'immagini.json').write_text(json.dumps(manifesto, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+        (RADICE / 'img' / 'immagini.json').write_bytes((json.dumps(manifesto, ensure_ascii=False, indent=2) + '\n').encode('utf-8'))
         print('scritto img/immagini.json')
 
 
