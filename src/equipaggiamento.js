@@ -248,7 +248,13 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       uid: o.uid, nome: o.nome, tipo: o.tipo, categoria: d?.categoria ?? null, taglia: d?.taglia ?? null,
       ar: d?.ar ?? (Number.isInteger(o.voce.personalizzato?.ar) ? { totale: o.voce.personalizzato.ar, magica: 0 } : null),
       penalita, forRichiesta: d?.for_richiesta ?? null, forMancante, personalizzato: o.personalizzato,
-      mov: d?.mov ?? 0, parata: null, alternative: [], proprieta: d?.proprieta ?? [],
+      mov: d?.mov ?? 0, parata: null, proprieta: d?.proprieta ?? [],
+      // §7.14.2, §7.16.3: armature servoassistite a sistema spento (FOR e penalità proprie), mostrate
+      // come promemoria; il calcolo usa il profilo acceso
+      alternative: o.tipo === 'armatura' ? (d?.profili_alternativi ?? []).map((a) => ({
+        condizione: a.condizione, ar: a.ar ?? null, parata: null, forRichiesta: a.for_richiesta ?? null, penalita: a.penalita ?? null,
+      })) : [],
+      rinforziAmmessi: d?.rinforzi_ammessi ?? null, supporti: d?.supporti ?? null,
     });
     if (o.tipo === 'scudo') {
       // §7.4: il requisito FOR dello Scudo segue il §7.1.6 (Parate e attacchi con lo Scudo), non

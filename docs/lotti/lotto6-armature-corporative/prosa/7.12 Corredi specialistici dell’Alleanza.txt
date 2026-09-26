@@ -1,0 +1,41 @@
+7.12 Corredi specialistici dell’Alleanza
+I cinque corredi sono strumenti Professionali: concedono +2 VA soltanto alle attività indicate. Questo è il
+modificatore complessivo degli strumenti (§1.4.1), non un bonus da sommare a ciascun componente del corredo.
+Restano applicabili i Talenti e le circostanze pertinenti. La Qualità costruttiva Non comune e la PS Integrità 12
+riguardano la resistenza dell’oggetto e non cambiano il livello Professionale.
+Corredo PI Qualità PS INT REP Costo
+Valigetta investigativa ASA 4 Non comune 12 RA 2.000
+Corredo d’intrusione ASA 4 Non comune 12 RA 1.500
+Kit di controsorveglianza ASA 4 Non comune 12 RA 2.500
+Corredo da artificiere dell’Alleanza 6 Non comune 12 RA 2.000
+Kit trauma dell’Alleanza 6 Non comune 12 RA 3.000
+7.12.1 Impieghi dei corredi
+Valigetta investigativa ASA
++2 VA a Percezione per esaminare tracce materiali mediante gli strumenti del corredo e a Scienza per analisi
+preliminari eseguibili con una dotazione portatile. Non concede un bonus generale alla vigilanza e non sostituisce
+un laboratorio completo.
+Corredo d’intrusione ASA
++2 VA a Tecnologia per intervenire su serrature, allarmi e sistemi di accesso raggiungibili e compatibili con gli
+strumenti. Richiede l’accesso materiale e le condizioni necessarie all’intervento; non supera automaticamente i
+sistemi di sicurezza.
+Kit di controsorveglianza ASA
++2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e
+apparecchi accessibili. Non individua automaticamente sorveglianti e non concede un bonus universale a
+Percezione.
+Corredo da artificiere dell’Alleanza
++2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili. Non include cariche esplosive,
+munizioni o componenti destinati a restare installati. Il corredo non sostituisce le competenze del personaggio né
+elimina i rischi delle Prove.
+7.12.2 Kit trauma e materiali sanitari
+Il Kit trauma è il Kit di pronto soccorso Professionale del §7.19. Concede +2 VA a Medicina e comprende cinque
+applicazioni; costo 3.000, ricarica da cinque applicazioni 300. Una medicazione riuscita arresta il Sanguinamento
+e recupera 1d4 PV; un Magistrale raddoppia il risultato del dado. Non cura stati di Ferita o Menomazioni.
+Ogni tentativo consuma un’applicazione all’inizio, anche se fallisce o viene interrotto. Una semplice diagnosi non
+consuma materiali. Esaurite le applicazioni restano disponibili gli strumenti riutilizzabili per le attività che non
+richiedono i materiali mancanti.
+La medicazione richiede un minuto continuativo, oppure due Round consecutivi con Soccorso Immediato del
+Paramedico. Prove, esiti, ripetizioni e raccordi con i Talenti seguono il §7.19.1. Strumentazione Efficace mantiene
+il proprio bonus separato quando applicabile.
+Con strumenti e materiali pertinenti, il corredo soddisfa i requisiti almeno Standard di Triage Estremo e
+Protocollo Shock senza concedere quei Talenti. Le procedure di cura delle Ferite e delle Menomazioni sono nel
+Manuale del Giocatore; il kit non equivale a una struttura sanitaria per Terapia Intensiva.

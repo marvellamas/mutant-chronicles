@@ -1,6 +1,6 @@
 # Catalogo dell'equipaggiamento: lotti da estrarre
 
-Stato al 26 settembre 2026 (lotti 2, 3, 4 e 5 fatti). Fonte: Manuale degli Armamenti v0.50. Metodo: `tools/estrai_manuali.py`
+Stato al 26 settembre 2026 (lotti 2–6 fatti). Fonte: Manuale degli Armamenti v0.50. Metodo: `tools/estrai_manuali.py`
 e `docs/pilota-estrazione-armamenti.md`.
 
 Questa è la lista dei prompt successivi: **un lotto per prompt**, nell'ordine di utilità al
@@ -20,6 +20,7 @@ su quelle pagine: le tabelle impilate contano come una.
 | `armi_distanza.json` | 22 armi a distanza del catalogo Commerciale (lotto 2) | §7.7 | 33–36 |
 | `scudi.json` | 26 scudi commerciali e corporativi (lotto 3) | §7.4 | 23–30 |
 | `armi_corporative.json` | 39 armi ravvicinate dei cataloghi corporativi (lotto 4) | §7.1.9 | 11–17 |
+| `armature_corporative.json` | 83 armature dei cataloghi corporativi, esoscheletri compresi (lotto 6) | §7.11.5–7.17.5 | 64–103 |
 | `armi_distanza_corporative.json` | 81 armi a distanza corporative, 19 moduli integrati, 6 munizioni di riferimento (lotto 5) | §7.8 | 36–52 |
 
 Da completare nello stesso ambito, a basso costo:
@@ -253,18 +254,51 @@ In ordine di peso:
     - il validatore controlla `modulo_di`, i campi null dei moduli e la munizione di riferimento.
   - **Dubbi per Davide:** Specializzazione di 16 armi (A.11) e conferma di quelle date per
     analogia con il §7.7 (A.12). In B aggiunto «Imperiali» anche nel §7.8.
-- **Armature corporative:**
-  - §7.11.5 Armature Bauhaus (pp. 64–66);
-  - §7.11.6 Esoscheletri Bauhaus (p. 67);
-  - §7.11.7–7.11.8 Alleanza (pp. 67–69);
-  - §7.13.1–7.13.3 Capitol (pp. 71–74);
-  - §7.14.1–7.14.3 Imperial (pp. 80–82);
-  - §7.15.2–7.15.3 Cybertronic (p. 91);
-  - §7.16.1–7.16.4 Mishima (pp. 95–97);
-  - §7.17.2–7.17.5 Fratellanza (pp. 100–103).
+- ✔ **Armature corporative** — §7.11.5–7.17.5, pp. 64–103 (lotto 6, fatto il 26 settembre 2026,
+  commit «Lotto 6 del catalogo: armature corporative»). Comprende Bauhaus con gli esoscheletri
+  (§7.11.5–7.11.6), Alleanza (§7.11.7), Capitol (§7.13.1–7.13.3), Imperial (§7.14.1–7.14.3),
+  Cybertronic (§7.15.2–7.15.3), Mishima (§7.16.1–7.16.4) e Fratellanza (§7.17.2–7.17.5).
+  - **Fonte:** `docs/lotti/lotto6-armature-corporative/`:
+    - `grezzo/`: i 55 CSV delle pp. 63–103, di cui il lotto legge 22;
+    - `prosa/`: i paragrafi 7.11–7.17 da `--prosa`;
+    - `pulito/armature_corporative.csv`.
 
-  Servono: AR magica, proprietà native (Mimetismo X, Discreta, Assetto da pattuglia…, §7.11.4
-  p. 63) e le penalità proprie dei modelli iconici (§7.17.4 Penalità effettive, p. 102).
+    Generatore `tools/lotti/lotto6_armature_corporative.mjs`, dati
+    `data/equipaggiamento/armature_corporative.json` (83 armature).
+  - **Estrazione:** **166 righe su 166 giuste al primo colpo**, cioè profilo e dati economici di
+    83 modelli; **0 correzioni a mano** sui valori.
+    - Il generatore controlla ogni riga contro il testo in prosa, che è un'estrazione
+      indipendente dello stesso PDF: si ferma se una riga non compare identica.
+    - 17 righe di continuazione unite: «AR / magica» degli esoscheletri, «Pesante /
+      servoassistita» della Felis e i nomi lunghi nelle tabelle dei rinforzi.
+  - **Penalità effettive:** categoria del §7.11.1 più gli effetti delle proprietà. Gli effetti
+    sono: Assetto da pattuglia/incursione/anfibio → MOV 0; Articolazione d'assalto → +1 ravv.;
+    Articolazione da/di tiro → +1 dist.; Articolazione da ricognizione → Agilità 0; Assetto
+    mistico X → +X al lancio.
+    - 77 modelli calcolati così; le 14 righe della tabella del §7.17.4 (Fratellanza) tornano
+      tutte.
+    - Le armature servoassistite (Felis, Powersuit, Shoa Ace Custom, Demonhunter) usano le
+      tabelle del manuale, con il profilo a sistema spento come `profili_alternativi`.
+    - Gli esoscheletri Bauhaus usano MOV della tabella e −5 al lancio (§7.11.6).
+  - **Proprietà:** 81 modelli dal testo e 2 scritti a mano (gli esoscheletri Bauhaus, che le
+    elencano nel testo comune).
+    - Per Bauhaus e Alleanza vale solo la dichiarazione «Proprietà: …», perché il testo nomina
+      anche proprietà assenti («senza Articolazione d'assalto»).
+    - Le definizioni sono quelle del §7.11.4, del §7.16.3 e del §7.17.1. 18 proprietà proprie
+      di un modello (SIN, Protezione climatica, Tenuta subacquea…) prendono le frasi del modello
+      che le spiegano.
+  - **Rinforzi ammessi:** dalle tabelle Capitol, Imperial e Mishima; i nomi abbreviati si
+    confrontano con il nome corto o con una parola unica del modello. Per gli altri cataloghi
+    dalle frasi del testo. I kit di rinforzo non sono ancora oggetti del catalogo (vedi «Da
+    completare»).
+  - **Restano testo, senza calcolo:** bonus condizionati (Mimetismo, SIN, Antiesplosione,
+    Colpo assistito a sistema acceso, Imbracatura da artigliere) e le regole di pilotaggio degli
+    esoscheletri. Le tabelle di reparto e di assegnazione restano nella prosa.
+  - **Schema esteso:** `rinforzi_ammessi` e `profili_alternativi` (FOR e penalità) validati
+    anche per le armature; `supporti` degli esoscheletri. Scheda, stampa e tooltip mostrano il
+    profilo a sistema spento, le penalità effettive e i rinforzi ammessi.
+  - **Dubbi per Davide:** nessuno nuovo. In B tre incoerenze di nome (Articolazione da/di tiro,
+    Manutenzione semplice/agevolata, titolo Bauhaus senza virgola).
 - **Corredi e dispositivi corporativi:** Propulsore Banshee e Paracadute Capitol
   (§7.13.4–7.13.5, pp. 74–75, con tabelle «Voce / Regola»), Esoscheletro APE (§7.13.6),
   corredi da campo e dotazioni per reparto (§7.13.7–7.13.9, §7.14.8–7.14.9, §7.16.5–7.16.6,

@@ -1,0 +1,3840 @@
+{
+  "versione_manuale": "Armamenti 0.50",
+  "fonte": "Manuale degli Armamenti v0.50: armature dei cataloghi Bauhaus (§7.11.5–7.11.6), Alleanza (§7.11.7), Capitol (§7.13.1–7.13.3), Imperial (§7.14.1–7.14.3), Cybertronic (§7.15.2–7.15.3), Mishima (§7.16.1–7.16.4) e Fratellanza (§7.17.2–7.17.5), pp. 64–103; lotto 6",
+  "_nota": "Generato da tools/lotti/lotto6_armature_corporative.mjs; da qui in poi si modifica questo file. «penalita» sono le penalità effettive del modello (categoria del §7.11.1 con gli effetti delle proprietà native), prima di rinforzi e FOR insufficiente. «profili_alternativi» delle armature servoassistite: il profilo a sistema spento, con FOR e penalità proprie. I rinforzi non sono ancora nel catalogo: «rinforzi_ammessi» dice solo quali kit accetta il modello.",
+  "note_per_catalogo": {
+    "Alleanza": "Marte, Vulcano e Mercurio comprendono AR magica 1 nel totale e possiedono Protezione occulta 1. Il beneficio alla PS Magia è passivo e vale una sola volta contro Oscura Simmetria, Corruzione o Paura, nei limiti del §7.11.4. Le due divise ASA non hanno questi benefici mistici.",
+    "Fratellanza": "AR magica e protezioni occulte indicate sono passive mentre l’armatura è indossata e non richiedono Sintonizzazione (§7.17)."
+  },
+  "oggetti": [
+    {
+      "id": "armatura-della-milizia-ducale",
+      "nome": "Armatura della Milizia Ducale",
+      "tipo": "armatura",
+      "catalogo": "Bauhaus",
+      "famiglia": "Fanteria e reparti operativi",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione delle riserve mobilitate. Proprietà: Manutenzione semplice. Accetta Rinforzi Leggeri oppure Pesanti, con le regole della Leggera commerciale.",
+      "paragrafo": "§7.11.5",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 1,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1800,
+      "rinforzi_ammessi": [
+        "Leggero",
+        "Pesante"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Manutenzione semplice",
+          "testo": "Concede +1 VA alle Prove di Tecnologia per riparare quell’armatura. Restano necessari strumenti e materiali adatti; la proprietà non abbrevia automaticamente i tempi e non aumenta i PI ripristinati (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "corazza-ussara-hussar-mk-i",
+      "nome": "Corazza Ussara Hussar Mk I",
+      "tipo": "armatura",
+      "catalogo": "Bauhaus",
+      "famiglia": "Fanteria e reparti operativi",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione della fanteria di linea. Proprietà: Struttura robusta, già inclusa nei 10 PI; Imbottita 1. Accetta soltanto Rinforzi Leggeri: AR 4, FOR 6, penalità Media.",
+      "paragrafo": "§7.11.5",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 10,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 5000,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": -1,
+        "agilita": -1,
+        "movimento_q": -1,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
+        },
+        {
+          "nome": "Imbottita 1",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "corazza-dei-dragoni-wolfheads",
+      "nome": "Corazza dei Dragoni Wolfheads",
+      "tipo": "armatura",
+      "catalogo": "Bauhaus",
+      "famiglia": "Fanteria e reparti operativi",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione pesante dei Wolfheads. Proprietà: Ignifuga 2, Stabile 2, Interfaccia da equipaggio 1. Mantiene tutte le penalità Pesanti, senza Articolazione d’assalto. Non accetta rinforzi esterni.",
+      "paragrafo": "§7.11.5",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Pesante",
+      "ar": {
+        "totale": 5,
+        "magica": 0
+      },
+      "for_richiesta": 7,
+      "pi": 12,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 12000,
+      "rinforzi_ammessi": [],
+      "penalita": {
+        "attacchi_distanza": -2,
+        "attacchi_ravvicinati": -2,
+        "agilita": -2,
+        "movimento_q": -2,
+        "lancio_potere": -5
+      },
+      "proprieta": [
+        {
+          "nome": "Ignifuga 2",
+          "testo": "Contromisura del §5.24 contro Fuoco: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Stabile 2",
+          "testo": "Concede +2 alla Prova di Caratteristica FOR o DES richiesta contro Sbilanciante. Non è una Prova Salvezza e non si estende automaticamente ad altri tentativi di mantenere l’equilibrio o agli spostamenti di Sbalzante. Più proprietà Stabile applicabili, comprese quelle di scudo e armatura, non si sommano: si usa il valore maggiore (§7.4.3, §7.11.4)."
+        },
+        {
+          "nome": "Interfaccia da equipaggio 1",
+          "testo": "Concede +1 VA alle Prove di Pilotare di mezzi terrestri corazzati quando la protezione è collegata a comandi compatibili e alimentati. Non concede bonus agli attacchi (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "armatura-dei-ranger-venusiani",
+      "nome": "Armatura dei Ranger Venusiani",
+      "tipo": "armatura",
+      "catalogo": "Bauhaus",
+      "famiglia": "Fanteria e reparti operativi",
+      "nomi_alternativi": [],
+      "note_manuale": "Proprietà: Assetto da pattuglia, Mimetica ambientale 1, Filtro respiratorio 2. La livrea si sceglie per l’ambiente operativo; i diversi ambienti non cambiano profilo o costo. MOV dell’armatura 0; le altre penalità Medie restano. Accetta soltanto Rinforzi Leggeri: AR 4, FOR 6.",
+      "paragrafo": "§7.11.5",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 8000,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": -1,
+        "agilita": -1,
+        "movimento_q": 0,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Assetto da pattuglia",
+          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4)."
+        },
+        {
+          "nome": "Mimetica ambientale 1",
+          "testo": "Concede +1 VA alla Prova unica di Furtività nell’ambiente per il quale la mimetica è predisposta, quando esistono condizioni concrete per nascondersi. Si sceglie l’ambiente della livrea, per esempio artico, boscoso, desertico o urbano. Non rende invisibili e non elimina i rumori prodotti; le limitazioni specifiche del modello restano valide (§7.11.4)."
+        },
+        {
+          "nome": "Filtro respiratorio 2",
+          "testo": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata. Richiede aria respirabile; non costituisce una riserva d’ossigeno né una tenuta per vuoto o immersione (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "armatura-d-assalto-blitzer",
+      "nome": "Armatura d’assalto Blitzer",
+      "tipo": "armatura",
+      "catalogo": "Bauhaus",
+      "famiglia": "Fanteria e reparti operativi",
+      "nomi_alternativi": [],
+      "note_manuale": "Proprietà: Antiesplosione 1, Ignifuga 2, Articolazione d’assalto, Assetto da incursione. Penalità ravvicinata 0 e MOV 0; restano −1 agli attacchi a distanza e ad Agilità, −3 al lancio. Accetta soltanto Rinforzi Leggeri: AR 4, FOR 6. Le specialità anticarro degli Incursori Bauhaus utilizzano questo profilo nell’adattamento.",
+      "paragrafo": "§7.11.5",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 9500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": 0,
+        "agilita": -1,
+        "movimento_q": 0,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Antiesplosione 1",
+          "testo": "Aumenta di 1 l’AR fornita dall’armatura contro danni Naturali o Magici di esplosioni, comprese granate, razzi e cariche da demolizione. Si applica a ciascuna applicazione di danno dell’esplosione e non protegge dal danno Etereo. Fra Antiesplosione di scudo e armatura si usa soltanto il valore maggiore (§7.4.3, §7.11.4)."
+        },
+        {
+          "nome": "Ignifuga 2",
+          "testo": "Contromisura del §5.24 contro Fuoco: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Articolazione d’assalto",
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+        },
+        {
+          "nome": "Assetto da incursione",
+          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "tuta-delle-etoiles-mortants",
+      "nome": "Tuta delle Étoiles Mortants",
+      "tipo": "armatura",
+      "catalogo": "Bauhaus",
+      "famiglia": "Fanteria e reparti operativi",
+      "nomi_alternativi": [],
+      "note_manuale": "Proprietà unica: Mimetismo 2. AR 2 è nativa e conserva categoria Leggera e FOR 3. Accetta soltanto Rinforzi Leggeri: AR 3, FOR 4, penalità Media. La tuta non concede automaticamente addestramento, capacità delle doppie lame o poteri dell’Arte.",
+      "paragrafo": "§7.11.5",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 6500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Mimetismo 2",
+          "testo": "Concede +2 VA alla Prova unica di Furtività per nascondersi o muoversi senza essere individuati, quando esistono condizioni concrete per farlo. Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "armatura-d-ordinanza-bleu",
+      "nome": "Armatura d’ordinanza BLEU",
+      "tipo": "armatura",
+      "catalogo": "Bauhaus",
+      "famiglia": "Fanteria e reparti operativi",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione leggera del corpo di polizia corporativa. Proprietà: Imbottita 2 e Isolante 2. Il Soprabito blu di ordinanza è un Rinforzo Leggero opzionale, con AR +1, FOR +1, PI 6, Qualità Comune, PS 10, REP NC e costo 1.000. Con il Soprabito: AR 3, FOR 5, penalità Media e costo totale 5.500. Occupa l’unico posto per rinforzi.",
+      "paragrafo": "§7.11.5",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 4,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 4500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Isolante 2",
+          "testo": "Contromisura del §5.24 contro Elettricità: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "armatura-dell-artillery-korps",
+      "nome": "Armatura dell’Artillery Korps",
+      "tipo": "armatura",
+      "catalogo": "Bauhaus",
+      "famiglia": "Fanteria e reparti operativi",
+      "nomi_alternativi": [],
+      "note_manuale": "Per artiglieri e squadre mortai. Proprietà: Antiesplosione 1 e Protezione acustica 2. Accetta soltanto Rinforzi Leggeri: AR 4, FOR 6. I bonus non migliorano direttamente gli attacchi con le armi di supporto.",
+      "paragrafo": "§7.11.5",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 6500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": -1,
+        "agilita": -1,
+        "movimento_q": -1,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Antiesplosione 1",
+          "testo": "Aumenta di 1 l’AR fornita dall’armatura contro danni Naturali o Magici di esplosioni, comprese granate, razzi e cariche da demolizione. Si applica a ciascuna applicazione di danno dell’esplosione e non protegge dal danno Etereo. Fra Antiesplosione di scudo e armatura si usa soltanto il valore maggiore (§7.4.3, §7.11.4)."
+        },
+        {
+          "nome": "Protezione acustica 2",
+          "testo": "Concede +2 alla Prova Salvezza espressamente richiesta contro un effetto sonoro o un rumore dannoso. Non è un bonus generale contro esplosioni (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "armatura-da-cavalleria-vorreiter",
+      "nome": "Armatura da cavalleria Vorreiter",
+      "tipo": "armatura",
+      "catalogo": "Bauhaus",
+      "famiglia": "Fanteria e reparti operativi",
+      "nomi_alternativi": [],
+      "note_manuale": "Proprietà: Imbottita 2 e Imbracatura da sella 1. La motocicletta è un mezzo separato. Accetta soltanto Rinforzi Leggeri: AR 3, FOR 5, penalità Media.",
+      "paragrafo": "§7.11.5",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 4,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 5000,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Imbracatura da sella 1",
+          "testo": "Concede +1 VA alle Prove di Pilotare già richieste per mantenere il controllo della motocicletta dopo un urto o evitare di essere disarcionati, mentre è agganciata a una sella compatibile. Non introduce una Prova quando la situazione non la richiede (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "abito-protettivo-dell-agente-bauhaus",
+      "nome": "Abito protettivo dell’Agente Bauhaus",
+      "tipo": "armatura",
+      "catalogo": "Bauhaus",
+      "famiglia": "Agenti, equipaggi e Guardie",
+      "nomi_alternativi": [],
+      "note_manuale": "Proprietà: Discreta e Mimetismo 1. Accetta soltanto Rinforzi Leggeri: AR 3, FOR 4, penalità Media, costo totale 7.000. Un rinforzo visibile rende riconoscibile la protezione e non beneficia di Discreta.",
+      "paragrafo": "§7.11.5",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 6000,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Discreta",
+          "testo": "La protezione è integrata nell’abito o nella divisa e non risulta evidente a una semplice osservazione casuale. Un esame ravvicinato o una perquisizione possono rivelarla. Componenti corazzati visibili non vengono nascosti da questa proprietà (§7.11.4)."
+        },
+        {
+          "nome": "Mimetismo 1",
+          "testo": "Concede +1 VA alla Prova unica di Furtività per nascondersi o muoversi senza essere individuati, quando esistono condizioni concrete per farlo. Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "armatura-da-equipaggio-dei-dragoni",
+      "nome": "Armatura da equipaggio dei Dragoni",
+      "tipo": "armatura",
+      "catalogo": "Bauhaus",
+      "famiglia": "Agenti, equipaggi e Guardie",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione per gli equipaggi della forza corazzata, distinta dalla Corazza dei Dragoni Wolfheads. Proprietà: Ignifuga 2, Imbottita 2, Interfaccia da equipaggio 1. Accetta soltanto Rinforzi Leggeri: AR 3, FOR 5, penalità Media, costo totale 6.500.",
+      "paragrafo": "§7.11.5",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 4,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 5500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Ignifuga 2",
+          "testo": "Contromisura del §5.24 contro Fuoco: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Interfaccia da equipaggio 1",
+          "testo": "Concede +1 VA alle Prove di Pilotare di mezzi terrestri corazzati quando la protezione è collegata a comandi compatibili e alimentati. Non concede bonus agli attacchi (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "armatura-dei-jungle-kommandos",
+      "nome": "Armatura dei Jungle Kommandos",
+      "tipo": "armatura",
+      "catalogo": "Bauhaus",
+      "famiglia": "Agenti, equipaggi e Guardie",
+      "nomi_alternativi": [],
+      "note_manuale": "Proprietà: Mimetica ambientale 1 per giungla e vegetazione tropicale compatibile; Filtro respiratorio 2. La mimetica non si estende automaticamente ad altri ambienti. Accetta soltanto Rinforzi Leggeri: AR 3, FOR 5, penalità Media, costo totale 7.500.",
+      "paragrafo": "§7.11.5",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 4,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 6500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Mimetica ambientale 1",
+          "testo": "Concede +1 VA alla Prova unica di Furtività nell’ambiente per il quale la mimetica è predisposta, quando esistono condizioni concrete per nascondersi. Si sceglie l’ambiente della livrea, per esempio artico, boscoso, desertico o urbano. Non rende invisibili e non elimina i rumori prodotti; le limitazioni specifiche del modello restano valide (§7.11.4)."
+        },
+        {
+          "nome": "Filtro respiratorio 2",
+          "testo": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata. Richiede aria respirabile; non costituisce una riserva d’ossigeno né una tenuta per vuoto o immersione (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "corazza-delle-guardie-ducali",
+      "nome": "Corazza delle Guardie Ducali",
+      "tipo": "armatura",
+      "catalogo": "Bauhaus",
+      "famiglia": "Agenti, equipaggi e Guardie",
+      "nomi_alternativi": [],
+      "note_manuale": "Proprietà: Imbottita 2, Isolante 2, Articolazione d’assalto. Penalità ravvicinata −1; restano le altre penalità Pesanti. Non accetta rinforzi esterni. Scudi, armi e insegne non sono compresi nel prezzo.",
+      "paragrafo": "§7.11.5",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Pesante",
+      "ar": {
+        "totale": 5,
+        "magica": 0
+      },
+      "for_richiesta": 7,
+      "pi": 12,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 12500,
+      "rinforzi_ammessi": [],
+      "penalita": {
+        "attacchi_distanza": -2,
+        "attacchi_ravvicinati": -1,
+        "agilita": -2,
+        "movimento_q": -2,
+        "lancio_potere": -5
+      },
+      "proprieta": [
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Isolante 2",
+          "testo": "Contromisura del §5.24 contro Elettricità: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Articolazione d’assalto",
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "juggernaut-xo-102-steel-strider",
+      "nome": "Juggernaut XO-102 Steel Strider",
+      "tipo": "armatura",
+      "catalogo": "Bauhaus",
+      "famiglia": "Esoscheletri",
+      "nomi_alternativi": [],
+      "note_manuale": "Il prezzo comprende esoscheletro, attuatori, comandi, supporti d’arma e una batteria da otto ore di funzionamento. Le armi montate sono escluse. XO-102 possiede Imbottita 2 e Stabile 2; Vulkan possiede Ignifuga 3, Imbottita 3 e Stabile 2. Nessuno dei due accetta rinforzi esterni. L’AR del telaio sostituisce quella di qualsiasi armatura indossata dal pilota: non si sommano. I danni che superano la protezione si applicano ai PV del pilota. PI, PS e deterioramento seguono le regole degli oggetti; a 0 PI il telaio è Rotto. Le Prove fisiche eseguite mediante il telaio usano Pilotare al posto di Atletica. Il movimento ordinario non impone una Prova aggiuntiva oltre alle regole già previste per la modalità scelta. Per Schivare si usa Pilotare con −2 VA nello XO-102 e −4 VA nel Vulkan. MOV è rispettivamente −1 e −2; il lancio di Incantesimi con Potere subisce −5 VA. I servocomandi soddisfano il requisito FOR delle armi pesanti montate e annullano la penalità MOV di quelle armi. Per attaccare si usa la normale Abilità dell’arma e si pagano le normali Azioni. Avere due supporti non concede attacchi aggiuntivi. I comandi richiedono entrambe le mani; durante il pilotaggio non si impugnano Scudi o altre armi manuali. Una batteria alimenta otto ore operative e richiede otto ore di ricarica. La sostituzione richiede un minuto. Una batteria di ricambio costa 1.500 per XO-102 e 3.000 per Vulkan. A energia esaurita l’AR resta, ma il telaio non può muoversi, Schivare, puntare o sparare. Uscire richiede 1 AzP e una casella adiacente libera.",
+      "paragrafo": "§7.11.6",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Esoscheletro",
+      "ar": {
+        "totale": 6,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 16,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 45000,
+      "rinforzi_ammessi": [],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": -1,
+        "lancio_potere": -5
+      },
+      "supporti": "1 arma pesante",
+      "proprieta": [
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Stabile 2",
+          "testo": "Concede +2 alla Prova di Caratteristica FOR o DES richiesta contro Sbilanciante. Non è una Prova Salvezza e non si estende automaticamente ad altri tentativi di mantenere l’equilibrio o agli spostamenti di Sbalzante. Più proprietà Stabile applicabili, comprese quelle di scudo e armatura, non si sommano: si usa il valore maggiore (§7.4.3, §7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "vulkan",
+      "nome": "Vulkan",
+      "tipo": "armatura",
+      "catalogo": "Bauhaus",
+      "famiglia": "Esoscheletri",
+      "nomi_alternativi": [],
+      "note_manuale": "Il prezzo comprende esoscheletro, attuatori, comandi, supporti d’arma e una batteria da otto ore di funzionamento. Le armi montate sono escluse. XO-102 possiede Imbottita 2 e Stabile 2; Vulkan possiede Ignifuga 3, Imbottita 3 e Stabile 2. Nessuno dei due accetta rinforzi esterni. L’AR del telaio sostituisce quella di qualsiasi armatura indossata dal pilota: non si sommano. I danni che superano la protezione si applicano ai PV del pilota. PI, PS e deterioramento seguono le regole degli oggetti; a 0 PI il telaio è Rotto. Le Prove fisiche eseguite mediante il telaio usano Pilotare al posto di Atletica. Il movimento ordinario non impone una Prova aggiuntiva oltre alle regole già previste per la modalità scelta. Per Schivare si usa Pilotare con −2 VA nello XO-102 e −4 VA nel Vulkan. MOV è rispettivamente −1 e −2; il lancio di Incantesimi con Potere subisce −5 VA. I servocomandi soddisfano il requisito FOR delle armi pesanti montate e annullano la penalità MOV di quelle armi. Per attaccare si usa la normale Abilità dell’arma e si pagano le normali Azioni. Avere due supporti non concede attacchi aggiuntivi. I comandi richiedono entrambe le mani; durante il pilotaggio non si impugnano Scudi o altre armi manuali. Una batteria alimenta otto ore operative e richiede otto ore di ricarica. La sostituzione richiede un minuto. Una batteria di ricambio costa 1.500 per XO-102 e 3.000 per Vulkan. A energia esaurita l’AR resta, ma il telaio non può muoversi, Schivare, puntare o sparare. Uscire richiede 1 AzP e una casella adiacente libera.",
+      "paragrafo": "§7.11.6",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Esoscheletro",
+      "ar": {
+        "totale": 7,
+        "magica": 0
+      },
+      "for_richiesta": 4,
+      "pi": 20,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 90000,
+      "rinforzi_ammessi": [],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": -2,
+        "lancio_potere": -5
+      },
+      "supporti": "2 armi pesanti",
+      "proprieta": [
+        {
+          "nome": "Ignifuga 3",
+          "testo": "Contromisura del §5.24 contro Fuoco: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Imbottita 3",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Stabile 2",
+          "testo": "Concede +2 alla Prova di Caratteristica FOR o DES richiesta contro Sbilanciante. Non è una Prova Salvezza e non si estende automaticamente ad altri tentativi di mantenere l’equilibrio o agli spostamenti di Sbalzante. Più proprietà Stabile applicabili, comprese quelle di scudo e armatura, non si sommano: si usa il valore maggiore (§7.4.3, §7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "divisa-d-ordinanza-asa",
+      "nome": "Divisa d’ordinanza ASA",
+      "tipo": "armatura",
+      "catalogo": "Alleanza",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Proprietà: Discreta e Imbottita 1. Protezione da indagine e servizio, categoria Leggera. Può aggiungere il Soprabito ASA come unico Rinforzo Leggero.",
+      "paragrafo": "§7.11.7",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 4000,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Discreta",
+          "testo": "La protezione è integrata nell’abito o nella divisa e non risulta evidente a una semplice osservazione casuale. Un esame ravvicinato o una perquisizione possono rivelarla. Componenti corazzati visibili non vengono nascosti da questa proprietà (§7.11.4)."
+        },
+        {
+          "nome": "Imbottita 1",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "divisa-operativa-asa",
+      "nome": "Divisa operativa ASA",
+      "tipo": "armatura",
+      "catalogo": "Alleanza",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Proprietà: Mimetismo 1 e Imbottita 1. AR 3 è nativa: la divisa conserva categoria Leggera, FOR 4 e penalità di lancio −1. Può aggiungere il Soprabito ASA come unico Rinforzo Leggero.",
+      "paragrafo": "§7.11.7",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 4,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 7000,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Mimetismo 1",
+          "testo": "Concede +1 VA alla Prova unica di Furtività per nascondersi o muoversi senza essere individuati, quando esistono condizioni concrete per farlo. Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito (§7.11.4)."
+        },
+        {
+          "nome": "Imbottita 1",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "armatura-marte",
+      "nome": "Armatura Marte",
+      "tipo": "armatura",
+      "catalogo": "Alleanza",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Per gli Assaltatori. Proprietà: Antiesplosione 1, Imbottita 2, Stabile 2 e Articolazione d’assalto, oltre a Protezione occulta 1. La penalità ravvicinata è −1; restano −2 a distanza e ad Agilità, MOV −2 e −5 al lancio. Non accetta rinforzi esterni.",
+      "paragrafo": "§7.11.7",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Pesante",
+      "ar": {
+        "totale": 6,
+        "magica": 1
+      },
+      "for_richiesta": 7,
+      "pi": 12,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 20000,
+      "rinforzi_ammessi": [],
+      "penalita": {
+        "attacchi_distanza": -2,
+        "attacchi_ravvicinati": -1,
+        "agilita": -2,
+        "movimento_q": -2,
+        "lancio_potere": -5
+      },
+      "proprieta": [
+        {
+          "nome": "Antiesplosione 1",
+          "testo": "Aumenta di 1 l’AR fornita dall’armatura contro danni Naturali o Magici di esplosioni, comprese granate, razzi e cariche da demolizione. Si applica a ciascuna applicazione di danno dell’esplosione e non protegge dal danno Etereo. Fra Antiesplosione di scudo e armatura si usa soltanto il valore maggiore (§7.4.3, §7.11.4)."
+        },
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Stabile 2",
+          "testo": "Concede +2 alla Prova di Caratteristica FOR o DES richiesta contro Sbilanciante. Non è una Prova Salvezza e non si estende automaticamente ad altri tentativi di mantenere l’equilibrio o agli spostamenti di Sbalzante. Più proprietà Stabile applicabili, comprese quelle di scudo e armatura, non si sommano: si usa il valore maggiore (§7.4.3, §7.11.4)."
+        },
+        {
+          "nome": "Articolazione d’assalto",
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+        },
+        {
+          "nome": "Protezione occulta 1",
+          "testo": "Concede +1 alle PS Magia effettivamente richieste contro Oscura Simmetria, Corruzione e Paura. Si applica una sola volta anche quando un effetto rientra in più categorie. Non crea una Salvezza altrimenti assente e non si trasferisce alle PS Volontà contro Paura (§7.11.4, §7.17.1)."
+        }
+      ]
+    },
+    {
+      "id": "armatura-vulcano",
+      "nome": "Armatura Vulcano",
+      "tipo": "armatura",
+      "catalogo": "Alleanza",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Per gli Artiglieri. Proprietà: Imbracatura da artigliere, Antiesplosione 1, Protezione acustica 2 e Protezione occulta 1. Imbracatura da artigliere. Con una sola arma pesante compatibile agganciata, elimina il −1 VA dell’armatura all’attacco a distanza effettuato con quell’arma e riduce di 1 Q la penalità MOV dell’arma, fino a 0. Non elimina il restano. Le altre penalità Medie si applicano normalmente. Accetta soltanto Rinforzi Leggeri: AR totale 5, di cui 1 magica, FOR 6 e costo totale 18.500. Le proprietà native restano applicabili.",
+      "paragrafo": "§7.11.7",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 4,
+        "magica": 1
+      },
+      "for_richiesta": 5,
+      "pi": 10,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 17500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": -1,
+        "agilita": -1,
+        "movimento_q": -1,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Imbracatura da artigliere",
+          "testo": "Con una sola arma pesante compatibile agganciata, elimina il −1 VA dell’armatura all’attacco a distanza effettuato con quell’arma e riduce di 1 Q la penalità MOV dell’arma, fino a 0. Non elimina il MOV −1 dell’armatura. Agganciare o sganciare costa 1 AzP; requisito FOR dell’arma e impugnatura a due mani restano (§7.11.7, Vulcano)."
+        },
+        {
+          "nome": "Antiesplosione 1",
+          "testo": "Aumenta di 1 l’AR fornita dall’armatura contro danni Naturali o Magici di esplosioni, comprese granate, razzi e cariche da demolizione. Si applica a ciascuna applicazione di danno dell’esplosione e non protegge dal danno Etereo. Fra Antiesplosione di scudo e armatura si usa soltanto il valore maggiore (§7.4.3, §7.11.4)."
+        },
+        {
+          "nome": "Protezione acustica 2",
+          "testo": "Concede +2 alla Prova Salvezza espressamente richiesta contro un effetto sonoro o un rumore dannoso. Non è un bonus generale contro esplosioni (§7.11.4)."
+        },
+        {
+          "nome": "Protezione occulta 1",
+          "testo": "Concede +1 alle PS Magia effettivamente richieste contro Oscura Simmetria, Corruzione e Paura. Si applica una sola volta anche quando un effetto rientra in più categorie. Non crea una Salvezza altrimenti assente e non si trasferisce alle PS Volontà contro Paura (§7.11.4, §7.17.1)."
+        }
+      ]
+    },
+    {
+      "id": "armatura-mercurio",
+      "nome": "Armatura Mercurio",
+      "tipo": "armatura",
+      "catalogo": "Alleanza",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Per gli Incursori. Proprietà: Assetto da incursione, Articolazione da ricognizione, Mimetismo 1, Filtro respiratorio 2 e Protezione occulta 1. MOV e penalità di Agilità dell’armatura sono 0, compresa Schivata; restano −1 agli attacchi a distanza e ravvicinati e −3 al lancio. Accetta soltanto Rinforzi Leggeri: AR totale 5, di cui 1 magica, FOR 6 e costo totale 17.500. Conserva i benefici nativi di movimento e ricognizione.",
+      "paragrafo": "§7.11.7",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 4,
+        "magica": 1
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 16500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": -1,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Assetto da incursione",
+          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4)."
+        },
+        {
+          "nome": "Articolazione da ricognizione",
+          "testo": "Elimina il −1 VA di Agilità della Media, comprese Schivata e Prove fisiche ostacolate. Non elimina il −1 agli attacchi né le penalità di lancio (§7.11.4)."
+        },
+        {
+          "nome": "Mimetismo 1",
+          "testo": "Concede +1 VA alla Prova unica di Furtività per nascondersi o muoversi senza essere individuati, quando esistono condizioni concrete per farlo. Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito (§7.11.4)."
+        },
+        {
+          "nome": "Filtro respiratorio 2",
+          "testo": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata. Richiede aria respirabile; non costituisce una riserva d’ossigeno né una tenuta per vuoto o immersione (§7.11.4)."
+        },
+        {
+          "nome": "Protezione occulta 1",
+          "testo": "Concede +1 alle PS Magia effettivamente richieste contro Oscura Simmetria, Corruzione e Paura. Si applica una sola volta anche quando un effetto rientra in più categorie. Non crea una Salvezza altrimenti assente e non si trasferisce alle PS Volontà contro Paura (§7.11.4, §7.17.1)."
+        }
+      ]
+    },
+    {
+      "id": "armatura-freedom-brigades",
+      "nome": "Armatura Freedom Brigades",
+      "tipo": "armatura",
+      "catalogo": "Capitol",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione della fanteria delle Brigate. Manutenzione semplice: +1 VA a Tecnologia per riparare questa armatura, con strumenti e materiali adeguati. Non riduce automaticamente i tempi né aumenta i PI ripristinati.",
+      "paragrafo": "§7.13.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 1,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1600,
+      "rinforzi_ammessi": [
+        "Leggero",
+        "Pesante"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Manutenzione semplice",
+          "testo": "Concede +1 VA alle Prove di Tecnologia per riparare quell’armatura. Restano necessari strumenti e materiali adatti; la proprietà non abbrevia automaticamente i tempi e non aumenta i PI ripristinati (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "corazza-tortoise-mk-i",
+      "nome": "Corazza Tortoise Mk I",
+      "tipo": "armatura",
+      "catalogo": "Capitol",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione della fanteria di linea. Possiede Imbottita 1. Conserva tutte le normali penalità delle armature Medie.",
+      "paragrafo": "§7.13.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 4000,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": -1,
+        "agilita": -1,
+        "movimento_q": -1,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Imbottita 1",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "corazza-tortoise-mk-ii",
+      "nome": "Corazza Tortoise Mk II",
+      "tipo": "armatura",
+      "catalogo": "Capitol",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione della fanteria pesante. Possiede Imbottita 2, Antiesplosione 1 e Articolazione da tiro. Quest’ultima riduce di 1 la penalità propria dell’armatura agli attacchi a distanza: il −2 della Pesante diventa −1. Restano le altre penalità della categoria e quelle dovute a FOR insufficiente. In questa conversione la Tortoise Mk II è un’armatura Pesante. Non applica le regole dei servosistemi e degli esoscheletri.",
+      "paragrafo": "§7.13.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Pesante",
+      "ar": {
+        "totale": 5,
+        "magica": 0
+      },
+      "for_richiesta": 7,
+      "pi": 10,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 11000,
+      "rinforzi_ammessi": [],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": -2,
+        "agilita": -2,
+        "movimento_q": -2,
+        "lancio_potere": -5
+      },
+      "proprieta": [
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Antiesplosione 1",
+          "testo": "Aumenta di 1 l’AR fornita dall’armatura contro danni Naturali o Magici di esplosioni, comprese granate, razzi e cariche da demolizione. Si applica a ciascuna applicazione di danno dell’esplosione e non protegge dal danno Etereo. Fra Antiesplosione di scudo e armatura si usa soltanto il valore maggiore (§7.4.3, §7.11.4)."
+        },
+        {
+          "nome": "Articolazione da tiro",
+          "testo": "Riduce di 1 la penalità propria dell’armatura agli attacchi a distanza: il −2 della Pesante diventa −1. Restano le altre penalità della categoria e quelle dovute a FOR insufficiente (§7.13.2, Tortoise Mk II)."
+        }
+      ]
+    },
+    {
+      "id": "armatura-rangers",
+      "nome": "Armatura Rangers",
+      "tipo": "armatura",
+      "catalogo": "Capitol",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione per ricognizione e pattugliamento. Assetto da pattuglia elimina soltanto la penalità MOV propria dell’armatura. Mimetica ambientale 1 concede +1 VA alla Prova unica di Furtività nell’ambiente scelto per la livrea, quando esistono condizioni per nascondersi. Restano le altre penalità della Media.",
+      "paragrafo": "§7.13.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 7000,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": -1,
+        "agilita": -1,
+        "movimento_q": 0,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Assetto da pattuglia",
+          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4)."
+        },
+        {
+          "nome": "Mimetica ambientale 1",
+          "testo": "Concede +1 VA alla Prova unica di Furtività nell’ambiente per il quale la mimetica è predisposta, quando esistono condizioni concrete per nascondersi. Si sceglie l’ambiente della livrea, per esempio artico, boscoso, desertico o urbano. Non rende invisibili e non elimina i rumori prodotti; le limitazioni specifiche del modello restano valide (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "armatura-airborne-rangers",
+      "nome": "Armatura Airborne Rangers",
+      "tipo": "armatura",
+      "catalogo": "Capitol",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione della fanteria aviotrasportata. Possiede Imbottita 2 e Imbracatura da lancio 2. L’imbracatura concede +2 VA alle Prove di Pilotare richieste per controllare discesa e atterraggio con un paracadute compatibile. Il paracadute si acquista separatamente. L’armatura da sola non rallenta una Caduta e Imbottita non costituisce protezione dai danni da caduta.",
+      "paragrafo": "§7.13.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 4,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 6000,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Imbracatura da lancio 2",
+          "testo": "Concede +2 VA alle Prove di Pilotare richieste per controllare discesa e atterraggio con un paracadute compatibile. Il paracadute si acquista separatamente (§7.13.2, Airborne Rangers)."
+        }
+      ]
+    },
+    {
+      "id": "corazza-free-marines",
+      "nome": "Corazza Free Marines",
+      "tipo": "armatura",
+      "catalogo": "Capitol",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione per incursioni e assalti. Possiede Struttura robusta, Antiesplosione 1 e Articolazione d’assalto. Il +2 PI di Struttura robusta è già compreso nei 10 PI del profilo. Articolazione d’assalto porta a 0 la penalità propria dell’armatura agli attacchi ravvicinati. Restano −1 VA agli attacchi a distanza, −1 VA ad Agilità, −1 Q al MOV e −3 VA al lancio con Potere. Coraggio, addestramento e altri benefici personali del reparto non sono proprietà dell’armatura.",
+      "paragrafo": "§7.13.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 10,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 9000,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": 0,
+        "agilita": -1,
+        "movimento_q": -1,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
+        },
+        {
+          "nome": "Antiesplosione 1",
+          "testo": "Aumenta di 1 l’AR fornita dall’armatura contro danni Naturali o Magici di esplosioni, comprese granate, razzi e cariche da demolizione. Si applica a ciascuna applicazione di danno dell’esplosione e non protegge dal danno Etereo. Fra Antiesplosione di scudo e armatura si usa soltanto il valore maggiore (§7.4.3, §7.11.4)."
+        },
+        {
+          "nome": "Articolazione d’assalto",
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "predator-martian-banshees",
+      "nome": "Predator Martian Banshees",
+      "tipo": "armatura",
+      "catalogo": "Capitol",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione per assalto a propulsione. Possiede Ignifuga 2, Imbottita 2 e Articolazione d’assalto. Gli attacchi strutturali per il propulsore sono inclusi; il dispositivo, il propellente e il paracadute restano dotazioni separate. La maschera caratteristica non infligge automaticamente Paura. Le regole del propulsore sono nel §7.13.4.",
+      "paragrafo": "§7.13.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 9500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": 0,
+        "agilita": -1,
+        "movimento_q": -1,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Ignifuga 2",
+          "testo": "Contromisura del §5.24 contro Fuoco: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Articolazione d’assalto",
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "panther-sea-lions",
+      "nome": "Panther Sea Lions",
+      "tipo": "armatura",
+      "catalogo": "Capitol",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione per infiltrazione nella giungla. Mimetica ambientale 2 concede +2 VA a Furtività per nascondersi o muoversi senza essere individuati nella giungla e nella vegetazione tropicale, quando le condizioni consentono di nascondersi. Articolazione da arrampicata 2 concede +2 VA ad Atletica per arrampicarsi usando appigli reali o attrezzatura adatta. Non aumenta automaticamente la distanza percorribile e non permette di aderire a superfici prive di appigli.",
+      "paragrafo": "§7.13.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 4,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 7000,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Mimetica ambientale 2",
+          "testo": "Concede +2 VA alla Prova unica di Furtività nell’ambiente per il quale la mimetica è predisposta, quando esistono condizioni concrete per nascondersi. Si sceglie l’ambiente della livrea, per esempio artico, boscoso, desertico o urbano. Non rende invisibili e non elimina i rumori prodotti; le limitazioni specifiche del modello restano valide (§7.11.4)."
+        },
+        {
+          "nome": "Articolazione da arrampicata 2",
+          "testo": "Articolazione da arrampicata 2 concede +2 VA ad Atletica per arrampicarsi usando appigli reali o attrezzatura adatta. Non aumenta automaticamente la distanza percorribile e non permette di aderire a superfici prive di appigli."
+        }
+      ]
+    },
+    {
+      "id": "survivor-desert-scorpions",
+      "nome": "Survivor Desert Scorpions",
+      "tipo": "armatura",
+      "catalogo": "Capitol",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione per operazioni nel deserto. Possiede Assetto da pattuglia, Mimetica ambientale 1 desertica e Protezione climatica 2 contro il caldo. La protezione climatica concede +2 alla PS Tempra contro gli effetti del caldo ambientale. Non riduce i danni da Fuoco e non sostituisce acqua, riposo o le altre necessità del personaggio.",
+      "paragrafo": "§7.13.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 8500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": -1,
+        "agilita": -1,
+        "movimento_q": 0,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Assetto da pattuglia",
+          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4)."
+        },
+        {
+          "nome": "Mimetica ambientale 1",
+          "testo": "Concede +1 VA alla Prova unica di Furtività nell’ambiente per il quale la mimetica è predisposta, quando esistono condizioni concrete per nascondersi. Si sceglie l’ambiente della livrea, per esempio artico, boscoso, desertico o urbano. Non rende invisibili e non elimina i rumori prodotti; le limitazioni specifiche del modello restano valide (§7.11.4)."
+        },
+        {
+          "nome": "Protezione climatica 2",
+          "testo": "La protezione climatica concede +2 alla PS Tempra contro gli effetti del caldo ambientale. Non riduce i danni da Fuoco e non sostituisce acqua, riposo o le altre necessità del personaggio."
+        }
+      ]
+    },
+    {
+      "id": "corazza-sunset-strikers",
+      "nome": "Corazza Sunset Strikers",
+      "tipo": "armatura",
+      "catalogo": "Capitol",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione per assalto ravvicinato. Possiede Articolazione d’assalto, Ignifuga 2 e Filtro respiratorio 2. Il filtro concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata; richiede aria respirabile e non contiene una riserva d’aria.",
+      "paragrafo": "§7.13.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 8000,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": 0,
+        "agilita": -1,
+        "movimento_q": -1,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Articolazione d’assalto",
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+        },
+        {
+          "nome": "Ignifuga 2",
+          "testo": "Contromisura del §5.24 contro Fuoco: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Filtro respiratorio 2",
+          "testo": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata. Richiede aria respirabile; non costituisce una riserva d’ossigeno né una tenuta per vuoto o immersione (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "sea-devil",
+      "nome": "Sea Devil",
+      "tipo": "armatura",
+      "catalogo": "Capitol",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione per operazioni anfibie e subacquee. Assetto anfibio elimina soltanto le penalità proprie dell’armatura al MOV e alle Prove di Atletica per nuotare. Il Nuoto continua a costare 2 MOV per Q; le altre penalità della Media restano valide. Tenuta subacquea consente immersioni fino a 30 metri con elmetto chiuso e riserva d’aria integrata da due ore, compresa nel prezzo. Una ricarica costa 100 e la sostituzione richiede un minuto fuori dall’acqua. A 0 PI la tenuta non è più garantita. Protezione climatica 2 contro il freddo concede +2 alla PS Tempra contro il freddo ambientale. Non riduce il danno degli attacchi.",
+      "paragrafo": "§7.13.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 11000,
+      "rinforzi_ammessi": [],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": -1,
+        "agilita": -1,
+        "movimento_q": 0,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Assetto anfibio",
+          "testo": "Assetto anfibio elimina soltanto le penalità proprie dell’armatura al MOV e alle Prove di Atletica per nuotare."
+        },
+        {
+          "nome": "Tenuta subacquea",
+          "testo": "Tenuta subacquea consente immersioni fino a 30 metri con elmetto chiuso e riserva d’aria integrata da due ore, compresa nel prezzo."
+        },
+        {
+          "nome": "Protezione climatica 2",
+          "testo": "Protezione climatica 2 contro il freddo concede +2 alla PS Tempra contro il freddo ambientale. Non riduce il danno degli attacchi."
+        }
+      ]
+    },
+    {
+      "id": "divisa-css",
+      "nome": "Divisa CSS",
+      "tipo": "armatura",
+      "catalogo": "Capitol",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione della polizia e delle pattuglie corporative. Possiede Discreta e Imbottita 1. La protezione integrata non è evidente a una semplice osservazione casuale; un esame ravvicinato o una perquisizione possono rivelarla. Componenti corazzati visibili restano riconoscibili.",
+      "paragrafo": "§7.13.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 3500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Discreta",
+          "testo": "La protezione è integrata nell’abito o nella divisa e non risulta evidente a una semplice osservazione casuale. Un esame ravvicinato o una perquisizione possono rivelarla. Componenti corazzati visibili non vengono nascosti da questa proprietà (§7.11.4)."
+        },
+        {
+          "nome": "Imbottita 1",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "abito-agente-capitol",
+      "nome": "Abito Agente Capitol",
+      "tipo": "armatura",
+      "catalogo": "Capitol",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione per investigazione e intelligence. Possiede Discreta e Mimetismo 1. Mimetismo concede +1 VA a Furtività per nascondersi o muoversi senza essere individuati, sul piano visivo e sonoro, una sola volta per Prova pertinente.",
+      "paragrafo": "§7.13.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 5500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Discreta",
+          "testo": "La protezione è integrata nell’abito o nella divisa e non risulta evidente a una semplice osservazione casuale. Un esame ravvicinato o una perquisizione possono rivelarla. Componenti corazzati visibili non vengono nascosti da questa proprietà (§7.11.4)."
+        },
+        {
+          "nome": "Mimetismo 1",
+          "testo": "Concede +1 VA alla Prova unica di Furtività per nascondersi o muoversi senza essere individuati, quando esistono condizioni concrete per farlo. Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "alpha-force",
+      "nome": "Alpha Force",
+      "tipo": "armatura",
+      "catalogo": "Capitol",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione per antiterrorismo e liberazione di ostaggi. Possiede Imbottita 2, Isolante 2 e Antiesplosione 1. Mantiene tutte le penalità ordinarie delle armature Medie.",
+      "paragrafo": "§7.13.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 8500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": -1,
+        "agilita": -1,
+        "movimento_q": -1,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Isolante 2",
+          "testo": "Contromisura del §5.24 contro Elettricità: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Antiesplosione 1",
+          "testo": "Aumenta di 1 l’AR fornita dall’armatura contro danni Naturali o Magici di esplosioni, comprese granate, razzi e cariche da demolizione. Si applica a ciascuna applicazione di danno dell’esplosione e non protegge dal danno Etereo. Fra Antiesplosione di scudo e armatura si usa soltanto il valore maggiore (§7.4.3, §7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "tuta-pilota-capitol",
+      "nome": "Tuta pilota Capitol",
+      "tipo": "armatura",
+      "catalogo": "Capitol",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione per equipaggi aeronautici. Possiede Ignifuga 2, Imbottita 1 e Interfaccia aeronautica 1. L’interfaccia concede +1 VA a Pilotare per la conduzione di un aeromobile quando è collegata a comandi compatibili e alimentati; non migliora l’uso delle armi. Paracadute, respiratore e sistema di eiezione sono dotazioni separate. Il bonus dell’interfaccia non si estende automaticamente a paracadute o propulsori personali.",
+      "paragrafo": "§7.13.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 1,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 3500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Ignifuga 2",
+          "testo": "Contromisura del §5.24 contro Fuoco: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Imbottita 1",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Interfaccia aeronautica 1",
+          "testo": "Concede +1 VA a Pilotare per la conduzione di un aeromobile quando è collegata a comandi compatibili e alimentati; non migliora l’uso delle armi (§7.13.2, Tuta pilota Capitol)."
+        }
+      ]
+    },
+    {
+      "id": "abito-protettivo-degli-agenti-isc",
+      "nome": "Abito protettivo degli Agenti ISC",
+      "tipo": "armatura",
+      "catalogo": "Imperial",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Discreta. La protezione integrata non è evidente a una semplice osservazione casuale; un esame ravvicinato o una perquisizione possono rivelarla. Rinforzi visibili non vengono nascosti. Mantiene tutte le penalità della categoria Leggera.",
+      "paragrafo": "§7.14.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 3500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Discreta",
+          "testo": "La protezione è integrata nell’abito o nella divisa e non risulta evidente a una semplice osservazione casuale. Un esame ravvicinato o una perquisizione possono rivelarla. Componenti corazzati visibili non vengono nascosti da questa proprietà (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "corazza-da-trincea-trencher",
+      "nome": "Corazza da trincea Trencher",
+      "tipo": "armatura",
+      "catalogo": "Imperial",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Struttura robusta, Filtro respiratorio 2 e Manutenzione semplice. I 2 PI aggiuntivi sono inclusi nel totale 10. Con la maschera indossata concede +2 alla PS Tempra contro veleni e agenti patogeni inalati; serve aria respirabile. La manutenzione concede +1 VA a Tecnologia per riparare questa armatura, con strumenti, materiali e tempi ordinari. Si applicano le penalità della Media.",
+      "paragrafo": "§7.14.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 10,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 5000,
+      "rinforzi_ammessi": [
+        "Leggero",
+        "Pesante"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": -1,
+        "agilita": -1,
+        "movimento_q": -1,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
+        },
+        {
+          "nome": "Filtro respiratorio 2",
+          "testo": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata. Richiede aria respirabile; non costituisce una riserva d’ossigeno né una tenuta per vuoto o immersione (§7.11.4)."
+        },
+        {
+          "nome": "Manutenzione semplice",
+          "testo": "Concede +1 VA alle Prove di Tecnologia per riparare quell’armatura. Restano necessari strumenti e materiali adatti; la proprietà non abbrevia automaticamente i tempi e non aumenta i PI ripristinati (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "armatura-d-assalto-stormtrencher",
+      "nome": "Armatura d’assalto Stormtrencher",
+      "tipo": "armatura",
+      "catalogo": "Imperial",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Articolazione d’assalto, Assetto da incursione e Filtro respiratorio 2. La penalità agli attacchi ravvicinati e la penalità MOV dell’armatura diventano 0; restano −1 VA agli attacchi a distanza, −1 VA ad Agilità e −3 VA al lancio degli Incantesimi. Il Jet-Chute è una dotazione separata (§7.14.4).",
+      "paragrafo": "§7.14.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 8500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": 0,
+        "agilita": -1,
+        "movimento_q": 0,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Articolazione d’assalto",
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+        },
+        {
+          "nome": "Assetto da incursione",
+          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4)."
+        },
+        {
+          "nome": "Filtro respiratorio 2",
+          "testo": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata. Richiede aria respirabile; non costituisce una riserva d’ossigeno né una tenuta per vuoto o immersione (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "tenuta-operativa-grey-ghost",
+      "nome": "Tenuta operativa Grey Ghost",
+      "tipo": "armatura",
+      "catalogo": "Imperial",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Mimetica ambientale 2 urbana e Imbracatura tecnica 1. La mimetica concede +2 VA alla Prova unica di Furtività in ambiente urbano quando esistono condizioni concrete per nascondersi. L’imbracatura concede +1 VA ad Atletica per arrampicarsi o calarsi usando corde e ancoraggi adeguati; tali strumenti si acquistano separatamente. Non aumenta automaticamente il movimento.",
+      "paragrafo": "§7.14.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 6500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Mimetica ambientale 2",
+          "testo": "Concede +2 VA alla Prova unica di Furtività nell’ambiente per il quale la mimetica è predisposta, quando esistono condizioni concrete per nascondersi. Si sceglie l’ambiente della livrea, per esempio artico, boscoso, desertico o urbano. Non rende invisibili e non elimina i rumori prodotti; le limitazioni specifiche del modello restano valide (§7.11.4)."
+        },
+        {
+          "nome": "Imbracatura tecnica 1",
+          "testo": "Concede +1 VA ad Atletica per arrampicarsi o calarsi usando corde e ancoraggi adeguati; tali strumenti si acquistano separatamente. Non aumenta automaticamente il movimento (§7.14.2, Grey Ghost)."
+        }
+      ]
+    },
+    {
+      "id": "corazza-pesante-blood-beret",
+      "nome": "Corazza pesante Blood Beret",
+      "tipo": "armatura",
+      "catalogo": "Imperial",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Imbottita 2, Antiesplosione 1 e Filtro respiratorio 2. Contro i danni Naturali o Magici delle esplosioni l’AR sale a 6; questo beneficio non assorbe danni Eterei. Si applicano tutte le penalità della Pesante.",
+      "paragrafo": "§7.14.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Pesante",
+      "ar": {
+        "totale": 5,
+        "magica": 0
+      },
+      "for_richiesta": 7,
+      "pi": 12,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "RA",
+      "costo": 12500,
+      "rinforzi_ammessi": [],
+      "penalita": {
+        "attacchi_distanza": -2,
+        "attacchi_ravvicinati": -2,
+        "agilita": -2,
+        "movimento_q": -2,
+        "lancio_potere": -5
+      },
+      "proprieta": [
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Antiesplosione 1",
+          "testo": "Aumenta di 1 l’AR fornita dall’armatura contro danni Naturali o Magici di esplosioni, comprese granate, razzi e cariche da demolizione. Si applica a ciascuna applicazione di danno dell’esplosione e non protegge dal danno Etereo. Fra Antiesplosione di scudo e armatura si usa soltanto il valore maggiore (§7.4.3, §7.11.4)."
+        },
+        {
+          "nome": "Filtro respiratorio 2",
+          "testo": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata. Richiede aria respirabile; non costituisce una riserva d’ossigeno né una tenuta per vuoto o immersione (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "corazza-degli-highland-clan-warriors",
+      "nome": "Corazza degli Highland Clan Warriors",
+      "tipo": "armatura",
+      "catalogo": "Imperial",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Struttura robusta, Articolazione d’assalto e Stabile 1. I 2 PI aggiuntivi sono inclusi nel totale 10. La penalità agli attacchi ravvicinati diventa 0. Stabile 1 concede +1 VA alle Prove di Forza o Destrezza previste contro Sbilanciante, senza modificare le Prove di Salvezza. Restano le altre penalità della Media.",
+      "paragrafo": "§7.14.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 10,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 7500,
+      "rinforzi_ammessi": [
+        "Leggero",
+        "Pesante"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": 0,
+        "agilita": -1,
+        "movimento_q": -1,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
+        },
+        {
+          "nome": "Articolazione d’assalto",
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+        },
+        {
+          "nome": "Stabile 1",
+          "testo": "Concede +1 alla Prova di Caratteristica FOR o DES richiesta contro Sbilanciante. Non è una Prova Salvezza e non si estende automaticamente ad altri tentativi di mantenere l’equilibrio o agli spostamenti di Sbalzante. Più proprietà Stabile applicabili, comprese quelle di scudo e armatura, non si sommano: si usa il valore maggiore (§7.4.3, §7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "mk-iv-felis-pattern-dei-golden-lions",
+      "nome": "Mk.IV Felis Pattern dei Golden Lions",
+      "tipo": "armatura",
+      "catalogo": "Imperial",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "La Felis è un’armatura Pesante servoassistita indossabile, utilizzabile anche senza alimentazione e senza innesti cibernetici. Il prezzo comprende una batteria dedicata; armi e Scudi si acquistano separatamente. Imbottita 2 resta attiva anche a batteria spenta. AR 5 e PI 12 non cambiano con l’alimentazione. Assistenza muscolare 1 concede +1 VA alle Prove di Forza o Atletica per sollevare, spingere, trascinare o sfondare. Non aumenta la Caratteristica Forza, non soddisfa i requisiti delle armi e non si applica a salti, equilibrio o attacchi. Il beneficio richiede alimentazione. Colpo assistito 1 aggiunge +1 danno ordinario a una sola applicazione del danno per attacco ravvicinato, con un’arma impugnata o a mani nude. Termoregolazione 2 concede +2 alla PS Tempra contro caldo e freddo ambientali; non aumenta l’AR contro attacchi di Fuoco o Gelo. Entrambe le proprietà richiedono alimentazione. Autonomia: 8 ore di funzionamento. Ricarica completa: 8 ore. Una batteria di ricambio costa 2.000; sostituirla richiede un minuto ad armatura spenta. Accendere o spegnere la servoassistenza richiede 1 AzP. A batteria esaurita si applicano immediatamente requisito FOR e penalità della configurazione senza alimentazione.",
+      "paragrafo": "§7.14.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Pesante servoassistita",
+      "ar": {
+        "totale": 5,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 12,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 22000,
+      "rinforzi_ammessi": [],
+      "penalita": {
+        "attacchi_ravvicinati": -1,
+        "attacchi_distanza": -2,
+        "agilita": -2,
+        "movimento_q": -1,
+        "lancio_potere": -5
+      },
+      "profili_alternativi": [
+        {
+          "condizione": "senza alimentazione",
+          "for_richiesta": 7,
+          "penalita": {
+            "attacchi_ravvicinati": -2,
+            "attacchi_distanza": -2,
+            "agilita": -2,
+            "movimento_q": -2,
+            "lancio_potere": -5
+          }
+        }
+      ],
+      "proprieta": [
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Assistenza muscolare 1",
+          "testo": "Concede +1 VA alle Prove di Forza o Atletica per sollevare, spingere, trascinare o sfondare con il telaio. Non aumenta la Caratteristica, non soddisfa requisiti delle armi e non si applica ad attacchi o salti. Richiede alimentazione (§7.14.2, §7.16.3)."
+        },
+        {
+          "nome": "Colpo assistito 1",
+          "testo": "Aggiunge 1 al danno ordinario degli attacchi ravvicinati, una sola volta per applicazione di danno. Richiede alimentazione (§7.14.2, §7.16.3)."
+        },
+        {
+          "nome": "Termoregolazione 2",
+          "testo": "Concede +2 alle PS Tempra contro caldo e freddo ambientali; non aumenta l’AR contro attacchi termici. Richiede alimentazione (§7.14.2, §7.16.3)."
+        }
+      ]
+    },
+    {
+      "id": "armatura-da-incursione-wolfbane",
+      "nome": "Armatura da incursione Wolfbane",
+      "tipo": "armatura",
+      "catalogo": "Imperial",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Mimetismo 1 e Imbottita 1. Concede +1 VA alla Prova unica di Furtività quando esistono condizioni concrete per nascondersi. È nativamente Leggera con AR 3 e mantiene le penalità della Leggera, compreso −1 VA al lancio degli Incantesimi.",
+      "paragrafo": "§7.14.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 7500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Mimetismo 1",
+          "testo": "Concede +1 VA alla Prova unica di Furtività per nascondersi o muoversi senza essere individuati, quando esistono condizioni concrete per farlo. Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito (§7.11.4)."
+        },
+        {
+          "nome": "Imbottita 1",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "armatura-d-assalto-headhunter",
+      "nome": "Armatura d’assalto Headhunter",
+      "tipo": "armatura",
+      "catalogo": "Imperial",
+      "famiglia": "Armature",
+      "nomi_alternativi": [
+        "Warhound"
+      ],
+      "note_manuale": "Struttura robusta, Imbottita 2 e Stabile 1. I 2 PI aggiuntivi sono inclusi nel totale 8. Stabile 1 concede +1 VA alle Prove di Forza o Destrezza previste contro Sbilanciante. È nativamente Leggera con AR 3. Il modello Warhound ha gli stessi valori, proprietà e costo.",
+      "paragrafo": "§7.14.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 4,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 8500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
+        },
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Stabile 1",
+          "testo": "Concede +1 alla Prova di Caratteristica FOR o DES richiesta contro Sbilanciante. Non è una Prova Salvezza e non si estende automaticamente ad altri tentativi di mantenere l’equilibrio o agli spostamenti di Sbalzante. Più proprietà Stabile applicabili, comprese quelle di scudo e armatura, non si sommano: si usa il valore maggiore (§7.4.3, §7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "tenuta-da-ricognizione-pathfinder",
+      "nome": "Tenuta da ricognizione Pathfinder",
+      "tipo": "armatura",
+      "catalogo": "Imperial",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Mimetismo 2 e Passo sicuro 1. Concede +2 VA alla Prova unica di Furtività nelle condizioni pertinenti. Passo sicuro 1 concede +1 VA ad Atletica per mantenere l’equilibrio o attraversare terreni instabili o scivolosi, soltanto quando la Prova è già richiesta. Non riduce i costi di movimento e non si applica a salti, arrampicate o spostamenti forzati.",
+      "paragrafo": "§7.14.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 7000,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Mimetismo 2",
+          "testo": "Concede +2 VA alla Prova unica di Furtività per nascondersi o muoversi senza essere individuati, quando esistono condizioni concrete per farlo. Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito (§7.11.4)."
+        },
+        {
+          "nome": "Passo sicuro 1",
+          "testo": "Passo sicuro 1 concede +1 VA ad Atletica per mantenere l’equilibrio o attraversare terreni instabili o scivolosi, soltanto quando la Prova è già richiesta. Non riduce i costi di movimento e non si applica a salti, arrampicate o spostamenti forzati."
+        }
+      ]
+    },
+    {
+      "id": "armatura-da-cavalleria-fenris",
+      "nome": "Armatura da cavalleria Fenris",
+      "tipo": "armatura",
+      "catalogo": "Imperial",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Struttura robusta, Imbottita 2 e Imbracatura da sella 1. I 2 PI aggiuntivi sono inclusi nel totale 8. Con l’imbracatura agganciata a una sella compatibile, concede +1 VA alle Prove di Pilotare già richieste per evitare la perdita di controllo dopo un urto o il disarcionamento. Non introduce ulteriori Prove. È nativamente Leggera con AR 3.",
+      "paragrafo": "§7.14.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 4,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 8500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
+        },
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Imbracatura da sella 1",
+          "testo": "Concede +1 VA alle Prove di Pilotare già richieste per mantenere il controllo della motocicletta dopo un urto o evitare di essere disarcionati, mentre è agganciata a una sella compatibile. Non introduce una Prova quando la situazione non la richiede (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "corazza-dei-life-dragoons",
+      "nome": "Corazza dei Life Dragoons",
+      "tipo": "armatura",
+      "catalogo": "Imperial",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Struttura robusta, Ignifuga 2, Filtro respiratorio 2 e Assetto da pattuglia. I 2 PI aggiuntivi sono inclusi nel totale 10. La penalità MOV propria dell’armatura diventa 0; restano le altre penalità della Media. Anche la Young Guard utilizza questo profilo.",
+      "paragrafo": "§7.14.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 10,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 8000,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": -1,
+        "agilita": -1,
+        "movimento_q": 0,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
+        },
+        {
+          "nome": "Ignifuga 2",
+          "testo": "Contromisura del §5.24 contro Fuoco: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Filtro respiratorio 2",
+          "testo": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata. Richiede aria respirabile; non costituisce una riserva d’ossigeno né una tenuta per vuoto o immersione (§7.11.4)."
+        },
+        {
+          "nome": "Assetto da pattuglia",
+          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "tenuta-delle-mourning-wolves",
+      "nome": "Tenuta delle Mourning Wolves",
+      "tipo": "armatura",
+      "catalogo": "Imperial",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Mimetismo 2. Concede +2 VA alla Prova unica di Furtività quando esistono condizioni concrete per nascondersi. È nativamente Leggera con AR 3 e mantiene tutte le penalità della Leggera.",
+      "paragrafo": "§7.14.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 7500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Mimetismo 2",
+          "testo": "Concede +2 VA alla Prova unica di Furtività per nascondersi o muoversi senza essere individuati, quando esistono condizioni concrete per farlo. Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "divisa-della-sicurezza",
+      "nome": "Divisa della Sicurezza",
+      "tipo": "armatura",
+      "catalogo": "Cybertronic",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Imbottita 1 e Isolante 1. SIN 1: +1 VA a Difese per Schivare. Accetta un Rinforzo Leggero.",
+      "paragrafo": "§7.15.2",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 4,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 4500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Imbottita 1",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Isolante 1",
+          "testo": "Contromisura del §5.24 contro Elettricità: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "SIN 1",
+          "testo": "SIN 1: +1 VA a Difese per Schivare."
+        }
+      ]
+    },
+    {
+      "id": "abito-degli-agenti-ies",
+      "nome": "Abito degli Agenti IES",
+      "tipo": "armatura",
+      "catalogo": "Cybertronic",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Discreta, Mimetismo 1 e Isolante 1. SIN 1: +1 VA alla Prova unica di Furtività. Accetta un Rinforzo Leggero; componenti esterni visibili non vengono nascosti dalla proprietà Discreta.",
+      "paragrafo": "§7.15.2",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 6500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Discreta",
+          "testo": "La protezione è integrata nell’abito o nella divisa e non risulta evidente a una semplice osservazione casuale. Un esame ravvicinato o una perquisizione possono rivelarla. Componenti corazzati visibili non vengono nascosti da questa proprietà (§7.11.4)."
+        },
+        {
+          "nome": "Mimetismo 1",
+          "testo": "Concede +1 VA alla Prova unica di Furtività per nascondersi o muoversi senza essere individuati, quando esistono condizioni concrete per farlo. Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito (§7.11.4)."
+        },
+        {
+          "nome": "Isolante 1",
+          "testo": "Contromisura del §5.24 contro Elettricità: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "SIN 1",
+          "testo": "SIN 1: +1 VA alla Prova unica di Furtività."
+        }
+      ]
+    },
+    {
+      "id": "corazza-chasseur",
+      "nome": "Corazza Chasseur",
+      "tipo": "armatura",
+      "catalogo": "Cybertronic",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Struttura robusta e Isolante 2. I 2 PI aggiuntivi sono già inclusi nel totale 10. SIN 1: +1 VA a Difese per Schivare. Accetta un Rinforzo Leggero.",
+      "paragrafo": "§7.15.2",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 10,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 6500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": -1,
+        "agilita": -1,
+        "movimento_q": -1,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
+        },
+        {
+          "nome": "Isolante 2",
+          "testo": "Contromisura del §5.24 contro Elettricità: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "SIN 1",
+          "testo": "SIN 1: +1 VA a Difese per Schivare."
+        }
+      ]
+    },
+    {
+      "id": "ia3000-chasseur-corazzato",
+      "nome": "IA3000 Chasseur corazzato",
+      "tipo": "armatura",
+      "catalogo": "Cybertronic",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Imbottita 2, Isolante 2 e Articolazione di tiro: la penalità della Pesante agli attacchi a distanza passa da −2 a −1 VA. SIN 2: +2 VA a Difese per Schivare. Non accetta rinforzi ordinari. È compatibile con il Generatore Blink IAS3100, acquistato separatamente.",
+      "paragrafo": "§7.15.2",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Pesante",
+      "ar": {
+        "totale": 5,
+        "magica": 0
+      },
+      "for_richiesta": 7,
+      "pi": 12,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "RA",
+      "costo": 15000,
+      "rinforzi_ammessi": [],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": -2,
+        "agilita": -2,
+        "movimento_q": -2,
+        "lancio_potere": -5
+      },
+      "proprieta": [
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Isolante 2",
+          "testo": "Contromisura del §5.24 contro Elettricità: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Articolazione di tiro",
+          "testo": "Riduce di 1 la penalità propria dell’armatura agli attacchi a distanza: il −2 della Pesante diventa −1. Restano le altre penalità della categoria e quelle dovute a FOR insufficiente (§7.13.2, Tortoise Mk II)."
+        },
+        {
+          "nome": "SIN 2",
+          "testo": "SIN 2: +2 VA a Difese per Schivare."
+        }
+      ]
+    },
+    {
+      "id": "ia3000-mirrorman",
+      "nome": "IA3000 Mirrorman",
+      "tipo": "armatura",
+      "catalogo": "Cybertronic",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Articolazione d’assalto e Assetto da incursione: annulla le penalità proprie della Media agli attacchi ravvicinati e al MOV. Restano la penalità ad Agilità e le altre penalità. SIN 2: +2 VA alla Prova unica di Furtività. Nessun rinforzo ordinario; IAS3300 Mirrorshard separato.",
+      "paragrafo": "§7.15.2",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 10000,
+      "rinforzi_ammessi": [],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": 0,
+        "agilita": -1,
+        "movimento_q": 0,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Articolazione d’assalto",
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+        },
+        {
+          "nome": "Assetto da incursione",
+          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4)."
+        },
+        {
+          "nome": "SIN 2",
+          "testo": "SIN 2: +2 VA alla Prova unica di Furtività."
+        }
+      ]
+    },
+    {
+      "id": "ia3000-shock-trooper",
+      "nome": "IA3000 Shock Trooper",
+      "tipo": "armatura",
+      "catalogo": "Cybertronic",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Imbottita 2, Articolazione d’assalto e Filtro respiratorio 2. SIN 2: +2 VA ad Atletica per salti e atterraggi che richiedono effettivamente quella Prova. Il bonus non si trasferisce automaticamente alle Prove di Pilotare. Nessun rinforzo ordinario; IAS3200 acquistato separatamente.",
+      "paragrafo": "§7.15.2",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 10,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "RA",
+      "costo": 11500,
+      "rinforzi_ammessi": [],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": 0,
+        "agilita": -1,
+        "movimento_q": -1,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Articolazione d’assalto",
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+        },
+        {
+          "nome": "Filtro respiratorio 2",
+          "testo": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata. Richiede aria respirabile; non costituisce una riserva d’ossigeno né una tenuta per vuoto o immersione (§7.11.4)."
+        },
+        {
+          "nome": "SIN 2",
+          "testo": "SIN 2: +2 VA ad Atletica per salti e atterraggi che richiedono effettivamente quella Prova."
+        }
+      ]
+    },
+    {
+      "id": "ia3000-silent",
+      "nome": "IA3000 Silent",
+      "tipo": "armatura",
+      "catalogo": "Cybertronic",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Articolazione da ricognizione e Assetto da incursione: annulla le penalità proprie della Media ad Agilità e al MOV. SIN 2: +2 VA alla Prova unica di Furtività. Nessun rinforzo ordinario. Smorzatore acustico e IAS3200 sono dispositivi separati.",
+      "paragrafo": "§7.15.2",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 11000,
+      "rinforzi_ammessi": [],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": -1,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Articolazione da ricognizione",
+          "testo": "Elimina il −1 VA di Agilità della Media, comprese Schivata e Prove fisiche ostacolate. Non elimina il −1 agli attacchi né le penalità di lancio (§7.11.4)."
+        },
+        {
+          "nome": "Assetto da incursione",
+          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4)."
+        },
+        {
+          "nome": "SIN 2",
+          "testo": "SIN 2: +2 VA alla Prova unica di Furtività."
+        }
+      ]
+    },
+    {
+      "id": "ia3000-reaver",
+      "nome": "IA3000 Reaver",
+      "tipo": "armatura",
+      "catalogo": "Cybertronic",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Isolante 2 e Antiesplosione 1: contro danni Naturali o Magici da esplosione l’AR sale a 5, senza protezione aggiuntiva dai danni Eterei. SIN 1: +1 VA a Difese per Schivare. Nessun rinforzo ordinario; IAS3400 acquistato separatamente.",
+      "paragrafo": "§7.15.2",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 4,
+        "magica": 0
+      },
+      "for_richiesta": 6,
+      "pi": 10,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 14000,
+      "rinforzi_ammessi": [],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": -1,
+        "agilita": -1,
+        "movimento_q": -1,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Isolante 2",
+          "testo": "Contromisura del §5.24 contro Elettricità: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Antiesplosione 1",
+          "testo": "Aumenta di 1 l’AR fornita dall’armatura contro danni Naturali o Magici di esplosioni, comprese granate, razzi e cariche da demolizione. Si applica a ciascuna applicazione di danno dell’esplosione e non protegge dal danno Etereo. Fra Antiesplosione di scudo e armatura si usa soltanto il valore maggiore (§7.4.3, §7.11.4)."
+        },
+        {
+          "nome": "SIN 1",
+          "testo": "SIN 1: +1 VA a Difese per Schivare."
+        }
+      ]
+    },
+    {
+      "id": "tuta-dr-diana",
+      "nome": "Tuta Dr. Diana",
+      "tipo": "armatura",
+      "catalogo": "Cybertronic",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Isolante 2 e Filtro respiratorio 2. SIN 1: +1 VA a Medicina o Tecnologia per assistenza medica e manutenzione cibernetica, usando strumenti appropriati. Il SIN non sostituisce competenze, materiali o strumenti. Accetta un Rinforzo Leggero; il corredo di assistenza è separato.",
+      "paragrafo": "§7.15.2",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 6500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Isolante 2",
+          "testo": "Contromisura del §5.24 contro Elettricità: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Filtro respiratorio 2",
+          "testo": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata. Richiede aria respirabile; non costituisce una riserva d’ossigeno né una tenuta per vuoto o immersione (§7.11.4)."
+        },
+        {
+          "nome": "SIN 1",
+          "testo": "SIN 1: +1 VA a Medicina o Tecnologia per assistenza medica e manutenzione cibernetica, usando strumenti appropriati."
+        }
+      ]
+    },
+    {
+      "id": "armatura-ashigaru",
+      "nome": "Armatura Ashigaru",
+      "tipo": "armatura",
+      "catalogo": "Mishima",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Manutenzione agevolata: +1 VA alle Prove di Tecnologia per riparare questa armatura, disponendo degli strumenti e dei ricambi necessari. Non ripristina automaticamente PI.",
+      "paragrafo": "§7.16.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 1,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 1800,
+      "rinforzi_ammessi": [
+        "Leggero",
+        "Pesante"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Manutenzione agevolata",
+          "testo": "Manutenzione agevolata: +1 VA alle Prove di Tecnologia per riparare questa armatura, disponendo degli strumenti e dei ricambi necessari. Non ripristina automaticamente PI."
+        }
+      ]
+    },
+    {
+      "id": "corazza-samurai-bushido",
+      "nome": "Corazza Samurai Bushido",
+      "tipo": "armatura",
+      "catalogo": "Mishima",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Articolazione d’assalto e Imbottita 1. La penalità propria della Media agli attacchi ravvicinati diventa 0; le altre restano invariate.",
+      "paragrafo": "§7.16.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 5500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": 0,
+        "agilita": -1,
+        "movimento_q": -1,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Articolazione d’assalto",
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+        },
+        {
+          "nome": "Imbottita 1",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "corazza-samurai-ronin",
+      "nome": "Corazza Samurai Ronin",
+      "tipo": "armatura",
+      "catalogo": "Mishima",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Articolazione di tiro e Imbottita 1. La penalità propria della Media agli attacchi a distanza diventa 0; le altre restano invariate.",
+      "paragrafo": "§7.16.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 5500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": -1,
+        "agilita": -1,
+        "movimento_q": -1,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Articolazione di tiro",
+          "testo": "Riduce di 1 la penalità propria dell’armatura agli attacchi a distanza: il −2 della Pesante diventa −1. Restano le altre penalità della categoria e quelle dovute a FOR insufficiente (§7.13.2, Tortoise Mk II)."
+        },
+        {
+          "nome": "Imbottita 1",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "corazza-hatamoto",
+      "nome": "Corazza Hatamoto",
+      "tipo": "armatura",
+      "catalogo": "Mishima",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Struttura robusta, Imbottita 2 e Articolazione d’assalto. I 2 PI aggiuntivi sono compresi nel totale 12. La penalità agli attacchi ravvicinati passa da −2 a −1 VA.",
+      "paragrafo": "§7.16.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Pesante",
+      "ar": {
+        "totale": 5,
+        "magica": 0
+      },
+      "for_richiesta": 7,
+      "pi": 12,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "RA",
+      "costo": 13500,
+      "rinforzi_ammessi": [],
+      "penalita": {
+        "attacchi_distanza": -2,
+        "attacchi_ravvicinati": -1,
+        "agilita": -2,
+        "movimento_q": -2,
+        "lancio_potere": -5
+      },
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
+        },
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Articolazione d’assalto",
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "armatura-dei-draghi-tigre",
+      "nome": "Armatura dei Draghi Tigre",
+      "tipo": "armatura",
+      "catalogo": "Mishima",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Assetto da incursione, Articolazione d’assalto e Mimetismo 1. Annulla le penalità proprie della Media al MOV e agli attacchi ravvicinati. Il mimetismo concede +1 VA alla Prova unica di Furtività quando ricorrono le condizioni per nascondersi.",
+      "paragrafo": "§7.16.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 9500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": 0,
+        "agilita": -1,
+        "movimento_q": 0,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Assetto da incursione",
+          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4)."
+        },
+        {
+          "nome": "Articolazione d’assalto",
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+        },
+        {
+          "nome": "Mimetismo 1",
+          "testo": "Concede +1 VA alla Prova unica di Furtività per nascondersi o muoversi senza essere individuati, quando esistono condizioni concrete per farlo. Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "corazza-dei-diavoli-scarlatti",
+      "nome": "Corazza dei Diavoli Scarlatti",
+      "tipo": "armatura",
+      "catalogo": "Mishima",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Struttura robusta, Imbottita 2 e Filtro respiratorio 2. I 2 PI aggiuntivi sono compresi nel totale 10; restano le penalità della Media.",
+      "paragrafo": "§7.16.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 4,
+        "magica": 0
+      },
+      "for_richiesta": 6,
+      "pi": 10,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 10500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": -1,
+        "agilita": -1,
+        "movimento_q": -1,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
+        },
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Filtro respiratorio 2",
+          "testo": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata. Richiede aria respirabile; non costituisce una riserva d’ossigeno né una tenuta per vuoto o immersione (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "tuta-delle-ombre",
+      "nome": "Tuta delle Ombre",
+      "tipo": "armatura",
+      "catalogo": "Mishima",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Mimetismo 2, Imbottita 1 e Imbracatura tecnica 1. Concede +2 VA alla Prova unica di Furtività nelle condizioni appropriate; l’imbracatura concede +1 VA ad Atletica per arrampicarsi o calarsi utilizzando effettivamente corde e attrezzature pertinenti.",
+      "paragrafo": "§7.16.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 8500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Mimetismo 2",
+          "testo": "Concede +2 VA alla Prova unica di Furtività per nascondersi o muoversi senza essere individuati, quando esistono condizioni concrete per farlo. Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito (§7.11.4)."
+        },
+        {
+          "nome": "Imbottita 1",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Imbracatura tecnica 1",
+          "testo": "Concede +1 VA ad Atletica per arrampicarsi o calarsi usando corde e ancoraggi adeguati; tali strumenti si acquistano separatamente. Non aumenta automaticamente il movimento (§7.14.2, Grey Ghost)."
+        }
+      ]
+    },
+    {
+      "id": "armatura-dei-portatori-di-morte",
+      "nome": "Armatura dei Portatori di Morte",
+      "tipo": "armatura",
+      "catalogo": "Mishima",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Mimetismo 2, Imbottita 2 e Struttura robusta. AR 3 è nativa del modello, che resta Leggero; gli 8 PI comprendono il beneficio della struttura. Il mimetismo concede +2 VA alla Prova unica di Furtività nelle condizioni appropriate.",
+      "paragrafo": "§7.16.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 4,
+      "pi": 8,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 11500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Mimetismo 2",
+          "testo": "Concede +2 VA alla Prova unica di Furtività per nascondersi o muoversi senza essere individuati, quando esistono condizioni concrete per farlo. Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito (§7.11.4)."
+        },
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "corazza-dei-droni",
+      "nome": "Corazza dei Droni",
+      "tipo": "armatura",
+      "catalogo": "Mishima",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Struttura robusta e Imbottita 2; 12 PI comprendono il beneficio della struttura. L’imbracatura d’artiglieria accoglie una sola arma pesante compatibile: riduce di 1 VA la penalità propria dell’armatura al tiro e di 1 Q l’eventuale penalità al MOV imposta dall’arma, fino a 0. Montare o sganciare l’arma richiede 1 AzP. Restano requisito di FOR, impugnatura e normali Azioni di impiego.",
+      "paragrafo": "§7.16.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Pesante",
+      "ar": {
+        "totale": 5,
+        "magica": 0
+      },
+      "for_richiesta": 7,
+      "pi": 12,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 13500,
+      "rinforzi_ammessi": [],
+      "penalita": {
+        "attacchi_distanza": -2,
+        "attacchi_ravvicinati": -2,
+        "agilita": -2,
+        "movimento_q": -2,
+        "lancio_potere": -5
+      },
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
+        },
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "powersuit",
+      "nome": "Powersuit",
+      "tipo": "armatura",
+      "catalogo": "Mishima",
+      "famiglia": "Esoscheletri",
+      "nomi_alternativi": [],
+      "note_manuale": "Imbottita 2, Assistenza muscolare 1, Colpo assistito 1 e Termoregolazione 2. L’imbottitura resta efficace anche a sistema spento; gli altri benefici richiedono alimentazione. Assistenza muscolare X concede +X VA alle Prove di Forza o Atletica per sollevare, spingere, trascinare o sfondare con il telaio. Non aumenta la Caratteristica, non soddisfa requisiti delle armi e non si applica ad attacchi o salti. Colpo assistito X aggiunge X al danno ordinario degli attacchi ravvicinati, una sola volta per applicazione di danno. Termoregolazione 2 concede +2 alle PS Tempra contro caldo e freddo ambientali; non aumenta l’AR contro attacchi termici. Lancio indica la penalità alla Prova di Potere per lanciare Incantesimi. I valori sono le penalità finali del modello, prima di altre cause. A sistema spento il telaio conserva la protezione ma usa il requisito FOR e le penalità passive indicate. Il prezzo comprende una batteria carica. Accendere o spegnere il sistema richiede 1 AzP; sostituire la batteria richiede un minuto a sistema spento. L’esoscheletro non fornisce Azioni aggiuntive.",
+      "paragrafo": "§7.16.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Pesante",
+      "ar": {
+        "totale": 5,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 12,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 22000,
+      "rinforzi_ammessi": [],
+      "penalita": {
+        "attacchi_ravvicinati": -1,
+        "attacchi_distanza": -2,
+        "agilita": -2,
+        "movimento_q": -1,
+        "lancio_potere": -5
+      },
+      "profili_alternativi": [
+        {
+          "condizione": "sistema spento",
+          "for_richiesta": 7,
+          "penalita": {
+            "attacchi_ravvicinati": -2,
+            "attacchi_distanza": -2,
+            "agilita": -2,
+            "movimento_q": -2,
+            "lancio_potere": -5
+          }
+        }
+      ],
+      "proprieta": [
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Assistenza muscolare 1",
+          "testo": "Concede +1 VA alle Prove di Forza o Atletica per sollevare, spingere, trascinare o sfondare con il telaio. Non aumenta la Caratteristica, non soddisfa requisiti delle armi e non si applica ad attacchi o salti. Richiede alimentazione (§7.14.2, §7.16.3)."
+        },
+        {
+          "nome": "Colpo assistito 1",
+          "testo": "Aggiunge 1 al danno ordinario degli attacchi ravvicinati, una sola volta per applicazione di danno. Richiede alimentazione (§7.14.2, §7.16.3)."
+        },
+        {
+          "nome": "Termoregolazione 2",
+          "testo": "Concede +2 alle PS Tempra contro caldo e freddo ambientali; non aumenta l’AR contro attacchi termici. Richiede alimentazione (§7.14.2, §7.16.3)."
+        }
+      ]
+    },
+    {
+      "id": "shoa-ace-custom",
+      "nome": "Shoa Ace Custom",
+      "tipo": "armatura",
+      "catalogo": "Mishima",
+      "famiglia": "Esoscheletri",
+      "nomi_alternativi": [],
+      "note_manuale": "Imbottita 2, Assistenza muscolare 2, Colpo assistito 2 e Termoregolazione 2. L’imbottitura è passiva; le altre proprietà richiedono alimentazione. Assistenza muscolare X concede +X VA alle Prove di Forza o Atletica per sollevare, spingere, trascinare o sfondare con il telaio. Non aumenta la Caratteristica, non soddisfa requisiti delle armi e non si applica ad attacchi o salti. Colpo assistito X aggiunge X al danno ordinario degli attacchi ravvicinati, una sola volta per applicazione di danno. Termoregolazione 2 concede +2 alle PS Tempra contro caldo e freddo ambientali; non aumenta l’AR contro attacchi termici. Lancio indica la penalità alla Prova di Potere per lanciare Incantesimi. I valori sono le penalità finali del modello, prima di altre cause. A sistema spento il telaio conserva la protezione ma usa il requisito FOR e le penalità passive indicate. Il prezzo comprende una batteria carica. Accendere o spegnere il sistema richiede 1 AzP; sostituire la batteria richiede un minuto a sistema spento. L’esoscheletro non fornisce Azioni aggiuntive.",
+      "paragrafo": "§7.16.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Pesante",
+      "ar": {
+        "totale": 6,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 14,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 34000,
+      "rinforzi_ammessi": [],
+      "penalita": {
+        "attacchi_ravvicinati": 0,
+        "attacchi_distanza": -2,
+        "agilita": -1,
+        "movimento_q": 0,
+        "lancio_potere": -5
+      },
+      "profili_alternativi": [
+        {
+          "condizione": "sistema spento",
+          "for_richiesta": 8,
+          "penalita": {
+            "attacchi_ravvicinati": -2,
+            "attacchi_distanza": -2,
+            "agilita": -2,
+            "movimento_q": -2,
+            "lancio_potere": -5
+          }
+        }
+      ],
+      "proprieta": [
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Assistenza muscolare 2",
+          "testo": "Concede +2 VA alle Prove di Forza o Atletica per sollevare, spingere, trascinare o sfondare con il telaio. Non aumenta la Caratteristica, non soddisfa requisiti delle armi e non si applica ad attacchi o salti. Richiede alimentazione (§7.14.2, §7.16.3)."
+        },
+        {
+          "nome": "Colpo assistito 2",
+          "testo": "Aggiunge 2 al danno ordinario degli attacchi ravvicinati, una sola volta per applicazione di danno. Richiede alimentazione (§7.14.2, §7.16.3)."
+        },
+        {
+          "nome": "Termoregolazione 2",
+          "testo": "Concede +2 alle PS Tempra contro caldo e freddo ambientali; non aumenta l’AR contro attacchi termici. Richiede alimentazione (§7.14.2, §7.16.3)."
+        }
+      ]
+    },
+    {
+      "id": "demonhunter",
+      "nome": "Demonhunter",
+      "tipo": "armatura",
+      "catalogo": "Mishima",
+      "famiglia": "Esoscheletri",
+      "nomi_alternativi": [],
+      "note_manuale": "Mantiene Assistenza muscolare 2, Colpo assistito 2, Termoregolazione 2 e Imbottita 2 della Shoa Ace Custom. Comprende AR magica 1 e Sigilli d’interdizione 2: +2 alle PS Magia effettivamente richieste contro l’Oscura Simmetria. AR magica, sigilli e imbottitura restano efficaci anche a sistema spento e non richiedono Sintonizzazione. I sigilli non concedono una Salvezza dove l’effetto non la prevede. Assistenza muscolare X concede +X VA alle Prove di Forza o Atletica per sollevare, spingere, trascinare o sfondare con il telaio. Non aumenta la Caratteristica, non soddisfa requisiti delle armi e non si applica ad attacchi o salti. Colpo assistito X aggiunge X al danno ordinario degli attacchi ravvicinati, una sola volta per applicazione di danno. Termoregolazione 2 concede +2 alle PS Tempra contro caldo e freddo ambientali; non aumenta l’AR contro attacchi termici. Lancio indica la penalità alla Prova di Potere per lanciare Incantesimi. I valori sono le penalità finali del modello, prima di altre cause. A sistema spento il telaio conserva la protezione ma usa il requisito FOR e le penalità passive indicate. Il prezzo comprende una batteria carica. Accendere o spegnere il sistema richiede 1 AzP; sostituire la batteria richiede un minuto a sistema spento. L’esoscheletro non fornisce Azioni aggiuntive.",
+      "paragrafo": "§7.16.1",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Pesante",
+      "ar": {
+        "totale": 6,
+        "magica": 1
+      },
+      "for_richiesta": 5,
+      "pi": 14,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 42000,
+      "rinforzi_ammessi": [],
+      "penalita": {
+        "attacchi_ravvicinati": 0,
+        "attacchi_distanza": -2,
+        "agilita": -1,
+        "movimento_q": 0,
+        "lancio_potere": -5
+      },
+      "profili_alternativi": [
+        {
+          "condizione": "sistema spento",
+          "for_richiesta": 8,
+          "penalita": {
+            "attacchi_ravvicinati": -2,
+            "attacchi_distanza": -2,
+            "agilita": -2,
+            "movimento_q": -2,
+            "lancio_potere": -5
+          }
+        }
+      ],
+      "proprieta": [
+        {
+          "nome": "Assistenza muscolare 2",
+          "testo": "Concede +2 VA alle Prove di Forza o Atletica per sollevare, spingere, trascinare o sfondare con il telaio. Non aumenta la Caratteristica, non soddisfa requisiti delle armi e non si applica ad attacchi o salti. Richiede alimentazione (§7.14.2, §7.16.3)."
+        },
+        {
+          "nome": "Colpo assistito 2",
+          "testo": "Aggiunge 2 al danno ordinario degli attacchi ravvicinati, una sola volta per applicazione di danno. Richiede alimentazione (§7.14.2, §7.16.3)."
+        },
+        {
+          "nome": "Termoregolazione 2",
+          "testo": "Concede +2 alle PS Tempra contro caldo e freddo ambientali; non aumenta l’AR contro attacchi termici. Richiede alimentazione (§7.14.2, §7.16.3)."
+        },
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Sigilli d’interdizione 2",
+          "testo": "Sigilli d’interdizione 2: +2 alle PS Magia effettivamente richieste contro l’Oscura Simmetria."
+        }
+      ]
+    },
+    {
+      "id": "abito-protettivo-del-revisore",
+      "nome": "Abito protettivo del Revisore",
+      "tipo": "armatura",
+      "catalogo": "Fratellanza",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Discreta e Imbottita 1. Mantiene le penalità della Leggera; componenti esterni visibili non vengono nascosti dalla proprietà Discreta.",
+      "paragrafo": "§7.17.2",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 4000,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Discreta",
+          "testo": "La protezione è integrata nell’abito o nella divisa e non risulta evidente a una semplice osservazione casuale. Un esame ravvicinato o una perquisizione possono rivelarla. Componenti corazzati visibili non vengono nascosti da questa proprietà (§7.11.4)."
+        },
+        {
+          "nome": "Imbottita 1",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "corazza-del-soldato",
+      "nome": "Corazza del Soldato",
+      "tipo": "armatura",
+      "catalogo": "Fratellanza",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Imbottita 1 e Filtro respiratorio 2. Mantiene le penalità ordinarie della Media.",
+      "paragrafo": "§7.17.2",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 5500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": -1,
+        "agilita": -1,
+        "movimento_q": -1,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Imbottita 1",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Filtro respiratorio 2",
+          "testo": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata. Richiede aria respirabile; non costituisce una riserva d’ossigeno né una tenuta per vuoto o immersione (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "corazza-del-soldato-d-elite",
+      "nome": "Corazza del Soldato d’élite",
+      "tipo": "armatura",
+      "catalogo": "Fratellanza",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione occulta 1, Imbottita 2 e Struttura robusta. I 2 PI aggiuntivi sono compresi nel totale 10.",
+      "paragrafo": "§7.17.2",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 4,
+        "magica": 1
+      },
+      "for_richiesta": 5,
+      "pi": 10,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "RA",
+      "costo": 11500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": -1,
+        "agilita": -1,
+        "movimento_q": -1,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Protezione occulta 1",
+          "testo": "Concede +1 alle PS Magia effettivamente richieste contro Oscura Simmetria, Corruzione e Paura. Si applica una sola volta anche quando un effetto rientra in più categorie. Non crea una Salvezza altrimenti assente e non si trasferisce alle PS Volontà contro Paura (§7.11.4, §7.17.1)."
+        },
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "armatura-del-pellegrino",
+      "nome": "Armatura del Pellegrino",
+      "tipo": "armatura",
+      "catalogo": "Fratellanza",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Articolazione d’assalto, Imbottita 1 e Stabile 1. Annulla la penalità propria della Media agli attacchi ravvicinati.",
+      "paragrafo": "§7.17.2",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 6500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": 0,
+        "agilita": -1,
+        "movimento_q": -1,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Articolazione d’assalto",
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+        },
+        {
+          "nome": "Imbottita 1",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Stabile 1",
+          "testo": "Concede +1 alla Prova di Caratteristica FOR o DES richiesta contro Sbilanciante. Non è una Prova Salvezza e non si estende automaticamente ad altri tentativi di mantenere l’equilibrio o agli spostamenti di Sbalzante. Più proprietà Stabile applicabili, comprese quelle di scudo e armatura, non si sommano: si usa il valore maggiore (§7.4.3, §7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "armatura-dell-inquisitore",
+      "nome": "Armatura dell’Inquisitore",
+      "tipo": "armatura",
+      "catalogo": "Fratellanza",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione occulta 2, Assetto mistico 2, Articolazione d’assalto, Imbottita 1 e Struttura robusta. Attacchi ravvicinati senza penalità propria dell’armatura; 10 PI comprendono il beneficio della struttura.",
+      "paragrafo": "§7.17.2",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 4,
+        "magica": 1
+      },
+      "for_richiesta": 5,
+      "pi": 10,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 18500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": 0,
+        "agilita": -1,
+        "movimento_q": -1,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Protezione occulta 2",
+          "testo": "Concede +2 alle PS Magia effettivamente richieste contro Oscura Simmetria, Corruzione e Paura. Si applica una sola volta anche quando un effetto rientra in più categorie. Non crea una Salvezza altrimenti assente e non si trasferisce alle PS Volontà contro Paura (§7.11.4, §7.17.1)."
+        },
+        {
+          "nome": "Assetto mistico 2",
+          "testo": "Riduce di 2 la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede un bonus positivo e non riduce penalità causate da altri fattori (§7.17.1)."
+        },
+        {
+          "nome": "Articolazione d’assalto",
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+        },
+        {
+          "nome": "Imbottita 1",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "armatura-del-mistico",
+      "nome": "Armatura del Mistico",
+      "tipo": "armatura",
+      "catalogo": "Fratellanza",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione occulta 2, Assetto mistico 3, Imbottita 1 e Struttura robusta. Nessuna penalità propria dell’armatura al lancio degli Incantesimi; 10 PI comprendono il beneficio della struttura.",
+      "paragrafo": "§7.17.2",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 4,
+        "magica": 1
+      },
+      "for_richiesta": 5,
+      "pi": 10,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 20000,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": -1,
+        "agilita": -1,
+        "movimento_q": -1,
+        "lancio_potere": 0
+      },
+      "proprieta": [
+        {
+          "nome": "Protezione occulta 2",
+          "testo": "Concede +2 alle PS Magia effettivamente richieste contro Oscura Simmetria, Corruzione e Paura. Si applica una sola volta anche quando un effetto rientra in più categorie. Non crea una Salvezza altrimenti assente e non si trasferisce alle PS Volontà contro Paura (§7.11.4, §7.17.1)."
+        },
+        {
+          "nome": "Assetto mistico 3",
+          "testo": "Riduce di 3 la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede un bonus positivo e non riduce penalità causate da altri fattori (§7.17.1)."
+        },
+        {
+          "nome": "Imbottita 1",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "corazza-delle-furie",
+      "nome": "Corazza delle Furie",
+      "tipo": "armatura",
+      "catalogo": "Fratellanza",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione occulta 2, Assetto mistico 2, Articolazione d’assalto, Imbottita 2, Stabile 2 e Struttura robusta. I 2 PI aggiuntivi sono compresi nel totale 12. Lo Scudo delle Guardie Sacre è separato.",
+      "paragrafo": "§7.17.2",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Pesante",
+      "ar": {
+        "totale": 7,
+        "magica": 2
+      },
+      "for_richiesta": 7,
+      "pi": 12,
+      "qualita": "Molto rara",
+      "ps_int": 16,
+      "reperibilita": "MR",
+      "costo": 32000,
+      "rinforzi_ammessi": [],
+      "penalita": {
+        "attacchi_distanza": -2,
+        "attacchi_ravvicinati": -1,
+        "agilita": -2,
+        "movimento_q": -2,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Protezione occulta 2",
+          "testo": "Concede +2 alle PS Magia effettivamente richieste contro Oscura Simmetria, Corruzione e Paura. Si applica una sola volta anche quando un effetto rientra in più categorie. Non crea una Salvezza altrimenti assente e non si trasferisce alle PS Volontà contro Paura (§7.11.4, §7.17.1)."
+        },
+        {
+          "nome": "Assetto mistico 2",
+          "testo": "Riduce di 2 la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede un bonus positivo e non riduce penalità causate da altri fattori (§7.17.1)."
+        },
+        {
+          "nome": "Articolazione d’assalto",
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+        },
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Stabile 2",
+          "testo": "Concede +2 alla Prova di Caratteristica FOR o DES richiesta contro Sbilanciante. Non è una Prova Salvezza e non si estende automaticamente ad altri tentativi di mantenere l’equilibrio o agli spostamenti di Sbalzante. Più proprietà Stabile applicabili, comprese quelle di scudo e armatura, non si sommano: si usa il valore maggiore (§7.4.3, §7.11.4)."
+        },
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "corazza-dei-sacri-guerrieri",
+      "nome": "Corazza dei Sacri Guerrieri",
+      "tipo": "armatura",
+      "catalogo": "Fratellanza",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione occulta 1, Assetto mistico 2, Articolazione d’assalto, Assetto da incursione, Imbottita 2 e Struttura robusta. Annulla la penalità propria al MOV; 12 PI comprendono il beneficio della struttura.",
+      "paragrafo": "§7.17.2",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Pesante",
+      "ar": {
+        "totale": 6,
+        "magica": 1
+      },
+      "for_richiesta": 7,
+      "pi": 12,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 23000,
+      "rinforzi_ammessi": [],
+      "penalita": {
+        "attacchi_distanza": -2,
+        "attacchi_ravvicinati": -1,
+        "agilita": -2,
+        "movimento_q": 0,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Protezione occulta 1",
+          "testo": "Concede +1 alle PS Magia effettivamente richieste contro Oscura Simmetria, Corruzione e Paura. Si applica una sola volta anche quando un effetto rientra in più categorie. Non crea una Salvezza altrimenti assente e non si trasferisce alle PS Volontà contro Paura (§7.11.4, §7.17.1)."
+        },
+        {
+          "nome": "Assetto mistico 2",
+          "testo": "Riduce di 2 la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede un bonus positivo e non riduce penalità causate da altri fattori (§7.17.1)."
+        },
+        {
+          "nome": "Articolazione d’assalto",
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+        },
+        {
+          "nome": "Assetto da incursione",
+          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4)."
+        },
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "armatura-delle-valchirie",
+      "nome": "Armatura delle Valchirie",
+      "tipo": "armatura",
+      "catalogo": "Fratellanza",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione occulta 1, Assetto mistico 2, Articolazione d’assalto, Assetto da incursione e Imbottita 1. Annulla le penalità proprie della Media agli attacchi ravvicinati e al MOV.",
+      "paragrafo": "§7.17.2",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 4,
+        "magica": 1
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 17500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": 0,
+        "agilita": -1,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Protezione occulta 1",
+          "testo": "Concede +1 alle PS Magia effettivamente richieste contro Oscura Simmetria, Corruzione e Paura. Si applica una sola volta anche quando un effetto rientra in più categorie. Non crea una Salvezza altrimenti assente e non si trasferisce alle PS Volontà contro Paura (§7.11.4, §7.17.1)."
+        },
+        {
+          "nome": "Assetto mistico 2",
+          "testo": "Riduce di 2 la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede un bonus positivo e non riduce penalità causate da altri fattori (§7.17.1)."
+        },
+        {
+          "nome": "Articolazione d’assalto",
+          "testo": "Riduce di 1 la penalità dell’armatura agli attacchi ravvicinati: una Media passa da −1 a 0 e una Pesante da −2 a −1. Non modifica gli attacchi a distanza o le Difese (§7.11.4)."
+        },
+        {
+          "nome": "Assetto da incursione",
+          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4)."
+        },
+        {
+          "nome": "Imbottita 1",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "tuta-del-mortificator",
+      "nome": "Tuta del Mortificator",
+      "tipo": "armatura",
+      "catalogo": "Fratellanza",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione occulta 1, Assetto mistico 1, Mimetismo 2, Imbottita 1, Imbracatura tecnica 1 e Struttura robusta. Concede +2 VA alla Prova unica di Furtività nelle condizioni appropriate e +1 VA ad Atletica per arrampicarsi o calarsi utilizzando effettivamente corde e attrezzatura pertinente. Gli 8 PI comprendono il beneficio della struttura. AR 3 nativa mantiene la categoria Leggera.",
+      "paragrafo": "§7.17.2",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 3,
+        "magica": 1
+      },
+      "for_richiesta": 4,
+      "pi": 8,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 15500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": 0
+      },
+      "proprieta": [
+        {
+          "nome": "Protezione occulta 1",
+          "testo": "Concede +1 alle PS Magia effettivamente richieste contro Oscura Simmetria, Corruzione e Paura. Si applica una sola volta anche quando un effetto rientra in più categorie. Non crea una Salvezza altrimenti assente e non si trasferisce alle PS Volontà contro Paura (§7.11.4, §7.17.1)."
+        },
+        {
+          "nome": "Assetto mistico 1",
+          "testo": "Riduce di 1 la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede un bonus positivo e non riduce penalità causate da altri fattori (§7.17.1)."
+        },
+        {
+          "nome": "Mimetismo 2",
+          "testo": "Concede +2 VA alla Prova unica di Furtività per nascondersi o muoversi senza essere individuati, quando esistono condizioni concrete per farlo. Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito (§7.11.4)."
+        },
+        {
+          "nome": "Imbottita 1",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Imbracatura tecnica 1",
+          "testo": "Concede +1 VA ad Atletica per arrampicarsi o calarsi usando corde e ancoraggi adeguati; tali strumenti si acquistano separatamente. Non aumenta automaticamente il movimento (§7.14.2, Grey Ghost)."
+        },
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "corazza-del-custode-dell-arte",
+      "nome": "Corazza del Custode dell’Arte",
+      "tipo": "armatura",
+      "catalogo": "Fratellanza",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione occulta 2, Assetto mistico 5, Imbottita 2 e Struttura robusta. Annulla la penalità propria al lancio degli Incantesimi; 12 PI comprendono il beneficio della struttura. La UMC Automatica è la dotazione sanitaria consigliata, acquistata separatamente (§7.19.3).",
+      "paragrafo": "§7.17.2",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Pesante",
+      "ar": {
+        "totale": 6,
+        "magica": 2
+      },
+      "for_richiesta": 7,
+      "pi": 12,
+      "qualita": "Molto rara",
+      "ps_int": 16,
+      "reperibilita": "MR",
+      "costo": 34000,
+      "rinforzi_ammessi": [],
+      "penalita": {
+        "attacchi_distanza": -2,
+        "attacchi_ravvicinati": -2,
+        "agilita": -2,
+        "movimento_q": -2,
+        "lancio_potere": 0
+      },
+      "proprieta": [
+        {
+          "nome": "Protezione occulta 2",
+          "testo": "Concede +2 alle PS Magia effettivamente richieste contro Oscura Simmetria, Corruzione e Paura. Si applica una sola volta anche quando un effetto rientra in più categorie. Non crea una Salvezza altrimenti assente e non si trasferisce alle PS Volontà contro Paura (§7.11.4, §7.17.1)."
+        },
+        {
+          "nome": "Assetto mistico 5",
+          "testo": "Riduce di 5 la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede un bonus positivo e non riduce penalità causate da altri fattori (§7.17.1)."
+        },
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "corazza-degli-arcivescovi",
+      "nome": "Corazza degli Arcivescovi",
+      "tipo": "armatura",
+      "catalogo": "Fratellanza",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Il modello appartiene al reparto militare degli Arcivescovi e non viene assegnato automaticamente a ogni titolare dell’omonimo rango. Protezione occulta 1, Assetto mistico 2, Articolazione di tiro, Imbottita 2, Filtro respiratorio 2 e Struttura robusta. La penalità propria al tiro passa da −2 a −1 VA; 12 PI comprendono il beneficio della struttura.",
+      "paragrafo": "§7.17.2",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Pesante",
+      "ar": {
+        "totale": 6,
+        "magica": 1
+      },
+      "for_richiesta": 7,
+      "pi": 12,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 22000,
+      "rinforzi_ammessi": [],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": -2,
+        "agilita": -2,
+        "movimento_q": -2,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Protezione occulta 1",
+          "testo": "Concede +1 alle PS Magia effettivamente richieste contro Oscura Simmetria, Corruzione e Paura. Si applica una sola volta anche quando un effetto rientra in più categorie. Non crea una Salvezza altrimenti assente e non si trasferisce alle PS Volontà contro Paura (§7.11.4, §7.17.1)."
+        },
+        {
+          "nome": "Assetto mistico 2",
+          "testo": "Riduce di 2 la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede un bonus positivo e non riduce penalità causate da altri fattori (§7.17.1)."
+        },
+        {
+          "nome": "Articolazione di tiro",
+          "testo": "Riduce di 1 la penalità propria dell’armatura agli attacchi a distanza: il −2 della Pesante diventa −1. Restano le altre penalità della categoria e quelle dovute a FOR insufficiente (§7.13.2, Tortoise Mk II)."
+        },
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Filtro respiratorio 2",
+          "testo": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata. Richiede aria respirabile; non costituisce una riserva d’ossigeno né una tenuta per vuoto o immersione (§7.11.4)."
+        },
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "armatura-della-sentinella",
+      "nome": "Armatura della Sentinella",
+      "tipo": "armatura",
+      "catalogo": "Fratellanza",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "Protezione occulta 1, Assetto mistico 1, Articolazione di tiro, Assetto da pattuglia e Imbottita 1. Annulla le penalità proprie della Media al tiro e al MOV.",
+      "paragrafo": "§7.17.2",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 4,
+        "magica": 1
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 16000,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": -1,
+        "agilita": -1,
+        "movimento_q": 0,
+        "lancio_potere": -2
+      },
+      "proprieta": [
+        {
+          "nome": "Protezione occulta 1",
+          "testo": "Concede +1 alle PS Magia effettivamente richieste contro Oscura Simmetria, Corruzione e Paura. Si applica una sola volta anche quando un effetto rientra in più categorie. Non crea una Salvezza altrimenti assente e non si trasferisce alle PS Volontà contro Paura (§7.11.4, §7.17.1)."
+        },
+        {
+          "nome": "Assetto mistico 1",
+          "testo": "Riduce di 1 la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede un bonus positivo e non riduce penalità causate da altri fattori (§7.17.1)."
+        },
+        {
+          "nome": "Articolazione di tiro",
+          "testo": "Riduce di 1 la penalità propria dell’armatura agli attacchi a distanza: il −2 della Pesante diventa −1. Restano le altre penalità della categoria e quelle dovute a FOR insufficiente (§7.13.2, Tortoise Mk II)."
+        },
+        {
+          "nome": "Assetto da pattuglia",
+          "testo": "Elimina soltanto la penalità MOV propria dell’armatura. Non elimina le penalità agli attacchi, ad Agilità, al lancio o quelle degli altri oggetti trasportati (§7.11.4)."
+        },
+        {
+          "nome": "Imbottita 1",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "tuta-da-volo-dell-arcangelo",
+      "nome": "Tuta da volo dell’Arcangelo",
+      "tipo": "armatura",
+      "catalogo": "Fratellanza",
+      "famiglia": "Armature",
+      "nomi_alternativi": [],
+      "note_manuale": "È una tuta per piloti, priva di propulsione autonoma. Imbottita 1, Ignifuga 2 e Interfaccia di pilotaggio 1: +1 VA a Pilotare aeromobili compatibili mentre è collegata a comandi funzionanti e alimentati. Collegarsi o scollegarsi richiede 1 AzP. Non richiede un innesto neurale e non modifica gli attacchi con le armi del mezzo. Paracadute, ossigeno ed equipaggiamento di emergenza sono separati.",
+      "paragrafo": "§7.17.2",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 6500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Imbottita 1",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Ignifuga 2",
+          "testo": "Contromisura del §5.24 contro Fuoco: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Interfaccia di pilotaggio 1",
+          "testo": "Interfaccia di pilotaggio 1: +1 VA a Pilotare aeromobili compatibili mentre è collegata a comandi funzionanti e alimentati."
+        }
+      ]
+    }
+  ]
+}

@@ -757,6 +757,23 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
         }
         if (o.penalita !== undefined) validaPenalita(F, `${k}.penalita`, o.penalita, err);
       }
+      if (o.tipo === 'armatura') {
+        // §7.11.2: kit di rinforzo compatibili
+        if (o.rinforzi_ammessi !== undefined && (!Array.isArray(o.rinforzi_ammessi) || o.rinforzi_ammessi.some((r) => !['Leggero', 'Pesante'].includes(r)))) {
+          err(F, `${k}.rinforzi_ammessi`, 'elenco di kit: "Leggero", "Pesante" (anche vuoto)');
+        }
+        // §7.14.2, §7.16.3: profilo a sistema spento delle armature servoassistite
+        if (o.profili_alternativi !== undefined) {
+          if (!Array.isArray(o.profili_alternativi)) err(F, `${k}.profili_alternativi`, 'deve essere un elenco');
+          else o.profili_alternativi.forEach((a, j) => {
+            const kk = `${k}.profili_alternativi[${j}]`;
+            if (!isTesto(a?.condizione)) err(F, `${kk}.condizione`, 'testo mancante');
+            if (a?.for_richiesta !== undefined && !(isIntero(a.for_richiesta) && a.for_richiesta >= 1 && a.for_richiesta <= 10)) err(F, `${kk}.for_richiesta`, 'intero da 1 a 10');
+            if (a?.penalita !== undefined) validaPenalita(F, `${kk}.penalita`, a.penalita, err);
+            if (a?.for_richiesta === undefined && a?.penalita === undefined && a?.ar === undefined) err(F, kk, 'un profilo alternativo cambia FOR, penalità o AR');
+          });
+        }
+      }
       if (o.tipo === 'scudo') {
         const parata = (v, chiave) => {
           if (!isOggetto(v) || !isIntero(v.ravvicinata) || !isIntero(v.distanza)) err(F, chiave, 'serve { ravvicinata, distanza } con modificatori interi (§7.4.11)');

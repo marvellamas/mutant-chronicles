@@ -226,7 +226,8 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     p.categoria ?? p.taglia ?? '—',
     [
       p.parata ? `Parata ${meno(p.parata.ravvicinata)} ravv. / ${meno(p.parata.distanza)} dist.` : null,
-      ...p.alternative.map((a) => `${a.condizione}: ${[a.ar ? `AR ${a.ar.totale}` : null, a.parata ? `Parata ${meno(a.parata.ravvicinata)}/${meno(a.parata.distanza)}` : null].filter(Boolean).join(', ')}`),
+      ...p.alternative.map((a) => `${a.condizione}: ${[a.ar ? `AR ${a.ar.totale}` : null, a.parata ? `Parata ${meno(a.parata.ravvicinata)}/${meno(a.parata.distanza)}` : null,
+        a.penalita || a.forRichiesta ? testoPenalita({ penalita: a.penalita, forRichiesta: a.forRichiesta }) : null].filter(Boolean).join(', ')}`),
       p.mov ? `MOV ${meno(p.mov)} Q` : null,
       testoPenalita(p) || null,
     ].filter(Boolean).join('; '),

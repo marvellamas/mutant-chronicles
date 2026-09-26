@@ -98,6 +98,7 @@ function tooltipOggetto(rif, dati) {
   if (o.categoria) riga.Categoria = o.categoria;
   if (o.taglia) riga.Taglia = o.taglia;
   if (o.ar) riga.AR = `${o.ar.totale}${o.ar.magica ? ` (${o.ar.magica} magica)` : ''}`;
+  if (o.supporti) riga.Supporti = o.supporti;
   if (o.for_richiesta) riga.FOR = String(o.for_richiesta);
   if (o.inc) riga.INC = String(o.inc);
   if (o.pi !== undefined && o.pi !== null) riga.PI = String(o.pi);
@@ -110,9 +111,14 @@ function tooltipOggetto(rif, dati) {
   for (const p of o.proprieta ?? []) sezioni.push({ etichetta: p.nome, testo: p.testo });
   const conSegno = (n) => (n < 0 ? `−${-n}` : n > 0 ? `+${n}` : '0');
   if (o.parata) riga.Parata = `${conSegno(o.parata.ravvicinata)} ravv. / ${conSegno(o.parata.distanza)} dist.`;
+  // penalità proprie del modello (armature corporative: categoria con gli effetti delle proprietà)
+  const testoPen = (p) => [`attacchi ${conSegno(p.attacchi_ravvicinati)} ravv. / ${conSegno(p.attacchi_distanza)} dist.`, `Agilità ${conSegno(p.agilita)}`, `MOV ${conSegno(p.movimento_q)} Q`, `lancio con Potere ${conSegno(p.lancio_potere)}`].join(', ');
+  if (o.tipo === 'armatura' && o.penalita) sezioni.push({ etichetta: 'Penalità effettive', testo: `${testoPen(o.penalita)}.` });
   for (const a of o.profili_alternativi ?? []) {
-    sezioni.push({ etichetta: a.condizione.replace(/^./, (c) => c.toUpperCase()), testo: [a.ar ? `AR ${a.ar.totale}${a.ar.magica ? ` (${a.ar.magica} magica)` : ''}` : null, a.parata ? `Parata ${conSegno(a.parata.ravvicinata)} ravv. / ${conSegno(a.parata.distanza)} dist.` : null].filter(Boolean).join(', ') });
+    sezioni.push({ etichetta: a.condizione.replace(/^./, (c) => c.toUpperCase()), testo: [a.ar ? `AR ${a.ar.totale}${a.ar.magica ? ` (${a.ar.magica} magica)` : ''}` : null, a.parata ? `Parata ${conSegno(a.parata.ravvicinata)} ravv. / ${conSegno(a.parata.distanza)} dist.` : null,
+      a.for_richiesta ? `FOR ${a.for_richiesta}` : null, a.penalita ? `penalità ${testoPen(a.penalita)}` : null].filter(Boolean).join(', ') });
   }
+  if (o.rinforzi_ammessi) sezioni.push({ etichetta: 'Rinforzi ammessi', testo: o.rinforzi_ammessi.length ? `un kit ${o.rinforzi_ammessi.join(' oppure ')} (§7.11.2)` : 'nessuno' });
   if (o.attivazione) sezioni.push({ etichetta: 'Attivazione', testo: o.attivazione.testo });
   if (o.manovre?.length) sezioni.push({ etichetta: 'Manovre compatibili', testo: o.manovre.join(', ') });
   if (o.attacco) sezioni.push({ etichetta: 'Attacco', testo: `${o.attacco.abilita}, ${o.attacco.mani === 1 ? 'una mano' : 'due mani'}, danno ${o.attacco.danno}, portata ${o.attacco.portata_q} Q${o.attacco.condizione ? `, ${o.attacco.condizione}` : ''}.` });

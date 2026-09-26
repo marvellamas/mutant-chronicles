@@ -1,0 +1,335 @@
+7.13 Catalogo Capitol
+Il catalogo comprende le armature iconiche per reparto, le dotazioni aeree, l’esoscheletro APE e i corredi
+operativi. Ogni armatura possiede un solo profilo e una categoria fissa. Le proprietà native sono comprese nella
+configurazione Standard; le future configurazioni Migliorate e Potenziate restano da sviluppare e sono distinte
+dalla Qualità costruttiva.
+Tutte le protezioni Capitol qui riportate hanno AR magica 0. FOR indica il valore della Caratteristica richiesto.
+Categorie, penalità, Integrità e proprietà comuni seguono i §§7.2.1 e 7.11. I prezzi comprendono soltanto le
+dotazioni espressamente indicate; armi, munizioni, rinforzi e accessori separati si aggiungono al costo.
+7.13.1 Profili delle armature
+Modello Categoria AR FOR PI
+Armatura Freedom Brigades Leggera 1 3 6
+Corazza Tortoise Mk I Media 3 5 8
+Corazza Tortoise Mk II Pesante 5 7 10
+Armatura Rangers Media 3 5 8
+Armatura Airborne Rangers Leggera 2 4 8
+Corazza Free Marines Media 3 5 10
+Predator Martian Banshees Media 3 5 8
+Panther Sea Lions Leggera 2 4 8
+Survivor Desert Scorpions Media 3 5 8
+Corazza Sunset Strikers Media 3 5 8
+Sea Devil Media 3 5 8
+Divisa CSS Leggera 2 3 6
+Abito Agente Capitol Leggera 2 3 6
+Alpha Force Media 3 5 8
+Tuta pilota Capitol Leggera 1 3 6
+Modello Qualità PS INT REP Costo
+Armatura Freedom Brigades Comune 10 CO 1.600
+Corazza Tortoise Mk I Comune 10 NC 4.000
+Corazza Tortoise Mk II Non comune 12 RA 11.000
+Armatura Rangers Non comune 12 RA 7.000
+Armatura Airborne Rangers Non comune 12 RA 6.000
+Corazza Free Marines Non comune 12 RA 9.000
+Predator Martian Banshees Non comune 12 RA 9.500
+Panther Sea Lions Non comune 12 RA 7.000
+Survivor Desert Scorpions Non comune 12 RA 8.500
+Corazza Sunset Strikers Non comune 12 RA 8.000
+Sea Devil Non comune 12 RA 11.000
+Divisa CSS Comune 10 NC 3.500
+Abito Agente Capitol Non comune 12 RA 5.500
+Alpha Force Non comune 12 RA 8.500
+Tuta pilota Capitol Non comune 12 NC 3.500
+7.13.2 Proprietà e impiego delle armature
+Imbottita, Ignifuga e Isolante sono le Contromisure già definite nel §7.11.4: la loro soglia contrasta gli effetti
+secondari pertinenti dopo l’AR e non aggiunge una seconda riduzione del danno. Antiesplosione, Mimetismo,
+Discreta e le altre proprietà comuni mantengono i rispettivi limiti.
+Armatura Freedom Brigades
+Protezione della fanteria delle Brigate. Manutenzione semplice: +1 VA a Tecnologia per riparare questa armatura,
+con strumenti e materiali adeguati. Non riduce automaticamente i tempi né aumenta i PI ripristinati.
+Corazza Tortoise Mk I
+Protezione della fanteria di linea. Possiede Imbottita 1. Conserva tutte le normali penalità delle armature Medie.
+Corazza Tortoise Mk II
+Protezione della fanteria pesante. Possiede Imbottita 2, Antiesplosione 1 e Articolazione da tiro. Quest’ultima
+riduce di 1 la penalità propria dell’armatura agli attacchi a distanza: il −2 della Pesante diventa −1. Restano le
+altre penalità della categoria e quelle dovute a FOR insufficiente.
+In questa conversione la Tortoise Mk II è un’armatura Pesante. Non applica le regole dei servosistemi e degli
+esoscheletri.
+Armatura Rangers
+Protezione per ricognizione e pattugliamento. Assetto da pattuglia elimina soltanto la penalità MOV propria
+dell’armatura. Mimetica ambientale 1 concede +1 VA alla Prova unica di Furtività nell’ambiente scelto per la
+livrea, quando esistono condizioni per nascondersi. Restano le altre penalità della Media.
+Armatura Airborne Rangers
+Protezione della fanteria aviotrasportata. Possiede Imbottita 2 e Imbracatura da lancio 2. L’imbracatura concede
++2 VA alle Prove di Pilotare richieste per controllare discesa e atterraggio con un paracadute compatibile.
+Il paracadute si acquista separatamente. L’armatura da sola non rallenta una Caduta e Imbottita non costituisce
+protezione dai danni da caduta.
+Corazza Free Marines
+Protezione per incursioni e assalti. Possiede Struttura robusta, Antiesplosione 1 e Articolazione d’assalto. Il +2 PI
+di Struttura robusta è già compreso nei 10 PI del profilo.
+Articolazione d’assalto porta a 0 la penalità propria dell’armatura agli attacchi ravvicinati. Restano −1 VA agli
+attacchi a distanza, −1 VA ad Agilità, −1 Q al MOV e −3 VA al lancio con Potere. Coraggio, addestramento e
+altri benefici personali del reparto non sono proprietà dell’armatura.
+Predator Martian Banshees
+Protezione per assalto a propulsione. Possiede Ignifuga 2, Imbottita 2 e Articolazione d’assalto. Gli attacchi
+strutturali per il propulsore sono inclusi; il dispositivo, il propellente e il paracadute restano dotazioni separate.
+La maschera caratteristica non infligge automaticamente Paura. Le regole del propulsore sono nel §7.13.4.
+Panther Sea Lions
+Protezione per infiltrazione nella giungla. Mimetica ambientale 2 concede +2 VA a Furtività per nascondersi o
+muoversi senza essere individuati nella giungla e nella vegetazione tropicale, quando le condizioni consentono di
+nascondersi.
+Articolazione da arrampicata 2 concede +2 VA ad Atletica per arrampicarsi usando appigli reali o attrezzatura
+adatta. Non aumenta automaticamente la distanza percorribile e non permette di aderire a superfici prive di
+appigli.
+Survivor Desert Scorpions
+Protezione per operazioni nel deserto. Possiede Assetto da pattuglia, Mimetica ambientale 1 desertica e Protezione
+climatica 2 contro il caldo.
+La protezione climatica concede +2 alla PS Tempra contro gli effetti del caldo ambientale. Non riduce i danni da
+Fuoco e non sostituisce acqua, riposo o le altre necessità del personaggio.
+Corazza Sunset Strikers
+Protezione per assalto ravvicinato. Possiede Articolazione d’assalto, Ignifuga 2 e Filtro respiratorio 2. Il filtro
+concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata; richiede aria
+respirabile e non contiene una riserva d’aria.
+Sea Devil
+Protezione per operazioni anfibie e subacquee. Assetto anfibio elimina soltanto le penalità proprie dell’armatura al
+MOV e alle Prove di Atletica per nuotare. Il Nuoto continua a costare 2 MOV per Q; le altre penalità della Media
+restano valide.
+Tenuta subacquea consente immersioni fino a 30 metri con elmetto chiuso e riserva d’aria integrata da due ore,
+compresa nel prezzo. Una ricarica costa 100 e la sostituzione richiede un minuto fuori dall’acqua. A 0 PI la tenuta
+non è più garantita.
+Protezione climatica 2 contro il freddo concede +2 alla PS Tempra contro il freddo ambientale. Non riduce il
+danno degli attacchi.
+Divisa CSS
+Protezione della polizia e delle pattuglie corporative. Possiede Discreta e Imbottita 1. La protezione integrata non
+è evidente a una semplice osservazione casuale; un esame ravvicinato o una perquisizione possono rivelarla.
+Componenti corazzati visibili restano riconoscibili.
+Abito Agente Capitol
+Protezione per investigazione e intelligence. Possiede Discreta e Mimetismo 1. Mimetismo concede +1 VA a
+Furtività per nascondersi o muoversi senza essere individuati, sul piano visivo e sonoro, una sola volta per Prova
+pertinente.
+Alpha Force
+Protezione per antiterrorismo e liberazione di ostaggi. Possiede Imbottita 2, Isolante 2 e Antiesplosione 1.
+Mantiene tutte le penalità ordinarie delle armature Medie.
+Tuta pilota Capitol
+Protezione per equipaggi aeronautici. Possiede Ignifuga 2, Imbottita 1 e Interfaccia aeronautica 1. L’interfaccia
+concede +1 VA a Pilotare per la conduzione di un aeromobile quando è collegata a comandi compatibili e
+alimentati; non migliora l’uso delle armi.
+Paracadute, respiratore e sistema di eiezione sono dotazioni separate. Il bonus dell’interfaccia non si estende
+automaticamente a paracadute o propulsori personali.
+7.13.3 Rinforzi e assegnazioni
+Modelli Rinforzi compatibili
+Armatura Freedom Brigades Un kit Leggero oppure Pesante
+Corazza Tortoise Mk II e Sea Devil Nessuno
+Tutti gli altri modelli di armatura Capitol del §7.13.1 Un kit Leggero
+Si applica il §7.11.2: un solo kit, PI e PS Integrità separati, aumento del requisito FOR e nessuna sovrapposizione
+di armature complete. Una Leggera portata fisicamente ad AR 3 o superiore da un rinforzo applica le penalità
+della Media. Le proprietà native continuano a funzionare nei rispettivi ambiti.
+Reparto o impiego Protezione assegnata
+Guardia Colby Panther Sea Lions
+Dog Soldiers Survivor Desert Scorpions
+Naval Marine Corps Tortoise Mk I per impiego ordinario; Sea Devil per operazioni subacquee
+Polaris Tridents Sea Devil
+CBI, MIC ed EIA Abito Agente Capitol
+Queste assegnazioni sono scelte del catalogo SIMPLY RPG. Guardia Colby e Dog Soldiers rimangono reparti
+distinti; le assegnazioni non concedono automaticamente Abilità, Talenti o privilegi personali.
+7.13.4 Propulsore Banshee
+Dispositivo PI Qualità PS INT REP Costo
+Propulsore d’assalto Banshee 6 Rara 14 RA 12.000
+Il propulsore permette brevi interventi in volo: superare ostacoli, raggiungere posizioni sopraelevate e
+condurre assalti verticali. È compatibile con la Predator, che comprende già gli attacchi strutturali. Montaggio e
+rimozione richiedono un minuto. Occupa lo spazio dello zaino ordinario e resta compatibile con i Rinforzi
+Leggeri ammessi dalla Predator.
+Non conferisce AR. Possiede PI e PS Integrità propri, separati dall’armatura. Il prezzo comprende il dispositivo e
+un serbatoio pieno. Predator e propulsore costano complessivamente 21.500.
+Voce Regola
+Attivazione Compresa nell’AzM utilizzata per il volo.
+Passo 6 Q, Corsa 12 Q, Scatto 18 Q prima dei modificatori. Ogni Q verticale costa quanto
+Movimento
+uno orizzontale.
+Pilotare al posto di Atletica: nessuna Prova al Passo in condizioni ordinarie; −2 VA in
+Controllo
+Corsa; −4 VA in Scatto.
+Sospensione Rimanere fermi in aria richiede comunque l’AzM.
+Autonomia 20 Round, pari a due minuti complessivi di funzionamento, anche non consecutivi.
+Un’unità di autonomia per ogni Round di utilizzo, anche in sospensione e indipendentemente
+Consumo
+dalla distanza.
+Decollo, salita, discesa e atterraggio fanno parte dello stesso movimento e consumano la distanza disponibile. Le
+penalità dell’armatura restano applicabili: con Predator e senza altri modificatori, le distanze sono 5/11/17 Q.
+Restano la continuità del percorso, l’ordine delle Azioni e la durata dei modificatori dell’andatura.
+Si applicano gli esiti delle Prove di volo delle regole di volo del Manuale della Magia: Magistrale +2 Q e +4
+alla prossima Prova; Fallimento −2 Q; Maldestro −4 Q e −4 alla prossima Prova. Con Fallimento o Maldestro si
+perde la penalità per essere colpiti concessa dall’andatura e restano le proprie penalità alle altre Azioni. La
+penalità specifica della Prova di movimento non si somma una seconda volta a quella personale dell’andatura.
+Attacchi, Carica, Movimento Evasivo, Ritirata, movimento misto e Attacchi di Opportunità seguono le regole del
+movimento in volo. Restano il divieto di lanciare Incantesimi nella stessa Iniziativa di una Corsa o uno Scatto in
+volo e i limiti imposti da Stati e Concentrazione. Il dispositivo non concede Azioni o attacchi aggiuntivi.
+Una Prova di movimento fallita non spegne automaticamente il propulsore. Se il dispositivo si rompe, viene
+disattivato o l’utilizzatore diventa Svenuto, il sostegno termina e si applicano le Cadute (§5.22). L’ultima unità di
+autonomia sostiene fino all’inizio della propria Iniziativa successiva: occorre raggiungere un appoggio prima
+dell’esaurimento. A 0 PI il dispositivo perde la funzione.
+Il motore acceso impedisce di nascondere il proprio rumore mediante Furtività. Coperture e occultamento visivo
+continuano a funzionare normalmente.
+Ricambio Costo Operazione
+Ricarica completa del propellente 500 Un minuto con dotazione di rifornimento
+Serbatoio di ricambio pieno 800 Sostituzione in un minuto
+7.13.5 Paracadute Capitol
+Modello PI Qualità PS INT REP Costo
+Paracadute di emergenza Capitol 2 Comune 10 NC 1.000
+Paracadute tattico Airborne 4 Non comune 12 RA 2.500
+Entrambi includono imbracatura e apertura automatica predisponibile. Non conferiscono AR e hanno Integrità
+propria. Sono compatibili con armature Leggere e Medie e possono essere montati ventralmente insieme al
+propulsore Banshee. Nessuno sostiene armature Pesanti o esoscheletri.
+Caratteristica Emergenza Capitol Tattico Airborne
+Impiego Evacuazione e salvataggio Inserimento operativo
+Discesa 12 Q per Round 12 Q per Round
+Spostamento orizzontale controllato Fino a 2 Q per AzM Fino a 6 Q per AzM
+Ripiegamento dopo l’uso 10 minuti 10 minuti
+Predisporre l’apertura automatica costa 1 AzP, normalmente prima del lancio; l’apertura successiva non richiede
+un’altra Azione. Se non è predisposto, aprirlo manualmente richiede 1 AzP quando il personaggio può agire.
+Occorrono almeno 30 Q di dislivello libero sotto il personaggio al momento dell’apertura perché la protezione
+diventi efficace.
+Con paracadute aperto e funzionante, la discesa ordinaria non infligge danni da Caduta. Non è possibile salire o
+rimanere sospesi. Dirigere la discesa richiede l’AzM; apertura automatica e discesa continuano anche senza
+controllo, ma il Direttore determina il punto di arrivo secondo vento e ostacoli.
+Atterrare su terreno ampio e libero non richiede una Prova. Vento forte, ostacoli o un punto ristretto richiedono
+Pilotare con i modificatori ambientali. Un Fallimento impedisce l’atterraggio desiderato: il personaggio raggiunge
+una zona effettivamente accessibile e arriva A Terra. Un Fallimento Maldestro comporta inoltre 1d6 danni
+Naturali da impatto, non ridotti dall’AR.
+Imbracatura da lancio 2 dell’armatura Airborne concede +2 VA alle Prove pertinenti. La discesa non concede
+automaticamente le penalità per essere colpiti previste da Corsa e Scatto. A 0 PI il paracadute non protegge più
+dalle Cadute.
+7.13.6 Esoscheletro APE Capitol
+APE Capitol è un modello originale del catalogo SIMPLY RPG, destinato al supporto pesante mobile. Il suo
+profilo privilegia mobilità e manovrabilità rispetto alla robustezza e all’autonomia dello Steel Strider Bauhaus.
+AR
+Modello AR FOR pilota PI MOV Supporti
+magica
+APE Capitol 6 0 3 14 0 Una arma pesante
+Qualità PS Integrità REP Autonomia Costo
+Rara 14 MR Sei ore operative 55.000
+Possiede Imbottita 2 e Stabile 1, con i significati del §7.11.4. Il prezzo comprende telaio, attuatori, comandi,
+supporto d’arma e una batteria carica. L’arma si acquista separatamente. Nessun rinforzo esterno, propulsore
+Banshee o paracadute personale è compatibile.
+Movimento: nessuna riduzione delle distanze ordinarie. Le Prove fisiche effettuate attraverso il telaio usano
+Pilotare al posto di Atletica; il movimento ordinario non impone una Prova aggiuntiva oltre a quelle della
+modalità utilizzata. Schivare usa Pilotare −1 VA. Furtività subisce −2 VA per ingombro e rumore. Il lancio di
+Incantesimi con Potere subisce −5 VA.
+I servosistemi soddisfano il requisito FOR dell’arma montata e annullano la sua penalità al MOV. Gli attacchi
+usano la normale Abilità dell’arma e consumano le normali Azioni. I comandi richiedono entrambe le mani e non
+consentono contemporaneamente armi impugnate o Scudi.
+L’AR del telaio sostituisce quella dell’armatura personale. I danni che superano l’AR raggiungono i PV del pilota,
+secondo la procedura degli esoscheletri Bauhaus (§7.11.6). I PI restano l’Integrità dell’oggetto e non costituiscono
+PV aggiuntivi.
+La batteria alimenta sei ore operative, richiede sei ore di ricarica, si sostituisce in un minuto e costa 2.000. A
+energia esaurita l’AR rimane, ma il telaio non può muoversi, Schivare, puntare o sparare. Uscire richiede 1 AzP e
+una casella adiacente libera. A 0 PI si applica normalmente Rotto.
+Esoscheletro AR PI MOV Schivare Ore Costo
+XO-102 Bauhaus 6 16 −1 Pilotare −2 8 45.000
+APE Capitol 6 14 0 Pilotare −1 6 55.000
+Vulkan Bauhaus 7 20 −2 Pilotare −4 8 90.000
+7.13.7 Corredi da campo
+I cinque corredi sono strumenti Professionali: +2 VA alle attività indicate. Si applica un solo bonus
+complessivo da strumenti per Prova (§1.4.1); i singoli componenti non sommano bonus tra loro. Talenti,
+circostanze e proprietà pertinenti delle armature restano applicabili separatamente. Non comune indica la Qualità
+costruttiva e determina PS Integrità 12, non il livello degli strumenti.
+Corredo PI Qualità PS INT REP Costo
+Ricognizione Rangers 4 Non comune 12 NC 2.000
+Sopravvivenza ambientale 4 Non comune 12 NC 1.500
+Assalto verticale 6 Non comune 12 NC 1.500
+Operazioni subacquee 4 Non comune 12 RA 2.000
+Manutenzione da campo 6 Non comune 12 NC 2.000
+Corredo da ricognizione Rangers
+Comprende binocolo, monocolo periscopico e strumenti per registrare osservazioni e riferimenti del terreno.
+Concede +2 VA a Percezione per osservazioni visive effettuate attraverso le ottiche: individuare postazioni,
+esaminare passaggi o distinguere movimenti lontani.
+Richiede visuale e illuminazione sufficienti. Non conferisce visione notturna né bonus all’ascolto. Osservare o
+cercare mantiene il normale costo in Azioni.
+Corredo di sopravvivenza ambientale
+Comprende strumenti di orientamento, raccolta delle risorse e allestimento di un riparo individuale. All’acquisto
+si sceglie un ambiente: boscoso, giungla, deserto oppure artico.
+Concede +2 VA a Sopravvivenza nell’ambiente scelto per orientarsi con strumenti e riferimenti disponibili,
+reperire e raccogliere risorse utilizzabili, individuare un luogo adatto e allestire un riparo.
+Il prezzo comprende la dotazione riutilizzabile; acqua, viveri e medicinali si acquistano separatamente. Non
+concede bonus alle Salvezze contro il clima. Fuori dall’ambiente previsto, i componenti concretamente utilizzabili
+valgono come strumenti Standard.
+Corredo da assalto verticale
+Comprende imbracatura, corda da 20 Q, discensore, moschettoni e ancoraggi. Concede +2 VA ad Atletica per
+arrampicarsi o calarsi utilizzando effettivamente il corredo. Preparare una linea su un punto di ancoraggio già
+adatto richiede un minuto; creare un nuovo ancoraggio dipende dalla superficie e dall’intervento necessario.
+Non aumenta automaticamente la distanza percorribile. La corda sostiene il personaggio soltanto se assicurata a
+un ancoraggio valido: portare il corredo nello zaino non protegge dalle Cadute. Sulla Panther, il +2 degli
+strumenti può sommarsi al +2 di Articolazione da arrampicata quando entrambi sono pertinenti.
+Corredo per operazioni subacquee
+Comprende pinne compatibili con l’armatura, bussola subacquea, sagola guida da 20 Q e strumenti di
+segnalazione e annotazione. Concede +2 VA ad Atletica nelle Prove di Nuoto quando si utilizzano le pinne e +2
+VA a Sopravvivenza per orientarsi sott’acqua utilizzando bussola, riferimenti e sagola.
+È utilizzabile con armature Leggere o Medie compatibili, compresa Sea Devil, fino a 30 metri di profondità. Il
+Nuoto costa sempre 2 MOV per Q. Non contiene una riserva d’aria: con Sea Devil si usa quella già compresa
+nell’armatura.
+Corredo di manutenzione da campo
+Comprende utensili, strumenti diagnostici e attrezzatura per interventi su armi, armature, propulsori ed
+esoscheletri compatibili. Concede +2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul
+campo.
+Il corredo fornisce gli strumenti; pezzi di ricambio e materiali necessari si conteggiano separatamente. Restano
+tempi, Prove e limiti delle riparazioni: il corredo non ripristina automaticamente PI.
+7.13.8 Corredi specialistici Capitol
+Queste versioni Capitol utilizzano gli stessi valori e le stesse regole dei corredi dell’Alleanza (§7.12). Sono
+strumenti Professionali, di Qualità Non comune, con PS Integrità 12. Il +2 VA è il modificatore complessivo degli
+strumenti per l’attività indicata.
+Corredo PI PS INT REP Costo
+Valigetta investigativa Capitol 4 12 RA 2.000
+Corredo d’intrusione Capitol 4 12 RA 1.500
+Kit di controsorveglianza Capitol 4 12 RA 2.500
+Corredo da artificiere Capitol 6 12 RA 2.000
+Kit trauma Capitol 6 12 RA 3.000
+Valigetta investigativa Capitol
++2 VA a Percezione per esaminare tracce materiali mediante gli strumenti e a Scienza per analisi preliminari
+eseguibili con dotazione portatile. Non concede un bonus generale alla vigilanza e non sostituisce un laboratorio
+completo.
+Corredo d’intrusione Capitol
++2 VA a Tecnologia per intervenire su serrature, allarmi e sistemi di accesso raggiungibili e compatibili. Richiede
+accesso materiale e condizioni adatte; non supera automaticamente la sicurezza.
+Kit di controsorveglianza Capitol
++2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e
+apparecchi accessibili. Non individua automaticamente sorveglianti e non concede un bonus universale a
+Percezione.
+Corredo da artificiere Capitol
++2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili. Non include cariche esplosive,
+munizioni o componenti destinati a restare installati. Non sostituisce le competenze né elimina i rischi delle
+Prove.
+Kit trauma Capitol
+Il Kit trauma è il Kit di pronto soccorso Professionale del §7.19. Concede +2 VA a Medicina e comprende cinque
+applicazioni; costo 3.000, ricarica da cinque applicazioni 300. Una medicazione riuscita arresta il Sanguinamento
+e recupera 1d4 PV; un Magistrale raddoppia il risultato del dado. Non cura stati di Ferita o Menomazioni.
+Si spende una dose all’inizio di ogni tentativo di pronto soccorso o trattamento traumatico su un paziente.
+Fallimento e interruzione non restituiscono la dose; una semplice diagnosi non la consuma. A dosi esaurite resta
+possibile la diagnosi, mentre i trattamenti che richiedono materiali necessitano di nuove dosi.
+Si applicano la procedura e i limiti sanitari del §7.19.1. Il kit non cura stati di Ferita o Menomazioni e non
+equivale a una struttura sanitaria. Soccorso Immediato e Strumentazione Efficace mantengono i rispettivi benefici;
+i requisiti dei Talenti sanitari devono essere soddisfatti separatamente.
+Quando contiene strumenti e materiali pertinenti, soddisfa il requisito di dotazione almeno Standard dei Talenti
+sanitari, ma non concede quei Talenti. Restano i limiti dei trattamenti delle Ferite; farmaci speciali, naniti e altri
+dispositivi sono oggetti distinti.
+7.13.9 Dotazioni per reparto
+I corredi sono assegnati secondo la missione e si aggiungono al costo della protezione. Le dotazioni degli
+specialisti non vengono assegnate automaticamente a ogni membro del reparto. Armi e munizioni seguono i
+rispettivi cataloghi.
+Reparto o impiego Dotazioni indicate
+Freedom Brigades e fanteria di linea Sopravvivenza ambientale; manutenzione agli specialisti
+Fanteria pesante e operatori APE Manutenzione da campo
+Rangers Ricognizione e sopravvivenza ambientale
+Airborne Rangers Assalto verticale e paracadute tattico
+Free Marines Assalto verticale; artificiere agli specialisti di breccia
+Propulsore da 20 Round; paracadute di emergenza secondo
+Martian Banshees
+missione
+Sea Lions e Guardia Colby Sopravvivenza nella giungla e assalto verticale
+Desert Scorpions e Dog Soldiers Sopravvivenza nel deserto e ricognizione
+Sunset Strikers Assalto verticale; artificiere agli specialisti
+Naval Marine Corps e Polaris Tridents Corredo subacqueo nelle operazioni con Sea Devil
+CSS Valigetta investigativa e Kit trauma agli operatori incaricati
+Agenti Capitol, CBI, MIC ed EIA Investigazione, intrusione o controsorveglianza
+Alpha Force Intrusione; artificiere e Kit trauma agli specialisti
+Piloti Paracadute di emergenza e sopravvivenza nell’ambiente operativo
+Esempi di costo: Airborne Rangers con armatura, paracadute tattico e corredo verticale costa 10.000; Sea Devil
+con corredo subacqueo costa 13.000. Armi e munizioni si aggiungono secondo la dotazione scelta.

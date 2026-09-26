@@ -46,6 +46,11 @@
       "descrizione": "Armature commerciali civili (§7.11.3)"
     },
     {
+      "id": "armature_corporative",
+      "file": "armature_corporative.json",
+      "descrizione": "Armature dei cataloghi corporativi (§7.11.5–7.17.5)"
+    },
+    {
       "id": "scudi",
       "file": "scudi.json",
       "descrizione": "Scudi commerciali e corporativi (§7.4)"

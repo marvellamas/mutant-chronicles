@@ -17,10 +17,10 @@ const voce = (uid, rif, stato, extra = {}) => ({ uid, rif, stato, quantita: 1, n
 const scheda = (creazione, equipaggiamento, livelli = []) => calcolaScheda({ creazione: { ...creazione, equipaggiamento }, livelli }, dati);
 
 test('catalogo: caricato dall’indice, un lotto = un file e una riga; riferimenti "file:id"', () => {
-  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armi_corporative', 'armi_distanza', 'armi_distanza_corporative', 'armature', 'scudi']);
+  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armi_corporative', 'armi_distanza', 'armi_distanza_corporative', 'armature', 'armature_corporative', 'scudi']);
   const cat = catalogo(dati);
   assert.equal(cat.oggetti.filter((o) => o.tipo === 'arma_ravvicinata' && o.catalogo === 'Commerciale').length, 28); // §7.1.1: 28 profili
-  assert.equal(cat.oggetti.filter((o) => o.tipo === 'armatura').length, 3); // §7.11.3
+  assert.equal(cat.oggetti.filter((o) => o.tipo === 'armatura' && o.catalogo === 'Commerciale').length, 3); // §7.11.3
   const lancia = cat.perRif.get('armi:lancia');
   assert.deepEqual(lancia.danno, { una_mano: '1d6+1', due_mani: '1d6+3' });
   assert.equal(lancia.mani, '1/2');
@@ -535,4 +535,65 @@ test('validatore dei moduli integrati e delle munizioni di riferimento', () => {
   assert.match(e((d) => { o(d, 'lanciagranate-mp105gw').modulo_di = 'armi_distanza_corporative:lanciagranate-ar3000'; }), /non è un'arma principale/);
   assert.match(e((d) => { o(d, 'arg17').munizioni.riferimento = 'Razzo fantasma'; }), /"Razzo fantasma" non è fra le munizioni_riferimento/);
   assert.match(e((d) => { f(d).munizioni_riferimento[0].danno = 'tanto'; }), /munizioni_riferimento\[0\] \(Granata standard a frammentazione\)\.danno/);
+});
+
+// --- Lotto 6: armature corporative (§7.11.5–7.17.5) ---------------------------------------
+
+test('lotto 6: 83 armature corporative in 7 cataloghi, penalità effettive e rinforzi dal manuale', () => {
+  const tutte = catalogo(dati).oggetti.filter((o) => o.file === 'armature_corporative');
+  assert.equal(tutte.length, 83);
+  assert.deepEqual([...new Set(tutte.map((o) => o.catalogo))], ['Bauhaus', 'Alleanza', 'Capitol', 'Imperial', 'Cybertronic', 'Mishima', 'Fratellanza']);
+  const r = (id) => catalogo(dati).perRif.get(`armature_corporative:${id}`);
+  // §7.11.5: Blitzer, Media con Articolazione d'assalto e Assetto da incursione
+  assert.deepEqual(r('armatura-d-assalto-blitzer').penalita, { attacchi_distanza: -1, attacchi_ravvicinati: 0, agilita: -1, movimento_q: 0, lancio_potere: -3 });
+  assert.equal(r('armatura-d-assalto-blitzer').costo, 9500);
+  // §7.17.4: Custode dell'Arte, Assetto mistico 5 annulla il −5 al lancio
+  assert.equal(r('corazza-del-custode-dell-arte').penalita.lancio_potere, 0);
+  assert.deepEqual(r('corazza-delle-furie').ar, { totale: 7, magica: 2 });
+  // §7.14.1–7.14.2: la Felis ha FOR 5 accesa, 7 senza alimentazione
+  const felis = r('mk-iv-felis-pattern-dei-golden-lions');
+  assert.equal(felis.for_richiesta, 5);
+  assert.deepEqual(felis.profili_alternativi[0], { condizione: 'senza alimentazione', for_richiesta: 7, penalita: { attacchi_ravvicinati: -2, attacchi_distanza: -2, agilita: -2, movimento_q: -2, lancio_potere: -5 } });
+  // §7.13.3: rinforzi dalla tabella Capitol
+  assert.deepEqual(r('armatura-freedom-brigades').rinforzi_ammessi, ['Leggero', 'Pesante']);
+  assert.deepEqual(r('corazza-tortoise-mk-ii').rinforzi_ammessi, []);
+  assert.deepEqual(r('corazza-tortoise-mk-i').rinforzi_ammessi, ['Leggero']);
+  assert.deepEqual(r('armatura-d-assalto-headhunter').nomi_alternativi, ['Warhound']);
+  assert.deepEqual(cercaNelCatalogo(dati, 'warhound').map((x) => x.rif), ['armature_corporative:armatura-d-assalto-headhunter']);
+  // esoscheletri Bauhaus (§7.11.6): FOR del pilota, MOV della tabella, −5 al lancio
+  assert.deepEqual(r('vulkan').penalita, { attacchi_distanza: 0, attacchi_ravvicinati: 0, agilita: 0, movimento_q: -2, lancio_potere: -5 });
+  assert.equal(r('vulkan').supporti, '2 armi pesanti');
+  assert.ok(r('corazza-dei-dragoni-wolfheads').proprieta.every((p) => p.nome !== 'Articolazione d’assalto')); // «senza Articolazione d’assalto»
+});
+
+test('armatura corporativa indossata: penalità proprie del modello, FOR insufficiente, profilo spento in stampa', () => {
+  // Mishima Agente, FOR 6: Blitzer (FOR 5) senza penalità FOR
+  let s = scheda(MISHIMA_AGENTE, [voce('b', 'armature_corporative:armatura-d-assalto-blitzer', 'indossata')]);
+  assert.equal(s.equipaggiamento.equipAbilita.Furtività, -1); // Agilità della Media
+  assert.equal(s.equipaggiamento.movimentoQ, 0); // Assetto da incursione
+  assert.equal(s.equipaggiamento.lancioPotere, -3);
+  // Corazza delle Furie, FOR 7: un punto mancante su Agilità e Difese
+  s = scheda(MISHIMA_AGENTE, [voce('f', 'armature_corporative:corazza-delle-furie', 'indossata')]);
+  assert.equal(s.equipaggiamento.equipAbilita.Furtività, -3);
+  assert.equal(s.equipaggiamento.equipAbilita.Difese, -1);
+  assert.equal(s.equipaggiamento.lancioPotere, -3); // Assetto mistico 2
+  assert.deepEqual(s.equipaggiamento.protezioni[0].ar, { totale: 7, magica: 2 });
+  // Felis: il profilo senza alimentazione è un promemoria nella scheda e nella stampa
+  const creazione = { ...MISHIMA_AGENTE, equipaggiamento: [voce('m', 'armature_corporative:mk-iv-felis-pattern-dei-golden-lions', 'indossata')] };
+  s = calcolaScheda({ creazione, livelli: [] }, dati);
+  assert.equal(s.equipaggiamento.protezioni[0].alternative[0].forRichiesta, 7);
+  const f3 = preparaStampa(creazione, dati).fogli.find((f) => f.id === 'combattimento').dati;
+  assert.match(f3.protezioni.righe[0][3], /senza alimentazione: .*MOV −2 Q.*FOR 7/);
+  const t = testoTooltip('oggetto', 'armature_corporative:mk-iv-felis-pattern-dei-golden-lions', dati);
+  assert.match(t, /Penalità effettive: attacchi −1 ravv\. \/ −2 dist\., Agilità −2, MOV −1 Q, lancio con Potere −5/);
+  assert.match(t, /Rinforzi ammessi: nessuno/);
+});
+
+test('validatore delle armature corporative: rinforzi, profili alternativi, penalità', () => {
+  const e = (modifica) => { const d = copia(dati); modifica(d); return validaDati(d).map((x) => `${x.chiave}: ${x.problema}`).join('\n'); };
+  const o = (d, id) => d.equipaggiamento.file.armature_corporative.oggetti.find((x) => x.id === id);
+  assert.match(e((d) => { o(d, 'corazza-tortoise-mk-i').rinforzi_ammessi = ['Titanio']; }), /rinforzi_ammessi: elenco di kit/);
+  assert.match(e((d) => { o(d, 'powersuit').profili_alternativi[0].for_richiesta = 12; }), /profili_alternativi\[0\]\.for_richiesta: intero da 1 a 10/);
+  assert.match(e((d) => { o(d, 'powersuit').profili_alternativi[0] = { condizione: 'spento' }; }), /un profilo alternativo cambia FOR, penalità o AR/);
+  assert.match(e((d) => { o(d, 'armatura-d-assalto-blitzer').penalita.movimento_q = 1; }), /penalita\.movimento_q: deve essere un intero ≤ 0/);
 });

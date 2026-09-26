@@ -55,6 +55,9 @@ Sono le cose che hai già deciso a voce o che sono errori evidenti: l'app segue 
 - **Magia, sezione 1**: la frase "con i cinque Talenti liberi ordinari, Usufruitore più quattro miglioramenti consentono il livello massimo 15" confonde: i Talenti Liberi sono nove (§8.6) e Potenziale Mistico si prende fino a cinque volte. Riformulare come esempio, non come regola.
 - **Giocatore §3.5.3, Bersaglio Designato**: impaginazione rotta nel PDF (il nome del Talento finisce dentro una frase).
 - **Armamenti §7.1.9 e §7.8**: i cataloghi si intitolano «Imperiali», mentre gli scudi (§7.4.8) e il catalogo generale (§7.14) usano «Imperial». L'app usa «Imperial» ovunque.
+- **Armamenti §7.13.2 e §7.15.3, §7.16.2, §7.17.3**: la stessa proprietà si chiama «Articolazione da tiro» nel catalogo Capitol e «Articolazione di tiro» negli altri. Conviene un solo nome (l'app li tratta come la stessa proprietà).
+- **Armamenti §7.16.2, Armatura Ashigaru**: «Manutenzione agevolata» ha lo stesso effetto di «Manutenzione semplice» (§7.11.4), usata da tutti gli altri cataloghi. Se sono la stessa proprietà, conviene un solo nome.
+- **Armamenti §7.11.5**: il titolo del secondo gruppo Bauhaus è stampato «Agenti equipaggi e Guardie», senza la virgola dopo «Agenti». L'app scrive «Agenti, equipaggi e Guardie».
 - **Armamenti §7.4.1 e §7.4.2, Scudo Punisher**: la scheda del §7.4.1 dice «Taglia Grande», il catalogo del §7.4.2 e la scheda del §7.4.5 dicono «Medio». Il manuale stesso dice che Medio e Grande sono denominazioni equivalenti, ma conviene usare una sola parola.
 - **Giocatore §3.2**: dice che ogni Classe ha due Talenti per Specializzazione e uno Comune; l'Esploratore non li assegnava (vedi sopra).
 
@@ -66,7 +69,7 @@ Sono le cose che hai già deciso a voce o che sono errori evidenti: l'app segue 
 ## D. Manuali che l'app aspetta
 
 - Manuale degli Equipaggiamenti e Manuale dei Veicoli (in stesura): diversi Talenti li citano. Quando esistono, ce li passi come PDF nella cartella `Manuali/`.
-- Manuale degli Armamenti v0.50: lo stiamo estraendo a lotti (stato in `docs/equipaggiamento-lotti.md`: fatti armi ravvicinate e a distanza commerciali, armature civili, scudi, armi ravvicinate e a distanza corporative). Se pubblichi una v0.51 prima che abbiamo finito, avvisaci: le tabelle cambiate vanno ri-estratte.
+- Manuale degli Armamenti v0.50: lo stiamo estraendo a lotti (stato in `docs/equipaggiamento-lotti.md`: fatti armi ravvicinate e a distanza commerciali, armature civili e corporative, scudi, armi ravvicinate e a distanza corporative). Se pubblichi una v0.51 prima che abbiamo finito, avvisaci: le tabelle cambiate vanno ri-estratte.
 
 ## Come ci rispondi
 
