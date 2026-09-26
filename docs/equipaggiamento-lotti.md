@@ -1,6 +1,6 @@
 # Catalogo dell'equipaggiamento: lotti da estrarre
 
-Stato al 26 settembre 2026 (lotti 2–12 fatti). Fonte: Manuale degli Armamenti v0.50. Metodo: `tools/estrai_manuali.py`
+Stato al 26 settembre 2026 (lotti 2–13 fatti). Fonte: Manuale degli Armamenti v0.50. Metodo: `tools/estrai_manuali.py`
 e `docs/pilota-estrazione-armamenti.md`.
 
 Questa è la lista dei prompt successivi: **un lotto per prompt**, nell'ordine di utilità al
@@ -30,8 +30,17 @@ su quelle pagine: le tabelle impilate contano come una.
 | `armi_distanza_corporative.json` | 81 armi a distanza corporative, 19 moduli integrati, 6 munizioni di riferimento (lotto 5) | §7.8 | 36–52 |
 
 Da completare nello stesso ambito, a basso costo:
-- **Manovre compatibili** dei profili commerciali, §7.1.7, pp. 9–10: una tabella Modello →
-  Manovre. Diventa un campo `manovre` in `armi.json`.
+- ✔ **Manovre compatibili** dei profili commerciali — §7.1.7, pp. 9–10 (lotto 13, fatto il
+  26 settembre 2026, commit «Lotto 13 del catalogo: Manovre compatibili dei profili commerciali»).
+  - **Fonte:** `docs/lotti/lotto13-manovre/`, generatore `tools/lotti/lotto13_manovre.mjs`.
+  - **Estrazione:** 2 tabelle, una per pagina. **28 righe su 28 giuste al primo colpo**, una
+    per ogni profilo commerciale, ritrovate nel testo; **0 correzioni a mano**.
+  - **Dati:** il generatore aggiunge a `armi.json` soltanto il campo `manovre` e controlla che il
+    resto di ogni oggetto resti identico (il diff ha solo righe aggiunte). «—» della Frusta
+    diventa `["generali"]`, come nelle schede corporative.
+  - **Scheda:** le Manovre compatibili compaiono nella scheda dell'arma impugnata e nel tooltip,
+    come per le armi corporative.
+  - **Dubbi per Davide:** nessuno.
 - ✔ **Rinforzi** delle armature — §7.11.2, p. 62 (lotto 9, fatto il 26 settembre 2026, commit
   «Lotto 9 del catalogo: kit di rinforzo delle armature»).
   - **Fonte:** `docs/lotti/lotto9-rinforzi/`, generatore `tools/lotti/lotto9_rinforzi.mjs`, dati

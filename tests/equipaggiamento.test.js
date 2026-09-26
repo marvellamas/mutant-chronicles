@@ -942,3 +942,18 @@ test('validatore degli Artefatti: costo = potenza, riferimenti, regole', () => {
   assert.match(e((d) => { f(d).artefatti_catalogo[0].rif = 'armi:inesistente'; }), /artefatti_catalogo\[0\]\.rif: .* non è un oggetto/);
   assert.match(e((d) => { f(d).sintonizzazione.capacita_per_gradi = [4, 5]; }), /sei interi/);
 });
+
+// --- Lotto 13: Manovre compatibili dei profili commerciali (§7.1.7) ------------------------
+
+test('lotto 13: Manovre compatibili su tutti i 28 profili commerciali (§7.1.7)', () => {
+  const commerciali = catalogo(dati).oggetti.filter((o) => o.file === 'armi');
+  assert.equal(commerciali.length, 28);
+  assert.ok(commerciali.every((o) => o.manovre?.length));
+  const r = (id) => catalogo(dati).perRif.get(`armi:${id}`).manovre;
+  assert.deepEqual(r('spada-lunga'), ['Affondo', 'Spazzata']);
+  assert.deepEqual(r('martello-a-due-mani'), ['Spazzata', 'Stordire']);
+  assert.deepEqual(r('frusta'), ['generali']); // «—»: restano le Manovre generali
+  assert.deepEqual(r('tirapugni-concussivo'), ['Stordire']);
+  const arma = scheda(MISHIMA_AGENTE, [voce('l', 'armi:lancia', 'impugnata')]).equipaggiamento.armi[0];
+  assert.deepEqual(arma.manovre, ['Affondo']);
+});

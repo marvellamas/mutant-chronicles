@@ -31,6 +31,9 @@
       "ps_int": 10,
       "reperibilita": "CO",
       "costo": 80,
+      "manovre": [
+        "Affondo"
+      ],
       "proprieta": []
     },
     {
@@ -61,6 +64,9 @@
       "ps_int": 10,
       "reperibilita": "CO",
       "costo": 150,
+      "manovre": [
+        "Affondo"
+      ],
       "proprieta": []
     },
     {
@@ -89,6 +95,9 @@
       "ps_int": 10,
       "reperibilita": "NC",
       "costo": 220,
+      "manovre": [
+        "Affondo"
+      ],
       "proprieta": []
     },
     {
@@ -117,6 +126,9 @@
       "ps_int": 10,
       "reperibilita": "NC",
       "costo": 300,
+      "manovre": [
+        "Affondo"
+      ],
       "proprieta": []
     },
     {
@@ -148,6 +160,10 @@
       "ps_int": 10,
       "reperibilita": "NC",
       "costo": 350,
+      "manovre": [
+        "Affondo",
+        "Spazzata"
+      ],
       "proprieta": []
     },
     {
@@ -176,6 +192,9 @@
       "ps_int": 10,
       "reperibilita": "NC",
       "costo": 450,
+      "manovre": [
+        "Affondo"
+      ],
       "proprieta": [
         {
           "nome": "Sanguinante 1",
@@ -209,6 +228,10 @@
       "ps_int": 10,
       "reperibilita": "NC",
       "costo": 500,
+      "manovre": [
+        "Affondo",
+        "Spazzata"
+      ],
       "proprieta": []
     },
     {
@@ -237,6 +260,10 @@
       "ps_int": 10,
       "reperibilita": "NC",
       "costo": 700,
+      "manovre": [
+        "Affondo",
+        "Spazzata"
+      ],
       "proprieta": [
         {
           "nome": "Versatile",
@@ -270,6 +297,9 @@
       "ps_int": 10,
       "reperibilita": "NC",
       "costo": 850,
+      "manovre": [
+        "Spazzata"
+      ],
       "proprieta": []
     },
     {
@@ -300,6 +330,9 @@
       "ps_int": 10,
       "reperibilita": "CO",
       "costo": 180,
+      "manovre": [
+        "Spazzata"
+      ],
       "proprieta": []
     },
     {
@@ -328,6 +361,9 @@
       "ps_int": 10,
       "reperibilita": "NC",
       "costo": 500,
+      "manovre": [
+        "Spazzata"
+      ],
       "proprieta": []
     },
     {
@@ -356,6 +392,9 @@
       "ps_int": 10,
       "reperibilita": "CO",
       "costo": 80,
+      "manovre": [
+        "Stordire"
+      ],
       "proprieta": []
     },
     {
@@ -384,6 +423,9 @@
       "ps_int": 10,
       "reperibilita": "NC",
       "costo": 280,
+      "manovre": [
+        "Stordire"
+      ],
       "proprieta": []
     },
     {
@@ -412,6 +454,10 @@
       "ps_int": 10,
       "reperibilita": "CO",
       "costo": 180,
+      "manovre": [
+        "Spazzata",
+        "Stordire"
+      ],
       "proprieta": []
     },
     {
@@ -443,6 +489,9 @@
       "ps_int": 10,
       "reperibilita": "CO",
       "costo": 40,
+      "manovre": [
+        "Stordire"
+      ],
       "proprieta": []
     },
     {
@@ -471,6 +520,9 @@
       "ps_int": 10,
       "reperibilita": "NC",
       "costo": 160,
+      "manovre": [
+        "Stordire"
+      ],
       "proprieta": []
     },
     {
@@ -499,6 +551,9 @@
       "ps_int": 10,
       "reperibilita": "NC",
       "costo": 90,
+      "manovre": [
+        "Stordire"
+      ],
       "proprieta": [
         {
           "nome": "Difensiva +2",
@@ -535,6 +590,9 @@
       "ps_int": 10,
       "reperibilita": "NC",
       "costo": 180,
+      "manovre": [
+        "Affondo"
+      ],
       "proprieta": [
         {
           "nome": "Montata",
@@ -568,6 +626,9 @@
       "ps_int": 10,
       "reperibilita": "CO",
       "costo": 220,
+      "manovre": [
+        "Affondo"
+      ],
       "proprieta": [
         {
           "nome": "Versatile",
@@ -601,6 +662,9 @@
       "ps_int": 10,
       "reperibilita": "NC",
       "costo": 250,
+      "manovre": [
+        "Affondo"
+      ],
       "proprieta": []
     },
     {
@@ -629,6 +693,9 @@
       "ps_int": 10,
       "reperibilita": "NC",
       "costo": 320,
+      "manovre": [
+        "Affondo"
+      ],
       "proprieta": []
     },
     {
@@ -660,6 +727,10 @@
       "ps_int": 10,
       "reperibilita": "NC",
       "costo": 450,
+      "manovre": [
+        "Affondo",
+        "Spazzata"
+      ],
       "proprieta": []
     },
     {
@@ -688,6 +759,9 @@
       "ps_int": 10,
       "reperibilita": "CO",
       "costo": 100,
+      "manovre": [
+        "generali"
+      ],
       "proprieta": [
         {
           "nome": "Immobilizzare a distanza",
@@ -721,6 +795,9 @@
       "ps_int": 10,
       "reperibilita": "NC",
       "costo": 350,
+      "manovre": [
+        "Spazzata"
+      ],
       "proprieta": [
         {
           "nome": "Parata avversaria −2 VA",
@@ -754,6 +831,9 @@
       "ps_int": 10,
       "reperibilita": "NC",
       "costo": 250,
+      "manovre": [
+        "Affondo"
+      ],
       "proprieta": [
         {
           "nome": "Sanguinante 1",
@@ -787,6 +867,9 @@
       "ps_int": 10,
       "reperibilita": "CO",
       "costo": 35,
+      "manovre": [
+        "Stordire"
+      ],
       "proprieta": []
     },
     {
@@ -815,6 +898,9 @@
       "ps_int": 10,
       "reperibilita": "NC",
       "costo": 70,
+      "manovre": [
+        "Stordire"
+      ],
       "proprieta": []
     },
     {
@@ -855,6 +941,9 @@
       "ps_int": 12,
       "reperibilita": "RA",
       "costo": 1200,
+      "manovre": [
+        "Stordire"
+      ],
       "proprieta": [
         {
           "nome": "Concussivo e Cariche 5",
