@@ -132,6 +132,7 @@ Tutte le regole numeriche stanno in `data/`:
 | `equipaggiamento/index.json` | l'elenco dei file del catalogo dell'equipaggiamento e le sigle di reperibilità (Armamenti §7.1.8) |
 | `equipaggiamento/armi.json` | armi ravvicinate del catalogo Commerciale (Armamenti §7.1.1–7.1.3) |
 | `equipaggiamento/armi_distanza.json` | armi a distanza del catalogo Commerciale, con gittata, caricatore, modalità di fuoco, INC (Armamenti §7.7) |
+| `equipaggiamento/scudi.json` | scudi commerciali e corporativi, con Parata ravvicinata e a distanza e profili alternativi (Armamenti §7.4) |
 | `equipaggiamento/armature.json` | armature commerciali civili e penalità per categoria (Armamenti §7.11.1–7.11.3) |
 
 **Catalogo dell'equipaggiamento.** Cresce a lotti (lista in `docs/equipaggiamento-lotti.md`):

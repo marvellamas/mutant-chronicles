@@ -1,0 +1,1101 @@
+{
+  "versione_manuale": "Armamenti 0.50",
+  "fonte": "Manuale degli Armamenti v0.50, §7.4 Scudi e protezioni (pp. 23–30): tabelle §7.4.2 e §7.4.11, schede in prosa §7.4.1, §7.4.4–7.4.10, proprietà §7.4.3; lotto 3",
+  "_nota": "Generato da tools/lotti/lotto3_scudi.mjs; da qui in poi si modifica questo file. «parata» sono i modificatori propri dello Scudo alle Parate (§7.4.11), prima di armatura, FOR insufficiente e altri effetti; «profili_alternativi» sono le condizioni che li cambiano (SIN collegato, Scudo Magico, Contenimento, Antiesplosione). Le proprietà e le note delle schede corporative sono trascritte dal testo in prosa.",
+  "regole": [
+    "La protezione passiva dello Scudo si aggiunge all’AR dell’armatura mentre è impugnato e utilizzabile. Due scudi non sommano la protezione: si utilizza soltanto il contributo maggiore (§7.4).",
+    "Il requisito FOR segue il §7.1.6 per le Parate e gli attacchi effettuati con lo Scudo (§7.4).",
+    "L’AR dello Scudo resta applicabile senza Parata, con Parata fallita o parando con un’altra arma, purché lo Scudo sia impugnato e utilizzabile (§7.4)."
+  ],
+  "note_per_catalogo": {
+    "Alleanza": [
+      "Il modello ASA è Raro; Punisher e Bastion sono Molto rari. Nessuno dei tre ha AR magica o Protezione occulta propria."
+    ],
+    "Capitol": [
+      "Per Rangers, Sea Lions e Martian Banshees gli scudi sono dotazioni occasionali. La mano occupata impedisce l’impiego contemporaneo di un’arma a due mani; l’appartenenza al reparto non elimina questo limite."
+    ],
+    "Cybertronic": [
+      "I modelli sono Standard a profilo fisso. AR magica 0; il collegamento non aumenta protezione passiva o numero di Azioni. Le condizioni di abbinamento e di cumulo del SIN sono nel §7.4.3 e nel §7.15.1."
+    ],
+    "Imperial": [
+      "La Rainy Dayer degli agenti ISC mantiene la propria configurazione aperta con AR +1 e le modalità di impugnatura e tiro del §7.14.6. Non costituisce un nuovo modello nella tabella dei 26 scudi. Per i cavalieri delle Fenris Bike gli scudi sono dotazioni opzionali: l’impiego durante la guida deve rispettare i comandi del mezzo e la disponibilità effettiva di una mano libera. Le schede dei mezzi saranno integrate successivamente."
+    ],
+    "Mishima": [
+      "Per Ombre e Portatori di Morte gli scudi sono dotazioni occasionali. Powersuit, Shoa Ace Custom e Demonhunter devono disporre di una mano libera; Assistenza muscolare non soddisfa il requisito di FOR dello Scudo e non ne elimina la penalità al MOV. Le eventuali protezioni integrate negli esoscheletri saranno descritte nelle rispettive schede."
+    ]
+  },
+  "oggetti": [
+    {
+      "id": "scudo-piccolo",
+      "nome": "Scudo piccolo",
+      "tipo": "scudo",
+      "catalogo": "Commerciale",
+      "famiglia": "Scudi piccoli",
+      "nomi_alternativi": [],
+      "note_manuale": "Scudo Standard commerciale: protezione passiva per taglia, nessuna proprietà propria (§7.4, §7.4.2).",
+      "paragrafo": "§7.4.2",
+      "versione_manuale": "Armamenti 0.50",
+      "taglia": "Piccolo",
+      "mani": 1,
+      "ar": {
+        "totale": 1,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 4,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -4
+      },
+      "profili_alternativi": [],
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 500,
+      "proprieta": []
+    },
+    {
+      "id": "scudo-medio",
+      "nome": "Scudo medio",
+      "tipo": "scudo",
+      "catalogo": "Commerciale",
+      "famiglia": "Scudi medi",
+      "nomi_alternativi": [],
+      "note_manuale": "Scudo Standard commerciale: protezione passiva per taglia, nessuna proprietà propria (§7.4, §7.4.2).",
+      "paragrafo": "§7.4.2",
+      "versione_manuale": "Armamenti 0.50",
+      "taglia": "Medio",
+      "mani": 1,
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 6,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -4
+      },
+      "profili_alternativi": [],
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 1500,
+      "proprieta": []
+    },
+    {
+      "id": "scudo-enorme",
+      "nome": "Scudo enorme",
+      "tipo": "scudo",
+      "catalogo": "Commerciale",
+      "famiglia": "Scudi enormi",
+      "nomi_alternativi": [],
+      "note_manuale": "Scudo Standard commerciale: protezione passiva per taglia, nessuna proprietà propria (§7.4, §7.4.2).",
+      "paragrafo": "§7.4.2",
+      "versione_manuale": "Armamenti 0.50",
+      "taglia": "Enorme",
+      "mani": 1,
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 7,
+      "pi": 8,
+      "mov": -1,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -4
+      },
+      "profili_alternativi": [],
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "RA",
+      "costo": 3000,
+      "proprieta": [
+        {
+          "nome": "Ingombrante",
+          "testo": "Gli Scudi enormi impongono −1 Q a Passo, Corsa e Scatto mentre sono impugnati. La penalità si somma a quelle pertinenti di armatura e arma e non viene eliminata soddisfacendo il requisito di FOR."
+        }
+      ]
+    },
+    {
+      "id": "scudo-d-ordinanza-bleu",
+      "nome": "Scudo d’ordinanza BLEU",
+      "tipo": "scudo",
+      "catalogo": "Bauhaus",
+      "famiglia": "Scudi medi",
+      "nomi_alternativi": [],
+      "note_manuale": "Scudo Medio con Contenimento 1, destinato agli interventi della polizia corporativa. Parata ravvicinata +1 VA contro Corpo a corpo e 0 contro le altre armi; Parata a distanza −4 VA.",
+      "paragrafo": "§7.4.2, §7.4.4–7.4.10",
+      "versione_manuale": "Armamenti 0.50",
+      "taglia": "Medio",
+      "mani": 1,
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 6,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -4
+      },
+      "profili_alternativi": [
+        {
+          "condizione": "contro attacchi di Corpo a corpo (Contenimento 1)",
+          "parata": {
+            "ravvicinata": 1,
+            "distanza": -4
+          }
+        }
+      ],
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 2500,
+      "proprieta": [
+        {
+          "nome": "Contenimento 1",
+          "testo": "Concede +1 VA alle Parate ravvicinate effettuate con lo Scudo contro attacchi di Corpo a corpo. Non si applica contro Armi da Mischia o da Guerra e non concede bonus alle Prove per afferrare o Immobilizzare."
+        }
+      ]
+    },
+    {
+      "id": "scudo-d-assalto-blitzer",
+      "nome": "Scudo d’assalto Blitzer",
+      "tipo": "scudo",
+      "catalogo": "Bauhaus",
+      "famiglia": "Scudi piccoli",
+      "nomi_alternativi": [],
+      "note_manuale": "Scudo Piccolo con Struttura robusta e Difensiva 1 ravvicinata; 6 PI comprendono la robustezza. Parata ravvicinata +1 VA e Parata a distanza −4 VA. Privilegia la difesa attiva conservando AR passiva +1.",
+      "paragrafo": "§7.4.2, §7.4.4–7.4.10",
+      "versione_manuale": "Armamenti 0.50",
+      "taglia": "Piccolo",
+      "mani": 1,
+      "ar": {
+        "totale": 1,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 1,
+        "distanza": -4
+      },
+      "profili_alternativi": [],
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2500,
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi, già compresi nei valori del catalogo. Il beneficio non aumenta la PS Integrità e non va conteggiato di nuovo."
+        },
+        {
+          "nome": "Difensiva 1 (ravvicinata)",
+          "testo": "Negli scudi che la indicano come ravvicinata, concede +1 VA esclusivamente alle Parate ravvicinate effettuate con quello Scudo. Il Punisher la applica espressamente sia alle Parate ravvicinate sia a quelle a distanza. Il bonus non si trasferisce a una Parata effettuata con un’altra arma."
+        }
+      ]
+    },
+    {
+      "id": "scudo-da-breccia-dei-dragoni",
+      "nome": "Scudo da breccia dei Dragoni",
+      "tipo": "scudo",
+      "catalogo": "Bauhaus",
+      "famiglia": "Scudi enormi",
+      "nomi_alternativi": [],
+      "note_manuale": "Scudo Enorme per operatori appiedati, con Struttura robusta, Antiesplosione 1 e Ingombrante. Ha 10 PI, AR +3 ordinaria e +4 contro esplosioni pertinenti; mantiene Parata ravvicinata 0, a distanza −4 VA e MOV −1 Q. È una dotazione separata dalla corazza.",
+      "paragrafo": "§7.4.2, §7.4.4–7.4.10",
+      "versione_manuale": "Armamenti 0.50",
+      "taglia": "Enorme",
+      "mani": 1,
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 7,
+      "pi": 10,
+      "mov": -1,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -4
+      },
+      "profili_alternativi": [
+        {
+          "condizione": "contro danni Naturali o Magici da esplosione (Antiesplosione 1)",
+          "ar": {
+            "totale": 4,
+            "magica": 0
+          }
+        }
+      ],
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 5500,
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi, già compresi nei valori del catalogo. Il beneficio non aumenta la PS Integrità e non va conteggiato di nuovo."
+        },
+        {
+          "nome": "Antiesplosione 1",
+          "testo": "Contro danni Naturali o Magici da esplosione aggiunge 1 all’AR applicabile: su uno Scudo enorme il contributo passa da +3 a +4. Non protegge dai danni Eterei. Antiesplosione di scudo e armatura non si sommano; si usa soltanto il valore maggiore, mentre le rispettive AR ordinarie continuano a sommarsi."
+        },
+        {
+          "nome": "Ingombrante",
+          "testo": "Gli Scudi enormi impongono −1 Q a Passo, Corsa e Scatto mentre sono impugnati. La penalità si somma a quelle pertinenti di armatura e arma e non viene eliminata soddisfacendo il requisito di FOR."
+        }
+      ]
+    },
+    {
+      "id": "scudo-delle-guardie-ducali",
+      "nome": "Scudo delle Guardie Ducali",
+      "tipo": "scudo",
+      "catalogo": "Bauhaus",
+      "famiglia": "Scudi medi",
+      "nomi_alternativi": [],
+      "note_manuale": "Scudo Medio con Struttura robusta e Difensiva 1 ravvicinata; 8 PI comprendono la robustezza. Parata ravvicinata +1 VA e a distanza −4 VA. La Qualità Rara porta la PS Integrità a 14; stemmi e livree non modificano il profilo.",
+      "paragrafo": "§7.4.2, §7.4.4–7.4.10",
+      "versione_manuale": "Armamenti 0.50",
+      "taglia": "Medio",
+      "mani": 1,
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 1,
+        "distanza": -4
+      },
+      "profili_alternativi": [],
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "RA",
+      "costo": 4500,
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi, già compresi nei valori del catalogo. Il beneficio non aumenta la PS Integrità e non va conteggiato di nuovo."
+        },
+        {
+          "nome": "Difensiva 1 (ravvicinata)",
+          "testo": "Negli scudi che la indicano come ravvicinata, concede +1 VA esclusivamente alle Parate ravvicinate effettuate con quello Scudo. Il Punisher la applica espressamente sia alle Parate ravvicinate sia a quelle a distanza. Il bonus non si trasferisce a una Parata effettuata con un’altra arma."
+        }
+      ]
+    },
+    {
+      "id": "scudo-compatto-asa",
+      "nome": "Scudo compatto ASA",
+      "tipo": "scudo",
+      "catalogo": "Alleanza",
+      "famiglia": "Scudi piccoli",
+      "nomi_alternativi": [],
+      "note_manuale": "Scudo Piccolo Ripiegabile. Aprire o richiudere lo Scudo già pronto richiede 1 AzP. Chiuso può essere trasportato sotto un soprabito adeguato senza essere evidente a una semplice osservazione; una perquisizione può individuarlo. Chiuso non concede AR e non consente Parate. Aperto occupa una mano, è riconoscibile e fornisce AR +1, Parata ravvicinata 0 e a distanza −4 VA. La possibilità di occultarlo non concede un bonus a Furtività.",
+      "paragrafo": "§7.4.2, §7.4.4–7.4.10",
+      "versione_manuale": "Armamenti 0.50",
+      "taglia": "Piccolo",
+      "mani": 1,
+      "ar": {
+        "totale": 1,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 4,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -4
+      },
+      "profili_alternativi": [],
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2500,
+      "proprieta": [
+        {
+          "nome": "Ripiegabile",
+          "testo": "Aprire o richiudere lo Scudo già pronto richiede 1 AzP. Chiuso non concede AR e non consente Parate. Aperto occupa una mano, è riconoscibile e fornisce AR +1, Parata ravvicinata 0 e a distanza −4 VA (§7.4.5)."
+        }
+      ]
+    },
+    {
+      "id": "scudo-punisher",
+      "nome": "Scudo Punisher",
+      "tipo": "scudo",
+      "catalogo": "Alleanza",
+      "famiglia": "Scudi medi",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello Medio con 8 PI e Difensiva 1 ravvicinata e a distanza: Parata ravvicinata +1 VA, a distanza −3 VA, AR passiva +2. La scheda completa, compreso l’impiego offensivo, è nel §7.4.1. È acquistabile separatamente dalla combinazione Punisher e non richiede un’interfaccia per il proprio beneficio. Difensiva 1, ravvicinata e a distanza. Concede +1 VA alle Parate effettuate con lo Scudo Punisher: +1 VA ravvicinata e −3 VA complessivo a distanza, prima degli altri modificatori. Restano la normale Azione di Parata, il dimezzamento per eccesso del danno con successo ordinario e l’AR passiva +2 mentre lo Scudo è impugnato e utilizzabile. Gli 8 PI sono il valore finale del profilo. Attacco: Armi da Guerra, una mano, 1d6+1 danni Naturali, portata 1 Q. Sono compatibili le Manovre generali pertinenti e Stordire. Lo Scudo non concede AR magica né Protezione occulta. Con Marte, il totale è AR 8, di cui 1 magica. Per usare la Carabina Punisher a due mani occorre prima riporre lo Scudo, pagando le normali Azioni.",
+      "paragrafo": "§7.4.2, §7.4.4–7.4.10",
+      "versione_manuale": "Armamenti 0.50",
+      "taglia": "Medio",
+      "mani": 1,
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 1,
+        "distanza": -3
+      },
+      "profili_alternativi": [],
+      "attacco": {
+        "abilita": "Armi da guerra",
+        "mani": 1,
+        "danno": "1d6+1",
+        "portata_q": 1,
+        "condizione": null,
+        "note": "Sono compatibili le Manovre generali pertinenti e Stordire (§7.4.1)."
+      },
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 6000,
+      "proprieta": [
+        {
+          "nome": "Difensiva 1 (ravvicinata e a distanza)",
+          "testo": "Negli scudi che la indicano come ravvicinata, concede +1 VA esclusivamente alle Parate ravvicinate effettuate con quello Scudo. Il Punisher la applica espressamente sia alle Parate ravvicinate sia a quelle a distanza. Il bonus non si trasferisce a una Parata effettuata con un’altra arma."
+        }
+      ]
+    },
+    {
+      "id": "scudo-da-sfondamento-bastion",
+      "nome": "Scudo da sfondamento Bastion",
+      "tipo": "scudo",
+      "catalogo": "Alleanza",
+      "famiglia": "Scudi enormi",
+      "nomi_alternativi": [],
+      "note_manuale": "Scudo Enorme con Struttura robusta, Stabile 1 e Ingombrante. Ha 10 PI, AR +3 e MOV −1 Q; Parata ravvicinata 0 e a distanza −4 VA. È destinato agli operatori che sostengono l’avanzata negli assalti a postazioni fortificate. Non concede automaticamente Copertura o protezione ad altri personaggi.",
+      "paragrafo": "§7.4.2, §7.4.4–7.4.10",
+      "versione_manuale": "Armamenti 0.50",
+      "taglia": "Enorme",
+      "mani": 1,
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 7,
+      "pi": 10,
+      "mov": -1,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -4
+      },
+      "profili_alternativi": [],
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 7000,
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi, già compresi nei valori del catalogo. Il beneficio non aumenta la PS Integrità e non va conteggiato di nuovo."
+        },
+        {
+          "nome": "Stabile 1",
+          "testo": "Concede +1 VA alle Prove di Forza o Destrezza richieste per resistere a Sbilanciante mentre lo Scudo è impugnato e utilizzabile. Più proprietà Stabile applicabili alla stessa Prova, comprese quelle di scudo e armatura, usano soltanto il valore maggiore. Non modifica le Prove Salvezza e non annulla Sbalzante."
+        },
+        {
+          "nome": "Ingombrante",
+          "testo": "Gli Scudi enormi impongono −1 Q a Passo, Corsa e Scatto mentre sono impugnati. La penalità si somma a quelle pertinenti di armatura e arma e non viene eliminata soddisfacendo il requisito di FOR."
+        }
+      ]
+    },
+    {
+      "id": "scudo-antisommossa-css",
+      "nome": "Scudo antisommossa CSS",
+      "tipo": "scudo",
+      "catalogo": "Capitol",
+      "famiglia": "Scudi medi",
+      "nomi_alternativi": [],
+      "note_manuale": "Scudo Medio con Contenimento 1: Parata ravvicinata +1 VA contro Corpo a corpo, altrimenti 0; a distanza −4 VA. La Qualità Comune corrisponde a PS Integrità 10.",
+      "paragrafo": "§7.4.2, §7.4.4–7.4.10",
+      "versione_manuale": "Armamenti 0.50",
+      "taglia": "Medio",
+      "mani": 1,
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 6,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -4
+      },
+      "profili_alternativi": [
+        {
+          "condizione": "contro attacchi di Corpo a corpo (Contenimento 1)",
+          "parata": {
+            "ravvicinata": 1,
+            "distanza": -4
+          }
+        }
+      ],
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 2000,
+      "proprieta": [
+        {
+          "nome": "Contenimento 1",
+          "testo": "Concede +1 VA alle Parate ravvicinate effettuate con lo Scudo contro attacchi di Corpo a corpo. Non si applica contro Armi da Mischia o da Guerra e non concede bonus alle Prove per afferrare o Immobilizzare."
+        }
+      ]
+    },
+    {
+      "id": "scudo-tattico-alpha",
+      "nome": "Scudo tattico Alpha",
+      "tipo": "scudo",
+      "catalogo": "Capitol",
+      "famiglia": "Scudi medi",
+      "nomi_alternativi": [],
+      "note_manuale": "Scudo Medio con Intercettazione balistica 1: Parata ravvicinata 0 e a distanza −3 VA. È destinato agli interventi armati in ambienti urbani e alla liberazione di ostaggi; non aumenta l’AR e non permette di parare attacchi normalmente non parabili.",
+      "paragrafo": "§7.4.2, §7.4.4–7.4.10",
+      "versione_manuale": "Armamenti 0.50",
+      "taglia": "Medio",
+      "mani": 1,
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 6,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -3
+      },
+      "profili_alternativi": [],
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 3500,
+      "proprieta": [
+        {
+          "nome": "Intercettazione balistica 1",
+          "testo": "Riduce di 1 la penalità alla Parata contro attacchi a distanza: il −4 dello Scudo diventa −3 VA. Non aumenta l’AR, non modifica la Parata ravvicinata e non rende parabile un attacco che normalmente non lo è."
+        }
+      ]
+    },
+    {
+      "id": "scudo-da-breccia-free-marines",
+      "nome": "Scudo da breccia Free Marines",
+      "tipo": "scudo",
+      "catalogo": "Capitol",
+      "famiglia": "Scudi enormi",
+      "nomi_alternativi": [],
+      "note_manuale": "Scudo Enorme con Struttura robusta, Antiesplosione 1 e Ingombrante. Ha 10 PI, AR +3 ordinaria e +4 contro esplosioni pertinenti, MOV −1 Q, Parata ravvicinata 0 e a distanza −4 VA. Condivide il profilo difensivo dello Scudo da breccia dei Dragoni.",
+      "paragrafo": "§7.4.2, §7.4.4–7.4.10",
+      "versione_manuale": "Armamenti 0.50",
+      "taglia": "Enorme",
+      "mani": 1,
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 7,
+      "pi": 10,
+      "mov": -1,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -4
+      },
+      "profili_alternativi": [
+        {
+          "condizione": "contro danni Naturali o Magici da esplosione (Antiesplosione 1)",
+          "ar": {
+            "totale": 4,
+            "magica": 0
+          }
+        }
+      ],
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 5500,
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi, già compresi nei valori del catalogo. Il beneficio non aumenta la PS Integrità e non va conteggiato di nuovo."
+        },
+        {
+          "nome": "Antiesplosione 1",
+          "testo": "Contro danni Naturali o Magici da esplosione aggiunge 1 all’AR applicabile: su uno Scudo enorme il contributo passa da +3 a +4. Non protegge dai danni Eterei. Antiesplosione di scudo e armatura non si sommano; si usa soltanto il valore maggiore, mentre le rispettive AR ordinarie continuano a sommarsi."
+        },
+        {
+          "nome": "Ingombrante",
+          "testo": "Gli Scudi enormi impongono −1 Q a Passo, Corsa e Scatto mentre sono impugnati. La penalità si somma a quelle pertinenti di armatura e arma e non viene eliminata soddisfacendo il requisito di FOR."
+        }
+      ]
+    },
+    {
+      "id": "scudo-della-sicurezza",
+      "nome": "Scudo della Sicurezza",
+      "tipo": "scudo",
+      "catalogo": "Cybertronic",
+      "famiglia": "Scudi medi",
+      "nomi_alternativi": [],
+      "note_manuale": "Scudo Medio con SIN 1. Collegato concede Parata ravvicinata +1 VA e a distanza −3 VA. Senza SIN mantiene AR +2 e le Parate ordinarie: 0 ravvicinata, −4 a distanza. È destinato a pattuglie, controllo degli accessi e protezione delle installazioni.",
+      "paragrafo": "§7.4.2, §7.4.4–7.4.10",
+      "versione_manuale": "Armamenti 0.50",
+      "taglia": "Medio",
+      "mani": 1,
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 6,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -4
+      },
+      "profili_alternativi": [
+        {
+          "condizione": "con SIN collegato (Innesto di Interfaccia Neurale attivo)",
+          "parata": {
+            "ravvicinata": 1,
+            "distanza": -3
+          }
+        }
+      ],
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 3000,
+      "proprieta": [
+        {
+          "nome": "SIN 1",
+          "testo": "SIN 1 concede +1 VA e SIN 2 concede +2 VA alle Prove di Parata effettuate con lo Scudo, ravvicinate e a distanza. Il beneficio richiede un Innesto di Interfaccia Neurale compatibile e attivo; gli innesti Cybertronic si abbinano automaticamente, quelli di altre marche seguono la configurazione con Tecnologia del §7.15.1. Senza collegamento lo Scudo mantiene AR e funzionamento ordinari, ma non il bonus SIN."
+        }
+      ]
+    },
+    {
+      "id": "scudo-d-assalto-chasseur",
+      "nome": "Scudo d’assalto Chasseur",
+      "tipo": "scudo",
+      "catalogo": "Cybertronic",
+      "famiglia": "Scudi medi",
+      "nomi_alternativi": [],
+      "note_manuale": "Scudo Medio con Struttura robusta e SIN 2; 8 PI comprendono la robustezza. Collegato concede Parata ravvicinata +2 VA e a distanza −2 VA. Senza SIN mantiene AR +2, Parata ravvicinata 0 e a distanza −4 VA.",
+      "paragrafo": "§7.4.2, §7.4.4–7.4.10",
+      "versione_manuale": "Armamenti 0.50",
+      "taglia": "Medio",
+      "mani": 1,
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -4
+      },
+      "profili_alternativi": [
+        {
+          "condizione": "con SIN collegato (Innesto di Interfaccia Neurale attivo)",
+          "parata": {
+            "ravvicinata": 2,
+            "distanza": -2
+          }
+        }
+      ],
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "RA",
+      "costo": 5500,
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi, già compresi nei valori del catalogo. Il beneficio non aumenta la PS Integrità e non va conteggiato di nuovo."
+        },
+        {
+          "nome": "SIN 2",
+          "testo": "SIN 1 concede +1 VA e SIN 2 concede +2 VA alle Prove di Parata effettuate con lo Scudo, ravvicinate e a distanza. Il beneficio richiede un Innesto di Interfaccia Neurale compatibile e attivo; gli innesti Cybertronic si abbinano automaticamente, quelli di altre marche seguono la configurazione con Tecnologia del §7.15.1. Senza collegamento lo Scudo mantiene AR e funzionamento ordinari, ma non il bonus SIN."
+        }
+      ]
+    },
+    {
+      "id": "scudo-pesante-reaver",
+      "nome": "Scudo pesante Reaver",
+      "tipo": "scudo",
+      "catalogo": "Cybertronic",
+      "famiglia": "Scudi enormi",
+      "nomi_alternativi": [],
+      "note_manuale": "Scudo Enorme con Struttura robusta, SIN 1 e Ingombrante. Ha 10 PI, AR +3 e MOV −1 Q. Collegato concede Parata ravvicinata +1 VA e a distanza −3 VA; senza SIN i modificatori sono 0 e −4. La penalità al MOV resta anche con SIN attivo e FOR sufficiente.",
+      "paragrafo": "§7.4.2, §7.4.4–7.4.10",
+      "versione_manuale": "Armamenti 0.50",
+      "taglia": "Enorme",
+      "mani": 1,
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 7,
+      "pi": 10,
+      "mov": -1,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -4
+      },
+      "profili_alternativi": [
+        {
+          "condizione": "con SIN collegato (Innesto di Interfaccia Neurale attivo)",
+          "parata": {
+            "ravvicinata": 1,
+            "distanza": -3
+          }
+        }
+      ],
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 8000,
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi, già compresi nei valori del catalogo. Il beneficio non aumenta la PS Integrità e non va conteggiato di nuovo."
+        },
+        {
+          "nome": "SIN 1",
+          "testo": "SIN 1 concede +1 VA e SIN 2 concede +2 VA alle Prove di Parata effettuate con lo Scudo, ravvicinate e a distanza. Il beneficio richiede un Innesto di Interfaccia Neurale compatibile e attivo; gli innesti Cybertronic si abbinano automaticamente, quelli di altre marche seguono la configurazione con Tecnologia del §7.15.1. Senza collegamento lo Scudo mantiene AR e funzionamento ordinari, ma non il bonus SIN."
+        },
+        {
+          "nome": "Ingombrante",
+          "testo": "Gli Scudi enormi impongono −1 Q a Passo, Corsa e Scatto mentre sono impugnati. La penalità si somma a quelle pertinenti di armatura e arma e non viene eliminata soddisfacendo il requisito di FOR."
+        }
+      ]
+    },
+    {
+      "id": "scudo-da-trincea-trencher",
+      "nome": "Scudo da trincea Trencher",
+      "tipo": "scudo",
+      "catalogo": "Imperial",
+      "famiglia": "Scudi enormi",
+      "nomi_alternativi": [],
+      "note_manuale": "Scudo Enorme con Struttura robusta, Manutenzione semplice e Ingombrante. Ha 10 PI, AR +3 e MOV −1 Q; Parata ravvicinata 0 e a distanza −4 VA. La manutenzione richiede strumenti e materiali e non trasforma lo Scudo in una barriera autonoma.",
+      "paragrafo": "§7.4.2, §7.4.4–7.4.10",
+      "versione_manuale": "Armamenti 0.50",
+      "taglia": "Enorme",
+      "mani": 1,
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 7,
+      "pi": 10,
+      "mov": -1,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -4
+      },
+      "profili_alternativi": [],
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 4500,
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi, già compresi nei valori del catalogo. Il beneficio non aumenta la PS Integrità e non va conteggiato di nuovo."
+        },
+        {
+          "nome": "Manutenzione semplice",
+          "testo": "Concede +1 VA alle Prove di Tecnologia per riparare questo Scudo, disponendo di strumenti e materiali necessari. Non riduce automaticamente tempi o costi e non ripristina PI senza una riparazione."
+        },
+        {
+          "nome": "Ingombrante",
+          "testo": "Gli Scudi enormi impongono −1 Q a Passo, Corsa e Scatto mentre sono impugnati. La penalità si somma a quelle pertinenti di armatura e arma e non viene eliminata soddisfacendo il requisito di FOR."
+        }
+      ]
+    },
+    {
+      "id": "scudo-d-assalto-dei-clan",
+      "nome": "Scudo d’assalto dei Clan",
+      "tipo": "scudo",
+      "catalogo": "Imperial",
+      "famiglia": "Scudi piccoli",
+      "nomi_alternativi": [],
+      "note_manuale": "Scudo Piccolo con Struttura robusta e Difensiva 1 ravvicinata; 6 PI comprendono la robustezza. Parata ravvicinata +1 VA e a distanza −4 VA. Condivide il profilo Blitzer; decorazioni, incisioni e simboli non conferiscono proprietà mistiche.",
+      "paragrafo": "§7.4.2, §7.4.4–7.4.10",
+      "versione_manuale": "Armamenti 0.50",
+      "taglia": "Piccolo",
+      "mani": 1,
+      "ar": {
+        "totale": 1,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 1,
+        "distanza": -4
+      },
+      "profili_alternativi": [],
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 2500,
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi, già compresi nei valori del catalogo. Il beneficio non aumenta la PS Integrità e non va conteggiato di nuovo."
+        },
+        {
+          "nome": "Difensiva 1 (ravvicinata)",
+          "testo": "Negli scudi che la indicano come ravvicinata, concede +1 VA esclusivamente alle Parate ravvicinate effettuate con quello Scudo. Il Punisher la applica espressamente sia alle Parate ravvicinate sia a quelle a distanza. Il bonus non si trasferisce a una Parata effettuata con un’altra arma."
+        }
+      ]
+    },
+    {
+      "id": "scudo-della-young-guard",
+      "nome": "Scudo della Young Guard",
+      "tipo": "scudo",
+      "catalogo": "Imperial",
+      "famiglia": "Scudi medi",
+      "nomi_alternativi": [],
+      "note_manuale": "Scudo Medio con Struttura robusta e Difensiva 1 ravvicinata; 8 PI comprendono la robustezza. Parata ravvicinata +1 VA e a distanza −4 VA. Il profilo difensivo coincide con quello delle Guardie Ducali Bauhaus.",
+      "paragrafo": "§7.4.2, §7.4.4–7.4.10",
+      "versione_manuale": "Armamenti 0.50",
+      "taglia": "Medio",
+      "mani": 1,
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 1,
+        "distanza": -4
+      },
+      "profili_alternativi": [],
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "RA",
+      "costo": 4500,
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi, già compresi nei valori del catalogo. Il beneficio non aumenta la PS Integrità e non va conteggiato di nuovo."
+        },
+        {
+          "nome": "Difensiva 1 (ravvicinata)",
+          "testo": "Negli scudi che la indicano come ravvicinata, concede +1 VA esclusivamente alle Parate ravvicinate effettuate con quello Scudo. Il Punisher la applica espressamente sia alle Parate ravvicinate sia a quelle a distanza. Il bonus non si trasferisce a una Parata effettuata con un’altra arma."
+        }
+      ]
+    },
+    {
+      "id": "scudo-da-campo-ashigaru",
+      "nome": "Scudo da campo Ashigaru",
+      "tipo": "scudo",
+      "catalogo": "Mishima",
+      "famiglia": "Scudi medi",
+      "nomi_alternativi": [],
+      "note_manuale": "Scudo Medio con Manutenzione semplice: +1 VA a Tecnologia per ripararlo con strumenti e materiali adatti. Ha AR +2 e 6 PI; Parata ravvicinata 0 e a distanza −4 VA. La proprietà non riduce automaticamente tempi o costi di riparazione.",
+      "paragrafo": "§7.4.2, §7.4.4–7.4.10",
+      "versione_manuale": "Armamenti 0.50",
+      "taglia": "Medio",
+      "mani": 1,
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 6,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -4
+      },
+      "profili_alternativi": [],
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 1800,
+      "proprieta": [
+        {
+          "nome": "Manutenzione semplice",
+          "testo": "Concede +1 VA alle Prove di Tecnologia per riparare questo Scudo, disponendo di strumenti e materiali necessari. Non riduce automaticamente tempi o costi e non ripristina PI senza una riparazione."
+        }
+      ]
+    },
+    {
+      "id": "scudo-da-duello-samurai",
+      "nome": "Scudo da duello Samurai",
+      "tipo": "scudo",
+      "catalogo": "Mishima",
+      "famiglia": "Scudi piccoli",
+      "nomi_alternativi": [],
+      "note_manuale": "Scudo Piccolo con Struttura robusta e Difensiva 1 ravvicinata; 6 PI comprendono la robustezza. Parata ravvicinata +1 VA e a distanza −4 VA. Condivide il profilo degli scudi Blitzer e dei Clan ed è destinato a chi usa un’arma con la mano rimasta libera.",
+      "paragrafo": "§7.4.2, §7.4.4–7.4.10",
+      "versione_manuale": "Armamenti 0.50",
+      "taglia": "Piccolo",
+      "mani": 1,
+      "ar": {
+        "totale": 1,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 1,
+        "distanza": -4
+      },
+      "profili_alternativi": [],
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2500,
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi, già compresi nei valori del catalogo. Il beneficio non aumenta la PS Integrità e non va conteggiato di nuovo."
+        },
+        {
+          "nome": "Difensiva 1 (ravvicinata)",
+          "testo": "Negli scudi che la indicano come ravvicinata, concede +1 VA esclusivamente alle Parate ravvicinate effettuate con quello Scudo. Il Punisher la applica espressamente sia alle Parate ravvicinate sia a quelle a distanza. Il bonus non si trasferisce a una Parata effettuata con un’altra arma."
+        }
+      ]
+    },
+    {
+      "id": "scudo-pesante-hatamoto",
+      "nome": "Scudo pesante Hatamoto",
+      "tipo": "scudo",
+      "catalogo": "Mishima",
+      "famiglia": "Scudi enormi",
+      "nomi_alternativi": [],
+      "note_manuale": "Scudo Enorme con Struttura robusta, Stabile 1 e Ingombrante. Ha 10 PI, AR +3 e MOV −1 Q; Parata ravvicinata 0 e a distanza −4 VA. Il profilo difensivo coincide con il Bastion; scudo e armatura non sommano più proprietà Stabile.",
+      "paragrafo": "§7.4.2, §7.4.4–7.4.10",
+      "versione_manuale": "Armamenti 0.50",
+      "taglia": "Enorme",
+      "mani": 1,
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 7,
+      "pi": 10,
+      "mov": -1,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -4
+      },
+      "profili_alternativi": [],
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "RA",
+      "costo": 6500,
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi, già compresi nei valori del catalogo. Il beneficio non aumenta la PS Integrità e non va conteggiato di nuovo."
+        },
+        {
+          "nome": "Stabile 1",
+          "testo": "Concede +1 VA alle Prove di Forza o Destrezza richieste per resistere a Sbilanciante mentre lo Scudo è impugnato e utilizzabile. Più proprietà Stabile applicabili alla stessa Prova, comprese quelle di scudo e armatura, usano soltanto il valore maggiore. Non modifica le Prove Salvezza e non annulla Sbalzante."
+        },
+        {
+          "nome": "Ingombrante",
+          "testo": "Gli Scudi enormi impongono −1 Q a Passo, Corsa e Scatto mentre sono impugnati. La penalità si somma a quelle pertinenti di armatura e arma e non viene eliminata soddisfacendo il requisito di FOR."
+        }
+      ]
+    },
+    {
+      "id": "scudo-del-pellegrino",
+      "nome": "Scudo del Pellegrino",
+      "tipo": "scudo",
+      "catalogo": "Fratellanza",
+      "famiglia": "Scudi piccoli",
+      "nomi_alternativi": [],
+      "note_manuale": "Scudo Piccolo con Struttura robusta e Difensiva 1 ravvicinata; 6 PI comprendono la robustezza. Parata ravvicinata +1 VA e a distanza −4 VA. Non possiede AR magica o proprietà aggiuntive dovute alle decorazioni.",
+      "paragrafo": "§7.4.2, §7.4.4–7.4.10",
+      "versione_manuale": "Armamenti 0.50",
+      "taglia": "Piccolo",
+      "mani": 1,
+      "ar": {
+        "totale": 1,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 1,
+        "distanza": -4
+      },
+      "profili_alternativi": [],
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2500,
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi, già compresi nei valori del catalogo. Il beneficio non aumenta la PS Integrità e non va conteggiato di nuovo."
+        },
+        {
+          "nome": "Difensiva 1 (ravvicinata)",
+          "testo": "Negli scudi che la indicano come ravvicinata, concede +1 VA esclusivamente alle Parate ravvicinate effettuate con quello Scudo. Il Punisher la applica espressamente sia alle Parate ravvicinate sia a quelle a distanza. Il bonus non si trasferisce a una Parata effettuata con un’altra arma."
+        }
+      ]
+    },
+    {
+      "id": "scudo-della-sentinella",
+      "nome": "Scudo della Sentinella",
+      "tipo": "scudo",
+      "catalogo": "Fratellanza",
+      "famiglia": "Scudi medi",
+      "nomi_alternativi": [],
+      "note_manuale": "Scudo Medio con Intercettazione balistica 1: Parata ravvicinata 0 e a distanza −3 VA. Ha 6 PI e Qualità Rara, PS Integrità 14; il beneficio non rende parabile un attacco che normalmente non lo è.",
+      "paragrafo": "§7.4.2, §7.4.4–7.4.10",
+      "versione_manuale": "Armamenti 0.50",
+      "taglia": "Medio",
+      "mani": 1,
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 6,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -3
+      },
+      "profili_alternativi": [],
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "RA",
+      "costo": 4000,
+      "proprieta": [
+        {
+          "nome": "Intercettazione balistica 1",
+          "testo": "Riduce di 1 la penalità alla Parata contro attacchi a distanza: il −4 dello Scudo diventa −3 VA. Non aumenta l’AR, non modifica la Parata ravvicinata e non rende parabile un attacco che normalmente non lo è."
+        }
+      ]
+    },
+    {
+      "id": "scudo-dei-sacri-guerrieri",
+      "nome": "Scudo dei Sacri Guerrieri",
+      "tipo": "scudo",
+      "catalogo": "Fratellanza",
+      "famiglia": "Scudi enormi",
+      "nomi_alternativi": [],
+      "note_manuale": "Scudo Enorme con Struttura robusta, Stabile 1 e Ingombrante. Ha 10 PI, AR +3 e MOV −1 Q; Parata ravvicinata 0 e a distanza −4 VA. Il profilo coincide con il Bastion. È una protezione ordinaria distinta dallo Scudo delle Guardie Sacre.",
+      "paragrafo": "§7.4.2, §7.4.4–7.4.10",
+      "versione_manuale": "Armamenti 0.50",
+      "taglia": "Enorme",
+      "mani": 1,
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 7,
+      "pi": 10,
+      "mov": -1,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -4
+      },
+      "profili_alternativi": [],
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 7000,
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "Aggiunge 2 PI massimi, già compresi nei valori del catalogo. Il beneficio non aumenta la PS Integrità e non va conteggiato di nuovo."
+        },
+        {
+          "nome": "Stabile 1",
+          "testo": "Concede +1 VA alle Prove di Forza o Destrezza richieste per resistere a Sbilanciante mentre lo Scudo è impugnato e utilizzabile. Più proprietà Stabile applicabili alla stessa Prova, comprese quelle di scudo e armatura, usano soltanto il valore maggiore. Non modifica le Prove Salvezza e non annulla Sbalzante."
+        },
+        {
+          "nome": "Ingombrante",
+          "testo": "Gli Scudi enormi impongono −1 Q a Passo, Corsa e Scatto mentre sono impugnati. La penalità si somma a quelle pertinenti di armatura e arma e non viene eliminata soddisfacendo il requisito di FOR."
+        }
+      ]
+    },
+    {
+      "id": "scudo-delle-guardie-sacre",
+      "nome": "Scudo delle Guardie Sacre",
+      "tipo": "scudo",
+      "catalogo": "Fratellanza",
+      "famiglia": "Scudi medi",
+      "nomi_alternativi": [],
+      "note_manuale": "Scudo Medio con AR passiva +2, AR magica 0 a riposo, FOR 5 e 6 PI. Non possiede Difensiva passiva, Struttura robusta o Protezione occulta aggiuntive. Comprende la Lama retrattile e la riserva di Scudo Magico del §7.1.9. Estrarre o ritrarre la lama richiede 1 AzP. Con lama estratta gli attacchi usano Armi da Guerra, una mano, portata 1 Q e danno 1d6+1d4 Naturale; la lama non consuma cariche per colpo e non richiede Sintonizzazione. I requisiti e le regole offensive complete sono nel §7.1.9. Dopo Sintonizzazione, 1 AzP e 1 PM della riserva attivano Scudo Magico per 5 Round: il contributo dello Scudo diventa AR +4, di cui 2 magica, e concede +2 VA alla Parata ravvicinata e +1 VA a quella a distanza, che passa a −3 VA complessivo. I bonus alla Prova valgono soltanto parando con lo Scudo; l’AR rimane passiva nelle normali condizioni d’impiego. L’effetto termina alla fine del Round di attivazione +5. Una nuova attivazione rinnova la durata senza sommare i benefici. La riserva è un Chroma Rosso da 5 PM; la potenza è Rara e il costo totale di Sintonizzazione è 3, riserva compresa. Ricarica e attivazione seguono il §7.5.1. La Qualità costruttiva Rara determina PS Integrità 14 ed è distinta dalla potenza mistica.",
+      "paragrafo": "§7.4.2, §7.4.4–7.4.10",
+      "versione_manuale": "Armamenti 0.50",
+      "taglia": "Medio",
+      "mani": 1,
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 6,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -4
+      },
+      "profili_alternativi": [
+        {
+          "condizione": "con Scudo Magico attivo (1 AzP e 1 PM della riserva, 5 Round)",
+          "parata": {
+            "ravvicinata": 2,
+            "distanza": -3
+          },
+          "ar": {
+            "totale": 4,
+            "magica": 2
+          }
+        }
+      ],
+      "attacco": {
+        "abilita": "Armi da guerra",
+        "mani": 1,
+        "danno": "1d6+1d4",
+        "portata_q": 1,
+        "condizione": "con la lama estratta (1 AzP)",
+        "note": "Requisiti e regole offensive complete nel §7.1.9."
+      },
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 18000,
+      "proprieta": [
+        {
+          "nome": "Lama retrattile",
+          "testo": "Estrarre o ritrarre la lama richiede 1 AzP. Con lama estratta gli attacchi usano Armi da Guerra, una mano, portata 1 Q e danno 1d6+1d4 Naturale; la lama non consuma cariche per colpo e non richiede Sintonizzazione (§7.4.10, §7.1.9)."
+        },
+        {
+          "nome": "Scudo Magico",
+          "testo": "Dopo Sintonizzazione, 1 AzP e 1 PM della riserva attivano Scudo Magico per 5 Round: il contributo dello Scudo diventa AR +4, di cui 2 magica, e concede +2 VA alla Parata ravvicinata e +1 VA a quella a distanza, che passa a −3 VA complessivo. La riserva è un Chroma Rosso da 5 PM; la potenza è Rara e il costo totale di Sintonizzazione è 3, riserva compresa (§7.4.10)."
+        }
+      ]
+    }
+  ]
+}

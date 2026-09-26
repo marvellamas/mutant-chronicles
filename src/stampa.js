@@ -211,14 +211,20 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
       a.mov ? `MOV ${a.mov < 0 ? `−${-a.mov}` : a.mov} Q` : null,
       a.specializzazione ? `+${a.bonusDanno} danno (Spec.)` : null,
       ...a.proprieta.map((p) => p.nome),
-      a.parata ? `Parata ${a.parata.va < 0 ? `−${-a.parata.va}` : a.parata.va}` : null,
+      a.parata ? `Parata ${a.parata.va < 0 ? `−${-a.parata.va}` : a.parata.va}${a.parata.distanza !== null && a.parata.distanza !== undefined ? ` (dist. ${a.parata.distanza < 0 ? `−${-a.parata.distanza}` : a.parata.distanza})` : ''}` : null,
     ].filter(Boolean).join('; '),
   ]);
+  const meno = (n) => (n < 0 ? `−${-n}` : String(n));
   const righeProtezioni = eq.protezioni.map((p) => [
     p.nome,
     p.ar ? `${p.ar.totale}${p.ar.magica ? ` (${p.ar.magica} magica)` : ''}` : '—',
-    p.categoria ?? '—',
-    testoPenalita(p),
+    p.categoria ?? p.taglia ?? '—',
+    [
+      p.parata ? `Parata ${meno(p.parata.ravvicinata)} ravv. / ${meno(p.parata.distanza)} dist.` : null,
+      ...p.alternative.map((a) => `${a.condizione}: ${[a.ar ? `AR ${a.ar.totale}` : null, a.parata ? `Parata ${meno(a.parata.ravvicinata)}/${meno(a.parata.distanza)}` : null].filter(Boolean).join(', ')}`),
+      p.mov ? `MOV ${meno(p.mov)} Q` : null,
+      testoPenalita(p) || null,
+    ].filter(Boolean).join('; '),
   ]);
   const combattimento = {
     armi: { colonne: ['Arma', 'Abilità', 'VA', 'Danno', 'Gittata', 'Munizioni', 'Note'], righe: righeArmi, righeVuote: Math.max(2, LIMITI_STAMPA.righeArmi - righeArmi.length) },

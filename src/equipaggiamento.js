@@ -225,10 +225,18 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     const penalita = d ? { ...(fileArmature.categorie?.[d.categoria] ?? {}), ...(d.penalita ?? {}) } : {};
     const forMancante = d?.for_richiesta ? Math.max(0, d.for_richiesta - FOR) : 0;
     protezioni.push({
-      uid: o.uid, nome: o.nome, tipo: o.tipo, categoria: d?.categoria ?? null,
+      uid: o.uid, nome: o.nome, tipo: o.tipo, categoria: d?.categoria ?? null, taglia: d?.taglia ?? null,
       ar: d?.ar ?? (Number.isInteger(o.voce.personalizzato?.ar) ? { totale: o.voce.personalizzato.ar, magica: 0 } : null),
       penalita, forRichiesta: d?.for_richiesta ?? null, forMancante, personalizzato: o.personalizzato,
+      mov: d?.mov ?? 0, parata: null, alternative: [], proprieta: d?.proprieta ?? [],
     });
+    if (o.tipo === 'scudo') {
+      // §7.4: il requisito FOR dello Scudo segue il §7.1.6 (Parate e attacchi con lo Scudo), non
+      // penalizza Agilità, Difese o gli altri attacchi; gli Scudi enormi tolgono 1 Q al MOV
+      movimentoQ += d?.mov ?? 0;
+      continue;
+    }
+    // §7.11.1: armature — penalità di categoria e FOR mancante su Agilità, Difese e attacchi
     for (const a of agilitaAbilita) aggiungi(a, (penalita.agilita ?? 0) - forMancante);
     aggiungi(difeseAbilita, -forMancante);
     attacchiRavv += (penalita.attacchi_ravvicinati ?? 0) - forMancante;
@@ -245,6 +253,22 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   const abilitaPer = (nome) => base.abilita.find((a) => a.nome === nome);
   const vaEquip = (nome) => { const a = abilitaPer(nome); return a ? a.totale + (equipAbilita[nome] ?? 0) : null; };
   const specPosseduti = new Set((base.specializzazioni ?? []).map((s) => s.id));
+  const difeseVa = difeseAbilita ? vaEquip(difeseAbilita) : null;
+
+  // Parate con lo Scudo (§7.4.11): Difese + modificatori propri dello Scudo − FOR insufficiente (§7.1.6)
+  const scudiAttivi = protezioni.filter((p) => p.tipo === 'scudo');
+  for (const p of scudiAttivi) {
+    const d = cat.perRif.get(oggetti.find((o) => o.uid === p.uid)?.voce.rif ?? '');
+    if (!d?.parata || difeseVa === null) continue;
+    const calcola = (par) => ({ ravvicinata: difeseVa + par.ravvicinata - p.forMancante, distanza: difeseVa + par.distanza - p.forMancante });
+    p.parata = { ...calcola(d.parata), modificatori: d.parata, difese: difeseVa };
+    p.alternative = (d.profili_alternativi ?? []).map((a) => ({ condizione: a.condizione, parata: a.parata ? calcola(a.parata) : null, ar: a.ar ?? null }));
+  }
+  if (scudiAttivi.length > 1) {
+    avvisi.push(`Due o più scudi imbracciati (${scudiAttivi.map((x) => x.nome).join(', ')}): non sommano la protezione, vale soltanto il contributo maggiore (Armamenti §7.4).`);
+  }
+  // Parata a distanza con un'arma: Giocatore §5.9 (dai dati, regole.json → difese)
+  const parataDistanzaArma = dati.regole?.difese?.parata_distanza_arma ?? null;
 
   // Armi impugnate: VA per colpire, danno, Parata
   const armi = [];
@@ -268,10 +292,12 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     const bonusDanno = spec?.effetto.danno ?? 0;
     const dannoBase = d?.danno ?? (o.voce.personalizzato?.danno ? { una_mano: o.voce.personalizzato.danno, due_mani: null } : null);
     const parataVa = (d?.proprieta ?? []).reduce((s, p) => s + (p.effetto?.parata_va ?? 0), 0);
-    const difese = difeseAbilita ? vaEquip(difeseAbilita) : null;
-    // Parata con l'arma: Difese + proprietà difensive − penalità FOR dell'arma (§7.1.3, §7.1.6)
+    const difese = difeseVa;
+    // Parata con l'arma: Difese + proprietà difensive − penalità FOR dell'arma (§7.1.3, §7.1.6);
+    // a distanza si aggiunge la penalità del Giocatore §5.9 (−8 VA con un'arma)
     const parata = o.tipo === 'arma_ravvicinata' && difese !== null && d ? {
       va: difese + parataVa - forPen,
+      distanza: parataDistanzaArma === null ? null : difese + parataVa - forPen + parataDistanzaArma,
       componenti: [
         { nome: `VA ${difeseAbilita}`, valore: difese },
         parataVa ? { nome: 'Proprietà difensive', valore: parataVa } : null,
@@ -294,6 +320,27 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       specializzazione: spec ? `Specializzazione in ${spec.nome}` : null,
     });
     if (!a && o.personalizzato) avvisi.push(`${o.nome}: arma personalizzata senza Abilità, VA non calcolato.`);
+  }
+
+  // Attacchi con lo Scudo imbracciato (Scudo Punisher §7.4.1, lama delle Guardie Sacre §7.4.10)
+  for (const p of scudiAttivi) {
+    const d = cat.perRif.get(oggetti.find((o) => o.uid === p.uid)?.voce.rif ?? '');
+    const att = d?.attacco;
+    if (!att) continue;
+    const a = abilitaPer(att.abilita);
+    const componenti = a ? [
+      { nome: `VA ${a.nome}`, valore: a.totale },
+      p.forMancante ? { nome: `FOR ${FOR} su ${d.for_richiesta} richiesta (§7.1.6)`, valore: -p.forMancante } : null,
+      attacchiRavv ? { nome: 'Armatura (§7.11.1)', valore: attacchiRavv } : null,
+    ].filter(Boolean) : [];
+    armi.push({
+      uid: `${p.uid}:attacco`, nome: `${d.nome} (attacco${att.condizione ? `, ${att.condizione}` : ''})`, tipo: 'arma_ravvicinata',
+      abilita: att.abilita, va: a ? componenti.reduce((x, c) => x + c.valore, 0) : null, componenti,
+      danno: { una_mano: att.danno, due_mani: null }, dannoDaMunizione: false, bonusDanno: 0, mani: att.mani,
+      portataQ: att.portata_q, gittataQ: null, gittataFormula: null, ac: null, inc: null, mov: 0, modalita: [], munizioni: null,
+      proprieta: att.note ? [{ nome: 'Manovre e requisiti', testo: att.note }] : [], parata: null, personalizzato: false,
+      specializzazione: null, daScudo: true,
+    });
   }
 
   // Mani impegnate: arma a due mani con scudo, più di due mani

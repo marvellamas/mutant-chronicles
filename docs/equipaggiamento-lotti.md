@@ -1,6 +1,6 @@
 # Catalogo dell'equipaggiamento: lotti da estrarre
 
-Stato al 26 settembre 2026 (lotto 2 fatto). Fonte: Manuale degli Armamenti v0.50. Metodo: `tools/estrai_manuali.py`
+Stato al 26 settembre 2026 (lotti 2 e 3 fatti). Fonte: Manuale degli Armamenti v0.50. Metodo: `tools/estrai_manuali.py`
 e `docs/pilota-estrazione-armamenti.md`.
 
 Questa è la lista dei prompt successivi: **un lotto per prompt**, nell'ordine di utilità al
@@ -18,6 +18,7 @@ su quelle pagine: le tabelle impilate contano come una.
 | `armi.json` | 28 armi ravvicinate del catalogo Commerciale | §7.1.1–7.1.3 | 4–7 |
 | `armature.json` | 3 armature commerciali civili, penalità per categoria | §7.11.1–7.11.3 | 62–63 |
 | `armi_distanza.json` | 22 armi a distanza del catalogo Commerciale (lotto 2) | §7.7 | 33–36 |
+| `scudi.json` | 26 scudi commerciali e corporativi (lotto 3) | §7.4 | 23–30 |
 
 Da completare nello stesso ambito, a basso costo:
 - **Manovre compatibili** dei profili commerciali, §7.1.7, pp. 9–10: una tabella Modello →
@@ -30,6 +31,8 @@ Da completare nello stesso ambito, a basso costo:
 ## Da estrarre, in ordine di utilità
 
 ### 1. ✔ Armi a distanza commerciali — §7.7, pp. 33–36 (lotto 2, fatto)
+
+Fatto il 26 settembre 2026, commit «Lotto 2 del catalogo: armi a distanza commerciali».
 
 Il lotto finisce a p. 36, non a p. 35 come scritto in origine: su p. 36 stanno la tabella
 economica di Archi e balestre, le Armi speciali e le Granate.
@@ -92,19 +95,71 @@ Scheda originale del lotto:
 - **Per Davide:** i profili lanciati che condividono prezzo e Integrità con l'arma ravvicinata
   (stesso oggetto, due profili?).
 
-### 2. Scudi — §7.4, pp. 23–30
+### 2. ✔ Scudi — §7.4, pp. 23–30 (lotto 3, fatto)
 
-- **Tabelle:**
-  - §7.4.1 Scudo Punisher (p. 24);
-  - §7.4.2 Catalogo generale degli scudi (pp. 24–26);
-  - §7.4.3 Proprietà comuni e sovrapposizioni (p. 26);
-  - §7.4.11 Modificatori alle Parate (p. 30).
-- **Scudi corporativi** §7.4.4–7.4.10 (pp. 27–29): **nessuna tabella trovata**, sono schede in
-  prosa, da estrarre con `--prosa` e un parser dedicato o a mano.
-- **Campi:** `ar`, `for_richiesta`, `mani`, proprietà di Parata; il file è `scudi.json`
-  (tipo `scudo`, stati imbracciato / pronta / zaino, già previsti).
-- **Effetti sulla scheda:** AR dello scudo imbracciato nelle Protezioni, bonus alla Parata
-  (§7.4.11), confronto con Difensiva X delle armi (§7.1.3).
+Fatto il 26 settembre 2026, commit «Lotto 3 del catalogo: scudi (§7.4, pp. 23–30)».
+
+- **Fonte:** `docs/lotti/lotto3-scudi/`:
+  - `grezzo/`: 8 CSV di pdfplumber, pp. 23–30;
+  - `prosa/`: il §7.4 estratto con `--prosa`, per le schede in prosa;
+  - `pulito/scudi.csv`.
+
+  Generatore `tools/lotti/lotto3_scudi.mjs`, dati `data/equipaggiamento/scudi.json`.
+- **Estrazione:** pdfplumber trova tutte le 8 tabelle del lotto, senza unirle. Diventano dati
+  quattro sottotabelle:
+  - §7.4.2 «Protezione requisiti e Integrità» e «Qualità reperibilità e costi», ciascuna
+    spezzata su due pagine;
+  - la tabella del §7.4.11.
+
+  Le tabelle del §7.4 (taglie, confronto Tonfa e scudi) e del §7.4.1 sono regole, riportate
+  nelle note.
+- **Righe:**
+  - **26 scudi su 26 giusti al primo colpo**, 52 righe delle due sottotabelle del §7.4.2;
+  - **16 righe su 16** del §7.4.11.
+
+  Tutte controllate riga per riga sulle immagini delle pp. 23–30. **0 correzioni a mano** sui
+  valori delle tabelle. Unica riga spezzata («Tonfa … +2 / Difensiva»), nella tabella di
+  confronto del §7.4, che non entra nei dati.
+- **Prosa (scritto a mano dal testo):** gli scudi corporativi §7.4.4–7.4.10 non hanno tabelle
+  proprie. Le proprietà di ogni scudo sono **trascritte a mano** dalla sua scheda (elenco
+  `PROPRIETA` nel generatore). I testi delle proprietà sono quelli del §7.4.3 parola per parola.
+  Le note sono il primo paragrafo di ogni scheda, preso in automatico dal testo in prosa.
+- **Regole nuove del generatore:**
+  1. i record si riuniscono sulla cella «Catalogo — Modello», che si divide in catalogo e nome;
+  2. la tabella §7.4.11 raggruppa i modelli per nome breve («BLEU e CSS», «Scudi Cybertronic
+     senza SIN»). L'assegnazione ai modelli è scritta a mano, e il generatore controlla che ogni
+     scudo ne abbia una e che nessuna riga resti non assegnata;
+  3. le righe «con SIN», «con Scudo Magico» e la condizione di Contenimento diventano
+     `profili_alternativi`, così come Antiesplosione 1 (AR +4 contro esplosioni);
+  4. paragrafi del testo in prosa: un paragrafo finisce con una riga corta (meno di 90
+     caratteri) chiusa da un punto. Per l'ultimo scudo di ogni sezione i paragrafi successivi
+     sono note della sezione (`note_per_catalogo`), salvo le Guardie Sacre, che hanno più
+     paragrafi propri.
+
+     L'euristica ha sbagliato una volta: nella scheda §7.4.1 del Punisher una riga piena finisce
+     con un punto. Corretto nel generatore fermando il testo del §7.4.1 alla frase «Le armature,
+     i rinforzi…», che è una regola generale.
+- **Schema esteso:**
+  - `taglia`, `parata` { ravvicinata, distanza };
+  - `profili_alternativi` [{ condizione, parata?, ar? }];
+  - `attacco` { abilita, mani, danno, portata_q, condizione?, note } per Punisher e Guardie
+    Sacre;
+  - `mov`, `note_per_catalogo`;
+  - formule di danno con somme di dadi («1d6+1d4»).
+
+  In `regole.json`: `difese.parata_distanza_arma` = −8 (Giocatore §5.9), per la Parata a
+  distanza con un'arma.
+- **Calcolo:**
+  - la Parata con lo Scudo è già calcolata: Difese con l'equipaggiamento, modificatori del
+    §7.4.11, FOR insufficiente (§7.1.6), anche per i profili alternativi;
+  - la FOR mancante dello Scudo tocca solo Parate e attacchi con lo Scudo (non Agilità e
+    Difese, come per le armature);
+  - gli Scudi enormi tolgono 1 Q al MOV;
+  - due scudi imbracciati danno un avviso;
+  - l'attacco del Punisher (e la lama delle Guardie Sacre) compare fra le armi;
+  - le armi ravvicinate mostrano anche la Parata a distanza (−8 VA).
+- **Dubbi per Davide:** nessuna domanda aperta. Un errata di nomenclatura in
+  `docs/per-davide.md` (B).
 
 ### 3. Cataloghi corporativi
 

@@ -153,6 +153,9 @@ function riassuntoProfilo(o) {
   if (o.munizioni?.capacita) parti.push(`CC ${o.munizioni.capacita}`);
   if (o.modalita?.length) parti.push(o.modalita.join(' '));
   if (o.ar) parti.push(`AR ${o.ar.totale}`);
+  if (o.taglia) parti.push(o.taglia);
+  if (o.parata) parti.push(`Parata ${o.parata.ravvicinata >= 0 ? '+' : '−'}${Math.abs(o.parata.ravvicinata)} / ${o.parata.distanza >= 0 ? '+' : '−'}${Math.abs(o.parata.distanza)}`);
+  if (o.mov) parti.push(`MOV −${-o.mov} Q`);
   if (o.categoria) parti.push(o.categoria);
   if (o.for_richiesta) parti.push(`FOR ${o.for_richiesta}`);
   if (o.costo !== undefined) parti.push(`costo ${o.costo.toLocaleString('it-IT')}`);

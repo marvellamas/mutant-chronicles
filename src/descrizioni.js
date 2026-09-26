@@ -95,6 +95,7 @@ function tooltipOggetto(rif, dati) {
   if (o.modalita?.length) riga['Modalità'] = o.modalita.join(' ');
   if (o.mov) riga.MOV = `−${-o.mov} Q`;
   if (o.categoria) riga.Categoria = o.categoria;
+  if (o.taglia) riga.Taglia = o.taglia;
   if (o.ar) riga.AR = `${o.ar.totale}${o.ar.magica ? ` (${o.ar.magica} magica)` : ''}`;
   if (o.for_richiesta) riga.FOR = String(o.for_richiesta);
   if (o.inc) riga.INC = String(o.inc);
@@ -105,6 +106,12 @@ function tooltipOggetto(rif, dati) {
   const sezioni = [];
   if (o.nomi_alternativi?.length) sezioni.push({ etichetta: 'Comprende', testo: o.nomi_alternativi.join(', ') });
   for (const p of o.proprieta ?? []) sezioni.push({ etichetta: p.nome, testo: p.testo });
+  const conSegno = (n) => (n < 0 ? `−${-n}` : n > 0 ? `+${n}` : '0');
+  if (o.parata) riga.Parata = `${conSegno(o.parata.ravvicinata)} ravv. / ${conSegno(o.parata.distanza)} dist.`;
+  for (const a of o.profili_alternativi ?? []) {
+    sezioni.push({ etichetta: a.condizione.replace(/^./, (c) => c.toUpperCase()), testo: [a.ar ? `AR ${a.ar.totale}${a.ar.magica ? ` (${a.ar.magica} magica)` : ''}` : null, a.parata ? `Parata ${conSegno(a.parata.ravvicinata)} ravv. / ${conSegno(a.parata.distanza)} dist.` : null].filter(Boolean).join(', ') });
+  }
+  if (o.attacco) sezioni.push({ etichetta: 'Attacco', testo: `${o.attacco.abilita}, ${o.attacco.mani === 1 ? 'una mano' : 'due mani'}, danno ${o.attacco.danno}, portata ${o.attacco.portata_q} Q${o.attacco.condizione ? `, ${o.attacco.condizione}` : ''}.` });
   if (o.munizioni?.riferimento) sezioni.push({ etichetta: 'Munizione di riferimento', testo: o.munizioni.riferimento });
   if (o.munizioni?.ricarica) sezioni.push({ etichetta: 'Ricarica', testo: o.munizioni.ricarica });
   if (o.note_manuale) sezioni.push({ etichetta: null, testo: o.note_manuale });

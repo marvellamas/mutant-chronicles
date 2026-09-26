@@ -33,6 +33,7 @@ Sono le cose che hai già deciso a voce o che sono errori evidenti: l'app segue 
 - **Giocatore §8.6, Attivazione Tempestiva**: sta prima del §8.6.1, fuori da ogni sottosezione, con un'intestazione diversa dagli altri.
 - **Magia, sezione 1**: la frase "con i cinque Talenti liberi ordinari, Usufruitore più quattro miglioramenti consentono il livello massimo 15" confonde: i Talenti Liberi sono nove (§8.6) e Potenziale Mistico si prende fino a cinque volte. Riformulare come esempio, non come regola.
 - **Giocatore §3.5.3, Bersaglio Designato**: impaginazione rotta nel PDF (il nome del Talento finisce dentro una frase).
+- **Armamenti §7.4.1 e §7.4.2, Scudo Punisher**: la scheda del §7.4.1 dice «Taglia Grande», il catalogo del §7.4.2 e la scheda del §7.4.5 dicono «Medio». Il manuale stesso dice che Medio e Grande sono denominazioni equivalenti, ma conviene usare una sola parola.
 - **Giocatore §3.2**: dice che ogni Classe ha due Talenti per Specializzazione e uno Comune; l'Esploratore non li assegnava (vedi sopra).
 
 ## C. Da rileggere (testi scritti da noi, non dal manuale)
@@ -43,7 +44,7 @@ Sono le cose che hai già deciso a voce o che sono errori evidenti: l'app segue 
 ## D. Manuali che l'app aspetta
 
 - Manuale degli Equipaggiamenti e Manuale dei Veicoli (in stesura): diversi Talenti li citano. Quando esistono, ce li passi come PDF nella cartella `Manuali/`.
-- Manuale degli Armamenti v0.50: lo stiamo estraendo a lotti (stato in `docs/equipaggiamento-lotti.md`: fatti armi ravvicinate e a distanza commerciali, armature civili). Se pubblichi una v0.51 prima che abbiamo finito, avvisaci: le tabelle cambiate vanno ri-estratte.
+- Manuale degli Armamenti v0.50: lo stiamo estraendo a lotti (stato in `docs/equipaggiamento-lotti.md`: fatti armi ravvicinate e a distanza commerciali, armature civili, scudi). Se pubblichi una v0.51 prima che abbiamo finito, avvisaci: le tabelle cambiate vanno ri-estratte.
 
 ## Come ci rispondi
 

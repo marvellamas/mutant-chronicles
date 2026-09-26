@@ -1,0 +1,302 @@
+7.4 Scudi e protezioni
+Scudo Armatura passiva
+Piccolo o leggero +1
+Medio o grande +2
+Enorme +3
+La protezione passiva dello Scudo si aggiunge all’AR dell’armatura mentre è impugnato e utilizzabile. La Parata
+attiva usa Difese e segue il Capitolo 5 del Manuale del Giocatore. Le proprietà del danno, le Contromisure e il
+loro ordine di applicazione sono nel §5.24 dello stesso manuale; le proprietà perforanti riducono l’AR soltanto
+quando lo dichiarano espressamente.
+Tutti gli scudi del catalogo richiedono una mano. Trasportare lo scudo sulla schiena non concede AR; una mano
+occupata non può essere usata contemporaneamente per l’impugnatura di un’arma a due mani. Due scudi non
+sommano la protezione: si utilizza soltanto il contributo maggiore. Nessun modello concede automaticamente
+Copertura o protezione agli alleati.
+Uno Scudo enorme impone −1 Q al MOV mentre è impugnato: la riduzione si applica a Passo, Corsa e Scatto e si
+somma alle penalità di armatura e arma. Soddisfare il requisito di FOR non la elimina. Gli altri scudi non
+impongono una penalità propria al MOV, salvo indicazione della scheda.
+Il requisito FOR segue il §7.1.6 per le Parate e gli attacchi effettuati con lo Scudo. PI e PS Integrità restano
+separati da quelli dell’armatura. La Struttura robusta, quando presente, è già compresa nei PI della scheda; il
+deterioramento segue il §7.2.1.
+Tonfa e Scudi
+Gli Scudi ordinari concedono AR passiva e non hanno un bonus alla Parata ravvicinata; la loro Parata a distanza
+ha −4 VA. Il confronto seguente esclude Talenti e proprietà specialistiche. Una Parata ordinaria riuscita dimezza
+per eccesso il danno, poi si applica l’AR complessiva. L’AR dello Scudo resta applicabile senza Parata, con
+Parata fallita o parando con un’altra arma, purché lo Scudo sia impugnato e utilizzabile.
+AR passiva
+Equipaggiamento Parata ravvicinata Parata a distanza
+aggiuntiva
+−6 VA: −8 arma, +2
+Tonfa 0 +2 VA
+Difensiva
+Scudo piccolo o leggero +1 0 −4 VA
+Scudo medio o grande +2 0 −4 VA
+Scudo enorme +3 0 −4 VA
+Con Tonfa e Scudo si sceglie l’oggetto con cui effettuare ciascuna Parata. Il +2 del Tonfa vale soltanto parando
+con il Tonfa; il modificatore dello Scudo vale soltanto parando con lo Scudo. L’AR passiva dello Scudo rimane
+applicabile in entrambi i casi. Restano i benefici pertinenti dei Talenti e degli Scudi Capolavoro. I bonus di Scudo
+Magico delle Guardie Sacre non si trasferiscono al Tonfa (§7.4.10).
+Le protezioni indicano AR totale ed eventuale componente magica separata. Per esempio «AR totale 6, di cui 1
+magica» assorbe 6 danni Naturali o Magici e soltanto 1 danno Etereo. Le Contromisure, come Ignifugo 2,
+proteggono dagli effetti aggiuntivi secondo il §5.24 e non sottraggono ulteriori PV al danno. Riflettente è privo di
+valore numerico e neutralizza invece il dimezzamento dell’Armatura dovuto a Laser, alle condizioni del §5.24;
+Dissipante X si applica separatamente all’effetto Plasma del Laser.
+7.4.1 Scudo Punisher
+Modello Taglia Mani AR AR magica FOR PI
+Scudo Punisher Grande 1 +2 0 5 8
+Qualità PS Integrità Reperibilità Costo
+Rara 14 Molto rara 6.000
+Difensiva 1, ravvicinata e a distanza. Concede +1 VA alle Parate effettuate con lo Scudo Punisher: +1 VA
+ravvicinata e −3 VA complessivo a distanza, prima degli altri modificatori. Restano la normale Azione di Parata,
+il dimezzamento per eccesso del danno con successo ordinario e l’AR passiva +2 mentre lo Scudo è impugnato e
+utilizzabile. Gli 8 PI sono il valore finale del profilo.
+Attacco: Armi da Guerra, una mano, 1d6+1 danni Naturali, portata 1 Q. Sono compatibili le Manovre generali
+pertinenti e Stordire. Lo Scudo non concede AR magica né Protezione occulta. Con Marte, il totale è AR 8, di cui
+1 magica. Per usare la Carabina Punisher a due mani occorre prima riporre lo Scudo, pagando le normali Azioni.
+Le armature, i rinforzi e le proprietà specialistiche delle protezioni sono raccolti nel §7.11. Le regole di Integrità
+del §7.2.1 restano applicabili a ogni oggetto separatamente.
+7.4.2 Catalogo generale degli scudi
+Il catalogo comprende 26 scudi Standard commerciali e corporativi. Ogni modello ha un profilo fisso; le taglie
+Piccolo o Leggero e Medio o Grande sono denominazioni equivalenti. Le configurazioni Migliorate e Potenziate
+saranno integrate successivamente. La Rainy Dayer mantiene la propria scheda multifunzione nel §7.14.6.
+Protezione requisiti e Integrità
+AR indica il contributo aggiuntivo dello Scudo. Tutti richiedono una mano. Il trattino nella colonna MOV indica
+nessuna penalità propria; −1 Q si applica mentre lo Scudo enorme è impugnato. La componente magica passiva è
+0: soltanto l’attivazione delle Guardie Sacre aggiunge AR magica.
+Catalogo e modello Taglia AR FOR PI MOV
+Commerciale — Scudo piccolo Piccolo +1 3 4 —
+Commerciale — Scudo medio Medio +2 5 6 —
+Commerciale — Scudo enorme Enorme +3 7 8 −1 Q
+Bauhaus — Scudo d’ordinanza BLEU Medio +2 5 6 —
+Bauhaus — Scudo d’assalto Blitzer Piccolo +1 3 6 —
+Bauhaus — Scudo da breccia dei Dragoni Enorme +3 7 10 −1 Q
+Bauhaus — Scudo delle Guardie Ducali Medio +2 5 8 —
+Alleanza — Scudo compatto ASA Piccolo +1 3 4 —
+Alleanza — Scudo Punisher Medio +2 5 8 —
+Alleanza — Scudo da sfondamento Bastion Enorme +3 7 10 −1 Q
+Capitol — Scudo antisommossa CSS Medio +2 5 6 —
+Capitol — Scudo tattico Alpha Medio +2 5 6 —
+Capitol — Scudo da breccia Free Marines Enorme +3 7 10 −1 Q
+Cybertronic — Scudo della Sicurezza Medio +2 5 6 —
+Cybertronic — Scudo d’assalto Chasseur Medio +2 5 8 —
+Cybertronic — Scudo pesante Reaver Enorme +3 7 10 −1 Q
+Catalogo e modello Taglia AR FOR PI MOV
+Imperial — Scudo da trincea Trencher Enorme +3 7 10 −1 Q
+Imperial — Scudo d’assalto dei Clan Piccolo +1 3 6 —
+Imperial — Scudo della Young Guard Medio +2 5 8 —
+Mishima — Scudo da campo Ashigaru Medio +2 5 6 —
+Mishima — Scudo da duello Samurai Piccolo +1 3 6 —
+Mishima — Scudo pesante Hatamoto Enorme +3 7 10 −1 Q
+Fratellanza — Scudo del Pellegrino Piccolo +1 3 6 —
+Fratellanza — Scudo della Sentinella Medio +2 5 6 —
+Fratellanza — Scudo dei Sacri Guerrieri Enorme +3 7 10 −1 Q
+Fratellanza — Scudo delle Guardie Sacre Medio +2 5 6 —
+Qualità reperibilità e costi
+La Qualità determina la PS Integrità; Reperibilità e costo sono dati distinti. Il prezzo dello scudo non comprende
+l’armatura o altri oggetti separati. Le riserve e le componenti integrate comprese nel modello sono indicate nella
+sua scheda.
+Catalogo e modello Qualità PS INT REP Costo
+Commerciale — Scudo piccolo Comune 10 CO 500
+Commerciale — Scudo medio Comune 10 NC 1.500
+Commerciale — Scudo enorme Comune 10 RA 3.000
+Bauhaus — Scudo d’ordinanza BLEU Non comune 12 NC 2.500
+Bauhaus — Scudo d’assalto Blitzer Non comune 12 RA 2.500
+Bauhaus — Scudo da breccia dei Dragoni Non comune 12 RA 5.500
+Bauhaus — Scudo delle Guardie Ducali Rara 14 RA 4.500
+Alleanza — Scudo compatto ASA Non comune 12 RA 2.500
+Alleanza — Scudo Punisher Rara 14 MR 6.000
+Alleanza — Scudo da sfondamento Bastion Rara 14 MR 7.000
+Capitol — Scudo antisommossa CSS Comune 10 NC 2.000
+Capitol — Scudo tattico Alpha Non comune 12 RA 3.500
+Capitol — Scudo da breccia Free Marines Non comune 12 RA 5.500
+Cybertronic — Scudo della Sicurezza Non comune 12 NC 3.000
+Cybertronic — Scudo d’assalto Chasseur Rara 14 RA 5.500
+Cybertronic — Scudo pesante Reaver Rara 14 MR 8.000
+Imperial — Scudo da trincea Trencher Non comune 12 NC 4.500
+Imperial — Scudo d’assalto dei Clan Non comune 12 NC 2.500
+Imperial — Scudo della Young Guard Rara 14 RA 4.500
+Mishima — Scudo da campo Ashigaru Comune 10 NC 1.800
+Mishima — Scudo da duello Samurai Non comune 12 RA 2.500
+Catalogo e modello Qualità PS INT REP Costo
+Mishima — Scudo pesante Hatamoto Rara 14 RA 6.500
+Fratellanza — Scudo del Pellegrino Non comune 12 RA 2.500
+Fratellanza — Scudo della Sentinella Rara 14 RA 4.000
+Fratellanza — Scudo dei Sacri Guerrieri Rara 14 MR 7.000
+Fratellanza — Scudo delle Guardie Sacre Rara 14 MR 18.000
+7.4.3 Proprietà comuni e sovrapposizioni
+Struttura robusta
+Aggiunge 2 PI massimi, già compresi nei valori del catalogo. Il beneficio non aumenta la PS Integrità e non va
+conteggiato di nuovo.
+Difensiva 1
+Negli scudi che la indicano come ravvicinata, concede +1 VA esclusivamente alle Parate ravvicinate effettuate
+con quello Scudo. Il Punisher la applica espressamente sia alle Parate ravvicinate sia a quelle a distanza. Il bonus
+non si trasferisce a una Parata effettuata con un’altra arma.
+Contenimento 1
+Concede +1 VA alle Parate ravvicinate effettuate con lo Scudo contro attacchi di Corpo a corpo. Non si applica
+contro Armi da Mischia o da Guerra e non concede bonus alle Prove per afferrare o Immobilizzare.
+Intercettazione balistica 1
+Riduce di 1 la penalità alla Parata contro attacchi a distanza: il −4 dello Scudo diventa −3 VA. Non aumenta l’AR,
+non modifica la Parata ravvicinata e non rende parabile un attacco che normalmente non lo è.
+Antiesplosione 1
+Contro danni Naturali o Magici da esplosione aggiunge 1 all’AR applicabile: su uno Scudo enorme il contributo
+passa da +3 a +4. Non protegge dai danni Eterei. Antiesplosione di scudo e armatura non si sommano; si usa
+soltanto il valore maggiore, mentre le rispettive AR ordinarie continuano a sommarsi.
+Stabile 1
+Concede +1 VA alle Prove di Forza o Destrezza richieste per resistere a Sbilanciante mentre lo Scudo è
+impugnato e utilizzabile. Più proprietà Stabile applicabili alla stessa Prova, comprese quelle di scudo e armatura,
+usano soltanto il valore maggiore. Non modifica le Prove Salvezza e non annulla Sbalzante.
+Manutenzione semplice
+Concede +1 VA alle Prove di Tecnologia per riparare questo Scudo, disponendo di strumenti e materiali
+necessari. Non riduce automaticamente tempi o costi e non ripristina PI senza una riparazione.
+Ingombrante
+Gli Scudi enormi impongono −1 Q a Passo, Corsa e Scatto mentre sono impugnati. La penalità si somma a quelle
+pertinenti di armatura e arma e non viene eliminata soddisfacendo il requisito di FOR.
+SIN degli scudi
+SIN 1 concede +1 VA e SIN 2 concede +2 VA alle Prove di Parata effettuate con lo Scudo, ravvicinate e a
+distanza. Il beneficio richiede un Innesto di Interfaccia Neurale compatibile e attivo; gli innesti Cybertronic si
+abbinano automaticamente, quelli di altre marche seguono la configurazione con Tecnologia del §7.15.1. Senza
+collegamento lo Scudo mantiene AR e funzionamento ordinari, ma non il bonus SIN.
+Si applica un solo SIN alla stessa Prova, scegliendo il maggiore pertinente fino a +2. Il SIN dell’armatura
+riservato a Schivare non si trasferisce alla Parata. Il SIN dello Scudo non aumenta AR, danno o Schivata e non
+consuma UMN aggiuntivi per l’oggetto collegato; gli eventuali costi dell’innesto seguono il catalogo cibernetico.
+Le decorazioni, i simboli e le livree non aggiungono proprietà. Scudi con la stessa combinazione di proprietà
+usano le medesime regole anche quando appartengono a cataloghi differenti.
+7.4.4 Scudi Bauhaus
+Scudo d’ordinanza BLEU
+Scudo Medio con Contenimento 1, destinato agli interventi della polizia corporativa. Parata ravvicinata +1 VA
+contro Corpo a corpo e 0 contro le altre armi; Parata a distanza −4 VA.
+Scudo d’assalto Blitzer
+Scudo Piccolo con Struttura robusta e Difensiva 1 ravvicinata; 6 PI comprendono la robustezza. Parata ravvicinata
++1 VA e Parata a distanza −4 VA. Privilegia la difesa attiva conservando AR passiva +1.
+Scudo da breccia dei Dragoni
+Scudo Enorme per operatori appiedati, con Struttura robusta, Antiesplosione 1 e Ingombrante. Ha 10 PI, AR +3
+ordinaria e +4 contro esplosioni pertinenti; mantiene Parata ravvicinata 0, a distanza −4 VA e MOV −1 Q. È una
+dotazione separata dalla corazza.
+Scudo delle Guardie Ducali
+Scudo Medio con Struttura robusta e Difensiva 1 ravvicinata; 8 PI comprendono la robustezza. Parata ravvicinata
++1 VA e a distanza −4 VA. La Qualità Rara porta la PS Integrità a 14; stemmi e livree non modificano il profilo.
+7.4.5 Scudi dell’Alleanza
+Scudo compatto ASA
+Scudo Piccolo Ripiegabile. Aprire o richiudere lo Scudo già pronto richiede 1 AzP. Chiuso può essere trasportato
+sotto un soprabito adeguato senza essere evidente a una semplice osservazione; una perquisizione può
+individuarlo. Chiuso non concede AR e non consente Parate. Aperto occupa una mano, è riconoscibile e fornisce
+AR +1, Parata ravvicinata 0 e a distanza −4 VA. La possibilità di occultarlo non concede un bonus a Furtività.
+Scudo Punisher
+Modello Medio con 8 PI e Difensiva 1 ravvicinata e a distanza: Parata ravvicinata +1 VA, a distanza −3 VA, AR
+passiva +2. La scheda completa, compreso l’impiego offensivo, è nel §7.4.1. È acquistabile separatamente dalla
+combinazione Punisher e non richiede un’interfaccia per il proprio beneficio.
+Scudo da sfondamento Bastion
+Scudo Enorme con Struttura robusta, Stabile 1 e Ingombrante. Ha 10 PI, AR +3 e MOV −1 Q; Parata ravvicinata
+0 e a distanza −4 VA. È destinato agli operatori che sostengono l’avanzata negli assalti a postazioni fortificate.
+Non concede automaticamente Copertura o protezione ad altri personaggi.
+Il modello ASA è Raro; Punisher e Bastion sono Molto rari. Nessuno dei tre ha AR magica o Protezione occulta
+propria.
+7.4.6 Scudi Capitol
+Scudo antisommossa CSS
+Scudo Medio con Contenimento 1: Parata ravvicinata +1 VA contro Corpo a corpo, altrimenti 0; a distanza −4
+VA. La Qualità Comune corrisponde a PS Integrità 10.
+Scudo tattico Alpha
+Scudo Medio con Intercettazione balistica 1: Parata ravvicinata 0 e a distanza −3 VA. È destinato agli interventi
+armati in ambienti urbani e alla liberazione di ostaggi; non aumenta l’AR e non permette di parare attacchi
+normalmente non parabili.
+Scudo da breccia Free Marines
+Scudo Enorme con Struttura robusta, Antiesplosione 1 e Ingombrante. Ha 10 PI, AR +3 ordinaria e +4 contro
+esplosioni pertinenti, MOV −1 Q, Parata ravvicinata 0 e a distanza −4 VA. Condivide il profilo difensivo dello
+Scudo da breccia dei Dragoni.
+Per Rangers, Sea Lions e Martian Banshees gli scudi sono dotazioni occasionali. La mano occupata impedisce
+l’impiego contemporaneo di un’arma a due mani; l’appartenenza al reparto non elimina questo limite.
+7.4.7 Scudi Cybertronic
+Scudo della Sicurezza
+Scudo Medio con SIN 1. Collegato concede Parata ravvicinata +1 VA e a distanza −3 VA. Senza SIN mantiene
+AR +2 e le Parate ordinarie: 0 ravvicinata, −4 a distanza. È destinato a pattuglie, controllo degli accessi e
+protezione delle installazioni.
+Scudo d’assalto Chasseur
+Scudo Medio con Struttura robusta e SIN 2; 8 PI comprendono la robustezza. Collegato concede Parata
+ravvicinata +2 VA e a distanza −2 VA. Senza SIN mantiene AR +2, Parata ravvicinata 0 e a distanza −4 VA.
+Scudo pesante Reaver
+Scudo Enorme con Struttura robusta, SIN 1 e Ingombrante. Ha 10 PI, AR +3 e MOV −1 Q. Collegato concede
+Parata ravvicinata +1 VA e a distanza −3 VA; senza SIN i modificatori sono 0 e −4. La penalità al MOV resta
+anche con SIN attivo e FOR sufficiente.
+I modelli sono Standard a profilo fisso. AR magica 0; il collegamento non aumenta protezione passiva o numero
+di Azioni. Le condizioni di abbinamento e di cumulo del SIN sono nel §7.4.3 e nel §7.15.1.
+7.4.8 Scudi Imperial
+Scudo da trincea Trencher
+Scudo Enorme con Struttura robusta, Manutenzione semplice e Ingombrante. Ha 10 PI, AR +3 e MOV −1 Q;
+Parata ravvicinata 0 e a distanza −4 VA. La manutenzione richiede strumenti e materiali e non trasforma lo Scudo
+in una barriera autonoma.
+Scudo d’assalto dei Clan
+Scudo Piccolo con Struttura robusta e Difensiva 1 ravvicinata; 6 PI comprendono la robustezza. Parata ravvicinata
++1 VA e a distanza −4 VA. Condivide il profilo Blitzer; decorazioni, incisioni e simboli non conferiscono
+proprietà mistiche.
+Scudo della Young Guard
+Scudo Medio con Struttura robusta e Difensiva 1 ravvicinata; 8 PI comprendono la robustezza. Parata ravvicinata
++1 VA e a distanza −4 VA. Il profilo difensivo coincide con quello delle Guardie Ducali Bauhaus.
+Rainy Dayer e cavalieri Fenris
+La Rainy Dayer degli agenti ISC mantiene la propria configurazione aperta con AR +1 e le modalità di
+impugnatura e tiro del §7.14.6. Non costituisce un nuovo modello nella tabella dei 26 scudi. Per i cavalieri delle
+Fenris Bike gli scudi sono dotazioni opzionali: l’impiego durante la guida deve rispettare i comandi del mezzo e
+la disponibilità effettiva di una mano libera. Le schede dei mezzi saranno integrate successivamente.
+7.4.9 Scudi Mishima
+Scudo da campo Ashigaru
+Scudo Medio con Manutenzione semplice: +1 VA a Tecnologia per ripararlo con strumenti e materiali adatti. Ha
+AR +2 e 6 PI; Parata ravvicinata 0 e a distanza −4 VA. La proprietà non riduce automaticamente tempi o costi di
+riparazione.
+Scudo da duello Samurai
+Scudo Piccolo con Struttura robusta e Difensiva 1 ravvicinata; 6 PI comprendono la robustezza. Parata ravvicinata
++1 VA e a distanza −4 VA. Condivide il profilo degli scudi Blitzer e dei Clan ed è destinato a chi usa un’arma con
+la mano rimasta libera.
+Scudo pesante Hatamoto
+Scudo Enorme con Struttura robusta, Stabile 1 e Ingombrante. Ha 10 PI, AR +3 e MOV −1 Q; Parata ravvicinata
+0 e a distanza −4 VA. Il profilo difensivo coincide con il Bastion; scudo e armatura non sommano più proprietà
+Stabile.
+Per Ombre e Portatori di Morte gli scudi sono dotazioni occasionali. Powersuit, Shoa Ace Custom e Demonhunter
+devono disporre di una mano libera; Assistenza muscolare non soddisfa il requisito di FOR dello Scudo e non ne
+elimina la penalità al MOV. Le eventuali protezioni integrate negli esoscheletri saranno descritte nelle rispettive
+schede.
+7.4.10 Scudi della Fratellanza
+Scudo del Pellegrino
+Scudo Piccolo con Struttura robusta e Difensiva 1 ravvicinata; 6 PI comprendono la robustezza. Parata ravvicinata
++1 VA e a distanza −4 VA. Non possiede AR magica o proprietà aggiuntive dovute alle decorazioni.
+Scudo della Sentinella
+Scudo Medio con Intercettazione balistica 1: Parata ravvicinata 0 e a distanza −3 VA. Ha 6 PI e Qualità Rara, PS
+Integrità 14; il beneficio non rende parabile un attacco che normalmente non lo è.
+Scudo dei Sacri Guerrieri
+Scudo Enorme con Struttura robusta, Stabile 1 e Ingombrante. Ha 10 PI, AR +3 e MOV −1 Q; Parata ravvicinata
+0 e a distanza −4 VA. Il profilo coincide con il Bastion. È una protezione ordinaria distinta dallo Scudo delle
+Guardie Sacre.
+Scudo delle Guardie Sacre
+Scudo Medio con AR passiva +2, AR magica 0 a riposo, FOR 5 e 6 PI. Non possiede Difensiva passiva, Struttura
+robusta o Protezione occulta aggiuntive. Comprende la Lama retrattile e la riserva di Scudo Magico del §7.1.9.
+Estrarre o ritrarre la lama richiede 1 AzP. Con lama estratta gli attacchi usano Armi da Guerra, una mano, portata
+1 Q e danno 1d6+1d4 Naturale; la lama non consuma cariche per colpo e non richiede Sintonizzazione. I requisiti
+e le regole offensive complete sono nel §7.1.9.
+Dopo Sintonizzazione, 1 AzP e 1 PM della riserva attivano Scudo Magico per 5 Round: il contributo dello Scudo
+diventa AR +4, di cui 2 magica, e concede +2 VA alla Parata ravvicinata e +1 VA a quella a distanza, che passa a
+−3 VA complessivo. I bonus alla Prova valgono soltanto parando con lo Scudo; l’AR rimane passiva nelle
+normali condizioni d’impiego.
+L’effetto termina alla fine del Round di attivazione +5. Una nuova attivazione rinnova la durata senza sommare i
+benefici. La riserva è un Chroma Rosso da 5 PM; la potenza è Rara e il costo totale di Sintonizzazione è 3, riserva
+compresa. Ricarica e attivazione seguono il §7.5.1. La Qualità costruttiva Rara determina PS Integrità 14 ed è
+distinta dalla potenza mistica.
+7.4.11 Modificatori alle Parate
+I valori seguenti sono i modificatori propri dello Scudo, prima di armatura, FOR insufficiente e altri effetti. I
+benefici valgono soltanto parando con l’oggetto indicato. Il SIN richiede collegamento attivo.
+Modelli o condizione Ravvicinata A distanza
+Commerciali 0 −4 VA
+BLEU e CSS +1 VA contro Corpo a corpo; altrimenti 0 −4 VA
+Blitzer, Clan, Samurai e Pellegrino +1 VA −4 VA
+Guardie Ducali e Young Guard +1 VA −4 VA
+Dragoni e Free Marines 0 −4 VA
+Compatto ASA aperto 0 −4 VA
+Punisher +1 VA −3 VA
+Bastion, Hatamoto e Sacri Guerrieri 0 −4 VA
+Alpha e Sentinella 0 −3 VA
+Sicurezza Cybertronic con SIN 1 +1 VA −3 VA
+Chasseur con SIN 2 +2 VA −2 VA
+Reaver con SIN 1 +1 VA −3 VA
+Scudi Cybertronic senza SIN 0 −4 VA
+Trencher e Ashigaru 0 −4 VA
+Guardie Sacre a riposo 0 −4 VA
+Guardie Sacre con Scudo Magico +2 VA −3 VA
+Esempio: armatura AR 3 e Scudo Medio AR +2 forniscono AR totale 5. Contro 10 danni, senza Parata riuscita
+passano 5 danni. Con una Parata ordinaria riuscita il danno viene dimezzato a 5, poi l’AR lo assorbe interamente.
+Contro danni Eterei si applica soltanto l’eventuale componente magica della protezione.

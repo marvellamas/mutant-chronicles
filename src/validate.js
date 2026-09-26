@@ -209,6 +209,7 @@ function validaRegole(r, err) {
     if (!isTesto(x?.nome)) err(F, `affaticamento.stati[${i}].nome`, 'nome mancante');
     if (!isIntero(x?.penalita) || x.penalita > 0) err(F, `affaticamento.stati[${i}].penalita`, 'penalità intera ≤ 0 mancante');
   });
+  if (!isIntero(r.difese?.parata_distanza_arma) || r.difese.parata_distanza_arma > 0) err(F, 'difese.parata_distanza_arma', 'penalità intera ≤ 0 mancante (Giocatore §5.9)');
   if (!isIntero(r.punti_eroe?.distintivi_per_punto_eroe) || r.punti_eroe.distintivi_per_punto_eroe < 1) {
     err(F, 'punti_eroe.distintivi_per_punto_eroe', 'numero intero ≥ 1 mancante (§1.8.3)');
   }
@@ -595,7 +596,8 @@ function validaClassi(c, nomiAddestramenti, nomiAbilita, macrofamiglie, regole, 
 // ---------------------------------------------------------------------------
 // Equipaggiamento (data/equipaggiamento/, Manuale degli Armamenti)
 
-const DADI = /^(\d+d\d+([+-]\d+)?|\d+)$/;
+// formule di danno: «1d6+1», «2», anche somme di dadi come «1d6+1d4» (lama delle Guardie Sacre)
+const DADI = /^(\d+d\d+(\+\d+d\d+)*([+-]\d+)?|\d+)$/;
 const EFFETTI_PROPRIETA = ['parata_va'];
 const CAMPI_PENALITA = ['attacchi_distanza', 'attacchi_ravvicinati', 'agilita', 'movimento_q', 'lancio_potere'];
 
@@ -716,6 +718,33 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
           err(F, `${k}.categoria`, `categoria "${o.categoria}" senza penalità in «categorie» e senza «penalita» proprie`);
         }
         if (o.penalita !== undefined) validaPenalita(F, `${k}.penalita`, o.penalita, err);
+      }
+      if (o.tipo === 'scudo') {
+        const parata = (v, chiave) => {
+          if (!isOggetto(v) || !isIntero(v.ravvicinata) || !isIntero(v.distanza)) err(F, chiave, 'serve { ravvicinata, distanza } con modificatori interi (§7.4.11)');
+        };
+        parata(o.parata, `${k}.parata`);
+        if (o.mov !== undefined && !(isIntero(o.mov) && o.mov <= 0)) err(F, `${k}.mov`, 'penalità MOV: intero ≤ 0');
+        if (o.profili_alternativi !== undefined) {
+          if (!Array.isArray(o.profili_alternativi)) err(F, `${k}.profili_alternativi`, 'deve essere un elenco');
+          else o.profili_alternativi.forEach((a, j) => {
+            const kk = `${k}.profili_alternativi[${j}]`;
+            if (!isTesto(a?.condizione)) err(F, `${kk}.condizione`, 'testo mancante');
+            if (a?.parata !== undefined) parata(a.parata, `${kk}.parata`);
+            if (a?.ar !== undefined && !(isOggetto(a.ar) && isIntero(a.ar.totale) && isIntero(a.ar.magica ?? 0))) err(F, `${kk}.ar`, 'serve { totale, magica }');
+            if (a?.parata === undefined && a?.ar === undefined) err(F, kk, 'un profilo alternativo cambia la Parata o l’AR');
+          });
+        }
+        if (o.attacco !== undefined) {
+          const a = o.attacco;
+          if (!isOggetto(a)) err(F, `${k}.attacco`, 'serve { abilita, mani, danno, portata_q }');
+          else {
+            if (!nomiAbilita.includes(a.abilita)) err(F, `${k}.attacco.abilita`, `Abilità "${a.abilita}" inesistente`);
+            if (!DADI.test(String(a.danno))) err(F, `${k}.attacco.danno`, `"${a.danno}" non è una formula di dadi`);
+            if (![1, 2].includes(a.mani)) err(F, `${k}.attacco.mani`, 'deve essere 1 o 2');
+            numeroOpz(F, `${k}.attacco.portata_q`, a.portata_q, 1, 99, err);
+          }
+        }
       }
     });
   }

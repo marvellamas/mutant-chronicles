@@ -34,6 +34,11 @@
       "id": "armature",
       "file": "armature.json",
       "descrizione": "Armature commerciali civili (§7.11.3)"
+    },
+    {
+      "id": "scudi",
+      "file": "scudi.json",
+      "descrizione": "Scudi commerciali e corporativi (§7.4)"
     }
   ]
 }

@@ -272,15 +272,24 @@ function tabCombattimento(ctx, d) {
 
     sezione('Protezioni', d.protezioniCalcolate.length
       ? h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },
-        h('thead', {}, h('tr', {}, ['Protezione', 'AR', 'Categoria', 'Penalità', 'FOR'].map((c) => h('th', {}, c)))),
-        h('tbody', {}, d.protezioniCalcolate.map((p) => h('tr', {},
-          h('th', { scope: 'row' }, p.nome),
-          h('td', { class: 'forte' }, p.ar ? `${p.ar.totale}${p.ar.magica ? ` (${p.ar.magica} magica)` : ''}` : '—'),
-          h('td', {}, p.categoria ?? '—'),
-          h('td', {}, testoPenalitaTab(p.penalita)),
-          h('td', {}, p.forRichiesta ? `${p.forRichiesta}${p.forMancante ? ` (−${p.forMancante} VA)` : ''}` : '—'))))))
+        h('thead', {}, h('tr', {}, ['Protezione', 'AR', 'Categoria o taglia', 'Parata', 'Penalità', 'FOR'].map((c) => h('th', {}, c)))),
+        h('tbody', {}, d.protezioniCalcolate.flatMap((p) => [
+          h('tr', {},
+            h('th', { scope: 'row' }, p.nome),
+            h('td', { class: 'forte' }, testoAr(p.ar)),
+            h('td', {}, p.categoria ?? p.taglia ?? '—'),
+            h('td', { title: p.parata ? `Difese ${p.parata.difese} + modificatori dello Scudo ${segno(p.parata.modificatori.ravvicinata)} / ${segno(p.parata.modificatori.distanza)} (§7.4.11)` : null },
+              p.parata ? `${numero(p.parata.ravvicinata)} ravv. · ${numero(p.parata.distanza)} dist.` : '—'),
+            h('td', {}, testoPenalitaTab({ ...p.penalita, movimento_q: (p.penalita?.movimento_q ?? 0) + (p.mov ?? 0) || undefined })),
+            h('td', {}, p.forRichiesta ? `${p.forRichiesta}${p.forMancante ? ` (−${p.forMancante} VA${p.tipo === 'scudo' ? ' a Parate e attacchi con lo Scudo' : ''})` : ''}` : '—')),
+          ...p.alternative.map((a) => h('tr', { class: 'alternativa' },
+            h('td', { colspan: 6 }, h('small', {}, `↳ ${a.condizione}: `,
+              [a.ar ? `AR ${testoAr(a.ar)}` : null, a.parata ? `Parata ${numero(a.parata.ravvicinata)} ravv. · ${numero(a.parata.distanza)} dist.` : null].filter(Boolean).join(' · '))))),
+          p.proprieta.length ? h('tr', { class: 'alternativa' }, h('td', { colspan: 6 },
+            h('span', { class: 'proprieta-arma' }, p.proprieta.map((x) => h('span', { class: 'etichetta', title: x.testo }, x.nome))))) : null,
+        ]))))
       : h('p', { class: 'vuoto' }, 'Nessuna protezione indossata o imbracciata.'),
-      d.protezioniCalcolate.length ? h('p', { class: 'nota' }, 'Agilità vale per Schivata e Prove fisiche di Atletica e Furtività ostacolate (già nel VA di quelle Abilità, colonna Equip); non per la Parata. La penalità MOV si sottrae una volta al budget di movimento (§7.11.1).') : null),
+      d.protezioniCalcolate.length ? h('p', { class: 'nota' }, 'Agilità vale per Schivata e Prove fisiche di Atletica e Furtività ostacolate (già nel VA di quelle Abilità, colonna Equip); non per la Parata. La penalità MOV si sottrae una volta al budget di movimento (§7.11.1). La Parata con lo Scudo è già calcolata: Difese con l’equipaggiamento, modificatori propri dello Scudo (§7.4.11) e FOR insufficiente (§7.1.6). L’AR dello Scudo vale anche senza Parata, purché sia imbracciato; due scudi non si sommano (§7.4).') : null),
 
     sezione('Ferite (§5.14)',
       h('p', { class: 'nota' }, 'Ogni nuova Ferita fa avanzare di un gradino. La penalità è cumulativa a VA e Prove Salvezza.'),
@@ -323,6 +332,8 @@ function testoPenalitaTab(pen = {}) {
   return parti.join(' · ') || 'nessuna';
 }
 
+const testoAr = (ar) => (ar ? `${ar.totale}${ar.magica ? ` (${ar.magica} magica)` : ''}` : '—');
+
 /** Numero con il segno meno tipografico, senza «+» (per i VA). */
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
 
@@ -339,7 +350,8 @@ function schedaArma(ctx, a) {
       a.portataQ ? h('p', {}, h('span', { class: 'sigla' }, 'Portata '), `${a.portataQ} Q`) : null,
       a.gittataQ ? h('p', {}, h('span', { class: 'sigla' }, 'Gittata '), `${a.gittataQ} Q`, a.gittataFormula ? h('small', { class: 'sigla' }, ` (${a.gittataFormula})`) : null) : null,
       a.inc ? h('p', {}, h('span', { class: 'sigla', title: 'Affidabilità (tabella di Inceppamento)' }, 'INC '), String(a.inc)) : null,
-      a.parata ? h('p', {}, h('span', { class: 'sigla' }, 'Parata '), h('strong', {}, numero(a.parata.va))) : null),
+      a.parata ? h('p', {}, h('span', { class: 'sigla' }, 'Parata '), h('strong', {}, numero(a.parata.va)),
+        a.parata.distanza !== null && a.parata.distanza !== undefined ? h('small', { class: 'sigla', title: 'Parata a distanza con un’arma: −8 VA (Giocatore §5.9)' }, ` · a distanza ${numero(a.parata.distanza)}`) : null) : null),
     a.componenti.length ? h('p', { class: 'nota' }, a.componenti.map((c) => `${c.nome} ${segno(c.valore)}`).join(' · '),
       a.bonusDanno ? ` · danno +${a.bonusDanno} (${a.specializzazione})` : null) : null,
     a.modalita.length ? h('p', { class: 'proprieta-arma' }, h('span', { class: 'sigla' }, 'Modalità '),

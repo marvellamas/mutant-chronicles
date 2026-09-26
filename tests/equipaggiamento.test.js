@@ -17,7 +17,7 @@ const voce = (uid, rif, stato, extra = {}) => ({ uid, rif, stato, quantita: 1, n
 const scheda = (creazione, equipaggiamento, livelli = []) => calcolaScheda({ creazione: { ...creazione, equipaggiamento }, livelli }, dati);
 
 test('catalogo: caricato dall’indice, un lotto = un file e una riga; riferimenti "file:id"', () => {
-  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armi_distanza', 'armature']);
+  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armi_distanza', 'armature', 'scudi']);
   const cat = catalogo(dati);
   assert.equal(cat.oggetti.filter((o) => o.tipo === 'arma_ravvicinata').length, 28); // §7.1.1: 28 profili
   assert.equal(cat.oggetti.filter((o) => o.tipo === 'armatura').length, 3); // §7.11.3
@@ -32,7 +32,7 @@ test('catalogo: caricato dall’indice, un lotto = un file e una riga; riferimen
 
 test('cascata e ricerca: solo ciò che esiste; i nomi alternativi portano al profilo', () => {
   const o = opzioniCascata(dati, { tipo: 'arma_ravvicinata', catalogo: 'Commerciale', famiglia: 'Spade' });
-  assert.deepEqual(o.tipi, ['arma_ravvicinata', 'arma_distanza', 'armatura']);
+  assert.deepEqual(o.tipi, ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura']);
   assert.deepEqual(o.cataloghi, ['Commerciale']);
   assert.ok(o.famiglie.includes('Armi da pugno'));
   assert.deepEqual(o.profili.map((p) => p.nome), ['Spada leggera', 'Stocco', 'Spada lunga', 'Spada bastarda', 'Spadone']);
@@ -310,4 +310,85 @@ test('validatore delle armi a distanza: modalità, capacità, AC, danno dalla mu
   assert.match(e((d) => { dist(d).find((o) => o.id === 'pugnale').stesso_oggetto = 'armi:pugnalone'; }), /"armi:pugnalone" non è un oggetto del catalogo/);
   assert.match(e((d) => { dist(d)[0].gittata_q = null; }), /senza gittata/);
   assert.match(e((d) => { dist(d)[0].mov = 1; }), /penalità MOV: intero ≤ 0/);
+});
+
+// --- Lotto 3: scudi (§7.4) ---------------------------------------------------------------
+
+test('lotto 3: 26 scudi del §7.4.2 con i modificatori alle Parate del §7.4.11', () => {
+  const scudi = catalogo(dati).oggetti.filter((o) => o.tipo === 'scudo');
+  assert.equal(scudi.length, 26); // §7.4.2: «Il catalogo comprende 26 scudi»
+  assert.deepEqual([...new Set(scudi.map((o) => o.catalogo))], ['Commerciale', 'Bauhaus', 'Alleanza', 'Capitol', 'Cybertronic', 'Imperial', 'Mishima', 'Fratellanza']);
+  const pun = catalogo(dati).perRif.get('scudi:scudo-punisher');
+  assert.deepEqual(pun.ar, { totale: 2, magica: 0 });
+  assert.deepEqual(pun.parata, { ravvicinata: 1, distanza: -3 });
+  assert.equal(pun.attacco.danno, '1d6+1');
+  assert.equal(pun.costo, 6000);
+  const enorme = catalogo(dati).perRif.get('scudi:scudo-enorme');
+  assert.equal(enorme.mov, -1);
+  assert.equal(enorme.for_richiesta, 7);
+  const sic = catalogo(dati).perRif.get('scudi:scudo-della-sicurezza');
+  assert.deepEqual(sic.parata, { ravvicinata: 0, distanza: -4 }); // senza SIN
+  assert.deepEqual(sic.profili_alternativi[0].parata, { ravvicinata: 1, distanza: -3 }); // con SIN 1
+  const gs = catalogo(dati).perRif.get('scudi:scudo-delle-guardie-sacre');
+  assert.deepEqual(gs.profili_alternativi[0].ar, { totale: 4, magica: 2 });
+  assert.equal(gs.costo, 18000);
+  // ogni scudo corporativo ha la sua scheda in prosa nelle note
+  assert.ok(scudi.filter((o) => o.catalogo !== 'Commerciale').every((o) => o.note_manuale.startsWith('Scudo') || o.note_manuale.startsWith('Modello')));
+});
+
+test('scudo imbracciato: AR, Parata già calcolata con Difese e modificatori, attacco del Punisher, MOV', () => {
+  const s = scheda(MISHIMA_AGENTE, [
+    voce('s', 'scudi:scudo-punisher', 'imbracciato'),
+    voce('w', 'armi:spada-leggera', 'impugnata'),
+  ]);
+  const difese = s.abilita.find((a) => a.nome === 'Difese').vaEquip;
+  const [p] = s.equipaggiamento.protezioni;
+  assert.deepEqual(p.ar, { totale: 2, magica: 0 });
+  assert.equal(p.parata.ravvicinata, difese + 1);
+  assert.equal(p.parata.distanza, difese - 3);
+  // la Parata con la spada: a distanza −8 VA (Giocatore §5.9)
+  const spada = s.equipaggiamento.armi.find((a) => a.nome === 'Spada leggera');
+  assert.equal(spada.parata.distanza, spada.parata.va - 8);
+  // l'attacco con lo Scudo Punisher (§7.4.1) compare fra le armi
+  const att = s.equipaggiamento.armi.find((a) => a.nome.startsWith('Scudo Punisher (attacco'));
+  assert.equal(att.va, s.abilita.find((a) => a.nome === 'Armi da guerra').totale);
+  assert.deepEqual(att.danno, { una_mano: '1d6+1', due_mani: null });
+  assert.equal(att.portataQ, 1);
+  assert.deepEqual(s.equipaggiamento.avvisi, []);
+  // Scudo enorme con FOR insufficiente: penalità solo a Parate e attacchi con lo Scudo (§7.1.6), MOV −1 Q
+  const a = scheda(ARCANISTA, [voce('e', 'scudi:scudo-enorme', 'imbracciato')]); // FOR 7, Arcanista 5
+  const pe = a.equipaggiamento.protezioni[0];
+  const difA = a.abilita.find((x) => x.nome === 'Difese');
+  assert.equal(pe.forMancante, 2);
+  assert.equal(pe.parata.ravvicinata, difA.vaEquip - 2);
+  assert.equal(difA.equip, 0); // non è un'armatura: Difese e Agilità non cambiano
+  assert.ok(a.abilita.every((x) => x.equip === 0));
+  assert.equal(a.equipaggiamento.movimentoQ, -1);
+  // SIN: il profilo alternativo è già calcolato
+  const c = scheda(MISHIMA_AGENTE, [voce('c', 'scudi:scudo-d-assalto-chasseur', 'imbracciato')]);
+  const alt = c.equipaggiamento.protezioni[0].alternative[0];
+  assert.match(alt.condizione, /SIN collegato/);
+  assert.equal(alt.parata.ravvicinata, difese + 2);
+  assert.equal(alt.parata.distanza, difese - 2);
+});
+
+test('scudi: due imbracciati non si sommano (avviso); stampa della riga Protezioni', () => {
+  const s = scheda(MISHIMA_AGENTE, [voce('a', 'scudi:scudo-piccolo', 'imbracciato'), voce('b', 'scudi:scudo-medio', 'imbracciato')]);
+  assert.ok(s.equipaggiamento.avvisi.some((x) => /non sommano la protezione/.test(x)));
+  const f3 = preparaStampa({ ...MISHIMA_AGENTE, equipaggiamento: [voce('p', 'scudi:scudo-pesante-reaver', 'imbracciato')] }, dati)
+    .fogli.find((f) => f.id === 'combattimento').dati;
+  const [riga] = f3.protezioni.righe;
+  assert.deepEqual(riga.slice(0, 3), ['Scudo pesante Reaver', '3', 'Enorme']);
+  // Agente: Difese 5, FOR 6 su 7 richiesta → −1 alle Parate con lo Scudo (§7.1.6)
+  assert.equal(riga[3], 'Parata 4 ravv. / 0 dist.; con SIN collegato (Innesto di Interfaccia Neurale attivo): Parata 5/1; MOV −1 Q; FOR 7 (−1)');
+});
+
+test('validatore degli scudi: Parata, profili alternativi, attacco', () => {
+  const e = (modifica) => { const d = copia(dati); modifica(d); return validaDati(d).map((x) => `${x.chiave}: ${x.problema}`).join('\n'); };
+  const sc = (d) => d.equipaggiamento.file.scudi.oggetti;
+  assert.match(e((d) => { sc(d)[0].parata = { ravvicinata: 0 }; }), /parata: serve \{ ravvicinata, distanza \}/);
+  assert.match(e((d) => { sc(d).find((o) => o.id === 'scudo-della-sicurezza').profili_alternativi[0].condizione = ''; }), /condizione: testo mancante/);
+  assert.match(e((d) => { sc(d).find((o) => o.id === 'scudo-punisher').attacco.abilita = 'Scudi'; }), /attacco\.abilita: Abilità "Scudi" inesistente/);
+  assert.match(e((d) => { sc(d)[2].mov = 2; }), /penalità MOV/);
+  assert.match(e((d) => { delete d.regole.difese; }), /difese\.parata_distanza_arma/);
 });

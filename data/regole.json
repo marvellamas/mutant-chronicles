@@ -1,6 +1,6 @@
 {
   "versione_manuale": "Giocatore 0.43; Magia 1.1",
-  "fonte": "Giocatore §1.2.3, §2.1, §2.3, §2.10, §2.12–2.15, §3.3, §1.8.3, §5.5, §5.14, §5.18, §5.19, cap. 8; Magia sezioni 1 e 11; docs/risposte-master.md",
+  "fonte": "Giocatore §1.2.3, §2.1, §2.3, §2.10, §2.12–2.15, §3.3, §1.8.3, §5.5, §5.9, §5.14, §5.18, §5.19, cap. 8; Magia sezioni 1 e 11; docs/risposte-master.md",
   "creazione": {
     "punti_caratteristica": 5,
     "massimo_caratteristica": 7,
@@ -510,5 +510,9 @@
       }
     ],
     "_nota": "§5.19: un unico Stato di Affaticamento; si applica solo la penalità dello Stato attuale, a tutte le Prove di Caratteristica, Abilità e Salvezza. Riposato è la riserva iniziale."
+  },
+  "difese": {
+    "parata_distanza_arma": -8,
+    "_nota": "Giocatore §5.9, Parata a distanza: «Penalità −8 VA con un’arma e −4 VA con uno scudo». Gli scudi hanno i propri modificatori nel catalogo (Armamenti §7.4.11)."
   }
 }
