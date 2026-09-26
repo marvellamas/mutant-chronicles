@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { specTiro, tira, tiroManuale, migraTiro, valoreTiro } from '../src/tiri.js';
-import { nuoveScelte, normalizza, deserializza, serializza, specTiroPM, specTiroPuntiEroe, VERSIONE_FORMATO } from '../src/character.js';
+import { nuoveScelte, normalizza, deserializza, serializza, specTiroPuntiEroe, VERSIONE_FORMATO } from '../src/character.js';
 import { calcolaScheda, validaLivello } from '../src/calc.js';
 import { datiReali } from './helpers.js';
 import { ARCANISTA as ARCANISTA_COMPLETA } from './personaggi.js';
@@ -20,13 +20,13 @@ const ARCANISTA = {
 
 test('formula e intervallo dai dati: 1d4 dei PM, 2d3+1 dei Punti Eroe', () => {
   assert.deepEqual(
-    (({ formula, minimo, massimo }) => ({ formula, minimo, massimo }))(specTiroPM(dati.classi.classi.find((c) => c.nome === 'Arcanista'))),
+    (({ formula, minimo, massimo }) => ({ formula, minimo, massimo }))(specTiro({ facce: dati.classi.classi.find((c) => c.nome === 'Arcanista').pm_per_grado.dado })),
     { formula: '1d4', minimo: 1, massimo: 4 });
   const pe = specTiroPuntiEroe(dati);
   assert.equal(pe.formula, '2d3+1');
   assert.equal(pe.minimo, dati.regole.punti_eroe.minimo);
   assert.equal(pe.massimo, dati.regole.punti_eroe.massimo);
-  assert.equal(specTiroPM(dati.classi.classi.find((c) => c.nome === 'Agente')), null); // PM fissi
+  assert.equal(dati.classi.classi.find((c) => c.nome === 'Agente').pm_per_grado.dado, 0); // PM fissi
 });
 
 test('tira: somma dei dadi più il fisso, origine "app"', () => {

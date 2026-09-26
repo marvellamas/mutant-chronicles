@@ -100,8 +100,10 @@ raccoglie Stampa, Esporta, Modifica creazione, Annulla l'ultimo livello e Nuova 
 Durante il gioco la scheda tiene i **valori attuali** della sessione: PV, PM, Punti Eroe,
 Distintivi (con la conversione 5 → 1 Punto Eroe del §1.8.3), Ferite, Affaticamento, Stati
 attivi e note, con pulsanti grandi per il dito. Si salvano con il personaggio in un blocco
-`sessione` separato dalle scelte: non si ricalcolano, e se un massimo cambia (nuovo livello,
-tabella modificata) vengono solo limitati al nuovo massimo. «Nuova sessione» riporta PV e PM
+`sessione` separato dalle scelte: non si ricalcolano. Salendo o annullando un livello PV e PM
+attuali cambiano della stessa quantità dei massimi (un personaggio a 40/47 che guadagna 6 PV
+passa a 46/53; ipotesi da confermare, `docs/per-davide.md` A.15); se invece un massimo cambia
+per una tabella modificata vengono solo limitati al nuovo massimo. «Nuova sessione» riporta PV e PM
 ai massimi e azzera Stati, Ferite e Affaticamento (note, Punti Eroe e Distintivi restano);
 «↶ Annulla» annulla l'ultima modifica di sessione. Le penalità di Ferite, Affaticamento e
 Stati compaiono come promemoria: i VA della scheda non le includono.
@@ -111,8 +113,8 @@ nei file salvati il testo resta `concetto`). L'anagrafica (soprannome, età, cit
 altezza, peso, occhi, capelli, mano dominante, segni distintivi) e i punti esperienza sono
 facoltativi; i PX sono un numero libero senza regole, modificabile anche dalla scheda.
 
-**Tiri di dado.** Dove serve un tiro (dado dei PM delle Classi taumaturgiche, Punti Eroe
-2d3+1) si può premere **Tira** oppure inserire il risultato tirato dal vivo: l'app rifiuta
+**Tiri di dado.** Dove serve un tiro (Punti Eroe 2d3+1 alla creazione; dadi di PV e PM dei
+Gradi successivi al primo, perché al 1° livello sono al massimo) si può premere **Tira** oppure inserire il risultato tirato dal vivo: l'app rifiuta
 i valori impossibili spiegando perché e ricorda se il risultato è «tirato dall'app» o
 «inserito a mano». Nei file ogni tiro è `{ "valore": 3, "origine": "app" | "manuale" }`;
 i personaggi salvati prima, con un numero semplice, vengono convertiti da soli.
@@ -125,10 +127,18 @@ npm test
 
 Serve Node 20 o successivo, senza dipendenze. I test coprono il motore di calcolo, il
 validatore, gli esempi numerici del manuale, l'invalidazione delle scelte, la
-serializzazione, il contenuto dei tooltip (`src/descrizioni.js`) e l'avanzamento di
+serializzazione, il contenuto dei tooltip (`src/descrizioni.js`), l'avanzamento di
 livello (un Agente portato dal 1° al 20°, multiclasse, incompatibilità fra magia e Risorse
-Interiori, i passi di «Sali di livello» generati dagli eventi). Il DOM dell'interfaccia non
-ha test automatici.
+Interiori, i passi di «Sali di livello» generati dagli eventi), il catalogo e gli effetti
+dell'equipaggiamento, la sessione e i fogli di stampa. Il DOM dell'interfaccia non ha test
+automatici.
+
+**Personaggi di collaudo.** In `tests/collaudo/` ci sono tre personaggi creati dall'app ed
+esportati (Imperiale Assaltatore 8°, Fratellanza Arcanista 12°, Freelance Tecnico 5°), con i
+loro PDF di stampa. `tests/collaudo.test.js` confronta la scheda con i valori ricalcolati a
+mano dal manuale, paragrafo per paragrafo: se una tabella cambia e un numero non torna più, il
+test dice quale. Dopo una modifica ai dati i PDF si rigenerano con il server acceso sulla
+porta 8000 e `node tools/collaudo_pdf.mjs` (serve Microsoft Edge).
 
 ## Modificare le regole (per Davide)
 
@@ -224,8 +234,9 @@ oggetti attivi cambiano i valori:
 Le incoerenze (due armature, arma a due mani con scudo) sono avvisi, non blocchi. Finché il
 §2.16 non esiste, l'equipaggiamento iniziale si inserisce a mano.
 
-Un personaggio è `{ "creazione": {…scelte…}, "livelli": [ {"livello": 2, …}, … ] }`: la scheda si
-ricalcola rigiocando la creazione e i livelli dall'inizio, con i limiti di ciascun livello.
+Un personaggio esportato (formato 5) è `{ "formato", "versione": 5, "versioni_dati", "scelte":
+{…creazione…}, "livelli": [ {"livello": 2, …}, … ], "sessione" }`: la scheda si ricalcola
+rigiocando la creazione e i livelli dall'inizio, con i limiti di ciascun livello.
 Cosa succede a ogni livello sta in `regole.json` → `avanzamento.eventi` (tabella del §8.1):
 cambiando la tabella cambiano gli eventi. Si sale un livello alla volta e si può annullare
 solo l'ultimo. I Talenti Liberi con effetti sulla scheda (Iniziativa Migliorata, Buona
@@ -258,6 +269,7 @@ src/incantesimi.js  quote e scelta degli incantesimi
 src/checklist.js  controllo finale §2.17
 src/descrizioni.js  contenuto dei tooltip e della scheda completa degli incantesimi
 src/tiri.js       tiri di dado { valore, origine }: formula, intervallo, migrazione
+src/lingua.js     piccole regole di italiano nei testi generati (all’8°, dell’11°)
 src/avanzamento.js  personaggio a livelli: ricalcolo, validazione di un livello, prossimo livello
 src/ui/           interfaccia (wizard, riepilogo, home, tooltip, tiro di dado)
 src/ui/tab.js     scheda a tab e modalità tavolo
@@ -268,10 +280,12 @@ src/ui/sali.js    schermata «Sali di livello»
 src/stampa.js     dati dei fogli di stampa e delle tab (funzioni pure)
 src/ui/stampa.js  vista di stampa A4 orizzontale, con css/stampa.css
 data/             regole in JSON
-tests/            node --test
-docs/             studio di fattibilità, ricognizione dell'avanzamento, risposte del master
+tests/            node --test; tests/collaudo/ personaggi di riferimento e loro PDF
+docs/             studio di fattibilità, ricognizione dell'avanzamento, lotti del catalogo,
+                  domande e risposte del master, roadmap
 serve.json        intestazioni di cache per npm start e avvia.bat
 tools/            estrazione di testo e tabelle dai PDF dei manuali (Python + pdfplumber) e generatori
-                  dei lotti del catalogo (tools/lotti/); non fa parte dell'app
+                  dei lotti del catalogo (tools/lotti/), PDF di collaudo; non fa parte dell'app
 avvia.bat         avvio con doppio clic su Windows
+distribuzione/    pacchetto per il master: guida e tre file .bat (vedi «Per il master»)
 ```

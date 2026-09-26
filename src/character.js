@@ -74,12 +74,6 @@ const trova = (lista, nome) => lista.find((x) => x.nome === nome);
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const somma = (obj) => Object.values(obj ?? {}).reduce((s, v) => s + v, 0);
 
-/** Tiro dei PM di una Classe (1d<dado>), o null se la Classe non ha dado nei PM. */
-export function specTiroPM(classe) {
-  const dado = classe?.pm_per_grado?.dado ?? 0;
-  return dado > 0 ? specTiro({ facce: dado }) : null;
-}
-
 /** Tiro dei Punti Eroe iniziali (§2.15), dalla formula in regole.json. */
 export function specTiroPuntiEroe(dati) {
   const { dadi, facce, fisso } = dati.regole.punti_eroe;

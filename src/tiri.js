@@ -56,9 +56,3 @@ export function valoreTiro(v) {
   if (typeof v === 'number') return v;
   return v && typeof v === 'object' && Number.isInteger(v.valore) ? v.valore : null;
 }
-
-/** Il tiro è presente e ammesso per questa specifica. */
-export function tiroValido(v, spec) {
-  const n = valoreTiro(v);
-  return n !== null && motivoFuoriIntervallo(n, spec) === null;
-}
