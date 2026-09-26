@@ -586,7 +586,8 @@
       "compatibile_con": [
         "armi_distanza_corporative:lanciagranate-deathlock-drum"
       ],
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Danno 1d10+1, AC 1d3, RS 2 Q; Sbilanciante, Sbalzante 1."
     },
     {
       "id": "razzo-standard",
@@ -616,7 +617,8 @@
         "armi_distanza_corporative:lanciarazzi-deuce",
         "armi_distanza_corporative:lanciarazzi-daimyo"
       ],
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Danno 1d10+1, AC 1d3, RS 2 Q; Sbilanciante, Sbalzante 2."
     },
     {
       "id": "razzo-a-carica-maggiorata",
@@ -644,7 +646,8 @@
       "compatibile_con": [
         "armi_distanza_corporative:lanciarazzi-southpaw"
       ],
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Danno 1d10+2, AC 1d3, RS 2 Q; Sbilanciante, Sbalzante 2."
     },
     {
       "id": "razzo-arg17",
@@ -672,7 +675,8 @@
       "compatibile_con": [
         "armi_distanza_corporative:arg17"
       ],
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Danno 1d10+2, AC 1d3, RS 3 Q; Sbilanciante, Sbalzante 2."
     },
     {
       "id": "razzo-ssw5500",
@@ -700,7 +704,8 @@
       "compatibile_con": [
         "armi_distanza_corporative:lanciarazzi-ssw5500"
       ],
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Danno 1d10+1, AC 1d3, RS 4 Q; Sbilanciante, Sbalzante 2."
     },
     {
       "id": "cella-ravvicinata-comune",
@@ -981,7 +986,8 @@
           "nome": "Perforante 1",
           "testo": "Perforante X Ignora X punti dell’AR non magica applicabile, compreso il contributo ordinario dello Scudo, fino a un minimo di 0 per questa componente. La componente magica rimane interamente applicabile. L’effetto si risolve per ogni colpo e non infligge danni aggiuntivi a bersagli senza armatura né perdite automatiche di PI. Perforante dell’arma e della munizione non si sommano: si applica il valore maggiore. Contro AR 5 interamente ordinaria, Perforante 1 lascia AR 4 e Perforante 2 lascia AR 3. Contro AR 2 interamente magica, entrambe lasciano AR 2. Le cartucce a pallini non hanno una variante Perforante in questo catalogo."
         }
-      ]
+      ],
+      "effetto_breve": "Perforante 1: Ignora X punti dell’AR non magica applicabile, compreso il contributo ordinario dello Scudo, fino a un minimo di 0 per questa componente."
     },
     {
       "id": "proiettili-da-pistola-perforante-2",
@@ -1008,7 +1014,8 @@
           "nome": "Perforante 2",
           "testo": "Perforante X Ignora X punti dell’AR non magica applicabile, compreso il contributo ordinario dello Scudo, fino a un minimo di 0 per questa componente. La componente magica rimane interamente applicabile. L’effetto si risolve per ogni colpo e non infligge danni aggiuntivi a bersagli senza armatura né perdite automatiche di PI. Perforante dell’arma e della munizione non si sommano: si applica il valore maggiore. Contro AR 5 interamente ordinaria, Perforante 1 lascia AR 4 e Perforante 2 lascia AR 3. Contro AR 2 interamente magica, entrambe lasciano AR 2. Le cartucce a pallini non hanno una variante Perforante in questo catalogo."
         }
-      ]
+      ],
+      "effetto_breve": "Perforante 2: Ignora X punti dell’AR non magica applicabile, compreso il contributo ordinario dello Scudo, fino a un minimo di 0 per questa componente."
     },
     {
       "id": "proiettili-da-pistola-incendiaria",
@@ -1035,7 +1042,8 @@
           "nome": "Incendiaria",
           "testo": "Incendiaria Riduce di 1 il danno base di ogni colpo o applicazione, prima di moltiplicatori, Difese e AR, fino a un minimo di 0, e aggiunge Fuoco. Dopo l’AR, se resta almeno 1 danno e il residuo supera l’eventuale Ignifugo X, il bersaglio effettua una PS Riflessi. Il Successo evita lo Stato; il Fallimento applica Incendiato per 1+1d3 Round. Incendiato infligge 1d4 danni immediati e periodici e impone −2 VA, con ricorrenze ed estinzione del §5.24 del Manuale del Giocatore. Il −1 della munizione non riduce questi danni periodici. Si effettua una sola PS per bersaglio e attacco; i residui di più applicazioni non si sommano per superare Ignifugo. Applicazioni ripetute conservano la scadenza più lontana senza sommare danni o penalità dello Stato."
         }
-      ]
+      ],
+      "effetto_breve": "Incendiaria: Riduce di 1 il danno base di ogni colpo o applicazione, prima di moltiplicatori, Difese e AR, fino a un minimo di 0, e aggiunge Fuoco."
     },
     {
       "id": "proiettili-da-pistola-concussiva",
@@ -1062,7 +1070,8 @@
           "nome": "Concussiva",
           "testo": "Concussiva Mantiene il danno ordinario e aggiunge Concussivo. Dopo l’AR, se resta almeno 1 danno e il residuo supera l’eventuale Imbottita X, il bersaglio effettua una PS Tempra. Il Successo evita l’effetto secondario; il Fallimento impone −2 VA alle sole Prove di Difese per 1+1d3 Round. La penalità non riduce AR o PS, non modifica Elusione e non applica automaticamente Stordito o A terra. Si effettua una sola PS per bersaglio e attacco; i residui non si sommano per superare Imbottita. Applicazioni ripetute mantengono la scadenza più lontana senza sommare le penalità."
         }
-      ]
+      ],
+      "effetto_breve": "Concussiva: Il Successo evita l’effetto secondario; il Fallimento impone −2 VA alle sole Prove di Difese per 1+1d3 Round."
     },
     {
       "id": "proiettili-da-fucile-perforante-1",
@@ -1089,7 +1098,8 @@
           "nome": "Perforante 1",
           "testo": "Perforante X Ignora X punti dell’AR non magica applicabile, compreso il contributo ordinario dello Scudo, fino a un minimo di 0 per questa componente. La componente magica rimane interamente applicabile. L’effetto si risolve per ogni colpo e non infligge danni aggiuntivi a bersagli senza armatura né perdite automatiche di PI. Perforante dell’arma e della munizione non si sommano: si applica il valore maggiore. Contro AR 5 interamente ordinaria, Perforante 1 lascia AR 4 e Perforante 2 lascia AR 3. Contro AR 2 interamente magica, entrambe lasciano AR 2. Le cartucce a pallini non hanno una variante Perforante in questo catalogo."
         }
-      ]
+      ],
+      "effetto_breve": "Perforante 1: Ignora X punti dell’AR non magica applicabile, compreso il contributo ordinario dello Scudo, fino a un minimo di 0 per questa componente."
     },
     {
       "id": "proiettili-da-fucile-perforante-2",
@@ -1116,7 +1126,8 @@
           "nome": "Perforante 2",
           "testo": "Perforante X Ignora X punti dell’AR non magica applicabile, compreso il contributo ordinario dello Scudo, fino a un minimo di 0 per questa componente. La componente magica rimane interamente applicabile. L’effetto si risolve per ogni colpo e non infligge danni aggiuntivi a bersagli senza armatura né perdite automatiche di PI. Perforante dell’arma e della munizione non si sommano: si applica il valore maggiore. Contro AR 5 interamente ordinaria, Perforante 1 lascia AR 4 e Perforante 2 lascia AR 3. Contro AR 2 interamente magica, entrambe lasciano AR 2. Le cartucce a pallini non hanno una variante Perforante in questo catalogo."
         }
-      ]
+      ],
+      "effetto_breve": "Perforante 2: Ignora X punti dell’AR non magica applicabile, compreso il contributo ordinario dello Scudo, fino a un minimo di 0 per questa componente."
     },
     {
       "id": "proiettili-da-fucile-incendiaria",
@@ -1143,7 +1154,8 @@
           "nome": "Incendiaria",
           "testo": "Incendiaria Riduce di 1 il danno base di ogni colpo o applicazione, prima di moltiplicatori, Difese e AR, fino a un minimo di 0, e aggiunge Fuoco. Dopo l’AR, se resta almeno 1 danno e il residuo supera l’eventuale Ignifugo X, il bersaglio effettua una PS Riflessi. Il Successo evita lo Stato; il Fallimento applica Incendiato per 1+1d3 Round. Incendiato infligge 1d4 danni immediati e periodici e impone −2 VA, con ricorrenze ed estinzione del §5.24 del Manuale del Giocatore. Il −1 della munizione non riduce questi danni periodici. Si effettua una sola PS per bersaglio e attacco; i residui di più applicazioni non si sommano per superare Ignifugo. Applicazioni ripetute conservano la scadenza più lontana senza sommare danni o penalità dello Stato."
         }
-      ]
+      ],
+      "effetto_breve": "Incendiaria: Riduce di 1 il danno base di ogni colpo o applicazione, prima di moltiplicatori, Difese e AR, fino a un minimo di 0, e aggiunge Fuoco."
     },
     {
       "id": "proiettili-da-fucile-concussiva",
@@ -1170,7 +1182,8 @@
           "nome": "Concussiva",
           "testo": "Concussiva Mantiene il danno ordinario e aggiunge Concussivo. Dopo l’AR, se resta almeno 1 danno e il residuo supera l’eventuale Imbottita X, il bersaglio effettua una PS Tempra. Il Successo evita l’effetto secondario; il Fallimento impone −2 VA alle sole Prove di Difese per 1+1d3 Round. La penalità non riduce AR o PS, non modifica Elusione e non applica automaticamente Stordito o A terra. Si effettua una sola PS per bersaglio e attacco; i residui non si sommano per superare Imbottita. Applicazioni ripetute mantengono la scadenza più lontana senza sommare le penalità."
         }
-      ]
+      ],
+      "effetto_breve": "Concussiva: Il Successo evita l’effetto secondario; il Fallimento impone −2 VA alle sole Prove di Difese per 1+1d3 Round."
     },
     {
       "id": "proiettili-pesanti-perforante-1",
@@ -1197,7 +1210,8 @@
           "nome": "Perforante 1",
           "testo": "Perforante X Ignora X punti dell’AR non magica applicabile, compreso il contributo ordinario dello Scudo, fino a un minimo di 0 per questa componente. La componente magica rimane interamente applicabile. L’effetto si risolve per ogni colpo e non infligge danni aggiuntivi a bersagli senza armatura né perdite automatiche di PI. Perforante dell’arma e della munizione non si sommano: si applica il valore maggiore. Contro AR 5 interamente ordinaria, Perforante 1 lascia AR 4 e Perforante 2 lascia AR 3. Contro AR 2 interamente magica, entrambe lasciano AR 2. Le cartucce a pallini non hanno una variante Perforante in questo catalogo."
         }
-      ]
+      ],
+      "effetto_breve": "Perforante 1: Ignora X punti dell’AR non magica applicabile, compreso il contributo ordinario dello Scudo, fino a un minimo di 0 per questa componente."
     },
     {
       "id": "proiettili-pesanti-perforante-2",
@@ -1224,7 +1238,8 @@
           "nome": "Perforante 2",
           "testo": "Perforante X Ignora X punti dell’AR non magica applicabile, compreso il contributo ordinario dello Scudo, fino a un minimo di 0 per questa componente. La componente magica rimane interamente applicabile. L’effetto si risolve per ogni colpo e non infligge danni aggiuntivi a bersagli senza armatura né perdite automatiche di PI. Perforante dell’arma e della munizione non si sommano: si applica il valore maggiore. Contro AR 5 interamente ordinaria, Perforante 1 lascia AR 4 e Perforante 2 lascia AR 3. Contro AR 2 interamente magica, entrambe lasciano AR 2. Le cartucce a pallini non hanno una variante Perforante in questo catalogo."
         }
-      ]
+      ],
+      "effetto_breve": "Perforante 2: Ignora X punti dell’AR non magica applicabile, compreso il contributo ordinario dello Scudo, fino a un minimo di 0 per questa componente."
     },
     {
       "id": "proiettili-pesanti-incendiaria",
@@ -1251,7 +1266,8 @@
           "nome": "Incendiaria",
           "testo": "Incendiaria Riduce di 1 il danno base di ogni colpo o applicazione, prima di moltiplicatori, Difese e AR, fino a un minimo di 0, e aggiunge Fuoco. Dopo l’AR, se resta almeno 1 danno e il residuo supera l’eventuale Ignifugo X, il bersaglio effettua una PS Riflessi. Il Successo evita lo Stato; il Fallimento applica Incendiato per 1+1d3 Round. Incendiato infligge 1d4 danni immediati e periodici e impone −2 VA, con ricorrenze ed estinzione del §5.24 del Manuale del Giocatore. Il −1 della munizione non riduce questi danni periodici. Si effettua una sola PS per bersaglio e attacco; i residui di più applicazioni non si sommano per superare Ignifugo. Applicazioni ripetute conservano la scadenza più lontana senza sommare danni o penalità dello Stato."
         }
-      ]
+      ],
+      "effetto_breve": "Incendiaria: Riduce di 1 il danno base di ogni colpo o applicazione, prima di moltiplicatori, Difese e AR, fino a un minimo di 0, e aggiunge Fuoco."
     },
     {
       "id": "proiettili-pesanti-concussiva",
@@ -1278,7 +1294,8 @@
           "nome": "Concussiva",
           "testo": "Concussiva Mantiene il danno ordinario e aggiunge Concussivo. Dopo l’AR, se resta almeno 1 danno e il residuo supera l’eventuale Imbottita X, il bersaglio effettua una PS Tempra. Il Successo evita l’effetto secondario; il Fallimento impone −2 VA alle sole Prove di Difese per 1+1d3 Round. La penalità non riduce AR o PS, non modifica Elusione e non applica automaticamente Stordito o A terra. Si effettua una sola PS per bersaglio e attacco; i residui non si sommano per superare Imbottita. Applicazioni ripetute mantengono la scadenza più lontana senza sommare le penalità."
         }
-      ]
+      ],
+      "effetto_breve": "Concussiva: Il Successo evita l’effetto secondario; il Fallimento impone −2 VA alle sole Prove di Difese per 1+1d3 Round."
     },
     {
       "id": "cartucce-a-pallini-incendiaria",
@@ -1305,7 +1322,8 @@
           "nome": "Incendiaria",
           "testo": "Incendiaria Riduce di 1 il danno base di ogni colpo o applicazione, prima di moltiplicatori, Difese e AR, fino a un minimo di 0, e aggiunge Fuoco. Dopo l’AR, se resta almeno 1 danno e il residuo supera l’eventuale Ignifugo X, il bersaglio effettua una PS Riflessi. Il Successo evita lo Stato; il Fallimento applica Incendiato per 1+1d3 Round. Incendiato infligge 1d4 danni immediati e periodici e impone −2 VA, con ricorrenze ed estinzione del §5.24 del Manuale del Giocatore. Il −1 della munizione non riduce questi danni periodici. Si effettua una sola PS per bersaglio e attacco; i residui di più applicazioni non si sommano per superare Ignifugo. Applicazioni ripetute conservano la scadenza più lontana senza sommare danni o penalità dello Stato."
         }
-      ]
+      ],
+      "effetto_breve": "Incendiaria: Riduce di 1 il danno base di ogni colpo o applicazione, prima di moltiplicatori, Difese e AR, fino a un minimo di 0, e aggiunge Fuoco."
     },
     {
       "id": "cartucce-a-pallini-concussiva",
@@ -1332,7 +1350,8 @@
           "nome": "Concussiva",
           "testo": "Concussiva Mantiene il danno ordinario e aggiunge Concussivo. Dopo l’AR, se resta almeno 1 danno e il residuo supera l’eventuale Imbottita X, il bersaglio effettua una PS Tempra. Il Successo evita l’effetto secondario; il Fallimento impone −2 VA alle sole Prove di Difese per 1+1d3 Round. La penalità non riduce AR o PS, non modifica Elusione e non applica automaticamente Stordito o A terra. Si effettua una sola PS per bersaglio e attacco; i residui non si sommano per superare Imbottita. Applicazioni ripetute mantengono la scadenza più lontana senza sommare le penalità."
         }
-      ]
+      ],
+      "effetto_breve": "Concussiva: Il Successo evita l’effetto secondario; il Fallimento impone −2 VA alle sole Prove di Difese per 1+1d3 Round."
     },
     {
       "id": "cartucce-nimrod",
@@ -1386,7 +1405,8 @@
           "nome": "Perforante 1",
           "testo": "Perforante X Ignora X punti dell’AR non magica applicabile, compreso il contributo ordinario dello Scudo, fino a un minimo di 0 per questa componente. La componente magica rimane interamente applicabile. L’effetto si risolve per ogni colpo e non infligge danni aggiuntivi a bersagli senza armatura né perdite automatiche di PI. Perforante dell’arma e della munizione non si sommano: si applica il valore maggiore. Contro AR 5 interamente ordinaria, Perforante 1 lascia AR 4 e Perforante 2 lascia AR 3. Contro AR 2 interamente magica, entrambe lasciano AR 2. Le cartucce a pallini non hanno una variante Perforante in questo catalogo."
         }
-      ]
+      ],
+      "effetto_breve": "Perforante 1: Ignora X punti dell’AR non magica applicabile, compreso il contributo ordinario dello Scudo, fino a un minimo di 0 per questa componente."
     },
     {
       "id": "cartucce-nimrod-perforante-2",
@@ -1416,7 +1436,8 @@
           "nome": "Perforante 2",
           "testo": "Perforante X Ignora X punti dell’AR non magica applicabile, compreso il contributo ordinario dello Scudo, fino a un minimo di 0 per questa componente. La componente magica rimane interamente applicabile. L’effetto si risolve per ogni colpo e non infligge danni aggiuntivi a bersagli senza armatura né perdite automatiche di PI. Perforante dell’arma e della munizione non si sommano: si applica il valore maggiore. Contro AR 5 interamente ordinaria, Perforante 1 lascia AR 4 e Perforante 2 lascia AR 3. Contro AR 2 interamente magica, entrambe lasciano AR 2. Le cartucce a pallini non hanno una variante Perforante in questo catalogo."
         }
-      ]
+      ],
+      "effetto_breve": "Perforante 2: Ignora X punti dell’AR non magica applicabile, compreso il contributo ordinario dello Scudo, fino a un minimo di 0 per questa componente."
     },
     {
       "id": "cartucce-nimrod-incendiaria",
@@ -1446,7 +1467,8 @@
           "nome": "Incendiaria",
           "testo": "Incendiaria Riduce di 1 il danno base di ogni colpo o applicazione, prima di moltiplicatori, Difese e AR, fino a un minimo di 0, e aggiunge Fuoco. Dopo l’AR, se resta almeno 1 danno e il residuo supera l’eventuale Ignifugo X, il bersaglio effettua una PS Riflessi. Il Successo evita lo Stato; il Fallimento applica Incendiato per 1+1d3 Round. Incendiato infligge 1d4 danni immediati e periodici e impone −2 VA, con ricorrenze ed estinzione del §5.24 del Manuale del Giocatore. Il −1 della munizione non riduce questi danni periodici. Si effettua una sola PS per bersaglio e attacco; i residui di più applicazioni non si sommano per superare Ignifugo. Applicazioni ripetute conservano la scadenza più lontana senza sommare danni o penalità dello Stato."
         }
-      ]
+      ],
+      "effetto_breve": "Incendiaria: Riduce di 1 il danno base di ogni colpo o applicazione, prima di moltiplicatori, Difese e AR, fino a un minimo di 0, e aggiunge Fuoco."
     },
     {
       "id": "cartucce-nimrod-concussiva",
@@ -1476,7 +1498,8 @@
           "nome": "Concussiva",
           "testo": "Concussiva Mantiene il danno ordinario e aggiunge Concussivo. Dopo l’AR, se resta almeno 1 danno e il residuo supera l’eventuale Imbottita X, il bersaglio effettua una PS Tempra. Il Successo evita l’effetto secondario; il Fallimento impone −2 VA alle sole Prove di Difese per 1+1d3 Round. La penalità non riduce AR o PS, non modifica Elusione e non applica automaticamente Stordito o A terra. Si effettua una sola PS per bersaglio e attacco; i residui non si sommano per superare Imbottita. Applicazioni ripetute mantengono la scadenza più lontana senza sommare le penalità."
         }
-      ]
+      ],
+      "effetto_breve": "Concussiva: Il Successo evita l’effetto secondario; il Fallimento impone −2 VA alle sole Prove di Difese per 1+1d3 Round."
     },
     {
       "id": "dardo-stordente",
@@ -1499,7 +1522,8 @@
           "nome": "Stordente",
           "testo": "Neuromuscolare immediato. Dopo l’iniezione il bersaglio effettua immediatamente una PS Tempra senza modificatore proprio della munizione. Con Successo evita l’effetto; con Fallimento diventa Stordito per 1+1d3 Round. All’inizio di ogni propria Iniziativa può effettuare una nuova PS Tempra gratuita: il Successo termina lo Stato."
         }
-      ]
+      ],
+      "effetto_breve": "Con Successo evita l’effetto; con Fallimento diventa Stordito per 1+1d3 Round."
     },
     {
       "id": "dardo-sedativo",
@@ -1522,7 +1546,8 @@
           "nome": "Sedativo",
           "testo": "Sedazione differita. L’effetto si risolve alla prima Iniziativa del bersaglio successiva alla somministrazione; prima di quel momento non impone penalità. Il bersaglio effettua una PS Tempra, con +2 alla PS se partecipa al combattimento. Il Successo evita l’effetto; il Fallimento applica Svenuto per 1d3 minuti. Nuovi danni permettono una nuova PS immediata per svegliarsi. Un alleato adiacente può spendere 1 AzP per scuotere il bersaglio e concedergli una nuova PS; si può ottenere al massimo una PS per Round in questo modo. Si applicano le normali regole di Stordito e Svenuto del Manuale del Giocatore."
         }
-      ]
+      ],
+      "effetto_breve": "Il Successo evita l’effetto; il Fallimento applica Svenuto per 1d3 minuti."
     }
   ]
 }

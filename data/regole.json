@@ -367,6 +367,123 @@
     "tetto_salvezza": 18,
     "_nota_tetto_salvezza": "§1.2.3, §8.6.2–8.6.3: valore strutturale + Prova Salvezza Migliorata + Resistenza specifica ≤ 18. La Resistenza è un bonus situazionale: la scheda applica il tetto a strutturale + Migliorata."
   },
+  "interfaccia": {
+    "barre_pv_pm": {
+      "verde_sopra": 0.75,
+      "rosso_sotto": 0.25
+    },
+    "_nota": "Scheda digitale: barre dei PV e dei PM. Verde sopra verde_sopra del massimo, rosso sotto rosso_sotto, giallo fra le due soglie (comprese). Frazioni da 0 a 1."
+  },
+  "modalita_di_fuoco": {
+    "S": {
+      "nome": "Tiro Singolo",
+      "nomi_alternativi": [
+        "Colpo Singolo"
+      ],
+      "colpi_consumati": 1,
+      "azioni_principali": 1,
+      "modificatore_va": 0,
+      "colpi_a_segno": "1 se la Prova riesce",
+      "regola": "Tiro Singolo. Consuma un’Azione Principale e una munizione e utilizza l’Abilità dell’arma.",
+      "note": "Tiro Mirato è compatibile soltanto con Tiro Singolo e Raffica Breve.",
+      "paragrafo": "§5.10"
+    },
+    "RB": {
+      "nome": "Raffica Breve",
+      "colpi_consumati": 3,
+      "azioni_principali": 1,
+      "modificatore_va": 2,
+      "colpi_a_segno": "1 con una Prova riuscita, nessuno con un fallimento",
+      "regola": "Ogni Raffica consuma un’Azione Principale e una sola Prova. Con successo produce il numero fisso di colpi indicato; con fallimento nessuno. Contro una Raffica si effettua una sola Prova per la Difesa scelta, pagando una sola volta il relativo costo. Una Parata riuscita dimezza per eccesso il danno di ciascun colpo; una Schivata riuscita evita tutti i colpi. Il danno viene determinato separatamente per ciascun colpo e l’Armatura si applica a ciascuno di essi.",
+      "note": "Raffica Breve Migliorata porta il bonus a +4 VA. Raffica Breve non è disponibile per alcun profilo che impieghi granate, razzi o altri esplosivi. Tiro Mirato è compatibile soltanto con Tiro Singolo e Raffica Breve; Tiro Rapido è incompatibile. Dal 12° livello si possono effettuare due Raffiche, una per Azione Principale.",
+      "migliorata": {
+        "talento": "Raffica Breve Migliorata",
+        "modificatore_va": 4
+      },
+      "paragrafo": "§5.10"
+    },
+    "RM": {
+      "nome": "Raffica Media",
+      "colpi_consumati": 5,
+      "azioni_principali": 1,
+      "modificatore_va": -2,
+      "colpi_a_segno": "3 con una Prova riuscita, nessuno con un fallimento",
+      "regola": "Ogni Raffica consuma un’Azione Principale e una sola Prova. Con successo produce il numero fisso di colpi indicato; con fallimento nessuno. Contro una Raffica si effettua una sola Prova per la Difesa scelta, pagando una sola volta il relativo costo. Una Parata riuscita dimezza per eccesso il danno di ciascun colpo; una Schivata riuscita evita tutti i colpi. Il danno viene determinato separatamente per ciascun colpo e l’Armatura si applica a ciascuno di essi.",
+      "note": "Raffica Media Migliorata porta il modificatore a 0. Un’arma deve possedere la modalità appropriata; se le munizioni non bastano si usa una modalità inferiore o il Tiro Singolo. Dal 12° livello si possono effettuare due Raffiche, una per Azione Principale.",
+      "migliorata": {
+        "talento": "Raffica Media Migliorata",
+        "modificatore_va": 0
+      },
+      "paragrafo": "§5.10"
+    },
+    "RL": {
+      "nome": "Raffica Lunga",
+      "colpi_consumati": 10,
+      "azioni_principali": 1,
+      "modificatore_va": -6,
+      "colpi_a_segno": "5 con una Prova riuscita, nessuno con un fallimento",
+      "regola": "Ogni Raffica consuma un’Azione Principale e una sola Prova. Con successo produce il numero fisso di colpi indicato; con fallimento nessuno. Contro una Raffica si effettua una sola Prova per la Difesa scelta, pagando una sola volta il relativo costo. Una Parata riuscita dimezza per eccesso il danno di ciascun colpo; una Schivata riuscita evita tutti i colpi. Il danno viene determinato separatamente per ciascun colpo e l’Armatura si applica a ciascuno di essi.",
+      "note": "Raffica Lunga Migliorata porta la penalità a −4 VA. Un’arma deve possedere la modalità appropriata; se le munizioni non bastano si usa una modalità inferiore o il Tiro Singolo. Dal 12° livello si possono effettuare due Raffiche, una per Azione Principale.",
+      "migliorata": {
+        "talento": "Raffica Lunga Migliorata",
+        "modificatore_va": -4
+      },
+      "paragrafo": "§5.10"
+    },
+    "TR": {
+      "nome": "Tiro Rapido",
+      "colpi_consumati": 2,
+      "azioni_principali": 1,
+      "modificatore_va": -4,
+      "colpi_a_segno": "uno per ciascuno dei due Tiri Singoli riusciti",
+      "regola": "Con un’Azione Principale e la stessa arma effettua due Tiri Singoli, ciascuno a −4 VA, contro lo stesso bersaglio o bersagli differenti, consumando due munizioni. Tiro Rapido Migliorato riduce la penalità a −2. Non si combina con Tiro Mirato, Tiro Ravvicinato, Tiro a Bruciapelo o Raffiche. Dal 12° livello può essere eseguito due volte.",
+      "note": "La disponibilità di Tiro Rapido dipende dalla scheda. Tutti i fucili possono eseguirlo, eccetto i fucili a pompa; HD14M e SA SG2001 sono eccezioni espresse. Con una doppietta i due Tiri Rapidi devono essere diretti contro bersagli differenti.",
+      "migliorata": {
+        "talento": "Tiro Rapido Migliorato",
+        "modificatore_va": -2
+      },
+      "paragrafo": "§5.10"
+    },
+    "TM": {
+      "nome": "Tiro Mirato",
+      "colpi_consumati": 1,
+      "azioni_principali": 2,
+      "modificatore_va": 2,
+      "colpi_a_segno": "come la modalità usata (Tiro Singolo o Raffica Breve)",
+      "regola": "Richiede complessivamente due Azioni Principali: la prima prepara e la seconda esegue il tiro. Dal 12° livello possono essere spese durante la stessa Iniziativa; altrimenti in due Round consecutivi. Il tiro ottiene +2 VA e +2 danni; Tiro Mirato Migliorato porta entrambi i bonus a +4. È consentito con Tiro Singolo o Raffica Breve.",
+      "note": "La preparazione si perde se prima del tiro si usa un’altra Azione Principale, si cambia arma, si usa Corsa o Scatto, si perde totalmente il bersaglio o si diventa incapaci. Passo e Prove Salvezza non la interrompono. Non esiste una versione Istintiva. Tiro Mirato non si combina con Tiro Rapido, Raffica Media o Lunga, Tiro Ravvicinato, Tiro a Bruciapelo o altre manovre offensive. Alle Azioni richieste dalla distanza aggiunge una sola Azione Principale.",
+      "migliorata": {
+        "talento": "Tiro Mirato Migliorato",
+        "modificatore_va": 4
+      },
+      "paragrafo": "§5.10"
+    },
+    "FS": {
+      "nome": "Fuoco di Soppressione",
+      "colpi_consumati": 10,
+      "azioni_principali": 1,
+      "modificatore_va": -4,
+      "colpi_a_segno": "nessun colpo: con successo crea un’Area di 3 × 3 Q fino all’Iniziativa successiva del tiratore",
+      "regola": "Con un’Azione Principale, un’arma capace di Raffica Lunga e 10 munizioni, il personaggio designa un’Area di 3 × 3 Q entro gittata e linea di tiro ed effettua una Prova a −4 VA. In caso di fallimento le munizioni sono consumate ma non si crea l’Area. Con successo l’effetto dura fino all’arrivo dell’Iniziativa successiva del tiratore.",
+      "note": "Una creatura che si espone, entra o agisce nell’Area effettua una Prova Salvezza di Volontà. Con successo agisce normalmente; con fallimento interrompe il Movimento e sceglie se cadere A Terra oppure effettuare un Passo verso la Copertura più vicina, senza poter compiere Azioni Principali offensive durante quella Iniziativa. Fuoco di Soppressione Migliorato riduce il consumo a cinque munizioni, anche in caso di fallimento, conservando la Prova a −4 VA e 1 AzP.",
+      "migliorata": {
+        "talento": "Fuoco di Soppressione Migliorato",
+        "colpi_consumati": 5
+      },
+      "paragrafo": "§5.10"
+    },
+    "DC": {
+      "nome": "Doppio Colpo",
+      "colpi_consumati": 2,
+      "azioni_principali": 1,
+      "modificatore_va": -4,
+      "colpi_a_segno": "quattro applicazioni separate di danno, due per cartuccia, con una Prova riuscita; nessuna con un fallimento",
+      "regola": "Una doppietta con entrambe le cartucce cariche può dichiarare Doppio Colpo prima della Prova. Spende 1 AzP ed effettua una sola Prova di Armi Medie a −4 VA, consumando due cartucce anche se manca. Entrambe sono dirette contro lo stesso bersaglio. Con successo si risolvono quattro applicazioni separate di danno, due per cartuccia; con fallimento nessuna. La Difesa è una sola, contro l’unica Prova per Colpire.",
+      "note": "Doppio Colpo non si combina con Tiro Rapido, Tiro Mirato o altre Manovre offensive. Tiro Rapido con una doppietta serve invece ad attaccare due bersagli differenti, con due Prove e due Difese separate.",
+      "paragrafo": "§5.10"
+    },
+    "_nota": "Manuale del Giocatore §5.10: per ogni sigla usata nel catalogo (campo modalita delle armi) nome, colpi consumati, Azioni Principali, modificatore al VA, colpi a segno, testo della regola e note dal manuale. «migliorata»: il Talento che la modifica. Il validatore controlla che ogni sigla del catalogo abbia la sua voce."
+  },
   "chroma": {
     "colori": {
       "Bianco": { "energia": "Universale", "macrofamiglie": ["Fisica", "Mentale", "Spirituale"] },

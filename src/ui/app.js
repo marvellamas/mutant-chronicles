@@ -578,6 +578,7 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
     massimi,
     penalita: penalitaSessione(stato.sessione, dati),
     posizione: archivio.leggiImpostazioni().posizioneTab,
+    larghezza: archivio.leggiImpostazioni().larghezzaScheda,
     puoAnnullareSessione: !!stato.sessionePrecedente,
     motivoNoSalita: !schedaCreazione.completa ? 'Completa la creazione prima di salire di livello.'
       : tab.errori.length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
@@ -631,6 +632,10 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       },
       posizione: (valore) => {
         archivio.salvaImpostazioni({ ...archivio.leggiImpostazioni(), posizioneTab: valore });
+        renderScheda({ mantieniScorrimento: true });
+      },
+      larghezza: (valore) => {
+        archivio.salvaImpostazioni({ ...archivio.leggiImpostazioni(), larghezzaScheda: valore });
         renderScheda({ mantieniScorrimento: true });
       },
     },

@@ -4,6 +4,11 @@ Tool interno per il gruppo di gioco di ruolo. Non va pubblicato. Il master (Davi
 
 Lingua del progetto: italiano (UI, commenti, commit, documentazione). Terminologia: quella dei manuali (Caratteristica, Abilità, Addestramento, Classe, Grado, Talento, VA, PV, PM, Salvezza).
 
+## Glossario
+
+- **SD** = scheda digitale: la scheda a tab dell'app (Identità, Abilità, Combattimento, Magia), con la modalità tavolo (`src/ui/tab.js`).
+- **SS** = scheda da stampare: la vista di stampa A4 orizzontale (`#/p/<id>/stampa`, `src/ui/stampa.js`, `css/stampa.css`).
+
 ## Stack (deciso)
 
 - Web app statica, **senza build step**: `index.html` + `src/*.js` (ES modules) + `css/`. Vanilla JS. Nessun framework, nessun bundler, nessuna dipendenza npm a runtime.

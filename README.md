@@ -109,6 +109,19 @@ per una tabella modificata vengono solo limitati al nuovo massimo. «Nuova sessi
 ai massimi e azzera Stati, Ferite e Affaticamento (note, Punti Eroe e Distintivi restano);
 «↶ Annulla» annulla l'ultima modifica di sessione.
 
+**Scheda digitale (SD) su schermi larghi.** Nell'ingranaggio, «Larghezza»: piena (predefinita,
+fino a 1650 px, e sopra 1300 px più colonne affiancate: tre riquadri in Magia, Talenti su due
+colonne, incantesimi su due colonne) oppure compatta (colonna centrale). Sotto i 1300 px le due
+scelte sono identiche. PV e PM hanno una barra che si accorcia e cambia colore (verde, giallo,
+rosso; soglie in `regole.json` → `interfaccia`), con il numero sempre accanto; il riepilogo PV/PM
+sta anche nell'intestazione della scheda. Il riquadro Punti Magia elenca sotto la riserva
+personale i cristalli di Chroma, separati: è il posto dove si modificano i loro PM. La tab Abilità
+apre con «Condizioni attive» quando Ferite, Affaticamento, Stati o armatura toccano le Abilità.
+Le sigle delle modalità di fuoco mostrano la regola del §5.10 al tocco; gli oggetti di sanitario,
+accessori e munizioni hanno sotto il nome una riga con l'effetto preso dal manuale
+(`effetto_breve`, popolato da `tools/lotti/effetto_breve.mjs`, che controlla che ogni frase sia
+davvero nel testo). La scheda da stampare (SS) non cambia.
+
 **Valori effettivi.** Nelle tab Abilità e Combattimento e nelle Salvezze di Identità ogni valore è
 quello **effettivo**: regole + equipaggiamento + condizioni della sessione (Ferite §5.14,
 Affaticamento §5.19, Stati del §5.18 con un effetto numerico: A Terra, Accecato, Immobilizzato,
@@ -163,7 +176,7 @@ Tutte le regole numeriche stanno in `data/`:
 | `addestramenti.json` | valori base delle 24 Abilità, vantaggio, Salvezze |
 | `classi.json` | Classi, PV/PM per Grado, quote incantesimi, Talenti con testo |
 | `incantesimi.json` | i 90 incantesimi: indice e scheda (intestazione, lancio, descrizione, tabella delle versioni, regole) |
-| `regole.json` | costanti della creazione (punti, massimi, Punti Eroe, Movimento…) e dell'avanzamento (eventi per livello, massimi, limiti); Ferite, Affaticamento e Stati con i loro effetti; `chroma`: colori del Chroma con le macrofamiglie alimentate, rapporti di conversione e Talenti che li riducono, Prova per gruppi (Magia sez. 6) |
+| `regole.json` | costanti della creazione (punti, massimi, Punti Eroe, Movimento…) e dell'avanzamento (eventi per livello, massimi, limiti); Ferite, Affaticamento e Stati con i loro effetti; `interfaccia`: soglie di colore delle barre di PV e PM; `modalita_di_fuoco`: le sigle delle armi (S, RB, RM, RL, TR, TM, FS, DC) con la regola del §5.10; `chroma`: colori del Chroma con le macrofamiglie alimentate, rapporti di conversione e Talenti che li riducono, Prova per gruppi (Magia sez. 6) |
 | `talenti_liberi.json` | gli 87 Talenti Liberi del §8.6 e i Talenti di magia (provvisori) |
 | `specializzazioni.json` | le 84 Specializzazioni del §8.8 (armi, mistiche, operative/sociali/professionali) |
 | `tecniche_interiori.json` | le 28 Tecniche Interiori del §8.9 e le regole comuni |

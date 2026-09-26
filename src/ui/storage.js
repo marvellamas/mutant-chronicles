@@ -58,14 +58,16 @@ export function nuovoId() {
 // Impostazioni dell'interfaccia (per browser, non per personaggio)
 
 const CHIAVE_IMPOSTAZIONI = 'mutant.impostazioni.v1';
-const IMPOSTAZIONI_PREDEFINITE = { posizioneTab: 'automatica' };
+const IMPOSTAZIONI_PREDEFINITE = { posizioneTab: 'automatica', larghezzaScheda: 'piena' };
 const POSIZIONI = ['automatica', 'sinistra', 'basso', 'alto'];
+const LARGHEZZE = ['compatta', 'piena'];
 
 export function leggiImpostazioni() {
   try {
     const v = JSON.parse(localStorage.getItem(CHIAVE_IMPOSTAZIONI) ?? '{}');
     const out = { ...IMPOSTAZIONI_PREDEFINITE, ...(v && typeof v === 'object' ? v : {}) };
     if (!POSIZIONI.includes(out.posizioneTab)) out.posizioneTab = IMPOSTAZIONI_PREDEFINITE.posizioneTab;
+    if (!LARGHEZZE.includes(out.larghezzaScheda)) out.larghezzaScheda = IMPOSTAZIONI_PREDEFINITE.larghezzaScheda;
     return out;
   } catch {
     return { ...IMPOSTAZIONI_PREDEFINITE };

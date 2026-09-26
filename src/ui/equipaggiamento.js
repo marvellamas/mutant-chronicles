@@ -41,6 +41,8 @@ function elencoVoci(ctx) {
           h('strong', {}, r.def ? info('oggetto', r.def.rif, r.nome) : r.nome),
           h('small', { class: 'sigla' }, ` · ${NOMI_TIPI[r.tipo]}${r.def ? ` · ${r.def.catalogo}` : ''}`),
           r.personalizzato ? h('span', { class: 'etichetta' }, 'personalizzato') : null,
+          // riga breve con l'effetto dal manuale (catalogo → effetto_breve)
+          r.def?.effetto_breve ? h('p', { class: 'effetto-breve' }, r.def.effetto_breve) : null,
           r.fuoriCatalogo ? h('p', { class: 'motivo' }, 'Non più in catalogo: resta in lista, senza effetti.') : null),
         h('button', {
           type: 'button', class: 'btn pericolo piccolo-btn', 'aria-label': `Togli ${r.nome}`,

@@ -7,6 +7,7 @@
 import { h, segno } from './dom.js';
 import { info, infoValore } from './tooltip.js';
 import { formulaScomposizione } from '../condizioni.js';
+import { colore, riempimento, condizioniAttiveAbilita } from '../interfaccia.js';
 import { descriviFerite } from '../sessione.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
 import { testoDanno } from '../stampa.js';
@@ -38,7 +39,11 @@ export function renderTab(ctx) {
   const barra = h('header', { class: 'barra-scheda' },
     h('div', { class: 'barra-titolo' },
       h('h1', {}, id.nome),
-      h('p', {}, h('strong', {}, `${id.livello}° livello`), ` · ${id.corporazione} · ${id.addestramento} · ${id.classi.map((c) => `${c.nome} ${c.grado}`).join(', ')}`)),
+      h('p', {}, h('strong', {}, `${id.livello}° livello`), ` · ${id.corporazione} · ${id.addestramento} · ${id.classi.map((c) => `${c.nome} ${c.grado}`).join(', ')}`),
+      // riepilogo sempre visibile, in ogni tab: PV e PM attuali con la barra
+      h('div', { class: 'riepilogo-risorse' },
+        barraRisorsa(ctx, 'PV', ctx.sessione.pvAttuali, ctx.massimi.pv),
+        ctx.massimi.pm ? barraRisorsa(ctx, 'PM', ctx.sessione.pmAttuali, ctx.massimi.pm) : null)),
     h('div', { class: 'barra-azioni' },
       ctx.puoAnnullareSessione ? h('button', { type: 'button', class: 'btn', onclick: azioni.annullaSessione, title: 'Annulla l’ultima modifica ai valori di sessione' }, '↶ Annulla') : null,
       id.livello < livelloMax
@@ -62,7 +67,7 @@ export function renderTab(ctx) {
       h('ul', {}, tab.errori.slice(0, 6).map((e) => h('li', {}, e.livello > 1 ? `${e.livello}° livello: ${e.problema}` : e.problema)))) : null,
     contenuti[corrente.id](ctx, corrente.dati));
 
-  return [h('div', { class: `scheda-tab pos-${ctx.posizione}` }, barra, nav, pannello)];
+  return [h('div', { class: `scheda-tab pos-${ctx.posizione} larghezza-${ctx.larghezza ?? 'piena'}` }, barra, nav, pannello)];
 }
 
 function menuAzioni(ctx) {
@@ -90,14 +95,35 @@ function menuImpostazioni(ctx) {
         POSIZIONI_TAB.map((p) => h('label', { class: 'scelta-radio' },
           h('input', { type: 'radio', name: 'posizione-tab', value: p.id, checked: ctx.posizione === p.id, onchange: () => ctx.azioni.posizione(p.id) }),
           ` ${p.etichetta}`))),
-      h('p', { class: 'nota' }, 'Salvata in questo browser.')));
+      h('fieldset', {},
+        h('legend', {}, 'Larghezza'),
+        [['compatta', 'Compatta (colonna centrale)'], ['piena', 'Piena (usa gli schermi larghi)']].map(([v, etichetta]) => h('label', { class: 'scelta-radio' },
+          h('input', { type: 'radio', name: 'larghezza-scheda', value: v, checked: (ctx.larghezza ?? 'piena') === v, onchange: () => ctx.azioni.larghezza(v) }),
+          ` ${etichetta}`))),
+      h('p', { class: 'nota' }, 'Salvate in questo browser.')));
 }
 
 // ---------------------------------------------------------------------------
 // componenti della modalità tavolo
 
 /** Contatore «attuali / massimi» con pulsanti grandi (≥ 44 px) per il dito. */
-function contatoreTavolo(ctx, { titolo, campo, attuale, massimo, passi = [1, 5], nota = null }) {
+/**
+ * Barra orizzontale di un valore attuale rispetto al massimo: si accorcia e cambia colore (verde,
+ * giallo, rosso; soglie in regole.json → interfaccia.barre_pv_pm). Il numero resta sempre accanto,
+ * così si legge anche senza colore.
+ */
+function barraRisorsa(ctx, etichetta, attuale, massimo, { classe = '' } = {}) {
+  const col = colore(attuale, massimo, ctx.dati.regole.interfaccia.barre_pv_pm);
+  return h('div', { class: `barra-risorsa ${classe}`.trim() },
+    etichetta ? h('span', { class: 'barra-etichetta' }, etichetta) : null,
+    h('span', {
+      class: 'barra-traccia', role: 'meter', 'aria-label': etichetta || 'riserva',
+      'aria-valuemin': 0, 'aria-valuemax': massimo, 'aria-valuenow': attuale,
+    }, h('span', { class: `barra-riempimento ${col ?? ''}`.trim(), style: `width: ${riempimento(attuale, massimo)}%` })),
+    h('span', { class: 'barra-numero' }, `${attuale} / ${massimo}`));
+}
+
+function contatoreTavolo(ctx, { titolo, campo, attuale, massimo, passi = [1, 5], nota = null, barra = false, extra = null, classe = '' }) {
   const b = (delta) => h('button', {
     type: 'button', class: 'btn-tavolo', onclick: () => ctx.azioni.varia(campo, delta),
     disabled: (delta < 0 && attuale <= 0) || (massimo !== null && delta > 0 && attuale >= massimo),
@@ -105,16 +131,41 @@ function contatoreTavolo(ctx, { titolo, campo, attuale, massimo, passi = [1, 5],
   }, delta > 0 ? `+${delta}` : `−${-delta}`);
   const meno = [...passi].reverse().map((p) => b(-p));
   const piu = passi.map((p) => b(p));
-  return h('div', { class: 'contatore-tavolo' },
+  return h('div', { class: `contatore-tavolo ${classe}`.trim() },
     h('h3', {}, titolo),
     h('p', { class: 'valore-tavolo', 'aria-live': 'polite' },
       h('strong', {}, String(attuale)), massimo !== null ? h('span', {}, ` / ${massimo}`) : null),
+    barra && massimo ? barraRisorsa(ctx, '', attuale, massimo, { classe: 'grande' }) : null,
     h('div', { class: 'pulsanti-tavolo' }, meno, piu),
-    nota ? h('p', { class: 'nota' }, nota) : null);
+    nota ? h('p', { class: 'nota' }, nota) : null,
+    extra);
 }
 
-function promemoriaPenalita(ctx) {
+/**
+ * Riquadro dei Punti Magia: la riserva personale e, sotto, i contenitori di Chroma posseduti
+ * (trasportati e sintonizzati per primi, gli altri in grigio). Due sottosezioni distinte: i PM dei
+ * cristalli non si sommano mai alla riserva personale (Magia sez. 6).
+ */
+function riquadroPM(ctx) {
+  const s = ctx.sessione;
+  const contenitori = [...(ctx.tab.scheda.equipaggiamento?.contenitori ?? [])]
+    .sort((x, y) => Number(y.trasportato && y.sintonizzato) - Number(x.trasportato && x.sintonizzato));
+  return contatoreTavolo(ctx, {
+    titolo: 'Punti Magia', campo: 'pmAttuali', attuale: s.pmAttuali, massimo: ctx.massimi.pm, barra: true, classe: 'riquadro-pm',
+    extra: contenitori.length ? h('div', { class: 'cristalli' },
+      h('h4', {}, 'Cristalli e riserve di Chroma'),
+      h('p', { class: 'nota' }, 'Riserve separate: non si sommano ai PM personali.'),
+      h('ul', { class: 'elenco-cristalli' }, contenitori.map((c) => h('li', {}, rigaCristallo(ctx, c))))) : null,
+  });
+}
+
+function promemoriaPenalita(ctx, { soloSenzaEffetto = false } = {}) {
   const p = ctx.penalita;
+  if (soloSenzaEffetto) {
+    const soli = p.stati.filter((s) => !s.effetto);
+    return soli.length ? h('div', { class: 'riquadro attenzione promemoria' },
+      h('p', {}, h('strong', {}, 'Stati senza effetto numerico, da applicare al tiro: '), soli.map((s) => `${s.nome}: ${s.promemoria}`).join(' '))) : null;
+  }
   const parti = [];
   if (ctx.sessione.ferite) parti.push(`Ferite: ${p.ferite.nome}${p.ferite.penalita ? ` ${segno(p.ferite.penalita)} a VA e Prove Salvezza` : ''}`);
   if (p.affaticamento.penalita) parti.push(`Affaticamento: ${p.affaticamento.nome} ${segno(p.affaticamento.penalita)} a tutte le Prove`);
@@ -167,8 +218,8 @@ function tabIdentita(ctx, d) {
   return [
     promemoriaPenalita(ctx),
     h('div', { class: 'griglia-tavolo' },
-      contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv }),
-      contatoreTavolo(ctx, { titolo: 'Punti Magia', campo: 'pmAttuali', attuale: s.pmAttuali, massimo: m.pm }),
+      contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true }),
+      riquadroPM(ctx),
       contatoreTavolo(ctx, { titolo: 'Punti Eroe', campo: 'puntiEroe', attuale: s.puntiEroe, massimo: m.puntiEroe, passi: [1] }),
       h('div', {},
         contatoreTavolo(ctx, { titolo: 'Distintivi', campo: 'distintivi', attuale: s.distintivi, massimo: null, passi: [1] }),
@@ -179,17 +230,18 @@ function tabIdentita(ctx, d) {
         }, `Converti ${m.distintiviPerPuntoEroe} Distintivi in 1 Punto Eroe`))),
 
     sezione('Anagrafica',
-      h('dl', { class: 'anagrafica' },
-        h('dt', {}, 'Corporazione'), h('dd', {}, d.corporazione),
-        h('dt', {}, 'Addestramento'), h('dd', {}, d.addestramento),
-        h('dt', {}, 'Classi'), h('dd', {}, d.classi.map((c) => `${c.nome} ${c.grado}`).join(', ')),
-        h('dt', {}, 'Livello'), h('dd', {}, String(d.livello)),
-        d.anagrafica.map((x) => [h('dt', {}, x.etichetta), h('dd', { class: x.valore ? null : 'vuoto' }, x.valore || '—')]),
-        h('dt', {}, h('label', { for: 'px' }, 'Punti esperienza')),
-        h('dd', {}, h('input', {
-          id: 'px', type: 'number', inputmode: 'numeric', step: 'any', class: 'input-px', value: d.puntiEsperienza ?? '',
-          onchange: (e) => ctx.azioni.puntiEsperienza(e.target.value === '' || !Number.isFinite(Number(e.target.value)) ? null : Number(e.target.value)),
-        }))),
+      // due colonne su desktop e tablet (le righe vanno giù per colonna), una sola su telefono
+      h('dl', { class: 'anagrafica anagrafica-colonne', style: `--righe: ${Math.ceil((d.anagrafica.length + 5) / 2)}` },
+        h('div', {}, h('dt', {}, 'Corporazione'), h('dd', {}, d.corporazione)),
+        h('div', {}, h('dt', {}, 'Addestramento'), h('dd', {}, d.addestramento)),
+        h('div', {}, h('dt', {}, 'Classi'), h('dd', {}, d.classi.map((c) => `${c.nome} ${c.grado}`).join(', '))),
+        h('div', {}, h('dt', {}, 'Livello'), h('dd', {}, String(d.livello))),
+        d.anagrafica.map((x) => h('div', {}, h('dt', {}, x.etichetta), h('dd', { class: x.valore ? null : 'vuoto' }, x.valore || '—'))),
+        h('div', {}, h('dt', {}, h('label', { for: 'px' }, 'Punti esperienza')),
+          h('dd', {}, h('input', {
+            id: 'px', type: 'number', inputmode: 'numeric', step: 'any', class: 'input-px', value: d.puntiEsperienza ?? '',
+            onchange: (e) => ctx.azioni.puntiEsperienza(e.target.value === '' || !Number.isFinite(Number(e.target.value)) ? null : Number(e.target.value)),
+          })))),
       h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.modificaCreazione(ctx.passi.background) },
         vuoti ? `Completa l’anagrafica (${vuoti} campi vuoti)` : 'Modifica anagrafica e Background')),
 
@@ -217,7 +269,7 @@ function tabIdentita(ctx, d) {
         h('div', {}, h('dt', {}, 'Azioni'), h('dd', {}, `${d.azioni.movimento} di Movimento, ${d.azioni.principali} ${d.azioni.principali === 1 ? 'Principale' : 'Principali'} per Round`)))),
 
     sezione('Vantaggio dell’Addestramento', h('p', {}, h('strong', {}, `${d.vantaggio.nome}. `), d.vantaggio.testo)),
-    sezione('Background', d.background ? paragrafi(d.background) : h('p', { class: 'vuoto' }, 'Nessun Background scritto.')),
+    sezione('Background', d.background ? h('div', { class: 'testo-lungo' }, paragrafi(d.background)) : h('p', { class: 'vuoto' }, 'Nessun Background scritto.')),
 
     sezione('Note di sessione',
       h('textarea', {
@@ -260,11 +312,18 @@ function tabAbilita(ctx, d) {
           h('small', { class: 'formula' }, `${segno(a.mod)} Mod + ${a.base} Base + ${a.corporazione} Corp + ${a.avanzamento} Avanz${a.equip ? ` ${segno(a.equip)} Equip` : ''}`)),
         h('td', { class: 'dettaglio' }, segno(a.mod)), h('td', { class: 'dettaglio' }, String(a.base)), h('td', { class: 'dettaglio' }, String(a.corporazione)),
         h('td', { class: 'dettaglio' }, String(a.avanzamento)), h('td', { class: 'dettaglio', title: a.equip ? 'Equipaggiamento indossato (§7.11.1)' : null }, a.equip ? segno(a.equip) : '0'), h('td', { class: 'forte' }, valoreEffettivo(a.nome, a.effettivo, a.totale, a.scomposizione)))))));
+  const condizioni = condizioniAttiveAbilita(ctx.tab.scheda, ctx.dati);
   return [
-    promemoriaPenalita(ctx),
+    condizioni.length ? h('section', { class: 'riquadro condizioni-attive', 'aria-label': 'Condizioni attive' },
+      h('h2', {}, 'Condizioni attive'),
+      h('ul', {}, condizioni.map((c) => h('li', { class: `condizione ${c.fonte}` },
+        h('span', { class: `val-eff ${c.verso}` }, h('span', { class: 'segno-verso', 'aria-hidden': 'true' }, c.verso === 'malus' ? '▼' : '▲'), ' '),
+        h('strong', {}, `${c.nome}: `), h('span', { class: `effetto-condizione ${c.verso}` }, c.testo))))) : null,
+    promemoriaPenalita(ctx, { soloSenzaEffetto: true }),
     sezione('Abilità',
       h('div', { class: 'abilita-affiancate' }, tabella(d.categorie.slice(0, meta)), tabella(d.categorie.slice(meta))),
       h('p', { class: 'nota' }, `• Abilità di Classe. VA = Mod + Base + Corp + Avanz + Equip (equipaggiamento indossato), più le condizioni della sessione (▼/▲ rispetto al valore da regole). Avanzamento massimo: ${d.limiteAvanzamento ?? '—'}.`)),
+    h('div', { class: 'colonne-larghe' },
     sezione('Talenti di Classe', d.talentiClasse.map((t) => h('div', { class: 'talento' },
       h('h3', {}, t.nome, h('span', { class: 'sigla' }, ` · ${t.classe} ${t.grado}${t.scelto ? ', a scelta' : ''}`)),
       paragrafi(t.frase)))),
@@ -272,7 +331,7 @@ function tabAbilita(ctx, d) {
       h('h3', {}, info('talento', t.id, t.nome), t.parametro ? ` (${t.parametro})` : null, t.annotazione ? ` — ${t.annotazione}` : null,
         h('span', { class: 'sigla' }, ` · ${t.livello}° livello`), t.provvisorio ? h('span', { class: 'etichetta' }, 'provvisorio') : null),
       t.provvisorio ? h('p', { class: 'nota' }, 'Talento provvisorio: ricavato dal Manuale della Magia, prerequisiti da definire con il master.') : null,
-      paragrafi(t.frase)))) : null,
+      paragrafi(t.frase)))) : null),
     d.specializzazioni.length ? sezione('Specializzazioni', h('ul', {}, d.specializzazioni.map((x) => h('li', {},
       info('talento', x.id, x.nome), ` — ${x.abilita}; ${x.effetto} (${x.livello}° livello)`)))) : null,
     d.tecniche.length || d.tecnicheAmmesse ? sezione(`Tecniche Interiori (${d.tecniche.length} / ${d.tecnicheAmmesse})`,
@@ -293,7 +352,7 @@ function tabCombattimento(ctx, d) {
       h('p', {}, h('strong', {}, 'Equipaggiamento da controllare (avvisi, non blocchi: decide il master):')),
       h('ul', {}, d.avvisiEquipaggiamento.map((a) => h('li', {}, a)))) : null,
     h('div', { class: 'griglia-tavolo' },
-      contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv }),
+      contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true }),
       d.difese ? h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Difese'),
         h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), h('strong', {}, valoreEffettivo('Difese', d.difese.effettivo, d.difese.totale, d.difese.scomposizione))),
         h('p', { class: 'nota' }, `(${d.difese.caratteristica}) con l’equipaggiamento e le condizioni della sessione`)) : null),
@@ -333,6 +392,7 @@ function tabCombattimento(ctx, d) {
       const lista = consumabili(normalizzaEquipaggiamento(ctx.scelte.equipaggiamento), ctx.dati).filter((c) => c.gruppo === 'sanitario');
       return lista.length ? [sezione('Sanitario (§7.19)', h('div', { class: 'armi-tab' }, lista.map((c) => h('article', { class: 'arma-tab' },
         h('h3', {}, c.nome),
+        c.effettoBreve ? h('p', { class: 'effetto-breve' }, c.effettoBreve) : null,
         pannelloMunizioni(ctx, { uid: c.uid, nome: c.nome, munizioni: { capacita: c.capacita, unita: c.unita, ricarica: c.ricarica ? `${c.ricarica.applicazioni} ${c.unita} costano ${c.ricarica.costo.toLocaleString('it-IT')}` : null } })))))] : [];
     })(),
     // §7.10: Artefatti, sintonizzazione e riserve di PM
@@ -346,7 +406,7 @@ function tabCombattimento(ctx, d) {
         h('p', { class: `valore-tavolo${st.usata > st.capacita ? ' oltre' : ''}` }, h('span', {}, 'Sintonizzazione '), h('strong', {}, String(st.usata)), h('span', {}, ` / ${st.capacita}`)),
         h('p', { class: 'nota' }, `Capacità per ${st.gradi} Grad${st.gradi === 1 ? 'o' : 'i'} complessiv${st.gradi === 1 ? 'o' : 'i'}${st.talento ? ` con ${st.talento}` : ''}, prima dell’eventuale riduzione per Umanità (§5.21). Si segna «Sintonizzato» nella lista dell’equipaggiamento.`),
         h('ul', { class: 'elenco-sintonie' }, st.artefatti.map((x) => h('li', {}, `${x.sintonizzato ? '✔' : '○'} ${x.nome} · ${x.potenza}, costo ${x.costo}`))),
-        conMagia && (ctx.tab.scheda.equipaggiamento?.contenitori ?? []).length ? h('p', { class: 'nota' }, 'Le riserve di Chroma sono nella tab Magia, «Riserve esterne».') : null,
+        (ctx.tab.scheda.equipaggiamento?.contenitori ?? []).length ? h('p', { class: 'nota' }, `I PM dei cristalli si modificano nel riquadro Punti Magia (tab Identità${conMagia ? ' o Magia' : ''}).`) : null,
         riserve.length ? h('div', { class: 'armi-tab' }, riserve.map((c) => schedaContenitore(ctx, c))) : null)];
     })(),
 
@@ -421,7 +481,7 @@ function schedaArma(ctx, a) {
     a.componenti.length ? h('p', { class: 'nota' }, a.componenti.map((c) => `${c.nome} ${segno(c.valore)}`).join(' · '),
       a.bonusDanno ? ` · danno +${a.bonusDanno} (${a.specializzazione})` : null) : null,
     a.modalita.length ? h('p', { class: 'proprieta-arma' }, h('span', { class: 'sigla' }, 'Modalità '),
-      a.modalita.map((m) => h('span', { class: 'etichetta', title: legenda[m] ?? m }, m))) : null,
+      a.modalita.map((m) => etichettaModalita(ctx, m, legenda[m]))) : null,
     a.mov ? h('p', { class: 'nota' }, `MOV ${segno(a.mov)} Q mentre è impugnata (§7.7)`) : null,
     a.famigliaMunizioni || a.scorte?.length ? h('p', { class: 'nota' }, h('strong', {}, 'Munizioni: '),
       a.famigliaMunizioni ? `${NOMI_FAMIGLIE_MUNIZIONI[a.famigliaMunizioni]} (§7.20.9)` : null,
@@ -438,7 +498,7 @@ function schedaArma(ctx, a) {
     a.proprieta.length ? h('p', { class: 'proprieta-arma' }, a.proprieta.map((p) => h('span', { class: 'etichetta', title: p.testo }, p.nome))) : null,
     mr ? h('p', { class: 'nota' }, `Con ${mr.nome}: ${mr.proprieta.join('; ')}. Danno, AC e RS sono della munizione, non bonus del lanciatore (§7.8).`) : null,
     // §7.5.1: la riserva di Chroma integrata non è un caricatore: +/− manuali, niente «Ricarica»
-    a.contenitore ? pannelloChroma(ctx, (ctx.tab.scheda.equipaggiamento?.contenitori ?? []).find((c) => c.uid === a.uid))
+    a.contenitore ? pannelloChroma(ctx, (ctx.tab.scheda.equipaggiamento?.contenitori ?? []).find((c) => c.uid === a.uid), { conPulsanti: true })
       : a.tipo === 'arma_distanza' || a.munizioni?.capacita ? pannelloMunizioni(ctx, a) : null);
 }
 
@@ -492,23 +552,39 @@ function testoAlimenta(c) {
   return `Energia ${c.energiaNome}: alimenta Incantesimi ${c.macrofamiglie.map((m) => AGGETTIVI_MACRO[m] ?? m).join(' e ')}.`;
 }
 
-/** PM attuali di un contenitore con +/− manuali. A 0 PM il Chroma è Trasparente, con l'alone del colore. */
-function pannelloChroma(ctx, c) {
-  if (!c) return null;
+/**
+ * Riga di un contenitore di Chroma: colore, PM attuali / capacità, barra e +/− manuali. È l'unico
+ * controllo che modifica i PM di un cristallo (riquadro Punti Magia e riserva accanto all'arma).
+ * A 0 PM il Chroma è Trasparente, con l'alone del colore. I contenitori non trasportati o non
+ * sintonizzati sono in grigio.
+ */
+function rigaCristallo(ctx, c) {
   const pm = ctx.sessione.chroma?.[c.uid]?.pmAttuali ?? 0;
   const esausto = pm === 0;
+  const pronto = c.trasportato && c.sintonizzato;
   const pulsante = (d) => h('button', {
     type: 'button', class: 'btn-tavolo', disabled: d < 0 ? pm <= 0 : pm >= c.capacita,
     'aria-label': `${d > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(d)} PM a ${c.nome}`,
     onclick: () => ctx.azioni.chroma(c.uid, d),
   }, d > 0 ? `+${d}` : `−${-d}`);
+  return h('div', { class: `riga-cristallo${pronto ? '' : ' inattivo'}` },
+    h('div', { class: 'cristallo-testa' },
+      h('span', { class: `chroma-punto chroma-${c.energia.toLowerCase()}${esausto ? ' esausto' : ''}`, 'aria-hidden': 'true' }),
+      h('span', { class: 'cristallo-nome' }, c.nome,
+        h('small', { class: 'sigla' }, ` · ${esausto ? `Trasparente (alone ${c.energia})` : `Chroma ${c.energia}`}${pronto ? '' : c.sintonizzato ? ' · non trasportato' : ' · non sintonizzato'}`))),
+    h('div', { class: 'cristallo-valori' },
+      barraRisorsa(ctx, '', pm, c.capacita),
+      pulsante(-1), pulsante(1)));
+}
+
+/** Riserva di Chroma: la riga del cristallo, con la nota su cosa alimenta e come si ricarica. */
+function pannelloChroma(ctx, c, { conPulsanti = true } = {}) {
+  if (!c) return null;
+  const pm = ctx.sessione.chroma?.[c.uid]?.pmAttuali ?? 0;
   return h('div', { class: 'munizioni-tavolo chroma-tavolo' },
-    h('div', { class: 'riga-munizioni' },
-      h('span', {},
-        h('span', { class: `chroma-punto chroma-${c.energia.toLowerCase()}${esausto ? ' esausto' : ''}`, 'aria-hidden': 'true' }),
-        esausto ? `Trasparente (alone ${c.energia}) ` : `Chroma ${c.energia} `,
-        h('strong', {}, String(pm)), ` / ${c.capacita} PM`),
-      pulsante(-1), pulsante(1)),
+    conPulsanti ? rigaCristallo(ctx, c)
+      : h('p', {}, h('span', { class: `chroma-punto chroma-${c.energia.toLowerCase()}${pm === 0 ? ' esausto' : ''}`, 'aria-hidden': 'true' }),
+        pm === 0 ? `Trasparente (alone ${c.energia}) ` : `Chroma ${c.energia} `, h('strong', {}, String(pm)), ` / ${c.capacita} PM`),
     h('small', { class: 'nota' }, [
       testoAlimenta(c),
       'Si ricarica solo con Convertire Potere (Magia sez. 6): «Nuova sessione» e il riposo non la riempiono.',
@@ -522,7 +598,28 @@ function schedaContenitore(ctx, c) {
     h('p', { class: 'nota' },
       c.sintonizzato ? `✔ Sintonizzato (costo ${c.costo}, §7.10)` : `○ Non sintonizzato (costo ${c.costo}): senza sintonizzazione non alimenta lanci`,
       ' · ', c.trasportato ? 'trasportato' : c.integrato ? `oggetto ${NOMI_STATI[c.stato]?.toLowerCase() ?? 'non trasportato'}` : 'nello zaino'),
-    pannelloChroma(ctx, c));
+    // vista estesa, in sola lettura: i PM si modificano nel riquadro Punti Magia
+    pannelloChroma(ctx, c, { conPulsanti: false }));
+}
+
+/** Sigla di una modalità di fuoco con il tooltip del §5.10 (regole.json → modalita_di_fuoco). */
+function etichettaModalita(ctx, sigla, nomeCatalogo) {
+  const m = ctx.dati.regole.modalita_di_fuoco?.[sigla];
+  if (!m) return h('span', { class: 'etichetta', title: nomeCatalogo ?? sigla }, sigla);
+  const segnoVa = (v) => (v > 0 ? `+${v}` : v < 0 ? `−${-v}` : '0');
+  return infoValore(sigla, {
+    titolo: `${sigla} · ${m.nome}`,
+    sottotitolo: `Manuale del Giocatore ${m.paragrafo}`,
+    sezioni: [
+      { etichetta: 'Regola', testo: m.regola },
+      { etichetta: 'Colpi consumati', testo: String(m.colpi_consumati) },
+      { etichetta: 'Azioni', testo: `${m.azioni_principali} ${m.azioni_principali === 1 ? 'Azione Principale' : 'Azioni Principali'}` },
+      { etichetta: 'VA', testo: segnoVa(m.modificatore_va) },
+      { etichetta: 'Colpi a segno', testo: m.colpi_a_segno },
+      m.migliorata ? { etichetta: m.migliorata.talento, testo: m.migliorata.modificatore_va !== undefined ? `VA ${segnoVa(m.migliorata.modificatore_va)}` : `consumo ${m.migliorata.colpi_consumati}` } : null,
+      m.note ? { etichetta: 'Note', testo: m.note } : null,
+    ].filter(Boolean),
+  }, { classe: 'etichetta' });
 }
 
 // ---------------------------------------------------------------------------
@@ -533,21 +630,22 @@ function tabMagia(ctx, d) {
   const contenitori = ctx.tab.scheda.equipaggiamento?.contenitori ?? [];
   const perLancio = ctx.dati.regole.chroma?.contenitori_per_lancio ?? 1;
   return [
+    h('div', { class: 'magia-testa' },
     h('div', { class: 'griglia-tavolo' },
-      contatoreTavolo(ctx, { titolo: 'Punti Magia', campo: 'pmAttuali', attuale: s.pmAttuali, massimo: ctx.massimi.pm }),
+      riquadroPM(ctx),
       h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Incantesimi'),
         h('p', { class: 'valore-tavolo' }, h('strong', {}, String(d.conosciuti)), h('span', {}, ` / ${d.quota}`)),
         h('p', { class: 'nota' }, `Livello massimo di lancio: ${d.livelloMassimo}`),
         ctx.tab.scheda.equipaggiamento?.lancioPotere ? h('p', { class: 'nota' }, `Armatura: ${segno(ctx.tab.scheda.equipaggiamento.lancioPotere)} VA alle Prove di Potere per lanciare (§7.11.1)`) : null)),
-    contenitori.length ? sezione('Riserve esterne',
-      h('p', { class: 'nota' }, `Magia sez. 6: il costo di un lancio si paga con i PM personali, con ${perLancio === 1 ? 'un solo contenitore' : `al massimo ${perLancio} contenitori`} trasportato, sintonizzato e compatibile, o con entrambi. Possedere PM in un contenitore non evita lo svenimento a 0 PM personali.`),
-      h('div', { class: 'armi-tab' }, contenitori.map((c) => schedaContenitore(ctx, c)))) : null,
     sezione(`Prove di Potere (scala ${d.scalaPotere})`,
       h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },
         h('thead', {}, h('tr', {}, h('th', {}, 'Livello'), h('th', {}, 'Prova'))),
-        h('tbody', {}, d.scala.map((r) => h('tr', {}, h('th', { scope: 'row' }, r.livelli), h('td', {}, r.prova))))))),
+        h('tbody', {}, d.scala.map((r) => h('tr', {}, h('th', { scope: 'row' }, r.livelli), h('td', {}, r.prova)))))))),
+    contenitori.length ? sezione('Riserve esterne',
+      h('p', { class: 'nota' }, `Magia sez. 6: il costo di un lancio si paga con i PM personali, con ${perLancio === 1 ? 'un solo contenitore' : `al massimo ${perLancio} contenitori`} trasportato, sintonizzato e compatibile, o con entrambi. Possedere PM in un contenitore non evita lo svenimento a 0 PM personali. I PM dei cristalli si modificano nel riquadro Punti Magia, qui sopra.`),
+      h('div', { class: 'armi-tab' }, contenitori.map((c) => schedaContenitore(ctx, c)))) : null,
     d.macrofamiglie.length ? d.macrofamiglie.map((mf) => sezione(mf.nome,
-      mf.specializzazioni.map((sp) => h('div', {},
+      mf.specializzazioni.map((sp) => h('div', { class: 'incantesimi-griglia' },
         h('h3', { class: 'spec' }, sp.nome),
         sp.incantesimi.map((i) => h('article', { class: 'incantesimo-scheda' },
           h('h4', {}, info('incantesimo', i.nome), h('span', { class: 'sigla' }, ` · livello base ${i.livelloBase} · scheda ${i.scheda}`)),

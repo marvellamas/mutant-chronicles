@@ -23,7 +23,8 @@
         "successo": "Sospende il Sanguinamento per 10 Round",
         "magistrale": "Arresta il Sanguinamento"
       },
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Sospende il Sanguinamento per 10 Round"
     },
     {
       "id": "kit-di-pronto-soccorso-standard",
@@ -53,7 +54,8 @@
         "successo": "Arresta il Sanguinamento",
         "magistrale": "Arresta il Sanguinamento e recupera 1d4 PV"
       },
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Arresta il Sanguinamento"
     },
     {
       "id": "kit-di-pronto-soccorso-professionale",
@@ -85,7 +87,8 @@
         "successo": "Arresta il Sanguinamento e recupera 1d4 PV",
         "magistrale": "Arresta il Sanguinamento e recupera il doppio del risultato di 1d4 PV"
       },
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Arresta il Sanguinamento e recupera 1d4 PV"
     },
     {
       "id": "cartuccia-emostatica",
@@ -100,7 +103,8 @@
       "reperibilita": "NC",
       "costo": 200,
       "effetto": "Sospende il Sanguinamento per 5 Round",
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Sospende il Sanguinamento per 5 Round"
     },
     {
       "id": "cartuccia-coagulante",
@@ -115,7 +119,8 @@
       "reperibilita": "RA",
       "costo": 600,
       "effetto": "Arresta il Sanguinamento",
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Arresta il Sanguinamento"
     },
     {
       "id": "cartuccia-curativa",
@@ -130,7 +135,8 @@
       "reperibilita": "RA",
       "costo": 500,
       "effetto": "Recupera 1d6 PV, fino ai PV massimi",
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Recupera 1d6 PV, fino ai PV massimi"
     },
     {
       "id": "umc-passiva",
@@ -175,7 +181,8 @@
           ]
         }
       ],
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Il giocatore sceglie una cartuccia caricata e spende 1 AzP. Occorre una Prova di Medicina oppure Tecnologia–Strumentazione."
     },
     {
       "id": "umc-attiva",
@@ -220,7 +227,8 @@
           ]
         }
       ],
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Modalità Emergenza: dopo aver subito il Sanguinamento, somministra automaticamente una cartuccia emostatica caricata, senza Prova e senza Azione."
     },
     {
       "id": "umc-automatica",
@@ -265,7 +273,8 @@
           ]
         }
       ],
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Dopo il Sanguinamento, il protocollo d’emergenza usa automaticamente una cartuccia emostatica oppure coagulante secondo la priorità impostata e la disponibilità delle cartucce."
     },
     {
       "id": "iniettore-sanitario-manuale",
@@ -283,7 +292,8 @@
       "reperibilita": "NC",
       "costo": 600,
       "capacita_cartucce": 1,
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Somministrare richiede 1 AzP e una Prova di Medicina oppure Tecnologia–Strumentazione."
     },
     {
       "id": "pistola-sanitaria",
@@ -301,7 +311,8 @@
       "reperibilita": "RA",
       "costo": 3500,
       "capacita_cartucce": 5,
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Somministrare una delle cartucce caricate richiede 1 AzP, senza Prova."
     },
     {
       "id": "spray-rimarginante",
@@ -324,7 +335,8 @@
         "applicazioni": 5,
         "costo": 1000
       },
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Spendendo 1 AzP e una dose, senza Prova, recupera 1d3 PV fino al massimo."
     },
     {
       "id": "scanner-diagnostico-portatile",
@@ -345,7 +357,8 @@
         "va": 2,
         "prova": "Medicina (diagnosi)"
       },
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Una diagnosi richiede almeno un minuto e una Prova di Medicina con +2 VA degli strumenti, per lesioni e anomalie rilevabili dall’apparecchio."
     },
     {
       "id": "scanner-diagnostico-cybertronic",
@@ -366,7 +379,8 @@
         "va": 2,
         "prova": "Medicina (diagnosi); +1 con SIN 1 e interfaccia attiva"
       },
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Mantiene le funzioni e il +2 VA diagnostico del modello portatile; SIN 1 concede un ulteriore +1 alla Prova diagnostica con interfaccia compatibile attiva, per +3 complessivo prima di altri modificatori."
     },
     {
       "id": "kit-chirurgico-da-campo",
@@ -393,7 +407,8 @@
         "applicazioni": 5,
         "costo": 2500
       },
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "È una dotazione Professionale: +2 VA a Medicina per interventi chirurgici e procedure pertinenti eseguibili sul campo."
     },
     {
       "id": "postazione-medica-da-campo",
@@ -420,7 +435,8 @@
         "applicazioni": 5,
         "costo": 2500
       },
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Concede +3 VA a Medicina per chirurgia e trattamenti delle Ferite o delle Menomazioni; la diagnostica mantiene il +2 del proprio scanner."
     }
   ]
 }

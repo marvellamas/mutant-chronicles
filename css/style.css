@@ -16,6 +16,10 @@
   --attenzione-tenue: #fbf0d9;
   --errore: #a3261b;
   --errore-tenue: #fbe4e1;
+  --barra-verde: #2e8b4e;
+  --barra-giallo: #d19a00;
+  --barra-rosso: #c23b2c;
+  --barra-traccia: #e6e3dc;
   --raggio: 8px;
   --ombra: 0 1px 2px rgb(0 0 0 / 0.06);
   --carattere: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -39,6 +43,10 @@
     --attenzione-tenue: #3a2f1a;
     --errore: #f08a80;
     --errore-tenue: #3d201d;
+    --barra-verde: #5cc47f;
+    --barra-giallo: #e8b64c;
+    --barra-rosso: #f07a6e;
+    --barra-traccia: #34343a;
     --ombra: none;
     color-scheme: dark;
   }
@@ -87,6 +95,8 @@ a { color: var(--accento); }
 .versioni { margin-left: auto; color: var(--tenue); font-size: 0.85rem; }
 
 main { padding: 0 1rem 6rem; max-width: 1280px; margin: 0 auto; }
+/* SD a larghezza piena: fino a 1650 px (ingranaggio della scheda, «Larghezza») */
+main:has(> .scheda-tab.larghezza-piena) { max-width: 1650px; }
 
 .avviso-avvio { max-width: 40rem; margin: 2rem auto; }
 
@@ -760,3 +770,69 @@ details.sezione-tab > summary { font-weight: 700; cursor: pointer; min-height: 4
 
 .riga-munizioni { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.6rem; flex-basis: 100%; }
 .riga-munizioni .btn { min-height: 48px; }
+
+/* ---------------------------------------------------------------- SD: barre, cristalli, schermi larghi */
+
+/* Barre di PV e PM (e dei cristalli): verde, giallo, rosso secondo regole.json → interfaccia.
+   Il numero «attuali / massimi» resta sempre accanto: si legge anche senza colore. */
+.barra-risorsa { display: flex; align-items: center; gap: 0.45rem; font-size: 0.85rem; min-width: 0; }
+.barra-etichetta { font-weight: 700; min-width: 1.8rem; }
+.barra-traccia { flex: 1; min-width: 3.5rem; height: 0.55rem; background: var(--barra-traccia); border-radius: 999px; overflow: hidden; }
+.barra-riempimento { display: block; height: 100%; background: var(--tenue); border-radius: 999px; transition: width 0.2s; }
+.barra-riempimento.verde { background: var(--barra-verde); }
+.barra-riempimento.giallo { background: var(--barra-giallo); }
+.barra-riempimento.rosso { background: var(--barra-rosso); }
+.barra-numero { font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--tenue); }
+.barra-risorsa.grande { margin: -0.2rem 0 0.55rem; }
+.barra-risorsa.grande .barra-traccia { height: 0.75rem; }
+.riepilogo-risorse { display: grid; grid-template-columns: repeat(2, minmax(7.5rem, 12rem)); gap: 0.2rem 1rem; margin-top: 0.35rem; }
+
+/* Riquadro Punti Magia: riserva personale e, separati, i cristalli */
+.cristalli { margin-top: 0.75rem; padding-top: 0.5rem; border-top: 1px dashed var(--bordo); }
+.cristalli h4 { margin: 0; font-size: 0.9rem; color: var(--tenue); }
+.cristalli > .nota { margin: 0.1rem 0 0.4rem; }
+.elenco-cristalli { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.5rem; }
+.riga-cristallo { display: grid; gap: 0.25rem; }
+.riga-cristallo.inattivo { opacity: 0.55; }
+.cristallo-testa { display: flex; align-items: baseline; gap: 0.3rem; min-width: 0; }
+.cristallo-nome { min-width: 0; }
+.cristallo-valori { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 0.4rem; align-items: center; }
+
+/* Anagrafica: due colonne da desktop e tablet (le righe scendono per colonna), una su telefono */
+.anagrafica-colonne { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.35rem 2rem; }
+.anagrafica-colonne > div { display: grid; grid-template-columns: minmax(7rem, 11rem) minmax(0, 1fr); gap: 0 1rem; align-items: center; }
+@media (min-width: 600px) {
+  .anagrafica-colonne { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-flow: column; grid-template-rows: repeat(var(--righe, 7), auto); }
+}
+
+/* Abilità: riquadro delle condizioni che toccano le Abilità */
+.condizioni-attive { margin: 0.75rem 0; }
+.condizioni-attive h2 { font-size: 1rem; margin: 0 0 0.35rem; }
+.condizioni-attive ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.25rem; }
+.effetto-condizione.malus, .condizioni-attive .val-eff.malus { color: var(--errore); }
+.effetto-condizione.bonus, .condizioni-attive .val-eff.bonus { color: var(--ok); }
+
+/* Riga di effetto degli oggetti (catalogo → effetto_breve) */
+.effetto-breve { margin: 0.15rem 0 0; font-size: 0.85rem; color: var(--tenue); }
+
+/* Sigle delle modalità di fuoco con tooltip: aspetto di etichetta */
+.voce-info.etichetta { margin-left: 0; padding: 0 0.4rem; border-radius: 4px; background: var(--accento-tenue); color: var(--accento); font-size: 0.7rem; font-weight: 600; text-decoration: none; }
+
+/* Contenitori che negli schermi normali non cambiano nulla */
+.colonne-larghe, .magia-testa, .incantesimi-griglia { display: contents; }
+
+/* Schermi larghi con larghezza piena: più colonne, non card più larghe; testo lungo a ~75 caratteri */
+@media (min-width: 1300px) {
+  .larghezza-piena .griglia-tavolo { grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); }
+  .larghezza-piena .armi-tab { grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr)); }
+  .larghezza-piena .griglia-tavolo > .riquadro-pm:has(.cristalli) { grid-column: span 2; }
+  .larghezza-piena .colonne-larghe { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 2rem; align-items: start; }
+  .larghezza-piena .magia-testa { display: grid; grid-template-columns: minmax(0, 2fr) minmax(18rem, 1fr); gap: 0 1.5rem; align-items: start; }
+  .larghezza-piena .magia-testa .griglia-tavolo { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .larghezza-piena .magia-testa .griglia-tavolo > .riquadro-pm { grid-column: auto; }
+  .larghezza-piena .magia-testa > .sezione-tab { margin-top: 0.75rem; }
+  .larghezza-piena .incantesimi-griglia { display: grid; grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr)); gap: 0 1.5rem; align-items: start; }
+  .larghezza-piena .incantesimi-griglia > .spec { grid-column: 1 / -1; }
+  .larghezza-piena .talento p, .larghezza-piena .testo-lungo p, .larghezza-piena .effetto-breve { max-width: 75ch; }
+  .larghezza-piena .note-sessione { max-width: 75ch; display: block; }
+}

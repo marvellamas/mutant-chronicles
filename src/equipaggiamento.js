@@ -146,7 +146,7 @@ export function consumabili(voci, dati) {
   const out = [];
   for (const r of (voci ?? []).map((v) => risolvi(v, cat))) {
     if (r.def?.applicazioni) {
-      out.push({ uid: r.uid, nome: r.nome, capacita: r.def.applicazioni * (r.voce.quantita ?? 1), unita: r.def.nome_applicazioni ?? 'applicazioni', ricarica: r.def.ricarica ?? null, gruppo: 'sanitario' });
+      out.push({ uid: r.uid, nome: r.nome, capacita: r.def.applicazioni * (r.voce.quantita ?? 1), unita: r.def.nome_applicazioni ?? 'applicazioni', ricarica: r.def.ricarica ?? null, gruppo: 'sanitario', effettoBreve: r.def.effetto_breve ?? null });
     }
     // le riserve di PM degli Artefatti sono contenitori di Chroma: vedi contenitori()
   }

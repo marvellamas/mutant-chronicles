@@ -30,7 +30,8 @@
         "azp_minime": null,
         "testo": "Fino a 80 Q; nessuna preparazione aggiuntiva."
       },
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Fino a 80 Q; nessuna preparazione aggiuntiva."
     },
     {
       "id": "mirino-ottico",
@@ -59,7 +60,8 @@
         "azp_minime": 2,
         "testo": "Fino a 500 Q; almeno 2 Azioni Principali complessive."
       },
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Fino a 500 Q; almeno 2 Azioni Principali complessive."
     },
     {
       "id": "mirino-di-precisione",
@@ -88,7 +90,8 @@
         "azp_minime": 2,
         "testo": "Entro la gittata massima dell’arma; almeno 2 Azioni Principali complessive."
       },
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Entro la gittata massima dell’arma; almeno 2 Azioni Principali complessive."
     },
     {
       "id": "attenuatore",
@@ -115,7 +118,8 @@
         "danno": 0
       },
       "percezione": "−2 VA",
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Percezione dello sparo: −2 VA; VA per colpire 0; danno 0."
     },
     {
       "id": "attenuatore-rinforzato",
@@ -142,7 +146,8 @@
         "danno": 0
       },
       "percezione": "−2 VA",
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Percezione dello sparo: −2 VA; VA per colpire 0; danno 0."
     },
     {
       "id": "smorzatore",
@@ -169,7 +174,8 @@
         "danno": 0
       },
       "percezione": "−4 VA",
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Percezione dello sparo: −4 VA; VA per colpire −1; danno 0."
     },
     {
       "id": "smorzatore-rinforzato",
@@ -196,7 +202,8 @@
         "danno": 0
       },
       "percezione": "−4 VA",
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Percezione dello sparo: −4 VA; VA per colpire −1; danno 0."
     },
     {
       "id": "silenziatore",
@@ -223,7 +230,8 @@
         "danno": -1
       },
       "percezione": "Nessuna Prova uditiva",
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Percezione dello sparo: Nessuna Prova uditiva; VA per colpire −2; danno −1."
     },
     {
       "id": "silenziatore-rinforzato",
@@ -250,7 +258,8 @@
         "danno": -1
       },
       "percezione": "Nessuna Prova uditiva",
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Percezione dello sparo: Nessuna Prova uditiva; VA per colpire −2; danno −1."
     },
     {
       "id": "bipiede",
@@ -276,7 +285,8 @@
         "va": 1,
         "condizione": "finché il personaggio mantiene posizione e appoggio"
       },
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Concede +1 VA per colpire finché il personaggio mantiene posizione e appoggio."
     },
     {
       "id": "treppiede",
@@ -302,7 +312,8 @@
         "va": 2,
         "condizione": "mentre il tiratore utilizza l’arma dalla postazione"
       },
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Il Treppiede concede +2 VA per colpire mentre il tiratore utilizza l’arma dalla postazione e permette di orientarla verso bersagli differenti senza ripetere la preparazione."
     },
     {
       "id": "torcia-tattica",
@@ -323,7 +334,8 @@
         "arma_distanza"
       ],
       "portata_q": 20,
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Si monta su un’arma predisposta e illumina nella direzione verso cui viene puntata, entro 20 Q."
     },
     {
       "id": "modulo-di-visione-notturna",
@@ -345,7 +357,8 @@
       ],
       "gruppo_esclusivo": "modulo_visione",
       "portata_q": 80,
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Si applica a un mirino compatibile e permette di osservare e sparare attraverso di esso ignorando, entro 80 Q, le penalità dovute alla scarsa illuminazione."
     },
     {
       "id": "modulo-di-visione-termica",
@@ -367,7 +380,8 @@
       ],
       "gruppo_esclusivo": "modulo_visione",
       "portata_q": 40,
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Permette di osservare e prendere di mira, entro 40 Q, bersagli con un contrasto termico sufficiente rispetto all’ambiente, anche nel buio naturale completo."
     },
     {
       "id": "batteria-di-servizio",
@@ -418,7 +432,8 @@
           ]
         }
       ],
-      "proprieta": []
+      "proprieta": [],
+      "effetto_breve": "Ogni accessorio impiega la propria batteria e dispone di 24 ore effettive di funzionamento, anche non consecutive."
     }
   ]
 }

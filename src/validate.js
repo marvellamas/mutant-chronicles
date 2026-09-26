@@ -62,6 +62,7 @@ export function validaDati(dati) {
   validaTecniche(dati.tecniche_interiori, err);
   validaEquipaggiamento(dati.equipaggiamento, [...nomiAbilita], [...(idSpec ?? [])], err, Object.keys(dati.regole?.chroma?.colori ?? {}).filter((c) => !dati.regole.chroma.colori[c]?.esausto));
   if (dati.regole?.chroma !== undefined) validaChroma(dati, err);
+  if (dati.regole) validaSchedaDigitale(dati, err);
 
   return errori;
 }
@@ -697,6 +698,39 @@ function validaChroma(dati, err) {
   }
   if (!isIntero(c.contenitori_per_lancio) || c.contenitori_per_lancio < 1) err(F, 'chroma.contenitori_per_lancio', 'intero ≥ 1 mancante');
   if (!['pieno', 'vuoto'].includes(c.contenitore_nuovo)) err(F, 'chroma.contenitore_nuovo', 'deve essere "pieno" o "vuoto"');
+}
+
+/**
+ * Dati della scheda digitale in regole.json: soglie delle barre di PV e PM («interfaccia») e
+ * modalità di fuoco del §5.10 («modalita_di_fuoco»), con una voce per ogni sigla usata nel
+ * catalogo. Nel catalogo, «effetto_breve» è un testo non vuoto.
+ */
+function validaSchedaDigitale(dati, err) {
+  const F = 'regole.json';
+  const b = dati.regole.interfaccia?.barre_pv_pm;
+  const frazione = (v) => typeof v === 'number' && v >= 0 && v <= 1;
+  if (!isOggetto(b) || !frazione(b.verde_sopra) || !frazione(b.rosso_sotto) || b.rosso_sotto >= b.verde_sopra) {
+    err(F, 'interfaccia.barre_pv_pm', 'servono verde_sopra e rosso_sotto fra 0 e 1, con rosso_sotto < verde_sopra');
+  }
+  const mf = dati.regole.modalita_di_fuoco;
+  if (!isOggetto(mf)) { err(F, 'modalita_di_fuoco', 'blocco mancante (§5.10)'); return; }
+  for (const [sigla, m] of Object.entries(mf)) {
+    if (sigla.startsWith('_')) continue;
+    const K = `modalita_di_fuoco.${sigla}`;
+    if (!isOggetto(m)) { err(F, K, 'oggetto atteso'); continue; }
+    if (!isTesto(m.nome)) err(F, `${K}.nome`, 'nome esteso mancante');
+    if (!isTesto(m.regola)) err(F, `${K}.regola`, 'testo della regola mancante');
+    if (!isTesto(m.paragrafo)) err(F, `${K}.paragrafo`, 'paragrafo del manuale mancante');
+    if (!isTesto(m.colpi_a_segno)) err(F, `${K}.colpi_a_segno`, 'come si determinano i colpi a segno');
+    for (const c of ['colpi_consumati', 'azioni_principali']) if (!isIntero(m[c]) || m[c] < 1) err(F, `${K}.${c}`, 'intero ≥ 1 atteso');
+    if (!isIntero(m.modificatore_va)) err(F, `${K}.modificatore_va`, 'intero atteso');
+  }
+  for (const [id, f] of Object.entries(dati.equipaggiamento?.file ?? {})) {
+    (f.oggetti ?? []).forEach((o, i) => {
+      for (const sigla of o.modalita ?? []) if (!isOggetto(mf[sigla])) err(`equipaggiamento/${id}`, `oggetti[${i}] (${o.nome}).modalita`, `la sigla "${sigla}" non ha una voce in regole.json → modalita_di_fuoco`);
+      if (o.effetto_breve !== undefined && !isTesto(o.effetto_breve)) err(`equipaggiamento/${id}`, `oggetti[${i}] (${o.nome}).effetto_breve`, 'testo non vuoto atteso');
+    });
+  }
 }
 
 function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = []) {
