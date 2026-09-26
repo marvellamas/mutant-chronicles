@@ -45,6 +45,8 @@ Le risposte già date (Esploratore, minimo 1 incantesimi, quote per macrofamigli
 
 13. **Rainy Dayer: quale Specializzazione? (§7.14.6)** È un'arma da fuoco a corto raggio con ombrello balistico, Armi medie, gittata 30 Q, a due mani al tiro. Il manuale non dice la categoria. Proposta: Carabine. Finché non rispondi nessuna Specializzazione dà +1 con quest'arma.
 
+14. **Batterie da 5 PM: prezzo e profilo (§7.10).** Il §7.10 cita le batterie da 5 PM come esempio di potenza (Rosso, Blu e Verde Comuni, costo di sintonizzazione 1; Bianco Non Comune, costo 2), ma nessun manuale dà prezzo, PI, Qualità e reperibilità; il Manuale della Magia (Batteria Mistica, 22.6) dice che le batterie permanenti saranno integrate più avanti. L'app le mostra senza prezzo. Ci dai i valori, o le togliamo finché non escono?
+
 ## B. Da correggere nella prossima edizione dei manuali
 
 Sono le cose che hai già deciso a voce o che sono errori evidenti: l'app segue la tua decisione, ma il testo stampato dice ancora un'altra cosa e prima o poi qualcuno al tavolo lo aprirà.
@@ -71,7 +73,7 @@ Sono le cose che hai già deciso a voce o che sono errori evidenti: l'app segue 
 ## D. Manuali che l'app aspetta
 
 - Manuale degli Equipaggiamenti e Manuale dei Veicoli (in stesura): diversi Talenti li citano. Quando esistono, ce li passi come PDF nella cartella `Manuali/`.
-- Manuale degli Armamenti v0.50: lo stiamo estraendo a lotti (stato in `docs/equipaggiamento-lotti.md`: fatti armi ravvicinate e a distanza commerciali, armature civili e corporative, scudi, armi ravvicinate e a distanza corporative, corredi e dispositivi corporativi, accessori delle armi, kit di rinforzo, munizioni e alimentazioni, equipaggiamento sanitario). Se pubblichi una v0.51 prima che abbiamo finito, avvisaci: le tabelle cambiate vanno ri-estratte.
+- Manuale degli Armamenti v0.50: lo stiamo estraendo a lotti (stato in `docs/equipaggiamento-lotti.md`: fatti armi ravvicinate e a distanza commerciali, armature civili e corporative, scudi, armi ravvicinate e a distanza corporative, corredi e dispositivi corporativi, accessori delle armi, kit di rinforzo, munizioni e alimentazioni, equipaggiamento sanitario, artefatti). Se pubblichi una v0.51 prima che abbiamo finito, avvisaci: le tabelle cambiate vanno ri-estratte.
 
 ## Come ci rispondi
 

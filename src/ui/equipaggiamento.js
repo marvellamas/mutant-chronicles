@@ -5,7 +5,7 @@
 import { h } from './dom.js';
 import { info } from './tooltip.js';
 import {
-  TIPI, NOMI_TIPI, STATI, NOMI_STATI, catalogo, risolvi, opzioniCascata, cercaNelCatalogo, statoIniziale, puoMontare,
+  TIPI, NOMI_TIPI, STATI, NOMI_STATI, catalogo, risolvi, opzioniCascata, cercaNelCatalogo, statoIniziale, puoMontare, infoArtefatto,
 } from '../equipaggiamento.js';
 
 const nuovoUid = () => `e${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
@@ -47,6 +47,9 @@ function elencoVoci(ctx) {
           type: 'button', role: 'radio', 'aria-checked': String(v.stato === st),
           class: `stato-equip${v.stato === st ? ' attivo' : ''}`, onclick: () => cambia(v.uid, { stato: st }),
         }, NOMI_STATI[st]))) : null,
+      infoArtefatto(r.def, dati) ? h('label', { class: 'campo-inline' },
+        h('input', { type: 'checkbox', checked: v.sintonizzato === true, onchange: (e) => cambia(v.uid, { sintonizzato: e.target.checked || undefined }) }),
+        ` Sintonizzato (costo ${infoArtefatto(r.def, dati).sintonizzazione}, §7.10)`) : null,
       r.tipo === 'accessorio' && risolte.some((t) => puoMontare(r, t)) ? h('label', { class: 'campo-inline' }, 'Montato su ',
         h('select', { onchange: (e) => cambia(v.uid, { montato_su: e.target.value || undefined }) },
           h('option', { value: '' }, '—'),

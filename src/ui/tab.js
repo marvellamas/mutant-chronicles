@@ -295,10 +295,23 @@ function tabCombattimento(ctx, d) {
 
     // §7.19: applicazioni di kit e dispositivi sanitari, con il contatore delle munizioni
     ...(() => {
-      const lista = consumabili(normalizzaEquipaggiamento(ctx.scelte.equipaggiamento), ctx.dati);
+      const lista = consumabili(normalizzaEquipaggiamento(ctx.scelte.equipaggiamento), ctx.dati).filter((c) => c.gruppo === 'sanitario');
       return lista.length ? [sezione('Sanitario (§7.19)', h('div', { class: 'armi-tab' }, lista.map((c) => h('article', { class: 'arma-tab' },
         h('h3', {}, c.nome),
         pannelloMunizioni(ctx, { uid: c.uid, nome: c.nome, munizioni: { capacita: c.capacita, unita: c.unita, ricarica: c.ricarica ? `${c.ricarica.applicazioni} ${c.unita} costano ${c.ricarica.costo.toLocaleString('it-IT')}` : null } })))))] : [];
+    })(),
+    // §7.10: Artefatti, sintonizzazione e riserve di PM
+    ...(() => {
+      const st = ctx.tab.scheda.equipaggiamento?.sintonizzazione;
+      if (!st) return [];
+      const riserve = consumabili(normalizzaEquipaggiamento(ctx.scelte.equipaggiamento), ctx.dati).filter((c) => c.gruppo === 'artefatto');
+      return [sezione('Artefatti e sintonizzazione (§7.10)',
+        h('p', { class: `valore-tavolo${st.usata > st.capacita ? ' oltre' : ''}` }, h('span', {}, 'Sintonizzazione '), h('strong', {}, String(st.usata)), h('span', {}, ` / ${st.capacita}`)),
+        h('p', { class: 'nota' }, `Capacità per ${st.gradi} Grad${st.gradi === 1 ? 'o' : 'i'} complessiv${st.gradi === 1 ? 'o' : 'i'}${st.talento ? ` con ${st.talento}` : ''}, prima dell’eventuale riduzione per Umanità (§5.21). Si segna «Sintonizzato» nella lista dell’equipaggiamento.`),
+        h('ul', { class: 'elenco-sintonie' }, st.artefatti.map((x) => h('li', {}, `${x.sintonizzato ? '✔' : '○'} ${x.nome} · ${x.potenza}, costo ${x.costo}`))),
+        riserve.length ? h('div', { class: 'armi-tab' }, riserve.map((c) => h('article', { class: 'arma-tab' },
+          h('h3', {}, c.nome, h('small', { class: 'sigla' }, ` · Chroma ${c.chroma}`)),
+          pannelloMunizioni(ctx, { uid: c.uid, nome: c.nome, munizioni: { capacita: c.capacita, unita: 'PM', ricarica: 'con PM personali secondo il §7.5.1' } })))) : null)];
     })(),
 
     sezione('Ferite (§5.14)',

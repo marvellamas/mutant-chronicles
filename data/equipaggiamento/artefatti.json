@@ -1,0 +1,189 @@
+{
+  "versione_manuale": "Armamenti 0.50",
+  "fonte": "Manuale degli Armamenti v0.50, §7.5 Artefatti (pp. 30–31) e §7.10 Artefatti e sintonizzazione (pp. 58–60); lotto 12",
+  "_nota": "Generato da tools/lotti/lotto12_artefatti.mjs; da qui in poi si modifica questo file. «sintonizzazione» contiene le regole del §7.10: capacità per Gradi complessivi (indice 0 = Grado I), bonus del Talento, costo per potenza. «artefatti_catalogo» dà tipologia, potenza e riserva agli Artefatti già presenti in altri file.",
+  "TODO(Davide)": [
+    "Batterie da 5 PM (§7.10): il manuale le cita come esempio di potenza, ma non dà prezzo, PI, Qualità e reperibilità; il Manuale della Magia (22.6) dice che le batterie permanenti saranno integrate più avanti. L’app le mostra senza prezzo."
+  ],
+  "sintonizzazione": {
+    "capacita_per_gradi": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "talento": {
+      "nome": "Architetto TecnoMistico",
+      "bonus": 2
+    },
+    "potenze": {
+      "Comune": 1,
+      "Non Comune": 2,
+      "Rara": 3,
+      "Molto Rara": 4,
+      "Epica": 5,
+      "Leggendaria": 6
+    },
+    "tipologie": {
+      "Armi": "Armi Mistiche e TecnoMistiche.",
+      "Protezioni": "Armature e scudi Mistici o TecnoMistici.",
+      "Batterie e contenitori": "Oggetti che conservano PM nel Chroma, indipendentemente da forma e materiale.",
+      "Accessori": "Strumenti, dispositivi, impianti e altri oggetti Mistici o TecnoMistici."
+    },
+    "regola": "La capacità di sintonizzazione è un unico budget del personaggio, non un numero fisso di oggetti né un limite separato per ciascuna Classe. Parte da 4 al I Grado complessivo e aumenta di 1 per ogni Grado complessivo successivo, fino a 9 al VI. L’Addestramento Taumaturgo segue la medesima progressione. Architetto TecnoMistico aggiunge +2 una sola volta: da 6 al I Grado complessivo a 11 al VI. Il Tecnomante non possiede più una capacità illimitata. I valori della tabella precedono l’eventuale riduzione dovuta all’Umanità (§5.21), applicata dopo i bonus e fino a un minimo di 0. Si sommano i costi di sintonizzazione degli Artefatti attualmente sintonizzati: la somma non può superare la capacità del personaggio. La potenza non impone da sola un livello minimo; un Tecnomante con capacità 6 può quindi sintonizzarsi con un Artefatto Leggendario da costo 6, se lo possiede e ne rispetta i requisiti. Disponibilità e ritrovamento degli oggetti potenti dipendono dall’ambientazione e dal Direttore. Se l’Umanità diminuisce e i costi degli Artefatti già sintonizzati superano la nuova capacità, il personaggio sceglie immediatamente quali sintonizzazioni interrompere per rispettare il limite. Quando la capacità aumenta, gli eventuali legami interrotti si ristabiliscono seguendo la procedura ordinaria."
+  },
+  "artefatti_catalogo": [
+    {
+      "rif": "armi_corporative:bordone-templare",
+      "tipologia": "Armi",
+      "potenza": "Non Comune",
+      "sintonizzazione": 2,
+      "riserva": {
+        "pm": 5,
+        "chroma": "Rosso"
+      }
+    },
+    {
+      "rif": "armi_corporative:spada-vindicator",
+      "tipologia": "Armi",
+      "potenza": "Non Comune",
+      "sintonizzazione": 2,
+      "riserva": {
+        "pm": 5,
+        "chroma": "Rosso"
+      }
+    },
+    {
+      "rif": "armi_corporative:spada-deliverer",
+      "tipologia": "Armi",
+      "potenza": "Non Comune",
+      "sintonizzazione": 2,
+      "riserva": {
+        "pm": 5,
+        "chroma": "Rosso"
+      }
+    },
+    {
+      "rif": "armi_corporative:lancia-castigator",
+      "tipologia": "Armi",
+      "potenza": "Non Comune",
+      "sintonizzazione": 2,
+      "riserva": {
+        "pm": 5,
+        "chroma": "Rosso"
+      }
+    },
+    {
+      "rif": "armi_corporative:lama-demontooth",
+      "tipologia": "Armi",
+      "potenza": "Non Comune",
+      "sintonizzazione": 2,
+      "riserva": {
+        "pm": 5,
+        "chroma": "Rosso"
+      }
+    },
+    {
+      "rif": "scudi:scudo-delle-guardie-sacre",
+      "tipologia": "Protezioni",
+      "potenza": "Rara",
+      "sintonizzazione": 3,
+      "riserva": {
+        "pm": 5,
+        "chroma": "Rosso"
+      }
+    }
+  ],
+  "oggetti": [
+    {
+      "id": "batteria-da-5-pm-chroma-rosso",
+      "nome": "Batteria da 5 PM (Chroma Rosso)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche sostituibili delle armi seguono invece il §7.1.4. Esempi: le Batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni e costano 1 punto di sintonizzazione; quella con Chroma Bianco è Non Comune e costa 2 punti.",
+      "paragrafo": "§7.10",
+      "versione_manuale": "Armamenti 0.50",
+      "costo": null,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Comune",
+        "sintonizzazione": 1,
+        "riserva": {
+          "pm": 5,
+          "chroma": "Rosso"
+        }
+      },
+      "proprieta": []
+    },
+    {
+      "id": "batteria-da-5-pm-chroma-blu",
+      "nome": "Batteria da 5 PM (Chroma Blu)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche sostituibili delle armi seguono invece il §7.1.4. Esempi: le Batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni e costano 1 punto di sintonizzazione; quella con Chroma Bianco è Non Comune e costa 2 punti.",
+      "paragrafo": "§7.10",
+      "versione_manuale": "Armamenti 0.50",
+      "costo": null,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Comune",
+        "sintonizzazione": 1,
+        "riserva": {
+          "pm": 5,
+          "chroma": "Blu"
+        }
+      },
+      "proprieta": []
+    },
+    {
+      "id": "batteria-da-5-pm-chroma-verde",
+      "nome": "Batteria da 5 PM (Chroma Verde)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche sostituibili delle armi seguono invece il §7.1.4. Esempi: le Batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni e costano 1 punto di sintonizzazione; quella con Chroma Bianco è Non Comune e costa 2 punti.",
+      "paragrafo": "§7.10",
+      "versione_manuale": "Armamenti 0.50",
+      "costo": null,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Comune",
+        "sintonizzazione": 1,
+        "riserva": {
+          "pm": 5,
+          "chroma": "Verde"
+        }
+      },
+      "proprieta": []
+    },
+    {
+      "id": "batteria-da-5-pm-chroma-bianco",
+      "nome": "Batteria da 5 PM (Chroma Bianco)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche sostituibili delle armi seguono invece il §7.1.4. Esempi: le Batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni e costano 1 punto di sintonizzazione; quella con Chroma Bianco è Non Comune e costa 2 punti.",
+      "paragrafo": "§7.10",
+      "versione_manuale": "Armamenti 0.50",
+      "costo": null,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Non Comune",
+        "sintonizzazione": 2,
+        "riserva": {
+          "pm": 5,
+          "chroma": "Bianco"
+        }
+      },
+      "proprieta": []
+    }
+  ]
+}

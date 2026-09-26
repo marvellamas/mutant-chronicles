@@ -1,0 +1,122 @@
+7.10 Artefatti e sintonizzazione
+Un Artefatto può possedere proprietà passive e attive. Le proprietà passive sono utilizzabili da chiunque soddisfi i
+normali requisiti dell’oggetto. Le proprietà attive richiedono sintonizzazione: un minuto di preparazione a
+contatto con l’oggetto e una Prova di Artefatti, salvo l’automatismo del Tecnomante. Essere sintonizzati non
+sostituisce requisiti, costi o Prove di attivazione indicati nella scheda e non identifica automaticamente gli effetti.
+Gradi complessivi Capacità ordinaria Addestramento Taumaturgo Con Architetto TecnoMistico
+I 4 4 6
+II 5 5 7
+III 6 6 8
+IV 7 7 9
+V 8 8 10
+VI 9 9 11
+La capacità di sintonizzazione è un unico budget del personaggio, non un numero fisso di oggetti né un limite
+separato per ciascuna Classe. Parte da 4 al I Grado complessivo e aumenta di 1 per ogni Grado complessivo
+successivo, fino a 9 al VI. L’Addestramento Taumaturgo segue la medesima progressione. Architetto
+TecnoMistico aggiunge +2 una sola volta: da 6 al I Grado complessivo a 11 al VI. Il Tecnomante non possiede
+più una capacità illimitata. I valori della tabella precedono l’eventuale riduzione dovuta all’Umanità (§5.21),
+applicata dopo i bonus e fino a un minimo di 0.
+Si sommano i costi di sintonizzazione degli Artefatti attualmente sintonizzati: la somma non può superare la
+capacità del personaggio. La potenza non impone da sola un livello minimo; un Tecnomante con capacità 6
+può quindi sintonizzarsi con un Artefatto Leggendario da costo 6, se lo possiede e ne rispetta i requisiti.
+Disponibilità e ritrovamento degli oggetti potenti dipendono dall’ambientazione e dal Direttore.
+Se l’Umanità diminuisce e i costi degli Artefatti già sintonizzati superano la nuova capacità, il personaggio sceglie
+immediatamente quali sintonizzazioni interrompere per rispettare il limite. Quando la capacità aumenta, gli
+eventuali legami interrotti si ristabiliscono seguendo la procedura ordinaria.
+Stati e Sintonizzazione. Diventare Stordito o Svenuto, oppure esaurire i PM personali, non interrompe
+automaticamente la Sintonizzazione: il legame continua a occupare la relativa Capacità. Le proprietà passive
+restano attive finché ne sono soddisfatti i requisiti, per esempio indossare l’Artefatto.
+Le nuove attivazioni richiedono le normali Azioni, risorse e condizioni: un Artefatto non permette di ignorare le
+limitazioni di uno Stato. Gli effetti già avviati seguono la propria Durata e le proprie condizioni di mantenimento;
+quelli a Concentrazione seguono il Manuale della Magia, sezione 2. I PM di una batteria esterna non impediscono
+lo svenimento a 0 PM personali e la Sintonizzazione non produce trasferimenti automatici.
+Attivare le proprietà degli Artefatti
+Una volta sintonizzato con un Artefatto, il personaggio può attivarne le proprietà attive senza effettuare ulteriori
+Prove. Deve rispettare i costi in Azioni e PM e le altre condizioni previste. L’attivazione non richiede
+Componenti: non occorrono Focus, Somatizzazione o Invocazione e non si applicano penalità per la loro assenza.
+Se una specifica proprietà richiede una Prova di attivazione, la scheda dell’Artefatto ne indica l’Abilità e le
+modalità di risoluzione. L’attivazione automatica produce un successo normale e non genera Successi Magistrali,
+Fallimenti Maldestri o Distintivi. Le eventuali Prove per colpire e quelle per mantenere la Concentrazione
+rimangono separate, secondo le rispettive regole.
+Artefatti che riproducono Incantesimi
+Un Artefatto può riprodurre l’effetto di un Incantesimo nella versione indicata dalla propria scheda. La scheda
+stabilisce Azioni richieste, costo, alimentazione, Gittata, bersagli, Durata ed eventuali Prove. L’utilizzatore deve
+essere sintonizzato e rispettare i requisiti dell’oggetto. Non deve conoscere personalmente l’Incantesimo né
+possedere l’Addestramento Taumaturgo, salvo un requisito esplicito dell’Artefatto.
+La versione disponibile dipende dall’Artefatto: il livello dell’utilizzatore non ne aumenta automaticamente la
+potenza. Usare l’oggetto non permette di apprendere l’Incantesimo o di lanciarlo autonomamente. Riprodurre un
+Incantesimo non aggiunge una Prova di Potere all’attivazione.
+Tutti gli altri obblighi dell’Incantesimo rimangono validi, comprese le condizioni relative a bersagli, Gittata,
+visibilità, Durata, Concentrazione e mantenimento dell’effetto. Restano i costi in Azioni e PM previsti per
+l’attivazione. Per mantenere la Concentrazione si usa PS Volontà nei casi previsti dal Manuale della Magia,
+sezione 2.
+Operazione Prova richiesta
+Nessuna dopo la Sintonizzazione, salvo una Prova espressamente prevista
+Attivare una proprietà
+nella scheda della proprietà.
+Colpire con l’effetto prodotto L’Abilità prevista per quel tipo di attacco, quando richiesta.
+Mantenere la Concentrazione PS Volontà, nei casi previsti dal Manuale della Magia.
+L’attivazione delle proprietà degli Artefatti non può essere contrastata da Contromagia, anche quando riproduce
+un Incantesimo. Restano valide Difese e Prove Salvezza contro l’effetto. Il lancio personale alimentato da una
+batteria resta soggetto a Contromagia (Manuale della Magia, regole di Contromagia).
+Talenti applicabili agli Artefatti
+I Talenti si applicano secondo il proprio ambito. Riprodurre l’effetto di un Incantesimo non estende
+automaticamente all’Artefatto i benefici previsti per il lancio personale.
+Beneficio Applicazione
+Alle Prove di attivazione espressamente richieste, rispettando le
+Bonus alle Prove di Artefatti
+condizioni del beneficio.
+Bonus generali a Potere Non si applicano alla PS Volontà per mantenere la Concentrazione.
+Bonus riservati alla Prova di lancio Non si applicano all’attivazione né alle Prove di mantenimento.
+Talenti che modificano gli Artefatti Si applicano nei limiti già descritti dal Talento.
+Talenti che modificano gli Incantesimi lanciati Non modificano costo, Gittata, Area o altri parametri dell’attivazione,
+personalmente salvo un’estensione esplicita.
+Restano validi Sovrascrittura e Schema Ridondante, con le rispettive condizioni (§3.9.5). Schema Ridondante può
+essere utilizzato soltanto per le proprietà che richiedono espressamente una Prova di Artefatti, entro i limiti del
+Talento.
+Il bonus di Focalizzazione, essendo riservato al lancio personale, non migliora la Prova di attivazione
+dell’Artefatto e non si applica alle Prove per mantenere la Concentrazione.
+Tipologie e potenza
+La tipologia indica la funzione dell’oggetto; la classificazione di potenza ne indica il costo di sintonizzazione. Le
+due indicazioni sono distinte: una Batteria e un’arma non diventano equivalenti soltanto perché appartengono alla
+stessa fascia di potenza.
+Tipologia Oggetti compresi
+Armi Armi Mistiche e TecnoMistiche.
+Protezioni Armature e scudi Mistici o TecnoMistici.
+Oggetti che conservano PM nel Chroma, indipendentemente da forma e
+Batterie e contenitori
+materiale.
+Accessori Strumenti, dispositivi, impianti e altri oggetti Mistici o TecnoMistici.
+Classificazione di potenza
+Potenza Costo di sintonizzazione
+Comune 1
+Non Comune 2
+Rara 3
+Molto Rara 4
+Epica 5
+Leggendaria 6
+Esempi: le Batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni e costano 1 punto di sintonizzazione;
+quella con Chroma Bianco è Non Comune e costa 2 punti. La scheda di ciascun oggetto stabilisce le sue proprietà
+effettive: la fascia non assegna automaticamente danni, riserve o funzioni identiche.
+Analizzare e identificare
+Per analizzare un Artefatto mediante una Prova di Artefatti occorre possedere l’Addestramento Taumaturgo
+oppure almeno un Grado in una Classe taumaturgica. Gli altri personaggi possono soltanto notare indizi speciali
+chiaramente manifesti nell’aspetto o nel funzionamento: non ottengono informazioni mistiche tramite una Prova.
+Un Combattente che acquisisce un Grado in una Classe taumaturgica ottiene l’accesso all’analisi, ma non cambia
+Addestramento.
+Metodo Informazioni accessibili
+Esame ordinario senza accesso Soli indizi apertamente osservabili; nessuna identificazione mistica
+taumaturgico mediante Prova.
+Prova di Artefatti con accesso Informazioni sulla Struttura pertinenti all’obiettivo dell’esame e alle
+taumaturgico condizioni.
+Struttura, Proprietà e Riserva energetica, secondo Architetto
+Analisi avanzata del Tecnomante
+TecnoMistico (§3.9.5).
+Incantesimo di Identificazione Effetti magici precisi, nei limiti della versione dell’Incantesimo.
+L’Analisi avanzata richiede 10 minuti e una Prova di Artefatti, con obiettivo e modificatori stabiliti prima del tiro.
+Il testo completo, comprese informazioni ottenibili, limiti ed esempio, è nel §3.9.5. Un Successo Magistrale non
+trasforma l’analisi in Identificazione. La sintonizzazione automatica del Tecnomante non concede
+automaticamente queste informazioni.
+La creazione degli Artefatti richiede procedure di costruzione e un Rituale finale, che saranno integrati
+successivamente. Architetto TecnoMistico conserva l’accesso esclusivo alla creazione degli Artefatti
+TecnoMistici.

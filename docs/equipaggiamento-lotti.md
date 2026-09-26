@@ -1,6 +1,6 @@
 # Catalogo dell'equipaggiamento: lotti da estrarre
 
-Stato al 26 settembre 2026 (lotti 2–11 fatti). Fonte: Manuale degli Armamenti v0.50. Metodo: `tools/estrai_manuali.py`
+Stato al 26 settembre 2026 (lotti 2–12 fatti). Fonte: Manuale degli Armamenti v0.50. Metodo: `tools/estrai_manuali.py`
 e `docs/pilota-estrazione-armamenti.md`.
 
 Questa è la lista dei prompt successivi: **un lotto per prompt**, nell'ordine di utilità al
@@ -26,6 +26,7 @@ su quelle pagine: le tabelle impilate contano come una.
 | `rinforzi.json` | 2 kit di rinforzo commerciali e 2 soprabiti corporativi (lotto 9) | §7.11.2 | 62 |
 | `munizioni.json` | 49 munizioni, caricatori, granata pesante, razzi, celle, combustibile, dardi chimici; tabella delle famiglie delle armi (lotto 10) | §7.20 | 114–121 |
 | `sanitario.json` | 16 oggetti sanitari: kit, cartucce, UMC, dispositivi portatili, diagnostica e chirurgia (lotto 11) | §7.19 | 109–113 |
+| `artefatti.json` | regole di sintonizzazione, 6 Artefatti già nel catalogo, 4 batterie da 5 PM (lotto 12) | §7.5, §7.10 | 30–31, 58–60 |
 | `armi_distanza_corporative.json` | 81 armi a distanza corporative, 19 moduli integrati, 6 munizioni di riferimento (lotto 5) | §7.8 | 36–52 |
 
 Da completare nello stesso ambito, a basso costo:
@@ -501,13 +502,41 @@ Fatto il 26 settembre 2026, commit «Lotto 11 del catalogo: equipaggiamento sani
   protocolli automatici delle UMC, carichi misti di cartucce.
 - **Dubbi per Davide:** nessuno.
 
-### 7. Artefatti — §7.5, pp. 30–31; §7.10, pp. 58–60
+### 7. ✔ Artefatti — §7.5, pp. 30–31; §7.10, pp. 58–60 (lotto 12, fatto)
 
-- **Contenuto:** profili con riserva mistica (§7.5.1), classificazione di potenza e costo di
-  sintonizzazione, analisi e identificazione (§7.10).
-- **Campi:** tipo `artefatto`, `potenza`, `sintonizzazione`, riserva di PM. Le regole sono le più
-  intrecciate (Addestramento Taumaturgo, Classi taumaturgiche, Tecnomante): come da roadmap,
-  per ultimi, con probabile testo + `TODO(Davide)`.
+Fatto il 26 settembre 2026, commit «Lotto 12 del catalogo: artefatti e sintonizzazione».
+
+- **Fonte:** `docs/lotti/lotto12-artefatti/`:
+  - `grezzo/`: le 2 tabelle del §7.10; le altre delle stesse pagine sono di lotti già fatti o
+    del §7.9;
+  - `prosa/`: §7.5, §7.10 e la scheda 22.6 del Manuale della Magia.
+
+  Generatore `tools/lotti/lotto12_artefatti.mjs`, dati `data/equipaggiamento/artefatti.json`.
+- **Contenuto:** è un lotto di regole più che di oggetti.
+  - `sintonizzazione`: capacità per Gradi complessivi (4–9), +2 di Architetto TecnoMistico,
+    potenza → costo (Comune 1 … Leggendaria 6), tipologie. La tabella della potenza non è
+    riconosciuta da pdfplumber e si legge dal testo in prosa.
+  - `artefatti_catalogo`: tipologia, potenza, costo e riserva dei 6 profili con riserva mistica
+    già nel catalogo (5 armi del lotto 4, Scudo delle Guardie Sacre del lotto 3).
+  - 4 batterie da 5 PM (Chroma Rosso, Blu, Verde, Bianco), che il §7.10 cita come esempio di
+    potenza. Senza prezzo: `TODO(Davide)`.
+- **Controlli incrociati (53, tutti superati):**
+  - capacità del Taumaturgo = capacità ordinaria; Architetto = +2 a ogni Grado;
+  - Sintonizzazione e riserva dei lotti 3 e 4 = §7.5.1;
+  - ogni costo di sintonizzazione = potenza dichiarata. Questo controllo è anche nel
+    validatore, così una modifica di Davide incoerente viene segnalata.
+  - **0 correzioni a mano.**
+- **Calcolo e scheda:**
+  - capacità di sintonizzazione del personaggio dalla somma dei Gradi di Classe e dal Talento
+    Architetto TecnoMistico;
+  - casella «Sintonizzato» sugli Artefatti della lista (scelta salvata nella voce);
+  - somma dei costi e avviso oltre la capacità;
+  - sezione «Artefatti e sintonizzazione» nella tab Combattimento, con il contatore dei PM per
+    le batterie e lo Scudo delle Guardie Sacre. Le armi con riserva avevano già il loro.
+- **Restano testo:** riduzione per Umanità (§5.21, l'app non la registra ancora: la capacità
+  mostrata è quella prima della riduzione), analisi e identificazione, ricarica dei PM con i
+  rapporti del §7.5.1, benefici artigianali e carico manuale del §7.5.
+- **Dubbi per Davide:** prezzo e profilo delle batterie (A.14).
 
 ### 8. Resto del manuale
 

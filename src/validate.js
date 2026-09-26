@@ -633,6 +633,9 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
   const rimandi = []; // [file, chiave, riferimento] di «stesso_oggetto», controllati alla fine
   const moduli = []; // [file, chiave, riferimento] di «modulo_di» (§7.8), controllati alla fine
   const rimandiMunizioni = []; // [file, chiave, riferimento] di «munizioni_armi» (§7.20.9)
+  const rimandiArtefatti = []; // [file, chiave, riferimento] di «artefatti_catalogo» (§7.5.1)
+  const artefattiDaControllare = []; // [file, chiave, dati] di Artefatto: potenza e costo (§7.10)
+  let potenzeArtefatti = null;
   const rimandiArmi = []; // [file, chiave, riferimento] di «sin_armi» (§7.15.1): devono essere armi
   // [file, chiave, riferimento, tipi ammessi] di «compatibile_con»: armature per gli accessori
   // (moduli IAS §7.15.4, soprabiti §7.11.2), armi per munizioni, celle e serbatoi (§7.20)
@@ -653,6 +656,20 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
       if (f[k] !== undefined && (!Array.isArray(f[k]) || f[k].some((a) => !nomiAbilita.includes(a)))) err(F, k, 'elenco di Abilità esistenti');
     }
     if (f.abilita_difese !== undefined && !nomiAbilita.includes(f.abilita_difese)) err(F, 'abilita_difese', `Abilità "${f.abilita_difese}" inesistente`);
+    // §7.10: regole di sintonizzazione e Artefatti di altri file
+    if (f.sintonizzazione !== undefined) {
+      const s = f.sintonizzazione;
+      const cap = s?.capacita_per_gradi;
+      if (!Array.isArray(cap) || cap.length !== 6 || cap.some((x, i) => !isIntero(x) || (i && x < cap[i - 1]))) err(F, 'sintonizzazione.capacita_per_gradi', 'sei interi non decrescenti (Gradi I–VI)');
+      if (!isOggetto(s?.talento) || !isTesto(s.talento.nome) || !isIntero(s.talento.bonus)) err(F, 'sintonizzazione.talento', 'serve { nome, bonus }');
+      if (!isOggetto(s?.potenze) || Object.values(s.potenze).some((x) => !isIntero(x) || x < 1)) err(F, 'sintonizzazione.potenze', 'serve { potenza: costo intero ≥ 1 }');
+      else potenzeArtefatti = s.potenze;
+    }
+    for (const [j, a] of (f.artefatti_catalogo ?? []).entries()) {
+      artefattiDaControllare.push([F, `artefatti_catalogo[${j}]`, a]);
+      if (!isTesto(a?.rif)) err(F, `artefatti_catalogo[${j}].rif`, 'riferimento "file:id" mancante');
+      else rimandiArtefatti.push([F, `artefatti_catalogo[${j}].rif`, a.rif]);
+    }
     // §7.20.9: famiglia di munizioni delle armi balistiche
     if (f.munizioni_armi !== undefined) {
       if (!Array.isArray(f.munizioni_armi)) err(F, 'munizioni_armi', 'deve essere un elenco');
@@ -722,6 +739,7 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
           else t.righe.forEach((r, n) => { if (!Array.isArray(r) || r.length !== t.colonne.length) err(F, `${kk}.righe[${n}]`, `servono ${t.colonne.length} celle`); });
         });
       }
+      if (o.artefatto !== undefined) artefattiDaControllare.push([F, `${k}.artefatto`, o.artefatto]);
       // §7.20: munizioni, esplosivi, celle e serbatoi
       if (o.munizione !== undefined) {
         const m = o.munizione;
@@ -917,6 +935,12 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
     const t = tipoDi.get(r);
     if (!t) err(F, k, `"${r}" non è un oggetto del catalogo (formato "file:id")`);
     else if (!tipi.includes(t.tipo)) err(F, k, `"${r}" non è ${tipi.includes('armatura') ? 'un\'armatura' : 'un\'arma'}`);
+  }
+  for (const [F, k, r] of rimandiArtefatti) if (!rif.has(r)) err(F, k, `"${r}" non è un oggetto del catalogo (formato "file:id")`);
+  for (const [F, k, a] of artefattiDaControllare) {
+    if (!isOggetto(a) || !isTesto(a.tipologia) || !isTesto(a.potenza) || !isIntero(a.sintonizzazione)) { err(F, k, 'serve { tipologia, potenza, sintonizzazione, riserva? }'); continue; }
+    if (potenzeArtefatti && potenzeArtefatti[a.potenza] !== a.sintonizzazione) err(F, `${k}.sintonizzazione`, `potenza ${a.potenza}: il costo di sintonizzazione è ${potenzeArtefatti[a.potenza] ?? 'sconosciuto'} (§7.10), trovato ${a.sintonizzazione}`);
+    if (a.riserva !== undefined && !(isOggetto(a.riserva) && isIntero(a.riserva.pm) && a.riserva.pm >= 1 && isTesto(a.riserva.chroma))) err(F, `${k}.riserva`, 'serve { pm ≥ 1, chroma }');
   }
   for (const [F, k, r] of rimandiMunizioni) {
     const t = tipoDi.get(r);

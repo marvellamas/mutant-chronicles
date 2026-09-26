@@ -56,6 +56,11 @@
       "descrizione": "Kit di pronto soccorso, cartucce, UMC, dispositivi portatili, diagnostica e chirurgia (§7.19)"
     },
     {
+      "id": "artefatti",
+      "file": "artefatti.json",
+      "descrizione": "Regole di sintonizzazione, Artefatti con riserva mistica, batterie (§7.5, §7.10)"
+    },
+    {
       "id": "armature",
       "file": "armature.json",
       "descrizione": "Armature commerciali civili (§7.11.3)"

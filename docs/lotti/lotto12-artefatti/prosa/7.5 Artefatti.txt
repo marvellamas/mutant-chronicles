@@ -1,0 +1,78 @@
+7.5 Artefatti
+Le proprietà passive sono utilizzabili da tutti nei normali limiti dell’oggetto; le proprietà attive richiedono
+sintonizzazione e, una volta sintonizzati, si attivano automaticamente senza Componenti, rispettando costi e
+condizioni. Soltanto le proprietà che lo prevedono espressamente richiedono una Prova di attivazione. Il §7.10
+distingue tipologia, classificazione di potenza e costo di sintonizzazione. La capacità ordinaria va da 4 a 9
+secondo i Gradi complessivi; Architetto TecnoMistico aggiunge +2 una sola volta. Al totale si applica la riduzione
+dovuta all’Umanità, fino a un minimo di 0 (§5.21); l’eventuale eccesso di sintonizzazioni si risolve secondo il
+§7.10. Ogni scheda deve riportare proprietà passive e attive, effetti, costo di sintonizzazione, eventuali PM,
+Azioni e requisiti; per le proprietà che richiedono una Prova di attivazione, ne specifica l’Abilità e le modalità di
+risoluzione. Il Rituale finale di creazione sarà integrato successivamente.
+Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare
+natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal
+Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano
+Chroma Rosso. Le celle tecnologiche sostituibili delle armi seguono invece il §7.1.4.
+Le regole di impiego degli Artefatti sono nel Manuale della Magia e nel §7.10 di questo volume; Architetto
+TecnoMistico e gli altri Talenti del Tecnomante sono nel Manuale del Giocatore, §3.9.5. Il catalogo ravvicinato e
+il §7.5.1 comprendono i profili con riserva mistica. La creazione rituale e i raccordi con costruzione e riparazione
+saranno integrati successivamente.
+7.5.1 Profili con riserva mistica
+Bordone Templare, Spada Vindicator, Spada Deliverer, Lancia Castigator e Lama Demontooth possiedono un
+Chroma Rosso integrato da 5 PM, corrispondenti a cinque cariche. Ogni attivazione offensiva spende un PM della
+riserva per aggiungere 1d6 danni Magici al medesimo colpo. La potenza mistica è Non comune e il costo totale di
+Sintonizzazione è 2, riserva compresa, anche quando la Qualità costruttiva è Rara.
+Lo Scudo delle Guardie Sacre usa una riserva di pari capacità, ma un PM alimenta Scudo Magico per 5 Round. La
+potenza è Rara e il costo totale di Sintonizzazione è 3, riserva compresa. La lama meccanica rimane indipendente
+da questa riserva.
+La Sintonizzazione iniziale richiede 1 minuto a contatto e una Prova di Artefatti, salvo l’automatismo del
+Tecnomante. Le attivazioni successive sono automatiche, senza Componenti e senza ulteriori Prove di attivazione;
+rimangono le Prove per colpire. Le proprietà passive sono utilizzabili senza Sintonizzazione, rispettando i normali
+requisiti.
+Ricaricare il Chroma Rosso integrato
+La ricarica con PM personali Universali richiede l’Addestramento Taumaturgo, il contatto con l’oggetto, la
+Sintonizzazione e 1 AzP. Si applica il rapporto ordinario 3:1: tre PM personali per ogni PM ripristinato nella
+riserva. Con Ricarica Efficiente oppure Conversione Migliorata il rapporto è 2:1; con entrambi è 1:1.
+Un gruppo si converte automaticamente. Per più gruppi si dichiara la quantità e si effettua una sola Prova di
+Potere: due gruppi senza penalità, tre a −2 VA, quattro a −4 VA, cinque a −6 VA e così via. La capacità massima
+e le risorse disponibili limitano la quantità.
+Un Successo Magistrale permette di passare al gruppo successivo soltanto se la riserva ha spazio e il costo
+completo del gruppo aggiuntivo può essere pagato. Un successo normale trasferisce i gruppi dichiarati. Un
+fallimento non spende risorse e non ricarica; un Maldestro perde l’intero costo dichiarato senza ricaricare. Riposo
+e recupero dei PM personali non ricaricano automaticamente la riserva.
+Esempio: ricaricare tre PM in una riserva vuota costa 9 PM personali con il rapporto 3:1 e richiede una sola
+Prova di Potere a −2 VA. Con un Magistrale si può ricaricare un quarto PM pagando altri 3 PM personali, se
+disponibili. I trasferimenti con Chroma Bianco mantengono invece il rapporto fisso 2:1 nei due sensi (Manuale
+della Magia, sezione 6); questi profili usano Chroma Rosso.
+Effetti delle attivazioni offensive
+Plasma, Concussivo ed Elettricità richiedono almeno 1 danno oltre l’Armatura e il superamento della rispettiva
+Contromisura. La tabella riepiloga il §5.24; non sostituisce le Difese o le Salvezze previste dall’attacco.
+Proprietà Contromisura PS Tempra fallita
+Plasma Dissipante X −2 VA a tutte le Prove per 1+1d3 Round.
+Concussivo Imbottita X −2 VA alle sole Difese per 1+1d3 Round.
+Nessuna Azione fuori dalla propria Iniziativa per 1+1d3
+Elettricità Isolante X
+Round.
+Si effettua una sola PS per tipo di effetto, bersaglio e attacco, anche con più colpi. La prima conseguenza si
+applica immediatamente; le eventuali ricorrenze seguono l’Iniziativa della fonte e il limite di una volta per Round.
+La durata scade alla fine del Round iniziale più la durata indicata. Effetti uguali non sommano le penalità e
+conservano la scadenza più lontana, secondo il Manuale della Magia, sezione 7.
+I Talenti del Tecnomante mantengono il proprio ambito: i bonus per armi Mistiche o TecnoMistiche e per
+protezioni magiche si applicano nei limiti delle descrizioni del §3.9.5. Una semplice cella tecnologica non basta a
+classificare un’arma come Artefatto Mistico o TecnoMistico.
+Benefici artigianali
+Il testo completo di manutenzione e Capolavori dell’Artigiano si trova nel §3.5.8. La manutenzione di Armaiolo
+richiede un’ora, conta come Attività leggera e per un giorno permette a ciascuna arma trattata di evitare una volta
+Inceppata o Danneggiata da Fallimento Maldestro. Restano il fallimento e le altre conseguenze, compresi Rotta e
+Distrutta. Lo Scudo Capolavoro concede +1 VA alle Prove di Difese per parare con quello Scudo, con i normali
+costi.
+Gli incrementi di PI di Lavoro a Regola d’Arte e Capolavoro sono raccordati nel §7.2.1. Le fortificazioni costruite
+dal Soldato e le strutture agricole costruite o dirette personalmente dall’Agricoltore ottengono +1 AR non magica.
+Il bonus si applica ai danni subiti dalla struttura prima dell’eventuale perdita di PI; non aumenta PI o PS Integrità,
+non modifica la Copertura, non concede AR agli occupanti e non protegge dal Danno Etereo. I due benefici non si
+sommano sulla stessa struttura. La protezione specialistica dell’armatura Capolavoro verrà integrata
+successivamente.
+Carico manuale
+La capacità ordinaria è FOR × 10 kg; il massimo sollevabile e trasportabile è FOR × 20 kg. Spinta e
+trascinamento su terreno piano e senza ostacoli arrivano a FOR × 40 kg. Forza da Lavoro raddoppia tutte queste
+soglie. Conteggio del peso, Sovraccarico, Prove, Affaticamento e interazioni con i Talenti seguono il Manuale del
+Giocatore, §5.2.6.

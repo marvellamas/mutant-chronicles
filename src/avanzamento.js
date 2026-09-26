@@ -700,7 +700,12 @@ export function calcolaSchedaPersonaggio(personaggio, dati) {
   // Equipaggiamento (roadmap §1.4): solo gli oggetti attivi. Il VA dell'Abilità con il componente
   // «Equip» è `vaEquip`; `totale` resta quello delle regole di creazione e avanzamento.
   const specPossedute = stato.talentiLiberi.filter((t) => talentoLiberoDef(t.id, dati).specializzazione).map((t) => ({ id: t.id }));
-  const equipaggiamento = calcolaEquipaggiamento({ caratteristiche, abilita, specializzazioni: specPossedute },
+  const equipaggiamento = calcolaEquipaggiamento({
+    caratteristiche, abilita, specializzazioni: specPossedute,
+    // §7.10: capacità di sintonizzazione per Gradi complessivi e Talenti di Classe
+    gradiComplessivi: stato.classi.reduce((s, c) => s + c.grado, 0),
+    talenti: stato.classi.flatMap((c) => c.talenti.map((t) => t.nome)),
+  },
     normalizzaEquipaggiamento(migraPersonaggio(personaggio).creazione.equipaggiamento), dati);
   const abilitaEquip = abilita.map((a) => {
     const equip = equipaggiamento.equipAbilita[a.nome] ?? 0;

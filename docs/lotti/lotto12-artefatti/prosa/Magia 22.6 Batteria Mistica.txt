@@ -1,0 +1,35 @@
+Batteria Mistica
+Scheda 22.6 • Macrofamiglia Spirituale • Specializzazione Incantamento • Livello base 3 • Rituale: consentito • PM utilizzabili:
+universali o spirituali.
+Lancio: 1 minuto; Focus, Gesto e Invocazione. Normali regole Potere. Gittata Contatto; un contenitore mistico con Chroma.
+Nessuna PS o Concentrazione.
+Espande temporaneamente la capacità di una batteria esistente. La capacità aggiuntiva è inizialmente vuota:
+l’incantesimo non crea PM e non ricarica automaticamente il contenitore. Le procedure rituali per la creazione di
+batterie permanenti verranno integrate successivamente nel Manuale della Magia; le procedure di costruzione
+verranno integrate successivamente nel Manuale dell’Equipaggiamento.
+Livello PM Capacità aggiuntiva Durata
+3 3 +5 PM 3 giorni
+6 6 +8 PM 5 giorni
+9 9 +12 PM 7 giorni
+12 12 +16 PM 15 giorni
+15 15 +20 PM 30 giorni
+18 18 +25 PM 60 giorni
+Capacità: si somma a quella propria del contenitore, senza cambiare i PM già presenti. Una batteria con 3/5 PM,
+potenziata al livello 3, diventa 3/10 PM. Può essere utilizzata e ricaricata più volte durante la durata, che decorre
+dal completamento del lancio.
+Chroma: sono consentiti Rosso, Blu, Verde e Bianco, anche esausti; il colore e il tipo di energia rimangono
+invariati. Rosso conserva PM Fisici, Blu Mentali, Verde Spirituali e Bianco Universali. Il Chroma Viola non è
+utilizzabile con questo incantesimo. Il costo di lancio di Batteria Mistica usa comunque PM universali o spirituali.
+Ricarica da PM personali Rapporto
+Chroma Rosso, Blu o Verde senza Talenti 3 PM spesi per 1 immagazzinato
+Ricarica Efficiente oppure Conversione Migliorata 2 PM spesi per 1 immagazzinato
+Entrambi i Talenti 1 PM speso per 1 immagazzinato
+Chroma Bianco Sempre 2 PM spesi per 1 immagazzinato
+Ricarica: richiede Addestramento Taumaturgo, contatto e sintonizzazione e segue la procedura in gruppi della
+sezione 6 di questo manuale. Batteria Mistica non concede ricarica autonoma.
+Impiego: il contenitore deve essere trasportato e sintonizzato. Per un singolo lancio si può usare un solo
+contenitore compatibile, eventualmente insieme ai PM personali. Il potenziamento temporaneo non aumenta il
+costo di sintonizzazione, non concede altre proprietà e non modifica i requisiti degli incantesimi alimentati.
+Scadenza e dissoluzione: la capacità torna al valore originario e i soli PM eccedenti si disperdono senza danni.
+Una batteria con 9/10 PM e capacità originaria 5 rimane con 5/5 PM. Negare Potere produce lo stesso risultato
+rimuovendo il potenziamento. Più lanci non sommano la capacità aggiuntiva: si applica il valore maggiore.

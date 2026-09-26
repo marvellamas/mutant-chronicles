@@ -65,16 +65,43 @@ export function legendaModalita(dati) {
  * Capacità del caricatore di ogni arma a distanza della lista (uid → numero o null), per il
  * contatore munizioni della modalità tavolo.
  */
+/** Regole di sintonizzazione (§7.10) dal file del catalogo che le definisce. */
+export function regoleSintonizzazione(dati) {
+  for (const f of Object.values(dati?.equipaggiamento?.file ?? {})) if (f.sintonizzazione) return f.sintonizzazione;
+  return null;
+}
+
+/**
+ * Dati di Artefatto di un oggetto del catalogo (§7.5, §7.10): il campo «artefatto» dell'oggetto
+ * oppure la riga di «artefatti_catalogo» di un altro file (profili con riserva mistica).
+ */
+export function infoArtefatto(def, dati) {
+  if (!def) return null;
+  if (def.artefatto) return def.artefatto;
+  for (const f of Object.values(dati?.equipaggiamento?.file ?? {})) {
+    const a = (f.artefatti_catalogo ?? []).find((x) => x.rif === def.rif);
+    if (a) return a;
+  }
+  return null;
+}
+
 /**
  * Oggetti con applicazioni da contare in modalità tavolo (kit di pronto soccorso, Spray, set
  * chirurgici, §7.19): uid → { nome, capacita (applicazioni × quantità), unita, ricarica }.
  */
 export function consumabili(voci, dati) {
   const cat = catalogo(dati);
-  return (voci ?? []).map((v) => risolvi(v, cat)).filter((r) => r.def?.applicazioni).map((r) => ({
-    uid: r.uid, nome: r.nome, capacita: r.def.applicazioni * (r.voce.quantita ?? 1),
-    unita: r.def.nome_applicazioni ?? 'applicazioni', ricarica: r.def.ricarica ?? null,
-  }));
+  const out = [];
+  for (const r of (voci ?? []).map((v) => risolvi(v, cat))) {
+    if (r.def?.applicazioni) {
+      out.push({ uid: r.uid, nome: r.nome, capacita: r.def.applicazioni * (r.voce.quantita ?? 1), unita: r.def.nome_applicazioni ?? 'applicazioni', ricarica: r.def.ricarica ?? null, gruppo: 'sanitario' });
+    } else {
+      // §7.5.1: riserva di PM di un Artefatto che non ha già un contatore da arma (Scudo delle Guardie Sacre, batterie)
+      const a = infoArtefatto(r.def, dati);
+      if (a?.riserva && !r.def.munizioni) out.push({ uid: r.uid, nome: r.nome, capacita: a.riserva.pm, unita: 'PM', ricarica: null, gruppo: 'artefatto', chroma: a.riserva.chroma });
+    }
+  }
+  return out;
 }
 
 export function caricatori(voci, dati) {
@@ -193,6 +220,7 @@ export function normalizzaEquipaggiamento(valore) {
       };
     }
     if (typeof v.montato_su === 'string' && v.montato_su) out.montato_su = v.montato_su;
+    if (v.sintonizzato === true) out.sintonizzato = true; // §7.10: scelta del giocatore
     return out;
   });
 }
@@ -560,6 +588,20 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     else if (!operativo(su)) avvisi.push(`${x.nome} è montato su ${su.nome}, che non è ${NON_ATTIVO[su.tipo] ?? 'impugnata'}: nessun effetto.`);
   }
 
+  // §7.10: la somma dei costi degli Artefatti sintonizzati non supera la capacità del personaggio
+  const rs = regoleSintonizzazione(dati);
+  const artefatti = oggetti.map((o) => ({ o, a: infoArtefatto(o.def, dati) })).filter((x) => x.a);
+  let sintonizzazione = null;
+  if (rs && artefatti.length) {
+    const gradi = Math.min(Math.max(base.gradiComplessivi ?? 1, 1), rs.capacita_per_gradi.length);
+    const talento = (base.talenti ?? []).includes(rs.talento.nome);
+    const capacita = rs.capacita_per_gradi[gradi - 1] + (talento ? rs.talento.bonus : 0);
+    const elenco = artefatti.map(({ o, a }) => ({ uid: o.uid, nome: o.nome, costo: a.sintonizzazione, potenza: a.potenza, tipologia: a.tipologia, sintonizzato: o.voce.sintonizzato === true }));
+    const usata = elenco.filter((x) => x.sintonizzato).reduce((s, x) => s + x.costo, 0);
+    sintonizzazione = { capacita, usata, gradi, talento: talento ? rs.talento.nome : null, artefatti: elenco };
+    if (usata > capacita) avvisi.push(`Sintonizzazioni oltre la capacità: ${usata} su ${capacita}. Il personaggio sceglie quali interrompere (§7.10).`);
+  }
+
   // §7.19.3: «È consentita una sola UMC operativa per utilizzatore»
   const unici = new Map();
   for (const x of oggetti.filter((o) => o.attivo && o.def?.uno_per_personaggio)) {
@@ -579,6 +621,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     movimentoQ,
     lancioPotere,
     forMancanteArmature,
+    sintonizzazione,
     avvisi,
   };
 }
