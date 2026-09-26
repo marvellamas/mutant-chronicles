@@ -23,6 +23,19 @@ echo   Mutant - scarica o aggiorna l'app
 echo  ============================================
 echo.
 
+rem Cartelle sincronizzate (Dropbox, OneDrive...): l'app ci funziona male. Avviso e si prosegue.
+set "SINC="
+echo("%~dp0" | findstr /i /c:"dropbox" >nul && set "SINC=Dropbox"
+echo("%~dp0" | findstr /i /c:"onedrive" >nul && set "SINC=OneDrive"
+echo("%~dp0" | findstr /i /c:"google drive" /c:"googledrive" /c:"il mio drive" /c:"my drive" >nul && set "SINC=Google Drive"
+echo("%~dp0" | findstr /i /c:"icloud" >nul && set "SINC=iCloud"
+if not defined SINC goto prepara
+echo  ATTENZIONE: questa cartella e' sincronizzata da %SINC%.
+echo  Se qualcosa non funziona, sposta tutto in una cartella normale,
+echo  ad esempio C:\Mutant, e riprova da li'.
+echo.
+
+:prepara
 echo  [1/5] Preparo una cartella di lavoro temporanea...
 if exist "%LAVORO%" rmdir /s /q "%LAVORO%"
 mkdir "%LAVORO%"

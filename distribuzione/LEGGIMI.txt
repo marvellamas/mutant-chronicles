@@ -5,6 +5,10 @@ Guida all'installazione e all'uso
 Questa guida è per chi non ha mai installato niente di simile.
 Segui i passi in ordine. Non serve sapere nulla di informatica.
 
+IMPORTANTE: non mettere questi file in Dropbox, OneDrive, Google Drive o iCloud.
+Le cartelle sincronizzate impediscono all'app di partire. Usa una cartella
+normale, per esempio C:\Mutant (vedi "Metti la cartella al suo posto").
+
 
 COSA C'È IN QUESTA CARTELLA
 --------------------------------------------------------------
@@ -30,7 +34,12 @@ PRIMA DI TUTTO: METTI LA CARTELLA AL SUO POSTO
 --------------------------------------------------------------
 
 1. Se hai ricevuto uno zip, fai clic destro sullo zip e scegli "Estrai tutto".
-2. Sposta la cartella estratta dove preferisci, per esempio in Documenti.
+2. Sposta la cartella estratta in una cartella normale del computer,
+   per esempio C:\Mutant.
+   NON in Dropbox, OneDrive, Google Drive o iCloud, e nemmeno sul Desktop o in
+   Documenti se il computer li sincronizza con OneDrive (succede spesso con
+   Windows 11: nell'indirizzo della cartella compare la parola "OneDrive").
+   Se la cartella è sincronizzata, i file .bat lo dicono con un avviso.
 3. Non lanciare i file da dentro lo zip: prima estraili.
 
 
@@ -171,6 +180,15 @@ La finestra si chiude subito
 
 "La porta 3000 è già in uso"
   L'app è già accesa in un'altra finestra nera. Usa quella.
+
+"Mutant si è fermato per un errore imprevisto"
+  Manda a Marcello una foto della finestra nera, oppure il file avvia.log
+  che trovi accanto a 3_avvia.bat: contiene tutto quello che è successo
+  nell'ultimo avvio.
+
+"Questa cartella è sincronizzata da Dropbox" (o OneDrive, Google Drive, iCloud)
+  L'app prova a partire lo stesso, ma se non funziona sposta tutta la cartella
+  in C:\Mutant e rifai doppio clic su 3_avvia.bat.
 
 La pagina del browser è bianca o dice "impossibile raggiungere il sito"
   Controlla che la finestra nera sia aperta. Aspetta qualche secondo e premi F5.
