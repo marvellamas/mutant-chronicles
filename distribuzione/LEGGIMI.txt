@@ -135,9 +135,9 @@ Attenzione:
 - un altro browser o un altro computer non li vede;
 - se cancelli i dati di navigazione del browser, i personaggi si perdono.
 
-Per tenerli al sicuro usa "Esporta":
+Per tenerli al sicuro usa "SALVA PG (Esporta JSON)":
 1. apri il personaggio;
-2. apri il menu "Azioni" e scegli "Esporta JSON";
+2. apri il menu "Azioni" e scegli "SALVA PG (Esporta JSON)";
 3. il browser scarica un file: tienilo in una cartella sicura.
 
 Per rimetterli nell'app (anche su un altro computer o telefono):

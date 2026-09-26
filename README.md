@@ -51,7 +51,7 @@ Quando Marcello pubblica una versione nuova (regole, correzioni, funzioni):
   `distribuzione/` (vedi sopra).
 
 I personaggi non si perdono: stanno nel browser, non nella cartella. Per sicurezza, prima
-di aggiornare esportali con **Esporta**. Dopo l'aggiornamento ricarica la pagina (con
+di aggiornare esportali con **SALVA PG (Esporta JSON)**. Dopo l'aggiornamento ricarica la pagina (con
 `avvia.bat` basta F5; con altri server Ctrl+F5, vedi sotto).
 
 ## Avvio in locale
@@ -84,7 +84,7 @@ bloccano i moduli JavaScript e la lettura dei file `data/*.json` da `file://`. I
 pagina resta sul messaggio «Caricamento…», che spiega cosa fare.
 
 I personaggi si salvano automaticamente nel browser (localStorage). Per passarli a un altro
-dispositivo o al master si usano **Esporta** (file JSON con le sole scelte, di nome
+dispositivo o al master si usano **SALVA PG (Esporta JSON)** (file JSON con le sole scelte, di nome
 `<nome>_liv<N>_<AAAA-MM-GG>.json`, per esempio `Varek-McCraig_liv8_2026-09-26.json`) e **Importa**,
 che legge il contenuto e non dipende dal nome del file.
 
@@ -98,7 +98,7 @@ continua su altre pagine («foglio 5 di 6»), con le intestazioni dei gruppi rip
 come i fogli stampati: Identità, Abilità, Combattimento e Magia (solo con accesso agli
 incantesimi). Le tab stanno a sinistra sugli schermi larghi e in basso su telefono e tablet;
 l'ingranaggio ⚙ permette di sceglierne la posizione (salvata nel browser). Il menu *Azioni*
-raccoglie Stampa, Esporta, Modifica creazione, Annulla l'ultimo livello e Nuova sessione.
+raccoglie Stampa, SALVA PG (Esporta JSON), Modifica creazione, Annulla l'ultimo livello e Nuova sessione.
 Durante il gioco la scheda tiene i **valori attuali** della sessione: PV, PM, Punti Eroe,
 Distintivi (con la conversione 5 → 1 Punto Eroe del §1.8.3), Ferite, Affaticamento, Stati
 attivi e note, con pulsanti grandi per il dito. Si salvano con il personaggio in un blocco

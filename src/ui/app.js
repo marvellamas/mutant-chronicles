@@ -251,7 +251,7 @@ function renderHome() {
     personaggi.length
       ? h('ul', { class: 'elenco-personaggi' }, personaggi.map(rigaPersonaggio))
       : h('p', { class: 'vuoto' }, 'Nessun personaggio salvato in questo browser.'),
-    h('p', { class: 'nota' }, 'I personaggi si salvano automaticamente in questo browser. Per spostarli su un altro dispositivo o passarli al master, usa Esporta e Importa.'),
+    h('p', { class: 'nota' }, 'I personaggi si salvano automaticamente in questo browser. Per spostarli su un altro dispositivo o passarli al master, usa «SALVA PG (Esporta JSON)» e Importa.'),
     h('section', { class: 'info-dati' },
       h('h2', {}, 'Dati delle regole'),
       h('p', {}, stato.versioni),
@@ -272,7 +272,7 @@ function rigaPersonaggio(p) {
       h('p', { class: 'nota' }, `Modificato ${data}`)),
     h('div', { class: 'riga-azioni' },
       h('button', { type: 'button', class: 'btn primario', onclick: () => vai(p.passo === PASSO_SCHEDA ? `#/p/${p.id}` : `#/p/${p.id}/${p.passo ?? 0}`) }, 'Apri'),
-      h('button', { type: 'button', class: 'btn', onclick: () => esporta(normalizza(s, stato.dati).scelte, livelli, p.sessione ?? null) }, 'Esporta'),
+      h('button', { type: 'button', class: 'btn', onclick: () => esporta(normalizza(s, stato.dati).scelte, livelli, p.sessione ?? null) }, 'SALVA PG (Esporta JSON)'),
       h('button', { type: 'button', class: 'btn pericolo', onclick: () => {
         if (confirm(`Eliminare «${s.nome?.trim() || 'Senza nome'}» da questo browser? L’operazione non si annulla (esporta prima il file se vuoi conservarlo).`)) {
           archivio.elimina(p.id);
@@ -402,7 +402,7 @@ function renderWizard() {
         h('header', { class: 'passo-testa' },
           h('p', { class: 'sopratitolo' }, `Passo ${pos} di ${visibili.length - 1} · ${passo.rif}`),
           h('h1', { id: 'titolo-passo' }, passo.titolo)),
-        stato.salvataggioOk ? null : h('p', { class: 'riquadro attenzione' }, 'Il browser non permette il salvataggio automatico: usa Esporta per non perdere il personaggio.'),
+        stato.salvataggioOk ? null : h('p', { class: 'riquadro attenzione' }, 'Il browser non permette il salvataggio automatico: usa «SALVA PG (Esporta JSON)» per non perdere il personaggio.'),
         stato.livelli.length && stato.passo !== PASSO_SCHEDA ? h('p', { class: 'riquadro attenzione no-stampa' },
           `Personaggio ${conOrdinale('al', 1 + stato.livelli.length)} livello: la creazione si può consultare ma non modificare (tranne nome, Background, anagrafica ed equipaggiamento). Per cambiarla annulla i livelli dalla scheda finale.`) : null,
         avvisi,
@@ -491,7 +491,7 @@ function renderSaliPagina() {
       stato.sali = null;
       stato.passo = PASSO_SCHEDA;
       persisti();
-      if (!stato.salvataggioOk) alert('Livello aggiunto, ma il browser non permette il salvataggio: usa Esporta per non perderlo.');
+      if (!stato.salvataggioOk) alert('Livello aggiunto, ma il browser non permette il salvataggio: usa «SALVA PG (Esporta JSON)» per non perderlo.');
       vai(`#/p/${stato.id}`);
     },
     esci() {
@@ -582,7 +582,7 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
     puoAnnullareSessione: !!stato.sessionePrecedente,
     motivoNoSalita: !schedaCreazione.completa ? 'Completa la creazione prima di salire di livello.'
       : tab.errori.length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
-    messaggio: messaggio ?? (stato.salvataggioOk ? null : { tipo: 'attenzione', testo: 'Il browser non permette il salvataggio: usa Esporta per non perdere il personaggio.' }),
+    messaggio: messaggio ?? (stato.salvataggioOk ? null : { tipo: 'attenzione', testo: 'Il browser non permette il salvataggio: usa «SALVA PG (Esporta JSON)» per non perdere il personaggio.' }),
     passi: { background: 0, equipaggiamento: PASSO_EQUIPAGGIAMENTO },
     ui: stato.ui,
     azioni: {

@@ -77,7 +77,7 @@ function menuAzioni(ctx) {
     h('summary', { class: 'btn' }, 'Azioni ▾'),
     h('div', { class: 'menu-voci' },
       voce('Stampa', azioni.stampa),
-      voce('Esporta JSON', azioni.esporta),
+      voce('SALVA PG (Esporta JSON)', azioni.esporta),
       voce('Modifica creazione', () => azioni.modificaCreazione()),
       ctx.livelli.length ? voce('Annulla l’ultimo livello', azioni.annullaLivello, { pericolo: true }) : null,
       h('hr', {}),
