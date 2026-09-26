@@ -1,6 +1,6 @@
 {
-  "versione_manuale": "Giocatore 0.43",
-  "fonte": "§8.9 (8.9.1 regole comuni, 8.9.2 generiche, 8.9.3 Scuole Mishima, 8.9.4 Lottatore)",
+  "versione_manuale": "Giocatore 0.43 + Google Doc del 26/09/2026",
+  "fonte": "§8.9 (8.9.1 regole comuni, 8.9.2 generiche, 8.9.3 Scuole Mishima, 8.9.4 Lottatore); durate di Vipera dal Cappuccio, Presa dell’Anima e Contraccolpo Interiore dal Google Doc del 26/09/2026 (master, docs/risposte-master.md, decisione 11)",
   "regole_comuni": [
     "Le Tecniche Interiori impiegano l’energia personale per produrre effetti fisici, percettivi e spirituali. Non sono Incantesimi. Si apprendono attraverso Risorse Interiori o una capacità che ne conceda espressamente l’accesso; il Lottatore segue il §3.5.5. I Talenti di accesso e apprendimento, con le incompatibilità rispetto alla magia, sono nel §8.6.10.",
     "Si può attivare una sola Tecnica Interiore per Round, comprese le reazioni prima e dopo la propria Iniziativa. La seconda AzP non aumenta il limite. Gli effetti già attivi proseguono secondo la propria durata; quando una scheda lo prevede, il loro funzionamento nei Round successivi non costituisce una nuova attivazione.",
@@ -183,7 +183,7 @@
       "costo": "6 PM",
       "azione": "1 AzP",
       "bersaglio": "creatura adiacente",
-      "durata": "TODO(Davide)",
+      "durata": "istantanea (un singolo attacco); l’eventuale Sanguinamento 2 prosegue secondo le regole dello Stato",
       "testo": "Colpo Singolo senz’armi o con Coltello, Pugnale, Daga, Pugnale da Combattimento, Spada leggera, Randello, Tonfa o Artigli, comprese le varianti dello stesso profilo. Non può essere Parato con arma o scudo; restano la protezione passiva dello scudo, Schivata e altre difese compatibili, compreso Passo della Mangusta se disponibile. La prova per colpire è normale.\nSe infligge almeno 1 danno dopo AR applica Sanguinamento 2 secondo le sue regole, senza durata arbitraria. A danno nullo o con attacco fallito non applica Sanguinamento; i PM restano spesi."
     },
     {
@@ -289,7 +289,7 @@
       "costo": "3 PM",
       "azione": "durante la propria Iniziativa, immediatamente prima della prova interessata, senza Azioni aggiuntive rispetto alla manovra",
       "bersaglio": "se stesso",
-      "durata": "TODO(Davide)",
+      "durata": "una singola Prova per il bonus di +3 VA; l’eventuale presa prosegue finché non si interrompe",
       "testo": "Concede +3 VA a una prova senz’armi per Immobilizzare, Sbilanciare, Disarmare o liberarsi da una presa/Immobilizzazione. Si usano l’abilità, la prova contrapposta, le penalità, il Contatto/portata, le mani libere e le Azioni richieste dalla specifica manovra.\nConsente di interessare creature incorporee, Eteree o altrimenti non afferrabili. Se una di esse viene Immobilizzata, la presa può essere mantenuta normalmente senza altri PM finché non si interrompe. Il +3 riguarda soltanto la prova di attivazione, non tutte quelle successive."
     },
     {
@@ -299,7 +299,7 @@
       "costo": "4 PM",
       "azione": "immediatamente dopo la Difesa idonea, anche fuori Iniziativa, senza AzP aggiuntive; la Difesa mantiene il proprio costo",
       "bersaglio": "attaccante adiacente ancora entro portata",
-      "durata": "TODO(Davide)",
+      "durata": "istantanea (un singolo attacco reattivo)",
       "testo": "Si attiva dopo Schivata riuscita, oppure dopo Parata riuscita che lasci 0 danni dopo l’AR. La Parata Magistrale soddisfa la condizione; una Parata che lascia danni da subire no.\nConsente un singolo attacco senz’armi con normale prova e normale danno, senza associarlo a una Manovra offensiva. Non è utilizzabile dopo Passo della Mangusta, Mani di Yorama o un’altra Tecnica attivata nello stesso Round."
     },
     {

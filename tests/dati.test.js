@@ -39,6 +39,8 @@ test('i TODO(Davide) sono elencabili', () => {
   // in regole.json restano solo le domande sugli effetti degli Stati (§5.18, per-davide A.16–A.17),
   // sul contenitore nuovo (Chroma, A.19) e sul carico (pesi e oltre il massimo, A.30–A.31)
   assert.deepEqual([...new Set(todo.filter((t) => t.percorso.startsWith('regole.json')).map((t) => t.percorso.split('.TODO')[0]))].sort(), ['regole.json.carico', 'regole.json.chroma', 'regole.json.stati']);
+  // durate delle Tecniche Interiori: decise dal master il 26/09/2026 (A.4 del Doc E&L)
+  assert.equal(todo.some((t) => t.percorso.startsWith('tecniche_interiori.json')), false);
 });
 
 test('risposte del master: Specializzazioni dei Talenti dell’Esploratore', () => {
@@ -183,11 +185,16 @@ test('validatore: Specializzazione con Abilità inesistente, Tecnica senza costo
   assert.ok(e.some((x) => x.file === 'tecniche_interiori.json' && x.chiave.endsWith('.costo')));
 });
 
-test('avvisi (non bloccanti): nessun Talento provvisorio o di tipo da definire; durate delle Tecniche da definire', () => {
+test('avvisi (non bloccanti): nessun Talento provvisorio o di tipo da definire, nessuna durata di Tecnica da definire', () => {
   const t = avvisiDati(dati);
   assert.equal(t.filter((x) => /provvisorio/.test(x.problema)).length, 0);
   assert.equal(t.filter((x) => x.file === 'talenti_liberi.json').length, 0);
-  assert.equal(t.filter((x) => x.file === 'tecniche_interiori.json').length, 3);
+  // durate di Vipera dal Cappuccio, Presa dell'Anima e Contraccolpo Interiore: master, 26/09/2026 (A.4)
+  assert.equal(t.filter((x) => x.file === 'tecniche_interiori.json').length, 0);
+  const durata = (id) => dati.tecniche_interiori.tecniche.find((x) => x.id === id).durata;
+  assert.equal(durata('contraccolpo-interiore'), 'istantanea (un singolo attacco reattivo)');
+  assert.match(durata('vipera-dal-cappuccio'), /^istantanea \(un singolo attacco\)/);
+  assert.match(durata('presa-dell-anima'), /^una singola Prova per il bonus di \+3 VA/);
 });
 
 test('Stati (§5.18): i promemoria sono marcati come riassunti, il validatore lo pretende', () => {

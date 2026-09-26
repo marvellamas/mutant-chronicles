@@ -90,3 +90,20 @@ condivisi (Giocatore §§1.2.3, 2.1, 2.11, 2.14, §8.6, §8.6.10; Magia sezioni 
 10. **Tipo di tre Talenti Liberi** (A.3): Attivazione Tempestiva, Risorse Interiori e Tecniche
     Interiori Supplementari sono **Passivi**.
     → `data/talenti_liberi.json` (`tipo`).
+
+11. **Durata di tre Tecniche Interiori** (E&L A.4, per-davide A.5; Doc E&L delle 15:20 UTC):
+    Vipera dal Cappuccio «istantanea (un singolo attacco); l’eventuale Sanguinamento 2 prosegue
+    secondo le regole dello Stato»; Presa dell’Anima «una singola Prova per il bonus di +3 VA;
+    l’eventuale presa prosegue finché non si interrompe» (sulle creature incorporee, Eteree o non
+    afferrabili senza altri PM, già nel testo della scheda); Contraccolpo Interiore «istantanea (un
+    singolo attacco reattivo)». Testi del campo Durata del §8.9 nel Google Doc del Giocatore.
+    → `data/tecniche_interiori.json` (`durata`), tolti i tre TODO.
+
+12. **Equipaggiamento iniziale: struttura** (E&L A.5, per-davide A.6): scelte guidate. Una
+    dotazione comune per tutti, una dotazione legata alla Classe iniziale (scelte predefinite fra
+    armi, protezioni e strumenti), modelli e varianti legati alla Corporazione; ogni scelta rispetta
+    i requisiti degli oggetti; gli oggetti scelti entrano da soli nell’inventario con quantità,
+    munizioni e cariche. Le tabelle delle dotazioni e l’eventuale denaro iniziale **restano da
+    scrivere** (Giocatore §2.16 del Google Doc).
+    → Nessun dato ancora: il passo del wizard resta a inserimento manuale finché non arrivano le
+    tabelle; la forma decisa guida il lavoro successivo (per-davide A.6 aggiornata).

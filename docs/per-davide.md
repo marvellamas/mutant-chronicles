@@ -1,6 +1,6 @@
 # Per Davide — domande aperte ed errata dei manuali
 
-Aggiornato al 26 settembre 2026, sera. Questo è l'unico elenco da tenere d'occhio. Le voci con risposta spariscono da qui e finiscono, con la data, in `docs/risposte-master.md` (che in caso di conflitto vale più del manuale).
+Aggiornato al 26 settembre 2026, sera (dopo il confronto fra i Google Doc e i PDF). Questo è l'unico elenco da tenere d'occhio. Le voci con risposta spariscono da qui e finiscono, con la data, in `docs/risposte-master.md` (che in caso di conflitto vale più del manuale).
 
 Come rispondere: a voce a Marcello, oppure scrivendo direttamente sotto la domanda nel Google Doc. Ogni domanda dice cosa fa l'app *nel frattempo*, così se non rispondi non si blocca nulla: applica un'ipotesi e la segnala.
 
@@ -9,6 +9,8 @@ Come rispondere: a voce a Marcello, oppure scrivendo direttamente sotto la doman
 ## 0. Risposte ricevute il 26/09 — grazie
 
 Le voci A.1–A.4 (descrizioni delle Caratteristiche e Volontà su CAR, 14 schede dei Talenti di magia, Potenziale Mistico solo per gli Usufruitori, tipo di tre Talenti Liberi) sono **recepite nell'app** e registrate con la data in `docs/risposte-master.md`; i testi completi sono in `docs/risposte-master-2026-09-26.md` (copia del Google Doc *E&L – Risposte e correzioni approvate*).
+
+Dalla versione delle 15:20 dello stesso Doc: **durata di tre Tecniche Interiori** (la vecchia A.5) recepita; **struttura dell'equipaggiamento iniziale** (A.6) registrata, in attesa delle tabelle.
 
 ---
 
@@ -44,9 +46,7 @@ Il manuale non lo dice.
 
 ### Regole generali
 
-**A.5 — Durata di tre Tecniche Interiori.** Vipera dal Cappuccio, Presa dell'Anima e Contraccolpo Interiore non indicano la durata.
-
-**A.6 — Equipaggiamento iniziale (§2.16).** "Verrà integrato successivamente". Quando lo scrivi, dicci prima la forma (lista fissa per Addestramento? budget? scelte guidate?): cambia il passo del wizard.
+**A.6 — Equipaggiamento iniziale (§2.16): le tabelle.** La forma è decisa (scelte guidate: dotazione comune, dotazione della Classe iniziale, varianti della Corporazione). Servono le tabelle: oggetti, quantità, munizioni, cariche ed eventuale denaro iniziale.
 *Nel frattempo:* inserimento manuale, voce per voce.
 
 **A.30 — Pesi degli oggetti (Equipaggiamento §1.6, §1.10).** Il carico si calcola sul peso di tutto ciò che si porta, e la scheda standard del §1.10 prevede il campo Peso, ma il Manuale degli Armamenti non dà pesi per armi, armature e scudi. Li aggiungerai ai cataloghi?
@@ -108,17 +108,18 @@ Decisioni già prese o errori evidenti: l'app segue la decisione, il testo stamp
 
 **Manuale del Giocatore**
 
-- §1.2.3, §2.11, §2.14: la Prova Salvezza Volontà usa CAR, non INT, compreso l'esempio di calcolo del §2.14 (risposta del 26/09). Secondo il master è già corretto nella copia condivisa: spuntalo quando esce il PDF.
-- §2.12 e §3.3: al 1° livello sono massimizzati sia i PV sia i PM.
-- §2.10, §3.8: "minimo 1" ai "2 + Mod INT incantesimi".
-- §3.5.2 Esploratore: Terrestre = Segni di Passaggio, Adattamento Estremo; Spaziale = Mappa Mentale, Rotta Alternativa; Comune = Avanguardia. (§3.2 lo prevede per tutte le Classi.)
+- ~~§1.2.3, §2.11, §2.14: la Prova Salvezza Volontà usa CAR~~ — fatto nel Google Doc (verificato il 26/09).
+- ~~§3.5.2 Esploratore: Specializzazioni dei Talenti a scelta~~ — fatto nel Google Doc (verificato il 26/09).
+- §2.12 e §3.3: al 1° livello sono massimizzati sia i PV sia i PM. Il Google Doc dice ancora solo i PV.
+- §2.10, §3.8: "minimo 1" ai "2 + Mod INT incantesimi". Nel Google Doc c'è nella Magia (sez. 1), non ancora nel §2.10 del Giocatore.
 - §3.5.3 Bersaglio Designato: impaginazione rotta nel PDF.
 - §8.6 Attivazione Tempestiva: sta prima del §8.6.1, fuori da ogni sottosezione.
 
 **Manuale della Magia**
 
-- Sez. 1: livello massimo incantesimi = tabella I→3, II→8, III→11, IV→14, V→17, VI→18, non "3 × Gradi".
-- Sez. 1: la frase "con i cinque Talenti liberi ordinari…" andava riformulata come esempio: fatto nella copia condivisa il 26/09, insieme alle schede dei Talenti di magia (A.2.2).
+- Sez. 1: livello massimo incantesimi = tabella I→3, II→8, III→11, IV→14, V→17, VI→18, non "3 × Gradi". Il Google Doc dice ancora "3 volte i Gradi taumaturgici complessivi".
+- ~~Sez. 1: la frase "con i cinque Talenti liberi ordinari…" come esempio~~ — fatto nel Google Doc (verificato il 26/09).
+- Sez. 1, scheda di Potenziale Mistico Migliorato: manca la riga «Ambito: il Talento è riservato agli Usufruitori di Magia e non si applica all’Addestramento Taumaturgo» della risposta A.2.2. La regola è comunque scritta nel paragrafo «Conoscenza e livello massimo»: solo testo.
 
 **Manuale degli Armamenti**
 
@@ -138,6 +139,7 @@ Decisioni già prese o errori evidenti: l'app segue la decisione, il testo stamp
 
 ## 5. Manuali che l'app aspetta
 
-- **Manuale del Giocatore e della Magia aggiornati** con le risposte del 26/09: passaci i nuovi PDF nella cartella `Manuali/`, così le schede nell'app vengono dal testo definitivo.
-- Manuale degli Equipaggiamenti e Manuale dei Veicoli (in stesura).
+- Dal 26/09 i manuali sono Google Doc condivisi: l'app li rilegge a ogni sessione (`docs/manuali-drive.md`), non servono più i PDF.
+- Manuale dell'Equipaggiamento: il cap. 1 (0.1) è recepito (carico, PS Integrità per Qualità). Aspettiamo i cap. 2–8 e i cataloghi.
+- Manuale dei Veicoli (in stesura).
 - Manuale degli Armamenti v0.50: estratto per intero. Restano rimandati dal manuale le Prove Salvezza, i tempi di ricarica e i ricambi del Cuirassier Attila (§7.18.1). Se esce una v0.51, avvisaci.
