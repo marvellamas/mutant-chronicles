@@ -1,0 +1,115 @@
+{
+  "versione_manuale": "Armamenti 0.50",
+  "fonte": "Manuale degli Armamenti v0.50, §7.11.1–7.11.3 (armature commerciali civili); lotto 1 dal pilota di estrazione",
+  "_nota": "Le penalità dipendono dalla categoria (tabella «categorie», §7.11.1); un oggetto può indicare «penalita» proprie che sostituiscono quelle della categoria. «agilita» vale per Schivata e Prove fisiche di Atletica o Furtività ostacolate; «movimento_q» si sottrae al budget di movimento.",
+  "categorie": {
+    "Leggera": {
+      "attacchi_distanza": 0,
+      "attacchi_ravvicinati": 0,
+      "agilita": 0,
+      "movimento_q": 0,
+      "lancio_potere": -1
+    },
+    "Media": {
+      "attacchi_distanza": -1,
+      "attacchi_ravvicinati": -1,
+      "agilita": -1,
+      "movimento_q": -1,
+      "lancio_potere": -3
+    },
+    "Pesante": {
+      "attacchi_distanza": -2,
+      "attacchi_ravvicinati": -2,
+      "agilita": -2,
+      "movimento_q": -2,
+      "lancio_potere": -5
+    }
+  },
+  "abilita_agilita": [
+    "Atletica",
+    "Furtività"
+  ],
+  "abilita_difese": "Difese",
+  "regole": {
+    "for_mancante": "Per ogni punto di FOR mancante rispetto al requisito: ulteriore −1 VA agli attacchi, alle Difese e alle Prove fisiche ostacolate dalla protezione (§7.11.1)."
+  },
+  "oggetti": [
+    {
+      "id": "armatura-civile-leggera",
+      "nome": "Armatura civile leggera",
+      "tipo": "armatura",
+      "catalogo": "Commerciale",
+      "famiglia": "Armature civili",
+      "nomi_alternativi": [],
+      "note_manuale": "Profilo Standard commerciale: nessuna AR magica né proprietà specialistiche native (§7.11.3).",
+      "paragrafo": "§7.11.3",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 1,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1500,
+      "rinforzi_ammessi": [
+        "Leggero",
+        "Pesante"
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "armatura-civile-media",
+      "nome": "Armatura civile media",
+      "tipo": "armatura",
+      "catalogo": "Commerciale",
+      "famiglia": "Armature civili",
+      "nomi_alternativi": [],
+      "note_manuale": "Profilo Standard commerciale: nessuna AR magica né proprietà specialistiche native (§7.11.3).",
+      "paragrafo": "§7.11.3",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 3500,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "armatura-civile-pesante",
+      "nome": "Armatura civile pesante",
+      "tipo": "armatura",
+      "catalogo": "Commerciale",
+      "famiglia": "Armature civili",
+      "nomi_alternativi": [],
+      "note_manuale": "Profilo Standard commerciale: nessuna AR magica né proprietà specialistiche native (§7.11.3).",
+      "paragrafo": "§7.11.3",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Pesante",
+      "ar": {
+        "totale": 5,
+        "magica": 0
+      },
+      "for_richiesta": 7,
+      "pi": 10,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "RA",
+      "costo": 7000,
+      "rinforzi_ammessi": [],
+      "proprieta": []
+    }
+  ]
+}

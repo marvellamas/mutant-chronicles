@@ -1,6 +1,7 @@
 // Validatore dei dati delle regole (data/*.json).
 // Controlla gli invarianti dei manuali e restituisce errori leggibili: file, chiave, problema.
 // Non lancia eccezioni: un file malformato produce errori, non un crash.
+import { TIPI as TIPI_EQUIP } from './equipaggiamento.js';
 
 // Invarianti strutturali dei manuali. I valori numerici "di gioco" stanno in regole.json;
 // qui restano solo le forme fisse descritte dai paragrafi citati.
@@ -58,6 +59,7 @@ export function validaDati(dati) {
   const idSpec = validaSpecializzazioni(dati.specializzazioni, nomiAbilita, err);
   validaTalentiLiberi(dati.talenti_liberi, idSpec, err);
   validaTecniche(dati.tecniche_interiori, err);
+  validaEquipaggiamento(dati.equipaggiamento, [...nomiAbilita], [...(idSpec ?? [])], err);
 
   return errori;
 }
@@ -588,4 +590,122 @@ function validaClassi(c, nomiAddestramenti, nomiAbilita, macrofamiglie, regole, 
       }
     }
   });
+}
+
+// ---------------------------------------------------------------------------
+// Equipaggiamento (data/equipaggiamento/, Manuale degli Armamenti)
+
+const DADI = /^(\d+d\d+([+-]\d+)?|\d+)$/;
+const EFFETTI_PROPRIETA = ['parata_va'];
+const CAMPI_PENALITA = ['attacchi_distanza', 'attacchi_ravvicinati', 'agilita', 'movimento_q', 'lancio_potere'];
+
+function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
+  const FI = 'equipaggiamento/index';
+  if (!isOggetto(eq) || !isOggetto(eq.indice)) {
+    err(FI, '', 'indice del catalogo mancante o non è un oggetto JSON');
+    return;
+  }
+  const ind = eq.indice;
+  if (!isTesto(ind.versione_manuale)) err(FI, 'versione_manuale', 'campo mancante o vuoto');
+  const rep = isOggetto(ind.reperibilita) ? Object.keys(ind.reperibilita) : [];
+  if (!rep.length) err(FI, 'reperibilita', 'tabella delle sigle di reperibilità mancante (§7.1.8)');
+  if (!Array.isArray(ind.file) || !ind.file.length) {
+    err(FI, 'file', 'elenco dei file mancante');
+    return;
+  }
+  const idFile = new Set();
+  ind.file.forEach((v, i) => {
+    if (!isTesto(v?.id) || !/^[a-z_]+$/.test(v.id)) err(FI, `file[${i}].id`, 'id mancante (solo lettere minuscole e _)');
+    else if (idFile.has(v.id)) err(FI, `file[${i}].id`, `id "${v.id}" ripetuto`);
+    else idFile.add(v.id);
+    if (!isTesto(v?.file) || !v.file.endsWith('.json')) err(FI, `file[${i}].file`, 'nome del file .json mancante');
+  });
+
+  for (const { id: fileId, file: nomeFile } of ind.file) {
+    if (!isTesto(nomeFile) || !nomeFile.endsWith('.json')) continue;
+    const F = `equipaggiamento/${nomeFile.slice(0, -5)}`;
+    const f = eq.file?.[fileId];
+    if (!isOggetto(f)) { err(F, '', 'file mancante o non è un oggetto JSON'); continue; }
+    if (!isTesto(f.versione_manuale)) err(F, 'versione_manuale', 'campo mancante o vuoto');
+    if (!Array.isArray(f.oggetti)) { err(F, 'oggetti', 'elenco mancante'); continue; }
+    if (f.categorie !== undefined) {
+      if (!isOggetto(f.categorie)) err(F, 'categorie', 'deve essere un oggetto { categoria: penalità }');
+      else for (const [c, p] of Object.entries(f.categorie)) validaPenalita(F, `categorie.${c}`, p, err);
+    }
+    for (const k of ['abilita_agilita']) {
+      if (f[k] !== undefined && (!Array.isArray(f[k]) || f[k].some((a) => !nomiAbilita.includes(a)))) err(F, k, 'elenco di Abilità esistenti');
+    }
+    if (f.abilita_difese !== undefined && !nomiAbilita.includes(f.abilita_difese)) err(F, 'abilita_difese', `Abilità "${f.abilita_difese}" inesistente`);
+
+    const ids = new Set();
+    f.oggetti.forEach((o, i) => {
+      const k = `oggetti[${i}]${isTesto(o?.id) ? ` (${o.id})` : ''}`;
+      if (!isOggetto(o)) { err(F, k, 'non è un oggetto'); return; }
+      if (!isTesto(o.id) || !/^[a-z0-9-]+$/.test(o.id)) err(F, `${k}.id`, 'id mancante (minuscole, cifre e trattini)');
+      else if (ids.has(o.id)) err(F, `${k}.id`, `id "${o.id}" ripetuto`);
+      else ids.add(o.id);
+      for (const c of ['nome', 'catalogo', 'famiglia', 'paragrafo', 'versione_manuale']) if (!isTesto(o[c])) err(F, `${k}.${c}`, 'testo mancante');
+      if (!TIPI_EQUIP.includes(o.tipo)) err(F, `${k}.tipo`, `tipo "${o.tipo}" non ammesso (${TIPI_EQUIP.join(', ')})`);
+      if (!Array.isArray(o.nomi_alternativi) || o.nomi_alternativi.some((n) => !isTesto(n))) err(F, `${k}.nomi_alternativi`, 'elenco di nomi (anche vuoto)');
+      if (o.note_manuale !== undefined && typeof o.note_manuale !== 'string') err(F, `${k}.note_manuale`, 'deve essere testo');
+      numeroOpz(F, `${k}.pi`, o.pi, 0, 999, err);
+      numeroOpz(F, `${k}.ps_int`, o.ps_int, 1, 30, err);
+      numeroOpz(F, `${k}.costo`, o.costo, 0, 1e9, err);
+      if (o.for_richiesta !== undefined && o.for_richiesta !== null && !(isIntero(o.for_richiesta) && o.for_richiesta >= 1 && o.for_richiesta <= 10)) {
+        err(F, `${k}.for_richiesta`, `deve essere un intero da 1 a 10, trovato ${JSON.stringify(o.for_richiesta)}`);
+      }
+      if (o.reperibilita !== undefined && !rep.includes(o.reperibilita)) err(F, `${k}.reperibilita`, `sigla "${o.reperibilita}" non in index.json (${rep.join(', ')})`);
+      if (o.proprieta !== undefined) {
+        if (!Array.isArray(o.proprieta)) err(F, `${k}.proprieta`, 'deve essere un elenco');
+        else o.proprieta.forEach((p, j) => {
+          if (!isTesto(p?.nome) || !isTesto(p?.testo)) err(F, `${k}.proprieta[${j}]`, 'servono nome e testo');
+          if (p?.effetto !== undefined) {
+            if (!isOggetto(p.effetto)) err(F, `${k}.proprieta[${j}].effetto`, 'deve essere un oggetto');
+            else for (const [e, v] of Object.entries(p.effetto)) {
+              if (!EFFETTI_PROPRIETA.includes(e)) err(F, `${k}.proprieta[${j}].effetto.${e}`, `effetto sconosciuto (ammessi: ${EFFETTI_PROPRIETA.join(', ')})`);
+              else if (!isIntero(v)) err(F, `${k}.proprieta[${j}].effetto.${e}`, 'deve essere un numero intero');
+            }
+          }
+        });
+      }
+      if (o.tipo === 'arma_ravvicinata' || o.tipo === 'arma_distanza') {
+        if (!nomiAbilita.includes(o.abilita)) err(F, `${k}.abilita`, `Abilità "${o.abilita}" inesistente in abilita.json`);
+        if (o.specializzazione !== undefined && o.specializzazione !== null && !idSpec.includes(o.specializzazione)) err(F, `${k}.specializzazione`, `Specializzazione "${o.specializzazione}" inesistente`);
+        if (![1, 2, '1/2'].includes(o.mani)) err(F, `${k}.mani`, 'deve essere 1, 2 oppure "1/2"');
+        if (!isOggetto(o.danno)) err(F, `${k}.danno`, 'serve { una_mano, due_mani }');
+        else {
+          for (const m of ['una_mano', 'due_mani']) if (o.danno[m] !== null && o.danno[m] !== undefined && !DADI.test(o.danno[m])) err(F, `${k}.danno.${m}`, `"${o.danno[m]}" non è una formula di dadi (es. 1d6+1, 2)`);
+          if (!o.danno.una_mano && !o.danno.due_mani) err(F, `${k}.danno`, 'manca il danno');
+          if (o.mani === 1 && !o.danno.una_mano) err(F, `${k}.danno.una_mano`, 'arma a una mano senza danno a una mano');
+          if (o.mani === 2 && !o.danno.due_mani) err(F, `${k}.danno.due_mani`, 'arma a due mani senza danno a due mani');
+          if (o.mani === '1/2' && !(o.danno.una_mano && o.danno.due_mani)) err(F, `${k}.danno`, 'arma Versatile: servono entrambi i danni');
+        }
+        numeroOpz(F, `${k}.portata_q`, o.portata_q, 1, 99, err);
+        numeroOpz(F, `${k}.gittata_q`, o.gittata_q, 1, 9999, err);
+        numeroOpz(F, `${k}.inc`, o.inc, 1, 10, err);
+      }
+      if (o.tipo === 'armatura' || o.tipo === 'scudo') {
+        if (!isOggetto(o.ar) || !isIntero(o.ar.totale) || o.ar.totale < 0) err(F, `${k}.ar`, 'serve { totale, magica } con numeri interi');
+        else if (!isIntero(o.ar.magica ?? 0) || (o.ar.magica ?? 0) > o.ar.totale) err(F, `${k}.ar.magica`, 'intero non superiore al totale');
+        if (o.tipo === 'armatura' && !(isOggetto(f.categorie) && o.categoria in f.categorie) && o.penalita === undefined) {
+          err(F, `${k}.categoria`, `categoria "${o.categoria}" senza penalità in «categorie» e senza «penalita» proprie`);
+        }
+        if (o.penalita !== undefined) validaPenalita(F, `${k}.penalita`, o.penalita, err);
+      }
+    });
+  }
+}
+
+function validaPenalita(F, k, p, err) {
+  if (!isOggetto(p)) { err(F, k, 'deve essere un oggetto di penalità'); return; }
+  for (const [c, v] of Object.entries(p)) {
+    if (!CAMPI_PENALITA.includes(c)) err(F, `${k}.${c}`, `penalità sconosciuta (ammesse: ${CAMPI_PENALITA.join(', ')})`);
+    else if (!isIntero(v) || v > 0) err(F, `${k}.${c}`, 'deve essere un intero ≤ 0');
+  }
+}
+
+function numeroOpz(F, k, v, min, max, err) {
+  if (v === undefined || v === null) return;
+  if (typeof v !== 'number' || !Number.isFinite(v)) err(F, k, `deve essere un numero, trovato ${JSON.stringify(v)}`);
+  else if (v < min || v > max) err(F, k, `fuori intervallo (${min}–${max}): ${v}`);
 }

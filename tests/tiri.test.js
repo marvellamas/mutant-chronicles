@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { specTiro, tira, tiroManuale, migraTiro, valoreTiro } from '../src/tiri.js';
-import { nuoveScelte, normalizza, deserializza, serializza, specTiroPM, specTiroPuntiEroe } from '../src/character.js';
+import { nuoveScelte, normalizza, deserializza, serializza, specTiroPM, specTiroPuntiEroe, VERSIONE_FORMATO } from '../src/character.js';
 import { calcolaScheda, validaLivello } from '../src/calc.js';
 import { datiReali } from './helpers.js';
 import { ARCANISTA as ARCANISTA_COMPLETA } from './personaggi.js';
@@ -113,6 +113,6 @@ test('file esportato in formato 1 (tiri numerici): si importa e si migra', () =>
   assert.deepEqual(r.scelte.puntiEroe, { valore: 4, origine: 'app' });
   // riesportato, il file è nel formato attuale e conserva l'origine
   const nuovo = JSON.parse(serializza({ ...r.scelte, puntiEroe: { valore: 4, origine: 'manuale' } }));
-  assert.equal(nuovo.versione, 4);
+  assert.equal(nuovo.versione, VERSIONE_FORMATO);
   assert.deepEqual(nuovo.scelte.puntiEroe, { valore: 4, origine: 'manuale' });
 });

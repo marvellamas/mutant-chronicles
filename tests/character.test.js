@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  nuoveScelte, applicaModifica, normalizza, anteprima, serializza, deserializza, deserializzaPersonaggio, FORMATO_FILE, CAMPI_ANAGRAFICA,
+  nuoveScelte, applicaModifica, normalizza, anteprima, serializza, deserializza, deserializzaPersonaggio, FORMATO_FILE, CAMPI_ANAGRAFICA, VERSIONE_FORMATO,
 } from '../src/character.js';
 import { statoIncantesimi, motivoBloccoIncantesimo } from '../src/incantesimi.js';
 import { checklist } from '../src/checklist.js';
@@ -195,7 +195,7 @@ test('serializza con i livelli → deserializzaPersonaggio restituisce creazione
   const livelli = [{ livello: 2, caratteristiche: { DES: 2 } }, { livello: 3, talentoLibero: { id: 'sempre-allerta' } }];
   const testo = serializza(MISHIMA_AGENTE, { livelli });
   const obj = JSON.parse(testo);
-  assert.equal(obj.versione, 4);
+  assert.equal(obj.versione, VERSIONE_FORMATO);
   assert.deepEqual(obj.livelli, livelli);
   assert.deepEqual(deserializzaPersonaggio(testo), { creazione: deserializza(testo), livelli, sessione: null });
   // al 1° livello il file non ha "livelli"; i file vecchi si leggono con livelli vuoti

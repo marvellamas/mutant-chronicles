@@ -7,6 +7,7 @@ import {
 } from './calc.js';
 import { statoIncantesimi } from './incantesimi.js';
 import { specTiro, migraTiro, motivoFuoriIntervallo } from './tiri.js';
+import { normalizzaEquipaggiamento, catalogo, risolvi, STATI, NOMI_TIPI } from './equipaggiamento.js';
 
 // Personaggio a livelli { creazione, livelli } (cap. 8): modello e funzioni in avanzamento.js.
 export {
@@ -17,7 +18,8 @@ export const FORMATO_FILE = 'mutant-personaggio';
 // 2: i tiri di dado sono { valore, origine } (src/tiri.js); i file della versione 1 si migrano.
 // 3: il file può contenere i livelli successivi al 1° ("livelli"); senza, è un personaggio al 1°.
 // 4: anagrafica nella creazione e blocco "sessione" (valori attuali della modalità tavolo).
-export const VERSIONE_FORMATO = 4;
+// 5: "equipaggiamento" è un elenco di voci (catalogo o personalizzate), non più un testo libero.
+export const VERSIONE_FORMATO = 5;
 
 /**
  * Anagrafica del passo «Background e anagrafica»: tutti campi facoltativi e descrittivi, senza
@@ -60,7 +62,7 @@ export function nuoveScelte() {
     puntiAbilitaLiberi: {},
     incantesimi: [],
     puntiEroe: null, // { valore, origine: 'app' | 'manuale' }
-    equipaggiamento: '',
+    equipaggiamento: [], // voci { uid, rif, personalizzato?, stato, quantita, montato_su?, note } (src/equipaggiamento.js)
   };
 }
 
@@ -124,7 +126,20 @@ export function normalizza(scelteIn, dati) {
   const avvisi = [];
   const r = dati.regole;
 
-  for (const k of ['nome', 'concetto', 'equipaggiamento']) if (typeof s[k] !== 'string') s[k] = '';
+  for (const k of ['nome', 'concetto']) if (typeof s[k] !== 'string') s[k] = '';
+  // Equipaggiamento: il vecchio campo di testo diventa un oggetto personalizzato «altro» con il
+  // testo nelle note; gli stati non ammessi per il tipo tornano «nello zaino».
+  s.equipaggiamento = normalizzaEquipaggiamento(s.equipaggiamento);
+  const cat = catalogo(dati);
+  for (const v of s.equipaggiamento) {
+    const r = risolvi(v, cat);
+    if (r.fuoriCatalogo) continue; // resta com'è: «non più in catalogo», senza effetti
+    const stati = STATI[r.tipo] ?? [];
+    if (stati.length ? !stati.includes(v.stato) : v.stato !== null) {
+      if (v.stato !== null) avvisi.push(`${r.nome}: stato «${v.stato}» non valido per ${NOMI_TIPI[r.tipo]}, rimesso ${stati.length ? 'nello zaino' : 'senza stato'}.`);
+      v.stato = stati.length ? stati.at(-1) : null;
+    }
+  }
   // Anagrafica: facoltativa; i personaggi salvati prima l'hanno vuota.
   for (const { campo } of CAMPI_ANAGRAFICA) {
     if (typeof s[campo] !== 'string') s[campo] = '';

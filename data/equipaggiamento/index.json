@@ -1,0 +1,34 @@
+{
+  "versione_manuale": "Armamenti 0.50",
+  "_nota": "Elenco dei file del catalogo dell’equipaggiamento. Aggiungere un lotto = aggiungere un file in questa cartella e una riga qui. «id» è il prefisso dei riferimenti nei personaggi (es. \"armi:spada-leggera\").",
+  "reperibilita": {
+    "CO": {
+      "nome": "Comune",
+      "ricerca": "Disponibile presso un venditore appropriato; nessuna Prova."
+    },
+    "NC": {
+      "nome": "Non comune",
+      "ricerca": "Oratoria senza penalità."
+    },
+    "RA": {
+      "nome": "Rara",
+      "ricerca": "Oratoria −2 VA."
+    },
+    "MR": {
+      "nome": "Molto rara",
+      "ricerca": "Oratoria −4 VA."
+    }
+  },
+  "file": [
+    {
+      "id": "armi",
+      "file": "armi.json",
+      "descrizione": "Armi ravvicinate del catalogo Commerciale (§7.1.1)"
+    },
+    {
+      "id": "armature",
+      "file": "armature.json",
+      "descrizione": "Armature commerciali civili (§7.11.3)"
+    }
+  ]
+}

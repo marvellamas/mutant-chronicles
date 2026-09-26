@@ -14,6 +14,7 @@ import {
   puntiMagiaCreazione, incantesimiLiberi, livelloMassimoIncantesimi,
 } from './calc.js';
 import { specTiro, valoreTiro, motivoFuoriIntervallo } from './tiri.js';
+import { calcolaEquipaggiamento, normalizzaEquipaggiamento } from './equipaggiamento.js';
 
 export const VERSIONE_PERSONAGGIO = 2;
 
@@ -696,6 +697,16 @@ export function calcolaSchedaPersonaggio(personaggio, dati) {
     return { nome, categoria, caratteristica, ...componenti, daClasse: x.daClasse, liberi: x.liberi, limite, totale: valoreAbilita(componenti) };
   });
 
+  // Equipaggiamento (roadmap §1.4): solo gli oggetti attivi. Il VA dell'Abilità con il componente
+  // «Equip» è `vaEquip`; `totale` resta quello delle regole di creazione e avanzamento.
+  const specPossedute = stato.talentiLiberi.filter((t) => talentoLiberoDef(t.id, dati).specializzazione).map((t) => ({ id: t.id }));
+  const equipaggiamento = calcolaEquipaggiamento({ caratteristiche, abilita, specializzazioni: specPossedute },
+    normalizzaEquipaggiamento(migraPersonaggio(personaggio).creazione.equipaggiamento), dati);
+  const abilitaEquip = abilita.map((a) => {
+    const equip = equipaggiamento.equipAbilita[a.nome] ?? 0;
+    return { ...a, equip, vaEquip: a.totale + equip };
+  });
+
   const pmMancanti = stato.contributiPM.some((c) => c.valore === null);
   const movimento = { passo: r.movimento.passo, corsa: r.movimento.corsa, scatto: r.movimento.scatto, unita: r.movimento.unita };
   for (const t of talenti) for (const [k, v] of Object.entries(t.effetti?.movimento ?? {})) movimento[k] += v;
@@ -725,7 +736,8 @@ export function calcolaSchedaPersonaggio(personaggio, dati) {
       return { nome: c.nome, addestramento: def.addestramento, grado: c.grado, taumaturgica: eTaumaturgica(def, dati), talenti: c.talenti };
     }),
     caratteristiche,
-    abilita,
+    abilita: abilitaEquip,
+    equipaggiamento,
     salvezze: salvezzeDi(stato, dati),
     pv: stato.car.COS + stato.contributiPV.reduce((s, c) => s + c.valore, 0) + effetto('pv'),
     pm: pmMancanti ? null : stato.car.SAG + stato.contributiPM.reduce((s, c) => s + c.valore, 0),

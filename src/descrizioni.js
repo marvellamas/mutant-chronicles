@@ -1,5 +1,6 @@
 // Contenuto dei tooltip e della scheda completa degli incantesimi, ricavato solo dai dati.
 // Funzioni pure: la UI (src/ui/tooltip.js) trasforma il risultato in DOM.
+import { catalogo, NOMI_TIPI } from './equipaggiamento.js';
 
 const trova = (lista, nome) => lista.find((x) => x.nome === nome);
 const eTodo = (v) => typeof v === 'string' && v.startsWith('TODO(');
@@ -24,6 +25,7 @@ export function contenutoTooltip(tipo, id, dati) {
   if (tipo === 'incantesimo') return tooltipIncantesimo(id, dati);
   if (tipo === 'talento') return tooltipTalento(id, dati);
   if (tipo === 'tecnica') return tooltipTecnica(id, dati);
+  if (tipo === 'oggetto') return tooltipOggetto(id, dati);
   return null;
 }
 
@@ -72,6 +74,37 @@ function nomeTalento(id, dati) {
   if (t) return t.nome;
   const s = dati.specializzazioni.specializzazioni.find((x) => x.id === id);
   return s ? `Specializzazione in ${s.nome}` : id;
+}
+
+/** Oggetto del catalogo dell'equipaggiamento (Manuale degli Armamenti), per riferimento "file:id". */
+function tooltipOggetto(rif, dati) {
+  const o = catalogo(dati).perRif.get(rif);
+  if (!o) return null;
+  const rep = dati.equipaggiamento.indice.reperibilita?.[o.reperibilita];
+  const danno = o.danno ? [o.danno.una_mano ? `${o.danno.una_mano} a una mano` : null, o.danno.due_mani ? `${o.danno.due_mani} a due mani` : null].filter(Boolean).join(', ') : null;
+  const riga = {};
+  if (o.abilita) riga['Abilità'] = o.abilita;
+  if (o.mani !== undefined) riga.Mani = String(o.mani).replace('1/2', '1 / 2');
+  if (danno) riga.Danno = danno;
+  if (o.portata_q) riga.Portata = `${o.portata_q} Q`;
+  if (o.gittata_q) riga.Gittata = `${o.gittata_q} Q`;
+  if (o.categoria) riga.Categoria = o.categoria;
+  if (o.ar) riga.AR = `${o.ar.totale}${o.ar.magica ? ` (${o.ar.magica} magica)` : ''}`;
+  if (o.for_richiesta) riga.FOR = String(o.for_richiesta);
+  if (o.inc) riga.INC = String(o.inc);
+  if (o.pi !== undefined) riga.PI = String(o.pi);
+  if (o.qualita) riga['Qualità'] = `${o.qualita}${o.ps_int ? ` (PS INT ${o.ps_int})` : ''}`;
+  if (o.reperibilita) riga.REP = rep ? `${o.reperibilita} ${rep.nome}` : o.reperibilita;
+  if (o.costo !== undefined) riga.Costo = o.costo.toLocaleString('it-IT');
+  const sezioni = [];
+  if (o.nomi_alternativi?.length) sezioni.push({ etichetta: 'Comprende', testo: o.nomi_alternativi.join(', ') });
+  for (const p of o.proprieta ?? []) sezioni.push({ etichetta: p.nome, testo: p.testo });
+  if (o.note_manuale) sezioni.push({ etichetta: null, testo: o.note_manuale });
+  return {
+    tipo: 'oggetto', titolo: o.nome,
+    sottotitolo: `${NOMI_TIPI[o.tipo]} · ${o.catalogo} · ${o.famiglia} · ${o.paragrafo} (${o.versione_manuale})`,
+    sezioni, tabella: { titolo: null, colonne: Object.keys(riga), righe: [riga] }, apriScheda: false,
+  };
 }
 
 /** Tecnica Interiore (§8.9). */

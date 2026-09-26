@@ -55,6 +55,45 @@ export function intestazioneBreve(intestazione) {
     .filter((x) => x && !/^(Scheda|Macrofamiglia|Specializzazione)\b/.test(x)).join(' • ');
 }
 
+/** Danno per la tabella: una mano e/o due mani. */
+export function testoDanno(danno) {
+  if (!danno) return '—';
+  if (danno.una_mano && danno.due_mani) return `${danno.una_mano} / ${danno.due_mani} (2 mani)`;
+  return danno.una_mano ?? danno.due_mani ?? '—';
+}
+
+const conSegno = (n) => (n > 0 ? `+${n}` : n < 0 ? `−${-n}` : '0');
+
+function testoPenalita(p) {
+  const pen = p.penalita ?? {};
+  const parti = [];
+  if (pen.agilita) parti.push(`Agilità ${conSegno(pen.agilita)}`);
+  if (pen.attacchi_ravvicinati || pen.attacchi_distanza) parti.push(`attacchi ${conSegno(pen.attacchi_ravvicinati ?? 0)} ravv. / ${conSegno(pen.attacchi_distanza ?? 0)} dist.`);
+  if (pen.movimento_q) parti.push(`MOV ${conSegno(pen.movimento_q)} Q`);
+  if (pen.lancio_potere) parti.push(`lancio ${conSegno(pen.lancio_potere)}`);
+  if (p.forRichiesta) parti.push(`FOR ${p.forRichiesta}${p.forMancante ? ` (−${p.forMancante})` : ''}`);
+  return parti.join('; ');
+}
+
+/**
+ * Elenco compatto degli oggetti non attivi: «nome ×quantità — note». Le note con più voci (righe o «;») di un
+ * oggetto «altro» (per esempio il vecchio campo di testo migrato) diventano voci separate.
+ */
+export function elencoZaino(zaino) {
+  const out = [];
+  for (const o of zaino) {
+    const q = o.voce.quantita > 1 ? ` ×${o.voce.quantita}` : '';
+    const stato = o.fuoriCatalogo ? ' (non più in catalogo)' : o.voce.stato === 'pronta' ? ' (addosso)' : '';
+    const note = String(o.voce.note ?? '').trim();
+    if (o.personalizzato && o.tipo === 'altro' && vociEquipaggiamento(note).length > 1) {
+      out.push(...vociEquipaggiamento(note));
+      continue;
+    }
+    out.push(`${o.nome}${q}${stato}${note ? ` — ${note.replace(/\s+/g, ' ')}` : ''}`);
+  }
+  return out;
+}
+
 /** Il foglio Magia si stampa solo se il personaggio ha accesso agli incantesimi. */
 export function haMagia(scheda) {
   const inc = scheda.incantesimi;
@@ -95,7 +134,7 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
   const testo = (t) => String(t ?? '').trim();
   const frase = (t) => (completo ? testo(t) : primaFrase(t));
   const bg = String(c.concetto ?? '').trim().replace(/\s+/g, ' ');
-  const equip = vociEquipaggiamento(c.equipaggiamento);
+  const equip = elencoZaino(s.equipaggiamento?.zaino ?? []);
 
   const identita = {
     nome,
@@ -126,7 +165,7 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
       nome: cat,
       abilita: s.abilita.filter((a) => a.categoria === cat).map((a) => ({
         nome: a.nome, caratteristica: a.caratteristica, mod: a.mod, base: a.base, corporazione: a.corporazione,
-        avanzamento: a.avanzamento, va: a.totale, diClasse: a.daClasse > 0,
+        avanzamento: a.avanzamento, equip: a.equip ?? 0, va: a.vaEquip ?? a.totale, diClasse: a.daClasse > 0,
       })),
     })),
     limiteAvanzamento: s.abilita[0]?.limite ?? null,
@@ -154,12 +193,33 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
   };
 
   const difese = s.abilita.find((a) => a.nome === 'Difese');
-  // Il foglio Combattimento ha le tabelle Armi e Protezioni vuote: quando arriverà il catalogo
-  // dell'equipaggiamento, le righe si riempiranno da lì (roadmap §1) con le stesse colonne.
+  // Armi e Protezioni si riempiono dagli oggetti attivi (impugnati, imbracciati, indossati); le
+  // righe vuote restano per la penna. Il resto dell'equipaggiamento va nell'elenco compatto.
+  const eq = s.equipaggiamento;
+  const righeArmi = eq.armi.map((a) => [
+    a.nome,
+    a.abilita ?? '—',
+    a.va === null ? '—' : a.va < 0 ? `−${-a.va}` : String(a.va),
+    testoDanno(a.danno),
+    a.gittataQ ? `${a.gittataQ} Q` : a.portataQ ? `portata ${a.portataQ} Q` : '—',
+    '',
+    [a.specializzazione ? `+${a.bonusDanno} danno (Spec.)` : null, ...a.proprieta.map((p) => p.nome), a.parata ? `Parata ${a.parata.va < 0 ? `−${-a.parata.va}` : a.parata.va}` : null].filter(Boolean).join('; '),
+  ]);
+  const righeProtezioni = eq.protezioni.map((p) => [
+    p.nome,
+    p.ar ? `${p.ar.totale}${p.ar.magica ? ` (${p.ar.magica} magica)` : ''}` : '—',
+    p.categoria ?? '—',
+    testoPenalita(p),
+  ]);
   const combattimento = {
-    armi: { colonne: ['Arma', 'Abilità', 'VA', 'Danno', 'Gittata', 'Munizioni', 'Note'], righe: [], righeVuote: LIMITI_STAMPA.righeArmi },
-    protezioni: { colonne: ['Protezione', 'AR', 'Zone', 'Note'], righe: [], righeVuote: LIMITI_STAMPA.righeProtezioni },
-    difese: difese ? { va: difese.totale, caratteristica: difese.caratteristica } : null,
+    armi: { colonne: ['Arma', 'Abilità', 'VA', 'Danno', 'Gittata', 'Munizioni', 'Note'], righe: righeArmi, righeVuote: Math.max(2, LIMITI_STAMPA.righeArmi - righeArmi.length) },
+    protezioni: { colonne: ['Protezione', 'AR', 'Categoria', 'Note'], righe: righeProtezioni, righeVuote: Math.max(1, LIMITI_STAMPA.righeProtezioni - righeProtezioni.length) },
+    armiCalcolate: eq.armi,
+    protezioniCalcolate: eq.protezioni,
+    avvisiEquipaggiamento: eq.avvisi,
+    movimentoQ: eq.movimentoQ,
+    lancioPotere: eq.lancioPotere,
+    difese: difese ? { va: difese.vaEquip ?? difese.totale, caratteristica: difese.caratteristica } : null,
     ferite: { stati: dati.regole.ferite.stati, oltre: dati.regole.ferite.oltre },
     affaticamento: dati.regole.affaticamento.stati,
     stati: dati.regole.stati.elenco,
