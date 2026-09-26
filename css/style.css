@@ -688,6 +688,13 @@ details.sezione-tab > summary { font-weight: 700; cursor: pointer; min-height: 4
 .btn-tavolo:active:not(:disabled) { background: var(--accento-tenue); border-color: var(--accento); }
 .btn-tavolo:disabled { opacity: 0.4; cursor: not-allowed; }
 .contatore-tavolo + .btn { margin-top: 0.5rem; width: 100%; min-height: 44px; }
+/* Riquadri delle risorse (css/palette.css): il bordo dice «che cos'è», la barra «come sta» */
+.contatore-tavolo.riquadro-pv { border: 2px solid var(--pv); }
+.contatore-tavolo.riquadro-pm { border: 2px solid var(--pm); }
+.contatore-tavolo.riquadro-pe { border: 2px solid var(--pe); }
+.riquadro-pv > h3 { color: var(--pv); }
+.riquadro-pm > h3 { color: var(--pm); }
+.riquadro-pe > h3 { color: var(--pe); }
 .selettore-livelli { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr)); gap: 0.4rem; }
 .livello-tavolo {
   font: inherit; display: grid; gap: 0.1rem; text-align: left; align-content: start;
@@ -788,6 +795,11 @@ details.sezione-tab > summary { font-weight: 700; cursor: pointer; min-height: 4
 .barra-numero { font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--tenue); }
 .barra-risorsa.grande { margin: -0.2rem 0 0.55rem; }
 .barra-risorsa.grande .barra-traccia { height: 0.75rem; }
+.barra-risorsa.risorsa-pv, .barra-risorsa.risorsa-pm { border: 2px solid; border-radius: 999px; padding: 0.05rem 0.55rem 0.05rem 0.45rem; }
+.barra-risorsa.risorsa-pv { border-color: var(--pv); }
+.barra-risorsa.risorsa-pm { border-color: var(--pm); }
+.risorsa-pv .barra-etichetta { color: var(--pv); }
+.risorsa-pm .barra-etichetta { color: var(--pm); }
 .riepilogo-risorse { display: grid; grid-template-columns: repeat(2, minmax(7.5rem, 12rem)); gap: 0.2rem 1rem; margin-top: 0.35rem; }
 
 /* Riquadro Punti Magia: riserva personale e, separati, i cristalli */

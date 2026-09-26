@@ -42,8 +42,9 @@ export function renderTab(ctx) {
       h('p', {}, h('strong', {}, `${id.livello}° livello`), ` · ${id.corporazione} · ${id.addestramento} · ${id.classi.map((c) => `${c.nome} ${c.grado}`).join(', ')}`),
       // riepilogo sempre visibile, in ogni tab: PV e PM attuali con la barra
       h('div', { class: 'riepilogo-risorse' },
-        barraRisorsa(ctx, 'PV', ctx.sessione.pvAttuali, ctx.massimi.pv),
-        ctx.massimi.pm ? barraRisorsa(ctx, 'PM', ctx.sessione.pmAttuali, ctx.massimi.pm) : null)),
+        // il bordo dice «che cos'è» (palette: PV rosso, PM blu), la barra «come sta»
+        barraRisorsa(ctx, 'PV', ctx.sessione.pvAttuali, ctx.massimi.pv, { classe: 'risorsa-pv' }),
+        ctx.massimi.pm ? barraRisorsa(ctx, 'PM', ctx.sessione.pmAttuali, ctx.massimi.pm, { classe: 'risorsa-pm' }) : null)),
     h('div', { class: 'barra-azioni' },
       ctx.puoAnnullareSessione ? h('button', { type: 'button', class: 'btn', onclick: azioni.annullaSessione, title: 'Annulla l’ultima modifica ai valori di sessione' }, '↶ Annulla') : null,
       id.livello < livelloMax
@@ -221,9 +222,9 @@ function tabIdentita(ctx, d) {
   return [
     promemoriaPenalita(ctx),
     h('div', { class: 'griglia-tavolo' },
-      contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true }),
+      contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true, classe: 'riquadro-pv' }),
       riquadroPM(ctx),
-      contatoreTavolo(ctx, { titolo: 'Punti Eroe', campo: 'puntiEroe', attuale: s.puntiEroe, massimo: m.puntiEroe, passi: [1] }),
+      contatoreTavolo(ctx, { titolo: 'Punti Eroe', campo: 'puntiEroe', attuale: s.puntiEroe, massimo: m.puntiEroe, passi: [1], classe: 'riquadro-pe' }),
       h('div', {},
         contatoreTavolo(ctx, { titolo: 'Distintivi', campo: 'distintivi', attuale: s.distintivi, massimo: null, passi: [1] }),
         h('button', {
@@ -355,7 +356,7 @@ function tabCombattimento(ctx, d) {
       h('p', {}, h('strong', {}, 'Equipaggiamento da controllare (avvisi, non blocchi: decide il master):')),
       h('ul', {}, d.avvisiEquipaggiamento.map((a) => h('li', {}, a)))) : null,
     h('div', { class: 'griglia-tavolo' },
-      contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true }),
+      contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true, classe: 'riquadro-pv' }),
       d.difese ? h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Difese'),
         h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), h('strong', {}, valoreEffettivo('Difese', d.difese.effettivo, d.difese.totale, d.difese.scomposizione))),
         h('p', { class: 'nota' }, `(${d.difese.caratteristica}) con l’equipaggiamento e le condizioni della sessione`)) : null),

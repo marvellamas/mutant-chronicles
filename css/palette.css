@@ -1,0 +1,79 @@
+/* Palette della scheda digitale (docs/palette.md). Colori con un significato fisso: non si
+   riusano per altro. Ogni colore ha la variante per il tema scuro; i contrasti sono controllati
+   da tests/palette.test.js (testo ≥ 4.5:1 sul proprio sfondo, bordi e barre ≥ 3:1).
+
+   Riservati:
+   --pv  rosso vivo      Punti Vita
+   --pm  blu             Punti Magia
+   --pe  verde           Punti Eroe
+   --fisica      rosa        magia Fisica
+   --mentale     azzurro     magia Mentale
+   --spirituale  verde chiaro magia Spirituale
+
+   Categorie dell'equipaggiamento (etichette dei gruppi nella tab Combattimento): --cat-*.
+   Il colore dice «che cos'è»; lo stato (verde/giallo/rosso delle barre) resta in style.css. */
+
+:root {
+  /* risorse: bordo e titolo del riquadro, fondo leggero */
+  --pv: #c8102e;
+  --pv-tenue: #fdecee;
+  --pm: #1d5fc4;
+  --pm-tenue: #eaf0fc;
+  --pe: #1b7a3a;
+  --pe-tenue: #e8f5ec;
+
+  /* macrofamiglie: barra laterale, fondo leggero, testo dell'etichetta */
+  --fisica: #d9577a;
+  --fisica-tenue: #fcedf1;
+  --fisica-testo: #9c2346;
+  --mentale: #2386bd;
+  --mentale-tenue: #e7f4fb;
+  --mentale-testo: #0b5a82;
+  --spirituale: #3e9a4f;
+  --spirituale-tenue: #ebf6ed;
+  --spirituale-testo: #2a6934;
+
+  /* categorie dell'equipaggiamento: fondo dell'etichetta (testo --cat-testo) */
+  --cat-testo: #ffffff;
+  --cat-ravvicinate: #8a3b12;  /* ruggine */
+  --cat-distanza: #5a5816;     /* oliva */
+  --cat-scudi: #7a5200;        /* ocra */
+  --cat-armature: #4a5260;     /* acciaio */
+  --cat-accessori: #5a4870;    /* prugna */
+  --cat-munizioni: #6b4423;    /* cuoio */
+  --cat-sanitario: #0e6863;    /* verde petrolio */
+  --cat-artefatti: #7a2f86;    /* viola */
+  --cat-altro: #5f5f66;        /* grigio */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --pv: #ff6b7d;
+    --pv-tenue: #3a1b21;
+    --pm: #7aaeff;
+    --pm-tenue: #1b2740;
+    --pe: #62d48e;
+    --pe-tenue: #17301f;
+
+    --fisica: #f08aa6;
+    --fisica-tenue: #3a2129;
+    --fisica-testo: #f7b6c8;
+    --mentale: #6cc4f0;
+    --mentale-tenue: #16303d;
+    --mentale-testo: #a4ddf8;
+    --spirituale: #8ed79a;
+    --spirituale-tenue: #1b3321;
+    --spirituale-testo: #b6ecbe;
+
+    --cat-testo: #17171a;
+    --cat-ravvicinate: #e8a07a;
+    --cat-distanza: #c9c66e;
+    --cat-scudi: #e6b35c;
+    --cat-armature: #aab4c4;
+    --cat-accessori: #c3aee0;
+    --cat-munizioni: #d6a67c;
+    --cat-sanitario: #6fd1c7;
+    --cat-artefatti: #dd9ce8;
+    --cat-altro: #b4b4bc;
+  }
+}
