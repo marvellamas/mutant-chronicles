@@ -315,6 +315,23 @@ const munizioniArmi = [];
     }
   }
   munizioniArmi.push({ rif: arma('Nimrod Autocannon').rif, famiglia: 'nimrod' });
+  // Armi del catalogo Commerciale (§7.7): le tabelle del §7.20.9 elencano solo i cataloghi
+  // corporativi; la famiglia viene dal §7.20.1 («La famiglia da fucile comprende carabine, fucili
+  // d’assalto e di precisione e mitragliatrici leggere») e dai nomi delle famiglie (proiettili da
+  // pistola, cartucce a pallini, frecce, dardi da balestra piccola e grande). Il Mitragliatore pesante
+  // usa i proiettili pesanti come i mitragliatori pesanti corporativi del §7.20.9 (MG80, Improved
+  // M89, SSW4200P). Aggiunte nel collaudo (docs/equipaggiamento-lotti.md).
+  const COMMERCIALI = {
+    pistola: ['Pistola semiautomatica', 'Revolver', 'Pistola pesante', 'Pistola mitragliatrice compatta'],
+    fucile: ['Carabina', 'Fucile d’assalto', 'Fucile di precisione', 'Mitragliatore leggero'],
+    pesanti: ['Mitragliatore pesante'],
+    pallini: ['Fucile a pompa', 'Doppietta'],
+    frecce: ['Arco da guerra'],
+    dardi_balestra_grande: ['Balestra grande'],
+    dardi_balestra_piccola: ['Balestra piccola'],
+  };
+  for (const [famiglia, nomi] of Object.entries(COMMERCIALI)) for (const n of nomi) munizioniArmi.push({ rif: arma(n, 'Commerciale').rif, famiglia });
+  verifica(testo.includes('La famiglia da fucile comprende carabine, fucili d’assalto e di precisione e mitragliatrici leggere'), 'famiglia da fucile nel §7.20.1');
 }
 
 // --- controllo delle righe contro la prosa --------------------------------------------------------------

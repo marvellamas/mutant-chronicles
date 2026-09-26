@@ -286,6 +286,62 @@
     {
       "rif": "armi_distanza_corporative:nimrod-autocannon",
       "famiglia": "nimrod"
+    },
+    {
+      "rif": "armi_distanza:pistola-semiautomatica",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza:revolver",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza:pistola-pesante",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza:pistola-mitragliatrice-compatta",
+      "famiglia": "pistola"
+    },
+    {
+      "rif": "armi_distanza:carabina",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza:fucile-d-assalto",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza:fucile-di-precisione",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza:mitragliatore-leggero",
+      "famiglia": "fucile"
+    },
+    {
+      "rif": "armi_distanza:mitragliatore-pesante",
+      "famiglia": "pesanti"
+    },
+    {
+      "rif": "armi_distanza:fucile-a-pompa",
+      "famiglia": "pallini"
+    },
+    {
+      "rif": "armi_distanza:doppietta",
+      "famiglia": "pallini"
+    },
+    {
+      "rif": "armi_distanza:arco-da-guerra",
+      "famiglia": "frecce"
+    },
+    {
+      "rif": "armi_distanza:balestra-grande",
+      "famiglia": "dardi_balestra_grande"
+    },
+    {
+      "rif": "armi_distanza:balestra-piccola",
+      "famiglia": "dardi_balestra_piccola"
     }
   ],
   "oggetti": [

@@ -467,7 +467,12 @@ Fatto il 26 settembre 2026, commit «Lotto 10 del catalogo: munizioni e alimenta
   - `munizione` (famiglia, variante, confezione), `esplosivo` (danno, AC, RS), `cella`
     (capacità, unità, costo di ricarica);
   - `compatibile_con` vale anche per le munizioni (verso le armi);
-  - `munizioni_armi`: la tabella del §7.20.9 con 71 armi corporative.
+  - `munizioni_armi`: la tabella del §7.20.9 con 71 armi corporative, più 14 armi commerciali
+    (aggiunte al collaudo del 26 settembre 2026). Il §7.20.1 dà la munizione di riferimento
+    delle armi commerciali per categoria: pistole → proiettili da pistola; carabine, fucili
+    d'assalto e di precisione, mitragliatore leggero → da fucile; mitragliatore pesante →
+    pesanti; fucile a pompa e doppietta → pallini; arco → frecce; balestre → dardi. Prima
+    mancavano e la scheda non mostrava le scorte compatibili.
   - Nella scheda dell'arma impugnata compaiono la famiglia di munizioni e le scorte
     compatibili della lista, con la quantità.
 - **Restano testo:** gli effetti delle varianti (Perforante sull'AR del bersaglio, Incendiaria
@@ -550,8 +555,12 @@ Fatto il 26 settembre 2026, commit «Lotto 12 del catalogo: artefatti e sintoniz
 
 ### 8. Resto del manuale
 
-- **Prezzi di riferimento delle armi** — §7.9, pp. 52–57: serve come **controllo incrociato**
-  dei costi estratti dagli altri lotti, non come dati nuovi.
+- ✔ **Prezzi di riferimento delle armi** — §7.9, pp. 53–58: **controllo incrociato** dei costi
+  estratti dagli altri lotti, non dati nuovi (collaudo del 26 settembre 2026).
+  - **Fonte:** `docs/lotti/collaudo-prezzi/`, script `tools/lotti/collaudo_prezzi.mjs`.
+  - **Esito:** 146 righe confrontate, **146 uguali, 0 differenze, 0 correzioni**.
+  - Al §7.9 mancano le tabelle a distanza di Fratellanza, Imperiali e Mishima: segnalato in
+    `per-davide.md`, sezione B.
 - **Integrità degli oggetti** — §7.2.1, p. 18: regole di PI e PS INT. Servirà quando la
   modalità tavolo terrà i PI attuali degli oggetti.
 - ✔ **Unità robotiche** — §7.18, pp. 107–108 (lotto 14, fatto il 26 settembre 2026, commit

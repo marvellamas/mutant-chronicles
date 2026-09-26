@@ -800,7 +800,7 @@ test('lotto 10: munizioni, celle, combustibile e compatibilità balistiche del �
   // granate standard, Fumogena ed Elettroshock sono già nel catalogo: niente doppioni
   assert.ok(!tutti.some((o) => /fumogena|elettroshock|frammentazione standard/i.test(o.nome)));
   const tab = dati.equipaggiamento.file.munizioni.munizioni_armi;
-  assert.equal(tab.length, 71);
+  assert.equal(tab.length, 71 + 14); // 71 armi corporative del §7.20.9 e 14 commerciali (§7.20.1, collaudo)
   const fam = (rif) => tab.find((x) => x.rif === rif)?.famiglia;
   assert.equal(fam('armi_distanza_corporative:mg40'), 'fucile'); // «La loro funzione di mitragliatrice leggera non li sposta nei pesanti»
   assert.equal(fam('corredi_dispositivi:rainy-dayer'), 'pistola');
