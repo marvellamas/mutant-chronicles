@@ -71,7 +71,7 @@ Sono le cose che hai già deciso a voce o che sono errori evidenti: l'app segue 
 ## D. Manuali che l'app aspetta
 
 - Manuale degli Equipaggiamenti e Manuale dei Veicoli (in stesura): diversi Talenti li citano. Quando esistono, ce li passi come PDF nella cartella `Manuali/`.
-- Manuale degli Armamenti v0.50: lo stiamo estraendo a lotti (stato in `docs/equipaggiamento-lotti.md`: fatti armi ravvicinate e a distanza commerciali, armature civili e corporative, scudi, armi ravvicinate e a distanza corporative, corredi e dispositivi corporativi). Se pubblichi una v0.51 prima che abbiamo finito, avvisaci: le tabelle cambiate vanno ri-estratte.
+- Manuale degli Armamenti v0.50: lo stiamo estraendo a lotti (stato in `docs/equipaggiamento-lotti.md`: fatti armi ravvicinate e a distanza commerciali, armature civili e corporative, scudi, armi ravvicinate e a distanza corporative, corredi e dispositivi corporativi, accessori delle armi). Se pubblichi una v0.51 prima che abbiamo finito, avvisaci: le tabelle cambiate vanno ri-estratte.
 
 ## Come ci rispondi
 

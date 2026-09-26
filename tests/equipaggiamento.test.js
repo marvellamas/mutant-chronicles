@@ -17,7 +17,7 @@ const voce = (uid, rif, stato, extra = {}) => ({ uid, rif, stato, quantita: 1, n
 const scheda = (creazione, equipaggiamento, livelli = []) => calcolaScheda({ creazione: { ...creazione, equipaggiamento }, livelli }, dati);
 
 test('catalogo: caricato dall’indice, un lotto = un file e una riga; riferimenti "file:id"', () => {
-  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armi_corporative', 'armi_distanza', 'armi_distanza_corporative', 'armature', 'armature_corporative', 'scudi', 'corredi_dispositivi']);
+  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armi_corporative', 'armi_distanza', 'armi_distanza_corporative', 'accessori_armi', 'armature', 'armature_corporative', 'scudi', 'corredi_dispositivi']);
   const cat = catalogo(dati);
   assert.equal(cat.oggetti.filter((o) => o.tipo === 'arma_ravvicinata' && o.catalogo === 'Commerciale').length, 28); // §7.1.1: 28 profili
   assert.equal(cat.oggetti.filter((o) => o.tipo === 'armatura' && o.catalogo === 'Commerciale').length, 3); // §7.11.3
@@ -664,4 +664,57 @@ test('validatore di corredi e dispositivi: SIN, compatibilità, tabelle, scudo i
   assert.match(e((d) => { o(d, 'rainy-dayer').scudo_integrato.parata = { ravvicinata: 0 }; }), /scudo_integrato\.parata/);
   assert.match(e((d) => { o(d, 'ape-capitol').penalita.abilita = { Nuoto: -2 }; }), /Abilità "Nuoto" inesistente/);
   assert.match(e((d) => { o(d, 'granata-fumogena').danno = { una_mano: '1d6', due_mani: null }; }), /nessun_danno/);
+});
+
+// --- Lotto 8: accessori delle armi (§7.3) -------------------------------------------------
+
+test('lotto 8: 15 accessori delle armi dal §7.3, con le versioni rinforzate dei silenziatori', () => {
+  const tutti = catalogo(dati).oggetti.filter((o) => o.file === 'accessori_armi');
+  assert.equal(tutti.length, 15);
+  const r = (id) => catalogo(dati).perRif.get(`accessori_armi:${id}`);
+  assert.deepEqual(r('mirino-ottico').mirino, { riduzione: 4, distanza_max_q: 500, azp_minime: 2, testo: 'Fino a 500 Q; almeno 2 Azioni Principali complessive.' });
+  assert.equal(r('mirino-di-precisione').mirino.distanza_max_q, null); // «Entro la gittata massima dell’arma»
+  assert.deepEqual(r('silenziatore').effetto_arma, { va: -2, danno: -1 });
+  // §7.3.1: «stessi modificatori, costo doppio»; «i rinforzati hanno PI 4»
+  assert.equal(r('silenziatore-rinforzato').costo, 4000);
+  assert.equal(r('silenziatore-rinforzato').pi, 4);
+  assert.deepEqual(r('bipiede').bonus_condizionato, { va: 1, condizione: 'finché il personaggio mantiene posizione e appoggio' });
+  assert.deepEqual(r('modulo-di-visione-termica').si_monta_su, ['mirino']);
+  assert.equal(r('batteria-di-servizio').costo, 10);
+});
+
+test('accessori montati su un’arma impugnata: silenziatore nel VA e nel danno, mirino, modulo sul mirino, bipiede', () => {
+  const arma = voce('f', 'armi_distanza:fucile-d-assalto', 'impugnata');
+  const acc = (uid, id, su, stato = 'in_uso') => voce(uid, `accessori_armi:${id}`, stato, { montato_su: su });
+  const base = scheda(MISHIMA_AGENTE, [arma]).equipaggiamento.armi[0];
+  const s = scheda(MISHIMA_AGENTE, [arma, acc('s', 'silenziatore', 'f'), acc('m', 'mirino-ottico', 'f'), acc('n', 'modulo-di-visione-notturna', 'm'), acc('b', 'bipiede', 'f')]).equipaggiamento;
+  const f = s.armi[0];
+  assert.equal(f.va, base.va - 2);
+  assert.ok(f.componenti.some((c) => c.nome === 'Silenziatore (§7.3.1)' && c.valore === -2));
+  assert.equal(f.danno.due_mani, aggiungiDanno(base.danno.due_mani, -1));
+  assert.equal(f.mirino.riduzione, 4);
+  assert.deepEqual(f.accessori.map((x) => x.nome), ['Silenziatore', 'Mirino Ottico', 'Bipiede', 'Modulo di visione notturna']);
+  assert.deepEqual(f.condizionali, [{ nome: 'Bipiede', va: 1, vaTotale: f.va + 1, condizione: 'finché il personaggio mantiene posizione e appoggio' }]);
+  assert.deepEqual(s.avvisi, []);
+  // un solo dispositivo di riduzione del rumore; il modulo di visione non si monta sull'arma
+  const t = scheda(MISHIMA_AGENTE, [arma, acc('s', 'silenziatore', 'f'), acc('a', 'attenuatore', 'f'), acc('n', 'modulo-di-visione-notturna', 'f')]).equipaggiamento;
+  assert.equal(t.armi[0].va, base.va - 2);
+  assert.ok(t.avvisi.some((x) => /c’è già Silenziatore: Attenuatore non ha effetto/.test(x)));
+  assert.ok(t.avvisi.some((x) => /Modulo di visione notturna non si monta su Fucile d’assalto/.test(x)));
+  // arma nello zaino: il mirino non ha effetto
+  const z = scheda(MISHIMA_AGENTE, [voce('f', 'armi_distanza:fucile-d-assalto', 'zaino'), acc('m', 'mirino-ottico', 'f')]).equipaggiamento;
+  assert.ok(z.avvisi.some((x) => /Mirino Ottico è montato su Fucile d’assalto, che non è impugnata/.test(x)));
+  // stampa: accessori, mirino e bipiede nelle note dell'arma
+  const creazione = { ...MISHIMA_AGENTE, equipaggiamento: [arma, acc('m', 'mirino-ottico', 'f'), acc('b', 'bipiede', 'f')] };
+  const riga = preparaStampa(creazione, dati).fogli.find((x) => x.id === 'combattimento').dati.armi.righe[0];
+  assert.match(riga[6], /Mirino Ottico; Bipiede; mirino −4 dist\.; Bipiede: VA \d+/);
+});
+
+test('validatore degli accessori: si monta su, mirino, effetti', () => {
+  const e = (modifica) => { const d = copia(dati); modifica(d); return validaDati(d).map((x) => `${x.chiave}: ${x.problema}`).join('\n'); };
+  const o = (d, id) => d.equipaggiamento.file.accessori_armi.oggetti.find((x) => x.id === id);
+  assert.match(e((d) => { o(d, 'bipiede').si_monta_su = ['zaino']; }), /si_monta_su: elenco fra/);
+  assert.match(e((d) => { o(d, 'mirino-reflex').mirino.riduzione = 0; }), /mirino: serve/);
+  assert.match(e((d) => { o(d, 'silenziatore').effetto_arma = { va: 'tanto' }; }), /effetto_arma: serve/);
+  assert.match(e((d) => { o(d, 'treppiede').bonus_condizionato = { va: 2 }; }), /bonus_condizionato: serve/);
 });

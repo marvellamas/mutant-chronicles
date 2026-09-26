@@ -139,6 +139,13 @@ function tooltipOggetto(rif, dati) {
     const si = o.scudo_integrato;
     sezioni.push({ etichetta: `Scudo, ${si.condizione}`, testo: `AR ${si.ar.totale}, Parata ${conSegno(si.parata.ravvicinata)} ravv. / ${conSegno(si.parata.distanza)} dist. (con Difese)` });
   }
+  if (o.mirino) sezioni.push({ etichetta: 'Mirino', testo: `riduce di ${o.mirino.riduzione} la penalità di distanza, fino a 0. ${o.mirino.testo}` });
+  if (o.effetto_arma && (o.effetto_arma.va || o.effetto_arma.danno)) sezioni.push({ etichetta: 'Sull’arma', testo: [o.effetto_arma.va ? `VA per colpire ${conSegno(o.effetto_arma.va)}` : null, o.effetto_arma.danno ? `danno ${conSegno(o.effetto_arma.danno)}` : null].filter(Boolean).join(', ') });
+  if (o.percezione) sezioni.push({ etichetta: 'Percezione dello sparo', testo: o.percezione });
+  if (o.bonus_condizionato) sezioni.push({ etichetta: 'Bonus al tiro', testo: `${conSegno(o.bonus_condizionato.va)} VA ${o.bonus_condizionato.condizione}` });
+  if (o.portata_q && o.tipo === 'accessorio') riga.Portata = `${o.portata_q} Q`;
+  if (o.si_monta_su) sezioni.push({ etichetta: 'Si monta su', testo: o.si_monta_su.map((x) => ({ arma_distanza: 'arma a distanza', arma_ravvicinata: 'arma ravvicinata', armatura: 'armatura', mirino: 'mirino' }[x])).join(', ') });
+  if (o.compatibilita) sezioni.push({ etichetta: 'Compatibilità', testo: o.compatibilita });
   if (o.compatibile_con) sezioni.push({ etichetta: 'Compatibile con', testo: o.compatibile_con.map((r) => cat.perRif.get(r)?.nome ?? r).join(', ') });
   for (const t of o.tabelle ?? []) {
     sezioni.push({ etichetta: t.titolo, testo: t.righe.map((r) => (t.colonne.length === 2 ? `${r[0]}: ${r[1]}` : `${r[0]}: ${r.slice(1).map((v, i) => `${t.colonne[i + 1]} ${v}`).join(', ')}`)).join(' · ') });

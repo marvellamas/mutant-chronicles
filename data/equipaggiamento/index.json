@@ -41,6 +41,11 @@
       "descrizione": "Armi a distanza dei cataloghi corporativi, con i moduli integrati (§7.8)"
     },
     {
+      "id": "accessori_armi",
+      "file": "accessori_armi.json",
+      "descrizione": "Mirini, riduzione del rumore, supporti di tiro, illuminazione e visione (§7.3)"
+    },
+    {
       "id": "armature",
       "file": "armature.json",
       "descrizione": "Armature commerciali civili (§7.11.3)"

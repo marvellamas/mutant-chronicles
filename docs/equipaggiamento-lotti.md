@@ -1,6 +1,6 @@
 # Catalogo dell'equipaggiamento: lotti da estrarre
 
-Stato al 26 settembre 2026 (lotti 2–7 fatti). Fonte: Manuale degli Armamenti v0.50. Metodo: `tools/estrai_manuali.py`
+Stato al 26 settembre 2026 (lotti 2–8 fatti). Fonte: Manuale degli Armamenti v0.50. Metodo: `tools/estrai_manuali.py`
 e `docs/pilota-estrazione-armamenti.md`.
 
 Questa è la lista dei prompt successivi: **un lotto per prompt**, nell'ordine di utilità al
@@ -22,6 +22,7 @@ su quelle pagine: le tabelle impilate contano come una.
 | `armi_corporative.json` | 39 armi ravvicinate dei cataloghi corporativi (lotto 4) | §7.1.9 | 11–17 |
 | `armature_corporative.json` | 83 armature dei cataloghi corporativi, esoscheletri compresi (lotto 6) | §7.11.5–7.17.5 | 64–103 |
 | `corredi_dispositivi.json` | 60 corredi, dispositivi, esoscheletro APE, Iron Mastiff, armi e granate Imperial; tabella SIN (lotto 7) | §7.12–7.17 | 69–105 |
+| `accessori_armi.json` | 15 accessori delle armi: mirini, riduzione del rumore, supporti, illuminazione e visione (lotto 8) | §7.3 | 19–22 |
 | `armi_distanza_corporative.json` | 81 armi a distanza corporative, 19 moduli integrati, 6 munizioni di riferimento (lotto 5) | §7.8 | 36–52 |
 
 Da completare nello stesso ambito, a basso costo:
@@ -345,14 +346,46 @@ In ordine di peso:
     reparto e gli esempi di costo.
   - **Dubbi per Davide:** Specializzazione della Rainy Dayer (A.13).
 
-### 4. Accessori delle armi — §7.3, pp. 19–22
+### 4. ✔ Accessori delle armi — §7.3, pp. 19–22 (lotto 8, fatto)
 
-- **Contenuto:** mirini, riduzione del rumore (§7.3.1), supporti di tiro (§7.3.2),
-  illuminazione e visione (§7.3.3), batterie (§7.3.4).
-- **Campi:** tipo `accessorio`, `montato_su` già previsto; servono i bonus alla Prova dell'arma
-  e la compatibilità per famiglia o modello.
-- **Effetti sulla scheda:** bonus al VA dell'arma impugnata su cui l'accessorio è montato (oggi
-  il calcolo dà solo l'avviso se l'arma non è impugnata).
+Fatto il 26 settembre 2026, commit «Lotto 8 del catalogo: accessori delle armi».
+
+- **Fonte:** `docs/lotti/lotto8-accessori-armi/`:
+  - `grezzo/`: 6 CSV, pp. 19–22;
+  - `prosa/`: il §7.3;
+  - `pulito/accessori_armi.csv`.
+
+  Generatore `tools/lotti/lotto8_accessori_armi.mjs`, dati `data/equipaggiamento/accessori_armi.json`.
+- **Oggetti:** 15 in tutto:
+  - 3 mirini;
+  - Attenuatore, Smorzatore e Silenziatore, più le versioni rinforzate per mitragliatori;
+  - Bipiede e Treppiede;
+  - Torcia tattica, 2 moduli di visione e la batteria di servizio.
+- **Estrazione:** pdfplumber trova tutte le 6 tabelle. **20 righe su 20 giuste al primo
+  colpo**, ritrovate nel testo in prosa dal generatore; **0 correzioni a mano**. 6 celle andate a
+  capo unite.
+- **Regole nuove del generatore:**
+  1. le due tabelle dei mirini si riuniscono per nome senza maiuscole («Di Precisione» / «Di
+     precisione»);
+  2. le versioni rinforzate si derivano dalla frase «stessi modificatori, costo doppio» e «i
+     rinforzati hanno PI 4»;
+  3. Qualità, PS e PI comuni dalle frasi del paragrafo;
+  4. il controllo incrociato con la prosa accetta le celle spezzate in mezzo alle righe vicine:
+     le parole della riga devono stare vicino al nome.
+- **Schema e calcolo:**
+  - `si_monta_su` generalizza `montato_su`: arma, mirino (moduli di visione), armatura (per i
+    rinforzi).
+  - `effetto_arma` (Smorzatore −1 VA; Silenziatore −2 VA e −1 danno) entra sempre nel VA e nel
+    danno dell'arma impugnata.
+  - `mirino` mostra la riduzione della penalità di distanza e il suo limite.
+  - `bonus_condizionato` (Bipiede +1, Treppiede +2) mostra il VA in appoggio accanto a quello
+    normale.
+  - `gruppo_esclusivo`: un solo mirino, un solo dispositivo di rumore, un solo supporto e un
+    solo modulo per mirino; gli altri danno un avviso.
+  - La lista dell'equipaggiamento propone come «Montato su» solo gli oggetti compatibili.
+- **Restano testo:** la compatibilità per famiglia o modello («predisposti», revolver esclusi…),
+  la preparazione in Azioni, gli effetti di luce e visione.
+- **Dubbi per Davide:** nessuno.
 
 ### 5. Munizioni e alimentazioni — §7.20, pp. 114–121
 

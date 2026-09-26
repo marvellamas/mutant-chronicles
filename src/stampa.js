@@ -207,6 +207,9 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     a.munizioni?.capacita ? (a.munizioni.unita === 'cariche' ? `${a.munizioni.capacita} cariche` : a.munizioni.unita === 'PM' ? `${a.munizioni.capacita} PM` : `CC ${a.munizioni.capacita}`) : '',
     [
       a.moduloDi ? `modulo di ${a.moduloDi}` : null,
+      ...(a.accessori ?? []).map((x) => x.nome),
+      a.mirino ? `mirino −${a.mirino.riduzione} dist.` : null,
+      ...(a.condizionali ?? []).map((c) => `${c.nome}: VA ${c.vaTotale < 0 ? `−${-c.vaTotale}` : c.vaTotale}`),
       a.ac !== null && a.ac !== 1 ? `AC ${a.ac === 'munizione' ? (a.munizioneRiferimento ? a.munizioneRiferimento.ac : 'mun.') : a.ac}` : null,
       a.munizioneRiferimento ? `RS ${a.munizioneRiferimento.rs_q} Q` : null,
       a.inc ? `INC ${a.inc}` : null,

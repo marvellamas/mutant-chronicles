@@ -1,0 +1,424 @@
+{
+  "versione_manuale": "Armamenti 0.50",
+  "fonte": "Manuale degli Armamenti v0.50, §7.3 Mirini e accessori delle armi (pp. 19–22); lotto 8",
+  "_nota": "Generato da tools/lotti/lotto8_accessori_armi.mjs; da qui in poi si modifica questo file. Un accessorio ha effetto quando è «in uso» e montato (montato_su) su un oggetto attivo del tipo indicato in «si_monta_su»: arma a distanza impugnata, oppure mirino montato su un’arma impugnata. «effetto_arma» si applica sempre al VA per colpire e al danno; «bonus_condizionato» solo nella condizione indicata; «mirino» riduce la sola penalità di distanza. Per ogni «gruppo_esclusivo» vale un solo accessorio per arma.",
+  "oggetti": [
+    {
+      "id": "mirino-reflex",
+      "nome": "Mirino Reflex",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Mirini",
+      "nomi_alternativi": [
+        "Reflex"
+      ],
+      "note_manuale": "I mirini non producono un bonus positivo e non estendono la gittata massima dell’arma. Compatibilità. Sono utilizzabili sulle armi da fuoco a proiettile o a energia predisposte per un’ottica. Archi, balestre e lanciatori richiedono una compatibilità espressa. Montare o rimuovere un mirino compatibile richiede 1 AzP, entrambe le mani e nessuna Prova. Per ogni attacco si applica un solo mirino. La riduzione riguarda esclusivamente la penalità di distanza e si ferma a 0; non estende la gittata massima e non elimina penalità dovute a fumo, Copertura o altre condizioni. I limiti di distanza della tabella circoscrivono il beneficio del mirino. Preparazione. Le almeno 2 AzP richieste da Ottico e Di precisione sono complessive e comprendono il tiro ordinario. La distanza può richiedere più Azioni. Se si aggiunge Tiro Mirato, si spende un’ulteriore AzP; Mira Rapida e gli altri Talenti si applicano secondo il Manuale del Giocatore, §5.11. Esempio: a 40 Q, un tiro ordinario con Ottico richiede 2 AzP; con Tiro Mirato richiede 3 AzP, prima dei Talenti pertinenti. Il mirino ha Integrità separata dall’arma e non ne aumenta i PI. A 0 PI perde il beneficio; un’arma ancora integra rimane utilizzabile secondo il proprio profilo.",
+      "paragrafo": "§7.3",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 3,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 500,
+      "si_monta_su": [
+        "arma_distanza"
+      ],
+      "gruppo_esclusivo": "mirino",
+      "mirino": {
+        "riduzione": 2,
+        "distanza_max_q": 80,
+        "azp_minime": null,
+        "testo": "Fino a 80 Q; nessuna preparazione aggiuntiva."
+      },
+      "proprieta": []
+    },
+    {
+      "id": "mirino-ottico",
+      "nome": "Mirino Ottico",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Mirini",
+      "nomi_alternativi": [
+        "Ottico"
+      ],
+      "note_manuale": "I mirini non producono un bonus positivo e non estendono la gittata massima dell’arma. Compatibilità. Sono utilizzabili sulle armi da fuoco a proiettile o a energia predisposte per un’ottica. Archi, balestre e lanciatori richiedono una compatibilità espressa. Montare o rimuovere un mirino compatibile richiede 1 AzP, entrambe le mani e nessuna Prova. Per ogni attacco si applica un solo mirino. La riduzione riguarda esclusivamente la penalità di distanza e si ferma a 0; non estende la gittata massima e non elimina penalità dovute a fumo, Copertura o altre condizioni. I limiti di distanza della tabella circoscrivono il beneficio del mirino. Preparazione. Le almeno 2 AzP richieste da Ottico e Di precisione sono complessive e comprendono il tiro ordinario. La distanza può richiedere più Azioni. Se si aggiunge Tiro Mirato, si spende un’ulteriore AzP; Mira Rapida e gli altri Talenti si applicano secondo il Manuale del Giocatore, §5.11. Esempio: a 40 Q, un tiro ordinario con Ottico richiede 2 AzP; con Tiro Mirato richiede 3 AzP, prima dei Talenti pertinenti. Il mirino ha Integrità separata dall’arma e non ne aumenta i PI. A 0 PI perde il beneficio; un’arma ancora integra rimane utilizzabile secondo il proprio profilo.",
+      "paragrafo": "§7.3",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 3,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "RA",
+      "costo": 1200,
+      "si_monta_su": [
+        "arma_distanza"
+      ],
+      "gruppo_esclusivo": "mirino",
+      "mirino": {
+        "riduzione": 4,
+        "distanza_max_q": 500,
+        "azp_minime": 2,
+        "testo": "Fino a 500 Q; almeno 2 Azioni Principali complessive."
+      },
+      "proprieta": []
+    },
+    {
+      "id": "mirino-di-precisione",
+      "nome": "Mirino di precisione",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Mirini",
+      "nomi_alternativi": [
+        "Di precisione"
+      ],
+      "note_manuale": "I mirini non producono un bonus positivo e non estendono la gittata massima dell’arma. Compatibilità. Sono utilizzabili sulle armi da fuoco a proiettile o a energia predisposte per un’ottica. Archi, balestre e lanciatori richiedono una compatibilità espressa. Montare o rimuovere un mirino compatibile richiede 1 AzP, entrambe le mani e nessuna Prova. Per ogni attacco si applica un solo mirino. La riduzione riguarda esclusivamente la penalità di distanza e si ferma a 0; non estende la gittata massima e non elimina penalità dovute a fumo, Copertura o altre condizioni. I limiti di distanza della tabella circoscrivono il beneficio del mirino. Preparazione. Le almeno 2 AzP richieste da Ottico e Di precisione sono complessive e comprendono il tiro ordinario. La distanza può richiedere più Azioni. Se si aggiunge Tiro Mirato, si spende un’ulteriore AzP; Mira Rapida e gli altri Talenti si applicano secondo il Manuale del Giocatore, §5.11. Esempio: a 40 Q, un tiro ordinario con Ottico richiede 2 AzP; con Tiro Mirato richiede 3 AzP, prima dei Talenti pertinenti. Il mirino ha Integrità separata dall’arma e non ne aumenta i PI. A 0 PI perde il beneficio; un’arma ancora integra rimane utilizzabile secondo il proprio profilo.",
+      "paragrafo": "§7.3",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 3,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "MR",
+      "costo": 2500,
+      "si_monta_su": [
+        "arma_distanza"
+      ],
+      "gruppo_esclusivo": "mirino",
+      "mirino": {
+        "riduzione": 6,
+        "distanza_max_q": null,
+        "azp_minime": 2,
+        "testo": "Entro la gittata massima dell’arma; almeno 2 Azioni Principali complessive."
+      },
+      "proprieta": []
+    },
+    {
+      "id": "attenuatore",
+      "nome": "Attenuatore",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Riduzione del rumore",
+      "nomi_alternativi": [],
+      "note_manuale": "Il dispositivo modifica soltanto la percezione uditiva dello sparo. Attenuatore e Smorzatore applicano la penalità indicata alle Prove di Percezione per udirlo; il Silenziatore rende lo sparo inudibile e per quel suono non si effettua una Prova. Impatti, esplosioni e reazioni dei bersagli restano percepibili. Il dispositivo non nasconde un tiratore visibile. Compatibilità: Armi Leggere e Medie a proiettile del modello o della famiglia previsti. Per i mitragliatori occorre la versione rinforzata: stessi modificatori, costo doppio. Sono esclusi lanciagranate, lanciarazzi, lanciafiamme, armi a energia e revolver, salvo un’esplicita eccezione nella scheda. Si monta un solo dispositivo; i suoi effetti non si sommano a quelli di un altro silenziatore. Montare o rimuovere un dispositivo esterno compatibile costa 1 AzP, richiede entrambe le mani e non richiede una Prova. I dispositivi sono di Qualità Comune, PS Integrità 10 e PI 3; i rinforzati hanno PI 4. Hanno Integrità propria e non aumentano i PI dell’arma. A 0 PI perdono la funzione. Il Silenziatore incorporato dell’Eliminator non è normalmente rimovibile; le sue penalità sono già incluse nel profilo.",
+      "paragrafo": "§7.3.1",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 3,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 300,
+      "si_monta_su": [
+        "arma_distanza"
+      ],
+      "gruppo_esclusivo": "riduzione_rumore",
+      "compatibilita": "Armi Leggere e Medie a proiettile del modello o della famiglia previsti; esclusi lanciagranate, lanciarazzi, lanciafiamme, armi a energia e revolver, salvo eccezione nella scheda.",
+      "effetto_arma": {
+        "va": 0,
+        "danno": 0
+      },
+      "percezione": "−2 VA",
+      "proprieta": []
+    },
+    {
+      "id": "attenuatore-rinforzato",
+      "nome": "Attenuatore rinforzato",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Riduzione del rumore",
+      "nomi_alternativi": [],
+      "note_manuale": "Il dispositivo modifica soltanto la percezione uditiva dello sparo. Attenuatore e Smorzatore applicano la penalità indicata alle Prove di Percezione per udirlo; il Silenziatore rende lo sparo inudibile e per quel suono non si effettua una Prova. Impatti, esplosioni e reazioni dei bersagli restano percepibili. Il dispositivo non nasconde un tiratore visibile. Compatibilità: Armi Leggere e Medie a proiettile del modello o della famiglia previsti. Per i mitragliatori occorre la versione rinforzata: stessi modificatori, costo doppio. Sono esclusi lanciagranate, lanciarazzi, lanciafiamme, armi a energia e revolver, salvo un’esplicita eccezione nella scheda. Si monta un solo dispositivo; i suoi effetti non si sommano a quelli di un altro silenziatore. Montare o rimuovere un dispositivo esterno compatibile costa 1 AzP, richiede entrambe le mani e non richiede una Prova. I dispositivi sono di Qualità Comune, PS Integrità 10 e PI 3; i rinforzati hanno PI 4. Hanno Integrità propria e non aumentano i PI dell’arma. A 0 PI perdono la funzione. Il Silenziatore incorporato dell’Eliminator non è normalmente rimovibile; le sue penalità sono già incluse nel profilo.",
+      "paragrafo": "§7.3.1",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 600,
+      "si_monta_su": [
+        "arma_distanza"
+      ],
+      "gruppo_esclusivo": "riduzione_rumore",
+      "compatibilita": "Mitragliatori a proiettile predisposti (versione rinforzata).",
+      "effetto_arma": {
+        "va": 0,
+        "danno": 0
+      },
+      "percezione": "−2 VA",
+      "proprieta": []
+    },
+    {
+      "id": "smorzatore",
+      "nome": "Smorzatore",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Riduzione del rumore",
+      "nomi_alternativi": [],
+      "note_manuale": "Il dispositivo modifica soltanto la percezione uditiva dello sparo. Attenuatore e Smorzatore applicano la penalità indicata alle Prove di Percezione per udirlo; il Silenziatore rende lo sparo inudibile e per quel suono non si effettua una Prova. Impatti, esplosioni e reazioni dei bersagli restano percepibili. Il dispositivo non nasconde un tiratore visibile. Compatibilità: Armi Leggere e Medie a proiettile del modello o della famiglia previsti. Per i mitragliatori occorre la versione rinforzata: stessi modificatori, costo doppio. Sono esclusi lanciagranate, lanciarazzi, lanciafiamme, armi a energia e revolver, salvo un’esplicita eccezione nella scheda. Si monta un solo dispositivo; i suoi effetti non si sommano a quelli di un altro silenziatore. Montare o rimuovere un dispositivo esterno compatibile costa 1 AzP, richiede entrambe le mani e non richiede una Prova. I dispositivi sono di Qualità Comune, PS Integrità 10 e PI 3; i rinforzati hanno PI 4. Hanno Integrità propria e non aumentano i PI dell’arma. A 0 PI perdono la funzione. Il Silenziatore incorporato dell’Eliminator non è normalmente rimovibile; le sue penalità sono già incluse nel profilo.",
+      "paragrafo": "§7.3.1",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 3,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "RA",
+      "costo": 800,
+      "si_monta_su": [
+        "arma_distanza"
+      ],
+      "gruppo_esclusivo": "riduzione_rumore",
+      "compatibilita": "Armi Leggere e Medie a proiettile del modello o della famiglia previsti; esclusi lanciagranate, lanciarazzi, lanciafiamme, armi a energia e revolver, salvo eccezione nella scheda.",
+      "effetto_arma": {
+        "va": -1,
+        "danno": 0
+      },
+      "percezione": "−4 VA",
+      "proprieta": []
+    },
+    {
+      "id": "smorzatore-rinforzato",
+      "nome": "Smorzatore rinforzato",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Riduzione del rumore",
+      "nomi_alternativi": [],
+      "note_manuale": "Il dispositivo modifica soltanto la percezione uditiva dello sparo. Attenuatore e Smorzatore applicano la penalità indicata alle Prove di Percezione per udirlo; il Silenziatore rende lo sparo inudibile e per quel suono non si effettua una Prova. Impatti, esplosioni e reazioni dei bersagli restano percepibili. Il dispositivo non nasconde un tiratore visibile. Compatibilità: Armi Leggere e Medie a proiettile del modello o della famiglia previsti. Per i mitragliatori occorre la versione rinforzata: stessi modificatori, costo doppio. Sono esclusi lanciagranate, lanciarazzi, lanciafiamme, armi a energia e revolver, salvo un’esplicita eccezione nella scheda. Si monta un solo dispositivo; i suoi effetti non si sommano a quelli di un altro silenziatore. Montare o rimuovere un dispositivo esterno compatibile costa 1 AzP, richiede entrambe le mani e non richiede una Prova. I dispositivi sono di Qualità Comune, PS Integrità 10 e PI 3; i rinforzati hanno PI 4. Hanno Integrità propria e non aumentano i PI dell’arma. A 0 PI perdono la funzione. Il Silenziatore incorporato dell’Eliminator non è normalmente rimovibile; le sue penalità sono già incluse nel profilo.",
+      "paragrafo": "§7.3.1",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "RA",
+      "costo": 1600,
+      "si_monta_su": [
+        "arma_distanza"
+      ],
+      "gruppo_esclusivo": "riduzione_rumore",
+      "compatibilita": "Mitragliatori a proiettile predisposti (versione rinforzata).",
+      "effetto_arma": {
+        "va": -1,
+        "danno": 0
+      },
+      "percezione": "−4 VA",
+      "proprieta": []
+    },
+    {
+      "id": "silenziatore",
+      "nome": "Silenziatore",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Riduzione del rumore",
+      "nomi_alternativi": [],
+      "note_manuale": "Il dispositivo modifica soltanto la percezione uditiva dello sparo. Attenuatore e Smorzatore applicano la penalità indicata alle Prove di Percezione per udirlo; il Silenziatore rende lo sparo inudibile e per quel suono non si effettua una Prova. Impatti, esplosioni e reazioni dei bersagli restano percepibili. Il dispositivo non nasconde un tiratore visibile. Compatibilità: Armi Leggere e Medie a proiettile del modello o della famiglia previsti. Per i mitragliatori occorre la versione rinforzata: stessi modificatori, costo doppio. Sono esclusi lanciagranate, lanciarazzi, lanciafiamme, armi a energia e revolver, salvo un’esplicita eccezione nella scheda. Si monta un solo dispositivo; i suoi effetti non si sommano a quelli di un altro silenziatore. Montare o rimuovere un dispositivo esterno compatibile costa 1 AzP, richiede entrambe le mani e non richiede una Prova. I dispositivi sono di Qualità Comune, PS Integrità 10 e PI 3; i rinforzati hanno PI 4. Hanno Integrità propria e non aumentano i PI dell’arma. A 0 PI perdono la funzione. Il Silenziatore incorporato dell’Eliminator non è normalmente rimovibile; le sue penalità sono già incluse nel profilo.",
+      "paragrafo": "§7.3.1",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 3,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "MR",
+      "costo": 2000,
+      "si_monta_su": [
+        "arma_distanza"
+      ],
+      "gruppo_esclusivo": "riduzione_rumore",
+      "compatibilita": "Armi Leggere e Medie a proiettile del modello o della famiglia previsti; esclusi lanciagranate, lanciarazzi, lanciafiamme, armi a energia e revolver, salvo eccezione nella scheda.",
+      "effetto_arma": {
+        "va": -2,
+        "danno": -1
+      },
+      "percezione": "Nessuna Prova uditiva",
+      "proprieta": []
+    },
+    {
+      "id": "silenziatore-rinforzato",
+      "nome": "Silenziatore rinforzato",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Riduzione del rumore",
+      "nomi_alternativi": [],
+      "note_manuale": "Il dispositivo modifica soltanto la percezione uditiva dello sparo. Attenuatore e Smorzatore applicano la penalità indicata alle Prove di Percezione per udirlo; il Silenziatore rende lo sparo inudibile e per quel suono non si effettua una Prova. Impatti, esplosioni e reazioni dei bersagli restano percepibili. Il dispositivo non nasconde un tiratore visibile. Compatibilità: Armi Leggere e Medie a proiettile del modello o della famiglia previsti. Per i mitragliatori occorre la versione rinforzata: stessi modificatori, costo doppio. Sono esclusi lanciagranate, lanciarazzi, lanciafiamme, armi a energia e revolver, salvo un’esplicita eccezione nella scheda. Si monta un solo dispositivo; i suoi effetti non si sommano a quelli di un altro silenziatore. Montare o rimuovere un dispositivo esterno compatibile costa 1 AzP, richiede entrambe le mani e non richiede una Prova. I dispositivi sono di Qualità Comune, PS Integrità 10 e PI 3; i rinforzati hanno PI 4. Hanno Integrità propria e non aumentano i PI dell’arma. A 0 PI perdono la funzione. Il Silenziatore incorporato dell’Eliminator non è normalmente rimovibile; le sue penalità sono già incluse nel profilo.",
+      "paragrafo": "§7.3.1",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "MR",
+      "costo": 4000,
+      "si_monta_su": [
+        "arma_distanza"
+      ],
+      "gruppo_esclusivo": "riduzione_rumore",
+      "compatibilita": "Mitragliatori a proiettile predisposti (versione rinforzata).",
+      "effetto_arma": {
+        "va": -2,
+        "danno": -1
+      },
+      "percezione": "Nessuna Prova uditiva",
+      "proprieta": []
+    },
+    {
+      "id": "bipiede",
+      "nome": "Bipiede",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Supporti di tiro",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Bipiede rimane fissato all’arma. Montarlo o rimuoverlo richiede un minuto, senza Prova in condizioni ordinarie. Aprirlo e stabilire l’appoggio richiede 1 AzP, con l’arma impugnata e una superficie solida adeguata, come terreno, muretto o davanzale. Il personaggio assume una posizione compatibile con l’altezza dell’appoggio. Concede +1 VA per colpire finché il personaggio mantiene posizione e appoggio. Sollevare l’arma per muoversi fa perdere immediatamente il beneficio. Richiudere il Bipiede richiede 1 AzP. Imbracciatura e condizioni comuni Un’arma utilizzata dal supporto operativo è considerata Imbracciata. Questo soddisfa il requisito di Imbracciatura del Manuale del Giocatore, §5.10; non concede di per sé il danno aggiuntivo di Postura d’Assedio. I Talenti mantengono i propri requisiti ed effetti. Il bonus del supporto si applica alle modalità di tiro consentite dall’arma. La preparazione richiesta da distanza, mirini e Tiro Mirato conserva i propri costi. Restano il requisito di FOR e le mani richieste per utilizzare l’arma. Si applica un solo supporto: Bipiede e Treppiede non sommano i benefici. I bonus sono compatibili con mirini e SIN quando ricorrono le rispettive condizioni; si applica comunque un solo SIN pertinente. Spostare la postazione, perdere l’appoggio o ridurre il supporto a 0 PI fa cessare il beneficio.",
+      "paragrafo": "§7.3.2",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 400,
+      "si_monta_su": [
+        "arma_distanza"
+      ],
+      "gruppo_esclusivo": "supporto",
+      "compatibilita": "Carabine, fucili e mitragliatrici leggere predisposti.",
+      "bonus_condizionato": {
+        "va": 1,
+        "condizione": "finché il personaggio mantiene posizione e appoggio"
+      },
+      "proprieta": []
+    },
+    {
+      "id": "treppiede",
+      "nome": "Treppiede",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Supporti di tiro",
+      "nomi_alternativi": [],
+      "note_manuale": "Preparare la postazione richiede 2 AzP complessive: una per aprire e posizionare il supporto, una per agganciare l’arma. Su terreno adatto non occorre una Prova. Il Treppiede concede +2 VA per colpire mentre il tiratore utilizza l’arma dalla postazione e permette di orientarla verso bersagli differenti senza ripetere la preparazione. Sganciare l’arma richiede 1 AzP; ripiegare il supporto richiede un’altra AzP. Il personaggio può abbandonare la postazione lasciando l’arma montata. Imbracciatura e condizioni comuni Un’arma utilizzata dal supporto operativo è considerata Imbracciata. Questo soddisfa il requisito di Imbracciatura del Manuale del Giocatore, §5.10; non concede di per sé il danno aggiuntivo di Postura d’Assedio. I Talenti mantengono i propri requisiti ed effetti. Il bonus del supporto si applica alle modalità di tiro consentite dall’arma. La preparazione richiesta da distanza, mirini e Tiro Mirato conserva i propri costi. Restano il requisito di FOR e le mani richieste per utilizzare l’arma. Si applica un solo supporto: Bipiede e Treppiede non sommano i benefici. I bonus sono compatibili con mirini e SIN quando ricorrono le rispettive condizioni; si applica comunque un solo SIN pertinente. Spostare la postazione, perdere l’appoggio o ridurre il supporto a 0 PI fa cessare il beneficio.",
+      "paragrafo": "§7.3.2",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 1200,
+      "si_monta_su": [
+        "arma_distanza"
+      ],
+      "gruppo_esclusivo": "supporto",
+      "compatibilita": "Armi Pesanti predisposte.",
+      "bonus_condizionato": {
+        "va": 2,
+        "condizione": "mentre il tiratore utilizza l’arma dalla postazione"
+      },
+      "proprieta": []
+    },
+    {
+      "id": "torcia-tattica",
+      "nome": "Torcia tattica",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Illuminazione e visione",
+      "nomi_alternativi": [],
+      "note_manuale": "Torcia tattica Si monta su un’arma predisposta e illumina nella direzione verso cui viene puntata, entro 20 Q. Contro un bersaglio effettivamente illuminato elimina le penalità causate esclusivamente dalla mancanza di luce. Non concede un bonus numerico per colpire. La luce è visibile anche agli altri: quando la sorgente è direttamente osservabile può rivelare la posizione del tiratore. La Torcia non applica automaticamente Accecato e non attraversa ostacoli. Montaggio attivazione e cumulo Ogni mirino può montare un solo modulo di visione. La Torcia tattica può essere presente insieme al modulo. Montare o rimuovere un accessorio compatibile richiede 1 AzP, entrambe le mani e nessuna Prova. Accenderlo o spegnerlo richiede 1 AzP; una volta attivo, non richiede Azioni per mantenerlo acceso. L’osservazione attraverso il mirino riguarda la direzione inquadrata e non conferisce una capacità sensoriale generale al personaggio. Preparazione del tiro e requisiti dell’ottica continuano ad applicarsi. Accessori e moduli hanno Integrità propria; a 0 PI perdono la funzione. Una batteria scarica interrompe la funzione alimentata; arma e mirino ancora integri conservano il proprio funzionamento ordinario. Torcia tattica, Modulo di visione notturna e Modulo di visione termica utilizzano la stessa batteria di servizio. Ogni accessorio impiega la propria batteria e dispone di 24 ore effettive di funzionamento, anche non consecutive. Non si conteggia il consumo per Round.",
+      "paragrafo": "§7.3.3",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 3,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 200,
+      "si_monta_su": [
+        "arma_distanza"
+      ],
+      "portata_q": 20,
+      "proprieta": []
+    },
+    {
+      "id": "modulo-di-visione-notturna",
+      "nome": "Modulo di visione notturna",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Illuminazione e visione",
+      "nomi_alternativi": [],
+      "note_manuale": "Modulo di visione notturna Si applica a un mirino compatibile e permette di osservare e sparare attraverso di esso ignorando, entro 80 Q, le penalità dovute alla scarsa illuminazione. Richiede una minima luce ambientale, come chiaro di luna o illuminazione residua; non funziona nel buio completo. Fumo, nebbia e ostacoli conservano i propri effetti. Montaggio attivazione e cumulo Ogni mirino può montare un solo modulo di visione. La Torcia tattica può essere presente insieme al modulo. Montare o rimuovere un accessorio compatibile richiede 1 AzP, entrambe le mani e nessuna Prova. Accenderlo o spegnerlo richiede 1 AzP; una volta attivo, non richiede Azioni per mantenerlo acceso. L’osservazione attraverso il mirino riguarda la direzione inquadrata e non conferisce una capacità sensoriale generale al personaggio. Preparazione del tiro e requisiti dell’ottica continuano ad applicarsi. Accessori e moduli hanno Integrità propria; a 0 PI perdono la funzione. Una batteria scarica interrompe la funzione alimentata; arma e mirino ancora integri conservano il proprio funzionamento ordinario. Torcia tattica, Modulo di visione notturna e Modulo di visione termica utilizzano la stessa batteria di servizio. Ogni accessorio impiega la propria batteria e dispone di 24 ore effettive di funzionamento, anche non consecutive. Non si conteggia il consumo per Round.",
+      "paragrafo": "§7.3.3",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 3,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2000,
+      "si_monta_su": [
+        "mirino"
+      ],
+      "gruppo_esclusivo": "modulo_visione",
+      "portata_q": 80,
+      "proprieta": []
+    },
+    {
+      "id": "modulo-di-visione-termica",
+      "nome": "Modulo di visione termica",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Illuminazione e visione",
+      "nomi_alternativi": [],
+      "note_manuale": "Modulo di visione termica Permette di osservare e prendere di mira, entro 40 Q, bersagli con un contrasto termico sufficiente rispetto all’ambiente, anche nel buio naturale completo. Quando il bersaglio è distinguibile termicamente, ignora anche il −4 VA della Fumogena standard (§§7.14.7 e 7.20.3). Pareti e coperture solide impediscono l’osservazione. Un bersaglio privo di sufficiente contrasto termico non viene distinto grazie al modulo. Individuare una creatura nascosta richiede le normali Prove: Percezione e Furtività restano Prove uniche. La sagoma termica non identifica automaticamente persone, alleati o natura delle creature. Gli effetti soprannaturali seguono le condizioni indicate dalla loro fonte. Montaggio attivazione e cumulo Ogni mirino può montare un solo modulo di visione. La Torcia tattica può essere presente insieme al modulo. Montare o rimuovere un accessorio compatibile richiede 1 AzP, entrambe le mani e nessuna Prova. Accenderlo o spegnerlo richiede 1 AzP; una volta attivo, non richiede Azioni per mantenerlo acceso. L’osservazione attraverso il mirino riguarda la direzione inquadrata e non conferisce una capacità sensoriale generale al personaggio. Preparazione del tiro e requisiti dell’ottica continuano ad applicarsi. Accessori e moduli hanno Integrità propria; a 0 PI perdono la funzione. Una batteria scarica interrompe la funzione alimentata; arma e mirino ancora integri conservano il proprio funzionamento ordinario. Torcia tattica, Modulo di visione notturna e Modulo di visione termica utilizzano la stessa batteria di servizio. Ogni accessorio impiega la propria batteria e dispone di 24 ore effettive di funzionamento, anche non consecutive. Non si conteggia il consumo per Round.",
+      "paragrafo": "§7.3.3",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 3,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "MR",
+      "costo": 4000,
+      "si_monta_su": [
+        "mirino"
+      ],
+      "gruppo_esclusivo": "modulo_visione",
+      "portata_q": 40,
+      "proprieta": []
+    },
+    {
+      "id": "batteria-di-servizio",
+      "nome": "Batteria di servizio",
+      "tipo": "altro",
+      "catalogo": "Commerciale",
+      "famiglia": "Illuminazione e visione",
+      "nomi_alternativi": [
+        "Batteria carica di ricambio"
+      ],
+      "note_manuale": "Torcia tattica, Modulo di visione notturna e Modulo di visione termica utilizzano la stessa batteria di servizio. Ogni accessorio impiega la propria batteria e dispone di 24 ore effettive di funzionamento, anche non consecutive. Non si conteggia il consumo per Round. La ricarica ordinaria non ha un costo fisso da conteggiare: richiede disponibilità dell’energia necessaria e quattro ore. Le fonti mobili di energia si acquistano separatamente; il cavo permette il collegamento ma non costituisce una riserva energetica. Questa batteria riguarda soltanto i tre accessori indicati. Celle delle armi, riserve mistiche, propulsori, esoscheletri e altri dispositivi conservano capacità, compatibilità e procedure delle rispettive schede. Le celle e i combustibili delle armi sono nel §7.20.",
+      "paragrafo": "§7.3.4",
+      "versione_manuale": "Armamenti 0.50",
+      "reperibilita": "CO",
+      "costo": 10,
+      "tabelle": [
+        {
+          "titolo": "Batteria di servizio",
+          "colonne": [
+            "Voce",
+            "Regola"
+          ],
+          "righe": [
+            [
+              "Autonomia",
+              "24 ore di utilizzo effettivo per batteria"
+            ],
+            [
+              "Ricarica completa",
+              "4 ore"
+            ],
+            [
+              "Collegamento",
+              "Cavo standard, equivalente a USB, con alimentatore, presa del veicolo o fonte mobile compatibile"
+            ],
+            [
+              "Batteria carica di ricambio",
+              "Costo 10; Reperibilità Comune"
+            ],
+            [
+              "Sostituzione",
+              "1 AzP, senza Prova, con batteria pronta"
+            ],
+            [
+              "Dotazione inclusa nell’accessorio",
+              "Batteria carica, cavo e alimentatore"
+            ]
+          ]
+        }
+      ],
+      "proprieta": []
+    }
+  ]
+}

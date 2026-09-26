@@ -1,0 +1,16 @@
+famiglia,nome,pi,qualita,ps_int,reperibilita,costo
+Mirini,Mirino Reflex,3,Comune,10,NC,500
+Mirini,Mirino Ottico,3,Comune,10,RA,1200
+Mirini,Mirino di precisione,3,Comune,10,MR,2500
+Riduzione del rumore,Attenuatore,3,Comune,10,NC,300
+Riduzione del rumore,Attenuatore rinforzato,4,Comune,10,NC,600
+Riduzione del rumore,Smorzatore,3,Comune,10,RA,800
+Riduzione del rumore,Smorzatore rinforzato,4,Comune,10,RA,1600
+Riduzione del rumore,Silenziatore,3,Comune,10,MR,2000
+Riduzione del rumore,Silenziatore rinforzato,4,Comune,10,MR,4000
+Supporti di tiro,Bipiede,4,Comune,10,NC,400
+Supporti di tiro,Treppiede,6,Comune,10,NC,1200
+Illuminazione e visione,Torcia tattica,3,Comune,10,CO,200
+Illuminazione e visione,Modulo di visione notturna,3,Non comune,12,RA,2000
+Illuminazione e visione,Modulo di visione termica,3,Non comune,12,MR,4000
+Illuminazione e visione,Batteria di servizio,,,,CO,10

@@ -217,6 +217,17 @@ export function aggiungiDanno(formula, n) {
 // "1/2" (Versatile) impegna almeno una mano; 0 = da polso, non impegna la mano (Howler, §7.14.6)
 const maniDi = (def) => (def?.mani === 2 ? 2 : def?.mani === 0 ? 0 : 1);
 
+/**
+ * Un accessorio si può montare su quell'oggetto? «si_monta_su» del catalogo: tipo di oggetto
+ * (arma_distanza, arma_ravvicinata, armatura) oppure «mirino» (un accessorio con dati di mirino,
+ * §7.3.3). Gli accessori personalizzati si montano sulle armi.
+ */
+export function puoMontare(acc, su) {
+  if (!su || su.uid === acc.uid) return false;
+  const dove = acc.def?.si_monta_su ?? ['arma_ravvicinata', 'arma_distanza'];
+  return dove.some((k) => (k === 'mirino' ? !!su.def?.mirino : su.tipo === k));
+}
+
 /** Tabella SIN delle armi (§7.15.1), raccolta dai file del catalogo: rif → { valore, prova }. */
 export function tabellaSin(dati) {
   const out = new Map();
@@ -310,6 +321,28 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   const interfaccia = oggetti.find((x) => x.attivo && x.def?.innesto === 'interfaccia_neurale') ?? null;
   const sin = interfaccia ? tabellaSin(dati) : new Map();
 
+  // §7.3: accessori in uso montati su un'arma, oppure su un mirino montato su un'arma (moduli di
+  // visione, §7.3.3). Per ogni gruppo esclusivo (mirino, riduzione del rumore, supporto, modulo di
+  // visione) vale un solo accessorio per arma: il primo della lista.
+  const accessoriMontati = oggetti.filter((x) => x.attivo && x.tipo === 'accessorio' && x.voce.montato_su);
+  const montatiSu = (uid) => accessoriMontati.filter((x) => x.voce.montato_su === uid);
+  const accessoriArma = (w) => {
+    const diretti = montatiSu(w.uid).filter((x) => puoMontare(x, w));
+    const suMirini = diretti.filter((x) => x.def?.mirino).flatMap((m) => montatiSu(m.uid).filter((x) => puoMontare(x, m)));
+    const gruppi = new Map();
+    const out = [];
+    for (const x of [...diretti, ...suMirini]) {
+      const g = x.def?.gruppo_esclusivo;
+      if (g && gruppi.has(g)) {
+        avvisi.push(`Su ${w.nome} c’è già ${gruppi.get(g).nome}: ${x.nome} non ha effetto (un solo accessorio di questo tipo per arma, §7.3).`);
+        continue;
+      }
+      if (g) gruppi.set(g, x);
+      out.push(x);
+    }
+    return out;
+  };
+
   // Armi impugnate: VA per colpire, danno, Parata
   const armi = [];
   const profiloArma = (o, d, extra = {}) => {
@@ -320,6 +353,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     // §7.1.6: penalità pari alla differenza fra FOR richiesta e Forza posseduta (valori, non modificatori)
     const forPen = d?.for_richiesta ? Math.max(0, d.for_richiesta - FOR) : 0;
     const armatura = o.tipo === 'arma_ravvicinata' ? attacchiRavv : attacchiDist;
+    const acc = accessoriArma(o);
     const componenti = a ? [
       { nome: `VA ${a.nome}`, valore: a.totale },
       spec ? { nome: `Specializzazione in ${spec.nome}`, valore: spec.effetto.va ?? 0 } : null,
@@ -329,9 +363,12 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       sin.has(d?.rif) ? { nome: `SIN ${sin.get(d.rif).valore} (${interfaccia.nome}, §7.15.1)`, valore: sin.get(d.rif).valore } : null,
       forPen ? { nome: `FOR ${FOR} su ${d.for_richiesta} richiesta (§7.1.6)`, valore: -forPen } : null,
       armatura ? { nome: 'Armatura (§7.11.1)', valore: armatura } : null,
+      // §7.3.1: Smorzatore e Silenziatore peggiorano il VA per colpire
+      ...acc.filter((x) => x.def?.effetto_arma?.va).map((x) => ({ nome: `${x.nome} (§7.3.1)`, valore: x.def.effetto_arma.va })),
     ].filter(Boolean) : [];
     const va = a ? componenti.reduce((s, c) => s + c.valore, 0) : null;
     const bonusDanno = spec?.effetto.danno ?? 0;
+    const dannoAccessori = acc.reduce((s, x) => s + (x.def?.effetto_arma?.danno ?? 0), 0);
     const dannoBase = d?.danno ?? (o.voce.personalizzato?.danno ? { una_mano: o.voce.personalizzato.danno, due_mani: null } : null);
     const parataVa = (d?.proprieta ?? []).reduce((s, p) => s + (p.effetto?.parata_va ?? 0), 0);
     const difese = difeseVa;
@@ -350,7 +387,13 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     const gittataQ = d?.gittata_q ?? (d?.gittata_per_for ? FOR * d.gittata_per_for : null);
     armi.push({
       uid: o.uid, nome: o.nome, tipo: o.tipo, abilita: nomeAbilita, va, componenti,
-      danno: dannoBase ? { una_mano: aggiungiDanno(dannoBase.una_mano, bonusDanno), due_mani: aggiungiDanno(dannoBase.due_mani, bonusDanno) } : null,
+      danno: dannoBase ? { una_mano: aggiungiDanno(dannoBase.una_mano, bonusDanno + dannoAccessori), due_mani: aggiungiDanno(dannoBase.due_mani, bonusDanno + dannoAccessori) } : null,
+      dannoAccessori,
+      accessori: acc.map((x) => ({ uid: x.uid, nome: x.nome, rif: x.def?.rif ?? null })),
+      // §7.3: il mirino riduce la sola penalità di distanza, entro il proprio limite
+      mirino: (() => { const m = acc.find((x) => x.def?.mirino); return m ? { nome: m.nome, ...m.def.mirino } : null; })(),
+      // §7.3.2: supporti di tiro, bonus solo in appoggio
+      condizionali: va === null ? [] : acc.filter((x) => x.def?.bonus_condizionato).map((x) => ({ nome: x.nome, va: x.def.bonus_condizionato.va, vaTotale: va + x.def.bonus_condizionato.va, condizione: x.def.bonus_condizionato.condizione })),
       dannoDaMunizione: !!d?.danno_da_munizione,
       munizioneRiferimento: d?.danno_da_munizione ? munizioneDiRiferimento(d.munizioni?.riferimento, dati) : null,
       bonusDanno, mani: d?.mani ?? null, portataQ: d?.portata_q ?? null, gittataQ,
@@ -419,11 +462,15 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   const mani = impugnate.reduce((s, x) => s + maniDi(x.def), 0) + scudi.length;
   if (mani > 2) avvisi.push(`Mani impegnate: ${mani} (armi impugnate e scudi imbracciati) su 2.`);
 
-  // Accessori montati
-  for (const x of oggetti.filter((o) => o.attivo && o.tipo === 'accessorio' && o.voce.montato_su)) {
-    const su = oggetti.find((o) => o.uid === x.voce.montato_su);
+  // Accessori montati: dove non si possono montare, o montati su un oggetto non attivo
+  const perUid = new Map(oggetti.map((o) => [o.uid, o]));
+  const operativo = (su) => (su.def?.mirino ? su.attivo && operativo(perUid.get(su.voce.montato_su) ?? {}) && puoMontare(su, perUid.get(su.voce.montato_su)) : !!su.attivo);
+  const NON_ATTIVO = { armatura: 'indossata', accessorio: 'montato su un’arma impugnata' };
+  for (const x of accessoriMontati) {
+    const su = perUid.get(x.voce.montato_su);
     if (!su) avvisi.push(`${x.nome} è montato su un oggetto che non è più nella lista.`);
-    else if (!(su.attivo && (su.tipo === 'arma_ravvicinata' || su.tipo === 'arma_distanza'))) avvisi.push(`${x.nome} è montato su ${su.nome}, che non è impugnata: nessun effetto.`);
+    else if (!puoMontare(x, su)) avvisi.push(`${x.nome} non si monta su ${su.nome}: nessun effetto.`);
+    else if (!operativo(su)) avvisi.push(`${x.nome} è montato su ${su.nome}, che non è ${NON_ATTIVO[su.tipo] ?? 'impugnata'}: nessun effetto.`);
   }
 
   for (const x of oggetti.filter((o) => o.fuoriCatalogo)) avvisi.push(`«${x.voce.rif}» non è più nel catalogo: resta in lista senza effetti.`);

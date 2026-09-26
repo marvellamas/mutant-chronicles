@@ -710,6 +710,22 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
       // §7.19: applicazioni dei kit sanitari e ricarica
       if (o.applicazioni !== undefined && !(isIntero(o.applicazioni) && o.applicazioni >= 1)) err(F, `${k}.applicazioni`, 'intero ≥ 1');
       if (o.ricarica !== undefined && !(isOggetto(o.ricarica) && isIntero(o.ricarica.applicazioni) && isIntero(o.ricarica.costo))) err(F, `${k}.ricarica`, 'serve { applicazioni, costo }');
+      // §7.3: accessori montati
+      if (o.si_monta_su !== undefined && (!Array.isArray(o.si_monta_su) || !o.si_monta_su.length || o.si_monta_su.some((x) => !['arma_distanza', 'arma_ravvicinata', 'armatura', 'mirino'].includes(x)))) {
+        err(F, `${k}.si_monta_su`, 'elenco fra arma_distanza, arma_ravvicinata, armatura, mirino');
+      }
+      if (o.gruppo_esclusivo !== undefined && !isTesto(o.gruppo_esclusivo)) err(F, `${k}.gruppo_esclusivo`, 'testo');
+      if (o.mirino !== undefined) {
+        const m = o.mirino;
+        if (!isOggetto(m) || !(isIntero(m.riduzione) && m.riduzione >= 1) || !isTesto(m.testo)) err(F, `${k}.mirino`, 'serve { riduzione ≥ 1, distanza_max_q, azp_minime, testo }');
+        else {
+          if (m.distanza_max_q !== null && !(isIntero(m.distanza_max_q) && m.distanza_max_q >= 1)) err(F, `${k}.mirino.distanza_max_q`, 'intero ≥ 1 oppure null (gittata dell’arma)');
+          if (m.azp_minime !== null && !(isIntero(m.azp_minime) && m.azp_minime >= 1)) err(F, `${k}.mirino.azp_minime`, 'intero ≥ 1 oppure null');
+        }
+      }
+      if (o.effetto_arma !== undefined && !(isOggetto(o.effetto_arma) && isIntero(o.effetto_arma.va ?? 0) && isIntero(o.effetto_arma.danno ?? 0))) err(F, `${k}.effetto_arma`, 'serve { va, danno } interi');
+      if (o.bonus_condizionato !== undefined && !(isOggetto(o.bonus_condizionato) && isIntero(o.bonus_condizionato.va) && isTesto(o.bonus_condizionato.condizione))) err(F, `${k}.bonus_condizionato`, 'serve { va, condizione }');
+      if (o.tipo === 'accessorio') numeroOpz(F, `${k}.portata_q`, o.portata_q, 1, 999, err);
       if (o.innesto !== undefined && !['interfaccia_neurale'].includes(o.innesto)) err(F, `${k}.innesto`, 'innesto sconosciuto (ammesso: interfaccia_neurale)');
       if (o.compatibile_con !== undefined) {
         if (!Array.isArray(o.compatibile_con) || !o.compatibile_con.length) err(F, `${k}.compatibile_con`, 'elenco di riferimenti "file:id"');

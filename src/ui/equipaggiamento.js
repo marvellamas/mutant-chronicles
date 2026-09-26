@@ -5,7 +5,7 @@
 import { h } from './dom.js';
 import { info } from './tooltip.js';
 import {
-  TIPI, NOMI_TIPI, STATI, NOMI_STATI, catalogo, risolvi, opzioniCascata, cercaNelCatalogo, statoIniziale,
+  TIPI, NOMI_TIPI, STATI, NOMI_STATI, catalogo, risolvi, opzioniCascata, cercaNelCatalogo, statoIniziale, puoMontare,
 } from '../equipaggiamento.js';
 
 const nuovoUid = () => `e${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
@@ -28,7 +28,6 @@ function elencoVoci(ctx) {
   const risolte = voci.map((v) => risolvi(v, cat));
   if (!risolte.length) return h('p', { class: 'vuoto' }, 'Nessun oggetto. Aggiungili dal catalogo o come oggetti personalizzati.');
   const cambia = (uid, modifica) => ctx.aggiorna(voci.map((v) => (v.uid === uid ? { ...v, ...modifica } : v)));
-  const armi = risolte.filter((r) => armiTipi.includes(r.tipo));
   return h('ul', { class: 'elenco-equip' }, risolte.map((r) => {
     const v = r.voce;
     const stati = STATI[r.tipo] ?? [];
@@ -48,10 +47,10 @@ function elencoVoci(ctx) {
           type: 'button', role: 'radio', 'aria-checked': String(v.stato === st),
           class: `stato-equip${v.stato === st ? ' attivo' : ''}`, onclick: () => cambia(v.uid, { stato: st }),
         }, NOMI_STATI[st]))) : null,
-      r.tipo === 'accessorio' && armi.length ? h('label', { class: 'campo-inline' }, 'Montato su ',
+      r.tipo === 'accessorio' && risolte.some((t) => puoMontare(r, t)) ? h('label', { class: 'campo-inline' }, 'Montato su ',
         h('select', { onchange: (e) => cambia(v.uid, { montato_su: e.target.value || undefined }) },
           h('option', { value: '' }, '—'),
-          armi.map((a) => h('option', { value: a.uid, selected: v.montato_su === a.uid }, a.nome)))) : null,
+          risolte.filter((t) => puoMontare(r, t)).map((a) => h('option', { value: a.uid, selected: v.montato_su === a.uid }, a.nome)))) : null,
       h('div', { class: 'equip-riga' },
         h('span', { class: 'quantita' }, 'Quantità ',
           h('button', { type: 'button', class: 'btn-tavolo piccolo', disabled: v.quantita <= 1, 'aria-label': `Togli uno a ${r.nome}`, onclick: () => cambia(v.uid, { quantita: v.quantita - 1 }) }, '−'),
