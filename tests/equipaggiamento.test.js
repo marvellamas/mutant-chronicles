@@ -17,7 +17,7 @@ const voce = (uid, rif, stato, extra = {}) => ({ uid, rif, stato, quantita: 1, n
 const scheda = (creazione, equipaggiamento, livelli = []) => calcolaScheda({ creazione: { ...creazione, equipaggiamento }, livelli }, dati);
 
 test('catalogo: caricato dall’indice, un lotto = un file e una riga; riferimenti "file:id"', () => {
-  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armi_corporative', 'armi_distanza', 'armi_distanza_corporative', 'armature', 'armature_corporative', 'scudi']);
+  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armi_corporative', 'armi_distanza', 'armi_distanza_corporative', 'armature', 'armature_corporative', 'scudi', 'corredi_dispositivi']);
   const cat = catalogo(dati);
   assert.equal(cat.oggetti.filter((o) => o.tipo === 'arma_ravvicinata' && o.catalogo === 'Commerciale').length, 28); // §7.1.1: 28 profili
   assert.equal(cat.oggetti.filter((o) => o.tipo === 'armatura' && o.catalogo === 'Commerciale').length, 3); // §7.11.3
@@ -32,7 +32,7 @@ test('catalogo: caricato dall’indice, un lotto = un file e una riga; riferimen
 
 test('cascata e ricerca: solo ciò che esiste; i nomi alternativi portano al profilo', () => {
   const o = opzioniCascata(dati, { tipo: 'arma_ravvicinata', catalogo: 'Commerciale', famiglia: 'Spade' });
-  assert.deepEqual(o.tipi, ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura']);
+  assert.deepEqual(o.tipi, ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'accessorio', 'sanitario', 'altro']);
   assert.deepEqual(o.cataloghi, ['Commerciale', 'Bauhaus', 'Capitol', 'Cybertronic', 'Fratellanza', 'Imperial', 'Mishima', 'Alleanza']);
   assert.ok(o.famiglie.includes('Armi da pugno'));
   assert.deepEqual(o.profili.map((p) => p.nome), ['Spada leggera', 'Stocco', 'Spada lunga', 'Spada bastarda', 'Spadone']);
@@ -596,4 +596,72 @@ test('validatore delle armature corporative: rinforzi, profili alternativi, pena
   assert.match(e((d) => { o(d, 'powersuit').profili_alternativi[0].for_richiesta = 12; }), /profili_alternativi\[0\]\.for_richiesta: intero da 1 a 10/);
   assert.match(e((d) => { o(d, 'powersuit').profili_alternativi[0] = { condizione: 'spento' }; }), /un profilo alternativo cambia FOR, penalità o AR/);
   assert.match(e((d) => { o(d, 'armatura-d-assalto-blitzer').penalita.movimento_q = 1; }), /penalita\.movimento_q: deve essere un intero ≤ 0/);
+});
+
+// --- Lotto 7: corredi e dispositivi corporativi (§7.12–7.17) --------------------------------
+
+test('lotto 7: corredi, dispositivi, APE, Iron Mastiff, armi e granate Imperial, SIN Cybertronic', () => {
+  const tutti = catalogo(dati).oggetti.filter((o) => o.file === 'corredi_dispositivi');
+  assert.equal(tutti.length, 60);
+  assert.equal(tutti.filter((o) => o.famiglia === 'Corredi professionali').length, 39); // 4 Alleanza, 9 Capitol, 8 Imperial, 8 Mishima, 9 Fratellanza, Dr. Diana
+  assert.equal(tutti.filter((o) => o.tipo === 'sanitario').length, 5); // Kit trauma = Kit di pronto soccorso Professionale (§7.19)
+  const r = (id) => catalogo(dati).perRif.get(`corredi_dispositivi:${id}`);
+  assert.equal(r('kit-trauma-mishima').applicazioni, 5);
+  assert.equal(r('corredo-di-sopravvivenza-ambientale-imperial').costo, 1500);
+  assert.equal(r('investigazione-fratellanza').qualita, 'Non comune'); // dalla frase «Tutti hanno Qualità Non comune e PS Integrità 12»
+  assert.equal(r('propulsore-d-assalto-banshee').tabelle[0].righe.length, 6); // «Voce | Regola»
+  // §7.13.6: APE, MOV 0, Furtività −2, lancio −5
+  assert.deepEqual(r('ape-capitol').penalita, { attacchi_distanza: 0, attacchi_ravvicinati: 0, agilita: 0, movimento_q: 0, lancio_potere: -5, abilita: { Furtività: -2 } });
+  assert.equal(r('howler').mani, 0);
+  assert.deepEqual(r('rainy-dayer').scudo_integrato.parata, { ravvicinata: 0, distanza: -4 });
+  assert.equal(r('granata-fumogena').nessun_danno, true);
+  assert.ok(!tutti.some((o) => /frammentazione/i.test(o.nome))); // è la granata commerciale del §7.7
+  assert.deepEqual(r('ias3200-imbracatura-antigravita').compatibile_con, ['armature_corporative:ia3000-shock-trooper', 'armature_corporative:ia3000-silent']);
+  const sin = dati.equipaggiamento.file.corredi_dispositivi.sin_armi;
+  assert.equal(sin.length, 15);
+  assert.deepEqual(sin.find((x) => x.rif === 'armi_distanza_corporative:sr3500'), { rif: 'armi_distanza_corporative:sr3500', valore: 2, prova: 'Per colpire' });
+  assert.ok(trovaTodo(dati).some((t) => /Rainy Dayer/.test(t.testo)));
+});
+
+test('SIN: con l’Interfaccia Neurale in uso le armi Cybertronic hanno +SIN al VA per colpire (§7.15.1)', () => {
+  const arma = voce('c', 'armi_distanza_corporative:caw2000', 'impugnata');
+  const senza = scheda(MISHIMA_AGENTE, [arma]).equipaggiamento.armi;
+  const con = scheda(MISHIMA_AGENTE, [arma, voce('i', 'corredi_dispositivi:interfaccia-neurale-cybertronic', 'in_uso')]).equipaggiamento.armi;
+  assert.equal(con[0].va, senza[0].va + 1);
+  assert.ok(con[0].componenti.some((c) => /^SIN 1/.test(c.nome)));
+  assert.equal(con[1].nome, 'Lanciagranate CAW2000'); // anche il modulo: «Per colpire con il modulo»
+  assert.equal(con[1].va, senza[1].va + 1);
+  // interfaccia nello zaino: nessun bonus
+  const zaino = scheda(MISHIMA_AGENTE, [arma, voce('i', 'corredi_dispositivi:interfaccia-neurale-cybertronic', 'zaino')]).equipaggiamento.armi;
+  assert.equal(zaino[0].va, senza[0].va);
+  assert.match(testoTooltip('oggetto', 'armi_distanza_corporative:sr3500', dati), /SIN 2: \+2 VA \(per colpire\)/);
+});
+
+test('Rainy Dayer aperta come Scudo, Howler al polso, APE indossato', () => {
+  let s = scheda(MISHIMA_AGENTE, [voce('r', 'corredi_dispositivi:rainy-dayer', 'impugnata'), voce('h', 'corredi_dispositivi:howler', 'impugnata')]);
+  const scudo = s.equipaggiamento.protezioni.find((p) => p.uid === 'r:scudo');
+  const difese = s.abilita.find((a) => a.nome === 'Difese').vaEquip;
+  assert.deepEqual(scudo.ar, { totale: 1, magica: 0 });
+  assert.deepEqual([scudo.parata.ravvicinata, scudo.parata.distanza], [difese, difese - 4]); // FOR 4 ≤ 6
+  assert.ok(!s.equipaggiamento.avvisi.some((a) => /Mani impegnate/.test(a))); // Howler da polso: 0 mani
+  assert.equal(s.equipaggiamento.armi.find((a) => a.nome === 'Howler').munizioneRiferimento.danno, '1d6+1');
+  s = scheda(MISHIMA_AGENTE, [voce('a', 'corredi_dispositivi:ape-capitol', 'indossata')]);
+  assert.equal(s.equipaggiamento.equipAbilita.Furtività, -2);
+  assert.equal(s.equipaggiamento.movimentoQ, 0);
+  assert.equal(s.equipaggiamento.lancioPotere, -5);
+  const t = testoTooltip('oggetto', 'corredi_dispositivi:propulsore-d-assalto-banshee', dati);
+  assert.match(t, /Regole di volo: Attivazione: Compresa nell’AzM/);
+});
+
+test('validatore di corredi e dispositivi: SIN, compatibilità, tabelle, scudo integrato, penalità per Abilità', () => {
+  const e = (modifica) => { const d = copia(dati); modifica(d); return validaDati(d).map((x) => `${x.chiave}: ${x.problema}`).join('\n'); };
+  const f = (d) => d.equipaggiamento.file.corredi_dispositivi;
+  const o = (d, id) => f(d).oggetti.find((x) => x.id === id);
+  assert.match(e((d) => { f(d).sin_armi[0].rif = 'corredi_dispositivi:kit-trauma-mishima'; }), /sin_armi\[0\]\.rif: .* non è un'arma/);
+  assert.match(e((d) => { f(d).sin_armi[0].valore = 3; }), /SIN 1 o SIN 2/);
+  assert.match(e((d) => { o(d, 'ias3300-mirrorshard').compatibile_con = ['armi:lancia']; }), /non è un'armatura/);
+  assert.match(e((d) => { o(d, 'propulsore-d-assalto-banshee').tabelle[0].righe[0] = ['solo una cella']; }), /servono 2 celle/);
+  assert.match(e((d) => { o(d, 'rainy-dayer').scudo_integrato.parata = { ravvicinata: 0 }; }), /scudo_integrato\.parata/);
+  assert.match(e((d) => { o(d, 'ape-capitol').penalita.abilita = { Nuoto: -2 }; }), /Abilità "Nuoto" inesistente/);
+  assert.match(e((d) => { o(d, 'granata-fumogena').danno = { una_mano: '1d6', due_mani: null }; }), /nessun_danno/);
 });

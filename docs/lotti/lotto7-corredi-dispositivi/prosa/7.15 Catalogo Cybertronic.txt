@@ -1,0 +1,176 @@
+7.15 Catalogo Cybertronic
+Il catalogo comprende nove armature iconiche Standard e i moduli specialistici compatibili. Ogni modello
+mantiene una categoria fissa. Tutte le armature hanno AR magica 0; Qualità costruttiva, Reperibilità e
+configurazione del prodotto sono dati distinti. Armi, moduli e corredi separati si aggiungono al costo
+dell’armatura.
+7.15.1 Sistema di Interfaccia Neurale
+Il Sistema di Interfaccia Neurale, SIN, collega l’equipaggiamento a un Innesto di Interfaccia Neurale compatibile.
+SIN 1 concede +1 VA e SIN 2 concede +2 VA alle sole Prove indicate nella scheda. Senza connessione l’oggetto
+mantiene il funzionamento ordinario, salvo un requisito espresso del dispositivo.
+La P500 è priva di SIN e non riceve il bonus di collegamento, anche se il tiratore possiede un Innesto di
+Interfaccia Neurale. I modelli compatibili sono elencati nelle tabelle seguenti.
+Gli innesti Cybertronic si collegano automaticamente. Un innesto di altra marca richiede un minuto di
+configurazione e una Prova di Tecnologia: con successo l’abbinamento viene memorizzato; con fallimento resta
+disponibile soltanto l’impiego ordinario, senza il bonus SIN. Il collegamento non richiede una Prova a ogni
+utilizzo.
+Si applica un solo bonus SIN alla stessa Prova, scegliendo il maggiore pertinente fino a +2: due SIN 1 non
+diventano SIN 2. Il bonus è distinto dal VA nativo dell’oggetto e dai modificatori degli strumenti. Non aumenta
+automaticamente danno, gittata, capacità, potenza o numero di Azioni. Le penalità dell’armatura continuano ad
+applicarsi.
+Interfaccia di comando indica il collegamento ai comandi e alle informazioni operative di un dispositivo
+automatico: non assegna un bonus numerico quando non viene effettuata una Prova. Furtività è sempre una Prova
+unica; i benefici acustici specifici si applicano mediante Soppressione acustica.
+Innesto di interfaccia PI Qualità PS INT REP Costo
+Interfaccia Neurale Cybertronic 4 Non comune 12 RA 5.000
+L’installazione dell’innesto costa 2.000 oltre al prezzo del dispositivo. L’impiego del SIN di armi, armature e
+strumenti non comporta un costo UMN aggiuntivo per ogni oggetto connesso. I costi UMN degli innesti saranno
+integrati con il catalogo cibernetico; per i modelli Cybertronic si applicherà il rapporto di metà rispetto agli
+equivalenti standard.
+SIN delle armi
+Armi a distanza e moduli SIN Prova
+P1000; SA SG2001; CAW2000; AR3000 1 Per colpire
+Lanciagranate CAW2000 e AR3000 1 Per colpire con il modulo
+SR3500 2 Per colpire
+TSW4000; SSW4200P; SSW5500 1 Per colpire
+Armi ravvicinate SIN Prova
+Artigli elettrificati; Elettrosega CSB600; Spada elettrificata CSA
+1 Per colpire
+404
+Baionetta elettrificata 1 Per colpire, montata ed estratta
+Frusta elettrificata 1 Per colpire oppure Immobilizzare
+Manganello e Tirapugni elettrificati — Nessun SIN nel modello Standard
+Il SIN non si aggiunge automaticamente a Parata, danno o attivazione delle cariche. I profili e i costi delle armi
+rimangono quelli dei §§7.1.9 e 7.8; il SIN indicato è parte della dotazione del modello.
+7.15.2 Profili delle armature
+Modello Categoria AR FOR PI
+Divisa della Sicurezza Leggera 2 4 8
+Abito degli Agenti IES Leggera 2 3 6
+Corazza Chasseur Media 3 5 10
+IA3000 Chasseur corazzato Pesante 5 7 12
+IA3000 Mirrorman Media 3 5 8
+IA3000 Shock Trooper Media 3 5 10
+IA3000 Silent Media 3 5 8
+IA3000 Reaver Media 4 6 10
+Tuta Dr. Diana Leggera 2 3 6
+Modello Qualità PS INT REP Costo
+Divisa della Sicurezza Non comune 12 NC 4.500
+Abito degli Agenti IES Non comune 12 RA 6.500
+Corazza Chasseur Non comune 12 NC 6.500
+IA3000 Chasseur corazzato Rara 14 RA 15.000
+IA3000 Mirrorman Rara 14 MR 10.000
+IA3000 Shock Trooper Rara 14 RA 11.500
+IA3000 Silent Rara 14 MR 11.000
+IA3000 Reaver Rara 14 MR 14.000
+Tuta Dr. Diana Non comune 12 RA 6.500
+7.15.3 Proprietà e rinforzi
+Divisa della Sicurezza
+Imbottita 1 e Isolante 1. SIN 1: +1 VA a Difese per Schivare. Accetta un Rinforzo Leggero.
+Abito degli Agenti IES
+Discreta, Mimetismo 1 e Isolante 1. SIN 1: +1 VA alla Prova unica di Furtività. Accetta un Rinforzo Leggero;
+componenti esterni visibili non vengono nascosti dalla proprietà Discreta.
+Corazza Chasseur
+Struttura robusta e Isolante 2. I 2 PI aggiuntivi sono già inclusi nel totale 10. SIN 1: +1 VA a Difese per Schivare.
+Accetta un Rinforzo Leggero.
+IA3000 Chasseur corazzato
+Imbottita 2, Isolante 2 e Articolazione di tiro: la penalità della Pesante agli attacchi a distanza passa da −2 a −1
+VA. SIN 2: +2 VA a Difese per Schivare. Non accetta rinforzi ordinari. È compatibile con il Generatore Blink
+IAS3100, acquistato separatamente.
+IA3000 Mirrorman
+Articolazione d’assalto e Assetto da incursione: annulla le penalità proprie della Media agli attacchi ravvicinati e
+al MOV. Restano la penalità ad Agilità e le altre penalità. SIN 2: +2 VA alla Prova unica di Furtività. Nessun
+rinforzo ordinario; IAS3300 Mirrorshard separato.
+IA3000 Shock Trooper
+Imbottita 2, Articolazione d’assalto e Filtro respiratorio 2. SIN 2: +2 VA ad Atletica per salti e atterraggi che
+richiedono effettivamente quella Prova. Il bonus non si trasferisce automaticamente alle Prove di Pilotare. Nessun
+rinforzo ordinario; IAS3200 acquistato separatamente.
+IA3000 Silent
+Articolazione da ricognizione e Assetto da incursione: annulla le penalità proprie della Media ad Agilità e al
+MOV. SIN 2: +2 VA alla Prova unica di Furtività. Nessun rinforzo ordinario. Smorzatore acustico e IAS3200
+sono dispositivi separati.
+IA3000 Reaver
+Isolante 2 e Antiesplosione 1: contro danni Naturali o Magici da esplosione l’AR sale a 5, senza protezione
+aggiuntiva dai danni Eterei. SIN 1: +1 VA a Difese per Schivare. Nessun rinforzo ordinario; IAS3400 acquistato
+separatamente.
+Tuta Dr. Diana
+Isolante 2 e Filtro respiratorio 2. SIN 1: +1 VA a Medicina o Tecnologia per assistenza medica e manutenzione
+cibernetica, usando strumenti appropriati. Il SIN non sostituisce competenze, materiali o strumenti. Accetta un
+Rinforzo Leggero; il corredo di assistenza è separato.
+Su Sicurezza, IES e Dr. Diana il Rinforzo Leggero porta AR da 2 a 3, aumenta FOR di 1 e applica le penalità
+della Media. Su Chasseur porta AR a 4 e FOR a 6, mantenendo la Media. I rinforzi costano 1.000 e conservano PI
+e PS propri (§7.11.2).
+7.15.4 Moduli specialistici
+I moduli sono equipaggiamenti speciali con PI propri; non aumentano l’AR o i PI dell’armatura. Tutti i moduli
+IAS e lo Smorzatore Silent hanno Qualità Rara, PS Integrità 14 e Reperibilità Molto rara. Il costo comprende una
+cella IAS carica.
+Modulo Compatibilità PI Costo
+IAS3100 Generatore Blink IA3000 Chasseur corazzato 6 25.000
+IAS3200 Imbracatura antigravità IA3000 Shock Trooper e Silent 6 18.000
+IAS3300 Mirrorshard IA3000 Mirrorman 4 14.000
+IAS3400 Disturbatore metafisico IA3000 Reaver 6 14.000
+Smorzatore acustico Silent IA3000 Silent 4 6.000
+La cella IAS contiene 20 cariche tecnologiche. Una cella di ricambio costa 1.000; una ricarica completa costa 50 e
+richiede un’ora. Sostituire la cella richiede un minuto con il dispositivo spento. Ogni modulo consuma secondo la
+propria scheda. Le cariche tecnologiche non sono PM e non richiedono Sintonizzazione. A 0 PI il modulo perde la
+propria funzione.
+IAS3100 Generatore Blink
+Modalità Distanza Azione Cariche Prova
+Blink 4 Q Intera AzM 1 Automatica
+Power Blink 8 Q Intera AzM 2 Pilotare −2 VA
+È consentito un solo trasferimento per Round durante la propria Iniziativa. L’AzM viene spesa interamente e non
+può essere suddivisa. La destinazione deve essere direttamente visibile, libera e abbastanza ampia per il
+personaggio e la dotazione indossata. Non sono validi mappe, immagini o telecamere remote; non si trasportano
+passeggeri. Gli ostacoli possono essere superati soltanto se la destinazione soddisfa queste condizioni.
+Power Blink: con successo avviene il trasferimento; con fallimento il personaggio resta al punto di partenza e
+spende comunque AzM e cariche. Con Maldestro, inoltre, il generatore perde 1 PI. SIN 2 concede +2 VA alle
+Prove di Pilotare del dispositivo, compensando la penalità di Power Blink; non aumenta il Blink ordinario, che è
+automatico.
+IAS3200 Imbracatura antigravità
+Occupa lo spazio dello zaino. Attivazione, decollo, salita, discesa e atterraggio fanno parte dell’AzM di volo.
+Rimanere sospesi richiede l’AzM. Ogni Round di funzionamento consuma una carica, anche in sospensione: 20
+Round complessivi, anche non consecutivi. Movimento base 6/12/18 Q per Passo/Corsa/Scatto; ogni Q verticale
+costa quanto un Q orizzontale.
+Pilotare sostituisce Atletica: automatico al Passo in condizioni ordinarie, −2 VA in Corsa, −4 VA in Scatto. SIN 1
+del modulo aggiunge +1 alle Prove pertinenti di Pilotare. Con Shock Trooper, prima di altri modificatori, il
+movimento effettivo è 5/11/17 Q; con Silent è 6/12/18 Q grazie all’Assetto da incursione.
+Prove di volo, attacchi, movimento misto, decollo, atterraggio ed esaurimento del sostegno seguono il Propulsore
+Banshee (§7.13.4). Un fallimento non spegne automaticamente il modulo; rottura, disattivazione, incoscienza o
+fine dell’energia fanno terminare il sostegno secondo quelle regole. Il funzionamento antigravitazionale è
+silenzioso; Furtività richiede comunque condizioni concrete e una normale Prova.
+IAS3300 Mirrorshard
+Il mimetismo ottico adattivo concede +2 VA alla Prova unica di Furtività quando esistono condizioni concrete per
+nascondersi o muoversi senza essere individuati. Non rende invisibili, non nasconde automaticamente armi o
+oggetti estranei al sistema e non impone una penalità automatica agli attacchi. Più sistemi mimetici ottici non
+sommano i bonus: si usa il maggiore.
+Attivare il modulo richiede 1 AzP. Consuma una carica per minuto continuativo, fino a 20 minuti per cella.
+Spento conserva l’aspetto cromato ma non il beneficio mimetico. Il SIN 2 pertinente aggiunge il proprio bonus
+una sola volta; il SIN dell’armatura e quello del modulo non si sommano fra loro.
+IAS3400 Disturbatore metafisico
+Attivazione: 1 AzP. Il campo mobile ha raggio 2 Q, centrato sull’utilizzatore, ed è bloccato da pareti e pavimenti
+solidi. Consuma una carica per Round, per 20 Round complessivi anche non consecutivi. Il campo impone −2 VA
+alla Prova di Potere per lanciare un Incantesimo quando il lanciatore è nel campo oppure il bersaglio, il punto
+scelto o parte dell’area dell’Incantesimo ricade nel campo.
+La penalità coinvolge utilizzatore, alleati e avversari; si applica una sola volta alla stessa Prova anche se più
+condizioni ricorrono. Più disturbatori non sommano l’interferenza. Il modulo non dissolve effetti già attivi e non
+interrompe automaticamente la Concentrazione. L’Interfaccia di comando non aumenta la penalità e non
+introduce una Prova aggiuntiva.
+Smorzatore acustico Silent
+Attivazione: 1 AzP. Consuma una carica per minuto, fino a 20 minuti per cella. Soppressione acustica 2 attenua
+passi, articolazioni ed equipaggiamento fissato: impone −2 VA alla Prova di Percezione dell’osservatore quando
+l’individuazione o localizzazione dipende da quei rumori. Se l’osservatore dispone di una visuale utile, questa
+penalità non si applica.
+Furtività e Percezione restano Prove uniche. Spari, esplosioni, parole e urti contro l’ambiente non vengono
+soppressi. Più sistemi di soppressione non cumulano le penalità. Il SIN 2 della Silent concede il proprio +2 a
+Furtività; l’Interfaccia di comando dello smorzatore non aggiunge un ulteriore bonus SIN.
+7.15.5 Corredo di assistenza Dr. Diana
+PI Qualità PS INT REP Costo
+6 Non comune 12 RA 5.000
+Corredo Professionale: +2 VA a Medicina per pronto soccorso e trattamenti traumatici portatili, oppure +2 VA a
+Tecnologia per diagnosi e riparazione cibernetica. Si usa un solo bonus degli strumenti alla stessa Prova. È
+utilizzabile senza interfaccia; il SIN pertinente della Tuta Dr. Diana si applica soltanto quando la connessione e le
+condizioni del §7.15.1 sono soddisfatte.
+La componente sanitaria utilizza il profilo del Kit di pronto soccorso Professionale (§7.19): cinque applicazioni
+comprese e ricarica da cinque 300. Ogni trattamento consuma un’applicazione; la diagnosi non la consuma.
+Materiali tecnici e ricambi cibernetici sono separati. Il corredo non sostituisce una struttura chirurgica né ripara
+automaticamente PI o stati di Ferita.
+Il Cuirassier Attila e il Generatore di risonanza RF366 sono equipaggiamenti speciali per unità robotiche (§7.18).
+Gli esoscheletri indossabili si trattano invece come protezioni; un robot autonomo non è un’armatura personale.

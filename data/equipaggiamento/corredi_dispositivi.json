@@ -1,0 +1,1964 @@
+{
+  "versione_manuale": "Armamenti 0.50",
+  "fonte": "Manuale degli Armamenti v0.50: corredi e dispositivi corporativi (§7.12, §7.13.4–7.13.8, §7.14.4–7.14.8, §7.15.1, §7.15.4–7.15.5, §7.16.5, §7.17.6), pp. 69–105; lotto 7",
+  "_nota": "Generato da tools/lotti/lotto7_corredi_dispositivi.mjs; da qui in poi si modifica questo file. «sin_armi» è la tabella SIN del §7.15.1: con l’Interfaccia Neurale in uso, +SIN al VA per colpire dell’arma. «scudo_integrato»: l’arma impugnata protegge anche come Scudo nella condizione indicata. I bonus degli strumenti Professionali (+2 VA alle attività indicate) restano testo: valgono solo per le Prove descritte.",
+  "TODO(Davide)": [
+    "Specializzazione della Rainy Dayer (§7.14.6): arma da fuoco a corto raggio con ombrello balistico, Armi medie. Il manuale non ne indica la categoria. Proposta: Carabine."
+  ],
+  "modalita": {
+    "S": "Colpo Singolo",
+    "TR": "Tiro Rapido"
+  },
+  "sin_armi": [
+    {
+      "rif": "armi_distanza_corporative:p1000",
+      "valore": 1,
+      "prova": "Per colpire"
+    },
+    {
+      "rif": "armi_distanza_corporative:sa-sg2001",
+      "valore": 1,
+      "prova": "Per colpire"
+    },
+    {
+      "rif": "armi_distanza_corporative:caw2000",
+      "valore": 1,
+      "prova": "Per colpire"
+    },
+    {
+      "rif": "armi_distanza_corporative:ar3000",
+      "valore": 1,
+      "prova": "Per colpire"
+    },
+    {
+      "rif": "armi_distanza_corporative:lanciagranate-caw2000",
+      "valore": 1,
+      "prova": "Per colpire con il modulo"
+    },
+    {
+      "rif": "armi_distanza_corporative:lanciagranate-ar3000",
+      "valore": 1,
+      "prova": "Per colpire con il modulo"
+    },
+    {
+      "rif": "armi_distanza_corporative:sr3500",
+      "valore": 2,
+      "prova": "Per colpire"
+    },
+    {
+      "rif": "armi_distanza_corporative:tsw4000",
+      "valore": 1,
+      "prova": "Per colpire"
+    },
+    {
+      "rif": "armi_distanza_corporative:ssw4200p",
+      "valore": 1,
+      "prova": "Per colpire"
+    },
+    {
+      "rif": "armi_distanza_corporative:lanciarazzi-ssw5500",
+      "valore": 1,
+      "prova": "Per colpire"
+    },
+    {
+      "rif": "armi_corporative:artigli-elettrificati",
+      "valore": 1,
+      "prova": "Per colpire"
+    },
+    {
+      "rif": "armi_corporative:elettrosega-csb600",
+      "valore": 1,
+      "prova": "Per colpire"
+    },
+    {
+      "rif": "armi_corporative:spada-elettrificata-csa-404",
+      "valore": 1,
+      "prova": "Per colpire"
+    },
+    {
+      "rif": "armi_corporative:baionetta-elettrificata",
+      "valore": 1,
+      "prova": "Per colpire, montata ed estratta"
+    },
+    {
+      "rif": "armi_corporative:frusta-elettrificata",
+      "valore": 1,
+      "prova": "Per colpire oppure Immobilizzare"
+    }
+  ],
+  "oggetti": [
+    {
+      "id": "valigetta-investigativa-asa",
+      "nome": "Valigetta investigativa ASA",
+      "tipo": "altro",
+      "catalogo": "Alleanza",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "+2 VA a Percezione per esaminare tracce materiali mediante gli strumenti del corredo e a Scienza per analisi preliminari eseguibili con una dotazione portatile. Non concede un bonus generale alla vigilanza e non sostituisce un laboratorio completo.",
+      "paragrafo": "§7.12",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2000,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I cinque corredi sono strumenti Professionali: concedono +2 VA soltanto alle attività indicate. Questo è il modificatore complessivo degli strumenti (§1.4.1), non un bonus da sommare a ciascun componente del corredo. Restano applicabili i Talenti e le circostanze pertinenti. La Qualità costruttiva Non comune e la PS Integrità 12 riguardano la resistenza dell’oggetto e non cambiano il livello Professionale."
+        }
+      ]
+    },
+    {
+      "id": "corredo-d-intrusione-asa",
+      "nome": "Corredo d’intrusione ASA",
+      "tipo": "altro",
+      "catalogo": "Alleanza",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "+2 VA a Tecnologia per intervenire su serrature, allarmi e sistemi di accesso raggiungibili e compatibili con gli strumenti. Richiede l’accesso materiale e le condizioni necessarie all’intervento; non supera automaticamente i sistemi di sicurezza.",
+      "paragrafo": "§7.12",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 1500,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I cinque corredi sono strumenti Professionali: concedono +2 VA soltanto alle attività indicate. Questo è il modificatore complessivo degli strumenti (§1.4.1), non un bonus da sommare a ciascun componente del corredo. Restano applicabili i Talenti e le circostanze pertinenti. La Qualità costruttiva Non comune e la PS Integrità 12 riguardano la resistenza dell’oggetto e non cambiano il livello Professionale."
+        }
+      ]
+    },
+    {
+      "id": "kit-di-controsorveglianza-asa",
+      "nome": "Kit di controsorveglianza ASA",
+      "tipo": "altro",
+      "catalogo": "Alleanza",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "+2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili. Non individua automaticamente sorveglianti e non concede un bonus universale a Percezione.",
+      "paragrafo": "§7.12",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2500,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I cinque corredi sono strumenti Professionali: concedono +2 VA soltanto alle attività indicate. Questo è il modificatore complessivo degli strumenti (§1.4.1), non un bonus da sommare a ciascun componente del corredo. Restano applicabili i Talenti e le circostanze pertinenti. La Qualità costruttiva Non comune e la PS Integrità 12 riguardano la resistenza dell’oggetto e non cambiano il livello Professionale."
+        }
+      ]
+    },
+    {
+      "id": "corredo-da-artificiere-dell-alleanza",
+      "nome": "Corredo da artificiere dell’Alleanza",
+      "tipo": "altro",
+      "catalogo": "Alleanza",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "+2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili. Non include cariche esplosive, munizioni o componenti destinati a restare installati. Il corredo non sostituisce le competenze del personaggio né elimina i rischi delle Prove.",
+      "paragrafo": "§7.12",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2000,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I cinque corredi sono strumenti Professionali: concedono +2 VA soltanto alle attività indicate. Questo è il modificatore complessivo degli strumenti (§1.4.1), non un bonus da sommare a ciascun componente del corredo. Restano applicabili i Talenti e le circostanze pertinenti. La Qualità costruttiva Non comune e la PS Integrità 12 riguardano la resistenza dell’oggetto e non cambiano il livello Professionale."
+        }
+      ]
+    },
+    {
+      "id": "kit-trauma-dell-alleanza",
+      "nome": "Kit trauma dell’Alleanza",
+      "tipo": "sanitario",
+      "catalogo": "Alleanza",
+      "famiglia": "Kit trauma",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Kit trauma è il Kit di pronto soccorso Professionale del §7.19. Concede +2 VA a Medicina e comprende cinque applicazioni; costo 3.000, ricarica da cinque applicazioni 300. Una medicazione riuscita arresta il Sanguinamento e recupera 1d4 PV; un Magistrale raddoppia il risultato del dado. Non cura stati di Ferita o Menomazioni. Ogni tentativo consuma un’applicazione all’inizio, anche se fallisce o viene interrotto. Una semplice diagnosi non consuma materiali. Esaurite le applicazioni restano disponibili gli strumenti riutilizzabili per le attività che non richiedono i materiali mancanti. La medicazione richiede un minuto continuativo, oppure due Round consecutivi con Soccorso Immediato del Paramedico. Prove, esiti, ripetizioni e raccordi con i Talenti seguono il §7.19.1. Strumentazione Efficace mantiene il proprio bonus separato quando applicabile. Con strumenti e materiali pertinenti, il corredo soddisfa i requisiti almeno Standard di Triage Estremo e Protocollo Shock senza concedere quei Talenti. Le procedure di cura delle Ferite e delle Menomazioni sono nel Manuale del Giocatore; il kit non equivale a una struttura sanitaria per Terapia Intensiva.",
+      "paragrafo": "§7.12",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 3000,
+      "applicazioni": 5,
+      "ricarica": {
+        "applicazioni": 5,
+        "costo": 300
+      },
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I cinque corredi sono strumenti Professionali: concedono +2 VA soltanto alle attività indicate. Questo è il modificatore complessivo degli strumenti (§1.4.1), non un bonus da sommare a ciascun componente del corredo. Restano applicabili i Talenti e le circostanze pertinenti. La Qualità costruttiva Non comune e la PS Integrità 12 riguardano la resistenza dell’oggetto e non cambiano il livello Professionale."
+        }
+      ]
+    },
+    {
+      "id": "corredo-da-ricognizione-rangers",
+      "nome": "Corredo da ricognizione Rangers",
+      "tipo": "altro",
+      "catalogo": "Capitol",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [
+        "Ricognizione Rangers"
+      ],
+      "note_manuale": "Comprende binocolo, monocolo periscopico e strumenti per registrare osservazioni e riferimenti del terreno. Concede +2 VA a Percezione per osservazioni visive effettuate attraverso le ottiche: individuare postazioni, esaminare passaggi o distinguere movimenti lontani. Richiede visuale e illuminazione sufficienti. Non conferisce visione notturna né bonus all’ascolto. Osservare o cercare mantiene il normale costo in Azioni.",
+      "paragrafo": "§7.13.7",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 2000,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I cinque corredi sono strumenti Professionali: +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova (§1.4.1); i singoli componenti non sommano bonus tra loro. Talenti, circostanze e proprietà pertinenti delle armature restano applicabili separatamente. Non comune indica la Qualità costruttiva e determina PS Integrità 12, non il livello degli strumenti."
+        }
+      ]
+    },
+    {
+      "id": "corredo-di-sopravvivenza-ambientale-capitol",
+      "nome": "Corredo di sopravvivenza ambientale",
+      "tipo": "altro",
+      "catalogo": "Capitol",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [
+        "Sopravvivenza ambientale"
+      ],
+      "note_manuale": "Comprende strumenti di orientamento, raccolta delle risorse e allestimento di un riparo individuale. All’acquisto si sceglie un ambiente: boscoso, giungla, deserto oppure artico. Concede +2 VA a Sopravvivenza nell’ambiente scelto per orientarsi con strumenti e riferimenti disponibili, reperire e raccogliere risorse utilizzabili, individuare un luogo adatto e allestire un riparo. Il prezzo comprende la dotazione riutilizzabile; acqua, viveri e medicinali si acquistano separatamente. Non concede bonus alle Salvezze contro il clima. Fuori dall’ambiente previsto, i componenti concretamente utilizzabili valgono come strumenti Standard.",
+      "paragrafo": "§7.13.7",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 1500,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I cinque corredi sono strumenti Professionali: +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova (§1.4.1); i singoli componenti non sommano bonus tra loro. Talenti, circostanze e proprietà pertinenti delle armature restano applicabili separatamente. Non comune indica la Qualità costruttiva e determina PS Integrità 12, non il livello degli strumenti."
+        }
+      ]
+    },
+    {
+      "id": "corredo-da-assalto-verticale-capitol",
+      "nome": "Corredo da assalto verticale",
+      "tipo": "altro",
+      "catalogo": "Capitol",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [
+        "Assalto verticale"
+      ],
+      "note_manuale": "Comprende imbracatura, corda da 20 Q, discensore, moschettoni e ancoraggi. Concede +2 VA ad Atletica per arrampicarsi o calarsi utilizzando effettivamente il corredo. Preparare una linea su un punto di ancoraggio già adatto richiede un minuto; creare un nuovo ancoraggio dipende dalla superficie e dall’intervento necessario. Non aumenta automaticamente la distanza percorribile. La corda sostiene il personaggio soltanto se assicurata a un ancoraggio valido: portare il corredo nello zaino non protegge dalle Cadute. Sulla Panther, il +2 degli strumenti può sommarsi al +2 di Articolazione da arrampicata quando entrambi sono pertinenti.",
+      "paragrafo": "§7.13.7",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 1500,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I cinque corredi sono strumenti Professionali: +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova (§1.4.1); i singoli componenti non sommano bonus tra loro. Talenti, circostanze e proprietà pertinenti delle armature restano applicabili separatamente. Non comune indica la Qualità costruttiva e determina PS Integrità 12, non il livello degli strumenti."
+        }
+      ]
+    },
+    {
+      "id": "corredo-per-operazioni-subacquee",
+      "nome": "Corredo per operazioni subacquee",
+      "tipo": "altro",
+      "catalogo": "Capitol",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [
+        "Operazioni subacquee"
+      ],
+      "note_manuale": "Comprende pinne compatibili con l’armatura, bussola subacquea, sagola guida da 20 Q e strumenti di segnalazione e annotazione. Concede +2 VA ad Atletica nelle Prove di Nuoto quando si utilizzano le pinne e +2 VA a Sopravvivenza per orientarsi sott’acqua utilizzando bussola, riferimenti e sagola. È utilizzabile con armature Leggere o Medie compatibili, compresa Sea Devil, fino a 30 metri di profondità. Il Nuoto costa sempre 2 MOV per Q. Non contiene una riserva d’aria: con Sea Devil si usa quella già compresa nell’armatura.",
+      "paragrafo": "§7.13.7",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2000,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I cinque corredi sono strumenti Professionali: +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova (§1.4.1); i singoli componenti non sommano bonus tra loro. Talenti, circostanze e proprietà pertinenti delle armature restano applicabili separatamente. Non comune indica la Qualità costruttiva e determina PS Integrità 12, non il livello degli strumenti."
+        }
+      ]
+    },
+    {
+      "id": "corredo-di-manutenzione-da-campo",
+      "nome": "Corredo di manutenzione da campo",
+      "tipo": "altro",
+      "catalogo": "Capitol",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [
+        "Manutenzione da campo"
+      ],
+      "note_manuale": "Comprende utensili, strumenti diagnostici e attrezzatura per interventi su armi, armature, propulsori ed esoscheletri compatibili. Concede +2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo. Il corredo fornisce gli strumenti; pezzi di ricambio e materiali necessari si conteggiano separatamente. Restano tempi, Prove e limiti delle riparazioni: il corredo non ripristina automaticamente PI.",
+      "paragrafo": "§7.13.7",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 2000,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I cinque corredi sono strumenti Professionali: +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova (§1.4.1); i singoli componenti non sommano bonus tra loro. Talenti, circostanze e proprietà pertinenti delle armature restano applicabili separatamente. Non comune indica la Qualità costruttiva e determina PS Integrità 12, non il livello degli strumenti."
+        }
+      ]
+    },
+    {
+      "id": "valigetta-investigativa-capitol",
+      "nome": "Valigetta investigativa Capitol",
+      "tipo": "altro",
+      "catalogo": "Capitol",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "+2 VA a Percezione per esaminare tracce materiali mediante gli strumenti e a Scienza per analisi preliminari eseguibili con dotazione portatile. Non concede un bonus generale alla vigilanza e non sostituisce un laboratorio completo.",
+      "paragrafo": "§7.13.8",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2000,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "Queste versioni Capitol utilizzano gli stessi valori e le stesse regole dei corredi dell’Alleanza (§7.12). Sono strumenti Professionali, di Qualità Non comune, con PS Integrità 12. Il +2 VA è il modificatore complessivo degli strumenti per l’attività indicata."
+        }
+      ]
+    },
+    {
+      "id": "corredo-d-intrusione-capitol",
+      "nome": "Corredo d’intrusione Capitol",
+      "tipo": "altro",
+      "catalogo": "Capitol",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "+2 VA a Tecnologia per intervenire su serrature, allarmi e sistemi di accesso raggiungibili e compatibili. Richiede accesso materiale e condizioni adatte; non supera automaticamente la sicurezza.",
+      "paragrafo": "§7.13.8",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 1500,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "Queste versioni Capitol utilizzano gli stessi valori e le stesse regole dei corredi dell’Alleanza (§7.12). Sono strumenti Professionali, di Qualità Non comune, con PS Integrità 12. Il +2 VA è il modificatore complessivo degli strumenti per l’attività indicata."
+        }
+      ]
+    },
+    {
+      "id": "kit-di-controsorveglianza-capitol",
+      "nome": "Kit di controsorveglianza Capitol",
+      "tipo": "altro",
+      "catalogo": "Capitol",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "+2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili. Non individua automaticamente sorveglianti e non concede un bonus universale a Percezione.",
+      "paragrafo": "§7.13.8",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2500,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "Queste versioni Capitol utilizzano gli stessi valori e le stesse regole dei corredi dell’Alleanza (§7.12). Sono strumenti Professionali, di Qualità Non comune, con PS Integrità 12. Il +2 VA è il modificatore complessivo degli strumenti per l’attività indicata."
+        }
+      ]
+    },
+    {
+      "id": "corredo-da-artificiere-capitol",
+      "nome": "Corredo da artificiere Capitol",
+      "tipo": "altro",
+      "catalogo": "Capitol",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "+2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili. Non include cariche esplosive, munizioni o componenti destinati a restare installati. Non sostituisce le competenze né elimina i rischi delle Prove.",
+      "paragrafo": "§7.13.8",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2000,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "Queste versioni Capitol utilizzano gli stessi valori e le stesse regole dei corredi dell’Alleanza (§7.12). Sono strumenti Professionali, di Qualità Non comune, con PS Integrità 12. Il +2 VA è il modificatore complessivo degli strumenti per l’attività indicata."
+        }
+      ]
+    },
+    {
+      "id": "kit-trauma-capitol",
+      "nome": "Kit trauma Capitol",
+      "tipo": "sanitario",
+      "catalogo": "Capitol",
+      "famiglia": "Kit trauma",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Kit trauma è il Kit di pronto soccorso Professionale del §7.19. Concede +2 VA a Medicina e comprende cinque applicazioni; costo 3.000, ricarica da cinque applicazioni 300. Una medicazione riuscita arresta il Sanguinamento e recupera 1d4 PV; un Magistrale raddoppia il risultato del dado. Non cura stati di Ferita o Menomazioni. Si spende una dose all’inizio di ogni tentativo di pronto soccorso o trattamento traumatico su un paziente. Fallimento e interruzione non restituiscono la dose; una semplice diagnosi non la consuma. A dosi esaurite resta possibile la diagnosi, mentre i trattamenti che richiedono materiali necessitano di nuove dosi. Si applicano la procedura e i limiti sanitari del §7.19.1. Il kit non cura stati di Ferita o Menomazioni e non equivale a una struttura sanitaria. Soccorso Immediato e Strumentazione Efficace mantengono i rispettivi benefici; i requisiti dei Talenti sanitari devono essere soddisfatti separatamente. Quando contiene strumenti e materiali pertinenti, soddisfa il requisito di dotazione almeno Standard dei Talenti sanitari, ma non concede quei Talenti. Restano i limiti dei trattamenti delle Ferite; farmaci speciali, naniti e altri dispositivi sono oggetti distinti.",
+      "paragrafo": "§7.13.8",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 3000,
+      "applicazioni": 5,
+      "ricarica": {
+        "applicazioni": 5,
+        "costo": 300
+      },
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "Queste versioni Capitol utilizzano gli stessi valori e le stesse regole dei corredi dell’Alleanza (§7.12). Sono strumenti Professionali, di Qualità Non comune, con PS Integrità 12. Il +2 VA è il modificatore complessivo degli strumenti per l’attività indicata."
+        }
+      ]
+    },
+    {
+      "id": "valigetta-investigativa-isc",
+      "nome": "Valigetta investigativa ISC",
+      "tipo": "altro",
+      "catalogo": "Imperial",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "Comprende strumenti portatili per individuare, raccogliere ed esaminare tracce materiali. Concede +2 VA a Percezione per esaminare tali tracce mediante gli strumenti e a Scienza per analisi preliminari eseguibili con la dotazione portatile. Non concede un bonus generale alla vigilanza e non sostituisce un laboratorio completo.",
+      "paragrafo": "§7.14.8",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2000,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I nove corredi sono strumenti Professionali: concedono +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova; componenti e corredi non sommano tra loro il medesimo beneficio. Talenti e proprietà pertinenti delle armature restano applicabili separatamente. Tutti hanno Qualità Non comune e PS Integrità 12; i PI sono propri del corredo."
+        }
+      ]
+    },
+    {
+      "id": "corredo-d-intrusione-isc",
+      "nome": "Corredo d’intrusione ISC",
+      "tipo": "altro",
+      "catalogo": "Imperial",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "Concede +2 VA a Tecnologia per intervenire su serrature elettroniche, allarmi e sistemi di accesso raggiungibili e compatibili. Richiede accesso materiale e condizioni adatte: non apre automaticamente i varchi e non supera da solo le protezioni del sistema.",
+      "paragrafo": "§7.14.8",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 1500,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I nove corredi sono strumenti Professionali: concedono +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova; componenti e corredi non sommano tra loro il medesimo beneficio. Talenti e proprietà pertinenti delle armature restano applicabili separatamente. Tutti hanno Qualità Non comune e PS Integrità 12; i PI sono propri del corredo."
+        }
+      ]
+    },
+    {
+      "id": "kit-di-controsorveglianza-isc",
+      "nome": "Kit di controsorveglianza ISC",
+      "tipo": "altro",
+      "catalogo": "Imperial",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "Concede +2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili. Non individua automaticamente chi segue o osserva il personaggio e non concede un bonus generale a Percezione.",
+      "paragrafo": "§7.14.8",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2500,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I nove corredi sono strumenti Professionali: concedono +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova; componenti e corredi non sommano tra loro il medesimo beneficio. Talenti e proprietà pertinenti delle armature restano applicabili separatamente. Tutti hanno Qualità Non comune e PS Integrità 12; i PI sono propri del corredo."
+        }
+      ]
+    },
+    {
+      "id": "corredo-da-artificiere-imperial",
+      "nome": "Corredo da artificiere Imperial",
+      "tipo": "altro",
+      "catalogo": "Imperial",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "Concede +2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili. Comprende gli strumenti, non le cariche, le munizioni o i componenti destinati a rimanere installati. Restano competenze, tempi e rischi delle normali Prove.",
+      "paragrafo": "§7.14.8",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2000,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I nove corredi sono strumenti Professionali: concedono +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova; componenti e corredi non sommano tra loro il medesimo beneficio. Talenti e proprietà pertinenti delle armature restano applicabili separatamente. Tutti hanno Qualità Non comune e PS Integrità 12; i PI sono propri del corredo."
+        }
+      ]
+    },
+    {
+      "id": "corredo-da-ricognizione-imperial",
+      "nome": "Corredo da ricognizione Imperial",
+      "tipo": "altro",
+      "catalogo": "Imperial",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "Comprende binocolo, monocolo periscopico e strumenti per registrare osservazioni e riferimenti del terreno. Concede +2 VA a Percezione per osservazioni effettuate attraverso le ottiche, con visuale e illuminazione sufficienti. Non conferisce visione notturna né bonus all’ascolto; osservare o cercare mantiene il normale costo in Azioni.",
+      "paragrafo": "§7.14.8",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 2000,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I nove corredi sono strumenti Professionali: concedono +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova; componenti e corredi non sommano tra loro il medesimo beneficio. Talenti e proprietà pertinenti delle armature restano applicabili separatamente. Tutti hanno Qualità Non comune e PS Integrità 12; i PI sono propri del corredo."
+        }
+      ]
+    },
+    {
+      "id": "corredo-di-sopravvivenza-ambientale-imperial",
+      "nome": "Corredo di sopravvivenza ambientale",
+      "tipo": "altro",
+      "catalogo": "Imperial",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "Comprende strumenti per orientarsi, raccogliere risorse e allestire un riparo individuale. All’acquisto si sceglie un ambiente: boscoso, giungla, deserto oppure artico. Concede +2 VA a Sopravvivenza nell’ambiente scelto per orientarsi con i riferimenti disponibili, reperire risorse utilizzabili e predisporre un riparo. Il prezzo comprende la dotazione riutilizzabile; acqua, viveri e medicinali si acquistano separatamente. Non concede bonus alle Salvezze contro il clima. Fuori dall’ambiente previsto, i componenti concretamente utilizzabili valgono come strumenti Standard.",
+      "paragrafo": "§7.14.8",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 1500,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I nove corredi sono strumenti Professionali: concedono +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova; componenti e corredi non sommano tra loro il medesimo beneficio. Talenti e proprietà pertinenti delle armature restano applicabili separatamente. Tutti hanno Qualità Non comune e PS Integrità 12; i PI sono propri del corredo."
+        }
+      ]
+    },
+    {
+      "id": "corredo-da-assalto-verticale-imperial",
+      "nome": "Corredo da assalto verticale",
+      "tipo": "altro",
+      "catalogo": "Imperial",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "Comprende imbracatura, corda da 20 Q, discensore, moschettoni e ancoraggi. Concede +2 VA ad Atletica per arrampicarsi o calarsi utilizzando effettivamente il corredo. Preparare una linea su un ancoraggio già adatto richiede un minuto; crearne uno nuovo dipende dalla superficie e dall’intervento necessario. Non aumenta automaticamente la distanza percorribile. La corda protegge dalle Cadute soltanto se il personaggio è assicurato a un ancoraggio valido. L’Imbracatura tecnica 1 della Grey Ghost può aggiungere il proprio +1 quando ricorrono anche le sue condizioni.",
+      "paragrafo": "§7.14.8",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 1500,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I nove corredi sono strumenti Professionali: concedono +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova; componenti e corredi non sommano tra loro il medesimo beneficio. Talenti e proprietà pertinenti delle armature restano applicabili separatamente. Tutti hanno Qualità Non comune e PS Integrità 12; i PI sono propri del corredo."
+        }
+      ]
+    },
+    {
+      "id": "corredo-di-manutenzione-imperial",
+      "nome": "Corredo di manutenzione Imperial",
+      "tipo": "altro",
+      "catalogo": "Imperial",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "Comprende utensili, strumenti diagnostici e attrezzatura per interventi su armi, armature, propulsori ed esoscheletri compatibili. Concede +2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo. Pezzi di ricambio e materiali necessari si conteggiano separatamente. Restano tempi, Prove e limiti delle riparazioni; il corredo non ripristina automaticamente PI.",
+      "paragrafo": "§7.14.8",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 2000,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I nove corredi sono strumenti Professionali: concedono +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova; componenti e corredi non sommano tra loro il medesimo beneficio. Talenti e proprietà pertinenti delle armature restano applicabili separatamente. Tutti hanno Qualità Non comune e PS Integrità 12; i PI sono propri del corredo."
+        }
+      ]
+    },
+    {
+      "id": "kit-trauma-imperial",
+      "nome": "Kit trauma Imperial",
+      "tipo": "sanitario",
+      "catalogo": "Imperial",
+      "famiglia": "Kit trauma",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Kit trauma è il Kit di pronto soccorso Professionale del §7.19. Concede +2 VA a Medicina e comprende cinque applicazioni; costo 3.000, ricarica da cinque applicazioni 300. Una medicazione riuscita arresta il Sanguinamento e recupera 1d4 PV; un Magistrale raddoppia il risultato del dado. Non cura stati di Ferita o Menomazioni. Si spende una dose all’inizio di ogni tentativo di pronto soccorso o trattamento traumatico su un paziente. Fallimento e interruzione non restituiscono la dose. Una semplice diagnosi non consuma materiali; a dosi esaurite restano possibili diagnosi e procedure che non richiedono i materiali mancanti. Si applicano la procedura e i limiti sanitari del §7.19.1. Il kit non cura stati di Ferita o Menomazioni e non equivale a una struttura sanitaria. Soccorso Immediato e Strumentazione Efficace mantengono i rispettivi benefici; i requisiti dei Talenti sanitari devono essere soddisfatti separatamente.",
+      "paragrafo": "§7.14.8",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 3000,
+      "applicazioni": 5,
+      "ricarica": {
+        "applicazioni": 5,
+        "costo": 300
+      },
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I nove corredi sono strumenti Professionali: concedono +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova; componenti e corredi non sommano tra loro il medesimo beneficio. Talenti e proprietà pertinenti delle armature restano applicabili separatamente. Tutti hanno Qualità Non comune e PS Integrità 12; i PI sono propri del corredo."
+        }
+      ]
+    },
+    {
+      "id": "investigazione-mishima",
+      "nome": "Investigazione",
+      "tipo": "altro",
+      "catalogo": "Mishima",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "+2 VA a Percezione per esaminare tracce materiali attraverso gli strumenti e a Scienza per analisi preliminari realizzabili con una dotazione portatile. Non sostituisce un laboratorio né concede un bonus generale alla vigilanza.",
+      "paragrafo": "§7.16.5",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2000,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
+        }
+      ]
+    },
+    {
+      "id": "intrusione-mishima",
+      "nome": "Intrusione",
+      "tipo": "altro",
+      "catalogo": "Mishima",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "+2 VA a Tecnologia per intervenire su serrature elettroniche, allarmi e sistemi di accesso materialmente raggiungibili e compatibili. Restano i normali tempi, le Prove e le protezioni del sistema.",
+      "paragrafo": "§7.16.5",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 1500,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
+        }
+      ]
+    },
+    {
+      "id": "controsorveglianza-mishima",
+      "nome": "Controsorveglianza",
+      "tipo": "altro",
+      "catalogo": "Mishima",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "+2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili. Non individua automaticamente chi segue o osserva il personaggio.",
+      "paragrafo": "§7.16.5",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2500,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
+        }
+      ]
+    },
+    {
+      "id": "ricognizione-mishima",
+      "nome": "Ricognizione",
+      "tipo": "altro",
+      "catalogo": "Mishima",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "Binocolo, monocolo periscopico e strumenti per registrare osservazioni e riferimenti del terreno. +2 VA a Percezione per osservazioni attraverso le ottiche, con visuale e luce sufficienti; nessuna visione notturna o bonus all’ascolto. Osservare mantiene il normale costo in Azioni.",
+      "paragrafo": "§7.16.5",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 2000,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
+        }
+      ]
+    },
+    {
+      "id": "sopravvivenza-ambientale-mishima",
+      "nome": "Sopravvivenza ambientale",
+      "tipo": "altro",
+      "catalogo": "Mishima",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "All’acquisto si sceglie un ambiente, per esempio boscoso, giungla, deserto o artico. +2 VA a Sopravvivenza per orientarsi con riferimenti disponibili, reperire risorse e preparare ripari nell’ambiente scelto. Viveri, acqua e medicinali sono separati. Altrove, i componenti utilizzabili valgono come strumenti Standard. Nessun bonus alle Salvezze contro il clima.",
+      "paragrafo": "§7.16.5",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 1500,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
+        }
+      ]
+    },
+    {
+      "id": "assalto-verticale-mishima",
+      "nome": "Assalto verticale",
+      "tipo": "altro",
+      "catalogo": "Mishima",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "Imbracatura, corda da 20 Q, discensore, moschettoni e ancoraggi. +2 VA ad Atletica per arrampicarsi o calarsi usando il corredo. Preparare una linea su un ancoraggio già adatto richiede un minuto; realizzarne uno nuovo dipende dalla superficie. Il corredo non aumenta le distanze e protegge dalle Cadute soltanto quando il personaggio è assicurato a un ancoraggio valido.",
+      "paragrafo": "§7.16.5",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 1500,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
+        }
+      ]
+    },
+    {
+      "id": "artificiere-mishima",
+      "nome": "Artificiere",
+      "tipo": "altro",
+      "catalogo": "Mishima",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "+2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili. Comprende gli strumenti; cariche, munizioni e componenti destinati a rimanere installati sono separati.",
+      "paragrafo": "§7.16.5",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2000,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
+        }
+      ]
+    },
+    {
+      "id": "manutenzione-mishima",
+      "nome": "Manutenzione",
+      "tipo": "altro",
+      "catalogo": "Mishima",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "+2 VA a Tecnologia per diagnosi, manutenzione e riparazioni sul campo di armi, armature, propulsori ed esoscheletri compatibili. Materiali e pezzi di ricambio sono separati. Il corredo non ripristina automaticamente PI.",
+      "paragrafo": "§7.16.5",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 2000,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
+        }
+      ]
+    },
+    {
+      "id": "kit-trauma-mishima",
+      "nome": "Kit trauma",
+      "tipo": "sanitario",
+      "catalogo": "Mishima",
+      "famiglia": "Kit trauma",
+      "nomi_alternativi": [],
+      "note_manuale": "È il Kit di pronto soccorso Professionale del §7.19: +2 VA a Medicina, cinque applicazioni comprese, ricarica da cinque applicazioni 300. Con una medicazione riuscita arresta il Sanguinamento e recupera 1d4 PV; con Magistrale raddoppia il risultato del dado. Non cura stati di Ferita o Menomazioni. Tempi, consumi, fallimenti e Talenti seguono la procedura sanitaria comune.",
+      "paragrafo": "§7.16.5",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 3000,
+      "applicazioni": 5,
+      "ricarica": {
+        "applicazioni": 5,
+        "costo": 300
+      },
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
+        }
+      ]
+    },
+    {
+      "id": "investigazione-fratellanza",
+      "nome": "Investigazione",
+      "tipo": "altro",
+      "catalogo": "Fratellanza",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "+2 VA a Percezione per esaminare tracce materiali attraverso gli strumenti e a Scienza per analisi preliminari realizzabili con una dotazione portatile. Non sostituisce un laboratorio né concede un bonus generale alla vigilanza.",
+      "paragrafo": "§7.17.6",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2000,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
+        }
+      ]
+    },
+    {
+      "id": "intrusione-fratellanza",
+      "nome": "Intrusione",
+      "tipo": "altro",
+      "catalogo": "Fratellanza",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "+2 VA a Tecnologia per intervenire su serrature elettroniche, allarmi e sistemi di accesso materialmente raggiungibili e compatibili. Restano i normali tempi, le Prove e le protezioni del sistema.",
+      "paragrafo": "§7.17.6",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 1500,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
+        }
+      ]
+    },
+    {
+      "id": "controsorveglianza-fratellanza",
+      "nome": "Controsorveglianza",
+      "tipo": "altro",
+      "catalogo": "Fratellanza",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "+2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili. Non individua automaticamente chi segue o osserva il personaggio.",
+      "paragrafo": "§7.17.6",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2500,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
+        }
+      ]
+    },
+    {
+      "id": "ricognizione-fratellanza",
+      "nome": "Ricognizione",
+      "tipo": "altro",
+      "catalogo": "Fratellanza",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "Binocolo, monocolo periscopico e strumenti per registrare osservazioni e riferimenti del terreno. +2 VA a Percezione per osservazioni attraverso le ottiche, con visuale e luce sufficienti; nessuna visione notturna o bonus all’ascolto. Osservare mantiene il normale costo in Azioni.",
+      "paragrafo": "§7.17.6",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 2000,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
+        }
+      ]
+    },
+    {
+      "id": "sopravvivenza-ambientale-fratellanza",
+      "nome": "Sopravvivenza ambientale",
+      "tipo": "altro",
+      "catalogo": "Fratellanza",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "All’acquisto si sceglie un ambiente, per esempio boscoso, giungla, deserto o artico. +2 VA a Sopravvivenza per orientarsi con riferimenti disponibili, reperire risorse e preparare ripari nell’ambiente scelto. Viveri, acqua e medicinali sono separati. Altrove, i componenti utilizzabili valgono come strumenti Standard. Nessun bonus alle Salvezze contro il clima.",
+      "paragrafo": "§7.17.6",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 1500,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
+        }
+      ]
+    },
+    {
+      "id": "assalto-verticale-fratellanza",
+      "nome": "Assalto verticale",
+      "tipo": "altro",
+      "catalogo": "Fratellanza",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "Imbracatura, corda da 20 Q, discensore, moschettoni e ancoraggi. +2 VA ad Atletica per arrampicarsi o calarsi usando il corredo. Preparare una linea su un ancoraggio già adatto richiede un minuto; realizzarne uno nuovo dipende dalla superficie. Il corredo non aumenta le distanze e protegge dalle Cadute soltanto quando il personaggio è assicurato a un ancoraggio valido.",
+      "paragrafo": "§7.17.6",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 1500,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
+        }
+      ]
+    },
+    {
+      "id": "artificiere-fratellanza",
+      "nome": "Artificiere",
+      "tipo": "altro",
+      "catalogo": "Fratellanza",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "+2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili. Comprende gli strumenti; cariche, munizioni e componenti destinati a rimanere installati sono separati.",
+      "paragrafo": "§7.17.6",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2000,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
+        }
+      ]
+    },
+    {
+      "id": "manutenzione-fratellanza",
+      "nome": "Manutenzione",
+      "tipo": "altro",
+      "catalogo": "Fratellanza",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "+2 VA a Tecnologia per diagnosi, manutenzione e riparazioni sul campo di armi, armature, propulsori ed esoscheletri compatibili. Materiali e pezzi di ricambio sono separati. Il corredo non ripristina automaticamente PI.",
+      "paragrafo": "§7.17.6",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 2000,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
+        }
+      ]
+    },
+    {
+      "id": "kit-trauma-fratellanza",
+      "nome": "Kit trauma",
+      "tipo": "sanitario",
+      "catalogo": "Fratellanza",
+      "famiglia": "Kit trauma",
+      "nomi_alternativi": [],
+      "note_manuale": "È il Kit di pronto soccorso Professionale del §7.19: +2 VA a Medicina, cinque applicazioni comprese, ricarica da cinque applicazioni 300. Con una medicazione riuscita arresta il Sanguinamento e recupera 1d4 PV; con Magistrale raddoppia il risultato del dado. Non cura stati di Ferita o Menomazioni. Tempi, consumi, fallimenti e Talenti seguono la procedura sanitaria comune.",
+      "paragrafo": "§7.17.6",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 3000,
+      "applicazioni": 5,
+      "ricarica": {
+        "applicazioni": 5,
+        "costo": 300
+      },
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
+        }
+      ]
+    },
+    {
+      "id": "consultazione-occultistica",
+      "nome": "Consultazione occultistica",
+      "tipo": "altro",
+      "catalogo": "Fratellanza",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "Testi, riproduzioni, indici dei culti e strumenti di confronto documentale. +2 VA a Occultismo per consultare e confrontare testi, simboli e pratiche documentate, disponendo del tempo e delle condizioni per la consultazione. Non individua automaticamente l’Oscura Simmetria e non identifica da solo le proprietà di un Artefatto.",
+      "paragrafo": "§7.17.6",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2500,
+      "proprieta": [
+        {
+          "nome": "Strumenti Professionali",
+          "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
+        }
+      ]
+    },
+    {
+      "id": "propulsore-d-assalto-banshee",
+      "nome": "Propulsore d’assalto Banshee",
+      "tipo": "accessorio",
+      "catalogo": "Capitol",
+      "famiglia": "Dispositivi di volo",
+      "nomi_alternativi": [],
+      "note_manuale": "Il propulsore permette brevi interventi in volo: superare ostacoli, raggiungere posizioni sopraelevate e condurre assalti verticali. È compatibile con la Predator, che comprende già gli attacchi strutturali. Montaggio e rimozione richiedono un minuto. Occupa lo spazio dello zaino ordinario e resta compatibile con i Rinforzi Leggeri ammessi dalla Predator. Non conferisce AR. Possiede PI e PS Integrità propri, separati dall’armatura. Il prezzo comprende il dispositivo e un serbatoio pieno. Predator e propulsore costano complessivamente 21.500. Decollo, salita, discesa e atterraggio fanno parte dello stesso movimento e consumano la distanza disponibile. Le penalità dell’armatura restano applicabili: con Predator e senza altri modificatori, le distanze sono 5/11/17 Q. Restano la continuità del percorso, l’ordine delle Azioni e la durata dei modificatori dell’andatura. Si applicano gli esiti delle Prove di volo delle regole di volo del Manuale della Magia: Magistrale +2 Q e +4 alla prossima Prova; Fallimento −2 Q; Maldestro −4 Q e −4 alla prossima Prova. Con Fallimento o Maldestro si perde la penalità per essere colpiti concessa dall’andatura e restano le proprie penalità alle altre Azioni. La penalità specifica della Prova di movimento non si somma una seconda volta a quella personale dell’andatura. Attacchi, Carica, Movimento Evasivo, Ritirata, movimento misto e Attacchi di Opportunità seguono le regole del movimento in volo. Restano il divieto di lanciare Incantesimi nella stessa Iniziativa di una Corsa o uno Scatto in volo e i limiti imposti da Stati e Concentrazione. Il dispositivo non concede Azioni o attacchi aggiuntivi. Una Prova di movimento fallita non spegne automaticamente il propulsore. Se il dispositivo si rompe, viene disattivato o l’utilizzatore diventa Svenuto, il sostegno termina e si applicano le Cadute (§5.22). L’ultima unità di autonomia sostiene fino all’inizio della propria Iniziativa successiva: occorre raggiungere un appoggio prima dell’esaurimento. A 0 PI il dispositivo perde la funzione. Il motore acceso impedisce di nascondere il proprio rumore mediante Furtività. Coperture e occultamento visivo continuano a funzionare normalmente.",
+      "paragrafo": "§7.13.4",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "RA",
+      "costo": 12000,
+      "tabelle": [
+        {
+          "titolo": "Regole di volo",
+          "colonne": [
+            "Voce",
+            "Regola"
+          ],
+          "righe": [
+            [
+              "Attivazione",
+              "Compresa nell’AzM utilizzata per il volo."
+            ],
+            [
+              "Movimento",
+              "Passo 6 Q, Corsa 12 Q, Scatto 18 Q prima dei modificatori. Ogni Q verticale costa quanto uno orizzontale."
+            ],
+            [
+              "Controllo",
+              "Pilotare al posto di Atletica: nessuna Prova al Passo in condizioni ordinarie; −2 VA in Corsa; −4 VA in Scatto."
+            ],
+            [
+              "Sospensione",
+              "Rimanere fermi in aria richiede comunque l’AzM."
+            ],
+            [
+              "Autonomia",
+              "20 Round, pari a due minuti complessivi di funzionamento, anche non consecutivi."
+            ],
+            [
+              "Consumo",
+              "Un’unità di autonomia per ogni Round di utilizzo, anche in sospensione e indipendentemente dalla distanza."
+            ]
+          ]
+        },
+        {
+          "titolo": "Ricambi",
+          "colonne": [
+            "Ricambio",
+            "Costo",
+            "Operazione"
+          ],
+          "righe": [
+            [
+              "Ricarica completa del propellente",
+              "500",
+              "Un minuto con dotazione di rifornimento"
+            ],
+            [
+              "Serbatoio di ricambio pieno",
+              "800",
+              "Sostituzione in un minuto"
+            ]
+          ]
+        }
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "paracadute-di-emergenza-capitol",
+      "nome": "Paracadute di emergenza Capitol",
+      "tipo": "accessorio",
+      "catalogo": "Capitol",
+      "famiglia": "Dispositivi di volo",
+      "nomi_alternativi": [],
+      "note_manuale": "Entrambi includono imbracatura e apertura automatica predisponibile. Non conferiscono AR e hanno Integrità propria. Sono compatibili con armature Leggere e Medie e possono essere montati ventralmente insieme al propulsore Banshee. Nessuno sostiene armature Pesanti o esoscheletri. Predisporre l’apertura automatica costa 1 AzP, normalmente prima del lancio; l’apertura successiva non richiede un’altra Azione. Se non è predisposto, aprirlo manualmente richiede 1 AzP quando il personaggio può agire. Occorrono almeno 30 Q di dislivello libero sotto il personaggio al momento dell’apertura perché la protezione diventi efficace. Con paracadute aperto e funzionante, la discesa ordinaria non infligge danni da Caduta. Non è possibile salire o rimanere sospesi. Dirigere la discesa richiede l’AzM; apertura automatica e discesa continuano anche senza controllo, ma il Direttore determina il punto di arrivo secondo vento e ostacoli. Atterrare su terreno ampio e libero non richiede una Prova. Vento forte, ostacoli o un punto ristretto richiedono Pilotare con i modificatori ambientali. Un Fallimento impedisce l’atterraggio desiderato: il personaggio raggiunge una zona effettivamente accessibile e arriva A Terra. Un Fallimento Maldestro comporta inoltre 1d6 danni Naturali da impatto, non ridotti dall’AR. Imbracatura da lancio 2 dell’armatura Airborne concede +2 VA alle Prove pertinenti. La discesa non concede automaticamente le penalità per essere colpiti previste da Corsa e Scatto. A 0 PI il paracadute non protegge più dalle Cadute.",
+      "paragrafo": "§7.13.5",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 2,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 1000,
+      "tabelle": [
+        {
+          "titolo": "Confronto dei paracadute",
+          "colonne": [
+            "Caratteristica",
+            "Emergenza Capitol",
+            "Tattico Airborne"
+          ],
+          "righe": [
+            [
+              "Impiego",
+              "Evacuazione e salvataggio",
+              "Inserimento operativo"
+            ],
+            [
+              "Discesa",
+              "12 Q per Round",
+              "12 Q per Round"
+            ],
+            [
+              "Spostamento orizzontale controllato",
+              "Fino a 2 Q per AzM",
+              "Fino a 6 Q per AzM"
+            ],
+            [
+              "Ripiegamento dopo l’uso",
+              "10 minuti",
+              "10 minuti"
+            ]
+          ]
+        }
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "paracadute-tattico-airborne",
+      "nome": "Paracadute tattico Airborne",
+      "tipo": "accessorio",
+      "catalogo": "Capitol",
+      "famiglia": "Dispositivi di volo",
+      "nomi_alternativi": [],
+      "note_manuale": "Entrambi includono imbracatura e apertura automatica predisponibile. Non conferiscono AR e hanno Integrità propria. Sono compatibili con armature Leggere e Medie e possono essere montati ventralmente insieme al propulsore Banshee. Nessuno sostiene armature Pesanti o esoscheletri. Predisporre l’apertura automatica costa 1 AzP, normalmente prima del lancio; l’apertura successiva non richiede un’altra Azione. Se non è predisposto, aprirlo manualmente richiede 1 AzP quando il personaggio può agire. Occorrono almeno 30 Q di dislivello libero sotto il personaggio al momento dell’apertura perché la protezione diventi efficace. Con paracadute aperto e funzionante, la discesa ordinaria non infligge danni da Caduta. Non è possibile salire o rimanere sospesi. Dirigere la discesa richiede l’AzM; apertura automatica e discesa continuano anche senza controllo, ma il Direttore determina il punto di arrivo secondo vento e ostacoli. Atterrare su terreno ampio e libero non richiede una Prova. Vento forte, ostacoli o un punto ristretto richiedono Pilotare con i modificatori ambientali. Un Fallimento impedisce l’atterraggio desiderato: il personaggio raggiunge una zona effettivamente accessibile e arriva A Terra. Un Fallimento Maldestro comporta inoltre 1d6 danni Naturali da impatto, non ridotti dall’AR. Imbracatura da lancio 2 dell’armatura Airborne concede +2 VA alle Prove pertinenti. La discesa non concede automaticamente le penalità per essere colpiti previste da Corsa e Scatto. A 0 PI il paracadute non protegge più dalle Cadute.",
+      "paragrafo": "§7.13.5",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2500,
+      "tabelle": [
+        {
+          "titolo": "Confronto dei paracadute",
+          "colonne": [
+            "Caratteristica",
+            "Emergenza Capitol",
+            "Tattico Airborne"
+          ],
+          "righe": [
+            [
+              "Impiego",
+              "Evacuazione e salvataggio",
+              "Inserimento operativo"
+            ],
+            [
+              "Discesa",
+              "12 Q per Round",
+              "12 Q per Round"
+            ],
+            [
+              "Spostamento orizzontale controllato",
+              "Fino a 2 Q per AzM",
+              "Fino a 6 Q per AzM"
+            ],
+            [
+              "Ripiegamento dopo l’uso",
+              "10 minuti",
+              "10 minuti"
+            ]
+          ]
+        }
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "jet-chute-pile-driver",
+      "nome": "Jet-Chute Pile Driver",
+      "tipo": "accessorio",
+      "catalogo": "Imperial",
+      "famiglia": "Dispositivi di volo",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Jet-Chute è un equipaggiamento speciale per la discesa rapida, dotato di frenata automatica a razzo. Il prezzo comprende imbracatura, altimetro e una carica completa. Occupa lo spazio di uno zaino; montarlo o rimuoverlo richiede un minuto. È compatibile con armature Leggere, Medie e Pesanti non servoassistite, insieme al normale equipaggiamento personale. Non trasporta passeggeri e non è compatibile con esoscheletri o con la Felis. Non consente di salire, volare in orizzontale o restare sospesi. Armarlo richiede 1 AzP, normalmente prima del salto; l’accensione della frenata è automatica. Servono almeno 35 Q di dislivello verticale libero fino al punto di arrivo, circa 52,5 metri. Sotto questa soglia il dispositivo non garantisce la protezione e si applicano le normali regole delle Cadute del Manuale del Giocatore. La discesa avviene a 60 Q per Round, fino a raggiungere il suolo. Spendendo 1 AzM si può correggere orizzontalmente la traiettoria fino a 2 Q per Round. La carica viene consumata all’accensione e serve per una sola discesa. Il dispositivo non concede Azioni aggiuntive né i benefici difensivi di Corsa o Scatto. Su un’area ampia e libera non occorre una Prova di Pilotare: l’atterraggio infligge 1d3 danni Naturali che ignorano l’AR. Imbottita non riduce questi danni. Spazi stretti, ostacoli o vento forte richiedono Pilotare con i modificatori delle circostanze. Rifornire il dispositivo costa 150 e richiede un minuto con l’attrezzatura di rifornimento. Una cartuccia completa di ricambio costa 300 e si sostituisce in un minuto. Stormtrencher e Jet-Chute costano complessivamente 14.500, escluse armi e munizioni.",
+      "paragrafo": "§7.14.4",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 6000,
+      "tabelle": [
+        {
+          "titolo": "Atterraggio",
+          "colonne": [
+            "Esito di Pilotare",
+            "Atterraggio"
+          ],
+          "righe": [
+            [
+              "Successo",
+              "Punto desiderato; 1d3 danni Naturali che ignorano l’AR"
+            ],
+            [
+              "Fallimento",
+              "Punto accessibile scelto dal Direttore; 1d3 danni Naturali che ignorano l’AR e A Terra"
+            ],
+            [
+              "Maldestro",
+              "Come il Fallimento, ma 1d6 danni invece di 1d3"
+            ]
+          ]
+        }
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "ape-capitol",
+      "nome": "APE Capitol",
+      "tipo": "armatura",
+      "catalogo": "Capitol",
+      "famiglia": "Esoscheletri",
+      "nomi_alternativi": [],
+      "note_manuale": "APE Capitol è un modello originale del catalogo SIMPLY RPG, destinato al supporto pesante mobile. Il suo profilo privilegia mobilità e manovrabilità rispetto alla robustezza e all’autonomia dello Steel Strider Bauhaus. Possiede Imbottita 2 e Stabile 1, con i significati del §7.11.4. Il prezzo comprende telaio, attuatori, comandi, supporto d’arma e una batteria carica. L’arma si acquista separatamente. Nessun rinforzo esterno, propulsore Banshee o paracadute personale è compatibile. Movimento: nessuna riduzione delle distanze ordinarie. Le Prove fisiche effettuate attraverso il telaio usano Pilotare al posto di Atletica; il movimento ordinario non impone una Prova aggiuntiva oltre a quelle della modalità utilizzata. Schivare usa Pilotare −1 VA. Furtività subisce −2 VA per ingombro e rumore. Il lancio di Incantesimi con Potere subisce −5 VA. I servosistemi soddisfano il requisito FOR dell’arma montata e annullano la sua penalità al MOV. Gli attacchi usano la normale Abilità dell’arma e consumano le normali Azioni. I comandi richiedono entrambe le mani e non consentono contemporaneamente armi impugnate o Scudi. L’AR del telaio sostituisce quella dell’armatura personale. I danni che superano l’AR raggiungono i PV del pilota, secondo la procedura degli esoscheletri Bauhaus (§7.11.6). I PI restano l’Integrità dell’oggetto e non costituiscono PV aggiuntivi. La batteria alimenta sei ore operative, richiede sei ore di ricarica, si sostituisce in un minuto e costa 2.000. A energia esaurita l’AR rimane, ma il telaio non può muoversi, Schivare, puntare o sparare. Uscire richiede 1 AzP e una casella adiacente libera. A 0 PI si applica normalmente Rotto.",
+      "paragrafo": "§7.13.6",
+      "versione_manuale": "Armamenti 0.50",
+      "categoria": "Esoscheletro",
+      "ar": {
+        "totale": 6,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 14,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 55000,
+      "rinforzi_ammessi": [],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -5,
+        "abilita": {
+          "Furtività": -2
+        }
+      },
+      "supporti": "Una arma pesante",
+      "autonomia": "Sei ore operative",
+      "proprieta": [
+        {
+          "nome": "Imbottita 2",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        },
+        {
+          "nome": "Stabile 1",
+          "testo": "Concede +1 alla Prova di Caratteristica FOR o DES richiesta contro Sbilanciante. Non è una Prova Salvezza e non si estende automaticamente ad altri tentativi di mantenere l’equilibrio o agli spostamenti di Sbalzante. Più proprietà Stabile applicabili, comprese quelle di scudo e armatura, non si sommano: si usa il valore maggiore (§7.4.3, §7.11.4)."
+        }
+      ]
+    },
+    {
+      "id": "iron-mastiff",
+      "nome": "Iron Mastiff",
+      "tipo": "altro",
+      "catalogo": "Imperial",
+      "famiglia": "Unità robotiche",
+      "nomi_alternativi": [],
+      "note_manuale": "L’Iron Mastiff è un robot da sicurezza e inseguimento, classificato tra gli equipaggiamenti speciali. È un modello fisso, senza versioni Leggere, Medie o Pesanti. Il prezzo comprende mascelle, sensori, pelliccia sintetica, batteria e controller abbinato; non richiede innesti né consuma UMN. I VA sono propri del robot e non dipendono dal livello del proprietario. Le mascelle attaccano con Corpo a corpo, portata 1 Q e danno 1d6+2 Naturale, usando le normali Azioni. Presa controllata e sensori Presa controllata permette di Immobilizzare con le mascelle una creatura di taglia umana o inferiore. Costa 1 AzP e richiede Corpo a corpo contrapposto a Corpo a corpo o Atletica del bersaglio; la presa iniziale non infligge danni. Liberarsi costa 1 AzP e richiede una nuova Prova contrapposta; in caso di parità la presa continua. Le mascelle restano occupate. Mordere il bersaglio trattenuto richiede una normale AzP e una nuova Prova per colpire. Sensori da pista 2 concede +2 VA a Sopravvivenza per seguire una traccia identificabile o un campione odoroso: il VA diventa 12. Terreno, interruzione e distruzione delle tracce restano rilevanti. Le ottiche infrarosse operano entro 20 Q in scarsa luce, con linea di vista e contrasto termico sufficienti. Percezione e Furtività seguono le normali Prove uniche; i sensori non riconoscono automaticamente eresia o Corruzione. Comando e autonomia operativa In modalità autonoma, il Direttore gestisce il robot secondo una direttiva semplice e persistente. Assegnare o cambiare la direttiva costa 1 AzP al referente. In comando diretto a distanza, ciascun comando costa 1 AzP al referente e utilizza le normali Azioni del robot: non ne crea di aggiuntive. Il controller trasmette audio, video e segnali entro 100 Q, purché il collegamento sia disponibile. Se il collegamento si interrompe, il robot continua l’ordine corrente; quando lo completa o non può eseguirlo, mantiene la posizione e si difende. Il robot dispone di un solo insieme di Azioni per Round, condiviso tra autonomia e comando diretto: cambiare modalità non concede un secondo turno. Controllo Parallelo del Tecnico, Grado V, permette una volta per Round, nella propria iniziativa, di impartire un comando a una sola unità senza spendere l’AzP del Tecnico; restano i normali limiti di Azioni del robot. Danni manutenzione e alimentazione I danni residui dopo l’AR riducono i PV meccanici. I PI restano separati e seguono le regole di Integrità del §7.2.1: un colpo non riduce automaticamente i PI. A 0 PV l’Iron Mastiff è fuori servizio; a 0 PI è rotto. Non respira, non sanguina e non subisce veleni o malattie biologiche; richiede riparazioni tecniche. Le altre Prove di Salvezza si applicano soltanto quando l’effetto può interessare una macchina. La batteria garantisce 8 ore di funzionamento e richiede 8 ore per una ricarica completa. Una batteria di ricambio costa 1.000; sostituirla richiede un minuto a robot spento. Non si applicano i kit di rinforzo destinati alle armature personali.",
+      "paragrafo": "§7.14.5",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 18000,
+      "tabelle": [
+        {
+          "titolo": "Profilo",
+          "colonne": [
+            "AR",
+            "AR magica",
+            "FOR",
+            "PV meccanici",
+            "Autonomia",
+            "Controller"
+          ],
+          "righe": [
+            [
+              "3",
+              "0",
+              "6",
+              "18",
+              "8 ore",
+              "100 Q"
+            ]
+          ]
+        },
+        {
+          "titolo": "Prove e dati del robot",
+          "colonne": [
+            "Prova o dato",
+            "Valore"
+          ],
+          "righe": [
+            [
+              "Corpo a corpo",
+              "VA 10"
+            ],
+            [
+              "Difese per Schivata",
+              "VA 8"
+            ],
+            [
+              "Atletica",
+              "VA 10"
+            ],
+            [
+              "Percezione",
+              "VA 10"
+            ],
+            [
+              "Sopravvivenza per seguire tracce",
+              "VA 10"
+            ],
+            [
+              "Furtività",
+              "VA 6"
+            ],
+            [
+              "PS Riflessi",
+              "10"
+            ],
+            [
+              "Altre PS applicabili alla macchina",
+              "8"
+            ],
+            [
+              "Iniziativa",
+              "1d10+1"
+            ],
+            [
+              "Movimento / Corsa / Scatto",
+              "6 / 12 / 18 Q"
+            ],
+            [
+              "Azioni per Round",
+              "1 AzM e 1 AzP"
+            ]
+          ]
+        }
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "howler",
+      "nome": "Howler",
+      "tipo": "arma_distanza",
+      "catalogo": "Imperial",
+      "famiglia": "Armi specialistiche",
+      "nomi_alternativi": [],
+      "note_manuale": "Howler e Rainy Dayer utilizzano Armi Medie. Danni e AC del Howler dipendono dalla munizione. I danni della Rainy Dayer sono Naturali. Qualità Non comune, PS Integrità 12 e Reperibilità Rara si applicano a entrambi i modelli; le munizioni si acquistano separatamente. Il Howler è un lanciagranate da polso, con staffa compresa nel prezzo. Non fornisce AR e conserva PI propri. Montarlo o rimuoverlo richiede un minuto. Una volta montato è pronto senza estrazione; il braccio deve poter puntare liberamente. La mano dello stesso braccio può impugnare un’arma a una mano. Uno Scudo che ostacola il tiro o l’impugnatura di un’arma a due mani impediscono di sparare con il Howler. La normale Imbracciatura richiede 1 AzM: senza di essa si applica −4 VA, oltre al −1 VA del modello. Movimento, spostamento forzato, Caduta, perdita dell’assetto o uso dell’arma impugnata con lo stesso braccio interrompono l’Imbracciatura. Ogni tiro consuma una granata. È disponibile soltanto il Tiro Singolo, senza Tiro Rapido. Ricaricare costa 1 AzP e richiede l’altra mano libera. Si applicano le normali regole di dispersione delle granate; un Maldestro usa la tabella di Inceppamento, senza aggiungere la dispersione ordinaria. Pathfinder con armatura e Howler costa 11.500, munizioni escluse.",
+      "paragrafo": "§7.14.6",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-lanciagranate",
+      "mani": 0,
+      "danno": null,
+      "danno_da_munizione": true,
+      "ac": "munizione",
+      "modificatore_va": -1,
+      "portata_q": null,
+      "gittata_q": 30,
+      "munizioni": {
+        "capacita": 1,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": "Granata standard a frammentazione"
+      },
+      "inc": 3,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 4,
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 4500,
+      "proprieta": [],
+      "tabelle": [
+        {
+          "titolo": "Dispersione delle granate",
+          "colonne": [
+            "1d8",
+            "Direzione",
+            "Distanza"
+          ],
+          "righe": [
+            [
+              "1",
+              "Avanti",
+              "1d4 Q"
+            ],
+            [
+              "2",
+              "Avanti a destra",
+              "1d4 Q"
+            ],
+            [
+              "3",
+              "Destra",
+              "1d4 Q"
+            ],
+            [
+              "4",
+              "Indietro a destra",
+              "1d3 Q"
+            ],
+            [
+              "5",
+              "Indietro",
+              "1d3 Q"
+            ],
+            [
+              "6",
+              "Indietro a sinistra",
+              "1d3 Q"
+            ],
+            [
+              "7",
+              "Sinistra",
+              "1d4 Q"
+            ],
+            [
+              "8",
+              "Avanti a sinistra",
+              "1d4 Q"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rainy-dayer",
+      "nome": "Rainy Dayer",
+      "tipo": "arma_distanza",
+      "catalogo": "Imperial",
+      "famiglia": "Armi specialistiche",
+      "nomi_alternativi": [],
+      "note_manuale": "Howler e Rainy Dayer utilizzano Armi Medie. Danni e AC del Howler dipendono dalla munizione. I danni della Rainy Dayer sono Naturali. Qualità Non comune, PS Integrità 12 e Reperibilità Rara si applicano a entrambi i modelli; le munizioni si acquistano separatamente. La Rainy Dayer combina un’arma da fuoco a corto raggio con un ombrello balistico, destinato agli ambienti urbani e corporativi. Il prezzo comprende arma, copertura balistica e caricatore vuoto. La gittata massima è 30 Q. Aprire o chiudere l’ombrello richiede 1 AzP. Si applicano i normali tempi di estrazione; quando è già in mano, passare all’impugnatura di tiro a due mani non richiede di estrarlo nuovamente. Ricaricare costa 1 AzP e richiede entrambe le mani. Aperta, la Rainy Dayer si usa come Scudo piccolo: AR +1 passiva e Parata attiva con Difese, modificatore 0 contro attacchi ravvicinati e −4 contro attacchi a distanza, oltre agli altri modificatori pertinenti. La Parata conserva il normale costo in Azioni e le regole del Manuale del Giocatore. Tenuta aperta a una mano, lascia l’altra libera per un’arma a una mano. Quando spara con entrambe le mani mantiene AR +1, come proprietà specifica dell’arma integrata. Non fornisce AR magica. Abito ISC e Rainy Dayer aperta danno AR totale 3, mantenendo la categoria Leggera dell’armatura. Il sistema appare come un comune ombrello a un’osservazione casuale; un esame ravvicinato o una perquisizione possono rivelarlo con Percezione. Lo sparo produce il normale rumore di un’arma da fuoco. Arma e copertura condividono PI 6: a 0 PI entrambe sono inutilizzabili. Un normale inceppamento dell’arma non impedisce di usare come Scudo la copertura ancora integra. Abito ISC e Rainy Dayer costano complessivamente 11.000, munizioni escluse.",
+      "paragrafo": "§7.14.6",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi medie",
+      "specializzazione": null,
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+2"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 30,
+      "munizioni": {
+        "capacita": 5,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 3,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 4,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 7500,
+      "scudo_integrato": {
+        "condizione": "aperta come Scudo",
+        "ar": {
+          "totale": 1,
+          "magica": 0
+        },
+        "parata": {
+          "ravvicinata": 0,
+          "distanza": -4
+        }
+      },
+      "tabelle": [
+        {
+          "titolo": "Configurazioni",
+          "colonne": [
+            "Configurazione",
+            "Mani richieste",
+            "Protezione"
+          ],
+          "righe": [
+            [
+              "Chiusa e trasportata",
+              "1",
+              "Nessuna AR aggiuntiva"
+            ],
+            [
+              "Chiusa e al tiro",
+              "2",
+              "Nessuna AR aggiuntiva"
+            ],
+            [
+              "Aperta come Scudo",
+              "1",
+              "AR +1"
+            ],
+            [
+              "Aperta e al tiro",
+              "2",
+              "AR +1"
+            ]
+          ]
+        }
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "granata-fumogena",
+      "nome": "Granata fumogena",
+      "tipo": "arma_distanza",
+      "catalogo": "Imperial",
+      "famiglia": "Granate",
+      "nomi_alternativi": [],
+      "note_manuale": "Le granate seguenti possono essere lanciate a mano o utilizzate nel Howler e negli altri lanciagranate compatibili. Il tiro con lanciagranate usa Abilità, VA, FOR, gittata e INC dell’arma; il lancio a mano usa Armi da Lancio, VA 0, FOR 3, gittata massima pari a FOR × 3 Q e INC 8. Attivare e lanciare una granata già pronta richiede 1 AzP. La compatibilità comune dei lanciagranate standard e i prezzi sono nel §7.20.3. La nube si forma immediatamente all’impatto, con raggio 2 Q. Dura 5 Round, contando quello di attivazione come primo, e termina alla fine del quinto. Pareti e altri ostacoli solidi ne delimitano la diffusione; vento forte o ventilazione intensa possono disperderla prima. Gli attacchi a distanza basati sulla vista ordinaria subiscono −4 VA quando la linea di tiro attraversa la nube, anche se il tiratore o il bersaglio si trovano al suo interno. La penalità vale anche per gli alleati; più nubi non sommano questa penalità. La nube offre occultamento per tentare una normale Prova unica di Furtività, senza un ulteriore bonus numerico. Non infligge danni e non fornisce AR. Ogni granata è monouso. Il Modulo di visione termica può ignorare la penalità al tiro entro 40 Q quando distingue il bersaglio termicamente (§7.3.3).",
+      "paragrafo": "§7.14.7",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da lancio",
+      "specializzazione": "specializzazione-granate",
+      "mani": 1,
+      "danno": null,
+      "nessun_danno": true,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": null,
+      "gittata_per_for": 3,
+      "munizioni": {
+        "capacita": 1,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 8,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 3,
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 120,
+      "proprieta": [
+        {
+          "nome": "RS 2",
+          "testo": "Raggio di Scoppio 2. Il punto effettivo di esplosione determina il Raggio di Scoppio. Chiunque sia compreso nell’Area viene coinvolto, senza una nuova Prova per colpire (Giocatore §5.10)."
+        }
+      ],
+      "tabelle": [
+        {
+          "titolo": "Dispersione delle granate",
+          "colonne": [
+            "1d8",
+            "Direzione",
+            "Distanza"
+          ],
+          "righe": [
+            [
+              "1",
+              "Avanti",
+              "1d4 Q"
+            ],
+            [
+              "2",
+              "Avanti a destra",
+              "1d4 Q"
+            ],
+            [
+              "3",
+              "Destra",
+              "1d4 Q"
+            ],
+            [
+              "4",
+              "Indietro a destra",
+              "1d3 Q"
+            ],
+            [
+              "5",
+              "Indietro",
+              "1d3 Q"
+            ],
+            [
+              "6",
+              "Indietro a sinistra",
+              "1d3 Q"
+            ],
+            [
+              "7",
+              "Sinistra",
+              "1d4 Q"
+            ],
+            [
+              "8",
+              "Avanti a sinistra",
+              "1d4 Q"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "granata-elettroshock",
+      "nome": "Granata elettroshock",
+      "tipo": "arma_distanza",
+      "catalogo": "Imperial",
+      "famiglia": "Granate",
+      "nomi_alternativi": [],
+      "note_manuale": "Le granate seguenti possono essere lanciate a mano o utilizzate nel Howler e negli altri lanciagranate compatibili. Il tiro con lanciagranate usa Abilità, VA, FOR, gittata e INC dell’arma; il lancio a mano usa Armi da Lancio, VA 0, FOR 3, gittata massima pari a FOR × 3 Q e INC 8. Attivare e lanciare una granata già pronta richiede 1 AzP. La compatibilità comune dei lanciagranate standard e i prezzi sono nel §7.20.3. Infligge 2d4 danni Naturali, AC 1, nell’area di raggio 1 Q e possiede Elettricità. Si applicano normalmente dispersione, Elusione e AR. Dopo l’AR, se resta almeno 1 danno e il danno residuo supera l’eventuale soglia Isolante X, il bersaglio effettua una PS Tempra. Il Successo evita l’effetto secondario, senza annullare i danni. Il Fallimento impedisce per 1+1d3 Round di spendere Azioni fuori dalla propria iniziativa; il bersaglio agisce normalmente durante il proprio turno. Prove di Salvezza, difese passive ed Elusione che non richiedono Azioni restano disponibili. L’effetto non applica automaticamente la condizione Stordito. Si effettua una sola PS per attacco e per bersaglio. Applicazioni ripetute mantengono la scadenza più lontana, senza sommare le durate. L’effetto può interessare robot compatibili, che usano la PS pertinente: l’Iron Mastiff usa PS Tempra 8. Non costituisce uno spegnimento EMP automatico; restano le normali soglie di PV e PI per mettere fuori servizio o rompere la macchina. Esempio: con AR 3 e Isolante 2, un danno iniziale di 5 lascia 2 danni e non richiede la PS; un danno iniziale di 7 lascia 4 danni e richiede la PS. La granata è monouso.",
+      "paragrafo": "§7.14.7",
+      "versione_manuale": "Armamenti 0.50",
+      "abilita": "Armi da lancio",
+      "specializzazione": "specializzazione-granate",
+      "mani": 1,
+      "danno": {
+        "una_mano": "2d4",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": null,
+      "gittata_per_for": 3,
+      "munizioni": {
+        "capacita": 1,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 8,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 3,
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 200,
+      "proprieta": [
+        {
+          "nome": "RS 1",
+          "testo": "Raggio di Scoppio 1. Il punto effettivo di esplosione determina il Raggio di Scoppio. Chiunque sia compreso nell’Area viene coinvolto, senza una nuova Prova per colpire (Giocatore §5.10)."
+        },
+        {
+          "nome": "Elettricità",
+          "testo": "Infligge 2d4 danni Naturali, AC 1, nell’area di raggio 1 Q e possiede Elettricità. Si applicano normalmente dispersione, Elusione e AR. Dopo l’AR, se resta almeno 1 danno e il danno residuo supera l’eventuale soglia Isolante X, il bersaglio effettua una PS Tempra. Il Successo evita l’effetto secondario, senza annullare i danni. Il Fallimento impedisce per 1+1d3 Round di spendere Azioni fuori dalla propria iniziativa; il bersaglio agisce normalmente durante il proprio turno. Prove di Salvezza, difese passive ed Elusione che non richiedono Azioni restano disponibili. L’effetto non applica automaticamente la condizione Stordito."
+        }
+      ],
+      "tabelle": [
+        {
+          "titolo": "Dispersione delle granate",
+          "colonne": [
+            "1d8",
+            "Direzione",
+            "Distanza"
+          ],
+          "righe": [
+            [
+              "1",
+              "Avanti",
+              "1d4 Q"
+            ],
+            [
+              "2",
+              "Avanti a destra",
+              "1d4 Q"
+            ],
+            [
+              "3",
+              "Destra",
+              "1d4 Q"
+            ],
+            [
+              "4",
+              "Indietro a destra",
+              "1d3 Q"
+            ],
+            [
+              "5",
+              "Indietro",
+              "1d3 Q"
+            ],
+            [
+              "6",
+              "Indietro a sinistra",
+              "1d3 Q"
+            ],
+            [
+              "7",
+              "Sinistra",
+              "1d4 Q"
+            ],
+            [
+              "8",
+              "Avanti a sinistra",
+              "1d4 Q"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "interfaccia-neurale-cybertronic",
+      "nome": "Interfaccia Neurale Cybertronic",
+      "tipo": "accessorio",
+      "catalogo": "Cybertronic",
+      "famiglia": "Innesti",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Sistema di Interfaccia Neurale, SIN, collega l’equipaggiamento a un Innesto di Interfaccia Neurale compatibile. SIN 1 concede +1 VA e SIN 2 concede +2 VA alle sole Prove indicate nella scheda. Senza connessione l’oggetto mantiene il funzionamento ordinario, salvo un requisito espresso del dispositivo. La P500 è priva di SIN e non riceve il bonus di collegamento, anche se il tiratore possiede un Innesto di Interfaccia Neurale. I modelli compatibili sono elencati nelle tabelle seguenti. Gli innesti Cybertronic si collegano automaticamente. Un innesto di altra marca richiede un minuto di configurazione e una Prova di Tecnologia: con successo l’abbinamento viene memorizzato; con fallimento resta disponibile soltanto l’impiego ordinario, senza il bonus SIN. Il collegamento non richiede una Prova a ogni utilizzo. Si applica un solo bonus SIN alla stessa Prova, scegliendo il maggiore pertinente fino a +2: due SIN 1 non diventano SIN 2. Il bonus è distinto dal VA nativo dell’oggetto e dai modificatori degli strumenti. Non aumenta automaticamente danno, gittata, capacità, potenza o numero di Azioni. Le penalità dell’armatura continuano ad applicarsi. Interfaccia di comando indica il collegamento ai comandi e alle informazioni operative di un dispositivo automatico: non assegna un bonus numerico quando non viene effettuata una Prova. Furtività è sempre una Prova unica; i benefici acustici specifici si applicano mediante Soppressione acustica. L’installazione dell’innesto costa 2.000 oltre al prezzo del dispositivo. L’impiego del SIN di armi, armature e strumenti non comporta un costo UMN aggiuntivo per ogni oggetto connesso. I costi UMN degli innesti saranno integrati con il catalogo cibernetico; per i modelli Cybertronic si applicherà il rapporto di metà rispetto agli equivalenti standard. Il SIN non si aggiunge automaticamente a Parata, danno o attivazione delle cariche. I profili e i costi delle armi rimangono quelli dei §§7.1.9 e 7.8; il SIN indicato è parte della dotazione del modello.",
+      "paragrafo": "§7.15.1",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 5000,
+      "innesto": "interfaccia_neurale",
+      "proprieta": []
+    },
+    {
+      "id": "ias3100-generatore-blink",
+      "nome": "IAS3100 Generatore Blink",
+      "tipo": "accessorio",
+      "catalogo": "Cybertronic",
+      "famiglia": "Moduli IAS",
+      "nomi_alternativi": [],
+      "note_manuale": "È consentito un solo trasferimento per Round durante la propria Iniziativa. L’AzM viene spesa interamente e non può essere suddivisa. La destinazione deve essere direttamente visibile, libera e abbastanza ampia per il personaggio e la dotazione indossata. Non sono validi mappe, immagini o telecamere remote; non si trasportano passeggeri. Gli ostacoli possono essere superati soltanto se la destinazione soddisfa queste condizioni. Power Blink: con successo avviene il trasferimento; con fallimento il personaggio resta al punto di partenza e spende comunque AzM e cariche. Con Maldestro, inoltre, il generatore perde 1 PI. SIN 2 concede +2 VA alle Prove di Pilotare del dispositivo, compensando la penalità di Power Blink; non aumenta il Blink ordinario, che è automatico. I moduli sono equipaggiamenti speciali con PI propri; non aumentano l’AR o i PI dell’armatura. Tutti i moduli IAS e lo Smorzatore Silent hanno Qualità Rara, PS Integrità 14 e Reperibilità Molto rara. Il costo comprende una cella IAS carica. La cella IAS contiene 20 cariche tecnologiche. Una cella di ricambio costa 1.000; una ricarica completa costa 50 e richiede un’ora. Sostituire la cella richiede un minuto con il dispositivo spento. Ogni modulo consuma secondo la propria scheda. Le cariche tecnologiche non sono PM e non richiedono Sintonizzazione. A 0 PI il modulo perde la propria funzione.",
+      "paragrafo": "§7.15.4",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 25000,
+      "compatibile_con": [
+        "armature_corporative:ia3000-chasseur-corazzato"
+      ],
+      "tabelle": [
+        {
+          "titolo": "Modalità",
+          "colonne": [
+            "Modalità",
+            "Distanza",
+            "Azione",
+            "Cariche",
+            "Prova"
+          ],
+          "righe": [
+            [
+              "Blink",
+              "4 Q",
+              "Intera AzM",
+              "1",
+              "Automatica"
+            ],
+            [
+              "Power Blink",
+              "8 Q",
+              "Intera AzM",
+              "2",
+              "Pilotare −2 VA"
+            ]
+          ]
+        }
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "ias3200-imbracatura-antigravita",
+      "nome": "IAS3200 Imbracatura antigravità",
+      "tipo": "accessorio",
+      "catalogo": "Cybertronic",
+      "famiglia": "Moduli IAS",
+      "nomi_alternativi": [],
+      "note_manuale": "Occupa lo spazio dello zaino. Attivazione, decollo, salita, discesa e atterraggio fanno parte dell’AzM di volo. Rimanere sospesi richiede l’AzM. Ogni Round di funzionamento consuma una carica, anche in sospensione: 20 Round complessivi, anche non consecutivi. Movimento base 6/12/18 Q per Passo/Corsa/Scatto; ogni Q verticale costa quanto un Q orizzontale. Pilotare sostituisce Atletica: automatico al Passo in condizioni ordinarie, −2 VA in Corsa, −4 VA in Scatto. SIN 1 del modulo aggiunge +1 alle Prove pertinenti di Pilotare. Con Shock Trooper, prima di altri modificatori, il movimento effettivo è 5/11/17 Q; con Silent è 6/12/18 Q grazie all’Assetto da incursione. Prove di volo, attacchi, movimento misto, decollo, atterraggio ed esaurimento del sostegno seguono il Propulsore Banshee (§7.13.4). Un fallimento non spegne automaticamente il modulo; rottura, disattivazione, incoscienza o fine dell’energia fanno terminare il sostegno secondo quelle regole. Il funzionamento antigravitazionale è silenzioso; Furtività richiede comunque condizioni concrete e una normale Prova. I moduli sono equipaggiamenti speciali con PI propri; non aumentano l’AR o i PI dell’armatura. Tutti i moduli IAS e lo Smorzatore Silent hanno Qualità Rara, PS Integrità 14 e Reperibilità Molto rara. Il costo comprende una cella IAS carica. La cella IAS contiene 20 cariche tecnologiche. Una cella di ricambio costa 1.000; una ricarica completa costa 50 e richiede un’ora. Sostituire la cella richiede un minuto con il dispositivo spento. Ogni modulo consuma secondo la propria scheda. Le cariche tecnologiche non sono PM e non richiedono Sintonizzazione. A 0 PI il modulo perde la propria funzione.",
+      "paragrafo": "§7.15.4",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 18000,
+      "compatibile_con": [
+        "armature_corporative:ia3000-shock-trooper",
+        "armature_corporative:ia3000-silent"
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "ias3300-mirrorshard",
+      "nome": "IAS3300 Mirrorshard",
+      "tipo": "accessorio",
+      "catalogo": "Cybertronic",
+      "famiglia": "Moduli IAS",
+      "nomi_alternativi": [],
+      "note_manuale": "Il mimetismo ottico adattivo concede +2 VA alla Prova unica di Furtività quando esistono condizioni concrete per nascondersi o muoversi senza essere individuati. Non rende invisibili, non nasconde automaticamente armi o oggetti estranei al sistema e non impone una penalità automatica agli attacchi. Più sistemi mimetici ottici non sommano i bonus: si usa il maggiore. Attivare il modulo richiede 1 AzP. Consuma una carica per minuto continuativo, fino a 20 minuti per cella. Spento conserva l’aspetto cromato ma non il beneficio mimetico. Il SIN 2 pertinente aggiunge il proprio bonus una sola volta; il SIN dell’armatura e quello del modulo non si sommano fra loro. I moduli sono equipaggiamenti speciali con PI propri; non aumentano l’AR o i PI dell’armatura. Tutti i moduli IAS e lo Smorzatore Silent hanno Qualità Rara, PS Integrità 14 e Reperibilità Molto rara. Il costo comprende una cella IAS carica. La cella IAS contiene 20 cariche tecnologiche. Una cella di ricambio costa 1.000; una ricarica completa costa 50 e richiede un’ora. Sostituire la cella richiede un minuto con il dispositivo spento. Ogni modulo consuma secondo la propria scheda. Le cariche tecnologiche non sono PM e non richiedono Sintonizzazione. A 0 PI il modulo perde la propria funzione.",
+      "paragrafo": "§7.15.4",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 14000,
+      "compatibile_con": [
+        "armature_corporative:ia3000-mirrorman"
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "ias3400-disturbatore-metafisico",
+      "nome": "IAS3400 Disturbatore metafisico",
+      "tipo": "accessorio",
+      "catalogo": "Cybertronic",
+      "famiglia": "Moduli IAS",
+      "nomi_alternativi": [],
+      "note_manuale": "Attivazione: 1 AzP. Il campo mobile ha raggio 2 Q, centrato sull’utilizzatore, ed è bloccato da pareti e pavimenti solidi. Consuma una carica per Round, per 20 Round complessivi anche non consecutivi. Il campo impone −2 VA alla Prova di Potere per lanciare un Incantesimo quando il lanciatore è nel campo oppure il bersaglio, il punto scelto o parte dell’area dell’Incantesimo ricade nel campo. La penalità coinvolge utilizzatore, alleati e avversari; si applica una sola volta alla stessa Prova anche se più condizioni ricorrono. Più disturbatori non sommano l’interferenza. Il modulo non dissolve effetti già attivi e non interrompe automaticamente la Concentrazione. L’Interfaccia di comando non aumenta la penalità e non introduce una Prova aggiuntiva. I moduli sono equipaggiamenti speciali con PI propri; non aumentano l’AR o i PI dell’armatura. Tutti i moduli IAS e lo Smorzatore Silent hanno Qualità Rara, PS Integrità 14 e Reperibilità Molto rara. Il costo comprende una cella IAS carica. La cella IAS contiene 20 cariche tecnologiche. Una cella di ricambio costa 1.000; una ricarica completa costa 50 e richiede un’ora. Sostituire la cella richiede un minuto con il dispositivo spento. Ogni modulo consuma secondo la propria scheda. Le cariche tecnologiche non sono PM e non richiedono Sintonizzazione. A 0 PI il modulo perde la propria funzione.",
+      "paragrafo": "§7.15.4",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 14000,
+      "compatibile_con": [
+        "armature_corporative:ia3000-reaver"
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "smorzatore-acustico-silent",
+      "nome": "Smorzatore acustico Silent",
+      "tipo": "accessorio",
+      "catalogo": "Cybertronic",
+      "famiglia": "Moduli IAS",
+      "nomi_alternativi": [],
+      "note_manuale": "Attivazione: 1 AzP. Consuma una carica per minuto, fino a 20 minuti per cella. Soppressione acustica 2 attenua passi, articolazioni ed equipaggiamento fissato: impone −2 VA alla Prova di Percezione dell’osservatore quando l’individuazione o localizzazione dipende da quei rumori. Se l’osservatore dispone di una visuale utile, questa penalità non si applica. Furtività e Percezione restano Prove uniche. Spari, esplosioni, parole e urti contro l’ambiente non vengono soppressi. Più sistemi di soppressione non cumulano le penalità. Il SIN 2 della Silent concede il proprio +2 a Furtività; l’Interfaccia di comando dello smorzatore non aggiunge un ulteriore bonus SIN. I moduli sono equipaggiamenti speciali con PI propri; non aumentano l’AR o i PI dell’armatura. Tutti i moduli IAS e lo Smorzatore Silent hanno Qualità Rara, PS Integrità 14 e Reperibilità Molto rara. Il costo comprende una cella IAS carica. La cella IAS contiene 20 cariche tecnologiche. Una cella di ricambio costa 1.000; una ricarica completa costa 50 e richiede un’ora. Sostituire la cella richiede un minuto con il dispositivo spento. Ogni modulo consuma secondo la propria scheda. Le cariche tecnologiche non sono PM e non richiedono Sintonizzazione. A 0 PI il modulo perde la propria funzione.",
+      "paragrafo": "§7.15.4",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 4,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "MR",
+      "costo": 6000,
+      "compatibile_con": [
+        "armature_corporative:ia3000-silent"
+      ],
+      "proprieta": []
+    },
+    {
+      "id": "corredo-di-assistenza-dr-diana",
+      "nome": "Corredo di assistenza Dr. Diana",
+      "tipo": "altro",
+      "catalogo": "Cybertronic",
+      "famiglia": "Corredi professionali",
+      "nomi_alternativi": [],
+      "note_manuale": "Corredo Professionale: +2 VA a Medicina per pronto soccorso e trattamenti traumatici portatili, oppure +2 VA a Tecnologia per diagnosi e riparazione cibernetica. Si usa un solo bonus degli strumenti alla stessa Prova. È utilizzabile senza interfaccia; il SIN pertinente della Tuta Dr. Diana si applica soltanto quando la connessione e le condizioni del §7.15.1 sono soddisfatte. La componente sanitaria utilizza il profilo del Kit di pronto soccorso Professionale (§7.19): cinque applicazioni comprese e ricarica da cinque 300. Ogni trattamento consuma un’applicazione; la diagnosi non la consuma. Materiali tecnici e ricambi cibernetici sono separati. Il corredo non sostituisce una struttura chirurgica né ripara automaticamente PI o stati di Ferita.",
+      "paragrafo": "§7.15.5",
+      "versione_manuale": "Armamenti 0.50",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 5000,
+      "applicazioni": 5,
+      "ricarica": {
+        "applicazioni": 5,
+        "costo": 300
+      },
+      "proprieta": []
+    }
+  ]
+}

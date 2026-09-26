@@ -1,6 +1,6 @@
 // Contenuto dei tooltip e della scheda completa degli incantesimi, ricavato solo dai dati.
 // Funzioni pure: la UI (src/ui/tooltip.js) trasforma il risultato in DOM.
-import { catalogo, NOMI_TIPI, moduliDi, munizioneDiRiferimento } from './equipaggiamento.js';
+import { catalogo, NOMI_TIPI, moduliDi, munizioneDiRiferimento, tabellaSin } from './equipaggiamento.js';
 
 const trova = (lista, nome) => lista.find((x) => x.nome === nome);
 const eTodo = (v) => typeof v === 'string' && v.startsWith('TODO(');
@@ -99,6 +99,8 @@ function tooltipOggetto(rif, dati) {
   if (o.taglia) riga.Taglia = o.taglia;
   if (o.ar) riga.AR = `${o.ar.totale}${o.ar.magica ? ` (${o.ar.magica} magica)` : ''}`;
   if (o.supporti) riga.Supporti = o.supporti;
+  if (o.autonomia) riga.Autonomia = o.autonomia;
+  if (o.applicazioni) riga.Applicazioni = String(o.applicazioni);
   if (o.for_richiesta) riga.FOR = String(o.for_richiesta);
   if (o.inc) riga.INC = String(o.inc);
   if (o.pi !== undefined && o.pi !== null) riga.PI = String(o.pi);
@@ -129,6 +131,18 @@ function tooltipOggetto(rif, dati) {
     sezioni.push({ etichetta: 'Munizione di riferimento', testo: mr ? `${mr.nome}: danno ${mr.danno}, AC ${mr.ac}, RS ${mr.rs_q} Q; ${mr.proprieta.join('; ')}.` : o.munizioni.riferimento });
   }
   if (o.munizioni?.ricarica) sezioni.push({ etichetta: 'Ricarica', testo: o.munizioni.ricarica });
+  if (o.ricarica?.applicazioni) sezioni.push({ etichetta: 'Ricarica', testo: `${o.ricarica.applicazioni} applicazioni, costo ${o.ricarica.costo.toLocaleString('it-IT')}` });
+  const s = tabellaSin(dati).get(rif);
+  if (s) sezioni.push({ etichetta: `SIN ${s.valore}`, testo: `+${s.valore} VA (${s.prova.toLowerCase()}) con un Innesto di Interfaccia Neurale in uso (§7.15.1).` });
+  if (o.innesto === 'interfaccia_neurale') sezioni.push({ etichetta: 'In uso', testo: 'Le armi con SIN ricevono il bonus al VA per colpire nella scheda (§7.15.1).' });
+  if (o.scudo_integrato) {
+    const si = o.scudo_integrato;
+    sezioni.push({ etichetta: `Scudo, ${si.condizione}`, testo: `AR ${si.ar.totale}, Parata ${conSegno(si.parata.ravvicinata)} ravv. / ${conSegno(si.parata.distanza)} dist. (con Difese)` });
+  }
+  if (o.compatibile_con) sezioni.push({ etichetta: 'Compatibile con', testo: o.compatibile_con.map((r) => cat.perRif.get(r)?.nome ?? r).join(', ') });
+  for (const t of o.tabelle ?? []) {
+    sezioni.push({ etichetta: t.titolo, testo: t.righe.map((r) => (t.colonne.length === 2 ? `${r[0]}: ${r[1]}` : `${r[0]}: ${r.slice(1).map((v, i) => `${t.colonne[i + 1]} ${v}`).join(', ')}`)).join(' · ') });
+  }
   if (o.note_manuale) sezioni.push({ etichetta: null, testo: o.note_manuale });
   const noteCatalogo = dati.equipaggiamento.file?.[o.file]?.note_per_catalogo?.[o.catalogo];
   if (noteCatalogo) sezioni.push({ etichetta: `Note del catalogo ${o.catalogo}`, testo: Array.isArray(noteCatalogo) ? noteCatalogo.join(' ') : noteCatalogo });

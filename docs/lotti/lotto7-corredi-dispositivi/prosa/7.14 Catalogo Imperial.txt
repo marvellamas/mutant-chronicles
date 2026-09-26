@@ -1,0 +1,399 @@
+7.14 Catalogo Imperial
+Il catalogo comprende tredici armature iconiche e le dotazioni operative Imperial. Ogni modello ha un profilo
+fisso, con proprietà native incluse. Le configurazioni Migliorate e Potenziate saranno integrate successivamente.
+Tutte le protezioni hanno AR magica 0. FOR è la Caratteristica richiesta. Categorie, penalità e Integrità seguono i
+§§7.11 e 7.2.1. I prezzi comprendono soltanto le dotazioni espressamente indicate.
+7.14.1 Profili delle armature
+Modello Categoria AR FOR PI
+Abito protettivo degli Agenti ISC Leggera 2 3 6
+Corazza da trincea Trencher Media 3 5 10
+Armatura d’assalto Stormtrencher Media 3 5 8
+Tenuta operativa Grey Ghost Leggera 2 3 6
+Corazza pesante Blood Beret Pesante 5 7 12
+Corazza degli Highland Clan Warriors Media 3 5 10
+Pesante
+Mk.IV Felis Pattern dei Golden Lions 5 5 / 7 12
+servoassistita
+Armatura da incursione Wolfbane Leggera 3 3 6
+Armatura d’assalto Headhunter Leggera 3 4 8
+Tenuta da ricognizione Pathfinder Leggera 2 3 6
+Armatura da cavalleria Fenris Leggera 3 4 8
+Corazza dei Life Dragoons Media 3 5 10
+Tenuta delle Mourning Wolves Leggera 3 3 6
+Per la Mk.IV Felis Pattern, FOR 5 vale con servoassistenza attiva e FOR 7 senza alimentazione. I PI aggiunti da
+Struttura robusta sono già compresi nei profili.
+Modello Qualità PS INT REP Costo
+Abito protettivo degli Agenti ISC Non comune 12 RA 3.500
+Corazza da trincea Trencher Non comune 12 NC 5.000
+Armatura d’assalto Stormtrencher Non comune 12 RA 8.500
+Tenuta operativa Grey Ghost Non comune 12 RA 6.500
+Corazza pesante Blood Beret Rara 14 RA 12.500
+Corazza degli Highland Clan Warriors Non comune 12 NC 7.500
+Mk.IV Felis Pattern dei Golden Lions Rara 14 MR 22.000
+Armatura da incursione Wolfbane Non comune 12 RA 7.500
+Armatura d’assalto Headhunter Non comune 12 RA 8.500
+Tenuta da ricognizione Pathfinder Non comune 12 RA 7.000
+Armatura da cavalleria Fenris Non comune 12 RA 8.500
+Corazza dei Life Dragoons Non comune 12 RA 8.000
+Tenuta delle Mourning Wolves Non comune 12 RA 7.500
+7.14.2 Proprietà e impiego delle armature
+Si applicano le proprietà comuni del §7.11.4. Imbottita, Ignifuga e Isolante contrastano gli effetti secondari
+pertinenti: non aggiungono una seconda riduzione del danno. Quando richiesto dalla Contromisura, l’armatura
+deve avere assorbito almeno 1 danno.
+Abito protettivo degli Agenti ISC
+Discreta. La protezione integrata non è evidente a una semplice osservazione casuale; un esame ravvicinato o una
+perquisizione possono rivelarla. Rinforzi visibili non vengono nascosti. Mantiene tutte le penalità della categoria
+Leggera.
+Corazza da trincea Trencher
+Struttura robusta, Filtro respiratorio 2 e Manutenzione semplice. I 2 PI aggiuntivi sono inclusi nel totale 10. Con
+la maschera indossata concede +2 alla PS Tempra contro veleni e agenti patogeni inalati; serve aria respirabile. La
+manutenzione concede +1 VA a Tecnologia per riparare questa armatura, con strumenti, materiali e tempi
+ordinari. Si applicano le penalità della Media.
+Armatura d’assalto Stormtrencher
+Articolazione d’assalto, Assetto da incursione e Filtro respiratorio 2. La penalità agli attacchi ravvicinati e la
+penalità MOV dell’armatura diventano 0; restano −1 VA agli attacchi a distanza, −1 VA ad Agilità e −3 VA al
+lancio degli Incantesimi. Il Jet-Chute è una dotazione separata (§7.14.4).
+Tenuta operativa Grey Ghost
+Mimetica ambientale 2 urbana e Imbracatura tecnica 1. La mimetica concede +2 VA alla Prova unica di Furtività
+in ambiente urbano quando esistono condizioni concrete per nascondersi. L’imbracatura concede +1 VA ad
+Atletica per arrampicarsi o calarsi usando corde e ancoraggi adeguati; tali strumenti si acquistano separatamente.
+Non aumenta automaticamente il movimento.
+Corazza pesante Blood Beret
+Imbottita 2, Antiesplosione 1 e Filtro respiratorio 2. Contro i danni Naturali o Magici delle esplosioni l’AR sale a
+6; questo beneficio non assorbe danni Eterei. Si applicano tutte le penalità della Pesante.
+Corazza degli Highland Clan Warriors
+Struttura robusta, Articolazione d’assalto e Stabile 1. I 2 PI aggiuntivi sono inclusi nel totale 10. La penalità agli
+attacchi ravvicinati diventa 0. Stabile 1 concede +1 VA alle Prove di Forza o Destrezza previste contro
+Sbilanciante, senza modificare le Prove di Salvezza. Restano le altre penalità della Media.
+Armatura da incursione Wolfbane
+Mimetismo 1 e Imbottita 1. Concede +1 VA alla Prova unica di Furtività quando esistono condizioni concrete per
+nascondersi. È nativamente Leggera con AR 3 e mantiene le penalità della Leggera, compreso −1 VA al lancio
+degli Incantesimi.
+Armatura d’assalto Headhunter
+Struttura robusta, Imbottita 2 e Stabile 1. I 2 PI aggiuntivi sono inclusi nel totale 8. Stabile 1 concede +1 VA alle
+Prove di Forza o Destrezza previste contro Sbilanciante. È nativamente Leggera con AR 3. Il modello Warhound
+ha gli stessi valori, proprietà e costo.
+Tenuta da ricognizione Pathfinder
+Mimetismo 2 e Passo sicuro 1. Concede +2 VA alla Prova unica di Furtività nelle condizioni pertinenti. Passo
+sicuro 1 concede +1 VA ad Atletica per mantenere l’equilibrio o attraversare terreni instabili o scivolosi, soltanto
+quando la Prova è già richiesta. Non riduce i costi di movimento e non si applica a salti, arrampicate o
+spostamenti forzati.
+Armatura da cavalleria Fenris
+Struttura robusta, Imbottita 2 e Imbracatura da sella 1. I 2 PI aggiuntivi sono inclusi nel totale 8. Con
+l’imbracatura agganciata a una sella compatibile, concede +1 VA alle Prove di Pilotare già richieste per evitare la
+perdita di controllo dopo un urto o il disarcionamento. Non introduce ulteriori Prove. È nativamente Leggera con
+AR 3.
+Corazza dei Life Dragoons
+Struttura robusta, Ignifuga 2, Filtro respiratorio 2 e Assetto da pattuglia. I 2 PI aggiuntivi sono inclusi nel totale
+10. La penalità MOV propria dell’armatura diventa 0; restano le altre penalità della Media. Anche la Young
+Guard utilizza questo profilo.
+Tenuta delle Mourning Wolves
+Mimetismo 2. Concede +2 VA alla Prova unica di Furtività quando esistono condizioni concrete per nascondersi.
+È nativamente Leggera con AR 3 e mantiene tutte le penalità della Leggera.
+Rune, tatuaggi e pratiche dei clan si trattano come Tecniche Interiori; acquistare un’armatura non concede tali
+capacità. Wolfbane e Pathfinder non possiedono Assetto mistico. Questa proprietà riguarda la riduzione delle
+penalità dell’armatura al lancio degli Incantesimi e deve essere espressamente indicata nella scheda del modello.
+Mk.IV Felis Pattern dei Golden Lions
+La Felis è un’armatura Pesante servoassistita indossabile, utilizzabile anche senza alimentazione e senza innesti
+cibernetici. Il prezzo comprende una batteria dedicata; armi e Scudi si acquistano separatamente. Imbottita 2 resta
+attiva anche a batteria spenta. AR 5 e PI 12 non cambiano con l’alimentazione.
+Dato Servoassistenza attiva Senza alimentazione
+FOR richiesta 5 7
+Attacchi ravvicinati −1 VA −2 VA
+Attacchi a distanza −2 VA −2 VA
+Agilità −2 VA −2 VA
+MOV −1 Q −2 Q
+Lancio degli Incantesimi −5 VA −5 VA
+Assistenza muscolare 1 concede +1 VA alle Prove di Forza o Atletica per sollevare, spingere, trascinare o
+sfondare. Non aumenta la Caratteristica Forza, non soddisfa i requisiti delle armi e non si applica a salti, equilibrio
+o attacchi. Il beneficio richiede alimentazione.
+Colpo assistito 1 aggiunge +1 danno ordinario a una sola applicazione del danno per attacco ravvicinato, con
+un’arma impugnata o a mani nude. Termoregolazione 2 concede +2 alla PS Tempra contro caldo e freddo
+ambientali; non aumenta l’AR contro attacchi di Fuoco o Gelo. Entrambe le proprietà richiedono alimentazione.
+Autonomia: 8 ore di funzionamento. Ricarica completa: 8 ore. Una batteria di ricambio costa 2.000; sostituirla
+richiede un minuto ad armatura spenta. Accendere o spegnere la servoassistenza richiede 1 AzP. A batteria
+esaurita si applicano immediatamente requisito FOR e penalità della configurazione senza alimentazione.
+7.14.3 Rinforzi e assegnazioni
+Modelli Rinforzi compatibili
+Trencher e Highland Clan Warriors Un kit Leggero oppure un kit Pesante
+Blood Beret e Mk.IV Felis Pattern Nessuno
+ISC, Stormtrencher, Grey Ghost, Wolfbane, Headhunter, Pathfinder, Fenris,
+Un kit Leggero
+Life Dragoons e Mourning Wolves
+Vale il limite di un solo kit del §7.11.2. Rinforzi Leggeri: AR +1, FOR +1, costo 1.000. Rinforzi Pesanti: AR +2,
+FOR +2, costo 2.000. Il kit conserva PI e PS Integrità separati e non somma i propri PI a quelli dell’armatura.
+Tutte le Leggere Imperial di questo catalogo, quando ricevono un kit Leggero, usano le penalità della categoria
+Media. Wolfbane, Headhunter, Fenris e Mourning Wolves passano da AR 3 a AR 4; ISC, Grey Ghost e
+Pathfinder passano da AR 2 a AR 3. Le proprietà native mantengono i propri limiti. La protezione Discreta
+dell’ISC non nasconde rinforzi visibili.
+Reparto o impiego Profilo e dotazione caratteristica
+Young Guard Corazza dei Life Dragoons
+Warhounds Variante Warhound dell’Headhunter; Martello Spaccateste a due mani
+Golden Panthers Armatura Stormtrencher e Jet-Chute Pile Driver
+Mourning Wolves Tenuta dedicata, Artiglio del Lupo e Catena chiodata; Howler agli specialisti
+Piloti delle Fenris Bike e del
+Armatura da cavalleria Fenris
+Necromower
+Altri reparti dei clan Corazza Highland Clan Warriors; profili specialistici secondo il ruolo
+Una diversa livrea o denominazione di reparto non modifica i valori del modello. Fenris Bike e Necromower sono
+veicoli; le loro schede saranno integrate nel Manuale dei Veicoli, insieme a Hurricane e Barracuda. Non si
+trattano come armature o esoscheletri indossabili.
+7.14.4 Jet Chute Pile Driver
+Il Jet-Chute è un equipaggiamento speciale per la discesa rapida, dotato di frenata automatica a razzo. Il prezzo
+comprende imbracatura, altimetro e una carica completa. Occupa lo spazio di uno zaino; montarlo o rimuoverlo
+richiede un minuto.
+PI Qualità PS INT REP Costo
+6 Non comune 12 RA 6.000
+È compatibile con armature Leggere, Medie e Pesanti non servoassistite, insieme al normale equipaggiamento
+personale. Non trasporta passeggeri e non è compatibile con esoscheletri o con la Felis. Non consente di salire,
+volare in orizzontale o restare sospesi.
+Armarlo richiede 1 AzP, normalmente prima del salto; l’accensione della frenata è automatica. Servono almeno
+35 Q di dislivello verticale libero fino al punto di arrivo, circa 52,5 metri. Sotto questa soglia il dispositivo non
+garantisce la protezione e si applicano le normali regole delle Cadute del Manuale del Giocatore.
+La discesa avviene a 60 Q per Round, fino a raggiungere il suolo. Spendendo 1 AzM si può correggere
+orizzontalmente la traiettoria fino a 2 Q per Round. La carica viene consumata all’accensione e serve per una sola
+discesa. Il dispositivo non concede Azioni aggiuntive né i benefici difensivi di Corsa o Scatto.
+Su un’area ampia e libera non occorre una Prova di Pilotare: l’atterraggio infligge 1d3 danni Naturali che
+ignorano l’AR. Imbottita non riduce questi danni. Spazi stretti, ostacoli o vento forte richiedono Pilotare con i
+modificatori delle circostanze.
+Esito di Pilotare Atterraggio
+Successo Punto desiderato; 1d3 danni Naturali che ignorano l’AR
+Fallimento Punto accessibile scelto dal Direttore; 1d3 danni Naturali che ignorano l’AR e A Terra
+Maldestro Come il Fallimento, ma 1d6 danni invece di 1d3
+Rifornire il dispositivo costa 150 e richiede un minuto con l’attrezzatura di rifornimento. Una cartuccia completa
+di ricambio costa 300 e si sostituisce in un minuto. Stormtrencher e Jet-Chute costano complessivamente 14.500,
+escluse armi e munizioni.
+7.14.5 Iron Mastiff
+L’Iron Mastiff è un robot da sicurezza e inseguimento, classificato tra gli equipaggiamenti speciali. È un modello
+fisso, senza versioni Leggere, Medie o Pesanti. Il prezzo comprende mascelle, sensori, pelliccia sintetica, batteria
+e controller abbinato; non richiede innesti né consuma UMN.
+AR AR magica FOR PV meccanici PI Costo
+3 0 6 18 8 18.000
+Qualità PS INT REP Autonomia Controller
+Non comune 12 RA 8 ore 100 Q
+Prova o dato Valore
+Corpo a corpo VA 10
+Difese per Schivata VA 8
+Atletica VA 10
+Percezione VA 10
+Sopravvivenza per seguire tracce VA 10
+Furtività VA 6
+PS Riflessi 10
+Altre PS applicabili alla macchina 8
+Iniziativa 1d10+1
+Movimento / Corsa / Scatto 6 / 12 / 18 Q
+Azioni per Round 1 AzM e 1 AzP
+I VA sono propri del robot e non dipendono dal livello del proprietario. Le mascelle attaccano con Corpo a corpo,
+portata 1 Q e danno 1d6+2 Naturale, usando le normali Azioni.
+Presa controllata e sensori
+Presa controllata permette di Immobilizzare con le mascelle una creatura di taglia umana o inferiore. Costa 1 AzP
+e richiede Corpo a corpo contrapposto a Corpo a corpo o Atletica del bersaglio; la presa iniziale non infligge
+danni. Liberarsi costa 1 AzP e richiede una nuova Prova contrapposta; in caso di parità la presa continua. Le
+mascelle restano occupate. Mordere il bersaglio trattenuto richiede una normale AzP e una nuova Prova per
+colpire.
+Sensori da pista 2 concede +2 VA a Sopravvivenza per seguire una traccia identificabile o un campione odoroso:
+il VA diventa 12. Terreno, interruzione e distruzione delle tracce restano rilevanti. Le ottiche infrarosse operano
+entro 20 Q in scarsa luce, con linea di vista e contrasto termico sufficienti. Percezione e Furtività seguono le
+normali Prove uniche; i sensori non riconoscono automaticamente eresia o Corruzione.
+Comando e autonomia operativa
+In modalità autonoma, il Direttore gestisce il robot secondo una direttiva semplice e persistente. Assegnare o
+cambiare la direttiva costa 1 AzP al referente. In comando diretto a distanza, ciascun comando costa 1 AzP al
+referente e utilizza le normali Azioni del robot: non ne crea di aggiuntive.
+Il controller trasmette audio, video e segnali entro 100 Q, purché il collegamento sia disponibile. Se il
+collegamento si interrompe, il robot continua l’ordine corrente; quando lo completa o non può eseguirlo, mantiene
+la posizione e si difende.
+Il robot dispone di un solo insieme di Azioni per Round, condiviso tra autonomia e comando diretto: cambiare
+modalità non concede un secondo turno. Controllo Parallelo del Tecnico, Grado V, permette una volta per Round,
+nella propria iniziativa, di impartire un comando a una sola unità senza spendere l’AzP del Tecnico; restano i
+normali limiti di Azioni del robot.
+Danni manutenzione e alimentazione
+I danni residui dopo l’AR riducono i PV meccanici. I PI restano separati e seguono le regole di Integrità del
+§7.2.1: un colpo non riduce automaticamente i PI. A 0 PV l’Iron Mastiff è fuori servizio; a 0 PI è rotto. Non
+respira, non sanguina e non subisce veleni o malattie biologiche; richiede riparazioni tecniche. Le altre Prove di
+Salvezza si applicano soltanto quando l’effetto può interessare una macchina.
+La batteria garantisce 8 ore di funzionamento e richiede 8 ore per una ricarica completa. Una batteria di ricambio
+costa 1.000; sostituirla richiede un minuto a robot spento. Non si applicano i kit di rinforzo destinati alle armature
+personali.
+7.14.6 Armi specialistiche
+Howler e Rainy Dayer utilizzano Armi Medie. Danni e AC del Howler dipendono dalla munizione. I danni della
+Rainy Dayer sono Naturali. Qualità Non comune, PS Integrità 12 e Reperibilità Rara si applicano a entrambi i
+modelli; le munizioni si acquistano separatamente.
+Modello Danno AC VA FOR Max Q CC INC
+Howler Mun. Mun. −1 4 30 1 3
+Rainy Dayer 1d6+2 1 0 4 30 5 3
+Modello Abilità Impugnatura PI MOV Modalità Costo
+Howler Medie Da polso 4 0 S 4.500
+Rainy Dayer Medie 2 mani al tiro 6 0 S TR 7.500
+Howler
+Il Howler è un lanciagranate da polso, con staffa compresa nel prezzo. Non fornisce AR e conserva PI propri.
+Montarlo o rimuoverlo richiede un minuto. Una volta montato è pronto senza estrazione; il braccio deve poter
+puntare liberamente.
+La mano dello stesso braccio può impugnare un’arma a una mano. Uno Scudo che ostacola il tiro o l’impugnatura
+di un’arma a due mani impediscono di sparare con il Howler. La normale Imbracciatura richiede 1 AzM: senza di
+essa si applica −4 VA, oltre al −1 VA del modello. Movimento, spostamento forzato, Caduta, perdita dell’assetto
+o uso dell’arma impugnata con lo stesso braccio interrompono l’Imbracciatura.
+Ogni tiro consuma una granata. È disponibile soltanto il Tiro Singolo, senza Tiro Rapido. Ricaricare costa 1 AzP
+e richiede l’altra mano libera. Si applicano le normali regole di dispersione delle granate; un Maldestro usa la
+tabella di Inceppamento, senza aggiungere la dispersione ordinaria. Pathfinder con armatura e Howler costa
+11.500, munizioni escluse.
+Rainy Dayer
+La Rainy Dayer combina un’arma da fuoco a corto raggio con un ombrello balistico, destinato agli ambienti
+urbani e corporativi. Il prezzo comprende arma, copertura balistica e caricatore vuoto. La gittata massima è 30 Q.
+Configurazione Mani richieste Protezione
+Chiusa e trasportata 1 Nessuna AR aggiuntiva
+Chiusa e al tiro 2 Nessuna AR aggiuntiva
+Aperta come Scudo 1 AR +1
+Aperta e al tiro 2 AR +1
+Aprire o chiudere l’ombrello richiede 1 AzP. Si applicano i normali tempi di estrazione; quando è già in mano,
+passare all’impugnatura di tiro a due mani non richiede di estrarlo nuovamente. Ricaricare costa 1 AzP e richiede
+entrambe le mani.
+Aperta, la Rainy Dayer si usa come Scudo piccolo: AR +1 passiva e Parata attiva con Difese, modificatore 0
+contro attacchi ravvicinati e −4 contro attacchi a distanza, oltre agli altri modificatori pertinenti. La Parata
+conserva il normale costo in Azioni e le regole del Manuale del Giocatore. Tenuta aperta a una mano, lascia l’altra
+libera per un’arma a una mano. Quando spara con entrambe le mani mantiene AR +1, come proprietà specifica
+dell’arma integrata.
+Non fornisce AR magica. Abito ISC e Rainy Dayer aperta danno AR totale 3, mantenendo la categoria Leggera
+dell’armatura. Il sistema appare come un comune ombrello a un’osservazione casuale; un esame ravvicinato o una
+perquisizione possono rivelarlo con Percezione. Lo sparo produce il normale rumore di un’arma da fuoco.
+Arma e copertura condividono PI 6: a 0 PI entrambe sono inutilizzabili. Un normale inceppamento dell’arma non
+impedisce di usare come Scudo la copertura ancora integra. Abito ISC e Rainy Dayer costano complessivamente
+11.000, munizioni escluse.
+7.14.7 Granate e munizioni specialistiche
+Le granate seguenti possono essere lanciate a mano o utilizzate nel Howler e negli altri lanciagranate compatibili.
+Il tiro con lanciagranate usa Abilità, VA, FOR, gittata e INC dell’arma; il lancio a mano usa Armi da Lancio, VA
+0, FOR 3, gittata massima pari a FOR × 3 Q e INC 8. Attivare e lanciare una granata già pronta richiede 1 AzP.
+La compatibilità comune dei lanciagranate standard e i prezzi sono nel §7.20.3.
+Munizione Danno AC RS PI Qualità PS INT REP Costo
+Frammentazione 1d6+1 1d3 1 Q 4 Comune 10 NC 80
+Fumogena — — 2 Q 4 Comune 10 NC 120
+Elettroshock 2d4 1 1 Q 4 Non comune 12 RA 200
+La Granata standard a frammentazione mantiene Sbilanciante e Sbalzante 1. I suoi danni sono Naturali; AC 1d3
+indica le applicazioni del danno, non una riduzione dell’AR. Si determina AC una sola volta per l’esplosione;
+ogni bersaglio risolve separatamente la propria Elusione. Si applicano le ordinarie regole delle aree e del danno.
+Fumogena
+La nube si forma immediatamente all’impatto, con raggio 2 Q. Dura 5 Round, contando quello di attivazione
+come primo, e termina alla fine del quinto. Pareti e altri ostacoli solidi ne delimitano la diffusione; vento forte o
+ventilazione intensa possono disperderla prima.
+Gli attacchi a distanza basati sulla vista ordinaria subiscono −4 VA quando la linea di tiro attraversa la nube,
+anche se il tiratore o il bersaglio si trovano al suo interno. La penalità vale anche per gli alleati; più nubi non
+sommano questa penalità.
+La nube offre occultamento per tentare una normale Prova unica di Furtività, senza un ulteriore bonus numerico.
+Non infligge danni e non fornisce AR. Ogni granata è monouso. Il Modulo di visione termica può ignorare la
+penalità al tiro entro 40 Q quando distingue il bersaglio termicamente (§7.3.3).
+Elettroshock
+Infligge 2d4 danni Naturali, AC 1, nell’area di raggio 1 Q e possiede Elettricità. Si applicano normalmente
+dispersione, Elusione e AR. Dopo l’AR, se resta almeno 1 danno e il danno residuo supera l’eventuale soglia
+Isolante X, il bersaglio effettua una PS Tempra.
+Il Successo evita l’effetto secondario, senza annullare i danni. Il Fallimento impedisce per 1+1d3 Round di
+spendere Azioni fuori dalla propria iniziativa; il bersaglio agisce normalmente durante il proprio turno. Prove di
+Salvezza, difese passive ed Elusione che non richiedono Azioni restano disponibili. L’effetto non applica
+automaticamente la condizione Stordito.
+Si effettua una sola PS per attacco e per bersaglio. Applicazioni ripetute mantengono la scadenza più lontana,
+senza sommare le durate. L’effetto può interessare robot compatibili, che usano la PS pertinente: l’Iron Mastiff
+usa PS Tempra 8. Non costituisce uno spegnimento EMP automatico; restano le normali soglie di PV e PI per
+mettere fuori servizio o rompere la macchina.
+Esempio: con AR 3 e Isolante 2, un danno iniziale di 5 lascia 2 danni e non richiede la PS; un danno iniziale di 7
+lascia 4 danni e richiede la PS. La granata è monouso.
+Dispersione delle granate
+Quando il tiro richiede dispersione, si determina la direzione con 1d8 rispetto alla linea di lancio e si applica la
+distanza indicata. Un Maldestro usa la tabella di Inceppamento e non aggiunge questa dispersione ordinaria.
+1d8 Direzione Distanza
+1 Avanti 1d4 Q
+2 Avanti a destra 1d4 Q
+3 Destra 1d4 Q
+4 Indietro a destra 1d3 Q
+5 Indietro 1d3 Q
+6 Indietro a sinistra 1d3 Q
+7 Sinistra 1d4 Q
+8 Avanti a sinistra 1d4 Q
+7.14.8 Corredi operativi
+I nove corredi sono strumenti Professionali: concedono +2 VA alle attività indicate. Si applica un solo bonus
+complessivo da strumenti per Prova; componenti e corredi non sommano tra loro il medesimo beneficio. Talenti e
+proprietà pertinenti delle armature restano applicabili separatamente. Tutti hanno Qualità Non comune e PS
+Integrità 12; i PI sono propri del corredo.
+Corredo PI REP Costo
+Valigetta investigativa ISC 4 RA 2.000
+Corredo d’intrusione ISC 4 RA 1.500
+Kit di controsorveglianza ISC 4 RA 2.500
+Corredo da artificiere Imperial 6 RA 2.000
+Corredo da ricognizione Imperial 4 NC 2.000
+Corredo di sopravvivenza ambientale 4 NC 1.500
+Corredo da assalto verticale 6 NC 1.500
+Corredo di manutenzione Imperial 6 NC 2.000
+Kit trauma Imperial 6 RA 3.000
+Valigetta investigativa ISC
+Comprende strumenti portatili per individuare, raccogliere ed esaminare tracce materiali. Concede +2 VA a
+Percezione per esaminare tali tracce mediante gli strumenti e a Scienza per analisi preliminari eseguibili con la
+dotazione portatile. Non concede un bonus generale alla vigilanza e non sostituisce un laboratorio completo.
+Corredo d’intrusione ISC
+Concede +2 VA a Tecnologia per intervenire su serrature elettroniche, allarmi e sistemi di accesso raggiungibili e
+compatibili. Richiede accesso materiale e condizioni adatte: non apre automaticamente i varchi e non supera da
+solo le protezioni del sistema.
+Kit di controsorveglianza ISC
+Concede +2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica
+di locali e apparecchi accessibili. Non individua automaticamente chi segue o osserva il personaggio e non
+concede un bonus generale a Percezione.
+Corredo da artificiere Imperial
+Concede +2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili. Comprende gli
+strumenti, non le cariche, le munizioni o i componenti destinati a rimanere installati. Restano competenze, tempi e
+rischi delle normali Prove.
+Corredo da ricognizione Imperial
+Comprende binocolo, monocolo periscopico e strumenti per registrare osservazioni e riferimenti del terreno.
+Concede +2 VA a Percezione per osservazioni effettuate attraverso le ottiche, con visuale e illuminazione
+sufficienti. Non conferisce visione notturna né bonus all’ascolto; osservare o cercare mantiene il normale costo in
+Azioni.
+Corredo di sopravvivenza ambientale
+Comprende strumenti per orientarsi, raccogliere risorse e allestire un riparo individuale. All’acquisto si sceglie un
+ambiente: boscoso, giungla, deserto oppure artico. Concede +2 VA a Sopravvivenza nell’ambiente scelto per
+orientarsi con i riferimenti disponibili, reperire risorse utilizzabili e predisporre un riparo.
+Il prezzo comprende la dotazione riutilizzabile; acqua, viveri e medicinali si acquistano separatamente. Non
+concede bonus alle Salvezze contro il clima. Fuori dall’ambiente previsto, i componenti concretamente utilizzabili
+valgono come strumenti Standard.
+Corredo da assalto verticale
+Comprende imbracatura, corda da 20 Q, discensore, moschettoni e ancoraggi. Concede +2 VA ad Atletica per
+arrampicarsi o calarsi utilizzando effettivamente il corredo. Preparare una linea su un ancoraggio già adatto
+richiede un minuto; crearne uno nuovo dipende dalla superficie e dall’intervento necessario.
+Non aumenta automaticamente la distanza percorribile. La corda protegge dalle Cadute soltanto se il personaggio
+è assicurato a un ancoraggio valido. L’Imbracatura tecnica 1 della Grey Ghost può aggiungere il proprio +1
+quando ricorrono anche le sue condizioni.
+Corredo di manutenzione Imperial
+Comprende utensili, strumenti diagnostici e attrezzatura per interventi su armi, armature, propulsori ed
+esoscheletri compatibili. Concede +2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul
+campo.
+Pezzi di ricambio e materiali necessari si conteggiano separatamente. Restano tempi, Prove e limiti delle
+riparazioni; il corredo non ripristina automaticamente PI.
+Kit trauma Imperial
+Il Kit trauma è il Kit di pronto soccorso Professionale del §7.19. Concede +2 VA a Medicina e comprende cinque
+applicazioni; costo 3.000, ricarica da cinque applicazioni 300. Una medicazione riuscita arresta il Sanguinamento
+e recupera 1d4 PV; un Magistrale raddoppia il risultato del dado. Non cura stati di Ferita o Menomazioni.
+Si spende una dose all’inizio di ogni tentativo di pronto soccorso o trattamento traumatico su un paziente.
+Fallimento e interruzione non restituiscono la dose. Una semplice diagnosi non consuma materiali; a dosi esaurite
+restano possibili diagnosi e procedure che non richiedono i materiali mancanti.
+Si applicano la procedura e i limiti sanitari del §7.19.1. Il kit non cura stati di Ferita o Menomazioni e non
+equivale a una struttura sanitaria. Soccorso Immediato e Strumentazione Efficace mantengono i rispettivi benefici;
+i requisiti dei Talenti sanitari devono essere soddisfatti separatamente.
+7.14.9 Dotazioni per reparto
+I corredi si assegnano in base alla missione e si aggiungono al costo di armatura e armi. Una dotazione
+specialistica non viene assegnata automaticamente a tutti i membri del reparto.
+Reparto o impiego Corredi e dotazioni
+Investigazione, intrusione e controsorveglianza agli operatori
+Agenti ISC
+incaricati; Rainy Dayer secondo missione
+Trencher e Highland Clan Warriors Sopravvivenza ambientale; manutenzione agli specialisti
+Stormtrencher e Golden Panthers Assalto verticale e Jet-Chute; artificiere agli specialisti di breccia
+Grey Ghost Intrusione, assalto verticale o artificiere secondo missione
+Blood Berets e Golden Lions Manutenzione; artificiere e Kit trauma agli specialisti
+Wolfbanes, Headhunters e Warhounds Sopravvivenza ambientale e assalto verticale secondo missione
+Pathfinders Ricognizione e sopravvivenza ambientale; Howler agli specialisti
+Mourning Wolves Ricognizione e sopravvivenza ambientale; Howler agli specialisti
+Life Dragoons e Young Guard Ricognizione; Kit trauma agli operatori incaricati
+Ricognizione e sopravvivenza ambientale; manutenzione agli
+Cavalieri Fenris e piloti del Necromower
+specialisti
+Sicurezza e inseguimento Iron Mastiff con referente e controller abbinato
+Esempio di dotazione Costo
+Stormtrencher e Jet-Chute 14.500
+Pathfinder e Howler 11.500
+Abito ISC e Rainy Dayer 11.000
+Gli esempi sommano soltanto i componenti indicati. Munizioni, ulteriori corredi e ricambi si aggiungono
+separatamente; non si applicano riduzioni automatiche per l’acquisto dell’intera dotazione.

@@ -1,0 +1,215 @@
+7.17 Catalogo Fratellanza
+Il catalogo comprende quattordici protezioni iconiche Standard. AR magica e protezioni occulte indicate sono
+passive mentre l’armatura è indossata e non richiedono Sintonizzazione. Armi, Scudi, UMC e corredi si
+aggiungono al prezzo del modello. Sigilli, talismani, tatuaggi e rune come oggetti o pratiche autonome saranno
+integrati con Tecniche Interiori e Artefatti.
+7.17.1 Proprietà comuni
+AR magica
+È già compresa nell’AR totale, non si aggiunge una seconda volta. Una corazza AR 6, di cui 2 magica, assorbe 6
+contro danni Naturali e Magici e 2 contro danni Eterei.
+Protezione occulta X
+Concede +X alle PS Magia effettivamente richieste contro Oscura Simmetria, Corruzione e Paura. Si applica una
+sola volta anche quando un effetto rientra in più categorie. Non crea una Salvezza altrimenti assente e non si
+trasferisce alle PS Volontà contro Paura.
+Assetto mistico X
+Riduce di X la penalità della propria armatura alle Prove di Potere per lanciare Incantesimi, fino a 0. Non concede
+un bonus positivo e non riduce penalità causate da altri fattori.
+Stabile X
+Concede +X VA alle Prove di Forza o Destrezza contro Sbilanciante quando quella Prova è prevista. Non
+modifica automaticamente le Prove Salvezza e non annulla Sbalzante.
+7.17.2 Profili delle armature
+Modello Categoria AR Magica FOR PI
+Abito protettivo del Revisore Leggera 2 0 3 6
+Corazza del Soldato Media 3 0 5 8
+Corazza del Soldato d’élite Media 4 1 5 10
+Armatura del Pellegrino Media 3 0 5 8
+Armatura dell’Inquisitore Media 4 1 5 10
+Armatura del Mistico Media 4 1 5 10
+Corazza delle Furie Pesante 7 2 7 12
+Corazza dei Sacri Guerrieri Pesante 6 1 7 12
+Armatura delle Valchirie Media 4 1 5 8
+Tuta del Mortificator Leggera 3 1 4 8
+Corazza del Custode dell’Arte Pesante 6 2 7 12
+Corazza degli Arcivescovi Pesante 6 1 7 12
+Armatura della Sentinella Media 4 1 5 8
+Tuta da volo dell’Arcangelo Leggera 2 0 3 6
+Modello Qualità PS INT REP Costo
+Abito protettivo del Revisore Non comune 12 RA 4.000
+Corazza del Soldato Non comune 12 RA 5.500
+Corazza del Soldato d’élite Rara 14 RA 11.500
+Armatura del Pellegrino Non comune 12 RA 6.500
+Armatura dell’Inquisitore Rara 14 MR 18.500
+Armatura del Mistico Rara 14 MR 20.000
+Corazza delle Furie Molto rara 16 MR 32.000
+Corazza dei Sacri Guerrieri Rara 14 MR 23.000
+Armatura delle Valchirie Rara 14 MR 17.500
+Tuta del Mortificator Rara 14 MR 15.500
+Corazza del Custode dell’Arte Molto rara 16 MR 34.000
+Corazza degli Arcivescovi Rara 14 MR 22.000
+Armatura della Sentinella Rara 14 MR 16.000
+Tuta da volo dell’Arcangelo Non comune 12 RA 6.500
+7.17.3 Proprietà dei modelli
+Abito protettivo del Revisore
+Discreta e Imbottita 1. Mantiene le penalità della Leggera; componenti esterni visibili non vengono nascosti dalla
+proprietà Discreta.
+Corazza del Soldato
+Imbottita 1 e Filtro respiratorio 2. Mantiene le penalità ordinarie della Media.
+Corazza del Soldato d’élite
+Protezione occulta 1, Imbottita 2 e Struttura robusta. I 2 PI aggiuntivi sono compresi nel totale 10.
+Armatura del Pellegrino
+Articolazione d’assalto, Imbottita 1 e Stabile 1. Annulla la penalità propria della Media agli attacchi ravvicinati.
+Armatura dell’Inquisitore
+Protezione occulta 2, Assetto mistico 2, Articolazione d’assalto, Imbottita 1 e Struttura robusta. Attacchi
+ravvicinati senza penalità propria dell’armatura; 10 PI comprendono il beneficio della struttura.
+Armatura del Mistico
+Protezione occulta 2, Assetto mistico 3, Imbottita 1 e Struttura robusta. Nessuna penalità propria dell’armatura al
+lancio degli Incantesimi; 10 PI comprendono il beneficio della struttura.
+Corazza delle Furie
+Protezione occulta 2, Assetto mistico 2, Articolazione d’assalto, Imbottita 2, Stabile 2 e Struttura robusta. I 2 PI
+aggiuntivi sono compresi nel totale 12. Lo Scudo delle Guardie Sacre è separato.
+Corazza dei Sacri Guerrieri
+Protezione occulta 1, Assetto mistico 2, Articolazione d’assalto, Assetto da incursione, Imbottita 2 e Struttura
+robusta. Annulla la penalità propria al MOV; 12 PI comprendono il beneficio della struttura.
+Armatura delle Valchirie
+Protezione occulta 1, Assetto mistico 2, Articolazione d’assalto, Assetto da incursione e Imbottita 1. Annulla le
+penalità proprie della Media agli attacchi ravvicinati e al MOV.
+Tuta del Mortificator
+Protezione occulta 1, Assetto mistico 1, Mimetismo 2, Imbottita 1, Imbracatura tecnica 1 e Struttura robusta.
+Concede +2 VA alla Prova unica di Furtività nelle condizioni appropriate e +1 VA ad Atletica per arrampicarsi o
+calarsi utilizzando effettivamente corde e attrezzatura pertinente. Gli 8 PI comprendono il beneficio della
+struttura. AR 3 nativa mantiene la categoria Leggera.
+Corazza del Custode dell’Arte
+Protezione occulta 2, Assetto mistico 5, Imbottita 2 e Struttura robusta. Annulla la penalità propria al lancio degli
+Incantesimi; 12 PI comprendono il beneficio della struttura. La UMC Automatica è la dotazione sanitaria
+consigliata, acquistata separatamente (§7.19.3).
+Corazza degli Arcivescovi
+Il modello appartiene al reparto militare degli Arcivescovi e non viene assegnato automaticamente a ogni titolare
+dell’omonimo rango. Protezione occulta 1, Assetto mistico 2, Articolazione di tiro, Imbottita 2, Filtro respiratorio
+2 e Struttura robusta. La penalità propria al tiro passa da −2 a −1 VA; 12 PI comprendono il beneficio della
+struttura.
+Armatura della Sentinella
+Protezione occulta 1, Assetto mistico 1, Articolazione di tiro, Assetto da pattuglia e Imbottita 1. Annulla le
+penalità proprie della Media al tiro e al MOV.
+Tuta da volo dell’Arcangelo
+È una tuta per piloti, priva di propulsione autonoma. Imbottita 1, Ignifuga 2 e Interfaccia di pilotaggio 1: +1 VA a
+Pilotare aeromobili compatibili mentre è collegata a comandi funzionanti e alimentati. Collegarsi o scollegarsi
+richiede 1 AzP. Non richiede un innesto neurale e non modifica gli attacchi con le armi del mezzo. Paracadute,
+ossigeno ed equipaggiamento di emergenza sono separati.
+7.17.4 Penalità effettive
+I valori seguenti comprendono le proprietà native dell’armatura, prima di rinforzi, FOR insufficiente e altre cause.
+Lancio riguarda esclusivamente la Prova di Potere per gli Incantesimi; Agilità segue il §7.11.1.
+Modello Ravv. Distanza Agilità MOV Lancio
+Revisore 0 0 0 0 −1
+Soldato / Soldato d’élite −1 −1 −1 −1 −3
+Pellegrino 0 −1 −1 −1 −3
+Inquisitore 0 −1 −1 −1 −1
+Mistico −1 −1 −1 −1 0
+Furie −1 −2 −2 −2 −3
+Sacri Guerrieri −1 −2 −2 0 −3
+Valchirie 0 −1 −1 0 −1
+Mortificator 0 0 0 0 0
+Custode dell’Arte −2 −2 −2 −2 0
+Arcivescovi −2 −1 −2 −2 −3
+Sentinella −1 0 −1 0 −2
+Arcangelo 0 0 0 0 −1
+7.17.5 Rinforzi e impieghi specialistici
+Tutte le Leggere e Medie ammettono un solo Rinforzo Leggero, acquistato separatamente per 1.000. Aggiunge 1
+AR ordinaria e 1 FOR richiesta; conserva PI propri e non aumenta AR magica. Furie, Sacri Guerrieri, Custode e
+Arcivescovi non ammettono rinforzi ordinari.
+Modello rinforzato AR totale Magica FOR
+Revisore 3 0 4
+Soldato / Pellegrino 4 0 6
+Soldato d’élite / Inquisitore / Mistico 5 1 6
+Valchirie 5 1 6
+Mortificator 4 1 5
+Sentinella 5 1 6
+Arcangelo 3 0 4
+Revisore, Mortificator e Arcangelo rinforzati utilizzano le penalità della Media, mantenendo le proprie proprietà.
+Mortificator rinforzato: −1 VA ad attacchi e Agilità, −1 MOV e −2 VA al lancio dopo Assetto mistico 1. Per
+l’Arcangelo il rinforzo deve essere compatibile con sedile e imbracatura; la penalità al lancio diventa −3. Gli altri
+modelli restano Medi.
+Specializzazione Profilo di protezione
+Inquisitore Maggiore Armatura dell’Inquisitore
+Vestale Armatura delle Valchirie
+Assassino Tuta del Mortificator
+Pellegrino Esecutore Armatura del Pellegrino
+Crucifier Armatura della Sentinella
+Queste assegnazioni non concedono Talenti personali o capacità di Classe. Le Furie impiegano Deliverer e Scudo
+delle Guardie Sacre; AR 7 più AR passiva 2 dello Scudo dà AR 9, di cui 2 magica. Lo Scudo segue la propria
+scheda. I Sacri Guerrieri impiegano Avenger; Valchirie e Vestali Castigator a due mani; Mortificator e Assassini
+Mortis e Nemesis. Il Crucifier con due mitragliette rispetta le regole delle due armi e non ottiene Azioni gratuite.
+7.17.6 Corredi operativi
+I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente
+utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature
+restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non
+espressamente inclusi si acquistano separatamente.
+Corredo PI REP Costo
+Investigazione 4 RA 2.000
+Intrusione 4 RA 1.500
+Controsorveglianza 4 RA 2.500
+Ricognizione 4 NC 2.000
+Sopravvivenza ambientale 4 NC 1.500
+Assalto verticale 6 NC 1.500
+Artificiere 6 RA 2.000
+Manutenzione 6 NC 2.000
+Kit trauma 6 RA 3.000
+Consultazione occultistica 4 RA 2.500
+Investigazione
++2 VA a Percezione per esaminare tracce materiali attraverso gli strumenti e a Scienza per analisi preliminari
+realizzabili con una dotazione portatile. Non sostituisce un laboratorio né concede un bonus generale alla
+vigilanza.
+Intrusione
++2 VA a Tecnologia per intervenire su serrature elettroniche, allarmi e sistemi di accesso materialmente
+raggiungibili e compatibili. Restano i normali tempi, le Prove e le protezioni del sistema.
+Controsorveglianza
++2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e
+apparecchi accessibili. Non individua automaticamente chi segue o osserva il personaggio.
+Ricognizione
+Binocolo, monocolo periscopico e strumenti per registrare osservazioni e riferimenti del terreno. +2 VA a
+Percezione per osservazioni attraverso le ottiche, con visuale e luce sufficienti; nessuna visione notturna o bonus
+all’ascolto. Osservare mantiene il normale costo in Azioni.
+Sopravvivenza ambientale
+All’acquisto si sceglie un ambiente, per esempio boscoso, giungla, deserto o artico. +2 VA a Sopravvivenza per
+orientarsi con riferimenti disponibili, reperire risorse e preparare ripari nell’ambiente scelto. Viveri, acqua e
+medicinali sono separati. Altrove, i componenti utilizzabili valgono come strumenti Standard. Nessun bonus alle
+Salvezze contro il clima.
+Assalto verticale
+Imbracatura, corda da 20 Q, discensore, moschettoni e ancoraggi. +2 VA ad Atletica per arrampicarsi o calarsi
+usando il corredo. Preparare una linea su un ancoraggio già adatto richiede un minuto; realizzarne uno nuovo
+dipende dalla superficie. Il corredo non aumenta le distanze e protegge dalle Cadute soltanto quando il
+personaggio è assicurato a un ancoraggio valido.
+Artificiere
++2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili. Comprende gli strumenti;
+cariche, munizioni e componenti destinati a rimanere installati sono separati.
+Manutenzione
++2 VA a Tecnologia per diagnosi, manutenzione e riparazioni sul campo di armi, armature, propulsori ed
+esoscheletri compatibili. Materiali e pezzi di ricambio sono separati. Il corredo non ripristina automaticamente PI.
+Kit trauma
+È il Kit di pronto soccorso Professionale del §7.19: +2 VA a Medicina, cinque applicazioni comprese, ricarica da
+cinque applicazioni 300. Con una medicazione riuscita arresta il Sanguinamento e recupera 1d4 PV; con
+Magistrale raddoppia il risultato del dado. Non cura stati di Ferita o Menomazioni. Tempi, consumi, fallimenti e
+Talenti seguono la procedura sanitaria comune.
+Consultazione occultistica
+Testi, riproduzioni, indici dei culti e strumenti di confronto documentale. +2 VA a Occultismo per consultare e
+confrontare testi, simboli e pratiche documentate, disponendo del tempo e delle condizioni per la consultazione.
+Non individua automaticamente l’Oscura Simmetria e non identifica da solo le proprietà di un Artefatto.
+7.17.7 Dotazioni per reparto
+Reparto o impiego Dotazioni secondo missione
+Revisori Investigazione; intrusione e controsorveglianza agli specialisti
+Soldati e Soldati d’élite Sopravvivenza; manutenzione e Kit trauma agli operatori incaricati
+Pellegrini e Sacri Guerrieri Assalto verticale; artificiere agli specialisti di breccia
+Inquisitori Investigazione e consultazione occultistica
+Mistici Consultazione occultistica e corredo richiesto dalla missione
+Furie Controsorveglianza o Kit trauma agli specialisti
+Valchirie e Vestali Assalto verticale e sopravvivenza
+Mortificator e Assassini Intrusione, assalto verticale e ricognizione
+Custodi dell’Arte UMC Automatica e consultazione occultistica
+Arcivescovi Manutenzione; artificiere e Kit trauma agli specialisti
+Sentinelle e Crucifier Ricognizione e sopravvivenza
+Arcangeli Paracadute ed emergenza secondo aeromobile; sopravvivenza
+Esempio di dotazione Costo
+Mortificator + intrusione + assalto verticale 18.500
+Inquisitore + investigazione + consultazione occultistica 23.000
+Custode + UMC Automatica + 2 emostatiche, 3 coagulanti e 5 curative 56.700
+Gli esempi comprendono soltanto gli elementi elencati. Il Custode costa 34.000, la UMC Automatica vuota
+18.000 e il carico indicato 4.700. Armi, munizioni, ulteriori corredi e ricambi restano separati.

@@ -1,6 +1,6 @@
 # Catalogo dell'equipaggiamento: lotti da estrarre
 
-Stato al 26 settembre 2026 (lotti 2–6 fatti). Fonte: Manuale degli Armamenti v0.50. Metodo: `tools/estrai_manuali.py`
+Stato al 26 settembre 2026 (lotti 2–7 fatti). Fonte: Manuale degli Armamenti v0.50. Metodo: `tools/estrai_manuali.py`
 e `docs/pilota-estrazione-armamenti.md`.
 
 Questa è la lista dei prompt successivi: **un lotto per prompt**, nell'ordine di utilità al
@@ -21,6 +21,7 @@ su quelle pagine: le tabelle impilate contano come una.
 | `scudi.json` | 26 scudi commerciali e corporativi (lotto 3) | §7.4 | 23–30 |
 | `armi_corporative.json` | 39 armi ravvicinate dei cataloghi corporativi (lotto 4) | §7.1.9 | 11–17 |
 | `armature_corporative.json` | 83 armature dei cataloghi corporativi, esoscheletri compresi (lotto 6) | §7.11.5–7.17.5 | 64–103 |
+| `corredi_dispositivi.json` | 60 corredi, dispositivi, esoscheletro APE, Iron Mastiff, armi e granate Imperial; tabella SIN (lotto 7) | §7.12–7.17 | 69–105 |
 | `armi_distanza_corporative.json` | 81 armi a distanza corporative, 19 moduli integrati, 6 munizioni di riferimento (lotto 5) | §7.8 | 36–52 |
 
 Da completare nello stesso ambito, a basso costo:
@@ -299,12 +300,50 @@ In ordine di peso:
     profilo a sistema spento, le penalità effettive e i rinforzi ammessi.
   - **Dubbi per Davide:** nessuno nuovo. In B tre incoerenze di nome (Articolazione da/di tiro,
     Manutenzione semplice/agevolata, titolo Bauhaus senza virgola).
-- **Corredi e dispositivi corporativi:** Propulsore Banshee e Paracadute Capitol
-  (§7.13.4–7.13.5, pp. 74–75, con tabelle «Voce / Regola»), Esoscheletro APE (§7.13.6),
-  corredi da campo e dotazioni per reparto (§7.13.7–7.13.9, §7.14.8–7.14.9, §7.16.5–7.16.6,
-  §7.17.6–7.17.7), armi e granate specialistiche Imperial (§7.14.6–7.14.7, pp. 85–86),
-  Sistema di Interfaccia Neurale e moduli Cybertronic (§7.15.1, §7.15.4–7.15.5, pp. 90–94).
-  Molte regole in prosa: parte resterà testo (`note_manuale`), non dati.
+- ✔ **Corredi e dispositivi corporativi** — §7.12–7.17.7, pp. 69–105 (lotto 7, fatto il 26 settembre
+  2026, commit «Lotto 7 del catalogo: corredi e dispositivi corporativi»). Comprende anche i
+  corredi dell'Alleanza del §7.12 e l'Iron Mastiff (§7.14.5), che stanno fra i dispositivi.
+  - **Fonte:** `docs/lotti/lotto7-corredi-dispositivi/`:
+    - `grezzo/`: i CSV delle pp. 69–106, di cui il lotto legge 24;
+    - `prosa/`: i paragrafi 7.12–7.17;
+    - `pulito/corredi_dispositivi.csv`.
+
+    Generatore `tools/lotti/lotto7_corredi_dispositivi.mjs`, dati
+    `data/equipaggiamento/corredi_dispositivi.json`.
+  - **Oggetti:** 60 in tutto:
+    - 39 corredi professionali (tipo `altro`) e 5 Kit trauma (tipo `sanitario`, 5
+      applicazioni);
+    - propulsore Banshee, 2 paracadute e Jet-Chute, Interfaccia Neurale e 5 moduli IAS (tipo
+      `accessorio`);
+    - esoscheletro APE (tipo `armatura`) e Iron Mastiff (tipo `altro`, con le sue tabelle);
+    - Howler, Rainy Dayer, Granata fumogena ed elettroshock (tipo `arma_distanza`).
+
+    La Frammentazione del §7.14.7 è la Granata a frammentazione commerciale e non si duplica.
+  - **Estrazione:** 60 righe di catalogo; **0 correzioni a mano**.
+    - Le 96 righe di dati delle tabelle lette compaiono tutte identiche nel testo in prosa; il
+      generatore si ferma altrimenti.
+    - 16 righe di continuazione unite.
+    - Qualità, PS e REP assenti da alcune tabelle vengono dalla frase comune del paragrafo, che
+      il generatore controlla.
+  - **Regole nuove del generatore:**
+    1. tabelle senza colonna del nome e tabelle con due intestazioni impilate;
+    2. note prese dal paragrafo sotto il titolo (corredi, armi, moduli) oppure da intervalli
+       di righe riconosciuti da prime e ultime parole (dispositivi), togliendo le righe che
+       ripetono una tabella;
+    3. le tabelle «Voce | Regola», esiti, configurazioni e modalità diventano `tabelle`;
+    4. id con il catalogo quando lo stesso nome esiste in più cataloghi.
+  - **Calcolo nuovo:**
+    - **SIN (§7.15.1):** `sin_armi` elenca 15 armi dei lotti 4 e 5. Con l'Interfaccia Neurale
+      «in uso» aggiunge +SIN al VA per colpire, moduli compresi.
+    - **Rainy Dayer:** `scudo_integrato`, cioè AR +1 e Parata 0 / −4 come Scudo quando è
+      impugnata.
+    - **Howler:** da polso, `mani: 0`.
+    - **APE:** penalità su una singola Abilità (`penalita.abilita`: Furtività −2).
+    - Granata fumogena senza danno (`nessun_danno`).
+  - **Restano testo:** i +2 VA degli strumenti Professionali (solo per le attività descritte),
+    le regole di volo e atterraggio, i moduli IAS, il SIN delle armature, le dotazioni per
+    reparto e gli esempi di costo.
+  - **Dubbi per Davide:** Specializzazione della Rainy Dayer (A.13).
 
 ### 4. Accessori delle armi — §7.3, pp. 19–22
 
@@ -332,7 +371,7 @@ In ordine di peso:
 - **Effetti sulla scheda:** il contatore munizioni della sessione collegato al caricatore
   dell'arma; eventuali modificatori al danno delle munizioni speciali.
 
-### 6. Equipaggiamento sanitario — §7.19, pp. 109–113; §7.12, pp. 70–71
+### 6. Equipaggiamento sanitario — §7.19, pp. 109–113
 
 - **Contenuto:**
   - kit di pronto soccorso (§7.19.1);
@@ -340,7 +379,8 @@ In ordine di peso:
   - UMC (§7.19.3);
   - dispositivi portatili (§7.19.4);
   - diagnostica e chirurgia (§7.19.5);
-  - corredi specialistici dell'Alleanza e kit trauma (§7.12.1–7.12.2).
+  - i corredi dell'Alleanza e i Kit trauma dei cataloghi sono già nel catalogo (lotto 7): qui
+    serve il §7.19, a cui rimandano.
 - **Campi:** tipo `sanitario` (quantità, usi), bonus alle Prove di Medicina. Si collegano alle
   Ferite e al Sanguinamento della modalità tavolo (§5.14, §5.15).
 

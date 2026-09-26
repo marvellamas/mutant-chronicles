@@ -602,7 +602,9 @@ const DADI = /^(\d+d\d+(\+\d+d\d+)*([+-]\d+)?|\d+)$/;
 const EFFETTI_PROPRIETA = ['parata_va', 'va'];
 const CAMPI_PENALITA = ['attacchi_distanza', 'attacchi_ravvicinati', 'agilita', 'movimento_q', 'lancio_potere'];
 
+let nomiAbilitaPenalita = null; // per validaPenalita: le Abilità esistenti
 function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
+  nomiAbilitaPenalita = nomiAbilita;
   const FI = 'equipaggiamento/index';
   if (!isOggetto(eq) || !isOggetto(eq.indice)) {
     err(FI, '', 'indice del catalogo mancante o non è un oggetto JSON');
@@ -627,6 +629,8 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
   const rif = new Set();
   const rimandi = []; // [file, chiave, riferimento] di «stesso_oggetto», controllati alla fine
   const moduli = []; // [file, chiave, riferimento] di «modulo_di» (§7.8), controllati alla fine
+  const rimandiArmi = []; // [file, chiave, riferimento] di «sin_armi» (§7.15.1): devono essere armi
+  const rimandiArmature = []; // [file, chiave, riferimento] di «compatibile_con» (§7.15.4): devono essere armature
   const tipoDi = new Map(); // rif → { tipo, modulo }
   for (const { id: fileId, file: nomeFile } of ind.file) {
     if (!isTesto(nomeFile) || !nomeFile.endsWith('.json')) continue;
@@ -643,6 +647,17 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
       if (f[k] !== undefined && (!Array.isArray(f[k]) || f[k].some((a) => !nomiAbilita.includes(a)))) err(F, k, 'elenco di Abilità esistenti');
     }
     if (f.abilita_difese !== undefined && !nomiAbilita.includes(f.abilita_difese)) err(F, 'abilita_difese', `Abilità "${f.abilita_difese}" inesistente`);
+    // §7.15.1: tabella SIN delle armi
+    if (f.sin_armi !== undefined) {
+      if (!Array.isArray(f.sin_armi)) err(F, 'sin_armi', 'deve essere un elenco');
+      else f.sin_armi.forEach((x, j) => {
+        const k = `sin_armi[${j}]`;
+        if (!isTesto(x?.rif)) err(F, `${k}.rif`, 'riferimento "file:id" mancante');
+        else rimandiArmi.push([F, `${k}.rif`, x.rif]);
+        if (![1, 2].includes(x?.valore)) err(F, `${k}.valore`, 'SIN 1 o SIN 2 (§7.15.1: il bonus arriva fino a +2)');
+        if (!isTesto(x?.prova)) err(F, `${k}.prova`, 'testo mancante (Prova a cui si applica)');
+      });
+    }
     // §7.8: «Munizioni di riferimento dei lanciatori» (dati della munizione, non del lanciatore)
     const nomiMunizioni = [];
     if (f.munizioni_riferimento !== undefined) {
@@ -683,6 +698,23 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
       if (o.for_richiesta !== undefined && o.for_richiesta !== null && !(isIntero(o.for_richiesta) && o.for_richiesta >= 1 && o.for_richiesta <= 10)) {
         err(F, `${k}.for_richiesta`, `deve essere un intero da 1 a 10, trovato ${JSON.stringify(o.for_richiesta)}`);
       }
+      // tabelle del manuale riportate con l'oggetto (regole di volo, esiti, configurazioni)
+      if (o.tabelle !== undefined) {
+        if (!Array.isArray(o.tabelle)) err(F, `${k}.tabelle`, 'deve essere un elenco');
+        else o.tabelle.forEach((t, j) => {
+          const kk = `${k}.tabelle[${j}]`;
+          if (!isTesto(t?.titolo) || !Array.isArray(t?.colonne) || !t.colonne.length || !Array.isArray(t?.righe)) err(F, kk, 'serve { titolo, colonne, righe }');
+          else t.righe.forEach((r, n) => { if (!Array.isArray(r) || r.length !== t.colonne.length) err(F, `${kk}.righe[${n}]`, `servono ${t.colonne.length} celle`); });
+        });
+      }
+      // §7.19: applicazioni dei kit sanitari e ricarica
+      if (o.applicazioni !== undefined && !(isIntero(o.applicazioni) && o.applicazioni >= 1)) err(F, `${k}.applicazioni`, 'intero ≥ 1');
+      if (o.ricarica !== undefined && !(isOggetto(o.ricarica) && isIntero(o.ricarica.applicazioni) && isIntero(o.ricarica.costo))) err(F, `${k}.ricarica`, 'serve { applicazioni, costo }');
+      if (o.innesto !== undefined && !['interfaccia_neurale'].includes(o.innesto)) err(F, `${k}.innesto`, 'innesto sconosciuto (ammesso: interfaccia_neurale)');
+      if (o.compatibile_con !== undefined) {
+        if (!Array.isArray(o.compatibile_con) || !o.compatibile_con.length) err(F, `${k}.compatibile_con`, 'elenco di riferimenti "file:id"');
+        else o.compatibile_con.forEach((r, j) => rimandiArmature.push([F, `${k}.compatibile_con[${j}]`, r]));
+      }
       if (o.reperibilita !== undefined && !(modulo && o.reperibilita === null) && !rep.includes(o.reperibilita)) err(F, `${k}.reperibilita`, `sigla "${o.reperibilita}" non in index.json (${rep.join(', ')})`);
       if (o.proprieta !== undefined) {
         if (!Array.isArray(o.proprieta)) err(F, `${k}.proprieta`, 'deve essere un elenco');
@@ -700,10 +732,14 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
       if (o.tipo === 'arma_ravvicinata' || o.tipo === 'arma_distanza') {
         if (!nomiAbilita.includes(o.abilita)) err(F, `${k}.abilita`, `Abilità "${o.abilita}" inesistente in abilita.json`);
         if (o.specializzazione !== undefined && o.specializzazione !== null && !idSpec.includes(o.specializzazione)) err(F, `${k}.specializzazione`, `Specializzazione "${o.specializzazione}" inesistente`);
-        if (![1, 2, '1/2'].includes(o.mani)) err(F, `${k}.mani`, 'deve essere 1, 2 oppure "1/2"');
+        // 0: arma da polso che non impegna la mano (Howler, §7.14.6)
+        if (![0, 1, 2, '1/2'].includes(o.mani)) err(F, `${k}.mani`, 'deve essere 0 (da polso), 1, 2 oppure "1/2"');
         if (o.danno_da_munizione === true) {
           // §7.7: «Munizione» nella colonna Danno: il danno viene dalla munizione caricata
           if (o.danno !== null) err(F, `${k}.danno`, 'con "danno_da_munizione": true il danno deve essere null');
+        } else if (o.nessun_danno === true) {
+          // §7.14.7: la Granata fumogena non infligge danni
+          if (o.danno !== null) err(F, `${k}.danno`, 'con "nessun_danno": true il danno deve essere null');
         } else if (!isOggetto(o.danno)) err(F, `${k}.danno`, 'serve { una_mano, due_mani } (oppure "danno_da_munizione": true)');
         else {
           for (const m of ['una_mano', 'due_mani']) if (o.danno[m] !== null && o.danno[m] !== undefined && !DADI.test(o.danno[m])) err(F, `${k}.danno.${m}`, `"${o.danno[m]}" non è una formula di dadi (es. 1d6+1, 2)`);
@@ -742,6 +778,15 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
           }
         }
         if (o.manovre !== undefined && (!Array.isArray(o.manovre) || !o.manovre.length || o.manovre.some((m) => !isTesto(m)))) err(F, `${k}.manovre`, 'elenco delle Manovre compatibili');
+        // §7.14.6: arma che protegge anche come Scudo (Rainy Dayer aperta)
+        if (o.scudo_integrato !== undefined) {
+          const s = o.scudo_integrato;
+          if (!isOggetto(s) || !isTesto(s.condizione)) err(F, `${k}.scudo_integrato`, 'serve { condizione, ar, parata }');
+          else {
+            if (!(isOggetto(s.ar) && isIntero(s.ar.totale) && isIntero(s.ar.magica ?? 0))) err(F, `${k}.scudo_integrato.ar`, 'serve { totale, magica }');
+            if (!(isOggetto(s.parata) && isIntero(s.parata.ravvicinata) && isIntero(s.parata.distanza))) err(F, `${k}.scudo_integrato.parata`, 'serve { ravvicinata, distanza } con modificatori interi');
+          }
+        }
         if (o.natura_danno !== undefined && !['Naturale', 'Magico', 'Etereo'].includes(o.natura_danno)) err(F, `${k}.natura_danno`, 'Naturale, Magico o Etereo');
         if (o.modalita !== undefined) {
           const legenda = isOggetto(f.modalita) ? Object.keys(f.modalita) : [];
@@ -804,6 +849,16 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
     });
   }
   for (const [F, k, r] of rimandi) if (!rif.has(r)) err(F, k, `"${r}" non è un oggetto del catalogo (formato "file:id")`);
+  for (const [F, k, r] of rimandiArmi) {
+    const t = tipoDi.get(r);
+    if (!t) err(F, k, `"${r}" non è un oggetto del catalogo (formato "file:id")`);
+    else if (!['arma_ravvicinata', 'arma_distanza'].includes(t.tipo)) err(F, k, `"${r}" non è un'arma`);
+  }
+  for (const [F, k, r] of rimandiArmature) {
+    const t = tipoDi.get(r);
+    if (!t) err(F, k, `"${r}" non è un oggetto del catalogo (formato "file:id")`);
+    else if (t.tipo !== 'armatura') err(F, k, `"${r}" non è un'armatura`);
+  }
   for (const [F, k, r] of moduli) {
     const t = tipoDi.get(r);
     if (!t) err(F, k, `"${r}" non è un oggetto del catalogo (formato "file:id")`);
@@ -814,6 +869,12 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err) {
 function validaPenalita(F, k, p, err) {
   if (!isOggetto(p)) { err(F, k, 'deve essere un oggetto di penalità'); return; }
   for (const [c, v] of Object.entries(p)) {
+    // penalità a singole Abilità (Furtività −2 dell'APE, §7.13.6)
+    if (c === 'abilita') {
+      if (!isOggetto(v) || Object.values(v).some((x) => !isIntero(x) || x > 0)) err(F, `${k}.abilita`, 'serve { Abilità: intero ≤ 0 }');
+      else for (const a of Object.keys(v)) if (nomiAbilitaPenalita && !nomiAbilitaPenalita.includes(a)) err(F, `${k}.abilita.${a}`, `Abilità "${a}" inesistente`);
+      continue;
+    }
     if (!CAMPI_PENALITA.includes(c)) err(F, `${k}.${c}`, `penalità sconosciuta (ammesse: ${CAMPI_PENALITA.join(', ')})`);
     else if (!isIntero(v) || v > 0) err(F, `${k}.${c}`, 'deve essere un intero ≤ 0');
   }

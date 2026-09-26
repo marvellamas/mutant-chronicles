@@ -214,7 +214,15 @@ export function aggiungiDanno(formula, n) {
   return `${s} ${n > 0 ? '+' : ''}${n}`;
 }
 
-const maniDi = (def) => (def?.mani === 2 ? 2 : 1); // "1/2" (Versatile) impegna almeno una mano
+// "1/2" (Versatile) impegna almeno una mano; 0 = da polso, non impegna la mano (Howler, §7.14.6)
+const maniDi = (def) => (def?.mani === 2 ? 2 : def?.mani === 0 ? 0 : 1);
+
+/** Tabella SIN delle armi (§7.15.1), raccolta dai file del catalogo: rif → { valore, prova }. */
+export function tabellaSin(dati) {
+  const out = new Map();
+  for (const f of Object.values(dati?.equipaggiamento?.file ?? {})) for (const x of f.sin_armi ?? []) out.set(x.rif, x);
+  return out;
+}
 
 /**
  * Effetti dell'equipaggiamento attivo sulla scheda.
@@ -264,6 +272,8 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     }
     // §7.11.1: armature — penalità di categoria e FOR mancante su Agilità, Difese e attacchi
     for (const a of agilitaAbilita) aggiungi(a, (penalita.agilita ?? 0) - forMancante);
+    // penalità proprie del modello su singole Abilità (APE: Furtività −2, §7.13.6)
+    for (const [a, v] of Object.entries(penalita.abilita ?? {})) aggiungi(a, v);
     aggiungi(difeseAbilita, -forMancante);
     attacchiRavv += (penalita.attacchi_ravvicinati ?? 0) - forMancante;
     attacchiDist += (penalita.attacchi_distanza ?? 0) - forMancante;
@@ -296,6 +306,10 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   // Parata a distanza con un'arma: Giocatore §5.9 (dai dati, regole.json → difese)
   const parataDistanzaArma = dati.regole?.difese?.parata_distanza_arma ?? null;
 
+  // §7.15.1: con un Innesto di Interfaccia Neurale in uso, le armi con SIN ricevono +SIN al VA per colpire
+  const interfaccia = oggetti.find((x) => x.attivo && x.def?.innesto === 'interfaccia_neurale') ?? null;
+  const sin = interfaccia ? tabellaSin(dati) : new Map();
+
   // Armi impugnate: VA per colpire, danno, Parata
   const armi = [];
   const profiloArma = (o, d, extra = {}) => {
@@ -312,6 +326,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       // §7.1.3: Precisa X concede +X VA alle Prove per colpire con l'arma
       ...(d?.proprieta ?? []).filter((p) => p.effetto?.va).map((p) => ({ nome: p.nome, valore: p.effetto.va })),
       d?.modificatore_va ? { nome: 'Modificatore VA dell’arma', valore: d.modificatore_va } : null,
+      sin.has(d?.rif) ? { nome: `SIN ${sin.get(d.rif).valore} (${interfaccia.nome}, §7.15.1)`, valore: sin.get(d.rif).valore } : null,
       forPen ? { nome: `FOR ${FOR} su ${d.for_richiesta} richiesta (§7.1.6)`, valore: -forPen } : null,
       armatura ? { nome: 'Armatura (§7.11.1)', valore: armatura } : null,
     ].filter(Boolean) : [];
@@ -358,6 +373,20 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     for (const m of moduliDi(o.def, cat)) {
       profiloArma({ ...o, uid: `${o.uid}:${m.id}`, nome: m.nome, tipo: m.tipo, personalizzato: false }, m, { moduloDi: o.nome, mov: 0 });
     }
+  }
+
+  // Armi che proteggono anche come Scudo (Rainy Dayer aperta, §7.14.6): AR passiva e Parata come
+  // uno Scudo, con i modificatori propri e la FOR insufficiente dell'arma (§7.1.6)
+  for (const o of oggetti.filter((x) => x.attivo && x.def?.scudo_integrato)) {
+    const s = o.def.scudo_integrato;
+    const forMancante = o.def.for_richiesta ? Math.max(0, o.def.for_richiesta - FOR) : 0;
+    const calcola = (par) => ({ ravvicinata: difeseVa + par.ravvicinata - forMancante, distanza: difeseVa + par.distanza - forMancante });
+    protezioni.push({
+      uid: `${o.uid}:scudo`, nome: `${o.nome} (${s.condizione})`, tipo: 'scudo', categoria: null, taglia: null,
+      ar: s.ar, penalita: {}, forRichiesta: o.def.for_richiesta ?? null, forMancante, personalizzato: false, mov: 0,
+      parata: difeseVa === null ? null : { ...calcola(s.parata), modificatori: s.parata, difese: difeseVa },
+      alternative: [], proprieta: [], rinforziAmmessi: null, supporti: null, daArma: true,
+    });
   }
 
   // Attacchi con lo Scudo imbracciato (Scudo Punisher §7.4.1, lama delle Guardie Sacre §7.4.10)

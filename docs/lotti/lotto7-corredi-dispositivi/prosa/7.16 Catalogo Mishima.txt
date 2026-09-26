@@ -1,0 +1,172 @@
+7.16 Catalogo Mishima
+Il catalogo comprende dodici armature iconiche Standard. La categoria è propria del modello e non dipende
+soltanto dall’AR. Powersuit, Shoa Ace Custom e Demonhunter sono esoscheletri indossabili; i Droni sono un
+reparto umano e la loro corazza non è un robot. Armi e corredi si acquistano separatamente.
+7.16.1 Profili delle armature
+Modello Categoria AR Magica FOR PI
+Armatura Ashigaru Leggera 1 0 3 6
+Corazza Samurai Bushido Media 3 0 5 8
+Corazza Samurai Ronin Media 3 0 5 8
+Corazza Hatamoto Pesante 5 0 7 12
+Armatura dei Draghi Tigre Media 3 0 5 8
+Corazza dei Diavoli Scarlatti Media 4 0 6 10
+Tuta delle Ombre Leggera 2 0 3 6
+Armatura dei Portatori di Morte Leggera 3 0 4 8
+Corazza dei Droni Pesante 5 0 7 12
+Powersuit Pesante 5 0 5 / 7 12
+Shoa Ace Custom Pesante 6 0 5 / 8 14
+Demonhunter Pesante 6 1 5 / 8 14
+Modello Qualità PS INT REP Costo
+Armatura Ashigaru Comune 10 NC 1.800
+Corazza Samurai Bushido Non comune 12 NC 5.500
+Corazza Samurai Ronin Non comune 12 NC 5.500
+Corazza Hatamoto Rara 14 RA 13.500
+Armatura dei Draghi Tigre Non comune 12 RA 9.500
+Corazza dei Diavoli Scarlatti Non comune 12 RA 10.500
+Tuta delle Ombre Non comune 12 RA 8.500
+Armatura dei Portatori di Morte Rara 14 MR 11.500
+Corazza dei Droni Non comune 12 RA 13.500
+Powersuit Rara 14 MR 22.000
+Shoa Ace Custom Rara 14 MR 34.000
+Demonhunter Rara 14 MR 42.000
+Magica indica la componente già compresa nell’AR totale. Le coppie FOR indicano sistema acceso / spento. PI e
+AR non diminuiscono quando l’alimentazione termina. Le protezioni prive di componente magica hanno AR
+magica 0.
+7.16.2 Proprietà delle armature
+Armatura Ashigaru
+Manutenzione agevolata: +1 VA alle Prove di Tecnologia per riparare questa armatura, disponendo degli
+strumenti e dei ricambi necessari. Non ripristina automaticamente PI.
+Corazza Samurai Bushido
+Articolazione d’assalto e Imbottita 1. La penalità propria della Media agli attacchi ravvicinati diventa 0; le altre
+restano invariate.
+Corazza Samurai Ronin
+Articolazione di tiro e Imbottita 1. La penalità propria della Media agli attacchi a distanza diventa 0; le altre
+restano invariate.
+Corazza Hatamoto
+Struttura robusta, Imbottita 2 e Articolazione d’assalto. I 2 PI aggiuntivi sono compresi nel totale 12. La penalità
+agli attacchi ravvicinati passa da −2 a −1 VA.
+Armatura dei Draghi Tigre
+Assetto da incursione, Articolazione d’assalto e Mimetismo 1. Annulla le penalità proprie della Media al MOV e
+agli attacchi ravvicinati. Il mimetismo concede +1 VA alla Prova unica di Furtività quando ricorrono le condizioni
+per nascondersi.
+Corazza dei Diavoli Scarlatti
+Struttura robusta, Imbottita 2 e Filtro respiratorio 2. I 2 PI aggiuntivi sono compresi nel totale 10; restano le
+penalità della Media.
+Tuta delle Ombre
+Mimetismo 2, Imbottita 1 e Imbracatura tecnica 1. Concede +2 VA alla Prova unica di Furtività nelle condizioni
+appropriate; l’imbracatura concede +1 VA ad Atletica per arrampicarsi o calarsi utilizzando effettivamente corde
+e attrezzature pertinenti.
+Armatura dei Portatori di Morte
+Mimetismo 2, Imbottita 2 e Struttura robusta. AR 3 è nativa del modello, che resta Leggero; gli 8 PI comprendono
+il beneficio della struttura. Il mimetismo concede +2 VA alla Prova unica di Furtività nelle condizioni
+appropriate.
+Corazza dei Droni
+Struttura robusta e Imbottita 2; 12 PI comprendono il beneficio della struttura. L’imbracatura d’artiglieria accoglie
+una sola arma pesante compatibile: riduce di 1 VA la penalità propria dell’armatura al tiro e di 1 Q l’eventuale
+penalità al MOV imposta dall’arma, fino a 0. Montare o sganciare l’arma richiede 1 AzP. Restano requisito di
+FOR, impugnatura e normali Azioni di impiego.
+Powersuit
+Imbottita 2, Assistenza muscolare 1, Colpo assistito 1 e Termoregolazione 2. L’imbottitura resta efficace anche a
+sistema spento; gli altri benefici richiedono alimentazione.
+Shoa Ace Custom
+Imbottita 2, Assistenza muscolare 2, Colpo assistito 2 e Termoregolazione 2. L’imbottitura è passiva; le altre
+proprietà richiedono alimentazione.
+Demonhunter
+Mantiene Assistenza muscolare 2, Colpo assistito 2, Termoregolazione 2 e Imbottita 2 della Shoa Ace Custom.
+Comprende AR magica 1 e Sigilli d’interdizione 2: +2 alle PS Magia effettivamente richieste contro l’Oscura
+Simmetria. AR magica, sigilli e imbottitura restano efficaci anche a sistema spento e non richiedono
+Sintonizzazione. I sigilli non concedono una Salvezza dove l’effetto non la prevede.
+7.16.3 Esoscheletri: alimentazione e impiego
+Assistenza muscolare X concede +X VA alle Prove di Forza o Atletica per sollevare, spingere, trascinare o
+sfondare con il telaio. Non aumenta la Caratteristica, non soddisfa requisiti delle armi e non si applica ad attacchi
+o salti. Colpo assistito X aggiunge X al danno ordinario degli attacchi ravvicinati, una sola volta per applicazione
+di danno. Termoregolazione 2 concede +2 alle PS Tempra contro caldo e freddo ambientali; non aumenta l’AR
+contro attacchi termici.
+Modello e stato Ravv. Distanza Agilità MOV Lancio
+Powersuit accesa −1 −2 −2 −1 −5
+Shoa / Demonhunter accesa 0 −2 −1 0 −5
+Qualsiasi modello spento −2 −2 −2 −2 −5
+Lancio indica la penalità alla Prova di Potere per lanciare Incantesimi. I valori sono le penalità finali del modello,
+prima di altre cause. A sistema spento il telaio conserva la protezione ma usa il requisito FOR e le penalità passive
+indicate.
+Modello Autonomia Ricarica Batteria di ricambio
+Powersuit 8 ore 8 ore 2.000
+Shoa Ace Custom / Demonhunter 6 ore 6 ore 2.500
+Il prezzo comprende una batteria carica. Accendere o spegnere il sistema richiede 1 AzP; sostituire la batteria
+richiede un minuto a sistema spento. L’esoscheletro non fornisce Azioni aggiuntive.
+7.16.4 Compatibilità con i rinforzi
+Armature Rinforzi ammessi
+Ashigaru Un Leggero oppure un Pesante
+Bushido, Ronin, Draghi Tigre, Diavoli Scarlatti, Ombre e Portatori di Morte Un Leggero
+Hatamoto, Droni, Powersuit, Shoa Ace Custom e Demonhunter Nessuno ordinario
+Si applicano aumenti di AR e FOR e PI separati del §7.11.2. Le Leggere rinforzate che raggiungono AR 3 o
+superiore utilizzano le penalità della Media; una categoria nativa Leggera con AR 3 non cambia invece senza
+rinforzo. Le proprietà del modello restano applicabili alle nuove penalità. I rinforzi ordinari non aumentano la
+componente magica.
+7.16.5 Corredi operativi
+I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente
+utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature
+restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non
+espressamente inclusi si acquistano separatamente.
+Corredo PI REP Costo
+Investigazione 4 RA 2.000
+Intrusione 4 RA 1.500
+Controsorveglianza 4 RA 2.500
+Ricognizione 4 NC 2.000
+Sopravvivenza ambientale 4 NC 1.500
+Assalto verticale 6 NC 1.500
+Artificiere 6 RA 2.000
+Manutenzione 6 NC 2.000
+Kit trauma 6 RA 3.000
+Investigazione
++2 VA a Percezione per esaminare tracce materiali attraverso gli strumenti e a Scienza per analisi preliminari
+realizzabili con una dotazione portatile. Non sostituisce un laboratorio né concede un bonus generale alla
+vigilanza.
+Intrusione
++2 VA a Tecnologia per intervenire su serrature elettroniche, allarmi e sistemi di accesso materialmente
+raggiungibili e compatibili. Restano i normali tempi, le Prove e le protezioni del sistema.
+Controsorveglianza
++2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e
+apparecchi accessibili. Non individua automaticamente chi segue o osserva il personaggio.
+Ricognizione
+Binocolo, monocolo periscopico e strumenti per registrare osservazioni e riferimenti del terreno. +2 VA a
+Percezione per osservazioni attraverso le ottiche, con visuale e luce sufficienti; nessuna visione notturna o bonus
+all’ascolto. Osservare mantiene il normale costo in Azioni.
+Sopravvivenza ambientale
+All’acquisto si sceglie un ambiente, per esempio boscoso, giungla, deserto o artico. +2 VA a Sopravvivenza per
+orientarsi con riferimenti disponibili, reperire risorse e preparare ripari nell’ambiente scelto. Viveri, acqua e
+medicinali sono separati. Altrove, i componenti utilizzabili valgono come strumenti Standard. Nessun bonus alle
+Salvezze contro il clima.
+Assalto verticale
+Imbracatura, corda da 20 Q, discensore, moschettoni e ancoraggi. +2 VA ad Atletica per arrampicarsi o calarsi
+usando il corredo. Preparare una linea su un ancoraggio già adatto richiede un minuto; realizzarne uno nuovo
+dipende dalla superficie. Il corredo non aumenta le distanze e protegge dalle Cadute soltanto quando il
+personaggio è assicurato a un ancoraggio valido.
+Artificiere
++2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili. Comprende gli strumenti;
+cariche, munizioni e componenti destinati a rimanere installati sono separati.
+Manutenzione
++2 VA a Tecnologia per diagnosi, manutenzione e riparazioni sul campo di armi, armature, propulsori ed
+esoscheletri compatibili. Materiali e pezzi di ricambio sono separati. Il corredo non ripristina automaticamente PI.
+Kit trauma
+È il Kit di pronto soccorso Professionale del §7.19: +2 VA a Medicina, cinque applicazioni comprese, ricarica da
+cinque applicazioni 300. Con una medicazione riuscita arresta il Sanguinamento e recupera 1d4 PV; con
+Magistrale raddoppia il risultato del dado. Non cura stati di Ferita o Menomazioni. Tempi, consumi, fallimenti e
+Talenti seguono la procedura sanitaria comune.
+7.16.6 Dotazioni per reparto
+Impiego Corredi consigliati secondo missione
+Ashigaru Sopravvivenza ambientale; Kit trauma agli operatori incaricati
+Samurai e Hatamoto Manutenzione; Kit trauma agli specialisti
+Draghi Tigre Ricognizione, sopravvivenza e assalto verticale
+Diavoli Scarlatti Manutenzione; artificiere per gli specialisti di breccia
+Ombre e Portatori di Morte Intrusione, ricognizione e assalto verticale
+Droni Manutenzione; artificiere agli specialisti
+Powersuit, Shoa e Demonhunter Manutenzione e batterie di ricambio
+Intelligence e investigazione Investigazione e controsorveglianza agli operatori incaricati
+Esempio di dotazione Costo
+Ombre + intrusione + assalto verticale + 2 Fumogene 11.740
+Draghi Tigre + ricognizione + sopravvivenza 13.000
+Shoa Ace Custom + manutenzione + batteria di ricambio 38.500
+Le Fumogene seguono il §7.14.7: raggio 2 Q, durata 5 Round e −4 VA agli attacchi a distanza la cui linea visiva
+attraversa la nube. Consentono una normale Prova unica di Furtività, senza un ulteriore bonus. Meka e
+motociclette Dragonbike saranno integrati nella sezione dei mezzi, separatamente dalle armature.

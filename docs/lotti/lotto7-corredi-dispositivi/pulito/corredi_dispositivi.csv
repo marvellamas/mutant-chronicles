@@ -1,0 +1,61 @@
+catalogo,famiglia,nome,tipo,pi,qualita,ps_int,reperibilita,costo
+Alleanza,Corredi professionali,Valigetta investigativa ASA,altro,4,Non comune,12,RA,2000
+Alleanza,Corredi professionali,Corredo d’intrusione ASA,altro,4,Non comune,12,RA,1500
+Alleanza,Corredi professionali,Kit di controsorveglianza ASA,altro,4,Non comune,12,RA,2500
+Alleanza,Corredi professionali,Corredo da artificiere dell’Alleanza,altro,6,Non comune,12,RA,2000
+Alleanza,Kit trauma,Kit trauma dell’Alleanza,sanitario,6,Non comune,12,RA,3000
+Capitol,Corredi professionali,Corredo da ricognizione Rangers,altro,4,Non comune,12,NC,2000
+Capitol,Corredi professionali,Corredo di sopravvivenza ambientale,altro,4,Non comune,12,NC,1500
+Capitol,Corredi professionali,Corredo da assalto verticale,altro,6,Non comune,12,NC,1500
+Capitol,Corredi professionali,Corredo per operazioni subacquee,altro,4,Non comune,12,RA,2000
+Capitol,Corredi professionali,Corredo di manutenzione da campo,altro,6,Non comune,12,NC,2000
+Capitol,Corredi professionali,Valigetta investigativa Capitol,altro,4,Non comune,12,RA,2000
+Capitol,Corredi professionali,Corredo d’intrusione Capitol,altro,4,Non comune,12,RA,1500
+Capitol,Corredi professionali,Kit di controsorveglianza Capitol,altro,4,Non comune,12,RA,2500
+Capitol,Corredi professionali,Corredo da artificiere Capitol,altro,6,Non comune,12,RA,2000
+Capitol,Kit trauma,Kit trauma Capitol,sanitario,6,Non comune,12,RA,3000
+Imperial,Corredi professionali,Valigetta investigativa ISC,altro,4,Non comune,12,RA,2000
+Imperial,Corredi professionali,Corredo d’intrusione ISC,altro,4,Non comune,12,RA,1500
+Imperial,Corredi professionali,Kit di controsorveglianza ISC,altro,4,Non comune,12,RA,2500
+Imperial,Corredi professionali,Corredo da artificiere Imperial,altro,6,Non comune,12,RA,2000
+Imperial,Corredi professionali,Corredo da ricognizione Imperial,altro,4,Non comune,12,NC,2000
+Imperial,Corredi professionali,Corredo di sopravvivenza ambientale,altro,4,Non comune,12,NC,1500
+Imperial,Corredi professionali,Corredo da assalto verticale,altro,6,Non comune,12,NC,1500
+Imperial,Corredi professionali,Corredo di manutenzione Imperial,altro,6,Non comune,12,NC,2000
+Imperial,Kit trauma,Kit trauma Imperial,sanitario,6,Non comune,12,RA,3000
+Mishima,Corredi professionali,Investigazione,altro,4,Non comune,12,RA,2000
+Mishima,Corredi professionali,Intrusione,altro,4,Non comune,12,RA,1500
+Mishima,Corredi professionali,Controsorveglianza,altro,4,Non comune,12,RA,2500
+Mishima,Corredi professionali,Ricognizione,altro,4,Non comune,12,NC,2000
+Mishima,Corredi professionali,Sopravvivenza ambientale,altro,4,Non comune,12,NC,1500
+Mishima,Corredi professionali,Assalto verticale,altro,6,Non comune,12,NC,1500
+Mishima,Corredi professionali,Artificiere,altro,6,Non comune,12,RA,2000
+Mishima,Corredi professionali,Manutenzione,altro,6,Non comune,12,NC,2000
+Mishima,Kit trauma,Kit trauma,sanitario,6,Non comune,12,RA,3000
+Fratellanza,Corredi professionali,Investigazione,altro,4,Non comune,12,RA,2000
+Fratellanza,Corredi professionali,Intrusione,altro,4,Non comune,12,RA,1500
+Fratellanza,Corredi professionali,Controsorveglianza,altro,4,Non comune,12,RA,2500
+Fratellanza,Corredi professionali,Ricognizione,altro,4,Non comune,12,NC,2000
+Fratellanza,Corredi professionali,Sopravvivenza ambientale,altro,4,Non comune,12,NC,1500
+Fratellanza,Corredi professionali,Assalto verticale,altro,6,Non comune,12,NC,1500
+Fratellanza,Corredi professionali,Artificiere,altro,6,Non comune,12,RA,2000
+Fratellanza,Corredi professionali,Manutenzione,altro,6,Non comune,12,NC,2000
+Fratellanza,Kit trauma,Kit trauma,sanitario,6,Non comune,12,RA,3000
+Fratellanza,Corredi professionali,Consultazione occultistica,altro,4,Non comune,12,RA,2500
+Capitol,Dispositivi di volo,Propulsore d’assalto Banshee,accessorio,6,Rara,14,RA,12000
+Capitol,Dispositivi di volo,Paracadute di emergenza Capitol,accessorio,2,Comune,10,NC,1000
+Capitol,Dispositivi di volo,Paracadute tattico Airborne,accessorio,4,Non comune,12,RA,2500
+Imperial,Dispositivi di volo,Jet-Chute Pile Driver,accessorio,6,Non comune,12,RA,6000
+Capitol,Esoscheletri,APE Capitol,armatura,14,Rara,14,MR,55000
+Imperial,Unità robotiche,Iron Mastiff,altro,8,Non comune,12,RA,18000
+Imperial,Armi specialistiche,Howler,arma_distanza,4,Non comune,12,RA,4500
+Imperial,Armi specialistiche,Rainy Dayer,arma_distanza,6,Non comune,12,RA,7500
+Imperial,Granate,Granata fumogena,arma_distanza,4,Comune,10,NC,120
+Imperial,Granate,Granata elettroshock,arma_distanza,4,Non comune,12,RA,200
+Cybertronic,Innesti,Interfaccia Neurale Cybertronic,accessorio,4,Non comune,12,RA,5000
+Cybertronic,Moduli IAS,IAS3100 Generatore Blink,accessorio,6,Rara,14,MR,25000
+Cybertronic,Moduli IAS,IAS3200 Imbracatura antigravità,accessorio,6,Rara,14,MR,18000
+Cybertronic,Moduli IAS,IAS3300 Mirrorshard,accessorio,4,Rara,14,MR,14000
+Cybertronic,Moduli IAS,IAS3400 Disturbatore metafisico,accessorio,6,Rara,14,MR,14000
+Cybertronic,Moduli IAS,Smorzatore acustico Silent,accessorio,4,Rara,14,MR,6000
+Cybertronic,Corredi professionali,Corredo di assistenza Dr. Diana,altro,6,Non comune,12,RA,5000

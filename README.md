@@ -133,6 +133,7 @@ Tutte le regole numeriche stanno in `data/`:
 | `equipaggiamento/armi.json` | armi ravvicinate del catalogo Commerciale (Armamenti §7.1.1–7.1.3) |
 | `equipaggiamento/armi_corporative.json` | armi ravvicinate dei cataloghi corporativi, con Precisa, attivazioni, cariche e Manovre (Armamenti §7.1.9) |
 | `equipaggiamento/armature_corporative.json` | armature dei cataloghi corporativi ed esoscheletri, con penalità effettive, proprietà native, rinforzi ammessi e profilo a sistema spento (Armamenti §7.11.5–7.17.5) |
+| `equipaggiamento/corredi_dispositivi.json` | corredi professionali, Kit trauma, dispositivi di volo, moduli IAS, Interfaccia Neurale con la tabella SIN delle armi, esoscheletro APE, Iron Mastiff, armi e granate Imperial (Armamenti §7.12–7.17) |
 | `equipaggiamento/armi_distanza_corporative.json` | armi a distanza dei cataloghi corporativi, con i moduli integrati (lanciagranate, lanciafiamme) e le munizioni di riferimento dei lanciatori (Armamenti §7.8) |
 | `equipaggiamento/armi_distanza.json` | armi a distanza del catalogo Commerciale, con gittata, caricatore, modalità di fuoco, INC (Armamenti §7.7) |
 | `equipaggiamento/scudi.json` | scudi commerciali e corporativi, con Parata ravvicinata e a distanza e profili alternativi (Armamenti §7.4) |

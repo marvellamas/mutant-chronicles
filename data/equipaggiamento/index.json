@@ -54,6 +54,11 @@
       "id": "scudi",
       "file": "scudi.json",
       "descrizione": "Scudi commerciali e corporativi (§7.4)"
+    },
+    {
+      "id": "corredi_dispositivi",
+      "file": "corredi_dispositivi.json",
+      "descrizione": "Corredi e dispositivi corporativi, esoscheletro APE, armi e granate Imperial, SIN Cybertronic (§7.12–7.17)"
     }
   ]
 }

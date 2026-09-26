@@ -43,6 +43,8 @@ Le risposte già date (Esploratore, minimo 1 incantesimi, quote per macrofamigli
 
 12. **Specializzazioni date per analogia con il §7.7: le confermi?** Nel catalogo Commerciale tutte le armi con Abilità Armi leggere sono Pistole e le armi pesanti a raffica sono Mitragliatori. L'app fa lo stesso con le corporative: 26 armi, fra cui MP105, P1000 e Nemesis 210 (Pistole) e MG40, Deathlock Drum, Kensai (Mitragliatori). Con la proprietà Plasma usa Armi al Plasma, anche per la pistola Hellblazer. Se una di queste va altrove, dillo (vedi anche la domanda 7).
 
+13. **Rainy Dayer: quale Specializzazione? (§7.14.6)** È un'arma da fuoco a corto raggio con ombrello balistico, Armi medie, gittata 30 Q, a due mani al tiro. Il manuale non dice la categoria. Proposta: Carabine. Finché non rispondi nessuna Specializzazione dà +1 con quest'arma.
+
 ## B. Da correggere nella prossima edizione dei manuali
 
 Sono le cose che hai già deciso a voce o che sono errori evidenti: l'app segue la tua decisione, ma il testo stampato dice ancora un'altra cosa e prima o poi qualcuno al tavolo lo aprirà.
@@ -69,7 +71,7 @@ Sono le cose che hai già deciso a voce o che sono errori evidenti: l'app segue 
 ## D. Manuali che l'app aspetta
 
 - Manuale degli Equipaggiamenti e Manuale dei Veicoli (in stesura): diversi Talenti li citano. Quando esistono, ce li passi come PDF nella cartella `Manuali/`.
-- Manuale degli Armamenti v0.50: lo stiamo estraendo a lotti (stato in `docs/equipaggiamento-lotti.md`: fatti armi ravvicinate e a distanza commerciali, armature civili e corporative, scudi, armi ravvicinate e a distanza corporative). Se pubblichi una v0.51 prima che abbiamo finito, avvisaci: le tabelle cambiate vanno ri-estratte.
+- Manuale degli Armamenti v0.50: lo stiamo estraendo a lotti (stato in `docs/equipaggiamento-lotti.md`: fatti armi ravvicinate e a distanza commerciali, armature civili e corporative, scudi, armi ravvicinate e a distanza corporative, corredi e dispositivi corporativi). Se pubblichi una v0.51 prima che abbiamo finito, avvisaci: le tabelle cambiate vanno ri-estratte.
 
 ## Come ci rispondi
 
