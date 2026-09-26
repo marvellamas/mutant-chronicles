@@ -196,6 +196,8 @@ function validaRegole(r, err) {
       if (!isTesto(x?.id)) err(F, `stati.elenco[${i}].id`, 'id mancante (serve a salvare gli Stati attivi della sessione)');
       else if (ids.has(x.id)) err(F, `stati.elenco[${i}].id`, `id "${x.id}" ripetuto`);
       else ids.add(x.id);
+      // i promemoria sono riassunti nostri, non testo del manuale: va dichiarato
+      if (x?.promemoria !== undefined && x.riassunto !== true) err(F, `stati.elenco[${i}].riassunto`, 'il promemoria è un riassunto: serve "riassunto": true');
     });
   }
   // §5.19: Affaticamento, un unico Stato con la sua penalità

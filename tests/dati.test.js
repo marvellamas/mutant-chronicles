@@ -181,3 +181,10 @@ test('avvisi (non bloccanti): Talenti provvisori, tipi e durate da definire', ()
   assert.equal(t.filter((x) => x.file === 'talenti_liberi.json' && x.chiave.endsWith('.tipo')).length, 3);
   assert.equal(t.filter((x) => x.file === 'tecniche_interiori.json').length, 3);
 });
+
+test('Stati (§5.18): i promemoria sono marcati come riassunti, il validatore lo pretende', () => {
+  assert.ok(dati.regole.stati.elenco.every((s) => s.riassunto === true));
+  const d = copia(dati);
+  delete d.regole.stati.elenco[0].riassunto;
+  assert.ok(validaDati(d).some((e) => e.chiave === 'stati.elenco[0].riassunto'));
+});

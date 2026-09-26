@@ -277,7 +277,7 @@ function tabCombattimento(ctx, d) {
         const attivo = s.statiAttivi.includes(st.id);
         return h('li', {}, h('label', { class: `stato-tavolo${attivo ? ' attivo' : ''}` },
           h('input', { type: 'checkbox', checked: attivo, onchange: () => ctx.azioni.commutaStato(st.id) }),
-          h('span', {}, h('strong', {}, st.nome), h('small', {}, ` · ${st.durata}`), h('br', {}), h('span', { class: 'promemoria-stato' }, st.promemoria))));
+          h('span', {}, h('strong', {}, st.nome), h('small', {}, ` · ${st.durata}`), h('br', {}), h('span', { class: 'promemoria-stato' }, st.promemoria, st.riassunto ? h('em', { class: 'riassunto' }, ' (riassunto, non testo del manuale)') : null))));
       }))),
 
     sezione('Armi e protezioni',

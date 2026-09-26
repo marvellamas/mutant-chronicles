@@ -402,70 +402,81 @@
         "id": "a-terra",
         "nome": "A Terra",
         "durata": "fino a quando si rialza",
-        "promemoria": "−4 VA ad azioni fisiche ravvicinate, di equilibrio e alle Difese; niente Corsa o Scatto; contro di lui +2 VA in ravvicinato, −2 VA a distanza (§5.5)."
+        "promemoria": "−4 VA ad azioni fisiche ravvicinate, di equilibrio e alle Difese; niente Corsa o Scatto; contro di lui +2 VA in ravvicinato, −2 VA a distanza (§5.5).",
+        "riassunto": true
       },
       {
         "id": "accecato",
         "nome": "Accecato",
         "durata": "1+1d3 Round",
-        "promemoria": "−8 VA alle Prove che richiedono la vista, Difese comprese; niente Tiro o Colpo Mirato; i nemici non percepiti hanno +4 VA."
+        "promemoria": "−8 VA alle Prove che richiedono la vista, Difese comprese; niente Tiro o Colpo Mirato; i nemici non percepiti hanno +4 VA.",
+        "riassunto": true
       },
       {
         "id": "assordato",
         "nome": "Assordato",
         "durata": "1+1d3 Round",
-        "promemoria": "Fallisce le azioni basate solo sull’udito; −4 VA quando l’udito è importante."
+        "promemoria": "Fallisce le azioni basate solo sull’udito; −4 VA quando l’udito è importante.",
+        "riassunto": true
       },
       {
         "id": "avvelenato",
         "nome": "Avvelenato",
         "durata": "1+1d3 Round, salvo la fonte",
-        "promemoria": "Effetti, danno e frequenza indicati dal veleno; l’antidoto adeguato lo termina."
+        "promemoria": "Effetti, danno e frequenza indicati dal veleno; l’antidoto adeguato lo termina.",
+        "riassunto": true
       },
       {
         "id": "immobilizzato",
         "nome": "Immobilizzato",
         "durata": "1+1d3 Round o fino alla liberazione",
-        "promemoria": "Non può muoversi né usare Corsa o Scatto; −4 VA alle azioni fisiche."
+        "promemoria": "Non può muoversi né usare Corsa o Scatto; −4 VA alle azioni fisiche.",
+        "riassunto": true
       },
       {
         "id": "incendiato",
         "nome": "Incendiato",
         "durata": "1+1d3 Round",
-        "promemoria": "1d4 danni da fuoco ai PV ogni Round, ignorando l’Armatura; −2 VA; 1 AzP e Riflessi per spegnersi."
+        "promemoria": "1d4 danni da fuoco ai PV ogni Round, ignorando l’Armatura; −2 VA; 1 AzP e Riflessi per spegnersi.",
+        "riassunto": true
       },
       {
         "id": "rallentato",
         "nome": "Rallentato",
         "durata": "1+1d3 Round",
-        "promemoria": "Passo 3 Q, niente Corsa o Scatto; −2 VA alle Prove fisiche e alle Difese."
+        "promemoria": "Passo 3 Q, niente Corsa o Scatto; −2 VA alle Prove fisiche e alle Difese.",
+        "riassunto": true
       },
       {
         "id": "sanguinamento",
         "nome": "Sanguinamento",
         "durata": "fino a quando viene fermato",
-        "promemoria": "Perde PV secondo il §5.15, all’Iniziativa della fonte, finché non viene fermato."
+        "promemoria": "Perde PV secondo il §5.15, all’Iniziativa della fonte, finché non viene fermato.",
+        "riassunto": true
       },
       {
         "id": "stordito",
         "nome": "Stordito",
         "durata": "1+1d3 Round",
-        "promemoria": "Solo Passo, nessuna Azione Principale; niente Difese che consumano Azioni."
+        "promemoria": "Solo Passo, nessuna Azione Principale; niente Difese che consumano Azioni.",
+        "riassunto": true
       },
       {
         "id": "svenuto",
         "nome": "Svenuto",
         "durata": "1+1d3 Round, salvo la fonte",
-        "promemoria": "Nessuna Azione né Movimento, cade A Terra, niente Difese attive; perde la Concentrazione."
+        "promemoria": "Nessuna Azione né Movimento, cade A Terra, niente Difese attive; perde la Concentrazione.",
+        "riassunto": true
       },
       {
         "id": "terrorizzato",
         "nome": "Terrorizzato",
         "durata": "1+1d3 Round",
-        "promemoria": "−4 VA a tutte le Prove; deve allontanarsi dalla fonte e non può attaccarla."
+        "promemoria": "−4 VA a tutte le Prove; deve allontanarsi dalla fonte e non può attaccarla.",
+        "riassunto": true
       }
     ],
-    "_nota": "§5.18, tabella «Durate e tempi di risoluzione»: gli Stati sono undici. «promemoria» riassume gli effetti descritti nel §5.18 (A Terra: §5.5) per la scheda e la modalità tavolo; il testo del manuale resta quello di riferimento."
+    "_nota": "§5.18, tabella «Durate e tempi di risoluzione»: gli Stati sono undici. «promemoria» (con \"riassunto\": true) riassume gli effetti descritti nel §5.18 (A Terra: §5.5) per la scheda e la modalità tavolo; il testo del manuale resta quello di riferimento."
   },
   "affaticamento": {
     "stati": [
