@@ -328,7 +328,8 @@ export function serializza(scelte, { versioniDati, livelli, sessione } = {}) {
   const pulite = {};
   for (const k of CAMPI) pulite[k] = scelte?.[k] ?? nuoveScelte()[k];
   const file = { formato: FORMATO_FILE, versione: VERSIONE_FORMATO };
-  if (versioniDati) file.versioni_dati = versioniDati;
+  // in ordine alfabetico: l'ordine di caricamento dei file dati varia, il file esportato no
+  if (versioniDati) file.versioni_dati = Object.fromEntries(Object.entries(versioniDati).sort(([a], [b]) => a.localeCompare(b)));
   file.scelte = pulite;
   if (Array.isArray(livelli) && livelli.length) file.livelli = livelli;
   if (isOggetto(sessione)) file.sessione = sessione;

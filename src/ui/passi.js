@@ -414,7 +414,7 @@ function passoPuntiEroe(ctx) {
 function passoEquipaggiamento(ctx) {
   return [
     h('p', { class: 'riquadro attenzione' }, 'L’equipaggiamento iniziale non ha ancora regole (§2.16: «integrazione successiva»): nessuna dotazione automatica. Inserisci a mano, voce per voce, ciò che concordi con il master.'),
-    h('p', { class: 'nota' }, 'Il catalogo contiene per ora le armi ravvicinate commerciali e le armature civili del Manuale degli Armamenti; il resto si aggiunge come oggetto personalizzato. Nella scheda, solo gli oggetti impugnati, imbracciati o indossati cambiano i valori.'),
+    h('p', { class: 'nota' }, 'Il catalogo contiene gli oggetti del Manuale degli Armamenti (armi, armature, scudi, accessori, munizioni, corredi, equipaggiamento sanitario, artefatti); ciò che manca si aggiunge come oggetto personalizzato. Nella scheda cambiano i valori solo gli oggetti impugnati, imbracciati, indossati o in uso.'),
     renderEquipaggiamento({
       dati: ctx.dati, voci: ctx.scelte.equipaggiamento, ui: ctx.ui,
       aggiorna: (voci) => ctx.aggiorna({ equipaggiamento: voci }),

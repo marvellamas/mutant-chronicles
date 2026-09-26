@@ -220,14 +220,16 @@ function tabIdentita(ctx, d) {
 
 function tabAbilita(ctx, d) {
   const meta = Math.ceil(d.categorie.length / 2);
+  // sul telefono le colonne di dettaglio si nascondono e la formula va sotto il nome (come nel wizard)
   const tabella = (categorie) => h('table', { class: 'tabella compatta abilita-tab' },
-    h('thead', {}, h('tr', {}, ['Abilità', 'Mod', 'Base', 'Corp', 'Avanz', 'Equip', 'VA'].map((c) => h('th', {}, c)))),
+    h('thead', {}, h('tr', {}, ['Abilità', 'Mod', 'Base', 'Corp', 'Avanz', 'Equip', 'VA'].map((c, i) => h('th', { class: i && i < 6 ? 'dettaglio' : null }, c)))),
     categorie.map((cat) => h('tbody', {},
       h('tr', { class: 'categoria' }, h('th', { colspan: 7 }, cat.nome)),
       cat.abilita.map((a) => h('tr', { class: a.diClasse ? 'di-classe' : null },
-        h('th', { scope: 'row' }, info('abilita', a.nome), h('span', { class: 'sigla' }, ` ${a.caratteristica}`), a.diClasse ? ' •' : null),
-        h('td', {}, segno(a.mod)), h('td', {}, String(a.base)), h('td', {}, String(a.corporazione)),
-        h('td', {}, String(a.avanzamento)), h('td', { title: a.equip ? 'Equipaggiamento indossato (§7.11.1)' : null }, a.equip ? segno(a.equip) : '0'), h('td', { class: 'forte' }, String(a.va)))))));
+        h('th', { scope: 'row' }, info('abilita', a.nome), h('span', { class: 'sigla' }, ` ${a.caratteristica}`), a.diClasse ? ' •' : null,
+          h('small', { class: 'formula' }, `${segno(a.mod)} Mod + ${a.base} Base + ${a.corporazione} Corp + ${a.avanzamento} Avanz${a.equip ? ` ${segno(a.equip)} Equip` : ''}`)),
+        h('td', { class: 'dettaglio' }, segno(a.mod)), h('td', { class: 'dettaglio' }, String(a.base)), h('td', { class: 'dettaglio' }, String(a.corporazione)),
+        h('td', { class: 'dettaglio' }, String(a.avanzamento)), h('td', { class: 'dettaglio', title: a.equip ? 'Equipaggiamento indossato (§7.11.1)' : null }, a.equip ? segno(a.equip) : '0'), h('td', { class: 'forte' }, String(a.va)))))));
   return [
     promemoriaPenalita(ctx),
     sezione('Abilità',

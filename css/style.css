@@ -627,7 +627,7 @@ dl.voci.in-linea dt::after { content: ":"; }
 .sezione-tab > h2 { font-size: 1.1rem; margin: 0 0 0.5rem; padding-bottom: 0.25rem; border-bottom: 1px solid var(--bordo); }
 details.sezione-tab > summary { font-weight: 700; cursor: pointer; min-height: 44px; display: flex; align-items: center; }
 .griglia-due { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 0 1.5rem; }
-.abilita-affiancate { display: grid; grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); gap: 0 1.5rem; align-items: start; }
+.abilita-affiancate { display: grid; grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr)); /* 25rem: la tabella a 7 colonne */ gap: 0 1.5rem; align-items: start; }
 .anagrafica { display: grid; grid-template-columns: auto 1fr; gap: 0.35rem 1rem; margin: 0 0 0.75rem; align-items: center; }
 .anagrafica dt { font-weight: 600; }
 .anagrafica dd { margin: 0; }
