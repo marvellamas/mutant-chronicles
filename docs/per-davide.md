@@ -59,6 +59,26 @@ Le risposte già date (Esploratore, minimo 1 incantesimi, quote per macrofamigli
 
 21. **Chroma Viola.** Le regole sono rimandate. L'app oggi permette di registrare un contenitore Viola personalizzato come oggetto inerte (capacità e PM, sintonizzazione, nessun Incantesimo alimentato). Va bene, o è meglio non prevederlo finché non escono le regole?
 
+**Combattimento corpo a corpo (A.22–A.29).** Servono per l'utility «Attacco corpo a corpo» (analisi in `docs/ricognizione-manovre.md`). Oggi l'app non calcola le Manovre: mostra il VA per colpire dell'arma con equipaggiamento e condizioni, e il resto si fa al tavolo. **A.22, A.23 e A.24 bloccano la prima sessione di lavoro**; le altre possono arrivare dopo, e nel frattempo l'app userebbe la proposta indicata segnandola come provvisoria.
+
+22. **Danno base degli attacchi senz'armi (bloccante).** Nessun manuale lo dice per chi non è Lottatore e non ha Arti Marziali. Arti Marziali (§8.6.6) dice che il danno «diventa 1d6», quindi di base è più basso, ma il valore non è scritto; il Lottatore usa il dado della propria Disciplina. Oggi l'app non ha un profilo «senz'armi»: i Tirapugni sono nel catalogo, i pugni no. Serve il dado (per esempio 1d3, oppure 1d4 come la Disciplina Rapidità al I Grado) ed eventuali bonus fissi.
+
+23. **Il −4 della mano non dominante (bloccante).** Ambidestro (§8.6.1, ripreso nel §5.7) «elimina il normale −4 VA quando si usa soltanto la mano non dominante», ma nessun paragrafo definisce questo −4. La mano dominante è già nell'anagrafica del personaggio; oggi l'app non la usa nei calcoli. Serve sapere:
+    - quando si applica: attaccando con un'arma impugnata nella mano non dominante? Anche parando o usando uno scudo?
+    - nel Combattere con due armi, il secondo attacco ha solo il −4 della manovra, oppure anche questo −4? Il §5.7 dice che Ambidestro «non modifica questa manovra».
+
+24. **Incalzare: quale Prova? (bloccante).** Il §5.5 lo descrive come «un attacco ravvicinato o senz'armi a −4 VA», quindi una Prova per colpire contro le Difese del bersaglio. La Disciplina Controllo del Lottatore (§3.5.5) elenca però Incalzare fra le «Prove offensive di Corpo a corpo», insieme a Immobilizzare, Sbilanciare, Disarmare e Stordire, che sono Prove contrapposte o con Corpo a corpo. Oggi l'app non calcola Incalzare. Serve sapere se è una Prova per colpire con l'Abilità dell'arma contro le Difese, oppure una Prova contrapposta (e contro quale Abilità del bersaglio). Serve anche sapere se il bonus di Controllo vale solo senz'armi.
+
+25. **La Copertura vale anche nel corpo a corpo?** Il §5.8 dà −2 (Leggera) e −4 (Media) a chi attacca un bersaglio in Copertura, e le stesse penalità a chi attacca dalla Copertura, senza distinguere distanza e ravvicinato. Per esempio: un avversario dietro un muretto, colpito con una lancia a portata 2 Q. Oggi l'app non gestisce la Copertura. Proposta: vale anche nel ravvicinato quando la Copertura è davvero interposta. Confermi?
+
+26. **Ingaggio multiplo.** Il manuale non dà un malus a chi è ingaggiato da più avversari, né un bonus a chi attacca in superiorità numerica. Fanno eccezione Coordinazione Offensiva dell'Assaltatore (+1 se il bersaglio è adiacente a un alleato) e Colpo Sleale del Lestofante (se il bersaglio è ingaggiato con un altro avversario). È voluto, e resta al modificatore unico di circostanza del Direttore (§1.4, da −8 a +8)? O manca una regola? Oggi l'app non ne tiene conto; la proposta è un campo «circostanze» libero.
+
+27. **Spazzata: bersagli «adiacenti» a chi?** Il §5.12 dice «fino a tre bersagli adiacenti». Adiacenti all'attaccante, o fra loro? Con un'arma a portata 2–3 Q (lancia, arma inastata, mazzafrusto) si possono colpire bersagli entro la portata ma non adiacenti? La stessa domanda vale per Combattimento Multiplo del Lottatore («adiacenti raggiungibili dai suoi colpi»). Proposta: bersagli entro la portata dell'arma e adiacenti fra loro.
+
+28. **Sbilanciare e Disarmare: chi sceglie la difesa del bersaglio?** Sbilanciare è «contro Atletica o Difese»; Disarmare «contro Corpo a corpo o Abilità dell'arma impugnata». Sceglie il bersaglio (quindi il valore più alto), oppure dipende dalla situazione? Proposta: sceglie il bersaglio, e l'app mostra entrambi i valori.
+
+29. **Il Magistrale raddoppia anche i bonus al danno delle Manovre?** Secondo l'ordine del §5.13 i bonus ordinari si sommano prima del moltiplicatore, quindi il Magistrale raddoppia anche il +2 (o +4) del Colpo Mirato, il +1 (o +2) dell'Affondo e il +1 della Specializzazione. Carica Brutale lo dice esplicitamente («prima di applicare il moltiplicatore»); le altre no. Punto Vitale invece è dopo l'Armatura e non si moltiplica. Proposta: tutti i bonus ordinari vengono moltiplicati. Confermi?
+
 ## B. Da correggere nella prossima edizione dei manuali
 
 Sono le cose che hai già deciso a voce o che sono errori evidenti: l'app segue la tua decisione, ma il testo stampato dice ancora un'altra cosa e prima o poi qualcuno al tavolo lo aprirà.
