@@ -101,7 +101,7 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
   display: flex; align-items: center; justify-content: center;
   pointer-events: none;
 }
-.filigrana img { width: 150mm; height: 150mm; object-fit: contain; opacity: 0.07; filter: grayscale(1); }
+.filigrana img { width: 150mm; height: 150mm; object-fit: contain; opacity: 0.08; filter: grayscale(1); }
 
 /* elementi comuni */
 .foglio h1 { font-size: 24pt; margin: 0; line-height: 1.05; }
@@ -118,7 +118,7 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
   --tinta: var(--ss-acciaio); --tinta-tenue: var(--ss-acciaio-tenue);
   display: flex; flex-direction: column; min-height: 0;
   border: 1.2pt solid var(--tinta); border-radius: 1.5mm;
-  background: linear-gradient(180deg, color-mix(in srgb, var(--tinta-tenue) 70%, transparent), rgba(255, 255, 255, 0.35) 60%);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--tinta-tenue) 60%, transparent), transparent 60%);
   break-inside: avoid; overflow: hidden;
 }
 .riquadro-stampa > h2 {
@@ -206,13 +206,28 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .foglio .gruppo-pallini { gap: 0.4mm; }
 
 /* === fogli (sezioni per foglio) === */
-/* Foglio 1 */
-.intestazione-personaggio { margin-bottom: 2mm; }
-.intestazione-personaggio p { font-size: 1.15em; margin: 0.5mm 0 0; }
-.griglia-identita { display: grid; grid-template-columns: 1fr 1fr 1.25fr; gap: 3mm; }
-.coppia { display: grid; grid-template-columns: 1fr 1fr; gap: 2mm; }
-.coppia .riquadro-stampa { margin-bottom: 2mm; }
-.testo-background { white-space: pre-line; }
+/* Foglio 1 — Identità */
+.f1-testa { display: grid; grid-template-columns: auto 1fr; gap: 6mm; align-items: end; margin-bottom: 2mm; }
+.f1-nome h1 { font-size: 26pt; }
+.f1-nome p { margin: 0.5mm 0 0; }
+.f1-anagrafica { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1mm 3mm; margin: 0; }
+.campo-anagrafica { display: flex; flex-direction: column; }
+.campo-anagrafica dt { font-size: var(--ss-font-small); color: var(--ss-grigio); font-weight: 600; }
+.campo-anagrafica dd { margin: 0; min-height: 5.5mm; border-bottom: 0.75pt solid var(--ss-linea); }
+.f1-caratteristiche { margin-bottom: 2mm; flex: none; }
+.tessere { display: grid; grid-template-columns: repeat(6, 1fr); gap: 2.5mm; }
+.tessera {
+  display: grid; grid-template-columns: auto 1fr; grid-template-areas: "sigla nome" "valore valore" "mod mod";
+  align-items: baseline; gap: 0 2mm; padding: 1mm 2mm;
+  border: 1.2pt solid var(--ss-accento); border-radius: 1.5mm; background: rgba(255, 255, 255, 0.75);
+}
+.sigla-car { grid-area: sigla; font-weight: 800; font-size: 13pt; color: var(--ss-accento); }
+.nome-car { grid-area: nome; font-size: var(--ss-font-small); color: var(--ss-grigio); text-align: right; }
+.valore-car { grid-area: valore; font-size: 34pt; font-weight: 800; text-align: center; line-height: 1.05; }
+.mod-car { grid-area: mod; display: flex; justify-content: space-between; font-size: 11pt; }
+.f1-basso { flex: 1; min-height: 0; display: grid; grid-template-columns: 105mm 1fr; gap: 3mm; }
+.f1-basso > .colonna { min-height: 0; }
+.f1-background .testo-background { white-space: pre-line; flex: none; }
 
 /* Foglio 2 */
 .griglia-abilita { display: grid; grid-template-columns: 150mm 1fr; gap: 3mm; height: 100%; }
@@ -241,8 +256,3 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .incantesimo-stampa h4 { font-size: 1.05em; }
 .tabella-stampa.versioni { font-size: 0.85em; margin-top: 0.5mm; }
 .tabella-stampa.versioni th, .tabella-stampa.versioni td { padding: 0.1mm 0.6mm; text-align: center; }
-
-/* anagrafica del foglio 1: i campi vuoti diventano righe da compilare a penna */
-.anagrafica-stampa { display: grid; grid-template-columns: auto 1fr; gap: 0 3mm; margin: 0; }
-.anagrafica-stampa dt { font-weight: 600; padding-top: 1.2mm; }
-.anagrafica-stampa dd { margin: 0; padding-top: 1.2mm; border-bottom: 0.5pt solid var(--linea-tenue); min-height: 4.5mm; }

@@ -35,6 +35,7 @@ function creaFoglio(id, titolo, dati, piede, corpo = corpi[id]) {
         // badge della pagina accanto al titolo (un <img>: si stampa anche senza «grafica di sfondo»)
         h('span', { class: 'foglio-titolo' }, iconaPagina(id, '96', { classe: 'badge-foglio', lato: 48 }), titolo),
         h('span', { class: 'foglio-nome' }, piede.nome)),
+      id === 'identita' && dati.corporazione ? h('div', { class: 'filigrana', 'aria-hidden': 'true' }, stemma(dati.corporazione, '512', { alt: '' })) : null,
       h('div', { class: 'foglio-corpo' }, corpo(dati)),
       h('footer', { class: 'foglio-piede' })));
 }
@@ -145,44 +146,41 @@ function tabella(colonne, righe, { classe = '', vuote = 0 } = {}) {
 }
 
 // ---------------------------------------------------------------------------
-// Foglio 1 — Identità
+// Foglio 1 — Identità: nome e anagrafica in alto, Caratteristiche in grande, poi Punti Eroe,
+// Segni distintivi (un quadratino per riga) e il Background come riempitivo.
 
 function foglioIdentita(d) {
-  const mov = d.movimento;
+  const campi = d.anagrafica.filter((x) => x.campo !== 'segniDistintivi');
+  const segni = d.anagrafica.find((x) => x.campo === 'segniDistintivi')?.valore ?? '';
+  const righeSegni = segni ? segni.split(/\n+|;\s*/).map((x) => x.trim()).filter(Boolean) : [];
   return [
-    h('div', { class: 'intestazione-personaggio' },
-      h('h1', {}, stemma(d.corporazione, '512', { classe: 'stemma-foglio', alt: '' }), d.nome),
-      h('p', {}, h('strong', {}, `${d.livello}° livello`), ` · ${d.corporazione} · ${d.addestramento} · `,
-        d.classi.map((c) => `${c.nome} ${c.grado}`).join(', '))),
-    h('div', { class: 'griglia-identita' },
+    h('div', { class: 'f1-testa' },
+      h('div', { class: 'f1-nome' },
+        h('h1', {}, d.nome),
+        h('p', {}, h('strong', {}, `${d.livello}° livello`), ` · ${d.corporazione} · ${d.addestramento}`),
+        h('p', {}, d.classi.map((c) => `${c.nome} ${c.grado}`).join(' · '))),
+      h('dl', { class: 'f1-anagrafica' },
+        [...campi, { etichetta: 'PX', valore: d.puntiEsperienza === null ? '' : String(d.puntiEsperienza) }].map((x) =>
+          h('div', { class: 'campo-anagrafica' }, h('dt', {}, x.etichetta), h('dd', {}, x.valore || ' '))))),
+    box({ titolo: 'Caratteristiche', tinta: 'accento', forte: true, classe: 'f1-caratteristiche' },
+      h('div', { class: 'tessere' }, d.caratteristiche.map((c) => h('div', { class: 'tessera' },
+        h('span', { class: 'sigla-car' }, c.sigla), h('span', { class: 'nome-car' }, c.nome),
+        h('span', { class: 'valore-car' }, String(c.valore)),
+        h('span', { class: 'mod-car' }, h('span', {}, 'Mod ', h('strong', {}, segno(c.mod))), h('span', {}, 'Salv. ', h('strong', {}, segno(c.modSalvezza)))))))),
+    h('div', { class: 'f1-basso' },
       h('div', { class: 'colonna' },
-        riquadro('Caratteristiche', tabella(['', 'Valore', 'Mod', 'Mod Salv.'],
-          d.caratteristiche.map((c) => [`${c.nome} (${c.sigla})`, String(c.valore), segno(c.mod), segno(c.modSalvezza)]), { classe: 'numeri' })),
-        riquadro('Prove Salvezza', tabella(['', 'Car.', 'Totale'],
-          d.salvezze.map((s) => [s.nome, s.caratteristica, `${s.totale}${s.limitato ? '*' : ''}`]), { classe: 'numeri' }),
-        d.salvezze.some((s) => s.limitato) ? h('p', { class: 'piccolo' }, `* limitato a ${d.salvezze[0].tetto} (§1.2.3)`) : null)),
-      h('div', { class: 'colonna' },
-        h('div', { class: 'coppia' },
-          riquadro('Punti Vita', h('p', { class: 'valore-grande' }, `max ${d.pv}`), h('div', { class: 'casella-grande' }, h('span', {}, 'attuali'))),
-          riquadro('Punti Magia', h('p', { class: 'valore-grande' }, `max ${d.pm ?? '—'}`), h('div', { class: 'casella-grande' }, h('span', {}, 'attuali')))),
-        riquadro('Punti Eroe',
+        box({ titolo: 'Punti Eroe', tinta: 'pe' },
           h('p', {}, d.puntiEroe.valore === null ? 'Iniziali: da determinare' : `Iniziali ${d.puntiEroe.valore} · riserva massima ${d.puntiEroe.massimo}`),
-          caselle(d.puntiEroe.massimo)),
-        riquadro('Distintivi', righeVuote(3)),
-        riquadro('Combattimento',
-          h('dl', { class: 'voci-stampa' },
-            h('dt', {}, 'Iniziativa'), h('dd', {}, `${segno(d.iniziativa)} + ${d.dadoIniziativa}`),
-            h('dt', {}, 'Movimento'), h('dd', {}, `Passo ${mov.passo} ${mov.unita} · Corsa ${mov.corsa} ${mov.unita} · Scatto ${mov.scatto} ${mov.unita}`),
-            h('dt', {}, 'Azioni'), h('dd', {}, `${d.azioni.movimento} di Movimento, ${d.azioni.principali} ${d.azioni.principali === 1 ? 'Principale' : 'Principali'} per Round`)))),
-      h('div', { class: 'colonna' },
-        riquadro('Vantaggio dell’Addestramento', h('p', {}, h('strong', {}, `${d.vantaggio.nome}. `), d.vantaggio.testo)),
-        riquadro('Anagrafica',
-          h('dl', { class: 'anagrafica-stampa' },
-            d.anagrafica.map((x) => [h('dt', {}, x.etichetta), h('dd', { class: x.valore ? null : 'da-compilare' }, x.valore || ' ')]),
-            h('dt', {}, 'Punti esperienza'), h('dd', { class: d.puntiEsperienza === null ? 'da-compilare' : null }, d.puntiEsperienza === null ? ' ' : String(d.puntiEsperienza)))),
-        riquadro('Background', d.background ? h('p', { class: 'testo-background' }, d.background) : righeVuote(4),
-          d.backgroundTroncato ? h('p', { class: 'piccolo' }, 'Testo completo nella scheda digitale.') : null),
-        d.annotazioni.length ? riquadro('Note', h('ul', { class: 'piccolo' }, d.annotazioni.map((a) => h('li', {}, a)))) : null)),
+          quadratini(d.puntiEroe.massimo)),
+        box({ titolo: 'Vantaggio dell’Addestramento' }, h('p', {}, h('strong', {}, `${d.vantaggio.nome}. `), d.vantaggio.testo)),
+        d.annotazioni.length ? box({ titolo: 'Note' }, h('ul', {}, d.annotazioni.map((x) => h('li', {}, x)))) : null,
+        box({ titolo: 'Segni distintivi', riempitivo: true },
+          righeDaPenna(Math.max(30, righeSegni.length), (i) => h('div', { class: 'riga-da-penna' },
+            h('span', { class: 'casella' }), h('span', { class: 'testo' }, righeSegni[i] ?? ''))))),
+      box({ titolo: 'Background', riempitivo: true, classe: 'f1-background' },
+        d.background ? h('p', { class: 'testo-background' }, d.background) : null,
+        d.backgroundTroncato ? h('p', { class: 'piccolo' }, 'Testo completo nella scheda digitale.') : null,
+        righeGuida())),
   ];
 }
 
