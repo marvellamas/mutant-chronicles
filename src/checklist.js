@@ -2,6 +2,7 @@
 import { calcolaScheda } from './calc.js';
 import { statoIncantesimi } from './incantesimi.js';
 import { valoreTiro } from './tiri.js';
+import { dotazioneApplicata } from './dotazioni.js';
 
 /** @returns {{testo: string, ok: boolean, nonApplicabile?: boolean}[]} */
 export function checklist(scelte, dati) {
@@ -24,6 +25,6 @@ export function checklist(scelte, dati) {
     conMagia
       ? { testo: 'Incantesimi conosciuti registrati per famiglia e livello', ok: !!inc?.completo }
       : { testo: 'Incantesimi conosciuti (solo Addestramento Taumaturgo)', ok: !!scelte.addestramento, nonApplicabile: !!scelte.addestramento },
-    { testo: 'Nessun Talento Libero al 1° livello; dotazioni iniziali da integrare', ok: true },
+    { testo: 'Nessun Talento Libero al 1° livello; equipaggiamento iniziale e crediti residui registrati, con modello effettivo, componenti compatibili ed eventuali conguagli del §2.16', ok: dotazioneApplicata(scelte.equipaggiamento) },
   ];
 }

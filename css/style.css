@@ -961,3 +961,39 @@ body.con-sfondo::before {
 .pallini-livello { display: inline-flex; gap: 0.3em; align-items: center; vertical-align: 0.05em; white-space: nowrap; cursor: help; }
 .gruppo-pallini { display: inline-flex; gap: 0.14em; }
 .pallino { display: inline-block; width: 0.42em; height: 0.42em; border-radius: 50%; background: var(--macro, currentColor); }
+
+/* Passo «Equipaggiamento iniziale» (§2.16, src/ui/dotazione.js) */
+.titolo-sezione-passo { margin: 1.5rem 0 0.5rem; font-size: 1.2rem; }
+.dotazione-sezione {
+  background: var(--superficie);
+  border: 1px solid var(--bordo);
+  border-radius: var(--raggio);
+  padding: 0.75rem 1rem;
+  margin: 0.75rem 0;
+  min-width: 0;
+}
+.dotazione-sezione > h3 { margin: 0 0 0.5rem; }
+.dotazione-comune { columns: 2 14rem; padding-left: 1.1rem; margin: 0.25rem 0 0.5rem; }
+.gruppo-dotazione { border: 0; border-top: 1px solid var(--bordo); margin: 0; padding: 0.6rem 0; min-width: 0; }
+.gruppo-dotazione > legend, .gruppo-dotazione > h4 { font-weight: 700; padding: 0; margin: 0; font-size: 1rem; float: left; width: 100%; }
+.gruppo-dotazione > legend + *, .gruppo-dotazione > h4 + * { clear: both; }
+.gruppo-dotazione.da-scegliere > legend { color: var(--attenzione); }
+.testo-manuale { margin: 0.2rem 0 0.4rem; font-style: italic; color: var(--tenue); }
+.opzione-dotazione { display: flex; gap: 0.5rem; align-items: flex-start; padding: 0.35rem 0.5rem; border-radius: var(--raggio); cursor: pointer; }
+.opzione-dotazione input { margin-top: 0.25rem; flex: none; }
+.opzione-dotazione.scelta { background: var(--ok-tenue); }
+.opzione-dotazione small, .assegnato small { color: var(--tenue); }
+.assegnato { margin: 0.2rem 0; }
+.sotto-scelte { border-top: 1px solid var(--bordo); padding-top: 0.5rem; }
+.sotto-scelte .campo { display: flex; flex-wrap: wrap; gap: 0.25rem 0.75rem; align-items: center; }
+.sotto-scelte input[type="text"] { width: min(18rem, 100%); }
+.note-dotazione { margin-top: 0.5rem; }
+.crediti-iniziali, .saldo { font-size: 1.05rem; }
+.saldo .negativo { color: var(--errore); }
+.elenco-acquisti { padding-left: 1.1rem; }
+.elenco-acquisti li { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.25rem 0.75rem; margin: 0.25rem 0; }
+.nuovo-acquisto select { max-width: 100%; }
+.nuovo-acquisto .campo { display: flex; flex-direction: column; gap: 0.25rem; }
+.cessioni { border: 1px solid var(--bordo); border-radius: var(--raggio); margin: 0.5rem 0; }
+.cessioni label { display: block; margin: 0.2rem 0; }
+.mancanze { color: var(--attenzione); padding-left: 1.1rem; }

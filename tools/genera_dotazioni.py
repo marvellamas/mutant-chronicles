@@ -418,6 +418,9 @@ risultato = {
     'classi': dotazioni,
     'oggetti_dotazione': OGGETTI,
     'sotto_scelte': SOTTO,
+    # §2.16.27 e §2.16.29: catalogo di ogni Corporazione (nomi dei file dati); i Freelance usano il Commerciale
+    'cataloghi_corporazioni': {'Bauhaus': 'Bauhaus', 'Capitol': 'Capitol', 'Cybertronic': 'Cybertronic', 'Fratellanza': 'Fratellanza',
+                               'Imperiali': 'Imperial', 'Mishima': 'Mishima', 'Freelance': 'Commerciale'},
     'corporativi': {
         'paragrafo': '2.16.27',
         'testo': sezioni['2.16.27']['paragrafi'],

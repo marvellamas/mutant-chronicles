@@ -9,6 +9,7 @@ import { statoIncantesimi } from './incantesimi.js';
 import { specTiro, migraTiro, motivoFuoriIntervallo } from './tiri.js';
 import { normalizzaEquipaggiamento, catalogo, risolvi, STATI, NOMI_TIPI, infoArtefattoVoce } from './equipaggiamento.js';
 import { ritrattoValido } from './ritratto.js';
+import { normalizzaDotazione } from './dotazioni.js';
 
 // Personaggio a livelli { creazione, livelli } (cap. 8): modello e funzioni in avanzamento.js.
 export {
@@ -64,6 +65,7 @@ export function nuoveScelte() {
     incantesimi: [],
     puntiEroe: null, // { valore, origine: 'app' | 'manuale' }
     equipaggiamento: [], // voci { uid, rif, personalizzato?, stato, quantita, montato_su?, note } (src/equipaggiamento.js)
+    dotazione: null, // §2.16: scelte dell'equipaggiamento iniziale e tiro dei crediti (src/dotazioni.js)
     ritratto: null, // data URL JPEG o PNG, ridimensionato nel browser (src/ritratto.js)
   };
 }
@@ -298,6 +300,9 @@ export function normalizza(scelteIn, dati) {
   const specPE = specTiroPuntiEroe(dati);
   s.puntiEroe = normalizzaTiro(s.puntiEroe, specPE, `Punti Eroe (${specPE.formula})`, avvisi);
 
+  // §2.16: equipaggiamento iniziale (le voci stanno in `equipaggiamento`, qui solo le scelte)
+  s.dotazione = normalizzaDotazione(s.dotazione, s.classe, dati, normalizzaTiro, avvisi);
+
   return { scelte: s, avvisi };
 }
 
@@ -377,8 +382,10 @@ export function nomeFileEsportazione(nome, livello, data = new Date()) {
 export function serializza(scelte, { versioniDati, livelli, sessione } = {}) {
   const pulite = {};
   for (const k of CAMPI) pulite[k] = scelte?.[k] ?? nuoveScelte()[k];
-  // senza ritratto il campo non si scrive: i file di prima restano identici byte per byte
+  // senza ritratto e senza dotazione iniziale i campi non si scrivono: i file di prima restano
+  // identici byte per byte
   if (pulite.ritratto === null) delete pulite.ritratto;
+  if (pulite.dotazione === null) delete pulite.dotazione;
   const file = { formato: FORMATO_FILE, versione: VERSIONE_FORMATO };
   // in ordine alfabetico: l'ordine di caricamento dei file dati varia, il file esportato no
   if (versioniDati) file.versioni_dati = Object.fromEntries(Object.entries(versioniDati).sort(([a], [b]) => a.localeCompare(b)));

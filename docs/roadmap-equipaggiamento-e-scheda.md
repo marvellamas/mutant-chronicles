@@ -29,7 +29,7 @@ Dopo il collaudo del 26 settembre (tre personaggi di riferimento creati dalla UI
 
 ### 1.1 Contesto
 
-- Il §2.16 del Manuale del Giocatore (equipaggiamento iniziale) non è ancora scritto e non è previsto a breve. Quindi **nessuna dotazione automatica**: il giocatore (o il master) inserisce gli oggetti a mano, voce per voce.
+- ~~Il §2.16 non è ancora scritto: nessuna dotazione automatica.~~ Superato il 27/09/2026: il §2.16 (E&L A.5–A.5.29) è nel passo «Equipaggiamento iniziale» del wizard (`data/dotazioni.json`, `src/dotazioni.js`); il resto dell'inventario si inserisce a mano, voce per voce.
 - La fonte dei dati è il Manuale degli Armamenti v0.50 (121 pagine, quasi tutto tabelle): armi ravvicinate e a distanza (catalogo commerciale + cataloghi corporativi), scudi, armature e rinforzi, mirini e accessori, munizioni, equipaggiamento sanitario, artefatti. Il Manuale degli Equipaggiamenti (strumenti) è in stesura: la struttura dati deve poterlo accogliere dopo.
 
 ### 1.2 Inserimento

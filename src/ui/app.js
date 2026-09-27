@@ -28,7 +28,7 @@ import { conOrdinale } from '../lingua.js';
 
 // Dopo la creazione si possono ancora cambiare solo i campi descrittivi: le altre scelte
 // determinano i livelli successivi (ricognizione dell'avanzamento, §8).
-const CAMPI_LIBERI_DOPO_LIVELLI = ['nome', 'concetto', 'equipaggiamento', 'puntiEsperienza', 'ritratto', ...CAMPI_ANAGRAFICA.map((c) => c.campo)];
+const CAMPI_LIBERI_DOPO_LIVELLI = ['nome', 'concetto', 'equipaggiamento', 'dotazione', 'puntiEsperienza', 'ritratto', ...CAMPI_ANAGRAFICA.map((c) => c.campo)];
 // L'ultimo passo del wizard è la scheda: si apre come vista a tab (#/p/<id>).
 const PASSO_SCHEDA = PASSI.length - 1;
 const PASSO_EQUIPAGGIAMENTO = PASSI.findIndex((p) => p.titolo === 'Equipaggiamento');

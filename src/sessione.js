@@ -5,7 +5,7 @@
 //
 // sessione = { pvAttuali, pmAttuali, puntiEroe, distintivi, statiAttivi: [id], ferite,
 //              affaticamento, munizioni: { uid: { colpi, riserve } }, chroma: { uid: { pmAttuali } },
-//              caricoExtra, note }
+//              caricoExtra, crediti, creditiIniziali, note }
 // munizioni: per ogni arma a distanza della lista, i colpi nel caricatore (limitati alla sua
 // capacità, dal catalogo) e le riserve (caricatori di scorta: quantità libera).
 // chroma: PM attuali di ogni contenitore di Chroma (Magia sez. 6), limitati alla sua capacità. Non
@@ -14,7 +14,11 @@
 // affaticamento: indice in regole.json → affaticamento.stati (§5.19), 0 = Riposato.
 // caricoExtra: kg trasportati oltre all'equipaggiamento (bottino, una creatura trasportata con il
 // suo equipaggiamento: §5.2.6), sommati al peso degli oggetti per il carico (src/carico.js).
+// crediti: crediti attuali (§2.16.28), null finché la dotazione iniziale non è nell'inventario.
+// creditiIniziali: l'ultimo saldo iniziale visto; se il saldo cambia (dotazione rifatta, tabella
+// modificata) i crediti attuali si spostano della stessa differenza, così le spese restano.
 import { valoreTiro } from './tiri.js';
+import { saldoIniziale } from './dotazioni.js';
 import { caricatori, contenitori, normalizzaEquipaggiamento } from './equipaggiamento.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
@@ -44,7 +48,18 @@ export function massimiSessione(scheda, creazione, dati) {
     contenitori: Object.fromEntries(contenitori(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati).map((c) => [c.uid, c.capacita])),
     // TODO(Davide): un contenitore nuovo arriva carico? Ipotesi: pieno (regole.json → chroma, per-davide A.19)
     contenitoreNuovo: dati.regole.chroma?.contenitore_nuovo ?? 'pieno',
+    // §2.16.28–29: crediti iniziali meno i conguagli, o null senza dotazione iniziale
+    creditiIniziali: dati.dotazioni ? saldoIniziale(creazione, dati) : null,
   };
+}
+
+/** Crediti attuali allineati al saldo iniziale (vedi l'intestazione). */
+function allineaCrediti(sessione, m) {
+  const saldo = Number.isInteger(m.creditiIniziali) ? m.creditiIniziali : null;
+  const visto = Number.isInteger(sessione?.creditiIniziali) ? sessione.creditiIniziali : null;
+  let crediti = Number.isInteger(sessione?.crediti) ? Math.max(0, sessione.crediti) : null;
+  if (saldo !== null && saldo !== visto) crediti = Math.max(0, (crediti ?? visto ?? 0) + saldo - (visto ?? 0));
+  return { crediti, creditiIniziali: saldo ?? visto };
 }
 
 /**
@@ -104,6 +119,7 @@ export function inizializzaSessione(m) {
     munizioni: allineaMunizioni({}, m),
     chroma: allineaChroma({}, {}, m),
     caricoExtra: 0,
+    ...allineaCrediti({}, m),
     note: '',
   };
 }
@@ -126,6 +142,7 @@ export function allineaSessione(sessione, m) {
     munizioni,
     chroma: allineaChroma(sessione.chroma, sessione.munizioni, m),
     caricoExtra: chili(sessione.caricoExtra),
+    ...allineaCrediti(sessione, m),
     note: typeof sessione.note === 'string' ? sessione.note : '',
   };
 }

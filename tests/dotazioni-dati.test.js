@@ -62,3 +62,11 @@ test('regole.json: crediti iniziali 1000 + 2d6 × 100, da 1200 a 2200 (§2.16.28
   x.regole.crediti_iniziali.massimo = 2000;
   assert.ok(validaDati(x).some((e) => e.chiave === 'crediti_iniziali.massimo'));
 });
+
+test('dotazioni.json: ogni Corporazione ha il suo catalogo (Imperiali → Imperial, Freelance → Commerciale)', () => {
+  assert.equal(d.cataloghi_corporazioni.Imperiali, 'Imperial');
+  assert.equal(d.cataloghi_corporazioni.Freelance, 'Commerciale');
+  const x = copia(dati);
+  delete x.dotazioni.cataloghi_corporazioni.Imperiali;
+  assert.ok(validaDati(x).some((e) => e.chiave === 'cataloghi_corporazioni.Imperiali'));
+});

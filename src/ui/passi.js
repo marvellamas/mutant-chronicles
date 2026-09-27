@@ -10,6 +10,8 @@ import { componenteTiro } from './tiro.js';
 import { campoRitratto } from './ritratto.js';
 import { valoreTiro } from '../tiri.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
+import { renderDotazione } from './dotazione.js';
+import { dotazioneApplicata } from '../dotazioni.js';
 
 const trova = (lista, nome) => lista.find((x) => x.nome === nome);
 const GRADI = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI' };
@@ -71,8 +73,9 @@ export const PASSI = [
     render: passoPuntiEroe,
   },
   {
+    // app.js cerca il passo per titolo (PASSO_EQUIPAGGIAMENTO)
     titolo: 'Equipaggiamento', rif: '§2.16',
-    completo: () => true,
+    completo: ({ scelte }) => dotazioneApplicata(scelte.equipaggiamento),
     render: passoEquipaggiamento,
   },
   {
@@ -417,8 +420,10 @@ function passoPuntiEroe(ctx) {
 
 function passoEquipaggiamento(ctx) {
   return [
-    h('p', { class: 'riquadro attenzione' }, 'Le dotazioni iniziali (§2.16: dotazione comune e della Classe, approvate dal master per ora solo per l’Agente) non sono ancora automatiche: inseriscile a mano, voce per voce.'),
-    h('p', { class: 'nota' }, 'Il catalogo contiene gli oggetti del Manuale degli Armamenti (armi, armature, scudi, accessori, munizioni, corredi, equipaggiamento sanitario, artefatti); ciò che manca si aggiunge come oggetto personalizzato. Nella scheda cambiano i valori solo gli oggetti impugnati, imbracciati, indossati o in uso.'),
+    h('h2', { class: 'titolo-sezione-passo' }, 'Equipaggiamento iniziale'),
+    ...renderDotazione(ctx),
+    h('h2', { class: 'titolo-sezione-passo' }, 'Altro equipaggiamento'),
+    h('p', { class: 'nota' }, 'L’inventario completo, dotazione iniziale compresa (segnata «dotazione»). Il catalogo contiene gli oggetti del Manuale degli Armamenti (armi, armature, scudi, accessori, munizioni, corredi, equipaggiamento sanitario, artefatti); ciò che manca si aggiunge come oggetto personalizzato. Nella scheda cambiano i valori solo gli oggetti impugnati, imbracciati, indossati o in uso.'),
     renderEquipaggiamento({
       dati: ctx.dati, voci: ctx.scelte.equipaggiamento, ui: ctx.ui,
       aggiorna: (voci) => ctx.aggiorna({ equipaggiamento: voci }),

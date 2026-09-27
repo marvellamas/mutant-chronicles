@@ -14,6 +14,7 @@ import { descriviFerite } from '../sessione.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
 import { testoDanno } from '../stampa.js';
 import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento } from '../equipaggiamento.js';
+import { dotazioneApplicata, crediti } from '../dotazioni.js';
 
 export const POSIZIONI_TAB = [
   { id: 'automatica', etichetta: 'Automatica (sinistra su schermi larghi, in basso su telefono e tablet)' },
@@ -174,6 +175,30 @@ function contatoreTavolo(ctx, { titolo, campo, attuale, massimo, passi = [1, 5],
 }
 
 /**
+ * Crediti attuali (§2.16.28, valore di sessione): +/− al tavolo. Senza dotazione iniziale
+ * nell'inventario (personaggi creati prima del passo guidato) propone di applicarla.
+ */
+function riquadroCrediti(ctx) {
+  const s = ctx.sessione;
+  if (s.crediti === null) {
+    return h('div', { class: 'contatore-tavolo riquadro-crediti' },
+      h('h3', {}, 'Crediti'),
+      h('p', { class: 'nota' }, 'Nessuna dotazione iniziale: crediti e oggetti del §2.16 non sono ancora registrati.'),
+      bottoneDotazione(ctx));
+  }
+  return contatoreTavolo(ctx, {
+    titolo: 'Crediti', campo: 'crediti', attuale: s.crediti, massimo: null, passi: [10, 100], classe: 'riquadro-crediti',
+    nota: Number.isInteger(s.creditiIniziali) ? `Saldo iniziale ${crediti(s.creditiIniziali)} (§2.16.28–29)` : null,
+  });
+}
+
+/** Porta al passo Equipaggiamento del wizard, dove si sceglie e si applica la dotazione iniziale. */
+function bottoneDotazione(ctx) {
+  return h('button', { type: 'button', class: 'btn primario', onclick: () => ctx.azioni.modificaCreazione(ctx.passi.equipaggiamento) },
+    'Applica la dotazione iniziale');
+}
+
+/**
  * Riquadro dei Punti Magia: la riserva personale e, sotto, i contenitori di Chroma posseduti
  * (trasportati e sintonizzati per primi, gli altri in grigio). Due sottosezioni distinte: i PM dei
  * cristalli non si sommano mai alla riserva personale (Magia sez. 6).
@@ -258,6 +283,7 @@ function tabIdentita(ctx, d) {
       contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true, classe: 'riquadro-pv' }),
       riquadroPM(ctx),
       contatoreTavolo(ctx, { titolo: 'Punti Eroe', campo: 'puntiEroe', attuale: s.puntiEroe, massimo: m.puntiEroe, passi: [1], classe: 'riquadro-pe' }),
+      riquadroCrediti(ctx),
       h('div', {},
         contatoreTavolo(ctx, { titolo: 'Distintivi', campo: 'distintivi', attuale: s.distintivi, massimo: null, passi: [1] }),
         h('button', {
@@ -492,7 +518,9 @@ function tabCombattimento(ctx, d) {
       }))),
 
     sezione('Equipaggiamento',
-      h('p', { class: 'nota' }, 'Solo gli oggetti impugnati, imbracciati o indossati cambiano i valori. L’inserimento è manuale: le dotazioni iniziali del §2.16 non sono ancora automatiche.'),
+      h('p', { class: 'nota' }, 'Solo gli oggetti impugnati, imbracciati o indossati cambiano i valori.',
+        dotazioneApplicata(ctx.scelte.equipaggiamento) ? ' La dotazione iniziale (§2.16) si cambia dal passo Equipaggiamento della creazione.' : null),
+      dotazioneApplicata(ctx.scelte.equipaggiamento) ? null : h('p', {}, bottoneDotazione(ctx)),
       renderEquipaggiamento({
         dati: ctx.dati, voci: ctx.scelte.equipaggiamento, ui: ctx.ui,
         aggiorna: ctx.azioni.equipaggiamento, ridisegna: ctx.azioni.ridisegna,

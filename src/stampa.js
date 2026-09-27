@@ -9,6 +9,7 @@ import { rigaAlLivello } from './descrizioni.js';
 import { CAMPI_ANAGRAFICA } from './character.js';
 import { checklist } from './checklist.js';
 import { aggiungiDanno, NOME_TESTO_PRECEDENTE } from './equipaggiamento.js';
+import { saldoIniziale } from './dotazioni.js';
 
 /** Limiti di impaginazione (non regole di gioco): lunghezze massime dei testi stampati. */
 export const LIMITI_STAMPA = {
@@ -264,6 +265,8 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     stati: dati.regole.stati.elenco,
     equipaggiamento: completo ? equip : equip.slice(0, LIMITI_STAMPA.righeEquipaggiamento),
     equipaggiamentoTroncato: !completo && equip.length > LIMITI_STAMPA.righeEquipaggiamento,
+    // §2.16.28–29: saldo iniziale (la stampa resta a riposo: i crediti attuali si scrivono a penna)
+    creditiIniziali: dati.dotazioni ? saldoIniziale(c, dati) : null,
     pv: s.pv,
   };
 

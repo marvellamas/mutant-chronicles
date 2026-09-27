@@ -21,7 +21,8 @@ test('inizializzazione: PV e PM ai massimi, Punti Eroe iniziali, il resto a zero
   const s = inizializzaSessione(m);
   assert.deepEqual(s, {
     pvAttuali: 16, pmAttuali: 9, puntiEroe: m.puntiEroeIniziali, distintivi: 0,
-    statiAttivi: [], ferite: 0, affaticamento: 0, munizioni: {}, chroma: {}, caricoExtra: 0, note: '',
+    statiAttivi: [], ferite: 0, affaticamento: 0, munizioni: {}, chroma: {}, caricoExtra: 0,
+    crediti: null, creditiIniziali: null, note: '',
   });
   // una sessione assente si inizializza
   assert.deepEqual(allineaSessione(null, m), s);

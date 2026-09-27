@@ -7,6 +7,7 @@ import { h, segno } from './dom.js';
 import { spezzaMagia, contaIncantesimi } from '../stampa.js';
 import { stemma, iconaPagina } from './immagini.js';
 import { pallini } from './tooltip.js';
+import { crediti } from '../dotazioni.js';
 
 const FOGLIO_STILE = 'css/stampa.css';
 const CARATTERE = { iniziale: 9, minimo: 5.5, passo: 0.25, continuazione: 7 }; // pt
@@ -249,6 +250,8 @@ function foglioCombattimento(d) {
           h('span', { class: 'round' }, 'Round ', h('span', { class: 'casella-lunga corta' }))))))),
     h('div', { class: 'colonna' },
       riquadro('Equipaggiamento',
+        h('p', { class: 'crediti-stampa' }, h('strong', {}, 'Crediti '), h('span', { class: 'casella-lunga' }),
+          d.creditiIniziali !== null ? h('span', { class: 'piccolo' }, ` saldo iniziale ${crediti(d.creditiIniziali)}`) : null),
         d.equipaggiamento.length ? h('ul', { class: 'equip-stampa' }, d.equipaggiamento.map((x) => h('li', {}, x))) : null,
         d.equipaggiamentoTroncato ? h('p', { class: 'piccolo' }, 'Elenco completo nella scheda digitale.') : null,
         righeVuote(Math.max(3, 12 - d.equipaggiamento.length)))));

@@ -1299,6 +1299,12 @@ function validaDotazioni(dati, err) {
       });
     });
   }
+  // catalogo di ogni Corporazione: serve agli abbinamenti (§2.16.27) e agli acquisti (§2.16.29)
+  const cataloghi = new Set([...cat.values()].map((o) => o.catalogo));
+  for (const c of dati.corporazioni?.corporazioni ?? []) {
+    const nome = d.cataloghi_corporazioni?.[c?.nome];
+    if (!cataloghi.has(nome)) err(F, `cataloghi_corporazioni.${c?.nome}`, `manca il catalogo della Corporazione (trovato ${JSON.stringify(nome)}; cataloghi: ${[...cataloghi].join(', ')})`);
+  }
   if (!isOggetto(d.corporativi?.abbinamenti)) err(F, 'corporativi.abbinamenti', 'oggetto { Corporazione: { rif commerciale: { rif } } } atteso (§2.16.27)');
   else {
     const nomiCorp = new Set((dati.corporazioni?.corporazioni ?? []).map((c) => c?.nome));

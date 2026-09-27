@@ -16,6 +16,7 @@ import {
 import { specTiro, valoreTiro, motivoFuoriIntervallo } from './tiri.js';
 import { calcolaEquipaggiamento, normalizzaEquipaggiamento } from './equipaggiamento.js';
 import { conOrdinale } from './lingua.js';
+import { saldoIniziale, contiDotazione, crediti } from './dotazioni.js';
 import { applicaCondizioni } from './condizioni.js';
 
 export const VERSIONE_PERSONAGGIO = 2;
@@ -936,6 +937,11 @@ export function progressione(personaggio, dati) {
     livello: 1,
     righe: [`Creazione: ${[c.corporazione, c.addestramento, c.classe ? `${c.classe} I` : null].filter(Boolean).join(' · ')}`],
   }];
+  // §2.16.28–29: crediti iniziali, conguagli e saldo, se la dotazione iniziale è nell'inventario
+  if (dati.dotazioni && saldoIniziale(c, dati) !== null) {
+    const k = contiDotazione(c.dotazione, c.classe, c.corporazione, dati);
+    out[0].righe.push(`Crediti iniziali ${crediti(k.iniziali)} (2d6 = ${valoreTiro(c.dotazione.crediti)})${k.speso ? `, conguagli ${crediti(k.speso)}` : ''}: saldo iniziale ${crediti(k.saldo)}`);
+  }
   const gradi = c.classe ? { [c.classe]: 1 } : {};
   p.livelli.forEach((voce, i) => {
     const n = i + 2;

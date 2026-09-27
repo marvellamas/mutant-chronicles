@@ -51,6 +51,7 @@ src/
   avanzamento.js  livelli 2–20 (cap. 8): ricalcolo, validazione, eventi
   incantesimi.js, checklist.js, descrizioni.js, tiri.js, lingua.js
   equipaggiamento.js  catalogo ed effetti degli oggetti
+  dotazioni.js  equipaggiamento iniziale (§2.16): scelte, crediti, acquisti, voci della dotazione
   sessione.js   valori attuali di sessione (modalità tavolo)
   stampa.js     dati dei fogli di stampa e delle tab
   ui/           wizard a passi (fasi 0–9 del §2.0), scheda a tab, Sali di livello, stampa, import/export
@@ -71,7 +72,7 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 - avanzamento dal 2° al 20° livello (cap. 8), un livello alla volta, annullabile (PV e PM attuali seguono i massimi: per-davide A.15);
 - scheda digitale a tab (Identità, Abilità, Combattimento, Magia) con modalità tavolo: valori di sessione separati dalle scelte (`src/sessione.js`);
 - stampa dedicata A4 orizzontale (`#/p/<id>/stampa`, `css/stampa.css`);
-- equipaggiamento con catalogo a lotti dal Manuale degli Armamenti (`data/equipaggiamento/`, lista dei lotti in `docs/equipaggiamento-lotti.md`); l'equipaggiamento iniziale si inserisce a mano finché non c'è il passo guidato (§2.16: struttura e dotazione comune approvate, risposte-master 12–13);
+- equipaggiamento con catalogo a lotti dal Manuale degli Armamenti (`data/equipaggiamento/`, lista dei lotti in `docs/equipaggiamento-lotti.md`); equipaggiamento iniziale guidato (§2.16, E&L A.5–A.5.29): dotazione comune e della Classe, crediti 1000 + 2d6 × 100, acquisti con cessione degli armamenti di base; dati in `data/dotazioni.json` (generato da `tools/genera_dotazioni.py`), regole in `src/dotazioni.js`, voci marcate `dotazione_iniziale`; crediti attuali nella sessione;
 - salva/carica in `localStorage`, export/import JSON, dati modificabili da Davide con validatore;
 - valori effettivi in modalità tavolo: Ferite, Affaticamento, Stati con effetto numerico e carico (`regole.json`) entrano nei VA, nelle Salvezze e nella Parata mostrati nelle tab, con la scomposizione (`src/condizioni.js`, `src/carico.js`); il totale da regole e la stampa restano a riposo;
 - Manuale dell'Equipaggiamento 0.1, cap. 1: carico (§1.6 = Giocatore §5.2.6) e PS Integrità per Qualità (§1.7) in `regole.json`.

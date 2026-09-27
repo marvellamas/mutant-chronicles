@@ -167,3 +167,4 @@ body.vista-stampa main { max-width: none; padding: 0; margin: 0; }
 .foglio .pallino { background: var(--inchiostro); width: 1.3mm; height: 1.3mm; }
 .foglio .pallini-livello { gap: 0.9mm; cursor: auto; }
 .foglio .gruppo-pallini { gap: 0.4mm; }
+.crediti-stampa { margin: 0 0 1mm; }

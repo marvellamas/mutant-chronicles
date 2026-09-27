@@ -4,6 +4,7 @@ import {
   nuoveScelte, applicaModifica, normalizza, anteprima, serializza, deserializza, deserializzaPersonaggio, FORMATO_FILE, CAMPI_ANAGRAFICA, VERSIONE_FORMATO,
 } from '../src/character.js';
 import { statoIncantesimi, motivoBloccoIncantesimo } from '../src/incantesimi.js';
+import { vociDotazione } from '../src/dotazioni.js';
 import { checklist } from '../src/checklist.js';
 import { calcolaScheda } from '../src/calc.js';
 import { datiReali } from './helpers.js';
@@ -135,8 +136,12 @@ test('incantesimi: livello base oltre 3 e quote esaurite sono bloccati con un mo
 });
 
 test('checklist §2.17: tutto spuntato per un personaggio completo', () => {
-  const c = checklist(MISHIMA_AGENTE, dati);
-  assert.equal(c.length, 10);
+  // §2.17: l'equipaggiamento iniziale è registrato quando la dotazione è nell'inventario
+  const senza = checklist(MISHIMA_AGENTE, dati);
+  assert.equal(senza.length, 10);
+  assert.deepEqual(senza.filter((x) => !x.ok).map((x) => x.testo.slice(0, 26)), ['Nessun Talento Libero al 1']);
+  const dotazione = { opzioni: { arma_da_fuoco: 'armi_distanza:revolver', arma_da_mischia: 'armi:coltello' }, sotto: {}, crediti: { valore: 7, origine: 'app' }, acquisti: [] };
+  const c = checklist({ ...MISHIMA_AGENTE, dotazione, equipaggiamento: vociDotazione(dotazione, 'Agente', 'Mishima', dati) }, dati);
   assert.deepEqual(c.filter((x) => !x.ok).map((x) => x.testo), []);
   const vuota = checklist(nuoveScelte(), dati);
   assert.ok(vuota.filter((x) => !x.ok).length >= 8);
@@ -172,8 +177,8 @@ test('serializza → deserializza restituisce le stesse scelte', () => {
 
 test('il file contiene solo le scelte, mai valori calcolati', () => {
   const obj = JSON.parse(serializza({ ...MISHIMA_AGENTE, pv: 99, abilita: [] }));
-  // il ritratto vuoto non si scrive (i file di prima restano identici)
-  assert.deepEqual(Object.keys(obj.scelte).sort(), Object.keys(nuoveScelte()).filter((k) => k !== 'ritratto').sort());
+  // il ritratto e la dotazione vuoti non si scrivono (i file di prima restano identici)
+  assert.deepEqual(Object.keys(obj.scelte).sort(), Object.keys(nuoveScelte()).filter((k) => !['ritratto', 'dotazione'].includes(k)).sort());
 });
 
 test('deserializza: errori leggibili su file non validi', () => {

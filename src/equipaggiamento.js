@@ -4,7 +4,8 @@
 // incoerenze (due armature, mani impegnate…) sono avvisi, non blocchi: decide il master.
 //
 // Voce del personaggio: { uid, rif: "armi:spada-leggera" | null, personalizzato?: { nome, tipo,
-//   abilita?, danno?, ar?, testo?, peso? }, stato, quantita, montato_su?: uid, note }
+//   abilita?, danno?, ar?, testo?, peso? }, stato, quantita, montato_su?: uid, note,
+//   dotazione_iniziale?: true (§2.16, src/dotazioni.js) }
 // peso: kg per unità (Equipaggiamento §1.6, §1.10), per il carico (src/carico.js).
 
 export const TIPI = ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'altro'];
@@ -290,6 +291,7 @@ export function normalizzaEquipaggiamento(valore) {
     }
     if (typeof v.montato_su === 'string' && v.montato_su) out.montato_su = v.montato_su;
     if (v.sintonizzato === true) out.sintonizzato = true; // §7.10: scelta del giocatore
+    if (v.dotazione_iniziale === true) out.dotazione_iniziale = true; // §2.16: voce della dotazione iniziale (src/dotazioni.js)
     return out;
   });
 }

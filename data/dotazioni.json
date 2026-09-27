@@ -3950,6 +3950,15 @@
       ]
     }
   },
+  "cataloghi_corporazioni": {
+    "Bauhaus": "Bauhaus",
+    "Capitol": "Capitol",
+    "Cybertronic": "Cybertronic",
+    "Fratellanza": "Fratellanza",
+    "Imperiali": "Imperial",
+    "Mishima": "Mishima",
+    "Freelance": "Commerciale"
+  },
   "corporativi": {
     "paragrafo": "2.16.27",
     "testo": [
