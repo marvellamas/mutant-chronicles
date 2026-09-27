@@ -159,7 +159,7 @@ function tabella(colonne, righe, { classe = '', vuote = 0 } = {}) {
 // ---------------------------------------------------------------------------
 // Foglio 1 — Identità: nome e anagrafica (Segni distintivi compresi) in alto, Caratteristiche in
 // grande, poi Punti Eroe, Distintivi (5 quadratini: al quinto si segna un Punto Eroe, §1.8.3) e
-// Vantaggio, e il Background come riempitivo.
+// Vantaggio; sotto, le Prove Salvezza e accanto il Background come riempitivo.
 
 function foglioIdentita(d) {
   // PX dopo il Peso: prima riga di campi brevi, poi Occhi, Capelli, Mano dominante e Segni distintivi (largo)
@@ -188,10 +188,17 @@ function foglioIdentita(d) {
         box({ titolo: 'Distintivi', tinta: 'pe', classe: 'f1-distintivi' }, filaCaselle(5)),
         box({ titolo: 'Vantaggio dell’Addestramento' }, h('p', {}, h('strong', {}, `${d.vantaggio.nome}. `), d.vantaggio.testo)),
         d.annotazioni.length ? box({ titolo: 'Note' }, h('ul', {}, d.annotazioni.map((x) => h('li', {}, x)))) : null),
+      h('div', { class: 'f1-sotto' },
+        // Prove Salvezza (§1.2.3): valori a riposo, come il resto della SS
+        box({ titolo: 'Prove Salvezza', tinta: 'accento', forte: true, classe: 'f1-salvezze' },
+          h('div', { class: 'tessere-salvezze' }, d.salvezze.map((x) => h('div', { class: 'tessera tessera-salvezza' },
+            h('span', { class: 'sigla-car' }, x.nome), h('span', { class: 'nome-car' }, x.caratteristica),
+            h('span', { class: 'valore-car' }, `${x.totale}${x.limitato ? '*' : ''}`)))),
+          d.salvezze.some((x) => x.limitato) ? h('p', { class: 'piccolo' }, `* limitata a ${d.salvezze[0].tetto} (§1.2.3)`) : null),
       box({ titolo: 'Background', riempitivo: true, classe: 'f1-background' },
         d.background ? h('p', { class: 'testo-background' }, d.background) : null,
         d.backgroundTroncato ? h('p', { class: 'piccolo' }, 'Testo completo nella scheda digitale.') : null,
-        righeGuida())),
+        righeGuida()))),
   ];
 }
 

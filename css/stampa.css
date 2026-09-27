@@ -236,6 +236,14 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .f1-risorse > .riquadro-stampa { flex: 0 0 auto; }
 .f1-risorse > .riquadro-stampa:nth-child(3), .f1-risorse > .riquadro-stampa:nth-child(4) { flex: 1 1 0; }
 .f1-background .testo-background { white-space: pre-line; flex: none; }
+/* Prove Salvezza accanto al Background (che si restringe e resta il riempitivo) */
+.f1-sotto { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 2mm; }
+.f1-salvezze { flex: none; }
+.tessere-salvezze { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.5mm; }
+.tessera-salvezza { grid-template-areas: "sigla nome valore"; grid-template-columns: auto 1fr auto; align-items: center; padding: 0.6mm 2.5mm; }
+.tessera-salvezza .sigla-car { font-size: 12pt; }
+.tessera-salvezza .nome-car { text-align: left; }
+.tessera-salvezza .valore-car { font-size: 22pt; }
 
 /* Foglio 2 — Abilità */
 .f2-griglia { flex: 1; min-height: 0; display: grid; grid-template-columns: 180mm 1fr; gap: 3mm; }
