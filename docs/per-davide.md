@@ -12,7 +12,7 @@ Le voci A.1–A.4 (descrizioni delle Caratteristiche e Volontà su CAR, 14 sched
 
 Dalle versioni del pomeriggio dello stesso Doc:
 - **durata di tre Tecniche Interiori** (la vecchia A.5): recepita;
-- **struttura dell'equipaggiamento iniziale**, **dotazione comune** e **dotazioni di Agente e Cacciatore** (A.6): registrate, in attesa del passo guidato nell'app.
+- **equipaggiamento iniziale** (A.6): tutte le 25 dotazioni di Classe, gli armamenti corporativi di base, i crediti iniziali e gli acquisti (27/09, E&L A.5.4–A.5.29): recepiti nel passo «Equipaggiamento iniziale». Restano da definire gli abbinamenti commerciale → corporativo (A.5.27).
 
 ---
 
@@ -48,8 +48,8 @@ Il manuale non lo dice.
 
 ### Regole generali
 
-**A.6 — Equipaggiamento iniziale (§2.16): le tabelle delle altre Classi.** La forma è decisa (scelte guidate); sono approvate la dotazione comune (A.5.1) e quelle di Agente (A.5.2) e Cacciatore (A.5.3). Servono le altre Classi, le varianti di Corporazione e l'eventuale denaro iniziale.
-*Nel frattempo:* inserimento manuale, voce per voce.
+**A.32 — 18 nuovi Talenti magici e mistici (Magia sez. 1, Giocatore §8.6.8, Doc del 27/09).** Nella copia condivisa sono comparse 18 schede nuove (Potere Mistico, Recupero Mistico, Escludere la Componente Somatica / l’Invocazione / il Focus, Concentrazione Migliorata e Operativa, Incantesimi Ampliati, Estesi, Proiettati, Plurimi, Intensificati, Anticipazione Migliorata, Incantesimi Inarrestabili e Massimizzati, Manifestazioni Occultate, Ritualista Minore e Maggiore) e la Concentrazione su un Incantesimo passa dalla Prova di Potere alla PS di Volontà. Non sono fra le risposte approvate del Doc E&L: sono definitive?
+*Nel frattempo:* l'app le recepisce dal manuale condiviso (fonte corrente): Talenti acquisibili con il testo della scheda, Potere Mistico +5 PM Massimi per acquisizione; «possedere una riserva personale di PM» vale per tutti.
 
 **A.30 — Pesi degli oggetti (Equipaggiamento §1.6, §1.10).** Il carico si calcola sul peso di tutto ciò che si porta, e la scheda standard del §1.10 prevede il campo Peso, ma il Manuale degli Armamenti non dà pesi per armi, armature e scudi. Li aggiungerai ai cataloghi?
 *Nel frattempo:* l'app conta solo il peso degli oggetti personalizzati (campo «Peso») e il peso aggiuntivo scritto in modalità tavolo; elenca gli oggetti senza peso.

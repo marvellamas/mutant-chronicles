@@ -1,6 +1,6 @@
 {
-  "versione_manuale": "Giocatore 0.43; Magia 1.1",
-  "fonte": "Manuale del Giocatore §8.6 (8.6.1–8.6.10); Manuale della Magia sezioni 1, 2, 3, 6 (Talenti di magia, provvisori)",
+  "versione_manuale": "Giocatore 0.43; Magia 1.1 + Google Doc del 27/09/2026",
+  "fonte": "Manuale del Giocatore §8.6 (8.6.1–8.6.10); Manuale della Magia sezioni 1, 2, 3, 6 (32 Talenti magici e mistici)",
   "_nota": "molteplicita: una | per_caratteristica | per_salvezza_max2 | illimitata | limitata (con max_acquisizioni). parametro: null | caratteristica | salvezza. prerequisiti: id di Talenti o condizioni di «condizioni_prerequisiti», eventualmente precedute da «non:». effetti solo per i Talenti che modificano valori della scheda.",
   "attesi": {
     "_nota": "Numero di Talenti per sezione, controllato dal validatore: aggiornarlo se si aggiungono Talenti.",
@@ -47,9 +47,21 @@
       "note": []
     },
     "8.6.8": {
-      "titolo": "Talenti di Combattimento Magico",
+      "titolo": "Talenti magici e mistici",
       "note": [
-        "I Talenti relativi a lancio, Componenti, Concentrazione, Contromagia, conversione e Meditazione si consultano nel Manuale della Magia. Si acquisiscono mediante le normali scelte di Talenti Liberi, rispettando i requisiti indicati dalle rispettive schede. Le Tecniche Interiori sono descritte separatamente nel §8.9."
+        "I 32 Talenti magici e mistici elencati di seguito si acquisiscono mediante le normali scelte di Talenti Liberi. Le schede complete, con requisiti, effetti, limiti e modalità di acquisizione, si consultano nel Manuale della Magia. Le Tecniche Interiori sono descritte separatamente nel §8.9.",
+        "Riserva e recupero mistico: Potere Mistico; Recupero Mistico; Recupero Meditativo; Meditazione Migliorata; Meditazione Estesa.",
+        "Potere Mistico concede +5 PM Massimi per acquisizione, fino a tre volte, prima della riduzione dovuta all’Umanità; non recupera PM Attuali. Recupero Mistico aggiunge 1 PM alle ore complete di recupero naturale consentito: Attività pesante 0, Attività leggera 2, Riposo breve 3 e Riposo completo 4 PM. Non si somma alla Meditazione o ad altri recuperi specifici sostitutivi.",
+        "Accesso e preparazione degli Incantesimi: Usufruitore di Magia; Potenziale Mistico Migliorato; Incrementare Incantesimi; Lancio in Combattimento; Focalizzazione Migliorata.",
+        "Componenti del lancio: Escludere la Componente Somatica; Escludere l’Invocazione; Escludere il Focus.",
+        "Concentrazione: Concentrazione Migliorata; Concentrazione Operativa.",
+        "Concentrazione Migliorata concede +3 VA alle PS di Volontà per mantenere un Incantesimo. Concentrazione Operativa permette le normali Azioni e andature mentre si mantiene un solo Incantesimo, ma impone di interrompere la Concentrazione prima di tentarne un altro. Contromagia e Convertire Potere rimangono utilizzabili alle normali condizioni. I due Talenti non sono prerequisiti l’uno dell’altro.",
+        "Contromagia e conversione: Contromagia; Contromagia Migliorata; Contromagia Universale; Conversione Migliorata.",
+        "Anticipazione: Incantesimi Ampliati; Incantesimi Estesi; Incantesimi Proiettati; Incantesimi Plurimi; Incantesimi Intensificati; Anticipazione Migliorata.",
+        "I primi cinque Talenti eliminano il raddoppio del costo base in PM soltanto per l’aspetto corrispondente. Anticipazione Migliorata elimina l’aumento di una categoria di difficoltà; la Prova di Potere resta obbligatoria. Si anticipano un solo aspetto e un solo scatto consentito, rispettando la scheda dell’Incantesimo. Questi benefici non si combinano con Calcolo Arcano sullo stesso lancio.",
+        "Efficacia e occultamento: Incantesimi da Lancio; Incantesimi Inarrestabili; Incantesimi Massimizzati; Magia Occultata; Manifestazioni Occultate.",
+        "Accesso ai Rituali: Ritualista Minore; Ritualista Maggiore.",
+        "Ritualista Minore non richiede l’Addestramento Taumaturgo né altri Talenti e permette di apprendere ed eseguire Rituali di Grado I–III come Officiante o Canale. Ritualista Maggiore richiede Ritualista Minore ed estende l’accesso ai Gradi IV–VI. Nessuno dei due concede automaticamente le procedure conosciute, gli Incantesimi o un bonus numerico al contributo del Canale. Restano i requisiti, i tempi, i materiali e i costi del singolo Rituale."
       ]
     },
     "8.6.9": {
@@ -1241,6 +1253,242 @@
           "moltiplicatore_ore": 2
         }
       }
+    },
+    {
+      "id": "potere-mistico",
+      "nome": "Potere Mistico",
+      "sezione": "magia",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "capacita:riserva_pm"
+      ],
+      "molteplicita": "limitata",
+      "max_acquisizioni": 3,
+      "parametro": null,
+      "testo": "Passivo. Requisito: possedere una riserva personale di PM. Acquisibile fino a tre volte.\nAumenta permanentemente i PM Massimi di 5 per acquisizione, fino a +15. Il beneficio si aggiunge alla riserva personale calcolata con SAG, Gradi di Classe e altri incrementi, prima della riduzione dovuta all’Umanità.\nAumentare il massimo non recupera PM: i PM Attuali restano invariati. Per esempio, 12 PM Attuali su 20 Massimi diventano 12 su 25. Il Talento non aumenta la capacità di batterie, cristalli o altre riserve esterne e non concede Incantesimi né accesso alla Meditazione. Può beneficiare anche chi usa Tecniche Interiori.",
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
+      "effetti": {
+        "pm": 5
+      }
+    },
+    {
+      "id": "recupero-mistico",
+      "nome": "Recupero Mistico",
+      "sezione": "magia",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "capacita:riserva_pm"
+      ],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Passivo. Requisito: possedere una riserva personale di PM. Acquisibile una sola volta.\nPer ogni ora completa in cui è consentito il recupero naturale dei PM, recupera 1 PM aggiuntivo. I recuperi orari diventano: Attività pesante 0 PM; Attività leggera 2 PM; Riposo breve 3 PM; Riposo completo 4 PM.\nRestano le condizioni dell’ora completa e ininterrotta, le interruzioni e il limite dei PM Massimi. Il beneficio vale anche durante sonno o incoscienza quando il recupero naturale è consentito. Non richiede attivazione e non ha un limite di utilizzi giornalieri.\nNon si aggiunge alla Meditazione, che sostituisce il recupero naturale della stessa ora, né ad altri recuperi specifici sostitutivi, come la trance di Meditazione Profonda, salvo un’eccezione espressa.",
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+    },
+    {
+      "id": "escludere-la-componente-somatica",
+      "nome": "Escludere la Componente Somatica",
+      "sezione": "magia",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "capacita:lanciare_incantesimi"
+      ],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nPuò lanciare i propri Incantesimi senza eseguire gesti, anche con le mani occupate o con il movimento delle mani impedito. L’assenza della Componente Somatica non infligge −2 VA e, da sola, non rende obbligatoria la Prova di Potere per un lancio altrimenti automatico.\nRestano le altre Componenti, i costi, le Azioni e le altre circostanze che richiedono la Prova. Il Talento non elimina un eventuale contatto richiesto con il bersaglio e non permette di agire quando uno Stato o un altro effetto lo impedisce.",
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+    },
+    {
+      "id": "escludere-l-invocazione",
+      "nome": "Escludere l’Invocazione",
+      "sezione": "magia",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "capacita:lanciare_incantesimi"
+      ],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nPuò lanciare i propri Incantesimi senza usare la voce. L’assenza dell’Invocazione non infligge −2 VA e, da sola, non rende obbligatoria la Prova di Potere per un lancio altrimenti automatico.\nRestano le altre Componenti, i costi, le Azioni e le altre circostanze che richiedono la Prova. Non vengono eliminate le parole che costituiscono una parte necessaria dell’effetto, come un ordine che il bersaglio deve udire. Gesti, Focus e manifestazioni dell’Incantesimo restano percepibili normalmente.",
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+    },
+    {
+      "id": "escludere-il-focus",
+      "nome": "Escludere il Focus",
+      "sezione": "magia",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "capacita:lanciare_incantesimi"
+      ],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nPuò lanciare i propri Incantesimi senza il Focus personale. La sua assenza non infligge −2 VA e, da sola, non rende obbligatoria la Prova di Potere per un lancio altrimenti automatico.\nRestano le altre Componenti, i costi, le Azioni e le altre circostanze che richiedono la Prova. Il Talento non sostituisce oggetti bersaglio, materiali speciali o componenti espressamente richiesti dalla scheda dell’Incantesimo. Le proprietà aggiuntive di un Focus o Artefatto richiedono l’oggetto e le relative condizioni d’uso.\nLa Manovra Focalizzazione rimane utilizzabile normalmente anche senza Focus: il Focus personale e la preparazione mediante Focalizzazione sono due elementi distinti.",
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+    },
+    {
+      "id": "concentrazione-migliorata",
+      "nome": "Concentrazione Migliorata",
+      "sezione": "magia",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "capacita:lanciare_incantesimi"
+      ],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nOttiene +3 VA alle Prove Salvezza di Volontà effettuate per mantenere la Concentrazione su un Incantesimo. Si applica soltanto alle Prove già previste dalle regole, senza introdurne di nuove né modificarne la frequenza.\nIl beneficio non si applica alle altre PS di Volontà, alle Prove di Potere per il lancio o alle Prove per mantenere una Focalizzazione preparatoria. Non consente di mantenere più Incantesimi e non impedisce l’interruzione automatica per incoscienza, morte o perdita dei requisiti necessari.",
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+    },
+    {
+      "id": "concentrazione-operativa",
+      "nome": "Concentrazione Operativa",
+      "sezione": "magia",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "capacita:lanciare_incantesimi"
+      ],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nMentre mantiene la Concentrazione su un solo Incantesimo, può utilizzare le normali Azioni del Round e le andature consentite: attaccare, muoversi, usare oggetti e Abilità o svolgere altre attività compatibili con le proprie condizioni.\nNon può lanciare un altro Incantesimo finché mantiene la Concentrazione, neppure se il nuovo Incantesimo è istantaneo o ha una Durata che non richiede Concentrazione. Deve interrompere volontariamente l’effetto mantenuto prima di tentare il nuovo lancio.\nContromagia e Convertire Potere rimangono utilizzabili, perché sono Manovre e non il lancio di un nuovo Incantesimo; seguono i propri requisiti, costi e Azioni.\nRestano le normali PS per mantenere la Concentrazione, le interruzioni automatiche e i requisiti di distanza, contatto o controllo dell’effetto. Il Talento non rende gratuite le Azioni espressamente richieste per guidare o utilizzare l’Incantesimo. Non richiede Concentrazione Migliorata e non aumenta il numero di Incantesimi mantenibili.",
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+    },
+    {
+      "id": "incantesimi-ampliati",
+      "nome": "Incantesimi Ampliati",
+      "sezione": "magia",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "capacita:lanciare_incantesimi"
+      ],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nQuando Anticipa l’Area di un Incantesimo, non raddoppia il suo costo base in PM. L’Area passa al successivo scatto espressamente consentito; il Talento non cambia la forma dell’Area né altri parametri.\nL’Anticipazione riguarda un solo aspetto e un solo scatto consentito dallo schema, senza cambiare il livello dichiarato. Restano tutti i limiti e i divieti dell’Incantesimo. La Prova di Potere è obbligatoria, anche se il lancio sarebbe automatico, e la sua difficoltà aumenta di una categoria; Anticipazione Migliorata può eliminare soltanto questo aumento. Non è cumulabile con Calcolo Arcano sullo stesso lancio.",
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+    },
+    {
+      "id": "incantesimi-estesi",
+      "nome": "Incantesimi Estesi",
+      "sezione": "magia",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "capacita:lanciare_incantesimi"
+      ],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nQuando Anticipa la Durata di un Incantesimo, non raddoppia il suo costo base in PM. La Durata passa al successivo scatto espressamente consentito. Il Talento non rende persistente un effetto istantaneo; se l’effetto richiede Concentrazione, questa deve essere mantenuta anche durante il tempo aggiuntivo.\nL’Anticipazione riguarda un solo aspetto e un solo scatto consentito dallo schema, senza cambiare il livello dichiarato. Restano tutti i limiti e i divieti dell’Incantesimo. La Prova di Potere è obbligatoria, anche se il lancio sarebbe automatico, e la sua difficoltà aumenta di una categoria; Anticipazione Migliorata può eliminare soltanto questo aumento. Non è cumulabile con Calcolo Arcano sullo stesso lancio.",
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+    },
+    {
+      "id": "incantesimi-proiettati",
+      "nome": "Incantesimi Proiettati",
+      "sezione": "magia",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "capacita:lanciare_incantesimi"
+      ],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nQuando Anticipa la Gittata di un Incantesimo, non raddoppia il suo costo base in PM. La Gittata passa al successivo scatto espressamente consentito. Una Gittata Personale o a Contatto può diventare a distanza soltanto se la scheda lo permette espressamente.\nRestano i requisiti di visibilità, individuazione del bersaglio e assenza di ostacoli previsti dall’Incantesimo.\nL’Anticipazione riguarda un solo aspetto e un solo scatto consentito dallo schema, senza cambiare il livello dichiarato. Restano tutti i limiti e i divieti dell’Incantesimo. La Prova di Potere è obbligatoria, anche se il lancio sarebbe automatico, e la sua difficoltà aumenta di una categoria; Anticipazione Migliorata può eliminare soltanto questo aumento. Non è cumulabile con Calcolo Arcano sullo stesso lancio.",
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+    },
+    {
+      "id": "incantesimi-plurimi",
+      "nome": "Incantesimi Plurimi",
+      "sezione": "magia",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "capacita:lanciare_incantesimi"
+      ],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nQuando Anticipa il numero di Bersagli di un Incantesimo, non raddoppia il suo costo base in PM. Il numero passa al successivo scatto espressamente consentito. Il Talento non aumenta i Colpi, non permette più impatti sullo stesso bersaglio e non modifica le regole di distribuzione dell’effetto.\nOgni bersaglio deve soddisfare i requisiti previsti e conserva le proprie Difese e Prove Salvezza.\nL’Anticipazione riguarda un solo aspetto e un solo scatto consentito dallo schema, senza cambiare il livello dichiarato. Restano tutti i limiti e i divieti dell’Incantesimo. La Prova di Potere è obbligatoria, anche se il lancio sarebbe automatico, e la sua difficoltà aumenta di una categoria; Anticipazione Migliorata può eliminare soltanto questo aumento. Non è cumulabile con Calcolo Arcano sullo stesso lancio.",
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+    },
+    {
+      "id": "incantesimi-intensificati",
+      "nome": "Incantesimi Intensificati",
+      "sezione": "magia",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "capacita:lanciare_incantesimi"
+      ],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nQuando Anticipa un valore numerico di danno, guarigione o bonus espressamente ammesso dallo schema di un Incantesimo, non raddoppia il suo costo base in PM.\nNon si applica a Gittata, Area, Durata, Bersagli, Colpi o modificatori delle Prove Salvezza. Non cambia la natura del danno, le informazioni ottenute o le capacità concesse e non rende anticipabile un valore che la scheda esclude.\nL’Anticipazione riguarda un solo aspetto e un solo scatto consentito dallo schema, senza cambiare il livello dichiarato. Restano tutti i limiti e i divieti dell’Incantesimo. La Prova di Potere è obbligatoria, anche se il lancio sarebbe automatico, e la sua difficoltà aumenta di una categoria; Anticipazione Migliorata può eliminare soltanto questo aumento. Non è cumulabile con Calcolo Arcano sullo stesso lancio.",
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+    },
+    {
+      "id": "anticipazione-migliorata",
+      "nome": "Anticipazione Migliorata",
+      "sezione": "magia",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "capacita:lanciare_incantesimi"
+      ],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nQuando usa l’Anticipazione, non aumenta di una categoria la difficoltà della Prova di Potere: usa quella del livello dichiarato, con gli altri modificatori applicabili. La Prova resta obbligatoria anche per un lancio normalmente automatico.\nIl costo base in PM resta raddoppiato, salvo il beneficio di Incantesimi Ampliati, Estesi, Proiettati, Plurimi o Intensificati per l’aspetto interessato. Con il Talento pertinente, il lancio conserva costo base e difficoltà ordinari, ma richiede comunque la Prova di Potere.\nRestano il limite di un solo aspetto, un solo scatto consentito e tutti i divieti della scheda. Non si combina con Calcolo Arcano sullo stesso lancio. Non modifica i livelli di Incantesimo accessibili e resta distinto da Potenziale Mistico Migliorato.",
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+    },
+    {
+      "id": "incantesimi-inarrestabili",
+      "nome": "Incantesimi Inarrestabili",
+      "sezione": "magia",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "capacita:lanciare_incantesimi"
+      ],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nLe Prove Salvezza con cui i bersagli resistono ai suoi Incantesimi subiscono −1 VA aggiuntivo, cumulabile con il modificatore previsto dall’Incantesimo e gli altri modificatori applicabili. Vale anche per le PS successive volte a liberarsi dall’effetto e quando la PS serve a risolvere Elusione.\nNon introduce una PS dove non è prevista e non modifica Parata, Schivata, Prove per colpire, Prove contrapposte, riconoscimento o Contromagia. Non si applica alle PS dell’incantatore per mantenere la Concentrazione. Non richiede PM o Azioni aggiuntivi.",
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+    },
+    {
+      "id": "incantesimi-massimizzati",
+      "nome": "Incantesimi Massimizzati",
+      "sezione": "magia",
+      "tipo": "attivo",
+      "prerequisiti": [
+        "capacita:lanciare_incantesimi"
+      ],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Attivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nUna volta per combattimento, dopo un lancio riuscito, anche automatico, e dopo l’eventuale Prova per colpire riuscita, può massimizzare una sola determinazione iniziale di danno o guarigione dell’Incantesimo. Dichiara l’uso prima di tirare i dadi dell’effetto.\nOgni dado della determinazione scelta assume il proprio risultato massimo, poi si applicano i normali modificatori fissi. Per esempio, 3d6 + 2 produce 20 prima delle protezioni.\nSe una sola determinazione è condivisa da più bersagli, tutti usano il risultato massimizzato. Se l’Incantesimo prevede più Colpi o determinazioni distinte, ne sceglie una sola. Non massimizza effetti periodici successivi, Durata, PV delle creature evocate, Prove Salvezza o altre Prove.\nRestano Armatura, resistenze, riduzioni, PS e ogni altra mitigazione applicabile, oltre ai normali costi in PM e Azioni.",
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+    },
+    {
+      "id": "manifestazioni-occultate",
+      "nome": "Manifestazioni Occultate",
+      "sezione": "magia",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "capacita:lanciare_incantesimi"
+      ],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nAl lancio può occultare le manifestazioni visive e sonore puramente magiche del proprio Incantesimo. Chi avrebbe normalmente la possibilità di percepirle deve superare una Prova di Percezione con −2 VA per notarle.\nNon nasconde gesti, voce o Focus usati per lanciare, né creature evocate, muri, oggetti o altre presenze fisiche. Restano osservabili danni, movimenti e conseguenze dell’effetto. Non occulta le manifestazioni necessarie al suo funzionamento, come un comando che il bersaglio deve udire.\nUn attacco non percepito segue le normali regole delle Difese, senza ulteriori bonus o penalità automatici concessi dal Talento.\nÈ distinto da Magia Occultata: da solo non impone una Prova di Occultismo per la Contromagia. L’eventuale riconoscimento richiesto da Magia Occultata segue la scheda di quel Talento.",
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+    },
+    {
+      "id": "ritualista-minore",
+      "nome": "Ritualista Minore",
+      "sezione": "magia",
+      "tipo": "passivo",
+      "prerequisiti": [],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Passivo. Nessun prerequisito. Acquisibile una sola volta.\nConsente di apprendere ed eseguire Rituali di Grado I–III come Officiante oppure di contribuire come Canale, secondo la procedura del singolo Rituale. Non richiede l’Addestramento Taumaturgo e non concede accesso agli Incantesimi.\nIl Talento non fa conoscere automaticamente tutti i Rituali dei Gradi accessibili. Occorre apprendere ciascuna procedura e rispettarne requisiti, tempi, materiali e costi.\nIl contributo del Canale segue la procedura del Rituale; il Talento non assegna un bonus numerico automatico.",
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+    },
+    {
+      "id": "ritualista-maggiore",
+      "nome": "Ritualista Maggiore",
+      "sezione": "magia",
+      "tipo": "passivo",
+      "prerequisiti": [
+        "ritualista-minore"
+      ],
+      "molteplicita": "una",
+      "parametro": null,
+      "testo": "Passivo. Requisito: Ritualista Minore. Acquisibile una sola volta.\nEstende ai Rituali di Grado IV–VI la possibilità di apprendimento ed esecuzione come Officiante o di partecipazione come Canale. Mantiene l’accesso ai Gradi I–III.\nNon concede automaticamente la conoscenza delle procedure né accesso agli Incantesimi. Per ciascun Rituale restano necessari apprendimento, requisiti, tempi, materiali e costi.\nIl contributo del Canale segue la procedura del Rituale; il Talento non assegna un bonus numerico automatico.",
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
     }
   ],
   "condizioni_prerequisiti": {
@@ -1259,6 +1507,11 @@
         "recupero-meditativo"
       ],
       "fonte": "Magia sez. 6: «La Meditazione è accessibile con l’Addestramento Taumaturgo, con Recupero Meditativo o con una capacità che la conceda espressamente.» Nessuna Classe la concede."
+    },
+    "capacita:riserva_pm": {
+      "descrizione": "una riserva personale di PM",
+      "sempre": true,
+      "fonte": "Magia sez. 1, Potere Mistico e Recupero Mistico: «Requisito: possedere una riserva personale di PM.» Ogni personaggio ha una riserva personale (PM Massimi = SAG + contributi di Classe, almeno 1): la condizione è sempre soddisfatta."
     }
   }
 }

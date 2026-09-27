@@ -8,11 +8,11 @@ Ultimo controllo: **26 settembre 2026, sera** (prima esecuzione; confronto con i
 
 | Documento | ID Google Doc | Ultima modifica vista (UTC) | Edizione vista | Testo salvato | Note |
 |---|---|---|---|---|---|
-| Manuale del Giocatore | `110LNyYLZFWRGYuym836EqKYOUvoQRYvqBzm_2bJqybc` | 2026-09-26T16:51:15Z | 0.43 + risposte 26/09 (A.1, A.3, A.4, A.5–A.5.3) e 25/09 (Esploratore) | `docs/manuali-txt/giocatore.md` | esaminato: coincide con i dati, tranne §2.16.1–§2.16.3 (dotazioni iniziali, approvate), che aspettano il passo guidato |
-| Manuale della Magia | `1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY` | 2026-09-26T13:26:03Z | 1.1 + risposte 26/09 (A.2: 14 schede, sez. 1–2) e 25/09 (minimo 1) | `docs/manuali-txt/magia.md` | esaminato: coincide con i dati |
+| Manuale del Giocatore | `110LNyYLZFWRGYuym836EqKYOUvoQRYvqBzm_2bJqybc` | 2026-09-27T02:14:45Z | 0.43 + risposte 26–27/09 (A.1, A.3, A.4, A.5–A.5.29) e 25/09 (Esploratore) | `docs/manuali-txt/giocatore.md` | esaminato: §2.16 (dotazioni) in `data/dotazioni.json`; §4.4, §8.6.8, §8.9 recepiti; modifiche non annunciate (per-davide A.32) |
+| Manuale della Magia | `1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY` | 2026-09-27T02:06:14Z | 1.1 + risposte 26/09 (A.2: 14 schede, sez. 1–2), 25/09 (minimo 1) e 18 Talenti nuovi del 27/09 | `docs/manuali-txt/magia.md` | esaminato: 32 Talenti in `talenti_liberi.json`; i 18 nuovi non sono annunciati (per-davide A.32) |
 | Manuale degli Armamenti | `1scH7QwtQYNb4D22vGJsUhGgPglwbFhZXf4ZGXPGhW3Y` | 2026-09-26T09:32:57Z | 0.50 | `docs/manuali-txt/armamenti.md` | esaminato: nessuna differenza di sostanza dal PDF |
 | Manuale dell'Equipaggiamento | `1bvTeJphQ6BNKazpV5twivvRbqkHrRowNBDZ_RakQiXA` | 2026-09-26T09:33:06Z | 0.1, solo cap. 1 | `docs/manuali-txt/equipaggiamento.md` | §1.6 e §1.7 in `regole.json`; cap. 2–8 "verranno integrati successivamente" |
-| E&L – Risposte e correzioni approvate | `1VaqZaAe4NK5P8A956Eahua_ZT60eh3ohnR2xSqh-tVs` | 2026-09-26T16:52:11Z | A.1–A.5.3 | `docs/risposte-master-2026-09-26.md` | registrate in `docs/risposte-master.md` (7–15); A.5.1–A.5.3 non ancora nell'app |
+| E&L – Risposte e correzioni approvate | `1VaqZaAe4NK5P8A956Eahua_ZT60eh3ohnR2xSqh-tVs` | 2026-09-27T01:56:00Z | A.1–A.5.29 | `docs/risposte-master-2026-09-26.md` | registrate in `docs/risposte-master.md` (7–19); dotazioni nel passo «Equipaggiamento iniziale» |
 
 Link: `https://docs.google.com/document/d/<ID>/edit`
 

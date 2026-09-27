@@ -142,3 +142,32 @@ condivisi (Giocatore §§1.2.3, 2.1, 2.11, 2.14, §8.6, §8.6.10; Magia sezioni 
     quell’ambiente, secondo la sua scheda). Requisiti: Carabina, Fucile a pompa e Ascia leggera
     FOR 4, armatura FOR 3, Pugnale FOR 2.
     → Non ancora nell’app, come la 13 e la 14: serve il passo guidato.
+
+## 27 settembre 2026
+
+Testi completi in `docs/risposte-master-2026-09-26.md` (copia del Doc E&L, versione delle 01:56
+UTC); i paragrafi corrispondenti sono nel Manuale del Giocatore §2.16.1–§2.16.29.
+
+16. **Dotazioni iniziali delle 25 Classi** (E&L A.5.4–A.5.26; Giocatore §2.16.4–§2.16.26), dopo
+    Agente (14) e Cacciatore (15): per ogni Classe gruppi di scelta fra armi, protezioni e
+    strumenti, con munizioni, requisiti di FOR e note.
+    → `data/dotazioni.json`, passo «Equipaggiamento iniziale» del wizard.
+
+17. **Armamenti corporativi di base** (A.5.27; §2.16.27). La Classe assegna direttamente il
+    modello di base della Corporazione che corrisponde al profilo commerciale delle tabelle
+    (stessa tipologia e funzione), senza conguaglio; nell’inventario va il modello corporativo con
+    i suoi valori, requisiti e prezzo; munizioni e accessori compatibili; i Freelance usano il
+    catalogo Commerciale. Gli abbinamenti puntuali commerciale → corporativo sono ancora da
+    completare.
+    → `data/dotazioni.json` → `corporativi` (vuoto finché il master non li dà: si assegna il
+    profilo commerciale con la nota «modello corporativo da definire (A.5.27)»).
+
+18. **Crediti iniziali** (A.5.28; §2.16.28): 1.000 + 2d6 × 100 crediti (da 1.200 a 2.200, media
+    1.700), per acquisti e conguagli; il resto rimane al personaggio.
+    → `data/regole.json` → `crediti_iniziali`, tiro con `src/tiri.js`.
+
+19. **Acquisti e miglioramenti iniziali** (A.5.29; §2.16.29). Alla creazione si possono cedere gli
+    armamenti di base assegnati, valutati al 100 % del prezzo di catalogo del modello assegnato, e
+    pagare con i crediti la differenza per un equipaggiamento migliore del catalogo della propria
+    Corporazione; la valutazione integrale vale solo alla creazione.
+    → `data/dotazioni.json` → `scambio`, passo «Equipaggiamento iniziale».

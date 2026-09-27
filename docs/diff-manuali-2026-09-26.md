@@ -169,3 +169,32 @@ Per la dotazione dell'Agente, i profili di armi e armatura esistono nel catalogo
 
 - **Giocatore**: aggiunge il §2.16.3, la dotazione iniziale del Cacciatore (23 righe), e nient'altro.
 - **E&L**: aggiunge **A.5.3**, con lo stesso contenuto del §2.16.3; la modifica è quindi annunciata. Registrata come decisione 15; non è ancora nell'app.
+
+---
+
+## Controllo del 27/09 (Giocatore 02:14:45, Magia 02:06:14, E&L 01:56:00)
+
+Confronto con `git diff` sui file di `docs/manuali-txt/`. Armamenti ed Equipaggiamento invariati.
+
+**E&L** — nuove le voci A.5.4–A.5.29: dotazioni iniziali delle altre 23 Classi, armamenti corporativi di base, crediti iniziali, acquisti e miglioramenti. Le voci A.1–A.5.3 sono identiche. Registrate come decisioni 16–19.
+
+**Giocatore**
+
+| Paragrafo | Differenza | Classe | Origine | Applicato |
+|---|---|---|---|---|
+| §2.16, §2.16.4–§2.16.29 | Dotazioni delle Classi, armamenti corporativi, crediti, acquisti (740 righe nuove) | regola | E&L A.5.4–A.5.29 | `data/dotazioni.json` e passo del wizard |
+| §2.16 introduzione, §2.16.2, §2.17 | Richiami ai modelli corporativi (§2.16.27) e ai crediti residui nel controllo finale | testo | E&L A.5.27 | — |
+| §4.3, §4.4 Potere | «Mantenere la Concentrazione» → «Focalizzazione e Concentrazione»: la Concentrazione su un Incantesimo attivo si mantiene con una PS di Volontà (+3 con Concentrazione Migliorata) | regola | **non annunciata** | `abilita.json` (ambito e descrizione) |
+| §4.4 Rituali | Ritualista Minore (Gradi I–III) e Maggiore (IV–VI) | testo | **non annunciata** | `abilita.json` |
+| §5.2, §5.18 Stordito, §8.9 Cobra paralizzante | PS di Volontà per la Concentrazione al posto della Prova di Potere | regola | **non annunciata** | `tecniche_interiori.json` (Cobra); il promemoria di Stordito non la citava |
+| §5.21 Umanità | La riduzione dei PM vale anche sui +5 di Potere Mistico | testo | **non annunciata** | — (l'app non calcola l'Umanità) |
+| §8.6.8 | «Talenti di Combattimento Magico» → «Talenti magici e mistici»: i 32 Talenti per gruppo, con le regole di Potere Mistico, Recupero Mistico, Concentrazione, Anticipazione, Ritualista | regola | **non annunciata** | `talenti_liberi.json` → `sezioni.8.6.8` |
+
+**Magia**
+
+| Paragrafo | Differenza | Classe | Origine | Applicato |
+|---|---|---|---|---|
+| Sez. 1 | 18 schede nuove di Talenti (32 in tutto) | regola | **non annunciata** (per-davide A.32) | `talenti_liberi.json`; Potere Mistico +5 PM Massimi per acquisizione nel calcolo |
+| Sez. 2 Componenti, Concentrazione | I tre Talenti «Escludere…»; PS di Volontà per la Concentrazione, Concentrazione Operativa e Migliorata | regola | **non annunciata** | nelle schede dei Talenti |
+| Sez. 6 Recupero | Recupero Mistico (+1 PM per ora di recupero naturale) | regola | **non annunciata** | nella scheda del Talento (i recuperi non si contano nell'app) |
+| Sez. 10–11 Anticipazione, Rituali | Eccezioni ai costi e alla difficoltà per i Talenti di Anticipazione; Ritualista Minore e Maggiore | regola | **non annunciata** | nelle schede dei Talenti |

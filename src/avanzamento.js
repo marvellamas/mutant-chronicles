@@ -171,7 +171,8 @@ const haAccessoMagiaDaTalenti = (stato, dati) => talentiConEffetti(stato, dati).
 function soddisfaPrerequisito(stato, p, dati) {
   if (p.startsWith('addestramento:')) return stato.addestr.nome === p.slice('addestramento:'.length);
   const c = dati.talenti_liberi.condizioni_prerequisiti?.[p];
-  if (c) return (c.addestramento && stato.addestr.nome === c.addestramento) || (c.talenti ?? []).some((id) => possiede(stato, id));
+  // «sempre»: condizione che ogni personaggio soddisfa (la riserva personale di PM, Magia sez. 1)
+  if (c) return c.sempre === true || (c.addestramento && stato.addestr.nome === c.addestramento) || (c.talenti ?? []).some((id) => possiede(stato, id));
   return possiede(stato, p);
 }
 
@@ -806,7 +807,8 @@ function schedaARiposo(personaggio, dati) {
     equipaggiamento,
     salvezze: salvezzeDi(stato, dati),
     pv: stato.car.COS + stato.contributiPV.reduce((s, c) => s + c.valore, 0) + effetto('pv'),
-    pm: pmMancanti ? null : stato.car.SAG + stato.contributiPM.reduce((s, c) => s + c.valore, 0),
+    // Magia sez. 1, Potere Mistico: +5 PM Massimi per acquisizione (effetti.pm), fino a +15
+    pm: pmMancanti ? null : stato.car.SAG + stato.contributiPM.reduce((s, c) => s + c.valore, 0) + effetto('pm'),
     iniziativa: sommaIniziativa(...r.iniziativa.caratteristiche.map((s) => caratteristiche[s].mod)) + effetto('iniziativa'),
     movimento,
     azioni: { movimento: r.azioni_primo_livello.movimento, principali: r.azioni_primo_livello.principali + cumulato('azione_principale', n, dati) },

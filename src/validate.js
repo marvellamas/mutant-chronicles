@@ -588,7 +588,7 @@ function validaSpecializzazioni(s, nomiAbilita, err) {
 }
 
 const MOLTEPLICITA = { una: null, per_caratteristica: 'caratteristica', per_salvezza_max2: 'salvezza', illimitata: null, limitata: null };
-const EFFETTI_NOTI = new Set(['iniziativa', 'pv', 'salvezza', 'movimento', 'tecniche', 'accessoMagia', 'incantesimi', 'livelloMax', 'livelloMaxIncantesimi', 'magia', 'meditazione']);
+const EFFETTI_NOTI = new Set(['iniziativa', 'pv', 'pm', 'salvezza', 'movimento', 'tecniche', 'accessoMagia', 'incantesimi', 'livelloMax', 'livelloMaxIncantesimi', 'magia', 'meditazione']);
 // effetti.magia: valori che sostituiscono la base di regole.json → lancio (numeri) o capacità (true)
 const EFFETTI_MAGIA = { focalizzazione_va: 'numero', penalita_ingaggio: 'numero', penalita_contromagia: 'numero', tiro_armi_da_lancio: 'numero', contromagia: 'vero', contromagia_senza_conoscenza: 'vero', occultata: 'vero' };
 const EFFETTI_MEDITAZIONE = { accesso: 'vero', pm_per_ora: 'numero', moltiplicatore_ore: 'numero' };
@@ -606,7 +606,8 @@ function validaTalentiLiberi(t, idSpec, err, addestramenti = []) {
   const condizioni = isOggetto(t.condizioni_prerequisiti) ? t.condizioni_prerequisiti : {};
   for (const [c, v] of Object.entries(condizioni)) {
     if (c.startsWith('_')) continue;
-    if (!isOggetto(v) || !isTesto(v.descrizione)) err(F, `condizioni_prerequisiti.${c}`, 'serve { descrizione, addestramento?, talenti? }');
+    if (!isOggetto(v) || !isTesto(v.descrizione)) err(F, `condizioni_prerequisiti.${c}`, 'serve { descrizione, addestramento?, talenti?, sempre? }');
+    else if (v.sempre !== undefined && v.sempre !== true) err(F, `condizioni_prerequisiti.${c}.sempre`, 'deve valere true (o mancare)');
     else {
       if (v.addestramento !== undefined && !addestramenti.includes(v.addestramento)) err(F, `condizioni_prerequisiti.${c}.addestramento`, `"${v.addestramento}" non è un Addestramento`);
       for (const id of v.talenti ?? []) if (!ids.has(id)) err(F, `condizioni_prerequisiti.${c}.talenti`, `"${id}" non è un Talento`);

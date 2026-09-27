@@ -109,6 +109,8 @@ Usufruitore di Magia concede agli altri personaggi 2 \+ Mod INT incantesimi, min
 
 Incrementare Incantesimi aggiunge due incantesimi conosciuti ed è acquisibile fino a cinque volte. Gli apprendimenti concessi da Addestramento, Classe o Talento sono automatici. Gli aumenti permanenti di Mod INT incrementano la relativa quota; quelli temporanei non concedono incantesimi.
 
+I 32 Talenti magici e mistici seguenti si acquisiscono con le normali scelte di Talenti Liberi. Ogni scheda ne indica requisiti, effetti e limiti di acquisizione. I Talenti che aumentano la riserva o il recupero personale dei PM possono beneficiare anche chi non lancia Incantesimi, quando ne possiede i requisiti.
+
 ## **Usufruitore di Magia**
 
 Tipo: Passivo. Prerequisiti: non possedere l’Addestramento Taumaturgo né Risorse Interiori. Acquisizione: una sola volta.
@@ -263,11 +265,183 @@ Chi usa Contromagia deve comunque conoscere l’Incantesimo, salvo possedere Con
 
 Il beneficio di Magia Occultata è sempre attivo e non richiede Azioni o PM aggiuntivi.
 
+## **Potere Mistico**
+
+Passivo. Requisito: possedere una riserva personale di PM. Acquisibile fino a tre volte.
+
+Aumenta permanentemente i PM Massimi di 5 per acquisizione, fino a \+15. Il beneficio si aggiunge alla riserva personale calcolata con SAG, Gradi di Classe e altri incrementi, prima della riduzione dovuta all’Umanità.
+
+Aumentare il massimo non recupera PM: i PM Attuali restano invariati. Per esempio, 12 PM Attuali su 20 Massimi diventano 12 su 25\. Il Talento non aumenta la capacità di batterie, cristalli o altre riserve esterne e non concede Incantesimi né accesso alla Meditazione. Può beneficiare anche chi usa Tecniche Interiori.
+
+## **Recupero Mistico**
+
+Passivo. Requisito: possedere una riserva personale di PM. Acquisibile una sola volta.
+
+Per ogni ora completa in cui è consentito il recupero naturale dei PM, recupera 1 PM aggiuntivo. I recuperi orari diventano: Attività pesante 0 PM; Attività leggera 2 PM; Riposo breve 3 PM; Riposo completo 4 PM.
+
+Restano le condizioni dell’ora completa e ininterrotta, le interruzioni e il limite dei PM Massimi. Il beneficio vale anche durante sonno o incoscienza quando il recupero naturale è consentito. Non richiede attivazione e non ha un limite di utilizzi giornalieri.
+
+Non si aggiunge alla Meditazione, che sostituisce il recupero naturale della stessa ora, né ad altri recuperi specifici sostitutivi, come la trance di Meditazione Profonda, salvo un’eccezione espressa.
+
+## **Escludere la Componente Somatica**
+
+Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.
+
+Può lanciare i propri Incantesimi senza eseguire gesti, anche con le mani occupate o con il movimento delle mani impedito. L’assenza della Componente Somatica non infligge −2 VA e, da sola, non rende obbligatoria la Prova di Potere per un lancio altrimenti automatico.
+
+Restano le altre Componenti, i costi, le Azioni e le altre circostanze che richiedono la Prova. Il Talento non elimina un eventuale contatto richiesto con il bersaglio e non permette di agire quando uno Stato o un altro effetto lo impedisce.
+
+## **Escludere l’Invocazione**
+
+Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.
+
+Può lanciare i propri Incantesimi senza usare la voce. L’assenza dell’Invocazione non infligge −2 VA e, da sola, non rende obbligatoria la Prova di Potere per un lancio altrimenti automatico.
+
+Restano le altre Componenti, i costi, le Azioni e le altre circostanze che richiedono la Prova. Non vengono eliminate le parole che costituiscono una parte necessaria dell’effetto, come un ordine che il bersaglio deve udire. Gesti, Focus e manifestazioni dell’Incantesimo restano percepibili normalmente.
+
+## **Escludere il Focus**
+
+Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.
+
+Può lanciare i propri Incantesimi senza il Focus personale. La sua assenza non infligge −2 VA e, da sola, non rende obbligatoria la Prova di Potere per un lancio altrimenti automatico.
+
+Restano le altre Componenti, i costi, le Azioni e le altre circostanze che richiedono la Prova. Il Talento non sostituisce oggetti bersaglio, materiali speciali o componenti espressamente richiesti dalla scheda dell’Incantesimo. Le proprietà aggiuntive di un Focus o Artefatto richiedono l’oggetto e le relative condizioni d’uso.
+
+La Manovra Focalizzazione rimane utilizzabile normalmente anche senza Focus: il Focus personale e la preparazione mediante Focalizzazione sono due elementi distinti.
+
+## **Concentrazione Migliorata**
+
+Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.
+
+Ottiene \+3 VA alle Prove Salvezza di Volontà effettuate per mantenere la Concentrazione su un Incantesimo. Si applica soltanto alle Prove già previste dalle regole, senza introdurne di nuove né modificarne la frequenza.
+
+Il beneficio non si applica alle altre PS di Volontà, alle Prove di Potere per il lancio o alle Prove per mantenere una Focalizzazione preparatoria. Non consente di mantenere più Incantesimi e non impedisce l’interruzione automatica per incoscienza, morte o perdita dei requisiti necessari.
+
+## **Concentrazione Operativa**
+
+Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.
+
+Mentre mantiene la Concentrazione su un solo Incantesimo, può utilizzare le normali Azioni del Round e le andature consentite: attaccare, muoversi, usare oggetti e Abilità o svolgere altre attività compatibili con le proprie condizioni.
+
+Non può lanciare un altro Incantesimo finché mantiene la Concentrazione, neppure se il nuovo Incantesimo è istantaneo o ha una Durata che non richiede Concentrazione. Deve interrompere volontariamente l’effetto mantenuto prima di tentare il nuovo lancio.
+
+Contromagia e Convertire Potere rimangono utilizzabili, perché sono Manovre e non il lancio di un nuovo Incantesimo; seguono i propri requisiti, costi e Azioni.
+
+Restano le normali PS per mantenere la Concentrazione, le interruzioni automatiche e i requisiti di distanza, contatto o controllo dell’effetto. Il Talento non rende gratuite le Azioni espressamente richieste per guidare o utilizzare l’Incantesimo. Non richiede Concentrazione Migliorata e non aumenta il numero di Incantesimi mantenibili.
+
+## **Incantesimi Ampliati**
+
+Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.
+
+Quando Anticipa l’Area di un Incantesimo, non raddoppia il suo costo base in PM. L’Area passa al successivo scatto espressamente consentito; il Talento non cambia la forma dell’Area né altri parametri.
+
+L’Anticipazione riguarda un solo aspetto e un solo scatto consentito dallo schema, senza cambiare il livello dichiarato. Restano tutti i limiti e i divieti dell’Incantesimo. La Prova di Potere è obbligatoria, anche se il lancio sarebbe automatico, e la sua difficoltà aumenta di una categoria; Anticipazione Migliorata può eliminare soltanto questo aumento. Non è cumulabile con Calcolo Arcano sullo stesso lancio.
+
+## **Incantesimi Estesi**
+
+Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.
+
+Quando Anticipa la Durata di un Incantesimo, non raddoppia il suo costo base in PM. La Durata passa al successivo scatto espressamente consentito. Il Talento non rende persistente un effetto istantaneo; se l’effetto richiede Concentrazione, questa deve essere mantenuta anche durante il tempo aggiuntivo.
+
+L’Anticipazione riguarda un solo aspetto e un solo scatto consentito dallo schema, senza cambiare il livello dichiarato. Restano tutti i limiti e i divieti dell’Incantesimo. La Prova di Potere è obbligatoria, anche se il lancio sarebbe automatico, e la sua difficoltà aumenta di una categoria; Anticipazione Migliorata può eliminare soltanto questo aumento. Non è cumulabile con Calcolo Arcano sullo stesso lancio.
+
+## **Incantesimi Proiettati**
+
+Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.
+
+Quando Anticipa la Gittata di un Incantesimo, non raddoppia il suo costo base in PM. La Gittata passa al successivo scatto espressamente consentito. Una Gittata Personale o a Contatto può diventare a distanza soltanto se la scheda lo permette espressamente.
+
+Restano i requisiti di visibilità, individuazione del bersaglio e assenza di ostacoli previsti dall’Incantesimo.
+
+L’Anticipazione riguarda un solo aspetto e un solo scatto consentito dallo schema, senza cambiare il livello dichiarato. Restano tutti i limiti e i divieti dell’Incantesimo. La Prova di Potere è obbligatoria, anche se il lancio sarebbe automatico, e la sua difficoltà aumenta di una categoria; Anticipazione Migliorata può eliminare soltanto questo aumento. Non è cumulabile con Calcolo Arcano sullo stesso lancio.
+
+## **Incantesimi Plurimi**
+
+Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.
+
+Quando Anticipa il numero di Bersagli di un Incantesimo, non raddoppia il suo costo base in PM. Il numero passa al successivo scatto espressamente consentito. Il Talento non aumenta i Colpi, non permette più impatti sullo stesso bersaglio e non modifica le regole di distribuzione dell’effetto.
+
+Ogni bersaglio deve soddisfare i requisiti previsti e conserva le proprie Difese e Prove Salvezza.
+
+L’Anticipazione riguarda un solo aspetto e un solo scatto consentito dallo schema, senza cambiare il livello dichiarato. Restano tutti i limiti e i divieti dell’Incantesimo. La Prova di Potere è obbligatoria, anche se il lancio sarebbe automatico, e la sua difficoltà aumenta di una categoria; Anticipazione Migliorata può eliminare soltanto questo aumento. Non è cumulabile con Calcolo Arcano sullo stesso lancio.
+
+## **Incantesimi Intensificati**
+
+Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.
+
+Quando Anticipa un valore numerico di danno, guarigione o bonus espressamente ammesso dallo schema di un Incantesimo, non raddoppia il suo costo base in PM.
+
+Non si applica a Gittata, Area, Durata, Bersagli, Colpi o modificatori delle Prove Salvezza. Non cambia la natura del danno, le informazioni ottenute o le capacità concesse e non rende anticipabile un valore che la scheda esclude.
+
+L’Anticipazione riguarda un solo aspetto e un solo scatto consentito dallo schema, senza cambiare il livello dichiarato. Restano tutti i limiti e i divieti dell’Incantesimo. La Prova di Potere è obbligatoria, anche se il lancio sarebbe automatico, e la sua difficoltà aumenta di una categoria; Anticipazione Migliorata può eliminare soltanto questo aumento. Non è cumulabile con Calcolo Arcano sullo stesso lancio.
+
+## **Anticipazione Migliorata**
+
+Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.
+
+Quando usa l’Anticipazione, non aumenta di una categoria la difficoltà della Prova di Potere: usa quella del livello dichiarato, con gli altri modificatori applicabili. La Prova resta obbligatoria anche per un lancio normalmente automatico.
+
+Il costo base in PM resta raddoppiato, salvo il beneficio di Incantesimi Ampliati, Estesi, Proiettati, Plurimi o Intensificati per l’aspetto interessato. Con il Talento pertinente, il lancio conserva costo base e difficoltà ordinari, ma richiede comunque la Prova di Potere.
+
+Restano il limite di un solo aspetto, un solo scatto consentito e tutti i divieti della scheda. Non si combina con Calcolo Arcano sullo stesso lancio. Non modifica i livelli di Incantesimo accessibili e resta distinto da Potenziale Mistico Migliorato.
+
+## **Incantesimi Inarrestabili**
+
+Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.
+
+Le Prove Salvezza con cui i bersagli resistono ai suoi Incantesimi subiscono −1 VA aggiuntivo, cumulabile con il modificatore previsto dall’Incantesimo e gli altri modificatori applicabili. Vale anche per le PS successive volte a liberarsi dall’effetto e quando la PS serve a risolvere Elusione.
+
+Non introduce una PS dove non è prevista e non modifica Parata, Schivata, Prove per colpire, Prove contrapposte, riconoscimento o Contromagia. Non si applica alle PS dell’incantatore per mantenere la Concentrazione. Non richiede PM o Azioni aggiuntivi.
+
+## **Incantesimi Massimizzati**
+
+Attivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.
+
+Una volta per combattimento, dopo un lancio riuscito, anche automatico, e dopo l’eventuale Prova per colpire riuscita, può massimizzare una sola determinazione iniziale di danno o guarigione dell’Incantesimo. Dichiara l’uso prima di tirare i dadi dell’effetto.
+
+Ogni dado della determinazione scelta assume il proprio risultato massimo, poi si applicano i normali modificatori fissi. Per esempio, 3d6 \+ 2 produce 20 prima delle protezioni.
+
+Se una sola determinazione è condivisa da più bersagli, tutti usano il risultato massimizzato. Se l’Incantesimo prevede più Colpi o determinazioni distinte, ne sceglie una sola. Non massimizza effetti periodici successivi, Durata, PV delle creature evocate, Prove Salvezza o altre Prove.
+
+Restano Armatura, resistenze, riduzioni, PS e ogni altra mitigazione applicabile, oltre ai normali costi in PM e Azioni.
+
+## **Manifestazioni Occultate**
+
+Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.
+
+Al lancio può occultare le manifestazioni visive e sonore puramente magiche del proprio Incantesimo. Chi avrebbe normalmente la possibilità di percepirle deve superare una Prova di Percezione con −2 VA per notarle.
+
+Non nasconde gesti, voce o Focus usati per lanciare, né creature evocate, muri, oggetti o altre presenze fisiche. Restano osservabili danni, movimenti e conseguenze dell’effetto. Non occulta le manifestazioni necessarie al suo funzionamento, come un comando che il bersaglio deve udire.
+
+Un attacco non percepito segue le normali regole delle Difese, senza ulteriori bonus o penalità automatici concessi dal Talento.
+
+È distinto da Magia Occultata: da solo non impone una Prova di Occultismo per la Contromagia. L’eventuale riconoscimento richiesto da Magia Occultata segue la scheda di quel Talento.
+
+## **Ritualista Minore**
+
+Passivo. Nessun prerequisito. Acquisibile una sola volta.
+
+Consente di apprendere ed eseguire Rituali di Grado I–III come Officiante oppure di contribuire come Canale, secondo la procedura del singolo Rituale. Non richiede l’Addestramento Taumaturgo e non concede accesso agli Incantesimi.
+
+Il Talento non fa conoscere automaticamente tutti i Rituali dei Gradi accessibili. Occorre apprendere ciascuna procedura e rispettarne requisiti, tempi, materiali e costi.
+
+Il contributo del Canale segue la procedura del Rituale; il Talento non assegna un bonus numerico automatico.
+
+## **Ritualista Maggiore**
+
+Passivo. Requisito: Ritualista Minore. Acquisibile una sola volta.
+
+Estende ai Rituali di Grado IV–VI la possibilità di apprendimento ed esecuzione come Officiante o di partecipazione come Canale. Mantiene l’accesso ai Gradi I–III.
+
+Non concede automaticamente la conoscenza delle procedure né accesso agli Incantesimi. Per ciascun Rituale restano necessari apprendimento, requisiti, tempi, materiali e costi.
+
+Il contributo del Canale segue la procedura del Rituale; il Talento non assegna un bonus numerico automatico.
+
 # **2 Componenti concentrazione e manovre**
 
 ## **Componenti e riconoscimento**
 
-Le componenti sono Focus personale, Somatizzazione mediante gesti e Invocazione mediante voce. Ogni componente richiesta ma mancante impone −2 VA a Potere, fino a −6, e rende necessaria la Prova anche ai livelli 1–3. Incantesimi e Talenti possono escludere espressamente una componente. L’impiego delle componenti è incluso nel lancio. La voce obbligatoria integrata nel discorso segue l’eccezione descritta nella sezione 19 e non può essere omessa.
+Le componenti sono Focus personale, Somatizzazione mediante gesti e Invocazione mediante voce. Ogni componente richiesta ma mancante impone −2 VA a Potere, fino a −6, e rende necessaria la Prova anche ai livelli 1–3. Incantesimi e Talenti possono escludere espressamente una componente. Escludere la Componente Somatica, Escludere l’Invocazione ed Escludere il Focus eliminano, per la rispettiva componente, sia il −2 VA sia l’obbligo di Prova dovuto soltanto alla sua assenza; restano gli altri motivi che rendono necessaria la Prova. L’impiego delle componenti è incluso nel lancio. La voce obbligatoria integrata nel discorso segue l’eccezione descritta nella sezione 19 e non può essere omessa.
 
 Si possiede un solo Focus personale. Sintonizzare un nuovo Focus richiede tre ore di Meditazione senza Prova. Chi possiede Usufruitore di Magia può invece sintonizzare il proprio Focus con tre ore di preparazione senza Prova; questa preparazione non concede il recupero di PM della Meditazione. Il Focus non è la manovra Focalizzazione. Gesti e parole evidenti rendono percepibile il lancio; un incantesimo conosciuto si riconosce automaticamente. Fa eccezione il riconoscimento ai fini di Contromagia contro chi possiede Magia Occultata, che richiede una Prova di Occultismo senza costo in Azioni, anche con Contromagia Universale. Occultismo può identificare ciò che è stato percepito, ma non rivela da solo magia nascosta.
 
@@ -277,7 +451,9 @@ Gli effetti sono istantanei, a Durata oppure a Concentrazione. Ogni versione per
 
 Durante la Concentrazione si può effettuare soltanto Passo fino a 6 Q e non si dispone di Azioni Principali. Si mantiene un solo incantesimo. La Concentrazione può terminare volontariamente senza Azioni; perdita di conoscenza e morte la interrompono. Avviare un altro incantesimo a Concentrazione termina il precedente, anche se il nuovo fallisce.
 
-Dopo la prima fonte di danno subita nel round si effettua una Salvezza di Volontà: con fallimento la Concentrazione termina. Le altre fonti del medesimo round non richiedono ulteriori Prove. Una Concentrazione interrotta richiede un nuovo lancio e un nuovo pagamento.
+Con Concentrazione Operativa si possono utilizzare le normali Azioni e andature mentre si mantiene un solo Incantesimo. Non si può lanciare alcun altro Incantesimo, neppure istantaneo o a Durata: occorre interrompere la Concentrazione prima del nuovo tentativo. Contromagia e Convertire Potere restano utilizzabili ai normali costi e requisiti. Restano le Prove di mantenimento, le interruzioni automatiche e le Azioni espressamente richieste per controllare o utilizzare l’effetto.
+
+Dopo la prima fonte di danno subita nel Round si effettua una PS di Volontà: con fallimento la Concentrazione termina. Concentrazione Migliorata concede \+3 VA a questa PS e alle altre PS previste per mantenerla. Le ulteriori fonti di soli danni nello stesso Round non richiedono altre Prove; acquisire Stordito in un evento successivo richiede invece una nuova PS, secondo la sezione 5\. Una Concentrazione interrotta richiede un nuovo lancio e un nuovo pagamento.
 
 ## **Le tre manovre magiche**
 
@@ -376,7 +552,7 @@ Movimenti forzati e A Terra non interrompono da soli Concentrazione o Focalizzaz
 
 Il personaggio possiede una sola riserva personale di PM universali. I PM attuali non possono superare il massimo e non scendono sotto 0\. I cristalli e gli altri contenitori conservano riserve esterne: non introducono riserve personali Fisiche, Mentali o Spirituali.
 
-L’Umanità può ridurre i PM Massimi personali secondo il Manuale del Giocatore, §5.21, «Umanità», fino a un minimo di 1\. I PM Attuali eccedenti il nuovo massimo vengono abbassati; un aumento del massimo non ripristina PM Attuali. Le riserve esterne mantengono la propria capacità, ma il loro impiego richiede la sintonizzazione entro la capacità risultante dopo la riduzione per UMN.
+L’Umanità può ridurre i PM Massimi personali secondo il Manuale del Giocatore, §5.21, «Umanità», fino a un minimo di 1\. I PM Attuali eccedenti il nuovo massimo vengono abbassati; un aumento del massimo non ripristina PM Attuali. Le riserve esterne mantengono la propria capacità, ma il loro impiego richiede la sintonizzazione entro la capacità risultante dopo la riduzione per UMN. Potere Mistico aumenta la riserva personale di 5 PM Massimi per acquisizione, fino a tre acquisizioni: questi incrementi si applicano prima della riduzione dovuta all’Umanità e non recuperano PM Attuali.
 
 Se, al termine della risoluzione completa di un’azione, il personaggio rimane a 0 PM personali, sviene finché non recupera almeno 1 PM. Prima si risolvono gli effetti dell’azione, gli eventuali rimborsi e la tabella del Fallimento Maldestro. Possedere PM in un contenitore esterno non impedisce lo svenimento.
 
@@ -475,6 +651,8 @@ Si annotano i PV sacrificati ancora da recuperare. Le cure magiche, Medicina e a
 
 Il recupero richiede un’ora intera e continuativa nella condizione indicata. Un’interruzione che impedisce il riposo o cambia la condizione fa perdere la frazione d’ora non completata; i PM recuperati nelle ore precedenti restano acquisiti. Terminata l’interruzione, inizia un nuovo periodo.
 
+Con Recupero Mistico si aggiunge 1 PM per ogni ora completa in cui il recupero naturale è consentito: Attività pesante 0 PM, Attività leggera 2 PM, Riposo breve 3 PM e Riposo completo 4 PM. L’Attività pesante continua a non concedere recupero. Il Talento vale anche nel sonno o nell’incoscienza quando il recupero naturale è consentito e non richiede attivazioni.
+
 **Un combattimento di 10–15 Round è Attività pesante:** non concede recupero e interrompe l’ora in corso, ma non viene conteggiato automaticamente come un’ora intera. Cinquanta minuti di riposo seguiti da un combattimento non concedono PM per quell’ora incompleta.
 
 Un’ora di esplorazione di un sotterraneo con pericolo concreto, ricerca di trappole o costante necessità di essere pronti allo scontro rientra nell’Attività pesante anche se non avviene alcun combattimento. La sola possibilità astratta di incontrare un pericolo non impedisce invece di classificare un’attività come leggera.
@@ -492,7 +670,7 @@ La Meditazione è accessibile con l’Addestramento Taumaturgo, con Recupero Med
 | Prova | Nessuna. |
 | Condizioni | Fermo e tranquillo; nessuna esplorazione, sorveglianza, ricarica o Concentrazione su un Incantesimo. |
 
-La Meditazione sostituisce il recupero naturale della stessa ora: i due recuperi non si sommano. Un’ora interrotta non concede PM; restano validi i recuperi delle ore già completate. Non si supera il massimo personale.
+La Meditazione sostituisce il recupero naturale della stessa ora: i due recuperi non si sommano. Un’ora interrotta non concede PM; restano validi i recuperi delle ore già completate. Non si supera il massimo personale. Recupero Mistico non aumenta la Meditazione, né altri recuperi specifici che sostituiscono quello naturale, salvo eccezione espressa.
 
 ## **Talenti di Meditazione**
 
@@ -822,11 +1000,17 @@ Quando un incantesimo consente più elementi, si dichiara un elemento principale
 
 Un unico tiro di danno vale per tutti i bersagli della medesima manifestazione ad area. Quando sono colpite più AC, si applicano separatamente protezioni e AR a ciascuna AC; la Contromisura si verifica sul singolo residuo e ogni effetto secondario viene verificato una sola volta per bersaglio e manifestazione. Le specifiche periodicità sono indicate nelle schede.
 
-Geometria Arcana esclude dall’area le creature consentite dal talento, pari al bonus INT con minimo 1, per tutta la durata. Calcolo Arcano, una volta per scena, prende Gittata, Area oppure Durata dalla versione successiva già accessibile. Incantesimi Aggressivi aggiunge il danno una sola volta per bersaglio e per lancio, non a ogni round persistente. Le creature evocate usano le proprie schede, senza ricevere i bonus offensivi del lanciatore.
+Geometria Arcana esclude dall’area le creature consentite dal talento, pari al bonus INT con minimo 1, per tutta la durata. Calcolo Arcano, una volta per scena, prende Gittata, Area oppure Durata dalla versione successiva già accessibile. Incantesimi Aggressivi aggiunge il danno una sola volta per bersaglio e per lancio, non a ogni round persistente. Le creature evocate usano le proprie schede, senza ricevere i bonus offensivi del lanciatore. I benefici dei Talenti sull’Anticipazione non si combinano con Calcolo Arcano sullo stesso lancio: si sceglie la modalità utilizzata.
 
 ## **12 3 Anticipazione**
 
 L’Anticipazione forza un solo aspetto di una sola scala senza aumentare il livello dell’incantesimo. Si sceglie una versione già accessibile, si raddoppia il suo costo base in PM e la prova Potere diventa più difficile di una categoria. Tutti gli altri parametri restano quelli della versione scelta. L’aspetto forzato può oltrepassare la normale disponibilità del personaggio. Sono ammessi soltanto gli aspetti elencati nella singola scheda; non si combinano più Anticipazioni nello stesso lancio.
+
+La Prova di Potere è sempre obbligatoria, anche quando la versione scelta sarebbe normalmente automatica. Incantesimi Ampliati, Estesi, Proiettati, Plurimi e Intensificati eliminano il raddoppio del costo base in PM rispettivamente per Area, Durata, Gittata, numero di Bersagli e valori numerici consentiti di danno, guarigione o bonus. Incantesimi Plurimi non modifica i Colpi; Incantesimi Intensificati non modifica le Prove Salvezza né rende anticipabili valori vietati dalla scheda.
+
+Anticipazione Migliorata elimina soltanto l’aumento di una categoria di difficoltà. Con il Talento pertinente all’aspetto e Anticipazione Migliorata, costo base e difficoltà restano ordinari, ma la Prova è comunque necessaria. Restano un solo aspetto, un solo scatto consentito e tutti i limiti della scheda.
+
+Queste eccezioni ai costi e alla difficoltà valgono per tutte le schede del manuale, anche quando la voce Anticipazione riepiloga i costi ordinari. Non si combinano con Calcolo Arcano sullo stesso lancio.
 
 | Livello | Potere ordinario del Taumaturgo | Con Anticipazione |
 | ----- | ----- | ----- |
@@ -842,6 +1026,10 @@ Restano applicabili le ulteriori penalità per componenti mancanti, Ingaggio o a
 ## **12 4 Ammissibilità dei Rituali**
 
 La voce Rituale indica se l’incantesimo ammette una versione rituale. Le procedure di esecuzione, con tempi, costi, Prove, partecipanti e limiti, verranno integrate successivamente nel Manuale della Magia.
+
+Ritualista Minore permette di apprendere ed eseguire Rituali di Grado I–III come Officiante o Canale, senza richiedere l’Addestramento Taumaturgo. Ritualista Maggiore richiede Ritualista Minore ed estende l’accesso ai Gradi IV–VI. Non si apprendono automaticamente le procedure e non si ottengono bonus numerici automatici al contributo del Canale: restano requisiti, tempi, materiali e costi del singolo Rituale.
+
+Gli utilizzi specifici già autorizzati da una capacità, come Purificazione, continuano a seguire la propria descrizione. Il possesso dell’Abilità Rituali, da solo, non concede ogni procedura.
 
 | Incantesimo | Rituale |
 | :---- | :---- |

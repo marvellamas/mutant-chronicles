@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Giocatore 0.43 + Google Doc del 26/09/2026",
+  "versione_manuale": "Giocatore 0.43 + Google Doc del 27/09/2026",
   "fonte": "§8.9 (8.9.1 regole comuni, 8.9.2 generiche, 8.9.3 Scuole Mishima, 8.9.4 Lottatore); durate di Vipera dal Cappuccio, Presa dell’Anima e Contraccolpo Interiore dal Google Doc del 26/09/2026 (master, docs/risposte-master.md, decisione 11)",
   "regole_comuni": [
     "Le Tecniche Interiori impiegano l’energia personale per produrre effetti fisici, percettivi e spirituali. Non sono Incantesimi. Si apprendono attraverso Risorse Interiori o una capacità che ne conceda espressamente l’accesso; il Lottatore segue il §3.5.5. I Talenti di accesso e apprendimento, con le incompatibilità rispetto alla magia, sono nel §8.6.10.",
@@ -154,7 +154,7 @@
       "azione": "1 AzP",
       "bersaglio": "creatura adiacente",
       "durata": "istantanea; lo Stato segue la durata indicata",
-      "testo": "Effettua un Colpo Singolo senz’armi o con Coltello, Pugnale, Daga, Pugnale da Combattimento, Spada leggera, Randello, Tonfa o Artigli, comprese le varianti dello stesso profilo. Sceglie una delle due modalità prima della Prova per colpire.\nCobra paralizzante. Infligge il normale danno. Se rimane almeno 1 danno dopo AR, il bersaglio effettua PS Tempra senza una penalità propria della Tecnica. Successo o Magistrale evitano lo Stato; Fallimento applica Stordito per 1+1d3 Round; Maldestro per 4 Round. Si applicano integralmente le regole di Stordito, compresa la Prova Potere per conservare Concentrazione o Focalizzazione.\nCobra distruttivo. Infligge il normale danno e applica normalmente l’AR. Se rimane almeno 1 danno, aggiunge 1d4 al residuo nella stessa applicazione. Il dado aggiuntivo non è Etereo, non subisce una seconda applicazione di AR e non si applica se il danno iniziale è interamente assorbito. Essendo aggiunto dopo l’AR, non viene moltiplicato.\nI PM rimangono spesi se l’attacco fallisce."
+      "testo": "Effettua un Colpo Singolo senz’armi o con Coltello, Pugnale, Daga, Pugnale da Combattimento, Spada leggera, Randello, Tonfa o Artigli, comprese le varianti dello stesso profilo. Sceglie una delle due modalità prima della Prova per colpire.\nCobra paralizzante. Infligge il normale danno. Se rimane almeno 1 danno dopo AR, il bersaglio effettua PS Tempra senza una penalità propria della Tecnica. Successo o Magistrale evitano lo Stato; Fallimento applica Stordito per 1+1d3 Round; Maldestro per 4 Round. Si applicano integralmente le regole di Stordito, compresa la PS di Volontà per conservare la Concentrazione o la Prova di Potere per la Focalizzazione.\nCobra distruttivo. Infligge il normale danno e applica normalmente l’AR. Se rimane almeno 1 danno, aggiunge 1d4 al residuo nella stessa applicazione. Il dado aggiuntivo non è Etereo, non subisce una seconda applicazione di AR e non si applica se il danno iniziale è interamente assorbito. Essendo aggiunto dopo l’AR, non viene moltiplicato.\nI PM rimangono spesi se l’attacco fallisce."
     },
     {
       "id": "sguardo-del-corvo",

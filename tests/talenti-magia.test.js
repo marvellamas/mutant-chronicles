@@ -128,3 +128,22 @@ test('tipo dei tre Talenti Liberi prima senza tipo: passivo (A.3)', () => {
   assert.deepEqual(['attivazione-tempestiva', 'risorse-interiori', 'tecniche-interiori-supplementari'].map((id) => t(id).tipo), ['passivo', 'passivo', 'passivo']);
   assert.equal(t('contromagia').tipo, 'attivo');
 });
+
+test('Potere Mistico: +5 PM Massimi per acquisizione, al massimo tre volte; requisito sempre soddisfatto (Magia sez. 1, Doc del 27/09)', () => {
+  // stesso livello con e senza il Talento: la differenza è solo Potere Mistico
+  const pm = (n, talenti) => calcolaScheda(agente(talenti, 3 + 2 * n), dati).pm;
+  assert.deepEqual([1, 2, 3].map((n) => pm(n, Array(n).fill('potere-mistico')) - pm(n, [])), [5, 10, 15]);
+  const tre = agente(Array(3).fill('potere-mistico'), 10);
+  assert.deepEqual(violazioni(calcolaScheda(tre, dati)), []);
+  assert.ok(provaTalento(tre, 'potere-mistico').includes('Potere Mistico: al massimo 3 acquisizioni'));
+  // anche chi non lancia Incantesimi (Agente Avventuriero) ha la riserva personale di PM
+  assert.deepEqual(provaTalento(agente2, 'recupero-mistico'), []);
+});
+
+test('Ritualista: Minore senza prerequisiti, Maggiore richiede Minore; i Talenti di lancio restano ai soli incantatori', () => {
+  assert.deepEqual(provaTalento(agente2, 'ritualista-minore'), []);
+  assert.ok(provaTalento(agente2, 'ritualista-maggiore').includes('Ritualista Maggiore richiede Ritualista Minore'));
+  assert.deepEqual(provaTalento(agente(['ritualista-minore'], 4), 'ritualista-maggiore'), []);
+  assert.ok(provaTalento(agente2, 'incantesimi-ampliati').includes('Incantesimi Ampliati richiede la capacità personale di lanciare Incantesimi'));
+  assert.deepEqual(provaTalento(arcanista2, 'concentrazione-migliorata'), []);
+});

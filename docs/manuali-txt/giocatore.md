@@ -232,7 +232,7 @@ Sezioni e pagine di consultazione
 
 [8.6.7 Talenti di Difesa e Copertura](#bookmark=id.bwocc4wobn6x)	
 
-[8.6.8 Talenti di Combattimento Magico](#bookmark=id.e3yuo3c1lfx2)	
+[8.6.8 Talenti magici e mistici](#bookmark=id.e3yuo3c1lfx2)	
 
 [8.6.9 Talenti per attività specialistiche](#bookmark=id.jf9skmciyggl)	
 
@@ -995,9 +995,9 @@ Ogni personaggio riceve l’equipaggiamento iniziale attraverso scelte guidate:
 
 * Una dotazione comune, con gli oggetti essenziali per tutti.  
 * Una dotazione legata alla Classe iniziale, con scelte predefinite fra armi, protezioni e strumenti adatti al ruolo.  
-* Modelli e varianti legati alla Corporazione, indicati nelle rispettive dotazioni.
+* Armamenti di base della propria Corporazione, corrispondenti ai profili commerciali della Classe (§2.16.27).
 
-Ogni scelta deve rispettare i requisiti degli oggetti. Le tabelle delle dotazioni, ancora da completare, specificheranno quantità, munizioni, cariche ed eventuale denaro iniziale.
+Ogni scelta deve rispettare i requisiti degli oggetti. Le dotazioni comuni e delle 25 Classi sono nei §§2.16.1–2.16.26; i modelli corporativi di base, i crediti iniziali e gli acquisti sono disciplinati nei §§2.16.27–2.16.29. L’eventuale veicolo iniziale richiede un’assegnazione separata.
 
 I profili degli oggetti e le relative regole si consultano nel Manuale degli Armamenti e nel Manuale degli Equipaggiamenti.
 
@@ -1040,7 +1040,7 @@ L’armatura concede AR 1\. L’elmetto standard incluso non aggiunge AR.
 
 Il registratore comprende batteria carica, cavo e alimentatore, con 24 ore di autonomia. Il binocolo non richiede batterie.
 
-Questa dotazione utilizza i profili commerciali dei manuali. Le eventuali sostituzioni con modelli di Corporazione saranno specificate nelle relative dotazioni.
+I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27).
 
 ### **2.16.3 Dotazione iniziale — Cacciatore**
 
@@ -1063,7 +1063,746 @@ Per il corredo si sceglie un ambiente: Artico, Forestale, Desertico, Urbano, Pia
 
 Il binocolo non richiede batterie. Acqua e viveri sono quelli della dotazione comune.
 
-Questa dotazione utilizza i profili commerciali dei manuali. Le eventuali sostituzioni con modelli di Corporazione saranno specificate nelle relative dotazioni.
+I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27).
+
+### **2.16.4 Dotazione iniziale — Esploratore**
+
+Oltre alla dotazione comune, l’Esploratore riceve:
+
+| Dotazione | Quantità e opzioni |
+| :---- | :---- |
+| Arma da fuoco | Una Pistola semiautomatica |
+| Munizioni e caricatori | Tre caricatori compatibili da 15 proiettili ordinari ciascuno: 45 colpi complessivi |
+| Arma da mischia | Un Coltello |
+| Protezione | Un’Armatura civile leggera, comprensiva dell’elmetto standard |
+| Osservazione | Un Binocolo |
+| Orientamento | Un Corredo di orientamento, con carta della zona iniziale |
+| Strumento specialistico | Uno dei tre oggetti indicati sotto |
+
+Lo strumento specialistico si sceglie liberamente:
+
+Corredo da assalto verticale: comprende imbracatura, corda da 20 Q, discensore, moschettoni e ancoraggi. Concede \+2 VA ad Atletica per arrampicarsi o calarsi usando il corredo.
+
+Corredo di sopravvivenza ambientale: si sceglie un ambiente fra Artico, Forestale, Desertico, Urbano, Pianure, Sottosuolo e Apocalittico. Concede i benefici previsti dalla propria scheda.
+
+Rilevatore ambientale: segnala carenza d’ossigeno, gas nocivi conosciuti dal dispositivo e radiazioni nel punto esaminato. Comprende batteria carica, cavo e alimentatore, con 24 ore di autonomia.
+
+Requisiti: pistola e armatura richiedono FOR 3; il Coltello richiede FOR 2\.
+
+L’armatura concede AR 1; l’elmetto standard non aggiunge AR. Il binocolo non richiede batterie.
+
+Il Corredo di orientamento concede \+1 VA a Sopravvivenza per orientarsi, quando esistono riferimenti utilizzabili. Questo bonus non si somma a quello del Corredo di sopravvivenza ambientale.
+
+I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27).
+
+### **2.16.5 Dotazione iniziale — Lestofante**
+
+Oltre alla dotazione comune, il Lestofante riceve:
+
+| Dotazione | Quantità e opzioni |
+| :---- | :---- |
+| Arma da mischia | Un Pugnale oppure una Spada leggera |
+| Arma da fuoco | Una Pistola semiautomatica |
+| Munizioni e caricatori | Tre caricatori compatibili da 15 proiettili ordinari ciascuno: 45 colpi complessivi |
+| Protezione | Un’Armatura civile leggera, comprensiva dell’elmetto standard |
+| Abbigliamento | Un completo aggiuntivo di Abiti eleganti, comprese le calzature |
+| Osservazione | Un Monocolo periscopico |
+| Strumento specialistico | Un Corredo da scasso oppure un Corredo da camuffamento, entrambi di livello Standard: modificatore degli strumenti 0 al VA |
+
+Requisiti: Spada leggera, pistola e armatura richiedono FOR 3; il Pugnale richiede FOR 2\.
+
+L’armatura concede AR 1; l’elmetto standard non aggiunge AR.
+
+Gli Abiti eleganti concedono \+1 VA a Oratoria negli ambienti formali appropriati, secondo la propria scheda.
+
+Il Monocolo periscopico permette di osservare oltre un bordo o un angolo senza esporre la testa, purché l’ottica raggiunga una posizione con visuale. Non richiede batterie.
+
+Corredo da scasso. Comprende grimaldelli, attrezzi di precisione, sonde e un’interfaccia portatile per serrature elettroniche compatibili. Si utilizza con Furtività per scassinare serrature e dispositivi meccanici e con Tecnologia per intervenire sulle serrature elettroniche.
+
+L’interfaccia comprende batteria carica, cavo e alimentatore, con 24 ore di autonomia. Restano necessarie le normali Prove e l’accesso ai componenti interessati.
+
+Corredo da camuffamento. Comprende trucchi, parrucche, barbe finte, piccoli accessori e materiali per modificare l’aspetto personale. Si utilizza con Raggirare per preparare e sostenere un travestimento o un’impersonificazione. Il beneficio riguarda il camuffamento effettivamente realizzato; documenti falsi e credenziali richiedono risorse separate.
+
+I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27).
+
+### **2.16.6 Dotazione iniziale — Paramedico**
+
+Oltre alla dotazione comune, il Paramedico riceve:
+
+| Dotazione | Quantità e opzioni |
+| :---- | :---- |
+| Arma da fuoco | Una Pistola semiautomatica |
+| Munizioni e caricatori | Tre caricatori compatibili da 15 proiettili ordinari ciascuno: 45 colpi complessivi |
+| Arma da mischia | Un Coltello |
+| Protezione | Un’Armatura civile leggera, comprensiva dell’elmetto standard |
+| Pronto soccorso | Un Kit trauma Professionale, completo di 5 applicazioni |
+| Materiali di riserva | Una ricarica per il Kit trauma da 5 applicazioni: 10 applicazioni complessive |
+| Trattamento rapido | Una delle due dotazioni indicate sotto |
+
+Trattamento rapido — scegliere una dotazione:
+
+Iniettore sanitario manuale, con 2 cartucce emostatiche e 1 curativa. Una delle emostatiche è già caricata; le altre due cartucce sono di riserva.
+
+Spray rimarginante, completo di 5 dosi.
+
+Requisiti: pistola e armatura richiedono FOR 3; il Coltello richiede FOR 2\.
+
+L’armatura concede AR 1; l’elmetto standard non aggiunge AR.
+
+Il Kit trauma concede \+2 VA alle Prove di Medicina per il pronto soccorso. Con successo arresta il Sanguinamento e recupera 1d4 PV; con un Magistrale raddoppia il risultato del dado. Bende, garze e disinfettanti sono già compresi nelle applicazioni.
+
+Il Paramedico applica Soccorso Immediato secondo la propria scheda. Kit e dispositivi seguono le rispettive procedure e non curano automaticamente stati di Ferita o Menomazioni.
+
+I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27).
+
+### **2.16.7 Dotazione iniziale — Artigliere**
+
+Oltre alla dotazione comune, l’Artigliere riceve:
+
+| Dotazione | Quantità e opzioni |
+| :---- | :---- |
+| Arma principale | Un Fucile d’assalto oppure un Fucile di precisione |
+| Munizioni e caricatori | Fucile d’assalto: 3 caricatori da 30, per 90 colpi. Fucile di precisione: 3 caricatori da 5, per 15 colpi |
+| Arma da mischia | Un Coltello |
+| Protezione | Un’Armatura civile leggera, con elmetto standard |
+| Mirino | Un Reflex per il Fucile d’assalto oppure un Ottico per il Fucile di precisione |
+| Supporto | Un Bipiede compatibile con l’arma scelta |
+| Osservazione | Un Binocolo |
+
+Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.
+
+Le munizioni sono ordinarie; i caricatori sono compatibili con il modello scelto, uno inserito nell’arma e due di riserva.
+
+Requisiti: FOR 5 per entrambi i fucili, FOR 3 per l’armatura e FOR 2 per il Coltello.
+
+L’Armatura civile leggera concede AR 1 e richiede FOR 3; l’elmetto standard incluso non aggiunge AR.
+
+L’arma viene fornita predisposta per gli accessori assegnati. Il Bipiede concede \+1 VA soltanto quando correttamente appoggiato.
+
+Il Reflex riduce di 2 la penalità di distanza entro 80 Q; l’Ottico la riduce di 4 entro 500 Q, ma richiede almeno 2 Azioni Principali complessive, compresa quella del tiro.
+
+Il Binocolo concede \+1 VA a Percezione per esaminare dettagli lontani nelle condizioni previste dal manuale.
+
+I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27).
+
+### **2.16.8 Dotazione iniziale — Assaltatore**
+
+Oltre alla dotazione comune, l’Assaltatore riceve:
+
+| Dotazione | Quantità e opzioni |
+| :---- | :---- |
+| Arma da mischia | Una Spada leggera, una Spada lunga oppure un’Ascia leggera |
+| Scudo | Uno Scudo piccolo oppure uno Scudo medio |
+| Arma da fuoco | Una Pistola semiautomatica |
+| Munizioni e caricatori | 3 caricatori da 15, per 45 colpi |
+| Protezione | Un’Armatura civile leggera oppure media, con elmetto standard |
+
+Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.
+
+Le munizioni sono ordinarie; i caricatori sono compatibili con il modello scelto, uno inserito nell’arma e due di riserva.
+
+Requisiti delle armi: FOR 3 per Spada leggera e pistola; FOR 4 per Spada lunga e Ascia leggera.
+
+Le protezioni si scelgono indipendentemente:
+
+| Protezione | Requisito | Armatura |
+| :---- | :---- | :---- |
+| Armatura civile leggera | FOR 3 | AR 1 |
+| Armatura civile media | FOR 5 | AR 3 |
+| Scudo piccolo | FOR 3 | \+1 AR |
+| Scudo medio | FOR 5 | \+2 AR |
+
+Lo scudo occupa una mano e concede il proprio beneficio quando è impugnato e utilizzabile. L’elmetto standard incluso non aggiunge AR.
+
+L’Armatura civile media concede AR 3 e richiede FOR 5\. Conserva le normali penalità: −1 VA agli attacchi e alle Prove di Agilità, −1 Q al Movimento e −3 VA al lancio tramite Potere.
+
+Il Talento Assalto Armato interviene quando viene acquisito, secondo il suo testo.
+
+I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27).
+
+### **2.16.9 Dotazione iniziale — Incursore**
+
+Oltre alla dotazione comune, l’Incursore riceve:
+
+| Dotazione | Quantità e opzioni |
+| :---- | :---- |
+| Arma da fuoco | Una Pistola semiautomatica |
+| Munizioni e caricatori | 3 caricatori da 15, per 45 colpi |
+| Arma da mischia | Un Pugnale da combattimento |
+| Protezione | Un’Armatura civile leggera, con elmetto standard |
+| Accessorio | Un Silenziatore compatibile con la pistola |
+| Corredo | Un Corredo da scasso Standard oppure un Corredo da assalto verticale |
+
+Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.
+
+Le munizioni sono ordinarie; i caricatori sono compatibili con il modello scelto, uno inserito nell’arma e due di riserva.
+
+Requisiti: FOR 3 per pistola, Pugnale da combattimento e armatura.
+
+L’Armatura civile leggera concede AR 1 e richiede FOR 3; l’elmetto standard incluso non aggiunge AR.
+
+Il Silenziatore rende inudibile lo sparo, applicando −2 VA al tiro e −1 danno. Restano percepibili gli eventuali impatti e gli altri indizi dell’attacco.
+
+Il Corredo da scasso Standard comprende grimaldelli, utensili di precisione, sonde e un’interfaccia elettronica compatibile. Si usa Furtività per le serrature meccaniche e Tecnologia per quelle elettroniche, effettuando le normali Prove. L’interfaccia comprende batteria carica da 24 ore, cavo e caricatore.
+
+Il Corredo da assalto verticale comprende imbracatura, corda da 20 Q, discensore, moschettoni e ancoraggi. Concede \+2 VA ad Atletica per arrampicate e discese effettuate utilizzandolo.
+
+I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27).
+
+### **2.16.10 Dotazione iniziale — Lottatore**
+
+Oltre alla dotazione comune, il Lottatore riceve:
+
+| Dotazione | Quantità e opzioni |
+| :---- | :---- |
+| Arma da mischia | Una Tonfa oppure un Randello |
+| Arma da fuoco | Una Pistola semiautomatica |
+| Munizioni e caricatori | 3 caricatori da 15, per 45 colpi |
+| Protezione | Un’Armatura civile leggera, con elmetto standard |
+| Abbigliamento aggiuntivo | Un completo di Abiti da viaggio, comprensivo di guanti, copricapo e calzature |
+| Pronto soccorso | Un Kit di pronto soccorso Standard, completo di 5 applicazioni |
+
+Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.
+
+Le munizioni sono ordinarie; i caricatori sono compatibili con il modello scelto, uno inserito nell’arma e due di riserva.
+
+Requisiti: FOR 3 per entrambe le armi da mischia, la pistola e l’armatura.
+
+L’Armatura civile leggera concede AR 1 e richiede FOR 3; l’elmetto standard incluso non aggiunge AR.
+
+La Tonfa concede \+2 VA alle Parate effettuate con essa. Gli attacchi con Tonfa o Randello seguono le regole delle armi: i Talenti che richiedono attacchi senz’armi si applicano soltanto agli attacchi appropriati.
+
+Gli Abiti da viaggio concedono \+1 VA ad Atletica per arrampicarsi e mantenere l’equilibrio su terreno accidentato.
+
+Il Kit di pronto soccorso Standard non concede bonus a Medicina: un successo arresta il Sanguinamento; un Magistrale recupera anche 1d4 PV. Ogni tentativo consuma un’applicazione.
+
+I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27).
+
+### **2.16.11 Dotazione iniziale — Soldato**
+
+Oltre alla dotazione comune, il Soldato riceve:
+
+| Dotazione | Quantità e opzioni |
+| :---- | :---- |
+| Arma principale | Una Carabina oppure un Fucile d’assalto |
+| Munizioni e caricatori | Carabina: 3 caricatori da 15, per 45 colpi. Fucile d’assalto: 3 caricatori da 30, per 90 colpi |
+| Arma da mischia | Un Coltello |
+| Protezione | Un’Armatura civile leggera oppure media, con elmetto standard |
+| Comunicazioni | Un Comunicatore da squadra, che sostituisce quello personale della dotazione comune |
+| Materiale di supporto | Un Kit di pronto soccorso Standard da 5 applicazioni oppure una Tenda da 2 posti, completa di pali, tiranti e picchetti |
+
+Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.
+
+Le munizioni sono ordinarie; i caricatori sono compatibili con il modello scelto, uno inserito nell’arma e due di riserva.
+
+Requisiti: FOR 4 per la Carabina, FOR 5 per il Fucile d’assalto, FOR 2 per il Coltello; FOR 3 o 5 per l’armatura scelta.
+
+L’Armatura civile leggera concede AR 1 e richiede FOR 3; l’elmetto standard incluso non aggiunge AR.
+
+L’Armatura civile media concede AR 3 e richiede FOR 5\. Conserva le normali penalità: −1 VA agli attacchi e alle Prove di Agilità, −1 Q al Movimento e −3 VA al lancio tramite Potere.
+
+Il Comunicatore da squadra comprende microfono, auricolare, batteria carica da 24 ore, cavo e caricatore. Ha una portata nominale di 10 km; collegandosi a un comunicatore personale, la comunicazione bidirezionale resta limitata dalla portata del dispositivo più debole. Le distanze previste dai Talenti di comando restano quelle indicate nei Talenti.
+
+Il Kit di pronto soccorso Standard non concede bonus a Medicina: un successo arresta il Sanguinamento; un Magistrale recupera anche 1d4 PV. Ogni tentativo consuma un’applicazione.
+
+I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27).
+
+### **2.16.12 Dotazione iniziale — Agricoltore**
+
+Oltre alla dotazione comune, l’Agricoltore riceve:
+
+| Dotazione | Quantità e opzioni |
+| :---- | :---- |
+| Arma da fuoco | Una Pistola semiautomatica |
+| Munizioni e caricatori | 3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva |
+| Protezione | Un’Armatura civile leggera, comprensiva dell’elmetto standard |
+| Arma da mischia | Un Coltello oppure un’Ascia leggera, anche come accetta |
+| Strumenti agricoli | Un Corredo agricolo Standard, scegliendo fra coltivazione e allevamento |
+| Supporto | Un Corredo di sopravvivenza ambientale oppure un Kit di pronto soccorso Standard da 5 applicazioni |
+
+Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.
+
+Pistola e armatura richiedono FOR 3\. L’armatura concede AR 1; l’elmetto standard incluso non aggiunge AR.
+
+Requisiti delle armi da mischia: FOR 2 per il Coltello; FOR 4 per l’Ascia leggera.
+
+Corredo agricolo Standard — Coltivazione. Comprende vanga compatta, zappetta, cesoie, piantatoio, cordino di tracciamento e sacchetti per semi e raccolti. Permette le operazioni manuali compatibili con questi strumenti.
+
+Corredo agricolo Standard — Allevamento. Comprende longhina, cavezza regolabile, spazzole, striglia, cesoie e piccoli utensili per pulire e curare ordinariamente animali domestici di taglia compatibile.
+
+Entrambe le versioni sono dotazioni Standard: modificatore degli strumenti 0 al VA. Sementi, mangimi e medicinali sono separati; gli strumenti per allevamento non sostituiscono l’attrezzatura sanitaria.
+
+Per il Corredo di sopravvivenza ambientale si sceglie Artico, Forestale, Desertico, Urbano, Pianure, Sottosuolo o Apocalittico. Concede \+2 VA a Sopravvivenza negli impieghi previsti per l’ambiente scelto.
+
+Il Kit di pronto soccorso Standard contiene 5 applicazioni: un successo a Medicina arresta il Sanguinamento; un Magistrale recupera anche 1d4 PV. Ogni tentativo consuma un’applicazione.
+
+Si applica un solo modificatore pertinente degli strumenti, senza sommare i bonus dei corredi. Materiali da lavorare e ricambi restano separati.
+
+### **2.16.13 Dotazione iniziale — Artigiano**
+
+Oltre alla dotazione comune, l’Artigiano riceve:
+
+| Dotazione | Quantità e opzioni |
+| :---- | :---- |
+| Arma da fuoco | Una Pistola semiautomatica |
+| Munizioni e caricatori | 3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva |
+| Protezione | Un’Armatura civile leggera, comprensiva dell’elmetto standard |
+| Arma da mischia | Un Coltello oppure un Martello |
+| Strumenti del mestiere | Un Corredo artigianale professionale oppure un Corredo di manutenzione da campo |
+| Illuminazione | Una Lampada frontale, che sostituisce la torcia della dotazione comune |
+| Documentazione | Un Registratore audiovisivo |
+
+Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.
+
+Pistola e armatura richiedono FOR 3\. L’armatura concede AR 1; l’elmetto standard incluso non aggiunge AR.
+
+Requisiti delle armi da mischia: FOR 2 per il Coltello; FOR 4 per il Martello.
+
+Il Corredo artigianale professionale viene dedicato a un mestiere, per esempio sartoria, pelletteria, falegnameria o lavorazione manuale dei metalli. Concede \+2 VA a Tecnologia per lavorare e riparare i prodotti di quel mestiere.
+
+Il Corredo di manutenzione da campo concede \+2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo di armi, armature, propulsori ed esoscheletri compatibili. La diagnostica comprende batteria carica da 24 ore, cavo e alimentatore.
+
+La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Comprende batteria carica da 24 ore, cavo e alimentatore.
+
+Il Registratore audiovisivo permette di documentare manufatti, difetti e lavorazioni, conservando immagini e suoni effettivamente ripresi. Comprende batteria carica da 24 ore, cavo e alimentatore.
+
+Si applica un solo modificatore pertinente degli strumenti, senza sommare i bonus dei corredi. Materiali da lavorare e ricambi restano separati.
+
+### **2.16.14 Dotazione iniziale — Operaio**
+
+Oltre alla dotazione comune, l’Operaio riceve:
+
+| Dotazione | Quantità e opzioni |
+| :---- | :---- |
+| Arma da fuoco | Una Pistola semiautomatica |
+| Munizioni e caricatori | 3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva |
+| Protezione | Un’Armatura civile leggera, comprensiva dell’elmetto standard |
+| Arma da mischia | Un Randello, anche come manganello, oppure un Martello |
+| Utensili | Una Cassetta degli attrezzi Standard |
+| Lavori in altezza | Un Corredo da assalto verticale |
+| Protezione respiratoria | Una Maschera filtrante |
+| Illuminazione | Una Lampada frontale, che sostituisce la torcia della dotazione comune |
+
+Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.
+
+Pistola e armatura richiedono FOR 3\. L’armatura concede AR 1; l’elmetto standard incluso non aggiunge AR.
+
+Requisiti delle armi da mischia: FOR 3 per il Randello; FOR 4 per il Martello.
+
+La Cassetta degli attrezzi comprende chiavi, cacciaviti, pinze, martello, lime e strumenti di misura meccanici. Consente gli interventi compatibili con questi utensili, con modificatore degli strumenti 0 al VA.
+
+Il Corredo da assalto verticale comprende imbracatura, corda da 20 Q, discensore, moschettoni e ancoraggi. Concede \+2 VA ad Atletica per arrampicate e discese effettuate utilizzandolo.
+
+La Maschera filtrante concede \+2 alle PS di Tempra contro veleni e agenti patogeni inalati. Richiede aria con ossigeno sufficiente; la sostituzione ordinaria dei filtri rientra nella manutenzione.
+
+La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Comprende batteria carica da 24 ore, cavo e alimentatore.
+
+Si applica un solo modificatore pertinente degli strumenti, senza sommare i bonus dei corredi. Materiali da lavorare e ricambi restano separati.
+
+### **2.16.15 Dotazione iniziale — Pilota**
+
+Oltre alla dotazione comune, il Pilota riceve:
+
+| Dotazione | Quantità e opzioni |
+| :---- | :---- |
+| Arma da fuoco | Una Pistola semiautomatica |
+| Munizioni e caricatori | 3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva |
+| Protezione | Un’Armatura civile leggera, comprensiva dell’elmetto standard |
+| Arma da mischia | Un Coltello |
+| Utensili | Una Cassetta degli attrezzi Standard |
+| Orientamento | Un Corredo di orientamento, con carta della zona iniziale |
+| Osservazione | Un Binocolo |
+| Comunicazioni | Un Comunicatore da squadra, che sostituisce quello personale della dotazione comune |
+
+Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.
+
+Pistola e armatura richiedono FOR 3\. L’armatura concede AR 1; l’elmetto standard incluso non aggiunge AR.
+
+Requisito del Coltello: FOR 2\.
+
+La Cassetta degli attrezzi comprende chiavi, cacciaviti, pinze, martello, lime e strumenti di misura meccanici. Consente gli interventi compatibili con questi utensili, con modificatore degli strumenti 0 al VA.
+
+Ricambi e attrezzature richiesti dalla specifica riparazione restano necessari.
+
+Il Corredo di orientamento concede \+1 VA a Sopravvivenza per orientarsi, quando esistono riferimenti utilizzabili. Il Binocolo concede \+1 VA a Percezione per esaminare dettagli lontani, con luce e visuale sufficienti.
+
+Il Comunicatore da squadra ha portata nominale di 10 km; con un comunicatore personale, la comunicazione bidirezionale resta limitata a 1 km, in condizioni favorevoli. Comprende batteria carica da 24 ore, cavo e alimentatore.
+
+L’eventuale veicolo iniziale richiede un’assegnazione separata, da definire nella dotazione del gruppo o della Corporazione.
+
+Si applica un solo modificatore pertinente degli strumenti, senza sommare i bonus dei corredi. Materiali da lavorare e ricambi restano separati.
+
+### **2.16.16 Dotazione iniziale — Tecnico**
+
+Oltre alla dotazione comune, il Tecnico riceve:
+
+| Dotazione | Quantità e opzioni |
+| :---- | :---- |
+| Arma da fuoco | Una Pistola semiautomatica |
+| Munizioni e caricatori | 3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva |
+| Protezione | Un’Armatura civile leggera, comprensiva dell’elmetto standard |
+| Arma da mischia | Un Coltello |
+| Strumenti tecnici | Un Corredo elettronico e informatico Standard |
+| Attrezzatura aggiuntiva | Un Corredo di manutenzione da campo oppure un Kit di videosorveglianza |
+| Illuminazione | Una Lampada frontale, che sostituisce la torcia della dotazione comune |
+
+Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.
+
+Pistola e armatura richiedono FOR 3\. L’armatura concede AR 1; l’elmetto standard incluso non aggiunge AR.
+
+Requisito del Coltello: FOR 2\.
+
+Il Corredo elettronico e informatico Standard comprende un terminale portatile con programmi di diagnostica e configurazione; un multimetro, sonde e utensili di precisione; cavi e adattatori per collegarsi fisicamente a sistemi compatibili, entro 2 Q.
+
+Permette diagnosi, configurazione e interventi portatili compatibili con i componenti disponibili. È Standard: modificatore degli strumenti 0 al VA. Intrusioni e controllo dei dispositivi richiedono comunque accesso utilizzabile, compatibilità e normali Prove. I dispositivi elettronici del corredo comprendono batterie cariche da 24 ore, cavi e alimentatori.
+
+Il Corredo di manutenzione da campo concede \+2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo di armi, armature, propulsori ed esoscheletri compatibili. La diagnostica comprende batteria carica da 24 ore, cavo e alimentatore.
+
+Il Kit di videosorveglianza comprende una videocamera e un monitor palmare, collegati entro 1 km. Usa vista e udito ordinari, richiede illuminazione sufficiente e non concede bonus automatici a Percezione. Tutti i componenti comprendono batterie cariche da 24 ore, cavi e alimentatori.
+
+La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Comprende batteria carica da 24 ore, cavo e alimentatore.
+
+Si applica un solo modificatore pertinente degli strumenti, senza sommare i bonus dei corredi. Materiali da lavorare e ricambi restano separati.
+
+### **2.16.17 Dotazione iniziale — Accademico**
+
+Oltre alla dotazione comune, l’Accademico riceve:
+
+| Dotazione | Quantità e opzioni |
+| :---- | :---- |
+| Arma da fuoco | Una Pistola semiautomatica |
+| Munizioni e caricatori | 3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva |
+| Protezione | Un’Armatura civile leggera, comprensiva dell’elmetto standard |
+| Arma da mischia | Un Coltello |
+| Ricerca | Un Corredo di ricerca documentale Standard |
+| Registrazione | Un Registratore audiovisivo |
+| Attrezzatura aggiuntiva | Un Corredo di analisi da campo oppure un Binocolo insieme a un Corredo di orientamento |
+
+Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.
+
+Pistola e armatura richiedono FOR 3\. L’armatura concede AR 1; l’elmetto standard incluso non aggiunge AR.
+
+Requisito del Coltello: FOR 2\.
+
+Il Corredo di ricerca documentale Standard comprende un terminale portatile, testi e riferimenti ordinari su un ambito scelto, un taccuino e strumenti di scrittura. Consente consultazione, annotazione e confronto dei dati disponibili, con modificatore degli strumenti 0 al VA e le normali Abilità pertinenti alla ricerca.
+
+Per il Corredo di analisi da campo si sceglie un ambito, per esempio chimica, biologia o geologia. Comprende strumenti di misura, ottiche, test e materiale ordinario per il campionamento; concede \+2 VA a Scienza per analisi preliminari realmente eseguibili, normalmente in 10 minuti.
+
+Il Binocolo concede \+1 VA a Percezione per distinguere dettagli lontani; il Corredo di orientamento concede \+1 VA a Sopravvivenza quando sono disponibili riferimenti utilizzabili.
+
+Il Registratore audiovisivo registra immagini e suoni effettivamente rilevati.
+
+Ogni dispositivo elettronico della dotazione comprende batteria carica da 24 ore, cavo e alimentatore. La stessa autonomia si applica al terminale e ai dispositivi del Corredo di analisi.
+
+I consumabili ordinari di scrittura, trucco, manutenzione e analisi si reintegrano durante il normale rifornimento; applicazioni mediche e set chirurgici si conteggiano separatamente.
+
+### **2.16.18 Dotazione iniziale — Amministrativo**
+
+Oltre alla dotazione comune, l’Amministrativo riceve:
+
+| Dotazione | Quantità e opzioni |
+| :---- | :---- |
+| Arma da fuoco | Una Pistola semiautomatica |
+| Munizioni e caricatori | 3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva |
+| Protezione | Un’Armatura civile leggera, comprensiva dell’elmetto standard |
+| Arma da mischia | Un Coltello |
+| Strumenti amministrativi | Un Corredo amministrativo Standard |
+| Abbigliamento | Un completo aggiuntivo di Abiti eleganti, comprese le calzature |
+| Attrezzatura aggiuntiva | Un Registratore audiovisivo oppure un Comunicatore da squadra, che sostituisce quello personale |
+
+Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.
+
+Pistola e armatura richiedono FOR 3\. L’armatura concede AR 1; l’elmetto standard incluso non aggiunge AR.
+
+Requisito del Coltello: FOR 2\.
+
+Il Corredo amministrativo Standard comprende un terminale portatile con programmi di scrittura, contabilità e gestione dei dati, una cartella portadocumenti, un taccuino e strumenti di scrittura. Consente le normali attività amministrative con modificatore degli strumenti 0 al VA; occorrono comunque documenti, dati e autorizzazioni effettivamente disponibili.
+
+Gli Abiti eleganti concedono \+1 VA a Oratoria nelle situazioni formali appropriate.
+
+Il Registratore audiovisivo registra immagini e suoni effettivamente rilevati.
+
+Il Comunicatore da squadra sostituisce il Comunicatore personale della dotazione comune. Ha portata nominale di 10 km; con un comunicatore personale la comunicazione bidirezionale è limitata a 1 km, in condizioni favorevoli.
+
+Ogni dispositivo elettronico della dotazione comprende batteria carica da 24 ore, cavo e alimentatore. L’autonomia di 24 ore si applica anche al nuovo terminale.
+
+I consumabili ordinari di scrittura, trucco, manutenzione e analisi si reintegrano durante il normale rifornimento; applicazioni mediche e set chirurgici si conteggiano separatamente.
+
+### **2.16.19 Dotazione iniziale — Artista**
+
+Oltre alla dotazione comune, l’Artista riceve:
+
+| Dotazione | Quantità e opzioni |
+| :---- | :---- |
+| Arma da fuoco | Una Pistola semiautomatica |
+| Munizioni e caricatori | 3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva |
+| Protezione | Un’Armatura civile leggera, comprensiva dell’elmetto standard |
+| Arma da mischia | Un Coltello |
+| Strumenti artistici | Uno Strumento musicale portatile, un Corredo scenico oppure un Terminale per produzione multimediale: tutti Standard |
+| Registrazione | Un Registratore audiovisivo |
+| Abbigliamento | Un completo aggiuntivo di Abiti eleganti, comprese le calzature |
+
+Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.
+
+Pistola e armatura richiedono FOR 3\. L’armatura concede AR 1; l’elmetto standard incluso non aggiunge AR.
+
+Requisito del Coltello: FOR 2\.
+
+Lo Strumento musicale portatile è uno strumento a scelta, con custodia e accessori ordinari necessari. Il Corredo scenico comprende un costume, trucco, piccoli oggetti di scena e materiale di manutenzione adatti alla performance scelta. Il Terminale per produzione multimediale è un dispositivo portatile con programmi per scrivere, montare e preparare contenuti audio e video.
+
+Le tre opzioni sono Standard, con modificatore degli strumenti 0 al VA. Gli Abiti eleganti concedono \+1 VA a Oratoria nelle situazioni formali appropriate.
+
+Il Registratore audiovisivo registra immagini e suoni effettivamente rilevati. La diffusione richiede canali e collegamenti disponibili; i Talenti che agiscono su registrazioni o trasmissioni seguono le proprie regole.
+
+Ogni dispositivo elettronico della dotazione comprende batteria carica da 24 ore, cavo e alimentatore. Sono compresi il terminale e gli eventuali strumenti musicali elettronici.
+
+I consumabili ordinari di scrittura, trucco, manutenzione e analisi si reintegrano durante il normale rifornimento; applicazioni mediche e set chirurgici si conteggiano separatamente.
+
+### **2.16.20 Dotazione iniziale — Medico**
+
+Oltre alla dotazione comune, il Medico riceve:
+
+| Dotazione | Quantità e opzioni |
+| :---- | :---- |
+| Arma da fuoco | Una Pistola semiautomatica |
+| Munizioni e caricatori | 3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva |
+| Protezione | Un’Armatura civile leggera, comprensiva dell’elmetto standard |
+| Arma da mischia | Un Coltello |
+| Primo soccorso | Un Kit trauma Professionale con 5 applicazioni e una ricarica da 5: 10 applicazioni complessive |
+| Attrezzatura aggiuntiva | Uno Scanner diagnostico portatile oppure un Kit chirurgico da campo con 5 set |
+| Illuminazione | Una Lampada frontale, che sostituisce la torcia della dotazione comune |
+
+Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.
+
+Pistola e armatura richiedono FOR 3\. L’armatura concede AR 1; l’elmetto standard incluso non aggiunge AR.
+
+Requisito del Coltello: FOR 2\.
+
+Il Kit trauma Professionale concede \+2 VA a Medicina per il primo soccorso. Con successo arresta il Sanguinamento e recupera 1d4 PV; con esito Magistrale si raddoppia il risultato del dado. Ogni tentativo consuma un’applicazione.
+
+Lo Scanner diagnostico portatile rileva automaticamente i parametri vitali di base con 1 Azione Principale. Una diagnosi richiede almeno 1 minuto e una Prova di Medicina con \+2 VA, limitata alle anomalie rilevabili; il bonus non si trasferisce alle cure.
+
+Il Kit chirurgico da campo concede \+2 VA a Medicina per le procedure sul campo pertinenti. Richiede 10 minuti di preparazione, un piano stabile e condizioni appropriate; ogni procedura consuma un set all’inizio, anche in caso di fallimento o interruzione. L’anestesia ordinaria è inclusa; restano necessari i Talenti e gli altri requisiti della procedura.
+
+La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Lampada e Scanner includono ciascuno batteria carica da 24 ore, cavo e alimentatore. Applicazioni mediche e set chirurgici si conteggiano e reintegrano separatamente.
+
+### **2.16.21 Dotazione iniziale — Predicatore**
+
+Oltre alla dotazione comune, il Predicatore riceve:
+
+| Dotazione | Quantità e opzioni |
+| :---- | :---- |
+| Arma da fuoco | Una Pistola semiautomatica |
+| Munizioni e caricatori | 3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva |
+| Protezione | Un’Armatura civile leggera, comprensiva dell’elmetto standard |
+| Arma da mischia | Un Coltello oppure un Randello, anche come bastone |
+| Materiale della tradizione | Un testo dottrinale e un simbolo della propria tradizione |
+| Abbigliamento | Un completo cerimoniale aggiuntivo, comprese le calzature, con profilo Abiti eleganti |
+| Attrezzatura aggiuntiva | Un Kit di pronto soccorso Standard con 5 applicazioni oppure un Corredo di sopravvivenza ambientale |
+| Illuminazione | Una Lanterna elettrica, che sostituisce la torcia della dotazione comune |
+
+Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.
+
+Pistola e armatura richiedono FOR 3\. L’armatura concede AR 1; l’elmetto standard incluso non aggiunge AR.
+
+Il Coltello richiede FOR 2; il Randello richiede FOR 3\.
+
+Il testo e il simbolo della tradizione sono oggetti ordinari: non hanno proprietà magiche e non concedono accesso automatico agli Incantesimi. L’abito cerimoniale usa il profilo degli Abiti eleganti: \+1 VA a Oratoria nelle situazioni cerimoniali o formali appropriate.
+
+Il Kit di pronto soccorso Standard contiene 5 applicazioni e non concede bonus al VA. Con successo arresta il Sanguinamento; con esito Magistrale recupera anche 1d4 PV. Ogni tentativo consuma un’applicazione.
+
+Per il Corredo di sopravvivenza ambientale si sceglie Artico, Forestale, Desertico, Urbano, Pianure, Sottosuolo oppure Apocalittico. Concede \+2 VA a Sopravvivenza per gli impieghi pertinenti alla versione scelta; non aggiunge acqua, viveri o medicinali alla dotazione.
+
+La Lanterna elettrica illumina un raggio di 6 Q e comprende batteria carica da 24 ore, cavo e alimentatore. Le applicazioni mediche si conteggiano e reintegrano separatamente.
+
+### **2.16.22 Dotazione iniziale — Arcanista**
+
+Oltre alla dotazione comune, l’Arcanista riceve:
+
+| Dotazione | Quantità e opzioni |
+| :---- | :---- |
+| Arma da fuoco | Una Pistola semiautomatica |
+| Munizioni e caricatori | 3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva |
+| Focus | Un Focus personale, già sintonizzato prima dell’avventura |
+| Riserva mistica | Una batteria mistica da 5 PM, carica: Chroma Rosso, Blu oppure Verde a scelta |
+| Protezione o abbigliamento | Un’Armatura civile leggera con elmetto standard oppure un completo aggiuntivo di Abiti da viaggio, comprese le calzature |
+| Arma da mischia | Un Coltello |
+| Ricerca | Un Corredo di ricerca documentale Standard, dedicato a un ambito di studi occulti |
+| Registrazione | Un Registratore audiovisivo |
+| Attrezzatura aggiuntiva | Un Corredo di analisi da campo oppure un Binocolo insieme a un Corredo di orientamento |
+
+Le scelte dell’equipaggiamento sono libere e indipendenti dalle Specializzazioni.
+
+Pistola e Armatura civile leggera richiedono FOR 3\. L’armatura concede AR 1 e impone −1 VA alle Prove di Potere per lanciare Incantesimi; l’elmetto standard non aggiunge AR. Gli Abiti da viaggio non concedono AR e danno \+1 VA ad Atletica per arrampicarsi e mantenere l’equilibrio sui terreni accidentati.
+
+Il Focus ha una forma coerente con il personaggio e serve come componente del lancio; non concede automaticamente bonus o PM. La batteria mistica si annota come 5/5 PM: è di potenza Comune, costa 1 punto di sintonizzazione e richiede la normale Sintonizzazione. Alimenta solo gli impieghi compatibili con la propria energia, segue le normali regole di ricarica e non aumenta il massimo dei PM personali.
+
+Il Coltello richiede FOR 2\. Il corredo documentale comprende terminale, riferimenti ordinari, taccuino e strumenti di scrittura: modificatore degli strumenti 0 al VA. I testi consentono ricerca e consultazione; l’apprendimento degli Incantesimi segue le proprie regole.
+
+Per il Corredo di analisi si sceglie un ambito, per esempio chimica, biologia o geologia: \+2 VA a Scienza per le analisi preliminari pertinenti, normalmente in 10 minuti. Il Binocolo concede \+1 VA a Percezione sui dettagli lontani; il Corredo di orientamento \+1 VA a Sopravvivenza con riferimenti utilizzabili. Il Registratore conserva immagini e suoni effettivamente rilevati.
+
+Tutti i dispositivi elettronici indicati comprendono batterie cariche da 24 ore, cavi e alimentatori. Questa autonomia riguarda l’alimentazione elettronica, distinta dai 5 PM della batteria mistica.
+
+### **2.16.23 Dotazione iniziale — Custode**
+
+Oltre alla dotazione comune, il Custode riceve:
+
+| Dotazione | Quantità e opzioni |
+| :---- | :---- |
+| Arma da fuoco | Una Pistola semiautomatica |
+| Munizioni e caricatori | 3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva |
+| Focus | Un Focus personale, già sintonizzato prima dell’avventura |
+| Riserva mistica | Una batteria mistica da 5 PM, carica: Chroma Rosso, Blu oppure Verde a scelta |
+| Protezione o abbigliamento | Un’Armatura civile leggera con elmetto standard oppure un completo aggiuntivo di Abiti da viaggio, comprese le calzature |
+| Arma da mischia | Una Spada leggera oppure un Tonfa |
+| Scudo | Uno Scudo piccolo |
+| Primo soccorso | Un Kit di pronto soccorso Standard con 5 applicazioni |
+| Comunicazioni | Un Comunicatore da squadra, che sostituisce quello personale |
+
+Le scelte dell’equipaggiamento sono libere e indipendenti dalle Specializzazioni.
+
+Pistola e Armatura civile leggera richiedono FOR 3\. L’armatura concede AR 1 e impone −1 VA alle Prove di Potere per lanciare Incantesimi; l’elmetto standard non aggiunge AR. Gli Abiti da viaggio non concedono AR e danno \+1 VA ad Atletica per arrampicarsi e mantenere l’equilibrio sui terreni accidentati.
+
+Il Focus ha una forma coerente con il personaggio e serve come componente del lancio; non concede automaticamente bonus o PM. La batteria mistica si annota come 5/5 PM: è di potenza Comune, costa 1 punto di sintonizzazione e richiede la normale Sintonizzazione. Alimenta solo gli impieghi compatibili con la propria energia, segue le normali regole di ricarica e non aumenta il massimo dei PM personali.
+
+Spada leggera, Tonfa e Scudo piccolo richiedono FOR 3\. Lo Scudo concede \+1 AR quando è impugnato e utilizzabile. Il \+2 VA del Tonfa alle Parate vale soltanto parando con quell’arma.
+
+Il Kit di pronto soccorso Standard contiene 5 applicazioni e non concede bonus al VA. Con successo arresta il Sanguinamento; con esito Magistrale recupera anche 1d4 PV. Ogni tentativo consuma un’applicazione.
+
+L’Arma Astrale segue il Talento del Custode; la CyberArma personale si ottiene al III Grado. Durante il lancio degli Incantesimi restano necessari i gesti e gli altri componenti previsti.
+
+Il Comunicatore da squadra sostituisce quello personale: portata nominale 10 km, limitata a 1 km per il collegamento bidirezionale con un comunicatore personale, in condizioni favorevoli.
+
+Tutti i dispositivi elettronici indicati comprendono batterie cariche da 24 ore, cavi e alimentatori. Questa autonomia riguarda l’alimentazione elettronica, distinta dai 5 PM della batteria mistica.
+
+### **2.16.24 Dotazione iniziale — Invocatore**
+
+Oltre alla dotazione comune, l’Invocatore riceve:
+
+| Dotazione | Quantità e opzioni |
+| :---- | :---- |
+| Arma da fuoco | Una Pistola semiautomatica |
+| Munizioni e caricatori | 3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva |
+| Focus | Un Focus personale, già sintonizzato prima dell’avventura |
+| Riserva mistica | Una batteria mistica da 5 PM, carica: Chroma Rosso, Blu oppure Verde a scelta |
+| Protezione o abbigliamento | Un’Armatura civile leggera con elmetto standard oppure un completo aggiuntivo di Abiti da viaggio, comprese le calzature |
+| Arma da mischia | Un Coltello |
+| Osservazione | Un Binocolo |
+| Attrezzatura aggiuntiva | Un Corredo di sopravvivenza ambientale oppure un Corredo da assalto verticale |
+| Comunicazioni | Un Comunicatore da squadra, che sostituisce quello personale |
+
+Le scelte dell’equipaggiamento sono libere e indipendenti dalle Specializzazioni.
+
+Pistola e Armatura civile leggera richiedono FOR 3\. L’armatura concede AR 1 e impone −1 VA alle Prove di Potere per lanciare Incantesimi; l’elmetto standard non aggiunge AR. Gli Abiti da viaggio non concedono AR e danno \+1 VA ad Atletica per arrampicarsi e mantenere l’equilibrio sui terreni accidentati.
+
+Il Focus ha una forma coerente con il personaggio e serve come componente del lancio; non concede automaticamente bonus o PM. La batteria mistica si annota come 5/5 PM: è di potenza Comune, costa 1 punto di sintonizzazione e richiede la normale Sintonizzazione. Alimenta solo gli impieghi compatibili con la propria energia, segue le normali regole di ricarica e non aumenta il massimo dei PM personali.
+
+Il Coltello richiede FOR 2\. Il Binocolo concede \+1 VA a Percezione per distinguere dettagli lontani nelle condizioni previste dalla sua scheda.
+
+Per il Corredo di sopravvivenza ambientale si sceglie Artico, Forestale, Desertico, Urbano, Pianure, Sottosuolo oppure Apocalittico: \+2 VA a Sopravvivenza negli impieghi pertinenti. Acqua e viveri restano quelli della dotazione comune.
+
+Il Corredo da assalto verticale comprende imbracatura, corda da 20 Q, discensore, moschettoni e ancoraggi; concede \+2 VA ad Atletica per arrampicarsi o calarsi utilizzandolo.
+
+Il Comunicatore da squadra sostituisce quello personale: portata nominale 10 km, limitata a 1 km per il collegamento bidirezionale con un comunicatore personale, in condizioni favorevoli.
+
+Tutti i dispositivi elettronici indicati comprendono batterie cariche da 24 ore, cavi e alimentatori. Questa autonomia riguarda l’alimentazione elettronica, distinta dai 5 PM della batteria mistica.
+
+### **2.16.25 Dotazione iniziale — Mistico**
+
+Oltre alla dotazione comune, il Mistico riceve:
+
+| Dotazione | Quantità e opzioni |
+| :---- | :---- |
+| Arma da fuoco | Una Pistola semiautomatica |
+| Munizioni e caricatori | 3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva |
+| Focus | Un Focus personale, già sintonizzato prima dell’avventura |
+| Riserva mistica | Una batteria mistica da 5 PM, carica: Chroma Rosso, Blu oppure Verde a scelta |
+| Protezione o abbigliamento | Un’Armatura civile leggera con elmetto standard oppure un completo aggiuntivo di Abiti da viaggio, comprese le calzature |
+| Arma da mischia | Un Coltello oppure un Randello, anche come bastone |
+| Primo soccorso | Un Kit trauma Professionale con 5 applicazioni |
+| Materiali di riserva | Una ricarica da 5 applicazioni: 10 applicazioni trauma complessive |
+| Strumenti rituali | Un Corredo rituale Standard |
+| Illuminazione | Una Lanterna elettrica, che sostituisce la torcia della dotazione comune |
+
+Le scelte dell’equipaggiamento sono libere e indipendenti dalle Specializzazioni.
+
+Pistola e Armatura civile leggera richiedono FOR 3\. L’armatura concede AR 1 e impone −1 VA alle Prove di Potere per lanciare Incantesimi; l’elmetto standard non aggiunge AR. Gli Abiti da viaggio non concedono AR e danno \+1 VA ad Atletica per arrampicarsi e mantenere l’equilibrio sui terreni accidentati.
+
+Il Focus ha una forma coerente con il personaggio e serve come componente del lancio; non concede automaticamente bonus o PM. La batteria mistica si annota come 5/5 PM: è di potenza Comune, costa 1 punto di sintonizzazione e richiede la normale Sintonizzazione. Alimenta solo gli impieghi compatibili con la propria energia, segue le normali regole di ricarica e non aumenta il massimo dei PM personali.
+
+Il Coltello richiede FOR 2; il Randello richiede FOR 3\.
+
+Il Corredo rituale Standard comprende un testo di riferimento della propria tradizione, un telo, una ciotola, un piccolo braciere, gessetti, incenso e strumenti di scrittura. Ha modificatore degli strumenti 0 al VA; i materiali specifici richiesti dai singoli Rituali si procurano separatamente.
+
+Il Kit trauma Professionale concede \+2 VA a Medicina per il primo soccorso. Con successo arresta il Sanguinamento e recupera 1d4 PV; un esito Magistrale raddoppia il risultato del dado. Ogni tentativo consuma un’applicazione.
+
+La Lanterna elettrica illumina un raggio di 6 Q e sostituisce la torcia comune.
+
+Tutti i dispositivi elettronici indicati comprendono batterie cariche da 24 ore, cavi e alimentatori. Questa autonomia riguarda l’alimentazione elettronica, distinta dai 5 PM della batteria mistica.
+
+### **2.16.26 Dotazione iniziale — Tecnomante**
+
+Oltre alla dotazione comune, il Tecnomante riceve:
+
+| Dotazione | Quantità e opzioni |
+| :---- | :---- |
+| Arma da fuoco | Una Pistola semiautomatica |
+| Munizioni e caricatori | 3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva |
+| Focus | Un Focus personale, già sintonizzato prima dell’avventura |
+| Riserva mistica | Una batteria mistica da 5 PM, carica: Chroma Rosso, Blu oppure Verde a scelta |
+| Protezione o abbigliamento | Un’Armatura civile leggera con elmetto standard oppure un completo aggiuntivo di Abiti da viaggio, comprese le calzature |
+| Arma da mischia | Un Coltello |
+| Strumenti tecnici | Un Corredo elettronico e informatico Standard |
+| Attrezzatura aggiuntiva | Un Corredo di manutenzione da campo oppure un Corredo di analisi da campo |
+| Illuminazione | Una Lampada frontale, che sostituisce la torcia della dotazione comune |
+
+Le scelte dell’equipaggiamento sono libere e indipendenti dalle Specializzazioni.
+
+Pistola e Armatura civile leggera richiedono FOR 3\. L’armatura concede AR 1 e impone −1 VA alle Prove di Potere per lanciare Incantesimi; l’elmetto standard non aggiunge AR. Gli Abiti da viaggio non concedono AR e danno \+1 VA ad Atletica per arrampicarsi e mantenere l’equilibrio sui terreni accidentati.
+
+Il Focus ha una forma coerente con il personaggio e serve come componente del lancio; non concede automaticamente bonus o PM. La batteria mistica si annota come 5/5 PM: è di potenza Comune, costa 1 punto di sintonizzazione e richiede la normale Sintonizzazione. Alimenta solo gli impieghi compatibili con la propria energia, segue le normali regole di ricarica e non aumenta il massimo dei PM personali.
+
+Il Coltello richiede FOR 2\. Il Corredo elettronico e informatico Standard comprende terminale, multimetro, sonde, utensili di precisione, cavi e adattatori per collegamenti fisici entro 2 Q: modificatore degli strumenti 0 al VA.
+
+Il Corredo di manutenzione da campo concede \+2 VA a Tecnologia per gli interventi sul campo previsti su armi, armature, propulsori ed esoscheletri compatibili. Il Corredo di analisi concede \+2 VA a Scienza per analisi preliminari pertinenti all’ambito scelto, normalmente in 10 minuti.
+
+I bonus degli strumenti non si trasferiscono automaticamente alle Prove di Artefatti o ai Rituali di creazione. Il Tecnomante applica alla batteria le regole di Sintonizzazione di Architetto TecnoMistico.
+
+La Lampada frontale illumina fino a 6 Q, lasciando libere le mani, e sostituisce la torcia comune.
+
+Tutti i dispositivi elettronici indicati comprendono batterie cariche da 24 ore, cavi e alimentatori. Questa autonomia riguarda l’alimentazione elettronica, distinta dai 5 PM della batteria mistica.
+
+### **2.16.27 Armamenti corporativi di base**
+
+La Classe iniziale assegna direttamente gli armamenti di base della Corporazione del personaggio corrispondenti ai profili commerciali indicati nelle tabelle dei §§2.16.2–2.16.26. L’assegnazione è compresa nella dotazione iniziale e non richiede un conguaglio rispetto al prezzo del modello commerciale.
+
+I nomi commerciali nelle tabelle identificano il tipo di dotazione e le alternative della Classe. La corrispondenza riguarda il modello corporativo di base con tipologia e funzione equivalenti: pistola con pistola, armatura leggera con armatura leggera, scudo piccolo con scudo piccolo. La sola Qualità costruttiva non determina l’equivalenza.
+
+Nell’inventario si registra il modello corporativo effettivamente assegnato, con valori, proprietà, requisiti, penalità e prezzo della sua scheda. Il personaggio deve rispettarne i requisiti; i dati del profilo commerciale non sostituiscono quelli del modello corporativo.
+
+Munizioni, caricatori, alimentazioni e accessori devono essere compatibili con il modello assegnato. Le corrispondenze di catalogo devono specificare anche questi componenti e le quantità della dotazione. Gli oggetti si registrano una sola volta.
+
+I Freelance fanno riferimento al catalogo Commerciale. La dotazione comune e gli strumenti non interessati da una corrispondenza corporativa mantengono i profili già indicati.
+
+### **2.16.28 Crediti iniziali**
+
+In aggiunta alla dotazione comune e a quella della Classe iniziale, ogni personaggio riceve 1.000 \+ (2d6 × 100\) crediti.
+
+Si tirano due dadi a sei facce, si sommano i risultati, si moltiplica la somma per 100 e si aggiungono 1.000 crediti. La dotazione monetaria va da 1.200 a 2.200 crediti; il valore medio è 1.700.
+
+I crediti possono essere utilizzati per gli acquisti iniziali e per pagare i conguagli del §2.16.29. Il denaro non speso rimane al personaggio.
+
+### **2.16.29 Acquisti e miglioramenti iniziali**
+
+Durante la creazione il personaggio può accedere al catalogo della propria Corporazione e acquistare equipaggiamenti migliori cedendo gli armamenti di base effettivamente assegnati e pagando la differenza con i crediti iniziali.
+
+Gli armamenti ceduti vengono valutati al 100% del loro prezzo di catalogo. Il conguaglio è pari al prezzo del nuovo equipaggiamento meno il valore degli armamenti ceduti. Si usa il prezzo del modello corporativo assegnato, oppure quello commerciale per la dotazione Commerciale; non si attribuisce al medesimo oggetto anche il valore del profilo usato come riferimento.
+
+Esempio: cedendo un’arma di base valutata 1.500 crediti per acquistare un modello da 2.100, il personaggio paga 600 crediti. L’arma ceduta viene rimossa dall’inventario e sostituita dal nuovo modello.
+
+Il nuovo equipaggiamento deve rispettare requisiti e autorizzazioni della propria scheda. Munizioni, caricatori e accessori vanno adattati al modello acquistato, conteggiando gli eventuali costi di sostituzione senza duplicare componenti già inclusi nel prezzo.
+
+La valutazione integrale degli armamenti ceduti vale per la creazione del personaggio e non stabilisce il prezzo di rivendita durante le avventure. Le configurazioni Migliorata e Potenziata diventano acquistabili quando dispongono di profili e prezzi definiti.
 
 ## **2.17 Controllo finale della Scheda**
 
@@ -1078,7 +1817,7 @@ Prima di iniziare a giocare, verifica le voci seguenti:
 * PV, PM, quattro Salvezze, bonus Iniziativa, Movimento e Azioni calcolati. Per le Salvezze: base 8, modificatore specifico, bonus di Addestramento e Corporazione, Avanzamento 0 al 1° livello.  
 * Punti Eroe iniziali determinati e spazio dedicato ai Distintivi.  
 * Se previsti, Incantesimi conosciuti registrati per famiglia e livello, secondo Addestramento, Classe e Manuale della Magia.  
-* Nessun Talento Libero assegnato al 1° livello; le dotazioni iniziali verranno integrate successivamente.
+* Nessun Talento Libero assegnato al 1° livello; equipaggiamento iniziale e crediti residui registrati, con modello effettivo, componenti compatibili ed eventuali conguagli del §2.16.
 
 Per esempio, la Furtività del Mishima Avventuriero Agente, dopo l’assegnazione mostrata al paragrafo 2.13, vale 2 \+ 4 \+ 0 \+ 3 \= VA 9\.
 
@@ -2577,7 +3316,7 @@ Il VA è la somma del Modificatore di Caratteristica, dell'Addestramento, dell'e
 | Ravvicinato | Difese | Destrezza | Schivare, parare, deviare un colpo e utilizzare uno scudo. |
 | Mistiche | Artefatti | Saggezza | Comprendere, analizzare e utilizzare oggetti mistici; sintonizzarsi con essi nei limiti dei requisiti previsti. |
 | Mistiche | Occultismo | Intelligenza | Conoscere e interpretare fenomeni soprannaturali, entità, simboli e Oscura Simmetria. |
-| Mistiche | Potere | Saggezza | Lanciare e controllare Incantesimi; mantenere la Concentrazione, meditare e convertire Potere. |
+| Mistiche | Potere | Saggezza | Lanciare e controllare Incantesimi; conservare la Focalizzazione, meditare e convertire Potere. |
 | Mistiche | Rituali | Intelligenza | Comprendere e preparare procedure rituali; eseguire gli usi specifici consentiti. Le procedure generali verranno integrate successivamente. |
 | Operative | Atletica | Forza | Correre, saltare, scalare, nuotare e superare ostacoli fisici. |
 | Operative | Furtività | Destrezza | Nascondersi, infiltrarsi, pedinare, scassinare dispositivi meccanici e agire senza essere notati. |
@@ -2672,7 +3411,7 @@ Potere (Saggezza) rappresenta la capacità di incanalare e controllare l’energ
 
 Lanciare Incantesimi. Potere viene utilizzata per manifestare gli Incantesimi conosciuti quando le circostanze richiedono una Prova di lancio. La Prova di Potere determina la riuscita del lancio; l’eventuale Prova per colpire, le Difese e le Prove Salvezza si risolvono separatamente secondo il Manuale della Magia.
 
-**Mantenere la Concentrazione.** Potere permette di mantenere attivo un Incantesimo a Concentrazione quando i danni subiti o altre circostanze previste ne mettono a rischio il controllo.
+**Focalizzazione e Concentrazione.** Potere permette di conservare una Focalizzazione preparatoria quando le circostanze previste la mettono alla prova. Per mantenere la Concentrazione su un Incantesimo già attivo si effettua invece una PS di Volontà, con \+3 VA se si possiede Concentrazione Migliorata (Manuale della Magia).
 
 **Meditare.** Potere permette di recuperare Punti Magia attraverso la meditazione, dedicandosi alla pratica in condizioni di tranquillità e senza svolgere altre attività, quando il personaggio possiede i requisiti necessari.
 
@@ -2692,7 +3431,7 @@ Rituali (Intelligenza) rappresenta la conoscenza delle procedure, delle preparaz
 
 **Preparare ed eseguire pratiche rituali consentite.** Utilizzare l’Abilità quando il personaggio possiede le conoscenze e i requisiti previsti da una specifica capacità o dalle regole del Rituale.
 
-Il possesso dell’Abilità non concede automaticamente la conoscenza o la possibilità di eseguire qualsiasi Rituale. Le procedure operative sono descritte nel Manuale della Magia e nelle capacità che ne autorizzano l’utilizzo.
+Il possesso dell’Abilità non concede automaticamente la conoscenza o la possibilità di eseguire qualsiasi Rituale. Le procedure operative sono descritte nel Manuale della Magia e nelle capacità che ne autorizzano l’utilizzo. Ritualista Minore permette l’accesso ai Gradi I–III e Ritualista Maggiore ai Gradi IV–VI come Officiante o Canale; occorre comunque apprendere la singola procedura e soddisfarne i requisiti. Restano validi gli utilizzi specifici autorizzati da altre capacità, come Purificazione.
 
 L’esecuzione generale dei Rituali verrà integrata successivamente (Manuale della Magia); rimangono utilizzabili le pratiche già autorizzate espressamente, come la Purificazione del Predicatore (§3.7.5). Quando l’esecuzione sarà accessibile, si userà questa Abilità anche per il Rituale finale di creazione degli Artefatti.
 
@@ -2773,7 +3512,7 @@ Riunisce Costruire, Riparare e Artificiere. Comprende meccanica, elettronica, in
 | Scassinare una serratura o un dispositivo meccanico | Furtività |
 | Intervenire su serrature elettroniche, allarmi e controlli di accesso | Tecnologia |
 | Analizzare le proprietà mistiche di un Artefatto o sintonizzarsi con esso | Artefatti |
-| Mantenere la Concentrazione su un Incantesimo quando viene messa alla prova | Potere |
+| Conservare una Focalizzazione preparatoria quando viene messa alla prova | Potere |
 | Meditare per recuperare energia mistica | Potere |
 | Convertire Punti Magia o trasformare Punti Vita in energia mistica | Potere |
 | Comprendere e preparare procedure rituali; eseguire le pratiche consentite | Rituali |
@@ -2869,7 +3608,7 @@ Corsa e Scatto richiedono una sola Prova di Atletica compresa nell’AzM: senza 
 | Fallimento | −2 Q | Nessuna modifica | Non ottenuta |
 | Maldestro | −4 Q | −4 | Non ottenuta |
 
-Le variazioni si applicano alla disponibilità prima del costo del terreno e del Nuoto, senza portarla sotto 0\. Restano le penalità personali alle altre Azioni. Durante la stessa Iniziativa in cui effettua Corsa o Scatto non può lanciare Incantesimi; gli Artefatti mantengono le proprie regole di attivazione, costi e Azioni. Chi mantiene un Incantesimo a Concentrazione può effettuare soltanto Passo e rispetta gli altri limiti della Concentrazione.
+Le variazioni si applicano alla disponibilità prima del costo del terreno e del Nuoto, senza portarla sotto 0\. Restano le penalità personali alle altre Azioni. Durante la stessa Iniziativa in cui effettua Corsa o Scatto non può lanciare Incantesimi; gli Artefatti mantengono le proprie regole di attivazione, costi e Azioni. Chi mantiene un Incantesimo a Concentrazione può effettuare soltanto Passo e rispetta gli altri limiti della Concentrazione, salvo Concentrazione Operativa (§8.6.8). Questo Talento permette le normali Azioni e andature, ma vieta di lanciare un altro Incantesimo finché si mantiene la Concentrazione.
 
 ### 5.2.2 Nuoto
 
@@ -2899,7 +3638,7 @@ Carica e Controcarica sono possibili anche in volo, a nuoto o su percorsi misti,
 | :---- | :---- | :---- |
 | A Terra | Un effetto che provoca soltanto A Terra non fa precipitare chi è sospeso e non applica lo Stato. | Non applica A Terra e non immerge automaticamente. |
 | Immobilizzato | Non si sposta; rimane sospeso se l’effetto che lo sostiene continua. | Non nuota; se le vie respiratorie sono immerse, si applica Affogare. |
-| Stordito | Soltanto Passo; resta la prova Potere per Concentrazione prevista dallo Stato. | Soltanto Passo; medesimo raccordo alla Concentrazione. |
+| Stordito | Soltanto Passo; resta la PS di Volontà per Concentrazione prevista dallo Stato. | Soltanto Passo; medesimo raccordo alla Concentrazione. |
 | Svenuto | Perde Concentrazione. Cade se termina il sostegno, altrimenti rimane sospeso senza agire. | Non nuota; se non può respirare, segue il §5.23. |
 
 L’eccezione ad A Terra vale soltanto senza appoggio: camminare sul fondo, su una piattaforma o sull’acqua permette normalmente di cadere A Terra. Gli spostamenti forzati conservano direzione e limiti; effetti che interrompono il Volo o trascinano sott’acqua mantengono le proprie conseguenze.
@@ -3470,7 +4209,7 @@ Applica integralmente le regole della sezione 5.15.
 
 ### **Stordito**
 
-Durata predefinita 1+1d3 Round. Può effettuare soltanto Passo e non dispone di Azioni Principali. Mantiene le Prove Salvezza e le Prove contrapposte passive, ma non può usare Difese che consumano Azioni. Più applicazioni non si sommano e mantengono soltanto la durata maggiore. Quando acquisisce Stordito, chi mantiene un Incantesimo a Concentrazione o una Focalizzazione effettua immediatamente una Prova di Potere senza spendere Azioni: il successo mantiene, il fallimento interrompe. La Prova è richiesta anche senza danni e non si ripete automaticamente nei Round successivi per la sola persistenza dello Stato (Manuale della Magia, Concentrazione e Focalizzazione).
+Durata predefinita 1+1d3 Round. Può effettuare soltanto Passo e non dispone di Azioni Principali. Mantiene le Prove Salvezza e le Prove contrapposte passive, ma non può usare Difese che consumano Azioni. Più applicazioni non si sommano e mantengono soltanto la durata maggiore. Quando acquisisce Stordito, chi mantiene un Incantesimo a Concentrazione effettua immediatamente una PS di Volontà; chi conserva una Focalizzazione effettua invece una Prova di Potere. Non si spendono Azioni: il successo mantiene, il fallimento interrompe. La Prova è richiesta anche senza danni e non si ripete automaticamente nei Round successivi per la sola persistenza dello Stato (Manuale della Magia, Concentrazione e Focalizzazione).
 
 ### **Svenuto**
 
@@ -3652,7 +4391,7 @@ Le ultime tre colonne riportano i modificatori da applicare. Le Caratteristiche 
 
 ### **5.21.1 Riduzione dei PM Massimi**
 
-Il modificatore ai PM si applica alla **riserva massima personale** normalmente calcolata, inclusi gli incrementi di Classe e gli altri benefici pertinenti. La riduzione dovuta all’Umanità **non può portare i PM Massimi sotto 1**.
+Il modificatore ai PM si applica alla riserva massima personale normalmente calcolata, inclusi gli incrementi di Classe e gli altri benefici pertinenti, compresi i \+5 PM per acquisizione di Potere Mistico. La riduzione dovuta all’Umanità non può portare i PM Massimi sotto 1\.
 
 Quando l’UMN diminuisce, il nuovo massimo si applica immediatamente. I PM Attuali vengono abbassati soltanto se superano il nuovo massimo. Quando l’UMN aumenta, il massimo viene ricalcolato, ma i PM Attuali devono essere recuperati normalmente.
 
@@ -4441,9 +5180,49 @@ Passivo. Requisito: Schivata Istintiva. Acquisibile una sola volta.
 
 Dopo la Schivata concessa da Schivata Istintiva, può effettuare una seconda Schivata nello stesso Round spendendo 1 AzP ancora disponibile. Non consente un secondo tentativo contro il medesimo attacco.
 
-### 8.6.8 Talenti di Combattimento Magico
+### 8.6.8 Talenti magici e mistici
 
-I Talenti relativi a lancio, Componenti, Concentrazione, Contromagia, conversione e Meditazione si consultano nel Manuale della Magia. Si acquisiscono mediante le normali scelte di Talenti Liberi, rispettando i requisiti indicati dalle rispettive schede. Le Tecniche Interiori sono descritte separatamente nel §8.9.
+I 32 Talenti magici e mistici elencati di seguito si acquisiscono mediante le normali scelte di Talenti Liberi. Le schede complete, con requisiti, effetti, limiti e modalità di acquisizione, si consultano nel Manuale della Magia. Le Tecniche Interiori sono descritte separatamente nel §8.9.
+
+#### Riserva e recupero mistico
+
+Potere Mistico; Recupero Mistico; Recupero Meditativo; Meditazione Migliorata; Meditazione Estesa.
+
+Potere Mistico concede \+5 PM Massimi per acquisizione, fino a tre volte, prima della riduzione dovuta all’Umanità; non recupera PM Attuali. Recupero Mistico aggiunge 1 PM alle ore complete di recupero naturale consentito: Attività pesante 0, Attività leggera 2, Riposo breve 3 e Riposo completo 4 PM. Non si somma alla Meditazione o ad altri recuperi specifici sostitutivi.
+
+#### Accesso e preparazione degli Incantesimi
+
+Usufruitore di Magia; Potenziale Mistico Migliorato; Incrementare Incantesimi; Lancio in Combattimento; Focalizzazione Migliorata.
+
+#### Componenti del lancio
+
+Escludere la Componente Somatica; Escludere l’Invocazione; Escludere il Focus.
+
+#### Concentrazione
+
+Concentrazione Migliorata; Concentrazione Operativa.
+
+Concentrazione Migliorata concede \+3 VA alle PS di Volontà per mantenere un Incantesimo. Concentrazione Operativa permette le normali Azioni e andature mentre si mantiene un solo Incantesimo, ma impone di interrompere la Concentrazione prima di tentarne un altro. Contromagia e Convertire Potere rimangono utilizzabili alle normali condizioni. I due Talenti non sono prerequisiti l’uno dell’altro.
+
+#### Contromagia e conversione
+
+Contromagia; Contromagia Migliorata; Contromagia Universale; Conversione Migliorata.
+
+#### Anticipazione
+
+Incantesimi Ampliati; Incantesimi Estesi; Incantesimi Proiettati; Incantesimi Plurimi; Incantesimi Intensificati; Anticipazione Migliorata.
+
+I primi cinque Talenti eliminano il raddoppio del costo base in PM soltanto per l’aspetto corrispondente. Anticipazione Migliorata elimina l’aumento di una categoria di difficoltà; la Prova di Potere resta obbligatoria. Si anticipano un solo aspetto e un solo scatto consentito, rispettando la scheda dell’Incantesimo. Questi benefici non si combinano con Calcolo Arcano sullo stesso lancio.
+
+#### Efficacia e occultamento
+
+Incantesimi da Lancio; Incantesimi Inarrestabili; Incantesimi Massimizzati; Magia Occultata; Manifestazioni Occultate.
+
+#### Accesso ai Rituali
+
+Ritualista Minore; Ritualista Maggiore.
+
+Ritualista Minore non richiede l’Addestramento Taumaturgo né altri Talenti e permette di apprendere ed eseguire Rituali di Grado I–III come Officiante o Canale. Ritualista Maggiore richiede Ritualista Minore ed estende l’accesso ai Gradi IV–VI. Nessuno dei due concede automaticamente le procedure conosciute, gli Incantesimi o un bonus numerico al contributo del Canale. Restano i requisiti, i tempi, i materiali e i costi del singolo Rituale.
 
 ### 8.6.9 Talenti per attività specialistiche
 
@@ -4815,7 +5594,7 @@ Le Tecniche delle Scuole possono essere scelte quando si apprende una Tecnica ag
 
 Effettua un Colpo Singolo senz’armi o con Coltello, Pugnale, Daga, Pugnale da Combattimento, Spada leggera, Randello, Tonfa o Artigli, comprese le varianti dello stesso profilo. Sceglie una delle due modalità prima della Prova per colpire.
 
-**Cobra paralizzante.** Infligge il normale danno. Se rimane almeno 1 danno dopo AR, il bersaglio effettua PS Tempra senza una penalità propria della Tecnica. Successo o Magistrale evitano lo Stato; Fallimento applica Stordito per 1+1d3 Round; Maldestro per 4 Round. Si applicano integralmente le regole di Stordito, compresa la Prova Potere per conservare Concentrazione o Focalizzazione.
+**Cobra paralizzante. Infligge il normale danno. Se rimane almeno 1 danno dopo AR, il bersaglio effettua PS Tempra senza una penalità propria della Tecnica. Successo o Magistrale evitano lo Stato; Fallimento applica Stordito per 1+1d3 Round; Maldestro per 4 Round. Si applicano integralmente le regole di Stordito, compresa la PS di Volontà per conservare la Concentrazione o la Prova di Potere per la Focalizzazione.**
 
 **Cobra distruttivo.** Infligge il normale danno e applica normalmente l’AR. Se rimane almeno 1 danno, aggiunge 1d4 al residuo nella stessa applicazione. Il dado aggiuntivo non è Etereo, non subisce una seconda applicazione di AR e non si applica se il danno iniziale è interamente assorbito. Essendo aggiunto dopo l’AR, non viene moltiplicato.
 
