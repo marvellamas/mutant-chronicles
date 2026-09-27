@@ -30,7 +30,15 @@
         {
           "grado": 1,
           "nome": "Fuoco Controllato",
-          "testo": "Quando spara contro un avversario ingaggiato in Ravvicinato, protetto da un alleato o che usa un ostaggio come scudo, l’Agente elimina la penalità specifica e non effettua la seconda Prova di controllo. Un normale fallimento non colpisce l’alleato o l’ostaggio; un Fallimento Maldestro produce una complicazione non collaterale. Restano gli altri modificatori pertinenti, comprese distanza e Copertura."
+          "testo": "Quando spara contro un avversario ingaggiato in Ravvicinato, protetto da un alleato o che usa un ostaggio come scudo, l’Agente elimina la penalità specifica e non effettua la seconda Prova di controllo. Un normale fallimento non colpisce l’alleato o l’ostaggio; un Fallimento Maldestro produce una complicazione non collaterale. Restano gli altri modificatori pertinenti, comprese distanza e Copertura.",
+          "effetti": {
+            "attacco_distanza": {
+              "impegnato": {
+                "va": 0,
+                "seconda_prova": null
+              }
+            }
+          }
         },
         {
           "grado": 3,
@@ -52,12 +60,26 @@
         {
           "specializzazione": "Sicurezza",
           "nome": "Mira Selettiva",
-          "testo": "Quando effettua un Tiro Mirato e rimane fermo per tutto il Round in cui spara, riduce di 2 la penalità dovuta alla Copertura del bersaglio: Leggera diventa 0 e Media diventa −2. La Copertura Totale impedisce ancora il tiro. Si applicano normalmente costi e benefici del Tiro Mirato. Il Talento riguarda la Copertura del bersaglio; Copertura Tattica riguarda invece la penalità per sparare dalla propria Copertura."
+          "testo": "Quando effettua un Tiro Mirato e rimane fermo per tutto il Round in cui spara, riduce di 2 la penalità dovuta alla Copertura del bersaglio: Leggera diventa 0 e Media diventa −2. La Copertura Totale impedisce ancora il tiro. Si applicano normalmente costi e benefici del Tiro Mirato. Il Talento riguarda la Copertura del bersaglio; Copertura Tattica riguarda invece la penalità per sparare dalla propria Copertura.",
+          "effetti": {
+            "attacco_distanza": {
+              "mira_selettiva": {
+                "riduzione": 2
+              }
+            }
+          }
         },
         {
           "specializzazione": "Spionaggio",
           "nome": "Analisi Rapida",
-          "testo": "Spendendo un’Azione Principale, senza Prova, studia un nemico visibile. Ottiene +2 VA alla prima Prova per colpirlo con un’arma a distanza effettuata entro la fine della propria Iniziativa successiva. Il bonus si consuma con quella Prova: può valere per una Raffica o per il primo tiro di Tiro Rapido, ma non per più Prove. Analisi ripetute non sommano il bonus."
+          "testo": "Spendendo un’Azione Principale, senza Prova, studia un nemico visibile. Ottiene +2 VA alla prima Prova per colpirlo con un’arma a distanza effettuata entro la fine della propria Iniziativa successiva. Il bonus si consuma con quella Prova: può valere per una Raffica o per il primo tiro di Tiro Rapido, ma non per più Prove. Analisi ripetute non sommano il bonus.",
+          "effetti": {
+            "attacco_distanza": {
+              "analisi_rapida": {
+                "va": 2
+              }
+            }
+          }
         },
         {
           "specializzazione": "Spionaggio",
@@ -378,7 +400,25 @@
         {
           "grado": 3,
           "nome": "Ottimizzare Proiettili",
-          "testo": "Una Raffica Breve consuma 2 colpi, una Media 4, una Lunga 8 e il Fuoco di Soppressione 8; il numero di colpi a segno non cambia."
+          "testo": "Una Raffica Breve consuma 2 colpi, una Media 4, una Lunga 8 e il Fuoco di Soppressione 8; il numero di colpi a segno non cambia.",
+          "effetti": {
+            "attacco_distanza": {
+              "modalita": {
+                "RB": {
+                  "munizioni": 2
+                },
+                "RM": {
+                  "munizioni": 4
+                },
+                "RL": {
+                  "munizioni": 8
+                },
+                "FS": {
+                  "munizioni": 8
+                }
+              }
+            }
+          }
         },
         {
           "grado": 5,
@@ -390,12 +430,24 @@
         {
           "specializzazione": "Pesante",
           "nome": "Postura d’Assedio",
-          "testo": "Se non utilizza l’Azione di Movimento nel Round, l’Artigliere considera automaticamente Imbracciata l’Arma Pesante o il lanciagranate che impugna e infligge +1 danno con essa. Il beneficio comprende i lanciagranate anche se appartengono alle Armi Medie."
+          "testo": "Se non utilizza l’Azione di Movimento nel Round, l’Artigliere considera automaticamente Imbracciata l’Arma Pesante o il lanciagranate che impugna e infligge +1 danno con essa. Il beneficio comprende i lanciagranate anche se appartengono alle Armi Medie.",
+          "effetti": {
+            "attacco_distanza": {
+              "postura_assedio": {
+                "danno": 1
+              }
+            }
+          }
         },
         {
           "specializzazione": "Pesante",
           "nome": "Raffica Estesa",
-          "testo": "Con Raffica Media o Lunga può distribuire i colpi fra bersagli entro 2 Q dal principale, almeno un colpo per bersaglio. Si usa la penalità più alta; Difese e Armatura si risolvono separatamente."
+          "testo": "Con Raffica Media o Lunga può distribuire i colpi fra bersagli entro 2 Q dal principale, almeno un colpo per bersaglio. Si usa la penalità più alta; Difese e Armatura si risolvono separatamente.",
+          "effetti": {
+            "attacco_distanza": {
+              "promemoria": "raffica"
+            }
+          }
         },
         {
           "specializzazione": "Cecchino",
@@ -509,12 +561,24 @@
         {
           "grado": 1,
           "nome": "Movimento Tattico",
-          "testo": "Riduce di 2, fino a un minimo di 0, le penalità alle proprie Prove dovute esclusivamente al tipo di Movimento: Passo 0, Corsa 0, Scatto −4. Restano valide le altre penalità, comprese quelle di terreno, Stati, Equipaggiamento e Manovre.\nLe penalità degli avversari per colpirlo restano quelle ordinarie: Corsa −2 e Scatto −4, con la normale durata. Il beneficio è sempre attivo, senza costi o limiti di utilizzo."
+          "testo": "Riduce di 2, fino a un minimo di 0, le penalità alle proprie Prove dovute esclusivamente al tipo di Movimento: Passo 0, Corsa 0, Scatto −4. Restano valide le altre penalità, comprese quelle di terreno, Stati, Equipaggiamento e Manovre.\nLe penalità degli avversari per colpirlo restano quelle ordinarie: Corsa −2 e Scatto −4, con la normale durata. Il beneficio è sempre attivo, senza costi o limiti di utilizzo.",
+          "effetti": {
+            "attacco_distanza": {
+              "movimento_proprio": {
+                "riduzione": 2
+              }
+            }
+          }
         },
         {
           "grado": 3,
           "nome": "Rapidità Operativa",
-          "testo": "Ottiene sempre +2 Iniziativa. Inoltre, in ogni combattimento ottiene +2 VA al primo attacco che esegue, se è un attacco ravvicinato oppure un attacco a distanza entro 10 Q. Il bonus si applica a una sola Prova per colpire, indipendentemente dal Round in cui attacca e dall’ordine delle Iniziative degli avversari."
+          "testo": "Ottiene sempre +2 Iniziativa. Inoltre, in ogni combattimento ottiene +2 VA al primo attacco che esegue, se è un attacco ravvicinato oppure un attacco a distanza entro 10 Q. Il bonus si applica a una sola Prova per colpire, indipendentemente dal Round in cui attacca e dall’ordine delle Iniziative degli avversari.",
+          "effetti": {
+            "attacco_distanza": {
+              "promemoria": "entro_10"
+            }
+          }
         },
         {
           "grado": 5,
@@ -526,12 +590,25 @@
         {
           "specializzazione": "Assassino",
           "nome": "Attacco Silenzioso",
-          "testo": "Ottiene +2 VA a Furtività per avvicinarsi a un avversario senza essere individuato. Quando attacca un bersaglio ignaro della sua presenza, ottiene +2 VA alla Prova per colpire con un attacco ravvicinato oppure con un’arma a distanza silenziata entro 10 Q. Restano i normali costi in Azioni. Il bonus si somma a Rapidità Operativa quando sono soddisfatte le condizioni di entrambi i Talenti."
+          "testo": "Ottiene +2 VA a Furtività per avvicinarsi a un avversario senza essere individuato. Quando attacca un bersaglio ignaro della sua presenza, ottiene +2 VA alla Prova per colpire con un attacco ravvicinato oppure con un’arma a distanza silenziata entro 10 Q. Restano i normali costi in Azioni. Il bonus si somma a Rapidità Operativa quando sono soddisfatte le condizioni di entrambi i Talenti.",
+          "effetti": {
+            "attacco_distanza": {
+              "silenzioso": {
+                "va": 2,
+                "distanza_max_q": 10
+              }
+            }
+          }
         },
         {
           "specializzazione": "Assassino",
           "nome": "Punto Vitale",
-          "testo": "Una volta per Round, quando colpisce con un Colpo Mirato o un Tiro Mirato un bersaglio entro 10 Q, infligge +2 danni ai PV dopo l’applicazione dell’Armatura, soltanto se almeno 1 danno ha superato la protezione. Il bonus si applica solo alla prima istanza di danno e non viene moltiplicato dal Successo Magistrale.\nEsempio: 8 danni contro AR 5 lasciano passare 3 danni; Punto Vitale porta il totale a 5. Se l’Armatura assorbe tutto il danno, il Talento non aggiunge danni."
+          "testo": "Una volta per Round, quando colpisce con un Colpo Mirato o un Tiro Mirato un bersaglio entro 10 Q, infligge +2 danni ai PV dopo l’applicazione dell’Armatura, soltanto se almeno 1 danno ha superato la protezione. Il bonus si applica solo alla prima istanza di danno e non viene moltiplicato dal Successo Magistrale.\nEsempio: 8 danni contro AR 5 lasciano passare 3 danni; Punto Vitale porta il totale a 5. Se l’Armatura assorbe tutto il danno, il Talento non aggiunge danni.",
+          "effetti": {
+            "attacco_distanza": {
+              "promemoria": "mirato"
+            }
+          }
         },
         {
           "specializzazione": "Guastatore",

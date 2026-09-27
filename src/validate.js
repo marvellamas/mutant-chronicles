@@ -65,6 +65,7 @@ export function validaDati(dati) {
   if (dati.regole) validaSchedaDigitale(dati, err);
   if (isOggetto(dati.dotazioni)) validaDotazioni(dati, err);
   if (dati.equipaggiamento?.file?.munizioni?.ricarica !== undefined) validaRicarica(dati, err);
+  if (dati.regole?.attacco_distanza !== undefined) validaAttaccoDistanza(dati, err);
 
   return errori;
 }
@@ -605,7 +606,7 @@ function validaSpecializzazioni(s, nomiAbilita, err) {
 }
 
 const MOLTEPLICITA = { una: null, per_caratteristica: 'caratteristica', per_salvezza_max2: 'salvezza', illimitata: null, limitata: null };
-const EFFETTI_NOTI = new Set(['iniziativa', 'pv', 'pm', 'salvezza', 'movimento', 'tecniche', 'accessoMagia', 'incantesimi', 'livelloMax', 'livelloMaxIncantesimi', 'magia', 'meditazione']);
+const EFFETTI_NOTI = new Set(['iniziativa', 'pv', 'pm', 'salvezza', 'movimento', 'tecniche', 'accessoMagia', 'incantesimi', 'livelloMax', 'livelloMaxIncantesimi', 'magia', 'meditazione', 'attacco_distanza']);
 // effetti.magia: valori che sostituiscono la base di regole.json → lancio (numeri) o capacità (true)
 const EFFETTI_MAGIA = { focalizzazione_va: 'numero', penalita_ingaggio: 'numero', penalita_contromagia: 'numero', tiro_armi_da_lancio: 'numero', contromagia: 'vero', contromagia_senza_conoscenza: 'vero', occultata: 'vero' };
 const EFFETTI_MEDITAZIONE = { accesso: 'vero', pm_per_ora: 'numero', moltiplicatore_ore: 'numero' };
@@ -1350,4 +1351,35 @@ function validaRicarica(dati, err) {
   for (const a of ins.armi ?? []) if (!rif.has(a)) err(F, 'ricarica.inserimento_singolo.armi', `"${a}" non esiste nel catalogo`);
   for (const f of r.famiglie_celle ?? []) if (!famiglie.has(f)) err(F, 'ricarica.famiglie_celle', `"${f}" non è una famiglia del catalogo`);
   for (const [abilita, x] of Object.entries(r.caricatori_vuoti ?? {})) if (!rif.has(x)) err(F, `ricarica.caricatori_vuoti.${abilita}`, `"${x}" non esiste nel catalogo`);
+}
+
+// Attacco a distanza (regole.json → attacco_distanza, src/attacco.js; Giocatore §5.2, §5.8, §5.10, §5.11)
+const EFFETTI_ATTACCO = ['modalita', 'mirato', 'impegnato', 'ravvicinato', 'bruciapelo', 'distanza', 'azioni_distanza', 'copertura_propria',
+  'movimento_proprio', 'imbracciatura', 'promemoria', 'mira_selettiva', 'analisi_rapida', 'postura_assedio', 'silenzioso'];
+function validaAttaccoDistanza(dati, err) {
+  const F = 'regole';
+  const a = dati.regole.attacco_distanza;
+  if (!isOggetto(a)) return err(F, 'attacco_distanza', 'oggetto atteso');
+  const sigle = Object.keys(dati.regole.modalita_di_fuoco ?? {}).filter((k) => !k.startsWith('_'));
+  const crescenti = (lista, k) => (lista ?? []).every((x, i, l) => isIntero(x?.[k]) && (!i || x[k] > l[i - 1][k]));
+  if (!crescenti(a.distanza?.fasce, 'fino_a')) err(F, 'attacco_distanza.distanza.fasce', 'fasce con «fino_a» crescente attese (§5.11)');
+  if (!crescenti(a.distanza?.azioni, 'fino_a')) err(F, 'attacco_distanza.distanza.azioni', 'fasce con «fino_a» crescente attese (§5.11)');
+  for (const k of Object.keys(a.modalita?.manovre_ammesse ?? {})) if (!sigle.includes(k)) err(F, `attacco_distanza.modalita.manovre_ammesse.${k}`, `"${k}" non è in modalita_di_fuoco`);
+  for (const k of a.modalita?.ordine_inferiore ?? []) if (!sigle.includes(k)) err(F, 'attacco_distanza.modalita.ordine_inferiore', `"${k}" non è in modalita_di_fuoco`);
+  for (const [id, m] of Object.entries(a.manovre ?? {})) {
+    for (const x of m.incompatibili ?? []) if (!a.manovre[x]) err(F, `attacco_distanza.manovre.${id}.incompatibili`, `"${x}" non è una manovra`);
+  }
+  const rif = new Set(Object.entries(dati.equipaggiamento?.file ?? {}).flatMap(([id, f]) => (f.oggetti ?? []).map((o) => `${id}:${o.id}`)));
+  for (const r of a.imbracciatura?.armi ?? []) if (!rif.has(r)) err(F, 'attacco_distanza.imbracciatura.armi', `"${r}" non esiste nel catalogo`);
+  // effetti.attacco_distanza dei Talenti (Liberi e di Classe)
+  const talenti = [
+    ...(dati.talenti_liberi?.talenti ?? []).map((t) => [`talenti_liberi`, t.id, t]),
+    ...(dati.classi?.classi ?? []).flatMap((c) => [...(c.talenti_fissi ?? []), ...(c.talenti_a_scelta ?? [])].map((t) => [`classi`, `${c.nome}: ${t.nome}`, t])),
+  ];
+  for (const [file, nome, t] of talenti) {
+    const e = t.effetti?.attacco_distanza;
+    if (e === undefined) continue;
+    for (const k of Object.keys(e)) if (!EFFETTI_ATTACCO.includes(k)) err(file, `${nome}.effetti.attacco_distanza.${k}`, `effetto sconosciuto (ammessi: ${EFFETTI_ATTACCO.join(', ')})`);
+    for (const s2 of Object.keys(e.modalita ?? {})) if (!sigle.includes(s2)) err(file, `${nome}.effetti.attacco_distanza.modalita.${s2}`, `"${s2}" non è in modalita_di_fuoco`);
+  }
 }

@@ -494,6 +494,349 @@
     },
     "_nota": "Manuale del Giocatore §5.10: per ogni sigla usata nel catalogo (campo modalita delle armi) nome, colpi consumati, Azioni Principali, modificatore al VA, colpi a segno, testo della regola e note dal manuale. «migliorata»: il Talento che la modifica. Il validatore controlla che ogni sigla del catalogo abbia la sua voce."
   },
+  "attacco_distanza": {
+    "_nota": "Utility «Attacco a distanza» (src/attacco.js). Valori e regole del Manuale del Giocatore §5.2, §5.8, §5.10, §5.11; «frasi» sono copiate dal manuale (anche righe di tabella) e verificate da tools/verifica_frasi.mjs. Le modalità di fuoco (VA, munizioni, Azioni) stanno in «modalita_di_fuoco»; i mirini (riduzione, distanza massima, Azioni minime) nel catalogo (accessori_armi → mirino, Armamenti §7.3); i Talenti che modificano l’attacco hanno effetti.attacco_distanza in talenti_liberi.json e classi.json.",
+    "movimento": {
+      "paragrafo": "Giocatore §5.2",
+      "frasi": [
+        "| Passo | 6 Q | Nessuna | Nessuna |",
+        "| Corsa | 12 Q | −2 VA | −2 VA |",
+        "| Scatto | 18 Q | −6 VA | −4 VA |",
+        "Corsa e Scatto costituiscono un unico blocco da completare prima delle Azioni Principali; le loro penalità durano fino all’arrivo dell’Iniziativa successiva."
+      ],
+      "proprio": {
+        "fermo": 0,
+        "passo": 0,
+        "corsa": -2,
+        "scatto": -6
+      },
+      "bersaglio": {
+        "fermo": 0,
+        "passo": 0,
+        "corsa": -2,
+        "scatto": -4
+      },
+      "azioni_movimento": {
+        "fermo": 0,
+        "passo": 1,
+        "corsa": 1,
+        "scatto": 1
+      }
+    },
+    "movimento_evasivo": {
+      "paragrafo": "Giocatore §5.2, Movimento Evasivo",
+      "frasi": [
+        "Consuma l’Azione di Movimento e un’Azione Principale, senza una Prova aggiuntiva per la manovra.",
+        "Con Passo gli avversari subiscono −2 VA; con Corsa il personaggio subisce −2 VA e gli avversari −4 VA; con Scatto il personaggio subisce −6 VA e gli avversari −6 VA.",
+        "Movimento Evasivo Migliorato porta le penalità degli avversari rispettivamente a −4, −6 e −8."
+      ],
+      "proprio": {
+        "passo": 0,
+        "corsa": -2,
+        "scatto": -6
+      },
+      "bersaglio": {
+        "passo": -2,
+        "corsa": -4,
+        "scatto": -6
+      },
+      "bersaglio_migliorato": {
+        "passo": -4,
+        "corsa": -6,
+        "scatto": -8
+      },
+      "azioni": {
+        "movimento": 1,
+        "principali": 1
+      }
+    },
+    "copertura": {
+      "paragrafo": "Giocatore §5.8",
+      "frasi": [
+        "| Leggera | −2 VA | −2 VA |",
+        "| Media | −4 VA | −4 VA |",
+        "| Totale | Il bersaglio non può essere attaccato direttamente | Non è possibile attaccare |",
+        "Attaccare dalla Copertura consuma l’Azione di Movimento e un’Azione Principale.",
+        "Il Movimento può essere diviso per esporsi e rientrare, senza superare complessivamente 6 Q.",
+        "Copertura Tattica riduce di 2 la penalità dell’attaccante."
+      ],
+      "bersaglio": {
+        "nessuna": 0,
+        "leggera": -2,
+        "media": -4,
+        "totale": null
+      },
+      "propria": {
+        "nessuna": 0,
+        "leggera": -2,
+        "media": -4
+      },
+      "propria_azioni_movimento": 1,
+      "propria_movimenti": [
+        "fermo",
+        "passo"
+      ]
+    },
+    "bersaglio_impegnato": {
+      "paragrafo": "Giocatore §5.10",
+      "frasi": [
+        "Sparare contro un nemico impegnato in Ravvicinato, protetto da un alleato o che usa un ostaggio impone −4 VA.",
+        "Se il tiro fallisce, si effettua una seconda Prova con la stessa Abilità a −4 VA: con successo il colpo manca tutti, con fallimento colpisce il bersaglio secondario."
+      ],
+      "va": -4,
+      "seconda_prova": -4
+    },
+    "distanza": {
+      "paragrafo": "Giocatore §5.11",
+      "frasi": [
+        "| 1–10 Q | 0 |",
+        "| 11–20 Q | −2 |",
+        "| 21–40 Q | −4 |",
+        "| 41–80 Q | −6 |",
+        "| 81–160 Q | −8 |",
+        "| 161–300 Q | −10 |",
+        "| 301–500 Q | −12 |",
+        "| 501–750 Q | −14 |",
+        "| 751–1.000 Q | −16 |",
+        "| 1.001–1.500 Q | −18 |",
+        "| Ogni ulteriori 500 Q o frazione | ulteriore −2 |",
+        "La gittata massima dell’arma non può essere superata.",
+        "| Fino a 80 Q | 1 |",
+        "| 81–500 Q | 2 |",
+        "| 501–1.000 Q | 3 |",
+        "| 1.001–1.500 Q | 4 |",
+        "| Ogni ulteriori 500 Q o frazione | +1 |",
+        "Le Azioni possono essere distribuite fra più Round; l’ultima effettua il tiro."
+      ],
+      "fasce": [
+        {
+          "fino_a": 10,
+          "va": 0
+        },
+        {
+          "fino_a": 20,
+          "va": -2
+        },
+        {
+          "fino_a": 40,
+          "va": -4
+        },
+        {
+          "fino_a": 80,
+          "va": -6
+        },
+        {
+          "fino_a": 160,
+          "va": -8
+        },
+        {
+          "fino_a": 300,
+          "va": -10
+        },
+        {
+          "fino_a": 500,
+          "va": -12
+        },
+        {
+          "fino_a": 750,
+          "va": -14
+        },
+        {
+          "fino_a": 1000,
+          "va": -16
+        },
+        {
+          "fino_a": 1500,
+          "va": -18
+        }
+      ],
+      "oltre": {
+        "ogni_q": 500,
+        "va": -2
+      },
+      "azioni": [
+        {
+          "fino_a": 80,
+          "azioni": 1
+        },
+        {
+          "fino_a": 500,
+          "azioni": 2
+        },
+        {
+          "fino_a": 1000,
+          "azioni": 3
+        },
+        {
+          "fino_a": 1500,
+          "azioni": 4
+        }
+      ],
+      "azioni_oltre": {
+        "ogni_q": 500,
+        "azioni": 1
+      }
+    },
+    "mirini": {
+      "paragrafo": "Giocatore §5.11",
+      "frasi": [
+        "| Reflex | 2 | Massimo 80 Q; nessuna Azione aggiuntiva. |",
+        "| Ottico | 4 | Massimo 500 Q; richiede almeno 2 Azioni Principali totali. |",
+        "| Di Precisione | 6 | Entro la gittata massima dell’arma; richiede almeno 2 Azioni Principali totali. |",
+        "Un mirino non può trasformare la penalità in un bonus positivo."
+      ],
+      "_nota": "Riduzione, distanza massima e Azioni minime di ogni mirino sono nel catalogo (accessori_armi → mirino); qui la regola generale: la riduzione non supera la penalità di distanza."
+    },
+    "modalita": {
+      "paragrafo": "Giocatore §5.10",
+      "frasi": [
+        "Tiro Mirato è compatibile soltanto con Tiro Singolo e Raffica Breve; Tiro Rapido è incompatibile.",
+        "Un’arma deve possedere la modalità appropriata; se le munizioni non bastano si usa una modalità inferiore o il Tiro Singolo.",
+        "Dal 12° livello si possono effettuare due Raffiche, una per Azione Principale.",
+        "Non si combina con Tiro Mirato, Tiro Ravvicinato, Tiro a Bruciapelo o Raffiche.",
+        "Doppio Colpo non si combina con Tiro Rapido, Tiro Mirato o altre Manovre offensive.",
+        "Con successo si risolvono quattro applicazioni separate di danno, due per cartuccia; con fallimento nessuna.",
+        "Con un’Azione Principale, un’arma capace di Raffica Lunga e 10 munizioni, il personaggio designa un’Area di 3 × 3 Q entro gittata e linea di tiro ed effettua una Prova a −4 VA."
+      ],
+      "colpi_a_segno": {
+        "S": 1,
+        "RB": 1,
+        "RM": 3,
+        "RL": 5,
+        "TR": 1,
+        "FS": 0,
+        "DC": 1
+      },
+      "tiri": {
+        "TR": 2
+      },
+      "applicazioni": {
+        "DC": 4
+      },
+      "area": {
+        "FS": "3 × 3 Q"
+      },
+      "ordine_inferiore": [
+        "RL",
+        "RM",
+        "RB",
+        "S"
+      ],
+      "raffiche": [
+        "RB",
+        "RM",
+        "RL"
+      ],
+      "manovre_ammesse": {
+        "S": [
+          "mirato",
+          "ravvicinato",
+          "bruciapelo"
+        ],
+        "RB": [
+          "mirato",
+          "ravvicinato",
+          "bruciapelo"
+        ],
+        "RM": [],
+        "RL": [],
+        "TR": [],
+        "FS": [],
+        "DC": []
+      }
+    },
+    "manovre": {
+      "mirato": {
+        "nome": "Tiro Mirato",
+        "paragrafo": "Giocatore §5.10",
+        "va": 2,
+        "danno": 2,
+        "azioni_principali": 1,
+        "frasi": [
+          "Il tiro ottiene +2 VA e +2 danni; Tiro Mirato Migliorato porta entrambi i bonus a +4.",
+          "Tiro Mirato non si combina con Tiro Rapido, Raffica Media o Lunga, Tiro Ravvicinato, Tiro a Bruciapelo o altre manovre offensive.",
+          "Alle Azioni richieste dalla distanza aggiunge una sola Azione Principale.",
+          "La preparazione si perde se prima del tiro si usa un’altra Azione Principale, si cambia arma, si usa Corsa o Scatto, si perde totalmente il bersaglio o si diventa incapaci."
+        ],
+        "incompatibili": [
+          "ravvicinato",
+          "bruciapelo"
+        ],
+        "movimenti_esclusi": [
+          "corsa",
+          "scatto"
+        ]
+      },
+      "ravvicinato": {
+        "nome": "Tiro Ravvicinato",
+        "paragrafo": "Giocatore §5.10",
+        "distanza_max_q": 3,
+        "va_per_abilita": {
+          "Armi leggere": -2,
+          "Armi medie": -4
+        },
+        "danno": 3,
+        "frasi": [
+          "| Tiro Ravvicinato | Bersaglio entro 3 Q; Arma leggera o media; Tiro Singolo o Raffica Breve | −2 VA con Armi leggere o −4 VA con Armi medie; +3 danni a ogni colpo prima dell’Armatura. Se il tiratore è impegnato direttamente dal bersaglio deve usare questa manovra. Tiro Ravvicinato Istintivo riduce la penalità di 2. |"
+        ],
+        "incompatibili": [
+          "mirato"
+        ],
+        "obbligatorio_se_impegnato_dal_bersaglio": true
+      },
+      "bruciapelo": {
+        "nome": "Tiro a Bruciapelo",
+        "paragrafo": "Giocatore §5.10",
+        "distanza_max_q": 1,
+        "abilita": [
+          "Armi leggere",
+          "Armi medie"
+        ],
+        "moltiplicatore": 2,
+        "frasi": [
+          "| Tiro a Bruciapelo | Contatto; bersaglio ignaro, immobilizzato o incapace di reagire; Arma leggera o media; Tiro Singolo o Raffica Breve | Prova normale senza penalità; ogni colpo infligge danno ×2 prima dell’Armatura. Il Direttore può evitare la Prova se non esiste incertezza. Tiro a Bruciapelo Migliorato permette l’uso contro un bersaglio consapevole, che conserva le Difese. |",
+          "Il bonus al danno di Tiro Ravvicinato, anche migliorato, non si somma al moltiplicatore del Tiro a Bruciapelo (§8.6.5)."
+        ],
+        "incompatibili": [
+          "mirato"
+        ],
+        "richiede_bersaglio_ignaro": true
+      }
+    },
+    "imbracciatura": {
+      "paragrafo": "Giocatore §5.10",
+      "frasi": [
+        "Le Armi Pesanti e i lanciagranate, compresi quelli integrati e quelli appartenenti alle Armi Medie, richiedono Imbracciatura.",
+        "Imbracciare costa 1 AzM e non richiede una Prova.",
+        "Sparare senza Imbracciatura impone −4 VA, cumulativo con gli altri modificatori.",
+        "Si perde muovendosi, subendo uno spostamento forzato, cadendo o smettendo di impugnare l’arma."
+      ],
+      "va": -4,
+      "abilita": [
+        "Armi pesanti"
+      ],
+      "armi": [
+        "armi_distanza:lanciagranate",
+        "armi_distanza_corporative:lanciagranate-alleanza",
+        "armi_distanza_corporative:lanciagranate-carabina-punisher",
+        "armi_distanza_corporative:lanciagranate-deathlock-drum",
+        "armi_distanza_corporative:lanciagranate-mp105gw",
+        "armi_distanza_corporative:lanciagranate-panzerknacker",
+        "armi_distanza_corporative:lanciagranate-bolter-20",
+        "armi_distanza_corporative:lanciagranate-ironfist-15",
+        "armi_distanza_corporative:lanciagranate-car24",
+        "armi_distanza_corporative:lanciagranate-m50",
+        "armi_distanza_corporative:lanciagranate-caw2000",
+        "armi_distanza_corporative:lanciagranate-ar3000",
+        "armi_distanza_corporative:lanciagranate-nemesis-221",
+        "armi_distanza_corporative:lanciagranate-volcano",
+        "armi_distanza_corporative:lanciagranate-interceptor",
+        "armi_distanza_corporative:lanciagranate-invader",
+        "armi_distanza_corporative:lanciagranate-windrider-n4",
+        "armi_distanza_corporative:lanciagranate-shogun"
+      ]
+    }
+  },
   "lancio": {
     "focalizzazione_va": 4,
     "penalita_ingaggio": -2,

@@ -334,7 +334,14 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Riduce di 2 punti complessivi per Prova, fino a un minimo di 0, le penalità dovute ad andatura, terreno o appoggi instabili. Vale per le Prove di Atletica del Movimento e per le altre Prove penalizzate da quelle condizioni: la penalità personale di Corsa passa da −2 a 0, quella di Scatto da −6 a −4; una Prova di movimento a −4 passa a −2.\nLa riduzione è di 2 complessivi, non di 2 per ciascuna causa. Non modifica il costo dei Q, le penalità degli avversari per colpire o gli impedimenti al Movimento e non supera divieti come quello di lanciare Incantesimi durante Corsa e Scatto nei casi previsti."
+      "testo": "Riduce di 2 punti complessivi per Prova, fino a un minimo di 0, le penalità dovute ad andatura, terreno o appoggi instabili. Vale per le Prove di Atletica del Movimento e per le altre Prove penalizzate da quelle condizioni: la penalità personale di Corsa passa da −2 a 0, quella di Scatto da −6 a −4; una Prova di movimento a −4 passa a −2.\nLa riduzione è di 2 complessivi, non di 2 per ciascuna causa. Non modifica il costo dei Q, le penalità degli avversari per colpire o gli impedimenti al Movimento e non supera divieti come quello di lanciare Incantesimi durante Corsa e Scatto nei casi previsti.",
+      "effetti": {
+        "attacco_distanza": {
+          "movimento_proprio": {
+            "riduzione": 2
+          }
+        }
+      }
     },
     {
       "id": "scattante",
@@ -429,7 +436,14 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Un utilizzo per Round, durante la propria Iniziativa. Una volta per Round, durante la propria Iniziativa, imbraccia l’arma senza spendere Azioni. L’Imbracciatura può essere persa normalmente, per esempio con un Movimento successivo. Il Talento non concede il +1 danno di Postura d’Assedio dell’Artigliere. Ogni Talento di preparazione rapida ha il proprio utilizzo distinto."
+      "testo": "Un utilizzo per Round, durante la propria Iniziativa. Una volta per Round, durante la propria Iniziativa, imbraccia l’arma senza spendere Azioni. L’Imbracciatura può essere persa normalmente, per esempio con un Movimento successivo. Il Talento non concede il +1 danno di Postura d’Assedio dell’Artigliere. Ogni Talento di preparazione rapida ha il proprio utilizzo distinto.",
+      "effetti": {
+        "attacco_distanza": {
+          "imbracciatura": {
+            "gratuita": true
+          }
+        }
+      }
     },
     {
       "id": "ricarica-rapida",
@@ -479,7 +493,16 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Porta il bonus della Raffica Breve da +2 a +4 VA. L’arma deve possedere questa modalità. Restano 1 AzP, il consumo di munizioni e il numero di colpi. Il bonus si applica anche quando la Raffica Breve è abbinata a una manovra compatibile."
+      "testo": "Porta il bonus della Raffica Breve da +2 a +4 VA. L’arma deve possedere questa modalità. Restano 1 AzP, il consumo di munizioni e il numero di colpi. Il bonus si applica anche quando la Raffica Breve è abbinata a una manovra compatibile.",
+      "effetti": {
+        "attacco_distanza": {
+          "modalita": {
+            "RB": {
+              "va": 4
+            }
+          }
+        }
+      }
     },
     {
       "id": "raffica-media-migliorata",
@@ -489,7 +512,16 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Elimina il −2 VA della Raffica Media, portando il modificatore a 0. L’arma deve possedere questa modalità. Restano 1 AzP, il consumo di munizioni e il numero di colpi. Si applica anche alla Prova con cui l’Artigliere utilizza Raffica Estesa."
+      "testo": "Elimina il −2 VA della Raffica Media, portando il modificatore a 0. L’arma deve possedere questa modalità. Restano 1 AzP, il consumo di munizioni e il numero di colpi. Si applica anche alla Prova con cui l’Artigliere utilizza Raffica Estesa.",
+      "effetti": {
+        "attacco_distanza": {
+          "modalita": {
+            "RM": {
+              "va": 0
+            }
+          }
+        }
+      }
     },
     {
       "id": "raffica-lunga-migliorata",
@@ -499,7 +531,16 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Riduce la penalità della Raffica Lunga da −6 a −4 VA. L’arma deve possedere questa modalità. Restano 1 AzP, il consumo di munizioni e il numero di colpi. Si applica anche alla Prova con cui l’Artigliere utilizza Raffica Estesa."
+      "testo": "Riduce la penalità della Raffica Lunga da −6 a −4 VA. L’arma deve possedere questa modalità. Restano 1 AzP, il consumo di munizioni e il numero di colpi. Si applica anche alla Prova con cui l’Artigliere utilizza Raffica Estesa.",
+      "effetti": {
+        "attacco_distanza": {
+          "modalita": {
+            "RL": {
+              "va": -4
+            }
+          }
+        }
+      }
     },
     {
       "id": "fuoco-di-soppressione-migliorato",
@@ -509,7 +550,16 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Consuma 5 munizioni anziché 10 quando effettua Fuoco di Soppressione. Restano necessari un’arma capace di Raffica Lunga, 1 AzP e la Prova a −4 VA; Area, durata ed effetti non cambiano. Le cinque munizioni sono consumate anche in caso di fallimento. La manovra è utilizzabile anche con sole cinque munizioni rimaste nell’arma. Ottimizzare Proiettili dell’Artigliere stabilisce invece un consumo di otto. Con entrambi i Talenti si applica il consumo più favorevole, cinque, senza sommare le riduzioni. Ottimizzare Proiettili conserva i propri benefici sulle Raffiche."
+      "testo": "Consuma 5 munizioni anziché 10 quando effettua Fuoco di Soppressione. Restano necessari un’arma capace di Raffica Lunga, 1 AzP e la Prova a −4 VA; Area, durata ed effetti non cambiano. Le cinque munizioni sono consumate anche in caso di fallimento. La manovra è utilizzabile anche con sole cinque munizioni rimaste nell’arma. Ottimizzare Proiettili dell’Artigliere stabilisce invece un consumo di otto. Con entrambi i Talenti si applica il consumo più favorevole, cinque, senza sommare le riduzioni. Ottimizzare Proiettili conserva i propri benefici sulle Raffiche.",
+      "effetti": {
+        "attacco_distanza": {
+          "modalita": {
+            "FS": {
+              "munizioni": 5
+            }
+          }
+        }
+      }
     },
     {
       "id": "tiro-ravvicinato-istintivo",
@@ -519,7 +569,14 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Riduce di 2 la penalità alla Prova per colpire con Tiro Ravvicinato: con Armi leggere passa da −2 a 0 VA; con Armi medie da −4 a −2 VA. Restano requisiti e costo della manovra. È cumulabile con Tiro Ravvicinato Migliorato."
+      "testo": "Riduce di 2 la penalità alla Prova per colpire con Tiro Ravvicinato: con Armi leggere passa da −2 a 0 VA; con Armi medie da −4 a −2 VA. Restano requisiti e costo della manovra. È cumulabile con Tiro Ravvicinato Migliorato.",
+      "effetti": {
+        "attacco_distanza": {
+          "ravvicinato": {
+            "riduzione": 2
+          }
+        }
+      }
     },
     {
       "id": "tiro-ravvicinato-migliorato",
@@ -529,7 +586,14 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Porta il bonus al danno di Tiro Ravvicinato da +3 a +5, applicato prima dell’Armatura. Restano bersaglio entro 3 Q, Arma leggera o media, Tiro Singolo o Raffica Breve. È cumulabile con Tiro Ravvicinato Istintivo, che riduce la penalità alla Prova. Il bonus non si somma al moltiplicatore di Tiro a Bruciapelo."
+      "testo": "Porta il bonus al danno di Tiro Ravvicinato da +3 a +5, applicato prima dell’Armatura. Restano bersaglio entro 3 Q, Arma leggera o media, Tiro Singolo o Raffica Breve. È cumulabile con Tiro Ravvicinato Istintivo, che riduce la penalità alla Prova. Il bonus non si somma al moltiplicatore di Tiro a Bruciapelo.",
+      "effetti": {
+        "attacco_distanza": {
+          "ravvicinato": {
+            "danno": 5
+          }
+        }
+      }
     },
     {
       "id": "tiro-a-bruciapelo-migliorato",
@@ -539,7 +603,14 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Permette di usare Tiro a Bruciapelo contro un bersaglio consapevole e capace di reagire, che conserva le proprie Difese. Restano il Contatto, l’Arma leggera o media, il Tiro Singolo o la Raffica Breve e il danno ×2 della manovra. Si applicano le regole ordinarie del Magistrale (§§1.6 e 5.10)."
+      "testo": "Permette di usare Tiro a Bruciapelo contro un bersaglio consapevole e capace di reagire, che conserva le proprie Difese. Restano il Contatto, l’Arma leggera o media, il Tiro Singolo o la Raffica Breve e il danno ×2 della manovra. Si applicano le regole ordinarie del Magistrale (§§1.6 e 5.10).",
+      "effetti": {
+        "attacco_distanza": {
+          "bruciapelo": {
+            "consapevole": true
+          }
+        }
+      }
     },
     {
       "id": "tiro-rapido-migliorato",
@@ -549,7 +620,16 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Riduce da −4 a −2 VA la penalità di ciascuno dei due Tiri Singoli effettuati mediante Tiro Rapido. Conserva il costo di 1 AzP, il consumo di due munizioni, i requisiti della scheda dell’arma e le incompatibilità della manovra. Ogni tiro e le sue conseguenze si risolvono separatamente (§5.10)."
+      "testo": "Riduce da −4 a −2 VA la penalità di ciascuno dei due Tiri Singoli effettuati mediante Tiro Rapido. Conserva il costo di 1 AzP, il consumo di due munizioni, i requisiti della scheda dell’arma e le incompatibilità della manovra. Ogni tiro e le sue conseguenze si risolvono separatamente (§5.10).",
+      "effetti": {
+        "attacco_distanza": {
+          "modalita": {
+            "TR": {
+              "va": -2
+            }
+          }
+        }
+      }
     },
     {
       "id": "tiro-mirato-migliorato",
@@ -559,7 +639,15 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Porta entrambi i bonus di Tiro Mirato da +2 a +4: +4 VA alla Prova per colpire e +4 danni. Conserva le Azioni di preparazione ed esecuzione e le condizioni che interrompono la preparazione. È consentito con Tiro Singolo o Raffica Breve. Alle Azioni richieste dalla distanza aggiunge una sola AzP, come Tiro Mirato (§5.10)."
+      "testo": "Porta entrambi i bonus di Tiro Mirato da +2 a +4: +4 VA alla Prova per colpire e +4 danni. Conserva le Azioni di preparazione ed esecuzione e le condizioni che interrompono la preparazione. È consentito con Tiro Singolo o Raffica Breve. Alle Azioni richieste dalla distanza aggiunge una sola AzP, come Tiro Mirato (§5.10).",
+      "effetti": {
+        "attacco_distanza": {
+          "mirato": {
+            "va": 4,
+            "danno": 4
+          }
+        }
+      }
     },
     {
       "id": "tiro-a-lunga-distanza",
@@ -569,7 +657,15 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Riduce di 2 punti la penalità dovuta alla distanza quando il bersaglio si trova oltre 80 Q. Si cumula con i mirini e con Ottimizzare Gittata dell’Artigliere, fino ad annullare la penalità, senza trasformarla in un bonus. Non estende la gittata massima dell’arma e non riduce le Azioni richieste (§5.11)."
+      "testo": "Riduce di 2 punti la penalità dovuta alla distanza quando il bersaglio si trova oltre 80 Q. Si cumula con i mirini e con Ottimizzare Gittata dell’Artigliere, fino ad annullare la penalità, senza trasformarla in un bonus. Non estende la gittata massima dell’arma e non riduce le Azioni richieste (§5.11).",
+      "effetti": {
+        "attacco_distanza": {
+          "distanza": {
+            "oltre_q": 80,
+            "riduzione": 2
+          }
+        }
+      }
     },
     {
       "id": "mira-rapida",
@@ -579,7 +675,12 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Riduce di 1, fino a un minimo di 1, le Azioni Principali complessivamente richieste dalla distanza e dal mirino. Non riduce l’Azione aggiuntiva necessaria per Tiro Mirato. Un tiro a 800 Q richiede normalmente tre AzP; con Mira Rapida ne richiede due. Aggiungendo Tiro Mirato il totale diventa tre AzP. La preparazione segue le normali condizioni del §5.11."
+      "testo": "Riduce di 1, fino a un minimo di 1, le Azioni Principali complessivamente richieste dalla distanza e dal mirino. Non riduce l’Azione aggiuntiva necessaria per Tiro Mirato. Un tiro a 800 Q richiede normalmente tre AzP; con Mira Rapida ne richiede due. Aggiungendo Tiro Mirato il totale diventa tre AzP. La preparazione segue le normali condizioni del §5.11.",
+      "effetti": {
+        "attacco_distanza": {
+          "azioni_distanza": -1
+        }
+      }
     },
     {
       "id": "fuoco-di-precisione",
@@ -589,7 +690,15 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Riduce da −4 a −2 VA entrambe le penalità previste quando si spara contro un bersaglio impegnato in Ravvicinato, protetto da un alleato o che utilizza un ostaggio: quella della Prova per colpire e quella dell’eventuale seconda Prova dopo un fallimento. Gli esiti seguono il §5.10. Fuoco Controllato dell’Agente continua a eliminare queste penalità e la seconda Prova secondo la propria descrizione."
+      "testo": "Riduce da −4 a −2 VA entrambe le penalità previste quando si spara contro un bersaglio impegnato in Ravvicinato, protetto da un alleato o che utilizza un ostaggio: quella della Prova per colpire e quella dell’eventuale seconda Prova dopo un fallimento. Gli esiti seguono il §5.10. Fuoco Controllato dell’Agente continua a eliminare queste penalità e la seconda Prova secondo la propria descrizione.",
+      "effetti": {
+        "attacco_distanza": {
+          "impegnato": {
+            "va": -2,
+            "seconda_prova": -2
+          }
+        }
+      }
     },
     {
       "id": "schermidore",
@@ -751,7 +860,14 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Riduce di 2 punti la penalità al proprio attacco dalla Copertura: Leggera 0 VA, Media −2 VA. Non permette di attaccare attraverso Copertura Totale."
+      "testo": "Riduce di 2 punti la penalità al proprio attacco dalla Copertura: Leggera 0 VA, Media −2 VA. Non permette di attaccare attraverso Copertura Totale.",
+      "effetti": {
+        "attacco_distanza": {
+          "copertura_propria": {
+            "riduzione": 2
+          }
+        }
+      }
     },
     {
       "id": "difesa-con-due-armi",
@@ -930,7 +1046,12 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Una volta per Round, il primo attacco a Distanza effettuato mentre è nascosto contro un bersaglio inconsapevole ottiene +2 danni e riduce di 2 la penalità di Copertura Leggera, fino a 0. Il danno aggiuntivo riguarda soltanto il primo colpo. Non vale per attacchi ad Area e non riduce Copertura Media o Totale. La condizione nascosta segue Furtività; la Specializzazione nell’arma si somma normalmente."
+      "testo": "Una volta per Round, il primo attacco a Distanza effettuato mentre è nascosto contro un bersaglio inconsapevole ottiene +2 danni e riduce di 2 la penalità di Copertura Leggera, fino a 0. Il danno aggiuntivo riguarda soltanto il primo colpo. Non vale per attacchi ad Area e non riduce Copertura Media o Totale. La condizione nascosta segue Furtività; la Specializzazione nell’arma si somma normalmente.",
+      "effetti": {
+        "attacco_distanza": {
+          "promemoria": "ignaro"
+        }
+      }
     },
     {
       "id": "controllo-d-emergenza",

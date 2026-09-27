@@ -1,5 +1,6 @@
-// Verifica che le frasi del manuale copiate negli effetti degli oggetti («condizione») esistano
-// davvero nel testo dei Google Doc (docs/manuali-txt/*.md).
+// Verifica che le frasi del manuale copiate nei dati esistano davvero nel testo dei Google Doc
+// (docs/manuali-txt/*.md): effetti degli oggetti («condizione») e regole dell'attacco a distanza
+// (regole.json → attacco_distanza, «frasi»).
 // Uso:  node tools/verifica_frasi.mjs     → elenca le frasi non trovate ed esce con codice 1
 // Lo usa anche tests/effetti-oggetti.test.js.
 import { readFileSync, readdirSync } from 'node:fs';
@@ -33,6 +34,17 @@ export function frasiEffetti() {
   for (const [id, o] of Object.entries(leggi('data/dotazioni.json').oggetti_dotazione)) {
     (o.effetti ?? []).forEach((e, i) => { if (e.condizione) out.push({ dove: `dotazioni:${id} effetti[${i}]`, frase: e.condizione }); });
   }
+  // regole.json → attacco_distanza: ogni «frasi» del blocco, a ogni profondità
+  const visita = (v, dove) => {
+    if (Array.isArray(v)) v.forEach((x, i) => visita(x, `${dove}[${i}]`));
+    else if (v && typeof v === 'object') {
+      for (const [k, x] of Object.entries(v)) {
+        if (k === 'frasi' && Array.isArray(x)) x.forEach((f, i) => out.push({ dove: `${dove}.frasi[${i}]`, frase: f }));
+        else visita(x, `${dove}.${k}`);
+      }
+    }
+  };
+  visita(leggi('data/regole.json').attacco_distanza ?? {}, 'regole:attacco_distanza');
   return out;
 }
 
