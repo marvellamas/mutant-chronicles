@@ -230,10 +230,33 @@ const COLONNE_ARMI = [
  * «colpi» per le armi a inserimento. I gruppi si affiancano quando entrano, con uno stacco largo,
  * e vanno a capo quando non entrano (un caricatore da 30 occupa una fila).
  */
-function fileColpi(c) {
-  const etichetta = c.modo === 'inserimento' ? () => 'colpi' : c.modo === 'cella' ? (k) => `cella ${k}` : (k) => `car. ${k}`;
-  return h('div', { class: 'file-colpi' }, Array.from({ length: c.file }, (_, k) => h('div', { class: 'caricatore' },
-    h('span', { class: 'etichetta-colpi' }, etichetta(k + 1)), filaCaselle(c.capacita))));
+function fileColpi(c, pi = []) {
+  const etichetta = !c ? null : c.modo === 'inserimento' ? () => 'colpi' : c.modo === 'cella' ? (k) => `cella ${k}` : (k) => `car. ${k}`;
+  return h('div', { class: 'file-colpi' },
+    c ? Array.from({ length: c.file }, (_, k) => h('div', { class: 'caricatore' },
+      h('span', { class: 'etichetta-colpi' }, etichetta(k + 1)), filaCaselle(c.capacita))) : null,
+    pi.map(gruppoPI));
+}
+
+/**
+ * PI da annerire a matita (Armamenti §7.2.1): un quadratino per PI massimo, stacco ogni 5, con
+ * l'etichetta dell'oggetto. A 0 PI l'oggetto è Rotto.
+ */
+const gruppoPI = ({ etichetta, pi }) => h('div', { class: 'caricatore gruppo-pi' },
+  h('span', { class: 'etichetta-colpi' }, etichetta ? `PI ${etichetta}` : 'PI'), filaCaselle(pi));
+
+/** Protezioni con la colonna PI e, sotto ogni riga, i quadratini dei PI (armatura, rinforzo, elmetto). */
+function tabellaProtezioni(d) {
+  const colonne = [...d.protezioni.colonne, 'PI'];
+  return h('table', { class: 'tabella-stampa protezioni-stampa' },
+    h('thead', {}, h('tr', {}, colonne.map((c) => h('th', { class: c === 'PI' ? 'col-pi' : null }, c)))),
+    d.protezioni.righe.length ? d.protezioni.righe.map((r, i) => {
+      const pi = d.piProtezioni?.[i] ?? [];
+      return h('tbody', {},
+        h('tr', { class: 'riga-arma' }, r.map((v, j) => (j === 0 ? h('th', { scope: 'row' }, v) : h('td', {}, v))),
+          h('td', { class: 'col-pi' }, pi.length ? pi.map((x) => x.pi).join(' + ') : '—')),
+        pi.length ? h('tr', { class: 'riga-colpi' }, h('td', { colspan: colonne.length }, fileColpi(null, pi))) : null);
+    }) : h('tbody', {}, h('tr', { class: 'da-compilare' }, colonne.map(() => h('td', {}, ' ')))));
 }
 
 function tabellaArmi(armi) {
@@ -242,9 +265,11 @@ function tabellaArmi(armi) {
     h('thead', {}, h('tr', {}, COLONNE_ARMI.map(([k, t]) => h('th', { class: `col-${k}` }, t)))),
     armi.map((a) => h('tbody', {},
       h('tr', { class: 'riga-arma' }, COLONNE_ARMI.map(([k]) => (k === 'nome'
-        ? h('th', { scope: 'row' }, a.nome, a.addosso ? h('span', { class: 'sigla' }, ' addosso') : null)
+        ? h('th', { scope: 'row' }, a.nome, a.addosso ? h('span', { class: 'sigla' }, ' addosso') : null,
+          // senza colpi, i PI stanno sotto il nome: la riga delle proprietà è spesso già su due righe
+          !a.colpi && a.piMax ? fileColpi(null, [{ etichetta: '', pi: a.piMax }]) : null)
         : h('td', { class: `col-${k}` }, a[k] || '—')))),
-      a.colpi ? h('tr', { class: 'riga-colpi' }, h('td', { colspan: n }, fileColpi(a.colpi))) : null)));
+      a.colpi ? h('tr', { class: 'riga-colpi' }, h('td', { colspan: n }, fileColpi(a.colpi, a.piMax ? [{ etichetta: '', pi: a.piMax }] : []))) : null)));
 }
 
 function foglioCombattimento(d) {
@@ -261,19 +286,19 @@ function foglioCombattimento(d) {
       h('div', { class: 'sintesi' },
         cella('Iniziativa', `${segno(s.iniziativa)} + ${s.dadoIniziativa}`),
         cella('Movimento', `Passo ${mov.passo} · Corsa ${mov.corsa} · Scatto ${mov.scatto} ${mov.unita}`),
-        cella('Azioni per Round', `${s.azioni.movimento} Mov. · ${s.azioni.principali} Princ.`),
-        s.difese ? cella(`Difese (${s.difese.caratteristica})`, `VA ${s.difese.va}`) : null,
-        s.salvezze.map((x) => cella(`${x.nome} (${x.caratteristica})`, `${x.totale}${x.limitato ? '*' : ''}`))),
+        cella('Azioni', `${s.azioni.movimento} Mov. · ${s.azioni.principali} Princ.`),
+        s.difese ? cella('Difese', `VA ${s.difese.va}`) : null,
+        s.salvezze.map((x) => cella(x.nome, `${x.totale}${x.limitato ? '*' : ''}`))),
       // §5.18: i riassunti degli Stati non entrano a 10 pt; resta una fila di nomi da cerchiare
       h('p', { class: 'stati-nomi' }, h('strong', {}, 'Stati (§5.18)'), d.statiRiassunto.map((x) => h('span', {}, x.nome)))),
     box({ titolo: 'Armi', classe: 'f3-armi' }, tabellaArmi(d.armiStampa),
-      tabella(d.protezioni.colonne, d.protezioni.righe, { classe: 'protezioni-stampa', vuote: d.protezioni.righe.length ? 0 : 1 })),
+      tabellaProtezioni(d)),
     h('div', { class: 'f3-basso' },
       h('div', { class: 'colonna' },
         box({ titolo: 'Equipaggiamento', riempitivo: true },
           h('p', { class: 'crediti-stampa' }, h('strong', {}, 'Crediti '), h('span', { class: 'casella-lunga' }),
             d.creditiIniziali !== null ? h('span', { class: 'sigla' }, ` saldo iniziale ${crediti(d.creditiIniziali)}`) : null,
-            eq.carico ? h('span', { class: 'sigla' }, ` · carico noto ${eq.carico.peso} kg (ordinario ≤ ${eq.carico.ordinario}, max ${eq.carico.massimo})${eq.carico.senzaPeso ? ` · ${eq.carico.senzaPeso} senza peso` : ''}`) : null),
+            eq.carico ? h('span', { class: 'sigla' }, ` · carico ${eq.carico.peso} kg (≤ ${eq.carico.ordinario} / ${eq.carico.massimo})${eq.carico.senzaPeso ? ` · ${eq.carico.senzaPeso} senza peso` : ''}`) : null),
           h('div', { class: 'riempi-righe' },
             h('table', { class: 'tabella-stampa equip-stampa' },
               h('thead', {}, h('tr', {}, h('th', {}, 'Oggetto'), h('th', {}, 'Peso'), h('th', { class: 'dove' }, 'ind'), h('th', { class: 'dove' }, 'zai'), h('th', { class: 'dove' }, 'Altro'))),
@@ -290,7 +315,12 @@ function foglioCombattimento(d) {
         d.tecniche.length || d.tecnicheAmmesse ? box({ titolo: `Tecniche Interiori (${d.tecniche.length} / ${d.tecnicheAmmesse})` },
           tabella(['Tecnica', 'Costo', 'Azione'], d.tecniche.map((x) => [x.nome, x.costo, x.azione]))) : null),
       box({ titolo: 'Punti Vita', tinta: 'pv', forte: true, riempitivo: true, classe: 'f3-pv' },
-        h('div', { class: 'massimo' }, h('span', {}, 'massimi'), h('span', { class: 'valore' }, String(d.pv))),
+        // PV massimi e, accanto, l'AR (docs/ricognizione-ar-pi.md): un sottoriquadro per valore
+        h('div', { class: 'f3-massimi' },
+          h('div', { class: 'massimo' }, h('span', {}, 'massimi'), h('span', { class: 'valore' }, String(d.pv))),
+          (d.arStampa?.valori ?? []).map((v) => h('div', { class: `massimo tinta-ar${v.principale ? ' principale' : ''}` },
+            h('span', {}, v.etichetta), h('span', { class: 'valore' }, String(v.valore))))),
+        d.arStampa ? h('p', { class: 'piccolo provenienza-ar' }, d.arStampa.provenienza) : null,
         h('p', { class: 'piccolo' }, 'attuali'),
         quadratini(d.pv, { piu: true }),
         righeGuida())),

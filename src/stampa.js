@@ -12,6 +12,7 @@ import { aggiungiDanno, NOME_TESTO_PRECEDENTE, catalogo, normalizzaEquipaggiamen
 import { saldoIniziale } from './dotazioni.js';
 import { modoRicarica } from './ricarica.js';
 import { calcolaCarico, pesoVoce } from './carico.js';
+import { testoProvenienzaAR } from './protezione.js';
 
 /** Limiti di impaginazione (non regole di gioco): lunghezze massime dei testi stampati. */
 export const LIMITI_STAMPA = {
@@ -256,6 +257,13 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     ].filter(Boolean).join('; '),
   ]);
   const sArmi = schedaConArmiAddosso(p, dati) ?? s; // SS: anche le armi addosso
+  // SS: PI massimi di ogni protezione stampata (armatura, kit di rinforzo, elmetto), per i quadratini
+  const piDi = new Map((eq.integrita ?? []).map((x) => [x.uid, x.piMax]));
+  const piProtezioni = eq.protezioni.filter((p) => p.tipo !== 'elmetto' || !conElmetto).map((p) => [
+    { etichetta: p.tipo === 'armatura' ? 'armatura' : p.tipo === 'scudo' ? 'scudo' : 'elmetto', pi: piDi.get(String(p.uid)) },
+    p.rinforzo ? { etichetta: 'rinforzo', pi: piDi.get(p.rinforzo.uid) } : null,
+    ...(p === conElmetto ? elmetti.map((e) => ({ etichetta: 'elmetto', pi: piDi.get(e.uid) })) : []),
+  ].filter((x) => x && x.pi));
   const combattimento = {
     armi: { colonne: ['Arma', 'Abilità', 'VA', 'Danno', 'Gittata', 'Munizioni', 'Note'], righe: righeArmi, righeVuote: Math.max(2, LIMITI_STAMPA.righeArmi - righeArmi.length) },
     protezioni: { colonne: ['Protezione', 'AR', 'Categoria', 'Note'], righe: righeProtezioni, righeVuote: Math.max(1, LIMITI_STAMPA.righeProtezioni - righeProtezioni.length) },
@@ -279,6 +287,9 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     pv: s.pv,
     // SS, foglio 3: riquadro compatto (come la tab Combattimento), armi con tutte le colonne e le
     // file di quadratini dei colpi, equipaggiamento in tabella con il carico, Stati con il riassunto
+    // SS: AR a riposo (docs/ricognizione-ar-pi.md) e PI delle protezioni
+    arStampa: eq.ar ? { valori: eq.ar.valori, provenienza: testoProvenienzaAR(eq.ar) } : null,
+    piProtezioni,
     sintesi: {
       iniziativa: identita.iniziativa, dadoIniziativa: identita.dadoIniziativa, movimento: s.movimento, azioni: s.azioni,
       salvezze: identita.salvezze, difese: difese ? { va: difese.vaEquip ?? difese.totale, caratteristica: difese.caratteristica } : null,
@@ -418,11 +429,11 @@ export function armiStampa(s, creazione, dati) {
       mani: a.mani ? String(a.mani) : '—',
       forza: def?.for_richiesta ? String(def.for_richiesta) : '—',
       pi: def?.pi ? String(def.pi) : '—',
+      piMax: Number.isInteger(def?.pi) ? def.pi : null,
       qualita: def?.qualita ?? '—',
       capacita: cap ? `${cap}${a.munizioni.unita && a.munizioni.unita !== 'colpi' ? ` ${a.munizioni.unita}` : ''}` : '—',
       modalita: (a.modalita ?? []).join(' ') || '—',
       proprieta: [
-        a.moduloDi ? 'modulo integrato' : null, // il nome dice già di quale arma
         ...(a.accessori ?? []).map((x) => x.nome),
         a.mirino ? `mirino −${a.mirino.riduzione} dist.` : null,
         a.munizioneRiferimento ? `RS ${a.munizioneRiferimento.rs_q} Q` : null,

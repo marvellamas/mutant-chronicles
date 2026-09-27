@@ -248,10 +248,10 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .foglio-combattimento .foglio-corpo { gap: 2mm; line-height: 1.18; }
 .foglio-combattimento .tabella-stampa th, .foglio-combattimento .tabella-stampa td { padding-top: 0.25mm; padding-bottom: 0.25mm; }
 .f3-sintesi { flex: none; }
-.sintesi { display: flex; flex-wrap: wrap; gap: 1mm 5mm; align-items: baseline; }
-.cella-sintesi { display: flex; flex-direction: column; }
+.sintesi { display: flex; flex-wrap: wrap; gap: 1mm 3.5mm; align-items: baseline; }
+.cella-sintesi { display: flex; align-items: baseline; gap: 1.2mm; }
 .cella-sintesi .nome-cella { font-size: var(--ss-font-small); color: var(--ss-grigio); font-weight: 600; }
-.cella-sintesi .valore-cella { font-size: 12pt; font-weight: 800; }
+.cella-sintesi .valore-cella { font-size: 11pt; font-weight: 800; }
 .f3-armi { flex: none; }
 .armi-stampa th, .armi-stampa td { padding: 0.3mm 0.7mm; }
 .armi-stampa tbody + tbody { border-top: 1pt solid var(--ss-acciaio); }
@@ -267,7 +267,7 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .file-colpi { display: flex; flex-wrap: wrap; gap: 0.8mm 9mm; padding-left: 4mm; }
 .caricatore { display: flex; align-items: center; gap: 2mm; }
 .etichetta-colpi { font-size: var(--ss-font-small); color: var(--ss-grigio); min-width: 11mm; }
-.f3-basso { flex: 1; min-height: 0; display: grid; grid-template-columns: 112mm 1fr 58mm; gap: 3mm; }
+.f3-basso { flex: 1; min-height: 0; display: grid; grid-template-columns: 106mm 1fr 60mm; gap: 3mm; }
 .protezioni-stampa { margin-top: 1mm; }
 .f3-basso > .colonna { min-height: 0; }
 .crediti-stampa { margin: 0; flex: none; }
@@ -280,6 +280,15 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .stati-nomi { display: flex; flex-wrap: wrap; gap: 1mm 4.5mm; margin: 1mm 0 0; padding-top: 1mm; border-top: 0.5pt solid var(--ss-linea-tenue); }
 .stati-nomi span { white-space: nowrap; }
 .f3-pv > .contenuto { gap: 1.2mm; }
+.f3-pv .righe-guida { min-height: 0; } /* lo spazio libero è quello che resta: può essere poco */
+/* AR accanto ai PV massimi, stessa dimensione (grigio acciaio delle protezioni) */
+.f3-massimi { display: flex; flex-wrap: wrap; gap: 1.5mm; align-items: stretch; }
+.f3-massimi .massimo { align-self: stretch; }
+.massimo.tinta-ar { --tinta: var(--ss-acciaio); border-color: var(--ss-acciaio); }
+.massimo.tinta-ar:not(.principale) .valore { font-size: 13pt; }
+.provenienza-ar { margin: 0; font-size: var(--ss-font-small); } /* «in piccolo», come chiesto per la provenienza */
+.col-pi { text-align: center; white-space: nowrap; }
+.gruppo-pi .etichetta-colpi { font-weight: 700; color: var(--ss-inchiostro); }
 
 /* Foglio 4 — Magia */
 .foglio-magia .foglio-corpo { gap: 2mm; }

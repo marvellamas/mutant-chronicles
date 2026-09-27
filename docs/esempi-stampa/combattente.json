@@ -83,13 +83,6 @@
         "note": ""
       },
       {
-        "uid": "rev",
-        "rif": "armi_distanza:revolver",
-        "stato": "pronta",
-        "quantita": 1,
-        "note": ""
-      },
-      {
         "uid": "scu",
         "rif": "scudi:scudo-d-assalto-dei-clan",
         "stato": "zaino",
