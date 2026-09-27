@@ -16,6 +16,7 @@ import { testoDanno } from '../stampa.js';
 import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento } from '../equipaggiamento.js';
 import { dotazioneApplicata, crediti } from '../dotazioni.js';
 import { statoRicarica, disponibili } from '../ricarica.js';
+import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 
 export const POSIZIONI_TAB = [
   { id: 'automatica', etichetta: 'Automatica (sinistra su schermi larghi, in basso su telefono e tablet)' },
@@ -63,12 +64,16 @@ export function renderTab(ctx) {
       menuImpostazioni(ctx)));
 
   const nav = h('nav', { class: 'tab-nav', 'aria-label': 'Sezioni della scheda' },
-    h('div', { role: 'tablist' }, tab.tab.map((t) => h('button', {
-      type: 'button', role: 'tab', id: `tab-${t.id}`, class: `tab-bottone${t.id === corrente.id ? ' attiva' : ''}`,
-      'aria-selected': String(t.id === corrente.id), 'aria-controls': 'pannello-tab',
-      onclick: () => azioni.vaiTab(t.id),
-    }, iconaPagina(t.id, '96', { classe: 'tab-icona-img', lato: 30 }) ?? h('span', { class: 'tab-icona', 'aria-hidden': 'true' }, ICONE_TAB[t.id] ?? '•'),
-    h('span', { class: 'tab-etichetta' }, t.titolo)))));
+    h('div', { class: 'colonna-tab' },
+      h('div', { role: 'tablist' }, tab.tab.map((t) => h('button', {
+        type: 'button', role: 'tab', id: `tab-${t.id}`, class: `tab-bottone${t.id === corrente.id ? ' attiva' : ''}`,
+        'aria-selected': String(t.id === corrente.id), 'aria-controls': 'pannello-tab',
+        onclick: () => azioni.vaiTab(t.id),
+      }, iconaPagina(t.id, '96', { classe: 'tab-icona-img', lato: 30 }) ?? h('span', { class: 'tab-icona', 'aria-hidden': 'true' }, ICONE_TAB[t.id] ?? '•'),
+      h('span', { class: 'tab-etichetta' }, t.titolo)))),
+      // PV e PM sempre a portata sotto le tab (solo con le tab a sinistra, da 900 px: css/style.css);
+      // su telefono e tablet restano nella tab Identità, con la mini-barra nell'intestazione
+      h('div', { class: 'risorse-laterali', 'aria-label': 'Punti Vita e Punti Magia' }, riquadriPvPm(ctx, { compatti: true }))));
 
   const contenuti = { identita: tabIdentita, abilita: tabAbilita, combattimento: tabCombattimento, magia: tabMagia };
   // badge della pagina accanto al titolo della tab (solo con l'immagine: senza, il titolo è già nella barra delle tab)
@@ -173,6 +178,22 @@ function contatoreTavolo(ctx, { titolo, campo, attuale, massimo, passi = [1, 5],
     h('div', { class: 'pulsanti-tavolo' }, meno, piu),
     nota ? h('p', { class: 'nota' }, nota) : null,
     extra);
+}
+
+/**
+ * Riquadri dei Punti Vita e dei Punti Magia con barra, bordo colorato e +/−. Compatti nella colonna
+ * di sinistra (senza l'elenco dei cristalli, che resta nella tab Magia).
+ */
+function riquadriPvPm(ctx, { compatti = false } = {}) {
+  const s = ctx.sessione;
+  const m = ctx.massimi;
+  const classe = compatti ? ' compatto' : '';
+  return [
+    contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true, classe: `riquadro-pv${classe}` }),
+    compatti
+      ? (m.pm ? contatoreTavolo(ctx, { titolo: 'Punti Magia', campo: 'pmAttuali', attuale: s.pmAttuali, massimo: m.pm, barra: true, classe: `riquadro-pm${classe}` }) : null)
+      : riquadroPM(ctx),
+  ];
 }
 
 /**
@@ -324,22 +345,24 @@ function tabIdentita(ctx, d) {
   const m = ctx.massimi;
   const mov = d.movimento;
   const vuoti = d.anagrafica.filter((x) => !x.valore).length;
+  // Ordine (dall'alto): PV e PM (solo dove non stanno nella colonna di sinistra), anagrafica in una
+  // riga espandibile, Caratteristiche e Prove Salvezza affiancate, Punti Eroe · Distintivi ·
+  // Crediti, poi il resto. Su telefono lo stesso ordine, in una colonna.
+  const espansa = leggiImpostazioni().anagraficaEspansa === true;
+  const riga = [d.nome, ...d.anagrafica.filter((x) => x.valore).map((x) => (x.campo === 'soprannome' ? `«${x.valore}»` : `${x.etichetta} ${x.valore}`))].join(' · ');
   return [
     promemoriaPenalita(ctx),
-    h('div', { class: 'griglia-tavolo' },
-      contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true, classe: 'riquadro-pv' }),
-      riquadroPM(ctx),
-      contatoreTavolo(ctx, { titolo: 'Punti Eroe', campo: 'puntiEroe', attuale: s.puntiEroe, massimo: m.puntiEroe, passi: [1], classe: 'riquadro-pe' }),
-      riquadroCrediti(ctx),
-      h('div', {},
-        contatoreTavolo(ctx, { titolo: 'Distintivi', campo: 'distintivi', attuale: s.distintivi, massimo: null, passi: [1] }),
-        h('button', {
-          type: 'button', class: 'btn', onclick: ctx.azioni.convertiDistintivi,
-          disabled: s.distintivi < m.distintiviPerPuntoEroe || s.puntiEroe >= m.puntiEroe,
-          title: '§1.8.3: facoltativo, senza superare la riserva massima',
-        }, `Converti ${m.distintiviPerPuntoEroe} Distintivi in 1 Punto Eroe`))),
+    h('div', { class: 'griglia-tavolo pv-pm-identita' }, riquadriPvPm(ctx)),
 
-    sezione('Anagrafica',
+    h('section', { class: `sezione-tab anagrafica-sezione${espansa ? ' espansa' : ''}` },
+      h('div', { class: 'anagrafica-testa' },
+        h('h2', {}, 'Anagrafica'),
+        h('button', {
+          type: 'button', class: 'btn piccolo', 'aria-expanded': String(espansa), 'aria-controls': 'anagrafica-dettaglio',
+          onclick: () => { salvaImpostazioni({ ...leggiImpostazioni(), anagraficaEspansa: !espansa }); ctx.azioni.ridisegna(); },
+        }, espansa ? 'Riduci' : 'Espandi')),
+      espansa ? null : h('p', { class: 'anagrafica-riga', title: riga }, riga),
+      espansa ? h('div', { id: 'anagrafica-dettaglio' },
       ctx.scelte.ritratto ? h('img', { class: 'ritratto-identita', src: ctx.scelte.ritratto, alt: `Ritratto di ${d.nome}` }) : null,
       // due colonne su desktop e tablet (le righe vanno giù per colonna), una sola su telefono
       h('dl', { class: 'anagrafica anagrafica-colonne', style: `--righe: ${Math.ceil((d.anagrafica.length + 5) / 2)}` },
@@ -354,7 +377,7 @@ function tabIdentita(ctx, d) {
             onchange: (e) => ctx.azioni.puntiEsperienza(e.target.value === '' || !Number.isFinite(Number(e.target.value)) ? null : Number(e.target.value)),
           })))),
       h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.modificaCreazione(ctx.passi.background) },
-        vuoti ? `Completa l’anagrafica (${vuoti} campi vuoti)` : 'Modifica anagrafica e Background')),
+        vuoti ? `Completa l’anagrafica (${vuoti} campi vuoti)` : 'Modifica anagrafica e Background')) : null),
 
     h('div', { class: 'griglia-due' },
       sezione('Caratteristiche',
@@ -371,6 +394,18 @@ function tabIdentita(ctx, d) {
             h('td', { class: 'cella-va', title: x.limitato ? `Limitato a ${x.tetto} (§1.2.3)` : null },
               valoreEffettivo(x.nome, x.effettivo, x.totale, x.scomposizione, { pillola: true }), x.limitato ? '*' : null))))),
         d.salvezze.some((x) => x.effettivo !== x.totale) ? h('p', { class: 'nota' }, 'Con le condizioni della sessione (Ferite, Affaticamento, Stati).') : null)),
+
+    h('div', { class: 'griglia-tre' },
+      contatoreTavolo(ctx, { titolo: 'Punti Eroe', campo: 'puntiEroe', attuale: s.puntiEroe, massimo: m.puntiEroe, passi: [1], classe: 'riquadro-pe' }),
+      contatoreTavolo(ctx, {
+        titolo: 'Distintivi', campo: 'distintivi', attuale: s.distintivi, massimo: null, passi: [1],
+        extra: h('button', {
+          type: 'button', class: 'btn', onclick: ctx.azioni.convertiDistintivi,
+          disabled: s.distintivi < m.distintiviPerPuntoEroe || s.puntiEroe >= m.puntiEroe,
+          title: '§1.8.3: facoltativo, senza superare la riserva massima',
+        }, `Converti ${m.distintiviPerPuntoEroe} in 1 Punto Eroe`),
+      }),
+      riquadroCrediti(ctx)),
 
     sezione('Combattimento e movimento',
       h('dl', { class: 'voci griglia-voci' },
@@ -473,7 +508,8 @@ function tabCombattimento(ctx, d) {
       h('p', {}, h('strong', {}, 'Equipaggiamento da controllare (avvisi, non blocchi: decide il master):')),
       h('ul', {}, d.avvisiEquipaggiamento.map((a) => h('li', {}, a)))) : null,
     h('div', { class: 'griglia-tavolo' },
-      contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true, classe: 'riquadro-pv' }),
+      // con la colonna di sinistra (tab a sinistra, da 900 px) i PV sono già lì: qui non si ripetono
+      contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true, classe: 'riquadro-pv pv-pm-identita' }),
       d.difese ? h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Difese'),
         h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), valoreEffettivo('Difese', d.difese.effettivo, d.difese.totale, d.difese.scomposizione, { pillola: true })),
         h('p', { class: 'nota' }, `(${d.difese.caratteristica}) con l’equipaggiamento e le condizioni della sessione`)) : null),
@@ -552,15 +588,24 @@ function tabCombattimento(ctx, d) {
       const kg = (v) => v.toLocaleString('it-IT', { maximumFractionDigits: 1 });
       const penalita = !!c.livello.effetto;
       const forza = ctx.tab.scheda.caratteristiche.FOR.valore;
-      const nomi = c.senzaPeso.length > 10 ? [...c.senzaPeso.slice(0, 10), '…'] : c.senzaPeso;
       return [sezione('Carico (§5.2.6)',
-        h('p', { class: `valore-tavolo${penalita ? ' oltre' : ''}` }, h('span', {}, 'Peso trasportato '), h('strong', {}, `${kg(c.peso)} kg`), h('span', {}, ` · ${c.livello.nome}`)),
+        // con oggetti senza peso il totale è parziale: «N kg noti · M oggetti senza peso» (per-davide A.30);
+        // soglie e penalità restano sul peso noto più il peso aggiuntivo
+        h('p', { class: `valore-tavolo${penalita ? ' oltre' : ''}` }, h('span', {}, 'Peso trasportato '),
+          c.senzaPeso.length
+            ? [h('strong', {}, `${kg(c.peso)} kg noti`), ' · ', infoValore(`${c.senzaPeso.length} ${c.senzaPeso.length === 1 ? 'oggetto' : 'oggetti'} senza peso`, {
+              titolo: `Oggetti senza peso (${c.senzaPeso.length})`,
+              sottotitolo: 'I pesi non sono ancora nei manuali (per-davide A.30): non si contano nel carico.',
+              sezioni: [{ testo: c.senzaPeso.join(', ') }, { testo: 'Per un oggetto personalizzato il peso si indica nel campo «Peso».' }],
+            }, { classe: 'senza-peso' }), h('small', { class: 'nota' }, ' (i pesi non sono ancora nei manuali, A.30)')]
+            : h('strong', {}, `${kg(c.peso)} kg`),
+          h('span', {}, ` · ${c.livello.nome}`)),
         h('p', { class: 'nota' }, `Ordinario fino a ${kg(c.soglie.ordinario)} kg, Sovraccarico fino a ${kg(c.soglie.massimo)} kg; spingere o trascinare su terreno piano fino a ${kg(c.soglie.spinta)} kg (FOR ${forza}${c.soglie.talento ? `, soglie raddoppiate da ${c.soglie.talento}` : ''}).`),
         h('p', { class: penalita ? 'avviso-carico' : 'nota' }, c.livello.promemoria, c.livello.movimento_q && c.passo !== null ? ` Passo ${c.passo} Q, prima delle altre penalità.` : ''),
         h('label', { class: 'campo-inline' }, 'Peso aggiuntivo (kg) ',
           h('input', { type: 'number', min: 0, step: 0.5, value: c.pesoExtra, 'aria-label': 'Peso aggiuntivo in kg', onchange: (e) => ctx.azioni.imposta('caricoExtra', Number(e.target.value) || 0) }),
           h('small', { class: 'nota' }, 'bottino, una creatura trasportata con il suo equipaggiamento…')),
-        c.senzaPeso.length ? h('p', { class: 'nota' }, `Senza peso, non contati (${c.senzaPeso.length}): ${nomi.join(', ')}. Il catalogo degli Armamenti non riporta i pesi; per un oggetto personalizzato si indica nel campo «Peso».`) : null)];
+        null)];
     })(),
 
     sezione('Stati attivi (§5.18)',

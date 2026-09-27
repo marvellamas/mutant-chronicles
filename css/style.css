@@ -1026,3 +1026,36 @@ body.con-sfondo::before {
 .editor-effetti .campo { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
 .editor-effetti input[type="text"] { width: min(16rem, 100%); }
 .editor-effetti input[type="number"] { width: 5rem; }
+
+/* ---------------------------------------------------------------- tab Identità e colonna di sinistra */
+
+/* PV e PM sotto le tab: solo con le tab a sinistra da 900 px; lì non si ripetono in Identità né
+   nella mini-barra dell'intestazione. Su telefono e tablet (tab in basso) restano in Identità. */
+.risorse-laterali { display: none; }
+.pos-sinistra .colonna-tab { position: sticky; top: 1rem; }
+@media (min-width: 900px) {
+  .pos-automatica .colonna-tab { position: sticky; top: 1rem; }
+  .pos-sinistra .risorse-laterali, .pos-automatica .risorse-laterali { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.75rem; }
+  .pos-sinistra .pv-pm-identita, .pos-automatica .pv-pm-identita,
+  .pos-sinistra .riepilogo-risorse, .pos-automatica .riepilogo-risorse { display: none; }
+}
+.contatore-tavolo.compatto { padding: 0.4rem 0.5rem 0.5rem; }
+.contatore-tavolo.compatto h3 { font-size: 0.8rem; }
+.contatore-tavolo.compatto .valore-tavolo { margin: 0; font-size: 0.9rem; }
+.contatore-tavolo.compatto .valore-tavolo strong { font-size: 1.4rem; }
+.contatore-tavolo.compatto .pulsanti-tavolo { gap: 0.25rem; margin-top: 0.3rem; }
+.contatore-tavolo.compatto .btn-tavolo { min-width: 0; min-height: 36px; font-size: 0.85rem; padding: 0; }
+.contatore-tavolo.compatto .barra-risorsa { margin: 0.2rem 0; }
+
+/* anagrafica in una riga, espandibile nelle due colonne */
+.anagrafica-testa { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; border-bottom: 1px solid var(--bordo); padding-bottom: 0.25rem; margin-bottom: 0.4rem; }
+.anagrafica-testa h2 { font-size: 1.1rem; margin: 0; }
+.anagrafica-riga { margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Punti Eroe, Distintivi, Crediti: una riga di tre riquadri (una colonna su telefono) */
+.griglia-tre { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; margin: 0.75rem 0 1rem; align-items: start; }
+.griglia-tre .contatore-tavolo .btn { width: 100%; margin-top: 0.5rem; min-height: 44px; }
+@media (max-width: 600px) { .griglia-tre { grid-template-columns: 1fr; } }
+
+/* carico con oggetti senza peso */
+.voce-info.senza-peso { font-size: 1rem; font-weight: 600; }
