@@ -126,12 +126,12 @@ Il manuale non lo dice.
 
 ### Stati: categorie di Prove (docs/ricognizione-stati.md)
 
-**A.51 — Quali Abilità sono nelle tre categorie di Prove degli Stati?** Il §5.18 e il §5.5 nominano categorie senza elencarle. L'app usa queste liste (regole.json → categorie_prove), da confermare:
+**A.51 — Quali Abilità sono nelle categorie di Prove degli Stati (vista, udito, fisiche)?** Il §5.18 e il §5.5 nominano categorie senza elencarle. L'app usa queste liste (regole.json → categorie_prove), da confermare:
 - «azioni fisiche ravvicinate» (A Terra): Armi da guerra, Armi da mischia, Corpo a corpo, Difese; l'equilibrio è Atletica per quell'uso;
 - «Prove che richiedono la vista» (Accecato, −8): tutte le Abilità di attacco (Armi da lancio, leggere, medie, pesanti, da guerra, da mischia, Corpo a corpo), Difese, Percezione, Pilotare;
 - «quando l’udito è importante» (Assordato, −4): Percezione e Intrattenere, solo come valore a parte per quell'uso.
-Le «azioni fisiche» di Immobilizzato e Rallentato sono la domanda A.16.
-*Nel frattempo:* queste liste.
+- «azioni fisiche» (Immobilizzato, Rallentato, carico §5.2.6; già domanda A.16): Armi da lancio, Armi leggere, Armi medie, Armi pesanti, Armi da guerra, Armi da mischia, Corpo a corpo, Difese, Atletica, Furtività.
+*Nel frattempo:* queste quattro liste (regole.json → categorie_prove: fisiche, fisiche_ravvicinate, vista, udito).
 
 ### AR e PI (docs/ricognizione-ar-pi.md)
 

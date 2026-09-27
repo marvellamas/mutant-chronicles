@@ -736,6 +736,15 @@ details.sezione-tab > summary { font-weight: 700; cursor: pointer; min-height: 4
 }
 .btn-tavolo:active:not(:disabled) { background: var(--accento-tenue); border-color: var(--accento); }
 .btn-tavolo:disabled { opacity: 0.4; cursor: not-allowed; }
+/* Crediti: 14 pulsanti in due file compatte (meno sopra, più sotto), alti almeno 32 px per il tocco;
+   se il riquadro è stretto spariscono ±500 e ±1000 (si usa il campo del totale), mai i piccoli */
+.riquadro-crediti { container-type: inline-size; padding-top: 0.45rem; padding-bottom: 0.5rem; }
+.riquadro-crediti .valore-tavolo { margin: 0 0 0.15rem; }
+.input-crediti { width: 100%; max-width: 11rem; font: inherit; font-size: 1.3rem; font-weight: 700; padding: 0 0.4rem; min-height: 32px; }
+.pulsanti-crediti { display: grid; gap: 0.1rem; }
+.fila-crediti { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 0.2rem; }
+.btn-tavolo.btn-crediti { min-height: 32px; min-width: 0; padding: 0 0.15rem; font-size: 0.8rem; font-weight: 600; }
+@container (max-width: 290px) { .btn-crediti.grande { display: none; } }
 .contatore-tavolo + .btn { margin-top: 0.5rem; width: 100%; min-height: 44px; }
 /* Riquadri delle risorse (css/palette.css): il bordo dice «che cos'è», la barra «come sta» */
 .contatore-tavolo.riquadro-pv { border: 2px solid var(--pv); }

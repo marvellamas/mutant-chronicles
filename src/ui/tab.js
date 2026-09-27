@@ -279,10 +279,25 @@ function riquadroCrediti(ctx) {
       h('p', { class: 'nota' }, 'Nessuna dotazione iniziale: crediti e oggetti del §2.16 non sono ancora registrati.'),
       bottoneDotazione(ctx));
   }
-  return contatoreTavolo(ctx, {
-    titolo: 'Crediti', campo: 'crediti', attuale: s.crediti, massimo: null, passi: [10, 100], classe: 'riquadro-crediti',
-    nota: Number.isInteger(s.creditiIniziali) ? `Saldo iniziale ${crediti(s.creditiIniziali)} (§2.16.28–29)` : null,
-  });
+  // pulsanti da 1 a 1000, meno sopra e più sotto; ±500 e ±1000 («grande») spariscono per primi se
+  // il riquadro è stretto (si fanno con il campo del totale), i piccoli restano sempre
+  const PASSI_CREDITI = [1, 5, 10, 50, 100, 500, 1000];
+  const b = (delta) => h('button', {
+    type: 'button', class: `btn-tavolo btn-crediti${Math.abs(delta) >= 500 ? ' grande' : ''}`,
+    onclick: () => ctx.azioni.varia('crediti', delta), disabled: delta < 0 && s.crediti + delta < 0,
+    'aria-label': `${delta > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(delta)} crediti`,
+  }, delta > 0 ? `+${delta}` : `−${-delta}`);
+  return h('div', { class: 'contatore-tavolo riquadro-crediti' },
+    h('h3', {}, 'Crediti'),
+    // il totale si può anche scrivere: si registra come variazione rispetto al valore attuale
+    h('p', { class: 'valore-tavolo' }, h('input', {
+      type: 'number', min: 0, step: 1, inputmode: 'numeric', class: 'input-crediti', value: s.crediti, 'aria-label': 'Crediti attuali',
+      onchange: (e) => { const n = Math.round(Number(e.target.value)); if (Number.isFinite(n) && n >= 0 && n !== s.crediti) ctx.azioni.varia('crediti', n - s.crediti); },
+    })),
+    h('div', { class: 'pulsanti-crediti' },
+      h('div', { class: 'fila-crediti' }, [...PASSI_CREDITI].reverse().map((p) => b(-p))),
+      h('div', { class: 'fila-crediti' }, PASSI_CREDITI.map((p) => b(p)))),
+    Number.isInteger(s.creditiIniziali) ? h('p', { class: 'nota' }, `Saldo iniziale ${crediti(s.creditiIniziali)} (§2.16.28–29)`) : null);
 }
 
 /** Porta al passo Equipaggiamento del wizard, dove si sceglie e si applica la dotazione iniziale. */
