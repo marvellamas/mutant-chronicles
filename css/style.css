@@ -206,17 +206,25 @@ main:has(> .scheda-tab.larghezza-piena) { max-width: 1650px; }
 .passo-testa h1 { margin-top: 0.25rem; }
 .sopratitolo { margin: 1rem 0 0; color: var(--tenue); font-size: 0.85rem; }
 
-.passo-piede {
+/* Barra «Indietro / Avanti» (src/ui/navigazione.js): in cima sempre, in fondo se il passo supera
+   lo schermo. Una riga sola: il motivo del blocco si tronca, le etichette lunghe si accorciano. */
+.barra-passi {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-wrap: nowrap;
   align-items: center;
   gap: 0.5rem;
-  margin-top: 2rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--bordo);
 }
-.passo-piede .motivo { flex-basis: 100%; text-align: right; }
+.barra-passi .btn { flex: none; white-space: nowrap; }
+.barra-passi .motivo { flex: 1 1 0; min-width: 0; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--tenue); }
+.barra-cima { margin: 0.5rem 0 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--bordo); }
+.barra-fondo { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--bordo); }
+.barra-fondo[hidden] { display: none; }
+.etichetta-corta { display: none; }
+@media (max-width: 480px) {
+  .barra-passi .etichetta-lunga { display: none; }
+  .barra-passi .etichetta-corta { display: inline; }
+  .barra-passi .btn { padding: 0.5rem 0.7rem; }
+}
 
 /* ---------------------------------------------------------------- carte */
 

@@ -11,6 +11,7 @@ import { classeMacrofamiglia } from '../palette.js';
 import { componenteTiro } from './tiro.js';
 import { dettagli, bottoneScelta, contatore, stepper } from './passi.js';
 import { conOrdinale } from '../lingua.js';
+import { barraPassi } from './navigazione.js';
 
 const trova = (lista, nome) => lista.find((x) => x.nome === nome);
 const GRADI_ROMANI = ['', 'I', 'II', 'III', 'IV', 'V', 'VI'];
@@ -73,25 +74,32 @@ export function renderSali(ctx) {
   }[passo.id](c, passo);
 
   const erroriPasso = delPasso(passo.id, errori);
+  // la stessa barra in cima e (se il passo supera lo schermo) in fondo: src/ui/navigazione.js
+  const ultimo = i === passi.length - 1;
+  const barra = (posizione) => barraPassi({
+    posizione,
+    indietro: i > 0 ? { etichetta: '← Indietro', onclick: () => ctx.vaiPasso(i - 1) } : { etichetta: '← Esci senza salvare', onclick: ctx.esci },
+    avanti: !ultimo
+      ? { etichetta: `${passi[i + 1].titolo} →`, corta: 'Avanti →', onclick: () => ctx.vaiPasso(i + 1) }
+      : { etichetta: `Conferma il livello ${struttura.livello}`, corta: 'Conferma', disabilitato: errori.length > 0,
+        motivo: errori.length ? `${errori.length} ${errori.length === 1 ? 'problema' : 'problemi'} da risolvere` : null, onclick: ctx.conferma },
+    extra: i > 0 ? { etichetta: 'Esci senza salvare', corta: 'Esci', onclick: ctx.esci } : null,
+  });
   return [h('div', { class: 'wizard sali' },
     nav,
     h('section', { class: 'passo', 'aria-labelledby': 'titolo-passo' },
       h('header', { class: 'passo-testa' },
         h('p', { class: 'sopratitolo' }, `Sali al livello ${struttura.livello} · passo ${i + 1} di ${passi.length} · ${passo.rif}`),
         h('h1', { id: 'titolo-passo' }, passo.titolo)),
+      barra('cima'),
       struttura.informazioni.length ? h('div', { class: 'riquadro ok' },
         h('p', {}, h('strong', {}, `${conOrdinale('Al', struttura.livello)} livello, automaticamente:`)),
         h('ul', {}, struttura.informazioni.map((x) => h('li', {}, x)))) : null,
       corpo,
       passo.id !== 'riepilogo' && erroriPasso.length ? h('div', { class: 'riquadro attenzione' },
         h('ul', {}, erroriPasso.map((e) => h('li', { class: e.tipo === 'violazione' ? 'motivo' : null }, e.problema)))) : null,
-      h('footer', { class: 'passo-piede' },
-        i > 0 ? h('button', { type: 'button', class: 'btn', onclick: () => ctx.vaiPasso(i - 1) }, '← Indietro')
-          : h('button', { type: 'button', class: 'btn', onclick: ctx.esci }, '← Esci senza salvare'),
-        i < passi.length - 1
-          ? h('button', { type: 'button', class: 'btn primario', onclick: () => ctx.vaiPasso(i + 1) }, `${passi[i + 1].titolo} →`)
-          : h('button', { type: 'button', class: 'btn primario', disabled: errori.length > 0, onclick: ctx.conferma }, `Conferma il livello ${struttura.livello}`),
-        i > 0 ? h('button', { type: 'button', class: 'btn', onclick: ctx.esci }, 'Esci senza salvare') : null)))];
+      barra('fondo'))),
+  ];
 }
 
 // ---------------------------------------------------------------------------

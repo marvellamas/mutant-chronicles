@@ -16,6 +16,7 @@ import { inizializzaTooltip, nascondiTooltip } from './tooltip.js';
 import { renderRiepilogo } from './riepilogo.js';
 import { renderSali } from './sali.js';
 import { renderStampa, esciDallaStampa } from './stampa.js';
+import { barraPassi, barraFondoSeServe } from './navigazione.js';
 import { cercaSfondi, applicaSfondo } from './sfondi.js';
 import { caricaImmagini } from './immagini.js';
 import { preparaStampa, preparaTab } from '../stampa.js';
@@ -409,6 +410,15 @@ function renderWizard() {
   const corpo = requisito
     ? [h('p', { class: 'nota errore' }, requisito)]
     : passo.render(ctx);
+  // la stessa barra in cima e (se il passo supera lo schermo) in fondo: src/ui/navigazione.js
+  const barra = (posizione) => barraPassi({
+    posizione,
+    indietro: prec !== undefined ? { etichetta: '← Indietro', onclick: () => vaiAlPasso(prec) } : { etichetta: '← Personaggi', onclick: () => vai('#/') },
+    avanti: succ !== undefined
+      ? { etichetta: `${PASSI[succ].titolo} →`, corta: 'Avanti →', disabilitato: !!requisitoSucc, motivo: requisitoSucc, onclick: () => vaiAlPasso(succ) }
+      : { etichetta: 'Torna ai personaggi', primario: false, onclick: () => vai('#/') },
+  });
+  const fondo = barra('fondo');
 
   svuota(radice, h('div', { class: 'wizard' },
     nav,
@@ -420,17 +430,12 @@ function renderWizard() {
         stato.salvataggioOk ? null : h('p', { class: 'riquadro errore', role: 'alert' }, testoSalvataggioFallito()),
         stato.livelli.length && stato.passo !== PASSO_SCHEDA ? h('p', { class: 'riquadro attenzione no-stampa' },
           `Personaggio ${conOrdinale('al', 1 + stato.livelli.length)} livello: la creazione si può consultare ma non modificare (tranne nome, Background, ritratto, anagrafica ed equipaggiamento). Per cambiarla annulla i livelli dalla scheda finale.`) : null,
+        barra('cima'),
         avvisi,
         corpo,
-        h('footer', { class: 'passo-piede no-stampa' },
-          prec !== undefined ? h('button', { type: 'button', class: 'btn', onclick: () => vaiAlPasso(prec) }, '← Indietro')
-            : h('button', { type: 'button', class: 'btn', onclick: () => vai('#/') }, '← Personaggi'),
-          succ !== undefined
-            ? h('button', { type: 'button', class: 'btn primario', disabled: !!requisitoSucc, title: requisitoSucc, onclick: () => vaiAlPasso(succ) },
-              `${PASSI[succ].titolo} →`)
-            : h('button', { type: 'button', class: 'btn', onclick: () => vai('#/') }, 'Torna ai personaggi'),
-          requisitoSucc ? h('small', { class: 'motivo' }, requisitoSucc) : null)),
+        fondo),
       renderRiepilogo(ctx))));
+  barraFondoSeServe(fondo, radice);
   // Su telefono la barra dei passi scorre: tiene visibile il passo corrente.
   // (solo scorrimento orizzontale della barra: la pagina non deve saltare)
   const attuale = nav.querySelector('.attuale');
@@ -515,6 +520,8 @@ function renderSaliPagina() {
       vai(`#/p/${stato.id}`);
     },
   }));
+  const fondoSali = radice.querySelector('.barra-fondo');
+  if (fondoSali) barraFondoSeServe(fondoSali, radice);
 }
 
 // ---------------------------------------------------------------------------
