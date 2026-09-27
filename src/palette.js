@@ -26,6 +26,9 @@ export const GRUPPI_EQUIPAGGIAMENTO = [
 /** Colori riservati: non si usano per le categorie né per altro. */
 export const COLORI_RISERVATI = ['pv', 'pm', 'pe', 'fisica', 'mentale', 'spirituale'];
 
+/** Bandierine del calendario (regole.json → calendario.bandierine): variabile CSS di ogni colore. */
+export const COLORI_EVENTO = ['evento-rosso', 'evento-giallo', 'evento-verde'];
+
 /**
  * Coppie da controllare: [primo piano, sfondo, contrasto minimo]. Testo ≥ 4.5:1 (WCAG AA);
  * bordi e barre ≥ 3:1 (elementi grafici). «testo» e «superficie» vengono da css/style.css.
@@ -45,6 +48,8 @@ export const COPPIE_CONTRASTO = [
     ['tenue', `${c}-tenue`, 4.5], // note e livello base (--tenue) sulla tinta
   ]),
   ...GRUPPI_EQUIPAGGIAMENTO.map((g) => ['cat-testo', g.colore, 4.5]),
+  // bandierine del calendario: pallini e bordi delle note (elementi grafici)
+  ...COLORI_EVENTO.map((c) => [c, 'superficie', 3]),
 ];
 
 // ---------------------------------------------------------------------------

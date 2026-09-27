@@ -20,7 +20,7 @@ Drive si usa **in sola lettura**: mai scrivere nei Doc di Davide, nemmeno commen
 
 ## Glossario
 
-- **SD** = scheda digitale: la scheda a tab dell'app (Identità, Abilità, Combattimento, Magia), con la modalità tavolo (`src/ui/tab.js`).
+- **SD** = scheda digitale: la scheda a tab dell'app (Identità, Abilità, Combattimento, Magia; Calendario se attivo), con la modalità tavolo (`src/ui/tab.js`).
 - **SS** = scheda da stampare: la vista di stampa A4 orizzontale (`#/p/<id>/stampa`, `src/ui/stampa.js`, `css/stampa.css`).
 
 ## Stack (deciso)
@@ -75,7 +75,7 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 - avanzamento dal 2° al 20° livello (cap. 8), un livello alla volta, annullabile (PV e PM attuali seguono i massimi: per-davide A.15);
 - scheda digitale a tab (Identità, Abilità, Combattimento, Magia) con modalità tavolo: valori di sessione separati dalle scelte (`src/sessione.js`);
 - stampa dedicata A4 orizzontale (`#/p/<id>/stampa`, `css/stampa.css`);
-- equipaggiamento con catalogo a lotti dal Manuale degli Armamenti (`data/equipaggiamento/`, lista dei lotti in `docs/equipaggiamento-lotti.md`); equipaggiamento iniziale guidato (§2.16, E&L A.5–A.5.29): dotazione comune e della Classe, crediti 1000 + 2d6 × 100, acquisti con cessione degli armamenti di base; dati in `data/dotazioni.json` (generato da `tools/genera_dotazioni.py`), regole in `src/dotazioni.js`, voci marcate `dotazione_iniziale`; crediti attuali nella sessione;
+- equipaggiamento con catalogo a lotti dal Manuale degli Armamenti (`data/equipaggiamento/`, lista dei lotti in `docs/equipaggiamento-lotti.md`); equipaggiamento iniziale guidato (§2.16, E&L A.5–A.5.31; modelli corporativi di base del §7.22): dotazione comune e della Classe, crediti 1000 + 2d6 × 100, acquisti con cessione degli armamenti di base; dati in `data/dotazioni.json` (generato da `tools/genera_dotazioni.py`), regole in `src/dotazioni.js`, voci marcate `dotazione_iniziale`; crediti attuali nella sessione;
 - salva/carica in `localStorage`, export/import JSON, dati modificabili da Davide con validatore;
 - valori effettivi in modalità tavolo: Ferite, Affaticamento, Stati con effetto numerico e carico (`regole.json`) entrano nei VA, nelle Salvezze e nella Parata mostrati nelle tab, con la scomposizione (`src/condizioni.js`, `src/carico.js`); il totale da regole e la stampa restano a riposo;
 - effetti degli oggetti sui VA (`effetti` nel catalogo, negli oggetti di dotazione e nei personalizzati): generali, situazionali (interruttore al tavolo), d'uso specifico (valore a parte); frasi del manuale verificate da `tools/verifica_frasi.mjs` (`docs/effetti-oggetti.md`);
@@ -83,6 +83,7 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 
 - utility «Attacca!» nella tab Combattimento (nessun tiro di dado): attacco a distanza completo (`src/attacco.js`, `regole.json` → `attacco_distanza`, effetti.attacco_distanza dei Talenti), corpo a corpo per ora solo con il risultato base;
 - utility «Lancia!» nella tab Magia (nessun tiro di dado): `src/lancio.js`, `regole.json` → `lancio`, `incantesimi.json` → `meccanica` (da `tools/estrai_lancio.py`), effetti.lancio dei Talenti;
+- Calendario di gioco facoltativo (ingranaggio → Calendario): tab con viste Giorno / Settimana / Mese, note per fascia con bandierine e «M», ricerca, «Avanza»; fuori dalle regole, non tocca calcoli né stampa. `src/calendario.js` (funzioni pure), `src/ui/calendario.js`, `regole.json` → `calendario`, colori `--evento-*` in `css/palette.css`; blocco `calendario` nel personaggio (formato 6), non toccato da «Nuova sessione» né dai livelli;
 - ricarica dalle riserve (`src/ricarica.js`, `munizioni.json` → `ricarica`).
 
 Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, manovre del corpo a corpo (prossima sessione), veicoli, capitoli 2–8 del Manuale dell'Equipaggiamento (non ancora scritti).

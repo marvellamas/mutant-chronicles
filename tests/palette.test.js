@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { COPPIE_CONTRASTO, GRUPPI_EQUIPAGGIAMENTO, COLORI_RISERVATI, COLORI_MACROFAMIGLIE, classeMacrofamiglia, contrasto, variabiliCss } from '../src/palette.js';
+import { COPPIE_CONTRASTO, GRUPPI_EQUIPAGGIAMENTO, COLORI_RISERVATI, COLORI_EVENTO, COLORI_MACROFAMIGLIE, classeMacrofamiglia, contrasto, variabiliCss } from '../src/palette.js';
 import { TIPI } from '../src/equipaggiamento.js';
 import { datiReali } from './helpers.js';
 
@@ -50,4 +50,15 @@ test('macrofamiglie: ogni macrofamiglia degli incantesimi ha il suo colore', asy
   assert.deepEqual(nomi.filter((n) => !COLORI_MACROFAMIGLIE[n]), []);
   assert.equal(classeMacrofamiglia('Mentale'), 'macro-mentale');
   assert.equal(classeMacrofamiglia('Oscura'), '');
+});
+
+test('bandierine del calendario: tre colori distinti, con le due varianti, mai quelli riservati né delle categorie', () => {
+  for (const tema of ['chiaro', 'scuro']) {
+    const colori = COLORI_EVENTO.map((c) => temi[tema][c]?.toLowerCase());
+    assert.ok(colori.every(Boolean), `tema ${tema}`);
+    assert.equal(new Set(colori).size, 3);
+    const altri = new Set([...COLORI_RISERVATI.flatMap((c) => [c, `${c}-tenue`, `${c}-testo`]), ...GRUPPI_EQUIPAGGIAMENTO.map((g) => g.colore)]
+      .map((c) => temi[tema][c]?.toLowerCase()).filter(Boolean));
+    assert.deepEqual(colori.filter((c) => altri.has(c)), [], `tema ${tema}`);
+  }
 });

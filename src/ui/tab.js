@@ -1,5 +1,5 @@
 // Scheda digitale a tab (#/p/<id>): Identità, Abilità, Combattimento, Magia (solo con accesso
-// agli incantesimi), docs/roadmap-equipaggiamento-e-scheda.md §3. I contenuti vengono da
+// agli incantesimi), Calendario (solo se attivo dall'ingranaggio: src/ui/calendario.js), docs/roadmap-equipaggiamento-e-scheda.md §3. I contenuti vengono da
 // preparaTab() — gli stessi dati dei fogli di stampa, senza troncamenti — più la modalità
 // tavolo: i valori attuali della sessione (src/sessione.js), che non si ricalcolano.
 // Le penalità di Ferite, Affaticamento e Stati sono solo promemoria: i VA mostrati non le
@@ -19,6 +19,7 @@ import { statoRicarica, disponibili } from '../ricarica.js';
 import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 import { pannelloAttacco } from './attacco.js';
 import { pannelloLancio } from './lancio.js';
+import { tabCalendario, pannelloAttivazione } from './calendario.js';
 
 export const POSIZIONI_TAB = [
   { id: 'automatica', etichetta: 'Automatica (sinistra su schermi larghi, in basso su telefono e tablet)' },
@@ -27,7 +28,7 @@ export const POSIZIONI_TAB = [
   { id: 'alto', etichetta: 'In alto' },
 ];
 
-const ICONE_TAB = { identita: '👤', abilita: '🎯', combattimento: '⚔', magia: '✦' };
+const ICONE_TAB = { identita: '👤', abilita: '🎯', combattimento: '⚔', magia: '✦', calendario: '📅' };
 
 /**
  * Contesto: { dati, tab: risultato di preparaTab, attiva: id della tab, scelte, livelli,
@@ -58,7 +59,7 @@ export function renderTab(ctx) {
         barraRisorsa(ctx, 'PV', ctx.sessione.pvAttuali, ctx.massimi.pv, { classe: 'risorsa-pv' }),
         ctx.massimi.pm ? barraRisorsa(ctx, 'PM', ctx.sessione.pmAttuali, ctx.massimi.pm, { classe: 'risorsa-pm' }) : null)),
     h('div', { class: 'barra-azioni' },
-      ctx.puoAnnullareSessione ? h('button', { type: 'button', class: 'btn', onclick: azioni.annullaSessione, title: 'Annulla l’ultima modifica ai valori di sessione' }, '↶ Annulla') : null,
+      ctx.puoAnnullareSessione ? h('button', { type: 'button', class: 'btn', onclick: azioni.annullaSessione, title: 'Annulla l’ultima modifica ai valori di sessione o al calendario' }, '↶ Annulla') : null,
       id.livello < livelloMax
         ? h('button', { type: 'button', class: 'btn primario', disabled: !!ctx.motivoNoSalita, title: ctx.motivoNoSalita, onclick: azioni.sali }, `Sali al livello ${id.livello + 1}`)
         : null,
@@ -72,12 +73,12 @@ export function renderTab(ctx) {
         'aria-selected': String(t.id === corrente.id), 'aria-controls': 'pannello-tab',
         onclick: () => azioni.vaiTab(t.id),
       }, iconaPagina(t.id, '96', { classe: 'tab-icona-img', lato: 30 }) ?? h('span', { class: 'tab-icona', 'aria-hidden': 'true' }, ICONE_TAB[t.id] ?? '•'),
-      h('span', { class: 'tab-etichetta' }, t.titolo)))),
+      h('span', { class: 'tab-etichetta' }, t.titolo, t.contatore ? h('small', { class: 'tab-contatore' }, t.contatore) : null)))),
       // PV e PM sempre a portata sotto le tab (solo con le tab a sinistra, da 900 px: css/style.css);
       // su telefono e tablet restano nella tab Identità, con la mini-barra nell'intestazione
       h('div', { class: 'risorse-laterali', 'aria-label': 'Punti Vita e Punti Magia' }, riquadriPvPm(ctx, { compatti: true }))));
 
-  const contenuti = { identita: tabIdentita, abilita: tabAbilita, combattimento: tabCombattimento, magia: tabMagia };
+  const contenuti = { identita: tabIdentita, abilita: tabAbilita, combattimento: tabCombattimento, magia: tabMagia, calendario: tabCalendario };
   // badge della pagina accanto al titolo della tab (solo con l'immagine: senza, il titolo è già nella barra delle tab)
   const badge = iconaPagina(corrente.id, '96', { classe: 'badge-pagina', lato: 48 });
   // filigrana: stemma in grigio nell'angolo di Identità (ingranaggio, predefinito sì)
@@ -99,7 +100,8 @@ export function renderTab(ctx) {
   if (ctx.ui?.lancio && !incLancio) ctx.ui.lancio = null;
   return [h('div', { class: `scheda-tab pos-${ctx.posizione} larghezza-${ctx.larghezza ?? 'piena'}` }, barra, nav, pannello),
     armaAttacco ? pannelloAttacco(ctx, armaAttacco) : null,
-    incLancio ? pannelloLancio(ctx, incLancio) : null];
+    incLancio ? pannelloLancio(ctx, incLancio) : null,
+    ctx.ui?.attivaCalendario ? pannelloAttivazione(ctx) : null];
 }
 
 function menuAzioni(ctx) {
@@ -114,7 +116,7 @@ function menuAzioni(ctx) {
       ctx.livelli.length ? voce('Annulla l’ultimo livello', azioni.annullaLivello, { pericolo: true }) : null,
       h('hr', {}),
       voce('Nuova sessione', azioni.nuovaSessione, { titolo: 'PV e PM ai massimi, Stati, Ferite e Affaticamento a zero' }),
-      voce('Annulla ultima modifica di sessione', azioni.annullaSessione, { disabilitato: !ctx.puoAnnullareSessione }),
+      voce('Annulla ultima modifica', azioni.annullaSessione, { disabilitato: !ctx.puoAnnullareSessione, titolo: 'Valori di sessione o calendario' }),
       ctx.motivoNoSalita ? h('p', { class: 'nota' }, ctx.motivoNoSalita) : null));
 }
 
@@ -149,7 +151,14 @@ function menuImpostazioni(ctx) {
           h('input', { type: 'checkbox', checked: !!ctx.ritrattoIntestazione, disabled: !ctx.scelte.ritratto, onchange: (e) => ctx.azioni.ritrattoIntestazione(e.target.checked) }),
           ' Ritratto come sfondo dell’intestazione'),
         ctx.scelte.ritratto ? null : h('p', { class: 'nota' }, 'Nessun ritratto: si carica nel passo Background.')),
-      h('p', { class: 'nota' }, 'Salvate in questo browser.')));
+      h('p', { class: 'nota' }, 'Salvate in questo browser.'),
+      // sezione facoltativa: si salva nel personaggio (e nel file esportato), non nel browser
+      h('fieldset', {},
+        h('legend', {}, 'Calendario'),
+        [[true, 'Attivo'], [false, 'Non attivo']].map(([v, etichetta]) => h('label', { class: 'scelta-radio' },
+          h('input', { type: 'radio', name: 'calendario-attivo', checked: !!ctx.calendario?.attivo === v, onchange: () => ctx.azioni.calendarioAttivo(v) }),
+          ` ${etichetta}`)),
+        h('p', { class: 'nota' }, 'Salvato nel personaggio. Spento, le note restano.'))));
 }
 
 // ---------------------------------------------------------------------------

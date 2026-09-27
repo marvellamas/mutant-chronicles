@@ -54,6 +54,18 @@ Sono le etichette dei gruppi dell'equipaggiamento nella tab Combattimento. Hanno
 | `altro` | Altro | `--cat-altro` (grigio) | `#5f5f66` | `#b4b4bc` |
 | — | testo delle etichette | `--cat-testo` | `#ffffff` | `#17171a` |
 
+## Bandierine del calendario
+
+Segnano l'importanza di una nota nel Calendario della SD (pallini in Settimana e Mese, bordo della nota in Giorno). Significati in `regole.json` → `calendario.bandierine`; la nota senza bandierina è normale. Il segno «M» (da ricordare) non ha un colore: è la lettera in un riquadro, e si combina con qualunque bandierina.
+
+| Bandierina | Significato | Variabile | Chiaro | Scuro |
+|---|---|---|---|---|
+| rossa | cruciale | `--evento-rosso` (vermiglio) | `#d9480f` | `#ff8c5a` |
+| gialla | importante | `--evento-giallo` (ambra) | `#a67c00` | `#ffd23f` |
+| verde | minore | `--evento-verde` (oliva) | `#5c8a00` | `#b8e05a` |
+
+Sono distinte dai colori riservati: il rosso delle bandierine tende all'arancio, quello dei PV al cremisi; il verde è oliva, quello dei Punti Eroe è un verde bosco. Accanto al colore c'è sempre il nome (tooltip e filtri), per chi non distingue i colori. Il test controlla che siano tre colori diversi, lontani da quelli riservati e delle categorie, con contrasto ≥ 3:1 sulla superficie.
+
 ## Altri colori (css/style.css, non riservati)
 
 - `--accento`: link, pulsanti primari, marchio.

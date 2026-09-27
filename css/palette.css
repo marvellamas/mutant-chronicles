@@ -10,6 +10,9 @@
    --mentale     azzurro     magia Mentale
    --spirituale  verde chiaro magia Spirituale
 
+   Bandierine del calendario (importanza di una nota): --evento-rosso (cruciale), --evento-giallo
+   (importante), --evento-verde (minore). Rosso vermiglio e verde oliva, lontani da --pv e --pe.
+
    Categorie dell'equipaggiamento (etichette dei gruppi nella tab Combattimento): --cat-*.
    Il colore dice «che cos'è»; lo stato (verde/giallo/rosso delle barre) resta in style.css. */
 
@@ -44,6 +47,11 @@
   --cat-sanitario: #0e6863;    /* verde petrolio */
   --cat-artefatti: #7a2f86;    /* viola */
   --cat-altro: #5f5f66;        /* grigio */
+
+  /* bandierine del calendario: pallino e bordo della nota */
+  --evento-rosso: #d9480f;     /* vermiglio: cruciale */
+  --evento-giallo: #a67c00;    /* ambra: importante */
+  --evento-verde: #5c8a00;     /* oliva: minore */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -75,5 +83,9 @@
     --cat-sanitario: #6fd1c7;
     --cat-artefatti: #dd9ce8;
     --cat-altro: #b4b4bc;
+
+    --evento-rosso: #ff8c5a;
+    --evento-giallo: #ffd23f;
+    --evento-verde: #b8e05a;
   }
 }

@@ -26,6 +26,8 @@ import {
   penalitaSessione, variaMunizioni, ricaricaArma, variaChroma,
 } from '../sessione.js';
 import { conOrdinale } from '../lingua.js';
+import { normalizzaCalendario, calendarioAttivo, attivaCalendario, disattivaCalendario, contaNote } from '../calendario.js';
+import { testoNote } from './calendario.js';
 
 // Dopo la creazione si possono ancora cambiare solo i campi descrittivi: le altre scelte
 // determinano i livelli successivi (ricognizione dell'avanzamento, §8).
@@ -33,7 +35,7 @@ const CAMPI_LIBERI_DOPO_LIVELLI = ['nome', 'concetto', 'equipaggiamento', 'dotaz
 // L'ultimo passo del wizard è la scheda: si apre come vista a tab (#/p/<id>).
 const PASSO_SCHEDA = PASSI.length - 1;
 const PASSO_EQUIPAGGIAMENTO = PASSI.findIndex((p) => p.titolo === 'Equipaggiamento');
-const TAB = ['identita', 'abilita', 'combattimento', 'magia'];
+const TAB = ['identita', 'abilita', 'combattimento', 'magia', 'calendario'];
 
 const radice = document.getElementById('app');
 
@@ -45,7 +47,9 @@ const stato = {
   livelli: [], // scelte dei livelli dal 2° in poi (cap. 8)
   sali: null, // bozza del livello successivo: { voce, passo, ui }. Non si salva fino alla conferma.
   sessione: null, // valori attuali della modalità tavolo (src/sessione.js); null finché non si apre la scheda
-  sessionePrecedente: null, // per «Annulla ultima modifica» (una sola, in memoria)
+  calendario: null, // calendario di gioco (src/calendario.js); null = mai attivato
+  // per «Annulla ultima modifica» (una sola, in memoria): { sessione, calendario } di prima
+  precedenteTavolo: null,
   tab: 'identita',
   messaggioScheda: null,
   passo: 0,
@@ -162,7 +166,10 @@ function daIndirizzo() {
     stato.scelte = scelte;
     stato.livelli = Array.isArray(salvato.livelli) ? salvato.livelli : [];
     stato.sessione = salvato.sessione ?? null;
-    stato.sessionePrecedente = null;
+    stato.calendario = normalizzaCalendario(salvato.calendario, stato.dati);
+    stato.precedenteTavolo = null;
+    stato.ui.calendario = null;
+    stato.ui.attivaCalendario = null;
     stato.messaggioScheda = null;
     stato.avvisi = avvisi.length ? ['Il personaggio salvato non era più coerente con i dati attuali:', ...avvisi] : [];
     stato.precedente = null;
@@ -203,12 +210,12 @@ function testoSalvataggioFallito() {
 
 function persisti() {
   if (!stato.id) return;
-  stato.salvataggioOk = archivio.salva({ id: stato.id, scelte: stato.scelte, livelli: stato.livelli, sessione: stato.sessione, passo: stato.passo });
+  stato.salvataggioOk = archivio.salva({ id: stato.id, scelte: stato.scelte, livelli: stato.livelli, sessione: stato.sessione, calendario: stato.calendario, passo: stato.passo });
 }
 
-function esporta(scelte, livelli = [], sessione = null) {
+function esporta(scelte, livelli = [], sessione = null, calendario = null) {
   const versioniDatiFile = Object.fromEntries(Object.entries(stato.dati).map(([k, v]) => [k, v.versione_manuale]));
-  scaricaFile(nomeFileEsportazione(scelte.nome, 1 + livelli.length), serializza(scelte, { versioniDati: versioniDatiFile, livelli, sessione }));
+  scaricaFile(nomeFileEsportazione(scelte.nome, 1 + livelli.length), serializza(scelte, { versioniDati: versioniDatiFile, livelli, sessione, calendario }));
 }
 
 /** Sessione allineata ai massimi attuali (inizializzata se manca), o null se la scheda non si calcola. */
@@ -220,7 +227,7 @@ function sessioneAllineata(creazione, livelli, sessione) {
 
 async function importa(file) {
   try {
-    const { creazione, livelli, sessione: sessioneFile } = deserializzaPersonaggio(await file.text());
+    const { creazione, livelli, sessione: sessioneFile, calendario: calendarioFile } = deserializzaPersonaggio(await file.text());
     const { scelte, avvisi } = normalizza(creazione, stato.dati);
     const id = archivio.nuovoId();
     // I livelli non si correggono in automatico: eventuali errori compaiono nella scheda.
@@ -228,7 +235,8 @@ async function importa(file) {
     if (errLivelli.length) avvisi.push(`Livelli con errori rispetto ai dati attuali: ${errLivelli[0].problema}`);
     // senza `sessione` nel file la si inizializza ai massimi; altrimenti la si limita ai massimi attuali
     const sessione = sessioneAllineata(scelte, livelli, sessioneFile);
-    if (!archivio.salva({ id, scelte, livelli, sessione, passo: livelli.length || calcolaScheda(scelte, stato.dati).completa ? PASSO_SCHEDA : 0 })) {
+    const calendario = normalizzaCalendario(calendarioFile, stato.dati);
+    if (!archivio.salva({ id, scelte, livelli, sessione, calendario, passo: livelli.length || calcolaScheda(scelte, stato.dati).completa ? PASSO_SCHEDA : 0 })) {
       throw new Error(archivio.erroreSalvataggio() === 'quota' ? 'spazio del browser esaurito: esporta e rimuovi personaggi vecchi, poi riprova.' : 'il browser non permette di salvare (navigazione privata o permessi).');
     }
     stato.messaggioHome = {
@@ -288,7 +296,7 @@ function rigaPersonaggio(p) {
       h('p', { class: 'nota' }, `Modificato ${data}`)),
     h('div', { class: 'riga-azioni' },
       h('button', { type: 'button', class: 'btn primario', onclick: () => vai(p.passo === PASSO_SCHEDA ? `#/p/${p.id}` : `#/p/${p.id}/${p.passo ?? 0}`) }, 'Apri'),
-      h('button', { type: 'button', class: 'btn', onclick: () => esporta(normalizza(s, stato.dati).scelte, livelli, p.sessione ?? null) }, 'SALVA PG (Esporta JSON)'),
+      h('button', { type: 'button', class: 'btn', onclick: () => esporta(normalizza(s, stato.dati).scelte, livelli, p.sessione ?? null, normalizzaCalendario(p.calendario, stato.dati)) }, 'SALVA PG (Esporta JSON)'),
       h('button', { type: 'button', class: 'btn pericolo', onclick: () => {
         if (confirm(`Eliminare «${s.nome?.trim() || 'Senza nome'}» da questo browser? L’operazione non si annulla (esporta prima il file se vuoi conservarlo).`)) {
           archivio.elimina(p.id);
@@ -328,7 +336,7 @@ function contesto() {
     ui: stato.ui,
     versioni: stato.versioni,
     aggiorna,
-    esporta: () => esporta(stato.scelte, stato.livelli),
+    esporta: () => esporta(stato.scelte, stato.livelli, stato.sessione, stato.calendario),
     ridisegnaRiepilogo,
     ridisegna: () => renderWizard(),
   };
@@ -560,6 +568,8 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
   const { dati } = stato;
   // le tab mostrano i valori effettivi con le condizioni della sessione; la stampa no
   const tab = preparaTab(personaggio(), dati, { sessione: stato.sessione });
+  // quinta tab, solo con il calendario attivo (non tocca preparaTab: la stampa resta com'è)
+  if (tab.tab.length && calendarioAttivo(stato.calendario)) tab.tab.push({ id: 'calendario', titolo: 'Calendario', contatore: testoNote(contaNote(stato.calendario)) });
   document.title = `${stato.scelte.nome.trim() || 'Personaggio'} — Scheda · Mutant`;
   if (!tab.tab.length) {
     svuota(radice, h('section', { class: 'passo' },
@@ -584,9 +594,10 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
   stato.messaggioScheda = null;
 
   // Ogni modifica di sessione salva subito e tiene da parte lo stato precedente per «Annulla».
+  const ricordaPrecedente = () => { stato.precedenteTavolo = { sessione: stato.sessione, calendario: stato.calendario }; };
   const cambiaSessione = (nuova, { ridisegna = true } = {}) => {
     if (!nuova) return;
-    stato.sessionePrecedente = stato.sessione;
+    ricordaPrecedente();
     stato.sessione = nuova;
     persisti();
     if (ridisegna) renderScheda({ mantieniScorrimento: true });
@@ -607,7 +618,9 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
     sfondo: impostazioni.sfondo,
     ritrattoIntestazione: impostazioni.ritrattoIntestazione,
     filigrana: impostazioni.filigranaCorporazione,
-    puoAnnullareSessione: !!stato.sessionePrecedente,
+    puoAnnullareSessione: !!stato.precedenteTavolo,
+    calendario: stato.calendario,
+    spazioQuasiEsaurito: archivio.spazioQuasiEsaurito(),
     motivoNoSalita: !schedaCreazione.completa ? 'Completa la creazione prima di salire di livello.'
       : tab.errori.length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
     messaggio: messaggio ?? (stato.salvataggioOk ? null : { tipo: 'errore', testo: testoSalvataggioFallito() }),
@@ -618,16 +631,16 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       sali: saliDiLivello,
       annullaLivello,
       stampa: () => vai(`#/p/${stato.id}/stampa`),
-      esporta: () => esporta(stato.scelte, stato.livelli, stato.sessione),
+      esporta: () => esporta(stato.scelte, stato.livelli, stato.sessione, stato.calendario),
       modificaCreazione: (passo = 0) => vaiAlPasso(passo),
       nuovaSessione: () => {
         if (!confirm('Nuova sessione: PV e PM tornano ai massimi, Stati, Ferite e Affaticamento si azzerano. Note, Punti Eroe e Distintivi restano. Procedere?')) return;
         cambiaSessione(nuovaSessione(stato.sessione, massimi));
       },
       annullaSessione: () => {
-        if (!stato.sessionePrecedente) return;
-        stato.sessione = stato.sessionePrecedente;
-        stato.sessionePrecedente = null;
+        if (!stato.precedenteTavolo) return;
+        ({ sessione: stato.sessione, calendario: stato.calendario } = stato.precedenteTavolo);
+        stato.precedenteTavolo = null;
         persisti();
         renderScheda({ mantieniScorrimento: true });
       },
@@ -652,7 +665,31 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       lancia: (fonte) => cambiaSessione(spendiPmLancio(stato.sessione, fonte, massimi)),
       convertiDistintivi: () => cambiaSessione(convertiDistintivi(stato.sessione, massimi)),
       // le note si salvano a ogni tasto; l'annullamento riporta al testo di prima della modifica
-      inizioNote: () => { stato.sessionePrecedente = stato.sessione; },
+      inizioNote: ricordaPrecedente,
+      // calendario: ogni modifica (note, «Avanza», attivazione) salva ed è annullabile
+      cambiaCalendario: (nuovo, { tab: vaiA = null } = {}) => {
+        if (!nuovo) return;
+        ricordaPrecedente();
+        stato.calendario = nuovo;
+        persisti();
+        if (vaiA) return vaiTab(vaiA);
+        renderScheda({ mantieniScorrimento: true });
+      },
+      // ingranaggio: la prima attivazione chiede inizio e fascia (pannello); poi si accende e spegne
+      calendarioAttivo: (attivo) => {
+        if (attivo && !stato.calendario) {
+          const oggi = new Date();
+          const due = (n) => String(n).padStart(2, '0');
+          stato.ui.attivaCalendario = { inizio: `${oggi.getFullYear()}-${due(oggi.getMonth() + 1)}-${due(oggi.getDate())}`, fascia: dati.regole.calendario.fasce[0].id };
+          return renderScheda({ mantieniScorrimento: true });
+        }
+        ricordaPrecedente();
+        stato.calendario = attivo ? attivaCalendario(stato.calendario, {}, dati) : disattivaCalendario(stato.calendario);
+        persisti();
+        if (attivo) return vaiTab('calendario');
+        if (stato.tab === 'calendario') return vaiTab('identita');
+        renderScheda({ mantieniScorrimento: true });
+      },
       note: (testo) => {
         stato.sessione = modificaSessione(stato.sessione, { note: testo }, massimi);
         persisti();
