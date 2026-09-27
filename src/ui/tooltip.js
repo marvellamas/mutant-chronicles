@@ -6,6 +6,11 @@
 //  - tastiera: compare al focus, sparisce al blur o con Esc;
 //  - tocco: un tocco sul nome lo apre, un tocco fuori lo chiude (i pulsanti vicini restano liberi);
 //  - clic (mouse o tastiera) sul nome di un incantesimo: apre la scheda completa.
+//  - un solo tooltip aperto alla volta; si chiude con Esc, al tocco fuori, allo scorrimento della
+//    pagina o di un pannello e quando il pannello che lo contiene si chiude.
+// Il riquadro è uno solo, «portale» in fondo a <body> con position: fixed e il piano più alto della
+// scala dei z-index (css/style.css → --z-tooltip): sta sopra ai pannelli in sovrimpressione. Dentro
+// un <dialog> modale (top layer, dove nessuno z-index arriva) si sposta dentro il dialog.
 import { h, svuota } from './dom.js';
 import { contenutoTooltip, schedaIncantesimo } from '../descrizioni.js';
 import { classeMacrofamiglia } from '../palette.js';
@@ -132,7 +137,11 @@ export function inizializzaTooltip(datiRegole) {
     }
   });
   window.addEventListener('resize', () => nascondiTooltip());
-  window.addEventListener('scroll', () => { if (!riquadro.hidden && ultimoPuntatore === 'mouse') nascondiTooltip(); }, { passive: true });
+  // scorrimento della pagina o di un pannello (in cattura: lo scroll non risale); non quello del
+  // riquadro stesso, che può scorrere se il contenuto è lungo
+  document.addEventListener('scroll', (e) => {
+    if (!riquadro.hidden && !riquadro.contains(e.target)) nascondiTooltip();
+  }, { capture: true, passive: true });
 }
 
 function chiudiTra() {
@@ -150,6 +159,12 @@ export function nascondiTooltip() {
   origine = null;
 }
 
+/** Dove montare il riquadro: nel <dialog> modale che contiene il nome, altrimenti in fondo a <body>. */
+function montaRiquadro(el) {
+  const ospite = el.closest('dialog[open]') ?? document.body;
+  if (riquadro.parentElement !== ospite) ospite.append(riquadro);
+}
+
 function mostra(el) {
   if (!dati || !el.isConnected) return;
   const c = el.dataset.infoTipo === 'valore' ? contenutiValore.get(el) : contenutoTooltip(el.dataset.infoTipo, el.dataset.infoId, dati);
@@ -162,6 +177,7 @@ function mostra(el) {
   const macro = el.dataset.infoTipo === 'incantesimo' ? macroDi(el.dataset.infoId) : null;
   riquadro.className = `tooltip${macro ? ` tooltip-incantesimo ${classeMacrofamiglia(macro)}` : ''}`;
   svuota(riquadro, contenuto(c, el.dataset.infoId, macro, macro ? incantesimoDi(el.dataset.infoId)?.livello_base : null));
+  montaRiquadro(el);
   riquadro.hidden = false;
   riquadro.scrollTop = 0;
   el.setAttribute('aria-describedby', 'tooltip');
@@ -193,7 +209,10 @@ function tabella(colonne, righe, evidenzia) {
       colonne.map((k) => h('td', {}, r[k] ?? '')))))));
 }
 
-/** Sopra o sotto, a sinistra o a destra, sempre dentro la finestra. */
+/**
+ * Vicino al «ⓘ» (getBoundingClientRect, coordinate della finestra): di preferenza sotto e verso
+ * destra; se non entra, sopra o verso sinistra; mai oltre MARGINE px dal bordo della finestra.
+ */
 function posiziona(el) {
   const r = el.getBoundingClientRect();
   const vw = document.documentElement.clientWidth;

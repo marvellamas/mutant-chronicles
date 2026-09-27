@@ -2,6 +2,14 @@
    colonna laterale di riepilogo su desktop, stampa nella vista dedicata (css/stampa.css). */
 
 :root {
+  /* Scala dei piani (z-index): si regola solo qui. Il tooltip sta sopra a tutto, anche ai pannelli
+     in sovrimpressione («Attacca!», «Lancia!»), così i «ⓘ» dentro un pannello restano leggibili. */
+  --z-base: 1;
+  --z-riepilogo: 10;  /* riepilogo del wizard su telefono */
+  --z-barre: 30;      /* barre fisse in fondo */
+  --z-menu: 40;       /* menu a tendina */
+  --z-pannelli: 60;   /* pannelli in sovrimpressione */
+  --z-tooltip: 100;   /* tooltip unico (src/ui/tooltip.js) */
   --sfondo: #f7f6f3;
   --superficie: #ffffff;
   --testo: #1d1d1f;
@@ -339,7 +347,7 @@ dl.voci.in-linea dt::after { content: ":"; }
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 10;
+  z-index: var(--z-riepilogo);
   border-top: 1px solid var(--bordo);
   box-shadow: 0 -2px 8px rgb(0 0 0 / 0.08);
   max-height: 80vh;
@@ -492,7 +500,7 @@ dl.voci.in-linea dt::after { content: ":"; }
 
 .tooltip {
   position: fixed;
-  z-index: 50;
+  z-index: var(--z-tooltip);
   width: max-content;
   max-width: min(360px, calc(100vw - 16px));
   overflow-y: auto;
@@ -631,7 +639,7 @@ dl.voci.in-linea dt::after { content: ":"; }
 .menu-azioni > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; }
 .menu-azioni > summary::-webkit-details-marker { display: none; }
 .menu-voci {
-  position: absolute; right: 0; top: calc(100% + 0.35rem); z-index: 40;
+  position: absolute; right: 0; top: calc(100% + 0.35rem); z-index: var(--z-menu);
   display: grid; gap: 0.4rem; width: max-content; min-width: 16rem; max-width: min(22rem, calc(100vw - 2rem));
   padding: 0.75rem; background: var(--superficie); border: 1px solid var(--bordo); border-radius: var(--raggio);
   box-shadow: 0 8px 24px rgb(0 0 0 / 0.18);
@@ -665,7 +673,7 @@ dl.voci.in-linea dt::after { content: ":"; }
 .pos-alto .tab-nav [role="tablist"] { overflow-x: auto; }
 /* in basso, raggiungibili col pollice */
 .pos-basso .tab-nav {
-  position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: var(--z-barre);
   background: var(--superficie); border-top: 1px solid var(--bordo);
   padding: 0.3rem 0.5rem calc(0.3rem + env(safe-area-inset-bottom));
 }
@@ -680,7 +688,7 @@ dl.voci.in-linea dt::after { content: ":"; }
 }
 @media (max-width: 899.98px) {
   .pos-automatica .tab-nav {
-    position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: var(--z-barre);
     background: var(--superficie); border-top: 1px solid var(--bordo);
     padding: 0.3rem 0.5rem calc(0.3rem + env(safe-area-inset-bottom));
   }
@@ -1079,7 +1087,7 @@ body.con-sfondo::before {
 .arma-testa { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; }
 .arma-testa h3 { margin: 0; }
 .btn-attacca { min-height: 48px; min-width: 7rem; font-size: 1.05rem; font-weight: 700; flex: none; }
-.attacco-sfondo { position: fixed; inset: 0; z-index: 60; background: rgba(0, 0, 0, 0.55); display: flex; justify-content: center; align-items: flex-start; overflow-y: auto; padding: 1rem; }
+.attacco-sfondo { position: fixed; inset: 0; z-index: var(--z-pannelli); background: rgba(0, 0, 0, 0.55); display: flex; justify-content: center; align-items: flex-start; overflow-y: auto; padding: 1rem; }
 .attacco-pannello { background: var(--sfondo); border: 1px solid var(--bordo); border-radius: var(--raggio); width: min(46rem, 100%); padding: 0.75rem 1rem 1rem; box-shadow: var(--ombra); }
 .attacco-testa { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; border-bottom: 1px solid var(--bordo); padding-bottom: 0.5rem; }
 .attacco-testa h2 { margin: 0; font-size: 1.15rem; }

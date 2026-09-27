@@ -6,7 +6,7 @@
 // Dentro ogni passo i gruppi di scelta vanno a capo da soli (due o tre per riga, secondo la
 // larghezza dei pulsanti) e le domande sì/no diventano interruttori in linea, anche loro in griglia.
 import { h } from './dom.js';
-import { infoValore } from './tooltip.js';
+import { infoValore, nascondiTooltip } from './tooltip.js';
 
 // «ⓘ» accanto a un pulsante: il tooltip con la regola completa. Separato dal pulsante, così su
 // telefono toccare il pulsante sceglie e toccare «ⓘ» spiega.
@@ -71,11 +71,13 @@ export function pannelloPassi({ etichetta, titolo, classe = '', chiudi, passi, s
   const passo = Math.min(stato.passo ?? 0, passi.length - 1);
   const vai = (n) => { stato.passo = n; ridisegna(); };
   const ultimo = passi.length - 1;
-  return h('div', { class: 'attacco-sfondo', onclick: (e) => { if (e.target === e.currentTarget) chiudi(); } },
+  // il tooltip aperto da un «ⓘ» del pannello si chiude con il pannello
+  const chiudiPannello = () => { nascondiTooltip(); chiudi(); };
+  return h('div', { class: 'attacco-sfondo', onclick: (e) => { if (e.target === e.currentTarget) chiudiPannello(); } },
     h('section', { class: `attacco-pannello ${classe}`, role: 'dialog', 'aria-modal': 'true', 'aria-label': etichetta },
       h('header', { class: 'attacco-testa' },
         h('h2', {}, titolo),
-        h('button', { type: 'button', class: 'btn', onclick: chiudi, 'aria-label': `Chiudi: ${etichetta}` }, 'Chiudi')),
+        h('button', { type: 'button', class: 'btn', onclick: chiudiPannello, 'aria-label': `Chiudi: ${etichetta}` }, 'Chiudi')),
       h('div', { class: 'attacco-passi' },
         passi.map((p, i) => h('section', { class: `attacco-passo${i === passo ? ' corrente' : ''}${i === ultimo ? ' passo-risultato' : ''}` },
           h('h3', {}, h('span', { class: 'num-passo' }, `${i + 1}`), ' ', p.titolo),
