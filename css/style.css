@@ -1186,3 +1186,62 @@ body.con-sfondo::before {
 .cal-numero { font-weight: 700; }
 .cal-segni { display: flex; flex-wrap: wrap; gap: 0.15rem; align-items: center; }
 .cal-quante { position: absolute; right: 0.3rem; top: 0.2rem; font-size: 0.72rem; color: var(--tenue); }
+
+/* ------------------------------------------- pannelli a passi (src/ui/pannello-passi.js) */
+/* gruppi di scelta e interruttori in griglia; su telefono una colonna, come prima */
+.griglia-scelte { display: flex; flex-direction: column; }
+.griglia-scelte .interruttore-cella { margin: 0.2rem 0 0.35rem; }
+.interruttore-cella .motivo { display: block; font-size: 0.75rem; line-height: 1.25; margin-top: 0.1rem; }
+.scelta-gruppo { margin: 0.2rem 0 0.4rem; min-width: 0; }
+.interruttore-cella { min-width: 0; }
+.interruttore {
+  display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; width: 100%; min-height: 44px;
+  padding: 0.35rem 0.6rem; border: 1px solid var(--bordo); border-radius: var(--raggio); background: var(--superficie);
+  color: var(--testo); font: inherit; text-align: left; cursor: pointer;
+}
+.interruttore:hover:not(:disabled) { border-color: var(--accento); }
+.interruttore:focus-visible { outline: 3px solid var(--accento); outline-offset: 1px; }
+.interruttore:disabled { opacity: 0.45; cursor: not-allowed; }
+.interruttore.acceso { border-color: var(--accento); background: var(--accento-tenue); }
+.interruttore-mod { color: var(--tenue); font-weight: 600; }
+.interruttore.acceso .interruttore-mod { color: var(--accento); }
+.levetta { display: inline-flex; align-items: center; gap: 0.3rem; flex: none; min-width: 3.4rem; padding: 0.1rem 0.45rem 0.1rem 0.2rem; border: 1px solid var(--bordo); border-radius: 999px; font-size: 0.85rem; font-weight: 700; }
+.levetta-pomello { width: 0.95rem; height: 0.95rem; border-radius: 50%; border: 2px solid var(--tenue); box-sizing: border-box; }
+.interruttore.acceso .levetta { border-color: var(--accento); color: var(--accento); }
+.interruttore.acceso .levetta-pomello { background: var(--accento); border-color: var(--accento); }
+.riga-versione { margin: 0.4rem 0; display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; }
+.voci.riga-versione > div { display: block; }
+.riga-versione dt { font-size: 0.8rem; }
+
+/* da 800 px: scelte a sinistra, risultato a destra sempre visibile; pulsanti compatti */
+@media (min-width: 800px) {
+  .attacco-sfondo { padding: 0.5rem; }
+  .attacco-pannello { width: min(80rem, 100%); padding: 0.5rem 1rem 0.75rem; }
+  .attacco-pannello.pannello-semplice { width: min(46rem, 100%); }
+  .attacco-passi { display: grid; grid-template-columns: minmax(0, 1fr) minmax(17rem, 22rem); column-gap: 1.25rem; align-items: start; }
+  .attacco-passo { grid-column: 1; padding: 0.3rem 0 0.2rem; }
+  .attacco-passo.passo-risultato { grid-column: 2; grid-row: 1 / span 12; position: sticky; top: 0; border-bottom: 0; }
+  .attacco-passo > h3 { margin: 0 0 0.15rem; font-size: 0.95rem; }
+  .num-passo { width: 1.35rem; height: 1.35rem; font-size: 0.8rem; }
+  /* ogni gruppo largo quanto i suoi pulsanti, a capo quando non c'è posto */
+  .griglia-scelte { flex-direction: row; flex-wrap: wrap; gap: 0 1rem; }
+  /* distanza: campo, fascia e pulsanti rapidi sulla stessa riga */
+  .scelta-distanza { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.75rem; }
+  .scelta-distanza .scelta-titolo { width: 100%; }
+  .scelta-distanza .distanza-riga { margin-bottom: 0; }
+  .attacco-pannello .scelta-attacco { margin: 0.1rem 0 0.3rem; }
+  .attacco-pannello .nota { margin: 0.2rem 0; }
+  .scelta-gruppo { flex: 0 1 auto; }
+  .griglia-scelte { align-items: flex-end; }
+  .griglia-scelte .interruttore-cella { flex: 0 1 auto; max-width: 24rem; margin: 0 0 0.3rem; }
+  .attacco-pannello .interruttore { width: auto; }
+  .attacco-pannello .scelta-titolo { font-size: 0.82rem; margin-bottom: 0.1rem; }
+  .attacco-pannello .scelta-pulsanti { gap: 0.25rem; }
+  .attacco-pannello .scelta-btn { min-height: 34px; padding: 0.1rem 0.55rem; font-size: 0.9rem; }
+  .attacco-pannello .interruttore { min-height: 36px; padding: 0.15rem 0.5rem; font-size: 0.9rem; }
+  .attacco-pannello .input-distanza { min-height: 36px; font-size: 1.05rem; }
+  .attacco-pannello .riquadro { margin: 0.35rem 0; padding: 0.35rem 0.6rem; }
+  .attacco-pannello .va-attacco { margin: 0.25rem 0; }
+  .attacco-pannello .voce-info.pillola-attacco { font-size: 1.6rem; }
+  .attacco-pannello .btn-grande { min-height: 48px; }
+}

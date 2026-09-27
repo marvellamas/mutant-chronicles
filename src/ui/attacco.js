@@ -1,12 +1,14 @@
 // Pannello «Attacca!» della tab Combattimento (backlog voce 5). Le regole stanno in src/attacco.js;
-// qui solo la presentazione: passi con righe di pulsanti (niente menu a tendina), risultato con la
-// scomposizione e «Spara». Nessun tiro di dado: al tavolo si tira a mano. Le scelte si ricordano
-// per ogni arma nella sessione (sessione → attacchi). Su telefono un passo per schermata con la
-// barra Indietro / Avanti; da 800 px tutti i passi in colonna.
+// qui solo la presentazione: passi con gruppi di pulsanti e interruttori (niente menu a tendina),
+// risultato con la scomposizione e «Spara». Nessun tiro di dado: al tavolo si tira a mano. Le scelte
+// si ricordano per ogni arma nella sessione (sessione → attacchi). Impianto del pannello e
+// componenti comuni in src/ui/pannello-passi.js (telefono: un passo per schermata; da 800 px le
+// scelte a sinistra e il risultato a destra).
 import { h, segno } from './dom.js';
 import { infoValore } from './tooltip.js';
 import { calcolaAttaccoDistanza, vincoliDistanza, dichiarazioneDistanza, richiedeImbracciatura, talentiAttacco, attaccoBase } from '../attacco.js';
 import { formulaScomposizione } from '../condizioni.js';
+import { rigaScelte, interruttore, pannelloPassi } from './pannello-passi.js';
 
 const PASSI = ['Il tuo movimento', 'Il bersaglio', 'Distanza', 'Tipo di tiro', 'Risultato'];
 const FONTI = { regole: 'regole', equipaggiamento: 'equipaggiamento', ferite: 'Ferite', affaticamento: 'Affaticamento', stato: 'Stato', oggetto: 'oggetto', movimento: 'movimento', bersaglio: 'bersaglio', copertura: 'Copertura', distanza: 'distanza', mirino: 'mirino', modalita: 'modalità', 'modalità': 'modalità', manovra: 'manovra', talento: 'Talento', situazione: 'situazione' };
@@ -14,34 +16,19 @@ const numero = (n) => (n < 0 ? `−${-n}` : String(n));
 const RAPIDE = [3, 10, 20, 40, 80, 160, 300, 500, 750, 1000, 1500];
 
 /**
- * Riga di scelte a pulsanti: [{ valore, etichetta, motivo? }]. Il pulsante scelto è evidenziato;
- * quelli non ammessi sono disabilitati con il motivo (title e testo sotto la riga).
- */
-export function righaScelte(titolo, opzioni, attuale, scegli) {
-  const motivi = opzioni.filter((o) => o.motivo && o.valore !== attuale).map((o) => `${o.etichetta}: ${o.motivo}`);
-  return h('div', { class: 'scelta-attacco', role: 'group', 'aria-label': titolo },
-    h('p', { class: 'scelta-titolo' }, titolo),
-    h('div', { class: 'scelta-pulsanti' }, opzioni.map((o) => h('button', {
-      type: 'button', class: `btn scelta-btn${o.valore === attuale ? ' scelta' : ''}`, 'aria-pressed': String(o.valore === attuale),
-      disabled: !!o.motivo && o.valore !== attuale, title: o.motivo ?? o.titolo ?? null, onclick: () => scegli(o.valore),
-    }, o.etichetta))),
-    motivi.length ? h('small', { class: 'motivo' }, motivi.join(' · ')) : null);
-}
-export const siNo = (titolo, attuale, scegli, motivo = null) => righaScelte(titolo, [{ valore: false, etichetta: 'No' }, { valore: true, etichetta: 'Sì', motivo }], attuale, scegli);
-
-/**
  * Pannello d'attacco per l'arma `a` (voce di scheda.equipaggiamento.armi).
  * ctx: contesto della scheda a tab (dati, tab.scheda, sessione, ui, azioni).
  */
 export function pannelloAttacco(ctx, a) {
   const chiudi = () => { ctx.ui.attacco = null; ctx.azioni.ridisegna(); };
-  const corpo = a.tipo === 'arma_distanza' ? corpoDistanza(ctx, a) : corpoRavvicinato(a);
+  const intestazione = { etichetta: `Attacco con ${a.nome}`, titolo: `Attacca! · ${a.nome}`, chiudi, etichettaNav: 'Passi dell’attacco' };
+  if (a.tipo === 'arma_distanza') return corpoDistanza(ctx, a, intestazione);
   return h('div', { class: 'attacco-sfondo', onclick: (e) => { if (e.target === e.currentTarget) chiudi(); } },
-    h('section', { class: 'attacco-pannello', role: 'dialog', 'aria-modal': 'true', 'aria-label': `Attacco con ${a.nome}` },
+    h('section', { class: 'attacco-pannello pannello-semplice', role: 'dialog', 'aria-modal': 'true', 'aria-label': intestazione.etichetta },
       h('header', { class: 'attacco-testa' },
-        h('h2', {}, `Attacca! · ${a.nome}`),
+        h('h2', {}, intestazione.titolo),
         h('button', { type: 'button', class: 'btn', onclick: chiudi, 'aria-label': 'Chiudi il pannello d’attacco' }, 'Chiudi')),
-      corpo));
+      corpoRavvicinato(a)));
 }
 
 function corpoRavvicinato(a) {
@@ -65,7 +52,7 @@ export function pillola(nome, va, scomposizione) {
   }, { classe: 'val-eff pillola-va pillola-attacco' });
 }
 
-function corpoDistanza(ctx, a) {
+function corpoDistanza(ctx, a, intestazione) {
   const personaggio = { scheda: ctx.tab.scheda, sessione: ctx.sessione };
   const salvate = ctx.sessione.attacchi?.[a.uid] ?? {};
   const d = dichiarazioneDistanza(salvate);
@@ -77,40 +64,43 @@ function corpoDistanza(ctx, a) {
   const MF = ctx.dati.regole.modalita_di_fuoco;
   const colpi = ctx.sessione.munizioni?.[a.uid]?.colpi ?? null;
   const stato = (ctx.ui.attacco ??= { uid: a.uid, passo: 0 });
-  const passo = Math.min(stato.passo ?? 0, PASSI.length - 1);
-  const vai = (n) => { stato.passo = n; ctx.azioni.ridisegna(); };
+  const R = ctx.dati.regole.attacco_distanza;
+  const M = R.manovre;
+  const evasivoProprio = R.movimento_evasivo.proprio[d.movimento];
+  const ravvicinatoVa = M.ravvicinato.va_per_abilita[a.abilita];
+  const analisi = T.find((t) => t.e.analisi_rapida);
 
   const passi = [
     [
-      righaScelte('Movimento', [
+      rigaScelte('Movimento', [
         { valore: 'fermo', etichetta: 'Fermo' }, { valore: 'passo', etichetta: 'Passo' },
         { valore: 'corsa', etichetta: 'Corsa −2' }, { valore: 'scatto', etichetta: 'Scatto −6' },
       ], d.movimento, (x) => imposta({ movimento: x, ...(x === 'fermo' ? { evasivo: false } : {}), ...(!['fermo', 'passo'].includes(x) ? { coperturaPropria: 'nessuna' } : {}) })),
-      siNo('Movimento Evasivo (AzM + AzP)', d.evasivo, (x) => imposta({ evasivo: x }), v.evasivo),
-      righaScelte('Attacco dalla Copertura (AzM)', [
+      interruttore('Movimento Evasivo', d.evasivo, (x) => imposta({ evasivo: x }), { motivo: v.evasivo, mod: `AzM + AzP${evasivoProprio ? ` · ${numero(evasivoProprio)}` : ''}` }),
+      rigaScelte('Attacco dalla Copertura (AzM)', [
         { valore: 'nessuna', etichetta: 'Nessuna' },
         { valore: 'leggera', etichetta: 'Leggera −2', motivo: v.coperturaPropria },
         { valore: 'media', etichetta: 'Media −4', motivo: v.coperturaPropria },
       ], d.coperturaPropria, (x) => imposta({ coperturaPropria: x })),
     ],
     [
-      righaScelte('Movimento del bersaglio', [
+      rigaScelte('Movimento del bersaglio', [
         { valore: 'fermo', etichetta: 'Fermo o Passo' }, { valore: 'corsa', etichetta: 'Corsa −2' }, { valore: 'scatto', etichetta: 'Scatto −4' },
       ], d.bersaglio.movimento, (x) => b({ movimento: x })),
-      righaScelte('Movimento Evasivo del bersaglio', [
+      rigaScelte('Movimento Evasivo del bersaglio', [
         { valore: 'no', etichetta: 'No' }, { valore: 'si', etichetta: 'Sì' }, { valore: 'migliorato', etichetta: 'Sì, Migliorato' },
       ], d.bersaglio.evasivoMigliorato ? 'migliorato' : d.bersaglio.evasivo ? 'si' : 'no', (x) => b({ evasivo: x !== 'no', evasivoMigliorato: x === 'migliorato' })),
-      righaScelte('Copertura del bersaglio', [
+      rigaScelte('Copertura del bersaglio', [
         { valore: 'nessuna', etichetta: 'Nessuna' }, { valore: 'leggera', etichetta: 'Leggera −2' },
         { valore: 'media', etichetta: 'Media −4' }, { valore: 'totale', etichetta: 'Totale' },
       ], d.bersaglio.copertura, (x) => b({ copertura: x })),
-      siNo('Impegnato in Ravvicinato, protetto da un alleato o con un ostaggio', d.bersaglio.impegnato, (x) => b({ impegnato: x })),
-      siNo('Ignaro, immobilizzato o incapace di reagire', d.bersaglio.ignaro, (x) => b({ ignaro: x })),
-      siNo('Il bersaglio ti impegna in Ravvicinato', d.bersaglio.tiImpegna, (x) => b({ tiImpegna: x })),
-      T.some((t) => t.e.analisi_rapida) ? siNo('Analisi Rapida sul bersaglio (+2, una volta)', d.analisiRapida, (x) => imposta({ analisiRapida: x })) : null,
+      interruttore('Impegnato in Ravvicinato, protetto da un alleato o con un ostaggio', d.bersaglio.impegnato, (x) => b({ impegnato: x }), { mod: numero(R.bersaglio_impegnato.va) }),
+      interruttore('Ignaro, immobilizzato o incapace di reagire', d.bersaglio.ignaro, (x) => b({ ignaro: x }), { mod: M.bruciapelo.nome.replace('Tiro a ', '') }),
+      interruttore('Ti impegna in Ravvicinato', d.bersaglio.tiImpegna, (x) => b({ tiImpegna: x }), { mod: `${M.ravvicinato.nome.replace('Tiro ', '')} obbligatorio` }),
+      analisi ? interruttore('Analisi Rapida (una volta)', d.analisiRapida, (x) => imposta({ analisiRapida: x }), { mod: segno(analisi.e.analisi_rapida.va) }) : null,
     ],
     [
-      h('div', { class: 'scelta-attacco' },
+      h('div', { class: 'scelta-attacco scelta-distanza' },
         h('label', { class: 'scelta-titolo', for: `dist-${a.uid}` }, 'Distanza in Q'),
         h('div', { class: 'distanza-riga' },
           h('input', {
@@ -127,27 +117,20 @@ function corpoDistanza(ctx, a) {
         : 'Nessun mirino montato sull’arma (inventario).'),
     ],
     [
-      righaScelte('Modalità', (a.modalita ?? []).filter((x) => x !== 'TM' && MF[x]).map((x) => ({ valore: x, etichetta: `${MF[x].nome}${MF[x].modificatore_va ? ` ${segno(MF[x].modificatore_va)}` : ''}`, motivo: v.modalita[x] })),
+      rigaScelte('Modalità', (a.modalita ?? []).filter((x) => x !== 'TM' && MF[x]).map((x) => ({ valore: x, etichetta: `${MF[x].nome}${MF[x].modificatore_va ? ` ${segno(MF[x].modificatore_va)}` : ''}`, motivo: v.modalita[x] })),
         d.modalita, (x) => imposta({ modalita: x, ...(ctx.dati.regole.attacco_distanza.modalita.manovre_ammesse[x]?.includes('mirato') ? {} : { mirato: false, ravvicinato: false, bruciapelo: false }) })),
-      siNo('Tiro Mirato (+1 AzP)', d.mirato, (x) => imposta({ mirato: x }), v.mirato),
-      d.distanza <= ctx.dati.regole.attacco_distanza.manovre.ravvicinato.distanza_max_q
-        ? siNo('Tiro Ravvicinato (entro 3 Q)', d.ravvicinato || d.bersaglio.tiImpegna, (x) => imposta({ ravvicinato: x }), d.bersaglio.tiImpegna ? 'obbligatorio: il bersaglio ti impegna' : v.ravvicinato) : null,
-      d.distanza <= ctx.dati.regole.attacco_distanza.manovre.bruciapelo.distanza_max_q
-        ? siNo('Tiro a Bruciapelo (Contatto)', d.bruciapelo, (x) => imposta({ bruciapelo: x }), v.bruciapelo) : null,
-      richiedeImbracciatura(a, ctx.dati) ? siNo('Arma Imbracciata (1 AzM)', d.imbracciata, (x) => imposta({ imbracciata: x })) : null,
+      interruttore(M.mirato.nome, d.mirato, (x) => imposta({ mirato: x }), { motivo: v.mirato, mod: `${segno(M.mirato.va)} · +${M.mirato.danno} danno · +1 AzP` }),
+      d.distanza <= M.ravvicinato.distanza_max_q
+        ? interruttore(`${M.ravvicinato.nome} (≤ ${M.ravvicinato.distanza_max_q} Q)`, d.ravvicinato || d.bersaglio.tiImpegna, (x) => imposta({ ravvicinato: x }),
+          { motivo: d.bersaglio.tiImpegna ? 'obbligatorio: il bersaglio ti impegna' : v.ravvicinato, mod: `${ravvicinatoVa !== undefined ? `${numero(ravvicinatoVa)} · ` : ''}+${M.ravvicinato.danno} danno` }) : null,
+      d.distanza <= M.bruciapelo.distanza_max_q
+        ? interruttore(`${M.bruciapelo.nome} (Contatto)`, d.bruciapelo, (x) => imposta({ bruciapelo: x }), { motivo: v.bruciapelo, mod: `danno ×${M.bruciapelo.moltiplicatore}` }) : null,
+      richiedeImbracciatura(a, ctx.dati) ? interruttore('Arma Imbracciata (1 AzM)', d.imbracciata, (x) => imposta({ imbracciata: x }), { mod: `senza: ${numero(R.imbracciatura.va)}` }) : null,
     ],
     risultato(ctx, a, r, colpi, imposta),
   ];
 
-  return h('div', { class: 'attacco-passi' },
-    passi.map((contenuto, i) => h('section', { class: `attacco-passo${i === passo ? ' corrente' : ''}` },
-      h('h3', {}, h('span', { class: 'num-passo' }, `${i + 1}`), ' ', PASSI[i]),
-      contenuto)),
-    // telefono: un passo per schermata
-    h('nav', { class: 'attacco-nav', 'aria-label': 'Passi dell’attacco' },
-      h('button', { type: 'button', class: 'btn', disabled: passo === 0, onclick: () => vai(passo - 1) }, '← Indietro'),
-      h('span', { class: 'nota' }, `${passo + 1} / ${PASSI.length}`),
-      passo < PASSI.length - 1 ? h('button', { type: 'button', class: 'btn primario', onclick: () => vai(passo + 1) }, `${PASSI[passo + 1]} →`) : null));
+  return pannelloPassi({ ...intestazione, passi: passi.map((contenuto, i) => ({ titolo: PASSI[i], contenuto })), stato, ridisegna: ctx.azioni.ridisegna });
 }
 
 function risultato(ctx, a, r, colpi, imposta) {
