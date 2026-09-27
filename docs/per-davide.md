@@ -115,6 +115,15 @@ Il manuale non lo dice.
 **A.29 — Magistrale.** Raddoppia anche i bonus fissi di Colpo Mirato e Affondo?
 *Nel frattempo:* sì, perché vengono prima del moltiplicatore (§5.13); vale anche per Carica Brutale, che lo dice.
 
+**A.40 — Carica oltre 12 Q (§5.6).** La tabella della Carica si ferma a 7–12 Q e la Carica «non può superare la Corsa». Chi ha una Corsa oltre 12 Q (Talenti di movimento) può caricare più lontano, e con quali penalità?
+*Nel frattempo:* oltre 12 Q l'app non ammette la Carica e lo dice.
+
+**A.41 — Sbilanciare, Disarmare: Corpo a corpo o Abilità dell'arma (§5.12).** Chi attacca sceglie liberamente fra Corpo a corpo e l'Abilità dell'arma impugnata?
+*Nel frattempo:* l'app usa il valore migliore dei due e lo scrive nel risultato.
+
+**A.42 — Spazzata senz'armi (§5.12).** Il §5.12 non dice se la Spazzata si fa senz'armi; il Lottatore l'ottiene con Combattimento Multiplo. Senza quel Talento è ammessa?
+*Nel frattempo:* senz'armi l'app non propone la Spazzata; Combattimento Multiplo resta un promemoria.
+
 ### Chroma, non bloccanti
 
 **A.14 — Batterie da 5 PM: prezzo e profilo (§7.10).** Il manuale le cita come esempio (Rosso, Blu, Verde Comuni costo 1; Bianco Non Comune costo 2) ma senza prezzo, PI, Qualità, reperibilità. Ci dai i valori, o le togliamo finché non escono?
