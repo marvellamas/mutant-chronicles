@@ -38,8 +38,13 @@ test('i TODO(Davide) sono elencabili', () => {
   assert.equal(todo.some((t) => t.percorso.startsWith('classi.json')), false);
   // in regole.json restano solo le domande sugli effetti degli Stati (§5.18, per-davide A.16–A.17),
   // sul contenitore nuovo (Chroma, A.19), sul carico (pesi e oltre il massimo, A.30–A.31) e sull'Anticipazione
-  // senza Addestramento (A.39)
-  assert.deepEqual([...new Set(todo.filter((t) => t.percorso.startsWith('regole.json')).map((t) => t.percorso.split('.TODO')[0]))].sort(), ['regole.json.carico', 'regole.json.chroma', 'regole.json.lancio.anticipazione', 'regole.json.stati']);
+  // senza Addestramento (A.39) e sul corpo a corpo (A.22–A.29)
+  assert.deepEqual([...new Set(todo.filter((t) => t.percorso.startsWith('regole.json')).map((t) => t.percorso.split('.TODO')[0]))].sort(), [
+    'regole.json.attacco_ravvicinato.circostanze', 'regole.json.attacco_ravvicinato.copertura', 'regole.json.attacco_ravvicinato.magistrale',
+    'regole.json.attacco_ravvicinato.mano_non_dominante', 'regole.json.attacco_ravvicinato.manovre.disarmare', 'regole.json.attacco_ravvicinato.manovre.incalzare',
+    'regole.json.attacco_ravvicinato.manovre.sbilanciare', 'regole.json.attacco_ravvicinato.manovre.spazzata', 'regole.json.attacco_ravvicinato.senz_armi',
+    'regole.json.carico', 'regole.json.chroma', 'regole.json.lancio.anticipazione', 'regole.json.stati',
+  ]);
   // durate delle Tecniche Interiori: decise dal master il 26/09/2026 (A.4 del Doc E&L)
   assert.equal(todo.some((t) => t.percorso.startsWith('tecniche_interiori.json')), false);
 });

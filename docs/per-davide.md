@@ -37,10 +37,13 @@ Il manuale non lo dice.
 ### Attacco corpo a corpo (utility al tavolo)
 
 **A.22 — Danno base senz'armi.** Nessun manuale lo scrive. Serve il dado (e se FOR aggiunge qualcosa).
+*Nel frattempo:* il pannello «Attacca!» senz'armi chiede il danno in un campo del personaggio, vuoto con un avviso finché non lo si scrive; Arti Marziali dà 1d6 (§8.6.1). `regole.json` → `attacco_ravvicinato.senz_armi`.
 
 **A.23 — Mano non dominante.** Ambidestro (§8.6.1) "elimina il normale −4 VA quando si usa soltanto la mano non dominante", ma quel −4 non è definito da nessuna parte. Confermi −4 alle Prove per colpire con la mano non dominante?
+*Nel frattempo:* −4 solo quando il giocatore dichiara di attaccare con la sola mano non dominante; Ambidestro lo elimina; in Combattere con due armi resta il solo −4 della manovra (§5.7). `attacco_ravvicinato.mano_non_dominante`.
 
 **A.24 — Incalzare (§5.5).** È una Prova per colpire contro le Difese o una Prova contrapposta?
+*Nel frattempo:* Prova per colpire a −4 contro le Difese del bersaglio.
 
 ---
 
@@ -99,14 +102,18 @@ Il manuale non lo dice.
 ### Manovre ravvicinate
 
 **A.25 — Copertura nel corpo a corpo.** Vale anche per gli attacchi ravvicinati?
+*Nel frattempo:* nel pannello del corpo a corpo la Copertura del bersaglio è solo un promemoria, senza effetto sul VA.
 
 **A.26 — Ingaggio multiplo.** Esiste una regola? *Nel frattempo:* solo il modificatore di circostanza del §1.4.
 
 **A.27 — Spazzata.** Colpisce bersagli adiacenti all'attaccante o adiacenti fra loro?
+*Nel frattempo:* bersagli entro la portata dell'arma, con il promemoria «adiacenti» nel risultato.
 
 **A.28 — Sbilanciare e Disarmare.** Chi sceglie la Difesa del bersaglio?
+*Nel frattempo:* il risultato mostra tutte e due le opposizioni (Atletica o Difese; Corpo a corpo o Abilità dell'arma impugnata).
 
 **A.29 — Magistrale.** Raddoppia anche i bonus fissi di Colpo Mirato e Affondo?
+*Nel frattempo:* sì, perché vengono prima del moltiplicatore (§5.13); vale anche per Carica Brutale, che lo dice.
 
 ### Chroma, non bloccanti
 

@@ -1275,6 +1275,372 @@
     "parata_distanza_arma": -8,
     "_nota": "Giocatore §5.9, Parata a distanza: «Penalità −8 VA con un’arma e −4 VA con uno scudo». Gli scudi hanno i propri modificatori nel catalogo (Armamenti §7.4.11)."
   },
+  "attacco_ravvicinato": {
+    "_nota": "Utility «Attacca!» per le armi ravvicinate e «Senz’armi» (src/attacco.js → calcolaAttaccoRavvicinato). Giocatore §1.4, §1.6, §5.3–5.7, §5.12, §5.13. Manovre ammesse per arma: campo «manovre» del catalogo (Armamenti §7.1.7) per le Manovre con compatibilita «arma»; le «generale» valgono con qualsiasi arma ravvicinata e senz’armi, nei loro requisiti. Le versioni Migliorate e gli altri Talenti con un numero stanno negli effetti.attacco_ravvicinato dei Talenti (talenti_liberi.json, classi.json). Le «frasi» sono controllate da tools/verifica_frasi.mjs.",
+    "paragrafo": "Giocatore §5.12",
+    "frasi": [
+      "Le manovre offensive non si combinano fra loro salvo indicazione esplicita."
+    ],
+    "manovre": {
+      "normale": {
+        "nome": "Attacco normale",
+        "paragrafo": "Giocatore §5.12",
+        "offensiva": false,
+        "compatibilita": "generale",
+        "azioni_principali": 1,
+        "va": 0,
+        "danno": 0,
+        "prova": {
+          "tipo": "per_colpire",
+          "contro": [
+            "Difese"
+          ]
+        },
+        "frasi": [
+          "Un’Azione Principale, Abilità appropriata, danno normale."
+        ]
+      },
+      "mirato": {
+        "nome": "Colpo Mirato",
+        "paragrafo": "Giocatore §5.12",
+        "offensiva": true,
+        "compatibilita": "generale",
+        "azioni_principali": 2,
+        "va": 2,
+        "danno": 2,
+        "movimenti_esclusi": [
+          "corsa",
+          "scatto"
+        ],
+        "prova": {
+          "tipo": "per_colpire",
+          "contro": [
+            "Difese"
+          ]
+        },
+        "frasi": [
+          "Due Azioni Principali complessive, anche su più Round: +2 VA e +2 danni; Colpo Mirato Migliorato +4/+4.",
+          "Stesse interruzioni del Tiro Mirato.",
+          "Nessuna versione Istintiva."
+        ]
+      },
+      "affondo": {
+        "nome": "Affondo",
+        "paragrafo": "Giocatore §5.12",
+        "offensiva": true,
+        "compatibilita": "arma",
+        "nome_catalogo": "Affondo",
+        "azioni_principali": 1,
+        "va": -4,
+        "danno": 1,
+        "dopo_armatura": {
+          "stato": "Sanguinamento",
+          "valore": 1
+        },
+        "prova": {
+          "tipo": "per_colpire",
+          "contro": [
+            "Difese"
+          ]
+        },
+        "frasi": [
+          "Un’Azione Principale, arma adatta, −4 VA e +1 danno.",
+          "Se almeno 1 danno supera l’Armatura causa Sanguinamento 1.",
+          "Affondo Migliorato: +2 danni e Sanguinamento 2."
+        ]
+      },
+      "spazzata": {
+        "nome": "Spazzata",
+        "paragrafo": "Giocatore §5.12",
+        "offensiva": true,
+        "compatibilita": "arma",
+        "nome_catalogo": "Spazzata",
+        "azioni_principali": 1,
+        "va_per_bersagli": {
+          "2": -4,
+          "3": -6
+        },
+        "bersagli_max": 3,
+        "danno": 0,
+        "prova": {
+          "tipo": "per_colpire",
+          "contro": [
+            "Difese"
+          ]
+        },
+        "TODO(Davide)": "A.27: «bersagli adiacenti» all’attaccante o fra loro? Con un’arma a portata 2–3 Q l’app accetta i bersagli entro la portata e lo ricorda nel risultato.",
+        "frasi": [
+          "Un’Azione Principale contro fino a tre bersagli adiacenti: −4 VA contro due, −6 contro tre; una Prova, un colpo per bersaglio.",
+          "Spazzata Migliorata riduce la penalità di 2."
+        ]
+      },
+      "immobilizzare": {
+        "nome": "Immobilizzare",
+        "paragrafo": "Giocatore §5.12",
+        "offensiva": true,
+        "compatibilita": "generale",
+        "azioni_principali": 1,
+        "va": 0,
+        "danno": null,
+        "contatto": true,
+        "mano_libera": true,
+        "prova": {
+          "tipo": "contrapposta",
+          "abilita": [
+            "Corpo a corpo"
+          ],
+          "contro": [
+            "Corpo a corpo",
+            "Atletica"
+          ]
+        },
+        "effetto": "Immobilizzato",
+        "frasi": [
+          "Un’Azione Principale, Contatto e una mano libera: Prova contrapposta Corpo a corpo contro Corpo a corpo o Atletica.",
+          "Con successo applica Immobilizzato.",
+          "Liberarsi richiede un’Azione Principale e una nuova Prova contrapposta; i pareggi favoriscono chi trattiene.",
+          "Immobilizzare Migliorato impone −2 VA alla fuga."
+        ]
+      },
+      "sbilanciare": {
+        "nome": "Sbilanciare",
+        "paragrafo": "Giocatore §5.12",
+        "offensiva": true,
+        "compatibilita": "generale",
+        "azioni_principali": 1,
+        "va": -4,
+        "danno": null,
+        "portata": true,
+        "prova": {
+          "tipo": "contrapposta",
+          "abilita": [
+            "Corpo a corpo",
+            "arma"
+          ],
+          "contro": [
+            "Atletica",
+            "Difese"
+          ]
+        },
+        "effetto": "A Terra",
+        "TODO(Davide)": "A.28: fra Atletica e Difese sceglie il bersaglio? L’app mostra entrambe.",
+        "frasi": [
+          "Un’Azione Principale a Contatto o portata: Corpo a corpo o Abilità dell’arma contro Atletica o Difese, con −4 VA all’attaccante.",
+          "Con successo il bersaglio cade A Terra.",
+          "Sbilanciare Migliorato riduce a −2 VA."
+        ]
+      },
+      "stordire": {
+        "nome": "Stordire",
+        "paragrafo": "Giocatore §5.12",
+        "offensiva": true,
+        "compatibilita": "arma",
+        "nome_catalogo": "Stordire",
+        "senz_armi": true,
+        "azioni_principali": 1,
+        "va": -6,
+        "danno": 0,
+        "contatto": true,
+        "prova": {
+          "tipo": "per_colpire",
+          "contro": [
+            "Difese"
+          ]
+        },
+        "dopo_armatura": {
+          "salvezza": "Tempra",
+          "stato": "Stordito",
+          "durata": "1+1d3 Round"
+        },
+        "frasi": [
+          "Un’Azione Principale a Contatto, Corpo a corpo oppure Abilità di un’arma compatibile (§7.1.7), a −6 VA e danno normale.",
+          "Se almeno 1 danno supera l’Armatura, il bersaglio effettua una PS Tempra; se fallisce è Stordito per 1+1d3 Round (§5.18).",
+          "Stordire Migliorato riduce la penalità a −4 VA."
+        ]
+      },
+      "disarmare": {
+        "nome": "Disarmare",
+        "paragrafo": "Giocatore §5.12",
+        "offensiva": true,
+        "compatibilita": "generale",
+        "azioni_principali": 1,
+        "va": -4,
+        "danno": null,
+        "portata": true,
+        "prova": {
+          "tipo": "contrapposta",
+          "abilita": [
+            "Corpo a corpo",
+            "arma"
+          ],
+          "contro": [
+            "Corpo a corpo",
+            "Abilità dell’arma impugnata"
+          ]
+        },
+        "effetto": "l’oggetto cade nel Q del bersaglio",
+        "TODO(Davide)": "A.28: fra Corpo a corpo e Abilità dell’arma impugnata sceglie il bersaglio? L’app mostra entrambe.",
+        "frasi": [
+          "Un’Azione Principale a Contatto o portata: Corpo a corpo o Abilità dell’arma a −4 VA contro Corpo a corpo o Abilità dell’arma impugnata.",
+          "Con successo l’oggetto cade nel Q del bersaglio.",
+          "Disarmare Migliorato riduce a −2 VA."
+        ]
+      },
+      "incalzare": {
+        "nome": "Incalzare",
+        "paragrafo": "Giocatore §5.5",
+        "offensiva": true,
+        "compatibilita": "generale",
+        "azioni_principali": 1,
+        "va": -4,
+        "danno": null,
+        "spinta_q": 2,
+        "prova": {
+          "tipo": "per_colpire",
+          "contro": [
+            "Difese"
+          ]
+        },
+        "TODO(Davide)": "A.24: Prova per colpire contro le Difese o Prova contrapposta? L’app usa per ora la Prova per colpire contro le Difese.",
+        "frasi": [
+          "Con un’Azione Principale e un attacco ravvicinato o senz’armi a −4 VA, il bersaglio arretra di 2 Q e non subisce danni.",
+          "Incalzare Migliorato infligge anche il danno normale.",
+          "Il Movimento forzato non provoca attacchi di opportunità."
+        ]
+      }
+    },
+    "carica": {
+      "paragrafo": "Giocatore §5.6",
+      "azioni_movimento": 1,
+      "azioni_principali": 1,
+      "percorso_min_q": 3,
+      "fasce": [
+        {
+          "da": 3,
+          "a": 6,
+          "va": -2,
+          "avversari": -4
+        },
+        {
+          "da": 7,
+          "a": 12,
+          "va": -4,
+          "avversari": -6
+        }
+      ],
+      "moltiplicatore": 2,
+      "solo_normale": true,
+      "frasi": [
+        "Consuma l’Azione di Movimento e un’Azione Principale, richiede almeno 3 Q di percorso sufficientemente rettilineo e non può superare la Corsa.",
+        "Permette un solo attacco ravvicinato normale o senz’armi.",
+        "Le penalità durano fino all’arrivo dell’Iniziativa successiva.",
+        "Carica Migliorata porta il danno a ×3.",
+        "La Carica non si combina con altre manovre offensive.",
+        "I moltiplicatori seguono il §1.6: il danno ×2 diventa ×3 con un Magistrale; il ×3 di Carica Migliorata rimane ×3."
+      ]
+    },
+    "controcarica": {
+      "paragrafo": "Giocatore §5.6",
+      "va": -2,
+      "distanza_min_q": 6,
+      "moltiplicatore": 2,
+      "solo_normale": true,
+      "frasi": [
+        "Entrambi spendono le Azioni e attaccano simultaneamente a −2 VA.",
+        "Ignorano reciprocamente le penalità difensive della Carica e applicano il danno ×2, o ×3 con Carica Migliorata."
+      ]
+    },
+    "a_terra": {
+      "paragrafo": "Giocatore §5.5",
+      "proprio": -4,
+      "bersaglio": 2,
+      "stato": "a-terra",
+      "frasi": [
+        "Subisce −4 VA alle azioni fisiche ravvicinate, di equilibrio e alle Difese; può usare normalmente armi a distanza se la posizione lo permette.",
+        "Gli attaccanti ravvicinati ottengono +2 VA, quelli a distanza −2 VA; gli attacchi ad Area non ricevono modificatori."
+      ]
+    },
+    "due_armi": {
+      "paragrafo": "Giocatore §5.7",
+      "va": -4,
+      "attacchi": 2,
+      "solo_normale": true,
+      "frasi": [
+        "Con un’Azione Principale il personaggio effettua due attacchi, ciascuno a −4 VA, contro lo stesso bersaglio o bersagli differenti.",
+        "La manovra non si combina con Tiro Rapido, Tiro o Colpo Mirato, Raffiche, Spazzata o altre manovre offensive.",
+        "Dal 12° livello può essere eseguita con entrambe le Azioni Principali, per un massimo di quattro attacchi."
+      ]
+    },
+    "mano_non_dominante": {
+      "paragrafo": "Giocatore §5.7 (Ambidestro)",
+      "va": -4,
+      "TODO(Davide)": "A.23: il −4 della mano non dominante non è definito da nessun paragrafo; l’app lo applica solo quando il giocatore dichiara di attaccare con la sola mano non dominante (fuori da Combattere con due armi).",
+      "frasi": [
+        "Elimina il normale −4 VA quando si usa soltanto la mano non dominante."
+      ]
+    },
+    "opportunita": {
+      "paragrafo": "Giocatore §5.3",
+      "per_round": 1,
+      "solo_normale": true,
+      "frasi": [
+        "Non consuma Azioni, può essere effettuato anche senza Azioni disponibili e una sola volta per Round.",
+        "Deve essere un attacco ravvicinato normale e non può incorporare manovre offensive."
+      ]
+    },
+    "imboscata": {
+      "paragrafo": "Giocatore §5.4",
+      "va": -2,
+      "frasi": [
+        "Se l’evento si verifica prima della propria Iniziativa successiva, l’Azione si risolve immediatamente con −2 VA e senza consumare un’altra Azione.",
+        "Imboscata Migliorata elimina la penalità."
+      ]
+    },
+    "magistrale": {
+      "paragrafo": "Giocatore §1.6",
+      "raddoppio": 2,
+      "da_x2": 3,
+      "massimo": 3,
+      "TODO(Davide)": "A.29: i bonus fissi al danno (Colpo Mirato, Affondo, Carica Brutale) vengono prima del moltiplicatore (§5.13), quindi il Magistrale li raddoppia: l’app li conta così.",
+      "frasi": [
+        "Normalmente il Magistrale raddoppia il danno; se una regola prevede già danno ×2, con il Magistrale si applica ×3, non ×4.",
+        "Gli altri moltiplicatori non si sommano né si moltiplicano tra loro: si utilizza il più alto."
+      ]
+    },
+    "danno": {
+      "paragrafo": "Giocatore §5.13",
+      "frasi": [
+        "Applicare il moltiplicatore più alto; il danno già ×2 diventa ×3 con un Magistrale (§1.6).",
+        "Un bonus formulato come “+X danni dopo l’Armatura” si applica soltanto se almeno 1 danno ha superato la protezione."
+      ]
+    },
+    "senz_armi": {
+      "paragrafo": "Giocatore §8.6.1 (Arti Marziali), §3.5.5 (Lottatore)",
+      "abilita": "Corpo a corpo",
+      "portata_q": 1,
+      "danno": null,
+      "TODO(Davide)": "A.22: nessun manuale dà il danno base senz’armi per chi non ha Arti Marziali né la Disciplina del Lottatore. L’app chiede il danno nel personaggio (campo «danno senz’armi»), vuoto finché non lo si scrive."
+    },
+    "copertura": {
+      "paragrafo": "Giocatore §5.8",
+      "TODO(Davide)": "A.25: le penalità della Copertura valgono anche nel ravvicinato? Per ora l’app lo ricorda soltanto, senza modificare il VA."
+    },
+    "circostanze": {
+      "paragrafo": "Giocatore §1.4",
+      "valori": [
+        -8,
+        -6,
+        -4,
+        -2,
+        0,
+        2,
+        4,
+        6,
+        8
+      ],
+      "TODO(Davide)": "A.26: nessuna regola per l’Ingaggio multiplo; resta il modificatore di circostanza del Direttore."
+    }
+  },
   "calendario": {
     "_nota": "Calendario di gioco della scheda digitale (src/calendario.js): non è una regola dei manuali, è un aiuto per le note di campagna. Le fasce sono in ordine: «+ fascia» dopo l’ultima passa alla prima del giorno dopo. Le bandierine danno l’importanza di una nota; «M» (da ricordare) si combina con qualunque bandierina.",
     "fasce": [

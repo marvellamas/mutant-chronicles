@@ -104,7 +104,14 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Elimina il normale −4 VA quando il personaggio utilizza soltanto la mano non dominante. Non concede Azioni o attacchi aggiuntivi. Non modifica la manovra Combattere con due armi e non si somma ai benefici di Duellante, Schermidore o Pistolero (§5.7)."
+      "testo": "Elimina il normale −4 VA quando il personaggio utilizza soltanto la mano non dominante. Non concede Azioni o attacchi aggiuntivi. Non modifica la manovra Combattere con due armi e non si somma ai benefici di Duellante, Schermidore o Pistolero (§5.7).",
+      "effetti": {
+        "attacco_ravvicinato": {
+          "mano_non_dominante": {
+            "va": 0
+          }
+        }
+      }
     },
     {
       "id": "iniziativa-migliorata",
@@ -231,7 +238,12 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Un 2 naturale che supera la Prova viene considerato un Successo Magistrale. Il beneficio si applica a tutti i tipi di Prova. Con Valore finale 1, un risultato di 2 rimane un fallimento. Il 2 naturale non assegna Distintivi.\nSi applicano gli effetti ordinari del Magistrale previsti dalla Prova, comprese le regole sulle applicazioni multiple del danno: il danno normalmente ×2 diventa ×3, mentre un ×3 già previsto non aumenta ulteriormente. Il Talento non consente tiri volontari per attività automatiche o prive di incertezza.\nUn avversario direttamente coinvolto può spendere 3 Punti Eroe per trasformare questo Magistrale in un successo normale, alle stesse condizioni previste per un Magistrale ottenuto con 1 naturale (§1.8.2)."
+      "testo": "Un 2 naturale che supera la Prova viene considerato un Successo Magistrale. Il beneficio si applica a tutti i tipi di Prova. Con Valore finale 1, un risultato di 2 rimane un fallimento. Il 2 naturale non assegna Distintivi.\nSi applicano gli effetti ordinari del Magistrale previsti dalla Prova, comprese le regole sulle applicazioni multiple del danno: il danno normalmente ×2 diventa ×3, mentre un ×3 già previsto non aumenta ulteriormente. Il Talento non consente tiri volontari per attività automatiche o prive di incertezza.\nUn avversario direttamente coinvolto può spendere 3 Punti Eroe per trasformare questo Magistrale in un successo normale, alle stesse condizioni previste per un Magistrale ottenuto con 1 naturale (§1.8.2).",
+      "effetti": {
+        "attacco_ravvicinato": {
+          "promemoria": "sempre"
+        }
+      }
     },
     {
       "id": "prova-di-caratteristica-migliorata",
@@ -366,7 +378,14 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Porta a ×3 il danno di Carica e Controcarica. Il ×3 rimane tale anche con un Successo Magistrale. Restano Azioni, Prove, distanze, penalità e incompatibilità delle manovre (§5.6)."
+      "testo": "Porta a ×3 il danno di Carica e Controcarica. Il ×3 rimane tale anche con un Successo Magistrale. Restano Azioni, Prove, distanze, penalità e incompatibilità delle manovre (§5.6).",
+      "effetti": {
+        "attacco_ravvicinato": {
+          "carica": {
+            "moltiplicatore": 3
+          }
+        }
+      }
     },
     {
       "id": "imboscata-migliorata",
@@ -376,7 +395,14 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Elimina il −2 VA all’Azione Principale eseguita quando si verifica l’evento dichiarato mediante Imboscata. Restano il costo e le condizioni della manovra (§5.4)."
+      "testo": "Elimina il −2 VA all’Azione Principale eseguita quando si verifica l’evento dichiarato mediante Imboscata. Restano il costo e le condizioni della manovra (§5.4).",
+      "effetti": {
+        "attacco_ravvicinato": {
+          "imboscata": {
+            "va": 0
+          }
+        }
+      }
     },
     {
       "id": "incalzare-migliorato",
@@ -386,7 +412,16 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Con Incalzare infligge anche il danno normale al bersaglio, oltre allo spostamento previsto. Conserva il costo di 1 AzP e il −4 VA alla Prova per colpire. Ostacoli, caduta A Terra e pericoli seguono la manovra ordinaria (§5.5)."
+      "testo": "Con Incalzare infligge anche il danno normale al bersaglio, oltre allo spostamento previsto. Conserva il costo di 1 AzP e il −4 VA alla Prova per colpire. Ostacoli, caduta A Terra e pericoli seguono la manovra ordinaria (§5.5).",
+      "effetti": {
+        "attacco_ravvicinato": {
+          "manovra": {
+            "incalzare": {
+              "danno_normale": true
+            }
+          }
+        }
+      }
     },
     {
       "id": "movimento-evasivo-migliorato",
@@ -473,7 +508,15 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Con due Armi leggere a distanza, la penalità di Combattere con due armi passa da −4 a −2 VA a ciascuno dei due attacchi. Gli attacchi conservano Prove e risoluzioni separate. Restano 1 AzP, i requisiti delle armi e tutte le incompatibilità della manovra (§5.7). Ambidestro non aggiunge un’ulteriore riduzione."
+      "testo": "Con due Armi leggere a distanza, la penalità di Combattere con due armi passa da −4 a −2 VA a ciascuno dei due attacchi. Gli attacchi conservano Prove e risoluzioni separate. Restano 1 AzP, i requisiti delle armi e tutte le incompatibilità della manovra (§5.7). Ambidestro non aggiunge un’ulteriore riduzione.",
+      "effetti": {
+        "attacco_ravvicinato": {
+          "due_armi": {
+            "combinazione": "leggere_distanza",
+            "va": -2
+          }
+        }
+      }
     },
     {
       "id": "duellante",
@@ -483,7 +526,15 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Con una combinazione mista di un’arma ravvicinata a una mano e un’Arma leggera a distanza, la penalità di Combattere con due armi passa da −4 a −2 VA a ciascun attacco. Gli attacchi conservano Prove e risoluzioni separate. Contro un bersaglio impegnato si applicano anche le regole del Tiro Ravvicinato. Restano 1 AzP e le incompatibilità della manovra; Ambidestro non aggiunge un’ulteriore riduzione (§5.7)."
+      "testo": "Con una combinazione mista di un’arma ravvicinata a una mano e un’Arma leggera a distanza, la penalità di Combattere con due armi passa da −4 a −2 VA a ciascun attacco. Gli attacchi conservano Prove e risoluzioni separate. Contro un bersaglio impegnato si applicano anche le regole del Tiro Ravvicinato. Restano 1 AzP e le incompatibilità della manovra; Ambidestro non aggiunge un’ulteriore riduzione (§5.7).",
+      "effetti": {
+        "attacco_ravvicinato": {
+          "due_armi": {
+            "combinazione": "mista",
+            "va": -2
+          }
+        }
+      }
     },
     {
       "id": "raffica-breve-migliorata",
@@ -708,7 +759,15 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Con due armi ravvicinate a una mano, la penalità di Combattere con due armi passa da −4 a −2 VA a ciascuno dei due attacchi. Restano 1 AzP, le Prove distinte, i requisiti e le incompatibilità della manovra. Ambidestro non aggiunge un’ulteriore riduzione (§5.7)."
+      "testo": "Con due armi ravvicinate a una mano, la penalità di Combattere con due armi passa da −4 a −2 VA a ciascuno dei due attacchi. Restano 1 AzP, le Prove distinte, i requisiti e le incompatibilità della manovra. Ambidestro non aggiunge un’ulteriore riduzione (§5.7).",
+      "effetti": {
+        "attacco_ravvicinato": {
+          "due_armi": {
+            "combinazione": "ravvicinate",
+            "va": -2
+          }
+        }
+      }
     },
     {
       "id": "affondo-migliorato",
@@ -718,7 +777,17 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Con Affondo porta il bonus al danno da +1 a +2 e applica Sanguinamento 2 anziché 1, se almeno 1 danno supera l’AR. Restano 1 AzP, −4 VA, l’arma compatibile e le altre condizioni della manovra."
+      "testo": "Con Affondo porta il bonus al danno da +1 a +2 e applica Sanguinamento 2 anziché 1, se almeno 1 danno supera l’AR. Restano 1 AzP, −4 VA, l’arma compatibile e le altre condizioni della manovra.",
+      "effetti": {
+        "attacco_ravvicinato": {
+          "manovra": {
+            "affondo": {
+              "danno": 2,
+              "dopo_armatura": 2
+            }
+          }
+        }
+      }
     },
     {
       "id": "apertura-tattica",
@@ -738,7 +807,14 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Il danno base degli attacchi senz’armi diventa 1d6. Non si somma al dado della Disciplina del Lottatore: si usa il dado più alto applicabile."
+      "testo": "Il danno base degli attacchi senz’armi diventa 1d6. Non si somma al dado della Disciplina del Lottatore: si usa il dado più alto applicabile.",
+      "effetti": {
+        "attacco_ravvicinato": {
+          "senz_armi": {
+            "danno": "1d6"
+          }
+        }
+      }
     },
     {
       "id": "arti-marziali-migliorate",
@@ -750,7 +826,14 @@
       ],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Ottiene +1 VA agli attacchi senz’armi e alle Prove di Difese contro attacchi Ravvicinati mentre combatte senz’armi. Non concede da solo la possibilità di parare a mani nude."
+      "testo": "Ottiene +1 VA agli attacchi senz’armi e alle Prove di Difese contro attacchi Ravvicinati mentre combatte senz’armi. Non concede da solo la possibilità di parare a mani nude.",
+      "effetti": {
+        "attacco_ravvicinato": {
+          "senz_armi": {
+            "va": 1
+          }
+        }
+      }
     },
     {
       "id": "colpo-di-opportunita-istintivo",
@@ -760,7 +843,12 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Può effettuare due Attacchi di Opportunità gratuiti per Round, contro avversari differenti, rispettando le condizioni che li provocano. Non permette due attacchi contro lo stesso avversario nel medesimo Round."
+      "testo": "Può effettuare due Attacchi di Opportunità gratuiti per Round, contro avversari differenti, rispettando le condizioni che li provocano. Non permette due attacchi contro lo stesso avversario nel medesimo Round.",
+      "effetti": {
+        "attacco_ravvicinato": {
+          "promemoria": "opportunita"
+        }
+      }
     },
     {
       "id": "colpo-mirato-migliorato",
@@ -770,7 +858,17 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Porta i bonus di Colpo Mirato a +4 VA e +4 danni. Restano due AzP complessive, anche su più Round, e le normali condizioni che interrompono la preparazione."
+      "testo": "Porta i bonus di Colpo Mirato a +4 VA e +4 danni. Restano due AzP complessive, anche su più Round, e le normali condizioni che interrompono la preparazione.",
+      "effetti": {
+        "attacco_ravvicinato": {
+          "manovra": {
+            "mirato": {
+              "va": 4,
+              "danno": 4
+            }
+          }
+        }
+      }
     },
     {
       "id": "combattere-alla-cieca",
@@ -780,7 +878,12 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Riduce da −8 a −4 VA le penalità per attaccare o difendersi contro un avversario non visibile. Una Prova riuscita di Percezione può localizzarlo mediante indizi concretamente percepibili: finché ne segue la posizione, quell’avversario non beneficia del +4 VA per attaccarlo senza essere percepito, ma resta la penalità di −4 dovuta alla mancanza della vista. Non permette di vedere, leggere o individuare una presenza priva di indizi percepibili."
+      "testo": "Riduce da −8 a −4 VA le penalità per attaccare o difendersi contro un avversario non visibile. Una Prova riuscita di Percezione può localizzarlo mediante indizi concretamente percepibili: finché ne segue la posizione, quell’avversario non beneficia del +4 VA per attaccarlo senza essere percepito, ma resta la penalità di −4 dovuta alla mancanza della vista. Non permette di vedere, leggere o individuare una presenza priva di indizi percepibili.",
+      "effetti": {
+        "attacco_ravvicinato": {
+          "promemoria": "sempre"
+        }
+      }
     },
     {
       "id": "disarmare-migliorato",
@@ -790,7 +893,16 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Riduce la penalità di Disarmare da −4 a −2 VA. Restano costo, Prova contrapposta, portata e conseguenze della manovra."
+      "testo": "Riduce la penalità di Disarmare da −4 a −2 VA. Restano costo, Prova contrapposta, portata e conseguenze della manovra.",
+      "effetti": {
+        "attacco_ravvicinato": {
+          "manovra": {
+            "disarmare": {
+              "va": -2
+            }
+          }
+        }
+      }
     },
     {
       "id": "immobilizzare-istintivo",
@@ -800,7 +912,12 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Quando riesce nella presa iniziale senz’armi di Immobilizzare, infligge anche il normale danno senz’armi, con l’AR pertinente. Il danno avviene una sola volta per la presa iniziale e non si ripete automaticamente mantenendola."
+      "testo": "Quando riesce nella presa iniziale senz’armi di Immobilizzare, infligge anche il normale danno senz’armi, con l’AR pertinente. Il danno avviene una sola volta per la presa iniziale e non si ripete automaticamente mantenendola.",
+      "effetti": {
+        "attacco_ravvicinato": {
+          "promemoria": "immobilizzare"
+        }
+      }
     },
     {
       "id": "immobilizzare-migliorato",
@@ -810,7 +927,12 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Impone −2 VA alle Prove con cui il bersaglio tenta di liberarsi dalla propria Immobilizzazione. Restano Prova contrapposta, Azioni e requisiti della manovra o dell’arma compatibile."
+      "testo": "Impone −2 VA alle Prove con cui il bersaglio tenta di liberarsi dalla propria Immobilizzazione. Restano Prova contrapposta, Azioni e requisiti della manovra o dell’arma compatibile.",
+      "effetti": {
+        "attacco_ravvicinato": {
+          "promemoria": "immobilizzare"
+        }
+      }
     },
     {
       "id": "sbilanciare-migliorato",
@@ -820,7 +942,16 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Riduce la penalità di Sbilanciare da −4 a −2 VA. Non modifica il costo, l’opposizione o gli effetti della manovra."
+      "testo": "Riduce la penalità di Sbilanciare da −4 a −2 VA. Non modifica il costo, l’opposizione o gli effetti della manovra.",
+      "effetti": {
+        "attacco_ravvicinato": {
+          "manovra": {
+            "sbilanciare": {
+              "va": -2
+            }
+          }
+        }
+      }
     },
     {
       "id": "spazzata-migliorata",
@@ -830,7 +961,16 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Riduce di 2 la penalità di Spazzata: −2 VA contro due bersagli, −4 contro tre o più quando una capacità consente di superare il limite ordinario. Non aumenta da solo il numero massimo di bersagli."
+      "testo": "Riduce di 2 la penalità di Spazzata: −2 VA contro due bersagli, −4 contro tre o più quando una capacità consente di superare il limite ordinario. Non aumenta da solo il numero massimo di bersagli.",
+      "effetti": {
+        "attacco_ravvicinato": {
+          "manovra": {
+            "spazzata": {
+              "riduzione": 2
+            }
+          }
+        }
+      }
     },
     {
       "id": "stordire-migliorato",
@@ -840,7 +980,16 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Riduce la penalità della manovra Stordire da −6 a −4 VA. Restano costo, danno, arma compatibile, almeno 1 danno oltre AR e PS Tempra prevista dalla manovra."
+      "testo": "Riduce la penalità della manovra Stordire da −6 a −4 VA. Restano costo, danno, arma compatibile, almeno 1 danno oltre AR e PS Tempra prevista dalla manovra.",
+      "effetti": {
+        "attacco_ravvicinato": {
+          "manovra": {
+            "stordire": {
+              "va": -4
+            }
+          }
+        }
+      }
     },
     {
       "id": "copertura-migliorata",

@@ -256,7 +256,12 @@
         {
           "grado": 1,
           "nome": "Colpo Sleale",
-          "testo": "Una volta per Round, quando colpisce un bersaglio che ignora la sua presenza, è ingaggiato con un altro avversario oppure ha esaurito le proprie Azioni Principali, può scegliere uno dei seguenti benefici: Ferire, +2 al danno; Spostare, spostamento del bersaglio di 1 Q se fisicamente possibile, con le regole del Movimento forzato; Distrarre, il bersaglio non può effettuare Attacchi di Opportunità fino all’arrivo dell’Iniziativa successiva del Lestofante. Il beneficio fa parte dell’attacco e non richiede altre Azioni."
+          "testo": "Una volta per Round, quando colpisce un bersaglio che ignora la sua presenza, è ingaggiato con un altro avversario oppure ha esaurito le proprie Azioni Principali, può scegliere uno dei seguenti benefici: Ferire, +2 al danno; Spostare, spostamento del bersaglio di 1 Q se fisicamente possibile, con le regole del Movimento forzato; Distrarre, il bersaglio non può effettuare Attacchi di Opportunità fino all’arrivo dell’Iniziativa successiva del Lestofante. Il beneficio fa parte dell’attacco e non richiede altre Azioni.",
+          "effetti": {
+            "attacco_ravvicinato": {
+              "promemoria": "sempre"
+            }
+          }
         },
         {
           "grado": 3,
@@ -510,17 +515,34 @@
         {
           "specializzazione": "Agile",
           "nome": "Carica Brutale",
-          "testo": "Ottiene +2 al danno base della Carica, prima di applicare il moltiplicatore. Valgono le regole comuni sui moltiplicatori: si applica quello più alto e il danno ×2 diventa ×3 con un Magistrale (§1.6)."
+          "testo": "Ottiene +2 al danno base della Carica, prima di applicare il moltiplicatore. Valgono le regole comuni sui moltiplicatori: si applica quello più alto e il danno ×2 diventa ×3 con un Magistrale (§1.6).",
+          "effetti": {
+            "attacco_ravvicinato": {
+              "carica": {
+                "danno": 2
+              }
+            }
+          }
         },
         {
           "specializzazione": "Agile",
           "nome": "Spinta d’Impatto",
-          "testo": "Una volta per Round, dopo un attacco ravvicinato che infligge almeno 1 danno dopo l’Armatura, può spingere il bersaglio di 1 Q allontanandolo da sé, senza Azioni aggiuntive. Lo spostamento deve essere fisicamente possibile e terminare in uno spazio libero e raggiungibile; non provoca Attacchi di Opportunità. Se l’attacco produce già uno spostamento, si applica solo quello maggiore. Valgono le capacità di resistenza agli spostamenti forzati."
+          "testo": "Una volta per Round, dopo un attacco ravvicinato che infligge almeno 1 danno dopo l’Armatura, può spingere il bersaglio di 1 Q allontanandolo da sé, senza Azioni aggiuntive. Lo spostamento deve essere fisicamente possibile e terminare in uno spazio libero e raggiungibile; non provoca Attacchi di Opportunità. Se l’attacco produce già uno spostamento, si applica solo quello maggiore. Valgono le capacità di resistenza agli spostamenti forzati.",
+          "effetti": {
+            "attacco_ravvicinato": {
+              "promemoria": "sempre"
+            }
+          }
         },
         {
           "specializzazione": "Corazzato",
           "nome": "Scudo Aggressivo",
-          "testo": "Una volta per Round, dopo aver risolto un attacco con lo scudo andato a segno, impone al bersaglio −2 VA alla prossima Prova di Difese effettuata prima dell’inizio dell’Iniziativa successiva dell’Assaltatore. La penalità si consuma con quella sola Prova e non si cumula con sé stessa."
+          "testo": "Una volta per Round, dopo aver risolto un attacco con lo scudo andato a segno, impone al bersaglio −2 VA alla prossima Prova di Difese effettuata prima dell’inizio dell’Iniziativa successiva dell’Assaltatore. La penalità si consuma con quella sola Prova e non si cumula con sé stessa.",
+          "effetti": {
+            "attacco_ravvicinato": {
+              "promemoria": "sempre"
+            }
+          }
         },
         {
           "specializzazione": "Corazzato",
@@ -530,7 +552,14 @@
         {
           "specializzazione": "Comune",
           "nome": "Coordinazione Offensiva",
-          "testo": "Ottiene +1 alla Prova per colpire in Ravvicinato un bersaglio adiacente a un alleato cosciente e capace di agire. La presenza di più alleati non aumenta il bonus."
+          "testo": "Ottiene +1 alla Prova per colpire in Ravvicinato un bersaglio adiacente a un alleato cosciente e capace di agire. La presenza di più alleati non aumenta il bonus.",
+          "effetti": {
+            "attacco_ravvicinato": {
+              "alleato_adiacente": {
+                "va": 1
+              }
+            }
+          }
         }
       ]
     },
@@ -577,13 +606,24 @@
           "effetti": {
             "attacco_distanza": {
               "promemoria": "entro_10"
-            }
+            },
+            "attacco_ravvicinato": {
+              "primo_attacco": {
+                "va": 2
+              }
+            },
+            "iniziativa": 2
           }
         },
         {
           "grado": 5,
           "nome": "Colpisci e Sparisci",
-          "testo": "Una volta per Round, durante la propria Iniziativa, può suddividere il Passo prima e dopo un proprio attacco, utilizzando la propria Azione di Movimento e percorrendo complessivamente fino a 6 Q. Il Movimento effettuato dopo l’attacco non provoca Attacchi di Opportunità.\nSe termina il Movimento in una posizione adatta a nascondersi, può effettuare una Prova di Furtività senza spendere un’ulteriore Azione Principale. Restano necessarie le normali condizioni ambientali e la riuscita della Prova: raggiungere una Copertura non lo rende automaticamente nascosto. Il Talento funziona anche se l’attacco fallisce. L’attacco può essere ravvicinato o a distanza e conserva i normali costi in Azioni."
+          "testo": "Una volta per Round, durante la propria Iniziativa, può suddividere il Passo prima e dopo un proprio attacco, utilizzando la propria Azione di Movimento e percorrendo complessivamente fino a 6 Q. Il Movimento effettuato dopo l’attacco non provoca Attacchi di Opportunità.\nSe termina il Movimento in una posizione adatta a nascondersi, può effettuare una Prova di Furtività senza spendere un’ulteriore Azione Principale. Restano necessarie le normali condizioni ambientali e la riuscita della Prova: raggiungere una Copertura non lo rende automaticamente nascosto. Il Talento funziona anche se l’attacco fallisce. L’attacco può essere ravvicinato o a distanza e conserva i normali costi in Azioni.",
+          "effetti": {
+            "attacco_ravvicinato": {
+              "promemoria": "sempre"
+            }
+          }
         }
       ],
       "talenti_a_scelta": [
@@ -597,6 +637,11 @@
                 "va": 2,
                 "distanza_max_q": 10
               }
+            },
+            "attacco_ravvicinato": {
+              "ignaro": {
+                "va": 2
+              }
             }
           }
         },
@@ -607,6 +652,13 @@
           "effetti": {
             "attacco_distanza": {
               "promemoria": "mirato"
+            },
+            "attacco_ravvicinato": {
+              "manovra": {
+                "mirato": {
+                  "dopo_armatura": 2
+                }
+              }
             }
           }
         },
@@ -654,29 +706,59 @@
         {
           "grado": 1,
           "nome": "Addestramento al Combattimento Senz’Armi",
-          "testo": "Il Lottatore sceglie permanentemente una Disciplina: Potenza, Rapidità, Controllo o Guardia. Il danno dei suoi attacchi senz’armi dipende dalla Disciplina e dal Grado nella Classe.\nDisciplina Potenza Rapidità Controllo Guardia\nGradi I–II 1d8 1d4 1d4 1d6\nGradi III–IV 1d10 1d6 1d6 1d8\nGradi V–VI 1d12 1d8 1d8 1d10\nPotenza. Dopo aver effettuato un attacco senz’armi, subisce −1 VA a Difese fino all’arrivo della propria Iniziativa successiva. Più attacchi non aumentano questa penalità.\nRapidità. Ottiene sempre +3 Iniziativa. Una volta per Round, durante la propria Iniziativa, può muoversi di 1 Q aggiuntivo senza spendere Azioni. Si applicano normalmente gli Attacchi di Opportunità. Questo movimento aggiuntivo non modifica la distanza o la continuità della normale Azione di Movimento.\nControllo. Ottiene +2 VA ai Gradi I–II, +4 VA ai Gradi III–IV e +6 VA ai Gradi V–VI alle Prove offensive di Corpo a corpo per Immobilizzare, Sbilanciare, Disarmare, Incalzare e Stordire. Restano validi costi, requisiti e penalità delle Manovre.\nGuardia. Ottiene un bonus a Difese contro gli attacchi ravvicinati: +1 VA ai Gradi I–II, +2 VA ai Gradi III–IV e +3 VA ai Gradi V–VI."
+          "testo": "Il Lottatore sceglie permanentemente una Disciplina: Potenza, Rapidità, Controllo o Guardia. Il danno dei suoi attacchi senz’armi dipende dalla Disciplina e dal Grado nella Classe.\nDisciplina Potenza Rapidità Controllo Guardia\nGradi I–II 1d8 1d4 1d4 1d6\nGradi III–IV 1d10 1d6 1d6 1d8\nGradi V–VI 1d12 1d8 1d8 1d10\nPotenza. Dopo aver effettuato un attacco senz’armi, subisce −1 VA a Difese fino all’arrivo della propria Iniziativa successiva. Più attacchi non aumentano questa penalità.\nRapidità. Ottiene sempre +3 Iniziativa. Una volta per Round, durante la propria Iniziativa, può muoversi di 1 Q aggiuntivo senza spendere Azioni. Si applicano normalmente gli Attacchi di Opportunità. Questo movimento aggiuntivo non modifica la distanza o la continuità della normale Azione di Movimento.\nControllo. Ottiene +2 VA ai Gradi I–II, +4 VA ai Gradi III–IV e +6 VA ai Gradi V–VI alle Prove offensive di Corpo a corpo per Immobilizzare, Sbilanciare, Disarmare, Incalzare e Stordire. Restano validi costi, requisiti e penalità delle Manovre.\nGuardia. Ottiene un bonus a Difese contro gli attacchi ravvicinati: +1 VA ai Gradi I–II, +2 VA ai Gradi III–IV e +3 VA ai Gradi V–VI.",
+          "effetti": {
+            "attacco_ravvicinato": {
+              "promemoria": "senz_armi"
+            }
+          }
         },
         {
           "grado": 3,
           "nome": "Raffica di Colpi",
-          "testo": "Con una sola Azione Principale effettua due attacchi senz’armi, ciascuno con −2 VA. Può colpire lo stesso bersaglio oppure due bersagli differenti entro portata. Ogni attacco richiede una Prova distinta e viene risolto separatamente, comprese Difese, danno e Armatura.\nNon richiede PM e non può essere combinata con altre Manovre offensive nella stessa Azione. Dal 12° livello può utilizzare entrambe le Azioni Principali per eseguire due Raffiche di Colpi, per un totale di quattro attacchi."
+          "testo": "Con una sola Azione Principale effettua due attacchi senz’armi, ciascuno con −2 VA. Può colpire lo stesso bersaglio oppure due bersagli differenti entro portata. Ogni attacco richiede una Prova distinta e viene risolto separatamente, comprese Difese, danno e Armatura.\nNon richiede PM e non può essere combinata con altre Manovre offensive nella stessa Azione. Dal 12° livello può utilizzare entrambe le Azioni Principali per eseguire due Raffiche di Colpi, per un totale di quattro attacchi.",
+          "effetti": {
+            "attacco_ravvicinato": {
+              "raffica_di_colpi": {
+                "attacchi": 2,
+                "va": -2
+              }
+            }
+          }
         },
         {
           "grado": 5,
           "nome": "Combattimento Multiplo",
-          "testo": "Con un’Azione Principale effettua una Spazzata senz’armi contro tutti gli avversari adiacenti raggiungibili dai suoi colpi, superando il normale limite di tre bersagli. Effettua una sola Prova di Corpo a corpo: −4 VA contro due bersagli, −6 VA contro tre o più bersagli.\nCon un successo, ogni bersaglio subisce un colpo e applica separatamente le proprie Difese e l’Armatura. Spazzata Migliorata riduce di 2 la penalità. Restano valide le regole generali sul Successo Magistrale per gli attacchi con più istanze di danno.\nNon richiede PM e non può essere combinato con Raffica di Colpi nella stessa Azione."
+          "testo": "Con un’Azione Principale effettua una Spazzata senz’armi contro tutti gli avversari adiacenti raggiungibili dai suoi colpi, superando il normale limite di tre bersagli. Effettua una sola Prova di Corpo a corpo: −4 VA contro due bersagli, −6 VA contro tre o più bersagli.\nCon un successo, ogni bersaglio subisce un colpo e applica separatamente le proprie Difese e l’Armatura. Spazzata Migliorata riduce di 2 la penalità. Restano valide le regole generali sul Successo Magistrale per gli attacchi con più istanze di danno.\nNon richiede PM e non può essere combinato con Raffica di Colpi nella stessa Azione.",
+          "effetti": {
+            "attacco_ravvicinato": {
+              "promemoria": "senz_armi"
+            }
+          }
         }
       ],
       "talenti_a_scelta": [
         {
           "specializzazione": "Marziale",
           "nome": "Punto Debole",
-          "testo": "Spende un’Azione Principale per studiare un avversario che percepisce chiaramente, senza effettuare una Prova. Il successivo attacco normale senz’armi contro quel bersaglio infligge danno ×2 se riesce, oppure danno ×3 con un Successo Magistrale. Il moltiplicatore si applica prima dell’Armatura; il ×3 sostituisce il normale raddoppio del Successo Magistrale e non produce un ×4.\nL’attacco deve essere effettuato entro la fine della propria Iniziativa successiva. Se dispone di due Azioni Principali, può prepararsi e attaccare durante la stessa Iniziativa. Il beneficio si consuma con l’attacco, anche se fallisce, e si perde se il bersaglio non è più percepibile.\nNon richiede PM e non si combina con Raffica di Colpi, Combattimento Multiplo o altre Manovre offensive."
+          "testo": "Spende un’Azione Principale per studiare un avversario che percepisce chiaramente, senza effettuare una Prova. Il successivo attacco normale senz’armi contro quel bersaglio infligge danno ×2 se riesce, oppure danno ×3 con un Successo Magistrale. Il moltiplicatore si applica prima dell’Armatura; il ×3 sostituisce il normale raddoppio del Successo Magistrale e non produce un ×4.\nL’attacco deve essere effettuato entro la fine della propria Iniziativa successiva. Se dispone di due Azioni Principali, può prepararsi e attaccare durante la stessa Iniziativa. Il beneficio si consuma con l’attacco, anche se fallisce, e si perde se il bersaglio non è più percepibile.\nNon richiede PM e non si combina con Raffica di Colpi, Combattimento Multiplo o altre Manovre offensive.",
+          "effetti": {
+            "attacco_ravvicinato": {
+              "punto_debole": {
+                "moltiplicatore": 2
+              }
+            }
+          }
         },
         {
           "specializzazione": "Marziale",
           "nome": "Padronanza della Disciplina",
-          "testo": "Perfeziona la Disciplina scelta al I Grado, senza acquisirne una seconda. Non richiede PM.\nPotenza. Elimina la penalità di −1 VA a Difese dopo aver attaccato.\nRapidità. Il movimento aggiuntivo gratuito di 1 Q non provoca Attacchi di Opportunità.\nControllo. Il bonus della Disciplina si applica anche alle Prove previste per resistere a Immobilizzare, Sbilanciare, Disarmare, Incalzare e Stordire, per mantenere una presa o per liberarsi da Immobilizzato. Si utilizza la Prova indicata dalla Manovra o dall’effetto; il Talento non introduce una Prova dove non è prevista.\nGuardia. Il bonus a Difese si applica a tutti gli attacchi diretti percepibili, anche a distanza. Restano necessari i normali requisiti della Difesa: il Talento non consente da solo di parare a mani nude un attacco a distanza. Sono esclusi gli effetti ad Area, gli effetti automatici e gli attacchi normalmente imparabili."
+          "testo": "Perfeziona la Disciplina scelta al I Grado, senza acquisirne una seconda. Non richiede PM.\nPotenza. Elimina la penalità di −1 VA a Difese dopo aver attaccato.\nRapidità. Il movimento aggiuntivo gratuito di 1 Q non provoca Attacchi di Opportunità.\nControllo. Il bonus della Disciplina si applica anche alle Prove previste per resistere a Immobilizzare, Sbilanciare, Disarmare, Incalzare e Stordire, per mantenere una presa o per liberarsi da Immobilizzato. Si utilizza la Prova indicata dalla Manovra o dall’effetto; il Talento non introduce una Prova dove non è prevista.\nGuardia. Il bonus a Difese si applica a tutti gli attacchi diretti percepibili, anche a distanza. Restano necessari i normali requisiti della Difesa: il Talento non consente da solo di parare a mani nude un attacco a distanza. Sono esclusi gli effetti ad Area, gli effetti automatici e gli attacchi normalmente imparabili.",
+          "effetti": {
+            "attacco_ravvicinato": {
+              "promemoria": "senz_armi"
+            }
+          }
         },
         {
           "specializzazione": "Spirituale",

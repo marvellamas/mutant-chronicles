@@ -46,6 +46,7 @@ export function frasiEffetti() {
   };
   visita(leggi('data/regole.json').attacco_distanza ?? {}, 'regole:attacco_distanza');
   visita(leggi('data/regole.json').lancio ?? {}, 'regole:lancio');
+  visita(leggi('data/regole.json').attacco_ravvicinato ?? {}, 'regole:attacco_ravvicinato');
   // incantesimi.json → meccanica: la riga «Lancio:», la Salvezza, il paragrafo «Anticipazione:» e le frasi delle correzioni
   for (const i of leggi('data/incantesimi.json').incantesimi) {
     const m = i.meccanica ?? {};

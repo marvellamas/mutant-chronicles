@@ -66,6 +66,7 @@ export function validaDati(dati) {
   if (isOggetto(dati.dotazioni)) validaDotazioni(dati, err);
   if (dati.equipaggiamento?.file?.munizioni?.ricarica !== undefined) validaRicarica(dati, err);
   if (dati.regole?.attacco_distanza !== undefined) validaAttaccoDistanza(dati, err);
+  if (dati.regole?.attacco_ravvicinato !== undefined) validaAttaccoRavvicinato(dati, err);
   if (dati.incantesimi?.incantesimi?.some((i) => i.meccanica)) validaMeccanicaIncantesimi(dati, err);
 
   return errori;
@@ -639,7 +640,7 @@ function validaSpecializzazioni(s, nomiAbilita, err) {
 }
 
 const MOLTEPLICITA = { una: null, per_caratteristica: 'caratteristica', per_salvezza_max2: 'salvezza', illimitata: null, limitata: null };
-const EFFETTI_NOTI = new Set(['iniziativa', 'pv', 'pm', 'salvezza', 'movimento', 'tecniche', 'accessoMagia', 'incantesimi', 'livelloMax', 'livelloMaxIncantesimi', 'magia', 'meditazione', 'attacco_distanza', 'lancio']);
+const EFFETTI_NOTI = new Set(['iniziativa', 'pv', 'pm', 'salvezza', 'movimento', 'tecniche', 'accessoMagia', 'incantesimi', 'livelloMax', 'livelloMaxIncantesimi', 'magia', 'meditazione', 'attacco_distanza', 'attacco_ravvicinato', 'lancio']);
 // effetti.magia: valori che sostituiscono la base di regole.json → lancio (numeri) o capacità (true)
 const EFFETTI_MAGIA = { focalizzazione_va: 'numero', penalita_ingaggio: 'numero', penalita_contromagia: 'numero', tiro_armi_da_lancio: 'numero', contromagia: 'vero', contromagia_senza_conoscenza: 'vero', occultata: 'vero' };
 const EFFETTI_MEDITAZIONE = { accesso: 'vero', pm_per_ora: 'numero', moltiplicatore_ore: 'numero' };
@@ -1418,6 +1419,56 @@ function validaAttaccoDistanza(dati, err) {
 }
 
 // Campi del lancio degli incantesimi (incantesimi.json → meccanica, tools/estrai_lancio.py) ed
+// Attacco ravvicinato (regole.json → attacco_ravvicinato, src/attacco.js; Giocatore §1.6, §5.3–5.7, §5.12, §5.13)
+const EFFETTI_RAVVICINATO = ['manovra', 'due_armi', 'mano_non_dominante', 'senz_armi', 'carica', 'imboscata', 'alleato_adiacente', 'ignaro',
+  'primo_attacco', 'raffica_di_colpi', 'punto_debole', 'promemoria'];
+const EFFETTI_MANOVRA = ['va', 'danno', 'riduzione', 'dopo_armatura', 'danno_normale'];
+const PROMEMORIA_RAVVICINATO = ['sempre', 'senz_armi', 'immobilizzare', 'opportunita'];
+const COMBINAZIONI_DUE_ARMI = ['ravvicinate', 'mista', 'leggere_distanza'];
+function validaAttaccoRavvicinato(dati, err) {
+  const F = 'regole';
+  const a = dati.regole.attacco_ravvicinato;
+  if (!isOggetto(a)) return err(F, 'attacco_ravvicinato', 'oggetto atteso');
+  const manovre = isOggetto(a.manovre) ? a.manovre : {};
+  if (!manovre.normale) err(F, 'attacco_ravvicinato.manovre.normale', 'serve l’Attacco normale (§5.12)');
+  for (const [id, m] of Object.entries(manovre)) {
+    const P = `attacco_ravvicinato.manovre.${id}`;
+    if (!isTesto(m?.nome) || !isTesto(m?.paragrafo)) err(F, P, 'nome e paragrafo attesi');
+    if (!['generale', 'arma'].includes(m?.compatibilita)) err(F, `${P}.compatibilita`, 'uno fra generale, arma (Armamenti §7.1.7)');
+    if (m?.compatibilita === 'arma' && !isTesto(m.nome_catalogo)) err(F, `${P}.nome_catalogo`, 'nome della Manovra nel campo «manovre» del catalogo');
+    if (!isIntero(m?.azioni_principali) || m.azioni_principali < 1) err(F, `${P}.azioni_principali`, 'intero ≥ 1 atteso');
+    if (m?.va_per_bersagli !== undefined) {
+      if (!isOggetto(m.va_per_bersagli) || !Object.values(m.va_per_bersagli).every(isIntero)) err(F, `${P}.va_per_bersagli`, '{ numero di bersagli: VA } atteso');
+    } else if (!isIntero(m?.va)) err(F, `${P}.va`, 'modificatore intero atteso');
+    if (m?.danno !== null && !isIntero(m?.danno)) err(F, `${P}.danno`, 'bonus intero, oppure null se la Manovra non infligge danno');
+    if (!['per_colpire', 'contrapposta'].includes(m?.prova?.tipo)) err(F, `${P}.prova.tipo`, 'per_colpire o contrapposta');
+    if (!Array.isArray(m?.frasi) || !m.frasi.length) err(F, `${P}.frasi`, 'frasi del manuale mancanti');
+  }
+  const C = a.carica;
+  if (!isOggetto(C) || !Array.isArray(C.fasce) || !C.fasce.every((f) => isIntero(f.da) && isIntero(f.a) && isIntero(f.va) && isIntero(f.avversari))) err(F, 'attacco_ravvicinato.carica.fasce', 'fasce { da, a, va, avversari } attese (§5.6)');
+  if (!isIntero(a.due_armi?.va) || !isIntero(a.due_armi?.attacchi)) err(F, 'attacco_ravvicinato.due_armi', 'va e attacchi interi attesi (§5.7)');
+  const M = a.magistrale;
+  if (!isIntero(M?.raddoppio) || !isIntero(M?.da_x2) || !isIntero(M?.massimo)) err(F, 'attacco_ravvicinato.magistrale', 'raddoppio, da_x2 e massimo interi attesi (§1.6)');
+  if (!isTesto(a.senz_armi?.abilita)) err(F, 'attacco_ravvicinato.senz_armi.abilita', 'Abilità degli attacchi senz’armi mancante');
+  // effetti.attacco_ravvicinato dei Talenti (Liberi e di Classe)
+  const talenti = [
+    ...(dati.talenti_liberi?.talenti ?? []).map((t) => ['talenti_liberi', t.id, t]),
+    ...(dati.classi?.classi ?? []).flatMap((c) => [...(c.talenti_fissi ?? []), ...(c.talenti_a_scelta ?? [])].map((t) => ['classi', `${c.nome}: ${t.nome}`, t])),
+  ];
+  for (const [file, nome, t] of talenti) {
+    const e = t.effetti?.attacco_ravvicinato;
+    if (e === undefined) continue;
+    const P = `${nome}.effetti.attacco_ravvicinato`;
+    for (const k of Object.keys(e)) if (!EFFETTI_RAVVICINATO.includes(k)) err(file, `${P}.${k}`, `effetto sconosciuto (ammessi: ${EFFETTI_RAVVICINATO.join(', ')})`);
+    for (const [id, x] of Object.entries(e.manovra ?? {})) {
+      if (!manovre[id]) err(file, `${P}.manovra.${id}`, `"${id}" non è una Manovra di attacco_ravvicinato`);
+      for (const k of Object.keys(x ?? {})) if (!EFFETTI_MANOVRA.includes(k)) err(file, `${P}.manovra.${id}.${k}`, `ammessi: ${EFFETTI_MANOVRA.join(', ')}`);
+    }
+    if (e.due_armi !== undefined && !COMBINAZIONI_DUE_ARMI.includes(e.due_armi.combinazione)) err(file, `${P}.due_armi.combinazione`, `una fra ${COMBINAZIONI_DUE_ARMI.join(', ')}`);
+    if (e.promemoria !== undefined && !PROMEMORIA_RAVVICINATO.includes(e.promemoria)) err(file, `${P}.promemoria`, `uno fra ${PROMEMORIA_RAVVICINATO.join(', ')}`);
+  }
+}
+
 // effetti.lancio dei Talenti (src/lancio.js; Magia sez. 1–3, 12.3)
 const CONCENTRAZIONE = ['no', 'obbligatoria', 'a_scelta', 'durante_il_lancio'];
 const COMPONENTI = ['focus', 'gesto', 'invocazione'];
