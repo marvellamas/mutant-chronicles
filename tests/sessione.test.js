@@ -132,3 +132,10 @@ test('massimi dai dati: cambiando la tabella delle Ferite cambia il numero di gr
   d.regole.ferite.stati.pop();
   assert.equal(massimi(agente(1), d).ferite, dati.regole.ferite.stati.length);
 });
+
+test('«Attacca!»: le scelte si conservano anche per le armi ravvicinate e per «Senz’armi»', async () => {
+  const { allineaSessione: allinea, inizializzaSessione: iniz } = await import('../src/sessione.js');
+  const m = { pv: 10, pm: 0, puntiEroe: 10, puntiEroeIniziali: 3, ferite: 6, affaticamento: 6, stati: [], caricatori: { f: 30 }, oggetti: ['f', 'spada'] };
+  const s = { ...iniz(m), attacchi: { f: { distanza: 10 }, spada: { manovra: 'affondo' }, senz_armi: { dannoSenzArmi: '1d3' }, sparita: { x: 1 } } };
+  assert.deepEqual(Object.keys(allinea(s, m).attacchi).sort(), ['f', 'senz_armi', 'spada']);
+});

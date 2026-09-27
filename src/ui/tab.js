@@ -18,6 +18,7 @@ import { dotazioneApplicata, crediti } from '../dotazioni.js';
 import { statoRicarica, disponibili } from '../ricarica.js';
 import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 import { pannelloAttacco } from './attacco.js';
+import { profiloSenzArmi, senzArmiDisponibile, SENZ_ARMI } from '../attacco.js';
 import { pannelloLancio } from './lancio.js';
 import { tabCalendario, pannelloAttivazione } from './calendario.js';
 
@@ -93,7 +94,8 @@ export function renderTab(ctx) {
     contenuti[corrente.id](ctx, corrente.dati));
 
   // pannello «Attacca!» dell'arma scelta (src/ui/attacco.js), sopra la scheda
-  const armaAttacco = ctx.ui?.attacco ? (tab.scheda.equipaggiamento?.armi ?? []).find((a) => a.uid === ctx.ui.attacco.uid) : null;
+  // «Senz'armi»: profilo costruito qui (Corpo a corpo e danno dichiarato, src/attacco.js)
+  const armaAttacco = !ctx.ui?.attacco ? null : ctx.ui.attacco.uid === SENZ_ARMI ? senzArmi(ctx) : (tab.scheda.equipaggiamento?.armi ?? []).find((a) => a.uid === ctx.ui.attacco.uid);
   if (ctx.ui?.attacco && !armaAttacco) ctx.ui.attacco = null;
   // pannello «Lancia!» dell'incantesimo scelto (src/ui/lancio.js)
   const incLancio = ctx.ui?.lancio ? (ctx.dati.incantesimi.incantesimi.find((i) => i.nome === ctx.ui.lancio.nome) ?? null) : null;
@@ -577,9 +579,10 @@ function tabCombattimento(ctx, d) {
         h('p', { class: 'nota' }, `(${d.difese.caratteristica}) con l’equipaggiamento e le condizioni della sessione`)) : null,
       ...riquadriTavolo(ctx)),
 
-    sezione('Armi impugnate', d.armiCalcolate.length
-      ? h('div', { class: 'armi-tab' }, d.armiCalcolate.map((a) => schedaArma(ctx, a)))
-      : h('p', { class: 'vuoto' }, 'Nessuna arma impugnata: cambia lo stato di un’arma in «Impugnata» qui sotto.')),
+    sezione('Armi impugnate',
+      d.armiCalcolate.length ? null : h('p', { class: 'vuoto' }, 'Nessuna arma impugnata: cambia lo stato di un’arma in «Impugnata» qui sotto.'),
+      d.armiCalcolate.length || senzArmiDisponibile(ctx.tab.scheda, ctx.dati)
+        ? h('div', { class: 'armi-tab' }, d.armiCalcolate.map((a) => schedaArma(ctx, a)), senzArmiDisponibile(ctx.tab.scheda, ctx.dati) ? schedaSenzArmi(ctx) : null) : null),
 
     sezione('Protezioni', d.protezioniCalcolate.length
       ? h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },
@@ -706,6 +709,27 @@ const testoAr = (ar) => (ar ? `${ar.totale}${ar.magica ? ` (${ar.magica} magica)
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
 
 /** Arma impugnata: VA per colpire con la scomposizione, danno, portata o gittata, Parata, munizioni. */
+/** Profilo «Senz'armi» con il danno dichiarato nella sessione (sessione → attacchi.senz_armi). */
+function senzArmi(ctx) {
+  return profiloSenzArmi(ctx.tab.scheda, ctx.dati, ctx.sessione.attacchi?.[SENZ_ARMI]?.dannoSenzArmi ?? null);
+}
+
+/** Voce fissa «Senz'armi» fra le armi (se non impugna nulla, ha Arti Marziali o è Lottatore). */
+function schedaSenzArmi(ctx) {
+  const a = senzArmi(ctx);
+  const ultima = ctx.sessione.attacchi?.[SENZ_ARMI]?.ultima ?? null;
+  return h('article', { class: 'arma-tab' },
+    h('div', { class: 'arma-testa' },
+      h('h3', {}, a.nome, h('small', { class: 'sigla' }, ` · ${a.abilita}`)),
+      a.va !== null ? h('button', { type: 'button', class: 'btn primario btn-attacca', onclick: () => { ctx.ui.attacco = { uid: SENZ_ARMI, passo: 0 }; ctx.azioni.ridisegna(); } }, 'Attacca!') : null),
+    h('div', { class: 'arma-valori' },
+      h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), a.va === null ? h('strong', {}, '—') : valoreEffettivo(`VA senz’armi (${a.abilita})`, a.vaEffettivo, a.va, a.scomposizione, { pillola: true })),
+      h('p', {}, h('span', { class: 'sigla' }, 'Danno '), h('strong', {}, a.danno.una_mano ?? 'da definire'), a.dannoOrigine === 'Arti Marziali' ? h('small', { class: 'sigla' }, ' (Arti Marziali)') : null),
+      h('p', {}, h('span', { class: 'sigla' }, 'Portata '), `${a.portataQ} Q`)),
+    a.danno.una_mano ? null : h('p', { class: 'nota' }, 'Il danno senz’armi non è nel manuale (per-davide A.22): scrivilo nel pannello «Attacca!».'),
+    ultima ? h('p', { class: 'nota' }, `Ultima Manovra: ${ultima.nome}`) : null);
+}
+
 function schedaArma(ctx, a) {
   const legenda = legendaModalita(ctx.dati);
   const mr = a.munizioneRiferimento;

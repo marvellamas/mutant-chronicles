@@ -28,6 +28,7 @@
 // creditiIniziali: l'ultimo saldo iniziale visto; se il saldo cambia (dotazione rifatta, tabella
 // modificata) i crediti attuali si spostano della stessa differenza, così le spese restano.
 import { valoreTiro } from './tiri.js';
+import { SENZ_ARMI } from './attacco.js';
 import { saldoIniziale } from './dotazioni.js';
 import { infoRicarica, eseguiRicarica } from './ricarica.js';
 import { caricatori, contenitori, normalizzaEquipaggiamento, catalogo, risolvi } from './equipaggiamento.js';
@@ -53,6 +54,8 @@ export function massimiSessione(scheda, creazione, dati) {
     ferite: dati.regole.ferite.stati.length + 1, // l'ultimo gradino è «oltre Grave»
     affaticamento: dati.regole.affaticamento.stati.length - 1,
     stati: dati.regole.stati.elenco.map((s) => s.id),
+    // uid di tutti gli oggetti della lista: le scelte di «Attacca!» si conservano per ogni arma (anche ravvicinata)
+    oggetti: normalizzaEquipaggiamento(creazione?.equipaggiamento).map((v) => v.uid),
     // capacità del caricatore di ogni arma a distanza della lista (uid → numero o null)
     caricatori: caricatori(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati),
     // modo di ricarica e scorte compatibili di ogni arma a distanza (Giocatore §5.1.1, Armamenti §7.20.2)
@@ -204,7 +207,7 @@ export function allineaSessione(sessione, m) {
     ...allineaCrediti(sessione, m),
     condizioniOggetti: allineaCondizioniOggetti(sessione.condizioniOggetti, m),
     attacchi: Object.fromEntries(Object.entries(isOggetto(sessione.attacchi) ? sessione.attacchi : {})
-      .filter(([uid, v]) => isOggetto(v) && (!m.caricatori || uid in m.caricatori))),
+      .filter(([uid, v]) => isOggetto(v) && (!m.caricatori || uid in m.caricatori || uid === SENZ_ARMI || (m.oggetti ?? []).includes(uid)))),
     lanci: Object.fromEntries(Object.entries(isOggetto(sessione.lanci) ? sessione.lanci : {}).filter(([, v]) => isOggetto(v))),
     note: typeof sessione.note === 'string' ? sessione.note : '',
   };
