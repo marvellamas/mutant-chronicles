@@ -9,18 +9,21 @@
 //
 // Effetti sui VA (docs/effetti-oggetti.md): «effetti» dell'oggetto del catalogo, dell'oggetto di
 // dotazione (data/dotazioni.json → oggetti_dotazione) o del personalizzato:
-//   [{ abilita, valore, ambito: 'generale'|'situazionale'|'uso_specifico', uso?, condizione?, fonte? }]
+//   [{ tipo?, abilita, valore, ambito: 'generale'|'situazionale'|'uso_specifico', uso?, condizione?, fonte?, beneficio?, proprieta? }]
+// tipo: va (predefinito), attacco, danno, iniziativa, salvezza, caratteristica, contromisura, ar_contro.
+// Copie dello stesso «beneficio» non si sommano: vale il maggiore (Armamenti §7.21.1).
 // Contano solo con l'oggetto in uso (indossato, impugnato…): gli oggetti senza stati propri che
 // hanno effetti ricevono «In uso» / «Nello zaino».
 // peso: kg per unità (Equipaggiamento §1.6, §1.10), per il carico (src/carico.js).
 
-export const TIPI = ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'altro'];
+export const TIPI = ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'elmetto', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'altro'];
 
 export const NOMI_TIPI = {
   arma_ravvicinata: 'Arma ravvicinata',
   arma_distanza: 'Arma a distanza',
   scudo: 'Scudo',
   armatura: 'Armatura',
+  elmetto: 'Elmetto',
   accessorio: 'Accessorio',
   munizioni: 'Munizioni',
   sanitario: 'Sanitario',
@@ -34,6 +37,8 @@ export const STATI = {
   arma_distanza: ['impugnata', 'pronta', 'zaino'],
   scudo: ['imbracciato', 'pronta', 'zaino'],
   armatura: ['indossata', 'zaino'],
+  // Armamenti §7.21.1: un solo elmetto indossato; indossarlo o toglierlo costa 1 AzP
+  elmetto: ['indossata', 'zaino'],
   accessorio: ['in_uso', 'zaino'],
   munizioni: [],
   sanitario: [],
@@ -64,8 +69,20 @@ export function statiPer(tipo, effetti = []) {
   return s.length || !effetti.length ? s : STATI_CON_EFFETTI;
 }
 
-/** «+2 VA a Percezione (solo per tracce)», «+1 VA a Oratoria (con la condizione)». */
+const NOMI_SALVEZZE = { tempra: 'Tempra', riflessi: 'Riflessi', volonta: 'Volontà', magia: 'Magia' };
+const segnoEff = (n) => `${n > 0 ? '+' : '−'}${Math.abs(n)}`;
+const ATTACCHI_TESTO = { tutti: 'alle Prove per colpire', ravvicinati: 'agli attacchi ravvicinati', distanza: 'agli attacchi a distanza' };
+
+/** «+2 VA a Percezione (solo per tracce)», «+1 VA a Oratoria (con la condizione)», «Contromisura Concussivo 1». */
 export function testoEffettoOggetto(e) {
+  const tipo = e.tipo ?? 'va';
+  if (tipo === 'attacco') return `${segnoEff(e.valore)} VA ${ATTACCHI_TESTO[e.attacchi] ?? ''}`.trim();
+  if (tipo === 'danno') return `${segnoEff(e.valore)} danno ${ATTACCHI_TESTO[e.attacchi] ?? ''}`.trim();
+  if (tipo === 'iniziativa') return `${segnoEff(e.valore)} Iniziativa`;
+  if (tipo === 'salvezza') return `${segnoEff(e.valore)} alla PS ${e.salvezza ? NOMI_SALVEZZE[e.salvezza] ?? e.salvezza : 'già prevista'} (solo ${e.uso})`;
+  if (tipo === 'caratteristica') return `${segnoEff(e.valore)} alla Prova di ${e.caratteristiche.join(' o ')} (solo ${e.uso})`;
+  if (tipo === 'contromisura') return `Contromisura ${e.effetto} ${e.valore}`;
+  if (tipo === 'ar_contro') return `${segnoEff(e.valore)} AR contro ${e.contro}`;
   const v = `${e.valore > 0 ? '+' : '−'}${Math.abs(e.valore)} VA ${/^[aA]/.test(e.abilita) ? 'ad' : 'a'} ${e.abilita}`;
   if (e.ambito === 'uso_specifico') return `${v} (solo per ${e.uso})`;
   if (e.ambito === 'situazionale') return `${v} (con la condizione attiva)`;
@@ -382,6 +399,11 @@ const maniDi = (def) => (def?.mani === 2 ? 2 : def?.mani === 0 ? 0 : 1);
  * (arma_distanza, arma_ravvicinata, armatura) oppure «mirino» (un accessorio con dati di mirino,
  * §7.3.3). Gli accessori personalizzati si montano sulle armi.
  */
+/** Un effetto «attacco» o «danno» vale per il tipo d'arma: tutti, ravvicinati, a distanza. */
+export function valePer(b, tipoArma) {
+  return b.attacchi === 'tutti' || (b.attacchi === 'ravvicinati' ? tipoArma === 'arma_ravvicinata' : tipoArma === 'arma_distanza');
+}
+
 export function puoMontare(acc, su) {
   if (!su || su.uid === acc.uid) return false;
   const dove = acc.def?.si_monta_su ?? ['arma_ravvicinata', 'arma_distanza'];
@@ -471,7 +493,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   let movimentoQ = 0;
   let lancioPotere = 0;
   let forMancanteArmature = 0;
-  for (const o of oggetti.filter((x) => x.attivo && (x.tipo === 'armatura' || x.tipo === 'scudo'))) {
+  for (const o of oggetti.filter((x) => x.attivo && (x.tipo === 'armatura' || x.tipo === 'scudo' || x.tipo === 'elmetto'))) {
     const d = o.def;
     let penalita = d ? { ...(fileArmature.categorie?.[d.categoria] ?? {}), ...(d.penalita ?? {}) } : {};
     let ar = d?.ar ?? (Number.isInteger(o.voce.personalizzato?.ar) ? { totale: o.voce.personalizzato.ar, magica: 0 } : null);
@@ -501,7 +523,11 @@ export function calcolaEquipaggiamento(base, voci, dati) {
         condizione: a.condizione, ar: a.ar ?? null, parata: null, forRichiesta: a.for_richiesta ?? null, penalita: a.penalita ?? null,
       })) : [],
       rinforziAmmessi: d?.rinforzi_ammessi ?? null, supporti: d?.supporti ?? null,
+      // Armamenti §7.21.4: modifiche montate sull'elmetto (o sull'elmetto standard dell'armatura)
+      modifiche: montatiSu(o.uid).filter((x) => x.def?.modifica_elmetto && puoMontare(x, o)).map((x) => x.nome),
     });
+    // §7.21.1: l'elmetto non fornisce AR e non ha requisiti FOR né penalità
+    if (o.tipo === 'elmetto') continue;
     if (o.tipo === 'scudo') {
       // §7.4: il requisito FOR dello Scudo segue il §7.1.6 (Parate e attacchi con lo Scudo), non
       // penalizza Agilità, Difese o gli altri attacchi; gli Scudi enormi tolgono 1 Q al MOV
@@ -527,12 +553,46 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   // qui e si applicano nella modalità tavolo (src/condizioni.js), il totale da regole non cambia.
   const effettiOggetti = [];
   const nomiAbilita = new Set(base.abilita.map((a) => a.nome));
-  for (const o of oggetti.filter((x) => x.attivo && x.effetti.length)) {
-    for (const e of o.effetti) {
+  const perUidOgg = new Map(oggetti.map((o) => [o.uid, o]));
+  // una modifica d'elmetto conta solo montata su un elmetto (o un'armatura, per il suo elmetto
+  // standard) indossato (Armamenti §7.21.1, §7.21.4)
+  const modificaOperativa = (o) => {
+    if (!o.def?.modifica_elmetto) return true;
+    const su = perUidOgg.get(o.voce.montato_su);
+    return !!su && su.attivo && puoMontare(o, su);
+  };
+  const candidati = [];
+  for (const o of oggetti.filter((x) => x.attivo && x.effetti.length && modificaOperativa(x))) {
+    for (const e of o.effetti) candidati.push({ o, e });
+  }
+  // §7.21.1: «copie dello stesso beneficio non si sommano»: vale il maggiore
+  const migliore = new Map();
+  for (const c of candidati) {
+    const k = c.e.beneficio;
+    if (k && (!migliore.has(k) || c.e.valore > migliore.get(k).e.valore)) migliore.set(k, c);
+  }
+  const bonusAttacco = [];
+  const dannoEquip = [];
+  const iniziativaEquip = [];
+  for (const { o, e } of candidati) {
+    if (e.beneficio && migliore.get(e.beneficio) !== candidati.find((c) => c.o === o && c.e === e)) continue;
+    const tipo = e.tipo ?? 'va';
+    if (tipo === 'va') {
       if (!nomiAbilita.has(e.abilita)) { avvisi.push(`${o.nome}: «${e.abilita}» non è un’Abilità, effetto ignorato.`); continue; }
       if (e.ambito === 'generale') aggiungi(e.abilita, e.valore, o.nome);
-      effettiOggetti.push({ uid: o.uid, oggetto: o.nome, ...e });
-    }
+    } else if (tipo === 'attacco') bonusAttacco.push({ nome: o.nome, valore: e.valore, attacchi: e.attacchi });
+    else if (tipo === 'danno') dannoEquip.push({ nome: o.nome, valore: e.valore, attacchi: e.attacchi });
+    else if (tipo === 'iniziativa') iniziativaEquip.push({ etichetta: o.nome, valore: e.valore });
+    effettiOggetti.push({ uid: o.uid, oggetto: o.nome, ...e });
+  }
+  // effetti e promemoria per protezione (SD, sezione Protezioni): le proprietà senza effetto e non
+  // già gestite dalle penalità del modello restano promemoria (docs/proprieta-armature.md)
+  const gestite = new Set(fileArmature.proprieta_gestite ?? []);
+  for (const p of protezioni) {
+    const miei = effettiOggetti.filter((e) => e.uid === p.uid);
+    const tradotte = new Set(miei.map((e) => e.proprieta).filter(Boolean));
+    p.effetti = miei;
+    p.promemoria = p.proprieta.filter((x) => !tradotte.has(x.nome) && !gestite.has(nomeProprieta(x).replace(/\s+\d+$/, ''))).map((x) => x.nome);
   }
   // §7.11.1: la penalità dell'armatura al lancio con Potere vale solo per lanciare Incantesimi
   for (const p of protezioni.filter((x) => x.tipo === 'armatura' && x.penalita?.lancio_potere)) {
@@ -542,6 +602,10 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     });
   }
 
+  // §7.21.1: «Ogni personaggio può indossare un solo elmetto» (regole.json → elmetti)
+  const elmettiIndossati = oggetti.filter((x) => x.attivo && x.tipo === 'elmetto');
+  const maxElmetti = dati.regole?.elmetti?.massimo_indossati ?? 1;
+  if (elmettiIndossati.length > maxElmetti) avvisi.push(`Più di un elmetto indossato (${elmettiIndossati.map((x) => x.nome).join(', ')}): se ne indossa uno solo (Armamenti §7.21.1).`);
   const armatureIndossate = oggetti.filter((x) => x.attivo && x.tipo === 'armatura');
   if (armatureIndossate.length > 1) {
     avvisi.push(`Due o più armature indossate (${armatureIndossate.map((x) => x.nome).join(', ')}): non si sovrappongono due armature complete (Armamenti §7.11.2). Le penalità sono sommate.`);
@@ -626,10 +690,13 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       armatura ? { nome: 'Armatura (§7.11.1)', valore: armatura } : null,
       // §7.3.1: Smorzatore e Silenziatore peggiorano il VA per colpire
       ...acc.filter((x) => x.def?.effetto_arma?.va).map((x) => ({ nome: `${x.nome} (§7.3.1)`, valore: x.def.effetto_arma.va })),
+      // effetti «attacco» dell'equipaggiamento (Assistenza offensiva dell'elmetto, §7.21.2)
+      ...bonusAttacco.filter((b) => valePer(b, o.tipo)).map((b) => ({ nome: b.nome, valore: b.valore })),
     ].filter(Boolean) : [];
     const va = a ? componenti.reduce((s, c) => s + c.valore, 0) : null;
     const bonusDanno = spec?.effetto.danno ?? 0;
-    const dannoAccessori = acc.reduce((s, x) => s + (x.def?.effetto_arma?.danno ?? 0), 0);
+    // accessori dell'arma e effetti «danno» dell'equipaggiamento (Colpo assistito, §7.14.2): bonus ordinari (§5.13)
+    const dannoAccessori = acc.reduce((s, x) => s + (x.def?.effetto_arma?.danno ?? 0), 0) + dannoEquip.filter((b) => valePer(b, o.tipo)).reduce((s, b) => s + b.valore, 0);
     const dannoBase = d?.danno ?? (o.voce.personalizzato?.danno ? { una_mano: o.voce.personalizzato.danno, due_mani: null } : null);
     const proprietaParata = (d?.proprieta ?? []).filter((p) => p.effetto?.parata_va);
     const parataVa = proprietaParata.reduce((s, p) => s + p.effetto.parata_va, 0);
@@ -731,7 +798,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   // Accessori montati: dove non si possono montare, o montati su un oggetto non attivo
   const perUid = new Map(oggetti.map((o) => [o.uid, o]));
   const operativo = (su) => (su.def?.mirino ? su.attivo && operativo(perUid.get(su.voce.montato_su) ?? {}) && puoMontare(su, perUid.get(su.voce.montato_su)) : !!su.attivo);
-  const NON_ATTIVO = { armatura: 'indossata', accessorio: 'montato su un’arma impugnata' };
+  const NON_ATTIVO = { armatura: 'indossata', elmetto: 'indossato', accessorio: 'montato su un’arma impugnata' };
   for (const x of accessoriMontati) {
     const su = perUid.get(x.voce.montato_su);
     if (!su) avvisi.push(`${x.nome} è montato su un oggetto che non è più nella lista.`);
@@ -771,6 +838,9 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     equipAbilita,
     componentiEquip,
     effettiOggetti,
+    bonusAttacco,
+    bonusDanno: dannoEquip,
+    iniziativa: iniziativaEquip,
     contenitori: contenitoriRisolti(oggetti, dati),
     abilitaDifese: difeseAbilita,
     movimentoQ,

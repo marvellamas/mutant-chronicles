@@ -13,7 +13,7 @@ import { colore, riempimento, condizioniAttiveAbilita } from '../interfaccia.js'
 import { descriviFerite } from '../sessione.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
 import { testoDanno } from '../stampa.js';
-import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento } from '../equipaggiamento.js';
+import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto } from '../equipaggiamento.js';
 import { dotazioneApplicata, crediti } from '../dotazioni.js';
 import { statoRicarica, disponibili } from '../ricarica.js';
 import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
@@ -414,7 +414,8 @@ function tabIdentita(ctx, d) {
             h('th', { scope: 'row' }, x.nome), h('td', {}, x.caratteristica),
             h('td', { class: 'cella-va', title: x.limitato ? `Limitato a ${x.tetto} (§1.2.3)` : null },
               valoreEffettivo(x.nome, x.effettivo, x.totale, x.scomposizione, { pillola: true }), x.limitato ? '*' : null))))),
-        d.salvezze.some((x) => x.effettivo !== x.totale) ? h('p', { class: 'nota' }, 'Con le condizioni della sessione (Ferite, Affaticamento, Stati).') : null)),
+        d.salvezze.some((x) => x.effettivo !== x.totale) ? h('p', { class: 'nota' }, 'Con le condizioni della sessione (Ferite, Affaticamento, Stati).') : null,
+        usiSalvezze(ctx, d.salvezze))),
 
     h('div', { class: 'griglia-tre' },
       contatoreTavolo(ctx, { titolo: 'Punti Eroe', campo: 'puntiEroe', attuale: s.puntiEroe, massimo: m.puntiEroe, passi: [1], classe: 'riquadro-pe' }),
@@ -593,9 +594,9 @@ function tabCombattimento(ctx, d) {
         h('tbody', {}, d.protezioniCalcolate.flatMap((p) => [
           h('tr', {},
             h('th', { scope: 'row' }, p.nome, p.rinforzo ? h('small', { class: 'sigla' }, ` + ${p.rinforzo.nome}`) : null),
-            h('td', { class: 'forte' }, testoAr(p.ar)),
+            h('td', { class: 'forte' }, p.tipo === 'elmetto' ? '—' : testoAr(p.ar)),
             h('td', { title: p.categoriaBase && p.categoria !== p.categoriaBase ? 'Leggera portata ad AR 3 o più da un rinforzo: penalità della Media (§7.11.2)' : null },
-              p.categoria !== p.categoriaBase && p.categoriaBase ? `${p.categoriaBase} → ${p.categoria}` : p.categoria ?? p.taglia ?? '—'),
+              p.tipo === 'elmetto' ? 'Elmetto' : p.categoria !== p.categoriaBase && p.categoriaBase ? `${p.categoriaBase} → ${p.categoria}` : p.categoria ?? p.taglia ?? '—'),
             h('td', { title: p.parata ? `Difese ${p.parata.difese} + modificatori dello Scudo ${segno(p.parata.modificatori.ravvicinata)} / ${segno(p.parata.modificatori.distanza)} (§7.4.11)` : null },
               p.parata ? [
                 valoreEffettivo(`Parata ravvicinata (${p.nome})`, p.parata.ravvicinataEffettiva ?? p.parata.ravvicinata, p.parata.daRegole, p.parata.scomposizioneRavvicinata), ' ravv. · ',
@@ -609,8 +610,14 @@ function tabCombattimento(ctx, d) {
                 a.forRichiesta ? `FOR ${a.forRichiesta}` : null, a.penalita ? `penalità: ${testoPenalitaTab(a.penalita)}` : null].filter(Boolean).join(' · '))))),
           p.proprieta.length ? h('tr', { class: 'alternativa' }, h('td', { colspan: 6 },
             h('span', { class: 'proprieta-arma' }, p.proprieta.map((x) => h('span', { class: 'etichetta', title: x.testo }, x.nome))))) : null,
+          // effetti tipizzati delle proprietà e promemoria (docs/effetti-oggetti.md, docs/proprieta-armature.md)
+          p.modifiche?.length || p.effetti?.length || p.promemoria?.length ? h('tr', { class: 'alternativa' }, h('td', { colspan: 6 }, h('small', {},
+            p.modifiche?.length ? [h('strong', {}, p.tipo === 'armatura' ? 'Elmetto standard con: ' : 'Modifiche: '), p.modifiche.join(', '), '. '] : null,
+            p.effetti?.length ? [h('strong', {}, 'Effetti: '), p.effetti.map((e) => testoEffettoOggetto(e)).join(' · '), '. '] : null,
+            p.promemoria?.length ? [h('strong', {}, 'Promemoria: '), p.promemoria.join(', '), '.'] : null))) : null,
         ]))))
       : h('p', { class: 'vuoto' }, 'Nessuna protezione indossata o imbracciata.'),
+      resistenze(ctx),
       d.protezioniCalcolate.length ? h('p', { class: 'nota' }, 'Agilità vale per Schivata e Prove fisiche di Atletica e Furtività ostacolate (già nel VA di quelle Abilità, colonna Equip); non per la Parata. La penalità MOV si sottrae una volta al budget di movimento (§7.11.1). La Parata con lo Scudo è già calcolata: Difese con l’equipaggiamento, modificatori propri dello Scudo (§7.4.11) e FOR insufficiente (§7.1.6). L’AR dello Scudo vale anche senza Parata, purché sia imbracciato; due scudi non si sommano (§7.4).') : null),
 
     // §7.19: applicazioni di kit e dispositivi sanitari, con il contatore delle munizioni
@@ -731,6 +738,30 @@ function schedaSenzArmi(ctx) {
       h('p', {}, h('span', { class: 'sigla' }, 'Portata '), `${a.portataQ} Q`)),
     a.danno.una_mano ? null : h('p', { class: 'nota' }, 'Il danno senz’armi non è nel manuale (per-davide A.22): scrivilo nel pannello «Attacca!».'),
     ultima ? h('p', { class: 'nota' }, `Ultima Manovra: ${ultima.nome}`) : null);
+}
+
+/**
+ * Bonus alle Prove Salvezza per un uso specifico (effetti «salvezza» dell'equipaggiamento in uso:
+ * Filtro respiratorio, Protezione occulta, Elusione…): il valore per quell'uso accanto alla PS, o
+ * «+X alla PS già prevista» quando il manuale non dice quale.
+ */
+function usiSalvezze(ctx, salvezze) {
+  const effetti = (ctx.tab.scheda.equipaggiamento?.effettiOggetti ?? []).filter((e) => e.tipo === 'salvezza');
+  if (!effetti.length) return null;
+  return h('ul', { class: 'usi-salvezze nota' }, effetti.map((e) => {
+    const s = e.salvezza ? salvezze.find((x) => x.id === e.salvezza || x.nome.toLowerCase() === e.salvezza) : null;
+    return h('li', { title: [e.condizione, e.fonte].filter(Boolean).join(' — ') },
+      s ? [h('strong', {}, `${s.nome} ${numero(s.effettivo + e.valore)}`), ` solo ${e.uso} (${segno(e.valore)} ${e.oggetto})`]
+        : [h('strong', {}, `${segno(e.valore)} alla PS già prevista`), ` ${e.uso} (${e.oggetto})`]);
+  }));
+}
+
+/** Resistenze delle protezioni in uso: Contromisure (soglie del §5.24) e AR contro un tipo di danno. */
+function resistenze(ctx) {
+  const effetti = (ctx.tab.scheda.equipaggiamento?.effettiOggetti ?? []).filter((e) => e.tipo === 'contromisura' || e.tipo === 'ar_contro' || e.tipo === 'caratteristica');
+  if (!effetti.length) return null;
+  return h('p', { class: 'resistenze' }, h('strong', {}, 'Resistenze e usi specifici: '),
+    effetti.map((e, i) => [i ? ' · ' : '', h('span', { title: [e.condizione, e.fonte].filter(Boolean).join(' — ') }, `${testoEffettoOggetto(e)} (${e.oggetto})`)]));
 }
 
 function schedaArma(ctx, a) {

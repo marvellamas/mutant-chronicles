@@ -1,0 +1,1614 @@
+{
+  "versione_manuale": "Armamenti 0.52",
+  "fonte": "Manuale degli Armamenti v0.52 (Google Doc), §7.21 «Elmetti e modifiche»: testo in docs/manuali-txt/armamenti.md.",
+  "_nota": "Generato da tools/lotti/lotto_elmetti.mjs. Gli elmetti non forniscono AR (§7.21.1): «ar» vale 0. Le modifiche sono accessori che si montano sull’elmetto indossato o sull’armatura indossata (per il suo elmetto standard) e contano solo montate. Nessun peso: il manuale non lo dà (A.30). Le regole d’uso sono in regole.json → elmetti.",
+  "oggetti": [
+    {
+      "id": "elmetto-standard",
+      "nome": "Elmetto standard (ricambio)",
+      "tipo": "elmetto",
+      "catalogo": "Commerciale",
+      "famiglia": "Elmetti",
+      "nomi_alternativi": [
+        "Elmetto standard"
+      ],
+      "note_manuale": "Ogni armatura comprende nel proprio prezzo un elmetto standard abbinato: questo è il ricambio privo di modifiche. Non fornisce AR. Può ricevere le modifiche commerciali (§7.21.1, §7.21.4).",
+      "paragrafo": "§7.21.4",
+      "versione_manuale": "Armamenti 0.52",
+      "ar": {
+        "totale": 0,
+        "magica": 0
+      },
+      "pi": 4,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 200,
+      "proprieta": [],
+      "effetti": []
+    },
+    {
+      "id": "visiera-antibagliore",
+      "nome": "Visiera antibagliore",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Modifiche per elmetti",
+      "nomi_alternativi": [],
+      "note_manuale": "Modifica per elmetto (§7.21.4): Antibagliore 2. Si monta sull’elmetto indossato o sull’elmetto standard compreso nell’armatura; condivide l’Integrità dell’elmetto. I gradi dello stesso modulo sono alternative, non si sommano.",
+      "paragrafo": "§7.21.4",
+      "versione_manuale": "Armamenti 0.52",
+      "si_monta_su": [
+        "elmetto",
+        "armatura"
+      ],
+      "modifica_elmetto": {
+        "modulo": "antibagliore"
+      },
+      "reperibilita": "CO",
+      "costo": 500,
+      "proprieta": [
+        {
+          "nome": "Antibagliore 2",
+          "testo": "+2 alla PS già prevista contro Accecamento provocato da lampi o luce intensa. Non introduce una PS se l’effetto non la prevede e non protegge dagli altri tipi di Accecamento."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "salvezza",
+          "salvezza": null,
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro Accecamento da lampi o luce intensa",
+          "beneficio": "antibagliore",
+          "condizione": "+2 alla PS già prevista contro Accecamento provocato da lampi o luce intensa.",
+          "proprieta": "Antibagliore 2",
+          "fonte": "Armamenti §7.21.2"
+        }
+      ]
+    },
+    {
+      "id": "protezione-acustica",
+      "nome": "Protezione acustica",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Modifiche per elmetti",
+      "nomi_alternativi": [],
+      "note_manuale": "Modifica per elmetto (§7.21.4): Protezione acustica 2. Si monta sull’elmetto indossato o sull’elmetto standard compreso nell’armatura; condivide l’Integrità dell’elmetto. I gradi dello stesso modulo sono alternative, non si sommano.",
+      "paragrafo": "§7.21.4",
+      "versione_manuale": "Armamenti 0.52",
+      "si_monta_su": [
+        "elmetto",
+        "armatura"
+      ],
+      "modifica_elmetto": {
+        "modulo": "protezione_acustica"
+      },
+      "reperibilita": "NC",
+      "costo": 600,
+      "proprieta": [
+        {
+          "nome": "Protezione acustica 2",
+          "testo": "+2 alla PS già prevista contro un effetto sonoro o un rumore dannoso, come nel §7.11.4. Non è una protezione generale contro esplosioni o danni."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "salvezza",
+          "salvezza": null,
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro effetti sonori o rumori dannosi",
+          "beneficio": "protezione_acustica",
+          "condizione": "+2 alla PS già prevista contro un effetto sonoro o un rumore dannoso, come nel §7.11.4.",
+          "proprieta": "Protezione acustica 2",
+          "fonte": "Armamenti §7.21.2"
+        }
+      ]
+    },
+    {
+      "id": "maschera-filtrante",
+      "nome": "Maschera filtrante",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Modifiche per elmetti",
+      "nomi_alternativi": [],
+      "note_manuale": "Modifica per elmetto (§7.21.4): Filtro respiratorio 2. Si monta sull’elmetto indossato o sull’elmetto standard compreso nell’armatura; condivide l’Integrità dell’elmetto. I gradi dello stesso modulo sono alternative, non si sommano.",
+      "paragrafo": "§7.21.4",
+      "versione_manuale": "Armamenti 0.52",
+      "si_monta_su": [
+        "elmetto",
+        "armatura"
+      ],
+      "modifica_elmetto": {
+        "modulo": "filtro_respiratorio"
+      },
+      "reperibilita": "NC",
+      "costo": 700,
+      "proprieta": [
+        {
+          "nome": "Filtro respiratorio 2",
+          "testo": "+2 alla PS Tempra contro veleni e agenti patogeni inalati, con maschera indossata. Richiede aria respirabile; non fornisce ossigeno né tenuta per immersione o vuoto."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "salvezza",
+          "salvezza": "tempra",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro veleni e agenti patogeni inalati",
+          "beneficio": "filtro_respiratorio",
+          "condizione": "+2 alla PS Tempra contro veleni e agenti patogeni inalati, con maschera indossata.",
+          "proprieta": "Filtro respiratorio 2",
+          "fonte": "Armamenti §7.21.2"
+        }
+      ]
+    },
+    {
+      "id": "sensori-visivi-1",
+      "nome": "Sensori visivi 1",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Modifiche per elmetti",
+      "nomi_alternativi": [],
+      "note_manuale": "Modifica per elmetto (§7.21.4): Sensori 1 alla vista. Si monta sull’elmetto indossato o sull’elmetto standard compreso nell’armatura; condivide l’Integrità dell’elmetto. I gradi dello stesso modulo sono alternative, non si sommano.",
+      "paragrafo": "§7.21.4",
+      "versione_manuale": "Armamenti 0.52",
+      "si_monta_su": [
+        "elmetto",
+        "armatura"
+      ],
+      "modifica_elmetto": {
+        "modulo": "sensori_vista"
+      },
+      "reperibilita": "NC",
+      "costo": 700,
+      "proprieta": [
+        {
+          "nome": "Sensori 1 alla vista",
+          "testo": "+X VA a Percezione per vista e/o udito, come indicato nella scheda. Non concede Prove o osservazioni gratuite, non individua automaticamente creature nascoste e non supera ostacoli che impediscono al sensore di rilevare il bersaglio."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Percezione",
+          "valore": 1,
+          "ambito": "situazionale",
+          "beneficio": "sensori_vista",
+          "condizione": "+X VA a Percezione per vista e/o udito, come indicato nella scheda.",
+          "proprieta": "Sensori 1 alla vista",
+          "fonte": "Armamenti §7.21.2"
+        }
+      ]
+    },
+    {
+      "id": "sensori-visivi-2",
+      "nome": "Sensori visivi 2",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Modifiche per elmetti",
+      "nomi_alternativi": [],
+      "note_manuale": "Modifica per elmetto (§7.21.4): Sensori 2 alla vista. Si monta sull’elmetto indossato o sull’elmetto standard compreso nell’armatura; condivide l’Integrità dell’elmetto. I gradi dello stesso modulo sono alternative, non si sommano.",
+      "paragrafo": "§7.21.4",
+      "versione_manuale": "Armamenti 0.52",
+      "si_monta_su": [
+        "elmetto",
+        "armatura"
+      ],
+      "modifica_elmetto": {
+        "modulo": "sensori_vista"
+      },
+      "reperibilita": "RA",
+      "costo": 2200,
+      "proprieta": [
+        {
+          "nome": "Sensori 2 alla vista",
+          "testo": "+X VA a Percezione per vista e/o udito, come indicato nella scheda. Non concede Prove o osservazioni gratuite, non individua automaticamente creature nascoste e non supera ostacoli che impediscono al sensore di rilevare il bersaglio."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Percezione",
+          "valore": 2,
+          "ambito": "situazionale",
+          "beneficio": "sensori_vista",
+          "condizione": "+X VA a Percezione per vista e/o udito, come indicato nella scheda.",
+          "proprieta": "Sensori 2 alla vista",
+          "fonte": "Armamenti §7.21.2"
+        }
+      ]
+    },
+    {
+      "id": "sensori-acustici-1",
+      "nome": "Sensori acustici 1",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Modifiche per elmetti",
+      "nomi_alternativi": [],
+      "note_manuale": "Modifica per elmetto (§7.21.4): Sensori 1 all’udito. Si monta sull’elmetto indossato o sull’elmetto standard compreso nell’armatura; condivide l’Integrità dell’elmetto. I gradi dello stesso modulo sono alternative, non si sommano.",
+      "paragrafo": "§7.21.4",
+      "versione_manuale": "Armamenti 0.52",
+      "si_monta_su": [
+        "elmetto",
+        "armatura"
+      ],
+      "modifica_elmetto": {
+        "modulo": "sensori_udito"
+      },
+      "reperibilita": "NC",
+      "costo": 700,
+      "proprieta": [
+        {
+          "nome": "Sensori 1 all’udito",
+          "testo": "+X VA a Percezione per vista e/o udito, come indicato nella scheda. Non concede Prove o osservazioni gratuite, non individua automaticamente creature nascoste e non supera ostacoli che impediscono al sensore di rilevare il bersaglio."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Percezione",
+          "valore": 1,
+          "ambito": "situazionale",
+          "beneficio": "sensori_udito",
+          "condizione": "+X VA a Percezione per vista e/o udito, come indicato nella scheda.",
+          "proprieta": "Sensori 1 all’udito",
+          "fonte": "Armamenti §7.21.2"
+        }
+      ]
+    },
+    {
+      "id": "sensori-acustici-2",
+      "nome": "Sensori acustici 2",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Modifiche per elmetti",
+      "nomi_alternativi": [],
+      "note_manuale": "Modifica per elmetto (§7.21.4): Sensori 2 all’udito. Si monta sull’elmetto indossato o sull’elmetto standard compreso nell’armatura; condivide l’Integrità dell’elmetto. I gradi dello stesso modulo sono alternative, non si sommano.",
+      "paragrafo": "§7.21.4",
+      "versione_manuale": "Armamenti 0.52",
+      "si_monta_su": [
+        "elmetto",
+        "armatura"
+      ],
+      "modifica_elmetto": {
+        "modulo": "sensori_udito"
+      },
+      "reperibilita": "RA",
+      "costo": 2200,
+      "proprieta": [
+        {
+          "nome": "Sensori 2 all’udito",
+          "testo": "+X VA a Percezione per vista e/o udito, come indicato nella scheda. Non concede Prove o osservazioni gratuite, non individua automaticamente creature nascoste e non supera ostacoli che impediscono al sensore di rilevare il bersaglio."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Percezione",
+          "valore": 2,
+          "ambito": "situazionale",
+          "beneficio": "sensori_udito",
+          "condizione": "+X VA a Percezione per vista e/o udito, come indicato nella scheda.",
+          "proprieta": "Sensori 2 all’udito",
+          "fonte": "Armamenti §7.21.2"
+        }
+      ]
+    },
+    {
+      "id": "interfaccia-di-pilotaggio",
+      "nome": "Interfaccia di pilotaggio",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Modifiche per elmetti",
+      "nomi_alternativi": [],
+      "note_manuale": "Modifica per elmetto (§7.21.4): Interfaccia di pilotaggio 1. Si monta sull’elmetto indossato o sull’elmetto standard compreso nell’armatura; condivide l’Integrità dell’elmetto. I gradi dello stesso modulo sono alternative, non si sommano.",
+      "paragrafo": "§7.21.4",
+      "versione_manuale": "Armamenti 0.52",
+      "si_monta_su": [
+        "elmetto",
+        "armatura"
+      ],
+      "modifica_elmetto": {
+        "modulo": "interfaccia_pilotaggio"
+      },
+      "reperibilita": "NC",
+      "costo": 1200,
+      "proprieta": [
+        {
+          "nome": "Interfaccia di pilotaggio 1",
+          "testo": "+1 VA alle Prove di Pilotare per la conduzione di un mezzo con comandi compatibili, alimentati e collegati. Non si applica al tiro con le armi, ai paracadute o ai propulsori personali. Non si somma alle interfacce equivalenti dell’armatura."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Pilotare",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "conduzione di mezzi compatibili",
+          "beneficio": "interfaccia_pilotaggio",
+          "condizione": "+1 VA alle Prove di Pilotare per la conduzione di un mezzo con comandi compatibili, alimentati e collegati.",
+          "proprieta": "Interfaccia di pilotaggio 1",
+          "fonte": "Armamenti §7.21.2"
+        }
+      ]
+    },
+    {
+      "id": "visore-notturno",
+      "nome": "Visore notturno",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Modifiche per elmetti",
+      "nomi_alternativi": [],
+      "note_manuale": "Modifica per elmetto (§7.21.4): Visione notturna. Si monta sull’elmetto indossato o sull’elmetto standard compreso nell’armatura; condivide l’Integrità dell’elmetto. I gradi dello stesso modulo sono alternative, non si sommano.",
+      "paragrafo": "§7.21.4",
+      "versione_manuale": "Armamenti 0.52",
+      "si_monta_su": [
+        "elmetto",
+        "armatura"
+      ],
+      "modifica_elmetto": {
+        "modulo": "visore_notturno"
+      },
+      "reperibilita": "RA",
+      "costo": 2600,
+      "proprieta": [
+        {
+          "nome": "Visione notturna",
+          "testo": "Entro 80 Q ignora le penalità per scarsa illuminazione. Richiede luce ambientale residua e non funziona nel buio completo. Fumo, nebbia e ostacoli mantengono i loro effetti."
+        }
+      ],
+      "effetti": []
+    },
+    {
+      "id": "visore-termico",
+      "nome": "Visore termico",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Modifiche per elmetti",
+      "nomi_alternativi": [],
+      "note_manuale": "Modifica per elmetto (§7.21.4): Visione termica. Si monta sull’elmetto indossato o sull’elmetto standard compreso nell’armatura; condivide l’Integrità dell’elmetto. I gradi dello stesso modulo sono alternative, non si sommano.",
+      "paragrafo": "§7.21.4",
+      "versione_manuale": "Armamenti 0.52",
+      "si_monta_su": [
+        "elmetto",
+        "armatura"
+      ],
+      "modifica_elmetto": {
+        "modulo": "visore_termico"
+      },
+      "reperibilita": "MR",
+      "costo": 4800,
+      "proprieta": [
+        {
+          "nome": "Visione termica",
+          "testo": "Entro 40 Q permette di osservare e prendere di mira bersagli con sufficiente contrasto termico, anche nel buio naturale completo. Ignora il −4 VA della Fumogena standard se il bersaglio è distinguibile termicamente."
+        }
+      ],
+      "effetti": []
+    },
+    {
+      "id": "assistenza-offensiva",
+      "nome": "Assistenza offensiva",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Modifiche per elmetti",
+      "nomi_alternativi": [],
+      "note_manuale": "Modifica per elmetto (§7.21.4): Assistenza offensiva 1. Si monta sull’elmetto indossato o sull’elmetto standard compreso nell’armatura; condivide l’Integrità dell’elmetto. I gradi dello stesso modulo sono alternative, non si sommano.",
+      "paragrafo": "§7.21.4",
+      "versione_manuale": "Armamenti 0.52",
+      "si_monta_su": [
+        "elmetto",
+        "armatura"
+      ],
+      "modifica_elmetto": {
+        "modulo": "assistenza_offensiva"
+      },
+      "reperibilita": "RA",
+      "costo": 4000,
+      "proprieta": [
+        {
+          "nome": "Assistenza offensiva 1",
+          "testo": "+1 VA alle Prove per colpire ravvicinate e a distanza, comprese armi da lancio e attacchi senz’armi. Comprende l’eventuale Prova per colpire separata richiesta da un Incantesimo; non modifica la Prova di Potere per lanciarlo. Non aumenta danni, numero di attacchi o Azioni."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "attacco",
+          "attacchi": "tutti",
+          "valore": 1,
+          "ambito": "generale",
+          "beneficio": "assistenza_offensiva",
+          "condizione": "+1 VA alle Prove per colpire ravvicinate e a distanza, comprese armi da lancio e attacchi senz’armi.",
+          "proprieta": "Assistenza offensiva 1",
+          "fonte": "Armamenti §7.21.2"
+        }
+      ]
+    },
+    {
+      "id": "assistenza-difensiva",
+      "nome": "Assistenza difensiva",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Modifiche per elmetti",
+      "nomi_alternativi": [],
+      "note_manuale": "Modifica per elmetto (§7.21.4): Assistenza difensiva 1. Si monta sull’elmetto indossato o sull’elmetto standard compreso nell’armatura; condivide l’Integrità dell’elmetto. I gradi dello stesso modulo sono alternative, non si sommano.",
+      "paragrafo": "§7.21.4",
+      "versione_manuale": "Armamenti 0.52",
+      "si_monta_su": [
+        "elmetto",
+        "armatura"
+      ],
+      "modifica_elmetto": {
+        "modulo": "assistenza_difensiva"
+      },
+      "reperibilita": "RA",
+      "costo": 4000,
+      "proprieta": [
+        {
+          "nome": "Assistenza difensiva 1",
+          "testo": "+1 VA alle Prove di Difese per Parata e Schivata, anche contro attacchi a distanza; inoltre +1 alla PS di Riflessi quando viene usata per Elusione. Non modifica le altre PS di Riflessi."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Difese",
+          "valore": 1,
+          "ambito": "generale",
+          "beneficio": "assistenza_difensiva",
+          "condizione": "+1 VA alle Prove di Difese per Parata e Schivata, anche contro attacchi a distanza; inoltre +1 alla PS di Riflessi quando viene usata per Elusione.",
+          "proprieta": "Assistenza difensiva 1",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "riflessi",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "Elusione",
+          "beneficio": "assistenza_difensiva_elusione",
+          "condizione": "+1 VA alle Prove di Difese per Parata e Schivata, anche contro attacchi a distanza; inoltre +1 alla PS di Riflessi quando viene usata per Elusione.",
+          "proprieta": "Assistenza difensiva 1",
+          "fonte": "Armamenti §7.21.2"
+        }
+      ]
+    },
+    {
+      "id": "allerta-tattica",
+      "nome": "Allerta tattica",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Modifiche per elmetti",
+      "nomi_alternativi": [],
+      "note_manuale": "Modifica per elmetto (§7.21.4): Allerta tattica 1. Si monta sull’elmetto indossato o sull’elmetto standard compreso nell’armatura; condivide l’Integrità dell’elmetto. I gradi dello stesso modulo sono alternative, non si sommano.",
+      "paragrafo": "§7.21.4",
+      "versione_manuale": "Armamenti 0.52",
+      "si_monta_su": [
+        "elmetto",
+        "armatura"
+      ],
+      "modifica_elmetto": {
+        "modulo": "allerta_tattica"
+      },
+      "reperibilita": "RA",
+      "costo": 2000,
+      "proprieta": [
+        {
+          "nome": "Allerta tattica 1",
+          "testo": "+1 Iniziativa. Il bonus si applica quando si determina l’Iniziativa; attivare o cambiare elmetto dopo non permette di ritirarla o riordinare i turni già stabiliti. Non impedisce automaticamente la Sorpresa."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "iniziativa",
+          "valore": 1,
+          "ambito": "generale",
+          "beneficio": "allerta_tattica",
+          "condizione": "+1 Iniziativa.",
+          "proprieta": "Allerta tattica 1",
+          "fonte": "Armamenti §7.21.2"
+        }
+      ]
+    },
+    {
+      "id": "interfaccia-neurale-percettiva-1",
+      "nome": "Interfaccia neurale percettiva 1",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Modifiche per elmetti",
+      "nomi_alternativi": [],
+      "note_manuale": "Modifica per elmetto (§7.21.4): SIN 1 a Percezione. Si monta sull’elmetto indossato o sull’elmetto standard compreso nell’armatura; condivide l’Integrità dell’elmetto. I gradi dello stesso modulo sono alternative, non si sommano. Richiede sensori o visori elettronici installati e un Innesto di Interfaccia Neurale compatibile (§7.15.1).",
+      "paragrafo": "§7.21.4",
+      "versione_manuale": "Armamenti 0.52",
+      "si_monta_su": [
+        "elmetto",
+        "armatura"
+      ],
+      "modifica_elmetto": {
+        "modulo": "interfaccia_neurale"
+      },
+      "reperibilita": "RA",
+      "costo": 1500,
+      "proprieta": [
+        {
+          "nome": "SIN 1 a Percezione",
+          "testo": "Il SIN conserva la propria regola: è distinto dal bonus ordinario dello strumento, ma si applica un solo SIN pertinente, fino a +2. I moduli neurali percettivi degli elmetti riguardano soltanto Percezione, non attacco o Difese."
+        }
+      ],
+      "effetti": []
+    },
+    {
+      "id": "interfaccia-neurale-percettiva-2",
+      "nome": "Interfaccia neurale percettiva 2",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Modifiche per elmetti",
+      "nomi_alternativi": [],
+      "note_manuale": "Modifica per elmetto (§7.21.4): SIN 2 a Percezione. Si monta sull’elmetto indossato o sull’elmetto standard compreso nell’armatura; condivide l’Integrità dell’elmetto. I gradi dello stesso modulo sono alternative, non si sommano. Richiede sensori o visori elettronici installati e un Innesto di Interfaccia Neurale compatibile (§7.15.1).",
+      "paragrafo": "§7.21.4",
+      "versione_manuale": "Armamenti 0.52",
+      "si_monta_su": [
+        "elmetto",
+        "armatura"
+      ],
+      "modifica_elmetto": {
+        "modulo": "interfaccia_neurale"
+      },
+      "reperibilita": "MR",
+      "costo": 3000,
+      "proprieta": [
+        {
+          "nome": "SIN 2 a Percezione",
+          "testo": "Il SIN conserva la propria regola: è distinto dal bonus ordinario dello strumento, ma si applica un solo SIN pertinente, fino a +2. I moduli neurali percettivi degli elmetti riguardano soltanto Percezione, non attacco o Difese."
+        }
+      ],
+      "effetti": []
+    },
+    {
+      "id": "elmetto-wacht",
+      "nome": "Elmetto Wacht",
+      "tipo": "elmetto",
+      "catalogo": "Bauhaus",
+      "famiglia": "Elmetti",
+      "nomi_alternativi": [
+        "Wacht"
+      ],
+      "note_manuale": "Elmetto specialistico (§7.21.5): Antibagliore 2; Protezione acustica 2; Assistenza difensiva 1. Non fornisce AR; sostituisce l’elmetto standard e si acquista per intero. Può ricevere modifiche aggiuntive compatibili.",
+      "paragrafo": "§7.21.5",
+      "versione_manuale": "Armamenti 0.52",
+      "ar": {
+        "totale": 0,
+        "magica": 0
+      },
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 6000,
+      "proprieta": [
+        {
+          "nome": "Antibagliore 2",
+          "testo": "+2 alla PS già prevista contro Accecamento provocato da lampi o luce intensa. Non introduce una PS se l’effetto non la prevede e non protegge dagli altri tipi di Accecamento."
+        },
+        {
+          "nome": "Protezione acustica 2",
+          "testo": "+2 alla PS già prevista contro un effetto sonoro o un rumore dannoso, come nel §7.11.4. Non è una protezione generale contro esplosioni o danni."
+        },
+        {
+          "nome": "Assistenza difensiva 1",
+          "testo": "+1 VA alle Prove di Difese per Parata e Schivata, anche contro attacchi a distanza; inoltre +1 alla PS di Riflessi quando viene usata per Elusione. Non modifica le altre PS di Riflessi."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "salvezza",
+          "salvezza": null,
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro Accecamento da lampi o luce intensa",
+          "beneficio": "antibagliore",
+          "condizione": "+2 alla PS già prevista contro Accecamento provocato da lampi o luce intensa.",
+          "proprieta": "Antibagliore 2",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": null,
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro effetti sonori o rumori dannosi",
+          "beneficio": "protezione_acustica",
+          "condizione": "+2 alla PS già prevista contro un effetto sonoro o un rumore dannoso, come nel §7.11.4.",
+          "proprieta": "Protezione acustica 2",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "abilita": "Difese",
+          "valore": 1,
+          "ambito": "generale",
+          "beneficio": "assistenza_difensiva",
+          "condizione": "+1 VA alle Prove di Difese per Parata e Schivata, anche contro attacchi a distanza; inoltre +1 alla PS di Riflessi quando viene usata per Elusione.",
+          "proprieta": "Assistenza difensiva 1",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "riflessi",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "Elusione",
+          "beneficio": "assistenza_difensiva_elusione",
+          "condizione": "+1 VA alle Prove di Difese per Parata e Schivata, anche contro attacchi a distanza; inoltre +1 alla PS di Riflessi quando viene usata per Elusione.",
+          "proprieta": "Assistenza difensiva 1",
+          "fonte": "Armamenti §7.21.2"
+        }
+      ]
+    },
+    {
+      "id": "elmetto-venus-scout",
+      "nome": "Elmetto Venus-Scout",
+      "tipo": "elmetto",
+      "catalogo": "Bauhaus",
+      "famiglia": "Elmetti",
+      "nomi_alternativi": [
+        "Venus-Scout"
+      ],
+      "note_manuale": "Elmetto specialistico (§7.21.5): Visione notturna; Filtro respiratorio 2; Allerta tattica 1. Non fornisce AR; sostituisce l’elmetto standard e si acquista per intero. Può ricevere modifiche aggiuntive compatibili.",
+      "paragrafo": "§7.21.5",
+      "versione_manuale": "Armamenti 0.52",
+      "ar": {
+        "totale": 0,
+        "magica": 0
+      },
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 6200,
+      "proprieta": [
+        {
+          "nome": "Visione notturna",
+          "testo": "Entro 80 Q ignora le penalità per scarsa illuminazione. Richiede luce ambientale residua e non funziona nel buio completo. Fumo, nebbia e ostacoli mantengono i loro effetti."
+        },
+        {
+          "nome": "Filtro respiratorio 2",
+          "testo": "+2 alla PS Tempra contro veleni e agenti patogeni inalati, con maschera indossata. Richiede aria respirabile; non fornisce ossigeno né tenuta per immersione o vuoto."
+        },
+        {
+          "nome": "Allerta tattica 1",
+          "testo": "+1 Iniziativa. Il bonus si applica quando si determina l’Iniziativa; attivare o cambiare elmetto dopo non permette di ritirarla o riordinare i turni già stabiliti. Non impedisce automaticamente la Sorpresa."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "salvezza",
+          "salvezza": "tempra",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro veleni e agenti patogeni inalati",
+          "beneficio": "filtro_respiratorio",
+          "condizione": "+2 alla PS Tempra contro veleni e agenti patogeni inalati, con maschera indossata.",
+          "proprieta": "Filtro respiratorio 2",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "iniziativa",
+          "valore": 1,
+          "ambito": "generale",
+          "beneficio": "allerta_tattica",
+          "condizione": "+1 Iniziativa.",
+          "proprieta": "Allerta tattica 1",
+          "fonte": "Armamenti §7.21.2"
+        }
+      ]
+    },
+    {
+      "id": "elmetto-ranger-scout",
+      "nome": "Elmetto Ranger Scout",
+      "tipo": "elmetto",
+      "catalogo": "Capitol",
+      "famiglia": "Elmetti",
+      "nomi_alternativi": [
+        "Ranger Scout"
+      ],
+      "note_manuale": "Elmetto specialistico (§7.21.5): Visione notturna; Sensori 1 alla vista; Assistenza offensiva 1. Non fornisce AR; sostituisce l’elmetto standard e si acquista per intero. Può ricevere modifiche aggiuntive compatibili.",
+      "paragrafo": "§7.21.5",
+      "versione_manuale": "Armamenti 0.52",
+      "ar": {
+        "totale": 0,
+        "magica": 0
+      },
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 8200,
+      "proprieta": [
+        {
+          "nome": "Visione notturna",
+          "testo": "Entro 80 Q ignora le penalità per scarsa illuminazione. Richiede luce ambientale residua e non funziona nel buio completo. Fumo, nebbia e ostacoli mantengono i loro effetti."
+        },
+        {
+          "nome": "Sensori 1 alla vista",
+          "testo": "+X VA a Percezione per vista e/o udito, come indicato nella scheda. Non concede Prove o osservazioni gratuite, non individua automaticamente creature nascoste e non supera ostacoli che impediscono al sensore di rilevare il bersaglio."
+        },
+        {
+          "nome": "Assistenza offensiva 1",
+          "testo": "+1 VA alle Prove per colpire ravvicinate e a distanza, comprese armi da lancio e attacchi senz’armi. Comprende l’eventuale Prova per colpire separata richiesta da un Incantesimo; non modifica la Prova di Potere per lanciarlo. Non aumenta danni, numero di attacchi o Azioni."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Percezione",
+          "valore": 1,
+          "ambito": "situazionale",
+          "beneficio": "sensori_vista",
+          "condizione": "+X VA a Percezione per vista e/o udito, come indicato nella scheda.",
+          "proprieta": "Sensori 1 alla vista",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "attacco",
+          "attacchi": "tutti",
+          "valore": 1,
+          "ambito": "generale",
+          "beneficio": "assistenza_offensiva",
+          "condizione": "+1 VA alle Prove per colpire ravvicinate e a distanza, comprese armi da lancio e attacchi senz’armi.",
+          "proprieta": "Assistenza offensiva 1",
+          "fonte": "Armamenti §7.21.2"
+        }
+      ]
+    },
+    {
+      "id": "elmetto-airborne-hud",
+      "nome": "Elmetto Airborne HUD",
+      "tipo": "elmetto",
+      "catalogo": "Capitol",
+      "famiglia": "Elmetti",
+      "nomi_alternativi": [
+        "Airborne HUD"
+      ],
+      "note_manuale": "Elmetto specialistico (§7.21.5): Interfaccia di pilotaggio 1; Antibagliore 2; Allerta tattica 1. Non fornisce AR; sostituisce l’elmetto standard e si acquista per intero. Può ricevere modifiche aggiuntive compatibili.",
+      "paragrafo": "§7.21.5",
+      "versione_manuale": "Armamenti 0.52",
+      "ar": {
+        "totale": 0,
+        "magica": 0
+      },
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 4600,
+      "proprieta": [
+        {
+          "nome": "Interfaccia di pilotaggio 1",
+          "testo": "+1 VA alle Prove di Pilotare per la conduzione di un mezzo con comandi compatibili, alimentati e collegati. Non si applica al tiro con le armi, ai paracadute o ai propulsori personali. Non si somma alle interfacce equivalenti dell’armatura."
+        },
+        {
+          "nome": "Antibagliore 2",
+          "testo": "+2 alla PS già prevista contro Accecamento provocato da lampi o luce intensa. Non introduce una PS se l’effetto non la prevede e non protegge dagli altri tipi di Accecamento."
+        },
+        {
+          "nome": "Allerta tattica 1",
+          "testo": "+1 Iniziativa. Il bonus si applica quando si determina l’Iniziativa; attivare o cambiare elmetto dopo non permette di ritirarla o riordinare i turni già stabiliti. Non impedisce automaticamente la Sorpresa."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Pilotare",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "conduzione di mezzi compatibili",
+          "beneficio": "interfaccia_pilotaggio",
+          "condizione": "+1 VA alle Prove di Pilotare per la conduzione di un mezzo con comandi compatibili, alimentati e collegati.",
+          "proprieta": "Interfaccia di pilotaggio 1",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": null,
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro Accecamento da lampi o luce intensa",
+          "beneficio": "antibagliore",
+          "condizione": "+2 alla PS già prevista contro Accecamento provocato da lampi o luce intensa.",
+          "proprieta": "Antibagliore 2",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "iniziativa",
+          "valore": 1,
+          "ambito": "generale",
+          "beneficio": "allerta_tattica",
+          "condizione": "+1 Iniziativa.",
+          "proprieta": "Allerta tattica 1",
+          "fonte": "Armamenti §7.21.2"
+        }
+      ]
+    },
+    {
+      "id": "elmetto-cs-100",
+      "nome": "Elmetto CS-100",
+      "tipo": "elmetto",
+      "catalogo": "Cybertronic",
+      "famiglia": "Elmetti",
+      "nomi_alternativi": [
+        "CS-100"
+      ],
+      "note_manuale": "Elmetto specialistico (§7.21.5): Sensori 1 a vista e udito; SIN 1 a Percezione visiva e uditiva; Allerta tattica 1. Non fornisce AR; sostituisce l’elmetto standard e si acquista per intero. Può ricevere modifiche aggiuntive compatibili. Il SIN richiede un Innesto di Interfaccia Neurale compatibile (§7.15.1).",
+      "paragrafo": "§7.21.5",
+      "versione_manuale": "Armamenti 0.52",
+      "ar": {
+        "totale": 0,
+        "magica": 0
+      },
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 5500,
+      "proprieta": [
+        {
+          "nome": "Sensori 1 a vista e udito",
+          "testo": "+X VA a Percezione per vista e/o udito, come indicato nella scheda. Non concede Prove o osservazioni gratuite, non individua automaticamente creature nascoste e non supera ostacoli che impediscono al sensore di rilevare il bersaglio."
+        },
+        {
+          "nome": "SIN 1 a Percezione visiva e uditiva",
+          "testo": "Il SIN conserva la propria regola: è distinto dal bonus ordinario dello strumento, ma si applica un solo SIN pertinente, fino a +2. I moduli neurali percettivi degli elmetti riguardano soltanto Percezione, non attacco o Difese."
+        },
+        {
+          "nome": "Allerta tattica 1",
+          "testo": "+1 Iniziativa. Il bonus si applica quando si determina l’Iniziativa; attivare o cambiare elmetto dopo non permette di ritirarla o riordinare i turni già stabiliti. Non impedisce automaticamente la Sorpresa."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Percezione",
+          "valore": 1,
+          "ambito": "situazionale",
+          "beneficio": "sensori_vista_udito",
+          "condizione": "+X VA a Percezione per vista e/o udito, come indicato nella scheda.",
+          "proprieta": "Sensori 1 a vista e udito",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "iniziativa",
+          "valore": 1,
+          "ambito": "generale",
+          "beneficio": "allerta_tattica",
+          "condizione": "+1 Iniziativa.",
+          "proprieta": "Allerta tattica 1",
+          "fonte": "Armamenti §7.21.2"
+        }
+      ]
+    },
+    {
+      "id": "elmetto-cs-400",
+      "nome": "Elmetto CS-400",
+      "tipo": "elmetto",
+      "catalogo": "Cybertronic",
+      "famiglia": "Elmetti",
+      "nomi_alternativi": [
+        "CS-400"
+      ],
+      "note_manuale": "Elmetto specialistico (§7.21.5): Visione termica; SIN 2 a Percezione termica; Assistenza offensiva 1. Non fornisce AR; sostituisce l’elmetto standard e si acquista per intero. Può ricevere modifiche aggiuntive compatibili. Il SIN richiede un Innesto di Interfaccia Neurale compatibile (§7.15.1).",
+      "paragrafo": "§7.21.5",
+      "versione_manuale": "Armamenti 0.52",
+      "ar": {
+        "totale": 0,
+        "magica": 0
+      },
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "MR",
+      "costo": 11500,
+      "proprieta": [
+        {
+          "nome": "Visione termica",
+          "testo": "Entro 40 Q permette di osservare e prendere di mira bersagli con sufficiente contrasto termico, anche nel buio naturale completo. Ignora il −4 VA della Fumogena standard se il bersaglio è distinguibile termicamente."
+        },
+        {
+          "nome": "SIN 2 a Percezione termica",
+          "testo": "Il SIN conserva la propria regola: è distinto dal bonus ordinario dello strumento, ma si applica un solo SIN pertinente, fino a +2. I moduli neurali percettivi degli elmetti riguardano soltanto Percezione, non attacco o Difese."
+        },
+        {
+          "nome": "Assistenza offensiva 1",
+          "testo": "+1 VA alle Prove per colpire ravvicinate e a distanza, comprese armi da lancio e attacchi senz’armi. Comprende l’eventuale Prova per colpire separata richiesta da un Incantesimo; non modifica la Prova di Potere per lanciarlo. Non aumenta danni, numero di attacchi o Azioni."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "attacco",
+          "attacchi": "tutti",
+          "valore": 1,
+          "ambito": "generale",
+          "beneficio": "assistenza_offensiva",
+          "condizione": "+1 VA alle Prove per colpire ravvicinate e a distanza, comprese armi da lancio e attacchi senz’armi.",
+          "proprieta": "Assistenza offensiva 1",
+          "fonte": "Armamenti §7.21.2"
+        }
+      ]
+    },
+    {
+      "id": "elmetto-trencher-mk-ii",
+      "nome": "Elmetto Trencher Mk II",
+      "tipo": "elmetto",
+      "catalogo": "Imperial",
+      "famiglia": "Elmetti",
+      "nomi_alternativi": [
+        "Trencher Mk II"
+      ],
+      "note_manuale": "Elmetto specialistico (§7.21.5): Filtro respiratorio 2; Protezione acustica 2; Assistenza difensiva 1. Non fornisce AR; sostituisce l’elmetto standard e si acquista per intero. Può ricevere modifiche aggiuntive compatibili.",
+      "paragrafo": "§7.21.5",
+      "versione_manuale": "Armamenti 0.52",
+      "ar": {
+        "totale": 0,
+        "magica": 0
+      },
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 6200,
+      "proprieta": [
+        {
+          "nome": "Filtro respiratorio 2",
+          "testo": "+2 alla PS Tempra contro veleni e agenti patogeni inalati, con maschera indossata. Richiede aria respirabile; non fornisce ossigeno né tenuta per immersione o vuoto."
+        },
+        {
+          "nome": "Protezione acustica 2",
+          "testo": "+2 alla PS già prevista contro un effetto sonoro o un rumore dannoso, come nel §7.11.4. Non è una protezione generale contro esplosioni o danni."
+        },
+        {
+          "nome": "Assistenza difensiva 1",
+          "testo": "+1 VA alle Prove di Difese per Parata e Schivata, anche contro attacchi a distanza; inoltre +1 alla PS di Riflessi quando viene usata per Elusione. Non modifica le altre PS di Riflessi."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "salvezza",
+          "salvezza": "tempra",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro veleni e agenti patogeni inalati",
+          "beneficio": "filtro_respiratorio",
+          "condizione": "+2 alla PS Tempra contro veleni e agenti patogeni inalati, con maschera indossata.",
+          "proprieta": "Filtro respiratorio 2",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": null,
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro effetti sonori o rumori dannosi",
+          "beneficio": "protezione_acustica",
+          "condizione": "+2 alla PS già prevista contro un effetto sonoro o un rumore dannoso, come nel §7.11.4.",
+          "proprieta": "Protezione acustica 2",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "abilita": "Difese",
+          "valore": 1,
+          "ambito": "generale",
+          "beneficio": "assistenza_difensiva",
+          "condizione": "+1 VA alle Prove di Difese per Parata e Schivata, anche contro attacchi a distanza; inoltre +1 alla PS di Riflessi quando viene usata per Elusione.",
+          "proprieta": "Assistenza difensiva 1",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "riflessi",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "Elusione",
+          "beneficio": "assistenza_difensiva_elusione",
+          "condizione": "+1 VA alle Prove di Difese per Parata e Schivata, anche contro attacchi a distanza; inoltre +1 alla PS di Riflessi quando viene usata per Elusione.",
+          "proprieta": "Assistenza difensiva 1",
+          "fonte": "Armamenti §7.21.2"
+        }
+      ]
+    },
+    {
+      "id": "elmetto-pathfinder-recon",
+      "nome": "Elmetto Pathfinder Recon",
+      "tipo": "elmetto",
+      "catalogo": "Imperial",
+      "famiglia": "Elmetti",
+      "nomi_alternativi": [
+        "Pathfinder Recon"
+      ],
+      "note_manuale": "Elmetto specialistico (§7.21.5): Visione notturna; Sensori 1 all’udito; Allerta tattica 1. Non fornisce AR; sostituisce l’elmetto standard e si acquista per intero. Può ricevere modifiche aggiuntive compatibili.",
+      "paragrafo": "§7.21.5",
+      "versione_manuale": "Armamenti 0.52",
+      "ar": {
+        "totale": 0,
+        "magica": 0
+      },
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 6200,
+      "proprieta": [
+        {
+          "nome": "Visione notturna",
+          "testo": "Entro 80 Q ignora le penalità per scarsa illuminazione. Richiede luce ambientale residua e non funziona nel buio completo. Fumo, nebbia e ostacoli mantengono i loro effetti."
+        },
+        {
+          "nome": "Sensori 1 all’udito",
+          "testo": "+X VA a Percezione per vista e/o udito, come indicato nella scheda. Non concede Prove o osservazioni gratuite, non individua automaticamente creature nascoste e non supera ostacoli che impediscono al sensore di rilevare il bersaglio."
+        },
+        {
+          "nome": "Allerta tattica 1",
+          "testo": "+1 Iniziativa. Il bonus si applica quando si determina l’Iniziativa; attivare o cambiare elmetto dopo non permette di ritirarla o riordinare i turni già stabiliti. Non impedisce automaticamente la Sorpresa."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Percezione",
+          "valore": 1,
+          "ambito": "situazionale",
+          "beneficio": "sensori_udito",
+          "condizione": "+X VA a Percezione per vista e/o udito, come indicato nella scheda.",
+          "proprieta": "Sensori 1 all’udito",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "iniziativa",
+          "valore": 1,
+          "ambito": "generale",
+          "beneficio": "allerta_tattica",
+          "condizione": "+1 Iniziativa.",
+          "proprieta": "Allerta tattica 1",
+          "fonte": "Armamenti §7.21.2"
+        }
+      ]
+    },
+    {
+      "id": "elmetto-kabuto-senshi",
+      "nome": "Elmetto Kabuto Senshi",
+      "tipo": "elmetto",
+      "catalogo": "Mishima",
+      "famiglia": "Elmetti",
+      "nomi_alternativi": [
+        "Kabuto Senshi"
+      ],
+      "note_manuale": "Elmetto specialistico (§7.21.5): Sensori 2 alla vista; Antibagliore 2; Assistenza offensiva 1; Assistenza difensiva 1. Non fornisce AR; sostituisce l’elmetto standard e si acquista per intero. Può ricevere modifiche aggiuntive compatibili.",
+      "paragrafo": "§7.21.5",
+      "versione_manuale": "Armamenti 0.52",
+      "ar": {
+        "totale": 0,
+        "magica": 0
+      },
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 11500,
+      "proprieta": [
+        {
+          "nome": "Sensori 2 alla vista",
+          "testo": "+X VA a Percezione per vista e/o udito, come indicato nella scheda. Non concede Prove o osservazioni gratuite, non individua automaticamente creature nascoste e non supera ostacoli che impediscono al sensore di rilevare il bersaglio."
+        },
+        {
+          "nome": "Antibagliore 2",
+          "testo": "+2 alla PS già prevista contro Accecamento provocato da lampi o luce intensa. Non introduce una PS se l’effetto non la prevede e non protegge dagli altri tipi di Accecamento."
+        },
+        {
+          "nome": "Assistenza offensiva 1",
+          "testo": "+1 VA alle Prove per colpire ravvicinate e a distanza, comprese armi da lancio e attacchi senz’armi. Comprende l’eventuale Prova per colpire separata richiesta da un Incantesimo; non modifica la Prova di Potere per lanciarlo. Non aumenta danni, numero di attacchi o Azioni."
+        },
+        {
+          "nome": "Assistenza difensiva 1",
+          "testo": "+1 VA alle Prove di Difese per Parata e Schivata, anche contro attacchi a distanza; inoltre +1 alla PS di Riflessi quando viene usata per Elusione. Non modifica le altre PS di Riflessi."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Percezione",
+          "valore": 2,
+          "ambito": "situazionale",
+          "beneficio": "sensori_vista",
+          "condizione": "+X VA a Percezione per vista e/o udito, come indicato nella scheda.",
+          "proprieta": "Sensori 2 alla vista",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": null,
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro Accecamento da lampi o luce intensa",
+          "beneficio": "antibagliore",
+          "condizione": "+2 alla PS già prevista contro Accecamento provocato da lampi o luce intensa.",
+          "proprieta": "Antibagliore 2",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "attacco",
+          "attacchi": "tutti",
+          "valore": 1,
+          "ambito": "generale",
+          "beneficio": "assistenza_offensiva",
+          "condizione": "+1 VA alle Prove per colpire ravvicinate e a distanza, comprese armi da lancio e attacchi senz’armi.",
+          "proprieta": "Assistenza offensiva 1",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "abilita": "Difese",
+          "valore": 1,
+          "ambito": "generale",
+          "beneficio": "assistenza_difensiva",
+          "condizione": "+1 VA alle Prove di Difese per Parata e Schivata, anche contro attacchi a distanza; inoltre +1 alla PS di Riflessi quando viene usata per Elusione.",
+          "proprieta": "Assistenza difensiva 1",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "riflessi",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "Elusione",
+          "beneficio": "assistenza_difensiva_elusione",
+          "condizione": "+1 VA alle Prove di Difese per Parata e Schivata, anche contro attacchi a distanza; inoltre +1 alla PS di Riflessi quando viene usata per Elusione.",
+          "proprieta": "Assistenza difensiva 1",
+          "fonte": "Armamenti §7.21.2"
+        }
+      ]
+    },
+    {
+      "id": "elmetto-maschera-kage",
+      "nome": "Elmetto Maschera Kage",
+      "tipo": "elmetto",
+      "catalogo": "Mishima",
+      "famiglia": "Elmetti",
+      "nomi_alternativi": [
+        "Maschera Kage"
+      ],
+      "note_manuale": "Elmetto specialistico (§7.21.5): Visione notturna; Sensori 2 all’udito; Allerta tattica 1. Non fornisce AR; sostituisce l’elmetto standard e si acquista per intero. Può ricevere modifiche aggiuntive compatibili.",
+      "paragrafo": "§7.21.5",
+      "versione_manuale": "Armamenti 0.52",
+      "ar": {
+        "totale": 0,
+        "magica": 0
+      },
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 7200,
+      "proprieta": [
+        {
+          "nome": "Visione notturna",
+          "testo": "Entro 80 Q ignora le penalità per scarsa illuminazione. Richiede luce ambientale residua e non funziona nel buio completo. Fumo, nebbia e ostacoli mantengono i loro effetti."
+        },
+        {
+          "nome": "Sensori 2 all’udito",
+          "testo": "+X VA a Percezione per vista e/o udito, come indicato nella scheda. Non concede Prove o osservazioni gratuite, non individua automaticamente creature nascoste e non supera ostacoli che impediscono al sensore di rilevare il bersaglio."
+        },
+        {
+          "nome": "Allerta tattica 1",
+          "testo": "+1 Iniziativa. Il bonus si applica quando si determina l’Iniziativa; attivare o cambiare elmetto dopo non permette di ritirarla o riordinare i turni già stabiliti. Non impedisce automaticamente la Sorpresa."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Percezione",
+          "valore": 2,
+          "ambito": "situazionale",
+          "beneficio": "sensori_udito",
+          "condizione": "+X VA a Percezione per vista e/o udito, come indicato nella scheda.",
+          "proprieta": "Sensori 2 all’udito",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "iniziativa",
+          "valore": 1,
+          "ambito": "generale",
+          "beneficio": "allerta_tattica",
+          "condizione": "+1 Iniziativa.",
+          "proprieta": "Allerta tattica 1",
+          "fonte": "Armamenti §7.21.2"
+        }
+      ]
+    },
+    {
+      "id": "elmetto-custode",
+      "nome": "Elmetto Custode",
+      "tipo": "elmetto",
+      "catalogo": "Fratellanza",
+      "famiglia": "Elmetti",
+      "nomi_alternativi": [
+        "Custode"
+      ],
+      "note_manuale": "Elmetto specialistico (§7.21.5): Antibagliore 2; Protezione acustica 2; Filtro respiratorio 2; Assistenza difensiva 1. Non fornisce AR; sostituisce l’elmetto standard e si acquista per intero. Può ricevere modifiche aggiuntive compatibili.",
+      "paragrafo": "§7.21.5",
+      "versione_manuale": "Armamenti 0.52",
+      "ar": {
+        "totale": 0,
+        "magica": 0
+      },
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 7200,
+      "proprieta": [
+        {
+          "nome": "Antibagliore 2",
+          "testo": "+2 alla PS già prevista contro Accecamento provocato da lampi o luce intensa. Non introduce una PS se l’effetto non la prevede e non protegge dagli altri tipi di Accecamento."
+        },
+        {
+          "nome": "Protezione acustica 2",
+          "testo": "+2 alla PS già prevista contro un effetto sonoro o un rumore dannoso, come nel §7.11.4. Non è una protezione generale contro esplosioni o danni."
+        },
+        {
+          "nome": "Filtro respiratorio 2",
+          "testo": "+2 alla PS Tempra contro veleni e agenti patogeni inalati, con maschera indossata. Richiede aria respirabile; non fornisce ossigeno né tenuta per immersione o vuoto."
+        },
+        {
+          "nome": "Assistenza difensiva 1",
+          "testo": "+1 VA alle Prove di Difese per Parata e Schivata, anche contro attacchi a distanza; inoltre +1 alla PS di Riflessi quando viene usata per Elusione. Non modifica le altre PS di Riflessi."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "salvezza",
+          "salvezza": null,
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro Accecamento da lampi o luce intensa",
+          "beneficio": "antibagliore",
+          "condizione": "+2 alla PS già prevista contro Accecamento provocato da lampi o luce intensa.",
+          "proprieta": "Antibagliore 2",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": null,
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro effetti sonori o rumori dannosi",
+          "beneficio": "protezione_acustica",
+          "condizione": "+2 alla PS già prevista contro un effetto sonoro o un rumore dannoso, come nel §7.11.4.",
+          "proprieta": "Protezione acustica 2",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "tempra",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro veleni e agenti patogeni inalati",
+          "beneficio": "filtro_respiratorio",
+          "condizione": "+2 alla PS Tempra contro veleni e agenti patogeni inalati, con maschera indossata.",
+          "proprieta": "Filtro respiratorio 2",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "abilita": "Difese",
+          "valore": 1,
+          "ambito": "generale",
+          "beneficio": "assistenza_difensiva",
+          "condizione": "+1 VA alle Prove di Difese per Parata e Schivata, anche contro attacchi a distanza; inoltre +1 alla PS di Riflessi quando viene usata per Elusione.",
+          "proprieta": "Assistenza difensiva 1",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "riflessi",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "Elusione",
+          "beneficio": "assistenza_difensiva_elusione",
+          "condizione": "+1 VA alle Prove di Difese per Parata e Schivata, anche contro attacchi a distanza; inoltre +1 alla PS di Riflessi quando viene usata per Elusione.",
+          "proprieta": "Assistenza difensiva 1",
+          "fonte": "Armamenti §7.21.2"
+        }
+      ]
+    },
+    {
+      "id": "elmetto-scrutatore",
+      "nome": "Elmetto Scrutatore",
+      "tipo": "elmetto",
+      "catalogo": "Fratellanza",
+      "famiglia": "Elmetti",
+      "nomi_alternativi": [
+        "Scrutatore"
+      ],
+      "note_manuale": "Elmetto specialistico (§7.21.5): Visione termica; Sensori 1 alla vista; Assistenza offensiva 1. Non fornisce AR; sostituisce l’elmetto standard e si acquista per intero. Può ricevere modifiche aggiuntive compatibili.",
+      "paragrafo": "§7.21.5",
+      "versione_manuale": "Armamenti 0.52",
+      "ar": {
+        "totale": 0,
+        "magica": 0
+      },
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "MR",
+      "costo": 10500,
+      "proprieta": [
+        {
+          "nome": "Visione termica",
+          "testo": "Entro 40 Q permette di osservare e prendere di mira bersagli con sufficiente contrasto termico, anche nel buio naturale completo. Ignora il −4 VA della Fumogena standard se il bersaglio è distinguibile termicamente."
+        },
+        {
+          "nome": "Sensori 1 alla vista",
+          "testo": "+X VA a Percezione per vista e/o udito, come indicato nella scheda. Non concede Prove o osservazioni gratuite, non individua automaticamente creature nascoste e non supera ostacoli che impediscono al sensore di rilevare il bersaglio."
+        },
+        {
+          "nome": "Assistenza offensiva 1",
+          "testo": "+1 VA alle Prove per colpire ravvicinate e a distanza, comprese armi da lancio e attacchi senz’armi. Comprende l’eventuale Prova per colpire separata richiesta da un Incantesimo; non modifica la Prova di Potere per lanciarlo. Non aumenta danni, numero di attacchi o Azioni."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Percezione",
+          "valore": 1,
+          "ambito": "situazionale",
+          "beneficio": "sensori_vista",
+          "condizione": "+X VA a Percezione per vista e/o udito, come indicato nella scheda.",
+          "proprieta": "Sensori 1 alla vista",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "attacco",
+          "attacchi": "tutti",
+          "valore": 1,
+          "ambito": "generale",
+          "beneficio": "assistenza_offensiva",
+          "condizione": "+1 VA alle Prove per colpire ravvicinate e a distanza, comprese armi da lancio e attacchi senz’armi.",
+          "proprieta": "Assistenza offensiva 1",
+          "fonte": "Armamenti §7.21.2"
+        }
+      ]
+    },
+    {
+      "id": "elmetto-asa-recon",
+      "nome": "Elmetto ASA Recon",
+      "tipo": "elmetto",
+      "catalogo": "Alleanza",
+      "famiglia": "Elmetti",
+      "nomi_alternativi": [
+        "ASA Recon"
+      ],
+      "note_manuale": "Elmetto specialistico (§7.21.5): Visione notturna; Sensori 1 a vista e udito; Filtro respiratorio 2; Allerta tattica 1. Non fornisce AR; sostituisce l’elmetto standard e si acquista per intero. Può ricevere modifiche aggiuntive compatibili.",
+      "paragrafo": "§7.21.5",
+      "versione_manuale": "Armamenti 0.52",
+      "ar": {
+        "totale": 0,
+        "magica": 0
+      },
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 7500,
+      "proprieta": [
+        {
+          "nome": "Visione notturna",
+          "testo": "Entro 80 Q ignora le penalità per scarsa illuminazione. Richiede luce ambientale residua e non funziona nel buio completo. Fumo, nebbia e ostacoli mantengono i loro effetti."
+        },
+        {
+          "nome": "Sensori 1 a vista e udito",
+          "testo": "+X VA a Percezione per vista e/o udito, come indicato nella scheda. Non concede Prove o osservazioni gratuite, non individua automaticamente creature nascoste e non supera ostacoli che impediscono al sensore di rilevare il bersaglio."
+        },
+        {
+          "nome": "Filtro respiratorio 2",
+          "testo": "+2 alla PS Tempra contro veleni e agenti patogeni inalati, con maschera indossata. Richiede aria respirabile; non fornisce ossigeno né tenuta per immersione o vuoto."
+        },
+        {
+          "nome": "Allerta tattica 1",
+          "testo": "+1 Iniziativa. Il bonus si applica quando si determina l’Iniziativa; attivare o cambiare elmetto dopo non permette di ritirarla o riordinare i turni già stabiliti. Non impedisce automaticamente la Sorpresa."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Percezione",
+          "valore": 1,
+          "ambito": "situazionale",
+          "beneficio": "sensori_vista_udito",
+          "condizione": "+X VA a Percezione per vista e/o udito, come indicato nella scheda.",
+          "proprieta": "Sensori 1 a vista e udito",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "tempra",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro veleni e agenti patogeni inalati",
+          "beneficio": "filtro_respiratorio",
+          "condizione": "+2 alla PS Tempra contro veleni e agenti patogeni inalati, con maschera indossata.",
+          "proprieta": "Filtro respiratorio 2",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "iniziativa",
+          "valore": 1,
+          "ambito": "generale",
+          "beneficio": "allerta_tattica",
+          "condizione": "+1 Iniziativa.",
+          "proprieta": "Allerta tattica 1",
+          "fonte": "Armamenti §7.21.2"
+        }
+      ]
+    },
+    {
+      "id": "elmetto-doomtrooper-assault",
+      "nome": "Elmetto Doomtrooper Assault",
+      "tipo": "elmetto",
+      "catalogo": "Alleanza",
+      "famiglia": "Elmetti",
+      "nomi_alternativi": [
+        "Doomtrooper Assault"
+      ],
+      "note_manuale": "Elmetto specialistico (§7.21.5): Visione termica; Antibagliore 2; Protezione acustica 2; Assistenza offensiva 1; Assistenza difensiva 1. Non fornisce AR; sostituisce l’elmetto standard e si acquista per intero. Può ricevere modifiche aggiuntive compatibili.",
+      "paragrafo": "§7.21.5",
+      "versione_manuale": "Armamenti 0.52",
+      "ar": {
+        "totale": 0,
+        "magica": 0
+      },
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "MR",
+      "costo": 15000,
+      "proprieta": [
+        {
+          "nome": "Visione termica",
+          "testo": "Entro 40 Q permette di osservare e prendere di mira bersagli con sufficiente contrasto termico, anche nel buio naturale completo. Ignora il −4 VA della Fumogena standard se il bersaglio è distinguibile termicamente."
+        },
+        {
+          "nome": "Antibagliore 2",
+          "testo": "+2 alla PS già prevista contro Accecamento provocato da lampi o luce intensa. Non introduce una PS se l’effetto non la prevede e non protegge dagli altri tipi di Accecamento."
+        },
+        {
+          "nome": "Protezione acustica 2",
+          "testo": "+2 alla PS già prevista contro un effetto sonoro o un rumore dannoso, come nel §7.11.4. Non è una protezione generale contro esplosioni o danni."
+        },
+        {
+          "nome": "Assistenza offensiva 1",
+          "testo": "+1 VA alle Prove per colpire ravvicinate e a distanza, comprese armi da lancio e attacchi senz’armi. Comprende l’eventuale Prova per colpire separata richiesta da un Incantesimo; non modifica la Prova di Potere per lanciarlo. Non aumenta danni, numero di attacchi o Azioni."
+        },
+        {
+          "nome": "Assistenza difensiva 1",
+          "testo": "+1 VA alle Prove di Difese per Parata e Schivata, anche contro attacchi a distanza; inoltre +1 alla PS di Riflessi quando viene usata per Elusione. Non modifica le altre PS di Riflessi."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "salvezza",
+          "salvezza": null,
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro Accecamento da lampi o luce intensa",
+          "beneficio": "antibagliore",
+          "condizione": "+2 alla PS già prevista contro Accecamento provocato da lampi o luce intensa.",
+          "proprieta": "Antibagliore 2",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": null,
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro effetti sonori o rumori dannosi",
+          "beneficio": "protezione_acustica",
+          "condizione": "+2 alla PS già prevista contro un effetto sonoro o un rumore dannoso, come nel §7.11.4.",
+          "proprieta": "Protezione acustica 2",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "attacco",
+          "attacchi": "tutti",
+          "valore": 1,
+          "ambito": "generale",
+          "beneficio": "assistenza_offensiva",
+          "condizione": "+1 VA alle Prove per colpire ravvicinate e a distanza, comprese armi da lancio e attacchi senz’armi.",
+          "proprieta": "Assistenza offensiva 1",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "abilita": "Difese",
+          "valore": 1,
+          "ambito": "generale",
+          "beneficio": "assistenza_difensiva",
+          "condizione": "+1 VA alle Prove di Difese per Parata e Schivata, anche contro attacchi a distanza; inoltre +1 alla PS di Riflessi quando viene usata per Elusione.",
+          "proprieta": "Assistenza difensiva 1",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "riflessi",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "Elusione",
+          "beneficio": "assistenza_difensiva_elusione",
+          "condizione": "+1 VA alle Prove di Difese per Parata e Schivata, anche contro attacchi a distanza; inoltre +1 alla PS di Riflessi quando viene usata per Elusione.",
+          "proprieta": "Assistenza difensiva 1",
+          "fonte": "Armamenti §7.21.2"
+        }
+      ]
+    },
+    {
+      "id": "elmetto-commando",
+      "nome": "Elmetto Commando",
+      "tipo": "elmetto",
+      "catalogo": "Alleanza",
+      "famiglia": "Elmetti",
+      "nomi_alternativi": [
+        "Commando"
+      ],
+      "note_manuale": "Elmetto specialistico (§7.21.5, §7.21.6): Allerta tattica 1; Assistenza offensiva 1; Assistenza difensiva 1. Non fornisce AR; sostituisce l’elmetto standard e si acquista per intero. Può ricevere modifiche aggiuntive compatibili. Non richiede un innesto neurale; i suoi bonus ad attacco, Difese/Elusione e Iniziativa sono già +1: un secondo modulo equivalente non li porta a +2.",
+      "paragrafo": "§7.21.6",
+      "versione_manuale": "Armamenti 0.52",
+      "ar": {
+        "totale": 0,
+        "magica": 0
+      },
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "MR",
+      "costo": 12000,
+      "proprieta": [
+        {
+          "nome": "Allerta tattica 1",
+          "testo": "+1 Iniziativa. Il bonus si applica quando si determina l’Iniziativa; attivare o cambiare elmetto dopo non permette di ritirarla o riordinare i turni già stabiliti. Non impedisce automaticamente la Sorpresa."
+        },
+        {
+          "nome": "Assistenza offensiva 1",
+          "testo": "+1 VA alle Prove per colpire ravvicinate e a distanza, comprese armi da lancio e attacchi senz’armi. Comprende l’eventuale Prova per colpire separata richiesta da un Incantesimo; non modifica la Prova di Potere per lanciarlo. Non aumenta danni, numero di attacchi o Azioni."
+        },
+        {
+          "nome": "Assistenza difensiva 1",
+          "testo": "+1 VA alle Prove di Difese per Parata e Schivata, anche contro attacchi a distanza; inoltre +1 alla PS di Riflessi quando viene usata per Elusione. Non modifica le altre PS di Riflessi."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "iniziativa",
+          "valore": 1,
+          "ambito": "generale",
+          "beneficio": "allerta_tattica",
+          "condizione": "+1 Iniziativa.",
+          "proprieta": "Allerta tattica 1",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "attacco",
+          "attacchi": "tutti",
+          "valore": 1,
+          "ambito": "generale",
+          "beneficio": "assistenza_offensiva",
+          "condizione": "+1 VA alle Prove per colpire ravvicinate e a distanza, comprese armi da lancio e attacchi senz’armi.",
+          "proprieta": "Assistenza offensiva 1",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "abilita": "Difese",
+          "valore": 1,
+          "ambito": "generale",
+          "beneficio": "assistenza_difensiva",
+          "condizione": "+1 VA alle Prove di Difese per Parata e Schivata, anche contro attacchi a distanza; inoltre +1 alla PS di Riflessi quando viene usata per Elusione.",
+          "proprieta": "Assistenza difensiva 1",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "riflessi",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "Elusione",
+          "beneficio": "assistenza_difensiva_elusione",
+          "condizione": "+1 VA alle Prove di Difese per Parata e Schivata, anche contro attacchi a distanza; inoltre +1 alla PS di Riflessi quando viene usata per Elusione.",
+          "proprieta": "Assistenza difensiva 1",
+          "fonte": "Armamenti §7.21.2"
+        }
+      ]
+    }
+  ]
+}

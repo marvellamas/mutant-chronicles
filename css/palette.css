@@ -42,6 +42,7 @@
   --cat-distanza: #5a5816;     /* oliva */
   --cat-scudi: #7a5200;        /* ocra */
   --cat-armature: #4a5260;     /* acciaio */
+  --cat-elmetti: #2f5d7a;      /* blu acciaio */
   --cat-accessori: #5a4870;    /* prugna */
   --cat-munizioni: #6b4423;    /* cuoio */
   --cat-sanitario: #0e6863;    /* verde petrolio */
@@ -78,6 +79,7 @@
     --cat-distanza: #c9c66e;
     --cat-scudi: #e6b35c;
     --cat-armature: #aab4c4;
+    --cat-elmetti: #9cc3dd;
     --cat-accessori: #c3aee0;
     --cat-munizioni: #d6a67c;
     --cat-sanitario: #6fd1c7;

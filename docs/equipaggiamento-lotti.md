@@ -584,15 +584,24 @@ Fatto il 26 settembre 2026, commit «Lotto 12 del catalogo: artefatti e sintoniz
   generatore `tools/lotti/lotto_7_22_corporativi_base.mjs`, che riempie anche
   `data/dotazioni.json` → `corporativi.abbinamenti` (48 corrispondenze). I 7 modelli già presenti
   conservano i loro valori. Famiglie nuove: «Fucili di base», «Armature di base».
-- **Elmetti e modifiche** — Armamenti v0.52 §7.21 (nuovo, 27 settembre 2026): da estrarre.
-  - Regole comuni: nessuna AR; un solo elmetto; lo standard è compreso nel prezzo dell'armatura;
-    4 PI, PS Integrità 10 (standard) o 12 (corporativi); 1 AzP per indossarlo o toglierlo.
-  - Proprietà con effetto numerico (Sensori X, Assistenza offensiva 1, Assistenza difensiva 1,
-    Allerta tattica 1, Interfaccia di pilotaggio 1, Antibagliore 2, Protezione acustica 2, Filtro
-    respiratorio 2): vanno nel formato degli effetti degli oggetti (`docs/effetti-oggetti.md`),
-    con le regole di non cumulo del §7.21.1.
-  - Tabelle: modifiche commerciali (§7.21.4), elmetti corporativi (§7.21.5), Elmetto Commando
-    dell'Alleanza (§7.21.6), esempi (§7.21.7).
+- ✔ **Elmetti e modifiche** — Armamenti v0.52 §7.21, fatto il 27 settembre 2026 (lotto elmetti).
+  - **Fonte:** Google Doc v0.52, testo in `docs/manuali-txt/armamenti.md` (non il PDF 0.50).
+    Generatore `tools/lotti/lotto_elmetti.mjs`, dati `data/equipaggiamento/elmetti.json`, riga in
+    `index.json`. 31 oggetti: elmetto standard di ricambio (§7.21.4), 15 modifiche commerciali,
+    15 elmetti corporativi (§7.21.5, Commando §7.21.6).
+  - **Tipo nuovo `elmetto`** (stati Indossato / Nello zaino, gruppo con il colore `--cat-elmetti`).
+    Le modifiche sono accessori con `si_monta_su: ["elmetto", "armatura"]` e `modifica_elmetto`:
+    contano solo montate su un elmetto indossato o sull'armatura indossata (il suo elmetto standard).
+  - **Regole d'uso** in `regole.json → elmetti` (frasi verificate): nessuna AR, un solo elmetto
+    indossato (avviso), lo standard è compreso nell'armatura, nessun requisito FOR né penalità.
+    Il manuale le dà tutte: nessuna domanda per Davide.
+  - **Effetti:** schema esteso (`docs/effetti-oggetti.md`): Assistenza offensiva → `attacco`,
+    Allerta tattica → `iniziativa`, Filtro/Antibagliore/Protezione acustica ed Elusione → `salvezza`,
+    Sensori → `va` situazionale su Percezione, Interfaccia di pilotaggio → `va` d'uso specifico,
+    Assistenza difensiva → `va` su Difese. Copie dello stesso beneficio non si sommano (`beneficio`).
+    Visione notturna e termica e SIN percettivo restano testo (il SIN richiede l'innesto).
+  - **Scostamenti:** nessun peso (A.30); le modifiche non hanno PI né Qualità propri
+    («condividono l'Integrità dell'elmetto», §7.21.3).
 
 ## Regole di ogni lotto
 

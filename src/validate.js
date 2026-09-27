@@ -872,7 +872,7 @@ function validaSchedaDigitale(dati, err) {
     (f.oggetti ?? []).forEach((o, i) => {
       for (const sigla of o.modalita ?? []) if (!isOggetto(mf[sigla])) err(`equipaggiamento/${id}`, `oggetti[${i}] (${o.nome}).modalita`, `la sigla "${sigla}" non ha una voce in regole.json → modalita_di_fuoco`);
       if (o.effetto_breve !== undefined && !isTesto(o.effetto_breve)) err(`equipaggiamento/${id}`, `oggetti[${i}] (${o.nome}).effetto_breve`, 'testo non vuoto atteso');
-      if (o.effetti !== undefined) validaEffettiOggetto(o.effetti, `equipaggiamento/${id}`, `oggetti[${i}] (${o.nome})`, new Set((dati.abilita?.abilita ?? []).map((a) => a.nome)), err);
+      if (o.effetti !== undefined) validaEffettiOggetto(o.effetti, `equipaggiamento/${id}`, `oggetti[${i}] (${o.nome})`, new Set((dati.abilita?.abilita ?? []).map((a) => a.nome)), err, ctxEffetti(dati));
     });
   }
 }
@@ -1036,8 +1036,8 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = []) 
       if (o.applicazioni !== undefined && !(isIntero(o.applicazioni) && o.applicazioni >= 1)) err(F, `${k}.applicazioni`, 'intero ≥ 1');
       if (o.ricarica !== undefined && !(isOggetto(o.ricarica) && isIntero(o.ricarica.applicazioni) && isIntero(o.ricarica.costo))) err(F, `${k}.ricarica`, 'serve { applicazioni, costo }');
       // §7.3: accessori montati
-      if (o.si_monta_su !== undefined && (!Array.isArray(o.si_monta_su) || !o.si_monta_su.length || o.si_monta_su.some((x) => !['arma_distanza', 'arma_ravvicinata', 'armatura', 'mirino'].includes(x)))) {
-        err(F, `${k}.si_monta_su`, 'elenco fra arma_distanza, arma_ravvicinata, armatura, mirino');
+      if (o.si_monta_su !== undefined && (!Array.isArray(o.si_monta_su) || !o.si_monta_su.length || o.si_monta_su.some((x) => !['arma_distanza', 'arma_ravvicinata', 'armatura', 'elmetto', 'mirino'].includes(x)))) {
+        err(F, `${k}.si_monta_su`, 'elenco fra arma_distanza, arma_ravvicinata, armatura, elmetto, mirino');
       }
       if (o.gruppo_esclusivo !== undefined && !isTesto(o.gruppo_esclusivo)) err(F, `${k}.gruppo_esclusivo`, 'testo');
       // §7.11.2: kit di rinforzo
@@ -1275,7 +1275,7 @@ function validaDotazioni(dati, err) {
     if (!isTesto(o?.nome)) err(F, `${K}.nome`, 'nome mancante');
     if (o?.sostituisce !== undefined && !(o.sostituisce in registro)) err(F, `${K}.sostituisce`, `"${o.sostituisce}" non è un oggetto di dotazione`);
     if (o?.sotto !== undefined && !isOggetto(sotto[o.sotto])) err(F, `${K}.sotto`, `"${o.sotto}" non è in sotto_scelte`);
-    if (o?.effetti !== undefined) validaEffettiOggetto(o.effetti, F, K, nomiAbilita, err);
+    if (o?.effetti !== undefined) validaEffettiOggetto(o.effetti, F, K, nomiAbilita, err, ctxEffetti(dati));
   }
   // un oggetto: { rif } del catalogo oppure { dotazione } del registro
   const controllaOggetto = (x, K) => {
@@ -1355,15 +1355,31 @@ function validaDotazioni(dati, err) {
   if (typeof v !== 'number' || v < 0 || v > 1) err(F, 'scambio.valutazione_cessione', 'frazione del prezzo fra 0 e 1 attesa (§2.16.29)');
 }
 
-// Effetti degli oggetti sui VA (docs/effetti-oggetti.md): catalogo e oggetti di dotazione
+// Effetti degli oggetti (docs/effetti-oggetti.md): catalogo e oggetti di dotazione. Tipi: va
+// (Abilità), attacco, danno, iniziativa, salvezza, caratteristica, contromisura, ar_contro.
 const AMBITI_EFFETTO = ['generale', 'situazionale', 'uso_specifico'];
-function validaEffettiOggetto(effetti, F, K, nomiAbilita, err) {
+const TIPI_EFFETTO = {
+  va: null, attacco: 'generale', danno: 'generale', iniziativa: 'generale', salvezza: 'uso_specifico',
+  caratteristica: 'uso_specifico', contromisura: 'generale', ar_contro: 'generale',
+};
+const ATTACCHI_EFFETTO = ['tutti', 'ravvicinati', 'distanza'];
+function validaEffettiOggetto(effetti, F, K, nomiAbilita, err, ctx = {}) {
   if (!Array.isArray(effetti)) return err(F, `${K}.effetti`, 'lista attesa');
   effetti.forEach((e, j) => {
     const KE = `${K}.effetti[${j}]`;
     if (!isOggetto(e)) return err(F, KE, 'oggetto atteso');
-    if (e.tipo !== undefined && e.tipo !== 'va') err(F, `${KE}.tipo`, 'per ora solo "va": nessun testo dei manuali dà effetti a Salvezze o Iniziativa');
-    if (!nomiAbilita.has(e.abilita)) err(F, `${KE}.abilita`, `"${e.abilita}" non è un'Abilità di abilita.json`);
+    const tipo = e.tipo ?? 'va';
+    if (!(tipo in TIPI_EFFETTO)) err(F, `${KE}.tipo`, `uno fra ${Object.keys(TIPI_EFFETTO).join(', ')}`);
+    if (tipo === 'va' && !nomiAbilita.has(e.abilita)) err(F, `${KE}.abilita`, `"${e.abilita}" non è un'Abilità di abilita.json`);
+    if (tipo !== 'va' && e.abilita !== undefined) err(F, `${KE}.abilita`, 'solo per il tipo "va"');
+    if (TIPI_EFFETTO[tipo] && e.ambito !== TIPI_EFFETTO[tipo]) err(F, `${KE}.ambito`, `il tipo "${tipo}" ha ambito "${TIPI_EFFETTO[tipo]}"`);
+    if ((tipo === 'attacco' || tipo === 'danno') && !ATTACCHI_EFFETTO.includes(e.attacchi)) err(F, `${KE}.attacchi`, `uno fra ${ATTACCHI_EFFETTO.join(', ')}`);
+    if (tipo === 'salvezza' && e.salvezza !== null && !(ctx.salvezze ?? new Set()).has(e.salvezza)) err(F, `${KE}.salvezza`, 'id di una Prova Salvezza, oppure null («la PS già prevista»)');
+    if (tipo === 'caratteristica' && (!Array.isArray(e.caratteristiche) || !e.caratteristiche.length || e.caratteristiche.some((c) => !(ctx.sigle ?? new Set()).has(c)))) err(F, `${KE}.caratteristiche`, 'sigle di Caratteristiche attese');
+    if (tipo === 'contromisura' && (!isTesto(e.effetto) || !(e.valore > 0))) err(F, KE, 'contromisura: effetto aggiuntivo (§5.24) e soglia positiva');
+    if (tipo === 'ar_contro' && !isTesto(e.contro)) err(F, `${KE}.contro`, 'tipo di danno mancante');
+    if (e.beneficio !== undefined && !isTesto(e.beneficio)) err(F, `${KE}.beneficio`, 'chiave di testo attesa');
+    if (e.proprieta !== undefined && !isTesto(e.proprieta)) err(F, `${KE}.proprieta`, 'nome della proprietà atteso');
     if (!isIntero(e.valore) || e.valore === 0) err(F, `${KE}.valore`, 'intero diverso da 0 atteso');
     if (!AMBITI_EFFETTO.includes(e.ambito)) err(F, `${KE}.ambito`, `uno fra ${AMBITI_EFFETTO.join(', ')}`);
     if (e.ambito === 'uso_specifico' && !isTesto(e.uso)) err(F, `${KE}.uso`, 'l’uso specifico ha bisogno di un’etichetta breve (es. "tracce")');
@@ -1371,6 +1387,11 @@ function validaEffettiOggetto(effetti, F, K, nomiAbilita, err) {
     if (!isTesto(e.condizione)) err(F, `${KE}.condizione`, 'frase del manuale mancante (tools/verifica_frasi.mjs)');
   });
 }
+
+const ctxEffetti = (dati) => ({
+  salvezze: new Set((dati.caratteristiche?.salvezze ?? []).map((s) => s.id)),
+  sigle: new Set((dati.caratteristiche?.caratteristiche ?? []).map((c) => c.sigla)),
+});
 
 // Ricarica delle armi a distanza (munizioni.json → ricarica, src/ricarica.js; Armamenti §7.20.2)
 function validaRicarica(dati, err) {

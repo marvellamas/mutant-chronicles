@@ -47,6 +47,7 @@ Sono le etichette dei gruppi dell'equipaggiamento nella tab Combattimento. Hanno
 | `arma_distanza` | Armi a distanza | `--cat-distanza` (oliva) | `#5a5816` | `#c9c66e` |
 | `scudo` | Scudi | `--cat-scudi` (ocra) | `#7a5200` | `#e6b35c` |
 | `armatura` | Armature | `--cat-armature` (acciaio) | `#4a5260` | `#aab4c4` |
+| `elmetto` | Elmetti | `--cat-elmetti` (blu acciaio) | `#2f5d7a` | `#9cc3dd` |
 | `accessorio` | Accessori | `--cat-accessori` (prugna) | `#5a4870` | `#c3aee0` |
 | `munizioni` | Munizioni | `--cat-munizioni` (cuoio) | `#6b4423` | `#d6a67c` |
 | `sanitario` | Sanitario | `--cat-sanitario` (verde petrolio) | `#0e6863` | `#6fd1c7` |

@@ -462,14 +462,21 @@ function massimoDanno(testo) {
 export function profiloSenzArmi(scheda, dati, dannoDichiarato = null) {
   const S = dati.regole.attacco_ravvicinato.senz_armi;
   const a = (scheda?.abilita ?? []).find((x) => x.nome === S.abilita) ?? null;
+  // effetti «attacco» e «danno» dell'equipaggiamento che valgono anche senz'armi (Assistenza offensiva
+  // dell'elmetto: «comprese armi da lancio e attacchi senz’armi», §7.21.2)
+  const eq = scheda?.equipaggiamento ?? {};
+  const ravv = (b) => b.attacchi === 'tutti' || b.attacchi === 'ravvicinati';
+  const bonusVa = (eq.bonusAttacco ?? []).filter(ravv).map((b) => voce(b.nome, b.valore, 'equipaggiamento'));
+  const bonusDannoEq = (eq.bonusDanno ?? []).filter(ravv).reduce((s, b) => s + b.valore, 0);
   const T = talentiAttacco(scheda, dati, 'attacco_ravvicinato');
   const daDati = T.filter((t) => t.e.senz_armi?.danno).sort((x, y) => massimoDanno(y.e.senz_armi.danno) - massimoDanno(x.e.senz_armi.danno))[0] ?? null;
   const dichiarato = typeof dannoDichiarato === 'string' && dannoDichiarato.trim() ? dannoDichiarato.trim() : null;
-  const danno = daDati?.e.senz_armi.danno ?? dichiarato;
-  const scomposizione = a ? (a.scomposizione ?? [voce('Valore da regole', a.totale, 'regole')]) : [];
+  const dannoBase = daDati?.e.senz_armi.danno ?? dichiarato;
+  const danno = dannoBase && bonusDannoEq ? aggiungiDanno(dannoBase, bonusDannoEq) : dannoBase;
+  const scomposizione = a ? [...(a.scomposizione ?? [voce('Valore da regole', a.totale, 'regole')]), ...bonusVa] : [];
   return {
     uid: SENZ_ARMI, rif: null, nome: 'Senz’armi', tipo: 'arma_ravvicinata', senzArmi: true, abilita: S.abilita,
-    va: a?.totale ?? null, vaEffettivo: a?.effettivo ?? a?.totale ?? null,
+    va: a?.totale ?? null, vaEffettivo: a ? (a.effettivo ?? a.totale) + somma(bonusVa) : null,
     scomposizione: scomposizione.map((x, i) => (i === 0 && x.fonte === 'regole' ? { ...x, etichetta: `VA ${S.abilita}` } : x)),
     danno: { una_mano: danno, due_mani: null }, dannoOrigine: daDati ? daDati.nome : dichiarato ? 'dichiarato' : null, dannoDaDati: !!daDati,
     mani: 1, portataQ: S.portata_q, manovre: [],

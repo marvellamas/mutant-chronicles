@@ -9,7 +9,21 @@ Stato al 27 settembre 2026. Dati: campo `effetti` degli oggetti del catalogo (`d
   "condizione": "<frase del manuale, copiata>", "fonte": "Armamenti §7.13.8" }
 ```
 
-- `tipo` per ora è solo `va`: nessun testo dei manuali esaminati dà effetti di oggetti alle Prove Salvezza o all'Iniziativa.
+- `tipo` (facoltativo, predefinito `va`). Dal 27 settembre 2026 (elmetti §7.21, proprietà delle armature corporative §7.11–§7.17) lo schema ha anche i tipi della tabella qui sotto. Solo `va` ha `abilita`.
+- `beneficio` (facoltativo): chiave di un beneficio che **non si somma** con le sue copie (Armamenti §7.21.1: «copie dello stesso beneficio non si sommano»). Fra gli effetti attivi con la stessa chiave vale il maggiore, gli altri non contano. Esempio: Filtro respiratorio 2 di un'armatura e Maschera filtrante dell'elmetto: +2, non +4.
+- `proprieta` (facoltativo): nome della proprietà del manuale che l'effetto traduce («Imbottita 1»). Le proprietà di un oggetto senza effetto e non già gestite altrove compaiono nella SD come **promemoria**.
+
+| tipo | Campi propri | Ambito | Dove entra |
+|---|---|---|---|
+| `va` | `abilita` | generale, situazionale, uso_specifico | VA dell'Abilità (come sopra) |
+| `attacco` | `attacchi`: `tutti`, `ravvicinati`, `distanza` | generale | VA per colpire delle armi impugnate e di «Senz'armi», quindi anche in «Attacca!» |
+| `danno` | `attacchi`: `tutti`, `ravvicinati`, `distanza` | generale | danno delle armi (bonus ordinario, prima dei moltiplicatori, §5.13) |
+| `iniziativa` | — | generale | Iniziativa effettiva (pillola della SD) e stampa |
+| `salvezza` | `salvezza`: id di una Prova Salvezza, oppure `null` = «la PS già prevista dall'effetto»; `uso` | uso_specifico | righe «solo per un uso» sotto le Prove Salvezza (tab Identità) |
+| `caratteristica` | `caratteristiche`: sigle; `uso` | uso_specifico | righe «solo per un uso» nella tab Combattimento, sezione Protezioni |
+| `contromisura` | `effetto`: effetto aggiuntivo del §5.24 (Concussivo, Elettricità, Fuoco…); `valore` = soglia | generale | «Resistenze» nella sezione Protezioni (vicino all'AR), non fra le Abilità |
+| `ar_contro` | `contro`: tipo di danno (esplosioni…) | generale | «Resistenze» nella sezione Protezioni |
+
 - `condizione` è la frase del manuale che dà il bonus, copiata intera. `node tools/verifica_frasi.mjs` controlla che esista nel testo dei Doc (`docs/manuali-txt/`); lo stesso controllo è nei test.
 - Un effetto conta solo con l'oggetto **in uso** (indossato, impugnato…). Gli oggetti senza stati propri (corredi, kit) ricevono «In uso» / «Nello zaino» quando hanno effetti.
 

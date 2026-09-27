@@ -1641,6 +1641,21 @@
       "TODO(Davide)": "A.26: nessuna regola per l’Ingaggio multiplo; resta il modificatore di circostanza del Direttore."
     }
   },
+  "elmetti": {
+    "paragrafo": "Armamenti §7.21.1",
+    "_nota": "Regole d’uso degli elmetti (data/equipaggiamento/elmetti.json, src/equipaggiamento.js). Il manuale le dà tutte: nessuna AR, un solo elmetto indossato, lo standard è compreso nell’armatura, niente requisiti FOR né penalità; copie dello stesso beneficio non si sommano (campo «beneficio» degli effetti).",
+    "massimo_indossati": 1,
+    "ar": 0,
+    "azioni_indossare": 1,
+    "frasi": [
+      "Ogni armatura comprende nel proprio prezzo un elmetto standard abbinato.",
+      "Gli elmetti non forniscono AR, neppure magica.",
+      "Ogni personaggio può indossare un solo elmetto; i modelli specialistici sostituiscono quello standard e si acquistano per intero, senza sconto automatico per quello già incluso.",
+      "Questi modelli non introducono requisiti FOR o penalità aggiuntive a Movimento, Abilità o lancio degli Incantesimi.",
+      "Le modifiche con funzioni diverse possono coesistere; copie dello stesso beneficio non si sommano, neppure quando una è integrata nell’elmetto corporativo.",
+      "Indossare o togliere un elmetto richiede 1 AzP ed entrambe le mani libere."
+    ]
+  },
   "calendario": {
     "_nota": "Calendario di gioco della scheda digitale (src/calendario.js): non è una regola dei manuali, è un aiuto per le note di campagna. Le fasce sono in ordine: «+ fascia» dopo l’ultima passa alla prima del giorno dopo. Le bandierine danno l’importanza di una nota; «M» (da ricordare) si combina con qualunque bandierina.",
     "fasce": [

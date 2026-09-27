@@ -162,7 +162,8 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     pv: s.pv,
     pm: s.pm,
     puntiEroe: { valore: Number.isInteger(pe) ? pe : null, massimo: dati.regole.punti_eroe.riserva_massima },
-    iniziativa: s.iniziativa,
+    // con gli effetti generali dell'equipaggiamento indossato (Allerta tattica, §7.21.2), come le armature
+    iniziativa: s.iniziativa + (s.equipaggiamento?.iniziativa ?? []).reduce((x, v) => x + v.valore, 0),
     dadoIniziativa: dati.regole.iniziativa.dado_in_combattimento,
     movimento: s.movimento,
     azioni: s.azioni,
@@ -237,9 +238,12 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     ].filter(Boolean).join('; '),
   ]);
   const meno = (n) => (n < 0 ? `−${-n}` : String(n));
-  const righeProtezioni = eq.protezioni.map((p) => [
-    p.rinforzo ? `${p.nome} + ${p.rinforzo.nome}` : p.nome,
-    p.ar ? `${p.ar.totale}${p.ar.magica ? ` (${p.ar.magica} magica)` : ''}` : '—',
+  const elmetti = eq.protezioni.filter((p) => p.tipo === 'elmetto');
+  const conElmetto = eq.protezioni.find((p) => p.tipo === 'armatura') ?? null;
+  const nomeElmetti = elmetti.map((p) => (p.modifiche?.length ? `${p.nome} (${p.modifiche.join(', ')})` : p.nome)).join(', ');
+  const righeProtezioni = eq.protezioni.filter((p) => p.tipo !== 'elmetto' || !conElmetto).map((p) => [
+    [p.rinforzo ? `${p.nome} + ${p.rinforzo.nome}` : p.nome, p === conElmetto && nomeElmetti ? (/^Elmetto/.test(nomeElmetti) ? nomeElmetti : `elmetto ${nomeElmetti}`) : null, p.modifiche?.length && p.tipo === 'armatura' ? `elmetto standard (${p.modifiche.join(', ')})` : null].filter(Boolean).join(' + '),
+    p.tipo === 'elmetto' ? '—' : p.ar ? `${p.ar.totale}${p.ar.magica ? ` (${p.ar.magica} magica)` : ''}` : '—',
     p.categoria ?? p.taglia ?? '—',
     [
       p.parata ? `Parata ${meno(p.parata.ravvicinata)} ravv. / ${meno(p.parata.distanza)} dist.` : null,

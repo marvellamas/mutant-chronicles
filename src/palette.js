@@ -16,6 +16,7 @@ export const GRUPPI_EQUIPAGGIAMENTO = [
   { tipo: 'arma_distanza', titolo: 'Armi a distanza', colore: 'cat-distanza' },
   { tipo: 'scudo', titolo: 'Scudi', colore: 'cat-scudi' },
   { tipo: 'armatura', titolo: 'Armature', colore: 'cat-armature' },
+  { tipo: 'elmetto', titolo: 'Elmetti', colore: 'cat-elmetti' },
   { tipo: 'accessorio', titolo: 'Accessori', colore: 'cat-accessori' },
   { tipo: 'munizioni', titolo: 'Munizioni', colore: 'cat-munizioni' },
   { tipo: 'sanitario', titolo: 'Sanitario', colore: 'cat-sanitario' },

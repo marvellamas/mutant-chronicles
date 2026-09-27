@@ -211,7 +211,9 @@ export function valoriTavolo(scheda, sessione, dati) {
   const stati = r.stati.elenco.filter((s) => attivi.has(s.id));
 
   const vociIni = (scheda.vociIniziativa ?? [{ etichetta: 'Iniziativa', valore: scheda.iniziativa ?? 0 }]).map((v) => voce(v.etichetta, v.valore, 'regole'));
-  const iniziativa = { effettivo: somma(vociIni), daRegole: somma(vociIni), scomposizione: vociIni, note: [] };
+  // effetti «iniziativa» dell'equipaggiamento in uso (Allerta tattica dell'elmetto, Armamenti §7.21.2)
+  const vociIniEquip = (scheda.equipaggiamento?.iniziativa ?? []).map((v) => voce(v.etichetta, v.valore, 'equipaggiamento'));
+  const iniziativa = { effettivo: somma([...vociIni, ...vociIniEquip]), daRegole: somma(vociIni), scomposizione: [...vociIni, ...vociIniEquip], note: [] };
 
   const base = scheda.movimento ?? {};
   const mov = scheda.equipaggiamento?.movimentoQ ?? 0;
