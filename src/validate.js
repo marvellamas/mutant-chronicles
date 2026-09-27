@@ -1476,6 +1476,11 @@ const CATEGORIE_ASPETTO = ['area', 'durata', 'gittata', 'bersagli', 'valori', 'a
 const EFFETTI_LANCIO = ['pm', 'pm_minimo', 'pm_una_volta_per_scena', 'riduzione_penalita_livello', 'divinazione_va', 'anticipazione_senza_difficolta',
   'anticipazione_senza_raddoppio', 'escludi_componente', 'salvezza_bersaglio', 'promemoria'];
 function validaMeccanicaIncantesimi(dati, err) {
+  // Magia sez. 2: numeri di Focalizzazione, Ingaggio, componenti mancanti e Contatto (usati da motore e pannello)
+  const L = dati.regole?.lancio;
+  for (const k of ['focalizzazione.va', 'focalizzazione.azioni_principali_prima', 'ingaggio.va', 'componenti.penalita', 'componenti.massimo', 'contatto.va', 'circostanze.minimo', 'circostanze.massimo', 'circostanze.passo']) {
+    if (!isIntero(k.split('.').reduce((o, x) => o?.[x], L))) err('regole', `lancio.${k}`, 'numero intero atteso');
+  }
   const F = 'incantesimi';
   dati.incantesimi.incantesimi.forEach((i, k) => {
     const m = i.meccanica;

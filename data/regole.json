@@ -838,8 +838,6 @@
     }
   },
   "lancio": {
-    "focalizzazione_va": 4,
-    "penalita_ingaggio": -2,
     "tiro_armi_da_lancio": 2,
     "penalita_contromagia": -2,
     "penalita_livello": {
@@ -920,6 +918,7 @@
     },
     "focalizzazione": {
       "paragrafo": "Magia sez. 2",
+      "va": 4,
       "azioni_principali_prima": 1,
       "frasi": [
         "Focalizzazione impiega 1 Azione Principale preparatoria, senza Prova né PM, e concede +4 VA a Potere per l’incantesimo e il livello dichiarati.",
@@ -929,6 +928,7 @@
     },
     "ingaggio": {
       "paragrafo": "Magia sez. 2",
+      "va": -2,
       "prova_obbligatoria": true,
       "frasi": [
         "Durante l’Ingaggio richiede sempre Potere, anche ai livelli 1–3, con un ulteriore −2 VA.",

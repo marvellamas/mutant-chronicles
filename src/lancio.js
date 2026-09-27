@@ -131,11 +131,11 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
   // manovre e situazione (sez. 2) e circostanze (Giocatore §1.4)
   const mg = scheda?.magia ?? {};
   if (d.focalizzazione) {
-    if (prova) scomposizione.push(voce('Focalizzazione', mg.focalizzazioneVa ?? L.focalizzazione_va, 'manovra', L.focalizzazione.paragrafo));
+    if (prova) scomposizione.push(voce('Focalizzazione', mg.focalizzazioneVa ?? L.focalizzazione.va, 'manovra', L.focalizzazione.paragrafo));
     else promemoria.push(L.focalizzazione.frasi[2]);
     promemoria.push('Focalizzazione: 1 Azione Principale prima del lancio, senza Prova né PM; fra le due è consentito soltanto il Passo.');
   }
-  if (d.ingaggio && (mg.penalitaIngaggio ?? L.penalita_ingaggio)) scomposizione.push(voce('Ingaggio', mg.penalitaIngaggio ?? L.penalita_ingaggio, 'situazione', L.ingaggio.paragrafo));
+  if (d.ingaggio && (mg.penalitaIngaggio ?? L.ingaggio.va)) scomposizione.push(voce('Ingaggio', mg.penalitaIngaggio ?? L.ingaggio.va, 'situazione', L.ingaggio.paragrafo));
   if (d.ingaggio && mg.penalitaIngaggio === 0) promemoria.push(L.ingaggio.frasi[1]);
   if (penalizzanti.length) {
     const nomi = penalizzanti.map((c) => L.componenti.nomi[c]).join(', ');

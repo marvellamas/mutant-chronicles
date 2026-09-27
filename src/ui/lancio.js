@@ -35,6 +35,13 @@ function corpo(ctx, inc, intestazione) {
   const titoli = ['Versione', ...(conAnticipazione ? ['Anticipazione'] : []), 'Condizioni', 'PM', 'Risultato'];
   const componentiRichieste = [...(m.componenti ?? []), ...(m.invocazione_obbligatoria ? ['invocazione'] : [])];
   const bozza = (ctx.ui.effettoMagico ??= { nome: '', valore: 2 });
+  // numeri di regola dai dati (regole.json → lancio) e dai Talenti del personaggio (scheda.magia)
+  const mg = ctx.tab.scheda.magia ?? {};
+  const focVa = mg.focalizzazioneVa ?? L.focalizzazione.va;
+  const ingVa = mg.penalitaIngaggio ?? L.ingaggio.va;
+  const riserva = ctx.tab.scheda.classi?.flatMap((c) => c.talenti ?? []).find((t) => t.effetti?.lancio?.pm_una_volta_per_scena) ?? null;
+  const C = L.circostanze;
+  const circostanze = Array.from({ length: (C.massimo - C.minimo) / C.passo + 1 }, (_, i) => C.minimo + i * C.passo);
 
   const passi = {
     Versione: [
@@ -52,14 +59,14 @@ function corpo(ctx, inc, intestazione) {
       rigaScelte('Aspetto da anticipare (uno solo)', [{ valore: null, etichetta: 'Nessuna' }, ...m.anticipazione.aspetti.map((a, i) => ({ valore: i, etichetta: a.nome ?? a.etichetta, titolo: a.gradino }))],
         d.anticipazione, (x) => imposta({ anticipazione: x })),
       d.anticipazione !== null ? h('p', { class: 'nota' }, h('strong', {}, 'Gradino: '), m.anticipazione.aspetti[d.anticipazione]?.gradino) : null,
-      h('p', { class: 'riquadro attenzione' }, 'PM ×2, Potere più difficile di una categoria; la Prova è sempre obbligatoria (Magia sez. 12.3).'),
+      h('p', { class: 'riquadro attenzione' }, `PM ×${L.anticipazione.moltiplicatore_costo}, Potere più difficile di una categoria; la Prova è sempre obbligatoria (Magia sez. 12.3).`),
       h('details', {}, h('summary', {}, 'Testo della scheda'), h('p', { class: 'nota' }, m.anticipazione.frase)),
     ] : [],
     Condizioni: [
-      interruttore('Focalizzazione', d.focalizzazione, (x) => imposta({ focalizzazione: x }), { mod: '+4 a Potere · 1 AP prima' }),
-      interruttore('Ingaggio', d.ingaggio, (x) => imposta({ ingaggio: x }), { mod: '−2 · Prova obbligatoria' }),
+      interruttore('Focalizzazione', d.focalizzazione, (x) => imposta({ focalizzazione: x }), { mod: `${segno(focVa)} a Potere · ${L.focalizzazione.azioni_principali_prima} AP prima` }),
+      interruttore('Ingaggio', d.ingaggio, (x) => imposta({ ingaggio: x }), { mod: `${ingVa ? numero(ingVa) : '0'} · Prova obbligatoria` }),
       componentiRichieste.length ? h('div', { class: 'scelta-attacco scelta-gruppo' },
-        h('p', { class: 'scelta-titolo' }, 'Componenti mancanti (−2 ciascuna, fino a −6)'),
+        h('p', { class: 'scelta-titolo' }, `Componenti mancanti (${numero(L.componenti.penalita)} ciascuna, fino a ${numero(L.componenti.massimo)})`),
         h('div', { class: 'scelta-pulsanti' }, componentiRichieste.map((c) => {
           const manca = d.componentiMancanti.includes(c);
           return h('button', {
@@ -67,7 +74,7 @@ function corpo(ctx, inc, intestazione) {
             onclick: () => imposta({ componentiMancanti: manca ? d.componentiMancanti.filter((x) => x !== c) : [...d.componentiMancanti, c] }),
           }, `${manca ? '✗ ' : ''}${L.componenti.nomi[c]}`);
         }))) : null,
-      rigaScelte('Circostanza del Direttore (§1.4)', [-8, -6, -4, -2, 0, 2, 4, 6, 8].map((x) => ({ valore: x, etichetta: x ? segno(x) : 'Normale' })), d.circostanza, (x) => imposta({ circostanza: x })),
+      rigaScelte('Circostanza del Direttore (§1.4)', circostanze.map((x) => ({ valore: x, etichetta: x ? segno(x) : 'Normale' })), d.circostanza, (x) => imposta({ circostanza: x })),
       h('div', { class: 'scelta-attacco' },
         h('p', { class: 'scelta-titolo' }, 'Effetti magici su di te (vale il bonus maggiore e la penalità maggiore, sez. 7)'),
         d.effettiMagici.length ? h('ul', { class: 'effetti-magici' }, d.effettiMagici.map((e, i) => h('li', {}, `${e.nome} ${segno(e.valore)} `,
@@ -76,8 +83,8 @@ function corpo(ctx, inc, intestazione) {
           h('input', { type: 'text', class: 'input-effetto', placeholder: 'es. Benedizione', value: bozza.nome, 'aria-label': 'Nome dell’effetto magico', oninput: (e) => { bozza.nome = e.target.value; } }),
           h('div', { class: 'scelta-pulsanti' }, [-4, -2, 2, 4].map((x) => h('button', { type: 'button', class: `btn scelta-btn${bozza.valore === x ? ' scelta' : ''}`, onclick: () => { bozza.valore = x; ctx.azioni.ridisegna(); } }, segno(x)))),
           h('button', { type: 'button', class: 'btn', onclick: () => { imposta({ effettiMagici: [...d.effettiMagici, { nome: bozza.nome.trim() || 'Effetto magico', valore: bozza.valore }] }); bozza.nome = ''; } }, 'Aggiungi'))),
-      ctx.tab.scheda.classi?.some((c) => c.talenti?.some((t) => t.effetti?.lancio?.pm_una_volta_per_scena))
-        ? interruttore('Riserva Tecnica (una volta per scena)', d.riservaTecnica, (x) => imposta({ riservaTecnica: x }), { mod: '−2 PM' }) : null,
+      riserva
+        ? interruttore('Riserva Tecnica (una volta per scena)', d.riservaTecnica, (x) => imposta({ riservaTecnica: x }), { mod: `${numero(riserva.effetti.lancio.pm_una_volta_per_scena)} PM` }) : null,
     ],
     PM: [
       h('p', { class: 'nota' }, `Costo: ${r.pm_costo} PM · personali ${ctx.sessione.pmAttuali} / ${ctx.massimi.pm}`),
@@ -118,7 +125,7 @@ function risultato(ctx, inc, r) {
         h('div', {}, h('dt', {}, 'Azioni'), h('dd', {}, azioni ?? '—', r.azioni.focalizzazione ? ' + 1 AP di Focalizzazione prima' : '')),
         h('div', {}, h('dt', {}, 'Concentrazione'), h('dd', {}, CONCENTRAZIONE[r.concentrazione] ?? 'da verificare')),
         r.tiro_per_colpire ? h('div', {}, h('dt', {}, 'Tiro per colpire'), h('dd', {}, `${r.tiro_per_colpire.abilita} ${numero(r.tiro_per_colpire.va)} (${segno(r.tiro_per_colpire.bonus)})`)) : null,
-        r.contatto ? h('div', {}, h('dt', {}, 'Contatto'), h('dd', {}, `${r.contatto.abilita} ${numero(r.contatto.va)} (+4) `, h('small', { class: 'nota' }, r.contatto.nota))) : null,
+        r.contatto ? h('div', {}, h('dt', {}, 'Contatto'), h('dd', {}, `${r.contatto.abilita} ${numero(r.contatto.va)} (${segno(L.contatto.va)}) `, h('small', { class: 'nota' }, r.contatto.nota))) : null,
         r.salvezza_bersaglio ? h('div', {}, h('dt', {}, 'Salvezza del bersaglio'), h('dd', {}, r.salvezza_bersaglio.testo,
           r.salvezza_bersaglio.mod_ps ? ` · Mod. PS ${r.salvezza_bersaglio.mod_ps}` : '',
           r.salvezza_bersaglio.talento ? ` · ${r.salvezza_bersaglio.talento.nome} ${segno(r.salvezza_bersaglio.talento.valore)}` : '')) : null),

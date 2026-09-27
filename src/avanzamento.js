@@ -705,7 +705,9 @@ function salvezzeDi(stato, dati) {
  * Talenti la modificano con effetti.magia e effetti.meditazione.
  */
 function magiaDelPersonaggio(stato, caratteristiche, dati) {
-  const base = dati.regole.lancio;
+  // i Talenti sostituiscono i valori base (effetti.magia.focalizzazione_va, penalita_ingaggio…)
+  const L = dati.regole.lancio;
+  const base = { ...L, focalizzazione_va: L.focalizzazione.va, penalita_ingaggio: L.ingaggio.va };
   const talenti = talentiConEffetti(stato, dati);
   const m = (k) => talenti.map((t) => t.effetti?.magia?.[k]).filter((v) => v !== undefined);
   const sostituisci = (k) => (m(k).length ? m(k).at(-1) : base[k]);
