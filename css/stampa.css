@@ -138,6 +138,7 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .tinta-spirituale { --tinta: var(--ss-spirituale); --tinta-tenue: var(--ss-spirituale-tenue); }
 
 /* riempitivo: prende tutto lo spazio che resta nella pagina o nella colonna */
+.riquadro-stampa { flex: none; }
 .riempitivo { flex: 1 1 0; min-height: 12mm; }
 .riempitivo > .contenuto { flex: 1; }
 /* righe guida a matita */
@@ -230,8 +231,8 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .f1-background .testo-background { white-space: pre-line; flex: none; }
 
 /* Foglio 2 — Abilità */
-.f2-griglia { flex: 1; min-height: 0; display: grid; grid-template-columns: 172mm 1fr; gap: 3mm; }
-.abilita-affiancate { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; }
+.f2-griglia { flex: 1; min-height: 0; display: grid; grid-template-columns: 180mm 1fr; gap: 3mm; }
+.abilita-affiancate { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5mm; }
 .f2-abilita > .contenuto { flex: 1; }
 .abilita-stampa { height: 100%; }
 .abilita-stampa th, .abilita-stampa td { padding-left: 0.6mm; padding-right: 0.6mm; }
@@ -243,14 +244,42 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .elenco-talenti-stampa { list-style: none; padding: 0; margin: 0; }
 .elenco-talenti-stampa li { margin-bottom: 0.8mm; break-inside: avoid; }
 
-/* Foglio 3 */
-.griglia-combattimento { display: grid; grid-template-columns: 1fr 1.7fr 1fr; grid-template-rows: auto 1fr; gap: 0 3mm; }
-.griglia-combattimento > .riquadro-stampa:first-child { grid-column: 1 / -1; }
+/* Foglio 3 — Combattimento ed equipaggiamento */
+.foglio-combattimento .foglio-corpo { gap: 2mm; line-height: 1.18; }
+.foglio-combattimento .tabella-stampa th, .foglio-combattimento .tabella-stampa td { padding-top: 0.25mm; padding-bottom: 0.25mm; }
+.f3-sintesi { flex: none; }
+.sintesi { display: flex; flex-wrap: wrap; gap: 1mm 5mm; align-items: baseline; }
+.cella-sintesi { display: flex; flex-direction: column; }
+.cella-sintesi .nome-cella { font-size: var(--ss-font-small); color: var(--ss-grigio); font-weight: 600; }
+.cella-sintesi .valore-cella { font-size: 12pt; font-weight: 800; }
+.f3-armi { flex: none; }
+.armi-stampa th, .armi-stampa td { padding: 0.3mm 0.7mm; }
+.armi-stampa tbody + tbody { border-top: 1pt solid var(--ss-acciaio); }
+.armi-stampa tbody tr:nth-child(even) > * { background: none; }
+.armi-stampa tr.riga-arma > * { background: color-mix(in srgb, var(--ss-acciaio-tenue) 80%, transparent); }
+.armi-stampa .col-va { font-weight: 800; text-align: center; }
+.armi-stampa .col-ac, .armi-stampa .col-inc, .armi-stampa .col-mani, .armi-stampa .col-forza, .armi-stampa .col-pi, .armi-stampa .col-capacita { text-align: center; }
+.armi-stampa .col-abilita, .armi-stampa .col-qualita, .armi-stampa .col-danno, .armi-stampa .col-gittata, .armi-stampa .col-parata { white-space: nowrap; }
+.armi-stampa .col-modalita { white-space: nowrap; }
+.armi-stampa thead th:first-child { width: 44mm; }
+.specializzazioni-stampa { margin: 0.5mm 0 0; }
+.riga-colpi td { padding-top: 0.3mm; padding-bottom: 0.5mm; }
+.file-colpi { display: flex; flex-wrap: wrap; gap: 0.8mm 9mm; padding-left: 4mm; }
+.caricatore { display: flex; align-items: center; gap: 2mm; }
+.etichetta-colpi { font-size: var(--ss-font-small); color: var(--ss-grigio); min-width: 11mm; }
+.f3-basso { flex: 1; min-height: 0; display: grid; grid-template-columns: 112mm 1fr 58mm; gap: 3mm; }
+.protezioni-stampa { margin-top: 1mm; }
+.f3-basso > .colonna { min-height: 0; }
+.crediti-stampa { margin: 0; flex: none; }
+.equip-stampa .dove { width: 8mm; text-align: center; }
+.equip-stampa thead th.dove { text-align: center; }
+.equip-stampa .peso { width: 13mm; white-space: nowrap; }
+.equip-stampa tbody th { font-weight: 500; }
+.equip-stampa tbody tr > * { height: 5mm; box-sizing: border-box; vertical-align: middle; }
 .ferite td:first-child { width: 5mm; }
-.stati-stampa { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.8mm 2mm; }
-.stati-stampa li { display: grid; grid-template-columns: 4mm 1fr auto; line-height: 1.15; align-items: center; gap: 1.5mm; border-bottom: 0.5pt solid var(--linea-tenue); padding-bottom: 0.5mm; }
-.stati-stampa .round { font-size: 0.8em; color: var(--grigio); white-space: nowrap; }
-.equip-stampa { padding-left: 1.1em; }
+.stati-nomi { display: flex; flex-wrap: wrap; gap: 1mm 4.5mm; margin: 1mm 0 0; padding-top: 1mm; border-top: 0.5pt solid var(--ss-linea-tenue); }
+.stati-nomi span { white-space: nowrap; }
+.f3-pv > .contenuto { gap: 1.2mm; }
 
 /* Foglio 4 */
 .testa-magia { display: grid; grid-template-columns: 40mm 45mm 1fr; gap: 3mm; align-items: start; }

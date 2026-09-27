@@ -217,33 +217,86 @@ function foglioAbilita(d) {
 }
 
 // ---------------------------------------------------------------------------
-// Foglio 3 — Combattimento
+// Foglio 3 — Combattimento ed equipaggiamento: in alto il riquadro compatto (Iniziativa,
+// Movimento, Azioni, Difese, Prove Salvezza); poi le Armi con tutte le colonne e le file dei
+// colpi; sotto Protezioni ed Equipaggiamento, Ferite e Stati, Punti Vita (riempitivo).
+
+const COLONNE_ARMI = [
+  ['nome', 'Arma'], ['abilita', 'Abilità'], ['va', 'VA'], ['danno', 'Danno'], ['ac', 'AC'], ['gittata', 'Gittata / portata'],
+  ['inc', 'INC'], ['parata', 'Parata'], ['mani', 'Mani'], ['forza', 'FOR'], ['pi', 'PI'], ['qualita', 'Qualità'],
+  ['capacita', 'Cap.'], ['modalita', 'Modalità'], ['proprieta', 'Proprietà'],
+];
+
+/**
+ * Colpi sotto l'arma: un gruppo di quadratini per caricatore (etichetta «car. N») o per cella;
+ * «colpi» per le armi a inserimento. I gruppi si affiancano quando entrano, con uno stacco largo,
+ * e vanno a capo quando non entrano (un caricatore da 30 occupa una fila).
+ */
+function fileColpi(c) {
+  const etichetta = c.modo === 'inserimento' ? () => 'colpi' : c.modo === 'cella' ? (k) => `cella ${k}` : (k) => `car. ${k}`;
+  return h('div', { class: 'file-colpi' }, Array.from({ length: c.file }, (_, k) => h('div', { class: 'caricatore' },
+    h('span', { class: 'etichetta-colpi' }, etichetta(k + 1)), filaCaselle(c.capacita))));
+}
+
+function tabellaArmi(armi) {
+  const n = COLONNE_ARMI.length;
+  return h('table', { class: 'tabella-stampa armi-stampa' },
+    h('thead', {}, h('tr', {}, COLONNE_ARMI.map(([k, t]) => h('th', { class: `col-${k}` }, t)))),
+    armi.map((a) => h('tbody', {},
+      h('tr', { class: 'riga-arma' }, COLONNE_ARMI.map(([k]) => (k === 'nome'
+        ? h('th', { scope: 'row' }, a.nome, a.addosso ? h('span', { class: 'sigla' }, ' addosso') : null)
+        : h('td', { class: `col-${k}` }, a[k] || '—')))),
+      a.colpi ? h('tr', { class: 'riga-colpi' }, h('td', { colspan: n }, fileColpi(a.colpi))) : null)));
+}
 
 function foglioCombattimento(d) {
-  return h('div', { class: 'griglia-combattimento' },
-    riquadro('Armi', tabella(d.armi.colonne, d.armi.righe, { classe: 'da-penna', vuote: d.armi.righeVuote })),
-    h('div', { class: 'colonna' },
-      riquadro('Protezioni', tabella(d.protezioni.colonne, d.protezioni.righe, { classe: 'da-penna', vuote: d.protezioni.righeVuote })),
-      d.difese ? riquadro('Difese', h('p', {}, `VA ${d.difese.va} `, h('span', { class: 'sigla' }, `(${d.difese.caratteristica})`))) : null,
-      riquadro('Punti Vita', h('p', {}, `max ${d.pv} · attuali `, h('span', { class: 'casella-lunga' })))),
-    h('div', { class: 'colonna' },
-      riquadro('Ferite (§5.14)',
-        h('table', { class: 'tabella-stampa ferite' },
-          h('thead', {}, h('tr', {}, h('th', {}, ''), h('th', {}, 'Stato'), h('th', {}, 'VA e PS'), h('th', {}, 'Menomazione'))),
-          h('tbody', {}, d.ferite.stati.map((f) => h('tr', {},
-            h('td', {}, h('span', { class: 'casella' })), h('th', { scope: 'row' }, f.nome), h('td', {}, segno(f.penalita)), h('td', { class: 'piccolo' }, f.menomazione ?? ''))),
-          h('tr', {}, h('td', {}, h('span', { class: 'casella' })), h('th', { scope: 'row' }, 'Oltre Grave'), h('td', { colspan: 2 }, d.ferite.oltre))))),
-      riquadro('Stati (§5.18)',
-        h('ul', { class: 'stati-stampa' }, d.stati.map((s) => h('li', {},
-          h('span', { class: 'casella' }), h('span', {}, h('strong', {}, s.nome), h('br', {}), h('span', { class: 'piccolo' }, s.durata)),
-          h('span', { class: 'round' }, 'Round ', h('span', { class: 'casella-lunga corta' }))))))),
-    h('div', { class: 'colonna' },
-      riquadro('Equipaggiamento',
-        h('p', { class: 'crediti-stampa' }, h('strong', {}, 'Crediti '), h('span', { class: 'casella-lunga' }),
-          d.creditiIniziali !== null ? h('span', { class: 'piccolo' }, ` saldo iniziale ${crediti(d.creditiIniziali)}`) : null),
-        d.equipaggiamento.length ? h('ul', { class: 'equip-stampa' }, d.equipaggiamento.map((x) => h('li', {}, x))) : null,
-        d.equipaggiamentoTroncato ? h('p', { class: 'piccolo' }, 'Elenco completo nella scheda digitale.') : null,
-        righeVuote(Math.max(3, 12 - d.equipaggiamento.length)))));
+  const s = d.sintesi;
+  const mov = s.movimento;
+  const cella = (etichetta, ...valore) => h('div', { class: 'cella-sintesi' }, h('span', { class: 'nome-cella' }, etichetta), h('span', { class: 'valore-cella' }, ...valore));
+  const eq = d.equipaggiamentoStampa;
+  const casella = () => h('span', { class: 'casella' });
+  const rigaEquip = (r) => h('tr', {}, h('th', { scope: 'row' }, r.nome, r.note ? h('span', { class: 'sigla' }, ` — ${r.note}`) : null),
+    h('td', { class: 'peso' }, r.peso), h('td', { class: 'dove' }, casella()), h('td', { class: 'dove' }, casella()), h('td', { class: 'dove' }, casella()));
+  const vuota = () => { const r = h('tr', { class: 'da-compilare' }, h('th', {}, ' '), h('td', {}, ' '), h('td', { class: 'dove' }, casella()), h('td', { class: 'dove' }, casella()), h('td', { class: 'dove' }, casella())); r.dataset.vuota = '1'; return r; };
+  return [
+    box({ titolo: null, classe: 'f3-sintesi' },
+      h('div', { class: 'sintesi' },
+        cella('Iniziativa', `${segno(s.iniziativa)} + ${s.dadoIniziativa}`),
+        cella('Movimento', `Passo ${mov.passo} · Corsa ${mov.corsa} · Scatto ${mov.scatto} ${mov.unita}`),
+        cella('Azioni per Round', `${s.azioni.movimento} Mov. · ${s.azioni.principali} Princ.`),
+        s.difese ? cella(`Difese (${s.difese.caratteristica})`, `VA ${s.difese.va}`) : null,
+        s.salvezze.map((x) => cella(`${x.nome} (${x.caratteristica})`, `${x.totale}${x.limitato ? '*' : ''}`))),
+      // §5.18: i riassunti degli Stati non entrano a 10 pt; resta una fila di nomi da cerchiare
+      h('p', { class: 'stati-nomi' }, h('strong', {}, 'Stati (§5.18)'), d.statiRiassunto.map((x) => h('span', {}, x.nome)))),
+    box({ titolo: 'Armi', classe: 'f3-armi' }, tabellaArmi(d.armiStampa),
+      tabella(d.protezioni.colonne, d.protezioni.righe, { classe: 'protezioni-stampa', vuote: d.protezioni.righe.length ? 0 : 1 })),
+    h('div', { class: 'f3-basso' },
+      h('div', { class: 'colonna' },
+        box({ titolo: 'Equipaggiamento', riempitivo: true },
+          h('p', { class: 'crediti-stampa' }, h('strong', {}, 'Crediti '), h('span', { class: 'casella-lunga' }),
+            d.creditiIniziali !== null ? h('span', { class: 'sigla' }, ` saldo iniziale ${crediti(d.creditiIniziali)}`) : null,
+            eq.carico ? h('span', { class: 'sigla' }, ` · carico noto ${eq.carico.peso} kg (ordinario ≤ ${eq.carico.ordinario}, max ${eq.carico.massimo})${eq.carico.senzaPeso ? ` · ${eq.carico.senzaPeso} senza peso` : ''}`) : null),
+          h('div', { class: 'riempi-righe' },
+            h('table', { class: 'tabella-stampa equip-stampa' },
+              h('thead', {}, h('tr', {}, h('th', {}, 'Oggetto'), h('th', {}, 'Peso'), h('th', { class: 'dove' }, 'ind'), h('th', { class: 'dove' }, 'zai'), h('th', { class: 'dove' }, 'Altro'))),
+              h('tbody', {}, eq.righe.map(rigaEquip), Array.from({ length: 30 }, vuota)))))),
+      h('div', { class: 'colonna' },
+        box({ titolo: 'Ferite (§5.14)' },
+          // senza intestazione: ferita, penalità a VA e PS, menomazione
+          h('table', { class: 'tabella-stampa ferite' },
+            h('tbody', {}, d.ferite.stati.map((f) => h('tr', {},
+              h('td', {}, casella()), h('th', { scope: 'row' }, f.nome), h('td', {}, segno(f.penalita)), h('td', {}, f.menomazione ?? ''))),
+            h('tr', {}, h('td', {}, casella()), h('th', { scope: 'row' }, 'Oltre Grave'), h('td', { colspan: 2 }, d.ferite.oltre))))),
+        d.specializzazioni.length ? box({ titolo: 'Specializzazioni' }, h('ul', { class: 'elenco-talenti-stampa' }, d.specializzazioni.map((x) => h('li', {},
+          h('strong', {}, x.nome), ` — ${x.abilita}; ${x.effetto}`)))) : null,
+        d.tecniche.length || d.tecnicheAmmesse ? box({ titolo: `Tecniche Interiori (${d.tecniche.length} / ${d.tecnicheAmmesse})` },
+          tabella(['Tecnica', 'Costo', 'Azione'], d.tecniche.map((x) => [x.nome, x.costo, x.azione]))) : null),
+      box({ titolo: 'Punti Vita', tinta: 'pv', forte: true, riempitivo: true, classe: 'f3-pv' },
+        h('div', { class: 'massimo' }, h('span', {}, 'massimi'), h('span', { class: 'valore' }, String(d.pv))),
+        h('p', { class: 'piccolo' }, 'attuali'),
+        quadratini(d.pv, { piu: true }),
+        righeGuida())),
+  ];
 }
 
 // ---------------------------------------------------------------------------

@@ -255,6 +255,7 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
       testoPenalita(p) || null,
     ].filter(Boolean).join('; '),
   ]);
+  const sArmi = schedaConArmiAddosso(p, dati) ?? s; // SS: anche le armi addosso
   const combattimento = {
     armi: { colonne: ['Arma', 'Abilità', 'VA', 'Danno', 'Gittata', 'Munizioni', 'Note'], righe: righeArmi, righeVuote: Math.max(2, LIMITI_STAMPA.righeArmi - righeArmi.length) },
     protezioni: { colonne: ['Protezione', 'AR', 'Categoria', 'Note'], righe: righeProtezioni, righeVuote: Math.max(1, LIMITI_STAMPA.righeProtezioni - righeProtezioni.length) },
@@ -282,8 +283,11 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
       iniziativa: identita.iniziativa, dadoIniziativa: identita.dadoIniziativa, movimento: s.movimento, azioni: s.azioni,
       salvezze: identita.salvezze, difese: difese ? { va: difese.vaEquip ?? difese.totale, caratteristica: difese.caratteristica } : null,
     },
-    armiStampa: armiStampa(s, c, dati),
-    equipaggiamentoStampa: equipaggiamentoStampa(s, dati),
+    armiStampa: armiStampa(sArmi, c, dati),
+    equipaggiamentoStampa: equipaggiamentoStampa(s, dati, sArmi.equipaggiamento?.armi),
+    specializzazioni: abilita.specializzazioni,
+    tecniche: abilita.tecniche,
+    tecnicheAmmesse: abilita.tecnicheAmmesse,
     statiRiassunto: dati.regole.stati.elenco.map((x) => ({ id: x.id, nome: x.nome, riassunto: x.promemoria ?? '' })),
   };
 
@@ -379,6 +383,7 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
  * pompa, doppiette) hanno una sola fila «colpi». I moduli integrati hanno la loro riga.
  */
 export function armiStampa(s, creazione, dati) {
+  const pronte = s.armiAddosso ?? new Set();
   const cat = catalogo(dati);
   const voci = normalizzaEquipaggiamento(creazione?.equipaggiamento);
   const quantita = (rif) => voci.filter((v) => v.rif === rif).reduce((n, v) => n + (v.quantita ?? 1), 0);
@@ -395,6 +400,8 @@ export function armiStampa(s, creazione, dati) {
     const meno = (n) => (n < 0 ? `−${-n}` : String(n));
     return {
       nome: a.nome,
+      uid: a.uid,
+      addosso: pronte.has(String(a.uid).split(':')[0]),
       moduloDi: a.moduloDi ?? null,
       abilita: a.abilita ?? '—',
       va: a.va === null ? '—' : meno(a.va),
@@ -410,7 +417,7 @@ export function armiStampa(s, creazione, dati) {
       capacita: cap ? `${cap}${a.munizioni.unita && a.munizioni.unita !== 'colpi' ? ` ${a.munizioni.unita}` : ''}` : '—',
       modalita: (a.modalita ?? []).join(' ') || '—',
       proprieta: [
-        a.moduloDi ? `modulo di ${a.moduloDi}` : null,
+        a.moduloDi ? 'modulo integrato' : null, // il nome dice già di quale arma
         ...(a.accessori ?? []).map((x) => x.nome),
         a.mirino ? `mirino −${a.mirino.riduzione} dist.` : null,
         a.munizioneRiferimento ? `RS ${a.munizioneRiferimento.rs_q} Q` : null,
@@ -426,13 +433,26 @@ export function armiStampa(s, creazione, dati) {
 }
 
 /**
+ * Le armi «addosso (pronta)» non sono attive e la scheda non ne calcola i valori; per la SS si
+ * calcolano come se fossero impugnate, in una scheda a parte usata solo per la tabella delle armi.
+ */
+export function schedaConArmiAddosso(p, dati) {
+  const voci = normalizzaEquipaggiamento(p.creazione?.equipaggiamento);
+  const pronte = new Set(voci.filter((v) => v.stato === 'pronta').map((v) => v.uid));
+  if (!pronte.size) return null;
+  const creazione = { ...p.creazione, equipaggiamento: voci.map((v) => (pronte.has(v.uid) ? { ...v, stato: 'impugnata' } : v)) };
+  const s = calcolaScheda({ ...p, creazione }, dati);
+  return s.equipaggiamento ? Object.assign(s, { armiAddosso: pronte }) : null;
+}
+
+/**
  * Equipaggiamento per la SS: una riga per oggetto non già nelle tabelle Armi e Protezioni, con
  * quantità e peso; carico noto (Giocatore §5.2.6) e oggetti senza peso nel catalogo.
  */
-export function equipaggiamentoStampa(s, dati) {
+export function equipaggiamentoStampa(s, dati, armi = null) {
   const eq = s.equipaggiamento;
   if (!eq) return { righe: [], carico: null };
-  const giaInTabella = new Set([...eq.armi.map((a) => String(a.uid).split(':')[0]), ...eq.protezioni.map((p) => p.uid)]);
+  const giaInTabella = new Set([...(armi ?? eq.armi).map((a) => String(a.uid).split(':')[0]), ...eq.protezioni.map((p) => p.uid)]);
   // gli accessori montati su un'arma o un'armatura stanno già nella loro riga (colonna Proprietà)
   const righe = eq.oggetti.filter((o) => !giaInTabella.has(o.uid) && !(o.voce.montato_su && giaInTabella.has(o.voce.montato_su))).map((o) => {
     const q = o.voce.quantita ?? 1;
