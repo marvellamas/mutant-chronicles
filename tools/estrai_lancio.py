@@ -85,7 +85,64 @@ CATEGORIE = [
     ('bersagli', r'bersagli|beneficiari|destinatari|dispositivi|animali|partecipanti'), ('valori', r'danno|guarigione|PV|bonus|^\+\d'),
 ]
 # pezzi che precisano l'aspetto precedente (massimi, limiti, eccezioni): non sono aspetti a sé
-QUALIFICATORI = r'^(fino a|massimo|anche |senza |oltre |da [−+-]?\d|con |che |mantenendo|applicat|usando|a partire)'
+QUALIFICATORI = r'^(fino a|massimo|anche |senza |oltre |da [−+-]?\d|con |che |mantenendo|applicat|usando|a partire|anziché |artificiale e mistica →)'
+
+
+# Nome breve dell'aspetto per il pannello «Lancia!» (il gradino intero va nel tooltip). Le etichette
+# che non sono qui e non sono già brevi mostrano il gradino intero: meglio lungo che ambiguo.
+NOMI = {
+    'natura Naturale → Magico': 'Natura del danno', 'Mod. PS peggiorato': 'Mod. PS',
+    '+1 elemento entro il massimo di 3': 'Elemento +1', '+1 elemento fino a 6': 'Elemento +1', '+1 elemento fino a 3': 'Elemento +1',
+    'sola delle due durate al gradino successivo della propria co': 'Una delle due durate',
+    'modificatore delle sole PS secondarie di un gradino': 'Mod. PS secondarie', 'durata al gradino successivo': 'Durata',
+    'Contromisura al gradino successivo': 'Contromisura', 'modificatore PS di un gradino': 'Mod. PS',
+    'composizione da puro a uno degli ibridi di due elementi': 'Composizione ibrida', 'composizione da puro a ibrido di due elementi': 'Composizione ibrida',
+    'natura del danno da Magico a Etereo per entrambe le componen': 'Natura del danno', 'modificatore PS': 'Mod. PS',
+    'quantità di PV temporanei': 'PV temporanei', '+1 Q al Passo': 'Passo +1 Q', 'ulteriore −1 al VA degli attaccanti': 'VA degli attaccanti −1',
+    'durata successiva': 'Durata', '+1 al bonus Tempra selezionato': 'Bonus Tempra +1', 'gradino nella durata della modalità attiva': 'Durata',
+    '+1 al bonus operativo': 'Bonus operativo +1', '+1 al VA degli attacchi': 'VA degli attacchi +1', '+1 al danno': 'Danno +1',
+    'gradino nella durata attiva': 'Durata', '+1 AR': 'AR +1', 'gradino di durata': 'Durata', '+1 all’Iniziativa': 'Iniziativa +1',
+    '+1 al bonus Schivata': 'Bonus Schivata +1', '+1 PV recuperabile per RND': 'PV per RND +1', 'ulteriore −2 alla Percezione': 'Percezione −2',
+    '+1 Azione consentita': 'Azioni consentite +1', 'gradino della durata scelta': 'Durata', '+1 al bonus fisico': 'Bonus fisico +1',
+    '+1 al bonus al danno': 'Bonus al danno +1', 'peso successivo della tabella': 'Peso', 'danno successivo': 'Danno',
+    'durata della modalità scelta': 'Durata', '+1 al bonus Parata': 'Bonus Parata +1', 'gradino nella durata': 'Durata',
+    'danno della riga successiva': 'Danno', '+1 Q alla spinta con Tempra fallita': 'Spinta +1 Q', 'gradino del modificatore PS': 'Mod. PS',
+    'valore successivo di PV per segmento': 'PV per segmento', 'Stato da Rallentato a Immobilizzato': 'Stato: Immobilizzato',
+    'carico successivo': 'Carico', '+1 al bonus stabilità': 'Bonus stabilità +1', 'durata scelta': 'Durata',
+    'dimensione cubica successiva': 'Dimensione del cubo', 'modificatore Tempra': 'Mod. Tempra', 'numero massimo di bersagli': 'Bersagli',
+    'modificatore PS Magia': 'Mod. PS Magia', '+1 al bonus': 'Bonus +1', '+1 al bonus PS': 'Bonus PS +1',
+    'danno della successiva voce distinta in tabella': 'Danno', 'PV alla riga successiva': 'PV', '+1 VA operativo': 'VA operativo +1',
+    '+1 al danno che resta Naturale': 'Danno +1 (Naturale)', '+1 PV per RND': 'PV per RND +1', '+1 al danno iniziale': 'Danno iniziale +1',
+    'ulteriore −1 alla penalità al VA': 'Penalità al VA −1', 'grado di complessità della tabella': 'Complessità', 'raggio aura': 'Raggio dell’aura',
+    'ulteriore −2 alla PS della modalità scelta': 'PS della modalità −2', 'durata massima a Concentrazione': 'Durata a Concentrazione',
+    'precisione del numero Approssimata → Generica → Precisa → Es': 'Precisione del numero',
+    'profondità delle informazioni individuali alla riga successi': 'Profondità delle informazioni',
+    'durata continuativa a Concentrazione': 'Durata a Concentrazione', 'durata alla riga successiva': 'Durata',
+    'passato massimo alla riga successiva': 'Passato massimo', 'un’impressione massima aggiuntiva': 'Impressioni +1',
+    'entrambe le modalità contemporaneamente': 'Entrambe le modalità', 'alleato come beneficiario al posto del Taumaturgo': 'Beneficiario: un alleato',
+    '+1 al bonus INI': 'Bonus INI +1', 'difesa automatica totale aggiuntiva': 'Difesa automatica totale +1',
+    'guarigione alla riga immediatamente successiva': 'Guarigione', 'gittata Contatto': 'Gittata', 'Pericolosità I → II → III → IV → V → VI': 'Pericolosità',
+    'origini naturale → naturale e artificiale → naturale': 'Origini', 'gruppo di capacità livello': 'Gruppo di capacità',
+    'massimo stato curabile Infetto → Corrotto → Eretico → Caotic': 'Stato massimo curabile', 'natura Magico → Etereo': 'Natura del danno',
+    'Potere di esorcismo': 'Potere di esorcismo +3', 'durata al gradino successivo della progressione': 'Durata', 'bonus danno con la stessa scala': 'Bonus danno',
+    'sigillo aggiuntivo': 'Sigilli +1', 'combinazione Avviso e Blocco prima del livello': 'Avviso e Blocco insieme',
+    'trappola aggiuntiva entro il limite SAG': 'Trappole +1', 'attesa al gradino successivo': 'Attesa', 'danno proprio alla riga successiva': 'Danno proprio',
+    'penalità di Interferenza peggiorata': 'Interferenza −1', 'capacità aggiuntiva': 'Capacità in PM', 'Potere di rottura': 'Potere di rottura +3',
+    'bonus PS aumentato': 'Bonus PS +1', 'protezione PM aumentata': 'Protezione PM +1', 'sorgente su un oggetto toccato': 'Sorgente su un oggetto',
+    'bonus aumentato': 'Bonus +1', 'penalità aumentata': 'Penalità −1', 'danno ai PV al successivo valore distinto della tabella': 'Danno ai PV',
+    'perdita di PM aumentata': 'Perdita di PM +1', 'Potere di Negazione aumentato': 'Potere di Negazione +3', 'Concentrazione': 'Durata a Concentrazione',
+    'utilizzo aggiuntivo': 'Utilizzi +1', 'gittata Personale → Contatto': 'Gittata', 'gittata di Analisi con la stessa scala': 'Gittata di Analisi',
+    'informazioni della soglia successiva in una sola categoria s': 'Informazioni della soglia successiva',
+    'Potere di Rilevazione aumentato': 'Potere di Rilevazione +3', 'Potere di Falsificazione aumentato': 'Potere di Falsificazione +3',
+}
+
+
+def nome_breve(etichetta, gradino):
+    if etichetta in NOMI:
+        return NOMI[etichetta]
+    if len(etichetta) <= 32 and '→' not in etichetta:
+        return etichetta[0].upper() + etichetta[1:]
+    return gradino[0].upper() + gradino[1:]
 
 
 def categoria(e):
@@ -137,6 +194,8 @@ def anticipazione(testo_scheda):
                 continue
             et = re.split(r'\s\(|,\s', p)[0]
         aspetti.append({'etichetta': et[:60], 'gradino': p, 'categoria': categoria(p)})
+    for a in aspetti:
+        a['nome'] = nome_breve(a['etichetta'], a['gradino'])
     return {'ammessa': True, 'aspetti': aspetti, 'frase': par}
 
 

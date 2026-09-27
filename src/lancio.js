@@ -92,7 +92,7 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
   // 3. costo in PM: base, raddoppio, riduzioni dei Talenti (minimo 1); le riduzioni non toccano livello e penalità
   let pm = v?.pm ?? livello;
   const costo = [{ etichetta: `Versione di livello ${livello}`, valore: pm }];
-  if (aspetto && !senzaRaddoppio) { costo.push({ etichetta: `Anticipazione (${aspetto.etichetta}): ×${A.moltiplicatore_costo}`, valore: pm * (A.moltiplicatore_costo - 1) }); pm *= A.moltiplicatore_costo; }
+  if (aspetto && !senzaRaddoppio) { costo.push({ etichetta: `Anticipazione (${aspetto.nome ?? aspetto.etichetta}): ×${A.moltiplicatore_costo}`, valore: pm * (A.moltiplicatore_costo - 1) }); pm *= A.moltiplicatore_costo; }
   if (aspetto && senzaRaddoppio) promemoria.push(`${senzaRaddoppio.nome}: l’Anticipazione di questo aspetto non raddoppia il costo.`);
   const minimo = Math.max(1, ...con('pm_minimo').map((t) => t.e.pm_minimo));
   for (const t of con('pm')) { const r = Math.max(minimo, pm + t.e.pm) - pm; if (r) { costo.push({ etichetta: t.nome, valore: r }); pm += r; } }

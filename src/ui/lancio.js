@@ -53,7 +53,7 @@ function corpo(ctx, inc) {
       })(),
     ],
     Anticipazione: conAnticipazione ? [
-      righaScelte('Aspetto da anticipare (uno solo)', [{ valore: null, etichetta: 'Nessuna' }, ...m.anticipazione.aspetti.map((a, i) => ({ valore: i, etichetta: a.etichetta }))],
+      righaScelte('Aspetto da anticipare (uno solo)', [{ valore: null, etichetta: 'Nessuna' }, ...m.anticipazione.aspetti.map((a, i) => ({ valore: i, etichetta: a.nome ?? a.etichetta, titolo: a.gradino }))],
         d.anticipazione, (x) => imposta({ anticipazione: x })),
       d.anticipazione !== null ? h('p', { class: 'nota' }, h('strong', {}, 'Gradino: '), m.anticipazione.aspetti[d.anticipazione]?.gradino) : null,
       h('p', { class: 'riquadro attenzione' }, 'PM ×2, Potere più difficile di una categoria; la Prova è sempre obbligatoria (Magia sez. 12.3).'),

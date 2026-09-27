@@ -23,7 +23,7 @@ export function righaScelte(titolo, opzioni, attuale, scegli) {
     h('p', { class: 'scelta-titolo' }, titolo),
     h('div', { class: 'scelta-pulsanti' }, opzioni.map((o) => h('button', {
       type: 'button', class: `btn scelta-btn${o.valore === attuale ? ' scelta' : ''}`, 'aria-pressed': String(o.valore === attuale),
-      disabled: !!o.motivo && o.valore !== attuale, title: o.motivo ?? null, onclick: () => scegli(o.valore),
+      disabled: !!o.motivo && o.valore !== attuale, title: o.motivo ?? o.titolo ?? null, onclick: () => scegli(o.valore),
     }, o.etichetta))),
     motivi.length ? h('small', { class: 'motivo' }, motivi.join(' · ')) : null);
 }

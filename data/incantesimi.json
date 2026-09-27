@@ -196,22 +196,26 @@
             {
               "etichetta": "Colpi",
               "gradino": "Colpi 1 → 2 → 3 → 4",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Colpi"
             },
             {
               "etichetta": "natura Naturale → Magico",
               "gradino": "natura Naturale → Magico",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Natura del danno"
             },
             {
               "etichetta": "elementi",
               "gradino": "elementi 1 → 2 → 3",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Elementi"
             },
             {
               "etichetta": "Mod. PS peggiorato",
               "gradino": "Mod. PS peggiorato di 2",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un gradino, con PM raddoppiati e Potere più difficile di una categoria. Si sceglie Colpi 1 → 2 → 3 → 4, natura Naturale → Magico, elementi 1 → 2 → 3 oppure Mod. PS peggiorato di 2. Il danno non è anticipabile. I massimi sono 5d6+5 per colpo, 4 Colpi e natura Magica: non si ottiene danno Etereo. Al livello 18 resta anticipabile soltanto il Mod. PS. La PS resta assente per gli effetti automatici."
@@ -486,12 +490,14 @@
             {
               "etichetta": "+1 elemento entro il massimo di 3",
               "gradino": "+1 elemento entro il massimo di 3",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Elemento +1"
             },
             {
               "etichetta": "sola delle due durate al gradino successivo della propria co",
               "gradino": "sola delle due durate al gradino successivo della propria colonna",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Una delle due durate"
             }
           ],
           "frase": "Anticipazione: +1 elemento entro il massimo di 3 oppure una sola delle due durate al gradino successivo della propria colonna. Oltre l’ultima riga: 4 ore con Concentrazione oppure 2 ore senza. Il raggio della luce resta 2 Q."
@@ -650,22 +656,26 @@
             {
               "etichetta": "natura del danno",
               "gradino": "natura del danno",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Natura del danno"
             },
             {
               "etichetta": "numero di elementi",
               "gradino": "numero di elementi fino a 3",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Numero di elementi"
             },
             {
               "etichetta": "modificatore delle sole PS secondarie di un gradino",
               "gradino": "modificatore delle sole PS secondarie di un gradino −2",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS secondarie"
             },
             {
               "etichetta": "durata al gradino successivo",
               "gradino": "durata al gradino successivo, fino a 4 ore oltre l’ultima riga",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: natura del danno, numero di elementi fino a 3, modificatore delle sole PS secondarie di un gradino −2 oppure durata al gradino successivo, fino a 4 ore oltre l’ultima riga. L’Anticipazione della PS non modifica la prova di FOR per attraversare."
@@ -768,17 +778,20 @@
             {
               "etichetta": "Contromisura al gradino successivo",
               "gradino": "Contromisura al gradino successivo (2 → 3 → 5 → 7 → 10 → 12 → 15 → 20)",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Contromisura"
             },
             {
               "etichetta": "+1 elemento fino a 6",
               "gradino": "+1 elemento fino a 6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Elemento +1"
             },
             {
               "etichetta": "durata al gradino successivo",
               "gradino": "durata al gradino successivo, fino a 8 ore oltre l’ultima riga",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: Contromisura al gradino successivo (2 → 3 → 5 → 7 → 10 → 12 → 15 → 20), +1 elemento fino a 6 oppure durata al gradino successivo, fino a 8 ore oltre l’ultima riga."
@@ -927,22 +940,26 @@
             {
               "etichetta": "natura del danno reattivo",
               "gradino": "natura del danno reattivo",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Natura del danno reattivo"
             },
             {
               "etichetta": "numero di elementi",
               "gradino": "numero di elementi fino a 3",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Numero di elementi"
             },
             {
               "etichetta": "modificatore PS di un gradino",
               "gradino": "modificatore PS di un gradino −2",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             },
             {
               "etichetta": "durata al gradino successivo",
               "gradino": "durata al gradino successivo, fino a 2 ore oltre l’ultima riga",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: natura del danno reattivo, numero di elementi fino a 3, modificatore PS di un gradino −2 oppure durata al gradino successivo, fino a 2 ore oltre l’ultima riga. Non anticipa AR, natura AR, numero di beneficiari, gittata o raggio dell’aura."
@@ -1092,17 +1109,20 @@
             {
               "etichetta": "natura del danno",
               "gradino": "natura del danno",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Natura del danno"
             },
             {
               "etichetta": "numero di elementi",
               "gradino": "numero di elementi fino a 3",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Numero di elementi"
             },
             {
               "etichetta": "modificatore PS di un gradino",
               "gradino": "modificatore PS di un gradino −2",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             }
           ],
           "frase": "Anticipazione: natura del danno, numero di elementi fino a 3 oppure modificatore PS di un gradino −2. Le 1d3 AC sono fisse e non anticipabili."
@@ -1243,17 +1263,20 @@
             {
               "etichetta": "natura del danno",
               "gradino": "natura del danno",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Natura del danno"
             },
             {
               "etichetta": "numero di elementi",
               "gradino": "numero di elementi fino a 3",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Numero di elementi"
             },
             {
               "etichetta": "modificatore PS di un gradino",
               "gradino": "modificatore PS di un gradino −2",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             }
           ],
           "frase": "Anticipazione: natura del danno, numero di elementi fino a 3 oppure modificatore PS di un gradino −2."
@@ -1371,12 +1394,14 @@
             {
               "etichetta": "durata al gradino successivo",
               "gradino": "durata al gradino successivo (10 RND → 20 RND → 5 min → 10 min → 30 min → 1 ora)",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             },
             {
               "etichetta": "composizione da puro a uno degli ibridi di due elementi",
               "gradino": "composizione da puro a uno degli ibridi di due elementi",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Composizione ibrida"
             }
           ],
           "frase": "Anticipazione: durata al gradino successivo (10 RND → 20 RND → 5 min → 10 min → 30 min → 1 ora) oppure composizione da puro a uno degli ibridi di due elementi. Il livello 6 anticipato a 12 PM evoca uno Spiritello ibrido, non un Servitore. La categoria non è anticipabile."
@@ -1507,12 +1532,14 @@
             {
               "etichetta": "composizione da puro a ibrido di due elementi",
               "gradino": "composizione da puro a ibrido di due elementi",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Composizione ibrida"
             },
             {
               "etichetta": "durata al gradino successivo",
               "gradino": "durata al gradino successivo, fino a 1 ora oltre la riga di livello 18",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: composizione da puro a ibrido di due elementi oppure durata al gradino successivo, fino a 1 ora oltre la riga di livello 18. La categoria resta quella della versione scelta: il livello 6 anticipato a 12 PM concede uno Spiritello ibrido per 10 RND."
@@ -1659,22 +1686,26 @@
             {
               "etichetta": "natura del danno da Magico a Etereo per entrambe le componen",
               "gradino": "natura del danno da Magico a Etereo per entrambe le componenti",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Natura del danno"
             },
             {
               "etichetta": "+1 elemento fino a 3",
               "gradino": "+1 elemento fino a 3",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Elemento +1"
             },
             {
               "etichetta": "modificatore PS",
               "gradino": "modificatore PS da −2 a −4, da −4 a −6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             },
             {
               "etichetta": "durata",
               "gradino": "durata da 5 a 10 RND, da 10 a 20 RND",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: natura del danno da Magico a Etereo per entrambe le componenti; +1 elemento fino a 3; modificatore PS da −2 a −4 oppure da −4 a −6; durata da 5 a 10 RND oppure da 10 a 20 RND. Le 1d3 AC iniziali e la singola AC persistente restano fisse."
@@ -1821,12 +1852,14 @@
             {
               "etichetta": "quantità di PV temporanei",
               "gradino": "quantità di PV temporanei",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "PV temporanei"
             },
             {
               "etichetta": "durata",
               "gradino": "durata",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: un solo gradino nella quantità di PV temporanei oppure nella durata; costo base raddoppiato e Potere più difficile di una categoria. Livello e altri parametri restano invariati."
@@ -1936,17 +1969,20 @@
             {
               "etichetta": "+1 Q al Passo",
               "gradino": "+1 Q al Passo",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Passo +1 Q"
             },
             {
               "etichetta": "ulteriore −1 al VA degli attaccanti",
               "gradino": "ulteriore −1 al VA degli attaccanti",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "VA degli attaccanti −1"
             },
             {
               "etichetta": "durata successiva",
               "gradino": "durata successiva",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 Q al Passo, un ulteriore −1 al VA degli attaccanti oppure la durata successiva. Oltre i massimi ordinari si può raggiungere +5 Q al Passo oppure −4 al VA degli attaccanti. Scala della durata: 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore."
@@ -2056,12 +2092,14 @@
             {
               "etichetta": "+1 al bonus Tempra selezionato",
               "gradino": "+1 al bonus Tempra selezionato",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Bonus Tempra +1"
             },
             {
               "etichetta": "gradino nella durata della modalità attiva",
               "gradino": "gradino nella durata della modalità attiva",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 al bonus Tempra selezionato oppure un gradino nella durata della modalità attiva. Durata A: 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore → 12 ore → 24 ore. Durata B: 1 → 2 → 3 → 4 → 5 giorni. Le righe con la stessa durata non costituiscono un nuovo gradino."
@@ -2157,7 +2195,8 @@
             {
               "etichetta": "durata",
               "gradino": "durata: 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore → 12 ore → 24 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. È consentita soltanto la durata: 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore → 12 ore → 24 ore."
@@ -2264,22 +2303,26 @@
             {
               "etichetta": "+1 al bonus operativo",
               "gradino": "+1 al bonus operativo",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Bonus operativo +1"
             },
             {
               "etichetta": "+1 al VA degli attacchi",
               "gradino": "+1 al VA degli attacchi",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "VA degli attacchi +1"
             },
             {
               "etichetta": "+1 al danno",
               "gradino": "+1 al danno",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Danno +1"
             },
             {
               "etichetta": "gradino nella durata attiva",
               "gradino": "gradino nella durata attiva",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 al bonus operativo, +1 al VA degli attacchi, +1 al danno oppure un gradino nella durata attiva. Durata A: 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore → 12 ore. Durata B: 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore."
@@ -2386,12 +2429,14 @@
             {
               "etichetta": "+1 AR",
               "gradino": "+1 AR, fino a 9 con l’Anticipazione della versione massima",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "AR +1"
             },
             {
               "etichetta": "gradino di durata",
               "gradino": "gradino di durata: 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 AR, fino a 9 con l’Anticipazione della versione massima, oppure un gradino di durata: 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore. Se aumenta l’AR si ricalcola la penalità al Passo. La natura dell’AR non può essere anticipata a Magica."
@@ -2492,17 +2537,20 @@
             {
               "etichetta": "+1 all’Iniziativa",
               "gradino": "+1 all’Iniziativa",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Iniziativa +1"
             },
             {
               "etichetta": "+1 al bonus Schivata",
               "gradino": "+1 al bonus Schivata",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Bonus Schivata +1"
             },
             {
               "etichetta": "gradino di durata",
               "gradino": "gradino di durata: 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 all’Iniziativa, +1 al bonus Schivata oppure un gradino di durata: 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore."
@@ -2594,12 +2642,14 @@
             {
               "etichetta": "+1 PV recuperabile per RND",
               "gradino": "+1 PV recuperabile per RND",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "PV per RND +1"
             },
             {
               "etichetta": "durata",
               "gradino": "durata da 10 a 15 RND",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 PV recuperabile per RND oppure la durata da 10 a 15 RND. Restano le stesse regole per Sanguinamento, limite dei PV e inizio del recupero."
@@ -2696,17 +2746,20 @@
             {
               "etichetta": "ulteriore −2 alla Percezione",
               "gradino": "ulteriore −2 alla Percezione",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Percezione −2"
             },
             {
               "etichetta": "+1 Azione consentita",
               "gradino": "+1 Azione consentita",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Azioni consentite +1"
             },
             {
               "etichetta": "gradino della durata scelta",
               "gradino": "gradino della durata scelta",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie un ulteriore −2 alla Percezione, +1 Azione consentita oppure un gradino della durata scelta. Concentrazione: 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore. Fissa: 10 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore."
@@ -2789,17 +2842,20 @@
             {
               "etichetta": "+1 al bonus fisico",
               "gradino": "+1 al bonus fisico",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Bonus fisico +1"
             },
             {
               "etichetta": "+1 al bonus al danno",
               "gradino": "+1 al bonus al danno",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Bonus al danno +1"
             },
             {
               "etichetta": "gradino di durata",
               "gradino": "gradino di durata: 5 → 10 → 15 RND",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 al bonus fisico, +1 al bonus al danno oppure un gradino di durata: 5 → 10 → 15 RND. Restano +1 AFT al termine e il contraccolpo −3 per 10 RND."
@@ -2918,22 +2974,26 @@
             {
               "etichetta": "peso successivo della tabella",
               "gradino": "peso successivo della tabella (oltre 100 kg: 200 kg)",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Peso"
             },
             {
               "etichetta": "danno successivo",
               "gradino": "danno successivo (oltre 1d10+3: 1d10+4)",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Danno"
             },
             {
               "etichetta": "modificatore PS",
               "gradino": "modificatore PS (0 → −2 → −4 → −6)",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             },
             {
               "etichetta": "durata della modalità scelta",
               "gradino": "durata della modalità scelta",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie il peso successivo della tabella (oltre 100 kg: 200 kg), il danno successivo (oltre 1d10+3: 1d10+4), il modificatore PS (0 → −2 → −4 → −6) oppure la durata della modalità scelta. Si usa il valore distinto successivo; oltre 12 ore in Concentrazione si arriva a 24 ore, oltre 2 ore a durata fissa a 4 ore."
@@ -3043,17 +3103,20 @@
             {
               "etichetta": "+1 AR",
               "gradino": "+1 AR, fino a un massimo di 4",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "AR +1"
             },
             {
               "etichetta": "+1 al bonus Parata",
               "gradino": "+1 al bonus Parata",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Bonus Parata +1"
             },
             {
               "etichetta": "gradino della durata scelta",
               "gradino": "gradino della durata scelta",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 AR, fino a un massimo di 4, +1 al bonus Parata oppure un gradino della durata scelta. Durata fissa: 5 RND → 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore. In Concentrazione si raddoppiano questi valori, fino a 4 ore con Anticipazione. L’AR rimane Naturale e non può essere anticipata a Magica."
@@ -3156,12 +3219,14 @@
             {
               "etichetta": "+1 AR",
               "gradino": "+1 AR, fino a un massimo di 8",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "AR +1"
             },
             {
               "etichetta": "gradino nella durata",
               "gradino": "gradino nella durata: 5 RND → 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 AR, fino a un massimo di 8, oppure un gradino nella durata: 5 RND → 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore."
@@ -3274,17 +3339,20 @@
             {
               "etichetta": "danno della riga successiva",
               "gradino": "danno della riga successiva (oltre 1d8+4: 1d8+5)",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Danno"
             },
             {
               "etichetta": "+1 Q alla spinta con Tempra fallita",
               "gradino": "+1 Q alla spinta con Tempra fallita",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Spinta +1 Q"
             },
             {
               "etichetta": "gradino del modificatore PS",
               "gradino": "gradino del modificatore PS (0 → −2 → −4 → −6)",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie il danno della riga successiva (oltre 1d8+4: 1d8+5), +1 Q alla spinta con Tempra fallita oppure un gradino del modificatore PS (0 → −2 → −4 → −6). La spinta con Tempra riuscita rimane sempre 1 Q."
@@ -3379,22 +3447,26 @@
             {
               "etichetta": "valore successivo di PV per segmento",
               "gradino": "valore successivo di PV per segmento (oltre 180: 220)",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "PV per segmento"
             },
             {
               "etichetta": "lunghezza",
               "gradino": "lunghezza (oltre 15 Q: 18 Q)",
-              "categoria": "area"
+              "categoria": "area",
+              "nome": "Lunghezza"
             },
             {
               "etichetta": "durata",
               "gradino": "durata (oltre 1 ora: 2 ore)",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             },
             {
               "etichetta": "interferenza magica",
               "gradino": "interferenza magica, da −2 a −4 a Potere",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Interferenza magica"
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie il valore successivo di PV per segmento (oltre 180: 220), lunghezza (oltre 15 Q: 18 Q), durata (oltre 1 ora: 2 ore) oppure interferenza magica, da −2 a −4 a Potere. L’altezza rimane 2 Q."
@@ -3498,22 +3570,26 @@
             {
               "etichetta": "Stato da Rallentato a Immobilizzato",
               "gradino": "Stato da Rallentato a Immobilizzato",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Stato: Immobilizzato"
             },
             {
               "etichetta": "durata",
               "gradino": "durata (3 → 5 → 10 → 20 → 30 RND)",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             },
             {
               "etichetta": "modificatore PS",
               "gradino": "modificatore PS (0 → −2 → −4 → −6), applicato a Tempra iniziale",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             },
             {
               "etichetta": "Tempra per liberarsi e Riflessi per mantenere l’equilibrio",
               "gradino": "Tempra per liberarsi e Riflessi per mantenere l’equilibrio",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Tempra per liberarsi e Riflessi per mantenere l’equilibrio"
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie lo Stato da Rallentato a Immobilizzato, la durata (3 → 5 → 10 → 20 → 30 RND) oppure il modificatore PS (0 → −2 → −4 → −6), applicato a Tempra iniziale, Tempra per liberarsi e Riflessi per mantenere l’equilibrio."
@@ -3620,27 +3696,32 @@
             {
               "etichetta": "carico successivo",
               "gradino": "carico successivo (oltre 1.200 kg: 1.600 kg)",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Carico"
             },
             {
               "etichetta": "dimensioni",
               "gradino": "dimensioni (1 × 1 → 2 × 1 → 2 × 2 → 3 × 2 → 3 × 3 → 4 × 3 Q)",
-              "categoria": "area"
+              "categoria": "area",
+              "nome": "Dimensioni"
             },
             {
               "etichetta": "budget di movimento",
               "gradino": "budget di movimento da 6 a 8 Q",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Budget di movimento"
             },
             {
               "etichetta": "+1 al bonus stabilità",
               "gradino": "+1 al bonus stabilità",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Bonus stabilità +1"
             },
             {
               "etichetta": "durata scelta",
               "gradino": "durata scelta (oltre 8 ore Con: 12 ore, oltre 1 ora fissa: 2 ore)",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie il carico successivo (oltre 1.200 kg: 1.600 kg), le dimensioni (1 × 1 → 2 × 1 → 2 × 2 → 3 × 2 → 3 × 3 → 4 × 3 Q), il budget di movimento da 6 a 8 Q, +1 al bonus stabilità oppure la durata scelta (oltre 8 ore Con: 12 ore; oltre 1 ora fissa: 2 ore). Il movimento verticale costa sempre 2; dimensioni e carico restano aspetti distinti."
@@ -3729,22 +3810,26 @@
             {
               "etichetta": "dimensione cubica successiva",
               "gradino": "dimensione cubica successiva (oltre 6 × 6 × 6 Q: 7 × 7 × 7 Q)",
-              "categoria": "area"
+              "categoria": "area",
+              "nome": "Dimensione del cubo"
             },
             {
               "etichetta": "durata",
               "gradino": "durata (5 → 10 → 20 → 30 RND)",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             },
             {
               "etichetta": "modificatore Tempra",
               "gradino": "modificatore Tempra (0 → −2 → −4 → −6)",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. Tempra"
             },
             {
               "etichetta": "interferenza magica",
               "gradino": "interferenza magica da −4 a −6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Interferenza magica"
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie la dimensione cubica successiva (oltre 6 × 6 × 6 Q: 7 × 7 × 7 Q), durata (5 → 10 → 20 → 30 RND), modificatore Tempra (0 → −2 → −4 → −6) oppure interferenza magica da −4 a −6. Restano due turni per attraversare e il dimezzamento del danno pertinente. Magia conservata: l’interferenza non introduce una Prova Potere nell’attivazione di Impronta Mistica o Trappola Mistica già caricata che non la richiede. Restano blocchi, assorbimenti e interdizioni della barriera. Per i normali lanci l’interferenza può rendere necessaria Potere anche ai livelli 1–3; fra penalità magiche concorrenti vale la maggiore, secondo le sezioni 7 e 9."
@@ -3833,22 +3918,26 @@
             {
               "etichetta": "peso",
               "gradino": "peso (5 → 10 → 25 → 50 → 100 → 200 kg)",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Peso"
             },
             {
               "etichetta": "gittata",
               "gradino": "gittata (10 → 15 → 20 → 25 → 30 → 40 Q)",
-              "categoria": "gittata"
+              "categoria": "gittata",
+              "nome": "Gittata"
             },
             {
               "etichetta": "trasporto di creature",
               "gradino": "trasporto di creature (nessuno → solo Taumaturgo → +1 → +2 → +3 → +4 passeggeri)",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Trasporto di creature"
             },
             {
               "etichetta": "PS Magia",
               "gradino": "PS Magia (0 → −2 → −4 → −6)",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "PS Magia"
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie peso (5 → 10 → 25 → 50 → 100 → 200 kg), gittata (10 → 15 → 20 → 25 → 30 → 40 Q), trasporto di creature (nessuno → solo Taumaturgo → +1 → +2 → +3 → +4 passeggeri) oppure PS Magia (0 → −2 → −4 → −6). Esempio: la versione di livello 6 anticipata sul trasporto costa 12 PM e permette al Taumaturgo di trasferirsi entro 10 Q, con Potere più difficile di una categoria e gli altri parametri invariati."
@@ -3929,17 +4018,20 @@
             {
               "etichetta": "numero massimo di bersagli",
               "gradino": "numero massimo di bersagli (1 → 2 → 3)",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Bersagli"
             },
             {
               "etichetta": "durata della prigionia",
               "gradino": "durata della prigionia (3 → 5 → 10 RND)",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata della prigionia"
             },
             {
               "etichetta": "modificatore PS Magia",
               "gradino": "modificatore PS Magia (0 → −2 → −4 → −6)",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS Magia"
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie il numero massimo di bersagli (1 → 2 → 3), la durata della prigionia (3 → 5 → 10 RND) oppure il modificatore PS Magia (0 → −2 → −4 → −6). Disorientato dura sempre 1+1d3 RND e non può essere anticipato."
@@ -4042,12 +4134,14 @@
             {
               "etichetta": "+1 al bonus",
               "gradino": "+1 al bonus, fino a +7",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Bonus +1"
             },
             {
               "etichetta": "gradino di durata",
               "gradino": "gradino di durata: 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 al bonus, fino a +7, oppure un gradino di durata: 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore. Gittata e beneficiari non cambiano."
@@ -4150,12 +4244,14 @@
             {
               "etichetta": "+1 al bonus PS",
               "gradino": "+1 al bonus PS, massimo +7",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Bonus PS +1"
             },
             {
               "etichetta": "durata",
               "gradino": "durata 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un gradino, PM raddoppiati e Potere più difficile di una categoria. Si sceglie +1 al bonus PS, massimo +7, oppure durata 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore. Non si ampliano le categorie protette."
@@ -4268,22 +4364,26 @@
             {
               "etichetta": "effetti",
               "gradino": "effetti 1 → 2 (massimo 2)",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Effetti"
             },
             {
               "etichetta": "durata",
               "gradino": "durata 3 → 5 → 10 → 20 → 30 RND",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             },
             {
               "etichetta": "modificatore PS",
               "gradino": "modificatore PS 0 → −2 → −4 → −6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             },
             {
               "etichetta": "Dolore",
               "gradino": "Dolore da −3 a −4",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Dolore"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie effetti 1 → 2 (massimo 2), durata 3 → 5 → 10 → 20 → 30 RND, modificatore PS 0 → −2 → −4 → −6 oppure Dolore da −3 a −4. Affaticamento resta +1 AFT."
@@ -4428,17 +4528,20 @@
             {
               "etichetta": "danno della successiva voce distinta in tabella",
               "gradino": "danno della successiva voce distinta in tabella (oltre 10d4+5: 12d4+5)",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Danno"
             },
             {
               "etichetta": "bersagli",
               "gradino": "bersagli 1 → 2 → 3 → 5 → 6",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Bersagli"
             },
             {
               "etichetta": "modificatore PS",
               "gradino": "modificatore PS 0 → −1 → −2 → −4 → −6 → −8 → −10",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie il danno della successiva voce distinta in tabella (oltre 10d4+5: 12d4+5), bersagli 1 → 2 → 3 → 5 → 6 oppure modificatore PS 0 → −1 → −2 → −4 → −6 → −8 → −10. La penalità anticipata vale per entrambe le PS. Svenuto resta 1+1d4 RND; l’immunità di Barriera Mentale non viene superata."
@@ -4545,27 +4648,32 @@
             {
               "etichetta": "PV alla riga successiva",
               "gradino": "PV alla riga successiva (oltre 40: 50)",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "PV"
             },
             {
               "etichetta": "+1 VA operativo",
               "gradino": "+1 VA operativo (massimo 14)",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "VA operativo +1"
             },
             {
               "etichetta": "+1 al danno che resta Naturale",
               "gradino": "+1 al danno che resta Naturale",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Danno +1 (Naturale)"
             },
             {
               "etichetta": "carico",
               "gradino": "carico 10 → 20 → 40 → 70 → 100 → 150 → 200 kg",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Carico"
             },
             {
               "etichetta": "durata",
               "gradino": "durata 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie PV alla riga successiva (oltre 40: 50), +1 VA operativo (massimo 14), +1 al danno che resta Naturale, carico 10 → 20 → 40 → 70 → 100 → 150 → 200 kg oppure durata 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore. Numero di servitori, Movimento, azioni e natura del danno non aumentano."
@@ -4662,17 +4770,20 @@
             {
               "etichetta": "durata",
               "gradino": "durata 5 → 10 → 20 RND → 5 → 10 → 30 minuti → 1 ora",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             },
             {
               "etichetta": "bersagli",
               "gradino": "bersagli 1 → 2 → 3 → 4",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Bersagli"
             },
             {
               "etichetta": "modificatore PS",
               "gradino": "modificatore PS 0 → −2 → −4 → −6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie durata 5 → 10 → 20 RND → 5 → 10 → 30 minuti → 1 ora, bersagli 1 → 2 → 3 → 4 oppure modificatore PS 0 → −2 → −4 → −6. Le condizioni di risveglio non cambiano."
@@ -4773,12 +4884,14 @@
             {
               "etichetta": "+1 PV per RND",
               "gradino": "+1 PV per RND, fino a 7 al livello 18",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "PV per RND +1"
             },
             {
               "etichetta": "durata periodica",
               "gradino": "durata periodica da 5 a 10 RND",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata periodica"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 PV per RND, fino a 7 al livello 18, oppure durata periodica da 5 a 10 RND. Il recupero immediato resta pari alla COS, non è anticipabile e si applica una sola volta per lancio."
@@ -4865,17 +4978,20 @@
             {
               "etichetta": "dispositivi",
               "gradino": "dispositivi 1 → 2 → 3 → 4",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Dispositivi"
             },
             {
               "etichetta": "bonus utilizzo",
               "gradino": "bonus utilizzo +1 → +2 → +3 → +4 → +6 → +8",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Bonus utilizzo"
             },
             {
               "etichetta": "durata",
               "gradino": "durata 10 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie dispositivi 1 → 2 → 3 → 4, bonus utilizzo +1 → +2 → +3 → +4 → +6 → +8 oppure durata 10 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore. Numero di azioni ed esclusioni restano invariati."
@@ -4985,12 +5101,14 @@
             {
               "etichetta": "+1 al danno iniziale",
               "gradino": "+1 al danno iniziale",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Danno iniziale +1"
             },
             {
               "etichetta": "modificatore PS",
               "gradino": "modificatore PS 0 → −2 → −4 → −6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 al danno iniziale oppure modificatore PS 0 → −2 → −4 → −6. Durata, numero di bersagli e passaggi fra gli stati non sono anticipabili."
@@ -5127,12 +5245,14 @@
             {
               "etichetta": "distanza dal corpo",
               "gradino": "distanza dal corpo",
-              "categoria": "gittata"
+              "categoria": "gittata",
+              "nome": "Distanza dal corpo"
             },
             {
               "etichetta": "durata",
               "gradino": "durata, usando la voce successiva della tabella quando presente",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un gradino, PM raddoppiati e Potere più difficile di una categoria. Si sceglie distanza dal corpo oppure durata, usando la voce successiva della tabella quando presente. All’ultima riga questi aspetti non sono anticipabili: non è definito un ulteriore gradino. Non si introduce interazione fisica."
@@ -5259,22 +5379,26 @@
             {
               "etichetta": "durata",
               "gradino": "durata 10 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             },
             {
               "etichetta": "beneficiari",
               "gradino": "beneficiari 1 → 2 → 3 → 4",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Beneficiari"
             },
             {
               "etichetta": "Mod. PS",
               "gradino": "Mod. PS 0 → −2 → −4 → −6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             },
             {
               "etichetta": "capacità volto generico → identità precisa → voce e postura ",
               "gradino": "capacità volto generico → identità precisa → voce e postura → equipaggiamento",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Capacità volto generico → identità precisa → voce e postura → equipaggiamento"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie durata 10 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore; beneficiari 1 → 2 → 3 → 4; Mod. PS 0 → −2 → −4 → −6; oppure capacità volto generico → identità precisa → voce e postura → equipaggiamento."
@@ -5437,17 +5561,20 @@
             {
               "etichetta": "bersagli",
               "gradino": "bersagli 1 → 2 → 3 → 4 → 5 → 6",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Bersagli"
             },
             {
               "etichetta": "Mod. PS",
               "gradino": "Mod. PS 0 → −2 → −4 → −6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             },
             {
               "etichetta": "parole",
               "gradino": "parole 1 → 2 → 3 → 4 → 5 → breve frase",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Parole"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie bersagli 1 → 2 → 3 → 4 → 5 → 6; Mod. PS 0 → −2 → −4 → −6; oppure parole 1 → 2 → 3 → 4 → 5 → breve frase. La durata non può essere anticipata."
@@ -5568,17 +5695,20 @@
             {
               "etichetta": "ulteriore −1 alla penalità al VA",
               "gradino": "ulteriore −1 alla penalità al VA, fino a −7",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Penalità al VA −1"
             },
             {
               "etichetta": "durata",
               "gradino": "durata 3 → 5 → 10 → 20 RND",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             },
             {
               "etichetta": "Mod. PS",
               "gradino": "Mod. PS 0 → −2 → −4 → −6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie un ulteriore −1 alla penalità al VA, fino a −7; durata 3 → 5 → 10 → 20 RND; oppure Mod. PS 0 → −2 → −4 → −6."
@@ -5705,22 +5835,26 @@
             {
               "etichetta": "raggio",
               "gradino": "raggio 2 → 3 → 4 → 5 → 6 Q",
-              "categoria": "area"
+              "categoria": "area",
+              "nome": "Raggio"
             },
             {
               "etichetta": "durata",
               "gradino": "durata 10 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             },
             {
               "etichetta": "Mod. PS",
               "gradino": "Mod. PS 0 → −2 → −4 → −6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             },
             {
               "etichetta": "grado di complessità della tabella",
               "gradino": "grado di complessità della tabella",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Complessità"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie raggio 2 → 3 → 4 → 5 → 6 Q; durata 10 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore; Mod. PS 0 → −2 → −4 → −6; oppure un grado di complessità della tabella."
@@ -5869,22 +6003,26 @@
             {
               "etichetta": "periodo modificabile",
               "gradino": "periodo modificabile 1 ora → 2 ore → 3 ore → 4 ore → 5 ore → 6 ore → 12 ore → 1 giorno → 3 giorni → 7 giorni",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Periodo modificabile"
             },
             {
               "etichetta": "durata dell’alterazione",
               "gradino": "durata dell’alterazione 1 → 2 → 3 → 4 → 5 → 7 → 15 → 30 → 90 → 180 giorni",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata dell’alterazione"
             },
             {
               "etichetta": "bersagli",
               "gradino": "bersagli 1 → 2 → 3 → 4",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Bersagli"
             },
             {
               "etichetta": "Mod. PS",
               "gradino": "Mod. PS 0 → −2 → −4 → −6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie periodo modificabile 1 ora → 2 ore → 3 ore → 4 ore → 5 ore → 6 ore → 12 ore → 1 giorno → 3 giorni → 7 giorni; durata dell’alterazione 1 → 2 → 3 → 4 → 5 → 7 → 15 → 30 → 90 → 180 giorni; bersagli 1 → 2 → 3 → 4; oppure Mod. PS 0 → −2 → −4 → −6. Il tempo di lancio resta quello della versione base e non può essere anticipato."
@@ -5987,22 +6125,26 @@
             {
               "etichetta": "durata",
               "gradino": "durata 3 → 5 → 7 → 10 → 15 RND",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             },
             {
               "etichetta": "bersagli",
               "gradino": "bersagli 1 → 2 → 3 → 4",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Bersagli"
             },
             {
               "etichetta": "Mod. PS",
               "gradino": "Mod. PS 0 → −2 → −4 → −6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             },
             {
               "etichetta": "penalità a Potere",
               "gradino": "penalità a Potere −1 → −2 → −3 → −4 → −6 → −8 → −10",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Penalità a Potere"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie durata 3 → 5 → 7 → 10 → 15 RND; bersagli 1 → 2 → 3 → 4; Mod. PS 0 → −2 → −4 → −6; oppure penalità a Potere −1 → −2 → −3 → −4 → −6 → −8 → −10."
@@ -6111,22 +6253,26 @@
             {
               "etichetta": "bersagli mirati",
               "gradino": "bersagli mirati 1 → 2 → 3 → 4",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Bersagli mirati"
             },
             {
               "etichetta": "raggio aura",
               "gradino": "raggio aura 1 → 2 → 3 → 4 → 5 → 6 Q",
-              "categoria": "area"
+              "categoria": "area",
+              "nome": "Raggio dell’aura"
             },
             {
               "etichetta": "durata",
               "gradino": "durata 1 → 3 → 5 → 7 → 10 RND",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             },
             {
               "etichetta": "ulteriore −2 alla PS della modalità scelta",
               "gradino": "ulteriore −2 alla PS della modalità scelta, fino a −8 per la mirata o −6 per l’aura",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "PS della modalità −2"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie bersagli mirati 1 → 2 → 3 → 4; raggio aura 1 → 2 → 3 → 4 → 5 → 6 Q; durata 1 → 3 → 5 → 7 → 10 RND; oppure un ulteriore −2 alla PS della modalità scelta, fino a −8 per la mirata o −6 per l’aura. La penalità dello stato resta −4 e non può essere anticipata."
@@ -6247,22 +6393,26 @@
             {
               "etichetta": "condizionamenti",
               "gradino": "condizionamenti 1 → 2 → 3 → 4",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Condizionamenti"
             },
             {
               "etichetta": "bersagli",
               "gradino": "bersagli 1 → 2 → 3 → 4",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Bersagli"
             },
             {
               "etichetta": "durata",
               "gradino": "durata 1 → 3 → 7 → 15 → 30 → 60 giorni",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             },
             {
               "etichetta": "Mod. PS",
               "gradino": "Mod. PS 0 → −2 → −4 → −6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie condizionamenti 1 → 2 → 3 → 4; bersagli 1 → 2 → 3 → 4; durata 1 → 3 → 7 → 15 → 30 → 60 giorni; oppure Mod. PS 0 → −2 → −4 → −6. Il tempo di lancio resta quello della versione base."
@@ -6386,27 +6536,32 @@
             {
               "etichetta": "raggio",
               "gradino": "raggio 6 → 10 → 15 → 20 → 25 → 30 Q",
-              "categoria": "area"
+              "categoria": "area",
+              "nome": "Raggio"
             },
             {
               "etichetta": "presenze occultate",
               "gradino": "presenze occultate 1 → 2 → 4 → 6 → 8 → 10",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Presenze occultate"
             },
             {
               "etichetta": "durata a Concentrazione",
               "gradino": "durata a Concentrazione 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata a Concentrazione"
             },
             {
               "etichetta": "durata fissa",
               "gradino": "durata fissa 10 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata fissa"
             },
             {
               "etichetta": "Mod. PS",
               "gradino": "Mod. PS 0 → −2 → −4 → −6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie raggio 6 → 10 → 15 → 20 → 25 → 30 Q; presenze occultate 1 → 2 → 4 → 6 → 8 → 10; durata a Concentrazione 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore; durata fissa 10 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore; oppure Mod. PS 0 → −2 → −4 → −6. La durata anticipata riguarda soltanto la modalità scelta."
@@ -6517,17 +6672,20 @@
             {
               "etichetta": "bersagli",
               "gradino": "bersagli 1 → 2 → 3 → 4",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Bersagli"
             },
             {
               "etichetta": "durata massima a Concentrazione",
               "gradino": "durata massima a Concentrazione 3 → 5 → 7 → 10 RND",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata a Concentrazione"
             },
             {
               "etichetta": "Mod. PS",
               "gradino": "Mod. PS −2 → −4 → −6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie bersagli 1 → 2 → 3 → 4; durata massima a Concentrazione 3 → 5 → 7 → 10 RND; oppure Mod. PS −2 → −4 → −6. Non può diventare un incantesimo a durata senza Concentrazione."
@@ -6639,22 +6797,26 @@
             {
               "etichetta": "bersagli",
               "gradino": "bersagli 1 → 2 → 3 → 4",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Bersagli"
             },
             {
               "etichetta": "durata a Concentrazione",
               "gradino": "durata a Concentrazione 5 → 10 → 30 minuti → 1 → 2 → 4 → 8 → 12 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata a Concentrazione"
             },
             {
               "etichetta": "durata fissa",
               "gradino": "durata fissa 10 → 20 RND → 5 → 10 → 30 minuti → 1 → 2 → 4 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata fissa"
             },
             {
               "etichetta": "Mod. PS",
               "gradino": "Mod. PS 0 → −2 → −4 → −6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie bersagli 1 → 2 → 3 → 4; durata a Concentrazione 5 → 10 → 30 minuti → 1 → 2 → 4 → 8 → 12 ore; durata fissa 10 → 20 RND → 5 → 10 → 30 minuti → 1 → 2 → 4 ore; oppure Mod. PS 0 → −2 → −4 → −6. L’accesso ai pensieri superficiali dal livello 9 non è anticipabile."
@@ -6766,22 +6928,26 @@
             {
               "etichetta": "beneficiari",
               "gradino": "beneficiari 1 → 2 → 3 → 4",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Beneficiari"
             },
             {
               "etichetta": "lingue",
               "gradino": "lingue 1 → 2 → 3 → 4 → 5",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Lingue"
             },
             {
               "etichetta": "durata",
               "gradino": "durata 10 → 30 minuti → 1 → 2 → 4 → 8 → 12 → 24 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             },
             {
               "etichetta": "Mod. PS",
               "gradino": "Mod. PS 0 → −2 → −4 → −6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie beneficiari 1 → 2 → 3 → 4; lingue 1 → 2 → 3 → 4 → 5; durata 10 → 30 minuti → 1 → 2 → 4 → 8 → 12 → 24 ore; oppure Mod. PS 0 → −2 → −4 → −6. Al livello 1 resta il vincolo del solo Taumaturgo come beneficiario. Lettura e scrittura dal livello 3 non sono anticipabili."
@@ -6949,27 +7115,32 @@
             {
               "etichetta": "raggio",
               "gradino": "raggio 6 → 10 → 15 → 20 → 25 → 30 → 40 Q",
-              "categoria": "area"
+              "categoria": "area",
+              "nome": "Raggio"
             },
             {
               "etichetta": "precisione del numero Approssimata → Generica → Precisa → Es",
               "gradino": "precisione del numero Approssimata → Generica → Precisa → Esatta",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Precisione del numero"
             },
             {
               "etichetta": "profondità delle informazioni individuali alla riga successi",
               "gradino": "profondità delle informazioni individuali alla riga successiva, mantenendo quelle già accessibili",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Profondità delle informazioni"
             },
             {
               "etichetta": "durata a Concentrazione",
               "gradino": "durata a Concentrazione 5 → 10 → 30 minuti → 1 → 2 → 4 → 8 → 12 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata a Concentrazione"
             },
             {
               "etichetta": "durata fissa",
               "gradino": "durata fissa 10 → 20 RND → 5 → 10 → 30 minuti → 1 → 2 → 4 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata fissa"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie raggio 6 → 10 → 15 → 20 → 25 → 30 → 40 Q; precisione del numero Approssimata → Generica → Precisa → Esatta; profondità delle informazioni individuali alla riga successiva, mantenendo quelle già accessibili; durata a Concentrazione 5 → 10 → 30 minuti → 1 → 2 → 4 → 8 → 12 ore; oppure durata fissa 10 → 20 RND → 5 → 10 → 30 minuti → 1 → 2 → 4 ore. Il conteggio esatto e le informazioni individuali del livello 18 sono i rispettivi limiti. Il Mod. PS non è anticipabile. Esempio: Presenza 6 può anticipare il conteggio esatto oppure le fasce di livello di 2, senza ottenere entrambi."
@@ -7130,22 +7301,26 @@
             {
               "etichetta": "destinatari",
               "gradino": "destinatari 1 → 2 → 4 → 6 → 8 → 10",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Destinatari"
             },
             {
               "etichetta": "durata continuativa a Concentrazione",
               "gradino": "durata continuativa a Concentrazione 10 → 30 minuti → 1 → 2 → 4 → 8 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata a Concentrazione"
             },
             {
               "etichetta": "durata fissa",
               "gradino": "durata fissa 10 RND → 5 → 10 → 30 minuti → 1 → 2 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata fissa"
             },
             {
               "etichetta": "Mod. PS",
               "gradino": "Mod. PS 0 → −2 → −4 → −6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie destinatari 1 → 2 → 4 → 6 → 8 → 10; durata continuativa a Concentrazione 10 → 30 minuti → 1 → 2 → 4 → 8 ore; durata fissa 10 RND → 5 → 10 → 30 minuti → 1 → 2 ore; oppure Mod. PS 0 → −2 → −4 → −6. Non anticipa portata, capacità sbloccate o ritardi; non concede il collegamento continuativo prima del livello 6."
@@ -7242,17 +7417,20 @@
             {
               "etichetta": "animali",
               "gradino": "animali 1 → 2 → 3 → 4 → 6 → 8 → 10",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Animali"
             },
             {
               "etichetta": "durata",
               "gradino": "durata 5 → 10 → 30 minuti → 1 → 2 → 4 → 8 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             },
             {
               "etichetta": "Mod. PS",
               "gradino": "Mod. PS 0 → −2 → −4 → −6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie animali 1 → 2 → 3 → 4 → 6 → 8 → 10; durata 5 → 10 → 30 minuti → 1 → 2 → 4 → 8 ore; oppure Mod. PS 0 → −2 → −4 → −6. Le richieste articolate del livello 6 non sono anticipabili."
@@ -7344,12 +7522,14 @@
             {
               "etichetta": "partecipanti",
               "gradino": "partecipanti 1 → 2 → 4 → 6 → 8 → 10",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Partecipanti"
             },
             {
               "etichetta": "durata alla riga successiva",
               "gradino": "durata alla riga successiva: 1 → 3 → 7 → 30 → 90 giorni → 1 anno, che resta il massimo",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie partecipanti 1 → 2 → 4 → 6 → 8 → 10 oppure durata alla riga successiva: 1 → 3 → 7 → 30 → 90 giorni → 1 anno, che resta il massimo. Non modifica portata, ritardi, consenso o tempo di lancio."
@@ -7483,12 +7663,14 @@
             {
               "etichetta": "passato massimo alla riga successiva",
               "gradino": "passato massimo alla riga successiva, senza superare 1 anno",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Passato massimo"
             },
             {
               "etichetta": "un’impressione massima aggiuntiva",
               "gradino": "un’impressione massima aggiuntiva, fino a 11",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Impressioni +1"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie passato massimo alla riga successiva, senza superare 1 anno, oppure un’impressione massima aggiuntiva, fino a 11. Il tempo di lettura rimane quello della versione effettivamente lanciata. Non si anticipano raggio o velocità di lettura. Esempio: livello 8 con passato anticipato costa 16 PM, richiede 10 RND ed esplora gli ultimi 7 giorni per un massimo di 5 impressioni."
@@ -7618,32 +7800,38 @@
             {
               "etichetta": "bersagli",
               "gradino": "bersagli 1 → 2 → 3 → 4",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Bersagli"
             },
             {
               "etichetta": "durata di inseguimento",
               "gradino": "durata di inseguimento 1 → 2 → 4 → 8 → 24 → 48 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata di inseguimento"
             },
             {
               "etichetta": "durata di combattimento",
               "gradino": "durata di combattimento 5 → 7 → 10 → 15 RND",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata di combattimento"
             },
             {
               "etichetta": "Mod. PS",
               "gradino": "Mod. PS 0 → −2 → −4 → −6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             },
             {
               "etichetta": "entrambe le modalità contemporaneamente",
               "gradino": "entrambe le modalità contemporaneamente",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Entrambe le modalità"
             },
             {
               "etichetta": "alleato come beneficiario al posto del Taumaturgo",
               "gradino": "alleato come beneficiario al posto del Taumaturgo",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Beneficiario: un alleato"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie bersagli 1 → 2 → 3 → 4; durata di inseguimento 1 → 2 → 4 → 8 → 24 → 48 ore; durata di combattimento 5 → 7 → 10 → 15 RND; Mod. PS 0 → −2 → −4 → −6; entrambe le modalità contemporaneamente; oppure un alleato come beneficiario al posto del Taumaturgo."
@@ -7730,17 +7918,20 @@
             {
               "etichetta": "+1 al bonus INI",
               "gradino": "+1 al bonus INI",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Bonus INI +1"
             },
             {
               "etichetta": "difesa automatica totale aggiuntiva",
               "gradino": "difesa automatica totale aggiuntiva",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Difesa automatica totale +1"
             },
             {
               "etichetta": "durata",
               "gradino": "durata 5 → 7 → 10 → 15 RND",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie +1 al bonus INI, una difesa automatica totale aggiuntiva oppure durata 5 → 7 → 10 → 15 RND. Il limite di una difesa automatica per RND e il bonus fisso +2 a Elusione rimangono invariati."
@@ -7823,22 +8014,26 @@
             {
               "etichetta": "portata",
               "gradino": "portata 6 → 10 → 15 → 20 → 25 Q",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Portata"
             },
             {
               "etichetta": "spessore solido",
               "gradino": "spessore solido 30 cm → 50 cm → 1 m → 2 m → 3 m",
-              "categoria": "area"
+              "categoria": "area",
+              "nome": "Spessore solido"
             },
             {
               "etichetta": "durata a Concentrazione",
               "gradino": "durata a Concentrazione 5 → 10 → 30 minuti → 1 → 2 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata a Concentrazione"
             },
             {
               "etichetta": "durata fissa",
               "gradino": "durata fissa 10 → 20 RND → 5 → 10 → 30 minuti",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata fissa"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie portata 6 → 10 → 15 → 20 → 25 Q; spessore solido 30 cm → 50 cm → 1 m → 2 m → 3 m; durata a Concentrazione 5 → 10 → 30 minuti → 1 → 2 ore; oppure durata fissa 10 → 20 RND → 5 → 10 → 30 minuti. Anticipare lo spessore solido aggiorna anche la colonna derivata di fumo e nebbia al medesimo gradino: 1 → 2 → 3 → 7 → 10 Q. Questo aggiornamento derivato non è un secondo aspetto anticipato."
@@ -7978,17 +8173,20 @@
             {
               "etichetta": "guarigione alla riga immediatamente successiva",
               "gradino": "guarigione alla riga immediatamente successiva, con 8d4+5 come gradino aggiuntivo dopo il livello 12",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Guarigione"
             },
             {
               "etichetta": "gittata Contatto",
               "gradino": "gittata Contatto → 3 → 6 → 10 → 15 Q",
-              "categoria": "gittata"
+              "categoria": "gittata",
+              "nome": "Gittata"
             },
             {
               "etichetta": "beneficiari",
               "gradino": "beneficiari da 1 a 2",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Beneficiari"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie guarigione alla riga immediatamente successiva, con 8d4+5 come gradino aggiuntivo dopo il livello 12; gittata Contatto → 3 → 6 → 10 → 15 Q; oppure beneficiari da 1 a 2."
@@ -8089,32 +8287,32 @@
             {
               "etichetta": "Pericolosità I → II → III → IV → V → VI",
               "gradino": "Pericolosità I → II → III → IV → V → VI",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Pericolosità"
             },
             {
               "etichetta": "origini naturale → naturale e artificiale → naturale",
-              "gradino": "origini naturale → naturale e artificiale → naturale",
-              "categoria": "altro"
-            },
-            {
-              "etichetta": "artificiale e mistica → universale",
-              "gradino": "artificiale e mistica → universale",
-              "categoria": "altro"
+              "gradino": "origini naturale → naturale e artificiale → naturale, artificiale e mistica → universale",
+              "categoria": "altro",
+              "nome": "Origini"
             },
             {
               "etichetta": "numero di malattie",
               "gradino": "numero di malattie 1 → 2 → tutte",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Numero di malattie"
             },
             {
               "etichetta": "beneficiari",
               "gradino": "beneficiari 1 → 2 → 3",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Beneficiari"
             },
             {
               "etichetta": "gittata Contatto",
               "gradino": "gittata Contatto → 3 → 6 → 10 Q",
-              "categoria": "gittata"
+              "categoria": "gittata",
+              "nome": "Gittata"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e gli altri parametri rimangono invariati. Si sceglie Pericolosità I → II → III → IV → V → VI; origini naturale → naturale e artificiale → naturale, artificiale e mistica → universale; numero di malattie 1 → 2 → tutte; beneficiari 1 → 2 → 3; oppure gittata Contatto → 3 → 6 → 10 Q. Aumentare un limite non aumenta gli altri."
@@ -8215,32 +8413,32 @@
             {
               "etichetta": "Pericolosità I → II → III → IV → V → VI",
               "gradino": "Pericolosità I → II → III → IV → V → VI",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Pericolosità"
             },
             {
               "etichetta": "origini naturale → naturale e artificiale → naturale",
-              "gradino": "origini naturale → naturale e artificiale → naturale",
-              "categoria": "altro"
-            },
-            {
-              "etichetta": "artificiale e mistica → universale",
-              "gradino": "artificiale e mistica → universale",
-              "categoria": "altro"
+              "gradino": "origini naturale → naturale e artificiale → naturale, artificiale e mistica → universale",
+              "categoria": "altro",
+              "nome": "Origini"
             },
             {
               "etichetta": "numero di sostanze",
               "gradino": "numero di sostanze 1 → 2 → tutte",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Numero di sostanze"
             },
             {
               "etichetta": "beneficiari",
               "gradino": "beneficiari 1 → 2 → 3",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Beneficiari"
             },
             {
               "etichetta": "gittata Contatto",
               "gradino": "gittata Contatto → 3 → 6 → 10 Q",
-              "categoria": "gittata"
+              "categoria": "gittata",
+              "nome": "Gittata"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e gli altri parametri rimangono invariati. Si sceglie Pericolosità I → II → III → IV → V → VI; origini naturale → naturale e artificiale → naturale, artificiale e mistica → universale; numero di sostanze 1 → 2 → tutte; beneficiari 1 → 2 → 3; oppure gittata Contatto → 3 → 6 → 10 Q. Aumentare un limite non aumenta gli altri."
@@ -8354,22 +8552,26 @@
             {
               "etichetta": "beneficiari",
               "gradino": "beneficiari 1 → 2 → 4 → 6 → 8 (massimo 8)",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Beneficiari"
             },
             {
               "etichetta": "numero di Stati",
               "gradino": "numero di Stati 1 → 2 → 3 → tutti consentiti",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Numero di Stati"
             },
             {
               "etichetta": "gittata Contatto",
               "gradino": "gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 → 30 Q",
-              "categoria": "gittata"
+              "categoria": "gittata",
+              "nome": "Gittata"
             },
             {
               "etichetta": "gruppo di capacità livello",
               "gradino": "gruppo di capacità livello 1 → livello 3 → livello 6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Gruppo di capacità"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e gli altri parametri rimangono invariati. Si sceglie beneficiari 1 → 2 → 4 → 6 → 8 (massimo 8); numero di Stati 1 → 2 → 3 → tutti consentiti; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 → 30 Q; oppure gruppo di capacità livello 1 → livello 3 → livello 6. Aumentare il numero non sblocca contemporaneamente nuovi tipi di Stato."
@@ -8464,22 +8666,26 @@
             {
               "etichetta": "massimo stato curabile Infetto → Corrotto → Eretico → Caotic",
               "gradino": "massimo stato curabile Infetto → Corrotto → Eretico → Caotico",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Stato massimo curabile"
             },
             {
               "etichetta": "passaggi rimossi",
               "gradino": "passaggi rimossi 1 → 2 → 3 → 4 → 5",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Passaggi rimossi"
             },
             {
               "etichetta": "beneficiari",
               "gradino": "beneficiari 1 → 2 → 3 → 4",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Beneficiari"
             },
             {
               "etichetta": "gittata Contatto",
               "gradino": "gittata Contatto → 3 → 6 → 10 → 15 → 20 Q",
-              "categoria": "gittata"
+              "categoria": "gittata",
+              "nome": "Gittata"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e gli altri parametri rimangono invariati. Si sceglie massimo stato curabile Infetto → Corrotto → Eretico → Caotico; passaggi rimossi 1 → 2 → 3 → 4 → 5; beneficiari 1 → 2 → 3 → 4; oppure gittata Contatto → 3 → 6 → 10 → 15 → 20 Q. Restano invariati i 10 minuti e il limite delle 24 ore."
@@ -8561,17 +8767,20 @@
             {
               "etichetta": "passaggi rimossi",
               "gradino": "passaggi rimossi 1 → 2 → 3 → 4 → 5, senza superare cinque",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Passaggi rimossi"
             },
             {
               "etichetta": "gittata Contatto",
               "gradino": "gittata Contatto → 3 → 6 → 10 → 15 Q",
-              "categoria": "gittata"
+              "categoria": "gittata",
+              "nome": "Gittata"
             },
             {
               "etichetta": "beneficiari",
               "gradino": "beneficiari 1 → 2",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Beneficiari"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e gli altri parametri rimangono invariati. Si sceglie passaggi rimossi 1 → 2 → 3 → 4 → 5, senza superare cinque; gittata Contatto → 3 → 6 → 10 → 15 Q; oppure beneficiari 1 → 2. Entrambi ricevono l’intera cura, rispettando gittata, visibilità, contatto quando necessario e concatenazione entro 2 Q; il limite delle 24 ore resta individuale. Esempio: Guarigione di livello 9 porta una creatura Grave a Importante e, se era a 0 PV, a 1 PV. Un’eventuale Menomazione al braccio rimane."
@@ -8666,22 +8875,26 @@
             {
               "etichetta": "passaggi per Menomazione",
               "gradino": "passaggi per Menomazione 1 → 2",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Passaggi per Menomazione"
             },
             {
               "etichetta": "Menomazioni trattate",
               "gradino": "Menomazioni trattate 1 → 2 → 3 → tutte temporanee",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Menomazioni trattate"
             },
             {
               "etichetta": "beneficiari",
               "gradino": "beneficiari 1 → 2 → 3 → 4 → 6",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Beneficiari"
             },
             {
               "etichetta": "gittata Contatto",
               "gradino": "gittata Contatto → 3 → 6 → 10 → 15 → 20 Q",
-              "categoria": "gittata"
+              "categoria": "gittata",
+              "nome": "Gittata"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e gli altri parametri rimangono invariati. Si sceglie passaggi per Menomazione 1 → 2; Menomazioni trattate 1 → 2 → 3 → tutte temporanee; beneficiari 1 → 2 → 3 → 4 → 6; oppure gittata Contatto → 3 → 6 → 10 → 15 → 20 Q. I 10 minuti e il limite delle 24 ore rimangono invariati."
@@ -8775,22 +8988,26 @@
             {
               "etichetta": "raggio",
               "gradino": "raggio 3 → 4 → 5 → 6 → 7 Q",
-              "categoria": "area"
+              "categoria": "area",
+              "nome": "Raggio"
             },
             {
               "etichetta": "spinta",
               "gradino": "spinta 3 → 4 → 5 → 6 → 7 Q",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Spinta"
             },
             {
               "etichetta": "natura Magico → Etereo",
               "gradino": "natura Magico → Etereo",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Natura del danno"
             },
             {
               "etichetta": "Mod. PS",
               "gradino": "Mod. PS 0 → −2 → −4 → −6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e gli altri parametri rimangono invariati. Si sceglie raggio 3 → 4 → 5 → 6 → 7 Q; spinta 3 → 4 → 5 → 6 → 7 Q; natura Magico → Etereo; oppure Mod. PS 0 → −2 → −4 → −6. Il danno non è anticipabile."
@@ -8951,17 +9168,20 @@
             {
               "etichetta": "Potere di esorcismo",
               "gradino": "Potere di esorcismo +3, massimo 21, anche ai livelli intermedi",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Potere di esorcismo +3"
             },
             {
               "etichetta": "gittata Contatto",
               "gradino": "gittata Contatto → 3 → 6 → 10 → 15 → 20 Q",
-              "categoria": "gittata"
+              "categoria": "gittata",
+              "nome": "Gittata"
             },
             {
               "etichetta": "bersagli",
               "gradino": "bersagli 1 → 2 → 3 → 4",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Bersagli"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un gradino, PM raddoppiati e Potere più difficile di una categoria. Si sceglie Potere di esorcismo +3, massimo 21, anche ai livelli intermedi; gittata Contatto → 3 → 6 → 10 → 15 → 20 Q; oppure bersagli 1 → 2 → 3 → 4. Se il Potere di esorcismo è già 21 non si può anticipare questo aspetto, ma restano quelli consentiti non al massimo. Il potere non aumenta il livello dichiarato dell’incantesimo."
@@ -9174,27 +9394,32 @@
             {
               "etichetta": "armi",
               "gradino": "armi 1 → 2 → 3 → 4",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Armi"
             },
             {
               "etichetta": "gittata Contatto",
               "gradino": "gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 Q",
-              "categoria": "gittata"
+              "categoria": "gittata",
+              "nome": "Gittata"
             },
             {
               "etichetta": "durata al gradino successivo della progressione",
               "gradino": "durata al gradino successivo della progressione",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             },
             {
               "etichetta": "bonus VA",
               "gradino": "bonus VA 0 → +1 → +2 → +3 → +4",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Bonus VA"
             },
             {
               "etichetta": "bonus danno con la stessa scala",
               "gradino": "bonus danno con la stessa scala",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Bonus danno"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie armi 1 → 2 → 3 → 4; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 Q; durata al gradino successivo della progressione; bonus VA 0 → +1 → +2 → +3 → +4; oppure bonus danno con la stessa scala. VA e danno sono aspetti distinti. La natura Magico → Etereo è anticipabile soltanto dal livello 12, spendendo 24 PM."
@@ -9304,22 +9529,26 @@
             {
               "etichetta": "bonus AR",
               "gradino": "bonus AR 0 → +1 → +2 → +3 → +4",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Bonus AR"
             },
             {
               "etichetta": "armature",
               "gradino": "armature 1 → 2 → 3 → 4",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Armature"
             },
             {
               "etichetta": "gittata Contatto",
               "gradino": "gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 Q",
-              "categoria": "gittata"
+              "categoria": "gittata",
+              "nome": "Gittata"
             },
             {
               "etichetta": "durata",
               "gradino": "durata 3 → 5 → 10 → 15 → 20 → 30 → 40 → 60 RND",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie bonus AR 0 → +1 → +2 → +3 → +4; armature 1 → 2 → 3 → 4; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 Q; oppure durata 3 → 5 → 10 → 15 → 20 → 30 → 40 → 60 RND. La natura dell’AR resta Magica."
@@ -9419,27 +9648,32 @@
             {
               "etichetta": "sigillo aggiuntivo",
               "gradino": "sigillo aggiuntivo",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Sigilli +1"
             },
             {
               "etichetta": "durata",
               "gradino": "durata 1 → 2 → 3 → 7 → 15 → 30 → 90 → 180 giorni",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             },
             {
               "etichetta": "penalità FOR",
               "gradino": "penalità FOR 0 → −1 → −2 → −3 → −4 → −6 → −8 → −10",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Penalità FOR"
             },
             {
               "etichetta": "combinazione Avviso e Blocco prima del livello",
               "gradino": "combinazione Avviso e Blocco prima del livello 6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Avviso e Blocco insieme"
             },
             {
               "etichetta": "portata",
               "gradino": "portata 1 → 3 → 10 → 30 → 100 → 300 → 1000 → 3000 km",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Portata"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie un sigillo aggiuntivo; durata 1 → 2 → 3 → 7 → 15 → 30 → 90 → 180 giorni; penalità FOR 0 → −1 → −2 → −3 → −4 → −6 → −8 → −10; combinazione Avviso e Blocco prima del livello 6; oppure portata 1 → 3 → 10 → 30 → 100 → 300 → 1000 → 3000 km."
@@ -9579,37 +9813,44 @@
             {
               "etichetta": "trappola aggiuntiva entro il limite SAG",
               "gradino": "trappola aggiuntiva entro il limite SAG",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Trappole +1"
             },
             {
               "etichetta": "attesa al gradino successivo",
               "gradino": "attesa al gradino successivo fino a 180 giorni",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Attesa"
             },
             {
               "etichetta": "danno proprio alla riga successiva",
               "gradino": "danno proprio alla riga successiva, massimo il valore di livello 18",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Danno proprio"
             },
             {
               "etichetta": "penalità di Interferenza peggiorata",
               "gradino": "penalità di Interferenza peggiorata di 1, massimo −5",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Interferenza −1"
             },
             {
               "etichetta": "durata di Interferenza",
               "gradino": "durata di Interferenza 3 → 5 → 7 → 10 → 15 RND",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata di Interferenza"
             },
             {
               "etichetta": "Mod. PS",
               "gradino": "Mod. PS 0 → −2 → −4 → −6, dal livello 6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             },
             {
               "etichetta": "livello massimo caricabile",
               "gradino": "livello massimo caricabile 3 → 6 → 9 → 12 → 15 → 18",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Livello massimo caricabile"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie una trappola aggiuntiva entro il limite SAG; attesa al gradino successivo fino a 180 giorni; danno proprio alla riga successiva, massimo il valore di livello 18; penalità di Interferenza peggiorata di 1, massimo −5; durata di Interferenza 3 → 5 → 7 → 10 → 15 RND; Mod. PS 0 → −2 → −4 → −6; oppure, dal livello 6, livello massimo caricabile 3 → 6 → 9 → 12 → 15 → 18. Il raddoppio riguarda soltanto il costo della trappola; il caricamento si paga separatamente."
@@ -9713,27 +9954,32 @@
             {
               "etichetta": "raggio",
               "gradino": "raggio 2 → 3 → 4 → 5 → 6 → 7 Q",
-              "categoria": "area"
+              "categoria": "area",
+              "nome": "Raggio"
             },
             {
               "etichetta": "durata",
               "gradino": "durata 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             },
             {
               "etichetta": "malus Potere",
               "gradino": "malus Potere −2 → −3 → −4 → −5 → −6 → −8 → −10",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Malus Potere"
             },
             {
               "etichetta": "assorbimento",
               "gradino": "assorbimento 3 → 4 → 5 → 6 → 8 → 10 → 12",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Assorbimento"
             },
             {
               "etichetta": "Mod. PS d’ingresso",
               "gradino": "Mod. PS d’ingresso 0 → −2 → −4 → −6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS d’ingresso"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie raggio 2 → 3 → 4 → 5 → 6 → 7 Q; durata 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore; malus Potere −2 → −3 → −4 → −5 → −6 → −8 → −10; assorbimento 3 → 4 → 5 → 6 → 8 → 10 → 12; oppure Mod. PS d’ingresso 0 → −2 → −4 → −6."
@@ -9838,12 +10084,14 @@
             {
               "etichetta": "capacità aggiuntiva",
               "gradino": "capacità aggiuntiva +5 → +8 → +12 → +16 → +20 → +25 → +30 PM",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Capacità in PM"
             },
             {
               "etichetta": "durata",
               "gradino": "durata 3 → 5 → 7 → 15 → 30 → 60 → 90 giorni",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie capacità aggiuntiva +5 → +8 → +12 → +16 → +20 → +25 → +30 PM; oppure durata 3 → 5 → 7 → 15 → 30 → 60 → 90 giorni."
@@ -9938,17 +10186,20 @@
             {
               "etichetta": "livello massimo identificabile",
               "gradino": "livello massimo identificabile 3 → 6 → 9 → 12 → 15 → 18",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Livello massimo identificabile"
             },
             {
               "etichetta": "gittata Contatto",
               "gradino": "gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 Q",
-              "categoria": "gittata"
+              "categoria": "gittata",
+              "nome": "Gittata"
             },
             {
               "etichetta": "bersagli",
               "gradino": "bersagli 1 → 2 → 3 → 4",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Bersagli"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie livello massimo identificabile 3 → 6 → 9 → 12 → 15 → 18; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 Q; oppure bersagli 1 → 2 → 3 → 4. Al livello 3, spendendo 6 PM per anticipare il limite a 6, si identifica completamente un oggetto Non Comune mantenendo Contatto e un bersaglio."
@@ -10106,17 +10357,20 @@
             {
               "etichetta": "Potere di rottura",
               "gradino": "Potere di rottura +3, massimo 21, anche ai livelli intermedi",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Potere di rottura +3"
             },
             {
               "etichetta": "gittata Contatto",
               "gradino": "gittata Contatto → 3 → 6 → 10 → 15 → 20 Q",
-              "categoria": "gittata"
+              "categoria": "gittata",
+              "nome": "Gittata"
             },
             {
               "etichetta": "oggetti",
               "gradino": "oggetti 1 → 2 → 3 → 4",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Oggetti"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un gradino, PM raddoppiati e Potere più difficile di una categoria. Si sceglie Potere di rottura +3, massimo 21, anche ai livelli intermedi; gittata Contatto → 3 → 6 → 10 → 15 → 20 Q; oppure oggetti 1 → 2 → 3 → 4. Il potere anticipato vale soltanto per il confronto e non aumenta il livello dichiarato."
@@ -10210,27 +10464,32 @@
             {
               "etichetta": "oggetti",
               "gradino": "oggetti 1 → 2 → 3 → 4",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Oggetti"
             },
             {
               "etichetta": "gittata Contatto",
               "gradino": "gittata Contatto → 3 → 6 → 10 → 15 → 20 Q",
-              "categoria": "gittata"
+              "categoria": "gittata",
+              "nome": "Gittata"
             },
             {
               "etichetta": "durata",
               "gradino": "durata 1 → 3 → 7 → 15 → 30 → 60 giorni",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             },
             {
               "etichetta": "danno",
               "gradino": "danno 1d6 → 1d6+1 → 1d6+2 → 2d6+2 → 3d6+2 → 4d6+2",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Danno"
             },
             {
               "etichetta": "Mod. PS",
               "gradino": "Mod. PS 0 → −2 → −4 → −6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie oggetti 1 → 2 → 3 → 4; gittata Contatto → 3 → 6 → 10 → 15 → 20 Q; durata 1 → 3 → 7 → 15 → 30 → 60 giorni; danno 1d6 → 1d6+1 → 1d6+2 → 2d6+2 → 3d6+2 → 4d6+2; oppure Mod. PS 0 → −2 → −4 → −6. Anticipare un aspetto non aumenta il livello del vincolo per Identificare Potere o Rompere Vincolo."
@@ -10336,27 +10595,32 @@
             {
               "etichetta": "oggetti",
               "gradino": "oggetti 1 → 2 → 3 → 4",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Oggetti"
             },
             {
               "etichetta": "conservazione Memoria",
               "gradino": "conservazione Memoria 1 mese → 3 mesi → 6 mesi → 1 anno → 2 anni",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Conservazione Memoria"
             },
             {
               "etichetta": "conservazione dell’incantesimo",
               "gradino": "conservazione dell’incantesimo 7 → 15 → 30 → 60 → 90 giorni",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Conservazione dell’incantesimo"
             },
             {
               "etichetta": "durata del contenuto Memoria",
               "gradino": "durata del contenuto Memoria 1 → 5 → 10 → 30 → 60 minuti",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata del contenuto Memoria"
             },
             {
               "etichetta": "livello massimo caricabile",
               "gradino": "livello massimo caricabile 6 → 9 → 12 → 15 → 18",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Livello massimo caricabile"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie oggetti 1 → 2 → 3 → 4; conservazione Memoria 1 mese → 3 mesi → 6 mesi → 1 anno → 2 anni; conservazione dell’incantesimo 7 → 15 → 30 → 60 → 90 giorni; durata del contenuto Memoria 1 → 5 → 10 → 30 → 60 minuti; oppure livello massimo caricabile 6 → 9 → 12 → 15 → 18."
@@ -10466,17 +10730,20 @@
             {
               "etichetta": "bonus PS aumentato",
               "gradino": "bonus PS aumentato di 1, massimo +7",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Bonus PS +1"
             },
             {
               "etichetta": "protezione PM aumentata",
               "gradino": "protezione PM aumentata di 1, massimo 5",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Protezione PM +1"
             },
             {
               "etichetta": "durata",
               "gradino": "durata 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie bonus PS aumentato di 1, massimo +7; protezione PM aumentata di 1, massimo 5; oppure durata 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore."
@@ -10581,32 +10848,32 @@
             {
               "etichetta": "raggio",
               "gradino": "raggio 3 → 4 → 5 → 6 → 7 Q",
-              "categoria": "area"
+              "categoria": "area",
+              "nome": "Raggio"
             },
             {
               "etichetta": "penalità",
               "gradino": "penalità −1 → −2 → −3 → −4 → −5",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Penalità"
             },
             {
               "etichetta": "Mod. PS",
               "gradino": "Mod. PS 0 → −2 → −4 → −6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             },
             {
               "etichetta": "durata al gradino successivo",
               "gradino": "durata al gradino successivo fino a 4 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             },
             {
               "etichetta": "sorgente su un oggetto toccato",
-              "gradino": "sorgente su un oggetto toccato",
-              "categoria": "altro"
-            },
-            {
-              "etichetta": "anziché sul Taumaturgo",
-              "gradino": "anziché sul Taumaturgo",
-              "categoria": "altro"
+              "gradino": "sorgente su un oggetto toccato, anziché sul Taumaturgo",
+              "categoria": "altro",
+              "nome": "Sorgente su un oggetto"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie raggio 3 → 4 → 5 → 6 → 7 Q; penalità −1 → −2 → −3 → −4 → −5; Mod. PS 0 → −2 → −4 → −6; durata al gradino successivo fino a 4 ore; oppure sorgente su un oggetto toccato, anziché sul Taumaturgo."
@@ -10709,22 +10976,26 @@
             {
               "etichetta": "bonus aumentato",
               "gradino": "bonus aumentato di 1, massimo +5",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Bonus +1"
             },
             {
               "etichetta": "beneficiari",
               "gradino": "beneficiari 1 → 2 → 3 → 4 → 5 → 6 → 8 → 10",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Beneficiari"
             },
             {
               "etichetta": "gittata",
               "gradino": "gittata 6 → 10 → 15 → 20 → 25 → 30 → 40 Q",
-              "categoria": "gittata"
+              "categoria": "gittata",
+              "nome": "Gittata"
             },
             {
               "etichetta": "durata",
               "gradino": "durata 5 → 10 → 15 → 20 → 30 → 40 → 60 RND",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie bonus aumentato di 1, massimo +5; beneficiari 1 → 2 → 3 → 4 → 5 → 6 → 8 → 10; gittata 6 → 10 → 15 → 20 → 25 → 30 → 40 Q; oppure durata 5 → 10 → 15 → 20 → 30 → 40 → 60 RND."
@@ -10836,27 +11107,32 @@
             {
               "etichetta": "penalità aumentata",
               "gradino": "penalità aumentata di 1, massimo −5",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Penalità −1"
             },
             {
               "etichetta": "bersagli",
               "gradino": "bersagli 1 → 2 → 3 → 4",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Bersagli"
             },
             {
               "etichetta": "gittata",
               "gradino": "gittata 6 → 10 → 15 → 20 → 25 → 30 → 40 Q",
-              "categoria": "gittata"
+              "categoria": "gittata",
+              "nome": "Gittata"
             },
             {
               "etichetta": "durata",
               "gradino": "durata 5 → 10 → 15 → 20 → 30 → 40 → 60 RND",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             },
             {
               "etichetta": "Mod. PS",
               "gradino": "Mod. PS 0 → −2 → −4 → −6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie penalità aumentata di 1, massimo −5; bersagli 1 → 2 → 3 → 4; gittata 6 → 10 → 15 → 20 → 25 → 30 → 40 Q; durata 5 → 10 → 15 → 20 → 30 → 40 → 60 RND; oppure Mod. PS 0 → −2 → −4 → −6."
@@ -10995,22 +11271,26 @@
             {
               "etichetta": "danno ai PV al successivo valore distinto della tabella",
               "gradino": "danno ai PV al successivo valore distinto della tabella, fino a 6d4+5 oltre il livello 18",
-              "categoria": "valori"
+              "categoria": "valori",
+              "nome": "Danno ai PV"
             },
             {
               "etichetta": "perdita di PM aumentata",
               "gradino": "perdita di PM aumentata di 1, massimo 7",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Perdita di PM +1"
             },
             {
               "etichetta": "bersagli",
               "gradino": "bersagli 1 → 2 → 3 → 4",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Bersagli"
             },
             {
               "etichetta": "Mod. PS",
               "gradino": "Mod. PS 0 → −2 → −4 → −6",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Mod. PS"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie danno ai PV al successivo valore distinto della tabella, fino a 6d4+5 oltre il livello 18; perdita di PM aumentata di 1, massimo 7; bersagli 1 → 2 → 3 → 4; oppure Mod. PS 0 → −2 → −4 → −6. Danno ai PV e perdita di PM sono aspetti separati."
@@ -11187,17 +11467,20 @@
             {
               "etichetta": "Potere di Negazione aumentato",
               "gradino": "Potere di Negazione aumentato di 3, anche ai livelli intermedi, massimo 21",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Potere di Negazione +3"
             },
             {
               "etichetta": "numero di effetti",
               "gradino": "numero di effetti 1 → 2 → 3 → 4",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Numero di effetti"
             },
             {
               "etichetta": "gittata",
               "gradino": "gittata 6 → 10 → 15 → 20 → 25 → 30 → 40 Q",
-              "categoria": "gittata"
+              "categoria": "gittata",
+              "nome": "Gittata"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie Potere di Negazione aumentato di 3, anche ai livelli intermedi, massimo 21; numero di effetti 1 → 2 → 3 → 4; oppure gittata 6 → 10 → 15 → 20 → 25 → 30 → 40 Q."
@@ -11292,27 +11575,32 @@
             {
               "etichetta": "beneficiari",
               "gradino": "beneficiari 1 → 2 → 3 → 4 → 6 → 8 → 10",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Beneficiari"
             },
             {
               "etichetta": "gittata Contatto",
               "gradino": "gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 Q",
-              "categoria": "gittata"
+              "categoria": "gittata",
+              "nome": "Gittata"
             },
             {
               "etichetta": "Concentrazione",
               "gradino": "Concentrazione 10 minuti → 30 minuti → 1 → 2 → 4 → 8 → 12 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata a Concentrazione"
             },
             {
               "etichetta": "durata fissa",
               "gradino": "durata fissa 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata fissa"
             },
             {
               "etichetta": "Potere di Occultamento",
               "gradino": "Potere di Occultamento 3 → 6 → 9 → 12 → 15 → 18 → 21",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Potere di Occultamento"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie beneficiari 1 → 2 → 3 → 4 → 6 → 8 → 10; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 Q; Concentrazione 10 minuti → 30 minuti → 1 → 2 → 4 → 8 → 12 ore; durata fissa 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore; oppure Potere di Occultamento 3 → 6 → 9 → 12 → 15 → 18 → 21. Quest’ultimo modifica soltanto il confronto con le rilevazioni, non il livello contro Negare Potere."
@@ -11400,22 +11688,26 @@
             {
               "etichetta": "utilizzo aggiuntivo",
               "gradino": "utilizzo aggiuntivo, massimo 7",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Utilizzi +1"
             },
             {
               "etichetta": "durata",
               "gradino": "durata 5 → 7 → 10 → 15 RND",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata"
             },
             {
               "etichetta": "possibilità di scegliere il risultato preferito già ai livel",
               "gradino": "possibilità di scegliere il risultato preferito già ai livelli 6 o 9",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Possibilità di scegliere il risultato preferito già ai livelli 6 o 9"
             },
             {
               "etichetta": "gittata Personale → Contatto",
               "gradino": "gittata Personale → Contatto → 3 Q → 6 Q → 10 Q",
-              "categoria": "gittata"
+              "categoria": "gittata",
+              "nome": "Gittata"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie un utilizzo aggiuntivo, massimo 7; durata 5 → 7 → 10 → 15 RND; possibilità di scegliere il risultato preferito già ai livelli 6 o 9; oppure gittata Personale → Contatto → 3 Q → 6 Q → 10 Q. Non aumenta mai il limite di un utilizzo per RND."
@@ -11580,37 +11872,44 @@
             {
               "etichetta": "raggio di Percezione",
               "gradino": "raggio di Percezione 10 → 15 → 20 → 25 → 30 → 40 Q",
-              "categoria": "area"
+              "categoria": "area",
+              "nome": "Raggio di Percezione"
             },
             {
               "etichetta": "gittata di Analisi con la stessa scala",
               "gradino": "gittata di Analisi con la stessa scala",
-              "categoria": "gittata"
+              "categoria": "gittata",
+              "nome": "Gittata di Analisi"
             },
             {
               "etichetta": "area totale di Analisi",
               "gradino": "area totale di Analisi 1 → 2 → 4 → 6 → 8 Q",
-              "categoria": "area"
+              "categoria": "area",
+              "nome": "Area totale di Analisi"
             },
             {
               "etichetta": "informazioni della soglia successiva in una sola categoria s",
               "gradino": "informazioni della soglia successiva in una sola categoria scelta, fino al livello 18",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Informazioni della soglia successiva"
             },
             {
               "etichetta": "Concentrazione",
               "gradino": "Concentrazione 10 minuti → 30 minuti → 1 → 2 → 4 → 8 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata a Concentrazione"
             },
             {
               "etichetta": "durata fissa",
               "gradino": "durata fissa 5 RND → 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata fissa"
             },
             {
               "etichetta": "Potere di Rilevazione aumentato",
               "gradino": "Potere di Rilevazione aumentato di 3, anche ai livelli intermedi",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Potere di Rilevazione +3"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie raggio di Percezione 10 → 15 → 20 → 25 → 30 → 40 Q; gittata di Analisi con la stessa scala; area totale di Analisi 1 → 2 → 4 → 6 → 8 Q; informazioni della soglia successiva in una sola categoria scelta, fino al livello 18; Concentrazione 10 minuti → 30 minuti → 1 → 2 → 4 → 8 ore; durata fissa 5 RND → 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti; oppure Potere di Rilevazione aumentato di 3, anche ai livelli intermedi. L’area non può superare 8 Q. Raggio, gittata, area, informazioni e potere di confronto sono aspetti distinti."
@@ -11755,27 +12054,32 @@
             {
               "etichetta": "Potere di Falsificazione aumentato",
               "gradino": "Potere di Falsificazione aumentato di 3, anche ai livelli intermedi, massimo 21, massimo potenziale magico apparente aumentato di 3, fino a 18",
-              "categoria": "altro"
+              "categoria": "altro",
+              "nome": "Potere di Falsificazione +3"
             },
             {
               "etichetta": "beneficiari",
               "gradino": "beneficiari 1 → 2 → 3 → 4",
-              "categoria": "bersagli"
+              "categoria": "bersagli",
+              "nome": "Beneficiari"
             },
             {
               "etichetta": "gittata Personale → Contatto",
               "gradino": "gittata Personale → Contatto → 3 Q → 6 Q → 10 Q → 15 Q",
-              "categoria": "gittata"
+              "categoria": "gittata",
+              "nome": "Gittata"
             },
             {
               "etichetta": "Concentrazione",
               "gradino": "Concentrazione 2 → 4 → 8 → 16 → 24 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata a Concentrazione"
             },
             {
               "etichetta": "durata fissa",
               "gradino": "durata fissa 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore",
-              "categoria": "durata"
+              "categoria": "durata",
+              "nome": "Durata fissa"
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie Potere di Falsificazione aumentato di 3, anche ai livelli intermedi, massimo 21; massimo potenziale magico apparente aumentato di 3, fino a 18; beneficiari 1 → 2 → 3 → 4; gittata Personale → Contatto → 3 Q → 6 Q → 10 Q → 15 Q; Concentrazione 2 → 4 → 8 → 16 → 24 ore; oppure durata fissa 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore. Il Potere di Falsificazione anticipato non aumenta il livello dell’effetto ai fini di Negare Potere."

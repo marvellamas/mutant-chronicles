@@ -1409,6 +1409,7 @@ function validaMeccanicaIncantesimi(dati, err) {
       if (!isTesto(a.frase)) err(F, `${K}.anticipazione.frase`, 'paragrafo del manuale mancante');
       (a.aspetti ?? []).forEach((x, j) => {
         if (!isTesto(x?.etichetta) || !isTesto(x?.gradino)) err(F, `${K}.anticipazione.aspetti[${j}]`, 'etichetta e gradino attesi');
+        if (x?.nome !== undefined && !isTesto(x.nome)) err(F, `${K}.anticipazione.aspetti[${j}].nome`, 'nome breve: testo non vuoto');
         if (!CATEGORIE_ASPETTO.includes(x?.categoria)) err(F, `${K}.anticipazione.aspetti[${j}].categoria`, `una fra ${CATEGORIE_ASPETTO.join(', ')}`);
       });
     } else if (!todo) err(F, `${K}.anticipazione`, 'mancante: serve un TODO(Davide)');

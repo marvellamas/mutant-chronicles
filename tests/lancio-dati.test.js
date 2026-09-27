@@ -33,6 +33,20 @@ test('meccanica estratta dalle schede: esempi', () => {
   }
 });
 
+test('Anticipazione: ogni aspetto ha un nome breve; il gradino intero resta per il tooltip', () => {
+  const nomi = (n) => inc(n).anticipazione.aspetti.map((a) => a.nome);
+  for (const i of dati.incantesimi.incantesimi) {
+    for (const a of i.meccanica.anticipazione?.aspetti ?? []) assert.ok(a.nome && a.gradino, `${i.nome}: ${a.etichetta}`);
+  }
+  assert.deepEqual(nomi('Irrobustire'), ['PV temporanei', 'Durata']);
+  assert.ok(dati.incantesimi.incantesimi.some((i) => i.meccanica.anticipazione?.aspetti.some((a) => a.nome === 'Precisione del numero')));
+  assert.ok(dati.incantesimi.incantesimi.some((i) => i.meccanica.anticipazione?.aspetti.some((a) => a.nome === 'Elemento +1')));
+  // pezzi che continuano l'aspetto precedente non sono aspetti a sé
+  assert.deepEqual(nomi('Luce Mistica').includes('Sorgente su un oggetto'), true);
+  assert.equal(inc('Cura Malattie').anticipazione.aspetti.find((a) => a.nome === 'Origini').gradino,
+    'origini naturale → naturale e artificiale → naturale, artificiale e mistica → universale');
+});
+
 test('casi non estratti: TODO(Davide) espliciti', () => {
   const conTodo = dati.incantesimi.incantesimi.filter((i) => Object.keys(i.meccanica).some((k) => k.startsWith('TODO('))).map((i) => i.nome);
   assert.deepEqual(conTodo, ['Colpo Elementale', 'Rigenerazione']);
