@@ -18,6 +18,7 @@ import { dotazioneApplicata, crediti } from '../dotazioni.js';
 import { statoRicarica, disponibili } from '../ricarica.js';
 import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 import { pannelloAttacco } from './attacco.js';
+import { pannelloLancio } from './lancio.js';
 
 export const POSIZIONI_TAB = [
   { id: 'automatica', etichetta: 'Automatica (sinistra su schermi larghi, in basso su telefono e tablet)' },
@@ -93,8 +94,12 @@ export function renderTab(ctx) {
   // pannello «Attacca!» dell'arma scelta (src/ui/attacco.js), sopra la scheda
   const armaAttacco = ctx.ui?.attacco ? (tab.scheda.equipaggiamento?.armi ?? []).find((a) => a.uid === ctx.ui.attacco.uid) : null;
   if (ctx.ui?.attacco && !armaAttacco) ctx.ui.attacco = null;
+  // pannello «Lancia!» dell'incantesimo scelto (src/ui/lancio.js)
+  const incLancio = ctx.ui?.lancio ? (ctx.dati.incantesimi.incantesimi.find((i) => i.nome === ctx.ui.lancio.nome) ?? null) : null;
+  if (ctx.ui?.lancio && !incLancio) ctx.ui.lancio = null;
   return [h('div', { class: `scheda-tab pos-${ctx.posizione} larghezza-${ctx.larghezza ?? 'piena'}` }, barra, nav, pannello),
-    armaAttacco ? pannelloAttacco(ctx, armaAttacco) : null];
+    armaAttacco ? pannelloAttacco(ctx, armaAttacco) : null,
+    incLancio ? pannelloLancio(ctx, incLancio) : null];
 }
 
 function menuAzioni(ctx) {
@@ -876,7 +881,9 @@ function tabMagia(ctx, d) {
       mf.specializzazioni.map((sp) => h('div', { class: 'incantesimi-griglia' },
         h('h3', { class: 'spec' }, sp.nome),
         sp.incantesimi.map((i) => h('article', { class: `incantesimo-scheda ${classeMacrofamiglia(mf.nome)}` },
-          h('h4', {}, info('incantesimo', i.nome), ' ', pallini(i.livelloBase), ' ', etichettaMacro(mf.nome), h('span', { class: 'sigla' }, ` · livello base ${i.livelloBase} · scheda ${i.scheda}`)),
+          h('div', { class: 'arma-testa' },
+            h('h4', {}, info('incantesimo', i.nome), ' ', pallini(i.livelloBase), ' ', etichettaMacro(mf.nome), h('span', { class: 'sigla' }, ` · livello base ${i.livelloBase} · scheda ${i.scheda}`)),
+            h('button', { type: 'button', class: 'btn primario btn-attacca', onclick: () => { ctx.ui.lancio = { nome: i.nome, passo: 0 }; ctx.azioni.ridisegna(); } }, 'Lancia!')),
           i.intestazione ? h('p', { class: 'piccolo' }, i.intestazione) : null,
           i.lancio ? h('p', { class: 'piccolo' }, i.lancio) : null,
           i.righe.length ? h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },

@@ -6,7 +6,9 @@
 // sessione = { pvAttuali, pmAttuali, puntiEroe, distintivi, statiAttivi: [id], ferite,
 //              affaticamento, munizioni: { uid: { colpi, riserve, parziali, vuoti } }, scorte: { uid: consumate },
 //              chroma: { uid: { pmAttuali } },
-//              caricoExtra, crediti, creditiIniziali, condizioniOggetti: [uid], attacchi: { uid: scelte }, note }
+//              caricoExtra, crediti, creditiIniziali, condizioniOggetti: [uid], attacchi: { uid: scelte },
+//              lanci: { incantesimo: scelte }, note }
+// lanci: le ultime scelte del pannello «Lancia!» per ogni incantesimo (src/ui/lancio.js).
 // attacchi: le ultime scelte del pannello «Attacca!» per ogni arma (src/ui/attacco.js), per il
 // prossimo tiro con le stesse scelte (anche l'Imbracciatura).
 // munizioni: per ogni arma a distanza della lista, i colpi nel caricatore (limitati alla sua
@@ -175,6 +177,7 @@ export function inizializzaSessione(m) {
     ...allineaCrediti({}, m),
     condizioniOggetti: [],
     attacchi: {},
+    lanci: {},
     note: '',
   };
 }
@@ -202,6 +205,7 @@ export function allineaSessione(sessione, m) {
     condizioniOggetti: allineaCondizioniOggetti(sessione.condizioniOggetti, m),
     attacchi: Object.fromEntries(Object.entries(isOggetto(sessione.attacchi) ? sessione.attacchi : {})
       .filter(([uid, v]) => isOggetto(v) && (!m.caricatori || uid in m.caricatori))),
+    lanci: Object.fromEntries(Object.entries(isOggetto(sessione.lanci) ? sessione.lanci : {}).filter(([, v]) => isOggetto(v))),
     note: typeof sessione.note === 'string' ? sessione.note : '',
   };
 }
@@ -261,6 +265,22 @@ export function ricaricaArma(sessione, uid, m) {
     return r ? modificaSessione(s, { munizioni: { ...s.munizioni, [uid]: r.munizione }, scorte: r.consumi }, m) : s;
   }
   return modificaSessione(s, { munizioni: { ...s.munizioni, [uid]: { ...(s.munizioni[uid] ?? { riserve: 0 }), colpi: capacita } } }, m);
+}
+
+/**
+ * «Lancia!»: spende i PM di un lancio (Magia sez. 6), personali e/o da un solo contenitore, in una
+ * sola modifica di sessione (così «Annulla» la copre tutta). null se i PM non bastano.
+ */
+export function spendiPmLancio(sessione, { personali = 0, contenitore = null }, m) {
+  const s = allineaSessione(sessione, m);
+  if (personali > s.pmAttuali) return null;
+  const chroma = { ...s.chroma };
+  if (contenitore) {
+    const c = chroma[contenitore.uid];
+    if (!c || contenitore.pm > c.pmAttuali) return null;
+    chroma[contenitore.uid] = { pmAttuali: c.pmAttuali - contenitore.pm };
+  }
+  return modificaSessione(s, { pmAttuali: s.pmAttuali - personali, chroma }, m);
 }
 
 /** Attiva o disattiva uno Stato. */

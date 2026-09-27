@@ -1104,3 +1104,10 @@ body.con-sfondo::before {
   }
   .attacco-nav .btn { min-height: 48px; white-space: nowrap; }
 }
+
+/* pannello «Lancia!» (src/ui/lancio.js): stesso impianto di «Attacca!» */
+.lancio-pannello { border-top: 4px solid var(--macro, var(--accento)); }
+.versioni-lancio { margin: 0.25rem 0 0.5rem; }
+.costo-lancio { font-size: 1.15rem; }
+.effetti-magici { padding-left: 1.1rem; margin: 0.25rem 0; }
+.input-effetto { width: min(14rem, 100%); min-height: 44px; }

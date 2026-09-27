@@ -52,6 +52,7 @@ src/
   incantesimi.js, checklist.js, descrizioni.js, tiri.js, lingua.js
   equipaggiamento.js  catalogo ed effetti degli oggetti
   attacco.js    utility d'attacco (a distanza; il corpo a corpo con lo stesso impianto)
+  lancio.js     utility di lancio degli incantesimi (stesso impianto)
   ricarica.js   ricarica delle armi a distanza dalle riserve
   dotazioni.js  equipaggiamento iniziale (§2.16): scelte, crediti, acquisti, voci della dotazione
   sessione.js   valori attuali di sessione (modalità tavolo)
@@ -81,6 +82,7 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 - Manuale dell'Equipaggiamento 0.1, cap. 1: carico (§1.6 = Giocatore §5.2.6) e PS Integrità per Qualità (§1.7) in `regole.json`.
 
 - utility «Attacca!» nella tab Combattimento (nessun tiro di dado): attacco a distanza completo (`src/attacco.js`, `regole.json` → `attacco_distanza`, effetti.attacco_distanza dei Talenti), corpo a corpo per ora solo con il risultato base;
+- utility «Lancia!» nella tab Magia (nessun tiro di dado): `src/lancio.js`, `regole.json` → `lancio`, `incantesimi.json` → `meccanica` (da `tools/estrai_lancio.py`), effetti.lancio dei Talenti;
 - ricarica dalle riserve (`src/ricarica.js`, `munizioni.json` → `ricarica`).
 
 Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, manovre del corpo a corpo (prossima sessione), veicoli, capitoli 2–8 del Manuale dell'Equipaggiamento (non ancora scritti).

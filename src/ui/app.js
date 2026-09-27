@@ -22,7 +22,7 @@ import { caricaImmagini } from './immagini.js';
 import { preparaStampa, preparaTab } from '../stampa.js';
 import { renderTab } from './tab.js';
 import {
-  massimiSessione, allineaSessione, variaSessione, modificaSessione, commutaStato, commutaCondizioneOggetto, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
+  massimiSessione, allineaSessione, variaSessione, modificaSessione, commutaStato, commutaCondizioneOggetto, spendiPmLancio, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
   penalitaSessione, variaMunizioni, ricaricaArma, variaChroma,
 } from '../sessione.js';
 import { conOrdinale } from '../lingua.js';
@@ -643,6 +643,13 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
         renderScheda({ mantieniScorrimento: true });
       },
       spara: (uid, munizioni) => cambiaSessione(variaMunizioni(stato.sessione, uid, 'colpi', -munizioni, massimi)),
+      // pannello «Lancia!»: come per l'attacco, le scelte si ricordano senza diventare l'ultima modifica
+      ricordaLancio: (nome, scelte) => {
+        stato.sessione = modificaSessione(stato.sessione, { lanci: { ...(stato.sessione?.lanci ?? {}), [nome]: scelte } }, massimi);
+        persisti();
+        renderScheda({ mantieniScorrimento: true });
+      },
+      lancia: (fonte) => cambiaSessione(spendiPmLancio(stato.sessione, fonte, massimi)),
       convertiDistintivi: () => cambiaSessione(convertiDistintivi(stato.sessione, massimi)),
       // le note si salvano a ogni tasto; l'annullamento riporta al testo di prima della modifica
       inizioNote: () => { stato.sessionePrecedente = stato.sessione; },

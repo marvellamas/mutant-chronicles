@@ -17,7 +17,7 @@ const RAPIDE = [3, 10, 20, 40, 80, 160, 300, 500, 750, 1000, 1500];
  * Riga di scelte a pulsanti: [{ valore, etichetta, motivo? }]. Il pulsante scelto è evidenziato;
  * quelli non ammessi sono disabilitati con il motivo (title e testo sotto la riga).
  */
-function righaScelte(titolo, opzioni, attuale, scegli) {
+export function righaScelte(titolo, opzioni, attuale, scegli) {
   const motivi = opzioni.filter((o) => o.motivo && o.valore !== attuale).map((o) => `${o.etichetta}: ${o.motivo}`);
   return h('div', { class: 'scelta-attacco', role: 'group', 'aria-label': titolo },
     h('p', { class: 'scelta-titolo' }, titolo),
@@ -27,7 +27,7 @@ function righaScelte(titolo, opzioni, attuale, scegli) {
     }, o.etichetta))),
     motivi.length ? h('small', { class: 'motivo' }, motivi.join(' · ')) : null);
 }
-const siNo = (titolo, attuale, scegli, motivo = null) => righaScelte(titolo, [{ valore: false, etichetta: 'No' }, { valore: true, etichetta: 'Sì', motivo }], attuale, scegli);
+export const siNo = (titolo, attuale, scegli, motivo = null) => righaScelte(titolo, [{ valore: false, etichetta: 'No' }, { valore: true, etichetta: 'Sì', motivo }], attuale, scegli);
 
 /**
  * Pannello d'attacco per l'arma `a` (voce di scheda.equipaggiamento.armi).
@@ -54,7 +54,7 @@ function corpoRavvicinato(a) {
 }
 
 /** VA in pillola con il tooltip della scomposizione riga per riga (fonte e paragrafo). */
-function pillola(nome, va, scomposizione) {
+export function pillola(nome, va, scomposizione) {
   return infoValore(numero(va), {
     titolo: `${nome}: ${numero(va)}`,
     sezioni: [{ testo: formulaScomposizione('VA', scomposizione) }],
