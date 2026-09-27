@@ -7,7 +7,9 @@
 //              affaticamento, munizioni: { uid: { colpi, riserve, parziali, vuoti } }, scorte: { uid: consumate },
 //              chroma: { uid: { pmAttuali } },
 //              caricoExtra, crediti, creditiIniziali, condizioniOggetti: [uid], attacchi: { uid: scelte },
-//              lanci: { incantesimo: scelte }, note }
+//              lanci: { incantesimo: scelte }, integrita: { uid: piAttuali }, note }
+// integrita: PI attuali degli oggetti con PI (Armamenti §7.2.1: «si annotano separatamente quelli
+// attuali»), entro 0 e i massimi del catalogo; gli oggetti nuovi partono integri (formato 7).
 // lanci: le ultime scelte del pannello «Lancia!» per ogni incantesimo (src/ui/lancio.js).
 // attacchi: le ultime scelte del pannello «Attacca!» per ogni arma (src/ui/attacco.js), per il
 // prossimo tiro con le stesse scelte (anche l'Imbracciatura).
@@ -32,6 +34,7 @@ import { SENZ_ARMI } from './attacco.js';
 import { saldoIniziale } from './dotazioni.js';
 import { infoRicarica, eseguiRicarica } from './ricarica.js';
 import { caricatori, contenitori, normalizzaEquipaggiamento, catalogo, risolvi } from './equipaggiamento.js';
+import { oggettiConPi } from './protezione.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const limita = (v, min, max) => Math.min(max, Math.max(min, v));
@@ -68,7 +71,30 @@ export function massimiSessione(scheda, creazione, dati) {
     oggettiSituazionali: oggettiSituazionali(creazione, dati),
     // §2.16.28–29: crediti iniziali meno i conguagli, o null senza dotazione iniziale
     creditiIniziali: dati.dotazioni ? saldoIniziale(creazione, dati) : null,
+    // PI massimi degli oggetti con PI (uid → PI), Armamenti §7.2.1
+    integrita: dati.equipaggiamento && dati.regole.integrita ? piMassimi(creazione, dati) : null,
   };
+}
+
+/** PI massimi degli oggetti della lista che hanno PI (src/protezione.js). */
+function piMassimi(creazione, dati) {
+  const cat = catalogo(dati);
+  const oggetti = normalizzaEquipaggiamento(creazione?.equipaggiamento).map((v) => risolvi(v, cat));
+  return Object.fromEntries(oggettiConPi(oggetti, dati).map((x) => [x.uid, x.piMax]));
+}
+
+/** PI attuali: gli oggetti nuovi partono integri, i valori restano entro 0 e i massimi. */
+function allineaIntegrita(v, m) {
+  const src = isOggetto(v) ? v : {};
+  if (!m.integrita) return Object.fromEntries(Object.entries(src).filter(([, n]) => Number.isInteger(n) && n >= 0));
+  return Object.fromEntries(Object.entries(m.integrita).map(([uid, max]) => [uid, limita(intero(src[uid], max), 0, max)]));
+}
+
+/** PI attuali di un oggetto: +/− al tavolo, entro 0 e i massimi (la riparazione la decide il master, A.46). */
+export function variaIntegrita(sessione, uid, delta, m) {
+  const s = allineaSessione(sessione, m);
+  if (!(uid in s.integrita)) return s;
+  return modificaSessione(s, { integrita: { ...s.integrita, [uid]: s.integrita[uid] + delta } }, m);
 }
 
 /** Uid degli oggetti della lista con almeno un effetto situazionale. */
@@ -181,6 +207,7 @@ export function inizializzaSessione(m) {
     condizioniOggetti: [],
     attacchi: {},
     lanci: {},
+    integrita: allineaIntegrita({}, m),
     note: '',
   };
 }
@@ -209,6 +236,7 @@ export function allineaSessione(sessione, m) {
     attacchi: Object.fromEntries(Object.entries(isOggetto(sessione.attacchi) ? sessione.attacchi : {})
       .filter(([uid, v]) => isOggetto(v) && (!m.caricatori || uid in m.caricatori || uid === SENZ_ARMI || (m.oggetti ?? []).includes(uid)))),
     lanci: Object.fromEntries(Object.entries(isOggetto(sessione.lanci) ? sessione.lanci : {}).filter(([, v]) => isOggetto(v))),
+    integrita: allineaIntegrita(sessione.integrita, m),
     note: typeof sessione.note === 'string' ? sessione.note : '',
   };
 }
@@ -294,7 +322,7 @@ export function commutaStato(sessione, id, m) {
 
 /**
  * «Nuova sessione / riposo completo»: PV e PM ai massimi, Stati, Ferite e Affaticamento a zero.
- * Restano note, Punti Eroe, Distintivi, munizioni e peso aggiuntivo.
+ * Restano note, Punti Eroe, Distintivi, munizioni, peso aggiuntivo e PI degli oggetti.
  */
 export function nuovaSessione(sessione, m) {
   return { ...allineaSessione(sessione, m), pvAttuali: m.pv, pmAttuali: m.pm, statiAttivi: [], ferite: 0, affaticamento: 0 };

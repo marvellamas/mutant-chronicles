@@ -5,6 +5,7 @@
 
 import { descriviFerite } from './sessione.js';
 import { calcolaCarico } from './carico.js';
+import { calcolaAR, oggettiRotti } from './protezione.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 
@@ -126,14 +127,16 @@ function vociCondizioniAbilita(condizioni, abilita, dati) {
 export function applicaCondizioni(scheda, sessione, dati) {
   const condizioni = condizioniAttive(sessione, dati, scheda);
   const perNome = new Map();
-  const effettiOggetti = scheda.equipaggiamento?.effettiOggetti ?? [];
+  // oggetti Rotti (0 PI, Armamenti §7.2.1): i loro effetti non valgono al tavolo
+  const rotti = oggettiRotti(sessione, dati);
+  const effettiOggetti = (scheda.equipaggiamento?.effettiOggetti ?? []).filter((e) => !rotti.has(e.uid));
   const accesi = new Set(isOggetto(sessione) && Array.isArray(sessione.condizioniOggetti) ? sessione.condizioniOggetti : []);
   scheda.abilita = scheda.abilita.map((a) => {
     const cond = vociCondizioniAbilita(condizioni, a, dati);
     const ogg = effettiOggettiAbilita(effettiOggetti, accesi, a);
     const scomposizione = [
       voce('Valore da regole', a.totale, 'regole'),
-      ...(a.componentiEquip ?? (a.equip ? [voce('Equipaggiamento', a.equip, 'equipaggiamento')] : [])),
+      ...(a.componentiEquip ?? (a.equip ? [voce('Equipaggiamento', a.equip, 'equipaggiamento')] : [])).filter((c) => !(c.effetto && rotti.has(c.uid))),
       ...ogg.voci,
       ...cond,
     ];
@@ -189,6 +192,14 @@ export function applicaCondizioni(scheda, sessione, dati) {
       p.parata.distanzaEffettiva = somma(p.parata.scomposizioneDistanza);
       p.parata.daRegole = d.totale;
     }
+  }
+  if (eq) {
+    // AR al tavolo: effetti situazionali accesi, oggetti Rotti esclusi (docs/ricognizione-ar-pi.md)
+    const talenti = (scheda.classi ?? []).flatMap((c) => (c.talenti ?? []).map((t) => t.nome));
+    eq.arEffettiva = calcolaAR(eq, dati, { talenti, accesi, rotti });
+    eq.rotti = [...rotti];
+    for (const w of eq.armi) w.rotta = rotti.has(String(w.uid).split(':')[0]);
+    for (const p of eq.protezioni) p.rotta = rotti.has(String(p.uid).split(':')[0]);
   }
   scheda.condizioni = condizioni;
   scheda.carico = isOggetto(sessione) && dati.regole.carico ? calcolaCarico(scheda, sessione, dati) : null;

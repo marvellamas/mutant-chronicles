@@ -148,7 +148,7 @@ test('migrazione: personaggi e file senza blocco non hanno il calendario; note n
 });
 
 test('file del personaggio (formato 6): il calendario va e torna; i file di prima si leggono senza', () => {
-  assert.equal(VERSIONE_FORMATO, 6);
+  assert.ok(VERSIONE_FORMATO >= 6); // dal formato 6 (il 7 aggiunge i PI nella sessione)
   let c = nuovoCalendario('2026-09-27', 'pomeriggio', dati);
   c = nota(c, { data: '2026-09-27', fascia: 'pomeriggio', testo: 'Partenza', colore: 'giallo', ricordare: true });
   const sessione = { pvAttuali: 10 };

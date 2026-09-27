@@ -226,6 +226,7 @@ function validaEffettiCondizioni(dati, err) {
   });
   if (r.carico !== undefined) validaCarico(dati, validaEffetto, err);
   if (r.integrita !== undefined) validaIntegrita(dati, err);
+  if (r.ar !== undefined) validaAR(dati, err);
 }
 
 /**
@@ -282,8 +283,46 @@ function validaIntegrita(dati, err) {
       const K = `oggetti[${i}] (${o.nome})`;
       if (!(o.qualita in ps)) err(`equipaggiamento/${id}`, `${K}.qualita`, `"${o.qualita}" non è una Qualità di regole.json → integrita (${Object.keys(ps).join(', ')})`);
       else if (o.ps_int !== undefined && o.ps_int !== null && o.ps_int !== ps[o.qualita]) err(`equipaggiamento/${id}`, `${K}.ps_int`, `Qualità ${o.qualita} vuole PS Integrità ${ps[o.qualita]}, trovata ${o.ps_int} (§1.7)`);
+      if (o.pi !== undefined && o.pi !== null && !(isIntero(o.pi) && o.pi > 0)) err(`equipaggiamento/${id}`, `${K}.pi`, 'PI massimi: intero positivo, o null per i moduli integrati (§7.2.1)');
     });
   }
+  // PI tracciati e soglie (docs/ricognizione-ar-pi.md)
+  if (t.tipi_tracciati !== undefined) {
+    if (!Array.isArray(t.tipi_tracciati) || !t.tipi_tracciati.length) err(F, 'integrita.tipi_tracciati', 'lista di tipi di oggetto attesa');
+    else for (const x of t.tipi_tracciati) if (!TIPI_EQUIP.includes(x)) err(F, 'integrita.tipi_tracciati', `"${x}" non è un tipo di oggetto (${TIPI_EQUIP.join(', ')})`);
+  }
+  if (t.soglie !== undefined) {
+    if (!Array.isArray(t.soglie)) err(F, 'integrita.soglie', 'lista attesa');
+    else t.soglie.forEach((s, i) => {
+      if (!isIntero(s?.pi_fino_a) || s.pi_fino_a < 0) err(F, `integrita.soglie[${i}].pi_fino_a`, 'intero ≥ 0 atteso');
+      if (!isTesto(s?.etichetta)) err(F, `integrita.soglie[${i}].etichetta`, 'etichetta mancante');
+      if (!['inutilizzabile', 'nessuno'].includes(s?.effetto)) err(F, `integrita.soglie[${i}].effetto`, 'uno fra inutilizzabile, nessuno');
+    });
+  }
+}
+
+/**
+ * Blocco «ar» di regole.json (docs/ricognizione-ar-pi.md; Giocatore §5.13, Armamenti §7.4, §7.11):
+ * regole di cumulo, etichette, Talenti passivi che danno AR.
+ */
+function validaAR(dati, err) {
+  const F = 'regole';
+  const a = dati.regole.ar;
+  if (!isOggetto(a)) { err(F, 'ar', 'oggetto atteso'); return; }
+  if (!isTesto(a.paragrafo)) err(F, 'ar.paragrafo', 'paragrafo del manuale mancante');
+  const REGOLE = ['massimo', 'somma', 'nessuna'];
+  for (const k of ['armatura', 'scudo', 'elmetto', 'effetti', 'ar_contro']) {
+    if (!REGOLE.includes(a.cumulo?.[k])) err(F, `ar.cumulo.${k}`, `uno fra ${REGOLE.join(', ')}`);
+  }
+  if (!isTesto(a.etichette?.totale) || !isTesto(a.etichette?.magica)) err(F, 'ar.etichette', 'servono «totale» e «magica»');
+  const nomi = new Set((dati.classi?.classi ?? []).flatMap((c) => [...(c.talenti ?? []), ...(c.talenti_a_scelta ?? [])].map((t) => t.nome)));
+  (Array.isArray(a.talenti) ? a.talenti : []).forEach((t, i) => {
+    const K = `ar.talenti[${i}]`;
+    if (!nomi.has(t?.talento)) err(F, `${K}.talento`, `"${t?.talento}" non è un Talento di Classe`);
+    if (!isIntero(t?.totale) || !isIntero(t?.magica) || t.magica < 0 || t.magica > t.totale) err(F, K, 'totale e magica interi, 0 ≤ magica ≤ totale');
+    if (!['armatura', 'nessuno'].includes(t?.richiede)) err(F, `${K}.richiede`, 'uno fra armatura, nessuno');
+  });
+  if (!isTesto(a.promemoria_danno)) err(F, 'ar.promemoria_danno', 'promemoria per «Attacca!» mancante');
 }
 
 function validaRegole(r, err) {
@@ -1356,11 +1395,11 @@ function validaDotazioni(dati, err) {
 }
 
 // Effetti degli oggetti (docs/effetti-oggetti.md): catalogo e oggetti di dotazione. Tipi: va
-// (Abilità), attacco, danno, iniziativa, salvezza, caratteristica, contromisura, ar_contro.
+// (Abilità), attacco, danno, iniziativa, salvezza, caratteristica, contromisura, ar_contro, ar.
 const AMBITI_EFFETTO = ['generale', 'situazionale', 'uso_specifico'];
 const TIPI_EFFETTO = {
   va: null, attacco: 'generale', danno: 'generale', iniziativa: 'generale', salvezza: 'uso_specifico',
-  caratteristica: 'uso_specifico', contromisura: 'generale', ar_contro: 'generale',
+  caratteristica: 'uso_specifico', contromisura: 'generale', ar_contro: 'generale', ar: null,
 };
 const ATTACCHI_EFFETTO = ['tutti', 'ravvicinati', 'distanza'];
 function validaEffettiOggetto(effetti, F, K, nomiAbilita, err, ctx = {}) {
@@ -1378,6 +1417,9 @@ function validaEffettiOggetto(effetti, F, K, nomiAbilita, err, ctx = {}) {
     if (tipo === 'caratteristica' && (!Array.isArray(e.caratteristiche) || !e.caratteristiche.length || e.caratteristiche.some((c) => !(ctx.sigle ?? new Set()).has(c)))) err(F, `${KE}.caratteristiche`, 'sigle di Caratteristiche attese');
     if (tipo === 'contromisura' && (!isTesto(e.effetto) || !(e.valore > 0))) err(F, KE, 'contromisura: effetto aggiuntivo (§5.24) e soglia positiva');
     if (tipo === 'ar_contro' && !isTesto(e.contro)) err(F, `${KE}.contro`, 'tipo di danno mancante');
+    if (tipo === 'ar' && e.ambito === 'uso_specifico') err(F, `${KE}.ambito`, 'l’AR è generale o situazionale');
+    if (tipo === 'ar' && e.magica !== undefined && !(isIntero(e.magica) && e.magica >= 0 && e.magica <= Math.abs(e.valore))) err(F, `${KE}.magica`, 'componente magica: intero fra 0 e il valore');
+    if (tipo !== 'ar' && e.magica !== undefined) err(F, `${KE}.magica`, 'solo per il tipo "ar"');
     if (e.beneficio !== undefined && !isTesto(e.beneficio)) err(F, `${KE}.beneficio`, 'chiave di testo attesa');
     if (e.proprieta !== undefined && !isTesto(e.proprieta)) err(F, `${KE}.proprieta`, 'nome della proprietà atteso');
     if (!isIntero(e.valore) || e.valore === 0) err(F, `${KE}.valore`, 'intero diverso da 0 atteso');

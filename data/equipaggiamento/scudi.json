@@ -254,6 +254,17 @@
           "nome": "Ingombrante",
           "testo": "Gli Scudi enormi impongono −1 Q a Passo, Corsa e Scatto mentre sono impugnati. La penalità si somma a quelle pertinenti di armatura e arma e non viene eliminata soddisfacendo il requisito di FOR."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "ar_contro",
+          "contro": "esplosioni",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Contro danni Naturali o Magici da esplosione aggiunge 1 all’AR applicabile: su uno Scudo enorme il contributo passa da +3 a +4.",
+          "fonte": "Armamenti §7.4.3",
+          "proprieta": "Antiesplosione 1"
+        }
       ]
     },
     {
@@ -542,6 +553,17 @@
         {
           "nome": "Ingombrante",
           "testo": "Gli Scudi enormi impongono −1 Q a Passo, Corsa e Scatto mentre sono impugnati. La penalità si somma a quelle pertinenti di armatura e arma e non viene eliminata soddisfacendo il requisito di FOR."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "ar_contro",
+          "contro": "esplosioni",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Contro danni Naturali o Magici da esplosione aggiunge 1 all’AR applicabile: su uno Scudo enorme il contributo passa da +3 a +4.",
+          "fonte": "Armamenti §7.4.3",
+          "proprieta": "Antiesplosione 1"
         }
       ]
     },
@@ -1097,6 +1119,17 @@
         {
           "nome": "Scudo Magico",
           "testo": "Dopo Sintonizzazione, 1 AzP e 1 PM della riserva attivano Scudo Magico per 5 Round: il contributo dello Scudo diventa AR +4, di cui 2 magica, e concede +2 VA alla Parata ravvicinata e +1 VA a quella a distanza, che passa a −3 VA complessivo. La riserva è un Chroma Rosso da 5 PM; la potenza è Rara e il costo totale di Sintonizzazione è 3, riserva compresa (§7.4.10)."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "ar",
+          "valore": 2,
+          "magica": 2,
+          "ambito": "situazionale",
+          "condizione": "Dopo Sintonizzazione, 1 AzP e 1 PM della riserva attivano Scudo Magico per 5 Round: il contributo dello Scudo diventa AR +4, di cui 2 magica, e concede +2 VA alla Parata ravvicinata e +1 VA a quella a distanza, che passa a −3 VA complessivo.",
+          "fonte": "Armamenti §7.4.10",
+          "proprieta": "Scudo Magico"
         }
       ]
     },

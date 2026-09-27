@@ -10,11 +10,13 @@
 // Effetti sui VA (docs/effetti-oggetti.md): «effetti» dell'oggetto del catalogo, dell'oggetto di
 // dotazione (data/dotazioni.json → oggetti_dotazione) o del personalizzato:
 //   [{ tipo?, abilita, valore, ambito: 'generale'|'situazionale'|'uso_specifico', uso?, condizione?, fonte?, beneficio?, proprieta? }]
-// tipo: va (predefinito), attacco, danno, iniziativa, salvezza, caratteristica, contromisura, ar_contro.
+// tipo: va (predefinito), attacco, danno, iniziativa, salvezza, caratteristica, contromisura, ar_contro, ar.
 // Copie dello stesso «beneficio» non si sommano: vale il maggiore (Armamenti §7.21.1).
 // Contano solo con l'oggetto in uso (indossato, impugnato…): gli oggetti senza stati propri che
 // hanno effetti ricevono «In uso» / «Nello zaino».
 // peso: kg per unità (Equipaggiamento §1.6, §1.10), per il carico (src/carico.js).
+
+import { calcolaAR, oggettiConPi } from './protezione.js';
 
 export const TIPI = ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'elmetto', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'altro'];
 
@@ -83,6 +85,7 @@ export function testoEffettoOggetto(e) {
   if (tipo === 'caratteristica') return `${segnoEff(e.valore)} alla Prova di ${e.caratteristiche.join(' o ')} (solo ${e.uso})`;
   if (tipo === 'contromisura') return `Contromisura ${e.effetto} ${e.valore}`;
   if (tipo === 'ar_contro') return `${segnoEff(e.valore)} AR contro ${e.contro}`;
+  if (tipo === 'ar') return `${segnoEff(e.valore)} AR${e.magica ? ` (di cui ${e.magica} magica)` : ''}${e.ambito === 'situazionale' ? ' (con la condizione attiva)' : ''}`;
   const v = `${e.valore > 0 ? '+' : '−'}${Math.abs(e.valore)} VA ${/^[aA]/.test(e.abilita) ? 'ad' : 'a'} ${e.abilita}`;
   if (e.ambito === 'uso_specifico') return `${v} (solo per ${e.uso})`;
   if (e.ambito === 'situazionale') return `${v} (con la condizione attiva)`;
@@ -483,10 +486,12 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   const equipAbilita = {};
   // per la scomposizione dei valori effettivi: ogni contributo con etichetta e oggetto di origine
   const componentiEquip = {};
-  const aggiungi = (nome, v, etichetta) => {
+  // `da`: { uid, effetto: true } per i contributi degli effetti degli oggetti, che al tavolo cadono
+  // se l'oggetto è Rotto (0 PI, Armamenti §7.2.1); le penalità delle armature non lo hanno
+  const aggiungi = (nome, v, etichetta, da = null) => {
     if (!nome || !v) return;
     equipAbilita[nome] = (equipAbilita[nome] ?? 0) + v;
-    (componentiEquip[nome] ??= []).push({ etichetta, valore: v, fonte: 'equipaggiamento' });
+    (componentiEquip[nome] ??= []).push({ etichetta, valore: v, fonte: 'equipaggiamento', ...(da ?? {}) });
   };
   let attacchiRavv = 0;
   let attacchiDist = 0;
@@ -514,7 +519,8 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     const forMancante = forRichiesta ? Math.max(0, forRichiesta - FOR) : 0;
     protezioni.push({
       uid: o.uid, nome: o.nome, tipo: o.tipo, categoria, taglia: d?.taglia ?? null,
-      categoriaBase: d?.categoria ?? null, rinforzo: kit ? { nome: kit.nome, kit: kit.def.rinforzo.kit } : null,
+      categoriaBase: d?.categoria ?? null, rinforzo: kit ? { nome: kit.nome, kit: kit.def.rinforzo.kit, uid: kit.uid } : null,
+      arKit: kit ? kit.def.rinforzo.ar : 0,
       ar, penalita, forRichiesta, forMancante, personalizzato: o.personalizzato,
       mov: d?.mov ?? 0, parata: null, proprieta: d?.proprieta ?? [],
       // §7.14.2, §7.16.3: armature servoassistite a sistema spento (FOR e penalità proprie), mostrate
@@ -579,7 +585,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     const tipo = e.tipo ?? 'va';
     if (tipo === 'va') {
       if (!nomiAbilita.has(e.abilita)) { avvisi.push(`${o.nome}: «${e.abilita}» non è un’Abilità, effetto ignorato.`); continue; }
-      if (e.ambito === 'generale') aggiungi(e.abilita, e.valore, o.nome);
+      if (e.ambito === 'generale') aggiungi(e.abilita, e.valore, o.nome, { uid: o.uid, effetto: true });
     } else if (tipo === 'attacco') bonusAttacco.push({ nome: o.nome, valore: e.valore, attacchi: e.attacchi });
     else if (tipo === 'danno') dannoEquip.push({ nome: o.nome, valore: e.valore, attacchi: e.attacchi });
     else if (tipo === 'iniziativa') iniziativaEquip.push({ etichetta: o.nome, valore: e.valore });
@@ -830,10 +836,16 @@ export function calcolaEquipaggiamento(base, voci, dati) {
 
   for (const x of oggetti.filter((o) => o.fuoriCatalogo)) avvisi.push(`«${x.voce.rif}» non è più nel catalogo: resta in lista senza effetti.`);
 
+  // AR a riposo (docs/ricognizione-ar-pi.md): al tavolo la ricalcola applicaCondizioni (src/condizioni.js)
+  const ar = calcolaAR({ protezioni, effettiOggetti }, dati, { talenti: base.talenti ?? [] });
+
   return {
     oggetti,
     armi,
     protezioni,
+    ar,
+    // oggetti con Punti Integrità da tracciare (Armamenti §7.2.1)
+    integrita: dati.regole?.integrita ? oggettiConPi(oggetti, dati) : [],
     zaino: oggetti.filter((o) => !o.attivo),
     equipAbilita,
     componentiEquip,

@@ -22,7 +22,8 @@ Stato al 27 settembre 2026. Dati: campo `effetti` degli oggetti del catalogo (`d
 | `salvezza` | `salvezza`: id di una Prova Salvezza, oppure `null` = «la PS già prevista dall'effetto»; `uso` | uso_specifico | righe «solo per un uso» sotto le Prove Salvezza (tab Identità) |
 | `caratteristica` | `caratteristiche`: sigle; `uso` | uso_specifico | righe «solo per un uso» nella tab Combattimento, sezione Protezioni |
 | `contromisura` | `effetto`: effetto aggiuntivo del §5.24 (Concussivo, Elettricità, Fuoco…); `valore` = soglia | generale | «Resistenze» nella sezione Protezioni (vicino all'AR), non fra le Abilità |
-| `ar_contro` | `contro`: tipo di danno (esplosioni…) | generale | «Resistenze» nella sezione Protezioni |
+| `ar_contro` | `contro`: tipo di danno (esplosioni…) | generale | «Resistenze» nella sezione Protezioni e valore «AR contro …» accanto all'AR: AR totale + il maggiore fra scudo e armatura (§7.4.3, §7.11.4) |
+| `ar` | `magica` (facoltativo): quanta parte dell'AR in più è magica | generale, situazionale | AR del personaggio (`src/protezione.js`, docs/ricognizione-ar-pi.md); situazionale con l'interruttore al tavolo (Scudo Magico delle Guardie Sacre, §7.4.10) |
 
 - `condizione` è la frase del manuale che dà il bonus, copiata intera. `node tools/verifica_frasi.mjs` controlla che esista nel testo dei Doc (`docs/manuali-txt/`); lo stesso controllo è nei test.
 - Un effetto conta solo con l'oggetto **in uso** (indossato, impugnato…). Gli oggetti senza stati propri (corredi, kit) ricevono «In uso» / «Nello zaino» quando hanno effetti.

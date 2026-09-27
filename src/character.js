@@ -22,7 +22,9 @@ export const FORMATO_FILE = 'mutant-personaggio';
 // 4: anagrafica nella creazione e blocco "sessione" (valori attuali della modalità tavolo).
 // 5: "equipaggiamento" è un elenco di voci (catalogo o personalizzate), non più un testo libero.
 // 6: blocco facoltativo "calendario" (src/calendario.js); senza, il calendario non è attivo.
-export const VERSIONE_FORMATO = 6;
+// 7: PI attuali degli oggetti nella sessione ("sessione.integrita", Armamenti §7.2.1); nei file
+//    fino al 6 manca, e allineaSessione (src/sessione.js) mette ogni oggetto ai PI massimi.
+export const VERSIONE_FORMATO = 7;
 
 /**
  * Anagrafica del passo «Background e anagrafica»: tutti campi facoltativi e descrittivi, senza

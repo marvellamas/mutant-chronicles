@@ -1269,7 +1269,37 @@
       "Molto rara": 16,
       "Leggendaria": 18
     },
-    "_nota": "La Qualità costruttiva determina la PS Integrità dell’oggetto, separata dalle Salvezze del personaggio. Il validatore controlla che «ps_int» di ogni oggetto del catalogo corrisponda alla sua «qualita». A 0 PI un oggetto ordinario è Rotto (§1.7, §7.2.1)."
+    "_nota": "La Qualità costruttiva determina la PS Integrità dell’oggetto, separata dalle Salvezze del personaggio. Il validatore controlla che «ps_int» di ogni oggetto del catalogo corrisponda alla sua «qualita». A 0 PI un oggetto ordinario è Rotto (§1.7, §7.2.1).",
+    "paragrafo_pi": "Armamenti §7.2.1, §7.21.3; Equipaggiamento §1.7",
+    "frasi_pi": [
+      "La scheda indica i PI massimi; si annotano separatamente quelli attuali.",
+      "A 0 PI l’oggetto è Rotto e non può essere utilizzato finché non viene riparato.",
+      "Una perdita di PI non assegna automaticamente la condizione Danneggiata e la relativa penalità di −2 VA."
+    ],
+    "tipi_tracciati": ["arma_ravvicinata", "arma_distanza", "scudo", "armatura", "elmetto", "accessorio", "artefatto", "altro"],
+    "_nota_tipi_tracciati": "TODO(Davide) A.47: si tracciano solo gli oggetti con «pi» nella scheda e quantità 1; munizioni e sanitario no. I PI non si ricavano dalla Qualità (§7.2.1: la Qualità dà solo la PS).",
+    "soglie": [
+      { "pi_fino_a": 0, "etichetta": "Rotto", "effetto": "inutilizzabile", "fonte": "Armamenti §7.2.1" }
+    ],
+    "_nota_soglie": "Nessuna soglia intermedia: «Una perdita di PI non impone automaticamente −2 VA» (Equipaggiamento §1.7). Effetto «inutilizzabile»: l'oggetto Rotto non dà AR né i suoi effetti (TODO(Davide) A.44, A.45; l'elmetto a 0 PI «perde i propri vantaggi», §7.21.3). Nessuna regola di riparazione per gli oggetti che non sono veicoli (A.46): i PI si rimettono a mano."
+  },
+  "ar": {
+    "paragrafo": "Giocatore §5.13, §5.24; Armamenti §7.4, §7.11, §7.11.2, §7.21.1; Magia sez. 7",
+    "frasi": [
+      "Un’Armatura ordinaria AR 5 con +1 AR magica si scrive «AR totale 6, di cui 1 magica»: contro il danno Etereo assorbe soltanto 1.",
+      "La protezione passiva dello Scudo si aggiunge all’AR dell’armatura mentre è impugnato e utilizzabile.",
+      "Due scudi non sommano la protezione: si utilizza soltanto il contributo maggiore.",
+      "Gli elmetti non forniscono AR, neppure magica."
+    ],
+    "cumulo": { "armatura": "massimo", "scudo": "massimo", "elmetto": "nessuna", "effetti": "somma", "ar_contro": "massimo" },
+    "_nota_cumulo": "TODO(Davide) A.43: un solo valore, non per zona (AC). Due armature non si sovrappongono (§7.11.2): vale la maggiore, con l'avviso del motore.",
+    "etichette": { "totale": "AR", "magica": "contro Etereo" },
+    "talenti": [
+      { "talento": "Corazza Potenziata", "totale": 1, "magica": 1, "richiede": "armatura", "fonte": "Giocatore §3.9.5", "frase": "Il beneficio è personale e si applica una sola volta, anche utilizzando contemporaneamente armatura e scudo." }
+    ],
+    "_nota_talenti": "TODO(Davide) A.48: si somma all'AR dell'equipaggiamento; lo scudo «Mistico o TecnoMistico» non è riconoscibile dal catalogo. Incantesimi e Tecniche (Armatura di Forza, Pelle Corazzata, Aura di Resistenza…) non sono tracciati al tavolo: restano fuori dal calcolo, con la regola di cumulo della Magia sez. 7 nel tooltip.",
+    "promemoria_cumulo_magia": "Incantesimi: si aggiunge il maggiore fra Pelle Corazzata, Armatura di Forza e bonus di Armatura Mistica, più Armatura Elementale contro il suo elemento (Magia sez. 7).",
+    "promemoria_danno": "Il bersaglio sottrae la sua AR dopo Difese e Prove Salvezza, per ogni colpo, fino a un minimo di 0: contro danno Naturale o Magico l’AR totale, contro Etereo solo la componente magica (Giocatore §5.13, §5.24)."
   },
   "difese": {
     "parata_distanza_arma": -8,
