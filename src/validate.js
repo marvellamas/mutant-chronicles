@@ -280,6 +280,18 @@ function validaRegole(r, err) {
     const v = percorso.split('.').reduce((o, k) => o?.[k], r);
     if (!isIntero(v)) err(F, percorso, 'numero intero mancante');
   }
+  // calendario di gioco della scheda (src/calendario.js): fasce in ordine e le tre bandierine
+  const cal = r.calendario;
+  const listaIdNome = (v) => Array.isArray(v) && v.length > 0 && v.every((x) => isOggetto(x) && isTesto(x.id) && isTesto(x.nome))
+    && new Set(v.map((x) => x.id)).size === v.length;
+  if (!isOggetto(cal)) err(F, 'calendario', 'blocco mancante: { fasce, bandierine, ricordare }');
+  else {
+    if (!listaIdNome(cal.fasce)) err(F, 'calendario.fasce', 'elenco non vuoto di { id, nome } con id diversi, nell’ordine della giornata');
+    if (!listaIdNome(cal.bandierine) || cal.bandierine.map((b) => b.id).join() !== 'rosso,giallo,verde') {
+      err(F, 'calendario.bandierine', 'servono rosso, giallo e verde, in quest’ordine, ognuna con il suo nome (i colori sono in css/palette.css)');
+    }
+    if (!isTesto(cal.ricordare?.sigla) || !isTesto(cal.ricordare?.nome)) err(F, 'calendario.ricordare', 'servono sigla e nome');
+  }
   // §2.16.28: crediti iniziali = fisso + (dadi)d(facce) × moltiplicatore
   const cr = r.crediti_iniziali;
   if (!isOggetto(cr) || !['dadi', 'facce', 'moltiplicatore', 'fisso', 'minimo', 'massimo'].every((k) => isIntero(cr[k]))) {

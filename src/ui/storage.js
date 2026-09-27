@@ -35,6 +35,12 @@ function scriviTutti(tutti) {
   }
 }
 
+/** Oltre questa soglia di caratteri la scheda avvisa che lo spazio del browser sta finendo (circa 5 milioni per sito). */
+export const SOGLIA_AVVISO_SPAZIO = 4_000_000;
+
+/** true quando i personaggi salvati si avvicinano al limite del browser (ritratti, note del calendario). */
+export const spazioQuasiEsaurito = () => spazioOccupato() > SOGLIA_AVVISO_SPAZIO;
+
 /** Caratteri occupati dai personaggi salvati (localStorage conta caratteri, circa 5 milioni per sito). */
 export function spazioOccupato() {
   try {
@@ -59,9 +65,9 @@ export function carica(id) {
  * dell'avanzamento non hanno "livelli": si leggono come personaggi al 1° livello.
  * @returns {boolean} false se il salvataggio non è riuscito
  */
-export function salva({ id, scelte, livelli = [], sessione = null, passo }) {
+export function salva({ id, scelte, livelli = [], sessione = null, calendario = null, passo }) {
   const tutti = leggiTutti();
-  tutti[id] = { id, scelte, livelli, sessione, passo, aggiornato: new Date().toISOString() };
+  tutti[id] = { id, scelte, livelli, sessione, ...(calendario ? { calendario } : {}), passo, aggiornato: new Date().toISOString() };
   return scriviTutti(tutti);
 }
 

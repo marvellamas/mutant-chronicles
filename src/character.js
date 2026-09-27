@@ -21,7 +21,8 @@ export const FORMATO_FILE = 'mutant-personaggio';
 // 3: il file può contenere i livelli successivi al 1° ("livelli"); senza, è un personaggio al 1°.
 // 4: anagrafica nella creazione e blocco "sessione" (valori attuali della modalità tavolo).
 // 5: "equipaggiamento" è un elenco di voci (catalogo o personalizzate), non più un testo libero.
-export const VERSIONE_FORMATO = 5;
+// 6: blocco facoltativo "calendario" (src/calendario.js); senza, il calendario non è attivo.
+export const VERSIONE_FORMATO = 6;
 
 /**
  * Anagrafica del passo «Background e anagrafica»: tutti campi facoltativi e descrittivi, senza
@@ -381,7 +382,7 @@ export function nomeFileEsportazione(nome, livello, data = new Date()) {
   return `${pulito || 'personaggio'}_liv${Number.isInteger(livello) && livello > 0 ? livello : 1}_${giorno}.json`;
 }
 
-export function serializza(scelte, { versioniDati, livelli, sessione } = {}) {
+export function serializza(scelte, { versioniDati, livelli, sessione, calendario } = {}) {
   const pulite = {};
   for (const k of CAMPI) pulite[k] = scelte?.[k] ?? nuoveScelte()[k];
   // senza ritratto e senza dotazione iniziale i campi non si scrivono: i file di prima restano
@@ -394,13 +395,15 @@ export function serializza(scelte, { versioniDati, livelli, sessione } = {}) {
   file.scelte = pulite;
   if (Array.isArray(livelli) && livelli.length) file.livelli = livelli;
   if (isOggetto(sessione)) file.sessione = sessione;
+  if (isOggetto(calendario)) file.calendario = calendario;
   return JSON.stringify(file, null, 2);
 }
 
 /**
- * Legge un file esportato con i livelli: { creazione, livelli, sessione }. I file senza livelli
- * (formati 1 e 2, o personaggi al 1° livello) danno livelli: []; senza sessione, sessione: null
- * (va inizializzata con allineaSessione). La creazione va poi normalizzata.
+ * Legge un file esportato con i livelli: { creazione, livelli, sessione, calendario }. I file senza
+ * livelli (formati 1 e 2, o personaggi al 1° livello) danno livelli: []; senza sessione, sessione: null
+ * (va inizializzata con allineaSessione); senza calendario (formati 1–5), calendario: null, cioè non
+ * attivo (va passato a normalizzaCalendario). La creazione va poi normalizzata.
  */
 export function deserializzaPersonaggio(testo) {
   const creazione = deserializza(testo);
@@ -408,7 +411,8 @@ export function deserializzaPersonaggio(testo) {
   const livelli = obj?.formato === FORMATO_FILE && obj.livelli !== undefined ? obj.livelli : [];
   if (!Array.isArray(livelli) || !livelli.every(isOggetto)) throw new Error('I livelli del personaggio nel file non sono validi.');
   const sessione = obj?.formato === FORMATO_FILE && isOggetto(obj.sessione) ? obj.sessione : null;
-  return { creazione, livelli, sessione };
+  const calendario = obj?.formato === FORMATO_FILE && isOggetto(obj.calendario) ? obj.calendario : null;
+  return { creazione, livelli, sessione, calendario };
 }
 
 /**

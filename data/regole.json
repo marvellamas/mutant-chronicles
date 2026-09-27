@@ -1267,5 +1267,20 @@
   "difese": {
     "parata_distanza_arma": -8,
     "_nota": "Giocatore §5.9, Parata a distanza: «Penalità −8 VA con un’arma e −4 VA con uno scudo». Gli scudi hanno i propri modificatori nel catalogo (Armamenti §7.4.11)."
+  },
+  "calendario": {
+    "_nota": "Calendario di gioco della scheda digitale (src/calendario.js): non è una regola dei manuali, è un aiuto per le note di campagna. Le fasce sono in ordine: «+ fascia» dopo l’ultima passa alla prima del giorno dopo. Le bandierine danno l’importanza di una nota; «M» (da ricordare) si combina con qualunque bandierina.",
+    "fasce": [
+      { "id": "mattina", "nome": "Mattina" },
+      { "id": "pomeriggio", "nome": "Pomeriggio" },
+      { "id": "sera", "nome": "Sera" },
+      { "id": "notte", "nome": "Notte" }
+    ],
+    "bandierine": [
+      { "id": "rosso", "nome": "Cruciale" },
+      { "id": "giallo", "nome": "Importante" },
+      { "id": "verde", "nome": "Minore" }
+    ],
+    "ricordare": { "sigla": "M", "nome": "Da ricordare" }
   }
 }

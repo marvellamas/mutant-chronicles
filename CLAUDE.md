@@ -28,7 +28,7 @@ Drive si usa **in sola lettura**: mai scrivere nei Doc di Davide, nemmeno commen
 - Web app statica, **senza build step**: `index.html` + `src/*.js` (ES modules) + `css/`. Vanilla JS. Nessun framework, nessun bundler, nessuna dipendenza npm a runtime.
 - Deve funzionare da browser desktop e telefono. Si serve con un qualunque server statico (`python -m http.server` in locale; GitHub Pages o simile per il gruppo).
 - Test: Node (`node --test`, cioè `npm test`) sulle funzioni pure del motore. I test non richiedono browser.
-- File del personaggio esportato: formato 5 (`VERSIONE_FORMATO` in `src/character.js`): `{ formato, versione, versioni_dati, scelte, livelli, sessione }`. I formati precedenti si importano e si migrano.
+- File del personaggio esportato: formato 6 (`VERSIONE_FORMATO` in `src/character.js`): `{ formato, versione, versioni_dati, scelte, livelli, sessione, calendario? }`. I formati precedenti si importano e si migrano (senza `calendario`: non attivo).
 
 ## Principi non negoziabili
 
