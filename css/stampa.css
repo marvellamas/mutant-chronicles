@@ -153,9 +153,9 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 
 /* tabelle */
 .tabella-stampa { width: 100%; border-collapse: collapse; }
-.tabella-stampa th, .tabella-stampa td { border-bottom: 0.5pt solid var(--ss-linea-tenue); padding: 0.4mm 1mm; text-align: left; vertical-align: top; }
+.tabella-stampa th, .tabella-stampa td { color: var(--ss-inchiostro); border-bottom: 0.5pt solid var(--ss-linea-tenue); padding: 0.4mm 1mm; text-align: left; vertical-align: top; }
 .tabella-stampa thead th {
-  font-size: var(--ss-font-small); font-weight: 700; color: #fff;
+  font-size: var(--ss-font-small); font-weight: 700; color: #fff !important;
   background: var(--tinta, var(--ss-acciaio)); border-bottom: 0;
 }
 .tabella-stampa tbody th { font-weight: 600; }
@@ -281,14 +281,39 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .stati-nomi span { white-space: nowrap; }
 .f3-pv > .contenuto { gap: 1.2mm; }
 
-/* Foglio 4 */
-.testa-magia { display: grid; grid-template-columns: 40mm 45mm 1fr; gap: 3mm; align-items: start; }
-.tabella-stampa.scala td, .tabella-stampa.scala th { font-size: 0.85em; text-align: center; border: 0.5pt solid var(--linea-tenue); }
-.foglio-magia .foglio-corpo { display: flex; flex-direction: column; }
-.colonne-incantesimi { flex: 1; min-height: 0; column-count: 3; column-gap: 4mm; column-fill: auto; }
-.colonne-incantesimi .macro { break-after: avoid; margin-top: 1mm; }
-.colonne-incantesimi .spec { font-size: 0.9em; font-style: italic; margin: 1mm 0 0.5mm; break-after: avoid; }
-.incantesimo-stampa { break-inside: avoid; margin-bottom: 2mm; }
-.incantesimo-stampa h4 { font-size: 1.05em; }
-.tabella-stampa.versioni { font-size: 0.85em; margin-top: 0.5mm; }
-.tabella-stampa.versioni th, .tabella-stampa.versioni td { padding: 0.1mm 0.6mm; text-align: center; }
+/* Foglio 4 — Magia */
+.foglio-magia .foglio-corpo { gap: 2mm; }
+.f4-testa { display: grid; grid-template-columns: 62mm 1fr 78mm; gap: 3mm; align-items: stretch; flex: none; }
+.f4-testa .voci-stampa { gap: 0.3mm 3mm; }
+.tabella-stampa.scala { margin-top: 1mm; }
+.tabella-stampa.scala td, .tabella-stampa.scala th { text-align: center; border: 0.5pt solid var(--ss-linea-tenue); }
+.tabella-stampa.scala tbody tr > * { background: none; }
+.tabella-stampa.scala th { font-size: var(--ss-font-small); white-space: nowrap; }
+.riserva p { margin: 0 0 0.6mm; }
+.riserva + .riserva { margin-top: 1.2mm; padding-top: 1mm; border-top: 0.5pt solid var(--ss-linea-tenue); }
+.indice-magia .centro { text-align: center; }
+.indice-magia tbody tr > * { background: color-mix(in srgb, var(--tinta-tenue) 90%, transparent); border-bottom-color: #fff; }
+.indice-magia tbody tr > th:first-child { border-left: 2.2mm solid var(--tinta); }
+.indice-magia tbody tr[class*="tinta-"]:nth-child(even) > * { background: color-mix(in srgb, var(--tinta-tenue) 55%, transparent); }
+.f4-indice-seguito { flex: none; }
+.colonne-schede { flex: 1; min-height: 0; overflow: hidden; column-count: 3; column-gap: 4mm; column-fill: auto; }
+.scheda-incantesimo {
+  break-inside: avoid; margin: 0 0 2.5mm;
+  /* niente overflow: hidden, che renderebbe la scheda indivisibile anche quando è più alta di una colonna */
+  border: 1.2pt solid var(--tinta); border-radius: 1.5mm;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--tinta-tenue) 70%, transparent), transparent 40mm);
+}
+.scheda-incantesimo.lunga { break-inside: auto; }
+.misura-scheda { position: absolute; visibility: hidden; left: 0; top: 0; font-size: var(--ss-font); line-height: 1.25; }
+.scheda-incantesimo header { background: var(--tinta); color: #fff; padding: 0.6mm 2mm; border-radius: 1mm 1mm 0 0; break-after: avoid; }
+.scheda-incantesimo header .sigla { color: #fff; display: block; }
+.nome-incantesimo { font-weight: 800; font-size: 11pt; }
+.scheda-incantesimo .pallini-livello { color: #fff; }
+.corpo-scheda { padding: 1mm 2mm 1.2mm; }
+.corpo-scheda p { margin: 0 0 1mm; }
+.corpo-scheda .intestazione { font-style: italic; }
+.testo-lungo { white-space: pre-line; }
+.tabella-stampa.versioni-stampa { margin: 0.5mm 0 1mm; --tinta: var(--ss-acciaio); }
+.scheda-incantesimo .tabella-stampa.versioni-stampa thead th { background: var(--tinta); }
+.tabella-stampa.versioni-stampa th, .tabella-stampa.versioni-stampa td { padding: 0.1mm 0.5mm; text-align: center; }
+.tabella-stampa.versioni-stampa thead th { overflow-wrap: anywhere; hyphens: auto; }

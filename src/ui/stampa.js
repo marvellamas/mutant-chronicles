@@ -7,6 +7,7 @@ import { h, segno } from './dom.js';
 import { stemma, iconaPagina } from './immagini.js';
 import { pallini } from './tooltip.js';
 import { crediti } from '../dotazioni.js';
+import { COLORI_MACROFAMIGLIE } from '../palette.js';
 
 const FOGLIO_STILE = 'css/stampa.css';
 
@@ -300,50 +301,118 @@ function foglioCombattimento(d) {
 }
 
 // ---------------------------------------------------------------------------
-// Foglio 4 — Magia
+// Foglio 4 — Magia (anche più pagine). Prima pagina: Punti Magia, valori di lancio, contenitori
+// di Chroma e l'indice degli incantesimi (una riga ciascuno, colorata per macrofamiglia); le
+// righe che non entrano continuano nella pagina dopo. Poi una scheda per incantesimo con il testo
+// completo, nell'ordine dell'indice, in tre colonne; una scheda non si spezza se entra in una
+// colonna (break-inside: avoid).
+
+const tintaMacro = (m) => COLORI_MACROFAMIGLIE[m] ?? null;
+const elencoIncantesimi = (d) => d.macrofamiglie.flatMap((m) => m.specializzazioni.flatMap((sp) =>
+  sp.incantesimi.map((i) => ({ ...i, macrofamiglia: i.macrofamiglia ?? m.nome, specializzazione: sp.nome }))));
+
+function rigaIndice(i) {
+  return h('tr', { class: `tinta-${tintaMacro(i.macrofamiglia)}` },
+    h('th', { scope: 'row' }, i.nome), h('td', { class: 'centro' }, String(i.livelloBase)), h('td', {}, `${i.macrofamiglia} · ${i.specializzazione}`),
+    h('td', { class: 'centro' }, i.indice.pm), h('td', {}, i.indice.tempo), h('td', {}, i.indice.gittata), h('td', {}, i.indice.durata));
+}
+
+const tabellaIndice = (righe) => h('table', { class: 'tabella-stampa indice-magia' },
+  h('thead', {}, h('tr', {}, ['Incantesimo', 'Liv.', 'Macrofamiglia', 'PM', 'Tempo di lancio', 'Gittata', 'Durata'].map((c) => h('th', {}, c)))),
+  h('tbody', {}, righe));
+
+function schedaIncantesimo(i) {
+  return h('article', { class: `scheda-incantesimo tinta-${tintaMacro(i.macrofamiglia)}` },
+    h('header', {}, h('span', { class: 'nome-incantesimo' }, i.nome), ' ', pallini(i.livelloBase),
+      h('span', { class: 'sigla' }, ` ${i.macrofamiglia} · ${i.specializzazione} · livello base ${i.livelloBase}`)),
+    h('div', { class: 'corpo-scheda' },
+      i.intestazione ? h('p', { class: 'intestazione' }, i.intestazione) : null,
+      i.lancio ? h('p', {}, i.lancio) : null,
+      i.descrizione ? h('p', { class: 'testo-lungo' }, i.descrizione) : null,
+      i.righe.length ? tabella(i.colonne, i.righe, { classe: 'versioni-stampa' })
+        : h('p', { class: 'piccolo' }, `Tabella: Manuale della Magia, scheda ${i.scheda}.`),
+      i.regole ? h('p', { class: 'testo-lungo' }, i.regole) : null));
+}
 
 function foglioMagia(d) {
-  // nelle pagine di continuazione (spezzaMagia) l'intestazione del foglio non si ripete
+  const v = d.valoriLancio;
+  const voce = (nome, valore) => [h('dt', {}, nome), h('dd', {}, valore)];
+  const incantesimi = elencoIncantesimi(d);
   return [
-    d.continuazione ? null : h('div', { class: 'testa-magia' },
-      riquadro('Punti Magia', h('p', { class: 'valore-grande' }, `max ${d.pm ?? '—'}`), h('div', { class: 'casella-grande' }, h('span', {}, 'attuali')),
-        d.lancio ? h('p', { class: 'piccolo' }, h('strong', {}, `Potere per lanciare ${d.lancio.va}`), ` (armatura ${segno(d.lancio.penalita)}, §7.11.1)`) : null),
-      riquadro('Incantesimi',
-        h('p', {}, `Conosciuti ${d.conosciuti} / ${d.quota}`),
-        h('p', {}, h('strong', {}, `Livello massimo: ${d.livelloMassimo}`))),
-      riquadro(`Prove di Potere (scala ${d.scalaPotere})`,
+    h('div', { class: 'f4-testa' },
+      box({ titolo: 'Punti Magia', tinta: 'pm', forte: true },
+        h('div', { class: 'massimo' }, h('span', {}, 'massimi'), h('span', { class: 'valore' }, String(d.pm ?? '—'))),
+        h('p', { class: 'piccolo' }, 'attuali'),
+        d.pm ? quadratini(d.pm, { piu: true }) : null),
+      box({ titolo: 'Lancio' },
+        h('dl', { class: 'voci-stampa' },
+          voce('Potere per lanciare', h('strong', {}, `VA ${v.potere ?? '—'}`), d.lancio ? ` (armatura ${segno(d.lancio.penalita)}, §7.11.1)` : null),
+          voce('Focalizzazione', `${segno(v.focalizzazione)} a Potere (1 Azione Principale prima)`),
+          voce('Ingaggio', `${segno(v.ingaggio)} a Potere, Prova sempre richiesta`),
+          voce('Anticipazione', `PM ×${v.anticipazione}, Potere più difficile di una categoria`),
+          voce('Armi da lancio', `${segno(v.armiDaLancio)} negli Incantesimi`),
+          voce('Incantesimi', `conosciuti ${d.conosciuti} / ${d.quota} · livello massimo ${d.livelloMassimo}`)),
         h('table', { class: 'tabella-stampa scala' },
           h('tbody', {},
-            h('tr', {}, h('th', {}, 'Livello'), d.scala.map((r) => h('td', {}, r.livelli))),
-            h('tr', {}, h('th', {}, 'Prova'), d.scala.map((r) => h('td', {}, r.prova))))))),
-    !d.continuazione && d.riserve?.length ? riquadro('Riserve esterne (Magia sez. 6)',
-      h('table', { class: 'tabella-stampa riserve' },
-        h('thead', {}, h('tr', {}, ['Contenitore', 'Chroma', 'Alimenta', 'Sint.', 'PM attuali'].map((c) => h('th', {}, c)))),
-        h('tbody', {}, d.riserve.map((r) => h('tr', {},
-          h('td', {}, r.nome, r.integrato ? h('span', { class: 'sigla' }, ' (integrata)') : null),
-          h('td', {}, r.energia),
-          h('td', {}, r.integrato ? 'attivazioni (A.18)' : r.regoleRimandate ? 'regole rimandate' : r.macrofamiglie.length >= 3 ? 'tutte' : r.macrofamiglie.join(', ') || '—'),
-          h('td', {}, r.sintonizzato ? `✔ ${r.costo}` : `○ ${r.costo}`),
-          // una casella per PM fino a 25; oltre, una riga da compilare
-          h('td', {}, r.capacita <= 25 ? caselle(r.capacita, 'piccole') : [h('span', { class: 'casella-lunga corta' }), ` / ${r.capacita}`])))))) : null,
-    h('div', { class: 'colonne-incantesimi' },
-      d.macrofamiglie.length ? d.macrofamiglie.map((m) => [
-        h('h2', { class: 'macro' }, m.nome, m.continua ? h('span', { class: 'sigla' }, ' (continua)') : null),
-        m.specializzazioni.map((sp) => [
-          h('h3', { class: 'spec' }, sp.nome, sp.continua ? ' (continua)' : null),
-          sp.incantesimi.map((i) => h('article', { class: 'incantesimo-stampa' },
-            h('h4', {}, i.nome, ' ', pallini(i.livelloBase), h('span', { class: 'sigla' }, ` · livello base ${i.livelloBase}`)),
-            i.intestazione ? h('p', { class: 'piccolo' }, i.intestazione) : null,
-            i.lancio ? h('p', {}, i.lancio) : null,
-            i.righe.length ? tabella(i.colonne, i.righe, { classe: 'versioni' })
-              : h('p', { class: 'piccolo' }, `Tabella: Manuale della Magia, scheda ${i.scheda}.`))),
-        ]),
-      ]) : h('p', {}, 'Nessun incantesimo scelto.')),
+            h('tr', {}, h('th', {}, `Livello (scala ${d.scalaPotere})`), d.scala.map((r) => h('td', {}, r.livelli))),
+            h('tr', {}, h('th', {}, 'Prova di Potere'), d.scala.map((r) => h('td', {}, r.prova)))))),
+      d.riserve?.length ? box({ titolo: 'Contenitori di Chroma (Magia sez. 6)', classe: 'f4-riserve' },
+        d.riserve.map((r) => h('div', { class: 'riserva' },
+          h('p', {}, h('strong', {}, r.nome), h('span', { class: 'sigla' }, ` · ${r.energia} · ${r.integrato ? 'attivazioni (A.18)' : r.regoleRimandate ? 'regole rimandate' : r.macrofamiglie.length >= 3 ? 'tutte le macrofamiglie' : r.macrofamiglie.join(', ') || '—'} · ${r.sintonizzato ? 'sintonizzato' : 'da sintonizzare'} (${r.costo})`)),
+          quadratini(r.capacita)))) : null),
+    box({ titolo: `Incantesimi (${incantesimi.length})`, riempitivo: true, classe: 'f4-indice' },
+      incantesimi.length ? tabellaIndice(incantesimi.map(rigaIndice)) : h('p', {}, 'Nessun incantesimo scelto.')),
   ];
 }
 
-/** Foglio Magia: per ora una pagina, con l'avviso se non entra (l'impaginazione è del foglio 4). */
-function impaginaMagia(contenitore, foglio) {
-  riempiRighe(foglio);
-  return 1;
+/**
+ * Impagina il foglio Magia: righe dell'indice che non entrano nella prima pagina e schede degli
+ * incantesimi su pagine successive, riempite misurando nel DOM. Restituisce il numero di pagine.
+ */
+function impaginaMagia(contenitore, foglio, d, piede) {
+  const incantesimi = elencoIncantesimi(d);
+  // 1. indice: le righe oltre il fondo del riquadro passano alla pagina dopo
+  const box1 = foglio.querySelector('.f4-indice > .contenuto');
+  const fondo = box1.getBoundingClientRect().bottom - 1;
+  const righe = [...foglio.querySelectorAll('.indice-magia tbody tr')];
+  const primaFuori = righe.findIndex((r) => r.getBoundingClientRect().bottom > fondo);
+  const resto = primaFuori < 0 ? [] : righe.slice(primaFuori);
+  resto.forEach((r) => r.remove());
+  if (!incantesimi.length) return 1;
+
+  let ultima = foglio;
+  let pagine = 1;
+  const nuovaPagina = (conIndice) => {
+    const f = creaFoglio('magia', 'Magia (continua)', d, piede, () => [
+      conIndice ? box({ titolo: 'Incantesimi (continua)', classe: 'f4-indice-seguito' }, tabellaIndice(resto)) : null,
+      h('div', { class: 'colonne-schede' }),
+    ]);
+    ultima.after(f);
+    ultima = f;
+    pagine++;
+    return f.querySelector('.colonne-schede');
+  };
+  let colonne = nuovaPagina(resto.length > 0);
+  // altezza naturale di una scheda nella larghezza di una colonna
+  const stile = getComputedStyle(colonne);
+  const larghezza = (colonne.clientWidth - 2 * parseFloat(stile.columnGap)) / 3;
+  const misura = h('div', { class: 'misura-scheda', style: `width: ${larghezza}px` });
+  colonne.closest('.foglio').append(misura);
+  const altezzaColonna = colonne.clientHeight;
+  const fuori = [];
+  for (const i of incantesimi) {
+    const scheda = schedaIncantesimo(i);
+    misura.append(scheda);
+    // una scheda più alta di una colonna continua nella colonna accanto; le altre non si spezzano
+    if (scheda.getBoundingClientRect().height > altezzaColonna) scheda.classList.add('lunga');
+    colonne.append(scheda);
+    if (trabocca(colonne) && colonne.children.length > 1) {
+      colonne = nuovaPagina(false);
+      colonne.append(scheda);
+    }
+    if (trabocca(colonne)) fuori.push(i.nome);
+  }
+  misura.remove();
+  if (fuori.length) console.warn('Schede più lunghe di una pagina:', fuori.join(', '));
+  return pagine;
 }

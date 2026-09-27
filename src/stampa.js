@@ -307,14 +307,19 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
         incantesimi: inc.conosciuti.filter((i) => i.macrofamiglia === m.nome && i.specializzazione === sp).map((i) => {
           const righe = versioniAccessibili(i, inc.livelloMassimo);
           const base = rigaAlLivello(i, i.livello_base) ?? {};
-          const campo = (re) => Object.entries(base).find(([k]) => re.test(k))?.[1] ?? '—';
+          // valore della colonna al livello base; l'unità nel nome della colonna («Gittata Q») va sul numero
+          const campo = (re) => {
+            const [k, v] = Object.entries(base).find(([x]) => re.test(x)) ?? [];
+            if (v === undefined || v === '') return '—';
+            return / Q$/.test(k) && /^\d+$/.test(v) ? `${v} Q` : v;
+          };
           return {
             nome: i.nome,
             livelloBase: i.livello_base,
             macrofamiglia: i.macrofamiglia,
             // SS, foglio 4: indice per il tavolo e scheda completa (descrizione e regole)
             indice: {
-              pm: campo(/^PM$/), gittata: campo(/Gittata/), durata: campo(/Durata/),
+              pm: campo(/PM/), gittata: campo(/Gittata/), durata: campo(/Durata/),
               tempo: i.meccanica?.azioni?.azioni_principali ? `${i.meccanica.azioni.azioni_principali} AP` : i.meccanica?.azioni?.tempo ?? '—',
             },
             descrizione: i.descrizione ?? '',
