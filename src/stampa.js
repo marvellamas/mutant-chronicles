@@ -1,7 +1,7 @@
 // Dati della scheda stampata (docs/roadmap-equipaggiamento-e-scheda.md, §2): quattro fogli A4
 // orizzontali, preparati solo da calcolaScheda e dai dati delle regole. Funzioni pure, senza DOM:
-// la vista src/ui/stampa.js trasforma il risultato in HTML e riduce il carattere se un foglio
-// non entra nella pagina.
+// la vista src/ui/stampa.js trasforma il risultato in HTML e lo impagina (il carattere non si
+// riduce: css/stampa.css, --ss-font).
 import { calcolaScheda } from './calc.js';
 import { migraPersonaggio } from './avanzamento.js';
 import { valoreTiro } from './tiri.js';

@@ -96,12 +96,12 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 }
 
 /* filigrana (solo foglio 1): stemma della Corporazione, in grigio, sotto tutto */
-.filigrana {
+.filigrana-stampa {
   position: absolute; z-index: 0; inset: 0;
   display: flex; align-items: center; justify-content: center;
   pointer-events: none;
 }
-.filigrana img { width: 150mm; height: 150mm; object-fit: contain; opacity: 0.08; filter: grayscale(1); }
+.filigrana-stampa img { width: 150mm; height: 150mm; object-fit: contain; opacity: 0.08; filter: grayscale(1); }
 
 /* elementi comuni */
 .foglio h1 { font-size: 24pt; margin: 0; line-height: 1.05; }
@@ -206,7 +206,7 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .foglio .pallini-livello { gap: 0.9mm; cursor: auto; }
 .foglio .gruppo-pallini { gap: 0.4mm; }
 
-/* === fogli (sezioni per foglio) === */
+/* === fogli === */
 /* Foglio 1 — Identità */
 .f1-testa { display: grid; grid-template-columns: auto 1fr; gap: 6mm; align-items: end; margin-bottom: 2mm; }
 .f1-nome h1 { font-size: 26pt; }

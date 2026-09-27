@@ -1,6 +1,6 @@
 # Palette della scheda digitale
 
-I valori stanno in `css/palette.css`, come variabili CSS con la variante per il tema scuro (`prefers-color-scheme: dark`). Qui si spiega a che cosa serve ogni colore. La SS (stampa) userà la stessa palette in una sessione successiva.
+I valori stanno in `css/palette.css`, come variabili CSS con la variante per il tema scuro (`prefers-color-scheme: dark`). Qui si spiega a che cosa serve ogni colore. La SS (stampa) usa gli stessi significati con variabili proprie `--ss-*` (sezione «Scheda da stampare» in fondo).
 
 **Regola:** i colori riservati hanno un solo significato e non si riusano per altro. Il colore dice *che cos'è*; le barre verde/giallo/rosso di `css/style.css` (`--barra-*`) dicono *come sta* una riserva e restano indipendenti.
 
@@ -73,3 +73,18 @@ Sono distinte dai colori riservati: il rosso delle bandierine tende all'arancio,
 - `--ok`, `--attenzione`, `--errore`: esito di controlli e messaggi.
 - `--barra-verde`, `--barra-giallo`, `--barra-rosso`: stato delle riserve, cioè quanto resta.
 - I colori dei cristalli di Chroma (`.chroma-*`: Bianco, Rosso, Blu, Verde, Viola) sono il colore fisico del cristallo nel mondo di gioco, non un codice dell'interfaccia.
+
+## Scheda da stampare (css/stampa.css)
+
+La SS definisce i suoi colori in `body.vista-stampa` come `--ss-*`, con gli stessi valori del tema chiaro: la stampa non segue il tema scuro. Si stampano con `print-color-adjust: exact`. Il testo resta nero sui fondi chiari; il bianco solo nelle intestazioni piene. Ogni riquadro ha bordo spesso e intestazione nel suo colore, fondo sfumato leggero e righe alterne tinte.
+
+| Uso nella SS | Variabile | Valore |
+|---|---|---|
+| Punti Vita (riquadro del foglio 3) | `--ss-pv`, `--ss-pv-tenue` | `#c8102e`, `#fdecee` |
+| Punti Magia (riquadro del foglio 4) | `--ss-pm`, `--ss-pm-tenue` | `#1d5fc4`, `#eaf0fc` |
+| Punti Eroe (riquadro del foglio 1) | `--ss-pe`, `--ss-pe-tenue` | `#1b7a3a`, `#e8f5ec` |
+| Incantesimi di macrofamiglia Fisica, Mentale, Spirituale (righe dell'indice, intestazione delle schede) | `--ss-fisica`, `--ss-mentale`, `--ss-spirituale` e i `-tenue` | come `--fisica`, `--mentale`, `--spirituale` |
+| Caratteristiche e Abilità (i riquadri principali dei fogli 1 e 2) | `--ss-accento`, `--ss-accento-tenue` | `#8a3b12`, `#f6e8df` |
+| Riquadri neutri, testate dei fogli, righe delle armi | `--ss-acciaio`, `--ss-acciaio-tenue` | `#4a5260`, `#eceef1` |
+
+In bianco e nero le intestazioni diventano grigio scuro con testo bianco e i fondi tenui quasi bianchi: la scheda resta leggibile. La filigrana del foglio 1 è lo stemma della Corporazione in scala di grigi all'8%.

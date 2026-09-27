@@ -3,13 +3,19 @@
 // Uso: con il server statico acceso sulla porta 8000 (python -m http.server 8000),
 //   node tools/collaudo_pdf.mjs
 // Scrive tests/collaudo/<nome>.pdf e stampa pagine, formato e avvisi della barra di stampa.
+// Variabili facoltative: PORTA (8000), CARTELLA (cartella dei .json e dei PDF, relativa alla
+// radice del repo: tests/collaudo; per gli esempi della SS: docs/esempi-stampa), IMMAGINI
+// (cartella dove salvare un PNG per ogni foglio, per controllare l'impaginazione).
 import { spawn } from 'node:child_process';
 import { writeFileSync, mkdirSync, rmSync, readdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 
 const DIR = `${tmpdir()}/mutant-collaudo-pdf`;
-const OUT = fileURLToPath(new URL('../tests/collaudo', import.meta.url));
+const CARTELLA = process.env.CARTELLA ?? 'tests/collaudo';
+const OUT = fileURLToPath(new URL(`../${CARTELLA}`, import.meta.url));
+const PORTA = process.env.PORTA ?? '8000';
+const IMMAGINI = process.env.IMMAGINI ?? null;
 const EDGE = process.env.EDGE ?? 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe';
 rmSync(DIR, { recursive: true, force: true }); // niente moduli in cache da una prova precedente
 mkdirSync(DIR, { recursive: true });
@@ -32,15 +38,15 @@ ws.addEventListener('message', (e) => {
 const cdp = (method, params = {}) => new Promise((r) => { const id = ++n; attese.set(id, r); ws.send(JSON.stringify({ id, method, params })); });
 const valuta = async (expr) => (await cdp('Runtime.evaluate', { expression: expr, awaitPromise: true, returnByValue: true })).result?.result?.value;
 
-const FILE = readdirSync(OUT).filter((f) => f.endsWith('.json')).map((f) => f.slice(0, -5)).sort();
+const FILE = readdirSync(OUT).filter((f) => f.endsWith('.json') && !f.startsWith('_')).map((f) => f.slice(0, -5)).sort();
 await cdp('Page.enable');
-await cdp('Page.navigate', { url: 'http://localhost:8000/' });
+await cdp('Page.navigate', { url: `http://localhost:${PORTA}/` });
 await attendi(1500);
 console.log(await valuta(`(async () => {
   const { deserializzaPersonaggio } = await import('/src/character.js');
   const tutti = {};
   for (const f of ${JSON.stringify(FILE)}) {
-    const { creazione, livelli, sessione } = deserializzaPersonaggio(await (await fetch('/tests/collaudo/' + f + '.json')).text());
+    const { creazione, livelli, sessione } = deserializzaPersonaggio(await (await fetch('/${CARTELLA}/' + f + '.json')).text());
     tutti[f] = { id: f, scelte: creazione, livelli, sessione, passo: 9, aggiornato: new Date().toISOString() };
   }
   localStorage.setItem('mutant.personaggi.v1', JSON.stringify(tutti));
@@ -48,9 +54,20 @@ console.log(await valuta(`(async () => {
 })()`));
 
 for (const id of FILE) {
-  await cdp('Page.navigate', { url: `http://localhost:8000/#/p/${id}/stampa` });
+  await cdp('Page.navigate', { url: `http://localhost:${PORTA}/#/p/${id}/stampa` });
   await attendi(2500);
   const avvisi = await valuta(`document.querySelector('.barra-avvisi')?.innerText ?? '(nessuna barra)'`);
+  if (IMMAGINI) {
+    mkdirSync(IMMAGINI, { recursive: true });
+    await cdp('Emulation.setDeviceMetricsOverride', { width: 1400, height: 1000, deviceScaleFactor: 1.5, mobile: false });
+    await attendi(500);
+    const rett = await valuta(`[...document.querySelectorAll('.foglio')].map((f) => { const r = f.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, width: r.width, height: r.height }; })`);
+    for (const [k, r] of rett.entries()) {
+      const img = await cdp('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true, clip: { ...r, scale: 1 } });
+      writeFileSync(`${IMMAGINI}/${id}-${k + 1}.png`, Buffer.from(img.result.data, 'base64'));
+    }
+    await cdp('Emulation.clearDeviceMetricsOverride');
+  }
   const pdf = await cdp('Page.printToPDF', { preferCSSPageSize: true, printBackground: true });
   const buf = Buffer.from(pdf.result.data, 'base64');
   writeFileSync(`${OUT}/${id}.pdf`, buf);

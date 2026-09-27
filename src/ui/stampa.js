@@ -36,7 +36,7 @@ function creaFoglio(id, titolo, dati, piede, corpo = corpi[id]) {
         // badge della pagina accanto al titolo (un <img>: si stampa anche senza «grafica di sfondo»)
         h('span', { class: 'foglio-titolo' }, iconaPagina(id, '96', { classe: 'badge-foglio', lato: 48 }), titolo),
         h('span', { class: 'foglio-nome' }, piede.nome)),
-      id === 'identita' && dati.corporazione ? h('div', { class: 'filigrana', 'aria-hidden': 'true' }, stemma(dati.corporazione, '512', { alt: '' })) : null,
+      id === 'identita' && dati.corporazione ? h('div', { class: 'filigrana-stampa', 'aria-hidden': 'true' }, stemma(dati.corporazione, '512', { alt: '' })) : null,
       h('div', { class: 'foglio-corpo' }, corpo(dati)),
       h('footer', { class: 'foglio-piede' })));
 }
@@ -111,9 +111,6 @@ function box({ titolo, tinta = null, forte = false, riempitivo = false, classe =
     titolo ? h('h2', {}, titolo) : null,
     h('div', { class: 'contenuto' }, ...contenuto));
 }
-const riquadro = (titolo, ...contenuto) => box({ titolo }, ...contenuto);
-const caselle = (n, classe = '') => h('span', { class: `caselle ${classe}` }, Array.from({ length: n }, () => h('span', { class: 'casella' })));
-const righeVuote = (n) => h('div', { class: 'righe-vuote' }, Array.from({ length: n }, () => h('div', { class: 'riga-vuota' })));
 
 /**
  * Quadratini da segnare a matita: file da 10 con uno stacco ogni 5 e il numero progressivo a

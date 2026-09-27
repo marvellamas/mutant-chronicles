@@ -1,0 +1,262 @@
+{
+  "formato": "mutant-personaggio",
+  "versione": 6,
+  "versioni_dati": {
+    "abilita": "Giocatore 0.43",
+    "addestramenti": "Giocatore 0.43",
+    "caratteristiche": "Giocatore 0.43",
+    "classi": "Giocatore 0.43",
+    "corporazioni": "Giocatore 0.43",
+    "equipaggiamento": "Armamenti 0.50",
+    "incantesimi": "Magia 1.1",
+    "regole": "Giocatore 0.43; Magia 1.1",
+    "specializzazioni": "Giocatore 0.43",
+    "talenti_liberi": "Giocatore 0.43; Magia 1.1",
+    "tecniche_interiori": "Giocatore 0.43"
+  },
+  "scelte": {
+    "nome": "Sorella Ilaria Venn",
+    "concetto": "",
+    "soprannome": "",
+    "eta": "",
+    "cittaNascita": "",
+    "altezza": "",
+    "peso": "",
+    "occhi": "",
+    "capelli": "",
+    "manoDominante": "",
+    "segniDistintivi": "",
+    "puntiEsperienza": null,
+    "corporazione": "Fratellanza",
+    "puntiCaratteristica": {
+      "INT": 2,
+      "SAG": 1,
+      "COS": 1,
+      "DES": 1
+    },
+    "addestramento": "Taumaturgo",
+    "classe": "Arcanista",
+    "puntiAbilitaLiberi": {
+      "Potere": 2,
+      "Occultismo": 2,
+      "Artefatti": 1
+    },
+    "incantesimi": [
+      "Colpo Elementale",
+      "Muro Elementale",
+      "Scudo",
+      "Armatura di Forza",
+      "Dardo Psichico",
+      "Barriera Mentale",
+      "Comando",
+      "Illusione",
+      "Cura Ferite",
+      "Scudo Spirituale",
+      "Luce Mistica",
+      "Benedizione",
+      "Esorcizzare Corruzione"
+    ],
+    "puntiEroe": {
+      "valore": 4,
+      "origine": "manuale"
+    },
+    "equipaggiamento": [
+      {
+        "uid": "emui9pxq89w9y",
+        "rif": "armature_corporative:armatura-del-mistico",
+        "stato": "indossata",
+        "quantita": 1,
+        "note": ""
+      },
+      {
+        "uid": "emui9pykakubk",
+        "rif": "armi_corporative:bordone-templare",
+        "stato": "impugnata",
+        "quantita": 1,
+        "note": "",
+        "sintonizzato": true
+      },
+      {
+        "uid": "emui9pzefde6r",
+        "rif": "artefatti:batteria-da-5-pm-chroma-bianco",
+        "stato": "trasportato",
+        "quantita": 1,
+        "note": "",
+        "sintonizzato": true
+      },
+      {
+        "uid": "emui9qmqgigth",
+        "rif": "corredi_dispositivi:kit-trauma-fratellanza",
+        "stato": "in_uso",
+        "quantita": 1,
+        "note": ""
+      }
+    ]
+  },
+  "livelli": [
+    {
+      "livello": 2,
+      "caratteristiche": {
+        "INT": 1,
+        "SAG": 1
+      },
+      "incantesimi": [
+        "Cura Malattie"
+      ]
+    },
+    {
+      "livello": 3,
+      "talentoLibero": {
+        "id": "specializzazione-elementi"
+      }
+    },
+    {
+      "livello": 4,
+      "grado": {
+        "classe": "Mistico"
+      },
+      "tiroPV": {
+        "valore": 3,
+        "origine": "manuale"
+      },
+      "tiroPM": {
+        "valore": 2,
+        "origine": "manuale"
+      },
+      "incantesimi": [
+        "Telepatia",
+        "Memoria",
+        "Guarigione",
+        "Arma Mistica",
+        "Dardo Spirituale",
+        "Recupero Rapido"
+      ],
+      "puntiAbilita": {
+        "Rituali": 2,
+        "Medicina": 2,
+        "Percezione": 1
+      }
+    },
+    {
+      "livello": 5,
+      "talentoLibero": {
+        "id": "iniziativa-migliorata"
+      }
+    },
+    {
+      "livello": 6,
+      "caratteristiche": {
+        "INT": 1,
+        "SAG": 1
+      },
+      "incantesimi": [
+        "Controllo Elementale"
+      ]
+    },
+    {
+      "livello": 7,
+      "talentoLibero": {
+        "id": "buona-costituzione"
+      }
+    },
+    {
+      "livello": 8,
+      "grado": {
+        "classe": "Mistico"
+      },
+      "tiroPV": {
+        "valore": 2,
+        "origine": "manuale"
+      },
+      "tiroPM": {
+        "valore": 3,
+        "origine": "manuale"
+      },
+      "talentoClasse": "Canale Vitale",
+      "incantesimi": [
+        "Esplosione Elementale",
+        "Cono Elementale",
+        "Indurre Sonno",
+        "Barriera Mistica"
+      ],
+      "puntiAbilita": {
+        "Artefatti": 2,
+        "Percezione": 1,
+        "Cultura": 1,
+        "Oratoria": 1
+      }
+    },
+    {
+      "livello": 9,
+      "talentoLibero": {
+        "id": "resistenza-alla-corruzione"
+      }
+    },
+    {
+      "livello": 10,
+      "caratteristiche": {
+        "SAG": 1,
+        "COS": 1
+      }
+    },
+    {
+      "livello": 11,
+      "talentoLibero": {
+        "id": "sempre-allerta"
+      }
+    },
+    {
+      "livello": 12,
+      "grado": {
+        "classe": "Arcanista"
+      },
+      "tiroPV": {
+        "valore": 4,
+        "origine": "manuale"
+      },
+      "tiroPM": {
+        "valore": 4,
+        "origine": "manuale"
+      },
+      "talentoClasse": "Geometria Arcana",
+      "incantesimi": [
+        "Devastazione Elementale",
+        "Campo di Forza",
+        "Sovraccarico Sinaptico",
+        "Ipnosi",
+        "Rigenerazione",
+        "Esorcizzare Oscurità"
+      ],
+      "puntiAbilita": {
+        "Artefatti": 1,
+        "Medicina": 2,
+        "Cultura": 1,
+        "Oratoria": 1
+      }
+    }
+  ],
+  "sessione": {
+    "pvAttuali": 33,
+    "pmAttuali": 41,
+    "puntiEroe": 4,
+    "distintivi": 0,
+    "statiAttivi": [],
+    "ferite": 0,
+    "affaticamento": 0,
+    "munizioni": {
+      "emui9qmqgigth": {
+        "colpi": 5,
+        "riserve": 0
+      }
+    },
+    "chroma": {
+      "emui9pykakubk": {
+        "pmAttuali": 5
+      },
+      "emui9pzefde6r": {
+        "pmAttuali": 5
+      }
+    },
+    "note": ""
+  }
+}

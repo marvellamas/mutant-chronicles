@@ -49,3 +49,13 @@ Armamenti v0.52 §7.21: elmetti e modifiche nel catalogo, con effetti nei valori
 ## 8. ✔ Armature corporative con proprietà — fatto il 27 settembre 2026
 
 Le proprietà delle armature corporative tradotte in effetti tipizzati (docs/proprieta-armature.md).
+
+## 9. ✔ SS a colori e impaginazione dei fogli — fatto il 27 settembre 2026
+
+Scheda da stampare ridisegnata (`src/ui/stampa.js`, `css/stampa.css`): carattere fisso a 10 pt (9 pt per le intestazioni di colonna, `--ss-font` e `--ss-font-small`), riempitivi che prendono lo spazio libero, quadratini uguali in tutti i fogli, colori della palette della SD (`docs/palette.md`, sezione «Scheda da stampare»), filigrana della Corporazione nel foglio 1.
+
+- ✔ Foglio 1: nome e anagrafica in alto, Caratteristiche in grande, Punti Eroe, Segni distintivi a quadratini, Background come riempitivo.
+- ✔ Foglio 2: Abilità a tutta altezza, Talenti e Annotazioni.
+- ✔ Foglio 3: riquadro compatto, armi con tutte le colonne e i colpi per caricatore, Protezioni, equipaggiamento con ind / zai / Altro, Ferite, Punti Vita a quadratini.
+- ✔ Foglio 4: Punti Magia, valori di lancio, contenitori di Chroma, indice e schede complete degli incantesimi su più pagine.
+- Esempi in `docs/esempi-stampa/` (PDF e personaggi di partenza), rigenerabili con `PORTA=8001 CARTELLA=docs/esempi-stampa node tools/collaudo_pdf.mjs`.
