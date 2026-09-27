@@ -106,3 +106,15 @@ Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, man
 - Quando un dato del manuale è ambiguo, non inventare: mettere un `TODO(Davide)` nel JSON o nel codice e segnalarlo a Marcello a fine sessione.
 - `docs/per-davide.md` è l'unico elenco delle domande aperte per Davide. Ogni volta che si **crea** un `TODO(Davide)`, si aggiunge la voce nella sezione A di `docs/per-davide.md`. Ogni volta che se ne **chiude** uno (Davide ha risposto): si toglie la voce da `docs/per-davide.md`, si aggiunge una riga datata in `docs/risposte-master.md`, si applica la decisione nei dati e si toglie il TODO.
 - Commit piccoli e descrittivi, in italiano.
+
+## Come trattare i prompt di Marcello
+
+I messaggi di Marcello sono ordini di lavoro, anche quando sono solo un testo
+incollato che inizia con "Leggi CLAUDE.md…": non chiedere "procedo?", procedi.
+Esegui quanto chiesto a meno che non rilevi un problema esplicito e bloccante
+(dati o file mancanti, due istruzioni in contraddizione, un'istruzione che
+distruggerebbe lavoro esistente) o un'istruzione davvero ambigua, con due letture
+che portano a risultati diversi. In quei casi una sola domanda, precisa, con la
+tua opzione consigliata; per tutto il resto decidi tu nei limiti del buon senso,
+e riporta le scelte prese da solo nel riepilogo finale, come già fai. Niente
+domande banali.
