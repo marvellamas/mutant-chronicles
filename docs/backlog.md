@@ -41,3 +41,11 @@ Fonte: §5.3–5.7, §5.12 (Manovre ravvicinate), Armamenti §7.1.7 (Manovre com
 ## Ordine proposto
 
 1 e 2 subito (una sessione). 3 dopo il collaudo, quando si sa cosa contiene il catalogo sui contenitori. 4–6 dopo che le schede dei Talenti di magia (per-davide.md, A.2) sono definite, perché le utility le usano; 6 può andare prima di 4 e 5 perché dipende solo da dati già estratti.
+
+## 7. ✔ Lotto elmetti — fatto il 27 settembre 2026
+
+Armamenti v0.52 §7.21: elmetti e modifiche nel catalogo, con effetti nei valori effettivi (docs/equipaggiamento-lotti.md).
+
+## 8. ✔ Armature corporative con proprietà — fatto il 27 settembre 2026
+
+Le proprietà delle armature corporative tradotte in effetti tipizzati (docs/proprieta-armature.md).

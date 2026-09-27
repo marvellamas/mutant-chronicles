@@ -611,9 +611,9 @@ function tabCombattimento(ctx, d) {
           p.proprieta.length ? h('tr', { class: 'alternativa' }, h('td', { colspan: 6 },
             h('span', { class: 'proprieta-arma' }, p.proprieta.map((x) => h('span', { class: 'etichetta', title: x.testo }, x.nome))))) : null,
           // effetti tipizzati delle proprietà e promemoria (docs/effetti-oggetti.md, docs/proprieta-armature.md)
-          p.modifiche?.length || p.effetti?.length || p.promemoria?.length ? h('tr', { class: 'alternativa' }, h('td', { colspan: 6 }, h('small', {},
+          p.modifiche?.length || p.effetti?.some((e) => e.proprieta) || p.promemoria?.length ? h('tr', { class: 'alternativa' }, h('td', { colspan: 6 }, h('small', {},
             p.modifiche?.length ? [h('strong', {}, p.tipo === 'armatura' ? 'Elmetto standard con: ' : 'Modifiche: '), p.modifiche.join(', '), '. '] : null,
-            p.effetti?.length ? [h('strong', {}, 'Effetti: '), p.effetti.map((e) => testoEffettoOggetto(e)).join(' · '), '. '] : null,
+            p.effetti?.some((e) => e.proprieta) ? [h('strong', {}, 'Effetti: '), p.effetti.filter((e) => e.proprieta).map((e) => testoEffettoOggetto(e)).join(' · '), '. '] : null,
             p.promemoria?.length ? [h('strong', {}, 'Promemoria: '), p.promemoria.join(', '), '.'] : null))) : null,
         ]))))
       : h('p', { class: 'vuoto' }, 'Nessuna protezione indossata o imbracciata.'),

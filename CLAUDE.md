@@ -58,7 +58,7 @@ src/
   sessione.js   valori attuali di sessione (modalità tavolo)
   stampa.js     dati dei fogli di stampa e delle tab
   ui/           wizard a passi (fasi 0–9 del §2.0), scheda a tab, Sali di livello, stampa, import/export
-data/           JSON delle regole (fonte di verità): 10 file in data/, catalogo in data/equipaggiamento/ (index.json + 14 file)
+data/           JSON delle regole (fonte di verità): 10 file in data/, catalogo in data/equipaggiamento/ (index.json + 15 file)
 tests/          node --test; tests/collaudo/ tre personaggi di riferimento con PDF
 tools/          estrazione dai manuali, generatori dei lotti (tools/lotti/), collaudo_pdf.mjs, genera_immagini.py
 img/            stemmi e icone generati (img/immagini.json li elenca); originali in img/originali/, non tracciati

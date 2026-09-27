@@ -602,6 +602,15 @@ Fatto il 26 settembre 2026, commit «Lotto 12 del catalogo: artefatti e sintoniz
     Visione notturna e termica e SIN percettivo restano testo (il SIN richiede l'innesto).
   - **Scostamenti:** nessun peso (A.30); le modifiche non hanno PI né Qualità propri
     («condividono l'Integrità dell'elmetto», §7.21.3).
+- ✔ **Proprietà delle armature corporative** — Armamenti v0.52 §7.11–§7.17, §7.22.5, fatto il
+  27 settembre 2026. Censimento e classificazione in `docs/proprieta-armature.md`; generatore
+  `tools/lotti/lotto_proprieta_armature.py`, che scrive `effetti` in `armature_corporative.json`
+  (stesso file, stesso ordine, nessun campo tolto) e `proprieta_gestite` in `armature.json`.
+  - **Scostamento:** le armature corporative sono 91 (non 51): tutte coperte; 88 ricevono effetti.
+  - **38 proprietà distinte:** 26 numeriche, 4 testuali (promemoria), 8 già gestite dalle penalità
+    effettive o dai PI, 0 rimandate.
+  - **Frasi:** per le Contromisure e Colpo assistito il testo della proprietà nei dati è un
+    riassunto del generatore del lotto 6: la «condizione» usa la frase del §7.11.4 e del §7.14.
 
 ## Regole di ogni lotto
 

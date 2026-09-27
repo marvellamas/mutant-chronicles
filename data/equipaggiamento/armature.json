@@ -111,5 +111,16 @@
       "rinforzi_ammessi": [],
       "proprieta": []
     }
-  ]
+  ],
+  "proprieta_gestite": [
+    "Struttura robusta",
+    "Articolazione d’assalto",
+    "Articolazione di tiro",
+    "Articolazione da tiro",
+    "Articolazione da ricognizione",
+    "Assetto da incursione",
+    "Assetto da pattuglia",
+    "Assetto mistico"
+  ],
+  "_nota_proprieta_gestite": "Proprietà delle armature già gestite dalle penalità effettive del modello (penalita) o dai PI della tabella: nessun effetto in più e nessun promemoria (docs/proprieta-armature.md)."
 }

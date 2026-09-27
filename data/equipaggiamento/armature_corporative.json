@@ -44,6 +44,18 @@
           "nome": "Manutenzione semplice",
           "testo": "Concede +1 VA alle Prove di Tecnologia per riparare quell’armatura. Restano necessari strumenti e materiali adatti; la proprietà non abbrevia automaticamente i tempi e non aumenta i PI ripristinati (§7.11.4)."
         }
+      ],
+      "effetti": [
+        {
+          "abilita": "Tecnologia",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "riparare l’armatura",
+          "beneficio": "manutenzione",
+          "condizione": "Concede +1 VA alle Prove di Tecnologia per riparare quell’armatura.",
+          "fonte": "Armamenti §7.11.5",
+          "proprieta": "Manutenzione semplice"
+        }
       ]
     },
     {
@@ -85,6 +97,17 @@
         {
           "nome": "Imbottita 1",
           "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.11.5",
+          "proprieta": "Imbottita 1"
         }
       ]
     },
@@ -129,6 +152,40 @@
         {
           "nome": "Interfaccia da equipaggio 1",
           "testo": "Concede +1 VA alle Prove di Pilotare di mezzi terrestri corazzati quando la protezione è collegata a comandi compatibili e alimentati. Non concede bonus agli attacchi (§7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Fuoco",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.11.5",
+          "proprieta": "Ignifuga 2"
+        },
+        {
+          "tipo": "caratteristica",
+          "caratteristiche": [
+            "FOR",
+            "DES"
+          ],
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro Sbilanciante",
+          "beneficio": "stabile",
+          "condizione": "Non è una Prova Salvezza e non si estende automaticamente ad altri tentativi di mantenere l’equilibrio o agli spostamenti di Sbalzante.",
+          "fonte": "Armamenti §7.11.5",
+          "proprieta": "Stabile 2"
+        },
+        {
+          "abilita": "Pilotare",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "mezzi terrestri corazzati",
+          "condizione": "Concede +1 VA alle Prove di Pilotare di mezzi terrestri corazzati quando la protezione è collegata a comandi compatibili e alimentati.",
+          "fonte": "Armamenti §7.11.5",
+          "proprieta": "Interfaccia da equipaggio 1"
         }
       ]
     },
@@ -182,6 +239,27 @@
         {
           "nome": "Filtro respiratorio 2",
           "testo": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata. Richiede aria respirabile; non costituisce una riserva d’ossigeno né una tenuta per vuoto o immersione (§7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Furtività",
+          "valore": 1,
+          "ambito": "situazionale",
+          "condizione": "Si sceglie l’ambiente della livrea, per esempio artico, boscoso, desertico o urbano.",
+          "fonte": "Armamenti §7.11.5",
+          "proprieta": "Mimetica ambientale 1"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "tempra",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro veleni e agenti patogeni inalati",
+          "beneficio": "filtro_respiratorio",
+          "condizione": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata.",
+          "fonte": "Armamenti §7.11.5",
+          "proprieta": "Filtro respiratorio 2"
         }
       ]
     },
@@ -247,6 +325,26 @@
             }
           }
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "ar_contro",
+          "contro": "esplosioni",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Aumenta di 1 l’AR fornita dall’armatura contro danni Naturali o Magici di esplosioni, comprese granate, razzi e cariche da demolizione.",
+          "fonte": "Armamenti §7.11.5",
+          "proprieta": "Antiesplosione 1"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Fuoco",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.11.5",
+          "proprieta": "Ignifuga 2"
+        }
       ]
     },
     {
@@ -284,6 +382,16 @@
         {
           "nome": "Mimetismo 2",
           "testo": "Concede +2 VA alla Prova unica di Furtività per nascondersi o muoversi senza essere individuati, quando esistono condizioni concrete per farlo. Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito (§7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Furtività",
+          "valore": 2,
+          "ambito": "situazionale",
+          "condizione": "Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito.",
+          "fonte": "Armamenti §7.11.5",
+          "proprieta": "Mimetismo 2"
         }
       ]
     },
@@ -327,6 +435,26 @@
           "nome": "Isolante 2",
           "testo": "Contromisura del §5.24 contro Elettricità: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.11.5",
+          "proprieta": "Imbottita 2"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Elettricità",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.11.5",
+          "proprieta": "Isolante 2"
+        }
       ]
     },
     {
@@ -368,6 +496,28 @@
         {
           "nome": "Protezione acustica 2",
           "testo": "Concede +2 alla Prova Salvezza espressamente richiesta contro un effetto sonoro o un rumore dannoso. Non è un bonus generale contro esplosioni (§7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "ar_contro",
+          "contro": "esplosioni",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Aumenta di 1 l’AR fornita dall’armatura contro danni Naturali o Magici di esplosioni, comprese granate, razzi e cariche da demolizione.",
+          "fonte": "Armamenti §7.11.5",
+          "proprieta": "Antiesplosione 1"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": null,
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro effetti sonori o rumori dannosi",
+          "beneficio": "protezione_acustica",
+          "condizione": "Concede +2 alla Prova Salvezza espressamente richiesta contro un effetto sonoro o un rumore dannoso.",
+          "fonte": "Armamenti §7.11.5",
+          "proprieta": "Protezione acustica 2"
         }
       ]
     },
@@ -411,6 +561,26 @@
           "nome": "Imbracatura da sella 1",
           "testo": "Concede +1 VA alle Prove di Pilotare già richieste per mantenere il controllo della motocicletta dopo un urto o evitare di essere disarcionati, mentre è agganciata a una sella compatibile. Non introduce una Prova quando la situazione non la richiede (§7.11.4)."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.11.5",
+          "proprieta": "Imbottita 2"
+        },
+        {
+          "abilita": "Pilotare",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "controllo della motocicletta",
+          "condizione": "Concede +1 VA alle Prove di Pilotare già richieste per mantenere il controllo della motocicletta dopo un urto o evitare di essere disarcionati, mentre è agganciata a una sella compatibile.",
+          "fonte": "Armamenti §7.11.5",
+          "proprieta": "Imbracatura da sella 1"
+        }
       ]
     },
     {
@@ -452,6 +622,16 @@
         {
           "nome": "Mimetismo 1",
           "testo": "Concede +1 VA alla Prova unica di Furtività per nascondersi o muoversi senza essere individuati, quando esistono condizioni concrete per farlo. Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito (§7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Furtività",
+          "valore": 1,
+          "ambito": "situazionale",
+          "condizione": "Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito.",
+          "fonte": "Armamenti §7.11.5",
+          "proprieta": "Mimetismo 1"
         }
       ]
     },
@@ -499,6 +679,35 @@
           "nome": "Interfaccia da equipaggio 1",
           "testo": "Concede +1 VA alle Prove di Pilotare di mezzi terrestri corazzati quando la protezione è collegata a comandi compatibili e alimentati. Non concede bonus agli attacchi (§7.11.4)."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Fuoco",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.11.5",
+          "proprieta": "Ignifuga 2"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.11.5",
+          "proprieta": "Imbottita 2"
+        },
+        {
+          "abilita": "Pilotare",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "mezzi terrestri corazzati",
+          "condizione": "Concede +1 VA alle Prove di Pilotare di mezzi terrestri corazzati quando la protezione è collegata a comandi compatibili e alimentati.",
+          "fonte": "Armamenti §7.11.5",
+          "proprieta": "Interfaccia da equipaggio 1"
+        }
       ]
     },
     {
@@ -540,6 +749,27 @@
         {
           "nome": "Filtro respiratorio 2",
           "testo": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata. Richiede aria respirabile; non costituisce una riserva d’ossigeno né una tenuta per vuoto o immersione (§7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Furtività",
+          "valore": 1,
+          "ambito": "situazionale",
+          "condizione": "Si sceglie l’ambiente della livrea, per esempio artico, boscoso, desertico o urbano.",
+          "fonte": "Armamenti §7.11.5",
+          "proprieta": "Mimetica ambientale 1"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "tempra",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro veleni e agenti patogeni inalati",
+          "beneficio": "filtro_respiratorio",
+          "condizione": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata.",
+          "fonte": "Armamenti §7.11.5",
+          "proprieta": "Filtro respiratorio 2"
         }
       ]
     },
@@ -592,6 +822,26 @@
             }
           }
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.11.5",
+          "proprieta": "Imbottita 2"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Elettricità",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.11.5",
+          "proprieta": "Isolante 2"
+        }
       ]
     },
     {
@@ -632,6 +882,31 @@
         {
           "nome": "Stabile 2",
           "testo": "Concede +2 alla Prova di Caratteristica FOR o DES richiesta contro Sbilanciante. Non è una Prova Salvezza e non si estende automaticamente ad altri tentativi di mantenere l’equilibrio o agli spostamenti di Sbalzante. Più proprietà Stabile applicabili, comprese quelle di scudo e armatura, non si sommano: si usa il valore maggiore (§7.4.3, §7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.11.6",
+          "proprieta": "Imbottita 2"
+        },
+        {
+          "tipo": "caratteristica",
+          "caratteristiche": [
+            "FOR",
+            "DES"
+          ],
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro Sbilanciante",
+          "beneficio": "stabile",
+          "condizione": "Non è una Prova Salvezza e non si estende automaticamente ad altri tentativi di mantenere l’equilibrio o agli spostamenti di Sbalzante.",
+          "fonte": "Armamenti §7.11.6",
+          "proprieta": "Stabile 2"
         }
       ]
     },
@@ -678,6 +953,40 @@
           "nome": "Stabile 2",
           "testo": "Concede +2 alla Prova di Caratteristica FOR o DES richiesta contro Sbilanciante. Non è una Prova Salvezza e non si estende automaticamente ad altri tentativi di mantenere l’equilibrio o agli spostamenti di Sbalzante. Più proprietà Stabile applicabili, comprese quelle di scudo e armatura, non si sommano: si usa il valore maggiore (§7.4.3, §7.11.4)."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Fuoco",
+          "valore": 3,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.11.6",
+          "proprieta": "Ignifuga 3"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 3,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.11.6",
+          "proprieta": "Imbottita 3"
+        },
+        {
+          "tipo": "caratteristica",
+          "caratteristiche": [
+            "FOR",
+            "DES"
+          ],
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro Sbilanciante",
+          "beneficio": "stabile",
+          "condizione": "Non è una Prova Salvezza e non si estende automaticamente ad altri tentativi di mantenere l’equilibrio o agli spostamenti di Sbalzante.",
+          "fonte": "Armamenti §7.11.6",
+          "proprieta": "Stabile 2"
+        }
       ]
     },
     {
@@ -720,6 +1029,17 @@
           "nome": "Imbottita 1",
           "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.11.7",
+          "proprieta": "Imbottita 1"
+        }
       ]
     },
     {
@@ -761,6 +1081,25 @@
         {
           "nome": "Imbottita 1",
           "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Furtività",
+          "valore": 1,
+          "ambito": "situazionale",
+          "condizione": "Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito.",
+          "fonte": "Armamenti §7.11.7",
+          "proprieta": "Mimetismo 1"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.11.7",
+          "proprieta": "Imbottita 1"
         }
       ]
     },
@@ -821,6 +1160,51 @@
           "nome": "Protezione occulta 1",
           "testo": "Concede +1 alle PS Magia effettivamente richieste contro Oscura Simmetria, Corruzione e Paura. Si applica una sola volta anche quando un effetto rientra in più categorie. Non crea una Salvezza altrimenti assente e non si trasferisce alle PS Volontà contro Paura (§7.11.4, §7.17.1)."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "ar_contro",
+          "contro": "esplosioni",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Aumenta di 1 l’AR fornita dall’armatura contro danni Naturali o Magici di esplosioni, comprese granate, razzi e cariche da demolizione.",
+          "fonte": "Armamenti §7.11.7",
+          "proprieta": "Antiesplosione 1"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.11.7",
+          "proprieta": "Imbottita 2"
+        },
+        {
+          "tipo": "caratteristica",
+          "caratteristiche": [
+            "FOR",
+            "DES"
+          ],
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro Sbilanciante",
+          "beneficio": "stabile",
+          "condizione": "Non è una Prova Salvezza e non si estende automaticamente ad altri tentativi di mantenere l’equilibrio o agli spostamenti di Sbalzante.",
+          "fonte": "Armamenti §7.11.7",
+          "proprieta": "Stabile 2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "magia",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "contro Oscura Simmetria, Corruzione e Paura",
+          "beneficio": "protezione_occulta",
+          "condizione": "Si applica una sola volta anche quando un effetto rientra in più categorie.",
+          "fonte": "Armamenti §7.11.7",
+          "proprieta": "Protezione occulta 1"
+        }
       ]
     },
     {
@@ -870,6 +1254,39 @@
         {
           "nome": "Protezione occulta 1",
           "testo": "Concede +1 alle PS Magia effettivamente richieste contro Oscura Simmetria, Corruzione e Paura. Si applica una sola volta anche quando un effetto rientra in più categorie. Non crea una Salvezza altrimenti assente e non si trasferisce alle PS Volontà contro Paura (§7.11.4, §7.17.1)."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "ar_contro",
+          "contro": "esplosioni",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Aumenta di 1 l’AR fornita dall’armatura contro danni Naturali o Magici di esplosioni, comprese granate, razzi e cariche da demolizione.",
+          "fonte": "Armamenti §7.11.7",
+          "proprieta": "Antiesplosione 1"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": null,
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro effetti sonori o rumori dannosi",
+          "beneficio": "protezione_acustica",
+          "condizione": "Concede +2 alla Prova Salvezza espressamente richiesta contro un effetto sonoro o un rumore dannoso.",
+          "fonte": "Armamenti §7.11.7",
+          "proprieta": "Protezione acustica 2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "magia",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "contro Oscura Simmetria, Corruzione e Paura",
+          "beneficio": "protezione_occulta",
+          "condizione": "Si applica una sola volta anche quando un effetto rientra in più categorie.",
+          "fonte": "Armamenti §7.11.7",
+          "proprieta": "Protezione occulta 1"
         }
       ]
     },
@@ -939,6 +1356,38 @@
           "nome": "Protezione occulta 1",
           "testo": "Concede +1 alle PS Magia effettivamente richieste contro Oscura Simmetria, Corruzione e Paura. Si applica una sola volta anche quando un effetto rientra in più categorie. Non crea una Salvezza altrimenti assente e non si trasferisce alle PS Volontà contro Paura (§7.11.4, §7.17.1)."
         }
+      ],
+      "effetti": [
+        {
+          "abilita": "Furtività",
+          "valore": 1,
+          "ambito": "situazionale",
+          "condizione": "Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito.",
+          "fonte": "Armamenti §7.11.7",
+          "proprieta": "Mimetismo 1"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "tempra",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro veleni e agenti patogeni inalati",
+          "beneficio": "filtro_respiratorio",
+          "condizione": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata.",
+          "fonte": "Armamenti §7.11.7",
+          "proprieta": "Filtro respiratorio 2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "magia",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "contro Oscura Simmetria, Corruzione e Paura",
+          "beneficio": "protezione_occulta",
+          "condizione": "Si applica una sola volta anche quando un effetto rientra in più categorie.",
+          "fonte": "Armamenti §7.11.7",
+          "proprieta": "Protezione occulta 1"
+        }
       ]
     },
     {
@@ -978,6 +1427,18 @@
           "nome": "Manutenzione semplice",
           "testo": "Concede +1 VA alle Prove di Tecnologia per riparare quell’armatura. Restano necessari strumenti e materiali adatti; la proprietà non abbrevia automaticamente i tempi e non aumenta i PI ripristinati (§7.11.4)."
         }
+      ],
+      "effetti": [
+        {
+          "abilita": "Tecnologia",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "riparare l’armatura",
+          "beneficio": "manutenzione",
+          "condizione": "Concede +1 VA alle Prove di Tecnologia per riparare quell’armatura.",
+          "fonte": "Armamenti §7.13.1",
+          "proprieta": "Manutenzione semplice"
+        }
       ]
     },
     {
@@ -1015,6 +1476,17 @@
         {
           "nome": "Imbottita 1",
           "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.13.1",
+          "proprieta": "Imbottita 1"
         }
       ]
     },
@@ -1067,6 +1539,26 @@
             }
           }
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.13.1",
+          "proprieta": "Imbottita 2"
+        },
+        {
+          "tipo": "ar_contro",
+          "contro": "esplosioni",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Aumenta di 1 l’AR fornita dall’armatura contro danni Naturali o Magici di esplosioni, comprese granate, razzi e cariche da demolizione.",
+          "fonte": "Armamenti §7.13.1",
+          "proprieta": "Antiesplosione 1"
+        }
       ]
     },
     {
@@ -1116,6 +1608,16 @@
           "nome": "Mimetica ambientale 1",
           "testo": "Concede +1 VA alla Prova unica di Furtività nell’ambiente per il quale la mimetica è predisposta, quando esistono condizioni concrete per nascondersi. Si sceglie l’ambiente della livrea, per esempio artico, boscoso, desertico o urbano. Non rende invisibili e non elimina i rumori prodotti; le limitazioni specifiche del modello restano valide (§7.11.4)."
         }
+      ],
+      "effetti": [
+        {
+          "abilita": "Furtività",
+          "valore": 1,
+          "ambito": "situazionale",
+          "condizione": "Si sceglie l’ambiente della livrea, per esempio artico, boscoso, desertico o urbano.",
+          "fonte": "Armamenti §7.13.1",
+          "proprieta": "Mimetica ambientale 1"
+        }
       ]
     },
     {
@@ -1157,6 +1659,26 @@
         {
           "nome": "Imbracatura da lancio 2",
           "testo": "Concede +2 VA alle Prove di Pilotare richieste per controllare discesa e atterraggio con un paracadute compatibile. Il paracadute si acquista separatamente (§7.13.2, Airborne Rangers)."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.13.1",
+          "proprieta": "Imbottita 2"
+        },
+        {
+          "abilita": "Pilotare",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "paracadute",
+          "condizione": "Il paracadute si acquista separatamente.",
+          "fonte": "Armamenti §7.13.1",
+          "proprieta": "Imbracatura da lancio 2"
         }
       ]
     },
@@ -1211,6 +1733,17 @@
             }
           }
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "ar_contro",
+          "contro": "esplosioni",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Aumenta di 1 l’AR fornita dall’armatura contro danni Naturali o Magici di esplosioni, comprese granate, razzi e cariche da demolizione.",
+          "fonte": "Armamenti §7.13.1",
+          "proprieta": "Antiesplosione 1"
+        }
       ]
     },
     {
@@ -1264,6 +1797,26 @@
             }
           }
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Fuoco",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.13.1",
+          "proprieta": "Ignifuga 2"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.13.1",
+          "proprieta": "Imbottita 2"
+        }
       ]
     },
     {
@@ -1305,6 +1858,25 @@
         {
           "nome": "Articolazione da arrampicata 2",
           "testo": "Articolazione da arrampicata 2 concede +2 VA ad Atletica per arrampicarsi usando appigli reali o attrezzatura adatta. Non aumenta automaticamente la distanza percorribile e non permette di aderire a superfici prive di appigli."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Furtività",
+          "valore": 2,
+          "ambito": "situazionale",
+          "condizione": "Si sceglie l’ambiente della livrea, per esempio artico, boscoso, desertico o urbano.",
+          "fonte": "Armamenti §7.13.1",
+          "proprieta": "Mimetica ambientale 2"
+        },
+        {
+          "abilita": "Atletica",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "arrampicarsi",
+          "condizione": "Articolazione da arrampicata 2 concede +2 VA ad Atletica per arrampicarsi usando appigli reali o attrezzatura adatta.",
+          "fonte": "Armamenti §7.13.1",
+          "proprieta": "Articolazione da arrampicata 2"
         }
       ]
     },
@@ -1359,6 +1931,26 @@
           "nome": "Protezione climatica 2",
           "testo": "La protezione climatica concede +2 alla PS Tempra contro gli effetti del caldo ambientale. Non riduce i danni da Fuoco e non sostituisce acqua, riposo o le altre necessità del personaggio."
         }
+      ],
+      "effetti": [
+        {
+          "abilita": "Furtività",
+          "valore": 1,
+          "ambito": "situazionale",
+          "condizione": "Si sceglie l’ambiente della livrea, per esempio artico, boscoso, desertico o urbano.",
+          "fonte": "Armamenti §7.13.1",
+          "proprieta": "Mimetica ambientale 1"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "tempra",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro il caldo ambientale",
+          "condizione": "La protezione climatica concede +2 alla PS Tempra contro gli effetti del caldo ambientale.",
+          "fonte": "Armamenti §7.13.1",
+          "proprieta": "Protezione climatica 2"
+        }
       ]
     },
     {
@@ -1412,6 +2004,28 @@
           "nome": "Filtro respiratorio 2",
           "testo": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata. Richiede aria respirabile; non costituisce una riserva d’ossigeno né una tenuta per vuoto o immersione (§7.11.4)."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Fuoco",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.13.1",
+          "proprieta": "Ignifuga 2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "tempra",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro veleni e agenti patogeni inalati",
+          "beneficio": "filtro_respiratorio",
+          "condizione": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata.",
+          "fonte": "Armamenti §7.13.1",
+          "proprieta": "Filtro respiratorio 2"
+        }
       ]
     },
     {
@@ -1463,6 +2077,18 @@
           "nome": "Protezione climatica 2",
           "testo": "Protezione climatica 2 contro il freddo concede +2 alla PS Tempra contro il freddo ambientale. Non riduce il danno degli attacchi."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "salvezza",
+          "salvezza": "tempra",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro il caldo ambientale",
+          "condizione": "Protezione climatica 2 contro il freddo concede +2 alla PS Tempra contro il freddo ambientale.",
+          "fonte": "Armamenti §7.13.1",
+          "proprieta": "Protezione climatica 2"
+        }
       ]
     },
     {
@@ -1505,6 +2131,17 @@
           "nome": "Imbottita 1",
           "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.13.1",
+          "proprieta": "Imbottita 1"
+        }
       ]
     },
     {
@@ -1546,6 +2183,16 @@
         {
           "nome": "Mimetismo 1",
           "testo": "Concede +1 VA alla Prova unica di Furtività per nascondersi o muoversi senza essere individuati, quando esistono condizioni concrete per farlo. Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito (§7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Furtività",
+          "valore": 1,
+          "ambito": "situazionale",
+          "condizione": "Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito.",
+          "fonte": "Armamenti §7.13.1",
+          "proprieta": "Mimetismo 1"
         }
       ]
     },
@@ -1593,6 +2240,35 @@
           "nome": "Antiesplosione 1",
           "testo": "Aumenta di 1 l’AR fornita dall’armatura contro danni Naturali o Magici di esplosioni, comprese granate, razzi e cariche da demolizione. Si applica a ciascuna applicazione di danno dell’esplosione e non protegge dal danno Etereo. Fra Antiesplosione di scudo e armatura si usa soltanto il valore maggiore (§7.4.3, §7.11.4)."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.13.1",
+          "proprieta": "Imbottita 2"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Elettricità",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.13.1",
+          "proprieta": "Isolante 2"
+        },
+        {
+          "tipo": "ar_contro",
+          "contro": "esplosioni",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Aumenta di 1 l’AR fornita dall’armatura contro danni Naturali o Magici di esplosioni, comprese granate, razzi e cariche da demolizione.",
+          "fonte": "Armamenti §7.13.1",
+          "proprieta": "Antiesplosione 1"
+        }
       ]
     },
     {
@@ -1638,6 +2314,36 @@
         {
           "nome": "Interfaccia aeronautica 1",
           "testo": "Concede +1 VA a Pilotare per la conduzione di un aeromobile quando è collegata a comandi compatibili e alimentati; non migliora l’uso delle armi (§7.13.2, Tuta pilota Capitol)."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Fuoco",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.13.1",
+          "proprieta": "Ignifuga 2"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.13.1",
+          "proprieta": "Imbottita 1"
+        },
+        {
+          "abilita": "Pilotare",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "conduzione di aeromobili",
+          "beneficio": "interfaccia_pilotaggio",
+          "condizione": "non migliora l’uso delle armi.",
+          "fonte": "Armamenti §7.13.1",
+          "proprieta": "Interfaccia aeronautica 1"
         }
       ]
     },
@@ -1724,6 +2430,29 @@
           "nome": "Manutenzione semplice",
           "testo": "Concede +1 VA alle Prove di Tecnologia per riparare quell’armatura. Restano necessari strumenti e materiali adatti; la proprietà non abbrevia automaticamente i tempi e non aumenta i PI ripristinati (§7.11.4)."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "salvezza",
+          "salvezza": "tempra",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro veleni e agenti patogeni inalati",
+          "beneficio": "filtro_respiratorio",
+          "condizione": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata.",
+          "fonte": "Armamenti §7.14.1",
+          "proprieta": "Filtro respiratorio 2"
+        },
+        {
+          "abilita": "Tecnologia",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "riparare l’armatura",
+          "beneficio": "manutenzione",
+          "condizione": "Concede +1 VA alle Prove di Tecnologia per riparare quell’armatura.",
+          "fonte": "Armamenti §7.14.1",
+          "proprieta": "Manutenzione semplice"
+        }
       ]
     },
     {
@@ -1784,6 +2513,19 @@
           "nome": "Filtro respiratorio 2",
           "testo": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata. Richiede aria respirabile; non costituisce una riserva d’ossigeno né una tenuta per vuoto o immersione (§7.11.4)."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "salvezza",
+          "salvezza": "tempra",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro veleni e agenti patogeni inalati",
+          "beneficio": "filtro_respiratorio",
+          "condizione": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata.",
+          "fonte": "Armamenti §7.14.1",
+          "proprieta": "Filtro respiratorio 2"
+        }
       ]
     },
     {
@@ -1825,6 +2567,25 @@
         {
           "nome": "Imbracatura tecnica 1",
           "testo": "Concede +1 VA ad Atletica per arrampicarsi o calarsi usando corde e ancoraggi adeguati; tali strumenti si acquistano separatamente. Non aumenta automaticamente il movimento (§7.14.2, Grey Ghost)."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Furtività",
+          "valore": 2,
+          "ambito": "situazionale",
+          "condizione": "Si sceglie l’ambiente della livrea, per esempio artico, boscoso, desertico o urbano.",
+          "fonte": "Armamenti §7.14.1",
+          "proprieta": "Mimetica ambientale 2"
+        },
+        {
+          "abilita": "Atletica",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "arrampicarsi o calarsi con corde",
+          "condizione": "tali strumenti si acquistano separatamente.",
+          "fonte": "Armamenti §7.14.1",
+          "proprieta": "Imbracatura tecnica 1"
         }
       ]
     },
@@ -1869,6 +2630,37 @@
         {
           "nome": "Filtro respiratorio 2",
           "testo": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata. Richiede aria respirabile; non costituisce una riserva d’ossigeno né una tenuta per vuoto o immersione (§7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.14.1",
+          "proprieta": "Imbottita 2"
+        },
+        {
+          "tipo": "ar_contro",
+          "contro": "esplosioni",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Aumenta di 1 l’AR fornita dall’armatura contro danni Naturali o Magici di esplosioni, comprese granate, razzi e cariche da demolizione.",
+          "fonte": "Armamenti §7.14.1",
+          "proprieta": "Antiesplosione 1"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "tempra",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro veleni e agenti patogeni inalati",
+          "beneficio": "filtro_respiratorio",
+          "condizione": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata.",
+          "fonte": "Armamenti §7.14.1",
+          "proprieta": "Filtro respiratorio 2"
         }
       ]
     },
@@ -1923,6 +2715,22 @@
         {
           "nome": "Stabile 1",
           "testo": "Concede +1 alla Prova di Caratteristica FOR o DES richiesta contro Sbilanciante. Non è una Prova Salvezza e non si estende automaticamente ad altri tentativi di mantenere l’equilibrio o agli spostamenti di Sbalzante. Più proprietà Stabile applicabili, comprese quelle di scudo e armatura, non si sommano: si usa il valore maggiore (§7.4.3, §7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "caratteristica",
+          "caratteristiche": [
+            "FOR",
+            "DES"
+          ],
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "contro Sbilanciante",
+          "beneficio": "stabile",
+          "condizione": "Non è una Prova Salvezza e non si estende automaticamente ad altri tentativi di mantenere l’equilibrio o agli spostamenti di Sbalzante.",
+          "fonte": "Armamenti §7.14.1",
+          "proprieta": "Stabile 1"
         }
       ]
     },
@@ -1985,6 +2793,57 @@
           "nome": "Termoregolazione 2",
           "testo": "Concede +2 alle PS Tempra contro caldo e freddo ambientali; non aumenta l’AR contro attacchi termici. Richiede alimentazione (§7.14.2, §7.16.3)."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.14.1",
+          "proprieta": "Imbottita 2"
+        },
+        {
+          "abilita": "Atletica",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "sollevare, spingere, trascinare o sfondare",
+          "condizione": "Non aumenta la Caratteristica, non soddisfa requisiti delle armi e non si applica ad attacchi o salti.",
+          "fonte": "Armamenti §7.14.1",
+          "proprieta": "Assistenza muscolare 1"
+        },
+        {
+          "tipo": "caratteristica",
+          "caratteristiche": [
+            "FOR"
+          ],
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "sollevare, spingere, trascinare o sfondare",
+          "condizione": "Non aumenta la Caratteristica, non soddisfa requisiti delle armi e non si applica ad attacchi o salti.",
+          "fonte": "Armamenti §7.14.1",
+          "proprieta": "Assistenza muscolare 1"
+        },
+        {
+          "tipo": "danno",
+          "attacchi": "ravvicinati",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Colpo assistito X aggiunge X al danno ordinario degli attacchi ravvicinati, una sola volta per applicazione di danno.",
+          "fonte": "Armamenti §7.14.1",
+          "proprieta": "Colpo assistito 1"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "tempra",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro caldo e freddo ambientali",
+          "condizione": "non aumenta l’AR contro attacchi termici.",
+          "fonte": "Armamenti §7.14.1",
+          "proprieta": "Termoregolazione 2"
+        }
       ]
     },
     {
@@ -2026,6 +2885,25 @@
         {
           "nome": "Imbottita 1",
           "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Furtività",
+          "valore": 1,
+          "ambito": "situazionale",
+          "condizione": "Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito.",
+          "fonte": "Armamenti §7.14.1",
+          "proprieta": "Mimetismo 1"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.14.1",
+          "proprieta": "Imbottita 1"
         }
       ]
     },
@@ -2075,6 +2953,31 @@
           "nome": "Stabile 1",
           "testo": "Concede +1 alla Prova di Caratteristica FOR o DES richiesta contro Sbilanciante. Non è una Prova Salvezza e non si estende automaticamente ad altri tentativi di mantenere l’equilibrio o agli spostamenti di Sbalzante. Più proprietà Stabile applicabili, comprese quelle di scudo e armatura, non si sommano: si usa il valore maggiore (§7.4.3, §7.11.4)."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.14.1",
+          "proprieta": "Imbottita 2"
+        },
+        {
+          "tipo": "caratteristica",
+          "caratteristiche": [
+            "FOR",
+            "DES"
+          ],
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "contro Sbilanciante",
+          "beneficio": "stabile",
+          "condizione": "Non è una Prova Salvezza e non si estende automaticamente ad altri tentativi di mantenere l’equilibrio o agli spostamenti di Sbalzante.",
+          "fonte": "Armamenti §7.14.1",
+          "proprieta": "Stabile 1"
+        }
       ]
     },
     {
@@ -2116,6 +3019,25 @@
         {
           "nome": "Passo sicuro 1",
           "testo": "Passo sicuro 1 concede +1 VA ad Atletica per mantenere l’equilibrio o attraversare terreni instabili o scivolosi, soltanto quando la Prova è già richiesta. Non riduce i costi di movimento e non si applica a salti, arrampicate o spostamenti forzati."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Furtività",
+          "valore": 2,
+          "ambito": "situazionale",
+          "condizione": "Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito.",
+          "fonte": "Armamenti §7.14.1",
+          "proprieta": "Mimetismo 2"
+        },
+        {
+          "abilita": "Atletica",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "equilibrio su terreni instabili",
+          "condizione": "Passo sicuro 1 concede +1 VA ad Atletica per mantenere l’equilibrio o attraversare terreni instabili o scivolosi, soltanto quando la Prova è già richiesta.",
+          "fonte": "Armamenti §7.14.1",
+          "proprieta": "Passo sicuro 1"
         }
       ]
     },
@@ -2162,6 +3084,26 @@
         {
           "nome": "Imbracatura da sella 1",
           "testo": "Concede +1 VA alle Prove di Pilotare già richieste per mantenere il controllo della motocicletta dopo un urto o evitare di essere disarcionati, mentre è agganciata a una sella compatibile. Non introduce una Prova quando la situazione non la richiede (§7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.14.1",
+          "proprieta": "Imbottita 2"
+        },
+        {
+          "abilita": "Pilotare",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "controllo della motocicletta",
+          "condizione": "Concede +1 VA alle Prove di Pilotare già richieste per mantenere il controllo della motocicletta dopo un urto o evitare di essere disarcionati, mentre è agganciata a una sella compatibile.",
+          "fonte": "Armamenti §7.14.1",
+          "proprieta": "Imbracatura da sella 1"
         }
       ]
     },
@@ -2220,6 +3162,28 @@
             }
           }
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Fuoco",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.14.1",
+          "proprieta": "Ignifuga 2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "tempra",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro veleni e agenti patogeni inalati",
+          "beneficio": "filtro_respiratorio",
+          "condizione": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata.",
+          "fonte": "Armamenti §7.14.1",
+          "proprieta": "Filtro respiratorio 2"
+        }
       ]
     },
     {
@@ -2257,6 +3221,16 @@
         {
           "nome": "Mimetismo 2",
           "testo": "Concede +2 VA alla Prova unica di Furtività per nascondersi o muoversi senza essere individuati, quando esistono condizioni concrete per farlo. Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito (§7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Furtività",
+          "valore": 2,
+          "ambito": "situazionale",
+          "condizione": "Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito.",
+          "fonte": "Armamenti §7.14.1",
+          "proprieta": "Mimetismo 2"
         }
       ]
     },
@@ -2303,6 +3277,35 @@
         {
           "nome": "SIN 1",
           "testo": "SIN 1: +1 VA a Difese per Schivare."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.15.2",
+          "proprieta": "Imbottita 1"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Elettricità",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.15.2",
+          "proprieta": "Isolante 1"
+        },
+        {
+          "abilita": "Difese",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "Schivata",
+          "condizione": "SIN 1: +1 VA a Difese per Schivare.",
+          "fonte": "Armamenti §7.15.2",
+          "proprieta": "SIN 1"
         }
       ]
     },
@@ -2354,6 +3357,34 @@
           "nome": "SIN 1",
           "testo": "SIN 1: +1 VA alla Prova unica di Furtività."
         }
+      ],
+      "effetti": [
+        {
+          "abilita": "Furtività",
+          "valore": 1,
+          "ambito": "situazionale",
+          "condizione": "Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito.",
+          "fonte": "Armamenti §7.15.2",
+          "proprieta": "Mimetismo 1"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Elettricità",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.15.2",
+          "proprieta": "Isolante 1"
+        },
+        {
+          "abilita": "Difese",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "Schivata",
+          "condizione": "SIN 1: +1 VA alla Prova unica di Furtività.",
+          "fonte": "Armamenti §7.15.2",
+          "proprieta": "SIN 1"
+        }
       ]
     },
     {
@@ -2399,6 +3430,26 @@
         {
           "nome": "SIN 1",
           "testo": "SIN 1: +1 VA a Difese per Schivare."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Elettricità",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.15.2",
+          "proprieta": "Isolante 2"
+        },
+        {
+          "abilita": "Difese",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "Schivata",
+          "condizione": "SIN 1: +1 VA a Difese per Schivare.",
+          "fonte": "Armamenti §7.15.2",
+          "proprieta": "SIN 1"
         }
       ]
     },
@@ -2454,6 +3505,35 @@
         {
           "nome": "SIN 2",
           "testo": "SIN 2: +2 VA a Difese per Schivare."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.15.2",
+          "proprieta": "Imbottita 2"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Elettricità",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.15.2",
+          "proprieta": "Isolante 2"
+        },
+        {
+          "abilita": "Difese",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "Schivata",
+          "condizione": "SIN 2: +2 VA a Difese per Schivare.",
+          "fonte": "Armamenti §7.15.2",
+          "proprieta": "SIN 2"
         }
       ]
     },
@@ -2513,6 +3593,17 @@
           "nome": "SIN 2",
           "testo": "SIN 2: +2 VA alla Prova unica di Furtività."
         }
+      ],
+      "effetti": [
+        {
+          "abilita": "Difese",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "Schivata",
+          "condizione": "SIN 2: +2 VA alla Prova unica di Furtività.",
+          "fonte": "Armamenti §7.15.2",
+          "proprieta": "SIN 2"
+        }
       ]
     },
     {
@@ -2567,6 +3658,37 @@
         {
           "nome": "SIN 2",
           "testo": "SIN 2: +2 VA ad Atletica per salti e atterraggi che richiedono effettivamente quella Prova."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.15.2",
+          "proprieta": "Imbottita 2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "tempra",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro veleni e agenti patogeni inalati",
+          "beneficio": "filtro_respiratorio",
+          "condizione": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata.",
+          "fonte": "Armamenti §7.15.2",
+          "proprieta": "Filtro respiratorio 2"
+        },
+        {
+          "abilita": "Difese",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "Schivata",
+          "condizione": "SIN 2: +2 VA ad Atletica per salti e atterraggi che richiedono effettivamente quella Prova.",
+          "fonte": "Armamenti §7.15.2",
+          "proprieta": "SIN 2"
         }
       ]
     },
@@ -2626,6 +3748,17 @@
           "nome": "SIN 2",
           "testo": "SIN 2: +2 VA alla Prova unica di Furtività."
         }
+      ],
+      "effetti": [
+        {
+          "abilita": "Difese",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "Schivata",
+          "condizione": "SIN 2: +2 VA alla Prova unica di Furtività.",
+          "fonte": "Armamenti §7.15.2",
+          "proprieta": "SIN 2"
+        }
       ]
     },
     {
@@ -2669,6 +3802,35 @@
         {
           "nome": "SIN 1",
           "testo": "SIN 1: +1 VA a Difese per Schivare."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Elettricità",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.15.2",
+          "proprieta": "Isolante 2"
+        },
+        {
+          "tipo": "ar_contro",
+          "contro": "esplosioni",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Aumenta di 1 l’AR fornita dall’armatura contro danni Naturali o Magici di esplosioni, comprese granate, razzi e cariche da demolizione.",
+          "fonte": "Armamenti §7.15.2",
+          "proprieta": "Antiesplosione 1"
+        },
+        {
+          "abilita": "Difese",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "Schivata",
+          "condizione": "SIN 1: +1 VA a Difese per Schivare.",
+          "fonte": "Armamenti §7.15.2",
+          "proprieta": "SIN 1"
         }
       ]
     },
@@ -2716,6 +3878,37 @@
           "nome": "SIN 1",
           "testo": "SIN 1: +1 VA a Medicina o Tecnologia per assistenza medica e manutenzione cibernetica, usando strumenti appropriati."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Elettricità",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.15.2",
+          "proprieta": "Isolante 2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "tempra",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro veleni e agenti patogeni inalati",
+          "beneficio": "filtro_respiratorio",
+          "condizione": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata.",
+          "fonte": "Armamenti §7.15.2",
+          "proprieta": "Filtro respiratorio 2"
+        },
+        {
+          "abilita": "Difese",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "Schivata",
+          "condizione": "SIN 1: +1 VA a Medicina o Tecnologia per assistenza medica e manutenzione cibernetica, usando strumenti appropriati.",
+          "fonte": "Armamenti §7.15.2",
+          "proprieta": "SIN 1"
+        }
       ]
     },
     {
@@ -2754,6 +3947,18 @@
         {
           "nome": "Manutenzione agevolata",
           "testo": "Manutenzione agevolata: +1 VA alle Prove di Tecnologia per riparare questa armatura, disponendo degli strumenti e dei ricambi necessari. Non ripristina automaticamente PI."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Tecnologia",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "riparare l’armatura",
+          "beneficio": "manutenzione",
+          "condizione": "Manutenzione agevolata: +1 VA alle Prove di Tecnologia per riparare questa armatura, disponendo degli strumenti e dei ricambi necessari.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Manutenzione agevolata"
         }
       ]
     },
@@ -2804,6 +4009,17 @@
           "nome": "Imbottita 1",
           "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Imbottita 1"
+        }
       ]
     },
     {
@@ -2852,6 +4068,17 @@
         {
           "nome": "Imbottita 1",
           "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Imbottita 1"
         }
       ]
     },
@@ -2903,6 +4130,17 @@
               }
             }
           }
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Imbottita 2"
         }
       ]
     },
@@ -2964,6 +4202,16 @@
           "nome": "Mimetismo 1",
           "testo": "Concede +1 VA alla Prova unica di Furtività per nascondersi o muoversi senza essere individuati, quando esistono condizioni concrete per farlo. Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito (§7.11.4)."
         }
+      ],
+      "effetti": [
+        {
+          "abilita": "Furtività",
+          "valore": 1,
+          "ambito": "situazionale",
+          "condizione": "Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Mimetismo 1"
+        }
       ]
     },
     {
@@ -3009,6 +4257,28 @@
         {
           "nome": "Filtro respiratorio 2",
           "testo": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata. Richiede aria respirabile; non costituisce una riserva d’ossigeno né una tenuta per vuoto o immersione (§7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Imbottita 2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "tempra",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro veleni e agenti patogeni inalati",
+          "beneficio": "filtro_respiratorio",
+          "condizione": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Filtro respiratorio 2"
         }
       ]
     },
@@ -3056,6 +4326,34 @@
           "nome": "Imbracatura tecnica 1",
           "testo": "Concede +1 VA ad Atletica per arrampicarsi o calarsi usando corde e ancoraggi adeguati; tali strumenti si acquistano separatamente. Non aumenta automaticamente il movimento (§7.14.2, Grey Ghost)."
         }
+      ],
+      "effetti": [
+        {
+          "abilita": "Furtività",
+          "valore": 2,
+          "ambito": "situazionale",
+          "condizione": "Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Mimetismo 2"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Imbottita 1"
+        },
+        {
+          "abilita": "Atletica",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "arrampicarsi o calarsi con corde",
+          "condizione": "tali strumenti si acquistano separatamente.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Imbracatura tecnica 1"
+        }
       ]
     },
     {
@@ -3102,6 +4400,25 @@
           "nome": "Struttura robusta",
           "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
         }
+      ],
+      "effetti": [
+        {
+          "abilita": "Furtività",
+          "valore": 2,
+          "ambito": "situazionale",
+          "condizione": "Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Mimetismo 2"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Imbottita 2"
+        }
       ]
     },
     {
@@ -3141,6 +4458,17 @@
         {
           "nome": "Imbottita 2",
           "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Imbottita 2"
         }
       ]
     },
@@ -3203,6 +4531,57 @@
           "nome": "Termoregolazione 2",
           "testo": "Concede +2 alle PS Tempra contro caldo e freddo ambientali; non aumenta l’AR contro attacchi termici. Richiede alimentazione (§7.14.2, §7.16.3)."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Imbottita 2"
+        },
+        {
+          "abilita": "Atletica",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "sollevare, spingere, trascinare o sfondare",
+          "condizione": "Non aumenta la Caratteristica, non soddisfa requisiti delle armi e non si applica ad attacchi o salti.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Assistenza muscolare 1"
+        },
+        {
+          "tipo": "caratteristica",
+          "caratteristiche": [
+            "FOR"
+          ],
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "sollevare, spingere, trascinare o sfondare",
+          "condizione": "Non aumenta la Caratteristica, non soddisfa requisiti delle armi e non si applica ad attacchi o salti.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Assistenza muscolare 1"
+        },
+        {
+          "tipo": "danno",
+          "attacchi": "ravvicinati",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Colpo assistito X aggiunge X al danno ordinario degli attacchi ravvicinati, una sola volta per applicazione di danno.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Colpo assistito 1"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "tempra",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro caldo e freddo ambientali",
+          "condizione": "non aumenta l’AR contro attacchi termici.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Termoregolazione 2"
+        }
       ]
     },
     {
@@ -3263,6 +4642,57 @@
         {
           "nome": "Termoregolazione 2",
           "testo": "Concede +2 alle PS Tempra contro caldo e freddo ambientali; non aumenta l’AR contro attacchi termici. Richiede alimentazione (§7.14.2, §7.16.3)."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Imbottita 2"
+        },
+        {
+          "abilita": "Atletica",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "sollevare, spingere, trascinare o sfondare",
+          "condizione": "Non aumenta la Caratteristica, non soddisfa requisiti delle armi e non si applica ad attacchi o salti.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Assistenza muscolare 2"
+        },
+        {
+          "tipo": "caratteristica",
+          "caratteristiche": [
+            "FOR"
+          ],
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "sollevare, spingere, trascinare o sfondare",
+          "condizione": "Non aumenta la Caratteristica, non soddisfa requisiti delle armi e non si applica ad attacchi o salti.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Assistenza muscolare 2"
+        },
+        {
+          "tipo": "danno",
+          "attacchi": "ravvicinati",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Colpo assistito X aggiunge X al danno ordinario degli attacchi ravvicinati, una sola volta per applicazione di danno.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Colpo assistito 2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "tempra",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro caldo e freddo ambientali",
+          "condizione": "non aumenta l’AR contro attacchi termici.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Termoregolazione 2"
         }
       ]
     },
@@ -3329,6 +4759,67 @@
           "nome": "Sigilli d’interdizione 2",
           "testo": "Sigilli d’interdizione 2: +2 alle PS Magia effettivamente richieste contro l’Oscura Simmetria."
         }
+      ],
+      "effetti": [
+        {
+          "abilita": "Atletica",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "sollevare, spingere, trascinare o sfondare",
+          "condizione": "Non aumenta la Caratteristica, non soddisfa requisiti delle armi e non si applica ad attacchi o salti.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Assistenza muscolare 2"
+        },
+        {
+          "tipo": "caratteristica",
+          "caratteristiche": [
+            "FOR"
+          ],
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "sollevare, spingere, trascinare o sfondare",
+          "condizione": "Non aumenta la Caratteristica, non soddisfa requisiti delle armi e non si applica ad attacchi o salti.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Assistenza muscolare 2"
+        },
+        {
+          "tipo": "danno",
+          "attacchi": "ravvicinati",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Colpo assistito X aggiunge X al danno ordinario degli attacchi ravvicinati, una sola volta per applicazione di danno.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Colpo assistito 2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "tempra",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro caldo e freddo ambientali",
+          "condizione": "non aumenta l’AR contro attacchi termici.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Termoregolazione 2"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Imbottita 2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "magia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro l’Oscura Simmetria",
+          "condizione": "Sigilli d’interdizione 2: +2 alle PS Magia effettivamente richieste contro l’Oscura Simmetria.",
+          "fonte": "Armamenti §7.16.1",
+          "proprieta": "Sigilli d’interdizione 2"
+        }
       ]
     },
     {
@@ -3371,6 +4862,17 @@
           "nome": "Imbottita 1",
           "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Imbottita 1"
+        }
       ]
     },
     {
@@ -3412,6 +4914,28 @@
         {
           "nome": "Filtro respiratorio 2",
           "testo": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata. Richiede aria respirabile; non costituisce una riserva d’ossigeno né una tenuta per vuoto o immersione (§7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Imbottita 1"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "tempra",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro veleni e agenti patogeni inalati",
+          "beneficio": "filtro_respiratorio",
+          "condizione": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Filtro respiratorio 2"
         }
       ]
     },
@@ -3458,6 +4982,28 @@
         {
           "nome": "Struttura robusta",
           "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "salvezza",
+          "salvezza": "magia",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "contro Oscura Simmetria, Corruzione e Paura",
+          "beneficio": "protezione_occulta",
+          "condizione": "Si applica una sola volta anche quando un effetto rientra in più categorie.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Protezione occulta 1"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Imbottita 2"
         }
       ]
     },
@@ -3511,6 +5057,31 @@
         {
           "nome": "Stabile 1",
           "testo": "Concede +1 alla Prova di Caratteristica FOR o DES richiesta contro Sbilanciante. Non è una Prova Salvezza e non si estende automaticamente ad altri tentativi di mantenere l’equilibrio o agli spostamenti di Sbalzante. Più proprietà Stabile applicabili, comprese quelle di scudo e armatura, non si sommano: si usa il valore maggiore (§7.4.3, §7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Imbottita 1"
+        },
+        {
+          "tipo": "caratteristica",
+          "caratteristiche": [
+            "FOR",
+            "DES"
+          ],
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "contro Sbilanciante",
+          "beneficio": "stabile",
+          "condizione": "Non è una Prova Salvezza e non si estende automaticamente ad altri tentativi di mantenere l’equilibrio o agli spostamenti di Sbalzante.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Stabile 1"
         }
       ]
     },
@@ -3580,6 +5151,28 @@
           "nome": "Struttura robusta",
           "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "salvezza",
+          "salvezza": "magia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro Oscura Simmetria, Corruzione e Paura",
+          "beneficio": "protezione_occulta",
+          "condizione": "Si applica una sola volta anche quando un effetto rientra in più categorie.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Protezione occulta 2"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Imbottita 1"
+        }
       ]
     },
     {
@@ -3636,6 +5229,28 @@
         {
           "nome": "Struttura robusta",
           "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "salvezza",
+          "salvezza": "magia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro Oscura Simmetria, Corruzione e Paura",
+          "beneficio": "protezione_occulta",
+          "condizione": "Si applica una sola volta anche quando un effetto rientra in più categorie.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Protezione occulta 2"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Imbottita 1"
         }
       ]
     },
@@ -3706,6 +5321,42 @@
         {
           "nome": "Struttura robusta",
           "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "salvezza",
+          "salvezza": "magia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro Oscura Simmetria, Corruzione e Paura",
+          "beneficio": "protezione_occulta",
+          "condizione": "Si applica una sola volta anche quando un effetto rientra in più categorie.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Protezione occulta 2"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Imbottita 2"
+        },
+        {
+          "tipo": "caratteristica",
+          "caratteristiche": [
+            "FOR",
+            "DES"
+          ],
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro Sbilanciante",
+          "beneficio": "stabile",
+          "condizione": "Non è una Prova Salvezza e non si estende automaticamente ad altri tentativi di mantenere l’equilibrio o agli spostamenti di Sbalzante.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Stabile 2"
         }
       ]
     },
@@ -3784,6 +5435,28 @@
           "nome": "Struttura robusta",
           "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "salvezza",
+          "salvezza": "magia",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "contro Oscura Simmetria, Corruzione e Paura",
+          "beneficio": "protezione_occulta",
+          "condizione": "Si applica una sola volta anche quando un effetto rientra in più categorie.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Protezione occulta 1"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Imbottita 2"
+        }
       ]
     },
     {
@@ -3859,6 +5532,28 @@
           "nome": "Imbottita 1",
           "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "salvezza",
+          "salvezza": "magia",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "contro Oscura Simmetria, Corruzione e Paura",
+          "beneficio": "protezione_occulta",
+          "condizione": "Si applica una sola volta anche quando un effetto rientra in più categorie.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Protezione occulta 1"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Imbottita 1"
+        }
       ]
     },
     {
@@ -3924,6 +5619,45 @@
           "nome": "Struttura robusta",
           "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "salvezza",
+          "salvezza": "magia",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "contro Oscura Simmetria, Corruzione e Paura",
+          "beneficio": "protezione_occulta",
+          "condizione": "Si applica una sola volta anche quando un effetto rientra in più categorie.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Protezione occulta 1"
+        },
+        {
+          "abilita": "Furtività",
+          "valore": 2,
+          "ambito": "situazionale",
+          "condizione": "Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Mimetismo 2"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Imbottita 1"
+        },
+        {
+          "abilita": "Atletica",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "arrampicarsi o calarsi con corde",
+          "condizione": "tali strumenti si acquistano separatamente.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Imbracatura tecnica 1"
+        }
       ]
     },
     {
@@ -3978,6 +5712,28 @@
         {
           "nome": "Struttura robusta",
           "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "salvezza",
+          "salvezza": "magia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro Oscura Simmetria, Corruzione e Paura",
+          "beneficio": "protezione_occulta",
+          "condizione": "Si applica una sola volta anche quando un effetto rientra in più categorie.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Protezione occulta 2"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Imbottita 2"
         }
       ]
     },
@@ -4048,6 +5804,39 @@
         {
           "nome": "Struttura robusta",
           "testo": "Aggiunge 2 PI massimi alla costruzione. I PI di Struttura robusta sono già inclusi nei valori tabellari dei modelli che possiedono questa proprietà e non si aggiungono nuovamente (§7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "salvezza",
+          "salvezza": "magia",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "contro Oscura Simmetria, Corruzione e Paura",
+          "beneficio": "protezione_occulta",
+          "condizione": "Si applica una sola volta anche quando un effetto rientra in più categorie.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Protezione occulta 1"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Imbottita 2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "tempra",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro veleni e agenti patogeni inalati",
+          "beneficio": "filtro_respiratorio",
+          "condizione": "Concede +2 alla PS Tempra contro veleni e agenti patogeni inalati mentre la maschera è indossata.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Filtro respiratorio 2"
         }
       ]
     },
@@ -4124,6 +5913,28 @@
           "nome": "Imbottita 1",
           "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "salvezza",
+          "salvezza": "magia",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "contro Oscura Simmetria, Corruzione e Paura",
+          "beneficio": "protezione_occulta",
+          "condizione": "Si applica una sola volta anche quando un effetto rientra in più categorie.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Protezione occulta 1"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Imbottita 1"
+        }
       ]
     },
     {
@@ -4170,6 +5981,36 @@
           "nome": "Interfaccia di pilotaggio 1",
           "testo": "Interfaccia di pilotaggio 1: +1 VA a Pilotare aeromobili compatibili mentre è collegata a comandi funzionanti e alimentati."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Imbottita 1"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Fuoco",
+          "valore": 2,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Ignifuga 2"
+        },
+        {
+          "abilita": "Pilotare",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "conduzione di aeromobili",
+          "beneficio": "interfaccia_pilotaggio",
+          "condizione": "Interfaccia di pilotaggio 1: +1 VA a Pilotare aeromobili compatibili mentre è collegata a comandi funzionanti e alimentati.",
+          "fonte": "Armamenti §7.17.2",
+          "proprieta": "Interfaccia di pilotaggio 1"
+        }
       ]
     },
     {
@@ -4209,6 +6050,17 @@
           "nome": "Isolante 1",
           "testo": "Contromisura di soglia 1 contro l’effetto aggiuntivo Elettricità; non riduce ulteriormente il danno (§7.22.5)."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Elettricità",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.22.3",
+          "proprieta": "Isolante 1"
+        }
       ]
     },
     {
@@ -4247,6 +6099,17 @@
         {
           "nome": "Imbottita 1",
           "testo": "Contromisura di soglia 1 contro l’effetto aggiuntivo Concussivo; non riduce ulteriormente il danno (§7.22.5)."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.22.3",
+          "proprieta": "Imbottita 1"
         }
       ]
     },
@@ -4325,6 +6188,17 @@
           "nome": "Imbottita 1",
           "testo": "Contromisura di soglia 1 contro l’effetto aggiuntivo Concussivo; non riduce ulteriormente il danno (§7.22.5)."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.22.3",
+          "proprieta": "Imbottita 1"
+        }
       ]
     },
     {
@@ -4363,6 +6237,17 @@
           "nome": "Isolante 1",
           "testo": "Contromisura di soglia 1 contro l’effetto aggiuntivo Elettricità; non riduce ulteriormente il danno (§7.22.5)."
         }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Elettricità",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.22.3",
+          "proprieta": "Isolante 1"
+        }
       ]
     },
     {
@@ -4400,6 +6285,17 @@
         {
           "nome": "Imbottita 1",
           "testo": "Contromisura di soglia 1 contro l’effetto aggiuntivo Concussivo; non riduce ulteriormente il danno (§7.22.5)."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.22.3",
+          "proprieta": "Imbottita 1"
         }
       ]
     },
@@ -4476,6 +6372,18 @@
         {
           "nome": "Manutenzione agevolata",
           "testo": "+1 VA a Tecnologia per riparare quell’oggetto, con strumenti e materiali necessari. Non ripristina PI automaticamente e non riduce da sola tempi o costi. Non si somma a Manutenzione semplice (§7.22.5)."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Tecnologia",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "riparare l’armatura",
+          "beneficio": "manutenzione",
+          "condizione": "Non ripristina PI automaticamente e non riduce da sola tempi o costi.",
+          "fonte": "Armamenti §7.22.3",
+          "proprieta": "Manutenzione agevolata"
         }
       ]
     }

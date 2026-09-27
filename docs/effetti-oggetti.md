@@ -87,7 +87,7 @@ Più la penalità delle armature al lancio con Potere (già nei dati, `penalita.
 - **Valore che dipende da altro**: Kit di pronto soccorso improvvisato/standard/professionale, tabella «X 1 +2, X 2 0, X 3 −2» (intensità del Sanguinamento); Generatore Blink IAS3100 (+2 con SIN 2); Scanner Cybertronic (+1 ulteriore con SIN 1); Imbracatura antigravità IAS3200 (Pilotare al posto di Atletica, −2/−4 per andatura).
 - **Abilità non indicata**: paracadute Capitol e Airborne («+2 VA alle Prove pertinenti»).
 - **Standard, modificatore 0**: corredo agricolo (le due versioni), cassetta degli attrezzi, corredo elettronico e informatico, ricerca documentale, amministrativo, rituale, strumenti artistici; Kit di pronto soccorso standard («non concede bonus al VA»).
-- **Fuori da questo lotto**: le 51 armature corporative con proprietà come Mimetismo, Manutenzione agevolata, Interfaccia di pilotaggio, Stabile. Il testo è traducibile con lo stesso schema; sono un lotto a sé.
+- **Armature corporative e elmetti**: tradotti nei lotti del 27 settembre 2026 con i tipi nuovi dello schema; censimento in `docs/proprieta-armature.md`, elmetti in `docs/equipaggiamento-lotti.md`.
 
 ## Casi dubbi (per-davide A.36)
 
