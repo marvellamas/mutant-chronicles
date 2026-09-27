@@ -29,6 +29,7 @@ export function condizioniAttive(sessione, dati, scheda = null) {
   const attivi = new Set(Array.isArray(sessione.statiAttivi) ? sessione.statiAttivi : []);
   for (const s of r.stati.elenco) {
     if (!attivi.has(s.id) || !s.effetti?.length) continue;
+    // anche con soli usi specifici (Assordato): il VA generale non cambia, il valore d'uso sì
     out.push({ etichetta: s.nome, fonte: 'stato', effetto: effettoDaEffetti(s.effetti), usi: s.effetti.filter((e) => e.ambito === 'uso_specifico') });
   }
   // §5.2.6: il Sovraccarico penalizza le Prove fisiche, compresi attacchi e Difese
@@ -52,6 +53,34 @@ export function effettoDaEffetti(effetti) {
     else if (x.abilita) (e.va_abilita ??= {})[x.abilita] = (e.va_abilita[x.abilita] ?? 0) + x.valore;
   }
   return e;
+}
+
+/**
+ * Limiti degli Stati attivi per le utility (regole.json → stati: «azioni», «limiti»), dai dati e
+ * mai scritti nel codice delle utility:
+ * - senzaAzioniPrincipali: Stati con 0 Azioni Principali (Stordito, Svenuto);
+ * - manovreVietate: id della manovra → Stato (Accecato: Tiro e Colpo Mirato);
+ * - soloDifensive: Stati che lasciano le Azioni Principali solo per difendersi (Terrorizzato).
+ */
+export function limitiStati(sessione, dati) {
+  const attivi = new Set(isOggetto(sessione) && Array.isArray(sessione.statiAttivi) ? sessione.statiAttivi : []);
+  const stati = dati.regole.stati.elenco.filter((s) => attivi.has(s.id));
+  const manovreVietate = new Map();
+  for (const s of stati) for (const m of s.limiti?.manovre_vietate ?? []) manovreVietate.set(m, { nome: s.nome, testo: s.limiti.testo, fonte: s.limiti.fonte });
+  return {
+    senzaAzioniPrincipali: stati.filter((s) => s.azioni?.principali === 0).map((s) => ({ nome: s.nome, testo: s.azioni.fonte })),
+    manovreVietate,
+    soloDifensive: stati.filter((s) => s.limiti?.solo_azioni_difensive).map((s) => ({ nome: s.nome, testo: s.limiti.testo, fonte: s.limiti.fonte })),
+  };
+}
+
+/** Avvisi comuni delle utility d'attacco e di lancio per gli Stati attivi (testi dai dati). */
+export function avvisiStati(sessione, dati, { offensiva = true } = {}) {
+  const l = limitiStati(sessione, dati);
+  return [
+    ...l.senzaAzioniPrincipali.map((s) => `${s.nome}: nessuna Azione Principale (${s.testo}).`),
+    ...(offensiva ? l.soloDifensive.map((s) => `${s.nome}: ${s.testo} (${s.fonte})`) : []),
+  ];
 }
 
 function perAmbiti(ambiti, valore) {
@@ -152,6 +181,14 @@ export function applicaCondizioni(scheda, sessione, dati) {
   scheda.abilita = scheda.abilita.map((a) => {
     const cond = vociCondizioniAbilita(condizioni, a, dati);
     const ogg = effettiOggettiAbilita(effettiOggetti, accesi, a);
+    // usi specifici degli Stati (A Terra: equilibrio; Assordato: udito): valore a parte, VA generale invariato
+    for (const c of condizioni) {
+      for (const e of c.usi ?? []) {
+        const tocca = e.abilita ? e.abilita === a.nome : e.prove === 'tutte' || (dati.regole.categorie_prove?.[e.prove] ?? []).includes(a.nome);
+        if (!tocca) continue;
+        (ogg.usi.get(e.uso) ?? ogg.usi.set(e.uso, []).get(e.uso)).push({ oggetto: c.etichetta, valore: e.valore, uso: e.uso, condizione: e.condizione, fonte: e.fonte });
+      }
+    }
     const scomposizione = [
       voce('Valore da regole', a.totale, 'regole'),
       ...(a.componentiEquip ?? (a.equip ? [voce('Equipaggiamento', a.equip, 'equipaggiamento')] : [])).filter((c) => !(c.effetto && rotti.has(c.uid))),

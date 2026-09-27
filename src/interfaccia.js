@@ -61,6 +61,13 @@ export function condizioniAttiveAbilita(scheda, dati) {
     const nome = c.fonte === 'affaticamento' ? `${c.etichetta} (Affaticamento)` : c.fonte === 'carico' ? `${c.etichetta} (carico, §5.2.6)` : c.etichetta;
     out.push({ fonte: 'sessione', nome, testo, verso: versoDi(c.effetto) });
   }
+  // usi specifici degli Stati (A Terra: equilibrio; Assordato: udito): non cambiano il VA
+  for (const c of scheda.condizioni ?? []) {
+    for (const e of c.usi ?? []) {
+      const dove = e.abilita ? a(e.abilita) : `alle Prove ${e.prove === 'udito' ? 'basate sull’udito' : e.prove} (${elenco(dati.regole.categorie_prove?.[e.prove] ?? [])})`;
+      out.push({ fonte: 'uso', nome: c.etichetta, testo: `${segno(e.valore)} ${dove}`, verso: e.valore < 0 ? 'malus' : 'bonus', uso: e.uso, vedi: 'Abilità' });
+    }
+  }
   const eq = scheda.equipaggiamento;
   const armature = dati.equipaggiamento?.file?.armature ?? {};
   const agilita = armature.abilita_agilita ?? [];
@@ -89,9 +96,11 @@ export function condizioniAttiveAbilita(scheda, dati) {
   // effetti degli oggetti (docs/effetti-oggetti.md)
   const effetti = eq?.effettiOggetti ?? [];
   const verso = (v) => (v < 0 ? 'malus' : 'bonus');
-  for (const e of effetti.filter((x) => x.ambito === 'generale')) out.push({ fonte: 'equipaggiamento', nome: e.oggetto, testo: `${segno(e.valore)} ${a(e.abilita)}`, verso: verso(e.valore) });
+  // solo gli effetti sui VA delle Abilità (AR, Contromisure, Iniziativa… stanno altrove)
+  const suAbilita = (x) => (x.tipo ?? 'va') === 'va';
+  for (const e of effetti.filter((x) => x.ambito === 'generale' && suAbilita(x))) out.push({ fonte: 'equipaggiamento', nome: e.oggetto, testo: `${segno(e.valore)} ${a(e.abilita)}`, verso: verso(e.valore) });
   for (const e of scheda.oggettiAccesi ?? []) out.push({ fonte: 'oggetto', nome: `${e.oggetto} (condizione attiva)`, testo: `${segno(e.valore)} ${a(e.abilita)}`, verso: verso(e.valore) });
-  for (const e of effetti.filter((x) => x.ambito === 'uso_specifico')) {
+  for (const e of effetti.filter((x) => x.ambito === 'uso_specifico' && suAbilita(x))) {
     out.push({ fonte: 'uso', nome: e.oggetto, testo: `${segno(e.valore)} ${a(e.abilita)}`, verso: verso(e.valore), uso: e.uso, vedi: e.uso === 'lancio' ? 'Magia' : 'Abilità' });
   }
   return out;

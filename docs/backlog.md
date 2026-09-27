@@ -68,3 +68,7 @@ AR del personaggio calcolata (armatura, rinforzo, scudo, effetti, Talenti; nient
 ## 11. ✔ PI degli oggetti — fatto il 27 settembre 2026
 
 PI massimi dal catalogo, PI attuali al tavolo con − e + ed etichetta «Rotto» a 0 (niente AR né effetti); quadratini dei PI nella SS; file del personaggio formato 7. Domande aperte A.43–A.50 in docs/per-davide.md.
+
+## 12. ✔ Stati nei valori effettivi — fatto il 27 settembre 2026
+
+Censimento in docs/ricognizione-stati.md (11 buchi, tutti chiusi): Stati come liste di effetti in regole.json, categorie di Prove (A.51), penalità in Abilità, Difese, Salvezze, «Attacca!» e «Lancia!», avvisi e divieti dai dati (Stordito, Svenuto, Terrorizzato, Accecato).

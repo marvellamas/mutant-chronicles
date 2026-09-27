@@ -73,4 +73,24 @@ Il manuale nomina categorie di Prove senza elencarne le Abilità. Le liste sono 
 
 ## Cosa è stato corretto
 
-(in fondo, a lavoro finito)
+27 settembre 2026. Tutti gli 11 ✗ sono chiusi.
+
+- **Dati** (`regole.json → stati`):
+  - Ogni Stato con penalità numeriche ha una lista `effetti` nello schema degli effetti degli oggetti. Ogni effetto è di tipo `va`, con `abilita` oppure con `prove` (una categoria di `regole.json → categorie_prove`, o «tutte»), oppure di tipo `salvezza`; ha ambito generale o uso specifico e riporta la frase del manuale, verificata da `tools/verifica_frasi.mjs`.
+  - I divieti e gli avvisi per le utility stanno in `limiti`: `manovre_vietate`, `solo_azioni_difensive`.
+  - Le categorie `fisiche_ravvicinate`, `vista` e `udito` sono ipotesi nostre (A.51).
+- **Motore** (`src/condizioni.js`):
+  - `effettoDaEffetti` porta gli effetti generali nel VA effettivo di Abilità, Difese e Salvezze. Le armi li ricevono tramite la loro Abilità, quindi «Attacca!» e «Lancia!» li leggono dai valori effettivi, senza ricalcolare nulla.
+  - Gli usi specifici (A Terra: equilibrio; Assordato: udito) sono valori a parte, come quelli degli oggetti.
+  - `limitiStati` e `avvisiStati` leggono `azioni` e `limiti` dai dati. Più Stati si sommano.
+- **Utility**:
+  - «Attacca!», a distanza e corpo a corpo, avvisa con Stordito o Svenuto (nessuna Azione Principale) e con Terrorizzato (solo azioni difensive).
+  - Con Accecato, «Attacca!» blocca Tiro Mirato e Colpo Mirato.
+  - «Lancia!» avvisa per gli stessi Stati.
+- **SD**: nel riquadro «Condizioni attive» ci sono anche le righe d'uso degli Stati. Corretto anche un difetto: gli effetti degli oggetti che non toccano i VA (AR, Contromisure) non compaiono più lì come «a undefined».
+- **Restano testo**:
+  - Avvelenato: le penalità le dà il veleno.
+  - Sanguinamento: perdita di PV (§5.15), nessun VA.
+  - Stordito e Svenuto hanno solo Movimento e Azioni, già calcolati; restano testo le Difese che consumano Azioni, «cade A Terra» (A Terra si attiva a parte) e la perdita della Concentrazione.
+  - Accecato: «fallisce le azioni puramente visive» e il +4 dei nemici non percepiti.
+  - Assordato: il fallimento automatico delle azioni solo uditive.

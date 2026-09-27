@@ -258,6 +258,7 @@ function risultato(ctx, a, r, colpi, imposta) {
     r.impossibile ? h('div', { class: 'riquadro errore', role: 'alert' },
       h('p', {}, h('strong', {}, 'Attacco non possibile. '), r.impossibile.motivo),
       r.impossibile.proposta ? h('button', { type: 'button', class: 'btn', onclick: () => imposta({ modalita: r.impossibile.proposta.modalita }) }, `Usa ${r.impossibile.proposta.nome}`) : null) : null,
+    r.avvisi?.length ? h('div', { class: 'riquadro attenzione' }, r.avvisi.map((x) => h('p', {}, x))) : null,
     h('div', { class: 'attacco-risultato' },
       h('p', { class: 'va-attacco' }, 'VA finale ', pillola(a.nome, r.va_finale, r.scomposizione), r.tiri > 1 ? h('span', { class: 'nota' }, ` · ${r.tiri} tiri, ciascuno con questo VA`) : null),
       h('table', { class: 'tabella compatta scomposizione-attacco' },

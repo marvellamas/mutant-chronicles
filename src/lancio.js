@@ -6,6 +6,7 @@
 // Talenti con effetti.lancio (e effetti.magia già calcolati nella scheda: Focalizzazione, Ingaggio,
 // tiro con Armi da lancio).
 import { voce, somma, talentiAttacco } from './attacco.js';
+import { avvisiStati } from './condizioni.js';
 
 const numero = (v) => { const n = parseInt(String(v ?? '').replace(/[^\d]/g, ''), 10); return Number.isFinite(n) ? n : null; };
 /** Livello di una riga delle versioni (colonne «Livello» oppure «Livello e PM»). */
@@ -202,5 +203,7 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
     aspetto,
     impossibile,
     promemoria,
+    // Stati attivi senza Azione Principale o con sole azioni difensive (regole.json → stati)
+    avvisi: avvisiStati(sessione, dati),
   };
 }

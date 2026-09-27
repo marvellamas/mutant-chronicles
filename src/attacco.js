@@ -9,6 +9,7 @@
 // { etichetta, valore, fonte, paragrafo }. Le fonti: regole, equipaggiamento, condizioni già nella
 // base; qui movimento, bersaglio, copertura, distanza, mirino, modalità, manovra, talento, situazione.
 import { aggiungiDanno } from './equipaggiamento.js';
+import { avvisiStati, limitiStati } from './condizioni.js';
 
 export const voce = (etichetta, valore, fonte, paragrafo = null) => ({ etichetta, valore, fonte, paragrafo });
 export const somma = (voci) => voci.reduce((s, x) => s + x.valore, 0);
@@ -249,6 +250,9 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
   const vincoli = vincoliDistanza(personaggio, arma, d, dati);
   const scomposizione = (arma.scomposizione?.length ? arma.scomposizione : [voce(`VA ${arma.abilita}`, arma.va, 'regole')]).map((x) => ({ paragrafo: null, ...x }));
   const promemoria = [];
+  // Stati attivi (regole.json → stati: azioni, limiti): avvisi e divieti dai dati
+  const avvisi = avvisiStati(personaggio.sessione, dati);
+  const limiti = limitiStati(personaggio.sessione, dati);
   let impossibile = null;
   const blocca = (motivo, proposta = null) => { impossibile ??= { motivo, ...(proposta ? { proposta } : {}) }; };
   const aggiungi = (etichetta, valore, fonte, paragrafo) => { if (valore) scomposizione.push(voce(etichetta, valore, fonte, paragrafo)); };
@@ -283,6 +287,8 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
   const azioniExtra = [];
   if (d.mirato) {
     if (vincoli.mirato) blocca(`Tiro Mirato non ammesso: ${vincoli.mirato}.`);
+    const vieta = limiti.manovreVietate.get('mirato');
+    if (vieta) blocca(`Tiro Mirato non ammesso: ${vieta.nome}. ${vieta.testo} (${vieta.fonte})`);
     const mig = con('mirato')[0];
     const MI = A.manovre.mirato;
     aggiungi(mig ? `Tiro Mirato (${mig.nome})` : 'Tiro Mirato', mig?.e.mirato.va ?? MI.va, mig ? 'talento' : 'manovra', MI.paragrafo);
@@ -431,6 +437,7 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
     seconda_prova: secondaProva,
     impossibile,
     promemoria,
+    avvisi,
     fascia,
   };
 }
@@ -648,6 +655,10 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
   }
   const vm = vincoli.manovre[id];
   if (vm?.motivo) blocca(`${m.nome} non ammessa: ${vm.motivo}.`);
+  // Stati attivi (regole.json → stati: azioni, limiti): avvisi e divieti dai dati
+  avvisi.push(...avvisiStati(personaggio.sessione, dati)); // ogni attacco è un'azione offensiva (Terrorizzato)
+  const vieta = limitiStati(personaggio.sessione, dati).manovreVietate.get(id);
+  if (vieta) blocca(`${m.nome} non ammessa: ${vieta.nome}. ${vieta.testo} (${vieta.fonte})`);
   const idMig = m.riduzione_da ?? id;
   const mig = con('manovra').find((t) => t.e.manovra[idMig]);
   const migE = mig?.e.manovra[idMig] ?? {};

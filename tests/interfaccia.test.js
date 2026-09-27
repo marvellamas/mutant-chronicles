@@ -77,13 +77,16 @@ test('«Condizioni attive»: prima la sessione, poi l’equipaggiamento, con eff
   const s = scheda([voce('a', 'armature:armatura-civile-pesante', 'indossata')], sessione({ ferite: 2, statiAttivi: ['a-terra', 'assordato'] }));
   const c = condizioniAttiveAbilita(s, dati);
   assert.deepEqual(c.map((x) => [x.fonte, x.nome]), [
-    ['sessione', 'Ferita Importante'], ['sessione', 'A Terra'], ['equipaggiamento', 'Armatura civile pesante'], ['uso', 'Armatura civile pesante'],
-  ]); // Assordato non ha effetto numerico: resta promemoria
+    ['sessione', 'Ferita Importante'], ['sessione', 'A Terra'], ['uso', 'A Terra'], ['uso', 'Assordato'],
+    ['equipaggiamento', 'Armatura civile pesante'], ['uso', 'Armatura civile pesante'],
+  ]); // gli usi specifici degli Stati (equilibrio, udito) sono righe a parte: il VA generale non cambia
   assert.equal(c[0].testo, '−2 a tutte le Abilità e Salvezze');
   assert.equal(c[1].testo, '−4 alle Prove fisiche ravvicinate (Armi da guerra, Armi da mischia, Corpo a corpo e Difese)');
-  assert.equal(c[2].testo, '−2 ad attacchi, Atletica e Furtività; −1 per FOR insufficiente ad Atletica, Furtività, Difese e attacchi');
+  assert.deepEqual([c[2].testo, c[2].uso], ['−4 ad Atletica', 'equilibrio']);
+  assert.deepEqual([c[3].testo, c[3].uso], ['−4 alle Prove basate sull’udito (Percezione e Intrattenere)', 'quando l’udito è importante']);
+  assert.equal(c[4].testo, '−2 ad attacchi, Atletica e Furtività; −1 per FOR insufficiente ad Atletica, Furtività, Difese e attacchi');
   // il lancio con Potere è un uso specifico: riga a parte, il VA di Potere non cambia
-  assert.deepEqual([c[3].testo, c[3].uso], ['−5 a Potere', 'lancio']);
+  assert.deepEqual([c[5].testo, c[5].uso], ['−5 a Potere', 'lancio']);
   assert.ok(c.every((x) => x.verso === 'malus'));
   // Affaticamento: nome con la sua scala
   const stanco = condizioniAttiveAbilita(scheda([], sessione({ affaticamento: dati.regole.affaticamento.stati.findIndex((x) => x.nome === 'Stanco') })), dati);
