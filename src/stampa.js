@@ -8,8 +8,10 @@ import { valoreTiro } from './tiri.js';
 import { rigaAlLivello } from './descrizioni.js';
 import { CAMPI_ANAGRAFICA } from './character.js';
 import { checklist } from './checklist.js';
-import { aggiungiDanno, NOME_TESTO_PRECEDENTE } from './equipaggiamento.js';
+import { aggiungiDanno, NOME_TESTO_PRECEDENTE, catalogo, normalizzaEquipaggiamento } from './equipaggiamento.js';
 import { saldoIniziale } from './dotazioni.js';
+import { modoRicarica } from './ricarica.js';
+import { calcolaCarico, pesoVoce } from './carico.js';
 
 /** Limiti di impaginazione (non regole di gioco): lunghezze massime dei testi stampati. */
 export const LIMITI_STAMPA = {
@@ -274,6 +276,15 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     // §2.16.28–29: saldo iniziale (la stampa resta a riposo: i crediti attuali si scrivono a penna)
     creditiIniziali: dati.dotazioni ? saldoIniziale(c, dati) : null,
     pv: s.pv,
+    // SS, foglio 3: riquadro compatto (come la tab Combattimento), armi con tutte le colonne e le
+    // file di quadratini dei colpi, equipaggiamento in tabella con il carico, Stati con il riassunto
+    sintesi: {
+      iniziativa: identita.iniziativa, dadoIniziativa: identita.dadoIniziativa, movimento: s.movimento, azioni: s.azioni,
+      salvezze: identita.salvezze, difese: difese ? { va: difese.vaEquip ?? difese.totale, caratteristica: difese.caratteristica } : null,
+    },
+    armiStampa: armiStampa(s, c, dati),
+    equipaggiamentoStampa: equipaggiamentoStampa(s, dati),
+    statiRiassunto: dati.regole.stati.elenco.map((x) => ({ id: x.id, nome: x.nome, riassunto: x.promemoria ?? '' })),
   };
 
   const fogli = [
@@ -291,9 +302,19 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
         nome: sp,
         incantesimi: inc.conosciuti.filter((i) => i.macrofamiglia === m.nome && i.specializzazione === sp).map((i) => {
           const righe = versioniAccessibili(i, inc.livelloMassimo);
+          const base = rigaAlLivello(i, i.livello_base) ?? {};
+          const campo = (re) => Object.entries(base).find(([k]) => re.test(k))?.[1] ?? '—';
           return {
             nome: i.nome,
             livelloBase: i.livello_base,
+            macrofamiglia: i.macrofamiglia,
+            // SS, foglio 4: indice per il tavolo e scheda completa (descrizione e regole)
+            indice: {
+              pm: campo(/^PM$/), gittata: campo(/Gittata/), durata: campo(/Durata/),
+              tempo: i.meccanica?.azioni?.azioni_principali ? `${i.meccanica.azioni.azioni_principali} AP` : i.meccanica?.azioni?.tempo ?? '—',
+            },
+            descrizione: i.descrizione ?? '',
+            regole: i.regole ?? '',
             scheda: i.scheda,
             intestazione: intestazioneBreve(i.intestazione),
             lancio: i.lancio ?? '',
@@ -320,6 +341,20 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
         conosciuti: inc.conosciuti.length,
         quota: inc.quote.totale,
         macrofamiglie: macro,
+        // valori di lancio come nella tab Magia (Magia sez. 2, regole.json → lancio, Talenti)
+        valoriLancio: {
+          focalizzazione: s.magia?.focalizzazioneVa ?? dati.regole.lancio.focalizzazione.va,
+          ingaggio: s.magia?.penalitaIngaggio ?? dati.regole.lancio.ingaggio.va,
+          potere: (() => {
+            // Potere a riposo, con la penalità d'armatura al lancio (uso specifico «lancio», Armamenti §7.11.1)
+            const p = s.abilita.find((a) => a.nome === 'Potere');
+            if (!p) return null;
+            const uso = (p.usiSpecifici ?? []).find((u) => u.uso === 'lancio');
+            return (p.vaEquip ?? p.totale) + (uso?.modificatore ?? 0);
+          })(),
+          armiDaLancio: s.magia?.tiroArmiDaLancio ?? dati.regole.lancio.tiro_armi_da_lancio,
+          anticipazione: dati.regole.lancio.anticipazione.moltiplicatore_costo,
+        },
         // Magia sez. 6: riserve esterne, con le caselle per i PM attuali (a penna)
         riserve: (s.equipaggiamento?.contenitori ?? []).map((c) => ({
           nome: c.nome, energia: c.energia, capacita: c.capacita, macrofamiglie: c.macrofamiglie,
@@ -336,6 +371,76 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     fogli: rinumera(fogli),
     piede: { nome, livello: s.livello, versioni: versioniDati },
   };
+}
+
+/**
+ * Armi per la SS (foglio 3): tutte le colonne dei dati, nell'ordine della SD, e le file di
+ * quadratini dei colpi: una per caricatore (almeno 2) o per cella; le armi a inserimento (revolver,
+ * pompa, doppiette) hanno una sola fila «colpi». I moduli integrati hanno la loro riga.
+ */
+export function armiStampa(s, creazione, dati) {
+  const cat = catalogo(dati);
+  const voci = normalizzaEquipaggiamento(creazione?.equipaggiamento);
+  const quantita = (rif) => voci.filter((v) => v.rif === rif).reduce((n, v) => n + (v.quantita ?? 1), 0);
+  return (s.equipaggiamento?.armi ?? []).map((a) => {
+    const def = a.rif ? cat.perRif.get(a.rif) : null;
+    const cap = a.munizioni?.capacita ?? null;
+    let colpi = null;
+    if (Number.isInteger(cap) && cap > 0 && a.tipo === 'arma_distanza') {
+      const r = modoRicarica(def, dati, cat);
+      if (r.modo === 'inserimento') colpi = { modo: 'inserimento', capacita: cap, file: 1 };
+      else if (r.modo === 'cella') colpi = { modo: 'cella', capacita: cap, file: 2 };
+      else colpi = { modo: 'caricatore', capacita: cap, file: Math.max(2, 1 + (r.vuoto ? quantita(r.vuoto.rif) : 0)) };
+    } else if (Number.isInteger(cap) && cap > 0) colpi = { modo: 'cella', capacita: cap, file: 2 }; // cariche di armi ravvicinate (PM, batterie)
+    const meno = (n) => (n < 0 ? `−${-n}` : String(n));
+    return {
+      nome: a.nome,
+      moduloDi: a.moduloDi ?? null,
+      abilita: a.abilita ?? '—',
+      va: a.va === null ? '—' : meno(a.va),
+      danno: a.dannoDaMunizione ? (a.munizioneRiferimento ? `${aggiungiDanno(a.munizioneRiferimento.danno, a.bonusDanno)} (mun.)` : 'munizione') : testoDanno(a.danno),
+      ac: a.ac !== null && a.ac !== undefined && a.ac !== 1 ? String(a.ac === 'munizione' ? (a.munizioneRiferimento?.ac ?? 'mun.') : a.ac) : '1',
+      gittata: a.gittataQ ? `${a.gittataQ} Q` : a.portataQ ? `port. ${a.portataQ} Q` : '—',
+      inc: a.inc ? String(a.inc) : '—',
+      parata: a.parata ? `${meno(a.parata.va)}${a.parata.distanza !== null && a.parata.distanza !== undefined ? ` / ${meno(a.parata.distanza)}` : ''}` : '—',
+      mani: a.mani ? String(a.mani) : '—',
+      forza: def?.for_richiesta ? String(def.for_richiesta) : '—',
+      pi: def?.pi ? String(def.pi) : '—',
+      qualita: def?.qualita ?? '—',
+      capacita: cap ? `${cap}${a.munizioni.unita && a.munizioni.unita !== 'colpi' ? ` ${a.munizioni.unita}` : ''}` : '—',
+      modalita: (a.modalita ?? []).join(' ') || '—',
+      proprieta: [
+        a.moduloDi ? `modulo di ${a.moduloDi}` : null,
+        ...(a.accessori ?? []).map((x) => x.nome),
+        a.mirino ? `mirino −${a.mirino.riduzione} dist.` : null,
+        a.munizioneRiferimento ? `RS ${a.munizioneRiferimento.rs_q} Q` : null,
+        a.mov ? `MOV ${meno(a.mov)} Q` : null,
+        a.specializzazione ? `+${a.bonusDanno} danno (Spec.)` : null,
+        a.attivazione ? `att. +${a.attivazione.danno_extra} ${a.attivazione.natura}` : null,
+        a.naturaDanno && a.naturaDanno !== 'Naturale' ? `danno ${a.naturaDanno}` : null,
+        ...(a.proprieta ?? []).map((p) => p.nome),
+      ].filter(Boolean).join('; '),
+      colpi,
+    };
+  });
+}
+
+/**
+ * Equipaggiamento per la SS: una riga per oggetto non già nelle tabelle Armi e Protezioni, con
+ * quantità e peso; carico noto (Giocatore §5.2.6) e oggetti senza peso nel catalogo.
+ */
+export function equipaggiamentoStampa(s, dati) {
+  const eq = s.equipaggiamento;
+  if (!eq) return { righe: [], carico: null };
+  const giaInTabella = new Set([...eq.armi.map((a) => String(a.uid).split(':')[0]), ...eq.protezioni.map((p) => p.uid)]);
+  // gli accessori montati su un'arma o un'armatura stanno già nella loro riga (colonna Proprietà)
+  const righe = eq.oggetti.filter((o) => !giaInTabella.has(o.uid) && !(o.voce.montato_su && giaInTabella.has(o.voce.montato_su))).map((o) => {
+    const q = o.voce.quantita ?? 1;
+    const p = pesoVoce(o);
+    return { nome: `${o.nome}${q > 1 ? ` ×${q}` : ''}`, peso: p === null ? '—' : `${Math.round(p * q * 100) / 100} kg`, note: String(o.voce.note ?? '').trim() };
+  });
+  const c = dati.regole.carico ? calcolaCarico(s, null, dati) : null;
+  return { righe, carico: c ? { peso: c.peso, senzaPeso: c.senzaPeso.length, ordinario: c.soglie.ordinario, massimo: c.soglie.massimo } : null };
 }
 
 /** Numera i fogli: «foglio N di M». */
