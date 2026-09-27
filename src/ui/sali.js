@@ -9,7 +9,7 @@ import { passiDelLivello, descriviVoce } from '../avanzamento.js';
 import { info, etichettaMacro, pallini } from './tooltip.js';
 import { classeMacrofamiglia } from '../palette.js';
 import { componenteTiro } from './tiro.js';
-import { dettagli, bottoneScelta, contatore, stepper } from './passi.js';
+import { dettagli, bottoneScelta, contatore, stepper, sceltaParametroTalento } from './passi.js';
 import { conOrdinale } from '../lingua.js';
 import { barraPassi } from './navigazione.js';
 
@@ -22,7 +22,7 @@ const normalizzaTesto = (s) => String(s).normalize('NFD').replace(/[̀-ͯ]/g, ''
 export const CAMPI_PASSO = {
   caratteristiche: ['caratteristiche'],
   talento: ['talentoLibero'],
-  grado: ['grado', 'tiroPV', 'tiroPM', 'talentoClasse'],
+  grado: ['grado', 'tiroPV', 'tiroPM', 'talentoClasse', 'parametriTalenti'],
   tecniche: ['tecniche', 'scuolaMishima'],
   incantesimi: ['incantesimi'],
   abilita: ['puntiAbilita'],
@@ -242,7 +242,7 @@ function passoGrado(c) {
       h('small', { class: 'sigla' }, x.gradoAttuale ? ` · Grado ${GRADI_ROMANI[x.gradoAttuale]} → ${GRADI_ROMANI[x.prossimoGrado]}` : ` · ${x.addestramento}, I Grado`),
       !x.ammessa ? h('small', { class: 'motivo' }, x.motivo) : null),
     x.ammessa ? bottoneScelta(scelta?.nome === x.nome, () => c.aggiornaVoce({
-      grado: { classe: x.nome }, tiroPV: undefined, tiroPM: undefined, talentoClasse: undefined, incantesimi: undefined, tecniche: undefined, scuolaMishima: undefined,
+      grado: { classe: x.nome }, tiroPV: undefined, tiroPM: undefined, talentoClasse: undefined, parametriTalenti: undefined, incantesimi: undefined, tecniche: undefined, scuolaMishima: undefined,
     })) : null);
   const def = scelta ? trova(dati.classi.classi, scelta.nome) : null;
   return [
@@ -262,7 +262,10 @@ function passoGrado(c) {
       scelta.tiroPM ? componenteTiro({ id: 'tiro-pm', spec: scelta.tiroPM, tiro: voce.tiroPM ?? null, memoria: ui, imposta: (t) => c.aggiornaVoce({ tiroPM: t ?? undefined }) }) : null,
       h('h4', {}, 'Talento di Classe'),
       scelta.talentoFisso
-        ? talentoClasse(c, def, def.talenti_fissi.find((t) => t.nome === scelta.talentoFisso), `${GRADI_ROMANI[scelta.prossimoGrado]} Grado — ${scelta.talentoFisso} (fisso)`)
+        ? h('div', {},
+          talentoClasse(c, def, def.talenti_fissi.find((t) => t.nome === scelta.talentoFisso), `${GRADI_ROMANI[scelta.prossimoGrado]} Grado — ${scelta.talentoFisso} (fisso)`),
+          sceltaParametroTalento(def.talenti_fissi.find((t) => t.nome === scelta.talentoFisso), voce.parametriTalenti?.[scelta.talentoFisso] ?? null,
+            (id) => c.aggiornaVoce({ parametriTalenti: { [scelta.talentoFisso]: id } })))
         : h('div', {},
           h('p', { class: 'nota' }, 'Scegli un Talento fra quelli non ancora presi:'),
           h('ul', { class: 'elenco-talenti' }, scelta.talentiAScelta.map((n) => {

@@ -68,6 +68,8 @@ export function nuoveScelte() {
     equipaggiamento: [], // voci { uid, rif, personalizzato?, stato, quantita, montato_su?, note } (src/equipaggiamento.js)
     dotazione: null, // §2.16: scelte dell'equipaggiamento iniziale e tiro dei crediti (src/dotazioni.js)
     ritratto: null, // data URL JPEG o PNG, ridimensionato nel browser (src/ritratto.js)
+    // parametri dei Talenti di Classe del 1° livello: { nome del Talento: id dell'opzione } (Disciplina del Lottatore, §3.5.5)
+    parametriTalenti: {},
   };
 }
 
@@ -190,7 +192,8 @@ export function normalizza(scelteIn, dati) {
     avvisi.push('Ritratto non valido o troppo pesante: rimosso (caricalo di nuovo dal passo Background).');
     s.ritratto = null;
   }
-  for (const k of ['puntiCaratteristica', 'puntiAbilitaLiberi']) if (!isOggetto(s[k])) s[k] = {};
+  for (const k of ['puntiCaratteristica', 'puntiAbilitaLiberi', 'parametriTalenti']) if (!isOggetto(s[k])) s[k] = {};
+  for (const [k, v] of Object.entries(s.parametriTalenti)) if (typeof v !== 'string' || !v) delete s.parametriTalenti[k];
   if (!Array.isArray(s.incantesimi)) s.incantesimi = [];
 
   // Riferimenti ai dati
@@ -389,6 +392,7 @@ export function serializza(scelte, { versioniDati, livelli, sessione, calendario
   // identici byte per byte
   if (pulite.ritratto === null) delete pulite.ritratto;
   if (pulite.dotazione === null) delete pulite.dotazione;
+  if (!Object.keys(pulite.parametriTalenti ?? {}).length) delete pulite.parametriTalenti;
   const file = { formato: FORMATO_FILE, versione: VERSIONE_FORMATO };
   // in ordine alfabetico: l'ordine di caricamento dei file dati varia, il file esportato no
   if (versioniDati) file.versioni_dati = Object.fromEntries(Object.entries(versioniDati).sort(([a], [b]) => a.localeCompare(b)));

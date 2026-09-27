@@ -82,12 +82,13 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 - Manuale dell'Equipaggiamento 0.1, cap. 1: carico (§1.6 = Giocatore §5.2.6) e PS Integrità per Qualità (§1.7) in `regole.json`.
 
 - utility «Attacca!» nella tab Combattimento (nessun tiro di dado), pannello a passi comune (`src/ui/pannello-passi.js`): attacco a distanza (`regole.json` → `attacco_distanza`, tooltip delle modalità da `modalita_di_fuoco`) e corpo a corpo con le Manovre del §5.12, Carica, due armi, Magistrale e «Senz'armi» (`regole.json` → `attacco_ravvicinato`); motore in `src/attacco.js`, Talenti in `effetti.attacco_distanza` / `effetti.attacco_ravvicinato`;
+- parametri dei Talenti di Classe scelti dal giocatore (Disciplina del Lottatore, §3.5.5): `parametro` in classi.json con le opzioni e i loro effetti (tabelle per Grado), scelta in `parametriTalenti` della creazione o della voce di livello, permanente;
 - Iniziativa, Movimento e Azioni effettivi nella SD (Stati, carico, MOV dell'armatura: `src/condizioni.js` → `valoriTavolo`);
 - utility «Lancia!» nella tab Magia (nessun tiro di dado): `src/lancio.js`, `regole.json` → `lancio`, `incantesimi.json` → `meccanica` (da `tools/estrai_lancio.py`), effetti.lancio dei Talenti;
 - Calendario di gioco facoltativo (ingranaggio → Calendario): tab con viste Giorno / Settimana / Mese, note per fascia con bandierine e «M», ricerca, «Avanza»; fuori dalle regole, non tocca calcoli né stampa. `src/calendario.js` (funzioni pure), `src/ui/calendario.js`, `regole.json` → `calendario`, colori `--evento-*` in `css/palette.css`; blocco `calendario` nel personaggio (formato 6), non toccato da «Nuova sessione» né dai livelli;
 - ricarica dalle riserve (`src/ricarica.js`, `munizioni.json` → `ricarica`).
 
-Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, Disciplina del Lottatore come scelta del personaggio, veicoli, capitoli 2–8 del Manuale dell'Equipaggiamento (non ancora scritti).
+Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, veicoli, capitoli 2–8 del Manuale dell'Equipaggiamento (non ancora scritti).
 
 ## Riferimenti
 

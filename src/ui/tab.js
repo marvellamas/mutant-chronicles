@@ -18,7 +18,7 @@ import { dotazioneApplicata, crediti } from '../dotazioni.js';
 import { statoRicarica, disponibili } from '../ricarica.js';
 import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 import { pannelloAttacco } from './attacco.js';
-import { profiloSenzArmi, senzArmiDisponibile, SENZ_ARMI } from '../attacco.js';
+import { profiloSenzArmi, senzArmiDisponibile, SENZ_ARMI, talentiAttacco } from '../attacco.js';
 import { pannelloLancio } from './lancio.js';
 import { tabCalendario, pannelloAttivazione } from './calendario.js';
 
@@ -576,7 +576,10 @@ function tabCombattimento(ctx, d) {
       contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true, classe: 'riquadro-pv pv-pm-identita' }),
       d.difese ? h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Difese'),
         h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), valoreEffettivo('Difese', d.difese.effettivo, d.difese.totale, d.difese.scomposizione, { pillola: true })),
-        h('p', { class: 'nota' }, `(${d.difese.caratteristica}) con l’equipaggiamento e le condizioni della sessione`)) : null,
+        h('p', { class: 'nota' }, `(${d.difese.caratteristica}) con l’equipaggiamento e le condizioni della sessione`),
+        // §3.5.5, Disciplina Guardia: bonus a Difese contro gli attacchi ravvicinati
+        ...talentiAttacco(ctx.tab.scheda, ctx.dati, 'difese_ravvicinate').filter((t) => t.e.va).map((t) => h('p', { class: 'nota' },
+          'Contro attacchi ravvicinati: ', h('strong', {}, `VA ${numero(d.difese.effettivo + t.e.va)}`), ` (${segno(t.e.va)} ${t.nome})`))) : null,
       ...riquadriTavolo(ctx)),
 
     sezione('Armi impugnate',
@@ -724,7 +727,7 @@ function schedaSenzArmi(ctx) {
       a.va !== null ? h('button', { type: 'button', class: 'btn primario btn-attacca', onclick: () => { ctx.ui.attacco = { uid: SENZ_ARMI, passo: 0 }; ctx.azioni.ridisegna(); } }, 'Attacca!') : null),
     h('div', { class: 'arma-valori' },
       h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), a.va === null ? h('strong', {}, '—') : valoreEffettivo(`VA senz’armi (${a.abilita})`, a.vaEffettivo, a.va, a.scomposizione, { pillola: true })),
-      h('p', {}, h('span', { class: 'sigla' }, 'Danno '), h('strong', {}, a.danno.una_mano ?? 'da definire'), a.dannoOrigine === 'Arti Marziali' ? h('small', { class: 'sigla' }, ' (Arti Marziali)') : null),
+      h('p', {}, h('span', { class: 'sigla' }, 'Danno '), h('strong', {}, a.danno.una_mano ?? 'da definire'), a.dannoDaDati ? h('small', { class: 'sigla' }, ` (${a.dannoOrigine})`) : null),
       h('p', {}, h('span', { class: 'sigla' }, 'Portata '), `${a.portataQ} Q`)),
     a.danno.una_mano ? null : h('p', { class: 'nota' }, 'Il danno senz’armi non è nel manuale (per-davide A.22): scrivilo nel pannello «Attacca!».'),
     ultima ? h('p', { class: 'nota' }, `Ultima Manovra: ${ultima.nome}`) : null);

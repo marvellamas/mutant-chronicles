@@ -48,7 +48,7 @@ export const PASSI = [
   {
     titolo: 'Classe', rif: '§2.12, cap. 3',
     requisito: ({ scelte }) => (scelte.addestramento ? null : 'Scegli prima l’Addestramento.'),
-    completo: ({ scheda }) => !scheda.errori.some((e) => e.campo === 'classe'),
+    completo: ({ scheda }) => !scheda.errori.some((e) => e.campo === 'classe' || e.campo.startsWith('parametriTalenti')),
     render: passoClasse,
   },
   {
@@ -278,6 +278,20 @@ function passoAddestramento(ctx) {
 // ---------------------------------------------------------------------------
 // 4 Classe
 
+/**
+ * Parametro di un Talento di Classe (Disciplina del Lottatore, §3.5.5): pulsanti con le opzioni.
+ * La scelta è permanente: si fa quando il Talento si acquisisce e poi non si cambia.
+ */
+export function sceltaParametroTalento(talento, attuale, scegli) {
+  const Q = talento?.parametro;
+  if (!Q || typeof Q !== 'object') return null;
+  return h('div', { class: 'scelta-parametro', role: 'group', 'aria-label': `${Q.nome} di ${talento.nome}` },
+    h('p', {}, h('strong', {}, `${Q.nome} (${talento.nome}): `), attuale ? null : h('span', { class: 'nota errore' }, 'da scegliere, permanente')),
+    h('div', { class: 'scelta-pulsanti' }, Q.opzioni.map((o) => h('button', {
+      type: 'button', class: `btn scelta-btn${attuale === o.id ? ' scelta' : ''}`, 'aria-pressed': String(attuale === o.id), onclick: () => scegli(o.id),
+    }, o.nome))));
+}
+
 function talento(ctx, chiave, titolo, testo) {
   return dettagli(ctx, chiave, titolo, testo.split('\n').map((p) => h('p', {}, p)));
 }
@@ -293,7 +307,7 @@ function passoClasse(ctx) {
       const sel = scelte.classe === c.nome;
       const pv1 = c.pv_per_grado.fisso + c.pv_per_grado.dado;
       return carta(sel,
-        h('header', {}, h('h3', {}, c.nome), bottoneScelta(sel, () => ctx.aggiorna({ classe: c.nome }))),
+        h('header', {}, h('h3', {}, c.nome), bottoneScelta(sel, () => ctx.aggiorna({ classe: c.nome, parametriTalenti: {} }))),
         h('p', { class: 'identita' }, c.specializzazioni.join(' / ')),
         h('p', {}, h('strong', {}, 'Abilità di Classe: '), elencoInfo('abilita', c.abilita)),
         h('dl', { class: 'voci in-linea' },
@@ -303,6 +317,7 @@ function passoClasse(ctx) {
         c.incantesimi ? h('p', {}, h('strong', {}, 'Incantesimi al I Grado: '),
           Object.entries(c.incantesimi.primo_grado).filter(([, n]) => n).map(([m, n]) => `${n} ${m}`).join(' + ')) : null,
         h('h4', {}, 'Talenti fissi'),
+        sel ? c.talenti_fissi.filter((t) => t.grado === 1).map((t) => sceltaParametroTalento(t, scelte.parametriTalenti?.[t.nome] ?? null, (id) => ctx.aggiorna({ parametriTalenti: { ...(scelte.parametriTalenti ?? {}), [t.nome]: id } }))) : null,
         c.talenti_fissi.map((t) => talento(ctx, `tal:${c.nome}:${t.nome}`, `${GRADI[t.grado]} Grado — ${t.nome}`, t.testo)),
         h('h4', {}, 'Talenti a scelta (Gradi II, IV, VI)'),
         c.talenti_a_scelta.map((t) => talento(ctx, `tal:${c.nome}:${t.nome}`,

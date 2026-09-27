@@ -185,7 +185,7 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     })),
     limiteAvanzamento: s.abilita[0]?.limite ?? null,
     talentiClasse: s.classi.flatMap((cl) => cl.talenti.map((t) => ({
-      nome: t.nome, classe: cl.nome, grado: GRADI_ROMANI[t.grado] ?? String(t.grado), scelto: !!t.scelto, frase: frase(t.testo),
+      nome: t.parametroNome ? `${t.nome} (${t.parametroNome})` : t.nome, classe: cl.nome, grado: GRADI_ROMANI[t.grado] ?? String(t.grado), scelto: !!t.scelto, frase: frase(t.testo),
     }))),
     talentiLiberi: s.talentiLiberi.map((t) => ({
       id: t.id,

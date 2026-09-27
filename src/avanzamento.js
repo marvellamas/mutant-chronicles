@@ -18,6 +18,7 @@ import { calcolaEquipaggiamento, normalizzaEquipaggiamento } from './equipaggiam
 import { conOrdinale } from './lingua.js';
 import { saldoIniziale, contiDotazione, crediti } from './dotazioni.js';
 import { applicaCondizioni } from './condizioni.js';
+import { erroriParametriTalenti } from './calc.js';
 
 export const VERSIONE_PERSONAGGIO = 2;
 
@@ -106,6 +107,49 @@ const limiteAvanzamento = (livello, dati) => fascia(dati.regole.avanzamento.avan
 
 const eTaumaturgica = (classe, dati) => classe?.addestramento === dati.regole.taumaturgo.addestramento;
 
+/** Scelta del parametro di un Talento di Classe (Disciplina, §3.5.5): { sceltaParametro: id } o nulla. */
+function sceltaParametro(talento, parametri) {
+  const v = isOggetto(parametri) ? parametri[talento?.nome] : undefined;
+  return isOggetto(talento?.parametro) && talento.parametro.opzioni.some((o) => o.id === v) ? { sceltaParametro: v } : {};
+}
+
+/** Valore di una tabella per Grado { "1": …, "3": …, "5": … }: la riga del Grado minimo raggiunto. */
+function perGrado(tabella, grado) {
+  const k = Object.keys(tabella).map(Number).filter((g) => g <= grado).sort((a, b) => b - a)[0];
+  return k === undefined ? null : tabella[String(k)];
+}
+
+/** Sostituisce «x_per_grado» con «x» al Grado dato, a ogni profondità. */
+function risolviPerGrado(v, grado) {
+  if (Array.isArray(v)) return v.map((x) => risolviPerGrado(x, grado));
+  if (!isOggetto(v)) return v;
+  const out = {};
+  for (const [k, x] of Object.entries(v)) {
+    if (k.endsWith('_per_grado') && isOggetto(x)) out[k.slice(0, -'_per_grado'.length)] = perGrado(x, grado);
+    else out[k] = risolviPerGrado(x, grado);
+  }
+  return out;
+}
+
+/** Unione profonda di due oggetti di effetti (la seconda aggiunge o sostituisce). */
+function unisciEffetti(a, b) {
+  const out = { ...(a ?? {}) };
+  for (const [k, x] of Object.entries(b ?? {})) out[k] = isOggetto(x) && isOggetto(out[k]) ? unisciEffetti(out[k], x) : x;
+  return out;
+}
+
+/**
+ * Talento di Classe pronto per il calcolo: con il parametro scelto (Disciplina del Lottatore,
+ * §3.5.5) gli effetti dell'opzione si uniscono a quelli del Talento e le tabelle per Grado si
+ * leggono al Grado attuale nella Classe.
+ */
+export function risolviTalentoClasse(t, grado) {
+  const Q = isOggetto(t.parametro) ? t.parametro : null;
+  const o = Q ? Q.opzioni.find((x) => x.id === t.sceltaParametro) : null;
+  const effetti = risolviPerGrado(unisciEffetti(t.effetti, o?.effetti), grado);
+  return { ...t, effetti, ...(Q ? { parametroNome: o?.nome ?? null, parametroEtichetta: Q.nome } : {}) };
+}
+
 function talentoLiberoDef(id, dati) {
   const t = dati.talenti_liberi.talenti.find((x) => x.id === id);
   if (t) return { ...t, specializzazione: false };
@@ -131,7 +175,7 @@ function statoCreazione(creazione, dati) {
     errori,
     stato: {
       livello: 1, corp, addestr, car, abil,
-      classi: [{ nome: classe.nome, grado: 1, talenti: [{ grado: 1, ...classe.talenti_fissi[0], scelto: false }] }],
+      classi: [{ nome: classe.nome, grado: 1, talenti: [{ grado: 1, ...classe.talenti_fissi[0], scelto: false, ...sceltaParametro(classe.talenti_fissi[0], creazione.parametriTalenti) }] }],
       contributiPV: [{ livello: 1, classe: classe.nome, valore: pvCreazione }],
       contributiPM: [{ livello: 1, classe: classe.nome, valore: pmCreazione }],
       talentiLiberi: [],
@@ -279,7 +323,7 @@ function applicaVoce(prima, voce, dati) {
     c.grado += 1;
     const av = dati.regole.avanzamento;
     const iFisso = av.gradi_talento_fisso.indexOf(c.grado);
-    if (iFisso >= 0 && def.talenti_fissi[iFisso]) c.talenti.push({ grado: c.grado, ...def.talenti_fissi[iFisso], scelto: false });
+    if (iFisso >= 0 && def.talenti_fissi[iFisso]) c.talenti.push({ grado: c.grado, ...def.talenti_fissi[iFisso], scelto: false, ...sceltaParametro(def.talenti_fissi[iFisso], v.parametriTalenti) });
     else if (av.gradi_talento_a_scelta.includes(c.grado)) {
       const t = def.talenti_a_scelta.find((x) => x.nome === v.talentoClasse);
       if (t) c.talenti.push({ grado: c.grado, ...t, scelto: true });
@@ -407,7 +451,7 @@ function controllaVoce(prima, voce, dati) {
   const ammesse = new Set(['livello', 'incantesimi', 'tecniche', 'scuolaMishima']);
   if (kCar) ammesse.add('caratteristiche');
   if (conTalento) ammesse.add('talentoLibero');
-  if (conGrado) for (const k of ['grado', 'tiroPV', 'tiroPM', 'talentoClasse']) ammesse.add(k);
+  if (conGrado) for (const k of ['grado', 'tiroPV', 'tiroPM', 'talentoClasse', 'parametriTalenti']) ammesse.add(k);
   if (kAbil) ammesse.add('puntiAbilita');
   for (const k of Object.keys(v)) if (!ammesse.has(k)) err(k, `${conOrdinale('al', n)} livello non si sceglie «${k}» (eventi: ${eventi.join(', ') || 'nessuno'})`);
 
@@ -454,6 +498,10 @@ function controllaVoce(prima, voce, dati) {
           if (motivo) err(campo, `tiro dei ${nome}: ${motivo}`);
         }
       }
+      // §3.5.5: il Talento fisso di questo Grado può chiedere un parametro (Disciplina); i parametri
+      // di Talenti presi prima non si cambiano
+      const iF = av.gradi_talento_fisso.indexOf(nuovoGrado);
+      for (const e of erroriParametriTalenti(iF >= 0 && def.talenti_fissi[iF] ? [def.talenti_fissi[iF]] : [], v.parametriTalenti)) err(e.campo, e.problema, e.tipo);
       // §3.2: Talento a scelta ai Gradi II, IV, VI, ciascuno una volta
       if (av.gradi_talento_a_scelta.includes(nuovoGrado)) {
         const t = def.talenti_a_scelta.find((x) => x.nome === v.talentoClasse);
@@ -780,10 +828,12 @@ function schedaARiposo(personaggio, dati) {
   const pmMancanti = stato.contributiPM.some((c) => c.valore === null);
   const movimento = { passo: r.movimento.passo, corsa: r.movimento.corsa, scatto: r.movimento.scatto, unita: r.movimento.unita };
   // §2.14: Iniziativa = Mod DES + Mod INT, più i Talenti con effetti.iniziativa (Iniziativa Migliorata, Talenti di Classe)
-  const talentiClasseIniziativa = stato.classi.flatMap((c) => c.talenti).filter((t) => typeof t.effetti?.iniziativa === 'number' && !talenti.some((x) => x.nome === t.nome));
+  // Talenti di Classe con il parametro scelto e le tabelle per Grado risolte (Disciplina, §3.5.5)
+  const talentiClasse = new Map(stato.classi.map((c) => [c.nome, c.talenti.map((t) => risolviTalentoClasse(t, c.grado))]));
+  const talentiClasseIniziativa = [...talentiClasse.values()].flat().filter((t) => typeof t.effetti?.iniziativa === 'number' && !talenti.some((x) => x.nome === t.nome));
   const vociIniziativa = [
     ...r.iniziativa.caratteristiche.map((s) => ({ etichetta: `Mod ${s}`, valore: caratteristiche[s].mod })),
-    ...[...talenti, ...talentiClasseIniziativa].filter((t) => typeof t.effetti?.iniziativa === 'number').map((t) => ({ etichetta: t.nome, valore: t.effetti.iniziativa })),
+    ...[...talenti, ...talentiClasseIniziativa].filter((t) => typeof t.effetti?.iniziativa === 'number').map((t) => ({ etichetta: t.parametroNome ? `${t.nome} (${t.parametroNome})` : t.nome, valore: t.effetti.iniziativa })),
   ];
   for (const t of talenti) for (const [k, v] of Object.entries(t.effetti?.movimento ?? {})) movimento[k] += v;
 
@@ -809,7 +859,7 @@ function schedaARiposo(personaggio, dati) {
     grado: primaClasse.grado,
     classi: stato.classi.map((c) => {
       const def = trova(dati.classi.classi, c.nome);
-      return { nome: c.nome, addestramento: def.addestramento, grado: c.grado, taumaturgica: eTaumaturgica(def, dati), talenti: c.talenti };
+      return { nome: c.nome, addestramento: def.addestramento, grado: c.grado, taumaturgica: eTaumaturgica(def, dati), talenti: talentiClasse.get(c.nome) };
     }),
     caratteristiche,
     abilita: abilitaEquip,
@@ -824,7 +874,7 @@ function schedaARiposo(personaggio, dati) {
     movimento,
     azioni: { movimento: r.azioni_primo_livello.movimento, principali: r.azioni_primo_livello.principali + cumulato('azione_principale', n, dati) },
     vantaggio: stato.addestr.vantaggio,
-    talenti: stato.classi.flatMap((c) => c.talenti.map((t) => ({ ...t, classe: c.nome }))),
+    talenti: stato.classi.flatMap((c) => talentiClasse.get(c.nome).map((t) => ({ ...t, classe: c.nome }))),
     talentiLiberi: stato.talentiLiberi.filter((t) => !talentoLiberoDef(t.id, dati).specializzazione).map((t) => {
       const d = talentoLiberoDef(t.id, dati);
       return { id: t.id, nome: d.nome, parametro: t.parametro, annotazione: t.annotazione ?? null, livello: t.livello, provvisorio: !!d.provvisorio, testo: d.testo };

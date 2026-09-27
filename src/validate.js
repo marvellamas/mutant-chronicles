@@ -1421,7 +1421,7 @@ function validaAttaccoDistanza(dati, err) {
 // Campi del lancio degli incantesimi (incantesimi.json → meccanica, tools/estrai_lancio.py) ed
 // Attacco ravvicinato (regole.json → attacco_ravvicinato, src/attacco.js; Giocatore §1.6, §5.3–5.7, §5.12, §5.13)
 const EFFETTI_RAVVICINATO = ['manovra', 'due_armi', 'mano_non_dominante', 'senz_armi', 'carica', 'imboscata', 'alleato_adiacente', 'ignaro',
-  'primo_attacco', 'raffica_di_colpi', 'punto_debole', 'promemoria'];
+  'primo_attacco', 'raffica_di_colpi', 'punto_debole', 'promemoria', 'dopo_attacco_senz_armi', 'controllo', 'padronanza_disciplina', 'combattimento_multiplo'];
 const EFFETTI_MANOVRA = ['va', 'danno', 'riduzione', 'dopo_armatura', 'danno_normale'];
 const PROMEMORIA_RAVVICINATO = ['sempre', 'senz_armi', 'immobilizzare', 'opportunita'];
 const COMBINAZIONI_DUE_ARMI = ['ravvicinate', 'mista', 'leggere_distanza'];
@@ -1455,7 +1455,25 @@ function validaAttaccoRavvicinato(dati, err) {
     ...(dati.talenti_liberi?.talenti ?? []).map((t) => ['talenti_liberi', t.id, t]),
     ...(dati.classi?.classi ?? []).flatMap((c) => [...(c.talenti_fissi ?? []), ...(c.talenti_a_scelta ?? [])].map((t) => ['classi', `${c.nome}: ${t.nome}`, t])),
   ];
+  // Talenti con un parametro scelto dal giocatore (Disciplina del Lottatore, §3.5.5): ogni opzione ha i suoi effetti
+  const conOpzioni = [];
   for (const [file, nome, t] of talenti) {
+    conOpzioni.push([file, nome, t]);
+    if (t.parametro === undefined || t.parametro === null || typeof t.parametro === 'string') continue;
+    const Q = t.parametro;
+    const P = `${nome}.parametro`;
+    if (!isOggetto(Q) || !isTesto(Q.chiave) || !isTesto(Q.nome) || !Array.isArray(Q.opzioni) || !Q.opzioni.length) { err(file, P, '{ chiave, nome, opzioni: [{ id, nome, effetti }] } atteso'); continue; }
+    const ids = Q.opzioni.map((o) => o?.id);
+    if (new Set(ids).size !== ids.length || !Q.opzioni.every((o) => isTesto(o?.id) && isTesto(o?.nome) && isOggetto(o?.effetti))) err(file, `${P}.opzioni`, 'ogni opzione con id (diversi), nome ed effetti');
+    for (const o of Q.opzioni) conOpzioni.push([file, `${nome} (${o?.nome})`, { effetti: o?.effetti }]);
+    for (const o of Q.opzioni) {
+      for (const [k, x] of Object.entries(o?.effetti?.attacco_ravvicinato ?? {})) {
+        const tab = x?.danno_per_grado ?? x?.va_per_grado;
+        if (tab !== undefined && (!isOggetto(tab) || !Object.keys(tab).every((g) => /^[1-6]$/.test(g)) || !('1' in tab))) err(file, `${P}.${o.id}.${k}`, 'tabella per Grado { "1": …, "3": …, "5": … } attesa');
+      }
+    }
+  }
+  for (const [file, nome, t] of conOpzioni) {
     const e = t.effetti?.attacco_ravvicinato;
     if (e === undefined) continue;
     const P = `${nome}.effetti.attacco_ravvicinato`;

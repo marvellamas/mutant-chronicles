@@ -170,6 +170,8 @@ export function validaScelte(scelte, dati) {
   if (classe && addestr && classe.addestramento !== addestr.nome) {
     err('classe', `${classe.nome} appartiene all'Addestramento ${classe.addestramento}, non a ${addestr.nome}`);
   }
+  // §3.5.5: il Talento fisso del I Grado può chiedere un parametro (Disciplina del Lottatore)
+  for (const e of erroriParametriTalenti(classe ? classe.talenti_fissi.filter((t) => t.grado === 1) : [], scelte?.parametriTalenti)) err(e.campo, e.problema, e.tipo);
 
   // §2.1: 5 Punti Caratteristica, nessun valore oltre 7, i valori iniziali non si riducono.
   const sigle = new Set(dati.caratteristiche.caratteristiche.map((c) => c.sigla));
@@ -220,6 +222,29 @@ export function validaScelte(scelte, dati) {
  * creazione, oppure dal personaggio { creazione, livelli } rigiocando i livelli.
  * Non lancia eccezioni per scelte errate: le segnala in `errori` e calcola ciò che può.
  */
+/**
+ * Parametri dei Talenti di Classe acquisiti in un passo (creazione o livello): { campo, problema, tipo }.
+ * Ogni Talento con un parametro (§3.5.5, Disciplina) vuole una delle sue opzioni; parametri per
+ * Talenti non acquisiti in quel passo sono violazioni (la scelta è permanente: non si cambia dopo).
+ */
+export function erroriParametriTalenti(talentiAcquisiti, parametri) {
+  const out = [];
+  const p = parametri && typeof parametri === 'object' ? parametri : {};
+  for (const t of talentiAcquisiti) {
+    const Q = t.parametro;
+    if (!Q || typeof Q !== 'object') continue;
+    const v = p[t.nome];
+    if (!v) out.push({ campo: `parametriTalenti.${t.nome}`, problema: `${t.nome}: scegli la ${Q.nome} (${Q.opzioni.map((o) => o.nome).join(', ')})`, tipo: 'incompleto' });
+    else if (!Q.opzioni.some((o) => o.id === v)) out.push({ campo: `parametriTalenti.${t.nome}`, problema: `${t.nome}: "${v}" non è una ${Q.nome}`, tipo: 'violazione' });
+  }
+  for (const nome of Object.keys(p)) {
+    if (!talentiAcquisiti.some((t) => t.nome === nome && t.parametro && typeof t.parametro === 'object')) {
+      out.push({ campo: `parametriTalenti.${nome}`, problema: `${nome}: il parametro si sceglie una sola volta, quando si acquisisce il Talento, e poi non si cambia (§3.5.5)`, tipo: 'violazione' });
+    }
+  }
+  return out;
+}
+
 export function calcolaScheda(scelte, dati) {
   // Personaggio v2 { creazione, livelli }: si rigiocano creazione e livelli (cap. 8).
   if (scelte?.creazione) return calcolaSchedaPersonaggio(scelte, dati);

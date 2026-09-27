@@ -21,7 +21,8 @@ const primaFrase = (t) => String(t ?? '').split(/(?<=\.)\s/)[0];
 export function talentiAttacco(scheda, dati, chiave = 'attacco_distanza') {
   const liberi = (scheda?.talentiLiberi ?? []).map((t) => dati.talenti_liberi.talenti.find((x) => x.id === t.id)).filter(Boolean);
   const classe = (scheda?.classi ?? []).flatMap((c) => c.talenti ?? []);
-  return [...liberi, ...classe].filter((t) => t.effetti?.[chiave] !== undefined).map((t) => ({ nome: t.nome, testo: t.testo, e: t.effetti[chiave] }));
+  return [...liberi, ...classe].filter((t) => t.effetti?.[chiave] !== undefined)
+    .map((t) => ({ nome: t.parametroNome ? `${t.nome} (${t.parametroNome})` : t.nome, testo: t.testo, e: t.effetti[chiave] }));
 }
 
 /** Danno di un colpo in testo: «1d6+3», «(1d6+1) ×2». */
@@ -443,24 +444,34 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
 export const SENZ_ARMI = 'senz_armi';
 const numeroTesto = (n) => (n < 0 ? `−${-n}` : `+${n}`);
 
+/** Valore massimo di un danno «XdY+Z», per scegliere il dado più alto (Arti Marziali, §8.6.1). */
+function massimoDanno(testo) {
+  const m = /^(\d+)d(\d+)(?:\s*([+−-])\s*(\d+))?$/.exec(String(testo ?? '').trim());
+  if (!m) return -Infinity;
+  const extra = m[3] ? (m[3] === '+' ? 1 : -1) * Number(m[4]) : 0;
+  return Number(m[1]) * Number(m[2]) + extra;
+}
+
 /**
- * Profilo «Senz'armi»: Abilità Corpo a corpo (VA effettivo con le condizioni), portata 1 Q, danno
- * dichiarato dal giocatore (A.22: il manuale non lo dà) oppure 1d6 con Arti Marziali (§8.6.1).
+ * Profilo «Senz'armi»: Abilità Corpo a corpo (VA effettivo con le condizioni), portata 1 Q. Danno:
+ * il dado dei dati se c'è (Disciplina del Lottatore al suo Grado, §3.5.5; Arti Marziali 1d6, §8.6.1;
+ * «si usa il dado più alto applicabile»), altrimenti quello dichiarato dal giocatore (A.22: il manuale
+ * non lo dà per gli altri).
  * @param dannoDichiarato testo del danno salvato nel personaggio (sessione → attacchi.senz_armi)
  */
 export function profiloSenzArmi(scheda, dati, dannoDichiarato = null) {
   const S = dati.regole.attacco_ravvicinato.senz_armi;
   const a = (scheda?.abilita ?? []).find((x) => x.nome === S.abilita) ?? null;
   const T = talentiAttacco(scheda, dati, 'attacco_ravvicinato');
-  const marziali = T.find((t) => t.e.senz_armi?.danno)?.e.senz_armi.danno ?? null;
+  const daDati = T.filter((t) => t.e.senz_armi?.danno).sort((x, y) => massimoDanno(y.e.senz_armi.danno) - massimoDanno(x.e.senz_armi.danno))[0] ?? null;
   const dichiarato = typeof dannoDichiarato === 'string' && dannoDichiarato.trim() ? dannoDichiarato.trim() : null;
-  const danno = dichiarato ?? marziali;
+  const danno = daDati?.e.senz_armi.danno ?? dichiarato;
   const scomposizione = a ? (a.scomposizione ?? [voce('Valore da regole', a.totale, 'regole')]) : [];
   return {
     uid: SENZ_ARMI, rif: null, nome: 'Senz’armi', tipo: 'arma_ravvicinata', senzArmi: true, abilita: S.abilita,
     va: a?.totale ?? null, vaEffettivo: a?.effettivo ?? a?.totale ?? null,
     scomposizione: scomposizione.map((x, i) => (i === 0 && x.fonte === 'regole' ? { ...x, etichetta: `VA ${S.abilita}` } : x)),
-    danno: { una_mano: danno, due_mani: null }, dannoOrigine: dichiarato ? 'dichiarato' : marziali ? 'Arti Marziali' : null,
+    danno: { una_mano: danno, due_mani: null }, dannoOrigine: daDati ? daDati.nome : dichiarato ? 'dichiarato' : null, dannoDaDati: !!daDati,
     mani: 1, portataQ: S.portata_q, manovre: [],
   };
 }
@@ -508,6 +519,13 @@ function manovreDiTalento(T) {
     out.raffica_di_colpi = {
       nome: raffica.nome, paragrafo: 'Lottatore §3.5.5', offensiva: true, azioni_principali: 1, va: raffica.e.raffica_di_colpi.va, danno: 0,
       attacchi: raffica.e.raffica_di_colpi.attacchi, solo_senz_armi: true, prova: { tipo: 'per_colpire', contro: ['Difese'] }, frasi: [primaFrase(raffica.testo)],
+    };
+  }
+  const multiplo = T.find((t) => t.e.combattimento_multiplo);
+  if (multiplo) {
+    out.combattimento_multiplo = {
+      nome: multiplo.nome, paragrafo: 'Lottatore §3.5.5', offensiva: true, azioni_principali: 1, va_per_bersagli: multiplo.e.combattimento_multiplo.va_per_bersagli,
+      danno: 0, solo_senz_armi: true, senza_limite: true, riduzione_da: 'spazzata', prova: { tipo: 'per_colpire', contro: ['Difese'] }, frasi: [primaFrase(multiplo.testo)],
     };
   }
   const debole = T.find((t) => t.e.punto_debole);
@@ -623,8 +641,9 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
   }
   const vm = vincoli.manovre[id];
   if (vm?.motivo) blocca(`${m.nome} non ammessa: ${vm.motivo}.`);
-  const mig = con('manovra').find((t) => t.e.manovra[id]);
-  const migE = mig?.e.manovra[id] ?? {};
+  const idMig = m.riduzione_da ?? id;
+  const mig = con('manovra').find((t) => t.e.manovra[idMig]);
+  const migE = mig?.e.manovra[idMig] ?? {};
 
   // 2. base: VA effettivo dell'arma; per le Prove contrapposte Corpo a corpo, se lo chiede la Manovra
   let base = (arma.scomposizione?.length ? arma.scomposizione : [voce(`VA ${arma.abilita}`, arma.va ?? 0, 'regole')]).map((x) => ({ paragrafo: null, ...x }));
@@ -647,7 +666,9 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
     const va = m.va_per_bersagli[d.bersagli];
     aggiungi(situazione, `${m.nome} contro ${d.bersagli} bersagli`, va, 'manovra', m.paragrafo);
     if (migE.riduzione) aggiungi(situazione, mig.nome, Math.min(migE.riduzione, -va), 'talento', m.paragrafo);
-    promemoria.push(`${m.nome}: bersagli adiacenti entro la portata (${vincoli.portata} Q); una Prova, un colpo e un’Armatura per bersaglio (A.27 provvisoria).`);
+    promemoria.push(m.senza_limite
+      ? `${m.nome}: tutti gli avversari adiacenti raggiungibili; con «3» si intende tre o più. Una Prova, un colpo e un’Armatura per bersaglio.`
+      : `${m.nome}: bersagli adiacenti entro la portata (${vincoli.portata} Q); una Prova, un colpo e un’Armatura per bersaglio (A.27 provvisoria).`);
   } else if (migE.va !== undefined) aggiungi(situazione, `${m.nome} (${mig.nome})`, migE.va, 'talento', m.paragrafo);
   else aggiungi(situazione, m.nome, m.va, 'manovra', m.paragrafo);
 
@@ -710,6 +731,19 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
   const primo = con('primo_attacco')[0];
   if (primo && d.primoAttacco) aggiungi(situazione, `${primo.nome} (primo attacco)`, primo.e.primo_attacco.va, 'talento', 'Incursore');
   if (arma.senzArmi) for (const t of con('senz_armi').filter((x) => x.e.senz_armi.va)) aggiungi(situazione, t.nome, t.e.senz_armi.va, 'talento', 'Giocatore §8.6.1');
+  // §3.5.5, Disciplina Controllo: bonus alle Prove offensive di Corpo a corpo per quelle Manovre
+  const usaCorpo = arma.senzArmi || base[0]?.etichetta === `VA ${R.senz_armi.abilita}`;
+  for (const t of con('controllo').filter((x) => x.e.controllo.manovre.includes(id))) {
+    if (usaCorpo) aggiungi(situazione, t.nome, t.e.controllo.va, 'talento', 'Lottatore §3.5.5');
+    else promemoria.push(`${t.nome}: il bonus vale per le Prove di Corpo a corpo, non con l’Abilità dell’arma.`);
+  }
+  // §3.5.5, Disciplina Potenza: −1 a Difese dopo un attacco senz'armi (Padronanza della Disciplina la elimina)
+  if (arma.senzArmi) {
+    for (const t of con('dopo_attacco_senz_armi')) {
+      const annullata = con('padronanza_disciplina').some((x) => x.e.padronanza_disciplina?.potenza?.annulla_dopo_attacco);
+      if (!annullata) promemoria.push(`${t.nome}: dopo l’attacco senz’armi ${numeroTesto(t.e.dopo_attacco_senz_armi.difese)} VA a Difese fino alla tua Iniziativa successiva.`);
+    }
+  }
   if (d.circostanza) aggiungi(situazione, 'Circostanza del Direttore', d.circostanza, 'situazione', 'Giocatore §1.4');
 
   // 6. più attacchi: Combattere con due armi (§5.7), Raffica di Colpi (Lottatore)

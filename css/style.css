@@ -1259,3 +1259,6 @@ body.con-sfondo::before {
 .riga-opzione { font-size: 0.72rem; font-weight: 400; color: var(--tenue); white-space: nowrap; }
 .scelta-btn.scelta .riga-opzione { color: inherit; opacity: 0.85; }
 
+/* parametro di un Talento di Classe (Disciplina del Lottatore, §3.5.5) */
+.scelta-parametro { margin: 0.4rem 0 0.6rem; padding: 0.5rem 0.6rem; border: 1px solid var(--accento); border-radius: var(--raggio); background: var(--accento-tenue); }
+.scelta-parametro p { margin: 0 0 0.35rem; }

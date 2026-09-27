@@ -707,10 +707,98 @@
           "grado": 1,
           "nome": "Addestramento al Combattimento Senz’Armi",
           "testo": "Il Lottatore sceglie permanentemente una Disciplina: Potenza, Rapidità, Controllo o Guardia. Il danno dei suoi attacchi senz’armi dipende dalla Disciplina e dal Grado nella Classe.\nDisciplina Potenza Rapidità Controllo Guardia\nGradi I–II 1d8 1d4 1d4 1d6\nGradi III–IV 1d10 1d6 1d6 1d8\nGradi V–VI 1d12 1d8 1d8 1d10\nPotenza. Dopo aver effettuato un attacco senz’armi, subisce −1 VA a Difese fino all’arrivo della propria Iniziativa successiva. Più attacchi non aumentano questa penalità.\nRapidità. Ottiene sempre +3 Iniziativa. Una volta per Round, durante la propria Iniziativa, può muoversi di 1 Q aggiuntivo senza spendere Azioni. Si applicano normalmente gli Attacchi di Opportunità. Questo movimento aggiuntivo non modifica la distanza o la continuità della normale Azione di Movimento.\nControllo. Ottiene +2 VA ai Gradi I–II, +4 VA ai Gradi III–IV e +6 VA ai Gradi V–VI alle Prove offensive di Corpo a corpo per Immobilizzare, Sbilanciare, Disarmare, Incalzare e Stordire. Restano validi costi, requisiti e penalità delle Manovre.\nGuardia. Ottiene un bonus a Difese contro gli attacchi ravvicinati: +1 VA ai Gradi I–II, +2 VA ai Gradi III–IV e +3 VA ai Gradi V–VI.",
-          "effetti": {
-            "attacco_ravvicinato": {
-              "promemoria": "senz_armi"
-            }
+          "effetti": {},
+          "parametro": {
+            "chiave": "disciplina",
+            "nome": "Disciplina",
+            "_nota": "§3.5.5: «sceglie permanentemente una Disciplina» al I Grado di Lottatore. Il dado senz’armi e i bonus dipendono dal Grado nella Classe: le chiavi dei «_per_grado» sono il Grado minimo (I–II, III–IV, V–VI).",
+            "opzioni": [
+              {
+                "id": "potenza",
+                "nome": "Potenza",
+                "effetti": {
+                  "attacco_ravvicinato": {
+                    "senz_armi": {
+                      "danno_per_grado": {
+                        "1": "1d8",
+                        "3": "1d10",
+                        "5": "1d12"
+                      }
+                    },
+                    "dopo_attacco_senz_armi": {
+                      "difese": -1
+                    }
+                  }
+                }
+              },
+              {
+                "id": "rapidita",
+                "nome": "Rapidità",
+                "effetti": {
+                  "iniziativa": 3,
+                  "attacco_ravvicinato": {
+                    "senz_armi": {
+                      "danno_per_grado": {
+                        "1": "1d4",
+                        "3": "1d6",
+                        "5": "1d8"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "id": "controllo",
+                "nome": "Controllo",
+                "effetti": {
+                  "attacco_ravvicinato": {
+                    "senz_armi": {
+                      "danno_per_grado": {
+                        "1": "1d4",
+                        "3": "1d6",
+                        "5": "1d8"
+                      }
+                    },
+                    "controllo": {
+                      "va_per_grado": {
+                        "1": 2,
+                        "3": 4,
+                        "5": 6
+                      },
+                      "manovre": [
+                        "immobilizzare",
+                        "sbilanciare",
+                        "disarmare",
+                        "incalzare",
+                        "stordire"
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "id": "guardia",
+                "nome": "Guardia",
+                "effetti": {
+                  "attacco_ravvicinato": {
+                    "senz_armi": {
+                      "danno_per_grado": {
+                        "1": "1d6",
+                        "3": "1d8",
+                        "5": "1d10"
+                      }
+                    }
+                  },
+                  "difese_ravvicinate": {
+                    "va_per_grado": {
+                      "1": 1,
+                      "3": 2,
+                      "5": 3
+                    }
+                  }
+                }
+              }
+            ]
           }
         },
         {
@@ -732,7 +820,12 @@
           "testo": "Con un’Azione Principale effettua una Spazzata senz’armi contro tutti gli avversari adiacenti raggiungibili dai suoi colpi, superando il normale limite di tre bersagli. Effettua una sola Prova di Corpo a corpo: −4 VA contro due bersagli, −6 VA contro tre o più bersagli.\nCon un successo, ogni bersaglio subisce un colpo e applica separatamente le proprie Difese e l’Armatura. Spazzata Migliorata riduce di 2 la penalità. Restano valide le regole generali sul Successo Magistrale per gli attacchi con più istanze di danno.\nNon richiede PM e non può essere combinato con Raffica di Colpi nella stessa Azione.",
           "effetti": {
             "attacco_ravvicinato": {
-              "promemoria": "senz_armi"
+              "combattimento_multiplo": {
+                "va_per_bersagli": {
+                  "2": -4,
+                  "3": -6
+                }
+              }
             }
           }
         }
@@ -756,6 +849,11 @@
           "testo": "Perfeziona la Disciplina scelta al I Grado, senza acquisirne una seconda. Non richiede PM.\nPotenza. Elimina la penalità di −1 VA a Difese dopo aver attaccato.\nRapidità. Il movimento aggiuntivo gratuito di 1 Q non provoca Attacchi di Opportunità.\nControllo. Il bonus della Disciplina si applica anche alle Prove previste per resistere a Immobilizzare, Sbilanciare, Disarmare, Incalzare e Stordire, per mantenere una presa o per liberarsi da Immobilizzato. Si utilizza la Prova indicata dalla Manovra o dall’effetto; il Talento non introduce una Prova dove non è prevista.\nGuardia. Il bonus a Difese si applica a tutti gli attacchi diretti percepibili, anche a distanza. Restano necessari i normali requisiti della Difesa: il Talento non consente da solo di parare a mani nude un attacco a distanza. Sono esclusi gli effetti ad Area, gli effetti automatici e gli attacchi normalmente imparabili.",
           "effetti": {
             "attacco_ravvicinato": {
+              "padronanza_disciplina": {
+                "potenza": {
+                  "annulla_dopo_attacco": true
+                }
+              },
               "promemoria": "senz_armi"
             }
           }
