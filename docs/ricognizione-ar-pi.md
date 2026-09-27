@@ -215,4 +215,25 @@ I rimedi temporanei (Riparazione d'Emergenza, Ingegneria d'Emergenza) non recupe
 
 ## 10. Cosa è stato implementato
 
-(in fondo, a lavoro finito)
+27 settembre 2026.
+
+- **Motore** (`src/protezione.js`):
+  - `calcolaAR` restituisce totale, magica, le voci con la provenienza, gli «AR contro» e i valori da mostrare (AR, contro Etereo, contro esplosioni).
+  - Cumulo da `regole.json → ar`: armatura con kit, un solo scudo, niente elmetto, effetti `ar`, Corazza Potenziata.
+  - `oggettiConPi` e `statoIntegrita`: soglia «Rotto» a 0 PI (`regole.json → integrita`).
+  - L'AR a riposo sta in `equipaggiamento.ar` (stampa). L'AR al tavolo sta in `equipaggiamento.arEffettiva` (`src/condizioni.js`), con gli effetti situazionali accesi e gli oggetti Rotti esclusi. Al tavolo gli oggetti Rotti perdono anche i loro effetti sui VA.
+- **Dati**:
+  - Scudi: Antiesplosione come `ar_contro` e Scudo Magico delle Guardie Sacre come `ar` situazionale (`tools/lotti/lotto_effetti_scudi.py`).
+  - Nuovo tipo di effetto `ar` (`docs/effetti-oggetti.md`) e validatore aggiornato.
+- **Salvataggio**: PI attuali in `sessione.integrita`, formato 7. I file del 6 si leggono con gli oggetti integri. «Nuova sessione» non ripara.
+- **SD**:
+  - Pillole AR nel riquadro dei PV, con la provenienza nel tooltip.
+  - Sezione «Integrità degli oggetti» con PI n/max, − e +, PS Integrità ed etichetta «Rotto». Nessun «Ripara».
+  - «Attacca!»: promemoria sull'Armatura del bersaglio e avviso se l'arma è Rotta.
+- **SS** (foglio 3):
+  - Sottoriquadri AR accanto ai PV massimi, con la provenienza in piccolo.
+  - Quadratini dei PI per armi e protezioni: armatura, rinforzo, elmetto.
+- **Non fatto** (ipotesi A.48, A.50):
+  - incantesimi e Tecniche Interiori attivi, che l'app non tiene al tavolo;
+  - calcolo del danno subito dal bersaglio;
+  - riparazione.

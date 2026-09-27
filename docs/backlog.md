@@ -59,3 +59,11 @@ Scheda da stampare ridisegnata (`src/ui/stampa.js`, `css/stampa.css`): carattere
 - ✔ Foglio 3: riquadro compatto, armi con tutte le colonne e i colpi per caricatore, Protezioni, equipaggiamento con ind / zai / Altro, Ferite, Punti Vita a quadratini.
 - ✔ Foglio 4: Punti Magia, valori di lancio, contenitori di Chroma, indice e schede complete degli incantesimi su più pagine.
 - Esempi in `docs/esempi-stampa/` (PDF e personaggi di partenza), rigenerabili con `PORTA=8001 CARTELLA=docs/esempi-stampa node tools/collaudo_pdf.mjs`.
+
+## 10. ✔ AR in evidenza — fatto il 27 settembre 2026
+
+AR del personaggio calcolata (armatura, rinforzo, scudo, effetti, Talenti; niente elmetto) e mostrata accanto ai PV nella SD e nel foglio 3 della SS, con la provenienza (docs/ricognizione-ar-pi.md).
+
+## 11. ✔ PI degli oggetti — fatto il 27 settembre 2026
+
+PI massimi dal catalogo, PI attuali al tavolo con − e + ed etichetta «Rotto» a 0 (niente AR né effetti); quadratini dei PI nella SS; file del personaggio formato 7. Domande aperte A.43–A.50 in docs/per-davide.md.
