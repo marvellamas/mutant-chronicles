@@ -649,7 +649,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     // §7.7: «FOR × 3» nella colonna Max Q: la gittata dipende dalla Forza del personaggio
     const gittataQ = d?.gittata_q ?? (d?.gittata_per_for ? FOR * d.gittata_per_for : null);
     armi.push({
-      uid: o.uid, nome: o.nome, tipo: o.tipo, abilita: nomeAbilita, va, componenti,
+      uid: o.uid, rif: d?.rif ?? null, nome: o.nome, tipo: o.tipo, abilita: nomeAbilita, va, componenti,
       danno: dannoBase ? { una_mano: aggiungiDanno(dannoBase.una_mano, bonusDanno + dannoAccessori), due_mani: aggiungiDanno(dannoBase.due_mani, bonusDanno + dannoAccessori) } : null,
       dannoAccessori,
       ...(d?.rif ? (({ famiglia, scorte }) => ({ famigliaMunizioni: famiglia, scorte }))(scorteDi(d.rif)) : { famigliaMunizioni: null, scorte: [] }),
