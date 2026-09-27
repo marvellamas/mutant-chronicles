@@ -49,7 +49,9 @@ function numeraPiedi(contenitore, piede) {
   });
 }
 
-const eccede = (corpo) => corpo.scrollHeight > corpo.clientHeight + 1 || corpo.scrollWidth > corpo.clientWidth + 1;
+const trabocca = (el) => el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1;
+/** Il corpo del foglio o un riquadro (che taglia il contenuto) non contiene tutto. */
+const eccede = (corpo) => trabocca(corpo) || [...corpo.querySelectorAll('.riquadro-stampa, .riquadro-stampa > .contenuto')].some(trabocca);
 
 /**
  * @param {object} o { stampa: risultato di preparaStampa, torna() }
@@ -185,11 +187,11 @@ function foglioIdentita(d) {
 }
 
 // ---------------------------------------------------------------------------
-// Foglio 2 — Abilità e statistiche
+// Foglio 2 — Abilità: la tabella occupa tutta l'altezza a sinistra; a destra i Talenti (prima
+// frase) e le Annotazioni come riempitivo. Specializzazioni e Tecniche stanno nel foglio 3.
 
 function foglioAbilita(d) {
-  // due tabelle affiancate (metà delle categorie ciascuna): in una sola colonna le 24 Abilità
-  // occuperebbero tutta l'altezza del foglio
+  // due tabelle affiancate, metà delle categorie ciascuna, alte quanto la pagina
   const meta = Math.ceil(d.categorie.length / 2);
   const tabellaAbilita = (categorie) => h('table', { class: 'tabella-stampa numeri abilita-stampa' },
     h('thead', {}, h('tr', {}, ['Abilità', 'Mod', 'Base', 'Corp', 'Avanz', 'Equip', 'VA'].map((c) => h('th', {}, c)))),
@@ -198,23 +200,20 @@ function foglioAbilita(d) {
       cat.abilita.map((a) => h('tr', {},
         h('th', { scope: 'row' }, `${a.nome} `, h('span', { class: 'sigla' }, a.caratteristica), a.diClasse ? ' •' : null),
         h('td', {}, segno(a.mod)), h('td', {}, String(a.base)), h('td', {}, String(a.corporazione)),
-        h('td', {}, String(a.avanzamento)), h('td', { title: a.equip ? 'Equipaggiamento indossato (§7.11.1)' : null }, a.equip ? segno(a.equip) : '0'), h('td', { class: 'forte' }, String(a.va)))))));
-  return h('div', { class: 'griglia-abilita' },
+        h('td', {}, String(a.avanzamento)), h('td', { title: a.equip ? 'Equipaggiamento indossato (§7.11.1)' : null }, a.equip ? segno(a.equip) : '0'),
+        h('td', { class: 'va' }, String(a.va)))))));
+  const talento = (t, dettagli) => h('li', {}, h('strong', {}, t.nome), dettagli, ` — ${t.frase}`);
+  return h('div', { class: 'f2-griglia' },
+    box({ titolo: 'Abilità', tinta: 'accento', forte: true, classe: 'f2-abilita' },
+      h('div', { class: 'abilita-affiancate' }, tabellaAbilita(d.categorie.slice(0, meta)), tabellaAbilita(d.categorie.slice(meta))),
+      h('p', { class: 'piccolo' }, `• Abilità di Classe. VA = Mod + Base + Corp + Avanz + Equip (equipaggiamento indossato). Avanzamento massimo: ${d.limiteAvanzamento ?? '—'}.`)),
     h('div', { class: 'colonna' },
-      riquadro('Abilità',
-        h('div', { class: 'abilita-affiancate' }, tabellaAbilita(d.categorie.slice(0, meta)), tabellaAbilita(d.categorie.slice(meta))),
-        h('p', { class: 'piccolo' }, `• Abilità di Classe. VA = Mod + Base + Corp + Avanz + Equip (equipaggiamento indossato). Avanzamento massimo: ${d.limiteAvanzamento ?? '—'}.`)),
-      d.specializzazioni.length ? riquadro('Specializzazioni', h('ul', { class: 'elenco-talenti-stampa' }, d.specializzazioni.map((x) => h('li', {},
-        h('strong', {}, x.nome), ` — ${x.abilita}; ${x.effetto}`)))) : null,
-      d.tecniche.length || d.tecnicheAmmesse ? riquadro(`Tecniche Interiori (${d.tecniche.length} / ${d.tecnicheAmmesse})`,
-        tabella(['Tecnica', 'Costo', 'Azione'], d.tecniche.map((t) => [t.nome, t.costo, t.azione]))) : null,
-      riquadro('Annotazioni', righeVuote(3))),
-    h('div', { class: 'colonna' },
-      riquadro('Talenti di Classe', h('ul', { class: 'elenco-talenti-stampa' }, d.talentiClasse.map((t) => h('li', {},
-        h('strong', {}, t.nome), h('span', { class: 'sigla' }, ` ${t.classe} ${t.grado}${t.scelto ? ', a scelta' : ''}`), ` — ${t.frase}`)))),
-      d.talentiLiberi.length ? riquadro('Talenti Liberi', h('ul', { class: 'elenco-talenti-stampa' }, d.talentiLiberi.map((t) => h('li', {},
-        h('strong', {}, t.nome), t.parametro ? ` (${t.parametro})` : null, t.annotazione ? ` — ${t.annotazione}` : null,
-        h('span', { class: 'sigla' }, ` ${t.livello}° liv.`), t.provvisorio ? h('em', {}, ' provvisorio') : null, ` — ${t.frase}`)))) : null));
+      box({ titolo: 'Talenti di Classe' }, h('ul', { class: 'elenco-talenti-stampa' }, d.talentiClasse.map((t) =>
+        talento(t, h('span', { class: 'sigla' }, ` ${t.classe} ${t.grado}${t.scelto ? ', a scelta' : ''}`))))),
+      d.talentiLiberi.length ? box({ titolo: 'Talenti Liberi' }, h('ul', { class: 'elenco-talenti-stampa' }, d.talentiLiberi.map((t) =>
+        talento(t, [t.parametro ? ` (${t.parametro})` : null, t.annotazione ? ` — ${t.annotazione}` : null,
+          h('span', { class: 'sigla' }, ` ${t.livello}° liv.`), t.provvisorio ? h('em', {}, ' provvisorio') : null])))) : null,
+      box({ titolo: 'Annotazioni', riempitivo: true }, righeGuida())));
 }
 
 // ---------------------------------------------------------------------------

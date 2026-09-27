@@ -229,12 +229,19 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .f1-basso > .colonna { min-height: 0; }
 .f1-background .testo-background { white-space: pre-line; flex: none; }
 
-/* Foglio 2 */
-.griglia-abilita { display: grid; grid-template-columns: 150mm 1fr; gap: 3mm; height: 100%; }
-.abilita-affiancate { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; align-items: start; }
-.abilita-stampa th, .abilita-stampa td { padding-top: 0.15mm; padding-bottom: 0.15mm; }
-.elenco-talenti-stampa { list-style: none; padding: 0; }
-.elenco-talenti-stampa li { margin-bottom: 1mm; break-inside: avoid; }
+/* Foglio 2 — Abilità */
+.f2-griglia { flex: 1; min-height: 0; display: grid; grid-template-columns: 172mm 1fr; gap: 3mm; }
+.abilita-affiancate { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; }
+.f2-abilita > .contenuto { flex: 1; }
+.abilita-stampa { height: 100%; }
+.abilita-stampa th, .abilita-stampa td { padding-left: 0.6mm; padding-right: 0.6mm; }
+.abilita-stampa th, .abilita-stampa td { vertical-align: middle; }
+.abilita-stampa tbody th[scope] { white-space: nowrap; }
+.abilita-stampa thead th { text-align: center; }
+.abilita-stampa thead th:first-child { text-align: left; }
+.abilita-stampa td.va { font-weight: 800; font-size: 12pt; color: var(--ss-accento); }
+.elenco-talenti-stampa { list-style: none; padding: 0; margin: 0; }
+.elenco-talenti-stampa li { margin-bottom: 0.8mm; break-inside: avoid; }
 
 /* Foglio 3 */
 .griglia-combattimento { display: grid; grid-template-columns: 1fr 1.7fr 1fr; grid-template-rows: auto 1fr; gap: 0 3mm; }
