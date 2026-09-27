@@ -80,7 +80,7 @@ test('«Condizioni attive»: prima la sessione, poi l’equipaggiamento, con eff
     ['sessione', 'Ferita Importante'], ['sessione', 'A Terra'], ['equipaggiamento', 'Armatura civile pesante'], ['uso', 'Armatura civile pesante'],
   ]); // Assordato non ha effetto numerico: resta promemoria
   assert.equal(c[0].testo, '−2 a tutte le Abilità e Salvezze');
-  assert.equal(c[1].testo, '−4 alle Abilità ravvicinate (Armi da guerra, Armi da mischia, Corpo a corpo e Difese)');
+  assert.equal(c[1].testo, '−4 alle Prove fisiche ravvicinate (Armi da guerra, Armi da mischia, Corpo a corpo e Difese)');
   assert.equal(c[2].testo, '−2 ad attacchi, Atletica e Furtività; −1 per FOR insufficiente ad Atletica, Furtività, Difese e attacchi');
   // il lancio con Potere è un uso specifico: riga a parte, il VA di Potere non cambia
   assert.deepEqual([c[3].testo, c[3].uso], ['−5 a Potere', 'lancio']);

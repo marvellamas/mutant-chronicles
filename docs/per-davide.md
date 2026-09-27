@@ -124,6 +124,15 @@ Il manuale non lo dice.
 **A.42 — Spazzata senz'armi (§5.12).** Il §5.12 non dice se la Spazzata si fa senz'armi; il Lottatore l'ottiene con Combattimento Multiplo. Senza quel Talento è ammessa?
 *Nel frattempo:* senz'armi l'app non propone la Spazzata; Combattimento Multiplo resta un promemoria.
 
+### Stati: categorie di Prove (docs/ricognizione-stati.md)
+
+**A.51 — Quali Abilità sono nelle tre categorie di Prove degli Stati?** Il §5.18 e il §5.5 nominano categorie senza elencarle. L'app usa queste liste (regole.json → categorie_prove), da confermare:
+- «azioni fisiche ravvicinate» (A Terra): Armi da guerra, Armi da mischia, Corpo a corpo, Difese; l'equilibrio è Atletica per quell'uso;
+- «Prove che richiedono la vista» (Accecato, −8): tutte le Abilità di attacco (Armi da lancio, leggere, medie, pesanti, da guerra, da mischia, Corpo a corpo), Difese, Percezione, Pilotare;
+- «quando l’udito è importante» (Assordato, −4): Percezione e Intrattenere, solo come valore a parte per quell'uso.
+Le «azioni fisiche» di Immobilizzato e Rallentato sono la domanda A.16.
+*Nel frattempo:* queste liste.
+
 ### AR e PI (docs/ricognizione-ar-pi.md)
 
 **A.43 — AR per zona del corpo?** Il Giocatore §5.10 dice che le AC «non assegnano locativi»; la Magia (sez. 7, Armatura Mistica) parla di «Area Colpita del corpo» e di AC «coperte dall’equipaggiamento», ma nessuna armatura dice quali AC copre. Basta un'AR unica?

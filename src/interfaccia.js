@@ -39,7 +39,7 @@ function testoEffetto(e, dati) {
   }
   for (const [nome, v] of Object.entries(e.va_abilita ?? {})) parti.push(`${segno(v)} ${a(nome)}`);
   for (const [g, v] of Object.entries(e.va_gruppi ?? {})) {
-    parti.push(`${segno(v)} alle Abilità ${g} (${elenco(dati.regole.stati[`abilita_${g}`] ?? [])})`);
+    parti.push(`${segno(v)} alle Prove ${g === 'fisiche_ravvicinate' ? 'fisiche ravvicinate' : g === 'vista' ? 'che richiedono la vista' : g === 'udito' ? 'basate sull’udito' : g} (${elenco(dati.regole.categorie_prove?.[g] ?? [])})`);
   }
   return parti.join('; ');
 }

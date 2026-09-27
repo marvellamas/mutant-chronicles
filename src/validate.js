@@ -177,12 +177,33 @@ function validaEffettiCondizioni(dati, err) {
     const a = r[k]?.si_applica_a;
     if (!Array.isArray(a) || !a.length || !a.every((x) => ['abilita', 'salvezze'].includes(x))) err(F, `${k}.si_applica_a`, 'lista di "abilita" e/o "salvezze" mancante');
   }
-  const gruppi = Object.keys(r.stati ?? {}).filter((k) => k.startsWith('abilita_')).map((k) => k.slice(8));
+  // categorie di Prove (regole.json → categorie_prove): liste di Abilità (A.16, A.51)
+  const gruppi = Object.keys(r.categorie_prove ?? {}).filter((k) => !k.startsWith('_') && k !== 'TODO(Davide)');
   for (const g of gruppi) {
-    const l = r.stati[`abilita_${g}`];
-    if (!Array.isArray(l)) err(F, `stati.abilita_${g}`, 'lista di Abilità mancante');
-    else l.forEach((n) => { if (!nomi.has(n)) err(F, `stati.abilita_${g}`, `"${n}" non è un'Abilità`); });
+    const l = r.categorie_prove[g];
+    if (!Array.isArray(l) || !l.length) err(F, `categorie_prove.${g}`, 'lista di Abilità mancante');
+    else l.forEach((n) => { if (!nomi.has(n)) err(F, `categorie_prove.${g}`, `"${n}" non è un'Abilità`); });
   }
+  const salvezze = new Set((dati.caratteristiche?.salvezze ?? []).map((s) => s.id));
+  // effetti degli Stati: schema degli effetti degli oggetti (docs/effetti-oggetti.md)
+  const validaEffettiStato = (lista, P) => {
+    if (!Array.isArray(lista)) { err(F, P, 'lista di effetti attesa'); return; }
+    lista.forEach((e, j) => {
+      const K = `${P}[${j}]`;
+      if (!isOggetto(e)) { err(F, K, 'oggetto atteso'); return; }
+      if (!['va', 'salvezza'].includes(e.tipo)) err(F, `${K}.tipo`, 'uno fra va, salvezza');
+      if (e.tipo === 'va' && (e.abilita === undefined) === (e.prove === undefined)) err(F, K, 'serve «abilita» oppure «prove», non tutti e due');
+      if (e.abilita !== undefined && !nomi.has(e.abilita)) err(F, `${K}.abilita`, `"${e.abilita}" non è un'Abilità`);
+      if (e.prove !== undefined && e.prove !== 'tutte' && !gruppi.includes(e.prove)) err(F, `${K}.prove`, `categoria sconosciuta (regole.json → categorie_prove, o «tutte»)`);
+      if (e.tipo === 'salvezza' && e.salvezza !== 'tutte' && !salvezze.has(e.salvezza)) err(F, `${K}.salvezza`, 'id di una Prova Salvezza o «tutte»');
+      if (!isIntero(e.valore) || e.valore === 0) err(F, `${K}.valore`, 'intero diverso da 0 atteso');
+      if (!['generale', 'uso_specifico'].includes(e.ambito)) err(F, `${K}.ambito`, 'uno fra generale, uso_specifico');
+      if (e.ambito === 'uso_specifico' && !isTesto(e.uso)) err(F, `${K}.uso`, 'etichetta dell’uso mancante');
+      if (e.tipo === 'salvezza' && e.ambito !== 'generale') err(F, `${K}.ambito`, 'le Salvezze degli Stati sono generali');
+      if (!isTesto(e.condizione)) err(F, `${K}.condizione`, 'frase del manuale mancante');
+      if (!isTesto(e.fonte)) err(F, `${K}.fonte`, 'paragrafo del manuale mancante');
+    });
+  };
   const validaEffetto = (e, P) => {
     if (!isOggetto(e)) { err(F, P, 'deve essere un oggetto'); return; }
     const noti = ['va', 'salvezze', 'va_categorie', 'va_abilita', 'va_gruppi', 'fonte'];
@@ -198,13 +219,24 @@ function validaEffettiCondizioni(dati, err) {
     };
     mappa('va_categorie', categorie, 'categoria di Abilità');
     mappa('va_abilita', nomi, 'Abilità');
-    mappa('va_gruppi', new Set(gruppi), 'gruppo (serve stati.abilita_<gruppo>)');
+    mappa('va_gruppi', new Set(gruppi), 'gruppo (serve regole.json → categorie_prove)');
     if (!isTesto(e.fonte)) err(F, `${P}.fonte`, 'paragrafo del manuale mancante');
   };
   (r.stati?.elenco ?? []).forEach((x, i) => {
-    if (x?.effetto !== undefined) validaEffetto(x.effetto, `stati.elenco[${i}] (${x.nome}).effetto`);
-    // effetti su Movimento e Azioni (SD, tab Combattimento e Identità)
     const P = `stati.elenco[${i}] (${x?.nome})`;
+    if (x?.effetto !== undefined) err(F, `${P}.effetto`, 'sostituito da «effetti» (lista nello schema degli effetti)');
+    if (x?.effetti !== undefined) validaEffettiStato(x.effetti, `${P}.effetti`);
+    if (x?.limiti !== undefined) {
+      const l = x.limiti;
+      const chiavi = Object.keys(l ?? {}).filter((k) => !['manovre_vietate', 'solo_azioni_difensive', 'testo', 'fonte'].includes(k));
+      if (!isOggetto(l) || chiavi.length) err(F, `${P}.limiti`, 'chiavi ammesse: manovre_vietate, solo_azioni_difensive, testo, fonte');
+      else {
+        const manovre = new Set([...Object.keys(r.attacco_distanza?.manovre ?? {}), ...Object.keys(r.attacco_ravvicinato?.manovre ?? {})]);
+        for (const m of l.manovre_vietate ?? []) if (!manovre.has(m)) err(F, `${P}.limiti.manovre_vietate`, `"${m}" non è una manovra di attacco_distanza o attacco_ravvicinato`);
+        if (!isTesto(l.testo) || !isTesto(l.fonte)) err(F, `${P}.limiti`, 'servono «testo» e «fonte»');
+      }
+    }
+    // effetti su Movimento e Azioni (SD, tab Combattimento e Identità)
     if (x?.movimento !== undefined) {
       const m = x.movimento;
       const chiavi = Object.keys(m ?? {}).filter((k) => !['passo_q', 'solo_passo', 'nessuno', 'fonte'].includes(k));

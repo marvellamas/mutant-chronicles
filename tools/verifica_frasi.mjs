@@ -48,6 +48,11 @@ export function frasiEffetti() {
   visita(leggi('data/regole.json').lancio ?? {}, 'regole:lancio');
   visita(leggi('data/regole.json').attacco_ravvicinato ?? {}, 'regole:attacco_ravvicinato');
   visita(leggi('data/regole.json').elmetti ?? {}, 'regole:elmetti');
+  // regole.json → stati: la «condizione» degli effetti e il testo dei limiti (docs/ricognizione-stati.md)
+  for (const s of leggi('data/regole.json').stati?.elenco ?? []) {
+    (s.effetti ?? []).forEach((e, i) => out.push({ dove: `regole:stati ${s.nome} effetti[${i}]`, frase: e.condizione }));
+    if (s.limiti?.testo) out.push({ dove: `regole:stati ${s.nome} limiti`, frase: s.limiti.testo });
+  }
   // incantesimi.json → meccanica: la riga «Lancio:», la Salvezza, il paragrafo «Anticipazione:» e le frasi delle correzioni
   for (const i of leggi('data/incantesimi.json').incantesimi) {
     const m = i.meccanica ?? {};

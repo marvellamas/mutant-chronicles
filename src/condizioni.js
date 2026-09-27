@@ -25,15 +25,33 @@ export function condizioniAttive(sessione, dati, scheda = null) {
   // §5.19: si applica solo la penalità dello Stato di Affaticamento attuale
   const aft = r.affaticamento.stati[sessione.affaticamento];
   if (aft?.penalita) out.push({ etichetta: aft.nome, fonte: 'affaticamento', effetto: perAmbiti(r.affaticamento.si_applica_a, aft.penalita) });
-  // §5.18: solo gli Stati con un effetto numerico nei dati
+  // §5.18: solo gli Stati con effetti numerici nei dati; più Stati si sommano
   const attivi = new Set(Array.isArray(sessione.statiAttivi) ? sessione.statiAttivi : []);
-  for (const s of r.stati.elenco) if (attivi.has(s.id) && s.effetto) out.push({ etichetta: s.nome, fonte: 'stato', effetto: s.effetto });
+  for (const s of r.stati.elenco) {
+    if (!attivi.has(s.id) || !s.effetti?.length) continue;
+    out.push({ etichetta: s.nome, fonte: 'stato', effetto: effettoDaEffetti(s.effetti), usi: s.effetti.filter((e) => e.ambito === 'uso_specifico') });
+  }
   // §5.2.6: il Sovraccarico penalizza le Prove fisiche, compresi attacchi e Difese
   if (scheda && r.carico) {
     const c = calcolaCarico(scheda, sessione, dati);
     if (c.livello.effetto) out.push({ etichetta: c.livello.nome, fonte: 'carico', effetto: c.livello.effetto });
   }
   return out;
+}
+
+/**
+ * Lista di effetti di uno Stato (schema degli effetti degli oggetti) → effetto di condizione
+ * { va, salvezze, va_abilita, va_gruppi } per il VA generale. Gli usi specifici restano a parte.
+ */
+export function effettoDaEffetti(effetti) {
+  const e = {};
+  for (const x of effetti.filter((y) => y.ambito === 'generale')) {
+    if (x.tipo === 'salvezza') e.salvezze = (e.salvezze ?? 0) + x.valore; // «tutte»: le quattro Prove Salvezza
+    else if (x.prove === 'tutte') e.va = (e.va ?? 0) + x.valore;
+    else if (x.prove) (e.va_gruppi ??= {})[x.prove] = (e.va_gruppi[x.prove] ?? 0) + x.valore;
+    else if (x.abilita) (e.va_abilita ??= {})[x.abilita] = (e.va_abilita[x.abilita] ?? 0) + x.valore;
+  }
+  return e;
 }
 
 function perAmbiti(ambiti, valore) {
@@ -44,11 +62,11 @@ function perAmbiti(ambiti, valore) {
 
 /** Contributo di una condizione al VA di un'Abilità (0 se non la riguarda). */
 export function effettoSuAbilita(effetto, abilita, dati) {
-  const gruppi = dati.regole.stati;
+  const gruppi = dati.regole.categorie_prove ?? {};
   let v = effetto.va ?? 0;
   v += effetto.va_categorie?.[abilita.categoria] ?? 0;
   v += effetto.va_abilita?.[abilita.nome] ?? 0;
-  for (const [g, x] of Object.entries(effetto.va_gruppi ?? {})) if ((gruppi[`abilita_${g}`] ?? []).includes(abilita.nome)) v += x;
+  for (const [g, x] of Object.entries(effetto.va_gruppi ?? {})) if ((gruppi[g] ?? []).includes(abilita.nome)) v += x;
   return v;
 }
 

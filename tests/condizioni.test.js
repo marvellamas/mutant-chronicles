@@ -102,8 +102,8 @@ test('Affaticamento e Stati: solo gli effetti numerici del §5.18, dove il manua
   assert.equal(delta(rallentato, 'Difese'), -2);
   assert.equal(delta(rallentato, 'Medicina'), 0);
 
-  // Stati senza effetto numerico: restano promemoria
-  assert.deepEqual(condizioniAttive(sessione({ statiAttivi: ['assordato', 'stordito', 'svenuto'] }), dati), []);
+  // Stati senza effetti numerici: restano promemoria (Stordito e Svenuto hanno solo Movimento e Azioni)
+  assert.deepEqual(condizioniAttive(sessione({ statiAttivi: ['avvelenato', 'sanguinamento', 'stordito', 'svenuto'] }), dati), []);
   // le condizioni si sommano
   const tutte = scheda(sessione({ ferite: 1, statiAttivi: ['a-terra', 'rallentato'] }));
   assert.equal(delta(tutte, 'Difese'), -1 - 4 - 2);
@@ -127,10 +127,15 @@ test('la stampa resta a riposo; le tab mostrano i valori effettivi', () => {
 
 test('validatore: effetto di uno Stato con Abilità inesistente o campo sconosciuto', () => {
   const d = structuredClone(dati);
-  d.regole.stati.elenco[0].effetto = { va_abilita: { Cucina: -2 }, bonus: 1, fonte: '§5.18' };
+  d.regole.stati.elenco[0].effetti = [
+    { tipo: 'va', abilita: 'Cucina', valore: -2, ambito: 'generale', condizione: 'x', fonte: '§5.18' },
+    { tipo: 'va', prove: 'olfatto', valore: -2, ambito: 'generale', condizione: 'x', fonte: '§5.18' },
+  ];
+  d.regole.stati.elenco[1].effetto = { va: -2, fonte: '§5.18' };
   const problemi = validaDati(d).map((e) => `${e.chiave}: ${e.problema}`);
-  assert.ok(problemi.some((p) => /va_abilita\.Cucina/.test(p)), problemi.join('\n'));
-  assert.ok(problemi.some((p) => /effetto\.bonus/.test(p)), problemi.join('\n'));
+  assert.ok(problemi.some((p) => /effetti\[0\]\.abilita: "Cucina"/.test(p)), problemi.join('\n'));
+  assert.ok(problemi.some((p) => /effetti\[1\]\.prove: categoria sconosciuta/.test(p)), problemi.join('\n'));
+  assert.ok(problemi.some((p) => /effetto: sostituito da «effetti»/.test(p)), problemi.join('\n'));
 });
 
 test('export: nome del file <nome>_liv<N>_<AAAA-MM-GG>.json; l’import non dipende dal nome', () => {

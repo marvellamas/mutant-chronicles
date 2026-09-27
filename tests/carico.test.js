@@ -56,7 +56,7 @@ test('Sovraccarico nei valori effettivi: −2 alle Abilità fisiche (attacchi e 
   const s = conEquip(equip, sessione());
   assert.equal(s.carico.livello.id, 'sovraccarico');
   assert.equal(riposo.carico, null); // senza sessione (stampa, creazione) il carico non si applica
-  const fisiche = dati.regole.stati.abilita_fisiche;
+  const fisiche = dati.regole.categorie_prove.fisiche;
   for (const a of s.abilita) {
     const atteso = abil(riposo, a.nome).effettivo + (fisiche.includes(a.nome) ? -2 : 0);
     assert.equal(a.effettivo, atteso, a.nome);
