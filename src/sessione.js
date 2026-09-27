@@ -213,9 +213,8 @@ export function allineaSessione(sessione, m) {
 /**
  * Sessione dopo un cambio di livello (conferma o annullamento): PV e PM attuali cambiano della stessa
  * quantità dei massimi, così un personaggio illeso resta illeso e i danni già subiti restano.
- * Giocatore §8.6.1, Buona Costituzione: «Al momento dell’acquisizione aumentano di 5 anche i PV
- * attuali». Per gli aumenti di Grado e di Caratteristica il manuale non lo dice: TODO(Davide),
- * docs/per-davide.md A.15.
+ * Giocatore §8.1.2 (E&L A.6): «l’aumento dei PV massimi si aggiunge anche ai PV attuali e l’aumento
+ * dei PM massimi si aggiunge anche ai PM attuali»; annullando un livello, l'inverso.
  */
 export function sessioneDopoLivello(sessione, prima, dopo) {
   if (!isOggetto(sessione)) return inizializzaSessione(dopo);

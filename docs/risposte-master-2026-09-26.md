@@ -1,6 +1,6 @@
 # E&L – Risposte e correzioni approvate
 
-Copia del Google Doc del master «E&L – Risposte e correzioni approvate» (Davide), letta il 26 settembre 2026 e riletta alla versione del 27/09 alle 01:56:00 UTC, che aggiunge A.4 e A.5–A.5.29, a quella delle 09:52:42 UTC, che cambia A.5.27 (munizioni e caricatori dei modelli corporativi), e a quella delle 11:19:01 UTC, che aggiunge A.5.30 (modelli corporativi di base) e A.5.31 (veicoli). Testo del documento, non riscritto: è la fonte delle decisioni registrate in `docs/risposte-master.md`.
+Copia del Google Doc del master «E&L – Risposte e correzioni approvate» (Davide), letta il 26 settembre 2026 e riletta alla versione del 27/09 alle 01:56:00 UTC, che aggiunge A.4 e A.5–A.5.29, a quella delle 09:52:42 UTC, che cambia A.5.27 (munizioni e caricatori dei modelli corporativi), a quella delle 11:19:01 UTC, che aggiunge A.5.30 (modelli corporativi di base) e A.5.31 (veicoli), e a quella delle 11:30:01 UTC, che aggiunge A.6 (PV e PM attuali al passaggio di livello). Testo del documento, non riscritto: è la fonte delle decisioni registrate in `docs/risposte-master.md`.
 
 Decisioni approvate e aggiornamenti dei manuali condivisi.
 
@@ -1427,3 +1427,15 @@ I veicoli sono esclusi dalla dotazione comune e dalle dotazioni iniziali di tutt
 Applicazione: inserito il §2.16.30 del Manuale del Giocatore e aggiornati l’introduzione del §2.16 e il richiamo nella dotazione del Pilota (§2.16.15). La questione dei veicoli iniziali è risolta; le dotazioni iniziali sono definite.
 
 Scheda digitale: non assegnare automaticamente veicoli in base alla Classe o alla Corporazione; gli eventuali mezzi del gruppo dipendono dalla decisione del Direttore di Gioco. Da recepire nella scheda digitale e in docs/risposte-master.md; l’aggiornamento dell’app resta da verificare.
+
+## A.6 — PV e PM attuali al passaggio di livello
+
+Approvato il: set 27, 2026
+
+Quando il personaggio sale di livello, l’aumento dei PV massimi si aggiunge anche ai PV attuali e l’aumento dei PM massimi si aggiunge anche ai PM attuali. I due incrementi si applicano separatamente alle rispettive riserve. La quantità di PV mancanti e di PM consumati resta invariata; il passaggio di livello non comporta un recupero completo.
+
+Esempi: un personaggio con 40 PV su 47 che ottiene +6 PV passa a 46 PV su 53; un personaggio con 12 PM su 20 che ottiene +4 PM passa a 16 PM su 24.
+
+Applicazione: inserita la regola nel §8.1.2 del Manuale del Giocatore. La decisione conferma per PV e PM la soluzione indicata come provvisoria nella scheda digitale; la domanda è rimossa dalla sezione A di per-davide.
+
+Scheda digitale: aggiungere ai PV attuali l’incremento dei PV massimi e ai PM attuali l’incremento dei PM massimi, conservando i punti mancanti di ciascuna riserva. Da recepire in docs/risposte-master.md e verificare nell’app.

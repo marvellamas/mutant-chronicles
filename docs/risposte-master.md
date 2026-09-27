@@ -195,3 +195,9 @@ UTC); i paragrafi corrispondenti sono nel Manuale del Giocatore §2.16.1–§2.1
     Nessuna Classe, Pilota compreso, riceve un veicolo; il Direttore di Gioco decide se e quali
     fornirne al gruppo.
     → `data/dotazioni.json` (testo del §2.16 e della dotazione del Pilota); l'app non assegna veicoli.
+
+23. **27/09, 11:30 UTC — PV e PM attuali al passaggio di livello** (A.6; Giocatore §8.1.2).
+    L'aumento dei PV massimi si aggiunge ai PV attuali e quello dei PM massimi ai PM attuali; PV
+    mancanti e PM consumati restano, salire di livello non è un recupero completo (40/47 + 6 PV →
+    46/53; 12/20 + 4 PM → 16/24). Conferma la soluzione provvisoria dell'app (per-davide A.15, chiusa).
+    → `src/sessione.js` → `sessioneDopoLivello` (già così; tolto il TODO).

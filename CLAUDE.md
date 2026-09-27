@@ -72,7 +72,7 @@ Manuali/        PDF di partenza dei manuali (riferimento storico). Non modificar
 La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 
 - creazione completa (sequenza §2.0), con Incantesimi per i Taumaturghi;
-- avanzamento dal 2° al 20° livello (cap. 8), un livello alla volta, annullabile (PV e PM attuali seguono i massimi: per-davide A.15);
+- avanzamento dal 2° al 20° livello (cap. 8), un livello alla volta, annullabile (PV e PM attuali seguono i massimi: Giocatore §8.1.2, E&L A.6);
 - scheda digitale a tab (Identità, Abilità, Combattimento, Magia) con modalità tavolo: valori di sessione separati dalle scelte (`src/sessione.js`);
 - stampa dedicata A4 orizzontale (`#/p/<id>/stampa`, `css/stampa.css`);
 - equipaggiamento con catalogo a lotti dal Manuale degli Armamenti (`data/equipaggiamento/`, lista dei lotti in `docs/equipaggiamento-lotti.md`); equipaggiamento iniziale guidato (§2.16, E&L A.5–A.5.31; modelli corporativi di base del §7.22): dotazione comune e della Classe, crediti 1000 + 2d6 × 100, acquisti con cessione degli armamenti di base; dati in `data/dotazioni.json` (generato da `tools/genera_dotazioni.py`), regole in `src/dotazioni.js`, voci marcate `dotazione_iniziale`; crediti attuali nella sessione;

@@ -4686,6 +4686,12 @@ Nel percorso completo si ricevono sei Gradi di Classe, 30 Punti Abilità Liberi,
 
 Il bonus di Avanzamento delle Salvezze è 0 ai livelli 1–2, \+1 ai livelli 3–10, \+2 ai livelli 11–18 e \+3 ai livelli 19–20. Si aggiunge una sola volta a ciascuna delle quattro Salvezze, indipendentemente dalle Classi possedute. I livelli 7 e 15 non assegnano incrementi alle Salvezze. Gli aumenti delle Caratteristiche aggiornano separatamente il modificatore specifico del paragrafo 1.2.3.
 
+### 8.1.2 PV e PM attuali al passaggio di livello
+
+Quando il personaggio sale di livello, l’aumento dei PV massimi si aggiunge anche ai PV attuali e l’aumento dei PM massimi si aggiunge anche ai PM attuali. I due incrementi si applicano separatamente alle rispettive riserve. La quantità di PV mancanti e di PM consumati resta invariata; il passaggio di livello non comporta un recupero completo.
+
+Esempi: un personaggio con 40 PV su 47 che ottiene \+6 PV passa a 46 PV su 53; un personaggio con 12 PM su 20 che ottiene \+4 PM passa a 16 PM su 24\.
+
 ## **8.2 Progressione delle Caratteristiche**
 
 Ai livelli 2, 6, 10, 14 e 18 si ricevono 2 Punti Caratteristica. Entrambi possono essere assegnati alla stessa Caratteristica, purché nessun valore superi 10\. Alla creazione resta il massimo 7\.

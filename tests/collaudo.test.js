@@ -150,7 +150,7 @@ test('stampa dei tre personaggi: il foglio Magia solo per chi conosce incantesim
   assert.deepEqual(fogli('c_freelance_tecnico_l5.json'), ['identita', 'abilita', 'combattimento']);
 });
 
-test('sessione dopo un cambio di livello: PV e PM attuali seguono i massimi (Buona Costituzione, §8.6.1)', () => {
+test('sessione dopo un cambio di livello: PV e PM attuali seguono i massimi (§8.1.2, Buona Costituzione §8.6.1)', () => {
   const prima = { pv: 31, pm: 9, puntiEroe: 10, puntiEroeIniziali: 5, stati: [], ferite: 6, affaticamento: 6, caricatori: {} };
   const dopo = { ...prima, pv: 36 };
   const illeso = { pvAttuali: 31, pmAttuali: 9, puntiEroe: 5, distintivi: 0, statiAttivi: [], ferite: 0, affaticamento: 0, munizioni: {}, note: '' };
@@ -158,6 +158,9 @@ test('sessione dopo un cambio di livello: PV e PM attuali seguono i massimi (Buo
   assert.equal(sessioneDopoLivello({ ...illeso, pvAttuali: 20 }, prima, dopo).pvAttuali, 25); // i danni subiti restano
   assert.equal(sessioneDopoLivello({ ...illeso, pvAttuali: 36 }, dopo, prima).pvAttuali, 31); // annullare il livello
   assert.equal(sessioneDopoLivello({ ...illeso, pvAttuali: 2 }, dopo, prima).pvAttuali, 0); // mai sotto 0
+  // §8.1.2 (E&L A.6), gli esempi del manuale: 40/47 + 6 PV → 46/53; 12/20 + 4 PM → 16/24
+  const es = sessioneDopoLivello({ ...illeso, pvAttuali: 40, pmAttuali: 12 }, { ...prima, pv: 47, pm: 20 }, { ...prima, pv: 53, pm: 24 });
+  assert.deepEqual([es.pvAttuali, es.pmAttuali], [46, 16]);
   // i file di collaudo, esportati dopo «Nuova sessione», hanno PV e PM ai massimi
   for (const f of ['a_imperiale_assaltatore_l8.json', 'b_fratellanza_arcanista_l12.json', 'c_freelance_tecnico_l5.json']) {
     const p = leggi(f);

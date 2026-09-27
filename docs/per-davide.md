@@ -90,9 +90,6 @@ Il manuale non lo dice.
 **A.31 — Carico oltre il massimo (§5.2.6).** Oltre FOR × 20 kg il carico "non può essere sollevato o trasportato". Se la lista dell'equipaggiamento supera il massimo, il personaggio che cosa subisce finché non lascia qualcosa?
 *Nel frattempo:* le stesse penalità del Sovraccarico, con l'avviso che il carico non si trasporta.
 
-**A.15 — Salendo di livello aumentano anche PV e PM attuali?** Il cap. 8 dice di quanto crescono i massimi, non cosa succede agli attuali di un personaggio ferito. Solo Buona Costituzione lo dice ("i PV attuali aumentano di 5").
-*Nel frattempo:* se i massimi salgono di N, anche gli attuali salgono di N (40/47 + 6 PV → 46/53); annullando un livello, l'inverso.
-
 **A.16 — Quali Abilità sono "fisiche"?** Immobilizzato (−4 alle azioni fisiche), Rallentato (−2 alle Prove fisiche e alle Difese) e il carico (§5.2) non dicono quali Abilità contano.
 *Nel frattempo:* tutte quelle di Distanza e Ravvicinato, più Atletica e Furtività.
 

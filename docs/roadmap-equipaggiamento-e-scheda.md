@@ -13,13 +13,13 @@ Dopo il collaudo del 26 settembre (tre personaggi di riferimento creati dalla UI
 - Effetti sui valori: VA per colpire e danno delle armi impugnate (Specializzazione, requisito FOR, penalità dell'armatura, mirini, SIN), AR e penalità di categoria nella colonna «Equip» delle Abilità, Parata degli scudi, sintonizzazione degli artefatti, scorte di munizioni compatibili.
 - Un oggetto tolto dal catalogo resta nella scheda come «non più in catalogo», senza effetti e senza errori (verificato al collaudo).
 - **Scheda stampabile (§2):** vista `#/p/<id>/stampa`, A4 orizzontale, 3 fogli o 4 con la Magia. Il foglio Magia continua su più pagine («foglio 5 di 6»). Anagrafica nel passo Background.
-- **Scheda a tab e modalità tavolo (§3):** quattro tab, posizione configurabile, blocco `sessione` con PV, PM, Punti Eroe, Distintivi, Ferite, Affaticamento, Stati, caricatori e applicazioni, «Nuova sessione» e «Annulla». Salendo o annullando un livello PV e PM attuali seguono i massimi (ipotesi, `per-davide.md` A.15).
+- **Scheda a tab e modalità tavolo (§3):** quattro tab, posizione configurabile, blocco `sessione` con PV, PM, Punti Eroe, Distintivi, Ferite, Affaticamento, Stati, caricatori e applicazioni, «Nuova sessione» e «Annulla». Salendo o annullando un livello PV e PM attuali seguono i massimi (Giocatore §8.1.2, E&L A.6).
 - Pacchetto per il master (`distribuzione/`) e file personaggio al formato 5.
 - Valori effettivi in modalità tavolo (aggiunti dopo il collaudo): Ferite, Affaticamento e Stati con effetto numerico dentro VA, Salvezze e Parata, con scomposizione e ▼/▲; la stampa resta a riposo. File esportato `<nome>_liv<N>_<data>.json`.
 
 **Resta**
 
-- **Dati da Davide** (`docs/per-davide.md`, sezione A): Specializzazione e famiglia di diverse armi (A.7–A.9, A.11–A.13), danno dello Scudo delle Guardie Sacre con la lama (A.10), prezzo delle batterie da 5 PM (A.14), PV/PM attuali al cambio di livello (A.15), Talenti di magia provvisori (A.2–A.3). Nella sezione B: tabelle del §7.9 mancanti per tre cataloghi.
+- **Dati da Davide** (`docs/per-davide.md`, sezione A): Specializzazione e famiglia di diverse armi (A.7–A.9, A.11–A.13), danno dello Scudo delle Guardie Sacre con la lama (A.10), prezzo delle batterie da 5 PM (A.14), Talenti di magia provvisori (A.2–A.3). Nella sezione B: tabelle del §7.9 mancanti per tre cataloghi.
 - **Equipaggiamento iniziale (§2.16):** il manuale non c'è; finché manca, inserimento a mano.
 - **Integrità degli oggetti (§7.2.1):** PI attuali in modalità tavolo, non ancora estratta.
 - **Restano testo, senza calcolo:** effetti delle munizioni speciali e dei dardi, compatibilità degli accessori per modello, riduzione della sintonizzazione per Umanità (§5.21).
