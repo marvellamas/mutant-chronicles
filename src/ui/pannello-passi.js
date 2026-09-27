@@ -6,37 +6,47 @@
 // Dentro ogni passo i gruppi di scelta vanno a capo da soli (due o tre per riga, secondo la
 // larghezza dei pulsanti) e le domande sì/no diventano interruttori in linea, anche loro in griglia.
 import { h } from './dom.js';
+import { infoValore } from './tooltip.js';
+
+// «ⓘ» accanto a un pulsante: il tooltip con la regola completa. Separato dal pulsante, così su
+// telefono toccare il pulsante sceglie e toccare «ⓘ» spiega.
+const infoOpzione = (nome, contenuto) => (contenuto ? infoValore('ⓘ', contenuto, { classe: 'info-opzione' }) : null);
 
 /**
- * Gruppo di scelte a pulsanti: [{ valore, etichetta, motivo?, titolo? }]. Il pulsante scelto è
- * evidenziato; quelli non ammessi sono disabilitati con il motivo (title e testo sotto).
+ * Gruppo di scelte a pulsanti: [{ valore, etichetta, motivo?, titolo?, riga?, info? }]. Il pulsante
+ * scelto è evidenziato; quelli non ammessi sono disabilitati con il motivo (title e testo sotto).
+ * `riga`: riga compatta sotto l'etichetta («3 colpi · 1 a segno · +2 VA»); `info`: contenuto del
+ * tooltip { titolo, sottotitolo, sezioni, tabella } con la regola completa, aperto da «ⓘ».
  * Nella griglia ogni gruppo prende la larghezza dei suoi pulsanti: due o tre gruppi per riga.
  */
 export function rigaScelte(titolo, opzioni, attuale, scegli) {
   const motivi = opzioni.filter((o) => o.motivo && o.valore !== attuale).map((o) => `${o.etichetta}: ${o.motivo}`);
+  const pulsante = (o) => h('button', {
+    type: 'button', class: `btn scelta-btn${o.valore === attuale ? ' scelta' : ''}${o.riga ? ' con-riga' : ''}`, 'aria-pressed': String(o.valore === attuale),
+    disabled: !!o.motivo && o.valore !== attuale, title: o.motivo ?? o.titolo ?? null, onclick: () => scegli(o.valore),
+  }, o.riga ? [h('span', { class: 'scelta-etichetta' }, o.etichetta), h('small', { class: 'riga-opzione' }, o.riga)] : o.etichetta);
   return h('div', { class: 'scelta-attacco scelta-gruppo', role: 'group', 'aria-label': titolo },
     h('p', { class: 'scelta-titolo' }, titolo),
-    h('div', { class: 'scelta-pulsanti' }, opzioni.map((o) => h('button', {
-      type: 'button', class: `btn scelta-btn${o.valore === attuale ? ' scelta' : ''}`, 'aria-pressed': String(o.valore === attuale),
-      disabled: !!o.motivo && o.valore !== attuale, title: o.motivo ?? o.titolo ?? null, onclick: () => scegli(o.valore),
-    }, o.etichetta))),
+    h('div', { class: 'scelta-pulsanti' }, opzioni.map((o) => (o.info ? h('span', { class: 'scelta-opzione' }, pulsante(o), infoOpzione(o.etichetta, o.info)) : pulsante(o)))),
     motivi.length ? h('small', { class: 'motivo' }, motivi.join(' · ')) : null);
 }
 
 /**
  * Domanda sì/no come interruttore in linea: «etichetta · modificatore [○ Sì]». Tutta la riga è il
  * bersaglio del tocco. `mod`: l'effetto accanto all'etichetta («−4», «Bruciapelo»). Con `motivo`
- * l'interruttore spento non si può accendere (il motivo va nel tooltip e sotto).
+ * l'interruttore spento non si può accendere (il motivo va nel tooltip e sotto). `info`: tooltip
+ * con la regola completa, aperto da «ⓘ» accanto all'interruttore.
  */
-export function interruttore(titolo, attivo, scegli, { motivo = null, mod = null } = {}) {
+export function interruttore(titolo, attivo, scegli, { motivo = null, mod = null, info = null } = {}) {
   const bloccato = !!motivo && !attivo;
-  return h('div', { class: 'interruttore-cella' },
+  return h('div', { class: `interruttore-cella${info ? ' con-info' : ''}` },
     h('button', {
       type: 'button', role: 'switch', class: `interruttore${attivo ? ' acceso' : ''}`, 'aria-checked': String(!!attivo),
       disabled: bloccato, title: motivo, onclick: () => scegli(!attivo),
     },
     h('span', { class: 'interruttore-testo' }, titolo, mod ? h('span', { class: 'interruttore-mod' }, ` · ${mod}`) : null),
     h('span', { class: 'levetta', 'aria-hidden': 'true' }, h('span', { class: 'levetta-pomello' }), attivo ? 'Sì' : 'No')),
+    infoOpzione(titolo, info),
     motivo && (bloccato || attivo) ? h('small', { class: 'motivo' }, motivo) : null);
 }
 

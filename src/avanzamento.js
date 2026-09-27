@@ -777,6 +777,12 @@ function schedaARiposo(personaggio, dati) {
 
   const pmMancanti = stato.contributiPM.some((c) => c.valore === null);
   const movimento = { passo: r.movimento.passo, corsa: r.movimento.corsa, scatto: r.movimento.scatto, unita: r.movimento.unita };
+  // §2.14: Iniziativa = Mod DES + Mod INT, più i Talenti con effetti.iniziativa (Iniziativa Migliorata, Talenti di Classe)
+  const talentiClasseIniziativa = stato.classi.flatMap((c) => c.talenti).filter((t) => typeof t.effetti?.iniziativa === 'number' && !talenti.some((x) => x.nome === t.nome));
+  const vociIniziativa = [
+    ...r.iniziativa.caratteristiche.map((s) => ({ etichetta: `Mod ${s}`, valore: caratteristiche[s].mod })),
+    ...[...talenti, ...talentiClasseIniziativa].filter((t) => typeof t.effetti?.iniziativa === 'number').map((t) => ({ etichetta: t.nome, valore: t.effetti.iniziativa })),
+  ];
   for (const t of talenti) for (const [k, v] of Object.entries(t.effetti?.movimento ?? {})) movimento[k] += v;
 
   const q = statoQuote(stato, dati);
@@ -810,7 +816,9 @@ function schedaARiposo(personaggio, dati) {
     pv: stato.car.COS + stato.contributiPV.reduce((s, c) => s + c.valore, 0) + effetto('pv'),
     // Magia sez. 1, Potere Mistico: +5 PM Massimi per acquisizione (effetti.pm), fino a +15
     pm: pmMancanti ? null : stato.car.SAG + stato.contributiPM.reduce((s, c) => s + c.valore, 0) + effetto('pm'),
-    iniziativa: sommaIniziativa(...r.iniziativa.caratteristiche.map((s) => caratteristiche[s].mod)) + effetto('iniziativa'),
+    iniziativa: sommaIniziativa(...vociIniziativa.map((v) => v.valore)),
+    // §2.14 più i Talenti con un bonus fisso all'Iniziativa (Liberi e di Classe): la scomposizione della SD
+    vociIniziativa,
     movimento,
     azioni: { movimento: r.azioni_primo_livello.movimento, principali: r.azioni_primo_livello.principali + cumulato('azione_principale', n, dati) },
     vantaggio: stato.addestr.vantaggio,

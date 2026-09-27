@@ -191,3 +191,23 @@ test('personaggio reale: parte dal VA per colpire effettivo della scheda (Specia
   assert.equal(r.danno_per_colpo, '1d6');
   assert.equal(attaccoBase(p).va_finale, p.vaEffettivo);
 });
+
+test('tooltip delle modalità e delle manovre: riga compatta e regola dai dati (§5.10)', async () => {
+  const { descriviModalita, descriviManovraDistanza } = await import('../src/attacco.js');
+  const { dati: d } = await (await import('./helpers.js')).datiReali();
+  assert.equal(descriviModalita('RB', d).riga, '3 colpi · 1 a segno · +2 VA');
+  assert.equal(descriviModalita('RM', d).riga, '5 colpi · 3 a segno · −2 VA');
+  assert.equal(descriviModalita('FS', d).riga, '10 colpi · Area 3 × 3 Q · −4 VA');
+  assert.equal(descriviModalita('DC', d).riga, '2 colpi · 4 applicazioni · −4 VA');
+  const rb = descriviModalita('RB', d).info;
+  assert.equal(rb.titolo, 'Raffica Breve');
+  assert.deepEqual(rb.sezioni.map((s) => s.etichetta), ['Munizioni consumate', 'Colpi a segno', 'VA', 'Azioni', 'Manovre compatibili', 'Regola', 'Note']);
+  assert.match(rb.sezioni.find((s) => s.etichetta === 'VA').testo, /Raffica Breve Migliorata: \+4/);
+  // con il Talento: VA migliorato nella riga
+  const T = [{ nome: 'Raffica Breve Migliorata', e: { modalita: { RB: { va: 4 } } } }];
+  assert.equal(descriviModalita('RB', d, T).riga, '3 colpi · 1 a segno · +4 VA');
+  assert.equal(descriviManovraDistanza('mirato', null, d).riga, '+2 VA · +2 danno · +1 AzP');
+  assert.equal(descriviManovraDistanza('ravvicinato', { abilita: 'Armi medie' }, d).riga, '−4 VA · +3 danno');
+  assert.equal(descriviManovraDistanza('bruciapelo', null, d).riga, 'danno ×2');
+  assert.match(descriviManovraDistanza('mirato', null, d).info.sezioni.find((s) => s.etichetta === 'Non si combina con').testo, /Tiro Ravvicinato/);
+});

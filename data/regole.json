@@ -1087,6 +1087,7 @@
         "nome": "A Terra",
         "durata": "fino a quando si rialza",
         "promemoria": "−4 VA ad azioni fisiche ravvicinate, di equilibrio e alle Difese; niente Corsa o Scatto; contro di lui +2 VA in ravvicinato, −2 VA a distanza (§5.5).",
+        "movimento": { "solo_passo": true, "fonte": "§5.5: niente Corsa o Scatto" },
         "riassunto": true,
         "effetto": { "va_categorie": { "Ravvicinato": -4 }, "fonte": "§5.5: −4 VA alle azioni fisiche ravvicinate e alle Difese (categoria Ravvicinato, Difese compresa); l’equilibrio resta promemoria" }
       },
@@ -1117,6 +1118,7 @@
         "nome": "Immobilizzato",
         "durata": "1+1d3 Round o fino alla liberazione",
         "promemoria": "Non può muoversi né usare Corsa o Scatto; −4 VA alle azioni fisiche.",
+        "movimento": { "nessuno": true, "fonte": "§5.18: non può muoversi né usare Corsa o Scatto" },
         "riassunto": true,
         "effetto": { "va_gruppi": { "fisiche": -4 }, "fonte": "§5.18: −4 VA alle azioni fisiche" }
       },
@@ -1133,6 +1135,7 @@
         "nome": "Rallentato",
         "durata": "1+1d3 Round",
         "promemoria": "Passo 3 Q, niente Corsa o Scatto; −2 VA alle Prove fisiche e alle Difese.",
+        "movimento": { "passo_q": 3, "solo_passo": true, "fonte": "§5.18: Passo 3 Q, niente Corsa o Scatto" },
         "riassunto": true,
         "effetto": { "va_gruppi": { "fisiche": -2 }, "fonte": "§5.18: −2 VA alle Prove fisiche e alle Difese (Difese è fra le Abilità fisiche)" }
       },
@@ -1148,6 +1151,8 @@
         "nome": "Stordito",
         "durata": "1+1d3 Round",
         "promemoria": "Solo Passo, nessuna Azione Principale; niente Difese che consumano Azioni.",
+        "movimento": { "solo_passo": true, "fonte": "§5.18: solo Passo" },
+        "azioni": { "principali": 0, "fonte": "§5.18: nessuna Azione Principale" },
         "riassunto": true
       },
       {
@@ -1155,6 +1160,8 @@
         "nome": "Svenuto",
         "durata": "1+1d3 Round, salvo la fonte",
         "promemoria": "Nessuna Azione né Movimento, cade A Terra, niente Difese attive; perde la Concentrazione.",
+        "movimento": { "nessuno": true, "fonte": "§5.18: nessun Movimento" },
+        "azioni": { "principali": 0, "movimento": 0, "fonte": "§5.18: nessuna Azione né Movimento" },
         "riassunto": true
       },
       {

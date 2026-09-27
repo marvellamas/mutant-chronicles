@@ -145,3 +145,38 @@ test('export: nome del file <nome>_liv<N>_<AAAA-MM-GG>.json; l’import non dipe
   const testo = serializza({ ...MISHIMA_AGENTE }, { livelli: [] });
   assert.equal(deserializzaPersonaggio(testo).creazione.nome, 'Kenji');
 });
+
+// --- Iniziativa, Movimento e Azioni effettivi (tab Combattimento e Identità) ---------------------
+
+test('Iniziativa: Mod DES + Mod INT come voci della scomposizione (Mishima Agente +2, §2.14)', () => {
+  const t = scheda(sessione()).tavolo;
+  assert.deepEqual(t.iniziativa.scomposizione.map((x) => x.etichetta), ['Mod DES', 'Mod INT']);
+  assert.equal(t.iniziativa.effettivo, 2);
+  assert.equal(t.iniziativa.effettivo, t.iniziativa.daRegole);
+});
+
+test('Movimento e Azioni: armatura, Sovraccarico, Rallentato, Stordito, Svenuto (§5.2, §5.2.6, §5.18)', async () => {
+  const { valoriTavolo } = await import('../src/condizioni.js');
+  const base = {
+    vociIniziativa: [{ etichetta: 'Mod DES', valore: 1 }, { etichetta: 'Mod INT', valore: 1 }, { etichetta: 'Iniziativa Migliorata', valore: 3 }],
+    movimento: { passo: 6, corsa: 12, scatto: 18, unita: 'Q' },
+    azioni: { principali: 1, movimento: 1 },
+    equipaggiamento: { movimentoQ: -1 },
+  };
+  const t = (stati, carico = null) => valoriTavolo({ ...base, carico }, { statiAttivi: stati }, { regole: { ...dati.regole, carico: carico ? dati.regole.carico : undefined } });
+  const riposo = t([]);
+  assert.equal(riposo.iniziativa.effettivo, 5);
+  assert.deepEqual(riposo.iniziativa.scomposizione.at(-1), { etichetta: 'Iniziativa Migliorata', valore: 3, fonte: 'regole' });
+  // Armamenti §7.11.1: MOV una volta sul budget di ogni modalità
+  assert.deepEqual([riposo.movimento.passo.effettivo, riposo.movimento.corsa.effettivo, riposo.movimento.scatto.effettivo], [5, 11, 17]);
+  const sovr = t([], { livello: dati.regole.carico.livelli.find((l) => l.id === 'sovraccarico') });
+  assert.deepEqual([sovr.movimento.passo.effettivo, sovr.movimento.corsa.effettivo], [3, null]);
+  const rall = t(['rallentato']);
+  assert.deepEqual([rall.movimento.passo.effettivo, rall.movimento.corsa.effettivo, rall.movimento.scatto.effettivo], [3, null, null]);
+  assert.equal(rall.movimento.passo.scomposizione.at(-1).fonte, 'stato');
+  const stord = t(['stordito']);
+  assert.deepEqual([stord.azioni.principali.effettivo, stord.azioni.movimento.effettivo, stord.movimento.passo.effettivo], [0, 1, 5]);
+  const sven = t(['svenuto']);
+  assert.deepEqual([sven.movimento.passo.effettivo, sven.azioni.principali.effettivo, sven.azioni.movimento.effettivo], [null, 0, 0]);
+  assert.equal(t(['a-terra']).movimento.scatto.effettivo, null);
+});

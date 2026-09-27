@@ -202,6 +202,26 @@ function validaEffettiCondizioni(dati, err) {
   };
   (r.stati?.elenco ?? []).forEach((x, i) => {
     if (x?.effetto !== undefined) validaEffetto(x.effetto, `stati.elenco[${i}] (${x.nome}).effetto`);
+    // effetti su Movimento e Azioni (SD, tab Combattimento e Identità)
+    const P = `stati.elenco[${i}] (${x?.nome})`;
+    if (x?.movimento !== undefined) {
+      const m = x.movimento;
+      const chiavi = Object.keys(m ?? {}).filter((k) => !['passo_q', 'solo_passo', 'nessuno', 'fonte'].includes(k));
+      if (!isOggetto(m) || chiavi.length) err(F, `${P}.movimento`, `chiavi ammesse: passo_q, solo_passo, nessuno, fonte${chiavi.length ? ` (non: ${chiavi.join(', ')})` : ''}`);
+      else {
+        if (m.passo_q !== undefined && !(isIntero(m.passo_q) && m.passo_q >= 0)) err(F, `${P}.movimento.passo_q`, 'intero ≥ 0 atteso');
+        if (!isTesto(m.fonte)) err(F, `${P}.movimento.fonte`, 'paragrafo del manuale mancante');
+      }
+    }
+    if (x?.azioni !== undefined) {
+      const a = x.azioni;
+      const chiavi = Object.keys(a ?? {}).filter((k) => !['principali', 'movimento', 'fonte'].includes(k));
+      if (!isOggetto(a) || chiavi.length) err(F, `${P}.azioni`, 'chiavi ammesse: principali, movimento, fonte');
+      else {
+        for (const k of ['principali', 'movimento']) if (a[k] !== undefined && !(isIntero(a[k]) && a[k] >= 0)) err(F, `${P}.azioni.${k}`, 'intero ≥ 0 atteso');
+        if (!isTesto(a.fonte)) err(F, `${P}.azioni.fonte`, 'paragrafo del manuale mancante');
+      }
+    }
   });
   if (r.carico !== undefined) validaCarico(dati, validaEffetto, err);
   if (r.integrita !== undefined) validaIntegrita(dati, err);

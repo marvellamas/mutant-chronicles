@@ -158,6 +158,79 @@ export function vincoliDistanza(personaggio, arma, dichiarazione, dati) {
   };
 }
 
+const conSegno = (n) => (n > 0 ? `+${n}` : n < 0 ? `−${-n}` : '0');
+const pulisciRiga = (f) => String(f).replace(/^\|\s*/, '').replace(/\s*\|\s*$/, '').replace(/\s*\|\s*/g, ' · ');
+
+/**
+ * Pulsante di una modalità di fuoco (§5.10, regole.json → modalita_di_fuoco): riga compatta
+ * («3 colpi · 1 a segno · +2 VA») e tooltip con la regola completa. Con i Talenti del personaggio
+ * (munizioni e VA migliorati).
+ * @returns {{ riga, info: { titolo, sottotitolo, sezioni } }}
+ */
+export function descriviModalita(m, dati, T = []) {
+  const A = dati.regole.attacco_distanza;
+  const M = dati.regole.modalita_di_fuoco[m];
+  const consumo = munizioniModalita(m, dati, T);
+  const tMig = T.find((t) => t.e.modalita?.[m]?.va !== undefined);
+  const va = tMig ? tMig.e.modalita[m].va : M.modificatore_va;
+  const tiri = A.modalita.tiri[m] ?? 1;
+  const esito = m === 'FS' ? `Area ${A.modalita.area.FS}`
+    : A.modalita.applicazioni[m] ? `${A.modalita.applicazioni[m]} applicazioni`
+      : tiri > 1 ? `${tiri} tiri · 1 a segno ciascuno` : `${A.modalita.colpi_a_segno[m] ?? 1} a segno`;
+  const riga = [`${consumo} ${consumo === 1 ? 'colpo' : 'colpi'}`, esito, `${conSegno(va)} VA`].join(' · ');
+  const manovre = (A.modalita.manovre_ammesse[m] ?? []).map((id) => A.manovre[id].nome);
+  const mig = M.migliorata;
+  return {
+    riga,
+    info: {
+      titolo: M.nome,
+      sottotitolo: `Giocatore ${M.paragrafo}`,
+      sezioni: [
+        { etichetta: 'Munizioni consumate', testo: `${consumo}${consumo !== M.colpi_consumati ? ` (${M.colpi_consumati} da regole, ridotte dal Talento)` : ''}` },
+        { etichetta: 'Colpi a segno', testo: M.colpi_a_segno },
+        { etichetta: 'VA', testo: `${conSegno(M.modificatore_va)}${mig?.modificatore_va !== undefined ? `; ${mig.talento}: ${conSegno(mig.modificatore_va)}` : ''}${mig?.colpi_consumati !== undefined ? `; ${mig.talento}: ${mig.colpi_consumati} munizioni` : ''}${tMig ? ` (applicato: ${tMig.nome})` : ''}` },
+        { etichetta: 'Azioni', testo: `${M.azioni_principali} ${M.azioni_principali === 1 ? 'Azione Principale' : 'Azioni Principali'}` },
+        { etichetta: 'Manovre compatibili', testo: manovre.length ? manovre.join(', ') : 'nessuna (Tiro Mirato, Ravvicinato e a Bruciapelo esclusi)' },
+        { etichetta: 'Regola', testo: M.regola },
+        M.note ? { etichetta: 'Note', testo: M.note } : null,
+      ].filter(Boolean),
+    },
+  };
+}
+
+/**
+ * Interruttore di una manovra a distanza (Tiro Mirato, Ravvicinato, a Bruciapelo, §5.10): riga
+ * compatta con l'effetto e tooltip con condizioni, incompatibilità e testo del manuale.
+ */
+export function descriviManovraDistanza(id, arma, dati, T = []) {
+  const A = dati.regole.attacco_distanza;
+  const M = A.manovre[id];
+  const MF = dati.regole.modalita_di_fuoco;
+  const modalita = Object.entries(A.modalita.manovre_ammesse).filter(([, l]) => l.includes(id)).map(([k]) => MF[k].nome);
+  let riga;
+  if (id === 'mirato') {
+    const mig = T.find((t) => t.e.mirato)?.e.mirato;
+    riga = `${conSegno(mig?.va ?? M.va)} VA · +${mig?.danno ?? M.danno} danno · +${M.azioni_principali} AzP`;
+  } else if (id === 'ravvicinato') {
+    const va = M.va_per_abilita[arma?.abilita];
+    riga = `${va === undefined ? 'solo Armi leggere o medie' : `${conSegno(va)} VA`} · +${M.danno} danno`;
+  } else riga = `danno ×${M.moltiplicatore}`;
+  return {
+    riga,
+    info: {
+      titolo: M.nome,
+      sottotitolo: M.paragrafo,
+      sezioni: [
+        { etichetta: 'Effetto', testo: riga },
+        M.distanza_max_q ? { etichetta: 'Distanza', testo: `entro ${M.distanza_max_q} Q` } : null,
+        { etichetta: 'Modalità', testo: modalita.join(', ') },
+        (M.incompatibili ?? []).length ? { etichetta: 'Non si combina con', testo: M.incompatibili.map((x) => A.manovre[x].nome).join(', ') } : null,
+        ...(M.frasi ?? []).map((f) => ({ testo: pulisciRiga(f) })),
+      ].filter(Boolean),
+    },
+  };
+}
+
 /**
  * Attacco a distanza.
  * @param personaggio { scheda (calcolaScheda, con la sessione), sessione }

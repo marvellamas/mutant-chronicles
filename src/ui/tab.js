@@ -427,11 +427,12 @@ function tabIdentita(ctx, d) {
       riquadroCrediti(ctx)),
 
     sezione('Combattimento e movimento',
-      h('dl', { class: 'voci griglia-voci' },
-        h('div', {}, h('dt', {}, 'Iniziativa'), h('dd', {}, `${segno(d.iniziativa)} + ${d.dadoIniziativa}`)),
-        h('div', {}, h('dt', {}, 'Movimento'), h('dd', {}, `Passo ${mov.passo} ${mov.unita} · Corsa ${mov.corsa} ${mov.unita} · Scatto ${mov.scatto} ${mov.unita}`,
-          ctx.tab.scheda.equipaggiamento?.movimentoQ ? h('small', { class: 'nota' }, ` · armatura MOV ${segno(ctx.tab.scheda.equipaggiamento.movimentoQ)} Q, una volta sul budget della modalità scelta (§7.11.1)`) : null)),
-        h('div', {}, h('dt', {}, 'Azioni'), h('dd', {}, `${d.azioni.movimento} di Movimento, ${d.azioni.principali} ${d.azioni.principali === 1 ? 'Principale' : 'Principali'} per Round`)))),
+      ctx.tab.scheda.tavolo
+        ? h('div', { class: 'griglia-tavolo griglia-tavolo-compatta' }, riquadriTavolo(ctx))
+        : h('dl', { class: 'voci griglia-voci' },
+          h('div', {}, h('dt', {}, 'Iniziativa'), h('dd', {}, `${segno(d.iniziativa)} + ${d.dadoIniziativa}`)),
+          h('div', {}, h('dt', {}, 'Movimento'), h('dd', {}, `Passo ${mov.passo} ${mov.unita} · Corsa ${mov.corsa} ${mov.unita} · Scatto ${mov.scatto} ${mov.unita}`)),
+          h('div', {}, h('dt', {}, 'Azioni'), h('dd', {}, `${d.azioni.movimento} di Movimento, ${d.azioni.principali} ${d.azioni.principali === 1 ? 'Principale' : 'Principali'} per Round`)))),
 
     sezione('Vantaggio dell’Addestramento', h('p', {}, h('strong', {}, `${d.vantaggio.nome}. `), d.vantaggio.testo)),
     sezione('Background', d.background ? h('div', { class: 'testo-lungo' }, paragrafi(d.background)) : h('p', { class: 'vuoto' }, 'Nessun Background scritto.')),
@@ -515,6 +516,48 @@ function tabAbilita(ctx, d) {
 }
 
 // ---------------------------------------------------------------------------
+// Iniziativa, Movimento e Azioni effettivi (scheda.tavolo, src/condizioni.js → valoriTavolo): stesse
+// pillole dei VA, con colore ▼/▲ rispetto ai valori da regole e la scomposizione nel tooltip.
+
+function pillolaTavolo(titolo, parti, formato = numero) {
+  const peggio = parti.some((p) => p.v.effettivo === null || p.v.effettivo < p.v.daRegole);
+  const meglio = !peggio && parti.some((p) => p.v.effettivo > p.v.daRegole);
+  const verso = peggio ? 'malus' : meglio ? 'bonus' : '';
+  const testo = parti.map((p) => (p.v.effettivo === null ? '—' : formato(p.v.effettivo))).join(' · ');
+  const figli = [testo, verso ? h('span', { class: 'segno-verso', 'aria-hidden': 'true' }, peggio ? '▼' : '▲') : null,
+    verso ? h('span', { class: 'sr' }, ' (diverso dal valore da regole)') : null];
+  return infoValore(figli, {
+    titolo: `${titolo}: ${parti.map((p) => `${p.nome ? `${p.nome} ` : ''}${p.v.effettivo === null ? '—' : formato(p.v.effettivo)}`).join(' · ')}`,
+    sottotitolo: `Valore da regole ${parti.map((p) => formato(p.v.daRegole)).join(' · ')}`,
+    sezioni: parti.map((p) => ({
+      etichetta: p.nome || null,
+      testo: [p.v.effettivo === null ? 'non disponibile' : formulaScomposizione(p.nome || titolo, p.v.scomposizione), ...p.v.note].join('\n'),
+    })),
+    tabella: parti.length === 1 ? {
+      titolo: 'Scomposizione', colonne: ['Voce', 'Valore', 'Fonte'],
+      righe: parti[0].v.scomposizione.map((x, i) => ({ Voce: x.etichetta, Valore: i ? segno(x.valore) : formato(x.valore), Fonte: FONTI[x.fonte] ?? x.fonte })),
+    } : undefined,
+  }, { classe: `val-eff pillola-va ${verso}`.trim() });
+}
+
+function riquadriTavolo(ctx) {
+  const t = ctx.tab.scheda.tavolo;
+  if (!t) return [];
+  const u = t.movimento.unita;
+  return [
+    h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Iniziativa'),
+      h('p', { class: 'valore-tavolo' }, pillolaTavolo('Iniziativa', [{ nome: '', v: t.iniziativa }], segno), h('span', {}, ` + ${ctx.dati.regole.iniziativa.dado_in_combattimento}`)),
+      h('p', { class: 'nota' }, 'Mod DES + Mod INT e Talenti (§2.14)')),
+    h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Movimento'),
+      h('p', { class: 'valore-tavolo' }, pillolaTavolo('Movimento', [{ nome: 'Passo', v: t.movimento.passo }, { nome: 'Corsa', v: t.movimento.corsa }, { nome: 'Scatto', v: t.movimento.scatto }]), h('span', {}, ` ${u}`)),
+      h('p', { class: 'nota' }, 'Passo · Corsa · Scatto (§5.2)')),
+    h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Azioni'),
+      h('p', { class: 'valore-tavolo' }, pillolaTavolo('Azioni', [{ nome: 'Principali', v: t.azioni.principali }, { nome: 'di Movimento', v: t.azioni.movimento }])),
+      h('p', { class: 'nota' }, 'Principali · di Movimento per Round (§5.1)')),
+  ];
+}
+
+// ---------------------------------------------------------------------------
 // Combattimento
 
 function tabCombattimento(ctx, d) {
@@ -531,7 +574,8 @@ function tabCombattimento(ctx, d) {
       contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true, classe: 'riquadro-pv pv-pm-identita' }),
       d.difese ? h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Difese'),
         h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), valoreEffettivo('Difese', d.difese.effettivo, d.difese.totale, d.difese.scomposizione, { pillola: true })),
-        h('p', { class: 'nota' }, `(${d.difese.caratteristica}) con l’equipaggiamento e le condizioni della sessione`)) : null),
+        h('p', { class: 'nota' }, `(${d.difese.caratteristica}) con l’equipaggiamento e le condizioni della sessione`)) : null,
+      ...riquadriTavolo(ctx)),
 
     sezione('Armi impugnate', d.armiCalcolate.length
       ? h('div', { class: 'armi-tab' }, d.armiCalcolate.map((a) => schedaArma(ctx, a)))

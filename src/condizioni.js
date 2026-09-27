@@ -192,5 +192,69 @@ export function applicaCondizioni(scheda, sessione, dati) {
   }
   scheda.condizioni = condizioni;
   scheda.carico = isOggetto(sessione) && dati.regole.carico ? calcolaCarico(scheda, sessione, dati) : null;
+  scheda.tavolo = valoriTavolo(scheda, sessione, dati);
   return scheda;
+}
+
+/**
+ * Iniziativa, Movimento e Azioni effettivi per la modalità tavolo, con la scomposizione:
+ * - Iniziativa (§2.14): Mod DES + Mod INT e i Talenti (scheda.vociIniziativa), tutti «da regole»;
+ * - Movimento (§5.2): Passo, Corsa, Scatto da regole (Talenti compresi); MOV dell'armatura una volta
+ *   sul budget di ogni modalità (Armamenti §7.11.1); Sovraccarico −2 Q e solo Passo (§5.2.6);
+ *   Stati con `movimento` in regole.json (A Terra, Immobilizzato, Rallentato, Stordito, Svenuto, §5.5, §5.18);
+ * - Azioni (§5.1): Principali e di Movimento per Round; Stati con `azioni` (Stordito, Svenuto).
+ * Ogni valore: { effettivo, daRegole, scomposizione, note }; le modalità non disponibili hanno effettivo null.
+ */
+export function valoriTavolo(scheda, sessione, dati) {
+  const r = dati.regole;
+  const attivi = new Set(isOggetto(sessione) && Array.isArray(sessione.statiAttivi) ? sessione.statiAttivi : []);
+  const stati = r.stati.elenco.filter((s) => attivi.has(s.id));
+
+  const vociIni = (scheda.vociIniziativa ?? [{ etichetta: 'Iniziativa', valore: scheda.iniziativa ?? 0 }]).map((v) => voce(v.etichetta, v.valore, 'regole'));
+  const iniziativa = { effettivo: somma(vociIni), daRegole: somma(vociIni), scomposizione: vociIni, note: [] };
+
+  const base = scheda.movimento ?? {};
+  const mov = scheda.equipaggiamento?.movimentoQ ?? 0;
+  const carico = isOggetto(sessione) && r.carico ? (scheda.carico ?? calcolaCarico(scheda, sessione, dati)) : null;
+  const liv = carico?.livello ?? null;
+  const movimento = {};
+  for (const modo of ['passo', 'corsa', 'scatto']) {
+    const note = [];
+    let voci = [voce(`${modo[0].toUpperCase()}${modo.slice(1)} da regole`, base[modo] ?? 0, 'regole')];
+    if (mov) voci.push(voce('Armatura (MOV)', mov, 'equipaggiamento'));
+    let disponibile = true;
+    if (liv?.movimento_q && modo === 'passo') voci.push(voce(liv.nome, liv.movimento_q, 'carico'));
+    if (liv?.solo_passo && modo !== 'passo') { disponibile = false; note.push(`${liv.nome}: soltanto Passo (§5.2.6)`); }
+    for (const s of stati) {
+      const m = s.movimento;
+      if (!m) continue;
+      if (m.nessuno) { disponibile = false; note.push(`${s.nome}: ${m.fonte}`); continue; }
+      if (m.solo_passo && modo !== 'passo') { disponibile = false; note.push(`${s.nome}: ${m.fonte}`); }
+      if (modo === 'passo' && Number.isInteger(m.passo_q)) {
+        const ora = Math.max(0, somma(voci));
+        if (m.passo_q < ora) voci.push(voce(`${s.nome} (Passo ${m.passo_q} Q)`, m.passo_q - ora, 'stato'));
+      }
+    }
+    // il budget non scende sotto 0 (§5.2.6: «minimo 0»)
+    const totale = Math.max(0, somma(voci));
+    if (totale !== somma(voci)) voci = [...voci, voce('minimo 0', totale - somma(voci), 'regole')];
+    movimento[modo] = { effettivo: disponibile ? totale : null, daRegole: base[modo] ?? 0, scomposizione: voci, note };
+  }
+  movimento.unita = base.unita ?? 'Q';
+
+  const azioni = {};
+  for (const tipo of ['principali', 'movimento']) {
+    const b = scheda.azioni?.[tipo] ?? 0;
+    const voci = [voce(tipo === 'principali' ? 'Azioni Principali da regole' : 'Azioni di Movimento da regole', b, 'regole')];
+    const note = [];
+    for (const s of stati) {
+      const x = s.azioni?.[tipo];
+      if (!Number.isInteger(x)) continue;
+      const ora = somma(voci);
+      if (x < ora) voci.push(voce(s.nome, x - ora, 'stato'));
+      note.push(`${s.nome}: ${s.azioni.fonte}`);
+    }
+    azioni[tipo] = { effettivo: somma(voci), daRegole: b, scomposizione: voci, note };
+  }
+  return { iniziativa, movimento, azioni };
 }

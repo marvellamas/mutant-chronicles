@@ -712,6 +712,7 @@ details.sezione-tab > summary { font-weight: 700; cursor: pointer; min-height: 4
 .griglia-tavolo { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 0.75rem; margin: 0.75rem 0 1rem; }
 .contatore-tavolo { background: var(--superficie); border: 1px solid var(--bordo); border-radius: var(--raggio); padding: 0.6rem 0.75rem 0.75rem; }
 .contatore-tavolo h3 { margin: 0; font-size: 0.95rem; color: var(--tenue); }
+.griglia-tavolo-compatta { grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); margin: 0.25rem 0 0; }
 .valore-tavolo { margin: 0.1rem 0 0.5rem; font-size: 1.1rem; }
 .valore-tavolo strong { font-size: 2.1rem; line-height: 1.1; }
 .valore-tavolo.oltre strong { color: var(--errore); } /* §7.10: sintonizzazioni oltre la capacità; §5.2.6: Sovraccarico */
@@ -1245,3 +1246,16 @@ body.con-sfondo::before {
   .attacco-pannello .voce-info.pillola-attacco { font-size: 1.6rem; }
   .attacco-pannello .btn-grande { min-height: 48px; }
 }
+
+/* tooltip delle opzioni (regola completa) e riga compatta sotto l'etichetta del pulsante */
+.scelta-opzione { display: inline-flex; align-items: stretch; }
+.scelta-opzione .scelta-btn { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.voce-info.info-opzione { display: inline-grid; place-items: center; min-width: 30px; padding: 0 0.35rem; border: 1px solid var(--bordo); border-left: 0; border-radius: 0 var(--raggio) var(--raggio) 0; background: var(--superficie); color: var(--tenue); font-size: 0.9rem; }
+.interruttore-cella.con-info { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: stretch; }
+.interruttore-cella.con-info > .motivo { grid-column: 1 / -1; }
+.interruttore-cella.con-info .interruttore { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.scelta-btn.con-riga { display: inline-flex; flex-direction: column; align-items: flex-start; justify-content: center; line-height: 1.15; gap: 0.05rem; }
+.riga-opzione { display: block; }
+.riga-opzione { font-size: 0.72rem; font-weight: 400; color: var(--tenue); white-space: nowrap; }
+.scelta-btn.scelta .riga-opzione { color: inherit; opacity: 0.85; }
+

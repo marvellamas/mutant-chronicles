@@ -6,7 +6,7 @@
 // scelte a sinistra e il risultato a destra).
 import { h, segno } from './dom.js';
 import { infoValore } from './tooltip.js';
-import { calcolaAttaccoDistanza, vincoliDistanza, dichiarazioneDistanza, richiedeImbracciatura, talentiAttacco, attaccoBase } from '../attacco.js';
+import { calcolaAttaccoDistanza, vincoliDistanza, dichiarazioneDistanza, richiedeImbracciatura, talentiAttacco, attaccoBase, descriviModalita, descriviManovraDistanza } from '../attacco.js';
 import { formulaScomposizione } from '../condizioni.js';
 import { rigaScelte, interruttore, pannelloPassi } from './pannello-passi.js';
 
@@ -67,7 +67,7 @@ function corpoDistanza(ctx, a, intestazione) {
   const R = ctx.dati.regole.attacco_distanza;
   const M = R.manovre;
   const evasivoProprio = R.movimento_evasivo.proprio[d.movimento];
-  const ravvicinatoVa = M.ravvicinato.va_per_abilita[a.abilita];
+  const man = (id) => descriviManovraDistanza(id, a, ctx.dati, T);
   const analisi = T.find((t) => t.e.analisi_rapida);
 
   const passi = [
@@ -117,14 +117,14 @@ function corpoDistanza(ctx, a, intestazione) {
         : 'Nessun mirino montato sull’arma (inventario).'),
     ],
     [
-      rigaScelte('Modalità', (a.modalita ?? []).filter((x) => x !== 'TM' && MF[x]).map((x) => ({ valore: x, etichetta: `${MF[x].nome}${MF[x].modificatore_va ? ` ${segno(MF[x].modificatore_va)}` : ''}`, motivo: v.modalita[x] })),
+      rigaScelte('Modalità', (a.modalita ?? []).filter((x) => x !== 'TM' && MF[x]).map((x) => ({ valore: x, etichetta: MF[x].nome, motivo: v.modalita[x], ...descriviModalita(x, ctx.dati, T) })),
         d.modalita, (x) => imposta({ modalita: x, ...(ctx.dati.regole.attacco_distanza.modalita.manovre_ammesse[x]?.includes('mirato') ? {} : { mirato: false, ravvicinato: false, bruciapelo: false }) })),
-      interruttore(M.mirato.nome, d.mirato, (x) => imposta({ mirato: x }), { motivo: v.mirato, mod: `${segno(M.mirato.va)} · +${M.mirato.danno} danno · +1 AzP` }),
+      interruttore(M.mirato.nome, d.mirato, (x) => imposta({ mirato: x }), { motivo: v.mirato, mod: man('mirato').riga, info: man('mirato').info }),
       d.distanza <= M.ravvicinato.distanza_max_q
         ? interruttore(`${M.ravvicinato.nome} (≤ ${M.ravvicinato.distanza_max_q} Q)`, d.ravvicinato || d.bersaglio.tiImpegna, (x) => imposta({ ravvicinato: x }),
-          { motivo: d.bersaglio.tiImpegna ? 'obbligatorio: il bersaglio ti impegna' : v.ravvicinato, mod: `${ravvicinatoVa !== undefined ? `${numero(ravvicinatoVa)} · ` : ''}+${M.ravvicinato.danno} danno` }) : null,
+          { motivo: d.bersaglio.tiImpegna ? 'obbligatorio: il bersaglio ti impegna' : v.ravvicinato, mod: man('ravvicinato').riga, info: man('ravvicinato').info }) : null,
       d.distanza <= M.bruciapelo.distanza_max_q
-        ? interruttore(`${M.bruciapelo.nome} (Contatto)`, d.bruciapelo, (x) => imposta({ bruciapelo: x }), { motivo: v.bruciapelo, mod: `danno ×${M.bruciapelo.moltiplicatore}` }) : null,
+        ? interruttore(`${M.bruciapelo.nome} (Contatto)`, d.bruciapelo, (x) => imposta({ bruciapelo: x }), { motivo: v.bruciapelo, mod: man('bruciapelo').riga, info: man('bruciapelo').info }) : null,
       richiedeImbracciatura(a, ctx.dati) ? interruttore('Arma Imbracciata (1 AzM)', d.imbracciata, (x) => imposta({ imbracciata: x }), { mod: `senza: ${numero(R.imbracciatura.va)}` }) : null,
     ],
     risultato(ctx, a, r, colpi, imposta),
