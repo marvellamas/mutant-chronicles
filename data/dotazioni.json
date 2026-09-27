@@ -1,0 +1,3986 @@
+{
+  "versione_manuale": "Giocatore 0.43 + Google Doc del 27/09/2026",
+  "fonte": "Manuale del Giocatore §2.16, §§2.16.1–2.16.29 (Google Doc del 27/09/2026); risposte del master E&L A.5–A.5.29 (docs/risposte-master.md, decisioni 12–19)",
+  "_nota": "Generato da tools/genera_dotazioni.py; da qui in poi si può correggere a mano. «testo», «introduzione» e «note» sono copiati dal Doc. Un’opzione ha uno o più «oggetti»: «rif» del catalogo oppure «dotazione» (oggetti_dotazione, non ancora a catalogo). «for_dichiarata» è il requisito di FOR scritto nel §2.16: il validatore lo confronta con quello del catalogo. «munizioni» segue l’arma scelta; «segue» lega un’opzione a quella di un altro gruppo; «sotto» (negli oggetti) chiede una scelta ulteriore.",
+  "introduzione": [
+    "Ogni personaggio riceve l’equipaggiamento iniziale attraverso scelte guidate:",
+    "Una dotazione comune, con gli oggetti essenziali per tutti.",
+    "Una dotazione legata alla Classe iniziale, con scelte predefinite fra armi, protezioni e strumenti adatti al ruolo.",
+    "Armamenti di base della propria Corporazione, corrispondenti ai profili commerciali della Classe (§2.16.27).",
+    "Ogni scelta deve rispettare i requisiti degli oggetti. Le dotazioni comuni e delle 25 Classi sono nei §§2.16.1–2.16.26; i modelli corporativi di base, i crediti iniziali e gli acquisti sono disciplinati nei §§2.16.27–2.16.29. L’eventuale veicolo iniziale richiede un’assegnazione separata.",
+    "I profili degli oggetti e le relative regole si consultano nel Manuale degli Armamenti e nel Manuale degli Equipaggiamenti."
+  ],
+  "TODO(Davide)": "Gli oggetti di oggetti_dotazione (Binocolo, Registratore audiovisivo, i Corredi, Focus personale…) non hanno ancora una scheda di catalogo: entrano nell’inventario come voci personalizzate senza peso né prezzo, e non si possono cedere per gli acquisti (§2.16.29). Aspettano i cap. 2–8 del Manuale dell’Equipaggiamento. Per-davide A.34.",
+  "comune": {
+    "paragrafo": "2.16.1",
+    "oggetti": [
+      {
+        "dotazione": "abiti-comuni",
+        "quantita": 1,
+        "unita": "completo"
+      },
+      {
+        "dotazione": "zaino-da-viaggio",
+        "quantita": 1
+      },
+      {
+        "dotazione": "cintura-attrezzata",
+        "quantita": 1
+      },
+      {
+        "dotazione": "borraccia",
+        "quantita": 2
+      },
+      {
+        "dotazione": "torcia-elettrica",
+        "quantita": 1
+      },
+      {
+        "dotazione": "comunicatore-personale",
+        "quantita": 1
+      },
+      {
+        "dotazione": "corredo-igiene",
+        "quantita": 1
+      },
+      {
+        "dotazione": "utensile-multiuso",
+        "quantita": 1
+      },
+      {
+        "dotazione": "accendino",
+        "quantita": 1
+      },
+      {
+        "dotazione": "sacco-a-pelo",
+        "quantita": 1
+      },
+      {
+        "dotazione": "razione-da-viaggio",
+        "quantita": 3
+      }
+    ],
+    "note": [
+      "Torcia e comunicatore comprendono ciascuno una batteria carica, cavo e alimentatore, con 24 ore di autonomia per dispositivo.",
+      "Le scorte iniziali comprendono tre giorni di cibo e due litri d’acqua. L’acqua copre un giorno di consumo ordinario e richiede rifornimenti durante il viaggio."
+    ]
+  },
+  "classi": {
+    "Agente": {
+      "paragrafo": "2.16.2",
+      "introduzione": "Oltre alla dotazione comune, l’Agente riceve:",
+      "gruppi": [
+        {
+          "id": "arma_da_fuoco",
+          "etichetta": "Arma da fuoco",
+          "testo": "Una Pistola semiautomatica oppure un Revolver",
+          "opzioni": [
+            {
+              "id": "armi_distanza:pistola-semiautomatica",
+              "nome": "Pistola semiautomatica",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:pistola-semiautomatica"
+                }
+              ],
+              "for_dichiarata": 3,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-pistola",
+                "colpi": 45,
+                "caricatori": 3
+              }
+            },
+            {
+              "id": "armi_distanza:revolver",
+              "nome": "Revolver",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:revolver"
+                }
+              ],
+              "for_dichiarata": 3,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-pistola",
+                "colpi": 18
+              }
+            }
+          ],
+          "testo_munizioni": "Per la semiautomatica: tre caricatori compatibili, ciascuno con 15 proiettili ordinari, per 45 colpi complessivi. Per il revolver: 18 proiettili ordinari, di cui 6 nel tamburo e 12 di riserva"
+        },
+        {
+          "id": "arma_da_mischia",
+          "etichetta": "Arma da mischia",
+          "testo": "Un Coltello oppure un Randello, anche nella forma di manganello",
+          "opzioni": [
+            {
+              "id": "armi:coltello",
+              "nome": "Coltello",
+              "oggetti": [
+                {
+                  "rif": "armi:coltello"
+                }
+              ],
+              "for_dichiarata": 2
+            },
+            {
+              "id": "armi:randello",
+              "nome": "Randello",
+              "oggetti": [
+                {
+                  "rif": "armi:randello"
+                }
+              ],
+              "for_dichiarata": 3
+            }
+          ]
+        },
+        {
+          "id": "protezione",
+          "etichetta": "Protezione",
+          "testo": "Un’Armatura civile leggera, comprensiva dell’elmetto standard",
+          "opzioni": [
+            {
+              "id": "armature:armatura-civile-leggera",
+              "nome": "Armatura civile leggera",
+              "oggetti": [
+                {
+                  "rif": "armature:armatura-civile-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            }
+          ]
+        },
+        {
+          "id": "osservazione",
+          "etichetta": "Osservazione",
+          "testo": "Un Binocolo",
+          "opzioni": [
+            {
+              "id": "dotazione:binocolo",
+              "nome": "Binocolo",
+              "oggetti": [
+                {
+                  "dotazione": "binocolo"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "registrazione",
+          "etichetta": "Registrazione",
+          "testo": "Un Registratore audiovisivo",
+          "opzioni": [
+            {
+              "id": "dotazione:registratore-audiovisivo",
+              "nome": "Registratore audiovisivo",
+              "oggetti": [
+                {
+                  "dotazione": "registratore-audiovisivo"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "note": [
+        "Requisiti: entrambe le armi da fuoco, il Randello e l’Armatura civile leggera richiedono FOR 3; il Coltello richiede FOR 2.",
+        "L’armatura concede AR 1. L’elmetto standard incluso non aggiunge AR.",
+        "Il registratore comprende batteria carica, cavo e alimentatore, con 24 ore di autonomia. Il binocolo non richiede batterie.",
+        "I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27)."
+      ]
+    },
+    "Cacciatore": {
+      "paragrafo": "2.16.3",
+      "introduzione": "Oltre alla dotazione comune, il Cacciatore riceve:",
+      "gruppi": [
+        {
+          "id": "arma_da_fuoco",
+          "etichetta": "Arma da fuoco",
+          "testo": "Una Carabina oppure un Fucile a pompa",
+          "opzioni": [
+            {
+              "id": "armi_distanza:carabina",
+              "nome": "Carabina",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:carabina"
+                }
+              ],
+              "for_dichiarata": 4,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-fucile",
+                "colpi": 45,
+                "caricatori": 3
+              }
+            },
+            {
+              "id": "armi_distanza:fucile-a-pompa",
+              "nome": "Fucile a pompa",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:fucile-a-pompa"
+                }
+              ],
+              "for_dichiarata": 4,
+              "munizioni": {
+                "rif": "munizioni:cartucce-a-pallini",
+                "colpi": 18
+              }
+            }
+          ],
+          "testo_munizioni": "Per la carabina: tre caricatori compatibili da 15 proiettili ordinari ciascuno, per 45 colpi complessivi. Per il fucile a pompa: 18 cartucce ordinarie a pallini, di cui 6 nel serbatoio e 12 di riserva"
+        },
+        {
+          "id": "arma_da_mischia",
+          "etichetta": "Arma da mischia",
+          "testo": "Un Pugnale, anche da caccia, oppure un’Ascia leggera, anche nella forma di accetta",
+          "opzioni": [
+            {
+              "id": "armi:pugnale",
+              "nome": "Pugnale",
+              "oggetti": [
+                {
+                  "rif": "armi:pugnale"
+                }
+              ],
+              "for_dichiarata": 2
+            },
+            {
+              "id": "armi:ascia-leggera",
+              "nome": "Ascia leggera",
+              "oggetti": [
+                {
+                  "rif": "armi:ascia-leggera"
+                }
+              ],
+              "for_dichiarata": 4
+            }
+          ]
+        },
+        {
+          "id": "protezione",
+          "etichetta": "Protezione",
+          "testo": "Un’Armatura civile leggera, comprensiva dell’elmetto standard",
+          "opzioni": [
+            {
+              "id": "armature:armatura-civile-leggera",
+              "nome": "Armatura civile leggera",
+              "oggetti": [
+                {
+                  "rif": "armature:armatura-civile-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            }
+          ]
+        },
+        {
+          "id": "osservazione",
+          "etichetta": "Osservazione",
+          "testo": "Un Binocolo",
+          "opzioni": [
+            {
+              "id": "dotazione:binocolo",
+              "nome": "Binocolo",
+              "oggetti": [
+                {
+                  "dotazione": "binocolo"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sopravvivenza",
+          "etichetta": "Sopravvivenza",
+          "testo": "Un Corredo di sopravvivenza ambientale",
+          "opzioni": [
+            {
+              "id": "dotazione:corredo-sopravvivenza-ambientale",
+              "nome": "Corredo di sopravvivenza ambientale",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-sopravvivenza-ambientale"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "note": [
+        "Requisiti: Carabina, Fucile a pompa e Ascia leggera richiedono FOR 4; l’armatura richiede FOR 3; il Pugnale richiede FOR 2.",
+        "L’armatura concede AR 1. L’elmetto standard incluso non aggiunge AR.",
+        "Per il corredo si sceglie un ambiente: Artico, Forestale, Desertico, Urbano, Pianure, Sottosuolo oppure Apocalittico. Nell’ambiente scelto concede +2 VA a Sopravvivenza per orientamento, raccolta di risorse e preparazione di un riparo, secondo la propria scheda.",
+        "Il binocolo non richiede batterie. Acqua e viveri sono quelli della dotazione comune.",
+        "I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27)."
+      ]
+    },
+    "Esploratore": {
+      "paragrafo": "2.16.4",
+      "introduzione": "Oltre alla dotazione comune, l’Esploratore riceve:",
+      "gruppi": [
+        {
+          "id": "arma_da_fuoco",
+          "etichetta": "Arma da fuoco",
+          "testo": "Una Pistola semiautomatica",
+          "opzioni": [
+            {
+              "id": "armi_distanza:pistola-semiautomatica",
+              "nome": "Pistola semiautomatica",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:pistola-semiautomatica"
+                }
+              ],
+              "for_dichiarata": 3,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-pistola",
+                "colpi": 45,
+                "caricatori": 3
+              }
+            }
+          ],
+          "testo_munizioni": "Tre caricatori compatibili da 15 proiettili ordinari ciascuno: 45 colpi complessivi"
+        },
+        {
+          "id": "arma_da_mischia",
+          "etichetta": "Arma da mischia",
+          "testo": "Un Coltello",
+          "opzioni": [
+            {
+              "id": "armi:coltello",
+              "nome": "Coltello",
+              "oggetti": [
+                {
+                  "rif": "armi:coltello"
+                }
+              ],
+              "for_dichiarata": 2
+            }
+          ]
+        },
+        {
+          "id": "protezione",
+          "etichetta": "Protezione",
+          "testo": "Un’Armatura civile leggera, comprensiva dell’elmetto standard",
+          "opzioni": [
+            {
+              "id": "armature:armatura-civile-leggera",
+              "nome": "Armatura civile leggera",
+              "oggetti": [
+                {
+                  "rif": "armature:armatura-civile-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            }
+          ]
+        },
+        {
+          "id": "osservazione",
+          "etichetta": "Osservazione",
+          "testo": "Un Binocolo",
+          "opzioni": [
+            {
+              "id": "dotazione:binocolo",
+              "nome": "Binocolo",
+              "oggetti": [
+                {
+                  "dotazione": "binocolo"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "orientamento",
+          "etichetta": "Orientamento",
+          "testo": "Un Corredo di orientamento, con carta della zona iniziale",
+          "opzioni": [
+            {
+              "id": "dotazione:corredo-orientamento",
+              "nome": "Corredo di orientamento, con carta della zona iniziale",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-orientamento"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "strumento_specialistico",
+          "etichetta": "Strumento specialistico",
+          "testo": "Uno dei tre oggetti indicati sotto",
+          "opzioni": [
+            {
+              "id": "dotazione:corredo-assalto-verticale",
+              "nome": "Corredo da assalto verticale",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-assalto-verticale"
+                }
+              ]
+            },
+            {
+              "id": "dotazione:corredo-sopravvivenza-ambientale",
+              "nome": "Corredo di sopravvivenza ambientale",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-sopravvivenza-ambientale"
+                }
+              ]
+            },
+            {
+              "id": "dotazione:rilevatore-ambientale",
+              "nome": "Rilevatore ambientale",
+              "oggetti": [
+                {
+                  "dotazione": "rilevatore-ambientale"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "note": [
+        "Lo strumento specialistico si sceglie liberamente:",
+        "Corredo da assalto verticale: comprende imbracatura, corda da 20 Q, discensore, moschettoni e ancoraggi. Concede +2 VA ad Atletica per arrampicarsi o calarsi usando il corredo.",
+        "Corredo di sopravvivenza ambientale: si sceglie un ambiente fra Artico, Forestale, Desertico, Urbano, Pianure, Sottosuolo e Apocalittico. Concede i benefici previsti dalla propria scheda.",
+        "Rilevatore ambientale: segnala carenza d’ossigeno, gas nocivi conosciuti dal dispositivo e radiazioni nel punto esaminato. Comprende batteria carica, cavo e alimentatore, con 24 ore di autonomia.",
+        "Requisiti: pistola e armatura richiedono FOR 3; il Coltello richiede FOR 2.",
+        "L’armatura concede AR 1; l’elmetto standard non aggiunge AR. Il binocolo non richiede batterie.",
+        "Il Corredo di orientamento concede +1 VA a Sopravvivenza per orientarsi, quando esistono riferimenti utilizzabili. Questo bonus non si somma a quello del Corredo di sopravvivenza ambientale.",
+        "I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27)."
+      ]
+    },
+    "Lestofante": {
+      "paragrafo": "2.16.5",
+      "introduzione": "Oltre alla dotazione comune, il Lestofante riceve:",
+      "gruppi": [
+        {
+          "id": "arma_da_mischia",
+          "etichetta": "Arma da mischia",
+          "testo": "Un Pugnale oppure una Spada leggera",
+          "opzioni": [
+            {
+              "id": "armi:pugnale",
+              "nome": "Pugnale",
+              "oggetti": [
+                {
+                  "rif": "armi:pugnale"
+                }
+              ],
+              "for_dichiarata": 2
+            },
+            {
+              "id": "armi:spada-leggera",
+              "nome": "Spada leggera",
+              "oggetti": [
+                {
+                  "rif": "armi:spada-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            }
+          ]
+        },
+        {
+          "id": "arma_da_fuoco",
+          "etichetta": "Arma da fuoco",
+          "testo": "Una Pistola semiautomatica",
+          "opzioni": [
+            {
+              "id": "armi_distanza:pistola-semiautomatica",
+              "nome": "Pistola semiautomatica",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:pistola-semiautomatica"
+                }
+              ],
+              "for_dichiarata": 3,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-pistola",
+                "colpi": 45,
+                "caricatori": 3
+              }
+            }
+          ],
+          "testo_munizioni": "Tre caricatori compatibili da 15 proiettili ordinari ciascuno: 45 colpi complessivi"
+        },
+        {
+          "id": "protezione",
+          "etichetta": "Protezione",
+          "testo": "Un’Armatura civile leggera, comprensiva dell’elmetto standard",
+          "opzioni": [
+            {
+              "id": "armature:armatura-civile-leggera",
+              "nome": "Armatura civile leggera",
+              "oggetti": [
+                {
+                  "rif": "armature:armatura-civile-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            }
+          ]
+        },
+        {
+          "id": "abbigliamento",
+          "etichetta": "Abbigliamento",
+          "testo": "Un completo aggiuntivo di Abiti eleganti, comprese le calzature",
+          "opzioni": [
+            {
+              "id": "dotazione:abiti-eleganti",
+              "nome": "Abiti eleganti, comprese le calzature (completo aggiuntivo)",
+              "oggetti": [
+                {
+                  "dotazione": "abiti-eleganti"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "osservazione",
+          "etichetta": "Osservazione",
+          "testo": "Un Monocolo periscopico",
+          "opzioni": [
+            {
+              "id": "dotazione:monocolo-periscopico",
+              "nome": "Monocolo periscopico",
+              "oggetti": [
+                {
+                  "dotazione": "monocolo-periscopico"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "strumento_specialistico",
+          "etichetta": "Strumento specialistico",
+          "testo": "Un Corredo da scasso oppure un Corredo da camuffamento, entrambi di livello Standard: modificatore degli strumenti 0 al VA",
+          "opzioni": [
+            {
+              "id": "dotazione:corredo-da-scasso",
+              "nome": "Corredo da scasso (Standard)",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-da-scasso"
+                }
+              ]
+            },
+            {
+              "id": "dotazione:corredo-da-camuffamento",
+              "nome": "Corredo da camuffamento (Standard)",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-da-camuffamento"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "note": [
+        "Requisiti: Spada leggera, pistola e armatura richiedono FOR 3; il Pugnale richiede FOR 2.",
+        "L’armatura concede AR 1; l’elmetto standard non aggiunge AR.",
+        "Gli Abiti eleganti concedono +1 VA a Oratoria negli ambienti formali appropriati, secondo la propria scheda.",
+        "Il Monocolo periscopico permette di osservare oltre un bordo o un angolo senza esporre la testa, purché l’ottica raggiunga una posizione con visuale. Non richiede batterie.",
+        "Corredo da scasso. Comprende grimaldelli, attrezzi di precisione, sonde e un’interfaccia portatile per serrature elettroniche compatibili. Si utilizza con Furtività per scassinare serrature e dispositivi meccanici e con Tecnologia per intervenire sulle serrature elettroniche.",
+        "L’interfaccia comprende batteria carica, cavo e alimentatore, con 24 ore di autonomia. Restano necessarie le normali Prove e l’accesso ai componenti interessati.",
+        "Corredo da camuffamento. Comprende trucchi, parrucche, barbe finte, piccoli accessori e materiali per modificare l’aspetto personale. Si utilizza con Raggirare per preparare e sostenere un travestimento o un’impersonificazione. Il beneficio riguarda il camuffamento effettivamente realizzato; documenti falsi e credenziali richiedono risorse separate.",
+        "I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27)."
+      ]
+    },
+    "Paramedico": {
+      "paragrafo": "2.16.6",
+      "introduzione": "Oltre alla dotazione comune, il Paramedico riceve:",
+      "gruppi": [
+        {
+          "id": "arma_da_fuoco",
+          "etichetta": "Arma da fuoco",
+          "testo": "Una Pistola semiautomatica",
+          "opzioni": [
+            {
+              "id": "armi_distanza:pistola-semiautomatica",
+              "nome": "Pistola semiautomatica",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:pistola-semiautomatica"
+                }
+              ],
+              "for_dichiarata": 3,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-pistola",
+                "colpi": 45,
+                "caricatori": 3
+              }
+            }
+          ],
+          "testo_munizioni": "Tre caricatori compatibili da 15 proiettili ordinari ciascuno: 45 colpi complessivi"
+        },
+        {
+          "id": "arma_da_mischia",
+          "etichetta": "Arma da mischia",
+          "testo": "Un Coltello",
+          "opzioni": [
+            {
+              "id": "armi:coltello",
+              "nome": "Coltello",
+              "oggetti": [
+                {
+                  "rif": "armi:coltello"
+                }
+              ],
+              "for_dichiarata": 2
+            }
+          ]
+        },
+        {
+          "id": "protezione",
+          "etichetta": "Protezione",
+          "testo": "Un’Armatura civile leggera, comprensiva dell’elmetto standard",
+          "opzioni": [
+            {
+              "id": "armature:armatura-civile-leggera",
+              "nome": "Armatura civile leggera",
+              "oggetti": [
+                {
+                  "rif": "armature:armatura-civile-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            }
+          ]
+        },
+        {
+          "id": "pronto_soccorso",
+          "etichetta": "Pronto soccorso",
+          "testo": "Un Kit trauma Professionale, completo di 5 applicazioni",
+          "opzioni": [
+            {
+              "id": "sanitario:kit-di-pronto-soccorso-professionale",
+              "nome": "Kit di pronto soccorso professionale",
+              "oggetti": [
+                {
+                  "rif": "sanitario:kit-di-pronto-soccorso-professionale"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "materiali_di_riserva",
+          "etichetta": "Materiali di riserva",
+          "testo": "Una ricarica per il Kit trauma da 5 applicazioni: 10 applicazioni complessive",
+          "opzioni": [
+            {
+              "id": "dotazione:ricarica-kit-trauma",
+              "nome": "Ricarica per il Kit trauma (5 applicazioni)",
+              "oggetti": [
+                {
+                  "dotazione": "ricarica-kit-trauma"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "trattamento_rapido",
+          "etichetta": "Trattamento rapido",
+          "testo": "Una delle due dotazioni indicate sotto",
+          "opzioni": [
+            {
+              "id": "sanitario:iniettore-sanitario-manuale",
+              "nome": "Iniettore sanitario manuale + Cartuccia emostatica + Cartuccia curativa",
+              "oggetti": [
+                {
+                  "rif": "sanitario:iniettore-sanitario-manuale"
+                },
+                {
+                  "rif": "sanitario:cartuccia-emostatica",
+                  "quantita": 2
+                },
+                {
+                  "rif": "sanitario:cartuccia-curativa"
+                }
+              ]
+            },
+            {
+              "id": "sanitario:spray-rimarginante",
+              "nome": "Spray rimarginante",
+              "oggetti": [
+                {
+                  "rif": "sanitario:spray-rimarginante"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "note": [
+        "Trattamento rapido — scegliere una dotazione:",
+        "Iniettore sanitario manuale, con 2 cartucce emostatiche e 1 curativa. Una delle emostatiche è già caricata; le altre due cartucce sono di riserva.",
+        "Spray rimarginante, completo di 5 dosi.",
+        "Requisiti: pistola e armatura richiedono FOR 3; il Coltello richiede FOR 2.",
+        "L’armatura concede AR 1; l’elmetto standard non aggiunge AR.",
+        "Il Kit trauma concede +2 VA alle Prove di Medicina per il pronto soccorso. Con successo arresta il Sanguinamento e recupera 1d4 PV; con un Magistrale raddoppia il risultato del dado. Bende, garze e disinfettanti sono già compresi nelle applicazioni.",
+        "Il Paramedico applica Soccorso Immediato secondo la propria scheda. Kit e dispositivi seguono le rispettive procedure e non curano automaticamente stati di Ferita o Menomazioni.",
+        "I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27)."
+      ]
+    },
+    "Artigliere": {
+      "paragrafo": "2.16.7",
+      "introduzione": "Oltre alla dotazione comune, l’Artigliere riceve:",
+      "gruppi": [
+        {
+          "id": "arma_principale",
+          "etichetta": "Arma principale",
+          "testo": "Un Fucile d’assalto oppure un Fucile di precisione",
+          "opzioni": [
+            {
+              "id": "armi_distanza:fucile-d-assalto",
+              "nome": "Fucile d’assalto",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:fucile-d-assalto"
+                }
+              ],
+              "for_dichiarata": 5,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-fucile",
+                "colpi": 90,
+                "caricatori": 3
+              }
+            },
+            {
+              "id": "armi_distanza:fucile-di-precisione",
+              "nome": "Fucile di precisione",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:fucile-di-precisione"
+                }
+              ],
+              "for_dichiarata": 5,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-fucile",
+                "colpi": 15,
+                "caricatori": 3
+              }
+            }
+          ],
+          "testo_munizioni": "Fucile d’assalto: 3 caricatori da 30, per 90 colpi. Fucile di precisione: 3 caricatori da 5, per 15 colpi"
+        },
+        {
+          "id": "arma_da_mischia",
+          "etichetta": "Arma da mischia",
+          "testo": "Un Coltello",
+          "opzioni": [
+            {
+              "id": "armi:coltello",
+              "nome": "Coltello",
+              "oggetti": [
+                {
+                  "rif": "armi:coltello"
+                }
+              ],
+              "for_dichiarata": 2
+            }
+          ]
+        },
+        {
+          "id": "protezione",
+          "etichetta": "Protezione",
+          "testo": "Un’Armatura civile leggera, con elmetto standard",
+          "opzioni": [
+            {
+              "id": "armature:armatura-civile-leggera",
+              "nome": "Armatura civile leggera",
+              "oggetti": [
+                {
+                  "rif": "armature:armatura-civile-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            }
+          ]
+        },
+        {
+          "id": "mirino",
+          "etichetta": "Mirino",
+          "testo": "Un Reflex per il Fucile d’assalto oppure un Ottico per il Fucile di precisione",
+          "opzioni": [
+            {
+              "id": "accessori_armi:mirino-reflex",
+              "nome": "Mirino Reflex",
+              "oggetti": [
+                {
+                  "rif": "accessori_armi:mirino-reflex"
+                }
+              ],
+              "segue": {
+                "gruppo": "arma_principale",
+                "opzione": "armi_distanza:fucile-d-assalto"
+              }
+            },
+            {
+              "id": "accessori_armi:mirino-ottico",
+              "nome": "Mirino Ottico",
+              "oggetti": [
+                {
+                  "rif": "accessori_armi:mirino-ottico"
+                }
+              ],
+              "segue": {
+                "gruppo": "arma_principale",
+                "opzione": "armi_distanza:fucile-di-precisione"
+              }
+            }
+          ]
+        },
+        {
+          "id": "supporto",
+          "etichetta": "Supporto",
+          "testo": "Un Bipiede compatibile con l’arma scelta",
+          "opzioni": [
+            {
+              "id": "accessori_armi:bipiede",
+              "nome": "Bipiede",
+              "oggetti": [
+                {
+                  "rif": "accessori_armi:bipiede"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "osservazione",
+          "etichetta": "Osservazione",
+          "testo": "Un Binocolo",
+          "opzioni": [
+            {
+              "id": "dotazione:binocolo",
+              "nome": "Binocolo",
+              "oggetti": [
+                {
+                  "dotazione": "binocolo"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "note": [
+        "Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.",
+        "Le munizioni sono ordinarie; i caricatori sono compatibili con il modello scelto, uno inserito nell’arma e due di riserva.",
+        "Requisiti: FOR 5 per entrambi i fucili, FOR 3 per l’armatura e FOR 2 per il Coltello.",
+        "L’Armatura civile leggera concede AR 1 e richiede FOR 3; l’elmetto standard incluso non aggiunge AR.",
+        "L’arma viene fornita predisposta per gli accessori assegnati. Il Bipiede concede +1 VA soltanto quando correttamente appoggiato.",
+        "Il Reflex riduce di 2 la penalità di distanza entro 80 Q; l’Ottico la riduce di 4 entro 500 Q, ma richiede almeno 2 Azioni Principali complessive, compresa quella del tiro.",
+        "Il Binocolo concede +1 VA a Percezione per esaminare dettagli lontani nelle condizioni previste dal manuale.",
+        "I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27)."
+      ]
+    },
+    "Assaltatore": {
+      "paragrafo": "2.16.8",
+      "introduzione": "Oltre alla dotazione comune, l’Assaltatore riceve:",
+      "gruppi": [
+        {
+          "id": "arma_da_mischia",
+          "etichetta": "Arma da mischia",
+          "testo": "Una Spada leggera, una Spada lunga oppure un’Ascia leggera",
+          "opzioni": [
+            {
+              "id": "armi:spada-leggera",
+              "nome": "Spada leggera",
+              "oggetti": [
+                {
+                  "rif": "armi:spada-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            },
+            {
+              "id": "armi:spada-lunga",
+              "nome": "Spada lunga",
+              "oggetti": [
+                {
+                  "rif": "armi:spada-lunga"
+                }
+              ],
+              "for_dichiarata": 4
+            },
+            {
+              "id": "armi:ascia-leggera",
+              "nome": "Ascia leggera",
+              "oggetti": [
+                {
+                  "rif": "armi:ascia-leggera"
+                }
+              ],
+              "for_dichiarata": 4
+            }
+          ]
+        },
+        {
+          "id": "scudo",
+          "etichetta": "Scudo",
+          "testo": "Uno Scudo piccolo oppure uno Scudo medio",
+          "opzioni": [
+            {
+              "id": "scudi:scudo-piccolo",
+              "nome": "Scudo piccolo",
+              "oggetti": [
+                {
+                  "rif": "scudi:scudo-piccolo"
+                }
+              ],
+              "for_dichiarata": 3
+            },
+            {
+              "id": "scudi:scudo-medio",
+              "nome": "Scudo medio",
+              "oggetti": [
+                {
+                  "rif": "scudi:scudo-medio"
+                }
+              ],
+              "for_dichiarata": 5
+            }
+          ]
+        },
+        {
+          "id": "arma_da_fuoco",
+          "etichetta": "Arma da fuoco",
+          "testo": "Una Pistola semiautomatica",
+          "opzioni": [
+            {
+              "id": "armi_distanza:pistola-semiautomatica",
+              "nome": "Pistola semiautomatica",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:pistola-semiautomatica"
+                }
+              ],
+              "for_dichiarata": 3,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-pistola",
+                "colpi": 45,
+                "caricatori": 3
+              }
+            }
+          ],
+          "testo_munizioni": "3 caricatori da 15, per 45 colpi"
+        },
+        {
+          "id": "protezione",
+          "etichetta": "Protezione",
+          "testo": "Un’Armatura civile leggera oppure media, con elmetto standard",
+          "opzioni": [
+            {
+              "id": "armature:armatura-civile-leggera",
+              "nome": "Armatura civile leggera",
+              "oggetti": [
+                {
+                  "rif": "armature:armatura-civile-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            },
+            {
+              "id": "armature:armatura-civile-media",
+              "nome": "Armatura civile media",
+              "oggetti": [
+                {
+                  "rif": "armature:armatura-civile-media"
+                }
+              ],
+              "for_dichiarata": 5
+            }
+          ]
+        }
+      ],
+      "note": [
+        "Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.",
+        "Le munizioni sono ordinarie; i caricatori sono compatibili con il modello scelto, uno inserito nell’arma e due di riserva.",
+        "Requisiti delle armi: FOR 3 per Spada leggera e pistola; FOR 4 per Spada lunga e Ascia leggera.",
+        "Le protezioni si scelgono indipendentemente:",
+        "Lo scudo occupa una mano e concede il proprio beneficio quando è impugnato e utilizzabile. L’elmetto standard incluso non aggiunge AR.",
+        "L’Armatura civile media concede AR 3 e richiede FOR 5. Conserva le normali penalità: −1 VA agli attacchi e alle Prove di Agilità, −1 Q al Movimento e −3 VA al lancio tramite Potere.",
+        "Il Talento Assalto Armato interviene quando viene acquisito, secondo il suo testo.",
+        "I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27)."
+      ],
+      "tabelle_aggiuntive": [
+        [
+          "Armatura civile leggera",
+          "FOR 3"
+        ],
+        [
+          "Armatura civile media",
+          "FOR 5"
+        ],
+        [
+          "Scudo piccolo",
+          "FOR 3"
+        ],
+        [
+          "Scudo medio",
+          "FOR 5"
+        ]
+      ]
+    },
+    "Incursore": {
+      "paragrafo": "2.16.9",
+      "introduzione": "Oltre alla dotazione comune, l’Incursore riceve:",
+      "gruppi": [
+        {
+          "id": "arma_da_fuoco",
+          "etichetta": "Arma da fuoco",
+          "testo": "Una Pistola semiautomatica",
+          "opzioni": [
+            {
+              "id": "armi_distanza:pistola-semiautomatica",
+              "nome": "Pistola semiautomatica",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:pistola-semiautomatica"
+                }
+              ],
+              "for_dichiarata": 3,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-pistola",
+                "colpi": 45,
+                "caricatori": 3
+              }
+            }
+          ],
+          "testo_munizioni": "3 caricatori da 15, per 45 colpi"
+        },
+        {
+          "id": "arma_da_mischia",
+          "etichetta": "Arma da mischia",
+          "testo": "Un Pugnale da combattimento",
+          "opzioni": [
+            {
+              "id": "armi:pugnale-da-combattimento",
+              "nome": "Pugnale da combattimento",
+              "oggetti": [
+                {
+                  "rif": "armi:pugnale-da-combattimento"
+                }
+              ],
+              "for_dichiarata": 3
+            }
+          ]
+        },
+        {
+          "id": "protezione",
+          "etichetta": "Protezione",
+          "testo": "Un’Armatura civile leggera, con elmetto standard",
+          "opzioni": [
+            {
+              "id": "armature:armatura-civile-leggera",
+              "nome": "Armatura civile leggera",
+              "oggetti": [
+                {
+                  "rif": "armature:armatura-civile-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            }
+          ]
+        },
+        {
+          "id": "accessorio",
+          "etichetta": "Accessorio",
+          "testo": "Un Silenziatore compatibile con la pistola",
+          "opzioni": [
+            {
+              "id": "accessori_armi:silenziatore",
+              "nome": "Silenziatore",
+              "oggetti": [
+                {
+                  "rif": "accessori_armi:silenziatore"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "corredo",
+          "etichetta": "Corredo",
+          "testo": "Un Corredo da scasso Standard oppure un Corredo da assalto verticale",
+          "opzioni": [
+            {
+              "id": "dotazione:corredo-da-scasso",
+              "nome": "Corredo da scasso (Standard)",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-da-scasso"
+                }
+              ]
+            },
+            {
+              "id": "dotazione:corredo-assalto-verticale",
+              "nome": "Corredo da assalto verticale",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-assalto-verticale"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "note": [
+        "Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.",
+        "Le munizioni sono ordinarie; i caricatori sono compatibili con il modello scelto, uno inserito nell’arma e due di riserva.",
+        "Requisiti: FOR 3 per pistola, Pugnale da combattimento e armatura.",
+        "L’Armatura civile leggera concede AR 1 e richiede FOR 3; l’elmetto standard incluso non aggiunge AR.",
+        "Il Silenziatore rende inudibile lo sparo, applicando −2 VA al tiro e −1 danno. Restano percepibili gli eventuali impatti e gli altri indizi dell’attacco.",
+        "Il Corredo da scasso Standard comprende grimaldelli, utensili di precisione, sonde e un’interfaccia elettronica compatibile. Si usa Furtività per le serrature meccaniche e Tecnologia per quelle elettroniche, effettuando le normali Prove. L’interfaccia comprende batteria carica da 24 ore, cavo e caricatore.",
+        "Il Corredo da assalto verticale comprende imbracatura, corda da 20 Q, discensore, moschettoni e ancoraggi. Concede +2 VA ad Atletica per arrampicate e discese effettuate utilizzandolo.",
+        "I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27)."
+      ]
+    },
+    "Lottatore": {
+      "paragrafo": "2.16.10",
+      "introduzione": "Oltre alla dotazione comune, il Lottatore riceve:",
+      "gruppi": [
+        {
+          "id": "arma_da_mischia",
+          "etichetta": "Arma da mischia",
+          "testo": "Una Tonfa oppure un Randello",
+          "opzioni": [
+            {
+              "id": "armi:tonfa",
+              "nome": "Tonfa",
+              "oggetti": [
+                {
+                  "rif": "armi:tonfa"
+                }
+              ],
+              "for_dichiarata": 3
+            },
+            {
+              "id": "armi:randello",
+              "nome": "Randello",
+              "oggetti": [
+                {
+                  "rif": "armi:randello"
+                }
+              ],
+              "for_dichiarata": 3
+            }
+          ]
+        },
+        {
+          "id": "arma_da_fuoco",
+          "etichetta": "Arma da fuoco",
+          "testo": "Una Pistola semiautomatica",
+          "opzioni": [
+            {
+              "id": "armi_distanza:pistola-semiautomatica",
+              "nome": "Pistola semiautomatica",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:pistola-semiautomatica"
+                }
+              ],
+              "for_dichiarata": 3,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-pistola",
+                "colpi": 45,
+                "caricatori": 3
+              }
+            }
+          ],
+          "testo_munizioni": "3 caricatori da 15, per 45 colpi"
+        },
+        {
+          "id": "protezione",
+          "etichetta": "Protezione",
+          "testo": "Un’Armatura civile leggera, con elmetto standard",
+          "opzioni": [
+            {
+              "id": "armature:armatura-civile-leggera",
+              "nome": "Armatura civile leggera",
+              "oggetti": [
+                {
+                  "rif": "armature:armatura-civile-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            }
+          ]
+        },
+        {
+          "id": "abbigliamento_aggiuntivo",
+          "etichetta": "Abbigliamento aggiuntivo",
+          "testo": "Un completo di Abiti da viaggio, comprensivo di guanti, copricapo e calzature",
+          "opzioni": [
+            {
+              "id": "dotazione:abiti-da-viaggio",
+              "nome": "Abiti da viaggio, comprese le calzature (completo aggiuntivo)",
+              "oggetti": [
+                {
+                  "dotazione": "abiti-da-viaggio"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "pronto_soccorso",
+          "etichetta": "Pronto soccorso",
+          "testo": "Un Kit di pronto soccorso Standard, completo di 5 applicazioni",
+          "opzioni": [
+            {
+              "id": "sanitario:kit-di-pronto-soccorso-standard",
+              "nome": "Kit di pronto soccorso standard",
+              "oggetti": [
+                {
+                  "rif": "sanitario:kit-di-pronto-soccorso-standard"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "note": [
+        "Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.",
+        "Le munizioni sono ordinarie; i caricatori sono compatibili con il modello scelto, uno inserito nell’arma e due di riserva.",
+        "Requisiti: FOR 3 per entrambe le armi da mischia, la pistola e l’armatura.",
+        "L’Armatura civile leggera concede AR 1 e richiede FOR 3; l’elmetto standard incluso non aggiunge AR.",
+        "La Tonfa concede +2 VA alle Parate effettuate con essa. Gli attacchi con Tonfa o Randello seguono le regole delle armi: i Talenti che richiedono attacchi senz’armi si applicano soltanto agli attacchi appropriati.",
+        "Gli Abiti da viaggio concedono +1 VA ad Atletica per arrampicarsi e mantenere l’equilibrio su terreno accidentato.",
+        "Il Kit di pronto soccorso Standard non concede bonus a Medicina: un successo arresta il Sanguinamento; un Magistrale recupera anche 1d4 PV. Ogni tentativo consuma un’applicazione.",
+        "I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27)."
+      ]
+    },
+    "Soldato": {
+      "paragrafo": "2.16.11",
+      "introduzione": "Oltre alla dotazione comune, il Soldato riceve:",
+      "gruppi": [
+        {
+          "id": "arma_principale",
+          "etichetta": "Arma principale",
+          "testo": "Una Carabina oppure un Fucile d’assalto",
+          "opzioni": [
+            {
+              "id": "armi_distanza:carabina",
+              "nome": "Carabina",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:carabina"
+                }
+              ],
+              "for_dichiarata": 4,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-fucile",
+                "colpi": 45,
+                "caricatori": 3
+              }
+            },
+            {
+              "id": "armi_distanza:fucile-d-assalto",
+              "nome": "Fucile d’assalto",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:fucile-d-assalto"
+                }
+              ],
+              "for_dichiarata": 5,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-fucile",
+                "colpi": 90,
+                "caricatori": 3
+              }
+            }
+          ],
+          "testo_munizioni": "Carabina: 3 caricatori da 15, per 45 colpi. Fucile d’assalto: 3 caricatori da 30, per 90 colpi"
+        },
+        {
+          "id": "arma_da_mischia",
+          "etichetta": "Arma da mischia",
+          "testo": "Un Coltello",
+          "opzioni": [
+            {
+              "id": "armi:coltello",
+              "nome": "Coltello",
+              "oggetti": [
+                {
+                  "rif": "armi:coltello"
+                }
+              ],
+              "for_dichiarata": 2
+            }
+          ]
+        },
+        {
+          "id": "protezione",
+          "etichetta": "Protezione",
+          "testo": "Un’Armatura civile leggera oppure media, con elmetto standard",
+          "opzioni": [
+            {
+              "id": "armature:armatura-civile-leggera",
+              "nome": "Armatura civile leggera",
+              "oggetti": [
+                {
+                  "rif": "armature:armatura-civile-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            },
+            {
+              "id": "armature:armatura-civile-media",
+              "nome": "Armatura civile media",
+              "oggetti": [
+                {
+                  "rif": "armature:armatura-civile-media"
+                }
+              ],
+              "for_dichiarata": 5
+            }
+          ]
+        },
+        {
+          "id": "comunicazioni",
+          "etichetta": "Comunicazioni",
+          "testo": "Un Comunicatore da squadra, che sostituisce quello personale della dotazione comune",
+          "opzioni": [
+            {
+              "id": "dotazione:comunicatore-da-squadra",
+              "nome": "Comunicatore da squadra",
+              "oggetti": [
+                {
+                  "dotazione": "comunicatore-da-squadra"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "materiale_di_supporto",
+          "etichetta": "Materiale di supporto",
+          "testo": "Un Kit di pronto soccorso Standard da 5 applicazioni oppure una Tenda da 2 posti, completa di pali, tiranti e picchetti",
+          "opzioni": [
+            {
+              "id": "sanitario:kit-di-pronto-soccorso-standard",
+              "nome": "Kit di pronto soccorso standard",
+              "oggetti": [
+                {
+                  "rif": "sanitario:kit-di-pronto-soccorso-standard"
+                }
+              ]
+            },
+            {
+              "id": "dotazione:tenda-2-posti",
+              "nome": "Tenda da 2 posti, completa di pali, tiranti e picchetti",
+              "oggetti": [
+                {
+                  "dotazione": "tenda-2-posti"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "note": [
+        "Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.",
+        "Le munizioni sono ordinarie; i caricatori sono compatibili con il modello scelto, uno inserito nell’arma e due di riserva.",
+        "Requisiti: FOR 4 per la Carabina, FOR 5 per il Fucile d’assalto, FOR 2 per il Coltello; FOR 3 o 5 per l’armatura scelta.",
+        "L’Armatura civile leggera concede AR 1 e richiede FOR 3; l’elmetto standard incluso non aggiunge AR.",
+        "L’Armatura civile media concede AR 3 e richiede FOR 5. Conserva le normali penalità: −1 VA agli attacchi e alle Prove di Agilità, −1 Q al Movimento e −3 VA al lancio tramite Potere.",
+        "Il Comunicatore da squadra comprende microfono, auricolare, batteria carica da 24 ore, cavo e caricatore. Ha una portata nominale di 10 km; collegandosi a un comunicatore personale, la comunicazione bidirezionale resta limitata dalla portata del dispositivo più debole. Le distanze previste dai Talenti di comando restano quelle indicate nei Talenti.",
+        "Il Kit di pronto soccorso Standard non concede bonus a Medicina: un successo arresta il Sanguinamento; un Magistrale recupera anche 1d4 PV. Ogni tentativo consuma un’applicazione.",
+        "I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27)."
+      ]
+    },
+    "Agricoltore": {
+      "paragrafo": "2.16.12",
+      "introduzione": "Oltre alla dotazione comune, l’Agricoltore riceve:",
+      "gruppi": [
+        {
+          "id": "arma_da_fuoco",
+          "etichetta": "Arma da fuoco",
+          "testo": "Una Pistola semiautomatica",
+          "opzioni": [
+            {
+              "id": "armi_distanza:pistola-semiautomatica",
+              "nome": "Pistola semiautomatica",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:pistola-semiautomatica"
+                }
+              ],
+              "for_dichiarata": 3,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-pistola",
+                "colpi": 45,
+                "caricatori": 3
+              }
+            }
+          ],
+          "testo_munizioni": "3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva"
+        },
+        {
+          "id": "protezione",
+          "etichetta": "Protezione",
+          "testo": "Un’Armatura civile leggera, comprensiva dell’elmetto standard",
+          "opzioni": [
+            {
+              "id": "armature:armatura-civile-leggera",
+              "nome": "Armatura civile leggera",
+              "oggetti": [
+                {
+                  "rif": "armature:armatura-civile-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            }
+          ]
+        },
+        {
+          "id": "arma_da_mischia",
+          "etichetta": "Arma da mischia",
+          "testo": "Un Coltello oppure un’Ascia leggera, anche come accetta",
+          "opzioni": [
+            {
+              "id": "armi:coltello",
+              "nome": "Coltello",
+              "oggetti": [
+                {
+                  "rif": "armi:coltello"
+                }
+              ],
+              "for_dichiarata": 2
+            },
+            {
+              "id": "armi:ascia-leggera",
+              "nome": "Ascia leggera",
+              "oggetti": [
+                {
+                  "rif": "armi:ascia-leggera"
+                }
+              ],
+              "for_dichiarata": 4
+            }
+          ]
+        },
+        {
+          "id": "strumenti_agricoli",
+          "etichetta": "Strumenti agricoli",
+          "testo": "Un Corredo agricolo Standard, scegliendo fra coltivazione e allevamento",
+          "opzioni": [
+            {
+              "id": "dotazione:corredo-agricolo",
+              "nome": "Corredo agricolo (Standard)",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-agricolo"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "supporto",
+          "etichetta": "Supporto",
+          "testo": "Un Corredo di sopravvivenza ambientale oppure un Kit di pronto soccorso Standard da 5 applicazioni",
+          "opzioni": [
+            {
+              "id": "dotazione:corredo-sopravvivenza-ambientale",
+              "nome": "Corredo di sopravvivenza ambientale",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-sopravvivenza-ambientale"
+                }
+              ]
+            },
+            {
+              "id": "sanitario:kit-di-pronto-soccorso-standard",
+              "nome": "Kit di pronto soccorso standard",
+              "oggetti": [
+                {
+                  "rif": "sanitario:kit-di-pronto-soccorso-standard"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "note": [
+        "Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.",
+        "Pistola e armatura richiedono FOR 3. L’armatura concede AR 1; l’elmetto standard incluso non aggiunge AR.",
+        "Requisiti delle armi da mischia: FOR 2 per il Coltello; FOR 4 per l’Ascia leggera.",
+        "Corredo agricolo Standard — Coltivazione. Comprende vanga compatta, zappetta, cesoie, piantatoio, cordino di tracciamento e sacchetti per semi e raccolti. Permette le operazioni manuali compatibili con questi strumenti.",
+        "Corredo agricolo Standard — Allevamento. Comprende longhina, cavezza regolabile, spazzole, striglia, cesoie e piccoli utensili per pulire e curare ordinariamente animali domestici di taglia compatibile.",
+        "Entrambe le versioni sono dotazioni Standard: modificatore degli strumenti 0 al VA. Sementi, mangimi e medicinali sono separati; gli strumenti per allevamento non sostituiscono l’attrezzatura sanitaria.",
+        "Per il Corredo di sopravvivenza ambientale si sceglie Artico, Forestale, Desertico, Urbano, Pianure, Sottosuolo o Apocalittico. Concede +2 VA a Sopravvivenza negli impieghi previsti per l’ambiente scelto.",
+        "Il Kit di pronto soccorso Standard contiene 5 applicazioni: un successo a Medicina arresta il Sanguinamento; un Magistrale recupera anche 1d4 PV. Ogni tentativo consuma un’applicazione.",
+        "Si applica un solo modificatore pertinente degli strumenti, senza sommare i bonus dei corredi. Materiali da lavorare e ricambi restano separati."
+      ]
+    },
+    "Artigiano": {
+      "paragrafo": "2.16.13",
+      "introduzione": "Oltre alla dotazione comune, l’Artigiano riceve:",
+      "gruppi": [
+        {
+          "id": "arma_da_fuoco",
+          "etichetta": "Arma da fuoco",
+          "testo": "Una Pistola semiautomatica",
+          "opzioni": [
+            {
+              "id": "armi_distanza:pistola-semiautomatica",
+              "nome": "Pistola semiautomatica",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:pistola-semiautomatica"
+                }
+              ],
+              "for_dichiarata": 3,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-pistola",
+                "colpi": 45,
+                "caricatori": 3
+              }
+            }
+          ],
+          "testo_munizioni": "3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva"
+        },
+        {
+          "id": "protezione",
+          "etichetta": "Protezione",
+          "testo": "Un’Armatura civile leggera, comprensiva dell’elmetto standard",
+          "opzioni": [
+            {
+              "id": "armature:armatura-civile-leggera",
+              "nome": "Armatura civile leggera",
+              "oggetti": [
+                {
+                  "rif": "armature:armatura-civile-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            }
+          ]
+        },
+        {
+          "id": "arma_da_mischia",
+          "etichetta": "Arma da mischia",
+          "testo": "Un Coltello oppure un Martello",
+          "opzioni": [
+            {
+              "id": "armi:coltello",
+              "nome": "Coltello",
+              "oggetti": [
+                {
+                  "rif": "armi:coltello"
+                }
+              ],
+              "for_dichiarata": 2
+            },
+            {
+              "id": "armi:martello",
+              "nome": "Martello",
+              "oggetti": [
+                {
+                  "rif": "armi:martello"
+                }
+              ],
+              "for_dichiarata": 4
+            }
+          ]
+        },
+        {
+          "id": "strumenti_del_mestiere",
+          "etichetta": "Strumenti del mestiere",
+          "testo": "Un Corredo artigianale professionale oppure un Corredo di manutenzione da campo",
+          "opzioni": [
+            {
+              "id": "dotazione:corredo-artigianale-professionale",
+              "nome": "Corredo artigianale professionale",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-artigianale-professionale"
+                }
+              ]
+            },
+            {
+              "id": "dotazione:corredo-manutenzione-campo",
+              "nome": "Corredo di manutenzione da campo",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-manutenzione-campo"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "illuminazione",
+          "etichetta": "Illuminazione",
+          "testo": "Una Lampada frontale, che sostituisce la torcia della dotazione comune",
+          "opzioni": [
+            {
+              "id": "dotazione:lampada-frontale",
+              "nome": "Lampada frontale",
+              "oggetti": [
+                {
+                  "dotazione": "lampada-frontale"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "documentazione",
+          "etichetta": "Documentazione",
+          "testo": "Un Registratore audiovisivo",
+          "opzioni": [
+            {
+              "id": "dotazione:registratore-audiovisivo",
+              "nome": "Registratore audiovisivo",
+              "oggetti": [
+                {
+                  "dotazione": "registratore-audiovisivo"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "note": [
+        "Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.",
+        "Pistola e armatura richiedono FOR 3. L’armatura concede AR 1; l’elmetto standard incluso non aggiunge AR.",
+        "Requisiti delle armi da mischia: FOR 2 per il Coltello; FOR 4 per il Martello.",
+        "Il Corredo artigianale professionale viene dedicato a un mestiere, per esempio sartoria, pelletteria, falegnameria o lavorazione manuale dei metalli. Concede +2 VA a Tecnologia per lavorare e riparare i prodotti di quel mestiere.",
+        "Il Corredo di manutenzione da campo concede +2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo di armi, armature, propulsori ed esoscheletri compatibili. La diagnostica comprende batteria carica da 24 ore, cavo e alimentatore.",
+        "La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Comprende batteria carica da 24 ore, cavo e alimentatore.",
+        "Il Registratore audiovisivo permette di documentare manufatti, difetti e lavorazioni, conservando immagini e suoni effettivamente ripresi. Comprende batteria carica da 24 ore, cavo e alimentatore.",
+        "Si applica un solo modificatore pertinente degli strumenti, senza sommare i bonus dei corredi. Materiali da lavorare e ricambi restano separati."
+      ]
+    },
+    "Operaio": {
+      "paragrafo": "2.16.14",
+      "introduzione": "Oltre alla dotazione comune, l’Operaio riceve:",
+      "gruppi": [
+        {
+          "id": "arma_da_fuoco",
+          "etichetta": "Arma da fuoco",
+          "testo": "Una Pistola semiautomatica",
+          "opzioni": [
+            {
+              "id": "armi_distanza:pistola-semiautomatica",
+              "nome": "Pistola semiautomatica",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:pistola-semiautomatica"
+                }
+              ],
+              "for_dichiarata": 3,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-pistola",
+                "colpi": 45,
+                "caricatori": 3
+              }
+            }
+          ],
+          "testo_munizioni": "3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva"
+        },
+        {
+          "id": "protezione",
+          "etichetta": "Protezione",
+          "testo": "Un’Armatura civile leggera, comprensiva dell’elmetto standard",
+          "opzioni": [
+            {
+              "id": "armature:armatura-civile-leggera",
+              "nome": "Armatura civile leggera",
+              "oggetti": [
+                {
+                  "rif": "armature:armatura-civile-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            }
+          ]
+        },
+        {
+          "id": "arma_da_mischia",
+          "etichetta": "Arma da mischia",
+          "testo": "Un Randello, anche come manganello, oppure un Martello",
+          "opzioni": [
+            {
+              "id": "armi:randello",
+              "nome": "Randello",
+              "oggetti": [
+                {
+                  "rif": "armi:randello"
+                }
+              ],
+              "for_dichiarata": 3
+            },
+            {
+              "id": "armi:martello",
+              "nome": "Martello",
+              "oggetti": [
+                {
+                  "rif": "armi:martello"
+                }
+              ],
+              "for_dichiarata": 4
+            }
+          ]
+        },
+        {
+          "id": "utensili",
+          "etichetta": "Utensili",
+          "testo": "Una Cassetta degli attrezzi Standard",
+          "opzioni": [
+            {
+              "id": "dotazione:cassetta-attrezzi",
+              "nome": "Cassetta degli attrezzi (Standard)",
+              "oggetti": [
+                {
+                  "dotazione": "cassetta-attrezzi"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "lavori_in_altezza",
+          "etichetta": "Lavori in altezza",
+          "testo": "Un Corredo da assalto verticale",
+          "opzioni": [
+            {
+              "id": "dotazione:corredo-assalto-verticale",
+              "nome": "Corredo da assalto verticale",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-assalto-verticale"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "protezione_respiratoria",
+          "etichetta": "Protezione respiratoria",
+          "testo": "Una Maschera filtrante",
+          "opzioni": [
+            {
+              "id": "dotazione:maschera-filtrante",
+              "nome": "Maschera filtrante",
+              "oggetti": [
+                {
+                  "dotazione": "maschera-filtrante"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "illuminazione",
+          "etichetta": "Illuminazione",
+          "testo": "Una Lampada frontale, che sostituisce la torcia della dotazione comune",
+          "opzioni": [
+            {
+              "id": "dotazione:lampada-frontale",
+              "nome": "Lampada frontale",
+              "oggetti": [
+                {
+                  "dotazione": "lampada-frontale"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "note": [
+        "Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.",
+        "Pistola e armatura richiedono FOR 3. L’armatura concede AR 1; l’elmetto standard incluso non aggiunge AR.",
+        "Requisiti delle armi da mischia: FOR 3 per il Randello; FOR 4 per il Martello.",
+        "La Cassetta degli attrezzi comprende chiavi, cacciaviti, pinze, martello, lime e strumenti di misura meccanici. Consente gli interventi compatibili con questi utensili, con modificatore degli strumenti 0 al VA.",
+        "Il Corredo da assalto verticale comprende imbracatura, corda da 20 Q, discensore, moschettoni e ancoraggi. Concede +2 VA ad Atletica per arrampicate e discese effettuate utilizzandolo.",
+        "La Maschera filtrante concede +2 alle PS di Tempra contro veleni e agenti patogeni inalati. Richiede aria con ossigeno sufficiente; la sostituzione ordinaria dei filtri rientra nella manutenzione.",
+        "La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Comprende batteria carica da 24 ore, cavo e alimentatore.",
+        "Si applica un solo modificatore pertinente degli strumenti, senza sommare i bonus dei corredi. Materiali da lavorare e ricambi restano separati."
+      ]
+    },
+    "Pilota": {
+      "paragrafo": "2.16.15",
+      "introduzione": "Oltre alla dotazione comune, il Pilota riceve:",
+      "gruppi": [
+        {
+          "id": "arma_da_fuoco",
+          "etichetta": "Arma da fuoco",
+          "testo": "Una Pistola semiautomatica",
+          "opzioni": [
+            {
+              "id": "armi_distanza:pistola-semiautomatica",
+              "nome": "Pistola semiautomatica",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:pistola-semiautomatica"
+                }
+              ],
+              "for_dichiarata": 3,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-pistola",
+                "colpi": 45,
+                "caricatori": 3
+              }
+            }
+          ],
+          "testo_munizioni": "3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva"
+        },
+        {
+          "id": "protezione",
+          "etichetta": "Protezione",
+          "testo": "Un’Armatura civile leggera, comprensiva dell’elmetto standard",
+          "opzioni": [
+            {
+              "id": "armature:armatura-civile-leggera",
+              "nome": "Armatura civile leggera",
+              "oggetti": [
+                {
+                  "rif": "armature:armatura-civile-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            }
+          ]
+        },
+        {
+          "id": "arma_da_mischia",
+          "etichetta": "Arma da mischia",
+          "testo": "Un Coltello",
+          "opzioni": [
+            {
+              "id": "armi:coltello",
+              "nome": "Coltello",
+              "oggetti": [
+                {
+                  "rif": "armi:coltello"
+                }
+              ],
+              "for_dichiarata": 2
+            }
+          ]
+        },
+        {
+          "id": "utensili",
+          "etichetta": "Utensili",
+          "testo": "Una Cassetta degli attrezzi Standard",
+          "opzioni": [
+            {
+              "id": "dotazione:cassetta-attrezzi",
+              "nome": "Cassetta degli attrezzi (Standard)",
+              "oggetti": [
+                {
+                  "dotazione": "cassetta-attrezzi"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "orientamento",
+          "etichetta": "Orientamento",
+          "testo": "Un Corredo di orientamento, con carta della zona iniziale",
+          "opzioni": [
+            {
+              "id": "dotazione:corredo-orientamento",
+              "nome": "Corredo di orientamento, con carta della zona iniziale",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-orientamento"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "osservazione",
+          "etichetta": "Osservazione",
+          "testo": "Un Binocolo",
+          "opzioni": [
+            {
+              "id": "dotazione:binocolo",
+              "nome": "Binocolo",
+              "oggetti": [
+                {
+                  "dotazione": "binocolo"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "comunicazioni",
+          "etichetta": "Comunicazioni",
+          "testo": "Un Comunicatore da squadra, che sostituisce quello personale della dotazione comune",
+          "opzioni": [
+            {
+              "id": "dotazione:comunicatore-da-squadra",
+              "nome": "Comunicatore da squadra",
+              "oggetti": [
+                {
+                  "dotazione": "comunicatore-da-squadra"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "note": [
+        "Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.",
+        "Pistola e armatura richiedono FOR 3. L’armatura concede AR 1; l’elmetto standard incluso non aggiunge AR.",
+        "Requisito del Coltello: FOR 2.",
+        "La Cassetta degli attrezzi comprende chiavi, cacciaviti, pinze, martello, lime e strumenti di misura meccanici. Consente gli interventi compatibili con questi utensili, con modificatore degli strumenti 0 al VA.",
+        "Ricambi e attrezzature richiesti dalla specifica riparazione restano necessari.",
+        "Il Corredo di orientamento concede +1 VA a Sopravvivenza per orientarsi, quando esistono riferimenti utilizzabili. Il Binocolo concede +1 VA a Percezione per esaminare dettagli lontani, con luce e visuale sufficienti.",
+        "Il Comunicatore da squadra ha portata nominale di 10 km; con un comunicatore personale, la comunicazione bidirezionale resta limitata a 1 km, in condizioni favorevoli. Comprende batteria carica da 24 ore, cavo e alimentatore.",
+        "L’eventuale veicolo iniziale richiede un’assegnazione separata, da definire nella dotazione del gruppo o della Corporazione.",
+        "Si applica un solo modificatore pertinente degli strumenti, senza sommare i bonus dei corredi. Materiali da lavorare e ricambi restano separati."
+      ]
+    },
+    "Tecnico": {
+      "paragrafo": "2.16.16",
+      "introduzione": "Oltre alla dotazione comune, il Tecnico riceve:",
+      "gruppi": [
+        {
+          "id": "arma_da_fuoco",
+          "etichetta": "Arma da fuoco",
+          "testo": "Una Pistola semiautomatica",
+          "opzioni": [
+            {
+              "id": "armi_distanza:pistola-semiautomatica",
+              "nome": "Pistola semiautomatica",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:pistola-semiautomatica"
+                }
+              ],
+              "for_dichiarata": 3,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-pistola",
+                "colpi": 45,
+                "caricatori": 3
+              }
+            }
+          ],
+          "testo_munizioni": "3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva"
+        },
+        {
+          "id": "protezione",
+          "etichetta": "Protezione",
+          "testo": "Un’Armatura civile leggera, comprensiva dell’elmetto standard",
+          "opzioni": [
+            {
+              "id": "armature:armatura-civile-leggera",
+              "nome": "Armatura civile leggera",
+              "oggetti": [
+                {
+                  "rif": "armature:armatura-civile-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            }
+          ]
+        },
+        {
+          "id": "arma_da_mischia",
+          "etichetta": "Arma da mischia",
+          "testo": "Un Coltello",
+          "opzioni": [
+            {
+              "id": "armi:coltello",
+              "nome": "Coltello",
+              "oggetti": [
+                {
+                  "rif": "armi:coltello"
+                }
+              ],
+              "for_dichiarata": 2
+            }
+          ]
+        },
+        {
+          "id": "strumenti_tecnici",
+          "etichetta": "Strumenti tecnici",
+          "testo": "Un Corredo elettronico e informatico Standard",
+          "opzioni": [
+            {
+              "id": "dotazione:corredo-elettronico-informatico",
+              "nome": "Corredo elettronico e informatico (Standard)",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-elettronico-informatico"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "attrezzatura_aggiuntiva",
+          "etichetta": "Attrezzatura aggiuntiva",
+          "testo": "Un Corredo di manutenzione da campo oppure un Kit di videosorveglianza",
+          "opzioni": [
+            {
+              "id": "dotazione:corredo-manutenzione-campo",
+              "nome": "Corredo di manutenzione da campo",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-manutenzione-campo"
+                }
+              ]
+            },
+            {
+              "id": "dotazione:kit-videosorveglianza",
+              "nome": "Kit di videosorveglianza",
+              "oggetti": [
+                {
+                  "dotazione": "kit-videosorveglianza"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "illuminazione",
+          "etichetta": "Illuminazione",
+          "testo": "Una Lampada frontale, che sostituisce la torcia della dotazione comune",
+          "opzioni": [
+            {
+              "id": "dotazione:lampada-frontale",
+              "nome": "Lampada frontale",
+              "oggetti": [
+                {
+                  "dotazione": "lampada-frontale"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "note": [
+        "Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.",
+        "Pistola e armatura richiedono FOR 3. L’armatura concede AR 1; l’elmetto standard incluso non aggiunge AR.",
+        "Requisito del Coltello: FOR 2.",
+        "Il Corredo elettronico e informatico Standard comprende un terminale portatile con programmi di diagnostica e configurazione; un multimetro, sonde e utensili di precisione; cavi e adattatori per collegarsi fisicamente a sistemi compatibili, entro 2 Q.",
+        "Permette diagnosi, configurazione e interventi portatili compatibili con i componenti disponibili. È Standard: modificatore degli strumenti 0 al VA. Intrusioni e controllo dei dispositivi richiedono comunque accesso utilizzabile, compatibilità e normali Prove. I dispositivi elettronici del corredo comprendono batterie cariche da 24 ore, cavi e alimentatori.",
+        "Il Corredo di manutenzione da campo concede +2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo di armi, armature, propulsori ed esoscheletri compatibili. La diagnostica comprende batteria carica da 24 ore, cavo e alimentatore.",
+        "Il Kit di videosorveglianza comprende una videocamera e un monitor palmare, collegati entro 1 km. Usa vista e udito ordinari, richiede illuminazione sufficiente e non concede bonus automatici a Percezione. Tutti i componenti comprendono batterie cariche da 24 ore, cavi e alimentatori.",
+        "La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Comprende batteria carica da 24 ore, cavo e alimentatore.",
+        "Si applica un solo modificatore pertinente degli strumenti, senza sommare i bonus dei corredi. Materiali da lavorare e ricambi restano separati."
+      ]
+    },
+    "Accademico": {
+      "paragrafo": "2.16.17",
+      "introduzione": "Oltre alla dotazione comune, l’Accademico riceve:",
+      "gruppi": [
+        {
+          "id": "arma_da_fuoco",
+          "etichetta": "Arma da fuoco",
+          "testo": "Una Pistola semiautomatica",
+          "opzioni": [
+            {
+              "id": "armi_distanza:pistola-semiautomatica",
+              "nome": "Pistola semiautomatica",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:pistola-semiautomatica"
+                }
+              ],
+              "for_dichiarata": 3,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-pistola",
+                "colpi": 45,
+                "caricatori": 3
+              }
+            }
+          ],
+          "testo_munizioni": "3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva"
+        },
+        {
+          "id": "protezione",
+          "etichetta": "Protezione",
+          "testo": "Un’Armatura civile leggera, comprensiva dell’elmetto standard",
+          "opzioni": [
+            {
+              "id": "armature:armatura-civile-leggera",
+              "nome": "Armatura civile leggera",
+              "oggetti": [
+                {
+                  "rif": "armature:armatura-civile-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            }
+          ]
+        },
+        {
+          "id": "arma_da_mischia",
+          "etichetta": "Arma da mischia",
+          "testo": "Un Coltello",
+          "opzioni": [
+            {
+              "id": "armi:coltello",
+              "nome": "Coltello",
+              "oggetti": [
+                {
+                  "rif": "armi:coltello"
+                }
+              ],
+              "for_dichiarata": 2
+            }
+          ]
+        },
+        {
+          "id": "ricerca",
+          "etichetta": "Ricerca",
+          "testo": "Un Corredo di ricerca documentale Standard",
+          "opzioni": [
+            {
+              "id": "dotazione:corredo-ricerca-documentale",
+              "nome": "Corredo di ricerca documentale (Standard)",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-ricerca-documentale"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "registrazione",
+          "etichetta": "Registrazione",
+          "testo": "Un Registratore audiovisivo",
+          "opzioni": [
+            {
+              "id": "dotazione:registratore-audiovisivo",
+              "nome": "Registratore audiovisivo",
+              "oggetti": [
+                {
+                  "dotazione": "registratore-audiovisivo"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "attrezzatura_aggiuntiva",
+          "etichetta": "Attrezzatura aggiuntiva",
+          "testo": "Un Corredo di analisi da campo oppure un Binocolo insieme a un Corredo di orientamento",
+          "opzioni": [
+            {
+              "id": "dotazione:corredo-analisi-campo",
+              "nome": "Corredo di analisi da campo",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-analisi-campo"
+                }
+              ]
+            },
+            {
+              "id": "dotazione:binocolo",
+              "nome": "Binocolo + Corredo di orientamento, con carta della zona iniziale",
+              "oggetti": [
+                {
+                  "dotazione": "binocolo"
+                },
+                {
+                  "dotazione": "corredo-orientamento"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "note": [
+        "Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.",
+        "Pistola e armatura richiedono FOR 3. L’armatura concede AR 1; l’elmetto standard incluso non aggiunge AR.",
+        "Requisito del Coltello: FOR 2.",
+        "Il Corredo di ricerca documentale Standard comprende un terminale portatile, testi e riferimenti ordinari su un ambito scelto, un taccuino e strumenti di scrittura. Consente consultazione, annotazione e confronto dei dati disponibili, con modificatore degli strumenti 0 al VA e le normali Abilità pertinenti alla ricerca.",
+        "Per il Corredo di analisi da campo si sceglie un ambito, per esempio chimica, biologia o geologia. Comprende strumenti di misura, ottiche, test e materiale ordinario per il campionamento; concede +2 VA a Scienza per analisi preliminari realmente eseguibili, normalmente in 10 minuti.",
+        "Il Binocolo concede +1 VA a Percezione per distinguere dettagli lontani; il Corredo di orientamento concede +1 VA a Sopravvivenza quando sono disponibili riferimenti utilizzabili.",
+        "Il Registratore audiovisivo registra immagini e suoni effettivamente rilevati.",
+        "Ogni dispositivo elettronico della dotazione comprende batteria carica da 24 ore, cavo e alimentatore. La stessa autonomia si applica al terminale e ai dispositivi del Corredo di analisi.",
+        "I consumabili ordinari di scrittura, trucco, manutenzione e analisi si reintegrano durante il normale rifornimento; applicazioni mediche e set chirurgici si conteggiano separatamente."
+      ]
+    },
+    "Amministrativo": {
+      "paragrafo": "2.16.18",
+      "introduzione": "Oltre alla dotazione comune, l’Amministrativo riceve:",
+      "gruppi": [
+        {
+          "id": "arma_da_fuoco",
+          "etichetta": "Arma da fuoco",
+          "testo": "Una Pistola semiautomatica",
+          "opzioni": [
+            {
+              "id": "armi_distanza:pistola-semiautomatica",
+              "nome": "Pistola semiautomatica",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:pistola-semiautomatica"
+                }
+              ],
+              "for_dichiarata": 3,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-pistola",
+                "colpi": 45,
+                "caricatori": 3
+              }
+            }
+          ],
+          "testo_munizioni": "3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva"
+        },
+        {
+          "id": "protezione",
+          "etichetta": "Protezione",
+          "testo": "Un’Armatura civile leggera, comprensiva dell’elmetto standard",
+          "opzioni": [
+            {
+              "id": "armature:armatura-civile-leggera",
+              "nome": "Armatura civile leggera",
+              "oggetti": [
+                {
+                  "rif": "armature:armatura-civile-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            }
+          ]
+        },
+        {
+          "id": "arma_da_mischia",
+          "etichetta": "Arma da mischia",
+          "testo": "Un Coltello",
+          "opzioni": [
+            {
+              "id": "armi:coltello",
+              "nome": "Coltello",
+              "oggetti": [
+                {
+                  "rif": "armi:coltello"
+                }
+              ],
+              "for_dichiarata": 2
+            }
+          ]
+        },
+        {
+          "id": "strumenti_amministrativi",
+          "etichetta": "Strumenti amministrativi",
+          "testo": "Un Corredo amministrativo Standard",
+          "opzioni": [
+            {
+              "id": "dotazione:corredo-amministrativo",
+              "nome": "Corredo amministrativo (Standard)",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-amministrativo"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "abbigliamento",
+          "etichetta": "Abbigliamento",
+          "testo": "Un completo aggiuntivo di Abiti eleganti, comprese le calzature",
+          "opzioni": [
+            {
+              "id": "dotazione:abiti-eleganti",
+              "nome": "Abiti eleganti, comprese le calzature (completo aggiuntivo)",
+              "oggetti": [
+                {
+                  "dotazione": "abiti-eleganti"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "attrezzatura_aggiuntiva",
+          "etichetta": "Attrezzatura aggiuntiva",
+          "testo": "Un Registratore audiovisivo oppure un Comunicatore da squadra, che sostituisce quello personale",
+          "opzioni": [
+            {
+              "id": "dotazione:registratore-audiovisivo",
+              "nome": "Registratore audiovisivo",
+              "oggetti": [
+                {
+                  "dotazione": "registratore-audiovisivo"
+                }
+              ]
+            },
+            {
+              "id": "dotazione:comunicatore-da-squadra",
+              "nome": "Comunicatore da squadra",
+              "oggetti": [
+                {
+                  "dotazione": "comunicatore-da-squadra"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "note": [
+        "Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.",
+        "Pistola e armatura richiedono FOR 3. L’armatura concede AR 1; l’elmetto standard incluso non aggiunge AR.",
+        "Requisito del Coltello: FOR 2.",
+        "Il Corredo amministrativo Standard comprende un terminale portatile con programmi di scrittura, contabilità e gestione dei dati, una cartella portadocumenti, un taccuino e strumenti di scrittura. Consente le normali attività amministrative con modificatore degli strumenti 0 al VA; occorrono comunque documenti, dati e autorizzazioni effettivamente disponibili.",
+        "Gli Abiti eleganti concedono +1 VA a Oratoria nelle situazioni formali appropriate.",
+        "Il Registratore audiovisivo registra immagini e suoni effettivamente rilevati.",
+        "Il Comunicatore da squadra sostituisce il Comunicatore personale della dotazione comune. Ha portata nominale di 10 km; con un comunicatore personale la comunicazione bidirezionale è limitata a 1 km, in condizioni favorevoli.",
+        "Ogni dispositivo elettronico della dotazione comprende batteria carica da 24 ore, cavo e alimentatore. L’autonomia di 24 ore si applica anche al nuovo terminale.",
+        "I consumabili ordinari di scrittura, trucco, manutenzione e analisi si reintegrano durante il normale rifornimento; applicazioni mediche e set chirurgici si conteggiano separatamente."
+      ]
+    },
+    "Artista": {
+      "paragrafo": "2.16.19",
+      "introduzione": "Oltre alla dotazione comune, l’Artista riceve:",
+      "gruppi": [
+        {
+          "id": "arma_da_fuoco",
+          "etichetta": "Arma da fuoco",
+          "testo": "Una Pistola semiautomatica",
+          "opzioni": [
+            {
+              "id": "armi_distanza:pistola-semiautomatica",
+              "nome": "Pistola semiautomatica",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:pistola-semiautomatica"
+                }
+              ],
+              "for_dichiarata": 3,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-pistola",
+                "colpi": 45,
+                "caricatori": 3
+              }
+            }
+          ],
+          "testo_munizioni": "3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva"
+        },
+        {
+          "id": "protezione",
+          "etichetta": "Protezione",
+          "testo": "Un’Armatura civile leggera, comprensiva dell’elmetto standard",
+          "opzioni": [
+            {
+              "id": "armature:armatura-civile-leggera",
+              "nome": "Armatura civile leggera",
+              "oggetti": [
+                {
+                  "rif": "armature:armatura-civile-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            }
+          ]
+        },
+        {
+          "id": "arma_da_mischia",
+          "etichetta": "Arma da mischia",
+          "testo": "Un Coltello",
+          "opzioni": [
+            {
+              "id": "armi:coltello",
+              "nome": "Coltello",
+              "oggetti": [
+                {
+                  "rif": "armi:coltello"
+                }
+              ],
+              "for_dichiarata": 2
+            }
+          ]
+        },
+        {
+          "id": "strumenti_artistici",
+          "etichetta": "Strumenti artistici",
+          "testo": "Uno Strumento musicale portatile, un Corredo scenico oppure un Terminale per produzione multimediale: tutti Standard",
+          "opzioni": [
+            {
+              "id": "dotazione:strumento-musicale-portatile",
+              "nome": "Strumento musicale portatile (Standard)",
+              "oggetti": [
+                {
+                  "dotazione": "strumento-musicale-portatile"
+                }
+              ]
+            },
+            {
+              "id": "dotazione:corredo-scenico",
+              "nome": "Corredo scenico (Standard)",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-scenico"
+                }
+              ]
+            },
+            {
+              "id": "dotazione:terminale-produzione-multimediale",
+              "nome": "Terminale per produzione multimediale (Standard)",
+              "oggetti": [
+                {
+                  "dotazione": "terminale-produzione-multimediale"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "registrazione",
+          "etichetta": "Registrazione",
+          "testo": "Un Registratore audiovisivo",
+          "opzioni": [
+            {
+              "id": "dotazione:registratore-audiovisivo",
+              "nome": "Registratore audiovisivo",
+              "oggetti": [
+                {
+                  "dotazione": "registratore-audiovisivo"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "abbigliamento",
+          "etichetta": "Abbigliamento",
+          "testo": "Un completo aggiuntivo di Abiti eleganti, comprese le calzature",
+          "opzioni": [
+            {
+              "id": "dotazione:abiti-eleganti",
+              "nome": "Abiti eleganti, comprese le calzature (completo aggiuntivo)",
+              "oggetti": [
+                {
+                  "dotazione": "abiti-eleganti"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "note": [
+        "Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.",
+        "Pistola e armatura richiedono FOR 3. L’armatura concede AR 1; l’elmetto standard incluso non aggiunge AR.",
+        "Requisito del Coltello: FOR 2.",
+        "Lo Strumento musicale portatile è uno strumento a scelta, con custodia e accessori ordinari necessari. Il Corredo scenico comprende un costume, trucco, piccoli oggetti di scena e materiale di manutenzione adatti alla performance scelta. Il Terminale per produzione multimediale è un dispositivo portatile con programmi per scrivere, montare e preparare contenuti audio e video.",
+        "Le tre opzioni sono Standard, con modificatore degli strumenti 0 al VA. Gli Abiti eleganti concedono +1 VA a Oratoria nelle situazioni formali appropriate.",
+        "Il Registratore audiovisivo registra immagini e suoni effettivamente rilevati. La diffusione richiede canali e collegamenti disponibili; i Talenti che agiscono su registrazioni o trasmissioni seguono le proprie regole.",
+        "Ogni dispositivo elettronico della dotazione comprende batteria carica da 24 ore, cavo e alimentatore. Sono compresi il terminale e gli eventuali strumenti musicali elettronici.",
+        "I consumabili ordinari di scrittura, trucco, manutenzione e analisi si reintegrano durante il normale rifornimento; applicazioni mediche e set chirurgici si conteggiano separatamente."
+      ]
+    },
+    "Medico": {
+      "paragrafo": "2.16.20",
+      "introduzione": "Oltre alla dotazione comune, il Medico riceve:",
+      "gruppi": [
+        {
+          "id": "arma_da_fuoco",
+          "etichetta": "Arma da fuoco",
+          "testo": "Una Pistola semiautomatica",
+          "opzioni": [
+            {
+              "id": "armi_distanza:pistola-semiautomatica",
+              "nome": "Pistola semiautomatica",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:pistola-semiautomatica"
+                }
+              ],
+              "for_dichiarata": 3,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-pistola",
+                "colpi": 45,
+                "caricatori": 3
+              }
+            }
+          ],
+          "testo_munizioni": "3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva"
+        },
+        {
+          "id": "protezione",
+          "etichetta": "Protezione",
+          "testo": "Un’Armatura civile leggera, comprensiva dell’elmetto standard",
+          "opzioni": [
+            {
+              "id": "armature:armatura-civile-leggera",
+              "nome": "Armatura civile leggera",
+              "oggetti": [
+                {
+                  "rif": "armature:armatura-civile-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            }
+          ]
+        },
+        {
+          "id": "arma_da_mischia",
+          "etichetta": "Arma da mischia",
+          "testo": "Un Coltello",
+          "opzioni": [
+            {
+              "id": "armi:coltello",
+              "nome": "Coltello",
+              "oggetti": [
+                {
+                  "rif": "armi:coltello"
+                }
+              ],
+              "for_dichiarata": 2
+            }
+          ]
+        },
+        {
+          "id": "primo_soccorso",
+          "etichetta": "Primo soccorso",
+          "testo": "Un Kit trauma Professionale con 5 applicazioni e una ricarica da 5: 10 applicazioni complessive",
+          "opzioni": [
+            {
+              "id": "sanitario:kit-di-pronto-soccorso-professionale",
+              "nome": "Kit di pronto soccorso professionale + Ricarica per il Kit trauma (5 applicazioni)",
+              "oggetti": [
+                {
+                  "rif": "sanitario:kit-di-pronto-soccorso-professionale"
+                },
+                {
+                  "dotazione": "ricarica-kit-trauma"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "attrezzatura_aggiuntiva",
+          "etichetta": "Attrezzatura aggiuntiva",
+          "testo": "Uno Scanner diagnostico portatile oppure un Kit chirurgico da campo con 5 set",
+          "opzioni": [
+            {
+              "id": "sanitario:scanner-diagnostico-portatile",
+              "nome": "Scanner diagnostico portatile",
+              "oggetti": [
+                {
+                  "rif": "sanitario:scanner-diagnostico-portatile"
+                }
+              ]
+            },
+            {
+              "id": "sanitario:kit-chirurgico-da-campo",
+              "nome": "Kit chirurgico da campo",
+              "oggetti": [
+                {
+                  "rif": "sanitario:kit-chirurgico-da-campo"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "illuminazione",
+          "etichetta": "Illuminazione",
+          "testo": "Una Lampada frontale, che sostituisce la torcia della dotazione comune",
+          "opzioni": [
+            {
+              "id": "dotazione:lampada-frontale",
+              "nome": "Lampada frontale",
+              "oggetti": [
+                {
+                  "dotazione": "lampada-frontale"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "note": [
+        "Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.",
+        "Pistola e armatura richiedono FOR 3. L’armatura concede AR 1; l’elmetto standard incluso non aggiunge AR.",
+        "Requisito del Coltello: FOR 2.",
+        "Il Kit trauma Professionale concede +2 VA a Medicina per il primo soccorso. Con successo arresta il Sanguinamento e recupera 1d4 PV; con esito Magistrale si raddoppia il risultato del dado. Ogni tentativo consuma un’applicazione.",
+        "Lo Scanner diagnostico portatile rileva automaticamente i parametri vitali di base con 1 Azione Principale. Una diagnosi richiede almeno 1 minuto e una Prova di Medicina con +2 VA, limitata alle anomalie rilevabili; il bonus non si trasferisce alle cure.",
+        "Il Kit chirurgico da campo concede +2 VA a Medicina per le procedure sul campo pertinenti. Richiede 10 minuti di preparazione, un piano stabile e condizioni appropriate; ogni procedura consuma un set all’inizio, anche in caso di fallimento o interruzione. L’anestesia ordinaria è inclusa; restano necessari i Talenti e gli altri requisiti della procedura.",
+        "La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Lampada e Scanner includono ciascuno batteria carica da 24 ore, cavo e alimentatore. Applicazioni mediche e set chirurgici si conteggiano e reintegrano separatamente."
+      ]
+    },
+    "Predicatore": {
+      "paragrafo": "2.16.21",
+      "introduzione": "Oltre alla dotazione comune, il Predicatore riceve:",
+      "gruppi": [
+        {
+          "id": "arma_da_fuoco",
+          "etichetta": "Arma da fuoco",
+          "testo": "Una Pistola semiautomatica",
+          "opzioni": [
+            {
+              "id": "armi_distanza:pistola-semiautomatica",
+              "nome": "Pistola semiautomatica",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:pistola-semiautomatica"
+                }
+              ],
+              "for_dichiarata": 3,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-pistola",
+                "colpi": 45,
+                "caricatori": 3
+              }
+            }
+          ],
+          "testo_munizioni": "3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva"
+        },
+        {
+          "id": "protezione",
+          "etichetta": "Protezione",
+          "testo": "Un’Armatura civile leggera, comprensiva dell’elmetto standard",
+          "opzioni": [
+            {
+              "id": "armature:armatura-civile-leggera",
+              "nome": "Armatura civile leggera",
+              "oggetti": [
+                {
+                  "rif": "armature:armatura-civile-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            }
+          ]
+        },
+        {
+          "id": "arma_da_mischia",
+          "etichetta": "Arma da mischia",
+          "testo": "Un Coltello oppure un Randello, anche come bastone",
+          "opzioni": [
+            {
+              "id": "armi:coltello",
+              "nome": "Coltello",
+              "oggetti": [
+                {
+                  "rif": "armi:coltello"
+                }
+              ],
+              "for_dichiarata": 2
+            },
+            {
+              "id": "armi:randello",
+              "nome": "Randello",
+              "oggetti": [
+                {
+                  "rif": "armi:randello"
+                }
+              ],
+              "for_dichiarata": 3
+            }
+          ]
+        },
+        {
+          "id": "materiale_della_tradizione",
+          "etichetta": "Materiale della tradizione",
+          "testo": "Un testo dottrinale e un simbolo della propria tradizione",
+          "opzioni": [
+            {
+              "id": "dotazione:testo-dottrinale-e-simbolo",
+              "nome": "Testo dottrinale e simbolo della propria tradizione",
+              "oggetti": [
+                {
+                  "dotazione": "testo-dottrinale-e-simbolo"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "abbigliamento",
+          "etichetta": "Abbigliamento",
+          "testo": "Un completo cerimoniale aggiuntivo, comprese le calzature, con profilo Abiti eleganti",
+          "opzioni": [
+            {
+              "id": "dotazione:completo-cerimoniale",
+              "nome": "Completo cerimoniale, comprese le calzature (profilo Abiti eleganti)",
+              "oggetti": [
+                {
+                  "dotazione": "completo-cerimoniale"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "attrezzatura_aggiuntiva",
+          "etichetta": "Attrezzatura aggiuntiva",
+          "testo": "Un Kit di pronto soccorso Standard con 5 applicazioni oppure un Corredo di sopravvivenza ambientale",
+          "opzioni": [
+            {
+              "id": "sanitario:kit-di-pronto-soccorso-standard",
+              "nome": "Kit di pronto soccorso standard",
+              "oggetti": [
+                {
+                  "rif": "sanitario:kit-di-pronto-soccorso-standard"
+                }
+              ]
+            },
+            {
+              "id": "dotazione:corredo-sopravvivenza-ambientale",
+              "nome": "Corredo di sopravvivenza ambientale",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-sopravvivenza-ambientale"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "illuminazione",
+          "etichetta": "Illuminazione",
+          "testo": "Una Lanterna elettrica, che sostituisce la torcia della dotazione comune",
+          "opzioni": [
+            {
+              "id": "dotazione:lanterna-elettrica",
+              "nome": "Lanterna elettrica",
+              "oggetti": [
+                {
+                  "dotazione": "lanterna-elettrica"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "note": [
+        "Le scelte dell’equipaggiamento sono libere e non vincolano i successivi Talenti della Classe.",
+        "Pistola e armatura richiedono FOR 3. L’armatura concede AR 1; l’elmetto standard incluso non aggiunge AR.",
+        "Il Coltello richiede FOR 2; il Randello richiede FOR 3.",
+        "Il testo e il simbolo della tradizione sono oggetti ordinari: non hanno proprietà magiche e non concedono accesso automatico agli Incantesimi. L’abito cerimoniale usa il profilo degli Abiti eleganti: +1 VA a Oratoria nelle situazioni cerimoniali o formali appropriate.",
+        "Il Kit di pronto soccorso Standard contiene 5 applicazioni e non concede bonus al VA. Con successo arresta il Sanguinamento; con esito Magistrale recupera anche 1d4 PV. Ogni tentativo consuma un’applicazione.",
+        "Per il Corredo di sopravvivenza ambientale si sceglie Artico, Forestale, Desertico, Urbano, Pianure, Sottosuolo oppure Apocalittico. Concede +2 VA a Sopravvivenza per gli impieghi pertinenti alla versione scelta; non aggiunge acqua, viveri o medicinali alla dotazione.",
+        "La Lanterna elettrica illumina un raggio di 6 Q e comprende batteria carica da 24 ore, cavo e alimentatore. Le applicazioni mediche si conteggiano e reintegrano separatamente."
+      ]
+    },
+    "Arcanista": {
+      "paragrafo": "2.16.22",
+      "introduzione": "Oltre alla dotazione comune, l’Arcanista riceve:",
+      "gruppi": [
+        {
+          "id": "arma_da_fuoco",
+          "etichetta": "Arma da fuoco",
+          "testo": "Una Pistola semiautomatica",
+          "opzioni": [
+            {
+              "id": "armi_distanza:pistola-semiautomatica",
+              "nome": "Pistola semiautomatica",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:pistola-semiautomatica"
+                }
+              ],
+              "for_dichiarata": 3,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-pistola",
+                "colpi": 45,
+                "caricatori": 3
+              }
+            }
+          ],
+          "testo_munizioni": "3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva"
+        },
+        {
+          "id": "focus",
+          "etichetta": "Focus",
+          "testo": "Un Focus personale, già sintonizzato prima dell’avventura",
+          "opzioni": [
+            {
+              "id": "dotazione:focus-personale",
+              "nome": "Focus personale, già sintonizzato prima dell’avventura",
+              "oggetti": [
+                {
+                  "dotazione": "focus-personale"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "riserva_mistica",
+          "etichetta": "Riserva mistica",
+          "testo": "Una batteria mistica da 5 PM, carica: Chroma Rosso, Blu oppure Verde a scelta",
+          "opzioni": [
+            {
+              "id": "artefatti:batteria-da-5-pm-chroma-rosso",
+              "nome": "Batteria da 5 PM (Chroma Rosso)",
+              "oggetti": [
+                {
+                  "rif": "artefatti:batteria-da-5-pm-chroma-rosso"
+                }
+              ]
+            },
+            {
+              "id": "artefatti:batteria-da-5-pm-chroma-blu",
+              "nome": "Batteria da 5 PM (Chroma Blu)",
+              "oggetti": [
+                {
+                  "rif": "artefatti:batteria-da-5-pm-chroma-blu"
+                }
+              ]
+            },
+            {
+              "id": "artefatti:batteria-da-5-pm-chroma-verde",
+              "nome": "Batteria da 5 PM (Chroma Verde)",
+              "oggetti": [
+                {
+                  "rif": "artefatti:batteria-da-5-pm-chroma-verde"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "protezione_o_abbigliamento",
+          "etichetta": "Protezione o abbigliamento",
+          "testo": "Un’Armatura civile leggera con elmetto standard oppure un completo aggiuntivo di Abiti da viaggio, comprese le calzature",
+          "opzioni": [
+            {
+              "id": "armature:armatura-civile-leggera",
+              "nome": "Armatura civile leggera",
+              "oggetti": [
+                {
+                  "rif": "armature:armatura-civile-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            },
+            {
+              "id": "dotazione:abiti-da-viaggio",
+              "nome": "Abiti da viaggio, comprese le calzature (completo aggiuntivo)",
+              "oggetti": [
+                {
+                  "dotazione": "abiti-da-viaggio"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "arma_da_mischia",
+          "etichetta": "Arma da mischia",
+          "testo": "Un Coltello",
+          "opzioni": [
+            {
+              "id": "armi:coltello",
+              "nome": "Coltello",
+              "oggetti": [
+                {
+                  "rif": "armi:coltello"
+                }
+              ],
+              "for_dichiarata": 2
+            }
+          ]
+        },
+        {
+          "id": "ricerca",
+          "etichetta": "Ricerca",
+          "testo": "Un Corredo di ricerca documentale Standard, dedicato a un ambito di studi occulti",
+          "opzioni": [
+            {
+              "id": "dotazione:corredo-ricerca-documentale",
+              "nome": "Corredo di ricerca documentale (Standard)",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-ricerca-documentale"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "registrazione",
+          "etichetta": "Registrazione",
+          "testo": "Un Registratore audiovisivo",
+          "opzioni": [
+            {
+              "id": "dotazione:registratore-audiovisivo",
+              "nome": "Registratore audiovisivo",
+              "oggetti": [
+                {
+                  "dotazione": "registratore-audiovisivo"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "attrezzatura_aggiuntiva",
+          "etichetta": "Attrezzatura aggiuntiva",
+          "testo": "Un Corredo di analisi da campo oppure un Binocolo insieme a un Corredo di orientamento",
+          "opzioni": [
+            {
+              "id": "dotazione:corredo-analisi-campo",
+              "nome": "Corredo di analisi da campo",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-analisi-campo"
+                }
+              ]
+            },
+            {
+              "id": "dotazione:binocolo",
+              "nome": "Binocolo + Corredo di orientamento, con carta della zona iniziale",
+              "oggetti": [
+                {
+                  "dotazione": "binocolo"
+                },
+                {
+                  "dotazione": "corredo-orientamento"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "note": [
+        "Le scelte dell’equipaggiamento sono libere e indipendenti dalle Specializzazioni.",
+        "Pistola e Armatura civile leggera richiedono FOR 3. L’armatura concede AR 1 e impone −1 VA alle Prove di Potere per lanciare Incantesimi; l’elmetto standard non aggiunge AR. Gli Abiti da viaggio non concedono AR e danno +1 VA ad Atletica per arrampicarsi e mantenere l’equilibrio sui terreni accidentati.",
+        "Il Focus ha una forma coerente con il personaggio e serve come componente del lancio; non concede automaticamente bonus o PM. La batteria mistica si annota come 5/5 PM: è di potenza Comune, costa 1 punto di sintonizzazione e richiede la normale Sintonizzazione. Alimenta solo gli impieghi compatibili con la propria energia, segue le normali regole di ricarica e non aumenta il massimo dei PM personali.",
+        "Il Coltello richiede FOR 2. Il corredo documentale comprende terminale, riferimenti ordinari, taccuino e strumenti di scrittura: modificatore degli strumenti 0 al VA. I testi consentono ricerca e consultazione; l’apprendimento degli Incantesimi segue le proprie regole.",
+        "Per il Corredo di analisi si sceglie un ambito, per esempio chimica, biologia o geologia: +2 VA a Scienza per le analisi preliminari pertinenti, normalmente in 10 minuti. Il Binocolo concede +1 VA a Percezione sui dettagli lontani; il Corredo di orientamento +1 VA a Sopravvivenza con riferimenti utilizzabili. Il Registratore conserva immagini e suoni effettivamente rilevati.",
+        "Tutti i dispositivi elettronici indicati comprendono batterie cariche da 24 ore, cavi e alimentatori. Questa autonomia riguarda l’alimentazione elettronica, distinta dai 5 PM della batteria mistica."
+      ]
+    },
+    "Custode": {
+      "paragrafo": "2.16.23",
+      "introduzione": "Oltre alla dotazione comune, il Custode riceve:",
+      "gruppi": [
+        {
+          "id": "arma_da_fuoco",
+          "etichetta": "Arma da fuoco",
+          "testo": "Una Pistola semiautomatica",
+          "opzioni": [
+            {
+              "id": "armi_distanza:pistola-semiautomatica",
+              "nome": "Pistola semiautomatica",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:pistola-semiautomatica"
+                }
+              ],
+              "for_dichiarata": 3,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-pistola",
+                "colpi": 45,
+                "caricatori": 3
+              }
+            }
+          ],
+          "testo_munizioni": "3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva"
+        },
+        {
+          "id": "focus",
+          "etichetta": "Focus",
+          "testo": "Un Focus personale, già sintonizzato prima dell’avventura",
+          "opzioni": [
+            {
+              "id": "dotazione:focus-personale",
+              "nome": "Focus personale, già sintonizzato prima dell’avventura",
+              "oggetti": [
+                {
+                  "dotazione": "focus-personale"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "riserva_mistica",
+          "etichetta": "Riserva mistica",
+          "testo": "Una batteria mistica da 5 PM, carica: Chroma Rosso, Blu oppure Verde a scelta",
+          "opzioni": [
+            {
+              "id": "artefatti:batteria-da-5-pm-chroma-rosso",
+              "nome": "Batteria da 5 PM (Chroma Rosso)",
+              "oggetti": [
+                {
+                  "rif": "artefatti:batteria-da-5-pm-chroma-rosso"
+                }
+              ]
+            },
+            {
+              "id": "artefatti:batteria-da-5-pm-chroma-blu",
+              "nome": "Batteria da 5 PM (Chroma Blu)",
+              "oggetti": [
+                {
+                  "rif": "artefatti:batteria-da-5-pm-chroma-blu"
+                }
+              ]
+            },
+            {
+              "id": "artefatti:batteria-da-5-pm-chroma-verde",
+              "nome": "Batteria da 5 PM (Chroma Verde)",
+              "oggetti": [
+                {
+                  "rif": "artefatti:batteria-da-5-pm-chroma-verde"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "protezione_o_abbigliamento",
+          "etichetta": "Protezione o abbigliamento",
+          "testo": "Un’Armatura civile leggera con elmetto standard oppure un completo aggiuntivo di Abiti da viaggio, comprese le calzature",
+          "opzioni": [
+            {
+              "id": "armature:armatura-civile-leggera",
+              "nome": "Armatura civile leggera",
+              "oggetti": [
+                {
+                  "rif": "armature:armatura-civile-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            },
+            {
+              "id": "dotazione:abiti-da-viaggio",
+              "nome": "Abiti da viaggio, comprese le calzature (completo aggiuntivo)",
+              "oggetti": [
+                {
+                  "dotazione": "abiti-da-viaggio"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "arma_da_mischia",
+          "etichetta": "Arma da mischia",
+          "testo": "Una Spada leggera oppure un Tonfa",
+          "opzioni": [
+            {
+              "id": "armi:spada-leggera",
+              "nome": "Spada leggera",
+              "oggetti": [
+                {
+                  "rif": "armi:spada-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            },
+            {
+              "id": "armi:tonfa",
+              "nome": "Tonfa",
+              "oggetti": [
+                {
+                  "rif": "armi:tonfa"
+                }
+              ],
+              "for_dichiarata": 3
+            }
+          ]
+        },
+        {
+          "id": "scudo",
+          "etichetta": "Scudo",
+          "testo": "Uno Scudo piccolo",
+          "opzioni": [
+            {
+              "id": "scudi:scudo-piccolo",
+              "nome": "Scudo piccolo",
+              "oggetti": [
+                {
+                  "rif": "scudi:scudo-piccolo"
+                }
+              ],
+              "for_dichiarata": 3
+            }
+          ]
+        },
+        {
+          "id": "primo_soccorso",
+          "etichetta": "Primo soccorso",
+          "testo": "Un Kit di pronto soccorso Standard con 5 applicazioni",
+          "opzioni": [
+            {
+              "id": "sanitario:kit-di-pronto-soccorso-standard",
+              "nome": "Kit di pronto soccorso standard",
+              "oggetti": [
+                {
+                  "rif": "sanitario:kit-di-pronto-soccorso-standard"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "comunicazioni",
+          "etichetta": "Comunicazioni",
+          "testo": "Un Comunicatore da squadra, che sostituisce quello personale",
+          "opzioni": [
+            {
+              "id": "dotazione:comunicatore-da-squadra",
+              "nome": "Comunicatore da squadra",
+              "oggetti": [
+                {
+                  "dotazione": "comunicatore-da-squadra"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "note": [
+        "Le scelte dell’equipaggiamento sono libere e indipendenti dalle Specializzazioni.",
+        "Pistola e Armatura civile leggera richiedono FOR 3. L’armatura concede AR 1 e impone −1 VA alle Prove di Potere per lanciare Incantesimi; l’elmetto standard non aggiunge AR. Gli Abiti da viaggio non concedono AR e danno +1 VA ad Atletica per arrampicarsi e mantenere l’equilibrio sui terreni accidentati.",
+        "Il Focus ha una forma coerente con il personaggio e serve come componente del lancio; non concede automaticamente bonus o PM. La batteria mistica si annota come 5/5 PM: è di potenza Comune, costa 1 punto di sintonizzazione e richiede la normale Sintonizzazione. Alimenta solo gli impieghi compatibili con la propria energia, segue le normali regole di ricarica e non aumenta il massimo dei PM personali.",
+        "Spada leggera, Tonfa e Scudo piccolo richiedono FOR 3. Lo Scudo concede +1 AR quando è impugnato e utilizzabile. Il +2 VA del Tonfa alle Parate vale soltanto parando con quell’arma.",
+        "Il Kit di pronto soccorso Standard contiene 5 applicazioni e non concede bonus al VA. Con successo arresta il Sanguinamento; con esito Magistrale recupera anche 1d4 PV. Ogni tentativo consuma un’applicazione.",
+        "L’Arma Astrale segue il Talento del Custode; la CyberArma personale si ottiene al III Grado. Durante il lancio degli Incantesimi restano necessari i gesti e gli altri componenti previsti.",
+        "Il Comunicatore da squadra sostituisce quello personale: portata nominale 10 km, limitata a 1 km per il collegamento bidirezionale con un comunicatore personale, in condizioni favorevoli.",
+        "Tutti i dispositivi elettronici indicati comprendono batterie cariche da 24 ore, cavi e alimentatori. Questa autonomia riguarda l’alimentazione elettronica, distinta dai 5 PM della batteria mistica."
+      ]
+    },
+    "Invocatore": {
+      "paragrafo": "2.16.24",
+      "introduzione": "Oltre alla dotazione comune, l’Invocatore riceve:",
+      "gruppi": [
+        {
+          "id": "arma_da_fuoco",
+          "etichetta": "Arma da fuoco",
+          "testo": "Una Pistola semiautomatica",
+          "opzioni": [
+            {
+              "id": "armi_distanza:pistola-semiautomatica",
+              "nome": "Pistola semiautomatica",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:pistola-semiautomatica"
+                }
+              ],
+              "for_dichiarata": 3,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-pistola",
+                "colpi": 45,
+                "caricatori": 3
+              }
+            }
+          ],
+          "testo_munizioni": "3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva"
+        },
+        {
+          "id": "focus",
+          "etichetta": "Focus",
+          "testo": "Un Focus personale, già sintonizzato prima dell’avventura",
+          "opzioni": [
+            {
+              "id": "dotazione:focus-personale",
+              "nome": "Focus personale, già sintonizzato prima dell’avventura",
+              "oggetti": [
+                {
+                  "dotazione": "focus-personale"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "riserva_mistica",
+          "etichetta": "Riserva mistica",
+          "testo": "Una batteria mistica da 5 PM, carica: Chroma Rosso, Blu oppure Verde a scelta",
+          "opzioni": [
+            {
+              "id": "artefatti:batteria-da-5-pm-chroma-rosso",
+              "nome": "Batteria da 5 PM (Chroma Rosso)",
+              "oggetti": [
+                {
+                  "rif": "artefatti:batteria-da-5-pm-chroma-rosso"
+                }
+              ]
+            },
+            {
+              "id": "artefatti:batteria-da-5-pm-chroma-blu",
+              "nome": "Batteria da 5 PM (Chroma Blu)",
+              "oggetti": [
+                {
+                  "rif": "artefatti:batteria-da-5-pm-chroma-blu"
+                }
+              ]
+            },
+            {
+              "id": "artefatti:batteria-da-5-pm-chroma-verde",
+              "nome": "Batteria da 5 PM (Chroma Verde)",
+              "oggetti": [
+                {
+                  "rif": "artefatti:batteria-da-5-pm-chroma-verde"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "protezione_o_abbigliamento",
+          "etichetta": "Protezione o abbigliamento",
+          "testo": "Un’Armatura civile leggera con elmetto standard oppure un completo aggiuntivo di Abiti da viaggio, comprese le calzature",
+          "opzioni": [
+            {
+              "id": "armature:armatura-civile-leggera",
+              "nome": "Armatura civile leggera",
+              "oggetti": [
+                {
+                  "rif": "armature:armatura-civile-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            },
+            {
+              "id": "dotazione:abiti-da-viaggio",
+              "nome": "Abiti da viaggio, comprese le calzature (completo aggiuntivo)",
+              "oggetti": [
+                {
+                  "dotazione": "abiti-da-viaggio"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "arma_da_mischia",
+          "etichetta": "Arma da mischia",
+          "testo": "Un Coltello",
+          "opzioni": [
+            {
+              "id": "armi:coltello",
+              "nome": "Coltello",
+              "oggetti": [
+                {
+                  "rif": "armi:coltello"
+                }
+              ],
+              "for_dichiarata": 2
+            }
+          ]
+        },
+        {
+          "id": "osservazione",
+          "etichetta": "Osservazione",
+          "testo": "Un Binocolo",
+          "opzioni": [
+            {
+              "id": "dotazione:binocolo",
+              "nome": "Binocolo",
+              "oggetti": [
+                {
+                  "dotazione": "binocolo"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "attrezzatura_aggiuntiva",
+          "etichetta": "Attrezzatura aggiuntiva",
+          "testo": "Un Corredo di sopravvivenza ambientale oppure un Corredo da assalto verticale",
+          "opzioni": [
+            {
+              "id": "dotazione:corredo-sopravvivenza-ambientale",
+              "nome": "Corredo di sopravvivenza ambientale",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-sopravvivenza-ambientale"
+                }
+              ]
+            },
+            {
+              "id": "dotazione:corredo-assalto-verticale",
+              "nome": "Corredo da assalto verticale",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-assalto-verticale"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "comunicazioni",
+          "etichetta": "Comunicazioni",
+          "testo": "Un Comunicatore da squadra, che sostituisce quello personale",
+          "opzioni": [
+            {
+              "id": "dotazione:comunicatore-da-squadra",
+              "nome": "Comunicatore da squadra",
+              "oggetti": [
+                {
+                  "dotazione": "comunicatore-da-squadra"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "note": [
+        "Le scelte dell’equipaggiamento sono libere e indipendenti dalle Specializzazioni.",
+        "Pistola e Armatura civile leggera richiedono FOR 3. L’armatura concede AR 1 e impone −1 VA alle Prove di Potere per lanciare Incantesimi; l’elmetto standard non aggiunge AR. Gli Abiti da viaggio non concedono AR e danno +1 VA ad Atletica per arrampicarsi e mantenere l’equilibrio sui terreni accidentati.",
+        "Il Focus ha una forma coerente con il personaggio e serve come componente del lancio; non concede automaticamente bonus o PM. La batteria mistica si annota come 5/5 PM: è di potenza Comune, costa 1 punto di sintonizzazione e richiede la normale Sintonizzazione. Alimenta solo gli impieghi compatibili con la propria energia, segue le normali regole di ricarica e non aumenta il massimo dei PM personali.",
+        "Il Coltello richiede FOR 2. Il Binocolo concede +1 VA a Percezione per distinguere dettagli lontani nelle condizioni previste dalla sua scheda.",
+        "Per il Corredo di sopravvivenza ambientale si sceglie Artico, Forestale, Desertico, Urbano, Pianure, Sottosuolo oppure Apocalittico: +2 VA a Sopravvivenza negli impieghi pertinenti. Acqua e viveri restano quelli della dotazione comune.",
+        "Il Corredo da assalto verticale comprende imbracatura, corda da 20 Q, discensore, moschettoni e ancoraggi; concede +2 VA ad Atletica per arrampicarsi o calarsi utilizzandolo.",
+        "Il Comunicatore da squadra sostituisce quello personale: portata nominale 10 km, limitata a 1 km per il collegamento bidirezionale con un comunicatore personale, in condizioni favorevoli.",
+        "Tutti i dispositivi elettronici indicati comprendono batterie cariche da 24 ore, cavi e alimentatori. Questa autonomia riguarda l’alimentazione elettronica, distinta dai 5 PM della batteria mistica."
+      ]
+    },
+    "Mistico": {
+      "paragrafo": "2.16.25",
+      "introduzione": "Oltre alla dotazione comune, il Mistico riceve:",
+      "gruppi": [
+        {
+          "id": "arma_da_fuoco",
+          "etichetta": "Arma da fuoco",
+          "testo": "Una Pistola semiautomatica",
+          "opzioni": [
+            {
+              "id": "armi_distanza:pistola-semiautomatica",
+              "nome": "Pistola semiautomatica",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:pistola-semiautomatica"
+                }
+              ],
+              "for_dichiarata": 3,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-pistola",
+                "colpi": 45,
+                "caricatori": 3
+              }
+            }
+          ],
+          "testo_munizioni": "3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva"
+        },
+        {
+          "id": "focus",
+          "etichetta": "Focus",
+          "testo": "Un Focus personale, già sintonizzato prima dell’avventura",
+          "opzioni": [
+            {
+              "id": "dotazione:focus-personale",
+              "nome": "Focus personale, già sintonizzato prima dell’avventura",
+              "oggetti": [
+                {
+                  "dotazione": "focus-personale"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "riserva_mistica",
+          "etichetta": "Riserva mistica",
+          "testo": "Una batteria mistica da 5 PM, carica: Chroma Rosso, Blu oppure Verde a scelta",
+          "opzioni": [
+            {
+              "id": "artefatti:batteria-da-5-pm-chroma-rosso",
+              "nome": "Batteria da 5 PM (Chroma Rosso)",
+              "oggetti": [
+                {
+                  "rif": "artefatti:batteria-da-5-pm-chroma-rosso"
+                }
+              ]
+            },
+            {
+              "id": "artefatti:batteria-da-5-pm-chroma-blu",
+              "nome": "Batteria da 5 PM (Chroma Blu)",
+              "oggetti": [
+                {
+                  "rif": "artefatti:batteria-da-5-pm-chroma-blu"
+                }
+              ]
+            },
+            {
+              "id": "artefatti:batteria-da-5-pm-chroma-verde",
+              "nome": "Batteria da 5 PM (Chroma Verde)",
+              "oggetti": [
+                {
+                  "rif": "artefatti:batteria-da-5-pm-chroma-verde"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "protezione_o_abbigliamento",
+          "etichetta": "Protezione o abbigliamento",
+          "testo": "Un’Armatura civile leggera con elmetto standard oppure un completo aggiuntivo di Abiti da viaggio, comprese le calzature",
+          "opzioni": [
+            {
+              "id": "armature:armatura-civile-leggera",
+              "nome": "Armatura civile leggera",
+              "oggetti": [
+                {
+                  "rif": "armature:armatura-civile-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            },
+            {
+              "id": "dotazione:abiti-da-viaggio",
+              "nome": "Abiti da viaggio, comprese le calzature (completo aggiuntivo)",
+              "oggetti": [
+                {
+                  "dotazione": "abiti-da-viaggio"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "arma_da_mischia",
+          "etichetta": "Arma da mischia",
+          "testo": "Un Coltello oppure un Randello, anche come bastone",
+          "opzioni": [
+            {
+              "id": "armi:coltello",
+              "nome": "Coltello",
+              "oggetti": [
+                {
+                  "rif": "armi:coltello"
+                }
+              ],
+              "for_dichiarata": 2
+            },
+            {
+              "id": "armi:randello",
+              "nome": "Randello",
+              "oggetti": [
+                {
+                  "rif": "armi:randello"
+                }
+              ],
+              "for_dichiarata": 3
+            }
+          ]
+        },
+        {
+          "id": "primo_soccorso",
+          "etichetta": "Primo soccorso",
+          "testo": "Un Kit trauma Professionale con 5 applicazioni",
+          "opzioni": [
+            {
+              "id": "sanitario:kit-di-pronto-soccorso-professionale",
+              "nome": "Kit di pronto soccorso professionale",
+              "oggetti": [
+                {
+                  "rif": "sanitario:kit-di-pronto-soccorso-professionale"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "materiali_di_riserva",
+          "etichetta": "Materiali di riserva",
+          "testo": "Una ricarica da 5 applicazioni: 10 applicazioni trauma complessive",
+          "opzioni": [
+            {
+              "id": "dotazione:ricarica-kit-trauma",
+              "nome": "Ricarica per il Kit trauma (5 applicazioni)",
+              "oggetti": [
+                {
+                  "dotazione": "ricarica-kit-trauma"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "strumenti_rituali",
+          "etichetta": "Strumenti rituali",
+          "testo": "Un Corredo rituale Standard",
+          "opzioni": [
+            {
+              "id": "dotazione:corredo-rituale",
+              "nome": "Corredo rituale (Standard)",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-rituale"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "illuminazione",
+          "etichetta": "Illuminazione",
+          "testo": "Una Lanterna elettrica, che sostituisce la torcia della dotazione comune",
+          "opzioni": [
+            {
+              "id": "dotazione:lanterna-elettrica",
+              "nome": "Lanterna elettrica",
+              "oggetti": [
+                {
+                  "dotazione": "lanterna-elettrica"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "note": [
+        "Le scelte dell’equipaggiamento sono libere e indipendenti dalle Specializzazioni.",
+        "Pistola e Armatura civile leggera richiedono FOR 3. L’armatura concede AR 1 e impone −1 VA alle Prove di Potere per lanciare Incantesimi; l’elmetto standard non aggiunge AR. Gli Abiti da viaggio non concedono AR e danno +1 VA ad Atletica per arrampicarsi e mantenere l’equilibrio sui terreni accidentati.",
+        "Il Focus ha una forma coerente con il personaggio e serve come componente del lancio; non concede automaticamente bonus o PM. La batteria mistica si annota come 5/5 PM: è di potenza Comune, costa 1 punto di sintonizzazione e richiede la normale Sintonizzazione. Alimenta solo gli impieghi compatibili con la propria energia, segue le normali regole di ricarica e non aumenta il massimo dei PM personali.",
+        "Il Coltello richiede FOR 2; il Randello richiede FOR 3.",
+        "Il Corredo rituale Standard comprende un testo di riferimento della propria tradizione, un telo, una ciotola, un piccolo braciere, gessetti, incenso e strumenti di scrittura. Ha modificatore degli strumenti 0 al VA; i materiali specifici richiesti dai singoli Rituali si procurano separatamente.",
+        "Il Kit trauma Professionale concede +2 VA a Medicina per il primo soccorso. Con successo arresta il Sanguinamento e recupera 1d4 PV; un esito Magistrale raddoppia il risultato del dado. Ogni tentativo consuma un’applicazione.",
+        "La Lanterna elettrica illumina un raggio di 6 Q e sostituisce la torcia comune.",
+        "Tutti i dispositivi elettronici indicati comprendono batterie cariche da 24 ore, cavi e alimentatori. Questa autonomia riguarda l’alimentazione elettronica, distinta dai 5 PM della batteria mistica."
+      ]
+    },
+    "Tecnomante": {
+      "paragrafo": "2.16.26",
+      "introduzione": "Oltre alla dotazione comune, il Tecnomante riceve:",
+      "gruppi": [
+        {
+          "id": "arma_da_fuoco",
+          "etichetta": "Arma da fuoco",
+          "testo": "Una Pistola semiautomatica",
+          "opzioni": [
+            {
+              "id": "armi_distanza:pistola-semiautomatica",
+              "nome": "Pistola semiautomatica",
+              "oggetti": [
+                {
+                  "rif": "armi_distanza:pistola-semiautomatica"
+                }
+              ],
+              "for_dichiarata": 3,
+              "munizioni": {
+                "rif": "munizioni:proiettili-da-pistola",
+                "colpi": 45,
+                "caricatori": 3
+              }
+            }
+          ],
+          "testo_munizioni": "3 caricatori compatibili da 15 proiettili ordinari: 45 colpi complessivi, un caricatore inserito e due di riserva"
+        },
+        {
+          "id": "focus",
+          "etichetta": "Focus",
+          "testo": "Un Focus personale, già sintonizzato prima dell’avventura",
+          "opzioni": [
+            {
+              "id": "dotazione:focus-personale",
+              "nome": "Focus personale, già sintonizzato prima dell’avventura",
+              "oggetti": [
+                {
+                  "dotazione": "focus-personale"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "riserva_mistica",
+          "etichetta": "Riserva mistica",
+          "testo": "Una batteria mistica da 5 PM, carica: Chroma Rosso, Blu oppure Verde a scelta",
+          "opzioni": [
+            {
+              "id": "artefatti:batteria-da-5-pm-chroma-rosso",
+              "nome": "Batteria da 5 PM (Chroma Rosso)",
+              "oggetti": [
+                {
+                  "rif": "artefatti:batteria-da-5-pm-chroma-rosso"
+                }
+              ]
+            },
+            {
+              "id": "artefatti:batteria-da-5-pm-chroma-blu",
+              "nome": "Batteria da 5 PM (Chroma Blu)",
+              "oggetti": [
+                {
+                  "rif": "artefatti:batteria-da-5-pm-chroma-blu"
+                }
+              ]
+            },
+            {
+              "id": "artefatti:batteria-da-5-pm-chroma-verde",
+              "nome": "Batteria da 5 PM (Chroma Verde)",
+              "oggetti": [
+                {
+                  "rif": "artefatti:batteria-da-5-pm-chroma-verde"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "protezione_o_abbigliamento",
+          "etichetta": "Protezione o abbigliamento",
+          "testo": "Un’Armatura civile leggera con elmetto standard oppure un completo aggiuntivo di Abiti da viaggio, comprese le calzature",
+          "opzioni": [
+            {
+              "id": "armature:armatura-civile-leggera",
+              "nome": "Armatura civile leggera",
+              "oggetti": [
+                {
+                  "rif": "armature:armatura-civile-leggera"
+                }
+              ],
+              "for_dichiarata": 3
+            },
+            {
+              "id": "dotazione:abiti-da-viaggio",
+              "nome": "Abiti da viaggio, comprese le calzature (completo aggiuntivo)",
+              "oggetti": [
+                {
+                  "dotazione": "abiti-da-viaggio"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "arma_da_mischia",
+          "etichetta": "Arma da mischia",
+          "testo": "Un Coltello",
+          "opzioni": [
+            {
+              "id": "armi:coltello",
+              "nome": "Coltello",
+              "oggetti": [
+                {
+                  "rif": "armi:coltello"
+                }
+              ],
+              "for_dichiarata": 2
+            }
+          ]
+        },
+        {
+          "id": "strumenti_tecnici",
+          "etichetta": "Strumenti tecnici",
+          "testo": "Un Corredo elettronico e informatico Standard",
+          "opzioni": [
+            {
+              "id": "dotazione:corredo-elettronico-informatico",
+              "nome": "Corredo elettronico e informatico (Standard)",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-elettronico-informatico"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "attrezzatura_aggiuntiva",
+          "etichetta": "Attrezzatura aggiuntiva",
+          "testo": "Un Corredo di manutenzione da campo oppure un Corredo di analisi da campo",
+          "opzioni": [
+            {
+              "id": "dotazione:corredo-manutenzione-campo",
+              "nome": "Corredo di manutenzione da campo",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-manutenzione-campo"
+                }
+              ]
+            },
+            {
+              "id": "dotazione:corredo-analisi-campo",
+              "nome": "Corredo di analisi da campo",
+              "oggetti": [
+                {
+                  "dotazione": "corredo-analisi-campo"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "illuminazione",
+          "etichetta": "Illuminazione",
+          "testo": "Una Lampada frontale, che sostituisce la torcia della dotazione comune",
+          "opzioni": [
+            {
+              "id": "dotazione:lampada-frontale",
+              "nome": "Lampada frontale",
+              "oggetti": [
+                {
+                  "dotazione": "lampada-frontale"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "note": [
+        "Le scelte dell’equipaggiamento sono libere e indipendenti dalle Specializzazioni.",
+        "Pistola e Armatura civile leggera richiedono FOR 3. L’armatura concede AR 1 e impone −1 VA alle Prove di Potere per lanciare Incantesimi; l’elmetto standard non aggiunge AR. Gli Abiti da viaggio non concedono AR e danno +1 VA ad Atletica per arrampicarsi e mantenere l’equilibrio sui terreni accidentati.",
+        "Il Focus ha una forma coerente con il personaggio e serve come componente del lancio; non concede automaticamente bonus o PM. La batteria mistica si annota come 5/5 PM: è di potenza Comune, costa 1 punto di sintonizzazione e richiede la normale Sintonizzazione. Alimenta solo gli impieghi compatibili con la propria energia, segue le normali regole di ricarica e non aumenta il massimo dei PM personali.",
+        "Il Coltello richiede FOR 2. Il Corredo elettronico e informatico Standard comprende terminale, multimetro, sonde, utensili di precisione, cavi e adattatori per collegamenti fisici entro 2 Q: modificatore degli strumenti 0 al VA.",
+        "Il Corredo di manutenzione da campo concede +2 VA a Tecnologia per gli interventi sul campo previsti su armi, armature, propulsori ed esoscheletri compatibili. Il Corredo di analisi concede +2 VA a Scienza per analisi preliminari pertinenti all’ambito scelto, normalmente in 10 minuti.",
+        "I bonus degli strumenti non si trasferiscono automaticamente alle Prove di Artefatti o ai Rituali di creazione. Il Tecnomante applica alla batteria le regole di Sintonizzazione di Architetto TecnoMistico.",
+        "La Lampada frontale illumina fino a 6 Q, lasciando libere le mani, e sostituisce la torcia comune.",
+        "Tutti i dispositivi elettronici indicati comprendono batterie cariche da 24 ore, cavi e alimentatori. Questa autonomia riguarda l’alimentazione elettronica, distinta dai 5 PM della batteria mistica."
+      ]
+    }
+  },
+  "oggetti_dotazione": {
+    "abiti-comuni": {
+      "nome": "Abiti comuni, comprese le calzature"
+    },
+    "zaino-da-viaggio": {
+      "nome": "Zaino da viaggio"
+    },
+    "cintura-attrezzata": {
+      "nome": "Cintura attrezzata"
+    },
+    "borraccia": {
+      "nome": "Borraccia da un litro, piena d’acqua"
+    },
+    "torcia-elettrica": {
+      "nome": "Torcia elettrica"
+    },
+    "comunicatore-personale": {
+      "nome": "Comunicatore personale"
+    },
+    "corredo-igiene": {
+      "nome": "Corredo personale per igiene e piccoli rammendi"
+    },
+    "utensile-multiuso": {
+      "nome": "Utensile multiuso"
+    },
+    "accendino": {
+      "nome": "Accendino"
+    },
+    "sacco-a-pelo": {
+      "nome": "Sacco a pelo"
+    },
+    "razione-da-viaggio": {
+      "nome": "Razione da viaggio"
+    },
+    "binocolo": {
+      "nome": "Binocolo",
+      "effetto": {
+        "abilita": "Percezione",
+        "va": 1,
+        "condizione": "per esaminare dettagli lontani"
+      }
+    },
+    "registratore-audiovisivo": {
+      "nome": "Registratore audiovisivo"
+    },
+    "corredo-sopravvivenza-ambientale": {
+      "nome": "Corredo di sopravvivenza ambientale",
+      "sotto": "ambiente",
+      "effetto": {
+        "abilita": "Sopravvivenza",
+        "va": 2,
+        "condizione": "nell’ambiente scelto, per orientamento, raccolta di risorse e preparazione di un riparo"
+      }
+    },
+    "corredo-orientamento": {
+      "nome": "Corredo di orientamento, con carta della zona iniziale",
+      "effetto": {
+        "abilita": "Sopravvivenza",
+        "va": 1,
+        "condizione": "per orientarsi, quando esistono riferimenti utilizzabili; non si somma al Corredo di sopravvivenza ambientale"
+      }
+    },
+    "corredo-assalto-verticale": {
+      "nome": "Corredo da assalto verticale",
+      "effetto": {
+        "abilita": "Atletica",
+        "va": 2,
+        "condizione": "per arrampicarsi o calarsi usando il corredo"
+      }
+    },
+    "rilevatore-ambientale": {
+      "nome": "Rilevatore ambientale"
+    },
+    "abiti-eleganti": {
+      "nome": "Abiti eleganti, comprese le calzature (completo aggiuntivo)",
+      "effetto": {
+        "abilita": "Oratoria",
+        "va": 1,
+        "condizione": "negli ambienti formali appropriati"
+      }
+    },
+    "monocolo-periscopico": {
+      "nome": "Monocolo periscopico"
+    },
+    "corredo-da-scasso": {
+      "nome": "Corredo da scasso (Standard)"
+    },
+    "corredo-da-camuffamento": {
+      "nome": "Corredo da camuffamento (Standard)"
+    },
+    "ricarica-kit-trauma": {
+      "nome": "Ricarica per il Kit trauma (5 applicazioni)"
+    },
+    "abiti-da-viaggio": {
+      "nome": "Abiti da viaggio, comprese le calzature (completo aggiuntivo)",
+      "effetto": {
+        "abilita": "Atletica",
+        "va": 1,
+        "condizione": "per arrampicarsi e mantenere l’equilibrio sui terreni accidentati"
+      }
+    },
+    "comunicatore-da-squadra": {
+      "nome": "Comunicatore da squadra",
+      "sostituisce": "comunicatore-personale"
+    },
+    "tenda-2-posti": {
+      "nome": "Tenda da 2 posti, completa di pali, tiranti e picchetti"
+    },
+    "corredo-agricolo": {
+      "nome": "Corredo agricolo (Standard)",
+      "sotto": "corredo_agricolo"
+    },
+    "corredo-artigianale-professionale": {
+      "nome": "Corredo artigianale professionale"
+    },
+    "corredo-manutenzione-campo": {
+      "nome": "Corredo di manutenzione da campo"
+    },
+    "lampada-frontale": {
+      "nome": "Lampada frontale",
+      "sostituisce": "torcia-elettrica"
+    },
+    "cassetta-attrezzi": {
+      "nome": "Cassetta degli attrezzi (Standard)"
+    },
+    "maschera-filtrante": {
+      "nome": "Maschera filtrante"
+    },
+    "corredo-elettronico-informatico": {
+      "nome": "Corredo elettronico e informatico (Standard)"
+    },
+    "kit-videosorveglianza": {
+      "nome": "Kit di videosorveglianza"
+    },
+    "corredo-ricerca-documentale": {
+      "nome": "Corredo di ricerca documentale (Standard)"
+    },
+    "corredo-analisi-campo": {
+      "nome": "Corredo di analisi da campo",
+      "sotto": "ambito_analisi",
+      "effetto": {
+        "abilita": "Scienza",
+        "va": 2,
+        "condizione": "per le analisi preliminari pertinenti all’ambito scelto"
+      }
+    },
+    "corredo-amministrativo": {
+      "nome": "Corredo amministrativo (Standard)"
+    },
+    "strumento-musicale-portatile": {
+      "nome": "Strumento musicale portatile (Standard)"
+    },
+    "corredo-scenico": {
+      "nome": "Corredo scenico (Standard)"
+    },
+    "terminale-produzione-multimediale": {
+      "nome": "Terminale per produzione multimediale (Standard)"
+    },
+    "testo-dottrinale-e-simbolo": {
+      "nome": "Testo dottrinale e simbolo della propria tradizione"
+    },
+    "completo-cerimoniale": {
+      "nome": "Completo cerimoniale, comprese le calzature (profilo Abiti eleganti)",
+      "effetto": {
+        "abilita": "Oratoria",
+        "va": 1,
+        "condizione": "negli ambienti formali appropriati"
+      }
+    },
+    "lanterna-elettrica": {
+      "nome": "Lanterna elettrica",
+      "sostituisce": "torcia-elettrica"
+    },
+    "focus-personale": {
+      "nome": "Focus personale, già sintonizzato prima dell’avventura"
+    },
+    "corredo-rituale": {
+      "nome": "Corredo rituale (Standard)"
+    }
+  },
+  "sotto_scelte": {
+    "ambiente": {
+      "etichetta": "Ambiente del corredo",
+      "valori": [
+        "Artico",
+        "Forestale",
+        "Desertico",
+        "Urbano",
+        "Pianure",
+        "Sottosuolo",
+        "Apocalittico"
+      ]
+    },
+    "corredo_agricolo": {
+      "etichetta": "Versione del corredo agricolo",
+      "valori": [
+        "Coltivazione",
+        "Allevamento"
+      ]
+    },
+    "ambito_analisi": {
+      "etichetta": "Ambito del corredo di analisi",
+      "libero": true,
+      "esempi": [
+        "chimica",
+        "biologia",
+        "geologia"
+      ]
+    }
+  },
+  "corporativi": {
+    "paragrafo": "2.16.27",
+    "testo": [
+      "La Classe iniziale assegna direttamente gli armamenti di base della Corporazione del personaggio corrispondenti ai profili commerciali indicati nelle tabelle dei §§2.16.2–2.16.26. L’assegnazione è compresa nella dotazione iniziale e non richiede un conguaglio rispetto al prezzo del modello commerciale.",
+      "I nomi commerciali nelle tabelle identificano il tipo di dotazione e le alternative della Classe. La corrispondenza riguarda il modello corporativo di base con tipologia e funzione equivalenti: pistola con pistola, armatura leggera con armatura leggera, scudo piccolo con scudo piccolo. La sola Qualità costruttiva non determina l’equivalenza.",
+      "Nell’inventario si registra il modello corporativo effettivamente assegnato, con valori, proprietà, requisiti, penalità e prezzo della sua scheda. Il personaggio deve rispettarne i requisiti; i dati del profilo commerciale non sostituiscono quelli del modello corporativo.",
+      "Munizioni, caricatori, alimentazioni e accessori devono essere compatibili con il modello assegnato. Le corrispondenze di catalogo devono specificare anche questi componenti e le quantità della dotazione. Gli oggetti si registrano una sola volta.",
+      "I Freelance fanno riferimento al catalogo Commerciale. La dotazione comune e gli strumenti non interessati da una corrispondenza corporativa mantengono i profili già indicati."
+    ],
+    "_nota": "Abbinamenti profilo commerciale → modello corporativo di base, per Corporazione: { \"<Corporazione>\": { \"<rif commerciale>\": { \"rif\": \"<rif corporativo>\", \"munizioni\": \"<rif>\" } } }. I Freelance usano sempre il catalogo Commerciale.",
+    "TODO(Davide)": "Abbinamenti puntuali commerciale → corporativo per ogni Corporazione, con munizioni e accessori compatibili (E&L A.5.27: «Restano da completare gli abbinamenti puntuali»). Finché mancano, l’app assegna il profilo commerciale con la nota «modello corporativo da definire (A.5.27)». Per-davide A.33.",
+    "abbinamenti": {}
+  },
+  "scambio": {
+    "paragrafo": "2.16.29",
+    "testo": [
+      "Durante la creazione il personaggio può accedere al catalogo della propria Corporazione e acquistare equipaggiamenti migliori cedendo gli armamenti di base effettivamente assegnati e pagando la differenza con i crediti iniziali.",
+      "Gli armamenti ceduti vengono valutati al 100% del loro prezzo di catalogo. Il conguaglio è pari al prezzo del nuovo equipaggiamento meno il valore degli armamenti ceduti. Si usa il prezzo del modello corporativo assegnato, oppure quello commerciale per la dotazione Commerciale; non si attribuisce al medesimo oggetto anche il valore del profilo usato come riferimento.",
+      "Esempio: cedendo un’arma di base valutata 1.500 crediti per acquistare un modello da 2.100, il personaggio paga 600 crediti. L’arma ceduta viene rimossa dall’inventario e sostituita dal nuovo modello.",
+      "Il nuovo equipaggiamento deve rispettare requisiti e autorizzazioni della propria scheda. Munizioni, caricatori e accessori vanno adattati al modello acquistato, conteggiando gli eventuali costi di sostituzione senza duplicare componenti già inclusi nel prezzo.",
+      "La valutazione integrale degli armamenti ceduti vale per la creazione del personaggio e non stabilisce il prezzo di rivendita durante le avventure. Le configurazioni Migliorata e Potenziata diventano acquistabili quando dispongono di profili e prezzi definiti."
+    ],
+    "valutazione_cessione": 1,
+    "_nota": "§2.16.29: gli armamenti di base ceduti valgono il 100 % del prezzo di catalogo del modello assegnato; conguaglio = prezzo del nuovo − valore dei ceduti; solo alla creazione."
+  },
+  "crediti": {
+    "paragrafo": "2.16.28",
+    "testo": [
+      "In aggiunta alla dotazione comune e a quella della Classe iniziale, ogni personaggio riceve 1.000 + (2d6 × 100) crediti.",
+      "Si tirano due dadi a sei facce, si sommano i risultati, si moltiplica la somma per 100 e si aggiungono 1.000 crediti. La dotazione monetaria va da 1.200 a 2.200 crediti; il valore medio è 1.700.",
+      "I crediti possono essere utilizzati per gli acquisti iniziali e per pagare i conguagli del §2.16.29. Il denaro non speso rimane al personaggio."
+    ]
+  }
+}

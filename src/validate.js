@@ -19,7 +19,7 @@ const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v
 const isTodo = (v) => typeof v === 'string' && v.startsWith('TODO(');
 
 const FILE_VALIDATI = ['caratteristiche', 'abilita', 'corporazioni', 'addestramenti', 'classi', 'incantesimi', 'regole',
-  'talenti_liberi', 'specializzazioni', 'tecniche_interiori'];
+  'talenti_liberi', 'specializzazioni', 'tecniche_interiori', 'dotazioni'];
 
 /** Formatta un errore come riga leggibile. */
 export function formattaErrore(e) {
@@ -63,6 +63,7 @@ export function validaDati(dati) {
   validaEquipaggiamento(dati.equipaggiamento, [...nomiAbilita], [...(idSpec ?? [])], err, Object.keys(dati.regole?.chroma?.colori ?? {}).filter((c) => !dati.regole.chroma.colori[c]?.esausto));
   if (dati.regole?.chroma !== undefined) validaChroma(dati, err);
   if (dati.regole) validaSchedaDigitale(dati, err);
+  if (isOggetto(dati.dotazioni)) validaDotazioni(dati, err);
 
   return errori;
 }
@@ -275,6 +276,14 @@ function validaRegole(r, err) {
   for (const percorso of interi) {
     const v = percorso.split('.').reduce((o, k) => o?.[k], r);
     if (!isIntero(v)) err(F, percorso, 'numero intero mancante');
+  }
+  // §2.16.28: crediti iniziali = fisso + (dadi)d(facce) × moltiplicatore
+  const cr = r.crediti_iniziali;
+  if (!isOggetto(cr) || !['dadi', 'facce', 'moltiplicatore', 'fisso', 'minimo', 'massimo'].every((k) => isIntero(cr[k]))) {
+    err(F, 'crediti_iniziali', 'servono dadi, facce, moltiplicatore, fisso, minimo e massimo interi (§2.16.28)');
+  } else {
+    if (cr.minimo !== cr.fisso + cr.dadi * cr.moltiplicatore) err(F, 'crediti_iniziali.minimo', `con ${cr.formula} il minimo è ${cr.fisso + cr.dadi * cr.moltiplicatore}`);
+    if (cr.massimo !== cr.fisso + cr.dadi * cr.facce * cr.moltiplicatore) err(F, 'crediti_iniziali.massimo', `con ${cr.formula} il massimo è ${cr.fisso + cr.dadi * cr.facce * cr.moltiplicatore}`);
   }
   const pe = r.punti_eroe;
   if (isOggetto(pe) && isIntero(pe.dadi) && isIntero(pe.fisso)) {
@@ -502,6 +511,13 @@ export function avvisiDati(dati) {
   (dati?.tecniche_interiori?.tecniche ?? []).forEach((x, i) => {
     for (const c of ['costo', 'azione', 'bersaglio', 'durata']) if (isTodo(x?.[c])) avv('tecniche_interiori', `tecniche[${i}] (${x.nome}).${c}`, 'non indicato nella scheda (TODO)');
   });
+  // §2.16: requisiti di FOR del manuale diversi dal catalogo, lasciati in sospeso con un TODO(Davide)
+  for (const [classe, c] of Object.entries(dati?.dotazioni?.classi ?? {})) {
+    (c?.gruppi ?? []).forEach((g, i) => (g?.opzioni ?? []).forEach((o, j) => {
+      const todo = Object.keys(o ?? {}).find((k) => k.startsWith('TODO('));
+      if (todo) avv('dotazioni', `classi.${classe}.gruppi[${i}].opzioni[${j}] (${o.nome})`, `${o[todo]}`);
+    }));
+  }
   return avvisi;
 }
 
@@ -1203,4 +1219,98 @@ function numeroOpz(F, k, v, min, max, err) {
   if (v === undefined || v === null) return;
   if (typeof v !== 'number' || !Number.isFinite(v)) err(F, k, `deve essere un numero, trovato ${JSON.stringify(v)}`);
   else if (v < min || v > max) err(F, k, `fuori intervallo (${min}–${max}): ${v}`);
+}
+
+// ---------------------------------------------------------------------------
+// Equipaggiamento iniziale (data/dotazioni.json, Giocatore §2.16, E&L A.5–A.5.29)
+
+function validaDotazioni(dati, err) {
+  const F = 'dotazioni';
+  const d = dati.dotazioni;
+  const cat = new Map();
+  for (const [id, f] of Object.entries(dati.equipaggiamento?.file ?? {})) for (const o of f?.oggetti ?? []) cat.set(`${id}:${o.id}`, o);
+  const registro = isOggetto(d.oggetti_dotazione) ? d.oggetti_dotazione : {};
+  const sotto = isOggetto(d.sotto_scelte) ? d.sotto_scelte : {};
+  const nomiAbilita = new Set((dati.abilita?.abilita ?? []).map((a) => a?.nome));
+  if (!isOggetto(d.oggetti_dotazione)) err(F, 'oggetti_dotazione', 'registro degli oggetti non a catalogo mancante');
+  for (const [id, o] of Object.entries(registro)) {
+    const K = `oggetti_dotazione.${id}`;
+    if (!isTesto(o?.nome)) err(F, `${K}.nome`, 'nome mancante');
+    if (o?.sostituisce !== undefined && !(o.sostituisce in registro)) err(F, `${K}.sostituisce`, `"${o.sostituisce}" non è un oggetto di dotazione`);
+    if (o?.sotto !== undefined && !isOggetto(sotto[o.sotto])) err(F, `${K}.sotto`, `"${o.sotto}" non è in sotto_scelte`);
+    if (o?.effetto !== undefined) {
+      if (!nomiAbilita.has(o.effetto?.abilita)) err(F, `${K}.effetto.abilita`, `"${o.effetto?.abilita}" non è un'Abilità di abilita.json`);
+      if (!isIntero(o.effetto?.va)) err(F, `${K}.effetto.va`, 'VA intero mancante');
+    }
+  }
+  // un oggetto: { rif } del catalogo oppure { dotazione } del registro
+  const controllaOggetto = (x, K) => {
+    if (!isOggetto(x)) return err(F, K, 'oggetto atteso');
+    if (x.quantita !== undefined && (!isIntero(x.quantita) || x.quantita < 1)) err(F, `${K}.quantita`, 'intero ≥ 1 atteso');
+    if (x.rif !== undefined) {
+      if (!cat.has(x.rif)) err(F, `${K}.rif`, `"${x.rif}" non esiste nel catalogo (data/equipaggiamento/)`);
+    } else if (!(x.dotazione in registro)) err(F, `${K}.dotazione`, `"${x.dotazione}" non è in oggetti_dotazione`);
+  };
+  if (!Array.isArray(d.comune?.oggetti) || !d.comune.oggetti.length) err(F, 'comune.oggetti', 'dotazione comune mancante (§2.16.1)');
+  else d.comune.oggetti.forEach((x, i) => controllaOggetto(x, `comune.oggetti[${i}]`));
+
+  const classi = isOggetto(d.classi) ? d.classi : {};
+  for (const c of dati.classi?.classi ?? []) {
+    if (isTesto(c?.nome) && !isOggetto(classi[c.nome])) err(F, `classi.${c.nome}`, `la Classe ${c.nome} non ha una dotazione iniziale (§2.16)`);
+  }
+  const nomiClassi = new Set((dati.classi?.classi ?? []).map((c) => c?.nome));
+  for (const [nome, c] of Object.entries(classi)) {
+    const K = `classi.${nome}`;
+    if (!nomiClassi.has(nome)) err(F, K, `"${nome}" non è una Classe di classi.json`);
+    if (!Array.isArray(c?.gruppi) || !c.gruppi.length) { err(F, `${K}.gruppi`, 'nessun gruppo di scelta'); continue; }
+    const ids = new Set();
+    c.gruppi.forEach((g, i) => {
+      const KG = `${K}.gruppi[${i}]`;
+      if (!isTesto(g?.id) || ids.has(g.id)) err(F, `${KG}.id`, 'id mancante o ripetuto');
+      ids.add(g?.id);
+      if (!isTesto(g?.testo)) err(F, `${KG}.testo`, 'testo del manuale mancante');
+      if (!Array.isArray(g?.opzioni) || !g.opzioni.length) return err(F, `${KG}.opzioni`, 'nessuna opzione');
+      const idOp = new Set();
+      g.opzioni.forEach((o, j) => {
+        const KO = `${KG}.opzioni[${j}] (${o?.nome})`;
+        if (!isTesto(o?.id) || idOp.has(o.id)) err(F, `${KO}.id`, 'id mancante o ripetuto nel gruppo');
+        idOp.add(o?.id);
+        if (!Array.isArray(o?.oggetti) || !o.oggetti.length) return err(F, `${KO}.oggetti`, 'nessun oggetto');
+        o.oggetti.forEach((x, k) => controllaOggetto(x, `${KO}.oggetti[${k}]`));
+        // §2.16: il requisito di FOR scritto nel manuale deve coincidere con il catalogo;
+        // una discrepanza si accetta solo con un TODO(Davide) nell'opzione
+        if (o.for_dichiarata !== undefined) {
+          const r = cat.get(o.oggetti[0].rif)?.for_richiesta;
+          const todo = Object.keys(o).some((k) => k.startsWith('TODO('));
+          if (!isIntero(o.for_dichiarata)) err(F, `${KO}.for_dichiarata`, 'intero atteso');
+          else if (r !== o.for_dichiarata && !todo) err(F, `${KO}.for_dichiarata`, `il §2.16 dichiara FOR ${o.for_dichiarata}, il catalogo FOR ${r ?? '—'}: correggere o aggiungere un "TODO(Davide)"`);
+        }
+        if (o.munizioni !== undefined) {
+          const m = o.munizioni;
+          if (!cat.has(m?.rif)) err(F, `${KO}.munizioni.rif`, `"${m?.rif}" non esiste nel catalogo`);
+          else if (!cat.get(m.rif).munizione) err(F, `${KO}.munizioni.rif`, `"${m.rif}" non è una munizione`);
+          if (!isIntero(m?.colpi) || m.colpi < 1) err(F, `${KO}.munizioni.colpi`, 'intero ≥ 1 atteso');
+        }
+        if (o.segue !== undefined) {
+          const altro = c.gruppi.find((x) => x?.id === o.segue?.gruppo);
+          if (!altro) err(F, `${KO}.segue.gruppo`, `nessun gruppo "${o.segue?.gruppo}" nella Classe`);
+          else if (!altro.opzioni?.some((x) => x?.id === o.segue.opzione)) err(F, `${KO}.segue.opzione`, `nessuna opzione "${o.segue.opzione}" nel gruppo ${altro.id}`);
+        }
+      });
+    });
+  }
+  if (!isOggetto(d.corporativi?.abbinamenti)) err(F, 'corporativi.abbinamenti', 'oggetto { Corporazione: { rif commerciale: { rif } } } atteso (§2.16.27)');
+  else {
+    const nomiCorp = new Set((dati.corporazioni?.corporazioni ?? []).map((c) => c?.nome));
+    for (const [corp, ab] of Object.entries(d.corporativi.abbinamenti)) {
+      if (!nomiCorp.has(corp)) err(F, `corporativi.abbinamenti.${corp}`, `"${corp}" non è una Corporazione`);
+      for (const [com, x] of Object.entries(ab ?? {})) {
+        if (!cat.has(com)) err(F, `corporativi.abbinamenti.${corp}.${com}`, 'il profilo commerciale non esiste nel catalogo');
+        if (!cat.has(x?.rif)) err(F, `corporativi.abbinamenti.${corp}.${com}.rif`, `"${x?.rif}" non esiste nel catalogo`);
+        if (x?.munizioni !== undefined && !cat.has(x.munizioni)) err(F, `corporativi.abbinamenti.${corp}.${com}.munizioni`, `"${x.munizioni}" non esiste nel catalogo`);
+      }
+    }
+  }
+  const v = d.scambio?.valutazione_cessione;
+  if (typeof v !== 'number' || v < 0 || v > 1) err(F, 'scambio.valutazione_cessione', 'frazione del prezzo fra 0 e 1 attesa (§2.16.29)');
 }

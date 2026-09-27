@@ -49,6 +49,16 @@
     "_nota": "§2.15; §1.8.3: cinque Distintivi si convertono in 1 Punto Eroe, senza superare la riserva massima.",
     "distintivi_per_punto_eroe": 5
   },
+  "crediti_iniziali": {
+    "formula": "1000 + 2d6 × 100",
+    "dadi": 2,
+    "facce": 6,
+    "moltiplicatore": 100,
+    "fisso": 1000,
+    "minimo": 1200,
+    "massimo": 2200,
+    "_nota": "§2.16.28 (E&L A.5.28, risposte-master 18): si tirano 2d6, si moltiplica per 100 e si aggiunge 1.000. Il tiro salvato è quello dei 2d6; i crediti si ricalcolano."
+  },
   "movimento": {
     "unita": "Q",
     "passo": 6,
