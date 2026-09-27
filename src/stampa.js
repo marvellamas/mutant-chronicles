@@ -479,6 +479,32 @@ export function equipaggiamentoStampa(s, dati, armi = null) {
   return { righe, carico: c ? { peso: c.peso, senzaPeso: c.senzaPeso.length, ordinario: c.soglie.ordinario, massimo: c.soglie.massimo } : null };
 }
 
+/**
+ * Preferenze di stampa del personaggio (salvate con il personaggio, non sono regole):
+ * - magia: 'elenco' (solo la prima pagina del foglio 4 e il seguito dell'indice) oppure
+ *   'completo' (anche le schede complete degli incantesimi);
+ * - fogli: id dei fogli da stampare, o null = tutti (pronto per la scelta dei fogli 1–4).
+ */
+export const SCELTE_MAGIA = ['elenco', 'completo'];
+export const OPZIONI_STAMPA_PREDEFINITE = { fogli: null, magia: 'elenco' };
+const ID_FOGLI = ['identita', 'abilita', 'combattimento', 'magia'];
+
+/** Opzioni di stampa ripulite: valori sconosciuti → predefiniti. */
+export function normalizzaOpzioniStampa(o) {
+  const x = o && typeof o === 'object' && !Array.isArray(o) ? o : {};
+  const fogli = Array.isArray(x.fogli) ? ID_FOGLI.filter((id) => x.fogli.includes(id)) : null;
+  return {
+    fogli: fogli && fogli.length ? fogli : null,
+    magia: SCELTE_MAGIA.includes(x.magia) ? x.magia : OPZIONI_STAMPA_PREDEFINITE.magia,
+  };
+}
+
+/** I fogli da stampare secondo le opzioni (il foglio Magia esiste solo con la magia). */
+export function fogliDaStampare(fogli, opzioni) {
+  const o = normalizzaOpzioniStampa(opzioni);
+  return o.fogli ? fogli.filter((f) => o.fogli.includes(f.id)) : fogli;
+}
+
 /** Numera i fogli: «foglio N di M». */
 export function rinumera(fogli) {
   return fogli.map((f, i) => ({ ...f, numero: i + 1, totale: fogli.length }));

@@ -208,3 +208,14 @@ test('rinumera: «foglio N di M» dopo aver aggiunto pagine Magia', () => {
   const fogli = rinumera([...st.fogli.filter((f) => f.id !== 'magia'), ...pagine]);
   assert.deepEqual(fogli.map((f) => `${f.numero} di ${f.totale}`), ['1 di 5', '2 di 5', '3 di 5', '4 di 5', '5 di 5']);
 });
+
+test('opzioni di stampa: predefinita «Solo elenco», valori sconosciuti ripuliti, scelta dei fogli pronta', async () => {
+  const { normalizzaOpzioniStampa, fogliDaStampare, OPZIONI_STAMPA_PREDEFINITE } = await import('../src/stampa.js');
+  assert.deepEqual(normalizzaOpzioniStampa(undefined), { fogli: null, magia: 'elenco' });
+  assert.equal(OPZIONI_STAMPA_PREDEFINITE.magia, 'elenco');
+  assert.deepEqual(normalizzaOpzioniStampa({ magia: 'completo' }), { fogli: null, magia: 'completo' });
+  assert.deepEqual(normalizzaOpzioniStampa({ magia: 'tutto', fogli: ['magia', 'x', 'identita'] }), { fogli: ['identita', 'magia'], magia: 'elenco' });
+  const fogli = [{ id: 'identita' }, { id: 'abilita' }, { id: 'combattimento' }, { id: 'magia' }];
+  assert.equal(fogliDaStampare(fogli, null).length, 4);
+  assert.deepEqual(fogliDaStampare(fogli, { fogli: ['combattimento'] }).map((f) => f.id), ['combattimento']);
+});

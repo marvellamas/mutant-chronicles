@@ -5,7 +5,9 @@
 // Scrive tests/collaudo/<nome>.pdf e stampa pagine, formato e avvisi della barra di stampa.
 // Variabili facoltative: PORTA (8000), CARTELLA (cartella dei .json e dei PDF, relativa alla
 // radice del repo: tests/collaudo; per gli esempi della SS: docs/esempi-stampa), IMMAGINI
-// (cartella dove salvare un PNG per ogni foglio, per controllare l'impaginazione).
+// (cartella dove salvare un PNG per ogni foglio, per controllare l'impaginazione), STAMPA_MAGIA
+// ("elenco,completo": un PDF per ogni scelta del foglio Magia, <nome>-solo-elenco.pdf e
+// <nome>-schede-complete.pdf; i personaggi senza magia danno un PDF solo, <nome>.pdf).
 import { spawn } from 'node:child_process';
 import { writeFileSync, mkdirSync, rmSync, readdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -53,9 +55,20 @@ console.log(await valuta(`(async () => {
   return 'caricati ' + Object.keys(tutti).length;
 })()`));
 
-for (const id of FILE) {
+const VARIANTI = (process.env.STAMPA_MAGIA ?? '').split(',').map((x) => x.trim()).filter(Boolean);
+const NOMI_VARIANTI = { elenco: 'solo-elenco', completo: 'schede-complete' };
+const lavori = FILE.flatMap((id) => (VARIANTI.length ? VARIANTI.map((v) => ({ id, variante: v })) : [{ id, variante: null }]));
+for (const { id, variante } of lavori) {
   await cdp('Page.navigate', { url: `http://localhost:${PORTA}/#/p/${id}/stampa` });
   await attendi(2500);
+  const conMagia = await valuta(`!!document.querySelector('.scelta-stampa')`);
+  if (variante && conMagia) {
+    // la scelta come la fa il giocatore: si salva con il personaggio e la vista si ridisegna
+    const cambiata = await valuta(`(() => { const x = document.querySelector('.scelta-stampa input[value=${JSON.stringify(variante)}]'); if (!x || x.checked) return false; x.click(); return true; })()`);
+    if (cambiata) await attendi(3500);
+  }
+  if (variante && !conMagia && variante !== VARIANTI[0]) continue;
+  const nome = variante && conMagia ? `${id}-${NOMI_VARIANTI[variante] ?? variante}` : id;
   const avvisi = await valuta(`document.querySelector('.barra-avvisi')?.innerText ?? '(nessuna barra)'`);
   if (IMMAGINI) {
     mkdirSync(IMMAGINI, { recursive: true });
@@ -64,16 +77,16 @@ for (const id of FILE) {
     const rett = await valuta(`[...document.querySelectorAll('.foglio')].map((f) => { const r = f.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, width: r.width, height: r.height }; })`);
     for (const [k, r] of rett.entries()) {
       const img = await cdp('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true, clip: { ...r, scale: 1 } });
-      writeFileSync(`${IMMAGINI}/${id}-${k + 1}.png`, Buffer.from(img.result.data, 'base64'));
+      writeFileSync(`${IMMAGINI}/${nome}-${k + 1}.png`, Buffer.from(img.result.data, 'base64'));
     }
     await cdp('Emulation.clearDeviceMetricsOverride');
   }
   const pdf = await cdp('Page.printToPDF', { preferCSSPageSize: true, printBackground: true });
   const buf = Buffer.from(pdf.result.data, 'base64');
-  writeFileSync(`${OUT}/${id}.pdf`, buf);
+  writeFileSync(`${OUT}/${nome}.pdf`, buf);
   const pagine = (buf.toString('latin1').match(/\/Type\s*\/Page[^s]/g) ?? []).length;
   const box = /\/MediaBox\s*\[([^\]]+)\]/.exec(buf.toString('latin1'))?.[1];
-  console.log(`${id}: ${pagine} pagine, MediaBox ${box}, ${Math.round(buf.length / 1024)} kB | ${avvisi.replace(/\n/g, ' / ')}`);
+  console.log(`${nome}: ${pagine} pagine, MediaBox ${box}, ${Math.round(buf.length / 1024)} kB | ${avvisi.replace(/\n/g, ' / ')}`);
 }
 ws.close();
 edge.kill();

@@ -8,6 +8,7 @@ import { stemma, iconaPagina } from './immagini.js';
 import { pallini } from './tooltip.js';
 import { crediti } from '../dotazioni.js';
 import { COLORI_MACROFAMIGLIE } from '../palette.js';
+import { normalizzaOpzioniStampa, fogliDaStampare } from '../stampa.js';
 
 const FOGLIO_STILE = 'css/stampa.css';
 
@@ -55,14 +56,27 @@ const trabocca = (el) => el.scrollHeight > el.clientHeight + 1 || el.scrollWidth
 const eccede = (corpo) => trabocca(corpo) || [...corpo.querySelectorAll('.riquadro-stampa, .riquadro-stampa > .contenuto')].some(trabocca);
 
 /**
- * @param {object} o { stampa: risultato di preparaStampa, torna() }
+ * @param {object} o { stampa: risultato di preparaStampa, opzioni: preferenze di stampa
+ *   (normalizzaOpzioniStampa), cambiaOpzioni(modifica), torna() }
  * @returns {Node[]} nodi da mettere nella pagina; l'impaginazione parte da sola dopo il caricamento dello stile
  */
-export function renderStampa({ stampa, torna }) {
+export function renderStampa({ stampa, torna, opzioni = null, cambiaOpzioni = null }) {
   document.body.classList.add('vista-stampa');
+  const opz = normalizzaOpzioniStampa(opzioni);
+  const fogli = fogliDaStampare(stampa.fogli, opz);
   const avvisi = h('div', { class: 'barra-avvisi' });
+  // scelta per il foglio Magia, solo se il personaggio ha la magia; la stima delle pagine in più
+  // arriva dopo l'impaginazione (schede reali, colonne per pagina)
+  const stimaSchede = h('span', { class: 'stima-pagine' }, '');
+  const conMagia = fogli.some((f) => f.id === 'magia');
+  const sceltaMagia = conMagia ? h('fieldset', { class: 'scelta-stampa' },
+    h('legend', {}, 'Foglio Magia'),
+    [['elenco', 'Solo elenco'], ['completo', 'Elenco e schede complete']].map(([valore, testo]) => h('label', {},
+      h('input', { type: 'radio', name: 'stampa-magia', value: valore, checked: opz.magia === valore, onchange: () => cambiaOpzioni?.({ magia: valore }) }),
+      ` ${testo}`, valore === 'completo' ? stimaSchede : null))) : null;
   const barra = h('div', { class: 'barra-stampa' },
     h('button', { type: 'button', class: 'btn primario', onclick: () => window.print() }, 'Stampa'),
+    sceltaMagia,
     h('button', { type: 'button', class: 'btn', onclick: torna }, 'Torna alla scheda'),
     h('span', { class: 'nota' }, 'A4 orizzontale. Per il PDF scegli «Salva come PDF» come stampante e attiva «Grafica di sfondo».'),
     avvisi);
@@ -71,13 +85,14 @@ export function renderStampa({ stampa, torna }) {
   }
   if (!stampa.completa) avvisi.append(h('p', {}, 'Scheda non ancora completa: alcuni valori possono mancare.'));
 
-  const contenitore = h('div', { class: 'fogli' }, stampa.fogli.map((f) => creaFoglio(f.id, f.titolo, f.dati, stampa.piede)));
+  const contenitore = h('div', { class: 'fogli' }, fogli.map((f) => creaFoglio(f.id, f.titolo, { ...f.dati, ...(f.id === 'magia' ? { soloElenco: opz.magia === 'elenco' } : {}) }, stampa.piede)));
   numeraPiedi(contenitore, stampa.piede);
   caricaStile().then(() => (document.fonts?.ready ?? Promise.resolve())).then(() => {
     const fuori = [];
     for (const f of [...contenitore.querySelectorAll('.foglio')]) {
       if (f.classList.contains('foglio-magia')) {
-        const pagine = impaginaMagia(contenitore, f, stampa.fogli.find((x) => x.id === 'magia').dati, stampa.piede);
+        const { pagine, pagineSchede } = impaginaMagia(contenitore, f, { ...stampa.fogli.find((x) => x.id === 'magia').dati, soloElenco: opz.magia === 'elenco' }, stampa.piede);
+        stimaSchede.textContent = pagineSchede ? ` (≈ ${pagineSchede} ${pagineSchede === 1 ? 'pagina' : 'pagine'} in più)` : ' (nessuna pagina in più)';
         if (pagine > 1) avvisi.append(h('p', {}, `Il foglio Magia è su ${pagine} pagine.`));
         continue;
       }
@@ -361,6 +376,9 @@ function schedaIncantesimo(i) {
       i.regole ? h('p', { class: 'testo-lungo' }, i.regole) : null));
 }
 
+/** «Solo elenco»: in fondo all'indice, perché mancano le schede. */
+const notaSoloElenco = () => h('p', { class: 'piccolo nota-solo-elenco' }, 'Schede complete non stampate: testo nel Manuale della Magia.');
+
 function foglioMagia(d) {
   const v = d.valoriLancio;
   const voce = (nome, valore) => [h('dt', {}, nome), h('dd', {}, valore)];
@@ -388,30 +406,36 @@ function foglioMagia(d) {
           h('p', {}, h('strong', {}, r.nome), h('span', { class: 'sigla' }, ` · ${r.energia} · ${r.integrato ? 'attivazioni (A.18)' : r.regoleRimandate ? 'regole rimandate' : r.macrofamiglie.length >= 3 ? 'tutte le macrofamiglie' : r.macrofamiglie.join(', ') || '—'} · ${r.sintonizzato ? 'sintonizzato' : 'da sintonizzare'} (${r.costo})`)),
           quadratini(r.capacita)))) : null),
     box({ titolo: `Incantesimi (${incantesimi.length})`, riempitivo: true, classe: 'f4-indice' },
-      incantesimi.length ? tabellaIndice(incantesimi.map(rigaIndice)) : h('p', {}, 'Nessun incantesimo scelto.')),
+      incantesimi.length ? tabellaIndice(incantesimi.map(rigaIndice)) : h('p', {}, 'Nessun incantesimo scelto.'),
+      d.soloElenco && incantesimi.length ? notaSoloElenco() : null),
   ];
 }
 
 /**
  * Impagina il foglio Magia: righe dell'indice che non entrano nella prima pagina e schede degli
- * incantesimi su pagine successive, riempite misurando nel DOM. Restituisce il numero di pagine.
+ * incantesimi su pagine successive, riempite misurando nel DOM. Le schede si impaginano sempre,
+ * per contare le pagine che aggiungono; con «Solo elenco» (d.soloElenco) poi si tolgono.
+ * @returns {{ pagine, pagineSchede }} pagine stampate e pagine che aggiungono le schede complete
  */
 function impaginaMagia(contenitore, foglio, d, piede) {
   const incantesimi = elencoIncantesimi(d);
-  // 1. indice: le righe oltre il fondo del riquadro passano alla pagina dopo
+  // 1. indice: le righe oltre il fondo del riquadro passano alla pagina dopo (la nota di «Solo
+  // elenco» resta in fondo all'indice, anche quando l'indice continua)
   const box1 = foglio.querySelector('.f4-indice > .contenuto');
-  const fondo = box1.getBoundingClientRect().bottom - 1;
+  const nota = box1.querySelector('.nota-solo-elenco');
+  const fondo = box1.getBoundingClientRect().bottom - 1 - (nota ? nota.getBoundingClientRect().height : 0);
   const righe = [...foglio.querySelectorAll('.indice-magia tbody tr')];
   const primaFuori = righe.findIndex((r) => r.getBoundingClientRect().bottom > fondo);
   const resto = primaFuori < 0 ? [] : righe.slice(primaFuori);
   resto.forEach((r) => r.remove());
-  if (!incantesimi.length) return 1;
+  if (resto.length && nota) nota.remove();
+  if (!incantesimi.length) return { pagine: 1, pagineSchede: 0 };
 
   let ultima = foglio;
   let pagine = 1;
   const nuovaPagina = (conIndice) => {
     const f = creaFoglio('magia', 'Magia (continua)', d, piede, () => [
-      conIndice ? box({ titolo: 'Incantesimi (continua)', classe: 'f4-indice-seguito' }, tabellaIndice(resto)) : null,
+      conIndice ? box({ titolo: 'Incantesimi (continua)', classe: 'f4-indice-seguito' }, tabellaIndice(resto), d.soloElenco ? notaSoloElenco() : null) : null,
       h('div', { class: 'colonne-schede' }),
     ]);
     ultima.after(f);
@@ -441,5 +465,17 @@ function impaginaMagia(contenitore, foglio, d, piede) {
   }
   misura.remove();
   if (fuori.length) console.warn('Schede più lunghe di una pagina:', fuori.join(', '));
-  return pagine;
+  // pagine con il solo indice: la prima e, se l'indice continua, quella dopo (senza schede)
+  const pagineElenco = resto.length ? 2 : 1;
+  if (d.soloElenco) {
+    let f = foglio.nextElementSibling;
+    for (let k = 1; k < pagine && f; k++) {
+      const dopo = f.nextElementSibling;
+      if (k < pagineElenco) f.querySelector('.colonne-schede')?.remove();
+      else f.remove();
+      f = dopo;
+    }
+    return { pagine: pagineElenco, pagineSchede: pagine - pagineElenco };
+  }
+  return { pagine, pagineSchede: pagine - pagineElenco };
 }

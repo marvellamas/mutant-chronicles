@@ -58,7 +58,8 @@ Scheda da stampare ridisegnata (`src/ui/stampa.js`, `css/stampa.css`): carattere
 - ✔ Foglio 2: Abilità a tutta altezza, Talenti e Annotazioni.
 - ✔ Foglio 3: riquadro compatto, armi con tutte le colonne e i colpi per caricatore, Protezioni, equipaggiamento con ind / zai / Altro, Ferite, Punti Vita a quadratini.
 - ✔ Foglio 4: Punti Magia, valori di lancio, contenitori di Chroma, indice e schede complete degli incantesimi su più pagine.
-- Esempi in `docs/esempi-stampa/` (PDF e personaggi di partenza), rigenerabili con `PORTA=8001 CARTELLA=docs/esempi-stampa node tools/collaudo_pdf.mjs`.
+- Esempi in `docs/esempi-stampa/` (PDF e personaggi di partenza), rigenerabili con `PORTA=8001 CARTELLA=docs/esempi-stampa STAMPA_MAGIA=elenco,completo node tools/collaudo_pdf.mjs`.
+- ✔ Scelta per il foglio Magia accanto a «Stampa»: «Solo elenco» (predefinita) o «Elenco e schede complete», con la stima delle pagine in più; salvata con il personaggio (`stampa` nel salvataggio del browser, `normalizzaOpzioniStampa` in `src/stampa.js`, pronta per la scelta dei fogli 1–4).
 
 ## 10. ✔ AR in evidenza — fatto il 27 settembre 2026
 

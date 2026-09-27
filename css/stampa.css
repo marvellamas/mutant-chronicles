@@ -50,6 +50,11 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 }
 .barra-stampa .nota { color: #555; }
 .barra-avvisi { flex-basis: 100%; }
+/* opzioni di stampa (solo a schermo): scelta per il foglio Magia */
+.scelta-stampa { display: flex; flex-wrap: wrap; align-items: center; gap: 0.2rem 0.9rem; margin: 0; padding: 0.2rem 0.7rem; border: 1px solid #ccc; border-radius: 6px; }
+.scelta-stampa legend { padding: 0 0.3rem; font-size: 0.8rem; color: #555; }
+.scelta-stampa label { cursor: pointer; }
+.stima-pagine { color: #555; }
 .barra-avvisi:empty { display: none; }
 .barra-avvisi p { margin: 0.15rem 0; font-size: 0.85rem; color: #6a4a00; }
 .barra-avvisi .motivo { color: #a3261b; }
@@ -305,6 +310,7 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .indice-magia tbody tr > th:first-child { border-left: 2.2mm solid var(--tinta); }
 .indice-magia tbody tr[class*="tinta-"]:nth-child(even) > * { background: color-mix(in srgb, var(--tinta-tenue) 55%, transparent); }
 .f4-indice-seguito { flex: none; }
+.nota-solo-elenco { margin: 1mm 0 0; }
 .colonne-schede { flex: 1; min-height: 0; overflow: hidden; column-count: 3; column-gap: 4mm; column-fill: auto; }
 .scheda-incantesimo {
   break-inside: avoid; margin: 0 0 2.5mm;

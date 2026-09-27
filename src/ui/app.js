@@ -19,7 +19,7 @@ import { renderStampa, esciDallaStampa } from './stampa.js';
 import { barraPassi, barraFondoSeServe } from './navigazione.js';
 import { cercaSfondi, applicaSfondo } from './sfondi.js';
 import { caricaImmagini } from './immagini.js';
-import { preparaStampa, preparaTab } from '../stampa.js';
+import { preparaStampa, preparaTab, normalizzaOpzioniStampa } from '../stampa.js';
 import { renderTab } from './tab.js';
 import {
   massimiSessione, allineaSessione, variaSessione, modificaSessione, commutaStato, commutaCondizioneOggetto, spendiPmLancio, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
@@ -167,6 +167,7 @@ function daIndirizzo() {
     stato.livelli = Array.isArray(salvato.livelli) ? salvato.livelli : [];
     stato.sessione = salvato.sessione ?? null;
     stato.calendario = normalizzaCalendario(salvato.calendario, stato.dati);
+    stato.opzioniStampa = normalizzaOpzioniStampa(salvato.stampa);
     stato.precedenteTavolo = null;
     stato.ui.calendario = null;
     stato.ui.attivaCalendario = null;
@@ -210,7 +211,7 @@ function testoSalvataggioFallito() {
 
 function persisti() {
   if (!stato.id) return;
-  stato.salvataggioOk = archivio.salva({ id: stato.id, scelte: stato.scelte, livelli: stato.livelli, sessione: stato.sessione, calendario: stato.calendario, passo: stato.passo });
+  stato.salvataggioOk = archivio.salva({ id: stato.id, scelte: stato.scelte, livelli: stato.livelli, sessione: stato.sessione, calendario: stato.calendario, stampa: stato.opzioniStampa ?? null, passo: stato.passo });
 }
 
 function esporta(scelte, livelli = [], sessione = null, calendario = null) {
@@ -539,7 +540,14 @@ function apriStampa() {
   nascondiTooltip();
   document.title = `${stato.scelte.nome.trim() || 'Personaggio'} — Stampa · Mutant`;
   const stampa = preparaStampa(personaggio(), stato.dati, { versioniDati: stato.versioni });
-  svuota(radice, ...renderStampa({ stampa, torna: () => vai(`#/p/${stato.id}`) }));
+  const opzioni = normalizzaOpzioniStampa(stato.opzioniStampa);
+  // le preferenze di stampa si salvano con il personaggio: ogni giocatore le ritrova come le ha lasciate
+  const cambiaOpzioni = (modifica) => {
+    stato.opzioniStampa = normalizzaOpzioniStampa({ ...opzioni, ...modifica });
+    persisti();
+    apriStampa();
+  };
+  svuota(radice, ...renderStampa({ stampa, opzioni, cambiaOpzioni, torna: () => vai(`#/p/${stato.id}`) }));
   window.scrollTo(0, 0);
 }
 

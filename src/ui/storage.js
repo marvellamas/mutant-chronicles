@@ -65,9 +65,10 @@ export function carica(id) {
  * dell'avanzamento non hanno "livelli": si leggono come personaggi al 1° livello.
  * @returns {boolean} false se il salvataggio non è riuscito
  */
-export function salva({ id, scelte, livelli = [], sessione = null, calendario = null, passo }) {
+export function salva({ id, scelte, livelli = [], sessione = null, calendario = null, stampa = null, passo }) {
   const tutti = leggiTutti();
-  tutti[id] = { id, scelte, livelli, sessione, ...(calendario ? { calendario } : {}), passo, aggiornato: new Date().toISOString() };
+  // stampa: preferenze di stampa (src/stampa.js → normalizzaOpzioniStampa), non regole
+  tutti[id] = { id, scelte, livelli, sessione, ...(calendario ? { calendario } : {}), ...(stampa ? { stampa } : {}), passo, aggiornato: new Date().toISOString() };
   return scriviTutti(tutti);
 }
 
