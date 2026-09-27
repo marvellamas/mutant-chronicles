@@ -55,6 +55,8 @@ Sono le etichette dei gruppi dell'equipaggiamento nella tab Combattimento. Hanno
 | `altro` | Altro | `--cat-altro` (grigio) | `#5f5f66` | `#b4b4bc` |
 | — | testo delle etichette | `--cat-testo` | `#ffffff` | `#17171a` |
 
+L'acciaio delle armature (`--cat-armature`) colora anche l'**AR** accanto ai PV (pillole della tab Combattimento e della colonna di sinistra, docs/ricognizione-ar-pi.md): è il colore delle protezioni, non un colore riservato nuovo.
+
 ## Bandierine del calendario
 
 Segnano l'importanza di una nota nel Calendario della SD (pallini in Settimana e Mese, bordo della nota in Giorno). Significati in `regole.json` → `calendario.bandierine`; la nota senza bandierina è normale. Il segno «M» (da ricordare) non ha un colore: è la lettera in un riquadro, e si combina con qualunque bandierina.

@@ -734,6 +734,19 @@ details.sezione-tab > summary { font-weight: 700; cursor: pointer; min-height: 4
 .contatore-tavolo.riquadro-pm { border: 2px solid var(--pm); }
 .contatore-tavolo.riquadro-pe { border: 2px solid var(--pe); }
 .riquadro-pv > h3 { color: var(--pv); }
+/* AR accanto ai PV (docs/ricognizione-ar-pi.md): pillole grigio-acciaio, la principale più grande */
+.pillole-ar { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.35rem; margin-top: 0.5rem; cursor: help; }
+.pillola-ar { display: inline-flex; align-items: baseline; gap: 0.3rem; padding: 0.1rem 0.5rem; border: 2px solid var(--cat-armature); border-radius: 999px; font-size: 0.85rem; }
+.pillola-ar .etichetta-ar { color: var(--tenue); font-size: 0.8rem; }
+.pillola-ar strong { color: var(--cat-armature); }
+.pillola-ar.principale { font-size: 1.1rem; padding: 0.15rem 0.7rem; border-width: 3px; }
+.pillola-ar.principale .etichetta-ar { font-weight: 700; color: var(--cat-armature); font-size: 0.95rem; }
+.pillola-ar.principale strong { font-size: 1.6rem; line-height: 1; }
+.compatto .pillola-ar.principale strong { font-size: 1.25rem; }
+/* Integrità degli oggetti: «Rotto» a 0 PI */
+.integrita-tab tr.rotto th, .integrita-tab tr.rotto td { color: var(--errore); }
+.etichetta-rotto { margin-left: 0.4rem; background: var(--errore); color: #fff; }
+.promemoria-ar { margin-top: 0.4rem; }
 .riquadro-pm > h3 { color: var(--pm); }
 .riquadro-pe > h3 { color: var(--pe); }
 .selettore-livelli { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr)); gap: 0.4rem; }

@@ -23,7 +23,7 @@ import { preparaStampa, preparaTab } from '../stampa.js';
 import { renderTab } from './tab.js';
 import {
   massimiSessione, allineaSessione, variaSessione, modificaSessione, commutaStato, commutaCondizioneOggetto, spendiPmLancio, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
-  penalitaSessione, variaMunizioni, ricaricaArma, variaChroma,
+  penalitaSessione, variaMunizioni, ricaricaArma, variaChroma, variaIntegrita,
 } from '../sessione.js';
 import { conOrdinale } from '../lingua.js';
 import { normalizzaCalendario, calendarioAttivo, attivaCalendario, disattivaCalendario, contaNote } from '../calendario.js';
@@ -706,6 +706,7 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       munizioni: (uid, campo, delta) => cambiaSessione(variaMunizioni(stato.sessione, uid, campo, delta, massimi)),
       ricarica: (uid) => cambiaSessione(ricaricaArma(stato.sessione, uid, massimi)),
       chroma: (uid, delta) => cambiaSessione(variaChroma(stato.sessione, uid, delta, massimi)),
+      integrita: (uid, delta) => cambiaSessione(variaIntegrita(stato.sessione, uid, delta, massimi)),
       puntiEsperienza: (valore) => {
         stato.scelte = applicaModifica(stato.scelte, { puntiEsperienza: valore }, dati).scelte;
         persisti();

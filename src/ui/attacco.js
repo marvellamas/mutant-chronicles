@@ -137,6 +137,7 @@ function risultatoRavvicinato(ctx, a, r) {
         r.effetti.length ? h('div', {}, h('dt', {}, 'Effetti'), h('dd', {}, r.effetti.join(' '))) : null),
       r.dopo_armatura.length ? h('ul', { class: 'promemoria-attacco' }, r.dopo_armatura.map((x) => h('li', {}, x.testo))) : null,
       r.promemoria.length ? h('ul', { class: 'promemoria-attacco' }, r.promemoria.map((p) => h('li', {}, p))) : null,
+      promemoriaAR(ctx, a),
       h('div', { class: 'attacco-azioni' },
         h('button', {
           type: 'button', class: 'btn primario btn-grande', disabled: !!r.impossibile, title: r.impossibile?.motivo ?? null,
@@ -239,6 +240,18 @@ function corpoDistanza(ctx, a, intestazione) {
   return pannelloPassi({ ...intestazione, passi: passi.map((contenuto, i) => ({ titolo: PASSI[i], contenuto })), stato, ridisegna: ctx.azioni.ridisegna });
 }
 
+/**
+ * Promemoria sull'Armatura del bersaglio (regole.json → ar.promemoria_danno, Giocatore §5.13, §5.24)
+ * e, se l'arma è Rotta (0 PI, Armamenti §7.2.1), l'avviso che non si può usare.
+ */
+function promemoriaAR(ctx, a) {
+  const testo = ctx.dati.regole.ar?.promemoria_danno;
+  return [
+    a.rotta ? h('div', { class: 'riquadro attenzione' }, h('p', {}, h('strong', {}, `${a.nome} è Rotta (0 PI): `), 'non può essere utilizzata finché non viene riparata (Armamenti §7.2.1).')) : null,
+    testo ? h('p', { class: 'nota promemoria-ar' }, h('strong', {}, 'Armatura del bersaglio: '), testo) : null,
+  ];
+}
+
 function risultato(ctx, a, r, colpi, imposta) {
   const spara = () => ctx.azioni.spara(a.uid, r.munizioni);
   return [
@@ -259,6 +272,7 @@ function risultato(ctx, a, r, colpi, imposta) {
         h('div', {}, h('dt', {}, 'Danno per colpo'), h('dd', {}, r.danno_per_colpo ?? '—', r.applicazioni !== 1 ? ` · ${r.applicazioni} applicazioni` : ''))),
       r.seconda_prova ? h('p', { class: 'nota' }, h('strong', {}, `Seconda Prova se fallisci: VA ${numero(r.seconda_prova.va)}. `), r.seconda_prova.testo) : null,
       r.promemoria.length ? h('ul', { class: 'promemoria-attacco' }, r.promemoria.map((p) => h('li', {}, p))) : null,
+      promemoriaAR(ctx, a),
       h('div', { class: 'attacco-azioni' },
         h('button', {
           type: 'button', class: 'btn primario btn-grande', disabled: !!r.impossibile || (colpi !== null && colpi < r.munizioni),

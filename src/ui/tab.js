@@ -11,6 +11,7 @@ import { classeMacrofamiglia } from '../palette.js';
 import { formulaScomposizione } from '../condizioni.js';
 import { colore, riempimento, condizioniAttiveAbilita } from '../interfaccia.js';
 import { descriviFerite } from '../sessione.js';
+import { testoProvenienzaAR, statoIntegrita } from '../protezione.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
 import { testoDanno } from '../stampa.js';
 import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto } from '../equipaggiamento.js';
@@ -210,11 +211,60 @@ function riquadriPvPm(ctx, { compatti = false } = {}) {
   const m = ctx.massimi;
   const classe = compatti ? ' compatto' : '';
   return [
-    contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true, classe: `riquadro-pv${classe}` }),
+    contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true, classe: `riquadro-pv${classe}`, extra: pilloleAR(ctx) }),
     compatti
       ? (m.pm ? contatoreTavolo(ctx, { titolo: 'Punti Magia', campo: 'pmAttuali', attuale: s.pmAttuali, massimo: m.pm, barra: true, classe: `riquadro-pm${classe}` }) : null)
       : riquadroPM(ctx),
   ];
+}
+
+/**
+ * AR del personaggio accanto ai PV (docs/ricognizione-ar-pi.md): una pillola per valore (AR contro
+ * danno Naturale e Magico, la più grande; contro Etereo; contro esplosioni se c'è Antiesplosione),
+ * con la provenienza nel tooltip. Valori al tavolo: condizioni accese, oggetti Rotti esclusi.
+ */
+function pilloleAR(ctx) {
+  const eq = ctx.tab.scheda.equipaggiamento;
+  const ar = eq?.arEffettiva ?? eq?.ar;
+  if (!ar) return null;
+  const R = ctx.dati.regole.ar ?? {};
+  const titolo = [
+    `AR ${ar.totale}${ar.magica ? `, di cui ${ar.magica} magica` : ''}: ${testoProvenienzaAR(ar)}.`,
+    ...ar.contro.map((c) => `Contro ${c.contro}: +${c.valore} (${c.fonte}), il maggiore fra scudo e armatura.`),
+    ...ar.esclusi.map((x) => `${x.etichetta}: ${x.motivo}.`),
+    'Elmetti: nessuna AR (Armamenti §7.21.1).',
+    R.promemoria_cumulo_magia ?? null,
+  ].filter(Boolean).join('\n');
+  return h('div', { class: 'pillole-ar', title: titolo, 'aria-label': `Armatura. ${titolo}` },
+    ar.valori.map((v) => h('span', { class: `pillola-ar${v.principale ? ' principale' : ''}` },
+      h('span', { class: 'etichetta-ar' }, v.etichetta), h('strong', {}, String(v.valore)))));
+}
+
+/**
+ * Punti Integrità degli oggetti (Armamenti §7.2.1): «PI n/max» con − e +, la PS Integrità della
+ * Qualità e «Rotto» a 0 PI. Nessun «Ripara»: la riparazione non ha ancora regole (A.46).
+ */
+function sezioneIntegrita(ctx) {
+  const lista = ctx.tab.scheda.equipaggiamento?.integrita ?? [];
+  if (!lista.length) return null;
+  const pi = ctx.sessione.integrita ?? {};
+  return sezione('Integrità degli oggetti (§7.2.1)',
+    h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta integrita-tab' },
+      h('thead', {}, h('tr', {}, ['Oggetto', 'PI', '', 'PS Integrità'].map((c) => h('th', {}, c)))),
+      h('tbody', {}, lista.map((x) => {
+        const n = pi[x.uid] ?? x.piMax;
+        const soglia = statoIntegrita(n, x.piMax, ctx.dati);
+        const b = (delta) => h('button', {
+          type: 'button', class: 'btn-tavolo', onclick: () => ctx.azioni.integrita(x.uid, delta),
+          disabled: delta < 0 ? n <= 0 : n >= x.piMax, 'aria-label': `${delta < 0 ? 'Togli' : 'Aggiungi'} 1 PI a ${x.nome}`,
+        }, delta < 0 ? '−' : '+');
+        return h('tr', { class: soglia ? 'rotto' : null },
+          h('th', { scope: 'row' }, x.nome, soglia ? h('span', { class: 'etichetta etichetta-rotto', title: 'A 0 PI l’oggetto è Rotto e non può essere utilizzato finché non viene riparato (§7.2.1).' }, soglia.etichetta) : null),
+          h('td', { class: 'forte' }, `PI ${n}/${x.piMax}`),
+          h('td', {}, h('span', { class: 'pulsanti-tavolo' }, b(-1), b(1))),
+          h('td', {}, x.ps ? `${x.ps}${x.qualita ? ` (${x.qualita})` : ''}` : '—'));
+      })))),
+    h('p', { class: 'nota' }, 'Un colpo o una Parata ordinari non tolgono PI: si perdono con un attacco per rompere l’oggetto, un Magistrale che lo coinvolge, Corrosivo o Demolitrice e il danno Etereo, se la PS Integrità (1d20 ≤ PS) fallisce. A 0 PI l’oggetto è Rotto: non dà AR né i suoi effetti. La riparazione la decide il master: si rimettono i PI con +.'));
 }
 
 /**
@@ -574,7 +624,7 @@ function tabCombattimento(ctx, d) {
       h('ul', {}, d.avvisiEquipaggiamento.map((a) => h('li', {}, a)))) : null,
     h('div', { class: 'griglia-tavolo' },
       // con la colonna di sinistra (tab a sinistra, da 900 px) i PV sono già lì: qui non si ripetono
-      contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true, classe: 'riquadro-pv pv-pm-identita' }),
+      contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true, classe: 'riquadro-pv pv-pm-identita', extra: pilloleAR(ctx) }),
       d.difese ? h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Difese'),
         h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), valoreEffettivo('Difese', d.difese.effettivo, d.difese.totale, d.difese.scomposizione, { pillola: true })),
         h('p', { class: 'nota' }, `(${d.difese.caratteristica}) con l’equipaggiamento e le condizioni della sessione`),
@@ -619,6 +669,8 @@ function tabCombattimento(ctx, d) {
       : h('p', { class: 'vuoto' }, 'Nessuna protezione indossata o imbracciata.'),
       resistenze(ctx),
       d.protezioniCalcolate.length ? h('p', { class: 'nota' }, 'Agilità vale per Schivata e Prove fisiche di Atletica e Furtività ostacolate (già nel VA di quelle Abilità, colonna Equip); non per la Parata. La penalità MOV si sottrae una volta al budget di movimento (§7.11.1). La Parata con lo Scudo è già calcolata: Difese con l’equipaggiamento, modificatori propri dello Scudo (§7.4.11) e FOR insufficiente (§7.1.6). L’AR dello Scudo vale anche senza Parata, purché sia imbracciato; due scudi non si sommano (§7.4).') : null),
+
+    sezioneIntegrita(ctx),
 
     // §7.19: applicazioni di kit e dispositivi sanitari, con il contatore delle munizioni
     ...(() => {
