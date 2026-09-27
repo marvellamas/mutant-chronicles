@@ -160,9 +160,11 @@ export function normalizza(scelteIn, dati) {
   for (const v of s.equipaggiamento) {
     const r = risolvi(v, cat);
     if (r.fuoriCatalogo) continue; // resta com'è: «non più in catalogo», senza effetti
-    const stati = STATI[r.tipo] ?? [];
+    const stati = r.stati; // del tipo, oppure In uso / Nello zaino per gli oggetti con effetti
     // gli Artefatti salvati prima degli stati (batterie) erano con il personaggio: «trasportato»
     if (r.tipo === 'artefatto' && v.stato === null && stati.includes('trasportato')) { v.stato = 'trasportato'; continue; }
+    // oggetti senza stati propri che hanno effetti sui VA (corredi, kit…): erano con il personaggio
+    if (v.stato === null && !(STATI[r.tipo] ?? []).length && stati.includes('in_uso')) { v.stato = 'in_uso'; continue; }
     if (stati.length ? !stati.includes(v.stato) : v.stato !== null) {
       if (v.stato !== null) avvisi.push(`${r.nome}: stato «${v.stato}» non valido per ${NOMI_TIPI[r.tipo]}, rimesso ${stati.length ? 'nello zaino' : 'senza stato'}.`);
       v.stato = stati.length ? stati.at(-1) : null;

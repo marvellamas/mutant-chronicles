@@ -836,6 +836,7 @@ function validaSchedaDigitale(dati, err) {
     (f.oggetti ?? []).forEach((o, i) => {
       for (const sigla of o.modalita ?? []) if (!isOggetto(mf[sigla])) err(`equipaggiamento/${id}`, `oggetti[${i}] (${o.nome}).modalita`, `la sigla "${sigla}" non ha una voce in regole.json → modalita_di_fuoco`);
       if (o.effetto_breve !== undefined && !isTesto(o.effetto_breve)) err(`equipaggiamento/${id}`, `oggetti[${i}] (${o.nome}).effetto_breve`, 'testo non vuoto atteso');
+      if (o.effetti !== undefined) validaEffettiOggetto(o.effetti, `equipaggiamento/${id}`, `oggetti[${i}] (${o.nome})`, new Set((dati.abilita?.abilita ?? []).map((a) => a.nome)), err);
     });
   }
 }
@@ -1238,10 +1239,7 @@ function validaDotazioni(dati, err) {
     if (!isTesto(o?.nome)) err(F, `${K}.nome`, 'nome mancante');
     if (o?.sostituisce !== undefined && !(o.sostituisce in registro)) err(F, `${K}.sostituisce`, `"${o.sostituisce}" non è un oggetto di dotazione`);
     if (o?.sotto !== undefined && !isOggetto(sotto[o.sotto])) err(F, `${K}.sotto`, `"${o.sotto}" non è in sotto_scelte`);
-    if (o?.effetto !== undefined) {
-      if (!nomiAbilita.has(o.effetto?.abilita)) err(F, `${K}.effetto.abilita`, `"${o.effetto?.abilita}" non è un'Abilità di abilita.json`);
-      if (!isIntero(o.effetto?.va)) err(F, `${K}.effetto.va`, 'VA intero mancante');
-    }
+    if (o?.effetti !== undefined) validaEffettiOggetto(o.effetti, F, K, nomiAbilita, err);
   }
   // un oggetto: { rif } del catalogo oppure { dotazione } del registro
   const controllaOggetto = (x, K) => {
@@ -1319,4 +1317,21 @@ function validaDotazioni(dati, err) {
   }
   const v = d.scambio?.valutazione_cessione;
   if (typeof v !== 'number' || v < 0 || v > 1) err(F, 'scambio.valutazione_cessione', 'frazione del prezzo fra 0 e 1 attesa (§2.16.29)');
+}
+
+// Effetti degli oggetti sui VA (docs/effetti-oggetti.md): catalogo e oggetti di dotazione
+const AMBITI_EFFETTO = ['generale', 'situazionale', 'uso_specifico'];
+function validaEffettiOggetto(effetti, F, K, nomiAbilita, err) {
+  if (!Array.isArray(effetti)) return err(F, `${K}.effetti`, 'lista attesa');
+  effetti.forEach((e, j) => {
+    const KE = `${K}.effetti[${j}]`;
+    if (!isOggetto(e)) return err(F, KE, 'oggetto atteso');
+    if (e.tipo !== undefined && e.tipo !== 'va') err(F, `${KE}.tipo`, 'per ora solo "va": nessun testo dei manuali dà effetti a Salvezze o Iniziativa');
+    if (!nomiAbilita.has(e.abilita)) err(F, `${KE}.abilita`, `"${e.abilita}" non è un'Abilità di abilita.json`);
+    if (!isIntero(e.valore) || e.valore === 0) err(F, `${KE}.valore`, 'intero diverso da 0 atteso');
+    if (!AMBITI_EFFETTO.includes(e.ambito)) err(F, `${KE}.ambito`, `uno fra ${AMBITI_EFFETTO.join(', ')}`);
+    if (e.ambito === 'uso_specifico' && !isTesto(e.uso)) err(F, `${KE}.uso`, 'l’uso specifico ha bisogno di un’etichetta breve (es. "tracce")');
+    if (e.ambito !== 'uso_specifico' && e.uso !== undefined) err(F, `${KE}.uso`, 'solo per ambito "uso_specifico"');
+    if (!isTesto(e.condizione)) err(F, `${KE}.condizione`, 'frase del manuale mancante (tools/verifica_frasi.mjs)');
+  });
 }

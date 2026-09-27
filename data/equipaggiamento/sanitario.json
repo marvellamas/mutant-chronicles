@@ -88,7 +88,17 @@
         "magistrale": "Arresta il Sanguinamento e recupera il doppio del risultato di 1d4 PV"
       },
       "proprieta": [],
-      "effetto_breve": "Arresta il Sanguinamento e recupera 1d4 PV"
+      "effetto_breve": "Arresta il Sanguinamento e recupera 1d4 PV",
+      "effetti": [
+        {
+          "abilita": "Medicina",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "pronto soccorso",
+          "condizione": "Il Kit trauma concede +2 VA alle Prove di Medicina per il pronto soccorso.",
+          "fonte": "Giocatore §2.16.6"
+        }
+      ]
     },
     {
       "id": "cartuccia-emostatica",
@@ -358,7 +368,17 @@
         "prova": "Medicina (diagnosi)"
       },
       "proprieta": [],
-      "effetto_breve": "Una diagnosi richiede almeno un minuto e una Prova di Medicina con +2 VA degli strumenti, per lesioni e anomalie rilevabili dall’apparecchio."
+      "effetto_breve": "Una diagnosi richiede almeno un minuto e una Prova di Medicina con +2 VA degli strumenti, per lesioni e anomalie rilevabili dall’apparecchio.",
+      "effetti": [
+        {
+          "abilita": "Medicina",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "diagnosi",
+          "condizione": "Una diagnosi richiede almeno un minuto e una Prova di Medicina con +2 VA degli strumenti, per lesioni e anomalie rilevabili dall’apparecchio.",
+          "fonte": "Armamenti §7.19.5"
+        }
+      ]
     },
     {
       "id": "scanner-diagnostico-cybertronic",
@@ -380,7 +400,17 @@
         "prova": "Medicina (diagnosi); +1 con SIN 1 e interfaccia attiva"
       },
       "proprieta": [],
-      "effetto_breve": "Mantiene le funzioni e il +2 VA diagnostico del modello portatile; SIN 1 concede un ulteriore +1 alla Prova diagnostica con interfaccia compatibile attiva, per +3 complessivo prima di altri modificatori."
+      "effetto_breve": "Mantiene le funzioni e il +2 VA diagnostico del modello portatile; SIN 1 concede un ulteriore +1 alla Prova diagnostica con interfaccia compatibile attiva, per +3 complessivo prima di altri modificatori.",
+      "effetti": [
+        {
+          "abilita": "Medicina",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "diagnosi",
+          "condizione": "Mantiene le funzioni e il +2 VA diagnostico del modello portatile",
+          "fonte": "Armamenti §7.19.5"
+        }
+      ]
     },
     {
       "id": "kit-chirurgico-da-campo",
@@ -408,7 +438,17 @@
         "costo": 2500
       },
       "proprieta": [],
-      "effetto_breve": "È una dotazione Professionale: +2 VA a Medicina per interventi chirurgici e procedure pertinenti eseguibili sul campo."
+      "effetto_breve": "È una dotazione Professionale: +2 VA a Medicina per interventi chirurgici e procedure pertinenti eseguibili sul campo.",
+      "effetti": [
+        {
+          "abilita": "Medicina",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "chirurgia",
+          "condizione": "È una dotazione Professionale: +2 VA a Medicina per interventi chirurgici e procedure pertinenti eseguibili sul campo.",
+          "fonte": "Armamenti §7.19.5"
+        }
+      ]
     },
     {
       "id": "postazione-medica-da-campo",
@@ -436,7 +476,17 @@
         "costo": 2500
       },
       "proprieta": [],
-      "effetto_breve": "Concede +3 VA a Medicina per chirurgia e trattamenti delle Ferite o delle Menomazioni; la diagnostica mantiene il +2 del proprio scanner."
+      "effetto_breve": "Concede +3 VA a Medicina per chirurgia e trattamenti delle Ferite o delle Menomazioni; la diagnostica mantiene il +2 del proprio scanner.",
+      "effetti": [
+        {
+          "abilita": "Medicina",
+          "valore": 3,
+          "ambito": "uso_specifico",
+          "uso": "chirurgia e Ferite",
+          "condizione": "Concede +3 VA a Medicina per chirurgia e trattamenti delle Ferite o delle Menomazioni; la diagnostica mantiene il +2 del proprio scanner.",
+          "fonte": "Armamenti §7.19.5"
+        }
+      ]
     }
   ]
 }

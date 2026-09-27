@@ -9,7 +9,7 @@
 // rifare la dotazione le sostituisce (non le somma) e lascia com'è tutto il resto. Crediti iniziali,
 // conguagli e saldo si ricalcolano sempre dalle scelte.
 import { specTiro, valoreTiro } from './tiri.js';
-import { catalogo, risolvi, statoIniziale, puoMontare, tabellaMunizioniArmi } from './equipaggiamento.js';
+import { catalogo, risolvi, statoIniziale, puoMontare, tabellaMunizioniArmi, testoEffettoOggetto } from './equipaggiamento.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 
@@ -93,10 +93,9 @@ export function sottoScelteRichieste(dotazione, classe, dati) {
   return out;
 }
 
-/** Descrizione dell'effetto di un oggetto di dotazione: «+2 VA a Sopravvivenza nell’ambiente scelto…». */
+/** Effetti di un oggetto di dotazione in breve: «+2 VA a Sopravvivenza (con la condizione attiva)». */
 export function testoEffetto(o) {
-  const e = o?.effetto;
-  return e ? `+${e.va} VA a ${e.abilita} ${e.condizione}` : '';
+  return (o?.effetti ?? []).map(testoEffettoOggetto).join('; ');
 }
 
 /** Valore di cessione di un armamento di base (§2.16.29: 100 % del prezzo del modello assegnato). */
@@ -195,8 +194,9 @@ export function vociDotazione(dotazione, classe, corporazione, dati) {
     const o = reg[id];
     const sotto = o.sotto ? dotazione?.sotto?.[id]?.trim() : '';
     const personalizzato = { nome: sotto ? `${o.nome} (${sotto})` : o.nome, tipo: 'altro' };
-    if (o.effetto) personalizzato.testo = testoEffetto(o);
-    return { uid, rif: null, personalizzato, stato: null, quantita: quantita ?? 1, note: '', dotazione_iniziale: true };
+    // gli effetti sui VA si leggono dai dati (oggetti_dotazione) attraverso dotazione_id
+    const stato = o.effetti?.length ? statoIniziale('altro', [], null, o.effetti) : null;
+    return { uid, rif: null, personalizzato, stato, quantita: quantita ?? 1, note: '', dotazione_iniziale: true, dotazione_id: id };
   };
   const voceCatalogo = (uid, rif, quantita, note = '') => {
     const def = cat.perRif.get(rif);

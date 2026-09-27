@@ -4,8 +4,14 @@
 // incoerenze (due armature, mani impegnate…) sono avvisi, non blocchi: decide il master.
 //
 // Voce del personaggio: { uid, rif: "armi:spada-leggera" | null, personalizzato?: { nome, tipo,
-//   abilita?, danno?, ar?, testo?, peso? }, stato, quantita, montato_su?: uid, note,
-//   dotazione_iniziale?: true (§2.16, src/dotazioni.js) }
+//   abilita?, danno?, ar?, testo?, peso?, effetti? }, stato, quantita, montato_su?: uid, note,
+//   dotazione_iniziale?: true, dotazione_id?: id dell'oggetto di dotazione (§2.16, src/dotazioni.js) }
+//
+// Effetti sui VA (docs/effetti-oggetti.md): «effetti» dell'oggetto del catalogo, dell'oggetto di
+// dotazione (data/dotazioni.json → oggetti_dotazione) o del personalizzato:
+//   [{ abilita, valore, ambito: 'generale'|'situazionale'|'uso_specifico', uso?, condizione?, fonte? }]
+// Contano solo con l'oggetto in uso (indossato, impugnato…): gli oggetti senza stati propri che
+// hanno effetti ricevono «In uso» / «Nello zaino».
 // peso: kg per unità (Equipaggiamento §1.6, §1.10), per il carico (src/carico.js).
 
 export const TIPI = ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'altro'];
@@ -47,6 +53,39 @@ export const NOMI_STATI = {
 };
 
 const ATTIVI = new Set(['impugnata', 'imbracciato', 'indossata', 'in_uso']);
+// stati degli oggetti senza stati propri (altro, sanitario, munizioni) quando hanno effetti sui VA
+const STATI_CON_EFFETTI = ['in_uso', 'zaino'];
+export const AMBITI_EFFETTO = ['generale', 'situazionale', 'uso_specifico'];
+export const NOMI_AMBITI = { generale: 'sempre', situazionale: 'condizione da attivare al tavolo', uso_specifico: 'solo per un uso' };
+
+/** Stati ammessi per un oggetto: quelli del tipo, oppure In uso / Nello zaino se ha effetti. */
+export function statiPer(tipo, effetti = []) {
+  const s = STATI[tipo] ?? [];
+  return s.length || !effetti.length ? s : STATI_CON_EFFETTI;
+}
+
+/** «+2 VA a Percezione (solo per tracce)», «+1 VA a Oratoria (con la condizione)». */
+export function testoEffettoOggetto(e) {
+  const v = `${e.valore > 0 ? '+' : '−'}${Math.abs(e.valore)} VA ${/^[aA]/.test(e.abilita) ? 'ad' : 'a'} ${e.abilita}`;
+  if (e.ambito === 'uso_specifico') return `${v} (solo per ${e.uso})`;
+  if (e.ambito === 'situazionale') return `${v} (con la condizione attiva)`;
+  return v;
+}
+
+/** Effetti di un personaggio personalizzato, ripuliti (l'Abilità si controlla al calcolo). */
+export function normalizzaEffetti(lista) {
+  if (!Array.isArray(lista)) return [];
+  return lista.filter(isOggetto).map((e) => {
+    const x = {
+      abilita: testo(e.abilita).trim(),
+      valore: Number.isInteger(e.valore) ? e.valore : 0,
+      ambito: AMBITI_EFFETTO.includes(e.ambito) ? e.ambito : 'generale',
+    };
+    if (x.ambito === 'uso_specifico') x.uso = testo(e.uso).trim().slice(0, 40) || 'uso indicato';
+    if (testo(e.condizione).trim()) x.condizione = testo(e.condizione).trim().slice(0, 300);
+    return x;
+  }).filter((e) => e.abilita && e.valore);
+}
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const testo = (v) => (typeof v === 'string' ? v : '');
 const normalizzaTesto = (s) => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
@@ -200,7 +239,8 @@ export function catalogo(dati) {
     const f = eq.file?.[fileId];
     for (const o of f?.oggetti ?? []) oggetti.push({ ...o, rif: `${fileId}:${o.id}`, file: fileId });
   }
-  return { oggetti, perRif: new Map(oggetti.map((o) => [o.rif, o])) };
+  // oggetti della dotazione iniziale senza scheda di catalogo (§2.16): servono per gli effetti
+  return { oggetti, perRif: new Map(oggetti.map((o) => [o.rif, o])), dotazione: dati?.dotazioni?.oggetti_dotazione ?? {} };
 }
 
 /** Voci per la cascata Tipo → Catalogo → Famiglia → Profilo: ogni livello solo ciò che esiste. */
@@ -231,9 +271,12 @@ export function cercaNelCatalogo(dati, testoCercato, massimo = 12) {
 // ---------------------------------------------------------------------------
 // Voci del personaggio
 
-/** Stato iniziale di una voce appena aggiunta: pronta per armi e scudi, indossata per armature se nessuna lo è. */
-export function statoIniziale(tipo, voci = [], dati = null) {
-  const stati = STATI[tipo] ?? [];
+/**
+ * Stato iniziale di una voce appena aggiunta: pronta per armi e scudi, indossata per armature se
+ * nessuna lo è; «in uso» per gli oggetti senza stati propri che hanno effetti.
+ */
+export function statoIniziale(tipo, voci = [], dati = null, effetti = []) {
+  const stati = statiPer(tipo, effetti);
   if (!stati.length) return null;
   if (tipo === 'armatura') {
     const giaIndossata = dati && voci.some((v) => v.stato === 'indossata' && risolvi(v, catalogo(dati)).tipo === 'armatura');
@@ -288,10 +331,13 @@ export function normalizzaEquipaggiamento(valore) {
         // §1.6: peso in kg per unità, per il carico
         ...(typeof p.peso === 'number' && Number.isFinite(p.peso) && p.peso >= 0 ? { peso: Math.round(p.peso * 100) / 100 } : {}),
       };
+      const effetti = normalizzaEffetti(p.effetti);
+      if (effetti.length) out.personalizzato.effetti = effetti;
     }
     if (typeof v.montato_su === 'string' && v.montato_su) out.montato_su = v.montato_su;
     if (v.sintonizzato === true) out.sintonizzato = true; // §7.10: scelta del giocatore
     if (v.dotazione_iniziale === true) out.dotazione_iniziale = true; // §2.16: voce della dotazione iniziale (src/dotazioni.js)
+    if (!out.rif && testo(v.dotazione_id)) out.dotazione_id = v.dotazione_id; // oggetto di dotazione: effetti dai dati
     return out;
   });
 }
@@ -305,9 +351,10 @@ export function risolvi(voce, cat) {
   const fuoriCatalogo = !!voce.rif && !def;
   const tipo = def?.tipo ?? voce.personalizzato?.tipo ?? 'altro';
   const nome = def?.nome ?? voce.personalizzato?.nome ?? (fuoriCatalogo ? voce.rif : 'Oggetto');
-  const stati = STATI[tipo] ?? [];
+  const effetti = fuoriCatalogo ? [] : def?.effetti ?? cat.dotazione?.[voce.dotazione_id]?.effetti ?? voce.personalizzato?.effetti ?? [];
+  const stati = statiPer(tipo, effetti);
   const attivo = !fuoriCatalogo && ATTIVI.has(voce.stato) && stati.includes(voce.stato);
-  return { voce, uid: voce.uid, def, tipo, nome, fuoriCatalogo, attivo, personalizzato: !voce.rif };
+  return { voce, uid: voce.uid, def, tipo, nome, fuoriCatalogo, attivo, personalizzato: !voce.rif, effetti, stati };
 }
 
 // ---------------------------------------------------------------------------
@@ -475,6 +522,26 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     lancioPotere += penalita.lancio_potere ?? 0;
     forMancanteArmature += forMancante;
   }
+  // Effetti degli oggetti in uso (docs/effetti-oggetti.md). I generali entrano nel VA con
+  // l'equipaggiamento, come le penalità delle armature; situazionali e d'uso specifico si raccolgono
+  // qui e si applicano nella modalità tavolo (src/condizioni.js), il totale da regole non cambia.
+  const effettiOggetti = [];
+  const nomiAbilita = new Set(base.abilita.map((a) => a.nome));
+  for (const o of oggetti.filter((x) => x.attivo && x.effetti.length)) {
+    for (const e of o.effetti) {
+      if (!nomiAbilita.has(e.abilita)) { avvisi.push(`${o.nome}: «${e.abilita}» non è un’Abilità, effetto ignorato.`); continue; }
+      if (e.ambito === 'generale') aggiungi(e.abilita, e.valore, o.nome);
+      effettiOggetti.push({ uid: o.uid, oggetto: o.nome, ...e });
+    }
+  }
+  // §7.11.1: la penalità dell'armatura al lancio con Potere vale solo per lanciare Incantesimi
+  for (const p of protezioni.filter((x) => x.tipo === 'armatura' && x.penalita?.lancio_potere)) {
+    effettiOggetti.push({
+      uid: p.uid, oggetto: p.nome, abilita: 'Potere', valore: p.penalita.lancio_potere, ambito: 'uso_specifico', uso: 'lancio',
+      condizione: 'Penalità dell’armatura alle Prove di Potere per lanciare Incantesimi.', fonte: 'Armamenti §7.11.1', permanente: true,
+    });
+  }
+
   const armatureIndossate = oggetti.filter((x) => x.attivo && x.tipo === 'armatura');
   if (armatureIndossate.length > 1) {
     avvisi.push(`Due o più armature indossate (${armatureIndossate.map((x) => x.nome).join(', ')}): non si sovrappongono due armature complete (Armamenti §7.11.2). Le penalità sono sommate.`);
@@ -703,6 +770,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     zaino: oggetti.filter((o) => !o.attivo),
     equipAbilita,
     componentiEquip,
+    effettiOggetti,
     contenitori: contenitoriRisolti(oggetti, dati),
     abilitaDifese: difeseAbilita,
     movimentoQ,

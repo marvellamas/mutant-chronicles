@@ -3776,11 +3776,15 @@
     },
     "binocolo": {
       "nome": "Binocolo",
-      "effetto": {
-        "abilita": "Percezione",
-        "va": 1,
-        "condizione": "per esaminare dettagli lontani"
-      }
+      "effetti": [
+        {
+          "abilita": "Percezione",
+          "valore": 1,
+          "ambito": "situazionale",
+          "condizione": "Il Binocolo concede +1 VA a Percezione per esaminare dettagli lontani nelle condizioni previste dal manuale.",
+          "fonte": "Giocatore §2.16.7"
+        }
+      ]
     },
     "registratore-audiovisivo": {
       "nome": "Registratore audiovisivo"
@@ -3788,38 +3792,56 @@
     "corredo-sopravvivenza-ambientale": {
       "nome": "Corredo di sopravvivenza ambientale",
       "sotto": "ambiente",
-      "effetto": {
-        "abilita": "Sopravvivenza",
-        "va": 2,
-        "condizione": "nell’ambiente scelto, per orientamento, raccolta di risorse e preparazione di un riparo"
-      }
+      "effetti": [
+        {
+          "abilita": "Sopravvivenza",
+          "valore": 2,
+          "ambito": "situazionale",
+          "condizione": "Nell’ambiente scelto concede +2 VA a Sopravvivenza per orientamento, raccolta di risorse e preparazione di un riparo, secondo la propria scheda.",
+          "fonte": "Giocatore §2.16.3"
+        }
+      ]
     },
     "corredo-orientamento": {
       "nome": "Corredo di orientamento, con carta della zona iniziale",
-      "effetto": {
-        "abilita": "Sopravvivenza",
-        "va": 1,
-        "condizione": "per orientarsi, quando esistono riferimenti utilizzabili; non si somma al Corredo di sopravvivenza ambientale"
-      }
+      "effetti": [
+        {
+          "abilita": "Sopravvivenza",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "orientamento",
+          "condizione": "Il Corredo di orientamento concede +1 VA a Sopravvivenza per orientarsi, quando esistono riferimenti utilizzabili.",
+          "fonte": "Giocatore §2.16.4"
+        }
+      ]
     },
     "corredo-assalto-verticale": {
       "nome": "Corredo da assalto verticale",
-      "effetto": {
-        "abilita": "Atletica",
-        "va": 2,
-        "condizione": "per arrampicarsi o calarsi usando il corredo"
-      }
+      "effetti": [
+        {
+          "abilita": "Atletica",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "arrampicata",
+          "condizione": "Concede +2 VA ad Atletica per arrampicarsi o calarsi usando il corredo.",
+          "fonte": "Giocatore §2.16.4"
+        }
+      ]
     },
     "rilevatore-ambientale": {
       "nome": "Rilevatore ambientale"
     },
     "abiti-eleganti": {
       "nome": "Abiti eleganti, comprese le calzature (completo aggiuntivo)",
-      "effetto": {
-        "abilita": "Oratoria",
-        "va": 1,
-        "condizione": "negli ambienti formali appropriati"
-      }
+      "effetti": [
+        {
+          "abilita": "Oratoria",
+          "valore": 1,
+          "ambito": "situazionale",
+          "condizione": "Gli Abiti eleganti concedono +1 VA a Oratoria negli ambienti formali appropriati, secondo la propria scheda.",
+          "fonte": "Giocatore §2.16.5"
+        }
+      ]
     },
     "monocolo-periscopico": {
       "nome": "Monocolo periscopico"
@@ -3835,11 +3857,16 @@
     },
     "abiti-da-viaggio": {
       "nome": "Abiti da viaggio, comprese le calzature (completo aggiuntivo)",
-      "effetto": {
-        "abilita": "Atletica",
-        "va": 1,
-        "condizione": "per arrampicarsi e mantenere l’equilibrio sui terreni accidentati"
-      }
+      "effetti": [
+        {
+          "abilita": "Atletica",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "arrampicata ed equilibrio",
+          "condizione": "Gli Abiti da viaggio concedono +1 VA ad Atletica per arrampicarsi e mantenere l’equilibrio su terreno accidentato.",
+          "fonte": "Giocatore §2.16.10"
+        }
+      ]
     },
     "comunicatore-da-squadra": {
       "nome": "Comunicatore da squadra",
@@ -3853,10 +3880,30 @@
       "sotto": "corredo_agricolo"
     },
     "corredo-artigianale-professionale": {
-      "nome": "Corredo artigianale professionale"
+      "nome": "Corredo artigianale professionale",
+      "effetti": [
+        {
+          "abilita": "Tecnologia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "lavori del mestiere",
+          "condizione": "Concede +2 VA a Tecnologia per lavorare e riparare i prodotti di quel mestiere.",
+          "fonte": "Giocatore §2.16.13"
+        }
+      ]
     },
     "corredo-manutenzione-campo": {
-      "nome": "Corredo di manutenzione da campo"
+      "nome": "Corredo di manutenzione da campo",
+      "effetti": [
+        {
+          "abilita": "Tecnologia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "riparazioni sul campo",
+          "condizione": "Il Corredo di manutenzione da campo concede +2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo di armi, armature, propulsori ed esoscheletri compatibili.",
+          "fonte": "Giocatore §2.16.13"
+        }
+      ]
     },
     "lampada-frontale": {
       "nome": "Lampada frontale",
@@ -3880,11 +3927,16 @@
     "corredo-analisi-campo": {
       "nome": "Corredo di analisi da campo",
       "sotto": "ambito_analisi",
-      "effetto": {
-        "abilita": "Scienza",
-        "va": 2,
-        "condizione": "per le analisi preliminari pertinenti all’ambito scelto"
-      }
+      "effetti": [
+        {
+          "abilita": "Scienza",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "analisi",
+          "condizione": "Comprende strumenti di misura, ottiche, test e materiale ordinario per il campionamento; concede +2 VA a Scienza per analisi preliminari realmente eseguibili, normalmente in 10 minuti.",
+          "fonte": "Giocatore §2.16.17"
+        }
+      ]
     },
     "corredo-amministrativo": {
       "nome": "Corredo amministrativo (Standard)"
@@ -3903,11 +3955,15 @@
     },
     "completo-cerimoniale": {
       "nome": "Completo cerimoniale, comprese le calzature (profilo Abiti eleganti)",
-      "effetto": {
-        "abilita": "Oratoria",
-        "va": 1,
-        "condizione": "negli ambienti formali appropriati"
-      }
+      "effetti": [
+        {
+          "abilita": "Oratoria",
+          "valore": 1,
+          "ambito": "situazionale",
+          "condizione": "L’abito cerimoniale usa il profilo degli Abiti eleganti: +1 VA a Oratoria nelle situazioni cerimoniali o formali appropriate.",
+          "fonte": "Giocatore §2.16.21"
+        }
+      ]
     },
     "lanterna-elettrica": {
       "nome": "Lanterna elettrica",

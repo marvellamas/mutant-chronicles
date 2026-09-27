@@ -87,7 +87,7 @@
       {
         "uid": "emui9qmqgigth",
         "rif": "corredi_dispositivi:kit-trauma-fratellanza",
-        "stato": null,
+        "stato": "in_uso",
         "quantita": 1,
         "note": ""
       }

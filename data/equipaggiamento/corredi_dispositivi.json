@@ -108,7 +108,25 @@
           "testo": "I cinque corredi sono strumenti Professionali: concedono +2 VA soltanto alle attività indicate. Questo è il modificatore complessivo degli strumenti (§1.4.1), non un bonus da sommare a ciascun componente del corredo. Restano applicabili i Talenti e le circostanze pertinenti. La Qualità costruttiva Non comune e la PS Integrità 12 riguardano la resistenza dell’oggetto e non cambiano il livello Professionale."
         }
       ],
-      "effetto_breve": "+2 VA a Percezione per esaminare tracce materiali mediante gli strumenti del corredo e a Scienza per analisi preliminari eseguibili con una dotazione portatile."
+      "effetto_breve": "+2 VA a Percezione per esaminare tracce materiali mediante gli strumenti del corredo e a Scienza per analisi preliminari eseguibili con una dotazione portatile.",
+      "effetti": [
+        {
+          "abilita": "Percezione",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "tracce",
+          "condizione": "+2 VA a Percezione per esaminare tracce materiali mediante gli strumenti del corredo e a Scienza per analisi preliminari eseguibili con una dotazione portatile.",
+          "fonte": "Armamenti §7.12"
+        },
+        {
+          "abilita": "Scienza",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "analisi",
+          "condizione": "+2 VA a Percezione per esaminare tracce materiali mediante gli strumenti del corredo e a Scienza per analisi preliminari eseguibili con una dotazione portatile.",
+          "fonte": "Armamenti §7.12"
+        }
+      ]
     },
     {
       "id": "corredo-d-intrusione-asa",
@@ -131,7 +149,17 @@
           "testo": "I cinque corredi sono strumenti Professionali: concedono +2 VA soltanto alle attività indicate. Questo è il modificatore complessivo degli strumenti (§1.4.1), non un bonus da sommare a ciascun componente del corredo. Restano applicabili i Talenti e le circostanze pertinenti. La Qualità costruttiva Non comune e la PS Integrità 12 riguardano la resistenza dell’oggetto e non cambiano il livello Professionale."
         }
       ],
-      "effetto_breve": "+2 VA a Tecnologia per intervenire su serrature, allarmi e sistemi di accesso raggiungibili e compatibili con gli strumenti."
+      "effetto_breve": "+2 VA a Tecnologia per intervenire su serrature, allarmi e sistemi di accesso raggiungibili e compatibili con gli strumenti.",
+      "effetti": [
+        {
+          "abilita": "Tecnologia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "serrature e allarmi",
+          "condizione": "+2 VA a Tecnologia per intervenire su serrature, allarmi e sistemi di accesso raggiungibili e compatibili con gli strumenti.",
+          "fonte": "Armamenti §7.12"
+        }
+      ]
     },
     {
       "id": "kit-di-controsorveglianza-asa",
@@ -154,7 +182,17 @@
           "testo": "I cinque corredi sono strumenti Professionali: concedono +2 VA soltanto alle attività indicate. Questo è il modificatore complessivo degli strumenti (§1.4.1), non un bonus da sommare a ciascun componente del corredo. Restano applicabili i Talenti e le circostanze pertinenti. La Qualità costruttiva Non comune e la PS Integrità 12 riguardano la resistenza dell’oggetto e non cambiano il livello Professionale."
         }
       ],
-      "effetto_breve": "+2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili."
+      "effetto_breve": "+2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili.",
+      "effetti": [
+        {
+          "abilita": "Tecnologia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "controsorveglianza",
+          "condizione": "+2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili.",
+          "fonte": "Armamenti §7.12"
+        }
+      ]
     },
     {
       "id": "corredo-da-artificiere-dell-alleanza",
@@ -177,7 +215,17 @@
           "testo": "I cinque corredi sono strumenti Professionali: concedono +2 VA soltanto alle attività indicate. Questo è il modificatore complessivo degli strumenti (§1.4.1), non un bonus da sommare a ciascun componente del corredo. Restano applicabili i Talenti e le circostanze pertinenti. La Qualità costruttiva Non comune e la PS Integrità 12 riguardano la resistenza dell’oggetto e non cambiano il livello Professionale."
         }
       ],
-      "effetto_breve": "+2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili."
+      "effetto_breve": "+2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili.",
+      "effetti": [
+        {
+          "abilita": "Tecnologia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "esplosivi",
+          "condizione": "+2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili.",
+          "fonte": "Armamenti §7.12"
+        }
+      ]
     },
     {
       "id": "kit-trauma-dell-alleanza",
@@ -205,7 +253,17 @@
           "testo": "I cinque corredi sono strumenti Professionali: concedono +2 VA soltanto alle attività indicate. Questo è il modificatore complessivo degli strumenti (§1.4.1), non un bonus da sommare a ciascun componente del corredo. Restano applicabili i Talenti e le circostanze pertinenti. La Qualità costruttiva Non comune e la PS Integrità 12 riguardano la resistenza dell’oggetto e non cambiano il livello Professionale."
         }
       ],
-      "effetto_breve": "Concede +2 VA a Medicina e comprende cinque applicazioni; costo 3.000, ricarica da cinque applicazioni 300."
+      "effetto_breve": "Concede +2 VA a Medicina e comprende cinque applicazioni; costo 3.000, ricarica da cinque applicazioni 300.",
+      "effetti": [
+        {
+          "abilita": "Medicina",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "pronto soccorso",
+          "condizione": "Concede +2 VA a Medicina e comprende cinque applicazioni; costo 3.000, ricarica da cinque applicazioni 300.",
+          "fonte": "Armamenti §7.12"
+        }
+      ]
     },
     {
       "id": "corredo-da-ricognizione-rangers",
@@ -230,7 +288,16 @@
           "testo": "I cinque corredi sono strumenti Professionali: +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova (§1.4.1); i singoli componenti non sommano bonus tra loro. Talenti, circostanze e proprietà pertinenti delle armature restano applicabili separatamente. Non comune indica la Qualità costruttiva e determina PS Integrità 12, non il livello degli strumenti."
         }
       ],
-      "effetto_breve": "Concede +2 VA a Percezione per osservazioni visive effettuate attraverso le ottiche: individuare postazioni, esaminare passaggi o distinguere movimenti lontani."
+      "effetto_breve": "Concede +2 VA a Percezione per osservazioni visive effettuate attraverso le ottiche: individuare postazioni, esaminare passaggi o distinguere movimenti lontani.",
+      "effetti": [
+        {
+          "abilita": "Percezione",
+          "valore": 2,
+          "ambito": "situazionale",
+          "condizione": "Concede +2 VA a Percezione per osservazioni visive effettuate attraverso le ottiche: individuare postazioni, esaminare passaggi o distinguere movimenti lontani.",
+          "fonte": "Armamenti §7.13.7"
+        }
+      ]
     },
     {
       "id": "corredo-di-sopravvivenza-ambientale-capitol",
@@ -255,7 +322,16 @@
           "testo": "I cinque corredi sono strumenti Professionali: +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova (§1.4.1); i singoli componenti non sommano bonus tra loro. Talenti, circostanze e proprietà pertinenti delle armature restano applicabili separatamente. Non comune indica la Qualità costruttiva e determina PS Integrità 12, non il livello degli strumenti."
         }
       ],
-      "effetto_breve": "Concede +2 VA a Sopravvivenza nell’ambiente scelto per orientarsi con strumenti e riferimenti disponibili, reperire e raccogliere risorse utilizzabili, individuare un luogo adatto e allestire un riparo."
+      "effetto_breve": "Concede +2 VA a Sopravvivenza nell’ambiente scelto per orientarsi con strumenti e riferimenti disponibili, reperire e raccogliere risorse utilizzabili, individuare un luogo adatto e allestire un riparo.",
+      "effetti": [
+        {
+          "abilita": "Sopravvivenza",
+          "valore": 2,
+          "ambito": "situazionale",
+          "condizione": "Concede +2 VA a Sopravvivenza nell’ambiente scelto per orientarsi con strumenti e riferimenti disponibili, reperire e raccogliere risorse utilizzabili, individuare un luogo adatto e allestire un riparo.",
+          "fonte": "Armamenti §7.13.7"
+        }
+      ]
     },
     {
       "id": "corredo-da-assalto-verticale-capitol",
@@ -280,7 +356,17 @@
           "testo": "I cinque corredi sono strumenti Professionali: +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova (§1.4.1); i singoli componenti non sommano bonus tra loro. Talenti, circostanze e proprietà pertinenti delle armature restano applicabili separatamente. Non comune indica la Qualità costruttiva e determina PS Integrità 12, non il livello degli strumenti."
         }
       ],
-      "effetto_breve": "Concede +2 VA ad Atletica per arrampicarsi o calarsi utilizzando effettivamente il corredo."
+      "effetto_breve": "Concede +2 VA ad Atletica per arrampicarsi o calarsi utilizzando effettivamente il corredo.",
+      "effetti": [
+        {
+          "abilita": "Atletica",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "arrampicata",
+          "condizione": "Concede +2 VA ad Atletica per arrampicarsi o calarsi utilizzando effettivamente il corredo.",
+          "fonte": "Armamenti §7.13.7"
+        }
+      ]
     },
     {
       "id": "corredo-per-operazioni-subacquee",
@@ -305,7 +391,25 @@
           "testo": "I cinque corredi sono strumenti Professionali: +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova (§1.4.1); i singoli componenti non sommano bonus tra loro. Talenti, circostanze e proprietà pertinenti delle armature restano applicabili separatamente. Non comune indica la Qualità costruttiva e determina PS Integrità 12, non il livello degli strumenti."
         }
       ],
-      "effetto_breve": "Concede +2 VA ad Atletica nelle Prove di Nuoto quando si utilizzano le pinne e +2 VA a Sopravvivenza per orientarsi sott’acqua utilizzando bussola, riferimenti e sagola."
+      "effetto_breve": "Concede +2 VA ad Atletica nelle Prove di Nuoto quando si utilizzano le pinne e +2 VA a Sopravvivenza per orientarsi sott’acqua utilizzando bussola, riferimenti e sagola.",
+      "effetti": [
+        {
+          "abilita": "Atletica",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "nuoto con le pinne",
+          "condizione": "Concede +2 VA ad Atletica nelle Prove di Nuoto quando si utilizzano le pinne e +2 VA a Sopravvivenza per orientarsi sott’acqua utilizzando bussola, riferimenti e sagola.",
+          "fonte": "Armamenti §7.13.7"
+        },
+        {
+          "abilita": "Sopravvivenza",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "orientamento sott’acqua",
+          "condizione": "Concede +2 VA ad Atletica nelle Prove di Nuoto quando si utilizzano le pinne e +2 VA a Sopravvivenza per orientarsi sott’acqua utilizzando bussola, riferimenti e sagola.",
+          "fonte": "Armamenti §7.13.7"
+        }
+      ]
     },
     {
       "id": "corredo-di-manutenzione-da-campo",
@@ -330,7 +434,17 @@
           "testo": "I cinque corredi sono strumenti Professionali: +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova (§1.4.1); i singoli componenti non sommano bonus tra loro. Talenti, circostanze e proprietà pertinenti delle armature restano applicabili separatamente. Non comune indica la Qualità costruttiva e determina PS Integrità 12, non il livello degli strumenti."
         }
       ],
-      "effetto_breve": "Concede +2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo."
+      "effetto_breve": "Concede +2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo.",
+      "effetti": [
+        {
+          "abilita": "Tecnologia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "riparazioni sul campo",
+          "condizione": "Concede +2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo.",
+          "fonte": "Armamenti §7.13.7"
+        }
+      ]
     },
     {
       "id": "valigetta-investigativa-capitol",
@@ -353,7 +467,25 @@
           "testo": "Queste versioni Capitol utilizzano gli stessi valori e le stesse regole dei corredi dell’Alleanza (§7.12). Sono strumenti Professionali, di Qualità Non comune, con PS Integrità 12. Il +2 VA è il modificatore complessivo degli strumenti per l’attività indicata."
         }
       ],
-      "effetto_breve": "+2 VA a Percezione per esaminare tracce materiali mediante gli strumenti e a Scienza per analisi preliminari eseguibili con dotazione portatile."
+      "effetto_breve": "+2 VA a Percezione per esaminare tracce materiali mediante gli strumenti e a Scienza per analisi preliminari eseguibili con dotazione portatile.",
+      "effetti": [
+        {
+          "abilita": "Percezione",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "tracce",
+          "condizione": "+2 VA a Percezione per esaminare tracce materiali mediante gli strumenti e a Scienza per analisi preliminari eseguibili con dotazione portatile.",
+          "fonte": "Armamenti §7.13.8"
+        },
+        {
+          "abilita": "Scienza",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "analisi",
+          "condizione": "+2 VA a Percezione per esaminare tracce materiali mediante gli strumenti e a Scienza per analisi preliminari eseguibili con dotazione portatile.",
+          "fonte": "Armamenti §7.13.8"
+        }
+      ]
     },
     {
       "id": "corredo-d-intrusione-capitol",
@@ -376,7 +508,17 @@
           "testo": "Queste versioni Capitol utilizzano gli stessi valori e le stesse regole dei corredi dell’Alleanza (§7.12). Sono strumenti Professionali, di Qualità Non comune, con PS Integrità 12. Il +2 VA è il modificatore complessivo degli strumenti per l’attività indicata."
         }
       ],
-      "effetto_breve": "+2 VA a Tecnologia per intervenire su serrature, allarmi e sistemi di accesso raggiungibili e compatibili."
+      "effetto_breve": "+2 VA a Tecnologia per intervenire su serrature, allarmi e sistemi di accesso raggiungibili e compatibili.",
+      "effetti": [
+        {
+          "abilita": "Tecnologia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "serrature e allarmi",
+          "condizione": "+2 VA a Tecnologia per intervenire su serrature, allarmi e sistemi di accesso raggiungibili e compatibili.",
+          "fonte": "Armamenti §7.13.8"
+        }
+      ]
     },
     {
       "id": "kit-di-controsorveglianza-capitol",
@@ -399,7 +541,17 @@
           "testo": "Queste versioni Capitol utilizzano gli stessi valori e le stesse regole dei corredi dell’Alleanza (§7.12). Sono strumenti Professionali, di Qualità Non comune, con PS Integrità 12. Il +2 VA è il modificatore complessivo degli strumenti per l’attività indicata."
         }
       ],
-      "effetto_breve": "+2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili."
+      "effetto_breve": "+2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili.",
+      "effetti": [
+        {
+          "abilita": "Tecnologia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "controsorveglianza",
+          "condizione": "+2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili.",
+          "fonte": "Armamenti §7.13.8"
+        }
+      ]
     },
     {
       "id": "corredo-da-artificiere-capitol",
@@ -422,7 +574,17 @@
           "testo": "Queste versioni Capitol utilizzano gli stessi valori e le stesse regole dei corredi dell’Alleanza (§7.12). Sono strumenti Professionali, di Qualità Non comune, con PS Integrità 12. Il +2 VA è il modificatore complessivo degli strumenti per l’attività indicata."
         }
       ],
-      "effetto_breve": "+2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili."
+      "effetto_breve": "+2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili.",
+      "effetti": [
+        {
+          "abilita": "Tecnologia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "esplosivi",
+          "condizione": "+2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili.",
+          "fonte": "Armamenti §7.13.8"
+        }
+      ]
     },
     {
       "id": "kit-trauma-capitol",
@@ -450,7 +612,17 @@
           "testo": "Queste versioni Capitol utilizzano gli stessi valori e le stesse regole dei corredi dell’Alleanza (§7.12). Sono strumenti Professionali, di Qualità Non comune, con PS Integrità 12. Il +2 VA è il modificatore complessivo degli strumenti per l’attività indicata."
         }
       ],
-      "effetto_breve": "Concede +2 VA a Medicina e comprende cinque applicazioni; costo 3.000, ricarica da cinque applicazioni 300."
+      "effetto_breve": "Concede +2 VA a Medicina e comprende cinque applicazioni; costo 3.000, ricarica da cinque applicazioni 300.",
+      "effetti": [
+        {
+          "abilita": "Medicina",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "pronto soccorso",
+          "condizione": "Concede +2 VA a Medicina e comprende cinque applicazioni; costo 3.000, ricarica da cinque applicazioni 300.",
+          "fonte": "Armamenti §7.13.8"
+        }
+      ]
     },
     {
       "id": "valigetta-investigativa-isc",
@@ -473,7 +645,25 @@
           "testo": "I nove corredi sono strumenti Professionali: concedono +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova; componenti e corredi non sommano tra loro il medesimo beneficio. Talenti e proprietà pertinenti delle armature restano applicabili separatamente. Tutti hanno Qualità Non comune e PS Integrità 12; i PI sono propri del corredo."
         }
       ],
-      "effetto_breve": "Concede +2 VA a Percezione per esaminare tali tracce mediante gli strumenti e a Scienza per analisi preliminari eseguibili con la dotazione portatile."
+      "effetto_breve": "Concede +2 VA a Percezione per esaminare tali tracce mediante gli strumenti e a Scienza per analisi preliminari eseguibili con la dotazione portatile.",
+      "effetti": [
+        {
+          "abilita": "Percezione",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "tracce",
+          "condizione": "Concede +2 VA a Percezione per esaminare tali tracce mediante gli strumenti e a Scienza per analisi preliminari eseguibili con la dotazione portatile.",
+          "fonte": "Armamenti §7.14.8"
+        },
+        {
+          "abilita": "Scienza",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "analisi",
+          "condizione": "Concede +2 VA a Percezione per esaminare tali tracce mediante gli strumenti e a Scienza per analisi preliminari eseguibili con la dotazione portatile.",
+          "fonte": "Armamenti §7.14.8"
+        }
+      ]
     },
     {
       "id": "corredo-d-intrusione-isc",
@@ -496,7 +686,17 @@
           "testo": "I nove corredi sono strumenti Professionali: concedono +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova; componenti e corredi non sommano tra loro il medesimo beneficio. Talenti e proprietà pertinenti delle armature restano applicabili separatamente. Tutti hanno Qualità Non comune e PS Integrità 12; i PI sono propri del corredo."
         }
       ],
-      "effetto_breve": "Concede +2 VA a Tecnologia per intervenire su serrature elettroniche, allarmi e sistemi di accesso raggiungibili e compatibili."
+      "effetto_breve": "Concede +2 VA a Tecnologia per intervenire su serrature elettroniche, allarmi e sistemi di accesso raggiungibili e compatibili.",
+      "effetti": [
+        {
+          "abilita": "Tecnologia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "serrature e allarmi",
+          "condizione": "Concede +2 VA a Tecnologia per intervenire su serrature elettroniche, allarmi e sistemi di accesso raggiungibili e compatibili.",
+          "fonte": "Armamenti §7.14.8"
+        }
+      ]
     },
     {
       "id": "kit-di-controsorveglianza-isc",
@@ -519,7 +719,17 @@
           "testo": "I nove corredi sono strumenti Professionali: concedono +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova; componenti e corredi non sommano tra loro il medesimo beneficio. Talenti e proprietà pertinenti delle armature restano applicabili separatamente. Tutti hanno Qualità Non comune e PS Integrità 12; i PI sono propri del corredo."
         }
       ],
-      "effetto_breve": "Concede +2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili."
+      "effetto_breve": "Concede +2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili.",
+      "effetti": [
+        {
+          "abilita": "Tecnologia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "controsorveglianza",
+          "condizione": "Concede +2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili.",
+          "fonte": "Armamenti §7.14.8"
+        }
+      ]
     },
     {
       "id": "corredo-da-artificiere-imperial",
@@ -542,7 +752,17 @@
           "testo": "I nove corredi sono strumenti Professionali: concedono +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova; componenti e corredi non sommano tra loro il medesimo beneficio. Talenti e proprietà pertinenti delle armature restano applicabili separatamente. Tutti hanno Qualità Non comune e PS Integrità 12; i PI sono propri del corredo."
         }
       ],
-      "effetto_breve": "Concede +2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili."
+      "effetto_breve": "Concede +2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili.",
+      "effetti": [
+        {
+          "abilita": "Tecnologia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "esplosivi",
+          "condizione": "Concede +2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili.",
+          "fonte": "Armamenti §7.14.8"
+        }
+      ]
     },
     {
       "id": "corredo-da-ricognizione-imperial",
@@ -565,7 +785,16 @@
           "testo": "I nove corredi sono strumenti Professionali: concedono +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova; componenti e corredi non sommano tra loro il medesimo beneficio. Talenti e proprietà pertinenti delle armature restano applicabili separatamente. Tutti hanno Qualità Non comune e PS Integrità 12; i PI sono propri del corredo."
         }
       ],
-      "effetto_breve": "Concede +2 VA a Percezione per osservazioni effettuate attraverso le ottiche, con visuale e illuminazione sufficienti."
+      "effetto_breve": "Concede +2 VA a Percezione per osservazioni effettuate attraverso le ottiche, con visuale e illuminazione sufficienti.",
+      "effetti": [
+        {
+          "abilita": "Percezione",
+          "valore": 2,
+          "ambito": "situazionale",
+          "condizione": "Concede +2 VA a Percezione per osservazioni effettuate attraverso le ottiche, con visuale e illuminazione sufficienti.",
+          "fonte": "Armamenti §7.14.8"
+        }
+      ]
     },
     {
       "id": "corredo-di-sopravvivenza-ambientale-imperial",
@@ -588,7 +817,16 @@
           "testo": "I nove corredi sono strumenti Professionali: concedono +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova; componenti e corredi non sommano tra loro il medesimo beneficio. Talenti e proprietà pertinenti delle armature restano applicabili separatamente. Tutti hanno Qualità Non comune e PS Integrità 12; i PI sono propri del corredo."
         }
       ],
-      "effetto_breve": "Concede +2 VA a Sopravvivenza nell’ambiente scelto per orientarsi con i riferimenti disponibili, reperire risorse utilizzabili e predisporre un riparo."
+      "effetto_breve": "Concede +2 VA a Sopravvivenza nell’ambiente scelto per orientarsi con i riferimenti disponibili, reperire risorse utilizzabili e predisporre un riparo.",
+      "effetti": [
+        {
+          "abilita": "Sopravvivenza",
+          "valore": 2,
+          "ambito": "situazionale",
+          "condizione": "Concede +2 VA a Sopravvivenza nell’ambiente scelto per orientarsi con i riferimenti disponibili, reperire risorse utilizzabili e predisporre un riparo.",
+          "fonte": "Armamenti §7.14.8"
+        }
+      ]
     },
     {
       "id": "corredo-da-assalto-verticale-imperial",
@@ -611,7 +849,17 @@
           "testo": "I nove corredi sono strumenti Professionali: concedono +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova; componenti e corredi non sommano tra loro il medesimo beneficio. Talenti e proprietà pertinenti delle armature restano applicabili separatamente. Tutti hanno Qualità Non comune e PS Integrità 12; i PI sono propri del corredo."
         }
       ],
-      "effetto_breve": "Concede +2 VA ad Atletica per arrampicarsi o calarsi utilizzando effettivamente il corredo."
+      "effetto_breve": "Concede +2 VA ad Atletica per arrampicarsi o calarsi utilizzando effettivamente il corredo.",
+      "effetti": [
+        {
+          "abilita": "Atletica",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "arrampicata",
+          "condizione": "Concede +2 VA ad Atletica per arrampicarsi o calarsi utilizzando effettivamente il corredo.",
+          "fonte": "Armamenti §7.14.8"
+        }
+      ]
     },
     {
       "id": "corredo-di-manutenzione-imperial",
@@ -634,7 +882,17 @@
           "testo": "I nove corredi sono strumenti Professionali: concedono +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova; componenti e corredi non sommano tra loro il medesimo beneficio. Talenti e proprietà pertinenti delle armature restano applicabili separatamente. Tutti hanno Qualità Non comune e PS Integrità 12; i PI sono propri del corredo."
         }
       ],
-      "effetto_breve": "Concede +2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo."
+      "effetto_breve": "Concede +2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo.",
+      "effetti": [
+        {
+          "abilita": "Tecnologia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "riparazioni sul campo",
+          "condizione": "Concede +2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo.",
+          "fonte": "Armamenti §7.14.8"
+        }
+      ]
     },
     {
       "id": "kit-trauma-imperial",
@@ -662,7 +920,17 @@
           "testo": "I nove corredi sono strumenti Professionali: concedono +2 VA alle attività indicate. Si applica un solo bonus complessivo da strumenti per Prova; componenti e corredi non sommano tra loro il medesimo beneficio. Talenti e proprietà pertinenti delle armature restano applicabili separatamente. Tutti hanno Qualità Non comune e PS Integrità 12; i PI sono propri del corredo."
         }
       ],
-      "effetto_breve": "Concede +2 VA a Medicina e comprende cinque applicazioni; costo 3.000, ricarica da cinque applicazioni 300."
+      "effetto_breve": "Concede +2 VA a Medicina e comprende cinque applicazioni; costo 3.000, ricarica da cinque applicazioni 300.",
+      "effetti": [
+        {
+          "abilita": "Medicina",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "pronto soccorso",
+          "condizione": "Concede +2 VA a Medicina e comprende cinque applicazioni; costo 3.000, ricarica da cinque applicazioni 300.",
+          "fonte": "Armamenti §7.14.8"
+        }
+      ]
     },
     {
       "id": "investigazione-mishima",
@@ -685,7 +953,25 @@
           "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
         }
       ],
-      "effetto_breve": "+2 VA a Percezione per esaminare tracce materiali attraverso gli strumenti e a Scienza per analisi preliminari realizzabili con una dotazione portatile."
+      "effetto_breve": "+2 VA a Percezione per esaminare tracce materiali attraverso gli strumenti e a Scienza per analisi preliminari realizzabili con una dotazione portatile.",
+      "effetti": [
+        {
+          "abilita": "Percezione",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "tracce",
+          "condizione": "+2 VA a Percezione per esaminare tracce materiali attraverso gli strumenti e a Scienza per analisi preliminari realizzabili con una dotazione portatile.",
+          "fonte": "Armamenti §7.16.5"
+        },
+        {
+          "abilita": "Scienza",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "analisi",
+          "condizione": "+2 VA a Percezione per esaminare tracce materiali attraverso gli strumenti e a Scienza per analisi preliminari realizzabili con una dotazione portatile.",
+          "fonte": "Armamenti §7.16.5"
+        }
+      ]
     },
     {
       "id": "intrusione-mishima",
@@ -708,7 +994,17 @@
           "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
         }
       ],
-      "effetto_breve": "+2 VA a Tecnologia per intervenire su serrature elettroniche, allarmi e sistemi di accesso materialmente raggiungibili e compatibili."
+      "effetto_breve": "+2 VA a Tecnologia per intervenire su serrature elettroniche, allarmi e sistemi di accesso materialmente raggiungibili e compatibili.",
+      "effetti": [
+        {
+          "abilita": "Tecnologia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "serrature e allarmi",
+          "condizione": "+2 VA a Tecnologia per intervenire su serrature elettroniche, allarmi e sistemi di accesso materialmente raggiungibili e compatibili.",
+          "fonte": "Armamenti §7.16.5"
+        }
+      ]
     },
     {
       "id": "controsorveglianza-mishima",
@@ -731,7 +1027,17 @@
           "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
         }
       ],
-      "effetto_breve": "+2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili."
+      "effetto_breve": "+2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili.",
+      "effetti": [
+        {
+          "abilita": "Tecnologia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "controsorveglianza",
+          "condizione": "+2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili.",
+          "fonte": "Armamenti §7.16.5"
+        }
+      ]
     },
     {
       "id": "ricognizione-mishima",
@@ -754,7 +1060,16 @@
           "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
         }
       ],
-      "effetto_breve": "+2 VA a Percezione per osservazioni attraverso le ottiche, con visuale e luce sufficienti; nessuna visione notturna o bonus all’ascolto."
+      "effetto_breve": "+2 VA a Percezione per osservazioni attraverso le ottiche, con visuale e luce sufficienti; nessuna visione notturna o bonus all’ascolto.",
+      "effetti": [
+        {
+          "abilita": "Percezione",
+          "valore": 2,
+          "ambito": "situazionale",
+          "condizione": "+2 VA a Percezione per osservazioni attraverso le ottiche, con visuale e luce sufficienti; nessuna visione notturna o bonus all’ascolto.",
+          "fonte": "Armamenti §7.16.5"
+        }
+      ]
     },
     {
       "id": "sopravvivenza-ambientale-mishima",
@@ -777,7 +1092,16 @@
           "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
         }
       ],
-      "effetto_breve": "+2 VA a Sopravvivenza per orientarsi con riferimenti disponibili, reperire risorse e preparare ripari nell’ambiente scelto."
+      "effetto_breve": "+2 VA a Sopravvivenza per orientarsi con riferimenti disponibili, reperire risorse e preparare ripari nell’ambiente scelto.",
+      "effetti": [
+        {
+          "abilita": "Sopravvivenza",
+          "valore": 2,
+          "ambito": "situazionale",
+          "condizione": "+2 VA a Sopravvivenza per orientarsi con riferimenti disponibili, reperire risorse e preparare ripari nell’ambiente scelto.",
+          "fonte": "Armamenti §7.16.5"
+        }
+      ]
     },
     {
       "id": "assalto-verticale-mishima",
@@ -800,7 +1124,17 @@
           "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
         }
       ],
-      "effetto_breve": "+2 VA ad Atletica per arrampicarsi o calarsi usando il corredo."
+      "effetto_breve": "+2 VA ad Atletica per arrampicarsi o calarsi usando il corredo.",
+      "effetti": [
+        {
+          "abilita": "Atletica",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "arrampicata",
+          "condizione": "+2 VA ad Atletica per arrampicarsi o calarsi usando il corredo.",
+          "fonte": "Armamenti §7.16.5"
+        }
+      ]
     },
     {
       "id": "artificiere-mishima",
@@ -823,7 +1157,17 @@
           "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
         }
       ],
-      "effetto_breve": "+2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili."
+      "effetto_breve": "+2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili.",
+      "effetti": [
+        {
+          "abilita": "Tecnologia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "esplosivi",
+          "condizione": "+2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili.",
+          "fonte": "Armamenti §7.16.5"
+        }
+      ]
     },
     {
       "id": "manutenzione-mishima",
@@ -846,7 +1190,17 @@
           "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
         }
       ],
-      "effetto_breve": "+2 VA a Tecnologia per diagnosi, manutenzione e riparazioni sul campo di armi, armature, propulsori ed esoscheletri compatibili."
+      "effetto_breve": "+2 VA a Tecnologia per diagnosi, manutenzione e riparazioni sul campo di armi, armature, propulsori ed esoscheletri compatibili.",
+      "effetti": [
+        {
+          "abilita": "Tecnologia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "riparazioni sul campo",
+          "condizione": "+2 VA a Tecnologia per diagnosi, manutenzione e riparazioni sul campo di armi, armature, propulsori ed esoscheletri compatibili.",
+          "fonte": "Armamenti §7.16.5"
+        }
+      ]
     },
     {
       "id": "kit-trauma-mishima",
@@ -874,7 +1228,17 @@
           "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
         }
       ],
-      "effetto_breve": "È il Kit di pronto soccorso Professionale del §7.19: +2 VA a Medicina, cinque applicazioni comprese, ricarica da cinque applicazioni 300."
+      "effetto_breve": "È il Kit di pronto soccorso Professionale del §7.19: +2 VA a Medicina, cinque applicazioni comprese, ricarica da cinque applicazioni 300.",
+      "effetti": [
+        {
+          "abilita": "Medicina",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "pronto soccorso",
+          "condizione": "È il Kit di pronto soccorso Professionale del §7.19: +2 VA a Medicina, cinque applicazioni comprese, ricarica da cinque applicazioni 300.",
+          "fonte": "Armamenti §7.16.5"
+        }
+      ]
     },
     {
       "id": "investigazione-fratellanza",
@@ -897,7 +1261,25 @@
           "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
         }
       ],
-      "effetto_breve": "+2 VA a Percezione per esaminare tracce materiali attraverso gli strumenti e a Scienza per analisi preliminari realizzabili con una dotazione portatile."
+      "effetto_breve": "+2 VA a Percezione per esaminare tracce materiali attraverso gli strumenti e a Scienza per analisi preliminari realizzabili con una dotazione portatile.",
+      "effetti": [
+        {
+          "abilita": "Percezione",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "tracce",
+          "condizione": "+2 VA a Percezione per esaminare tracce materiali attraverso gli strumenti e a Scienza per analisi preliminari realizzabili con una dotazione portatile.",
+          "fonte": "Armamenti §7.17.6"
+        },
+        {
+          "abilita": "Scienza",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "analisi",
+          "condizione": "+2 VA a Percezione per esaminare tracce materiali attraverso gli strumenti e a Scienza per analisi preliminari realizzabili con una dotazione portatile.",
+          "fonte": "Armamenti §7.17.6"
+        }
+      ]
     },
     {
       "id": "intrusione-fratellanza",
@@ -920,7 +1302,17 @@
           "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
         }
       ],
-      "effetto_breve": "+2 VA a Tecnologia per intervenire su serrature elettroniche, allarmi e sistemi di accesso materialmente raggiungibili e compatibili."
+      "effetto_breve": "+2 VA a Tecnologia per intervenire su serrature elettroniche, allarmi e sistemi di accesso materialmente raggiungibili e compatibili.",
+      "effetti": [
+        {
+          "abilita": "Tecnologia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "serrature e allarmi",
+          "condizione": "+2 VA a Tecnologia per intervenire su serrature elettroniche, allarmi e sistemi di accesso materialmente raggiungibili e compatibili.",
+          "fonte": "Armamenti §7.17.6"
+        }
+      ]
     },
     {
       "id": "controsorveglianza-fratellanza",
@@ -943,7 +1335,17 @@
           "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
         }
       ],
-      "effetto_breve": "+2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili."
+      "effetto_breve": "+2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili.",
+      "effetti": [
+        {
+          "abilita": "Tecnologia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "controsorveglianza",
+          "condizione": "+2 VA a Tecnologia per cercare dispositivi di sorveglianza o manomissioni durante un’ispezione fisica di locali e apparecchi accessibili.",
+          "fonte": "Armamenti §7.17.6"
+        }
+      ]
     },
     {
       "id": "ricognizione-fratellanza",
@@ -966,7 +1368,16 @@
           "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
         }
       ],
-      "effetto_breve": "+2 VA a Percezione per osservazioni attraverso le ottiche, con visuale e luce sufficienti; nessuna visione notturna o bonus all’ascolto."
+      "effetto_breve": "+2 VA a Percezione per osservazioni attraverso le ottiche, con visuale e luce sufficienti; nessuna visione notturna o bonus all’ascolto.",
+      "effetti": [
+        {
+          "abilita": "Percezione",
+          "valore": 2,
+          "ambito": "situazionale",
+          "condizione": "+2 VA a Percezione per osservazioni attraverso le ottiche, con visuale e luce sufficienti; nessuna visione notturna o bonus all’ascolto.",
+          "fonte": "Armamenti §7.17.6"
+        }
+      ]
     },
     {
       "id": "sopravvivenza-ambientale-fratellanza",
@@ -989,7 +1400,16 @@
           "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
         }
       ],
-      "effetto_breve": "+2 VA a Sopravvivenza per orientarsi con riferimenti disponibili, reperire risorse e preparare ripari nell’ambiente scelto."
+      "effetto_breve": "+2 VA a Sopravvivenza per orientarsi con riferimenti disponibili, reperire risorse e preparare ripari nell’ambiente scelto.",
+      "effetti": [
+        {
+          "abilita": "Sopravvivenza",
+          "valore": 2,
+          "ambito": "situazionale",
+          "condizione": "+2 VA a Sopravvivenza per orientarsi con riferimenti disponibili, reperire risorse e preparare ripari nell’ambiente scelto.",
+          "fonte": "Armamenti §7.17.6"
+        }
+      ]
     },
     {
       "id": "assalto-verticale-fratellanza",
@@ -1012,7 +1432,17 @@
           "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
         }
       ],
-      "effetto_breve": "+2 VA ad Atletica per arrampicarsi o calarsi usando il corredo."
+      "effetto_breve": "+2 VA ad Atletica per arrampicarsi o calarsi usando il corredo.",
+      "effetti": [
+        {
+          "abilita": "Atletica",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "arrampicata",
+          "condizione": "+2 VA ad Atletica per arrampicarsi o calarsi usando il corredo.",
+          "fonte": "Armamenti §7.17.6"
+        }
+      ]
     },
     {
       "id": "artificiere-fratellanza",
@@ -1035,7 +1465,17 @@
           "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
         }
       ],
-      "effetto_breve": "+2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili."
+      "effetto_breve": "+2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili.",
+      "effetti": [
+        {
+          "abilita": "Tecnologia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "esplosivi",
+          "condizione": "+2 VA a Tecnologia per preparare, collocare o disinnescare esplosivi compatibili.",
+          "fonte": "Armamenti §7.17.6"
+        }
+      ]
     },
     {
       "id": "manutenzione-fratellanza",
@@ -1058,7 +1498,17 @@
           "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
         }
       ],
-      "effetto_breve": "+2 VA a Tecnologia per diagnosi, manutenzione e riparazioni sul campo di armi, armature, propulsori ed esoscheletri compatibili."
+      "effetto_breve": "+2 VA a Tecnologia per diagnosi, manutenzione e riparazioni sul campo di armi, armature, propulsori ed esoscheletri compatibili.",
+      "effetti": [
+        {
+          "abilita": "Tecnologia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "riparazioni sul campo",
+          "condizione": "+2 VA a Tecnologia per diagnosi, manutenzione e riparazioni sul campo di armi, armature, propulsori ed esoscheletri compatibili.",
+          "fonte": "Armamenti §7.17.6"
+        }
+      ]
     },
     {
       "id": "kit-trauma-fratellanza",
@@ -1086,7 +1536,17 @@
           "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
         }
       ],
-      "effetto_breve": "È il Kit di pronto soccorso Professionale del §7.19: +2 VA a Medicina, cinque applicazioni comprese, ricarica da cinque applicazioni 300."
+      "effetto_breve": "È il Kit di pronto soccorso Professionale del §7.19: +2 VA a Medicina, cinque applicazioni comprese, ricarica da cinque applicazioni 300.",
+      "effetti": [
+        {
+          "abilita": "Medicina",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "pronto soccorso",
+          "condizione": "È il Kit di pronto soccorso Professionale del §7.19: +2 VA a Medicina, cinque applicazioni comprese, ricarica da cinque applicazioni 300.",
+          "fonte": "Armamenti §7.17.6"
+        }
+      ]
     },
     {
       "id": "consultazione-occultistica",
@@ -1109,7 +1569,17 @@
           "testo": "I corredi sono strumenti Professionali e concedono +2 VA alle attività indicate, quando vengono effettivamente utilizzati. Si applica un solo modificatore degli strumenti per Prova; Talenti e proprietà pertinenti delle armature restano separati. Tutti hanno Qualità Non comune e PS Integrità 12. Ricambi, munizioni e materiali non espressamente inclusi si acquistano separatamente."
         }
       ],
-      "effetto_breve": "+2 VA a Occultismo per consultare e confrontare testi, simboli e pratiche documentate, disponendo del tempo e delle condizioni per la consultazione."
+      "effetto_breve": "+2 VA a Occultismo per consultare e confrontare testi, simboli e pratiche documentate, disponendo del tempo e delle condizioni per la consultazione.",
+      "effetti": [
+        {
+          "abilita": "Occultismo",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "consultazione di testi",
+          "condizione": "+2 VA a Occultismo per consultare e confrontare testi, simboli e pratiche documentate, disponendo del tempo e delle condizioni per la consultazione.",
+          "fonte": "Armamenti §7.17.6"
+        }
+      ]
     },
     {
       "id": "propulsore-d-assalto-banshee",
@@ -1939,7 +2409,16 @@
       "compatibile_con": [
         "armature_corporative:ia3000-mirrorman"
       ],
-      "proprieta": []
+      "proprieta": [],
+      "effetti": [
+        {
+          "abilita": "Furtività",
+          "valore": 2,
+          "ambito": "situazionale",
+          "condizione": "Il mimetismo ottico adattivo concede +2 VA alla Prova unica di Furtività quando esistono condizioni concrete per nascondersi o muoversi senza essere individuati.",
+          "fonte": "Armamenti §7.15.4"
+        }
+      ]
     },
     {
       "id": "ias3400-disturbatore-metafisico",
@@ -2002,7 +2481,25 @@
         "costo": 300
       },
       "proprieta": [],
-      "effetto_breve": "Corredo Professionale: +2 VA a Medicina per pronto soccorso e trattamenti traumatici portatili, oppure +2 VA a Tecnologia per diagnosi e riparazione cibernetica."
+      "effetto_breve": "Corredo Professionale: +2 VA a Medicina per pronto soccorso e trattamenti traumatici portatili, oppure +2 VA a Tecnologia per diagnosi e riparazione cibernetica.",
+      "effetti": [
+        {
+          "abilita": "Medicina",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "pronto soccorso",
+          "condizione": "Corredo Professionale: +2 VA a Medicina per pronto soccorso e trattamenti traumatici portatili, oppure +2 VA a Tecnologia per diagnosi e riparazione cibernetica.",
+          "fonte": "Armamenti §7.15.5"
+        },
+        {
+          "abilita": "Tecnologia",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "riparazione cibernetica",
+          "condizione": "Corredo Professionale: +2 VA a Medicina per pronto soccorso e trattamenti traumatici portatili, oppure +2 VA a Tecnologia per diagnosi e riparazione cibernetica.",
+          "fonte": "Armamenti §7.15.5"
+        }
+      ]
     }
   ]
 }

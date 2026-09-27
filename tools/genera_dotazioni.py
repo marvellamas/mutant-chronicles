@@ -81,23 +81,18 @@ OGGETTI = {
     'sacco-a-pelo': {'nome': 'Sacco a pelo'},
     'razione-da-viaggio': {'nome': 'Razione da viaggio'},
     # dotazioni delle Classi
-    'binocolo': {'nome': 'Binocolo', 'effetto': {'abilita': 'Percezione', 'va': 1, 'condizione': 'per esaminare dettagli lontani'}},
+    'binocolo': {'nome': 'Binocolo'},
     'registratore-audiovisivo': {'nome': 'Registratore audiovisivo'},
-    'corredo-sopravvivenza-ambientale': {'nome': 'Corredo di sopravvivenza ambientale', 'sotto': 'ambiente',
-                                         'effetto': {'abilita': 'Sopravvivenza', 'va': 2, 'condizione': 'nell’ambiente scelto, per orientamento, raccolta di risorse e preparazione di un riparo'}},
-    'corredo-orientamento': {'nome': 'Corredo di orientamento, con carta della zona iniziale',
-                             'effetto': {'abilita': 'Sopravvivenza', 'va': 1, 'condizione': 'per orientarsi, quando esistono riferimenti utilizzabili; non si somma al Corredo di sopravvivenza ambientale'}},
-    'corredo-assalto-verticale': {'nome': 'Corredo da assalto verticale',
-                                  'effetto': {'abilita': 'Atletica', 'va': 2, 'condizione': 'per arrampicarsi o calarsi usando il corredo'}},
+    'corredo-sopravvivenza-ambientale': {'nome': 'Corredo di sopravvivenza ambientale', 'sotto': 'ambiente'},
+    'corredo-orientamento': {'nome': 'Corredo di orientamento, con carta della zona iniziale'},
+    'corredo-assalto-verticale': {'nome': 'Corredo da assalto verticale'},
     'rilevatore-ambientale': {'nome': 'Rilevatore ambientale'},
-    'abiti-eleganti': {'nome': 'Abiti eleganti, comprese le calzature (completo aggiuntivo)',
-                       'effetto': {'abilita': 'Oratoria', 'va': 1, 'condizione': 'negli ambienti formali appropriati'}},
+    'abiti-eleganti': {'nome': 'Abiti eleganti, comprese le calzature (completo aggiuntivo)'},
     'monocolo-periscopico': {'nome': 'Monocolo periscopico'},
     'corredo-da-scasso': {'nome': 'Corredo da scasso (Standard)'},
     'corredo-da-camuffamento': {'nome': 'Corredo da camuffamento (Standard)'},
     'ricarica-kit-trauma': {'nome': 'Ricarica per il Kit trauma (5 applicazioni)'},
-    'abiti-da-viaggio': {'nome': 'Abiti da viaggio, comprese le calzature (completo aggiuntivo)',
-                         'effetto': {'abilita': 'Atletica', 'va': 1, 'condizione': 'per arrampicarsi e mantenere l’equilibrio sui terreni accidentati'}},
+    'abiti-da-viaggio': {'nome': 'Abiti da viaggio, comprese le calzature (completo aggiuntivo)'},
     'comunicatore-da-squadra': {'nome': 'Comunicatore da squadra', 'sostituisce': 'comunicatore-personale'},
     'tenda-2-posti': {'nome': 'Tenda da 2 posti, completa di pali, tiranti e picchetti'},
     'corredo-agricolo': {'nome': 'Corredo agricolo (Standard)', 'sotto': 'corredo_agricolo'},
@@ -109,19 +104,32 @@ OGGETTI = {
     'corredo-elettronico-informatico': {'nome': 'Corredo elettronico e informatico (Standard)'},
     'kit-videosorveglianza': {'nome': 'Kit di videosorveglianza'},
     'corredo-ricerca-documentale': {'nome': 'Corredo di ricerca documentale (Standard)'},
-    'corredo-analisi-campo': {'nome': 'Corredo di analisi da campo', 'sotto': 'ambito_analisi',
-                              'effetto': {'abilita': 'Scienza', 'va': 2, 'condizione': 'per le analisi preliminari pertinenti all’ambito scelto'}},
+    'corredo-analisi-campo': {'nome': 'Corredo di analisi da campo', 'sotto': 'ambito_analisi'},
     'corredo-amministrativo': {'nome': 'Corredo amministrativo (Standard)'},
     'strumento-musicale-portatile': {'nome': 'Strumento musicale portatile (Standard)'},
     'corredo-scenico': {'nome': 'Corredo scenico (Standard)'},
     'terminale-produzione-multimediale': {'nome': 'Terminale per produzione multimediale (Standard)'},
     'testo-dottrinale-e-simbolo': {'nome': 'Testo dottrinale e simbolo della propria tradizione'},
-    'completo-cerimoniale': {'nome': 'Completo cerimoniale, comprese le calzature (profilo Abiti eleganti)',
-                             'effetto': {'abilita': 'Oratoria', 'va': 1, 'condizione': 'negli ambienti formali appropriati'}},
+    'completo-cerimoniale': {'nome': 'Completo cerimoniale, comprese le calzature (profilo Abiti eleganti)'},
     'lanterna-elettrica': {'nome': 'Lanterna elettrica', 'sostituisce': 'torcia-elettrica'},
     'focus-personale': {'nome': 'Focus personale, già sintonizzato prima dell’avventura'},
     'corredo-rituale': {'nome': 'Corredo rituale (Standard)'},
 }
+# Effetti sui VA (docs/effetti-oggetti.md): (Abilità, valore, ambito, uso, paragrafo, chiave). La frase
+# del paragrafo che contiene `chiave` si copia intera nella «condizione» (tools/verifica_frasi.mjs).
+EFFETTI = {
+    'binocolo': [('Percezione', 1, 'situazionale', None, '2.16.7', 'Il Binocolo concede +1 VA a Percezione')],
+    'corredo-sopravvivenza-ambientale': [('Sopravvivenza', 2, 'situazionale', None, '2.16.3', 'Nell’ambiente scelto concede +2 VA a Sopravvivenza')],
+    'corredo-orientamento': [('Sopravvivenza', 1, 'uso_specifico', 'orientamento', '2.16.4', 'Il Corredo di orientamento concede +1 VA')],
+    'corredo-assalto-verticale': [('Atletica', 2, 'uso_specifico', 'arrampicata', '2.16.4', 'Concede +2 VA ad Atletica per arrampicarsi')],
+    'abiti-eleganti': [('Oratoria', 1, 'situazionale', None, '2.16.5', 'Gli Abiti eleganti concedono +1 VA a Oratoria')],
+    'abiti-da-viaggio': [('Atletica', 1, 'uso_specifico', 'arrampicata ed equilibrio', '2.16.10', 'Gli Abiti da viaggio concedono +1 VA ad Atletica')],
+    'corredo-artigianale-professionale': [('Tecnologia', 2, 'uso_specifico', 'lavori del mestiere', '2.16.13', 'Concede +2 VA a Tecnologia per lavorare')],
+    'corredo-manutenzione-campo': [('Tecnologia', 2, 'uso_specifico', 'riparazioni sul campo', '2.16.13', 'Il Corredo di manutenzione da campo concede +2 VA')],
+    'corredo-analisi-campo': [('Scienza', 2, 'uso_specifico', 'analisi', '2.16.17', 'concede +2 VA a Scienza per analisi preliminari')],
+    'completo-cerimoniale': [('Oratoria', 1, 'situazionale', None, '2.16.21', 'L’abito cerimoniale usa il profilo degli Abiti eleganti')],
+}
+
 SOTTO = {
     'ambiente': {'etichetta': 'Ambiente del corredo', 'valori': AMBIENTI},
     'corredo_agricolo': {'etichetta': 'Versione del corredo agricolo', 'valori': ['Coltivazione', 'Allevamento']},
@@ -369,6 +377,27 @@ def opzione(spec):
         assert fam in ordinaria, (primo, fam)
         op['munizioni'] = {'rif': ordinaria[fam], 'colpi': m['colpi'], **({'caricatori': m['caricatori']} if m['caricatori'] else {})}
     return op
+
+
+def frasi_di(par):
+    out = []
+    for t in sezioni[par]['paragrafi']:
+        out += [f.strip() for f in re.split(r'(?<=[.;])\s+(?=[A-ZÈÉÀ+])', t) if f.strip()]
+    return out
+
+
+for oid, lista in EFFETTI.items():
+    effetti = []
+    for abilita, valore, ambito, uso, par, chiave in lista:
+        trovate = [f for f in frasi_di(par) if chiave in f]
+        assert trovate, f'{oid}: nessuna frase con «{chiave}» nel §{par}'
+        e = {'abilita': abilita, 'valore': valore, 'ambito': ambito}
+        if uso:
+            e['uso'] = uso
+        e['condizione'] = trovate[0]
+        e['fonte'] = f'Giocatore §{par}'
+        effetti.append(e)
+    OGGETTI[oid]['effetti'] = effetti
 
 
 dotazioni = {}

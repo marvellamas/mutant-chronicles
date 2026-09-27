@@ -12,7 +12,7 @@ import {
 
 /** Confronto delle voci della dotazione ignorando ciò che il giocatore può cambiare dopo (stato, note). */
 const impronta = (voci) => JSON.stringify(voci.filter((v) => v.dotazione_iniziale)
-  .map((v) => [v.uid, v.rif, v.personalizzato?.nome ?? null, v.quantita]));
+  .map((v) => [v.uid, v.rif, v.personalizzato?.nome ?? null, v.quantita, v.dotazione_id ?? null]));
 
 /**
  * @param {object} ctx contesto del wizard: { dati, scelte, ante, ui, aggiorna, ridisegna }
@@ -102,7 +102,7 @@ function gruppoScelta(ctx, { gruppo, opzione, automatica }, d, imposta, cat, per
     for (const x of o.oggetti) {
       if (x.dotazione) {
         const r = ctx.dati.dotazioni.oggetti_dotazione[x.dotazione];
-        if (r.effetto) parti.push(testoEffetto(r));
+        if (r.effetti?.length) parti.push(testoEffetto(r));
         continue;
       }
       const m = modelloAssegnato(x.rif, ctx.scelte.corporazione, ctx.dati, cat);

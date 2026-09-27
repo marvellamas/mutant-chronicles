@@ -166,7 +166,10 @@ test('sotto-scelte: l’ambiente del corredo è richiesto ed entra nel nome, con
   const voci = vociDotazione({ ...d, sotto: { 'corredo-sopravvivenza-ambientale': 'Artico' } }, 'Cacciatore', 'Freelance', dati);
   const c = voci.find((v) => v.personalizzato?.nome.startsWith('Corredo di sopravvivenza'));
   assert.equal(c.personalizzato.nome, 'Corredo di sopravvivenza ambientale (Artico)');
-  assert.match(c.personalizzato.testo, /^\+2 VA a Sopravvivenza/);
+  // l'effetto non si copia nella voce: si legge dai dati attraverso dotazione_id; l'oggetto parte «in uso»
+  assert.equal(c.dotazione_id, 'corredo-sopravvivenza-ambientale');
+  assert.equal(c.stato, 'in_uso');
+  assert.equal(c.personalizzato.testo, undefined);
   assert.deepEqual(mancanzeDotazione({ ...d, sotto: { 'corredo-sopravvivenza-ambientale': 'Artico' } }, 'Cacciatore', 'Freelance', dati), []);
 });
 
