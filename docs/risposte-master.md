@@ -171,3 +171,11 @@ UTC); i paragrafi corrispondenti sono nel Manuale del Giocatore §2.16.1–§2.1
     pagare con i crediti la differenza per un equipaggiamento migliore del catalogo della propria
     Corporazione; la valutazione integrale vale solo alla creazione.
     → `data/dotazioni.json` → `scambio`, passo «Equipaggiamento iniziale».
+
+20. **27/09, 09:52 UTC — Munizioni dei modelli corporativi** (A.5.27; §2.16.27). Il totale dei
+    colpi resta quello della Classe, assegnato nel tipo ordinario compatibile con il modello
+    corporativo, senza costi; i caricatori hanno la capacità reale del modello e la ripartizione fra
+    arma, caricatori e riserva si adegua senza cambiare il totale. L'Applicazione aggiunge che «le
+    corrispondenze delle pistole sono già definite» e che restano fucili, armature e scudi.
+    → `src/dotazioni.js` (voce delle munizioni della dotazione). Le corrispondenze delle pistole non
+    sono scritte in nessuno dei Doc condivisi: per-davide A.33.

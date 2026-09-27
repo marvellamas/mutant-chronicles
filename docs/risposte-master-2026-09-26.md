@@ -1,6 +1,6 @@
 # E&L – Risposte e correzioni approvate
 
-Copia del Google Doc del master «E&L – Risposte e correzioni approvate» (Davide), letta il 26 settembre 2026 e riletta alla versione del 27/09 alle 01:56:00 UTC, che aggiunge A.4 e A.5–A.5.29. Testo del documento, non riscritto: è la fonte delle decisioni registrate in `docs/risposte-master.md`.
+Copia del Google Doc del master «E&L – Risposte e correzioni approvate» (Davide), letta il 26 settembre 2026 e riletta alla versione del 27/09 alle 01:56:00 UTC, che aggiunge A.4 e A.5–A.5.29, e a quella delle 09:52:42 UTC, che cambia A.5.27 (munizioni e caricatori dei modelli corporativi). Testo del documento, non riscritto: è la fonte delle decisioni registrate in `docs/risposte-master.md`.
 
 Decisioni approvate e aggiornamenti dei manuali condivisi.
 
@@ -1352,11 +1352,11 @@ I nomi commerciali nelle tabelle identificano il tipo di dotazione e le alternat
 
 Nell’inventario si registra il modello corporativo effettivamente assegnato, con valori, proprietà, requisiti, penalità e prezzo della sua scheda. Il personaggio deve rispettarne i requisiti; i dati del profilo commerciale non sostituiscono quelli del modello corporativo.
 
-Munizioni, caricatori, alimentazioni e accessori devono essere compatibili con il modello assegnato. Le corrispondenze di catalogo devono specificare anche questi componenti e le quantità della dotazione. Gli oggetti si registrano una sola volta.
+Le munizioni mantengono il numero complessivo già previsto dalla Classe e vengono assegnate automaticamente, senza costi aggiuntivi, nel tipo ordinario compatibile con il modello corporativo di base. I caricatori già previsti sono forniti nel formato compatibile, con la capacità reale del modello. La ripartizione fra arma, caricatori e riserva si adegua a tale capacità senza aumentare o diminuire il totale dei colpi. Alimentazioni e accessori devono essere compatibili; gli oggetti si registrano una sola volta.
 
 I Freelance fanno riferimento al catalogo Commerciale. La dotazione comune e gli strumenti non interessati da una corrispondenza corporativa mantengono i profili già indicati.
 
-Applicazione: inserito il §2.16.27 del Manuale del Giocatore e aggiornati l’introduzione del §2.16 e i richiami delle dotazioni. L’armamento corporativo corrispondente è la dotazione di base assegnata direttamente, senza passaggio preliminare attraverso l’oggetto commerciale e senza conguaglio iniziale. I nomi commerciali delle tabelle restano riferimenti per le corrispondenze. Restano da completare gli abbinamenti puntuali tra profili commerciali e modelli corporativi, con i componenti compatibili; l’eventuale veicolo iniziale resta separato.
+Applicazione: inserito il §2.16.27 del Manuale del Giocatore e aggiornati l’introduzione del §2.16 e i richiami delle dotazioni. L’armamento corporativo corrispondente è la dotazione di base assegnata direttamente, senza passaggio preliminare attraverso l’oggetto commerciale e senza conguaglio iniziale. I nomi commerciali delle tabelle restano riferimenti per le corrispondenze. Le corrispondenze delle pistole sono già definite. Restano da completare quelle dei fucili, delle armature e degli scudi; le quantità complessive delle munizioni restano quelle già approvate per le Classi, con assegnazione automatica del tipo compatibile. L’eventuale veicolo iniziale resta separato.
 
 Scheda digitale: assegnare il modello effettivo incrociando Classe e Corporazione, registrandone profilo, requisiti, prezzo e componenti. Evitare la doppia assegnazione del modello commerciale e di quello corporativo.
 

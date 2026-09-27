@@ -56,6 +56,12 @@ export function modelloAssegnato(rif, corporazione, dati, cat = catalogo(dati)) 
   return { rif, corporativo: false, nota: NOTA_CORPORATIVO };
 }
 
+/** Munizione ordinaria commerciale di una famiglia (§7.20.1: intercambiabile fra Corporazioni). */
+function munizioneOrdinaria(famiglia, cat) {
+  if (!famiglia) return null;
+  return cat.oggetti.find((o) => o.famiglia === 'Munizioni ordinarie' && o.munizione?.famiglia === famiglia)?.rif ?? null;
+}
+
 /** Gruppi di scelta della Classe (vuoto se la Classe non ha dotazione). */
 export function gruppiClasse(classe, dati) {
   return dati.dotazioni.classi?.[classe]?.gruppi ?? [];
@@ -222,8 +228,16 @@ export function vociDotazione(dotazione, classe, corporazione, dati) {
     });
     if (opzione.munizioni && arma) {
       const mun = opzione.munizioni;
-      const rif = arma.munizioni ?? mun.rif;
-      const car = mun.caricatori ? `${mun.caricatori} caricatori compatibili da ${mun.colpi / mun.caricatori} colpi (uno inserito, gli altri di riserva)` : `${mun.colpi} colpi`;
+      // §2.16.27 (Doc del 27/09, 09:52): con il modello corporativo il totale dei colpi resta quello
+      // della Classe, nel tipo ordinario compatibile con il modello; i caricatori hanno la capacità
+      // reale del modello e la ripartizione fra arma, caricatori e riserva si adegua
+      const ordinaria = arma.corporativo && !arma.munizioni ? munizioneOrdinaria(famiglie.get(arma.rif), cat) : null;
+      const rif = arma.munizioni ?? ordinaria ?? mun.rif;
+      const capacita = cat.perRif.get(arma.rif)?.munizioni?.capacita ?? null;
+      const car = !mun.caricatori ? `${mun.colpi} colpi`
+        : !arma.corporativo || !capacita || capacita * mun.caricatori === mun.colpi
+          ? `${mun.caricatori} caricatori compatibili da ${mun.colpi / mun.caricatori} colpi (uno inserito, gli altri di riserva)`
+          : `${mun.colpi} colpi in ${mun.caricatori} caricatori compatibili da ${capacita} (uno inserito, gli altri di riserva)${capacita * mun.caricatori < mun.colpi ? `, ${mun.colpi - capacita * mun.caricatori} sciolti` : ', l’ultimo non pieno'} (§2.16.27)`;
       // §2.16.29: con l'arma ceduta le munizioni restano; valgono per il nuovo modello se della stessa famiglia
       const nuovo = ceduti.has(gruppo.id) ? conti.acquisti.find((a) => a.cede.includes(gruppo.id)) : null;
       const note = !nuovo ? `Per ${cat.perRif.get(arma.rif)?.nome}: ${car}.`

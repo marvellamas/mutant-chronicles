@@ -1780,7 +1780,7 @@ I nomi commerciali nelle tabelle identificano il tipo di dotazione e le alternat
 
 Nell’inventario si registra il modello corporativo effettivamente assegnato, con valori, proprietà, requisiti, penalità e prezzo della sua scheda. Il personaggio deve rispettarne i requisiti; i dati del profilo commerciale non sostituiscono quelli del modello corporativo.
 
-Munizioni, caricatori, alimentazioni e accessori devono essere compatibili con il modello assegnato. Le corrispondenze di catalogo devono specificare anche questi componenti e le quantità della dotazione. Gli oggetti si registrano una sola volta.
+Le munizioni mantengono il numero complessivo già previsto dalla Classe e vengono assegnate automaticamente, senza costi aggiuntivi, nel tipo ordinario compatibile con il modello corporativo di base. I caricatori già previsti sono forniti nel formato compatibile, con la capacità reale del modello. La ripartizione fra arma, caricatori e riserva si adegua a tale capacità senza aumentare o diminuire il totale dei colpi. Alimentazioni e accessori devono essere compatibili; gli oggetti si registrano una sola volta.
 
 I Freelance fanno riferimento al catalogo Commerciale. La dotazione comune e gli strumenti non interessati da una corrispondenza corporativa mantengono i profili già indicati.
 

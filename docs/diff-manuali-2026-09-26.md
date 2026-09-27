@@ -198,3 +198,14 @@ Confronto con `git diff` sui file di `docs/manuali-txt/`. Armamenti ed Equipaggi
 | Sez. 2 Componenti, Concentrazione | I tre Talenti «Escludere…»; PS di Volontà per la Concentrazione, Concentrazione Operativa e Migliorata | regola | **non annunciata** | nelle schede dei Talenti |
 | Sez. 6 Recupero | Recupero Mistico (+1 PM per ora di recupero naturale) | regola | **non annunciata** | nella scheda del Talento (i recuperi non si contano nell'app) |
 | Sez. 10–11 Anticipazione, Rituali | Eccezioni ai costi e alla difficoltà per i Talenti di Anticipazione; Ritualista Minore e Maggiore | regola | **non annunciata** | nelle schede dei Talenti |
+
+---
+
+## Controllo del 27/09, seconda versione (Giocatore 09:52:35, E&L 09:52:42)
+
+Magia, Armamenti ed Equipaggiamento invariati.
+
+| Documento | Paragrafo | Differenza | Classe | Applicato |
+|---|---|---|---|---|
+| Giocatore | §2.16.27 | Munizioni dei modelli corporativi: totale della Classe, tipo ordinario compatibile, caricatori con la capacità reale, ripartizione adeguata | regola | `src/dotazioni.js`; `data/dotazioni.json` (testo) |
+| E&L | A.5.27 | Stesso testo; l'Applicazione dice che le corrispondenze delle pistole sono «già definite» e restano fucili, armature e scudi | regola | risposte-master 20; corrispondenze non trovate nei Doc: per-davide A.33 |

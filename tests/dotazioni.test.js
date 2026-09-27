@@ -145,6 +145,16 @@ test('A.5.27: senza abbinamento il profilo commerciale con la nota; con l’abbi
   assert.deepEqual(m, { rif: 'armi_distanza_corporative:ronin-45ap', corporativo: true, nota: null });
   const conMishima = vociDotazione(AGENTE, 'Agente', 'Mishima', d2);
   assert.equal(perNome(conMishima, 'armi_distanza_corporative:ronin-45ap').length, 1);
+  // §2.16.27: stesso totale di colpi, munizione ordinaria compatibile, caricatori da 15 del Ronin 45AP
+  const mun = conMishima.find((v) => v.uid === 'dot-arma_da_fuoco-munizioni');
+  assert.equal(mun.rif, 'munizioni:proiettili-da-pistola');
+  assert.equal(mun.quantita, 45);
+  // modello con capacità diversa: la ripartizione si adegua senza cambiare il totale
+  d2.dotazioni.corporativi.abbinamenti.Mishima['armi_distanza:pistola-semiautomatica'] = { rif: 'armi_distanza_corporative:ronin-25ap' }; // capacità 10
+  const r25 = vociDotazione(AGENTE, 'Agente', 'Mishima', d2).find((v) => v.uid === 'dot-arma_da_fuoco-munizioni');
+  assert.equal(r25.quantita, 45);
+  assert.match(r25.note, /45 colpi in 3 caricatori compatibili da 10 .*15 sciolti/);
+  d2.dotazioni.corporativi.abbinamenti.Mishima['armi_distanza:pistola-semiautomatica'] = { rif: 'armi_distanza_corporative:ronin-45ap' };
   // il valore di cessione è quello del modello assegnato (1.200), non del commerciale (1.300)
   const c = contiDotazione({ ...AGENTE, acquisti: [{ rif: 'armi_distanza:pistola-pesante', cede: ['arma_da_fuoco'] }] }, 'Agente', 'Mishima', d2);
   assert.equal(c.acquisti[0].valoreCeduto, 1200);
