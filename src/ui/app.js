@@ -22,7 +22,7 @@ import { caricaImmagini } from './immagini.js';
 import { preparaStampa, preparaTab } from '../stampa.js';
 import { renderTab } from './tab.js';
 import {
-  massimiSessione, allineaSessione, variaSessione, modificaSessione, commutaStato, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
+  massimiSessione, allineaSessione, variaSessione, modificaSessione, commutaStato, commutaCondizioneOggetto, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
   penalitaSessione, variaMunizioni, ricaricaArma, variaChroma,
 } from '../sessione.js';
 import { conOrdinale } from '../lingua.js';
@@ -634,6 +634,7 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       varia: (campo, delta) => cambiaSessione(variaSessione(stato.sessione, campo, delta, massimi)),
       imposta: (campo, valore) => cambiaSessione(modificaSessione(stato.sessione, { [campo]: valore }, massimi)),
       commutaStato: (id) => cambiaSessione(commutaStato(stato.sessione, id, massimi)),
+      condizioneOggetto: (uid) => cambiaSessione(commutaCondizioneOggetto(stato.sessione, uid, massimi)),
       convertiDistintivi: () => cambiaSessione(convertiDistintivi(stato.sessione, massimi)),
       // le note si salvano a ogni tasto; l'annullamento riporta al testo di prima della modifica
       inizioNote: () => { stato.sessionePrecedente = stato.sessione; },

@@ -5,7 +5,7 @@
 //
 // sessione = { pvAttuali, pmAttuali, puntiEroe, distintivi, statiAttivi: [id], ferite,
 //              affaticamento, munizioni: { uid: { colpi, riserve } }, chroma: { uid: { pmAttuali } },
-//              caricoExtra, crediti, creditiIniziali, note }
+//              caricoExtra, crediti, creditiIniziali, condizioniOggetti: [uid], note }
 // munizioni: per ogni arma a distanza della lista, i colpi nel caricatore (limitati alla sua
 // capacità, dal catalogo) e le riserve (caricatori di scorta: quantità libera).
 // chroma: PM attuali di ogni contenitore di Chroma (Magia sez. 6), limitati alla sua capacità. Non
@@ -14,12 +14,15 @@
 // affaticamento: indice in regole.json → affaticamento.stati (§5.19), 0 = Riposato.
 // caricoExtra: kg trasportati oltre all'equipaggiamento (bottino, una creatura trasportata con il
 // suo equipaggiamento: §5.2.6), sommati al peso degli oggetti per il carico (src/carico.js).
+// condizioniOggetti: oggetti con effetti situazionali la cui condizione è accesa al tavolo (corredo
+// di sopravvivenza nell'ambiente scelto, abiti eleganti in un ambiente formale…): i loro effetti
+// entrano nei VA effettivi (src/condizioni.js, docs/effetti-oggetti.md).
 // crediti: crediti attuali (§2.16.28), null finché la dotazione iniziale non è nell'inventario.
 // creditiIniziali: l'ultimo saldo iniziale visto; se il saldo cambia (dotazione rifatta, tabella
 // modificata) i crediti attuali si spostano della stessa differenza, così le spese restano.
 import { valoreTiro } from './tiri.js';
 import { saldoIniziale } from './dotazioni.js';
-import { caricatori, contenitori, normalizzaEquipaggiamento } from './equipaggiamento.js';
+import { caricatori, contenitori, normalizzaEquipaggiamento, catalogo, risolvi } from './equipaggiamento.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const limita = (v, min, max) => Math.min(max, Math.max(min, v));
@@ -48,9 +51,32 @@ export function massimiSessione(scheda, creazione, dati) {
     contenitori: Object.fromEntries(contenitori(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati).map((c) => [c.uid, c.capacita])),
     // TODO(Davide): un contenitore nuovo arriva carico? Ipotesi: pieno (regole.json → chroma, per-davide A.19)
     contenitoreNuovo: dati.regole.chroma?.contenitore_nuovo ?? 'pieno',
+    // oggetti con effetti situazionali: solo questi possono avere la condizione accesa
+    oggettiSituazionali: oggettiSituazionali(creazione, dati),
     // §2.16.28–29: crediti iniziali meno i conguagli, o null senza dotazione iniziale
     creditiIniziali: dati.dotazioni ? saldoIniziale(creazione, dati) : null,
   };
+}
+
+/** Uid degli oggetti della lista con almeno un effetto situazionale. */
+function oggettiSituazionali(creazione, dati) {
+  if (!dati.equipaggiamento) return null;
+  const cat = catalogo(dati);
+  return normalizzaEquipaggiamento(creazione?.equipaggiamento).map((v) => risolvi(v, cat))
+    .filter((r) => r.effetti.some((e) => e.ambito === 'situazionale')).map((r) => r.uid);
+}
+
+/** Condizioni accese degli oggetti: uid esistenti, senza doppioni. */
+function allineaCondizioniOggetti(v, m) {
+  const lista = Array.isArray(v) ? v.filter((x) => typeof x === 'string') : [];
+  return [...new Set(m.oggettiSituazionali ? lista.filter((x) => m.oggettiSituazionali.includes(x)) : lista)];
+}
+
+/** Accende o spegne la condizione di un oggetto con effetti situazionali. */
+export function commutaCondizioneOggetto(sessione, uid, m) {
+  const s = allineaSessione(sessione, m);
+  const lista = s.condizioniOggetti.includes(uid) ? s.condizioniOggetti.filter((x) => x !== uid) : [...s.condizioniOggetti, uid];
+  return modificaSessione(s, { condizioniOggetti: lista }, m);
 }
 
 /** Crediti attuali allineati al saldo iniziale (vedi l'intestazione). */
@@ -120,6 +146,7 @@ export function inizializzaSessione(m) {
     chroma: allineaChroma({}, {}, m),
     caricoExtra: 0,
     ...allineaCrediti({}, m),
+    condizioniOggetti: [],
     note: '',
   };
 }
@@ -143,6 +170,7 @@ export function allineaSessione(sessione, m) {
     chroma: allineaChroma(sessione.chroma, sessione.munizioni, m),
     caricoExtra: chili(sessione.caricoExtra),
     ...allineaCrediti(sessione, m),
+    condizioniOggetti: allineaCondizioniOggetti(sessione.condizioniOggetti, m),
     note: typeof sessione.note === 'string' ? sessione.note : '',
   };
 }

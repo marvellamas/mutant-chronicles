@@ -66,9 +66,9 @@ const sessione = (modifica) => ({ ...inizializzaSessione({ pv: 10, pm: 5, puntiE
 test('«Condizioni attive»: vuoto senza condizioni né equipaggiamento che tocca le Abilità', () => {
   assert.deepEqual(condizioniAttiveAbilita(scheda([]), dati), []);
   assert.deepEqual(condizioniAttiveAbilita(scheda([], sessione({})), dati), []);
-  // un'armatura Leggera senza penalità alle Abilità (solo il lancio −1) resta nel riquadro per il lancio
+  // un'armatura Leggera senza penalità alle Abilità: resta solo il lancio −1, come uso specifico
   const leggera = condizioniAttiveAbilita(scheda([voce('a', 'armature:armatura-civile-leggera', 'indossata')]), dati);
-  assert.deepEqual(leggera.map((c) => c.testo), ['−1 alle Prove di Potere per lanciare']);
+  assert.deepEqual(leggera.map((c) => [c.fonte, c.testo, c.uso, c.vedi]), [['uso', '−1 a Potere', 'lancio', 'Magia']]);
   // uno zaino con un'armatura non indossata non conta
   assert.deepEqual(condizioniAttiveAbilita(scheda([voce('a', 'armature:armatura-civile-pesante', 'zaino')]), dati), []);
 });
@@ -77,11 +77,13 @@ test('«Condizioni attive»: prima la sessione, poi l’equipaggiamento, con eff
   const s = scheda([voce('a', 'armature:armatura-civile-pesante', 'indossata')], sessione({ ferite: 2, statiAttivi: ['a-terra', 'assordato'] }));
   const c = condizioniAttiveAbilita(s, dati);
   assert.deepEqual(c.map((x) => [x.fonte, x.nome]), [
-    ['sessione', 'Ferita Importante'], ['sessione', 'A Terra'], ['equipaggiamento', 'Armatura civile pesante'],
+    ['sessione', 'Ferita Importante'], ['sessione', 'A Terra'], ['equipaggiamento', 'Armatura civile pesante'], ['uso', 'Armatura civile pesante'],
   ]); // Assordato non ha effetto numerico: resta promemoria
   assert.equal(c[0].testo, '−2 a tutte le Abilità e Salvezze');
   assert.equal(c[1].testo, '−4 alle Abilità ravvicinate (Armi da guerra, Armi da mischia, Corpo a corpo e Difese)');
-  assert.equal(c[2].testo, '−2 ad attacchi, Atletica e Furtività; −5 alle Prove di Potere per lanciare; −1 per FOR insufficiente ad Atletica, Furtività, Difese e attacchi');
+  assert.equal(c[2].testo, '−2 ad attacchi, Atletica e Furtività; −1 per FOR insufficiente ad Atletica, Furtività, Difese e attacchi');
+  // il lancio con Potere è un uso specifico: riga a parte, il VA di Potere non cambia
+  assert.deepEqual([c[3].testo, c[3].uso], ['−5 a Potere', 'lancio']);
   assert.ok(c.every((x) => x.verso === 'malus'));
   // Affaticamento: nome con la sua scala
   const stanco = condizioniAttiveAbilita(scheda([], sessione({ affaticamento: dati.regole.affaticamento.stati.findIndex((x) => x.nome === 'Stanco') })), dati);

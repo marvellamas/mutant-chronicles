@@ -47,9 +47,11 @@ function testoEffetto(e, dati) {
 /**
  * Voci del riquadro «Condizioni attive» (tab Abilità): prima le condizioni di sessione (Ferite,
  * Affaticamento, Stati con effetto), poi l'equipaggiamento che tocca Abilità e attacchi (armature:
- * Agilità, penalità agli attacchi e al lancio, penalità proprie del modello, FOR insufficiente).
+ * Agilità, penalità agli attacchi, penalità proprie del modello, FOR insufficiente), gli effetti
+ * generali degli oggetti e quelli situazionali con la condizione accesa. Gli effetti d'uso specifico
+ * (lancio con Potere, tracce, pronto soccorso…) stanno in voci a parte con `uso`: non cambiano il VA.
  * Vuoto quando non c'è nulla: il riquadro non si mostra.
- * @returns {{fonte: 'sessione'|'equipaggiamento', nome, testo, verso: 'malus'|'bonus'}[]}
+ * @returns {{fonte: 'sessione'|'equipaggiamento'|'oggetto'|'uso', nome, testo, verso: 'malus'|'bonus', uso?, vedi?}[]}
  */
 export function condizioniAttiveAbilita(scheda, dati) {
   const out = [];
@@ -76,7 +78,6 @@ export function condizioniAttiveAbilita(scheda, dati) {
     }
     for (const x of agilita) aggiungi(pen.agilita, x);
     for (const [x, v] of Object.entries(pen.abilita ?? {})) aggiungi(v, x);
-    aggiungi(pen.lancio_potere, 'Prove di Potere per lanciare');
     const parti = [...perValore].map(([v, bersagli]) => `${segno(v)} ${a(elenco(bersagli))}`);
     // §7.1.6, §7.11.1: la FOR mancante pesa su Agilità, Difese e attacchi
     if (p.forMancante) parti.push(`${segno(-p.forMancante)} per FOR insufficiente ${a(elenco([...agilita, difese, 'attacchi']))}`);
@@ -84,6 +85,14 @@ export function condizioniAttiveAbilita(scheda, dati) {
     const nome = p.rinforzo ? `${p.nome} + ${p.rinforzo.nome}` : p.nome;
     const valori = [...perValore.keys(), p.forMancante ? -p.forMancante : 0];
     out.push({ fonte: 'equipaggiamento', nome, testo: parti.join('; '), verso: valori.some((v) => v < 0) ? 'malus' : 'bonus' });
+  }
+  // effetti degli oggetti (docs/effetti-oggetti.md)
+  const effetti = eq?.effettiOggetti ?? [];
+  const verso = (v) => (v < 0 ? 'malus' : 'bonus');
+  for (const e of effetti.filter((x) => x.ambito === 'generale')) out.push({ fonte: 'equipaggiamento', nome: e.oggetto, testo: `${segno(e.valore)} ${a(e.abilita)}`, verso: verso(e.valore) });
+  for (const e of scheda.oggettiAccesi ?? []) out.push({ fonte: 'oggetto', nome: `${e.oggetto} (condizione attiva)`, testo: `${segno(e.valore)} ${a(e.abilita)}`, verso: verso(e.valore) });
+  for (const e of effetti.filter((x) => x.ambito === 'uso_specifico')) {
+    out.push({ fonte: 'uso', nome: e.oggetto, testo: `${segno(e.valore)} ${a(e.abilita)}`, verso: verso(e.valore), uso: e.uso, vedi: e.uso === 'lancio' ? 'Magia' : 'Abilità' });
   }
   return out;
 }

@@ -6,7 +6,7 @@ import { h } from './dom.js';
 import { info } from './tooltip.js';
 import {
   TIPI, NOMI_TIPI, STATI, NOMI_STATI, catalogo, risolvi, opzioniCascata, cercaNelCatalogo, statoIniziale, puoMontare, infoArtefattoVoce,
-  regoleSintonizzazione, coloriChroma,
+  regoleSintonizzazione, coloriChroma, testoEffettoOggetto, AMBITI_EFFETTO, NOMI_AMBITI,
 } from '../equipaggiamento.js';
 
 import { GRUPPI_EQUIPAGGIAMENTO } from '../palette.js';
@@ -62,7 +62,7 @@ function elencoVoci(ctx) {
 function voceEquip(ctx, r, risolte, cambia) {
   const { dati, voci } = ctx;
   const v = r.voce;
-  const stati = STATI[r.tipo] ?? [];
+  const stati = r.stati; // del tipo, oppure In uso / Nello zaino per gli oggetti con effetti
   const art = r.fuoriCatalogo ? null : infoArtefattoVoce(r, dati);
   // Magia sez. 6: ogni contenitore si sintonizza e si ricarica da solo, quindi una voce ciascuno
   const contenitoreSingolo = art?.contenitore && !art.contenitore.integrato;
@@ -113,7 +113,55 @@ function voceEquip(ctx, r, risolte, cambia) {
         type: 'text', class: 'note-equip', value: v.note, placeholder: 'Note (es. «danneggiata», «regalo di…»)', 'aria-label': `Note su ${r.nome}`,
         onchange: (e) => cambia(v.uid, { note: e.target.value }),
       })),
-    r.personalizzato && v.personalizzato?.testo ? h('p', { class: 'nota' }, v.personalizzato.testo) : null);
+    r.personalizzato && v.personalizzato?.testo ? h('p', { class: 'nota' }, v.personalizzato.testo) : null,
+    // effetti sui VA (docs/effetti-oggetti.md): contano solo con l'oggetto in uso
+    r.effetti.length ? h('ul', { class: 'effetti-voce' }, r.effetti.map((e) => h('li', {},
+      h('span', { class: 'effetto-oggetto' }, testoEffettoOggetto(e)),
+      e.condizione ? h('small', { class: 'nota' }, ` — ${e.condizione}`) : null))) : null,
+    r.personalizzato && !v.dotazione_id ? editorEffetti(ctx, v, cambia) : null);
+}
+
+/**
+ * Piccolo editor degli effetti di un oggetto personalizzato: Abilità, valore, ambito (sempre,
+ * condizione da attivare al tavolo, solo per un uso), uso e condizione (testo libero).
+ */
+function editorEffetti(ctx, v, cambia) {
+  const effetti = v.personalizzato?.effetti ?? [];
+  const bozze = (ctx.ui.effettiNuovi ??= {});
+  const b = (bozze[v.uid] ??= { abilita: '', valore: '', ambito: 'generale', uso: '', condizione: '' });
+  const salva = (lista) => cambia(v.uid, { personalizzato: { ...v.personalizzato, effetti: lista } });
+  const id = (k) => `eff-${v.uid}-${k}`;
+  return h('details', { class: 'editor-effetti', open: ctx.ui.aperti?.has?.(id('d')) || null, ontoggle: (e) => ctx.ui.aperti?.[e.target.open ? 'add' : 'delete']?.(id('d')) },
+    h('summary', {}, `Effetti sui VA (${effetti.length})`),
+    effetti.length ? h('ul', {}, effetti.map((e, i) => h('li', {}, testoEffettoOggetto(e), e.condizione ? h('small', { class: 'nota' }, ` — ${e.condizione}`) : null, ' ',
+      h('button', { type: 'button', class: 'btn piccolo', onclick: () => salva(effetti.filter((_, j) => j !== i)) }, 'Togli')))) : null,
+    h('div', { class: 'griglia-form' },
+      h('label', { class: 'campo', for: id('a') }, h('span', {}, 'Abilità'),
+        h('select', { id: id('a'), onchange: (e) => { b.abilita = e.target.value; } }, h('option', { value: '' }, '—'),
+          ctx.dati.abilita.abilita.map((a) => h('option', { value: a.nome, selected: b.abilita === a.nome }, a.nome)))),
+      h('label', { class: 'campo', for: id('v') }, h('span', {}, 'Valore (VA)'),
+        h('input', { id: id('v'), type: 'number', step: 1, value: b.valore, oninput: (e) => { b.valore = e.target.value; } })),
+      h('label', { class: 'campo', for: id('m') }, h('span', {}, 'Quando vale'),
+        h('select', { id: id('m'), onchange: (e) => { b.ambito = e.target.value; ctx.ridisegna?.(); } },
+          AMBITI_EFFETTO.map((x) => h('option', { value: x, selected: b.ambito === x }, NOMI_AMBITI[x])))),
+      b.ambito === 'uso_specifico' ? h('label', { class: 'campo', for: id('u') }, h('span', {}, 'Uso (breve)'),
+        h('input', { id: id('u'), type: 'text', maxlength: 40, placeholder: 'es. tracce', value: b.uso, oninput: (e) => { b.uso = e.target.value; } })) : null,
+      h('label', { class: 'campo', for: id('c') }, h('span', {}, 'Condizione (testo)'),
+        h('input', { id: id('c'), type: 'text', maxlength: 300, placeholder: 'es. negli ambienti formali', value: b.condizione, oninput: (e) => { b.condizione = e.target.value; } }))),
+    h('button', {
+      type: 'button', class: 'btn',
+      onclick: () => {
+        const valore = Number(b.valore);
+        if (!b.abilita) { alert('Scegli l’Abilità.'); return; }
+        if (!Number.isInteger(valore) || valore === 0) { alert('Il valore è un intero diverso da 0 (es. 2 o −1).'); return; }
+        if (b.ambito === 'uso_specifico' && !b.uso.trim()) { alert('Scrivi l’uso, in breve (es. «tracce»).'); return; }
+        const e = { abilita: b.abilita, valore, ambito: b.ambito };
+        if (b.ambito === 'uso_specifico') e.uso = b.uso.trim();
+        if (b.condizione.trim()) e.condizione = b.condizione.trim();
+        bozze[v.uid] = { abilita: '', valore: '', ambito: 'generale', uso: '', condizione: '' };
+        salva([...effetti, e]);
+      },
+    }, 'Aggiungi effetto'));
 }
 
 // ---------------------------------------------------------------------------
@@ -167,7 +215,7 @@ function pannelloAggiungi(ctx) {
         type: 'button', class: 'btn primario',
         onclick: () => {
           Object.assign(s, { rif: null });
-          aggiungiVoce({ uid: nuovoUid(), rif: scelto.rif, stato: statoIniziale(scelto.tipo, ctx.voci, dati), quantita: 1, note: '' });
+          aggiungiVoce({ uid: nuovoUid(), rif: scelto.rif, stato: statoIniziale(scelto.tipo, ctx.voci, dati, scelto.effetti ?? []), quantita: 1, note: '' });
         },
       }, `Aggiungi ${scelto.nome}`)) : null,
     h('details', { class: 'personalizzato', open: !!ui.equipPersAperto, ontoggle: (e) => { ui.equipPersAperto = e.target.open; } },

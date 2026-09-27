@@ -68,6 +68,45 @@ export function formulaScomposizione(nome, voci) {
   return `${nome} ${meno(totale)} = ${parti.join(' ')}`;
 }
 
+/**
+ * Effetti degli oggetti su un'Abilità nella modalità tavolo (docs/effetti-oggetti.md). I generali
+ * sono già nel VA con l'equipaggiamento; qui:
+ * - situazionali: con la condizione dell'oggetto accesa entrano nel VA effettivo; spenti restano
+ *   «disponibili» (nel tooltip);
+ * - usi specifici: il VA generale non cambia; per ogni uso un valore a parte.
+ * Giocatore §1.4.1: «Si applica un solo modificatore complessivo per la qualità degli strumenti
+ * impiegati»: fra i bonus degli oggetti per la stessa Prova vale il maggiore; le penalità si sommano.
+ */
+function effettiOggettiAbilita(effetti, accesi, a) {
+  const miei = effetti.filter((e) => e.abilita === a.nome && e.ambito !== 'generale');
+  const situ = miei.filter((e) => e.ambito === 'situazionale');
+  const on = situ.filter((e) => accesi.has(e.uid));
+  const migliore = (lista) => lista.filter((e) => e.valore > 0).reduce((m, e) => (!m || e.valore > m.valore ? e : m), null);
+  const bonusOn = migliore(on);
+  const penalitaOn = on.filter((e) => e.valore < 0);
+  const voci = [...(bonusOn ? [bonusOn] : []), ...penalitaOn].map((e) => voce(`${e.oggetto} (condizione attiva)`, e.valore, 'oggetto'));
+  const nonCumulati = on.filter((e) => e.valore > 0 && e !== bonusOn);
+  const disponibili = situ.filter((e) => !accesi.has(e.uid));
+  const usi = new Map();
+  for (const e of miei.filter((x) => x.ambito === 'uso_specifico')) (usi.get(e.uso) ?? usi.set(e.uso, []).get(e.uso)).push(e);
+  return { voci, nonCumulati, disponibili, usi, bonusOn };
+}
+
+/** Valore di ogni uso specifico: dal VA effettivo, con un solo bonus degli strumenti (§1.4.1). */
+function valoriUsi(usi, effettivo, bonusOn) {
+  return [...usi].map(([uso, lista]) => {
+    const bonus = lista.filter((e) => e.valore > 0).reduce((m, e) => (!m || e.valore > m.valore ? e : m), null);
+    const penalita = lista.filter((e) => e.valore < 0).reduce((s, e) => s + e.valore, 0);
+    const giaAcceso = bonusOn?.valore ?? 0;
+    const valore = effettivo - giaAcceso + Math.max(giaAcceso, bonus?.valore ?? 0) + penalita;
+    return {
+      uso, valore, base: effettivo, modificatore: valore - effettivo,
+      oggetti: lista.map((e) => ({ oggetto: e.oggetto, valore: e.valore, condizione: e.condizione ?? null, fonte: e.fonte ?? null, contato: e.valore < 0 || e === bonus })),
+      assorbito: !!bonus && giaAcceso >= bonus.valore, permanente: lista.every((e) => e.permanente),
+    };
+  });
+}
+
 /** Voci delle condizioni per un'Abilità: [{ etichetta, valore, fonte }]. */
 function vociCondizioniAbilita(condizioni, abilita, dati) {
   return condizioni.map((c) => voce(c.etichetta, effettoSuAbilita(c.effetto, abilita, dati), c.fonte)).filter((x) => x.valore);
@@ -87,17 +126,26 @@ function vociCondizioniAbilita(condizioni, abilita, dati) {
 export function applicaCondizioni(scheda, sessione, dati) {
   const condizioni = condizioniAttive(sessione, dati, scheda);
   const perNome = new Map();
+  const effettiOggetti = scheda.equipaggiamento?.effettiOggetti ?? [];
+  const accesi = new Set(isOggetto(sessione) && Array.isArray(sessione.condizioniOggetti) ? sessione.condizioniOggetti : []);
   scheda.abilita = scheda.abilita.map((a) => {
     const cond = vociCondizioniAbilita(condizioni, a, dati);
+    const ogg = effettiOggettiAbilita(effettiOggetti, accesi, a);
     const scomposizione = [
       voce('Valore da regole', a.totale, 'regole'),
       ...(a.componentiEquip ?? (a.equip ? [voce('Equipaggiamento', a.equip, 'equipaggiamento')] : [])),
+      ...ogg.voci,
       ...cond,
     ];
-    const x = { ...a, effettivo: somma(scomposizione), daRegole: a.totale, scomposizione, condizioni: somma(cond) };
+    const effettivo = somma(scomposizione);
+    const x = {
+      ...a, effettivo, daRegole: a.totale, scomposizione, condizioni: somma(cond),
+      disponibili: ogg.disponibili, nonCumulati: ogg.nonCumulati, usiSpecifici: valoriUsi(ogg.usi, effettivo, ogg.bonusOn),
+    };
     perNome.set(a.nome, x);
     return x;
   });
+  scheda.oggettiAccesi = effettiOggetti.filter((e) => e.ambito === 'situazionale' && accesi.has(e.uid));
 
   for (const s of Object.values(scheda.salvezze ?? {})) {
     const cond = condizioni.filter((c) => c.effetto.salvezze).map((c) => voce(c.etichetta, c.effetto.salvezze, c.fonte));

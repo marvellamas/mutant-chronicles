@@ -179,6 +179,8 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
         nome: a.nome, caratteristica: a.caratteristica, mod: a.mod, base: a.base, corporazione: a.corporazione,
         avanzamento: a.avanzamento, equip: a.equip ?? 0, va: a.vaEquip ?? a.totale, diClasse: a.daClasse > 0,
         totale: a.totale, effettivo: a.effettivo ?? a.vaEquip ?? a.totale, scomposizione: a.scomposizione ?? [],
+        // effetti degli oggetti (docs/effetti-oggetti.md): situazionali spenti e valori d'uso specifico
+        disponibili: a.disponibili ?? [], nonCumulati: a.nonCumulati ?? [], usiSpecifici: a.usiSpecifici ?? [],
       })),
     })),
     limiteAvanzamento: s.abilita[0]?.limite ?? null,
@@ -301,6 +303,13 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
       id: 'magia', titolo: 'Magia',
       dati: {
         pm: s.pm,
+        // uso specifico permanente (docs/effetti-oggetti.md): Potere per lanciare con l'armatura
+        // indossata (§7.11.1), a riposo come il resto della stampa
+        lancio: (() => {
+          const pen = s.equipaggiamento?.lancioPotere ?? 0;
+          const potere = s.abilita.find((a) => a.nome === 'Potere');
+          return pen && potere ? { va: (potere.vaEquip ?? potere.totale) + pen, penalita: pen } : null;
+        })(),
         scalaPotere: inc.scalaPotere === 'altri_utilizzatori' ? 'altri utilizzatori' : 'Taumaturgo',
         scala,
         livelloMassimo: inc.livelloMassimo,

@@ -264,7 +264,8 @@ function foglioMagia(d) {
   // nelle pagine di continuazione (spezzaMagia) l'intestazione del foglio non si ripete
   return [
     d.continuazione ? null : h('div', { class: 'testa-magia' },
-      riquadro('Punti Magia', h('p', { class: 'valore-grande' }, `max ${d.pm ?? '—'}`), h('div', { class: 'casella-grande' }, h('span', {}, 'attuali'))),
+      riquadro('Punti Magia', h('p', { class: 'valore-grande' }, `max ${d.pm ?? '—'}`), h('div', { class: 'casella-grande' }, h('span', {}, 'attuali')),
+        d.lancio ? h('p', { class: 'piccolo' }, h('strong', {}, `Potere per lanciare ${d.lancio.va}`), ` (armatura ${segno(d.lancio.penalita)}, §7.11.1)`) : null),
       riquadro('Incantesimi',
         h('p', {}, `Conosciuti ${d.conosciuti} / ${d.quota}`),
         h('p', {}, h('strong', {}, `Livello massimo: ${d.livelloMassimo}`))),

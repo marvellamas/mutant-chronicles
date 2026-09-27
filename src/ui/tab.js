@@ -219,6 +219,27 @@ function riquadroPM(ctx) {
   });
 }
 
+/**
+ * Interruttori «condizione attiva» degli oggetti in uso con effetti situazionali (corredo di
+ * sopravvivenza nell'ambiente scelto, abiti eleganti in un ambiente formale…): accesi, i loro
+ * effetti entrano nei VA effettivi. Valore di sessione (src/sessione.js → condizioniOggetti).
+ */
+function condizioniOggetti(ctx) {
+  const effetti = (ctx.tab.scheda.equipaggiamento?.effettiOggetti ?? []).filter((e) => e.ambito === 'situazionale');
+  if (!effetti.length) return null;
+  const perUid = new Map();
+  for (const e of effetti) (perUid.get(e.uid) ?? perUid.set(e.uid, []).get(e.uid)).push(e);
+  const accesi = new Set(ctx.sessione.condizioniOggetti ?? []);
+  return h('section', { class: 'riquadro condizioni-oggetti', 'aria-label': 'Condizioni degli oggetti' },
+    h('h2', {}, 'Condizioni degli oggetti'),
+    h('p', { class: 'nota' }, 'Accendi la condizione quando ricorre (ambiente, situazione formale, osservazione a distanza): l’effetto entra nel VA. Un solo bonus degli strumenti per Prova (Giocatore §1.4.1).'),
+    h('ul', { class: 'stati-tavolo' }, [...perUid].map(([uid, lista]) => h('li', {},
+      h('label', { class: `stato-tavolo${accesi.has(uid) ? ' attivo' : ''}` },
+        h('input', { type: 'checkbox', checked: accesi.has(uid), onchange: () => ctx.azioni.condizioneOggetto(uid) }),
+        h('span', {}, h('strong', {}, lista[0].oggetto), h('small', {}, ` · ${lista.map((e) => `${segno(e.valore)} ${e.abilita}`).join(', ')}`),
+          h('br', {}), h('span', { class: 'promemoria-stato' }, lista.map((e) => e.condizione).filter(Boolean).join(' '))))))));
+}
+
 function promemoriaPenalita(ctx, { soloSenzaEffetto = false } = {}) {
   const p = ctx.penalita;
   if (soloSenzaEffetto) {
@@ -238,14 +259,14 @@ function promemoriaPenalita(ctx, { soloSenzaEffetto = false } = {}) {
       soloTesto.length ? ` Senza effetto numerico, da applicare al tiro: ${soloTesto.map((s) => `${s.nome}: ${s.promemoria}`).join(' ')}` : null));
 }
 
-const FONTI = { regole: 'regole', equipaggiamento: 'equipaggiamento', ferite: 'Ferite (§5.14)', affaticamento: 'Affaticamento (§5.19)', stato: 'Stato (§5.18)' };
+const FONTI = { regole: 'regole', equipaggiamento: 'equipaggiamento', oggetto: 'oggetto (condizione accesa)', ferite: 'Ferite (§5.14)', affaticamento: 'Affaticamento (§5.19)', stato: 'Stato (§5.18)' };
 
 /**
  * Valore effettivo della modalità tavolo (regole + equipaggiamento + condizioni). Se differisce dal
  * valore da regole: rosso ▼ (malus) o verde ▲ (bonus); il segno resta leggibile senza colore.
  * Con più di una voce, un tocco o il passaggio del mouse mostra la scomposizione.
  */
-function valoreEffettivo(nome, effettivo, daRegole, scomposizione = [], { pillola = false, dettaglio = null } = {}) {
+function valoreEffettivo(nome, effettivo, daRegole, scomposizione = [], { pillola = false, dettaglio = null, disponibili = [], nonCumulati = [] } = {}) {
   if (effettivo === null || effettivo === undefined) return '—';
   const diff = daRegole === null || daRegole === undefined ? 0 : effettivo - daRegole;
   const verso = diff < 0 ? 'malus' : diff > 0 ? 'bonus' : '';
@@ -258,12 +279,37 @@ function valoreEffettivo(nome, effettivo, daRegole, scomposizione = [], { pillol
   return infoValore(figli, {
     titolo: `${nome}: ${numero(effettivo)}`,
     sottotitolo: `Valore da regole ${numero(daRegole)}`,
-    sezioni: [dettaglio ? { etichetta: 'Da regole', testo: dettaglio } : null, scomposizione.length > 1 ? { testo: formulaScomposizione(nome, scomposizione) } : null].filter(Boolean),
+    sezioni: [
+      dettaglio ? { etichetta: 'Da regole', testo: dettaglio } : null,
+      scomposizione.length > 1 ? { testo: formulaScomposizione(nome, scomposizione) } : null,
+      // effetti situazionali con la condizione spenta (docs/effetti-oggetti.md)
+      ...disponibili.map((e) => ({ etichetta: 'Disponibile', testo: `${segno(e.valore)} ${e.oggetto} — attiva la condizione (tab Abilità, «Condizioni degli oggetti»)${e.condizione ? `. ${e.condizione}` : ''}` })),
+      ...nonCumulati.map((e) => ({ etichetta: 'Non si somma', testo: `${segno(e.valore)} ${e.oggetto}: un solo modificatore degli strumenti per Prova (Giocatore §1.4.1).` })),
+    ].filter(Boolean),
     tabella: {
       titolo: 'Scomposizione', colonne: ['Voce', 'Valore', 'Fonte'],
       righe: scomposizione.map((x, i) => ({ Voce: x.etichetta, Valore: i ? segno(x.valore) : numero(x.valore), Fonte: FONTI[x.fonte] ?? x.fonte })),
     },
   }, { classe });
+}
+
+/**
+ * Valori d'uso specifico accanto alla pillola (docs/effetti-oggetti.md): «tracce 12 ▲», «lancio 8 ▼».
+ * Il VA generale non cambia; il tooltip spiega base, modificatore, oggetto, condizione e paragrafo.
+ */
+function valoriUso(nome, usi = []) {
+  return usi.map((u) => {
+    const verso = u.modificatore < 0 ? 'malus' : u.modificatore > 0 ? 'bonus' : '';
+    return infoValore([h('span', { class: 'uso-etichetta' }, u.uso), ' ', numero(u.valore),
+      verso ? h('span', { class: 'segno-verso', 'aria-hidden': 'true' }, u.modificatore < 0 ? '▼' : '▲') : null], {
+      titolo: `${nome} per ${u.uso}: ${numero(u.valore)}`,
+      sottotitolo: `VA ${numero(u.base)} ${segno(u.modificatore)}, solo per ${u.uso}: il VA di ${nome} non cambia`,
+      sezioni: [
+        ...u.oggetti.map((o) => ({ etichetta: `${o.oggetto} ${segno(o.valore)}${o.contato ? '' : ' (non si somma)'}`, testo: [o.condizione, o.fonte].filter(Boolean).join(' — ') || '—' })),
+        u.assorbito ? { testo: 'Il bonus è già nel VA con la condizione accesa: un solo modificatore degli strumenti per Prova (Giocatore §1.4.1).' } : null,
+      ].filter(Boolean),
+    }, { classe: `valore-uso ${verso}`.trim() });
+  });
 }
 
 const sezione = (titolo, ...contenuto) => h('section', { class: 'sezione-tab' }, h('h2', {}, titolo), ...contenuto);
@@ -376,16 +422,23 @@ function tabAbilita(ctx, d) {
           h('small', { class: 'formula' }, `${segno(a.mod)} Mod + ${a.base} Base + ${a.corporazione} Corp + ${a.avanzamento} Avanz${a.equip ? ` ${segno(a.equip)} Equip` : ''}`)),
         h('td', { class: 'dettaglio' }, segno(a.mod)), h('td', { class: 'dettaglio' }, String(a.base)), h('td', { class: 'dettaglio' }, String(a.corporazione)),
         h('td', { class: 'dettaglio' }, String(a.avanzamento)), h('td', { class: 'dettaglio', title: a.equip ? 'Equipaggiamento indossato (§7.11.1)' : null }, a.equip ? segno(a.equip) : '0'),
-        h('td', { class: 'cella-va' }, valoreEffettivo(a.nome, a.effettivo, a.totale, a.scomposizione, {
+        h('td', { class: 'cella-va' }, h('span', { class: 'va-con-usi' }, valoreEffettivo(a.nome, a.effettivo, a.totale, a.scomposizione, {
           pillola: true, dettaglio: `${segno(a.mod)} Mod + ${a.base} Base + ${a.corporazione} Corp + ${a.avanzamento} Avanz = ${a.totale}`,
-        })))))));
-  const condizioni = condizioniAttiveAbilita(ctx.tab.scheda, ctx.dati);
+          disponibili: a.disponibili, nonCumulati: a.nonCumulati,
+        }), valoriUso(a.nome, a.usiSpecifici))))))));
+  const tutte = condizioniAttiveAbilita(ctx.tab.scheda, ctx.dati);
+  const condizioni = tutte.filter((c) => c.fonte !== 'uso');
+  const usi = tutte.filter((c) => c.fonte === 'uso');
+  const rigaCondizione = (c) => h('li', { class: `condizione ${c.fonte}` },
+    h('span', { class: `val-eff ${c.verso}` }, h('span', { class: 'segno-verso', 'aria-hidden': 'true' }, c.verso === 'malus' ? '▼' : '▲'), ' '),
+    h('strong', {}, `${c.nome}: `), h('span', { class: `effetto-condizione ${c.verso}` }, c.testo),
+    c.uso ? h('span', { class: 'nota' }, ` (solo per ${c.uso}: vedi ${c.vedi})`) : null);
   return [
-    condizioni.length ? h('section', { class: 'riquadro condizioni-attive', 'aria-label': 'Condizioni attive' },
+    condizioni.length || usi.length ? h('section', { class: 'riquadro condizioni-attive', 'aria-label': 'Condizioni attive' },
       h('h2', {}, 'Condizioni attive'),
-      h('ul', {}, condizioni.map((c) => h('li', { class: `condizione ${c.fonte}` },
-        h('span', { class: `val-eff ${c.verso}` }, h('span', { class: 'segno-verso', 'aria-hidden': 'true' }, c.verso === 'malus' ? '▼' : '▲'), ' '),
-        h('strong', {}, `${c.nome}: `), h('span', { class: `effetto-condizione ${c.verso}` }, c.testo))))) : null,
+      condizioni.length ? h('ul', {}, condizioni.map(rigaCondizione)) : null,
+      usi.length ? h('ul', { class: 'usi-specifici', 'aria-label': 'Solo per un uso specifico' }, usi.map(rigaCondizione)) : null) : null,
+    condizioniOggetti(ctx),
     promemoriaPenalita(ctx, { soloSenzaEffetto: true }),
     sezione('Abilità',
       h('div', { class: 'abilita-affiancate' }, tabella(d.categorie.slice(0, meta)), tabella(d.categorie.slice(meta))),
@@ -732,7 +785,12 @@ function tabMagia(ctx, d) {
             mg.contromagia ? ` · Contromagia ${segno(mg.contromagia.penalita)} VA${mg.contromagia.serveConoscenza ? ', solo Incantesimi conosciuti' : ', anche Incantesimi non conosciuti'}` : null,
             mg.magiaOccultata ? ' · Magia Occultata: per contrastarti serve una Prova di Occultismo' : null);
         })(),
-        ctx.tab.scheda.equipaggiamento?.lancioPotere ? h('p', { class: 'nota' }, `Armatura: ${segno(ctx.tab.scheda.equipaggiamento.lancioPotere)} VA alle Prove di Potere per lanciare (§7.11.1)`) : null)),
+        (() => {
+          // uso specifico «lancio» (armatura, §7.11.1): accanto ai PM, con il VA di Potere per lanciare
+          const potere = ctx.tab.scheda.abilita?.find((a) => a.nome === 'Potere');
+          const usi = (potere?.usiSpecifici ?? []).filter((u) => u.uso === 'lancio');
+          return usi.length ? h('p', { class: 'lancio-potere' }, 'Potere per lanciare: ', valoriUso('Potere', usi)) : null;
+        })())),
     sezione(`Prove di Potere (scala ${d.scalaPotere})`,
       h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },
         h('thead', {}, h('tr', {}, h('th', {}, 'Livello'), h('th', {}, 'Prova'))),
