@@ -124,6 +124,32 @@ Il manuale non lo dice.
 **A.42 — Spazzata senz'armi (§5.12).** Il §5.12 non dice se la Spazzata si fa senz'armi; il Lottatore l'ottiene con Combattimento Multiplo. Senza quel Talento è ammessa?
 *Nel frattempo:* senz'armi l'app non propone la Spazzata; Combattimento Multiplo resta un promemoria.
 
+### AR e PI (docs/ricognizione-ar-pi.md)
+
+**A.43 — AR per zona del corpo?** Il Giocatore §5.10 dice che le AC «non assegnano locativi»; la Magia (sez. 7, Armatura Mistica) parla di «Area Colpita del corpo» e di AC «coperte dall’equipaggiamento», ma nessuna armatura dice quali AC copre. Basta un'AR unica?
+*Nel frattempo:* un solo valore, «AR totale, di cui magica» (contro l'Etereo vale la parte magica).
+
+**A.44 — Armatura o scudo a 0 PI (§7.2.1).** L'oggetto è Rotto e «non può essere utilizzato». Un'armatura Rotta ancora indossata dà la sua AR? Il manuale lo dice solo per l'elmetto («l’AR dell’armatura non cambia»).
+*Nel frattempo:* armatura e scudo Rotti non danno AR né i loro effetti; le penalità dell'armatura indossata restano.
+
+**A.45 — Kit di rinforzo a 0 PI (§7.11.2).** Il kit ha PI propri. Quando arriva a 0, il suo +AR sparisce? E la Leggera portata a Media dal kit torna Leggera?
+*Nel frattempo:* il +AR del kit sparisce; la categoria resta quella con il kit montato.
+
+**A.46 — Riparazione degli oggetti (§7.2.1, «da integrare»).** Tempo, costo, Prova di Tecnologia e PI recuperati per armi, armature, scudi ed elmetti. Vale la regola dei veicoli (1 ora, 1 PI con successo, 2 con Magistrale)?
+*Nel frattempo:* nessun pulsante «Ripara»; i PI si rimettono a mano con il +.
+
+**A.47 — Oggetti senza PI nel catalogo.** Dotazione, corredi e strumenti comuni spesso non hanno PI («quando pertinenti», Equipaggiamento §1.10). Sono indistruttibili o hanno un valore predefinito?
+*Nel frattempo:* un oggetto senza PI nel catalogo non si traccia; munizioni, sanitario e voci con quantità maggiore di 1 nemmeno.
+
+**A.48 — Cumulo dei Talenti e delle Tecniche che danno AR.** Corazza Potenziata (+1 AR magica), Aura di Resistenza (+1 magica) e Pelle di Rinoceronte (+1 contro il ravvicinato) non compaiono nella formula della Magia sez. 7 («il maggiore contributo applicabile fra Pelle Corazzata, Armatura di Forza e bonus di Armatura Mistica»). Si sommano o rientrano nel maggiore? E quali scudi sono «Mistici o TecnoMistici» per Corazza Potenziata?
+*Nel frattempo:* Corazza Potenziata si somma, con un'armatura indossata; Tecniche e incantesimi non sono tracciati al tavolo e restano fuori dal calcolo.
+
+**A.49 — Condizioni delle armi (§5.17, §7.2) e PI.** Un'arma Rotta o Inutilizzabile per un Fallimento Maldestro scende a 0 PI? Una riparata torna ai PI massimi?
+*Nel frattempo:* sono indipendenti; l'app tiene solo i PI, con l'etichetta «Rotto» a 0.
+
+**A.50 — Laser, Perforante e Incendiato contro l'AR.** Sullo stesso colpo si applica prima il dimezzamento di Laser o la sottrazione di Perforante? Perforante tocca l'AR Naturale di Pelle Corazzata e di Scudo (incantesimo)? Nell'Incendiato («ignorando l’Armatura ordinaria») la componente magica riduce il danno?
+*Nel frattempo:* l'app non calcola il danno al bersaglio; «Attacca!» ricorda solo l'ordine del §5.13.
+
 ### Chroma, non bloccanti
 
 **A.14 — Batterie da 5 PM: prezzo e profilo (§7.10).** Il manuale le cita come esempio (Rosso, Blu, Verde Comuni costo 1; Bianco Non Comune costo 2) ma senza prezzo, PI, Qualità, reperibilità. Ci dai i valori, o le togliamo finché non escono?
