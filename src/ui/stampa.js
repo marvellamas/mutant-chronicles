@@ -148,10 +148,6 @@ const filaCaselle = (n) => h('span', { class: 'fila-quadratini' },
 /** Righe guida a matita: lo sfondo del riempitivo. */
 const righeGuida = () => h('div', { class: 'righe-guida' });
 
-/** Righe da penna generate in abbondanza e tagliate a misura (riempiRighe). */
-const righeDaPenna = (n, riga) => h('div', { class: 'riempi-righe' },
-  Array.from({ length: n }, (_, i) => { const r = riga(i); r.dataset.vuota = '1'; return r; }));
-
 function tabella(colonne, righe, { classe = '', vuote = 0 } = {}) {
   return h('table', { class: `tabella-stampa ${classe}` },
     h('thead', {}, h('tr', {}, colonne.map((c) => h('th', {}, c)))),
@@ -161,13 +157,15 @@ function tabella(colonne, righe, { classe = '', vuote = 0 } = {}) {
 }
 
 // ---------------------------------------------------------------------------
-// Foglio 1 — Identità: nome e anagrafica in alto, Caratteristiche in grande, poi Punti Eroe,
-// Segni distintivi (un quadratino per riga) e il Background come riempitivo.
+// Foglio 1 — Identità: nome e anagrafica (Segni distintivi compresi) in alto, Caratteristiche in
+// grande, poi Punti Eroe, Distintivi (5 quadratini: al quinto si segna un Punto Eroe, §1.8.3) e
+// Vantaggio, e il Background come riempitivo.
 
 function foglioIdentita(d) {
-  const campi = d.anagrafica.filter((x) => x.campo !== 'segniDistintivi');
-  const segni = d.anagrafica.find((x) => x.campo === 'segniDistintivi')?.valore ?? '';
-  const righeSegni = segni ? segni.split(/\n+|;\s*/).map((x) => x.trim()).filter(Boolean) : [];
+  // PX dopo il Peso: prima riga di campi brevi, poi Occhi, Capelli, Mano dominante e Segni distintivi (largo)
+  const px = { campo: 'puntiEsperienza', etichetta: 'PX', valore: d.puntiEsperienza === null ? '' : String(d.puntiEsperienza) };
+  const i = d.anagrafica.findIndex((x) => x.campo === 'peso');
+  const campi = i < 0 ? [...d.anagrafica, px] : [...d.anagrafica.slice(0, i + 1), px, ...d.anagrafica.slice(i + 1)];
   return [
     h('div', { class: 'f1-testa' },
       h('div', { class: 'f1-nome' },
@@ -175,23 +173,21 @@ function foglioIdentita(d) {
         h('p', {}, h('strong', {}, `${d.livello}° livello`), ` · ${d.corporazione} · ${d.addestramento}`),
         h('p', {}, d.classi.map((c) => `${c.nome} ${c.grado}`).join(' · '))),
       h('dl', { class: 'f1-anagrafica' },
-        [...campi, { etichetta: 'PX', valore: d.puntiEsperienza === null ? '' : String(d.puntiEsperienza) }].map((x) =>
-          h('div', { class: 'campo-anagrafica' }, h('dt', {}, x.etichetta), h('dd', {}, x.valore || ' '))))),
+        campi.map((x) => h('div', { class: `campo-anagrafica campo-${x.campo}` }, h('dt', {}, x.etichetta), h('dd', {}, x.valore || ' '))))),
     box({ titolo: 'Caratteristiche', tinta: 'accento', forte: true, classe: 'f1-caratteristiche' },
       h('div', { class: 'tessere' }, d.caratteristiche.map((c) => h('div', { class: 'tessera' },
         h('span', { class: 'sigla-car' }, c.sigla), h('span', { class: 'nome-car' }, c.nome),
         h('span', { class: 'valore-car' }, String(c.valore)),
         h('span', { class: 'mod-car' }, h('span', {}, 'Mod ', h('strong', {}, segno(c.mod))), h('span', {}, 'Salv. ', h('strong', {}, segno(c.modSalvezza)))))))),
     h('div', { class: 'f1-basso' },
-      h('div', { class: 'colonna' },
+      h('div', { class: 'f1-risorse' },
         box({ titolo: 'Punti Eroe', tinta: 'pe' },
           h('p', {}, d.puntiEroe.valore === null ? 'Iniziali: da determinare' : `Iniziali ${d.puntiEroe.valore} · riserva massima ${d.puntiEroe.massimo}`),
           quadratini(d.puntiEroe.massimo)),
+        // §1.8.3: 5 Distintivi = 1 Punto Eroe; al quinto annerito si segna il Punto Eroe e si cancellano
+        box({ titolo: 'Distintivi', tinta: 'pe', classe: 'f1-distintivi' }, filaCaselle(5)),
         box({ titolo: 'Vantaggio dell’Addestramento' }, h('p', {}, h('strong', {}, `${d.vantaggio.nome}. `), d.vantaggio.testo)),
-        d.annotazioni.length ? box({ titolo: 'Note' }, h('ul', {}, d.annotazioni.map((x) => h('li', {}, x)))) : null,
-        box({ titolo: 'Segni distintivi', riempitivo: true },
-          righeDaPenna(Math.max(30, righeSegni.length), (i) => h('div', { class: 'riga-da-penna' },
-            h('span', { class: 'casella' }), h('span', { class: 'testo' }, righeSegni[i] ?? ''))))),
+        d.annotazioni.length ? box({ titolo: 'Note' }, h('ul', {}, d.annotazioni.map((x) => h('li', {}, x)))) : null),
       box({ titolo: 'Background', riempitivo: true, classe: 'f1-background' },
         d.background ? h('p', { class: 'testo-background' }, d.background) : null,
         d.backgroundTroncato ? h('p', { class: 'piccolo' }, 'Testo completo nella scheda digitale.') : null,

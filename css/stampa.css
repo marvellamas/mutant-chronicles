@@ -153,8 +153,6 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 }
 /* righe generate e poi tagliate a misura (riempiRighe in src/ui/stampa.js) */
 .riempi-righe { flex: 1; min-height: 0; overflow: hidden; }
-.riga-da-penna { display: flex; align-items: center; gap: 2mm; height: 7mm; border-bottom: 0.5pt solid var(--ss-guida); box-sizing: border-box; }
-.riga-da-penna .testo { flex: 1; }
 
 /* tabelle */
 .tabella-stampa { width: 100%; border-collapse: collapse; }
@@ -216,7 +214,9 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .f1-testa { display: grid; grid-template-columns: auto 1fr; gap: 6mm; align-items: end; margin-bottom: 2mm; }
 .f1-nome h1 { font-size: 26pt; }
 .f1-nome p { margin: 0.5mm 0 0; }
-.f1-anagrafica { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1mm 3mm; margin: 0; }
+.f1-anagrafica { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1mm 3mm; margin: 0; }
+.campo-segniDistintivi { grid-column: span 3; } /* una riga, più larga degli altri campi */
+.campo-segniDistintivi dd { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .campo-anagrafica { display: flex; flex-direction: column; }
 .campo-anagrafica dt { font-size: var(--ss-font-small); color: var(--ss-grigio); font-weight: 600; }
 .campo-anagrafica dd { margin: 0; min-height: 5.5mm; border-bottom: 0.75pt solid var(--ss-linea); }
@@ -231,8 +231,10 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .nome-car { grid-area: nome; font-size: var(--ss-font-small); color: var(--ss-grigio); text-align: right; }
 .valore-car { grid-area: valore; font-size: 34pt; font-weight: 800; text-align: center; line-height: 1.05; }
 .mod-car { grid-area: mod; display: flex; justify-content: space-between; font-size: 11pt; }
-.f1-basso { flex: 1; min-height: 0; display: grid; grid-template-columns: 105mm 1fr; gap: 3mm; }
-.f1-basso > .colonna { min-height: 0; }
+.f1-basso { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 2mm; }
+.f1-risorse { display: flex; gap: 3mm; align-items: stretch; flex: none; }
+.f1-risorse > .riquadro-stampa { flex: 0 0 auto; }
+.f1-risorse > .riquadro-stampa:nth-child(3), .f1-risorse > .riquadro-stampa:nth-child(4) { flex: 1 1 0; }
 .f1-background .testo-background { white-space: pre-line; flex: none; }
 
 /* Foglio 2 — Abilità */
