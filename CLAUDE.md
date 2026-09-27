@@ -51,6 +51,8 @@ src/
   avanzamento.js  livelli 2–20 (cap. 8): ricalcolo, validazione, eventi
   incantesimi.js, checklist.js, descrizioni.js, tiri.js, lingua.js
   equipaggiamento.js  catalogo ed effetti degli oggetti
+  attacco.js    utility d'attacco (a distanza; il corpo a corpo con lo stesso impianto)
+  ricarica.js   ricarica delle armi a distanza dalle riserve
   dotazioni.js  equipaggiamento iniziale (§2.16): scelte, crediti, acquisti, voci della dotazione
   sessione.js   valori attuali di sessione (modalità tavolo)
   stampa.js     dati dei fogli di stampa e delle tab
@@ -78,7 +80,10 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 - effetti degli oggetti sui VA (`effetti` nel catalogo, negli oggetti di dotazione e nei personalizzati): generali, situazionali (interruttore al tavolo), d'uso specifico (valore a parte); frasi del manuale verificate da `tools/verifica_frasi.mjs` (`docs/effetti-oggetti.md`);
 - Manuale dell'Equipaggiamento 0.1, cap. 1: carico (§1.6 = Giocatore §5.2.6) e PS Integrità per Qualità (§1.7) in `regole.json`.
 
-Fuori perimetro per ora: combattimento automatizzato (tiri, bersagli, danni), veicoli, capitoli 2–8 del Manuale dell'Equipaggiamento (non ancora scritti).
+- utility «Attacca!» nella tab Combattimento (nessun tiro di dado): attacco a distanza completo (`src/attacco.js`, `regole.json` → `attacco_distanza`, effetti.attacco_distanza dei Talenti), corpo a corpo per ora solo con il risultato base;
+- ricarica dalle riserve (`src/ricarica.js`, `munizioni.json` → `ricarica`).
+
+Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, manovre del corpo a corpo (prossima sessione), veicoli, capitoli 2–8 del Manuale dell'Equipaggiamento (non ancora scritti).
 
 ## Riferimenti
 

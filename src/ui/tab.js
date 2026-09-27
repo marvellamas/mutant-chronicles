@@ -17,6 +17,7 @@ import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, co
 import { dotazioneApplicata, crediti } from '../dotazioni.js';
 import { statoRicarica, disponibili } from '../ricarica.js';
 import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
+import { pannelloAttacco } from './attacco.js';
 
 export const POSIZIONI_TAB = [
   { id: 'automatica', etichetta: 'Automatica (sinistra su schermi larghi, in basso su telefono e tablet)' },
@@ -89,7 +90,11 @@ export function renderTab(ctx) {
       h('ul', {}, tab.errori.slice(0, 6).map((e) => h('li', {}, e.livello > 1 ? `${e.livello}° livello: ${e.problema}` : e.problema)))) : null,
     contenuti[corrente.id](ctx, corrente.dati));
 
-  return [h('div', { class: `scheda-tab pos-${ctx.posizione} larghezza-${ctx.larghezza ?? 'piena'}` }, barra, nav, pannello)];
+  // pannello «Attacca!» dell'arma scelta (src/ui/attacco.js), sopra la scheda
+  const armaAttacco = ctx.ui?.attacco ? (tab.scheda.equipaggiamento?.armi ?? []).find((a) => a.uid === ctx.ui.attacco.uid) : null;
+  if (ctx.ui?.attacco && !armaAttacco) ctx.ui.attacco = null;
+  return [h('div', { class: `scheda-tab pos-${ctx.posizione} larghezza-${ctx.larghezza ?? 'piena'}` }, barra, nav, pannello),
+    armaAttacco ? pannelloAttacco(ctx, armaAttacco) : null];
 }
 
 function menuAzioni(ctx) {
@@ -651,7 +656,9 @@ function schedaArma(ctx, a) {
     ? (mr ? aggiungiDanno(mr.danno, a.bonusDanno) : `dalla munizione${a.munizioni?.riferimento ? ` (${a.munizioni.riferimento})` : ''}`)
     : testoDanno(a.danno);
   return h('article', { class: `arma-tab${a.moduloDi ? ' modulo' : ''}` },
-    h('h3', {}, a.nome, h('small', { class: 'sigla' }, ` · ${a.abilita ?? 'Abilità non indicata'}`)),
+    h('div', { class: 'arma-testa' },
+      h('h3', {}, a.nome, h('small', { class: 'sigla' }, ` · ${a.abilita ?? 'Abilità non indicata'}`)),
+      a.va !== null ? h('button', { type: 'button', class: 'btn primario btn-attacca', onclick: () => { ctx.ui.attacco = { uid: a.uid, passo: 0 }; ctx.azioni.ridisegna(); } }, 'Attacca!') : null),
     a.moduloDi ? h('p', { class: 'nota' }, `Modulo integrato di ${a.moduloDi}: si sceglie il profilo prima di ogni attacco; alimentazione separata (§7.8).`) : null,
     h('div', { class: 'arma-valori' },
       h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), a.va === null ? h('strong', {}, '—') : valoreEffettivo(`VA per colpire (${a.nome})`, a.vaEffettivo ?? a.va, a.vaDaRegole ?? a.va, a.scomposizione, { pillola: true })),

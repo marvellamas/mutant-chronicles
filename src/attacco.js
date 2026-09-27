@@ -66,7 +66,7 @@ export function dichiarazioneDistanza(d = {}) {
       ignaro: !!b.ignaro,
       tiImpegna: !!b.tiImpegna,
     },
-    distanza: Number.isFinite(d.distanza) && d.distanza >= 1 ? Math.round(d.distanza) : 1,
+    distanza: Number.isFinite(d.distanza) && d.distanza >= 1 ? Math.round(d.distanza) : 10,
     modalita: typeof d.modalita === 'string' ? d.modalita : 'S',
     mirato: !!d.mirato,
     ravvicinato: !!d.ravvicinato,

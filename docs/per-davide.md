@@ -57,6 +57,16 @@ Il manuale non lo dice.
 **A.35 — Acquisti iniziali: valore ceduto maggiore del prezzo (§2.16.29).** Il paragrafo dice che si paga la differenza; se gli armamenti ceduti valgono più del nuovo oggetto (per esempio si cede l'armatura da 1.500 per un'arma da 800), la differenza torna in crediti o si perde?
 *Nel frattempo:* il conguaglio non scende sotto zero (la differenza si perde) e l'app lo segnala accanto all'acquisto.
 
+**A.38 — Attacco a distanza: punti da confermare (Giocatore §5.2, §5.8, §5.10, §5.11).** L'utility «Attacca!» applica il testo; dove non è esplicito ha scelto così:
+1. *Movimento Tattico (Incursore) e Movimento Fluido* riducono entrambi di 2 le penalità del proprio movimento: si sommano? L'app usa una sola riduzione (Scatto −6 → −4).
+2. *Attaccare dalla Copertura* «consuma l'Azione di Movimento e un'Azione Principale»: l'Azione Principale è quella del tiro, o una in più? L'app conta solo l'AzM in più.
+3. *Seconda Prova contro un bersaglio impegnato o protetto* («con la stessa Abilità a −4 VA»): è il VA per colpire dell'arma −4, o con anche distanza, Copertura e gli altri modificatori del tiro? L'app usa il VA dell'arma −4.
+4. *Mira Selettiva* vale «se rimane fermo per tutto il Round»: basta il Passo per perderla? L'app la applica solo scegliendo «Fermo».
+5. *Imbracciatura*: con l'arma già imbracciata si spara senza costo; se va imbracciata nel Round costa 1 AzM, che l'app ricorda ma non aggiunge. Muoversi (Passo compreso) fa perdere l'Imbracciatura, salvo Imbracciatura Rapida: corretto?
+6. *Tiro Ravvicinato obbligatorio e Tiro a Bruciapelo* (bersaglio che ti impegna, al Contatto, con Tiro a Bruciapelo Migliorato): l'app applica la penalità del Tiro Ravvicinato e il danno ×2 senza il +3. È così?
+7. *Movimento Evasivo del bersaglio fermo*: il Movimento Evasivo si fa muovendosi; se il giocatore lo indica per un bersaglio «fermo», l'app usa le penalità del Passo.
+*Nel frattempo:* le scelte sopra; Tiratore Imboscato, Rapidità Operativa, Punto Vitale e Raffica Estesa compaiono come promemoria nel risultato.
+
 **A.37 — Ricarica di fucili a pompa e doppiette (Armamenti §7.20.2, Giocatore §5.1.1).** Il §7.20.2 esclude dai caricatori amovibili i revolver e i «serbatoi fissi». La scheda tratta come armi a inserimento (si infilano le cartucce sciolte fino alla capacità) i revolver, i fucili a pompa e le doppiette, commerciali e corporativi (famiglie «Revolver», «Fucili a pompa», «Fucili a pompa e doppiette»), compresi M310 (capacità 20) e SA SG2001 (capacità 10). Tutte le altre armi a proiettile usano un caricatore amovibile. È corretto?
 *Nel frattempo:* `munizioni.json` → `ricarica.inserimento_singolo`; per cambiare un'arma basta spostarla da lì.
 

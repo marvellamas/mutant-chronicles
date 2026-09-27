@@ -1059,3 +1059,48 @@ body.con-sfondo::before {
 
 /* carico con oggetti senza peso */
 .voce-info.senza-peso { font-size: 1rem; font-weight: 600; }
+
+/* ---------------------------------------------------------------- pannello «Attacca!» (src/ui/attacco.js) */
+
+.arma-testa { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; }
+.arma-testa h3 { margin: 0; }
+.btn-attacca { min-height: 48px; min-width: 7rem; font-size: 1.05rem; font-weight: 700; flex: none; }
+.attacco-sfondo { position: fixed; inset: 0; z-index: 60; background: rgba(0, 0, 0, 0.55); display: flex; justify-content: center; align-items: flex-start; overflow-y: auto; padding: 1rem; }
+.attacco-pannello { background: var(--sfondo); border: 1px solid var(--bordo); border-radius: var(--raggio); width: min(46rem, 100%); padding: 0.75rem 1rem 1rem; box-shadow: var(--ombra); }
+.attacco-testa { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; border-bottom: 1px solid var(--bordo); padding-bottom: 0.5rem; }
+.attacco-testa h2 { margin: 0; font-size: 1.15rem; }
+.attacco-passo { border-bottom: 1px solid var(--bordo); padding: 0.6rem 0; }
+.attacco-passo > h3 { margin: 0 0 0.35rem; font-size: 1rem; }
+.num-passo { display: inline-grid; place-items: center; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--accento-tenue); color: var(--accento); font-size: 0.85rem; }
+.scelta-attacco { margin: 0.4rem 0 0.6rem; }
+.scelta-titolo { margin: 0 0 0.25rem; font-weight: 600; font-size: 0.9rem; color: var(--tenue); display: block; }
+.scelta-pulsanti { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.scelta-btn { min-height: 44px; }
+.scelta-btn.scelta { background: var(--accento-tenue); border-color: var(--accento); color: var(--accento); font-weight: 700; }
+.distanza-riga { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem; }
+.input-distanza { width: 7rem; font-size: 1.2rem; min-height: 44px; }
+.fascia { font-weight: 600; }
+.fascia.malus { color: var(--errore); }
+.va-attacco { font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.voce-info.pillola-attacco { font-size: 2rem; padding: 0.1rem 0.9rem; }
+.scomposizione-attacco td { text-align: right; font-variant-numeric: tabular-nums; }
+.scomposizione-attacco td.malus { color: var(--errore); }
+.scomposizione-attacco td.bonus { color: var(--ok); }
+.scomposizione-attacco tr.totale th, .scomposizione-attacco tr.totale td { font-weight: 700; border-top: 2px solid var(--bordo); }
+.promemoria-attacco { padding-left: 1.1rem; font-size: 0.9rem; color: var(--tenue); }
+.attacco-azioni { display: flex; flex-direction: column; gap: 0.35rem; margin-top: 0.75rem; }
+.btn-grande { min-height: 56px; font-size: 1.15rem; }
+.attacco-nav { display: none; }
+/* telefono: un passo per schermata, con la barra Indietro / Avanti */
+@media (max-width: 799.98px) {
+  .attacco-sfondo { padding: 0; }
+  .attacco-pannello { border-radius: 0; min-height: 100%; padding-bottom: 5rem; }
+  .attacco-passo:not(.corrente) { display: none; }
+  .attacco-passo { border-bottom: 0; }
+  .attacco-nav {
+    display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;
+    position: fixed; left: 0; right: 0; bottom: 0; padding: 0.5rem 0.75rem calc(0.5rem + env(safe-area-inset-bottom));
+    background: var(--superficie); border-top: 1px solid var(--bordo);
+  }
+  .attacco-nav .btn { min-height: 48px; white-space: nowrap; }
+}

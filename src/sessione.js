@@ -6,7 +6,9 @@
 // sessione = { pvAttuali, pmAttuali, puntiEroe, distintivi, statiAttivi: [id], ferite,
 //              affaticamento, munizioni: { uid: { colpi, riserve, parziali, vuoti } }, scorte: { uid: consumate },
 //              chroma: { uid: { pmAttuali } },
-//              caricoExtra, crediti, creditiIniziali, condizioniOggetti: [uid], note }
+//              caricoExtra, crediti, creditiIniziali, condizioniOggetti: [uid], attacchi: { uid: scelte }, note }
+// attacchi: le ultime scelte del pannello «Attacca!» per ogni arma (src/ui/attacco.js), per il
+// prossimo tiro con le stesse scelte (anche l'Imbracciatura).
 // munizioni: per ogni arma a distanza della lista, i colpi nel caricatore (limitati alla sua
 // capacità, dal catalogo), le riserve (caricatori pieni di scorta), i caricatori parziali tolti
 // (colpi rimasti) e quelli vuoti. scorte: munizioni sciolte e celle dell'inventario consumate
@@ -172,6 +174,7 @@ export function inizializzaSessione(m) {
     caricoExtra: 0,
     ...allineaCrediti({}, m),
     condizioniOggetti: [],
+    attacchi: {},
     note: '',
   };
 }
@@ -197,6 +200,8 @@ export function allineaSessione(sessione, m) {
     caricoExtra: chili(sessione.caricoExtra),
     ...allineaCrediti(sessione, m),
     condizioniOggetti: allineaCondizioniOggetti(sessione.condizioniOggetti, m),
+    attacchi: Object.fromEntries(Object.entries(isOggetto(sessione.attacchi) ? sessione.attacchi : {})
+      .filter(([uid, v]) => isOggetto(v) && (!m.caricatori || uid in m.caricatori))),
     note: typeof sessione.note === 'string' ? sessione.note : '',
   };
 }

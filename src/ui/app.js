@@ -635,6 +635,14 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       imposta: (campo, valore) => cambiaSessione(modificaSessione(stato.sessione, { [campo]: valore }, massimi)),
       commutaStato: (id) => cambiaSessione(commutaStato(stato.sessione, id, massimi)),
       condizioneOggetto: (uid) => cambiaSessione(commutaCondizioneOggetto(stato.sessione, uid, massimi)),
+      // pannello «Attacca!»: le scelte si ricordano senza diventare «l'ultima modifica» da annullare;
+      // «Spara» sì, così «Annulla» lo copre
+      ricordaAttacco: (uid, scelte) => {
+        stato.sessione = modificaSessione(stato.sessione, { attacchi: { ...(stato.sessione?.attacchi ?? {}), [uid]: scelte } }, massimi);
+        persisti();
+        renderScheda({ mantieniScorrimento: true });
+      },
+      spara: (uid, munizioni) => cambiaSessione(variaMunizioni(stato.sessione, uid, 'colpi', -munizioni, massimi)),
       convertiDistintivi: () => cambiaSessione(convertiDistintivi(stato.sessione, massimi)),
       // le note si salvano a ogni tasto; l'annullamento riporta al testo di prima della modifica
       inizioNote: () => { stato.sessionePrecedente = stato.sessione; },
