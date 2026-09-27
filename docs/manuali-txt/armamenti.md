@@ -4,7 +4,7 @@
 
 ## Armi armature scudi e dotazioni operative
 
-**EDIZIONE 0.50**
+**EDIZIONE 0.52**
 
 Settembre 2026
 
@@ -14,9 +14,9 @@ Giocatore  ·  Magia  ·  Armamenti  ·  Equipaggiamenti  ·  Veicoli  ·  Diret
 
 **Usare questo manuale**
 
-Questo volume raccoglie armi, armature, scudi e dotazioni operative, con le regole di impiego, Integrità e Sintonizzazione degli oggetti. Le tabelle permettono di confrontare i profili e trovare rapidamente valori, requisiti, proprietà e costi.
+Questo volume raccoglie armi, armature, scudi, elmetti e dotazioni operative, con le regole di impiego, Integrità e Sintonizzazione degli oggetti. Le tabelle permettono di confrontare i profili e trovare rapidamente valori, requisiti, proprietà e costi.
 
-I cataloghi comprendono gli armamenti commerciali e i modelli delle Corporazioni, dell’Alleanza e della Fratellanza. Sono inclusi munizioni, alimentazioni, mirini, silenziatori, supporti di tiro, moduli di visione, rinforzi, esoscheletri indossabili, moduli specialistici, unità robotiche, corredi e strumenti sanitari, con consumabili e regole d’impiego.
+I cataloghi comprendono gli armamenti commerciali e i modelli delle Corporazioni, dell’Alleanza e della Fratellanza. Sono inclusi munizioni, alimentazioni, mirini, silenziatori, supporti di tiro, moduli di visione, elmetti e relative modifiche, rinforzi, esoscheletri indossabili, moduli specialistici, unità robotiche, corredi e strumenti sanitari, con consumabili e regole d’impiego.
 
 ## **I manuali di SIMPLY RPG**
 
@@ -34,47 +34,51 @@ Il sommario riporta le pagine delle sezioni ed è navigabile nella versione digi
 
 Sezioni e pagine di consultazione
 
-[**Capitolo 7 — Armamenti**](#bookmark=id.a8w9t3sec2mh)	**[4](#bookmark=id.a8w9t3sec2mh)**
+[**Capitolo 7 — Armamenti**](#bookmark=id.wpuxddubkx6a)	**[4](#bookmark=id.wpuxddubkx6a)**
 
-[7.1 Dati fondamentali delle armi](#bookmark=id.2dntyurvlf9a)	[4](#bookmark=id.2dntyurvlf9a)
+[7.1 Dati fondamentali delle armi](#bookmark=id.4w3742n5gvec)	[4](#bookmark=id.4w3742n5gvec)
 
-[7.2 Condizioni delle armi](#bookmark=id.3fmmsixavh3m)	[18](#bookmark=id.3fmmsixavh3m)
+[7.2 Condizioni delle armi](#bookmark=id.ip33x86hsv1i)	17
 
-[7.3 Mirini e accessori delle armi](#bookmark=id.qmwhgsdwtlpt)	[19](#bookmark=id.qmwhgsdwtlpt)
+[7.3 Mirini e accessori delle armi](#bookmark=id.mmrq37s6fbry)	[19](#bookmark=id.mmrq37s6fbry)
 
-[7.4 Scudi e protezioni](#bookmark=id.a1hlxqn8xgnl)	[23](#bookmark=id.a1hlxqn8xgnl)
+[7.4 Scudi e protezioni](#bookmark=id.n8nkkkxvc8rz)	22
 
-[7.5 Artefatti](#bookmark=id.gx9of9qmjnds)	[30](#bookmark=id.gx9of9qmjnds)
+[7.5 Artefatti](#bookmark=id.j9e8wdskmj0n)	[30](#bookmark=id.j9e8wdskmj0n)
 
-[7.6 Contenuti ancora da sviluppare](#bookmark=id.s2p05lyroi17)	[32](#bookmark=id.s2p05lyroi17)
+[7.6 Contenuti ancora da sviluppare](#bookmark=id.jqq38ym9gaqu)	31
 
-[7.7 Catalogo Commerciale delle armi a distanza](#bookmark=id.euf5olgvjq2o)	[33](#bookmark=id.euf5olgvjq2o)
+[7.7 Catalogo Commerciale delle armi a distanza](#bookmark=id.5pdrpgoayxs2)	32
 
-[7.8 Cataloghi corporativi delle armi a distanza](#bookmark=id.8tapw3ksnwqn)	[36](#bookmark=id.8tapw3ksnwqn)
+[7.8 Cataloghi corporativi delle armi a distanza](#bookmark=id.c59shry7qhmf)	[36](#bookmark=id.c59shry7qhmf)
 
-[7.9 Prezzi di riferimento delle armi](#bookmark=id.9xs7ojambs7s)	[52](#bookmark=id.9xs7ojambs7s)
+[7.9 Prezzi di riferimento delle armi](#bookmark=id.4k4pq4fn3vxf)	51
 
-[7.10 Artefatti e sintonizzazione](#bookmark=id.7t20qs5hra47)	[58](#bookmark=id.7t20qs5hra47)
+[7.10 Artefatti e sintonizzazione](#bookmark=id.fakxh9134kr4)	57
 
-[7.11 Armature e rinforzi](#bookmark=id.bagtv8dfxdd4)	[61](#bookmark=id.bagtv8dfxdd4)
+[7.11 Armature e rinforzi](#bookmark=id.bwv35jaq96fp)	60
 
-[7.12 Corredi specialistici dell’Alleanza](#bookmark=id.yl79epy1tvrq)	[70](#bookmark=id.yl79epy1tvrq)
+[7.12 Corredi specialistici dell’Alleanza](#bookmark=id.ojdo7b9jhrmr)	68
 
-[7.13 Catalogo Capitol](#bookmark=id.nmidpq1zaxpr)	[71](#bookmark=id.nmidpq1zaxpr)
+[7.13 Catalogo Capitol](#bookmark=id.evbj8kxr55ul)	69
 
-[7.14 Catalogo Imperial](#bookmark=id.lpwszsako5w8)	[80](#bookmark=id.lpwszsako5w8)
+[7.14 Catalogo Imperial](#bookmark=id.dsvajpof4rfc)	78
 
-[7.15 Catalogo Cybertronic](#bookmark=id.218vbel876rl)	[90](#bookmark=id.218vbel876rl)
+[7.15 Catalogo Cybertronic](#bookmark=id.6eswqv4mjio6)	88
 
-[7.16 Catalogo Mishima](#bookmark=id.qawuwg3uuuku)	[95](#bookmark=id.qawuwg3uuuku)
+[7.16 Catalogo Mishima](#bookmark=id.oo04uhg9nuu0)	93
 
-[7.17 Catalogo Fratellanza](#bookmark=id.nzyvqn24q7sg)	[100](#bookmark=id.nzyvqn24q7sg)
+[7.17 Catalogo Fratellanza](#bookmark=id.ti3dqryv45h4)	98
 
-[7.18 Unità robotiche e accessori](#bookmark=id.wk6k6ogghvdk)	[106](#bookmark=id.wk6k6ogghvdk)
+[7.18 Unità robotiche e accessori](#bookmark=id.se3u0w2yng53)	104
 
-[7.19 Equipaggiamento sanitario](#bookmark=id.vjva6kjafwzl)	[108](#bookmark=id.vjva6kjafwzl)
+[7.19 Equipaggiamento sanitario](#bookmark=id.dsii7f4mdwfd)	106
 
-[7.20 Munizioni e alimentazioni](#bookmark=id.ixdxvqcpxh3k)	[113](#bookmark=id.ixdxvqcpxh3k)
+[7.20 Munizioni e alimentazioni](#bookmark=id.p6lnkgsvyr4g)	111
+
+[7.21 Elmetti e modifiche](#bookmark=id.yq2wgvpplbyh)	119
+
+7.22 Armamenti corporativi di base	124
 
 # **Capitolo 7 — Armamenti**
 
@@ -762,7 +766,7 @@ Si applica un solo supporto: Bipiede e Treppiede non sommano i benefici. I bonus
 
 ### **7.3.3 Illuminazione e moduli di visione**
 
-Questi accessori si montano sulle armi e sui mirini compatibili. I moduli di visione si acquistano separatamente dall’ottica e non aumentano la sua riduzione della penalità di distanza. I visori indossabili saranno integrati nel Manuale degli Equipaggiamenti.
+Questi accessori si montano sulle armi e sui mirini compatibili. I moduli di visione si acquistano separatamente dall’ottica e non aumentano la sua riduzione della penalità di distanza. I visori per elmetti seguono le stesse regole di visione e sono nel §7.21; gli altri visori indossabili si consultano nel Manuale degli Equipaggiamenti.
 
 | Accessorio | Portata | PI | Qualità | PS INT | REP | Costo |
 | :---- | :---: | :---: | :---- | :---: | :---: | :---: |
@@ -807,7 +811,7 @@ Torcia tattica, Modulo di visione notturna e Modulo di visione termica utilizzan
 
 La ricarica ordinaria non ha un costo fisso da conteggiare: richiede disponibilità dell’energia necessaria e quattro ore. Le fonti mobili di energia si acquistano separatamente; il cavo permette il collegamento ma non costituisce una riserva energetica.
 
-Questa batteria riguarda soltanto i tre accessori indicati. Celle delle armi, riserve mistiche, propulsori, esoscheletri e altri dispositivi conservano capacità, compatibilità e procedure delle rispettive schede. Le celle e i combustibili delle armi sono nel §7.20.
+La stessa batteria alimenta anche gli elmetti del §7.21: tutte le loro funzioni elettroniche condividono una batteria e 24 ore di autonomia. Celle delle armi, riserve mistiche, propulsori, esoscheletri e altri dispositivi conservano capacità, compatibilità e procedure delle rispettive schede. Le celle e i combustibili delle armi sono nel §7.20.
 
 ## **7.4 Scudi e protezioni**
 
@@ -1170,8 +1174,8 @@ La capacità ordinaria è FOR × 10 kg; il massimo sollevabile e trasportabile �
 ## **7.6 Contenuti ancora da sviluppare**
 
 * Armi ravvicinate e a distanza: i cataloghi commerciali, corporativi, dell’Alleanza e della Fratellanza sono nei §§7.1 e 7.7–7.9. Il raccordo KI della Lama Mushashi sarà integrato successivamente.  
-* Armature: basi commerciali, rinforzi, Bauhaus e Alleanza nel §7.11; Capitol nel §7.13; Imperial nel §7.14; Cybertronic nel §7.15; Mishima nel §7.16; Fratellanza nel §7.17. Gli Scudi commerciali e corporativi sono nel §7.4. Le configurazioni Migliorate e Potenziate di armature e scudi saranno integrate successivamente.  
-* Munizioni e alimentazioni: il catalogo completo delle munizioni qui definite, con prezzi e compatibilità, è nel §7.20. Le cariche offensive e le riserve a PM seguono anche i §§7.1.4 e 7.5.1. Le batterie di servizio di Torcia tattica e moduli di visione sono nel §7.3.4. Le altre batterie e i consumabili non descritti nelle rispettive schede saranno integrati successivamente.  
+* Armature: basi commerciali, rinforzi, Bauhaus e Alleanza nel §7.11; Capitol nel §7.13; Imperial nel §7.14; Cybertronic nel §7.15; Mishima nel §7.16; Fratellanza nel §7.17. Gli Scudi commerciali e corporativi sono nel §7.4; gli elmetti e le modifiche commerciali nel §7.21. Le configurazioni Migliorate e Potenziate di armature e scudi saranno integrate successivamente.  
+* Munizioni e alimentazioni: il catalogo completo delle munizioni qui definite, con prezzi e compatibilità, è nel §7.20. Le cariche offensive e le riserve a PM seguono anche i §§7.1.4 e 7.5.1. Le batterie di servizio di Torcia tattica, moduli di visione ed elmetti sono nei §§7.3.4 e 7.21.3. Le altre batterie e i consumabili non descritti nelle rispettive schede saranno integrati successivamente.  
 * Strumenti e dispositivi: corredi dell’Alleanza nel §7.12; esoscheletri Bauhaus nel §7.11.6; dotazioni Capitol e Imperial nei §§7.13–7.14; moduli Cybertronic nel §7.15 e robot Attila nel §7.18. Veicoli, motociclette e mezzi corazzati saranno integrati successivamente, comprese Fenris Bike, Necromower, Hurricane, Barracuda, mezzi dei Dragoni, Vorreiter e mezzi Mishima.  
 * Equipaggiamento sanitario: kit di pronto soccorso, cartucce, UMC, strumenti portatili, diagnostici e chirurgici nel §7.19. Droghe da Combattimento compatibili con gli UMC, naniti medici e ulteriori consumabili saranno integrati successivamente.
 
@@ -1379,7 +1383,7 @@ Arco da guerra. Incoccare è compreso nell’attacco; Tiro Rapido consuma due fr
 
 ## **7.8 Cataloghi corporativi delle armi a distanza**
 
-I cataloghi comprendono Alleanza, Bauhaus, Capitol, Cybertronic, Fratellanza, Imperiali e Mishima. Gli indirizzi corporativi del §7.1.9 sono rappresentati nelle singole schede e non aggiungono bonus automatici. Sigle e procedure comuni seguono il §7.7. Il Sistema di Interfaccia Neurale Cybertronic è descritto nel §7.15.1.
+I cataloghi comprendono Alleanza, Bauhaus, Capitol, Cybertronic, Fratellanza, Imperiali e Mishima. Gli indirizzi corporativi del §7.1.9 sono rappresentati nelle singole schede e non aggiungono bonus automatici. Sigle e procedure comuni seguono il §7.7. Il Sistema di Interfaccia Neurale Cybertronic è descritto nel §7.15.1. I fucili corporativi di base sono nel §7.22.2.
 
 **Pistole corporative di base.** HG10, Bolter 10, P500, Nemesis 100, Belliger e Ronin 25AP sono modelli autonomi utilizzabili senza un livello minimo. Tutte usano Armi leggere (DES), si impugnano a una mano, infliggono danno Naturale con AC 1 e hanno 4 PI, Qualità Comune, PS Integrità 10 e MOV 0\. Dispongono di Colpo Singolo e Tiro Rapido, senza Raffiche. I profili riportano le differenze di danno, VA, FOR, gittata, capacità e affidabilità.
 
@@ -2166,7 +2170,7 @@ I seguenti dati appartengono alla munizione, non sono bonus permanenti del lanci
 
 ## **7.9 Prezzi di riferimento delle armi**
 
-Le tabelle riuniscono i prezzi di riferimento delle armi. Dove la scheda indica «Costo proposto», il valore conserva tale indicazione; per gli altri modelli valgono i costi riportati nelle rispettive schede. La combinazione Punisher è nel §7.11.8. I prezzi non modificano danni, Abilità, requisiti, Qualità, proprietà, Reperibilità o modalità di tiro.
+Le tabelle riuniscono i prezzi di riferimento delle armi. Dove la scheda indica «Costo proposto», il valore conserva tale indicazione; per gli altri modelli valgono i costi riportati nelle rispettive schede. La combinazione Punisher è nel §7.11.8. I prezzi non modificano danni, Abilità, requisiti, Qualità, proprietà, Reperibilità o modalità di tiro. I prezzi degli armamenti corporativi di base sono nel §7.22.
 
 La nuova scala usa una pistola semiautomatica commerciale da 1.300 unità come riferimento. È il parametro indicato dall’autore, prendendo come confronto la Beretta 92FS da circa 1.300 euro; viene usato come ancoraggio progettuale, non come certificazione di un listino corrente. Un’unità ha quindi, in questa proposta, un ordine di grandezza vicino a un euro. Il nome della moneta resta da definire.
 
@@ -2500,7 +2504,7 @@ La creazione degli Artefatti richiede procedure di costruzione e un Rituale fina
 
 Le armature commerciali civili hanno tre profili: Leggera, Media e Pesante. I modelli corporativi iconici hanno invece una sola categoria e un solo profilo, costruiti per il loro impiego. La categoria governa le penalità; AR, FOR e PI sono dati distinti. La FOR indicata è il valore della Caratteristica richiesto, non il suo Modificatore. I cataloghi Capitol (§7.13) e Imperial (§7.14) seguono queste regole comuni.
 
-AR totale comprende l’eventuale componente magica: AR 6, di cui 1 magica, assorbe 6 danni Naturali o Magici e 1 danno Etereo. Gli Scudi impugnati aggiungono la propria AR secondo il §7.4. Qualità determina la PS Integrità, mentre PI misura la resistenza strutturale (§7.2.1). I costi di questo catalogo non comprendono armi, Scudi, munizioni o strumenti separati, salvo dotazioni espressamente incluse.
+AR totale comprende l’eventuale componente magica: AR 6, di cui 1 magica, assorbe 6 danni Naturali o Magici e 1 danno Etereo. Gli Scudi impugnati aggiungono la propria AR secondo il §7.4. Qualità determina la PS Integrità, mentre PI misura la resistenza strutturale (§7.2.1). Ogni armatura comprende un elmetto standard senza AR aggiuntiva; modifiche ed elmetti corporativi si acquistano separatamente (§7.21). I costi non comprendono armi, Scudi, munizioni o strumenti separati, salvo dotazioni espressamente incluse.
 
 ### **7.11.1 Categorie requisiti e penalità**
 
@@ -3599,7 +3603,7 @@ Il catalogo comprende nove armature iconiche Standard e i moduli specialistici c
 
 Il Sistema di Interfaccia Neurale, SIN, collega l’equipaggiamento a un Innesto di Interfaccia Neurale compatibile. SIN 1 concede \+1 VA e SIN 2 concede \+2 VA alle sole Prove indicate nella scheda. Senza connessione l’oggetto mantiene il funzionamento ordinario, salvo un requisito espresso del dispositivo.
 
-La P500 è priva di SIN e non riceve il bonus di collegamento, anche se il tiratore possiede un Innesto di Interfaccia Neurale. I modelli compatibili sono elencati nelle tabelle seguenti.
+La P500 è priva di SIN e non riceve il bonus di collegamento, anche se il tiratore possiede un Innesto di Interfaccia Neurale. I modelli compatibili sono elencati nelle tabelle seguenti; i moduli percettivi e gli elmetti con SIN sono nel §7.21.
 
 Gli innesti Cybertronic si collegano automaticamente. Un innesto di altra marca richiede un minuto di configurazione e una Prova di Tecnologia: con successo l’abbinamento viene memorizzato; con fallimento resta disponibile soltanto l’impiego ordinario, senza il bonus SIN. Il collegamento non richiede una Prova a ogni utilizzo.
 
@@ -4667,7 +4671,7 @@ Più dosi dello stesso tipo non sommano penalità o durate; mantengono la scaden
 
 ### **7.20.9 Compatibilità balistiche dei cataloghi**
 
-Le tabelle assegnano la famiglia del tiro balistico principale. Eventuali lanciagranate, lanciafiamme e altre funzioni integrate mantengono alimentazioni separate. Tutti i modelli balistici elencati accettano le varianti previste per la propria famiglia; per i fucili a pallini sono disponibili Incendiaria e Concussiva, non Perforante.
+Le tabelle assegnano la famiglia del tiro balistico principale. Eventuali lanciagranate, lanciafiamme e altre funzioni integrate mantengono alimentazioni separate. Tutti i modelli balistici elencati accettano le varianti previste per la propria famiglia; per i fucili a pallini sono disponibili Incendiaria e Concussiva, non Perforante. Per i modelli di base del §7.22.2: carabine, assalto e precisione usano proiettili da fucile; i fucili a pompa usano cartucce a pallini.
 
 #### **Proiettili da pistola e cartucce a pallini**
 
@@ -4712,3 +4716,379 @@ Il Nimrod impiega cartucce per autocannone dedicate. La munizione ordinaria mant
 | Concussiva | 10 | 600 | 60 | RA |
 
 Le varianti seguono il §7.20.7. Un pieno di 300 cartucce ordinarie costa 6.000. Il contenitore di alimentazione vuoto costa 500; maglie e preparazione del nastro seguono il §7.20.2. Prezzo della scorta e prezzo del contenitore rimangono distinti.
+
+## **7.21 Elmetti e modifiche**
+
+Gli elmetti completano la dotazione delle armature con protezioni sensoriali, visori e assistenze operative. Non forniscono AR. Il catalogo commerciale presenta modifiche acquistabili separatamente; i cataloghi delle Corporazioni, della Fratellanza e dell’Alleanza offrono modelli completi con le funzioni già indicate nella scheda.
+
+### **7.21.1 Regole comuni**
+
+Ogni armatura comprende nel proprio prezzo un elmetto standard abbinato. Non concede vantaggi autonomi oltre alle funzioni già dichiarate nella scheda dell’armatura. Non è obbligatorio indossarlo: anche le protezioni integrate negli abiti ne includono uno separato, che rimane visibile quando indossato.
+
+Gli elmetti non forniscono AR, neppure magica. Indossarli, sostituirli o toglierli non modifica il valore di AR dell’armatura. Ogni personaggio può indossare un solo elmetto; i modelli specialistici sostituiscono quello standard e si acquistano per intero, senza sconto automatico per quello già incluso.
+
+Questi modelli non introducono requisiti FOR o penalità aggiuntive a Movimento, Abilità o lancio degli Incantesimi. L’elmetto standard può ricevere le modifiche commerciali elencate sotto; gli elmetti corporativi comprendono i vantaggi della propria scheda e possono ricevere modifiche aggiuntive compatibili. Ogni modifica si paga separatamente e il suo costo comprende il montaggio presso un fornitore attrezzato. L’installazione si svolge fuori dal combattimento, senza una nuova Prova di gioco per un normale acquisto.
+
+Le modifiche con funzioni diverse possono coesistere; copie dello stesso beneficio non si sommano, neppure quando una è integrata nell’elmetto corporativo. Per ciascun senso si usa un solo grado di Sensori, il maggiore. Il massimo fornito da un elmetto è \+1 Attacco, \+1 Difese/Elusione e \+1 Iniziativa: sono tre benefici distinti e possono essere presenti contemporaneamente.
+
+Sensori, protezioni e interfacce di pilotaggio non si sommano a effetti equivalenti di altra attrezzatura sulla stessa Prova: si usa il maggiore. I bonus di assistenza offensiva e difensiva dell’elmetto si aggiungono invece al normale VA del personaggio e ai modificatori nativi di armi o scudi, come Precisa e Difensiva, mantenendo le normali regole di Talenti, Incantesimi e Manovre. Due assistenze tecnologiche equivalenti esterne che concedono lo stesso bonus offensivo o difensivo non si sommano: si applica il maggiore. La riduzione delle penalità di distanza di un mirino svolge una funzione diversa e resta utilizzabile.
+
+Il SIN conserva la propria regola: è distinto dal bonus ordinario dello strumento, ma si applica un solo SIN pertinente, fino a \+2. I moduli neurali percettivi degli elmetti riguardano soltanto Percezione, non attacco o Difese. Il SIN di un’arma continua a funzionare secondo la sua scheda.
+
+Gli elmetti sono intercambiabili sulle armature ordinarie. Per conservare tenuta subacquea, riserva d’aria o altre funzioni dipendenti da un collegamento chiuso, il modello sostitutivo deve essere compatibile con l’impianto. Una semplice maschera filtrante non sostituisce un sistema sigillato. Le altre proprietà dell’armatura restano applicabili. Un beneficio che richiede una maschera o un componente realmente rimosso cessa finché non è ripristinato con un componente compatibile; non viene trasferito automaticamente al nuovo elmetto.
+
+Indossare o togliere un elmetto richiede 1 AzP ed entrambe le mani libere. Il collegamento a un impianto specialistico segue le procedure di quell’impianto.
+
+### **7.21.2 Proprietà**
+
+#### **Antibagliore 2**
+
+\+2 alla PS già prevista contro Accecamento provocato da lampi o luce intensa. Non introduce una PS se l’effetto non la prevede e non protegge dagli altri tipi di Accecamento.
+
+#### **Protezione acustica 2**
+
+\+2 alla PS già prevista contro un effetto sonoro o un rumore dannoso, come nel §7.11.4. Non è una protezione generale contro esplosioni o danni.
+
+#### **Filtro respiratorio 2**
+
+\+2 alla PS Tempra contro veleni e agenti patogeni inalati, con maschera indossata. Richiede aria respirabile; non fornisce ossigeno né tenuta per immersione o vuoto.
+
+#### **Sensori X**
+
+\+X VA a Percezione per vista e/o udito, come indicato nella scheda. Non concede Prove o osservazioni gratuite, non individua automaticamente creature nascoste e non supera ostacoli che impediscono al sensore di rilevare il bersaglio.
+
+#### **Visione notturna**
+
+Entro 80 Q ignora le penalità per scarsa illuminazione. Richiede luce ambientale residua e non funziona nel buio completo. Fumo, nebbia e ostacoli mantengono i loro effetti.
+
+#### **Visione termica**
+
+Entro 40 Q permette di osservare e prendere di mira bersagli con sufficiente contrasto termico, anche nel buio naturale completo. Ignora il −4 VA della Fumogena standard se il bersaglio è distinguibile termicamente. Non attraversa coperture solide, non rivela automaticamente bersagli nascosti e non identifica persone o natura delle creature. Gli effetti soprannaturali seguono la propria fonte.
+
+#### **Interfaccia di pilotaggio 1**
+
+\+1 VA alle Prove di Pilotare per la conduzione di un mezzo con comandi compatibili, alimentati e collegati. Non si applica al tiro con le armi, ai paracadute o ai propulsori personali. Non si somma alle interfacce equivalenti dell’armatura.
+
+#### **Proprietà di combattimento**
+
+#### **Assistenza offensiva 1**
+
+\+1 VA alle Prove per colpire ravvicinate e a distanza, comprese armi da lancio e attacchi senz’armi. Comprende l’eventuale Prova per colpire separata richiesta da un Incantesimo; non modifica la Prova di Potere per lanciarlo. Non aumenta danni, numero di attacchi o Azioni.
+
+#### **Assistenza difensiva 1**
+
+\+1 VA alle Prove di Difese per Parata e Schivata, anche contro attacchi a distanza; inoltre \+1 alla PS di Riflessi quando viene usata per Elusione. Non modifica le altre PS di Riflessi.
+
+#### **Allerta tattica 1**
+
+\+1 Iniziativa. Il bonus si applica quando si determina l’Iniziativa; attivare o cambiare elmetto dopo non permette di ritirarla o riordinare i turni già stabiliti. Non impedisce automaticamente la Sorpresa.
+
+Questi vantaggi non consentono azioni o Difese altrimenti vietate e non rimuovono i normali costi e requisiti. Il personaggio deve poter effettuare la Prova: Elusione rimane impossibile se è immobilizzato, ignaro o privo della possibilità fisica di evitare l’effetto. Non si ottengono nuove informazioni sensoriali oltre a quelle consentite dalle funzioni realmente installate.
+
+Elusione è una Difesa risolta con una PS di Riflessi, come nel Manuale del Giocatore §5.9. La formula corretta è quindi «+1 alle Prove di Difese e \+1 alla PS di Riflessi per Elusione», senza trasformarla in una Prova dell’Abilità Difese. I due bonus non si applicano insieme allo stesso tiro: \+1, non \+2.
+
+I visori dell’elmetto sono indossabili: agiscono sulla normale visuale del portatore, non soltanto attraverso il mirino di un’arma. Non forniscono visione a 360°, non sostituiscono le Prove di Percezione e non riducono le penalità di distanza. Sensori limitati a vista o udito si applicano alla normale Prova unica di Percezione soltanto quando quel canale può contribuire; non producono tiri separati.
+
+### **7.21.3 Integrità e alimentazione**
+
+Ogni elmetto ha 4 PI propri. Lo standard ha Qualità Comune e PS Integrità 10\. Tutti i modelli corporativi, dell’Alleanza e della Fratellanza hanno Qualità Non comune e PS Integrità 12\. Le modifiche condividono l’Integrità dell’elmetto: non richiedono PI da registrare separatamente e non ne modificano automaticamente la Qualità. A 0 PI l’elmetto perde i propri vantaggi; l’AR dell’armatura non cambia. Si applicano le normali procedure di Integrità degli oggetti, senza un tiro aggiuntivo per ogni colpo subito dal portatore.
+
+Sensori, visione notturna, visione termica, interfacce di pilotaggio, SIN, Assistenza offensiva, Assistenza difensiva e Allerta tattica richiedono alimentazione. Antibagliore, Protezione acustica e Filtro respiratorio sono passivi.
+
+La prima modifica elettronica installata comprende una batteria di servizio carica, cavo e alimentatore; le modifiche successive condividono l’alimentazione. Gli elmetti corporativi elettronici comprendono già questa dotazione. Gli elmetti usano la batteria del §7.3.4: 24 ore complessive di funzionamento, anche non consecutive, indipendentemente dal numero di funzioni attive; ricarica completa in 4 ore; ricambio carico 10, Reperibilità Comune; sostituzione con batteria pronta in 1 AzP. Non si conteggia il consumo per Round.
+
+Accendere, spegnere o cambiare modalità richiede 1 AzP; il mantenimento non richiede Azioni. A batteria scarica cessano soltanto le funzioni elettroniche. I benefici passivi dell’elmetto e le dotazioni indipendenti dell’armatura restano disponibili.
+
+### **7.21.4 Modifiche commerciali**
+
+I costi usano la stessa unità monetaria dei cataloghi esistenti e comprendono la modifica installata. L’elmetto standard è già compreso nell’armatura; l’eventuale ricambio privo di modifiche costa 200, Reperibilità Comune.
+
+| Modifica | Vantaggio | REP | Costo |
+| :---- | :---- | :---: | :---: |
+| Visiera antibagliore | Antibagliore 2 | CO | 500 |
+| Protezione acustica | Protezione acustica 2 | NC | 600 |
+| Maschera filtrante | Filtro respiratorio 2 | NC | 700 |
+| Sensori visivi 1 | \+1 VA a Percezione tramite la vista | NC | 700 |
+| Sensori visivi 2 | \+2 VA a Percezione tramite la vista | RA | 2.200 |
+| Sensori acustici 1 | \+1 VA a Percezione tramite l’udito | NC | 700 |
+| Sensori acustici 2 | \+2 VA a Percezione tramite l’udito | RA | 2.200 |
+| Interfaccia di pilotaggio | Interfaccia di pilotaggio 1 | NC | 1.200 |
+| Visore notturno | Visione notturna 80 Q | RA | 2.600 |
+| Visore termico | Visione termica 40 Q | MR | 4.800 |
+| Assistenza offensiva | Assistenza offensiva 1 | RA | 4.000 |
+| Assistenza difensiva | Assistenza difensiva 1, compresa Elusione | RA | 4.000 |
+| Allerta tattica | Allerta tattica 1 | RA | 2.000 |
+| Interfaccia neurale percettiva 1 | SIN 1 a Percezione attraverso i sensori o visori elettronici dell’elmetto | RA | 1.500 |
+| Interfaccia neurale percettiva 2 | SIN 2 a Percezione attraverso i sensori o visori elettronici dell’elmetto | MR | 3.000 |
+
+I gradi 1 e 2 dello stesso modulo sono alternative, non incrementi cumulabili: Sensori visivi 2 concede \+2 complessivo, non \+3 acquistando anche il grado 1\. I prezzi dei gradi superiori riguardano il modulo completo, senza rimborso automatico del precedente. Vista e udito possono avere gradi diversi; si effettua comunque la normale Prova unica di Percezione e non si sommano i bonus dei due sensi.
+
+L’interfaccia neurale percettiva richiede sensori o visori elettronici installati e un Innesto di Interfaccia Neurale compatibile. Si sceglie SIN 1 oppure SIN 2; non si sommano. Il costo non comprende l’innesto nel personaggio. Le procedure di connessione restano quelle del §7.15.1. Se sono installati entrambi i visori, si usa una sola modalità di visione alla volta; cambiarla richiede 1 AzP.
+
+### **7.21.5 Elmetti corporativi**
+
+I modelli seguenti sono elmetti specialistici acquistabili separatamente. L’appartenenza a un reparto o il possesso dell’armatura omonima non li rende dotazioni gratuite. Ogni modello riunisce le sole proprietà indicate, senza ulteriori bonus corporativi automatici.
+
+| Catalogo | Modello | Vantaggi compresi | REP | Costo |
+| :---- | :---- | :---- | :---: | :---: |
+| Bauhaus | Wacht | Antibagliore 2; Protezione acustica 2; Assistenza difensiva 1 | RA | 6.000 |
+| Bauhaus | Venus-Scout | Visione notturna; Filtro respiratorio 2; Allerta tattica 1 | RA | 6.200 |
+| Capitol | Ranger Scout | Visione notturna; Sensori 1 alla vista; Assistenza offensiva 1 | RA | 8.200 |
+| Capitol | Airborne HUD | Interfaccia di pilotaggio 1; Antibagliore 2; Allerta tattica 1 | RA | 4.600 |
+| Cybertronic | CS-100 | Sensori 1 a vista e udito; SIN 1 a Percezione visiva e uditiva; Allerta tattica 1 | RA | 5.500 |
+| Cybertronic | CS-400 | Visione termica; SIN 2 a Percezione termica; Assistenza offensiva 1 | MR | 11.500 |
+| Imperiali | Trencher Mk II | Filtro respiratorio 2; Protezione acustica 2; Assistenza difensiva 1 | RA | 6.200 |
+| Imperiali | Pathfinder Recon | Visione notturna; Sensori 1 all’udito; Allerta tattica 1 | RA | 6.200 |
+| Mishima | Kabuto Senshi | Sensori 2 alla vista; Antibagliore 2; Assistenza offensiva 1; Assistenza difensiva 1 | RA | 11.500 |
+| Mishima | Maschera Kage | Visione notturna; Sensori 2 all’udito; Allerta tattica 1 | RA | 7.200 |
+| Fratellanza | Custode | Antibagliore 2; Protezione acustica 2; Filtro respiratorio 2; Assistenza difensiva 1 | RA | 7.200 |
+| Fratellanza | Scrutatore | Visione termica; Sensori 1 alla vista; Assistenza offensiva 1 | MR | 10.500 |
+| Alleanza | ASA Recon | Visione notturna; Sensori 1 a vista e udito; Filtro respiratorio 2; Allerta tattica 1 | RA | 7.500 |
+| Alleanza | Doomtrooper Assault | Visione termica; Antibagliore 2; Protezione acustica 2; Assistenza offensiva 1; Assistenza difensiva 1 | MR | 15.000 |
+| Alleanza | Commando | Allerta tattica 1; Assistenza offensiva 1; Assistenza difensiva 1 | MR | 12.000 |
+
+I prezzi indicano l’elmetto completo, con i sistemi elencati già installati, Qualità Non comune e alimentazione comune. Non occorre sommare i costi delle modifiche comprese. La dotazione corporativa può costare più della personalizzazione di uno standard, che conserva Qualità Comune e PS Integrità 10\. Per la costruzione di oggetti si applicano le relative regole; il prezzo commerciale non ne determina automaticamente i costi.
+
+Il CS-100, collegato a un Innesto di Interfaccia Neurale compatibile, arriva a \+2 VA complessivi alle Prove pertinenti di Percezione: \+1 dei sensori e \+1 SIN. Senza innesto conserva Sensori 1 e Allerta tattica 1\. Il CS-400 conserva la visione termica e Assistenza offensiva 1 anche senza innesto; il \+2 SIN richiede il collegamento. Nessuno dei due aggiunge il SIN agli attacchi. Connessione e cumulo seguono il §7.15.1.
+
+Gli elmetti della Fratellanza di questo catalogo sono tecnologici: non richiedono PM o Sintonizzazione e non rivelano automaticamente Corruzione, Oscura Simmetria o natura soprannaturale di un bersaglio. La Maschera Kage migliora l’osservazione e l’ascolto del portatore, senza concedere Mimetismo o silenziare l’armatura. L’Airborne HUD assiste il pilotaggio ordinario dei mezzi compatibili, senza aggiungere benefici ai lanci con paracadute.
+
+### **7.21.6 Elmetto Commando dell’Alleanza**
+
+Elmetto tattico integrato che coordina segnalazioni di minaccia, assistenza al puntamento e indicazioni per reagire agli attacchi. Non richiede un innesto neurale.
+
+| Dato | Valore |
+| :---- | :---- |
+| AR aggiuntiva | Nessuna |
+| Iniziativa | \+1 |
+| Prove per colpire | \+1 VA, ravvicinate e a distanza, nei limiti di Assistenza offensiva 1 |
+| Parata e Schivata | \+1 VA alle Prove di Difese |
+| Elusione | \+1 alla PS di Riflessi usata per Elusione |
+| PI | 4 |
+| Qualità / PS Integrità | Non comune / 12 |
+| Reperibilità | Molto rara |
+| Costo | 12.000 |
+| Alimentazione | Una batteria di servizio; 24 ore |
+
+Non comprende automaticamente visione notturna, termica, filtri o altri accessori. Può riceverli come modifiche aggiuntive. I suoi bonus ad attacco, Difese/Elusione e Iniziativa sono già \+1: acquistare un secondo modulo equivalente non li porta a \+2.
+
+### **7.21.7 Esempi di configurazione**
+
+* Elmetto standard già incluso nell’armatura, con visore notturno e Allerta tattica: 2.600 \+ 2.000 \= 4.600. L’armatura conserva la propria AR.  
+* Elmetto standard con i tre moduli del Commando: 4.000 \+ 4.000 \+ 2.000 \= 10.000 in modifiche, oppure 10.200 acquistando anche un ricambio standard. Conserva Qualità Comune e PS Integrità 10\. Il Commando completo costa 12.000 e ha Qualità Non comune e PS Integrità 12\.  
+* Commando con visore notturno aggiunto: 12.000 \+ 2.600 \= 14.600.  
+* Personaggio con VA per colpire 12, Difese 10, Riflessi 9 e bonus Iniziativa \+2: con Commando attivo passa rispettivamente a 13, 11, 10 soltanto per Elusione e \+3 Iniziativa. Riflessi per gli altri impieghi rimane 9\.  
+* Armatura con Filtro respiratorio 2 e modifica filtrante: \+2 alla PS pertinente, non \+4.  
+* CS-100 con innesto compatibile: \+2 Percezione nelle osservazioni visive o uditive ammesse; il SIN percettivo non si aggiunge al tiro per colpire.  
+* Armatura Sea Devil: l’elmetto sostitutivo deve essere compatibile con il sistema chiuso e con la riserva d’aria per conservare la tenuta subacquea.
+
+## 7.22 Armamenti corporativi di base
+
+Le tabelle definiscono i modelli assegnati alla creazione in sostituzione dei corrispondenti profili commerciali della Classe. Comprendono 24 fucili, 12 armature e 12 scudi; le pistole mantengono i profili del §7.8. L’assegnazione, i crediti iniziali e i conguagli seguono il §2.16 del Manuale del Giocatore.
+
+### 7.22.1 Criterio di equivalenza
+
+Ogni corrispondenza conserva la funzione della dotazione, il requisito FOR del riferimento commerciale e, per le protezioni, categoria e AR. I fucili mantengono anche le modalità di tiro del rispettivo riferimento commerciale. Le differenze corporative riguardano precisione, danno, gittata, capacità, affidabilità o una proprietà circoscritta.
+
+I modelli sono prodotti autonomi: non sono configurazioni Migliorate o Potenziate e non modificano le schede dei modelli già presenti. Il marchio non aggiunge altri bonus oltre ai dati indicati. Nessuno di questi profili richiede un livello minimo, un innesto neurale o una Sintonizzazione.
+
+I prezzi indicati sono espressi in crediti e si usano anche per i conguagli durante la creazione.
+
+### 7.22.2 Fucili
+
+#### Regole comuni
+
+Tutti i profili seguenti usano **Armi Medie (INT)**, richiedono **due mani**, hanno **6 PI**, **Qualità Comune**, **PS Integrità 10** e **MOV 0**. Il danno è Naturale. VA indica il modificatore nativo per colpire; Max Q la gittata massima; CC la capacità; INC l'affidabilità.
+
+| Tipo | FOR | AC | Modalità | Munizioni ordinarie iniziali |
+| :---- | :---- | :---: | :---: | :---: |
+| Carabina | 4 | 1 | Colpo Singolo, Tiro Rapido | 45 |
+| Fucile d'assalto | 5 | 1 | Colpo Singolo, Raffica Breve, Media e Lunga, Tiro Rapido, Fuoco di Soppressione | 90 |
+| Fucile di precisione | 5 | 1 | Colpo Singolo, Tiro Rapido | 15 |
+| Fucile a pompa | 4 | 2 | Colpo Singolo | 18 |
+
+Le quantità si applicano quando la Classe assegna quel tipo di arma, non si sommano fra alternative. Tutti i fucili a pompa possiedono **Sbilanciante**. Nessuno dei fucili di base comprende lanciagranate, lanciafiamme, SIN o altre modalità non elencate.
+
+Carabine, assalto e precisione usano proiettili da fucile; i fucili a pompa cartucce ordinarie a pallini. I fucili di base a pompa hanno un serbatoio fisso della capacità CC: non ricevono caricatori estraibili. La M516S conserva il proprio sistema di alimentazione.
+
+Il prezzo dell'arma comprende il sistema di alimentazione standard: un caricatore vuoto specifico per le armi a caricatore, oppure il serbatoio fisso. Munizioni, caricatori aggiuntivi e ottiche non sono inclusi nel prezzo di catalogo dell'arma. Alla creazione vengono però forniti gratuitamente quelli già previsti dalla dotazione della Classe.
+
+Le ottiche previste per l'Artigliere restano comprese nella sua dotazione: Reflex sul fucile d'assalto oppure Ottico sul fucile di precisione, compatibili con il modello assegnato. Tutti i fucili di base d'assalto e di precisione prevedono un attacco compatibile con l'ottica pertinente; questa predisposizione non conferisce un bonus autonomo.
+
+#### Carabine — FOR 4, AC 1
+
+| Catalogo | Modello | Danno | VA | Max Q | CC | INC | REP | Crediti |
+| :---- | :---- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| Commerciale | Carabina — riferimento | 1d6+1 | 0 | 80 | 15 | 7 | CO | 1.800 |
+| Bauhaus | KR10 | 1d6+1 | \+1 | 60 | 10 | 7 | CO | 2.000 |
+| Capitol | CAR10 | 1d6+1 | 0 | 80 | 15 | 6 | CO | 1.600 |
+| Cybertronic | CAW1000 | 1d6+1 | 0 | 80 | 15 | 8 | NC | 2.100 |
+| Fratellanza | Nemesis 11 | 1d6+1 | 0 | 60 | 15 | 7 | NC | 2.100 |
+| Imperiali | Defender | 1d6+2 | −1 | 60 | 10 | 6 | CO | 1.800 |
+| Mishima | Ashigaru R1 | 1d6+1 | 0 | 60 | 20 | 5 | CO | 1.500 |
+
+Nemesis 11 possiede **Purificatrice 1**, separata dal danno in tabella. Gli altri profili non hanno proprietà aggiuntive.
+
+#### Fucili d'assalto — FOR 5, AC 1
+
+| Catalogo | Modello | Danno | VA | Max Q | CC | INC | REP | Crediti |
+| :---- | :---- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| Commerciale | Fucile d'assalto — riferimento | 1d6+2 | 0 | 160 | 30 | 6 | NC | 4.000 |
+| Bauhaus | STG10 | 1d6+2 | \+1 | 120 | 20 | 6 | NC | 4.400 |
+| Capitol | M40 | 1d6+2 | 0 | 160 | 30 | 5 | CO | 3.500 |
+| Cybertronic | AR2000 | 1d6+2 | 0 | 160 | 30 | 7 | NC | 4.400 |
+| Fratellanza | Volcano 100 | 1d6+2 | 0 | 120 | 30 | 6 | NC | 4.600 |
+| Imperiali | Conqueror 10 | 1d6+3 | −1 | 120 | 20 | 5 | NC | 4.000 |
+| Mishima | Shogun 10 | 1d6+2 | 0 | 120 | 40 | 4 | NC | 3.500 |
+
+Volcano 100 possiede **Purificatrice 1**, separata dal danno in tabella. Volcano 100 e Shogun 10 sono modelli distinti da Volcano e Shogun: non ne ereditano i moduli integrati.
+
+#### Fucili di precisione — FOR 5, AC 1
+
+| Catalogo | Modello | Danno | VA | Max Q | CC | INC | REP | Crediti |
+| :---- | :---- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| Commerciale | Fucile di precisione — riferimento | 1d6+3 | 0 | 1.000 | 5 | 7 | NC | 5.500 |
+| Bauhaus | PSG50 | 1d6+3 | \+1 | 800 | 4 | 7 | NC | 6.000 |
+| Capitol | SR20 | 1d6+3 | 0 | 1.000 | 5 | 6 | CO | 4.800 |
+| Cybertronic | SR1500 | 1d6+3 | 0 | 1.000 | 5 | 8 | NC | 6.000 |
+| Fratellanza | Mefisto 100 | 1d6+3 | 0 | 800 | 5 | 7 | NC | 6.200 |
+| Imperiali | Marksman | 1d6+4 | −1 | 800 | 4 | 6 | NC | 5.500 |
+| Mishima | Archer 10 | 1d6+3 | 0 | 800 | 8 | 5 | NC | 4.800 |
+
+Mefisto 100 possiede **Purificatrice 1**, separata dal danno in tabella. Mefisto 100 e Archer 10 sono distinti da Mefisto e Archer. Nessuno dei sei modelli di base dispone di Raffica Breve.
+
+#### Fucili a pompa — FOR 4, AC 2, Sbilanciante
+
+| Catalogo | Modello | Danno | VA | Max Q | CC | INC | REP | Crediti |
+| :---- | :---- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| Commerciale | Fucile a pompa — riferimento | 1d6 | 0 | 30 | 6 | 6 | CO | 1.200 |
+| Bauhaus | HD10 | 1d6 | \+1 | 20 | 4 | 6 | CO | 1.400 |
+| Capitol | M516S | 1d6 | 0 | 15 | 6 | 6 | CO | 1.100 |
+| Cybertronic | SA SG1000 | 1d6 | 0 | 30 | 6 | 7 | NC | 1.400 |
+| Fratellanza | Judicator 100 | 1d6 | 0 | 20 | 6 | 6 | NC | 1.400 |
+| Imperiali | Breacher | 1d6+1 | −1 | 20 | 4 | 5 | CO | 1.300 |
+| Mishima | Kaze 10 | 1d6 | 0 | 20 | 8 | 4 | CO | 1.000 |
+
+Judicator 100 possiede **Purificatrice 1**, separata dal danno in tabella. HD10 e SA SG1000 non possiedono l'eccezione al Tiro Rapido dei modelli superiori HD14M e SA SG2001.
+
+**Purificatrice 1:** si applica esattamente secondo il §7.1.3 del Manuale degli Armamenti, contro i bersagli validi dell'Oscura Simmetria. Non trasforma il danno in Magico, non richiede PM o Sintonizzazione e non considera automaticamente valida la sola Corruzione. Il bonus non è già incluso nei danni tabellari.
+
+#### Identità dei fucili di base
+
+* Bauhaus: \+1 VA nativo, compensato da gittata e capacità inferiori al commerciale. Non si aggiunge nuovamente un bonus da marchio o da Precisa.  
+* Capitol: profili economici e reperibili; i tre fucili di base hanno INC inferiore di 1 al commerciale. M516S conserva i valori già pubblicati.  
+* Cybertronic: affidabilità superiore di 1, costo e reperibilità maggiori; funzionamento convenzionale senza SIN.  
+* Fratellanza: Purificatrice 1, con gittata ridotta e prezzo maggiore.  
+* Imperiali: \+1 danno nativo, −1 VA, gittata e capacità ridotte, INC inferiore di 1\. I requisiti FOR restano quelli iniziali della Classe.  
+* Mishima: caricatori o serbatoi più capienti, con gittata e affidabilità inferiori; costo più basso.
+
+### 7.22.3 Armature
+
+Tutti i modelli selezionati hanno **Qualità Comune**, **PS Integrità 10** e **AR magica 0**. Il prezzo comprende l'elmetto standard, senza AR aggiuntiva né funzioni autonome. Gli elmetti corporativi specialistici si acquistano separatamente.
+
+Le Leggere hanno **AR 1 e FOR 3**; le Medie **AR 3 e FOR 5**. I PI indicati sono finali: la Struttura robusta è già conteggiata.
+
+#### Armature leggere
+
+| Catalogo | Modello | PI | Proprietà | REP | Crediti |
+| :---- | :---- | :---: | :---- | :---: | :---: |
+| Commerciale | Armatura civile leggera — riferimento | 6 | Nessuna | CO | 1.500 |
+| Bauhaus | Armatura della Milizia Ducale | 6 | Manutenzione semplice | CO | 1.800 |
+| Capitol | Armatura Freedom Brigades | 6 | Manutenzione semplice | CO | 1.600 |
+| Cybertronic | Giubba di servizio C100 | 6 | Isolante 1 | NC | 1.700 |
+| Fratellanza | Veste protettiva dell'Accolito | 6 | Imbottita 1 | NC | 1.700 |
+| Imperiali | Giubba territoriale dei Clan | 8 | Struttura robusta | CO | 1.800 |
+| Mishima | Armatura Ashigaru | 6 | Manutenzione agevolata | NC | 1.800 |
+
+#### Armature medie
+
+| Catalogo | Modello | PI | Proprietà | REP | Crediti |
+| :---- | :---- | :---: | :---- | :---: | :---: |
+| Commerciale | Armatura civile media — riferimento | 8 | Nessuna | NC | 3.500 |
+| Bauhaus | Corazza Ussara R0 | 8 | Imbottita 1 | NC | 4.000 |
+| Capitol | Corazza Tortoise Mk I | 8 | Imbottita 1 | NC | 4.000 |
+| Cybertronic | Corazza di servizio C200 | 8 | Isolante 1 | NC | 4.000 |
+| Fratellanza | Corazza del Novizio | 8 | Imbottita 1 | NC | 4.000 |
+| Imperiali | Corazza territoriale dei Clan | 10 | Struttura robusta | NC | 4.200 |
+| Mishima | Corazza Ashigaru | 8 | Manutenzione agevolata | NC | 3.800 |
+
+Corazza Ashigaru è un modello Medio, distinto dall'Armatura Ashigaru Leggera. Corazza Ussara R0 è distinta dalla Corazza Ussara Hussar Mk I. Giubba C100 e Corazza C200 sono protezioni convenzionali prive di SIN; non sono versioni rinominate della Divisa della Sicurezza o della Corazza Chasseur.
+
+#### Penalità e rinforzi
+
+| Categoria | Attacchi ravvicinati | Attacchi a distanza | Agilità | MOV | Lancio con Potere |
+| :---- | :---- | :---: | :---- | :---: | :---: |
+| Leggera | 0 | 0 | 0 | 0 | −1 VA |
+| Media | −1 VA | −1 VA | −1 VA | −1 Q | −3 VA |
+
+Agilità comprende Schivata e le Prove fisiche effettivamente ostacolate dalla protezione, secondo il §7.11.1. Le proprietà elencate non eliminano queste penalità. Non si aggiungono Articolazione d'assalto, Assetto mistico, Mimetismo, AR magica o Protezione occulta alle dotazioni di base.
+
+Per i modelli C100, C200, Accolito, Novizio, territoriali dei Clan, Ussara R0 e Corazza Ashigaru: le Leggere accettano un Rinforzo Leggero oppure Pesante; le Medie un Rinforzo Leggero. Si applicano requisiti, costi, PI separati e cambi di categoria del §7.11.2. Milizia Ducale, Freedom Brigades, Armatura Ashigaru e Tortoise Mk I conservano la compatibilità della propria scheda. Il rinforzo non fa parte della dotazione iniziale gratuita.
+
+### 7.22.4 Scudi
+
+Tutti i modelli hanno **Qualità Comune**, **PS Integrità 10**, **AR magica 0** e richiedono **una mano**. Non impongono una penalità propria al MOV. Piccolo e Leggero sono sinonimi; Medio e Grande sono sinonimi.
+
+Gli Scudi piccoli hanno **AR \+1 e FOR 3**; gli Scudi medi **AR \+2 e FOR 5**. L'AR si aggiunge a quella dell'armatura soltanto mentre lo Scudo è impugnato e utilizzabile. Non consente di impugnare contemporaneamente un fucile a due mani con la stessa mano occupata.
+
+#### Scudi piccoli
+
+| Catalogo | Modello | PI | Proprietà | REP | Crediti |
+| :---- | :---- | :---: | :---- | :---: | :---: |
+| Commerciale | Scudo piccolo — riferimento | 4 | Nessuna | CO | 500 |
+| Bauhaus | Scudo leggero di servizio B10 | 4 | Manutenzione semplice | CO | 600 |
+| Capitol | Scudo compatto CSS | 4 | Contenimento 1 | CO | 700 |
+| Cybertronic | Scudo di servizio S100 | 4 | Isolante 1 | NC | 650 |
+| Fratellanza | Scudo dell'Accolito | 4 | Imbottita 1 | NC | 650 |
+| Imperiali | Scudo leggero territoriale dei Clan | 6 | Struttura robusta | CO | 800 |
+| Mishima | Scudo leggero Ashigaru | 4 | Manutenzione semplice | CO | 600 |
+
+#### Scudi medi
+
+| Catalogo | Modello | PI | Proprietà | REP | Crediti |
+| :---- | :---- | :---: | :---- | :---: | :---: |
+| Commerciale | Scudo medio — riferimento | 6 | Nessuna | NC | 1.500 |
+| Bauhaus | Scudo di servizio B20 | 6 | Manutenzione semplice | NC | 1.800 |
+| Capitol | Scudo antisommossa CSS | 6 | Contenimento 1 | NC | 2.000 |
+| Cybertronic | Scudo di servizio S200 | 6 | Isolante 1 | NC | 1.900 |
+| Fratellanza | Scudo del Novizio | 6 | Imbottita 1 | NC | 1.900 |
+| Imperiali | Scudo medio territoriale dei Clan | 8 | Struttura robusta | NC | 2.100 |
+| Mishima | Scudo da campo Ashigaru | 6 | Manutenzione semplice | NC | 1.800 |
+
+Gli scudi di base hanno il normale modificatore **0 alla Parata ravvicinata e −4 VA a distanza**. Contenimento 1 concede \+1 VA soltanto alle Parate ravvicinate contro attacchi di Corpo a corpo, come nel catalogo attuale. Non sono presenti Difensiva, Intercettazione balistica, SIN o riserve di Scudo Magico.
+
+Scudo compatto CSS è piccolo ma non Ripiegabile. Scudo leggero Ashigaru è distinto dal modello Medio già esistente. Gli scudi territoriali Imperiali sono distinti dallo Scudo d'assalto dei Clan e da quello della Young Guard.
+
+### 7.22.5 Proprietà utilizzate
+
+Si applicano le regole del Manuale degli Armamenti e del §5.24 del Manuale del Giocatore; queste proprietà non aggiungono un secondo bonus da Corporazione.
+
+| Proprietà | Effetto |
+| :---- | :---- |
+| Manutenzione semplice / agevolata | \+1 VA a Tecnologia per riparare quell'oggetto, con strumenti e materiali necessari. Non ripristina PI automaticamente e non riduce da sola tempi o costi. Le due denominazioni non si sommano. |
+| Struttura robusta | \+2 PI massimi, già inclusi nella tabella del modello; nessun incremento della PS Integrità. |
+| Imbottita 1 | Contromisura di soglia 1 contro l'effetto aggiuntivo Concussivo; non riduce ulteriormente il danno. |
+| Isolante 1 | Contromisura di soglia 1 contro l'effetto aggiuntivo Elettricità; non riduce ulteriormente il danno. |
+| Contenimento 1 | \+1 VA alle Parate ravvicinate effettuate con quello Scudo contro Corpo a corpo; non contro Armi da Mischia o da Guerra. |
+
+Le Contromisure degli Scudi si applicano solo mentre lo Scudo è impugnato e utilizzabile e alle condizioni delle regole generali delle protezioni. Due soglie uguali provenienti da Scudo e armatura non diventano automaticamente una soglia doppia.
+
+### 7.22.6 Assegnazione alla creazione
+
+Si legge il tipo di armamento nella dotazione della Classe, quindi si assegna il modello della Corporazione corrispondente nelle tabelle. Il personaggio Freelance riceve il profilo Commerciale. Le scelte alternative della Classe e i requisiti FOR rimangono quelli già previsti.
+
+Le munizioni mantengono il totale approvato: 45 per la carabina, 90 per il fucile d'assalto, 15 per quello di precisione e 18 per il fucile a pompa. La maggiore capacità non produce colpi gratuiti aggiuntivi. Per le armi a caricatore restano i tre caricatori già previsti, uno inserito e due di riserva; si distribuiscono i colpi entro la capacità reale e si conserva l'eccedenza come munizioni sciolte. Il caricatore standard compreso nell'arma è uno dei tre, non un quarto.
+
+Esempi di ripartizione:
+
+* KR10: tre caricatori da 10 colpi pieni e 15 colpi sciolti, totale 45\.  
+* Ashigaru R1: caricatore inserito da 20 colpi, una riserva da 20 e una da 5, totale 45\.  
+* STG10: tre caricatori da 20 pieni e 30 colpi sciolti, totale 90\.  
+* Archer 10: caricatore inserito con 8 colpi, una riserva con 7 e una vuota, totale 15\.  
+* HD10: 4 cartucce nel serbatoio e 14 di riserva, totale 18\.
+
+La Classe può quindi ricevere caricatori parzialmente pieni o vuoti, senza aumentare il totale delle munizioni e senza alterare la capacità dell'arma. Restano i normali tempi di ricarica.
+
+Gli eventuali acquisti migliori usano il valore del modello effettivamente assegnato, secondo la regola già approvata: cessione al 100% del prezzo di catalogo durante la creazione e pagamento della differenza con i crediti iniziali. Si applicano i prezzi riportati nelle tabelle di questa sezione.
+
+Esempio: una CAW1000 da 2.100 crediti ceduta per una CAW2000 da 8.000 richiede un conguaglio di 5.900. Non si attribuisce al personaggio il valore della CAW2000 prima di averla acquistata.

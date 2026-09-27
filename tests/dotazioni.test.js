@@ -9,7 +9,7 @@ import {
 import { tira } from '../src/tiri.js';
 import { nuoveScelte, normalizza, serializza, deserializza } from '../src/character.js';
 import { massimiSessione, allineaSessione, variaSessione } from '../src/sessione.js';
-import { normalizzaEquipaggiamento } from '../src/equipaggiamento.js';
+import { normalizzaEquipaggiamento, catalogo } from '../src/equipaggiamento.js';
 
 const { dati } = await datiReali();
 const tiro = (valore) => ({ valore, origine: 'manuale' });
@@ -136,7 +136,8 @@ test('rifare la dotazione sostituisce le voci, non le somma; gli altri oggetti r
 test('A.5.27: senza abbinamento il profilo commerciale con la nota; con l’abbinamento il modello corporativo', () => {
   const voci = vociDotazione(AGENTE, 'Agente', 'Mishima', dati);
   assert.equal(perNome(voci, 'armi_distanza:pistola-semiautomatica')[0].note, NOTA_CORPORATIVO);
-  assert.equal(perNome(voci, 'armature:armatura-civile-leggera')[0].note, NOTA_CORPORATIVO);
+  // A.5.30: l'armatura ha l'abbinamento del §7.22 → modello corporativo, senza nota
+  assert.equal(perNome(voci, 'armature_corporative:armatura-ashigaru')[0].note, '');
   // gli strumenti non armamenti restano commerciali, senza nota
   assert.ok(voci.filter((v) => v.rif?.startsWith('munizioni:')).every((v) => !v.note.includes('A.5.27')));
   const d2 = copia(dati);
@@ -211,4 +212,32 @@ test('crediti di sessione: partono dal saldo iniziale, seguono la dotazione rifa
   assert.equal(s.crediti, 600); // 1400 − 800 di conguaglio
   assert.equal(s.creditiIniziali, 900);
   assert.equal(variaSessione(s, 'crediti', -5000, m2).crediti, 0);
+});
+
+test('A.5.30 (§7.22): 48 abbinamenti di fucili, armature e scudi; le pistole restano senza abbinamento', () => {
+  const ab = dati.dotazioni.corporativi.abbinamenti;
+  assert.deepEqual(Object.keys(ab), ['Bauhaus', 'Capitol', 'Cybertronic', 'Fratellanza', 'Imperiali', 'Mishima']);
+  assert.equal(Object.values(ab).reduce((n, a) => n + Object.keys(a).length, 0), 48);
+  assert.ok(Object.values(ab).every((a) => !a['armi_distanza:pistola-semiautomatica'] && !a['armi_distanza:revolver']));
+  const cat = catalogo(dati);
+  const m = (corp, rif) => cat.perRif.get(modelloAssegnato(rif, corp, dati, cat).rif);
+  assert.equal(m('Bauhaus', 'armi_distanza:carabina').nome, 'KR10');
+  assert.equal(m('Capitol', 'armi_distanza:fucile-a-pompa').nome, 'M516S'); // modello già presente
+  assert.equal(m('Imperiali', 'armature:armatura-civile-media').nome, 'Corazza territoriale dei Clan');
+  assert.equal(m('Imperiali', 'armature:armatura-civile-media').catalogo, 'Imperial');
+  assert.equal(m('Mishima', 'scudi:scudo-medio').nome, 'Scudo da campo Ashigaru');
+  // §7.22.2: valori della tabella e Purificatrice 1 della Fratellanza
+  const kr = m('Bauhaus', 'armi_distanza:carabina');
+  assert.deepEqual([kr.danno.due_mani, kr.modificatore_va, kr.gittata_q, kr.munizioni.capacita, kr.inc, kr.reperibilita, kr.costo], ['1d6+1', 1, 60, 10, 7, 'CO', 2000]);
+  assert.ok(m('Fratellanza', 'armi_distanza:fucile-d-assalto').proprieta.some((p) => p.nome === 'Purificatrice 1'));
+  // §7.22.6: il totale dei colpi resta quello della Classe, ripartito entro la capacità reale (KR10 da 10)
+  const sol = vociDotazione({ opzioni: { arma_principale: 'armi_distanza:carabina' } }, 'Soldato', 'Bauhaus', dati);
+  assert.equal(sol.find((v) => v.uid === 'dot-arma_principale-1').rif, 'armi_distanza_corporative:kr10');
+  const mun = sol.find((v) => v.uid === 'dot-arma_principale-munizioni');
+  assert.equal(mun.quantita, 45);
+  assert.match(mun.note, /3 caricatori compatibili da 10 .*15 sciolti/);
+  // i fucili a pompa di base hanno serbatoio fisso: si ricaricano per inserimento (famiglia «Fucili a pompa»)
+  assert.equal(m('Mishima', 'armi_distanza:fucile-a-pompa').famiglia, 'Fucili a pompa');
+  // 41 profili nuovi con versione 0.52
+  assert.equal(cat.oggetti.filter((o) => o.paragrafo?.startsWith('§7.22')).length, 41);
 });

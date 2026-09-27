@@ -1,6 +1,6 @@
 # E&L – Risposte e correzioni approvate
 
-Copia del Google Doc del master «E&L – Risposte e correzioni approvate» (Davide), letta il 26 settembre 2026 e riletta alla versione del 27/09 alle 01:56:00 UTC, che aggiunge A.4 e A.5–A.5.29, e a quella delle 09:52:42 UTC, che cambia A.5.27 (munizioni e caricatori dei modelli corporativi). Testo del documento, non riscritto: è la fonte delle decisioni registrate in `docs/risposte-master.md`.
+Copia del Google Doc del master «E&L – Risposte e correzioni approvate» (Davide), letta il 26 settembre 2026 e riletta alla versione del 27/09 alle 01:56:00 UTC, che aggiunge A.4 e A.5–A.5.29, a quella delle 09:52:42 UTC, che cambia A.5.27 (munizioni e caricatori dei modelli corporativi), e a quella delle 11:19:01 UTC, che aggiunge A.5.30 (modelli corporativi di base) e A.5.31 (veicoli). Testo del documento, non riscritto: è la fonte delle decisioni registrate in `docs/risposte-master.md`.
 
 Decisioni approvate e aggiornamenti dei manuali condivisi.
 
@@ -1397,3 +1397,33 @@ Applicazione: inserito il §2.16.29 del Manuale del Giocatore. Il credito di sca
 Scheda digitale: mostrare prezzo del nuovo equipaggiamento, valore degli armamenti ceduti, conguaglio e saldo; rispettare requisiti, autorizzazioni e compatibilità, senza duplicare oggetti o componenti. La regola di valutazione integrale riguarda la creazione e non la rivendita durante il gioco.
 
 Da recepire nella scheda digitale e in docs/risposte-master.md; l’aggiornamento dell’app resta da verificare.
+
+## A.5.30 — Modelli corporativi di base: fucili, armature e scudi
+
+Approvato il: set 27, 2026
+
+Approvate tutte le 48 corrispondenze dei modelli di base: 24 fucili, 12 armature e 12 scudi per Bauhaus, Capitol, Cybertronic, Fratellanza, Imperiali e Mishima. Il gruppo comprende 41 nuovi profili e 7 modelli già presenti, dei quali si conservano i valori pubblicati. Le pistole restano quelle già definite.
+
+Ogni modello conserva funzione e requisito FOR del riferimento commerciale; armature e scudi ne mantengono anche categoria e AR. Le differenze corporative sono quelle indicate nelle tabelle: non si aggiunge un ulteriore bonus di marchio e non si tratta di configurazioni Migliorate o Potenziate.
+
+Applicazione: inserito il §7.22 nel Manuale degli Armamenti v0.52, con profili completi, proprietà, prezzi, compatibilità e regole di assegnazione; aggiunti rimandi dai cataloghi, dai prezzi e dalle munizioni. Le tre tabelle di corrispondenza e le istruzioni per le munizioni sono inserite nel §2.16.27 del Manuale del Giocatore.
+
+Edizione aggiornata: [SIMPLY RPG – Manuale degli Armamenti v0.52](https://docs.google.com/document/d/1eDZJHfgBIYPvzKg78tEGwiLtrI_6gzpQOIfJA9aYiYg/edit)
+
+Munizioni iniziali: carabina 45, fucile d’assalto 90, fucile di precisione 15, fucile a pompa 18, quando previsti dalla Classe. I totali non aumentano con la capacità del modello. Le armi a caricatore mantengono tre caricatori compatibili, uno inserito e due di riserva; quello incluso nell’arma è uno dei tre. Si ammettono caricatori parzialmente pieni o vuoti e munizioni sciolte. I nuovi fucili a pompa hanno serbatoio fisso; M516S conserva il proprio sistema di alimentazione. Le ottiche dell’Artigliere restano incluse e compatibili.
+
+Assegnazione e acquisti: il modello corporativo di base è gratuito e assegnato direttamente; i Freelance ricevono il commerciale. Restano 1.000 + (2d6 × 100) crediti iniziali e lo scambio al 100% del prezzo del modello effettivo, pagando la differenza per il nuovo acquisto ed eliminando dall’inventario l’oggetto ceduto.
+
+Scheda digitale: applicare le corrispondenze incrociando Classe e Corporazione; registrare profilo, requisiti, prezzo, proprietà e componenti reali; mantenere invariati i totali delle munizioni. Da recepire nella scheda digitale e in docs/risposte-master.md; l’aggiornamento dell’app resta da verificare.
+
+Per completare l’equipaggiamento iniziale resta da decidere l’eventuale veicolo. Questa approvazione non assegna veicoli.
+
+## A.5.31 — Veicoli esclusi dalle dotazioni iniziali
+
+Approvato il: set 27, 2026
+
+I veicoli sono esclusi dalla dotazione comune e dalle dotazioni iniziali di tutte le Classi, compresa quella del Pilota. Il Direttore di Gioco decide se fornire uno o più veicoli al gruppo, e quali, in base alle esigenze della propria campagna. L’eventuale assegnazione è separata dalla dotazione iniziale dei personaggi.
+
+Applicazione: inserito il §2.16.30 del Manuale del Giocatore e aggiornati l’introduzione del §2.16 e il richiamo nella dotazione del Pilota (§2.16.15). La questione dei veicoli iniziali è risolta; le dotazioni iniziali sono definite.
+
+Scheda digitale: non assegnare automaticamente veicoli in base alla Classe o alla Corporazione; gli eventuali mezzi del gruppo dipendono dalla decisione del Direttore di Gioco. Da recepire nella scheda digitale e in docs/risposte-master.md; l’aggiornamento dell’app resta da verificare.

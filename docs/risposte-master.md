@@ -179,3 +179,19 @@ UTC); i paragrafi corrispondenti sono nel Manuale del Giocatore §2.16.1–§2.1
     corrispondenze delle pistole sono già definite» e che restano fucili, armature e scudi.
     → `src/dotazioni.js` (voce delle munizioni della dotazione). Le corrispondenze delle pistole non
     sono scritte in nessuno dei Doc condivisi: per-davide A.33.
+
+21. **27/09, 11:19 UTC — Modelli corporativi di base: fucili, armature e scudi** (A.5.30;
+    Giocatore §2.16.27; Armamenti v0.52 §7.22). 48 corrispondenze per Bauhaus, Capitol, Cybertronic,
+    Fratellanza, Imperiali e Mishima: 24 fucili (carabina, assalto, precisione, pompa), 12 armature
+    (leggera, media), 12 scudi (piccolo, medio). 41 profili nuovi; i 7 già presenti conservano i loro
+    valori. Munizioni: totali della Classe invariati (45, 90, 15, 18); tre caricatori per le armi a
+    caricatore, uno inserito; i nuovi fucili a pompa hanno serbatoio fisso. «Le pistole restano quelle
+    già definite».
+    → `data/equipaggiamento/` (armi_distanza_corporative, armature_corporative, scudi: generatore
+    `tools/lotti/lotto_7_22_corporativi_base.mjs`), `data/dotazioni.json` → `corporativi.abbinamenti`.
+    Le pistole restano senza abbinamento: per-davide A.33.
+
+22. **27/09, 11:19 UTC — Veicoli esclusi dalle dotazioni iniziali** (A.5.31; Giocatore §2.16.30).
+    Nessuna Classe, Pilota compreso, riceve un veicolo; il Direttore di Gioco decide se e quali
+    fornirne al gruppo.
+    → `data/dotazioni.json` (testo del §2.16 e della dotazione del Pilota); l'app non assegna veicoli.

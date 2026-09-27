@@ -997,7 +997,7 @@ Ogni personaggio riceve l’equipaggiamento iniziale attraverso scelte guidate:
 * Una dotazione legata alla Classe iniziale, con scelte predefinite fra armi, protezioni e strumenti adatti al ruolo.  
 * Armamenti di base della propria Corporazione, corrispondenti ai profili commerciali della Classe (§2.16.27).
 
-Ogni scelta deve rispettare i requisiti degli oggetti. Le dotazioni comuni e delle 25 Classi sono nei §§2.16.1–2.16.26; i modelli corporativi di base, i crediti iniziali e gli acquisti sono disciplinati nei §§2.16.27–2.16.29. L’eventuale veicolo iniziale richiede un’assegnazione separata.
+Ogni scelta deve rispettare i requisiti degli oggetti. Le dotazioni comuni e delle 25 Classi sono nei §§2.16.1–2.16.26; i modelli corporativi di base, i crediti iniziali e gli acquisti sono disciplinati nei §§2.16.27–2.16.29. I veicoli sono esclusi dalle dotazioni iniziali; il Direttore di Gioco decide se e quali fornire al gruppo secondo il §2.16.30.
 
 I profili degli oggetti e le relative regole si consultano nel Manuale degli Armamenti e nel Manuale degli Equipaggiamenti.
 
@@ -1428,7 +1428,7 @@ Il Corredo di orientamento concede \+1 VA a Sopravvivenza per orientarsi, quando
 
 Il Comunicatore da squadra ha portata nominale di 10 km; con un comunicatore personale, la comunicazione bidirezionale resta limitata a 1 km, in condizioni favorevoli. Comprende batteria carica da 24 ore, cavo e alimentatore.
 
-L’eventuale veicolo iniziale richiede un’assegnazione separata, da definire nella dotazione del gruppo o della Corporazione.
+Il veicolo non è compreso nella dotazione iniziale del Pilota. Il Direttore di Gioco decide se e quali veicoli fornire al gruppo in base alla campagna (§2.16.30).
 
 Si applica un solo modificatore pertinente degli strumenti, senza sommare i bonus dei corredi. Materiali da lavorare e ricambi restano separati.
 
@@ -1784,6 +1784,51 @@ Le munizioni mantengono il numero complessivo già previsto dalla Classe e vengo
 
 I Freelance fanno riferimento al catalogo Commerciale. La dotazione comune e gli strumenti non interessati da una corrispondenza corporativa mantengono i profili già indicati.
 
+#### **Corrispondenze dei fucili**
+
+| Corporazione | Carabina | Assalto | Precisione | Pompa |
+| :---- | :---- | :---- | :---- | :---- |
+| Bauhaus | KR10 | STG10 | PSG50 | HD10 |
+| Capitol | CAR10 | M40 | SR20 | M516S |
+| Cybertronic | CAW1000 | AR2000 | SR1500 | SA SG1000 |
+| Fratellanza | Nemesis 11 | Volcano 100 | Mefisto 100 | Judicator 100 |
+| Imperiali | Defender | Conqueror 10 | Marksman | Breacher |
+| Mishima | Ashigaru R1 | Shogun 10 | Archer 10 | Kaze 10 |
+
+Carabine e fucili a pompa richiedono FOR 4; assalto e precisione FOR 5\. I profili completi, le proprietà e i prezzi sono nel Manuale degli Armamenti, §7.22.2. Le pistole mantengono i modelli già definiti.
+
+#### **Corrispondenze delle armature**
+
+| Corporazione | Armatura leggera | Armatura media |
+| :---- | :---- | :---- |
+| Bauhaus | Armatura della Milizia Ducale | Corazza Ussara R0 |
+| Capitol | Armatura Freedom Brigades | Corazza Tortoise Mk I |
+| Cybertronic | Giubba di servizio C100 | Corazza di servizio C200 |
+| Fratellanza | Veste protettiva dell'Accolito | Corazza del Novizio |
+| Imperiali | Giubba territoriale dei Clan | Corazza territoriale dei Clan |
+| Mishima | Armatura Ashigaru | Corazza Ashigaru |
+
+Tutte le Leggere indicate hanno AR 1 e FOR 3; tutte le Medie AR 3 e FOR 5\. Comprendono l’elmetto standard. Proprietà, PI, penalità e rinforzi seguono il Manuale degli Armamenti, §7.22.3.
+
+#### **Corrispondenze degli scudi**
+
+| Corporazione | Scudo piccolo | Scudo medio |
+| :---- | :---- | :---- |
+| Bauhaus | Scudo leggero di servizio B10 | Scudo di servizio B20 |
+| Capitol | Scudo compatto CSS | Scudo antisommossa CSS |
+| Cybertronic | Scudo di servizio S100 | Scudo di servizio S200 |
+| Fratellanza | Scudo dell'Accolito | Scudo del Novizio |
+| Imperiali | Scudo leggero territoriale dei Clan | Scudo medio territoriale dei Clan |
+| Mishima | Scudo leggero Ashigaru | Scudo da campo Ashigaru |
+
+Gli Scudi piccoli hanno AR \+1 e FOR 3; quelli medi AR \+2 e FOR 5\. Richiedono una mano libera e seguono le proprietà e i PI del modello assegnato (Manuale degli Armamenti, §7.22.4).
+
+#### **Ripartizione delle munizioni iniziali**
+
+Le quantità complessive restano quelle della Classe: carabina 45, assalto 90, precisione 15 e pompa 18\. I tre caricatori previsti per le armi a caricatore sono del modello compatibile: uno inserito e due di riserva; quello incluso nell’arma è uno dei tre. Si distribuiscono i colpi entro la capacità reale, conservando l’eccedenza sciolta; sono ammessi caricatori parzialmente pieni o vuoti. I fucili a pompa con serbatoio fisso ricevono le cartucce nel serbatoio e la riserva, senza caricatori estraibili.
+
+Esempio: la KR10 riceve tre caricatori pieni da 10 colpi e 15 colpi sciolti; l’Ashigaru R1 riceve caricatori contenenti 20, 20 e 5 colpi. Entrambe conservano 45 colpi complessivi. Reflex e Ottico dell’Artigliere restano compresi nella dotazione e compatibili con l’arma.
+
 ### **2.16.28 Crediti iniziali**
 
 In aggiunta alla dotazione comune e a quella della Classe iniziale, ogni personaggio riceve 1.000 \+ (2d6 × 100\) crediti.
@@ -1803,6 +1848,10 @@ Esempio: cedendo un’arma di base valutata 1.500 crediti per acquistare un mode
 Il nuovo equipaggiamento deve rispettare requisiti e autorizzazioni della propria scheda. Munizioni, caricatori e accessori vanno adattati al modello acquistato, conteggiando gli eventuali costi di sostituzione senza duplicare componenti già inclusi nel prezzo.
 
 La valutazione integrale degli armamenti ceduti vale per la creazione del personaggio e non stabilisce il prezzo di rivendita durante le avventure. Le configurazioni Migliorata e Potenziata diventano acquistabili quando dispongono di profili e prezzi definiti.
+
+### **2.16.30 Veicoli**
+
+I veicoli sono esclusi dalla dotazione comune e dalle dotazioni iniziali di tutte le Classi, compresa quella del Pilota. Il Direttore di Gioco decide se fornire uno o più veicoli al gruppo, e quali, in base alle esigenze della propria campagna. L’eventuale assegnazione è separata dalla dotazione iniziale dei personaggi.
 
 ## **2.17 Controllo finale della Scheda**
 

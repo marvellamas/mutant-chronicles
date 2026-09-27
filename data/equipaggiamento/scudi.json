@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Armamenti 0.50",
+  "versione_manuale": "Armamenti 0.52",
   "fonte": "Manuale degli Armamenti v0.50, §7.4 Scudi e protezioni (pp. 23–30): tabelle §7.4.2 e §7.4.11, schede in prosa §7.4.1, §7.4.4–7.4.10, proprietà §7.4.3; lotto 3",
   "_nota": "Generato da tools/lotti/lotto3_scudi.mjs; da qui in poi si modifica questo file. «parata» sono i modificatori propri dello Scudo alle Parate (§7.4.11), prima di armatura, FOR insufficiente e altri effetti; «profili_alternativi» sono le condizioni che li cambiano (SIN collegato, Scudo Magico, Contenimento, Antiesplosione). Le proprietà e le note delle schede corporative sono trascritte dal testo in prosa.",
   "TODO(Davide)": [
@@ -1097,6 +1097,364 @@
         {
           "nome": "Scudo Magico",
           "testo": "Dopo Sintonizzazione, 1 AzP e 1 PM della riserva attivano Scudo Magico per 5 Round: il contributo dello Scudo diventa AR +4, di cui 2 magica, e concede +2 VA alla Parata ravvicinata e +1 VA a quella a distanza, che passa a −3 VA complessivo. La riserva è un Chroma Rosso da 5 PM; la potenza è Rara e il costo totale di Sintonizzazione è 3, riserva compresa (§7.4.10)."
+        }
+      ]
+    },
+    {
+      "id": "scudo-leggero-di-servizio-b10",
+      "nome": "Scudo leggero di servizio B10",
+      "tipo": "scudo",
+      "catalogo": "Bauhaus",
+      "famiglia": "Scudi piccoli",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Scudo Piccolo con Manutenzione semplice: Parata ravvicinata 0 e a distanza −4 VA.",
+      "paragrafo": "§7.22.4",
+      "versione_manuale": "Armamenti 0.52",
+      "taglia": "Piccolo",
+      "mani": 1,
+      "ar": {
+        "totale": 1,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 4,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -4
+      },
+      "profili_alternativi": [],
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 600,
+      "proprieta": [
+        {
+          "nome": "Manutenzione semplice",
+          "testo": "+1 VA a Tecnologia per riparare quell’oggetto, con strumenti e materiali necessari. Non ripristina PI automaticamente e non riduce da sola tempi o costi (§7.22.5)."
+        }
+      ]
+    },
+    {
+      "id": "scudo-compatto-css",
+      "nome": "Scudo compatto CSS",
+      "tipo": "scudo",
+      "catalogo": "Capitol",
+      "famiglia": "Scudi piccoli",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Scudo Piccolo con Contenimento 1: Parata ravvicinata 0 e a distanza −4 VA; +1 VA alle Parate ravvicinate contro Corpo a corpo.",
+      "paragrafo": "§7.22.4",
+      "versione_manuale": "Armamenti 0.52",
+      "taglia": "Piccolo",
+      "mani": 1,
+      "ar": {
+        "totale": 1,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 4,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -4
+      },
+      "profili_alternativi": [
+        {
+          "condizione": "contro attacchi di Corpo a corpo (Contenimento 1)",
+          "parata": {
+            "ravvicinata": 1,
+            "distanza": -4
+          }
+        }
+      ],
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 700,
+      "proprieta": [
+        {
+          "nome": "Contenimento 1",
+          "testo": "+1 VA alle Parate ravvicinate effettuate con quello Scudo contro Corpo a corpo; non contro Armi da Mischia o da Guerra (§7.22.5)."
+        }
+      ]
+    },
+    {
+      "id": "scudo-di-servizio-s100",
+      "nome": "Scudo di servizio S100",
+      "tipo": "scudo",
+      "catalogo": "Cybertronic",
+      "famiglia": "Scudi piccoli",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Scudo Piccolo con Isolante 1: Parata ravvicinata 0 e a distanza −4 VA.",
+      "paragrafo": "§7.22.4",
+      "versione_manuale": "Armamenti 0.52",
+      "taglia": "Piccolo",
+      "mani": 1,
+      "ar": {
+        "totale": 1,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 4,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -4
+      },
+      "profili_alternativi": [],
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 650,
+      "proprieta": [
+        {
+          "nome": "Isolante 1",
+          "testo": "Contromisura di soglia 1 contro l’effetto aggiuntivo Elettricità; non riduce ulteriormente il danno (§7.22.5)."
+        }
+      ]
+    },
+    {
+      "id": "scudo-dell-accolito",
+      "nome": "Scudo dell’Accolito",
+      "tipo": "scudo",
+      "catalogo": "Fratellanza",
+      "famiglia": "Scudi piccoli",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Scudo Piccolo con Imbottita 1: Parata ravvicinata 0 e a distanza −4 VA.",
+      "paragrafo": "§7.22.4",
+      "versione_manuale": "Armamenti 0.52",
+      "taglia": "Piccolo",
+      "mani": 1,
+      "ar": {
+        "totale": 1,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 4,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -4
+      },
+      "profili_alternativi": [],
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 650,
+      "proprieta": [
+        {
+          "nome": "Imbottita 1",
+          "testo": "Contromisura di soglia 1 contro l’effetto aggiuntivo Concussivo; non riduce ulteriormente il danno (§7.22.5)."
+        }
+      ]
+    },
+    {
+      "id": "scudo-leggero-territoriale-dei-clan",
+      "nome": "Scudo leggero territoriale dei Clan",
+      "tipo": "scudo",
+      "catalogo": "Imperial",
+      "famiglia": "Scudi piccoli",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Scudo Piccolo con Struttura robusta: Parata ravvicinata 0 e a distanza −4 VA.",
+      "paragrafo": "§7.22.4",
+      "versione_manuale": "Armamenti 0.52",
+      "taglia": "Piccolo",
+      "mani": 1,
+      "ar": {
+        "totale": 1,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -4
+      },
+      "profili_alternativi": [],
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 800,
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "+2 PI massimi, già inclusi nella tabella del modello; nessun incremento della PS Integrità (§7.22.5)."
+        }
+      ]
+    },
+    {
+      "id": "scudo-leggero-ashigaru",
+      "nome": "Scudo leggero Ashigaru",
+      "tipo": "scudo",
+      "catalogo": "Mishima",
+      "famiglia": "Scudi piccoli",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Scudo Piccolo con Manutenzione semplice: Parata ravvicinata 0 e a distanza −4 VA.",
+      "paragrafo": "§7.22.4",
+      "versione_manuale": "Armamenti 0.52",
+      "taglia": "Piccolo",
+      "mani": 1,
+      "ar": {
+        "totale": 1,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 4,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -4
+      },
+      "profili_alternativi": [],
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 600,
+      "proprieta": [
+        {
+          "nome": "Manutenzione semplice",
+          "testo": "+1 VA a Tecnologia per riparare quell’oggetto, con strumenti e materiali necessari. Non ripristina PI automaticamente e non riduce da sola tempi o costi (§7.22.5)."
+        }
+      ]
+    },
+    {
+      "id": "scudo-di-servizio-b20",
+      "nome": "Scudo di servizio B20",
+      "tipo": "scudo",
+      "catalogo": "Bauhaus",
+      "famiglia": "Scudi medi",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Scudo Medio con Manutenzione semplice: Parata ravvicinata 0 e a distanza −4 VA.",
+      "paragrafo": "§7.22.4",
+      "versione_manuale": "Armamenti 0.52",
+      "taglia": "Medio",
+      "mani": 1,
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 6,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -4
+      },
+      "profili_alternativi": [],
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 1800,
+      "proprieta": [
+        {
+          "nome": "Manutenzione semplice",
+          "testo": "+1 VA a Tecnologia per riparare quell’oggetto, con strumenti e materiali necessari. Non ripristina PI automaticamente e non riduce da sola tempi o costi (§7.22.5)."
+        }
+      ]
+    },
+    {
+      "id": "scudo-di-servizio-s200",
+      "nome": "Scudo di servizio S200",
+      "tipo": "scudo",
+      "catalogo": "Cybertronic",
+      "famiglia": "Scudi medi",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Scudo Medio con Isolante 1: Parata ravvicinata 0 e a distanza −4 VA.",
+      "paragrafo": "§7.22.4",
+      "versione_manuale": "Armamenti 0.52",
+      "taglia": "Medio",
+      "mani": 1,
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 6,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -4
+      },
+      "profili_alternativi": [],
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 1900,
+      "proprieta": [
+        {
+          "nome": "Isolante 1",
+          "testo": "Contromisura di soglia 1 contro l’effetto aggiuntivo Elettricità; non riduce ulteriormente il danno (§7.22.5)."
+        }
+      ]
+    },
+    {
+      "id": "scudo-del-novizio",
+      "nome": "Scudo del Novizio",
+      "tipo": "scudo",
+      "catalogo": "Fratellanza",
+      "famiglia": "Scudi medi",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Scudo Medio con Imbottita 1: Parata ravvicinata 0 e a distanza −4 VA.",
+      "paragrafo": "§7.22.4",
+      "versione_manuale": "Armamenti 0.52",
+      "taglia": "Medio",
+      "mani": 1,
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 6,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -4
+      },
+      "profili_alternativi": [],
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 1900,
+      "proprieta": [
+        {
+          "nome": "Imbottita 1",
+          "testo": "Contromisura di soglia 1 contro l’effetto aggiuntivo Concussivo; non riduce ulteriormente il danno (§7.22.5)."
+        }
+      ]
+    },
+    {
+      "id": "scudo-medio-territoriale-dei-clan",
+      "nome": "Scudo medio territoriale dei Clan",
+      "tipo": "scudo",
+      "catalogo": "Imperial",
+      "famiglia": "Scudi medi",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Scudo Medio con Struttura robusta: Parata ravvicinata 0 e a distanza −4 VA.",
+      "paragrafo": "§7.22.4",
+      "versione_manuale": "Armamenti 0.52",
+      "taglia": "Medio",
+      "mani": 1,
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "mov": 0,
+      "parata": {
+        "ravvicinata": 0,
+        "distanza": -4
+      },
+      "profili_alternativi": [],
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 2100,
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "+2 PI massimi, già inclusi nella tabella del modello; nessun incremento della PS Integrità (§7.22.5)."
         }
       ]
     }

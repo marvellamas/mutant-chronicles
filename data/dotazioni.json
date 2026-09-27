@@ -7,7 +7,7 @@
     "Una dotazione comune, con gli oggetti essenziali per tutti.",
     "Una dotazione legata alla Classe iniziale, con scelte predefinite fra armi, protezioni e strumenti adatti al ruolo.",
     "Armamenti di base della propria Corporazione, corrispondenti ai profili commerciali della Classe (§2.16.27).",
-    "Ogni scelta deve rispettare i requisiti degli oggetti. Le dotazioni comuni e delle 25 Classi sono nei §§2.16.1–2.16.26; i modelli corporativi di base, i crediti iniziali e gli acquisti sono disciplinati nei §§2.16.27–2.16.29. L’eventuale veicolo iniziale richiede un’assegnazione separata.",
+    "Ogni scelta deve rispettare i requisiti degli oggetti. Le dotazioni comuni e delle 25 Classi sono nei §§2.16.1–2.16.26; i modelli corporativi di base, i crediti iniziali e gli acquisti sono disciplinati nei §§2.16.27–2.16.29. I veicoli sono esclusi dalle dotazioni iniziali; il Direttore di Gioco decide se e quali fornire al gruppo secondo il §2.16.30.",
     "I profili degli oggetti e le relative regole si consultano nel Manuale degli Armamenti e nel Manuale degli Equipaggiamenti."
   ],
   "TODO(Davide)": "Gli oggetti di oggetti_dotazione (Binocolo, Registratore audiovisivo, i Corredi, Focus personale…) non hanno ancora una scheda di catalogo: entrano nell’inventario come voci personalizzate senza peso né prezzo, e non si possono cedere per gli acquisti (§2.16.29). Aspettano i cap. 2–8 del Manuale dell’Equipaggiamento. Per-davide A.34.",
@@ -1948,7 +1948,7 @@
         "Ricambi e attrezzature richiesti dalla specifica riparazione restano necessari.",
         "Il Corredo di orientamento concede +1 VA a Sopravvivenza per orientarsi, quando esistono riferimenti utilizzabili. Il Binocolo concede +1 VA a Percezione per esaminare dettagli lontani, con luce e visuale sufficienti.",
         "Il Comunicatore da squadra ha portata nominale di 10 km; con un comunicatore personale, la comunicazione bidirezionale resta limitata a 1 km, in condizioni favorevoli. Comprende batteria carica da 24 ore, cavo e alimentatore.",
-        "L’eventuale veicolo iniziale richiede un’assegnazione separata, da definire nella dotazione del gruppo o della Corporazione.",
+        "Il veicolo non è compreso nella dotazione iniziale del Pilota. Il Direttore di Gioco decide se e quali veicoli fornire al gruppo in base alla campagna (§2.16.30).",
         "Si applica un solo modificatore pertinente degli strumenti, senza sommare i bonus dei corredi. Materiali da lavorare e ricambi restano separati."
       ]
     },
@@ -4025,8 +4025,165 @@
       "I Freelance fanno riferimento al catalogo Commerciale. La dotazione comune e gli strumenti non interessati da una corrispondenza corporativa mantengono i profili già indicati."
     ],
     "_nota": "Abbinamenti profilo commerciale → modello corporativo di base, per Corporazione: { \"<Corporazione>\": { \"<rif commerciale>\": { \"rif\": \"<rif corporativo>\", \"munizioni\": \"<rif>\" } } }. I Freelance usano sempre il catalogo Commerciale.",
-    "TODO(Davide)": "Abbinamenti puntuali commerciale → corporativo per ogni Corporazione, con munizioni e accessori compatibili (E&L A.5.27: «Restano da completare gli abbinamenti puntuali»). Finché mancano, l’app assegna il profilo commerciale con la nota «modello corporativo da definire (A.5.27)». Per-davide A.33.",
-    "abbinamenti": {}
+    "TODO(Davide)": "Le pistole (Pistola semiautomatica, Revolver) non hanno un abbinamento: E&L A.5.30 dice che «restano quelle già definite», ma nessun Doc indica il modello corporativo. Finché manca, l’app assegna il profilo commerciale con la nota «modello corporativo da definire (A.5.27)». Fucili, armature e scudi: Armamenti §7.22 (E&L A.5.30). Per-davide A.33.",
+    "abbinamenti": {
+      "Bauhaus": {
+        "armi_distanza:carabina": {
+          "rif": "armi_distanza_corporative:kr10"
+        },
+        "armi_distanza:fucile-d-assalto": {
+          "rif": "armi_distanza_corporative:stg10"
+        },
+        "armi_distanza:fucile-di-precisione": {
+          "rif": "armi_distanza_corporative:psg50"
+        },
+        "armi_distanza:fucile-a-pompa": {
+          "rif": "armi_distanza_corporative:hd10"
+        },
+        "armature:armatura-civile-leggera": {
+          "rif": "armature_corporative:armatura-della-milizia-ducale"
+        },
+        "armature:armatura-civile-media": {
+          "rif": "armature_corporative:corazza-ussara-r0"
+        },
+        "scudi:scudo-piccolo": {
+          "rif": "scudi:scudo-leggero-di-servizio-b10"
+        },
+        "scudi:scudo-medio": {
+          "rif": "scudi:scudo-di-servizio-b20"
+        }
+      },
+      "Capitol": {
+        "armi_distanza:carabina": {
+          "rif": "armi_distanza_corporative:car10"
+        },
+        "armi_distanza:fucile-d-assalto": {
+          "rif": "armi_distanza_corporative:m40"
+        },
+        "armi_distanza:fucile-di-precisione": {
+          "rif": "armi_distanza_corporative:sr20"
+        },
+        "armi_distanza:fucile-a-pompa": {
+          "rif": "armi_distanza_corporative:m516s"
+        },
+        "armature:armatura-civile-leggera": {
+          "rif": "armature_corporative:armatura-freedom-brigades"
+        },
+        "armature:armatura-civile-media": {
+          "rif": "armature_corporative:corazza-tortoise-mk-i"
+        },
+        "scudi:scudo-piccolo": {
+          "rif": "scudi:scudo-compatto-css"
+        },
+        "scudi:scudo-medio": {
+          "rif": "scudi:scudo-antisommossa-css"
+        }
+      },
+      "Cybertronic": {
+        "armi_distanza:carabina": {
+          "rif": "armi_distanza_corporative:caw1000"
+        },
+        "armi_distanza:fucile-d-assalto": {
+          "rif": "armi_distanza_corporative:ar2000"
+        },
+        "armi_distanza:fucile-di-precisione": {
+          "rif": "armi_distanza_corporative:sr1500"
+        },
+        "armi_distanza:fucile-a-pompa": {
+          "rif": "armi_distanza_corporative:sa-sg1000"
+        },
+        "armature:armatura-civile-leggera": {
+          "rif": "armature_corporative:giubba-di-servizio-c100"
+        },
+        "armature:armatura-civile-media": {
+          "rif": "armature_corporative:corazza-di-servizio-c200"
+        },
+        "scudi:scudo-piccolo": {
+          "rif": "scudi:scudo-di-servizio-s100"
+        },
+        "scudi:scudo-medio": {
+          "rif": "scudi:scudo-di-servizio-s200"
+        }
+      },
+      "Fratellanza": {
+        "armi_distanza:carabina": {
+          "rif": "armi_distanza_corporative:nemesis-11"
+        },
+        "armi_distanza:fucile-d-assalto": {
+          "rif": "armi_distanza_corporative:volcano-100"
+        },
+        "armi_distanza:fucile-di-precisione": {
+          "rif": "armi_distanza_corporative:mefisto-100"
+        },
+        "armi_distanza:fucile-a-pompa": {
+          "rif": "armi_distanza_corporative:judicator-100"
+        },
+        "armature:armatura-civile-leggera": {
+          "rif": "armature_corporative:veste-protettiva-dell-accolito"
+        },
+        "armature:armatura-civile-media": {
+          "rif": "armature_corporative:corazza-del-novizio"
+        },
+        "scudi:scudo-piccolo": {
+          "rif": "scudi:scudo-dell-accolito"
+        },
+        "scudi:scudo-medio": {
+          "rif": "scudi:scudo-del-novizio"
+        }
+      },
+      "Imperiali": {
+        "armi_distanza:carabina": {
+          "rif": "armi_distanza_corporative:defender"
+        },
+        "armi_distanza:fucile-d-assalto": {
+          "rif": "armi_distanza_corporative:conqueror-10"
+        },
+        "armi_distanza:fucile-di-precisione": {
+          "rif": "armi_distanza_corporative:marksman"
+        },
+        "armi_distanza:fucile-a-pompa": {
+          "rif": "armi_distanza_corporative:breacher"
+        },
+        "armature:armatura-civile-leggera": {
+          "rif": "armature_corporative:giubba-territoriale-dei-clan"
+        },
+        "armature:armatura-civile-media": {
+          "rif": "armature_corporative:corazza-territoriale-dei-clan"
+        },
+        "scudi:scudo-piccolo": {
+          "rif": "scudi:scudo-leggero-territoriale-dei-clan"
+        },
+        "scudi:scudo-medio": {
+          "rif": "scudi:scudo-medio-territoriale-dei-clan"
+        }
+      },
+      "Mishima": {
+        "armi_distanza:carabina": {
+          "rif": "armi_distanza_corporative:ashigaru-r1"
+        },
+        "armi_distanza:fucile-d-assalto": {
+          "rif": "armi_distanza_corporative:shogun-10"
+        },
+        "armi_distanza:fucile-di-precisione": {
+          "rif": "armi_distanza_corporative:archer-10"
+        },
+        "armi_distanza:fucile-a-pompa": {
+          "rif": "armi_distanza_corporative:kaze-10"
+        },
+        "armature:armatura-civile-leggera": {
+          "rif": "armature_corporative:armatura-ashigaru"
+        },
+        "armature:armatura-civile-media": {
+          "rif": "armature_corporative:corazza-ashigaru"
+        },
+        "scudi:scudo-piccolo": {
+          "rif": "scudi:scudo-leggero-ashigaru"
+        },
+        "scudi:scudo-medio": {
+          "rif": "scudi:scudo-da-campo-ashigaru"
+        }
+      }
+    }
   },
   "scambio": {
     "paragrafo": "2.16.29",

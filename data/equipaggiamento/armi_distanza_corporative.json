@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Armamenti 0.50",
+  "versione_manuale": "Armamenti 0.52",
   "fonte": "Manuale degli Armamenti v0.50, §7.8 Cataloghi corporativi delle armi a distanza (pp. 36–52): armi, moduli integrati, munizioni di riferimento dei lanciatori; lotto 5",
   "_nota": "Generato da tools/lotti/lotto5_armi_distanza_corporative.mjs; da qui in poi si modifica questo file. I moduli integrati (modulo_di) non si comprano da soli: la scheda li mostra come profilo aggiuntivo dell’arma impugnata, con alimentazione separata; PI, Qualità e MOV sono quelli dell’arma. «munizioni_riferimento» sono i dati della munizione dei lanciatori (danno, AC, RS), non bonus del lanciatore.",
   "TODO(Davide)": [
@@ -4468,6 +4468,1035 @@
       "costo": null,
       "proprieta": [],
       "modulo_di": "armi_distanza_corporative:shogun"
+    },
+    {
+      "id": "kr10",
+      "nome": "KR10",
+      "tipo": "arma_distanza",
+      "catalogo": "Bauhaus",
+      "famiglia": "Fucili di base",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Carabina.",
+      "paragrafo": "§7.22.2",
+      "versione_manuale": "Armamenti 0.52",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-carabine",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+1"
+      },
+      "ac": 1,
+      "modificatore_va": 1,
+      "portata_q": null,
+      "gittata_q": 60,
+      "munizioni": {
+        "capacita": 10,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 4,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 2000,
+      "proprieta": []
+    },
+    {
+      "id": "car10",
+      "nome": "CAR10",
+      "tipo": "arma_distanza",
+      "catalogo": "Capitol",
+      "famiglia": "Fucili di base",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Carabina.",
+      "paragrafo": "§7.22.2",
+      "versione_manuale": "Armamenti 0.52",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-carabine",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+1"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 80,
+      "munizioni": {
+        "capacita": 15,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 4,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1600,
+      "proprieta": []
+    },
+    {
+      "id": "caw1000",
+      "nome": "CAW1000",
+      "tipo": "arma_distanza",
+      "catalogo": "Cybertronic",
+      "famiglia": "Fucili di base",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Carabina.",
+      "paragrafo": "§7.22.2",
+      "versione_manuale": "Armamenti 0.52",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-carabine",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+1"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 80,
+      "munizioni": {
+        "capacita": 15,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 8,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 4,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 2100,
+      "proprieta": []
+    },
+    {
+      "id": "nemesis-11",
+      "nome": "Nemesis 11",
+      "tipo": "arma_distanza",
+      "catalogo": "Fratellanza",
+      "famiglia": "Fucili di base",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Carabina. Proprietà: Purificatrice 1.",
+      "paragrafo": "§7.22.2",
+      "versione_manuale": "Armamenti 0.52",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-carabine",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+1"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 60,
+      "munizioni": {
+        "capacita": 15,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 4,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 2100,
+      "proprieta": [
+        {
+          "nome": "Purificatrice 1",
+          "testo": "Si applica secondo il §7.1.3 contro i bersagli validi dell’Oscura Simmetria. Non trasforma il danno in Magico, non richiede PM o Sintonizzazione e non considera automaticamente valida la sola Corruzione. Il bonus non è incluso nei danni tabellari (§7.22.2)."
+        }
+      ]
+    },
+    {
+      "id": "defender",
+      "nome": "Defender",
+      "tipo": "arma_distanza",
+      "catalogo": "Imperial",
+      "famiglia": "Fucili di base",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Carabina.",
+      "paragrafo": "§7.22.2",
+      "versione_manuale": "Armamenti 0.52",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-carabine",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+2"
+      },
+      "ac": 1,
+      "modificatore_va": -1,
+      "portata_q": null,
+      "gittata_q": 60,
+      "munizioni": {
+        "capacita": 10,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 4,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1800,
+      "proprieta": []
+    },
+    {
+      "id": "ashigaru-r1",
+      "nome": "Ashigaru R1",
+      "tipo": "arma_distanza",
+      "catalogo": "Mishima",
+      "famiglia": "Fucili di base",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Carabina.",
+      "paragrafo": "§7.22.2",
+      "versione_manuale": "Armamenti 0.52",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-carabine",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+1"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 60,
+      "munizioni": {
+        "capacita": 20,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 5,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 4,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1500,
+      "proprieta": []
+    },
+    {
+      "id": "stg10",
+      "nome": "STG10",
+      "tipo": "arma_distanza",
+      "catalogo": "Bauhaus",
+      "famiglia": "Fucili di base",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Fucile d’assalto.",
+      "paragrafo": "§7.22.2",
+      "versione_manuale": "Armamenti 0.52",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-d-assalto",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+2"
+      },
+      "ac": 1,
+      "modificatore_va": 1,
+      "portata_q": null,
+      "gittata_q": 120,
+      "munizioni": {
+        "capacita": 20,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "RL",
+        "TR",
+        "FS"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 4400,
+      "proprieta": []
+    },
+    {
+      "id": "m40",
+      "nome": "M40",
+      "tipo": "arma_distanza",
+      "catalogo": "Capitol",
+      "famiglia": "Fucili di base",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Fucile d’assalto.",
+      "paragrafo": "§7.22.2",
+      "versione_manuale": "Armamenti 0.52",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-d-assalto",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+2"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 160,
+      "munizioni": {
+        "capacita": 30,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 5,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "RL",
+        "TR",
+        "FS"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 3500,
+      "proprieta": []
+    },
+    {
+      "id": "ar2000",
+      "nome": "AR2000",
+      "tipo": "arma_distanza",
+      "catalogo": "Cybertronic",
+      "famiglia": "Fucili di base",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Fucile d’assalto.",
+      "paragrafo": "§7.22.2",
+      "versione_manuale": "Armamenti 0.52",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-d-assalto",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+2"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 160,
+      "munizioni": {
+        "capacita": 30,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "RL",
+        "TR",
+        "FS"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 4400,
+      "proprieta": []
+    },
+    {
+      "id": "volcano-100",
+      "nome": "Volcano 100",
+      "tipo": "arma_distanza",
+      "catalogo": "Fratellanza",
+      "famiglia": "Fucili di base",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Fucile d’assalto. Proprietà: Purificatrice 1.",
+      "paragrafo": "§7.22.2",
+      "versione_manuale": "Armamenti 0.52",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-d-assalto",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+2"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 120,
+      "munizioni": {
+        "capacita": 30,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "RL",
+        "TR",
+        "FS"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 4600,
+      "proprieta": [
+        {
+          "nome": "Purificatrice 1",
+          "testo": "Si applica secondo il §7.1.3 contro i bersagli validi dell’Oscura Simmetria. Non trasforma il danno in Magico, non richiede PM o Sintonizzazione e non considera automaticamente valida la sola Corruzione. Il bonus non è incluso nei danni tabellari (§7.22.2)."
+        }
+      ]
+    },
+    {
+      "id": "conqueror-10",
+      "nome": "Conqueror 10",
+      "tipo": "arma_distanza",
+      "catalogo": "Imperial",
+      "famiglia": "Fucili di base",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Fucile d’assalto.",
+      "paragrafo": "§7.22.2",
+      "versione_manuale": "Armamenti 0.52",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-d-assalto",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+3"
+      },
+      "ac": 1,
+      "modificatore_va": -1,
+      "portata_q": null,
+      "gittata_q": 120,
+      "munizioni": {
+        "capacita": 20,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 5,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "RL",
+        "TR",
+        "FS"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 4000,
+      "proprieta": []
+    },
+    {
+      "id": "shogun-10",
+      "nome": "Shogun 10",
+      "tipo": "arma_distanza",
+      "catalogo": "Mishima",
+      "famiglia": "Fucili di base",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Fucile d’assalto.",
+      "paragrafo": "§7.22.2",
+      "versione_manuale": "Armamenti 0.52",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-d-assalto",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+2"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 120,
+      "munizioni": {
+        "capacita": 40,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 4,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "RL",
+        "TR",
+        "FS"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 3500,
+      "proprieta": []
+    },
+    {
+      "id": "psg50",
+      "nome": "PSG50",
+      "tipo": "arma_distanza",
+      "catalogo": "Bauhaus",
+      "famiglia": "Fucili di base",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Fucile di precisione.",
+      "paragrafo": "§7.22.2",
+      "versione_manuale": "Armamenti 0.52",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-di-precisione",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+3"
+      },
+      "ac": 1,
+      "modificatore_va": 1,
+      "portata_q": null,
+      "gittata_q": 800,
+      "munizioni": {
+        "capacita": 4,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 6000,
+      "proprieta": []
+    },
+    {
+      "id": "sr20",
+      "nome": "SR20",
+      "tipo": "arma_distanza",
+      "catalogo": "Capitol",
+      "famiglia": "Fucili di base",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Fucile di precisione.",
+      "paragrafo": "§7.22.2",
+      "versione_manuale": "Armamenti 0.52",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-di-precisione",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+3"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 1000,
+      "munizioni": {
+        "capacita": 5,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 4800,
+      "proprieta": []
+    },
+    {
+      "id": "sr1500",
+      "nome": "SR1500",
+      "tipo": "arma_distanza",
+      "catalogo": "Cybertronic",
+      "famiglia": "Fucili di base",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Fucile di precisione.",
+      "paragrafo": "§7.22.2",
+      "versione_manuale": "Armamenti 0.52",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-di-precisione",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+3"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 1000,
+      "munizioni": {
+        "capacita": 5,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 8,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 6000,
+      "proprieta": []
+    },
+    {
+      "id": "mefisto-100",
+      "nome": "Mefisto 100",
+      "tipo": "arma_distanza",
+      "catalogo": "Fratellanza",
+      "famiglia": "Fucili di base",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Fucile di precisione. Proprietà: Purificatrice 1.",
+      "paragrafo": "§7.22.2",
+      "versione_manuale": "Armamenti 0.52",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-di-precisione",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+3"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 800,
+      "munizioni": {
+        "capacita": 5,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 6200,
+      "proprieta": [
+        {
+          "nome": "Purificatrice 1",
+          "testo": "Si applica secondo il §7.1.3 contro i bersagli validi dell’Oscura Simmetria. Non trasforma il danno in Magico, non richiede PM o Sintonizzazione e non considera automaticamente valida la sola Corruzione. Il bonus non è incluso nei danni tabellari (§7.22.2)."
+        }
+      ]
+    },
+    {
+      "id": "marksman",
+      "nome": "Marksman",
+      "tipo": "arma_distanza",
+      "catalogo": "Imperial",
+      "famiglia": "Fucili di base",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Fucile di precisione.",
+      "paragrafo": "§7.22.2",
+      "versione_manuale": "Armamenti 0.52",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-di-precisione",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+4"
+      },
+      "ac": 1,
+      "modificatore_va": -1,
+      "portata_q": null,
+      "gittata_q": 800,
+      "munizioni": {
+        "capacita": 4,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 5500,
+      "proprieta": []
+    },
+    {
+      "id": "archer-10",
+      "nome": "Archer 10",
+      "tipo": "arma_distanza",
+      "catalogo": "Mishima",
+      "famiglia": "Fucili di base",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Fucile di precisione.",
+      "paragrafo": "§7.22.2",
+      "versione_manuale": "Armamenti 0.52",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-di-precisione",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+3"
+      },
+      "ac": 1,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 800,
+      "munizioni": {
+        "capacita": 8,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 5,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 5,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 4800,
+      "proprieta": []
+    },
+    {
+      "id": "hd10",
+      "nome": "HD10",
+      "tipo": "arma_distanza",
+      "catalogo": "Bauhaus",
+      "famiglia": "Fucili a pompa",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Fucile a pompa con serbatoio fisso della capacità CC: non riceve caricatori estraibili. Proprietà: Sbilanciante.",
+      "paragrafo": "§7.22.2",
+      "versione_manuale": "Armamenti 0.52",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-a-pompa-e-doppiette",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6"
+      },
+      "ac": 2,
+      "modificatore_va": 1,
+      "portata_q": null,
+      "gittata_q": 20,
+      "munizioni": {
+        "capacita": 4,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 4,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1400,
+      "proprieta": [
+        {
+          "nome": "Sbilanciante",
+          "testo": "Dopo due colpi penetranti dello stesso attacco: Prova di Forza o Destrezza; fallimento A Terra. Prova immediata; A Terra fino a quando si rialza (Giocatore §5.24)."
+        }
+      ]
+    },
+    {
+      "id": "sa-sg1000",
+      "nome": "SA SG1000",
+      "tipo": "arma_distanza",
+      "catalogo": "Cybertronic",
+      "famiglia": "Fucili a pompa",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Fucile a pompa con serbatoio fisso della capacità CC: non riceve caricatori estraibili. Proprietà: Sbilanciante.",
+      "paragrafo": "§7.22.2",
+      "versione_manuale": "Armamenti 0.52",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-a-pompa-e-doppiette",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6"
+      },
+      "ac": 2,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 30,
+      "munizioni": {
+        "capacita": 6,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 7,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 4,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 1400,
+      "proprieta": [
+        {
+          "nome": "Sbilanciante",
+          "testo": "Dopo due colpi penetranti dello stesso attacco: Prova di Forza o Destrezza; fallimento A Terra. Prova immediata; A Terra fino a quando si rialza (Giocatore §5.24)."
+        }
+      ]
+    },
+    {
+      "id": "judicator-100",
+      "nome": "Judicator 100",
+      "tipo": "arma_distanza",
+      "catalogo": "Fratellanza",
+      "famiglia": "Fucili a pompa",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Fucile a pompa con serbatoio fisso della capacità CC: non riceve caricatori estraibili. Proprietà: Purificatrice 1, Sbilanciante.",
+      "paragrafo": "§7.22.2",
+      "versione_manuale": "Armamenti 0.52",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-a-pompa-e-doppiette",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6"
+      },
+      "ac": 2,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 20,
+      "munizioni": {
+        "capacita": 6,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 4,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 1400,
+      "proprieta": [
+        {
+          "nome": "Purificatrice 1",
+          "testo": "Si applica secondo il §7.1.3 contro i bersagli validi dell’Oscura Simmetria. Non trasforma il danno in Magico, non richiede PM o Sintonizzazione e non considera automaticamente valida la sola Corruzione. Il bonus non è incluso nei danni tabellari (§7.22.2)."
+        },
+        {
+          "nome": "Sbilanciante",
+          "testo": "Dopo due colpi penetranti dello stesso attacco: Prova di Forza o Destrezza; fallimento A Terra. Prova immediata; A Terra fino a quando si rialza (Giocatore §5.24)."
+        }
+      ]
+    },
+    {
+      "id": "breacher",
+      "nome": "Breacher",
+      "tipo": "arma_distanza",
+      "catalogo": "Imperial",
+      "famiglia": "Fucili a pompa",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Fucile a pompa con serbatoio fisso della capacità CC: non riceve caricatori estraibili. Proprietà: Sbilanciante.",
+      "paragrafo": "§7.22.2",
+      "versione_manuale": "Armamenti 0.52",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-a-pompa-e-doppiette",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6+1"
+      },
+      "ac": 2,
+      "modificatore_va": -1,
+      "portata_q": null,
+      "gittata_q": 20,
+      "munizioni": {
+        "capacita": 4,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 5,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 4,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1300,
+      "proprieta": [
+        {
+          "nome": "Sbilanciante",
+          "testo": "Dopo due colpi penetranti dello stesso attacco: Prova di Forza o Destrezza; fallimento A Terra. Prova immediata; A Terra fino a quando si rialza (Giocatore §5.24)."
+        }
+      ]
+    },
+    {
+      "id": "kaze-10",
+      "nome": "Kaze 10",
+      "tipo": "arma_distanza",
+      "catalogo": "Mishima",
+      "famiglia": "Fucili a pompa",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Fucile a pompa con serbatoio fisso della capacità CC: non riceve caricatori estraibili. Proprietà: Sbilanciante.",
+      "paragrafo": "§7.22.2",
+      "versione_manuale": "Armamenti 0.52",
+      "abilita": "Armi medie",
+      "specializzazione": "specializzazione-fucili-a-pompa-e-doppiette",
+      "mani": 2,
+      "danno": {
+        "una_mano": null,
+        "due_mani": "1d6"
+      },
+      "ac": 2,
+      "modificatore_va": 0,
+      "portata_q": null,
+      "gittata_q": 20,
+      "munizioni": {
+        "capacita": 8,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 4,
+      "mov": 0,
+      "modalita": [
+        "S"
+      ],
+      "for_richiesta": 4,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1000,
+      "proprieta": [
+        {
+          "nome": "Sbilanciante",
+          "testo": "Dopo due colpi penetranti dello stesso attacco: Prova di Forza o Destrezza; fallimento A Terra. Prova immediata; A Terra fino a quando si rialza (Giocatore §5.24)."
+        }
+      ]
     }
   ]
 }

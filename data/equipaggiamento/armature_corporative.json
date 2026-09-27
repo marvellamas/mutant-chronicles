@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Armamenti 0.50",
+  "versione_manuale": "Armamenti 0.52",
   "fonte": "Manuale degli Armamenti v0.50: armature dei cataloghi Bauhaus (§7.11.5–7.11.6), Alleanza (§7.11.7), Capitol (§7.13.1–7.13.3), Imperial (§7.14.1–7.14.3), Cybertronic (§7.15.2–7.15.3), Mishima (§7.16.1–7.16.4) e Fratellanza (§7.17.2–7.17.5), pp. 64–103; lotto 6",
   "_nota": "Generato da tools/lotti/lotto6_armature_corporative.mjs; da qui in poi si modifica questo file. «penalita» sono le penalità effettive del modello (categoria del §7.11.1 con gli effetti delle proprietà native), prima di rinforzi e FOR insufficiente. «profili_alternativi» delle armature servoassistite: il profilo a sistema spento, con FOR e penalità proprie. I rinforzi non sono ancora nel catalogo: «rinforzi_ammessi» dice solo quali kit accetta il modello.",
   "note_per_catalogo": {
@@ -4169,6 +4169,313 @@
         {
           "nome": "Interfaccia di pilotaggio 1",
           "testo": "Interfaccia di pilotaggio 1: +1 VA a Pilotare aeromobili compatibili mentre è collegata a comandi funzionanti e alimentati."
+        }
+      ]
+    },
+    {
+      "id": "giubba-di-servizio-c100",
+      "nome": "Giubba di servizio C100",
+      "tipo": "armatura",
+      "catalogo": "Cybertronic",
+      "famiglia": "Armature di base",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Comprende l’elmetto standard, senza AR aggiuntiva. Proprietà: Isolante 1. Accetta un Rinforzo Leggero oppure Pesante (§7.11.2); il rinforzo non fa parte della dotazione iniziale gratuita.",
+      "paragrafo": "§7.22.3",
+      "versione_manuale": "Armamenti 0.52",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 1,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 1700,
+      "rinforzi_ammessi": [
+        "Leggero",
+        "Pesante"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Isolante 1",
+          "testo": "Contromisura di soglia 1 contro l’effetto aggiuntivo Elettricità; non riduce ulteriormente il danno (§7.22.5)."
+        }
+      ]
+    },
+    {
+      "id": "veste-protettiva-dell-accolito",
+      "nome": "Veste protettiva dell’Accolito",
+      "tipo": "armatura",
+      "catalogo": "Fratellanza",
+      "famiglia": "Armature di base",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Comprende l’elmetto standard, senza AR aggiuntiva. Proprietà: Imbottita 1. Accetta un Rinforzo Leggero oppure Pesante (§7.11.2); il rinforzo non fa parte della dotazione iniziale gratuita.",
+      "paragrafo": "§7.22.3",
+      "versione_manuale": "Armamenti 0.52",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 1,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 1700,
+      "rinforzi_ammessi": [
+        "Leggero",
+        "Pesante"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Imbottita 1",
+          "testo": "Contromisura di soglia 1 contro l’effetto aggiuntivo Concussivo; non riduce ulteriormente il danno (§7.22.5)."
+        }
+      ]
+    },
+    {
+      "id": "giubba-territoriale-dei-clan",
+      "nome": "Giubba territoriale dei Clan",
+      "tipo": "armatura",
+      "catalogo": "Imperial",
+      "famiglia": "Armature di base",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Comprende l’elmetto standard, senza AR aggiuntiva. Proprietà: Struttura robusta. Accetta un Rinforzo Leggero oppure Pesante (§7.11.2); il rinforzo non fa parte della dotazione iniziale gratuita.",
+      "paragrafo": "§7.22.3",
+      "versione_manuale": "Armamenti 0.52",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 1,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 8,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "CO",
+      "costo": 1800,
+      "rinforzi_ammessi": [
+        "Leggero",
+        "Pesante"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "+2 PI massimi, già inclusi nella tabella del modello; nessun incremento della PS Integrità (§7.22.5)."
+        }
+      ]
+    },
+    {
+      "id": "corazza-ussara-r0",
+      "nome": "Corazza Ussara R0",
+      "tipo": "armatura",
+      "catalogo": "Bauhaus",
+      "famiglia": "Armature di base",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Comprende l’elmetto standard, senza AR aggiuntiva. Proprietà: Imbottita 1. Accetta un Rinforzo Leggero (§7.11.2); il rinforzo non fa parte della dotazione iniziale gratuita.",
+      "paragrafo": "§7.22.3",
+      "versione_manuale": "Armamenti 0.52",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 4000,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": -1,
+        "agilita": -1,
+        "movimento_q": -1,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Imbottita 1",
+          "testo": "Contromisura di soglia 1 contro l’effetto aggiuntivo Concussivo; non riduce ulteriormente il danno (§7.22.5)."
+        }
+      ]
+    },
+    {
+      "id": "corazza-di-servizio-c200",
+      "nome": "Corazza di servizio C200",
+      "tipo": "armatura",
+      "catalogo": "Cybertronic",
+      "famiglia": "Armature di base",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Comprende l’elmetto standard, senza AR aggiuntiva. Proprietà: Isolante 1. Accetta un Rinforzo Leggero (§7.11.2); il rinforzo non fa parte della dotazione iniziale gratuita.",
+      "paragrafo": "§7.22.3",
+      "versione_manuale": "Armamenti 0.52",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 4000,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": -1,
+        "agilita": -1,
+        "movimento_q": -1,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Isolante 1",
+          "testo": "Contromisura di soglia 1 contro l’effetto aggiuntivo Elettricità; non riduce ulteriormente il danno (§7.22.5)."
+        }
+      ]
+    },
+    {
+      "id": "corazza-del-novizio",
+      "nome": "Corazza del Novizio",
+      "tipo": "armatura",
+      "catalogo": "Fratellanza",
+      "famiglia": "Armature di base",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Comprende l’elmetto standard, senza AR aggiuntiva. Proprietà: Imbottita 1. Accetta un Rinforzo Leggero (§7.11.2); il rinforzo non fa parte della dotazione iniziale gratuita.",
+      "paragrafo": "§7.22.3",
+      "versione_manuale": "Armamenti 0.52",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 4000,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": -1,
+        "agilita": -1,
+        "movimento_q": -1,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Imbottita 1",
+          "testo": "Contromisura di soglia 1 contro l’effetto aggiuntivo Concussivo; non riduce ulteriormente il danno (§7.22.5)."
+        }
+      ]
+    },
+    {
+      "id": "corazza-territoriale-dei-clan",
+      "nome": "Corazza territoriale dei Clan",
+      "tipo": "armatura",
+      "catalogo": "Imperial",
+      "famiglia": "Armature di base",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Comprende l’elmetto standard, senza AR aggiuntiva. Proprietà: Struttura robusta. Accetta un Rinforzo Leggero (§7.11.2); il rinforzo non fa parte della dotazione iniziale gratuita.",
+      "paragrafo": "§7.22.3",
+      "versione_manuale": "Armamenti 0.52",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 10,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 4200,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": -1,
+        "agilita": -1,
+        "movimento_q": -1,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "+2 PI massimi, già inclusi nella tabella del modello; nessun incremento della PS Integrità (§7.22.5)."
+        }
+      ]
+    },
+    {
+      "id": "corazza-ashigaru",
+      "nome": "Corazza Ashigaru",
+      "tipo": "armatura",
+      "catalogo": "Mishima",
+      "famiglia": "Armature di base",
+      "nomi_alternativi": [],
+      "note_manuale": "Modello corporativo di base (§7.22, E&L A.5.30). Comprende l’elmetto standard, senza AR aggiuntiva. Proprietà: Manutenzione agevolata. Accetta un Rinforzo Leggero (§7.11.2); il rinforzo non fa parte della dotazione iniziale gratuita.",
+      "paragrafo": "§7.22.3",
+      "versione_manuale": "Armamenti 0.52",
+      "categoria": "Media",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 5,
+      "pi": 8,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 3800,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": -1,
+        "attacchi_ravvicinati": -1,
+        "agilita": -1,
+        "movimento_q": -1,
+        "lancio_potere": -3
+      },
+      "proprieta": [
+        {
+          "nome": "Manutenzione agevolata",
+          "testo": "+1 VA a Tecnologia per riparare quell’oggetto, con strumenti e materiali necessari. Non ripristina PI automaticamente e non riduce da sola tempi o costi. Non si somma a Manutenzione semplice (§7.22.5)."
         }
       ]
     }

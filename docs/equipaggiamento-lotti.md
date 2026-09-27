@@ -579,6 +579,20 @@ Fatto il 26 settembre 2026, commit «Lotto 12 del catalogo: artefatti e sintoniz
   - **Dubbi per Davide:** nessuno.
 - **Contenuti ancora da sviluppare** — §7.6, p. 32: niente da estrarre; da ricontrollare alla
   prossima edizione.
+- ✔ **Modelli corporativi di base** — Armamenti v0.52 §7.22 (E&L A.5.30), fatto il 27 settembre
+  2026. 41 profili nuovi (23 fucili, 8 armature, 10 scudi) trascritti dalle tabelle del Doc nel
+  generatore `tools/lotti/lotto_7_22_corporativi_base.mjs`, che riempie anche
+  `data/dotazioni.json` → `corporativi.abbinamenti` (48 corrispondenze). I 7 modelli già presenti
+  conservano i loro valori. Famiglie nuove: «Fucili di base», «Armature di base».
+- **Elmetti e modifiche** — Armamenti v0.52 §7.21 (nuovo, 27 settembre 2026): da estrarre.
+  - Regole comuni: nessuna AR; un solo elmetto; lo standard è compreso nel prezzo dell'armatura;
+    4 PI, PS Integrità 10 (standard) o 12 (corporativi); 1 AzP per indossarlo o toglierlo.
+  - Proprietà con effetto numerico (Sensori X, Assistenza offensiva 1, Assistenza difensiva 1,
+    Allerta tattica 1, Interfaccia di pilotaggio 1, Antibagliore 2, Protezione acustica 2, Filtro
+    respiratorio 2): vanno nel formato degli effetti degli oggetti (`docs/effetti-oggetti.md`),
+    con le regole di non cumulo del §7.21.1.
+  - Tabelle: modifiche commerciali (§7.21.4), elmetti corporativi (§7.21.5), Elmetto Commando
+    dell'Alleanza (§7.21.6), esempi (§7.21.7).
 
 ## Regole di ogni lotto
 

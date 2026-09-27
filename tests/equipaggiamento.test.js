@@ -315,7 +315,7 @@ test('validatore delle armi a distanza: modalità, capacità, AC, danno dalla mu
 // --- Lotto 3: scudi (§7.4) ---------------------------------------------------------------
 
 test('lotto 3: 26 scudi del §7.4.2 con i modificatori alle Parate del §7.4.11', () => {
-  const scudi = catalogo(dati).oggetti.filter((o) => o.tipo === 'scudo');
+  const scudi = catalogo(dati).oggetti.filter((o) => o.tipo === 'scudo' && !o.paragrafo.startsWith('§7.22'));
   assert.equal(scudi.length, 26); // §7.4.2: «Il catalogo comprende 26 scudi»
   assert.deepEqual([...new Set(scudi.map((o) => o.catalogo))], ['Commerciale', 'Bauhaus', 'Alleanza', 'Capitol', 'Cybertronic', 'Imperial', 'Mishima', 'Fratellanza']);
   const pun = catalogo(dati).perRif.get('scudi:scudo-punisher');
@@ -465,7 +465,7 @@ test('validatore delle armi corporative: effetti, attivazione, unità delle cari
 // --- Lotto 5: armi a distanza corporative (§7.8) ------------------------------------------
 
 test('lotto 5: 81 armi a distanza corporative e 19 moduli integrati in 7 cataloghi, con i valori del §7.8', () => {
-  const tutte = catalogo(dati).oggetti.filter((o) => o.file === 'armi_distanza_corporative');
+  const tutte = catalogo(dati).oggetti.filter((o) => o.file === 'armi_distanza_corporative' && !o.paragrafo.startsWith('§7.22'));
   assert.equal(tutte.length, 100);
   assert.equal(tutte.filter((o) => o.modulo_di).length, 19);
   assert.deepEqual([...new Set(tutte.map((o) => o.catalogo))], ['Alleanza', 'Bauhaus', 'Capitol', 'Cybertronic', 'Fratellanza', 'Imperial', 'Mishima']);
@@ -541,7 +541,7 @@ test('validatore dei moduli integrati e delle munizioni di riferimento', () => {
 // --- Lotto 6: armature corporative (§7.11.5–7.17.5) ---------------------------------------
 
 test('lotto 6: 83 armature corporative in 7 cataloghi, penalità effettive e rinforzi dal manuale', () => {
-  const tutte = catalogo(dati).oggetti.filter((o) => o.file === 'armature_corporative');
+  const tutte = catalogo(dati).oggetti.filter((o) => o.file === 'armature_corporative' && !o.paragrafo.startsWith('§7.22'));
   assert.equal(tutte.length, 83);
   assert.deepEqual([...new Set(tutte.map((o) => o.catalogo))], ['Bauhaus', 'Alleanza', 'Capitol', 'Imperial', 'Cybertronic', 'Mishima', 'Fratellanza']);
   const r = (id) => catalogo(dati).perRif.get(`armature_corporative:${id}`);

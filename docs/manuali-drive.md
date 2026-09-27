@@ -4,15 +4,15 @@ Dal 26 settembre 2026 i manuali vivono come Google Doc nella cartella Drive di D
 
 ## Registro
 
-Ultimo controllo: **26 settembre 2026, sera** (prima esecuzione; confronto con i PDF in `docs/diff-manuali-2026-09-26.md`).
+Ultimo controllo: **27 settembre 2026, 11:19 UTC** (prima esecuzione; confronto con i PDF in `docs/diff-manuali-2026-09-26.md`).
 
 | Documento | ID Google Doc | Ultima modifica vista (UTC) | Edizione vista | Testo salvato | Note |
 |---|---|---|---|---|---|
-| Manuale del Giocatore | `110LNyYLZFWRGYuym836EqKYOUvoQRYvqBzm_2bJqybc` | 2026-09-27T09:52:35Z | 0.43 + risposte 26–27/09 (A.1, A.3, A.4, A.5–A.5.29; A.5.27 rivista alle 09:52) e 25/09 (Esploratore) | `docs/manuali-txt/giocatore.md` | esaminato: §2.16 (dotazioni) in `data/dotazioni.json`; §4.4, §8.6.8, §8.9 recepiti; modifiche non annunciate (per-davide A.32) |
+| Manuale del Giocatore | `110LNyYLZFWRGYuym836EqKYOUvoQRYvqBzm_2bJqybc` | 2026-09-27T11:18:55Z | 0.43 + risposte 26–27/09 (A.1, A.3, A.4, A.5–A.5.31; A.5.27 rivista alle 09:52; §2.16.27 tabelle e §2.16.30 alle 11:18) e 25/09 (Esploratore) | `docs/manuali-txt/giocatore.md` | esaminato: §2.16 (dotazioni) in `data/dotazioni.json`; §4.4, §8.6.8, §8.9 recepiti; modifiche non annunciate (per-davide A.32) |
 | Manuale della Magia | `1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY` | 2026-09-27T02:06:14Z | 1.1 + risposte 26/09 (A.2: 14 schede, sez. 1–2), 25/09 (minimo 1) e 18 Talenti nuovi del 27/09 | `docs/manuali-txt/magia.md` | esaminato: 32 Talenti in `talenti_liberi.json`; i 18 nuovi non sono annunciati (per-davide A.32) |
-| Manuale degli Armamenti | `1scH7QwtQYNb4D22vGJsUhGgPglwbFhZXf4ZGXPGhW3Y` | 2026-09-26T09:32:57Z | 0.50 | `docs/manuali-txt/armamenti.md` | esaminato: nessuna differenza di sostanza dal PDF |
+| Manuale degli Armamenti | `1eDZJHfgBIYPvzKg78tEGwiLtrI_6gzpQOIfJA9aYiYg` | 2026-09-27T11:11:25Z | 0.52 (Doc nuovo, indicato da E&L A.5.30; la 0.50 era `1scH7QwtQYNb4D22vGJsUhGgPglwbFhZXf4ZGXPGhW3Y`) | `docs/manuali-txt/armamenti.md` | esaminato: §7.22 (modelli corporativi di base) nel catalogo; §7.21 (elmetti e modifiche) da estrarre, `docs/equipaggiamento-lotti.md` |
 | Manuale dell'Equipaggiamento | `1bvTeJphQ6BNKazpV5twivvRbqkHrRowNBDZ_RakQiXA` | 2026-09-26T09:33:06Z | 0.1, solo cap. 1 | `docs/manuali-txt/equipaggiamento.md` | §1.6 e §1.7 in `regole.json`; cap. 2–8 "verranno integrati successivamente" |
-| E&L – Risposte e correzioni approvate | `1VaqZaAe4NK5P8A956Eahua_ZT60eh3ohnR2xSqh-tVs` | 2026-09-27T09:52:42Z | A.1–A.5.29 (A.5.27 rivista) | `docs/risposte-master-2026-09-26.md` | registrate in `docs/risposte-master.md` (7–20); dotazioni nel passo «Equipaggiamento iniziale» |
+| E&L – Risposte e correzioni approvate | `1VaqZaAe4NK5P8A956Eahua_ZT60eh3ohnR2xSqh-tVs` | 2026-09-27T11:19:01Z | A.1–A.5.31 (A.5.27 rivista) | `docs/risposte-master-2026-09-26.md` | registrate in `docs/risposte-master.md` (7–22); dotazioni nel passo «Equipaggiamento iniziale» |
 
 Link: `https://docs.google.com/document/d/<ID>/edit`
 

@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Armamenti 0.50",
+  "versione_manuale": "Armamenti 0.52",
   "_nota": "Elenco dei file del catalogo dell’equipaggiamento. Aggiungere un lotto = aggiungere un file in questa cartella e una riga qui. «id» è il prefisso dei riferimenti nei personaggi (es. \"armi:spada-leggera\").",
   "reperibilita": {
     "CO": {
