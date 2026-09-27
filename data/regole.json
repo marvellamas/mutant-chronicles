@@ -1209,7 +1209,7 @@
       },
       {
         "nome": "Stremato",
-        "penalita": -8
+        "penalita": -10
       }
     ],
     "si_applica_a": ["abilita", "salvezze"],

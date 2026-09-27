@@ -4282,7 +4282,7 @@ L’**Affaticamento (AFT)** rappresenta l’accumulo di stanchezza e sforzo. Si 
 | Stanco | −2 |
 | Spossato | −4 |
 | Sfinito | −6 |
-| Stremato | −8 |
+| Stremato | −10 |
 
 **Riposato** costituisce una riserva iniziale: il primo peggioramento porta a Normale, senza penalità. Si applica soltanto la penalità dello Stato attuale; non si sommano quelle degli Stati precedenti.
 
@@ -4325,7 +4325,7 @@ Per migliorare di uno Stato occorre accumulare consecutivamente i punti indicati
 
 | Passaggio | Punti necessari |
 | :---- | :---- |
-| Stremato → Sfinito | 8 |
+| Stremato → Sfinito | 10 |
 | Sfinito → Spossato | 6 |
 | Spossato → Stanco | 4 |
 | Stanco → Affaticato | 2 |
@@ -4336,7 +4336,7 @@ I punti eccedenti una soglia contribuiscono subito alla successiva. Un’interru
 
 Ogni ora completa vale secondo la qualità del riposo effettivamente svolto. Alternare le due forme di riposo non ricalcola retroattivamente le ore precedenti al ritmo meno efficace.
 
-**Esempio.** Da Stremato, 4 ore di riposo assoluto producono 8 punti e portano a Sfinito. Dopo altre 2 ore si rimane Sfinito, con 4 dei 6 punti necessari per diventare Spossato. Un Riposo completo di 6 ore non azzera quindi automaticamente l’AFT.
+**Esempio.** Da Stremato, 5 ore di riposo assoluto producono 10 punti e portano a Sfinito. Dopo un’altra ora si rimane Sfinito, con 2 dei 6 punti necessari per diventare Spossato. Un Riposo completo di 6 ore non azzera quindi automaticamente l’AFT. Per passare da Stremato a Riposato servono complessivamente 24 punti: 12 ore consecutive di sonno o riposo assoluto.
 
 Questo recupero riguarda soltanto l’Affaticamento. PV, Ferite, Menomazioni e PM seguono le rispettive regole (§§5.16, 6.15 e 6.16). La perdita di punti incompleti di AFT non annulla PV o PM già recuperati.
 
@@ -4358,7 +4358,7 @@ La **Corruzione Oscura (CROS)** rappresenta la contaminazione spirituale, mental
 | Infetto | −2 | Malessere persistente e aggressività verbale o emotiva. |
 | Corrotto | −4 | Influenza oscura marcata e possibili perdite di controllo. |
 | Eretico | −6 | Tendenza a servire il Caos e possibile comparsa di Mutazioni Oscure. |
-| Caotico | −8 | Identità quasi perduta, instabilità e trasformazioni mostruose. |
+| Caotico | −10 | Identità quasi perduta, instabilità e trasformazioni mostruose. |
 | Oscuro | — | **Corruzione irreversibile:** il personaggio diventa un PNG. |
 
 Si applica soltanto la penalità dello Stato attuale, senza sommare quelle precedenti. Essa interessa **tutte le Prove di Caratteristica, Abilità e Salvezza**, comprese quelle contro ulteriori esposizioni, e si aggiunge agli altri modificatori pertinenti.
@@ -4418,25 +4418,22 @@ Ogni periodo permette un solo passaggio verso lo Stato precedente. Incantesimi e
 
 ## **5.21 Umanità**
 
-L’**Umanità (UMN)** misura quanto il personaggio conserva della propria natura biologica, emotiva e spirituale dopo innesti cibernetici o altre trasformazioni permanenti. Il valore va da **0 a 10**; un essere umano non modificato parte normalmente da **UMN 10**.
+L’**Umanità (UMN)** misura quanto il personaggio conserva della propria natura biologica, emotiva e spirituale dopo innesti cibernetici o altre trasformazioni permanenti. Il valore va da 0 a 20; un essere umano non modificato parte normalmente da UMN 20\.
 
-Ogni innesto o trasformazione indica nella propria descrizione l’eventuale perdita di UMN. I costi dei singoli impianti devono comparire nelle relative schede. Si applica soltanto la riga del valore attuale, senza sommare i modificatori delle righe precedenti.
+Ogni innesto o trasformazione indica nella propria descrizione l’eventuale perdita di UMN. I costi dei singoli impianti devono comparire nelle relative schede. Si applica soltanto la fascia del valore attuale, senza sommare i modificatori delle fasce precedenti.
 
 | UMN | Condizione | PM Massimi | PS Magia contro CROS | Capacità di Sintonizzazione |
 | :---: | :---: | :---: | :---: | :---: |
-| 10 | Umano | 0 | 0 | 0 |
-| 9 | Potenziato | 0 | −1 | 0 |
-| 8 | Potenziato | 0 | −1 | 0 |
-| 7 | Potenziato | 0 | −1 | −1 |
-| 6 | Cyborg | −1 | −2 | −2 |
-| 5 | Cyborg | −2 | −2 | −2 |
-| 4 | Cyborg | −3 | −2 | −4 |
-| 3 | Transumano | −5 | −4 | −6 |
-| 2 | Transumano | −7 | −4 | −6 |
-| 1 | Transumano | −10 | −4 | −8 |
-| 0 | Macchina | −15 | −8 | −10 |
+| 20–19 | Umano | 0 | 0 | 0 |
+| 18–16 | Potenziato | 0 | −1 | 0 |
+| 15–13 | Potenziato | −1 | −2 | −1 |
+| 12–10 | Cyborg | −2 | −3 | −2 |
+| 9–7 | Cyborg | −4 | −4 | −4 |
+| 6–4 | Transumano | −8 | −5 | −6 |
+| 3–1 | Transumano | −15 | −7 | −8 |
+| 0 | Macchina | −20 | −10 | −10 |
 
-Le ultime tre colonne riportano i modificatori da applicare. Le Caratteristiche e gli altri valori non vengono ricalcolati per la sola perdita di UMN.
+Le ultime tre colonne riportano modificatori in punti, non percentuali. Le Caratteristiche e gli altri valori non vengono ricalcolati per la sola perdita di UMN.
 
 ### **5.21.1 Riduzione dei PM Massimi**
 
@@ -4444,7 +4441,7 @@ Il modificatore ai PM si applica alla riserva massima personale normalmente calc
 
 Quando l’UMN diminuisce, il nuovo massimo si applica immediatamente. I PM Attuali vengono abbassati soltanto se superano il nuovo massimo. Quando l’UMN aumenta, il massimo viene ricalcolato, ma i PM Attuali devono essere recuperati normalmente.
 
-**Esempio.** Con 20 PM Massimi prima della riduzione e 19 PM Attuali, passando a UMN 5 il personaggio avrà 18 PM Massimi e 18 PM Attuali. Se possedesse soltanto 10 PM Attuali, conserverebbe quei 10\. Con 8 PM Massimi prima della riduzione e UMN 0, il massimo risultante è 1, non 0\.
+**Esempio.** Con 20 PM Massimi prima della riduzione e 19 PM Attuali, passando a UMN 8 il personaggio avrà 16 PM Massimi e 16 PM Attuali. Se possedesse soltanto 10 PM Attuali, conserverebbe quei 10\. Con 8 PM Massimi prima della riduzione e UMN 0, il massimo risultante è 1, non 0\.
 
 Il minimo di 1 riguarda esclusivamente i PM Massimi dopo questa riduzione. I PM Attuali possono scendere a 0 e si applica normalmente lo svenimento per esaurimento (Manuale della Magia). Recupero e Meditazione rispettano il massimo ridotto. La capacità dei contenitori e delle riserve esterne non viene ridotta dall’Umanità.
 
@@ -4452,7 +4449,7 @@ Il minimo di 1 riguarda esclusivamente i PM Massimi dopo questa riduzione. I PM 
 
 La penalità alla Salvezza si applica **esclusivamente alle PS di Magia contro la Corruzione**. Non interessa le altre PS di Magia, le Prove di Potere o le altre Abilità.
 
-Si somma alla penalità dello Stato di CROS e agli altri modificatori pertinenti. Un personaggio a UMN 5 e Infetto subisce −4 alla PS contro una nuova esposizione: −2 per l’Umanità e −2 per la Corruzione.
+Si somma alla penalità dello Stato di CROS e agli altri modificatori pertinenti. Un personaggio a UMN 8 e Infetto subisce −6 alla PS contro una nuova esposizione: −4 per l’Umanità e −2 per la Corruzione.
 
 UMN e CROS si registrano separatamente. La perdita di UMN aumenta la vulnerabilità alla Corruzione, ma non fa avanzare automaticamente nei suoi Stati.
 
@@ -4462,7 +4459,7 @@ La riduzione indicata nella tabella si applica alla Capacità complessiva di Sin
 
 Se la capacità diminuisce e non basta più per gli Artefatti sintonizzati, il personaggio **sceglie immediatamente quali sintonizzazioni interrompere**, finché la somma dei costi rispetta il nuovo limite. Un successivo aumento della capacità permette di sintonizzarsi nuovamente secondo la procedura ordinaria.
 
-**Esempio.** Al I Grado complessivo, UMN 4 porta la capacità ordinaria da 4 a 0; con Architetto TecnoMistico la porta da 6 a 2\. Al VI Grado complessivo, un Tecnomante con UMN 0 conserva capacità 1: 9 \+ 2 − 10\.
+**Esempio.** Al I Grado complessivo, UMN 8 porta la capacità ordinaria da 4 a 0; con Architetto TecnoMistico la porta da 6 a 2\. Al VI Grado complessivo, un Tecnomante con UMN 0 conserva capacità 1: 9 \+ 2 − 10\.
 
 La riduzione limita il totale degli Artefatti sintonizzati, non il Valore della Prova di Artefatti. Le proprietà passive seguono i normali requisiti dell’oggetto. La disciplina del Focus resta quella del Manuale della Magia; eventuali proprietà attive del Focus come Artefatto richiedono la normale capacità.
 
@@ -4470,7 +4467,7 @@ La riduzione limita il totale degli Artefatti sintonizzati, non il Valore della 
 
 A UMN 0 il personaggio non può utilizzare **Risorse Interiori**, comprese le Tecniche che ne dipendono, salvo un’eccezione espressamente prevista. La condizione Macchina non comporta automaticamente la trasformazione in PNG. Le altre capacità restano utilizzabili rispettandone requisiti, costi e risorse effettivamente disponibili.
 
-L’Umanità **non si recupera naturalmente**. Può aumentare mediante rimozione o sostituzione degli innesti, Medicina avanzata, interventi cibernetici, Magia o altri effetti che lo prevedano espressamente. Ogni procedura indica quanti punti restituisce e a quali condizioni, fino al massimo di 10\.
+L’Umanità **non si recupera naturalmente**. Può aumentare mediante rimozione o sostituzione degli innesti, Medicina avanzata, interventi cibernetici, Magia o altri effetti che lo prevedano espressamente. Ogni procedura indica quanti punti restituisce e a quali condizioni, fino al massimo di 20\.
 
 I trattamenti delle Ferite e delle Menomazioni del Medico e i Talenti del Tecnomante per lavorare sugli Artefatti non restituiscono automaticamente UMN: occorre una procedura specifica. I benefici del Predicatore e del Mistico alle PS contro Corruzione funzionano normalmente; Purificazione, Purificatore e Aura di Equilibrio non ripristinano UMN né attenuano gli effetti della sua perdita.
 
