@@ -45,6 +45,16 @@ export function frasiEffetti() {
     }
   };
   visita(leggi('data/regole.json').attacco_distanza ?? {}, 'regole:attacco_distanza');
+  visita(leggi('data/regole.json').lancio ?? {}, 'regole:lancio');
+  // incantesimi.json → meccanica: la riga «Lancio:», la Salvezza, il paragrafo «Anticipazione:» e le frasi delle correzioni
+  for (const i of leggi('data/incantesimi.json').incantesimi) {
+    const m = i.meccanica ?? {};
+    const dove = `incantesimi:${i.scheda} ${i.nome}`;
+    if (i.lancio) out.push({ dove: `${dove} lancio`, frase: i.lancio });
+    if (m.salvezza?.testo) out.push({ dove: `${dove} salvezza`, frase: m.salvezza.testo });
+    if (m.anticipazione?.frase) out.push({ dove: `${dove} anticipazione`, frase: m.anticipazione.frase });
+    (m.frasi ?? []).forEach((f, k) => out.push({ dove: `${dove} frasi[${k}]`, frase: f }));
+  }
   return out;
 }
 

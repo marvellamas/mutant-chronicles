@@ -842,8 +842,182 @@
     "penalita_ingaggio": -2,
     "tiro_armi_da_lancio": 2,
     "penalita_contromagia": -2,
-    "fonte": "Magia sez. 2 («Durante l’Ingaggio richiede sempre Potere, anche ai livelli 1–3, con un ulteriore −2 VA»; Focalizzazione «+4 VA a Potere»; Contromagia «un ulteriore −2 VA») e sez. 3 («si tira Armi da lancio +2»)",
-    "_nota": "Valori base; i Talenti di magia li cambiano con effetti.magia: focalizzazione_va e penalita_ingaggio e penalita_contromagia sostituiscono il valore base, tiro_armi_da_lancio si aggiunge (master, 26/09/2026)."
+    "penalita_livello": {
+      "paragrafo": "Magia sez. 1",
+      "frasi": [
+        "| 1–3 | Nessuna Prova, salvo eccezioni | Potere senza penalità di livello |",
+        "| 4–6 | Potere senza penalità di livello | Potere −2 VA |",
+        "| 7–9 | Potere −2 VA | Potere −4 VA |",
+        "| 10–12 | Potere −4 VA | Potere −6 VA |",
+        "| 13–15 | Potere −6 VA | Potere −8 VA |",
+        "| 16–18 | Potere −8 VA | Potere −10 VA |"
+      ],
+      "fasce": [
+        {
+          "fino_a": 3,
+          "taumaturgo": 0,
+          "taumaturgo_automatico": true,
+          "altri": 0
+        },
+        {
+          "fino_a": 6,
+          "taumaturgo": 0,
+          "altri": -2
+        },
+        {
+          "fino_a": 9,
+          "taumaturgo": -2,
+          "altri": -4
+        },
+        {
+          "fino_a": 12,
+          "taumaturgo": -4,
+          "altri": -6
+        },
+        {
+          "fino_a": 15,
+          "taumaturgo": -6,
+          "altri": -8
+        },
+        {
+          "fino_a": 18,
+          "taumaturgo": -8,
+          "altri": -10
+        }
+      ]
+    },
+    "prova_senza_addestramento": {
+      "paragrafo": "Magia sez. 1, Usufruitore di Magia",
+      "frasi": [
+        "Il lancio richiede sempre una Prova di Potere, anche ai livelli 1–3."
+      ]
+    },
+    "anticipazione": {
+      "paragrafo": "Magia sez. 12.3",
+      "moltiplicatore_costo": 2,
+      "prova_obbligatoria": true,
+      "penalita_taumaturgo": [
+        0,
+        -2,
+        -4,
+        -6,
+        -8,
+        -10
+      ],
+      "frasi": [
+        "Si sceglie una versione già accessibile, si raddoppia il suo costo base in PM e la prova Potere diventa più difficile di una categoria.",
+        "La Prova di Potere è sempre obbligatoria, anche quando la versione scelta sarebbe normalmente automatica.",
+        "Anticipazione Migliorata elimina soltanto l’aumento di una categoria di difficoltà.",
+        "| 1–3 | Automatico, salvo obblighi | Prova necessaria, 0 |",
+        "| 4–6 | 0 | −2 |",
+        "| 7–9 | −2 | −4 |",
+        "| 10–12 | −4 | −6 |",
+        "| 13–15 | −6 | −8 |",
+        "| 16–18 | −8 | −10 |",
+        "Non si combinano con Calcolo Arcano sullo stesso lancio."
+      ],
+      "TODO(Davide)": "Per chi non ha l’Addestramento Taumaturgo la tabella con Anticipazione non c’è: l’app usa la categoria successiva della colonna «altri utilizzatori» (−2 in più; −12 per i livelli 16–18). Per-davide A.39."
+    },
+    "focalizzazione": {
+      "paragrafo": "Magia sez. 2",
+      "azioni_principali_prima": 1,
+      "frasi": [
+        "Focalizzazione impiega 1 Azione Principale preparatoria, senza Prova né PM, e concede +4 VA a Potere per l’incantesimo e il livello dichiarati.",
+        "Focalizzazione Migliorata porta il bonus a +6.",
+        "Se non serve Potere, non produce un vantaggio."
+      ]
+    },
+    "ingaggio": {
+      "paragrafo": "Magia sez. 2",
+      "prova_obbligatoria": true,
+      "frasi": [
+        "Durante l’Ingaggio richiede sempre Potere, anche ai livelli 1–3, con un ulteriore −2 VA.",
+        "Lancio in Combattimento elimina il −2 da Ingaggio, mantenendo l’obbligo della Prova."
+      ]
+    },
+    "componenti": {
+      "paragrafo": "Magia sez. 2",
+      "penalita": -2,
+      "massimo": -6,
+      "prova_obbligatoria": true,
+      "nomi": {
+        "focus": "Focus",
+        "gesto": "Gesto",
+        "invocazione": "Invocazione"
+      },
+      "frasi": [
+        "Ogni componente richiesta ma mancante impone −2 VA a Potere, fino a −6, e rende necessaria la Prova anche ai livelli 1–3."
+      ]
+    },
+    "circostanze": {
+      "paragrafo": "Giocatore §1.4",
+      "minimo": -8,
+      "massimo": 8,
+      "passo": 2,
+      "frasi": [
+        "Il Direttore di Gioco valuta complessivamente la situazione e assegna un solo modificatore, senza sommare ogni piccolo vantaggio o impedimento."
+      ]
+    },
+    "cumulo": {
+      "paragrafo": "Magia sez. 7",
+      "frasi": [
+        "Alla stessa prova si applicano il maggiore bonus magico e la maggiore penalità magica pertinenti.",
+        "La difficoltà ordinaria del livello, le componenti mancanti, l’Ingaggio e le circostanze non sono penalità magiche concorrenti."
+      ]
+    },
+    "fonti_pm": {
+      "paragrafo": "Magia sez. 6",
+      "frasi": [
+        "Il costo di un lancio può essere pagato con PM personali, con un solo contenitore compatibile o combinando queste due fonti.",
+        "Non si possono usare due contenitori per lo stesso lancio.",
+        "il contenitore deve essere trasportato e sintonizzato."
+      ]
+    },
+    "svenimento": {
+      "paragrafo": "Magia sez. 6",
+      "frasi": [
+        "Se, al termine della risoluzione completa di un’azione, il personaggio rimane a 0 PM personali, sviene finché non recupera almeno 1 PM.",
+        "Possedere PM in un contenitore esterno non impedisce lo svenimento."
+      ]
+    },
+    "magistrale": {
+      "paragrafo": "Magia sez. 5",
+      "frasi": [
+        "Successo Magistrale, lancio riuscito e costo dimezzato per difetto, minimo 1 PM."
+      ]
+    },
+    "fallimento": {
+      "paragrafo": "Magia sez. 1",
+      "frasi": [
+        "Un fallimento consuma Azione e PM.",
+        "Riduzioni del costo non riducono livello o penalità."
+      ]
+    },
+    "colpire": {
+      "paragrafo": "Magia sez. 3",
+      "abilita": "Armi da lancio",
+      "frasi": [
+        "Se lo richiede, si tira Armi da lancio +2 anche senza Copertura; Incantesimi da Lancio aggiunge un ulteriore +2, per un totale di +4.",
+        "Le penalità di livello si applicano a Potere, non al tiro per colpire."
+      ]
+    },
+    "contatto": {
+      "paragrafo": "Magia sez. 3",
+      "abilita": "Corpo a corpo",
+      "va": 4,
+      "frasi": [
+        "Dopo il lancio riuscito si effettua Corpo a corpo +4 per toccarlo.",
+        "Contro un bersaglio consenziente il tiro di contatto non serve."
+      ]
+    },
+    "impossibile": {
+      "paragrafo": "Giocatore §1.7",
+      "frasi": [
+        "| 0 o inferiore | Prova impossibile nelle condizioni attuali: non si tira. |"
+      ]
+    },
+    "fonte": "Magia sez. 2 («Durante l’Ingaggio richiede sempre Potere, anche ai livelli 1–3, con un ulteriore −2 VA»; Focalizzazione «+4 VA a Potere»; Contromagia «un ulteriore −2 VA») e sez. 3 («si tira Armi da lancio +2»); utility «Lancia un incantesimo» (src/lancio.js): sez. 1, 2, 3, 5, 6, 7, 12.3; Giocatore §1.4 e §1.7",
+    "_nota": "Valori base; i Talenti di magia li cambiano con effetti.magia: focalizzazione_va e penalita_ingaggio e penalita_contromagia sostituiscono il valore base, tiro_armi_da_lancio si aggiunge (master, 26/09/2026). I blocchi con «frasi» sono verificati da tools/verifica_frasi.mjs."
   },
   "meditazione": {
     "pm_per_ora": { "fisso": 3, "caratteristiche": ["SAG"], "minimo": 3 },

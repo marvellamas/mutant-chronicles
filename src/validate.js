@@ -66,6 +66,7 @@ export function validaDati(dati) {
   if (isOggetto(dati.dotazioni)) validaDotazioni(dati, err);
   if (dati.equipaggiamento?.file?.munizioni?.ricarica !== undefined) validaRicarica(dati, err);
   if (dati.regole?.attacco_distanza !== undefined) validaAttaccoDistanza(dati, err);
+  if (dati.incantesimi?.incantesimi?.some((i) => i.meccanica)) validaMeccanicaIncantesimi(dati, err);
 
   return errori;
 }
@@ -606,7 +607,7 @@ function validaSpecializzazioni(s, nomiAbilita, err) {
 }
 
 const MOLTEPLICITA = { una: null, per_caratteristica: 'caratteristica', per_salvezza_max2: 'salvezza', illimitata: null, limitata: null };
-const EFFETTI_NOTI = new Set(['iniziativa', 'pv', 'pm', 'salvezza', 'movimento', 'tecniche', 'accessoMagia', 'incantesimi', 'livelloMax', 'livelloMaxIncantesimi', 'magia', 'meditazione', 'attacco_distanza']);
+const EFFETTI_NOTI = new Set(['iniziativa', 'pv', 'pm', 'salvezza', 'movimento', 'tecniche', 'accessoMagia', 'incantesimi', 'livelloMax', 'livelloMaxIncantesimi', 'magia', 'meditazione', 'attacco_distanza', 'lancio']);
 // effetti.magia: valori che sostituiscono la base di regole.json → lancio (numeri) o capacità (true)
 const EFFETTI_MAGIA = { focalizzazione_va: 'numero', penalita_ingaggio: 'numero', penalita_contromagia: 'numero', tiro_armi_da_lancio: 'numero', contromagia: 'vero', contromagia_senza_conoscenza: 'vero', occultata: 'vero' };
 const EFFETTI_MEDITAZIONE = { accesso: 'vero', pm_per_ora: 'numero', moltiplicatore_ore: 'numero' };
@@ -1381,5 +1382,46 @@ function validaAttaccoDistanza(dati, err) {
     if (e === undefined) continue;
     for (const k of Object.keys(e)) if (!EFFETTI_ATTACCO.includes(k)) err(file, `${nome}.effetti.attacco_distanza.${k}`, `effetto sconosciuto (ammessi: ${EFFETTI_ATTACCO.join(', ')})`);
     for (const s2 of Object.keys(e.modalita ?? {})) if (!sigle.includes(s2)) err(file, `${nome}.effetti.attacco_distanza.modalita.${s2}`, `"${s2}" non è in modalita_di_fuoco`);
+  }
+}
+
+// Campi del lancio degli incantesimi (incantesimi.json → meccanica, tools/estrai_lancio.py) ed
+// effetti.lancio dei Talenti (src/lancio.js; Magia sez. 1–3, 12.3)
+const CONCENTRAZIONE = ['no', 'obbligatoria', 'a_scelta', 'durante_il_lancio'];
+const COMPONENTI = ['focus', 'gesto', 'invocazione'];
+const CATEGORIE_ASPETTO = ['area', 'durata', 'gittata', 'bersagli', 'valori', 'altro'];
+const EFFETTI_LANCIO = ['pm', 'pm_minimo', 'pm_una_volta_per_scena', 'riduzione_penalita_livello', 'divinazione_va', 'anticipazione_senza_difficolta',
+  'anticipazione_senza_raddoppio', 'escludi_componente', 'salvezza_bersaglio', 'promemoria'];
+function validaMeccanicaIncantesimi(dati, err) {
+  const F = 'incantesimi';
+  dati.incantesimi.incantesimi.forEach((i, k) => {
+    const m = i.meccanica;
+    const K = `incantesimi[${k}] (${i.nome}).meccanica`;
+    if (!isOggetto(m)) return err(F, K, 'campi del lancio mancanti (tools/estrai_lancio.py)');
+    const todo = Object.keys(m).some((x) => x.startsWith('TODO('));
+    if (!isOggetto(m.azioni) || (!isIntero(m.azioni.azioni_principali) && !isTesto(m.azioni.tempo))) err(F, `${K}.azioni`, '{ azioni_principali } oppure { tempo } atteso');
+    if (!Array.isArray(m.componenti) || m.componenti.some((c) => !COMPONENTI.includes(c))) err(F, `${K}.componenti`, `lista fra ${COMPONENTI.join(', ')}`);
+    if (m.concentrazione !== null && !CONCENTRAZIONE.includes(m.concentrazione)) err(F, `${K}.concentrazione`, `uno fra ${CONCENTRAZIONE.join(', ')}`);
+    if (m.concentrazione === null && !todo) err(F, `${K}.concentrazione`, 'mancante: serve un TODO(Davide)');
+    if (!Array.isArray(m.pm_utilizzabili) || !m.pm_utilizzabili.length) err(F, `${K}.pm_utilizzabili`, 'lista mancante');
+    const a = m.anticipazione;
+    if (a !== null && a !== undefined) {
+      if (!isTesto(a.frase)) err(F, `${K}.anticipazione.frase`, 'paragrafo del manuale mancante');
+      (a.aspetti ?? []).forEach((x, j) => {
+        if (!isTesto(x?.etichetta) || !isTesto(x?.gradino)) err(F, `${K}.anticipazione.aspetti[${j}]`, 'etichetta e gradino attesi');
+        if (!CATEGORIE_ASPETTO.includes(x?.categoria)) err(F, `${K}.anticipazione.aspetti[${j}].categoria`, `una fra ${CATEGORIE_ASPETTO.join(', ')}`);
+      });
+    } else if (!todo) err(F, `${K}.anticipazione`, 'mancante: serve un TODO(Davide)');
+  });
+  const talenti = [
+    ...(dati.talenti_liberi?.talenti ?? []).map((t) => ['talenti_liberi', t.id, t]),
+    ...(dati.classi?.classi ?? []).flatMap((c) => [...(c.talenti_fissi ?? []), ...(c.talenti_a_scelta ?? [])].map((t) => ['classi', `${c.nome}: ${t.nome}`, t])),
+  ];
+  for (const [file, nome, t] of talenti) {
+    const e = t.effetti?.lancio;
+    if (e === undefined) continue;
+    for (const x of Object.keys(e)) if (!EFFETTI_LANCIO.includes(x)) err(file, `${nome}.effetti.lancio.${x}`, `effetto sconosciuto (ammessi: ${EFFETTI_LANCIO.join(', ')})`);
+    if (e.escludi_componente !== undefined && !COMPONENTI.includes(e.escludi_componente)) err(file, `${nome}.effetti.lancio.escludi_componente`, `una fra ${COMPONENTI.join(', ')}`);
+    if (e.anticipazione_senza_raddoppio !== undefined && !CATEGORIE_ASPETTO.includes(e.anticipazione_senza_raddoppio)) err(file, `${nome}.effetti.lancio.anticipazione_senza_raddoppio`, `una fra ${CATEGORIE_ASPETTO.join(', ')}`);
   }
 }

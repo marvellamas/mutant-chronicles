@@ -57,6 +57,14 @@ Il manuale non lo dice.
 **A.35 — Acquisti iniziali: valore ceduto maggiore del prezzo (§2.16.29).** Il paragrafo dice che si paga la differenza; se gli armamenti ceduti valgono più del nuovo oggetto (per esempio si cede l'armatura da 1.500 per un'arma da 800), la differenza torna in crediti o si perde?
 *Nel frattempo:* il conguaglio non scende sotto zero (la differenza si perde) e l'app lo segnala accanto all'acquisto.
 
+**A.39 — Lancia un incantesimo: punti da confermare (Magia sez. 1–3, 7, 12.3).** L'utility legge le schede e le regole; dove il testo non basta ha scelto così:
+1. *Anticipazione senza Addestramento Taumaturgo.* La tabella del 12.3 dà solo la colonna del Taumaturgo. Per gli «altri utilizzatori» l'app usa la categoria successiva della loro colonna (−2 in più; ai livelli 16–18 −12). Va bene?
+2. *Colpo Elementale (13.1)* ha la colonna «Mod PS» ma non dice quale Prova Salvezza fa il bersaglio, né quando: colpisce automaticamente. Qual è?
+3. *Rigenerazione (21.10)* si lancia solo con un Rituale: componenti, Concentrazione, Anticipazione e costo arriveranno con le regole dei Rituali. L'utility la mostra, ma non la calcola.
+4. *Tiro di contatto (Corpo a corpo +4).* Vale per le versioni con Gittata «Contatto» contro un bersaglio non consenziente; l'app lo ricorda sempre accanto al risultato. Serve anche con i beneficiari consenzienti delle schede che parlano solo di «consenzienti»? (L'app dice di no: sez. 3.)
+5. *Cumulo della sez. 7 sul lancio.* L'app lo applica agli effetti magici sul lanciatore dichiarati al tavolo (Benedizione, Maledizione…): vale il bonus magico maggiore e la penalità magica maggiore; livello, componenti, Ingaggio, circostanze e Talenti restano fuori dal cumulo. I Talenti (Focalizzazione, Occhio Interiore) sono fuori dal cumulo?
+*Nel frattempo:* le scelte sopra.
+
 **A.38 — Attacco a distanza: punti da confermare (Giocatore §5.2, §5.8, §5.10, §5.11).** L'utility «Attacca!» applica il testo; dove non è esplicito ha scelto così:
 1. *Movimento Tattico (Incursore) e Movimento Fluido* riducono entrambi di 2 le penalità del proprio movimento: si sommano? L'app usa una sola riduzione (Scatto −6 → −4).
 2. *Attaccare dalla Copertura* «consuma l'Azione di Movimento e un'Azione Principale»: l'Azione Principale è quella del tiro, o una in più? L'app conta solo l'AzM in più.

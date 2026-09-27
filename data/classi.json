@@ -1498,44 +1498,86 @@
         {
           "grado": 1,
           "nome": "Armonizzazione Arcana",
-          "testo": "L’Arcanista riduce di 1 PM il costo di tutti gli Incantesimi che lancia, fino a un minimo di 1 PM. Il livello dichiarato, gli effetti e le Azioni necessarie non cambiano. La Prova di Potere e la relativa penalità dipendono dal livello dichiarato, non dal costo ridotto."
+          "testo": "L’Arcanista riduce di 1 PM il costo di tutti gli Incantesimi che lancia, fino a un minimo di 1 PM. Il livello dichiarato, gli effetti e le Azioni necessarie non cambiano. La Prova di Potere e la relativa penalità dipendono dal livello dichiarato, non dal costo ridotto.",
+          "effetti": {
+            "lancio": {
+              "pm": -1,
+              "pm_minimo": 1
+            }
+          }
         },
         {
           "grado": 3,
           "nome": "Controllo Superiore",
-          "testo": "Una volta per scena, immediatamente dopo una Prova di Potere fallita per lanciare un Incantesimo e prima di applicarne le conseguenze, l’Arcanista può ripetere la Prova. Non spende nuovamente Azioni o PM e conserva Incantesimo, versione, bersagli e modificatori del tentativo originale. Deve accettare il secondo risultato.\nPuò ripetere anche un 20 naturale. Il primo tiro concede comunque il Distintivo, mentre la riuscita del lancio e l’eventuale Fallimento Maldestro vengono determinati dal secondo risultato. Il Talento non permette di ripetere la distinta Prova per colpire."
+          "testo": "Una volta per scena, immediatamente dopo una Prova di Potere fallita per lanciare un Incantesimo e prima di applicarne le conseguenze, l’Arcanista può ripetere la Prova. Non spende nuovamente Azioni o PM e conserva Incantesimo, versione, bersagli e modificatori del tentativo originale. Deve accettare il secondo risultato.\nPuò ripetere anche un 20 naturale. Il primo tiro concede comunque il Distintivo, mentre la riuscita del lancio e l’eventuale Fallimento Maldestro vengono determinati dal secondo risultato. Il Talento non permette di ripetere la distinta Prova per colpire.",
+          "effetti": {
+            "lancio": {
+              "promemoria": "sempre"
+            }
+          }
         },
         {
           "grado": 5,
           "nome": "Architetto Arcano",
-          "testo": "L’Arcanista riduce di 2 punti, fino a un minimo di 0, la penalità alla Prova di Potere dovuta al livello dell’Incantesimo. Non modifica livello, costo, effetti o Azioni e non elimina una Prova obbligatoria. Non compensa penalità derivanti da altre cause."
+          "testo": "L’Arcanista riduce di 2 punti, fino a un minimo di 0, la penalità alla Prova di Potere dovuta al livello dell’Incantesimo. Non modifica livello, costo, effetti o Azioni e non elimina una Prova obbligatoria. Non compensa penalità derivanti da altre cause.",
+          "effetti": {
+            "lancio": {
+              "riduzione_penalita_livello": 2
+            }
+          }
         }
       ],
       "talenti_a_scelta": [
         {
           "specializzazione": "Plasmatore",
           "nome": "Geometria Arcana",
-          "testo": "Quando lancia un Incantesimo ad Area, l’Arcanista può escluderne un numero di creature pari al proprio Modificatore di Intelligenza, con un minimo di una. Le creature devono essere percepibili e vengono scelte prima del lancio; può scegliere anche sé stesso.\nLe creature scelte sono escluse da tutti gli effetti di quell’Incantesimo per l’intera durata, anche se escono dall’Area e vi rientrano. Non può cambiare le esclusioni dopo il lancio. Il Talento non richiede Azioni o PM aggiuntivi."
+          "testo": "Quando lancia un Incantesimo ad Area, l’Arcanista può escluderne un numero di creature pari al proprio Modificatore di Intelligenza, con un minimo di una. Le creature devono essere percepibili e vengono scelte prima del lancio; può scegliere anche sé stesso.\nLe creature scelte sono escluse da tutti gli effetti di quell’Incantesimo per l’intera durata, anche se escono dall’Area e vi rientrano. Non può cambiare le esclusioni dopo il lancio. Il Talento non richiede Azioni o PM aggiuntivi.",
+          "effetti": {
+            "lancio": {
+              "promemoria": "sempre"
+            }
+          }
         },
         {
           "specializzazione": "Plasmatore",
           "nome": "Calcolo Arcano",
-          "testo": "Una volta per scena, prima di lanciare un Incantesimo, l’Arcanista può usare un solo parametro della versione successiva già presente nella scheda e già accessibile al personaggio: Gittata, dimensione dell’Area oppure Durata. La versione successiva non deve necessariamente trovarsi un livello sopra quella scelta.\nCosto, livello, Prova e tutti gli altri effetti restano quelli della versione lanciata. Il Talento non aumenta danno, guarigione, numero di bersagli o colpi e non modifica Prove Salvezza, forma dell’Area, necessità di colpire o obbligo di Concentrazione."
+          "testo": "Una volta per scena, prima di lanciare un Incantesimo, l’Arcanista può usare un solo parametro della versione successiva già presente nella scheda e già accessibile al personaggio: Gittata, dimensione dell’Area oppure Durata. La versione successiva non deve necessariamente trovarsi un livello sopra quella scelta.\nCosto, livello, Prova e tutti gli altri effetti restano quelli della versione lanciata. Il Talento non aumenta danno, guarigione, numero di bersagli o colpi e non modifica Prove Salvezza, forma dell’Area, necessità di colpire o obbligo di Concentrazione.",
+          "effetti": {
+            "lancio": {
+              "promemoria": "sempre"
+            }
+          }
         },
         {
           "specializzazione": "Canalizzatore",
           "nome": "Riserva Tecnica",
-          "testo": "Una volta per scena, prima del lancio, l’Arcanista riduce di altri 2 PM il costo di un singolo Incantesimo, fino a un minimo di 1 PM. Il beneficio si cumula con Armonizzazione Arcana. Livello, effetti e Prova rimangono invariati."
+          "testo": "Una volta per scena, prima del lancio, l’Arcanista riduce di altri 2 PM il costo di un singolo Incantesimo, fino a un minimo di 1 PM. Il beneficio si cumula con Armonizzazione Arcana. Livello, effetti e Prova rimangono invariati.",
+          "effetti": {
+            "lancio": {
+              "pm_una_volta_per_scena": -2,
+              "pm_minimo": 1
+            }
+          }
         },
         {
           "specializzazione": "Canalizzatore",
           "nome": "Canalizzazione Sicura",
-          "testo": "Una volta per scena, dopo il fallimento definitivo di una Prova di Potere per lanciare un Incantesimo, l’Arcanista recupera metà dei PM effettivamente spesi, arrotondando per difetto e senza superare il proprio massimo. Il rimborso si applica dopo eventuali ripetizioni o modifiche del risultato e non restituisce Azioni.\nIn caso di Fallimento Maldestro, il rimborso precede la risoluzione della tabella della Magia e non ne annulla le conseguenze. Il Talento non si applica se l’Incantesimo è stato lanciato ma manca il bersaglio, viene contrastato dalla Contromagia oppure il bersaglio resiste con una Prova Salvezza."
+          "testo": "Una volta per scena, dopo il fallimento definitivo di una Prova di Potere per lanciare un Incantesimo, l’Arcanista recupera metà dei PM effettivamente spesi, arrotondando per difetto e senza superare il proprio massimo. Il rimborso si applica dopo eventuali ripetizioni o modifiche del risultato e non restituisce Azioni.\nIn caso di Fallimento Maldestro, il rimborso precede la risoluzione della tabella della Magia e non ne annulla le conseguenze. Il Talento non si applica se l’Incantesimo è stato lanciato ma manca il bersaglio, viene contrastato dalla Contromagia oppure il bersaglio resiste con una Prova Salvezza.",
+          "effetti": {
+            "lancio": {
+              "promemoria": "sempre"
+            }
+          }
         },
         {
           "specializzazione": "Comune",
           "nome": "Controllo dei Flussi",
-          "testo": "Quando ottiene un Successo Magistrale definitivo in una Prova di Potere per lanciare un Incantesimo, l’Arcanista recupera 1 PM, senza superare il proprio massimo. Il beneficio si aggiunge alla normale riduzione del costo dovuta al Successo Magistrale; i Distintivi seguono il §1.8.3 e sono assegnati soltanto con 1 o 20 naturali.\nGli Incantesimi lanciati senza Prova non attivano questo Talento. Non è possibile richiedere una Prova facoltativa soltanto per tentare di ottenere il beneficio."
+          "testo": "Quando ottiene un Successo Magistrale definitivo in una Prova di Potere per lanciare un Incantesimo, l’Arcanista recupera 1 PM, senza superare il proprio massimo. Il beneficio si aggiunge alla normale riduzione del costo dovuta al Successo Magistrale; i Distintivi seguono il §1.8.3 e sono assegnati soltanto con 1 o 20 naturali.\nGli Incantesimi lanciati senza Prova non attivano questo Talento. Non è possibile richiedere una Prova facoltativa soltanto per tentare di ottenere il beneficio.",
+          "effetti": {
+            "lancio": {
+              "promemoria": "sempre"
+            }
+          }
         }
       ],
       "note": [
@@ -1661,17 +1703,32 @@
         {
           "grado": 1,
           "nome": "Incantesimi Aggressivi",
-          "testo": "Gli Incantesimi offensivi dell’Invocatore infliggono +1 danno ai Gradi I–II, +2 ai Gradi III–IV e +3 ai Gradi V– VI. Il bonus si applica una sola volta per bersaglio, al primo colpo o alla prima applicazione del danno, e non si ripete nei Round successivi di un effetto persistente."
+          "testo": "Gli Incantesimi offensivi dell’Invocatore infliggono +1 danno ai Gradi I–II, +2 ai Gradi III–IV e +3 ai Gradi V– VI. Il bonus si applica una sola volta per bersaglio, al primo colpo o alla prima applicazione del danno, e non si ripete nei Round successivi di un effetto persistente.",
+          "effetti": {
+            "lancio": {
+              "promemoria": "sempre"
+            }
+          }
         },
         {
           "grado": 3,
           "nome": "Sovraccarico Controllato",
-          "testo": "Una volta per combattimento, prima di lanciare un Incantesimo offensivo che infligge danno con dadi, l’Invocatore può aggiungere un dado dello stesso tipo. Livello, costo, penalità e Azioni rimangono invariati. L’utilizzo viene consumato anche se il lancio fallisce o non viene inflitto danno.\nIl dado aggiuntivo si applica una sola volta per bersaglio, al primo colpo o alla prima applicazione del danno. Non si ripete sui colpi successivi o nei Round di danno persistente. Per esempio, 2d6 + 5 diventano 3d6 + 5; se l’Incantesimo produce tre colpi contro lo stesso bersaglio, soltanto il primo riceve il dado aggiuntivo."
+          "testo": "Una volta per combattimento, prima di lanciare un Incantesimo offensivo che infligge danno con dadi, l’Invocatore può aggiungere un dado dello stesso tipo. Livello, costo, penalità e Azioni rimangono invariati. L’utilizzo viene consumato anche se il lancio fallisce o non viene inflitto danno.\nIl dado aggiuntivo si applica una sola volta per bersaglio, al primo colpo o alla prima applicazione del danno. Non si ripete sui colpi successivi o nei Round di danno persistente. Per esempio, 2d6 + 5 diventano 3d6 + 5; se l’Incantesimo produce tre colpi contro lo stesso bersaglio, soltanto il primo riceve il dado aggiuntivo.",
+          "effetti": {
+            "lancio": {
+              "promemoria": "sempre"
+            }
+          }
         },
         {
           "grado": 5,
           "nome": "Controllo Arcano",
-          "testo": "Quando lancia un Incantesimo ad Area, l’Invocatore può escludere 1 + Modificatore di Intelligenza creature, con un minimo di una. Le creature devono essere percepibili e vengono scelte prima del lancio; può includere sé stesso. Sono escluse da tutti gli effetti per l’intera durata, anche uscendo dall’Area e rientrandovi, e non possono essere sostituite dopo il lancio.\nSe l’Incantesimo infligge danni ai PV, ogni creatura ostile interessata subisce inoltre +1 danno alla prima applicazione, una sola volta per quel lancio. Il Talento non richiede Azioni o PM aggiuntivi."
+          "testo": "Quando lancia un Incantesimo ad Area, l’Invocatore può escludere 1 + Modificatore di Intelligenza creature, con un minimo di una. Le creature devono essere percepibili e vengono scelte prima del lancio; può includere sé stesso. Sono escluse da tutti gli effetti per l’intera durata, anche uscendo dall’Area e rientrandovi, e non possono essere sostituite dopo il lancio.\nSe l’Incantesimo infligge danni ai PV, ogni creatura ostile interessata subisce inoltre +1 danno alla prima applicazione, una sola volta per quel lancio. Il Talento non richiede Azioni o PM aggiuntivi.",
+          "effetti": {
+            "lancio": {
+              "promemoria": "sempre"
+            }
+          }
         }
       ],
       "talenti_a_scelta": [
@@ -1698,7 +1755,12 @@
         {
           "specializzazione": "Comune",
           "nome": "Canalizzazione Implacabile",
-          "testo": "Una volta per scena, immediatamente dopo una Prova di Potere fallita per lanciare un Incantesimo offensivo e prima delle conseguenze, l’Invocatore può ripetere la Prova. Non spende nuovamente Azioni o PM; mantiene Incantesimo, versione, bersagli e modificatori originali e deve accettare il secondo risultato.\nPuò ripetere anche un 20 naturale, conservando il Distintivo ottenuto dal primo tiro. Il lancio e l’eventuale Fallimento Maldestro dipendono dal secondo risultato. Non permette di ripetere una Prova di Armi da lancio o Corpo a Corpo per colpire."
+          "testo": "Una volta per scena, immediatamente dopo una Prova di Potere fallita per lanciare un Incantesimo offensivo e prima delle conseguenze, l’Invocatore può ripetere la Prova. Non spende nuovamente Azioni o PM; mantiene Incantesimo, versione, bersagli e modificatori originali e deve accettare il secondo risultato.\nPuò ripetere anche un 20 naturale, conservando il Distintivo ottenuto dal primo tiro. Il lancio e l’eventuale Fallimento Maldestro dipendono dal secondo risultato. Non permette di ripetere una Prova di Armi da lancio o Corpo a Corpo per colpire.",
+          "effetti": {
+            "lancio": {
+              "promemoria": "sempre"
+            }
+          }
         }
       ],
       "note": [
@@ -1744,7 +1806,12 @@
         {
           "grado": 1,
           "nome": "Tocco Sacro",
-          "testo": "Quando il Mistico usa Cura Ferite a Contatto, i dadi che ripristinano PV ottengono il risultato massimo. I bonus fissi rimangono invariati. Il Talento non aumenta la riduzione delle Ferite."
+          "testo": "Quando il Mistico usa Cura Ferite a Contatto, i dadi che ripristinano PV ottengono il risultato massimo. I bonus fissi rimangono invariati. Il Talento non aumenta la riduzione delle Ferite.",
+          "effetti": {
+            "lancio": {
+              "promemoria": "sempre"
+            }
+          }
         },
         {
           "grado": 3,
@@ -1761,7 +1828,12 @@
         {
           "specializzazione": "Guaritore",
           "nome": "Canale Vitale",
-          "testo": "Ogni Incantesimo di cura lanciato dal Mistico ripristina 1 PV aggiuntivo a ciascun bersaglio, una sola volta per lancio. Il Talento non aumenta il numero di stati di Ferita rimossi."
+          "testo": "Ogni Incantesimo di cura lanciato dal Mistico ripristina 1 PV aggiuntivo a ciascun bersaglio, una sola volta per lancio. Il Talento non aumenta il numero di stati di Ferita rimossi.",
+          "effetti": {
+            "lancio": {
+              "promemoria": "sempre"
+            }
+          }
         },
         {
           "specializzazione": "Guaritore",
@@ -1771,7 +1843,12 @@
         {
           "specializzazione": "Divinatore",
           "nome": "Occhio Interiore",
-          "testo": "Il Mistico ottiene +2 VA a Potere nelle Prove richieste per lanciare Incantesimi di Divinazione. Il Talento non introduce una Prova quando il lancio è automatico."
+          "testo": "Il Mistico ottiene +2 VA a Potere nelle Prove richieste per lanciare Incantesimi di Divinazione. Il Talento non introduce una Prova quando il lancio è automatico.",
+          "effetti": {
+            "lancio": {
+              "divinazione_va": 2
+            }
+          }
         },
         {
           "specializzazione": "Divinatore",

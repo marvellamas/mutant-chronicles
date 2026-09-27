@@ -1416,7 +1416,12 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nPuò lanciare i propri Incantesimi senza eseguire gesti, anche con le mani occupate o con il movimento delle mani impedito. L’assenza della Componente Somatica non infligge −2 VA e, da sola, non rende obbligatoria la Prova di Potere per un lancio altrimenti automatico.\nRestano le altre Componenti, i costi, le Azioni e le altre circostanze che richiedono la Prova. Il Talento non elimina un eventuale contatto richiesto con il bersaglio e non permette di agire quando uno Stato o un altro effetto lo impedisce.",
-      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
+      "effetti": {
+        "lancio": {
+          "escludi_componente": "gesto"
+        }
+      }
     },
     {
       "id": "escludere-l-invocazione",
@@ -1429,7 +1434,12 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nPuò lanciare i propri Incantesimi senza usare la voce. L’assenza dell’Invocazione non infligge −2 VA e, da sola, non rende obbligatoria la Prova di Potere per un lancio altrimenti automatico.\nRestano le altre Componenti, i costi, le Azioni e le altre circostanze che richiedono la Prova. Non vengono eliminate le parole che costituiscono una parte necessaria dell’effetto, come un ordine che il bersaglio deve udire. Gesti, Focus e manifestazioni dell’Incantesimo restano percepibili normalmente.",
-      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
+      "effetti": {
+        "lancio": {
+          "escludi_componente": "invocazione"
+        }
+      }
     },
     {
       "id": "escludere-il-focus",
@@ -1442,7 +1452,12 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nPuò lanciare i propri Incantesimi senza il Focus personale. La sua assenza non infligge −2 VA e, da sola, non rende obbligatoria la Prova di Potere per un lancio altrimenti automatico.\nRestano le altre Componenti, i costi, le Azioni e le altre circostanze che richiedono la Prova. Il Talento non sostituisce oggetti bersaglio, materiali speciali o componenti espressamente richiesti dalla scheda dell’Incantesimo. Le proprietà aggiuntive di un Focus o Artefatto richiedono l’oggetto e le relative condizioni d’uso.\nLa Manovra Focalizzazione rimane utilizzabile normalmente anche senza Focus: il Focus personale e la preparazione mediante Focalizzazione sono due elementi distinti.",
-      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
+      "effetti": {
+        "lancio": {
+          "escludi_componente": "focus"
+        }
+      }
     },
     {
       "id": "concentrazione-migliorata",
@@ -1481,7 +1496,12 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nQuando Anticipa l’Area di un Incantesimo, non raddoppia il suo costo base in PM. L’Area passa al successivo scatto espressamente consentito; il Talento non cambia la forma dell’Area né altri parametri.\nL’Anticipazione riguarda un solo aspetto e un solo scatto consentito dallo schema, senza cambiare il livello dichiarato. Restano tutti i limiti e i divieti dell’Incantesimo. La Prova di Potere è obbligatoria, anche se il lancio sarebbe automatico, e la sua difficoltà aumenta di una categoria; Anticipazione Migliorata può eliminare soltanto questo aumento. Non è cumulabile con Calcolo Arcano sullo stesso lancio.",
-      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
+      "effetti": {
+        "lancio": {
+          "anticipazione_senza_raddoppio": "area"
+        }
+      }
     },
     {
       "id": "incantesimi-estesi",
@@ -1494,7 +1514,12 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nQuando Anticipa la Durata di un Incantesimo, non raddoppia il suo costo base in PM. La Durata passa al successivo scatto espressamente consentito. Il Talento non rende persistente un effetto istantaneo; se l’effetto richiede Concentrazione, questa deve essere mantenuta anche durante il tempo aggiuntivo.\nL’Anticipazione riguarda un solo aspetto e un solo scatto consentito dallo schema, senza cambiare il livello dichiarato. Restano tutti i limiti e i divieti dell’Incantesimo. La Prova di Potere è obbligatoria, anche se il lancio sarebbe automatico, e la sua difficoltà aumenta di una categoria; Anticipazione Migliorata può eliminare soltanto questo aumento. Non è cumulabile con Calcolo Arcano sullo stesso lancio.",
-      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
+      "effetti": {
+        "lancio": {
+          "anticipazione_senza_raddoppio": "durata"
+        }
+      }
     },
     {
       "id": "incantesimi-proiettati",
@@ -1507,7 +1532,12 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nQuando Anticipa la Gittata di un Incantesimo, non raddoppia il suo costo base in PM. La Gittata passa al successivo scatto espressamente consentito. Una Gittata Personale o a Contatto può diventare a distanza soltanto se la scheda lo permette espressamente.\nRestano i requisiti di visibilità, individuazione del bersaglio e assenza di ostacoli previsti dall’Incantesimo.\nL’Anticipazione riguarda un solo aspetto e un solo scatto consentito dallo schema, senza cambiare il livello dichiarato. Restano tutti i limiti e i divieti dell’Incantesimo. La Prova di Potere è obbligatoria, anche se il lancio sarebbe automatico, e la sua difficoltà aumenta di una categoria; Anticipazione Migliorata può eliminare soltanto questo aumento. Non è cumulabile con Calcolo Arcano sullo stesso lancio.",
-      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
+      "effetti": {
+        "lancio": {
+          "anticipazione_senza_raddoppio": "gittata"
+        }
+      }
     },
     {
       "id": "incantesimi-plurimi",
@@ -1520,7 +1550,12 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nQuando Anticipa il numero di Bersagli di un Incantesimo, non raddoppia il suo costo base in PM. Il numero passa al successivo scatto espressamente consentito. Il Talento non aumenta i Colpi, non permette più impatti sullo stesso bersaglio e non modifica le regole di distribuzione dell’effetto.\nOgni bersaglio deve soddisfare i requisiti previsti e conserva le proprie Difese e Prove Salvezza.\nL’Anticipazione riguarda un solo aspetto e un solo scatto consentito dallo schema, senza cambiare il livello dichiarato. Restano tutti i limiti e i divieti dell’Incantesimo. La Prova di Potere è obbligatoria, anche se il lancio sarebbe automatico, e la sua difficoltà aumenta di una categoria; Anticipazione Migliorata può eliminare soltanto questo aumento. Non è cumulabile con Calcolo Arcano sullo stesso lancio.",
-      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
+      "effetti": {
+        "lancio": {
+          "anticipazione_senza_raddoppio": "bersagli"
+        }
+      }
     },
     {
       "id": "incantesimi-intensificati",
@@ -1533,7 +1568,12 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nQuando Anticipa un valore numerico di danno, guarigione o bonus espressamente ammesso dallo schema di un Incantesimo, non raddoppia il suo costo base in PM.\nNon si applica a Gittata, Area, Durata, Bersagli, Colpi o modificatori delle Prove Salvezza. Non cambia la natura del danno, le informazioni ottenute o le capacità concesse e non rende anticipabile un valore che la scheda esclude.\nL’Anticipazione riguarda un solo aspetto e un solo scatto consentito dallo schema, senza cambiare il livello dichiarato. Restano tutti i limiti e i divieti dell’Incantesimo. La Prova di Potere è obbligatoria, anche se il lancio sarebbe automatico, e la sua difficoltà aumenta di una categoria; Anticipazione Migliorata può eliminare soltanto questo aumento. Non è cumulabile con Calcolo Arcano sullo stesso lancio.",
-      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
+      "effetti": {
+        "lancio": {
+          "anticipazione_senza_raddoppio": "valori"
+        }
+      }
     },
     {
       "id": "anticipazione-migliorata",
@@ -1546,7 +1586,12 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nQuando usa l’Anticipazione, non aumenta di una categoria la difficoltà della Prova di Potere: usa quella del livello dichiarato, con gli altri modificatori applicabili. La Prova resta obbligatoria anche per un lancio normalmente automatico.\nIl costo base in PM resta raddoppiato, salvo il beneficio di Incantesimi Ampliati, Estesi, Proiettati, Plurimi o Intensificati per l’aspetto interessato. Con il Talento pertinente, il lancio conserva costo base e difficoltà ordinari, ma richiede comunque la Prova di Potere.\nRestano il limite di un solo aspetto, un solo scatto consentito e tutti i divieti della scheda. Non si combina con Calcolo Arcano sullo stesso lancio. Non modifica i livelli di Incantesimo accessibili e resta distinto da Potenziale Mistico Migliorato.",
-      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
+      "effetti": {
+        "lancio": {
+          "anticipazione_senza_difficolta": true
+        }
+      }
     },
     {
       "id": "incantesimi-inarrestabili",
@@ -1559,7 +1604,12 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nLe Prove Salvezza con cui i bersagli resistono ai suoi Incantesimi subiscono −1 VA aggiuntivo, cumulabile con il modificatore previsto dall’Incantesimo e gli altri modificatori applicabili. Vale anche per le PS successive volte a liberarsi dall’effetto e quando la PS serve a risolvere Elusione.\nNon introduce una PS dove non è prevista e non modifica Parata, Schivata, Prove per colpire, Prove contrapposte, riconoscimento o Contromagia. Non si applica alle PS dell’incantatore per mantenere la Concentrazione. Non richiede PM o Azioni aggiuntivi.",
-      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
+      "effetti": {
+        "lancio": {
+          "salvezza_bersaglio": -1
+        }
+      }
     },
     {
       "id": "incantesimi-massimizzati",
@@ -1572,7 +1622,12 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Attivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nUna volta per combattimento, dopo un lancio riuscito, anche automatico, e dopo l’eventuale Prova per colpire riuscita, può massimizzare una sola determinazione iniziale di danno o guarigione dell’Incantesimo. Dichiara l’uso prima di tirare i dadi dell’effetto.\nOgni dado della determinazione scelta assume il proprio risultato massimo, poi si applicano i normali modificatori fissi. Per esempio, 3d6 + 2 produce 20 prima delle protezioni.\nSe una sola determinazione è condivisa da più bersagli, tutti usano il risultato massimizzato. Se l’Incantesimo prevede più Colpi o determinazioni distinte, ne sceglie una sola. Non massimizza effetti periodici successivi, Durata, PV delle creature evocate, Prove Salvezza o altre Prove.\nRestano Armatura, resistenze, riduzioni, PS e ogni altra mitigazione applicabile, oltre ai normali costi in PM e Azioni.",
-      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
+      "effetti": {
+        "lancio": {
+          "promemoria": "sempre"
+        }
+      }
     },
     {
       "id": "manifestazioni-occultate",
@@ -1585,7 +1640,12 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nAl lancio può occultare le manifestazioni visive e sonore puramente magiche del proprio Incantesimo. Chi avrebbe normalmente la possibilità di percepirle deve superare una Prova di Percezione con −2 VA per notarle.\nNon nasconde gesti, voce o Focus usati per lanciare, né creature evocate, muri, oggetti o altre presenze fisiche. Restano osservabili danni, movimenti e conseguenze dell’effetto. Non occulta le manifestazioni necessarie al suo funzionamento, come un comando che il bersaglio deve udire.\nUn attacco non percepito segue le normali regole delle Difese, senza ulteriori bonus o penalità automatici concessi dal Talento.\nÈ distinto da Magia Occultata: da solo non impone una Prova di Occultismo per la Contromagia. L’eventuale riconoscimento richiesto da Magia Occultata segue la scheda di quel Talento.",
-      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
+      "effetti": {
+        "lancio": {
+          "promemoria": "sempre"
+        }
+      }
     },
     {
       "id": "ritualista-minore",
