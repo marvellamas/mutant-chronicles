@@ -15,6 +15,7 @@ import { renderEquipaggiamento } from './equipaggiamento.js';
 import { testoDanno } from '../stampa.js';
 import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento } from '../equipaggiamento.js';
 import { dotazioneApplicata, crediti } from '../dotazioni.js';
+import { statoRicarica, disponibili } from '../ricarica.js';
 
 export const POSIZIONI_TAB = [
   { id: 'automatica', etichetta: 'Automatica (sinistra su schermi larghi, in basso su telefono e tablet)' },
@@ -625,7 +626,8 @@ function schedaArma(ctx, a) {
     a.mov ? h('p', { class: 'nota' }, `MOV ${segno(a.mov)} Q mentre è impugnata (§7.7)`) : null,
     a.famigliaMunizioni || a.scorte?.length ? h('p', { class: 'nota' }, h('strong', {}, 'Munizioni: '),
       a.famigliaMunizioni ? `${NOMI_FAMIGLIE_MUNIZIONI[a.famigliaMunizioni]} (§7.20.9)` : null,
-      a.scorte?.length ? `${a.famigliaMunizioni ? ' · ' : ''}in lista: ${a.scorte.map((x) => `${x.nome} ×${x.quantita}`).join(', ')}` : null) : null,
+      // quantità rimasta: la voce meno quanto inserito ricaricando nella sessione (src/ricarica.js)
+      a.scorte?.length ? `${a.famigliaMunizioni ? ' · ' : ''}in lista: ${a.scorte.map((x) => `${x.nome} ×${Math.max(0, x.quantita - (ctx.sessione.scorte?.[x.uid] ?? 0))}${ctx.sessione.scorte?.[x.uid] ? ` (di ${x.quantita})` : ''}`).join(', ')}` : null) : null,
     a.accessori?.length ? h('p', { class: 'nota' }, h('strong', {}, 'Accessori: '), a.accessori.map((x) => x.nome).join(', '),
       a.dannoAccessori ? ` · danno ${segno(a.dannoAccessori)}` : null) : null,
     a.mirino ? h('p', { class: 'nota', title: a.mirino.testo }, `${a.mirino.nome}: −${a.mirino.riduzione} alla penalità di distanza (fino a 0), ${a.mirino.distanza_max_q ? `fino a ${a.mirino.distanza_max_q} Q` : 'entro la gittata'}${a.mirino.azp_minime ? `, almeno ${a.mirino.azp_minime} AzP` : ''} (§7.3)`) : null,
@@ -645,13 +647,23 @@ function schedaArma(ctx, a) {
 const ETICHETTE_MUNIZIONI = { colpi: 'Caricatore', cariche: 'Cariche nella cella', PM: 'PM nella riserva', applicazioni: 'Applicazioni', dosi: 'Dosi', set: 'Set di materiali' };
 const SANITARI = ['applicazioni', 'dosi', 'set'];
 
+const MODI_RICARICA = {
+  caricatore: 'si sostituisce un caricatore pieno di riserva; quello tolto resta, vuoto o parziale (§7.20.2)',
+  inserimento: 'si inseriscono munizioni sciolte compatibili fino alla capacità',
+  cella: 'una cella piena compatibile sostituisce quella esaurita',
+};
+
 /**
- * Modalità tavolo: colpi nel caricatore (dalla capacità del catalogo, «Ricarica» lo riporta al
- * massimo) e riserve (caricatori di scorta, quantità libera).
+ * Modalità tavolo: colpi nel caricatore e, per le armi a distanza, ricarica dalle riserve
+ * (Giocatore §5.1.1, Armamenti §7.20.2, src/ricarica.js): caricatori pieni di riserva (+/−),
+ * parziali e vuoti tolti, munizioni sciolte o celle dell'inventario. «Ricarica» è disabilitato,
+ * con il motivo, se non c'è niente di compatibile. Le altre riserve si contano a mano.
  */
 function pannelloMunizioni(ctx, a) {
   const m = ctx.sessione.munizioni[a.uid] ?? { colpi: 0, riserve: 0 };
   const capacita = a.munizioni?.capacita ?? null;
+  const info = a.tipo === 'arma_distanza' ? ctx.massimi.ricarica?.[a.uid] ?? null : null;
+  const stato = info ? statoRicarica(info, m, ctx.sessione.scorte) : { possibile: capacita !== null && m.colpi < capacita, motivo: null, avviso: null };
   const pulsante = (campo, d, etichetta) => h('button', {
     type: 'button', class: 'btn-tavolo', disabled: (d < 0 && m[campo] <= 0) || (campo === 'colpi' && d > 0 && capacita !== null && m.colpi >= capacita),
     'aria-label': `${d > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(d)} ${etichetta} a ${a.nome}`,
@@ -662,18 +674,28 @@ function pannelloMunizioni(ctx, a) {
       h('span', {}, ETICHETTE_MUNIZIONI[a.munizioni?.unita ?? 'colpi'] ?? 'Caricatore', ' ', h('strong', {}, String(m.colpi)), capacita !== null ? ` / ${capacita}` : ''),
       pulsante('colpi', -1, 'colpi'),
       capacita !== null && capacita >= 10 ? pulsante('colpi', -5, 'colpi') : null,
-      capacita !== null ? h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.ricarica(a.uid), disabled: m.colpi >= capacita }, 'Ricarica') : pulsante('colpi', 1, 'colpi')),
-    h('div', { class: 'riga-munizioni' },
-      h('span', {}, 'Riserve ', h('strong', {}, String(m.riserve))),
-      pulsante('riserve', -1, 'riserve'), pulsante('riserve', 1, 'riserve')),
+      capacita !== null ? h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.ricarica(a.uid), disabled: !stato.possibile, title: stato.motivo ?? 'Ricarica (1 AzP, Giocatore §5.1.1)' }, 'Ricarica') : pulsante('colpi', 1, 'colpi')),
+    stato.motivo && capacita !== null && m.colpi < capacita ? h('small', { class: 'motivo', role: 'status' }, `Ricarica: ${stato.motivo}.`) : null,
+    stato.avviso ? h('small', { class: 'motivo' }, stato.avviso) : null,
+    !info || info.modo === 'caricatore' || info.modo === null ? h('div', { class: 'riga-munizioni' },
+      h('span', {}, info?.modo === 'caricatore' ? 'Caricatori pieni di riserva ' : 'Riserve ', h('strong', {}, String(m.riserve))),
+      pulsante('riserve', -1, 'riserve'), pulsante('riserve', 1, 'riserve')) : null,
+    info?.modo === 'caricatore' && (m.parziali?.length || m.vuoti) ? h('p', { class: 'nota riga-munizioni' },
+      m.parziali?.length ? `Caricatori parziali: ${m.parziali.map((n) => `${n} colpi`).join(', ')}` : null,
+      m.parziali?.length && m.vuoti ? ' · ' : null,
+      m.vuoti ? `${info.vuoto?.nome ?? 'Caricatori vuoti'}: ×${m.vuoti}` : null) : null,
+    info && info.modo !== 'caricatore' && info.modo !== null ? h('p', { class: 'nota riga-munizioni' },
+      info.scorte.length ? `${info.modo === 'cella' ? 'Celle' : 'Munizioni sciolte'}: ${info.scorte.map((x) => `${x.nome} ×${disponibili(x, ctx.sessione.scorte)}`).join(', ')}`
+        : `Nessuna ${info.modo === 'cella' ? 'cella' : 'munizione'} compatibile nell’inventario.`) : null,
     h('small', { class: 'nota' }, [
+      info?.modo ? `Ricarica: ${MODI_RICARICA[info.modo]}.` : null,
       capacita === null ? 'Nessun caricatore nella scheda dell’arma: contatore libero.' : null,
       a.munizioni?.ricarica ? `Ricarica: ${a.munizioni.ricarica}.` : null,
       a.munizioni?.consumo ? `${a.munizioni.consumo.replace(/^./, (c) => c.toUpperCase())}.` : null,
       a.munizioni?.riferimento ? `Munizione di riferimento: ${a.munizioni.riferimento}.` : null,
       a.munizioni?.unita === 'PM' ? 'Le riserve si contano a mano.'
         : SANITARI.includes(a.munizioni?.unita) ? 'Si consuma all’inizio di ogni tentativo, anche se fallisce. Le ricariche di scorta si contano a mano.'
-          : 'Le riserve (caricatori o celle di scorta) si contano a mano: «Ricarica» non le scala.',
+          : info?.modo ? null : 'Le riserve (caricatori o celle di scorta) si contano a mano: «Ricarica» non le scala.',
     ].filter(Boolean).join(' ')));
 }
 

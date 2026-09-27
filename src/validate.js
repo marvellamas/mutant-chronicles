@@ -64,6 +64,7 @@ export function validaDati(dati) {
   if (dati.regole?.chroma !== undefined) validaChroma(dati, err);
   if (dati.regole) validaSchedaDigitale(dati, err);
   if (isOggetto(dati.dotazioni)) validaDotazioni(dati, err);
+  if (dati.equipaggiamento?.file?.munizioni?.ricarica !== undefined) validaRicarica(dati, err);
 
   return errori;
 }
@@ -1334,4 +1335,19 @@ function validaEffettiOggetto(effetti, F, K, nomiAbilita, err) {
     if (e.ambito !== 'uso_specifico' && e.uso !== undefined) err(F, `${KE}.uso`, 'solo per ambito "uso_specifico"');
     if (!isTesto(e.condizione)) err(F, `${KE}.condizione`, 'frase del manuale mancante (tools/verifica_frasi.mjs)');
   });
+}
+
+// Ricarica delle armi a distanza (munizioni.json → ricarica, src/ricarica.js; Armamenti §7.20.2)
+function validaRicarica(dati, err) {
+  const F = 'equipaggiamento/munizioni';
+  const r = dati.equipaggiamento.file.munizioni.ricarica;
+  if (!isOggetto(r)) return err(F, 'ricarica', 'oggetto atteso');
+  const tutti = Object.entries(dati.equipaggiamento.file).flatMap(([id, f]) => (f.oggetti ?? []).map((o) => ({ ...o, rif: `${id}:${o.id}` })));
+  const rif = new Set(tutti.map((o) => o.rif));
+  const famiglie = new Set(tutti.map((o) => o.famiglia));
+  const ins = r.inserimento_singolo ?? {};
+  for (const f of ins.famiglie ?? []) if (!famiglie.has(f)) err(F, 'ricarica.inserimento_singolo.famiglie', `"${f}" non è una famiglia del catalogo`);
+  for (const a of ins.armi ?? []) if (!rif.has(a)) err(F, 'ricarica.inserimento_singolo.armi', `"${a}" non esiste nel catalogo`);
+  for (const f of r.famiglie_celle ?? []) if (!famiglie.has(f)) err(F, 'ricarica.famiglie_celle', `"${f}" non è una famiglia del catalogo`);
+  for (const [abilita, x] of Object.entries(r.caricatori_vuoti ?? {})) if (!rif.has(x)) err(F, `ricarica.caricatori_vuoti.${abilita}`, `"${x}" non esiste nel catalogo`);
 }

@@ -344,6 +344,32 @@
       "famiglia": "dardi_balestra_piccola"
     }
   ],
+  "ricarica": {
+    "_nota": "Come si ricarica un’arma a distanza nella modalità tavolo (src/ricarica.js). Giocatore §5.1.1: una ricarica costa 1 AzP; Armamenti §7.20.2: «Serve sempre un caricatore compatibile con il modello. Questi prezzi non introducono caricatori amovibili per revolver o serbatoi fissi». Modi: «caricatore» (armi con famiglia di munizioni del §7.20.9: si sostituisce un caricatore pieno di riserva e quello tolto resta, vuoto o parziale); «inserimento» (armi elencate qui: si inseriscono munizioni sciolte compatibili fino alla capacità); «cella» (armi con celle compatibili: una cella piena sostituisce quella esaurita); le munizioni con «compatibile_con» e senza famiglia (razzi, dardi chimici, combustibile) si inseriscono come sciolte. Senza dati di compatibilità la ricarica resta libera, con un avviso.",
+    "inserimento_singolo": {
+      "_nota": "Famiglie del catalogo (titoli dei paragrafi degli Armamenti) e modelli commerciali senza caricatore amovibile: revolver (§7.20.2), fucili a pompa e doppiette (serbatoio fisso), archi e balestre.",
+      "famiglie": [
+        "Revolver",
+        "Fucili a pompa",
+        "Fucili a pompa e doppiette",
+        "Archi e balestre"
+      ],
+      "armi": [
+        "armi_distanza:revolver",
+        "armi_distanza:fucile-a-pompa",
+        "armi_distanza:doppietta"
+      ],
+      "TODO(Davide)": "Doppiette e fucili a pompa corporativi (famiglie «Fucili a pompa» e «Fucili a pompa e doppiette», compresi M310 con capacità 20 e SA SG2001 con capacità 10) si ricaricano inserendo le cartucce una per una, come il revolver? Per-davide A.37."
+    },
+    "famiglie_celle": [
+      "Celle energetiche"
+    ],
+    "caricatori_vuoti": {
+      "Armi leggere": "munizioni:caricatore-vuoto-per-arma-leggera",
+      "Armi medie": "munizioni:caricatore-vuoto-per-arma-media",
+      "Armi pesanti": "munizioni:caricatore-vuoto-per-arma-pesante"
+    }
+  },
   "oggetti": [
     {
       "id": "proiettili-da-pistola",

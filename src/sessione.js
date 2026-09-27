@@ -4,10 +4,13 @@
 // viene solo limitato al nuovo massimo, mai riazzerato. Funzioni pure.
 //
 // sessione = { pvAttuali, pmAttuali, puntiEroe, distintivi, statiAttivi: [id], ferite,
-//              affaticamento, munizioni: { uid: { colpi, riserve } }, chroma: { uid: { pmAttuali } },
+//              affaticamento, munizioni: { uid: { colpi, riserve, parziali, vuoti } }, scorte: { uid: consumate },
+//              chroma: { uid: { pmAttuali } },
 //              caricoExtra, crediti, creditiIniziali, condizioniOggetti: [uid], note }
 // munizioni: per ogni arma a distanza della lista, i colpi nel caricatore (limitati alla sua
-// capacità, dal catalogo) e le riserve (caricatori di scorta: quantità libera).
+// capacità, dal catalogo), le riserve (caricatori pieni di scorta), i caricatori parziali tolti
+// (colpi rimasti) e quelli vuoti. scorte: munizioni sciolte e celle dell'inventario consumate
+// ricaricando (la quantità della voce resta la scelta del giocatore). Ricarica: src/ricarica.js.
 // chroma: PM attuali di ogni contenitore di Chroma (Magia sez. 6), limitati alla sua capacità. Non
 // si ricaricano con «Ricarica» né con «Nuova sessione»: solo convertendo PM (Magia sez. 6, §7.5.1).
 // ferite: 0 = nessuna, 1…5 = gli Stati di Ferita di regole.json (§5.14), 6 = oltre Grave.
@@ -22,6 +25,7 @@
 // modificata) i crediti attuali si spostano della stessa differenza, così le spese restano.
 import { valoreTiro } from './tiri.js';
 import { saldoIniziale } from './dotazioni.js';
+import { infoRicarica, eseguiRicarica } from './ricarica.js';
 import { caricatori, contenitori, normalizzaEquipaggiamento, catalogo, risolvi } from './equipaggiamento.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
@@ -47,6 +51,8 @@ export function massimiSessione(scheda, creazione, dati) {
     stati: dati.regole.stati.elenco.map((s) => s.id),
     // capacità del caricatore di ogni arma a distanza della lista (uid → numero o null)
     caricatori: caricatori(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati),
+    // modo di ricarica e scorte compatibili di ogni arma a distanza (Giocatore §5.1.1, Armamenti §7.20.2)
+    ricarica: dati.equipaggiamento ? infoRicarica(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati) : {},
     // capacità di ogni contenitore di Chroma (uid → PM)
     contenitori: Object.fromEntries(contenitori(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati).map((c) => [c.uid, c.capacita])),
     // TODO(Davide): un contenitore nuovo arriva carico? Ipotesi: pieno (regole.json → chroma, per-davide A.19)
@@ -106,11 +112,26 @@ function allineaChroma(sorgente, munizioniPrecedenti, m) {
   return out;
 }
 
-/** Munizioni di un'arma: { colpi, riserve }; i vecchi valori numerici sono i colpi. */
+/** Munizioni di un'arma: { colpi, riserve, parziali?, vuoti? }; i vecchi valori numerici sono i colpi. */
 function voceMunizioni(v) {
   if (Number.isInteger(v) && v >= 0) return { colpi: v, riserve: 0 };
   if (!isOggetto(v)) return null;
-  return { colpi: Number.isInteger(v.colpi) && v.colpi >= 0 ? v.colpi : 0, riserve: Number.isInteger(v.riserve) && v.riserve >= 0 ? v.riserve : 0 };
+  const out = { colpi: Number.isInteger(v.colpi) && v.colpi >= 0 ? v.colpi : 0, riserve: Number.isInteger(v.riserve) && v.riserve >= 0 ? v.riserve : 0 };
+  // caricatori tolti ricaricando: parziali (colpi rimasti) e vuoti; si scrivono solo se ci sono
+  const parziali = Array.isArray(v.parziali) ? v.parziali.filter((n) => Number.isInteger(n) && n > 0) : [];
+  if (parziali.length) out.parziali = parziali;
+  if (Number.isInteger(v.vuoti) && v.vuoti > 0) out.vuoti = v.vuoti;
+  return out;
+}
+
+/** Munizioni sciolte consumate: solo le voci ancora compatibili con un'arma, entro la loro quantità. */
+function allineaScorte(v, m) {
+  const src = isOggetto(v) ? v : {};
+  if (!m.ricarica) return Object.fromEntries(Object.entries(src).filter(([, n]) => Number.isInteger(n) && n > 0));
+  const quantita = new Map(Object.values(m.ricarica).flatMap((x) => x.scorte.map((s) => [s.uid, s.quantita])));
+  const out = {};
+  for (const [uid, n] of Object.entries(src)) if (quantita.has(uid) && Number.isInteger(n) && n > 0) out[uid] = Math.min(n, quantita.get(uid));
+  return out;
 }
 
 /**
@@ -126,7 +147,10 @@ function allineaMunizioni(sorgente, m) {
   }
   for (const [uid, capacita] of Object.entries(m.caricatori)) {
     const x = voceMunizioni(src[uid]) ?? { colpi: capacita ?? 0, riserve: 0 };
-    if (capacita !== null) x.colpi = Math.min(x.colpi, capacita);
+    if (capacita !== null) {
+      x.colpi = Math.min(x.colpi, capacita);
+      if (x.parziali) x.parziali = x.parziali.map((n) => Math.min(n, capacita));
+    }
     out[uid] = x;
   }
   return out;
@@ -143,6 +167,7 @@ export function inizializzaSessione(m) {
     ferite: 0,
     affaticamento: 0,
     munizioni: allineaMunizioni({}, m),
+    scorte: {},
     chroma: allineaChroma({}, {}, m),
     caricoExtra: 0,
     ...allineaCrediti({}, m),
@@ -167,6 +192,7 @@ export function allineaSessione(sessione, m) {
     ferite: limita(intero(sessione.ferite, 0), 0, m.ferite),
     affaticamento: limita(intero(sessione.affaticamento, 0), 0, m.affaticamento),
     munizioni,
+    scorte: allineaScorte(sessione.scorte, m),
     chroma: allineaChroma(sessione.chroma, sessione.munizioni, m),
     caricoExtra: chili(sessione.caricoExtra),
     ...allineaCrediti(sessione, m),
@@ -214,14 +240,21 @@ export function variaChroma(sessione, uid, delta, m) {
 }
 
 /**
- * «Ricarica»: il caricatore torna alla capacità. Le riserve restano come sono (quantità libera).
- * Vale per munizioni e celle tecnologiche sostituibili (§7.1.4); le riserve di Chroma non sono
- * caricatori e non si toccano: si ricaricano solo convertendo PM (Magia sez. 6, §7.5.1).
+ * «Ricarica» (Giocatore §5.1.1, Armamenti §7.20.2). Armi a distanza con dati di ricarica: dalle
+ * riserve della sessione o dalle scorte dell'inventario (src/ricarica.js); senza riserve non
+ * cambia nulla. Altre armi e armi senza dati di compatibilità: il caricatore torna alla capacità.
+ * Le riserve di Chroma non sono caricatori e non si toccano: si ricaricano solo convertendo PM
+ * (Magia sez. 6, §7.5.1).
  */
 export function ricaricaArma(sessione, uid, m) {
   const s = allineaSessione(sessione, m);
   const capacita = m.caricatori?.[uid];
   if (capacita === null || capacita === undefined) return s;
+  const info = m.ricarica?.[uid];
+  if (info) {
+    const r = eseguiRicarica(info, s.munizioni[uid], s.scorte);
+    return r ? modificaSessione(s, { munizioni: { ...s.munizioni, [uid]: r.munizione }, scorte: r.consumi }, m) : s;
+  }
   return modificaSessione(s, { munizioni: { ...s.munizioni, [uid]: { ...(s.munizioni[uid] ?? { riserve: 0 }), colpi: capacita } } }, m);
 }
 

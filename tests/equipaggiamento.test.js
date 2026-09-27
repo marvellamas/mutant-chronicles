@@ -278,7 +278,7 @@ test('Specializzazione Pistole sulla pistola; il danno «dalla munizione» resta
   assert.equal(s.equipaggiamento.armi[1].danno, null);
 });
 
-test('munizioni in sessione: il contatore parte dalla capacità, «Ricarica» lo riporta al massimo, riserve libere', () => {
+test('munizioni in sessione: il contatore parte dalla capacità, «Ricarica» usa un caricatore di riserva', () => {
   const creazione = { ...MISHIMA_AGENTE, equipaggiamento: [voce('p', 'armi_distanza:pistola-semiautomatica', 'impugnata'), voce('a', 'armi_distanza:arco-da-guerra', 'zaino')] };
   const m = massimiSessione(calcolaScheda({ creazione, livelli: [] }, dati), creazione, dati);
   assert.deepEqual(m.caricatori, { p: 15, a: null });
@@ -291,7 +291,7 @@ test('munizioni in sessione: il contatore parte dalla capacità, «Ricarica» lo
   s = variaMunizioni(s, 'p', 'riserve', +3, m);
   s = variaMunizioni(s, 'p', 'colpi', -15, m);
   s = ricaricaArma(s, 'p', m);
-  assert.deepEqual(s.munizioni.p, { colpi: 15, riserve: 3 }); // la ricarica non scala le riserve
+  assert.deepEqual(s.munizioni.p, { colpi: 15, riserve: 2, vuoti: 1 }); // un caricatore di riserva, quello tolto resta vuoto (§7.20.2)
   s = variaMunizioni(s, 'a', 'colpi', +20, m); // arco: nessun caricatore, contatore libero
   assert.equal(s.munizioni.a.colpi, 20);
   assert.equal(ricaricaArma(s, 'a', m).munizioni.a.colpi, 20);
