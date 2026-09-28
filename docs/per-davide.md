@@ -1,6 +1,6 @@
 # Per Davide — domande aperte ed errata dei manuali
 
-Aggiornato al 26 settembre 2026, sera (dopo il confronto fra i Google Doc e i PDF). Questo è l'unico elenco da tenere d'occhio. Le voci con risposta spariscono da qui e finiscono, con la data, in `docs/risposte-master.md` (che in caso di conflitto vale più del manuale).
+Aggiornato al 28 settembre 2026, mattina. Questo è l'unico elenco da tenere d'occhio. Le voci con risposta spariscono da qui e finiscono, con la data, in `docs/risposte-master.md` (che in caso di conflitto vale più del manuale).
 
 Come rispondere: a voce a Marcello, oppure scrivendo direttamente sotto la domanda nel Google Doc. Ogni domanda dice cosa fa l'app *nel frattempo*, così se non rispondi non si blocca nulla: applica un'ipotesi e la segnala.
 
@@ -10,9 +10,12 @@ Come rispondere: a voce a Marcello, oppure scrivendo direttamente sotto la doman
 
 Le voci A.1–A.4 (descrizioni delle Caratteristiche e Volontà su CAR, 14 schede dei Talenti di magia, Potenziale Mistico solo per gli Usufruitori, tipo di tre Talenti Liberi) sono **recepite nell'app** e registrate con la data in `docs/risposte-master.md`; i testi completi sono in `docs/risposte-master-2026-09-26.md` (copia del Google Doc *E&L – Risposte e correzioni approvate*).
 
-Dalle versioni del pomeriggio dello stesso Doc:
+Dalle versioni successive dello stesso Doc e dei manuali:
 - **durata di tre Tecniche Interiori** (la vecchia A.5): recepita;
-- **equipaggiamento iniziale** (A.6): tutte le 25 dotazioni di Classe, gli armamenti corporativi di base, i crediti iniziali e gli acquisti (27/09, E&L A.5.4–A.5.29): recepiti nel passo «Equipaggiamento iniziale». Restano da definire gli abbinamenti commerciale → corporativo (A.5.27).
+- **equipaggiamento iniziale** (A.6): tutte le 25 dotazioni di Classe, gli armamenti corporativi di base (Armamenti §7.22), i crediti iniziali e gli acquisti (27/09, E&L A.5.4–A.5.30): recepiti nel passo «Equipaggiamento iniziale». Restano da definire le pistole corporative (A.33);
+- **PV e PM attuali al passaggio di livello** (§8.1.2, la vecchia A.15): recepita;
+- **Armamenti v0.52 e v0.53** (27/09): elmetti (§7.21), modelli corporativi di base (§7.22) e catalogo dei rinforzi (§7.23) sono nell'app; le proprietà di tutte le armature corporative entrano nei valori della scheda;
+- **Manuale del Giocatore del 27/09**: Addestramenti a 76 punti e 10 Punti Abilità Liberi: recepiti (vedi A.52 per la conferma).
 
 ---
 
@@ -228,4 +231,4 @@ Decisioni già prese o errori evidenti: l'app segue la decisione, il testo stamp
 - Dal 26/09 i manuali sono Google Doc condivisi: l'app li rilegge a ogni sessione (`docs/manuali-drive.md`), non servono più i PDF.
 - Manuale dell'Equipaggiamento: il cap. 1 (0.1) è recepito (carico, PS Integrità per Qualità). Aspettiamo i cap. 2–8 e i cataloghi.
 - Manuale dei Veicoli (in stesura).
-- Manuale degli Armamenti v0.50: estratto per intero. Restano rimandati dal manuale le Prove Salvezza, i tempi di ricarica e i ricambi del Cuirassier Attila (§7.18.1). Se esce una v0.51, avvisaci.
+- Manuale degli Armamenti v0.53: estratto per intero, §7.21–7.23 compresi. Restano rimandati dal manuale le Prove Salvezza, i tempi di ricarica e i ricambi del Cuirassier Attila (§7.18.1), e la riparazione degli oggetti (A.46).
