@@ -372,6 +372,10 @@ function validaRegole(r, err) {
     const v = percorso.split('.').reduce((o, k) => o?.[k], r);
     if (!isIntero(v)) err(F, percorso, 'numero intero mancante');
   }
+  // titolo dell'avviso «regole aggiornate» della SD (facoltativo; senza, «Regole aggiornate»)
+  if (r.regole_aggiornate !== undefined && !(isOggetto(r.regole_aggiornate) && isTesto(r.regole_aggiornate.punti_abilita))) {
+    err(F, 'regole_aggiornate.punti_abilita', 'testo dell’avviso mancante');
+  }
   // calendario di gioco della scheda (src/calendario.js): fasce in ordine e le tre bandierine
   const cal = r.calendario;
   const listaIdNome = (v) => Array.isArray(v) && v.length > 0 && v.every((x) => isOggetto(x) && isTesto(x.id) && isTesto(x.nome))

@@ -22,6 +22,7 @@ import { pannelloAttacco } from './attacco.js';
 import { profiloSenzArmi, senzArmiDisponibile, SENZ_ARMI, talentiAttacco } from '../attacco.js';
 import { pannelloLancio } from './lancio.js';
 import { tabCalendario, pannelloAttivazione } from './calendario.js';
+import { conOrdinale } from '../lingua.js';
 
 export const POSIZIONI_TAB = [
   { id: 'automatica', etichetta: 'Automatica (sinistra su schermi larghi, in basso su telefono e tablet)' },
@@ -89,6 +90,7 @@ export function renderTab(ctx) {
     filigrana ? h('div', { class: 'filigrana-contenitore', 'aria-hidden': 'true' }, filigrana) : null,
     badge ? h('div', { class: 'titolo-tab' }, badge, h('h2', {}, corrente.titolo)) : null,
     ctx.messaggio ? h('p', { class: `riquadro ${ctx.messaggio.tipo}`, role: 'status' }, ctx.messaggio.testo) : null,
+    avvisoRegoleAggiornate(ctx, tab.scheda),
     tab.errori?.length ? h('div', { class: 'riquadro attenzione' },
       h('p', {}, h('strong', {}, 'Scheda non ancora completa:')),
       h('ul', {}, tab.errori.slice(0, 6).map((e) => h('li', {}, e.livello > 1 ? `${e.livello}° livello: ${e.problema}` : e.problema)))) : null,
@@ -105,6 +107,23 @@ export function renderTab(ctx) {
     armaAttacco ? pannelloAttacco(ctx, armaAttacco) : null,
     incLancio ? pannelloLancio(ctx, incLancio) : null,
     ctx.ui?.attivaCalendario ? pannelloAttivazione(ctx) : null];
+}
+
+/**
+ * Regole aggiornate (per-davide A.52): Punti Abilità da completare negli eventi passati, con
+ * «Assegna» (un evento alla volta, dal più vecchio), e punti in eccesso, soltanto segnalati.
+ */
+function avvisoRegoleAggiornate(ctx, scheda) {
+  const da = scheda?.completamenti ?? [];
+  const ecc = scheda?.eccessi ?? [];
+  if (!da.length && !ecc.length) return null;
+  const n = da.reduce((s, c) => s + c.mancanti, 0);
+  const dove = (c, k) => `${k} ${c.livello === 1 ? 'della creazione' : `${conOrdinale('del', c.livello)} livello`}`;
+  return h('div', { class: 'riquadro attenzione avviso-regole', role: 'status' },
+    da.length ? h('p', {}, h('strong', {}, `${ctx.avvisoRegole}: hai ${n} Punti Abilità da assegnare`),
+      ` (${da.map((c) => dove(c, c.mancanti)).join(', ')}). `,
+      h('button', { type: 'button', class: 'btn primario', onclick: ctx.azioni.completaPunti }, 'Assegna')) : null,
+    ecc.length ? h('p', {}, `${ctx.avvisoRegole}: ${ecc.map((c) => `${c.eccesso} ${c.eccesso === 1 ? 'punto' : 'punti'} in eccesso rispetto alle regole correnti (${c.livello === 1 ? 'creazione' : `${c.livello}° livello`})`).join('; ')}.`) : null);
 }
 
 function menuAzioni(ctx) {

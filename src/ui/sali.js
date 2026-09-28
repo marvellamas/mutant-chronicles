@@ -387,13 +387,32 @@ function passoAbilita(c, passo) {
     if (v <= 0) delete nuovo[n];
     c.aggiornaVoce({ puntiAbilita: nuovo });
   };
-  const righe = (cat) => base.filter((a) => a.categoria === cat).map((a) => {
+  // stesse regole di validaLivello: limite del livello e VA ≥ 1 prima dei punti liberi
+  const abilita = base.map((a) => {
     const punti = pa[a.nome] ?? 0;
     const avanz = a.avanzamento + punti;
-    // stesse regole di validaLivello: limite del livello e VA ≥ 1 prima dei punti liberi
     const motivoPiu = rimasti <= 0 ? 'Nessun Punto Abilità Libero rimasto da spendere.'
       : avanz + 1 > limite ? `Avanzamento ${avanz + 1}: ${conOrdinale('al', prossimo.livello)} livello il massimo è ${limite} (§8.3).`
         : a.totale < minimo ? `VA ${a.totale} prima dei punti liberi: serve almeno ${minimo} (§2.13).` : null;
+    return { ...a, punti, motivoPiu };
+  });
+  return [
+    h('p', { class: 'guida' }, `Distribuisci ${k} Punti Abilità Liberi. ${conOrdinale('Al', prossimo.livello)} livello l’Avanzamento massimo è ${limite}, compresi i +1 di Classe già applicati; l’Abilità deve avere VA almeno ${minimo} prima dei punti liberi.`),
+    contatore(rimasti, k, 'Punti Abilità Liberi'),
+    tabellaPuntiAbilita({ dati, abilita, limite, rimasti, imposta }),
+  ];
+}
+
+/**
+ * Tabella di assegnazione dei Punti Abilità Liberi, comune a «Sali di livello» e al completamento
+ * dei punti di un evento passato (src/ui/completa.js).
+ * abilita: [{ nome, categoria, caratteristica, mod, base, corporazione, avanzamento, daClasse, totale, punti, motivoPiu }]
+ * con avanzamento e totale prima dei punti della bozza.
+ */
+export function tabellaPuntiAbilita({ dati, abilita, limite, rimasti, imposta }) {
+  const righe = (cat) => abilita.filter((a) => a.categoria === cat).map((a) => {
+    const { punti, motivoPiu } = a;
+    const avanz = a.avanzamento + punti;
     const inRiga = motivoPiu && rimasti > 0 ? motivoPiu : null;
     return h('tr', { class: a.daClasse ? 'di-classe' : null },
       h('th', { scope: 'row' }, info('abilita', a.nome), h('span', { class: 'sigla' }, ` ${a.caratteristica}`),
@@ -406,19 +425,15 @@ function passoAbilita(c, passo) {
       h('td', { class: 'forte' }, String(a.totale + punti)),
       h('td', {}, stepper(punti, {
         etichetta: a.nome, motivoPiu,
-        motivoMeno: punti === 0 ? 'Nessun punto di questo livello da togliere.' : null,
+        motivoMeno: punti === 0 ? 'Nessun punto da togliere.' : null,
         meno: () => imposta(a.nome, punti - 1), piu: () => imposta(a.nome, punti + 1),
       })));
   });
-  return [
-    h('p', { class: 'guida' }, `Distribuisci ${k} Punti Abilità Liberi. ${conOrdinale('Al', prossimo.livello)} livello l’Avanzamento massimo è ${limite}, compresi i +1 di Classe già applicati; l’Abilità deve avere VA almeno ${minimo} prima dei punti liberi.`),
-    contatore(rimasti, k, 'Punti Abilità Liberi'),
-    h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella abilita' },
-      h('thead', {}, h('tr', {}, h('th', {}, 'Abilità'),
-        h('th', { class: 'dettaglio' }, 'Mod'), h('th', { class: 'dettaglio' }, 'Base'), h('th', { class: 'dettaglio' }, 'Corp'),
-        h('th', { class: 'dettaglio' }, 'Avanz'), h('th', {}, 'VA'), h('th', {}, 'Punti'))),
-      dati.abilita.categorie.map((cat) => h('tbody', {}, h('tr', { class: 'categoria' }, h('th', { colspan: 7 }, cat)), righe(cat))))),
-  ];
+  return h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella abilita' },
+    h('thead', {}, h('tr', {}, h('th', {}, 'Abilità'),
+      h('th', { class: 'dettaglio' }, 'Mod'), h('th', { class: 'dettaglio' }, 'Base'), h('th', { class: 'dettaglio' }, 'Corp'),
+      h('th', { class: 'dettaglio' }, 'Avanz'), h('th', {}, 'VA'), h('th', {}, 'Punti'))),
+    dati.abilita.categorie.map((cat) => h('tbody', {}, h('tr', { class: 'categoria' }, h('th', { colspan: 7 }, cat)), righe(cat)))));
 }
 
 // ---------------------------------------------------------------------------

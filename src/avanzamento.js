@@ -543,7 +543,7 @@ function controllaVoce(prima, voce, dati) {
       if (va < minimo) err(`puntiAbilita.${a}`, `VA ${va} prima dei punti liberi: serve almeno ${minimo} (§2.13)`);
     }
     const spesi = somma(pa);
-    if (spesi > kAbil) err('puntiAbilita', `assegnati ${spesi} Punti Abilità Liberi, ${conOrdinale('al', n)} livello se ne ricevono ${kAbil}`);
+    if (spesi > kAbil) err('puntiAbilita', `${spesi - kAbil} punti in eccesso rispetto alle regole correnti (${conOrdinale('al', n)} livello se ne ricevono ${kAbil})`, 'eccesso');
     if (spesi < kAbil) err('puntiAbilita', `assegnati ${spesi} Punti Abilità Liberi su ${kAbil}`, 'incompleto');
   }
 
@@ -634,14 +634,141 @@ function controllaTecniche(prima, dopo, v, dati) {
 function ricalcola(personaggio, dati, finoA = Infinity) {
   const p = migraPersonaggio(personaggio);
   const { stato: iniziale, errori } = statoCreazione(p.creazione, dati);
-  if (!iniziale) return { stato: null, errori };
+  if (!iniziale) return { stato: null, errori, completamenti: [], eccessi: [] };
   let stato = iniziale;
   p.livelli.slice(0, finoA).forEach((voce, i) => {
     const e = controllaVoce(stato, voce, dati);
     errori.push(...e.map((x) => ({ ...x, livello: stato.livello + 1, campo: `livelli[${i}].${x.campo}` })));
     stato = applicaVoce(stato, voce, dati);
   });
-  return { stato, errori };
+  return { stato, ...separaPuntiLiberi(p, errori, finoA, dati) };
+}
+
+// ---------------------------------------------------------------------------
+// Punti Abilità Liberi e regole aggiornate (Giocatore, Doc del 27/09/2026: 10 punti invece di 5;
+// per-davide A.52). Un evento già registrato (creazione o livello) con meno punti liberi di quelli
+// previsti dalle regole correnti non è un errore ma un completamento da fare, uno alla volta dal più
+// vecchio: i punti si aggiungono all'evento a cui appartengono. I punti in più non si tolgono: si
+// segnalano come eccesso.
+
+const nomeEvento = (livello) => (livello === 1 ? 'creazione' : `${livello}° livello`);
+
+/** Eventi di punti liberi del personaggio: creazione (livello 1) e livelli con «punti_abilita:N». */
+function eventiPuntiLiberi(p, finoA, dati) {
+  const validi = (o) => Object.values(isOggetto(o) ? o : {}).filter((v) => Number.isInteger(v) && v > 0).reduce((s, v) => s + v, 0);
+  const out = [{ livello: 1, campo: 'creazione.puntiAbilitaLiberi', previsti: dati.regole.creazione.punti_abilita_liberi, assegnati: validi(p.creazione.puntiAbilitaLiberi) }];
+  p.livelli.slice(0, finoA).forEach((v, i) => {
+    const previsti = puntiEvento('punti_abilita', i + 2, dati);
+    if (previsti) out.push({ livello: i + 2, campo: `livelli[${i}].puntiAbilita`, previsti, assegnati: validi(v.puntiAbilita) });
+  });
+  return out;
+}
+
+function separaPuntiLiberi(p, errori, finoA, dati) {
+  const completamenti = [];
+  const eccessi = [];
+  const togli = new Set();
+  // la creazione ancora in corso (altre scelte mancanti) resta un normale «incompleto» del wizard
+  const creazioneAperta = errori.some((e) => e.livello === 1 && e.campo !== 'creazione.puntiAbilitaLiberi');
+  for (const ev of eventiPuntiLiberi(p, finoA, dati)) {
+    const { livello, previsti, assegnati } = ev;
+    if (assegnati < previsti && !(livello === 1 && creazioneAperta)) {
+      completamenti.push({ livello, evento: nomeEvento(livello), previsti, assegnati, mancanti: previsti - assegnati });
+      togli.add(`${ev.campo}|incompleto`);
+    }
+    if (assegnati > previsti) eccessi.push({ livello, evento: nomeEvento(livello), previsti, assegnati, eccesso: assegnati - previsti });
+    togli.add(`${ev.campo}|eccesso`);
+  }
+  return { errori: errori.filter((e) => !togli.has(`${e.campo}|${e.tipo}`)), completamenti, eccessi };
+}
+
+/** Punti Abilità Liberi da completare (regole aggiornate), dal più vecchio; [] se nessuno. */
+export function puntiDaCompletare(personaggio, dati) {
+  return ricalcola(personaggio, dati).completamenti;
+}
+
+/** Aggiunge i punti all'evento a cui appartengono (livello 1 = creazione): non crea eventi nuovi. */
+export function applicaCompletamento(personaggio, livello, punti) {
+  const p = migraPersonaggio(personaggio);
+  const unisci = (prima) => {
+    const out = { ...(isOggetto(prima) ? prima : {}) };
+    for (const [k, v] of Object.entries(punti ?? {})) if (Number.isInteger(v) && v > 0) out[k] = (out[k] ?? 0) + v;
+    return out;
+  };
+  if (livello === 1) return { ...p, creazione: { ...p.creazione, puntiAbilitaLiberi: unisci(p.creazione.puntiAbilitaLiberi) } };
+  return { ...p, livelli: p.livelli.map((v, j) => (j === livello - 2 ? { ...v, puntiAbilita: unisci(v.puntiAbilita) } : v)) };
+}
+
+/**
+ * Valida i punti da aggiungere al primo evento da completare. Oltre ai limiti di quell'evento
+ * (Avanzamento massimo del livello, §8.3; VA ≥ 1, §2.13) i punti non devono rendere irregolari i
+ * livelli successivi né togliere i +1 di Classe già applicati.
+ * @returns {{campo, problema, tipo: 'violazione'|'incompleto'}[]}
+ */
+export function validaCompletamento(personaggio, livello, punti, dati) {
+  const errori = [];
+  const err = (campo, problema, tipo = 'violazione') => errori.push({ campo, problema, tipo });
+  const prima = ricalcola(personaggio, dati);
+  const ev = prima.completamenti[0];
+  if (!ev) return [{ campo: 'puntiAbilita', problema: 'nessun Punto Abilità Libero da completare', tipo: 'violazione' }];
+  if (ev.livello !== livello) return [{ campo: 'puntiAbilita', problema: `si completa un evento alla volta, dal più vecchio: prima ${ev.evento === 'creazione' ? 'la creazione' : `il ${ev.evento}`}`, tipo: 'violazione' }];
+  const pa = isOggetto(punti) ? punti : {};
+  for (const [a, x] of Object.entries(pa)) {
+    if (!trova(dati.abilita.abilita, a)) err(`puntiAbilita.${a}`, `"${a}" non è un'Abilità`);
+    else if (!Number.isInteger(x) || x < 0) err(`puntiAbilita.${a}`, 'i punti devono essere interi ≥ 0');
+  }
+  if (errori.length) return errori;
+  const spesi = somma(pa);
+  if (spesi > ev.mancanti) err('puntiAbilita', `assegnati ${spesi} punti, ne mancano ${ev.mancanti}`);
+  const dopo = ricalcola(applicaCompletamento(personaggio, livello, pa), dati);
+  const chiave = (e) => `${e.campo}|${e.problema}`;
+  const giaPrima = new Set(prima.errori.map(chiave));
+  for (const e of dopo.errori.filter((x) => x.tipo === 'violazione' && !giaPrima.has(chiave(x)))) {
+    const m = /\.(?:puntiAbilitaLiberi|puntiAbilita)\.(.+)$/.exec(e.campo);
+    err(m ? `puntiAbilita.${m[1]}` : 'puntiAbilita', e.livello === livello ? e.problema : `${conOrdinale('al', e.livello)} livello: ${e.problema}`);
+  }
+  // i punti di Classe già assegnati non si rimettono in discussione (§8.3: il +1 oltre il limite si perde)
+  const persi = new Set((prima.stato?.persi ?? []).map((x) => `${x.livello}|${x.abilita}`));
+  for (const x of (dopo.stato?.persi ?? []).filter((y) => !persi.has(`${y.livello}|${y.abilita}`))) {
+    err(`puntiAbilita.${x.abilita}`, `il +1 di ${x.classe} a ${x.abilita} ${conOrdinale('del', x.livello)} livello non si applicherebbe più (limite ${x.limite}, §8.3)`);
+  }
+  if (spesi < ev.mancanti) err('puntiAbilita', `assegnati ${spesi} punti su ${ev.mancanti}`, 'incompleto');
+  return errori;
+}
+
+/**
+ * Dati del pannello di completamento per il primo evento da completare, con la bozza dei punti.
+ * @returns {null|{livello, evento, previsti, assegnati, mancanti, rimasti, limite, errori, abilita: object[]}}
+ */
+export function statoCompletamento(personaggio, bozza, dati) {
+  const p = migraPersonaggio(personaggio);
+  const ev = ricalcola(p, dati).completamenti[0];
+  if (!ev) return null;
+  // Abilità a quell'evento, prima dei punti della bozza (dopo i +1 di Classe dell'evento)
+  const stato = ev.livello === 1 ? statoCreazione(p.creazione, dati).stato : ricalcola(p, dati, ev.livello - 1).stato;
+  const limite = ev.livello === 1 ? dati.regole.creazione.avanzamento_massimo_iniziale : limiteAvanzamento(ev.livello, dati);
+  const pa = isOggetto(bozza) ? bozza : {};
+  const rimasti = ev.mancanti - somma(pa);
+  const abilita = dati.abilita.abilita.map(({ nome, categoria, caratteristica }) => {
+    const x = stato.abil[nome];
+    const avanzamento = x.daClasse + x.liberi;
+    const punti = pa[nome] ?? 0;
+    const motivoPiu = rimasti <= 0 ? 'Nessun Punto Abilità da assegnare rimasto.'
+      : validaCompletamento(p, ev.livello, { ...pa, [nome]: punti + 1 }, dati).find((e) => e.tipo === 'violazione')?.problema ?? null;
+    return {
+      nome, categoria, caratteristica, mod: modDi(stato, caratteristica, dati), base: stato.addestr.valori_base[nome],
+      corporazione: stato.corp.abilita_bonus.includes(nome) ? 1 : 0, avanzamento, daClasse: x.daClasse,
+      totale: vaDi(stato, nome, avanzamento, dati), punti, motivoPiu,
+    };
+  });
+  return { ...ev, rimasti, limite, errori: validaCompletamento(p, ev.livello, pa, dati), abilita };
+}
+
+/** Perché non si sale di livello finché ci sono punti da completare (regole aggiornate). */
+export function motivoCompletamento(completamenti) {
+  const n = completamenti.reduce((s, c) => s + c.mancanti, 0);
+  const dove = completamenti.map((c) => `${c.mancanti} ${c.livello === 1 ? 'della creazione' : `${conOrdinale('del', c.livello)} livello`}`).join(', ');
+  return `Regole aggiornate: prima di salire di livello assegna ${n} Punti Abilità mancanti (${dove}) con «Assegna» in cima alla scheda.`;
 }
 
 /**
@@ -651,6 +778,8 @@ function ricalcola(personaggio, dati, finoA = Infinity) {
 export function validaLivello(personaggio, scelte, dati) {
   const { stato, errori } = ricalcola(personaggio, dati);
   if (!stato) return [{ campo: 'creazione', problema: 'la creazione non si può calcolare: correggila prima di salire di livello', tipo: 'violazione' }];
+  const { completamenti } = ricalcola(personaggio, dati);
+  if (completamenti.length) return [{ campo: 'livelli', problema: motivoCompletamento(completamenti), tipo: 'violazione' }];
   const bloccanti = errori.filter((e) => e.tipo === 'violazione');
   if (bloccanti.length) {
     return [{ campo: 'livelli', problema: `i livelli già acquisiti contengono errori (${bloccanti[0].problema}): annulla l’ultimo livello e correggilo`, tipo: 'violazione' }];
@@ -789,8 +918,8 @@ export function calcolaSchedaPersonaggio(personaggio, dati) {
 }
 
 function schedaARiposo(personaggio, dati) {
-  const { stato, errori } = ricalcola(personaggio, dati);
-  if (!stato) return { livello: 1, errori, completa: false };
+  const { stato, errori, completamenti, eccessi } = ricalcola(personaggio, dati);
+  if (!stato) return { livello: 1, errori, completamenti, eccessi, completa: false };
   const r = dati.regole;
   const n = stato.livello;
   const talenti = talentiConEffetti(stato, dati);
@@ -896,6 +1025,9 @@ function schedaARiposo(personaggio, dati) {
     progressione: progressione(personaggio, dati),
     annotazioni,
     errori,
+    // regole aggiornate: punti liberi da completare (bloccano solo l'avanzamento) e in eccesso (avviso)
+    completamenti,
+    eccessi,
     completa: errori.length === 0,
   };
 }

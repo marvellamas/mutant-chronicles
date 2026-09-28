@@ -253,10 +253,8 @@ export function normalizza(scelteIn, dati) {
       delete s.puntiAbilitaLiberi[k];
     }
   }
-  if (somma(s.puntiAbilitaLiberi) > r.creazione.punti_abilita_liberi) {
-    avvisi.push(`I Punti Abilità Liberi assegnati superano ${r.creazione.punti_abilita_liberi}: sono stati azzerati.`);
-    s.puntiAbilitaLiberi = {};
-  }
+  // Punti oltre il totale delle regole correnti: non si tolgono, la scheda li segnala come eccesso
+  // (le regole possono cambiare: Giocatore, Doc del 27/09/2026; per-davide A.52)
   if (corp && addestr && classe) {
     // Toglie un punto alla volta dove validaScelte segnala una violazione (Avanzamento > 3, VA < 1).
     const ridotti = new Map();

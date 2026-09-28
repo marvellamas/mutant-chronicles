@@ -195,7 +195,8 @@ export function validaScelte(scelte, dati) {
     else if (!Number.isInteger(p) || p < 0) err(`puntiAbilitaLiberi.${n}`, 'i punti devono essere interi ≥ 0');
   }
   const spesiAb = somma(pa);
-  if (spesiAb > cr.punti_abilita_liberi) err('puntiAbilitaLiberi', `assegnati ${spesiAb} punti, il massimo è ${cr.punti_abilita_liberi}`);
+  // punti in più rispetto alle regole correnti (se un domani i punti calano): si segnalano, non si tolgono
+  if (spesiAb > cr.punti_abilita_liberi) err('puntiAbilitaLiberi', `${spesiAb - cr.punti_abilita_liberi} punti in eccesso rispetto alle regole correnti (${cr.punti_abilita_liberi})`, 'eccesso');
   if (spesiAb < cr.punti_abilita_liberi) err('puntiAbilitaLiberi', `assegnati ${spesiAb} punti su ${cr.punti_abilita_liberi}`, 'incompleto');
 
   const strutturaOk = corp && addestr && classe && errori.every((e) => !e.campo.startsWith('puntiCaratteristica.'));
@@ -292,7 +293,7 @@ export function calcolaScheda(scelte, dati) {
     // §2.12: al 1° livello solo il Talento fisso del I Grado.
     talenti: classe.talenti_fissi.filter((t) => t.grado === 1),
     errori,
-    completa: errori.length === 0,
+    completa: errori.every((e) => e.tipo === 'eccesso'), // i punti in eccesso si segnalano soltanto
   };
 
   // §2.10, §3.8 e Magia sezione 1: accesso alla magia per l'Addestramento Taumaturgo.

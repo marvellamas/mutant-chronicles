@@ -15,6 +15,8 @@ import { PASSI, passoVisibile, requisitoPasso } from './passi.js';
 import { inizializzaTooltip, nascondiTooltip } from './tooltip.js';
 import { renderRiepilogo } from './riepilogo.js';
 import { renderSali } from './sali.js';
+import { renderCompleta } from './completa.js';
+import { validaCompletamento, applicaCompletamento, puntiDaCompletare, motivoCompletamento } from '../avanzamento.js';
 import { renderStampa, esciDallaStampa } from './stampa.js';
 import { barraPassi, barraFondoSeServe } from './navigazione.js';
 import { cercaSfondi, applicaSfondo } from './sfondi.js';
@@ -46,6 +48,7 @@ const stato = {
   scelte: null,
   livelli: [], // scelte dei livelli dal 2° in poi (cap. 8)
   sali: null, // bozza del livello successivo: { voce, passo, ui }. Non si salva fino alla conferma.
+  completa: null, // bozza dei Punti Abilità da completare (regole aggiornate): { punti }. Come «sali».
   sessione: null, // valori attuali della modalità tavolo (src/sessione.js); null finché non si apre la scheda
   calendario: null, // calendario di gioco (src/calendario.js); null = mai attivato
   // per «Annulla ultima modifica» (una sola, in memoria): { sessione, calendario } di prima
@@ -144,9 +147,11 @@ function daIndirizzo() {
     }
     stato.sali = null;
   }
+  const completa = location.hash.match(/^#\/p\/([\w-]+)\/(completa)$/);
+  if (stato.completa && !(completa && completa[1] === stato.id)) stato.completa = null;
   const stampa = location.hash.match(/^#\/p\/([\w-]+)\/(stampa)$/);
   const scheda = location.hash.match(/^#\/p\/([\w-]+)(?:\/t\/(\w+))?$/);
-  const m = sali ?? stampa ?? scheda ?? location.hash.match(/^#\/p\/([\w-]+)\/(\d+)$/);
+  const m = sali ?? completa ?? stampa ?? scheda ?? location.hash.match(/^#\/p\/([\w-]+)\/(\d+)$/);
   if (!m) {
     stato.id = null;
     stato.scelte = null;
@@ -179,6 +184,7 @@ function daIndirizzo() {
     if (avvisi.length) persisti();
   }
   if (sali) return apriSali(Number(passoTesto));
+  if (completa) return apriCompleta();
   if (stampa) return apriStampa();
   if (scheda) return apriScheda(TAB.includes(passoTesto) ? passoTesto : null);
   const passo = Math.min(Number(passoTesto), PASSI.length - 1);
@@ -328,8 +334,9 @@ function contesto() {
     scheda,
     schedaPersonaggio,
     livelli: stato.livelli,
-    motivoNoSalita: !scheda.completa ? 'Completa la creazione (passi precedenti) prima di salire di livello.'
-      : schedaPersonaggio.errori.length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
+    motivoNoSalita: schedaPersonaggio.completamenti?.length ? motivoCompletamento(schedaPersonaggio.completamenti)
+      : !scheda.completa ? 'Completa la creazione (passi precedenti) prima di salire di livello.'
+        : schedaPersonaggio.errori.length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
     saliDiLivello,
     stampa: () => vai(`#/p/${stato.id}/stampa`),
     annullaUltimoLivello: annullaLivello,
@@ -486,6 +493,52 @@ function annullaLivello() {
   renderScheda();
 }
 
+// ---------------------------------------------------------------------------
+// Completamento dei Punti Abilità di un evento passato (regole aggiornate, per-davide A.52):
+// bozza in memoria, salvata nell'evento a cui appartiene solo con «Conferma»
+
+function apriCompleta() {
+  if (!stato.completa) stato.completa = { punti: {} };
+  renderCompletaPagina();
+  window.scrollTo(0, 0);
+}
+
+function renderCompletaPagina() {
+  nascondiTooltip();
+  const { dati } = stato;
+  const bozza = stato.completa;
+  document.title = `${stato.scelte.nome.trim() || 'Personaggio'} — Punti Abilità da assegnare · Mutant`;
+  svuota(radice, ...renderCompleta({
+    dati,
+    personaggio: personaggio(),
+    bozza: bozza.punti,
+    titoloAvviso: dati.regole.regole_aggiornate?.punti_abilita ?? 'Regole aggiornate',
+    aggiornaBozza(punti) {
+      bozza.punti = punti;
+      renderCompletaPagina();
+    },
+    conferma() {
+      const ev = puntiDaCompletare(personaggio(), dati)[0];
+      if (!ev || validaCompletamento(personaggio(), ev.livello, bozza.punti, dati).length) return renderCompletaPagina();
+      const p = applicaCompletamento(personaggio(), ev.livello, bozza.punti);
+      stato.scelte = p.creazione;
+      stato.livelli = p.livelli;
+      stato.completa = null;
+      persisti();
+      const restano = puntiDaCompletare(personaggio(), dati).reduce((s, c) => s + c.mancanti, 0);
+      stato.messaggioScheda = { tipo: 'ok', testo: `Punti Abilità ${ev.livello === 1 ? 'della creazione' : `${conOrdinale('del', ev.livello)} livello`} assegnati.${restano ? ` Ne restano ${restano} da assegnare.` : ''}` };
+      if (!stato.salvataggioOk) alert(`Punti assegnati, ma non salvati nel browser. ${testoSalvataggioFallito()}`);
+      vai(`#/p/${stato.id}`);
+    },
+    esci() {
+      stato.completa = null;
+      vai(`#/p/${stato.id}`);
+    },
+  }));
+  const fondo = radice.querySelector('.barra-fondo');
+  if (fondo) barraFondoSeServe(fondo, radice);
+}
+
 function apriSali(passo) {
   if (!stato.sali) stato.sali = { voce: {}, passo: 0, ui: { aperti: new Set(), filtroTalenti: null } };
   stato.sali.passo = passo;
@@ -629,14 +682,18 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
     puoAnnullareSessione: !!stato.precedenteTavolo,
     calendario: stato.calendario,
     spazioQuasiEsaurito: archivio.spazioQuasiEsaurito(),
-    motivoNoSalita: !schedaCreazione.completa ? 'Completa la creazione prima di salire di livello.'
-      : tab.errori.length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
+    motivoNoSalita: tab.scheda.completamenti?.length ? motivoCompletamento(tab.scheda.completamenti)
+      : !schedaCreazione.completa ? 'Completa la creazione prima di salire di livello.'
+        : tab.errori.length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
+    // regole aggiornate (regole.json → regole_aggiornate): punti da completare e in eccesso
+    avvisoRegole: dati.regole.regole_aggiornate?.punti_abilita ?? 'Regole aggiornate',
     messaggio: messaggio ?? (stato.salvataggioOk ? null : { tipo: 'errore', testo: testoSalvataggioFallito() }),
     passi: { background: 0, equipaggiamento: PASSO_EQUIPAGGIAMENTO },
     ui: stato.ui,
     azioni: {
       vaiTab,
       sali: saliDiLivello,
+      completaPunti: () => vai(`#/p/${stato.id}/completa`),
       annullaLivello,
       stampa: () => vai(`#/p/${stato.id}/stampa`),
       esporta: () => esporta(stato.scelte, stato.livelli, stato.sessione, stato.calendario),

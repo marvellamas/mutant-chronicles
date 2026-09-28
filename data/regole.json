@@ -80,6 +80,10 @@
     "dado_in_combattimento": "1d10",
     "_nota": "§2.14: usa i modificatori ordinari."
   },
+  "regole_aggiornate": {
+    "punti_abilita": "Regole aggiornate (manuale del 27/09)",
+    "_nota": "Titolo dell'avviso in cima alla SD quando un evento già registrato (creazione o livello) ha meno Punti Abilità Liberi di quelli previsti dalle regole correnti, o più: Giocatore, Doc del 27/09/2026 (10 punti invece di 5), per-davide A.52. Se le regole cambiano ancora, si aggiorna qui la data."
+  },
   "addestramento": {
     "punti_totali": 76,
     "schema": {

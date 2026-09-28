@@ -86,7 +86,8 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 - Iniziativa, Movimento e Azioni effettivi nella SD (Stati, carico, MOV dell'armatura: `src/condizioni.js` → `valoriTavolo`);
 - utility «Lancia!» nella tab Magia (nessun tiro di dado): `src/lancio.js`, `regole.json` → `lancio`, `incantesimi.json` → `meccanica` (da `tools/estrai_lancio.py`), effetti.lancio dei Talenti;
 - Calendario di gioco facoltativo (ingranaggio → Calendario): tab con viste Giorno / Settimana / Mese, note per fascia con bandierine e «M», ricerca, «Avanza»; fuori dalle regole, non tocca calcoli né stampa. `src/calendario.js` (funzioni pure), `src/ui/calendario.js`, `regole.json` → `calendario`, colori `--evento-*` in `css/palette.css`; blocco `calendario` nel personaggio (formato 6), non toccato da «Nuova sessione» né dai livelli;
-- ricarica dalle riserve (`src/ricarica.js`, `munizioni.json` → `ricarica`).
+- ricarica dalle riserve (`src/ricarica.js`, `munizioni.json` → `ricarica`);
+- regole aggiornate sui Punti Abilità Liberi (Doc del 27/09, per-davide A.52): gli eventi già registrati con meno punti delle regole correnti si completano dall'avviso in cima alla SD («Assegna», `#/p/<id>/completa`, `src/ui/completa.js`; motore in `src/avanzamento.js` → `statoCompletamento`, `validaCompletamento`, `applicaCompletamento`), i punti si registrano nell'evento a cui appartengono; finché mancano, l'avanzamento è bloccato; i punti in eccesso si segnalano soltanto. Titolo dell'avviso in `regole.json` → `regole_aggiornate`.
 
 Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, veicoli, capitoli 2–8 del Manuale dell'Equipaggiamento (non ancora scritti).
 
