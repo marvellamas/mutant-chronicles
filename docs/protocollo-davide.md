@@ -22,7 +22,7 @@ Claude Code non scrive mai nei Google Doc (non ha lo strumento per farlo, e i Do
 | Doc dei manuali e Doc «E&L – Risposte e correzioni approvate» | di Davide; letti in sola lettura (`docs/manuali-drive.md`) | Davide |
 | `docs/risposte-master.md` nel repo | registro datato delle decisioni recepite nell'app; vale più del manuale in caso di conflitto | Claude Code |
 
-Il vecchio Doc «Per Davide — domande aperte ed errata (aggiornato 28/09)» (`1HK0EAO7igV6vr4eIoCRBIR9dHstUZGy8kU3utrtoomk`) non si usa più: le sue risposte sono riportate nella sezione 7 del Doc unico. Dopo il primo aggiornamento del Doc unico si rinomina «OBSOLETO — usare per-davide.md» e Marcello lo cestina.
+Il vecchio Doc «Per Davide — domande aperte ed errata (aggiornato 28/09)» (`1HK0EAO7igV6vr4eIoCRBIR9dHstUZGy8kU3utrtoomk`) non si usa più: le sue risposte sono riportate nella sezione 7 del Doc unico. Marcello l'ha eliminato il 28/09, dopo aver aggiornato il Doc unico.
 
 ## 3. Struttura del Doc «per-davide.md»
 
