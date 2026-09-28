@@ -384,6 +384,14 @@ function validaRegole(r, err) {
     const v = percorso.split('.').reduce((o, k) => o?.[k], r);
     if (!isIntero(v)) err(F, percorso, 'numero intero mancante');
   }
+  // condizioni delle armi al tavolo (Giocatore §5.17, A.49)
+  if (r.condizioni_armi !== undefined) {
+    const el = r.condizioni_armi?.elenco;
+    if (!Array.isArray(el) || !el.length) err(F, 'condizioni_armi.elenco', 'elenco delle condizioni mancante');
+    else el.forEach((c, i) => {
+      if (!isTesto(c?.id) || !isTesto(c?.nome) || typeof c?.utilizzabile !== 'boolean' || !isIntero(c?.va) || c.va > 0) err(F, `condizioni_armi.elenco[${i}]`, 'serve { id, nome, utilizzabile: booleano, va: intero ≤ 0, testo }');
+    });
+  }
   // titolo dell'avviso «regole aggiornate» della SD (facoltativo; senza, «Regole aggiornate»)
   if (r.regole_aggiornate !== undefined && !(isOggetto(r.regole_aggiornate) && isTesto(r.regole_aggiornate.punti_abilita))) {
     err(F, 'regole_aggiornate.punti_abilita', 'testo dell’avviso mancante');

@@ -1265,6 +1265,20 @@
     "_nota_effetti": "«effetti»: lista nello schema degli effetti degli oggetti (docs/effetti-oggetti.md). tipo «va»: «abilita» (una Abilità) oppure «prove» (una categoria di regole.json → categorie_prove, o «tutte»); ambito «generale» entra nel VA effettivo, «uso_specifico» dà un valore a parte per quell'uso. tipo «salvezza» con «salvezza»: id oppure «tutte». Le armi ricevono le penalità della loro Abilità, quindi anche «Attacca!»; «Lancia!» quelle di Potere. Più Stati attivi si sommano (il §5.18 non dà un'altra regola). «limiti»: divieti e avvisi nelle utility (manovre_vietate, solo_azioni_difensive); «azioni» e «movimento» restano blocchi a parte. Gli Stati senza effetti restano promemoria. La stampa non li applica.",
     "_nota": "§5.18, tabella «Durate e tempi di risoluzione»: gli Stati sono undici. «promemoria» (con \"riassunto\": true) riassume gli effetti descritti nel §5.18 (A Terra: §5.5) per la scheda e la modalità tavolo; il testo del manuale resta quello di riferimento."
   },
+  "condizioni_armi": {
+    "elenco": [
+      { "id": "integra", "nome": "Integra", "utilizzabile": true, "va": 0, "testo": "Nessuna condizione." },
+      { "id": "inceppata", "nome": "Inceppata", "utilizzabile": false, "va": 0, "testo": "Non spara finché non viene liberata: 1 AzP e una Prova con l’Abilità dell’arma, con il modificatore della tabella (§5.17)." },
+      { "id": "inutilizzabile", "nome": "Inutilizzabile", "utilizzabile": false, "va": 0, "testo": "Richiede la riparazione sul campo: 1 AzP e una Prova di Tecnologia con il modificatore della tabella; dopo, −3 VA fino alla riparazione completa (§5.17)." },
+      { "id": "riparata-sul-campo", "nome": "Riparata sul campo (era Inutilizzabile)", "utilizzabile": true, "va": -3, "testo": "−3 VA fino alla riparazione completa (§5.17)." },
+      { "id": "rotta", "nome": "Rotta (Complicazione)", "utilizzabile": false, "va": 0, "testo": "Resta inutilizzabile fino alla riparazione sul campo (Tecnologia con il modificatore della tabella); dopo, −5 VA fino alla riparazione completa (§5.17). Distinta dai PI: non li azzera (A.49)." },
+      { "id": "riparata-da-rotta", "nome": "Riparata sul campo (era Rotta)", "utilizzabile": true, "va": -5, "testo": "−5 VA fino alla riparazione completa (§5.17)." },
+      { "id": "danneggiata", "nome": "Danneggiata", "utilizzabile": true, "va": -2, "testo": "−2 VA; si applica quando una regola la prevede, non per la sola perdita di PI (Armamenti §7.2.1)." },
+      { "id": "distrutta", "nome": "Distrutta", "utilizzabile": false, "va": 0, "testo": "Non recuperabile con una riparazione ordinaria (§5.17, A.46)." }
+    ],
+    "fonte": "Giocatore §5.17 (28/09); Armamenti §7.2, §7.2.1; risposta di Davide A.49",
+    "_nota": "Stato dell’arma al tavolo, distinto dai PI (A.49): una Complicazione non azzera i PI e la riparazione sul campo non ne restituisce; recuperare PI (A.46) non toglie la condizione. A 0 PI l’arma è comunque Rotta. «va» entra nel VA effettivo dell’arma; «utilizzabile»: false blocca «Attacca!»."
+  },
   "categorie_prove": {
     "fisiche": ["Armi da lancio", "Armi leggere", "Armi medie", "Armi pesanti", "Armi da guerra", "Armi da mischia", "Corpo a corpo", "Difese", "Atletica", "Furtività"],
     "fisiche_ravvicinate": ["Armi da guerra", "Armi da mischia", "Corpo a corpo", "Difese"],

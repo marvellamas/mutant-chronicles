@@ -346,3 +346,13 @@ UTC); i paragrafi corrispondenti sono nel Manuale del Giocatore §2.16.1–§2.1
     il d4 ignora l'AR non magica, l'AR magica lo riduce fino a 0 senza spegnere lo Stato; Ignifugo non
     riduce il danno. → `data/regole.json` → `ar.ordine_riduzioni`, promemoria in «Attacca!»
     (`src/ui/attacco.js`, aperto con Perforante, Laser o Incendiaria); nessun calcolo del danno al bersaglio.
+
+42. **Condizioni delle armi e PI** (A.49; Giocatore §5.17, Armamenti §§7.2, 7.2.1). Distinte: una
+    Complicazione (Inceppata, Inutilizzabile, Rotta, Danneggiata) non azzera i PI salvo una perdita
+    espressa; a 0 PI l'arma è comunque Rotta; la riparazione sul campo del §5.17 toglie il guasto con la
+    penalità prevista (−3 o −5 VA fino alla riparazione completa) ma non restituisce PI; recuperare PI
+    (A.46) non toglie una condizione; Distrutta non si ripara in modo ordinario. Le condizioni non erano
+    nell'app: ora sono uno stato dell'arma al tavolo.
+    → `data/regole.json` → `condizioni_armi`; `src/sessione.js` (`condizioniArmi`, `impostaCondizioneArma`);
+    `src/condizioni.js` (penalità nel VA effettivo, quindi anche in «Attacca!»); `src/ui/tab.js` (scelta
+    nella scheda dell'arma, «Attacca!» disattivato se l'arma non è utilizzabile).

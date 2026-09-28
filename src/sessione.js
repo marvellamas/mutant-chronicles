@@ -71,6 +71,8 @@ export function massimiSessione(scheda, creazione, dati) {
     oggettiSituazionali: oggettiSituazionali(creazione, dati, scheda),
     // §2.16.28–29: crediti iniziali meno i conguagli, o null senza dotazione iniziale
     creditiIniziali: dati.dotazioni ? saldoIniziale(creazione, dati) : null,
+    // condizioni delle armi al tavolo (Giocatore §5.17, A.49): id ammessi
+    condizioniArmi: (dati.regole.condizioni_armi?.elenco ?? []).map((c) => c.id),
     // PI massimi degli oggetti con PI (uid → PI), Armamenti §7.2.1
     integrita: dati.equipaggiamento && dati.regole.integrita ? piMassimi(creazione, dati) : null,
   };
@@ -119,6 +121,14 @@ function oggettiSituazionali(creazione, dati, scheda = null) {
 function allineaCondizioniOggetti(v, m) {
   const lista = Array.isArray(v) ? v.filter((x) => typeof x === 'string') : [];
   return [...new Set(m.oggettiSituazionali ? lista.filter((x) => m.oggettiSituazionali.includes(x)) : lista)];
+}
+
+/** Condizione di un'arma al tavolo (Giocatore §5.17, A.49); «integra» la toglie. */
+export function impostaCondizioneArma(sessione, uid, id, m) {
+  const s = allineaSessione(sessione, m);
+  const c = { ...s.condizioniArmi };
+  if (!id || id === 'integra') delete c[uid]; else c[uid] = id;
+  return modificaSessione(s, { condizioniArmi: c }, m);
 }
 
 /** Accende o spegne la condizione di un oggetto con effetti situazionali. */
@@ -218,6 +228,7 @@ export function inizializzaSessione(m) {
     attacchi: {},
     lanci: {},
     integrita: allineaIntegrita({}, m),
+    condizioniArmi: {},
     note: '',
   };
 }
@@ -247,6 +258,9 @@ export function allineaSessione(sessione, m) {
       .filter(([uid, v]) => isOggetto(v) && (!m.caricatori || uid in m.caricatori || uid === SENZ_ARMI || (m.oggetti ?? []).includes(uid)))),
     lanci: Object.fromEntries(Object.entries(isOggetto(sessione.lanci) ? sessione.lanci : {}).filter(([, v]) => isOggetto(v))),
     integrita: allineaIntegrita(sessione.integrita, m),
+    // condizione di ogni arma (uid → id; «integra» non si salva)
+    condizioniArmi: Object.fromEntries(Object.entries(isOggetto(sessione.condizioniArmi) ? sessione.condizioniArmi : {})
+      .filter(([uid, id]) => id !== 'integra' && (m.condizioniArmi ?? []).includes(id) && (!m.oggetti || m.oggetti.includes(uid)))),
     note: typeof sessione.note === 'string' ? sessione.note : '',
   };
 }

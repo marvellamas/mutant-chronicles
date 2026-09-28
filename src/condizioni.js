@@ -217,7 +217,12 @@ export function applicaCondizioni(scheda, sessione, dati) {
     const condDi = (nome) => { const a = perNome.get(nome); return a ? vociCondizioniAbilita(condizioni, a, dati) : []; };
     const difese = eq.abilitaDifese ?? 'Difese';
     const condDifese = condDi(difese);
+    const condArmi = new Map((dati.regole.condizioni_armi?.elenco ?? []).map((c) => [c.id, c]));
+    const statiArmi = isOggetto(sessione?.condizioniArmi) ? sessione.condizioniArmi : {};
     for (const w of eq.armi) {
+      // A.49: condizione dell'arma al tavolo (Giocatore §5.17), distinta dai PI
+      const ca = condArmi.get(statiArmi[String(w.uid).split(':')[0]] ?? statiArmi[w.uid]);
+      w.condizioneArma = ca && ca.id !== 'integra' ? { id: ca.id, nome: ca.nome, va: ca.va, utilizzabile: ca.utilizzabile, testo: ca.testo } : null;
       // risposta A.10: stato al tavolo dell'attacco (lama estratta): cambia il danno, il resto no
       if (w.statoAlternativo) {
         w.statoAlternativo.acceso = accesi.has(w.statoAlternativo.chiave);
@@ -226,7 +231,7 @@ export function applicaCondizioni(scheda, sessione, dati) {
           w.nome = w.nome.replace(w.statoAlternativo.nomeOpposto, w.statoAlternativo.nome);
         }
       }
-      const cond = condDi(w.abilita);
+      const cond = [...condDi(w.abilita), ...(w.condizioneArma?.va ? [voce(w.condizioneArma.nome, w.condizioneArma.va, 'condizione')] : [])];
       w.scomposizione = [...(w.componenti ?? []).map((c) => voce(c.nome, c.valore, c.fonte ?? 'equipaggiamento')), ...cond];
       w.vaEffettivo = w.va === null ? null : w.va + somma(cond);
       w.vaDaRegole = w.va === null ? null : daRegole(w.scomposizione);

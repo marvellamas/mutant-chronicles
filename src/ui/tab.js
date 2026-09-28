@@ -884,7 +884,14 @@ function schedaArma(ctx, a) {
     h('div', { class: 'arma-testa' },
       h('h3', {}, a.nome, h('small', { class: 'sigla' }, ` · ${a.abilita ?? 'Abilità non indicata'}`)),
       // A.44: un’arma o uno scudo Rotti (0 PI) non possono attaccare finché non vengono riparati
-      a.va !== null ? h('button', { type: 'button', class: 'btn primario btn-attacca', disabled: !!a.rotta, title: a.rotta ? 'Rotto (0 PI): non può attaccare finché non viene riparato (§7.2.1, A.44).' : null, onclick: () => { ctx.ui.attacco = { uid: a.uid, passo: 0 }; ctx.azioni.ridisegna(); } }, 'Attacca!') : null),
+      a.va !== null ? h('button', { type: 'button', class: 'btn primario btn-attacca', disabled: !!a.rotta || a.condizioneArma?.utilizzabile === false,
+        title: a.rotta ? 'Rotto (0 PI): non può attaccare finché non viene riparato (§7.2.1, A.44).' : a.condizioneArma?.utilizzabile === false ? `${a.condizioneArma.nome}: ${a.condizioneArma.testo}` : null,
+        onclick: () => { ctx.ui.attacco = { uid: a.uid, passo: 0 }; ctx.azioni.ridisegna(); } }, 'Attacca!') : null),
+    // A.49: condizione dell'arma al tavolo (Giocatore §5.17), distinta dai PI
+    ctx.dati.regole.condizioni_armi && !a.daScudo && !a.moduloDi ? h('label', { class: 'condizione-arma', title: a.condizioneArma?.testo ?? 'Condizione dell’arma dopo una Complicazione (§5.17); distinta dai PI.' },
+      h('span', { class: 'sigla' }, 'Condizione '),
+      h('select', { onchange: (e) => ctx.azioni.condizioneArma(a.uid, e.target.value) },
+        ctx.dati.regole.condizioni_armi.elenco.map((c) => h('option', { value: c.id, selected: (a.condizioneArma?.id ?? 'integra') === c.id }, c.nome)))) : null,
     a.moduloDi ? h('p', { class: 'nota' }, `Modulo integrato di ${a.moduloDi}: si sceglie il profilo prima di ogni attacco; alimentazione separata (§7.8).`) : null,
     // risposta A.10: stato al tavolo dell'attacco (lama estratta), lo stesso interruttore della tab Abilità
     a.statoAlternativo ? h('label', { class: `stato-tavolo${a.statoAlternativo.acceso ? ' attivo' : ''}` },

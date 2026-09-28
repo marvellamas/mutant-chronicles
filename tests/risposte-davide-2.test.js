@@ -4,7 +4,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';
 import { catalogo } from '../src/equipaggiamento.js';
-import { massimiSessione, inizializzaSessione, variaIntegrita } from '../src/sessione.js';
+import { massimiSessione, inizializzaSessione, variaIntegrita, impostaCondizioneArma } from '../src/sessione.js';
 import { calcolaAR } from '../src/protezione.js';
 import { datiReali } from './helpers.js';
 import { MISHIMA_AGENTE, LIVELLI_AGENTE } from './personaggi.js';
@@ -84,4 +84,22 @@ test('A.48: la Tecnica posseduta diventa un interruttore della sessione', () => 
   const scheda = { ...calcolaScheda({ creazione, livelli: [] }, dati), tecniche: [{ id: 'aura-di-resistenza' }] };
   assert.ok(massimiSessione(scheda, creazione, dati).oggettiSituazionali.includes('tecnica:aura-di-resistenza'));
   assert.ok(!massimiSessione(scheda, creazione, dati).oggettiSituazionali.includes('tecnica:pelle-di-rinoceronte'));
+});
+
+// --- A.49 -----------------------------------------------------------------------------------
+
+test('A.49: condizioni delle armi al tavolo distinte dai PI; Inutilizzabile blocca, riparata −3 VA', () => {
+  const equip = [voce('p', 'armi_distanza:pistola-semiautomatica', 'impugnata')];
+  const { aRiposo, sessione, m } = alTavolo(equip);
+  const conCondizione = (id) => calcolaScheda({ creazione: { ...MISHIMA_AGENTE, equipaggiamento: equip }, livelli: [], sessione: impostaCondizioneArma(sessione, 'p', id, m) }, dati);
+  const base = aRiposo.equipaggiamento.armi[0].va;
+  const inut = conCondizione('inutilizzabile').equipaggiamento.armi[0];
+  assert.equal(inut.condizioneArma.utilizzabile, false);
+  const rip = conCondizione('riparata-sul-campo').equipaggiamento.armi[0];
+  assert.equal(rip.vaEffettivo, base - 3);
+  assert.equal(conCondizione('riparata-da-rotta').equipaggiamento.armi[0].vaEffettivo, base - 5);
+  // la condizione non tocca i PI (A.49)
+  assert.equal(impostaCondizioneArma(sessione, 'p', 'rotta', m).integrita.p, m.integrita.p);
+  // «integra» toglie la condizione
+  assert.deepEqual(impostaCondizioneArma(impostaCondizioneArma(sessione, 'p', 'rotta', m), 'p', 'integra', m).condizioniArmi, {});
 });
