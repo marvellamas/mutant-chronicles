@@ -290,6 +290,14 @@ function sezioneIntegrita(ctx) {
     h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta integrita-tab' },
       h('thead', {}, h('tr', {}, ['Oggetto', 'PI', '', 'PS Integrità'].map((c) => h('th', {}, c)))),
       h('tbody', {}, lista.map((x) => {
+        // A.47: esemplari identici integri, raggruppati; «Danneggia uno» ne separa uno con 1 PI in meno
+        if (x.gruppo) {
+          return h('tr', { class: 'gruppo-esemplari' },
+            h('th', { scope: 'row' }, `${x.nome} ×${x.gruppo}`, h('span', { class: 'sigla' }, ' · integri')),
+            h('td', { class: 'forte' }, `PI ${x.piMax}/${x.piMax} ciascuno`),
+            h('td', {}, h('button', { type: 'button', class: 'btn btn-danneggia', title: 'Separa un esemplare in una riga propria, con 1 PI in meno (A.47).', onclick: () => ctx.azioni.danneggiaEsemplare(x.uid) }, 'Danneggia uno')),
+            h('td', {}, x.ps ? `${x.ps}${x.qualita ? ` (${x.qualita})` : ''}` : '—'));
+        }
         const n = pi[x.uid] ?? x.piMax;
         const soglia = statoIntegrita(n, x.piMax, ctx.dati);
         const b = (delta) => h('button', {
@@ -310,6 +318,7 @@ function sezioneIntegrita(ctx) {
           h('td', {}, x.ps ? `${x.ps}${x.qualita ? ` (${x.qualita})` : ''}` : '—'));
       })))),
     pannelloRiparazione(ctx, lista, pi, rip),
+    campiPiDirettore(ctx),
     h('p', { class: 'nota' }, 'Un colpo o una Parata ordinari non tolgono PI: si perdono con un attacco per rompere l’oggetto, un Magistrale che lo coinvolge, Corrosivo o Demolitrice e il danno Etereo, se la PS Integrità (1d20 ≤ PS) fallisce. A 0 PI l’oggetto è Rotto: non dà AR né i suoi effetti. La riparazione la decide il master: si rimettono i PI con +.'));
 }
 
@@ -400,6 +409,27 @@ function condizioniOggetti(ctx) {
         h('span', { class: 'nome-condizionale' }, lista[0].oggetto),
         h('span', { class: 'effetto-condizionale' }, ` · ${lista.map(breve).join(', ')}`));
     })));
+}
+
+/** A.47: PI fissati dal Direttore per gli oggetti senza PI a catalogo (facoltativo, nessun valore predefinito). */
+function campiPiDirettore(ctx) {
+  const lista = ctx.tab.scheda.equipaggiamento?.senzaPi ?? [];
+  if (!lista.length) return null;
+  const imposta = (uid, valore) => {
+    const n = Number.parseInt(valore, 10);
+    const voci = (ctx.scelte.equipaggiamento ?? []).map((v) => {
+      if (v.uid !== uid) return v;
+      const w = { ...v };
+      if (Number.isInteger(n) && n >= 1) w.pi_direttore = n; else delete w.pi_direttore;
+      return w;
+    });
+    ctx.azioni.equipaggiamento(voci);
+  };
+  return h('details', { class: 'pi-direttore' },
+    h('summary', {}, `Oggetti senza PI a catalogo (${lista.length}): PI definiti dal Direttore`),
+    h('p', { class: 'nota' }, 'Senza PI a catalogo un oggetto non è indistruttibile e non vale 0: se serve tenerne l’Integrità, il Direttore fissa i PI per analogia con oggetti comparabili (A.47).'),
+    h('ul', {}, lista.map((x) => h('li', {}, h('label', {}, `${x.nome}: PI `,
+      h('input', { type: 'number', min: 1, max: 99, value: x.piDirettore ?? '', placeholder: '—', 'aria-label': `PI di ${x.nome} definiti dal Direttore`, onchange: (e) => imposta(x.uid, e.target.value) }))))));
 }
 
 /** Pannello della riparazione strutturale di un oggetto (A.46): nessun dado, esito scelto dopo il tiro. */

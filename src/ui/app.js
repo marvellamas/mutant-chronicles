@@ -5,6 +5,7 @@
 import { caricaDati } from '../rules.js';
 import { formattaErrore, trovaTodo } from '../validate.js';
 import { calcolaScheda, validaLivello } from '../calc.js';
+import { separaEsemplare } from '../equipaggiamento.js';
 import {
   nuoveScelte, normalizza, applicaModifica, anteprima, serializza, nomeFileEsportazione, deserializzaPersonaggio, applicaLivello, annullaUltimoLivello,
   CAMPI_ANAGRAFICA,
@@ -772,6 +773,16 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
         renderScheda({ mantieniScorrimento: true });
       },
       ridisegna: () => renderScheda({ mantieniScorrimento: true }),
+      // A.47: separa un esemplare danneggiato dal gruppo, con 1 PI in meno
+      danneggiaEsemplare: (uid) => {
+        const { voci, uid: nuovo } = separaEsemplare(stato.scelte.equipaggiamento, uid);
+        if (!nuovo) return;
+        stato.scelte = applicaModifica(stato.scelte, { equipaggiamento: voci }, dati).scelte;
+        const m2 = massimiSessione(calcolaScheda(personaggio(), dati), stato.scelte, dati);
+        stato.sessione = variaIntegrita(allineaSessione(stato.sessione, m2), nuovo, -1, m2);
+        persisti();
+        renderScheda({ mantieniScorrimento: true });
+      },
       munizioni: (uid, campo, delta) => cambiaSessione(variaMunizioni(stato.sessione, uid, campo, delta, massimi)),
       ricarica: (uid) => cambiaSessione(ricaricaArma(stato.sessione, uid, massimi)),
       chroma: (uid, delta) => cambiaSessione(variaChroma(stato.sessione, uid, delta, massimi)),

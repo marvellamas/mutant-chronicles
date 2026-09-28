@@ -3,7 +3,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';
-import { catalogo } from '../src/equipaggiamento.js';
+import { catalogo, separaEsemplare } from '../src/equipaggiamento.js';
 import { massimiSessione, inizializzaSessione, variaIntegrita, impostaCondizioneArma, riparaOggetto } from '../src/sessione.js';
 import { regoleRiparazione, esitoRiparazione, vaRiparazione, riparabile } from '../src/riparazione.js';
 import { calcolaAR } from '../src/protezione.js';
@@ -129,4 +129,29 @@ test('A.46: la riparazione aggiorna i PI e toglie i materiali dai crediti; VA di
   assert.deepEqual([s.integrita.a, s.crediti], [1, 950]);
   const va = vaRiparazione(tavolo, true, r);
   assert.equal(va.totale, va.base - 2);
+});
+
+// --- A.47 -----------------------------------------------------------------------------------
+
+test('A.47: sanitari con PI tracciati; esemplari raggruppati finché integri, «Danneggia uno» li separa; PI del Direttore', () => {
+  const kit = (uid, q = 1, extra = {}) => ({ uid, rif: 'sanitario:kit-di-pronto-soccorso-standard', stato: null, quantita: q, note: '', ...extra });
+  // un kit Standard da solo: 4 PI tracciati (prima il sanitario era escluso)
+  let { m } = alTavolo([kit('k')]);
+  assert.equal(m.integrita.k, 4);
+  // tre kit: gruppo integro, nessun PI in sessione, una riga «×3»
+  const tre = alTavolo([kit('g', 3)]);
+  assert.equal(tre.m.integrita.g, undefined);
+  assert.deepEqual(tre.aRiposo.equipaggiamento.integrita.map((x) => [x.uid, x.gruppo, x.piMax]), [['g', 3, 4]]);
+  // «Danneggia uno»: il gruppo scende a 2, l'esemplare separato ha una riga propria con i suoi PI
+  const { voci, uid } = separaEsemplare([kit('g', 3)], 'g');
+  assert.deepEqual(voci.map((v) => [v.uid, v.quantita]), [['g', 2], ['g-2', 1]]);
+  ({ m } = alTavolo(voci));
+  assert.equal(m.integrita[uid], 4);
+  // oggetto senza PI a catalogo: nessun valore finché il Direttore non lo fissa
+  const improvvisato = { uid: 'i', rif: 'sanitario:kit-di-pronto-soccorso-improvvisato', stato: null, quantita: 1, note: '' };
+  const senza = alTavolo([improvvisato]);
+  assert.equal(senza.m.integrita.i, undefined);
+  assert.deepEqual(senza.aRiposo.equipaggiamento.senzaPi.map((x) => [x.uid, x.piDirettore]), [['i', null]]);
+  const con = alTavolo([{ ...improvvisato, pi_direttore: 3 }]);
+  assert.equal(con.m.integrita.i, 3);
 });

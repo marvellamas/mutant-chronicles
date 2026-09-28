@@ -26,13 +26,30 @@ export function oggettiConPi(oggetti, dati) {
   const ps = r.ps_per_qualita ?? {};
   const out = [];
   for (const o of oggetti) {
-    if (o.fuoriCatalogo || (o.voce.quantita ?? 1) !== 1 || !tipi.has(o.tipo) || o.def?.modifica_elmetto) continue;
-    const piMax = o.def?.pi ?? o.voce.personalizzato?.pi;
+    if (o.fuoriCatalogo || !tipi.has(o.tipo) || o.def?.modifica_elmetto) continue;
+    // A.47: PI del catalogo, oppure fissati dal Direttore per l'oggetto senza PI a catalogo
+    const piMax = o.def?.pi ?? o.voce.pi_direttore ?? o.voce.personalizzato?.pi;
     if (!Number.isInteger(piMax) || piMax <= 0) continue;
     const qualita = o.def?.qualita ?? null;
-    out.push({ uid: o.uid, nome: o.nome, tipo: o.tipo, piMax, qualita, ps: o.def?.ps_int ?? ps[qualita] ?? null, costo: Number.isFinite(o.def?.costo) ? o.def.costo : null });
+    const quantita = o.voce.quantita ?? 1;
+    out.push({
+      uid: o.uid, nome: o.nome, tipo: o.tipo, piMax, qualita, ps: o.def?.ps_int ?? ps[qualita] ?? null, costo: Number.isFinite(o.def?.costo) ? o.def.costo : null,
+      // A.47: esemplari identici raggruppati finché integri (nessun PI in sessione); «Danneggia uno» li separa
+      ...(quantita > 1 ? { gruppo: quantita } : {}),
+      ...(o.def?.pi === undefined || o.def?.pi === null ? { daDirettore: Number.isInteger(o.voce.pi_direttore) } : {}),
+    });
   }
   return out;
+}
+
+/**
+ * Oggetti della lista senza PI a catalogo (A.47), fra i tipi tracciati: il Direttore può fissarne i PI
+ * in modalità tavolo («pi_direttore» della voce). Nessun valore predefinito, nemmeno 0.
+ */
+export function oggettiSenzaPi(oggetti, dati) {
+  const tipi = new Set(dati.regole.integrita?.tipi_tracciati ?? []);
+  return oggetti.filter((o) => !o.fuoriCatalogo && o.def && tipi.has(o.tipo) && !o.def.modifica_elmetto && !Number.isInteger(o.def.pi))
+    .map((o) => ({ uid: o.uid, nome: o.nome, tipo: o.tipo, piDirettore: Number.isInteger(o.voce.pi_direttore) ? o.voce.pi_direttore : null }));
 }
 
 /** Etichetta della soglia di Integrità (regole.json → integrita.soglie): { etichetta, effetto } o null. */

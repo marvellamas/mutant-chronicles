@@ -82,7 +82,7 @@ export function massimiSessione(scheda, creazione, dati) {
 function piMassimi(creazione, dati) {
   const cat = catalogo(dati);
   const oggetti = normalizzaEquipaggiamento(creazione?.equipaggiamento).map((v) => risolvi(v, cat));
-  return Object.fromEntries(oggettiConPi(oggetti, dati).map((x) => [x.uid, x.piMax]));
+  return Object.fromEntries(oggettiConPi(oggetti, dati).filter((x) => !x.gruppo).map((x) => [x.uid, x.piMax]));
 }
 
 /** PI attuali: gli oggetti nuovi partono integri, i valori restano entro 0 e i massimi. */

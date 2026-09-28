@@ -1382,8 +1382,8 @@
       "A 0 PI l’oggetto è Rotto e non può essere utilizzato finché non viene riparato.",
       "Una perdita di PI non assegna automaticamente la condizione Danneggiata e la relativa penalità di −2 VA."
     ],
-    "tipi_tracciati": ["arma_ravvicinata", "arma_distanza", "scudo", "armatura", "elmetto", "accessorio", "artefatto", "altro"],
-    "_nota_tipi_tracciati": "TODO(Davide) A.47: si tracciano solo gli oggetti con «pi» nella scheda e quantità 1; munizioni e sanitario no. I PI non si ricavano dalla Qualità (§7.2.1: la Qualità dà solo la PS).",
+    "tipi_tracciati": ["arma_ravvicinata", "arma_distanza", "scudo", "armatura", "elmetto", "accessorio", "artefatto", "sanitario", "altro"],
+    "_nota_tipi_tracciati": "Risposta A.47 (Armamenti §7.2.1 del 28/09): si tracciano gli oggetti con «pi» nella scheda, sanitari compresi (kit Standard 4, Professionale 6, iniettore 2); le munizioni e i consumabili contano quantità, dosi o applicazioni. Ogni esemplare ha i propri PI: esemplari identici restano raggruppati finché integri e si separano appena uno viene danneggiato («Danneggia uno»). Senza «pi» a catalogo nessun valore, nemmeno 0: il Direttore può fissarlo in modalità tavolo («pi_direttore» della voce).",
     "riparazione": {
       "ore": 1,
       "abilita": "Tecnologia",

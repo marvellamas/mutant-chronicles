@@ -44,7 +44,7 @@ test('i TODO(Davide) sono elencabili', () => {
     'regole.json.attacco_ravvicinato.circostanze', 'regole.json.attacco_ravvicinato.copertura', 'regole.json.attacco_ravvicinato.magistrale',
     'regole.json.attacco_ravvicinato.mano_non_dominante', 'regole.json.attacco_ravvicinato.manovre.disarmare', 'regole.json.attacco_ravvicinato.manovre.incalzare',
     'regole.json.attacco_ravvicinato.manovre.sbilanciare', 'regole.json.attacco_ravvicinato.manovre.spazzata', 'regole.json.attacco_ravvicinato.senz_armi',
-    'regole.json.carico', 'regole.json.categorie_prove', 'regole.json.chroma', 'regole.json.integrita._nota_tipi_tracciati',
+    'regole.json.carico', 'regole.json.categorie_prove', 'regole.json.chroma',
     'regole.json.lancio.anticipazione',
   ]);
   // durate delle Tecniche Interiori: decise dal master il 26/09/2026 (A.4 del Doc E&L)

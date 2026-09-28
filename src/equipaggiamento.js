@@ -16,7 +16,7 @@
 // hanno effetti ricevono «In uso» / «Nello zaino».
 // peso: kg per unità (Equipaggiamento §1.6, §1.10), per il carico (src/carico.js).
 
-import { calcolaAR, oggettiConPi } from './protezione.js';
+import { calcolaAR, oggettiConPi, oggettiSenzaPi } from './protezione.js';
 
 export const TIPI = ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'elmetto', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'altro'];
 
@@ -356,10 +356,30 @@ export function normalizzaEquipaggiamento(valore) {
     }
     if (typeof v.montato_su === 'string' && v.montato_su) out.montato_su = v.montato_su;
     if (v.sintonizzato === true) out.sintonizzato = true; // §7.10: scelta del giocatore
+    if (Number.isInteger(v.pi_direttore) && v.pi_direttore >= 1) out.pi_direttore = v.pi_direttore; // A.47: PI fissati dal Direttore
     if (v.dotazione_iniziale === true) out.dotazione_iniziale = true; // §2.16: voce della dotazione iniziale (src/dotazioni.js)
     if (!out.rif && testo(v.dotazione_id)) out.dotazione_id = v.dotazione_id; // oggetto di dotazione: effetti dai dati
     return out;
   });
+}
+
+/**
+ * A.47: separa un esemplare da un gruppo (quantità > 1) in una voce propria, per tracciarne i PI.
+ * @returns {{ voci, uid: string|null }} la lista nuova e l'uid dell'esemplare separato
+ */
+export function separaEsemplare(voci, uid) {
+  const lista = normalizzaEquipaggiamento(voci);
+  const i = lista.findIndex((v) => v.uid === uid);
+  if (i < 0 || lista[i].quantita < 2) return { voci: lista, uid: null };
+  const usati = new Set(lista.map((v) => v.uid));
+  let k = 2;
+  while (usati.has(`${uid}-${k}`)) k++;
+  const nuovo = { ...structuredClone(lista[i]), uid: `${uid}-${k}`, quantita: 1 };
+  delete nuovo.montato_su;
+  const out = [...lista];
+  out[i] = { ...lista[i], quantita: lista[i].quantita - 1 };
+  out.splice(i + 1, 0, nuovo);
+  return { voci: out, uid: nuovo.uid };
 }
 
 /**
@@ -869,6 +889,8 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     ar,
     // oggetti con Punti Integrità da tracciare (Armamenti §7.2.1)
     integrita: dati.regole?.integrita ? oggettiConPi(oggetti, dati) : [],
+    // A.47: oggetti senza PI a catalogo, per il campo «PI (definito dal Direttore)»
+    senzaPi: dati.regole?.integrita ? oggettiSenzaPi(oggetti, dati) : [],
     zaino: oggetti.filter((o) => !o.attivo),
     equipAbilita,
     componentiEquip,

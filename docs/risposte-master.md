@@ -367,3 +367,13 @@ UTC); i paragrafi corrispondenti sono nel Manuale del Giocatore §2.16.1–§2.1
     → `data/regole.json` → `integrita.riparazione`; `src/riparazione.js` (funzioni pure);
     `src/sessione.js` → `riparaOggetto` (PI e crediti); `src/ui/tab.js`: «Ripara» nella sezione Integrità
     con il pannello (VA di Tecnologia, strumenti improvvisati, esito scelto dopo il tiro, materiali).
+
+40. **Oggetti senza PI e oggetti multipli** (A.47; Armamenti §7.2.1, Equipaggiamento §§1.7, 1.10–1.11).
+    Senza PI a catalogo un oggetto non è indistruttibile né a 0: nessun valore finché il Direttore non lo
+    fissa per analogia. Il materiale sanitario si traccia (kit Standard 4, Professionale 6, iniettore
+    manuale 2); consumabili: quantità, dosi o applicazioni. Ogni esemplare ha i propri PI; gli identici
+    restano insieme finché integri e si separano quando uno viene danneggiato.
+    → `data/regole.json` → `integrita.tipi_tracciati` (+ sanitario), nota senza TODO; `src/protezione.js`
+    (`oggettiConPi`: gruppi e `pi_direttore`, `oggettiSenzaPi`); `src/equipaggiamento.js`
+    (`separaEsemplare`, `pi_direttore` della voce); `src/ui/tab.js` (riga «×N integri» con «Danneggia uno»,
+    campo «PI definiti dal Direttore»); `src/ui/app.js`.
