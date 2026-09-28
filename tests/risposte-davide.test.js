@@ -88,6 +88,7 @@ test('A.10: Scudo delle Guardie Sacre, lama ritratta 1d6+1 e lama estratta 1d6+1
   const aRiposo = calcolaScheda({ creazione, livelli: [] }, dati);
   const att = aRiposo.equipaggiamento.armi.find((a) => a.uid === 'g:attacco');
   assert.deepEqual([att.nome, att.danno.una_mano, att.statoAlternativo.costo], ['Scudo delle Guardie Sacre (attacco, lama ritratta)', '1d6+1', '1 Azione Principale']);
+  assert.deepEqual(att.manovre, []); // la scheda dell'arma nella SD legge «manovre»: senza, la tab Combattimento andava in errore
   const m = massimiSessione(aRiposo, creazione, dati);
   assert.ok(m.oggettiSituazionali.includes('g:lama'));
   let s = commutaCondizioneOggetto(inizializzaSessione(m), 'g:lama', m);

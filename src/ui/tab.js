@@ -362,16 +362,20 @@ function condizioniOggetti(ctx) {
   return h('section', { class: 'riquadro condizioni-oggetti', 'aria-label': 'Condizioni degli oggetti' },
     h('h2', {}, 'Condizioni degli oggetti'),
     h('p', { class: 'nota' }, 'Accendi la condizione quando ricorre (ambiente, situazione formale, osservazione a distanza): l’effetto entra nel VA. Un solo bonus degli strumenti per Prova (Giocatore §1.4.1).'),
-    h('ul', { class: 'stati-tavolo' }, [...perUid].map(([uid, lista]) => h('li', {},
-      h('label', { class: `stato-tavolo${accesi.has(uid) ? ' attivo' : ''}` },
-        h('input', { type: 'checkbox', checked: accesi.has(uid), onchange: () => ctx.azioni.condizioneOggetto(uid) }),
-        h('span', {}, h('strong', {}, lista[0].oggetto), h('small', {}, ` · ${lista.map((e) => `${segno(e.valore)} ${e.abilita}`).join(', ')}`),
-          h('br', {}), h('span', { class: 'promemoria-stato' }, lista.map((e) => e.condizione).filter(Boolean).join(' '))))),
-      stati.map((w) => { const st = w.statoAlternativo; return h('li', {},
-        h('label', { class: `stato-tavolo${st.acceso ? ' attivo' : ''}` },
-          h('input', { type: 'checkbox', checked: !!st.acceso, onchange: () => ctx.azioni.condizioneOggetto(st.chiave) }),
-          h('span', {}, h('strong', {}, w.nome.replace(/ \(attacco.*$/, '')), h('small', {}, ` · ${st.nome}: danno ${st.danno}`),
-            h('br', {}), h('span', { class: 'promemoria-stato' }, `Cambiare costa ${st.costo} (promemoria: l’app non conta le Azioni).`)))); })));
+    h('ul', { class: 'stati-tavolo' },
+      [...perUid].map(([uid, lista]) => h('li', {},
+        h('label', { class: `stato-tavolo${accesi.has(uid) ? ' attivo' : ''}` },
+          h('input', { type: 'checkbox', checked: accesi.has(uid), onchange: () => ctx.azioni.condizioneOggetto(uid) }),
+          h('span', {}, h('strong', {}, lista[0].oggetto), h('small', {}, ` · ${lista.map((e) => ((e.tipo ?? 'va') === 'va' ? `${segno(e.valore)} ${e.abilita}` : testoEffettoOggetto(e).replace(/ \(con la condizione attiva\)$/, ''))).join(', ')}`),
+            h('br', {}), h('span', { class: 'promemoria-stato' }, lista.map((e) => e.condizione).filter(Boolean).join(' ')))))),
+      stati.map((w) => {
+        const st = w.statoAlternativo;
+        return h('li', {},
+          h('label', { class: `stato-tavolo${st.acceso ? ' attivo' : ''}` },
+            h('input', { type: 'checkbox', checked: !!st.acceso, onchange: () => ctx.azioni.condizioneOggetto(st.chiave) }),
+            h('span', {}, h('strong', {}, w.nome.replace(/ \(attacco.*$/, '')), h('small', {}, ` · ${st.nome}: danno ${st.danno}`),
+              h('br', {}), h('span', { class: 'promemoria-stato' }, `Cambiare costa ${st.costo} (promemoria: l’app non conta le Azioni).`))));
+      })));
 }
 
 function promemoriaPenalita(ctx, { soloSenzaEffetto = false } = {}) {
@@ -869,6 +873,10 @@ function schedaArma(ctx, a) {
       h('h3', {}, a.nome, h('small', { class: 'sigla' }, ` · ${a.abilita ?? 'Abilità non indicata'}`)),
       a.va !== null ? h('button', { type: 'button', class: 'btn primario btn-attacca', onclick: () => { ctx.ui.attacco = { uid: a.uid, passo: 0 }; ctx.azioni.ridisegna(); } }, 'Attacca!') : null),
     a.moduloDi ? h('p', { class: 'nota' }, `Modulo integrato di ${a.moduloDi}: si sceglie il profilo prima di ogni attacco; alimentazione separata (§7.8).`) : null,
+    // risposta A.10: stato al tavolo dell'attacco (lama estratta), lo stesso interruttore della tab Abilità
+    a.statoAlternativo ? h('label', { class: `stato-tavolo${a.statoAlternativo.acceso ? ' attivo' : ''}` },
+      h('input', { type: 'checkbox', checked: !!a.statoAlternativo.acceso, onchange: () => ctx.azioni.condizioneOggetto(a.statoAlternativo.chiave) }),
+      h('span', {}, h('strong', {}, a.statoAlternativo.nome.replace(/^./, (c) => c.toUpperCase())), h('small', {}, ` · cambiare costa ${a.statoAlternativo.costo}`))) : null,
     h('div', { class: 'arma-valori' },
       h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), a.va === null ? h('strong', {}, '—') : valoreEffettivo(`VA per colpire (${a.nome})`, a.vaEffettivo ?? a.va, a.vaDaRegole ?? a.va, a.scomposizione, { pillola: true })),
       h('p', {}, h('span', { class: 'sigla' }, 'Danno '), h('strong', {}, dannoTesto)),

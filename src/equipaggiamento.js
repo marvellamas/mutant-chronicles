@@ -802,7 +802,8 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       danno: { una_mano: att.danno, due_mani: null }, dannoDaMunizione: false, bonusDanno: 0, mani: att.mani,
       portataQ: att.portata_q, gittataQ: null, gittataFormula: null, ac: null, inc: null, mov: 0, modalita: [], munizioni: null,
       proprieta: att.note ? [{ nome: 'Manovre e requisiti', testo: att.note }] : [], parata: null, personalizzato: false,
-      specializzazione: null, daScudo: true, statoAlternativo: stato,
+      // manovre: [] — la scheda dell'arma nella SD le legge; quelle dello scudo stanno nelle note
+      manovre: [], attivazione: null, naturaDanno: null, specializzazione: null, daScudo: true, statoAlternativo: stato,
     });
   }
 
