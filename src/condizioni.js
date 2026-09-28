@@ -259,7 +259,7 @@ export function applicaCondizioni(scheda, sessione, dati) {
   if (eq) {
     // AR al tavolo: effetti situazionali accesi, oggetti Rotti esclusi (docs/ricognizione-ar-pi.md)
     const talenti = (scheda.classi ?? []).flatMap((c) => (c.talenti ?? []).map((t) => t.nome));
-    eq.arEffettiva = calcolaAR(eq, dati, { talenti, accesi, rotti });
+    eq.arEffettiva = calcolaAR(eq, dati, { talenti, accesi, rotti, tecniche: (scheda.tecniche ?? []).map((t) => t.id) });
     eq.rotti = [...rotti];
     for (const w of eq.armi) w.rotta = rotti.has(String(w.uid).split(':')[0]);
     for (const p of eq.protezioni) p.rotta = rotti.has(String(p.uid).split(':')[0]);

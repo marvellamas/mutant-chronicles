@@ -254,9 +254,24 @@ function pilloleAR(ctx) {
     'Elmetti: nessuna AR (Armamenti §7.21.1).',
     R.promemoria_cumulo_magia ?? null,
   ].filter(Boolean).join('\n');
-  return h('div', { class: 'pillole-ar', title: titolo, 'aria-label': `Armatura. ${titolo}` },
-    ar.valori.map((v) => h('span', { class: `pillola-ar${v.principale ? ' principale' : ''}` },
-      h('span', { class: 'etichetta-ar' }, v.etichetta), h('strong', {}, String(v.valore)))));
+  // A.48: Tecniche Interiori che danno AR, accese al tavolo (3 Round), per chi le possiede
+  const possedute = new Set((ctx.tab.scheda.tecniche ?? []).map((t) => t.id));
+  const tecniche = (R.tecniche ?? []).filter((t) => possedute.has(t.tecnica));
+  const accese = new Set(ctx.sessione?.condizioniOggetti ?? []);
+  return [
+    h('div', { class: 'pillole-ar', title: titolo, 'aria-label': `Armatura. ${titolo}` },
+      ar.valori.map((v) => h('span', { class: `pillola-ar${v.principale ? ' principale' : ''}` },
+        h('span', { class: 'etichetta-ar' }, v.etichetta), h('strong', {}, String(v.valore))))),
+    tecniche.length ? h('div', { class: 'pillole-condizionali tecniche-ar' }, tecniche.map((t) => {
+      const chiave = `tecnica:${t.tecnica}`;
+      const nome = ctx.dati.tecniche_interiori.tecniche.find((x) => x.id === t.tecnica)?.nome ?? t.tecnica;
+      const effetto = `+${t.totale} AR${t.magica ? ' magica' : ''}${t.contro ? ` contro ${t.contro}` : ''}`;
+      const acceso = accese.has(chiave);
+      return h('label', { class: `pillola-condizionale${acceso ? ' attivo' : ''}`, title: `${nome}: ${effetto} per ${t.durata}; si somma alle altre protezioni (A.48).` },
+        h('input', { type: 'checkbox', role: 'switch', checked: acceso, 'aria-label': `${nome}: ${effetto}`, onchange: () => ctx.azioni.condizioneOggetto(chiave) }),
+        h('span', { class: 'nome-condizionale' }, nome), h('span', { class: 'effetto-condizionale' }, ` · ${effetto}`));
+    })) : null,
+  ];
 }
 
 /**

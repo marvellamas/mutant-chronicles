@@ -57,7 +57,7 @@ export function oggettiRotti(sessione, dati) {
  * @returns {{ totale, magica, voci: [{ etichetta, totale, magica, fonte, uid }], contro: [{ contro, valore, totale, fonte }],
  *   valori: [{ id, etichetta, valore, principale? }], esclusi: [{ etichetta, motivo }] }}
  */
-export function calcolaAR(equip, dati, { talenti = [], accesi = new Set(), rotti = new Set() } = {}) {
+export function calcolaAR(equip, dati, { talenti = [], accesi = new Set(), rotti = new Set(), tecniche = [] } = {}) {
   const R = dati.regole.ar ?? {};
   const voci = [];
   const esclusi = [];
@@ -97,10 +97,23 @@ export function calcolaAR(equip, dati, { talenti = [], accesi = new Set(), rotti
 
   // Talenti passivi (Corazza Potenziata, Giocatore §3.9.5): una volta sola, con la protezione richiesta
   const nomi = new Set(talenti);
+  // A.48: Corazza Potenziata vuole un'armatura o uno scudo Artefatto, utilizzabili e con almeno 1 PI
+  const artefattiUsabili = protezioni.filter((p) => (p.tipo === 'armatura' || p.tipo === 'scudo') && p.artefatto && !rotti.has(String(p.uid).split(':')[0]));
   for (const t of R.talenti ?? []) {
     if (!nomi.has(t.talento)) continue;
-    const richiesta = t.richiede === 'armatura' ? armatureUsabili.length > 0 : true;
+    const richiesta = t.richiede === 'armatura' ? armatureUsabili.length > 0 : t.richiede === 'protezione_artefatto' ? artefattiUsabili.length > 0 : true;
     if (richiesta) voci.push({ etichetta: t.talento, totale: t.totale ?? 0, magica: t.magica ?? 0, fonte: 'talento', uid: null });
+    else if (t.richiede === 'protezione_artefatto') esclusi.push({ etichetta: t.talento, motivo: 'serve un’armatura o uno scudo Artefatto Mistico o TecnoMistico, utilizzabile (A.48)' });
+  }
+  // A.48: Tecniche Interiori accese al tavolo («tecnica:<id>» fra le condizioni); quelle «contro» un
+  // tipo di attacco (Pelle di Rinoceronte: ravvicinato) danno un valore a parte
+  const tecnicheContro = [];
+  const possedute = new Set(tecniche);
+  for (const t of R.tecniche ?? []) {
+    if (!possedute.has(t.tecnica) || !accesi.has(`tecnica:${t.tecnica}`)) continue;
+    const nome = dati.tecniche_interiori?.tecniche?.find((x) => x.id === t.tecnica)?.nome ?? t.tecnica;
+    if (t.contro) tecnicheContro.push({ contro: t.contro, valore: t.totale, fonte: nome });
+    else voci.push({ etichetta: `${nome} (${t.durata})`, totale: t.totale, magica: t.magica, fonte: 'tecnica', uid: null });
   }
 
   const totale = voci.reduce((s, v) => s + v.totale, 0);
@@ -112,6 +125,10 @@ export function calcolaAR(equip, dati, { talenti = [], accesi = new Set(), rotti
     if (rotti.has(e.uid)) continue;
     const x = perContro.get(e.contro);
     if (!x || e.valore > x.valore) perContro.set(e.contro, { contro: e.contro, valore: e.valore, fonte: e.oggetto });
+  }
+  for (const x of tecnicheContro) {
+    const y = perContro.get(x.contro);
+    perContro.set(x.contro, y ? { ...y, valore: y.valore + x.valore, fonte: `${y.fonte}, ${x.fonte}` } : x);
   }
   const contro = [...perContro.values()].map((x) => ({ ...x, totale: totale + x.valore }));
 

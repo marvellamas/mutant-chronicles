@@ -1384,12 +1384,32 @@
       "Gli elmetti non forniscono AR, neppure magica."
     ],
     "cumulo": { "armatura": "massimo", "scudo": "massimo", "elmetto": "nessuna", "effetti": "somma", "ar_contro": "massimo" },
-    "_nota_cumulo": "TODO(Davide) A.43: un solo valore, non per zona (AC). Due armature non si sovrappongono (§7.11.2): vale la maggiore, con l'avviso del motore.",
+    "_nota_cumulo": "Un solo valore complessivo, «totale, di cui magica», senza zone del corpo (risposta A.43). Due armature non si sovrappongono (§7.11.2): vale la maggiore, con l’avviso del motore.",
     "etichette": { "totale": "AR", "magica": "contro Etereo" },
     "talenti": [
-      { "talento": "Corazza Potenziata", "totale": 1, "magica": 1, "richiede": "armatura", "fonte": "Giocatore §3.9.5", "frase": "Il beneficio è personale e si applica una sola volta, anche utilizzando contemporaneamente armatura e scudo." }
+      { "talento": "Corazza Potenziata", "totale": 1, "magica": 1, "richiede": "protezione_artefatto", "fonte": "Giocatore §3.9.5 (28/09); risposta A.48", "frase": "Il beneficio è personale e si applica una sola volta, anche utilizzando contemporaneamente armatura e scudo." }
     ],
-    "_nota_talenti": "TODO(Davide) A.48: si somma all'AR dell'equipaggiamento; lo scudo «Mistico o TecnoMistico» non è riconoscibile dal catalogo. Incantesimi e Tecniche (Armatura di Forza, Pelle Corazzata, Aura di Resistenza…) non sono tracciati al tavolo: restano fuori dal calcolo, con la regola di cumulo della Magia sez. 7 nel tooltip.",
+    "_nota_talenti": "Corazza Potenziata (risposta A.48): +1 AR magica una sola volta con un’armatura indossata o uno scudo imbracciato classificati Artefatto Mistico o TecnoMistico, utilizzabili e con almeno 1 PI. «Artefatto» è la tipologia «Protezioni» della classificazione degli Artefatti del catalogo (artefatti.json → artefatti_catalogo): oggi solo lo Scudo delle Guardie Sacre. Le armature con AR magica propria sono in per-davide A.53.",
+    "tecniche": [
+      { "tecnica": "aura-di-resistenza", "totale": 1, "magica": 1, "contro": null, "durata": "3 Round", "fonte": "Giocatore §8.9; risposta A.48" },
+      { "tecnica": "pelle-di-rinoceronte", "totale": 1, "magica": 0, "contro": "ravvicinato", "durata": "3 Round", "fonte": "Giocatore §8.9; risposta A.48" }
+    ],
+    "_nota_tecniche": "Tecniche Interiori che danno AR (risposta A.48): interruttori al tavolo, per chi le possiede; si sommano fra loro, a Corazza Potenziata e alle altre protezioni. Pelle di Rinoceronte vale solo contro gli attacchi ravvicinati Naturali o Magici: valore a parte «contro ravvicinato». Resta «solo il maggiore» fra Pelle Corazzata, Armatura di Forza e bonus di Armatura Mistica (incantesimi, non tracciati: promemoria).",
+    "ordine_riduzioni": {
+      "passi": [
+        "Si determina l’AR applicabile alla natura del danno: contro Naturale o Magico l’AR totale, contro Etereo solo la componente magica.",
+        "Perforante X sottrae X una sola volta alla componente non magica del colpo (tutte le protezioni insieme), fino a 0; la componente magica resta intera. Contro Etereo non si applica.",
+        "Laser dimezza per difetto l’AR rimasta, componente magica compresa. Riflettente, se applicabile, annulla il dimezzamento di Laser, non Perforante."
+      ],
+      "esempio": "AR 7, di cui 2 magica, contro Perforante 2 e Laser: Perforante porta la parte non magica da 5 a 3 (AR 5), Laser la dimezza a 2; con Riflettente resta 5. Pelle Corazzata 3 e Scudo (incantesimo) 2 sono AR Naturale 5: Perforante 2 la porta a 3.",
+      "incendiato": "Incendiato: il d4 immediato e periodico ignora l’AR non magica (anche Pelle Corazzata e Scudo); l’AR magica pertinente lo riduce fino a 0 senza spegnere le fiamme né togliere il −2. Ignifugo non riduce il danno: può solo impedire lo Stato. Esempio: AR 6, di cui 2 magica, d4 = 3 → 1 danno.",
+      "proprieta": [
+        "Perforante",
+        "Laser",
+        "Incendiaria"
+      ],
+      "fonte": "Risposta di Davide A.50 (28/09/2026); Giocatore §§5.13, 5.18, 5.24 e Armamenti §7.1.3 del 28/09; docs/risposte-master.md decisione 43."
+    },
     "promemoria_cumulo_magia": "Incantesimi: si aggiunge il maggiore fra Pelle Corazzata, Armatura di Forza e bonus di Armatura Mistica, più Armatura Elementale contro il suo elemento (Magia sez. 7).",
     "promemoria_danno": "Il bersaglio sottrae la sua AR dopo Difese e Prove Salvezza, per ogni colpo, fino a un minimo di 0: contro danno Naturale o Magico l’AR totale, contro Etereo solo la componente magica (Giocatore §5.13, §5.24)."
   },

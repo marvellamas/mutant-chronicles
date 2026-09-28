@@ -352,9 +352,21 @@ function validaAR(dati, err) {
     const K = `ar.talenti[${i}]`;
     if (!nomi.has(t?.talento)) err(F, `${K}.talento`, `"${t?.talento}" non è un Talento di Classe`);
     if (!isIntero(t?.totale) || !isIntero(t?.magica) || t.magica < 0 || t.magica > t.totale) err(F, K, 'totale e magica interi, 0 ≤ magica ≤ totale');
-    if (!['armatura', 'nessuno'].includes(t?.richiede)) err(F, `${K}.richiede`, 'uno fra armatura, nessuno');
+    if (!['armatura', 'protezione_artefatto', 'nessuno'].includes(t?.richiede)) err(F, `${K}.richiede`, 'uno fra armatura, protezione_artefatto, nessuno');
   });
   if (!isTesto(a.promemoria_danno)) err(F, 'ar.promemoria_danno', 'promemoria per «Attacca!» mancante');
+  // A.48: Tecniche Interiori che danno AR, attivabili al tavolo
+  const idTec = new Set((dati.tecniche_interiori?.tecniche ?? []).map((t) => t.id));
+  (Array.isArray(a.tecniche) ? a.tecniche : []).forEach((t, i) => {
+    const K = `ar.tecniche[${i}]`;
+    if (idTec.size && !idTec.has(t?.tecnica)) err(F, `${K}.tecnica`, `"${t?.tecnica}" non è una Tecnica Interiore`);
+    if (!isIntero(t?.totale) || !isIntero(t?.magica) || t.magica < 0 || t.magica > t.totale) err(F, K, 'totale e magica interi, 0 ≤ magica ≤ totale');
+  });
+  // A.50: ordine delle riduzioni per «Attacca!»
+  const o = a.ordine_riduzioni;
+  if (o !== undefined && !(isOggetto(o) && Array.isArray(o.passi) && o.passi.every(isTesto) && isTesto(o.esempio) && isTesto(o.incendiato) && Array.isArray(o.proprieta))) {
+    err(F, 'ar.ordine_riduzioni', 'serve { passi: [testi], esempio, incendiato, proprieta: [nomi] }');
+  }
 }
 
 function validaRegole(r, err) {

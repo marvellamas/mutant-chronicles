@@ -62,10 +62,16 @@ test('AR contro esplosioni (Antiesplosione, §7.11.4, §7.4.3): +1 una volta sol
   assert.ok(ar.valori.some((v) => v.etichetta === 'contro esplosioni' && v.valore === 7));
 });
 
-test('Corazza Potenziata (Giocatore §3.9.5): +1 AR e +1 magica una volta, solo con un’armatura indossata', () => {
-  const armatura = { protezioni: [{ uid: 'a', nome: 'Armatura', tipo: 'armatura', ar: { totale: 5, magica: 1 } }], effettiOggetti: [] };
-  const ar = calcolaAR(armatura, dati, { talenti: ['Corazza Potenziata'] });
+test('Corazza Potenziata (Giocatore §3.9.5, A.48): +1 AR magica una volta, solo con una protezione Artefatto utilizzabile', () => {
+  const artefatta = { protezioni: [{ uid: 'a', nome: 'Armatura', tipo: 'armatura', ar: { totale: 5, magica: 1 }, artefatto: true }], effettiOggetti: [] };
+  const ar = calcolaAR(artefatta, dati, { talenti: ['Corazza Potenziata'] });
   assert.deepEqual([ar.totale, ar.magica], [6, 2]); // l'esempio del manuale
+  // un'armatura ordinaria non basta più (A.48): niente +1, con il motivo fra gli esclusi
+  const ordinaria = calcolaAR({ protezioni: [{ ...artefatta.protezioni[0], artefatto: false }], effettiOggetti: [] }, dati, { talenti: ['Corazza Potenziata'] });
+  assert.deepEqual([ordinaria.totale, ordinaria.magica], [5, 1]);
+  assert.ok(ordinaria.esclusi.some((x) => /Artefatto/.test(x.motivo)));
+  // Artefatto Rotto (0 PI): niente +1
+  assert.equal(calcolaAR(artefatta, dati, { talenti: ['Corazza Potenziata'], rotti: new Set(['a']) }).totale, 0);
   assert.equal(calcolaAR({ protezioni: [], effettiOggetti: [] }, dati, { talenti: ['Corazza Potenziata'] }).totale, 0);
 });
 

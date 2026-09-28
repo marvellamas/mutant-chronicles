@@ -527,6 +527,8 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       uid: o.uid, nome: o.nome, tipo: o.tipo, categoria, taglia: d?.taglia ?? null,
       categoriaBase: d?.categoria ?? null, rinforzo: kit ? { nome: kit.nome, kit: kit.def.rinforzo.kit, uid: kit.uid } : null,
       arKit: kit ? kit.def.rinforzo.ar : 0,
+      // A.48: protezione classificata Artefatto Mistico o TecnoMistico (Corazza Potenziata)
+      artefatto: !!d && infoArtefatto(d, dati)?.tipologia === 'Protezioni',
       ar, penalita, forRichiesta, forMancante, personalizzato: o.personalizzato,
       mov: d?.mov ?? 0, parata: null, proprieta: d?.proprieta ?? [],
       // §7.14.2, §7.16.3: armature servoassistite a sistema spento (FOR e penalità proprie), mostrate

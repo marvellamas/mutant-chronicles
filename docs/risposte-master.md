@@ -322,3 +322,27 @@ UTC); i paragrafi corrispondenti sono nel Manuale del Giocatore §2.16.1–§2.1
 38. **Rainy Dayer** (A.13; Armamenti §7.14.6). Specializzazione Carabine sul profilo di tiro (+1 VA,
     +1 danno; Armi medie, due mani aperta o chiusa, 30 Q); la copertura (AR +1, Parata con Difese) non
     prende il +1. → `data/equipaggiamento/corredi_dispositivi.json` (tolto il TODO).
+
+41. **Cumulo dell'AR: Corazza Potenziata, Aura di Resistenza, Pelle di Rinoceronte** (A.48; Giocatore
+    §§3.9.5, 5.13, 8.9). Si sommano fra loro e alle altre protezioni; «solo il maggiore» resta fra Pelle
+    Corazzata, Armatura di Forza e bonus di Armatura Mistica. Corazza Potenziata: +1 AR magica una volta,
+    solo con un'armatura indossata o uno scudo imbracciato classificati Artefatto Mistico o TecnoMistico,
+    utilizzabili e con almeno 1 PI (Guardie Sacre sì, anche con Scudo Magico spento; Sacri Guerrieri no;
+    tecnologia, Fratellanza o un incantesimo temporaneo non bastano). Aura di Resistenza +1 AR magica per
+    3 Round; Pelle di Rinoceronte +1 non magica solo contro il ravvicinato Naturale o Magico, 3 Round.
+    Insieme: +3 contro il ravvicinato, +2 contro il resto, +2 magica.
+    → `data/regole.json` → `ar.talenti` (`richiede: protezione_artefatto`), `ar.tecniche`; «Artefatto» è la
+    classificazione già nel catalogo (`artefatti.json` → `artefatti_catalogo`, tipologia «Protezioni»),
+    non un campo nuovo: un solo posto per il dato. `src/protezione.js`, `src/equipaggiamento.js`
+    (`protezioni[].artefatto`), `src/sessione.js` (interruttori «tecnica:<id>»), `src/ui/tab.js`
+    (interruttori accanto all'AR, per chi possiede le Tecniche; «contro ravvicinato» come valore a parte).
+    Le 14 armature con AR magica propria restano senza il +1 finché Davide non risponde: per-davide A.53.
+
+43. **Perforante, Laser, Incendiato** (A.50; Giocatore §§5.13, 5.18, 5.24, Armamenti §7.1.3). Prima l'AR
+    della natura del danno; poi Perforante X sulla sola parte non magica, una volta per colpo, minimo 0;
+    poi Laser dimezza per difetto il totale rimasto, magica compresa; Riflettente annulla Laser, non
+    Perforante; contro l'Etereo solo la parte magica e Perforante non la tocca. Perforante riduce l'AR
+    Naturale di Pelle Corazzata e Scudo (incantesimo), non quella Magica di Armatura di Forza. Incendiato:
+    il d4 ignora l'AR non magica, l'AR magica lo riduce fino a 0 senza spegnere lo Stato; Ignifugo non
+    riduce il danno. → `data/regole.json` → `ar.ordine_riduzioni`, promemoria in «Attacca!»
+    (`src/ui/attacco.js`, aperto con Perforante, Laser o Incendiaria); nessun calcolo del danno al bersaglio.

@@ -68,7 +68,7 @@ export function massimiSessione(scheda, creazione, dati) {
     // TODO(Davide): un contenitore nuovo arriva carico? Ipotesi: pieno (regole.json → chroma, per-davide A.19)
     contenitoreNuovo: dati.regole.chroma?.contenitore_nuovo ?? 'pieno',
     // oggetti con effetti situazionali: solo questi possono avere la condizione accesa
-    oggettiSituazionali: oggettiSituazionali(creazione, dati),
+    oggettiSituazionali: oggettiSituazionali(creazione, dati, scheda),
     // §2.16.28–29: crediti iniziali meno i conguagli, o null senza dotazione iniziale
     creditiIniziali: dati.dotazioni ? saldoIniziale(creazione, dati) : null,
     // PI massimi degli oggetti con PI (uid → PI), Armamenti §7.2.1
@@ -101,13 +101,17 @@ export function variaIntegrita(sessione, uid, delta, m) {
  * Uid degli oggetti della lista con almeno un effetto situazionale, e chiavi «uid:stato» degli
  * stati al tavolo degli attacchi (lama estratta dello Scudo delle Guardie Sacre, risposta A.10).
  */
-function oggettiSituazionali(creazione, dati) {
+function oggettiSituazionali(creazione, dati, scheda = null) {
   if (!dati.equipaggiamento) return null;
+  // A.48: Tecniche Interiori che danno AR, per chi le possiede («tecnica:<id>»)
+  const tecniche = new Set((scheda?.tecniche ?? []).map((t) => t.id));
+  const tecnicheAR = (dati.regole.ar?.tecniche ?? []).filter((t) => tecniche.has(t.tecnica)).map((t) => `tecnica:${t.tecnica}`);
   const cat = catalogo(dati);
   const risolti = normalizzaEquipaggiamento(creazione?.equipaggiamento).map((v) => risolvi(v, cat));
   return [
     ...risolti.filter((r) => r.effetti.some((e) => e.ambito === 'situazionale')).map((r) => r.uid),
     ...risolti.filter((r) => r.def?.attacco?.stato).map((r) => `${r.uid}:${r.def.attacco.stato.id}`),
+    ...tecnicheAR,
   ];
 }
 

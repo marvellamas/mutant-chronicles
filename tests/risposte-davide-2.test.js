@@ -5,6 +5,7 @@ import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';
 import { catalogo } from '../src/equipaggiamento.js';
 import { massimiSessione, inizializzaSessione, variaIntegrita } from '../src/sessione.js';
+import { calcolaAR } from '../src/protezione.js';
 import { datiReali } from './helpers.js';
 import { MISHIMA_AGENTE, LIVELLI_AGENTE } from './personaggi.js';
 
@@ -60,4 +61,27 @@ test('A.45: civile leggera + rinforzo pesante: 3/5/Media → rinforzo a 0 PI 1/5
   const tolto = alTavolo([arm, { ...kit, stato: 'zaino', montato_su: undefined }]);
   const p3 = tolto.tavolo.equipaggiamento.protezioni[0];
   assert.deepEqual([tolto.tavolo.equipaggiamento.arEffettiva.totale, p3.forRichiesta, p3.categoria], [1, 3, 'Leggera']);
+});
+
+// --- A.48 -----------------------------------------------------------------------------------
+
+test('A.48: Corazza Potenziata solo con protezione Artefatto (Guardie Sacre sì, Sacri Guerrieri no); Aura e Pelle di Rinoceronte si sommano', () => {
+  const prot = (rif) => calcolaScheda({ creazione: { ...MISHIMA_AGENTE, equipaggiamento: [voce('s', rif, 'imbracciato')] }, livelli: [] }, dati).equipaggiamento.protezioni[0];
+  assert.equal(prot('scudi:scudo-delle-guardie-sacre').artefatto, true);
+  assert.equal(prot('scudi:scudo-dei-sacri-guerrieri').artefatto, false);
+  // l'esempio di Davide: tutte e tre attive → +3 contro il ravvicinato, +2 contro gli altri, +2 magica
+  const eq = { protezioni: [{ uid: 's', nome: 'Scudo delle Guardie Sacre', tipo: 'scudo', ar: { totale: 2, magica: 0 }, artefatto: true }], effettiOggetti: [] };
+  const accesi = new Set(['tecnica:aura-di-resistenza', 'tecnica:pelle-di-rinoceronte']);
+  const ar = calcolaAR(eq, dati, { talenti: ['Corazza Potenziata'], accesi, tecniche: ['aura-di-resistenza', 'pelle-di-rinoceronte'] });
+  assert.deepEqual([ar.totale - 2, ar.magica], [2, 2]);
+  assert.deepEqual(ar.contro.map((c) => [c.contro, c.totale - 2]), [['ravvicinato', 3]]);
+  // una Tecnica non posseduta non conta, anche se accesa
+  assert.equal(calcolaAR(eq, dati, { accesi, tecniche: [] }).totale, 2);
+});
+
+test('A.48: la Tecnica posseduta diventa un interruttore della sessione', () => {
+  const creazione = { ...MISHIMA_AGENTE, equipaggiamento: [] };
+  const scheda = { ...calcolaScheda({ creazione, livelli: [] }, dati), tecniche: [{ id: 'aura-di-resistenza' }] };
+  assert.ok(massimiSessione(scheda, creazione, dati).oggettiSituazionali.includes('tecnica:aura-di-resistenza'));
+  assert.ok(!massimiSessione(scheda, creazione, dati).oggettiSituazionali.includes('tecnica:pelle-di-rinoceronte'));
 });
