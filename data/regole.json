@@ -1384,10 +1384,26 @@
     ],
     "tipi_tracciati": ["arma_ravvicinata", "arma_distanza", "scudo", "armatura", "elmetto", "accessorio", "artefatto", "altro"],
     "_nota_tipi_tracciati": "TODO(Davide) A.47: si tracciano solo gli oggetti con «pi» nella scheda e quantità 1; munizioni e sanitario no. I PI non si ricavano dalla Qualità (§7.2.1: la Qualità dà solo la PS).",
+    "riparazione": {
+      "ore": 1,
+      "abilita": "Tecnologia",
+      "esiti": [
+        { "id": "maldestro", "nome": "Fallimento Maldestro", "pi": -1 },
+        { "id": "fallimento", "nome": "Fallimento", "pi": 0 },
+        { "id": "successo", "nome": "Successo", "pi": 1 },
+        { "id": "magistrale", "nome": "Successo Magistrale", "pi": 2 }
+      ],
+      "strumenti_improvvisati_va": -2,
+      "materiali_percentuale": 5,
+      "tipi": ["arma_ravvicinata", "arma_distanza", "armatura", "scudo", "elmetto", "accessorio"],
+      "esclusi": ["distrutta"],
+      "fonte": "Armamenti §7.2.1 (28/09), «Riparazione strutturale degli oggetti personali»; risposta di Davide A.46",
+      "_nota": "Un intervento: un oggetto, 1 ora, Prova di Tecnologia. Successo +1 PI, Magistrale +2, Fallimento nessun PI e tempo consumato, Maldestro −1 PI fino a 0 senza PS Integrità; mai oltre il massimo. Strumenti improvvisati −2 VA. Materiali: 5% del prezzo di catalogo per ogni PI effettivamente recuperato (un’armatura da 2.000 crediti: 100 per PI); la manodopera di un riparatore esterno si paga a parte. Un oggetto Rotto a 0 PI torna utilizzabile con almeno 1 PI. «accessorio»: i rinforzi. Distrutti e componenti mistiche da ricostruire: procedure specifiche. Nessun dado nell’app: l’esito si sceglie dopo il tiro al tavolo (src/riparazione.js)."
+    },
     "soglie": [
       { "pi_fino_a": 0, "etichetta": "Rotto", "effetto": "inutilizzabile", "fonte": "Armamenti §7.2.1" }
     ],
-    "_nota_soglie": "Nessuna soglia intermedia: «Una perdita di PI non impone automaticamente −2 VA» (Equipaggiamento §1.7). Effetto «inutilizzabile»: l'oggetto Rotto non dà AR né i suoi effetti (TODO(Davide) A.44, A.45; l'elmetto a 0 PI «perde i propri vantaggi», §7.21.3). Nessuna regola di riparazione per gli oggetti che non sono veicoli (A.46): i PI si rimettono a mano."
+    "_nota_soglie": "Nessuna soglia intermedia: «Una perdita di PI non impone automaticamente −2 VA» (Equipaggiamento §1.7). Effetto «inutilizzabile»: l'oggetto Rotto non dà AR né i suoi effetti, peso e penalità restano; un rinforzo rotto montato tiene FOR richiesta e penalità della configurazione (risposte A.44, A.45; l'elmetto a 0 PI «perde i propri vantaggi», §7.21.3). Riparazione: «riparazione» qui sopra (A.46)."
   },
   "ar": {
     "paragrafo": "Giocatore §5.13, §5.24; Armamenti §7.4, §7.11, §7.11.2, §7.21.1; Magia sez. 7",

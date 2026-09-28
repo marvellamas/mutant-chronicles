@@ -30,7 +30,7 @@ export function oggettiConPi(oggetti, dati) {
     const piMax = o.def?.pi ?? o.voce.personalizzato?.pi;
     if (!Number.isInteger(piMax) || piMax <= 0) continue;
     const qualita = o.def?.qualita ?? null;
-    out.push({ uid: o.uid, nome: o.nome, tipo: o.tipo, piMax, qualita, ps: o.def?.ps_int ?? ps[qualita] ?? null });
+    out.push({ uid: o.uid, nome: o.nome, tipo: o.tipo, piMax, qualita, ps: o.def?.ps_int ?? ps[qualita] ?? null, costo: Number.isFinite(o.def?.costo) ? o.def.costo : null });
   }
   return out;
 }

@@ -356,3 +356,14 @@ UTC); i paragrafi corrispondenti sono nel Manuale del Giocatore §2.16.1–§2.1
     → `data/regole.json` → `condizioni_armi`; `src/sessione.js` (`condizioniArmi`, `impostaCondizioneArma`);
     `src/condizioni.js` (penalità nel VA effettivo, quindi anche in «Attacca!»); `src/ui/tab.js` (scelta
     nella scheda dell'arma, «Attacca!» disattivato se l'arma non è utilizzabile).
+
+39. **Riparazione strutturale degli oggetti personali** (A.46; Armamenti §7.2.1 del 28/09). La procedura
+    dei veicoli si estende ad armi, armature, scudi, elmetti e rinforzi: un oggetto, 1 ora, Prova di
+    Tecnologia; Successo +1 PI, Magistrale +2, Fallimento nessuno (tempo consumato), Maldestro −1 fino a
+    0 senza PS Integrità; mai oltre il massimo; strumenti improvvisati −2 VA; riduzioni di tempo dei
+    Talenti non sotto metà; materiali 5% del prezzo di catalogo per PI effettivamente recuperato (armatura
+    da 2.000: 100 crediti per PI); manodopera esterna a parte. Rotto a 0 PI torna utilizzabile con 1 PI;
+    Distrutti e componenti mistiche: procedure specifiche.
+    → `data/regole.json` → `integrita.riparazione`; `src/riparazione.js` (funzioni pure);
+    `src/sessione.js` → `riparaOggetto` (PI e crediti); `src/ui/tab.js`: «Ripara» nella sezione Integrità
+    con il pannello (VA di Tecnologia, strumenti improvvisati, esito scelto dopo il tiro, materiali).

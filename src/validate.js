@@ -384,6 +384,13 @@ function validaRegole(r, err) {
     const v = percorso.split('.').reduce((o, k) => o?.[k], r);
     if (!isIntero(v)) err(F, percorso, 'numero intero mancante');
   }
+  // riparazione strutturale (Armamenti §7.2.1, A.46)
+  const rip = r.integrita?.riparazione;
+  if (rip !== undefined) {
+    const ok = isOggetto(rip) && isTesto(rip.abilita) && Array.isArray(rip.esiti) && rip.esiti.length && rip.esiti.every((e) => isTesto(e?.id) && isTesto(e?.nome) && isIntero(e?.pi))
+      && isIntero(rip.strumenti_improvvisati_va) && typeof rip.materiali_percentuale === 'number' && rip.materiali_percentuale >= 0 && Array.isArray(rip.tipi) && Array.isArray(rip.esclusi);
+    if (!ok) err(F, 'integrita.riparazione', 'serve { abilita, esiti: [{ id, nome, pi }], strumenti_improvvisati_va, materiali_percentuale, tipi, esclusi }');
+  }
   // condizioni delle armi al tavolo (Giocatore §5.17, A.49)
   if (r.condizioni_armi !== undefined) {
     const el = r.condizioni_armi?.elenco;

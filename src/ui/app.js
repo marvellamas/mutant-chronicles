@@ -24,7 +24,7 @@ import { caricaImmagini } from './immagini.js';
 import { preparaStampa, preparaTab, normalizzaOpzioniStampa } from '../stampa.js';
 import { renderTab } from './tab.js';
 import {
-  massimiSessione, allineaSessione, variaSessione, modificaSessione, commutaStato, commutaCondizioneOggetto, impostaCondizioneArma, spendiPmLancio, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
+  massimiSessione, allineaSessione, variaSessione, modificaSessione, commutaStato, commutaCondizioneOggetto, impostaCondizioneArma, riparaOggetto, spendiPmLancio, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
   penalitaSessione, variaMunizioni, ricaricaArma, variaChroma, variaIntegrita,
 } from '../sessione.js';
 import { conOrdinale } from '../lingua.js';
@@ -716,6 +716,7 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       commutaStato: (id) => cambiaSessione(commutaStato(stato.sessione, id, massimi)),
       condizioneOggetto: (uid) => cambiaSessione(commutaCondizioneOggetto(stato.sessione, uid, massimi)),
       condizioneArma: (uid, id) => cambiaSessione(impostaCondizioneArma(stato.sessione, uid, id, massimi)),
+      ripara: (uid, piNuovi, costo) => cambiaSessione(riparaOggetto(stato.sessione, uid, piNuovi, costo, massimi)),
       // pannello «Attacca!»: le scelte si ricordano senza diventare «l'ultima modifica» da annullare;
       // «Spara» sì, così «Annulla» lo copre
       ricordaAttacco: (uid, scelte) => {

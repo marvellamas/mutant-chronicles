@@ -4,7 +4,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';
 import { catalogo } from '../src/equipaggiamento.js';
-import { massimiSessione, inizializzaSessione, variaIntegrita, impostaCondizioneArma } from '../src/sessione.js';
+import { massimiSessione, inizializzaSessione, variaIntegrita, impostaCondizioneArma, riparaOggetto } from '../src/sessione.js';
+import { regoleRiparazione, esitoRiparazione, vaRiparazione, riparabile } from '../src/riparazione.js';
 import { calcolaAR } from '../src/protezione.js';
 import { datiReali } from './helpers.js';
 import { MISHIMA_AGENTE, LIVELLI_AGENTE } from './personaggi.js';
@@ -102,4 +103,30 @@ test('A.49: condizioni delle armi al tavolo distinte dai PI; Inutilizzabile bloc
   assert.equal(impostaCondizioneArma(sessione, 'p', 'rotta', m).integrita.p, m.integrita.p);
   // «integra» toglie la condizione
   assert.deepEqual(impostaCondizioneArma(impostaCondizioneArma(sessione, 'p', 'rotta', m), 'p', 'integra', m).condizioniArmi, {});
+});
+
+// --- A.46 -----------------------------------------------------------------------------------
+
+test('A.46: esiti della riparazione, materiali al 5% per PI recuperato, mai oltre il massimo, Maldestro fino a 0', () => {
+  const r = regoleRiparazione(dati);
+  const arm = { piAttuali: 2, piMax: 8, costo: 2000 };
+  assert.deepEqual(esitoRiparazione(arm, 'successo', r), { piNuovi: 3, recuperati: 1, costoMateriali: 100 }); // l'esempio di Davide
+  assert.deepEqual(esitoRiparazione(arm, 'magistrale', r), { piNuovi: 4, recuperati: 2, costoMateriali: 200 });
+  assert.deepEqual(esitoRiparazione(arm, 'fallimento', r), { piNuovi: 2, recuperati: 0, costoMateriali: 0 });
+  assert.deepEqual(esitoRiparazione({ ...arm, piAttuali: 0 }, 'maldestro', r), { piNuovi: 0, recuperati: 0, costoMateriali: 0 });
+  assert.deepEqual(esitoRiparazione({ ...arm, piAttuali: 7 }, 'magistrale', r), { piNuovi: 8, recuperati: 1, costoMateriali: 100 });
+  assert.equal(esitoRiparazione({ piAttuali: 1, piMax: 4, costo: null }, 'successo', r).costoMateriali, null);
+  // Distrutta esclusa, tipi ammessi
+  assert.equal(riparabile({ tipo: 'arma_distanza' }, 'distrutta', r).si, false);
+  assert.equal(riparabile({ tipo: 'armatura' }, null, r).si, true);
+  assert.equal(riparabile({ tipo: 'sanitario' }, null, r).si, false);
+});
+
+test('A.46: la riparazione aggiorna i PI e toglie i materiali dai crediti; VA di Tecnologia con strumenti improvvisati −2', () => {
+  const { tavolo, sessione, m } = alTavolo([voce('a', 'armature:armatura-civile-media', 'indossata')], { a: true });
+  const r = regoleRiparazione(dati);
+  const s = riparaOggetto({ ...sessione, crediti: 1000 }, 'a', 1, 50, m);
+  assert.deepEqual([s.integrita.a, s.crediti], [1, 950]);
+  const va = vaRiparazione(tavolo, true, r);
+  assert.equal(va.totale, va.base - 2);
 });

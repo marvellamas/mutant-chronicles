@@ -123,6 +123,18 @@ function allineaCondizioniOggetti(v, m) {
   return [...new Set(m.oggettiSituazionali ? lista.filter((x) => m.oggettiSituazionali.includes(x)) : lista)];
 }
 
+/**
+ * Riparazione strutturale (A.46, src/riparazione.js): PI nuovi dell'oggetto e materiali sottratti ai
+ * crediti attuali, se il personaggio li ha (senza scendere sotto 0).
+ */
+export function riparaOggetto(sessione, uid, piNuovi, costoMateriali, m) {
+  const s = allineaSessione(sessione, m);
+  if (!(uid in s.integrita)) return s;
+  const modifica = { integrita: { ...s.integrita, [uid]: piNuovi } };
+  if (Number.isInteger(s.crediti) && Number.isFinite(costoMateriali) && costoMateriali > 0) modifica.crediti = Math.max(0, s.crediti - costoMateriali);
+  return modificaSessione(s, modifica, m);
+}
+
 /** Condizione di un'arma al tavolo (Giocatore §5.17, A.49); «integra» la toglie. */
 export function impostaCondizioneArma(sessione, uid, id, m) {
   const s = allineaSessione(sessione, m);

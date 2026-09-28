@@ -23,6 +23,7 @@ import { profiloSenzArmi, senzArmiDisponibile, SENZ_ARMI, talentiAttacco } from 
 import { pannelloLancio } from './lancio.js';
 import { tabCalendario, pannelloAttivazione } from './calendario.js';
 import { conOrdinale } from '../lingua.js';
+import { regoleRiparazione, esitoRiparazione, vaRiparazione, riparabile } from '../riparazione.js';
 
 export const POSIZIONI_TAB = [
   { id: 'automatica', etichetta: 'Automatica (sinistra su schermi larghi, in basso su telefono e tablet)' },
@@ -276,12 +277,15 @@ function pilloleAR(ctx) {
 
 /**
  * Punti Integrità degli oggetti (Armamenti §7.2.1): «PI n/max» con − e +, la PS Integrità della
- * Qualità e «Rotto» a 0 PI. Nessun «Ripara»: la riparazione non ha ancora regole (A.46).
+ * Qualità e «Rotto» a 0 PI. «Ripara» apre il pannello della riparazione strutturale (A.46): VA di
+ * Tecnologia, strumenti improvvisati, esito scelto dopo il tiro al tavolo, materiali dai crediti.
  */
 function sezioneIntegrita(ctx) {
   const lista = ctx.tab.scheda.equipaggiamento?.integrita ?? [];
   if (!lista.length) return null;
   const pi = ctx.sessione.integrita ?? {};
+  const rip = regoleRiparazione(ctx.dati);
+  const armi = ctx.tab.scheda.equipaggiamento?.armi ?? [];
   return sezione('Integrità degli oggetti (§7.2.1)',
     h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta integrita-tab' },
       h('thead', {}, h('tr', {}, ['Oggetto', 'PI', '', 'PS Integrità'].map((c) => h('th', {}, c)))),
@@ -295,9 +299,17 @@ function sezioneIntegrita(ctx) {
         return h('tr', { class: soglia ? 'rotto' : null },
           h('th', { scope: 'row' }, x.nome, soglia ? h('span', { class: 'etichetta etichetta-rotto', title: 'A 0 PI l’oggetto è Rotto e non può essere utilizzato finché non viene riparato (§7.2.1). La rottura vale dal colpo successivo: non annulla la protezione già data contro il colpo che l’ha causata (A.44).' }, soglia.etichetta) : null),
           h('td', { class: 'forte' }, `PI ${n}/${x.piMax}`),
-          h('td', {}, h('span', { class: 'pulsanti-tavolo' }, b(-1), b(1))),
+          h('td', {}, h('span', { class: 'pulsanti-tavolo' }, b(-1), b(1)),
+            rip ? (() => {
+              const cond = armi.find((w) => String(w.uid).split(':')[0] === x.uid)?.condizioneArma?.id ?? null;
+              const ok = riparabile(x, cond, rip);
+              return h('button', { type: 'button', class: 'btn btn-ripara', disabled: !ok.si || n >= x.piMax,
+                title: !ok.si ? ok.motivo : n >= x.piMax ? 'PI già al massimo.' : `Riparazione strutturale: ${rip.ore} ora, Prova di ${rip.abilita} (A.46).`,
+                onclick: () => { ctx.ui.riparazione = { uid: x.uid, improvvisati: false, esito: null }; ctx.azioni.ridisegna(); } }, 'Ripara');
+            })() : null),
           h('td', {}, x.ps ? `${x.ps}${x.qualita ? ` (${x.qualita})` : ''}` : '—'));
       })))),
+    pannelloRiparazione(ctx, lista, pi, rip),
     h('p', { class: 'nota' }, 'Un colpo o una Parata ordinari non tolgono PI: si perdono con un attacco per rompere l’oggetto, un Magistrale che lo coinvolge, Corrosivo o Demolitrice e il danno Etereo, se la PS Integrità (1d20 ≤ PS) fallisce. A 0 PI l’oggetto è Rotto: non dà AR né i suoi effetti. La riparazione la decide il master: si rimettono i PI con +.'));
 }
 
@@ -388,6 +400,36 @@ function condizioniOggetti(ctx) {
         h('span', { class: 'nome-condizionale' }, lista[0].oggetto),
         h('span', { class: 'effetto-condizionale' }, ` · ${lista.map(breve).join(', ')}`));
     })));
+}
+
+/** Pannello della riparazione strutturale di un oggetto (A.46): nessun dado, esito scelto dopo il tiro. */
+function pannelloRiparazione(ctx, lista, pi, rip) {
+  const stato = ctx.ui?.riparazione;
+  const x = stato && lista.find((o) => o.uid === stato.uid);
+  if (!rip || !x) return null;
+  const n = pi[x.uid] ?? x.piMax;
+  const va = vaRiparazione(ctx.tab.scheda, stato.improvvisati, rip);
+  const e = stato.esito ? esitoRiparazione({ piAttuali: n, piMax: x.piMax, costo: x.costo }, stato.esito, rip) : null;
+  const crediti = ctx.sessione.crediti;
+  const chiudi = () => { ctx.ui.riparazione = null; ctx.azioni.ridisegna(); };
+  return h('div', { class: 'riquadro pannello-riparazione', role: 'group', 'aria-label': `Riparazione di ${x.nome}` },
+    h('h3', {}, `Ripara ${x.nome} · PI ${n}/${x.piMax}`),
+    h('p', {}, `${rip.ore} ora di lavoro, Prova di ${rip.abilita}: `, h('strong', {}, va ? `VA ${va.totale}` : '—'),
+      va?.improvvisati ? h('span', { class: 'sigla' }, ` (${va.base} ${va.improvvisati} strumenti improvvisati)`) : null),
+    h('label', {}, h('input', { type: 'checkbox', checked: stato.improvvisati, onchange: () => { stato.improvvisati = !stato.improvvisati; ctx.azioni.ridisegna(); } }),
+      ` Strumenti improvvisati (${rip.strumenti_improvvisati_va} VA)`),
+    h('p', { class: 'nota' }, 'Tira al tavolo, poi scegli l’esito:'),
+    h('div', { class: 'scelte-esito' }, rip.esiti.map((es) => h('button', { type: 'button', class: `btn${stato.esito === es.id ? ' primario' : ''}`, 'aria-pressed': String(stato.esito === es.id),
+      onclick: () => { stato.esito = es.id; ctx.azioni.ridisegna(); } }, `${es.nome} (${es.pi > 0 ? '+' : ''}${es.pi} PI)`))),
+    e ? h('p', {}, `PI ${n} → `, h('strong', {}, `${e.piNuovi}/${x.piMax}`),
+      e.costoMateriali === null ? ' · materiali: prezzo di catalogo assente, costo a cura del Direttore'
+        : ` · materiali ${e.costoMateriali.toLocaleString('it-IT')} crediti (${rip.materiali_percentuale}% del prezzo per PI recuperato)`,
+      e.costoMateriali && !Number.isInteger(crediti) ? ' — crediti non tracciati: annotali a mano' : null,
+      e.costoMateriali && Number.isInteger(crediti) && crediti < e.costoMateriali ? ` — crediti insufficienti (${crediti})` : null) : null,
+    h('div', { class: 'barra-azioni' },
+      h('button', { type: 'button', class: 'btn primario', disabled: !e,
+        onclick: () => { ctx.azioni.ripara(x.uid, e.piNuovi, e.costoMateriali); ctx.ui.riparazione = null; } }, 'Conferma'),
+      h('button', { type: 'button', class: 'btn', onclick: chiudi }, 'Annulla')));
 }
 
 function promemoriaPenalita(ctx, { soloSenzaEffetto = false } = {}) {
