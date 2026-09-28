@@ -13,7 +13,8 @@ const { dati } = await datiReali();
 const N = 'Addestramento al Combattimento Senz’Armi';
 const LOTTATORE = {
   ...nuoveScelte(), nome: 'Brutus', corporazione: 'Bauhaus', puntiCaratteristica: { FOR: 2, COS: 1, DES: 2 },
-  addestramento: 'Combattente', classe: 'Lottatore', puntiAbilitaLiberi: { 'Corpo a corpo': 2, 'Atletica': 2, 'Percezione': 1 }, puntiEroe: tiro(5),
+  addestramento: 'Combattente', classe: 'Lottatore', puntiEroe: tiro(5),
+  puntiAbilitaLiberi: { 'Corpo a corpo': 2, 'Atletica': 2, 'Percezione': 1, 'Armi da mischia': 2, 'Difese': 2, 'Armi da guerra': 1 },
 };
 const con = (disciplina) => ({ ...LOTTATORE, parametriTalenti: { [N]: disciplina } });
 const scheda = (creazione, livelli = []) => calcolaScheda({ creazione, livelli }, dati);
@@ -72,7 +73,8 @@ test('la Disciplina non si cambia dopo la conferma: un livello successivo non pu
   const p = { creazione: con('potenza'), livelli };
   assert.equal(scheda(p.creazione, livelli).errori.length, 0);
   const aScelta = lottatore.talenti_a_scelta.find((t) => !t.requisito && !/Tecniche Interiori Supplementari|Risorse Interiori/.test(t.nome)).nome;
-  const voce = { grado: { classe: 'Lottatore' }, tiroPV: tiro(4), talentoClasse: aScelta, puntiAbilita: { 'Corpo a corpo': 1, 'Atletica': 1, 'Difese': 3 } };
+  const voce = { grado: { classe: 'Lottatore' }, tiroPV: tiro(4), talentoClasse: aScelta, puntiAbilita: { 'Percezione': 1, 'Armi da guerra': 3, 'Armi leggere': 3, 'Tecnologia': 3 },
+  };
   const cambio = validaLivello(p, { ...voce, parametriTalenti: { [N]: 'rapidita' } }, dati);
   assert.ok(cambio.some((e) => e.tipo === 'violazione' && /una sola volta/.test(e.problema)), JSON.stringify(cambio));
   // su un livello senza Grado di Classe il campo non è nemmeno ammesso

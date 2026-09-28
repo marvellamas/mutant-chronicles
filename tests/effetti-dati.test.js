@@ -11,7 +11,7 @@ test('effetti degli oggetti: i dati reali passano il validatore', () => {
   assert.deepEqual(errori, []);
   const n = dati.equipaggiamento.indice.file.flatMap(({ id }) => dati.equipaggiamento.file[id].oggetti).filter((o) => o.effetti).length
     + Object.values(dati.dotazioni.oggetti_dotazione).filter((o) => o.effetti).length;
-  assert.equal(n, 182); // 60 fino al lotto elmetti; elmetti e modifiche (§7.21): 31; armature corporative con proprietà numeriche: 88; scudi con AR (Antiesplosione, Scudo Magico): 3
+  assert.equal(n, 194); // 60 fino al lotto elmetti; elmetti e modifiche (§7.21): 31; armature corporative con proprietà numeriche: 88; scudi con AR (Antiesplosione, Scudo Magico): 3; rinforzi del §7.23: 12
 });
 
 test('validatore: effetti con Abilità inesistente, valore 0 o uso mancante sono errori leggibili', () => {

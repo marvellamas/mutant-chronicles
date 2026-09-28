@@ -1,7 +1,7 @@
 {
-  "versione_manuale": "Armamenti 0.50",
-  "fonte": "Manuale degli Armamenti v0.50, §7.11.2 Rinforzi e sovrapponibilità (p. 62), soprabiti dei §7.11.5 e §7.11.7; lotto 9",
-  "_nota": "Generato da tools/lotti/lotto9_rinforzi.mjs; da qui in poi si modifica questo file. Un kit «in uso» e montato su un’armatura indossata ne aumenta AR e FOR richiesta, se l’armatura lo ammette («rinforzi_ammessi», e «compatibile_con» del kit). Una Leggera portata fisicamente ad AR 3 o più usa le penalità della Media, con gli effetti delle proprietà native (§7.11.2).",
+  "versione_manuale": "Armamenti 0.53",
+  "fonte": "Manuale degli Armamenti v0.53, §7.23 Catalogo dei rinforzi (regole del §7.11.2)",
+  "_nota": "Generato da tools/lotti/lotto_rinforzi_723.py. Un rinforzo «in uso» e montato su un’armatura indossata ne aumenta AR e FOR richiesta, se l’armatura ammette la sua categoria («rinforzi_ammessi», e «compatibile_con» del rinforzo); le sue proprietà valgono solo in quel caso. Una Leggera portata fisicamente ad AR 3 o più usa le penalità della Media (§7.11.2, §7.23.4). Proprietà uguali o benefici equivalenti presenti su più oggetti non si sommano: si usa il maggiore applicabile. (§7.23.9)",
   "oggetti": [
     {
       "id": "rinforzo-leggero",
@@ -13,9 +13,9 @@
         "Rinforzi Leggeri",
         "Kit di rinforzo leggero"
       ],
-      "note_manuale": "Si può montare un solo kit di Rinforzi compatibile. Non si sommano più kit e non si sovrappongono due armature complete. Il kit aumenta AR e requisito FOR dell’armatura; conserva PI e PS propri, registrati separatamente. Non si sommano i suoi PI a quelli della protezione. Le proprietà native restano applicabili nei rispettivi ambiti. La Leggera commerciale accetta Rinforzi Leggeri o Pesanti; la Media commerciale soltanto Leggeri; la Pesante commerciale nessuno. Per i modelli corporativi prevale la compatibilità indicata nella scheda. Un’armatura Leggera portata fisicamente ad AR 3 o superiore da un rinforzo utilizza le penalità di una Media. Un incremento della sola AR magica non cambia categoria. Un modello nativamente Leggero con AR superiore, come la Divisa operativa ASA, mantiene invece la categoria dichiarata fino all’aggiunta del rinforzo.",
-      "paragrafo": "§7.11.2",
-      "versione_manuale": "Armamenti 0.50",
+      "note_manuale": "Leggero e Pesante indicano la categoria regolistica del rinforzo. Il catalogo identifica gli oggetti acquistabili che utilizzano quei profili. Soprabito, mantello e kit di piastre sono alternative: i loro bonus non si sommano. * La Leggera commerciale ammette un Rinforzo Leggero oppure Pesante; la Media commerciale soltanto un Leggero; la Pesante commerciale nessuno. Per i modelli corporativi prevale la singola scheda. * La forma dell’oggetto non supera i limiti di compatibilità: un soprabito non concede il bonus su un’armatura che non ammette rinforzi. * Il rinforzo conserva PI e PS Integrità propri, registrati separatamente. I suoi PI non si aggiungono a quelli dell’armatura. * Un’armatura Leggera portata fisicamente ad AR 3 o superiore mediante un rinforzo utilizza le penalità della Media. Le proprietà native continuano a funzionare nei rispettivi ambiti. * Il requisito FOR aumenta; il rinforzo non aumenta la Caratteristica FOR del personaggio. I valori aggiuntivi descrivono l’impiego insieme a un’armatura compatibile; non costituiscono un profilo autonomo di armatura.",
+      "paragrafo": "§7.23.1",
+      "versione_manuale": "Armamenti 0.53",
       "pi": 6,
       "qualita": "Comune",
       "ps_int": 10,
@@ -41,9 +41,109 @@
         "Rinforzi Pesanti",
         "Kit di rinforzo pesante"
       ],
-      "note_manuale": "Si può montare un solo kit di Rinforzi compatibile. Non si sommano più kit e non si sovrappongono due armature complete. Il kit aumenta AR e requisito FOR dell’armatura; conserva PI e PS propri, registrati separatamente. Non si sommano i suoi PI a quelli della protezione. Le proprietà native restano applicabili nei rispettivi ambiti. La Leggera commerciale accetta Rinforzi Leggeri o Pesanti; la Media commerciale soltanto Leggeri; la Pesante commerciale nessuno. Per i modelli corporativi prevale la compatibilità indicata nella scheda. Un’armatura Leggera portata fisicamente ad AR 3 o superiore da un rinforzo utilizza le penalità di una Media. Un incremento della sola AR magica non cambia categoria. Un modello nativamente Leggero con AR superiore, come la Divisa operativa ASA, mantiene invece la categoria dichiarata fino all’aggiunta del rinforzo.",
-      "paragrafo": "§7.11.2",
-      "versione_manuale": "Armamenti 0.50",
+      "note_manuale": "Leggero e Pesante indicano la categoria regolistica del rinforzo. Il catalogo identifica gli oggetti acquistabili che utilizzano quei profili. Soprabito, mantello e kit di piastre sono alternative: i loro bonus non si sommano. * La Leggera commerciale ammette un Rinforzo Leggero oppure Pesante; la Media commerciale soltanto un Leggero; la Pesante commerciale nessuno. Per i modelli corporativi prevale la singola scheda. * La forma dell’oggetto non supera i limiti di compatibilità: un soprabito non concede il bonus su un’armatura che non ammette rinforzi. * Il rinforzo conserva PI e PS Integrità propri, registrati separatamente. I suoi PI non si aggiungono a quelli dell’armatura. * Un’armatura Leggera portata fisicamente ad AR 3 o superiore mediante un rinforzo utilizza le penalità della Media. Le proprietà native continuano a funzionare nei rispettivi ambiti. * Il requisito FOR aumenta; il rinforzo non aumenta la Caratteristica FOR del personaggio. I valori aggiuntivi descrivono l’impiego insieme a un’armatura compatibile; non costituiscono un profilo autonomo di armatura.",
+      "paragrafo": "§7.23.1",
+      "versione_manuale": "Armamenti 0.53",
+      "pi": 8,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 2000,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Pesante",
+        "ar": 2,
+        "for": 2
+      },
+      "proprieta": []
+    },
+    {
+      "id": "soprabito-balistico",
+      "nome": "Soprabito balistico",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Cappotto lungo con tessuto protettivo e inserti flessibili, da indossare sopra un’armatura compatibile.",
+      "paragrafo": "§7.23.2",
+      "versione_manuale": "Armamenti 0.53",
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 1000,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "proprieta": []
+    },
+    {
+      "id": "mantello-balistico",
+      "nome": "Mantello balistico",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Mantello protettivo avvolgente, assicurato al corpo mediante chiusure e cinghie; deve essere indossato correttamente per concedere il beneficio.",
+      "paragrafo": "§7.23.2",
+      "versione_manuale": "Armamenti 0.53",
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 1000,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "proprieta": []
+    },
+    {
+      "id": "kit-di-piastre-supplementari-leggere",
+      "nome": "Kit di piastre supplementari leggere",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Serie completa di piastre aggiuntive per gli alloggiamenti o gli attacchi dell’armatura compatibile.",
+      "paragrafo": "§7.23.2",
+      "versione_manuale": "Armamenti 0.53",
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 1000,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "proprieta": []
+    },
+    {
+      "id": "kit-di-piastre-supplementari-pesanti",
+      "nome": "Kit di piastre supplementari pesanti",
+      "tipo": "accessorio",
+      "catalogo": "Commerciale",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Serie completa di piastre più spesse ed estese per le armature che ammettono un Rinforzo Pesante.",
+      "paragrafo": "§7.23.2",
+      "versione_manuale": "Armamenti 0.53",
       "pi": 8,
       "qualita": "Comune",
       "ps_int": 10,
@@ -61,14 +161,16 @@
     },
     {
       "id": "soprabito-blu-di-ordinanza",
-      "nome": "Soprabito blu di ordinanza",
+      "nome": "Soprabito blu d’ordinanza BLEU",
       "tipo": "accessorio",
       "catalogo": "Bauhaus",
       "famiglia": "Rinforzi",
-      "nomi_alternativi": [],
-      "note_manuale": "Il Soprabito blu di ordinanza è un Rinforzo Leggero opzionale, con AR +1, FOR +1, PI 6, Qualità Comune, PS 10, REP NC e costo 1.000. Con il Soprabito: AR 3, FOR 5, penalità Media e costo totale 5.500. Occupa l’unico posto per rinforzi.",
-      "paragrafo": "§7.11.5",
-      "versione_manuale": "Armamenti 0.50",
+      "nomi_alternativi": [
+        "Soprabito blu di ordinanza"
+      ],
+      "note_manuale": "Entrambi concedono AR +1 e aumentano di 1 la FOR richiesta; hanno PI 6, Qualità Comune, PS Integrità 10 e Reperibilità Non comune. La forma di soprabito non aggiunge automaticamente Discreta, Mimetismo o altri vantaggi.",
+      "paragrafo": "§7.23.3",
+      "versione_manuale": "Armamenti 0.53",
       "pi": 6,
       "qualita": "Comune",
       "ps_int": 10,
@@ -82,10 +184,10 @@
         "ar": 1,
         "for": 1
       },
+      "proprieta": [],
       "compatibile_con": [
         "armature_corporative:armatura-d-ordinanza-bleu"
-      ],
-      "proprieta": []
+      ]
     },
     {
       "id": "soprabito-asa",
@@ -94,9 +196,9 @@
       "catalogo": "Alleanza",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
-      "note_manuale": "Soprabito ASA Rinforzo Leggero opzionale: AR +1, FOR +1, PI 6, Qualità Comune, PS Integrità 10, REP NC, costo 1.000. Con la Divisa d’ordinanza: AR 3, FOR 4, penalità Media e costo totale 5.000. Con la Divisa operativa: AR 4, FOR 5, penalità Media e costo totale 8.000. Non concede AR magica né Protezione occulta; mantiene Integrità propria e occupa l’unico posto per rinforzi.",
-      "paragrafo": "§7.11.7",
-      "versione_manuale": "Armamenti 0.50",
+      "note_manuale": "Entrambi concedono AR +1 e aumentano di 1 la FOR richiesta; hanno PI 6, Qualità Comune, PS Integrità 10 e Reperibilità Non comune. La forma di soprabito non aggiunge automaticamente Discreta, Mimetismo o altri vantaggi.",
+      "paragrafo": "§7.23.3",
+      "versione_manuale": "Armamenti 0.53",
       "pi": 6,
       "qualita": "Comune",
       "ps_int": 10,
@@ -110,11 +212,624 @@
         "ar": 1,
         "for": 1
       },
+      "proprieta": [],
       "compatibile_con": [
         "armature_corporative:divisa-d-ordinanza-asa",
         "armature_corporative:divisa-operativa-asa"
+      ]
+    },
+    {
+      "id": "soprabito-feldmantel",
+      "nome": "Soprabito Feldmantel",
+      "tipo": "accessorio",
+      "catalogo": "Bauhaus",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Feldmantel è un soprabito spesso, con tessuto resistente al fuoco. Le Eisenwall sono piastre massicce e ben ancorate: la maggiore robustezza riguarda il rinforzo stesso; Stabile aiuta il portatore contro Sbilanciante.",
+      "paragrafo": "§7.23.6",
+      "versione_manuale": "Armamenti 0.53",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 1800,
+      "si_monta_su": [
+        "armatura"
       ],
-      "proprieta": []
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "proprieta": [
+        {
+          "nome": "Ignifuga 2",
+          "testo": "I valori sono le soglie delle Contromisure contro gli effetti aggiuntivi di Fuoco, Concussivo ed Elettricità, secondo il §5.24 del Manuale del Giocatore e il §7.11.4 degli Armamenti. Non rappresentano ulteriori punti da sottrarre ai danni."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Fuoco",
+          "valore": 2,
+          "ambito": "generale",
+          "beneficio": "contromisura_fuoco",
+          "condizione": "I valori sono le soglie delle Contromisure contro gli effetti aggiuntivi di Fuoco, Concussivo ed Elettricità, secondo il §5.24 del Manuale del Giocatore e il §7.11.4 degli Armamenti.",
+          "fonte": "Armamenti §7.23.7",
+          "proprieta": "Ignifuga 2"
+        }
+      ]
+    },
+    {
+      "id": "piastre-eisenwall",
+      "nome": "Piastre Eisenwall",
+      "tipo": "accessorio",
+      "catalogo": "Bauhaus",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Feldmantel è un soprabito spesso, con tessuto resistente al fuoco. Le Eisenwall sono piastre massicce e ben ancorate: la maggiore robustezza riguarda il rinforzo stesso; Stabile aiuta il portatore contro Sbilanciante.",
+      "paragrafo": "§7.23.6",
+      "versione_manuale": "Armamenti 0.53",
+      "pi": 10,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 3200,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Pesante",
+        "ar": 2,
+        "for": 2
+      },
+      "proprieta": [
+        {
+          "nome": "Struttura robusta",
+          "testo": "I due PI aggiuntivi appartengono alle Eisenwall e sono già compresi nei 10 PI dichiarati; non aumentano i PI dell’armatura sottostante."
+        },
+        {
+          "nome": "Stabile 1",
+          "testo": "Concede +X alla Prova di Caratteristica FOR o DES effettivamente richiesta contro Sbilanciante. Non è un bonus generale alle Prove Salvezza e non annulla Sbalzante."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "caratteristica",
+          "caratteristiche": [
+            "FOR",
+            "DES"
+          ],
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "contro Sbilanciante",
+          "beneficio": "stabile",
+          "condizione": "Concede +X alla Prova di Caratteristica FOR o DES effettivamente richiesta contro Sbilanciante.",
+          "fonte": "Armamenti §7.23.7",
+          "proprieta": "Stabile 1"
+        }
+      ]
+    },
+    {
+      "id": "piastre-breacher",
+      "nome": "Piastre Breacher",
+      "tipo": "accessorio",
+      "catalogo": "Capitol",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Le Breacher sono destinate alle operazioni di breccia e agli ambienti esposti a esplosioni. Il Mantello Ranger privilegia la ricognizione: all’acquisto si sceglie un solo ambiente della mimetica, per esempio boscoso, desertico, artico o urbano. La livrea non cambia automaticamente.",
+      "paragrafo": "§7.23.6",
+      "versione_manuale": "Armamenti 0.53",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2500,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "proprieta": [
+        {
+          "nome": "Antiesplosione 1",
+          "testo": "Aggiunge 1 AR contro danni Naturali o Magici di esplosioni. Per esempio, una civile media con Breacher passa da AR 3 a 4 ordinaria e a 5 contro un’esplosione pertinente. Non aggiunge protezione dai danni Eterei."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "ar_contro",
+          "contro": "esplosioni",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Aggiunge 1 AR contro danni Naturali o Magici di esplosioni.",
+          "fonte": "Armamenti §7.23.7",
+          "proprieta": "Antiesplosione 1"
+        }
+      ]
+    },
+    {
+      "id": "mantello-ranger",
+      "nome": "Mantello Ranger",
+      "tipo": "accessorio",
+      "catalogo": "Capitol",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Le Breacher sono destinate alle operazioni di breccia e agli ambienti esposti a esplosioni. Il Mantello Ranger privilegia la ricognizione: all’acquisto si sceglie un solo ambiente della mimetica, per esempio boscoso, desertico, artico o urbano. La livrea non cambia automaticamente.",
+      "paragrafo": "§7.23.6",
+      "versione_manuale": "Armamenti 0.53",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 1800,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "proprieta": [
+        {
+          "nome": "Mimetica ambientale 1",
+          "testo": "Concedono +1 VA alla normale Prova unica di Furtività, quando esistono condizioni concrete per nascondersi o muoversi senza essere individuati. Il Ranger richiede anche l’ambiente previsto; il Kasumi non è legato a una sola livrea ambientale. Non rendono invisibili, non eliminano i rumori e non annullano le penalità dell’armatura."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Furtività",
+          "valore": 1,
+          "ambito": "situazionale",
+          "beneficio": "mimetismo",
+          "condizione": "Il Ranger richiede anche l’ambiente previsto; il Kasumi non è legato a una sola livrea ambientale.",
+          "fonte": "Armamenti §7.23.7",
+          "proprieta": "Mimetica ambientale 1"
+        }
+      ]
+    },
+    {
+      "id": "soprabito-trenchcoat",
+      "nome": "Soprabito Trenchcoat",
+      "tipo": "accessorio",
+      "catalogo": "Imperial",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Trenchcoat è un soprabito da trincea con imbottitura contro gli effetti concussivi. Le Highland Guard sono piastre fissate con un’imbracatura stabile, pensate per contrastare lo sbilanciamento; non impediscono automaticamente lo spostamento provocato da Sbalzante.",
+      "paragrafo": "§7.23.6",
+      "versione_manuale": "Armamenti 0.53",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 1800,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "proprieta": [
+        {
+          "nome": "Imbottita 2",
+          "testo": "I valori sono le soglie delle Contromisure contro gli effetti aggiuntivi di Fuoco, Concussivo ed Elettricità, secondo il §5.24 del Manuale del Giocatore e il §7.11.4 degli Armamenti. Non rappresentano ulteriori punti da sottrarre ai danni."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "beneficio": "contromisura_concussivo",
+          "condizione": "I valori sono le soglie delle Contromisure contro gli effetti aggiuntivi di Fuoco, Concussivo ed Elettricità, secondo il §5.24 del Manuale del Giocatore e il §7.11.4 degli Armamenti.",
+          "fonte": "Armamenti §7.23.7",
+          "proprieta": "Imbottita 2"
+        }
+      ]
+    },
+    {
+      "id": "piastre-highland-guard",
+      "nome": "Piastre Highland Guard",
+      "tipo": "accessorio",
+      "catalogo": "Imperial",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Trenchcoat è un soprabito da trincea con imbottitura contro gli effetti concussivi. Le Highland Guard sono piastre fissate con un’imbracatura stabile, pensate per contrastare lo sbilanciamento; non impediscono automaticamente lo spostamento provocato da Sbalzante.",
+      "paragrafo": "§7.23.6",
+      "versione_manuale": "Armamenti 0.53",
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 3000,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Pesante",
+        "ar": 2,
+        "for": 2
+      },
+      "proprieta": [
+        {
+          "nome": "Stabile 2",
+          "testo": "Concede +X alla Prova di Caratteristica FOR o DES effettivamente richiesta contro Sbilanciante. Non è un bonus generale alle Prove Salvezza e non annulla Sbalzante."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "caratteristica",
+          "caratteristiche": [
+            "FOR",
+            "DES"
+          ],
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro Sbilanciante",
+          "beneficio": "stabile",
+          "condizione": "Concede +X alla Prova di Caratteristica FOR o DES effettivamente richiesta contro Sbilanciante.",
+          "fonte": "Armamenti §7.23.7",
+          "proprieta": "Stabile 2"
+        }
+      ]
+    },
+    {
+      "id": "rivestimento-cs-r10",
+      "nome": "Rivestimento CS-R10",
+      "tipo": "accessorio",
+      "catalogo": "Cybertronic",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Il CS-R10 è un rivestimento protettivo con strati isolanti passivi. Il CS-R20 aggiunge sensori e assistenza reattiva collegati all’interfaccia neurale: il suo SIN riguarda soltanto Schivata.",
+      "paragrafo": "§7.23.6",
+      "versione_manuale": "Armamenti 0.53",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 1800,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "proprieta": [
+        {
+          "nome": "Isolante 2",
+          "testo": "I valori sono le soglie delle Contromisure contro gli effetti aggiuntivi di Fuoco, Concussivo ed Elettricità, secondo il §5.24 del Manuale del Giocatore e il §7.11.4 degli Armamenti. Non rappresentano ulteriori punti da sottrarre ai danni."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Elettricità",
+          "valore": 2,
+          "ambito": "generale",
+          "beneficio": "contromisura_elettricita",
+          "condizione": "I valori sono le soglie delle Contromisure contro gli effetti aggiuntivi di Fuoco, Concussivo ed Elettricità, secondo il §5.24 del Manuale del Giocatore e il §7.11.4 degli Armamenti.",
+          "fonte": "Armamenti §7.23.7",
+          "proprieta": "Isolante 2"
+        }
+      ]
+    },
+    {
+      "id": "piastre-reattive-cs-r20",
+      "nome": "Piastre reattive CS-R20",
+      "tipo": "accessorio",
+      "catalogo": "Cybertronic",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Il CS-R10 è un rivestimento protettivo con strati isolanti passivi. Il CS-R20 aggiunge sensori e assistenza reattiva collegati all’interfaccia neurale: il suo SIN riguarda soltanto Schivata. È l’unico modello di questo catalogo che richiede alimentazione per la proprietà speciale. Il CS-R20 usa la stessa batteria di servizio degli elmetti (§§7.3.4 e 7.21.3), con una batteria dedicata al rinforzo e indipendente dall’elmetto: autonomia 24 ore complessive anche non consecutive, ricarica completa in 4 ore, ricambio carico 10. Batteria carica, cavo e alimentatore sono compresi nei 3.500. Accensione, spegnimento o sostituzione con batteria pronta richiedono 1 AzP. Il mantenimento non richiede Azioni. A batteria scarica cessa il solo bonus SIN; l’AR ordinaria resta disponibile. Tutti gli altri modelli del catalogo funzionano passivamente.",
+      "paragrafo": "§7.23.6",
+      "versione_manuale": "Armamenti 0.53",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 3500,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "proprieta": [
+        {
+          "nome": "SIN 1",
+          "testo": "Richiede un Innesto di Interfaccia Neurale compatibile e attivo, acquistato e installato separatamente. Concede +1 VA alle Prove di Difese per Schivare, senza estendersi a Parata, Elusione, Iniziativa o attacchi. Senza collegamento conserva il normale profilo del Rinforzo Leggero. Abbinamento e cumulo seguono il §7.15.1: si usa un solo SIN pertinente, il maggiore fino a +2, senza sommare il SIN del rinforzo a quello dell’armatura."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Difese",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "Schivata",
+          "beneficio": "sin_schivata",
+          "condizione": "Richiede un Innesto di Interfaccia Neurale compatibile e attivo, acquistato e installato separatamente.",
+          "fonte": "Armamenti §7.23.7",
+          "proprieta": "SIN 1"
+        }
+      ]
+    },
+    {
+      "id": "mantello-kasumi",
+      "nome": "Mantello Kasumi",
+      "tipo": "accessorio",
+      "catalogo": "Mishima",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Kasumi combina protezione flessibile e tessuti mimetici. Le Sode d’assalto impiegano piastre articolate che riducono l’ostacolo dell’armatura negli attacchi ravvicinati.",
+      "paragrafo": "§7.23.6",
+      "versione_manuale": "Armamenti 0.53",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2500,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "proprieta": [
+        {
+          "nome": "Mimetismo 1",
+          "testo": "Concedono +1 VA alla normale Prova unica di Furtività, quando esistono condizioni concrete per nascondersi o muoversi senza essere individuati. Il Ranger richiede anche l’ambiente previsto; il Kasumi non è legato a una sola livrea ambientale. Non rendono invisibili, non eliminano i rumori e non annullano le penalità dell’armatura."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Furtività",
+          "valore": 1,
+          "ambito": "situazionale",
+          "beneficio": "mimetismo",
+          "condizione": "Concedono +1 VA alla normale Prova unica di Furtività, quando esistono condizioni concrete per nascondersi o muoversi senza essere individuati.",
+          "fonte": "Armamenti §7.23.7",
+          "proprieta": "Mimetismo 1"
+        }
+      ]
+    },
+    {
+      "id": "piastre-sode-d-assalto",
+      "nome": "Piastre Sode d’assalto",
+      "tipo": "accessorio",
+      "catalogo": "Mishima",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Kasumi combina protezione flessibile e tessuti mimetici. Le Sode d’assalto impiegano piastre articolate che riducono l’ostacolo dell’armatura negli attacchi ravvicinati.",
+      "paragrafo": "§7.23.6",
+      "versione_manuale": "Armamenti 0.53",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 3000,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "proprieta": [
+        {
+          "nome": "Articolazione d’assalto",
+          "testo": "Riduce di 1, fino a 0, la penalità della propria armatura agli attacchi ravvicinati. Non concede un bonus positivo quando la penalità è già 0 e non riduce quelle dovute a FOR insufficiente. Non modifica Schivata, Parata, attacchi a distanza, MOV o lancio degli Incantesimi.",
+          "effetto": {
+            "penalita": {
+              "riduce": {
+                "attacchi_ravvicinati": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "tabardo-consacrato",
+      "nome": "Tabardo consacrato",
+      "tipo": "accessorio",
+      "catalogo": "Fratellanza",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Tabardo consacrato incorpora una protezione rituale passiva, secondo il modello delle armature del catalogo. Il Mantello del Pellegrino combina resistenza al fuoco e imbottitura per affrontare ambienti di combattimento ostili.",
+      "paragrafo": "§7.23.6",
+      "versione_manuale": "Armamenti 0.53",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 3000,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "proprieta": [
+        {
+          "nome": "Protezione occulta 1",
+          "testo": "Concede +1 alle sole PS Magia effettivamente richieste contro Oscura Simmetria, Corruzione o Paura. Non crea una nuova Salvezza e non si applica a una PS Volontà contro Paura. Come nelle armature della Fratellanza, è passiva mentre il rinforzo è indossato e non richiede Sintonizzazione o PM. Il Tabardo aggiunge soltanto AR ordinaria, senza AR magica."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "salvezza",
+          "salvezza": "magia",
+          "valore": 1,
+          "ambito": "uso_specifico",
+          "uso": "contro Oscura Simmetria, Corruzione e Paura",
+          "beneficio": "protezione_occulta",
+          "condizione": "Concede +1 alle sole PS Magia effettivamente richieste contro Oscura Simmetria, Corruzione o Paura.",
+          "fonte": "Armamenti §7.23.7",
+          "proprieta": "Protezione occulta 1"
+        }
+      ]
+    },
+    {
+      "id": "mantello-del-pellegrino",
+      "nome": "Mantello del Pellegrino",
+      "tipo": "accessorio",
+      "catalogo": "Fratellanza",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Tabardo consacrato incorpora una protezione rituale passiva, secondo il modello delle armature del catalogo. Il Mantello del Pellegrino combina resistenza al fuoco e imbottitura per affrontare ambienti di combattimento ostili.",
+      "paragrafo": "§7.23.6",
+      "versione_manuale": "Armamenti 0.53",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2600,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "proprieta": [
+        {
+          "nome": "Ignifuga 2",
+          "testo": "I valori sono le soglie delle Contromisure contro gli effetti aggiuntivi di Fuoco, Concussivo ed Elettricità, secondo il §5.24 del Manuale del Giocatore e il §7.11.4 degli Armamenti. Non rappresentano ulteriori punti da sottrarre ai danni."
+        },
+        {
+          "nome": "Imbottita 2",
+          "testo": "I valori sono le soglie delle Contromisure contro gli effetti aggiuntivi di Fuoco, Concussivo ed Elettricità, secondo il §5.24 del Manuale del Giocatore e il §7.11.4 degli Armamenti. Non rappresentano ulteriori punti da sottrarre ai danni."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Fuoco",
+          "valore": 2,
+          "ambito": "generale",
+          "beneficio": "contromisura_fuoco",
+          "condizione": "I valori sono le soglie delle Contromisure contro gli effetti aggiuntivi di Fuoco, Concussivo ed Elettricità, secondo il §5.24 del Manuale del Giocatore e il §7.11.4 degli Armamenti.",
+          "fonte": "Armamenti §7.23.7",
+          "proprieta": "Ignifuga 2"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 2,
+          "ambito": "generale",
+          "beneficio": "contromisura_concussivo",
+          "condizione": "I valori sono le soglie delle Contromisure contro gli effetti aggiuntivi di Fuoco, Concussivo ed Elettricità, secondo il §5.24 del Manuale del Giocatore e il §7.11.4 degli Armamenti.",
+          "fonte": "Armamenti §7.23.7",
+          "proprieta": "Imbottita 2"
+        }
+      ]
+    },
+    {
+      "id": "soprabito-asa-riservato",
+      "nome": "Soprabito ASA riservato",
+      "tipo": "accessorio",
+      "catalogo": "Alleanza",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Soprabito ASA riservato è una variante distinta dal soprabito base: la protezione è celata nella fattura del capo. Le Piastre Missione combinano contromisure contro fuoco ed elettricità.",
+      "paragrafo": "§7.23.6",
+      "versione_manuale": "Armamenti 0.53",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "NC",
+      "costo": 1800,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "proprieta": [
+        {
+          "nome": "Discreta",
+          "testo": "La protezione del Soprabito ASA riservato non è evidente a un’osservazione casuale; un esame ravvicinato o una perquisizione possono rivelarla. La proprietà permette di conservare Discreta quando anche l’armatura sottostante la possiede e nessun componente corazzato resta visibile. Non rende discreta un’armatura apertamente riconoscibile, non nasconde automaticamente armi o altri oggetti e non concede bonus a Furtività."
+        }
+      ],
+      "compatibile_con": [
+        "armature_corporative:divisa-d-ordinanza-asa",
+        "armature_corporative:divisa-operativa-asa"
+      ]
+    },
+    {
+      "id": "piastre-missione",
+      "nome": "Piastre Missione",
+      "tipo": "accessorio",
+      "catalogo": "Alleanza",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Soprabito ASA riservato è una variante distinta dal soprabito base: la protezione è celata nella fattura del capo. Le Piastre Missione combinano contromisure contro fuoco ed elettricità.",
+      "paragrafo": "§7.23.6",
+      "versione_manuale": "Armamenti 0.53",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2600,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "proprieta": [
+        {
+          "nome": "Ignifuga 2",
+          "testo": "I valori sono le soglie delle Contromisure contro gli effetti aggiuntivi di Fuoco, Concussivo ed Elettricità, secondo il §5.24 del Manuale del Giocatore e il §7.11.4 degli Armamenti. Non rappresentano ulteriori punti da sottrarre ai danni."
+        },
+        {
+          "nome": "Isolante 2",
+          "testo": "I valori sono le soglie delle Contromisure contro gli effetti aggiuntivi di Fuoco, Concussivo ed Elettricità, secondo il §5.24 del Manuale del Giocatore e il §7.11.4 degli Armamenti. Non rappresentano ulteriori punti da sottrarre ai danni."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Fuoco",
+          "valore": 2,
+          "ambito": "generale",
+          "beneficio": "contromisura_fuoco",
+          "condizione": "I valori sono le soglie delle Contromisure contro gli effetti aggiuntivi di Fuoco, Concussivo ed Elettricità, secondo il §5.24 del Manuale del Giocatore e il §7.11.4 degli Armamenti.",
+          "fonte": "Armamenti §7.23.7",
+          "proprieta": "Ignifuga 2"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Elettricità",
+          "valore": 2,
+          "ambito": "generale",
+          "beneficio": "contromisura_elettricita",
+          "condizione": "I valori sono le soglie delle Contromisure contro gli effetti aggiuntivi di Fuoco, Concussivo ed Elettricità, secondo il §5.24 del Manuale del Giocatore e il §7.11.4 degli Armamenti.",
+          "fonte": "Armamenti §7.23.7",
+          "proprieta": "Isolante 2"
+        }
+      ]
     }
   ]
 }

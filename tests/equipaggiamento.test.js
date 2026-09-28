@@ -379,8 +379,8 @@ test('scudi: due imbracciati non si sommano (avviso); stampa della riga Protezio
     .fogli.find((f) => f.id === 'combattimento').dati;
   const [riga] = f3.protezioni.righe;
   assert.deepEqual(riga.slice(0, 3), ['Scudo pesante Reaver', '3', 'Enorme']);
-  // Agente: Difese 5, FOR 6 su 7 richiesta → −1 alle Parate con lo Scudo (§7.1.6)
-  assert.equal(riga[3], 'Parata 4 ravv. / 0 dist.; con SIN collegato (Innesto di Interfaccia Neurale attivo): Parata 5/1; MOV −1 Q; FOR 7 (−1)');
+  // Agente: Difese 6 (Mod DES +2, base Avventuriero 4), FOR 6 su 7 richiesta → −1 alle Parate con lo Scudo (§7.1.6)
+  assert.equal(riga[3], 'Parata 5 ravv. / 1 dist.; con SIN collegato (Innesto di Interfaccia Neurale attivo): Parata 6/2; MOV −1 Q; FOR 7 (−1)');
 });
 
 test('validatore degli scudi: Parata, profili alternativi, attacco', () => {
@@ -729,7 +729,9 @@ const rinforzata = (armatura, kit, extra = []) => {
 
 test('lotto 9: rinforzi commerciali e soprabiti; la tabella del §7.11.2 è il test del calcolo', () => {
   const tutti = catalogo(dati).oggetti.filter((o) => o.file === 'rinforzi');
-  assert.deepEqual(tutti.map((o) => o.nome), ['Rinforzo Leggero', 'Rinforzo Pesante', 'Soprabito blu di ordinanza', 'Soprabito ASA']);
+  // Armamenti 0.53: il catalogo completo del §7.23 è in tests/rinforzi.test.js; qui i profili e i soprabiti del lotto 9
+  assert.deepEqual(tutti.filter((o) => ['rinforzo-leggero', 'rinforzo-pesante', 'soprabito-blu-di-ordinanza', 'soprabito-asa'].includes(o.id)).map((o) => o.nome),
+    ['Rinforzo Leggero', 'Rinforzo Pesante', 'Soprabito blu d’ordinanza BLEU', 'Soprabito ASA']);
   // «Configurazione commerciale | AR finale | FOR finale | Penalità» (p. 62)
   for (const [armatura, kit, ar, forR, cat] of [
     ['armature:armatura-civile-leggera', 'rinforzo-leggero', 2, 4, 'Leggera'],

@@ -187,7 +187,7 @@ export function validaScelte(scelte, dati) {
   if (spesiCar > cr.punti_caratteristica) err('puntiCaratteristica', `assegnati ${spesiCar} punti, il massimo è ${cr.punti_caratteristica}`);
   if (spesiCar < cr.punti_caratteristica) err('puntiCaratteristica', `assegnati ${spesiCar} punti su ${cr.punti_caratteristica}`, 'incompleto');
 
-  // §2.13: 5 Punti Abilità Liberi; Avanzamento iniziale ≤ 3 incluso il +1 di Classe; VA ≥ 1 prima dei punti liberi.
+  // §2.13: Punti Abilità Liberi (creazione.punti_abilita_liberi); Avanzamento iniziale ≤ 3 incluso il +1 di Classe; VA ≥ 1 prima dei punti liberi.
   const pa = scelte?.puntiAbilitaLiberi ?? {};
   const nomiAbilita = new Set(dati.abilita.abilita.map((a) => a.nome));
   for (const [n, p] of Object.entries(pa)) {

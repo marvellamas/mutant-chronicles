@@ -4,7 +4,7 @@
 
 ## Armi armature scudi e dotazioni operative
 
-**EDIZIONE 0.52**
+**EDIZIONE 0.53**
 
 Settembre 2026
 
@@ -60,25 +60,27 @@ Sezioni e pagine di consultazione
 
 [7.12 Corredi specialistici dell’Alleanza](#bookmark=id.ojdo7b9jhrmr)	68
 
-[7.13 Catalogo Capitol](#bookmark=id.evbj8kxr55ul)	69
+[7.13 Catalogo Capitol	70](#bookmark=id.evbj8kxr55ul)
 
-[7.14 Catalogo Imperial](#bookmark=id.dsvajpof4rfc)	78
+[7.14 Catalogo Imperial	79](#bookmark=id.dsvajpof4rfc)
 
-[7.15 Catalogo Cybertronic](#bookmark=id.6eswqv4mjio6)	88
+[7.15 Catalogo Cybertronic	89](#bookmark=id.6eswqv4mjio6)
 
-[7.16 Catalogo Mishima](#bookmark=id.oo04uhg9nuu0)	93
+[7.16 Catalogo Mishima	94](#bookmark=id.oo04uhg9nuu0)
 
-[7.17 Catalogo Fratellanza](#bookmark=id.ti3dqryv45h4)	98
+[7.17 Catalogo Fratellanza	99](#bookmark=id.ti3dqryv45h4)
 
-[7.18 Unità robotiche e accessori](#bookmark=id.se3u0w2yng53)	104
+[7.18 Unità robotiche e accessori	105](#bookmark=id.se3u0w2yng53)
 
-[7.19 Equipaggiamento sanitario](#bookmark=id.dsii7f4mdwfd)	106
+[7.19 Equipaggiamento sanitario	107](#bookmark=id.dsii7f4mdwfd)
 
-[7.20 Munizioni e alimentazioni](#bookmark=id.p6lnkgsvyr4g)	111
+[7.20 Munizioni e alimentazioni	112](#bookmark=id.p6lnkgsvyr4g)
 
-[7.21 Elmetti e modifiche](#bookmark=id.yq2wgvpplbyh)	119
+[7.21 Elmetti e modifiche	120](#bookmark=id.yq2wgvpplbyh)
 
-7.22 Armamenti corporativi di base	124
+7.22 Armamenti corporativi di base	125
+
+[7.23 Catalogo dei rinforzi	131](#7.23-catalogo-dei-rinforzi)
 
 # **Capitolo 7 — Armamenti**
 
@@ -1174,7 +1176,7 @@ La capacità ordinaria è FOR × 10 kg; il massimo sollevabile e trasportabile �
 ## **7.6 Contenuti ancora da sviluppare**
 
 * Armi ravvicinate e a distanza: i cataloghi commerciali, corporativi, dell’Alleanza e della Fratellanza sono nei §§7.1 e 7.7–7.9. Il raccordo KI della Lama Mushashi sarà integrato successivamente.  
-* Armature: basi commerciali, rinforzi, Bauhaus e Alleanza nel §7.11; Capitol nel §7.13; Imperial nel §7.14; Cybertronic nel §7.15; Mishima nel §7.16; Fratellanza nel §7.17. Gli Scudi commerciali e corporativi sono nel §7.4; gli elmetti e le modifiche commerciali nel §7.21. Le configurazioni Migliorate e Potenziate di armature e scudi saranno integrate successivamente.  
+* Armature: basi commerciali, rinforzi, Bauhaus e Alleanza nel §7.11; Capitol nel §7.13; Imperial nel §7.14; Cybertronic nel §7.15; Mishima nel §7.16; Fratellanza nel §7.17. Gli Scudi commerciali e corporativi sono nel §7.4; gli elmetti e le modifiche commerciali nel §7.21; i rinforzi commerciali e corporativi nel §7.23. Le configurazioni Migliorate e Potenziate di armature e scudi saranno integrate successivamente.  
 * Munizioni e alimentazioni: il catalogo completo delle munizioni qui definite, con prezzi e compatibilità, è nel §7.20. Le cariche offensive e le riserve a PM seguono anche i §§7.1.4 e 7.5.1. Le batterie di servizio di Torcia tattica, moduli di visione ed elmetti sono nei §§7.3.4 e 7.21.3. Le altre batterie e i consumabili non descritti nelle rispettive schede saranno integrati successivamente.  
 * Strumenti e dispositivi: corredi dell’Alleanza nel §7.12; esoscheletri Bauhaus nel §7.11.6; dotazioni Capitol e Imperial nei §§7.13–7.14; moduli Cybertronic nel §7.15 e robot Attila nel §7.18. Veicoli, motociclette e mezzi corazzati saranno integrati successivamente, comprese Fenris Bike, Necromower, Hurricane, Barracuda, mezzi dei Dragoni, Vorreiter e mezzi Mishima.  
 * Equipaggiamento sanitario: kit di pronto soccorso, cartucce, UMC, strumenti portatili, diagnostici e chirurgici nel §7.19. Droghe da Combattimento compatibili con gli UMC, naniti medici e ulteriori consumabili saranno integrati successivamente.
@@ -2527,7 +2529,7 @@ Per ogni punto di FOR mancante rispetto al requisito si applica un ulteriore −
 | Leggero | \+1 | \+1 | 6 | Comune | 10 | NC | 1.000 |
 | Pesante | \+2 | \+2 | 8 | Comune | 10 | NC | 2.000 |
 
-Si può montare un solo kit di Rinforzi compatibile. Non si sommano più kit e non si sovrappongono due armature complete. Il kit aumenta AR e requisito FOR dell’armatura; conserva PI e PS propri, registrati separatamente. Non si sommano i suoi PI a quelli della protezione. Le proprietà native restano applicabili nei rispettivi ambiti.
+Si può montare un solo rinforzo compatibile, scelto dal catalogo del §7.23. Non si sommano più kit e non si sovrappongono due armature complete. Il kit aumenta AR e requisito FOR dell’armatura; conserva PI e PS propri, registrati separatamente. Non si sommano i suoi PI a quelli della protezione. Le proprietà native restano applicabili nei rispettivi ambiti.
 
 La Leggera commerciale accetta Rinforzi Leggeri o Pesanti; la Media commerciale soltanto Leggeri; la Pesante commerciale nessuno. Per i modelli corporativi prevale la compatibilità indicata nella scheda. Un’armatura Leggera portata fisicamente ad AR 3 o superiore da un rinforzo utilizza le penalità di una Media. Un incremento della sola AR magica non cambia categoria. Un modello nativamente Leggero con AR superiore, come la Divisa operativa ASA, mantiene invece la categoria dichiarata fino all’aggiunta del rinforzo.
 
@@ -5092,3 +5094,152 @@ La Classe può quindi ricevere caricatori parzialmente pieni o vuoti, senza aume
 Gli eventuali acquisti migliori usano il valore del modello effettivamente assegnato, secondo la regola già approvata: cessione al 100% del prezzo di catalogo durante la creazione e pagamento della differenza con i crediti iniziali. Si applicano i prezzi riportati nelle tabelle di questa sezione.
 
 Esempio: una CAW1000 da 2.100 crediti ceduta per una CAW2000 da 8.000 richiede un conguaglio di 5.900. Non si attribuisce al personaggio il valore della CAW2000 prima di averla acquistata.
+
+## **7.23 Catalogo dei rinforzi** {#7.23-catalogo-dei-rinforzi}
+
+I rinforzi aumentano l’AR di un’armatura compatibile e possono aggiungere proprietà specialistiche. Questa sezione raccoglie i modelli commerciali e corporativi acquistabili separatamente; Leggero e Pesante restano le categorie del §7.11.2. Ogni prezzo comprende il rinforzo completo e le proprietà espressamente indicate.
+
+### **7.23.1 Profili comuni**
+
+Leggero e Pesante indicano la categoria regolistica del rinforzo. Il catalogo identifica gli oggetti acquistabili che utilizzano quei profili.
+
+| Categoria | AR | FOR richiesta | PI | Qualità | PS INT | REP | Costo |
+| :---: | :---: | :---: | :---: | :---- | :---: | :---: | :---: |
+| Rinforzo Leggero | \+1 | \+1 | 6 | Comune | 10 | NC | 1.000 |
+| Rinforzo Pesante | \+2 | \+2 | 8 | Comune | 10 | NC | 2.000 |
+
+### **7.23.2 Catalogo commerciale**
+
+| Modello | Categoria | Descrizione | Costo |
+| :---- | :---: | :---- | :---: |
+| Soprabito balistico | Leggero | Cappotto lungo con tessuto protettivo e inserti flessibili, da indossare sopra un’armatura compatibile. | 1.000 |
+| Mantello balistico | Leggero | Mantello protettivo avvolgente, assicurato al corpo mediante chiusure e cinghie; deve essere indossato correttamente per concedere il beneficio. | 1.000 |
+| Kit di piastre supplementari leggere | Leggero | Serie completa di piastre aggiuntive per gli alloggiamenti o gli attacchi dell’armatura compatibile. | 1.000 |
+| Kit di piastre supplementari pesanti | Pesante | Serie completa di piastre più spesse ed estese per le armature che ammettono un Rinforzo Pesante. | 2.000 |
+
+Il prezzo dei kit riguarda l’intero insieme necessario a ottenere il bonus: ogni singola piastra non concede separatamente AR. I modelli della stessa categoria hanno lo stesso profilo base; forma e materiale non assegnano proprietà speciali ulteriori.
+
+“Balistico” è la denominazione del prodotto: il soprabito e il mantello seguono la normale AR non magica dei rinforzi, senza una limitazione ai soli proiettili. Non aggiungono AR magica.
+
+### **7.23.3 Soprabiti corporativi di base**
+
+| Modello | Catalogo | Categoria | Compatibilità | Costo |
+| :---- | :---- | :---: | :---- | :---: |
+| Soprabito blu d’ordinanza BLEU | Bauhaus | Leggero | Armatura d’ordinanza BLEU. | 1.000 |
+| Soprabito ASA | Alleanza | Leggero | Divisa d’ordinanza ASA e Divisa operativa ASA. | 1.000 |
+
+Entrambi concedono AR \+1 e aumentano di 1 la FOR richiesta; hanno PI 6, Qualità Comune, PS Integrità 10 e Reperibilità Non comune. La forma di soprabito non aggiunge automaticamente Discreta, Mimetismo o altri vantaggi.
+
+### **7.23.4 Regole generali**
+
+Si applicano le regole già stabilite nel §7.11.2:
+
+* È consentito un solo rinforzo compatibile complessivo. Soprabito, mantello e kit di piastre sono alternative: i loro bonus non si sommano.  
+* La Leggera commerciale ammette un Rinforzo Leggero oppure Pesante; la Media commerciale soltanto un Leggero; la Pesante commerciale nessuno. Per i modelli corporativi prevale la singola scheda.  
+* La forma dell’oggetto non supera i limiti di compatibilità: un soprabito non concede il bonus su un’armatura che non ammette rinforzi.  
+* Il rinforzo conserva PI e PS Integrità propri, registrati separatamente. I suoi PI non si aggiungono a quelli dell’armatura.  
+* Un’armatura Leggera portata fisicamente ad AR 3 o superiore mediante un rinforzo utilizza le penalità della Media. Le proprietà native continuano a funzionare nei rispettivi ambiti.  
+* Il requisito FOR aumenta; il rinforzo non aumenta la Caratteristica FOR del personaggio.
+
+I valori aggiuntivi descrivono l’impiego insieme a un’armatura compatibile; non costituiscono un profilo autonomo di armatura.
+
+### **7.23.5 Esempi commerciali**
+
+* Armatura civile leggera \+ soprabito balistico: AR 2, FOR richiesta 4, penalità Leggera; costo complessivo 2.500.  
+* Armatura civile leggera \+ kit di piastre pesanti: AR 3, FOR richiesta 5, penalità Media; costo complessivo 3.500.  
+* Armatura civile media \+ kit di piastre leggere: AR 4, FOR richiesta 6, penalità Media; costo complessivo 4.500.
+
+In tutti gli esempi i PI dell’armatura e quelli del rinforzo restano separati.
+
+### **7.23.6 Rinforzi corporativi specialistici**
+
+Il catalogo comprende due rinforzi specialistici per ciascuna Corporazione, per la Fratellanza e per l’Alleanza, oltre ai soprabiti BLEU e ASA di base.
+
+Le differenze riguardano robustezza, protezioni specialistiche, discrezione e assistenza a impieghi precisi. Ogni rinforzo rimane un singolo oggetto acquistabile; le proprietà indicate sono comprese nel prezzo.
+
+#### **Profili dei modelli specialistici**
+
+* **Leggero:** AR ordinaria \+1, requisito FOR \+1, PI 6\.  
+* **Pesante:** AR ordinaria \+2, requisito FOR \+2, PI 8\.  
+* Tutti i modelli specialistici hanno **Qualità Non comune e PS Integrità 12**. La Reperibilità è indicata separatamente: NC Non comune, RA Rara.  
+* Le Piastre Eisenwall hanno **10 PI**, con il \+2 di Struttura robusta già incluso.  
+* I soprabiti BLEU e ASA base da 1.000 conservano invece Qualità Comune, PS Integrità 10 e PI 6\.
+
+| Catalogo | Modello | Tipo | Proprietà comprese oltre al profilo | REP | Costo |
+| :---- | :---- | :---: | :---- | :---: | :---: |
+| Bauhaus | Soprabito Feldmantel | Leggero | Ignifuga 2 | NC | 1.800 |
+| Bauhaus | Piastre Eisenwall | Pesante | Struttura robusta: 10 PI totali; Stabile 1 | RA | 3.200 |
+| Capitol | Piastre Breacher | Leggero | Antiesplosione 1 | RA | 2.500 |
+| Capitol | Mantello Ranger | Leggero | Mimetica ambientale 1 | NC | 1.800 |
+| Imperial | Soprabito Trenchcoat | Leggero | Imbottita 2 | NC | 1.800 |
+| Imperial | Piastre Highland Guard | Pesante | Stabile 2 | RA | 3.000 |
+| Cybertronic | Rivestimento CS-R10 | Leggero | Isolante 2 | NC | 1.800 |
+| Cybertronic | Piastre reattive CS-R20 | Leggero | SIN 1 alle Prove di Difese per Schivare | RA | 3.500 |
+| Mishima | Mantello Kasumi | Leggero | Mimetismo 1 | RA | 2.500 |
+| Mishima | Piastre Sode d’assalto | Leggero | Articolazione d’assalto | RA | 3.000 |
+| Fratellanza | Tabardo consacrato | Leggero | Protezione occulta 1 | RA | 3.000 |
+| Fratellanza | Mantello del Pellegrino | Leggero | Ignifuga 2 e Imbottita 2 | RA | 2.600 |
+| Alleanza | Soprabito ASA riservato | Leggero | Discreta | NC | 1.800 |
+| Alleanza | Piastre Missione | Leggero | Ignifuga 2 e Isolante 2 | RA | 2.600 |
+
+#### **Modelli e impieghi**
+
+**Bauhaus.** Il Feldmantel è un soprabito spesso, con tessuto resistente al fuoco. Le Eisenwall sono piastre massicce e ben ancorate: la maggiore robustezza riguarda il rinforzo stesso; Stabile aiuta il portatore contro Sbilanciante.
+
+**Capitol.** Le Breacher sono destinate alle operazioni di breccia e agli ambienti esposti a esplosioni. Il Mantello Ranger privilegia la ricognizione: all’acquisto si sceglie un solo ambiente della mimetica, per esempio boscoso, desertico, artico o urbano. La livrea non cambia automaticamente.
+
+**Imperial.** Il Trenchcoat è un soprabito da trincea con imbottitura contro gli effetti concussivi. Le Highland Guard sono piastre fissate con un’imbracatura stabile, pensate per contrastare lo sbilanciamento; non impediscono automaticamente lo spostamento provocato da Sbalzante.
+
+**Cybertronic.** Il CS-R10 è un rivestimento protettivo con strati isolanti passivi. Il CS-R20 aggiunge sensori e assistenza reattiva collegati all’interfaccia neurale: il suo SIN riguarda soltanto Schivata.
+
+**Mishima.** Il Kasumi combina protezione flessibile e tessuti mimetici. Le Sode d’assalto impiegano piastre articolate che riducono l’ostacolo dell’armatura negli attacchi ravvicinati.
+
+**Fratellanza.** Il Tabardo consacrato incorpora una protezione rituale passiva, secondo il modello delle armature del catalogo. Il Mantello del Pellegrino combina resistenza al fuoco e imbottitura per affrontare ambienti di combattimento ostili.
+
+**Alleanza.** Il Soprabito ASA riservato è una variante distinta dal soprabito base: la protezione è celata nella fattura del capo. Le Piastre Missione combinano contromisure contro fuoco ed elettricità.
+
+### **7.23.7 Proprietà specialistiche**
+
+**Ignifuga, Imbottita e Isolante.** I valori sono le soglie delle Contromisure contro gli effetti aggiuntivi di Fuoco, Concussivo ed Elettricità, secondo il §5.24 del Manuale del Giocatore e il §7.11.4 degli Armamenti. Non rappresentano ulteriori punti da sottrarre ai danni.
+
+**Antiesplosione 1\.** Aggiunge 1 AR contro danni Naturali o Magici di esplosioni. Per esempio, una civile media con Breacher passa da AR 3 a 4 ordinaria e a 5 contro un’esplosione pertinente. Non aggiunge protezione dai danni Eterei.
+
+**Stabile X.** Concede \+X alla Prova di Caratteristica FOR o DES effettivamente richiesta contro Sbilanciante. Non è un bonus generale alle Prove Salvezza e non annulla Sbalzante.
+
+**Struttura robusta.** I due PI aggiuntivi appartengono alle Eisenwall e sono già compresi nei 10 PI dichiarati; non aumentano i PI dell’armatura sottostante.
+
+**Mimetica ambientale 1 e Mimetismo 1\.** Concedono \+1 VA alla normale Prova unica di Furtività, quando esistono condizioni concrete per nascondersi o muoversi senza essere individuati. Il Ranger richiede anche l’ambiente previsto; il Kasumi non è legato a una sola livrea ambientale. Non rendono invisibili, non eliminano i rumori e non annullano le penalità dell’armatura.
+
+**Articolazione d’assalto.** Riduce di 1, fino a 0, la penalità della propria armatura agli attacchi ravvicinati. Non concede un bonus positivo quando la penalità è già 0 e non riduce quelle dovute a FOR insufficiente. Non modifica Schivata, Parata, attacchi a distanza, MOV o lancio degli Incantesimi.
+
+**Protezione occulta 1\.** Concede \+1 alle sole PS Magia effettivamente richieste contro Oscura Simmetria, Corruzione o Paura. Non crea una nuova Salvezza e non si applica a una PS Volontà contro Paura. Come nelle armature della Fratellanza, è passiva mentre il rinforzo è indossato e non richiede Sintonizzazione o PM. Il Tabardo aggiunge soltanto AR ordinaria, senza AR magica.
+
+**Discreta.** La protezione del Soprabito ASA riservato non è evidente a un’osservazione casuale; un esame ravvicinato o una perquisizione possono rivelarla. La proprietà permette di conservare Discreta quando anche l’armatura sottostante la possiede e nessun componente corazzato resta visibile. Non rende discreta un’armatura apertamente riconoscibile, non nasconde automaticamente armi o altri oggetti e non concede bonus a Furtività.
+
+**SIN 1 del CS-R20.** Richiede un Innesto di Interfaccia Neurale compatibile e attivo, acquistato e installato separatamente. Concede \+1 VA alle Prove di Difese per Schivare, senza estendersi a Parata, Elusione, Iniziativa o attacchi. Senza collegamento conserva il normale profilo del Rinforzo Leggero. Abbinamento e cumulo seguono il §7.15.1: si usa un solo SIN pertinente, il maggiore fino a \+2, senza sommare il SIN del rinforzo a quello dell’armatura.
+
+### **7.23.8 Alimentazione del CS-R20**
+
+È l’unico modello di questo catalogo che richiede alimentazione per la proprietà speciale. Il CS-R20 usa la stessa batteria di servizio degli elmetti (§§7.3.4 e 7.21.3), con una batteria dedicata al rinforzo e indipendente dall’elmetto: autonomia 24 ore complessive anche non consecutive, ricarica completa in 4 ore, ricambio carico 10\.
+
+Batteria carica, cavo e alimentatore sono compresi nei 3.500. Accensione, spegnimento o sostituzione con batteria pronta richiedono 1 AzP. Il mantenimento non richiede Azioni. A batteria scarica cessa il solo bonus SIN; l’AR ordinaria resta disponibile. Tutti gli altri modelli del catalogo funzionano passivamente.
+
+### **7.23.9 Compatibilità e cumulo delle proprietà**
+
+Le categorie ammesse dalla singola armatura restano vincolanti: un modello specialistico non permette di aggiungere un Rinforzo Pesante dove è consentito soltanto un Leggero, né un rinforzo a un’armatura che li esclude. Occorrono taglia, alloggiamenti e attacchi compatibili.
+
+Il Soprabito ASA riservato usa la compatibilità già prevista per il Soprabito ASA, sulle due divise ASA. Il marchio o il nome di un reparto non rende automaticamente compatibile un altro modello di armatura. Le Piastre Missione, in particolare, non si applicano alla Marte, che non accetta rinforzi esterni.
+
+Restano l’unico rinforzo complessivo, i PI separati e le normali variazioni di categoria e penalità. A 0 PI il rinforzo perde sia l’AR sia le proprie proprietà; la protezione nativa dell’armatura resta distinta.
+
+Proprietà uguali o benefici equivalenti presenti su più oggetti non si sommano: si usa il maggiore applicabile. Questo vale anche tra Mimetismo e Mimetica ambientale sulla stessa Prova, tra più Articolazioni d’assalto, tra Contromisure dello stesso tipo e tra Protezioni occulte. Proprietà diverse conservano ciascuna il proprio effetto; Antiesplosione usa il valore maggiore fra armatura, rinforzo e scudo.
+
+Esempi:
+
+* Imbottita 2 dell’armatura \+ Imbottita 2 del Trenchcoat: soglia 2, non 4\.  
+* Mimetismo 2 dell’armatura \+ Mimetica ambientale 1 del Ranger: bonus massimo \+2, non \+3.  
+* SIN 2 alla Schivata dell’armatura \+ SIN 1 del CS-R20: bonus SIN \+2, non \+3.  
+* Civile leggera \+ Sode d’assalto: AR 2 e FOR 4; la penalità ravvicinata era già 0, quindi non si ottiene \+1 VA.  
+* Civile media \+ Sode d’assalto: AR 4 e FOR 6; penalità ravvicinata da −1 a 0, con le altre penalità della Media ancora applicabili.
+
+I prezzi riguardano i rinforzi completi. Le proprietà aggiuntive non sono un listino di modifiche liberamente combinabili o sommabili sullo stesso oggetto.

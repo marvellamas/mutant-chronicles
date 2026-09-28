@@ -103,7 +103,7 @@ test('4° livello: Grado II con Talento a scelta e limite di Avanzamento 4', () 
   const { livello, ...base } = voce(4);
   assert.deepEqual(validaLivello(p3, base, dati), []);
   // Furtività: 3 alla creazione + 1 di Classe = 4, già al limite
-  const troppo = validaLivello(p3, { ...base, puntiAbilita: { 'Furtività': 1, 'Medicina': 2, 'Sopravvivenza': 2 } }, dati);
+  const troppo = validaLivello(p3, { ...base, puntiAbilita: { ...base.puntiAbilita, 'Furtività': 1, 'Atletica': 2 } }, dati);
   assert.ok(problemi(troppo).includes('Avanzamento 5: al 4° livello il massimo è 4 (§8.3)'), JSON.stringify(troppo));
   const senzaTalento = validaLivello(p3, { ...base, talentoClasse: undefined }, dati);
   assert.ok(senzaTalento.some((x) => x.campo === 'talentoClasse' && x.tipo === 'incompleto'));
@@ -155,7 +155,9 @@ test('un +1 di Classe oltre il limite non si applica ed è annotato (§8.3)', ()
   // lasciasse il limite a 3 anche al 4° livello, il +1 dell'Agente a Furtività (già 3) andrebbe perso.
   const d = copia(dati);
   d.regole.avanzamento.avanzamento_massimo_abilita[1].massimo = 3;
-  const p = fino(MISHIMA_AGENTE, [voce(2), voce(3), { ...voce(4), puntiAbilita: { 'Medicina': 2, 'Sopravvivenza': 3 } }], 3);
+  // Medicina è già a 3 dalla creazione: i 10 punti vanno su Abilità che restano entro 3
+  const puntiAbilita = { 'Sopravvivenza': 3, 'Atletica': 3, 'Tecnologia': 3, 'Pilotare': 1 };
+  const p = fino(MISHIMA_AGENTE, [voce(2), voce(3), { ...voce(4), puntiAbilita }], 3);
   const s = calcolaScheda(p, d);
   assert.deepEqual(s.errori, []);
   assert.equal(s.abilita.find((a) => a.nome === 'Furtività').avanzamento, 3);
@@ -170,23 +172,25 @@ const MULTI = [
   { livello: 3, talentoLibero: { id: 'sempre-allerta' } },
   {
     livello: 4, grado: { classe: 'Soldato' }, tiroPV: tiro(5), // Combattente: nuova Classe di altro Addestramento
-    puntiAbilita: { 'Medicina': 3, 'Atletica': 2 },
+    puntiAbilita: { 'Medicina': 1, 'Atletica': 3, 'Sopravvivenza': 3, 'Difese': 3 },
   },
   { livello: 5, talentoLibero: { id: 'mulo-da-soma' } },
   { livello: 6, caratteristiche: { SAG: 2 } },
   { livello: 7, talentoLibero: { id: 'sonno-leggero' } },
-  { livello: 8, grado: { classe: 'Accademico' }, tiroPV: tiro(2), puntiAbilita: { 'Scienza': 2, 'Cultura': 2, 'Tecnologia': 1 } },
+  { livello: 8, grado: { classe: 'Accademico' }, tiroPV: tiro(2), puntiAbilita: { 'Scienza': 3, 'Cultura': 2, 'Tecnologia': 3, 'Oratoria': 2 } },
   { livello: 9, talentoLibero: { id: 'visione-perfetta' } },
   { livello: 10, caratteristiche: { INT: 2 } },
   { livello: 11, talentoLibero: { id: 'guarigione-migliorata' } },
   {
     livello: 12, grado: { classe: 'Agente' }, tiroPV: tiro(3), talentoClasse: 'Mira Selettiva',
-    puntiAbilita: { 'Furtività': 2, 'Sopravvivenza': 1, 'Scienza': 2 },
+    puntiAbilita: { 'Furtività': 2, 'Sopravvivenza': 2, 'Scienza': 2, 'Raggirare': 2, 'Medicina': 2 },
   },
   { livello: 13, talentoLibero: { id: 'struttura-robusta' } },
   { livello: 14, caratteristiche: { CAR: 2 } },
   { livello: 15, talentoLibero: { id: 'duro-a-morire' } },
-  { livello: 16, grado: { classe: 'Soldato' }, tiroPV: tiro(4), talentoClasse: 'Supporto d’Attacco', puntiAbilita: { 'Armi medie': 3, 'Difese': 2 } },
+  { livello: 16, grado: { classe: 'Soldato' }, tiroPV: tiro(4), talentoClasse: 'Supporto d’Attacco',
+    puntiAbilita: { 'Armi medie': 3, 'Difese': 2, 'Atletica': 3, 'Tecnologia': 2 },
+  },
   { livello: 17, talentoLibero: { id: 'autosufficiente' } },
   { livello: 18, caratteristiche: { FOR: 2 } },
   { livello: 19, talentoLibero: { id: 'poliglotta', annotazione: 'Imperiale, Venusiano' } },
@@ -211,7 +215,8 @@ test('multiclasse: al 4° una nuova Classe di un altro Addestramento, al 20° la
   assert.equal(info.classi.find((c) => c.nome === 'Pilota').ammessa, false);
   assert.equal(info.classi.find((c) => c.nome === 'Soldato').ammessa, true);
   // al Grado III del Soldato il Talento è fisso
-  assert.deepEqual(validaLivello(p19, { grado: { classe: 'Soldato' }, tiroPV: tiro(8), puntiAbilita: { 'Armi medie': 1, 'Difese': 1, 'Pilotare': 3 } }, dati), []);
+  assert.deepEqual(validaLivello(p19, { grado: { classe: 'Soldato' }, tiroPV: tiro(8),
+    puntiAbilita: { 'Armi medie': 2, 'Armi leggere': 2, 'Pilotare': 3, 'Tecnologia': 2, 'Atletica': 1 } }, dati), []);
 });
 
 test('Talento di Classe con requisito: Supporto Avanzato richiede un Supporto', () => {
@@ -276,6 +281,9 @@ test('Specializzazione: un Talento Libero acquisibile una volta', () => {
 
 // --- incompatibilità magia / Risorse Interiori (§8.6.10) ------------------------------------
 
+/** 10 punti del 4° livello per l'Agente che prende un Grado di Arcanista: limite 4, Medicina già a 3. */
+const PUNTI_4_ARCANISTA = { 'Medicina': 1, 'Sopravvivenza': 3, 'Atletica': 3, 'Tecnologia': 3 };
+
 const TECNICHE_4 = ['meditazione-profonda', 'vista-felina', 'aura-di-resistenza', 'salto-della-tigre'];
 
 test('Taumaturgo che sceglie Risorse Interiori → errore', () => {
@@ -294,7 +302,7 @@ test('personaggio con Risorse Interiori che prende un Grado di Arcanista → err
   assert.deepEqual(s3.errori, []);
   assert.equal(s3.tecnicheAmmesse, 4);
   assert.deepEqual(s3.tecniche.map((t) => t.id), TECNICHE_4);
-  const e = validaLivello(p3, { grado: { classe: 'Arcanista' }, tiroPV: tiro(2), tiroPM: tiro(2), puntiAbilita: { 'Medicina': 3, 'Sopravvivenza': 2 } }, dati);
+  const e = validaLivello(p3, { grado: { classe: 'Arcanista' }, tiroPV: tiro(2), tiroPM: tiro(2), puntiAbilita: PUNTI_4_ARCANISTA }, dati);
   assert.ok(problemi(e).includes('Arcanista è una Classe taumaturgica: incompatibile con Risorse Interiori (§8.6.10)'), JSON.stringify(e));
   assert.equal(prossimoLivello(p3, dati).classi.find((c) => c.nome === 'Arcanista').ammessa, false);
   // anche nell'altra direzione con i Talenti che concedono il lancio
@@ -323,7 +331,7 @@ test('Risorse Interiori: le Tecniche vanno scelte, e le Scuole richiedono Mishim
 test('Classe taumaturgica senza Addestramento: niente 2 + Mod INT, scala «altri utilizzatori»', () => {
   const noveIncantesimi = ['Colpo Elementale', 'Controllo Elementale', 'Muro Elementale', 'Ampliare Sensi', 'Barriera Mentale',
     'Biomanipolazione', 'Cura Ferite', 'Cura Malattie', 'Cura Avvelenamenti'];
-  const livello4 = { grado: { classe: 'Arcanista' }, tiroPV: tiro(2), tiroPM: tiro(4), puntiAbilita: { 'Medicina': 3, 'Sopravvivenza': 2 } };
+  const livello4 = { grado: { classe: 'Arcanista' }, tiroPV: tiro(2), tiroPM: tiro(4), puntiAbilita: PUNTI_4_ARCANISTA };
   const p3 = agente(3);
   const incompleto = validaLivello(p3, livello4, dati);
   assert.ok(incompleto.some((x) => x.campo === 'incantesimi' && x.tipo === 'incompleto' && /restano 9/.test(x.problema)), JSON.stringify(incompleto));
@@ -365,7 +373,7 @@ test('decisione 5 del master: al Grado II di Arcanista il livello massimo è 8, 
   const p3 = fino(ARCANISTA, liv, 2);
   const voce4 = {
     grado: { classe: 'Arcanista' }, tiroPV: tiro(2), tiroPM: tiro(3), talentoClasse: 'Riserva Tecnica',
-    puntiAbilita: { 'Percezione': 2, 'Rituali': 2, 'Artefatti': 1 },
+    puntiAbilita: { 'Percezione': 2, 'Artefatti': 1, 'Cultura': 3, 'Medicina': 2, 'Scienza': 2 },
     // +2 per macrofamiglia; Evoca Elementale ha livello base 6
     incantesimi: ['Evoca Elementale', 'Irrobustire', 'Distrazione', 'Empatia', 'Cura Spirituale', 'Arma Mistica'],
   };
@@ -399,7 +407,7 @@ test('passiDelLivello: un passo per evento di regole.json, gli eventi automatici
 
   const l4 = passiDelLivello(agente(3), {}, dati);
   assert.deepEqual(idPassi(l4), ['grado', 'abilita', 'riepilogo']);
-  assert.equal(l4.passi.find((p) => p.id === 'abilita').punti, 5);
+  assert.equal(l4.passi.find((p) => p.id === 'abilita').punti, 10);
 
   const l12 = passiDelLivello(agente(11), {}, dati);
   assert.deepEqual(idPassi(l12), ['grado', 'abilita', 'riepilogo']);
@@ -437,7 +445,7 @@ test('descriviVoce e progressione: una riga leggibile per scelta e per livello',
   assert.match(r5[0], /^Talento Libero: .+ \(Tempra\)$/);
   const r4 = descriviVoce(voce(4), dati, { Agente: 1 });
   assert.match(r4[0], /^Grado: Agente II — Talento a scelta Reazione Operativa; PV 1d6 = 4/);
-  assert.equal(r4[1], 'Punti Abilità: Medicina +3, Sopravvivenza +2');
+  assert.equal(r4[1], 'Punti Abilità: Medicina +1, Armi leggere +1, Cultura +1, Raggirare +1, Sopravvivenza +3, Atletica +3');
 
   const pr = progressione(agente(4), dati);
   assert.deepEqual(pr.map((x) => x.livello), [1, 2, 3, 4]);

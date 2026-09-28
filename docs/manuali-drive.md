@@ -4,13 +4,13 @@ Dal 26 settembre 2026 i manuali vivono come Google Doc nella cartella Drive di D
 
 ## Registro
 
-Ultimo controllo: **27 settembre 2026, 13:02 UTC** (prima esecuzione; confronto con i PDF in `docs/diff-manuali-2026-09-26.md`).
+Ultimo controllo: **28 settembre 2026** (cambiati Giocatore e Armamenti; la prima esecuzione, del 27/09, ha il confronto con i PDF in `docs/diff-manuali-2026-09-26.md`).
 
 | Documento | ID Google Doc | Ultima modifica vista (UTC) | Edizione vista | Testo salvato | Note |
 |---|---|---|---|---|---|
-| Manuale del Giocatore | `110LNyYLZFWRGYuym836EqKYOUvoQRYvqBzm_2bJqybc` | 2026-09-27T13:02:45Z | 0.43 + risposte 26–27/09 (A.1, A.3, A.4, A.5–A.5.31, A.6 §8.1.2; 12:58: Stremato −10, Caotico −10, Umanità 0–20; A.5.27 rivista alle 09:52; §2.16.27 tabelle e §2.16.30 alle 11:18) e 25/09 (Esploratore) | `docs/manuali-txt/giocatore.md` | esaminato: §2.16 (dotazioni) in `data/dotazioni.json`; §4.4, §8.6.8, §8.9 recepiti; modifiche non annunciate (per-davide A.32) |
+| Manuale del Giocatore | `110LNyYLZFWRGYuym836EqKYOUvoQRYvqBzm_2bJqybc` | 2026-09-27T16:38:22Z | 0.43 + risposte 26–27/09 (A.1, A.3, A.4, A.5–A.5.31, A.6 §8.1.2) e 25/09 (Esploratore); 16:38: Addestramenti a 76 punti (basi 2–4, schema 8×4, 12×3, 4×2) e 10 Punti Abilità Liberi per assegnazione (§1.x, §2.0, §2.3–2.8, §2.13, §2.17, §4, §8.1, §8.4) | `docs/manuali-txt/giocatore.md` | esaminato: `addestramenti.json`, `regole.json` (addestramento, creazione, eventi); modifiche non annunciate (per-davide A.32, A.52) |
 | Manuale della Magia | `1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY` | 2026-09-27T02:06:14Z | 1.1 + risposte 26/09 (A.2: 14 schede, sez. 1–2), 25/09 (minimo 1) e 18 Talenti nuovi del 27/09 | `docs/manuali-txt/magia.md` | esaminato: 32 Talenti in `talenti_liberi.json`; i 18 nuovi non sono annunciati (per-davide A.32) |
-| Manuale degli Armamenti | `1eDZJHfgBIYPvzKg78tEGwiLtrI_6gzpQOIfJA9aYiYg` | 2026-09-27T11:11:25Z | 0.52 (Doc nuovo, indicato da E&L A.5.30; la 0.50 era `1scH7QwtQYNb4D22vGJsUhGgPglwbFhZXf4ZGXPGhW3Y`) | `docs/manuali-txt/armamenti.md` | esaminato: §7.22 (modelli corporativi di base) e §7.21 (elmetti e modifiche) nel catalogo; proprietà delle armature corporative in effetti (`docs/proprieta-armature.md`) |
+| Manuale degli Armamenti | `1eDZJHfgBIYPvzKg78tEGwiLtrI_6gzpQOIfJA9aYiYg` | 2026-09-27T22:48:49Z | 0.53 (stesso Doc; la 0.50 era `1scH7QwtQYNb4D22vGJsUhGgPglwbFhZXf4ZGXPGhW3Y`): nuovo §7.23 Catalogo dei rinforzi, §7.11.2 vi rimanda | `docs/manuali-txt/armamenti.md` | esaminato: §7.23 in `rinforzi.json` (22 voci); §7.22, §7.21 nel catalogo; proprietà delle armature in effetti (`docs/proprieta-armature.md`) |
 | Manuale dell'Equipaggiamento | `1bvTeJphQ6BNKazpV5twivvRbqkHrRowNBDZ_RakQiXA` | 2026-09-26T09:33:06Z | 0.1, solo cap. 1 | `docs/manuali-txt/equipaggiamento.md` | §1.6 e §1.7 in `regole.json`; cap. 2–8 "verranno integrati successivamente" |
 | E&L – Risposte e correzioni approvate | `1VaqZaAe4NK5P8A956Eahua_ZT60eh3ohnR2xSqh-tVs` | 2026-09-27T11:30:01Z | A.1–A.6 (A.5.27 rivista) | `docs/risposte-master-2026-09-26.md` | registrate in `docs/risposte-master.md` (7–23); dotazioni nel passo «Equipaggiamento iniziale» |
 

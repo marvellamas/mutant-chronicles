@@ -258,9 +258,15 @@ function tabellaValoriBase(ctx, valori) {
         h('td', { class: `base base-${valori[a.nome]}` }, String(valori[a.nome])))))));
 }
 
+// §2.3: valori base ammessi, dallo schema degli Addestramenti (es. «2–4»).
+function intervalloBasi(regole) {
+  const v = Object.keys(regole.addestramento.schema).map(Number);
+  return `${Math.min(...v)}–${Math.max(...v)}`;
+}
+
 function passoAddestramento(ctx) {
   return [
-    h('p', { class: 'guida' }, 'L’Addestramento fissa il valore base (0–4) delle 24 Abilità, concede un vantaggio e i bonus alle Salvezze. La prima Classe deve appartenere all’Addestramento scelto.'),
+    h('p', { class: 'guida' }, `L’Addestramento fissa il valore base (${intervalloBasi(ctx.dati.regole)}) delle 24 Abilità, concede un vantaggio e i bonus alle Salvezze. La prima Classe deve appartenere all’Addestramento scelto.`),
     ctx.scelte.classe ? h('p', { class: 'nota' }, `Cambiare Addestramento azzera la Classe scelta (${ctx.scelte.classe}).`) : null,
     h('div', { class: 'griglia-carte' }, ctx.dati.addestramenti.addestramenti.map((a) => {
       const sel = ctx.scelte.addestramento === a.nome;
@@ -329,7 +335,7 @@ function passoClasse(ctx) {
 }
 
 // ---------------------------------------------------------------------------
-// 5 Punti Abilità Liberi
+// Punti Abilità Liberi (§2.13)
 
 function passoAbilita(ctx) {
   const { dati, scelte, scheda } = ctx;

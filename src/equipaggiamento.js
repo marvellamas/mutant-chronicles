@@ -498,6 +498,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   let movimentoQ = 0;
   let lancioPotere = 0;
   let forMancanteArmature = 0;
+  const rinforziValidi = new Set();
   for (const o of oggetti.filter((x) => x.attivo && (x.tipo === 'armatura' || x.tipo === 'scudo' || x.tipo === 'elmetto'))) {
     const d = o.def;
     let penalita = d ? { ...(fileArmature.categorie?.[d.categoria] ?? {}), ...(d.penalita ?? {}) } : {};
@@ -515,6 +516,11 @@ export function calcolaEquipaggiamento(base, voci, dati) {
         categoria = 'Media';
         penalita = { ...penalitaConEffetti(fileArmature.categorie.Media, d.proprieta), ...(d.penalita?.abilita ? { abilita: d.penalita.abilita } : {}) };
       }
+      // §7.23.7: le proprietà del rinforzo che riducono le penalità dell'armatura (Articolazione
+      // d'assalto: −1 → 0, mai oltre 0); §7.23.9: la stessa proprietà già nativa non si somma
+      const native = new Set((d.proprieta ?? []).map((x) => x.nome));
+      penalita = penalitaConEffetti(penalita, (kit.def.proprieta ?? []).filter((x) => !native.has(x.nome)));
+      rinforziValidi.add(kit.uid);
     }
     const forMancante = forRichiesta ? Math.max(0, forRichiesta - FOR) : 0;
     protezioni.push({
@@ -562,7 +568,9 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   const perUidOgg = new Map(oggetti.map((o) => [o.uid, o]));
   // una modifica d'elmetto conta solo montata su un elmetto (o un'armatura, per il suo elmetto
   // standard) indossato (Armamenti §7.21.1, §7.21.4)
+  // un rinforzo conta solo come kit valido di un'armatura indossata (Armamenti §7.23.4, §7.23.9)
   const modificaOperativa = (o) => {
+    if (o.def?.rinforzo) return rinforziValidi.has(o.uid);
     if (!o.def?.modifica_elmetto) return true;
     const su = perUidOgg.get(o.voce.montato_su);
     return !!su && su.attivo && puoMontare(o, su);
@@ -595,10 +603,13 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   // già gestite dalle penalità del modello restano promemoria (docs/proprieta-armature.md)
   const gestite = new Set(fileArmature.proprieta_gestite ?? []);
   for (const p of protezioni) {
-    const miei = effettiOggetti.filter((e) => e.uid === p.uid);
+    // con l'armatura anche il suo rinforzo valido (§7.23): effetti e proprietà testuali (Discreta)
+    const kitDef = p.rinforzo ? perUidOgg.get(p.rinforzo.uid)?.def : null;
+    const miei = effettiOggetti.filter((e) => e.uid === p.uid || (p.rinforzo && e.uid === p.rinforzo.uid));
     const tradotte = new Set(miei.map((e) => e.proprieta).filter(Boolean));
     p.effetti = miei;
-    p.promemoria = p.proprieta.filter((x) => !tradotte.has(x.nome) && !gestite.has(nomeProprieta(x).replace(/\s+\d+$/, ''))).map((x) => x.nome);
+    p.promemoria = [...p.proprieta, ...(kitDef?.proprieta ?? [])]
+      .filter((x) => !tradotte.has(x.nome) && !gestite.has(nomeProprieta(x).replace(/\s+\d+$/, ''))).map((x) => x.nome);
   }
   // §7.11.1: la penalità dell'armatura al lancio con Potere vale solo per lanciare Incantesimi
   for (const p of protezioni.filter((x) => x.tipo === 'armatura' && x.penalita?.lancio_potere)) {

@@ -288,7 +288,7 @@ Attacchi, Difese e lanci di Incantesimi utilizzano le Abilità pertinenti e le r
 | Componente | Intervallo | Funzione |
 | ----- | ----- | :---- |
 | Caratteristica | −4 a \+5 | Modificatore della Caratteristica associata in modo fisso all’Abilità. |
-| Addestramento | 0–4 | Valore base determinato dall’Addestramento scelto alla creazione; varia secondo l’Abilità. |
+| Addestramento | 2–4 | Valore base determinato dall’Addestramento scelto alla creazione; varia secondo l’Abilità. |
 | Corporazione | 0–1 | Bonus eventuale concesso dalla Corporazione alla specifica Abilità. |
 | Avanzamento | 0–8 | Parte migliorabile attraverso creazione, Classi e punti assegnati liberamente. |
 
@@ -379,13 +379,13 @@ Una singola Prova risolve l’intera azione significativa, evitando tiri separat
 
 ### **1.3.1 Preparazione e accesso alle Abilità**
 
-Non esiste una penalità generale aggiuntiva per la mancanza di preparazione. Un Valore base di Addestramento pari a 0 non indica necessariamente inesperienza: il personaggio può aver sviluppato l’Abilità tramite Corporazione o Avanzamento. Si utilizza sempre il VA risultante dalle componenti possedute.
+Non esiste una penalità generale aggiuntiva per la minore preparazione. I profili iniziali assegnano basi da 2 a 4; anche un’Abilità con base 2 può essere sviluppata tramite Corporazione e Avanzamento. Si utilizza sempre il VA risultante dalle componenti possedute.
 
 Le attività comuni o intuitive possono essere tentate con l’Abilità pertinente. Le attività specialistiche richiedono invece le conoscenze, gli strumenti e gli altri requisiti indicati dalle regole. Le capacità concesse da un Talento richiedono quel Talento: un VA elevato non ne conferisce automaticamente l’accesso.
 
 Istruzioni, supervisione o strumenti automatizzati possono rendere plausibile una procedura specialistica semplificata. Il Direttore applica le normali regole di assistenza e circostanze, senza attribuire al personaggio una competenza permanente.
 
-Per esempio, Furtività può essere utilizzata anche con Addestramento 0; possedere un VA positivo in Potere non concede da solo l’accesso agli Incantesimi. Una Prova di Caratteristica non può aggirare l’Abilità richiesta. Aiuti e strumenti possono migliorare un VA insufficiente, ma non sostituiscono requisiti indispensabili.
+Un’Abilità con base 2 può essere utilizzata quando il VA e i requisiti lo consentono; possedere un VA positivo in Potere non concede da solo l’accesso agli Incantesimi. Una Prova di Caratteristica non può aggirare l’Abilità richiesta. Aiuti e strumenti possono migliorare un VA insufficiente, ma non sostituiscono requisiti indispensabili.
 
 ### **1.3.2 Nuovi tentativi e ritiri**
 
@@ -624,7 +624,7 @@ Compila la Scheda seguendo questa sequenza. I rimandi indicano dove trovare i va
 | 2 | Distribuire 5 Punti Caratteristica | 2.1 |
 | 3 | Scegliere l’Addestramento | 2.2–2.8, 2.10–2.11 |
 | 4 | Scegliere la prima Classe al I Grado | 2.12 |
-| 5 | Distribuire 5 Punti Abilità Liberi | 2.13 |
+| 5 | Distribuire 10 Punti Abilità Liberi | 2.13 |
 | 6 | Calcolare i valori derivati | 2.14 |
 | 7 | Determinare i Punti Eroe | 2.15 |
 | 8 | Equipaggiamento iniziale — integrazione successiva | 2.16 |
@@ -684,7 +684,7 @@ Il personaggio ha speso tutti e 5 i punti e nessuna Caratteristica supera 7\.
 
 ## **2.2 Addestramenti**
 
-Alla creazione il personaggio sceglie uno dei cinque Addestramenti. L’Addestramento determina il Valore Base Addestramento da 0 a 4 in ciascuna delle ventiquattro Abilità: questi valori sono fissi e non vengono distribuiti liberamente. Concede inoltre il vantaggio indicato al paragrafo 2.10 e i bonus alle Salvezze del paragrafo 2.11. La prima Classe deve appartenere all’Addestramento scelto.
+Alla creazione il personaggio sceglie uno dei cinque Addestramenti. L’Addestramento determina il Valore Base Addestramento da 2 a 4 in ciascuna delle ventiquattro Abilità: questi valori sono fissi e non vengono distribuiti liberamente. Concede inoltre il vantaggio indicato al paragrafo 2.10 e i bonus alle Salvezze del paragrafo 2.11. La prima Classe deve appartenere all’Addestramento scelto.
 
 | Addestramento | Identità generale |
 | :---- | :---- |
@@ -698,18 +698,16 @@ I cinque profili hanno lo stesso totale numerico, ma distribuiscono i valori in 
 
 ## **2.3 Struttura comune dei profili**
 
-Ogni Addestramento distribuisce quarantotto punti base complessivi sulle ventiquattro Abilità. La quantità di Abilità assegnata a ciascun valore è identica per tutti e cinque i profili; cambia soltanto quali Abilità ricevono quei valori.
+Ogni Addestramento distribuisce settantasei punti base complessivi sulle ventiquattro Abilità. La quantità di Abilità assegnata a ciascun valore è identica per tutti e cinque i profili; cambia soltanto quali Abilità ricevono quei valori.
 
 | Valore base | N. Abilità | Grado di preparazione | Punti |
 | :---: | :---: | ----- | :---: |
-| **4** | 4 | Competenze caratteristiche | 16 |
-| **3** | 4 | Preparazione solida | 12 |
-| **2** | 8 | Preparazione ordinaria | 16 |
-| **1** | 4 | Conoscenza rudimentale | 4 |
-| **0** | 4 | Nessun addestramento | 0 |
-| **Totale** | 24 | — | 48 |
+| **4** | 8 | Competenze caratteristiche | 32 |
+| **3** | 12 | Preparazione solida | 36 |
+| **2** | 4 | Preparazione essenziale | 8 |
+| **Totale** | 24 | — | 76 |
 
-L'uguaglianza dei quarantotto punti garantisce lo stesso peso numerico iniziale. L'equilibrio effettivo dovrà essere verificato anche considerando frequenza e utilità delle Abilità assegnate a ciascun profilo.
+L'uguaglianza dei settantasei punti garantisce lo stesso peso numerico iniziale. L'equilibrio effettivo dovrà essere verificato anche considerando frequenza e utilità delle Abilità assegnate a ciascun profilo.
 
 ## **2.4 Profilo: Avventuriero**
 
@@ -717,13 +715,11 @@ L'Avventuriero è versatile, autonomo e abituato all'esplorazione, all'infiltraz
 
 | Valore base | N. Abilità | Abilità |
 | ----- | ----- | :---- |
-| **4** | 4 | Furtività, Percezione, Sopravvivenza, Raggirare |
-| **3** | 4 | Armi leggere, Difese, Atletica, Pilotare |
-| **2** | 8 | Armi da lancio, Armi medie, Armi da mischia, Corpo a corpo, Cultura, Intrattenere, Medicina, Tecnologia |
-| **1** | 4 | Armi da guerra, Artefatti, Oratoria, Scienza |
-| **0** | 4 | Armi pesanti, Occultismo, Potere, Rituali |
+| **4** | 8 | Furtività, Percezione, Sopravvivenza, Raggirare, Armi leggere, Difese, Atletica, Pilotare |
+| **3** | 12 | Armi da lancio, Armi medie, Armi da mischia, Corpo a corpo, Cultura, Intrattenere, Medicina, Tecnologia, Armi da guerra, Artefatti, Oratoria, Scienza |
+| **2** | 4 | Armi pesanti, Occultismo, Potere, Rituali |
 
-**Totale:** ventiquattro Abilità e quarantotto punti base.
+**Totale:** ventiquattro Abilità e settantasei punti base.
 
 ## **2.5 Profilo: Combattente**
 
@@ -731,13 +727,11 @@ Il Combattente possiede una preparazione marziale ampia e affidabile, accompagna
 
 | Valore base | N. Abilità | Abilità |
 | ----- | ----- | :---- |
-| **4** | 4 | Armi leggere, Armi medie, Armi da guerra, Difese |
-| **3** | 4 | Armi pesanti, Armi da mischia, Corpo a corpo, Atletica |
-| **2** | 8 | Armi da lancio, Furtività, Percezione, Sopravvivenza, Raggirare, Medicina, Pilotare, Tecnologia |
-| **1** | 4 | Artefatti, Cultura, Intrattenere, Oratoria |
-| **0** | 4 | Occultismo, Potere, Rituali, Scienza |
+| **4** | 8 | Armi leggere, Armi medie, Armi da guerra, Difese, Armi pesanti, Armi da mischia, Corpo a corpo, Atletica |
+| **3** | 12 | Armi da lancio, Furtività, Percezione, Sopravvivenza, Raggirare, Medicina, Pilotare, Tecnologia, Artefatti, Cultura, Intrattenere, Oratoria |
+| **2** | 4 | Occultismo, Potere, Rituali, Scienza |
 
-**Totale:** ventiquattro Abilità e quarantotto punti base.
+**Totale:** ventiquattro Abilità e settantasei punti base.
 
 ## **2.6 Profilo: Lavoratore**
 
@@ -745,13 +739,11 @@ Il Lavoratore rappresenta una preparazione pratica, tecnica e manuale. È compet
 
 | Valore base | N. Abilità | Abilità |
 | ----- | ----- | :---- |
-| **4** | 4 | Armi da mischia, Atletica, Pilotare, Tecnologia |
-| **3** | 4 | Armi leggere, Medicina, Percezione, Sopravvivenza |
-| **2** | 8 | Armi da lancio, Armi medie, Corpo a corpo, Difese, Artefatti, Intrattenere, Raggirare, Scienza |
-| **1** | 4 | Armi pesanti, Cultura, Furtività, Oratoria |
-| **0** | 4 | Armi da guerra, Occultismo, Potere, Rituali |
+| **4** | 8 | Armi da mischia, Atletica, Pilotare, Tecnologia, Armi leggere, Medicina, Percezione, Sopravvivenza |
+| **3** | 12 | Armi da lancio, Armi medie, Corpo a corpo, Difese, Artefatti, Intrattenere, Raggirare, Scienza, Armi pesanti, Cultura, Furtività, Oratoria |
+| **2** | 4 | Armi da guerra, Occultismo, Potere, Rituali |
 
-**Totale:** ventiquattro Abilità e quarantotto punti base.
+**Totale:** ventiquattro Abilità e settantasei punti base.
 
 ## **2.7 Profilo: Studioso**
 
@@ -759,13 +751,11 @@ Lo Studioso comprende intellettuali, ricercatori, medici, amministratori, predic
 
 | Valore base | N. Abilità | Abilità |
 | ----- | ----- | :---- |
-| **4** | 4 | Cultura, Medicina, Oratoria, Scienza |
-| **3** | 4 | Artefatti, Occultismo, Percezione, Tecnologia |
-| **2** | 8 | Armi leggere, Difese, Furtività, Intrattenere, Pilotare, Raggirare, Rituali, Sopravvivenza |
-| **1** | 4 | Armi da lancio, Armi da mischia, Corpo a corpo, Potere |
-| **0** | 4 | Armi medie, Armi pesanti, Armi da guerra, Atletica |
+| **4** | 8 | Cultura, Medicina, Oratoria, Scienza, Artefatti, Occultismo, Percezione, Tecnologia |
+| **3** | 12 | Armi leggere, Difese, Furtività, Intrattenere, Pilotare, Raggirare, Rituali, Sopravvivenza, Armi da lancio, Armi da mischia, Corpo a corpo, Potere |
+| **2** | 4 | Armi medie, Armi pesanti, Armi da guerra, Atletica |
 
-**Totale:** ventiquattro Abilità e quarantotto punti base.
+**Totale:** ventiquattro Abilità e settantasei punti base.
 
 ## **2.8 Profilo: Taumaturgo**
 
@@ -773,13 +763,11 @@ Il Taumaturgo è addestrato a percepire, comprendere e manipolare le Energie Ast
 
 | Valore base | N. Abilità | Abilità |
 | ----- | ----- | :---- |
-| **4** | 4 | Artefatti, Occultismo, Potere, Rituali |
-| **3** | 4 | Cultura, Oratoria, Percezione, Scienza |
-| **2** | 8 | Armi leggere, Difese, Furtività, Intrattenere, Medicina, Raggirare, Sopravvivenza, Tecnologia |
-| **1** | 4 | Armi da lancio, Armi da mischia, Corpo a corpo, Pilotare |
-| **0** | 4 | Armi medie, Armi pesanti, Armi da guerra, Atletica |
+| **4** | 8 | Artefatti, Occultismo, Potere, Rituali, Cultura, Oratoria, Percezione, Scienza |
+| **3** | 12 | Armi leggere, Difese, Furtività, Intrattenere, Medicina, Raggirare, Sopravvivenza, Tecnologia, Armi da lancio, Armi da mischia, Corpo a corpo, Pilotare |
+| **2** | 4 | Armi medie, Armi pesanti, Armi da guerra, Atletica |
 
-**Totale:** ventiquattro Abilità e quarantotto punti base.
+**Totale:** ventiquattro Abilità e settantasei punti base.
 
 Il valore posseduto in Potere non concede automaticamente l’accesso agli Incantesimi. Il vantaggio dell’Addestramento Taumaturgo e le regole di Classi e Talenti stabiliscono quali capacità mistiche il personaggio possa apprendere; il Valore Abilità determina soltanto l’efficacia delle Prove consentite.
 
@@ -937,7 +925,7 @@ I tre Talenti fissi si ottengono ai Gradi I, III e V. Ai Gradi II, IV e VI si ac
 
 ## **2.13 Punti Abilità Liberi iniziali**
 
-Alla creazione distribuisci 5 Punti Abilità Liberi. Ogni punto aggiunge \+1 all’Avanzamento dell’Abilità scelta, sia essa di Classe oppure no. L’Abilità deve avere VA almeno 1 prima dell’assegnazione dei punti liberi.
+Alla creazione distribuisci 10 Punti Abilità Liberi. Ogni punto aggiunge \+1 all’Avanzamento dell’Abilità scelta, sia essa di Classe oppure no. L’Abilità deve avere VA almeno 1 prima dell’assegnazione dei punti liberi.
 
 Puoi assegnare più punti alla stessa Abilità, ma l’Avanzamento totale iniziale non può superare 3\. Nel limite rientra anche l’eventuale \+1 della Classe. I punti liberi non aumentano il Valore Base Addestramento e non modificano il bonus della Corporazione.
 
@@ -947,11 +935,14 @@ Puoi assegnare più punti alla stessa Abilità, ma l’Avanzamento totale inizia
 | :---: | :---: | :---: | :---: |
 | Furtività | \+1 | \+2 | 3 |
 | Percezione | \+1 | \+2 | 3 |
-| Medicina | 0 | \+1 | 1 |
+| Medicina | 0 | \+3 | 3 |
+| Armi leggere | \+1 | \+1 | 2 |
+| Cultura | \+1 | \+1 | 2 |
+| Raggirare | \+1 | \+1 | 2 |
 
-Sono stati spesi 5 punti liberi. Le altre tre Abilità dell’Agente conservano il \+1 ricevuto dalla Classe. Con Modificatore \+2, base 4, Corporazione \+1 e Avanzamento 3, il VA iniziale massimo ordinario è 10, pari al 50% di successo prima dei modificatori alla Prova.
+Sono stati spesi 10 punti liberi: 2 a Furtività, 2 a Percezione, 3 a Medicina e 1 ciascuno ad Armi leggere, Cultura e Raggirare. Nessuna Abilità supera Avanzamento 3\. Con Modificatore \+2, base 4, Corporazione \+1 e Avanzamento 3, il VA iniziale massimo ordinario è 10, pari al 50% di successo prima dei modificatori alla Prova.
 
-I 5 punti della creazione costituiscono l’assegnazione del 1° livello. Altri 5 Punti Abilità Liberi vengono assegnati ai livelli 4, 8, 12, 16 e 20, secondo il Capitolo 8; non si aggiunge un secondo gruppo di punti al 1° livello.
+I 10 punti della creazione costituiscono l’assegnazione del 1° livello. Altri 10 Punti Abilità Liberi vengono assegnati ai livelli 4, 8, 12, 16 e 20, secondo il Capitolo 8; non si aggiunge un secondo gruppo di punti al 1° livello.
 
 ## **2.14 Valori derivati iniziali**
 
@@ -1861,7 +1852,7 @@ Prima di iniziare a giocare, verifica le voci seguenti:
 * Tutti i 5 Punti Caratteristica assegnati, nessun valore iniziale superiore a 7 e modificatori calcolati come valore meno 5\.  
 * Uno dei cinque Addestramenti scelto, con il profilo completo delle ventiquattro Abilità, il vantaggio e i bonus alle Salvezze.  
 * Prima Classe appartenente all’Addestramento, registrata al I Grado: \+1 nelle cinque Abilità, Talento fisso iniziale e contributi a PV e PM. Nessun bonus automatico alle Salvezze dalla Classe.  
-* Tutti i 5 Punti Abilità Liberi assegnati ad Abilità ammesse, senza superare Avanzamento 3 in ciascuna.  
+* Tutti i 10 Punti Abilità Liberi assegnati ad Abilità ammesse, senza superare Avanzamento 3 in ciascuna.  
 * Per ogni Abilità, componenti e totale distinti: Modificatore \+ Valore Base Addestramento \+ Corporazione \+ Avanzamento.  
 * PV, PM, quattro Salvezze, bonus Iniziativa, Movimento e Azioni calcolati. Per le Salvezze: base 8, modificatore specifico, bonus di Addestramento e Corporazione, Avanzamento 0 al 1° livello.  
 * Punti Eroe iniziali determinati e spazio dedicato ai Distintivi.  
@@ -3342,7 +3333,7 @@ Ogni Abilità è associata a una Caratteristica fissa e possiede un Valore Abili
 
 ## **4.2 Composizione del Valore Abilità**
 
-Il VA è la somma del Modificatore di Caratteristica, dell'Addestramento, dell'eventuale bonus di Corporazione e dell'Avanzamento. L'Addestramento fornisce un valore da 0 a 4 diverso per ciascuna Abilità, così da distinguere le competenze iniziali dei cinque profili senza modificare l'elenco delle Abilità.
+Il VA è la somma del Modificatore di Caratteristica, dell'Addestramento, dell'eventuale bonus di Corporazione e dell'Avanzamento. L'Addestramento fornisce un valore da 2 a 4 diverso per ciascuna Abilità, così da distinguere le competenze iniziali dei cinque profili senza modificare l'elenco delle Abilità.
 
 | Componente | Massimo | Nota |
 | ----- | ----- | :---- |
@@ -4656,28 +4647,28 @@ SIMPLY RPG prevede venti livelli. Alla creazione si acquisisce il primo Grado di
 
 | Livello | Avanzamento |
 | :---- | :---- |
-| 1 | **Creazione:** I Grado di Classe e 5 Punti Abilità Liberi iniziali |
+| 1 | **Creazione:** I Grado di Classe e 10 Punti Abilità Liberi iniziali |
 | 2 | \+2 Punti Caratteristica |
 | 3 | Un Talento Libero; \+1 a tutte le Prove Salvezza |
-| 4 | Un Grado di Classe e 5 Punti Abilità Liberi |
+| 4 | Un Grado di Classe e 10 Punti Abilità Liberi |
 | 5 | Un Talento Libero |
 | 6 | \+2 Punti Caratteristica |
 | 7 | Un Talento Libero |
-| 8 | Un Grado di Classe e 5 Punti Abilità Liberi |
+| 8 | Un Grado di Classe e 10 Punti Abilità Liberi |
 | 9 | Un Talento Libero |
 | 10 | \+2 Punti Caratteristica |
 | 11 | Un Talento Libero; \+1 a tutte le Prove Salvezza |
-| 12 | Un Grado di Classe e 5 Punti Abilità Liberi; seconda Azione Principale per Round |
+| 12 | Un Grado di Classe e 10 Punti Abilità Liberi; seconda Azione Principale per Round |
 | 13 | Un Talento Libero |
 | 14 | \+2 Punti Caratteristica |
 | 15 | Un Talento Libero |
-| 16 | Un Grado di Classe e 5 Punti Abilità Liberi |
+| 16 | Un Grado di Classe e 10 Punti Abilità Liberi |
 | 17 | Un Talento Libero |
 | 18 | \+2 Punti Caratteristica |
 | 19 | Un Talento Libero; \+1 a tutte le Prove Salvezza |
-| 20 | Un Grado di Classe e 5 Punti Abilità Liberi |
+| 20 | Un Grado di Classe e 10 Punti Abilità Liberi |
 
-Nel percorso completo si ricevono sei Gradi di Classe, 30 Punti Abilità Liberi, 10 Punti Caratteristica dopo la creazione e nove Talenti Liberi. Ogni Grado concede inoltre \+1 a ciascuna delle cinque Abilità della Classe, per 30 punti fissi complessivi, entro i limiti individuali di Avanzamento. Ai livelli 3, 11 e 19 si aggiunge inoltre \+1 a tutte le Salvezze, fino a \+3 complessivo.
+Nel percorso completo si ricevono sei Gradi di Classe, 60 Punti Abilità Liberi, 10 Punti Caratteristica dopo la creazione e nove Talenti Liberi. Ogni Grado concede inoltre \+1 a ciascuna delle cinque Abilità della Classe, per 30 punti fissi complessivi, entro i limiti individuali di Avanzamento. Ai livelli 3, 11 e 19 si aggiunge inoltre \+1 a tutte le Salvezze, fino a \+3 complessivo.
 
 ### 8.1.1 Avanzamento delle Prove Salvezza
 
@@ -4703,7 +4694,7 @@ Una Caratteristica iniziale a 7 può salire a 9 al 2° livello e a 10 al 6° liv
 
 ## **8.3 Punti Abilità e limiti di Avanzamento**
 
-Si distribuiscono 5 Punti Abilità Liberi ai livelli 1, 4, 8, 12, 16 e 20\. I punti del 1° livello sono quelli già previsti dalla creazione, non un’assegnazione aggiuntiva. Ogni punto aggiunge \+1 all’Avanzamento di un’Abilità ammessa; si applicano i requisiti del paragrafo 2.13. Si assegnano prima i punti fissi della Classe e poi quelli liberi.
+Si distribuiscono 10 Punti Abilità Liberi ai livelli 1, 4, 8, 12, 16 e 20\. I punti del 1° livello sono quelli già previsti dalla creazione, non un’assegnazione aggiuntiva. Ogni punto aggiunge \+1 all’Avanzamento di un’Abilità ammessa; si applicano i requisiti del paragrafo 2.13. Si assegnano prima i punti fissi della Classe e poi quelli liberi.
 
 | Livelli | Avanzamento massimo nella stessa Abilità |
 | :---- | :---- |

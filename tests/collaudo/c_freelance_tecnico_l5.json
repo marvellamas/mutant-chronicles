@@ -38,7 +38,10 @@
     "puntiAbilitaLiberi": {
       "Tecnologia": 2,
       "Armi leggere": 2,
-      "Scienza": 1
+      "Scienza": 1,
+      "Raggirare": 2,
+      "Medicina": 2,
+      "Sopravvivenza": 1
     },
     "incantesimi": [],
     "puntiEroe": {
@@ -159,7 +162,10 @@
         "Scienza": 1,
         "Pilotare": 1,
         "Percezione": 1,
-        "Furtività": 1
+        "Furtività": 1,
+        "Medicina": 2,
+        "Sopravvivenza": 2,
+        "Atletica": 1
       }
     },
     {

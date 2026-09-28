@@ -1,7 +1,9 @@
 // Collaudo: tre personaggi di riferimento costruiti dall'interfaccia (wizard, «Sali di livello»,
 // lista dell'equipaggiamento) ed esportati con «Esporta JSON» in tests/collaudo/. I valori attesi
 // sono ricalcolati a mano dal Manuale del Giocatore v0.43 e dal Manuale degli Armamenti v0.50: il
-// commento accanto a ogni valore riporta il calcolo e il paragrafo.
+// commento accanto a ogni valore riporta il calcolo e il paragrafo. Basi degli Addestramenti e 10 Punti
+// Abilità Liberi per assegnazione dal Doc del Giocatore del 27/09/2026: i JSON hanno i 5 punti in più
+// per assegnazione aggiunti a mano, e i PDF di riferimento sono precedenti a questo cambio.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -43,11 +45,11 @@ test('collaudo a: Imperiali Combattente Assaltatore, 8° livello', () => {
   assert.equal(va(s, 'Armi da guerra').totale, 13); // 3 + 4 + 1 + (1 + 2 + 1 + 1)
   assert.equal(va(s, 'Difese').totale, 12); // 3 + 4 + 0 + (1 + 2 + 1 + 1)
   assert.equal(va(s, 'Armi leggere').totale, 12); // 3 + 4 + 0 + (1 + 1 + 2 + 1)
-  assert.equal(va(s, 'Armi da mischia').totale, 11); // 3 + 3 + 0 + (1 + 1 + 2 + 1)
-  assert.equal(va(s, 'Atletica').totale, 12); // 3 + 3 + 1 + 5
-  assert.equal(va(s, 'Atletica').vaEquip, 11); // armatura Media: Agilità −1 (Armamenti §7.11.1)
-  assert.equal(va(s, 'Sopravvivenza').totale, 7); // 2 + 2 + 1 + 2
-  assert.equal(va(s, 'Furtività').vaEquip, 5); // 3 + 2 + 0 + 1, poi −1 di Agilità
+  assert.equal(va(s, 'Armi da mischia').totale, 12); // 3 + 4 + 0 + (1 + 1 + 2 + 1)
+  assert.equal(va(s, 'Atletica').totale, 13); // 3 + 4 + 1 + 5
+  assert.equal(va(s, 'Atletica').vaEquip, 12); // armatura Media: Agilità −1 (Armamenti §7.11.1)
+  assert.equal(va(s, 'Sopravvivenza').totale, 8); // 2 + 3 + 1 + 2
+  assert.equal(va(s, 'Furtività').vaEquip, 6); // 3 + 3 + 0 + 1, poi −1 di Agilità
   // Spadone Claymore a due mani: Armi da guerra 13 + Specializzazione in Spade +1 (§8.8.1);
   // Highland Clan Warriors: Articolazione d'assalto porta a 0 la penalità ravvicinata (Armamenti §7.14.2)
   const [claymore] = s.equipaggiamento.armi;
@@ -90,13 +92,13 @@ test('collaudo b: Fratellanza Taumaturgo Arcanista, 12° livello, Mistico II', (
   assert.equal(s.azioni.principali, 2); // §8.1: +1 Azione Principale al 12° livello
   assert.equal(va(s, 'Potere').totale, 15); // 5 + 4 + 0 + 6 (limite 6 al 12° livello)
   assert.equal(va(s, 'Occultismo').totale, 15); // 4 + 4 + 1 (Fratellanza) + 6
-  assert.equal(va(s, 'Percezione').totale, 15); // 5 + 3 + 1 + 6
-  assert.equal(va(s, 'Medicina').totale, 13); // 5 + 2 + 0 + (Mistico I 1 + 2 + Mistico II 1 + 2)
-  assert.equal(va(s, 'Cultura').totale, 7); // 1 + 3 + 1 + 2
+  assert.equal(va(s, 'Percezione').totale, 16); // 5 + 4 + 1 + 6
+  assert.equal(va(s, 'Medicina').totale, 14); // 5 + 3 + 0 + (Mistico I 1 + 2 + Mistico II 1 + 2)
+  assert.equal(va(s, 'Cultura').totale, 8); // 1 + 4 + 1 + 2
   assert.equal(va(s, 'Artefatti').totale, 15); // 5 + 4 + 0 + 6
-  // Bordone Templare: Armi da guerra 0 (base Taumaturgo 0, FOR 5) − 1 (Armatura del Mistico, Media, Armamenti §7.17.4)
+  // Bordone Templare: Armi da guerra 2 (base Taumaturgo 2, FOR 5) − 1 (Armatura del Mistico, Media, Armamenti §7.17.4)
   const [bordone] = s.equipaggiamento.armi;
-  assert.deepEqual([bordone.va, bordone.danno.due_mani, bordone.attivazione.danno_extra], [-1, '1d8+1', '1d6']);
+  assert.deepEqual([bordone.va, bordone.danno.due_mani, bordone.attivazione.danno_extra], [1, '1d8+1', '1d6']);
   const [armatura] = s.equipaggiamento.protezioni;
   assert.deepEqual(armatura.ar, { totale: 4, magica: 1 }); // §7.17.2
   assert.equal(s.equipaggiamento.lancioPotere, 0); // Media −3, Assetto mistico 3 (§7.17.4)
@@ -121,16 +123,16 @@ test('collaudo c: Freelance Lavoratore Tecnico, 5° livello, Risorse Interiori, 
   assert.equal(s.pv, 22); // COS 6 + Tecnico I 9 (3 + 1d6 massimizzato) + II 7 (3 + 4)
   assert.equal(s.pm, 10); // SAG 6 + 2 + 2
   assert.equal(s.iniziativa, 6); // Mod DES +3 + Mod INT +3
-  // §2.6 valori base del Lavoratore: Tecnologia 4, Pilotare 4, Armi leggere 3, Scienza 2, Armi da mischia 4, Furtività 1
+  // §2.6 valori base del Lavoratore: Tecnologia 4, Pilotare 4, Armi leggere 4, Scienza 3, Armi da mischia 4, Furtività 3
   assert.equal(va(s, 'Tecnologia').totale, 11); // 3 + 4 + 0 + (1 + 2 + 1)
   assert.equal(va(s, 'Pilotare').totale, 11); // 3 + 4 + 1 + (1 + 1 + 1)
-  assert.equal(va(s, 'Armi leggere').totale, 10); // 3 + 3 + 1 + (2 + 1)
-  assert.equal(va(s, 'Scienza').totale, 9); // 3 + 2 + 0 + (1 + 1 + 1 + 1)
-  assert.equal(va(s, 'Percezione').totale, 7); // 1 + 3 + 0 + (1 + 1 + 1)
-  assert.equal(va(s, 'Furtività').totale, 5); // 3 + 1 + 0 + 1
-  // Pistola semiautomatica: Armi leggere 10 + Specializzazione in Pistole +1 − Smorzatore 1 (Armamenti §7.3.1)
+  assert.equal(va(s, 'Armi leggere').totale, 11); // 3 + 4 + 1 + (2 + 1)
+  assert.equal(va(s, 'Scienza').totale, 10); // 3 + 3 + 0 + (1 + 1 + 1 + 1)
+  assert.equal(va(s, 'Percezione').totale, 8); // 1 + 4 + 0 + (1 + 1 + 1)
+  assert.equal(va(s, 'Furtività').totale, 7); // 3 + 3 + 0 + 1
+  // Pistola semiautomatica: Armi leggere 11 + Specializzazione in Pistole +1 − Smorzatore 1 (Armamenti §7.3.1)
   const [pistola, chiave] = s.equipaggiamento.armi;
-  assert.deepEqual([pistola.va, pistola.danno.una_mano, pistola.mirino.riduzione], [10, '1d6+1', 2]);
+  assert.deepEqual([pistola.va, pistola.danno.una_mano, pistola.mirino.riduzione], [11, '1d6+1', 2]);
   assert.deepEqual(pistola.scorte.map((x) => [x.nome, x.quantita]), [['Proiettili da pistola', 30]]); // §7.20.1: proiettili da pistola
   // oggetto personalizzato: Armi da mischia 7 (3 + 4), danno scritto dal giocatore
   assert.deepEqual([chiave.nome, chiave.va, chiave.danno.una_mano], ['Chiave idraulica pesante', 7, '1d6']);

@@ -23,7 +23,7 @@ su quelle pagine: le tabelle impilate contano come una.
 | `armature_corporative.json` | 83 armature dei cataloghi corporativi, esoscheletri compresi (lotto 6) | §7.11.5–7.17.5 | 64–103 |
 | `corredi_dispositivi.json` | 60 corredi, dispositivi, esoscheletro APE, Iron Mastiff, armi e granate Imperial; tabella SIN (lotto 7) | §7.12–7.17 | 69–105 |
 | `accessori_armi.json` | 15 accessori delle armi: mirini, riduzione del rumore, supporti, illuminazione e visione (lotto 8) | §7.3 | 19–22 |
-| `rinforzi.json` | 2 kit di rinforzo commerciali e 2 soprabiti corporativi (lotto 9) | §7.11.2 | 62 |
+| `rinforzi.json` | 22 rinforzi: profili Leggero e Pesante, 4 modelli commerciali, soprabiti BLEU e ASA, 14 specialistici (lotto 9, poi Armamenti 0.53 §7.23) | §7.11.2, §7.23 | 62, 131 |
 | `munizioni.json` | 49 munizioni, caricatori, granata pesante, razzi, celle, combustibile, dardi chimici; tabella delle famiglie delle armi (lotto 10) | §7.20 | 114–121 |
 | `sanitario.json` | 16 oggetti sanitari: kit, cartucce, UMC, dispositivi portatili, diagnostica e chirurgia (lotto 11) | §7.19 | 109–113 |
 | `artefatti.json` | regole di sintonizzazione, 6 Artefatti già nel catalogo, 4 batterie da 5 PM (lotto 12) | §7.5, §7.10 | 30–31, 58–60 |
@@ -67,6 +67,23 @@ Da completare nello stesso ambito, a basso costo:
     - il Mortificator rinforzato del §7.17.5 (Media, −1 attacchi e Agilità, −1 MOV, −2 al
       lancio);
     - la Divisa operativa ASA col Soprabito del §7.11.7 (AR 4, FOR 5, Media).
+  - **Dubbi per Davide:** nessuno.
+- ✔ **Catalogo dei rinforzi** — Armamenti 0.53, §7.23 (28 settembre 2026).
+  - **Fonte:** testo del Doc (`docs/manuali-txt/armamenti.md`), generatore
+    `tools/lotti/lotto_rinforzi_723.py`, dati `data/equipaggiamento/rinforzi.json` (riscritto).
+  - **Oggetti:** 22. I due profili di categoria del §7.23.1 (stessi id del lotto 9), i quattro modelli
+    commerciali del §7.23.2, i soprabiti BLEU e ASA del §7.23.3 (stessi id, nomi nuovi) e i 14
+    specialistici del §7.23.6 (Qualità Non comune, PS 12; Eisenwall 10 PI).
+  - **Proprietà:** tradotte in effetti con la funzione del lotto delle armature, quindi con le stesse
+    chiavi di cumulo. Nuove chiavi `beneficio` anche sulle armature (contromisure, Mimetismo e
+    Mimetica ambientale, SIN): §7.23.9, «si usa il maggiore applicabile». Articolazione d'assalto del
+    rinforzo riduce la penalità ravvicinata dell'armatura fino a 0, se l'armatura non l'ha già.
+    Discreta resta promemoria nella riga della protezione.
+  - **Calcolo:** le proprietà del rinforzo valgono solo se è il kit valido di un'armatura indossata.
+    Limite: la riduzione della penalità (Sode d'assalto) non segue lo stato «rotto» del rinforzo, che
+    oggi toglie AR ed effetti ma non tocca le penalità.
+  - **Test dal manuale** (`tests/rinforzi.test.js`): esempi del §7.23.5, Breacher del §7.23.7, esempi
+    del §7.23.9 (Imbottita, Mimetismo, Sode su leggera e media), Missione non montabile sulla Marte.
   - **Dubbi per Davide:** nessuno.
 
 ## Da estrarre, in ordine di utilità

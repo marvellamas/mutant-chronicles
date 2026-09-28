@@ -4,7 +4,7 @@
   "creazione": {
     "punti_caratteristica": 5,
     "massimo_caratteristica": 7,
-    "punti_abilita_liberi": 5,
+    "punti_abilita_liberi": 10,
     "avanzamento_massimo_iniziale": 3,
     "va_minimo_per_punti_liberi": 1,
     "bonus_classe_per_grado": 1,
@@ -81,15 +81,13 @@
     "_nota": "§2.14: usa i modificatori ordinari."
   },
   "addestramento": {
-    "punti_totali": 48,
+    "punti_totali": 76,
     "schema": {
-      "4": 4,
-      "3": 4,
-      "2": 8,
-      "1": 4,
-      "0": 4
+      "4": 8,
+      "3": 12,
+      "2": 4
     },
-    "_nota": "§2.3: valore base → numero di Abilità con quel valore."
+    "_nota": "§2.3: valore base → numero di Abilità con quel valore. Doc del Giocatore del 27/09/2026 (16:38): basi da 2 a 4, 76 punti; prima 48 punti con basi da 0 a 4."
   },
   "taumaturgo": {
     "addestramento": "Taumaturgo",
@@ -200,7 +198,7 @@
         "livello": 4,
         "eventi": [
           "grado_classe",
-          "punti_abilita:5"
+          "punti_abilita:10"
         ]
       },
       {
@@ -225,7 +223,7 @@
         "livello": 8,
         "eventi": [
           "grado_classe",
-          "punti_abilita:5"
+          "punti_abilita:10"
         ]
       },
       {
@@ -251,7 +249,7 @@
         "livello": 12,
         "eventi": [
           "grado_classe",
-          "punti_abilita:5",
+          "punti_abilita:10",
           "azione_principale:+1"
         ]
       },
@@ -277,7 +275,7 @@
         "livello": 16,
         "eventi": [
           "grado_classe",
-          "punti_abilita:5"
+          "punti_abilita:10"
         ]
       },
       {
@@ -303,7 +301,7 @@
         "livello": 20,
         "eventi": [
           "grado_classe",
-          "punti_abilita:5"
+          "punti_abilita:10"
         ]
       }
     ],

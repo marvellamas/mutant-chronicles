@@ -49,12 +49,14 @@ def effetti_di(nome):
     b, x = base(nome), valore(nome)
     va = lambda abilita, v, ambito, uso=None, **k: {'abilita': abilita, 'valore': v, 'ambito': ambito, **({'uso': uso} if uso else {}), **k}
     sal = lambda s, v, uso, **k: {'tipo': 'salvezza', 'salvezza': s, 'valore': v, 'ambito': 'uso_specifico', 'uso': uso, **k}
+    # §7.23.9: proprietà uguali o equivalenti su più oggetti (armatura, rinforzo) non si sommano:
+    # vale la maggiore → stessa chiave «beneficio»
     if b == 'Imbottita':
-        return [{'tipo': 'contromisura', 'effetto': 'Concussivo', 'valore': x, 'ambito': 'generale'}]
+        return [{'tipo': 'contromisura', 'effetto': 'Concussivo', 'valore': x, 'ambito': 'generale', 'beneficio': 'contromisura_concussivo'}]
     if b == 'Isolante':
-        return [{'tipo': 'contromisura', 'effetto': 'Elettricità', 'valore': x, 'ambito': 'generale'}]
+        return [{'tipo': 'contromisura', 'effetto': 'Elettricità', 'valore': x, 'ambito': 'generale', 'beneficio': 'contromisura_elettricita'}]
     if b == 'Ignifuga':
-        return [{'tipo': 'contromisura', 'effetto': 'Fuoco', 'valore': x, 'ambito': 'generale'}]
+        return [{'tipo': 'contromisura', 'effetto': 'Fuoco', 'valore': x, 'ambito': 'generale', 'beneficio': 'contromisura_fuoco'}]
     if b == 'Antiesplosione':
         return [{'tipo': 'ar_contro', 'contro': 'esplosioni', 'valore': x, 'ambito': 'generale'}]
     if b == 'Filtro respiratorio':
@@ -70,9 +72,9 @@ def effetti_di(nome):
     if b == 'Protezione acustica':
         return [sal(None, x, 'contro effetti sonori o rumori dannosi', beneficio='protezione_acustica')]
     if b in ('Mimetismo', 'Mimetica ambientale'):
-        return [va('Furtività', x, 'situazionale')]
+        return [va('Furtività', x, 'situazionale', beneficio='mimetismo')]
     if b == 'SIN':
-        return [va('Difese', x, 'uso_specifico', 'Schivata')]
+        return [va('Difese', x, 'uso_specifico', 'Schivata', beneficio='sin_schivata')]
     if b == 'Stabile':
         return [{'tipo': 'caratteristica', 'caratteristiche': ['FOR', 'DES'], 'valore': x, 'ambito': 'uso_specifico', 'uso': 'contro Sbilanciante', 'beneficio': 'stabile'}]
     if b == 'Assistenza muscolare':

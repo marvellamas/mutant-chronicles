@@ -69,9 +69,18 @@ function erroriDopo(modifica) {
 }
 
 test('validatore: Addestramento con somma o distribuzione sbagliata', () => {
+  // §2.3 (Doc del 27/09/2026): 76 punti, 8×4, 12×3, 4×2. Furtività 4 → 3: somma 75, 7×4 e 13×3.
   const e = erroriDopo((d) => { d.addestramenti.addestramenti[0].valori_base['Furtività'] = 3; });
-  assert.ok(e.some((x) => x.file === 'addestramenti.json' && x.chiave.includes('Avventuriero') && /somma è 47/.test(x.problema)));
+  assert.ok(e.some((x) => x.file === 'addestramenti.json' && x.chiave.includes('Avventuriero') && /somma è 75/.test(x.problema)));
   assert.ok(e.some((x) => /distribuzione/.test(x.problema)));
+  // una base 0 (ammessa dal vecchio schema) ora è fuori distribuzione anche a somma invariata
+  const zero = erroriDopo((d) => {
+    const vb = d.addestramenti.addestramenti[0].valori_base;
+    vb['Potere'] = 0; // 2 → 0
+    vb['Cultura'] = 4; vb['Medicina'] = 4; // 3 → 4 ciascuna: somma di nuovo 76
+  });
+  assert.equal(zero.some((x) => /somma/.test(x.problema)), false);
+  assert.ok(zero.some((x) => x.chiave.includes('Avventuriero') && /distribuzione/.test(x.problema)), JSON.stringify(zero));
 });
 
 test('validatore: Addestramento con Abilità mancante o inesistente', () => {

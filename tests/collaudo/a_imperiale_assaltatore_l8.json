@@ -39,7 +39,9 @@
     "puntiAbilitaLiberi": {
       "Armi da guerra": 2,
       "Difese": 2,
-      "Atletica": 1
+      "Atletica": 1,
+      "Percezione": 2,
+      "Armi medie": 3
     },
     "incantesimi": [],
     "puntiEroe": {
@@ -111,7 +113,9 @@
       "puntiAbilita": {
         "Armi leggere": 2,
         "Armi da mischia": 2,
-        "Percezione": 1
+        "Percezione": 2,
+        "Armi pesanti": 2,
+        "Pilotare": 2
       }
     },
     {
@@ -145,8 +149,10 @@
       "puntiAbilita": {
         "Atletica": 1,
         "Sopravvivenza": 2,
-        "Medicina": 1,
-        "Furtività": 1
+        "Medicina": 2,
+        "Furtività": 1,
+        "Armi medie": 2,
+        "Tecnologia": 2
       }
     }
   ],
