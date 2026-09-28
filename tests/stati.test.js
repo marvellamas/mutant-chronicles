@@ -27,7 +27,9 @@ test('Accecato: −8 al VA per colpire a distanza (anche in «Attacca!») e alle
   const p = al(['accecato']);
   assert.equal(arma(p, 'p').vaEffettivo, arma(riposo, 'p').vaEffettivo - 8);
   assert.equal(va(p, 'Difese'), va(riposo, 'Difese') - 8);
-  assert.equal(va(p, 'Percezione'), va(riposo, 'Percezione') - 8);
+  assert.equal(va(p, 'Pilotare'), va(riposo, 'Pilotare') - 8);
+  // risposta A.51: Percezione non ha una penalità generale (le azioni solo visive falliscono)
+  assert.equal(va(p, 'Percezione'), va(riposo, 'Percezione'));
   assert.equal(distanza(p).va_finale, distanza(riposo).va_finale - 8);
   assert.ok(distanza(p).scomposizione.some((x) => x.etichetta === 'Accecato' && x.valore === -8));
   // anche nel corpo a corpo, e Colpo Mirato vietato

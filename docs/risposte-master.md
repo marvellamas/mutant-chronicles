@@ -285,3 +285,40 @@ UTC); i paragrafi corrispondenti sono nel Manuale del Giocatore §2.16.1–§2.1
     PM, con le fasce nel tooltip e l'avviso nella SD; `src/character.js`: i contenitori personalizzati
     Viola salvati prima diventano il frammento, con un avviso al caricamento. Tracker dell'esposizione:
     `docs/backlog.md`, voce 13.
+
+## 28 settembre 2026, pomeriggio — seconda serie di risposte nel Doc «per-davide.md» (sezione 7), riportate anche nei manuali delle 13:20
+
+33. **Addestramenti e punti liberi** (A.52; Giocatore §§2.3–2.8, 2.13, 8.1, 8.3). Confermati: 76 punti
+    base (8 × 4, 12 × 3, 4 × 2); 10 Punti Abilità Liberi alla creazione (sono quelli del 1° livello) e ai
+    livelli 4, 8, 12, 16, 20, 60 in tutto. Limiti di Avanzamento: 3 ai livelli 1–3, 4 ai 4–7, 5 agli 8–11,
+    6 ai 12–15, 7 ai 16–19, 8 al 20°; il limite comprende punti di Classe e punti liberi (prima quelli di
+    Classe), VA ≥ 1 prima dei liberi. Nessun cambio: `regole.json` coincide.
+    → `data/regole.json` → `regole_aggiornate.punti_abilita` («confermato da Davide il 28/09»).
+
+34. **Categorie di Prove degli Stati** (A.51; Giocatore §§5.5, 5.18). Le liste sono di riferimento, non
+    chiuse: conta l'azione. A Terra: Armi da guerra, Armi da mischia, Corpo a corpo, Difese; Atletica per
+    l'equilibrio. Accecato: attacchi, Difese, Pilotare e altre Prove che richiedono la vista; Percezione
+    non ha una penalità generale. Assordato: −4 quando l'udito è importante ma non indispensabile
+    (Percezione, Intrattenere). Un'azione esclusivamente visiva (Accecato) o uditiva (Assordato) fallisce
+    automaticamente. «Prove fisiche» come A.16 (la lista dell'app).
+    → `data/regole.json` → `categorie_prove.vista` (tolta Percezione), promemoria di Accecato e Assordato;
+    `tests/stati.test.js`.
+
+35. **AR unica** (A.43; Giocatore §5.10, Magia sez. 7 e scheda 22.2). Un'AR complessiva «totale, di cui
+    magica», senza zone del corpo; Armatura Mistica converte l'AR dell'armatura incantata e aggiunge il
+    bonus una volta. Conferma l'app. Nel manuale della Magia la correzione è già fatta.
+
+36. **Oggetti a 0 PI** (A.44; Armamenti §§7.2.1, 7.4, 7.11.1, 7.21.3). Rotto e inutilizzabile finché non
+    riparato: un'armatura perde AR (anche magica) e benefici, uno scudo non dà AR e non attacca né para,
+    un elmetto perde i suoi vantaggi; peso e penalità restano; la rottura vale dal colpo successivo.
+    Conferma l'app. → `src/ui/tab.js`: «Attacca!» disattivato per armi e scudi Rotti, nota nel tooltip
+    di «Rotto»; `tests/risposte-davide-2.test.js`.
+
+37. **Rinforzo a 0 PI** (A.45; Armamenti §§7.11.2, 7.23.9). Perde AR e proprietà; montato conserva peso,
+    FOR richiesta e penalità della configurazione rinforzata; tolto, l'armatura torna al suo profilo.
+    Esempio: civile leggera + rinforzo pesante 3/5/Media → rinforzo rotto 1/5/Media → tolto 1/3/Leggera.
+    Conferma l'app (chiude A.45). → `tests/risposte-davide-2.test.js`.
+
+38. **Rainy Dayer** (A.13; Armamenti §7.14.6). Specializzazione Carabine sul profilo di tiro (+1 VA,
+    +1 danno; Armi medie, due mani aperta o chiusa, 30 Q); la copertura (AR +1, Parata con Difese) non
+    prende il +1. → `data/equipaggiamento/corredi_dispositivi.json` (tolto il TODO).

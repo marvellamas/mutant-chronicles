@@ -76,9 +76,9 @@ test('A.8: Pugnale in mischia con Coltelli e Pugnali, lanciato con Armi da Lanci
   assert.equal(def('armi_distanza:ascia-leggera').specializzazione, 'specializzazione-armi-da-lancio');
 });
 
-test('controllo finale: ogni arma del catalogo ha una Specializzazione, salvo la Rainy Dayer (A.13, aperta)', () => {
+test('controllo finale: ogni arma del catalogo ha una Specializzazione (A.13 chiusa)', () => {
   const senza = catalogo(dati).oggetti.filter((o) => (o.tipo === 'arma_ravvicinata' || o.tipo === 'arma_distanza') && !o.specializzazione).map((o) => o.nome);
-  assert.deepEqual(senza, ['Rainy Dayer']);
+  assert.deepEqual(senza, []);
 });
 
 // --- A.10: Scudo delle Guardie Sacre ------------------------------------------------------

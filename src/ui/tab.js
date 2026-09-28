@@ -278,7 +278,7 @@ function sezioneIntegrita(ctx) {
           disabled: delta < 0 ? n <= 0 : n >= x.piMax, 'aria-label': `${delta < 0 ? 'Togli' : 'Aggiungi'} 1 PI a ${x.nome}`,
         }, delta < 0 ? '−' : '+');
         return h('tr', { class: soglia ? 'rotto' : null },
-          h('th', { scope: 'row' }, x.nome, soglia ? h('span', { class: 'etichetta etichetta-rotto', title: 'A 0 PI l’oggetto è Rotto e non può essere utilizzato finché non viene riparato (§7.2.1).' }, soglia.etichetta) : null),
+          h('th', { scope: 'row' }, x.nome, soglia ? h('span', { class: 'etichetta etichetta-rotto', title: 'A 0 PI l’oggetto è Rotto e non può essere utilizzato finché non viene riparato (§7.2.1). La rottura vale dal colpo successivo: non annulla la protezione già data contro il colpo che l’ha causata (A.44).' }, soglia.etichetta) : null),
           h('td', { class: 'forte' }, `PI ${n}/${x.piMax}`),
           h('td', {}, h('span', { class: 'pulsanti-tavolo' }, b(-1), b(1))),
           h('td', {}, x.ps ? `${x.ps}${x.qualita ? ` (${x.qualita})` : ''}` : '—'));
@@ -868,7 +868,8 @@ function schedaArma(ctx, a) {
   return h('article', { class: `arma-tab${a.moduloDi ? ' modulo' : ''}` },
     h('div', { class: 'arma-testa' },
       h('h3', {}, a.nome, h('small', { class: 'sigla' }, ` · ${a.abilita ?? 'Abilità non indicata'}`)),
-      a.va !== null ? h('button', { type: 'button', class: 'btn primario btn-attacca', onclick: () => { ctx.ui.attacco = { uid: a.uid, passo: 0 }; ctx.azioni.ridisegna(); } }, 'Attacca!') : null),
+      // A.44: un’arma o uno scudo Rotti (0 PI) non possono attaccare finché non vengono riparati
+      a.va !== null ? h('button', { type: 'button', class: 'btn primario btn-attacca', disabled: !!a.rotta, title: a.rotta ? 'Rotto (0 PI): non può attaccare finché non viene riparato (§7.2.1, A.44).' : null, onclick: () => { ctx.ui.attacco = { uid: a.uid, passo: 0 }; ctx.azioni.ridisegna(); } }, 'Attacca!') : null),
     a.moduloDi ? h('p', { class: 'nota' }, `Modulo integrato di ${a.moduloDi}: si sceglie il profilo prima di ogni attacco; alimentazione separata (§7.8).`) : null,
     // risposta A.10: stato al tavolo dell'attacco (lama estratta), lo stesso interruttore della tab Abilità
     a.statoAlternativo ? h('label', { class: `stato-tavolo${a.statoAlternativo.acceso ? ' attivo' : ''}` },

@@ -1,10 +1,7 @@
 {
   "versione_manuale": "Armamenti 0.50",
   "fonte": "Manuale degli Armamenti v0.50: corredi e dispositivi corporativi (§7.12, §7.13.4–7.13.8, §7.14.4–7.14.8, §7.15.1, §7.15.4–7.15.5, §7.16.5, §7.17.6), pp. 69–105; lotto 7",
-  "_nota": "Generato da tools/lotti/lotto7_corredi_dispositivi.mjs; da qui in poi si modifica questo file. «sin_armi» è la tabella SIN del §7.15.1: con l’Interfaccia Neurale in uso, +SIN al VA per colpire dell’arma. «scudo_integrato»: l’arma impugnata protegge anche come Scudo nella condizione indicata. I bonus degli strumenti Professionali (+2 VA alle attività indicate) restano testo: valgono solo per le Prove descritte.",
-  "TODO(Davide)": [
-    "Specializzazione della Rainy Dayer (§7.14.6): arma da fuoco a corto raggio con ombrello balistico, Armi medie. Il manuale non ne indica la categoria. Proposta: Carabine."
-  ],
+  "_nota": "Generato da tools/lotti/lotto7_corredi_dispositivi.mjs; da qui in poi si modifica questo file. «sin_armi» è la tabella SIN del §7.15.1: con l’Interfaccia Neurale in uso, +SIN al VA per colpire dell’arma. «scudo_integrato»: l’arma impugnata protegge anche come Scudo nella condizione indicata. I bonus degli strumenti Professionali (+2 VA alle attività indicate) restano testo: valgono solo per le Prove descritte. Rainy Dayer: Specializzazione Carabine sul solo profilo di tiro (Armi medie, due mani, 30 Q); la funzione difensiva (scudo_integrato: AR +1, Parata con Difese) non prende il +1 (risposta di Davide A.13, 28/09/2026).",
   "modalita": {
     "S": "Colpo Singolo",
     "TR": "Tiro Rapido"
@@ -2031,7 +2028,7 @@
       "paragrafo": "§7.14.6",
       "versione_manuale": "Armamenti 0.50",
       "abilita": "Armi medie",
-      "specializzazione": null,
+      "specializzazione": "specializzazione-carabine",
       "mani": 2,
       "danno": {
         "una_mano": null,

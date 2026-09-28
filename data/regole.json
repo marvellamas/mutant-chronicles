@@ -149,7 +149,7 @@
     }
   },
   "regole_aggiornate": {
-    "punti_abilita": "Regole aggiornate (manuale del 27/09)",
+    "punti_abilita": "Regole aggiornate (manuale del 27/09, confermato da Davide il 28/09)",
     "_nota": "Titolo dell'avviso in cima alla SD quando un evento già registrato (creazione o livello) ha meno Punti Abilità Liberi di quelli previsti dalle regole correnti, o più: Giocatore, Doc del 27/09/2026 (10 punti invece di 5), per-davide A.52. Se le regole cambiano ancora, si aggiorna qui la data."
   },
   "addestramento": {
@@ -1168,7 +1168,7 @@
         "id": "accecato",
         "nome": "Accecato",
         "durata": "1+1d3 Round",
-        "promemoria": "−8 VA alle Prove che richiedono la vista, Difese comprese; niente Tiro o Colpo Mirato; i nemici non percepiti hanno +4 VA.",
+        "promemoria": "−8 VA alle Prove che richiedono la vista (attacchi, Difese, Pilotare); niente Tiro o Colpo Mirato; i nemici non percepiti hanno +4 VA. Un’azione esclusivamente visiva fallisce automaticamente: Percezione non ha una penalità generale (A.51).",
         "riassunto": true,
         "effetti": [
           {"tipo": "va", "prove": "vista", "valore": -8, "ambito": "generale", "condizione": "Il personaggio subisce −8 VA alle Prove che richiedono la vista, comprese Difese e attacchi contro bersagli non percepiti, e fallisce automaticamente le azioni puramente visive.", "fonte": "Giocatore §5.18"}
@@ -1179,7 +1179,7 @@
         "id": "assordato",
         "nome": "Assordato",
         "durata": "1+1d3 Round",
-        "promemoria": "Fallisce le azioni basate solo sull’udito; −4 VA quando l’udito è importante.",
+        "promemoria": "Un’azione esclusivamente uditiva fallisce automaticamente; −4 VA a Percezione e Intrattenere solo quando l’udito conta (valore a parte), nessuna penalità generale (A.51).",
         "riassunto": true,
         "effetti": [
           {"tipo": "va", "prove": "udito", "valore": -4, "ambito": "uso_specifico", "uso": "quando l’udito è importante", "condizione": "Fallisce automaticamente le azioni basate soltanto sull’udito e subisce −4 VA quando l’udito è importante ma non essenziale.", "fonte": "Giocatore §5.18"}
@@ -1271,10 +1271,10 @@
   "categorie_prove": {
     "fisiche": ["Armi da lancio", "Armi leggere", "Armi medie", "Armi pesanti", "Armi da guerra", "Armi da mischia", "Corpo a corpo", "Difese", "Atletica", "Furtività"],
     "fisiche_ravvicinate": ["Armi da guerra", "Armi da mischia", "Corpo a corpo", "Difese"],
-    "vista": ["Armi da lancio", "Armi leggere", "Armi medie", "Armi pesanti", "Armi da guerra", "Armi da mischia", "Corpo a corpo", "Difese", "Percezione", "Pilotare"],
+    "vista": ["Armi da lancio", "Armi leggere", "Armi medie", "Armi pesanti", "Armi da guerra", "Armi da mischia", "Corpo a corpo", "Difese", "Pilotare"],
     "udito": ["Percezione", "Intrattenere"],
-    "TODO(Davide)": "A.51 (e A.16 per «fisiche»): liste nostre. Il manuale nomina «azioni fisiche» (Immobilizzato, Rallentato, carico §5.2.6), «azioni fisiche ravvicinate» (A Terra, §5.5), «Prove che richiedono la vista» (Accecato, con Difese e attacchi) e «l’udito è importante» (Assordato), senza elencare le Abilità.",
-    "_nota": "Categorie di Prove per gli effetti degli Stati e del carico («prove» negli effetti). Ogni lista è di Abilità di abilita.json."
+    "TODO(Davide)": "A.16 per «fisiche»: lista nostra, finché Davide non risponde. Il manuale nomina «azioni fisiche» (Immobilizzato, Rallentato, carico §5.2.6) senza elencare le Abilità.",
+    "_nota": "Categorie di Prove per gli effetti degli Stati e del carico («prove» negli effetti). Ogni lista è di Abilità di abilita.json. Risposta di Davide A.51 (28/09/2026): le liste sono di riferimento, non chiuse; il Direttore di Gioco valuta i casi particolari. «vista» (Accecato): Abilità di attacco, Difese, Pilotare; Percezione non ha una penalità generale, le azioni esclusivamente visive falliscono. «udito» (Assordato): solo valore a parte «quando l’udito conta», nessuna penalità generale."
   },
   "affaticamento": {
     "stati": [
