@@ -445,12 +445,12 @@ function pannelloRiparazione(ctx, lista, pi, rip) {
   return h('div', { class: 'riquadro pannello-riparazione', role: 'group', 'aria-label': `Riparazione di ${x.nome}` },
     h('h3', {}, `Ripara ${x.nome} · PI ${n}/${x.piMax}`),
     h('p', {}, `${rip.ore} ora di lavoro, Prova di ${rip.abilita}: `, h('strong', {}, va ? `VA ${va.totale}` : '—'),
-      va?.improvvisati ? h('span', { class: 'sigla' }, ` (${va.base} ${va.improvvisati} strumenti improvvisati)`) : null),
+      va?.improvvisati ? h('span', { class: 'sigla' }, ` (${va.base} ${segno(va.improvvisati)} strumenti improvvisati)`) : null),
     h('label', {}, h('input', { type: 'checkbox', checked: stato.improvvisati, onchange: () => { stato.improvvisati = !stato.improvvisati; ctx.azioni.ridisegna(); } }),
-      ` Strumenti improvvisati (${rip.strumenti_improvvisati_va} VA)`),
+      ` Strumenti improvvisati (${segno(rip.strumenti_improvvisati_va)} VA)`),
     h('p', { class: 'nota' }, 'Tira al tavolo, poi scegli l’esito:'),
     h('div', { class: 'scelte-esito' }, rip.esiti.map((es) => h('button', { type: 'button', class: `btn${stato.esito === es.id ? ' primario' : ''}`, 'aria-pressed': String(stato.esito === es.id),
-      onclick: () => { stato.esito = es.id; ctx.azioni.ridisegna(); } }, `${es.nome} (${es.pi > 0 ? '+' : ''}${es.pi} PI)`))),
+      onclick: () => { stato.esito = es.id; ctx.azioni.ridisegna(); } }, `${es.nome} (${segno(es.pi)} PI)`))),
     e ? h('p', {}, `PI ${n} → `, h('strong', {}, `${e.piNuovi}/${x.piMax}`),
       e.costoMateriali === null ? ' · materiali: prezzo di catalogo assente, costo a cura del Direttore'
         : ` · materiali ${e.costoMateriali.toLocaleString('it-IT')} crediti (${rip.materiali_percentuale}% del prezzo per PI recuperato)`,
@@ -458,7 +458,7 @@ function pannelloRiparazione(ctx, lista, pi, rip) {
       e.costoMateriali && Number.isInteger(crediti) && crediti < e.costoMateriali ? ` — crediti insufficienti (${crediti})` : null) : null,
     h('div', { class: 'barra-azioni' },
       h('button', { type: 'button', class: 'btn primario', disabled: !e,
-        onclick: () => { ctx.azioni.ripara(x.uid, e.piNuovi, e.costoMateriali); ctx.ui.riparazione = null; } }, 'Conferma'),
+        onclick: () => { ctx.ui.riparazione = null; ctx.azioni.ripara(x.uid, e.piNuovi, e.costoMateriali); } }, 'Conferma'),
       h('button', { type: 'button', class: 'btn', onclick: chiudi }, 'Annulla')));
 }
 
