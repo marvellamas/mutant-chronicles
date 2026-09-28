@@ -794,13 +794,15 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       p.forMancante ? { nome: `FOR ${FOR} su ${d.for_richiesta} richiesta (§7.1.6)`, valore: -p.forMancante } : null,
       attacchiRavv ? { nome: 'Armatura (§7.11.1)', valore: attacchiRavv } : null,
     ].filter(Boolean) : [];
+    // risposta A.10: stato al tavolo che cambia il danno (lama estratta); a riposo vale il profilo base
+    const stato = att.stato ? { chiave: `${p.uid}:${att.stato.id}`, nome: att.stato.nome, nomeOpposto: att.stato.nome_opposto, danno: att.stato.danno, costo: att.stato.costo } : null;
     armi.push({
-      uid: `${p.uid}:attacco`, nome: `${d.nome} (attacco${att.condizione ? `, ${att.condizione}` : ''})`, tipo: 'arma_ravvicinata',
+      uid: `${p.uid}:attacco`, nome: `${d.nome} (attacco${att.condizione ? `, ${att.condizione}` : stato ? `, ${stato.nomeOpposto}` : ''})`, tipo: 'arma_ravvicinata',
       abilita: att.abilita, va: a ? componenti.reduce((x, c) => x + c.valore, 0) : null, componenti,
       danno: { una_mano: att.danno, due_mani: null }, dannoDaMunizione: false, bonusDanno: 0, mani: att.mani,
       portataQ: att.portata_q, gittataQ: null, gittataFormula: null, ac: null, inc: null, mov: 0, modalita: [], munizioni: null,
       proprieta: att.note ? [{ nome: 'Manovre e requisiti', testo: att.note }] : [], parata: null, personalizzato: false,
-      specializzazione: null, daScudo: true,
+      specializzazione: null, daScudo: true, statoAlternativo: stato,
     });
   }
 

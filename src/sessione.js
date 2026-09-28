@@ -97,12 +97,18 @@ export function variaIntegrita(sessione, uid, delta, m) {
   return modificaSessione(s, { integrita: { ...s.integrita, [uid]: s.integrita[uid] + delta } }, m);
 }
 
-/** Uid degli oggetti della lista con almeno un effetto situazionale. */
+/**
+ * Uid degli oggetti della lista con almeno un effetto situazionale, e chiavi «uid:stato» degli
+ * stati al tavolo degli attacchi (lama estratta dello Scudo delle Guardie Sacre, risposta A.10).
+ */
 function oggettiSituazionali(creazione, dati) {
   if (!dati.equipaggiamento) return null;
   const cat = catalogo(dati);
-  return normalizzaEquipaggiamento(creazione?.equipaggiamento).map((v) => risolvi(v, cat))
-    .filter((r) => r.effetti.some((e) => e.ambito === 'situazionale')).map((r) => r.uid);
+  const risolti = normalizzaEquipaggiamento(creazione?.equipaggiamento).map((v) => risolvi(v, cat));
+  return [
+    ...risolti.filter((r) => r.effetti.some((e) => e.ambito === 'situazionale')).map((r) => r.uid),
+    ...risolti.filter((r) => r.def?.attacco?.stato).map((r) => `${r.uid}:${r.def.attacco.stato.id}`),
+  ];
 }
 
 /** Condizioni accese degli oggetti: uid esistenti, senza doppioni. */

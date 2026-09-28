@@ -353,7 +353,9 @@ function riquadroPM(ctx) {
  */
 function condizioniOggetti(ctx) {
   const effetti = (ctx.tab.scheda.equipaggiamento?.effettiOggetti ?? []).filter((e) => e.ambito === 'situazionale');
-  if (!effetti.length) return null;
+  // stati degli attacchi (lama estratta dello Scudo delle Guardie Sacre, risposta A.10)
+  const stati = (ctx.tab.scheda.equipaggiamento?.armi ?? []).filter((w) => w.statoAlternativo);
+  if (!effetti.length && !stati.length) return null;
   const perUid = new Map();
   for (const e of effetti) (perUid.get(e.uid) ?? perUid.set(e.uid, []).get(e.uid)).push(e);
   const accesi = new Set(ctx.sessione.condizioniOggetti ?? []);
@@ -364,7 +366,12 @@ function condizioniOggetti(ctx) {
       h('label', { class: `stato-tavolo${accesi.has(uid) ? ' attivo' : ''}` },
         h('input', { type: 'checkbox', checked: accesi.has(uid), onchange: () => ctx.azioni.condizioneOggetto(uid) }),
         h('span', {}, h('strong', {}, lista[0].oggetto), h('small', {}, ` · ${lista.map((e) => `${segno(e.valore)} ${e.abilita}`).join(', ')}`),
-          h('br', {}), h('span', { class: 'promemoria-stato' }, lista.map((e) => e.condizione).filter(Boolean).join(' '))))))));
+          h('br', {}), h('span', { class: 'promemoria-stato' }, lista.map((e) => e.condizione).filter(Boolean).join(' '))))),
+      stati.map((w) => { const st = w.statoAlternativo; return h('li', {},
+        h('label', { class: `stato-tavolo${st.acceso ? ' attivo' : ''}` },
+          h('input', { type: 'checkbox', checked: !!st.acceso, onchange: () => ctx.azioni.condizioneOggetto(st.chiave) }),
+          h('span', {}, h('strong', {}, w.nome.replace(/ \(attacco.*$/, '')), h('small', {}, ` · ${st.nome}: danno ${st.danno}`),
+            h('br', {}), h('span', { class: 'promemoria-stato' }, `Cambiare costa ${st.costo} (promemoria: l’app non conta le Azioni).`)))); })));
 }
 
 function promemoriaPenalita(ctx, { soloSenzaEffetto = false } = {}) {

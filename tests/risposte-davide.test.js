@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';
 import { prossimoLivello } from '../src/character.js';
 import { catalogo } from '../src/equipaggiamento.js';
+import { inizializzaSessione, massimiSessione, commutaCondizioneOggetto } from '../src/sessione.js';
 import { datiReali } from './helpers.js';
 import { MISHIMA_AGENTE, LIVELLI_AGENTE } from './personaggi.js';
 
@@ -75,4 +76,25 @@ test('A.8: Pugnale in mischia con Coltelli e Pugnali, lanciato con Armi da Lanci
 test('controllo finale: ogni arma del catalogo ha una Specializzazione, salvo la Rainy Dayer (A.13, aperta)', () => {
   const senza = catalogo(dati).oggetti.filter((o) => (o.tipo === 'arma_ravvicinata' || o.tipo === 'arma_distanza') && !o.specializzazione).map((o) => o.nome);
   assert.deepEqual(senza, ['Rainy Dayer']);
+});
+
+// --- A.10: Scudo delle Guardie Sacre ------------------------------------------------------
+
+test('A.10: Scudo delle Guardie Sacre, lama ritratta 1d6+1 e lama estratta 1d6+1+1d4 al tavolo, indipendente da Scudo Magico', () => {
+  const creazione = { ...MISHIMA_AGENTE, equipaggiamento: [voce('g', 'scudi:scudo-delle-guardie-sacre', 'imbracciato')] };
+  const aRiposo = calcolaScheda({ creazione, livelli: [] }, dati);
+  const att = aRiposo.equipaggiamento.armi.find((a) => a.uid === 'g:attacco');
+  assert.deepEqual([att.nome, att.danno.una_mano, att.statoAlternativo.costo], ['Scudo delle Guardie Sacre (attacco, lama ritratta)', '1d6+1', '1 Azione Principale']);
+  const m = massimiSessione(aRiposo, creazione, dati);
+  assert.ok(m.oggettiSituazionali.includes('g:lama'));
+  let s = commutaCondizioneOggetto(inizializzaSessione(m), 'g:lama', m);
+  const tavolo = calcolaScheda({ creazione, livelli: [], sessione: s }, dati);
+  const conLama = tavolo.equipaggiamento.armi.find((a) => a.uid === 'g:attacco');
+  assert.deepEqual([conLama.nome, conLama.danno.una_mano], ['Scudo delle Guardie Sacre (attacco, lama estratta)', '1d6+1d4+1']);
+  // la lama non attiva Scudo Magico: l'AR resta quella a riposo
+  assert.equal(tavolo.equipaggiamento.arEffettiva.totale, aRiposo.equipaggiamento.protezioni[0].ar.totale);
+  s = commutaCondizioneOggetto(s, 'g', m); // Scudo Magico acceso, lama sempre estratta
+  const entrambi = calcolaScheda({ creazione, livelli: [], sessione: s }, dati);
+  assert.equal(entrambi.equipaggiamento.arEffettiva.totale, 4);
+  assert.equal(entrambi.equipaggiamento.armi.find((a) => a.uid === 'g:attacco').danno.una_mano, '1d6+1d4+1');
 });

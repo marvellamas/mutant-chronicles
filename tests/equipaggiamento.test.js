@@ -446,11 +446,11 @@ test('arma corporativa impugnata: Precisa nel VA per colpire, Difensiva nella Pa
   assert.match(f3.armi.righe[0][6], /Precisa 1/);
 });
 
-test('Scudo delle Guardie Sacre: attacco senza lama dal §7.1.9, danno con la lama in TODO(Davide)', () => {
+test('Scudo delle Guardie Sacre: lama ritratta 1d6+1, lama estratta 1d6+1+1d4 (risposta A.10)', () => {
   const gs = catalogo(dati).perRif.get('scudi:scudo-delle-guardie-sacre');
   assert.equal(gs.attacco.danno, '1d6+1');
-  assert.match(gs.attacco.note, /1d6\+1\+1d4.*§7\.1\.9.*1d6\+1d4.*§7\.4\.10/);
-  assert.ok(trovaTodo(dati).some((t) => /Guardie Sacre, danno con la lama/.test(t.testo)));
+  assert.equal(gs.attacco.stato.danno, '1d6+1d4+1');
+  assert.ok(!trovaTodo(dati).some((t) => /Guardie Sacre, danno con la lama/.test(t.testo)));
 });
 
 test('validatore delle armi corporative: effetti, attivazione, unità delle cariche, Manovre', () => {

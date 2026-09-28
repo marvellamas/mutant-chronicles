@@ -218,6 +218,14 @@ export function applicaCondizioni(scheda, sessione, dati) {
     const difese = eq.abilitaDifese ?? 'Difese';
     const condDifese = condDi(difese);
     for (const w of eq.armi) {
+      // risposta A.10: stato al tavolo dell'attacco (lama estratta): cambia il danno, il resto no
+      if (w.statoAlternativo) {
+        w.statoAlternativo.acceso = accesi.has(w.statoAlternativo.chiave);
+        if (w.statoAlternativo.acceso) {
+          w.danno = { una_mano: w.statoAlternativo.danno, due_mani: null };
+          w.nome = w.nome.replace(w.statoAlternativo.nomeOpposto, w.statoAlternativo.nome);
+        }
+      }
       const cond = condDi(w.abilita);
       w.scomposizione = [...(w.componenti ?? []).map((c) => voce(c.nome, c.valore, c.fonte ?? 'equipaggiamento')), ...cond];
       w.vaEffettivo = w.va === null ? null : w.va + somma(cond);

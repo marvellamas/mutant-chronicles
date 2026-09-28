@@ -1269,6 +1269,12 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = []) 
             if (!DADI.test(String(a.danno))) err(F, `${k}.attacco.danno`, `"${a.danno}" non è una formula di dadi`);
             if (![1, 2].includes(a.mani)) err(F, `${k}.attacco.mani`, 'deve essere 1 o 2');
             numeroOpz(F, `${k}.attacco.portata_q`, a.portata_q, 1, 99, err);
+            // stato alternativo al tavolo (lama estratta delle Guardie Sacre, risposta A.10)
+            if (a.stato !== undefined) {
+              const st = a.stato;
+              if (!isOggetto(st) || !isTesto(st.id) || !isTesto(st.nome) || !isTesto(st.nome_opposto) || !isTesto(st.costo)) err(F, `${k}.attacco.stato`, 'serve { id, nome, nome_opposto, danno, costo }');
+              else if (!DADI.test(String(st.danno))) err(F, `${k}.attacco.stato.danno`, `"${st.danno}" non è una formula di dadi`);
+            }
           }
         }
       }
