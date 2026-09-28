@@ -622,7 +622,7 @@ test('lotto 7: corredi, dispositivi, APE, Iron Mastiff, armi e granate Imperial,
   const sin = dati.equipaggiamento.file.corredi_dispositivi.sin_armi;
   assert.equal(sin.length, 15);
   assert.deepEqual(sin.find((x) => x.rif === 'armi_distanza_corporative:sr3500'), { rif: 'armi_distanza_corporative:sr3500', valore: 2, prova: 'Per colpire' });
-  assert.ok(trovaTodo(dati).some((t) => /Rainy Dayer/.test(t.testo)));
+  assert.ok(!trovaTodo(dati).some((t) => /Rainy Dayer/.test(t.testo))); // risposta A.13
 });
 
 test('SIN: con l’Interfaccia Neurale in uso le armi Cybertronic hanno +SIN al VA per colpire (§7.15.1)', () => {

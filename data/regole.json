@@ -626,7 +626,7 @@
         "| Leggera | −2 VA | −2 VA |",
         "| Media | −4 VA | −4 VA |",
         "| Totale | Il bersaglio non può essere attaccato direttamente | Non è possibile attaccare |",
-        "Attaccare dalla Copertura consuma l’Azione di Movimento e un’Azione Principale.",
+        "Attaccare dalla Copertura consuma l’Azione di Movimento e un’Azione Principale, che comprende l’attacco.",
         "Il Movimento può essere diviso per esporsi e rientrare, senza superare complessivamente 6 Q.",
         "Copertura Tattica riduce di 2 la penalità dell’attaccante."
       ],
@@ -879,7 +879,7 @@
         "Le Armi Pesanti e i lanciagranate, compresi quelli integrati e quelli appartenenti alle Armi Medie, richiedono Imbracciatura.",
         "Imbracciare costa 1 AzM e non richiede una Prova.",
         "Sparare senza Imbracciatura impone −4 VA, cumulativo con gli altri modificatori.",
-        "Si perde muovendosi, subendo uno spostamento forzato, cadendo o smettendo di impugnare l’arma."
+        "Si perde muovendosi, anche al Passo, subendo uno spostamento forzato, cadendo o smettendo di impugnare l’arma."
       ],
       "va": -4,
       "abilita": [
@@ -1210,7 +1210,7 @@
         "promemoria": "1d4 danni da fuoco ai PV ogni Round, ignorando l’Armatura; −2 VA; 1 AzP e Riflessi per spegnersi.",
         "riassunto": true,
         "effetti": [
-          {"tipo": "va", "prove": "tutte", "valore": -2, "ambito": "generale", "condizione": "Subisce immediatamente 1d4 danni da fuoco ai PV ignorando l’Armatura ordinaria e −2 VA.", "fonte": "Giocatore §5.18"}
+          {"tipo": "va", "prove": "tutte", "valore": -2, "ambito": "generale", "condizione": "Subisce immediatamente 1d4 danni da fuoco ai PV ignorando l’Armatura ordinaria e −2 VA alle Prove di Abilità, non alle Prove Salvezza.", "fonte": "Giocatore §5.18"}
         ]
       },
       {
@@ -1256,14 +1256,11 @@
         "promemoria": "−4 VA a tutte le Prove; deve allontanarsi dalla fonte e non può attaccarla.",
         "riassunto": true,
         "effetti": [
-          {"tipo": "va", "prove": "tutte", "valore": -4, "ambito": "generale", "condizione": "Subisce −4 VA a tutte le Prove, non può avvicinarsi volontariamente alla fonte e deve utilizzare il Movimento per allontanarsi lungo il percorso ragionevolmente più sicuro.", "fonte": "Giocatore §5.18"},
-          {"tipo": "salvezza", "salvezza": "tutte", "valore": -4, "ambito": "generale", "condizione": "Subisce −4 VA a tutte le Prove, non può avvicinarsi volontariamente alla fonte e deve utilizzare il Movimento per allontanarsi lungo il percorso ragionevolmente più sicuro.", "fonte": "Giocatore §5.18; Prove Salvezza comprese per ipotesi (per-davide A.17)"}
+          {"tipo": "va", "prove": "tutte", "valore": -4, "ambito": "generale", "condizione": "Subisce −4 a tutte le Prove, comprese le Prove Salvezza effettuate mentre lo Stato è attivo; la penalità non modifica la Salvezza iniziale per evitarlo.", "fonte": "Giocatore §5.18"},
+          {"tipo": "salvezza", "salvezza": "tutte", "valore": -4, "ambito": "generale", "condizione": "Subisce −4 a tutte le Prove, comprese le Prove Salvezza effettuate mentre lo Stato è attivo; la penalità non modifica la Salvezza iniziale per evitarlo.", "fonte": "Giocatore §5.18 (Doc del 28/09: Prove Salvezza comprese, chiude A.17)"}
         ],
         "limiti": { "solo_azioni_difensive": true, "testo": "Le Azioni Principali possono essere usate soltanto per difendersi, nascondersi, aiutare la fuga o rimuovere lo Stato.", "fonte": "Giocatore §5.18" }
       }
-    ],
-    "TODO(Davide)": [
-      "Terrorizzato (§5.18, «−4 VA a tutte le Prove»): vale anche per le Prove Salvezza? L'app lo applica anche alle Salvezze (A.17)."
     ],
     "_nota_effetti": "«effetti»: lista nello schema degli effetti degli oggetti (docs/effetti-oggetti.md). tipo «va»: «abilita» (una Abilità) oppure «prove» (una categoria di regole.json → categorie_prove, o «tutte»); ambito «generale» entra nel VA effettivo, «uso_specifico» dà un valore a parte per quell'uso. tipo «salvezza» con «salvezza»: id oppure «tutte». Le armi ricevono le penalità della loro Abilità, quindi anche «Attacca!»; «Lancia!» quelle di Potere. Più Stati attivi si sommano (il §5.18 non dà un'altra regola). «limiti»: divieti e avvisi nelle utility (manovre_vietate, solo_azioni_difensive); «azioni» e «movimento» restano blocchi a parte. Gli Stati senza effetti restano promemoria. La stampa non li applica.",
     "_nota": "§5.18, tabella «Durate e tempi di risoluzione»: gli Stati sono undici. «promemoria» (con \"riassunto\": true) riassume gli effetti descritti nel §5.18 (A Terra: §5.5) per la scheda e la modalità tavolo; il testo del manuale resta quello di riferimento."
@@ -1495,7 +1492,7 @@
         },
         "TODO(Davide)": "A.27: «bersagli adiacenti» all’attaccante o fra loro? Con un’arma a portata 2–3 Q l’app accetta i bersagli entro la portata e lo ricorda nel risultato.",
         "frasi": [
-          "Un’Azione Principale contro fino a tre bersagli adiacenti: −4 VA contro due, −6 contro tre; una Prova, un colpo per bersaglio.",
+          "Un’Azione Principale contro due o tre bersagli adiacenti fra loro e tutti entro la propria portata, senza muoversi: −4 VA contro due, −6 contro tre; una Prova, un colpo per bersaglio.",
           "Spazzata Migliorata riduce la penalità di 2."
         ]
       },
