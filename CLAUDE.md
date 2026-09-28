@@ -111,6 +111,7 @@ Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, vei
 - Prima di scrivere codice che tocca una regola, citare il paragrafo del manuale nel commento (es. `// §2.13: Avanzamento iniziale ≤ 3, incluso il +1 di Classe`).
 - Quando un dato del manuale è ambiguo, non inventare: mettere un `TODO(Davide)` nel JSON o nel codice e segnalarlo a Marcello a fine sessione.
 - `docs/per-davide.md` è l'unico elenco delle domande aperte per Davide. Ogni volta che si **crea** un `TODO(Davide)`, si aggiunge la voce nella sezione A di `docs/per-davide.md`. Ogni volta che se ne **chiude** uno (Davide ha risposto): si toglie la voce da `docs/per-davide.md`, si aggiunge una riga datata in `docs/risposte-master.md`, si applica la decisione nei dati e si toglie il TODO.
+- Ogni volta che una sessione cambia `docs/per-davide.md`, nel riepilogo finale si consegna il testo pronto da incollare nel Google Doc «Per Davide» (link fisso: non si rigenera; lo incolla Marcello), nel formato di `docs/protocollo-davide.md` §2bis, e si aggiorna il registro in quel paragrafo.
 - Commit piccoli e descrittivi, in italiano.
 
 ## Come trattare i prompt di Marcello
