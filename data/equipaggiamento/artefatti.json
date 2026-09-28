@@ -1,10 +1,7 @@
 {
   "versione_manuale": "Armamenti 0.50",
   "fonte": "Manuale degli Armamenti v0.50, §7.5 Artefatti (pp. 30–31) e §7.10 Artefatti e sintonizzazione (pp. 58–60); lotto 12",
-  "_nota": "Generato da tools/lotti/lotto12_artefatti.mjs; da qui in poi si modifica questo file. «sintonizzazione» contiene le regole del §7.10: capacità per Gradi complessivi (indice 0 = Grado I), bonus del Talento, costo per potenza. «artefatti_catalogo» dà tipologia e potenza agli Artefatti già presenti in altri file. «contenitore» descrive la riserva di Chroma (Magia sez. 6): energia (colore di regole.json → chroma.colori), capacita_pm; «integrato»: true quando la riserva è dentro l'oggetto (§7.5.1: Bordone Templare, Spade Vindicator e Deliverer, Lancia Castigator, Lama Demontooth, Scudo delle Guardie Sacre), con un solo costo di sintonizzazione. «sintonizzabile»: le proprietà attive richiedono sintonizzazione (§7.10).",
-  "TODO(Davide)": [
-    "Batterie da 5 PM (§7.10): il manuale le cita come esempio di potenza, ma non dà prezzo, PI, Qualità e reperibilità; il Manuale della Magia (22.6) dice che le batterie permanenti saranno integrate più avanti. L’app le mostra senza prezzo."
-  ],
+  "_nota": "Generato da tools/lotti/lotto12_artefatti.mjs; da qui in poi si modifica questo file. «sintonizzazione» contiene le regole del §7.10: capacità per Gradi complessivi (indice 0 = Grado I), bonus del Talento, costo per potenza. «artefatti_catalogo» dà tipologia e potenza agli Artefatti già presenti in altri file. «contenitore» descrive la riserva di Chroma (Magia sez. 6): energia (colore di regole.json → chroma.colori), capacita_pm; «integrato»: true quando la riserva è dentro l'oggetto (§7.5.1: Bordone Templare, Spade Vindicator e Deliverer, Lancia Castigator, Lama Demontooth, Scudo delle Guardie Sacre), con un solo costo di sintonizzazione. «sintonizzabile»: le proprietà attive richiedono sintonizzazione (§7.10). Batterie da 5 PM: profilo della risposta di Davide A.14 (28/09/2026); i vecchi valori provvisori (500 e 1.000 crediti, reperibilità Non comune e Rara) non valgono più.",
   "sintonizzazione": {
     "capacita_per_gradi": [
       4,
@@ -116,10 +113,10 @@
       "catalogo": "Commerciale",
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
-      "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche sostituibili delle armi seguono invece il §7.1.4. Esempi: le Batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni e costano 1 punto di sintonizzazione; quella con Chroma Bianco è Non Comune e costa 2 punti.",
+      "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche sostituibili delle armi seguono invece il §7.1.4. Esempi: le Batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni e costano 1 punto di sintonizzazione; quella con Chroma Bianco è Non Comune e costa 2 punti. Profilo approvato da Davide (A.14, 28/09/2026): capacità 5 PM, Qualità costruttiva Comune, PS Integrità 10, PI 3, peso 0,2 kg; Rosso, Blu e Verde reperibilità Molto rara e valore indicativo 10.000 crediti, Bianco Leggendaria e 50.000. Si acquistano cariche (5/5 PM). Potenza mistica e costo di Sintonizzazione restano quelli del §7.10.",
       "paragrafo": "§7.10",
       "versione_manuale": "Armamenti 0.50",
-      "costo": null,
+      "costo": 10000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Comune",
@@ -130,7 +127,12 @@
           "capacita_pm": 5
         }
       },
-      "proprieta": []
+      "proprieta": [],
+      "reperibilita": "MR",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2
     },
     {
       "id": "batteria-da-5-pm-chroma-blu",
@@ -139,10 +141,10 @@
       "catalogo": "Commerciale",
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
-      "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche sostituibili delle armi seguono invece il §7.1.4. Esempi: le Batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni e costano 1 punto di sintonizzazione; quella con Chroma Bianco è Non Comune e costa 2 punti.",
+      "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche sostituibili delle armi seguono invece il §7.1.4. Esempi: le Batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni e costano 1 punto di sintonizzazione; quella con Chroma Bianco è Non Comune e costa 2 punti. Profilo approvato da Davide (A.14, 28/09/2026): capacità 5 PM, Qualità costruttiva Comune, PS Integrità 10, PI 3, peso 0,2 kg; Rosso, Blu e Verde reperibilità Molto rara e valore indicativo 10.000 crediti, Bianco Leggendaria e 50.000. Si acquistano cariche (5/5 PM). Potenza mistica e costo di Sintonizzazione restano quelli del §7.10.",
       "paragrafo": "§7.10",
       "versione_manuale": "Armamenti 0.50",
-      "costo": null,
+      "costo": 10000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Comune",
@@ -153,7 +155,12 @@
           "capacita_pm": 5
         }
       },
-      "proprieta": []
+      "proprieta": [],
+      "reperibilita": "MR",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2
     },
     {
       "id": "batteria-da-5-pm-chroma-verde",
@@ -162,10 +169,10 @@
       "catalogo": "Commerciale",
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
-      "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche sostituibili delle armi seguono invece il §7.1.4. Esempi: le Batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni e costano 1 punto di sintonizzazione; quella con Chroma Bianco è Non Comune e costa 2 punti.",
+      "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche sostituibili delle armi seguono invece il §7.1.4. Esempi: le Batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni e costano 1 punto di sintonizzazione; quella con Chroma Bianco è Non Comune e costa 2 punti. Profilo approvato da Davide (A.14, 28/09/2026): capacità 5 PM, Qualità costruttiva Comune, PS Integrità 10, PI 3, peso 0,2 kg; Rosso, Blu e Verde reperibilità Molto rara e valore indicativo 10.000 crediti, Bianco Leggendaria e 50.000. Si acquistano cariche (5/5 PM). Potenza mistica e costo di Sintonizzazione restano quelli del §7.10.",
       "paragrafo": "§7.10",
       "versione_manuale": "Armamenti 0.50",
-      "costo": null,
+      "costo": 10000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Comune",
@@ -176,7 +183,12 @@
           "capacita_pm": 5
         }
       },
-      "proprieta": []
+      "proprieta": [],
+      "reperibilita": "MR",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2
     },
     {
       "id": "batteria-da-5-pm-chroma-bianco",
@@ -185,10 +197,10 @@
       "catalogo": "Commerciale",
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
-      "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche sostituibili delle armi seguono invece il §7.1.4. Esempi: le Batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni e costano 1 punto di sintonizzazione; quella con Chroma Bianco è Non Comune e costa 2 punti.",
+      "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche sostituibili delle armi seguono invece il §7.1.4. Esempi: le Batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni e costano 1 punto di sintonizzazione; quella con Chroma Bianco è Non Comune e costa 2 punti. Profilo approvato da Davide (A.14, 28/09/2026): capacità 5 PM, Qualità costruttiva Comune, PS Integrità 10, PI 3, peso 0,2 kg; Rosso, Blu e Verde reperibilità Molto rara e valore indicativo 10.000 crediti, Bianco Leggendaria e 50.000. Si acquistano cariche (5/5 PM). Potenza mistica e costo di Sintonizzazione restano quelli del §7.10.",
       "paragrafo": "§7.10",
       "versione_manuale": "Armamenti 0.50",
-      "costo": null,
+      "costo": 50000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Non Comune",
@@ -199,7 +211,12 @@
           "capacita_pm": 5
         }
       },
-      "proprieta": []
+      "proprieta": [],
+      "reperibilita": "LE",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2
     }
   ]
 }

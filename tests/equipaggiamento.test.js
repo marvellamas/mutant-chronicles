@@ -915,8 +915,9 @@ test('lotto 12: regole di sintonizzazione, profili con riserva mistica, batterie
   });
   const b = catalogo(dati).perRif.get('artefatti:batteria-da-5-pm-chroma-bianco');
   assert.deepEqual(b.artefatto, { tipologia: 'Batterie e contenitori', potenza: 'Non Comune', sintonizzazione: 2, sintonizzabile: true, contenitore: { energia: 'Bianco', capacita_pm: 5 } });
-  assert.equal(b.costo, null);
-  assert.ok(trovaTodo(dati).some((t) => /Batterie da 5 PM/.test(t.testo)));
+  // risposta A.14: profilo delle batterie; potenza e Sintonizzazione restano quelle del §7.10
+  assert.deepEqual([b.costo, b.reperibilita, b.qualita, b.ps_int, b.pi, b.peso], [50000, 'LE', 'Comune', 10, 3, 0.2]);
+  assert.ok(!trovaTodo(dati).some((t) => /Batterie da 5 PM/.test(t.testo)));
 });
 
 test('sintonizzazione: capacità per Gradi e Talento, somma dei costi, avviso oltre il limite, riserve di PM', () => {

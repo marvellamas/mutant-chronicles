@@ -17,6 +17,10 @@
     "MR": {
       "nome": "Molto rara",
       "ricerca": "Oratoria −4 VA."
+    },
+    "LE": {
+      "nome": "Leggendaria",
+      "ricerca": "Nessuna Prova la rende disponibile: riservata a disponibilità eccezionali introdotte dal Direttore di Gioco."
     }
   },
   "file": [
@@ -95,5 +99,6 @@
       "file": "corredi_dispositivi.json",
       "descrizione": "Corredi e dispositivi corporativi, esoscheletro APE, armi e granate Imperial, SIN Cybertronic (§7.12–7.17)"
     }
-  ]
+  ],
+  "_nota_reperibilita": "Scala: Comune, Non comune, Rara, Molto rara, Leggendaria (risposta di Davide A.14, 28/09/2026). Leggendaria è superiore a Molto rara. I valori economici degli oggetti rari sono riferimenti per eventuali scambi, non un listino che garantisce l’acquisto: deve prima esistere un produttore o possessore disposto a cedere l’oggetto; una Prova di Oratoria, da sola, non crea questa disponibilità. La reperibilità resta distinta dalla potenza mistica e dalla Qualità costruttiva."
 }

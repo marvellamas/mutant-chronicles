@@ -248,3 +248,23 @@ UTC); i paragrafi corrispondenti sono nel Manuale del Giocatore §2.16.1–§2.1
     → `data/equipaggiamento/scudi.json` (`attacco.stato`, danno scritto 1d6+1d4+1 per il formato dei
     dadi; tolto il TODO), `src/equipaggiamento.js`, `src/condizioni.js` (stato «lama estratta» al
     tavolo, interruttore fra le «Condizioni degli oggetti» della SD), `src/sessione.js`, `src/validate.js`.
+
+30. **Disponibilità degli Artefatti Mistici** (A.14). Pochi e non commercializzati, nessun negozio
+    ordinario; la Fratellanza è l'unica a produrne in quantità ma non li vende fuori dalla congrega;
+    Bauhaus, Imperiali e Mishima ne producono molto meno; nei sistemi esterni qualche Tecnomistico
+    indipendente li produce e vende a prezzi elevati. Testo, senza effetto sui calcoli.
+    → `data/regole.json` → `artefatti_mistici.disponibilita`, mostrato nel tooltip di ogni Artefatto
+    (`src/descrizioni.js`).
+
+31. **Batterie da 5 PM e scala di reperibilità** (A.14; Armamenti §7.10). Rosso, Blu e Verde:
+    reperibilità Molto rara, valore indicativo 10.000 crediti; Bianco: Leggendaria, 50.000. Tutte:
+    capacità 5 PM, Qualità Comune, PS Integrità 10, PI 3, peso 0,2 kg, cariche all'acquisto (5/5,
+    come A.19). Potenza mistica e costo di Sintonizzazione invariati (Comune 1, Bianco Non comune 2);
+    Leggendaria non porta il costo a 6. Scala di reperibilità: Comune, Non comune, Rara, Molto rara,
+    Leggendaria (superiore a Molto rara, per disponibilità eccezionali del Direttore di Gioco). I valori
+    sono riferimenti per gli scambi, non un listino: serve un produttore o possessore disposto a
+    cedere; l'Oratoria da sola non crea disponibilità. I valori provvisori (500 e 1.000 crediti) non
+    erano nei dati: le batterie avevano il prezzo vuoto.
+    → `data/equipaggiamento/artefatti.json` (tolto il TODO), `data/equipaggiamento/index.json`
+    (sigla `LE` e `_nota_reperibilita`: la scala sta con le sigle del catalogo, che il validatore e i
+    tooltip già leggono, non in `regole.json`).

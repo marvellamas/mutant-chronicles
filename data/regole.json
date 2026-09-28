@@ -80,6 +80,11 @@
     "dado_in_combattimento": "1d10",
     "_nota": "§2.14: usa i modificatori ordinari."
   },
+  "artefatti_mistici": {
+    "disponibilita": "Gli Artefatti Mistici sono generalmente pochi e non commercializzati; non esistono normali negozi che li vendano. La Fratellanza è l’unica a produrne in quantità, ma non li commercializza al di fuori della propria congrega. Bauhaus, Imperiali e Mishima ne producono quantità molto inferiori. Nei sistemi esterni, poco controllati dall’Imperium, si può trovare qualche Tecnomistico indipendente che li produce e li vende a prezzi elevati.",
+    "fonte": "Risposta di Davide A.14 (28/09/2026), docs/risposte-master.md decisione 30.",
+    "_nota": "Testo mostrato nel tooltip di ogni oggetto che è un Artefatto (src/descrizioni.js)."
+  },
   "regole_aggiornate": {
     "punti_abilita": "Regole aggiornate (manuale del 27/09)",
     "_nota": "Titolo dell'avviso in cima alla SD quando un evento già registrato (creazione o livello) ha meno Punti Abilità Liberi di quelli previsti dalle regole correnti, o più: Giocatore, Doc del 27/09/2026 (10 punti invece di 5), per-davide A.52. Se le regole cambiano ancora, si aggiorna qui la data."

@@ -3,7 +3,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';
 import { prossimoLivello } from '../src/character.js';
-import { catalogo } from '../src/equipaggiamento.js';
+import { catalogo, contenitori } from '../src/equipaggiamento.js';
+import { testoTooltip } from '../src/descrizioni.js';
 import { inizializzaSessione, massimiSessione, commutaCondizioneOggetto } from '../src/sessione.js';
 import { datiReali } from './helpers.js';
 import { MISHIMA_AGENTE, LIVELLI_AGENTE } from './personaggi.js';
@@ -97,4 +98,30 @@ test('A.10: Scudo delle Guardie Sacre, lama ritratta 1d6+1 e lama estratta 1d6+1
   const entrambi = calcolaScheda({ creazione, livelli: [], sessione: s }, dati);
   assert.equal(entrambi.equipaggiamento.arEffettiva.totale, 4);
   assert.equal(entrambi.equipaggiamento.armi.find((a) => a.uid === 'g:attacco').danno.una_mano, '1d6+1d4+1');
+});
+
+// --- A.14: batterie da 5 PM e disponibilità degli Artefatti Mistici -------------------------
+
+test('A.14: batterie da 5 PM con i valori approvati, cariche all’acquisto; scala di reperibilità fino a Leggendaria', () => {
+  for (const [c, rep, costo, pot, sint] of [['rosso', 'MR', 10000, 'Comune', 1], ['blu', 'MR', 10000, 'Comune', 1], ['verde', 'MR', 10000, 'Comune', 1], ['bianco', 'LE', 50000, 'Non Comune', 2]]) {
+    const b = def(`artefatti:batteria-da-5-pm-chroma-${c}`);
+    assert.deepEqual([b.reperibilita, b.costo, b.qualita, b.ps_int, b.pi, b.peso, b.artefatto.contenitore.capacita_pm], [rep, costo, 'Comune', 10, 3, 0.2, 5], c);
+    assert.deepEqual([b.artefatto.potenza, b.artefatto.sintonizzazione], [pot, sint], c); // invariati (§7.10)
+  }
+  assert.deepEqual(Object.values(dati.equipaggiamento.indice.reperibilita).map((r) => r.nome), ['Comune', 'Non comune', 'Rara', 'Molto rara', 'Leggendaria']);
+  assert.match(dati.equipaggiamento.indice._nota_reperibilita, /non un listino/);
+  // cariche all'acquisto (A.19): il contenitore nuovo è pieno
+  const creazione = { ...MISHIMA_AGENTE, equipaggiamento: [voce('b', 'artefatti:batteria-da-5-pm-chroma-verde', 'trasportato')] };
+  const s = calcolaScheda({ creazione, livelli: [] }, dati);
+  const m = massimiSessione(s, creazione, dati);
+  assert.equal(m.contenitoreNuovo, 'pieno');
+  assert.deepEqual(inizializzaSessione(m).chroma.b, { pmAttuali: 5 });
+  assert.equal(contenitori(creazione.equipaggiamento, dati)[0].capacita, 5);
+});
+
+test('A.14: la disponibilità degli Artefatti Mistici compare nel tooltip degli Artefatti', () => {
+  const t = JSON.stringify(testoTooltip('oggetto', 'artefatti:batteria-da-5-pm-chroma-rosso', dati));
+  assert.match(t, /La Fratellanza è l’unica a produrne in quantità/);
+  assert.match(t, /Molto rara/);
+  assert.doesNotMatch(JSON.stringify(testoTooltip('oggetto', 'armi:pugnale', dati)), /Artefatti Mistici/);
 });
