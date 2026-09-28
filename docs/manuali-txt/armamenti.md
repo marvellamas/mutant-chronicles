@@ -122,6 +122,8 @@ La tabella seguente riporta i profili unici e i nomi descrittivi compresi. Ascia
 
 Mischia indica Armi da mischia (DES), Guerra indica Armi da guerra (FOR), Corpo indica Corpo a corpo (FOR). Nelle righe con due impugnature, i danni sono indicati nello stesso ordine: prima una mano, poi due mani. I danni sono quelli base, prima dei modificatori pertinenti; 1, 2 e 3 senza dado sono valori fissi. FOR è il requisito della Caratteristica; PI è l’Integrità massima del profilo nuovo e integro. Qualità, reperibilità e potenza di un Artefatto sono dati distinti. Le sigle della reperibilità e i costi seguono il §7.1.8.
 
+La Specializzazione dell’arma dipende dalla famiglia e dalla modalità effettivamente usata; concede \+1 VA e \+1 danno, salvo Danno calibrato o altre eccezioni espresse. Le assegnazioni ai modelli sono riepilogate nei §§7.1.9 e 7.6. Non modificano l’Abilità della scheda.
+
 | Famiglia | Profilo | Abilità | Mani | Danno base | Q | Proprietà |
 | :---: | ----- | :---: | :---: | :---: | :---: | ----- |
 | Coltelli e pugnali | Coltello | Mischia | 1 | 1d4 | 1 | — |
@@ -319,7 +321,7 @@ Immobilizzare con Frusta elettrificata e Catena chiodata segue il §7.1.5, rispe
 
 ### **7.1.8 Qualità reperibilità e costi**
 
-La Qualità determina la PS Integrità (§7.2.1); la Reperibilità indica la difficoltà di trovare un venditore. Il costo usa la scala economica del catalogo; il nome dell’unità monetaria sarà integrato successivamente. I valori indicati come «Costo proposto» restano proposte economiche. Il §7.9 riunisce i prezzi di riferimento delle armi.
+La Qualità determina la PS Integrità (§7.2.1); la Reperibilità indica la difficoltà di trovare un venditore. Il costo usa la scala economica del catalogo; l’unità monetaria è il credito. I valori indicati come «Costo proposto» restano proposte economiche. Il §7.9 riunisce i prezzi di riferimento delle armi.
 
 La ricerca richiede una Prova di Oratoria soltanto quando trovare un venditore è incerto. Un successo permette di individuare un’offerta: rimangono prezzo, eventuali autorizzazioni e tempi di consegna.
 
@@ -331,6 +333,8 @@ La ricerca richiede una Prova di Oratoria soltanto quando trovare un venditore �
 | MR | Molto rara | Oratoria −4 VA. |
 
 Gestione Operativa dell’Amministrativo riduce del 10% un acquisto pianificato di armi standard del catalogo Commerciale, rispettando la preparazione richiesta dal Talento. Si arrotonda il prezzo finale per eccesso all’intero: costo 1.300, prezzo ridotto 1.170. Altri beni, esclusioni e raccordi economici restano da completare.
+
+LE indica Reperibilità Leggendaria: disponibilità eccezionale stabilita dal Direttore, senza una penalità numerica che garantisca l’esistenza di un venditore. Gli Artefatti non seguono il normale mercato e rispettano il §7.5.
 
 ### **7.1.9 Cataloghi delle Corporazioni**
 
@@ -348,6 +352,14 @@ I cataloghi seguenti comprendono 39 armi ravvicinate e uno Scudo corporativo. Le
 | Indipendenti | Catalogo Commerciale. |
 
 Le tabelle separano il profilo d’impiego dai dati economici. PS INT indica la PS Integrità; PI indica il massimo del modello. Le proprietà e le Manovre di ciascuna scheda si aggiungono alle regole generali. Quando non è indicato un danno Magico o Etereo, il danno è Naturale.
+
+#### **Specializzazioni dei modelli ravvicinati**
+
+Spade: Katana, Wakizashi, Mushashi e Lama Demontooth. Coltelli e Pugnali: Kriss. Armi Flessibili: Nunchaku, Nunchaku elettrico e Catena Chiodata. Mazze e Bastoni: Bordone Templare.
+
+Armi a Sega: Elettrosega CSB600, Chainreaper e Sbudellatrice. Questa Specializzazione concede il normale \+1 VA e \+1 danno; ciascuna arma conserva l’Abilità del proprio profilo.
+
+Pugnale e Ascia leggera usano Coltelli e Pugnali oppure Asce nel Ravvicinato; quando sono scagliati usano Armi da Lancio, sia come Abilità sia come Specializzazione. Si applica una sola Specializzazione alla modalità scelta.
 
 #### **Bauhaus**
 
@@ -651,6 +663,18 @@ Ogni oggetto possiede una PS Integrità determinata dalla propria Qualità. Si t
 
 I Punti Integrità (PI) misurano la resistenza strutturale. La scheda indica i PI massimi; si annotano separatamente quelli attuali. La Qualità determina la PS, non una variazione percentuale dei PI. A 0 PI l’oggetto è Rotto e non può essere utilizzato finché non viene riparato.
 
+#### **Oggetti rotti e protezioni**
+
+A 0 PI un’armatura perde tutta la propria AR, anche magica, e i propri benefici. Uno scudo perde AR e benefici e non può essere usato per attaccare o parare; un elmetto perde i propri benefici, senza annullare l’AR dell’armatura ancora integra. Peso, ingombro e penalità della categoria rimangono finché l’oggetto è indossato o impugnato; uno scudo continua a occupare la mano. Le protezioni magiche indipendenti seguono le proprie regole. La rottura si applica dopo il colpo che l’ha causata, senza ricalcolare retroattivamente l’AR.
+
+Un kit di rinforzo ha PI separati: a 0 PI perde soltanto la propria AR e le proprie proprietà, mentre l’armatura di base integra conserva le sue. Finché il kit resta montato, rimangono peso, aumento del requisito di FOR e penalità della categoria rinforzata. Rimuovendolo si torna al profilo di base. Esempio: armatura civile Leggera con kit pesante, AR 3, FOR 5 e categoria Media; kit rotto ma montato, AR 1, FOR 5 e Media; kit rimosso, AR 1, FOR 3 e Leggera.
+
+#### **PI non indicati e oggetti multipli**
+
+Una scheda priva di PI non indica né un oggetto indistruttibile né un oggetto già a 0 PI. Si usa il valore del catalogo quando presente; altrimenti il Direttore risolve il danno secondo le circostanze e, se occorre tenere traccia dell’Integrità, stabilisce prima della risoluzione un valore coerente con oggetti analoghi. Le quantità dei consumabili restano separate dai PI del dispositivo riutilizzabile.
+
+Ogni esemplare possiede i propri PI. Oggetti identici possono essere annotati insieme finché la loro condizione coincide; si separano appena uno subisce danni o riparazioni. Per i presidi sanitari: pronto soccorso Standard 4 PI, Professionale 6 PI, iniettore manuale 2 PI.
+
 Veicoli. Corpo principale, Propulsione e Motore possiedono PI separati. Per le loro perdite strutturali, una PS riuscita dimezza i PI per eccesso, con minimo 1 se esiste una perdita potenziale; una PS fallita li applica interamente. Corazzato X si sottrae dopo la PS e può ridurre la perdita a 0\. Propulsione a 0 PI conserva il funzionamento parziale previsto; stati, localizzazione e procedura completa sono nel Manuale dei Veicoli, §4. Gli oggetti con PI autonomi e gli esoscheletri indossabili mantengono i propri profili.
 
 | Qualità | PS Integrità |
@@ -677,7 +701,7 @@ Si effettua una sola PS per oggetto e per colpo, riunendo le cause presenti. Con
 
 Le protezioni dello stesso attacco si verificano separatamente: ogni oggetto coinvolto effettua la propria PS. Il deterioramento si applica dopo il colpo che lo provoca, senza modificare retroattivamente l’assorbimento di quel colpo. Corrosivo rimane limitato a una sola applicazione per protezione, bersaglio e attacco, anche quando l’attacco produce più colpi (§5.24).
 
-Una perdita di PI non assegna automaticamente la condizione Danneggiata e la relativa penalità di −2 VA. Tale condizione si applica quando una regola la prevede. Restano le condizioni delle armi del §7.2 e gli esiti specifici delle Complicazioni del §5.17.
+Una perdita di PI non assegna automaticamente la condizione Danneggiata e la relativa penalità di −2 VA. Tale condizione si applica quando una regola la prevede. Restano le condizioni delle armi del §7.2 e gli esiti specifici delle Complicazioni del §5.17. Le condizioni Danneggiata, Inutilizzabile o Rotta causate da un Maldestro non portano automaticamente i PI a 0, salvo una perdita espressa. Recuperare almeno 1 PI rimuove soltanto il blocco dovuto ai PI azzerati; eventuali condizioni indipendenti devono essere risolte a parte.
 
 #### **Attacchi Magistrali Parate e Armatura**
 
@@ -693,7 +717,15 @@ Lavoro a Regola d’Arte concede \+1 PI massimo a un oggetto non consumabile cos
 
 Il rinforzo di un oggetto completamente riparato riduce di 1, fino a un minimo di 0, la prima perdita di PI che dovrebbe subire; poi si esaurisce. Restano i limiti di Lavoro a Regola d’Arte. La manutenzione di Armaiolo e Manutenzione Preventiva del Tecnico conservano frequenze, condizioni ed effetti delle rispettive descrizioni di Classe.
 
-Le perdite espressamente indicate come costi diretti dei Talenti mantengono la propria procedura. Per veicoli, riparazioni, rinforzi, Spinta al Limite e Sovraccarico Tecnico si consulta il Manuale dei Veicoli, §7. Le schede strutturali e le procedure generali di costruzione e riparazione degli altri oggetti, con tempi e costi, verranno integrate successivamente.
+Le perdite espressamente indicate come costi diretti dei Talenti mantengono la propria procedura. I veicoli, i loro rinforzi, Spinta al Limite e Sovraccarico Tecnico seguono il Manuale dei Veicoli, §7. La procedura seguente riguarda gli oggetti personali.
+
+#### **Riparazione strutturale degli oggetti personali**
+
+Armi, armature, elmetti, scudi e rinforzi richiedono un’ora di lavoro su un solo oggetto, con strumenti, materiali e componenti adatti. Al termine si effettua Tecnologia: Successo \+1 PI, Magistrale \+2 PI, Fallimento nessun PI e tempo consumato, Maldestro −1 PI fino a un minimo di 0, senza PS Integrità. Non si supera il massimo dell’oggetto.
+
+Gli strumenti improvvisati impongono −2 VA, quando il lavoro è concretamente possibile. I Talenti pertinenti si applicano normalmente; le riduzioni di tempo combinate non possono scendere sotto metà del tempo ordinario. I materiali costano il 5% del prezzo di catalogo per ogni PI effettivamente recuperato: un Magistrale che restituisce 2 PI consuma il costo di 2 PI. Un oggetto da 2.000 crediti richiede 100 crediti per PI; l’eventuale manodopera a pagamento è separata.
+
+Un oggetto bloccato soltanto perché a 0 PI torna utilizzabile con almeno 1 PI, purché i componenti necessari siano presenti. Oggetti Distrutti e componenti mistiche da ricostruire richiedono procedure specifiche. Le riparazioni delle condizioni delle armi restano distinte: la riparazione sul campo del §5.17 del Manuale del Giocatore può rimuovere una condizione con la penalità prevista, ma non restituisce PI; riparare i PI non elimina automaticamente una condizione indipendente. Esempio: un’arma Inutilizzabile con 4/6 PI, riparata sul campo, resta a 4/6 PI e conserva −3 VA fino alla riparazione completa della condizione.
 
 ## **7.3 Mirini e accessori delle armi**
 
@@ -1092,7 +1124,7 @@ Scudo Enorme con Struttura robusta, Stabile 1 e Ingombrante. Ha 10 PI, AR \+3 e 
 
 Scudo Medio con AR passiva \+2, AR magica 0 a riposo, FOR 5 e 6 PI. Non possiede Difensiva passiva, Struttura robusta o Protezione occulta aggiuntive. Comprende la Lama retrattile e la riserva di Scudo Magico del §7.1.9.
 
-Estrarre o ritrarre la lama richiede 1 AzP. Con lama estratta gli attacchi usano Armi da Guerra, una mano, portata 1 Q e danno 1d6+1d4 Naturale; la lama non consuma cariche per colpo e non richiede Sintonizzazione. I requisiti e le regole offensive complete sono nel §7.1.9.
+Estrarre o ritrarre la lama richiede 1 AzP. Con lama estratta gli attacchi usano Armi da Guerra, una mano, portata 1 Q e danno 1d6+1+1d4 Naturale; la lama non consuma cariche per colpo e non richiede Sintonizzazione. I requisiti e le regole offensive complete sono nel §7.1.9. Con lama ritratta infligge 1d6+1 Naturale. È un solo colpo: si applica l’Armatura una sola volta.
 
 Dopo Sintonizzazione, 1 AzP e 1 PM della riserva attivano Scudo Magico per 5 Round: il contributo dello Scudo diventa AR \+4, di cui 2 magica, e concede \+2 VA alla Parata ravvicinata e \+1 VA a quella a distanza, che passa a −3 VA complessivo. I bonus alla Prova valgono soltanto parando con lo Scudo; l’AR rimane passiva nelle normali condizioni d’impiego.
 
@@ -1129,7 +1161,17 @@ Le proprietà passive sono utilizzabili da tutti nei normali limiti dell’ogget
 
 Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche sostituibili delle armi seguono invece il §7.1.4.
 
+Le riserve integrate in un Artefatto alimentano soltanto quell’Artefatto: non possono pagare Incantesimi personali né essere prelevate o convertite nella riserva personale. Un oggetto acquistato viene consegnato con la riserva piena; per uno trovato il Direttore stabilisce i PM residui secondo le circostanze.
+
 Le regole di impiego degli Artefatti sono nel Manuale della Magia e nel §7.10 di questo volume; Architetto TecnoMistico e gli altri Talenti del Tecnomante sono nel Manuale del Giocatore, §3.9.5. Il catalogo ravvicinato e il §7.5.1 comprendono i profili con riserva mistica. La creazione rituale e i raccordi con costruzione e riparazione saranno integrati successivamente.
+
+### **Reperibilità degli Artefatti e batterie mistiche**
+
+Gli Artefatti Mistici e TecnoMistici sono pochi e non hanno un normale mercato o negozi dedicati. La Fratellanza ne produce quantità rilevanti per la propria congrega, senza commercializzarli all’esterno; Bauhaus, Imperial e Mishima ne producono molti meno. Nei sistemi esterni poco controllati dall’Imperium possono operare Tecnomistici indipendenti disposti a vendere a prezzi elevati.
+
+La Reperibilità degli Artefatti è Molto rara; per le batterie universali è Leggendaria. I prezzi sono valori indicativi per scambi o commissioni, non garantiscono l’acquisto. Oratoria non crea un’offerta inesistente. Reperibilità, Qualità costruttiva e potenza mistica restano dati distinti.
+
+Le batterie Rosse, Blu e Verdi da 5 PM hanno ciascuna costo 10.000 crediti, REP Molto rara, potenza Comune e Sintonizzazione 1\. Quella Bianca da 5 PM ha costo 50.000 crediti, REP Leggendaria, potenza Non comune e Sintonizzazione 2\. Tutte pesano 0,2 kg, hanno Qualità Comune, PS Integrità 10 e 3 PI; all’acquisto contengono 5/5 PM. Il Chroma Viola non è in commercio.
 
 ### **7.5.1 Profili con riserva mistica**
 
@@ -1181,7 +1223,7 @@ La capacità ordinaria è FOR × 10 kg; il massimo sollevabile e trasportabile �
 * Strumenti e dispositivi: corredi dell’Alleanza nel §7.12; esoscheletri Bauhaus nel §7.11.6; dotazioni Capitol e Imperial nei §§7.13–7.14; moduli Cybertronic nel §7.15 e robot Attila nel §7.18. Veicoli, motociclette e mezzi corazzati saranno integrati successivamente, comprese Fenris Bike, Necromower, Hurricane, Barracuda, mezzi dei Dragoni, Vorreiter e mezzi Mishima.  
 * Equipaggiamento sanitario: kit di pronto soccorso, cartucce, UMC, strumenti portatili, diagnostici e chirurgici nel §7.19. Droghe da Combattimento compatibili con gli UMC, naniti medici e ulteriori consumabili saranno integrati successivamente.
 
-Le regole delle tre strutture dei veicoli, della conduzione, degli incidenti e delle riparazioni si trovano nel Manuale dei Veicoli. Le altre schede strutturali, i tempi e i costi generali di costruzione e riparazione, gli ulteriori equipaggiamenti cibernetici e i relativi costi UMN saranno integrati successivamente. PS Integrità, PI e Corrosivo degli oggetti ordinari sono nel §7.2.1. Sigilli, talismani, rune e tatuaggi saranno integrati nelle sezioni dedicate a Tecniche Interiori e Artefatti.
+Le regole delle tre strutture dei veicoli, della conduzione, degli incidenti e delle riparazioni si trovano nel Manuale dei Veicoli. Le altre schede strutturali, le procedure generali di costruzione, gli ulteriori equipaggiamenti cibernetici e i relativi costi UMN saranno integrati successivamente. PS Integrità, PI e Corrosivo degli oggetti ordinari sono nel §7.2.1. Sigilli, talismani, rune e tatuaggi saranno integrati nelle sezioni dedicate a Tecniche Interiori e Artefatti. Le riparazioni strutturali ordinarie degli oggetti personali seguono il §7.2.1.
 
 * Ulteriori Artefatti, batterie e oggetti TecnoMistici, oltre ai profili già integrati, e regole complete di creazione.
 
@@ -1192,6 +1234,16 @@ Le schede degli innesti cibernetici e delle trasformazioni permanenti devono ind
 Le schede seguenti raccolgono i profili commerciali. Leggere indica Armi Leggere (DES), Medie indica Armi Medie (INT), Pesanti indica Armi Pesanti (FOR), Lancio indica Armi da Lancio (DES). Mani indica l’impugnatura ordinaria; l’uso a una mano di un’arma a due mani segue il §7.1.6. I danni indicati sono Naturali salvo proprietà o munizioni che stabiliscano diversamente.
 
 Max Q è la gittata massima; CC è la capacità del caricatore, della cella o del serbatoio; INC è l’affidabilità. Il Modificatore VA della scheda si somma alle Prove per Colpire con quel profilo. AC indica applicazioni di danno, non locativi. PI è l’Integrità massima. Le sigle REP sono quelle del §7.1.8.
+
+### **Specializzazioni dei modelli a distanza**
+
+Pistole: pistole ordinarie e mitragliette, compreso il Mitra compatto e i modelli MP105, P1000 e Nemesis 210\. Restano Armi Leggere in tutte le modalità; la Raffica non li trasferisce nella famiglia Mitragliatori. La SA30 a dardi usa Pistole per il \+1 VA, ma Danno calibrato esclude il \+1 danno.
+
+Fucili di Precisione: Eruptor, Mefisto, Archer e Assailant. Fucili d’Assalto: M50, AR3000, Volcano, Invader, Shogun e Panzerknacker. Carabine: Mandible, Interceptor, Airbrush, Windrider N4, MP105GW, Nemesis 21 e Rainy Dayer.
+
+Mitragliatori: Justifier, Purifier, MG40, Deathlock Drum, Kensai e Nimrod Autocannon. Justifier e Purifier usano Armi Pesanti; gli altri quattordici fucili del catalogo principale usano Armi Medie secondo il proprio profilo.
+
+Armi al Plasma: Hellblazer e Intruder. Hellblazer mantiene Armi Leggere, ma utilizza soltanto la Specializzazione Armi al Plasma. I moduli integrati conservano la propria famiglia: Lanciagranate per il modulo del Volcano, Lanciafiamme per quello dell’Eruptor e analogamente per gli altri modelli combinati.
 
 S \= Colpo Singolo; RB \= Raffica Breve; RM \= Raffica Media; RL \= Raffica Lunga; TR \= Tiro Rapido; FS \= Fuoco di Soppressione; DC \= Doppio Colpo. Una modalità assente non è disponibile. Il profilo generico Mitra è eliminato; le specifiche armi corporative a due mani sono classificate singolarmente come carabine o fucili.
 
@@ -3447,7 +3499,7 @@ Ogni tiro consuma una granata. È disponibile soltanto il Tiro Singolo, senza Ti
 
 #### **Rainy Dayer**
 
-La Rainy Dayer combina un’arma da fuoco a corto raggio con un ombrello balistico, destinato agli ambienti urbani e corporativi. Il prezzo comprende arma, copertura balistica e caricatore vuoto. La gittata massima è 30 Q.
+La Rainy Dayer combina un’arma da fuoco a corto raggio con un ombrello balistico, destinato agli ambienti urbani e corporativi. Il prezzo comprende arma, copertura balistica e caricatore vuoto. La gittata massima è 30 Q. Per la Specializzazione appartiene alle Carabine: \+1 VA e \+1 danno al tiro, con Armi Medie e due mani sia aperta sia chiusa. La Specializzazione non modifica AR o Parata della copertura.
 
 | Configurazione | Mani richieste | Protezione |
 | :---- | :---: | :---- |
@@ -4619,9 +4671,11 @@ Il Nimrod dispone delle stesse quattro varianti per la propria famiglia dedicata
 
 #### **Perforante X**
 
-Ignora X punti dell’AR non magica applicabile, compreso il contributo ordinario dello Scudo, fino a un minimo di 0 per questa componente. La componente magica rimane interamente applicabile. L’effetto si risolve per ogni colpo e non infligge danni aggiuntivi a bersagli senza armatura né perdite automatiche di PI.
+Ignora X punti dell’AR non magica applicabile, compreso il contributo ordinario dello Scudo, fino a un minimo di 0 per questa componente. La componente magica rimane interamente applicabile. L’effetto si risolve per ogni colpo e non infligge danni aggiuntivi a bersagli senza armatura né perdite automatiche di PI. La riduzione si applica una sola volta al totale non magico del singolo colpo, non una volta per ciascuna protezione. Conta la natura dell’AR: Perforante riduce anche l’AR non magica di Pelle Corazzata o Scudo, ma non quella magica di Armatura di Forza. Se il colpo è anche Laser si applica prima Perforante e poi il dimezzamento per difetto del totale rimasto; Riflettente neutralizza soltanto il dimezzamento.
 
 Perforante dell’arma e della munizione non si sommano: si applica il valore maggiore. Contro AR 5 interamente ordinaria, Perforante 1 lascia AR 4 e Perforante 2 lascia AR 3\. Contro AR 2 interamente magica, entrambe lasciano AR 2\. Le cartucce a pallini non hanno una variante Perforante in questo catalogo.
+
+Esempio: AR 7, di cui 2 magica, contro Perforante 2 rimane 5; Laser la porta a 2\. Con Riflettente applicabile rimane 5\. Contro Etereo si parte dalla sola componente magica: Perforante non la riduce, Laser la dimezza salvo Riflettente.
 
 #### **Incendiaria**
 

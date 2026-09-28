@@ -103,7 +103,7 @@ Per Round, Iniziativa e Azioni disponibili, consultare il Manuale del Giocatore,
 
 ## **Conoscenza e livello massimo**
 
-L’Addestramento Taumaturgo concede accesso e 2 \+ Mod INT incantesimi liberi una sola volta. Le Classi aggiungono le proprie quote. Le versioni di un incantesimo conosciuto diventano disponibili automaticamente: il limite è 3 volte i Gradi taumaturgici complessivi, fino a 18 con sei Gradi. Nel multiclasse si sommano i Gradi taumaturgici per questo limite.
+L’Addestramento Taumaturgo concede accesso e 2 \+ Mod INT incantesimi liberi, minimo 1, una sola volta. Le Classi aggiungono le proprie quote. Le versioni di un incantesimo conosciuto diventano disponibili automaticamente entro il limite dei Gradi taumaturgici complessivi: I Grado livello 3; II livello 8; III livello 11; IV livello 14; V livello 17; VI livello 18\. Nel multiclasse si sommano i Gradi taumaturgici per questo limite.
 
 Usufruitore di Magia concede agli altri personaggi 2 \+ Mod INT incantesimi, minimo 1, e accesso fino al livello 3\. Potenziale Mistico Migliorato è riservato a chi possiede Usufruitore di Magia: aumenta il limite di 3 per acquisizione, fino a cinque acquisizioni e a un massimo di 18, mantenendo sempre la scala più difficile. Per esempio, Usufruitore di Magia e quattro acquisizioni di Potenziale Mistico Migliorato consentono il livello massimo 15; la quinta acquisizione porta il limite a 18\.
 
@@ -129,7 +129,7 @@ Sintonizzazione del Focus. Chi possiede Usufruitore di Magia può sintonizzare i
 
 Tipo: Passivo. Prerequisito: Usufruitore di Magia. Acquisizione: fino a cinque volte.
 
-Ogni acquisizione aumenta di 3 il livello massimo degli Incantesimi accessibili tramite Usufruitore di Magia, fino a un massimo di 18\.
+Ogni acquisizione aumenta di 3 il livello massimo degli Incantesimi accessibili tramite Usufruitore di Magia, fino a un massimo di 18\. È riservato a chi possiede Usufruitore di Magia e non aumenta il limite dei personaggi con Addestramento Taumaturgo.
 
 Partendo dal limite iniziale di 3, le cinque acquisizioni portano il limite rispettivamente a 6, 9, 12, 15 e 18\.
 
@@ -562,12 +562,14 @@ Se, al termine della risoluzione completa di un’azione, il personaggio rimane 
 | Rosso | Fisica | Alimenta Incantesimi Fisici e celle energetiche. |
 | Blu | Mentale | Alimenta Incantesimi Mentali. |
 | Verde | Spirituale | Alimenta Incantesimi Spirituali. |
-| Viola | Oscura | Le regole di impiego verranno integrate successivamente con l’Oscura Simmetria nel Manuale della Magia. |
+| Viola | Oscura | Saturo di Energia Oscura: la vicinanza provoca esposizione passiva alla Corruzione. Non è in commercio. Gli impieghi energetici saranno definiti con l’Oscura Simmetria. |
 | Trasparente | Nessuna energia residua | Cristallo esausto, ancora mistico e ricaricabile. |
 
 Un cristallo esausto conserva un alone del colore originario, che ne identifica la natura anche quando è trasparente. Mantiene capacità e sintonizzazione. Il Chroma Rosso viene impiegato nelle celle che costituiscono la principale fonte di energia dell’ambientazione. Per le armi, la scheda distingue le riserve mistiche ricaricabili con PM dalle celle tecnologiche sostituibili, che non richiedono Sintonizzazione (Manuale dell’Equipaggiamento, §§7.1.4 e 7.5.1).
 
 Contenitore indica qualunque oggetto che racchiuda un Chroma, indipendentemente da forma e materiale. La scheda riporta tipo di energia, PM attuali e capacità massima: per esempio «Chroma Rosso, 6/10 PM».
+
+Le riserve integrate in un Artefatto alimentano soltanto le sue proprietà, senza pagare Incantesimi personali o consentire prelievi e conversioni nella riserva personale. Questa limitazione non riguarda i contenitori autonomi destinati a fornire PM. Un oggetto acquistato ha la riserva piena; per un oggetto trovato il Direttore decide secondo le circostanze.
 
 ## **Utilizzare una riserva esterna**
 
@@ -624,13 +626,25 @@ La ricarica è riservata ai personaggi con Addestramento Taumaturgo. Richiede co
 
 L’energia immagazzinata assume la natura originaria del Chroma. Per aggiungere 1 PM a un Chroma Rosso, Blu o Verde si spendono 3 PM personali, 2 PM con uno dei due Talenti oppure 1 PM con entrambi. Per il Chroma Bianco si spendono sempre 2 PM personali per ogni 1 PM aggiunto. La ricarica non avviene automaticamente durante il recupero personale.
 
-L’operazione si risolve interamente nella stessa AzP secondo l’esito previsto; non richiede minuti aggiuntivi per i PM immagazzinati. Le regole specifiche del Chroma Viola verranno integrate successivamente nel Manuale della Magia.
+L’operazione si risolve interamente nella stessa AzP secondo l’esito previsto; non richiede minuti aggiuntivi per i PM immagazzinati. Gli impieghi energetici del Chroma Viola saranno definiti separatamente; la sua esposizione passiva segue le regole di questa sezione.
 
 Ricarica Efficiente è il Talento fisso di III Grado del Tecnomante (Manuale del Giocatore, §3.9.5, «Tecnomante»). Il suo beneficio e quello di Conversione Migliorata si applicano anche alla ricarica secondo i rapporti riportati sopra. Se la spesa o la perdita di PM personali porta la riserva a 0, lo svenimento avviene al termine dell’intera Azione, dopo averne risolto l’esito (sezione 6).
 
 ## **Trasferire PM con il Chroma Bianco**
 
-Un personaggio cosciente può prelevare PM da un contenitore Bianco sintonizzato, con contatto, trasferendoli nella propria riserva personale. Per ricaricare il contenitore rimane necessario l’Addestramento Taumaturgo. In entrambe le direzioni il rapporto è 2:1: ogni gruppo consuma 2 PM dalla fonte e ne aggiunge 1 alla destinazione. Si applicano la stessa AzP, la dichiarazione dei gruppi, la Prova unica e i relativi esiti; un gruppo è automatico. Non si supera la capacità della destinazione, compreso il massimo personale eventualmente ridotto dall’Umanità. L’uso diretto del contenitore per pagare un Incantesimo segue invece la sezione 6 di questo manuale: non trasferisce PM alla riserva personale e non richiede un’Azione aggiuntiva né la perdita prevista per il trasferimento.
+Un personaggio cosciente che abbia accesso alla magia può prelevare PM da un contenitore Bianco sintonizzato, con contatto, trasferendoli nella propria riserva personale. Per ricaricare il contenitore rimane necessario l’Addestramento Taumaturgo. In entrambe le direzioni il rapporto è 2:1: ogni gruppo consuma 2 PM dalla fonte e ne aggiunge 1 alla destinazione. Si applicano la stessa AzP, la dichiarazione dei gruppi, la Prova unica e i relativi esiti; un gruppo è automatico. Non si supera la capacità della destinazione, compreso il massimo personale eventualmente ridotto dall’Umanità. L’uso diretto del contenitore per pagare un Incantesimo segue invece la sezione 6 di questo manuale: non trasferisce PM alla riserva personale e non richiede un’Azione aggiuntiva né la perdita prevista per il trasferimento. Il prelievo non richiede necessariamente l’Addestramento Taumaturgo, ma non è disponibile a chi non ha accesso alla magia.
+
+## **Esposizione passiva al Chroma Viola**
+
+Il Chroma Viola è saturo di Energia Oscura: la sola vicinanza può corrompere un essere umano. Per un frammento portatile il raggio è 12 Q, pari a 18 metri; per cristalli maggiori il Direttore stabilisce l’estensione. Non si trova in commercio.
+
+Si effettua una PS di Magia ogni ora cumulativa di esposizione. La prima avviene al completamento della prima ora. Uscire dal raggio sospende il conteggio senza azzerarlo; cambiare distanza non richiede una PS aggiuntiva. Per ogni ora si usa la fascia più intensa incontrata.
+
+Contatto: esposizione Intensa, −2 alla PS, 2 Stati di Corruzione con fallimento. Entro 1 Q senza contatto: Normale, nessun modificatore, 1 Stato. Oltre 1 Q e fino a 6 Q: Debole, \+2 alla PS, 1 Stato. Oltre 6 Q e fino a 12 Q: Flebile, \+4 alla PS, 1 Stato.
+
+Con Successo non si acquisisce Corruzione; con Fallimento si applica la quantità della fascia; con Maldestro si aggiunge 1 Stato. Il Magistrale concede \+4 alla successiva PS contro la Corruzione nella stessa Scena, una sola volta, secondo la regola generale. Si applicano le penalità pertinenti di Umanità e Corruzione Oscura del Manuale del Giocatore.
+
+Esempio: 10 minuti a contatto e 50 minuti a 8 Q completano un’ora; si effettua la PS della fascia Intensa, −2, con 2 Stati in caso di fallimento. Gli impieghi energetici del Chroma Viola restano da definire.
 
 ## **PV sacrificati nella conversione**
 
@@ -695,7 +709,7 @@ PM 0 indica una riserva personale esaurita; PM — indica una riserva inesistent
 
 Alla stessa prova si applicano il maggiore bonus magico e la maggiore penalità magica pertinenti. Più applicazioni conservano la propria scadenza: terminato l’effetto maggiore, quello inferiore ancora attivo torna applicabile. Le penalità numeriche degli Stati di origine magica rientrano in questa regola; i loro impedimenti funzionali restano tutti validi.
 
-La difficoltà ordinaria del livello, le componenti mancanti, l’Ingaggio e le circostanze non sono penalità magiche concorrenti. Il modificatore PS proprio dell’incantesimo si applica separatamente. Il −2 alla PS Volontà ottenuto con la preparazione di Oratoria si aggiunge espressamente agli altri modificatori. Fra Silenzio Mentale, Maledizione, Distrazione e interferenze di barriere vale invece soltanto la maggiore penalità magica applicabile.
+La difficoltà ordinaria del livello, le componenti mancanti, l’Ingaggio e le circostanze non sono penalità magiche concorrenti. Il modificatore PS proprio dell’incantesimo si applica separatamente. Il −2 alla PS Volontà ottenuto con la preparazione di Oratoria si aggiunge espressamente agli altri modificatori. Fra Silenzio Mentale, Maledizione, Distrazione e interferenze di barriere vale invece soltanto la maggiore penalità magica applicabile. I benefici personali dei Talenti, fra cui Focalizzazione e Occhio Interiore, si applicano separatamente e non sono sostituiti dal maggiore bonus magico.
 
 **Esempi:** Volontà 10 contro Comando con Mod PS −2, Maledizione −2, Barriera Mentale \+4, Benedizione \+2 e Oratoria −2 dà VA 8: il \+2 di Benedizione è sostituito dal \+4 della barriera. Potere 14, livello 9 −2, Silenzio −3, interferenza −4 e Benedizione \+2 dà VA 10: si usa −4 e non −7.
 
@@ -719,7 +733,7 @@ Lanci distinti, interamente pagati e compatibili con i limiti di mantenimento, p
 
 ## **Armature e riserve**
 
-Si sommano l’AR pertinente dell’equipaggiamento, il maggiore contributo applicabile fra Pelle Corazzata, Armatura di Forza e bonus di Armatura Mistica, un solo scudo e l’eventuale Armatura Elementale contro l’elemento protetto. Armatura Mistica converte solo l’equipaggiamento interessato: non rende magiche Pelle Corazzata, Scudo o altre protezioni. Il totale si ricalcola per ciascuna AC e natura del danno.
+Si sommano l’AR pertinente dell’equipaggiamento, il maggiore contributo applicabile fra Pelle Corazzata, Armatura di Forza e bonus di Armatura Mistica, un solo scudo e l’eventuale Armatura Elementale contro l’elemento protetto. Armatura Mistica converte solo l’equipaggiamento interessato: non rende magiche Pelle Corazzata, Scudo o altre protezioni. Il totale si ricalcola per ciascuna AC e natura del danno. L’AR è complessiva, non suddivisa per parti anatomiche; ogni AC indica una distinta applicazione di danno alla quale sottrarre separatamente la protezione. Corazza Potenziata, Aura di Resistenza e Pelle di Rinoceronte si sommano fra loro e alle protezioni compatibili: rispettivamente \+1 magica, \+1 magica e \+1 non magica contro il Ravvicinato Naturale o Magico. Non appartengono al gruppo del solo maggiore contributo. Restano requisiti, durate e divieto di sommare più applicazioni della stessa Tecnica.
 
 Un nuovo lancio può rinnovare una riserva quando la scheda lo consente, pagando nuovamente costi e azione. Non somma la riserva precedente né rinnova altre riserve, azioni o limiti per RND. Sono distinti i limiti di un elementale evocato e di un ectoplasma: possono coesistere.
 
@@ -1002,9 +1016,11 @@ Un unico tiro di danno vale per tutti i bersagli della medesima manifestazione a
 
 Geometria Arcana esclude dall’area le creature consentite dal talento, pari al bonus INT con minimo 1, per tutta la durata. Calcolo Arcano, una volta per scena, prende Gittata, Area oppure Durata dalla versione successiva già accessibile. Incantesimi Aggressivi aggiunge il danno una sola volta per bersaglio e per lancio, non a ogni round persistente. Le creature evocate usano le proprie schede, senza ricevere i bonus offensivi del lanciatore. I benefici dei Talenti sull’Anticipazione non si combinano con Calcolo Arcano sullo stesso lancio: si sceglie la modalità utilizzata.
 
+Ai danni degli Incantesimi si aggiunge il bonus di SAG con i tetti di livello del Manuale del Giocatore, §5.13: 0 con SAG 1–5, \+1 con 6–7, \+2 con 8–9, \+3 con 10; massimo \+1 ai livelli 1–7, \+2 ai livelli 8–14, \+3 dal 15°. Si applica a ogni colpo o applicazione di danno, prima di moltiplicatori, Difese e Armatura. Le capacità che limitano espressamente il proprio bonus alla prima applicazione conservano tale limite.
+
 ## **12 3 Anticipazione**
 
-L’Anticipazione forza un solo aspetto di una sola scala senza aumentare il livello dell’incantesimo. Si sceglie una versione già accessibile, si raddoppia il suo costo base in PM e la prova Potere diventa più difficile di una categoria. Tutti gli altri parametri restano quelli della versione scelta. L’aspetto forzato può oltrepassare la normale disponibilità del personaggio. Sono ammessi soltanto gli aspetti elencati nella singola scheda; non si combinano più Anticipazioni nello stesso lancio.
+L’Anticipazione forza un solo aspetto di una sola scala senza aumentare il livello dell’incantesimo. Si sceglie una versione già accessibile, si raddoppia il suo costo base in PM e la prova Potere diventa più difficile di una categoria. Tutti gli altri parametri restano quelli della versione scelta. L’aspetto forzato può oltrepassare la normale disponibilità del personaggio. Sono ammessi soltanto gli aspetti elencati nella singola scheda; non si combinano più Anticipazioni nello stesso lancio. Per chi non possiede l’Addestramento Taumaturgo si parte dalla propria scala ordinaria e si applica l’ulteriore −2 della categoria successiva; Anticipazione Migliorata elimina questa penalità aggiuntiva, conservando la Prova obbligatoria.
 
 La Prova di Potere è sempre obbligatoria, anche quando la versione scelta sarebbe normalmente automatica. Incantesimi Ampliati, Estesi, Proiettati, Plurimi e Intensificati eliminano il raddoppio del costo base in PM rispettivamente per Area, Durata, Gittata, numero di Bersagli e valori numerici consentiti di danno, guarigione o bonus. Incantesimi Plurimi non modifica i Colpi; Incantesimi Intensificati non modifica le Prove Salvezza né rende anticipabili valori vietati dalla scheda.
 
@@ -1075,6 +1091,8 @@ I colpi possono essere concentrati o distribuiti. La distribuzione e la combinaz
 | 18 | 18 | 35 | 4 | 5d6+5 | Magico | 3 | −4 |
 
 **Anticipazione:** un solo aspetto di un gradino, con PM raddoppiati e Potere più difficile di una categoria. Si sceglie Colpi 1 → 2 → 3 → 4, natura Naturale → Magico, elementi 1 → 2 → 3 oppure Mod. PS peggiorato di 2\. Il danno non è anticipabile. I massimi sono 5d6+5 per colpo, 4 Colpi e natura Magica: non si ottiene danno Etereo. Al livello 18 resta anticipabile soltanto il Mod. PS. La PS resta assente per gli effetti automatici.
+
+Il Mod. PS di Colpo Elementale riguarda soltanto le Salvezze degli effetti secondari dell’elemento, dopo il danno. Non concede una Salvezza per evitare il colpo o il danno; gli effetti automatici restano tali.
 
 **Controllo Elementale**
 
@@ -4434,7 +4452,7 @@ Incanta un’armatura fisica indossata, convertendone l’AR in Magica e attribu
 
 **Bersagli:** al lancio devono essere visibili e in gittata, con concatenazione entro 2 Q quando sono multipli. Dopo il lancio possono separarsi e cambiare utilizzatore senza perdere l’effetto.
 
-**Copertura:** protegge soltanto le AC coperte dall’equipaggiamento. Il bonus si applica una volta all’AR pertinente, senza moltiplicarsi per pezzi sovrapposti. Peso, ingombro e penalità rimangono invariati; non ripara l’armatura.
+**P**rotezione: converte in magica l’AR dell’equipaggiamento interessato e aggiunge una sola volta il bonus previsto all’AR complessiva, senza suddivisioni per parti anatomiche o moltiplicazioni per pezzi sovrapposti. Peso, ingombro e penalità rimangono invariati; non ripara l’armatura. A 0 PI la protezione dipendente dall’equipaggiamento inutilizzabile non fornisce AR.
 
 **Bersagli esclusi:** scudi, pelle naturale, Pelle Corazzata e protezioni generate da altri incantesimi. La natura dell’AR rimane Magica a tutti i livelli; non viene introdotta un’AR Eterea.
 

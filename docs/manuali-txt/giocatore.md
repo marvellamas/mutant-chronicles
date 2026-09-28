@@ -877,7 +877,7 @@ I Freelance non appartengono a nessuno. Sono mercenari, contrabbandieri, special
 | Combattente — Colpo Perentorio | Una volta per combattimento può massimizzare tutti i dadi di una singola istanza di danno inflitta da un proprio attacco. Si dichiara dopo aver colpito e prima di tirare i danni; i bonus fissi si applicano normalmente. In una Raffica vale per un solo colpo, in un attacco ad Area per un solo bersaglio. |
 | Lavoratore — Mestiere Solido | Una volta per sessione può ripetere una Prova fallita di Atletica, Pilotare o Tecnologia. Deve accettare il secondo risultato. |
 | Studioso — Mente Analitica | Una volta per sessione può ripetere una Prova fallita di Cultura, Medicina o Scienza. Deve accettare il secondo risultato. |
-| Taumaturgo — Manipolare il Potere | Concede l’accesso alla magia e 2 \+ Mod INT Incantesimi liberi conosciuti, oltre a quelli della Classe. Si applicano le regole del Capitolo 6\. |
+| Taumaturgo — Manipolare il Potere | Concede l’accesso alla magia e 2 \+ Mod INT Incantesimi liberi conosciuti, minimo 1, oltre a quelli della Classe. Si applicano le regole del Capitolo 6\. |
 
 Per Sopravvissuto, Mestiere Solido e Mente Analitica il limite di una volta per sessione è complessivo tra le Abilità elencate. Il vantaggio dell’Addestramento è distinto dai Talenti di Classe e dai Talenti Liberi: il primo Talento Libero si ottiene al 3° livello.
 
@@ -918,7 +918,7 @@ Al 1° livello scegli una Classe appartenente al tuo Addestramento e acquisiscin
 
 * \+1 a ciascuna delle cinque Abilità di Classe. Questi punti si registrano nell’Avanzamento e non modificano il Valore Base Addestramento.  
 * Il Talento fisso del I Grado.  
-* I contributi della Classe a PV e PM. Il dado dei PV iniziali è massimizzato; per i PM si applica il contributo indicato dal profilo.  
+* I contributi della Classe a PV e PM. Alla creazione si massimizzano gli eventuali dadi sia dei PV sia dei PM della prima Classe; i contributi fissi si aggiungono normalmente.  
 * Gli Incantesimi o gli altri benefici espressamente previsti dalla Classe.
 
 I tre Talenti fissi si ottengono ai Gradi I, III e V. Ai Gradi II, IV e VI si acquisisce un Talento a scelta fra i cinque disponibili per la Classe. Alla creazione non si riceve un Talento Libero: il primo è previsto al 3° livello.
@@ -950,8 +950,8 @@ Dopo le assegnazioni, calcola i valori seguenti. Nelle formule dei PV e dei PM, 
 
 | Voce | Calcolo o valore iniziale |
 | :---- | :---- |
-| Punti Vita | COS \+ contributo della Classe, con il dado dei PV massimizzato |
-| Punti Magia | SAG \+ contributo della Classe |
+| Punti Vita | COS \+ contributo della Classe, con l’eventuale dado dei PV massimizzato |
+| Punti Magia | SAG \+ contributo della Classe, con l’eventuale dado dei PM massimizzato |
 | Tempra | 8 \+ modificatore specifico di COS \+ bonus di Addestramento e Corporazione; Avanzamento 0 al 1° livello |
 | Riflessi | 8 \+ modificatore specifico di DES \+ bonus di Addestramento e Corporazione; Avanzamento 0 al 1° livello |
 | Volontà | 8 \+ modificatore specifico di CAR \+ bonus di Addestramento e Corporazione; Avanzamento 0 al 1° livello |
@@ -1832,7 +1832,7 @@ I crediti possono essere utilizzati per gli acquisti iniziali e per pagare i con
 
 Durante la creazione il personaggio può accedere al catalogo della propria Corporazione e acquistare equipaggiamenti migliori cedendo gli armamenti di base effettivamente assegnati e pagando la differenza con i crediti iniziali.
 
-Gli armamenti ceduti vengono valutati al 100% del loro prezzo di catalogo. Il conguaglio è pari al prezzo del nuovo equipaggiamento meno il valore degli armamenti ceduti. Si usa il prezzo del modello corporativo assegnato, oppure quello commerciale per la dotazione Commerciale; non si attribuisce al medesimo oggetto anche il valore del profilo usato come riferimento.
+Gli armamenti ceduti vengono valutati al 100% del loro prezzo di catalogo. Il conguaglio è pari al prezzo del nuovo equipaggiamento meno il valore degli armamenti ceduti. Si usa il prezzo del modello corporativo assegnato, oppure quello commerciale per la dotazione Commerciale; non si attribuisce al medesimo oggetto anche il valore del profilo usato come riferimento. Se il conguaglio è negativo, la differenza viene restituita in crediti e si aggiunge al denaro disponibile del personaggio.
 
 Esempio: cedendo un’arma di base valutata 1.500 crediti per acquistare un modello da 2.100, il personaggio paga 600 crediti. L’arma ceduta viene rimossa dall’inventario e sostituita dal nuovo modello.
 
@@ -1917,7 +1917,9 @@ Interrompere una sessione durante un combattimento non rinnova gli usi per comba
 
 COS e SAG indicano i valori completi delle Caratteristiche. Alla creazione si aggiunge soltanto il contributo della prima Classe, come descritto al paragrafo 2.14.
 
-Soltanto alla creazione del personaggio, al 1° livello, il dado dei PV della prima Classe è massimizzato. In ogni acquisizione successiva viene tirato, anche se si acquisisce il I Grado di una nuova Classe. Si aggiungono i contributi di ciascun Grado; COS e SAG entrano nelle formule una sola volta. I PM si calcolano con il contributo fisso e l’eventuale dado indicati dal profilo.
+Soltanto alla creazione del personaggio, al 1° livello, gli eventuali dadi dei PV e dei PM della prima Classe sono massimizzati. In ogni acquisizione successiva vengono tirati, anche acquisendo il I Grado di una nuova Classe. Si aggiungono i contributi fissi e variabili di ciascun Grado; COS e SAG entrano nelle formule una sola volta.
+
+Quando l’avanzamento aumenta i PV o i PM massimi, lo stesso incremento si aggiunge anche ai rispettivi valori attuali, conservando i punti mancanti. Non si ottiene un recupero completo della riserva.
 
 I valori dei PV sono calibrati come riserva precedente alle Ferite. Raggiunti 0 PV, il personaggio passa alle condizioni di Ferita definite nel Capitolo 5\.
 
@@ -1997,7 +1999,7 @@ I Talenti fissi si acquisiscono ai Gradi I, III e V della singola Classe. Ai Gra
 
 **Reazione Operativa.** Una volta per combattimento, quando un nemico visibile abbandona volontariamente una Copertura, anche per esporsi e attaccare, l’Agente può effettuare immediatamente un Tiro Singolo con un’arma pronta. Spende le Azioni Principali richieste e già disponibili, comprese quelle aggiuntive dovute a distanza e mirino. Il bersaglio non beneficia della Copertura appena abbandonata; gli altri modificatori si applicano normalmente. Non occorre preparare l’azione.
 
-**Mira Selettiva.** Quando effettua un Tiro Mirato e rimane fermo per tutto il Round in cui spara, riduce di 2 la penalità dovuta alla Copertura del bersaglio: Leggera diventa 0 e Media diventa −2. La Copertura Totale impedisce ancora il tiro. Si applicano normalmente costi e benefici del Tiro Mirato. Il Talento riguarda la Copertura del bersaglio; Copertura Tattica riguarda invece la penalità per sparare dalla propria Copertura.
+**Mira Selettiva.** Quando effettua un Tiro Mirato e rimane fermo per tutto il Round in cui spara, riduce di 2 la penalità dovuta alla Copertura del bersaglio: Leggera diventa 0 e Media diventa −2. La Copertura Totale impedisce ancora il tiro. Si applicano normalmente costi e benefici del Tiro Mirato. Il Talento riguarda la Copertura del bersaglio; Copertura Tattica riguarda invece la penalità per sparare dalla propria Copertura. Anche un Passo fa perdere il requisito di rimanere Fermo per tutto il Round.
 
 **Analisi Rapida.** Spendendo un’Azione Principale, senza Prova, studia un nemico visibile. Ottiene \+2 VA alla prima Prova per colpirlo con un’arma a distanza effettuata entro la fine della propria Iniziativa successiva. Il bonus si consuma con quella Prova: può valere per una Raffica o per il primo tiro di Tiro Rapido, ma non per più Prove. Analisi ripetute non sommano il bonus.
 
@@ -2158,7 +2160,7 @@ Non si applica agli attacchi ad Area o inevitabili. Le eventuali Difese richiedo
 
 ### **Incursore — Talenti fissi**
 
-**I Grado — Movimento Tattico.** Riduce di 2, fino a un minimo di 0, le penalità alle proprie Prove dovute esclusivamente al tipo di Movimento: Passo 0, Corsa 0, Scatto −4. Restano valide le altre penalità, comprese quelle di terreno, Stati, Equipaggiamento e Manovre.
+**I Grado — Movimento Tattico.** Riduce di 2, fino a un minimo di 0, le penalità alle proprie Prove dovute esclusivamente al tipo di Movimento: Passo 0, Corsa 0, Scatto −4. Restano valide le altre penalità, comprese quelle di terreno, Stati, Equipaggiamento e Manovre. Il beneficio si somma alla riduzione di Movimento Fluido, fino a un minimo di 0 per la penalità pertinente.
 
 Le penalità degli avversari per colpirlo restano quelle ordinarie: Corsa −2 e Scatto −4, con la normale durata. Il beneficio è sempre attivo, senza costi o limiti di utilizzo.
 
@@ -3295,9 +3297,11 @@ Se l’attacco genera danni persistenti, il bonus si applica al danno iniziale e
 
 #### **Forgiatore 2 Corazza Potenziata**
 
-Quando indossa un’armatura o utilizza uno scudo Mistico o TecnoMistico, il Tecnomante ottiene \+1 AR magica. Aumentano di 1 sia l’AR totale sia la sua componente magica.
+Il Tecnomante ottiene \+1 AR magica quando indossa un’armatura oppure impugna uno scudo classificato come Artefatto Mistico o TecnoMistico, utilizzabile e con almeno 1 PI. Il requisito mistico vale sia per l’armatura sia per lo scudo. Aumentano di 1 sia l’AR totale sia la componente magica.
 
-Il beneficio è personale e si applica una sola volta, anche utilizzando contemporaneamente armatura e scudo. Per esempio, AR totale 5 con componente magica 1 diventa AR totale 6 con componente magica 2\. È passivo e non richiede Azioni o PM.
+Il beneficio è personale e si applica una sola volta, anche utilizzando contemporaneamente armatura e scudo. Per esempio, AR totale 5 con componente magica 1 diventa AR totale 6 con componente magica 2\. È passivo e non richiede Azioni o PM. Non occorre Sintonizzazione per questo \+1 passivo; le proprietà attive dell’oggetto mantengono i propri requisiti. Lo Scudo delle Guardie Sacre è idoneo anche con Scudo Magico inattivo o riserva vuota; quello ordinario dei Sacri Guerrieri non lo è. Tecnologia avanzata, provenienza corporativa o un Incantesimo temporaneo non rendono da soli un oggetto un Artefatto.
+
+Corazza Potenziata si cumula con Aura di Resistenza, Pelle di Rinoceronte e le altre protezioni compatibili secondo il §5.13. Non appartiene al gruppo di cui si usa soltanto il maggiore contributo fra Pelle Corazzata, Armatura di Forza e bonus aggiuntivo di Armatura Mistica.
 
 #### **Artefice 1 Scarica d’Emergenza**
 
@@ -3408,6 +3412,8 @@ Comprende coltelli, pugnali, spade leggere, manganelli, mazze, bastoni, machete,
 ### **Corpo a corpo**
 
 Comprende pugni, calci, prese, lotta, immobilizzazioni, strangolamenti, spinte, sbilanciamenti e disarmi eseguiti a mani nude. Comprende inoltre Tirapugni, Tirapugni chiodato e Tirapugni concussivo. I benefici che richiedono specificamente attacchi senz’armi mantengono quel requisito.
+
+Il danno base di un attacco senz’armi è 1d4, al quale si aggiungono il bonus di FOR al danno e gli altri benefici pertinenti (§5.13). Arti Marziali porta il dado a 1d6; il Lottatore utilizza il proprio dado quando superiore.
 
 ### **Difese**
 
@@ -3631,7 +3637,7 @@ Scattante aumenta di 6 Q la disponibilità dello Scatto prima del costo del terr
 
 ### **Movimento Evasivo**
 
-Consuma l’Azione di Movimento e un’Azione Principale, senza una Prova aggiuntiva per la manovra. Con Passo gli avversari subiscono −2 VA; con Corsa il personaggio subisce −2 VA e gli avversari −4 VA; con Scatto il personaggio subisce −6 VA e gli avversari −6 VA. Movimento Evasivo Migliorato porta le penalità degli avversari rispettivamente a −4, −6 e −8. Non evita gli attacchi di opportunità. Le eventuali Prove di Corsa e Scatto in volo, a nuoto o in un percorso misto restano necessarie, con gli esiti del §5.2.
+Consuma l’Azione di Movimento e un’Azione Principale, senza una Prova aggiuntiva per la manovra. Con Passo gli avversari subiscono −2 VA; con Corsa il personaggio subisce −2 VA e gli avversari −4 VA; con Scatto il personaggio subisce −6 VA e gli avversari −6 VA. Movimento Evasivo Migliorato porta le penalità degli avversari rispettivamente a −4, −6 e −8. Non evita gli attacchi di opportunità. Le eventuali Prove di Corsa e Scatto in volo, a nuoto o in un percorso misto restano necessarie, con gli esiti del §5.2. Occorre percorrere effettivamente almeno 1 Q: restare fermi non concede la penalità agli avversari.
 
 ### **Ritirata**
 
@@ -3685,13 +3691,13 @@ L’eccezione ad A Terra vale soltanto senza appoggio: camminare sul fondo, su u
 
 ### **5.2.6 Capacità di carico**
 
-La capacità di carico utilizza il valore della Caratteristica FOR. Nel peso complessivo rientrano armatura, armi, scudo, zaino, contenuto e qualsiasi creatura trasportata, compreso il suo equipaggiamento.
+La capacità di carico utilizza il valore della Caratteristica FOR. Nel peso complessivo rientrano armatura, armi, scudo, zaino, contenuto e qualsiasi creatura trasportata, compreso il suo equipaggiamento. Se manca il peso di un oggetto, lo si annota come «da definire» e si indica il totale come «parziale»: un dato assente non vale 0 kg.
 
 | Carico | Peso complessivo | Effetti |
 | :---- | :---- | :---- |
 | Ordinario | Fino a FOR × 10 kg | Nessuna penalità dovuta al peso. |
 | Sovraccarico | Oltre FOR × 10 kg e fino a FOR × 20 kg | −2 VA alle Prove fisiche, compresi attacchi e Difese. Soltanto Passo, con −2 Q al Movimento disponibile. |
-| Oltre il massimo | Superiore a FOR × 20 kg | Non può essere sollevato o trasportato senza aiuto o strumenti adeguati. |
+| Oltre il massimo | Superiore a FOR × 20 kg | Movimento 0 Q finché non si riduce il carico o si riceve un aiuto adeguato; resta −2 VA alle Prove fisiche. Non si può sollevare o trasportare il carico senza aiuto o strumenti adeguati. |
 
 Le penalità del Sovraccarico si aggiungono a quelle specifiche degli oggetti. Non modificano le Prove Salvezza. Si applicano appena viene superata la soglia e terminano quando il carico viene ridotto. Il Movimento disponibile non scende sotto 0\.
 
@@ -3727,6 +3733,12 @@ Un personaggio provoca un **Attacco di Opportunità** quando, con un Movimento v
 
 **Esempio.** Due avversari sono a 2 Q: uno ha portata 2 Q e l’altro 1 Q. Il primo può colpire il secondo; il secondo deve avvicinarsi. Se il secondo si allontana oltre i 2 Q, provoca un Attacco di Opportunità, salvo eccezioni. Se si allontana il primo, il secondo non può effettuare l’attacco: il bersaglio era già fuori dalla sua portata.
 
+### **Superiorità numerica**
+
+Negli attacchi ravvicinati contro lo stesso bersaglio, ciascun attaccante ottiene \+1 VA con 3–5 attaccanti, \+2 VA con 6–7 e \+3 VA con almeno 8\. Con uno o due attaccanti non si ottiene alcun bonus. Il massimo è \+3 VA.
+
+Il Direttore stabilisce quanti attaccanti possano intervenire realmente in situazioni come porte, corridoi e passaggi stretti, tenendo conto di spazio e portata.
+
 ## **5.4 Attesa Azione Preparata e Imboscata**
 
 **Attesa.** Il personaggio dichiara di quanti segmenti ritarda la propria Iniziativa e agisce alla nuova Iniziativa per il Round corrente. Nel Round successivo torna alla propria Iniziativa normale.
@@ -3737,9 +3749,9 @@ Un personaggio provoca un **Attacco di Opportunità** quando, con un Movimento v
 
 ## **5.5 A Terra e Incalzare**
 
-Buttarsi a terra o rialzarsi consuma l’Azione di Movimento oppure un’Azione Principale. Una creatura A Terra non può usare Corsa o Scatto e può strisciare per 3 Q con l’Azione di Movimento. Subisce −4 VA alle azioni fisiche ravvicinate, di equilibrio e alle Difese; può usare normalmente armi a distanza se la posizione lo permette. Gli attaccanti ravvicinati ottengono \+2 VA, quelli a distanza −2 VA; gli attacchi ad Area non ricevono modificatori.
+Buttarsi a terra o rialzarsi consuma l’Azione di Movimento oppure un’Azione Principale. Una creatura A Terra non può usare Corsa o Scatto e può strisciare per 3 Q con l’Azione di Movimento. Subisce −4 VA alle azioni fisiche ravvicinate, di equilibrio e alle Difese; può usare normalmente armi a distanza se la posizione lo permette. Gli attaccanti ravvicinati ottengono \+2 VA, quelli a distanza −2 VA; gli attacchi ad Area non ricevono modificatori. Il −4 interessa Armi da guerra, Armi da mischia, Corpo a corpo e Difese, oltre ad Atletica quando richiede equilibrio; non penalizza automaticamente il tiro consentito dalla posizione.
 
-Incalzare. Con un’Azione Principale e un attacco ravvicinato o senz’armi a −4 VA, il bersaglio arretra di 2 Q e non subisce danni. Incalzare Migliorato infligge anche il danno normale. Il Movimento forzato non provoca attacchi di opportunità.
+Incalzare. Con un’Azione Principale e un attacco ravvicinato o senz’armi a −4 VA, il bersaglio arretra di 2 Q e non subisce danni. Incalzare Migliorato infligge anche il danno normale. Il Movimento forzato non provoca attacchi di opportunità. Si risolve come un normale attacco e ammette le Difese applicabili; non è una Prova contrapposta.
 
 * Se è disponibile soltanto 1 Q, il bersaglio arretra di 1 Q.  
 * Se un ostacolo o un Q occupato impedisce ogni spostamento, il bersaglio cade A Terra.  
@@ -3753,7 +3765,7 @@ Carica. Consuma l’Azione di Movimento e un’Azione Principale, richiede almen
 | Distanza | Penalità del personaggio | Penalità degli avversari | Danno |
 | :---: | :---: | :---: | :---: |
 | 3–6 Q | −2 VA | −4 VA | ×2 |
-| 7–12 Q | −4 VA | −6 VA | ×2 |
+| Da 7 Q fino alla propria Corsa massima | −4 VA | −6 VA | ×2 |
 
 Le penalità durano fino all’arrivo dell’Iniziativa successiva. Carica Migliorata porta il danno a ×3. Dal 12° livello l’eventuale seconda Azione Principale può essere usata normalmente, ma non riceve i benefici della Carica. La Carica non si combina con altre manovre offensive. I moltiplicatori seguono il §1.6: il danno ×2 diventa ×3 con un Magistrale; il ×3 di Carica Migliorata rimane ×3.
 
@@ -3762,6 +3774,8 @@ Controcarica. Il bersaglio consapevole può sostituire le normali Difese con una
 ## **5.7 Combattere con due armi**
 
 Con un’Azione Principale il personaggio effettua due attacchi, ciascuno a −4 VA, contro lo stesso bersaglio o bersagli differenti. Sono ammesse due armi ravvicinate a una mano, due armi leggere a distanza oppure una combinazione mista. La combinazione mista contro un bersaglio impegnato applica anche le regole del Tiro Ravvicinato.
+
+Quando si attacca soltanto con la mano non dominante si applica −4 VA, salvo Ambidestro. Nella manovra con due armi si applica soltanto la penalità della manovra, senza aggiungere un secondo −4 per la mano non dominante.
 
 | Talento | Effetto |
 | :---- | :---- |
@@ -3780,9 +3794,9 @@ La manovra non si combina con Tiro Rapido, Tiro o Colpo Mirato, Raffiche, Spazza
 | Media | −4 VA | −4 VA |
 | Totale | Il bersaglio non può essere attaccato direttamente | Non è possibile attaccare |
 
-Mettersi in Copertura consuma l’Azione di Movimento e un’Azione Principale. La Copertura è direzionale, non costituisce Armatura e più Coperture non si sommano. Copertura Migliorata porta le penalità inflitte a −4 e −6 VA.
+Mettersi in Copertura consuma l’Azione di Movimento e un’Azione Principale. La Copertura è direzionale, non costituisce Armatura e più Coperture non si sommano. Copertura Migliorata porta le penalità inflitte a −4 e −6 VA. La Copertura vale anche contro attacchi ravvicinati quando l’ostacolo protegge realmente dalla direzione dell’attacco e la portata permette di colpire: Leggera −2, Media −4, Totale impedisce l’attacco diretto. Copertura Migliorata porta le prime due penalità a −4 e −6.
 
-Attaccare dalla Copertura consuma l’Azione di Movimento e un’Azione Principale. Il Movimento può essere diviso per esporsi e rientrare, senza superare complessivamente 6 Q. Copertura Tattica riduce di 2 la penalità dell’attaccante. Dal 12° livello il personaggio può esporsi, utilizzare entrambe le Azioni Principali e completare poi il medesimo Movimento rientrando in Copertura.
+Attaccare dalla Copertura consuma l’Azione di Movimento e un’Azione Principale, che comprende l’attacco. Il Movimento può essere diviso per esporsi e rientrare, senza superare complessivamente 6 Q. Copertura Tattica riduce di 2 la penalità dell’attaccante. Dal 12° livello il personaggio può esporsi, utilizzare entrambe le Azioni Principali e completare poi il medesimo Movimento rientrando in Copertura.
 
 Contro gli Incantesimi la Copertura modifica l’eventuale Prova per colpire, non Potere. Contro Aree fisicamente evitabili concede \+2 alla Salvezza di Riflessi se Leggera e \+4 se Media; Copertura Migliorata aumenta questi bonus di altri \+2. La Copertura Totale protegge quando blocca realmente la propagazione dell’effetto. Vedi Manuale della Magia
 
@@ -3808,7 +3822,7 @@ La mancanza del requisito di Forza dell’arma o dello Scudo penalizza anche la 
 
 Tiro Singolo. Consuma un’Azione Principale e una munizione e utilizza l’Abilità dell’arma.
 
-Bersaglio impegnato o protetto. Sparare contro un nemico impegnato in Ravvicinato, protetto da un alleato o che usa un ostaggio impone −4 VA. Se il tiro fallisce, si effettua una seconda Prova con la stessa Abilità a −4 VA: con successo il colpo manca tutti, con fallimento colpisce il bersaglio secondario. Fuoco di Precisione riduce entrambe le penalità a −2. Fuoco Controllato dell’Agente elimina penalità e seconda Prova.
+Bersaglio impegnato o protetto. Sparare contro un nemico impegnato in Ravvicinato, protetto da un alleato o che usa un ostaggio impone −4 VA. Se il tiro fallisce, si effettua una seconda Prova con la stessa Abilità a −4 VA: con successo il colpo manca tutti, con fallimento colpisce il bersaglio secondario. Fuoco di Precisione riduce entrambe le penalità a −2. Fuoco Controllato dell’Agente elimina penalità e seconda Prova. La seconda Prova usa il VA dell’Abilità dell’arma, la penalità specifica e i modificatori generali del personaggio, come Ferite e Affaticamento; non riapplica distanza, Copertura, Movimento, modalità di fuoco o altri modificatori propri del tiro originario. Fuoco di Precisione conserva la sua riduzione del −4 a −2.
 
 ### **Raffiche**
 
@@ -3839,7 +3853,7 @@ Una creatura che si espone, entra o agisce nell’Area effettua una Prova Salvez
 | Tiro Ravvicinato | Bersaglio entro 3 Q; Arma leggera o media; Tiro Singolo o Raffica Breve | −2 VA con Armi leggere o −4 VA con Armi medie; \+3 danni a ogni colpo prima dell’Armatura. Se il tiratore è impegnato direttamente dal bersaglio deve usare questa manovra. Tiro Ravvicinato Istintivo riduce la penalità di 2\. |
 | Tiro a Bruciapelo | Contatto; bersaglio ignaro, immobilizzato o incapace di reagire; Arma leggera o media; Tiro Singolo o Raffica Breve | Prova normale senza penalità; ogni colpo infligge danno ×2 prima dell’Armatura. Il Direttore può evitare la Prova se non esiste incertezza. Tiro a Bruciapelo Migliorato permette l’uso contro un bersaglio consapevole, che conserva le Difese. |
 
-Tiro Ravvicinato Migliorato porta il bonus al danno da \+3 a \+5 ed è cumulabile con Tiro Ravvicinato Istintivo. Il bonus al danno di Tiro Ravvicinato, anche migliorato, non si somma al moltiplicatore del Tiro a Bruciapelo (§8.6.5).
+Tiro Ravvicinato Migliorato porta il bonus al danno da \+3 a \+5 ed è cumulabile con Tiro Ravvicinato Istintivo. Il bonus al danno di Tiro Ravvicinato, anche migliorato, non si somma al moltiplicatore del Tiro a Bruciapelo (§8.6.5). Quando Tiro a Bruciapelo Migliorato viene usato contro un avversario che ingaggia il tiratore, restano le penalità di Tiro Ravvicinato e si usa il ×2 a ogni colpo, senza aggiungere il \+3 o il \+5.
 
 ### **Tiro Rapido**
 
@@ -3902,7 +3916,7 @@ Con Tiro Rapido ogni colpo fallito determina il proprio Scarto indipendente. Non
 
 Le Armi Pesanti e i lanciagranate, compresi quelli integrati e quelli appartenenti alle Armi Medie, richiedono Imbracciatura. Imbracciare costa 1 AzM e non richiede una Prova. Sparare senza Imbracciatura impone −4 VA, cumulativo con gli altri modificatori.
 
-L’Imbracciatura permane finché si mantengono posizione e impugnatura. Si perde muovendosi, subendo uno spostamento forzato, cadendo o smettendo di impugnare l’arma. Postura dell’Artigliere costituisce l’eccezione indicata nel §3.5.3. In un’arma combinata il Talento si applica al lanciagranate, senza estendere automaticamente il suo beneficio al fucile di Armi Medie.
+L’Imbracciatura permane finché si mantengono posizione e impugnatura. Si perde muovendosi, anche al Passo, subendo uno spostamento forzato, cadendo o smettendo di impugnare l’arma. Postura dell’Artigliere costituisce l’eccezione indicata nel §3.5.3. In un’arma combinata il Talento si applica al lanciagranate, senza estendere automaticamente il suo beneficio al fucile di Armi Medie.
 
 Imbracciatura Rapida permette di imbracciare gratuitamente una volta per Round durante la propria Iniziativa, senza concedere il \+1 danno di Postura d’Assedio. Estrazione, cambio arma, ricarica e operazioni incorporate nell’attacco seguono il §5.1.1; i Talenti pertinenti sono nel §8.6.4.
 
@@ -3953,13 +3967,15 @@ Esempio. Con VA 18, un tiro a 800 Q subisce −16. Un mirino di Precisione riduc
 | Attacco normale | Un’Azione Principale, Abilità appropriata, danno normale. |
 | Colpo Mirato | **Due Azioni Principali complessive, anche su più Round:** \+2 VA e \+2 danni; Colpo Mirato Migliorato \+4/+4. Stesse interruzioni del Tiro Mirato. Nessuna versione Istintiva. |
 | Affondo | Un’Azione Principale, arma adatta, −4 VA e \+1 danno. Se almeno 1 danno supera l’Armatura causa Sanguinamento 1\. Affondo Migliorato: \+2 danni e Sanguinamento 2\. |
-| Spazzata | **Un’Azione Principale contro fino a tre bersagli adiacenti:** −4 VA contro due, −6 contro tre; una Prova, un colpo per bersaglio. Spazzata Migliorata riduce la penalità di 2\. |
+| Spazzata | **Un’Azione Principale contro due o tre bersagli adiacenti fra loro e tutti entro la propria portata, senza muoversi:** −4 VA contro due, −6 contro tre; una Prova, un colpo per bersaglio. È consentita a tutti anche senz’armi, con Corpo a corpo. Spazzata Migliorata riduce la penalità di 2\. Soltanto Combattimento Multiplo del Lottatore supera il limite di tre bersagli alle proprie condizioni. |
 | Immobilizzare | **Un’Azione Principale, Contatto e una mano libera:** Prova contrapposta Corpo a corpo contro Corpo a corpo o Atletica. Con successo applica Immobilizzato. Liberarsi richiede un’Azione Principale e una nuova Prova contrapposta; i pareggi favoriscono chi trattiene. Immobilizzare Migliorato impone −2 VA alla fuga. |
 | Sbilanciare | **Un’Azione Principale a Contatto o portata:** Corpo a corpo o Abilità dell’arma contro Atletica o Difese, con −4 VA all’attaccante. Con successo il bersaglio cade A Terra. Sbilanciare Migliorato riduce a −2 VA. |
 | Stordire | Un’Azione Principale a Contatto, Corpo a corpo oppure Abilità di un’arma compatibile (§7.1.7), a −6 VA e danno normale. Se almeno 1 danno supera l’Armatura, il bersaglio effettua una PS Tempra; se fallisce è Stordito per 1+1d3 Round (§5.18). Stordire Migliorato riduce la penalità a −4 VA. |
 | Disarmare | **Un’Azione Principale a Contatto o portata:** Corpo a corpo o Abilità dell’arma a −4 VA contro Corpo a corpo o Abilità dell’arma impugnata. Con successo l’oggetto cade nel Q del bersaglio. Disarmare Migliorato riduce a −2 VA. |
 
 Le manovre offensive non si combinano fra loro salvo indicazione esplicita.
+
+Per Sbilanciare e Disarmare, l’attaccante dichiara prima del tiro se agisce senz’armi o con un’arma e usa l’Abilità del mezzo effettivamente impiegato, senza scegliere liberamente il VA maggiore. Il difensore sceglie prima del tiro una delle opposizioni concretamente possibili: Atletica o Difese contro Sbilanciare; Corpo a corpo oppure l’Abilità dell’arma impugnata contro Disarmare.
 
 ## **5.13 Danno e Armatura**
 
@@ -3975,9 +3991,27 @@ Le manovre offensive non si combinano fra loro salvo indicazione esplicita.
 
 Il danno finale non può essere inferiore a 0\. Nei colpi multipli la sequenza si applica separatamente a ogni colpo. Un bonus formulato come “+X danni dopo l’Armatura” si applica soltanto se almeno 1 danno ha superato la protezione. Nessun Talento ignora genericamente l’Armatura: eventuali riduzioni vere appartengono a specifiche armi o munizioni perforanti.
 
+### **Danno base e bonus di Caratteristica**
+
+Il danno base senz’armi è 1d4. Il bonus di Caratteristica al danno è 0 con valore 1–5, \+1 con 6–7, \+2 con 8–9 e \+3 con 10\. Il livello del personaggio ne limita l’importo: massimo \+1 ai livelli 1–7, \+2 ai livelli 8–14 e \+3 dal 15° livello. Si usa il minore fra bonus e tetto; il bonus non può essere negativo.
+
+Si usa FOR per i colpi senz’armi; FOR o DES secondo l’arma ravvicinata; DES o INT secondo l’arma a distanza; SAG per i danni della magia e delle Risorse Interiori. Per le Armi Pesanti il bonus al danno usa INT, mentre la Prova per colpire conserva FOR.
+
+Il bonus si applica a ogni colpo o applicazione di danno, prima del moltiplicatore, delle Difese e dell’Armatura. I bonus ordinari, compresi quelli pertinenti di Colpo Mirato, Affondo e Carica, entrano nel calcolo prima del moltiplicatore più alto; quelli espressamente successivi all’Armatura non vengono moltiplicati. Il Magistrale mantiene il limite alla prima applicazione previsto dal §1.6. Restano le esclusioni espresse delle schede, come Danno calibrato.
+
+### **Armatura complessiva e protezioni compatibili**
+
 **Gli scudi indossati concedono Armatura passiva:** \+1 per scudi piccoli o leggeri, \+2 per scudi medi o grandi, \+3 per scudi enormi.
 
 I danni Naturali e Magici sono assorbiti da qualsiasi protezione pertinente. I danni Eterei sono assorbiti soltanto dalle protezioni magiche o dalla componente magica dell’Armatura. Natura del danno, proprietà, effetti aggiuntivi e Contromisure sono definiti nel §5.24 e si applicano anche agli attacchi non magici quando pertinenti.
+
+L’Armatura è un unico valore complessivo, con la componente magica annotata separatamente; non viene suddivisa per parti anatomiche. Le AC indicano applicazioni distinte del danno: l’AR pertinente si sottrae separatamente a ciascuna. AR 6, di cui 2 magica, assorbe 6 danni Naturali o Magici e 2 danni Eterei, salvo eccezioni specifiche.
+
+Corazza Potenziata (+1 AR magica), Aura di Resistenza (+1 AR magica) e Pelle di Rinoceronte (+1 AR non magica contro attacchi Ravvicinati Naturali o Magici) si sommano fra loro e alle protezioni compatibili. Insieme concedono \+3 contro il Ravvicinato Naturale o Magico, \+2 contro gli altri danni Naturali o Magici e \+2 contro l’Etereo. Restano durate e requisiti; più applicazioni della stessa Tecnica non si sommano.
+
+Si usa invece soltanto il maggiore contributo applicabile fra Pelle Corazzata, Armatura di Forza e il bonus aggiuntivo di Armatura Mistica. La conversione dell’AR dell’equipaggiamento operata da Armatura Mistica resta distinta e si conta una sola volta; non cambia la natura delle altre protezioni.
+
+A 0 PI un’armatura perde la propria AR e i propri benefici, uno scudo perde AR e benefici e non può attaccare o parare, un elmetto perde i propri benefici senza annullare l’AR dell’armatura ancora integra. Peso e penalità rimangono finché l’oggetto è indossato o impugnato; lo scudo continua a occupare la mano. Le protezioni magiche indipendenti seguono le proprie regole. La rottura si applica dopo il colpo che la causa (§7.2.1 del Manuale degli Armamenti).
 
 ## **5.14 Punti Vita, Ferite e Morte**
 
@@ -4175,6 +4209,8 @@ Dopo un 20 naturale con un’arma dotata di INC, si tira 1d10 \+ INC. Un valore 
 
 Liberare o riparare sul campo richiede un’Azione Principale per tentativo. Inceppata impedisce di sparare finché non viene liberata; Inutilizzabile richiede riparazione sul campo; Rotta resta inutilizzabile e subisce la penalità indicata dopo la riparazione; Distrutta non è recuperabile con una riparazione ordinaria.
 
+Le condizioni delle armi sono separate dai Punti Integrità: Inutilizzabile, Rotta o Danneggiata causate da un Maldestro non azzerano automaticamente i PI, salvo una perdita espressamente prevista. Le procedure sul campo di questa sezione non restituiscono PI. Una riparazione strutturale restituisce solo i PI previsti e non rimuove automaticamente una condizione indipendente (Manuale degli Armamenti, §7.2.1).
+
 Affidabile e Affidabilità ridotta modificano il tiro sulla tabella delle Complicazioni ravvicinate, secondo la proprietà del modello (Manuale degli Armamenti, §7.1.3). Non modificano l’attacco già fallito né la PS Integrità. Gli esiti e le condizioni delle tabelle restano quelli indicati.
 
 ### **Ravvicinato e armi senza INC**
@@ -4200,6 +4236,10 @@ Se esistono più compagni plausibili si determina casualmente il bersaglio. Le F
 ## **5.18 Stati**
 
 Gli Stati sono undici. La durata predefinita degli Stati temporanei è 1+1d3 Round. Le regole specifiche della fonte prevalgono sulla durata o sulla Prova Salvezza predefinite; gli Stati legati a una condizione, come una presa, il Sanguinamento o lo svenimento a 0 PM, mantengono le proprie condizioni di conclusione. La prima conseguenza si applica immediatamente; le ricorrenze seguono l’Iniziativa di chi ha procurato l’effetto, al massimo una volta per Round. Penalità e Stati continuativi rimangono attivi fra le Iniziative. Il Round di applicazione non viene conteggiato: con durata N, uno Stato applicato nel Round R termina alla fine del Round R \+ N (Manuale della Magia).
+
+Le penalità alle «Prove fisiche» dipendono dall’attività svolta, non dalla Caratteristica scelta. Comprendono Armi da lancio, Armi leggere, Armi medie, Armi pesanti, Armi da guerra, Armi da mischia, Corpo a corpo, Difese, Atletica e Furtività. Il Direttore le applica anche ad altri impieghi concretamente fisici; non si estendono automaticamente a Potere o alle Prove Salvezza.
+
+Gli elenchi di Abilità degli Stati sono esempi, non liste chiuse. Accecato interessa anche Pilotare o altri impieghi che richiedono la vista; Assordato può interessare Percezione o Intrattenere quando l’udito è importante ma non esclusivo. Percezione si valuta sul senso usato: ascoltare da Accecato o osservare da Assordato non riceve la penalità di quel senso mancante. Medicina o Tecnologia possono richiedere la vista, mentre ricordare una nozione con Cultura non la richiede. Le attività esclusivamente visive da Accecato o esclusivamente uditive da Assordato falliscono automaticamente, salvo capacità sostitutive pertinenti.
 
 ### **Durate e tempi di risoluzione**
 
@@ -4237,7 +4277,9 @@ Non può muoversi, usare Corsa o Scatto e subisce −4 VA alle azioni fisiche. G
 
 ### **Incendiato**
 
-All’applicazione effettua sempre Riflessi, salvo eccezione esplicita: con successo evita lo Stato; con fallimento resta Incendiato per 1+1d3 Round. Subisce immediatamente 1d4 danni da fuoco ai PV ignorando l’Armatura ordinaria e −2 VA. Nei Round successivi il danno si ripete all’Iniziativa di chi ha procurato lo Stato, al massimo una volta per Round; il −2 VA rimane continuo fino al termine dello Stato (Manuale della Magia). Oggetti infiammabili possono prendere fuoco. Con un’Azione Principale può effettuare una nuova Prova Salvezza di Riflessi per spegnersi. Acqua, sabbia, coperta antifiamma o mezzo adeguato riescono automaticamente con un’Azione Principale, anche da parte di un compagno. Protezioni resistenti al fuoco possono ridurre il danno. Nuove applicazioni non sommano il danno e mantengono la durata maggiore.
+All’applicazione effettua sempre Riflessi, salvo eccezione esplicita: con successo evita lo Stato; con fallimento resta Incendiato per 1+1d3 Round. Subisce immediatamente 1d4 danni da fuoco ai PV ignorando l’Armatura ordinaria e −2 VA alle Prove di Abilità, non alle Prove Salvezza. Nei Round successivi il danno si ripete all’Iniziativa di chi ha procurato lo Stato, al massimo una volta per Round; il −2 VA rimane continuo fino al termine dello Stato (Manuale della Magia). Oggetti infiammabili possono prendere fuoco. Con un’Azione Principale può effettuare una nuova Prova Salvezza di Riflessi per spegnersi. Acqua, sabbia, coperta antifiamma o mezzo adeguato riescono automaticamente con un’Azione Principale, anche da parte di un compagno. Protezioni resistenti al fuoco possono ridurre il danno. Nuove applicazioni non sommano il danno e mantengono la durata maggiore.
+
+Il danno immediato e quello periodico di Incendiato ignorano tutta l’AR non magica generica, comprese Pelle Corazzata e Scudo. L’AR magica pertinente lo riduce fino a 0, come le protezioni specifiche contro il fuoco secondo la propria scheda, inclusa Armatura Elementale del Fuoco nelle versioni Naturali. Ignifugo X non riduce il danno: può impedire l’applicazione dello Stato secondo il §5.24. Assorbire interamente il danno non spegne le fiamme né elimina il −2; AR magica 4 può azzerare 1d4 lasciando lo Stato attivo.
 
 ### **Rallentato**
 
@@ -4257,7 +4299,7 @@ Non dispone di Azioni o Movimento, cade A Terra, non può effettuare Difese atti
 
 ### **Terrorizzato**
 
-All’applicazione effettua Volontà; con successo evita lo Stato. Durata predefinita 1+1d3 Round. Subisce −4 VA a tutte le Prove, non può avvicinarsi volontariamente alla fonte e deve utilizzare il Movimento per allontanarsi lungo il percorso ragionevolmente più sicuro. Le Azioni Principali possono essere usate soltanto per difendersi, nascondersi, aiutare la fuga o rimuovere lo Stato. Se non può fuggire può effettuare Passo o cercare Copertura, ma non compiere azioni offensive contro la fonte.
+All’applicazione effettua Volontà; con successo evita lo Stato. Durata predefinita 1+1d3 Round. Subisce −4 a tutte le Prove, comprese le Prove Salvezza effettuate mentre lo Stato è attivo; la penalità non modifica la Salvezza iniziale per evitarlo. Non può avvicinarsi volontariamente alla fonte e deve utilizzare il Movimento per allontanarsi lungo il percorso ragionevolmente più sicuro. Le Azioni Principali possono essere usate soltanto per difendersi, nascondersi, aiutare la fuga o rimuovere lo Stato. Se non può fuggire può effettuare Passo o cercare Copertura, ma non compiere azioni offensive contro la fonte.
 
 Un compagno adiacente può spendere un’Azione Principale e superare Oratoria per terminare Terrorizzato. Nuove applicazioni non si sommano e mantengono la durata maggiore; la scomparsa evidente della fonte termina immediatamente lo Stato.
 
@@ -4593,7 +4635,7 @@ Lo Stato si applica immediatamente e rimane continuo. Si effettua una sola PS pe
 
 La Contromisura è Ignifugo X. Dopo almeno 1 danno oltre l’Armatura e il superamento dell’eventuale Ignifugo, il bersaglio effettua una PS di Riflessi, salvo eccezione esplicita. Con successo evita lo Stato; con fallimento è Incendiato per 1+1d3 Round. Si effettua una sola PS iniziale per bersaglio e attacco, anche se più colpi soddisfano la condizione.
 
-Incendiato infligge subito 1d4 danni da fuoco, ignorando l’Armatura ordinaria, e applica −2 VA continuo. Nei Round successivi il danno si ripete all’Iniziativa della fonte, al massimo una volta per Round. Restano tutte le regole del §5.18, comprese le nuove applicazioni e lo spegnimento: 1 AzP e una PS di Riflessi, oppure 1 AzP con acqua, sabbia, coperta antifiamma o mezzo adeguato, anche da parte di un compagno.
+Incendiato infligge subito 1d4 danni da fuoco, ignorando l’AR non magica generica, e applica −2 VA continuo alle Prove di Abilità, non alle Prove Salvezza. Nei Round successivi il danno si ripete all’Iniziativa della fonte, al massimo una volta per Round. Restano tutte le regole del §5.18, comprese le nuove applicazioni e lo spegnimento: 1 AzP e una PS di Riflessi, oppure 1 AzP con acqua, sabbia, coperta antifiamma o mezzo adeguato, anche da parte di un compagno. L’AR magica e le protezioni specifiche contro il fuoco possono ridurre il danno fino a 0 secondo il §5.18, senza estinguere lo Stato; Ignifugo non riduce i PV persi.
 
 ### **Concussivo**
 
@@ -4603,9 +4645,9 @@ La Contromisura è Imbottita X. Dopo almeno 1 danno oltre l’Armatura e il supe
 
 ### **Laser**
 
-Laser dimezza per difetto l’Armatura applicabile a ogni colpo, prima dell’assorbimento. Si determina prima quale protezione vale contro la natura del danno: contro Laser Etereo si considera soltanto la componente magica e poi la si dimezza. Un’Armatura applicabile pari a 5 diventa quindi 2\.
+Laser dimezza per difetto l’Armatura applicabile a ogni colpo, prima dell’assorbimento. Si determina prima quale protezione vale contro la natura del danno: contro Laser Etereo si considera soltanto la componente magica e poi la si dimezza. Un’Armatura applicabile pari a 5 diventa quindi 2\. Se il colpo possiede anche Perforante X, prima si sottrae X una sola volta dalla componente non magica applicabile, minimo 0, poi Laser dimezza per difetto l’AR totale rimasta, inclusa quella magica. Contro danno Etereo, Perforante non riduce la sola componente magica applicabile.
 
-Riflettente è una Contromisura senza valore numerico. Se appartiene a una protezione che fornisce almeno 1 punto di Armatura applicabile prima del dimezzamento, neutralizza il dimezzamento di Laser e si usa l’intera Armatura applicabile. Contro Laser Etereo quella protezione deve quindi avere una componente magica. Riflettente non riflette il colpo e non concede immunità al danno.
+Riflettente è una Contromisura senza valore numerico. Se appartiene a una protezione che fornisce almeno 1 punto di Armatura applicabile prima del dimezzamento, neutralizza il dimezzamento di Laser e si usa l’intera Armatura applicabile. Contro Laser Etereo quella protezione deve quindi avere una componente magica. Riflettente non riflette il colpo e non concede immunità al danno. Non neutralizza Perforante: in sua presenza si conserva l’AR rimasta dopo Perforante. Per esempio AR 7, di cui 2 magica, contro Perforante 2 diventa 5 e contro Laser diventa 2; con Riflettente applicabile rimane 5\.
 
 **Laser applica inoltre lo stesso effetto aggiuntivo di Plasma:** dopo almeno 1 danno oltre l’Armatura e il superamento dell’eventuale Dissipante X, una sola PS di Tempra per bersaglio e attacco; con successo si evita l’effetto, con fallimento si subisce −2 VA per 1+1d3 Round. È la medesima penalità di Plasma e non si somma ad altre applicazioni dello stesso effetto. Laser non possiede un’ulteriore penalità propria e non causa automaticamente Incendiato.
 
@@ -5396,6 +5438,8 @@ Le Specializzazioni ordinarie concedono \+2 VA alla Prova di Abilità pertinente
 
 Ciascuna Specializzazione in una categoria di armi concede \+1 VA e \+1 danno nell’impiego delle armi di quella categoria. Si usa sempre l’Abilità indicata dalla scheda dell’arma: la Specializzazione non riclassifica il profilo. I Lanciagranate utilizzano Armi medie; i Lanciarazzi Armi pesanti; Armi da Lancio, Archi e Balestre e Granate utilizzano Armi da lancio.
 
+Quando un’arma cambia modalità si usa soltanto la Specializzazione della modalità impiegata. Pugnale e Ascia leggera impiegano rispettivamente Coltelli e Pugnali o Asce in mischia, ma Armi da Lancio quando vengono scagliati; il lancio usa l’Abilità Armi da lancio. I moduli lanciagranate e lanciafiamme conservano le proprie Specializzazioni. Il catalogo del Manuale degli Armamenti precisa i modelli corporativi.
+
 | Ravvicinato | Distanza |
 | :---- | :---- |
 | Coltelli e Pugnali | Pistole |
@@ -5407,7 +5451,7 @@ Ciascuna Specializzazione in una categoria di armi concede \+1 VA e \+1 danno ne
 | Armi Flessibili | Lanciagranate |
 | Armi da Pugno | Lanciarazzi |
 | Scudi | Armi da Lancio |
-| — | Archi e Balestre |
+| Armi a Sega | Archi e Balestre |
 | — | Armi al Plasma |
 | — | Lanciafiamme |
 | — | Granate |
@@ -5601,7 +5645,7 @@ Richiede di percepire l’attacco e di poter raggiungere un Q adiacente libero. 
 
 **Costo:** 4 PM. **Azione:** 1 AzP. **Bersaglio:** se stesso. **Durata:** 3 Round.
 
-Concede **\+1 AR di natura magica**, efficace contro danni Naturali, Magici ed Eterei secondo le normali regole. Si aggiunge alle protezioni indossate; più applicazioni della stessa Tecnica non si sommano.
+Concede **\+1 AR di natura magica**, efficace contro danni Naturali, Magici ed Eterei secondo le normali regole. Si aggiunge alle protezioni indossate; più applicazioni della stessa Tecnica non si sommano. Il \+1 si cumula anche con Corazza Potenziata e con il \+1 non magico di Pelle di Rinoceronte, nei rispettivi ambiti (§5.13).
 
 Non modifica le PS o le Contromisure e non protegge dagli effetti che ignorano espressamente anche questa componente d’Armatura.
 
@@ -5655,9 +5699,9 @@ Ogni creatura può essere sottoposta allo Sguardo dello stesso utilizzatore una 
 
 **Costo:** 6 PM. **Azione:** 1 AzP. **Bersaglio:** se stesso. **Durata:** 3 Round.
 
-Concede \+1 AR contro attacchi Ravvicinati Naturali o Magici, \+3 alle prove di FOR, \+3 ad Atletica e alle prove di Corpo a Corpo nelle manovre in cui si impiega direttamente la forza fisica, e \+2 al danno Ravvicinato. Il \+3 alle manovre non è un bonus generale alle prove per colpire. La protezione non si applica ai danni Eterei.
+Concede \+1 AR non magica contro attacchi Ravvicinati Naturali o Magici, \+3 alle prove di FOR, \+3 ad Atletica e alle prove di Corpo a Corpo nelle manovre in cui si impiega direttamente la forza fisica, e \+2 al danno Ravvicinato. Il \+3 alle manovre non è un bonus generale alle prove per colpire. La protezione non si applica ai danni Eterei.
 
-Non aumenta FOR e non ricalcola modificatori o capacità di carico. È compatibile con Aura di Resistenza; applicazioni multiple della stessa Tecnica non si sommano.
+Non aumenta FOR e non ricalcola modificatori o capacità di carico. È compatibile con Aura di Resistenza, Corazza Potenziata e le altre protezioni consentite dal §5.13; applicazioni multiple della stessa Tecnica non si sommano.
 
 #### Vipera dal Cappuccio
 
