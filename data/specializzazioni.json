@@ -106,6 +106,19 @@
       }
     },
     {
+      "id": "specializzazione-armi-a-sega",
+      "nome": "Armi a Sega",
+      "gruppo": "armi",
+      "sottogruppo": "ravvicinato",
+      "abilita": [],
+      "ambito": "Armi della categoria Armi a Sega (Elettrosega CSB600, Chainreaper, Sbudellatrice). Si usa l’Abilità indicata dalla scheda dell’arma (Manuale degli Armamenti).",
+      "effetto": {
+        "va": 1,
+        "danno": 1
+      },
+      "fonte": "Risposta di Davide A.9 (28/09/2026): nuova Specializzazione del §8.8.1 (docs/risposte-master.md, decisione 24)."
+    },
+    {
       "id": "specializzazione-scudi",
       "nome": "Scudi",
       "gruppo": "armi",

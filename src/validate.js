@@ -1156,6 +1156,8 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = []) 
       if (o.tipo === 'arma_ravvicinata' || o.tipo === 'arma_distanza') {
         if (!nomiAbilita.includes(o.abilita)) err(F, `${k}.abilita`, `Abilità "${o.abilita}" inesistente in abilita.json`);
         if (o.specializzazione !== undefined && o.specializzazione !== null && !idSpec.includes(o.specializzazione)) err(F, `${k}.specializzazione`, `Specializzazione "${o.specializzazione}" inesistente`);
+        // risposta A.12: la Specializzazione dà solo il +1 VA (Danno calibrato)
+        if (o.specializzazione_danno !== undefined && o.specializzazione_danno !== false) err(F, `${k}.specializzazione_danno`, 'ammesso solo false (la Specializzazione non dà il +1 danno)');
         // 0: arma da polso che non impegna la mano (Howler, §7.14.6)
         if (![0, 1, 2, '1/2'].includes(o.mani)) err(F, `${k}.mani`, 'deve essere 0 (da polso), 1, 2 oppure "1/2"');
         if (o.danno_da_munizione === true) {

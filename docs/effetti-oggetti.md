@@ -26,6 +26,7 @@ Stato al 27 settembre 2026. Dati: campo `effetti` degli oggetti del catalogo (`d
 | `ar` | `magica` (facoltativo): quanta parte dell'AR in più è magica | generale, situazionale | AR del personaggio (`src/protezione.js`, docs/ricognizione-ar-pi.md); situazionale con l'interruttore al tavolo (Scudo Magico delle Guardie Sacre, §7.4.10) |
 
 - `condizione` è la frase del manuale che dà il bonus, copiata intera. `node tools/verifica_frasi.mjs` controlla che esista nel testo dei Doc (`docs/manuali-txt/`); lo stesso controllo è nei test.
+- Armi: `specializzazione_danno: false` (campo dell'arma, non un effetto) vuol dire che la Specializzazione della sua famiglia dà solo il +1 VA, senza il +1 danno del §8.8.1. Caso unico: SA30 a dardi, proprietà Danno calibrato (risposta di Davide A.12, 28/09/2026). Il validatore ammette solo il valore `false`.
 - Un effetto conta solo con l'oggetto **in uso** (indossato, impugnato…). Gli oggetti senza stati propri (corredi, kit) ricevono «In uso» / «Nello zaino» quando hanno effetti.
 
 ## Regola unica (effetti degli oggetti e condizioni della sessione)

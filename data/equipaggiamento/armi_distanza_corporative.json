@@ -1,11 +1,7 @@
 {
   "versione_manuale": "Armamenti 0.52",
   "fonte": "Manuale degli Armamenti v0.50, §7.8 Cataloghi corporativi delle armi a distanza (pp. 36–52): armi, moduli integrati, munizioni di riferimento dei lanciatori; lotto 5",
-  "_nota": "Generato da tools/lotti/lotto5_armi_distanza_corporative.mjs; da qui in poi si modifica questo file. I moduli integrati (modulo_di) non si comprano da soli: la scheda li mostra come profilo aggiuntivo dell’arma impugnata, con alimentazione separata; PI, Qualità e MOV sono quelli dell’arma. «munizioni_riferimento» sono i dati della munizione dei lanciatori (danno, AC, RS), non bonus del lanciatore.",
-  "TODO(Davide)": [
-    "Specializzazione (§8.8.1) di 16 armi a distanza corporative che non la dichiarano: Panzerknacker (Bauhaus), M50 (Capitol), AR3000 (Cybertronic), Volcano (Fratellanza), Eruptor (Fratellanza), Mefisto (Fratellanza), Justifier (Fratellanza), Purifier (Fratellanza), Mandible (Imperial), Interceptor (Imperial), Invader (Imperial), Assailant (Imperial), Airbrush (Mishima), Windrider N4 (Mishima), Shogun (Mishima), Archer (Mishima). Proposta: gittata molto lunga (Eruptor, Mefisto, Archer, Assailant) → Fucili di precisione; con Raffica Lunga e Fuoco di Soppressione (M50, AR3000, Volcano, Invader, Shogun) → Fucili d’assalto; Armi pesanti con RM RL FS (Justifier, Purifier) → Mitragliatori; le altre (Panzerknacker, Mandible, Interceptor, Airbrush, Windrider N4) → Carabine.",
-    "Specializzazioni assegnate per analogia con il §7.7, da confermare: le armi con Abilità Armi leggere → Pistole (come la Pistola mitragliatrice compatta, vedi anche la domanda sul §7.7); il gruppo Armi pesanti con modalità RM RL FS → Mitragliatori; la proprietà Plasma → Armi al Plasma, anche per la pistola Hellblazer."
-  ],
+  "_nota": "Generato da tools/lotti/lotto5_armi_distanza_corporative.mjs; da qui in poi si modifica questo file. I moduli integrati (modulo_di) non si comprano da soli: la scheda li mostra come profilo aggiuntivo dell’arma impugnata, con alimentazione separata; PI, Qualità e MOV sono quelli dell’arma. «munizioni_riferimento» sono i dati della munizione dei lanciatori (danno, AC, RS), non bonus del lanciatore. Specializzazioni: risposte di Davide A.11 (le 16 armi senza Specializzazione dichiarata, Panzerknacker nei Fucili d’Assalto) e A.12 (conferma delle assegnazioni per analogia con il §7.7) del 28/09/2026. I moduli integrati tengono la propria Specializzazione. «specializzazione_danno»: false quando la Specializzazione dà solo il +1 VA (SA30, Danno calibrato).",
   "modalita": {
     "S": "Colpo Singolo",
     "RB": "Raffica Breve",
@@ -814,7 +810,8 @@
           "nome": "Danno calibrato",
           "testo": "Per SA30 e SA50F, i bonus ordinari al danno di Classi, Talenti e Manovre non modificano il danno del dardo. Il Magistrale si applica normalmente; sono ammessi modificatori specifici della munizione. Tiro Mirato concede il bonus al VA ma non il bonus ordinario al danno. L’effetto del contenuto del dardo si applica soltanto se almeno 1 danno supera l’Armatura. Il lanciatore determina danno e gittata, il carico del dardo determina l’effetto aggiuntivo (§7.8)."
         }
-      ]
+      ],
+      "specializzazione_danno": false
     },
     {
       "id": "hd14m",
@@ -966,7 +963,7 @@
       "paragrafo": "§7.8",
       "versione_manuale": "Armamenti 0.50",
       "abilita": "Armi medie",
-      "specializzazione": null,
+      "specializzazione": "specializzazione-fucili-d-assalto",
       "mani": 2,
       "danno": {
         "una_mano": null,
@@ -2041,7 +2038,7 @@
       "paragrafo": "§7.8",
       "versione_manuale": "Armamenti 0.50",
       "abilita": "Armi medie",
-      "specializzazione": null,
+      "specializzazione": "specializzazione-fucili-d-assalto",
       "mani": 2,
       "danno": {
         "una_mano": null,
@@ -2475,7 +2472,7 @@
       "paragrafo": "§7.8",
       "versione_manuale": "Armamenti 0.50",
       "abilita": "Armi medie",
-      "specializzazione": null,
+      "specializzazione": "specializzazione-fucili-d-assalto",
       "mani": 2,
       "danno": {
         "una_mano": null,
@@ -3062,7 +3059,7 @@
       "paragrafo": "§7.8",
       "versione_manuale": "Armamenti 0.50",
       "abilita": "Armi medie",
-      "specializzazione": null,
+      "specializzazione": "specializzazione-fucili-d-assalto",
       "mani": 2,
       "danno": {
         "una_mano": null,
@@ -3113,7 +3110,7 @@
       "paragrafo": "§7.8",
       "versione_manuale": "Armamenti 0.50",
       "abilita": "Armi medie",
-      "specializzazione": null,
+      "specializzazione": "specializzazione-fucili-di-precisione",
       "mani": 2,
       "danno": {
         "una_mano": null,
@@ -3161,7 +3158,7 @@
       "paragrafo": "§7.8",
       "versione_manuale": "Armamenti 0.50",
       "abilita": "Armi medie",
-      "specializzazione": null,
+      "specializzazione": "specializzazione-fucili-di-precisione",
       "mani": 2,
       "danno": {
         "una_mano": null,
@@ -3209,7 +3206,7 @@
       "paragrafo": "§7.8",
       "versione_manuale": "Armamenti 0.50",
       "abilita": "Armi pesanti",
-      "specializzazione": null,
+      "specializzazione": "specializzazione-mitragliatori",
       "mani": 2,
       "danno": {
         "una_mano": null,
@@ -3257,7 +3254,7 @@
       "paragrafo": "§7.8",
       "versione_manuale": "Armamenti 0.50",
       "abilita": "Armi pesanti",
-      "specializzazione": null,
+      "specializzazione": "specializzazione-mitragliatori",
       "mani": 2,
       "danno": {
         "una_mano": null,
@@ -3633,7 +3630,7 @@
       "paragrafo": "§7.8",
       "versione_manuale": "Armamenti 0.50",
       "abilita": "Armi medie",
-      "specializzazione": null,
+      "specializzazione": "specializzazione-carabine",
       "mani": 2,
       "danno": {
         "una_mano": null,
@@ -3675,7 +3672,7 @@
       "paragrafo": "§7.8",
       "versione_manuale": "Armamenti 0.50",
       "abilita": "Armi medie",
-      "specializzazione": null,
+      "specializzazione": "specializzazione-carabine",
       "mani": 2,
       "danno": {
         "una_mano": null,
@@ -3719,7 +3716,7 @@
       "paragrafo": "§7.8",
       "versione_manuale": "Armamenti 0.50",
       "abilita": "Armi medie",
-      "specializzazione": null,
+      "specializzazione": "specializzazione-fucili-d-assalto",
       "mani": 2,
       "danno": {
         "una_mano": null,
@@ -3765,7 +3762,7 @@
       "paragrafo": "§7.8",
       "versione_manuale": "Armamenti 0.50",
       "abilita": "Armi medie",
-      "specializzazione": null,
+      "specializzazione": "specializzazione-fucili-di-precisione",
       "mani": 2,
       "danno": {
         "una_mano": null,
@@ -4099,7 +4096,7 @@
       "paragrafo": "§7.8",
       "versione_manuale": "Armamenti 0.50",
       "abilita": "Armi medie",
-      "specializzazione": null,
+      "specializzazione": "specializzazione-carabine",
       "mani": 2,
       "danno": {
         "una_mano": null,
@@ -4141,7 +4138,7 @@
       "paragrafo": "§7.8",
       "versione_manuale": "Armamenti 0.50",
       "abilita": "Armi medie",
-      "specializzazione": null,
+      "specializzazione": "specializzazione-carabine",
       "mani": 2,
       "danno": {
         "una_mano": null,
@@ -4185,7 +4182,7 @@
       "paragrafo": "§7.8",
       "versione_manuale": "Armamenti 0.50",
       "abilita": "Armi medie",
-      "specializzazione": null,
+      "specializzazione": "specializzazione-fucili-d-assalto",
       "mani": 2,
       "danno": {
         "una_mano": null,
@@ -4231,7 +4228,7 @@
       "paragrafo": "§7.8",
       "versione_manuale": "Armamenti 0.50",
       "abilita": "Armi medie",
-      "specializzazione": null,
+      "specializzazione": "specializzazione-fucili-di-precisione",
       "mani": 2,
       "danno": {
         "una_mano": null,

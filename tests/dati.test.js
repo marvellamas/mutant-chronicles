@@ -144,7 +144,7 @@ test('validaDati non lancia eccezioni su dati vuoti o assurdi', () => {
 
 // --- cap. 8: Talenti Liberi, Specializzazioni, Tecniche Interiori, avanzamento ---------------
 
-test('conteggi del cap. 8: 87 Talenti del §8.6 + 32 Talenti magici e mistici, 84 Specializzazioni, 28 Tecniche', () => {
+test('conteggi del cap. 8: 87 Talenti del §8.6 + 32 Talenti magici e mistici, 85 Specializzazioni (Armi a Sega, risposta A.9), 28 Tecniche', () => {
   const t = dati.talenti_liberi.talenti;
   assert.equal(t.filter((x) => x.sezione.startsWith('8.6')).length, 87);
   const magia = t.filter((x) => x.sezione === 'magia');
@@ -154,7 +154,7 @@ test('conteggi del cap. 8: 87 Talenti del §8.6 + 32 Talenti magici e mistici, 8
   assert.ok(magia.some((x) => x.id === 'contromagia-universale') && magia.some((x) => x.id === 'magia-occultata'));
   assert.ok(magia.every((x) => !x.provvisorio && Array.isArray(x.prerequisiti) && ['passivo', 'attivo'].includes(x.tipo)));
   assert.ok(t.every((x) => ['passivo', 'attivo'].includes(x.tipo)));
-  assert.equal(dati.specializzazioni.specializzazioni.length, 84);
+  assert.equal(dati.specializzazioni.specializzazioni.length, 85);
   assert.equal(dati.tecniche_interiori.tecniche.length, 28);
   assert.equal(dati.regole.avanzamento.eventi.length, 20);
 });

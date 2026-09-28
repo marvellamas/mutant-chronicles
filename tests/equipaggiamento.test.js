@@ -404,8 +404,9 @@ test('lotto 4: 39 armi ravvicinate corporative in 7 cataloghi; lo Scudo delle Gu
   assert.deepEqual(r('spada-violator').danno, { una_mano: '1d8+1', due_mani: '2d6' });
   assert.equal(r('spada-violator').specializzazione, 'specializzazione-spade');
   assert.equal(r('manganello-elettrificato').famiglia, 'Mazze e bastoni'); // «Manganello» è nome alternativo del Randello
-  assert.equal(r('katana').famiglia, 'Da classificare'); // famiglia non dichiarata: TODO(Davide)
-  assert.equal(r('katana').specializzazione, null);
+  // risposta A.9: famiglia della Specializzazione; l'Abilità resta quella della scheda
+  assert.deepEqual([r('katana').famiglia, r('katana').specializzazione, r('katana').abilita], ['Spade', 'specializzazione-spade', 'Armi da guerra']);
+  assert.deepEqual([r('wakizashi').specializzazione, r('wakizashi').abilita], ['specializzazione-spade', 'Armi da mischia']);
   assert.deepEqual(r('kriss').proprieta[0].effetto, { va: 1 }); // Precisa 1
   assert.deepEqual(r('tonfa-stella-cadente').proprieta[0].effetto, { parata_va: 2 });
   assert.deepEqual(r('spada-punisher').munizioni.capacita, 5);
@@ -415,8 +416,8 @@ test('lotto 4: 39 armi ravvicinate corporative in 7 cataloghi; lo Scudo delle Gu
   assert.equal(r('spada-deathdealer').natura_danno, 'Magico');
   assert.deepEqual(r('elettrosega-csb600').manovre, ['generali']);
   assert.equal(r('lama-mushashi').note_manuale, 'Lama Mushashi. Proprietà: Precisa 2; Danno Magico. Manovre compatibili: Affondo, Spazzata. Il raccordo con il KI sarà integrato successivamente.');
-  // le domande sulle famiglie mancanti compaiono fra i TODO della home
-  assert.ok(trovaTodo(dati).some((t) => /Katana/.test(t.testo)));
+  // le domande sulle famiglie sono chiuse: nessun TODO
+  assert.ok(!trovaTodo(dati).some((t) => /Katana/.test(t.testo)));
 });
 
 test('arma corporativa impugnata: Precisa nel VA per colpire, Difensiva nella Parata, cariche in sessione', () => {
@@ -477,7 +478,7 @@ test('lotto 5: 81 armi a distanza corporative e 19 moduli integrati in 7 catalog
   assert.deepEqual(r('eliminator').proprieta.map((p) => p.nome), ['Purificatrice 1', 'Silenziatore incorporato']);
   assert.equal(r('hg10').specializzazione, 'specializzazione-pistole'); // «Pistole corporative di base»
   assert.equal(r('hellblazer').specializzazione, 'specializzazione-armi-al-plasma');
-  assert.equal(r('m50').specializzazione, null); // non dichiarata: TODO(Davide)
+  assert.equal(r('m50').specializzazione, 'specializzazione-fucili-d-assalto'); // risposta A.11
   // modulo integrato: PI, reperibilità e costo sono quelli dell'arma principale
   const lg = r('lanciagranate-mp105gw');
   assert.equal(lg.modulo_di, 'armi_distanza_corporative:mp105gw');
@@ -491,7 +492,7 @@ test('lotto 5: 81 armi a distanza corporative e 19 moduli integrati in 7 catalog
   assert.ok(!opzioniCascata(dati, { tipo: 'arma_distanza', catalogo: 'Bauhaus', famiglia: 'Lanciagranate integrato' }).profili.length);
   assert.ok(!opzioniCascata(dati, { tipo: 'arma_distanza', catalogo: 'Bauhaus' }).famiglie.includes('Lanciagranate integrato'));
   assert.deepEqual(cercaNelCatalogo(dati, 'mp105gw').map((x) => x.rif), ['armi_distanza_corporative:mp105gw']);
-  assert.ok(trovaTodo(dati).some((t) => /Panzerknacker/.test(t.testo)));
+  assert.ok(!trovaTodo(dati).some((t) => /Panzerknacker/.test(t.testo)));
 });
 
 test('arma con modulo integrato impugnata: due profili, alimentazioni separate, danno della munizione di riferimento', () => {

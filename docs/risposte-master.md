@@ -201,3 +201,41 @@ UTC); i paragrafi corrispondenti sono nel Manuale del Giocatore §2.16.1–§2.1
     mancanti e PM consumati restano, salire di livello non è un recupero completo (40/47 + 6 PV →
     46/53; 12/20 + 4 PM → 16/24). Conferma la soluzione provvisoria dell'app (per-davide A.15, chiusa).
     → `src/sessione.js` → `sessioneDopoLivello` (già così; tolto il TODO).
+
+## 28 settembre 2026 — risposte nel Doc «per-davide.md» (sezione 7)
+
+24. **Famiglie delle 12 armi ravvicinate corporative e Specializzazione Armi a Sega** (A.9;
+    Armamenti §7.1.9, Giocatore §8.8.1). Katana, Wakizashi, Lama Mushashi, Lama Demontooth → Spade;
+    Kriss → Coltelli e Pugnali; Nunchaku, Nunchaku elettrificato, Catena chiodata → Armi Flessibili;
+    Bordone Templare → Mazze e Bastoni; Elettrosega CSB600, Chainreaper, Sbudellatrice → nuova
+    famiglia Armi a Sega, con la nuova Specializzazione Armi a Sega (+1 VA, +1 danno). La famiglia
+    non cambia l'Abilità della scheda (Katana Armi da guerra, Wakizashi Armi da mischia).
+    → `data/specializzazioni.json` (85 Specializzazioni), `data/equipaggiamento/armi_corporative.json`
+    (`famiglia`, `specializzazione`; tolto il TODO).
+
+25. **Specializzazioni delle 16 armi a distanza corporative** (A.11; Armamenti §7.8), riferite al
+    profilo principale. Fucili di Precisione: Eruptor, Mefisto, Archer, Assailant. Fucili d'Assalto:
+    M50, AR3000, Volcano, Invader, Shogun, Panzerknacker (non Carabine: profilo come il M50).
+    Mitragliatori: Justifier, Purifier. Carabine: Mandible, Interceptor, Airbrush, Windrider N4.
+    I moduli integrati tengono la propria (Lanciagranate del Volcano, Lanciafiamme dell'Eruptor).
+    → `data/equipaggiamento/armi_distanza_corporative.json` (tolto il TODO).
+
+26. **Specializzazioni delle altre armi corporative per analogia con il §7.7** (A.12). Pistole e
+    pistole mitragliatrici → Pistole; pesanti automatiche (MG40, Deathlock Drum, Kensai, Nimrod
+    Autocannon) → Mitragliatori; plasma (Hellblazer, Plasma Intruder) → Armi al Plasma, l'Hellblazer
+    con l'Abilità Armi leggere; MP105 GW e Nemesis 21 → Carabine; lanciafiamme, lanciarazzi e moduli
+    integrati tengono la propria. SA30 a dardi → Pistole, ma solo +1 VA: Danno calibrato esclude il
+    +1 danno. Conferma le assegnazioni già nei dati.
+    → `armi_distanza_corporative.json` (SA30: `specializzazione_danno: false`), `src/equipaggiamento.js`
+    (il bonus al danno della Specializzazione rispetta il campo), `src/validate.js`, `docs/effetti-oggetti.md`.
+
+27. **Pistola mitragliatrice compatta** (A.7; Armamenti §7.7). Famiglia Pistole anche in Raffica Breve
+    o Media; Specializzazione Mitragliatori non si applica; Abilità Armi leggere in tutte le modalità.
+    Conferma la scelta dell'app. → `data/equipaggiamento/armi_distanza.json` (tolto il TODO).
+
+28. **Pugnale e Ascia leggera, uso ravvicinato e lancio** (A.8; Armamenti §§7.1.1, 7.7). In mischia
+    Coltelli e Pugnali / Asce; al lancio Armi da Lancio (Abilità Armi da lancio). Mai cumulate né a
+    scelta: vale quella dell'attacco effettuato. Conferma la scelta dell'app: i due profili del
+    catalogo (ravvicinato in `armi.json`, a distanza in `armi_distanza.json`, collegati da
+    `stesso_oggetto`) portano ciascuno la propria Specializzazione, e «Attacca!» usa quella del
+    pannello aperto. → `armi_distanza.json` (tolto il TODO).

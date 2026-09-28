@@ -1,11 +1,7 @@
 {
   "versione_manuale": "Armamenti 0.50",
   "fonte": "Manuale degli Armamenti v0.50, §7.7 Catalogo Commerciale delle armi a distanza (pp. 33–36); definizioni delle proprietà dal Manuale del Giocatore §5.10 e §5.24; lotto 2",
-  "_nota": "Generato da tools/lotti/lotto2_armi_distanza.mjs; da qui in poi si modifica questo file. «ac» è il numero di applicazioni di danno (anche «1d3», o «munizione»); «modificatore_va» è la colonna VA della scheda; «gittata_per_for» sostituisce la gittata con FOR × valore; «mov» è la penalità MOV dell’arma impugnata (§7.7).",
-  "TODO(Davide)": [
-    "Pistola mitragliatrice compatta: vale la Specializzazione Pistole (il suo gruppo nel §7.7, scelta attuale) o Mitragliatori?",
-    "Pugnale e Ascia leggera lanciati: vale la Specializzazione Armi da Lancio (scelta attuale) o quella dell’arma ravvicinata (Coltelli e Pugnali, Asce)?"
-  ],
+  "_nota": "Generato da tools/lotti/lotto2_armi_distanza.mjs; da qui in poi si modifica questo file. «ac» è il numero di applicazioni di danno (anche «1d3», o «munizione»); «modificatore_va» è la colonna VA della scheda; «gittata_per_for» sostituisce la gittata con FOR × valore; «mov» è la penalità MOV dell’arma impugnata (§7.7). Pistola mitragliatrice compatta: Pistole anche in raffica (risposta A.7). Pugnale e Ascia leggera lanciati: Armi da Lancio; in mischia vale la Specializzazione del profilo ravvicinato, mai cumulate (risposta A.8). Risposte di Davide del 28/09/2026.",
   "modalita": {
     "S": "Colpo Singolo",
     "RB": "Raffica Breve",

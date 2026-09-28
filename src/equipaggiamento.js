@@ -711,7 +711,8 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       ...bonusAttacco.filter((b) => valePer(b, o.tipo)).map((b) => ({ nome: b.nome, valore: b.valore })),
     ].filter(Boolean) : [];
     const va = a ? componenti.reduce((s, c) => s + c.valore, 0) : null;
-    const bonusDanno = spec?.effetto.danno ?? 0;
+    // §8.8.1: +1 danno della Specializzazione, salvo le armi che lo escludono (SA30, Danno calibrato: risposta A.12)
+    const bonusDanno = spec && d.specializzazione_danno !== false ? spec.effetto.danno ?? 0 : 0;
     // accessori dell'arma e effetti «danno» dell'equipaggiamento (Colpo assistito, §7.14.2): bonus ordinari (§5.13)
     const dannoAccessori = acc.reduce((s, x) => s + (x.def?.effetto_arma?.danno ?? 0), 0) + dannoEquip.filter((b) => valePer(b, o.tipo)).reduce((s, b) => s + b.valore, 0);
     const dannoBase = d?.danno ?? (o.voce.personalizzato?.danno ? { una_mano: o.voce.personalizzato.danno, due_mani: null } : null);
