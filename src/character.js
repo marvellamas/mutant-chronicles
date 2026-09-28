@@ -161,6 +161,16 @@ export function normalizza(scelteIn, dati) {
   // Equipaggiamento: il vecchio campo di testo diventa un oggetto personalizzato «altro» con il
   // testo nelle note; gli stati non ammessi per il tipo tornano «nello zaino».
   s.equipaggiamento = normalizzaEquipaggiamento(s.equipaggiamento);
+  // risposta A.21: il Chroma Viola non è più un contenitore inerte; il contenitore personalizzato
+  // Viola salvato prima diventa l'oggetto del catalogo «Chroma Viola (frammento)», senza PM
+  const coloriNo = Object.entries(r.chroma?.colori ?? {}).filter(([, x]) => x.contenitore === false && x.corruzione_passiva);
+  s.equipaggiamento = s.equipaggiamento.map((v) => {
+    const c = coloriNo.find(([nome]) => v.personalizzato?.energia === nome);
+    const rif = c ? r.corruzione?.[c[1].corruzione_passiva]?.oggetto : null;
+    if (!rif) return v;
+    avvisi.push(`«${v.personalizzato.nome}»: il Chroma ${c[0]} non è più un contenitore di PM ma una fonte di Corruzione passiva (risposta di Davide A.21). Ora è «Chroma Viola (frammento)», senza PM.`);
+    return { uid: v.uid, rif, stato: null, quantita: v.quantita, note: [v.note, v.personalizzato.nome !== 'Chroma Viola (frammento)' ? `era «${v.personalizzato.nome}»` : ''].filter(Boolean).join(' · ') };
+  });
   const cat = catalogo(dati);
   for (const v of s.equipaggiamento) {
     const r = risolvi(v, cat);

@@ -60,7 +60,7 @@ export function validaDati(dati) {
   const idSpec = validaSpecializzazioni(dati.specializzazioni, nomiAbilita, err);
   validaTalentiLiberi(dati.talenti_liberi, idSpec, err, (dati.addestramenti?.addestramenti ?? []).map((a) => a.nome));
   validaTecniche(dati.tecniche_interiori, err);
-  validaEquipaggiamento(dati.equipaggiamento, [...nomiAbilita], [...(idSpec ?? [])], err, Object.keys(dati.regole?.chroma?.colori ?? {}).filter((c) => !dati.regole.chroma.colori[c]?.esausto));
+  validaEquipaggiamento(dati.equipaggiamento, [...nomiAbilita], [...(idSpec ?? [])], err, Object.keys(dati.regole?.chroma?.colori ?? {}).filter((c) => !dati.regole.chroma.colori[c]?.esausto && dati.regole.chroma.colori[c]?.contenitore !== false), Object.keys(dati.regole?.corruzione ?? {}));
   if (dati.regole?.chroma !== undefined) validaChroma(dati, err);
   if (dati.regole) validaSchedaDigitale(dati, err);
   if (isOggetto(dati.dotazioni)) validaDotazioni(dati, err);
@@ -952,7 +952,7 @@ function validaSchedaDigitale(dati, err) {
   }
 }
 
-function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = []) {
+function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], fontiCorruzione = []) {
   nomiAbilitaPenalita = nomiAbilita;
   const FI = 'equipaggiamento/index';
   if (!isOggetto(eq) || !isOggetto(eq.indice)) {
@@ -1153,6 +1153,8 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = []) 
           }
         });
       }
+      // risposta A.21: fonte di Corruzione passiva (regole.json → corruzione)
+      if (o.corruzione_passiva !== undefined && !fontiCorruzione.includes(o.corruzione_passiva)) err(F, `${k}.corruzione_passiva`, `"${o.corruzione_passiva}" non è in regole.json → corruzione`);
       if (o.tipo === 'arma_ravvicinata' || o.tipo === 'arma_distanza') {
         if (!nomiAbilita.includes(o.abilita)) err(F, `${k}.abilita`, `Abilità "${o.abilita}" inesistente in abilita.json`);
         if (o.specializzazione !== undefined && o.specializzazione !== null && !idSpec.includes(o.specializzazione)) err(F, `${k}.specializzazione`, `Specializzazione "${o.specializzazione}" inesistente`);

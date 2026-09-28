@@ -2,7 +2,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';
-import { prossimoLivello } from '../src/character.js';
+import { prossimoLivello, normalizza } from '../src/character.js';
+import { validaDati } from '../src/validate.js';
+import { copia } from './helpers.js';
 import { catalogo, contenitori } from '../src/equipaggiamento.js';
 import { testoTooltip } from '../src/descrizioni.js';
 import { inizializzaSessione, massimiSessione, commutaCondizioneOggetto } from '../src/sessione.js';
@@ -124,4 +126,34 @@ test('A.14: la disponibilità degli Artefatti Mistici compare nel tooltip degli 
   assert.match(t, /La Fratellanza è l’unica a produrne in quantità/);
   assert.match(t, /Molto rara/);
   assert.doesNotMatch(JSON.stringify(testoTooltip('oggetto', 'armi:pugnale', dati)), /Artefatti Mistici/);
+});
+
+// --- A.21: Chroma Viola ---------------------------------------------------------------------
+
+test('A.21: un contenitore Viola inerte salvato prima diventa «Chroma Viola (frammento)», con avviso', () => {
+  const vecchio = { ...MISHIMA_AGENTE, equipaggiamento: [
+    { uid: 'v', rif: null, stato: 'trasportato', quantita: 1, note: 'trovato su Luna', personalizzato: { nome: 'Cristallo Viola', tipo: 'artefatto', potenza: 'Comune', energia: 'Viola', capacita_pm: 5 } },
+    { uid: 'b', rif: null, stato: 'trasportato', quantita: 1, note: '', personalizzato: { nome: 'Batteria Rossa', tipo: 'artefatto', potenza: 'Comune', energia: 'Rosso', capacita_pm: 5 } },
+  ] };
+  const { scelte, avvisi } = normalizza(vecchio, dati);
+  assert.deepEqual(scelte.equipaggiamento[0], { uid: 'v', rif: 'artefatti:chroma-viola-frammento', stato: null, quantita: 1, note: 'trovato su Luna · era «Cristallo Viola»' });
+  assert.equal(scelte.equipaggiamento[1].personalizzato.energia, 'Rosso'); // gli altri contenitori non cambiano
+  assert.ok(avvisi.some((a) => /Cristallo Viola.*non è più un contenitore.*A\.21/.test(a)));
+  const s = calcolaScheda({ creazione: scelte, livelli: [] }, dati);
+  assert.deepEqual(contenitori(scelte.equipaggiamento, dati).map((c) => c.energia), ['Rosso']); // nessun PM dal Viola
+  assert.ok(s.equipaggiamento.avvisi.some((a) => /Chroma Viola \(frammento\): Fonte di Corruzione passiva/.test(a)));
+});
+
+test('A.21: fasce, frequenza ed esiti in regole.json e nel tooltip del frammento; il Viola non è un colore da contenitore', () => {
+  const cv = dati.regole.corruzione.chroma_viola;
+  assert.deepEqual(cv.fasce.map((f) => [f.esposizione, f.modificatore_ps, f.intensita, f.fino_a_q]),
+    [['Intensa', -2, 2, 0], ['Normale', 0, 1, 1], ['Debole', 2, 1, 6], ['Flebile', 4, 1, 12]]);
+  assert.match(cv.frequenza, /ogni ora complessiva/);
+  const t = testoTooltip('oggetto', 'artefatti:chroma-viola-frammento', dati);
+  assert.match(t, /Contatto diretto: esposizione Intensa, −2 alla PS di Magia, Intensità 2 Stati/);
+  assert.match(t, /Oltre 12 Q/);
+  // un contenitore Viola nel catalogo è un errore del validatore; una fonte di Corruzione sconosciuta anche
+  const e = (modifica) => { const d = copia(dati); modifica(d); return validaDati(d).map((x) => `${x.chiave}: ${x.problema}`).join('\n'); };
+  assert.match(e((d) => { d.equipaggiamento.file.artefatti.oggetti[0].artefatto.contenitore.energia = 'Viola'; }), /"Viola" non è un colore del Chroma/);
+  assert.match(e((d) => { d.equipaggiamento.file.artefatti.oggetti.at(-1).corruzione_passiva = 'giacimento'; }), /corruzione_passiva: "giacimento" non è in regole\.json/);
 });

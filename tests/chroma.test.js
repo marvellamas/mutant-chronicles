@@ -22,7 +22,7 @@ test('regole.json → chroma: sei colori, rapporti, Talenti, Prova per gruppi, u
   assert.deepEqual(Object.keys(c.colori), ['Bianco', 'Rosso', 'Blu', 'Verde', 'Viola', 'Trasparente']);
   assert.deepEqual(c.colori.Bianco.macrofamiglie, ['Fisica', 'Mentale', 'Spirituale']);
   assert.deepEqual([c.colori.Rosso.macrofamiglie, c.colori.Blu.macrofamiglie, c.colori.Verde.macrofamiglie], [['Fisica'], ['Mentale'], ['Spirituale']]);
-  assert.equal(c.colori.Viola.regole_rimandate, true);
+  assert.deepEqual([c.colori.Viola.contenitore, c.colori.Viola.corruzione_passiva], [false, 'chroma_viola']); // risposta A.21: non è un contenitore
   assert.equal(c.colori.Trasparente.esausto, true);
   // Magia p. 9: 3:1, uno dei due Talenti 2:1, entrambi 1:1; il Bianco resta 2:1
   assert.deepEqual(c.conversione.rapporto_per_talenti, [3, 2, 1]);

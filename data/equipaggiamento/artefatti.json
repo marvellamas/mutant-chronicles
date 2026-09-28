@@ -217,6 +217,22 @@
       "ps_int": 10,
       "pi": 3,
       "peso": 0.2
+    },
+    {
+      "id": "chroma-viola-frammento",
+      "nome": "Chroma Viola (frammento)",
+      "tipo": "altro",
+      "catalogo": "Commerciale",
+      "famiglia": "Chroma",
+      "nomi_alternativi": [
+        "Chroma Viola"
+      ],
+      "note_manuale": "Il Chroma Viola è saturo di Energia Oscura e la sola vicinanza corrompe l’essere umano. Non è reperibile in commercio. Va trattato come una fonte di Corruzione passiva, non come una normale batteria o un oggetto inerte (risposta di Davide A.21, 28/09/2026). Nessun PM utilizzabile: le regole per impiegarne l’Energia Oscura restano da sviluppare.",
+      "paragrafo": "Magia sez. 6; risposta A.21",
+      "versione_manuale": "Magia 1.1",
+      "costo": null,
+      "corruzione_passiva": "chroma_viola",
+      "proprieta": []
     }
   ]
 }

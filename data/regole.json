@@ -85,6 +85,69 @@
     "fonte": "Risposta di Davide A.14 (28/09/2026), docs/risposte-master.md decisione 30.",
     "_nota": "Testo mostrato nel tooltip di ogni oggetto che è un Artefatto (src/descrizioni.js)."
   },
+  "corruzione": {
+    "chroma_viola": {
+      "oggetto": "artefatti:chroma-viola-frammento",
+      "fasce": [
+        {
+          "id": "contatto",
+          "nome": "Contatto diretto",
+          "esposizione": "Intensa",
+          "modificatore_ps": -2,
+          "intensita": 2,
+          "fino_a_q": 0
+        },
+        {
+          "id": "entro_1q",
+          "nome": "Entro 1 Q, senza contatto diretto",
+          "esposizione": "Normale",
+          "modificatore_ps": 0,
+          "intensita": 1,
+          "fino_a_q": 1
+        },
+        {
+          "id": "fino_6q",
+          "nome": "Oltre 1 Q e fino a 6 Q",
+          "esposizione": "Debole",
+          "modificatore_ps": 2,
+          "intensita": 1,
+          "fino_a_q": 6
+        },
+        {
+          "id": "fino_12q",
+          "nome": "Oltre 6 Q e fino a 12 Q (frammento trasportabile)",
+          "esposizione": "Flebile",
+          "modificatore_ps": 4,
+          "intensita": 1,
+          "fino_a_q": 12
+        }
+      ],
+      "oltre": "Oltre 12 Q (18 metri) un frammento trasportabile non provoca esposizione passiva. Cristalli grandi e giacimenti hanno un raggio specificato dal Direttore di Gioco.",
+      "frequenza": "Una PS di Magia per ogni ora complessiva di esposizione, in tutte le fasce. Fuori dall’aura il conteggio si sospende, senza azzerare i minuti accumulati; cambiare distanza non provoca PS aggiuntive. Alla scadenza dell’ora vale la fascia più grave raggiunta in quell’ora. Un contatto brevissimo non impone una PS immediata, ma conta nel tempo accumulato e nella gravità della prova successiva. Esempio: 10 minuti a contatto e 50 minuti a 8 Q = una PS contro esposizione Intensa, −2, Intensità 2 Stati.",
+      "esiti": [
+        {
+          "esito": "Successo",
+          "effetto": "nessun peggioramento"
+        },
+        {
+          "esito": "Fallimento",
+          "effetto": "peggioramento pari all’Intensità"
+        },
+        {
+          "esito": "Fallimento Maldestro",
+          "effetto": "peggioramento pari all’Intensità più 1 Stato"
+        },
+        {
+          "esito": "Successo Magistrale",
+          "effetto": "nessun peggioramento e +4 alla prossima PS di Magia contro Corruzione nella stessa Scena, per una sola Prova"
+        }
+      ],
+      "modificatori": "Restano i modificatori pertinenti, comprese le penalità da CROS e Umanità.",
+      "avviso": "Fonte di Corruzione passiva: una PS di Magia per ogni ora complessiva di esposizione (fasce nel tooltip).",
+      "fonte": "Risposta di Davide A.21 (28/09/2026); esiti del Giocatore §5.20.1; docs/risposte-master.md decisione 32.",
+      "_nota": "L’app non traccia l’esposizione (docs/backlog.md): mostra le fasce e l’avviso. Le regole per impiegare l’Energia Oscura restano da sviluppare."
+    }
+  },
   "regole_aggiornate": {
     "punti_abilita": "Regole aggiornate (manuale del 27/09)",
     "_nota": "Titolo dell'avviso in cima alla SD quando un evento già registrato (creazione o livello) ha meno Punti Abilità Liberi di quelli previsti dalle regole correnti, o più: Giocatore, Doc del 27/09/2026 (10 punti invece di 5), per-davide A.52. Se le regole cambiano ancora, si aggiorna qui la data."
@@ -1038,7 +1101,7 @@
       "Rosso": { "energia": "Fisica", "macrofamiglie": ["Fisica"] },
       "Blu": { "energia": "Mentale", "macrofamiglie": ["Mentale"] },
       "Verde": { "energia": "Spirituale", "macrofamiglie": ["Spirituale"] },
-      "Viola": { "energia": "Oscura", "macrofamiglie": [], "regole_rimandate": true },
+      "Viola": { "energia": "Oscura", "macrofamiglie": [], "contenitore": false, "corruzione_passiva": "chroma_viola" },
       "Trasparente": { "energia": "Nessuna energia residua", "macrofamiglie": [], "esausto": true }
     },
     "conversione": {
@@ -1055,7 +1118,7 @@
     "TODO(Davide)": [
       "Un contenitore acquistato o trovato arriva carico? L'app lo considera pieno: PM attuali = capacità (per-davide A.19)."
     ],
-    "_nota": "Magia sez. 6 e Armamenti §7.5, §7.10. «colori»: energia e macrofamiglie di Incantesimi alimentate; Viola ha regole rimandate; Trasparente non è un colore da scegliere ma il contenitore esausto (0 PM), che conserva l'alone del colore d'origine, capacità e sintonizzazione. «conversione»: rapporto ordinario 3:1, ridotto di uno per ciascun Talento posseduto fra quelli elencati (rapporto_per_talenti, indice = numero di Talenti); il Bianco resta 2:1 in entrambi i sensi. Convertire Potere e ricaricare richiedono l'Addestramento Taumaturgo; un gruppo è automatico, da due in su una sola Prova di Potere con la penalità indicata. «contenitori_per_lancio»: un solo contenitore compatibile per lancio, eventualmente con PM personali."
+    "_nota": "Magia sez. 6 e Armamenti §7.5, §7.10. «colori»: energia e macrofamiglie di Incantesimi alimentate; Viola non è un contenitore di PM ma una fonte di Corruzione passiva («contenitore»: false; regole in «corruzione.chroma_viola», risposta A.21); Trasparente non è un colore da scegliere ma il contenitore esausto (0 PM), che conserva l'alone del colore d'origine, capacità e sintonizzazione. «conversione»: rapporto ordinario 3:1, ridotto di uno per ciascun Talento posseduto fra quelli elencati (rapporto_per_talenti, indice = numero di Talenti); il Bianco resta 2:1 in entrambi i sensi. Convertire Potere e ricaricare richiedono l'Addestramento Taumaturgo; un gruppo è automatico, da due in su una sola Prova di Potere con la penalità indicata. «contenitori_per_lancio»: un solo contenitore compatibile per lancio, eventualmente con PM personali."
   },
   "ferite": {
     "stati": [

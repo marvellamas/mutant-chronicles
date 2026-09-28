@@ -268,3 +268,20 @@ UTC); i paragrafi corrispondenti sono nel Manuale del Giocatore §2.16.1–§2.1
     → `data/equipaggiamento/artefatti.json` (tolto il TODO), `data/equipaggiamento/index.json`
     (sigla `LE` e `_nota_reperibilita`: la scala sta con le sigle del catalogo, che il validatore e i
     tooltip già leggono, non in `regole.json`).
+
+32. **Chroma Viola e Corruzione passiva** (A.21; Magia sez. 6, Giocatore §5.20.1). Saturo di Energia
+    Oscura, la sola vicinanza corrompe; non reperibile in commercio. Non è una batteria né un oggetto
+    inerte: è una fonte di Corruzione passiva (la soluzione provvisoria «contenitore inerte» non è
+    adottata). Fasce: contatto diretto Intensa −2, 2 Stati; entro 1 Q Normale 0, 1 Stato; oltre 1 e
+    fino a 6 Q Debole +2, 1 Stato; oltre 6 e fino a 12 Q (frammento trasportabile) Flebile +4, 1 Stato;
+    oltre 12 Q (18 m) nessuna esposizione; cristalli grandi e giacimenti: raggio del Direttore di
+    Gioco. Una PS di Magia per ogni ora complessiva di esposizione; fuori dall'aura il conteggio si
+    sospende senza azzerarsi; vale la fascia più grave dell'ora; un contatto brevissimo conta nel tempo
+    accumulato. Esiti del §5.20.1, con i modificatori da CROS e Umanità. Le regole per impiegarne
+    l'Energia Oscura restano da sviluppare.
+    → `data/regole.json` → `corruzione.chroma_viola` (fasce, frequenza, esiti, avviso) e
+    `chroma.colori.Viola` (`contenitore: false`: non si sceglie più come energia di un contenitore);
+    `data/equipaggiamento/artefatti.json` → «Chroma Viola (frammento)» (`corruzione_passiva`), senza
+    PM, con le fasce nel tooltip e l'avviso nella SD; `src/character.js`: i contenitori personalizzati
+    Viola salvati prima diventano il frammento, con un avviso al caricamento. Tracker dell'esposizione:
+    `docs/backlog.md`, voce 13.

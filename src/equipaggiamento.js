@@ -826,6 +826,12 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     else if (!operativo(su)) avvisi.push(`${x.nome} è montato su ${su.nome}, che non è ${NON_ATTIVO[su.tipo] ?? 'impugnata'}: nessun effetto.`);
   }
 
+  // risposta A.21: fonti di Corruzione passiva nella lista (Chroma Viola), ovunque siano
+  for (const o of oggetti.filter((x) => !x.fuoriCatalogo && x.def?.corruzione_passiva)) {
+    const cp = dati.regole?.corruzione?.[o.def.corruzione_passiva];
+    if (cp) avvisi.push(`${o.nome}: ${cp.avviso}`);
+  }
+
   // §7.10: la somma dei costi degli Artefatti sintonizzati non supera la capacità del personaggio
   const rs = regoleSintonizzazione(dati);
   const artefatti = oggetti.filter((o) => !o.fuoriCatalogo).map((o) => ({ o, a: infoArtefattoVoce(o, dati) })).filter((x) => x.a);

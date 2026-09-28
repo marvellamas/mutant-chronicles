@@ -149,6 +149,15 @@ function tooltipOggetto(rif, dati) {
   if (o.cella) sezioni.push({ etichetta: 'Capacità', testo: `${o.cella.capacita} ${o.cella.unita}; riempirla o ricaricarla costa ${o.cella.ricarica_costo.toLocaleString('it-IT')}` });
   const art = infoArtefatto(o, dati);
   if (art) sezioni.push({ etichetta: 'Artefatto', testo: `${art.tipologia}; potenza ${art.potenza}, costo di sintonizzazione ${art.sintonizzazione}${art.contenitore ? `; ${art.contenitore.integrato ? 'riserva integrata' : 'contenitore'} di ${art.contenitore.capacita_pm} PM (Chroma ${art.contenitore.energia})` : ''} (§7.10).` });
+  // risposta A.21: fonte di Corruzione passiva (regole.json → corruzione)
+  const cp = o.corruzione_passiva ? dati.regole?.corruzione?.[o.corruzione_passiva] : null;
+  if (cp) {
+    const conSegnoPs = (n) => (n < 0 ? `−${-n}` : n > 0 ? `+${n}` : '0');
+    sezioni.push({ etichetta: 'Attenzione', testo: cp.avviso });
+    for (const f of cp.fasce) sezioni.push({ etichetta: f.nome, testo: `esposizione ${f.esposizione}, ${conSegnoPs(f.modificatore_ps)} alla PS di Magia, Intensità ${f.intensita} ${f.intensita === 1 ? 'Stato' : 'Stati'}` });
+    sezioni.push({ etichetta: 'Oltre', testo: cp.oltre }, { etichetta: 'Frequenza', testo: cp.frequenza },
+      { etichetta: 'Esiti (§5.20.1)', testo: `${cp.esiti.map((e) => `${e.esito}: ${e.effetto}`).join('; ')}. ${cp.modificatori}` });
+  }
   // risposta A.14: disponibilità degli Artefatti Mistici (regole.json → artefatti_mistici)
   if (art && dati.regole?.artefatti_mistici?.disponibilita) sezioni.push({ etichetta: 'Disponibilità', testo: dati.regole.artefatti_mistici.disponibilita });
   if (o.strumenti) sezioni.push({ etichetta: 'Strumenti', testo: `${o.strumenti.va > 0 ? '+' : o.strumenti.va < 0 ? '−' : ''}${Math.abs(o.strumenti.va)} VA a ${o.strumenti.prova}; un solo modificatore degli strumenti per Prova.` });

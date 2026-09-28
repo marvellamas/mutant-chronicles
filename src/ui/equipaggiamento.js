@@ -195,7 +195,8 @@ function pannelloAggiungi(ctx) {
 
   const p = s.pers;
   const potenze = Object.keys(regoleSintonizzazione(dati)?.potenze ?? {});
-  const colori = Object.entries(coloriChroma(dati)).filter(([, x]) => !x.esausto).map(([nome]) => nome);
+  // il Chroma Viola non è un contenitore (risposta A.21): «contenitore»: false
+  const colori = Object.entries(coloriChroma(dati)).filter(([, x]) => !x.esausto && x.contenitore !== false).map(([nome]) => nome);
   const difese = dati.equipaggiamento?.file?.armature?.abilita_difese;
   const abilitaArmi = dati.abilita.abilita.filter((a) => ['Distanza', 'Ravvicinato'].includes(a.categoria) && a.nome !== difese).map((a) => a.nome);
   return h('section', { class: 'aggiungi-equip' },

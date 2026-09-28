@@ -72,3 +72,11 @@ PI massimi dal catalogo, PI attuali al tavolo con − e + ed etichetta «Rotto»
 ## 12. ✔ Stati nei valori effettivi — fatto il 27 settembre 2026
 
 Censimento in docs/ricognizione-stati.md (11 buchi, tutti chiusi): Stati come liste di effetti in regole.json, categorie di Prove (A.51), penalità in Abilità, Difese, Salvezze, «Attacca!» e «Lancia!», avvisi e divieti dai dati (Stordito, Svenuto, Terrorizzato, Accecato).
+
+## 13. Esposizione al Chroma Viola, Corruzione e Umanità — ASPETTA LE SCALE DI DAVIDE
+
+Fonte: risposta di Davide A.21 (28/09/2026; `regole.json` → `corruzione.chroma_viola`), Giocatore §5.20.1 (Corruzione) e §5.21 (Umanità).
+
+- **Tracker dell'esposizione** in modalità tavolo, per ogni «Chroma Viola (frammento)» della lista: minuti di esposizione accumulati nell'ora, fascia più grave raggiunta (contatto, entro 1 Q, 1–6 Q, 6–12 Q), sospensione fuori dall'aura senza azzerare; alla scadenza dell'ora il promemoria della PS di Magia con modificatore e Intensità della fascia. Oggi l'app mostra solo le fasce nel tooltip e l'avviso nella SD.
+- **Corruzione e Umanità** come valori del personaggio (Stati di Corruzione, peggioramenti per esito, penalità da CROS e Umanità sulle PS, riduzione della capacità di sintonizzazione del §7.10): servono le scale complete di Davide.
+- Poi: collegare gli esiti della PS al peggioramento della Corruzione, senza tiri automatici (fuori perimetro).
