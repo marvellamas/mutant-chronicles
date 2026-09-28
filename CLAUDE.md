@@ -9,7 +9,8 @@ Lingua del progetto: italiano (UI, commenti, commit, documentazione). Terminolog
 Prima di qualunque altro lavoro, eseguire la procedura di controllo di `docs/manuali-drive.md` su:
 
 - i quattro Google Doc dei manuali: Giocatore, Magia, Armamenti, Equipaggiamento;
-- il Doc «E&L – Risposte e correzioni approvate» (ID `1VaqZaAe4NK5P8A956Eahua_ZT60eh3ohnR2xSqh-tVs`).
+- il Doc «E&L – Risposte e correzioni approvate» (ID `1VaqZaAe4NK5P8A956Eahua_ZT60eh3ohnR2xSqh-tVs`);
+- il Doc «per-davide.md» (ID `1Jg5rqbBtcHGE1E10xYElO_qCDCwh8K87LAInovtpF6A`): fonte unica delle domande a Davide; se è cambiato, lo si scarica in `docs/per-davide.md` e si leggono le risposte in coda (sezione 7). Protocollo: `docs/protocollo-davide.md`.
 
 Si confronta il `modifiedTime` di ciascuno con il registro.
 
@@ -94,7 +95,7 @@ Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, vei
 ## Riferimenti
 
 - `docs/studio-fattibilita.md`: analisi dei manuali, formule, punti da chiarire con Davide, stima.
-- `docs/per-davide.md`: domande aperte per Davide, errata dei manuali, testi da rileggere.
+- `docs/per-davide.md`: copia scaricata del Google Doc «per-davide.md», la fonte unica delle domande a Davide (errata, testi da rileggere, voci risolte, risposte di Davide in coda). Non si modifica a mano.
 - `docs/equipaggiamento-lotti.md`: tabelle del Manuale degli Armamenti da estrarre, in ordine, con lo stato di ogni lotto.
 - `docs/risposte-master.md`: decisioni di Davide sui punti ambigui o errati dei manuali, con data. **In caso di conflitto fra un manuale e `docs/risposte-master.md`, vale `docs/risposte-master.md`.**
 - `docs/ricognizione-avanzamento.md`: analisi dell'avanzamento di livello (cap. 8) e modello a eventi.
@@ -110,8 +111,7 @@ Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, vei
 
 - Prima di scrivere codice che tocca una regola, citare il paragrafo del manuale nel commento (es. `// §2.13: Avanzamento iniziale ≤ 3, incluso il +1 di Classe`).
 - Quando un dato del manuale è ambiguo, non inventare: mettere un `TODO(Davide)` nel JSON o nel codice e segnalarlo a Marcello a fine sessione.
-- `docs/per-davide.md` è l'unico elenco delle domande aperte per Davide. Ogni volta che si **crea** un `TODO(Davide)`, si aggiunge la voce nella sezione A di `docs/per-davide.md`. Ogni volta che se ne **chiude** uno (Davide ha risposto): si toglie la voce da `docs/per-davide.md`, si aggiunge una riga datata in `docs/risposte-master.md`, si applica la decisione nei dati e si toglie il TODO.
-- Ogni volta che una sessione cambia `docs/per-davide.md`, nel riepilogo finale si consegna il testo pronto da incollare nel Google Doc «Per Davide» (link fisso: non si rigenera; lo incolla Marcello), nel formato di `docs/protocollo-davide.md` §2bis, e si aggiorna il registro in quel paragrafo.
+- Le domande a Davide stanno nel Google Doc «per-davide.md» (fonte unica, link fisso) e seguono `docs/protocollo-davide.md`. Quando si **crea** un `TODO(Davide)`, la voce A.n nuova va nel «pacchetto per il Doc» di fine sessione (§5 del protocollo). Quando Davide **risponde** (in coda al Doc, sezione 7): riga datata in `docs/risposte-master.md`, decisione applicata nei dati, TODO tolto, e nel pacchetto lo spostamento della voce nella sezione «Risolte». Claude Code non scrive nei Google Doc e non modifica a mano `docs/per-davide.md`: il pacchetto lo applica Cowork (o Marcello).
 - Commit piccoli e descrittivi, in italiano.
 
 ## Come trattare i prompt di Marcello

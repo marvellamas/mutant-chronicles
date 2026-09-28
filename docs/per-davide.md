@@ -1,21 +1,16 @@
 # Per Davide — domande aperte ed errata dei manuali
 
-Aggiornato al 28 settembre 2026, mattina. Questo è l'unico elenco da tenere d'occhio. Le voci con risposta spariscono da qui e finiscono, con la data, in `docs/risposte-master.md` (che in caso di conflitto vale più del manuale).
+Aggiornato al 28 settembre 2026.
 
-Come rispondere: a voce a Marcello, oppure scrivendo direttamente sotto la domanda nel Google Doc. Ogni domanda dice cosa fa l'app *nel frattempo*, così se non rispondi non si blocca nulla: applica un'ipotesi e la segnala.
+**Istruzioni per Davide (e per l'AI che usi per rispondere).**
 
----
+- Questo è l'unico documento con le domande dell'app Mutant. Il link resta sempre questo: non ne esistono altri e non se ne creano di nuovi.
+- **Rispondi in coda**, nella sezione **7. Risposte di Davide**, alla fine del documento: un blocco per risposta, con il numero della domanda (per esempio «A.23»), la data e il testo. Anche «confermo il Nel frattempo» è una risposta valida.
+- Non modificare, spostare o cancellare le domande: lo facciamo noi. Quando una risposta è recepita e la funzione è implementata nell'app, la voce passa nella sezione **6. Risolte**, con la data.
+- Le correzioni ai manuali le fai nei Doc dei manuali, come sempre. Il Doc «E&L – Risposte e correzioni approvate» resta tuo: se ci scrivi, lo leggiamo comunque.
+- Ogni domanda dice cosa fa l'app *nel frattempo*: se non rispondi non si blocca nulla, l'app applica l'ipotesi indicata.
 
-## 0. Risposte ricevute il 26/09 — grazie
-
-Le voci A.1–A.4 (descrizioni delle Caratteristiche e Volontà su CAR, 14 schede dei Talenti di magia, Potenziale Mistico solo per gli Usufruitori, tipo di tre Talenti Liberi) sono **recepite nell'app** e registrate con la data in `docs/risposte-master.md`; i testi completi sono in `docs/risposte-master-2026-09-26.md` (copia del Google Doc *E&L – Risposte e correzioni approvate*).
-
-Dalle versioni successive dello stesso Doc e dei manuali:
-- **durata di tre Tecniche Interiori** (la vecchia A.5): recepita;
-- **equipaggiamento iniziale** (A.6): tutte le 25 dotazioni di Classe, gli armamenti corporativi di base (Armamenti §7.22), i crediti iniziali e gli acquisti (27/09, E&L A.5.4–A.5.30): recepiti nel passo «Equipaggiamento iniziale». Restano da definire le pistole corporative (A.33);
-- **PV e PM attuali al passaggio di livello** (§8.1.2, la vecchia A.15): recepita;
-- **Armamenti v0.52 e v0.53** (27/09): elmetti (§7.21), modelli corporativi di base (§7.22) e catalogo dei rinforzi (§7.23) sono nell'app; le proprietà di tutte le armature corporative entrano nei valori della scheda;
-- **Manuale del Giocatore del 27/09**: Addestramenti a 76 punti e 10 Punti Abilità Liberi: recepiti (vedi A.52 per la conferma).
+Le sezioni: 1. Domande che bloccano un lavoro in corso · 2. Domande di rifinitura · 3. Da correggere nella prossima edizione dei manuali · 4. Da rileggere · 5. Manuali che l'app aspetta · 6. Risolte · 7. Risposte di Davide.
 
 ---
 
@@ -40,10 +35,10 @@ Il manuale non lo dice.
 ### Attacco corpo a corpo (utility al tavolo)
 
 **A.22 — Danno base senz'armi.** Nessun manuale lo scrive. Serve il dado (e se FOR aggiunge qualcosa).
-*Nel frattempo:* il pannello «Attacca!» senz'armi chiede il danno in un campo del personaggio, vuoto con un avviso finché non lo si scrive; Arti Marziali dà 1d6 (§8.6.1). `regole.json` → `attacco_ravvicinato.senz_armi`.
+*Nel frattempo:* il pannello «Attacca!» senz'armi chiede il danno in un campo del personaggio, vuoto con un avviso finché non lo si scrive; Arti Marziali dà 1d6 (§8.6.1).
 
 **A.23 — Mano non dominante.** Ambidestro (§8.6.1) "elimina il normale −4 VA quando si usa soltanto la mano non dominante", ma quel −4 non è definito da nessuna parte. Confermi −4 alle Prove per colpire con la mano non dominante?
-*Nel frattempo:* −4 solo quando il giocatore dichiara di attaccare con la sola mano non dominante; Ambidestro lo elimina; in Combattere con due armi resta il solo −4 della manovra (§5.7). `attacco_ravvicinato.mano_non_dominante`.
+*Nel frattempo:* −4 solo quando il giocatore dichiara di attaccare con la sola mano non dominante; Ambidestro lo elimina; in Combattere con due armi resta il solo −4 della manovra (§5.7).
 
 **A.24 — Incalzare (§5.5).** È una Prova per colpire contro le Difese o una Prova contrapposta?
 *Nel frattempo:* Prova per colpire a −4 contro le Difese del bersaglio.
@@ -61,7 +56,7 @@ Il manuale non lo dice.
 *Nel frattempo:* l'app applica le regole nuove (fonte corrente). Nei personaggi già creati i VA salgono da soli con le basi nuove. I punti mancanti della creazione e dei livelli 4, 8, 12, 16, 20 già presi si assegnano dall'avviso «Regole aggiornate» in cima alla scheda («Assegna», un evento alla volta, con i limiti di Avanzamento di quel livello); finché mancano, non si sale di livello. Se un domani i punti calassero, quelli in più non verrebbero tolti ma solo segnalati.
 
 **A.33 — Armamenti corporativi di base: le pistole (E&L A.5.27 e A.5.30, Giocatore §2.16.27).** *Aggiornamento del 27/09, 11:19:* fucili, armature e scudi sono definiti (A.5.30, Armamenti §7.22) e sono nell'app. Per le pistole E&L A.5.30 dice «Le pistole restano quelle già definite» e il §2.16.27 «Le pistole mantengono i modelli già definiti», ma nessuno dei Doc condivisi indica quale modello corporativo corrisponde a Pistola semiautomatica e Revolver per Bauhaus, Capitol, Cybertronic, Fratellanza, Imperiali e Mishima. Vuol dire che le pistole restano il profilo commerciale anche per le Corporazioni, oppure c'è una tabella che non vediamo?
-*Nel frattempo:* per le pistole si assegna il profilo commerciale con la nota «modello corporativo da definire (A.5.27)». Gli abbinamenti vanno in `data/dotazioni.json` → `corporativi.abbinamenti` e l'app li usa subito.
+*Nel frattempo:* per le pistole si assegna il profilo commerciale con la nota «modello corporativo da definire (A.5.27)».
 
 **A.35 — Acquisti iniziali: valore ceduto maggiore del prezzo (§2.16.29).** Il paragrafo dice che si paga la differenza; se gli armamenti ceduti valgono più del nuovo oggetto (per esempio si cede l'armatura da 1.500 per un'arma da 800), la differenza torna in crediti o si perde?
 *Nel frattempo:* il conguaglio non scende sotto zero (la differenza si perde) e l'app lo segnala accanto all'acquisto.
@@ -85,9 +80,9 @@ Il manuale non lo dice.
 *Nel frattempo:* le scelte sopra; Tiratore Imboscato, Rapidità Operativa, Punto Vitale e Raffica Estesa compaiono come promemoria nel risultato.
 
 **A.37 — Ricarica di fucili a pompa e doppiette (Armamenti §7.20.2, Giocatore §5.1.1).** Il §7.20.2 esclude dai caricatori amovibili i revolver e i «serbatoi fissi». La scheda tratta come armi a inserimento (si infilano le cartucce sciolte fino alla capacità) i revolver, i fucili a pompa e le doppiette, commerciali e corporativi (famiglie «Revolver», «Fucili a pompa», «Fucili a pompa e doppiette»), compresi M310 (capacità 20) e SA SG2001 (capacità 10). Tutte le altre armi a proiettile usano un caricatore amovibile. È corretto? *Aggiornamento del 27/09, 11:19:* per i fucili a pompa di base del §7.22.2 il manuale lo conferma («serbatoio fisso della capacità CC»); resta la domanda per gli altri modelli corporativi.
-*Nel frattempo:* `munizioni.json` → `ricarica.inserimento_singolo`; per cambiare un'arma basta spostarla da lì.
+*Nel frattempo:* come descritto sopra; se un'arma va trattata diversamente, basta dirlo.
 
-**A.36 — Effetti degli oggetti: situazionali o per un uso specifico? (docs/effetti-oggetti.md)** La scheda distingue i bonus che il giocatore accende al tavolo quando ricorre una circostanza (corredo di sopravvivenza nell'ambiente scelto, abiti eleganti in un ambiente formale) da quelli che valgono solo per un tipo di Prova (valigetta: esaminare tracce; kit: pronto soccorso), mostrati a parte. Casi da confermare: Binocolo e corredi da ricognizione («dettagli lontani», «osservazioni attraverso le ottiche») trattati come situazionali; Corredo di orientamento come uso specifico; il «+2 VA a Medicina» dei Kit trauma limitato al pronto soccorso. Inoltre: fra i bonus degli oggetti per la stessa Prova vale solo il maggiore (Giocatore §1.4.1, «un solo modificatore complessivo per la qualità degli strumenti»), anche per abiti e binocolo: va bene?
+**A.36 — Effetti degli oggetti: situazionali o per un uso specifico?** La scheda distingue i bonus che il giocatore accende al tavolo quando ricorre una circostanza (corredo di sopravvivenza nell'ambiente scelto, abiti eleganti in un ambiente formale) da quelli che valgono solo per un tipo di Prova (valigetta: esaminare tracce; kit: pronto soccorso), mostrati a parte. Casi da confermare: Binocolo e corredi da ricognizione («dettagli lontani», «osservazioni attraverso le ottiche») trattati come situazionali; Corredo di orientamento come uso specifico; il «+2 VA a Medicina» dei Kit trauma limitato al pronto soccorso. Inoltre: fra i bonus degli oggetti per la stessa Prova vale solo il maggiore (Giocatore §1.4.1, «un solo modificatore complessivo per la qualità degli strumenti»), anche per abiti e binocolo: va bene?
 *Nel frattempo:* classificazione e regola come descritto; nessun effetto cambia il totale da regole né la stampa, tranne la penalità dell'armatura al lancio con Potere, che compare nel foglio Magia.
 
 **A.34 — Oggetti della dotazione senza scheda di catalogo (§2.16).** 44 oggetti delle dotazioni non hanno ancora peso, prezzo e Qualità: gli 11 della dotazione comune, poi Binocolo, Registratore audiovisivo, Monocolo periscopico, Rilevatore ambientale, Comunicatore da squadra, Tenda, Lampada frontale, Lanterna elettrica, Maschera filtrante, Kit di videosorveglianza, Focus personale, Testo dottrinale e i Corredi (sopravvivenza ambientale, orientamento, assalto verticale, scasso, camuffamento, agricolo, artigianale, manutenzione, elettronico, ricerca documentale, analisi da campo, amministrativo, scenico, rituale), Abiti eleganti e da viaggio, Completo cerimoniale, Strumento musicale, Terminale multimediale, Ricarica per il Kit trauma. Arriveranno con i cap. 2–8 del Manuale dell'Equipaggiamento?
@@ -130,7 +125,7 @@ Il manuale non lo dice.
 **A.42 — Spazzata senz'armi (§5.12).** Il §5.12 non dice se la Spazzata si fa senz'armi; il Lottatore l'ottiene con Combattimento Multiplo. Senza quel Talento è ammessa?
 *Nel frattempo:* senz'armi l'app non propone la Spazzata; Combattimento Multiplo resta un promemoria.
 
-### Stati: categorie di Prove (docs/ricognizione-stati.md)
+### Stati: categorie di Prove
 
 **A.51 — Quali Abilità sono nelle categorie di Prove degli Stati (vista, udito, fisiche)?** Il §5.18 e il §5.5 nominano categorie senza elencarle. L'app usa queste liste (regole.json → categorie_prove), da confermare:
 - «azioni fisiche ravvicinate» (A Terra): Armi da guerra, Armi da mischia, Corpo a corpo, Difese; l'equilibrio è Atletica per quell'uso;
@@ -139,7 +134,7 @@ Il manuale non lo dice.
 - «azioni fisiche» (Immobilizzato, Rallentato, carico §5.2.6; già domanda A.16): Armi da lancio, Armi leggere, Armi medie, Armi pesanti, Armi da guerra, Armi da mischia, Corpo a corpo, Difese, Atletica, Furtività.
 *Nel frattempo:* queste quattro liste (regole.json → categorie_prove: fisiche, fisiche_ravvicinate, vista, udito).
 
-### AR e PI (docs/ricognizione-ar-pi.md)
+### AR e PI
 
 **A.43 — AR per zona del corpo?** Il Giocatore §5.10 dice che le AC «non assegnano locativi»; la Magia (sez. 7, Armatura Mistica) parla di «Area Colpita del corpo» e di AC «coperte dall’equipaggiamento», ma nessuna armatura dice quali AC copre. Basta un'AR unica?
 *Nel frattempo:* un solo valore, «AR totale, di cui magica» (contro l'Etereo vale la parte magica).
@@ -168,24 +163,32 @@ Il manuale non lo dice.
 ### Chroma, non bloccanti
 
 **A.14 — Batterie da 5 PM: prezzo e profilo (§7.10).** Il manuale le cita come esempio (Rosso, Blu, Verde Comuni costo 1; Bianco Non Comune costo 2) ma senza prezzo, PI, Qualità, reperibilità. Ci dai i valori, o le togliamo finché non escono?
+*Risposta ricevuta il 28/09 (sezione 7): in implementazione.*
 
 **A.21 — Chroma Viola.** Regole rimandate. *Nel frattempo:* si può registrare un contenitore Viola come oggetto inerte (capacità, PM, sintonizzazione, nessun incantesimo alimentato). Va bene?
+*Risposta ricevuta il 28/09 (sezione 7): in implementazione.*
 
 ### Armamenti: Specializzazioni e famiglie
 
 Le tabelle corporative non dicono la famiglia dell'arma, che serve per la Specializzazione (§8.8.1). Finché non rispondi, per queste armi nessuna Specializzazione dà +1.
 
 **A.7 — Pistola mitragliatrice compatta.** Nel §7.7 sta fra le Pistole, ma ha Raffica Breve e Media. *Nel frattempo:* Pistole. Vale Mitragliatori, o entrambe?
+*Risposta ricevuta il 28/09 (sezione 7): in implementazione.*
 
 **A.8 — Pugnale e Ascia leggera lanciati.** *Nel frattempo:* al lancio Armi da Lancio, in mischia la famiglia (Coltelli e pugnali, Asce). Al lancio vale invece la famiglia, o entrambe?
+*Risposta ricevuta il 28/09 (sezione 7): in implementazione.*
 
 **A.9 — 12 armi ravvicinate corporative (§7.1.9).** Proposta: Katana, Wakizashi, Lama Mushashi, Lama Demontooth → Spade; Kriss → Coltelli e pugnali; Nunchaku, Nunchaku elettrificato, Catena chiodata → Armi flessibili; Bordone Templare → Mazze e bastoni; Elettrosega CSB600, Chainreaper, Sbudellatrice → **?**
+*Risposta ricevuta il 28/09 (sezione 7): in implementazione.*
 
 **A.10 — Scudo delle Guardie Sacre, lama estratta.** §7.1.9: 1d6+1+1d4; §7.4.10: 1d6+1d4. Quale? *Nel frattempo:* l'app mostra 1d6+1 senza lama e cita entrambi.
+*Risposta ricevuta il 28/09 (sezione 7): in implementazione.*
 
 **A.11 — 16 armi a distanza corporative (§7.8).** Proposta: Eruptor, Mefisto, Archer, Assailant → Fucili di precisione; M50, AR3000, Volcano, Invader, Shogun → Fucili d'assalto; Justifier, Purifier → Mitragliatori; Panzerknacker, Mandible, Interceptor, Airbrush, Windrider N4 → Carabine.
+*Risposta ricevuta il 28/09 (sezione 7): in implementazione.*
 
 **A.12 — Specializzazioni per analogia.** Come nel §7.7: le Armi leggere corporative sono Pistole (MP105, P1000, Nemesis 210…), le pesanti a raffica Mitragliatori (MG40, Deathlock Drum, Kensai…), le armi Plasma → Armi al Plasma (anche la pistola Hellblazer). 26 armi: se una va altrove, dillo.
+*Risposta ricevuta il 28/09 (sezione 7): in implementazione.*
 
 **A.13 — Rainy Dayer (§7.14.6).** Armi medie, gittata 30 Q, due mani. Proposta: Carabine.
 
@@ -193,7 +196,7 @@ Le tabelle corporative non dicono la famiglia dell'arma, che serve per la Specia
 
 ## 3. Da correggere nella prossima edizione dei manuali
 
-Decisioni già prese o errori evidenti: l'app segue la decisione, il testo stampato dice ancora altro. Spunta quelle già sistemate nel manuale condiviso.
+Decisioni già prese o errori evidenti: l'app segue la decisione, il testo stampato dice ancora altro. Le voci barrate sono già sistemate nel manuale condiviso.
 
 **Manuale del Giocatore**
 
@@ -228,7 +231,77 @@ Decisioni già prese o errori evidenti: l'app segue la decisione, il testo stamp
 
 ## 5. Manuali che l'app aspetta
 
-- Dal 26/09 i manuali sono Google Doc condivisi: l'app li rilegge a ogni sessione (`docs/manuali-drive.md`), non servono più i PDF.
+- Dal 26/09 i manuali sono Google Doc condivisi: l'app li rilegge a ogni sessione, non servono più i PDF.
 - Manuale dell'Equipaggiamento: il cap. 1 (0.1) è recepito (carico, PS Integrità per Qualità). Aspettiamo i cap. 2–8 e i cataloghi.
 - Manuale dei Veicoli (in stesura).
 - Manuale degli Armamenti v0.53: estratto per intero, §7.21–7.23 compresi. Restano rimandati dal manuale le Prove Salvezza, i tempi di ricarica e i ricambi del Cuirassier Attila (§7.18.1), e la riparazione degli oggetti (A.46).
+
+---
+
+## 6. Risolte
+
+Voci con risposta recepita e funzione implementata nell'app. La data è quella dell'implementazione.
+
+- **Esploratore, Specializzazioni dei Talenti a scelta; «minimo 1» ai 2 + Mod INT incantesimi; quote di Classe per macrofamiglia; incantesimi liberi di qualunque famiglia; tabella del livello massimo degli incantesimi; dadi dei PV e dei PM massimizzati al 1° livello** — risolte e implementate prima del 26/09.
+- **A.1 — Descrizioni delle Caratteristiche; Prova Salvezza Volontà su CAR** — implementata il 26/09.
+- **A.2 — Schede dei 14 Talenti di magia** (compreso Potenziale Mistico Migliorato solo per gli Usufruitori di Magia) — implementata il 26/09.
+- **A.3 — Tipo di tre Talenti Liberi** (Attivazione Tempestiva, Risorse Interiori, Tecniche Interiori Supplementari: passivi) — implementata il 26/09.
+- **Durata di tre Tecniche Interiori** (Vipera dal Cappuccio, Presa dell'Anima, Contraccolpo Interiore) — implementata il 26/09.
+- **Equipaggiamento iniziale** (E&L A.5–A.5.31): dotazioni delle 25 Classi, armamenti corporativi di base (Armamenti §7.22), crediti iniziali 1.000 + 2d6 × 100, acquisti con cessione, veicoli esclusi — implementato il 27/09. Resta aperta la sola domanda sulle pistole corporative (A.33).
+- **PV e PM attuali al passaggio di livello** (§8.1.2, E&L A.6) — implementata il 27/09.
+- **18 Talenti magici e mistici nuovi del 27/09** — recepiti nell'app il 27/09; la conferma è chiesta in A.32.
+- **Manuale degli Armamenti v0.52 e v0.53** (elmetti §7.21, modelli corporativi di base §7.22, catalogo dei rinforzi §7.23) — recepito il 28/09.
+- **Manuale del Giocatore del 27/09** (Addestramenti a 76 punti, 10 Punti Abilità Liberi) — recepito il 28/09; la conferma è chiesta in A.52.
+
+---
+
+## 7. Risposte di Davide
+
+Scrivi qui, in coda, una risposta per blocco: numero della domanda, data, testo.
+
+Le risposte qui sotto sono riportate dal documento «Per Davide» del 28/09, che non si usa più.
+
+**A.7 (Pistola mitragliatrice compatta).** Appartiene alla famiglia Pistole ai fini delle Specializzazioni. Specializzazione Pistole concede +1 VA e +1 danno anche usando Raffica Breve o Media. Specializzazione Mitragliatori non si applica a questo modello. L’Abilità utilizzata rimane Armi leggere in tutte le modalità di fuoco; la raffica non cambia la famiglia dell’arma. Nell’app il profilo deve quindi essere associato a Pistole, senza passare a Mitragliatori quando viene selezionata una raffica. Riferimenti: Manuale degli Armamenti, §7.7; Manuale del Giocatore, §8.8.1.
+
+**A.8 (Pugnale e Ascia leggera, uso ravvicinato e lancio).** La Specializzazione applicabile dipende dall’impiego. Per il Pugnale si applica Coltelli e Pugnali nell’uso ravvicinato e Armi da Lancio quando viene lanciato. Per l’Ascia leggera si applica Asce nell’uso ravvicinato e Armi da Lancio quando viene lanciata. Al lancio si usa l’Abilità Armi da lancio; possedere la Specializzazione Armi da Lancio concede +1 VA e +1 danno. Coltelli e Pugnali e Asce concedono i rispettivi benefici soltanto nell’impiego ravvicinato. Anche possedendo entrambe le Specializzazioni pertinenti all’oggetto, si applica soltanto quella relativa all’attacco effettuato, senza cumulo né scelta alternativa. Le Abilità dei profili ravvicinati restano quelle indicate nelle schede. Riferimenti: Manuale degli Armamenti, §§7.1.1 e 7.7; Manuale del Giocatore, §8.8.1.
+
+**A.9 (famiglie delle 12 armi ravvicinate corporative).** Katana, Wakizashi, Lama Mushashi e Lama Demontooth appartengono a Spade; Kriss a Coltelli e Pugnali; Nunchaku, Nunchaku elettrificato e Catena chiodata ad Armi Flessibili; Bordone Templare a Mazze e Bastoni; Elettrosega CSB600, Chainreaper e Sbudellatrice alla nuova famiglia Armi a Sega.
+
+Si aggiunge Specializzazione Armi a Sega all’elenco del Manuale del Giocatore, §8.8.1, con il normale beneficio di +1 VA e +1 danno. La classificazione ai fini della Specializzazione non modifica l’Abilità prevista dalla scheda di ciascuna arma. Per esempio, Katana utilizza Armi da guerra e Wakizashi Armi da mischia, pur appartenendo entrambe a Spade. Nell’app le dodici armi devono essere associate alle famiglie indicate e Armi a Sega deve diventare una Specializzazione selezionabile. Riferimenti: Manuale degli Armamenti, §7.1.9; Manuale del Giocatore, §8.8.1.
+
+**A.10 (Scudo delle Guardie Sacre).** Il danno base è 1d6+1 Naturale con lama ritratta e 1d6+1+1d4 Naturale con lama estratta. Si conferma il valore del §7.1.9 e si deve correggere il §7.4.10, dove manca il +1. La lama aggiunge 1d4 al danno base dello Scudo. È un unico colpo: si sommano dadi e bonus pertinenti e si applica l’Armatura una sola volta. Estrarre o ritrarre la lama costa 1 Azione Principale; il suo utilizzo non consuma PM e non richiede Sintonizzazione. La lama resta indipendente dall’attivazione di Scudo Magico. Nell’app devono comparire i due profili di danno corretti, secondo lo stato della lama. Riferimenti: Manuale degli Armamenti, §§7.1.9 e 7.4.10.
+
+**A.11 (Specializzazioni delle 16 armi a distanza corporative, §7.8, riferite al profilo principale dell’arma).**
+Fucili di Precisione: Eruptor, Mefisto, Archer, Assailant.
+Fucili d’Assalto: M50, AR3000, Volcano, Invader, Shogun, Panzerknacker.
+Mitragliatori: Justifier, Purifier.
+Carabine: Mandible, Interceptor, Airbrush, Windrider N4.
+Il Panzerknacker va quindi nei Fucili d’Assalto, anziché nelle Carabine: il suo profilo ha danno 1d6+2, FOR 5, gittata massima 100 Q e modalità di fuoco corrispondenti a quelle del M50.
+I moduli integrati mantengono la propria Specializzazione: Lanciagranate per il modulo del Volcano e Lanciafiamme per quello dell’Eruptor. L’Abilità richiesta rimane quella del profilo: Armi medie per i fucili e le carabine qui elencati, Armi pesanti per Justifier e Purifier. La Specializzazione pertinente conferisce il normale +1 al VA e +1 al danno (§8.8.1).
+
+**A.12 (Specializzazioni delle altre armi corporative per analogia con le famiglie del §7.7).** Le pistole e le pistole mitragliatrici corporative appartengono alla Specializzazione Pistole: per esempio MP105, P1000 e Nemesis 210. Le armi pesanti automatiche appartengono a Mitragliatori: per esempio MG40, Deathlock Drum, Kensai e Nimrod Autocannon. Le armi a distanza al plasma appartengono ad Armi al Plasma: per esempio Hellblazer e Plasma Intruder.
+
+Hellblazer usa esclusivamente la Specializzazione Armi al Plasma, pur richiedendo l’Abilità Armi leggere. MP105 GW e Nemesis 21 sono invece Carabine, distinte dalle rispettive pistole. Lanciafiamme, lanciarazzi e moduli integrati mantengono la propria Specializzazione.
+
+La SA30 a dardi rientra nelle Pistole: la Specializzazione conferisce +1 al VA, ma la regola Danno calibrato esclude il bonus al danno. Negli altri casi si applicano normalmente +1 al VA e +1 al danno, mantenendo l’Abilità indicata nel profilo dell’arma.
+
+**A.14 (disponibilità degli Artefatti Mistici).** Gli Artefatti Mistici sono generalmente pochi e non commercializzati; non esistono normali negozi che li vendano. La Fratellanza è l’unica a produrne in quantità, ma non li commercializza al di fuori della propria congrega. Bauhaus, Imperiali e Mishima ne producono quantità molto inferiori. Nei sistemi esterni, poco controllati dall’Imperium, si può trovare qualche Tecnomistico indipendente che li produce e li vende a prezzi elevati.
+
+**A.14 (profili delle batterie da 5 PM).** Chroma Rosso, Blu e Verde hanno ciascuno reperibilità Molto rara e valore indicativo di 10.000 crediti. Il Chroma Bianco, universale, ha reperibilità Leggendaria e valore indicativo di 50.000 crediti. Tutti e quattro i profili hanno capacità 5 PM, Qualità costruttiva Comune, PS Integrità 10, PI massimi 3 e peso 0,2 kg. Le batterie acquistate sono cariche, 5/5 PM, secondo A.19; restano le regole già previste per utilizzo e ricarica.
+
+La scala di reperibilità viene estesa a Comune, Non comune, Rara, Molto rara, Leggendaria. Leggendaria è superiore a Molto rara ed è riservata a disponibilità eccezionali introdotte dal Direttore di Gioco. Questi valori economici sono riferimenti per eventuali scambi, non un listino che garantisce l’acquisto. Deve prima esistere un produttore o possessore disposto a cedere l’oggetto; una Prova di Oratoria, da sola, non crea questa disponibilità. Valgono i vincoli di produzione e circolazione indicati sopra.
+
+La reperibilità resta distinta dalla potenza mistica e dalla Qualità costruttiva. Per le batterie da 5 PM Rosse, Blu e Verdi la potenza mistica resta Comune e il costo di Sintonizzazione 1 punto; per quelle Bianche la potenza resta Non comune e il costo di Sintonizzazione 2 punti. La reperibilità Leggendaria non porta il costo a 6 punti. I precedenti prezzi di 500 e 1.000 crediti e le reperibilità Non comune e Rara sono sostituiti dai valori approvati. A.14 è risolta.
+
+**A.21 (Chroma Viola e Corruzione passiva).** Il Chroma Viola è saturo di Energia Oscura e la sola vicinanza corrompe l’essere umano. Non è reperibile in commercio. Va trattato come una fonte di Corruzione passiva, non come una normale batteria o un oggetto inerte; la precedente soluzione provvisoria non è adottata.
+
+La frequenza della PS di Magia è una ogni ora in tutte le fasce, compreso il contatto diretto. Contatto diretto: esposizione Intensa, −2 alla PS, Intensità 2 Stati. Entro 1 Q senza contatto diretto: Normale, modificatore 0, Intensità 1 Stato. Oltre 1 Q e fino a 6 Q: Debole, +2 alla PS, Intensità 1 Stato. Oltre 6 Q e fino a 12 Q per un frammento trasportabile: +4 alla PS, Intensità 1 Stato; questa combinazione è denominata Flebile nella scala del Manuale del Giocatore, §5.20.1. Sono superati gli intervalli precedentemente proposti di 10 minuti e 1 minuto.
+
+Si applicano i normali esiti della Corruzione (§5.20.1): Successo, nessun peggioramento; Fallimento, peggioramento pari all’Intensità; Fallimento Maldestro, peggioramento pari all’Intensità più 1 Stato; Successo Magistrale, nessun peggioramento e +4 alla prossima PS di Magia contro Corruzione nella stessa Scena, per una sola Prova. Restano i modificatori pertinenti, comprese le penalità da CROS e Umanità.
+
+Raggio approvato: per un frammento trasportabile di Chroma Viola l’aura di Corruzione passiva si estende fino a 12 Q (18 metri), inclusi. Oltre questo limite il frammento non provoca esposizione passiva. Cristalli grandi e giacimenti hanno un raggio specificato dal Direttore di Gioco.
+
+Tempi approvati: la prima PS di Magia si effettua dopo un’ora complessiva di esposizione; segue una PS per ogni ulteriore ora di esposizione. Fuori dall’aura il conteggio si sospende, senza azzerare i minuti già accumulati. Cambiare distanza non provoca PS aggiuntive. Alla scadenza si usa il modificatore e l’Intensità della fascia più grave raggiunta durante quell’ora di esposizione, quindi inizia il nuovo intervallo orario. Un contatto brevissimo, da solo, non impone una PS immediata, ma contribuisce al tempo accumulato e alla gravità della prossima prova. Esempio: 10 minuti a contatto e 50 minuti a 8 Q richiedono una sola PS contro esposizione Intensa, −2 alla PS e Intensità 2 Stati.
+
+A.21: definita la gestione della Corruzione passiva del Chroma Viola. La registrazione come oggetto inerte è superata; le regole per impiegarne l’Energia Oscura restano da sviluppare.
+
