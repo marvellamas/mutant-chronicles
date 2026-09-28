@@ -1,6 +1,6 @@
 # **Per Davide — domande aperte ed errata dei manuali**
 
-Aggiornato al 28 settembre 2026\.  
+Aggiornato al 28 settembre 2026, pomeriggio.  
 **Istruzioni per Davide (e per l’AI che usi per rispondere).**
 
 > * Questo è l’unico documento con le domande dell’app Mutant. Il link resta sempre questo: non ne esistono altri e non se ne creano di nuovi.  
@@ -135,28 +135,10 @@ Il manuale non lo dice.
 **A.50 — Laser, Perforante e Incendiato contro l’AR.** Sullo stesso colpo si applica prima il dimezzamento di Laser o la sottrazione di Perforante? Perforante tocca l’AR Naturale di Pelle Corazzata e di Scudo (incantesimo)? Nell’Incendiato («ignorando l’Armatura ordinaria») la componente magica riduce il danno?  
 *Nel frattempo:* l’app non calcola il danno al bersaglio; «Attacca\!» ricorda solo l’ordine del §5.13.
 
-### **Chroma, non bloccanti**
-
-**A.14 — Batterie da 5 PM: prezzo e profilo (§7.10).** Il manuale le cita come esempio (Rosso, Blu, Verde Comuni costo 1; Bianco Non Comune costo 2\) ma senza prezzo, PI, Qualità, reperibilità. Ci dai i valori, o le togliamo finché non escono?  
-*Risposta ricevuta il 28/09 (sezione 7): in implementazione.*  
-**A.21 — Chroma Viola.** Regole rimandate. *Nel frattempo:* si può registrare un contenitore Viola come oggetto inerte (capacità, PM, sintonizzazione, nessun incantesimo alimentato). Va bene?  
-*Risposta ricevuta il 28/09 (sezione 7): in implementazione.*
 
 ### **Armamenti: Specializzazioni e famiglie**
 
-Le tabelle corporative non dicono la famiglia dell’arma, che serve per la Specializzazione (§8.8.1). Finché non rispondi, per queste armi nessuna Specializzazione dà \+1.  
-**A.7 — Pistola mitragliatrice compatta.** Nel §7.7 sta fra le Pistole, ma ha Raffica Breve e Media. *Nel frattempo:* Pistole. Vale Mitragliatori, o entrambe?  
-*Risposta ricevuta il 28/09 (sezione 7): in implementazione.*  
-**A.8 — Pugnale e Ascia leggera lanciati.** *Nel frattempo:* al lancio Armi da Lancio, in mischia la famiglia (Coltelli e pugnali, Asce). Al lancio vale invece la famiglia, o entrambe?  
-*Risposta ricevuta il 28/09 (sezione 7): in implementazione.*  
-**A.9 — 12 armi ravvicinate corporative (§7.1.9).** Proposta: Katana, Wakizashi, Lama Mushashi, Lama Demontooth → Spade; Kriss → Coltelli e pugnali; Nunchaku, Nunchaku elettrificato, Catena chiodata → Armi flessibili; Bordone Templare → Mazze e bastoni; Elettrosega CSB600, Chainreaper, Sbudellatrice → **?**  
-*Risposta ricevuta il 28/09 (sezione 7): in implementazione.*  
-**A.10 — Scudo delle Guardie Sacre, lama estratta.** §7.1.9: 1d6+1+1d4; §7.4.10: 1d6+1d4. Quale? *Nel frattempo:* l’app mostra 1d6+1 senza lama e cita entrambi.  
-*Risposta ricevuta il 28/09 (sezione 7): in implementazione.*  
-**A.11 — 16 armi a distanza corporative (§7.8).** Proposta: Eruptor, Mefisto, Archer, Assailant → Fucili di precisione; M50, AR3000, Volcano, Invader, Shogun → Fucili d’assalto; Justifier, Purifier → Mitragliatori; Panzerknacker, Mandible, Interceptor, Airbrush, Windrider N4 → Carabine.  
-*Risposta ricevuta il 28/09 (sezione 7): in implementazione.*  
-**A.12 — Specializzazioni per analogia.** Come nel §7.7: le Armi leggere corporative sono Pistole (MP105, P1000, Nemesis 210…), le pesanti a raffica Mitragliatori (MG40, Deathlock Drum, Kensai…), le armi Plasma → Armi al Plasma (anche la pistola Hellblazer). 26 armi: se una va altrove, dillo.  
-*Risposta ricevuta il 28/09 (sezione 7): in implementazione.*  
+Resta da classificare solo la Rainy Dayer (A.13): finché non rispondi, nessuna Specializzazione le dà \+1.  
 **A.13 — Rainy Dayer (§7.14.6).** Armi medie, gittata 30 Q, due mani. Proposta: Carabine.
 
 ## ---
@@ -186,7 +168,8 @@ Decisioni già prese o errori evidenti: l’app segue la decisione, il testo sta
 > * §7.13.2 / §7.15.3, §7.16.2, §7.17.3: “Articolazione da tiro” vs “di tiro”.  
 > * §7.16.2 Armatura Ashigaru: “Manutenzione agevolata” \= “Manutenzione semplice” (§7.11.4)?  
 > * §7.11.5: “Agenti equipaggi e Guardie” senza virgola.  
-> * §7.4.1 / §7.4.2 Scudo Punisher: “Grande” vs “Medio”.
+> * §7.4.1 / §7.4.2 Scudo Punisher: “Grande” vs “Medio”.  
+> * §7.4.10 Scudo delle Guardie Sacre: con la lama estratta il danno è 1d6+1+1d4 Naturale, come nel §7.1.9 (manca il \+1; risposta A.10).
 
 ## ---
 
@@ -217,7 +200,15 @@ Voci con risposta recepita e funzione implementata nell’app. La data è quella
 > * **PV e PM attuali al passaggio di livello** (§8.1.2, E\&L A.6) — implementata il 27/09.  
 > * **18 Talenti magici e mistici nuovi del 27/09** — recepiti nell’app il 27/09; la conferma è chiesta in A.32.  
 > * **Manuale degli Armamenti v0.52 e v0.53** (elmetti §7.21, modelli corporativi di base §7.22, catalogo dei rinforzi §7.23) — recepito il 28/09.  
-> * **Manuale del Giocatore del 27/09** (Addestramenti a 76 punti, 10 Punti Abilità Liberi) — recepito il 28/09; la conferma è chiesta in A.52.
+> * **Manuale del Giocatore del 27/09** (Addestramenti a 76 punti, 10 Punti Abilità Liberi) — recepito il 28/09; la conferma è chiesta in A.52.  
+> * **A.7 — Pistola mitragliatrice compatta**: Specializzazione Pistole anche in Raffica Breve e Media — implementata il 28/09.  
+> * **A.8 — Pugnale e Ascia leggera**: Coltelli e Pugnali / Asce in mischia, Armi da Lancio al lancio, mai cumulate — implementata il 28/09.  
+> * **A.9 — Famiglie delle 12 armi ravvicinate corporative** e nuova Specializzazione Armi a Sega (Elettrosega CSB600, Chainreaper, Sbudellatrice) — implementata il 28/09.  
+> * **A.10 — Scudo delle Guardie Sacre**: 1d6+1 con la lama ritratta, 1d6+1+1d4 con la lama estratta; nell’app la lama si estrae e ritrae al tavolo — implementata il 28/09.  
+> * **A.11 — Specializzazioni delle 16 armi a distanza corporative** (Panzerknacker nei Fucili d’Assalto) — implementata il 28/09.  
+> * **A.12 — Specializzazioni delle altre armi corporative per analogia**; SA30 a dardi con solo \+1 VA (Danno calibrato) — implementata il 28/09.  
+> * **A.14 — Batterie da 5 PM** (Rosso, Blu, Verde Molto rara 10.000; Bianco Leggendaria 50.000), scala di reperibilità fino a Leggendaria, disponibilità degli Artefatti Mistici — implementata il 28/09.  
+> * **A.21 — Chroma Viola come fonte di Corruzione passiva**: fasce, frequenza ed esiti nell’app; il frammento si registra nell’inventario senza PM; il conteggio dell’esposizione arriverà insieme a Corruzione e Umanità — implementata il 28/09.
 
 ## ---
 
