@@ -347,35 +347,32 @@ function riquadroPM(ctx) {
 }
 
 /**
- * Interruttori «condizione attiva» degli oggetti in uso con effetti situazionali (corredo di
- * sopravvivenza nell'ambiente scelto, abiti eleganti in un ambiente formale…): accesi, i loro
- * effetti entrano nei VA effettivi. Valore di sessione (src/sessione.js → condizioniOggetti).
+ * «Bonus/malus condizionali su Abilità»: interruttori degli oggetti in uso con effetti situazionali
+ * (corredo di sopravvivenza nell'ambiente scelto, abiti eleganti in un ambiente formale, Scudo Magico…).
+ * Accesi, i loro effetti entrano nei valori effettivi. Una fila di pillole compatte che va a capo
+ * solo se non entra; il testo completo dell'effetto nel tooltip. Valore di sessione
+ * (src/sessione.js → condizioniOggetti). La lama delle Guardie Sacre ha il suo interruttore nella
+ * scheda dell'arma (tab Combattimento).
  */
 function condizioniOggetti(ctx) {
   const effetti = (ctx.tab.scheda.equipaggiamento?.effettiOggetti ?? []).filter((e) => e.ambito === 'situazionale');
-  // stati degli attacchi (lama estratta dello Scudo delle Guardie Sacre, risposta A.10)
-  const stati = (ctx.tab.scheda.equipaggiamento?.armi ?? []).filter((w) => w.statoAlternativo);
-  if (!effetti.length && !stati.length) return null;
+  if (!effetti.length) return null;
   const perUid = new Map();
   for (const e of effetti) (perUid.get(e.uid) ?? perUid.set(e.uid, []).get(e.uid)).push(e);
   const accesi = new Set(ctx.sessione.condizioniOggetti ?? []);
-  return h('section', { class: 'riquadro condizioni-oggetti', 'aria-label': 'Condizioni degli oggetti' },
-    h('h2', {}, 'Condizioni degli oggetti'),
-    h('p', { class: 'nota' }, 'Accendi la condizione quando ricorre (ambiente, situazione formale, osservazione a distanza): l’effetto entra nel VA. Un solo bonus degli strumenti per Prova (Giocatore §1.4.1).'),
-    h('ul', { class: 'stati-tavolo' },
-      [...perUid].map(([uid, lista]) => h('li', {},
-        h('label', { class: `stato-tavolo${accesi.has(uid) ? ' attivo' : ''}` },
-          h('input', { type: 'checkbox', checked: accesi.has(uid), onchange: () => ctx.azioni.condizioneOggetto(uid) }),
-          h('span', {}, h('strong', {}, lista[0].oggetto), h('small', {}, ` · ${lista.map((e) => ((e.tipo ?? 'va') === 'va' ? `${segno(e.valore)} ${e.abilita}` : testoEffettoOggetto(e).replace(/ \(con la condizione attiva\)$/, ''))).join(', ')}`),
-            h('br', {}), h('span', { class: 'promemoria-stato' }, lista.map((e) => e.condizione).filter(Boolean).join(' ')))))),
-      stati.map((w) => {
-        const st = w.statoAlternativo;
-        return h('li', {},
-          h('label', { class: `stato-tavolo${st.acceso ? ' attivo' : ''}` },
-            h('input', { type: 'checkbox', checked: !!st.acceso, onchange: () => ctx.azioni.condizioneOggetto(st.chiave) }),
-            h('span', {}, h('strong', {}, w.nome.replace(/ \(attacco.*$/, '')), h('small', {}, ` · ${st.nome}: danno ${st.danno}`),
-              h('br', {}), h('span', { class: 'promemoria-stato' }, `Cambiare costa ${st.costo} (promemoria: l’app non conta le Azioni).`))));
-      })));
+  // nella pillola la forma breve («+2 Sopravvivenza», «+2 AR»); il testo completo nel tooltip
+  const breve = (e) => ((e.tipo ?? 'va') === 'va' ? `${segno(e.valore)} ${e.abilita}` : e.tipo === 'ar' ? `${segno(e.valore)} AR` : testoEffettoOggetto(e).replace(/ \(con la condizione attiva\)$/, ''));
+  return h('section', { class: 'riquadro condizionali-oggetti', 'aria-label': 'Bonus/malus condizionali su Abilità' },
+    h('h3', { title: 'Accendi la condizione quando ricorre (ambiente, situazione formale, osservazione a distanza): l’effetto entra nel valore. Un solo bonus degli strumenti per Prova (Giocatore §1.4.1).' },
+      'Bonus/malus condizionali su Abilità'),
+    h('div', { class: 'pillole-condizionali' }, [...perUid].map(([uid, lista]) => {
+      const acceso = accesi.has(uid);
+      const completo = `${lista[0].oggetto}: ${lista.map((e) => testoEffettoOggetto(e)).join('; ')}.${lista.map((e) => e.condizione).filter(Boolean).map((c) => ` ${c}`).join('')}`;
+      return h('label', { class: `pillola-condizionale${acceso ? ' attivo' : ''}`, title: completo },
+        h('input', { type: 'checkbox', role: 'switch', checked: acceso, 'aria-label': completo, onchange: () => ctx.azioni.condizioneOggetto(uid) }),
+        h('span', { class: 'nome-condizionale' }, lista[0].oggetto),
+        h('span', { class: 'effetto-condizionale' }, ` · ${lista.map(breve).join(', ')}`));
+    })));
 }
 
 function promemoriaPenalita(ctx, { soloSenzaEffetto = false } = {}) {

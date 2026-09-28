@@ -76,7 +76,9 @@ async function avvia() {
   }
   stato.dati = risultato.dati;
   stato.versioni = versioniDati(risultato.dati);
-  document.getElementById('versioni').textContent = stato.versioni ? `Dati: ${stato.versioni}` : '';
+  const versioni = document.getElementById('versioni');
+  versioni.textContent = stato.versioni ? `Dati: ${stato.versioni}` : '';
+  versioni.title = versioni.textContent; // la riga si tronca con «…»: il testo intero nel tooltip
   if (risultato.errori.length) return mostraErroriDati(risultato.errori);
   stato.avvisiDati = risultato.avvisi ?? [];
   inizializzaTooltip(stato.dati);

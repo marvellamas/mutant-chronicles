@@ -91,16 +91,20 @@ a { color: var(--accento); }
 
 .testata {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* sempre una riga sola: le versioni troppo lunghe si troncano con «…» */
   align-items: baseline;
-  gap: 0.25rem 1rem;
-  padding: 0.75rem 1rem;
+  gap: 0 0.75rem;
+  padding: 0.2rem 0.75rem;
   background: var(--superficie);
   border-bottom: 1px solid var(--bordo);
+  font-size: 0.8rem;
+  line-height: 1.3;
+  white-space: nowrap;
 }
-.marchio { font-weight: 700; font-size: 1.2rem; text-decoration: none; color: var(--accento); }
-.sottotitolo { color: var(--tenue); }
-.versioni { margin-left: auto; color: var(--tenue); font-size: 0.85rem; }
+.marchio { font-weight: 700; font-size: 0.95rem; text-decoration: none; color: var(--accento); flex: none; }
+.sottotitolo { color: var(--tenue); flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+/* testo completo nel tooltip (title, src/ui/app.js) */
+.versioni { margin-left: auto; color: var(--tenue); font-size: 0.72rem; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 
 main { padding: 0 1rem 6rem; max-width: 1280px; margin: 0 auto; }
 /* SD a larghezza piena: fino a 1650 px (ingranaggio della scheda, «Larghezza») */
@@ -786,6 +790,33 @@ details.sezione-tab > summary { font-weight: 700; cursor: pointer; min-height: 4
 .stato-tavolo input { width: 1.5rem; height: 1.5rem; margin: 0.05rem 0 0; flex: none; }
 .stato-tavolo.attivo { border-color: var(--attenzione); background: var(--attenzione-tenue); }
 .promemoria-stato { font-size: 0.85rem; color: var(--tenue); }
+
+/* Bonus/malus condizionali su Abilità (tab Abilità): una fila di pillole con interruttore, che va a
+   capo solo se non entra; intestazione discreta come le altre h3 */
+.condizionali-oggetti { padding: 0.45rem 0.75rem; }
+.condizionali-oggetti h3 { margin: 0 0 0.35rem; font-size: 0.9rem; color: var(--tenue); font-weight: 600; cursor: help; }
+.pillole-condizionali { display: flex; flex-wrap: wrap; gap: 0.3rem 0.4rem; }
+.pillola-condizionale {
+  display: inline-flex; align-items: center; gap: 0.4rem; max-width: 100%;
+  padding: 0.1rem 0.55rem 0.1rem 0.25rem; border: 1px solid var(--bordo); border-radius: 999px;
+  background: var(--superficie); font-size: 0.8rem; line-height: 1.3; white-space: nowrap; cursor: pointer;
+}
+.pillola-condizionale .nome-condizionale { overflow: hidden; text-overflow: ellipsis; max-width: 9rem; } /* nome intero nel tooltip */
+.pillola-condizionale .effetto-condizionale { color: var(--tenue); flex: none; }
+.pillola-condizionale.attivo { border-color: var(--attenzione); background: var(--attenzione-tenue); }
+.pillola-condizionale.attivo .effetto-condizionale { color: inherit; font-weight: 600; }
+/* interruttore */
+.pillola-condizionale input[role="switch"] {
+  appearance: none; -webkit-appearance: none; flex: none; margin: 0; cursor: pointer;
+  width: 1.9rem; height: 1.1rem; border-radius: 999px; background: var(--bordo); position: relative; transition: background 0.15s;
+}
+.pillola-condizionale input[role="switch"]::after {
+  content: ''; position: absolute; top: 0.15rem; left: 0.15rem; width: 0.8rem; height: 0.8rem; border-radius: 50%;
+  background: var(--superficie); transition: transform 0.15s;
+}
+.pillola-condizionale input[role="switch"]:checked { background: var(--attenzione); }
+.pillola-condizionale input[role="switch"]:checked::after { transform: translateX(0.8rem); }
+.pillola-condizionale input[role="switch"]:focus-visible { outline: 2px solid var(--accento); outline-offset: 2px; }
 
 @media (max-width: 600px) {
   /* su telefono i menu diventano un pannello a tutta larghezza, senza uscire dallo schermo */
