@@ -3,6 +3,10 @@
 // Uso: con il server statico acceso sulla porta 8000 (python -m http.server 8000),
 //   node tools/collaudo_pdf.mjs
 // Scrive tests/collaudo/<nome>.pdf e stampa pagine, formato e avvisi della barra di stampa.
+// Controllo: esce con codice 1 se un foglio 1–3 (continuazioni comprese) supera la sua pagina, cioè
+// se il corpo, un riquadro o una colonna tagliano il contenuto o un riempitivo taglia righe vere, e
+// se manca il riquadro Punti Vita nella prima pagina del foglio 3. La misura è fatta qui, non con il
+// controllo della vista di stampa.
 // Variabili facoltative: PORTA (8000), CARTELLA (cartella dei .json e dei PDF, relativa alla
 // radice del repo: tests/collaudo; per gli esempi della SS: docs/esempi-stampa), IMMAGINI
 // (cartella dove salvare un PNG per ogni foglio, per controllare l'impaginazione), STAMPA_MAGIA
@@ -55,6 +59,26 @@ console.log(await valuta(`(async () => {
   return 'caricati ' + Object.keys(tutti).length;
 })()`));
 
+/** Fogli 1–3 che superano la pagina (eseguita nella pagina di stampa). */
+function controllaFogli() {
+  const trabocca = (el) => el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1;
+  const out = [];
+  for (const f of document.querySelectorAll('.foglio:not(.foglio-magia)')) {
+    const titolo = f.querySelector('.foglio-titolo')?.textContent ?? '?';
+    const corpo = f.querySelector('.foglio-corpo');
+    const fuori = [corpo, ...corpo.querySelectorAll('.riquadro-stampa, .riquadro-stampa > .contenuto, .colonna')].find(trabocca);
+    if (fuori) out.push(`${titolo}: supera la pagina (${fuori.closest('.riquadro-stampa')?.querySelector('h2')?.textContent ?? fuori.className})`);
+    for (const c of corpo.querySelectorAll('.riempi-righe')) {
+      const fondo = c.getBoundingClientRect().bottom + 0.5;
+      if ([...c.querySelectorAll('tbody > tr')].some((r) => !r.dataset.vuota && r.getBoundingClientRect().bottom > fondo)) out.push(`${titolo}: righe tagliate in un riempitivo`);
+    }
+  }
+  const primo = document.querySelector('.foglio-combattimento:not(.seguito)');
+  if (primo && !primo.querySelector('.f3-pv')) out.push('Combattimento: manca il riquadro Punti Vita nella prima pagina');
+  return out;
+}
+const sbordati = [];
+
 const VARIANTI = (process.env.STAMPA_MAGIA ?? '').split(',').map((x) => x.trim()).filter(Boolean);
 const NOMI_VARIANTI = { elenco: 'solo-elenco', completo: 'schede-complete' };
 const lavori = FILE.flatMap((id) => (VARIANTI.length ? VARIANTI.map((v) => ({ id, variante: v })) : [{ id, variante: null }]));
@@ -70,6 +94,7 @@ for (const { id, variante } of lavori) {
   if (variante && !conMagia && variante !== VARIANTI[0]) continue;
   const nome = variante && conMagia ? `${id}-${NOMI_VARIANTI[variante] ?? variante}` : id;
   const avvisi = await valuta(`document.querySelector('.barra-avvisi')?.innerText ?? '(nessuna barra)'`);
+  for (const x of await valuta(`(${controllaFogli})()`)) sbordati.push(`${nome}: ${x}`);
   if (IMMAGINI) {
     mkdirSync(IMMAGINI, { recursive: true });
     await cdp('Emulation.setDeviceMetricsOverride', { width: 1400, height: 1000, deviceScaleFactor: 1.5, mobile: false });
@@ -90,4 +115,9 @@ for (const { id, variante } of lavori) {
 }
 ws.close();
 edge.kill();
+if (sbordati.length) {
+  console.error(['ERRORE: fogli che superano la pagina senza continuazione:', ...sbordati.map((x) => `  ${x}`)].join('\n'));
+  process.exit(1);
+}
+console.log('Fogli 1–3: nessuno supera la pagina.');
 process.exit(0);

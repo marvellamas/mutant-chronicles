@@ -280,7 +280,9 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .specializzazioni-stampa { margin: 0.5mm 0 0; }
 .riga-colpi td { padding-top: 0.3mm; padding-bottom: 0.5mm; }
 .file-colpi { display: flex; flex-wrap: wrap; gap: 0.8mm 9mm; padding-left: 4mm; }
-.caricatore { display: flex; align-items: center; gap: 2mm; }
+.caricatore { display: flex; align-items: center; gap: 2mm; min-width: 0; max-width: 100%; }
+/* un nastro più lungo della riga (Mitragliatore leggero, 100 colpi) va a capo invece di sbordare */
+.caricatore > .fila-quadratini { flex-wrap: wrap; row-gap: 0.8mm; min-width: 0; }
 .etichetta-colpi { font-size: var(--ss-font-small); color: var(--ss-grigio); min-width: 11mm; }
 .f3-basso { flex: 1; min-height: 0; display: grid; grid-template-columns: 106mm 1fr 60mm; gap: 3mm; }
 .protezioni-stampa { margin-top: 1mm; }
@@ -295,7 +297,14 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .stati-nomi { display: flex; flex-wrap: wrap; gap: 1mm 4.5mm; margin: 1mm 0 0; padding-top: 1mm; border-top: 0.5pt solid var(--ss-linea-tenue); }
 .stati-nomi span { white-space: nowrap; }
 .f3-pv > .contenuto { gap: 1.2mm; }
-.f3-pv .righe-guida { min-height: 0; } /* lo spazio libero è quello che resta: può essere poco */
+.f3-pv .righe-guida { min-height: 14mm; } /* almeno due righe per le note */
+/* il riquadro Punti Vita non si schiaccia: massimi, AR, quadratini e due righe guida restano
+   sempre interi; se il foglio non ci sta, il resto continua nella pagina dopo (impaginaCombattimento) */
+.f3-pv { min-height: min-content; }
+.f3-pv > .contenuto { flex: 1 0 auto; } /* il contenuto conta nell'altezza minima */
+/* seconda pagina del foglio 3: Armi a tutta larghezza, sotto Equipaggiamento e i riquadri della colonna centrale */
+.f3-seguito { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 2mm; }
+.f3-seguito-basso { display: grid; grid-template-columns: 106mm 1fr; gap: 3mm; align-items: start; min-height: 0; }
 /* AR accanto ai PV massimi, stessa dimensione (grigio acciaio delle protezioni) */
 .f3-massimi { display: flex; flex-wrap: wrap; gap: 1.5mm; align-items: stretch; }
 .f3-massimi .massimo { align-self: stretch; }

@@ -2,7 +2,9 @@
 // vista digitale (docs/roadmap-equipaggiamento-e-scheda.md, §2.2). I contenuti vengono da
 // preparaStampa() (src/stampa.js); qui solo HTML e impaginazione. Regole comuni (css/stampa.css):
 // il carattere non si riduce mai (--ss-font, --ss-font-small); i riempitivi prendono lo spazio che
-// resta; se un foglio 1–3 non entra lo si segnala nella barra, senza rimpicciolire il testo.
+// resta. Il foglio 3 (Combattimento) e il foglio 4 (Magia) continuano in una pagina successiva
+// quando non entrano; se un foglio non entra comunque lo si segnala nella barra, senza rimpicciolire
+// il testo (e tools/collaudo_pdf.mjs fallisce).
 import { h, segno } from './dom.js';
 import { stemma, iconaPagina } from './immagini.js';
 import { pallini } from './tooltip.js';
@@ -52,8 +54,14 @@ function numeraPiedi(contenitore, piede) {
 }
 
 const trabocca = (el) => el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1;
+/** Righe vere (non da compilare) di un riempitivo a righe tagliate dal suo fondo. */
+const righeTagliate = (corpo) => [...corpo.querySelectorAll('.riempi-righe')].some((c) => {
+  const fondo = c.getBoundingClientRect().bottom + 0.5;
+  return [...c.querySelectorAll('tbody > tr')].some((r) => !r.dataset.vuota && r.getBoundingClientRect().bottom > fondo);
+});
 /** Il corpo del foglio o un riquadro (che taglia il contenuto) non contiene tutto. */
-const eccede = (corpo) => trabocca(corpo) || [...corpo.querySelectorAll('.riquadro-stampa, .riquadro-stampa > .contenuto')].some(trabocca);
+const eccede = (corpo) => trabocca(corpo) || [...corpo.querySelectorAll('.riquadro-stampa, .riquadro-stampa > .contenuto, .colonna')].some(trabocca)
+  || righeTagliate(corpo);
 
 /**
  * @param {object} o { stampa: risultato di preparaStampa, opzioni: preferenze di stampa
@@ -89,15 +97,26 @@ export function renderStampa({ stampa, torna, opzioni = null, cambiaOpzioni = nu
   numeraPiedi(contenitore, stampa.piede);
   caricaStile().then(() => (document.fonts?.ready ?? Promise.resolve())).then(() => {
     const fuori = [];
-    for (const f of [...contenitore.querySelectorAll('.foglio')]) {
+    const controllati = new Set();
+    // la continuazione del foglio 3 nasce nel ciclo: la lista si rilegge a ogni giro
+    for (let f; (f = [...contenitore.querySelectorAll('.foglio')].find((x) => !controllati.has(x)));) {
+      controllati.add(f);
+      if (f.classList.contains('foglio-magia') && f.classList.contains('seguito')) continue; // impaginate da impaginaMagia
       if (f.classList.contains('foglio-magia')) {
         const { pagine, pagineSchede } = impaginaMagia(contenitore, f, { ...stampa.fogli.find((x) => x.id === 'magia').dati, soloElenco: opz.magia === 'elenco' }, stampa.piede);
         stimaSchede.textContent = pagineSchede ? ` (≈ ${pagineSchede} ${pagineSchede === 1 ? 'pagina' : 'pagine'} in più)` : ' (nessuna pagina in più)';
         if (pagine > 1) avvisi.append(h('p', {}, `Il foglio Magia è su ${pagine} pagine.`));
         continue;
       }
+      if (f.classList.contains('foglio-combattimento') && !f.classList.contains('seguito')) {
+        const pagine = impaginaCombattimento(f, stampa.fogli.find((x) => x.id === 'combattimento').dati, stampa.piede);
+        if (pagine > 1) avvisi.append(h('p', {}, `Il foglio Combattimento è su ${pagine} pagine.`));
+      }
       riempiRighe(f);
-      if (eccede(f.querySelector('.foglio-corpo'))) fuori.push(f.querySelector('.foglio-titolo').textContent);
+      if (eccede(f.querySelector('.foglio-corpo'))) {
+        f.dataset.fuori = '1'; // lo legge tools/collaudo_pdf.mjs
+        fuori.push(f.querySelector('.foglio-titolo').textContent);
+      }
     }
     numeraPiedi(contenitore, stampa.piede);
     if (fuori.length) avvisi.append(h('p', { class: 'motivo' }, `Non entra nella pagina: ${fuori.join(', ')}. Il carattere non si riduce: accorcia i testi nella scheda digitale.`));
@@ -290,6 +309,88 @@ function tabellaArmi(armi) {
       a.colpi ? h('tr', { class: 'riga-colpi' }, h('td', { colspan: n }, fileColpi(a.colpi, a.piMax ? [{ etichetta: '', pi: a.piMax }] : []))) : null)));
 }
 
+/**
+ * Continuazione del foglio 3: se il contenuto non entra, ciò che non sta passa a una pagina
+ * successiva con la stessa intestazione (e da questa alla seguente, se serve). Si spezza fra i
+ * riquadri e, nelle tabelle, fra le righe (un'arma con le sue file di colpi e di PI è una riga
+ * sola): mai dentro una riga. Nella prima pagina restano la sintesi e il riquadro Punti Vita, con
+ * l'altezza minima di css/stampa.css (.f3-pv); passano, in quest'ordine: i riquadri della colonna
+ * centrale oltre il primo (Ferite), Protezioni e Armi dall'ultima se schiacciano la parte bassa, le
+ * righe dell'Equipaggiamento che il riquadro taglierebbe. Da una continuazione alla successiva
+ * passa l'ultimo elemento in ordine di lettura.
+ * @returns {number} pagine del foglio
+ */
+function impaginaCombattimento(foglio, d, piede) {
+  const corpo = foglio.querySelector('.foglio-corpo');
+  if (!eccede(corpo)) return 1;
+  const theadArmi = corpo.querySelector('.armi-stampa thead');
+  const theadEquip = corpo.querySelector('.equip-stampa thead');
+  const pagina1 = { corpo, colonna: corpo.querySelectorAll('.f3-basso > .colonna')[1], contenutoArmi: corpo.querySelector('.f3-armi > .contenuto') };
+  const pagine = [pagina1];
+
+  // pagina di continuazione: Armi (e Protezioni) a tutta larghezza, sotto Equipaggiamento e riquadri
+  const nuovaPagina = () => {
+    const armi = box({ titolo: 'Armi (continua)', classe: 'f3-armi' }, h('table', { class: 'tabella-stampa armi-stampa' }, theadArmi.cloneNode(true)));
+    const equip = box({ titolo: 'Equipaggiamento (continua)', classe: 'f3-equip-seguito' },
+      h('table', { class: 'tabella-stampa equip-stampa' }, theadEquip.cloneNode(true), h('tbody', {})));
+    const colonna = h('div', { class: 'colonna f3-seguito-colonna' });
+    const f = creaFoglio('combattimento', 'Combattimento (continua)', d, piede, () => h('div', { class: 'f3-seguito' }, armi, h('div', { class: 'f3-seguito-basso' }, equip, colonna)));
+    f.classList.add('seguito');
+    (pagine.at(-1).foglio ?? foglio).after(f);
+    const pg = { foglio: f, corpo: f.querySelector('.foglio-corpo'), colonna, contenutoArmi: armi.querySelector('.contenuto') };
+    pagine.push(pg);
+    return pg;
+  };
+  const tabArmi = (pg) => pg.contenutoArmi?.querySelector('.armi-stampa') ?? null;
+  const armiDi = (pg) => [...(tabArmi(pg)?.querySelectorAll(':scope > tbody') ?? [])];
+  const protDi = (pg) => pg.contenutoArmi?.querySelector('.protezioni-stampa') ?? null;
+  const equipDi = (pg) => [...pg.corpo.querySelectorAll('.equip-stampa tbody > tr')].filter((r) => !r.dataset.vuota);
+  // spostamenti verso la pagina dopo, sempre in testa: l'ordine di lettura si conserva
+  const verso = (k) => pagine[k + 1] ?? nuovaPagina();
+  const sposta = {
+    riquadro: (k) => verso(k).colonna.prepend(pagine[k].colonna.lastElementChild),
+    riga: (k) => verso(k).corpo.querySelector('.equip-stampa tbody').prepend(equipDi(pagine[k]).pop()),
+    protezioni: (k) => { const pg = verso(k); pg.contenutoArmi.insertBefore(protDi(pagine[k]), tabArmi(pg).nextSibling); },
+    arma: (k) => { const t = tabArmi(verso(k)); t.insertBefore(armiDi(pagine[k]).pop(), t.querySelector(':scope > tbody')); },
+  };
+
+  for (let k = 0; k < pagine.length && k < 10; k++) {
+    const pg = pagine[k];
+    for (let giro = 0; giro < 300 && eccede(pg.corpo); giro++) {
+      const unita = pg.colonna.children.length + equipDi(pg).length + (protDi(pg) ? 1 : 0) + armiDi(pg).length;
+      if (k > 0 && unita <= 1) break; // un elemento solo più alto della pagina: resta, e lo si segnala
+      if (k === 0) {
+        const centrale = trabocca(pg.colonna);
+        const pv = pg.corpo.querySelector('.f3-pv');
+        if (centrale && pg.colonna.children.length > 1) sposta.riquadro(k);
+        else if (trabocca(pg.corpo) || centrale || (pv && (trabocca(pv) || trabocca(pv.querySelector(':scope > .contenuto'))))) {
+          if (protDi(pg)) sposta.protezioni(k);
+          else if (armiDi(pg).length) sposta.arma(k);
+          else if (pg.colonna.children.length) sposta.riquadro(k);
+          else break;
+        } else if (righeTagliate(pg.corpo) && equipDi(pg).length) sposta.riga(k);
+        else break;
+      } else if (pg.colonna.children.length) sposta.riquadro(k);
+      else if (equipDi(pg).length) sposta.riga(k);
+      else if (protDi(pg)) sposta.protezioni(k);
+      else if (armiDi(pg).length > 1) sposta.arma(k);
+      else break;
+    }
+  }
+
+  // riquadri rimasti vuoti
+  for (const pg of pagine) {
+    if (tabArmi(pg) && !armiDi(pg).length) tabArmi(pg).remove();
+    const boxArmi = pg.contenutoArmi?.closest('.riquadro-stampa');
+    if (boxArmi && !boxArmi.querySelector('table')) boxArmi.remove();
+    if (pg.foglio) {
+      const boxEquip = pg.corpo.querySelector('.f3-equip-seguito');
+      if (boxEquip && !equipDi(pg).length) boxEquip.remove();
+    }
+  }
+  return pagine.length;
+}
+
 function foglioCombattimento(d) {
   const s = d.sintesi;
   const mov = s.movimento;
@@ -441,6 +542,7 @@ function impaginaMagia(contenitore, foglio, d, piede) {
       conIndice ? box({ titolo: 'Incantesimi (continua)', classe: 'f4-indice-seguito' }, tabellaIndice(resto), d.soloElenco ? notaSoloElenco() : null) : null,
       h('div', { class: 'colonne-schede' }),
     ]);
+    f.classList.add('seguito');
     ultima.after(f);
     ultima = f;
     pagine++;
