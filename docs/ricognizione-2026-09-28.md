@@ -72,3 +72,11 @@ Nessuna di sostanza. Tre punti da annotare:
    - Armi medie: INT.
    Da confermare con Davide come nuova domanda, con la regola applicata nel frattempo.
 3. **Versione dell'Equipaggiamento.** E&L 15 cita l'Equipaggiamento «v0.3». Il Doc è intitolato 0.3; nel registro compariva ancora 0.1. Si aggiorna il registro.
+
+## Esito (29/09)
+
+Le voci 1–19 sono recepite: decisioni 44–61 di `docs/risposte-master.md`, test in
+`tests/risposte-el-19.test.js`. Restano per una sessione successiva le voci M1–M9 e i lotti dell'Equipaggiamento.
+Due scelte dell'app, da confermare con Davide (A.54, A.55 nel pacchetto per il Doc):
+- il revolver a tamburo (una operazione riempie il tamburo);
+- la Caratteristica del bonus al danno presa dall'Abilità dell'arma.
