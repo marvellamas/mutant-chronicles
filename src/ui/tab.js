@@ -938,8 +938,8 @@ function schedaSenzArmi(ctx) {
       h('h3', {}, a.nome, h('small', { class: 'sigla' }, ` · ${a.abilita}`)),
       a.va !== null ? h('button', { type: 'button', class: 'btn primario btn-attacca', onclick: () => { ctx.ui.attacco = { uid: SENZ_ARMI, passo: 0 }; ctx.azioni.ridisegna(); } }, 'Attacca!') : null),
     h('div', { class: 'arma-valori' },
-      h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), a.va === null ? h('strong', {}, '—') : valoreEffettivo(`VA senz’armi (${a.abilita})`, a.vaEffettivo, a.va, a.scomposizione, { pillola: true })),
-      h('p', {}, h('span', { class: 'sigla' }, 'Danno '), h('strong', { title: testoBonusCaratteristica(a.bonusCaratteristica) ?? null }, a.danno.una_mano ?? '—'),
+      h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), a.va === null ? h('strong', {}, '—') : valoreEffettivo(`VA senz’armi (${a.abilita})`, a.vaEffettivo, a.va, a.scomposizione, { pillola: true, provenienza: a.provenienza })),
+      h('p', {}, h('span', { class: 'sigla' }, 'Danno '), dannoConProvenienza(a, a.danno.una_mano ?? '—'),
         h('small', { class: 'sigla' }, ` (${a.dannoOrigine === 'base' ? 'base' : a.dannoOrigine}${a.bonusCaratteristica?.bonus ? `, ${a.bonusCaratteristica.sigla} ${segno(a.bonusCaratteristica.bonus)}` : ''})`)),
       h('p', {}, h('span', { class: 'sigla' }, 'Portata '), `${a.portataQ} Q`)),
     ultima ? h('p', { class: 'nota' }, `Ultima Manovra: ${ultima.nome}`) : null);

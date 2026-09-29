@@ -7,6 +7,7 @@
 // tiro con Armi da lancio).
 import { voce, somma, talentiAttacco } from './attacco.js';
 import { avvisiStati } from './condizioni.js';
+import { provenienza, righeDaScomposizione, rigaConDettaglio } from './provenienza.js';
 import { bonusDannoCaratteristica } from './calc.js';
 import { aggiungiDanno } from './equipaggiamento.js';
 
@@ -62,7 +63,7 @@ export function contenitoriLancio(personaggio, incantesimo) {
  * Lancio di un incantesimo conosciuto.
  * @param personaggio { scheda (calcolaScheda con la sessione), sessione }
  * @param incantesimo voce di incantesimi.json (con meccanica)
- * @returns {{ pm_costo, fonte_pm, prova_richiesta, motivi_prova, va_potere_finale, scomposizione, cumulo,
+ * @returns {{ pm_costo, fonte_pm, prova_richiesta, motivi_prova, va_potere_finale, provenienza: { totale, righe }, cumulo,
  *   tiro_per_colpire?, contatto?, salvezza_bersaglio?, danno: {sigla, valore, bonus, voci: [{colonna, base, testo}]}|null,
  *   azioni, concentrazione, impossibile, promemoria }}
  */
@@ -122,6 +123,8 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
   // 5. VA di Potere per lanciare: Potere effettivo (con la penalità d'armatura al lancio, uso specifico)
   const potere = (scheda?.abilita ?? []).find((a) => a.nome === 'Potere');
   const scomposizione = (potere?.scomposizione?.length ? potere.scomposizione : [voce('VA Potere', potere?.effettivo ?? potere?.totale ?? 0, 'regole')]).map((x) => ({ paragrafo: null, ...x }));
+  // provenienza (src/provenienza.js): VA di Potere con la sua scomposizione in dettaglio, poi le voci del lancio
+  const nBase = scomposizione.length;
   const usoLancio = (potere?.usiSpecifici ?? []).find((u) => u.uso === 'lancio');
   if (usoLancio?.modificatore) scomposizione.push(voce(`Lancio: ${usoLancio.oggetti.map((o) => o.oggetto).join(', ')}`, usoLancio.modificatore, 'equipaggiamento', 'Armamenti §7.11.1'));
   // penalità di livello (colonna Taumaturgo o altri utilizzatori), più difficile di una categoria con l'Anticipazione
@@ -213,7 +216,7 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
     prova_richiesta: prova,
     motivi_prova: motiviProva,
     va_potere_finale: va,
-    scomposizione,
+    provenienza: provenienza([rigaConDettaglio('VA Potere', somma(scomposizione.slice(0, nBase)), potere?.provenienza), ...righeDaScomposizione(scomposizione.slice(nBase))], va),
     cumulo: { applicati, esclusi: esclusiCumulo },
     tiro_per_colpire: tiro,
     contatto,

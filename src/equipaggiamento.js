@@ -17,7 +17,7 @@
 // peso: kg per unità (Equipaggiamento §1.6, §1.10), per il carico (src/carico.js).
 
 import { bonusDannoCaratteristica, caratteristicaDanno } from './calc.js';
-import { riga } from './provenienza.js';
+import { riga, rigaBonusCaratteristica as rigaBonus } from './provenienza.js';
 import { calcolaAR, oggettiConPi, oggettiSenzaPi } from './protezione.js';
 
 export const TIPI = ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'elmetto', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'altro'];
@@ -734,11 +734,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   };
 
   // §5.13: riga del bonus di Caratteristica al danno, con il tetto del livello quando scatta
-  const rigaBonusCaratteristica = (bc) => {
-    const fascia = bonusDannoCaratteristica(bc.valore, Number.MAX_SAFE_INTEGER, dati.regole);
-    const nota = bc.esclusoDa ? `escluso da ${bc.esclusoDa}` : fascia > bc.bonus ? `fascia +${fascia}, tetto +${bc.bonus} al ${base.livello ?? 1}° livello (§5.13)` : '§5.13';
-    return riga(`${bc.sigla} ${bc.valore}`, bc.bonus, nota);
-  };
+  const rigaBonusCaratteristica = (bc) => rigaBonus(bc, bonusDannoCaratteristica(bc.valore, Number.MAX_SAFE_INTEGER, dati.regole), base.livello);
 
   // Armi impugnate: VA per colpire, danno, Parata
   const armi = [];

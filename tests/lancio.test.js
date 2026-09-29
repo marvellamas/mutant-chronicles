@@ -48,8 +48,11 @@ test('livello 6 con Anticipazione: 12 PM, Potere −2; con Architetto Arcano 0 (
   assert.equal(r.pm_costo, 12);
   assert.equal(r.prova_richiesta, true);
   assert.ok(r.motivi_prova.some((m) => m.startsWith('Anticipazione')));
-  assert.deepEqual(r.scomposizione.slice(1).map((x) => [x.etichetta, x.valore, x.paragrafo]), [['Livello 6, con Anticipazione (Taumaturgo)', -2, 'Magia sez. 12.3']]);
+  assert.deepEqual(r.provenienza.righe.slice(1).map((x) => [x.fonte, x.valore, x.paragrafo]), [['Livello 6, con Anticipazione (Taumaturgo)', -2, 'Magia sez. 12.3']]);
   assert.equal(r.va_potere_finale, 8);
+  // provenienza (src/provenienza.js): VA Potere con il dettaglio, poi le voci del lancio; la somma è il VA
+  assert.equal(r.provenienza.righe.filter((x) => !x.escluso).reduce((s, x) => s + x.valore, 0), r.va_potere_finale);
+  assert.equal(r.provenienza.righe[0].fonte, 'VA Potere');
   const a = lancia(pg({ classe: [ARMONIZZAZIONE, ARCHITETTO] }), 'Irrobustire', { versione: 6, anticipazione: 0 });
   assert.equal(a.va_potere_finale, 10);
   assert.equal(a.pm_costo, 11); // raddoppio, poi Armonizzazione −1
@@ -80,7 +83,7 @@ test('Ingaggio: −2 e Prova obbligatoria; con Lancio in Combattimento 0 ma la P
 test('componenti mancanti: −2 ciascuna fino a −6, Prova obbligatoria; Escludere il Focus; voce obbligatoria', () => {
   const r = lancia(pg(), 'Irrobustire', { versione: 1, componentiMancanti: ['focus', 'gesto'] });
   assert.deepEqual([r.prova_richiesta, r.va_potere_finale], [true, 6]);
-  assert.equal(r.scomposizione.at(-1).etichetta, 'Componenti mancanti: Focus, Gesto');
+  assert.equal(r.provenienza.righe.at(-1).fonte, 'Componenti mancanti: Focus, Gesto');
   const tre = lancia(pg(), 'Irrobustire', { versione: 1, componentiMancanti: ['focus', 'gesto', 'invocazione'] });
   assert.equal(tre.va_potere_finale, 4); // −6, il massimo
   const esc = lancia(pg({ liberi: ['escludere-il-focus'] }), 'Irrobustire', { versione: 1, componentiMancanti: ['focus'] });

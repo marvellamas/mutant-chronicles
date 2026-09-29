@@ -1156,10 +1156,8 @@ body.con-sfondo::before {
 .fascia.malus { color: var(--errore); }
 .va-attacco { font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
 .voce-info.pillola-attacco { font-size: 2rem; padding: 0.1rem 0.9rem; }
-.scomposizione-attacco td { text-align: right; font-variant-numeric: tabular-nums; }
-.scomposizione-attacco td.malus { color: var(--errore); }
-.scomposizione-attacco td.bonus { color: var(--ok); }
-.scomposizione-attacco tr.totale th, .scomposizione-attacco tr.totale td { font-weight: 700; border-top: 2px solid var(--bordo); }
+/* provenienza del VA nei pannelli «Attacca!» e «Lancia!»: la stessa lista dei tooltip (src/ui/tooltip.js) */
+.provenienza-attacco .tooltip-provenienza { max-width: 32rem; }
 .promemoria-attacco { padding-left: 1.1rem; font-size: 0.9rem; color: var(--tenue); }
 .attacco-azioni { display: flex; flex-direction: column; gap: 0.35rem; margin-top: 0.75rem; }
 .btn-grande { min-height: 56px; font-size: 1.15rem; }

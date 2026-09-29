@@ -40,11 +40,11 @@ test('§5.11, esempio: VA 18 a 800 Q con mirino di Precisione e Tiro a Lunga Dis
   assert.equal(attacca(pg({ liberi: ['tiro-a-lunga-distanza'] }), a, { distanza: 800, mirato: true }).azioni_principali, 4);
 });
 
-test('scomposizione completa: ogni voce con fonte e paragrafo, la somma è il VA finale', () => {
+test('provenienza completa: ogni riga con categoria e paragrafo, la somma è il VA finale', () => {
   const r = attacca(pg({ liberi: ['tiro-a-lunga-distanza'] }), arma({ mirino: PRECISIONE }), {
     distanza: 800, movimento: 'passo', bersaglio: { movimento: 'corsa', copertura: 'leggera' },
   });
-  assert.deepEqual(r.scomposizione.map((x) => [x.etichetta, x.valore, x.fonte, x.paragrafo]), [
+  assert.deepEqual(r.provenienza.righe.map((x) => [x.fonte, x.valore, x.categoria, x.paragrafo ?? null]), [
     ['VA Armi medie', 18, 'regole', null],
     ['Bersaglio in corsa', -2, 'bersaglio', 'Giocatore §5.2'],
     ['Bersaglio in Copertura leggera', -2, 'copertura', 'Giocatore §5.8'],
@@ -84,7 +84,7 @@ test('Raffica Breve: +2, con Raffica Breve Migliorata +4; munizioni e colpi a se
   assert.equal(r.colpi_a_segno, 1);
   const m = attacca(pg({ liberi: ['raffica-breve-migliorata'] }), arma(), { modalita: 'RB', distanza: 5 });
   assert.equal(m.va_finale, 22);
-  assert.equal(m.scomposizione.at(-1).etichetta, 'Raffica Breve (Raffica Breve Migliorata)');
+  assert.equal(m.provenienza.righe.at(-1).fonte, 'Raffica Breve (Raffica Breve Migliorata)');
   // Ottimizzare Proiettili (Artigliere): la Raffica Lunga consuma 8 colpi, i colpi a segno restano 5
   const l = attacca(pg({ classe: [classeTalento('Artigliere', 'Ottimizzare Proiettili')] }), arma(), { modalita: 'RL', distanza: 5 });
   assert.deepEqual([l.munizioni, l.colpi_a_segno, l.va_finale], [8, 5, 12]);
@@ -187,7 +187,7 @@ test('personaggio reale: parte dal VA per colpire effettivo della scheda (Specia
   const p = scheda.equipaggiamento.armi[0];
   const r = calcolaAttaccoDistanza({ scheda, sessione }, p, { distanza: 15 }, dati);
   assert.equal(r.va_finale, p.vaEffettivo - 2);
-  assert.ok(r.scomposizione.some((x) => x.fonte === 'ferite'));
+  assert.ok(r.provenienza.righe.some((x) => x.categoria === 'ferite'));
   // DES 7 al 1° livello: +1 al danno delle Armi leggere (§5.13)
   assert.equal(r.danno_per_colpo, '1d6+1');
   assert.equal(attaccoBase(p).va_finale, p.vaEffettivo);

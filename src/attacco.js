@@ -1,5 +1,5 @@
 // Utility d'attacco (backlog voci 5 e 6): funzioni pure, nessun tiro di dado. Il giocatore tira al
-// tavolo; qui si calcolano VA finale con la scomposizione, Azioni, munizioni, colpi a segno, danno e
+// tavolo; qui si calcolano VA finale con la provenienza, Azioni, munizioni, colpi a segno, danno e
 // promemoria. Regole e valori in regole.json → attacco_distanza (Giocatore §5.2, §5.8, §5.10,
 // §5.11) e negli effetti.attacco_distanza dei Talenti; le modalità di fuoco in modalita_di_fuoco.
 //
@@ -8,9 +8,12 @@
 // con vaEffettivo e scomposizione) e si aggiungono le voci della dichiarazione, ognuna con
 // { etichetta, valore, fonte, paragrafo }. Le fonti: regole, equipaggiamento, condizioni già nella
 // base; qui movimento, bersaglio, copertura, distanza, mirino, modalità, manovra, talento, situazione.
+// Il risultato porta la `provenienza` (src/provenienza.js): le righe della base come nella SD (con la
+// scomposizione dell'Abilità in dettaglio) e, sotto, una riga per voce della dichiarazione.
 import { aggiungiDanno } from './equipaggiamento.js';
 import { bonusDannoCaratteristica } from './calc.js';
 import { avvisiStati, limitiStati } from './condizioni.js';
+import { riga, provenienza, righeDaScomposizione, righeBase, rigaConDettaglio, rigaBonusCaratteristica } from './provenienza.js';
 
 export const voce = (etichetta, valore, fonte, paragrafo = null) => ({ etichetta, valore, fonte, paragrafo });
 export const somma = (voci) => voci.reduce((s, x) => s + x.valore, 0);
@@ -38,12 +41,12 @@ const dannoBase = (arma) => (arma.mani === 2 && arma.danno?.due_mani ? arma.dann
 
 /**
  * Risultato base di un attacco (armi ravvicinate finché non arriva l'utility corpo a corpo):
- * VA per colpire effettivo con la scomposizione, danno e Parata.
+ * VA per colpire effettivo con la provenienza, danno e Parata.
  */
 export function attaccoBase(arma) {
   return {
     va_finale: arma.vaEffettivo ?? arma.va,
-    scomposizione: (arma.scomposizione ?? []).map((x) => ({ paragrafo: null, ...x })),
+    provenienza: provenienza(righeBase(arma, arma.scomposizione), arma.vaEffettivo ?? arma.va),
     danno_per_colpo: testoDanno(dannoBase(arma)),
     applicazioni: arma.ac ?? 1,
     parata: arma.parata ? { va: arma.parata.vaEffettivo ?? arma.parata.va, distanza: arma.parata.distanzaEffettiva ?? arma.parata.distanza ?? null } : null,
@@ -240,7 +243,7 @@ export function descriviManovraDistanza(id, arma, dati, T = []) {
  * @param personaggio { scheda (calcolaScheda, con la sessione), sessione }
  * @param arma una voce di scheda.equipaggiamento.armi (arma a distanza impugnata)
  * @param dichiarazione vedi dichiarazioneDistanza()
- * @returns {{ va_finale, scomposizione, azioni_principali, azioni_movimento, munizioni, colpi_a_segno, tiri,
+ * @returns {{ va_finale, provenienza: { totale, righe }, azioni_principali, azioni_movimento, munizioni, colpi_a_segno, tiri,
  *   danno_per_colpo, applicazioni, seconda_prova, impossibile: {motivo, proposta?}|null, promemoria }}
  */
 export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
@@ -251,6 +254,7 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
   const con = (k) => T.filter((t) => t.e[k] !== undefined);
   const vincoli = vincoliDistanza(personaggio, arma, d, dati);
   const scomposizione = (arma.scomposizione?.length ? arma.scomposizione : [voce(`VA ${arma.abilita}`, arma.va, 'regole')]).map((x) => ({ paragrafo: null, ...x }));
+  const nBase = scomposizione.length;
   const promemoria = [];
   // Stati attivi (regole.json → stati: azioni, limiti): avvisi e divieti dai dati
   const avvisi = avvisiStati(personaggio.sessione, dati);
@@ -431,7 +435,7 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
 
   return {
     va_finale: somma(scomposizione),
-    scomposizione,
+    provenienza: provenienza([...righeBase(arma, scomposizione.slice(0, nBase)), ...righeDaScomposizione(scomposizione.slice(nBase))], somma(scomposizione)),
     azioni_principali: azioni,
     azioni_movimento: azioniMovimento,
     munizioni,
@@ -450,7 +454,7 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
 // ---------------------------------------------------------------------------
 // Attacco ravvicinato e senz'armi (Giocatore §1.6, §5.3–5.7, §5.12, §5.13; regole.json →
 // attacco_ravvicinato; effetti.attacco_ravvicinato dei Talenti). Stesso contratto dell'attacco a
-// distanza: VA finale con la scomposizione, Azioni, danno con moltiplicatori e bonus nell'ordine del
+// distanza: VA finale con la provenienza, Azioni, danno con moltiplicatori e bonus nell'ordine del
 // §5.13, Prova o Salvezza del bersaglio, effetti, promemoria. Nessun tiro, nessun consumo.
 
 export const SENZ_ARMI = 'senz_armi';
@@ -490,9 +494,19 @@ export function profiloSenzArmi(scheda, dati) {
   const extra = bonusDannoEq + (bonusCaratteristica?.bonus ?? 0);
   const danno = dannoBase && extra ? aggiungiDanno(dannoBase, extra) : dannoBase;
   const scomposizione = a ? [...(a.scomposizione ?? [voce('Valore da regole', a.totale, 'regole')]), ...bonusVa] : [];
+  const vaEffettivo = a ? (a.effettivo ?? a.totale) + somma(bonusVa) : null;
+  // provenienza (src/provenienza.js): VA di Corpo a corpo con la sua scomposizione, poi i bonus
+  // dell'equipaggiamento; danno: dado, bonus di FOR (tetto del livello), bonus dell'equipaggiamento
+  const prov = a ? provenienza([rigaConDettaglio(`VA ${S.abilita}`, a.effettivo ?? a.totale, a.provenienza), ...righeDaScomposizione(bonusVa)], vaEffettivo) : null;
+  const righeDanno = dannoBase ? [
+    riga('Danno senz’armi', dannoBase, daDati ? `dado di ${daDati.nome}, il più alto (§5.13)` : 'base (§5.13)'),
+    ...(bonusCaratteristica ? [rigaBonusCaratteristica(bonusCaratteristica, bonusDannoCaratteristica(valoreCar, Number.MAX_SAFE_INTEGER, dati.regole), scheda?.livello)] : []),
+    ...(eq.bonusDanno ?? []).filter(ravv).map((b) => riga(b.nome, b.valore, 'effetto dell’oggetto')),
+  ] : null;
   return {
     uid: SENZ_ARMI, rif: null, nome: 'Senz’armi', tipo: 'arma_ravvicinata', senzArmi: true, abilita: S.abilita,
-    va: a?.totale ?? null, vaEffettivo: a ? (a.effettivo ?? a.totale) + somma(bonusVa) : null,
+    va: a?.totale ?? null, vaEffettivo, provenienza: prov,
+    provenienzaDanno: righeDanno ? provenienza(righeDanno, danno) : null,
     scomposizione: scomposizione.map((x, i) => (i === 0 && x.fonte === 'regole' ? { ...x, etichetta: `VA ${S.abilita}` } : x)),
     danno: { una_mano: danno, due_mani: null }, dannoBase, dannoOrigine: daDati ? daDati.nome : 'base', dannoDaDati: true, bonusCaratteristica,
     mani: 1, portataQ: S.portata_q, manovre: [],
@@ -641,7 +655,7 @@ export function moltiplicatoreMagistrale(m, dati) {
  * @param personaggio { scheda (calcolaScheda, con la sessione), sessione }
  * @param arma una voce di scheda.equipaggiamento.armi (arma ravvicinata impugnata) o profiloSenzArmi()
  * @param dichiarazione vedi dichiarazioneRavvicinato()
- * @returns {{ va_finale, scomposizione, attacchi: [{etichetta, va}], manovra, azioni_principali, azioni_movimento,
+ * @returns {{ va_finale, provenienza: { totale, righe }, attacchi: [{etichetta, va}], manovra, azioni_principali, azioni_movimento,
  *   prova: {tipo, testo}, danno: { base, bonus, formula, moltiplicatore, moltiplicatore_magistrale, testo, testo_magistrale }|null,
  *   dopo_armatura: [{etichetta, testo}], effetti, impossibile: {motivo}|null, promemoria, avvisi }}
  */
@@ -665,7 +679,7 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
   const id = sconosciuta ?? offensive[0] ?? 'normale';
   const m = M[id];
   if (!m) {
-    return { va_finale: null, scomposizione: [], attacchi: [], manovra: null, azioni_principali: 0, azioni_movimento: 0, prova: null, danno: null, dopo_armatura: [], effetti: [], impossibile: { motivo: `Manovra sconosciuta: ${id}.` }, promemoria, avvisi };
+    return { va_finale: null, provenienza: provenienza([], null), attacchi: [], manovra: null, azioni_principali: 0, azioni_movimento: 0, prova: null, danno: null, dopo_armatura: [], effetti: [], impossibile: { motivo: `Manovra sconosciuta: ${id}.` }, promemoria, avvisi };
   }
   const vm = vincoli.manovre[id];
   if (vm?.motivo) blocca(`${m.nome} non ammessa: ${vm.motivo}.`);
@@ -681,10 +695,12 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
   // (Immobilizzare); altrimenti l'Abilità del mezzo dichiarato, senza scegliere il VA maggiore
   // (Sbilanciare, Disarmare: E&L 7–8, A.41): senz'armi Corpo a corpo, con un'arma la sua Abilità
   let base = (arma.scomposizione?.length ? arma.scomposizione : [voce(`VA ${arma.abilita}`, arma.va ?? 0, 'regole')]).map((x) => ({ paragrafo: null, ...x }));
+  let baseRighe = righeBase(arma, base);
   const corpo = (personaggio.scheda?.abilita ?? []).find((x) => x.nome === R.senz_armi.abilita);
   const delMezzo = (m.prova?.abilita ?? []).includes('mezzo');
   if (m.prova?.tipo === 'contrapposta' && corpo && !arma.senzArmi && !delMezzo) {
     base = (corpo.scomposizione ?? [voce('Valore da regole', corpo.totale, 'regole')]).map((x, i) => ({ paragrafo: null, ...x, etichetta: i === 0 && x.fonte === 'regole' ? `VA ${corpo.nome}` : x.etichetta }));
+    baseRighe = [rigaConDettaglio(`VA ${corpo.nome}`, somma(base), corpo.provenienza)];
   }
   if (delMezzo && !arma.senzArmi) promemoria.push(`${m.nome}: usi l’Abilità dell’arma dichiarata (${arma.abilita}); per usare Corpo a corpo scegli «Senz’armi» (§5.12).`);
   if ((arma.va === null || arma.va === undefined) && !arma.senzArmi) blocca('VA dell’arma non calcolato.');
@@ -856,7 +872,7 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
 
   return {
     va_finale: attacchi[0]?.va ?? somma(scomposizione),
-    scomposizione,
+    provenienza: provenienza([...baseRighe, ...righeDaScomposizione(scomposizione.slice(base.length))], attacchi[0]?.va ?? somma(scomposizione)),
     attacchi,
     manovra: { id, nome: m.nome, paragrafo: m.paragrafo },
     azioni_principali: d.opportunita ? 0 : m.azioni_principali,

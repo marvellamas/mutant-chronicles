@@ -31,7 +31,7 @@ test('Accecato: −8 al VA per colpire a distanza (anche in «Attacca!») e alle
   // risposta A.51: Percezione non ha una penalità generale (le azioni solo visive falliscono)
   assert.equal(va(p, 'Percezione'), va(riposo, 'Percezione'));
   assert.equal(distanza(p).va_finale, distanza(riposo).va_finale - 8);
-  assert.ok(distanza(p).scomposizione.some((x) => x.etichetta === 'Accecato' && x.valore === -8));
+  assert.ok(distanza(p).provenienza.righe.some((x) => x.fonte === 'Accecato' && x.valore === -8));
   // anche nel corpo a corpo, e Colpo Mirato vietato
   assert.equal(ravvicinato(p).va_finale, ravvicinato(riposo).va_finale - 8);
   assert.match(distanza(p, { mirato: true }).impossibile?.motivo ?? '', /Accecato/);
@@ -47,7 +47,7 @@ test('A Terra: −4 alle ravvicinate e alle Difese; il −2 a distanza è di chi
   // a distanza nessuna penalità per chi è A Terra (§5.5: «può usare normalmente armi a distanza»)
   assert.equal(arma(p, 'p').vaEffettivo, arma(riposo, 'p').vaEffettivo);
   assert.equal(distanza(p).va_finale, distanza(riposo).va_finale);
-  assert.ok(!distanza(p).scomposizione.some((x) => x.valore === -2));
+  assert.ok(!distanza(p).provenienza.righe.some((x) => x.valore === -2));
   // nel corpo a corpo il −4 arriva dallo Stato una volta sola
   assert.equal(ravvicinato(p).va_finale, ravvicinato(riposo).va_finale - 4);
   // equilibrio: uso specifico di Atletica, il VA generale non cambia

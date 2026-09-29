@@ -68,7 +68,7 @@ test('E&L 7–8: Sbilanciare e Disarmare usano l’Abilità del mezzo dichiarato
   for (const manovra of ['sbilanciare', 'disarmare']) {
     const r = attacca(s, spada, { manovra });
     // con l'arma: la sua Abilità, anche se Corpo a corpo fosse maggiore; −4 all'attaccante
-    assert.equal(r.scomposizione[0].etichetta, `VA ${spada.abilita}`, manovra);
+    assert.equal(r.provenienza.righe[0].fonte, `VA ${spada.abilita}`, manovra);
     assert.equal(r.va_finale, (spada.vaEffettivo ?? spada.va) - 4, manovra);
     // senza scelta dell'opposizione: avviso; con la scelta, la Prova la nomina
     assert.ok(r.avvisi.some((x) => /sceglie prima del tiro/.test(x)), manovra);
@@ -81,7 +81,7 @@ test('E&L 7–8: Sbilanciare e Disarmare usano l’Abilità del mezzo dichiarato
   const nudo = profiloSenzArmi(s, dati);
   assert.equal(attacca(s, nudo, { manovra: 'sbilanciare', opposizione: 'Atletica' }).va_finale, vaDi(s, 'Corpo a corpo').totale - 4);
   // Immobilizzare resta sempre Corpo a corpo
-  assert.equal(attacca(s, spada, { manovra: 'immobilizzare' }).scomposizione[0].etichetta, 'VA Corpo a corpo');
+  assert.equal(attacca(s, spada, { manovra: 'immobilizzare' }).provenienza.righe[0].fonte, 'VA Corpo a corpo');
 });
 
 test('E&L 6: Spazzata anche senz’armi con Corpo a corpo, −4 contro due e −6 contro tre (A.27, A.42)', () => {
@@ -251,7 +251,7 @@ const mago = ({ scala = 'taumaturgo', liberi = [], SAG = 7, livello = 1, max = 9
   },
   sessione: { pmAttuali: 40, chroma: {} },
 });
-const potereLivello = (r) => r.scomposizione.filter((x) => x.fonte === 'livello').reduce((s, x) => s + x.valore, 0);
+const potereLivello = (r) => r.provenienza.righe.filter((x) => x.categoria === 'livello').reduce((s, x) => s + x.valore, 0);
 
 test('E&L 1: Anticipazione senza Addestramento: colonna «altri» con −2 in più; la Migliorata toglie solo il −2, la Prova resta (A.39.1)', () => {
   const altri = (versione, liberi = []) => calcolaLancio(mago({ scala: 'altri_utilizzatori', liberi }), incantesimo('Colpo Elementale'), { versione, anticipazione: 0 }, dati);

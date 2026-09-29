@@ -15,21 +15,46 @@ export const sommaRighe = (righe) => righe.filter((r) => !r.escluso && typeof r.
 
 export const provenienza = (righe, totale = sommaRighe(righe)) => ({ totale, righe });
 
-// categoria della voce di una scomposizione (src/condizioni.js) → nota della riga
+// categoria della voce di una scomposizione (src/condizioni.js, src/attacco.js, src/lancio.js) → nota della riga
 const NOTE = {
   equipaggiamento: 'equipaggiamento', oggetto: 'condizione accesa', ferite: 'Ferite (§5.14)', affaticamento: 'Affaticamento (§5.19)',
   stato: 'Stato (§5.18)', carico: 'carico (§5.2.6)', condizione: 'condizione dell’arma (§5.17)',
+  movimento: 'movimento', bersaglio: 'bersaglio', copertura: 'Copertura', distanza: 'distanza', mirino: 'mirino',
+  modalita: 'modalità di fuoco', 'modalità': 'modalità di fuoco', manovra: 'manovra', talento: 'Talento', situazione: 'situazione',
+  livello: 'livello dell’incantesimo', componenti: 'componenti', circostanze: 'circostanze', magia: 'effetto magico',
 };
 
-/** Voci { etichetta, valore, fonte } di una scomposizione → righe; la voce «regole» si può espandere. */
+/**
+ * Voci { etichetta, valore, fonte, paragrafo? } di una scomposizione → righe, con la categoria
+ * (`categoria`: la vecchia `fonte`) e il paragrafo nella nota; la voce «regole» si può espandere.
+ */
 export function righeDaScomposizione(voci, { regole = null } = {}) {
   return voci.flatMap((v) => {
     if (v.fonte === 'regole' && regole) {
       const r = regole(v);
       if (r) return r;
     }
-    return [riga(v.etichetta, v.valore, v.fonte === 'regole' ? null : NOTE[v.fonte] ?? null)];
+    const nota = [v.fonte === 'regole' ? null : NOTE[v.fonte] ?? v.fonte, v.paragrafo].filter(Boolean).join(', ') || null;
+    return [riga(v.etichetta, v.valore, nota, { categoria: v.fonte, ...(v.paragrafo ? { paragrafo: v.paragrafo } : {}) })];
   });
+}
+
+/**
+ * Righe di partenza di un'utility («Attacca!», «Lancia!»): la provenienza del valore effettivo
+ * (arma della SD), altrimenti la sua scomposizione.
+ */
+export const righeBase = (valore, voci) => valore?.provenienza?.righe ?? righeDaScomposizione(voci ?? []);
+
+/** Un valore in una riga sola, con la sua provenienza come dettaglio (VA Corpo a corpo, VA Potere). */
+export const rigaConDettaglio = (fonte, valore, prov) => riga(fonte, valore, null, { categoria: 'regole', ...(prov?.righe?.length ? { dettaglio: prov.righe } : {}) });
+
+/**
+ * §5.13: riga del bonus di Caratteristica al danno, con il tetto del livello quando scatta.
+ * @param bc { sigla, valore, bonus, esclusoDa }  @param fascia bonus della fascia senza tetto
+ */
+export function rigaBonusCaratteristica(bc, fascia, livello) {
+  const nota = bc.esclusoDa ? `escluso da ${bc.esclusoDa}` : fascia > bc.bonus ? `fascia +${fascia}, tetto +${bc.bonus} al ${livello ?? 1}° livello (§5.13)` : '§5.13';
+  return riga(`${bc.sigla} ${bc.valore}`, bc.bonus, nota);
 }
 
 /**

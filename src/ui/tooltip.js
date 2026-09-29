@@ -206,9 +206,10 @@ const segnoProv = (v) => (typeof v !== 'number' ? String(v) : v < 0 ? `−${-v}`
 /**
  * Provenienza di un valore calcolato (src/provenienza.js): una colonna, fonte a sinistra con la nota
  * sotto, valore con il segno allineato a destra; le righe che non contano attenuate (barrate se
- * l'oggetto è Rotto), il dettaglio di una riga rientrato; il totale in grassetto in fondo.
+ * l'oggetto è Rotto), il dettaglio di una riga rientrato; il totale in grassetto in fondo. La usano
+ * anche i pannelli «Attacca!» e «Lancia!», fuori dal tooltip.
  */
-function listaProvenienza(p, etichettaTotale = 'Totale') {
+export function listaProvenienza(p, etichettaTotale = 'Totale') {
   const riga = (x, sotto = false) => [
     h('li', { class: `prov-riga${x.escluso ? ' escluso' : ''}${x.barrato ? ' barrato' : ''}${sotto ? ' sotto' : ''}` },
       h('span', { class: 'prov-fonte' }, h('span', { class: 'prov-nome' }, x.fonte), x.nota ? h('span', { class: 'prov-nota' }, x.nota) : null),

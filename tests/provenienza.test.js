@@ -122,3 +122,33 @@ test('provenienza di Salvezze, Iniziativa, Movimento, VA e danno delle armi: le 
   assert.equal(w.provenienzaDanno.righe[0].fonte, 'Danno dell’arma');
   assert.match(w.provenienzaDanno.righe[1].fonte, /^DES \d+$/);
 });
+
+test('«Attacca!»: il VA finale è la somma delle righe della provenienza (distanza, corpo a corpo, senz’armi)', async () => {
+  const { calcolaAttaccoDistanza, calcolaAttaccoRavvicinato, profiloSenzArmi } = await import('../src/attacco.js');
+  const c = creazione([voce('p', 'armi_distanza:pistola-semiautomatica', 'impugnata'), voce('t', 'armi:tonfa', 'impugnata')]);
+  const s = alTavolo(c, { statiAttivi: ['rallentato'] });
+  const personaggio = { scheda: s, sessione: s.sessione ?? { statiAttivi: ['rallentato'] } };
+  const p = s.equipaggiamento.armi.find((x) => x.uid === 'p');
+  const t = s.equipaggiamento.armi.find((x) => x.uid === 't');
+  const dist = calcolaAttaccoDistanza(personaggio, p, { distanza: 40, movimento: 'passo', bersaglio: { movimento: 'corsa', copertura: 'leggera' } }, dati);
+  assert.equal(sommaRighe(dist.provenienza.righe), dist.va_finale);
+  assert.equal(dist.provenienza.totale, dist.va_finale);
+  // la base è la provenienza dell'arma nella SD (con il VA dell'Abilità in dettaglio), sotto la dichiarazione
+  assert.deepEqual(dist.provenienza.righe.slice(0, p.provenienza.righe.length), p.provenienza.righe);
+  assert.ok(dist.provenienza.righe.some((r) => r.categoria === 'copertura' && /§5\.8/.test(r.nota)));
+  for (const d of [{}, { manovra: 'mirato' }, { carica: true, distanzaCarica: 6 }, { manovra: 'immobilizzare' }]) {
+    const r = calcolaAttaccoRavvicinato(personaggio, t, d, dati);
+    assert.equal(sommaRighe(r.provenienza.righe), r.va_finale, JSON.stringify(d));
+  }
+  // Immobilizzare: Corpo a corpo in una riga, con la sua scomposizione in dettaglio
+  const imm = calcolaAttaccoRavvicinato(personaggio, t, { manovra: 'immobilizzare' }, dati);
+  assert.equal(imm.provenienza.righe[0].fonte, 'VA Corpo a corpo');
+  assert.equal(sommaRighe(imm.provenienza.righe[0].dettaglio), imm.provenienza.righe[0].valore);
+  // senz'armi: VA e danno con la provenienza (riquadro della SD e utility)
+  const nudo = profiloSenzArmi(s, dati);
+  assert.equal(sommaRighe(nudo.provenienza.righe), nudo.vaEffettivo);
+  const r = calcolaAttaccoRavvicinato(personaggio, nudo, {}, dati);
+  assert.equal(sommaRighe(r.provenienza.righe), r.va_finale);
+  assert.equal(nudo.provenienzaDanno.totale, nudo.danno.una_mano);
+  assert.deepEqual(nudo.provenienzaDanno.righe.map((x) => x.fonte), ['Danno senz’armi', `FOR ${s.caratteristiche.FOR.valore}`]);
+});

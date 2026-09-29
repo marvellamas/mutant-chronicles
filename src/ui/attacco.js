@@ -1,20 +1,18 @@
 // Pannello «Attacca!» della tab Combattimento (backlog voce 5). Le regole stanno in src/attacco.js;
 // qui solo la presentazione: passi con gruppi di pulsanti e interruttori (niente menu a tendina),
-// risultato con la scomposizione, «Spara» (a distanza) o «Attacca» (corpo a corpo e senz'armi). Nessun tiro di dado: al tavolo si tira a mano. Le scelte
+// risultato con la provenienza del VA (src/provenienza.js), «Spara» (a distanza) o «Attacca» (corpo a corpo e senz'armi). Nessun tiro di dado: al tavolo si tira a mano. Le scelte
 // si ricordano per ogni arma nella sessione (sessione → attacchi). Impianto del pannello e
 // componenti comuni in src/ui/pannello-passi.js (telefono: un passo per schermata; da 800 px le
 // scelte a sinistra e il risultato a destra).
 import { h, segno } from './dom.js';
-import { infoValore } from './tooltip.js';
+import { infoValore, listaProvenienza } from './tooltip.js';
 import {
   calcolaAttaccoDistanza, vincoliDistanza, dichiarazioneDistanza, richiedeImbracciatura, talentiAttacco, descriviModalita, descriviManovraDistanza,
   calcolaAttaccoRavvicinato, vincoliRavvicinato, dichiarazioneRavvicinato, manovreRavvicinate, descriviManovraRavvicinata,
 } from '../attacco.js';
-import { formulaScomposizione } from '../condizioni.js';
 import { rigaScelte, interruttore, pannelloPassi } from './pannello-passi.js';
 
 const PASSI = ['Il tuo movimento', 'Il bersaglio', 'Distanza', 'Tipo di tiro', 'Risultato'];
-const FONTI = { regole: 'regole', equipaggiamento: 'equipaggiamento', ferite: 'Ferite', affaticamento: 'Affaticamento', stato: 'Stato', oggetto: 'oggetto', movimento: 'movimento', bersaglio: 'bersaglio', copertura: 'Copertura', distanza: 'distanza', mirino: 'mirino', modalita: 'modalità', 'modalità': 'modalità', manovra: 'manovra', talento: 'Talento', situazione: 'situazione' };
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
 const RAPIDE = [3, 10, 20, 40, 80, 160, 300, 500, 750, 1000, 1500];
 
@@ -127,14 +125,10 @@ function risultatoRavvicinato(ctx, a, r) {
     r.impossibile ? h('div', { class: 'riquadro errore', role: 'alert' }, h('p', {}, h('strong', {}, 'Attacco non possibile. '), r.impossibile.motivo)) : null,
     r.avvisi.length ? h('div', { class: 'riquadro attenzione' }, r.avvisi.map((x) => h('p', {}, x))) : null,
     h('div', { class: 'attacco-risultato' },
-      h('p', { class: 'va-attacco' }, `${r.prova?.tipo === 'contrapposta' ? 'VA della Prova ' : 'VA finale '}`, pillola(a.nome, r.va_finale, r.scomposizione),
+      h('p', { class: 'va-attacco' }, `${r.prova?.tipo === 'contrapposta' ? 'VA della Prova ' : 'VA finale '}`, pillola(a.nome, r.va_finale, r.provenienza),
         h('small', { class: 'nota' }, ` · ${r.manovra?.nome ?? ''}`)),
       r.attacchi.length > 1 ? h('ul', { class: 'promemoria-attacco' }, r.attacchi.map((x) => h('li', {}, `${x.etichetta}: VA ${numero(x.va)}`))) : null,
-      h('table', { class: 'tabella compatta scomposizione-attacco' },
-        h('tbody', {}, r.scomposizione.map((x, i) => h('tr', {},
-          h('th', { scope: 'row' }, x.etichetta, x.paragrafo ? h('small', { class: 'sigla' }, ` ${x.paragrafo}`) : null),
-          h('td', { class: x.valore < 0 && i ? 'malus' : x.valore > 0 && i ? 'bonus' : null }, i ? segno(x.valore) : numero(x.valore)))),
-          h('tr', { class: 'totale' }, h('th', { scope: 'row' }, 'VA finale'), h('td', {}, numero(r.va_finale))))),
+      h('div', { class: 'provenienza-attacco' }, listaProvenienza(r.provenienza, 'VA finale')),
       h('dl', { class: 'voci griglia-voci' },
         h('div', {}, h('dt', {}, 'Azioni'), h('dd', {}, r.azioni_principali ? `${r.azioni_principali} ${r.azioni_principali === 1 ? 'Principale' : 'Principali'}` : 'nessuna (gratuito)', r.azioni_movimento ? ` + ${r.azioni_movimento} di Movimento` : '')),
         h('div', {}, h('dt', {}, 'Bersaglio'), h('dd', {}, r.prova?.testo ?? '—')),
@@ -154,16 +148,9 @@ function risultatoRavvicinato(ctx, a, r) {
   ];
 }
 
-/** VA in pillola con il tooltip della scomposizione riga per riga (fonte e paragrafo). */
-export function pillola(nome, va, scomposizione) {
-  return infoValore(numero(va), {
-    titolo: `${nome}: ${numero(va)}`,
-    sezioni: [{ testo: formulaScomposizione('VA', scomposizione) }],
-    tabella: {
-      titolo: 'Scomposizione', colonne: ['Voce', 'Valore', 'Fonte'],
-      righe: scomposizione.map((x, i) => ({ Voce: x.etichetta, Valore: i ? segno(x.valore) : numero(x.valore), Fonte: [FONTI[x.fonte] ?? x.fonte, x.paragrafo].filter(Boolean).join(', ') })),
-    },
-  }, { classe: 'val-eff pillola-va pillola-attacco' });
+/** VA in pillola con il tooltip della provenienza del motore (src/provenienza.js), una riga per contributo. */
+export function pillola(nome, va, provenienza) {
+  return infoValore(numero(va), { titolo: `${nome}: ${numero(va)}`, provenienza, sezioni: [] }, { classe: 'val-eff pillola-va pillola-attacco' });
 }
 
 function corpoDistanza(ctx, a, intestazione) {
@@ -277,12 +264,8 @@ function risultato(ctx, a, r, colpi, imposta) {
       r.impossibile.proposta ? h('button', { type: 'button', class: 'btn', onclick: () => imposta({ modalita: r.impossibile.proposta.modalita }) }, `Usa ${r.impossibile.proposta.nome}`) : null) : null,
     r.avvisi?.length ? h('div', { class: 'riquadro attenzione' }, r.avvisi.map((x) => h('p', {}, x))) : null,
     h('div', { class: 'attacco-risultato' },
-      h('p', { class: 'va-attacco' }, 'VA finale ', pillola(a.nome, r.va_finale, r.scomposizione), r.tiri > 1 ? h('span', { class: 'nota' }, ` · ${r.tiri} tiri, ciascuno con questo VA`) : null),
-      h('table', { class: 'tabella compatta scomposizione-attacco' },
-        h('tbody', {}, r.scomposizione.map((x, i) => h('tr', {},
-          h('th', { scope: 'row' }, x.etichetta, x.paragrafo ? h('small', { class: 'sigla' }, ` ${x.paragrafo}`) : null),
-          h('td', { class: x.valore < 0 && i ? 'malus' : x.valore > 0 && i ? 'bonus' : null }, i ? segno(x.valore) : numero(x.valore)))),
-          h('tr', { class: 'totale' }, h('th', { scope: 'row' }, 'VA finale'), h('td', {}, numero(r.va_finale))))),
+      h('p', { class: 'va-attacco' }, 'VA finale ', pillola(a.nome, r.va_finale, r.provenienza), r.tiri > 1 ? h('span', { class: 'nota' }, ` · ${r.tiri} tiri, ciascuno con questo VA`) : null),
+      h('div', { class: 'provenienza-attacco' }, listaProvenienza(r.provenienza, 'VA finale')),
       h('dl', { class: 'voci griglia-voci' },
         h('div', {}, h('dt', {}, 'Azioni'), h('dd', {}, `${r.azioni_principali} ${r.azioni_principali === 1 ? 'Principale' : 'Principali'}${r.azioni_movimento ? ` + ${r.azioni_movimento} di Movimento` : ''}`)),
         h('div', {}, h('dt', {}, 'Munizioni'), h('dd', {}, `${r.munizioni}${colpi !== null ? ` (nel caricatore ${colpi})` : ''}`)),

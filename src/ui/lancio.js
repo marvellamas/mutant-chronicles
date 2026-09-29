@@ -1,9 +1,10 @@
 // Pannello «Lancia!» della tab Magia (backlog voce 4). Le regole stanno in src/lancio.js; qui la
 // presentazione, con lo stesso impianto del pannello «Attacca!» (src/ui/pannello-passi.js): passi con
-// gruppi di pulsanti e interruttori, risultato con la scomposizione, «Lancia» che scala i PM ed è annullabile. Nessun
+// gruppi di pulsanti e interruttori, risultato con la provenienza del VA di Potere, «Lancia» che scala i PM ed è annullabile. Nessun
 // tiro di dado. Le scelte si ricordano per incantesimo nella sessione (sessione → lanci).
 import { h } from './dom.js';
 import { pillola } from './attacco.js';
+import { listaProvenienza } from './tooltip.js';
 import { rigaScelte, interruttore, pannelloPassi } from './pannello-passi.js';
 import { calcolaLancio, dichiarazioneLancio, versioniLancio, contenitoriLancio } from '../lancio.js';
 import { classeMacrofamiglia } from '../palette.js';
@@ -120,12 +121,8 @@ function risultato(ctx, inc, r) {
       h('p', { class: 'costo-lancio' }, h('strong', {}, `${r.pm_costo} PM`), ` · ${doveSpesa || '—'}`,
         r.costo.length > 1 ? h('small', { class: 'nota' }, ` (${r.costo.map((c, i) => (i ? `${segno(c.valore)} ${c.etichetta}` : `${c.valore} ${c.etichetta}`)).join(', ')})`) : null),
       r.prova_richiesta
-        ? [h('p', { class: 'va-attacco' }, 'Prova di Potere ', pillola(inc.nome, r.va_potere_finale, r.scomposizione), h('small', { class: 'nota' }, ` · ${r.motivi_prova.join('; ')}`)),
-          h('table', { class: 'tabella compatta scomposizione-attacco' },
-            h('tbody', {}, r.scomposizione.map((x, i) => h('tr', {},
-              h('th', { scope: 'row' }, x.etichetta, x.paragrafo ? h('small', { class: 'sigla' }, ` ${x.paragrafo}`) : null),
-              h('td', { class: x.valore < 0 && i ? 'malus' : x.valore > 0 && i ? 'bonus' : null }, i ? segno(x.valore) : numero(x.valore)))),
-              h('tr', { class: 'totale' }, h('th', { scope: 'row' }, 'VA di Potere'), h('td', {}, numero(r.va_potere_finale)))))]
+        ? [h('p', { class: 'va-attacco' }, 'Prova di Potere ', pillola(inc.nome, r.va_potere_finale, r.provenienza), h('small', { class: 'nota' }, ` · ${r.motivi_prova.join('; ')}`)),
+          h('div', { class: 'provenienza-attacco' }, listaProvenienza(r.provenienza, 'VA di Potere'))]
         : h('p', { class: 'va-attacco' }, h('strong', {}, 'Prova di Potere: non richiesta'), h('small', { class: 'nota' }, ' (livelli 1–3 del Taumaturgo, senza obblighi)')),
       h('dl', { class: 'voci griglia-voci' },
         h('div', {}, h('dt', {}, 'Azioni'), h('dd', {}, azioni ?? '—', r.azioni.focalizzazione ? ' + 1 AP di Focalizzazione prima' : '')),
