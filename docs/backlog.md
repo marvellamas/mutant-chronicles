@@ -80,3 +80,13 @@ Fonte: risposta di Davide A.21 (28/09/2026; `regole.json` → `corruzione.chroma
 - **Tracker dell'esposizione** in modalità tavolo, per ogni «Chroma Viola (frammento)» della lista: minuti di esposizione accumulati nell'ora, fascia più grave raggiunta (contatto, entro 1 Q, 1–6 Q, 6–12 Q), sospensione fuori dall'aura senza azzerare; alla scadenza dell'ora il promemoria della PS di Magia con modificatore e Intensità della fascia. Oggi l'app mostra solo le fasce nel tooltip e l'avviso nella SD.
 - **Corruzione e Umanità** come valori del personaggio (Stati di Corruzione, peggioramenti per esito, penalità da CROS e Umanità sulle PS, riduzione della capacità di sintonizzazione del §7.10): servono le scale complete di Davide.
 - Poi: collegare gli esiti della PS al peggioramento della Corruzione, senza tiri automatici (fuori perimetro).
+
+## 14. Tavolo del Direttore — STRUTTURALE, su branch `tavolo-direttore`
+
+Richiesta del 29/09/2026. Nessuna implementazione ancora: si parte da un **branch dedicato** (`tavolo-direttore`) e si porta su `main` solo quando è provato al tavolo.
+
+- **Server Node nostro** al posto di `serve`: oltre a servire i file statici accetta due richieste, «salva personaggio» (il JSON del personaggio, formato di `src/character.js`) e «elenca personaggi»; tiene i JSON in `personaggi/` sul PC che fa da server (un file per personaggio, nome dall'id).
+- **Invio dai browser dei giocatori**: in modalità tavolo ogni modifica della scheda si manda anche al server. Se il server non risponde, l'app resta locale come oggi (`localStorage`), senza errori bloccanti: al massimo un indicatore «non collegato».
+- **Pagina «Tavolo del Direttore»**: tutti i personaggi in griglia, una carta ciascuno con nome, PV e PM attuali/massimi, AR, Stati attivi, Ferite, Affaticamento e arma impugnata; aggiornata ogni pochi secondi. Solo lettura nella prima versione.
+- **Avvio**: `distribuzione/3_avvia.bat` avvia il nostro server invece di `serve`.
+- **Vincolo**: l'app statica deve continuare a funzionare senza server (GitHub Pages, `python -m http.server`, apertura in locale); il server è un'aggiunta, mai un requisito.
