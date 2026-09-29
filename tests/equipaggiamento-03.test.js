@@ -101,3 +101,20 @@ test('cap. 4: 11 voci con REP propria; Binocolo +1 Percezione per un uso (vale l
   const bin = risolvi(vecchiaDotazione('binocolo', 'Binocolo'), cat);
   assert.deepEqual([bin.def?.peso, bin.def?.costo, bin.effetti[0].ambito], [0.8, 500, 'uso_specifico']);
 });
+
+test('cap. 6: le 16 schede del §7.19 restano (stessi valori); 7 voci nuove: ricariche, ricambi, farmaco, antidoto', () => {
+  const tutte = deiFile('sanitario');
+  assert.equal(tutte.length, 23);
+  // valori del §6.1 e §6.4 uguali a quelli già nel catalogo
+  assert.deepEqual([r('sanitario:kit-di-pronto-soccorso-standard').pi, r('sanitario:kit-di-pronto-soccorso-standard').costo], [4, 1000]);
+  assert.deepEqual(r('sanitario:kit-di-pronto-soccorso-professionale').ricarica, { applicazioni: 5, costo: 300 });
+  assert.equal(r('sanitario:ricarica-kit-di-pronto-soccorso-professionale').costo, 300);
+  assert.equal(r('sanitario:confezione-da-cinque-set-chirurgici').costo, 2500);
+  const f = r('sanitario:farmaco-terapeutico-specifico').effetti[0];
+  assert.deepEqual([f.tipo, f.salvezza, f.valore, f.ambito], ['salvezza', 'tempra', 2, 'uso_specifico']);
+  assert.equal(r('sanitario:antidoto-specifico').effetti, undefined); // testuale: termina l'avvelenamento
+  // nessun peso nel cap. 6: resta assente (§1.11)
+  assert.ok(tutte.every((o) => o.peso === undefined));
+  // la Ricarica per il Kit trauma della dotazione trova la scheda Professionale
+  assert.equal(risolvi(vecchiaDotazione('ricarica-kit-trauma', 'Ricarica per il Kit trauma (5 applicazioni)'), cat).def?.costo, 300);
+});

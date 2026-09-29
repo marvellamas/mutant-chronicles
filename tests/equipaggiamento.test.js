@@ -854,7 +854,7 @@ test('validatore delle munizioni: famiglia, esplosivo, cella, compatibilità, ta
 // --- Lotto 11: equipaggiamento sanitario (§7.19) -------------------------------------------
 
 test('lotto 11: kit, cartucce, UMC, dispositivi, diagnostica e chirurgia del §7.19', () => {
-  const tutti = catalogo(dati).oggetti.filter((o) => o.file === 'sanitario');
+  const tutti = catalogo(dati).oggetti.filter((o) => o.file === 'sanitario' && o.versione_manuale !== 'Equipaggiamento 0.3'); // le 7 voci del cap. 6 dell'Equipaggiamento stanno in tests/equipaggiamento-03.test.js
   assert.equal(tutti.length, 16);
   const r = (id) => catalogo(dati).perRif.get(`sanitario:${id}`);
   // tabella degli esiti ricostruita per colonna più vicina (p. 109)

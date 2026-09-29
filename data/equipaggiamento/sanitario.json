@@ -1,6 +1,6 @@
 {
   "versione_manuale": "Armamenti 0.50",
-  "fonte": "Manuale degli Armamenti v0.50, §7.19 Equipaggiamento sanitario (pp. 109–113); lotto 11",
+  "fonte": "Manuale degli Armamenti v0.50, §7.19 Equipaggiamento sanitario (pp. 109–113), lotto 11; Manuale dell’Equipaggiamento 0.3, cap. 6 (stesse schede e valori; ricariche, ricambi, farmaci e antidoti)",
   "_nota": "Generato da tools/lotti/lotto11_sanitario.mjs; da qui in poi si modifica questo file. «applicazioni» è il contatore della modalità tavolo (con «nome_applicazioni»: dosi, set); «ricarica» il costo per ripristinarlo. «strumenti» è il modificatore degli strumenti alla Prova indicata: resta un promemoria, non entra nei VA. La UMC si monta su un’armatura; ne vale una sola per personaggio.",
   "oggetti": [
     {
@@ -58,6 +58,19 @@
       "effetto_breve": "Arresta il Sanguinamento"
     },
     {
+      "id": "ricarica-kit-di-pronto-soccorso-standard",
+      "nome": "Ricarica del kit di pronto soccorso Standard",
+      "tipo": "sanitario",
+      "catalogo": "Commerciale",
+      "famiglia": "Pronto soccorso",
+      "nomi_alternativi": [],
+      "note_manuale": "Cinque applicazioni miste di materiali da medicazione per il kit Standard (§6.1: «150 / 5 applicazioni»).",
+      "paragrafo": "§6.1",
+      "versione_manuale": "Equipaggiamento 0.3",
+      "costo": 150,
+      "proprieta": []
+    },
+    {
       "id": "kit-di-pronto-soccorso-professionale",
       "nome": "Kit di pronto soccorso professionale",
       "tipo": "sanitario",
@@ -99,6 +112,21 @@
           "fonte": "Giocatore §2.16.6"
         }
       ]
+    },
+    {
+      "id": "ricarica-kit-di-pronto-soccorso-professionale",
+      "nome": "Ricarica del kit di pronto soccorso Professionale",
+      "tipo": "sanitario",
+      "catalogo": "Commerciale",
+      "famiglia": "Pronto soccorso",
+      "nomi_alternativi": [
+        "Ricarica per il Kit trauma"
+      ],
+      "note_manuale": "Cinque applicazioni miste di materiali da medicazione per il kit Professionale e il Kit trauma, anche nelle versioni corporative (§6.1: «300 / 5 applicazioni»).",
+      "paragrafo": "§6.1",
+      "versione_manuale": "Equipaggiamento 0.3",
+      "costo": 300,
+      "proprieta": []
     },
     {
       "id": "cartuccia-emostatica",
@@ -349,6 +377,19 @@
       "effetto_breve": "Spendendo 1 AzP e una dose, senza Prova, recupera 1d3 PV fino al massimo."
     },
     {
+      "id": "contenitore-di-ricambio-spray-rimarginante",
+      "nome": "Contenitore di ricambio per lo Spray rimarginante",
+      "tipo": "sanitario",
+      "catalogo": "Commerciale",
+      "famiglia": "Dispositivi portatili",
+      "nomi_alternativi": [],
+      "note_manuale": "Cinque dosi. Sostituirlo richiede un minuto.",
+      "paragrafo": "§6.4",
+      "versione_manuale": "Equipaggiamento 0.3",
+      "costo": 1000,
+      "proprieta": []
+    },
+    {
       "id": "scanner-diagnostico-portatile",
       "nome": "Scanner diagnostico portatile",
       "tipo": "sanitario",
@@ -451,6 +492,32 @@
       ]
     },
     {
+      "id": "set-chirurgico-di-ricambio",
+      "nome": "Set chirurgico di ricambio",
+      "tipo": "sanitario",
+      "catalogo": "Commerciale",
+      "famiglia": "Diagnostica e chirurgia",
+      "nomi_alternativi": [],
+      "note_manuale": "Un set di materiali per procedura del Kit chirurgico da campo o della Postazione medica, anestesia compresa; si consuma all’inizio di ogni intervento.",
+      "paragrafo": "§6.5",
+      "versione_manuale": "Equipaggiamento 0.3",
+      "costo": 500,
+      "proprieta": []
+    },
+    {
+      "id": "confezione-da-cinque-set-chirurgici",
+      "nome": "Confezione da cinque set chirurgici",
+      "tipo": "sanitario",
+      "catalogo": "Commerciale",
+      "famiglia": "Diagnostica e chirurgia",
+      "nomi_alternativi": [],
+      "note_manuale": "Cinque set di materiali per procedura, anestesia compresa.",
+      "paragrafo": "§6.5",
+      "versione_manuale": "Equipaggiamento 0.3",
+      "costo": 2500,
+      "proprieta": []
+    },
+    {
       "id": "postazione-medica-da-campo",
       "nome": "Postazione medica da campo",
       "tipo": "sanitario",
@@ -487,6 +554,46 @@
           "fonte": "Armamenti §7.19.5"
         }
       ]
+    },
+    {
+      "id": "farmaco-terapeutico-specifico",
+      "nome": "Farmaco terapeutico specifico",
+      "tipo": "sanitario",
+      "catalogo": "Commerciale",
+      "famiglia": "Farmaci e antidoti",
+      "nomi_alternativi": [],
+      "note_manuale": "Una monodose per 24 ore. Concede +2 alle PS di Tempra previste dalla malattia o infezione per cui è indicato, per 24 ore. Non concede nuove PS, non restituisce PV, non cura Ferite o Menomazioni e non arresta il Sanguinamento. Più dosi non sommano il bonus. Somministrazione 1 AzP e una mano; rientra nel limite di una somministrazione rapida per Round.",
+      "paragrafo": "§6.6",
+      "versione_manuale": "Equipaggiamento 0.3",
+      "reperibilita": "NC",
+      "costo": 100,
+      "proprieta": [],
+      "effetto_breve": "+2 alle PS di Tempra contro la malattia o l’infezione indicata, per 24 ore.",
+      "effetti": [
+        {
+          "tipo": "salvezza",
+          "salvezza": "tempra",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro la malattia o l’infezione indicata",
+          "condizione": "Concede +2 alle PS di Tempra previste dalla malattia o infezione per cui è indicato, per 24 ore.",
+          "fonte": "Equipaggiamento §6.6"
+        }
+      ]
+    },
+    {
+      "id": "antidoto-specifico",
+      "nome": "Antidoto specifico",
+      "tipo": "sanitario",
+      "catalogo": "Commerciale",
+      "famiglia": "Farmaci e antidoti",
+      "nomi_alternativi": [],
+      "note_manuale": "Una monodose pronta all’impiego. L’antidoto adatto termina immediatamente l’avvelenamento a cui è destinato (Giocatore §5.18, Avvelenato). Non restituisce PV già persi, non elimina Ferite o Menomazioni e non protegge da una nuova esposizione. Somministrazione 1 AzP e una mano; rientra nel limite di una somministrazione rapida per Round.",
+      "paragrafo": "§6.6",
+      "versione_manuale": "Equipaggiamento 0.3",
+      "reperibilita": "RA",
+      "costo": 500,
+      "proprieta": []
     }
   ]
 }

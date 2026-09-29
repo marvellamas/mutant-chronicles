@@ -3825,7 +3825,8 @@
       "nome": "Corredo da camuffamento (Standard)"
     },
     "ricarica-kit-trauma": {
-      "nome": "Ricarica per il Kit trauma (5 applicazioni)"
+      "nome": "Ricarica per il Kit trauma (5 applicazioni)",
+      "rif": "sanitario:ricarica-kit-di-pronto-soccorso-professionale"
     },
     "abiti-da-viaggio": {
       "nome": "Abiti da viaggio, comprese le calzature (completo aggiuntivo)",
