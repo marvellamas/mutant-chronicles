@@ -59,7 +59,7 @@ src/
   sessione.js   valori attuali di sessione (modalità tavolo)
   stampa.js     dati dei fogli di stampa e delle tab
   ui/           wizard a passi (fasi 0–9 del §2.0), scheda a tab, Sali di livello, stampa, import/export
-data/           JSON delle regole (fonte di verità): 10 file in data/, catalogo in data/equipaggiamento/ (index.json + 15 file)
+data/           JSON delle regole (fonte di verità): 10 file in data/, catalogo in data/equipaggiamento/ (index.json + 18 file)
 tests/          node --test; tests/collaudo/ tre personaggi di riferimento con PDF
 tools/          estrazione dai manuali, generatori dei lotti (tools/lotti/), collaudo_pdf.mjs, genera_immagini.py
 img/            stemmi e icone generati (img/immagini.json li elenca); originali in img/originali/, non tracciati
@@ -80,7 +80,7 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 - salva/carica in `localStorage`, export/import JSON, dati modificabili da Davide con validatore;
 - valori effettivi in modalità tavolo: Ferite, Affaticamento, Stati con effetto numerico e carico (`regole.json`) entrano nei VA, nelle Salvezze e nella Parata mostrati nelle tab, con la scomposizione (`src/condizioni.js`, `src/carico.js`); il totale da regole e la stampa restano a riposo;
 - effetti degli oggetti sui VA (`effetti` nel catalogo, negli oggetti di dotazione e nei personalizzati): generali, situazionali (interruttore al tavolo), d'uso specifico (valore a parte); frasi del manuale verificate da `tools/verifica_frasi.mjs` (`docs/effetti-oggetti.md`);
-- Manuale dell'Equipaggiamento 0.1, cap. 1: carico (§1.6 = Giocatore §5.2.6) e PS Integrità per Qualità (§1.7) in `regole.json`.
+- Manuale dell'Equipaggiamento 0.3: cap. 1, carico (§1.6 = Giocatore §5.2.6) e PS Integrità per Qualità (§1.7) in `regole.json`; cap. 2, 3, 4 e 6 nel catalogo (`dotazioni_personali`, `esplorazione`, `comunicazione`, `sanitario`), con le voci di dotazione collegate alla loro scheda (`oggetti_dotazione[id].rif`).
 
 - utility «Attacca!» nella tab Combattimento (nessun tiro di dado), pannello a passi comune (`src/ui/pannello-passi.js`): attacco a distanza (`regole.json` → `attacco_distanza`, tooltip delle modalità da `modalita_di_fuoco`) e corpo a corpo con le Manovre del §5.12, Carica, due armi, Magistrale e «Senz'armi» (`regole.json` → `attacco_ravvicinato`); motore in `src/attacco.js`, Talenti in `effetti.attacco_distanza` / `effetti.attacco_ravvicinato`;
 - parametri dei Talenti di Classe scelti dal giocatore (Disciplina del Lottatore, §3.5.5): `parametro` in classi.json con le opzioni e i loro effetti (tabelle per Grado), scelta in `parametriTalenti` della creazione o della voce di livello, permanente;
@@ -90,7 +90,7 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 - ricarica dalle riserve (`src/ricarica.js`, `munizioni.json` → `ricarica`);
 - regole aggiornate sui Punti Abilità Liberi (Doc del 27/09, per-davide A.52): gli eventi già registrati con meno punti delle regole correnti si completano dall'avviso in cima alla SD («Assegna», `#/p/<id>/completa`, `src/ui/completa.js`; motore in `src/avanzamento.js` → `statoCompletamento`, `validaCompletamento`, `applicaCompletamento`), i punti si registrano nell'evento a cui appartengono; finché mancano, l'avanzamento è bloccato; i punti in eccesso si segnalano soltanto. Titolo dell'avviso in `regole.json` → `regole_aggiornate`.
 
-Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, veicoli, capitoli 2–8 del Manuale dell'Equipaggiamento (non ancora scritti).
+Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, veicoli, capitoli 5, 7 e 8 del Manuale dell'Equipaggiamento (non ancora scritti).
 
 ## Riferimenti
 

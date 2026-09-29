@@ -682,3 +682,12 @@ Trovano la scheda in questi capitoli **27 voci**, più una già nel catalogo deg
 - Le voci di dotazione (`data/dotazioni.json → oggetti_dotazione`) ricevono `rif` verso la scheda di catalogo. `risolvi()` (`src/equipaggiamento.js`) legge la scheda attraverso `dotazione_id`, quindi anche i personaggi già salvati vedono peso, prezzo, Qualità e PI al caricamento. Il nome resta quello della dotazione, perché porta l'ambiente scelto.
 - Se l'effetto della scheda contraddice quello scritto dal §2.16, vale la scheda del manuale e la differenza si segnala.
 - Acquistabili: sono voci del catalogo Commerciale con prezzo, quindi entrano da sole negli acquisti iniziali (§2.16.29: «catalogo della propria Corporazione») e nell'elenco dell'inventario al tavolo.
+
+### Stato dei lotti (29/09/2026)
+
+Generatore unico `tools/lotti/lotto_equipaggiamento_03.mjs --capitolo N [--scrivi]`: frasi controllate nel Doc, collegamento delle voci di dotazione, un commit per capitolo.
+
+- ✔ **Cap. 2** — `dotazioni_personali.json`, 19 voci (4 con effetti); 13 voci di dotazione collegate, più il Corredo di manutenzione da campo (Armamenti §7.13.7). Differenza segnalata: Abiti da viaggio, un uso («arrampicata ed equilibrio») diventa due, per combinarsi con il Corredo da assalto verticale e con l'equilibrio di A Terra.
+- ✔ **Cap. 3** — `esplorazione.json`, 21 voci (6 con effetti); 7 voci di dotazione collegate.
+- ✔ **Cap. 4** — `comunicazione.json`, 11 voci (1 con effetti); 7 voci di dotazione collegate. Differenza segnalata: Binocolo, «situazionale» nel §2.16.7, uso specifico nel §4.2 (vale la scheda).
+- ✔ **Cap. 6** — `sanitario.json` aggiornato: le 16 schede del §7.19 coincidono; 7 voci nuove (1 con effetti); 1 voce di dotazione collegata.
