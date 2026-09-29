@@ -69,7 +69,7 @@ function corpoRavvicinato(ctx, a, intestazione) {
       interruttore('Combatti con due armi', d.dueArmi, (x) => imposta({ dueArmi: x, ...(x ? { manovra: 'normale' } : {}) }),
         { motivo: v.dueArmi, mod: `${v.secondaArma ? `con ${v.secondaArma.nome} · ` : ''}${numero(tDue?.e.due_armi.va ?? R.due_armi.va)} a ciascuno`, info: infoRegola('Combattere con due armi', R.due_armi) }),
       !d.dueArmi && !a.senzArmi ? interruttore('Solo la mano non dominante', d.manoNonDominante, (x) => imposta({ manoNonDominante: x }),
-        { mod: T.some((t) => t.e.mano_non_dominante) ? '0 (Ambidestro)' : `${numero(R.mano_non_dominante.va)} (A.23)`, info: infoRegola('Mano non dominante', R.mano_non_dominante) }) : null,
+        { mod: T.some((t) => t.e.mano_non_dominante) ? '0 (Ambidestro)' : numero(R.mano_non_dominante.va), info: infoRegola('Mano non dominante', R.mano_non_dominante) }) : null,
       interruttore('Imboscata (Azione dichiarata)', d.imboscata, (x) => imposta({ imboscata: x }),
         { mod: numero(ha('imboscata')?.e.imboscata.va ?? R.imboscata.va), info: infoRegola('Imboscata', R.imboscata) }),
       interruttore('Attacco di Opportunità', d.opportunita, (x) => imposta({ opportunita: x, ...(x ? { manovra: 'normale' } : {}) }),
@@ -80,9 +80,19 @@ function corpoRavvicinato(ctx, a, intestazione) {
       interruttore('A Terra', d.bersaglio.aTerra, (x) => b({ aTerra: x }), { mod: segno(R.a_terra.bersaglio) }),
       interruttore('Ignaro della tua presenza', d.bersaglio.ignaro, (x) => b({ ignaro: x }), { mod: ha('ignaro') ? `${segno(ha('ignaro').e.ignaro.va)} (${ha('ignaro').nome})` : 'per i Talenti' }),
       ha('alleato_adiacente') ? interruttore('Adiacente a un alleato', d.bersaglio.alleatoAdiacente, (x) => b({ alleatoAdiacente: x }), { mod: `${segno(ha('alleato_adiacente').e.alleato_adiacente.va)} (${ha('alleato_adiacente').nome})` }) : null,
-      rigaScelte('Copertura del bersaglio (A.25: solo promemoria)', [
-        { valore: 'nessuna', etichetta: 'Nessuna' }, { valore: 'leggera', etichetta: 'Leggera' }, { valore: 'media', etichetta: 'Media' }, { valore: 'totale', etichetta: 'Totale' },
-      ], d.bersaglio.copertura, (x) => b({ copertura: x })),
+      rigaScelte('Copertura del bersaglio (§5.8: se l’ostacolo lo protegge dalla tua direzione)', ['nessuna', 'leggera', 'media', 'totale'].map((c) => ({
+        valore: c, etichetta: c[0].toUpperCase() + c.slice(1),
+        riga: c === 'nessuna' ? null : c === 'totale' ? 'nessun attacco diretto' : `${numero((d.bersaglio.coperturaMigliorata ? R.copertura.bersaglio_migliorata : R.copertura.bersaglio)[c])} VA`,
+      })), d.bersaglio.copertura, (x) => b({ copertura: x })),
+      d.bersaglio.copertura === 'leggera' || d.bersaglio.copertura === 'media' ? interruttore('Il bersaglio ha Copertura Migliorata', d.bersaglio.coperturaMigliorata, (x) => b({ coperturaMigliorata: x }),
+        { mod: `${numero(R.copertura.bersaglio_migliorata.leggera)} / ${numero(R.copertura.bersaglio_migliorata.media)}`, info: infoRegola('Copertura', R.copertura) }) : null,
+      // §5.3 (E&L 14): Superiorità numerica
+      h('div', { class: 'scelta-attacco scelta-distanza' },
+        h('label', { class: 'scelta-titolo', for: `attaccanti-${a.uid}` }, 'Attaccanti in ravvicinato contro il bersaglio (te compreso)'),
+        h('div', { class: 'distanza-riga' },
+          h('input', { id: `attaccanti-${a.uid}`, type: 'number', min: 1, step: 1, inputmode: 'numeric', value: d.attaccanti, class: 'input-distanza', onchange: (e) => { const n = Number(e.target.value); if (Number.isFinite(n) && n >= 1) imposta({ attaccanti: Math.round(n) }); } }),
+          (() => { const f = R.superiorita_numerica.fasce.find((x) => d.attaccanti >= x.da && (x.a === null || d.attaccanti <= x.a)); return h('span', { class: `fascia${f?.va ? ' bonus' : ''}`, title: R.superiorita_numerica.frasi.join(' ') }, f?.va ? `${segno(f.va)} VA (Superiorità numerica, §5.3)` : 'nessun bonus'); })()),
+        h('div', { class: 'scelta-pulsanti' }, [1, 3, 6, 8].map((q) => h('button', { type: 'button', class: `btn scelta-btn${d.attaccanti === q ? ' scelta' : ''}`, onclick: () => imposta({ attaccanti: q }) }, q === 8 ? '8+' : String(q))))),
       rigaScelte('Circostanza del Direttore (§1.4)', R.circostanze.valori.map((x) => ({ valore: x, etichetta: x ? segno(x) : 'Normale' })), d.circostanza, (x) => imposta({ circostanza: x })),
       h('div', { class: 'scelta-attacco scelta-distanza' },
         h('label', { class: 'scelta-titolo', for: `dist-${a.uid}` }, `Distanza in Q (portata ${v.portata} Q)`),
@@ -95,6 +105,9 @@ function corpoRavvicinato(ctx, a, intestazione) {
       rigaScelte('Manovra', Object.entries(v.manovre).filter(([, x]) => !x.nascosta).map(([id, x]) => ({
         valore: id, etichetta: manovreRavvicinate(ctx.tab.scheda, ctx.dati)[id].nome, motivo: x.motivo, ...descriviManovraRavvicinata(id, ctx.tab.scheda, ctx.dati),
       })), manovraScelta, (x) => imposta({ manovra: x })),
+      // §5.12 (E&L 7–8): l'opposizione la sceglie il bersaglio prima del tiro
+      R.manovre[manovraScelta]?.prova?.scelta_bersaglio ? rigaScelte('Il bersaglio si oppone con (lo sceglie lui, prima del tiro)',
+        R.manovre[manovraScelta].prova.contro.map((x) => ({ valore: x, etichetta: x })), d.opposizione, (x) => imposta({ opposizione: x })) : null,
       manovraScelta === 'spazzata' ? rigaScelte('Bersagli della Spazzata', Object.keys(R.manovre.spazzata.va_per_bersagli).map(Number).map((n) => ({ valore: n, etichetta: `${n} bersagli`, riga: `${numero(R.manovre.spazzata.va_per_bersagli[n])} VA` })), d.bersagli, (x) => imposta({ bersagli: x })) : null,
       a.senzArmi ? h('p', { class: 'nota' }, `Danno senz’armi: ${a.danno.una_mano} (${a.dannoOrigine === 'base' ? `base ${a.dannoBase}` : `${a.dannoBase}, ${a.dannoOrigine}`}${a.bonusCaratteristica?.bonus ? `, ${a.bonusCaratteristica.sigla} ${a.bonusCaratteristica.bonus > 0 ? '+' : ''}${a.bonusCaratteristica.bonus}` : ''}; §5.13).`) : null,
     ] },

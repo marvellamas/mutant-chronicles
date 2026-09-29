@@ -636,6 +636,7 @@
         "media": -4,
         "totale": null
       },
+      "bersaglio_migliorata": { "nessuna": 0, "leggera": -4, "media": -6, "totale": null },
       "propria": {
         "nessuna": 0,
         "leggera": -2,
@@ -1554,15 +1555,17 @@
         },
         "bersagli_max": 3,
         "danno": 0,
+        "senz_armi": true,
         "prova": {
           "tipo": "per_colpire",
           "contro": [
             "Difese"
           ]
         },
-        "TODO(Davide)": "A.27: «bersagli adiacenti» all’attaccante o fra loro? Con un’arma a portata 2–3 Q l’app accetta i bersagli entro la portata e lo ricorda nel risultato.",
+        "_nota": "E&L del 29/09, risposta 6 (A.27, A.42): bersagli adiacenti fra loro e tutti entro la portata, senza spostarsi; la sola portata non basta. Ogni bersaglio applica le proprie Difese e la propria AR. Anche senz’armi, con Corpo a corpo.",
         "frasi": [
           "Un’Azione Principale contro due o tre bersagli adiacenti fra loro e tutti entro la propria portata, senza muoversi: −4 VA contro due, −6 contro tre; una Prova, un colpo per bersaglio.",
+          "È consentita a tutti anche senz’armi, con Corpo a corpo.",
           "Spazzata Migliorata riduce la penalità di 2."
         ]
       },
@@ -1606,16 +1609,16 @@
         "prova": {
           "tipo": "contrapposta",
           "abilita": [
-            "Corpo a corpo",
-            "arma"
+            "mezzo"
           ],
           "contro": [
             "Atletica",
             "Difese"
-          ]
+          ],
+          "scelta_bersaglio": true
         },
         "effetto": "A Terra",
-        "TODO(Davide)": "A.28: fra Atletica e Difese sceglie il bersaglio? L’app mostra entrambe.",
+        "_nota": "E&L del 29/09, risposta 7 (A.28, A.41): l’attaccante usa l’Abilità del mezzo dichiarato (senz’armi Corpo a corpo, con un’arma la sua Abilità), non il VA maggiore; il bersaglio sceglie prima del tiro fra le opposizioni praticabili.",
         "frasi": [
           "Un’Azione Principale a Contatto o portata: Corpo a corpo o Abilità dell’arma contro Atletica o Difese, con −4 VA all’attaccante.",
           "Con successo il bersaglio cade A Terra.",
@@ -1662,16 +1665,16 @@
         "prova": {
           "tipo": "contrapposta",
           "abilita": [
-            "Corpo a corpo",
-            "arma"
+            "mezzo"
           ],
           "contro": [
             "Corpo a corpo",
             "Abilità dell’arma impugnata"
-          ]
+          ],
+          "scelta_bersaglio": true
         },
         "effetto": "l’oggetto cade nel Q del bersaglio",
-        "TODO(Davide)": "A.28: fra Corpo a corpo e Abilità dell’arma impugnata sceglie il bersaglio? L’app mostra entrambe.",
+        "_nota": "E&L del 29/09, risposta 8 (A.28, A.41): come Sbilanciare; il bersaglio sceglie fra Corpo a corpo e l’Abilità dell’arma impugnata, se concretamente utilizzabile.",
         "frasi": [
           "Un’Azione Principale a Contatto o portata: Corpo a corpo o Abilità dell’arma a −4 VA contro Corpo a corpo o Abilità dell’arma impugnata.",
           "Con successo l’oggetto cade nel Q del bersaglio.",
@@ -1693,11 +1696,12 @@
             "Difese"
           ]
         },
-        "TODO(Davide)": "A.24: Prova per colpire contro le Difese o Prova contrapposta? L’app usa per ora la Prova per colpire contro le Difese.",
+        "_nota": "E&L del 29/09, risposta 9 (A.24): normale Prova per colpire a −4 contro le Difese pertinenti, non contrapposta.",
         "frasi": [
           "Con un’Azione Principale e un attacco ravvicinato o senz’armi a −4 VA, il bersaglio arretra di 2 Q e non subisce danni.",
           "Incalzare Migliorato infligge anche il danno normale.",
-          "Il Movimento forzato non provoca attacchi di opportunità."
+          "Il Movimento forzato non provoca attacchi di opportunità.",
+          "Si risolve come un normale attacco e ammette le Difese applicabili; non è una Prova contrapposta."
         ]
       }
     },
@@ -1764,10 +1768,12 @@
       ]
     },
     "mano_non_dominante": {
-      "paragrafo": "Giocatore §5.7 (Ambidestro)",
+      "paragrafo": "Giocatore §5.7",
       "va": -4,
-      "TODO(Davide)": "A.23: il −4 della mano non dominante non è definito da nessun paragrafo; l’app lo applica solo quando il giocatore dichiara di attaccare con la sola mano non dominante (fuori da Combattere con due armi).",
+      "_nota": "E&L del 29/09, risposta 10 (A.23): −4 salvo Ambidestro; con Combattere con due armi solo la penalità della manovra; Ambidestro non la riduce, Schermidore, Pistolero e Duellante sì (effetti.attacco_ravvicinato.due_armi dei Talenti).",
       "frasi": [
+        "Quando si attacca soltanto con la mano non dominante si applica −4 VA, salvo Ambidestro.",
+        "Nella manovra con due armi si applica soltanto la penalità della manovra, senza aggiungere un secondo −4 per la mano non dominante.",
         "Elimina il normale −4 VA quando si usa soltanto la mano non dominante."
       ]
     },
@@ -1793,7 +1799,8 @@
       "raddoppio": 2,
       "da_x2": 3,
       "massimo": 3,
-      "TODO(Davide)": "A.29: i bonus fissi al danno (Colpo Mirato, Affondo, Carica Brutale) vengono prima del moltiplicatore (§5.13), quindi il Magistrale li raddoppia: l’app li conta così.",
+      "_nota": "E&L del 29/09, risposta 11 (A.29): i bonus ordinari (Colpo Mirato, Affondo, Carica Brutale, Caratteristica) si sommano prima del moltiplicatore e si moltiplicano; quelli espressamente dopo l’Armatura no e richiedono almeno 1 danno residuo; ×2 diventa ×3, ×3 resta ×3; nelle applicazioni multiple solo la prima (§1.6).",
+      "promemoria": "Magistrale: i bonus ordinari al danno sono già nella formula e si moltiplicano; quelli dopo l’Armatura no. Nelle applicazioni multiple di danno il moltiplicatore vale solo per la prima (§1.6, §5.13).",
       "frasi": [
         "Normalmente il Magistrale raddoppia il danno; se una regola prevede già danno ×2, con il Magistrale si applica ×3, non ×4.",
         "Gli altri moltiplicatori non si sommano né si moltiplicano tra loro: si utilizza il più alto."
@@ -1815,7 +1822,27 @@
     },
     "copertura": {
       "paragrafo": "Giocatore §5.8",
-      "TODO(Davide)": "A.25: le penalità della Copertura valgono anche nel ravvicinato? Per ora l’app lo ricorda soltanto, senza modificare il VA."
+      "bersaglio": { "nessuna": 0, "leggera": -2, "media": -4, "totale": null },
+      "bersaglio_migliorata": { "nessuna": 0, "leggera": -4, "media": -6, "totale": null },
+      "_nota": "E&L del 29/09, risposta 13 (A.25): vale quando l’ostacolo protegge davvero dalla direzione dell’attacco e la portata permette di colpire. Totale (null): nessun attacco diretto. «bersaglio_migliorata»: il bersaglio ha Copertura Migliorata.",
+      "frasi": [
+        "La Copertura vale anche contro attacchi ravvicinati quando l’ostacolo protegge realmente dalla direzione dell’attacco e la portata permette di colpire: Leggera −2, Media −4, Totale impedisce l’attacco diretto.",
+        "Copertura Migliorata porta le prime due penalità a −4 e −6."
+      ]
+    },
+    "superiorita_numerica": {
+      "paragrafo": "Giocatore §5.3",
+      "fasce": [
+        { "da": 1, "a": 2, "va": 0 },
+        { "da": 3, "a": 5, "va": 1 },
+        { "da": 6, "a": 7, "va": 2 },
+        { "da": 8, "a": null, "va": 3 }
+      ],
+      "_nota": "E&L del 29/09, risposta 14 (A.26): ogni attaccante in ravvicinato contro lo stesso bersaglio, secondo quanti partecipano davvero; il Direttore decide quanti possono intervenire (porte, corridoi, spazio, portata).",
+      "frasi": [
+        "Negli attacchi ravvicinati contro lo stesso bersaglio, ciascun attaccante ottiene +1 VA con 3–5 attaccanti, +2 VA con 6–7 e +3 VA con almeno 8.",
+        "Il Direttore stabilisce quanti attaccanti possano intervenire realmente in situazioni come porte, corridoi e passaggi stretti, tenendo conto di spazio e portata."
+      ]
     },
     "circostanze": {
       "paragrafo": "Giocatore §1.4",
@@ -1830,7 +1857,7 @@
         6,
         8
       ],
-      "TODO(Davide)": "A.26: nessuna regola per l’Ingaggio multiplo; resta il modificatore di circostanza del Direttore."
+      "_nota": "Modificatore di circostanza del Direttore (§1.4). L’Ingaggio multiplo ha la sua regola: superiorita_numerica (A.26)."
     }
   },
   "elmetti": {

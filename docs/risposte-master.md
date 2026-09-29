@@ -395,3 +395,41 @@ Ricognizione e stime: `docs/ricognizione-2026-09-28.md`.
     (`bonusDannoCaratteristica`, `caratteristicaDanno`); `src/equipaggiamento.js` (bonus nel danno di ogni
     arma e dell'attacco con lo scudo, `bonusCaratteristica`); `src/attacco.js` (`profiloSenzArmi`);
     `src/lancio.js` (danno della versione con SAG in «Lancia!»); SD, «Attacca!», SS.
+
+45. **Spazzata** (E&L 6, A.27 e A.42; Giocatore §5.12). Bersagli adiacenti fra loro e tutti entro la
+    portata, senza spostarsi (la sola portata non basta); una Prova, −4 contro due e −6 contro tre; ogni
+    bersaglio con le sue Difese e la sua AR; per tutti anche senz'armi con Corpo a corpo; Spazzata
+    Migliorata −2; oltre tre bersagli solo Combattimento Multiplo.
+    → `regole.json` → `attacco_ravvicinato.manovre.spazzata` (`senz_armi`, TODO tolto); promemoria di «Attacca!».
+
+46. **Sbilanciare e Disarmare** (E&L 7–8, A.28 e A.41; §5.12). L'attaccante dichiara prima del tiro se
+    agisce senz'armi o con un'arma e usa l'Abilità di quel mezzo, non il VA maggiore; Prova contrapposta
+    con −4 (−2 con la Migliorata); il bersaglio sceglie prima del tiro fra Atletica e Difese (Sbilanciare)
+    o fra Corpo a corpo e l'Abilità dell'arma impugnata (Disarmare), se praticabili.
+    → `prova.abilita: ["mezzo"]`, `prova.scelta_bersaglio`; `src/attacco.js` (niente più «il migliore»,
+    `opposizione` nella dichiarazione, avviso finché non è scelta); pannello: scelta dell'opposizione.
+
+47. **Incalzare** (E&L 9, A.24; §5.5). Normale Prova per colpire a −4 contro le Difese, non contrapposta;
+    1 AzP, spinta 2 Q, nessun danno; Incalzare Migliorato aggiunge il danno. Già così: tolto «provvisorio».
+
+48. **Mano non dominante** (E&L 10, A.23; §5.7). −4 salvo Ambidestro; con Combattere con due armi solo la
+    penalità della manovra; Ambidestro non la riduce, Schermidore, Pistolero e Duellante sì. Già così:
+    tolti TODO e «provvisorio».
+
+49. **Magistrale e bonus fissi** (E&L 11, A.29; §§5.13, 1.6). I bonus ordinari (Colpo Mirato, Affondo,
+    Carica Brutale, Caratteristica) si sommano prima del moltiplicatore; quelli espressamente dopo l'AR non
+    si moltiplicano e richiedono almeno 1 danno residuo; ×2 diventa ×3, ×3 resta ×3; nelle applicazioni
+    multiple solo la prima.
+    → `attacco_ravvicinato.magistrale` (`promemoria`), nel risultato di «Attacca!» ravvicinato e a distanza.
+
+50. **Copertura nel ravvicinato** (E&L 13, A.25; §5.8). Vale se l'ostacolo protegge davvero dalla
+    direzione dell'attacco e la portata consente di colpire: Leggera −2, Media −4, Totale impedisce
+    l'attacco diretto; Copertura Migliorata −4 / −6. Ora modificatore vero, non più promemoria.
+    → `attacco_ravvicinato.copertura` (`bersaglio`, `bersaglio_migliorata`); la Copertura Migliorata del
+    bersaglio anche a distanza (`attacco_distanza.copertura.bersaglio_migliorata`, stesso §5.8).
+
+51. **Superiorità numerica** (E&L 14, A.26; §5.3). Ogni attaccante in ravvicinato contro lo stesso
+    bersaglio: 1–2 → 0, 3–5 → +1, 6–7 → +2, 8+ → +3 VA, massimo +3; quanti partecipano davvero lo decide
+    il Direttore.
+    → `attacco_ravvicinato.superiorita_numerica`; campo «attaccanti in ravvicinato contro il bersaglio»
+    nel pannello.

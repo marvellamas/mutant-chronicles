@@ -41,9 +41,6 @@ test('i TODO(Davide) sono elencabili', () => {
   // senza Addestramento (A.39), sul corpo a corpo (A.22–A.29), su AR e PI (A.43–A.48) e sulle
   // categorie di Prove degli Stati (A.16, A.51)
   assert.deepEqual([...new Set(todo.filter((t) => t.percorso.startsWith('regole.json')).map((t) => t.percorso.split('.TODO')[0]))].sort(), [
-    'regole.json.attacco_ravvicinato.circostanze', 'regole.json.attacco_ravvicinato.copertura', 'regole.json.attacco_ravvicinato.magistrale',
-    'regole.json.attacco_ravvicinato.mano_non_dominante', 'regole.json.attacco_ravvicinato.manovre.disarmare', 'regole.json.attacco_ravvicinato.manovre.incalzare',
-    'regole.json.attacco_ravvicinato.manovre.sbilanciare', 'regole.json.attacco_ravvicinato.manovre.spazzata',
     'regole.json.carico', 'regole.json.categorie_prove', 'regole.json.chroma',
     'regole.json.lancio.anticipazione',
   ]);

@@ -65,6 +65,7 @@ export function dichiarazioneDistanza(d = {}) {
       evasivo: !!b.evasivo,
       evasivoMigliorato: !!b.evasivoMigliorato,
       copertura: ['leggera', 'media', 'totale'].includes(b.copertura) ? b.copertura : 'nessuna',
+      coperturaMigliorata: !!b.coperturaMigliorata,
       impegnato: !!b.impegnato,
       ignaro: !!b.ignaro,
       tiImpegna: !!b.tiImpegna,
@@ -339,8 +340,9 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
   } else aggiungi(`Bersaglio in ${b.movimento}`, A.movimento.bersaglio[b.movimento], 'bersaglio', A.movimento.paragrafo);
   if (b.copertura === 'totale') blocca('Il bersaglio in Copertura Totale non può essere attaccato direttamente (§5.8).');
   else if (b.copertura !== 'nessuna') {
-    const pen = A.copertura.bersaglio[b.copertura];
-    aggiungi(`Bersaglio in Copertura ${b.copertura}`, pen, 'copertura', A.copertura.paragrafo);
+    // §5.8: Copertura Migliorata del bersaglio porta le penalità a −4 e −6
+    const pen = (b.coperturaMigliorata ? A.copertura.bersaglio_migliorata ?? A.copertura.bersaglio : A.copertura.bersaglio)[b.copertura];
+    aggiungi(`Bersaglio in Copertura ${b.copertura}${b.coperturaMigliorata ? ' (Copertura Migliorata)' : ''}`, pen, 'copertura', A.copertura.paragrafo);
     const ms = con('mira_selettiva')[0];
     if (ms && d.mirato && d.movimento === 'fermo') {
       aggiungi(ms.nome, Math.min(ms.e.mira_selettiva.riduzione, -pen), 'talento', 'Agente');
@@ -424,6 +426,8 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
   const base = dannoBase(arma);
   if (arma.dannoDaMunizione) promemoria.push('Il danno dipende dalla munizione caricata.');
   const formula = base ? aggiungiDanno(base, dannoBonus) : null;
+  const G = dati.regole.attacco_ravvicinato?.magistrale;
+  if (formula && G?.promemoria) promemoria.push(G.promemoria);
 
   return {
     va_finale: somma(scomposizione),
@@ -522,10 +526,15 @@ export function dichiarazioneRavvicinato(d = {}) {
       ignaro: !!b.ignaro,
       alleatoAdiacente: !!b.alleatoAdiacente,
       copertura: ['leggera', 'media', 'totale'].includes(b.copertura) ? b.copertura : 'nessuna',
+      coperturaMigliorata: !!b.coperturaMigliorata,
       distanza: Number.isFinite(b.distanza) && b.distanza >= 1 ? Math.round(b.distanza) : 1,
     },
     manovra: manovra.length ? manovra : ['normale'],
     bersagli: [2, 3].includes(d.bersagli) ? d.bersagli : 2,
+    // §5.12 (E&L 7–8): opposizione scelta dal bersaglio prima del tiro (Sbilanciare, Disarmare)
+    opposizione: typeof d.opposizione === 'string' && d.opposizione ? d.opposizione : null,
+    // §5.3 (E&L 14): attaccanti in ravvicinato contro lo stesso bersaglio, compreso il personaggio
+    attaccanti: Number.isInteger(d.attaccanti) && d.attaccanti >= 1 ? d.attaccanti : 1,
     circostanza: Number.isInteger(d.circostanza) ? d.circostanza : 0,
   };
 }
@@ -668,17 +677,16 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
   const mig = con('manovra').find((t) => t.e.manovra[idMig]);
   const migE = mig?.e.manovra[idMig] ?? {};
 
-  // 2. base: VA effettivo dell'arma; per le Prove contrapposte Corpo a corpo, se lo chiede la Manovra
+  // 2. base: VA effettivo dell'arma. Prove contrapposte (§5.12): Corpo a corpo se la Manovra lo chiede
+  // (Immobilizzare); altrimenti l'Abilità del mezzo dichiarato, senza scegliere il VA maggiore
+  // (Sbilanciare, Disarmare: E&L 7–8, A.41): senz'armi Corpo a corpo, con un'arma la sua Abilità
   let base = (arma.scomposizione?.length ? arma.scomposizione : [voce(`VA ${arma.abilita}`, arma.va ?? 0, 'regole')]).map((x) => ({ paragrafo: null, ...x }));
   const corpo = (personaggio.scheda?.abilita ?? []).find((x) => x.nome === R.senz_armi.abilita);
-  if (m.prova?.tipo === 'contrapposta' && corpo && !arma.senzArmi) {
-    const vaCorpo = corpo.effettivo ?? corpo.totale;
-    const soloCorpo = !(m.prova.abilita ?? []).includes('arma');
-    if (soloCorpo || vaCorpo > (arma.vaEffettivo ?? arma.va ?? -99)) {
-      base = (corpo.scomposizione ?? [voce('Valore da regole', corpo.totale, 'regole')]).map((x, i) => ({ paragrafo: null, ...x, etichetta: i === 0 && x.fonte === 'regole' ? `VA ${corpo.nome}` : x.etichetta }));
-      if (!soloCorpo) promemoria.push(`${m.nome}: usi Corpo a corpo (${vaCorpo}), migliore dell’Abilità dell’arma.`);
-    }
+  const delMezzo = (m.prova?.abilita ?? []).includes('mezzo');
+  if (m.prova?.tipo === 'contrapposta' && corpo && !arma.senzArmi && !delMezzo) {
+    base = (corpo.scomposizione ?? [voce('Valore da regole', corpo.totale, 'regole')]).map((x, i) => ({ paragrafo: null, ...x, etichetta: i === 0 && x.fonte === 'regole' ? `VA ${corpo.nome}` : x.etichetta }));
   }
+  if (delMezzo && !arma.senzArmi) promemoria.push(`${m.nome}: usi l’Abilità dell’arma dichiarata (${arma.abilita}); per usare Corpo a corpo scegli «Senz’armi» (§5.12).`);
   if ((arma.va === null || arma.va === undefined) && !arma.senzArmi) blocca('VA dell’arma non calcolato.');
   if (arma.senzArmi && arma.va === null) blocca('VA di Corpo a corpo non calcolato.');
   const scomposizione = [...base];
@@ -691,7 +699,7 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
     if (migE.riduzione) aggiungi(situazione, mig.nome, Math.min(migE.riduzione, -va), 'talento', m.paragrafo);
     promemoria.push(m.senza_limite
       ? `${m.nome}: tutti gli avversari adiacenti raggiungibili; con «3» si intende tre o più. Una Prova, un colpo e un’Armatura per bersaglio.`
-      : `${m.nome}: bersagli adiacenti entro la portata (${vincoli.portata} Q); una Prova, un colpo e un’Armatura per bersaglio (A.27 provvisoria).`);
+      : `${m.nome}: bersagli adiacenti fra loro e tutti entro la portata (${vincoli.portata} Q), senza spostarti; una Prova, un colpo, le Difese e l’Armatura di ciascun bersaglio (§5.12).`);
   } else if (migE.va !== undefined) aggiungi(situazione, `${m.nome} (${mig.nome})`, migE.va, 'talento', m.paragrafo);
   else aggiungi(situazione, m.nome, m.va, 'manovra', m.paragrafo);
 
@@ -730,7 +738,12 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
   if (b.aTerra) aggiungi(situazione, 'Bersaglio A Terra', AT.bersaglio, 'bersaglio', AT.paragrafo);
   if (b.distanza > vincoli.portata && !d.controcarica) blocca(`Bersaglio a ${b.distanza} Q, oltre la portata dell’arma (${vincoli.portata} Q).`);
   if (b.copertura === 'totale') blocca('Il bersaglio in Copertura Totale non può essere attaccato direttamente (§5.8).');
-  else if (b.copertura !== 'nessuna') promemoria.push(`Bersaglio in Copertura ${b.copertura}: nel ravvicinato l’app non applica la penalità finché il master non decide (A.25).`);
+  else if (b.copertura !== 'nessuna') {
+    // §5.8 (E&L 13): vale se l'ostacolo protegge davvero dalla direzione dell'attacco
+    const C = R.copertura;
+    aggiungi(situazione, `Bersaglio in Copertura ${b.copertura}${b.coperturaMigliorata ? ' (Copertura Migliorata)' : ''}`, (b.coperturaMigliorata ? C.bersaglio_migliorata : C.bersaglio)[b.copertura], 'bersaglio', C.paragrafo);
+    promemoria.push(C.frasi[0]);
+  }
   if (d.imboscata) {
     const t = con('imboscata')[0];
     aggiungi(situazione, t ? `Imboscata (${t.nome})` : 'Imboscata', t ? t.e.imboscata.va : R.imboscata.va, t ? 'talento' : 'manovra', R.imboscata.paragrafo);
@@ -744,7 +757,6 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
     const amb = con('mano_non_dominante')[0];
     aggiungi(situazione, 'Mano non dominante', R.mano_non_dominante.va, 'situazione', R.mano_non_dominante.paragrafo);
     if (amb) aggiungi(situazione, amb.nome, amb.e.mano_non_dominante.va - R.mano_non_dominante.va, 'talento', R.mano_non_dominante.paragrafo);
-    else promemoria.push('Mano non dominante: −4 provvisorio (A.23).');
   }
   // Talenti con una condizione dichiarata
   const alleato = con('alleato_adiacente')[0];
@@ -768,6 +780,12 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
     }
   }
   if (d.circostanza) aggiungi(situazione, 'Circostanza del Direttore', d.circostanza, 'situazione', 'Giocatore §1.4');
+  // §5.3 (E&L 14): Superiorità numerica, secondo gli attaccanti che partecipano davvero
+  const SN = R.superiorita_numerica;
+  if (SN && d.attaccanti > 1) {
+    const f = SN.fasce.find((x) => d.attaccanti >= x.da && (x.a === null || d.attaccanti <= x.a));
+    aggiungi(situazione, `Superiorità numerica (${d.attaccanti} attaccanti)`, f?.va ?? 0, 'situazione', SN.paragrafo);
+  }
 
   // 6. più attacchi: Combattere con due armi (§5.7), Raffica di Colpi (Lottatore)
   scomposizione.push(...situazione);
@@ -810,7 +828,7 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
     if (m.dopo_armatura?.salvezza) dopo.push({ etichetta: `PS ${m.dopo_armatura.salvezza}`, testo: `Se almeno 1 danno supera l’Armatura, il bersaglio fa una PS ${m.dopo_armatura.salvezza}; se fallisce è ${m.dopo_armatura.stato} per ${m.dopo_armatura.durata} (§5.18).` });
     if (migE.dopo_armatura && !m.dopo_armatura) dopo.push({ etichetta: `+${migE.dopo_armatura} dopo l’Armatura`, testo: `${mig.nome}: +${migE.dopo_armatura} danni ai PV dopo l’Armatura, solo se almeno 1 danno la supera; non si moltiplica.` });
     if (moltiplicatore > 1) promemoria.push(`Con un Successo Magistrale il danno ×${moltiplicatore} diventa ×${mm} (§1.6).`);
-    if (dannoBonus && moltiplicatore > 1) promemoria.push('I bonus ordinari al danno si sommano prima del moltiplicatore (§5.13; A.29).');
+    if (R.magistrale.promemoria) promemoria.push(R.magistrale.promemoria);
   }
   const effetti = [];
   if (m.effetto) effetti.push(`Con successo: ${m.effetto}.`);
@@ -820,10 +838,15 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
   if (id === 'mirato') promemoria.push(`${m.nome}: ${m.frasi[1]} ${m.frasi[2]}`);
 
   // 8. Prova o Salvezza del bersaglio
-  const prova = m.prova?.tipo === 'contrapposta'
-    ? { tipo: 'contrapposta', testo: `Prova contrapposta: ${m.prova.abilita.map((x) => (x === 'arma' ? `Abilità dell’arma (${arma.abilita})` : x)).join(' o ')} contro ${m.prova.contro.join(' o ')} del bersaglio${m.prova.contro.length > 1 ? ' (A.28: sceglie il bersaglio, provvisorio)' : ''}.` }
-    : { tipo: 'per_colpire', testo: `Il bersaglio si difende con le Difese (Parata o Schivata, §5.9)${m.dopo_armatura?.salvezza ? `, poi PS ${m.dopo_armatura.salvezza}` : ''}.` };
-  if (id === 'incalzare') prova.testo += ' Incalzare: Prova per colpire contro le Difese, provvisoria (A.24).';
+  let prova;
+  if (m.prova?.tipo === 'contrapposta') {
+    const chi = m.prova.abilita.map((x) => (x === 'mezzo' || x === 'arma' ? arma.abilita : x)).join(' o ');
+    const scelta = m.prova.scelta_bersaglio && m.prova.contro.includes(d.opposizione) ? d.opposizione : null;
+    if (m.prova.scelta_bersaglio && !scelta) avvisi.push(`${m.nome}: il bersaglio sceglie prima del tiro fra ${m.prova.contro.join(' e ')}; selezionala nel pannello (§5.12).`);
+    prova = { tipo: 'contrapposta', opposizione: scelta, opposizioni: m.prova.contro,
+      testo: `Prova contrapposta: ${chi} contro ${scelta ?? m.prova.contro.join(' o ')} del bersaglio${m.prova.scelta_bersaglio ? (scelta ? ' (scelta dal bersaglio prima del tiro)' : ' (la sceglie il bersaglio prima del tiro)') : ''}.` };
+  } else prova = { tipo: 'per_colpire', testo: `Il bersaglio si difende con le Difese (Parata o Schivata, §5.9)${m.dopo_armatura?.salvezza ? `, poi PS ${m.dopo_armatura.salvezza}` : ''}.` };
+  if (id === 'incalzare') prova.testo += ' Incalzare: normale Prova per colpire, non contrapposta (§5.5).';
 
   // 9. promemoria dei Talenti senza numero
   for (const t of con('promemoria')) {
