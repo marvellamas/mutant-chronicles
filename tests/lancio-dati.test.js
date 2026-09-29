@@ -47,9 +47,11 @@ test('Anticipazione: ogni aspetto ha un nome breve; il gradino intero resta per 
     'origini naturale → naturale e artificiale → naturale, artificiale e mistica → universale');
 });
 
-test('casi non estratti: TODO(Davide) espliciti', () => {
+test('casi non estratti: nessun TODO(Davide) (E&L 17–18); Rigenerazione con la procedura rituale non definita', () => {
   const conTodo = dati.incantesimi.incantesimi.filter((i) => Object.keys(i.meccanica).some((k) => k.startsWith('TODO('))).map((i) => i.nome);
-  assert.deepEqual(conTodo, ['Colpo Elementale', 'Rigenerazione']);
+  assert.deepEqual(conTodo, []);
+  const rig = dati.incantesimi.incantesimi.find((i) => i.nome === 'Rigenerazione');
+  assert.equal(rig.meccanica.procedura_rituale.stato, 'non_definita');
 });
 
 test('regole.json → lancio: scala del Potere e Anticipazione (sez. 1 e 12.3)', () => {

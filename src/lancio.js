@@ -85,6 +85,8 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
   else if (v.motivo) blocca(`Versione di livello ${v.livello} ${v.motivo}.`);
   const livello = v?.livello ?? 1;
   for (const k of Object.keys(m).filter((x) => x.startsWith('TODO('))) promemoria.push(`Dati da completare: ${m[k]}`);
+  // E&L 18: incantesimo solo rituale con procedura non definita (Rigenerazione): nessun calcolo
+  if (m.procedura_rituale?.stato === 'non_definita') blocca(m.procedura_rituale.testo);
 
   // 2. Anticipazione (sez. 12.3): un aspetto della scheda, costo base ×2, Potere di una categoria più difficile
   const A = L.anticipazione;
@@ -180,8 +182,11 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
   const gittata = String(v?.riga?.Gittata ?? v?.riga?.['Gittata Q'] ?? '');
   const contatto = /Contatto/.test(gittata) ? { abilita: L.contatto.abilita, va: (abil(L.contatto.abilita)?.effettivo ?? abil(L.contatto.abilita)?.totale ?? 0) + L.contatto.va, nota: L.contatto.frasi[1] } : null;
   const inarrestabili = con('salvezza_bersaglio')[0];
-  const salvezza = m.salvezza?.tipi?.length ? { tipi: m.salvezza.tipi, testo: m.salvezza.testo, mod_ps: modPsVersione(v?.riga), talento: inarrestabili ? { nome: inarrestabili.nome, valore: inarrestabili.e.salvezza_bersaglio } : null }
+  const salvezza = m.salvezza?.tipi?.length ? { tipi: m.salvezza.tipi, testo: [m.salvezza.testo, m.salvezza.dettaglio].filter(Boolean).join(' '), mod_ps: modPsVersione(v?.riga), talento: inarrestabili ? { nome: inarrestabili.nome, valore: inarrestabili.e.salvezza_bersaglio } : null }
     : m.salvezza ? { tipi: [], testo: m.salvezza.testo, mod_ps: modPsVersione(v?.riga), talento: null } : null;
+
+  // E&L 17: colpo automatico, difese ammesse (Colpo Elementale)
+  if (m.colpo?.automatico) promemoria.unshift(m.colpo.testo);
 
   // 8. danno della versione con il bonus di SAG (Magia sez. 7; Giocatore §5.13, stessi tetti di livello):
   // colonne «Danno…» della riga con un dado; a ogni colpo o applicazione, prima di moltiplicatori e Armatura
@@ -214,6 +219,7 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
     contatto,
     salvezza_bersaglio: salvezza,
     danno: dannoIncantesimo,
+    rituale_non_definito: m.procedura_rituale?.stato === 'non_definita',
     azioni: { ...m.azioni, focalizzazione: d.focalizzazione ? 1 : 0 },
     concentrazione: m.concentrazione ?? null,
     aspetto,

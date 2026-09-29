@@ -183,7 +183,23 @@
         ],
         "richiede_colpire": false,
         "contatto": false,
-        "salvezza": null,
+        "salvezza": {
+          "tipi": [
+            "Riflessi",
+            "Tempra"
+          ],
+          "testo": "Il Mod. PS di Colpo Elementale riguarda soltanto le Salvezze degli effetti secondari dell’elemento, dopo il danno.",
+          "dettaglio": "Solo per gli effetti secondari, dopo danno e Contromisure e con almeno 1 danno residuo: Fuoco e Aria Riflessi, Gelo e Fulmine Tempra, Acqua e Terra nessuna. Una PS per tipo di effetto e per bersaglio a ogni lancio, anche con più colpi; gli effetti automatici restano automatici. Non evita il colpo né il danno.",
+          "per_elemento": {
+            "Fuoco": "Riflessi",
+            "Aria": "Riflessi",
+            "Gelo": "Tempra",
+            "Fulmine": "Tempra",
+            "Acqua": null,
+            "Terra": null
+          },
+          "una_per_tipo": true
+        },
         "concentrazione": "no",
         "rituale": "non consentito",
         "pm_utilizzabili": [
@@ -221,9 +237,23 @@
           "frase": "Anticipazione: un solo aspetto di un gradino, con PM raddoppiati e Potere più difficile di una categoria. Si sceglie Colpi 1 → 2 → 3 → 4, natura Naturale → Magico, elementi 1 → 2 → 3 oppure Mod. PS peggiorato di 2. Il danno non è anticipabile. I massimi sono 5d6+5 per colpo, 4 Colpi e natura Magica: non si ottiene danno Etereo. Al livello 18 resta anticipabile soltanto il Mod. PS. La PS resta assente per gli effetti automatici."
         },
         "frasi": [
-          "Ogni versione persistente riporta la Durata."
+          "Ogni versione persistente riporta la Durata.",
+          "Colpisce automaticamente, rispettando gittata, visibilità e ostacoli sul percorso.",
+          "Consente Parata e Schivata; non Elusione.",
+          "Il Mod. PS di Colpo Elementale riguarda soltanto le Salvezze degli effetti secondari dell’elemento, dopo il danno."
         ],
-        "TODO(Davide)": "Colpo Elementale ha la colonna «Mod PS» ma la scheda non dice quale Prova Salvezza e quando la fa il bersaglio (colpisce automaticamente). Per-davide A.39."
+        "colpo": {
+          "automatico": true,
+          "difese": [
+            "Parata",
+            "Schivata"
+          ],
+          "escluse": [
+            "Elusione"
+          ],
+          "testo": "Colpisce automaticamente, rispettando gittata, visibilità e ostacoli; il bersaglio può usare Parata e Schivata, non Elusione."
+        },
+        "_nota": "E&L del 29/09, risposta 17 (A.39.2): colpisce automaticamente; «Mod PS» riguarda soltanto gli effetti secondari."
       }
     },
     {
@@ -9276,7 +9306,14 @@
           "spirituali"
         ],
         "anticipazione": null,
-        "TODO(Davide)": "Rigenerazione si lancia solo mediante Rituale: componenti, Concentrazione, Anticipazione e costo di esecuzione arriveranno con le regole dei Rituali. Per-davide A.39.",
+        "procedura_rituale": {
+          "stato": "non_definita",
+          "testo": "Procedura rituale non ancora definita: componenti, esecuzione e costo finale arriveranno con le regole generali dei Rituali (E&L 18). I PM della tabella sono la base del costo rituale, non il costo finale; i tempi indicano la rigenerazione dopo il Rituale. Contatto durante il Rituale; bersaglio vivente e consenziente, oppure incosciente e soccorso, senza PS. Anticipazione ordinaria non applicabile."
+        },
+        "frasi": [
+          "La voce Rituale indica l’ammissibilità di una versione rituale."
+        ],
+        "_nota": "E&L del 29/09, risposta 18 (A.39.3): solo mediante Rituale; l’app non lo tratta come un lancio normale e non inventa costi o componenti.",
         "da_verificare": [
           "componenti",
           "concentrazione",

@@ -1660,7 +1660,8 @@ function validaMeccanicaIncantesimi(dati, err) {
     const m = i.meccanica;
     const K = `incantesimi[${k}] (${i.nome}).meccanica`;
     if (!isOggetto(m)) return err(F, K, 'campi del lancio mancanti (tools/estrai_lancio.py)');
-    const todo = Object.keys(m).some((x) => x.startsWith('TODO('));
+    // E&L 18: un incantesimo solo rituale con procedura non definita non ha ancora questi campi
+    const todo = Object.keys(m).some((x) => x.startsWith('TODO(')) || m.procedura_rituale?.stato === 'non_definita';
     if (!isOggetto(m.azioni) || (!isIntero(m.azioni.azioni_principali) && !isTesto(m.azioni.tempo))) err(F, `${K}.azioni`, '{ azioni_principali } oppure { tempo } atteso');
     if (!Array.isArray(m.componenti) || m.componenti.some((c) => !COMPONENTI.includes(c))) err(F, `${K}.componenti`, `lista fra ${COMPONENTI.join(', ')}`);
     if (m.concentrazione !== null && !CONCENTRAZIONE.includes(m.concentrazione)) err(F, `${K}.concentrazione`, `uno fra ${CONCENTRAZIONE.join(', ')}`);

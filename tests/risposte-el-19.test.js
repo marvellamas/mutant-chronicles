@@ -4,7 +4,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda, bonusDannoCaratteristica, caratteristicaDanno } from '../src/calc.js';
 import { profiloSenzArmi, calcolaAttaccoRavvicinato, vincoliRavvicinato, moltiplicatoreMagistrale } from '../src/attacco.js';
-import { inizializzaSessione, massimiSessione, ricaricaArma, variaMunizioni } from '../src/sessione.js';
+import { inizializzaSessione, massimiSessione, ricaricaArma, variaMunizioni, allineaSessione, modificaSessione } from '../src/sessione.js';
+import { calcolaLancio } from '../src/lancio.js';
 import { soglieCarico } from '../src/carico.js';
 import { vociDotazione, modelloAssegnato } from '../src/dotazioni.js';
 import { datiReali } from './helpers.js';
@@ -232,4 +233,59 @@ test('E&L 19: fucile a pompa, 1 cartuccia per operazione; 3 con Ricarica Miglior
   s = ricaricaArma(s, 'r', m);
   assert.equal(s.munizioni.r.colpi, 6);
   assert.equal(dati.equipaggiamento.file.munizioni.ricarica.inserimento_singolo['TODO(Davide)'], undefined);
+});
+
+// --- 1, 2, 17, 18. Magia ---------------------------------------------------------------------------
+
+const incantesimo = (nome) => dati.incantesimi.incantesimi.find((i) => i.nome === nome);
+const mago = ({ scala = 'taumaturgo', liberi = [], SAG = 7, livello = 1, max = 9 } = {}) => ({
+  scheda: {
+    livello, caratteristiche: { SAG: { valore: SAG } },
+    abilita: [{ nome: 'Potere', effettivo: 10, scomposizione: [{ etichetta: 'Valore da regole', valore: 10, fonte: 'regole' }] }],
+    incantesimi: { livelloMassimo: max, scalaPotere: scala }, magia: {}, equipaggiamento: { contenitori: [] },
+    talentiLiberi: liberi.map((id) => ({ id })), classi: [{ talenti: [] }],
+  },
+  sessione: { pmAttuali: 40, chroma: {} },
+});
+const potereLivello = (r) => r.scomposizione.filter((x) => x.fonte === 'livello').reduce((s, x) => s + x.valore, 0);
+
+test('E&L 1: Anticipazione senza Addestramento: colonna «altri» con −2 in più; la Migliorata toglie solo il −2, la Prova resta (A.39.1)', () => {
+  const altri = (versione, liberi = []) => calcolaLancio(mago({ scala: 'altri_utilizzatori', liberi }), incantesimo('Colpo Elementale'), { versione, anticipazione: 0 }, dati);
+  // 1–3 → −2, 4–6 → −4, 7–9 → −6
+  assert.deepEqual([1, 5, 8].map((v) => potereLivello(altri(v))), [-2, -4, -6]);
+  const mig = altri(5, ['anticipazione-migliorata']);
+  assert.equal(potereLivello(mig), -2); // resta la colonna ordinaria
+  assert.equal(mig.prova_richiesta, true);
+  assert.equal(dati.regole.lancio.anticipazione['TODO(Davide)'], undefined);
+});
+
+test('E&L 17: Colpo Elementale colpisce automaticamente; PS solo per gli effetti secondari, per elemento (A.39.2)', () => {
+  const r = calcolaLancio(mago(), incantesimo('Colpo Elementale'), { versione: 1 }, dati);
+  assert.ok(r.promemoria[0].startsWith('Colpisce automaticamente'));
+  assert.match(r.salvezza_bersaglio.testo, /Fuoco e Aria Riflessi, Gelo e Fulmine Tempra, Acqua e Terra nessuna/);
+  assert.deepEqual(incantesimo('Colpo Elementale').meccanica.salvezza.per_elemento, { Fuoco: 'Riflessi', Aria: 'Riflessi', Gelo: 'Tempra', Fulmine: 'Tempra', Acqua: null, Terra: null });
+  // Magia sez. 7: il danno della versione con il bonus di SAG (SAG 7, 1° livello: +1)
+  assert.deepEqual(r.danno.voci.map((x) => [x.colonna, x.testo]), [['Danno per colpo', '1d6+1']]);
+});
+
+test('E&L 18: Rigenerazione solo Rituale: «procedura rituale non ancora definita», nessun calcolo (A.39.3)', () => {
+  const r = calcolaLancio(mago({ max: 18 }), incantesimo('Rigenerazione'), {}, dati);
+  assert.equal(r.rituale_non_definito, true);
+  assert.match(r.impossibile.motivo, /Procedura rituale non ancora definita/);
+});
+
+test('E&L 2: contenitore acquistato pieno; trovato con i PM impostati nella voce (A.19)', () => {
+  const batteria = (extra = {}) => ({ uid: 'b', rif: 'artefatti:batteria-da-5-pm-chroma-rosso', stato: 'trasportato', quantita: 1, note: '', ...extra });
+  const m = (v) => { const creazione = { ...MISHIMA_AGENTE, equipaggiamento: [v] }; return massimiSessione(calcolaScheda({ creazione, livelli: [] }, dati), creazione, dati); };
+  const acquistato = m(batteria());
+  assert.equal(inizializzaSessione(acquistato).chroma.b.pmAttuali, acquistato.contenitori.b);
+  const trovato = m(batteria({ pm_iniziali: 2 }));
+  assert.equal(inizializzaSessione(trovato).chroma.b.pmAttuali, 2);
+  // aggiunto «pieno» e poi segnato come trovato: la sessione segue il valore della voce
+  const s = inizializzaSessione(acquistato);
+  assert.equal(allineaSessione(s, trovato).chroma.b.pmAttuali, 2);
+  // spendere PM non fa ripartire il valore
+  const speso = modificaSessione(allineaSessione(s, trovato), { chroma: { b: { pmAttuali: 1, iniziale: 2 } } }, trovato);
+  assert.equal(allineaSessione(speso, trovato).chroma.b.pmAttuali, 1);
+  assert.equal(dati.regole.chroma['TODO(Davide)'], undefined);
 });

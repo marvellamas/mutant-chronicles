@@ -105,6 +105,8 @@ function corpo(ctx, inc, intestazione) {
 }
 
 function risultato(ctx, inc, r) {
+  // E&L 18: procedura rituale non ancora definita (Rigenerazione): nessun costo né Prova
+  if (r.rituale_non_definito) return [h('div', { class: 'riquadro attenzione', role: 'status' }, h('p', {}, h('strong', {}, 'Procedura rituale non ancora definita. '), r.impossibile?.motivo ?? ''))];
   const f = r.fonte_pm;
   const doveSpesa = [f.personali ? `${f.personali} personali` : null, f.contenitore ? `${f.contenitore.pm} da ${f.contenitore.nome}` : null].filter(Boolean).join(' + ');
   const azioni = r.azioni.azioni_principali ? `${r.azioni.azioni_principali} ${r.azioni.azioni_principali === 1 ? 'Azione Principale' : 'Azioni Principali'}` : r.azioni.tempo;

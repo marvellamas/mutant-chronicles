@@ -226,9 +226,14 @@ def estrai(i):
 NO_CONC = lambda f: {'concentrazione': 'no', 'frasi': [f]}
 CORREZIONI = {
     # effetti istantanei: nessuna colonna Durata nelle versioni (sez. 2: «Ogni versione persistente riporta la Durata.»)
-    '13.1': {'concentrazione': 'no', 'frasi': ['Ogni versione persistente riporta la Durata.'],
-             'TODO(Davide)': 'Colpo Elementale ha la colonna «Mod PS» ma la scheda non dice quale Prova Salvezza e quando la fa il bersaglio (colpisce automaticamente). Per-davide A.39.'},
-    '21.10': {'TODO(Davide)': 'Rigenerazione si lancia solo mediante Rituale: componenti, Concentrazione, Anticipazione e costo di esecuzione arriveranno con le regole dei Rituali. Per-davide A.39.'},
+    # E&L 17 (A.39.2): colpo automatico; «Mod PS» solo per gli effetti secondari, PS per elemento
+    '13.1': {'concentrazione': 'no', 'frasi': ['Ogni versione persistente riporta la Durata.', 'Colpisce automaticamente, rispettando gittata, visibilità e ostacoli sul percorso.', 'Consente Parata e Schivata; non Elusione.', 'Il Mod. PS di Colpo Elementale riguarda soltanto le Salvezze degli effetti secondari dell’elemento, dopo il danno.'],
+             'salvezza': {'tipi': ['Riflessi', 'Tempra'], 'testo': 'Il Mod. PS di Colpo Elementale riguarda soltanto le Salvezze degli effetti secondari dell’elemento, dopo il danno.', 'dettaglio': 'Solo per gli effetti secondari, dopo danno e Contromisure e con almeno 1 danno residuo: Fuoco e Aria Riflessi, Gelo e Fulmine Tempra, Acqua e Terra nessuna. Una PS per tipo di effetto e per bersaglio a ogni lancio, anche con più colpi; gli effetti automatici restano automatici. Non evita il colpo né il danno.', 'per_elemento': {'Fuoco': 'Riflessi', 'Aria': 'Riflessi', 'Gelo': 'Tempra', 'Fulmine': 'Tempra', 'Acqua': None, 'Terra': None}, 'una_per_tipo': True},
+             'colpo': {'automatico': True, 'difese': ['Parata', 'Schivata'], 'escluse': ['Elusione'], 'testo': 'Colpisce automaticamente, rispettando gittata, visibilità e ostacoli; il bersaglio può usare Parata e Schivata, non Elusione.'},
+             '_nota': 'E&L del 29/09, risposta 17 (A.39.2): colpisce automaticamente; «Mod PS» riguarda soltanto gli effetti secondari.'},
+    # E&L 18 (A.39.3): solo Rituale, procedura non ancora definita
+    '21.10': {'procedura_rituale': {'stato': 'non_definita', 'testo': 'Procedura rituale non ancora definita: componenti, esecuzione e costo finale arriveranno con le regole generali dei Rituali (E&L 18). I PM della tabella sono la base del costo rituale, non il costo finale; i tempi indicano la rigenerazione dopo il Rituale. Contatto durante il Rituale; bersaglio vivente e consenziente, oppure incosciente e soccorso, senza PS. Anticipazione ordinaria non applicabile.'}, 'frasi': ['La voce Rituale indica l’ammissibilità di una versione rituale.'],
+              '_nota': 'E&L del 29/09, risposta 18 (A.39.3): solo mediante Rituale; l’app non lo tratta come un lancio normale e non inventa costi o componenti.'},
     '13.2': {'concentrazione': 'a_scelta', 'frasi': ['Un comportamento semplice dichiarato al lancio può proseguire senza Concentrazione.', 'Modificare attivamente l’effetto richiede Concentrazione.']},
     '13.3': NO_CONC('Durata fissa senza Concentrazione.'),
     '13.4': NO_CONC('Durata fissa senza Concentrazione.'),

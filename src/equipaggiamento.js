@@ -190,6 +190,8 @@ function contenitoriRisolti(oggetti, dati) {
       energia: c.energia, energiaNome: colore.energia ?? null, macrofamiglie: colore.macrofamiglie ?? [], regoleRimandate: !!colore.regole_rimandate,
       capacita: c.capacita_pm, potenza: a.potenza, costo: a.sintonizzazione,
       sintonizzato: r.voce.sintonizzato === true,
+      // E&L 2 (A.19): PM di un contenitore trovato, impostati dal giocatore; null = acquistato, pieno
+      pmIniziali: !c.integrato && Number.isInteger(r.voce.pm_iniziali) ? Math.min(r.voce.pm_iniziali, c.capacita_pm) : null,
       stato: r.voce.stato,
       // un contenitore a sé è trasportato nello stato omonimo; uno integrato segue l'oggetto
       trasportato: c.integrato ? ['impugnata', 'imbracciato', 'pronta', 'indossata', 'in_uso'].includes(r.voce.stato) : r.voce.stato === 'trasportato',
@@ -358,6 +360,7 @@ export function normalizzaEquipaggiamento(valore) {
     if (typeof v.montato_su === 'string' && v.montato_su) out.montato_su = v.montato_su;
     if (v.sintonizzato === true) out.sintonizzato = true; // §7.10: scelta del giocatore
     if (Number.isInteger(v.pi_direttore) && v.pi_direttore >= 1) out.pi_direttore = v.pi_direttore; // A.47: PI fissati dal Direttore
+    if (Number.isInteger(v.pm_iniziali) && v.pm_iniziali >= 0) out.pm_iniziali = v.pm_iniziali; // E&L 2 (A.19): contenitore trovato
     if (v.dotazione_iniziale === true) out.dotazione_iniziale = true; // §2.16: voce della dotazione iniziale (src/dotazioni.js)
     if (!out.rif && testo(v.dotazione_id)) out.dotazione_id = v.dotazione_id; // oggetto di dotazione: effetti dai dati
     return out;

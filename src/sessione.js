@@ -5,7 +5,7 @@
 //
 // sessione = { pvAttuali, pmAttuali, puntiEroe, distintivi, statiAttivi: [id], ferite,
 //              affaticamento, munizioni: { uid: { colpi, riserve, parziali, vuoti } }, scorte: { uid: consumate },
-//              chroma: { uid: { pmAttuali } },
+//              chroma: { uid: { pmAttuali, iniziale? } } (iniziale: PM impostati per un contenitore trovato, E&L 2),
 //              caricoExtra, crediti, creditiIniziali, condizioniOggetti: [uid], attacchi: { uid: scelte },
 //              lanci: { incantesimo: scelte }, integrita: { uid: piAttuali }, note }
 // integrita: PI attuali degli oggetti con PI (Armamenti §7.2.1: «si annotano separatamente quelli
@@ -67,8 +67,9 @@ export function massimiSessione(scheda, creazione, dati) {
       .map(([uid, x]) => [uid, x.singolo ? { ...x, perOperazione: perOperazione(x, (scheda?.talentiLiberi ?? []).map((t) => t.id), dati) } : x])) : {},
     // capacità di ogni contenitore di Chroma (uid → PM)
     contenitori: Object.fromEntries(contenitori(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati).map((c) => [c.uid, c.capacita])),
-    // TODO(Davide): un contenitore nuovo arriva carico? Ipotesi: pieno (regole.json → chroma, per-davide A.19)
+    // E&L 2 (A.19): acquistato pieno (regole.json → chroma); trovato con i PM impostati nella voce
     contenitoreNuovo: dati.regole.chroma?.contenitore_nuovo ?? 'pieno',
+    contenitoriIniziali: Object.fromEntries(contenitori(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati).filter((c) => c.pmIniziali !== null).map((c) => [c.uid, c.pmIniziali])),
     // oggetti con effetti situazionali: solo questi possono avere la condizione accesa
     oggettiSituazionali: oggettiSituazionali(creazione, dati, scheda),
     // §2.16.28–29: crediti iniziali meno i conguagli, o null senza dotazione iniziale
@@ -162,7 +163,8 @@ function allineaCrediti(sessione, m) {
 }
 
 /**
- * PM attuali dei contenitori di Chroma: i nuovi partono pieni (o vuoti, secondo regole.json), i
+ * PM attuali dei contenitori di Chroma: i nuovi partono pieni (acquistati) o con i PM impostati nella
+ * voce (trovati, E&L 2), i
  * valori non superano la capacità, i contenitori tolti dalla lista spariscono. Le riserve integrate
  * salvate prima come «munizioni» di un'arma (Bordone Templare…) conservano il loro valore.
  */
@@ -172,9 +174,12 @@ function allineaChroma(sorgente, munizioniPrecedenti, m) {
   const vecchie = isOggetto(munizioniPrecedenti) ? munizioniPrecedenti : {};
   const out = {};
   for (const [uid, capacita] of Object.entries(m.contenitori)) {
-    const salvato = isOggetto(src[uid]) && Number.isInteger(src[uid].pmAttuali) ? src[uid].pmAttuali
-      : voceMunizioni(vecchie[uid])?.colpi ?? (m.contenitoreNuovo === 'vuoto' ? 0 : capacita);
-    out[uid] = { pmAttuali: limita(salvato, 0, capacita) };
+    // E&L 2: se il giocatore cambia i PM «trovato» della voce, il valore di sessione riparte da lì
+    const iniziale = m.contenitoriIniziali?.[uid] ?? null;
+    const valido = isOggetto(src[uid]) && Number.isInteger(src[uid].pmAttuali) && (src[uid].iniziale ?? null) === iniziale;
+    const salvato = valido ? src[uid].pmAttuali
+      : iniziale ?? voceMunizioni(vecchie[uid])?.colpi ?? (m.contenitoreNuovo === 'vuoto' ? 0 : capacita);
+    out[uid] = { pmAttuali: limita(salvato, 0, capacita), ...(iniziale !== null ? { iniziale } : {}) };
   }
   return out;
 }
@@ -313,7 +318,7 @@ export function variaMunizioni(sessione, uid, campo, delta, m) {
 export function variaChroma(sessione, uid, delta, m) {
   const s = allineaSessione(sessione, m);
   if (!s.chroma[uid]) return s;
-  return modificaSessione(s, { chroma: { ...s.chroma, [uid]: { pmAttuali: s.chroma[uid].pmAttuali + delta } } }, m);
+  return modificaSessione(s, { chroma: { ...s.chroma, [uid]: { ...s.chroma[uid], pmAttuali: s.chroma[uid].pmAttuali + delta } } }, m);
 }
 
 /**
@@ -346,7 +351,7 @@ export function spendiPmLancio(sessione, { personali = 0, contenitore = null }, 
   if (contenitore) {
     const c = chroma[contenitore.uid];
     if (!c || contenitore.pm > c.pmAttuali) return null;
-    chroma[contenitore.uid] = { pmAttuali: c.pmAttuali - contenitore.pm };
+    chroma[contenitore.uid] = { ...c, pmAttuali: c.pmAttuali - contenitore.pm };
   }
   return modificaSessione(s, { pmAttuali: s.pmAttuali - personali, chroma }, m);
 }

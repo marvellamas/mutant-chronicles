@@ -478,3 +478,32 @@ Ricognizione e stime: `docs/ricognizione-2026-09-28.md`.
     `migliorata`), `ricarica.tamburo`, `ricarica.ricarica_rapida`; `src/ricarica.js` (modo «tamburo»,
     `perOperazione`); `src/sessione.js` (massimi con il Talento); SD: «Ricarica +1 / +3», promemoria di
     Ricarica Rapida.
+
+58. **Anticipazione senza Addestramento Taumaturgo** (E&L 1, A.39.1; Magia §12.3). Confermata la colonna
+    «altri utilizzatori» con un ulteriore −2: 1–3 → −2, 4–6 → −4, 7–9 → −6, 10–12 → −8, 13–15 → −10,
+    16–18 → −12. La Prova di Potere resta obbligatoria; Anticipazione Migliorata toglie solo il −2
+    aggiuntivo; l'Anticipazione ordinaria modifica un solo aspetto di una scala e raddoppia il costo base.
+    Già così: TODO tolto (`regole.json` → `lancio.anticipazione._nota_altri`).
+
+59. **Carica dei contenitori Chroma** (E&L 2, A.19; Magia §6). Acquistato: pieno. Trovato: la carica la
+    stabilisce il Direttore; l'app la fa impostare, senza considerarla pari alla capacità.
+    → `regole.json` → `chroma` (TODO tolto); voce dell'equipaggiamento `pm_iniziali` («Trovato» e «PM
+    attuali» nella lista, `src/ui/equipaggiamento.js`); `src/sessione.js`: il contenitore nuovo parte da
+    lì e, se il giocatore cambia il valore della voce, la sessione lo segue.
+
+60. **Colpo Elementale** (E&L 17, A.39.2; Magia §§12.1–12.2, 13.1). Colpisce automaticamente (gittata,
+    visibilità, ostacoli); Parata e Schivata sì, Elusione no. «Mod PS» solo per gli effetti secondari,
+    dopo danno e Contromisure: Fuoco e Aria Riflessi, Gelo e Fulmine Tempra, Acqua e Terra nessuna; almeno
+    1 danno residuo; una PS per tipo di effetto e per bersaglio a ogni lancio.
+    → `incantesimi.json` (13.1: `salvezza`, `colpo`; da `tools/estrai_lancio.py`, CORREZIONI); «Lancia!».
+
+61. **Rigenerazione** (E&L 18, A.39.3; Magia §§21.10, 12.4). Solo mediante Rituale; componenti,
+    procedura e costo finale arriveranno con le regole dei Rituali; i PM della tabella sono la base del
+    costo rituale; i tempi sono della rigenerazione dopo il Rituale; contatto durante il Rituale;
+    bersaglio vivente e consenziente oppure incosciente e soccorso, senza PS; Anticipazione ordinaria non
+    applicabile.
+    → `incantesimi.json` (21.10: `procedura_rituale` «non_definita»); «Lancia!» la segnala e non calcola;
+    il validatore accetta i campi mancanti per la procedura non definita.
+
+Restano aperti di A.39 i punti 4 (tiro di contatto con i consenzienti) e 5 (Talenti fuori dal cumulo
+della sez. 7).
