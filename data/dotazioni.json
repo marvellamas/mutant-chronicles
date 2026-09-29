@@ -3777,10 +3777,12 @@
       "rif": "dotazioni_personali:accendino"
     },
     "sacco-a-pelo": {
-      "nome": "Sacco a pelo"
+      "nome": "Sacco a pelo",
+      "rif": "esplorazione:sacco-a-pelo"
     },
     "razione-da-viaggio": {
-      "nome": "Razione da viaggio"
+      "nome": "Razione da viaggio",
+      "rif": "esplorazione:razione-da-viaggio"
     },
     "binocolo": {
       "nome": "Binocolo",
@@ -3805,42 +3807,16 @@
     },
     "corredo-sopravvivenza-ambientale": {
       "nome": "Corredo di sopravvivenza ambientale",
-      "sotto": "ambiente",
-      "effetti": [
-        {
-          "abilita": "Sopravvivenza",
-          "valore": 2,
-          "ambito": "situazionale",
-          "condizione": "Nell’ambiente scelto concede +2 VA a Sopravvivenza per orientamento, raccolta di risorse e preparazione di un riparo, secondo la propria scheda.",
-          "fonte": "Giocatore §2.16.3"
-        }
-      ]
+      "rif": "esplorazione:corredo-di-sopravvivenza-ambientale",
+      "sotto": "ambiente"
     },
     "corredo-orientamento": {
       "nome": "Corredo di orientamento, con carta della zona iniziale",
-      "effetti": [
-        {
-          "abilita": "Sopravvivenza",
-          "valore": 1,
-          "ambito": "uso_specifico",
-          "uso": "orientamento",
-          "condizione": "Il Corredo di orientamento concede +1 VA a Sopravvivenza per orientarsi, quando esistono riferimenti utilizzabili.",
-          "fonte": "Giocatore §2.16.4"
-        }
-      ]
+      "rif": "esplorazione:corredo-di-orientamento"
     },
     "corredo-assalto-verticale": {
       "nome": "Corredo da assalto verticale",
-      "effetti": [
-        {
-          "abilita": "Atletica",
-          "valore": 2,
-          "ambito": "uso_specifico",
-          "uso": "arrampicata",
-          "condizione": "Concede +2 VA ad Atletica per arrampicarsi o calarsi usando il corredo.",
-          "fonte": "Giocatore §2.16.4"
-        }
-      ]
+      "rif": "esplorazione:corredo-da-assalto-verticale"
     },
     "rilevatore-ambientale": {
       "nome": "Rilevatore ambientale"
@@ -3870,7 +3846,8 @@
       "sostituisce": "comunicatore-personale"
     },
     "tenda-2-posti": {
-      "nome": "Tenda da 2 posti, completa di pali, tiranti e picchetti"
+      "nome": "Tenda da 2 posti, completa di pali, tiranti e picchetti",
+      "rif": "esplorazione:tenda-da-2-persone"
     },
     "corredo-agricolo": {
       "nome": "Corredo agricolo (Standard)",
@@ -3902,7 +3879,8 @@
       "nome": "Cassetta degli attrezzi (Standard)"
     },
     "maschera-filtrante": {
-      "nome": "Maschera filtrante"
+      "nome": "Maschera filtrante",
+      "rif": "esplorazione:maschera-filtrante"
     },
     "corredo-elettronico-informatico": {
       "nome": "Corredo elettronico e informatico (Standard)"

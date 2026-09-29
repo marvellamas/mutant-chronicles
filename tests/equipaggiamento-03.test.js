@@ -61,3 +61,31 @@ test('acquistabili alla creazione: le voci del catalogo Commerciale con prezzo (
   const ids = new Set(acquistabili('Mishima', dati).map((o) => o.rif));
   assert.ok(ids.has('dotazioni_personali:zaino-da-viaggio'));
 });
+
+test('cap. 3: 21 voci; PI e Qualità solo dove la scheda li dà; effetti di sopravvivenza e protezione', () => {
+  const tutte = deiFile('esplorazione');
+  assert.equal(tutte.length, 21);
+  assert.deepEqual(tutte.filter((o) => o.pi !== undefined).map((o) => [o.id, o.pi, o.ps_int]), [['corredo-da-assalto-verticale', 6, 12], ['corredo-di-sopravvivenza-ambientale', 4, 12]]);
+  assert.equal(r('esplorazione:depuratore-portatile').reperibilita, 'NC');
+  assert.deepEqual(r('esplorazione:corredo-di-sopravvivenza-ambientale').effetti.map((e) => [e.abilita, e.valore, e.ambito]), [['Sopravvivenza', 2, 'situazionale']]);
+  assert.equal(r('esplorazione:maschera-filtrante').effetti[0].beneficio, 'filtro_respiratorio');
+  assert.equal(r('esplorazione:tenda-da-2-persone').nomi_alternativi[0], 'Tenda da 2 posti');
+});
+
+test('cap. 3: Completo invernale e Sacco a pelo invernale danno un solo +2 contro il freddo (§3.1); assalto verticale e abiti da viaggio, il maggiore (§3.3)', () => {
+  const voce = (uid, rif) => ({ uid, rif, stato: 'in_uso', quantita: 1, note: '' });
+  const s = calcolaScheda({ creazione: { ...MISHIMA_AGENTE, equipaggiamento: [
+    voce('c', 'dotazioni_personali:completo-invernale'), voce('s', 'esplorazione:sacco-a-pelo-invernale'),
+    voce('v', 'dotazioni_personali:abiti-da-viaggio'), voce('a', 'esplorazione:corredo-da-assalto-verticale'),
+  ] }, livelli: [] }, dati);
+  const freddo = s.equipaggiamento.effettiOggetti.filter((e) => e.beneficio === 'freddo_ambientale');
+  assert.equal(freddo.length, 1);
+  const atl = s.abilita.find((a) => a.nome === 'Atletica');
+  assert.equal(atl.usiSpecifici.find((u) => u.uso === 'arrampicata').valore - atl.effettivo, 2);
+});
+
+test('cap. 3: le voci di dotazione trovano la scheda (sacco a pelo, razione, tenda, corredi, maschera)', () => {
+  for (const id of ['sacco-a-pelo', 'razione-da-viaggio', 'tenda-2-posti', 'corredo-orientamento', 'corredo-assalto-verticale', 'corredo-sopravvivenza-ambientale', 'maschera-filtrante']) {
+    assert.ok(risolvi(vecchiaDotazione(id, id), cat).def, id);
+  }
+});
