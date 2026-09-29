@@ -53,6 +53,8 @@ export function modelloAssegnato(rif, corporazione, dati, cat = catalogo(dati)) 
   }
   const ab = dati.dotazioni.corporativi?.abbinamenti?.[corporazione]?.[rif];
   if (ab?.rif && cat.perRif.has(ab.rif)) return { rif: ab.rif, ...(ab.munizioni ? { munizioni: ab.munizioni } : {}), corporativo: true, nota: null };
+  // E&L 16 (A.33): profili che restano commerciali per tutte le Corporazioni (Revolver), senza nota
+  if ((dati.dotazioni.corporativi?.commerciali ?? []).includes(rif)) return { rif, corporativo: false, nota: null };
   return { rif, corporativo: false, nota: NOTA_CORPORATIVO };
 }
 
@@ -199,7 +201,8 @@ export function vociDotazione(dotazione, classe, corporazione, dati) {
   const vocePersonalizzata = (uid, id, quantita) => {
     const o = reg[id];
     const sotto = o.sotto ? dotazione?.sotto?.[id]?.trim() : '';
-    const personalizzato = { nome: sotto ? `${o.nome} (${sotto})` : o.nome, tipo: 'altro' };
+    // E&L 15 (A.34): il peso, se il manuale lo dà (Binocolo, Registratore audiovisivo); senza, «da definire»
+    const personalizzato = { nome: sotto ? `${o.nome} (${sotto})` : o.nome, tipo: 'altro', ...(Number.isFinite(o.peso) ? { peso: o.peso } : {}) };
     // gli effetti sui VA si leggono dai dati (oggetti_dotazione) attraverso dotazione_id
     const stato = o.effetti?.length ? statoIniziale('altro', [], null, o.effetti) : null;
     return { uid, rif: null, personalizzato, stato, quantita: quantita ?? 1, note: '', dotazione_iniziale: true, dotazione_id: id };

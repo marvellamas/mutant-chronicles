@@ -451,3 +451,18 @@ Ricognizione e stime: `docs/ricognizione-2026-09-28.md`.
     soglie modificate si applicano prima (Forza da Lavoro: massimo FOR × 40, trascinamento FOR × 80).
     → `carico.livelli.oltre_il_massimo` (`movimento_zero`); `src/carico.js`, `src/condizioni.js` (Passo 0,
     Corsa e Scatto non disponibili).
+
+55. **Oggetti delle dotazioni senza scheda** (E&L 15, A.34; Equipaggiamento 0.3 §§4.2–4.3, Giocatore
+    §2.16.29). Binocolo 0,8 kg e 500 crediti, Registratore audiovisivo 0,2 kg e 200 crediti; gli altri
+    restano «da definire» (peso assente non è 0 kg, prezzo assente non dà credito di scambio) finché non
+    arrivano i lotti dei cap. 2–6 dell'Equipaggiamento; gli oggetti della dotazione che non sono armamenti
+    assegnati non si cedono.
+    → `dotazioni.json` → `oggetti_dotazione` (`peso`, `costo`, `paragrafo`), `_nota_oggetti_dotazione`;
+    `tools/genera_dotazioni.py`; `src/dotazioni.js` (il peso entra nella voce e nel carico); validatore.
+
+56. **Pistole corporative** (E&L 16, A.33; E&L A.5.27 e A.5.30; Giocatore §2.16.27). Pistola
+    semiautomatica di base: HG10 (Bauhaus), Bolter 10 (Capitol), P500 (Cybertronic), Nemesis 100
+    (Fratellanza), Belliger (Imperiali), Ronin 25 AP (Mishima); Freelance commerciale. Il Revolver resta
+    commerciale, senza la nota «da definire». Munizioni: il totale della Classe, la capacità del modello.
+    → `dotazioni.json` → `corporativi.abbinamenti` (6 voci in più), `corporativi.commerciali`;
+    `src/dotazioni.js` (`modelloAssegnato`).

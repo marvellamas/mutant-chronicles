@@ -81,8 +81,9 @@ OGGETTI = {
     'sacco-a-pelo': {'nome': 'Sacco a pelo'},
     'razione-da-viaggio': {'nome': 'Razione da viaggio'},
     # dotazioni delle Classi
-    'binocolo': {'nome': 'Binocolo'},
-    'registratore-audiovisivo': {'nome': 'Registratore audiovisivo'},
+    # E&L 15 (A.34): peso e prezzo dall'Equipaggiamento 0.3 §§4.2–4.3
+    'binocolo': {'nome': 'Binocolo', 'peso': 0.8, 'costo': 500, 'paragrafo': 'Equipaggiamento 0.3 §4.2'},
+    'registratore-audiovisivo': {'nome': 'Registratore audiovisivo', 'peso': 0.2, 'costo': 200, 'paragrafo': 'Equipaggiamento 0.3 §4.3'},
     'corredo-sopravvivenza-ambientale': {'nome': 'Corredo di sopravvivenza ambientale', 'sotto': 'ambiente'},
     'corredo-orientamento': {'nome': 'Corredo di orientamento, con carta della zona iniziale'},
     'corredo-assalto-verticale': {'nome': 'Corredo da assalto verticale'},

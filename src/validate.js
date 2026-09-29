@@ -1401,7 +1401,9 @@ function validaDotazioni(dati, err) {
     if (o?.sostituisce !== undefined && !(o.sostituisce in registro)) err(F, `${K}.sostituisce`, `"${o.sostituisce}" non è un oggetto di dotazione`);
     if (o?.sotto !== undefined && !isOggetto(sotto[o.sotto])) err(F, `${K}.sotto`, `"${o.sotto}" non è in sotto_scelte`);
     if (o?.effetti !== undefined) validaEffettiOggetto(o.effetti, F, K, nomiAbilita, err, ctxEffetti(dati));
+    for (const k of ['peso', 'costo']) if (o?.[k] !== undefined && !(typeof o[k] === 'number' && o[k] >= 0)) err(F, `${K}.${k}`, 'numero ≥ 0 atteso (senza il campo: «da definire»)');
   }
+  for (const [i, rif] of (d.corporativi?.commerciali ?? []).entries()) if (!cat.has(rif)) err(F, `corporativi.commerciali[${i}]`, `"${rif}" non esiste nel catalogo`);
   // un oggetto: { rif } del catalogo oppure { dotazione } del registro
   const controllaOggetto = (x, K) => {
     if (!isOggetto(x)) return err(F, K, 'oggetto atteso');

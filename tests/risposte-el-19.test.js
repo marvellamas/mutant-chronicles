@@ -6,6 +6,7 @@ import { calcolaScheda, bonusDannoCaratteristica, caratteristicaDanno } from '..
 import { profiloSenzArmi, calcolaAttaccoRavvicinato, vincoliRavvicinato, moltiplicatoreMagistrale } from '../src/attacco.js';
 import { inizializzaSessione } from '../src/sessione.js';
 import { soglieCarico } from '../src/carico.js';
+import { vociDotazione, modelloAssegnato } from '../src/dotazioni.js';
 import { datiReali } from './helpers.js';
 import { MISHIMA_AGENTE } from './personaggi.js';
 
@@ -162,4 +163,37 @@ test('E&L 5: oltre FOR × 20 kg Movimento 0 Q e −2 alle Prove fisiche, niente 
   const f = soglieCarico({ caratteristiche: { FOR: { valore: 5 } }, classi: [{ talenti: [{ nome: 'Forza da Lavoro' }] }] }, dati);
   assert.deepEqual([f.massimo, f.spinta], [200, 400]); // FOR × 40, FOR × 80
   assert.equal(dati.regole.carico['TODO(Davide)'], undefined);
+});
+
+// --- 15–16. Equipaggiamento iniziale ----------------------------------------------------------------
+
+test('E&L 16: pistole corporative di base; Revolver commerciale senza nota; munizioni con la capacità del modello (A.33)', () => {
+  const attesi = { Bauhaus: 'HG10', Capitol: 'Bolter 10', Cybertronic: 'P500', Fratellanza: 'Nemesis 100', Imperiali: 'Belliger', Mishima: 'Ronin 25AP' };
+  for (const [corp, nome] of Object.entries(attesi)) {
+    const m = modelloAssegnato('armi_distanza:pistola-semiautomatica', corp, dati);
+    assert.equal(m.corporativo, true, corp);
+    assert.equal(dati.equipaggiamento.file.armi_distanza_corporative.oggetti.find((o) => `armi_distanza_corporative:${o.id}` === m.rif).nome, nome, corp);
+    assert.deepEqual(modelloAssegnato('armi_distanza:revolver', corp, dati), { rif: 'armi_distanza:revolver', corporativo: false, nota: null }, corp);
+  }
+  // Freelance: commerciale
+  assert.equal(modelloAssegnato('armi_distanza:pistola-semiautomatica', 'Freelance', dati).rif, 'armi_distanza:pistola-semiautomatica');
+  // Agente Mishima: Ronin 25 AP (capacità 10), 45 colpi ripartiti
+  const voci = vociDotazione({ opzioni: { arma_da_fuoco: 'armi_distanza:pistola-semiautomatica', arma_da_mischia: 'armi:coltello' } }, 'Agente', 'Mishima', dati);
+  assert.ok(voci.some((v) => v.rif === 'armi_distanza_corporative:ronin-25ap'));
+  const mun = voci.find((v) => v.uid === 'dot-arma_da_fuoco-munizioni');
+  assert.equal(mun.quantita, 45);
+  assert.match(mun.note, /da 10/);
+  assert.equal(dati.dotazioni.corporativi['TODO(Davide)'], undefined);
+});
+
+test('E&L 15: Binocolo e Registratore audiovisivo con peso e prezzo; gli altri «da definire», non cedibili (A.34)', () => {
+  const reg = dati.dotazioni.oggetti_dotazione;
+  assert.deepEqual([reg.binocolo.peso, reg.binocolo.costo, reg['registratore-audiovisivo'].peso, reg['registratore-audiovisivo'].costo], [0.8, 500, 0.2, 200]);
+  assert.equal(dati.dotazioni['TODO(Davide)'], undefined);
+  // un oggetto con peso entra nel carico; uno senza resta «da definire»
+  const voci = vociDotazione({}, 'Agente', 'Mishima', dati);
+  const bin = voci.find((v) => v.dotazione_id === 'binocolo');
+  if (bin) assert.equal(bin.personalizzato.peso, 0.8);
+  const senza = voci.find((v) => v.dotazione_id && !reg[v.dotazione_id].peso);
+  assert.ok(senza && senza.personalizzato.peso === undefined);
 });

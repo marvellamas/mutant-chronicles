@@ -135,7 +135,12 @@ test('rifare la dotazione sostituisce le voci, non le somma; gli altri oggetti r
 
 test('A.5.27: senza abbinamento il profilo commerciale con la nota; con l’abbinamento il modello corporativo', () => {
   const voci = vociDotazione(AGENTE, 'Agente', 'Mishima', dati);
-  assert.equal(perNome(voci, 'armi_distanza:pistola-semiautomatica')[0].note, NOTA_CORPORATIVO);
+  // E&L 16 (A.33): la pistola semiautomatica del Mishima è la Ronin 25 AP, senza nota
+  assert.equal(perNome(voci, 'armi_distanza_corporative:ronin-25ap')[0].note, '');
+  // un profilo senza abbinamento e fuori da «commerciali» ha ancora la nota
+  const d0 = copia(dati);
+  delete d0.dotazioni.corporativi.abbinamenti.Mishima['armi_distanza:pistola-semiautomatica'];
+  assert.equal(perNome(vociDotazione(AGENTE, 'Agente', 'Mishima', d0), 'armi_distanza:pistola-semiautomatica')[0].note, NOTA_CORPORATIVO);
   // A.5.30: l'armatura ha l'abbinamento del §7.22 → modello corporativo, senza nota
   assert.equal(perNome(voci, 'armature_corporative:armatura-ashigaru')[0].note, '');
   // gli strumenti non armamenti restano commerciali, senza nota
@@ -214,11 +219,11 @@ test('crediti di sessione: partono dal saldo iniziale, seguono la dotazione rifa
   assert.equal(variaSessione(s, 'crediti', -5000, m2).crediti, 0);
 });
 
-test('A.5.30 (§7.22): 48 abbinamenti di fucili, armature e scudi; le pistole restano senza abbinamento', () => {
+test('A.5.30 (§7.22): 48 abbinamenti di fucili, armature e scudi, più le 6 pistole di E&L 16; il Revolver resta commerciale', () => {
   const ab = dati.dotazioni.corporativi.abbinamenti;
   assert.deepEqual(Object.keys(ab), ['Bauhaus', 'Capitol', 'Cybertronic', 'Fratellanza', 'Imperiali', 'Mishima']);
-  assert.equal(Object.values(ab).reduce((n, a) => n + Object.keys(a).length, 0), 48);
-  assert.ok(Object.values(ab).every((a) => !a['armi_distanza:pistola-semiautomatica'] && !a['armi_distanza:revolver']));
+  assert.equal(Object.values(ab).reduce((n, a) => n + Object.keys(a).length, 0), 54);
+  assert.ok(Object.values(ab).every((a) => !a['armi_distanza:revolver']));
   const cat = catalogo(dati);
   const m = (corp, rif) => cat.perRif.get(modelloAssegnato(rif, corp, dati, cat).rif);
   assert.equal(m('Bauhaus', 'armi_distanza:carabina').nome, 'KR10');
