@@ -1023,6 +1023,8 @@ const SANITARI = ['applicazioni', 'dosi', 'set'];
 const MODI_RICARICA = {
   caricatore: 'si sostituisce un caricatore pieno di riserva; quello tolto resta, vuoto o parziale (§7.20.2)',
   inserimento: 'si inseriscono munizioni sciolte compatibili fino alla capacità',
+  singolo: 'una munizione per operazione, 1 AzP (E&L 19; §5.1.1)',
+  tamburo: 'una operazione riempie il tamburo con munizioni pronte, 1 AzP (E&L 19; §5.1.1)',
   cella: 'una cella piena compatibile sostituisce quella esaurita',
 };
 
@@ -1047,7 +1049,8 @@ function pannelloMunizioni(ctx, a) {
       h('span', {}, ETICHETTE_MUNIZIONI[a.munizioni?.unita ?? 'colpi'] ?? 'Caricatore', ' ', h('strong', {}, String(m.colpi)), capacita !== null ? ` / ${capacita}` : ''),
       pulsante('colpi', -1, 'colpi'),
       capacita !== null && capacita >= 10 ? pulsante('colpi', -5, 'colpi') : null,
-      capacita !== null ? h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.ricarica(a.uid), disabled: !stato.possibile, title: stato.motivo ?? 'Ricarica (1 AzP, Giocatore §5.1.1)' }, 'Ricarica') : pulsante('colpi', 1, 'colpi')),
+      capacita !== null ? h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.ricarica(a.uid), disabled: !stato.possibile, title: stato.motivo ?? 'Ricarica (1 AzP, Giocatore §5.1.1)' },
+        info?.singolo ? `Ricarica +${Math.min(info.perOperazione ?? 1, capacita - m.colpi) || info.perOperazione || 1}` : 'Ricarica') : pulsante('colpi', 1, 'colpi')),
     stato.motivo && capacita !== null && m.colpi < capacita ? h('small', { class: 'motivo', role: 'status' }, `Ricarica: ${stato.motivo}.`) : null,
     stato.avviso ? h('small', { class: 'motivo' }, stato.avviso) : null,
     !info || info.modo === 'caricatore' || info.modo === null ? h('div', { class: 'riga-munizioni' },
@@ -1061,7 +1064,9 @@ function pannelloMunizioni(ctx, a) {
       info.scorte.length ? `${info.modo === 'cella' ? 'Celle' : 'Munizioni sciolte'}: ${info.scorte.map((x) => `${x.nome} ×${disponibili(x, ctx.sessione.scorte)}`).join(', ')}`
         : `Nessuna ${info.modo === 'cella' ? 'cella' : 'munizione'} compatibile nell’inventario.`) : null,
     h('small', { class: 'nota' }, [
-      info?.modo ? `Ricarica: ${MODI_RICARICA[info.modo]}.` : null,
+      info?.modo ? `Ricarica: ${MODI_RICARICA[info.singolo ? 'singolo' : info.modo]}${info.singolo && info.perOperazione > 1 ? `; ${info.perOperazione} con Ricarica Migliorata` : ''}.` : null,
+      // Ricarica Rapida (Giocatore §8.6.4): una operazione gratuita per Round
+      info?.modo && (ctx.tab.scheda.talentiLiberi ?? []).some((t) => t.id === ctx.dati.equipaggiamento.file.munizioni.ricarica.ricarica_rapida?.talento) ? ctx.dati.equipaggiamento.file.munizioni.ricarica.ricarica_rapida.promemoria : null,
       capacita === null ? 'Nessun caricatore nella scheda dell’arma: contatore libero.' : null,
       a.munizioni?.ricarica ? `Ricarica: ${a.munizioni.ricarica}.` : null,
       a.munizioni?.consumo ? `${a.munizioni.consumo.replace(/^./, (c) => c.toUpperCase())}.` : null,

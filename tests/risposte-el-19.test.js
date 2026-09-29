@@ -4,7 +4,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda, bonusDannoCaratteristica, caratteristicaDanno } from '../src/calc.js';
 import { profiloSenzArmi, calcolaAttaccoRavvicinato, vincoliRavvicinato, moltiplicatoreMagistrale } from '../src/attacco.js';
-import { inizializzaSessione } from '../src/sessione.js';
+import { inizializzaSessione, massimiSessione, ricaricaArma, variaMunizioni } from '../src/sessione.js';
 import { soglieCarico } from '../src/carico.js';
 import { vociDotazione, modelloAssegnato } from '../src/dotazioni.js';
 import { datiReali } from './helpers.js';
@@ -196,4 +196,40 @@ test('E&L 15: Binocolo e Registratore audiovisivo con peso e prezzo; gli altri �
   if (bin) assert.equal(bin.personalizzato.peso, 0.8);
   const senza = voci.find((v) => v.dotazione_id && !reg[v.dotazione_id].peso);
   assert.ok(senza && senza.personalizzato.peso === undefined);
+});
+
+// --- 19. Ricarica ------------------------------------------------------------------------------------
+
+const preparaRicarica = (voci, livelli = []) => {
+  const creazione = { ...MISHIMA_AGENTE, equipaggiamento: voci };
+  const m = massimiSessione(calcolaScheda({ creazione, livelli }, dati), creazione, dati);
+  return { m, s: inizializzaSessione(m) };
+};
+
+test('E&L 19: fucile a pompa, 1 cartuccia per operazione; 3 con Ricarica Migliorata; revolver a tamburo pieno (A.37)', () => {
+  const equip = [voce('f', 'armi_distanza:fucile-a-pompa', 'impugnata'), { ...voce('c', 'munizioni:cartucce-a-pallini', null), quantita: 20 }];
+  let { m, s } = preparaRicarica(equip);
+  const cap = m.caricatori.f;
+  assert.deepEqual([m.ricarica.f.modo, m.ricarica.f.singolo, m.ricarica.f.perOperazione], ['inserimento', true, 1]);
+  s = variaMunizioni(s, 'f', 'colpi', -cap, m);
+  s = ricaricaArma(s, 'f', m);
+  assert.equal(s.munizioni.f.colpi, 1);
+  // con Ricarica Migliorata: fino a 3 per operazione, senza superare la capacità
+  const livelli = [{ livello: 2, caratteristiche: { DES: 2 } }, { livello: 3, talentoLibero: { id: 'ricarica-migliorata' } }];
+  ({ m, s } = preparaRicarica(equip, livelli));
+  assert.equal(m.ricarica.f.perOperazione, 3);
+  s = variaMunizioni(s, 'f', 'colpi', -cap, m);
+  s = ricaricaArma(s, 'f', m);
+  assert.equal(s.munizioni.f.colpi, 3);
+  s = variaMunizioni(s, 'f', 'colpi', cap, m); // pieno meno niente: capacità
+  s = variaMunizioni(s, 'f', 'colpi', -1, m);
+  s = ricaricaArma(s, 'f', m);
+  assert.equal(s.munizioni.f.colpi, cap); // una sola munizione mancante
+  // revolver: una operazione riempie il tamburo
+  ({ m, s } = preparaRicarica([voce('r', 'armi_distanza:revolver', 'impugnata'), { ...voce('p', 'munizioni:proiettili-da-pistola', null), quantita: 12 }]));
+  assert.equal(m.ricarica.r.modo, 'tamburo');
+  s = variaMunizioni(s, 'r', 'colpi', -6, m);
+  s = ricaricaArma(s, 'r', m);
+  assert.equal(s.munizioni.r.colpi, 6);
+  assert.equal(dati.equipaggiamento.file.munizioni.ricarica.inserimento_singolo['TODO(Davide)'], undefined);
 });

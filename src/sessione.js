@@ -32,7 +32,7 @@
 import { valoreTiro } from './tiri.js';
 import { SENZ_ARMI } from './attacco.js';
 import { saldoIniziale } from './dotazioni.js';
-import { infoRicarica, eseguiRicarica } from './ricarica.js';
+import { infoRicarica, eseguiRicarica, perOperazione } from './ricarica.js';
 import { caricatori, contenitori, normalizzaEquipaggiamento, catalogo, risolvi } from './equipaggiamento.js';
 import { oggettiConPi } from './protezione.js';
 
@@ -62,7 +62,9 @@ export function massimiSessione(scheda, creazione, dati) {
     // capacità del caricatore di ogni arma a distanza della lista (uid → numero o null)
     caricatori: caricatori(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati),
     // modo di ricarica e scorte compatibili di ogni arma a distanza (Giocatore §5.1.1, Armamenti §7.20.2)
-    ricarica: dati.equipaggiamento ? infoRicarica(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati) : {},
+    // inserimento singolo: 1 munizione per operazione, 3 con Ricarica Migliorata (E&L 19)
+    ricarica: dati.equipaggiamento ? Object.fromEntries(Object.entries(infoRicarica(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati))
+      .map(([uid, x]) => [uid, x.singolo ? { ...x, perOperazione: perOperazione(x, (scheda?.talentiLiberi ?? []).map((t) => t.id), dati) } : x])) : {},
     // capacità di ogni contenitore di Chroma (uid → PM)
     contenitori: Object.fromEntries(contenitori(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati).map((c) => [c.uid, c.capacita])),
     // TODO(Davide): un contenitore nuovo arriva carico? Ipotesi: pieno (regole.json → chroma, per-davide A.19)

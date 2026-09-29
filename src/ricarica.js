@@ -5,8 +5,10 @@
 // Modi:
 // - caricatore: si sostituisce un caricatore pieno di riserva (sessione → munizioni[uid].riserve)
 //   oppure, se non ce ne sono, il parziale più carico; quello tolto resta come parziale o vuoto;
-// - inserimento: si inseriscono munizioni sciolte compatibili dell'inventario fino alla capacità
-//   (revolver, fucili a pompa, archi e balestre; razzi, dardi chimici, combustibile);
+// - inserimento: una operazione inserisce 1 munizione sciolta compatibile, 3 con Ricarica Migliorata
+//   (doppiette, fucili a pompa, archi e balestre: E&L 19, A.37; Giocatore §8.6.4);
+// - tamburo: una operazione riempie il tamburo con munizioni pronte (revolver: E&L 19);
+// - (anche «inserimento» senza elenco: razzi, dardi chimici, combustibile compatibili fino alla capacità);
 // - cella: una cella piena compatibile sostituisce quella esaurita;
 // - null: nessun dato di compatibilità, la ricarica resta libera (con un avviso).
 // Le munizioni sciolte consumate si contano nella sessione (sessione → scorte: { uid voce: consumate }):
@@ -25,8 +27,11 @@ export function modoRicarica(def, dati, cat = catalogo(dati)) {
   const r = regole(dati) ?? {};
   const famiglia = tabellaMunizioniArmi(dati).get(def.rif) ?? null;
   const ins = r.inserimento_singolo ?? {};
+  const tamburo = r.tamburo ?? {};
   const compatibili = cat.oggetti.filter((o) => o.tipo === 'munizioni' && !eVuoto(o) && o.compatibile_con?.includes(def.rif));
-  if ((ins.armi ?? []).includes(def.rif) || (ins.famiglie ?? []).includes(def.famiglia)) return { modo: 'inserimento', famiglia, vuoto: null };
+  const amovibile = (ins.caricatore_amovibile ?? []).includes(def.rif);
+  if ((tamburo.armi ?? []).includes(def.rif) || (tamburo.famiglie ?? []).includes(def.famiglia)) return { modo: 'tamburo', famiglia, vuoto: null };
+  if (!amovibile && ((ins.armi ?? []).includes(def.rif) || (ins.famiglie ?? []).includes(def.famiglia))) return { modo: 'inserimento', famiglia, vuoto: null, singolo: true };
   if (famiglia) {
     // caricatore vuoto: il contenitore dedicato dell'arma (Nimrod), altrimenti quello della categoria
     const dedicato = cat.oggetti.find((o) => eVuoto(o) && o.compatibile_con?.includes(def.rif));
@@ -88,8 +93,20 @@ export function statoRicarica(info, munizione, consumi = {}) {
 }
 
 /**
+ * Munizioni inserite da una operazione di ricarica a inserimento singolo (E&L 19; Giocatore §8.6.4):
+ * 1, oppure quelle di Ricarica Migliorata se il personaggio la possiede. null per gli altri modi.
+ */
+export function perOperazione(info, idTalenti, dati) {
+  if (!info?.singolo) return null;
+  const ins = regole(dati)?.inserimento_singolo ?? {};
+  const mig = ins.migliorata;
+  return mig && (idTalenti ?? []).includes(mig.talento) ? mig.per_operazione : ins.per_operazione ?? 1;
+}
+
+/**
  * Esegue la ricarica sui valori di sessione di un'arma.
- * @returns {{ munizione: {colpi, riserve, parziali, vuoti}, consumi: {uid: n} } | null} null se non si può
+ * @param info voce di infoRicarica(); con `perOperazione` (inserimento singolo) il limite di munizioni
+ * @returns {{ munizione: {colpi, riserve, parziali, vuoti}, consumi: {uid: n}, inserite?: number } | null} null se non si può
  */
 export function eseguiRicarica(info, munizione, consumi = {}) {
   const m = { colpi: 0, riserve: 0, parziali: [], vuoti: 0, ...munizione, parziali: [...(munizione?.parziali ?? [])] };
@@ -114,8 +131,9 @@ export function eseguiRicarica(info, munizione, consumi = {}) {
     c[s.uid] = (c[s.uid] ?? 0) + 1;
     return { munizione: { ...m, colpi: info.capacita }, consumi: c };
   }
-  // inserimento: munizioni sciolte fino alla capacità, dalla prima scorta disponibile
-  let manca = info.capacita - m.colpi;
+  // inserimento (e tamburo): munizioni sciolte fino alla capacità, dalla prima scorta disponibile;
+  // l'inserimento singolo si ferma a 1 munizione per operazione (3 con Ricarica Migliorata)
+  let manca = Math.min(info.capacita - m.colpi, info.singolo ? info.perOperazione ?? 1 : Infinity);
   for (const s of info.scorte) {
     const n = Math.min(manca, disponibili(s, c));
     if (!n) continue;
@@ -124,5 +142,5 @@ export function eseguiRicarica(info, munizione, consumi = {}) {
     manca -= n;
     if (!manca) break;
   }
-  return { munizione: m, consumi: c };
+  return { munizione: m, consumi: c, inserite: m.colpi - (munizione?.colpi ?? 0) };
 }

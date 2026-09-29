@@ -18,13 +18,17 @@ const prepara = (voci) => {
 };
 const stato = (s, m, uid) => statoRicarica(m.ricarica[uid], s.munizioni[uid], s.scorte);
 
-test('modo di ricarica dai dati: caricatore, inserimento, cella, nessun dato', () => {
+test('modo di ricarica dai dati: caricatore, inserimento, tamburo, cella, nessun dato', () => {
   const cat = catalogo(dati);
   const modo = (rif) => modoRicarica(cat.perRif.get(rif), dati, cat).modo;
   assert.equal(modo('armi_distanza:pistola-semiautomatica'), 'caricatore');
-  assert.equal(modo('armi_distanza:revolver'), 'inserimento');
+  // E&L 19: il revolver usa il tamburo; pompa e doppiette una cartuccia per operazione
+  assert.equal(modo('armi_distanza:revolver'), 'tamburo');
   assert.equal(modo('armi_distanza:fucile-a-pompa'), 'inserimento');
-  assert.equal(modo('armi_distanza_corporative:jemson-45'), 'inserimento'); // famiglia «Revolver»
+  assert.equal(modo('armi_distanza_corporative:jemson-45'), 'tamburo'); // famiglia «Revolver»
+  // M310 e SA SG2001: caricatore amovibile specifico
+  assert.equal(modo('armi_distanza_corporative:m310'), 'caricatore');
+  assert.equal(modo('armi_distanza_corporative:sa-sg2001'), 'caricatore');
   assert.equal(modo('armi_distanza:fucile-al-plasma'), 'cella');
   assert.equal(modo('armi_distanza:lanciarazzi'), 'inserimento'); // razzi compatibili, uno per colpo
   assert.equal(modo('armi_distanza:lanciagranate'), null);

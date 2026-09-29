@@ -1534,6 +1534,11 @@ function validaRicarica(dati, err) {
   const ins = r.inserimento_singolo ?? {};
   for (const f of ins.famiglie ?? []) if (!famiglie.has(f)) err(F, 'ricarica.inserimento_singolo.famiglie', `"${f}" non è una famiglia del catalogo`);
   for (const a of ins.armi ?? []) if (!rif.has(a)) err(F, 'ricarica.inserimento_singolo.armi', `"${a}" non esiste nel catalogo`);
+  for (const a of ins.caricatore_amovibile ?? []) if (!rif.has(a)) err(F, 'ricarica.inserimento_singolo.caricatore_amovibile', `"${a}" non esiste nel catalogo`);
+  if (ins.per_operazione !== undefined && !(isIntero(ins.per_operazione) && ins.per_operazione >= 1)) err(F, 'ricarica.inserimento_singolo.per_operazione', 'intero ≥ 1 atteso');
+  if (ins.migliorata !== undefined && !(isOggetto(ins.migliorata) && isIntero(ins.migliorata.per_operazione) && (dati.talenti_liberi?.talenti ?? []).some((t) => t.id === ins.migliorata.talento))) err(F, 'ricarica.inserimento_singolo.migliorata', 'serve { talento (id di talenti_liberi.json), per_operazione }');
+  for (const f of r.tamburo?.famiglie ?? []) if (!famiglie.has(f)) err(F, 'ricarica.tamburo.famiglie', `"${f}" non è una famiglia del catalogo`);
+  for (const a of r.tamburo?.armi ?? []) if (!rif.has(a)) err(F, 'ricarica.tamburo.armi', `"${a}" non esiste nel catalogo`);
   for (const f of r.famiglie_celle ?? []) if (!famiglie.has(f)) err(F, 'ricarica.famiglie_celle', `"${f}" non è una famiglia del catalogo`);
   for (const [abilita, x] of Object.entries(r.caricatori_vuoti ?? {})) if (!rif.has(x)) err(F, `ricarica.caricatori_vuoti.${abilita}`, `"${x}" non esiste nel catalogo`);
 }

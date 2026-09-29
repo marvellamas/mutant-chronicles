@@ -347,19 +347,36 @@
   "ricarica": {
     "_nota": "Come si ricarica un’arma a distanza nella modalità tavolo (src/ricarica.js). Giocatore §5.1.1: una ricarica costa 1 AzP; Armamenti §7.20.2: «Serve sempre un caricatore compatibile con il modello. Questi prezzi non introducono caricatori amovibili per revolver o serbatoi fissi». Modi: «caricatore» (armi con famiglia di munizioni del §7.20.9: si sostituisce un caricatore pieno di riserva e quello tolto resta, vuoto o parziale); «inserimento» (armi elencate qui: si inseriscono munizioni sciolte compatibili fino alla capacità); «cella» (armi con celle compatibili: una cella piena sostituisce quella esaurita); le munizioni con «compatibile_con» e senza famiglia (razzi, dardi chimici, combustibile) si inseriscono come sciolte. Senza dati di compatibilità la ricarica resta libera, con un avviso.",
     "inserimento_singolo": {
-      "_nota": "Famiglie del catalogo (titoli dei paragrafi degli Armamenti) e modelli commerciali senza caricatore amovibile: revolver (§7.20.2), fucili a pompa e doppiette (serbatoio fisso), archi e balestre.",
+      "_nota": "E&L del 29/09, risposta 19 (A.37): la ricarica segue il sistema di alimentazione del modello. Doppiette (cartucce nelle canne), fucili a pompa ordinari e di base (serbatoio tubolare fisso), archi e balestre: una operazione (1 AzP, Giocatore §5.1.1) inserisce 1 munizione; Ricarica Migliorata fino a 3 (§8.6.4), senza superare la capacità. «caricatore_amovibile»: modelli delle stesse famiglie con caricatore amovibile specifico (M310 da 20, SA SG2001 da 10): si sostituisce il caricatore.",
       "famiglie": [
-        "Revolver",
         "Fucili a pompa",
         "Fucili a pompa e doppiette",
         "Archi e balestre"
       ],
       "armi": [
-        "armi_distanza:revolver",
         "armi_distanza:fucile-a-pompa",
         "armi_distanza:doppietta"
       ],
-      "TODO(Davide)": "Doppiette e fucili a pompa corporativi (famiglie «Fucili a pompa» e «Fucili a pompa e doppiette», compresi M310 con capacità 20 e SA SG2001 con capacità 10) si ricaricano inserendo le cartucce una per una, come il revolver? Per-davide A.37."
+      "caricatore_amovibile": [
+        "armi_distanza_corporative:m310",
+        "armi_distanza_corporative:sa-sg2001"
+      ],
+      "per_operazione": 1,
+      "migliorata": { "talento": "ricarica-migliorata", "nome": "Ricarica Migliorata", "per_operazione": 3 }
+    },
+    "tamburo": {
+      "_nota": "E&L del 29/09, risposta 19: «Il Revolver usa il tamburo». Una operazione di ricarica (1 AzP, §5.1.1) riempie il tamburo con munizioni pronte, come la Colt Hammershot (Armamenti 0.54: «Ricaricare il tamburo con munizioni pronte richiede 1 AzP»). Ricarica Migliorata non lo cambia.",
+      "famiglie": [
+        "Revolver"
+      ],
+      "armi": [
+        "armi_distanza:revolver"
+      ]
+    },
+    "ricarica_rapida": {
+      "talento": "ricarica-rapida",
+      "nome": "Ricarica Rapida",
+      "promemoria": "Ricarica Rapida: una sola operazione di ricarica gratuita per Round, durante la tua Iniziativa (§8.6.4)."
     },
     "famiglie_celle": [
       "Celle energetiche"

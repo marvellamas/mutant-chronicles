@@ -466,3 +466,15 @@ Ricognizione e stime: `docs/ricognizione-2026-09-28.md`.
     commerciale, senza la nota «da definire». Munizioni: il totale della Classe, la capacità del modello.
     → `dotazioni.json` → `corporativi.abbinamenti` (6 voci in più), `corporativi.commerciali`;
     `src/dotazioni.js` (`modelloAssegnato`).
+
+57. **Ricarica di doppiette, fucili a pompa e revolver** (E&L 19, A.37; Giocatore §§5.1.1, 8.6.4). La
+    ricarica segue il sistema di alimentazione del modello. Doppiette e fucili a pompa ordinari e di base
+    (e archi e balestre): una operazione inserisce 1 munizione e costa 1 AzP; Ricarica Migliorata fino a 3,
+    senza accelerare caricatori, celle o serbatoi. Ricarica Rapida: una operazione gratuita per Round,
+    combinabile con la Migliorata. M310 e SA SG2001: caricatore amovibile specifico. Revolver: tamburo;
+    scelta dell'app, una operazione riempie il tamburo con munizioni pronte (§5.1.1; come la Colt
+    Hammershot degli Armamenti 0.54).
+    → `munizioni.json` → `ricarica.inserimento_singolo` (`caricatore_amovibile`, `per_operazione`,
+    `migliorata`), `ricarica.tamburo`, `ricarica.ricarica_rapida`; `src/ricarica.js` (modo «tamburo»,
+    `perOperazione`); `src/sessione.js` (massimi con il Talento); SD: «Ricarica +1 / +3», promemoria di
+    Ricarica Rapida.
