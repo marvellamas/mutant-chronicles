@@ -4,7 +4,7 @@
 
 ## Armi armature scudi e dotazioni operative
 
-**EDIZIONE 0.53**
+**EDIZIONE 0.54**
 
 Settembre 2026
 
@@ -40,47 +40,47 @@ Sezioni e pagine di consultazione
 
 [7.2 Condizioni delle armi](#bookmark=id.ip33x86hsv1i)	17
 
-[7.3 Mirini e accessori delle armi](#bookmark=id.mmrq37s6fbry)	[19](#bookmark=id.mmrq37s6fbry)
+[7.3 Mirini e accessori delle armi](#bookmark=id.mmrq37s6fbry)	[20](#bookmark=id.mmrq37s6fbry)
 
-[7.4 Scudi e protezioni](#bookmark=id.n8nkkkxvc8rz)	22
+[7.4 Scudi e protezioni](#bookmark=id.n8nkkkxvc8rz)	23
 
-[7.5 Artefatti](#bookmark=id.j9e8wdskmj0n)	[30](#bookmark=id.j9e8wdskmj0n)
+[7.5 Artefatti](#bookmark=id.j9e8wdskmj0n)	[31](#bookmark=id.j9e8wdskmj0n)
 
-[7.6 Contenuti ancora da sviluppare](#bookmark=id.jqq38ym9gaqu)	31
+[7.6 Contenuti ancora da sviluppare](#bookmark=id.jqq38ym9gaqu)	33
 
-[7.7 Catalogo Commerciale delle armi a distanza](#bookmark=id.5pdrpgoayxs2)	32
+[7.7 Catalogo Commerciale delle armi a distanza](#bookmark=id.5pdrpgoayxs2)	34
 
-[7.8 Cataloghi corporativi delle armi a distanza](#bookmark=id.c59shry7qhmf)	[36](#bookmark=id.c59shry7qhmf)
+[7.8 Cataloghi corporativi delle armi a distanza](#bookmark=id.c59shry7qhmf)	[38](#bookmark=id.c59shry7qhmf)
 
-[7.9 Prezzi di riferimento delle armi](#bookmark=id.4k4pq4fn3vxf)	51
+[7.9 Prezzi di riferimento delle armi](#bookmark=id.4k4pq4fn3vxf)	54
 
-[7.10 Artefatti e sintonizzazione](#bookmark=id.fakxh9134kr4)	57
+[7.10 Artefatti e sintonizzazione](#bookmark=id.fakxh9134kr4)	59
 
-[7.11 Armature e rinforzi](#bookmark=id.bwv35jaq96fp)	60
+[7.11 Armature e rinforzi](#bookmark=id.bwv35jaq96fp)	62
 
-[7.12 Corredi specialistici dell’Alleanza](#bookmark=id.ojdo7b9jhrmr)	68
+[7.12 Corredi specialistici dell’Alleanza](#bookmark=id.ojdo7b9jhrmr)	71
 
-[7.13 Catalogo Capitol	70](#bookmark=id.evbj8kxr55ul)
+[7.13 Catalogo Capitol	72](#bookmark=id.evbj8kxr55ul)
 
-[7.14 Catalogo Imperial	79](#bookmark=id.dsvajpof4rfc)
+[7.14 Catalogo Imperial	81](#bookmark=id.dsvajpof4rfc)
 
-[7.15 Catalogo Cybertronic	89](#bookmark=id.6eswqv4mjio6)
+[7.15 Catalogo Cybertronic	91](#bookmark=id.6eswqv4mjio6)
 
-[7.16 Catalogo Mishima	94](#bookmark=id.oo04uhg9nuu0)
+[7.16 Catalogo Mishima	96](#bookmark=id.oo04uhg9nuu0)
 
-[7.17 Catalogo Fratellanza	99](#bookmark=id.ti3dqryv45h4)
+[7.17 Catalogo Fratellanza	101](#bookmark=id.ti3dqryv45h4)
 
-[7.18 Unità robotiche e accessori	105](#bookmark=id.se3u0w2yng53)
+[7.18 Unità robotiche e accessori	107](#bookmark=id.se3u0w2yng53)
 
-[7.19 Equipaggiamento sanitario	107](#bookmark=id.dsii7f4mdwfd)
+[7.19 Equipaggiamento sanitario	109](#bookmark=id.dsii7f4mdwfd)
 
-[7.20 Munizioni e alimentazioni	112](#bookmark=id.p6lnkgsvyr4g)
+[7.20 Munizioni e alimentazioni	114](#bookmark=id.p6lnkgsvyr4g)
 
-[7.21 Elmetti e modifiche	120](#bookmark=id.yq2wgvpplbyh)
+[7.21 Elmetti e modifiche	122](#bookmark=id.yq2wgvpplbyh)
 
-7.22 Armamenti corporativi di base	125
+7.22 Armamenti corporativi di base	127
 
-[7.23 Catalogo dei rinforzi	131](#7.23-catalogo-dei-rinforzi)
+[7.23 Catalogo dei rinforzi	133](#7.23-catalogo-dei-rinforzi)
 
 # **Capitolo 7 — Armamenti**
 
@@ -1237,13 +1237,13 @@ Max Q è la gittata massima; CC è la capacità del caricatore, della cella o de
 
 ### **Specializzazioni dei modelli a distanza**
 
-Pistole: pistole ordinarie e mitragliette, compreso il Mitra compatto e i modelli MP105, P1000 e Nemesis 210\. Restano Armi Leggere in tutte le modalità; la Raffica non li trasferisce nella famiglia Mitragliatori. La SA30 a dardi usa Pistole per il \+1 VA, ma Danno calibrato esclude il \+1 danno.
+Pistole: pistole ordinarie e mitragliette, compreso il Mitra compatto e i modelli Colt Hammershot, MP105, P1000 e Nemesis 210\. Restano Armi Leggere in tutte le modalità; la Raffica non li trasferisce nella famiglia Mitragliatori. La SA30 a dardi usa Pistole per il \+1 VA, ma Danno calibrato esclude il \+1 danno.
 
 Fucili di Precisione: Eruptor, Mefisto, Archer e Assailant. Fucili d’Assalto: M50, AR3000, Volcano, Invader, Shogun e Panzerknacker. Carabine: Mandible, Interceptor, Airbrush, Windrider N4, MP105GW, Nemesis 21 e Rainy Dayer.
 
 Mitragliatori: Justifier, Purifier, MG40, Deathlock Drum, Kensai e Nimrod Autocannon. Justifier e Purifier usano Armi Pesanti; gli altri quattordici fucili del catalogo principale usano Armi Medie secondo il proprio profilo.
 
-Armi al Plasma: Hellblazer e Intruder. Hellblazer mantiene Armi Leggere, ma utilizza soltanto la Specializzazione Armi al Plasma. I moduli integrati conservano la propria famiglia: Lanciagranate per il modulo del Volcano, Lanciafiamme per quello dell’Eruptor e analogamente per gli altri modelli combinati.
+Armi al Plasma: Hellblazer, KEP 808 e Intruder. Hellblazer e KEP 808 mantengono Armi Leggere, ma utilizzano soltanto la Specializzazione Armi al Plasma. I moduli integrati conservano la propria famiglia: Lanciagranate per il modulo del Volcano, Lanciafiamme per quello dell’Eruptor e analogamente per gli altri modelli combinati.
 
 S \= Colpo Singolo; RB \= Raffica Breve; RM \= Raffica Media; RL \= Raffica Lunga; TR \= Tiro Rapido; FS \= Fuoco di Soppressione; DC \= Doppio Colpo. Una modalità assente non è disponibile. Il profilo generico Mitra è eliminato; le specifiche armi corporative a due mani sono classificate singolarmente come carabine o fucili.
 
@@ -1459,6 +1459,7 @@ Danno calibrato. Per SA30 e SA50F, i bonus ordinari al danno di Classi, Talenti 
 | Piranha | 1d6+1 | 1 | 0 | 2 | 35 | 8 | 8 |
 | Punisher | 1d6+2 | 1 | 0 | 4 | 25 | 10 | 6 |
 | Hellblazer | 1d6+1 | 1 | 0 | 3 | 30 | 30 | 6 |
+| KEP 808 | 1d6+1 | 1d3 | \+1 | 6 | 20 | 10 | 6 |
 
 | Modello | Abilità | Mani | PI | MOV | Modalità |
 | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -1466,6 +1467,7 @@ Danno calibrato. Per SA30 e SA50F, i bonus ordinari al danno di Classi, Talenti 
 | Piranha | Leggere | 1 | 4 | 0 | S TR |
 | Punisher | Leggere | 1 | 4 | 0 | S RB TR |
 | Hellblazer | Leggere | 1 | 4 | 0 | S TR |
+| KEP 808 | Leggere | 1 | 4 | 0 | S TR |
 
 | Modello | Qualità | PS INT | REP | Costo proposto |
 | :---: | :---: | :---: | :---: | :---: |
@@ -1473,8 +1475,11 @@ Danno calibrato. Per SA30 e SA50F, i bonus ordinari al danno di Classi, Talenti 
 | Piranha | Comune | 10 | NC | 2.100 |
 | Punisher | Non comune | 12 | RA | 3.150 |
 | Hellblazer | Non comune | 12 | RA | 9.000 |
+| KEP 808 | Non comune | 12 | RA | 12.500 |
 
 **Hellblazer. Proprietà:** Plasma. Include una cella standard da 30 colpi.
+
+**KEP 808\.** Pistola al plasma. Specializzazione: Armi al Plasma. Proprietà: Plasma. Il \+1 VA è già incluso nella scheda. Include una cella specifica da 10 colpi (§7.20.5). Ogni colpo a segno tira AC 1d3 e risolve separatamente danno e Armatura per ciascuna applicazione; consuma una sola carica. L’effetto aggiuntivo Plasma segue il §5.24 del Manuale del Giocatore. Non possiede un raggio di esplosione.
 
 #### **Armi medie**
 
@@ -1686,18 +1691,23 @@ MP105GW. Carabina automatica; modello distinto dalla pistola MP105.
 | Bolter 09 | 1d6 | 1 | 0 | 3 | 60 | 10 | 6 |
 | Enforcer | 1d6+1 | 1 | 0 | 2 | 15 | 6 | 6 |
 | Jemson 45 | 1d6+2 | 1 | 0 | 3 | 15 | 6 | 6 |
+| Colt Hammershot | 1d6+3 | 1 | −1 | 7 | 10 | 6 | 5 |
 
 | Modello | Abilità | Mani | PI | MOV | Modalità |
 | :---: | :---: | :---: | :---: | :---: | :---: |
 | Bolter 09 | Leggere | 1 | 4 | 0 | S TR |
 | Enforcer | Leggere | 1 | 4 | 0 | S TR |
 | Jemson 45 | Leggere | 1 | 4 | 0 | S TR |
+| Colt Hammershot | Leggere | 1 | 4 | 0 | S TR |
 
 | Modello | Qualità | PS INT | REP | Costo proposto |
 | :---: | :---: | :---: | :---: | :---: |
 | Bolter 09 | Comune | 10 | CO | 1.450 |
 | Enforcer | Comune | 10 | CO | 1.200 |
 | Jemson 45 | Comune | 10 | CO | 1.600 |
+| Colt Hammershot | Rara | 14 | RA | 3.500 |
+
+**Colt Hammershot.** Revolver pesante. Specializzazione: Pistole. Usa proiettili da pistola (§7.20.9) e un tamburo fisso da sei colpi. Ricaricare il tamburo con munizioni pronte richiede 1 AzP e la mano libera. Il prezzo comprende il tamburo, mentre le munizioni si acquistano separatamente. Non possiede proprietà aggiuntive.
 
 #### **Pistole semiautomatiche e automatiche**
 
@@ -2390,6 +2400,7 @@ Il prezzo comprende un caricatore vuoto specifico. Le munizioni e i caricatori a
 | Piranha | 2.100 |
 | Punisher | 3.150 |
 | Hellblazer | 9.000 |
+| KEP 808 | 12.500 |
 | Carabina Punisher con modulo | 8.000 |
 | Plasma Intruder | 18.000 |
 | Lanciagranate Alleanza | 7.800 |
@@ -2423,6 +2434,7 @@ Il prezzo comprende un caricatore vuoto specifico. Le munizioni e i caricatori a
 | Bolter 09 | 1.450 |
 | Enforcer | 1.200 |
 | Jemson 45 | 1.600 |
+| Colt Hammershot | 3.500 |
 | Bolter 10 | 1.000 |
 | Bolter 13 | 1.300 |
 | Bolter 20 con modulo | 3.600 |
@@ -4600,9 +4612,10 @@ Le celle tecnologiche sono riutilizzabili e si acquistano cariche. Il costo di r
 | Ravvicinata comune | 5 attivazioni | 200 | 40 | NC |
 | Fucile al plasma commerciale | 20 colpi | 400 | 80 | RA |
 | Hellblazer | 30 colpi | 450 | 90 | RA |
+| KEP 808 | 10 colpi | 300 | 60 | RA |
 | Intruder | 30 colpi | 600 | 120 | RA |
 
-Carica indica il prezzo della cella piena. Il formato ravvicinato da cinque cariche è comune ai modelli elencati sotto. Le tre celle delle armi a distanza sono invece specifiche: Hellblazer e Intruder non sono intercambiabili anche se entrambe contengono trenta colpi.
+Carica indica il prezzo della cella piena. Il formato ravvicinato da cinque cariche è comune ai modelli elencati sotto. Le quattro celle delle armi a distanza sono invece specifiche del modello: Fucile al plasma commerciale, Hellblazer, KEP 808 e Intruder. Hellblazer e Intruder non sono intercambiabili anche se entrambe contengono trenta colpi.
 
 | Catalogo | Armi compatibili con la cella ravvicinata da 5 |
 | :---- | :---- |
@@ -4735,7 +4748,7 @@ Le tabelle assegnano la famiglia del tiro balistico principale. Eventuali lancia
 | :---- | :---- | :---- |
 | Alleanza | AXIS 227; Piranha; Pistola Punisher | — |
 | Bauhaus | HG10; HG12; Equalizer; MP105 | HD14M; HG14 |
-| Capitol | Bolter 10; Bolter 09; Enforcer; Jemson 45; Bolter 13; Bolter 20; Ironfist 15 | M310; M510; M516S; M516D; M410 |
+| Capitol | Bolter 10; Bolter 09; Enforcer; Jemson 45; Colt Hammershot; Bolter 13; Bolter 20; Ironfist 15 | M310; M510; M516S; M516D; M410 |
 | Cybertronic | P500; P1000 | SA SG2001 |
 | Fratellanza | Nemesis 100; Eliminator; Nemesis 210; Nemesis 214; Nemesis 221 | — |
 | Imperial | Belliger; Aggressor; Rainy Dayer | — |

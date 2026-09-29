@@ -1,6 +1,6 @@
 # **Per Davide — domande aperte ed errata dei manuali**
 
-Aggiornato al 28 settembre 2026, pomeriggio.  
+Aggiornato al 28 settembre 2026, sera.  
 **Istruzioni per Davide (e per l’AI che usi per rispondere).**
 
 > * Questo è l’unico documento con le domande dell’app Mutant. Il link resta sempre questo: non ne esistono altri e non se ne creano di nuovi.  
@@ -46,8 +46,6 @@ Il manuale non lo dice.
 
 **A.32 — 18 nuovi Talenti magici e mistici (Magia sez. 1, Giocatore §8.6.8, Doc del 27/09).** Nella copia condivisa sono comparse 18 schede nuove (Potere Mistico, Recupero Mistico, Escludere la Componente Somatica / l’Invocazione / il Focus, Concentrazione Migliorata e Operativa, Incantesimi Ampliati, Estesi, Proiettati, Plurimi, Intensificati, Anticipazione Migliorata, Incantesimi Inarrestabili e Massimizzati, Manifestazioni Occultate, Ritualista Minore e Maggiore) e la Concentrazione su un Incantesimo passa dalla Prova di Potere alla PS di Volontà. Non sono fra le risposte approvate del Doc E\&L: sono definitive?  
 *Nel frattempo:* l’app le recepisce dal manuale condiviso (fonte corrente): Talenti acquisibili con il testo della scheda, Potere Mistico \+5 PM Massimi per acquisizione; «possedere una riserva personale di PM» vale per tutti.  
-**A.52 — Addestramenti a 76 punti e 10 Punti Abilità Liberi (Giocatore §2.3–2.8, §2.13, §8.1, Doc del 27/09, 16:38).** Nella copia condivisa i cinque Addestramenti passano da 48 a 76 punti (basi da 2 a 4: 8 Abilità a 4, 12 a 3, 4 a 2; nessuna più a 0 o a 1\) e i Punti Abilità Liberi da 5 a 10, alla creazione e ai livelli 4, 8, 12, 16, 20 (60 in tutto). Non è fra le risposte approvate del Doc E\&L: è definitivo? Il resto del capitolo 8 non è cambiato: limiti di Avanzamento per livello (3 fino al 3°, 4 dal 4°…) e VA ≥ 1 prima dei punti liberi restano. Con 10 punti e il limite 3 alla creazione, va bene così?  
-*Nel frattempo:* l’app applica le regole nuove (fonte corrente). Nei personaggi già creati i VA salgono da soli con le basi nuove. I punti mancanti della creazione e dei livelli 4, 8, 12, 16, 20 già presi si assegnano dall’avviso «Regole aggiornate» in cima alla scheda («Assegna», un evento alla volta, con i limiti di Avanzamento di quel livello); finché mancano, non si sale di livello. Se un domani i punti calassero, quelli in più non verrebbero tolti ma solo segnalati.  
 **A.33 — Armamenti corporativi di base: le pistole (E\&L A.5.27 e A.5.30, Giocatore §2.16.27).** *Aggiornamento del 27/09, 11:19:* fucili, armature e scudi sono definiti (A.5.30, Armamenti §7.22) e sono nell’app. Per le pistole E\&L A.5.30 dice «Le pistole restano quelle già definite» e il §2.16.27 «Le pistole mantengono i modelli già definiti», ma nessuno dei Doc condivisi indica quale modello corporativo corrisponde a Pistola semiautomatica e Revolver per Bauhaus, Capitol, Cybertronic, Fratellanza, Imperiali e Mishima. Vuol dire che le pistole restano il profilo commerciale anche per le Corporazioni, oppure c’è una tabella che non vediamo?  
 *Nel frattempo:* per le pistole si assegna il profilo commerciale con la nota «modello corporativo da definire (A.5.27)».  
 **A.35 — Acquisti iniziali: valore ceduto maggiore del prezzo (§2.16.29).** Il paragrafo dice che si paga la differenza; se gli armamenti ceduti valgono più del nuovo oggetto (per esempio si cede l’armatura da 1.500 per un’arma da 800), la differenza torna in crediti o si perde?  
@@ -105,40 +103,10 @@ Il manuale non lo dice.
 **A.42 — Spazzata senz’armi (§5.12).** Il §5.12 non dice se la Spazzata si fa senz’armi; il Lottatore l’ottiene con Combattimento Multiplo. Senza quel Talento è ammessa?  
 *Nel frattempo:* senz’armi l’app non propone la Spazzata; Combattimento Multiplo resta un promemoria.
 
-### **Stati: categorie di Prove**
-
-**A.51 — Quali Abilità sono nelle categorie di Prove degli Stati (vista, udito, fisiche)?** Il §5.18 e il §5.5 nominano categorie senza elencarle. L’app usa queste liste, da confermare:
-
-> * «azioni fisiche ravvicinate» (A Terra): Armi da guerra, Armi da mischia, Corpo a corpo, Difese; l’equilibrio è Atletica per quell’uso;  
-> * «Prove che richiedono la vista» (Accecato, −8): tutte le Abilità di attacco (Armi da lancio, leggere, medie, pesanti, da guerra, da mischia, Corpo a corpo), Difese, Percezione, Pilotare;  
-> * «quando l’udito è importante» (Assordato, −4): Percezione e Intrattenere, solo come valore a parte per quell’uso;  
-> * «azioni fisiche» (Immobilizzato, Rallentato, carico §5.2.6; già domanda A.16): Armi da lancio, Armi leggere, Armi medie, Armi pesanti, Armi da guerra, Armi da mischia, Corpo a corpo, Difese, Atletica, Furtività.
-
-*Nel frattempo:* queste quattro liste.
-
 ### **AR e PI**
 
-**A.43 — AR per zona del corpo?** Il Giocatore §5.10 dice che le AC «non assegnano locativi»; la Magia (sez. 7, Armatura Mistica) parla di «Area Colpita del corpo» e di AC «coperte dall’equipaggiamento», ma nessuna armatura dice quali AC copre. Basta un’AR unica?  
-*Nel frattempo:* un solo valore, «AR totale, di cui magica» (contro l’Etereo vale la parte magica).  
-**A.44 — Armatura o scudo a 0 PI (§7.2.1).** L’oggetto è Rotto e «non può essere utilizzato». Un’armatura Rotta ancora indossata dà la sua AR? Il manuale lo dice solo per l’elmetto («l’AR dell’armatura non cambia»).  
-*Nel frattempo:* armatura e scudo Rotti non danno AR né i loro effetti; le penalità dell’armatura indossata restano.  
-**A.45 — Kit di rinforzo a 0 PI (§7.11.2).** Il kit ha PI propri. Quando arriva a 0, il suo \+AR sparisce? E la Leggera portata a Media dal kit torna Leggera?  
-*Nel frattempo:* il \+AR del kit sparisce; la categoria resta quella con il kit montato.  
-**A.46 — Riparazione degli oggetti (§7.2.1, «da integrare»).** Tempo, costo, Prova di Tecnologia e PI recuperati per armi, armature, scudi ed elmetti. Vale la regola dei veicoli (1 ora, 1 PI con successo, 2 con Magistrale)?  
-*Nel frattempo:* nessun pulsante «Ripara»; i PI si rimettono a mano con il \+.  
-**A.47 — Oggetti senza PI nel catalogo.** Dotazione, corredi e strumenti comuni spesso non hanno PI («quando pertinenti», Equipaggiamento §1.10). Sono indistruttibili o hanno un valore predefinito?  
-*Nel frattempo:* un oggetto senza PI nel catalogo non si traccia; munizioni, sanitario e voci con quantità maggiore di 1 nemmeno.  
-**A.48 — Cumulo dei Talenti e delle Tecniche che danno AR.** Corazza Potenziata (+1 AR magica), Aura di Resistenza (+1 magica) e Pelle di Rinoceronte (+1 contro il ravvicinato) non compaiono nella formula della Magia sez. 7 («il maggiore contributo applicabile fra Pelle Corazzata, Armatura di Forza e bonus di Armatura Mistica»). Si sommano o rientrano nel maggiore? E quali scudi sono «Mistici o TecnoMistici» per Corazza Potenziata?  
-*Nel frattempo:* Corazza Potenziata si somma, con un’armatura indossata; Tecniche e incantesimi non sono tracciati al tavolo e restano fuori dal calcolo.  
-**A.49 — Condizioni delle armi (§5.17, §7.2) e PI.** Un’arma Rotta o Inutilizzabile per un Fallimento Maldestro scende a 0 PI? Una riparata torna ai PI massimi?  
-*Nel frattempo:* sono indipendenti; l’app tiene solo i PI, con l’etichetta «Rotto» a 0\.  
-**A.50 — Laser, Perforante e Incendiato contro l’AR.** Sullo stesso colpo si applica prima il dimezzamento di Laser o la sottrazione di Perforante? Perforante tocca l’AR Naturale di Pelle Corazzata e di Scudo (incantesimo)? Nell’Incendiato («ignorando l’Armatura ordinaria») la componente magica riduce il danno?  
-*Nel frattempo:* l’app non calcola il danno al bersaglio; «Attacca\!» ricorda solo l’ordine del §5.13.
-
-### **Armamenti: Specializzazioni e famiglie**
-
-Resta da classificare solo la Rainy Dayer (A.13): finché non rispondi, nessuna Specializzazione le dà \+1.  
-**A.13 — Rainy Dayer (§7.14.6).** Armi medie, gittata 30 Q, due mani. Proposta: Carabine.
+**A.53 — Armature con AR magica propria e Corazza Potenziata (A.48).** Corazza Potenziata richiede una protezione Artefatto. Nel catalogo l’unico Artefatto fra le protezioni è lo Scudo delle Guardie Sacre. Queste 14 armature hanno una parte di AR magica propria ma non sono Artefatti: Armatura Marte, Vulcano e Mercurio (Alleanza); Demonhunter (Mishima); Corazza del Soldato d’élite, Armatura dell’Inquisitore, Armatura del Mistico, Corazza delle Furie, Corazza dei Sacri Guerrieri, Armatura delle Valchirie, Tuta del Mortificator, Corazza del Custode dell’Arte, Corazza degli Arcivescovi, Armatura della Sentinella (Fratellanza). Contano come protezione Artefatto per Corazza Potenziata?  
+*Nel frattempo:* no, Corazza Potenziata vale solo con lo Scudo delle Guardie Sacre.
 
 ## ---
 
@@ -149,14 +117,15 @@ Decisioni già prese o errori evidenti: l’app segue la decisione, il testo sta
 
 > * ~~§1.2.3, §2.11, §2.14: la Prova Salvezza Volontà usa CAR~~ — fatto nel Google Doc (verificato il 26/09).  
 > * ~~§3.5.2 Esploratore: Specializzazioni dei Talenti a scelta~~ — fatto nel Google Doc (verificato il 26/09).  
-> * §2.12 e §3.3: al 1° livello sono massimizzati sia i PV sia i PM. Il Google Doc dice ancora solo i PV.  
-> * §2.10, §3.8: “minimo 1” ai “2 \+ Mod INT incantesimi”. Nel Google Doc c’è nella Magia (sez. 1), non ancora nel §2.10 del Giocatore.  
+> * ~~§2.12 e §3.3: al 1° livello sono massimizzati sia i PV sia i PM~~ — fatto nel Google Doc (verificato il 28/09).  
+> * ~~§2.10, §3.8: “minimo 1” ai “2 \+ Mod INT incantesimi”~~ — fatto nel Google Doc (verificato il 28/09).  
 > * §3.5.3 Bersaglio Designato: impaginazione rotta nel PDF.  
 > * §8.6 Attivazione Tempestiva: sta prima del §8.6.1, fuori da ogni sottosezione.
 
 **Manuale della Magia**
 
-> * Sez. 1: livello massimo incantesimi \= tabella I→3, II→8, III→11, IV→14, V→17, VI→18, non “3 × Gradi”. Il Google Doc dice ancora “3 volte i Gradi taumaturgici complessivi”.  
+> * ~~Sez. 1: livello massimo incantesimi \= tabella I→3, II→8, III→11, IV→14, V→17, VI→18~~ — fatto nel Google Doc (verificato il 28/09).  
+> * ~~Armatura Mistica (scheda 22.2): togliere il riferimento alle zone del corpo coperte (A.43)~~ — fatto nel Google Doc (verificato il 28/09).  
 > * ~~Sez. 1: la frase “con i cinque Talenti liberi ordinari…” come esempio~~ — fatto nel Google Doc (verificato il 26/09).  
 > * Sez. 1, scheda di Potenziale Mistico Migliorato: manca la riga «Ambito: il Talento è riservato agli Usufruitori di Magia e non si applica all’Addestramento Taumaturgo» della risposta A.2.2. La regola è comunque scritta nel paragrafo «Conoscenza e livello massimo»: solo testo.
 
@@ -168,7 +137,7 @@ Decisioni già prese o errori evidenti: l’app segue la decisione, il testo sta
 > * §7.16.2 Armatura Ashigaru: “Manutenzione agevolata” \= “Manutenzione semplice” (§7.11.4)?  
 > * §7.11.5: “Agenti equipaggi e Guardie” senza virgola.  
 > * §7.4.1 / §7.4.2 Scudo Punisher: “Grande” vs “Medio”.  
-> * §7.4.10 Scudo delle Guardie Sacre: con la lama estratta il danno è 1d6+1+1d4 Naturale, come nel §7.1.9 (manca il \+1; risposta A.10).
+> * ~~§7.4.10 Scudo delle Guardie Sacre: con la lama estratta il danno è 1d6+1+1d4 Naturale~~ — fatto nel Google Doc (verificato il 28/09).
 
 ## ---
 
@@ -182,7 +151,7 @@ Decisioni già prese o errori evidenti: l’app segue la decisione, il testo sta
 > * Dal 26/09 i manuali sono Google Doc condivisi: l’app li rilegge a ogni sessione, non servono più i PDF.  
 > * Manuale dell’Equipaggiamento: il cap. 1 (0.1) è recepito (carico, PS Integrità per Qualità). Aspettiamo i cap. 2–8 e i cataloghi.  
 > * Manuale dei Veicoli (in stesura).  
-> * Manuale degli Armamenti v0.53: estratto per intero, §7.21–7.23 compresi. Restano rimandati dal manuale le Prove Salvezza, i tempi di ricarica e i ricambi del Cuirassier Attila (§7.18.1), e la riparazione degli oggetti (A.46).
+> * Manuale degli Armamenti v0.53: estratto per intero, §7.21–7.23 compresi; la riparazione degli oggetti è recepita (A.46). Restano rimandati dal manuale le Prove Salvezza, i tempi di ricarica e i ricambi del Cuirassier Attila (§7.18.1). La versione del 28/09 dei quattro manuali è salvata e in esame: le novità arriveranno nell’app nelle prossime sessioni.
 
 ## ---
 
@@ -207,7 +176,18 @@ Voci con risposta recepita e funzione implementata nell’app. La data è quella
 > * **A.11 — Specializzazioni delle 16 armi a distanza corporative** (Panzerknacker nei Fucili d’Assalto) — implementata il 28/09.  
 > * **A.12 — Specializzazioni delle altre armi corporative per analogia**; SA30 a dardi con solo \+1 VA (Danno calibrato) — implementata il 28/09.  
 > * **A.14 — Batterie da 5 PM** (Rosso, Blu, Verde Molto rara 10.000; Bianco Leggendaria 50.000), scala di reperibilità fino a Leggendaria, disponibilità degli Artefatti Mistici — implementata il 28/09.  
-> * **A.21 — Chroma Viola come fonte di Corruzione passiva**: fasce, frequenza ed esiti nell’app; il frammento si registra nell’inventario senza PM; il conteggio dell’esposizione arriverà insieme a Corruzione e Umanità — implementata il 28/09.
+> * **A.21 — Chroma Viola come fonte di Corruzione passiva**: fasce, frequenza ed esiti nell’app; il frammento si registra nell’inventario senza PM; il conteggio dell’esposizione arriverà insieme a Corruzione e Umanità — implementata il 28/09.  
+> * **A.52 — Addestramenti a 76 punti e 10 Punti Abilità Liberi**: confermati da Davide; nessun cambio alle regole dell’app, l’avviso ai personaggi esistenti lo cita — implementata il 28/09.  
+> * **A.51 — Categorie di Prove degli Stati**: Percezione tolta da «vista», Assordato come valore a parte, nei promemoria la frase sull’azione esclusivamente visiva o uditiva che fallisce — implementata il 28/09.  
+> * **A.43 — AR complessiva** («AR totale, di cui magica»), non per zona del corpo: l’app già così; Magia sez. 7 già corretta nel Google Doc — implementata il 28/09.  
+> * **A.44 — Armatura, scudo ed elmetto a 0 PI**: niente AR né benefici; lo scudo Rotto non attacca né para; la rottura vale dal colpo successivo — implementata il 28/09.  
+> * **A.45 — Kit di rinforzo a 0 PI**: perde AR e proprietà, l’armatura sottostante resta com’è, PI separati — implementata il 28/09.  
+> * **A.46 — Riparazione strutturale** di armi, armature, scudi, elmetti e rinforzi: pulsante «Ripara», 1 ora, Prova di Tecnologia (−2 con strumenti improvvisati), esito scelto dopo il tiro, materiali al 5% del prezzo per PI recuperato tolti dai crediti — implementata il 28/09.  
+> * **A.47 — Oggetti senza PI**: nessun valore predefinito; campo facoltativo «PI definiti dal Direttore»; sanitari tracciati; esemplari identici raggruppati con «Danneggia uno» — implementata il 28/09.  
+> * **A.48 — Corazza Potenziata, Aura di Resistenza e Pelle di Rinoceronte si sommano**; Corazza Potenziata solo con una protezione Artefatto; le due Tecniche come interruttori al tavolo — implementata il 28/09. Resta la domanda A.53 sulle armature con AR magica propria.  
+> * **A.49 — Condizioni delle armi (§5.17)** come stato al tavolo, distinto dai PI: penalità al VA e blocco di «Attacca\!» quando l’arma non è utilizzabile — implementata il 28/09.  
+> * **A.50 — Ordine delle riduzioni dell’AR** (Perforante, Laser, Incendiato): nei dati dell’app e come promemoria in «Attacca\!» — implementata il 28/09.  
+> * **A.13 — Rainy Dayer** nelle Carabine, solo per il profilo di tiro — implementata il 28/09.
 
 ## ---
 
@@ -239,8 +219,7 @@ La frequenza della PS di Magia è una ogni ora in tutte le fasce, compreso il co
 Si applicano i normali esiti della Corruzione (§5.20.1): Successo, nessun peggioramento; Fallimento, peggioramento pari all’Intensità; Fallimento Maldestro, peggioramento pari all’Intensità più 1 Stato; Successo Magistrale, nessun peggioramento e \+4 alla prossima PS di Magia contro Corruzione nella stessa Scena, per una sola Prova. Restano i modificatori pertinenti, comprese le penalità da CROS e Umanità.  
 Raggio approvato: per un frammento trasportabile di Chroma Viola l’aura di Corruzione passiva si estende fino a 12 Q (18 metri), inclusi. Oltre questo limite il frammento non provoca esposizione passiva. Cristalli grandi e giacimenti hanno un raggio specificato dal Direttore di Gioco.  
 Tempi approvati: la prima PS di Magia si effettua dopo un’ora complessiva di esposizione; segue una PS per ogni ulteriore ora di esposizione. Fuori dall’aura il conteggio si sospende, senza azzerare i minuti già accumulati. Cambiare distanza non provoca PS aggiuntive. Alla scadenza si usa il modificatore e l’Intensità della fascia più grave raggiunta durante quell’ora di esposizione, quindi inizia il nuovo intervallo orario. Un contatto brevissimo, da solo, non impone una PS immediata, ma contribuisce al tempo accumulato e alla gravità della prossima prova. Esempio: 10 minuti a contatto e 50 minuti a 8 Q richiedono una sola PS contro esposizione Intensa, −2 alla PS e Intensità 2 Stati.  
-A.21: definita la gestione della Corruzione passiva del Chroma Viola. La registrazione come oggetto inerte è superata; le regole per impiegarne l’Energia Oscura restano da sviluppare.
-
+A.21: definita la gestione della Corruzione passiva del Chroma Viola. La registrazione come oggetto inerte è superata; le regole per impiegarne l’Energia Oscura restano da sviluppare.  
 *Risposte scritte da Davide il 28/09 nel documento «Per Davide — aggiornato 28/09» (che non si usa più), riportate qui.*  
 **Risposta A.52** — Chiarimento delle decisioni già approvate il 27/09/2026 e recepite nel Manuale del Giocatore v0.43.  
 La versione operativa per la prova approvata è quella con 76 punti base per ciascun Addestramento: 8 Abilità con base 4, 12 con base 3 e 4 con base 2, per un totale di 24 Abilità. Sostituisce la precedente distribuzione da 56 punti. L’adozione della nuova distribuzione non costituisce una verifica definitiva dell’equilibrio di gioco.  
@@ -308,4 +287,5 @@ Ignifugo X non si sottrae al danno e non riduce direttamente i PV persi. Mantien
 Esempio: con AR totale 6, di cui 2 magica, un risultato di 3 sul d4 di Incendiato provoca 1 danno ai PV.  
 Assorbire interamente il danno non spegne le fiamme e non elimina il −2 VA dello Stato. Quattro punti di AR magica pertinente possono annullare il normale 1d4, ma Incendiato deve comunque terminare o essere spento.  
 **Risposta approvata A.13** — Rainy Dayer (§7.14.6): il profilo di tiro appartiene alla Specializzazione Carabine, che conferisce \+1 al VA e \+1 al danno. L’Abilità utilizzata rimane Armi medie; il tiro richiede due mani sia con l’ombrello aperto sia con l’ombrello chiuso, con gittata massima di 30 Q.  
-La funzione difensiva segue le regole già presenti: aperta, la Rainy Dayer fornisce AR \+1 e permette la Parata con Difese. La Specializzazione Carabine riguarda il tiro e non aumenta questa protezione.  
+La funzione difensiva segue le regole già presenti: aperta, la Rainy Dayer fornisce AR \+1 e permette la Parata con Difese. La Specializzazione Carabine riguarda il tiro e non aumenta questa protezione.
+

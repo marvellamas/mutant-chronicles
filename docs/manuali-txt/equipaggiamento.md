@@ -156,7 +156,6 @@ Ogni scheda presenta prima la funzione dell’oggetto e poi i dati necessari per
 | Nome e categoria | Nome del profilo; eventuale produttore o Corporazione; famiglia del catalogo. |
 | Funzione | Attività resa possibile ed effetto concreto dell’oggetto. |
 | Impiego | Tempo e Azioni richiesti, mani, preparazione ed eventuale mantenimento; uso impugnato, indossato, installato o comandato. |
-| Preparazione e tempo | Operazioni preliminari, Azioni o durata d’impiego; eventuale mantenimento. |
 | Abilità e Prova | Abilità pertinente quando richiesta, condizioni del tiro ed esiti specifici. |
 | Livello degli strumenti | Improvvisati, Standard, Buoni, Professionali o Specializzati, se pertinente. |
 | Benefici e limiti | Bonus applicabile, attività interessate, portata, bersagli e limitazioni tecniche. |

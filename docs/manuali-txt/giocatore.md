@@ -2977,7 +2977,7 @@ Raccordi. Guida Morale, Fede Incrollabile e Consolazione si applicano alle PS di
 
 ## **3.8 Profili taumaturgici**
 
-L’Addestramento Taumaturgo concede l’accesso alla magia e una dotazione iniziale di 2 \+ Modificatore di Intelligenza Incantesimi liberi. Questa dotazione si riceve una sola volta e soltanto possedendo l’Addestramento. A essa si aggiungono gli Incantesimi concessi dai Gradi delle Classi taumaturgiche: acquisire una nuova Classe non riassegna il bonus iniziale dell’Addestramento. I profili seguenti non conferiscono bonus automatici alle Prove Salvezza, che seguono il Capitolo 1\. L’Addestramento e i Gradi delle Classi taumaturgiche sono incompatibili con Risorse Interiori (§8.6.10).
+L’Addestramento Taumaturgo concede l’accesso alla magia e una dotazione iniziale di 2 \+ Modificatore di Intelligenza Incantesimi liberi, con un minimo di 1\. Questa dotazione si riceve una sola volta e soltanto possedendo l’Addestramento. A essa si aggiungono gli Incantesimi concessi dai Gradi delle Classi taumaturgiche: acquisire una nuova Classe non riassegna il bonus iniziale dell’Addestramento. I profili seguenti non conferiscono bonus automatici alle Prove Salvezza, che seguono il Capitolo 1\. L’Addestramento e i Gradi delle Classi taumaturgiche sono incompatibili con Risorse Interiori (§8.6.10).
 
 | Classe | Specializzazioni | Abilità di Classe | PV/Grado | PM/Grado |
 | :---: | ----- | ----- | :---: | :---: |
