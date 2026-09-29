@@ -467,9 +467,9 @@ test('validatore delle armi corporative: effetti, attivazione, unità delle cari
 
 // --- Lotto 5: armi a distanza corporative (§7.8) ------------------------------------------
 
-test('lotto 5: 81 armi a distanza corporative e 19 moduli integrati in 7 cataloghi, con i valori del §7.8', () => {
+test('lotto 5: 83 armi a distanza corporative (KEP 808 e Colt Hammershot dalla 0.54) e 19 moduli integrati in 7 cataloghi, con i valori del §7.8', () => {
   const tutte = catalogo(dati).oggetti.filter((o) => o.file === 'armi_distanza_corporative' && !o.paragrafo.startsWith('§7.22'));
-  assert.equal(tutte.length, 100);
+  assert.equal(tutte.length, 102);
   assert.equal(tutte.filter((o) => o.modulo_di).length, 19);
   assert.deepEqual([...new Set(tutte.map((o) => o.catalogo))], ['Alleanza', 'Bauhaus', 'Capitol', 'Cybertronic', 'Fratellanza', 'Imperial', 'Mishima']);
   const r = (id) => catalogo(dati).perRif.get(`armi_distanza_corporative:${id}`);
@@ -790,7 +790,7 @@ test('validatore dei rinforzi e degli effetti sulle penalità', () => {
 
 test('lotto 10: munizioni, celle, combustibile e compatibilità balistiche del §7.20', () => {
   const tutti = catalogo(dati).oggetti.filter((o) => o.file === 'munizioni');
-  assert.equal(tutti.length, 49);
+  assert.equal(tutti.length, 50); // con la cella KEP 808 (Armamenti 0.54)
   const r = (id) => catalogo(dati).perRif.get(`munizioni:${id}`);
   assert.deepEqual(r('proiettili-da-fucile').munizione, { famiglia: 'fucile', confezione: { quantita: 50, costo: 150 } });
   // §7.20.7: prezzo speciale = ordinario × moltiplicatore; confezione da dieci
@@ -806,7 +806,7 @@ test('lotto 10: munizioni, celle, combustibile e compatibilità balistiche del �
   // granate standard, Fumogena ed Elettroshock sono già nel catalogo: niente doppioni
   assert.ok(!tutti.some((o) => /fumogena|elettroshock|frammentazione standard/i.test(o.nome)));
   const tab = dati.equipaggiamento.file.munizioni.munizioni_armi;
-  assert.equal(tab.length, 71 + 14); // 71 armi corporative del §7.20.9 e 14 commerciali (§7.20.1, collaudo)
+  assert.equal(tab.length, 72 + 14); // 72 armi corporative del §7.20.9 (con la Colt Hammershot, 0.54) e 14 commerciali (§7.20.1, collaudo)
   const fam = (rif) => tab.find((x) => x.rif === rif)?.famiglia;
   assert.equal(fam('armi_distanza_corporative:mg40'), 'fucile'); // «La loro funzione di mitragliatrice leggera non li sposta nei pesanti»
   assert.equal(fam('corredi_dispositivi:rainy-dayer'), 'pistola');

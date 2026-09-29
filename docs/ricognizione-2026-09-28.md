@@ -49,7 +49,7 @@ Rimandate alla prossima sessione, salvo dove indicato.
 | M6 | Prelievo dal Chroma Bianco: serve l'accesso alla magia | Magia sez. 6 | **Motore:** prelievo non ancora implementato; va fatto con la regola. | A.20 | media |
 | M7 | A.38.2–A.38.6 | Giocatore §5.8–5.11 | Già così nell'app; «Bersaglio impegnato»: verificare Ferite e Affaticamento nella seconda Prova. | A.38 | piccola |
 | M8 | Terrorizzato anche alle Salvezze durante lo Stato | Giocatore §5.18 | Già così. | A.17 | — |
-| M9 | KEP 808 (pistola al plasma, cella da 10) e Colt Hammershot (revolver pesante, Capitol) | Armamenti 0.54 §7.8, §7.9, §7.20.5, §7.22 | **Dati:** due armi, una cella, prezzi; Specializzazioni Armi al Plasma e Pistole. Colt Hammershot nell'elenco delle pistole Capitol (§7.22). | — | media |
+| M9 ✔ 29/09 | KEP 808 (pistola al plasma, cella da 10) e Colt Hammershot (revolver pesante, Capitol) | Armamenti 0.54 §7.8, §7.9, §7.20.5, §7.22 | **Dati:** due armi, una cella, prezzi; Specializzazioni Armi al Plasma e Pistole. Colt Hammershot nell'elenco delle pistole Capitol (§7.22). | — | media |
 
 ## Rimandate a lotti a parte
 

@@ -250,6 +250,53 @@
       ]
     },
     {
+      "id": "kep-808",
+      "nome": "KEP 808",
+      "tipo": "arma_distanza",
+      "catalogo": "Alleanza",
+      "famiglia": "Armi leggere",
+      "nomi_alternativi": [],
+      "note_manuale": "KEP 808. Pistola al plasma. Specializzazione: Armi al Plasma. Proprietà: Plasma. Il +1 VA è già incluso nella scheda. Include una cella specifica da 10 colpi (§7.20.5). Ogni colpo a segno tira AC 1d3 e risolve separatamente danno e Armatura per ciascuna applicazione; consuma una sola carica. L’effetto aggiuntivo Plasma segue il §5.24 del Manuale del Giocatore. Non possiede un raggio di esplosione.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.54",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-armi-al-plasma",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+1",
+        "due_mani": null
+      },
+      "ac": "1d3",
+      "modificatore_va": 1,
+      "portata_q": null,
+      "gittata_q": 20,
+      "munizioni": {
+        "capacita": 10,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 6,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 6,
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 12500,
+      "proprieta": [
+        {
+          "nome": "Plasma",
+          "testo": "La Contromisura è Dissipante X. Dopo almeno 1 danno oltre l’Armatura e il superamento dell’eventuale Dissipante, il bersaglio effettua una PS di Tempra con i modificatori della fonte. Con successo evita l’effetto aggiuntivo; con fallimento subisce −2 VA per 1+1d3 Round (Giocatore §5.24)."
+        }
+      ]
+    },
+    {
       "id": "carabina-punisher",
       "nome": "Carabina Punisher",
       "tipo": "arma_distanza",
@@ -1419,6 +1466,48 @@
       "ps_int": 10,
       "reperibilita": "CO",
       "costo": 1600,
+      "proprieta": []
+    },
+    {
+      "id": "colt-hammershot",
+      "nome": "Colt Hammershot",
+      "tipo": "arma_distanza",
+      "catalogo": "Capitol",
+      "famiglia": "Revolver",
+      "nomi_alternativi": [],
+      "note_manuale": "Colt Hammershot. Revolver pesante. Specializzazione: Pistole. Usa proiettili da pistola (§7.20.9) e un tamburo fisso da sei colpi. Ricaricare il tamburo con munizioni pronte richiede 1 AzP e la mano libera. Il prezzo comprende il tamburo, mentre le munizioni si acquistano separatamente. Non possiede proprietà aggiuntive.",
+      "paragrafo": "§7.8",
+      "versione_manuale": "Armamenti 0.54",
+      "abilita": "Armi leggere",
+      "specializzazione": "specializzazione-pistole",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d6+3",
+        "due_mani": null
+      },
+      "ac": 1,
+      "modificatore_va": -1,
+      "portata_q": null,
+      "gittata_q": 10,
+      "munizioni": {
+        "capacita": 6,
+        "unita": "colpi",
+        "ricarica": null,
+        "consumo": null,
+        "riferimento": null
+      },
+      "inc": 5,
+      "mov": 0,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "for_richiesta": 7,
+      "pi": 4,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "RA",
+      "costo": 3500,
       "proprieta": []
     },
     {

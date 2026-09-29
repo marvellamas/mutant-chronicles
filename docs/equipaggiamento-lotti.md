@@ -640,3 +640,13 @@ Fatto il 26 settembre 2026, commit «Lotto 12 del catalogo: artefatti e sintoniz
   `{ parata_va: 2 }`); il resto resta testo del manuale.
 - **Ambiguità:** non inventare, mettere `TODO(Davide)` e annotare la risposta in
   `docs/risposte-master.md`.
+
+- ✔ **Armamenti 0.54: KEP 808 e Colt Hammershot** — fatto il 29 settembre 2026 (voce M9 di
+  `docs/ricognizione-2026-09-28.md`). Generatore `tools/lotti/lotto_armamenti_054.mjs`
+  (idempotente, frasi controllate nel testo del Doc): due armi in `armi_distanza_corporative.json`
+  nell'ordine del §7.8 (dopo Hellblazer e Jemson 45), la cella KEP 808 in `munizioni.json`
+  (§7.20.5) e la Hammershot fra le armi a proiettili da pistola (§7.20.9).
+  - **Specializzazioni:** KEP 808 → Armi al Plasma (§7.7: «utilizzano soltanto la
+    Specializzazione Armi al Plasma»); Hammershot → Pistole.
+  - **Ricarica:** Hammershot a tamburo (famiglia Revolver, E&L 19: una operazione riempie il
+    tamburo); KEP 808 a cella.
