@@ -277,9 +277,13 @@ function pilloleAR(ctx) {
 }
 
 /**
- * Punti Integrità degli oggetti (Armamenti §7.2.1): «PI n/max» con − e +, la PS Integrità della
- * Qualità e «Rotto» a 0 PI. «Ripara» apre il pannello della riparazione strutturale (A.46): VA di
- * Tecnologia, strumenti improvvisati, esito scelto dopo il tiro al tavolo, materiali dai crediti.
+ * Punti Integrità degli oggetti (Armamenti §7.2.1), riquadro comprimibile della modalità tavolo:
+ * chiuso per impostazione predefinita, con «N oggetti · M danneggiati» nell'intestazione; lo stato
+ * aperto/chiuso si ricorda nel browser (impostazioni → integritaAperta). Una riga compatta per
+ * oggetto: nome, «PI n/max», − e + piccoli, «Ripara» (A.46), PS Integrità della Qualità. I danneggiati
+ * in cima; gli esemplari identici integri in una riga sola con la quantità e «Danneggia uno» (A.47),
+ * anche quando sono voci distinte dell'inventario (dotazione e acquisto). A 0 PI: «Rotto» e «Ripara»
+ * in evidenza. Solo presentazione: dati e calcoli restano quelli di src/protezione.js.
  */
 function sezioneIntegrita(ctx) {
   const lista = ctx.tab.scheda.equipaggiamento?.integrita ?? [];
@@ -287,37 +291,69 @@ function sezioneIntegrita(ctx) {
   const pi = ctx.sessione.integrita ?? {};
   const rip = regoleRiparazione(ctx.dati);
   const armi = ctx.tab.scheda.equipaggiamento?.armi ?? [];
-  return sezione('Integrità degli oggetti (§7.2.1)',
+  const attuali = (x) => pi[x.uid] ?? x.piMax;
+  // A.47: esemplari identici integri (stesso oggetto, stessi PI e PS) in una riga; i danneggiati a parte
+  const righe = [];
+  const gruppi = new Map();
+  for (const x of lista) {
+    const integro = x.gruppo || attuali(x) >= x.piMax;
+    if (!integro) { righe.push({ x, n: attuali(x) }); continue; }
+    const k = [x.nome, x.tipo, x.piMax, x.ps, x.qualita].join('|');
+    const g = gruppi.get(k);
+    if (g) { g.quantita += x.gruppo ?? 1; g.voci.push(x); } else {
+      const nuovo = { x, n: x.piMax, quantita: x.gruppo ?? 1, voci: [x] };
+      gruppi.set(k, nuovo);
+      righe.push(nuovo);
+    }
+  }
+  // danneggiati in cima (i Rotti per primi), poi gli integri nell'ordine dell'inventario
+  const danno = (r) => (r.n < r.x.piMax ? r.n / r.x.piMax : 2);
+  righe.sort((a, b) => danno(a) - danno(b));
+  const oggetti = righe.reduce((s, r) => s + (r.quantita ?? 1), 0);
+  const danneggiati = righe.filter((r) => r.n < r.x.piMax).length;
+  const aperta = leggiImpostazioni().integritaAperta === true;
+  const ps = (x) => (x.ps ? `${x.ps}${x.qualita ? ` (${x.qualita})` : ''}` : '—');
+  const riga = ({ x, n, quantita = 1, voci = [x] }) => {
+    if (quantita > 1) {
+      // «Danneggia uno»: una voce con quantità > 1 si separa (A.47); fra voci distinte si toglie 1 PI all'ultima
+      const conQuantita = voci.find((v) => v.gruppo);
+      const danneggia = conQuantita ? () => ctx.azioni.danneggiaEsemplare(conQuantita.uid) : () => ctx.azioni.integrita(voci.at(-1).uid, -1);
+      return h('tr', { class: 'gruppo-esemplari' },
+        h('th', { scope: 'row' }, `${x.nome} ×${quantita}`, h('span', { class: 'sigla' }, ' · integri')),
+        h('td', { class: 'forte pi-valore' }, `PI ${x.piMax}/${x.piMax}`),
+        h('td', { class: 'pi-comandi' }, h('button', { type: 'button', class: 'btn btn-piccolo btn-danneggia', title: 'Separa un esemplare in una riga propria, con 1 PI in meno (A.47).', onclick: danneggia }, 'Danneggia uno')),
+        h('td', { class: 'pi-ps' }, ps(x)));
+    }
+    const soglia = statoIntegrita(n, x.piMax, ctx.dati);
+    const rotto = soglia?.effetto === 'inutilizzabile';
+    const b = (delta) => h('button', {
+      type: 'button', class: 'btn-tavolo btn-mini', onclick: () => ctx.azioni.integrita(x.uid, delta),
+      disabled: delta < 0 ? n <= 0 : n >= x.piMax, 'aria-label': `${delta < 0 ? 'Togli' : 'Aggiungi'} 1 PI a ${x.nome}`,
+    }, delta < 0 ? '−' : '+');
+    const ripara = rip ? (() => {
+      const cond = armi.find((w) => String(w.uid).split(':')[0] === x.uid)?.condizioneArma?.id ?? null;
+      const ok = riparabile(x, cond, rip);
+      return h('button', { type: 'button', class: `btn btn-piccolo btn-ripara${rotto && ok.si ? ' primario' : ''}`, disabled: !ok.si || n >= x.piMax,
+        title: !ok.si ? ok.motivo : n >= x.piMax ? 'PI già al massimo.' : `Riparazione strutturale: ${rip.ore} ora, Prova di ${rip.abilita} (A.46).`,
+        onclick: () => { ctx.ui.riparazione = { uid: x.uid, improvvisati: false, esito: null }; ctx.azioni.ridisegna(); } }, 'Ripara');
+    })() : null;
+    return h('tr', { class: `${rotto ? 'rotto' : ''}${n < x.piMax ? ' danneggiato' : ''}`.trim() || null },
+      h('th', { scope: 'row' }, x.nome, soglia ? h('span', { class: 'etichetta etichetta-rotto', title: 'A 0 PI l’oggetto è Rotto e non può essere utilizzato finché non viene riparato (§7.2.1). La rottura vale dal colpo successivo: non annulla la protezione già data contro il colpo che l’ha causata (A.44).' }, soglia.etichetta) : null),
+      h('td', { class: 'forte pi-valore' }, `PI ${n}/${x.piMax}`),
+      h('td', { class: 'pi-comandi' }, b(-1), b(1), ripara),
+      h('td', { class: 'pi-ps' }, ps(x)));
+  };
+  return h('details', {
+    class: 'sezione-tab sezione-integrita', open: aperta || !!ctx.ui.riparazione || null,
+    ontoggle: (e) => { if (e.target.open !== aperta) salvaImpostazioni({ ...leggiImpostazioni(), integritaAperta: e.target.open }); },
+  },
+    h('summary', {},
+      h('h2', {}, 'Integrità degli oggetti (§7.2.1)'),
+      h('span', { class: `riassunto-integrita${danneggiati ? ' con-danni' : ''}` },
+        `${oggetti} ${oggetti === 1 ? 'oggetto' : 'oggetti'} · ${danneggiati} ${danneggiati === 1 ? 'danneggiato' : 'danneggiati'}`)),
     h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta integrita-tab' },
-      h('thead', {}, h('tr', {}, ['Oggetto', 'PI', '', 'PS Integrità'].map((c) => h('th', {}, c)))),
-      h('tbody', {}, lista.map((x) => {
-        // A.47: esemplari identici integri, raggruppati; «Danneggia uno» ne separa uno con 1 PI in meno
-        if (x.gruppo) {
-          return h('tr', { class: 'gruppo-esemplari' },
-            h('th', { scope: 'row' }, `${x.nome} ×${x.gruppo}`, h('span', { class: 'sigla' }, ' · integri')),
-            h('td', { class: 'forte' }, `PI ${x.piMax}/${x.piMax} ciascuno`),
-            h('td', {}, h('button', { type: 'button', class: 'btn btn-danneggia', title: 'Separa un esemplare in una riga propria, con 1 PI in meno (A.47).', onclick: () => ctx.azioni.danneggiaEsemplare(x.uid) }, 'Danneggia uno')),
-            h('td', {}, x.ps ? `${x.ps}${x.qualita ? ` (${x.qualita})` : ''}` : '—'));
-        }
-        const n = pi[x.uid] ?? x.piMax;
-        const soglia = statoIntegrita(n, x.piMax, ctx.dati);
-        const b = (delta) => h('button', {
-          type: 'button', class: 'btn-tavolo', onclick: () => ctx.azioni.integrita(x.uid, delta),
-          disabled: delta < 0 ? n <= 0 : n >= x.piMax, 'aria-label': `${delta < 0 ? 'Togli' : 'Aggiungi'} 1 PI a ${x.nome}`,
-        }, delta < 0 ? '−' : '+');
-        return h('tr', { class: soglia ? 'rotto' : null },
-          h('th', { scope: 'row' }, x.nome, soglia ? h('span', { class: 'etichetta etichetta-rotto', title: 'A 0 PI l’oggetto è Rotto e non può essere utilizzato finché non viene riparato (§7.2.1). La rottura vale dal colpo successivo: non annulla la protezione già data contro il colpo che l’ha causata (A.44).' }, soglia.etichetta) : null),
-          h('td', { class: 'forte' }, `PI ${n}/${x.piMax}`),
-          h('td', {}, h('span', { class: 'pulsanti-tavolo' }, b(-1), b(1)),
-            rip ? (() => {
-              const cond = armi.find((w) => String(w.uid).split(':')[0] === x.uid)?.condizioneArma?.id ?? null;
-              const ok = riparabile(x, cond, rip);
-              return h('button', { type: 'button', class: 'btn btn-ripara', disabled: !ok.si || n >= x.piMax,
-                title: !ok.si ? ok.motivo : n >= x.piMax ? 'PI già al massimo.' : `Riparazione strutturale: ${rip.ore} ora, Prova di ${rip.abilita} (A.46).`,
-                onclick: () => { ctx.ui.riparazione = { uid: x.uid, improvvisati: false, esito: null }; ctx.azioni.ridisegna(); } }, 'Ripara');
-            })() : null),
-          h('td', {}, x.ps ? `${x.ps}${x.qualita ? ` (${x.qualita})` : ''}` : '—'));
-      })))),
+      h('thead', {}, h('tr', {}, h('th', {}, 'Oggetto'), h('th', {}, 'PI'), h('th', {}, h('span', { class: 'sr' }, 'Comandi')), h('th', { class: 'pi-ps' }, 'PS Integrità'))),
+      h('tbody', {}, righe.map(riga)))),
     pannelloRiparazione(ctx, lista, pi, rip),
     campiPiDirettore(ctx),
     h('p', { class: 'nota' }, 'Un colpo o una Parata ordinari non tolgono PI: si perdono con un attacco per rompere l’oggetto, un Magistrale che lo coinvolge, Corrosivo o Demolitrice e il danno Etereo, se la PS Integrità (1d20 ≤ PS) fallisce. A 0 PI l’oggetto è Rotto: non dà AR né i suoi effetti. La riparazione la decide il master: si rimettono i PI con +.'));

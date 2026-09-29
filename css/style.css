@@ -778,6 +778,22 @@ details.sezione-tab > summary { font-weight: 700; cursor: pointer; min-height: 4
 /* Integrità degli oggetti: «Rotto» a 0 PI */
 .integrita-tab tr.rotto th, .integrita-tab tr.rotto td { color: var(--errore); }
 .etichetta-rotto { margin-left: 0.4rem; background: var(--errore); color: #fff; }
+/* riquadro comprimibile: intestazione con freccia e riassunto, chiuso per impostazione predefinita */
+.sezione-integrita > summary { list-style: none; gap: 0.5rem; flex-wrap: wrap; border-bottom: 1px solid var(--bordo); padding-bottom: 0.25rem; margin-bottom: 0.5rem; }
+.sezione-integrita > summary::-webkit-details-marker { display: none; }
+.sezione-integrita > summary::before { content: '▸'; display: inline-block; transition: transform 0.15s; color: var(--tenue); }
+.sezione-integrita[open] > summary::before { transform: rotate(90deg); }
+.sezione-integrita > summary h2 { font-size: 1.1rem; margin: 0; }
+.riassunto-integrita { font-weight: 400; font-size: 0.9rem; color: var(--tenue); }
+.riassunto-integrita.con-danni { color: var(--errore); font-weight: 600; }
+/* una riga compatta per oggetto: la tabella prende la larghezza che serve */
+.integrita-tab { width: auto; }
+.integrita-tab th, .integrita-tab td { vertical-align: middle; white-space: nowrap; }
+.integrita-tab tbody th { white-space: normal; }
+.integrita-tab .pi-comandi { display: flex; align-items: center; gap: 0.3rem; }
+.integrita-tab .pi-ps { text-align: right; }
+.btn-tavolo.btn-mini { min-width: 32px; min-height: 32px; font-size: 1rem; padding: 0; }
+.btn.btn-piccolo { min-height: 32px; padding: 0.1rem 0.6rem; font-size: 0.85rem; }
 .promemoria-ar { margin-top: 0.4rem; }
 .riquadro-pm > h3 { color: var(--pm); }
 .riquadro-pe > h3 { color: var(--pe); }
