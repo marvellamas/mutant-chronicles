@@ -417,7 +417,7 @@ function foglioCombattimento(d) {
         box({ titolo: 'Equipaggiamento', riempitivo: true },
           h('p', { class: 'crediti-stampa' }, h('strong', {}, 'Crediti '), h('span', { class: 'casella-lunga' }),
             d.creditiIniziali !== null ? h('span', { class: 'sigla' }, ` saldo iniziale ${crediti(d.creditiIniziali)}`) : null,
-            eq.carico ? h('span', { class: 'sigla' }, ` · carico ${eq.carico.peso} kg (≤ ${eq.carico.ordinario} / ${eq.carico.massimo})${eq.carico.senzaPeso ? ` · ${eq.carico.senzaPeso} senza peso` : ''}`) : null),
+            eq.carico ? h('span', { class: 'sigla' }, ` · carico ${eq.carico.peso} kg (≤ ${eq.carico.ordinario} / ${eq.carico.massimo})${eq.carico.senzaPeso ? ` · ${eq.carico.senzaPeso} da definire, totale parziale` : ''}`) : null),
           h('div', { class: 'riempi-righe' },
             h('table', { class: 'tabella-stampa equip-stampa' },
               h('thead', {}, h('tr', {}, h('th', {}, 'Oggetto'), h('th', {}, 'Peso'), h('th', { class: 'dove' }, 'ind'), h('th', { class: 'dove' }, 'zai'), h('th', { class: 'dove' }, 'Altro'))),

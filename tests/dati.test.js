@@ -41,7 +41,7 @@ test('i TODO(Davide) sono elencabili', () => {
   // senza Addestramento (A.39), sul corpo a corpo (A.22–A.29), su AR e PI (A.43–A.48) e sulle
   // categorie di Prove degli Stati (A.16, A.51)
   assert.deepEqual([...new Set(todo.filter((t) => t.percorso.startsWith('regole.json')).map((t) => t.percorso.split('.TODO')[0]))].sort(), [
-    'regole.json.carico', 'regole.json.categorie_prove', 'regole.json.chroma',
+    'regole.json.chroma',
     'regole.json.lancio.anticipazione',
   ]);
   // durate delle Tecniche Interiori: decise dal master il 26/09/2026 (A.4 del Doc E&L)

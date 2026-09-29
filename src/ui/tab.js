@@ -846,19 +846,22 @@ function tabCombattimento(ctx, d) {
       const penalita = !!c.livello.effetto;
       const forza = ctx.tab.scheda.caratteristiche.FOR.valore;
       return [sezione('Carico (§5.2.6)',
-        // con oggetti senza peso il totale è parziale: «N kg noti · M oggetti senza peso» (per-davide A.30);
-        // soglie e penalità restano sul peso noto più il peso aggiuntivo
+        // E&L 4 (A.30): un peso mancante è «da definire», non 0 kg; il totale noto è parziale e il livello
+        // vale «almeno»: non si attesta l'assenza di penalità
         h('p', { class: `valore-tavolo${penalita ? ' oltre' : ''}` }, h('span', {}, 'Peso trasportato '),
-          c.senzaPeso.length
-            ? [h('strong', {}, `${kg(c.peso)} kg noti`), ' · ', infoValore(`${c.senzaPeso.length} ${c.senzaPeso.length === 1 ? 'oggetto' : 'oggetti'} senza peso`, {
-              titolo: `Oggetti senza peso (${c.senzaPeso.length})`,
-              sottotitolo: 'I pesi non sono ancora nei manuali (per-davide A.30): non si contano nel carico.',
+          c.parziale
+            ? [h('strong', {}, `${kg(c.peso)} kg noti`), ' · ', infoValore(`${c.senzaPeso.length} ${c.senzaPeso.length === 1 ? 'oggetto' : 'oggetti'} con peso da definire`, {
+              titolo: `Peso da definire (${c.senzaPeso.length})`,
+              sottotitolo: 'Un peso mancante non vale 0 kg: il totale è parziale (E&L 4, A.30).',
               sezioni: [{ testo: c.senzaPeso.join(', ') }, { testo: 'Per un oggetto personalizzato il peso si indica nel campo «Peso».' }],
-            }, { classe: 'senza-peso' }), h('small', { class: 'nota' }, ' (i pesi non sono ancora nei manuali, A.30)')]
+            }, { classe: 'senza-peso' }), h('small', { class: 'nota' }, ' · totale parziale')]
             : h('strong', {}, `${kg(c.peso)} kg`),
-          h('span', {}, ` · ${c.livello.nome}`)),
+          h('span', {}, c.parziale ? ` · almeno ${c.livello.nome}` : ` · ${c.livello.nome}`)),
         h('p', { class: 'nota' }, `Ordinario fino a ${kg(c.soglie.ordinario)} kg, Sovraccarico fino a ${kg(c.soglie.massimo)} kg; spingere o trascinare su terreno piano fino a ${kg(c.soglie.spinta)} kg (FOR ${forza}${c.soglie.talento ? `, soglie raddoppiate da ${c.soglie.talento}` : ''}).`),
-        h('p', { class: penalita ? 'avviso-carico' : 'nota' }, c.livello.promemoria, c.livello.movimento_q && c.passo !== null ? ` Passo ${c.passo} Q, prima delle altre penalità.` : ''),
+        h('p', { class: penalita ? 'avviso-carico' : 'nota' },
+          // con il totale parziale l'Ordinario non attesta «nessuna penalità» (E&L 4)
+          c.parziale && !penalita ? 'Sul peso noto nessuna penalità; con i pesi da definire il carico reale può essere maggiore: decide il Direttore.' : c.livello.promemoria,
+          c.livello.movimento_q && c.passo !== null ? ` Passo ${c.passo} Q, prima delle altre penalità.` : ''),
         h('label', { class: 'campo-inline' }, 'Peso aggiuntivo (kg) ',
           h('input', { type: 'number', min: 0, step: 0.5, value: c.pesoExtra, 'aria-label': 'Peso aggiuntivo in kg', onchange: (e) => ctx.azioni.imposta('caricoExtra', Number(e.target.value) || 0) }),
           h('small', { class: 'nota' }, 'bottino, una creatura trasportata con il suo equipaggiamento…')),

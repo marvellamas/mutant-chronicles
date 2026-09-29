@@ -47,8 +47,10 @@ export function livelloCarico(peso, soglie, dati) {
 }
 
 /**
- * Carico del personaggio: { peso, pesoOggetti, pesoExtra, senzaPeso: [nomi], soglie, livello, passo }.
- * `passo` è il Passo con il −2 Q del Sovraccarico, prima delle altre penalità (esempio del §5.2.6).
+ * Carico del personaggio: { peso, pesoOggetti, pesoExtra, senzaPeso: [nomi], parziale, soglie, livello, passo }.
+ * `passo` è il Passo con il −2 Q del Sovraccarico, prima delle altre penalità (esempio del §5.2.6); oltre il
+ * massimo è 0 (E&L 5, A.31). `parziale`: qualche peso è «da definire» (E&L 4, A.30): il livello vale per il
+ * peso noto e non esclude una penalità.
  */
 export function calcolaCarico(scheda, sessione, dati) {
   const oggetti = scheda.equipaggiamento?.oggetti ?? [];
@@ -65,6 +67,6 @@ export function calcolaCarico(scheda, sessione, dati) {
   const soglie = soglieCarico(scheda, dati);
   const livello = livelloCarico(peso, soglie, dati);
   const passoBase = scheda.movimento?.passo ?? null;
-  const passo = passoBase === null ? null : Math.max(0, passoBase + (livello.movimento_q ?? 0));
-  return { peso, pesoOggetti: arrotonda(pesoOggetti), pesoExtra, senzaPeso, soglie, livello, passo };
+  const passo = passoBase === null ? null : livello.movimento_zero ? 0 : Math.max(0, passoBase + (livello.movimento_q ?? 0));
+  return { peso, pesoOggetti: arrotonda(pesoOggetti), pesoExtra, senzaPeso, parziale: senzaPeso.length > 0, soglie, livello, passo };
 }

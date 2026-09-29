@@ -4,6 +4,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda, bonusDannoCaratteristica, caratteristicaDanno } from '../src/calc.js';
 import { profiloSenzArmi, calcolaAttaccoRavvicinato, vincoliRavvicinato, moltiplicatoreMagistrale } from '../src/attacco.js';
+import { inizializzaSessione } from '../src/sessione.js';
+import { soglieCarico } from '../src/carico.js';
 import { datiReali } from './helpers.js';
 import { MISHIMA_AGENTE } from './personaggi.js';
 
@@ -124,4 +126,40 @@ test('E&L 14: Superiorità numerica: 1–2 → 0, 3–5 → +1, 6–7 → +2, 8+
   const spada = s.equipaggiamento.armi[0];
   const base = attacca(s, spada).va_finale;
   assert.deepEqual([2, 3, 5, 6, 7, 8, 12].map((n) => attacca(s, spada, { attaccanti: n }).va_finale - base), [0, 1, 1, 2, 2, 3, 3]);
+});
+
+// --- 3–5. Prove fisiche e carico ----------------------------------------------------------------
+
+const sessione = (modifica = {}) => ({ ...inizializzaSessione({ pv: 16, pm: 9, puntiEroe: 10, ferite: 6, caricatori: {} }), ...modifica });
+const pers = (nome, peso, quantita = 1) => ({ uid: nome, rif: null, personalizzato: { nome, tipo: 'altro', peso }, stato: null, quantita, note: '' });
+const alTavolo = (equip, s) => calcolaScheda({ creazione: { ...MISHIMA_AGENTE, equipaggiamento: equip }, livelli: [], sessione: s }, dati);
+
+test('E&L 3: le penalità alle azioni fisiche (Immobilizzato) non toccano Potere né le Prove Salvezza (A.16)', () => {
+  assert.equal(dati.regole.categorie_prove['TODO(Davide)'], undefined);
+  const riposo = alTavolo([], sessione());
+  const imm = alTavolo([], sessione({ statiAttivi: ['immobilizzato'] }));
+  const fisiche = dati.regole.categorie_prove.fisiche;
+  assert.ok(!fisiche.includes('Potere'));
+  for (const nome of ['Atletica', 'Difese', 'Corpo a corpo']) assert.equal(vaDi(imm, nome).effettivo, vaDi(riposo, nome).effettivo - 4, nome);
+  assert.equal(vaDi(imm, 'Potere').effettivo, vaDi(riposo, 'Potere').effettivo);
+  for (const [k, v] of Object.entries(imm.salvezze)) assert.equal(v.effettivo, riposo.salvezze[k].effettivo, k);
+});
+
+test('E&L 4: un peso mancante è «da definire»: totale parziale, livello «almeno» (A.30)', () => {
+  const s = alTavolo([pers('Tenda', 12.5), voce('k', 'armi:coltello', 'pronta')], sessione());
+  assert.deepEqual([s.carico.parziale, s.carico.senzaPeso, s.carico.peso], [true, ['Coltello'], 12.5]);
+  assert.equal(alTavolo([pers('Tenda', 12.5)], sessione()).carico.parziale, false);
+});
+
+test('E&L 5: oltre FOR × 20 kg Movimento 0 Q e −2 alle Prove fisiche, niente alle Salvezze; Forza da Lavoro ×40 e ×80 (A.31)', () => {
+  const riposo = alTavolo([], sessione());
+  const oltre = alTavolo([pers('Casse', 125)], sessione()); // FOR 6: massimo 120 kg
+  assert.equal(oltre.carico.livello.id, 'oltre_il_massimo');
+  assert.equal(oltre.carico.passo, 0);
+  assert.deepEqual([oltre.tavolo.movimento.passo.effettivo, oltre.tavolo.movimento.corsa.effettivo, oltre.tavolo.movimento.scatto.effettivo], [0, null, null]);
+  assert.equal(vaDi(oltre, 'Atletica').effettivo, vaDi(riposo, 'Atletica').effettivo - 2);
+  for (const [k, v] of Object.entries(oltre.salvezze)) assert.equal(v.effettivo, riposo.salvezze[k].effettivo, k);
+  const f = soglieCarico({ caratteristiche: { FOR: { valore: 5 } }, classi: [{ talenti: [{ nome: 'Forza da Lavoro' }] }] }, dati);
+  assert.deepEqual([f.massimo, f.spinta], [200, 400]); // FOR × 40, FOR × 80
+  assert.equal(dati.regole.carico['TODO(Davide)'], undefined);
 });

@@ -433,3 +433,21 @@ Ricognizione e stime: `docs/ricognizione-2026-09-28.md`.
     il Direttore.
     → `attacco_ravvicinato.superiorita_numerica`; campo «attaccanti in ravvicinato contro il bersaglio»
     nel pannello.
+
+52. **Prove fisiche** (E&L 3, A.16; Giocatore §5.18). Lista di riferimento confermata (Armi da lancio,
+    leggere, medie, pesanti, da guerra, da mischia, Corpo a corpo, Difese, Atletica, Furtività); conta
+    l'azione, non la Caratteristica; il Direttore può aggiungerne; le penalità fisiche non si estendono a
+    Potere né alle Salvezze (verificato con un test); prevalgono le indicazioni dello Stato.
+    → `regole.json` → `categorie_prove` (`_nota_fisiche`, TODO tolto).
+
+53. **Pesi mancanti** (E&L 4, A.30; Giocatore §5.2.6, Equipaggiamento §1.6). Si conta tutto ciò che si
+    trasporta, senza doppioni; un peso mancante è «da definire», non 0 kg; il totale noto è parziale e
+    non attesta l'assenza di penalità.
+    → `src/carico.js` (`parziale`); SD: «N kg noti · M oggetti con peso da definire · totale parziale»,
+    «almeno <livello>», niente «nessuna penalità»; SS: «da definire, totale parziale».
+
+54. **Oltre il carico massimo** (E&L 5, A.31; §5.2.6). Oltre FOR × 20 kg Movimento 0 Q finché non si
+    riduce il carico o non arriva un aiuto; −2 alle Prove fisiche; nessuna penalità alle Salvezze; le
+    soglie modificate si applicano prima (Forza da Lavoro: massimo FOR × 40, trascinamento FOR × 80).
+    → `carico.livelli.oltre_il_massimo` (`movimento_zero`); `src/carico.js`, `src/condizioni.js` (Passo 0,
+    Corsa e Scatto non disponibili).

@@ -307,6 +307,8 @@ export function valoriTavolo(scheda, sessione, dati) {
     if (mov) voci.push(voce('Armatura (MOV)', mov, 'equipaggiamento'));
     let disponibile = true;
     if (liv?.movimento_q && modo === 'passo') voci.push(voce(liv.nome, liv.movimento_q, 'carico'));
+    // E&L 5 (A.31): oltre il carico massimo Movimento 0 Q
+    if (liv?.movimento_zero) { disponibile = modo === 'passo'; if (modo === 'passo') voci.push(voce(liv.nome, -Math.max(0, somma(voci)), 'carico')); else note.push(`${liv.nome}: Movimento 0 Q (§5.2.6)`); }
     if (liv?.solo_passo && modo !== 'passo') { disponibile = false; note.push(`${liv.nome}: soltanto Passo (§5.2.6)`); }
     for (const s of stati) {
       const m = s.movimento;
