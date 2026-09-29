@@ -86,6 +86,27 @@ export function iniziativa(...modificatori) {
   return modificatori.reduce((s, m) => s + m, 0);
 }
 
+/**
+ * §5.13: bonus di Caratteristica al danno. Fascia del valore (1–5 → 0, 6–7 → +1, 8–9 → +2, 10 → +3),
+ * limitata dal tetto del livello (1–7 → +1, 8–14 → +2, 15+ → +3); mai sotto 0.
+ * Tabelle in regole.json → danno_caratteristica.
+ */
+export function bonusDannoCaratteristica(valore, livello, regole) {
+  const R = regole.danno_caratteristica;
+  if (!R || !Number.isFinite(valore)) return 0;
+  const dentro = (x, v) => v >= x.da && (x.a === null || v <= x.a);
+  const bonus = R.fasce.find((x) => dentro(x, valore))?.bonus ?? 0;
+  const tetto = R.tetto_per_livello.find((x) => dentro(x, livello ?? 1))?.massimo ?? bonus;
+  return Math.max(0, Math.min(bonus, tetto));
+}
+
+/** §5.13: Caratteristica del bonus al danno per un'Abilità d'attacco (quella dell'Abilità, salvo le eccezioni: Armi pesanti → INT). */
+export function caratteristicaDanno(nomeAbilita, dati) {
+  const R = dati.regole.danno_caratteristica;
+  if (!R || !nomeAbilita) return null;
+  return R.caratteristica_per_abilita?.[nomeAbilita] ?? dati.abilita.abilita.find((a) => a.nome === nomeAbilita)?.caratteristica ?? null;
+}
+
 /** §1.2.3: bonus di Avanzamento alle Salvezze per livello del personaggio. */
 export function bonusAvanzamentoSalvezze(livello, regole) {
   const riga = regole.salvezze.avanzamento_per_livello.find((r) => livello >= r.da && livello <= r.a);

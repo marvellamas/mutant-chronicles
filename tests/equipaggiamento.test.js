@@ -65,7 +65,7 @@ test('VA per colpire = VA dell’Abilità dell’arma; FOR insufficiente toglie 
   const guerra = s.abilita.find((a) => a.nome === 'Armi da guerra').totale;
   const [arma] = s.equipaggiamento.armi;
   assert.equal(arma.va, guerra);
-  assert.deepEqual(arma.danno, { una_mano: '1d8+1', due_mani: null });
+  assert.deepEqual(arma.danno, { una_mano: '1d8+2', due_mani: null }); // +1 di FOR 6 (§5.13)
   assert.equal(arma.portataQ, 1);
   // Arcanista: FOR 5; Spadone FOR 6 → −1; Ascia bipenne FOR 7 → −2
   const a = scheda(ARCANISTA, [voce('a', 'armi:spadone', 'impugnata'), voce('b', 'armi:ascia-bipenne', 'impugnata')]);
@@ -90,8 +90,9 @@ test('Specializzazione nella famiglia dell’arma (§8.8.1): +1 VA e +1 al danno
   const con = scheda(MISHIMA_AGENTE, [voce('a', 'armi:spada-bastarda', 'impugnata')], livelli);
   const senza = scheda(MISHIMA_AGENTE, [voce('a', 'armi:spada-bastarda', 'impugnata')], livelli.slice(0, 1));
   assert.equal(con.equipaggiamento.armi[0].va, senza.equipaggiamento.armi[0].va + 1);
-  assert.deepEqual(con.equipaggiamento.armi[0].danno, { una_mano: '1d8+2', due_mani: '2d6+1' });
-  assert.deepEqual(senza.equipaggiamento.armi[0].danno, { una_mano: '1d8+1', due_mani: '2d6' });
+  // più il +1 di Caratteristica al danno (§5.13, tetto +1 al 2° livello)
+  assert.deepEqual(con.equipaggiamento.armi[0].danno, { una_mano: '1d8+3', due_mani: '2d6+2' });
+  assert.deepEqual(senza.equipaggiamento.armi[0].danno, { una_mano: '1d8+2', due_mani: '2d6+1' });
   // la Specializzazione in Spade non vale per un Martello
   const martello = scheda(MISHIMA_AGENTE, [voce('m', 'armi:martello', 'impugnata')], livelli);
   assert.equal(martello.equipaggiamento.armi[0].bonusDanno, 0);
@@ -264,7 +265,7 @@ test('arma a distanza impugnata: VA per colpire, gittata (anche FOR × 3), MOV, 
   // stampa: gittata e capacità nella riga dell'arma
   const f3 = preparaStampa({ ...MISHIMA_AGENTE, equipaggiamento: [voce('p', 'armi_distanza:pistola-semiautomatica', 'impugnata')] }, dati)
     .fogli.find((f) => f.id === 'combattimento').dati;
-  assert.deepEqual(f3.armi.righe[0].slice(0, 6), ['Pistola semiautomatica', 'Armi leggere', String(pistola.va), '1d6', '30 Q', 'CC 15']);
+  assert.deepEqual(f3.armi.righe[0].slice(0, 6), ['Pistola semiautomatica', 'Armi leggere', String(pistola.va), '1d6+1', '30 Q', 'CC 15']); // +1 di DES 7 (§5.13)
   assert.match(f3.armi.righe[0][6], /INC 6; S TR/);
 });
 
@@ -273,7 +274,8 @@ test('Specializzazione Pistole sulla pistola; il danno «dalla munizione» resta
   const s = scheda(MISHIMA_AGENTE, [voce('p', 'armi_distanza:revolver', 'impugnata'), voce('l', 'armi_distanza:lanciagranate', 'impugnata')], livelli);
   const base = s.abilita.find((a) => a.nome === 'Armi leggere').totale;
   assert.equal(s.equipaggiamento.armi[0].va, base + 1);
-  assert.deepEqual(s.equipaggiamento.armi[0].danno, { una_mano: '1d6+2', due_mani: null });
+  // revolver 1d6+1, +1 della Specializzazione, +1 di DES 9 (tetto +1 al 3° livello, §5.13)
+  assert.deepEqual(s.equipaggiamento.armi[0].danno, { una_mano: '1d6+3', due_mani: null });
   assert.equal(s.equipaggiamento.armi[1].dannoDaMunizione, true);
   assert.equal(s.equipaggiamento.armi[1].danno, null);
 });
@@ -352,7 +354,7 @@ test('scudo imbracciato: AR, Parata già calcolata con Difese e modificatori, at
   // l'attacco con lo Scudo Punisher (§7.4.1) compare fra le armi
   const att = s.equipaggiamento.armi.find((a) => a.nome.startsWith('Scudo Punisher (attacco'));
   assert.equal(att.va, s.abilita.find((a) => a.nome === 'Armi da guerra').totale);
-  assert.deepEqual(att.danno, { una_mano: '1d6+1', due_mani: null });
+  assert.deepEqual(att.danno, { una_mano: '1d6+2', due_mani: null }); // +1 di Caratteristica (§5.13)
   assert.equal(att.portataQ, 1);
   assert.deepEqual(s.equipaggiamento.avvisi, []);
   // Scudo enorme con FOR insufficiente: penalità solo a Parate e attacchi con lo Scudo (§7.1.6), MOV −1 Q

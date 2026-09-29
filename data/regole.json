@@ -1447,6 +1447,26 @@
     "parata_distanza_arma": -8,
     "_nota": "Giocatore §5.9, Parata a distanza: «Penalità −8 VA con un’arma e −4 VA con uno scudo». Gli scudi hanno i propri modificatori nel catalogo (Armamenti §7.4.11)."
   },
+  "danno_caratteristica": {
+    "paragrafo": "Giocatore §5.13, «Danno base e bonus di Caratteristica»",
+    "fasce": [
+      { "da": 1, "a": 5, "bonus": 0 },
+      { "da": 6, "a": 7, "bonus": 1 },
+      { "da": 8, "a": 9, "bonus": 2 },
+      { "da": 10, "a": null, "bonus": 3 }
+    ],
+    "tetto_per_livello": [
+      { "da": 1, "a": 7, "massimo": 1 },
+      { "da": 8, "a": 14, "massimo": 2 },
+      { "da": 15, "a": null, "massimo": 3 }
+    ],
+    "caratteristica_per_abilita": { "Armi pesanti": "INT" },
+    "senz_armi": "FOR",
+    "magia": "SAG",
+    "proprieta_escluse": ["Danno calibrato"],
+    "fonte": "Giocatore §5.13 (28/09); Magia sez. 7 (SAG per il danno degli Incantesimi, stessi tetti); E&L del 29/09, risposta 12 (A.22)",
+    "_nota": "Bonus = minore fra la fascia del valore della Caratteristica e il tetto del livello del personaggio; mai sotto 0. Si applica a ogni colpo o applicazione di danno, prima del moltiplicatore, delle Difese e dell’Armatura. Caratteristica: quella dell’Abilità dell’arma (§4.3; FOR per Armi da guerra e Corpo a corpo, DES per Armi da mischia, da lancio e leggere, INT per Armi medie), salvo «caratteristica_per_abilita» (Armi pesanti: INT, mentre la Prova per colpire conserva FOR); FOR senz’armi; SAG per la magia e le Risorse Interiori. Il §5.13 dice «FOR o DES secondo l’arma ravvicinata; DES o INT secondo l’arma a distanza» senza tabella: la Caratteristica dell’Abilità ne dà esattamente le coppie. «proprieta_escluse»: le esclusioni espresse delle schede (Danno calibrato, SA30 e SA50F)."
+  },
   "attacco_ravvicinato": {
     "_nota": "Utility «Attacca!» per le armi ravvicinate e «Senz’armi» (src/attacco.js → calcolaAttaccoRavvicinato). Giocatore §1.4, §1.6, §5.3–5.7, §5.12, §5.13. Manovre ammesse per arma: campo «manovre» del catalogo (Armamenti §7.1.7) per le Manovre con compatibilita «arma»; le «generale» valgono con qualsiasi arma ravvicinata e senz’armi, nei loro requisiti. Le versioni Migliorate e gli altri Talenti con un numero stanno negli effetti.attacco_ravvicinato dei Talenti (talenti_liberi.json, classi.json). Le «frasi» sono controllate da tools/verifica_frasi.mjs.",
     "paragrafo": "Giocatore §5.12",
@@ -1787,11 +1807,11 @@
       ]
     },
     "senz_armi": {
-      "paragrafo": "Giocatore §8.6.1 (Arti Marziali), §3.5.5 (Lottatore)",
+      "paragrafo": "Giocatore §5.13, §4.4 (Corpo a corpo), §8.6.1 (Arti Marziali), §3.5.5 (Lottatore)",
       "abilita": "Corpo a corpo",
       "portata_q": 1,
-      "danno": null,
-      "TODO(Davide)": "A.22: nessun manuale dà il danno base senz’armi per chi non ha Arti Marziali né la Disciplina del Lottatore. L’app chiede il danno nel personaggio (campo «danno senz’armi»), vuoto finché non lo si scrive."
+      "danno": "1d4",
+      "_nota": "E&L del 29/09, risposta 12 (A.22): danno base 1d4, più il bonus di FOR al danno (danno_caratteristica) e gli altri bonus pertinenti. Arti Marziali porta il dado a 1d6; la Disciplina del Lottatore usa il proprio dado se maggiore («si usa il dado più alto applicabile»)."
     },
     "copertura": {
       "paragrafo": "Giocatore §5.8",

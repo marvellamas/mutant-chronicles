@@ -16,6 +16,7 @@
 // hanno effetti ricevono «In uso» / «Nello zaino».
 // peso: kg per unità (Equipaggiamento §1.6, §1.10), per il carico (src/carico.js).
 
+import { bonusDannoCaratteristica, caratteristicaDanno } from './calc.js';
 import { calcolaAR, oggettiConPi, oggettiSenzaPi } from './protezione.js';
 
 export const TIPI = ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'elmetto', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'altro'];
@@ -400,11 +401,11 @@ export function risolvi(voce, cat) {
 // ---------------------------------------------------------------------------
 // Calcolo
 
-/** Aggiunge un bonus fisso a una formula di danno: "1d6+1" + 1 → "1d6+2"; "2" + 1 → "3". */
+/** Aggiunge un bonus fisso a una formula di danno: "1d6+1" + 1 → "1d6+2"; "1d6+1d4+1" + 1 → "1d6+1d4+2"; "2" + 1 → "3". */
 export function aggiungiDanno(formula, n) {
   if (!formula || !n) return formula ?? null;
   const s = String(formula).trim();
-  let m = /^(\d+d\d+)([+-]\d+)?$/.exec(s);
+  let m = /^((?:\d+d\d+\+)*\d+d\d+)([+-]\d+)?$/.exec(s);
   if (m) {
     const b = Number(m[2] ?? 0) + n;
     return b ? `${m[1]}${b > 0 ? '+' : ''}${b}` : m[1];
@@ -707,6 +708,16 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     };
   };
 
+  // §5.13: bonus di Caratteristica al danno per un'Abilità d'attacco; null se non si applica
+  const regoleCar = dati.regole?.danno_caratteristica ?? null;
+  const bonusCaratteristicaArma = (nomeAbilita, proprieta) => {
+    const sigla = regoleCar ? caratteristicaDanno(nomeAbilita, dati) : null;
+    if (!sigla || !base.caratteristiche[sigla]) return null;
+    const escluse = proprieta.map((p) => String(p.nome ?? p)).filter((n) => (regoleCar.proprieta_escluse ?? []).includes(n));
+    const valore = base.caratteristiche[sigla].valore;
+    return { sigla, valore, bonus: escluse.length ? 0 : bonusDannoCaratteristica(valore, base.livello ?? 1, dati.regole), esclusoDa: escluse[0] ?? null };
+  };
+
   // Armi impugnate: VA per colpire, danno, Parata
   const armi = [];
   const profiloArma = (o, d, extra = {}) => {
@@ -738,6 +749,10 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     // accessori dell'arma e effetti «danno» dell'equipaggiamento (Colpo assistito, §7.14.2): bonus ordinari (§5.13)
     const dannoAccessori = acc.reduce((s, x) => s + (x.def?.effetto_arma?.danno ?? 0), 0) + dannoEquip.filter((b) => valePer(b, o.tipo)).reduce((s, b) => s + b.valore, 0);
     const dannoBase = d?.danno ?? (o.voce.personalizzato?.danno ? { una_mano: o.voce.personalizzato.danno, due_mani: null } : null);
+    // §5.13: bonus di Caratteristica al danno (Caratteristica dell'Abilità dell'arma, Armi pesanti INT),
+    // salvo le esclusioni espresse delle schede (Danno calibrato)
+    const bonusCaratteristica = bonusCaratteristicaArma(nomeAbilita, d?.proprieta ?? []);
+    const dannoCar = bonusCaratteristica?.bonus ?? 0;
     const proprietaParata = (d?.proprieta ?? []).filter((p) => p.effetto?.parata_va);
     const parataVa = proprietaParata.reduce((s, p) => s + p.effetto.parata_va, 0);
     const difese = difeseVa;
@@ -757,8 +772,8 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     const gittataQ = d?.gittata_q ?? (d?.gittata_per_for ? FOR * d.gittata_per_for : null);
     armi.push({
       uid: o.uid, rif: d?.rif ?? null, nome: o.nome, tipo: o.tipo, abilita: nomeAbilita, va, componenti,
-      danno: dannoBase ? { una_mano: aggiungiDanno(dannoBase.una_mano, bonusDanno + dannoAccessori), due_mani: aggiungiDanno(dannoBase.due_mani, bonusDanno + dannoAccessori) } : null,
-      dannoAccessori,
+      danno: dannoBase ? { una_mano: aggiungiDanno(dannoBase.una_mano, bonusDanno + dannoAccessori + dannoCar), due_mani: aggiungiDanno(dannoBase.due_mani, bonusDanno + dannoAccessori + dannoCar) } : null,
+      dannoAccessori, bonusCaratteristica,
       ...(d?.rif ? (({ famiglia, scorte }) => ({ famigliaMunizioni: famiglia, scorte }))(scorteDi(d.rif)) : { famigliaMunizioni: null, scorte: [] }),
       accessori: acc.map((x) => ({ uid: x.uid, nome: x.nome, rif: x.def?.rif ?? null })),
       // §7.3: il mirino riduce la sola penalità di distanza, entro il proprio limite
@@ -821,7 +836,11 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     armi.push({
       uid: `${p.uid}:attacco`, nome: `${d.nome} (attacco${att.condizione ? `, ${att.condizione}` : stato ? `, ${stato.nomeOpposto}` : ''})`, tipo: 'arma_ravvicinata',
       abilita: att.abilita, va: a ? componenti.reduce((x, c) => x + c.valore, 0) : null, componenti,
-      danno: { una_mano: att.danno, due_mani: null }, dannoDaMunizione: false, bonusDanno: 0, mani: att.mani,
+      ...(() => {
+        const bc = bonusCaratteristicaArma(att.abilita, []);
+        return { danno: { una_mano: aggiungiDanno(att.danno, bc?.bonus ?? 0), due_mani: null }, bonusCaratteristica: bc };
+      })(),
+      dannoDaMunizione: false, bonusDanno: 0, mani: att.mani,
       portataQ: att.portata_q, gittataQ: null, gittataFormula: null, ac: null, inc: null, mov: 0, modalita: [], munizioni: null,
       proprieta: att.note ? [{ nome: 'Manovre e requisiti', testo: att.note }] : [], parata: null, personalizzato: false,
       // manovre: [] — la scheda dell'arma nella SD le legge; quelle dello scudo stanno nelle note

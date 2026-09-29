@@ -943,7 +943,8 @@ function schedaARiposo(personaggio, dati) {
   // «Equip» è `vaEquip`; `totale` resta quello delle regole di creazione e avanzamento.
   const specPossedute = stato.talentiLiberi.filter((t) => talentoLiberoDef(t.id, dati).specializzazione).map((t) => ({ id: t.id }));
   const equipaggiamento = calcolaEquipaggiamento({
-    caratteristiche, abilita, specializzazioni: specPossedute,
+    // §5.13: il livello limita il bonus di Caratteristica al danno
+    livello: n, caratteristiche, abilita, specializzazioni: specPossedute,
     // §7.10: capacità di sintonizzazione per Gradi complessivi e Talenti di Classe
     gradiComplessivi: stato.classi.reduce((s, c) => s + c.grado, 0),
     talenti: stato.classi.flatMap((c) => c.talenti.map((t) => t.nome)),

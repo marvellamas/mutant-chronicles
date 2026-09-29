@@ -32,7 +32,7 @@ export function pannelloAttacco(ctx, a) {
 function corpoRavvicinato(ctx, a, intestazione) {
   const R = ctx.dati.regole.attacco_ravvicinato;
   const personaggio = { scheda: ctx.tab.scheda, sessione: ctx.sessione };
-  // le scelte salvate contengono anche il danno senz'armi e l'ultima Manovra: si conservano
+  // le scelte salvate contengono anche l’ultima Manovra: si conservano
   const salvate = ctx.sessione.attacchi?.[a.uid] ?? {};
   const d = dichiarazioneRavvicinato(salvate);
   const imposta = (modifica) => ctx.azioni.ricordaAttacco(a.uid, { ...salvate, ...d, ...modifica, bersaglio: { ...d.bersaglio, ...(modifica.bersaglio ?? {}) } });
@@ -96,13 +96,7 @@ function corpoRavvicinato(ctx, a, intestazione) {
         valore: id, etichetta: manovreRavvicinate(ctx.tab.scheda, ctx.dati)[id].nome, motivo: x.motivo, ...descriviManovraRavvicinata(id, ctx.tab.scheda, ctx.dati),
       })), manovraScelta, (x) => imposta({ manovra: x })),
       manovraScelta === 'spazzata' ? rigaScelte('Bersagli della Spazzata', Object.keys(R.manovre.spazzata.va_per_bersagli).map(Number).map((n) => ({ valore: n, etichetta: `${n} bersagli`, riga: `${numero(R.manovre.spazzata.va_per_bersagli[n])} VA` })), d.bersagli, (x) => imposta({ bersagli: x })) : null,
-      a.senzArmi && a.dannoDaDati ? h('p', { class: 'nota' }, `Danno senz’armi: ${a.danno.una_mano} (${a.dannoOrigine}).`) : null,
-      a.senzArmi && !a.dannoDaDati ? h('div', { class: 'scelta-attacco scelta-distanza' },
-        h('label', { class: 'scelta-titolo', for: 'danno-senz-armi' }, 'Danno senz’armi (A.22: il manuale non lo dà)'),
-        h('div', { class: 'distanza-riga' },
-          h('input', { id: 'danno-senz-armi', type: 'text', class: 'input-effetto', placeholder: 'es. 1d3', value: salvate.dannoSenzArmi ?? '',
-            onchange: (e) => imposta({ dannoSenzArmi: e.target.value.trim() }) }),
-          h('span', { class: 'nota' }, a.dannoOrigine ? `ora: ${a.danno.una_mano} (scritto da te)` : 'vuoto: danno da definire'))) : null,
+      a.senzArmi ? h('p', { class: 'nota' }, `Danno senz’armi: ${a.danno.una_mano} (${a.dannoOrigine === 'base' ? `base ${a.dannoBase}` : `${a.dannoBase}, ${a.dannoOrigine}`}${a.bonusCaratteristica?.bonus ? `, ${a.bonusCaratteristica.sigla} ${a.bonusCaratteristica.bonus > 0 ? '+' : ''}${a.bonusCaratteristica.bonus}` : ''}; §5.13).`) : null,
     ] },
     { titolo: 'Risultato', contenuto: risultatoRavvicinato(ctx, a, r) },
   ];

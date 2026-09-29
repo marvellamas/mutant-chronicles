@@ -87,20 +87,20 @@ test('A.10: Scudo delle Guardie Sacre, lama ritratta 1d6+1 e lama estratta 1d6+1
   const creazione = { ...MISHIMA_AGENTE, equipaggiamento: [voce('g', 'scudi:scudo-delle-guardie-sacre', 'imbracciato')] };
   const aRiposo = calcolaScheda({ creazione, livelli: [] }, dati);
   const att = aRiposo.equipaggiamento.armi.find((a) => a.uid === 'g:attacco');
-  assert.deepEqual([att.nome, att.danno.una_mano, att.statoAlternativo.costo], ['Scudo delle Guardie Sacre (attacco, lama ritratta)', '1d6+1', '1 Azione Principale']);
+  assert.deepEqual([att.nome, att.danno.una_mano, att.statoAlternativo.costo], ['Scudo delle Guardie Sacre (attacco, lama ritratta)', '1d6+2', '1 Azione Principale']); // +1 di FOR 6 (§5.13)
   assert.deepEqual(att.manovre, []); // la scheda dell'arma nella SD legge «manovre»: senza, la tab Combattimento andava in errore
   const m = massimiSessione(aRiposo, creazione, dati);
   assert.ok(m.oggettiSituazionali.includes('g:lama'));
   let s = commutaCondizioneOggetto(inizializzaSessione(m), 'g:lama', m);
   const tavolo = calcolaScheda({ creazione, livelli: [], sessione: s }, dati);
   const conLama = tavolo.equipaggiamento.armi.find((a) => a.uid === 'g:attacco');
-  assert.deepEqual([conLama.nome, conLama.danno.una_mano], ['Scudo delle Guardie Sacre (attacco, lama estratta)', '1d6+1d4+1']);
+  assert.deepEqual([conLama.nome, conLama.danno.una_mano], ['Scudo delle Guardie Sacre (attacco, lama estratta)', '1d6+1d4+2']);
   // la lama non attiva Scudo Magico: l'AR resta quella a riposo
   assert.equal(tavolo.equipaggiamento.arEffettiva.totale, aRiposo.equipaggiamento.protezioni[0].ar.totale);
   s = commutaCondizioneOggetto(s, 'g', m); // Scudo Magico acceso, lama sempre estratta
   const entrambi = calcolaScheda({ creazione, livelli: [], sessione: s }, dati);
   assert.equal(entrambi.equipaggiamento.arEffettiva.totale, 4);
-  assert.equal(entrambi.equipaggiamento.armi.find((a) => a.uid === 'g:attacco').danno.una_mano, '1d6+1d4+1');
+  assert.equal(entrambi.equipaggiamento.armi.find((a) => a.uid === 'g:attacco').danno.una_mano, '1d6+1d4+2');
 });
 
 // --- A.14: batterie da 5 PM e disponibilità degli Artefatti Mistici -------------------------

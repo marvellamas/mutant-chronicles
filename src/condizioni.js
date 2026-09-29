@@ -5,6 +5,7 @@
 
 import { descriviFerite } from './sessione.js';
 import { calcolaCarico } from './carico.js';
+import { aggiungiDanno } from './equipaggiamento.js';
 import { calcolaAR, oggettiRotti } from './protezione.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
@@ -227,7 +228,8 @@ export function applicaCondizioni(scheda, sessione, dati) {
       if (w.statoAlternativo) {
         w.statoAlternativo.acceso = accesi.has(w.statoAlternativo.chiave);
         if (w.statoAlternativo.acceso) {
-          w.danno = { una_mano: w.statoAlternativo.danno, due_mani: null };
+          // §5.13: anche il danno dello stato alternativo riceve il bonus di Caratteristica
+          w.danno = { una_mano: aggiungiDanno(w.statoAlternativo.danno, w.bonusCaratteristica?.bonus ?? 0), due_mani: null };
           w.nome = w.nome.replace(w.statoAlternativo.nomeOpposto, w.statoAlternativo.nome);
         }
       }

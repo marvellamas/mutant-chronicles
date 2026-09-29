@@ -7,6 +7,8 @@
 // tiro con Armi da lancio).
 import { voce, somma, talentiAttacco } from './attacco.js';
 import { avvisiStati } from './condizioni.js';
+import { bonusDannoCaratteristica } from './calc.js';
+import { aggiungiDanno } from './equipaggiamento.js';
 
 const numero = (v) => { const n = parseInt(String(v ?? '').replace(/[^\d]/g, ''), 10); return Number.isFinite(n) ? n : null; };
 /** Livello di una riga delle versioni (colonne «Livello» oppure «Livello e PM»). */
@@ -61,7 +63,8 @@ export function contenitoriLancio(personaggio, incantesimo) {
  * @param personaggio { scheda (calcolaScheda con la sessione), sessione }
  * @param incantesimo voce di incantesimi.json (con meccanica)
  * @returns {{ pm_costo, fonte_pm, prova_richiesta, motivi_prova, va_potere_finale, scomposizione, cumulo,
- *   tiro_per_colpire?, contatto?, salvezza_bersaglio?, azioni, concentrazione, impossibile, promemoria }}
+ *   tiro_per_colpire?, contatto?, salvezza_bersaglio?, danno: {sigla, valore, bonus, voci: [{colonna, base, testo}]}|null,
+ *   azioni, concentrazione, impossibile, promemoria }}
  */
 export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
   const L = dati.regole.lancio;
@@ -180,7 +183,19 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
   const salvezza = m.salvezza?.tipi?.length ? { tipi: m.salvezza.tipi, testo: m.salvezza.testo, mod_ps: modPsVersione(v?.riga), talento: inarrestabili ? { nome: inarrestabili.nome, valore: inarrestabili.e.salvezza_bersaglio } : null }
     : m.salvezza ? { tipi: [], testo: m.salvezza.testo, mod_ps: modPsVersione(v?.riga), talento: null } : null;
 
-  // 8. promemoria finali
+  // 8. danno della versione con il bonus di SAG (Magia sez. 7; Giocatore §5.13, stessi tetti di livello):
+  // colonne «Danno…» della riga con un dado; a ogni colpo o applicazione, prima di moltiplicatori e Armatura
+  const Rd = dati.regole.danno_caratteristica;
+  const siglaMagia = Rd?.magia ?? null;
+  const valoreMagia = siglaMagia ? scheda?.caratteristiche?.[siglaMagia]?.valore ?? null : null;
+  const colonneDanno = Object.entries(v?.riga ?? {}).filter(([k, t]) => /^Danno/.test(k) && /\d+d\d+/.test(String(t)));
+  const dannoIncantesimo = colonneDanno.length && valoreMagia !== null ? (() => {
+    const bonus = bonusDannoCaratteristica(valoreMagia, scheda?.livello ?? 1, dati.regole);
+    return { sigla: siglaMagia, valore: valoreMagia, bonus, voci: colonneDanno.map(([k, t]) => ({ colonna: k, base: String(t), testo: aggiungiDanno(String(t), bonus) })) };
+  })() : null;
+  if (dannoIncantesimo?.bonus) promemoria.push(`Bonus di ${siglaMagia} al danno: ${dannoIncantesimo.bonus > 0 ? '+' : ''}${dannoIncantesimo.bonus} a ogni colpo o applicazione di danno, prima di moltiplicatori, Difese e Armatura (Magia sez. 7; Giocatore §5.13).`);
+
+  // 9. promemoria finali
   promemoria.push(L.magistrale.frasi[0], L.fallimento.frasi[0]);
   for (const t of con('promemoria')) promemoria.push(`${t.nome}: ${String(t.testo ?? '').split(/(?<=\.)\s/)[0]}`);
   if (aspetto && T.some((t) => t.nome === 'Calcolo Arcano')) promemoria.push(`Calcolo Arcano: ${A.frasi.at(-1)}`);
@@ -198,6 +213,7 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
     tiro_per_colpire: tiro,
     contatto,
     salvezza_bersaglio: salvezza,
+    danno: dannoIncantesimo,
     azioni: { ...m.azioni, focalizzazione: d.focalizzazione ? 1 : 0 },
     concentrazione: m.concentrazione ?? null,
     aspetto,

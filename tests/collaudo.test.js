@@ -55,7 +55,8 @@ test('collaudo a: Imperiali Combattente Assaltatore, 8° livello', () => {
   const [claymore] = s.equipaggiamento.armi;
   assert.equal(claymore.nome, 'Spadone Claymore');
   assert.equal(claymore.va, 14);
-  assert.equal(claymore.danno.due_mani, '2d6+3'); // 2d6+2 (§7.1.9) + 1 della Specializzazione
+  // 2d6+2 (§7.1.9) + 1 della Specializzazione + 2 di FOR (§5.13: FOR 8–9, tetto +2 all'8° livello)
+  assert.equal(claymore.danno.due_mani, '2d6+5');
   assert.deepEqual([claymore.parata.va, claymore.parata.distanza], [12, 4]); // Difese 12; a distanza −8 (Giocatore §5.9)
   const [armatura] = s.equipaggiamento.protezioni;
   assert.deepEqual([armatura.ar.totale, armatura.categoria, armatura.penalita.attacchi_distanza, armatura.penalita.movimento_q], [3, 'Media', -1, -1]);
@@ -67,7 +68,7 @@ test('collaudo a: Imperiali Combattente Assaltatore, 8° livello', () => {
   const b = scheda(p, (c) => ({ ...c, equipaggiamento: c.equipaggiamento.map((v) => ({ ...v, stato: /spadone/.test(v.rif) ? 'pronta' : /belliger/.test(v.rif) ? 'impugnata' : /scudo/.test(v.rif) ? 'imbracciato' : v.stato })) }));
   const [belliger] = b.equipaggiamento.armi;
   assert.equal(belliger.va, 10); // Armi leggere 12 − 1 (profilo, §7.8) − 1 (armatura Media a distanza)
-  assert.equal(belliger.danno.una_mano, '1d6+1');
+  assert.equal(belliger.danno.una_mano, '1d6+3'); // +2 di DES (§5.13, tetto +2 all'8° livello)
   assert.deepEqual(belliger.scorte, [{ uid: p.creazione.equipaggiamento.find((v) => /proiettili/.test(v.rif)).uid, nome: 'Proiettili da pistola', quantita: 30 }]);
   const scudo = b.equipaggiamento.protezioni.find((x) => x.tipo === 'scudo');
   assert.deepEqual([scudo.ar.totale, scudo.parata.ravvicinata, scudo.parata.distanza], [1, 13, 8]); // Difese 12 + 1 / 12 − 4 (§7.4.8)
@@ -132,10 +133,11 @@ test('collaudo c: Freelance Lavoratore Tecnico, 5° livello, Risorse Interiori, 
   assert.equal(va(s, 'Furtività').totale, 7); // 3 + 3 + 0 + 1
   // Pistola semiautomatica: Armi leggere 11 + Specializzazione in Pistole +1 − Smorzatore 1 (Armamenti §7.3.1)
   const [pistola, chiave] = s.equipaggiamento.armi;
-  assert.deepEqual([pistola.va, pistola.danno.una_mano, pistola.mirino.riduzione], [11, '1d6+1', 2]);
+  // danno: 1d6, +1 della Specializzazione, +1 di DES (§5.13, tetto +1 al 5° livello)
+  assert.deepEqual([pistola.va, pistola.danno.una_mano, pistola.mirino.riduzione], [11, '1d6+2', 2]);
   assert.deepEqual(pistola.scorte.map((x) => [x.nome, x.quantita]), [['Proiettili da pistola', 30]]); // §7.20.1: proiettili da pistola
   // oggetto personalizzato: Armi da mischia 7 (3 + 4), danno scritto dal giocatore
-  assert.deepEqual([chiave.nome, chiave.va, chiave.danno.una_mano], ['Chiave idraulica pesante', 7, '1d6']);
+  assert.deepEqual([chiave.nome, chiave.va, chiave.danno.una_mano], ['Chiave idraulica pesante', 7, '1d6+1']); // Armi da mischia: +1 di DES (§5.13)
   // Armatura civile leggera + Rinforzo Leggero: AR 2, FOR 4, resta Leggera (Armamenti §7.11.2)
   const [armatura] = s.equipaggiamento.protezioni;
   assert.deepEqual([armatura.ar.totale, armatura.forRichiesta, armatura.categoria], [2, 4, 'Leggera']);

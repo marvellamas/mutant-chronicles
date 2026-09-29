@@ -43,10 +43,11 @@ test('Colpo assistito 1 (Felis): +1 al danno delle armi ravvicinate e in «Attac
   const senza = scheda([SPADA]);
   const con = scheda([SPADA, voce('a', 'armature_corporative:mk-iv-felis-pattern-dei-golden-lions', 'indossata')]);
   const arma = (s) => s.equipaggiamento.armi.find((a) => a.uid === 's');
-  assert.equal(arma(senza).danno.una_mano, '1d6+1');
-  assert.equal(arma(con).danno.una_mano, '1d6+2');
+  // danno della spada con il +1 di Caratteristica (§5.13); Colpo assistito aggiunge +1
+  assert.equal(arma(senza).danno.una_mano, '1d6+2');
+  assert.equal(arma(con).danno.una_mano, '1d6+3');
   const r = calcolaAttaccoRavvicinato({ scheda: con, sessione: sessione() }, arma(con), {}, dati);
-  assert.equal(r.danno.testo, '1d6+2');
+  assert.equal(r.danno.testo, '1d6+3');
   const tempra = con.equipaggiamento.effettiOggetti.find((e) => e.tipo === 'salvezza');
   assert.deepEqual([tempra.salvezza, tempra.valore, tempra.uso], ['tempra', 2, 'contro caldo e freddo ambientali']);
 });

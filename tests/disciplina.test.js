@@ -33,10 +33,11 @@ test('creazione: la Disciplina si sceglie al I Grado; senza, la scheda non è co
 
 test('Lottatore con Disciplina: il danno senz’armi viene dai dati (Potenza 1d8 ai Gradi I–II, 1d10 al III)', () => {
   const s = scheda(con('potenza'));
-  const a = profiloSenzArmi(s, dati, '1d2'); // il campo manuale non conta: vale il dado della Disciplina
-  assert.deepEqual([a.danno.una_mano, a.dannoDaDati, a.dannoOrigine], ['1d8', true, `${N} (Potenza)`]);
+  const a = profiloSenzArmi(s, dati); // vale il dado della Disciplina, più alto dell'1d4 di base
+  // il Lottatore di prova ha FOR 7: +1 al danno (§5.13)
+  assert.deepEqual([a.danno.una_mano, a.dannoBase, a.dannoOrigine], ['1d8+1', '1d8', `${N} (Potenza)`]);
   const r = calcolaAttaccoRavvicinato(pg(s), a, {}, dati);
-  assert.equal(r.danno.testo, '1d8');
+  assert.equal(r.danno.testo, '1d8+1');
   assert.deepEqual(r.avvisi, []);
   assert.ok(r.promemoria.some((x) => /−1 VA a Difese/.test(x)));
   // tabella per Grado: al III Grado nella Classe 1d10, al V 1d12
@@ -59,13 +60,11 @@ test('Rapidità +3 Iniziativa; Controllo +2 alle Prove offensive di Corpo a corp
   assert.deepEqual(talentiAttacco(g, dati, 'difese_ravvicinate').map((t) => t.e.va), [1]);
 });
 
-test('non Lottatore: il danno senz’armi resta il campo manuale con l’avviso A.22', () => {
-  const s = scheda(MISHIMA_AGENTE);
-  const vuoto = profiloSenzArmi(s, dati);
-  assert.deepEqual([vuoto.danno.una_mano, vuoto.dannoDaDati], [null, false]);
-  assert.match(calcolaAttaccoRavvicinato(pg(s), vuoto, {}, dati).avvisi[0], /A\.22/);
-  const scritto = profiloSenzArmi(s, dati, '1d3');
-  assert.deepEqual([scritto.danno.una_mano, scritto.dannoOrigine], ['1d3', 'dichiarato']);
+test('non Lottatore: danno senz’armi 1d4 più il bonus di FOR (E&L 12, A.22)', () => {
+  const s = scheda(MISHIMA_AGENTE); // FOR 6: +1
+  const nudo = profiloSenzArmi(s, dati);
+  assert.deepEqual([nudo.danno.una_mano, nudo.dannoOrigine, nudo.bonusCaratteristica.sigla], ['1d4+1', 'base', 'FOR']);
+  assert.deepEqual(calcolaAttaccoRavvicinato(pg(s), nudo, {}, dati).avvisi, []);
 });
 
 test('la Disciplina non si cambia dopo la conferma: un livello successivo non può riscriverla', () => {

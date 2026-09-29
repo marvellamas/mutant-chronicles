@@ -9,6 +9,7 @@
 // { etichetta, valore, fonte, paragrafo }. Le fonti: regole, equipaggiamento, condizioni già nella
 // base; qui movimento, bersaglio, copertura, distanza, mirino, modalità, manovra, talento, situazione.
 import { aggiungiDanno } from './equipaggiamento.js';
+import { bonusDannoCaratteristica } from './calc.js';
 import { avvisiStati, limitiStati } from './condizioni.js';
 
 export const voce = (etichetta, valore, fonte, paragrafo = null) => ({ etichetta, valore, fonte, paragrafo });
@@ -460,13 +461,11 @@ function massimoDanno(testo) {
 }
 
 /**
- * Profilo «Senz'armi»: Abilità Corpo a corpo (VA effettivo con le condizioni), portata 1 Q. Danno:
- * il dado dei dati se c'è (Disciplina del Lottatore al suo Grado, §3.5.5; Arti Marziali 1d6, §8.6.1;
- * «si usa il dado più alto applicabile»), altrimenti quello dichiarato dal giocatore (A.22: il manuale
- * non lo dà per gli altri).
- * @param dannoDichiarato testo del danno salvato nel personaggio (sessione → attacchi.senz_armi)
+ * Profilo «Senz'armi»: Abilità Corpo a corpo (VA effettivo con le condizioni), portata 1 Q. Danno
+ * (§5.13; E&L 12, A.22): 1d4 di base, oppure il dado più alto dei Talenti (Arti Marziali 1d6, §8.6.1;
+ * Disciplina del Lottatore al suo Grado, §3.5.5), più il bonus di FOR al danno e gli altri bonus.
  */
-export function profiloSenzArmi(scheda, dati, dannoDichiarato = null) {
+export function profiloSenzArmi(scheda, dati) {
   const S = dati.regole.attacco_ravvicinato.senz_armi;
   const a = (scheda?.abilita ?? []).find((x) => x.nome === S.abilita) ?? null;
   // effetti «attacco» e «danno» dell'equipaggiamento che valgono anche senz'armi (Assistenza offensiva
@@ -476,16 +475,22 @@ export function profiloSenzArmi(scheda, dati, dannoDichiarato = null) {
   const bonusVa = (eq.bonusAttacco ?? []).filter(ravv).map((b) => voce(b.nome, b.valore, 'equipaggiamento'));
   const bonusDannoEq = (eq.bonusDanno ?? []).filter(ravv).reduce((s, b) => s + b.valore, 0);
   const T = talentiAttacco(scheda, dati, 'attacco_ravvicinato');
-  const daDati = T.filter((t) => t.e.senz_armi?.danno).sort((x, y) => massimoDanno(y.e.senz_armi.danno) - massimoDanno(x.e.senz_armi.danno))[0] ?? null;
-  const dichiarato = typeof dannoDichiarato === 'string' && dannoDichiarato.trim() ? dannoDichiarato.trim() : null;
-  const dannoBase = daDati?.e.senz_armi.danno ?? dichiarato;
-  const danno = dannoBase && bonusDannoEq ? aggiungiDanno(dannoBase, bonusDannoEq) : dannoBase;
+  // il dado di un Talento vale solo se più alto della base (Lottatore: «si usa il dado più alto applicabile»)
+  const daDati = T.filter((t) => t.e.senz_armi?.danno && massimoDanno(t.e.senz_armi.danno) > massimoDanno(S.danno))
+    .sort((x, y) => massimoDanno(y.e.senz_armi.danno) - massimoDanno(x.e.senz_armi.danno))[0] ?? null;
+  const dannoBase = daDati?.e.senz_armi.danno ?? S.danno ?? null;
+  // §5.13: bonus di FOR al danno, limitato dal livello
+  const sigla = dati.regole.danno_caratteristica?.senz_armi ?? null;
+  const valoreCar = sigla ? scheda?.caratteristiche?.[sigla]?.valore ?? null : null;
+  const bonusCaratteristica = sigla && valoreCar !== null ? { sigla, valore: valoreCar, bonus: bonusDannoCaratteristica(valoreCar, scheda?.livello ?? 1, dati.regole), esclusoDa: null } : null;
+  const extra = bonusDannoEq + (bonusCaratteristica?.bonus ?? 0);
+  const danno = dannoBase && extra ? aggiungiDanno(dannoBase, extra) : dannoBase;
   const scomposizione = a ? [...(a.scomposizione ?? [voce('Valore da regole', a.totale, 'regole')]), ...bonusVa] : [];
   return {
     uid: SENZ_ARMI, rif: null, nome: 'Senz’armi', tipo: 'arma_ravvicinata', senzArmi: true, abilita: S.abilita,
     va: a?.totale ?? null, vaEffettivo: a ? (a.effettivo ?? a.totale) + somma(bonusVa) : null,
     scomposizione: scomposizione.map((x, i) => (i === 0 && x.fonte === 'regole' ? { ...x, etichetta: `VA ${S.abilita}` } : x)),
-    danno: { una_mano: danno, due_mani: null }, dannoOrigine: daDati ? daDati.nome : dichiarato ? 'dichiarato' : null, dannoDaDati: !!daDati,
+    danno: { una_mano: danno, due_mani: null }, dannoBase, dannoOrigine: daDati ? daDati.nome : 'base', dannoDaDati: true, bonusCaratteristica,
     mani: 1, portataQ: S.portata_q, manovre: [],
   };
 }
@@ -789,9 +794,7 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
     const baseDanno = dannoBase(arma);
     dannoBonus += migE.danno ?? m.danno ?? 0;
     if (!baseDanno) {
-      avvisi.push(arma.senzArmi
-        ? 'Danno senz’armi non definito: il manuale non lo dà (A.22). Scrivilo nel campo «danno senz’armi»; con Arti Marziali è 1d6.'
-        : 'Danno dell’arma non definito.');
+      avvisi.push('Danno dell’arma non definito.');
     }
     const formula = baseDanno ? aggiungiDanno(baseDanno, dannoBonus) : null;
     const mm = moltiplicatoreMagistrale(moltiplicatore, dati);

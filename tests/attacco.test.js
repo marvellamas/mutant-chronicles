@@ -188,7 +188,8 @@ test('personaggio reale: parte dal VA per colpire effettivo della scheda (Specia
   const r = calcolaAttaccoDistanza({ scheda, sessione }, p, { distanza: 15 }, dati);
   assert.equal(r.va_finale, p.vaEffettivo - 2);
   assert.ok(r.scomposizione.some((x) => x.fonte === 'ferite'));
-  assert.equal(r.danno_per_colpo, '1d6');
+  // DES 7 al 1° livello: +1 al danno delle Armi leggere (§5.13)
+  assert.equal(r.danno_per_colpo, '1d6+1');
   assert.equal(attaccoBase(p).va_finale, p.vaEffettivo);
 });
 

@@ -377,3 +377,21 @@ UTC); i paragrafi corrispondenti sono nel Manuale del Giocatore §2.16.1–§2.1
     (`oggettiConPi`: gruppi e `pi_direttore`, `oggettiSenzaPi`); `src/equipaggiamento.js`
     (`separaEsemplare`, `pi_direttore` della voce); `src/ui/tab.js` (riga «×N integri» con «Danneggia uno»,
     campo «PI definiti dal Direttore»); `src/ui/app.js`.
+
+## 29 settembre 2026 — risposte ai 19 quesiti dell'app (Doc E&L, sezione in fondo), testo nei manuali del 28/09
+
+Le risposte sono numerate 1–19 come nel Doc E&L; tra parentesi la domanda del Doc «per-davide.md».
+Ricognizione e stime: `docs/ricognizione-2026-09-28.md`.
+
+44. **Bonus di Caratteristica al danno; danno senz'armi** (E&L 12, A.22; Giocatore §5.13, §4.4; Magia
+    sez. 7). Bonus = fascia del valore (1–5 → 0, 6–7 → +1, 8–9 → +2, 10 → +3) limitata dal livello
+    (1–7 → +1, 8–14 → +2, 15+ → +3), mai sotto 0; a ogni colpo o applicazione, prima di moltiplicatore,
+    Difese e Armatura. FOR senz'armi; per le armi la Caratteristica dell'Abilità (le coppie «FOR o DES» e
+    «DES o INT» del §5.13 tornano), Armi pesanti INT; SAG per la magia. Esclusioni espresse: Danno
+    calibrato (SA30, SA50F: anche il +1 della Specializzazione della SA50F, finora mancante). Senz'armi
+    1d4 + bonus; Arti Marziali 1d6; la Disciplina del Lottatore il suo dado se maggiore. Tolto il campo
+    «danno senz'armi».
+    → `data/regole.json` → `danno_caratteristica`, `attacco_ravvicinato.senz_armi.danno`; `src/calc.js`
+    (`bonusDannoCaratteristica`, `caratteristicaDanno`); `src/equipaggiamento.js` (bonus nel danno di ogni
+    arma e dell'attacco con lo scudo, `bonusCaratteristica`); `src/attacco.js` (`profiloSenzArmi`);
+    `src/lancio.js` (danno della versione con SAG in «Lancia!»); SD, «Attacca!», SS.

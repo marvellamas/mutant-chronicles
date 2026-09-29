@@ -118,16 +118,14 @@ test('Stordire con arma non compatibile → non ammesso; con il Martello −6 e 
   assert.equal(attacca(pg({ armi: [MARTELLO], liberi: ['stordire-migliorato'] }), MARTELLO, { manovra: 'stordire' }).va_finale, 6);
 });
 
-test('Senz’armi: senza danno definito → avviso (A.22); Arti Marziali 1d6 e +1 VA con le Migliorate; Stordire ammesso', () => {
+test('Senz’armi: danno base 1d4 (E&L 12, A.22); Arti Marziali 1d6 e +1 VA con le Migliorate; Stordire ammesso', () => {
   const p = pg({ armi: [] });
   assert.equal(senzArmiDisponibile(p.scheda, dati), true);
   const nudo = profiloSenzArmi(p.scheda, dati);
   const r = attacca(p, nudo, {});
   assert.equal(r.va_finale, 8);
-  assert.equal(r.danno.testo, null);
-  assert.match(r.avvisi[0], /A\.22/);
-  // danno scritto dal giocatore
-  assert.equal(attacca(p, profiloSenzArmi(p.scheda, dati, '1d3'), {}).danno.testo, '1d3');
+  // scheda di prova senza Caratteristiche: nessun bonus (§5.13)
+  assert.deepEqual([r.danno.testo, r.avvisi.length, nudo.bonusCaratteristica], ['1d4', 0, null]);
   const m = pg({ armi: [], liberi: ['arti-marziali', 'arti-marziali-migliorate'] });
   const rm = attacca(m, profiloSenzArmi(m.scheda, dati), {});
   assert.deepEqual([rm.va_finale, rm.danno.testo, rm.avvisi.length], [9, '1d6', 0]);

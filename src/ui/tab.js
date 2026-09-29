@@ -900,9 +900,9 @@ const testoAr = (ar) => (ar ? `${ar.totale}${ar.magica ? ` (${ar.magica} magica)
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
 
 /** Arma impugnata: VA per colpire con la scomposizione, danno, portata o gittata, Parata, munizioni. */
-/** Profilo «Senz'armi» con il danno dichiarato nella sessione (sessione → attacchi.senz_armi). */
+/** Profilo «Senz'armi»: 1d4 o il dado dei Talenti, con il bonus di FOR (§5.13). */
 function senzArmi(ctx) {
-  return profiloSenzArmi(ctx.tab.scheda, ctx.dati, ctx.sessione.attacchi?.[SENZ_ARMI]?.dannoSenzArmi ?? null);
+  return profiloSenzArmi(ctx.tab.scheda, ctx.dati);
 }
 
 /** Voce fissa «Senz'armi» fra le armi (se non impugna nulla, ha Arti Marziali o è Lottatore). */
@@ -915,9 +915,9 @@ function schedaSenzArmi(ctx) {
       a.va !== null ? h('button', { type: 'button', class: 'btn primario btn-attacca', onclick: () => { ctx.ui.attacco = { uid: SENZ_ARMI, passo: 0 }; ctx.azioni.ridisegna(); } }, 'Attacca!') : null),
     h('div', { class: 'arma-valori' },
       h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), a.va === null ? h('strong', {}, '—') : valoreEffettivo(`VA senz’armi (${a.abilita})`, a.vaEffettivo, a.va, a.scomposizione, { pillola: true })),
-      h('p', {}, h('span', { class: 'sigla' }, 'Danno '), h('strong', {}, a.danno.una_mano ?? 'da definire'), a.dannoDaDati ? h('small', { class: 'sigla' }, ` (${a.dannoOrigine})`) : null),
+      h('p', {}, h('span', { class: 'sigla' }, 'Danno '), h('strong', { title: testoBonusCaratteristica(a.bonusCaratteristica) ?? null }, a.danno.una_mano ?? '—'),
+        h('small', { class: 'sigla' }, ` (${a.dannoOrigine === 'base' ? 'base' : a.dannoOrigine}${a.bonusCaratteristica?.bonus ? `, ${a.bonusCaratteristica.sigla} ${segno(a.bonusCaratteristica.bonus)}` : ''})`)),
       h('p', {}, h('span', { class: 'sigla' }, 'Portata '), `${a.portataQ} Q`)),
-    a.danno.una_mano ? null : h('p', { class: 'nota' }, 'Il danno senz’armi non è nel manuale (per-davide A.22): scrivilo nel pannello «Attacca!».'),
     ultima ? h('p', { class: 'nota' }, `Ultima Manovra: ${ultima.nome}`) : null);
 }
 
@@ -945,12 +945,19 @@ function resistenze(ctx) {
     effetti.map((e, i) => [i ? ' · ' : '', h('span', { title: [e.condizione, e.fonte].filter(Boolean).join(' — ') }, `${testoEffettoOggetto(e)} (${e.oggetto})`)]));
 }
 
+/** Tooltip del bonus di Caratteristica al danno (§5.13). */
+function testoBonusCaratteristica(bc) {
+  if (!bc) return null;
+  if (bc.esclusoDa) return `${bc.esclusoDa}: niente bonus di ${bc.sigla} al danno (§5.13).`;
+  return `Bonus di ${bc.sigla} al danno: ${segno(bc.bonus)} (${bc.sigla} ${bc.valore}, con il tetto del livello; §5.13). Già compreso nel danno.`;
+}
+
 function schedaArma(ctx, a) {
   const legenda = legendaModalita(ctx.dati);
   const mr = a.munizioneRiferimento;
   // §7.8: il danno dei lanciatori è quello della munizione caricata (qui la munizione di riferimento)
   const dannoTesto = a.dannoDaMunizione
-    ? (mr ? aggiungiDanno(mr.danno, a.bonusDanno) : `dalla munizione${a.munizioni?.riferimento ? ` (${a.munizioni.riferimento})` : ''}`)
+    ? (mr ? aggiungiDanno(mr.danno, a.bonusDanno + (a.bonusCaratteristica?.bonus ?? 0)) : `dalla munizione${a.munizioni?.riferimento ? ` (${a.munizioni.riferimento})` : ''}`)
     : testoDanno(a.danno);
   return h('article', { class: `arma-tab${a.moduloDi ? ' modulo' : ''}` },
     h('div', { class: 'arma-testa' },
@@ -971,7 +978,7 @@ function schedaArma(ctx, a) {
       h('span', {}, h('strong', {}, a.statoAlternativo.nome.replace(/^./, (c) => c.toUpperCase())), h('small', {}, ` · cambiare costa ${a.statoAlternativo.costo}`))) : null,
     h('div', { class: 'arma-valori' },
       h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), a.va === null ? h('strong', {}, '—') : valoreEffettivo(`VA per colpire (${a.nome})`, a.vaEffettivo ?? a.va, a.vaDaRegole ?? a.va, a.scomposizione, { pillola: true })),
-      h('p', {}, h('span', { class: 'sigla' }, 'Danno '), h('strong', {}, dannoTesto)),
+      h('p', {}, h('span', { class: 'sigla' }, 'Danno '), h('strong', { title: testoBonusCaratteristica(a.bonusCaratteristica) ?? null }, dannoTesto)),
       a.ac !== null && a.ac !== 1 ? h('p', {}, h('span', { class: 'sigla', title: 'Applicazioni di danno per colpo a segno' }, 'AC '), a.ac === 'munizione' ? (mr ? String(mr.ac) : 'dalla munizione') : String(a.ac)) : null,
       mr ? h('p', {}, h('span', { class: 'sigla', title: 'Raggio di scoppio della munizione (§5.10)' }, 'RS '), `${mr.rs_q} Q`) : null,
       a.portataQ ? h('p', {}, h('span', { class: 'sigla' }, 'Portata '), `${a.portataQ} Q`) : null,
@@ -981,7 +988,9 @@ function schedaArma(ctx, a) {
         h('strong', {}, valoreEffettivo(`Parata (${a.nome})`, a.parata.vaEffettivo ?? a.parata.va, a.parata.vaDaRegole ?? a.parata.va, a.parata.scomposizione)),
         a.parata.distanza !== null && a.parata.distanza !== undefined ? h('small', { class: 'sigla', title: 'Parata a distanza con un’arma: −8 VA (Giocatore §5.9)' }, ` · a distanza ${numero(a.parata.distanzaEffettiva ?? a.parata.distanza)}`) : null) : null),
     a.componenti.length ? h('p', { class: 'nota' }, a.componenti.map((c) => `${c.nome} ${segno(c.valore)}`).join(' · '),
-      a.bonusDanno ? ` · danno +${a.bonusDanno} (${a.specializzazione})` : null) : null,
+      a.bonusDanno ? ` · danno +${a.bonusDanno} (${a.specializzazione})` : null,
+      a.bonusCaratteristica?.bonus ? ` · danno ${segno(a.bonusCaratteristica.bonus)} (${a.bonusCaratteristica.sigla} ${a.bonusCaratteristica.valore}, §5.13)` : null,
+      a.bonusCaratteristica?.esclusoDa ? ` · niente bonus di ${a.bonusCaratteristica.sigla} al danno (${a.bonusCaratteristica.esclusoDa})` : null) : null,
     a.modalita.length ? h('p', { class: 'proprieta-arma' }, h('span', { class: 'sigla' }, 'Modalità '),
       a.modalita.map((m) => etichettaModalita(ctx, m, legenda[m]))) : null,
     a.mov ? h('p', { class: 'nota' }, `MOV ${segno(a.mov)} Q mentre è impugnata (§7.7)`) : null,

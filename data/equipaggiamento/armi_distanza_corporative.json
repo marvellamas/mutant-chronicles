@@ -1166,7 +1166,8 @@
           "nome": "Danno calibrato",
           "testo": "Per SA30 e SA50F, i bonus ordinari al danno di Classi, Talenti e Manovre non modificano il danno del dardo. Il Magistrale si applica normalmente; sono ammessi modificatori specifici della munizione. Tiro Mirato concede il bonus al VA ma non il bonus ordinario al danno. L’effetto del contenuto del dardo si applica soltanto se almeno 1 danno supera l’Armatura. Il lanciatore determina danno e gittata, il carico del dardo determina l’effetto aggiuntivo (§7.8)."
         }
-      ]
+      ],
+      "specializzazione_danno": false
     },
     {
       "id": "mg40",

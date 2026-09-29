@@ -50,7 +50,7 @@ export function validaDati(dati) {
   const sigle = validaCaratteristiche(dati.caratteristiche, err);
   const nomiAbilita = validaAbilita(dati.abilita, sigle, err);
   const idSalvezze = (dati.caratteristiche?.salvezze ?? []).map((s) => s?.id);
-  validaRegole(dati.regole, err);
+  validaRegole(dati.regole, err, dati);
   if (dati.regole && dati.abilita) validaEffettiCondizioni(dati, err);
   validaCorporazioni(dati.corporazioni, sigle, nomiAbilita, idSalvezze, dati.caratteristiche, err);
   const nomiAddestramenti = validaAddestramenti(dati.addestramenti, nomiAbilita, idSalvezze, dati.regole, err);
@@ -369,7 +369,7 @@ function validaAR(dati, err) {
   }
 }
 
-function validaRegole(r, err) {
+function validaRegole(r, err, dati = {}) {
   if (!isOggetto(r)) return;
   const F = 'regole';
   const interi = [
@@ -390,6 +390,19 @@ function validaRegole(r, err) {
     const ok = isOggetto(rip) && isTesto(rip.abilita) && Array.isArray(rip.esiti) && rip.esiti.length && rip.esiti.every((e) => isTesto(e?.id) && isTesto(e?.nome) && isIntero(e?.pi))
       && isIntero(rip.strumenti_improvvisati_va) && typeof rip.materiali_percentuale === 'number' && rip.materiali_percentuale >= 0 && Array.isArray(rip.tipi) && Array.isArray(rip.esclusi);
     if (!ok) err(F, 'integrita.riparazione', 'serve { abilita, esiti: [{ id, nome, pi }], strumenti_improvvisati_va, materiali_percentuale, tipi, esclusi }');
+  }
+  // bonus di Caratteristica al danno (Giocatore §5.13; E&L 12)
+  const dc = r.danno_caratteristica;
+  if (dc !== undefined) {
+    const sigle = new Set((dati.caratteristiche?.caratteristiche ?? []).map((c) => c.sigla));
+    const fascia = (x, k) => isOggetto(x) && isIntero(x.da) && (x.a === null || isIntero(x.a)) && isIntero(x[k]) && x[k] >= 0;
+    if (!Array.isArray(dc.fasce) || !dc.fasce.length || !dc.fasce.every((x) => fascia(x, 'bonus'))) err(F, 'danno_caratteristica.fasce', 'serve [{ da, a (intero o null), bonus ≥ 0 }]');
+    if (!Array.isArray(dc.tetto_per_livello) || !dc.tetto_per_livello.length || !dc.tetto_per_livello.every((x) => fascia(x, 'massimo'))) err(F, 'danno_caratteristica.tetto_per_livello', 'serve [{ da, a (intero o null), massimo ≥ 0 }]');
+    for (const k of ['senz_armi', 'magia']) if (!sigle.has(dc[k])) err(F, `danno_caratteristica.${k}`, `Caratteristica «${dc[k]}» sconosciuta`);
+    for (const [ab, c] of Object.entries(dc.caratteristica_per_abilita ?? {})) {
+      if (!(dati.abilita?.abilita ?? []).some((a) => a.nome === ab)) err(F, `danno_caratteristica.caratteristica_per_abilita.${ab}`, 'Abilità sconosciuta');
+      if (!sigle.has(c)) err(F, `danno_caratteristica.caratteristica_per_abilita.${ab}`, `Caratteristica «${c}» sconosciuta`);
+    }
   }
   // condizioni delle armi al tavolo (Giocatore §5.17, A.49)
   if (r.condizioni_armi !== undefined) {

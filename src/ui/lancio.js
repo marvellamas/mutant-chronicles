@@ -127,6 +127,9 @@ function risultato(ctx, inc, r) {
         h('div', {}, h('dt', {}, 'Concentrazione'), h('dd', {}, CONCENTRAZIONE[r.concentrazione] ?? 'da verificare')),
         r.tiro_per_colpire ? h('div', {}, h('dt', {}, 'Tiro per colpire'), h('dd', {}, `${r.tiro_per_colpire.abilita} ${numero(r.tiro_per_colpire.va)} (${segno(r.tiro_per_colpire.bonus)})`)) : null,
         r.contatto ? h('div', {}, h('dt', {}, 'Contatto'), h('dd', {}, `${r.contatto.abilita} ${numero(r.contatto.va)} (${segno(L.contatto.va)}) `, h('small', { class: 'nota' }, r.contatto.nota))) : null,
+        // Magia sez. 7, Giocatore §5.13: danno della versione con il bonus di SAG
+        ...(r.danno?.voci ?? []).map((x) => h('div', {}, h('dt', {}, x.colonna), h('dd', {}, h('strong', {}, x.testo),
+          r.danno.bonus ? h('small', { class: 'nota' }, ` (${x.base} ${segno(r.danno.bonus)} di ${r.danno.sigla})`) : null))),
         r.salvezza_bersaglio ? h('div', {}, h('dt', {}, 'Salvezza del bersaglio'), h('dd', {}, r.salvezza_bersaglio.testo,
           r.salvezza_bersaglio.mod_ps ? ` · Mod. PS ${r.salvezza_bersaglio.mod_ps}` : '',
           r.salvezza_bersaglio.talento ? ` · ${r.salvezza_bersaglio.talento.nome} ${segno(r.salvezza_bersaglio.talento.valore)}` : '')) : null),
