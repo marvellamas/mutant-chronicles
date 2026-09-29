@@ -89,3 +89,15 @@ test('cap. 3: le voci di dotazione trovano la scheda (sacco a pelo, razione, ten
     assert.ok(risolvi(vecchiaDotazione(id, id), cat).def, id);
   }
 });
+
+test('cap. 4: 11 voci con REP propria; Binocolo +1 Percezione per un uso (vale la scheda, non il «situazionale» del §2.16.7)', () => {
+  const tutte = deiFile('comunicazione');
+  assert.equal(tutte.length, 11);
+  assert.deepEqual(['CO', 'NC', 'NC'], ['comunicatore-personale', 'comunicatore-da-squadra', 'stazione-radio-portatile'].map((id) => r(`comunicazione:${id}`).reperibilita));
+  assert.equal(r('comunicazione:visore-termico').reperibilita, 'MR');
+  const b = r('comunicazione:binocolo').effetti[0];
+  assert.deepEqual([b.abilita, b.valore, b.ambito, b.uso], ['Percezione', 1, 'uso_specifico', 'dettagli a distanza']);
+  // la voce di dotazione del Binocolo legge la scheda: niente più effetto situazionale
+  const bin = risolvi(vecchiaDotazione('binocolo', 'Binocolo'), cat);
+  assert.deepEqual([bin.def?.peso, bin.def?.costo, bin.effetti[0].ambito], [0.8, 500, 'uso_specifico']);
+});

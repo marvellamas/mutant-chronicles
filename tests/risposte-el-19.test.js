@@ -6,7 +6,8 @@ import { calcolaScheda, bonusDannoCaratteristica, caratteristicaDanno } from '..
 import { profiloSenzArmi, calcolaAttaccoRavvicinato, vincoliRavvicinato, moltiplicatoreMagistrale } from '../src/attacco.js';
 import { inizializzaSessione, massimiSessione, ricaricaArma, variaMunizioni, allineaSessione, modificaSessione } from '../src/sessione.js';
 import { calcolaLancio } from '../src/lancio.js';
-import { soglieCarico } from '../src/carico.js';
+import { soglieCarico, pesoVoce } from '../src/carico.js';
+import { catalogo, risolvi } from '../src/equipaggiamento.js';
 import { vociDotazione, modelloAssegnato } from '../src/dotazioni.js';
 import { datiReali } from './helpers.js';
 import { MISHIMA_AGENTE } from './personaggi.js';
@@ -187,16 +188,19 @@ test('E&L 16: pistole corporative di base; Revolver commerciale senza nota; muni
   assert.equal(dati.dotazioni.corporativi['TODO(Davide)'], undefined);
 });
 
-test('E&L 15: Binocolo e Registratore audiovisivo con peso e prezzo; gli altri «da definire», non cedibili (A.34)', () => {
+test('E&L 15: Binocolo e Registratore audiovisivo con peso e prezzo (dalla scheda del cap. 4 dal 29/09); gli altri «da definire», non cedibili (A.34)', () => {
   const reg = dati.dotazioni.oggetti_dotazione;
-  assert.deepEqual([reg.binocolo.peso, reg.binocolo.costo, reg['registratore-audiovisivo'].peso, reg['registratore-audiovisivo'].costo], [0.8, 500, 0.2, 200]);
+  const cat = catalogo(dati);
+  // dal lotto del cap. 4 peso e prezzo sono nella scheda di catalogo collegata («rif»)
+  const scheda = (id) => cat.perRif.get(reg[id].rif);
+  assert.deepEqual([scheda('binocolo').peso, scheda('binocolo').costo, scheda('registratore-audiovisivo').peso, scheda('registratore-audiovisivo').costo], [0.8, 500, 0.2, 200]);
   assert.equal(dati.dotazioni['TODO(Davide)'], undefined);
-  // un oggetto con peso entra nel carico; uno senza resta «da definire»
+  // un oggetto con scheda entra nel carico; uno senza resta «da definire»
   const voci = vociDotazione({}, 'Agente', 'Mishima', dati);
   const bin = voci.find((v) => v.dotazione_id === 'binocolo');
-  if (bin) assert.equal(bin.personalizzato.peso, 0.8);
-  const senza = voci.find((v) => v.dotazione_id && !reg[v.dotazione_id].peso);
-  assert.ok(senza && senza.personalizzato.peso === undefined);
+  if (bin) assert.equal(pesoVoce(risolvi(bin, cat)), 0.8);
+  const senza = voci.find((v) => v.dotazione_id && !reg[v.dotazione_id].rif);
+  assert.ok(!senza || pesoVoce(risolvi(senza, cat)) === null);
 });
 
 // --- 19. Ricarica ------------------------------------------------------------------------------------

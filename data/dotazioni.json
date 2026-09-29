@@ -3762,7 +3762,8 @@
       "rif": "dotazioni_personali:torcia-elettrica"
     },
     "comunicatore-personale": {
-      "nome": "Comunicatore personale"
+      "nome": "Comunicatore personale",
+      "rif": "comunicazione:comunicatore-personale"
     },
     "corredo-igiene": {
       "nome": "Corredo personale per igiene e piccoli rammendi",
@@ -3786,24 +3787,11 @@
     },
     "binocolo": {
       "nome": "Binocolo",
-      "peso": 0.8,
-      "costo": 500,
-      "paragrafo": "Equipaggiamento 0.3 §4.2",
-      "effetti": [
-        {
-          "abilita": "Percezione",
-          "valore": 1,
-          "ambito": "situazionale",
-          "condizione": "Il Binocolo concede +1 VA a Percezione per esaminare dettagli lontani nelle condizioni previste dal manuale.",
-          "fonte": "Giocatore §2.16.7"
-        }
-      ]
+      "rif": "comunicazione:binocolo"
     },
     "registratore-audiovisivo": {
       "nome": "Registratore audiovisivo",
-      "peso": 0.2,
-      "costo": 200,
-      "paragrafo": "Equipaggiamento 0.3 §4.3"
+      "rif": "comunicazione:registratore-audiovisivo"
     },
     "corredo-sopravvivenza-ambientale": {
       "nome": "Corredo di sopravvivenza ambientale",
@@ -3819,14 +3807,16 @@
       "rif": "esplorazione:corredo-da-assalto-verticale"
     },
     "rilevatore-ambientale": {
-      "nome": "Rilevatore ambientale"
+      "nome": "Rilevatore ambientale",
+      "rif": "comunicazione:rilevatore-ambientale"
     },
     "abiti-eleganti": {
       "nome": "Abiti eleganti, comprese le calzature (completo aggiuntivo)",
       "rif": "dotazioni_personali:abiti-eleganti"
     },
     "monocolo-periscopico": {
-      "nome": "Monocolo periscopico"
+      "nome": "Monocolo periscopico",
+      "rif": "comunicazione:monocolo-periscopico"
     },
     "corredo-da-scasso": {
       "nome": "Corredo da scasso (Standard)"
@@ -3843,6 +3833,7 @@
     },
     "comunicatore-da-squadra": {
       "nome": "Comunicatore da squadra",
+      "rif": "comunicazione:comunicatore-da-squadra",
       "sostituisce": "comunicatore-personale"
     },
     "tenda-2-posti": {
@@ -3886,7 +3877,8 @@
       "nome": "Corredo elettronico e informatico (Standard)"
     },
     "kit-videosorveglianza": {
-      "nome": "Kit di videosorveglianza"
+      "nome": "Kit di videosorveglianza",
+      "rif": "comunicazione:kit-di-videosorveglianza"
     },
     "corredo-ricerca-documentale": {
       "nome": "Corredo di ricerca documentale (Standard)"
