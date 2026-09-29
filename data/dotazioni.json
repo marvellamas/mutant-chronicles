@@ -10,7 +10,7 @@
     "Ogni scelta deve rispettare i requisiti degli oggetti. Le dotazioni comuni e delle 25 Classi sono nei §§2.16.1–2.16.26; i modelli corporativi di base, i crediti iniziali e gli acquisti sono disciplinati nei §§2.16.27–2.16.29. I veicoli sono esclusi dalle dotazioni iniziali; il Direttore di Gioco decide se e quali fornire al gruppo secondo il §2.16.30.",
     "I profili degli oggetti e le relative regole si consultano nel Manuale degli Armamenti e nel Manuale degli Equipaggiamenti."
   ],
-  "_nota_oggetti_dotazione": "E&L del 29/09, risposta 15 (A.34): Binocolo (0,8 kg, 500 crediti, Equipaggiamento 0.3 §4.2) e Registratore audiovisivo (0,2 kg, 200 crediti, §4.3) hanno «peso» e «costo»; gli altri oggetti di oggetti_dotazione restano «da definire» (peso assente non è 0 kg, prezzo assente non dà credito di scambio) fino ai lotti dei cap. 2–6 dell’Equipaggiamento. Nessun oggetto della dotazione che non sia un armamento assegnato si cede nello scambio iniziale (§2.16.29).",
+  "_nota_oggetti_dotazione": "Voci della dotazione del §2.16 senza modello di armamento. Con «rif» hanno una scheda di catalogo (Manuale dell’Equipaggiamento 0.3, cap. 2–6, tools/lotti/lotto_equipaggiamento_03.mjs; Corredo di manutenzione da campo: Armamenti §7.13.7): nome della dotazione, peso, prezzo, Qualità, PI ed effetti dalla scheda, anche per i personaggi già salvati (risolvi() tramite dotazione_id). Senza «rif» restano «da definire» (A.34: peso assente non è 0 kg, prezzo assente non dà credito di scambio). Nessun oggetto della dotazione che non sia un armamento assegnato si cede nello scambio iniziale (§2.16.29).",
   "comune": {
     "paragrafo": "2.16.1",
     "oggetti": [
@@ -3742,31 +3742,39 @@
   },
   "oggetti_dotazione": {
     "abiti-comuni": {
-      "nome": "Abiti comuni, comprese le calzature"
+      "nome": "Abiti comuni, comprese le calzature",
+      "rif": "dotazioni_personali:abiti-comuni"
     },
     "zaino-da-viaggio": {
-      "nome": "Zaino da viaggio"
+      "nome": "Zaino da viaggio",
+      "rif": "dotazioni_personali:zaino-da-viaggio"
     },
     "cintura-attrezzata": {
-      "nome": "Cintura attrezzata"
+      "nome": "Cintura attrezzata",
+      "rif": "dotazioni_personali:cintura-attrezzata"
     },
     "borraccia": {
-      "nome": "Borraccia da un litro, piena d’acqua"
+      "nome": "Borraccia da un litro, piena d’acqua",
+      "rif": "dotazioni_personali:borraccia-da-un-litro"
     },
     "torcia-elettrica": {
-      "nome": "Torcia elettrica"
+      "nome": "Torcia elettrica",
+      "rif": "dotazioni_personali:torcia-elettrica"
     },
     "comunicatore-personale": {
       "nome": "Comunicatore personale"
     },
     "corredo-igiene": {
-      "nome": "Corredo personale per igiene e piccoli rammendi"
+      "nome": "Corredo personale per igiene e piccoli rammendi",
+      "rif": "dotazioni_personali:corredo-personale"
     },
     "utensile-multiuso": {
-      "nome": "Utensile multiuso"
+      "nome": "Utensile multiuso",
+      "rif": "dotazioni_personali:utensile-multiuso"
     },
     "accendino": {
-      "nome": "Accendino"
+      "nome": "Accendino",
+      "rif": "dotazioni_personali:accendino"
     },
     "sacco-a-pelo": {
       "nome": "Sacco a pelo"
@@ -3839,15 +3847,7 @@
     },
     "abiti-eleganti": {
       "nome": "Abiti eleganti, comprese le calzature (completo aggiuntivo)",
-      "effetti": [
-        {
-          "abilita": "Oratoria",
-          "valore": 1,
-          "ambito": "situazionale",
-          "condizione": "Gli Abiti eleganti concedono +1 VA a Oratoria negli ambienti formali appropriati, secondo la propria scheda.",
-          "fonte": "Giocatore §2.16.5"
-        }
-      ]
+      "rif": "dotazioni_personali:abiti-eleganti"
     },
     "monocolo-periscopico": {
       "nome": "Monocolo periscopico"
@@ -3863,16 +3863,7 @@
     },
     "abiti-da-viaggio": {
       "nome": "Abiti da viaggio, comprese le calzature (completo aggiuntivo)",
-      "effetti": [
-        {
-          "abilita": "Atletica",
-          "valore": 1,
-          "ambito": "uso_specifico",
-          "uso": "arrampicata ed equilibrio",
-          "condizione": "Gli Abiti da viaggio concedono +1 VA ad Atletica per arrampicarsi e mantenere l’equilibrio su terreno accidentato.",
-          "fonte": "Giocatore §2.16.10"
-        }
-      ]
+      "rif": "dotazioni_personali:abiti-da-viaggio"
     },
     "comunicatore-da-squadra": {
       "nome": "Comunicatore da squadra",
@@ -3900,19 +3891,11 @@
     },
     "corredo-manutenzione-campo": {
       "nome": "Corredo di manutenzione da campo",
-      "effetti": [
-        {
-          "abilita": "Tecnologia",
-          "valore": 2,
-          "ambito": "uso_specifico",
-          "uso": "riparazioni sul campo",
-          "condizione": "Il Corredo di manutenzione da campo concede +2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo di armi, armature, propulsori ed esoscheletri compatibili.",
-          "fonte": "Giocatore §2.16.13"
-        }
-      ]
+      "rif": "corredi_dispositivi:corredo-di-manutenzione-da-campo"
     },
     "lampada-frontale": {
       "nome": "Lampada frontale",
+      "rif": "dotazioni_personali:lampada-frontale",
       "sostituisce": "torcia-elettrica"
     },
     "cassetta-attrezzi": {
@@ -3961,18 +3944,11 @@
     },
     "completo-cerimoniale": {
       "nome": "Completo cerimoniale, comprese le calzature (profilo Abiti eleganti)",
-      "effetti": [
-        {
-          "abilita": "Oratoria",
-          "valore": 1,
-          "ambito": "situazionale",
-          "condizione": "L’abito cerimoniale usa il profilo degli Abiti eleganti: +1 VA a Oratoria nelle situazioni cerimoniali o formali appropriate.",
-          "fonte": "Giocatore §2.16.21"
-        }
-      ]
+      "rif": "dotazioni_personali:abiti-eleganti"
     },
     "lanterna-elettrica": {
       "nome": "Lanterna elettrica",
+      "rif": "dotazioni_personali:lanterna-elettrica",
       "sostituisce": "torcia-elettrica"
     },
     "focus-personale": {
@@ -4032,7 +4008,9 @@
     ],
     "_nota": "Abbinamenti profilo commerciale → modello corporativo di base, per Corporazione: { \"<Corporazione>\": { \"<rif commerciale>\": { \"rif\": \"<rif corporativo>\", \"munizioni\": \"<rif>\" } } }. I Freelance usano sempre il catalogo Commerciale.",
     "_nota_pistole": "E&L del 29/09, risposta 16 (A.33; E&L A.5.27, A.5.30): la Pistola semiautomatica di base corrisponde a HG10 (Bauhaus), Bolter 10 (Capitol), P500 (Cybertronic), Nemesis 100 (Fratellanza), Belliger (Imperiali), Ronin 25 AP (Mishima); i Freelance usano il modello commerciale. Il Revolver resta commerciale per tutti («commerciali»), senza nota. Munizioni: il totale della Classe, la capacità del modello assegnato.",
-    "commerciali": ["armi_distanza:revolver"],
+    "commerciali": [
+      "armi_distanza:revolver"
+    ],
     "abbinamenti": {
       "Bauhaus": {
         "armi_distanza:pistola-semiautomatica": {

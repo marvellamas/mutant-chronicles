@@ -203,8 +203,11 @@ export function vociDotazione(dotazione, classe, corporazione, dati) {
     const sotto = o.sotto ? dotazione?.sotto?.[id]?.trim() : '';
     // E&L 15 (A.34): il peso, se il manuale lo dà (Binocolo, Registratore audiovisivo); senza, «da definire»
     const personalizzato = { nome: sotto ? `${o.nome} (${sotto})` : o.nome, tipo: 'altro', ...(Number.isFinite(o.peso) ? { peso: o.peso } : {}) };
-    // gli effetti sui VA si leggono dai dati (oggetti_dotazione) attraverso dotazione_id
-    const stato = o.effetti?.length ? statoIniziale('altro', [], null, o.effetti) : null;
+    // gli effetti sui VA si leggono dai dati attraverso dotazione_id: dalla scheda di catalogo
+    // collegata (oggetti_dotazione[id].rif, Equipaggiamento 0.3), altrimenti dalla dotazione
+    const scheda = o.rif ? cat.perRif.get(o.rif) : null;
+    const effetti = scheda?.effetti ?? o.effetti;
+    const stato = effetti?.length ? statoIniziale(scheda?.tipo ?? 'altro', [], null, effetti) : null;
     return { uid, rif: null, personalizzato, stato, quantita: quantita ?? 1, note: '', dotazione_iniziale: true, dotazione_id: id };
   };
   const voceCatalogo = (uid, rif, quantita, note = '') => {

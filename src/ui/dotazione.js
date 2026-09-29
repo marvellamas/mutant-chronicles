@@ -102,7 +102,9 @@ function gruppoScelta(ctx, { gruppo, opzione, automatica }, d, imposta, cat, per
     for (const x of o.oggetti) {
       if (x.dotazione) {
         const r = ctx.dati.dotazioni.oggetti_dotazione[x.dotazione];
-        if (r.effetti?.length) parti.push(testoEffetto(r));
+        // con una scheda di catalogo (Equipaggiamento 0.3) gli effetti vengono da lì
+        const effetti = r.rif ? cat.perRif.get(r.rif)?.effetti : r.effetti;
+        if (effetti?.length) parti.push(testoEffetto({ ...r, effetti }));
         continue;
       }
       const m = modelloAssegnato(x.rif, ctx.scelte.corporazione, ctx.dati, cat);

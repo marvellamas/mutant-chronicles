@@ -1401,6 +1401,9 @@ function validaDotazioni(dati, err) {
     if (o?.sostituisce !== undefined && !(o.sostituisce in registro)) err(F, `${K}.sostituisce`, `"${o.sostituisce}" non è un oggetto di dotazione`);
     if (o?.sotto !== undefined && !isOggetto(sotto[o.sotto])) err(F, `${K}.sotto`, `"${o.sotto}" non è in sotto_scelte`);
     if (o?.effetti !== undefined) validaEffettiOggetto(o.effetti, F, K, nomiAbilita, err, ctxEffetti(dati));
+    // scheda di catalogo collegata (Equipaggiamento 0.3): deve esistere; peso ed effetti vengono da lì
+    if (o?.rif !== undefined && !cat.has(o.rif)) err(F, `${K}.rif`, `"${o.rif}" non esiste nel catalogo (data/equipaggiamento/)`);
+    if (o?.rif !== undefined && (o.effetti !== undefined || o.peso !== undefined)) err(F, K, 'con «rif» peso ed effetti vengono dalla scheda di catalogo: niente «peso» o «effetti» qui');
     for (const k of ['peso', 'costo']) if (o?.[k] !== undefined && !(typeof o[k] === 'number' && o[k] >= 0)) err(F, `${K}.${k}`, 'numero ≥ 0 atteso (senza il campo: «da definire»)');
   }
   for (const [i, rif] of (d.corporativi?.commerciali ?? []).entries()) if (!cat.has(rif)) err(F, `corporativi.commerciali[${i}]`, `"${rif}" non esiste nel catalogo`);

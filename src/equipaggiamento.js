@@ -391,14 +391,18 @@ export function separaEsemplare(voci, uid) {
  * catalogo», senza effetti.
  */
 export function risolvi(voce, cat) {
-  const def = voce.rif ? cat.perRif.get(voce.rif) ?? null : null;
+  // oggetto di dotazione con scheda di catalogo (Equipaggiamento 0.3, oggetti_dotazione[id].rif): peso,
+  // prezzo, Qualità, PI ed effetti dalla scheda, anche per le voci salvate prima; il nome resta
+  // quello della dotazione (porta l'ambiente scelto e le calzature comprese)
+  const schedaDotazione = !voce.rif && voce.dotazione_id ? cat.dotazione?.[voce.dotazione_id]?.rif ?? null : null;
+  const def = voce.rif ? cat.perRif.get(voce.rif) ?? null : schedaDotazione ? cat.perRif.get(schedaDotazione) ?? null : null;
   const fuoriCatalogo = !!voce.rif && !def;
   const tipo = def?.tipo ?? voce.personalizzato?.tipo ?? 'altro';
-  const nome = def?.nome ?? voce.personalizzato?.nome ?? (fuoriCatalogo ? voce.rif : 'Oggetto');
+  const nome = (schedaDotazione ? voce.personalizzato?.nome : null) ?? def?.nome ?? voce.personalizzato?.nome ?? (fuoriCatalogo ? voce.rif : 'Oggetto');
   const effetti = fuoriCatalogo ? [] : def?.effetti ?? cat.dotazione?.[voce.dotazione_id]?.effetti ?? voce.personalizzato?.effetti ?? [];
   const stati = statiPer(tipo, effetti);
   const attivo = !fuoriCatalogo && ATTIVI.has(voce.stato) && stati.includes(voce.stato);
-  return { voce, uid: voce.uid, def, tipo, nome, fuoriCatalogo, attivo, personalizzato: !voce.rif, effetti, stati };
+  return { voce, uid: voce.uid, def, tipo, nome, fuoriCatalogo, attivo, personalizzato: !voce.rif && !def, effetti, stati };
 }
 
 // ---------------------------------------------------------------------------
