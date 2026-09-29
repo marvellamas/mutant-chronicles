@@ -650,3 +650,35 @@ Fatto il 26 settembre 2026, commit «Lotto 12 del catalogo: artefatti e sintoniz
     Specializzazione Armi al Plasma»); Hammershot → Pistole.
   - **Ricarica:** Hammershot a tamburo (famiglia Revolver, E&L 19: una operazione riempie il
     tamburo); KEP 808 a cella.
+
+## Manuale dell'Equipaggiamento 0.3: ricognizione dei capitoli 2, 3, 4 e 6 (29/09/2026)
+
+Fonte: Google Doc «Manuale dell'Equipaggiamento», edizione 0.3 (testo in `docs/manuali-txt/equipaggiamento.md`, identico alla versione del 29/09 13:02 UTC). I capitoli 5, 7 e 8 non sono ancora scritti. Scheda standard del §1.10: si riportano solo i campi pertinenti; un dato necessario ma non definito «verrà integrato» e non vale 0 (§1.11, E&L 4 e 15). Nei dati: campo assente, mai 0.
+
+| Cap. | Sezioni | Voci | Campi nelle schede | Effetti numerici |
+|---|---|---|---|---|
+| 2 Dotazioni personali | 2.1 Contenitori e trasporto (6), 2.3 Illuminazione (4 + batteria di servizio), 2.4 Abbigliamento (6), 2.5 Oggetti quotidiani (3) | 19 (+ la batteria di servizio, già nel catalogo come `accessori_armi:batteria-di-servizio`) | peso, costo, REP (tutte CO); niente Qualità, PS Integrità, PI | Abiti da viaggio +1 Atletica (uso); Abiti eleganti +1 Oratoria (situazionale); Completo invernale e per caldo estremo +2 PS Tempra (uso) |
+| 3 Esplorazione e sopravvivenza | 3.1 Accampamento (6), 3.2 Viveri e cucina (7), 3.3 Orientamento e arrampicata (3), 3.4 Corredo di sopravvivenza ambientale (1), 3.5 Protezioni ambientali (4) | 21 | peso, costo, REP; Qualità, PS Integrità e PI solo per Corredo da assalto verticale (6 PI) e Corredo di sopravvivenza ambientale (4 PI) | Sacco a pelo invernale +2 PS Tempra (uso); Corredo di orientamento +1 Sopravvivenza (uso); assalto verticale +2 Atletica (uso); sopravvivenza ambientale +2 Sopravvivenza (situazionale, ambiente scelto); Maschera filtrante +2 PS Tempra (uso); Tuta anticontaminazione +2 PS Tempra (uso) |
+| 4 Comunicazione e rilevamento | 4.1 Comunicatori (3), 4.2 Ottiche e visori (4), 4.3 Rilevamento e sorveglianza (4) | 11 | peso, costo, REP; niente Qualità, PS Integrità, PI | Binocolo +1 Percezione (uso: dettagli a distanza) |
+| 6 Equipaggiamento sanitario | 6.1 Kit di pronto soccorso, 6.2 Cartucce, 6.3 UMC, 6.4 Dispositivi portatili, 6.5 Diagnostica e chirurgia, 6.6 Farmaci e antidoti | 16 già nel catalogo (`sanitario.json`, dal §7.19 degli Armamenti: stessi valori), 7 nuove (ricariche dei kit Standard e Professionale, contenitore di ricambio dello Spray, set chirurgico e confezione da cinque, Farmaco terapeutico, Antidoto) | PI, Qualità, PS Integrità, REP, costo; **nessun peso** | Farmaco terapeutico +2 PS Tempra (uso); i bonus di kit e diagnostica sono già nel catalogo |
+
+Testuali (promemoria, nessun numero applicabile dalla scheda): contenitori, luci, poncho, tende e telo, materassino, viveri, depuratore, respiratore, comunicatori, monocolo, visori (tolgono penalità di luce: situazioni del tavolo), registratore, videosorveglianza, allarme, rilevatore, antidoto.
+
+### Le 44 voci «senza scheda» di A.34
+
+Trovano la scheda in questi capitoli **27 voci**, più una già nel catalogo degli Armamenti, per un totale di **28**:
+
+- **Cap. 2 (13):** abiti comuni, zaino da viaggio, cintura attrezzata, borraccia, torcia elettrica, corredo personale, utensile multiuso, accendino, abiti eleganti, abiti da viaggio, lampada frontale, lanterna elettrica, completo cerimoniale (profilo Abiti eleganti).
+- **Cap. 3 (7):** sacco a pelo, razione da viaggio, tenda da 2 posti, corredo di orientamento, corredo da assalto verticale, corredo di sopravvivenza ambientale, maschera filtrante.
+- **Cap. 4 (7):** comunicatore personale, comunicatore da squadra, binocolo, monocolo periscopico, registratore audiovisivo, kit di videosorveglianza, rilevatore ambientale.
+- **Cap. 6 (1):** ricarica per il Kit trauma (profilo Professionale: 300 per 5 applicazioni).
+- **Già nel catalogo degli Armamenti (1):** corredo di manutenzione da campo (§7.13.7, `corredi_dispositivi`).
+
+**Restano senza scheda 16:** corredo da scasso, da camuffamento, agricolo, artigianale professionale, elettronico e informatico, di ricerca documentale, di analisi da campo, amministrativo, scenico, rituale; cassetta degli attrezzi; strumento musicale portatile; terminale per produzione multimediale; testo dottrinale e simbolo; focus personale. Sono strumenti professionali o dispositivi specialistici: aspettano i capitoli 5 e 7.
+
+### Scelte dei lotti
+
+- Un file per capitolo: `dotazioni_personali.json` (cap. 2), `esplorazione.json` (cap. 3), `comunicazione.json` (cap. 4). Il cap. 6 aggiorna `sanitario.json`, che ha già le stesse schede: niente doppioni.
+- Le voci di dotazione (`data/dotazioni.json → oggetti_dotazione`) ricevono `rif` verso la scheda di catalogo. `risolvi()` (`src/equipaggiamento.js`) legge la scheda attraverso `dotazione_id`, quindi anche i personaggi già salvati vedono peso, prezzo, Qualità e PI al caricamento. Il nome resta quello della dotazione, perché porta l'ambiente scelto.
+- Se l'effetto della scheda contraddice quello scritto dal §2.16, vale la scheda del manuale e la differenza si segnala.
+- Acquistabili: sono voci del catalogo Commerciale con prezzo, quindi entrano da sole negli acquisti iniziali (§2.16.29: «catalogo della propria Corporazione») e nell'elenco dell'inventario al tavolo.
