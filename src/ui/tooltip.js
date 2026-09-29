@@ -37,8 +37,10 @@ export function info(tipo, id, testo = id) {
 const contenutiValore = new WeakMap();
 
 /**
- * Valore con tooltip di contenuto libero { titolo, sottotitolo, sezioni: [{testo}], tabella }:
- * la scomposizione dei valori effettivi della scheda. Stesso comportamento dei nomi (tocco, tastiera).
+ * Valore con tooltip di contenuto libero { titolo, sottotitolo, provenienza, provenienze, sezioni: [{testo}], tabella }:
+ * la scomposizione dei valori effettivi della scheda. `provenienza` { totale, righe } è quella del
+ * motore (src/provenienza.js); `provenienze` [{ etichetta, provenienza, totale? }] per più valori
+ * nello stesso tooltip (Passo · Corsa · Scatto). Stesso comportamento dei nomi (tocco, tastiera).
  */
 export function infoValore(figli, contenuto, { classe = '' } = {}) {
   const el = h('button', { type: 'button', class: `voce-info valore-info ${classe}`.trim(), dataset: { infoTipo: 'valore' } }, figli);
@@ -189,12 +191,35 @@ function contenuto(c, id, macro = null, livelloBase = null) {
   return [
     h('p', { class: 'tooltip-titolo' }, c.titolo, macro ? ' ' : null, pallini(livelloBase), livelloBase ? ' ' : null, etichettaMacro(macro)),
     c.sottotitolo ? h('p', { class: 'tooltip-sottotitolo' }, c.sottotitolo) : null,
-    c.sezioni.map((s) => paragrafi(s.testo, s.etichetta)),
+    c.provenienza ? listaProvenienza(c.provenienza) : null,
+    (c.provenienze ?? []).map((p) => [h('p', { class: 'tooltip-etichetta' }, p.etichetta), listaProvenienza(p.provenienza, p.totale)]),
+    (c.sezioni ?? []).map((s) => paragrafi(s.testo, s.etichetta)),
     c.tabella ? h('div', { class: 'tooltip-tabella' },
       h('p', { class: 'tooltip-etichetta' }, c.tabella.titolo),
       tabella(c.tabella.colonne, c.tabella.righe)) : null,
     c.apriScheda ? h('button', { type: 'button', class: 'btn tooltip-apri', onclick: () => apriScheda(id) }, 'Apri scheda completa') : null,
   ];
+}
+
+const segnoProv = (v) => (typeof v !== 'number' ? String(v) : v < 0 ? `−${-v}` : `+${v}`);
+
+/**
+ * Provenienza di un valore calcolato (src/provenienza.js): una colonna, fonte a sinistra con la nota
+ * sotto, valore con il segno allineato a destra; le righe che non contano attenuate (barrate se
+ * l'oggetto è Rotto), il dettaglio di una riga rientrato; il totale in grassetto in fondo.
+ */
+function listaProvenienza(p, etichettaTotale = 'Totale') {
+  const riga = (x, sotto = false) => [
+    h('li', { class: `prov-riga${x.escluso ? ' escluso' : ''}${x.barrato ? ' barrato' : ''}${sotto ? ' sotto' : ''}` },
+      h('span', { class: 'prov-fonte' }, h('span', { class: 'prov-nome' }, x.fonte), x.nota ? h('span', { class: 'prov-nota' }, x.nota) : null),
+      h('span', { class: 'prov-valore' }, segnoProv(x.valore))),
+    ...(x.dettaglio ?? []).map((y) => riga(y, true)),
+  ];
+  return h('ul', { class: 'tooltip-provenienza' },
+    p.righe.map((x) => riga(x)),
+    h('li', { class: 'prov-riga prov-totale' },
+      h('span', { class: 'prov-fonte' }, etichettaTotale),
+      h('span', { class: 'prov-valore' }, p.totale === null || p.totale === undefined ? '—' : String(p.totale))));
 }
 
 function paragrafi(testo, etichetta) {

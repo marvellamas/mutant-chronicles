@@ -11,7 +11,7 @@ import { classeMacrofamiglia } from '../palette.js';
 import { formulaScomposizione } from '../condizioni.js';
 import { colore, riempimento, condizioniAttiveAbilita } from '../interfaccia.js';
 import { descriviFerite } from '../sessione.js';
-import { testoProvenienzaAR, statoIntegrita } from '../protezione.js';
+import { statoIntegrita } from '../protezione.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
 import { testoDanno } from '../stampa.js';
 import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto } from '../equipaggiamento.js';
@@ -248,21 +248,22 @@ function pilloleAR(ctx) {
   const ar = eq?.arEffettiva ?? eq?.ar;
   if (!ar) return null;
   const R = ctx.dati.regole.ar ?? {};
-  const titolo = [
-    `AR ${ar.totale}${ar.magica ? `, di cui ${ar.magica} magica` : ''}: ${testoProvenienzaAR(ar)}.`,
-    ...ar.contro.map((c) => `Contro ${c.contro}: +${c.valore} (${c.fonte}), il maggiore fra scudo e armatura.`),
-    ...ar.esclusi.map((x) => `${x.etichetta}: ${x.motivo}.`),
-    'Elmetti: nessuna AR (Armamenti §7.21.1).',
-    R.promemoria_cumulo_magia ?? null,
-  ].filter(Boolean).join('\n');
+  const sottotitoli = {
+    totale: 'Contro danno Naturale e Magico (§5.13, §5.24)',
+    magica: 'Contro danno Etereo vale solo la parte magica (§5.24)',
+  };
   // A.48: Tecniche Interiori che danno AR, accese al tavolo (3 Round), per chi le possiede
   const possedute = new Set((ctx.tab.scheda.tecniche ?? []).map((t) => t.id));
   const tecniche = (R.tecniche ?? []).filter((t) => possedute.has(t.tecnica));
   const accese = new Set(ctx.sessione?.condizioniOggetti ?? []);
   return [
-    h('div', { class: 'pillole-ar', title: titolo, 'aria-label': `Armatura. ${titolo}` },
-      ar.valori.map((v) => h('span', { class: `pillola-ar${v.principale ? ' principale' : ''}` },
-        h('span', { class: 'etichetta-ar' }, v.etichetta), h('strong', {}, String(v.valore))))),
+    h('div', { class: 'pillole-ar', role: 'group', 'aria-label': 'Armatura' },
+      ar.valori.map((v) => infoValore([h('span', { class: 'etichetta-ar' }, v.etichetta), h('strong', {}, String(v.valore))], {
+        titolo: `${v.etichetta === 'AR' ? 'AR' : `AR ${v.etichetta}`}: ${v.valore}`,
+        sottotitolo: sottotitoli[v.id] ?? `Contro ${v.id.replace(/^contro:/, '')}: l’AR totale più la protezione specifica (§7.11.4, §7.4.3)`,
+        provenienza: v.provenienza,
+        sezioni: v.id === 'totale' && R.promemoria_cumulo_magia ? [{ testo: R.promemoria_cumulo_magia }] : [],
+      }, { classe: `pillola-ar${v.principale ? ' principale' : ''}` }))),
     tecniche.length ? h('div', { class: 'pillole-condizionali tecniche-ar' }, tecniche.map((t) => {
       const chiave = `tecnica:${t.tecnica}`;
       const nome = ctx.dati.tecniche_interiori.tecniche.find((x) => x.id === t.tecnica)?.nome ?? t.tecnica;
@@ -488,7 +489,7 @@ const FONTI = { regole: 'regole', equipaggiamento: 'equipaggiamento', oggetto: '
  * valore da regole: rosso ▼ (malus) o verde ▲ (bonus); il segno resta leggibile senza colore.
  * Con più di una voce, un tocco o il passaggio del mouse mostra la scomposizione.
  */
-function valoreEffettivo(nome, effettivo, daRegole, scomposizione = [], { pillola = false, dettaglio = null, disponibili = [], nonCumulati = [] } = {}) {
+function valoreEffettivo(nome, effettivo, daRegole, scomposizione = [], { pillola = false, dettaglio = null, disponibili = [], nonCumulati = [], provenienza = null } = {}) {
   if (effettivo === null || effettivo === undefined) return '—';
   const diff = daRegole === null || daRegole === undefined ? 0 : effettivo - daRegole;
   const verso = diff < 0 ? 'malus' : diff > 0 ? 'bonus' : '';
@@ -497,22 +498,36 @@ function valoreEffettivo(nome, effettivo, daRegole, scomposizione = [], { pillol
     verso ? h('span', { class: 'sr' }, ` (${segno(diff)} rispetto al valore da regole ${numero(daRegole)})`) : null];
   // pillola: il VA finale in evidenza, sempre toccabile (anche con la sola voce «da regole»)
   const classe = `val-eff${pillola ? ' pillola-va' : ''} ${verso}`.trim();
-  if (scomposizione.length <= 1 && !pillola) return h('span', { class: classe }, figli);
+  if (scomposizione.length <= 1 && !pillola && !provenienza) return h('span', { class: classe }, figli);
+  // con la provenienza del motore (src/provenienza.js) la lista sostituisce formula e tabella; i bonus
+  // non cumulati sono già righe della lista
   return infoValore(figli, {
     titolo: `${nome}: ${numero(effettivo)}`,
     sottotitolo: `Valore da regole ${numero(daRegole)}`,
+    provenienza,
     sezioni: [
       dettaglio ? { etichetta: 'Da regole', testo: dettaglio } : null,
-      scomposizione.length > 1 ? { testo: formulaScomposizione(nome, scomposizione) } : null,
+      scomposizione.length > 1 && !provenienza ? { testo: formulaScomposizione(nome, scomposizione) } : null,
       // effetti situazionali con la condizione spenta (docs/effetti-oggetti.md)
       ...disponibili.map((e) => ({ etichetta: 'Disponibile', testo: `${segno(e.valore)} ${e.oggetto} — attiva la condizione (tab Abilità, «Condizioni degli oggetti»)${e.condizione ? `. ${e.condizione}` : ''}` })),
-      ...nonCumulati.map((e) => ({ etichetta: 'Non si somma', testo: `${segno(e.valore)} ${e.oggetto}: un solo modificatore degli strumenti per Prova (Giocatore §1.4.1).` })),
+      ...(provenienza ? [] : nonCumulati).map((e) => ({ etichetta: 'Non si somma', testo: `${segno(e.valore)} ${e.oggetto}: un solo modificatore degli strumenti per Prova (Giocatore §1.4.1).` })),
     ].filter(Boolean),
-    tabella: {
+    tabella: provenienza ? undefined : {
       titolo: 'Scomposizione', colonne: ['Voce', 'Valore', 'Fonte'],
       righe: scomposizione.map((x, i) => ({ Voce: x.etichetta, Valore: i ? segno(x.valore) : numero(x.valore), Fonte: FONTI[x.fonte] ?? x.fonte })),
     },
   }, { classe });
+}
+
+/** Danno dell'arma con il tooltip della provenienza (motore: w.provenienzaDanno); senza, il testo del bonus. */
+function dannoConProvenienza(a, testo) {
+  if (!a.provenienzaDanno) return h('strong', { title: testoBonusCaratteristica(a.bonusCaratteristica) ?? null }, testo);
+  return infoValore(h('strong', {}, testo), {
+    titolo: `Danno (${a.nome}): ${testo}`,
+    sottotitolo: 'Dado dell’arma e bonus fissi, per ogni colpo (§5.13)',
+    provenienza: { ...a.provenienzaDanno, totale: testo },
+    sezioni: [],
+  }, { classe: 'valore-danno' });
 }
 
 /**
@@ -592,7 +607,7 @@ function tabIdentita(ctx, d) {
           h('tbody', {}, d.salvezze.map((x) => h('tr', {},
             h('th', { scope: 'row' }, x.nome), h('td', {}, x.caratteristica),
             h('td', { class: 'cella-va', title: x.limitato ? `Limitato a ${x.tetto} (§1.2.3)` : null },
-              valoreEffettivo(x.nome, x.effettivo, x.totale, x.scomposizione, { pillola: true }), x.limitato ? '*' : null))))),
+              valoreEffettivo(x.nome, x.effettivo, x.totale, x.scomposizione, { pillola: true, provenienza: x.provenienza }), x.limitato ? '*' : null))))),
         d.salvezze.some((x) => x.effettivo !== x.totale) ? h('p', { class: 'nota' }, 'Con le condizioni della sessione (Ferite, Affaticamento, Stati).') : null,
         usiSalvezze(ctx, d.salvezze))),
 
@@ -661,8 +676,8 @@ function tabAbilita(ctx, d) {
         h('td', { class: 'dettaglio' }, segno(a.mod)), h('td', { class: 'dettaglio' }, String(a.base)), h('td', { class: 'dettaglio' }, String(a.corporazione)),
         h('td', { class: 'dettaglio' }, String(a.avanzamento)), h('td', { class: 'dettaglio', title: a.equip ? 'Equipaggiamento indossato (§7.11.1)' : null }, a.equip ? segno(a.equip) : '0'),
         h('td', { class: 'cella-va' }, h('span', { class: 'va-con-usi' }, valoreEffettivo(a.nome, a.effettivo, a.totale, a.scomposizione, {
-          pillola: true, dettaglio: `${segno(a.mod)} Mod + ${a.base} Base + ${a.corporazione} Corp + ${a.avanzamento} Avanz = ${a.totale}`,
-          disponibili: a.disponibili, nonCumulati: a.nonCumulati,
+          pillola: true, dettaglio: a.provenienza ? null : `${segno(a.mod)} Mod + ${a.base} Base + ${a.corporazione} Corp + ${a.avanzamento} Avanz = ${a.totale}`,
+          disponibili: a.disponibili, nonCumulati: a.nonCumulati, provenienza: a.provenienza,
         }), valoriUso(a.nome, a.usiSpecifici))))))));
   const tutte = condizioniAttiveAbilita(ctx.tab.scheda, ctx.dati);
   const condizioni = tutte.filter((c) => c.fonte !== 'uso');
@@ -711,11 +726,17 @@ function pillolaTavolo(titolo, parti, formato = numero) {
   return infoValore(figli, {
     titolo: `${titolo}: ${parti.map((p) => `${p.nome ? `${p.nome} ` : ''}${p.v.effettivo === null ? '—' : formato(p.v.effettivo)}`).join(' · ')}`,
     sottotitolo: `Valore da regole ${parti.map((p) => formato(p.v.daRegole)).join(' · ')}`,
-    sezioni: parti.map((p) => ({
-      etichetta: p.nome || null,
-      testo: [p.v.effettivo === null ? 'non disponibile' : formulaScomposizione(p.nome || titolo, p.v.scomposizione), ...p.v.note].join('\n'),
-    })),
-    tabella: parti.length === 1 ? {
+    // provenienza del motore (src/condizioni.js → valoriTavolo): una lista per valore, poi le note
+    ...(parti.every((p) => p.v.provenienza) ? {
+      provenienze: parti.map((p) => ({ etichetta: p.nome || titolo, provenienza: { ...p.v.provenienza, totale: p.v.provenienza.totale === null ? null : formato(p.v.provenienza.totale) } })),
+      sezioni: parti.flatMap((p) => p.v.note.map((n) => ({ etichetta: p.nome || null, testo: n }))),
+    } : {
+      sezioni: parti.map((p) => ({
+        etichetta: p.nome || null,
+        testo: [p.v.effettivo === null ? 'non disponibile' : formulaScomposizione(p.nome || titolo, p.v.scomposizione), ...p.v.note].join('\n'),
+      })),
+    }),
+    tabella: parti.length === 1 && !parti[0].v.provenienza ? {
       titolo: 'Scomposizione', colonne: ['Voce', 'Valore', 'Fonte'],
       righe: parti[0].v.scomposizione.map((x, i) => ({ Voce: x.etichetta, Valore: i ? segno(x.valore) : formato(x.valore), Fonte: FONTI[x.fonte] ?? x.fonte })),
     } : undefined,
@@ -755,7 +776,7 @@ function tabCombattimento(ctx, d) {
       // con la colonna di sinistra (tab a sinistra, da 900 px) i PV sono già lì: qui non si ripetono
       contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true, classe: 'riquadro-pv pv-pm-identita', extra: pilloleAR(ctx) }),
       d.difese ? h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Difese'),
-        h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), valoreEffettivo('Difese', d.difese.effettivo, d.difese.totale, d.difese.scomposizione, { pillola: true })),
+        h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), valoreEffettivo('Difese', d.difese.effettivo, d.difese.totale, d.difese.scomposizione, { pillola: true, provenienza: d.difese.provenienza })),
         h('p', { class: 'nota' }, `(${d.difese.caratteristica}) con l’equipaggiamento e le condizioni della sessione`),
         // §3.5.5, Disciplina Guardia: bonus a Difese contro gli attacchi ravvicinati
         ...talentiAttacco(ctx.tab.scheda, ctx.dati, 'difese_ravvicinate').filter((t) => t.e.va).map((t) => h('p', { class: 'nota' },
@@ -778,8 +799,8 @@ function tabCombattimento(ctx, d) {
               p.tipo === 'elmetto' ? 'Elmetto' : p.categoria !== p.categoriaBase && p.categoriaBase ? `${p.categoriaBase} → ${p.categoria}` : p.categoria ?? p.taglia ?? '—'),
             h('td', { title: p.parata ? `Difese ${p.parata.difese} + modificatori dello Scudo ${segno(p.parata.modificatori.ravvicinata)} / ${segno(p.parata.modificatori.distanza)} (§7.4.11)` : null },
               p.parata ? [
-                valoreEffettivo(`Parata ravvicinata (${p.nome})`, p.parata.ravvicinataEffettiva ?? p.parata.ravvicinata, p.parata.daRegole, p.parata.scomposizioneRavvicinata), ' ravv. · ',
-                valoreEffettivo(`Parata a distanza (${p.nome})`, p.parata.distanzaEffettiva ?? p.parata.distanza, p.parata.daRegole, p.parata.scomposizioneDistanza), ' dist.',
+                valoreEffettivo(`Parata ravvicinata (${p.nome})`, p.parata.ravvicinataEffettiva ?? p.parata.ravvicinata, p.parata.daRegole, p.parata.scomposizioneRavvicinata, { provenienza: p.parata.provenienzaRavvicinata }), ' ravv. · ',
+                valoreEffettivo(`Parata a distanza (${p.nome})`, p.parata.distanzaEffettiva ?? p.parata.distanza, p.parata.daRegole, p.parata.scomposizioneDistanza, { provenienza: p.parata.provenienzaDistanza }), ' dist.',
               ] : '—'),
             h('td', {}, testoPenalitaTab({ ...p.penalita, movimento_q: (p.penalita?.movimento_q ?? 0) + (p.mov ?? 0) || undefined })),
             h('td', {}, p.forRichiesta ? `${p.forRichiesta}${p.forMancante ? ` (−${p.forMancante} VA${p.tipo === 'scudo' ? ' a Parate e attacchi con lo Scudo' : ''})` : ''}` : '—')),
@@ -980,15 +1001,15 @@ function schedaArma(ctx, a) {
       h('input', { type: 'checkbox', checked: !!a.statoAlternativo.acceso, onchange: () => ctx.azioni.condizioneOggetto(a.statoAlternativo.chiave) }),
       h('span', {}, h('strong', {}, a.statoAlternativo.nome.replace(/^./, (c) => c.toUpperCase())), h('small', {}, ` · cambiare costa ${a.statoAlternativo.costo}`))) : null,
     h('div', { class: 'arma-valori' },
-      h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), a.va === null ? h('strong', {}, '—') : valoreEffettivo(`VA per colpire (${a.nome})`, a.vaEffettivo ?? a.va, a.vaDaRegole ?? a.va, a.scomposizione, { pillola: true })),
-      h('p', {}, h('span', { class: 'sigla' }, 'Danno '), h('strong', { title: testoBonusCaratteristica(a.bonusCaratteristica) ?? null }, dannoTesto)),
+      h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), a.va === null ? h('strong', {}, '—') : valoreEffettivo(`VA per colpire (${a.nome})`, a.vaEffettivo ?? a.va, a.vaDaRegole ?? a.va, a.scomposizione, { pillola: true, provenienza: a.provenienza })),
+      h('p', {}, h('span', { class: 'sigla' }, 'Danno '), dannoConProvenienza(a, dannoTesto)),
       a.ac !== null && a.ac !== 1 ? h('p', {}, h('span', { class: 'sigla', title: 'Applicazioni di danno per colpo a segno' }, 'AC '), a.ac === 'munizione' ? (mr ? String(mr.ac) : 'dalla munizione') : String(a.ac)) : null,
       mr ? h('p', {}, h('span', { class: 'sigla', title: 'Raggio di scoppio della munizione (§5.10)' }, 'RS '), `${mr.rs_q} Q`) : null,
       a.portataQ ? h('p', {}, h('span', { class: 'sigla' }, 'Portata '), `${a.portataQ} Q`) : null,
       a.gittataQ ? h('p', {}, h('span', { class: 'sigla' }, 'Gittata '), `${a.gittataQ} Q`, a.gittataFormula ? h('small', { class: 'sigla' }, ` (${a.gittataFormula})`) : null) : null,
       a.inc ? h('p', {}, h('span', { class: 'sigla', title: 'Affidabilità (tabella di Inceppamento)' }, 'INC '), String(a.inc)) : null,
       a.parata ? h('p', {}, h('span', { class: 'sigla' }, 'Parata '),
-        h('strong', {}, valoreEffettivo(`Parata (${a.nome})`, a.parata.vaEffettivo ?? a.parata.va, a.parata.vaDaRegole ?? a.parata.va, a.parata.scomposizione)),
+        h('strong', {}, valoreEffettivo(`Parata (${a.nome})`, a.parata.vaEffettivo ?? a.parata.va, a.parata.vaDaRegole ?? a.parata.va, a.parata.scomposizione, { provenienza: a.parata.provenienza })),
         a.parata.distanza !== null && a.parata.distanza !== undefined ? h('small', { class: 'sigla', title: 'Parata a distanza con un’arma: −8 VA (Giocatore §5.9)' }, ` · a distanza ${numero(a.parata.distanzaEffettiva ?? a.parata.distanza)}`) : null) : null),
     a.componenti.length ? h('p', { class: 'nota' }, a.componenti.map((c) => `${c.nome} ${segno(c.valore)}`).join(' · '),
       a.bonusDanno ? ` · danno +${a.bonusDanno} (${a.specializzazione})` : null,

@@ -530,6 +530,17 @@ dl.voci.in-linea dt::after { content: ":"; }
 .tooltip .tabella { font-size: 0.8rem; }
 .tooltip .tabella th { text-transform: none; letter-spacing: normal; }
 .tooltip-apri { margin-top: 0.5rem; min-height: 2rem; padding: 0.3rem 0.7rem; }
+/* provenienza dei valori calcolati (src/provenienza.js): una colonna, fonte a sinistra, valore a destra, totale in fondo */
+.tooltip-provenienza { list-style: none; margin: 0.4rem 0; padding: 0; min-width: 15rem; font-size: 0.85rem; }
+.prov-riga { display: flex; align-items: baseline; justify-content: space-between; gap: 0.75rem; padding: 0.2rem 0; border-bottom: 1px solid var(--bordo); }
+.prov-fonte { display: flex; flex-direction: column; min-width: 0; }
+.prov-nota { color: var(--tenue); font-size: 0.75rem; line-height: 1.25; }
+.prov-valore { font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; min-width: 2.5ch; }
+.prov-riga.sotto { padding-left: 0.9rem; font-size: 0.78rem; color: var(--tenue); border-bottom-style: dotted; }
+.prov-riga.escluso { color: var(--tenue); }
+.prov-riga.barrato .prov-nome, .prov-riga.barrato .prov-valore { text-decoration: line-through; }
+.prov-totale { font-weight: 700; border-bottom: 0; border-top: 2px solid var(--testo); margin-top: 0.1rem; }
+@media (pointer: coarse) { .tooltip-provenienza { font-size: 0.95rem; } .prov-riga { padding: 0.3rem 0; } }
 
 .pannello-scheda {
   width: min(760px, calc(100vw - 16px));

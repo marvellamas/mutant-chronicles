@@ -7,6 +7,7 @@ import { descriviFerite } from './sessione.js';
 import { calcolaCarico } from './carico.js';
 import { aggiungiDanno } from './equipaggiamento.js';
 import { calcolaAR, oggettiRotti } from './protezione.js';
+import { riga, provenienza, righeDaScomposizione, righeRegoleAbilita, righeRegoleSalvezza } from './provenienza.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 
@@ -171,6 +172,10 @@ function vociCondizioniAbilita(condizioni, abilita, dati) {
  *   scomposizioneRavvicinata, scomposizioneDistanza;
  * - condizioni: le condizioni attive; carico: il carico trasportato (src/carico.js), con la sessione.
  * Ogni scomposizione è [{ etichetta, valore, fonte: 'regole'|'equipaggiamento'|'ferite'|'affaticamento'|'stato'|'carico' }].
+ * Accanto, `provenienza` { totale, righe: [{ fonte, valore, nota? }] } (src/provenienza.js): gli stessi
+ * contributi con il valore da regole scomposto nelle sue voci (Caratteristica, Addestramento,
+ * Corporazione, Classe, Avanzamento) e le righe che non contano ma si vedono (oggetti a 0, Rotti,
+ * bonus non cumulabili). È quella che i tooltip della SD stampano.
  */
 export function applicaCondizioni(scheda, sessione, dati) {
   const condizioni = condizioniAttive(sessione, dati, scheda);
@@ -197,8 +202,18 @@ export function applicaCondizioni(scheda, sessione, dati) {
       ...cond,
     ];
     const effettivo = somma(scomposizione);
+    const righe = [
+      ...righeRegoleAbilita(a, scheda),
+      ...(a.componentiEquip ?? (a.equip ? [voce('Equipaggiamento', a.equip, 'equipaggiamento')] : [])).map((c) => (c.effetto && rotti.has(c.uid)
+        ? { ...riga(c.etichetta, c.valore, 'Rotto: non conta'), escluso: true, barrato: true }
+        : riga(c.etichetta, c.valore, c.effetto ? 'effetto dell’oggetto' : 'equipaggiamento'))),
+      ...(scheda.equipaggiamento?.zeriEquip?.[a.nome] ?? []).map((z) => riga(z.etichetta, z.valore, z.nota)),
+      ...righeDaScomposizione(ogg.voci),
+      ...ogg.nonCumulati.map((e) => ({ ...riga(`${e.oggetto} (condizione attiva)`, e.valore, 'non si somma: un solo modificatore degli strumenti per Prova (§1.4.1)'), escluso: true })),
+      ...righeDaScomposizione(cond),
+    ];
     const x = {
-      ...a, effettivo, daRegole: a.totale, scomposizione, condizioni: somma(cond),
+      ...a, effettivo, daRegole: a.totale, scomposizione, provenienza: provenienza(righe, effettivo), condizioni: somma(cond),
       disponibili: ogg.disponibili, nonCumulati: ogg.nonCumulati, usiSpecifici: valoriUsi(ogg.usi, effettivo, ogg.bonusOn),
     };
     perNome.set(a.nome, x);
@@ -211,11 +226,17 @@ export function applicaCondizioni(scheda, sessione, dati) {
     s.scomposizione = [voce('Valore da regole', s.totale, 'regole'), ...cond];
     s.effettivo = somma(s.scomposizione);
     s.daRegole = s.totale;
+    s.provenienza = provenienza([...righeRegoleSalvezza(s, scheda), ...righeDaScomposizione(cond)], s.effettivo);
   }
 
   const eq = scheda.equipaggiamento;
   if (eq) {
     const condDi = (nome) => { const a = perNome.get(nome); return a ? vociCondizioniAbilita(condizioni, a, dati) : []; };
+    // «VA <Abilità>» dentro un altro valore: la riga porta la scomposizione dell'Abilità come dettaglio
+    const conDettaglio = (v) => {
+      const a = perNome.get(String(v.etichetta).replace(/^VA /, ''));
+      return a && v.valore === a.totale ? [riga(v.etichetta, v.valore, null, { dettaglio: righeRegoleAbilita(a, scheda) })] : null;
+    };
     const difese = eq.abilitaDifese ?? 'Difese';
     const condDifese = condDi(difese);
     const condArmi = new Map((dati.regole.condizioni_armi?.elenco ?? []).map((c) => [c.id, c]));
@@ -237,11 +258,17 @@ export function applicaCondizioni(scheda, sessione, dati) {
       w.scomposizione = [...(w.componenti ?? []).map((c) => voce(c.nome, c.valore, c.fonte ?? 'equipaggiamento')), ...cond];
       w.vaEffettivo = w.va === null ? null : w.va + somma(cond);
       w.vaDaRegole = w.va === null ? null : daRegole(w.scomposizione);
+      if (w.va !== null) w.provenienza = provenienza(righeDaScomposizione(w.scomposizione, { regole: conDettaglio }), w.vaEffettivo);
+      if (w.righeDanno) {
+        const righe = w.statoAlternativo?.acceso ? [riga(`Danno (${w.statoAlternativo.nome})`, w.statoAlternativo.danno), ...w.righeDanno.slice(1)] : w.righeDanno;
+        w.provenienzaDanno = provenienza(righe, w.danno?.una_mano ?? w.danno?.due_mani ?? '—');
+      }
       if (w.parata) {
         w.parata.scomposizione = [...w.parata.componenti.map((c) => voce(c.nome, c.valore, c.fonte ?? 'equipaggiamento')), ...condDifese];
         w.parata.vaEffettivo = w.parata.va + somma(condDifese);
         w.parata.vaDaRegole = daRegole(w.parata.scomposizione);
         w.parata.distanzaEffettiva = w.parata.distanza === null || w.parata.distanza === undefined ? null : w.parata.distanza + somma(condDifese);
+        w.parata.provenienza = provenienza(righeDaScomposizione(w.parata.scomposizione, { regole: conDettaglio }), w.parata.vaEffettivo);
       }
     }
     // §7.4.11: Parata con lo Scudo = Difese (con l'equipaggiamento) + modificatori dello Scudo − FOR insufficiente
@@ -260,8 +287,23 @@ export function applicaCondizioni(scheda, sessione, dati) {
       p.parata.scomposizioneDistanza = perDistanza('distanza');
       p.parata.ravvicinataEffettiva = somma(p.parata.scomposizioneRavvicinata);
       p.parata.distanzaEffettiva = somma(p.parata.scomposizioneDistanza);
+      p.parata.provenienzaRavvicinata = provenienza(righeDaScomposizione(p.parata.scomposizioneRavvicinata, { regole: conDettaglio }), p.parata.ravvicinataEffettiva);
+      p.parata.provenienzaDistanza = provenienza(righeDaScomposizione(p.parata.scomposizioneDistanza, { regole: conDettaglio }), p.parata.distanzaEffettiva);
       p.parata.daRegole = d.totale;
     }
+  }
+  if (eq && d0(perNome, eq)) {
+    // Difese: le proprietà difensive delle armi e i modificatori degli Scudi valgono solo nella Parata
+    // (§7.1.3, §7.4.11): righe che non contano, così il tooltip delle Difese non ne omette nessuna
+    const d = d0(perNome, eq);
+    const altrove = [
+      ...eq.armi.filter((w) => w.parata?.proprieta?.length).flatMap((w) => w.parata.proprieta.map((x) => ({ ...riga(x.nome, x.valore, 'solo nella Parata con l’arma (§7.1.3)'), escluso: true }))),
+      ...eq.protezioni.filter((p) => p.parata?.modificatori).map((p) => ({
+        ...riga(p.nome, p.parata.modificatori.ravvicinata, `solo nella Parata con lo Scudo: ${p.parata.modificatori.ravvicinata >= 0 ? '+' : '−'}${Math.abs(p.parata.modificatori.ravvicinata)} ravvicinata, ${p.parata.modificatori.distanza >= 0 ? '+' : '−'}${Math.abs(p.parata.modificatori.distanza)} a distanza (§7.4.11)`),
+        escluso: true,
+      })),
+    ];
+    if (altrove.length) d.provenienza = { ...d.provenienza, righe: [...d.provenienza.righe, ...altrove] };
   }
   if (eq) {
     // AR al tavolo: effetti situazionali accesi, oggetti Rotti esclusi (docs/ricognizione-ar-pi.md)
@@ -276,6 +318,9 @@ export function applicaCondizioni(scheda, sessione, dati) {
   scheda.tavolo = valoriTavolo(scheda, sessione, dati);
   return scheda;
 }
+
+/** Abilità delle Difese già calcolata (applicaCondizioni). */
+const d0 = (perNome, eq) => perNome.get(eq.abilitaDifese ?? 'Difese') ?? null;
 
 /**
  * Iniziativa, Movimento e Azioni effettivi per la modalità tavolo, con la scomposizione:
@@ -295,6 +340,10 @@ export function valoriTavolo(scheda, sessione, dati) {
   // effetti «iniziativa» dell'equipaggiamento in uso (Allerta tattica dell'elmetto, Armamenti §7.21.2)
   const vociIniEquip = (scheda.equipaggiamento?.iniziativa ?? []).map((v) => voce(v.etichetta, v.valore, 'equipaggiamento'));
   const iniziativa = { effettivo: somma([...vociIni, ...vociIniEquip]), daRegole: somma(vociIni), scomposizione: [...vociIni, ...vociIniEquip], note: [] };
+  iniziativa.provenienza = provenienza([
+    ...vociIni.map((v) => riga(v.etichetta, v.valore, /^Mod /.test(v.etichetta) ? 'Caratteristica (§2.14)' : 'Talento')),
+    ...righeDaScomposizione(vociIniEquip),
+  ], iniziativa.effettivo);
 
   const base = scheda.movimento ?? {};
   const mov = scheda.equipaggiamento?.movimentoQ ?? 0;
@@ -324,6 +373,7 @@ export function valoriTavolo(scheda, sessione, dati) {
     const totale = Math.max(0, somma(voci));
     if (totale !== somma(voci)) voci = [...voci, voce('minimo 0', totale - somma(voci), 'regole')];
     movimento[modo] = { effettivo: disponibile ? totale : null, daRegole: base[modo] ?? 0, scomposizione: voci, note };
+    movimento[modo].provenienza = provenienza([...righeDaScomposizione(voci), ...(disponibile ? [] : note.map((n) => ({ ...riga(n, 0), escluso: true })))], disponibile ? totale : null);
   }
   movimento.unita = base.unita ?? 'Q';
 
@@ -339,7 +389,7 @@ export function valoriTavolo(scheda, sessione, dati) {
       if (x < ora) voci.push(voce(s.nome, x - ora, 'stato'));
       note.push(`${s.nome}: ${s.azioni.fonte}`);
     }
-    azioni[tipo] = { effettivo: somma(voci), daRegole: b, scomposizione: voci, note };
+    azioni[tipo] = { effettivo: somma(voci), daRegole: b, scomposizione: voci, note, provenienza: provenienza(righeDaScomposizione(voci)) };
   }
   return { iniziativa, movimento, azioni };
 }

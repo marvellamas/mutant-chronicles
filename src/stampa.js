@@ -12,7 +12,7 @@ import { aggiungiDanno, NOME_TESTO_PRECEDENTE, catalogo, normalizzaEquipaggiamen
 import { saldoIniziale } from './dotazioni.js';
 import { modoRicarica } from './ricarica.js';
 import { calcolaCarico, pesoVoce } from './carico.js';
-import { testoProvenienzaAR } from './protezione.js';
+import { testoProvenienza } from './provenienza.js';
 
 /** Limiti di impaginazione (non regole di gioco): lunghezze massime dei testi stampati. */
 export const LIMITI_STAMPA = {
@@ -160,7 +160,7 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     caratteristiche: Object.entries(s.caratteristiche).map(([sigla, x]) => ({ sigla, nome: x.nome, valore: x.valore, mod: x.mod, modSalvezza: x.modSalvezza })),
     salvezze: Object.entries(s.salvezze).map(([id, x]) => ({
       id, nome: x.nome, caratteristica: x.caratteristica, totale: x.totale, limitato: x.limitato, tetto: x.tetto,
-      effettivo: x.effettivo ?? x.totale, scomposizione: x.scomposizione ?? [],
+      effettivo: x.effettivo ?? x.totale, scomposizione: x.scomposizione ?? [], provenienza: x.provenienza ?? null,
     })),
     pv: s.pv,
     pm: s.pm,
@@ -182,7 +182,7 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
       abilita: s.abilita.filter((a) => a.categoria === cat).map((a) => ({
         nome: a.nome, caratteristica: a.caratteristica, mod: a.mod, base: a.base, corporazione: a.corporazione,
         avanzamento: a.avanzamento, equip: a.equip ?? 0, va: a.vaEquip ?? a.totale, diClasse: a.daClasse > 0,
-        totale: a.totale, effettivo: a.effettivo ?? a.vaEquip ?? a.totale, scomposizione: a.scomposizione ?? [],
+        totale: a.totale, effettivo: a.effettivo ?? a.vaEquip ?? a.totale, scomposizione: a.scomposizione ?? [], provenienza: a.provenienza ?? null,
         // effetti degli oggetti (docs/effetti-oggetti.md): situazionali spenti e valori d'uso specifico
         disponibili: a.disponibili ?? [], nonCumulati: a.nonCumulati ?? [], usiSpecifici: a.usiSpecifici ?? [],
       })),
@@ -275,7 +275,7 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     lancioPotere: eq.lancioPotere,
     difese: difese ? {
       va: difese.vaEquip ?? difese.totale, caratteristica: difese.caratteristica,
-      totale: difese.totale, effettivo: difese.effettivo ?? difese.vaEquip ?? difese.totale, scomposizione: difese.scomposizione ?? [],
+      totale: difese.totale, effettivo: difese.effettivo ?? difese.vaEquip ?? difese.totale, scomposizione: difese.scomposizione ?? [], provenienza: difese.provenienza ?? null,
     } : null,
     condizioni: s.condizioni ?? [],
     ferite: { stati: dati.regole.ferite.stati, oltre: dati.regole.ferite.oltre },
@@ -289,7 +289,11 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     // SS, foglio 3: riquadro compatto (come la tab Combattimento), armi con tutte le colonne e le
     // file di quadratini dei colpi, equipaggiamento in tabella con il carico, Stati con il riassunto
     // SS: AR a riposo (docs/ricognizione-ar-pi.md) e PI delle protezioni
-    arStampa: eq.ar ? { valori: eq.ar.valori, provenienza: testoProvenienzaAR(eq.ar) } : null,
+    // provenienza dell'AR totale in una riga, dalle stesse righe dei tooltip della SD (src/provenienza.js)
+    arStampa: eq.ar ? {
+      valori: eq.ar.valori,
+      provenienza: eq.ar.valori[0].provenienza.righe.length ? testoProvenienza(eq.ar.valori[0].provenienza, { totale: null, separatore: ' · ', note: false }) : 'nessuna protezione',
+    } : null,
     piProtezioni,
     sintesi: {
       iniziativa: identita.iniziativa, dadoIniziativa: identita.dadoIniziativa, movimento: s.movimento, azioni: s.azioni,

@@ -11,6 +11,8 @@
 // e non si può usare finché non è riparato (Armamenti §7.2.1, Equipaggiamento §1.7): regole.json
 // → integrita.
 
+import { riga, sommaRighe } from './provenienza.js';
+
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const intero = (v) => (Number.isInteger(v) ? v : 0);
 
@@ -72,7 +74,9 @@ export function oggettiRotti(sessione, dati) {
  * @param opz { talenti: nomi dei Talenti di Classe, accesi: Set degli uid con la condizione accesa
  *   (effetti situazionali), rotti: Set degli uid a 0 PI }
  * @returns {{ totale, magica, voci: [{ etichetta, totale, magica, fonte, uid }], contro: [{ contro, valore, totale, fonte }],
- *   valori: [{ id, etichetta, valore, principale? }], esclusi: [{ etichetta, motivo }] }}
+ *   valori: [{ id, etichetta, valore, principale?, provenienza: { totale, righe } }], esclusi: [{ etichetta, motivo }] }}
+ * `provenienza` (src/provenienza.js): i contributi di ogni valore, uno per riga, anche quelli a 0
+ * (elmetto) o che non contano (Rotto, non cumulabile, «solo ravvicinato»).
  */
 export function calcolaAR(equip, dati, { talenti = [], accesi = new Set(), rotti = new Set(), tecniche = [] } = {}) {
   const R = dati.regole.ar ?? {};
@@ -80,36 +84,71 @@ export function calcolaAR(equip, dati, { talenti = [], accesi = new Set(), rotti
   const esclusi = [];
   const protezioni = equip?.protezioni ?? [];
   const arDi = (p) => ({ totale: intero(p.ar?.totale), magica: intero(p.ar?.magica) });
+  // righe della provenienza: `magica` è la parte magica della riga (per il valore contro Etereo)
+  const righe = [];
+  const ROTTO = 'Rotto: non conta';
+  /** Protezione in righe: parte non magica, rinforzo, parte magica («+1 magica, Armatura Marte»). */
+  const righeProtezione = (p, a, nota, kit = 0) => [
+    riga(p.nome, a.totale - a.magica - kit, nota),
+    ...(kit ? [riga(p.rinforzo.nome, kit, 'rinforzo (§7.11.2)')] : []),
+    ...(a.magica ? [riga(`magica, ${p.nome}`, a.magica, null, { magica: a.magica })] : []),
+  ];
+  const nonConta = (lista, nota, barrato = false) => lista.map((r) => ({ ...r, escluso: true, nota, ...(barrato ? { barrato: true } : {}) }));
 
   // armatura: con due armature (avviso nel motore) vale la maggiore; il kit di rinforzo a 0 PI perde il suo +AR (A.45)
   const armature = protezioni.filter((p) => p.tipo === 'armatura' && p.ar);
   const armatureUsabili = [];
   for (const p of armature) {
-    if (rotti.has(p.uid)) { esclusi.push({ etichetta: p.nome, motivo: 'Rotta (0 PI): non dà AR' }); continue; }
+    if (rotti.has(p.uid)) {
+      esclusi.push({ etichetta: p.nome, motivo: 'Rotta (0 PI): non dà AR' });
+      righe.push(...nonConta(righeProtezione(p, arDi(p), null), ROTTO, true));
+      continue;
+    }
     const a = arDi(p);
+    let kitRotto = null;
     if (p.rinforzo && p.arKit && rotti.has(p.rinforzo.uid)) {
       a.totale -= p.arKit;
       esclusi.push({ etichetta: p.rinforzo.nome, motivo: 'Rotto (0 PI): il suo +AR non vale' });
+      kitRotto = { ...riga(p.rinforzo.nome, p.arKit, ROTTO), escluso: true, barrato: true };
     }
-    armatureUsabili.push({ p, a });
+    armatureUsabili.push({ p, a, kitRotto });
   }
   const scegli = (lista, regola) => (regola === 'somma' ? lista : lista.length ? [lista.reduce((m, x) => (x.a.totale > m.a.totale ? x : m))] : []);
-  for (const { p, a } of scegli(armatureUsabili, R.cumulo?.armatura)) {
+  const armatureScelte = scegli(armatureUsabili, R.cumulo?.armatura);
+  for (const x of armatureUsabili) {
+    const { p, a, kitRotto } = x;
+    const kit = p.rinforzo && !kitRotto ? p.arKit : 0;
+    if (!armatureScelte.includes(x)) { righe.push(...nonConta(righeProtezione(p, a, null, kit), 'non si somma: vale l’armatura maggiore (§7.11.2)')); continue; }
     voci.push({ etichetta: p.rinforzo && !rotti.has(p.rinforzo.uid) ? `${p.nome} + ${p.rinforzo.nome}` : p.nome, ...a, fonte: 'armatura', uid: p.uid });
+    righe.push(...righeProtezione(p, a, 'armatura', kit), ...(kitRotto ? [kitRotto] : []));
   }
+  // §7.21.1: gli elmetti indossati non danno AR, neppure magica (riga a 0: l'app li ha visti)
+  for (const p of protezioni.filter((x) => x.tipo === 'elmetto')) righe.push(riga(p.nome, 0, 'elmetto: nessuna AR (§7.21.1)'));
 
   // scudo imbracciato: vale il contributo maggiore (§7.4)
   const scudi = protezioni.filter((p) => p.tipo === 'scudo' && p.ar).filter((p) => {
-    if (rotti.has(String(p.uid).split(':')[0])) { esclusi.push({ etichetta: p.nome, motivo: 'Rotto (0 PI): non dà AR' }); return false; }
+    if (rotti.has(String(p.uid).split(':')[0])) {
+      esclusi.push({ etichetta: p.nome, motivo: 'Rotto (0 PI): non dà AR' });
+      righe.push(...nonConta(righeProtezione(p, arDi(p), null), ROTTO, true));
+      return false;
+    }
     return true;
   }).map((p) => ({ p, a: arDi(p) }));
-  for (const { p, a } of scegli(scudi, R.cumulo?.scudo)) voci.push({ etichetta: p.nome, ...a, fonte: 'scudo', uid: p.uid });
+  const scudiScelti = scegli(scudi, R.cumulo?.scudo);
+  for (const x of scudi) {
+    const { p, a } = x;
+    if (!scudiScelti.includes(x)) { righe.push(...nonConta(righeProtezione(p, a, null), 'due scudi non si sommano: vale il maggiore (§7.4)')); continue; }
+    voci.push({ etichetta: p.nome, ...a, fonte: 'scudo', uid: p.uid });
+    righe.push(...righeProtezione(p, a, 'scudo imbracciato (§7.4)'));
+  }
 
   // effetti «ar» degli oggetti in uso: generali sempre, situazionali con la condizione accesa
   for (const e of (equip?.effettiOggetti ?? []).filter((x) => x.tipo === 'ar')) {
-    if (rotti.has(e.uid)) continue;
     if (e.ambito === 'situazionale' && !accesi.has(e.uid)) continue;
+    const r = riga(e.oggetto, e.valore, e.ambito === 'situazionale' ? 'condizione accesa' : 'effetto dell’oggetto', e.magica ? { magica: intero(e.magica) } : {});
+    if (rotti.has(e.uid)) { righe.push({ ...r, escluso: true, barrato: true, nota: ROTTO }); continue; }
     voci.push({ etichetta: `${e.oggetto}${e.ambito === 'situazionale' ? ' (condizione attiva)' : ''}`, totale: e.valore, magica: intero(e.magica), fonte: 'effetto', uid: e.uid });
+    righe.push(r);
   }
 
   // Talenti passivi (Corazza Potenziata, Giocatore §3.9.5): una volta sola, con la protezione richiesta
@@ -119,8 +158,12 @@ export function calcolaAR(equip, dati, { talenti = [], accesi = new Set(), rotti
   for (const t of R.talenti ?? []) {
     if (!nomi.has(t.talento)) continue;
     const richiesta = t.richiede === 'armatura' ? armatureUsabili.length > 0 : t.richiede === 'protezione_artefatto' ? artefattiUsabili.length > 0 : true;
-    if (richiesta) voci.push({ etichetta: t.talento, totale: t.totale ?? 0, magica: t.magica ?? 0, fonte: 'talento', uid: null });
-    else if (t.richiede === 'protezione_artefatto') esclusi.push({ etichetta: t.talento, motivo: 'serve un’armatura o uno scudo Artefatto Mistico o TecnoMistico, utilizzabile (A.48)' });
+    const r = riga(t.talento, t.totale ?? 0, `Talento${t.magica ? ', magica' : ''}`, t.magica ? { magica: t.magica } : {});
+    if (richiesta) { voci.push({ etichetta: t.talento, totale: t.totale ?? 0, magica: t.magica ?? 0, fonte: 'talento', uid: null }); righe.push(r); }
+    else if (t.richiede === 'protezione_artefatto') {
+      esclusi.push({ etichetta: t.talento, motivo: 'serve un’armatura o uno scudo Artefatto Mistico o TecnoMistico, utilizzabile (A.48)' });
+      righe.push({ ...r, escluso: true, nota: 'serve una protezione Artefatto utilizzabile (A.48)' });
+    }
   }
   // A.48: Tecniche Interiori accese al tavolo («tecnica:<id>» fra le condizioni); quelle «contro» un
   // tipo di attacco (Pelle di Rinoceronte: ravvicinato) danno un valore a parte
@@ -129,8 +172,13 @@ export function calcolaAR(equip, dati, { talenti = [], accesi = new Set(), rotti
   for (const t of R.tecniche ?? []) {
     if (!possedute.has(t.tecnica) || !accesi.has(`tecnica:${t.tecnica}`)) continue;
     const nome = dati.tecniche_interiori?.tecniche?.find((x) => x.id === t.tecnica)?.nome ?? t.tecnica;
-    if (t.contro) tecnicheContro.push({ contro: t.contro, valore: t.totale, fonte: nome });
-    else voci.push({ etichetta: `${nome} (${t.durata})`, totale: t.totale, magica: t.magica, fonte: 'tecnica', uid: null });
+    if (t.contro) {
+      tecnicheContro.push({ contro: t.contro, valore: t.totale, fonte: nome });
+      righe.push({ ...riga(nome, t.totale, `solo ${t.contro}`), escluso: true, contro: t.contro });
+    } else {
+      voci.push({ etichetta: `${nome} (${t.durata})`, totale: t.totale, magica: t.magica, fonte: 'tecnica', uid: null });
+      righe.push(riga(nome, t.totale, `Tecnica Interiore${t.magica ? ', magica' : ''}, ${t.durata}`, t.magica ? { magica: t.magica } : {}));
+    }
   }
 
   const totale = voci.reduce((s, v) => s + v.totale, 0);
@@ -138,22 +186,39 @@ export function calcolaAR(equip, dati, { talenti = [], accesi = new Set(), rotti
 
   // AR contro un tipo di danno (Antiesplosione): per ogni tipo vale il maggiore fra scudo e armatura
   const perContro = new Map();
+  const righeContro = new Map();
+  const aggiungiContro = (c, r) => (righeContro.get(c) ?? righeContro.set(c, []).get(c)).push(r);
   for (const e of (equip?.effettiOggetti ?? []).filter((x) => x.tipo === 'ar_contro')) {
-    if (rotti.has(e.uid)) continue;
+    if (rotti.has(e.uid)) { aggiungiContro(e.contro, { ...riga(e.oggetto, e.valore, ROTTO), escluso: true, barrato: true }); continue; }
     const x = perContro.get(e.contro);
-    if (!x || e.valore > x.valore) perContro.set(e.contro, { contro: e.contro, valore: e.valore, fonte: e.oggetto });
+    if (!x || e.valore > x.valore) perContro.set(e.contro, { contro: e.contro, valore: e.valore, fonte: e.oggetto, uid: e.uid });
   }
+  for (const e of (equip?.effettiOggetti ?? []).filter((x) => x.tipo === 'ar_contro' && !rotti.has(x.uid))) {
+    const scelto = perContro.get(e.contro)?.uid === e.uid;
+    aggiungiContro(e.contro, { ...riga(e.oggetto, e.valore, scelto ? `contro ${e.contro}` : 'non si somma: vale il maggiore fra scudo e armatura'), ...(scelto ? {} : { escluso: true }) });
+  }
+  for (const x of tecnicheContro) aggiungiContro(x.contro, riga(x.fonte, x.valore, `solo ${x.contro}`));
   for (const x of tecnicheContro) {
     const y = perContro.get(x.contro);
     perContro.set(x.contro, y ? { ...y, valore: y.valore + x.valore, fonte: `${y.fonte}, ${x.fonte}` } : x);
   }
-  const contro = [...perContro.values()].map((x) => ({ ...x, totale: totale + x.valore }));
+  const contro = [...perContro.values()].map(({ uid: _u, ...x }) => ({ ...x, totale: totale + x.valore }));
+
+  // provenienza per valore: il totale; la sola parte magica (contro Etereo); totale + il valore contro
+  const righeMagiche = righe.filter((r) => r.magica && !r.escluso).map((r) => ({ ...r, valore: r.magica }));
+  if (sommaRighe(righeMagiche) > magica) righeMagiche.push(riga('non oltre l’AR totale', magica - sommaRighe(righeMagiche)));
+  const perValore = new Map([
+    ['totale', righe],
+    ['magica', righeMagiche.length ? righeMagiche : [riga('nessuna protezione magica', 0)]],
+    ...contro.map((c) => [`contro:${c.contro}`, [...righe.filter((r) => r.contro !== c.contro), ...(righeContro.get(c.contro) ?? [])]]),
+  ]);
+  const pulisci = (r) => { const { magica: _m, contro: _c, ...x } = r; return x; };
 
   const valori = [
     { id: 'totale', etichetta: R.etichette?.totale ?? 'AR', valore: totale, principale: true },
     { id: 'magica', etichetta: R.etichette?.magica ?? 'contro Etereo', valore: magica },
     ...contro.map((c) => ({ id: `contro:${c.contro}`, etichetta: `contro ${c.contro}`, valore: c.totale })),
-  ];
+  ].map((v) => ({ ...v, provenienza: { totale: v.valore, righe: (perValore.get(v.id) ?? []).map(pulisci) } }));
   return { totale, magica, voci, contro, valori, esclusi };
 }
 

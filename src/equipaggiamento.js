@@ -17,6 +17,7 @@
 // peso: kg per unità (Equipaggiamento §1.6, §1.10), per il carico (src/carico.js).
 
 import { bonusDannoCaratteristica, caratteristicaDanno } from './calc.js';
+import { riga } from './provenienza.js';
 import { calcolaAR, oggettiConPi, oggettiSenzaPi } from './protezione.js';
 
 export const TIPI = ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'elmetto', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'altro'];
@@ -521,6 +522,9 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     equipAbilita[nome] = (equipAbilita[nome] ?? 0) + v;
     (componentiEquip[nome] ??= []).push({ etichetta, valore: v, fonte: 'equipaggiamento', ...(da ?? {}) });
   };
+  // armature indossate che non cambiano il VA di un'Abilità d'Agilità o delle Difese: riga «+0» nella
+  // provenienza (src/provenienza.js), così si vede che l'app le ha considerate; non entrano nei calcoli
+  const zeriEquip = {};
   let attacchiRavv = 0;
   let attacchiDist = 0;
   let movimentoQ = 0;
@@ -580,6 +584,10 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     for (const a of agilitaAbilita) {
       aggiungi(a, penalita.agilita ?? 0, `Agilità (${o.nome})`);
       aggiungi(a, -forMancante, `FOR insufficiente (${o.nome})`);
+    }
+    for (const a of new Set([...agilitaAbilita, difeseAbilita].filter(Boolean))) {
+      const tocca = (a !== difeseAbilita || agilitaAbilita.includes(a) ? penalita.agilita ?? 0 : 0) || forMancante || penalita.abilita?.[a];
+      if (!tocca) (zeriEquip[a] ??= []).push({ etichetta: o.nome, valore: 0, nota: 'armatura: nessuna penalità (§7.11.1)' });
     }
     // penalità proprie del modello su singole Abilità (APE: Furtività −2, §7.13.6)
     for (const [a, v] of Object.entries(penalita.abilita ?? {})) aggiungi(a, v, o.nome);
@@ -725,6 +733,13 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     return { sigla, valore, bonus: escluse.length ? 0 : bonusDannoCaratteristica(valore, base.livello ?? 1, dati.regole), esclusoDa: escluse[0] ?? null };
   };
 
+  // §5.13: riga del bonus di Caratteristica al danno, con il tetto del livello quando scatta
+  const rigaBonusCaratteristica = (bc) => {
+    const fascia = bonusDannoCaratteristica(bc.valore, Number.MAX_SAFE_INTEGER, dati.regole);
+    const nota = bc.esclusoDa ? `escluso da ${bc.esclusoDa}` : fascia > bc.bonus ? `fascia +${fascia}, tetto +${bc.bonus} al ${base.livello ?? 1}° livello (§5.13)` : '§5.13';
+    return riga(`${bc.sigla} ${bc.valore}`, bc.bonus, nota);
+  };
+
   // Armi impugnate: VA per colpire, danno, Parata
   const armi = [];
   const profiloArma = (o, d, extra = {}) => {
@@ -768,6 +783,8 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     const parata = o.tipo === 'arma_ravvicinata' && difese !== null && d ? {
       va: difese + parataVa - forPen,
       distanza: parataDistanzaArma === null ? null : difese + parataVa - forPen + parataDistanzaArma,
+      // proprietà difensive dell'arma: la provenienza delle Difese le mostra (valgono solo nella Parata)
+      proprieta: proprietaParata.map((p) => ({ nome: `${nomeProprieta(p)} (${o.nome})`, valore: p.effetto.parata_va })),
       componenti: [
         { nome: `VA ${difeseAbilita}`, valore: abilitaPer(difeseAbilita).totale, fonte: 'regole' },
         ...(componentiEquip[difeseAbilita] ?? []).map((c) => ({ nome: c.etichetta, valore: c.valore })),
@@ -777,8 +794,17 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     } : null;
     // §7.7: «FOR × 3» nella colonna Max Q: la gittata dipende dalla Forza del personaggio
     const gittataQ = d?.gittata_q ?? (d?.gittata_per_for ? FOR * d.gittata_per_for : null);
+    // provenienza del danno (src/provenienza.js): dado dell'arma e bonus fissi, uno per riga
+    const righeDanno = dannoBase ? [
+      riga('Danno dell’arma', dannoBase.una_mano ?? dannoBase.due_mani ?? '—', dannoBase.una_mano && dannoBase.due_mani ? `a due mani ${dannoBase.due_mani}` : null),
+      ...(bonusCaratteristica ? [rigaBonusCaratteristica(bonusCaratteristica)] : []),
+      ...(spec ? [riga(`Specializzazione in ${spec.nome}`, bonusDanno, d.specializzazione_danno === false ? 'esclusa dalla scheda dell’arma (A.12)' : '§8.8.1')] : []),
+      ...acc.filter((x) => x.def?.effetto_arma?.danno !== undefined).map((x) => riga(x.nome, x.def.effetto_arma.danno, 'accessorio (§7.3)')),
+      ...dannoEquip.filter((b) => valePer(b, o.tipo)).map((b) => riga(b.nome, b.valore, 'effetto dell’oggetto')),
+    ] : null;
     armi.push({
       uid: o.uid, rif: d?.rif ?? null, nome: o.nome, tipo: o.tipo, abilita: nomeAbilita, va, componenti,
+      righeDanno,
       danno: dannoBase ? { una_mano: aggiungiDanno(dannoBase.una_mano, bonusDanno + dannoAccessori + dannoCar), due_mani: aggiungiDanno(dannoBase.due_mani, bonusDanno + dannoAccessori + dannoCar) } : null,
       dannoAccessori, bonusCaratteristica,
       ...(d?.rif ? (({ famiglia, scorte }) => ({ famigliaMunizioni: famiglia, scorte }))(scorteDi(d.rif)) : { famigliaMunizioni: null, scorte: [] }),
@@ -845,7 +871,10 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       abilita: att.abilita, va: a ? componenti.reduce((x, c) => x + c.valore, 0) : null, componenti,
       ...(() => {
         const bc = bonusCaratteristicaArma(att.abilita, []);
-        return { danno: { una_mano: aggiungiDanno(att.danno, bc?.bonus ?? 0), due_mani: null }, bonusCaratteristica: bc };
+        return {
+          danno: { una_mano: aggiungiDanno(att.danno, bc?.bonus ?? 0), due_mani: null }, bonusCaratteristica: bc,
+          righeDanno: [riga('Danno dello Scudo', att.danno), ...(bc ? [rigaBonusCaratteristica(bc)] : [])],
+        };
       })(),
       dannoDaMunizione: false, bonusDanno: 0, mani: att.mani,
       portataQ: att.portata_q, gittataQ: null, gittataFormula: null, ac: null, inc: null, mov: 0, modalita: [], munizioni: null,
@@ -920,6 +949,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     zaino: oggetti.filter((o) => !o.attivo),
     equipAbilita,
     componentiEquip,
+    zeriEquip,
     effettiOggetti,
     bonusAttacco,
     bonusDanno: dannoEquip,
