@@ -1,12 +1,12 @@
 # **Per Davide — domande aperte ed errata dei manuali**
 
-Aggiornato al 28 settembre 2026, sera.  
+Aggiornato al 29 settembre 2026, sera.  
 **Istruzioni per Davide (e per l’AI che usi per rispondere).**
 
-> * Questo è l’unico documento con le domande dell’app Mutant. Il link resta sempre questo: non ne esistono altri e non se ne creano di nuovi.  
-> * **Rispondi in coda**, nella sezione **7\. Risposte di Davide**, alla fine del documento: un blocco per risposta, con il numero della domanda (per esempio «A.23»), la data e il testo. Anche «confermo il Nel frattempo» è una risposta valida.  
+> * Questo è l’unico documento con le domande dell’app Mutant. Il link resta sempre questo: non ne esistono altri e non se ne creano di nuovi. Lo stesso testo è nel repo GitHub, docs/per-davide.md.  
+> * **Rispondi in coda**, nella sezione **7\. Risposte di Davide**, alla fine del documento, oppure nel tuo Doc «E\&L – Risposte e correzioni approvate»: leggiamo tutti e due a ogni sessione. Un blocco per risposta, con il numero della domanda (per esempio «A.23»), la data e il testo. Anche «confermo il Nel frattempo» è una risposta valida.  
 > * Non modificare, spostare o cancellare le domande: lo facciamo noi. Quando una risposta è recepita e la funzione è implementata nell’app, la voce passa nella sezione **6\. Risolte**, con la data.  
-> * Le correzioni ai manuali le fai nei Doc dei manuali, come sempre. Il Doc «E\&L – Risposte e correzioni approvate» resta tuo: se ci scrivi, lo leggiamo comunque.  
+> * Le correzioni ai manuali le fai nei Doc dei manuali, come sempre.  
 > * Ogni domanda dice cosa fa l’app *nel frattempo*: se non rispondi non si blocca nulla, l’app applica l’ipotesi indicata.
 
 Le sezioni: 1\. Domande che bloccano un lavoro in corso · 2\. Domande di rifinitura · 3\. Da correggere nella prossima edizione dei manuali · 4\. Da rileggere · 5\. Manuali che l’app aspetta · 6\. Risolte · 7\. Risposte di Davide.
@@ -15,28 +15,16 @@ Le sezioni: 1\. Domande che bloccano un lavoro in corso · 2\. Domande di rifini
 
 **1\. Domande che bloccano un lavoro in corso**
 
-Rispondere a queste per prime: senza, tre funzioni restano ferme.
+Rispondere a queste per prime: senza, la seconda sessione dei Chroma resta ferma.
 
 ### **Chroma (sessione 2: Convertire Potere, ricarica, prelievo)**
 
 **A.18 — Le riserve integrate nelle armi pagano gli incantesimi?**  
 La Magia (sez. 6\) chiama contenitore “qualunque oggetto che racchiuda un Chroma”. Il §7.5.1 degli Armamenti descrive la riserva del Bordone Templare (e di Vindicator, Deliverer, Castigator, Demontooth, Scudo delle Guardie Sacre) come “cinque cariche” per le attivazioni. Un Taumaturgo può usarla per lanciare incantesimi Fisici, o convertirla in PM personali? O alimenta solo l’oggetto?  
 *Nel frattempo:* l’app la mostra come contenitore integrato, PM contati a mano, non usabile per i lanci.  
-**A.19 — Un contenitore acquistato o trovato è carico?**  
-Il manuale non lo dice.  
-*Nel frattempo:* pieno (PM attuali \= capacità), poi il giocatore lo scala con il −.  
 **A.20 — Prelievo dal Chroma Bianco senza Addestramento Taumaturgo.**  
 “Un personaggio cosciente può prelevare PM da un contenitore Bianco sintonizzato”: vale per chiunque, anche un Combattente senza magia? O serve almeno l’accesso alla magia?  
 *Nel frattempo:* non ancora implementato; è la domanda che decide come.
-
-### **Attacco corpo a corpo (utility al tavolo)**
-
-**A.22 — Danno base senz’armi.** Nessun manuale lo scrive. Serve il dado (e se FOR aggiunge qualcosa).  
-*Nel frattempo:* il pannello «Attacca\!» senz’armi chiede il danno in un campo del personaggio, vuoto con un avviso finché non lo si scrive; Arti Marziali dà 1d6 (§8.6.1).  
-**A.23 — Mano non dominante.** Ambidestro (§8.6.1) “elimina il normale −4 VA quando si usa soltanto la mano non dominante”, ma quel −4 non è definito da nessuna parte. Confermi −4 alle Prove per colpire con la mano non dominante?  
-*Nel frattempo:* −4 solo quando il giocatore dichiara di attaccare con la sola mano non dominante; Ambidestro lo elimina; in Combattere con due armi resta il solo −4 della manovra (§5.7).  
-**A.24 — Incalzare (§5.5).** È una Prova per colpire contro le Difese o una Prova contrapposta?  
-*Nel frattempo:* Prova per colpire a −4 contro le Difese del bersaglio.
 
 ## ---
 
@@ -46,15 +34,10 @@ Il manuale non lo dice.
 
 **A.32 — 18 nuovi Talenti magici e mistici (Magia sez. 1, Giocatore §8.6.8, Doc del 27/09).** Nella copia condivisa sono comparse 18 schede nuove (Potere Mistico, Recupero Mistico, Escludere la Componente Somatica / l’Invocazione / il Focus, Concentrazione Migliorata e Operativa, Incantesimi Ampliati, Estesi, Proiettati, Plurimi, Intensificati, Anticipazione Migliorata, Incantesimi Inarrestabili e Massimizzati, Manifestazioni Occultate, Ritualista Minore e Maggiore) e la Concentrazione su un Incantesimo passa dalla Prova di Potere alla PS di Volontà. Non sono fra le risposte approvate del Doc E\&L: sono definitive?  
 *Nel frattempo:* l’app le recepisce dal manuale condiviso (fonte corrente): Talenti acquisibili con il testo della scheda, Potere Mistico \+5 PM Massimi per acquisizione; «possedere una riserva personale di PM» vale per tutti.  
-**A.33 — Armamenti corporativi di base: le pistole (E\&L A.5.27 e A.5.30, Giocatore §2.16.27).** *Aggiornamento del 27/09, 11:19:* fucili, armature e scudi sono definiti (A.5.30, Armamenti §7.22) e sono nell’app. Per le pistole E\&L A.5.30 dice «Le pistole restano quelle già definite» e il §2.16.27 «Le pistole mantengono i modelli già definiti», ma nessuno dei Doc condivisi indica quale modello corporativo corrisponde a Pistola semiautomatica e Revolver per Bauhaus, Capitol, Cybertronic, Fratellanza, Imperiali e Mishima. Vuol dire che le pistole restano il profilo commerciale anche per le Corporazioni, oppure c’è una tabella che non vediamo?  
-*Nel frattempo:* per le pistole si assegna il profilo commerciale con la nota «modello corporativo da definire (A.5.27)».  
 **A.35 — Acquisti iniziali: valore ceduto maggiore del prezzo (§2.16.29).** Il paragrafo dice che si paga la differenza; se gli armamenti ceduti valgono più del nuovo oggetto (per esempio si cede l’armatura da 1.500 per un’arma da 800), la differenza torna in crediti o si perde?  
 *Nel frattempo:* il conguaglio non scende sotto zero (la differenza si perde) e l’app lo segnala accanto all’acquisto.  
-**A.39 — Lancia un incantesimo: punti da confermare (Magia sez. 1–3, 7, 12.3).** L’utility legge le schede e le regole; dove il testo non basta ha scelto così:
+**A.39 — Lancia un incantesimo: punti ancora da confermare (Magia sez. 3, 7).** I punti 1–3 hanno risposta (E\&L 1, 17, 18).
 
-> 1. *Anticipazione senza Addestramento Taumaturgo.* La tabella del 12.3 dà solo la colonna del Taumaturgo. Per gli «altri utilizzatori» l’app usa la categoria successiva della loro colonna (−2 in più; ai livelli 16–18 −12). Va bene?  
-> 2. *Colpo Elementale (13.1)* ha la colonna «Mod PS» ma non dice quale Prova Salvezza fa il bersaglio, né quando: colpisce automaticamente. Qual è?  
-> 3. *Rigenerazione (21.10)* si lancia solo con un Rituale: componenti, Concentrazione, Anticipazione e costo arriveranno con le regole dei Rituali. L’utility la mostra, ma non la calcola.  
 > 4. *Tiro di contatto (Corpo a corpo \+4).* Vale per le versioni con Gittata «Contatto» contro un bersaglio non consenziente; l’app lo ricorda sempre accanto al risultato. Serve anche con i beneficiari consenzienti delle schede che parlano solo di «consenzienti»? (L’app dice di no: sez. 3.)  
 > 5. *Cumulo della sez. 7 sul lancio.* L’app lo applica agli effetti magici sul lanciatore dichiarati al tavolo (Benedizione, Maledizione…): vale il bonus magico maggiore e la penalità magica maggiore; livello, componenti, Ingaggio, circostanze e Talenti restano fuori dal cumulo. I Talenti (Focalizzazione, Occhio Interiore) sono fuori dal cumulo?
 
@@ -70,38 +53,19 @@ Il manuale non lo dice.
 > 7. *Movimento Evasivo del bersaglio fermo*: il Movimento Evasivo si fa muovendosi; se il giocatore lo indica per un bersaglio «fermo», l’app usa le penalità del Passo.
 
 *Nel frattempo:* le scelte sopra; Tiratore Imboscato, Rapidità Operativa, Punto Vitale e Raffica Estesa compaiono come promemoria nel risultato.  
-**A.37 — Ricarica di fucili a pompa e doppiette (Armamenti §7.20.2, Giocatore §5.1.1).** Il §7.20.2 esclude dai caricatori amovibili i revolver e i «serbatoi fissi». La scheda tratta come armi a inserimento (si infilano le cartucce sciolte fino alla capacità) i revolver, i fucili a pompa e le doppiette, commerciali e corporativi (famiglie «Revolver», «Fucili a pompa», «Fucili a pompa e doppiette»), compresi M310 (capacità 20\) e SA SG2001 (capacità 10). Tutte le altre armi a proiettile usano un caricatore amovibile. È corretto? *Aggiornamento del 27/09, 11:19:* per i fucili a pompa di base del §7.22.2 il manuale lo conferma («serbatoio fisso della capacità CC»); resta la domanda per gli altri modelli corporativi.  
-*Nel frattempo:* come descritto sopra; se un’arma va trattata diversamente, basta dirlo.  
 **A.36 — Effetti degli oggetti: situazionali o per un uso specifico?** La scheda distingue i bonus che il giocatore accende al tavolo quando ricorre una circostanza (corredo di sopravvivenza nell’ambiente scelto, abiti eleganti in un ambiente formale) da quelli che valgono solo per un tipo di Prova (valigetta: esaminare tracce; kit: pronto soccorso), mostrati a parte. Casi da confermare: Binocolo e corredi da ricognizione («dettagli lontani», «osservazioni attraverso le ottiche») trattati come situazionali; Corredo di orientamento come uso specifico; il «+2 VA a Medicina» dei Kit trauma limitato al pronto soccorso. Inoltre: fra i bonus degli oggetti per la stessa Prova vale solo il maggiore (Giocatore §1.4.1, «un solo modificatore complessivo per la qualità degli strumenti»), anche per abiti e binocolo: va bene?  
-*Nel frattempo:* classificazione e regola come descritto; nessun effetto cambia il totale da regole né la stampa, tranne la penalità dell’armatura al lancio con Potere, che compare nel foglio Magia.  
+*Nel frattempo:* classificazione e regola come descritto; nessun effetto cambia il totale da regole né la stampa, tranne la penalità dell’armatura al lancio con Potere, che compare nel foglio Magia. Dal 29/09 il Binocolo segue il §4.2 dell’Equipaggiamento (uso specifico).  
 **A.34 — Oggetti della dotazione senza scheda di catalogo (§2.16).** *Aggiornamento del 29/09:* 28 delle 44 voci hanno la scheda nei capitoli 2, 3, 4 e 6 del Manuale dell’Equipaggiamento 0.3 (o, per il Corredo di manutenzione da campo, nel §7.13.7 degli Armamenti) e sono nell’app. Restano senza peso, prezzo e Qualità 16 voci: i Corredi da scasso, da camuffamento, agricolo, artigianale professionale, elettronico e informatico, di ricerca documentale, di analisi da campo, amministrativo, scenico e rituale; Cassetta degli attrezzi; Strumento musicale portatile; Terminale per produzione multimediale; Testo dottrinale e simbolo; Focus personale. Arriveranno con i capitoli 5 e 7?  
-*Nel frattempo:* entrano nell’inventario come voci personalizzate senza peso né prezzo (il carico non li conta) e non si possono cedere negli acquisti iniziali (§2.16.29 vale per gli armamenti di base). Gli effetti numerici scritti nel §2.16 (per esempio \+2 VA a Sopravvivenza nell’ambiente scelto) sono registrati nei dati e mostrati nella scheda come nota.  
-**A.30 — Pesi degli oggetti (Equipaggiamento §1.6, §1.10).** Il carico si calcola sul peso di tutto ciò che si porta, e la scheda standard del §1.10 prevede il campo Peso, ma il Manuale degli Armamenti non dà pesi per armi, armature e scudi. Li aggiungerai ai cataloghi?  
-*Nel frattempo:* l’app conta solo il peso degli oggetti personalizzati (campo «Peso») e il peso aggiuntivo scritto in modalità tavolo; elenca gli oggetti senza peso.  
-**A.31 — Carico oltre il massimo (§5.2.6).** Oltre FOR × 20 kg il carico “non può essere sollevato o trasportato”. Se la lista dell’equipaggiamento supera il massimo, il personaggio che cosa subisce finché non lascia qualcosa?  
-*Nel frattempo:* le stesse penalità del Sovraccarico, con l’avviso che il carico non si trasporta.  
-**A.16 — Quali Abilità sono “fisiche”?** Immobilizzato (−4 alle azioni fisiche), Rallentato (−2 alle Prove fisiche e alle Difese) e il carico (§5.2) non dicono quali Abilità contano.  
-*Nel frattempo:* tutte quelle di Distanza e Ravvicinato, più Atletica e Furtività.  
-**A.17 — Terrorizzato vale anche per le Salvezze?** Il §5.18 dice “−4 VA a tutte le Prove”.  
-*Nel frattempo:* sì, Abilità e Salvezze; Incendiato (−2 VA) solo Abilità.
+*Nel frattempo:* entrano nell’inventario come voci personalizzate senza peso né prezzo (il carico non li conta) e non si possono cedere negli acquisti iniziali.  
+**A.54 — Ricarica del revolver (E\&L 19, Giocatore §5.1.1).** La risposta dice «Il Revolver usa il tamburo» senza il costo. L’app applica la regola generale: una operazione di ricarica (1 AzP) riempie il tamburo con munizioni pronte, come scritto per la Colt Hammershot (Armamenti 0.54). Doppiette e fucili a pompa invece inseriscono una cartuccia per operazione. È corretto anche per il revolver commerciale e per i revolver corporativi?  
+*Nel frattempo:* tamburo pieno in 1 AzP.  
+**A.55 — Caratteristica del bonus al danno (Giocatore §5.13).** Il paragrafo dice «FOR o DES secondo l’arma ravvicinata; DES o INT secondo l’arma a distanza». L’app usa la Caratteristica dell’Abilità dell’arma: FOR per Armi da guerra e Corpo a corpo; DES per Armi da mischia, da lancio e leggere; INT per Armi medie; Armi pesanti INT, come scritto. Va bene?  
+*Nel frattempo:* questa corrispondenza.
 
 ### **Manovre ravvicinate**
 
-**A.25 — Copertura nel corpo a corpo.** Vale anche per gli attacchi ravvicinati?  
-*Nel frattempo:* nel pannello del corpo a corpo la Copertura del bersaglio è solo un promemoria, senza effetto sul VA.  
-**A.26 — Ingaggio multiplo.** Esiste una regola? *Nel frattempo:* solo il modificatore di circostanza del §1.4.  
-**A.27 — Spazzata.** Colpisce bersagli adiacenti all’attaccante o adiacenti fra loro?  
-*Nel frattempo:* bersagli entro la portata dell’arma, con il promemoria «adiacenti» nel risultato.  
-**A.28 — Sbilanciare e Disarmare.** Chi sceglie la Difesa del bersaglio?  
-*Nel frattempo:* il risultato mostra tutte e due le opposizioni (Atletica o Difese; Corpo a corpo o Abilità dell’arma impugnata).  
-**A.29 — Magistrale.** Raddoppia anche i bonus fissi di Colpo Mirato e Affondo?  
-*Nel frattempo:* sì, perché vengono prima del moltiplicatore (§5.13); vale anche per Carica Brutale, che lo dice.  
 **A.40 — Carica oltre 12 Q (§5.6).** La tabella della Carica si ferma a 7–12 Q e la Carica «non può superare la Corsa». Chi ha una Corsa oltre 12 Q (Talenti di movimento) può caricare più lontano, e con quali penalità?  
-*Nel frattempo:* oltre 12 Q l’app non ammette la Carica e lo dice.  
-**A.41 — Sbilanciare, Disarmare: Corpo a corpo o Abilità dell’arma (§5.12).** Chi attacca sceglie liberamente fra Corpo a corpo e l’Abilità dell’arma impugnata?  
-*Nel frattempo:* l’app usa il valore migliore dei due e lo scrive nel risultato.  
-**A.42 — Spazzata senz’armi (§5.12).** Il §5.12 non dice se la Spazzata si fa senz’armi; il Lottatore l’ottiene con Combattimento Multiplo. Senza quel Talento è ammessa?  
-*Nel frattempo:* senz’armi l’app non propone la Spazzata; Combattimento Multiplo resta un promemoria.
+*Nel frattempo:* oltre 12 Q l’app non ammette la Carica e lo dice.
 
 ### **AR e PI**
 
@@ -137,7 +101,8 @@ Decisioni già prese o errori evidenti: l’app segue la decisione, il testo sta
 > * §7.16.2 Armatura Ashigaru: “Manutenzione agevolata” \= “Manutenzione semplice” (§7.11.4)?  
 > * §7.11.5: “Agenti equipaggi e Guardie” senza virgola.  
 > * §7.4.1 / §7.4.2 Scudo Punisher: “Grande” vs “Medio”.  
-> * ~~§7.4.10 Scudo delle Guardie Sacre: con la lama estratta il danno è 1d6+1+1d4 Naturale~~ — fatto nel Google Doc (verificato il 28/09).
+> * ~~§7.4.10 Scudo delle Guardie Sacre: con la lama estratta il danno è 1d6+1+1d4 Naturale~~ — fatto nel Google Doc (verificato il 28/09).  
+> * §7.8, schede di M310 e SA SG2001: indicare che usano un caricatore amovibile specifico e che la sostituzione con un caricatore pronto costa 1 AzP (E\&L 19: «va esplicitata nelle relative schede di catalogo»).
 
 ## ---
 
@@ -149,9 +114,9 @@ Decisioni già prese o errori evidenti: l’app segue la decisione, il testo sta
 ## **5\. Manuali che l’app aspetta**
 
 > * Dal 26/09 i manuali sono Google Doc condivisi: l’app li rilegge a ogni sessione, non servono più i PDF.  
-> * Manuale dell’Equipaggiamento 0.3: recepiti i capitoli 1, 2, 3, 4 e 6 (carico, PS Integrità, dotazioni personali, esplorazione, comunicazione e rilevamento, sanitario), con 58 voci di catalogo nuove e 28 oggetti della dotazione collegati alla loro scheda. Aspettiamo i capitoli 5, 7 e 8.  
+> * Manuale dell’Equipaggiamento 0.3: recepiti i capitoli 1, 2, 3, 4 e 6 (carico, PS Integrità, dotazioni personali, esplorazione, comunicazione e rilevamento, sanitario), con 58 voci di catalogo nuove e 28 oggetti della dotazione collegati alla loro scheda. Aspettiamo i capitoli 5, 7 e 8\.  
 > * Manuale dei Veicoli (in stesura).  
-> * Manuale degli Armamenti v0.54: KEP 808 e Colt Hammershot recepiti il 29/09. v0.53: estratto per intero, §7.21–7.23 compresi; la riparazione degli oggetti è recepita (A.46). Restano rimandati dal manuale le Prove Salvezza, i tempi di ricarica e i ricambi del Cuirassier Attila (§7.18.1). La versione del 28/09 dei quattro manuali è salvata e in esame: le novità arriveranno nell’app nelle prossime sessioni.
+> * Manuale degli Armamenti v0.54: KEP 808 e Colt Hammershot recepiti il 29/09. La v0.53 è estratta per intero, §7.21–7.23 compresi; la riparazione degli oggetti è recepita (A.46). Restano rimandati dal manuale le Prove Salvezza, i tempi di ricarica e i ricambi del Cuirassier Attila (§7.18.1).
 
 ## ---
 
@@ -164,11 +129,11 @@ Voci con risposta recepita e funzione implementata nell’app. La data è quella
 > * **A.2 — Schede dei 14 Talenti di magia** (compreso Potenziale Mistico Migliorato solo per gli Usufruitori di Magia) — implementata il 26/09.  
 > * **A.3 — Tipo di tre Talenti Liberi** (Attivazione Tempestiva, Risorse Interiori, Tecniche Interiori Supplementari: passivi) — implementata il 26/09.  
 > * **Durata di tre Tecniche Interiori** (Vipera dal Cappuccio, Presa dell’Anima, Contraccolpo Interiore) — implementata il 26/09.  
-> * **Equipaggiamento iniziale** (E\&L A.5–A.5.31): dotazioni delle 25 Classi, armamenti corporativi di base (Armamenti §7.22), crediti iniziali 1.000 \+ 2d6 × 100, acquisti con cessione, veicoli esclusi — implementato il 27/09. Resta aperta la sola domanda sulle pistole corporative (A.33).  
+> * **Equipaggiamento iniziale** (E\&L A.5–A.5.31): dotazioni delle 25 Classi, armamenti corporativi di base (Armamenti §7.22), crediti iniziali 1.000 \+ 2d6 × 100, acquisti con cessione, veicoli esclusi — implementato il 27/09.  
 > * **PV e PM attuali al passaggio di livello** (§8.1.2, E\&L A.6) — implementata il 27/09.  
 > * **18 Talenti magici e mistici nuovi del 27/09** — recepiti nell’app il 27/09; la conferma è chiesta in A.32.  
 > * **Manuale degli Armamenti v0.52 e v0.53** (elmetti §7.21, modelli corporativi di base §7.22, catalogo dei rinforzi §7.23) — recepito il 28/09.  
-> * **Manuale del Giocatore del 27/09** (Addestramenti a 76 punti, 10 Punti Abilità Liberi) — recepito il 28/09; la conferma è chiesta in A.52.  
+> * **Manuale del Giocatore del 27/09** (Addestramenti a 76 punti, 10 Punti Abilità Liberi) — recepito il 28/09; confermato in A.52.  
 > * **A.7 — Pistola mitragliatrice compatta**: Specializzazione Pistole anche in Raffica Breve e Media — implementata il 28/09.  
 > * **A.8 — Pugnale e Ascia leggera**: Coltelli e Pugnali / Asce in mischia, Armi da Lancio al lancio, mai cumulate — implementata il 28/09.  
 > * **A.9 — Famiglie delle 12 armi ravvicinate corporative** e nuova Specializzazione Armi a Sega (Elettrosega CSB600, Chainreaper, Sbudellatrice) — implementata il 28/09.  
@@ -188,13 +153,32 @@ Voci con risposta recepita e funzione implementata nell’app. La data è quella
 > * **A.49 — Condizioni delle armi (§5.17)** come stato al tavolo, distinto dai PI: penalità al VA e blocco di «Attacca\!» quando l’arma non è utilizzabile — implementata il 28/09.  
 > * **A.50 — Ordine delle riduzioni dell’AR** (Perforante, Laser, Incendiato): nei dati dell’app e come promemoria in «Attacca\!» — implementata il 28/09.  
 > * **A.13 — Rainy Dayer** nelle Carabine, solo per il profilo di tiro — implementata il 28/09.  
-> * **A.34, in parte — Oggetti della dotazione con scheda**: 28 delle 44 voci (dotazione comune, abiti, luci, corredi di orientamento, arrampicata e sopravvivenza, tenda, maschera, comunicatori, ottiche, sorveglianza, ricarica del Kit trauma) prendono peso, prezzo, Qualità, PI ed effetti dalla scheda dell’Equipaggiamento 0.3, anche nei personaggi già salvati; restano aperte 16 voci (sezione 2) — implementata il 29/09.
+> * **A.16 — Prove fisiche**: lista confermata; le penalità fisiche non toccano Potere né le Salvezze — implementata il 29/09.  
+> * **A.17 — Terrorizzato anche alle Prove Salvezza** durante lo Stato: risposta nel Manuale del Giocatore del 28/09 (§5.18); l’app già così — chiusa il 29/09.  
+> * **A.19 — Contenitori Chroma**: acquistato pieno; trovato con i PM impostati dal giocatore — implementata il 29/09.  
+> * **A.22 — Senz’armi 1d4 più il bonus di FOR**; Arti Marziali 1d6; Lottatore il suo dado — implementata il 29/09.  
+> * **A.23 — Mano non dominante −4** salvo Ambidestro; con due armi solo la penalità della manovra — implementata il 29/09.  
+> * **A.24 — Incalzare**: Prova per colpire a −4 contro le Difese, spinta 2 Q, nessun danno — implementata il 29/09.  
+> * **A.25 — Copertura anche nel ravvicinato**: −2 / −4, Copertura Migliorata −4 / −6, Totale impedisce l’attacco — implementata il 29/09.  
+> * **A.26 — Superiorità numerica**: \+1 / \+2 / \+3 con 3–5 / 6–7 / 8+ attaccanti; campo nel pannello — implementata il 29/09.  
+> * **A.27 — Spazzata**: bersagli adiacenti fra loro e tutti entro la portata — implementata il 29/09.  
+> * **A.28 — Sbilanciare e Disarmare**: l’opposizione la sceglie il bersaglio prima del tiro — implementata il 29/09.  
+> * **A.29 — Magistrale**: bonus ordinari prima del moltiplicatore, quelli dopo l’Armatura no, solo la prima applicazione — implementata il 29/09.  
+> * **A.30 — Pesi mancanti «da definire»**, totale del carico parziale — implementata il 29/09.  
+> * **A.31 — Oltre il carico massimo**: Movimento 0 Q e −2 alle Prove fisiche — implementata il 29/09.  
+> * **A.33 — Pistole corporative**: HG10, Bolter 10, P500, Nemesis 100, Belliger, Ronin 25 AP; Revolver commerciale — implementata il 29/09.  
+> * **A.34 — Binocolo e Registratore audiovisivo** con peso e prezzo (Equipaggiamento 0.3 §§4.2–4.3) — implementata il 29/09.  
+> * **A.34, in parte — Oggetti della dotazione con scheda**: 28 delle 44 voci (dotazione comune, abiti, luci, corredi di orientamento, arrampicata e sopravvivenza, tenda, maschera, comunicatori, ottiche, sorveglianza, ricarica del Kit trauma) prendono peso, prezzo, Qualità, PI ed effetti dalla scheda dell’Equipaggiamento 0.3, anche nei personaggi già salvati; restano aperte 16 voci (sezione 2\) — implementata il 29/09.  
+> * **A.37 — Ricarica**: doppiette e pompa una cartuccia per operazione (3 con Ricarica Migliorata); M310 e SA SG2001 a caricatore — implementata il 29/09.  
+> * **A.39, punti 1–3** — Anticipazione senza Addestramento (colonna «altri» −2), Colpo Elementale (PS solo per gli effetti secondari, per elemento), Rigenerazione (procedura rituale non ancora definita) — implementata il 29/09.  
+> * **A.41 — Sbilanciare e Disarmare con l’Abilità del mezzo dichiarato**, non il VA maggiore — implementata il 29/09.  
+> * **A.42 — Spazzata anche senz’armi**, con Corpo a corpo — implementata il 29/09.
 
 ## ---
 
 **7\. Risposte di Davide**
 
-Scrivi qui, in coda, una risposta per blocco: numero della domanda, data, testo.  
+Scrivi qui, in coda, una risposta per blocco: numero della domanda, data, testo. Va bene anche rispondere nel Doc E\&L.  
 Le risposte qui sotto sono riportate dal documento «Per Davide» del 28/09, che non si usa più.  
 **A.7 (Pistola mitragliatrice compatta).** Appartiene alla famiglia Pistole ai fini delle Specializzazioni. Specializzazione Pistole concede \+1 VA e \+1 danno anche usando Raffica Breve o Media. Specializzazione Mitragliatori non si applica a questo modello. L’Abilità utilizzata rimane Armi leggere in tutte le modalità di fuoco; la raffica non cambia la famiglia dell’arma. Nell’app il profilo deve quindi essere associato a Pistole, senza passare a Mitragliatori quando viene selezionata una raffica. Riferimenti: Manuale degli Armamenti, §7.7; Manuale del Giocatore, §8.8.1.  
 **A.8 (Pugnale e Ascia leggera, uso ravvicinato e lancio).** La Specializzazione applicabile dipende dall’impiego. Per il Pugnale si applica Coltelli e Pugnali nell’uso ravvicinato e Armi da Lancio quando viene lanciato. Per l’Ascia leggera si applica Asce nell’uso ravvicinato e Armi da Lancio quando viene lanciata. Al lancio si usa l’Abilità Armi da lancio; possedere la Specializzazione Armi da Lancio concede \+1 VA e \+1 danno. Coltelli e Pugnali e Asce concedono i rispettivi benefici soltanto nell’impiego ravvicinato. Anche possedendo entrambe le Specializzazioni pertinenti all’oggetto, si applica soltanto quella relativa all’attacco effettuato, senza cumulo né scelta alternativa. Le Abilità dei profili ravvicinati restano quelle indicate nelle schede. Riferimenti: Manuale degli Armamenti, §§7.1.1 e 7.7; Manuale del Giocatore, §8.8.1.  

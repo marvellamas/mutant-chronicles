@@ -1,0 +1,481 @@
+{
+  "formato": "mutant-personaggio",
+  "versione": 7,
+  "versioni_dati": {
+    "abilita": "Giocatore 0.43 + Google Doc del 27/09/2026",
+    "addestramenti": "Giocatore 0.43 + Google Doc del 27/09/2026",
+    "caratteristiche": "Giocatore 0.43",
+    "classi": "Giocatore 0.43",
+    "corporazioni": "Giocatore 0.43",
+    "dotazioni": "Giocatore 0.43 + Google Doc del 27/09/2026",
+    "equipaggiamento": "Armamenti 0.52",
+    "incantesimi": "Magia 1.1",
+    "regole": "Giocatore 0.43; Magia 1.1; Equipaggiamento 0.1",
+    "specializzazioni": "Giocatore 0.43",
+    "talenti_liberi": "Giocatore 0.43; Magia 1.1 + Google Doc del 27/09/2026",
+    "tecniche_interiori": "Giocatore 0.43 + Google Doc del 27/09/2026"
+  },
+  "scelte": {
+    "nome": "Lucas",
+    "concetto": "Origini / Pianeta natale\nLuna City, la Luna. Lucas è cresciuto alla periferia della città, nei quartieri grigi che sfumano nel nulla prima dei\nconfini amministrativi. Non conosce il pianeta da cui viene, né chi lo ha messo al mondo. Sa solo che qualcuno\nlo ha deposto in una cesta sulle scale di una chiesa e se n'è andato senza voltarsi.\nLa Luna non è un posto tenero. Luna City ancora meno. È una città che ti insegna presto che devi guadagnarti\nogni cosa — e Lucas lo ha imparato prima degli altri.\nFamiglia e infanzia\nL'unico padre che Lucas abbia mai conosciuto è Fratello Hector, il religioso che lo trovò neonato sulle scale\ndella sua chiesa di periferia e decise di tenerlo con sé. Hector era un uomo buono — paziente, attento, capace\ndi vedere nei bambini quello che ancora non sanno di essere. Quando Lucas aveva cinque anni e senza\nrendersene conto faceva danzare la luce e l'energia astrale tra le dita come se giocasse, Hector non si spaventò.\nSorrise.\nMa la consuetudine della Fratellanza era chiara: un bambino con quelle attitudini doveva essere formato in una\nsede attrezzata. Così Hector lo portò alla Chiesa del Distretto Occidentale di Luna City e lo affidò a Fratello\nTerenzio. Poi se ne andò.\nLucas aveva cinque anni. Non capì perché l'unica persona che lo aveva voluto lo stava lasciando di nuovo.\nI sei anni successivi furono duri. Terenzio era un mistico mediocre che aveva dedicato la sua mediocrità\nall'ostruzione sistematica di chiunque mostrasse più talento di lui — e Lucas ne aveva in abbondanza. Le\npunizioni erano frequenti, spesso sproporzionate, sempre mirate a umiliare più che a correggere. Lucas imparò\na stringere i denti. Imparò che la rabbia poteva diventare carburante. E imparò a odiare, con la precisione\nsilenziosa che hanno solo i bambini, chi abusa del proprio potere.\nA undici anni decise che ne aveva abbastanza. Pianificò la fuga.\nEvento formativo chiave\nLa notte della fuga, Lucas si arrampicò sulle inferriate che separavano la chiesa dal resto della città. Era a pochi\nmetri dalla libertà quando tutto sparì.\nLa visione lo colpì senza preavviso. Svenne prima ancora di toccare terra e si risvegliò un mese dopo nel letto\ndella chiesa — con una cicatrice sul collo, ramificata come rami che si diramano sotto la pelle, che nessuno\nseppe spiegargli. Era ricaduto esattamente dove aveva iniziato. Più intrappolato di prima.\nMa qualcosa era cambiato. Non nella sua situazione — quella era identica, forse peggiore. Era cambiato lui.\nQuella notte aveva smesso di voler scappare da qualcosa e aveva iniziato a voler diventare qualcosa. Qualcosa\ndi abbastanza forte da non aver più bisogno di scappare.\nNei cinque anni successivi Lucas studiò con una determinazione che faceva infuriare Terenzio proprio perché\nnon riusciva a scalfirla. Ogni punizione diventava motivazione. Ogni umiliazione, benzina.\nMotivazioni e obiettivi\nA sedici anni Lucas superò brillantemente il suo primo esame di qualificazione. Terenzio lo fece bocciare. A\ndiciotto anni lo superò di nuovo, ancora più brillantemente. Terenzio lo fece bocciare ancora.\nLucas fissò una data nella sua testa: se alla terza prova fosse stato bocciato ancora, avrebbe abbandonato la\nFratellanza. Non con rabbia. Con fredda determinazione.\nNon ne ebbe bisogno. A diciannove anni un agente dell'Alleanza si presentò alla chiesa per reclutarlo. Terenzio\nsi oppose con tutto quello che aveva. Non bastò — i documenti furono firmati, e Lucas uscì da quella chiesa per\nl'ultima volta.\nTrascorse due anni all'Accademia dell'Alleanza — prima a Luna City, poi sulla Fortezza, l'astronave che orbita\nintorno alla Luna e che è la sede centrale dell'Alleanza. Al termine dell'addestramento il Colonnello Hoffmann lo\nconvocò nel suo ufficio insieme ad altri sei agenti. Insieme avrebbero formato una squadra operativa per il\nprogramma Kill Joy.\nIl suo obiettivo a breve termine è dimostrare sul campo che il talento soffocato per quattordici anni era reale.\nQuello a lungo termine è più personale: capire chi è, da dove viene, perché qualcuno lo ha abbandonato su\nquelle scale. E cosa significa quella cicatrice",
+    "soprannome": "",
+    "eta": "22",
+    "cittaNascita": "Luna City",
+    "altezza": "180",
+    "peso": "80",
+    "occhi": "marro'",
+    "capelli": "castani",
+    "manoDominante": "destra",
+    "segniDistintivi": "Cicatrice frattale sul collo",
+    "puntiEsperienza": null,
+    "corporazione": "Fratellanza",
+    "puntiCaratteristica": {
+      "SAG": 1,
+      "INT": 2,
+      "DES": 2
+    },
+    "addestramento": "Taumaturgo",
+    "classe": "Invocatore",
+    "puntiAbilitaLiberi": {
+      "Potere": 2,
+      "Occultismo": 2,
+      "Artefatti": 1,
+      "Medicina": 1,
+      "Scienza": 1,
+      "Armi medie": 1,
+      "Difese": 2
+    },
+    "incantesimi": [
+      "Colpo Elementale",
+      "Esplosione Elementale",
+      "Armatura di Forza",
+      "Telecinesi",
+      "Psicometria",
+      "Telepatia",
+      "Cura Ferite",
+      "Guarigione",
+      "Muro Elementale",
+      "Dardo Spirituale"
+    ],
+    "puntiEroe": {
+      "valore": 7,
+      "origine": "manuale"
+    },
+    "equipaggiamento": [
+      {
+        "uid": "dot-comune-1",
+        "rif": null,
+        "stato": null,
+        "quantita": 1,
+        "note": "",
+        "personalizzato": {
+          "nome": "Abiti comuni, comprese le calzature",
+          "tipo": "altro"
+        },
+        "dotazione_iniziale": true,
+        "dotazione_id": "abiti-comuni"
+      },
+      {
+        "uid": "dot-comune-2",
+        "rif": null,
+        "stato": null,
+        "quantita": 1,
+        "note": "",
+        "personalizzato": {
+          "nome": "Zaino da viaggio",
+          "tipo": "altro"
+        },
+        "dotazione_iniziale": true,
+        "dotazione_id": "zaino-da-viaggio"
+      },
+      {
+        "uid": "dot-comune-3",
+        "rif": null,
+        "stato": null,
+        "quantita": 1,
+        "note": "",
+        "personalizzato": {
+          "nome": "Cintura attrezzata",
+          "tipo": "altro"
+        },
+        "dotazione_iniziale": true,
+        "dotazione_id": "cintura-attrezzata"
+      },
+      {
+        "uid": "dot-comune-4",
+        "rif": null,
+        "stato": null,
+        "quantita": 2,
+        "note": "",
+        "personalizzato": {
+          "nome": "Borraccia da un litro, piena d’acqua",
+          "tipo": "altro"
+        },
+        "dotazione_iniziale": true,
+        "dotazione_id": "borraccia"
+      },
+      {
+        "uid": "dot-comune-5",
+        "rif": null,
+        "stato": null,
+        "quantita": 1,
+        "note": "",
+        "personalizzato": {
+          "nome": "Torcia elettrica",
+          "tipo": "altro"
+        },
+        "dotazione_iniziale": true,
+        "dotazione_id": "torcia-elettrica"
+      },
+      {
+        "uid": "dot-comune-7",
+        "rif": null,
+        "stato": null,
+        "quantita": 1,
+        "note": "",
+        "personalizzato": {
+          "nome": "Corredo personale per igiene e piccoli rammendi",
+          "tipo": "altro"
+        },
+        "dotazione_iniziale": true,
+        "dotazione_id": "corredo-igiene"
+      },
+      {
+        "uid": "dot-comune-8",
+        "rif": null,
+        "stato": null,
+        "quantita": 1,
+        "note": "",
+        "personalizzato": {
+          "nome": "Utensile multiuso",
+          "tipo": "altro"
+        },
+        "dotazione_iniziale": true,
+        "dotazione_id": "utensile-multiuso"
+      },
+      {
+        "uid": "dot-comune-9",
+        "rif": null,
+        "stato": null,
+        "quantita": 1,
+        "note": "",
+        "personalizzato": {
+          "nome": "Accendino",
+          "tipo": "altro"
+        },
+        "dotazione_iniziale": true,
+        "dotazione_id": "accendino"
+      },
+      {
+        "uid": "dot-comune-10",
+        "rif": null,
+        "stato": null,
+        "quantita": 1,
+        "note": "",
+        "personalizzato": {
+          "nome": "Sacco a pelo",
+          "tipo": "altro"
+        },
+        "dotazione_iniziale": true,
+        "dotazione_id": "sacco-a-pelo"
+      },
+      {
+        "uid": "dot-comune-11",
+        "rif": null,
+        "stato": null,
+        "quantita": 3,
+        "note": "",
+        "personalizzato": {
+          "nome": "Razione da viaggio",
+          "tipo": "altro"
+        },
+        "dotazione_iniziale": true,
+        "dotazione_id": "razione-da-viaggio"
+      },
+      {
+        "uid": "dot-arma_da_fuoco-munizioni",
+        "rif": "munizioni:proiettili-da-pistola",
+        "stato": null,
+        "quantita": 45,
+        "note": "Per Pistola semiautomatica: 3 caricatori compatibili da 15 colpi (uno inserito, gli altri di riserva).",
+        "dotazione_iniziale": true
+      },
+      {
+        "uid": "dot-focus-1",
+        "rif": null,
+        "stato": null,
+        "quantita": 1,
+        "note": "",
+        "personalizzato": {
+          "nome": "Focus personale, già sintonizzato prima dell’avventura",
+          "tipo": "altro"
+        },
+        "dotazione_iniziale": true,
+        "dotazione_id": "focus-personale"
+      },
+      {
+        "uid": "dot-riserva_mistica-1",
+        "rif": "artefatti:batteria-da-5-pm-chroma-rosso",
+        "stato": "trasportato",
+        "quantita": 1,
+        "note": "",
+        "sintonizzato": true,
+        "dotazione_iniziale": true
+      },
+      {
+        "uid": "dot-protezione_o_abbigliamento-1",
+        "rif": "armature_corporative:veste-protettiva-dell-accolito",
+        "stato": "zaino",
+        "quantita": 1,
+        "note": "",
+        "dotazione_iniziale": true
+      },
+      {
+        "uid": "dot-osservazione-1",
+        "rif": null,
+        "stato": "in_uso",
+        "quantita": 1,
+        "note": "",
+        "personalizzato": {
+          "nome": "Binocolo",
+          "tipo": "altro"
+        },
+        "dotazione_iniziale": true,
+        "dotazione_id": "binocolo"
+      },
+      {
+        "uid": "dot-attrezzatura_aggiuntiva-1",
+        "rif": null,
+        "stato": "in_uso",
+        "quantita": 1,
+        "note": "",
+        "personalizzato": {
+          "nome": "Corredo da assalto verticale",
+          "tipo": "altro"
+        },
+        "dotazione_iniziale": true,
+        "dotazione_id": "corredo-assalto-verticale"
+      },
+      {
+        "uid": "dot-comunicazioni-1",
+        "rif": null,
+        "stato": null,
+        "quantita": 1,
+        "note": "",
+        "personalizzato": {
+          "nome": "Comunicatore da squadra",
+          "tipo": "altro"
+        },
+        "dotazione_iniziale": true,
+        "dotazione_id": "comunicatore-da-squadra"
+      },
+      {
+        "uid": "emul7afzhal5m",
+        "rif": "artefatti:batteria-da-5-pm-chroma-rosso",
+        "stato": "trasportato",
+        "quantita": 1,
+        "note": ""
+      },
+      {
+        "uid": "emul7aksd0724",
+        "rif": "armi_distanza_corporative:carabina-punisher",
+        "stato": "impugnata",
+        "quantita": 1,
+        "note": ""
+      },
+      {
+        "uid": "emul7ayjijjc3",
+        "rif": "armi:pugnale",
+        "stato": "pronta",
+        "quantita": 1,
+        "note": ""
+      },
+      {
+        "uid": "emul7b87ytrnh",
+        "rif": "rinforzi:soprabito-asa",
+        "stato": "in_uso",
+        "quantita": 1,
+        "note": ""
+      },
+      {
+        "uid": "emul7bl6e8hpp",
+        "rif": "armature_corporative:divisa-d-ordinanza-asa",
+        "stato": "indossata",
+        "quantita": 1,
+        "note": ""
+      }
+    ],
+    "dotazione": {
+      "opzioni": {
+        "riserva_mistica": "artefatti:batteria-da-5-pm-chroma-rosso",
+        "attrezzatura_aggiuntiva": "dotazione:corredo-assalto-verticale",
+        "protezione_o_abbigliamento": "armature:armatura-civile-leggera"
+      },
+      "sotto": {},
+      "crediti": {
+        "valore": 7,
+        "origine": "app"
+      },
+      "acquisti": []
+    },
+    "ritratto": "data:image/jpeg;base64,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"
+  },
+  "livelli": [
+    {
+      "livello": 2,
+      "caratteristiche": {
+        "SAG": 1,
+        "INT": 1
+      },
+      "incantesimi": [
+        "Piattaforma Levitante"
+      ]
+    },
+    {
+      "livello": 3,
+      "talentoLibero": {
+        "id": "incantesimi-estesi"
+      }
+    },
+    {
+      "livello": 4,
+      "grado": {
+        "classe": "Invocatore"
+      },
+      "tiroPV": {
+        "valore": 4,
+        "origine": "app"
+      },
+      "tiroPM": {
+        "valore": 3,
+        "origine": "app"
+      },
+      "talentoClasse": "Canalizzazione Implacabile",
+      "incantesimi": [
+        "Sovraccarico Sinaptico",
+        "Esorcizzare Corruzione",
+        "Psicometabolismo",
+        "Forma Elementale"
+      ],
+      "puntiAbilita": {
+        "Artefatti": 1,
+        "Armi medie": 2,
+        "Difese": 2,
+        "Medicina": 3,
+        "Percezione": 1,
+        "Atletica": 1
+      }
+    },
+    {
+      "livello": 5,
+      "talentoLibero": {
+        "id": "incantesimi-plurimi"
+      }
+    },
+    {
+      "livello": 6,
+      "caratteristiche": {
+        "SAG": 1,
+        "DES": 1
+      }
+    }
+  ],
+  "sessione": {
+    "pvAttuali": 17,
+    "pmAttuali": 24,
+    "puntiEroe": 7,
+    "distintivi": 0,
+    "statiAttivi": [],
+    "ferite": 0,
+    "affaticamento": 0,
+    "munizioni": {
+      "emul7aksd0724": {
+        "colpi": 30,
+        "riserve": 0
+      },
+      "emul7aksd0724:lanciagranate-carabina-punisher": {
+        "colpi": 2,
+        "riserve": 0
+      }
+    },
+    "scorte": {},
+    "chroma": {
+      "dot-riserva_mistica-1": {
+        "pmAttuali": 5
+      },
+      "emul7afzhal5m": {
+        "pmAttuali": 5
+      }
+    },
+    "caricoExtra": 0,
+    "crediti": 900,
+    "creditiIniziali": 1700,
+    "condizioniOggetti": [],
+    "attacchi": {},
+    "lanci": {
+      "Colpo Elementale": {
+        "versione": 8,
+        "anticipazione": null,
+        "focalizzazione": false,
+        "ingaggio": false,
+        "componentiMancanti": [],
+        "circostanza": 0,
+        "effettiMagici": [],
+        "fonte": "personali",
+        "contenitore": null,
+        "quotaContenitore": 1,
+        "riservaTecnica": false
+      },
+      "Armatura di Forza": {
+        "versione": 6,
+        "anticipazione": 1,
+        "focalizzazione": false,
+        "ingaggio": false,
+        "componentiMancanti": [],
+        "circostanza": 0,
+        "effettiMagici": [],
+        "fonte": "personali",
+        "contenitore": null,
+        "quotaContenitore": 1,
+        "riservaTecnica": false
+      },
+      "Muro Elementale": {
+        "versione": 6,
+        "anticipazione": 3,
+        "focalizzazione": false,
+        "ingaggio": false,
+        "componentiMancanti": [],
+        "circostanza": 0,
+        "effettiMagici": [],
+        "fonte": "personali",
+        "contenitore": null,
+        "quotaContenitore": 1,
+        "riservaTecnica": false
+      },
+      "Sovraccarico Sinaptico": {
+        "versione": 6,
+        "anticipazione": null,
+        "focalizzazione": false,
+        "ingaggio": false,
+        "componentiMancanti": [],
+        "circostanza": 0,
+        "effettiMagici": [],
+        "fonte": "personali",
+        "contenitore": null,
+        "quotaContenitore": 1,
+        "riservaTecnica": false
+      }
+    },
+    "integrita": {
+      "dot-riserva_mistica-1": 3,
+      "dot-protezione_o_abbigliamento-1": 6,
+      "emul7afzhal5m": 3,
+      "emul7aksd0724": 6,
+      "emul7ayjijjc3": 4,
+      "emul7b87ytrnh": 6,
+      "emul7bl6e8hpp": 6
+    },
+    "condizioniArmi": {},
+    "note": ""
+  }
+}
