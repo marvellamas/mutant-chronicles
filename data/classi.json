@@ -3420,11 +3420,29 @@
         {
           "grado": 1,
           "nome": "Incantesimi Aggressivi",
-          "testo": "Gli Incantesimi offensivi dell’Invocatore infliggono +1 danno ai Gradi I–II, +2 ai Gradi III–IV e +3 ai Gradi V– VI. Il bonus si applica una sola volta per bersaglio, al primo colpo o alla prima applicazione del danno, e non si ripete nei Round successivi di un effetto persistente.",
+          "testo": "Gli Incantesimi offensivi dell’Invocatore infliggono +1 danno ai Gradi I–II, +2 ai Gradi III–IV e +3 ai Gradi V–VI. Il bonus si applica una sola volta per bersaglio, al primo colpo o alla prima applicazione del danno, e non si ripete nei Round successivi di un effetto persistente.",
           "effetti": {
             "lancio": {
               "promemoria": "sempre"
-            }
+            },
+            "valori": [
+              {
+                "tipo": "danno",
+                "ambito": "uso_specifico",
+                "uso": "incantesimi_offensivi",
+                "incantesimi": "offensivi",
+                "valore": 1,
+                "valore_per_grado": {
+                  "1": 1,
+                  "3": 2,
+                  "5": 3
+                },
+                "grado_di": "Invocatore",
+                "nota": "Il bonus si applica una sola volta per bersaglio, al primo colpo o alla prima applicazione del danno, e non si ripete nei Round successivi di un effetto persistente.",
+                "condizione": "Gli Incantesimi offensivi dell’Invocatore infliggono +1 danno ai Gradi I–II, +2 ai Gradi III–IV e +3 ai Gradi V–VI.",
+                "fonte": "Giocatore, Invocatore (§3.8; Talenti §3.9; Talenti §3.9.3)"
+              }
+            ]
           }
         },
         {
@@ -3434,7 +3452,18 @@
           "effetti": {
             "lancio": {
               "promemoria": "sempre"
-            }
+            },
+            "valori": [
+              {
+                "tipo": "dado_danno",
+                "ambito": "situazionale",
+                "incantesimi": "offensivi",
+                "valore": 1,
+                "nota": "Il dado aggiuntivo si applica una sola volta per bersaglio, al primo colpo o alla prima applicazione del danno.",
+                "condizione": "Una volta per combattimento, prima di lanciare un Incantesimo offensivo che infligge danno con dadi, l’Invocatore può aggiungere un dado dello stesso tipo.",
+                "fonte": "Giocatore, Invocatore (§3.8; Talenti §3.9; Talenti §3.9.3)"
+              }
+            ]
           }
         },
         {
@@ -3444,7 +3473,18 @@
           "effetti": {
             "lancio": {
               "promemoria": "sempre"
-            }
+            },
+            "valori": [
+              {
+                "tipo": "danno",
+                "ambito": "uso_specifico",
+                "uso": "incantesimi_area",
+                "incantesimi": "area",
+                "valore": 1,
+                "condizione": "Se l’Incantesimo infligge danni ai PV, ogni creatura ostile interessata subisce inoltre +1 danno alla prima applicazione, una sola volta per quel lancio.",
+                "fonte": "Giocatore, Invocatore (§3.8; Talenti §3.9; Talenti §3.9.3)"
+              }
+            ]
           }
         }
       ],
@@ -3561,7 +3601,18 @@
           "effetti": {
             "lancio": {
               "promemoria": "sempre"
-            }
+            },
+            "valori": [
+              {
+                "tipo": "massimizza",
+                "ambito": "uso_specifico",
+                "uso": "Cura Ferite a Contatto",
+                "incantesimi": "cura_ferite_contatto",
+                "valore": 1,
+                "condizione": "Quando il Mistico usa Cura Ferite a Contatto, i dadi che ripristinano PV ottengono il risultato massimo.",
+                "fonte": "Giocatore, Mistico (§3.8; Talenti §3.9; Talenti §3.9.4)"
+              }
+            ]
           }
         },
         {
@@ -3583,7 +3634,18 @@
           "effetti": {
             "lancio": {
               "promemoria": "sempre"
-            }
+            },
+            "valori": [
+              {
+                "tipo": "cura",
+                "ambito": "uso_specifico",
+                "uso": "incantesimi_cura",
+                "incantesimi": "cura",
+                "valore": 1,
+                "condizione": "Ogni Incantesimo di cura lanciato dal Mistico ripristina 1 PV aggiuntivo a ciascun bersaglio, una sola volta per lancio.",
+                "fonte": "Giocatore, Mistico (§3.8; Talenti §3.9; Talenti §3.9.4)"
+              }
+            ]
           }
         },
         {

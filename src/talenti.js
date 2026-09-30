@@ -45,7 +45,8 @@ function sostituisci(e, t) {
  */
 export function talentiSituazionali(effetti) {
   const perChiave = new Map();
-  for (const e of effetti.filter((x) => x.ambito === 'situazionale')) {
+  // i situazionali di lancio («incantesimi») sono interruttori del pannello «Lancia!», non della scheda
+  for (const e of effetti.filter((x) => x.ambito === 'situazionale' && !x.incantesimi)) {
     const g = perChiave.get(e.chiave) ?? perChiave.set(e.chiave, { chiave: e.chiave, talento: e.talento, effetti: [], condizione: e.condizione }).get(e.chiave);
     g.effetti.push(e);
   }

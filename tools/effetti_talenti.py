@@ -110,6 +110,24 @@ EFFETTI = {
         ('Spendendo 2 PM', [ps('volonta', 2, 'situazionale'), ps('magia', 2, 'situazionale')]),
     ],
     'Meccanica Potenziata': [('Il Tecnomante ottiene +1 al danno', [{'tipo': 'danno', 'armi': 'artefatto', 'attacchi': 'tutti', 'valore': 1, 'ambito': 'generale'}])],
+    # --- Talenti di lancio, applicati da «Lancia!» (src/lancio.js). «incantesimi»: a quali Incantesimi
+    # valgono (offensivi: hanno una colonna Danno con dadi; area: colonna Area/Raggio o Anticipazione
+    # dell'Area; cura: colonna Guarigione con dadi; cura_ferite_contatto; danno_o_cura). Gli
+    # usi specifici si applicano da soli; i situazionali sono un interruttore nel pannello «Lancia!».
+    # «valore_per_grado»: il valore per Grado minimo nella Classe «grado_di» (come i «_per_grado» delle Discipline).
+    'Incantesimi Aggressivi': [('Gli Incantesimi offensivi dell’Invocatore infliggono', [{
+        'tipo': 'danno', 'ambito': 'uso_specifico', 'uso': 'incantesimi_offensivi', 'incantesimi': 'offensivi', 'valore': 1,
+        'valore_per_grado': {'1': 1, '3': 2, '5': 3}, 'grado_di': 'Invocatore', 'nota_inizio': 'Il bonus si applica una sola volta per bersaglio'}])],
+    'Sovraccarico Controllato': [('Una volta per combattimento, prima di lanciare', [{
+        'tipo': 'dado_danno', 'ambito': 'situazionale', 'incantesimi': 'offensivi', 'valore': 1, 'nota_inizio': 'Il dado aggiuntivo si applica una sola volta per bersaglio'}])],
+    'Controllo Arcano': [('Se l’Incantesimo infligge danni ai PV', [{
+        'tipo': 'danno', 'ambito': 'uso_specifico', 'uso': 'incantesimi_area', 'incantesimi': 'area', 'valore': 1}])],
+    'Canale Vitale': [('Ogni Incantesimo di cura lanciato dal Mistico', [{
+        'tipo': 'cura', 'ambito': 'uso_specifico', 'uso': 'incantesimi_cura', 'incantesimi': 'cura', 'valore': 1}])],
+    'Tocco Sacro': [('Quando il Mistico usa Cura Ferite a Contatto', [{
+        'tipo': 'massimizza', 'ambito': 'uso_specifico', 'uso': 'Cura Ferite a Contatto', 'incantesimi': 'cura_ferite_contatto', 'valore': 1}])],
+    'Incantesimi Massimizzati': [('Una volta per combattimento, dopo un lancio riuscito', [{
+        'tipo': 'massimizza', 'ambito': 'situazionale', 'incantesimi': 'danno_o_cura', 'valore': 1, 'nota_inizio': 'Ogni dado della determinazione scelta assume'}])],
 }
 
 # Talenti con effetti già letti dal motore fuori da «effetti» (per nome o per id)
@@ -186,6 +204,10 @@ def effetti_di(x):
     for inizio, lista in EFFETTI[nome]:
         f = frase(x['t'].get('testo', ''), inizio, nome)
         for e in lista:
+            e = dict(e)
+            # «nota»: un'altra frase del manuale da mostrare sotto il valore («una sola volta per bersaglio…»)
+            if 'nota_inizio' in e:
+                e['nota'] = frase(x['t'].get('testo', ''), e.pop('nota_inizio'), nome)
             out.append({**e, 'condizione': f, 'fonte': x['fonte']})
     return out
 
@@ -194,7 +216,9 @@ def categoria(x):
     t = x['t']
     nome = t['nome']
     ee = effetti_di(x)
-    gia = [k for k in (t.get('effetti') or {}) if k != 'valori']
+    solo_promemoria = lambda v: isinstance(v, dict) and set(v) <= {'promemoria'}
+    gia = [k for k, v in (t.get('effetti') or {}).items() if k != 'valori' and not solo_promemoria(v)]
+    promemoria = [k for k, v in (t.get('effetti') or {}).items() if k != 'valori' and solo_promemoria(v)]
     if nome in RIMANDATI and not ee:
         return 'rimandato', RIMANDATI[nome]
     if nome in RIMANDATI:
@@ -209,6 +233,9 @@ def categoria(x):
         return 'già gestito', GIA_PER_NOME[nome]
     if nome in NUMERICI_NON_APPLICATI:
         return 'testuale', f'numerico non applicato: {NUMERICI_NON_APPLICATI[nome]}'
+    if promemoria:
+        dove = ', '.join(sorted({'«Lancia!»' if k == 'lancio' else '«Attacca!»' for k in promemoria}))
+        return 'testuale', f'promemoria in {dove} (prima frase del Talento), nessun valore'
     if re.search(r'[+−-]\s?\d+\s*(VA|PV|PM|AR|Q\b|danni?|alle|al |a )', t.get('testo', '')):
         return 'testuale', MOMENTANEI
     return 'testuale', 'nessun valore numerico del personaggio'
@@ -225,6 +252,14 @@ def testo_effetto(e):
         s = f"{v} alle Prove di Caratteristica ({', '.join(e['caratteristiche'])})"
     elif tipo == 'parata':
         s = f"{v} alla Parata a distanza con lo scudo"
+    elif tipo == 'danno' and e.get('incantesimi'):
+        s = f"{v} danno" + (f" (Gradi: {', '.join(f'{k}+ → {x}' for k, x in e['valore_per_grado'].items())} di {e['grado_di']})" if e.get('valore_per_grado') else '') + f" agli Incantesimi {e['incantesimi']}"
+    elif tipo == 'dado_danno':
+        s = f"+{e['valore']} dado di danno agli Incantesimi {e['incantesimi']}"
+    elif tipo == 'cura':
+        s = f"{v} PV curati agli Incantesimi {e['incantesimi']}"
+    elif tipo == 'massimizza':
+        s = f"dadi al massimo (Incantesimi {e['incantesimi']})"
     elif tipo == 'danno':
         s = f"{v} danno con le armi Artefatto"
     else:
@@ -287,6 +322,8 @@ def scrivi_doc():
     L.append('- **Dati:** `effetti.valori` nelle voci dei Talenti (`talenti_liberi.json`, `classi.json`), scritti da questo script; le chiavi di `effetti` già lette dal motore restano come sono. Validatore e `tools/verifica_frasi.mjs` controllano forma e frasi.')
     L.append('- **Motore** (`src/talenti.js`, `src/condizioni.js`): solo al tavolo (con la sessione), nei valori effettivi; il totale da regole, l’avanzamento e la SS non cambiano. Generali sempre; situazionali con l’interruttore del Talento (`sessione.talentiAccesi`); usi specifici come valore a parte accanto all’Abilità, sotto le Prove Salvezza (Resistenze con il tetto del §8.6) e sotto le Caratteristiche. I bonus dei Talenti si sommano (la regola «un solo modificatore degli strumenti» vale per gli oggetti). Provenienza: una riga per Talento, con il suo nome.')
     L.append('- **Interruttore «Bonus dei Talenti»** (`sessione.bonusTalenti`, predefinito acceso; nel salvataggio e nell’export, come le altre condizioni al tavolo): in testa alle tab Combattimento e Poteri. Spento: nessun effetto di `effetti.valori`, nemmeno i Talenti dell’Iniziativa; «Attacca!» e «Lancia!» calcolano senza Talenti (`talentiAttacco` vuoto); la provenienza elenca i Talenti barrati («Talenti spenti: non conta»). PV, PM, Prova Salvezza Migliorata e Movimento restano: sono il totale da regole.')
+    L.append('- **Talenti di lancio** (`incantesimi` negli effetti, applicati da «Lancia!»): **offensivo** = la versione dell’Incantesimo ha una colonna che inizia con «Danno» e contiene dadi (in `incantesimi.json` non c’è un campo che dica «offensivo»); **ad Area** = offensivo con una colonna «Area» o «Raggio», o con l’Anticipazione dell’Area; **di cura** = una colonna «Guarigione» con dadi. Incantesimi Aggressivi (+1/+2/+3 per Grado di Invocatore), Controllo Arcano (+1 ad Area), Canale Vitale (+1 PV), Tocco Sacro (dadi al massimo) si applicano da soli; Sovraccarico Controllato (+1 dado) e Incantesimi Massimizzati sono interruttori del pannello. Il valore e il Grado compaiono nella provenienza del danno, la frase «una sola volta per bersaglio» sotto il danno.')
+    L.append('- **Promemoria di lancio senza numero** (Canalizzazione Implacabile, Controllo Superiore, Controllo dei Flussi, Calcolo Arcano, Manifestazioni Occultate; Canalizzazione Sicura e Geometria Arcana con il numero ricavato fra parentesi): una riga «Talenti: Nome — prima frase» nei promemoria di «Lancia!». Non sono «già gestiti»: il motore non applica nessun valore.')
     L.append('- **SD:** interruttori dei Talenti situazionali nella colonna Condizioni della tab Abilità e, per Difese e Salvezze, in testa alla tab Combattimento; usi delle Prove di Caratteristica sotto le Caratteristiche (Identità).')
     L.append('- **Non applicati** (restano testo, motivo nella tabella): Sangue Freddo, Aura di Equilibrio, Assalto Armato, Evacuazione Medica, Supporto Avanzato, Capolavoro, Maestro d’Arma, Maestria Astrale (l’Arma Astrale non è ancora un’arma della scheda).')
     L.append('')

@@ -10,6 +10,22 @@ import { avvisiStati } from './condizioni.js';
 import { provenienza, righeDaScomposizione, rigaConDettaglio } from './provenienza.js';
 import { bonusDannoCaratteristica } from './calc.js';
 import { aggiungiDanno } from './equipaggiamento.js';
+import { effettiTalenti } from './talenti.js';
+
+const GRADI_ROMANI = ['', 'I', 'II', 'III', 'IV', 'V', 'VI'];
+/** «2d6+5» + 1 dado → «3d6+5» (il primo gruppo di dadi; Sovraccarico Controllato). */
+export function aggiungiDado(formula, n = 1) {
+  return n ? String(formula).replace(/(\d+)d(\d+)/, (_, a, f) => `${Number(a) + n}d${f}`) : formula;
+}
+/** Risultato massimo di una formula («3d6+2» → 20): ogni dado al massimo, poi i fissi (Magia, Incantesimi Massimizzati). */
+export function massimoFormula(formula) {
+  let tot = 0;
+  for (const m of String(formula).replace(/\s+/g, '').matchAll(/([+-]?)(\d+)(?:d(\d+))?/g)) {
+    const v = m[3] ? Number(m[2]) * Number(m[3]) : Number(m[2]);
+    tot += m[1] === '-' ? -v : v;
+  }
+  return tot;
+}
 
 const numero = (v) => { const n = parseInt(String(v ?? '').replace(/[^\d]/g, ''), 10); return Number.isFinite(n) ? n : null; };
 /** Livello di una riga delle versioni (colonne «Livello» oppure «Livello e PM»). */
@@ -33,6 +49,9 @@ export function dichiarazioneLancio(d = {}) {
     contenitore: typeof d.contenitore === 'string' ? d.contenitore : null,
     quotaContenitore: Number.isInteger(d.quotaContenitore) && d.quotaContenitore > 0 ? d.quotaContenitore : 1,
     riservaTecnica: !!d.riservaTecnica,
+    // Talenti di lancio situazionali accesi per questo lancio (chiavi di src/talenti.js): Sovraccarico
+    // Controllato, Incantesimi Massimizzati
+    talentiLancio: Array.isArray(d.talentiLancio) ? d.talentiLancio.filter((x) => typeof x === 'string') : [],
   };
 }
 
@@ -209,9 +228,56 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
   const siglaMagia = Rd?.magia ?? null;
   const valoreMagia = siglaMagia ? scheda?.caratteristiche?.[siglaMagia]?.valore ?? null : null;
   const colonneDanno = Object.entries(v?.riga ?? {}).filter(([k, t]) => /^Danno/.test(k) && /\d+d\d+/.test(String(t)));
+  // Talenti di lancio (docs/censimento-talenti.md, effetti.valori con «incantesimi»): con l'interruttore
+  // «Bonus dei Talenti» spento non contano. Offensivo = una colonna Danno con dadi; ad Area = una colonna
+  // Area o Raggio, o l'Anticipazione dell'Area; di cura = una colonna Guarigione con dadi.
+  const colonneCura = Object.entries(v?.riga ?? {}).filter(([k, t]) => /^Guarigione/.test(k) && /\d+d\d+/.test(String(t)));
+  const offensivo = colonneDanno.length > 0;
+  const adArea = Object.keys(v?.riga ?? {}).some((k) => /^(Area|Raggio)/.test(k)) || (m.anticipazione?.aspetti ?? []).some((a) => a.categoria === 'area');
+  const valePer = { offensivi: offensivo, area: adArea && offensivo, cura: colonneCura.length > 0, cura_ferite_contatto: incantesimo.nome === 'Cura Ferite' && !!contatto, danno_o_cura: offensivo || colonneCura.length > 0 };
+  const talentiLancio = scheda?.bonusTalenti === false ? [] : effettiTalenti(scheda, dati).filter((e) => e.incantesimi);
+  const sceltiLancio = new Set(d.talentiLancio);
+  const attiviLancio = talentiLancio.filter((e) => valePer[e.incantesimi] && (e.ambito === 'uso_specifico' || sceltiLancio.has(e.chiave)));
+  const valoreTalento = (e) => {
+    if (!e.valore_per_grado) return { valore: e.valore, grado: null };
+    const g = (scheda?.classi ?? []).find((c) => c.nome === e.grado_di)?.grado ?? 0;
+    const soglia = Object.entries(e.valore_per_grado).map(([k, x]) => [Number(k), x]).filter(([k]) => k <= g).sort((a, b) => b[0] - a[0])[0];
+    return { valore: soglia?.[1] ?? 0, grado: g };
+  };
+  const extraDanno = attiviLancio.filter((e) => e.tipo === 'danno').map((e) => ({ nome: e.talento, ...valoreTalento(e), nota: e.nota ?? null })).filter((x) => x.valore);
+  const dadiInPiu = attiviLancio.filter((e) => e.tipo === 'dado_danno');
+  const massimizza = attiviLancio.filter((e) => e.tipo === 'massimizza');
+  const extraCura = attiviLancio.filter((e) => e.tipo === 'cura').map((e) => ({ nome: e.talento, valore: e.valore, nota: e.nota ?? null }));
+  const conSegno = (n) => (n < 0 ? `−${-n}` : `+${n}`);
+  const etichettaTalento = (x) => `${conSegno(x.valore)} ${x.nome}${x.grado ? ` (Grado ${GRADI_ROMANI[x.grado] ?? x.grado})` : ''}`;
   const dannoIncantesimo = colonneDanno.length && valoreMagia !== null ? (() => {
     const bonus = bonusDannoCaratteristica(valoreMagia, scheda?.livello ?? 1, dati.regole);
-    return { sigla: siglaMagia, valore: valoreMagia, bonus, voci: colonneDanno.map(([k, t]) => ({ colonna: k, base: String(t), testo: aggiungiDanno(String(t), bonus) })) };
+    const sommaExtra = extraDanno.reduce((s, x) => s + x.valore, 0);
+    const nDadi = dadiInPiu.reduce((s, e) => s + e.valore, 0);
+    return {
+      sigla: siglaMagia, valore: valoreMagia, bonus, talenti: extraDanno,
+      voci: colonneDanno.map(([k, t]) => {
+        const testo = aggiungiDanno(aggiungiDado(String(t), nDadi), bonus + sommaExtra);
+        // provenienza in una riga: «1d6 +1 SAG +1 Incantesimi Aggressivi (Grado I)»
+        const parti = [String(t), nDadi ? `${conSegno(nDadi)} dado (${dadiInPiu.map((e) => e.talento).join(', ')})` : null, bonus ? `${conSegno(bonus)} ${siglaMagia}` : null, ...extraDanno.map(etichettaTalento)].filter(Boolean);
+        return { colonna: k, base: String(t), testo: massimizza.length ? `${testo} (massimo ${massimoFormula(testo)}: ${massimizza.map((e) => e.talento).join(', ')})` : testo, provenienza: parti.join(' ') };
+      }),
+      // note del manuale sotto il danno («una sola volta per bersaglio, al primo colpo»)
+      note: [...extraDanno, ...dadiInPiu.map((e) => ({ nome: e.talento, nota: e.nota })), ...massimizza.map((e) => ({ nome: e.talento, nota: e.nota }))]
+        .filter((x) => x.nota).map((x) => `${x.nome}: ${x.nota}`),
+    };
+  })() : null;
+  // cura della versione (colonna Guarigione) con i Talenti di cura (Canale Vitale, Tocco Sacro)
+  const curaIncantesimo = colonneCura.length ? (() => {
+    const sommaExtra = extraCura.reduce((s, x) => s + x.valore, 0);
+    return {
+      talenti: extraCura,
+      voci: colonneCura.map(([k, t]) => {
+        const testo = aggiungiDanno(String(t), sommaExtra);
+        const parti = [String(t), ...extraCura.map(etichettaTalento)];
+        return { colonna: k, base: String(t), testo: massimizza.length ? `${testo} (dadi al massimo: ${massimoFormula(testo)}; ${massimizza.map((e) => e.talento).join(', ')})` : testo, provenienza: parti.join(' ') };
+      }),
+    };
   })() : null;
   if (dannoIncantesimo?.bonus) promemoria.push(`Bonus di ${siglaMagia} al danno: ${dannoIncantesimo.bonus > 0 ? '+' : ''}${dannoIncantesimo.bonus} a ogni colpo o applicazione di danno, prima di moltiplicatori, Difese e Armatura (Magia sez. 7; Giocatore §5.13).`);
 
@@ -219,7 +285,18 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
   promemoria.push(L.magistrale.frasi[0], L.fallimento.frasi[0]);
   const mn = prova ? promemoriaMagistraleNaturale(va, dati) : null;
   if (mn) promemoria.push(mn);
-  for (const t of con('promemoria')) promemoria.push(`${t.nome}: ${String(t.testo ?? '').split(/(?<=\.)\s/)[0]}`);
+  const conValori = new Set(talentiLancio.map((e) => e.talento));
+  const modInt = Math.max(1, scheda?.caratteristiche?.INT?.mod ?? 0);
+  const numeri = {
+    'Canalizzazione Sicura': prova ? `se la Prova fallisce recuperi ${Math.floor(pm / 2)} PM` : null,
+    'Geometria Arcana': adArea ? `qui puoi escludere fino a ${modInt} creature` : null,
+  };
+  const soloTesto = con('promemoria').filter((t) => !conValori.has(t.nome));
+  if (soloTesto.length) {
+    promemoria.push(`Talenti: ${soloTesto.map((t) => `${t.nome} — ${String(t.testo ?? '').split(/(?<=\.)\s/)[0]}${numeri[t.nome] ? ` (${numeri[t.nome]})` : ''}`).join(' · ')}`);
+  }
+  // Controllo Arcano: oltre al +1 danno, l'esclusione di 1 + Mod INT creature dagli Incantesimi ad Area
+  if (adArea && T.some((t) => t.nome === 'Controllo Arcano')) promemoria.push(`Controllo Arcano: puoi escludere fino a ${1 + Math.max(0, scheda?.caratteristiche?.INT?.mod ?? 0)} creature dall’Area.`);
   if (aspetto && T.some((t) => t.nome === 'Calcolo Arcano')) promemoria.push(`Calcolo Arcano: ${A.frasi.at(-1)}`);
 
   return {
@@ -236,6 +313,9 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
     contatto,
     salvezza_bersaglio: salvezza,
     danno: dannoIncantesimo,
+    cura: curaIncantesimo,
+    // Talenti di lancio situazionali disponibili per questo incantesimo (interruttori del pannello)
+    talenti_lancio: talentiLancio.filter((e) => e.ambito === 'situazionale' && valePer[e.incantesimi]).map((e) => ({ chiave: e.chiave, nome: e.talento, condizione: e.condizione, acceso: sceltiLancio.has(e.chiave) })),
     rituale_non_definito: m.procedura_rituale?.stato === 'non_definita',
     azioni: { ...m.azioni, focalizzazione: d.focalizzazione ? 1 : 0 },
     concentrazione: m.concentrazione ?? null,

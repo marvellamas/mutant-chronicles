@@ -2005,7 +2005,18 @@
       "effetti": {
         "lancio": {
           "promemoria": "sempre"
-        }
+        },
+        "valori": [
+          {
+            "tipo": "massimizza",
+            "ambito": "situazionale",
+            "incantesimi": "danno_o_cura",
+            "valore": 1,
+            "nota": "Ogni dado della determinazione scelta assume il proprio risultato massimo, poi si applicano i normali modificatori fissi.",
+            "condizione": "Una volta per combattimento, dopo un lancio riuscito, anche automatico, e dopo l’eventuale Prova per colpire riuscita, può massimizzare una sola determinazione iniziale di danno o guarigione dell’Incantesimo.",
+            "fonte": "Magia sez. 1"
+          }
+        ]
       }
     },
     {

@@ -18,13 +18,13 @@
 | Categoria | Talenti |
 |---|---|
 | generale | 3 |
-| situazionale | 7 |
-| uso_specifico | 52 |
-| testuale | 148 |
+| situazionale | 9 |
+| uso_specifico | 56 |
+| testuale | 166 |
 | rimandato | 1 |
-| già gestito | 110 |
+| già gestito | 86 |
 
-Talenti con effetti tipizzati nuovi: **61**, per **97 effetti** (`effetti.valori`).
+Talenti con effetti tipizzati nuovi: **67**, per **103 effetti** (`effetti.valori`).
 
 ## Tipi dello schema
 
@@ -53,7 +53,7 @@ Nuovi o estesi per i Talenti (anche in `docs/effetti-oggetti.md` e nel validator
 | Sport | Giocatore §8.6.1 | uso_specifico | +3 VA a Atletica (solo per sport: {annotazione}) |
 | Visione Perfetta | Giocatore §8.6.1 | testuale | nessun valore numerico del personaggio |
 | Controllo del Fallimento | Giocatore §8.6.1 | testuale | nessun valore numerico del personaggio |
-| Successo Magistrale Migliorato | Giocatore §8.6.1 | già gestito | attacco_ravvicinato → src/attacco.js |
+| Successo Magistrale Migliorato | Giocatore §8.6.1 | testuale | promemoria in «Attacca!» (prima frase del Talento), nessun valore |
 | Prova di Caratteristica Migliorata | Giocatore §8.6.2 | uso_specifico | +3 alle Prove di Caratteristica ({parametro}) (solo per Prove dirette di Caratteristica) |
 | Prova Salvezza Migliorata | Giocatore §8.6.2 | già gestito | salvezza → src/avanzamento.js |
 | Resistenza ai Veleni | Giocatore §8.6.3 | uso_specifico | +2 alla PS di Tempra (solo per contro l’avvelenamento) |
@@ -94,12 +94,12 @@ Nuovi o estesi per i Talenti (anche in `docs/effetti-oggetti.md` e nel validator
 | Apertura Tattica | Giocatore §8.6.6 | testuale | nessun valore numerico del personaggio |
 | Arti Marziali | Giocatore §8.6.6 | già gestito | attacco_ravvicinato → src/attacco.js |
 | Arti Marziali Migliorate | Giocatore §8.6.6 | uso_specifico | +1 VA a Difese (solo per contro attacchi ravvicinati, senz’armi) · già gestito in parte: src/attacco.js |
-| Colpo di Opportunità Istintivo | Giocatore §8.6.6 | già gestito | attacco_ravvicinato → src/attacco.js |
+| Colpo di Opportunità Istintivo | Giocatore §8.6.6 | testuale | promemoria in «Attacca!» (prima frase del Talento), nessun valore |
 | Colpo Mirato Migliorato | Giocatore §8.6.6 | già gestito | attacco_ravvicinato → src/attacco.js |
-| Combattere alla Cieca | Giocatore §8.6.6 | già gestito | attacco_ravvicinato → src/attacco.js |
+| Combattere alla Cieca | Giocatore §8.6.6 | testuale | promemoria in «Attacca!» (prima frase del Talento), nessun valore |
 | Disarmare Migliorato | Giocatore §8.6.6 | già gestito | attacco_ravvicinato → src/attacco.js |
-| Immobilizzare Istintivo | Giocatore §8.6.6 | già gestito | attacco_ravvicinato → src/attacco.js |
-| Immobilizzare Migliorato | Giocatore §8.6.6 | già gestito | attacco_ravvicinato → src/attacco.js |
+| Immobilizzare Istintivo | Giocatore §8.6.6 | testuale | promemoria in «Attacca!» (prima frase del Talento), nessun valore |
+| Immobilizzare Migliorato | Giocatore §8.6.6 | testuale | promemoria in «Attacca!» (prima frase del Talento), nessun valore |
 | Sbilanciare Migliorato | Giocatore §8.6.6 | già gestito | attacco_ravvicinato → src/attacco.js |
 | Spazzata Migliorata | Giocatore §8.6.6 | già gestito | attacco_ravvicinato → src/attacco.js |
 | Stordire Migliorato | Giocatore §8.6.6 | già gestito | attacco_ravvicinato → src/attacco.js |
@@ -121,7 +121,7 @@ Nuovi o estesi per i Talenti (anche in `docs/effetti-oggetti.md` e nel validator
 | Lettura Veloce | Giocatore §8.6.9 | testuale | nessun valore numerico del personaggio |
 | Poliglotta | Giocatore §8.6.9 | testuale | nessun valore numerico del personaggio |
 | Autosufficiente | Giocatore §8.6.9 | testuale | nessun valore numerico del personaggio |
-| Tiratore Imboscato | Giocatore §8.6.9 | già gestito | attacco_distanza → src/attacco.js |
+| Tiratore Imboscato | Giocatore §8.6.9 | testuale | promemoria in «Attacca!» (prima frase del Talento), nessun valore |
 | Controllo d’Emergenza | Giocatore §8.6.9 | testuale | nessun valore numerico del personaggio |
 | Inseguimento | Giocatore §8.6.9 | uso_specifico | +2 VA a Pilotare (solo per inseguire o seminare un mezzo) |
 | Pilotaggio Acrobatico | Giocatore §8.6.9 | testuale | nessun valore numerico del personaggio |
@@ -155,8 +155,8 @@ Nuovi o estesi per i Talenti (anche in `docs/effetti-oggetti.md` e nel validator
 | Incantesimi Intensificati | Magia sez. 1 | già gestito | lancio → src/lancio.js |
 | Anticipazione Migliorata | Magia sez. 1 | già gestito | lancio → src/lancio.js |
 | Incantesimi Inarrestabili | Magia sez. 1 | già gestito | lancio → src/lancio.js |
-| Incantesimi Massimizzati | Magia sez. 1 | già gestito | lancio → src/lancio.js |
-| Manifestazioni Occultate | Magia sez. 1 | già gestito | lancio → src/lancio.js |
+| Incantesimi Massimizzati | Magia sez. 1 | situazionale | dadi al massimo (Incantesimi danno_o_cura) (con la condizione accesa) |
+| Manifestazioni Occultate | Magia sez. 1 | testuale | promemoria in «Lancia!» (prima frase del Talento), nessun valore |
 | Ritualista Minore | Magia sez. 1 | testuale | nessun valore numerico del personaggio |
 | Ritualista Maggiore | Magia sez. 1 | testuale | nessun valore numerico del personaggio |
 
@@ -188,7 +188,7 @@ Nuovi o estesi per i Talenti (anche in `docs/effetti-oggetti.md` e nel validator
 | Mappa Mentale (Esploratore (a scelta)) | Giocatore, Esploratore (§3.4; Talenti §3.5.2; Specializzazioni dei Talenti a scelta: risposte del master (docs/risposte-master.md)) | testuale | nessun valore numerico del personaggio |
 | Rotta Alternativa (Esploratore (a scelta)) | Giocatore, Esploratore (§3.4; Talenti §3.5.2; Specializzazioni dei Talenti a scelta: risposte del master (docs/risposte-master.md)) | testuale | nessun valore numerico del personaggio |
 | Avanguardia (Esploratore (a scelta)) | Giocatore, Esploratore (§3.4; Talenti §3.5.2; Specializzazioni dei Talenti a scelta: risposte del master (docs/risposte-master.md)) | testuale | nessun valore numerico del personaggio |
-| Colpo Sleale (Lestofante (fisso, Grado 1)) | Giocatore, Lestofante (§3.4; Talenti §3.5.2) | già gestito | attacco_ravvicinato → src/attacco.js |
+| Colpo Sleale (Lestofante (fisso, Grado 1)) | Giocatore, Lestofante (§3.4; Talenti §3.5.2) | testuale | promemoria in «Attacca!» (prima frase del Talento), nessun valore |
 | Opportunista (Lestofante (fisso, Grado 3)) | Giocatore, Lestofante (§3.4; Talenti §3.5.2) | testuale | nessun valore numerico del personaggio |
 | Scambio Sporco (Lestofante (fisso, Grado 5)) | Giocatore, Lestofante (§3.4; Talenti §3.5.2) | testuale | bonus momentaneo (la prossima Prova, una volta per scena o per Round), per un alleato o una penalità dell’avversario: resta testo |
 | Filo Nascosto (Lestofante (a scelta)) | Giocatore, Lestofante (§3.4; Talenti §3.5.2) | testuale | nessun valore numerico del personaggio |
@@ -208,7 +208,7 @@ Nuovi o estesi per i Talenti (anche in `docs/effetti-oggetti.md` e nel validator
 | Ottimizzare Proiettili (Artigliere (fisso, Grado 3)) | Giocatore, Artigliere (§3.4; Talenti §3.5.3) | già gestito | attacco_distanza → src/attacco.js |
 | Armaiolo da Campo (Artigliere (fisso, Grado 5)) | Giocatore, Artigliere (§3.4; Talenti §3.5.3) | uso_specifico | +2 VA a Tecnologia (solo per riparare armi da fuoco) |
 | Postura d’Assedio (Artigliere (a scelta)) | Giocatore, Artigliere (§3.4; Talenti §3.5.3) | già gestito | attacco_distanza → src/attacco.js |
-| Raffica Estesa (Artigliere (a scelta)) | Giocatore, Artigliere (§3.4; Talenti §3.5.3) | già gestito | attacco_distanza → src/attacco.js |
+| Raffica Estesa (Artigliere (a scelta)) | Giocatore, Artigliere (§3.4; Talenti §3.5.3) | testuale | promemoria in «Attacca!» (prima frase del Talento), nessun valore |
 | Occhio del Tiratore (Artigliere (a scelta)) | Giocatore, Artigliere (§3.4; Talenti §3.5.3) | testuale | nessun valore numerico del personaggio |
 | Bersaglio Designato (Artigliere (a scelta)) | Giocatore, Artigliere (§3.4; Talenti §3.5.3) | testuale | bonus momentaneo (la prossima Prova, una volta per scena o per Round), per un alleato o una penalità dell’avversario: resta testo |
 | Fuoco di Disturbo (Artigliere (a scelta)) | Giocatore, Artigliere (§3.4; Talenti §3.5.3) | testuale | bonus momentaneo (la prossima Prova, una volta per scena o per Round), per un alleato o una penalità dell’avversario: resta testo |
@@ -216,15 +216,15 @@ Nuovi o estesi per i Talenti (anche in `docs/effetti-oggetti.md` e nel validator
 | Assalto Armato (Assaltatore (fisso, Grado 3)) | Giocatore, Assaltatore (§3.4; Talenti §3.5.4) | testuale | numerico non applicato: riduce la penalità di Movimento di una combinazione precisa di armatura e scudo enorme: l’app non la ricalcola |
 | Presidio di Combattimento (Assaltatore (fisso, Grado 5)) | Giocatore, Assaltatore (§3.4; Talenti §3.5.4) | situazionale | +2 VA a Difese (con la condizione accesa) |
 | Carica Brutale (Assaltatore (a scelta)) | Giocatore, Assaltatore (§3.4; Talenti §3.5.4) | già gestito | attacco_ravvicinato → src/attacco.js |
-| Spinta d’Impatto (Assaltatore (a scelta)) | Giocatore, Assaltatore (§3.4; Talenti §3.5.4) | già gestito | attacco_ravvicinato → src/attacco.js |
-| Scudo Aggressivo (Assaltatore (a scelta)) | Giocatore, Assaltatore (§3.4; Talenti §3.5.4) | già gestito | attacco_ravvicinato → src/attacco.js |
+| Spinta d’Impatto (Assaltatore (a scelta)) | Giocatore, Assaltatore (§3.4; Talenti §3.5.4) | testuale | promemoria in «Attacca!» (prima frase del Talento), nessun valore |
+| Scudo Aggressivo (Assaltatore (a scelta)) | Giocatore, Assaltatore (§3.4; Talenti §3.5.4) | testuale | promemoria in «Attacca!» (prima frase del Talento), nessun valore |
 | Interposizione Armata (Assaltatore (a scelta)) | Giocatore, Assaltatore (§3.4; Talenti §3.5.4) | testuale | nessun valore numerico del personaggio |
 | Coordinazione Offensiva (Assaltatore (a scelta)) | Giocatore, Assaltatore (§3.4; Talenti §3.5.4) | già gestito | attacco_ravvicinato → src/attacco.js |
 | Movimento Tattico (Incursore (fisso, Grado 1)) | Giocatore, Incursore (§3.4; Talenti §3.5.4) | già gestito | attacco_distanza → src/attacco.js |
-| Rapidità Operativa (Incursore (fisso, Grado 3)) | Giocatore, Incursore (§3.4; Talenti §3.5.4) | già gestito | attacco_distanza → src/attacco.js, attacco_ravvicinato → src/attacco.js, iniziativa → src/avanzamento.js |
-| Colpisci e Sparisci (Incursore (fisso, Grado 5)) | Giocatore, Incursore (§3.4; Talenti §3.5.4) | già gestito | attacco_ravvicinato → src/attacco.js |
+| Rapidità Operativa (Incursore (fisso, Grado 3)) | Giocatore, Incursore (§3.4; Talenti §3.5.4) | già gestito | attacco_ravvicinato → src/attacco.js, iniziativa → src/avanzamento.js |
+| Colpisci e Sparisci (Incursore (fisso, Grado 5)) | Giocatore, Incursore (§3.4; Talenti §3.5.4) | testuale | promemoria in «Attacca!» (prima frase del Talento), nessun valore |
 | Attacco Silenzioso (Incursore (a scelta)) | Giocatore, Incursore (§3.4; Talenti §3.5.4) | uso_specifico | +2 VA a Furtività (solo per avvicinarsi a un avversario senza essere visto) · già gestito in parte: src/attacco.js |
-| Punto Vitale (Incursore (a scelta)) | Giocatore, Incursore (§3.4; Talenti §3.5.4) | già gestito | attacco_distanza → src/attacco.js, attacco_ravvicinato → src/attacco.js |
+| Punto Vitale (Incursore (a scelta)) | Giocatore, Incursore (§3.4; Talenti §3.5.4) | già gestito | attacco_ravvicinato → src/attacco.js |
 | Carica Ottimizzata (Incursore (a scelta)) | Giocatore, Incursore (§3.4; Talenti §3.5.4) | testuale | nessun valore numerico del personaggio |
 | Sabotaggio Rapido (Incursore (a scelta)) | Giocatore, Incursore (§3.4; Talenti §3.5.4) | uso_specifico | +2 VA a Tecnologia (solo per sabotare o disattivare dispositivi) |
 | Piano di Riserva (Incursore (a scelta)) | Giocatore, Incursore (§3.4; Talenti §3.5.4) | testuale | nessun valore numerico del personaggio |
@@ -325,13 +325,13 @@ Nuovi o estesi per i Talenti (anche in `docs/effetti-oggetti.md` e nel validator
 | Purificazione (Predicatore (a scelta)) | Giocatore, Predicatore (§3.6; Talenti §3.7; Talenti §3.7.5) | testuale | bonus momentaneo (la prossima Prova, una volta per scena o per Round), per un alleato o una penalità dell’avversario: resta testo |
 | Consolazione (Predicatore (a scelta)) | Giocatore, Predicatore (§3.6; Talenti §3.7; Talenti §3.7.5) | testuale | nessun valore numerico del personaggio |
 | Armonizzazione Arcana (Arcanista (fisso, Grado 1)) | Giocatore, Arcanista (§3.8; Talenti §3.9; Talenti §3.9.1) | già gestito | lancio → src/lancio.js |
-| Controllo Superiore (Arcanista (fisso, Grado 3)) | Giocatore, Arcanista (§3.8; Talenti §3.9; Talenti §3.9.1) | già gestito | lancio → src/lancio.js |
+| Controllo Superiore (Arcanista (fisso, Grado 3)) | Giocatore, Arcanista (§3.8; Talenti §3.9; Talenti §3.9.1) | testuale | promemoria in «Lancia!» (prima frase del Talento), nessun valore |
 | Architetto Arcano (Arcanista (fisso, Grado 5)) | Giocatore, Arcanista (§3.8; Talenti §3.9; Talenti §3.9.1) | già gestito | lancio → src/lancio.js |
-| Geometria Arcana (Arcanista (a scelta)) | Giocatore, Arcanista (§3.8; Talenti §3.9; Talenti §3.9.1) | già gestito | lancio → src/lancio.js |
-| Calcolo Arcano (Arcanista (a scelta)) | Giocatore, Arcanista (§3.8; Talenti §3.9; Talenti §3.9.1) | già gestito | lancio → src/lancio.js |
+| Geometria Arcana (Arcanista (a scelta)) | Giocatore, Arcanista (§3.8; Talenti §3.9; Talenti §3.9.1) | testuale | promemoria in «Lancia!» (prima frase del Talento), nessun valore |
+| Calcolo Arcano (Arcanista (a scelta)) | Giocatore, Arcanista (§3.8; Talenti §3.9; Talenti §3.9.1) | testuale | promemoria in «Lancia!» (prima frase del Talento), nessun valore |
 | Riserva Tecnica (Arcanista (a scelta)) | Giocatore, Arcanista (§3.8; Talenti §3.9; Talenti §3.9.1) | già gestito | lancio → src/lancio.js |
-| Canalizzazione Sicura (Arcanista (a scelta)) | Giocatore, Arcanista (§3.8; Talenti §3.9; Talenti §3.9.1) | già gestito | lancio → src/lancio.js |
-| Controllo dei Flussi (Arcanista (a scelta)) | Giocatore, Arcanista (§3.8; Talenti §3.9; Talenti §3.9.1) | già gestito | lancio → src/lancio.js |
+| Canalizzazione Sicura (Arcanista (a scelta)) | Giocatore, Arcanista (§3.8; Talenti §3.9; Talenti §3.9.1) | testuale | promemoria in «Lancia!» (prima frase del Talento), nessun valore |
+| Controllo dei Flussi (Arcanista (a scelta)) | Giocatore, Arcanista (§3.8; Talenti §3.9; Talenti §3.9.1) | testuale | promemoria in «Lancia!» (prima frase del Talento), nessun valore |
 | Arma Astrale (Custode (fisso, Grado 1)) | Giocatore, Custode (§3.8; Talenti §3.9; Talenti §3.9.2) | testuale | nessun valore numerico del personaggio |
 | Maestro d’Arma (Custode (fisso, Grado 3)) | Giocatore, Custode (§3.8; Talenti §3.9; Talenti §3.9.2) | testuale | numerico non applicato: il +1 danno vale per l’Arma Astrale evocata, che la scheda non ha fra le armi (Armi da mischia, danno per Grado di Custode: da aggiungere come arma evocabile) |
 | Scudo Assoluto (Custode (fisso, Grado 5)) | Giocatore, Custode (§3.8; Talenti §3.9; Talenti §3.9.2) | testuale | nessun valore numerico del personaggio |
@@ -340,18 +340,18 @@ Nuovi o estesi per i Talenti (anche in `docs/effetti-oggetti.md` e nel validator
 | Guardiano Instancabile (Custode (a scelta)) | Giocatore, Custode (§3.8; Talenti §3.9; Talenti §3.9.2) | testuale | bonus momentaneo (la prossima Prova, una volta per scena o per Round), per un alleato o una penalità dell’avversario: resta testo |
 | Intercettazione Astrale (Custode (a scelta)) | Giocatore, Custode (§3.8; Talenti §3.9; Talenti §3.9.2) | testuale | nessun valore numerico del personaggio |
 | Difesa Astrale (Custode (a scelta)) | Giocatore, Custode (§3.8; Talenti §3.9; Talenti §3.9.2) | testuale | bonus momentaneo (la prossima Prova, una volta per scena o per Round), per un alleato o una penalità dell’avversario: resta testo |
-| Incantesimi Aggressivi (Invocatore (fisso, Grado 1)) | Giocatore, Invocatore (§3.8; Talenti §3.9; Talenti §3.9.3) | già gestito | lancio → src/lancio.js |
-| Sovraccarico Controllato (Invocatore (fisso, Grado 3)) | Giocatore, Invocatore (§3.8; Talenti §3.9; Talenti §3.9.3) | già gestito | lancio → src/lancio.js |
-| Controllo Arcano (Invocatore (fisso, Grado 5)) | Giocatore, Invocatore (§3.8; Talenti §3.9; Talenti §3.9.3) | già gestito | lancio → src/lancio.js |
+| Incantesimi Aggressivi (Invocatore (fisso, Grado 1)) | Giocatore, Invocatore (§3.8; Talenti §3.9; Talenti §3.9.3) | uso_specifico | +1 danno (Gradi: 1+ → 1, 3+ → 2, 5+ → 3 di Invocatore) agli Incantesimi offensivi (solo per incantesimi_offensivi) |
+| Sovraccarico Controllato (Invocatore (fisso, Grado 3)) | Giocatore, Invocatore (§3.8; Talenti §3.9; Talenti §3.9.3) | situazionale | +1 dado di danno agli Incantesimi offensivi (con la condizione accesa) |
+| Controllo Arcano (Invocatore (fisso, Grado 5)) | Giocatore, Invocatore (§3.8; Talenti §3.9; Talenti §3.9.3) | uso_specifico | +1 danno agli Incantesimi area (solo per incantesimi_area) |
 | Potere Travolgente (Invocatore (a scelta)) | Giocatore, Invocatore (§3.8; Talenti §3.9; Talenti §3.9.3) | testuale | bonus momentaneo (la prossima Prova, una volta per scena o per Round), per un alleato o una penalità dell’avversario: resta testo |
 | Eco Primordiale (Invocatore (a scelta)) | Giocatore, Invocatore (§3.8; Talenti §3.9; Talenti §3.9.3) | testuale | nessun valore numerico del personaggio |
 | Impatto Arcano (Invocatore (a scelta)) | Giocatore, Invocatore (§3.8; Talenti §3.9; Talenti §3.9.3) | testuale | nessun valore numerico del personaggio |
 | Mano Invisibile (Invocatore (a scelta)) | Giocatore, Invocatore (§3.8; Talenti §3.9; Talenti §3.9.3) | testuale | nessun valore numerico del personaggio |
-| Canalizzazione Implacabile (Invocatore (a scelta)) | Giocatore, Invocatore (§3.8; Talenti §3.9; Talenti §3.9.3) | già gestito | lancio → src/lancio.js |
-| Tocco Sacro (Mistico (fisso, Grado 1)) | Giocatore, Mistico (§3.8; Talenti §3.9; Talenti §3.9.4) | già gestito | lancio → src/lancio.js |
+| Canalizzazione Implacabile (Invocatore (a scelta)) | Giocatore, Invocatore (§3.8; Talenti §3.9; Talenti §3.9.3) | testuale | promemoria in «Lancia!» (prima frase del Talento), nessun valore |
+| Tocco Sacro (Mistico (fisso, Grado 1)) | Giocatore, Mistico (§3.8; Talenti §3.9; Talenti §3.9.4) | uso_specifico | dadi al massimo (Incantesimi cura_ferite_contatto) (solo per Cura Ferite a Contatto) |
 | Purificatore (Mistico (fisso, Grado 3)) | Giocatore, Mistico (§3.8; Talenti §3.9; Talenti §3.9.4) | testuale | nessun valore numerico del personaggio |
 | Aura di Equilibrio (Mistico (fisso, Grado 5)) | Giocatore, Mistico (§3.8; Talenti §3.9; Talenti §3.9.4) | testuale | numerico non applicato: attenua le penalità di Ferite e Corruzione per sé e per gli alleati: la applica il giocatore al tavolo |
-| Canale Vitale (Mistico (a scelta)) | Giocatore, Mistico (§3.8; Talenti §3.9; Talenti §3.9.4) | già gestito | lancio → src/lancio.js |
+| Canale Vitale (Mistico (a scelta)) | Giocatore, Mistico (§3.8; Talenti §3.9; Talenti §3.9.4) | uso_specifico | +1 PV curati agli Incantesimi cura (solo per incantesimi_cura) |
 | Flusso Sacro (Mistico (a scelta)) | Giocatore, Mistico (§3.8; Talenti §3.9; Talenti §3.9.4) | testuale | nessun valore numerico del personaggio |
 | Occhio Interiore (Mistico (a scelta)) | Giocatore, Mistico (§3.8; Talenti §3.9; Talenti §3.9.4) | già gestito | lancio → src/lancio.js |
 | Presagio (Mistico (a scelta)) | Giocatore, Mistico (§3.8; Talenti §3.9; Talenti §3.9.4) | testuale | nessun valore numerico del personaggio |
@@ -374,6 +374,8 @@ Nuovi o estesi per i Talenti (anche in `docs/effetti-oggetti.md` e nel validator
 - **Dati:** `effetti.valori` nelle voci dei Talenti (`talenti_liberi.json`, `classi.json`), scritti da questo script; le chiavi di `effetti` già lette dal motore restano come sono. Validatore e `tools/verifica_frasi.mjs` controllano forma e frasi.
 - **Motore** (`src/talenti.js`, `src/condizioni.js`): solo al tavolo (con la sessione), nei valori effettivi; il totale da regole, l’avanzamento e la SS non cambiano. Generali sempre; situazionali con l’interruttore del Talento (`sessione.talentiAccesi`); usi specifici come valore a parte accanto all’Abilità, sotto le Prove Salvezza (Resistenze con il tetto del §8.6) e sotto le Caratteristiche. I bonus dei Talenti si sommano (la regola «un solo modificatore degli strumenti» vale per gli oggetti). Provenienza: una riga per Talento, con il suo nome.
 - **Interruttore «Bonus dei Talenti»** (`sessione.bonusTalenti`, predefinito acceso; nel salvataggio e nell’export, come le altre condizioni al tavolo): in testa alle tab Combattimento e Poteri. Spento: nessun effetto di `effetti.valori`, nemmeno i Talenti dell’Iniziativa; «Attacca!» e «Lancia!» calcolano senza Talenti (`talentiAttacco` vuoto); la provenienza elenca i Talenti barrati («Talenti spenti: non conta»). PV, PM, Prova Salvezza Migliorata e Movimento restano: sono il totale da regole.
+- **Talenti di lancio** (`incantesimi` negli effetti, applicati da «Lancia!»): **offensivo** = la versione dell’Incantesimo ha una colonna che inizia con «Danno» e contiene dadi (in `incantesimi.json` non c’è un campo che dica «offensivo»); **ad Area** = offensivo con una colonna «Area» o «Raggio», o con l’Anticipazione dell’Area; **di cura** = una colonna «Guarigione» con dadi. Incantesimi Aggressivi (+1/+2/+3 per Grado di Invocatore), Controllo Arcano (+1 ad Area), Canale Vitale (+1 PV), Tocco Sacro (dadi al massimo) si applicano da soli; Sovraccarico Controllato (+1 dado) e Incantesimi Massimizzati sono interruttori del pannello. Il valore e il Grado compaiono nella provenienza del danno, la frase «una sola volta per bersaglio» sotto il danno.
+- **Promemoria di lancio senza numero** (Canalizzazione Implacabile, Controllo Superiore, Controllo dei Flussi, Calcolo Arcano, Manifestazioni Occultate; Canalizzazione Sicura e Geometria Arcana con il numero ricavato fra parentesi): una riga «Talenti: Nome — prima frase» nei promemoria di «Lancia!». Non sono «già gestiti»: il motore non applica nessun valore.
 - **SD:** interruttori dei Talenti situazionali nella colonna Condizioni della tab Abilità e, per Difese e Salvezze, in testa alla tab Combattimento; usi delle Prove di Caratteristica sotto le Caratteristiche (Identità).
 - **Non applicati** (restano testo, motivo nella tabella): Sangue Freddo, Aura di Equilibrio, Assalto Armato, Evacuazione Medica, Supporto Avanzato, Capolavoro, Maestro d’Arma, Maestria Astrale (l’Arma Astrale non è ancora un’arma della scheda).
 

@@ -215,7 +215,9 @@ def estrai(i):
         'concentrazione': concentrazione(i['lancio']),
         'rituale': rit,
         'pm_utilizzabili': pm,
-        **({'divinazione': True} if divinazione else {}),
+        # Divinazione: nell'intestazione della scheda o nella descrizione («Incantesimo di Divinazione»,
+        # Presenza e Psicometria: Magia sez. 11, «Presenza e Psicometria sono espressamente incantesimi di Divinazione»)
+        **({'divinazione': True} if divinazione or re.search(r'Incantesimo di Divinazione', testo) else {}),
         'anticipazione': anticipazione(testo),
     }
     return out

@@ -86,6 +86,9 @@ function corpo(ctx, inc, intestazione) {
           h('button', { type: 'button', class: 'btn', onclick: () => { imposta({ effettiMagici: [...d.effettiMagici, { nome: bozza.nome.trim() || 'Effetto magico', valore: bozza.valore }] }); bozza.nome = ''; } }, 'Aggiungi'))),
       riserva
         ? interruttore('Riserva Tecnica (una volta per scena)', d.riservaTecnica, (x) => imposta({ riservaTecnica: x }), { mod: `${numero(riserva.effetti.lancio.pm_una_volta_per_scena)} PM` }) : null,
+      // Talenti di lancio da dichiarare (Sovraccarico Controllato, Incantesimi Massimizzati): src/lancio.js
+      ...(r.talenti_lancio ?? []).map((t) => interruttore(t.nome, t.acceso,
+        (x) => imposta({ talentiLancio: x ? [...d.talentiLancio, t.chiave] : d.talentiLancio.filter((k) => k !== t.chiave) }), { info: t.condizione })),
     ],
     PM: [
       h('p', { class: 'nota' }, `Costo: ${r.pm_costo} PM · personali ${ctx.sessione.pmAttuali} / ${ctx.massimi.pm}`),
@@ -131,12 +134,17 @@ function risultato(ctx, inc, r) {
         h('div', {}, h('dt', {}, 'Concentrazione'), h('dd', {}, CONCENTRAZIONE[r.concentrazione] ?? 'da verificare')),
         r.tiro_per_colpire ? h('div', {}, h('dt', {}, 'Tiro per colpire'), h('dd', {}, `${r.tiro_per_colpire.abilita} ${numero(r.tiro_per_colpire.va)} (${segno(r.tiro_per_colpire.bonus)})`)) : null,
         r.contatto ? h('div', {}, h('dt', {}, 'Contatto'), h('dd', {}, `${r.contatto.abilita} ${numero(r.contatto.va)} (${segno(L.contatto.va)}) `, h('small', { class: 'nota' }, r.contatto.nota))) : null,
-        // Magia sez. 7, Giocatore §5.13: danno della versione con il bonus di SAG
+        // Magia sez. 7, Giocatore §5.13: danno della versione con il bonus di SAG e i Talenti di lancio
+        // (provenienza in una riga: «1d6 +1 SAG +1 Incantesimi Aggressivi (Grado I)»)
         ...(r.danno?.voci ?? []).map((x) => h('div', {}, h('dt', {}, x.colonna), h('dd', {}, h('strong', {}, x.testo),
-          r.danno.bonus ? h('small', { class: 'nota' }, ` (${x.base} ${segno(r.danno.bonus)} di ${r.danno.sigla})`) : null))),
+          x.provenienza && x.provenienza !== x.base ? h('small', { class: 'nota' }, ` (${x.provenienza})`) : null))),
+        ...(r.cura?.voci ?? []).map((x) => h('div', {}, h('dt', {}, x.colonna), h('dd', {}, h('strong', {}, x.testo),
+          x.provenienza && x.provenienza !== x.base ? h('small', { class: 'nota' }, ` (${x.provenienza})`) : null))),
         r.salvezza_bersaglio ? h('div', {}, h('dt', {}, 'Salvezza del bersaglio'), h('dd', {}, r.salvezza_bersaglio.testo,
           r.salvezza_bersaglio.mod_ps ? ` · Mod. PS ${r.salvezza_bersaglio.mod_ps}` : '',
           r.salvezza_bersaglio.talento ? ` · ${r.salvezza_bersaglio.talento.nome} ${segno(r.salvezza_bersaglio.talento.valore)}` : '')) : null),
+      // note del manuale dei Talenti sotto il danno («una sola volta per bersaglio, al primo colpo»)
+      r.danno?.note?.length ? h('ul', { class: 'note-danno nota' }, r.danno.note.map((n) => h('li', {}, n))) : null,
       r.promemoria.length ? h('ul', { class: 'promemoria-attacco' }, r.promemoria.map((p) => h('li', {}, p))) : null,
       h('div', { class: 'attacco-azioni' },
         h('button', {

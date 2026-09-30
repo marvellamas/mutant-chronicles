@@ -1539,7 +1539,9 @@ const ATTACCHI_EFFETTO = ['tutti', 'ravvicinati', 'distanza'];
 // Talenti (docs/censimento-talenti.md): in più il tipo «parata», le Salvezze anche generali o
 // situazionali (Scudo Spirituale), «resistenza», il danno per le armi Artefatto e la scelta del
 // giocatore («{parametro}», «{annotazione}»)
-const TIPI_EFFETTO_TALENTO = { ...TIPI_EFFETTO, salvezza: null, parata: 'generale' };
+const TIPI_EFFETTO_TALENTO = { ...TIPI_EFFETTO, salvezza: null, parata: 'generale', danno: null, dado_danno: null, cura: null, massimizza: null };
+// Talenti di lancio (src/lancio.js): a quali Incantesimi valgono
+const INCANTESIMI_EFFETTO = ['offensivi', 'area', 'cura', 'cura_ferite_contatto', 'danno_o_cura'];
 function validaEffettiOggetto(effetti, F, K, nomiAbilita, err, ctx = {}) {
   const lista = ctx.chiave ?? `${K}.effetti`;
   if (!Array.isArray(effetti)) return err(F, lista, 'lista attesa');
@@ -1552,7 +1554,18 @@ function validaEffettiOggetto(effetti, F, K, nomiAbilita, err, ctx = {}) {
     if (tipo === 'va' && !nomiAbilita.has(e.abilita)) err(F, `${KE}.abilita`, `"${e.abilita}" non è un'Abilità di abilita.json`);
     if (tipo !== 'va' && e.abilita !== undefined) err(F, `${KE}.abilita`, 'solo per il tipo "va"');
     if (TIPI[tipo] && e.ambito !== TIPI[tipo]) err(F, `${KE}.ambito`, `il tipo "${tipo}" ha ambito "${TIPI[tipo]}"`);
-    if ((tipo === 'attacco' || tipo === 'danno') && !ATTACCHI_EFFETTO.includes(e.attacchi)) err(F, `${KE}.attacchi`, `uno fra ${ATTACCHI_EFFETTO.join(', ')}`);
+    if ((tipo === 'attacco' || tipo === 'danno') && e.incantesimi === undefined && !ATTACCHI_EFFETTO.includes(e.attacchi)) err(F, `${KE}.attacchi`, `uno fra ${ATTACCHI_EFFETTO.join(', ')}`);
+    if (tipo === 'danno' && e.incantesimi === undefined && e.ambito !== 'generale') err(F, `${KE}.ambito`, 'il danno delle armi è generale');
+    // effetti per «Lancia!»: incantesimi, valore per Grado di una Classe, nota del manuale
+    if (['dado_danno', 'cura', 'massimizza'].includes(tipo) && e.incantesimi === undefined) err(F, `${KE}.incantesimi`, 'a quali Incantesimi vale: ' + INCANTESIMI_EFFETTO.join(', '));
+    if (e.incantesimi !== undefined && !(ctx.talento && INCANTESIMI_EFFETTO.includes(e.incantesimi))) err(F, `${KE}.incantesimi`, `uno fra ${INCANTESIMI_EFFETTO.join(', ')} (solo Talenti)`);
+    if (e.incantesimi !== undefined && e.ambito === 'generale') err(F, `${KE}.ambito`, 'gli effetti di lancio sono uso_specifico (sempre) o situazionale (interruttore in «Lancia!»)');
+    if (e.valore_per_grado !== undefined) {
+      const ok = isOggetto(e.valore_per_grado) && Object.keys(e.valore_per_grado).length && Object.entries(e.valore_per_grado).every(([k, x]) => /^[1-6]$/.test(k) && isIntero(x) && x !== 0);
+      if (!ok) err(F, `${KE}.valore_per_grado`, 'oggetto { Grado minimo (1–6): valore intero }');
+      if (!(ctx.classi ?? new Set()).has(e.grado_di)) err(F, `${KE}.grado_di`, `"${e.grado_di}" non è una Classe`);
+    }
+    if (e.nota !== undefined && !isTesto(e.nota)) err(F, `${KE}.nota`, 'frase del manuale attesa');
     if (tipo === 'salvezza' && e.salvezza !== null && !(ctx.salvezze ?? new Set()).has(e.salvezza)) err(F, `${KE}.salvezza`, 'id di una Prova Salvezza, oppure null («la PS già prevista»)');
     if (tipo === 'salvezza' && e.ambito !== 'uso_specifico' && e.salvezza === null) err(F, `${KE}.salvezza`, 'una Salvezza generale o situazionale deve dire quale Prova Salvezza');
     if (e.resistenza !== undefined && !(ctx.talento && tipo === 'salvezza' && e.resistenza === true)) err(F, `${KE}.resistenza`, 'solo true, per le Resistenze specifiche dei Talenti (tipo "salvezza")');
@@ -1576,6 +1589,7 @@ function validaEffettiOggetto(effetti, F, K, nomiAbilita, err, ctx = {}) {
 }
 
 const ctxEffetti = (dati) => ({
+  classi: new Set((dati.classi?.classi ?? []).map((c) => c.nome)),
   salvezze: new Set((dati.caratteristiche?.salvezze ?? []).map((s) => s.id)),
   sigle: new Set((dati.caratteristiche?.caratteristiche ?? []).map((c) => c.sigla)),
 });

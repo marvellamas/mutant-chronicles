@@ -29,6 +29,14 @@ Stato al 27 settembre 2026. Dati: campo `effetti` degli oggetti del catalogo (`d
 - `salvezza` anche **generale** o **situazionale**, con l'id della Prova Salvezza (Scudo Spirituale); `resistenza: true` per le Resistenze specifiche: strutturale + Prova Salvezza Migliorata + Resistenza non oltre 18 (Giocatore §8.6);
 - `parata` (nuovo): `con: "scudo"`, `contro: "distanza"` o `"ravvicinata"`, generale: modifica la Parata con lo Scudo (Parata a Distanza: +2 a distanza);
 - `danno` con `armi: "artefatto"`: solo le armi Artefatto (Mistiche o TecnoMistiche; Meccanica Potenziata);
+- **Talenti di lancio** (applicati da «Lancia!», `src/lancio.js`): il campo `incantesimi` dice a quali Incantesimi vale l'effetto, e con `incantesimi` l'effetto non tocca i VA della scheda:
+  - `offensivi`: la versione ha una colonna che inizia con «Danno» e contiene dadi (non c'è un campo «offensivo» nei dati di `incantesimi.json`; regola in `docs/censimento-talenti.md`);
+  - `area`: offensivo e con una colonna «Area» o «Raggio», o con l'Anticipazione dell'Area;
+  - `cura`: una colonna «Guarigione» con dadi; `cura_ferite_contatto`: Cura Ferite lanciato a contatto; `danno_o_cura`: offensivo o di cura;
+- tipi di lancio: `danno` (con `incantesimi`, senza `attacchi`: si somma al danno della versione), `dado_danno` (un dado in più del primo gruppo), `cura` (PV curati in più), `massimizza` (mostra il risultato con i dadi al massimo);
+- `uso_specifico` con `uso: "incantesimi_offensivi"` (o `incantesimi_area`, `incantesimi_cura`, …): si applica da solo a ogni lancio che rientra; `situazionale`: interruttore nel passo Condizioni del pannello «Lancia!» (`dichiarazione.talentiLancio`), non nella scheda. Con «Bonus dei Talenti» spento nessuno dei due conta;
+- `valore_per_grado` (es. `{ "1": 1, "3": 2, "5": 3 }`) con `grado_di` (nome della Classe): il valore per Grado minimo in quella Classe, non per livello dell'Incantesimo (Incantesimi Aggressivi: I–II +1, III–IV +2, V–VI +3). La provenienza lo scrive con il Grado: «1d6 +1 SAG +1 Incantesimi Aggressivi (Grado II)»;
+- `nota`: un'altra frase del manuale, copiata intera e controllata da `verifica_frasi`, mostrata sotto il danno («Il bonus si applica una sola volta per bersaglio, al primo colpo…»);
 - `{parametro}` nelle `caratteristiche` e `{annotazione}` nell'`uso`: la scelta del giocatore (Prova di Caratteristica Migliorata, Sport);
 - i bonus dei Talenti **si sommano** fra loro e con gli strumenti: la regola «un solo modificatore degli strumenti» (§1.4.1) vale solo per gli oggetti.
 
