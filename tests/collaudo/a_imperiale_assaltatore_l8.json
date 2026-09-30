@@ -37,11 +37,11 @@
     "addestramento": "Combattente",
     "classe": "Assaltatore",
     "puntiAbilitaLiberi": {
-      "Armi da guerra": 2,
-      "Difese": 2,
-      "Atletica": 1,
+      "Armi da guerra": 1,
       "Percezione": 2,
-      "Armi medie": 3
+      "Armi medie": 2,
+      "Scienza": 3,
+      "Cultura": 2
     },
     "incantesimi": [],
     "puntiEroe": {
@@ -111,11 +111,11 @@
       },
       "talentoClasse": "Scudo Aggressivo",
       "puntiAbilita": {
-        "Armi leggere": 2,
-        "Armi da mischia": 2,
+        "Armi leggere": 1,
+        "Armi da mischia": 3,
         "Percezione": 2,
-        "Armi pesanti": 2,
-        "Pilotare": 2
+        "Armi pesanti": 1,
+        "Pilotare": 3
       }
     },
     {
@@ -147,8 +147,7 @@
         "origine": "manuale"
       },
       "puntiAbilita": {
-        "Atletica": 1,
-        "Sopravvivenza": 2,
+        "Sopravvivenza": 3,
         "Medicina": 2,
         "Furtività": 1,
         "Armi medie": 2,

@@ -1,9 +1,12 @@
 // Collaudo: tre personaggi di riferimento costruiti dall'interfaccia (wizard, «Sali di livello»,
 // lista dell'equipaggiamento) ed esportati con «Esporta JSON» in tests/collaudo/. I valori attesi
 // sono ricalcolati a mano dal Manuale del Giocatore v0.43 e dal Manuale degli Armamenti v0.50: il
-// commento accanto a ogni valore riporta il calcolo e il paragrafo. Basi degli Addestramenti e 10 Punti
-// Abilità Liberi per assegnazione dal Doc del Giocatore del 27/09/2026: i JSON hanno i 5 punti in più
-// per assegnazione aggiunti a mano, e i PDF di riferimento sono precedenti a questo cambio.
+// commento accanto a ogni valore riporta il calcolo e il paragrafo. 10 Punti Abilità Liberi per
+// assegnazione dal Doc del Giocatore del 27/09/2026 (i 5 punti in più aggiunti a mano); categorie di
+// competenza e limiti del VA personale dal Doc del 29/09/2026 (§2.3, §2.13, §8.3, §8.7): i punti che non
+// aumentavano più il VA sono stati riassegnati come farebbe «Assegna» (la copia con le regole del 27/09 è
+// in collaudo/regole-27-09/ per il test della migrazione). VA = Mod + base della categoria nella prima
+// Classe (S 7, P 6, G 5, N 3) + Corporazione + Avanzamento, entro il limite della categoria più alta.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -41,20 +44,21 @@ test('collaudo a: Imperiali Combattente Assaltatore, 8° livello', () => {
   assert.equal(s.pm, 10);
   // Iniziativa = Mod DES +3 + Mod INT −1 (regole.json, Giocatore §5.1) + Iniziativa Migliorata +3 (§8.6.1)
   assert.equal(s.iniziativa, 5);
-  // §1.2.1 VA = Mod + base Combattente + Corporazione + Avanzamento (limite 5 all'8° livello, §8.3)
-  assert.equal(va(s, 'Armi da guerra').totale, 13); // 3 + 4 + 1 + (1 + 2 + 1 + 1)
-  assert.equal(va(s, 'Difese').totale, 12); // 3 + 4 + 0 + (1 + 2 + 1 + 1)
-  assert.equal(va(s, 'Armi leggere').totale, 12); // 3 + 4 + 0 + (1 + 1 + 2 + 1)
-  assert.equal(va(s, 'Armi da mischia').totale, 12); // 3 + 4 + 0 + (1 + 1 + 2 + 1)
-  assert.equal(va(s, 'Atletica').totale, 13); // 3 + 4 + 1 + 5
+  // §1.2.1 VA = Mod + base dell'Assaltatore + Corporazione + Avanzamento; limiti al III Grado (§8.3):
+  // S 16, P 13, G 11
+  assert.equal(va(s, 'Armi da guerra').totale, 15); // S: 3 + 7 + 1 + (3 di Classe + 1)
+  assert.equal(va(s, 'Difese').totale, 12); // P: 3 + 6 + 0 + 3 di Classe
+  assert.equal(va(s, 'Armi leggere').totale, 13); // P: 3 + 6 + 0 + (3 + 1) = 13, al limite
+  assert.equal(va(s, 'Armi da mischia').totale, 16); // S: 3 + 7 + 0 + (3 + 3) = 16, al limite
+  assert.equal(va(s, 'Atletica').totale, 13); // P: 3 + 6 + 1 + 3 = 13, al limite
   assert.equal(va(s, 'Atletica').vaEquip, 12); // armatura Media: Agilità −1 (Armamenti §7.11.1)
-  assert.equal(va(s, 'Sopravvivenza').totale, 8); // 2 + 3 + 1 + 2
-  assert.equal(va(s, 'Furtività').vaEquip, 6); // 3 + 3 + 0 + 1, poi −1 di Agilità
-  // Spadone Claymore a due mani: Armi da guerra 13 + Specializzazione in Spade +1 (§8.8.1);
+  assert.equal(va(s, 'Sopravvivenza').totale, 12); // P: 2 + 6 + 1 + 3
+  assert.equal(va(s, 'Furtività').vaEquip, 8); // G: 3 + 5 + 0 + 1 = 9, poi −1 di Agilità
+  // Spadone Claymore a due mani: Armi da guerra 15 + Specializzazione in Spade +1 (§8.8.1, dopo il limite);
   // Highland Clan Warriors: Articolazione d'assalto porta a 0 la penalità ravvicinata (Armamenti §7.14.2)
   const [claymore] = s.equipaggiamento.armi;
   assert.equal(claymore.nome, 'Spadone Claymore');
-  assert.equal(claymore.va, 14);
+  assert.equal(claymore.va, 16);
   // 2d6+2 (§7.1.9) + 1 della Specializzazione + 2 di FOR (§5.13: FOR 8–9, tetto +2 all'8° livello)
   assert.equal(claymore.danno.due_mani, '2d6+5');
   assert.deepEqual([claymore.parata.va, claymore.parata.distanza], [12, 4]); // Difese 12; a distanza −8 (Giocatore §5.9)
@@ -67,7 +71,7 @@ test('collaudo a: Imperiali Combattente Assaltatore, 8° livello', () => {
   // seconda configurazione: Scudo d'assalto dei Clan imbracciato e Belliger impugnata
   const b = scheda(p, (c) => ({ ...c, equipaggiamento: c.equipaggiamento.map((v) => ({ ...v, stato: /spadone/.test(v.rif) ? 'pronta' : /belliger/.test(v.rif) ? 'impugnata' : /scudo/.test(v.rif) ? 'imbracciato' : v.stato })) }));
   const [belliger] = b.equipaggiamento.armi;
-  assert.equal(belliger.va, 10); // Armi leggere 12 − 1 (profilo, §7.8) − 1 (armatura Media a distanza)
+  assert.equal(belliger.va, 11); // Armi leggere 13 − 1 (profilo, §7.8) − 1 (armatura Media a distanza)
   assert.equal(belliger.danno.una_mano, '1d6+3'); // +2 di DES (§5.13, tetto +2 all'8° livello)
   assert.deepEqual(belliger.scorte, [{ uid: p.creazione.equipaggiamento.find((v) => /proiettili/.test(v.rif)).uid, nome: 'Proiettili da pistola', quantita: 30 }]);
   const scudo = b.equipaggiamento.protezioni.find((x) => x.tipo === 'scudo');
@@ -91,15 +95,20 @@ test('collaudo b: Fratellanza Taumaturgo Arcanista, 12° livello, Mistico II', (
   assert.equal(s.pm, 41);
   assert.equal(s.iniziativa, 7); // Mod DES 0 + Mod INT +4 + Iniziativa Migliorata +3
   assert.equal(s.azioni.principali, 2); // §8.1: +1 Azione Principale al 12° livello
-  assert.equal(va(s, 'Potere').totale, 15); // 5 + 4 + 0 + 6 (limite 6 al 12° livello)
-  assert.equal(va(s, 'Occultismo').totale, 15); // 4 + 4 + 1 (Fratellanza) + 6
-  assert.equal(va(s, 'Percezione').totale, 16); // 5 + 4 + 1 + 6
-  assert.equal(va(s, 'Medicina').totale, 14); // 5 + 3 + 0 + (Mistico I 1 + 2 + Mistico II 1 + 2)
-  assert.equal(va(s, 'Cultura').totale, 8); // 1 + 4 + 1 + 2
-  assert.equal(va(s, 'Artefatti').totale, 15); // 5 + 4 + 0 + 6
-  // Bordone Templare: Armi da guerra 2 (base Taumaturgo 2, FOR 5) − 1 (Armatura del Mistico, Media, Armamenti §7.17.4)
+  // basi dall'Arcanista (prima Classe); limiti con 4 Gradi (§8.7), la categoria più alta fra Arcanista II
+  // e Mistico II: S 10 + 4 + 2 = 16 (18 se S per entrambe: 10 + 4 + 4), P 7 + 4 + 2 = 13 (15 se P per
+  // entrambe: 7 + 4 + 4)
+  assert.equal(va(s, 'Potere').totale, 18); // S: 5 + 7 + 0 + (4 di Classe + 2) = 18, al limite
+  assert.equal(va(s, 'Occultismo').totale, 15); // P: 4 + 6 + 1 (Fratellanza) + 4 di Classe = 15, al limite
+  // P: 5 + 6 + 1 + 4 = 16 grezzo, limite 15: il +1 di Classe resta registrato (§3.1)
+  assert.deepEqual([va(s, 'Percezione').grezzo, va(s, 'Percezione').totale], [16, 15]);
+  // G per l'Arcanista (base 5), S per il Mistico: limite 10 + 4 + 2 = 16 (§8.7)
+  assert.deepEqual([va(s, 'Medicina').competenza, va(s, 'Medicina').limite, va(s, 'Medicina').totale], ['G', 16, 16]); // 5 + 5 + 0 + (2 + 4)
+  assert.equal(va(s, 'Cultura').totale, 11); // P: 1 + 6 + 1 + 3
+  assert.equal(va(s, 'Artefatti').totale, 15); // P: 5 + 6 + 0 + (2 + 2) = 15, al limite
+  // Bordone Templare: Armi da guerra 3 (N: base 3, FOR 5) − 1 (Armatura del Mistico, Media, Armamenti §7.17.4)
   const [bordone] = s.equipaggiamento.armi;
-  assert.deepEqual([bordone.va, bordone.danno.due_mani, bordone.attivazione.danno_extra], [1, '1d8+1', '1d6']);
+  assert.deepEqual([bordone.va, bordone.danno.due_mani, bordone.attivazione.danno_extra], [2, '1d8+1', '1d6']);
   const [armatura] = s.equipaggiamento.protezioni;
   assert.deepEqual(armatura.ar, { totale: 4, magica: 1 }); // §7.17.2
   assert.equal(s.equipaggiamento.lancioPotere, 0); // Media −3, Assetto mistico 3 (§7.17.4)
@@ -124,20 +133,21 @@ test('collaudo c: Freelance Lavoratore Tecnico, 5° livello, Risorse Interiori, 
   assert.equal(s.pv, 22); // COS 6 + Tecnico I 9 (3 + 1d6 massimizzato) + II 7 (3 + 4)
   assert.equal(s.pm, 10); // SAG 6 + 2 + 2
   assert.equal(s.iniziativa, 6); // Mod DES +3 + Mod INT +3
-  // §2.6 valori base del Lavoratore: Tecnologia 4, Pilotare 4, Armi leggere 4, Scienza 3, Armi da mischia 4, Furtività 3
-  assert.equal(va(s, 'Tecnologia').totale, 11); // 3 + 4 + 0 + (1 + 2 + 1)
-  assert.equal(va(s, 'Pilotare').totale, 11); // 3 + 4 + 1 + (1 + 1 + 1)
-  assert.equal(va(s, 'Armi leggere').totale, 11); // 3 + 4 + 1 + (2 + 1)
-  assert.equal(va(s, 'Scienza').totale, 10); // 3 + 3 + 0 + (1 + 1 + 1 + 1)
-  assert.equal(va(s, 'Percezione').totale, 8); // 1 + 4 + 0 + (1 + 1 + 1)
-  assert.equal(va(s, 'Furtività').totale, 7); // 3 + 3 + 0 + 1
-  // Pistola semiautomatica: Armi leggere 11 + Specializzazione in Pistole +1 − Smorzatore 1 (Armamenti §7.3.1)
+  // Tecnico al II Grado: limiti S 14, P 11, G 9 (§8.3)
+  assert.equal(va(s, 'Tecnologia').totale, 14); // S: 3 + 7 + 0 + (2 di Classe + 2) = 14, al limite
+  // P: 3 + 6 + 1 + 2 di Classe = 12 grezzo, limite 11 (§8.3)
+  assert.deepEqual([va(s, 'Pilotare').grezzo, va(s, 'Pilotare').totale], [12, 11]);
+  assert.equal(va(s, 'Armi leggere').totale, 9); // G: 3 + 5 + 1 = 9, al limite
+  assert.equal(va(s, 'Scienza').totale, 14); // S: 3 + 7 + 0 + (2 + 2) = 14, al limite
+  assert.equal(va(s, 'Percezione').totale, 11); // P: 1 + 6 + 0 + (2 + 2) = 11, al limite
+  assert.equal(va(s, 'Furtività').totale, 11); // P: 3 + 6 + 0 + 2 = 11, al limite
+  // Pistola semiautomatica: Armi leggere 9 + Specializzazione in Pistole +1 − Smorzatore 1 (Armamenti §7.3.1)
   const [pistola, chiave] = s.equipaggiamento.armi;
   // danno: 1d6, +1 della Specializzazione, +1 di DES (§5.13, tetto +1 al 5° livello)
-  assert.deepEqual([pistola.va, pistola.danno.una_mano, pistola.mirino.riduzione], [11, '1d6+2', 2]);
+  assert.deepEqual([pistola.va, pistola.danno.una_mano, pistola.mirino.riduzione], [9, '1d6+2', 2]);
   assert.deepEqual(pistola.scorte.map((x) => [x.nome, x.quantita]), [['Proiettili da pistola', 30]]); // §7.20.1: proiettili da pistola
-  // oggetto personalizzato: Armi da mischia 7 (3 + 4), danno scritto dal giocatore
-  assert.deepEqual([chiave.nome, chiave.va, chiave.danno.una_mano], ['Chiave idraulica pesante', 7, '1d6+1']); // Armi da mischia: +1 di DES (§5.13)
+  // oggetto personalizzato: Armi da mischia 8 (G: 3 + 5), danno scritto dal giocatore
+  assert.deepEqual([chiave.nome, chiave.va, chiave.danno.una_mano], ['Chiave idraulica pesante', 8, '1d6+1']); // Armi da mischia: +1 di DES (§5.13)
   // Armatura civile leggera + Rinforzo Leggero: AR 2, FOR 4, resta Leggera (Armamenti §7.11.2)
   const [armatura] = s.equipaggiamento.protezioni;
   assert.deepEqual([armatura.ar.totale, armatura.forRichiesta, armatura.categoria], [2, 4, 'Leggera']);
