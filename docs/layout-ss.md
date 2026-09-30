@@ -1,7 +1,7 @@
 # Nuova scheda da stampare (SS): piano
 
-30 settembre 2026. **Solo il piano**: l'implementazione parte dopo le risposte alla sezione «Da
-decidere con Marcello».
+30 settembre 2026. Piano deciso con Marcello il 30/09 (sezione 9, «Deciso»); si implementa sul
+branch `layout-ss`, un pezzo alla volta (sezione 8).
 
 ## 1. Perché
 
@@ -39,7 +39,9 @@ Oggetti nell'inventario dei personaggi di prova:
 
 La dotazione del §2.16 da sola ne porta fino a una quarantina.
 
-## 3. Regole comuni (restano)
+## 3. Regole generali
+
+Quelle di oggi, che restano:
 
 - A4 orizzontale, margine 10 mm.
 - `--ss-font` 10 pt e `--ss-font-small` 9 pt (`css/stampa.css`): il carattere non si riduce mai.
@@ -50,6 +52,13 @@ La dotazione del §2.16 da sola ne porta fino a una quarantina.
 - Pagine di continuazione solo dove una tabella non entra.
 - Il generatore (`tools/collaudo_pdf.mjs`) fallisce se un foglio senza continuazione sborda.
 - La SS resta a riposo: nessun valore di sessione stampato. PV, PM, Ferite, Corruzione e simili si segnano a matita.
+
+**Quadratini con un massimo** (regola nuova, decisa il 30/09). Vale per PV, PM, colpi, PI, applicazioni, cariche e riserve; un solo componente, riusato ovunque:
+- righe da 10 caselle, con uno stacco dopo la quinta e il cumulato a destra (10, 20, 30…);
+- blocchi da 5 righe (50 caselle); un secondo blocco quando lo spazio lo consente (o quando il massimo supera 50);
+- le caselle fino al massimo attuale sono nere su bianco; quelle oltre il massimo sono grigio chiaro (bordo grigio, fondo grigio al 15–20 %, `print-color-adjust: exact`): il tetto si vede e un aumento di livello non richiede di ristampare;
+- dove 50 caselle sono troppe per lo spazio (colpi di un caricatore da 2, PI da 6, Punti Eroe, Distintivi) il blocco si accorcia alla prima riga intera che contiene il massimo: sempre righe da 10 (massimo 2 → una riga, 2 nere e 8 grigie).
+- Logica in `src/stampa.js` → `schemaQuadratini`, disegno in `src/ui/stampa.js` → `quadratini()`, stile in `css/stampa.css` (`.casella`, `.casella.oltre`).
 
 ## 4. I fogli
 
@@ -73,7 +82,7 @@ Come oggi.
 - **Riempitivo:** Background.
 - **Quadratini:** Punti Eroe, Distintivi.
 - **Continuazione:** no (il Background si tronca a `LIMITI_STAMPA.background`; il testo intero resta nella SD).
-- Le Ferite restano nel foglio 3: domanda 2.
+- Le Ferite restano nel foglio 3 (deciso, sezione 9.2).
 
 ### Foglio 2 — Abilità (sempre)
 
@@ -108,6 +117,8 @@ la colonna di Ferite, Affaticamento, Corruzione e Stati. L'Equipaggiamento esce 
 | Punti Vita: massimi, AR con i suoi valori e la provenienza in piccolo, attuali a quadratini, righe guida | colonna di sinistra della SD |
 
 - Nelle Armi, una casella «in mano» per ogni arma sostituisce la divisione in mani della SD: sulla carta la mano non conta.
+- **PI** di armi e protezioni: quadratini accanto all'arma o alla protezione, come oggi (deciso: anche qui, oltre che nell'Inventario; il giocatore annerisce dove ha il foglio davanti e a fine sessione riallinea l'altro).
+- **Sanitario** (deciso): riquadro compatto nella zona sinistra, o dove entra; un kit per riga, con le applicazioni a quadratini.
 - **Riempitivo:** Punti Vita.
 
 **Colonna destra (circa 1/3, a tutta altezza):**
@@ -122,10 +133,11 @@ la colonna di Ferite, Affaticamento, Corruzione e Stati. L'Equipaggiamento esce 
 - I gradi di Affaticamento e Corruzione vanno su due colonne per stare nell'altezza.
 - Stima: Ferite ~40 mm, Affaticamento ~25, Corruzione ~28, Stati ~40, titoli compresi: ~135 mm su 168.
 - La fila dei nomi degli Stati nella Sintesi sparisce: gli Stati hanno il loro riquadro.
-- Il Sanitario non c'è: le applicazioni dei kit stanno nel foglio 4.
 
 **Quadratini:**
 - colpi del caricatore per arma, come oggi (`fileColpi`);
+- PI di armi e protezioni;
+- applicazioni dei kit sanitari;
 - casella «in mano»;
 - PV attuali;
 - caselle di Ferite, Affaticamento, Corruzione e Stati.
@@ -159,7 +171,7 @@ contenitori di Chroma · Altro equipaggiamento.
 - Le sezioni vanno su due colonne affiancate. Ogni sezione si apre con il titolo nel colore della sua categoria.
 - Nel titolo della sezione, il numero degli oggetti.
 - Munizioni: la quantità si scrive a matita; i caricatori di riserva di un'arma sono una fila di quadratini.
-- Sanitario: le applicazioni del kit sono una fila di quadratini nella riga (oggi solo nella SD).
+- Sanitario: solo la riga di possesso, senza quadratini delle applicazioni (stanno nel foglio 3).
 - Armi: la condizione dell'arma (A.49) ha i gradi da cerchiare in piccolo.
 
 **Riempitivo:** «Da aggiungere», righe vuote con le stesse caselle, per gli acquisti al tavolo,
@@ -181,22 +193,22 @@ della SD non si stampa. I Poteri Sciamanici arriveranno con il loro manuale.
 | Punti Magia | quadratini, come oggi |
 | Lancio | come oggi, più la riga dei **Gradi taumaturgici** e il **livello massimo** degli incantesimi (come il riquadro Incantesimi della tab) |
 | Indice degli incantesimi | come oggi |
+| Batterie e riserve di Chroma | come oggi («Contenitori di Chroma»): energia, capacità, quadratini dei PM (deciso: i PM delle riserve si segnano qui) |
 | «Da artefatti» | una riga di rimando agli Artefatti con attivazione o riserva integrata: «vedi foglio Artefatti» |
 
-- Contenitori di Chroma: domanda 5 (proposta: si spostano nel foglio 6).
 - **Riempitivo:** Indice degli incantesimi.
-- **Quadratini:** PM.
+- **Quadratini:** PM personali e PM delle riserve di Chroma.
 - **Continuazione:** sì, come oggi. Prosegue l'indice, poi le schede complete su due colonne se scelte (vedi 5.3).
 
 ### Foglio 6 — Artefatti (solo se ne ha)
 
-Si stampa se il personaggio possiede almeno un Artefatto (sintonizzato o no) o una riserva di Chroma.
+Si stampa se il personaggio possiede almeno un Artefatto (sintonizzato o no) o una riserva di Chroma. Un personaggio con riserve ma senza magia non ha il foglio Poteri: in quel caso i quadratini dei PM delle riserve vanno qui (pezzo 5).
 
 | Riquadro | Contenuto e quadratini |
 |---|---|
 | Sintonizzazione (§7.10) | capacità per Gradi complessivi e bonus del Talento; una fila di quadratini lunga quanto la capacità, da annerire per i punti usati; elenco con i costi. Stampata a riposo: la scelta «sintonizzato» del file è segnata come oggi nella SD, i quadratini restano vuoti per il tavolo |
 | Una scheda per Artefatto (come nella tab) | stato nell'Inventario, sintonizzato sì/no, potenza e costo, attivazione; VA e danno se è un'arma, AR se è una protezione; riserva integrata con quadratini dei PM |
-| Riserve di Chroma | batterie, cristalli e contenitori: energia, capacità e quadratini dei PM |
+| Riserve di Chroma | batterie, cristalli e contenitori: una riga di sintonizzazione ciascuna (energia, capacità, costo, sintonizzata sì/no), senza quadratini dei PM, che stanno nel foglio Poteri (deciso) |
 
 - **Riempitivo:** Note sugli Artefatti (righe guida).
 - **Continuazione:** sì, per le schede, come le schede degli incantesimi (una scheda non si spezza).
@@ -217,7 +229,7 @@ La regola del generatore è già quella giusta: un foglio senza contenuto non es
 Identità · Abilità · Combattimento · Inventario · Poteri · Artefatti · Cibernetica · Veicoli.
 
 Prima i fogli sempre presenti, poi quelli condizionati. È diverso dall'ordine dei tab della SD,
-che mette Inventario al settimo posto: domanda 1.
+che mette Inventario al settimo posto (deciso, sezione 9.1).
 
 ### 5.2 Numerazione
 
@@ -272,35 +284,28 @@ Un pezzo per foglio, un commit per pezzo, come per il layout della SD. Ogni pezz
    - Fogli vuoti non stampati.
    - Icone dei fogli: `inventario` c'è già in `img/pagine/`; `poteri` usa quella della Magia come nella SD.
    - `tools/collaudo_pdf.mjs` con i nuovi id: controlla ogni foglio senza continuazione, e i PV nella prima pagina del foglio 3.
+   - Componente dei quadratini con la regola della sezione 3, applicato dove i quadratini esistono già (PV, PM, riserve, colpi, PI, Punti Eroe, Distintivi); il contenuto dei fogli non cambia.
 1. **Inventario (foglio 4).** Sezioni, testa con Crediti e Carico, stato e PI a quadratini, «Da aggiungere», continuazione. Toglie l'Equipaggiamento dal foglio 3.
 2. **Abilità (foglio 2).** Arrivano Specializzazioni e Tecniche Interiori; le toglie dal foglio 3.
 3. **Combattimento (foglio 3).**
-   - Zona sinistra rifatta nello spazio liberato; nelle Armi, le colonne «in mano» e PI secondo la domanda 6.
+   - Zona sinistra rifatta nello spazio liberato; nelle Armi la colonna «in mano» e i PI accanto (9.6); riquadro Sanitario compatto con le applicazioni (9.7).
    - Colonna destra: Ferite, Affaticamento, Corruzione, Stati.
    - Continuazione aggiornata.
-4. **Poteri (foglio 5).** Rinomina, Gradi taumaturgici e livello massimo, rimando «Da artefatti»; Contenitori di Chroma secondo la domanda 5.
+4. **Poteri (foglio 5).** Rinomina, Gradi taumaturgici e livello massimo, rimando «Da artefatti»; batterie e riserve di Chroma con i PM restano qui (9.5).
 5. **Artefatti (foglio 6).** Sintonizzazione, schede, riserve di Chroma, continuazione.
 6. **Verifica e PDF.**
    - PDF dei due personaggi del §7 in `docs/esempi-stampa/`.
    - Confronto foglio per foglio con i tab della SD.
    - Esito in fondo a questo file. Cibernetica e Veicoli: nessun lavoro oltre la regola del pezzo 0.
 
-## 9. Da decidere con Marcello
+## 9. Deciso (Marcello, 30/09/2026)
 
-1. **Ordine dei fogli.** Sempre presenti prima (Identità, Abilità, Combattimento, Inventario, poi Poteri, Artefatti…) oppure esattamente l'ordine dei tab della SD (Inventario dopo Cibernetica, al settimo posto)?
-   *Proposta:* sempre presenti prima. Così i fogli 1–4 hanno sempre lo stesso numero e chi non ha poteri riceve quattro fogli consecutivi. Nella SD l'ordine dei tab conta meno perché si salta da uno all'altro.
-2. **Ferite in Combattimento o in Identità?**
-   *Proposta:* Combattimento, nella colonna destra con Affaticamento, Corruzione e Stati, come nella SD. Si segnano durante lo scontro, accanto ai PV. In Identità resterebbero lontane dai PV.
-3. **L'Inventario ha un foglio suo anche quando è corto?** Con 4–9 oggetti (b, a, c) il foglio resta per metà vuoto; con la dotazione guidata (22–40 oggetti) si riempie o continua.
-   *Proposta:* foglio sempre a sé. Lo spazio vuoto diventa il riempitivo «Da aggiungere», righe con caselle per gli acquisti al tavolo. Unirlo ad altro renderebbe il posto dell'Inventario variabile da personaggio a personaggio.
-4. **Le armi: in Combattimento, in Inventario o in entrambi?**
-   *Proposta:* in entrambi, con contenuti diversi, come nella SD.
-   - In Combattimento: il profilo d'uso (VA, danno, gittata, colpi a quadratini, «in mano»).
-   - In Inventario: la riga di possesso (costo, Qualità, peso, stato, PI, condizione).
-   Nessun dato si ripete, tranne il nome.
-5. **Riserve di Chroma: nel foglio Poteri (come oggi, «Contenitori di Chroma») o nel foglio Artefatti (come la tab Artefatti)?** La SD le mostra in tutte e due le tab, ma sulla carta due file di quadratini per la stessa riserva vuol dire due posti da tenere allineati.
-   *Proposta:* quadratini solo nel foglio Artefatti. Nel foglio Poteri una riga «Riserve di Chroma: foglio Artefatti» con capacità e sintonizzazione. Per un personaggio con Artefatti ma senza magia le riserve restano comunque sul suo foglio.
-6. **PI di armi e protezioni: solo in Inventario (come la SD) o anche in Combattimento?** Oggi il foglio 3 stampa i PI delle protezioni.
-   *Proposta:* solo in Inventario, come nella SD. In Combattimento, accanto alla protezione, «PI: foglio 4». Un solo posto dove annerire, e il foglio 3 guadagna spazio.
-7. **Sanitario: sezione dell'Inventario o riquadro suo?**
-   *Proposta:* sezione dell'Inventario, con le applicazioni a quadratini nella riga del kit, come nella SD dopo il pezzo 3 del layout. Un riquadro a sé in Combattimento duplicherebbe le applicazioni.
+1. **Ordine dei fogli:** prima i sempre presenti (Identità, Abilità, Combattimento, Inventario 4°), poi Poteri, Artefatti, Cibernetica, Veicoli. Come proposto.
+2. **Ferite** in Combattimento, colonna destra con Affaticamento, Corruzione e Stati. Come proposto.
+3. **Inventario** sempre su un foglio suo, con «Da aggiungere» come riempitivo. Come proposto.
+4. **Armi** in entrambi i fogli con contenuti diversi: l'uso in Combattimento (VA, danno, colpi, «in mano»), il possesso in Inventario (costo, Qualità, peso, stato, PI, condizione). Come proposto.
+5. **Batterie e riserve di Chroma** nel foglio Poteri, con i quadratini dei PM lì; nel foglio Artefatti solo la riga di sintonizzazione per ciascuna, senza quadratini dei PM. *Diverso dalla proposta* (che le portava nel foglio Artefatti).
+6. **PI di armi e protezioni** anche in Combattimento, con i quadratini accanto all'arma o alla protezione nel foglio 3, oltre che in Inventario: il giocatore annerisce dove ha il foglio davanti e a fine sessione riallinea l'altro. *Diverso dalla proposta* (solo Inventario).
+7. **Sanitario** in Combattimento: riquadro compatto nella zona sinistra (o dove entra), un kit per riga con le applicazioni a quadratini; in Inventario resta la riga di possesso senza quadratini. *Diverso dalla proposta* (sezione dell'Inventario con i quadratini).
+
+In più, la regola dei quadratini con un massimo (sezione 3), da fare nel pezzo 0 e applicare subito dove i quadratini esistono già.
