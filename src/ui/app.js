@@ -23,7 +23,7 @@ import { barraPassi, barraFondoSeServe } from './navigazione.js';
 import { cercaSfondi, applicaSfondo } from './sfondi.js';
 import { caricaImmagini } from './immagini.js';
 import { preparaStampa, preparaTab, normalizzaOpzioniStampa } from '../stampa.js';
-import { renderTab } from './tab.js';
+import { renderTab, tabFissi, ALIAS_TAB } from './tab.js';
 import {
   massimiSessione, allineaSessione, variaSessione, modificaSessione, commutaStato, commutaCondizioneOggetto, impostaCondizioneArma, riparaOggetto, spendiPmLancio, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
   penalitaSessione, variaMunizioni, ricaricaArma, variaChroma, variaIntegrita,
@@ -38,7 +38,8 @@ const CAMPI_LIBERI_DOPO_LIVELLI = ['nome', 'concetto', 'equipaggiamento', 'dotaz
 // L'ultimo passo del wizard è la scheda: si apre come vista a tab (#/p/<id>).
 const PASSO_SCHEDA = PASSI.length - 1;
 const PASSO_EQUIPAGGIAMENTO = PASSI.findIndex((p) => p.titolo === 'Equipaggiamento');
-const TAB = ['identita', 'abilita', 'combattimento', 'magia', 'calendario'];
+// tab della scheda (docs/layout-sd.md): gli otto fissi, il Calendario e i vecchi id (magia → poteri)
+const TAB = ['identita', 'abilita', 'combattimento', 'poteri', 'artefatti', 'cibernetica', 'inventario', 'veicoli', 'calendario', 'magia'];
 
 const radice = document.getElementById('app');
 
@@ -189,7 +190,7 @@ function daIndirizzo() {
   if (sali) return apriSali(Number(passoTesto));
   if (completa) return apriCompleta();
   if (stampa) return apriStampa();
-  if (scheda) return apriScheda(TAB.includes(passoTesto) ? passoTesto : null);
+  if (scheda) return apriScheda(TAB.includes(passoTesto) ? (ALIAS_TAB[passoTesto] ?? passoTesto) : null);
   const passo = Math.min(Number(passoTesto), PASSI.length - 1);
   // L'ultimo passo del wizard è la scheda a tab
   if (passo === PASSO_SCHEDA) return vai(`#/p/${id}`);
@@ -634,6 +635,8 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
   const tab = preparaTab(personaggio(), dati, { sessione: stato.sessione });
   // quinta tab, solo con il calendario attivo (non tocca preparaTab: la stampa resta com'è)
   if (tab.tab.length && calendarioAttivo(stato.calendario)) tab.tab.push({ id: 'calendario', titolo: 'Calendario', contatore: testoNote(contaNote(stato.calendario)) });
+  // gli otto tab fissi (docs/layout-sd.md): preparaTab non cambia, la stampa resta com'è
+  if (tab.tab.length) tab.tab = tabFissi(tab.tab);
   document.title = `${stato.scelte.nome.trim() || 'Personaggio'} — Scheda · Mutant`;
   if (!tab.tab.length) {
     svuota(radice, h('section', { class: 'passo' },
@@ -650,7 +653,8 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
     stato.sessione = allineata;
     persisti();
   }
-  const attiva = tab.tab.some((t) => t.id === stato.tab) ? stato.tab : 'identita';
+  const richiesta = ALIAS_TAB[stato.tab] ?? stato.tab;
+  const attiva = tab.tab.some((t) => t.id === richiesta) ? richiesta : 'identita';
   const impostazioni = archivio.leggiImpostazioni();
   applicaSfondo(stato.sfondi.find((s) => s.id === impostazioni.sfondo)?.url ?? null);
   const schedaCreazione = calcolaScheda(stato.scelte, dati);

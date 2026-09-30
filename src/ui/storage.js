@@ -89,7 +89,7 @@ const CHIAVE_IMPOSTAZIONI = 'mutant.impostazioni.v1';
 // sfondo: 'nessuno' o l'id di uno sfondo di Corporazione (src/ui/sfondi.js); ritrattoIntestazione:
 // il ritratto sfumato dietro l'intestazione della SD
 // filigranaCorporazione: lo stemma in grigio nell'angolo della tab Identità (predefinito sì)
-const IMPOSTAZIONI_PREDEFINITE = { posizioneTab: 'automatica', larghezzaScheda: 'piena', sfondo: 'nessuno', ritrattoIntestazione: false, filigranaCorporazione: true };
+const IMPOSTAZIONI_PREDEFINITE = { posizioneTab: 'alto', larghezzaScheda: 'piena', sfondo: 'nessuno', ritrattoIntestazione: false, filigranaCorporazione: true };
 const POSIZIONI = ['automatica', 'sinistra', 'basso', 'alto'];
 const LARGHEZZE = ['compatta', 'piena'];
 
@@ -97,6 +97,12 @@ export function leggiImpostazioni() {
   try {
     const v = JSON.parse(localStorage.getItem(CHIAVE_IMPOSTAZIONI) ?? '{}');
     const out = { ...IMPOSTAZIONI_PREDEFINITE, ...(v && typeof v === 'object' ? v : {}) };
+    // docs/layout-sd.md: la riga in alto diventa la predefinita; chi aveva salvato «automatica» (la
+    // vecchia predefinita) passa una volta in alto, poi la scelta resta libera
+    if (out.layoutTab !== 2) {
+      if (out.posizioneTab === 'automatica') out.posizioneTab = 'alto';
+      out.layoutTab = 2;
+    }
     if (!POSIZIONI.includes(out.posizioneTab)) out.posizioneTab = IMPOSTAZIONI_PREDEFINITE.posizioneTab;
     if (!LARGHEZZE.includes(out.larghezzaScheda)) out.larghezzaScheda = IMPOSTAZIONI_PREDEFINITE.larghezzaScheda;
     if (typeof out.sfondo !== 'string' || !/^[a-z0-9-]+$/.test(out.sfondo)) out.sfondo = IMPOSTAZIONI_PREDEFINITE.sfondo;

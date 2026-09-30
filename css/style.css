@@ -1348,3 +1348,64 @@ body.con-sfondo::before {
 /* parametro di un Talento di Classe (Disciplina del Lottatore, §3.5.5) */
 .scelta-parametro { margin: 0.4rem 0 0.6rem; padding: 0.5rem 0.6rem; border: 1px solid var(--accento); border-radius: var(--raggio); background: var(--accento-tenue); }
 .scelta-parametro p { margin: 0 0 0.35rem; }
+
+/* ---------------------------------------------------------------- scheda digitale, layout del 30/09
+   (docs/layout-sd.md, pezzo 1): otto tab in una riga in alto (predefinita), colonna di sinistra con
+   Punti Eroe, PV e PM in ogni tab, tab Abilità con la colonna Condizioni a destra. */
+
+/* riga dei tab: il selezionato evidenziato, gli altri in secondo piano */
+.pos-alto .tab-nav [role="tablist"] { gap: 0.25rem; overflow-x: auto; scrollbar-width: thin; }
+.pos-alto .tab-bottone { flex: 1 1 auto; min-width: 0; justify-content: center; gap: 0.4rem; padding: 0.4rem 0.5rem; white-space: nowrap; opacity: 0.72; }
+.pos-alto .tab-bottone:hover, .pos-alto .tab-bottone:focus-visible { opacity: 1; }
+.pos-alto .tab-bottone.attiva { opacity: 1; box-shadow: 0 2px 0 var(--accento); }
+.pos-alto .tab-etichetta { overflow: hidden; text-overflow: ellipsis; }
+/* fino a ~1250 px: icona sopra il testo, così gli otto tab stanno in una riga anche a ~800 px */
+@media (max-width: 1250px) {
+  .pos-alto .tab-bottone { flex: 1 1 0; flex-direction: column; gap: 0.1rem; font-size: 0.78rem; padding: 0.3rem 0.15rem; }
+  .pos-alto .tab-bottone .tab-icona-img { width: 26px; height: 26px; }
+}
+@media (max-width: 600px) {
+  .pos-alto .tab-bottone { flex: 0 0 auto; min-width: 4.4rem; }
+}
+
+/* colonna di sinistra: Punti Eroe sopra PV e PM, sempre visibile; niente doppioni nel resto */
+.colonna-risorse { grid-area: lato; display: flex; flex-direction: column; gap: 0.5rem; }
+.pos-alto .pv-pm-identita, .pos-alto .pe-identita, .pos-alto .riepilogo-risorse { display: none; }
+@media (min-width: 900px) {
+  .pos-sinistra .pe-identita, .pos-automatica .pe-identita { display: none; }
+}
+@media (min-width: 601px) {
+  .pos-alto { grid-template-columns: 11rem minmax(0, 1fr); grid-template-areas: "barra barra" "nav nav" "lato pannello"; }
+  .pos-alto .colonna-risorse { position: sticky; top: 0.5rem; align-self: start; }
+}
+@media (max-width: 600px) {
+  /* telefono: striscia compatta sopra il contenuto */
+  .pos-alto { grid-template-areas: "barra" "nav" "lato" "pannello"; }
+  .colonna-risorse { display: grid; grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr)); gap: 0.4rem; margin-bottom: 0.5rem; }
+  .colonna-risorse .pillole-ar, .colonna-risorse .pillole-condizionali { display: none; }
+}
+
+/* tab nuovi, ancora senza contenuto */
+.tab-vuoto { margin: 1rem 0; }
+
+/* Abilità: tabella compatta in alto, Condizioni attive in una colonna a destra */
+.tab-pannello { container-type: inline-size; }
+.abilita-layout { display: grid; grid-template-columns: minmax(0, 1fr) 17rem; gap: 0 1.25rem; align-items: start; }
+.abilita-layout .sezione-tab { margin-top: 0.5rem; }
+.abilita-layout .abilita-tab th, .abilita-layout .abilita-tab td { padding: 0.15rem 0.35rem; }
+.abilita-layout .abilita-tab tr.categoria th { padding-top: 0.35rem; }
+.colonna-condizioni { position: sticky; top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem; }
+.colonna-condizioni .condizioni-attive { margin: 0; }
+.colonna-condizioni .pillole-condizionali { flex-direction: column; align-items: stretch; }
+/* tablet: la colonna resta a destra, più stretta; la tabella nasconde le colonne di dettaglio e mostra
+   la formula sotto il nome (come sul telefono) */
+@container (max-width: 52rem) {
+  .abilita-layout { grid-template-columns: minmax(0, 1fr) 12.5rem; gap: 0 0.75rem; }
+  .abilita-layout .abilita-tab .dettaglio { display: none; }
+  .abilita-layout .abilita-tab .formula { display: block; }
+}
+/* pannello stretto (telefono): una colonna, le Condizioni sotto la tabella */
+@container (max-width: 30rem) {
+  .abilita-layout { grid-template-columns: minmax(0, 1fr); }
+  .colonna-condizioni { position: static; }
+}

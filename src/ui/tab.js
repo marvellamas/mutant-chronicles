@@ -1,4 +1,5 @@
-// Scheda digitale a tab (#/p/<id>): Identità, Abilità, Combattimento, Magia (solo con accesso
+// Scheda digitale a tab (#/p/<id>): otto tab fissi (docs/layout-sd.md: Identità, Abilità, Combattimento,
+// Poteri, Artefatti, Cibernetica, Inventario, Veicoli; Poteri contiene la Magia, con accesso
 // agli incantesimi), Calendario (solo se attivo dall'ingranaggio: src/ui/calendario.js), docs/roadmap-equipaggiamento-e-scheda.md §3. I contenuti vengono da
 // preparaTab() — gli stessi dati dei fogli di stampa, senza troncamenti — più la modalità
 // tavolo: i valori attuali della sessione (src/sessione.js), che non si ricalcolano.
@@ -26,13 +27,46 @@ import { conOrdinale } from '../lingua.js';
 import { regoleRiparazione, esitoRiparazione, vaRiparazione, riparabile } from '../riparazione.js';
 
 export const POSIZIONI_TAB = [
+  { id: 'alto', etichetta: 'In alto, con Punti Eroe, PV e PM a sinistra (predefinita)' },
   { id: 'automatica', etichetta: 'Automatica (sinistra su schermi larghi, in basso su telefono e tablet)' },
   { id: 'sinistra', etichetta: 'Sinistra' },
   { id: 'basso', etichetta: 'In basso' },
-  { id: 'alto', etichetta: 'In alto' },
 ];
 
-const ICONE_TAB = { identita: '👤', abilita: '🎯', combattimento: '⚔', magia: '✦', calendario: '📅' };
+// icone provvisorie (un carattere) finché la pagina non ha l'immagine nel manifesto (img/immagini.json)
+const ICONE_TAB = { identita: '👤', abilita: '🎯', combattimento: '⚔', magia: '✦', poteri: '✦', artefatti: '🔮', cibernetica: '🦾', inventario: '🎒', veicoli: '🚗', calendario: '📅' };
+
+/**
+ * Otto tab fissi, uguali per tutti i personaggi (docs/layout-sd.md): «etichetta» nella riga, «titolo»
+ * nel pannello, «icona» = id dell'immagine in img/pagine/ (Poteri usa per ora quella della Magia).
+ */
+export const TAB_FISSI = [
+  { id: 'identita', etichetta: 'Identità' },
+  { id: 'abilita', etichetta: 'Abilità' },
+  { id: 'combattimento', etichetta: 'Combattimento' },
+  { id: 'poteri', etichetta: 'Poteri', titolo: 'Poteri', icona: 'magia', da: 'magia' },
+  { id: 'artefatti', etichetta: 'Artefatti', titolo: 'Artefatti' },
+  { id: 'cibernetica', etichetta: 'Cibernetica', titolo: 'Cibernetica' },
+  { id: 'inventario', etichetta: 'Inventario', titolo: 'Inventario' },
+  { id: 'veicoli', etichetta: 'Veicoli', titolo: 'Veicoli' },
+];
+
+/** Vecchi id dei tab che portano a uno dei fissi (#/p/<id>/t/magia apre Poteri). */
+export const ALIAS_TAB = { magia: 'poteri' };
+
+/**
+ * Dalle tab di preparaTab (Identità, Abilità, Combattimento, Magia se c'è; Calendario aggiunto da
+ * app.js) all'elenco fisso: i dati delle tab esistenti restano quelli; Poteri prende quelli della
+ * Magia (null senza magia); i tab nuovi non hanno dati. Il Calendario resta in coda, se attivo.
+ */
+export function tabFissi(elenco) {
+  const perId = new Map(elenco.map((t) => [t.id, t]));
+  const fissi = TAB_FISSI.map((f) => {
+    const origine = perId.get(f.da ?? f.id);
+    return { ...f, titolo: (f.da ? f.titolo : origine?.titolo) ?? f.titolo ?? f.etichetta, dati: origine?.dati ?? null, contatore: origine?.contatore ?? null };
+  });
+  return [...fissi, ...elenco.filter((t) => t.id === 'calendario').map((t) => ({ ...t, etichetta: t.titolo }))];
+}
 
 /**
  * Contesto: { dati, tab: risultato di preparaTab, attiva: id della tab, scelte, livelli,
@@ -70,21 +104,33 @@ export function renderTab(ctx) {
       menuAzioni(ctx),
       menuImpostazioni(ctx)));
 
+  // riga in alto (predefinita) o colonna: con i tab in alto la colonna di sinistra con Punti Eroe, PV
+  // e PM è un elemento a sé (colonna-risorse), visibile in ogni tab (docs/layout-sd.md, pezzo 1)
+  const inAlto = ctx.posizione === 'alto';
   const nav = h('nav', { class: 'tab-nav', 'aria-label': 'Sezioni della scheda' },
     h('div', { class: 'colonna-tab' },
       h('div', { role: 'tablist' }, tab.tab.map((t) => h('button', {
         type: 'button', role: 'tab', id: `tab-${t.id}`, class: `tab-bottone${t.id === corrente.id ? ' attiva' : ''}`,
         'aria-selected': String(t.id === corrente.id), 'aria-controls': 'pannello-tab',
         onclick: () => azioni.vaiTab(t.id),
-      }, iconaPagina(t.id, '96', { classe: 'tab-icona-img', lato: 30 }) ?? h('span', { class: 'tab-icona', 'aria-hidden': 'true' }, ICONE_TAB[t.id] ?? '•'),
-      h('span', { class: 'tab-etichetta' }, t.titolo, t.contatore ? h('small', { class: 'tab-contatore' }, t.contatore) : null)))),
-      // PV e PM sempre a portata sotto le tab (solo con le tab a sinistra, da 900 px: css/style.css);
-      // su telefono e tablet restano nella tab Identità, con la mini-barra nell'intestazione
-      h('div', { class: 'risorse-laterali', 'aria-label': 'Punti Vita e Punti Magia' }, riquadriPvPm(ctx, { compatti: true }))));
+      }, iconaPagina(t.icona ?? t.id, '96', { classe: 'tab-icona-img', lato: 30 }) ?? h('span', { class: 'tab-icona', 'aria-hidden': 'true' }, ICONE_TAB[t.id] ?? '•'),
+      h('span', { class: 'tab-etichetta' }, t.etichetta ?? t.titolo, t.contatore ? h('small', { class: 'tab-contatore' }, t.contatore) : null)))),
+      // Punti Eroe, PV e PM sotto le tab quando stanno a sinistra (da 900 px: css/style.css);
+      // su telefono e tablet con le tab in basso restano nella tab Identità
+      inAlto ? null : h('div', { class: 'risorse-laterali', 'aria-label': 'Punti Eroe, Punti Vita e Punti Magia' }, colonnaRisorse(ctx))));
+  const lato = inAlto ? h('aside', { class: 'colonna-risorse', 'aria-label': 'Punti Eroe, Punti Vita e Punti Magia' }, colonnaRisorse(ctx)) : null;
 
-  const contenuti = { identita: tabIdentita, abilita: tabAbilita, combattimento: tabCombattimento, magia: tabMagia, calendario: tabCalendario };
+  const contenuti = {
+    identita: tabIdentita, abilita: tabAbilita, combattimento: tabCombattimento, calendario: tabCalendario,
+    // Poteri: per ora la tab Magia com'è; senza accesso alla magia «Nessun potere» (docs/layout-sd.md)
+    poteri: (c, d) => (d ? tabMagia(c, d) : tabVuoto('Nessun potere.', 'Tecniche Interiori e Poteri Sciamanici arriveranno qui.')),
+    artefatti: () => tabVuoto('In lavorazione.', 'Gli Artefatti Mistici posseduti, con PI, Sintonizzazione e riserve (docs/layout-sd.md, pezzo 4).'),
+    cibernetica: () => tabVuoto('In lavorazione.'),
+    inventario: () => tabVuoto('In lavorazione.', 'Per ora l’equipaggiamento resta nella tab Combattimento (docs/layout-sd.md, pezzo 2).'),
+    veicoli: () => tabVuoto('In lavorazione.'),
+  };
   // badge della pagina accanto al titolo della tab (solo con l'immagine: senza, il titolo è già nella barra delle tab)
-  const badge = iconaPagina(corrente.id, '96', { classe: 'badge-pagina', lato: 48 });
+  const badge = iconaPagina(corrente.icona ?? corrente.id, '96', { classe: 'badge-pagina', lato: 48 });
   // filigrana: stemma in grigio nell'angolo di Identità (ingranaggio, predefinito sì)
   const filigrana = corrente.id === 'identita' && ctx.filigrana !== false ? stemma(id.corporazione, '512-grigio', { classe: 'filigrana', alt: '' }) : null;
   const pannello = h('section', { class: `tab-pannello${filigrana ? ' con-filigrana' : ''}`, id: 'pannello-tab', role: 'tabpanel', 'aria-labelledby': `tab-${corrente.id}` },
@@ -104,7 +150,7 @@ export function renderTab(ctx) {
   // pannello «Lancia!» dell'incantesimo scelto (src/ui/lancio.js)
   const incLancio = ctx.ui?.lancio ? (ctx.dati.incantesimi.incantesimi.find((i) => i.nome === ctx.ui.lancio.nome) ?? null) : null;
   if (ctx.ui?.lancio && !incLancio) ctx.ui.lancio = null;
-  return [h('div', { class: `scheda-tab pos-${ctx.posizione} larghezza-${ctx.larghezza ?? 'piena'}` }, barra, nav, pannello),
+  return [h('div', { class: `scheda-tab pos-${ctx.posizione} larghezza-${ctx.larghezza ?? 'piena'}` }, barra, nav, lato, pannello),
     armaAttacco ? pannelloAttacco(ctx, armaAttacco) : null,
     incLancio ? pannelloLancio(ctx, incLancio) : null,
     ctx.ui?.attivaCalendario ? pannelloAttivazione(ctx) : null];
@@ -226,6 +272,21 @@ function contatoreTavolo(ctx, { titolo, campo, attuale, massimo, passi = [1, 5],
  * Riquadri dei Punti Vita e dei Punti Magia con barra, bordo colorato e +/−. Compatti nella colonna
  * di sinistra (senza l'elenco dei cristalli, che resta nella tab Magia).
  */
+/** Contenitore di un tab senza contenuti (ancora): una riga e una nota. */
+function tabVuoto(testo, nota = null) {
+  return h('div', { class: 'riquadro tab-vuoto' }, h('p', {}, h('strong', {}, testo)), nota ? h('p', { class: 'nota' }, nota) : null);
+}
+
+/** Colonna di sinistra, uguale in ogni tab: Punti Eroe sopra i PV, poi PV e PM (docs/layout-sd.md). */
+function colonnaRisorse(ctx) {
+  const s = ctx.sessione;
+  const m = ctx.massimi;
+  return [
+    contatoreTavolo(ctx, { titolo: 'Punti Eroe', campo: 'puntiEroe', attuale: s.puntiEroe, massimo: m.puntiEroe, passi: [1], classe: 'riquadro-pe compatto' }),
+    ...riquadriPvPm(ctx, { compatti: true }),
+  ];
+}
+
 function riquadriPvPm(ctx, { compatti = false } = {}) {
   const s = ctx.sessione;
   const m = ctx.massimi;
@@ -648,7 +709,8 @@ function tabIdentita(ctx, d) {
         usiSalvezze(ctx, d.salvezze))),
 
     h('div', { class: 'griglia-tre' },
-      contatoreTavolo(ctx, { titolo: 'Punti Eroe', campo: 'puntiEroe', attuale: s.puntiEroe, massimo: m.puntiEroe, passi: [1], classe: 'riquadro-pe' }),
+      // Punti Eroe: nella colonna di sinistra; qui solo dove la colonna non si vede (css/style.css)
+      contatoreTavolo(ctx, { titolo: 'Punti Eroe', campo: 'puntiEroe', attuale: s.puntiEroe, massimo: m.puntiEroe, passi: [1], classe: 'riquadro-pe pe-identita' }),
       contatoreTavolo(ctx, {
         titolo: 'Distintivi', campo: 'distintivi', attuale: s.distintivi, massimo: null, passi: [1],
         extra: h('button', {
@@ -722,16 +784,21 @@ function tabAbilita(ctx, d) {
     h('span', { class: `val-eff ${c.verso}` }, h('span', { class: 'segno-verso', 'aria-hidden': 'true' }, c.verso === 'malus' ? '▼' : '▲'), ' '),
     h('strong', {}, `${c.nome}: `), h('span', { class: `effetto-condizione ${c.verso}` }, c.testo),
     c.uso ? h('span', { class: 'nota' }, ` (solo per ${c.uso}: vedi ${c.vedi})`) : null);
+  // docs/layout-sd.md, pezzo 1: tabella compatta in alto; Condizioni attive (Ferite, Affaticamento,
+  // carico, Stati, bonus/malus condizionali degli oggetti) in una colonna a destra, sempre presente
   return [
-    condizioni.length || usi.length ? h('section', { class: 'riquadro condizioni-attive', 'aria-label': 'Condizioni attive' },
-      h('h2', {}, 'Condizioni attive'),
-      condizioni.length ? h('ul', {}, condizioni.map(rigaCondizione)) : null,
-      usi.length ? h('ul', { class: 'usi-specifici', 'aria-label': 'Solo per un uso specifico' }, usi.map(rigaCondizione)) : null) : null,
-    condizioniOggetti(ctx),
-    promemoriaPenalita(ctx, { soloSenzaEffetto: true }),
-    sezione('Abilità',
-      h('div', { class: 'abilita-affiancate' }, tabella(d.categorie.slice(0, meta)), tabella(d.categorie.slice(meta))),
-      h('p', { class: 'nota' }, `• Abilità di Classe. VA = Mod + Base + Corp + Avanz + Equip (equipaggiamento indossato), più le condizioni della sessione (▼/▲ rispetto al valore da regole). Avanzamento massimo: ${d.limiteAvanzamento ?? '—'}.`)),
+    h('div', { class: 'abilita-layout' },
+      h('div', { class: 'abilita-principale' },
+        sezione('Abilità',
+          h('div', { class: 'abilita-affiancate' }, tabella(d.categorie.slice(0, meta)), tabella(d.categorie.slice(meta))),
+          h('p', { class: 'nota' }, `• Abilità di Classe. VA = Mod + Base + Corp + Avanz + Equip (equipaggiamento indossato), più le condizioni della sessione (▼/▲ rispetto al valore da regole). Avanzamento massimo: ${d.limiteAvanzamento ?? '—'}.`))),
+      h('aside', { class: 'colonna-condizioni', 'aria-label': 'Condizioni attive' },
+        h('section', { class: 'riquadro condizioni-attive' },
+          h('h2', {}, 'Condizioni attive'),
+          condizioni.length ? h('ul', {}, condizioni.map(rigaCondizione)) : h('p', { class: 'nota' }, 'Nessuna: Ferite, Affaticamento, carico e Stati si segnano nella tab Combattimento.'),
+          usi.length ? h('ul', { class: 'usi-specifici', 'aria-label': 'Solo per un uso specifico' }, usi.map(rigaCondizione)) : null),
+        condizioniOggetti(ctx),
+        promemoriaPenalita(ctx, { soloSenzaEffetto: true }))),
     h('div', { class: 'colonne-larghe' },
     sezione('Talenti di Classe', d.talentiClasse.map((t) => h('div', { class: 'talento' },
       h('h3', {}, t.nome, h('span', { class: 'sigla' }, ` · ${t.classe} ${t.grado}${t.scelto ? ', a scelta' : ''}`)),
@@ -871,13 +938,13 @@ function tabCombattimento(ctx, d) {
       const st = ctx.tab.scheda.equipaggiamento?.sintonizzazione;
       if (!st) return [];
       // i contenitori delle armi stanno accanto all'arma; gli altri nella tab Magia, se c'è, altrimenti qui
-      const conMagia = ctx.tab.tab.some((t) => t.id === 'magia');
+      const conMagia = ctx.tab.tab.some((t) => t.id === 'poteri' && t.dati);
       const riserve = conMagia ? [] : (ctx.tab.scheda.equipaggiamento?.contenitori ?? []).filter((c) => !['arma_ravvicinata', 'arma_distanza'].includes(c.tipo));
       return [sezione('Artefatti e sintonizzazione (§7.10)',
         h('p', { class: `valore-tavolo${st.usata > st.capacita ? ' oltre' : ''}` }, h('span', {}, 'Sintonizzazione '), h('strong', {}, String(st.usata)), h('span', {}, ` / ${st.capacita}`)),
         h('p', { class: 'nota' }, `Capacità per ${st.gradi} Grad${st.gradi === 1 ? 'o' : 'i'} complessiv${st.gradi === 1 ? 'o' : 'i'}${st.talento ? ` con ${st.talento}` : ''}, prima dell’eventuale riduzione per Umanità (§5.21). Si segna «Sintonizzato» nella lista dell’equipaggiamento.`),
         h('ul', { class: 'elenco-sintonie' }, st.artefatti.map((x) => h('li', {}, `${x.sintonizzato ? '✔' : '○'} ${x.nome} · ${x.potenza}, costo ${x.costo}`))),
-        (ctx.tab.scheda.equipaggiamento?.contenitori ?? []).length ? h('p', { class: 'nota' }, `I PM dei cristalli si modificano nel riquadro Punti Magia (tab Identità${conMagia ? ' o Magia' : ''}).`) : null,
+        (ctx.tab.scheda.equipaggiamento?.contenitori ?? []).length ? h('p', { class: 'nota' }, `I PM dei cristalli si modificano nel riquadro Punti Magia (tab Identità${conMagia ? ' o Poteri' : ''}).`) : null,
         riserve.length ? h('div', { class: 'armi-tab' }, riserve.map((c) => schedaContenitore(ctx, c))) : null)];
     })(),
 

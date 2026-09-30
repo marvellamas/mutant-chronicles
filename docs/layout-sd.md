@@ -104,5 +104,5 @@ Tab presenti e vuoti, con la scritta «In arrivo con il manuale».
 ## Stato
 
 - [x] Piano (questo file).
-- [ ] Pezzo 1.
+- [x] Pezzo 1: riga degli otto tab (Poteri con la Magia o «Nessun potere», gli altri «In lavorazione»), Punti Eroe sopra i PV nella colonna di sinistra, Abilità con la colonna Condizioni a destra (a ~800 px la tabella mostra la formula sotto il nome e la colonna resta a destra; sul telefono scende sotto). Verificato nel browser a 1280, 800 e 375 px.
 - [ ] Pezzi 2–6.

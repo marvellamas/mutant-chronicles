@@ -46,6 +46,11 @@ SORGENTI = {
     'Pages/Skills.png': ('pagine', 'abilita'),
     'Pages/Combat.png': ('pagine', 'combattimento'),
     'Pages/Magic.png': ('pagine', 'magia'),
+    # tab nuovi della scheda (docs/layout-sd.md); gli originali di Marcello vanno in img/originali/Pages/
+    'Pages/Artefatti.png': ('pagine', 'artefatti'),
+    'Pages/Cibernetica.png': ('pagine', 'cibernetica'),
+    'Pages/Veicoli.png': ('pagine', 'veicoli'),
+    'Pages/equipaggiamento.png': ('pagine', 'inventario'),
 }
 
 VARIANTI = [('96', 96, False), ('512', 512, False), ('512-grigio', 512, True)]
