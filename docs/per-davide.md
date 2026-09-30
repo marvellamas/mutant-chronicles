@@ -1,6 +1,6 @@
 # **Per Davide — domande aperte ed errata dei manuali**
 
-Aggiornato al 29 settembre 2026, sera.  
+Aggiornato al 30 settembre 2026, mattina.  
 **Istruzioni per Davide (e per l’AI che usi per rispondere).**
 
 > * Questo è l’unico documento con le domande dell’app Mutant. Il link resta sempre questo: non ne esistono altri e non se ne creano di nuovi. Lo stesso testo è nel repo GitHub, docs/per-davide.md.  
@@ -60,7 +60,14 @@ La Magia (sez. 6\) chiama contenitore “qualunque oggetto che racchiuda un Chro
 **A.54 — Ricarica del revolver (E\&L 19, Giocatore §5.1.1).** La risposta dice «Il Revolver usa il tamburo» senza il costo. L’app applica la regola generale: una operazione di ricarica (1 AzP) riempie il tamburo con munizioni pronte, come scritto per la Colt Hammershot (Armamenti 0.54). Doppiette e fucili a pompa invece inseriscono una cartuccia per operazione. È corretto anche per il revolver commerciale e per i revolver corporativi?  
 *Nel frattempo:* tamburo pieno in 1 AzP.  
 **A.55 — Caratteristica del bonus al danno (Giocatore §5.13).** Il paragrafo dice «FOR o DES secondo l’arma ravvicinata; DES o INT secondo l’arma a distanza». L’app usa la Caratteristica dell’Abilità dell’arma: FOR per Armi da guerra e Corpo a corpo; DES per Armi da mischia, da lancio e leggere; INT per Armi medie; Armi pesanti INT, come scritto. Va bene?  
-*Nel frattempo:* questa corrispondenza.
+*Nel frattempo:* questa corrispondenza.  
+**A.56 — La riforma delle categorie di competenza supera la decisione del 28/09 sugli Addestramenti a 76 punti?** Il 28/09 hai confermato gli Addestramenti a 76 punti (basi 2–4) e il limite di Avanzamento 3 alla creazione. Il Doc del Giocatore del 29/09 (23:45) dà le basi alla prima Classe (7/6/5/3, 122 punti) e sostituisce il limite 3 con i limiti per categoria (§2.3, §2.13, §8.3). Vale il testo del 29/09?
+
+*Nel frattempo:* vale il testo del 29/09; dei 76 punti resta solo la conferma dei 10 Punti Abilità Liberi.  
+**A.57 — Personaggi già creati: punti liberi che non aumentano più il VA (§8.3).** Con i limiti nuovi, ogni personaggio già creato ha punti già spesi che oggi non aumenterebbero il VA personale (da 6 a 15 punti nei nostri personaggi di prova). Si riassegnano, evento per evento con i limiti di quel momento, oppure restano dove sono e tornano efficaci quando il limite sale?  
+*Nel frattempo:* si riassegnano dall’avviso in cima alla scheda; finché non si riassegnano non contano e non si sale di livello.  
+**A.58 — Il \+1 di Corporazione può essere annullato dal limite (§1.2.1).** Il bonus di Corporazione sta dentro il VA personale: un’Abilità Non competente con Caratteristica 7 e bonus di Corporazione fa 2 \+ 3 \+ 1 \= 6 contro il limite 5 del I Grado, e il \+1 non conta finché il limite non sale. Capita anche con le Generiche: 2 \+ 5 \+ 1 \= 8 contro 7\. È voluto?  
+*Nel frattempo:* sì, come dice il testo; il \+1 resta e conta quando il limite sale.
 
 ### **Manovre ravvicinate**
 
