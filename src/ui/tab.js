@@ -1674,20 +1674,19 @@ function tabArtefatti(ctx) {
 }
 
 /**
- * Riquadro «Gradi taumaturgici» della tab Poteri (Magia sez. 1): Grado complessivo con le Classi che
- * contribuiscono e il livello massimo degli Incantesimi che ne deriva; nel tooltip la provenienza.
- * Valore calcolato (src/incantesimi.js → gradiTaumaturgici); senza Classi taumaturgiche non compare.
+ * Riga «Gradi taumaturgici» in fondo al riquadro Incantesimi della tab Poteri (Magia sez. 1): Grado
+ * complessivo con le Classi che contribuiscono; nel tooltip la provenienza e il livello massimo che
+ * ne deriva. Valore calcolato (src/incantesimi.js → gradiTaumaturgici); senza Classi taumaturgiche
+ * non compare.
  */
-function riquadroGradiTaumaturgici(ctx) {
+function rigaGradiTaumaturgici(ctx) {
   const g = gradiTaumaturgici(ctx.tab.scheda, ctx.dati);
   if (!g) return null;
-  return h('div', { class: 'contatore-tavolo gradi-taumaturgici' }, h('h3', {}, 'Gradi taumaturgici'),
-    h('p', { class: 'valore-tavolo' }, infoValore(h('strong', {}, g.testo), {
-      titolo: `Gradi taumaturgici: ${g.gradi}`,
-      sottotitolo: 'Somma dei Gradi delle Classi taumaturgiche (Magia sez. 1)',
-      provenienza: g.provenienza,
-    })),
-    h('p', { class: 'nota' }, `Livello massimo di incantesimo: ${g.livelloMassimo}`));
+  return h('p', { class: 'nota gradi-taumaturgici' }, 'Gradi taumaturgici: ', infoValore(h('strong', {}, g.testo), {
+    titolo: `Gradi taumaturgici: ${g.gradi}`,
+    sottotitolo: 'Somma dei Gradi delle Classi taumaturgiche (Magia sez. 1)',
+    provenienza: g.provenienza,
+  }));
 }
 
 function tabMagia(ctx, d) {
@@ -1698,7 +1697,6 @@ function tabMagia(ctx, d) {
     h('div', { class: 'magia-testa' },
     h('div', { class: 'griglia-tavolo' },
       riquadroPM(ctx),
-      riquadroGradiTaumaturgici(ctx),
       h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Incantesimi'),
         h('p', { class: 'valore-tavolo' }, h('strong', {}, String(d.conosciuti)), h('span', {}, ` / ${d.quota}`)),
         h('p', { class: 'nota' }, `Livello massimo di lancio: ${d.livelloMassimo}`),
@@ -1716,7 +1714,8 @@ function tabMagia(ctx, d) {
           const potere = ctx.tab.scheda.abilita?.find((a) => a.nome === 'Potere');
           const usi = (potere?.usiSpecifici ?? []).filter((u) => u.uso === 'lancio');
           return usi.length ? h('p', { class: 'lancio-potere' }, 'Potere per lanciare: ', valoriUso('Potere', usi)) : null;
-        })())),
+        })(),
+        rigaGradiTaumaturgici(ctx))),
     sezione(`Prove di Potere (scala ${d.scalaPotere})`,
       h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },
         h('thead', {}, h('tr', {}, h('th', {}, 'Livello'), h('th', {}, 'Prova'))),
