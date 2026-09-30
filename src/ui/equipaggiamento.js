@@ -1,22 +1,27 @@
 // Componente dell'equipaggiamento (roadmap §1.2–1.3), usato dal passo Equipaggiamento del wizard e
-// dalla tab Combattimento: elenco delle voci con stato, quantità e note; «Aggiungi oggetto» con
+// dalla tab Inventario: elenco delle voci con stato, quantità e note; «Aggiungi oggetto» con
 // cascata Tipo → Catalogo → Famiglia → Profilo, ricerca per nome e oggetto personalizzato.
 // Non calcola nulla: i valori vengono da calcolaEquipaggiamento (src/equipaggiamento.js).
+// Modalità Inventario (docs/layout-sd.md, pezzo 2; ctx.inventario): sezioni per famiglia
+// (SEZIONI_INVENTARIO), stato con il deposito comune, costo / Qualità / reperibilità / peso nella
+// riga, contenuto aggiunto dalla tab (ctx.rigaExtra: PI e Ripara) e «Compra» (ctx.compra).
 import { h } from './dom.js';
 import { info } from './tooltip.js';
 import {
   TIPI, NOMI_TIPI, STATI, NOMI_STATI, catalogo, risolvi, opzioniCascata, cercaNelCatalogo, statoIniziale, puoMontare, infoArtefattoVoce,
-  regoleSintonizzazione, coloriChroma, testoEffettoOggetto, AMBITI_EFFETTO, NOMI_AMBITI,
+  regoleSintonizzazione, coloriChroma, testoEffettoOggetto, AMBITI_EFFETTO, NOMI_AMBITI, statiInventario,
 } from '../equipaggiamento.js';
+import { pesoVoce } from '../carico.js';
 
-import { GRUPPI_EQUIPAGGIAMENTO } from '../palette.js';
+import { GRUPPI_EQUIPAGGIAMENTO, SEZIONI_INVENTARIO, sezioneInventario } from '../palette.js';
 import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 
 const nuovoUid = () => `e${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
 const armiTipi = ['arma_ravvicinata', 'arma_distanza'];
 
 /**
- * @param {object} ctx { dati, voci, ui (memoria fra i ridisegni), aggiorna(voci), ridisegna() }
+ * @param {object} ctx { dati, voci, ui (memoria fra i ridisegni), aggiorna(voci), ridisegna(),
+ *   inventario?: true, rigaExtra?(r) → nodi, compra?(voce, costo), crediti?: numero | null }
  * @returns {Node[]}
  */
 export function renderEquipaggiamento(ctx) {
@@ -32,22 +37,27 @@ function elencoVoci(ctx) {
   const risolte = voci.map((v) => risolvi(v, cat));
   if (!risolte.length) return h('p', { class: 'vuoto' }, 'Nessun oggetto. Aggiungili dal catalogo o come oggetti personalizzati.');
   const cambia = (uid, modifica) => ctx.aggiorna(voci.map((v) => (v.uid === uid ? { ...v, ...modifica } : v)));
-  // gruppi per tipo (docs/palette.md): espandibili, con lo stato ricordato nel browser. A gruppo
-  // chiuso gli oggetti attivi restano visibili in una riga compatta: cambiano i valori della scheda.
-  const chiusi = new Set(leggiImpostazioni().gruppiEquipChiusi ?? []);
-  return h('div', { class: 'gruppi-equip' }, GRUPPI_EQUIPAGGIAMENTO.map((g) => {
-    const delGruppo = risolte.filter((r) => (TIPI.includes(r.tipo) ? r.tipo : 'altro') === g.tipo);
+  // gruppi per tipo (docs/palette.md) o, nell'Inventario, sezioni per famiglia: espandibili, con lo
+  // stato ricordato nel browser. A gruppo chiuso gli oggetti attivi restano visibili in una riga
+  // compatta: cambiano i valori della scheda.
+  const chiave = ctx.inventario ? 'sezioniInventarioChiuse' : 'gruppiEquipChiusi';
+  const chiusi = new Set(leggiImpostazioni()[chiave] ?? []);
+  const gruppi = ctx.inventario
+    ? SEZIONI_INVENTARIO.map((s) => ({ id: s.id, titolo: s.titolo, colore: s.colore, voci: risolte.filter((r) => sezioneInventario(r)?.id === s.id) }))
+    : GRUPPI_EQUIPAGGIAMENTO.map((g) => ({ id: g.tipo, titolo: g.titolo, colore: g.colore, voci: risolte.filter((r) => (TIPI.includes(r.tipo) ? r.tipo : 'altro') === g.tipo) }));
+  return h('div', { class: 'gruppi-equip' }, gruppi.map((g) => {
+    const delGruppo = g.voci;
     if (!delGruppo.length) return null;
-    const aperto = !chiusi.has(g.tipo);
+    const aperto = !chiusi.has(g.id);
     const attivi = delGruppo.filter((r) => r.attivo);
     return h('section', { class: `gruppo-equip${aperto ? '' : ' chiuso'}` },
       h('details', {
         open: aperto,
         ontoggle: (e) => {
           if (e.target.open === aperto) return; // il toggle iniziale non è un cambio
-          const nuovi = new Set(leggiImpostazioni().gruppiEquipChiusi ?? []);
-          if (e.target.open) nuovi.delete(g.tipo); else nuovi.add(g.tipo);
-          salvaImpostazioni({ ...leggiImpostazioni(), gruppiEquipChiusi: [...nuovi] });
+          const nuovi = new Set(leggiImpostazioni()[chiave] ?? []);
+          if (e.target.open) nuovi.delete(g.id); else nuovi.add(g.id);
+          salvaImpostazioni({ ...leggiImpostazioni(), [chiave]: [...nuovi] });
           ctx.ridisegna?.();
         },
       },
@@ -62,11 +72,13 @@ function elencoVoci(ctx) {
 function voceEquip(ctx, r, risolte, cambia) {
   const { dati, voci } = ctx;
   const v = r.voce;
-  const stati = r.stati; // del tipo, oppure In uso / Nello zaino per gli oggetti con effetti
+  // del tipo, oppure In uso / Nello zaino per gli oggetti con effetti; nell'Inventario più il deposito
+  // comune (null = «Con sé» per i tipi senza stati)
+  const stati = ctx.inventario ? statiInventario(r) : r.stati;
   const art = r.fuoriCatalogo ? null : infoArtefattoVoce(r, dati);
   // Magia sez. 6: ogni contenitore si sintonizza e si ricarica da solo, quindi una voce ciascuno
   const contenitoreSingolo = art?.contenitore && !art.contenitore.integrato;
-  return h('li', { class: `voce-equip${r.attivo ? ' attiva' : ''}${r.fuoriCatalogo ? ' fuori' : ''}` },
+  return h('li', { class: `voce-equip${r.attivo ? ' attiva' : ''}${r.fuoriCatalogo ? ' fuori' : ''}${r.deposito ? ' in-deposito' : ''}`, dataset: { uid: v.uid } },
     h('div', { class: 'equip-testa' },
       h('div', {},
         h('strong', {}, r.def ? info('oggetto', r.def.rif, r.nome) : r.nome),
@@ -75,16 +87,19 @@ function voceEquip(ctx, r, risolte, cambia) {
           : r.personalizzato ? h('span', { class: 'etichetta' }, 'personalizzato') : null,
         // riga breve con l'effetto dal manuale (catalogo → effetto_breve)
         r.def?.effetto_breve ? h('p', { class: 'effetto-breve' }, r.def.effetto_breve) : null,
-        r.fuoriCatalogo ? h('p', { class: 'motivo' }, 'Non più in catalogo: resta in lista, senza effetti.') : null),
+        r.fuoriCatalogo ? h('p', { class: 'motivo' }, 'Non più in catalogo: resta in lista, senza effetti.') : null,
+        ctx.inventario ? datiOggetto(ctx, r) : null),
       h('button', {
         type: 'button', class: 'btn pericolo piccolo-btn', 'aria-label': `Togli ${r.nome}`,
         onclick: () => { if (confirm(`Togliere «${r.nome}» dall’equipaggiamento?`)) ctx.aggiorna(voci.filter((x) => x.uid !== v.uid)); },
       }, 'Togli')),
-    stati.length && !r.fuoriCatalogo ? h('div', { class: 'stati-equip', role: 'radiogroup', 'aria-label': `Stato di ${r.nome}` },
+    stati.length && (!r.fuoriCatalogo || ctx.inventario) ? h('div', { class: 'stati-equip', role: 'radiogroup', 'aria-label': `Stato di ${r.nome}` },
       stati.map((st) => h('button', {
         type: 'button', role: 'radio', 'aria-checked': String(v.stato === st),
-        class: `stato-equip${v.stato === st ? ' attivo' : ''}`, onclick: () => cambia(v.uid, { stato: st }),
-      }, NOMI_STATI[st]))) : null,
+        class: `stato-equip${v.stato === st ? ' attivo' : ''}${st === 'deposito' ? ' stato-deposito' : ''}`, onclick: () => cambia(v.uid, { stato: st }),
+        title: st === 'deposito' ? 'Resta del personaggio, ma fuori dal carico e senza effetti; non disponibile al tavolo.' : null,
+      }, st === null ? 'Con sé' : NOMI_STATI[st]))) : null,
+    ctx.rigaExtra ? ctx.rigaExtra(r) : null,
     art ? h('label', { class: 'campo-inline' },
       h('input', { type: 'checkbox', checked: v.sintonizzato === true, onchange: (e) => cambia(v.uid, { sintonizzato: e.target.checked || undefined }) }),
       ` Sintonizzato (costo ${art.sintonizzazione}, §7.10)`) : null,
@@ -128,6 +143,24 @@ function voceEquip(ctx, r, risolte, cambia) {
       h('span', { class: 'effetto-oggetto' }, testoEffettoOggetto(e)),
       e.condizione ? h('small', { class: 'nota' }, ` — ${e.condizione}`) : null))) : null,
     r.personalizzato && !v.dotazione_id ? editorEffetti(ctx, v, cambia) : null);
+}
+
+/**
+ * Costo, Qualità, reperibilità e peso di un oggetto (Inventario, docs/layout-sd.md): dal catalogo o,
+ * per i personalizzati, il peso scritto dal giocatore.
+ */
+function datiOggetto(ctx, r) {
+  const d = r.def ?? {};
+  const rep = d.reperibilita ? ctx.dati.equipaggiamento?.indice?.reperibilita?.[d.reperibilita] ?? null : null;
+  const peso = pesoVoce(r);
+  const parti = [
+    Number.isFinite(d.costo) ? `costo ${d.costo.toLocaleString('it-IT')}` : null,
+    d.qualita ? `Qualità ${d.qualita}` : null,
+    d.reperibilita ? h('span', { title: rep ? `${rep.nome}: ${rep.ricerca}` : null }, `reperibilità ${(rep?.nome ?? d.reperibilita).toLowerCase()}`) : null,
+    peso !== null ? `${String(peso).replace('.', ',')} kg${r.voce.quantita > 1 ? ' l’uno' : ''}` : r.fuoriCatalogo ? null : 'peso da definire',
+  ].filter(Boolean);
+  if (!parti.length) return null;
+  return h('p', { class: 'dati-oggetto' }, parti.flatMap((x, i) => (i ? [' · ', x] : [x])));
 }
 
 /**
@@ -221,13 +254,19 @@ function pannelloAggiungi(ctx) {
     scelto ? h('div', { class: 'riquadro ok profilo-scelto' },
       h('p', {}, h('strong', {}, info('oggetto', scelto.rif, scelto.nome)), h('small', { class: 'sigla' }, ` · ${scelto.paragrafo}`)),
       h('p', { class: 'nota' }, riassuntoProfilo(scelto)),
-      h('button', {
-        type: 'button', class: 'btn primario',
-        onclick: () => {
+      h('div', { class: 'barra-azioni' },
+        h('button', {
+          type: 'button', class: 'btn primario',
+          onclick: () => {
+            Object.assign(s, { rif: null });
+            aggiungiVoce({ uid: nuovoUid(), rif: scelto.rif, stato: statoIniziale(scelto.tipo, ctx.voci, dati, scelto.effetti ?? []), quantita: 1, note: '' });
+          },
+        }, `Aggiungi ${scelto.nome}`),
+        // Inventario, modalità tavolo: compra al prezzo di catalogo, scalando i crediti attuali
+        ctx.compra ? bottoneCompra(ctx, scelto, () => {
           Object.assign(s, { rif: null });
-          aggiungiVoce({ uid: nuovoUid(), rif: scelto.rif, stato: statoIniziale(scelto.tipo, ctx.voci, dati, scelto.effetti ?? []), quantita: 1, note: '' });
-        },
-      }, `Aggiungi ${scelto.nome}`)) : null,
+          return { uid: nuovoUid(), rif: scelto.rif, stato: statoIniziale(scelto.tipo, ctx.voci, dati, scelto.effetti ?? []), quantita: 1, note: '' };
+        }) : null)) : null,
     h('details', { class: 'personalizzato', open: !!ui.equipPersAperto, ontoggle: (e) => { ui.equipPersAperto = e.target.open; } },
       h('summary', {}, 'Oggetto personalizzato'),
       h('p', { class: 'nota' }, 'Per ciò che il catalogo non ha ancora o per le improvvisazioni del master. Un’arma con l’Abilità indicata mostra il VA per colpire; un’armatura con l’AR mostra la protezione.'),
@@ -277,6 +316,18 @@ function pannelloAggiungi(ctx) {
           aggiungiVoce({ uid: nuovoUid(), rif: null, personalizzato, stato: statoIniziale(personalizzato.tipo, ctx.voci, dati), quantita: 1, note: '' });
         },
       }, 'Aggiungi oggetto personalizzato')));
+}
+
+/** «Compra (−N crediti)»: disabilitato, con il motivo, se il prezzo manca o i crediti non bastano. */
+function bottoneCompra(ctx, scelto, nuovaVoce) {
+  const costo = Number.isFinite(scelto.costo) ? scelto.costo : null;
+  const motivo = costo === null ? 'Prezzo di catalogo assente: aggiungi l’oggetto e scala i crediti a mano.'
+    : !Number.isInteger(ctx.crediti) ? 'Crediti non tracciati: applica prima la dotazione iniziale, oppure aggiungi l’oggetto e annota la spesa a mano.'
+      : ctx.crediti < costo ? `Crediti insufficienti (${ctx.crediti.toLocaleString('it-IT')}).` : null;
+  return h('button', {
+    type: 'button', class: 'btn', disabled: !!motivo, title: motivo,
+    onclick: () => ctx.compra(nuovaVoce(), costo),
+  }, costo === null ? 'Compra' : `Compra (−${costo.toLocaleString('it-IT')} crediti)`);
 }
 
 function riassuntoProfilo(o) {

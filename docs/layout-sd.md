@@ -105,4 +105,11 @@ Tab presenti e vuoti, con la scritta «In arrivo con il manuale».
 
 - [x] Piano (questo file).
 - [x] Pezzo 1: riga degli otto tab (Poteri con la Magia o «Nessun potere», gli altri «In lavorazione»), Punti Eroe sopra i PV nella colonna di sinistra, Abilità con la colonna Condizioni a destra (a ~800 px la tabella mostra la formula sotto il nome e la colonna resta a destra; sul telefono scende sotto). Verificato nel browser a 1280, 800 e 375 px.
-- [ ] Pezzi 2–6.
+- [x] Pezzo 2: tab Inventario (`tabInventario` in `src/ui/tab.js`, modalità `inventario` di `src/ui/equipaggiamento.js`). In testa Carico (peso noto / soglia Ordinaria, provenienza al tooltip: cosa pesa, cosa è nel deposito, i pesi da definire; `provenienzaCarico` in `src/carico.js`) e Crediti; poi gli avvisi dell'equipaggiamento, il riquadro Integrità (spostato com'è) e le sezioni per famiglia (`SEZIONI_INVENTARIO` in `src/palette.js`, colori dei gruppi esistenti). Ogni riga: costo, Qualità, reperibilità, peso; un solo controllo di stato con «Deposito comune»; PI n/max con − e +, «Rotto», «Ripara» (il pannello si apre sotto la riga), PS Integrità. In fondo il catalogo con «Aggiungi» e «Compra (−N crediti)». Test in `tests/inventario.test.js`. Verificato nel browser a 1280, 800 e 375 px.
+  Scostamenti dal piano:
+  - **Stato:** era già in un solo campo (`voce.stato`), letto da motore e SS: nessuna migrazione del formato. Si aggiunge il valore `deposito` (ammesso per ogni tipo; fuori dal carico, senza effetti, fuori dalle scorte di munizioni e dalle applicazioni sanitarie). Restano gli stati fini del tipo (Impugnata, Addosso, Imbracciato, Indossata, In uso, Trasportato, Nello zaino): il motore li usa, ridurli ai quattro del piano toglierebbe informazioni; per i tipi senza stati il controllo è «Con sé» / «Deposito comune». La SS scrive «(deposito comune)» accanto all'oggetto nel foglio 3.
+  - **Sezioni:** «Strumenti professionali» e «Razioni» arriveranno con i loro capitoli del Manuale dell'Equipaggiamento (oggi nessun oggetto); in più «Artefatti, cristalli e contenitori di Chroma» e «Altro equipaggiamento». «Accessori» comprende anche rinforzi e modifiche d'elmetto.
+  - **Spostati nell'Inventario** oltre all'equipaggiamento e all'Integrità: il Carico (dalla tab Combattimento) e i Crediti (dalla tab Identità), perché gli acquisti al tavolo si fanno da qui.
+  - **Resta nel Combattimento** fino al pezzo 3–4: Sanitario (§7.19) e Artefatti e sintonizzazione.
+  - Il passo Equipaggiamento del wizard resta com'è (gruppi per tipo, senza deposito).
+- [ ] Pezzi 3–6.

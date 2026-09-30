@@ -17,6 +17,7 @@ import { renderEquipaggiamento } from './equipaggiamento.js';
 import { testoDanno } from '../stampa.js';
 import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto } from '../equipaggiamento.js';
 import { dotazioneApplicata, crediti } from '../dotazioni.js';
+import { provenienzaCarico } from '../carico.js';
 import { statoRicarica, disponibili } from '../ricarica.js';
 import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 import { pannelloAttacco } from './attacco.js';
@@ -126,7 +127,7 @@ export function renderTab(ctx) {
     poteri: (c, d) => (d ? tabMagia(c, d) : tabVuoto('Nessun potere.', 'Tecniche Interiori e Poteri Sciamanici arriveranno qui.')),
     artefatti: () => tabVuoto('In lavorazione.', 'Gli Artefatti Mistici posseduti, con PI, Sintonizzazione e riserve (docs/layout-sd.md, pezzo 4).'),
     cibernetica: () => tabVuoto('In lavorazione.'),
-    inventario: () => tabVuoto('In lavorazione.', 'Per ora l’equipaggiamento resta nella tab Combattimento (docs/layout-sd.md, pezzo 2).'),
+    inventario: (c) => tabInventario(c),
     veicoli: () => tabVuoto('In lavorazione.'),
   };
   // badge della pagina accanto al titolo della tab (solo con l'immagine: senza, il titolo è già nella barra delle tab)
@@ -354,7 +355,6 @@ function sezioneIntegrita(ctx) {
   if (!lista.length) return null;
   const pi = ctx.sessione.integrita ?? {};
   const rip = regoleRiparazione(ctx.dati);
-  const armi = ctx.tab.scheda.equipaggiamento?.armi ?? [];
   const attuali = (x) => pi[x.uid] ?? x.piMax;
   // A.47: esemplari identici integri (stesso oggetto, stessi PI e PS) in una riga; i danneggiati a parte
   const righe = [];
@@ -376,39 +376,18 @@ function sezioneIntegrita(ctx) {
   const oggetti = righe.reduce((s, r) => s + (r.quantita ?? 1), 0);
   const danneggiati = righe.filter((r) => r.n < r.x.piMax).length;
   const aperta = leggiImpostazioni().integritaAperta === true;
-  const ps = (x) => (x.ps ? `${x.ps}${x.qualita ? ` (${x.qualita})` : ''}` : '—');
   const riga = ({ x, n, quantita = 1, voci = [x] }) => {
-    if (quantita > 1) {
-      // «Danneggia uno»: una voce con quantità > 1 si separa (A.47); fra voci distinte si toglie 1 PI all'ultima
-      const conQuantita = voci.find((v) => v.gruppo);
-      const danneggia = conQuantita ? () => ctx.azioni.danneggiaEsemplare(conQuantita.uid) : () => ctx.azioni.integrita(voci.at(-1).uid, -1);
-      return h('tr', { class: 'gruppo-esemplari' },
-        h('th', { scope: 'row' }, `${x.nome} ×${quantita}`, h('span', { class: 'sigla' }, ' · integri')),
-        h('td', { class: 'forte pi-valore' }, `PI ${x.piMax}/${x.piMax}`),
-        h('td', { class: 'pi-comandi' }, h('button', { type: 'button', class: 'btn btn-piccolo btn-danneggia', title: 'Separa un esemplare in una riga propria, con 1 PI in meno (A.47).', onclick: danneggia }, 'Danneggia uno')),
-        h('td', { class: 'pi-ps' }, ps(x)));
-    }
-    const soglia = statoIntegrita(n, x.piMax, ctx.dati);
-    const rotto = soglia?.effetto === 'inutilizzabile';
-    const b = (delta) => h('button', {
-      type: 'button', class: 'btn-tavolo btn-mini', onclick: () => ctx.azioni.integrita(x.uid, delta),
-      disabled: delta < 0 ? n <= 0 : n >= x.piMax, 'aria-label': `${delta < 0 ? 'Togli' : 'Aggiungi'} 1 PI a ${x.nome}`,
-    }, delta < 0 ? '−' : '+');
-    const ripara = rip ? (() => {
-      const cond = armi.find((w) => String(w.uid).split(':')[0] === x.uid)?.condizioneArma?.id ?? null;
-      const ok = riparabile(x, cond, rip);
-      return h('button', { type: 'button', class: `btn btn-piccolo btn-ripara${rotto && ok.si ? ' primario' : ''}`, disabled: !ok.si || n >= x.piMax,
-        title: !ok.si ? ok.motivo : n >= x.piMax ? 'PI già al massimo.' : `Riparazione strutturale: ${rip.ore} ora, Prova di ${rip.abilita} (A.46).`,
-        onclick: () => { ctx.ui.riparazione = { uid: x.uid, improvvisati: false, esito: null }; ctx.azioni.ridisegna(); } }, 'Ripara');
-    })() : null;
-    return h('tr', { class: `${rotto ? 'rotto' : ''}${n < x.piMax ? ' danneggiato' : ''}`.trim() || null },
-      h('th', { scope: 'row' }, x.nome, soglia ? h('span', { class: 'etichetta etichetta-rotto', title: 'A 0 PI l’oggetto è Rotto e non può essere utilizzato finché non viene riparato (§7.2.1). La rottura vale dal colpo successivo: non annulla la protezione già data contro il colpo che l’ha causata (A.44).' }, soglia.etichetta) : null),
-      h('td', { class: 'forte pi-valore' }, `PI ${n}/${x.piMax}`),
-      h('td', { class: 'pi-comandi' }, b(-1), b(1), ripara),
-      h('td', { class: 'pi-ps' }, ps(x)));
+    const c = controlliPi(ctx, { x, n, quantita, voci });
+    return h('tr', { class: c.classe },
+      h('th', { scope: 'row' }, c.nome, c.etichetta),
+      h('td', { class: 'forte pi-valore' }, c.valore),
+      h('td', { class: 'pi-comandi' }, c.comandi),
+      h('td', { class: 'pi-ps' }, c.ps));
   };
+  // il pannello della riparazione aperto dalla riga dell'Inventario sta nella riga, non qui
+  const dalRiquadro = ctx.ui.riparazione && ctx.ui.riparazione.dove !== 'riga';
   return h('details', {
-    class: 'sezione-tab sezione-integrita', open: aperta || !!ctx.ui.riparazione || null,
+    class: 'sezione-tab sezione-integrita', open: aperta || !!dalRiquadro || null,
     ontoggle: (e) => { if (e.target.open !== aperta) salvaImpostazioni({ ...leggiImpostazioni(), integritaAperta: e.target.open }); },
   },
     h('summary', {},
@@ -418,9 +397,135 @@ function sezioneIntegrita(ctx) {
     h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta integrita-tab' },
       h('thead', {}, h('tr', {}, h('th', {}, 'Oggetto'), h('th', {}, 'PI'), h('th', {}, h('span', { class: 'sr' }, 'Comandi')), h('th', { class: 'pi-ps' }, 'PS Integrità'))),
       h('tbody', {}, righe.map(riga)))),
-    pannelloRiparazione(ctx, lista, pi, rip),
+    dalRiquadro ? pannelloRiparazione(ctx, lista, pi, rip) : null,
     campiPiDirettore(ctx),
     h('p', { class: 'nota' }, 'Un colpo o una Parata ordinari non tolgono PI: si perdono con un attacco per rompere l’oggetto, un Magistrale che lo coinvolge, Corrosivo o Demolitrice e il danno Etereo, se la PS Integrità (1d20 ≤ PS) fallisce. A 0 PI l’oggetto è Rotto: non dà AR né i suoi effetti. La riparazione la decide il master: si rimettono i PI con +.'));
+}
+
+/**
+ * Controlli dei PI di un oggetto (Armamenti §7.2.1), comuni al riquadro Integrità e alla riga
+ * dell'Inventario: { classe, nome, etichetta, valore, comandi, ps }. «PI n/max», − e +, «Ripara»
+ * (A.46); per più esemplari integri «Danneggia uno» (A.47). `dove` dice dove si apre il pannello della
+ * riparazione ('riquadro' o 'riga').
+ */
+function controlliPi(ctx, { x, n, quantita = 1, voci = [x] }, dove = 'riquadro') {
+  const rip = regoleRiparazione(ctx.dati);
+  const armi = ctx.tab.scheda.equipaggiamento?.armi ?? [];
+  const ps = x.ps ? `${x.ps}${x.qualita ? ` (${x.qualita})` : ''}` : '—';
+  if (quantita > 1) {
+    // «Danneggia uno»: una voce con quantità > 1 si separa (A.47); fra voci distinte si toglie 1 PI all'ultima
+    const conQuantita = voci.find((v) => v.gruppo);
+    const danneggia = conQuantita ? () => ctx.azioni.danneggiaEsemplare(conQuantita.uid) : () => ctx.azioni.integrita(voci.at(-1).uid, -1);
+    return {
+      classe: 'gruppo-esemplari', nome: `${x.nome} ×${quantita}`, etichetta: h('span', { class: 'sigla' }, ' · integri'),
+      valore: `PI ${x.piMax}/${x.piMax}`,
+      comandi: h('button', { type: 'button', class: 'btn btn-piccolo btn-danneggia', title: 'Separa un esemplare in una riga propria, con 1 PI in meno (A.47).', onclick: danneggia }, 'Danneggia uno'),
+      ps,
+    };
+  }
+  const soglia = statoIntegrita(n, x.piMax, ctx.dati);
+  const rotto = soglia?.effetto === 'inutilizzabile';
+  const b = (delta) => h('button', {
+    type: 'button', class: 'btn-tavolo btn-mini', onclick: () => ctx.azioni.integrita(x.uid, delta),
+    disabled: delta < 0 ? n <= 0 : n >= x.piMax, 'aria-label': `${delta < 0 ? 'Togli' : 'Aggiungi'} 1 PI a ${x.nome}`,
+  }, delta < 0 ? '−' : '+');
+  const ripara = rip ? (() => {
+    const cond = armi.find((w) => String(w.uid).split(':')[0] === x.uid)?.condizioneArma?.id ?? null;
+    const ok = riparabile(x, cond, rip);
+    return h('button', { type: 'button', class: `btn btn-piccolo btn-ripara${rotto && ok.si ? ' primario' : ''}`, disabled: !ok.si || n >= x.piMax,
+      title: !ok.si ? ok.motivo : n >= x.piMax ? 'PI già al massimo.' : `Riparazione strutturale: ${rip.ore} ora, Prova di ${rip.abilita} (A.46).`,
+      onclick: () => { ctx.ui.riparazione = { uid: x.uid, improvvisati: false, esito: null, dove }; ctx.azioni.ridisegna(); } }, 'Ripara');
+  })() : null;
+  return {
+    classe: `${rotto ? 'rotto' : ''}${n < x.piMax ? ' danneggiato' : ''}`.trim() || null,
+    nome: x.nome,
+    etichetta: soglia ? h('span', { class: 'etichetta etichetta-rotto', title: 'A 0 PI l’oggetto è Rotto e non può essere utilizzato finché non viene riparato (§7.2.1). La rottura vale dal colpo successivo: non annulla la protezione già data contro il colpo che l’ha causata (A.44).' }, soglia.etichetta) : null,
+    valore: `PI ${n}/${x.piMax}`,
+    comandi: [b(-1), b(1), ripara],
+    ps,
+  };
+}
+
+/**
+ * PI e Ripara nella riga di un oggetto dell'Inventario (docs/layout-sd.md, pezzo 2): gli stessi
+ * controlli del riquadro Integrità (una voce con PI ha una sola riga di Integrità, con lo stesso uid);
+ * il pannello della riparazione aperto da qui si apre sotto la riga.
+ */
+function piRigaInventario(ctx, r) {
+  const lista = ctx.tab.scheda.equipaggiamento?.integrita ?? [];
+  const x = lista.find((o) => o.uid === r.uid);
+  if (!x) return null;
+  const pi = ctx.sessione.integrita ?? {};
+  const n = pi[x.uid] ?? x.piMax;
+  // A.47: più esemplari integri restano in una riga, con «Danneggia uno»
+  const c = controlliPi(ctx, { x, n, quantita: x.gruppo ?? 1 }, 'riga');
+  const stato = ctx.ui.riparazione;
+  return h('div', { class: 'pi-riga' },
+    h('div', { class: `pi-voce${c.classe ? ` ${c.classe}` : ''}` },
+      c.etichetta, h('strong', { class: 'pi-valore' }, c.valore), h('span', { class: 'pi-comandi' }, c.comandi), h('span', { class: 'pi-ps sigla' }, c.ps === '—' ? null : `PS Integrità ${c.ps}`)),
+    stato?.dove === 'riga' && stato.uid === x.uid ? pannelloRiparazione(ctx, lista, pi, regoleRiparazione(ctx.dati)) : null);
+}
+
+/**
+ * Peso e carico in testa all'Inventario (§5.2.6, Equipaggiamento §1.6): «peso attuale / soglia», con
+ * la provenienza al tooltip (cosa pesa, cosa è escluso perché nel deposito comune, i pesi da
+ * definire); soglie, penalità e peso aggiuntivo della sessione sotto. Era nella tab Combattimento.
+ */
+function riquadroCarico(ctx) {
+  const c = ctx.tab.scheda.carico;
+  if (!c) return null;
+  const kg = (v) => v.toLocaleString('it-IT', { maximumFractionDigits: 1 });
+  const penalita = !!c.livello.effetto;
+  const forza = ctx.tab.scheda.caratteristiche.FOR.valore;
+  const esclusi = c.esclusi.length;
+  return h('div', { class: 'contatore-tavolo riquadro-carico' },
+    h('h3', {}, 'Carico (§5.2.6)'),
+    // E&L 4 (A.30): un peso mancante è «da definire», non 0 kg; il totale noto è parziale e il livello
+    // vale «almeno»: non si attesta l'assenza di penalità
+    h('p', { class: `valore-tavolo${penalita ? ' oltre' : ''}` },
+      infoValore([h('strong', {}, `${kg(c.peso)} kg`), c.parziale ? ' noti' : null], {
+        titolo: 'Peso trasportato',
+        sottotitolo: `${c.parziale ? 'Totale parziale: un peso mancante non vale 0 kg (E&L 4, A.30). ' : ''}${esclusi ? `${esclusi} ${esclusi === 1 ? 'oggetto' : 'oggetti'} nel deposito comune, fuori dal carico.` : ''}`.trim() || null,
+        provenienza: provenienzaCarico(c),
+      }, { classe: 'valore-carico' }),
+      h('span', {}, ` / ${kg(c.soglie.ordinario)} kg`),
+      h('span', {}, c.parziale ? ` · almeno ${c.livello.nome}` : ` · ${c.livello.nome}`)),
+    h('p', { class: 'nota' }, `Ordinario fino a ${kg(c.soglie.ordinario)} kg, Sovraccarico fino a ${kg(c.soglie.massimo)} kg; spingere o trascinare su terreno piano fino a ${kg(c.soglie.spinta)} kg (FOR ${forza}${c.soglie.talento ? `, soglie raddoppiate da ${c.soglie.talento}` : ''}).`),
+    h('p', { class: penalita ? 'avviso-carico' : 'nota' },
+      // con il totale parziale l'Ordinario non attesta «nessuna penalità» (E&L 4)
+      c.parziale && !penalita ? 'Sul peso noto nessuna penalità; con i pesi da definire il carico reale può essere maggiore: decide il Direttore.' : c.livello.promemoria,
+      c.livello.movimento_q && c.passo !== null ? ` Passo ${c.passo} Q, prima delle altre penalità.` : ''),
+    h('label', { class: 'campo-inline' }, 'Peso aggiuntivo (kg) ',
+      h('input', { type: 'number', min: 0, step: 0.5, value: c.pesoExtra, 'aria-label': 'Peso aggiuntivo in kg', onchange: (e) => ctx.azioni.imposta('caricoExtra', Number(e.target.value) || 0) }),
+      h('small', { class: 'nota' }, 'bottino, una creatura trasportata con il suo equipaggiamento…')));
+}
+
+/**
+ * Tab Inventario (docs/layout-sd.md, pezzo 2): l'unica casa degli oggetti del personaggio. In testa
+ * carico e crediti; poi gli avvisi dell'equipaggiamento, il riquadro Integrità (spostato dalla tab
+ * Combattimento) e le sezioni per famiglia, con lo stato di ogni oggetto (compreso il deposito
+ * comune), PI e Ripara nella riga; in fondo il catalogo, con «Aggiungi» e «Compra».
+ */
+function tabInventario(ctx) {
+  const d = ctx.tab.tab.find((t) => t.id === 'combattimento')?.dati ?? null;
+  const applicata = dotazioneApplicata(ctx.scelte.equipaggiamento);
+  return [
+    h('div', { class: 'griglia-tavolo testa-inventario' }, riquadroCarico(ctx), riquadroCrediti(ctx)),
+    d?.avvisiEquipaggiamento?.length ? h('div', { class: 'riquadro attenzione' },
+      h('p', {}, h('strong', {}, 'Equipaggiamento da controllare (avvisi, non blocchi: decide il master):')),
+      h('ul', {}, d.avvisiEquipaggiamento.map((a) => h('li', {}, a)))) : null,
+    sezioneIntegrita(ctx),
+    sezione('Oggetti',
+      h('p', { class: 'nota' }, 'Solo gli oggetti impugnati, imbracciati o indossati cambiano i valori. Il deposito comune tiene l’oggetto fuori dal carico e fuori dal tavolo.',
+        applicata ? ' La dotazione iniziale (§2.16) si cambia dal passo Equipaggiamento della creazione.' : null),
+      // senza dotazione iniziale il pulsante per applicarla sta nel riquadro Crediti, qui sopra
+      renderEquipaggiamento({
+        dati: ctx.dati, voci: ctx.scelte.equipaggiamento, ui: ctx.ui,
+        aggiorna: ctx.azioni.equipaggiamento, ridisegna: ctx.azioni.ridisegna,
+        inventario: true, rigaExtra: (r) => piRigaInventario(ctx, r),
+        compra: ctx.azioni.compra, crediti: ctx.sessione.crediti,
+      })),
+  ];
 }
 
 /**
@@ -721,8 +826,7 @@ function tabIdentita(ctx, d) {
           disabled: s.distintivi < m.distintiviPerPuntoEroe || s.puntiEroe >= m.puntiEroe,
           title: '§1.8.3: facoltativo, senza superare la riserva massima',
         }, `Converti ${m.distintiviPerPuntoEroe} in 1 Punto Eroe`),
-      }),
-      riquadroCrediti(ctx)),
+      })),
 
     sezione('Combattimento e movimento',
       ctx.tab.scheda.tavolo
@@ -801,7 +905,7 @@ function tabAbilita(ctx, d) {
       h('aside', { class: 'colonna-condizioni', 'aria-label': 'Condizioni attive' },
         h('section', { class: 'riquadro condizioni-attive' },
           h('h2', {}, 'Condizioni attive'),
-          condizioni.length ? h('ul', {}, condizioni.map(rigaCondizione)) : h('p', { class: 'nota' }, 'Nessuna: Ferite, Affaticamento, carico e Stati si segnano nella tab Combattimento.'),
+          condizioni.length ? h('ul', {}, condizioni.map(rigaCondizione)) : h('p', { class: 'nota' }, 'Nessuna: Ferite, Affaticamento e Stati si segnano nella tab Combattimento, il carico nell’Inventario.'),
           usi.length ? h('ul', { class: 'usi-specifici', 'aria-label': 'Solo per un uso specifico' }, usi.map(rigaCondizione)) : null),
         condizioniOggetti(ctx),
         promemoriaPenalita(ctx, { soloSenzaEffetto: true }))),
@@ -893,7 +997,7 @@ function tabCombattimento(ctx, d) {
       ...riquadriTavolo(ctx)),
 
     sezione('Armi impugnate',
-      d.armiCalcolate.length ? null : h('p', { class: 'vuoto' }, 'Nessuna arma impugnata: cambia lo stato di un’arma in «Impugnata» qui sotto.'),
+      d.armiCalcolate.length ? null : h('p', { class: 'vuoto' }, 'Nessuna arma impugnata: cambia lo stato di un’arma in «Impugnata» nella tab Inventario.'),
       d.armiCalcolate.length || senzArmiDisponibile(ctx.tab.scheda, ctx.dati)
         ? h('div', { class: 'armi-tab' }, d.armiCalcolate.map((a) => schedaArma(ctx, a)), senzArmiDisponibile(ctx.tab.scheda, ctx.dati) ? schedaSenzArmi(ctx) : null) : null),
 
@@ -928,8 +1032,6 @@ function tabCombattimento(ctx, d) {
       : h('p', { class: 'vuoto' }, 'Nessuna protezione indossata o imbracciata.'),
       resistenze(ctx),
       d.protezioniCalcolate.length ? h('p', { class: 'nota' }, 'Agilità vale per Schivata e Prove fisiche di Atletica e Furtività ostacolate (già nel VA di quelle Abilità, colonna Equip); non per la Parata. La penalità MOV si sottrae una volta al budget di movimento (§7.11.1). La Parata con lo Scudo è già calcolata: Difese con l’equipaggiamento, modificatori propri dello Scudo (§7.4.11) e FOR insufficiente (§7.1.6). L’AR dello Scudo vale anche senza Parata, purché sia imbracciato; due scudi non si sommano (§7.4).') : null),
-
-    sezioneIntegrita(ctx),
 
     // §7.19: applicazioni di kit e dispositivi sanitari, con il contatore delle munizioni
     ...(() => {
@@ -968,36 +1070,6 @@ function tabCombattimento(ctx, d) {
         onclick: () => ctx.azioni.imposta('affaticamento', n),
       }, h('strong', {}, a.nome), h('span', {}, a.penalita ? segno(a.penalita) : '0'))))),
 
-    // §5.2.6 e Equipaggiamento §1.6: peso trasportato e soglie; la penalità entra nei valori effettivi
-    ...(() => {
-      const c = ctx.tab.scheda.carico;
-      if (!c) return [];
-      const kg = (v) => v.toLocaleString('it-IT', { maximumFractionDigits: 1 });
-      const penalita = !!c.livello.effetto;
-      const forza = ctx.tab.scheda.caratteristiche.FOR.valore;
-      return [sezione('Carico (§5.2.6)',
-        // E&L 4 (A.30): un peso mancante è «da definire», non 0 kg; il totale noto è parziale e il livello
-        // vale «almeno»: non si attesta l'assenza di penalità
-        h('p', { class: `valore-tavolo${penalita ? ' oltre' : ''}` }, h('span', {}, 'Peso trasportato '),
-          c.parziale
-            ? [h('strong', {}, `${kg(c.peso)} kg noti`), ' · ', infoValore(`${c.senzaPeso.length} ${c.senzaPeso.length === 1 ? 'oggetto' : 'oggetti'} con peso da definire`, {
-              titolo: `Peso da definire (${c.senzaPeso.length})`,
-              sottotitolo: 'Un peso mancante non vale 0 kg: il totale è parziale (E&L 4, A.30).',
-              sezioni: [{ testo: c.senzaPeso.join(', ') }, { testo: 'Per un oggetto personalizzato il peso si indica nel campo «Peso».' }],
-            }, { classe: 'senza-peso' }), h('small', { class: 'nota' }, ' · totale parziale')]
-            : h('strong', {}, `${kg(c.peso)} kg`),
-          h('span', {}, c.parziale ? ` · almeno ${c.livello.nome}` : ` · ${c.livello.nome}`)),
-        h('p', { class: 'nota' }, `Ordinario fino a ${kg(c.soglie.ordinario)} kg, Sovraccarico fino a ${kg(c.soglie.massimo)} kg; spingere o trascinare su terreno piano fino a ${kg(c.soglie.spinta)} kg (FOR ${forza}${c.soglie.talento ? `, soglie raddoppiate da ${c.soglie.talento}` : ''}).`),
-        h('p', { class: penalita ? 'avviso-carico' : 'nota' },
-          // con il totale parziale l'Ordinario non attesta «nessuna penalità» (E&L 4)
-          c.parziale && !penalita ? 'Sul peso noto nessuna penalità; con i pesi da definire il carico reale può essere maggiore: decide il Direttore.' : c.livello.promemoria,
-          c.livello.movimento_q && c.passo !== null ? ` Passo ${c.passo} Q, prima delle altre penalità.` : ''),
-        h('label', { class: 'campo-inline' }, 'Peso aggiuntivo (kg) ',
-          h('input', { type: 'number', min: 0, step: 0.5, value: c.pesoExtra, 'aria-label': 'Peso aggiuntivo in kg', onchange: (e) => ctx.azioni.imposta('caricoExtra', Number(e.target.value) || 0) }),
-          h('small', { class: 'nota' }, 'bottino, una creatura trasportata con il suo equipaggiamento…')),
-        null)];
-    })(),
-
     sezione('Stati attivi (§5.18)',
       h('ul', { class: 'stati-tavolo' }, d.stati.map((st) => {
         const attivo = s.statiAttivi.includes(st.id);
@@ -1006,14 +1078,6 @@ function tabCombattimento(ctx, d) {
           h('span', {}, h('strong', {}, st.nome), h('small', {}, ` · ${st.durata}`), h('br', {}), h('span', { class: 'promemoria-stato' }, st.promemoria, st.riassunto ? h('em', { class: 'riassunto' }, ' (riassunto, non testo del manuale)') : null))));
       }))),
 
-    sezione('Equipaggiamento',
-      h('p', { class: 'nota' }, 'Solo gli oggetti impugnati, imbracciati o indossati cambiano i valori.',
-        dotazioneApplicata(ctx.scelte.equipaggiamento) ? ' La dotazione iniziale (§2.16) si cambia dal passo Equipaggiamento della creazione.' : null),
-      dotazioneApplicata(ctx.scelte.equipaggiamento) ? null : h('p', {}, bottoneDotazione(ctx)),
-      renderEquipaggiamento({
-        dati: ctx.dati, voci: ctx.scelte.equipaggiamento, ui: ctx.ui,
-        aggiorna: ctx.azioni.equipaggiamento, ridisegna: ctx.azioni.ridisegna,
-      })),
   ];
 }
 

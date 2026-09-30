@@ -875,6 +875,17 @@ details.sezione-tab > summary { font-weight: 700; cursor: pointer; min-height: 4
   border: 1px solid var(--bordo); border-radius: var(--raggio); background: var(--sfondo); color: var(--testo);
 }
 .stato-equip.attivo { border-color: var(--accento); background: var(--accento-tenue); color: var(--accento); font-weight: 700; }
+/* Inventario (docs/layout-sd.md, pezzo 2): deposito comune, dati dell'oggetto, PI nella riga */
+.voce-equip.in-deposito { opacity: 0.8; border-style: dashed; }
+.stato-equip.stato-deposito { border-style: dashed; }
+.dati-oggetto { margin: 0.15rem 0 0; font-size: 0.82rem; color: var(--tenue); }
+.pi-riga { display: grid; gap: 0.35rem; }
+.pi-voce { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.6rem; font-size: 0.9rem; }
+.pi-voce .pi-comandi { display: inline-flex; align-items: center; gap: 0.3rem; }
+.pi-voce.danneggiato .pi-valore { color: var(--attenzione, inherit); }
+.pi-voce.rotto .pi-valore { color: var(--errore, inherit); }
+.testa-inventario { grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
+.riquadro-carico .valore-carico { font-size: inherit; }
 .equip-riga { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: center; }
 .quantita { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--tenue); }
 .quantita output { min-width: 1.5rem; text-align: center; font-weight: 700; color: var(--testo); }

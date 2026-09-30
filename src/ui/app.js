@@ -777,6 +777,15 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
         persisti();
         renderScheda({ mantieniScorrimento: true });
       },
+      // tab Inventario (docs/layout-sd.md, pezzo 2): acquisto al tavolo, oggetto e crediti insieme
+      compra: (voce, costo) => {
+        const { scelte, avvisi } = applicaModifica(stato.scelte, { equipaggiamento: [...stato.scelte.equipaggiamento, voce] }, dati);
+        stato.scelte = scelte;
+        stato.sessione = variaSessione(stato.sessione, 'crediti', -costo, massimi);
+        stato.messaggioScheda = avvisi.length ? { tipo: 'attenzione', testo: avvisi.join(' ') } : null;
+        persisti();
+        renderScheda({ mantieniScorrimento: true });
+      },
       ridisegna: () => renderScheda({ mantieniScorrimento: true }),
       // A.47: separa un esemplare danneggiato dal gruppo, con 1 PI in meno
       danneggiaEsemplare: (uid) => {

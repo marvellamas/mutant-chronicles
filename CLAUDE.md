@@ -21,7 +21,7 @@ Drive si usa **in sola lettura**: mai scrivere nei Doc di Davide, nemmeno commen
 
 ## Glossario
 
-- **SD** = scheda digitale: la scheda a tab dell'app (Identità, Abilità, Combattimento, Magia; Calendario se attivo), con la modalità tavolo (`src/ui/tab.js`).
+- **SD** = scheda digitale: la scheda a tab dell'app, con la modalità tavolo (`src/ui/tab.js`). Sul branch `layout-sd` otto tab (Identità, Abilità, Combattimento, Poteri, Artefatti, Cibernetica, Inventario, Veicoli; Calendario se attivo): piano e stato in `docs/layout-sd.md`.
 - **SS** = scheda da stampare: la vista di stampa A4 orizzontale (`#/p/<id>/stampa`, `src/ui/stampa.js`, `css/stampa.css`).
 
 ## Stack (deciso)
@@ -92,6 +92,8 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 - ricarica dalle riserve (`src/ricarica.js`, `munizioni.json` → `ricarica`);
 - regole aggiornate sui Punti Abilità Liberi (Doc del 27/09, per-davide A.52): gli eventi già registrati con meno punti delle regole correnti si completano dall'avviso in cima alla SD («Assegna», `#/p/<id>/completa`, `src/ui/completa.js`; motore in `src/avanzamento.js` → `statoCompletamento`, `validaCompletamento`, `applicaCompletamento`), i punti si registrano nell'evento a cui appartengono; finché mancano, l'avanzamento è bloccato; i punti in eccesso si segnalano soltanto. Titolo dell'avviso in `regole.json` → `regole_aggiornate`.
 - categorie di competenza (Giocatore del 29/09 23:45, §2.3, §2.13, §8.3, §8.7): le basi delle Abilità vengono dalla prima Classe (`classi.json` → `competenze`, S 7 / P 6 / G 5 / N 3), l'Addestramento non ha più valori base; VA personale = min(Mod + Base + Corp + Avanzamento, limite della categoria migliore fra le Classi possedute), con le formule in `regole.json` → `competenze`; i +1 di Classe si registrano sempre, i punti liberi valgono solo se aumentano il VA personale. I punti già spesi che non lo aumentano più restano nel file, non contano e si riassegnano con lo stesso «Assegna» (`applicaCompletamento(…, inattivi)`); motore in `src/competenze.js`, ricognizione in `docs/ricognizione-abilita-2026-09-30.md`.
+
+- tab Inventario (`docs/layout-sd.md`, pezzo 2): unica casa degli oggetti, con sezioni per famiglia (`src/palette.js` → `SEZIONI_INVENTARIO`), stato di ogni oggetto in `voce.stato` con il valore `deposito` (deposito comune: fuori dal carico, senza effetti, fuori dal tavolo), PI e Ripara nella riga, Carico e Crediti in testa, «Compra» dal catalogo.
 
 Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, veicoli, capitoli 5, 7 e 8 del Manuale dell'Equipaggiamento (non ancora scritti).
 
