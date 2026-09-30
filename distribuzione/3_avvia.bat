@@ -85,6 +85,9 @@ call :scrivi " [4/5] Controllo che la porta %MUTANT_PORTA% sia libera..."
 powershell -NoProfile -ExecutionPolicy Bypass -Command "try { if (Get-NetTCPConnection -State Listen -LocalPort ([int]$env:MUTANT_PORTA) -ErrorAction Stop) { exit 1 } } catch { exit 0 }; exit 0"
 if errorlevel 1 goto porta_occupata
 
+rem Versione dell'app e indirizzi dei moduli con ?v= (docs/cache.md): dopo un aggiornamento il
+rem browser prende i file nuovi senza Ctrl+F5. Se lo script manca o non riesce si prosegue.
+if exist "%APP%\tools\versione.mjs" node "%APP%\tools\versione.mjs" >>"%LOG%" 2>&1
 call :scrivi " [5/5] Accendo l'app..."
 call :scrivi ""
 call :scrivi " --------------------------------------------------------------"

@@ -31,6 +31,9 @@ if not exist "node_modules\" (
   )
 )
 
+rem Versione dell'app e indirizzi dei moduli con ?v= (docs/cache.md): dopo un aggiornamento il
+rem browser prende i file nuovi senza Ctrl+F5. Se non riesce si prosegue: l'app funziona lo stesso.
+node tools\versione.mjs
 echo.
 echo  Mutant e' acceso: il browser si apre su http://localhost:3000
 echo  Se la pagina resta vuota, aspetta qualche secondo e premi F5.

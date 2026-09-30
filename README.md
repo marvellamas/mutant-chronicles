@@ -51,8 +51,9 @@ Quando Marcello pubblica una versione nuova (regole, correzioni, funzioni):
   `distribuzione/` (vedi sopra).
 
 I personaggi non si perdono: stanno nel browser, non nella cartella. Per sicurezza, prima
-di aggiornare esportali con **SALVA PG (Esporta JSON)**. Dopo l'aggiornamento ricarica la pagina (con
-`avvia.bat` basta F5; con altri server Ctrl+F5, vedi sotto).
+di aggiornare esportali con **SALVA PG (Esporta JSON)**. Dopo l'aggiornamento non serve Ctrl+F5:
+se l'app era aperta compare in alto «Nuova versione disponibile» con **Ricarica**; altrimenti
+basta aprirla o premere F5. La versione caricata è in fondo alla pagina (docs/cache.md).
 
 ## Avvio in locale
 
@@ -72,12 +73,13 @@ python -m http.server 8000
 
 e poi <http://localhost:8000>.
 
-**Aggiornamenti e cache del browser.** Con `npm start` il file `serve.json` fa rispondere il
-server con `Cache-Control: no-cache` (e un ETag) per i file `.js`, `.css` e `.json`: il browser
-chiede ogni volta se il file è cambiato, costa pochissimo e prende sempre la versione nuova.
-Con altri server (`python -m http.server`, GitHub Pages) il browser può tenere in cache i file
-vecchi per un po': dopo un aggiornamento dell'app, se qualcosa non torna, ricarica la pagina
-con **Ctrl+F5** (su Mac **Cmd+Shift+R**).
+**Aggiornamenti e cache del browser** (docs/cache.md). `node tools/versione.mjs` (lo eseguono
+`avvia.bat` e il pacchetto per il master) scrive `versione.json` e in `index.html` gli indirizzi dei
+moduli con `?v=<versione>`: a ogni aggiornamento il browser prende tutti i file nuovi insieme,
+con qualunque server. Con `npm start` il file `serve.json` manda anche `Cache-Control: no-cache`
+per `.js`, `.css`, `.json` e `.html`, quindi F5 prende sempre i file nuovi. Con altri server
+(`python -m http.server`, GitHub Pages) dopo un aggiornamento compare la barra «Nuova versione
+disponibile»: **Ricarica** carica la versione nuova (su GitHub Pages fino a 10 minuti di ritardo).
 
 **Non funziona aprendo `index.html` con un doppio clic** (indirizzo `file://`): i browser
 bloccano i moduli JavaScript e la lettura dei file `data/*.json` da `file://`. In quel caso la

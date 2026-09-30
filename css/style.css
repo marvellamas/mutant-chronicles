@@ -1488,3 +1488,8 @@ body.con-sfondo::before {
 /* Talenti (docs/censimento-talenti.md): interruttore globale in testa a Combattimento e Poteri */
 .interruttore-talenti { display: flex; justify-content: flex-end; margin: 0.25rem 0 0.5rem; }
 .condizionali-talenti { margin: 0.5rem 0; }
+
+/* Avviso di aggiornamento e versione dell'app (src/ui/aggiornamento.js, docs/cache.md) */
+.barra-aggiornamento { position: sticky; top: 0; z-index: 1000; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.5rem 0.75rem; padding: 0.5rem 1rem; background: var(--attenzione-tenue); border-bottom: 2px solid var(--attenzione); font-size: 0.95rem; }
+.piede { padding: 0.5rem 1rem 1rem; text-align: center; color: var(--tenue); }
+.piede small { font-size: 0.75rem; }

@@ -100,9 +100,9 @@ Proposta di Davide «Modifiche Layout APP»: otto tab in una riga, Inventario, C
 
 Le icone delle pagine sono generate da `tools/genera_immagini.py` dagli originali in `img/originali/` (non tracciati). Poteri usa ancora quella della Magia; le definitive arrivano da Davide con la stessa convenzione (originale 1254×1254 in `img/originali/Pages/`, voce in `SORGENTI`).
 
-## 17. Cache-busting dei moduli JS — FACILE/MEDIA
+## 17. ✔ Cache-busting dei moduli JS — fatto il 30 settembre 2026
 
-Dopo un aggiornamento il browser può tenere in cache i moduli vecchi con i dati nuovi (visto il 30/09: import fallito finché non si ricarica con Ctrl+F5). Servono indirizzi dei moduli con la versione (per esempio `?v=<commit>` negli import di `index.html` e dei moduli) o un service worker che li aggiorni; senza build step.
+Dopo un aggiornamento il browser può tenere in cache i moduli vecchi con i dati nuovi (visto il 30/09: import fallito finché non si ricarica con Ctrl+F5). Fatto senza build step (docs/cache.md): `tools/versione.mjs` scrive `versione.json` (impronta del contenuto) e in `index.html` un importmap con `?v=` su tutti i moduli; gli avviatori lo eseguono prima del server; l'app aperta mostra «Nuova versione disponibile · Ricarica» quando la versione cambia; `serve.json` manda `no-cache` in locale.
 
 ## 18. ✔ Export/import del solo Calendario — fatto il 30 settembre 2026
 
