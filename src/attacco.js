@@ -82,6 +82,14 @@ export function dichiarazioneDistanza(d = {}) {
     bruciapelo: !!d.bruciapelo,
     imbracciata: d.imbracciata !== false,
     analisiRapida: !!d.analisiRapida,
+    // Talenti con una condizione dichiarata: Rapidità Operativa (primo attacco del combattimento),
+    // Tiratore Imboscato (nascosto), Bersaglio Designato (Azioni Principali di preparazione)
+    primoAttacco: !!d.primoAttacco,
+    nascosto: !!d.nascosto,
+    preparazione: Number.isInteger(d.preparazione) && d.preparazione > 0 ? d.preparazione : 0,
+    // §5.7: Combattere con due armi (due Armi leggere a distanza o combinazione mista), mano non dominante
+    dueArmi: !!d.dueArmi,
+    manoNonDominante: !!d.manoNonDominante && !d.dueArmi,
   };
 }
 
@@ -162,6 +170,16 @@ export function vincoliDistanza(personaggio, arma, dichiarazione, dati) {
     ravvicinato,
     bruciapelo,
     evasivo: d.movimento === 'fermo' ? 'il Movimento Evasivo si fa muovendosi (Passo, Corsa o Scatto)' : d.coperturaPropria !== 'nessuna' ? 'non si combina con l’attacco dalla Copertura' : null,
+    // §5.7: due Armi leggere a distanza o combinazione mista; solo Tiro Singolo, senza Tiro Mirato
+    dueArmi: (() => {
+      const s = secondaArma(personaggio.scheda, arma);
+      if (!s.arma) return 'serve una seconda arma impugnata';
+      if (!['leggere_distanza', 'mista'].includes(s.combinazione)) return 'combinazione di armi non ammessa (§5.7)';
+      if (d.modalita !== 'S') return 'si usa con il Tiro Singolo: non si combina con Tiro Rapido e Raffiche (§5.7)';
+      if (d.mirato) return 'non si combina con il Tiro Mirato (§5.7)';
+      return null;
+    })(),
+    secondaArma: secondaArma(personaggio.scheda, arma).arma,
     coperturaPropria: !A.copertura.propria_movimenti.includes(d.movimento) || d.evasivo ? 'dalla Copertura ci si espone e si rientra con il solo Passo (§5.8)' : null,
     gittata: arma.gittataQ ?? null,
   };
@@ -344,10 +362,12 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
     const mov = b.movimento === 'fermo' ? 'passo' : b.movimento;
     aggiungi(`Bersaglio in Movimento Evasivo${b.evasivoMigliorato ? ' Migliorato' : ''} (${mov})`, tab[mov], 'bersaglio', EV.paragrafo);
   } else aggiungi(`Bersaglio in ${b.movimento}`, A.movimento.bersaglio[b.movimento], 'bersaglio', A.movimento.paragrafo);
+  let penCopertura = 0;
   if (b.copertura === 'totale') blocca('Il bersaglio in Copertura Totale non può essere attaccato direttamente (§5.8).');
   else if (b.copertura !== 'nessuna') {
     // §5.8: Copertura Migliorata del bersaglio porta le penalità a −4 e −6
     const pen = (b.coperturaMigliorata ? A.copertura.bersaglio_migliorata ?? A.copertura.bersaglio : A.copertura.bersaglio)[b.copertura];
+    penCopertura = pen;
     aggiungi(`Bersaglio in Copertura ${b.copertura}${b.coperturaMigliorata ? ' (Copertura Migliorata)' : ''}`, pen, 'copertura', A.copertura.paragrafo);
     const ms = con('mira_selettiva')[0];
     if (ms && d.mirato && d.movimento === 'fermo') {
@@ -412,12 +432,64 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
   const silenzioso = con('silenzioso')[0];
   const silenziata = (arma.accessori ?? []).some((x) => /silenziat/i.test(x.nome));
   if (silenzioso && b.ignaro && silenziata && d.distanza <= silenzioso.e.silenzioso.distanza_max_q) aggiungi(silenzioso.nome, silenzioso.e.silenzioso.va, 'talento', 'Incursore');
-  for (const t of con('promemoria')) {
-    const quando = t.e.promemoria;
-    const vale = (quando === 'ignaro' && b.ignaro) || (quando === 'raffica' && ['RM', 'RL'].includes(m))
-      || (quando === 'entro_10' && d.distanza <= 10) || (quando === 'mirato' && d.mirato && d.distanza <= 10);
-    if (vale) promemoria.push(`${t.nome}: ${primaFrase(t.testo)}`);
+  // Rapidità Operativa (Incursore): +2 VA al primo attacco del combattimento, a distanza entro 10 Q
+  const primo = con('primo_attacco')[0];
+  if (primo && d.primoAttacco && d.distanza <= primo.e.primo_attacco.distanza_max_q) aggiungi(`${primo.nome} (primo attacco)`, primo.e.primo_attacco.va, 'talento', 'Incursore');
+  // Tiratore Imboscato (§8.6): nascosto contro un bersaglio inconsapevole, non ad Area: +2 danni al
+  // primo colpo e Copertura Leggera ridotta di 2 fino a 0
+  const imboscato = con('nascosto')[0];
+  if (imboscato && d.nascosto && b.ignaro && m !== 'FS') {
+    const n = imboscato.e.nascosto;
+    dannoBonus += n.danno;
+    if (n.coperture.includes(b.copertura) && penCopertura < 0) aggiungi(imboscato.nome, Math.min(n.riduzione_copertura, -penCopertura), 'talento', 'Giocatore §8.6');
+    promemoria.push(`${imboscato.nome}: +${n.danno} danni soltanto al primo colpo, una volta per Round.`);
   }
+  // danni dopo l'Armatura (§5.13): Punto Vitale (Tiro Mirato entro 10 Q), Bersaglio Designato (preparazione)
+  const dopo = [];
+  const vitale = con('mirato_dopo_armatura')[0];
+  if (vitale && d.mirato && d.distanza <= vitale.e.mirato_dopo_armatura.distanza_max_q) {
+    const v = vitale.e.mirato_dopo_armatura.valore;
+    dopo.push({ etichetta: `+${v} dopo l’Armatura`, testo: `${vitale.nome}: +${v} danni ai PV dopo l’Armatura, solo se almeno 1 danno la supera; una volta per Round, solo la prima istanza, non si moltiplica.` });
+  }
+  const designato = con('preparazione')[0];
+  if (designato && d.preparazione > 0) {
+    const p = designato.e.preparazione;
+    if (!p.modalita.includes(m)) promemoria.push(`${designato.nome}: vale solo con ${p.modalita.map((x) => MF[x].nome).join(' o ')}.`);
+    else {
+      const azioniPrep = Math.min(d.preparazione, Math.floor(p.massimo / p.dopo_armatura_per_azione));
+      const v = azioniPrep * p.dopo_armatura_per_azione;
+      azioniExtra.push(azioniPrep);
+      dopo.push({ etichetta: `+${v} dopo l’Armatura`, testo: `${designato.nome}: ${azioniPrep} ${azioniPrep === 1 ? 'Azione Principale' : 'Azioni Principali'} di preparazione, +${v} danni dopo l’Armatura se almeno 1 danno l’ha superata.` });
+    }
+  }
+  // §5.7: Combattere con due armi e mano non dominante (regole in attacco_ravvicinato, valgono per ogni
+  // attacco; Talenti in effetti.attacco_ravvicinato: Pistolero, Duellante, Ambidestro)
+  const R7 = dati.regole.attacco_ravvicinato;
+  const T7 = talentiAttacco(personaggio.scheda, dati, 'attacco_ravvicinato');
+  let attacchi = [];
+  if (d.dueArmi) {
+    if (vincoli.dueArmi) blocca(`Combattere con due armi non possibile: ${vincoli.dueArmi}.`);
+    const s = secondaArma(personaggio.scheda, arma);
+    const tal = T7.find((t) => t.e.due_armi?.combinazione === s.combinazione);
+    scomposizione.push(voce(tal ? `Combattere con due armi (${tal.nome})` : 'Combattere con due armi', tal ? tal.e.due_armi.va : R7.due_armi.va, tal ? 'talento' : 'manovra', R7.due_armi.paragrafo));
+    attacchi = [{ etichetta: arma.nome, va: somma(scomposizione) }];
+    // la seconda arma a distanza ha gli stessi modificatori del tiro; nella combinazione mista l'arma
+    // ravvicinata ha solo la penalità della manovra
+    const situazione = s.arma?.tipo === arma.tipo ? somma(scomposizione.slice(nBase)) : scomposizione.at(-1).valore;
+    if (s.arma) attacchi.push({ etichetta: s.arma.nome, va: (s.arma.vaEffettivo ?? s.arma.va ?? 0) + situazione });
+    promemoria.push('Combattere con due armi: due Prove e risoluzioni separate, ciascuna con il danno e le munizioni della propria arma (§5.7).');
+    if (T7.some((t) => t.e.mano_non_dominante)) promemoria.push('Ambidestro non modifica Combattere con due armi (§5.7).');
+  } else if (d.manoNonDominante) {
+    const amb = T7.find((t) => t.e.mano_non_dominante);
+    aggiungi('Mano non dominante', R7.mano_non_dominante.va, 'situazione', R7.mano_non_dominante.paragrafo);
+    if (amb) aggiungi(amb.nome, amb.e.mano_non_dominante.va - R7.mano_non_dominante.va, 'talento', R7.mano_non_dominante.paragrafo);
+  }
+  // Talenti senza numero: una riga con la prima frase (come in «Lancia!»)
+  const testuali = con('promemoria').filter((t) => {
+    const quando = t.e.promemoria;
+    return quando === 'sempre' || (quando === 'ignaro' && b.ignaro) || (quando === 'raffica' && ['RM', 'RL'].includes(m));
+  });
+  if (testuali.length) promemoria.push(`Talenti: ${testuali.map((t) => `${t.nome} — ${primaFrase(t.testo)}`).join(' · ')}`);
 
   // 8. Azioni (§5.11): distanza e mirino, Mira Rapida (minimo 1), poi Tiro Mirato e Movimento Evasivo
   let azioni = Math.max(azioniDistanza(d.distanza, dati), azioniMinime);
@@ -446,6 +518,8 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
     colpi_a_segno: A.modalita.colpi_a_segno[m] ?? 1,
     tiri: A.modalita.tiri[m] ?? 1,
     danno_per_colpo: testoDanno(formula, moltiplicatore),
+    dopo_armatura: dopo,
+    attacchi,
     applicazioni: A.modalita.applicazioni[m] ?? arma.ac ?? 1,
     seconda_prova: secondaProva,
     impossibile,
@@ -585,6 +659,30 @@ function manovreDiTalento(T) {
   return out;
 }
 
+/**
+ * Valori a parte della Disciplina del Lottatore (§3.5.5) per la tab Combattimento: Guardia, bonus a
+ * Difese contro gli attacchi ravvicinati (con Padronanza della Disciplina contro tutti gli attacchi
+ * diretti percepibili, anche a distanza); Controllo con Padronanza, lo stesso bonus per resistere alle
+ * Manovre, mantenere una presa o liberarsi da Immobilizzato. [{ nome, valore, contro, testo }]
+ */
+export function valoriDisciplina(scheda, dati) {
+  const T = talentiAttacco(scheda, dati, 'attacco_ravvicinato');
+  const pad = T.find((t) => t.e.padronanza_disciplina) ?? null;
+  const out = [];
+  for (const t of talentiAttacco(scheda, dati, 'difese_ravvicinate').filter((x) => x.e.va)) {
+    const tutti = !!pad?.e.padronanza_disciplina.guardia?.anche_distanza;
+    out.push({ nome: t.nome, valore: t.e.va, contro: tutti ? 'diretti' : 'ravvicinati',
+      testo: tutti ? `Contro gli attacchi diretti percepibili, anche a distanza (${pad.nome})` : 'Contro attacchi ravvicinati' });
+  }
+  if (pad?.e.padronanza_disciplina.controllo?.anche_resistenza) {
+    for (const t of T.filter((x) => x.e.controllo)) {
+      out.push({ nome: t.nome, valore: t.e.controllo.va, contro: 'resistenza',
+        testo: `Per resistere a ${t.e.controllo.manovre.map((x) => dati.regole.attacco_ravvicinato.manovre[x]?.nome ?? x).join(', ')}, mantenere una presa o liberarsi da Immobilizzato (${pad.nome})` });
+    }
+  }
+  return out;
+}
+
 /** Tutte le Manovre utilizzabili dal personaggio: quelle del §5.12 e quelle dei suoi Talenti. */
 export function manovreRavvicinate(scheda, dati) {
   return { ...dati.regole.attacco_ravvicinato.manovre, ...manovreDiTalento(talentiAttacco(scheda, dati, 'attacco_ravvicinato')) };
@@ -597,8 +695,11 @@ export function secondaArma(scheda, arma) {
   if (!s) return { arma: null, combinazione: null };
   const ravv = (x) => x.tipo === 'arma_ravvicinata';
   const unaMano = (x) => x.mani !== 2;
+  // §5.7: «due armi ravvicinate a una mano, due armi leggere a distanza oppure una combinazione mista»
+  const leggeraDistanza = (x) => x.tipo === 'arma_distanza' && x.abilita === 'Armi leggere';
   const combinazione = ravv(arma) && ravv(s) ? (unaMano(arma) && unaMano(s) ? 'ravvicinate' : null)
-    : (ravv(arma) && unaMano(arma) && s.abilita === 'Armi leggere') || (ravv(s) && unaMano(s) && arma.abilita === 'Armi leggere') ? 'mista' : null;
+    : leggeraDistanza(arma) && leggeraDistanza(s) ? 'leggere_distanza'
+      : (ravv(arma) && unaMano(arma) && s.abilita === 'Armi leggere') || (ravv(s) && unaMano(s) && arma.abilita === 'Armi leggere') ? 'mista' : null;
   return { arma: s, combinazione };
 }
 
@@ -835,7 +936,10 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
   const dopo = [];
   let danno = null;
   if (!(m.danno === null && !migE.danno_normale)) {
-    const baseDanno = dannoBase(arma);
+    // Immobilizzare Istintivo (§8.6): la presa infligge «il normale danno senz’armi», anche se è
+    // dichiarata un’arma in mano
+    const mezzoDanno = id === 'immobilizzare' && !arma.senzArmi ? profiloSenzArmi(personaggio.scheda, dati) : arma;
+    const baseDanno = dannoBase(mezzoDanno);
     dannoBonus += migE.danno ?? m.danno ?? 0;
     if (!baseDanno) {
       avvisi.push('Danno dell’arma non definito.');
@@ -845,7 +949,7 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
     danno = {
       base: baseDanno, bonus: dannoBonus, formula, moltiplicatore, moltiplicatore_magistrale: mm,
       testo: formula ? testoDanno(formula, moltiplicatore) : null, testo_magistrale: formula ? testoDanno(formula, mm) : null,
-      origine: arma.senzArmi ? arma.dannoOrigine : null,
+      origine: mezzoDanno.senzArmi ? mezzoDanno.dannoOrigine : null,
     };
     if (m.dopo_armatura?.stato && !m.dopo_armatura.salvezza) {
       const v = migE.dopo_armatura ?? m.dopo_armatura.valore;
@@ -859,7 +963,6 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
   const effetti = [];
   if (m.effetto) effetti.push(`Con successo: ${m.effetto}.`);
   if (m.spinta_q) effetti.push(`Il bersaglio arretra di ${m.spinta_q} Q${migE.danno_normale ? ' e subisce il danno normale' : ' e non subisce danni'} (§5.5).`);
-  if (id === 'immobilizzare') for (const t of con('promemoria').filter((x) => x.e.promemoria === 'immobilizzare')) promemoria.push(`${t.nome}: ${primaFrase(t.testo)}`);
   if (m.preparazione) promemoria.push(`${m.nome}: ${m.frasi[0]}`);
   if (id === 'mirato') promemoria.push(`${m.nome}: ${m.frasi[1]} ${m.frasi[2]}`);
 
@@ -874,11 +977,12 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
   } else prova = { tipo: 'per_colpire', testo: `Il bersaglio si difende con le Difese (Parata o Schivata, §5.9)${m.dopo_armatura?.salvezza ? `, poi PS ${m.dopo_armatura.salvezza}` : ''}.` };
   if (id === 'incalzare') prova.testo += ' Incalzare: normale Prova per colpire, non contrapposta (§5.5).';
 
-  // 9. promemoria dei Talenti senza numero
-  for (const t of con('promemoria')) {
+  // 9. Talenti senza numero: una riga con la prima frase (come in «Lancia!»)
+  const testuali = con('promemoria').filter((t) => {
     const q = t.e.promemoria;
-    if (q === 'sempre' || (q === 'senz_armi' && arma.senzArmi)) promemoria.push(`${t.nome}: ${primaFrase(t.testo)}`);
-  }
+    return q === 'sempre' || (q === 'senz_armi' && arma.senzArmi) || (q === 'immobilizzare' && id === 'immobilizzare');
+  });
+  if (testuali.length) promemoria.push(`Talenti: ${testuali.map((t) => `${t.nome} — ${primaFrase(t.testo)}`).join(' · ')}`);
 
   const mn = promemoriaMagistraleNaturale(attacchi[0]?.va ?? somma(scomposizione), dati);
   if (mn) promemoria.push(mn);

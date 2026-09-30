@@ -103,11 +103,37 @@ export function testoEffettoOggetto(e) {
   if (tipo === 'caratteristica') return `${segnoEff(e.valore)} alla Prova di ${e.caratteristiche.join(' o ')} (solo ${e.uso})`;
   if (tipo === 'contromisura') return `Contromisura ${e.effetto} ${e.valore}`;
   if (tipo === 'ar_contro') return `${segnoEff(e.valore)} AR contro ${e.contro}`;
+  if (tipo === 'riduzione_stato') return `riduce di ${e.valore} la penalità di ${e.stato[0].toUpperCase()}${e.stato.slice(1)}${e.ambito === 'situazionale' ? ' (con la condizione attiva)' : ''}`;
+  if (tipo === 'movimento_armatura') return `riduce di ${e.valore} Q la penalità MOV di armatura e scudo`;
   if (tipo === 'ar') return `${segnoEff(e.valore)} AR${e.magica ? ` (di cui ${e.magica} magica)` : ''}${e.ambito === 'situazionale' ? ' (con la condizione attiva)' : ''}`;
   const v = `${e.valore > 0 ? '+' : '−'}${Math.abs(e.valore)} VA ${/^[aA]/.test(e.abilita) ? 'ad' : 'a'} ${e.abilita}`;
   if (e.ambito === 'uso_specifico') return `${v} (solo per ${e.uso})`;
   if (e.ambito === 'situazionale') return `${v} (con la condizione attiva)`;
   return v;
+}
+
+/**
+ * Rapporto di Convertire Potere e della ricarica dei contenitori di Chroma (Magia sez. 6; Giocatore
+ * §3.9.5; regole.json → chroma.conversione): ordinario 3:1, ridotto per ciascun Talento posseduto fra
+ * quelli elencati (Ricarica Efficiente, Conversione Migliorata: 2:1, entrambi 1:1); il Bianco resta
+ * 2:1 (rapporti_fissi). Serve l'Addestramento Taumaturgo. Con «Bonus dei Talenti» spento, il
+ * rapporto ordinario.
+ * @returns {{ rapporto, talenti: string[], fissi: {colore: n}, disponibile: boolean, addestramento } | null}
+ */
+export function rapportoConversione(scheda, dati) {
+  const cv = dati.regole.chroma?.conversione;
+  if (!cv) return null;
+  const nomeLibero = new Map((dati.talenti_liberi?.talenti ?? []).map((t) => [t.id, t.nome]));
+  const posseduti = new Set([
+    ...(scheda?.talentiLiberi ?? []).map((t) => nomeLibero.get(t.id) ?? t.nome),
+    ...(scheda?.classi ?? []).flatMap((c) => (c.talenti ?? []).map((t) => t.nome)),
+  ]);
+  const talenti = scheda?.bonusTalenti === false ? [] : cv.talenti_riduzione.filter((n) => posseduti.has(n));
+  const addestramento = typeof scheda?.addestramento === 'string' ? scheda.addestramento : scheda?.addestramento?.nome ?? null;
+  return {
+    rapporto: cv.rapporto_per_talenti[talenti.length], talenti, fissi: cv.rapporti_fissi ?? {},
+    disponibile: addestramento === cv.addestramento_richiesto, addestramento: cv.addestramento_richiesto,
+  };
 }
 
 /** Effetti di un personaggio personalizzato, ripuliti (l'Abilità si controlla al calcolo). */
@@ -546,6 +572,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   let attacchiRavv = 0;
   let attacchiDist = 0;
   let movimentoQ = 0;
+  let movimentoQProtezioni = 0; // parte di armatura e scudo (Assalto Armato)
   let lancioPotere = 0;
   let forMancanteArmature = 0;
   const rinforziValidi = new Set();
@@ -598,6 +625,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       // §7.4: il requisito FOR dello Scudo segue il §7.1.6 (Parate e attacchi con lo Scudo), non
       // penalizza Agilità, Difese o gli altri attacchi; gli Scudi enormi tolgono 1 Q al MOV
       movimentoQ += d?.mov ?? 0;
+      movimentoQProtezioni += d?.mov ?? 0;
       continue;
     }
     // §7.11.1: armature — penalità di categoria e FOR mancante su Agilità, Difese e attacchi
@@ -615,6 +643,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     attacchiRavv += (penalita.attacchi_ravvicinati ?? 0) - forMancante;
     attacchiDist += (penalita.attacchi_distanza ?? 0) - forMancante;
     movimentoQ += penalita.movimento_q ?? 0;
+    movimentoQProtezioni += penalita.movimento_q ?? 0;
     lancioPotere += penalita.lancio_potere ?? 0;
     forMancanteArmature += forMancante;
   }
@@ -974,6 +1003,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     contenitori: contenitoriRisolti(oggetti, dati),
     abilitaDifese: difeseAbilita,
     movimentoQ,
+    movimentoQProtezioni,
     lancioPotere,
     forMancanteArmature,
     sintonizzazione,

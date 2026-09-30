@@ -170,6 +170,13 @@ function corpoDistanza(ctx, a, intestazione) {
   const evasivoProprio = R.movimento_evasivo.proprio[d.movimento];
   const man = (id) => descriviManovraDistanza(id, a, ctx.dati, T);
   const analisi = T.find((t) => t.e.analisi_rapida);
+  const primo = T.find((t) => t.e.primo_attacco);
+  const imboscato = T.find((t) => t.e.nascosto);
+  const designato = T.find((t) => t.e.preparazione);
+  // §5.7 (regole e Talenti in attacco_ravvicinato: Pistolero, Duellante, Ambidestro)
+  const R7 = ctx.dati.regole.attacco_ravvicinato;
+  const T7 = talentiAttacco(ctx.tab.scheda, ctx.dati, 'attacco_ravvicinato');
+  const tDue = T7.find((t) => t.e.due_armi && ['leggere_distanza', 'mista'].includes(t.e.due_armi.combinazione));
 
   const passi = [
     [
@@ -183,6 +190,10 @@ function corpoDistanza(ctx, a, intestazione) {
         { valore: 'leggera', etichetta: `Leggera ${numero(R.copertura.propria.leggera)}`, motivo: v.coperturaPropria },
         { valore: 'media', etichetta: `Media ${numero(R.copertura.propria.media)}`, motivo: v.coperturaPropria },
       ], d.coperturaPropria, (x) => imposta({ coperturaPropria: x })),
+      interruttore('Combatti con due armi', d.dueArmi, (x) => imposta({ dueArmi: x, ...(x ? { modalita: 'S', mirato: false } : {}) }),
+        { motivo: v.dueArmi, mod: `${v.secondaArma ? `con ${v.secondaArma.nome} · ` : ''}${numero(tDue?.e.due_armi.va ?? R7.due_armi.va)} a ciascuno` }),
+      !d.dueArmi ? interruttore('Solo la mano non dominante', d.manoNonDominante, (x) => imposta({ manoNonDominante: x }),
+        { mod: T7.some((t) => t.e.mano_non_dominante) ? '0 (Ambidestro)' : numero(R7.mano_non_dominante.va) }) : null,
     ],
     [
       rigaScelte('Movimento del bersaglio', [
@@ -199,6 +210,12 @@ function corpoDistanza(ctx, a, intestazione) {
       interruttore('Ignaro, immobilizzato o incapace di reagire', d.bersaglio.ignaro, (x) => b({ ignaro: x }), { mod: M.bruciapelo.nome.replace('Tiro a ', '') }),
       interruttore('Ti impegna in Ravvicinato', d.bersaglio.tiImpegna, (x) => b({ tiImpegna: x }), { mod: `${M.ravvicinato.nome.replace('Tiro ', '')} obbligatorio` }),
       analisi ? interruttore('Analisi Rapida (una volta)', d.analisiRapida, (x) => imposta({ analisiRapida: x }), { mod: segno(analisi.e.analisi_rapida.va) }) : null,
+      primo ? interruttore(`Primo attacco del combattimento (entro ${primo.e.primo_attacco.distanza_max_q} Q)`, d.primoAttacco, (x) => imposta({ primoAttacco: x }), { mod: `${segno(primo.e.primo_attacco.va)} (${primo.nome})` }) : null,
+      imboscato ? interruttore('Sei nascosto e il bersaglio è ignaro', d.nascosto, (x) => imposta({ nascosto: x, ...(x ? { bersaglio: { ...d.bersaglio, ignaro: true } } : {}) }),
+        { mod: `+${imboscato.e.nascosto.danno} danni (${imboscato.nome})` }) : null,
+      designato ? rigaScelte(`Preparazione (${designato.nome})`, Array.from({ length: Math.floor(designato.e.preparazione.massimo / designato.e.preparazione.dopo_armatura_per_azione) + 1 }, (_, n) => ({
+        valore: n, etichetta: n ? `${n} AzP · +${n * designato.e.preparazione.dopo_armatura_per_azione} dopo l’Armatura` : 'Nessuna',
+      })), d.preparazione, (x) => imposta({ preparazione: x })) : null,
     ],
     [
       h('div', { class: 'scelta-attacco scelta-distanza' },
@@ -270,7 +287,10 @@ function risultato(ctx, a, r, colpi, imposta) {
         h('div', {}, h('dt', {}, 'Azioni'), h('dd', {}, `${r.azioni_principali} ${r.azioni_principali === 1 ? 'Principale' : 'Principali'}${r.azioni_movimento ? ` + ${r.azioni_movimento} di Movimento` : ''}`)),
         h('div', {}, h('dt', {}, 'Munizioni'), h('dd', {}, `${r.munizioni}${colpi !== null ? ` (nel caricatore ${colpi})` : ''}`)),
         h('div', {}, h('dt', {}, 'Colpi a segno'), h('dd', {}, r.colpi_a_segno ? `${r.colpi_a_segno}${r.tiri > 1 ? ' per tiro riuscito' : ' con la Prova riuscita'}` : 'nessuno: effetto ad Area')),
-        h('div', {}, h('dt', {}, 'Danno per colpo'), h('dd', {}, r.danno_per_colpo ?? '—', r.applicazioni !== 1 ? ` · ${r.applicazioni} applicazioni` : ''))),
+        h('div', {}, h('dt', {}, 'Danno per colpo'), h('dd', {}, r.danno_per_colpo ?? '—', r.applicazioni !== 1 ? ` · ${r.applicazioni} applicazioni` : '')),
+        r.dopo_armatura?.length ? h('div', {}, h('dt', {}, 'Dopo l’Armatura'), h('dd', {}, r.dopo_armatura.map((x) => x.etichetta).join(' · '), h('small', { class: 'nota' }, ' (solo se almeno 1 danno la supera)'))) : null),
+      r.attacchi?.length > 1 ? h('ul', { class: 'promemoria-attacco' }, r.attacchi.map((x) => h('li', {}, `${x.etichetta}: VA ${numero(x.va)}`))) : null,
+      r.dopo_armatura?.length ? h('ul', { class: 'promemoria-attacco' }, r.dopo_armatura.map((x) => h('li', {}, x.testo))) : null,
       r.seconda_prova ? h('p', { class: 'nota' }, h('strong', {}, `Seconda Prova se fallisci: VA ${numero(r.seconda_prova.va)}. `), r.seconda_prova.testo) : null,
       r.promemoria.length ? h('ul', { class: 'promemoria-attacco' }, r.promemoria.map((p) => h('li', {}, p))) : null,
       promemoriaAR(ctx, a),

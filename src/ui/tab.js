@@ -15,14 +15,14 @@ import { descriviFerite } from '../sessione.js';
 import { statoIntegrita } from '../protezione.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
 import { testoDanno } from '../stampa.js';
-import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto, catalogo, risolvi, infoArtefattoVoce, regoleSintonizzazione } from '../equipaggiamento.js';
+import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto, catalogo, risolvi, infoArtefattoVoce, regoleSintonizzazione, rapportoConversione } from '../equipaggiamento.js';
 import { dotazioneApplicata, crediti } from '../dotazioni.js';
 import { provenienzaCarico } from '../carico.js';
 import { talentiSituazionali } from '../talenti.js';
 import { statoRicarica, disponibili } from '../ricarica.js';
 import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 import { pannelloAttacco } from './attacco.js';
-import { profiloSenzArmi, senzArmiDisponibile, SENZ_ARMI, talentiAttacco } from '../attacco.js';
+import { profiloSenzArmi, senzArmiDisponibile, SENZ_ARMI, talentiAttacco, valoriDisciplina } from '../attacco.js';
 import { pannelloLancio } from './lancio.js';
 import { statoPulsanteLancio } from '../lancio.js';
 import { tabCalendario, pannelloAttivazione } from './calendario.js';
@@ -613,13 +613,19 @@ function riquadroPM(ctx) {
     .sort((x, y) => Number(y.trasportato && y.sintonizzato) - Number(x.trasportato && x.sintonizzato));
   // Magia sez. 6 e Talenti di Meditazione: valori calcolati, le ore non si contano
   const med = ctx.tab.scheda.magia?.meditazione;
+  // Convertire Potere e ricaricare (Magia sez. 6): rapporto con i Talenti (Ricarica Efficiente, Conversione Migliorata)
+  const cv = rapportoConversione(ctx.tab.scheda, ctx.dati);
+  const notaConversione = cv?.disponibile ? h('p', { class: 'nota' }, `Convertire Potere e ricaricare: ${cv.rapporto}:1`,
+    cv.talenti.length ? ` (${cv.talenti.join(' e ')})` : '',
+    Object.keys(cv.fissi).length ? `; ${Object.entries(cv.fissi).map(([c, n]) => `${c} ${n}:1`).join(', ')} in entrambi i sensi` : '', '.') : null;
   return contatoreTavolo(ctx, {
     titolo: 'Punti Magia', campo: 'pmAttuali', attuale: s.pmAttuali, massimo: ctx.massimi.pm, barra: true, classe: 'riquadro-pm',
     nota: med ? `Recupero PM con Meditazione: ${med.pmPerOra} PM/ora, ${med.orePerGiorno} ${med.orePerGiorno === 1 ? 'ora' : 'ore'}/giorno` : null,
     extra: contenitori.length ? h('div', { class: 'cristalli' },
       h('h4', {}, 'Cristalli e riserve di Chroma'),
       h('p', { class: 'nota' }, 'Riserve separate: non si sommano ai PM personali.'),
-      h('ul', { class: 'elenco-cristalli' }, contenitori.map((c) => h('li', {}, rigaCristallo(ctx, c))))) : null,
+      notaConversione,
+      h('ul', { class: 'elenco-cristalli' }, contenitori.map((c) => h('li', {}, rigaCristallo(ctx, c))))) : notaConversione,
   });
 }
 
@@ -1178,7 +1184,7 @@ function tabCombattimento(ctx, d) {
     d.avvisiEquipaggiamento.length ? h('div', { class: 'riquadro attenzione' },
       h('p', {}, h('strong', {}, 'Equipaggiamento da controllare (avvisi, non blocchi: decide il master):')),
       h('ul', {}, d.avvisiEquipaggiamento.map((a) => h('li', {}, a)))) : null,
-    condizioniTalenti(ctx, { titolo: 'Talenti da attivare (Difese e Salvezze)', filtro: (e) => e.tipo === 'salvezza' || e.abilita === 'Difese' }),
+    condizioniTalenti(ctx, { titolo: 'Talenti da attivare (Difese e Salvezze)', filtro: (e) => e.tipo === 'salvezza' || e.abilita === 'Difese' || e.tipo === 'riduzione_stato' }),
     h('div', { class: 'combattimento-layout' },
       h('div', { class: 'combattimento-principale' },
         h('div', { class: 'griglia-tavolo griglia-tavolo-compatta' },
@@ -1186,9 +1192,11 @@ function tabCombattimento(ctx, d) {
           contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true, classe: 'riquadro-pv pv-pm-identita', extra: pilloleAR(ctx) }),
           d.difese ? h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Difese'),
             h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), valoreEffettivo('Difese', d.difese.effettivo, d.difese.totale, d.difese.scomposizione, { pillola: true, provenienza: d.difese.provenienza })),
-            // §3.5.5, Disciplina Guardia: bonus a Difese contro gli attacchi ravvicinati
-            ...talentiAttacco(ctx.tab.scheda, ctx.dati, 'difese_ravvicinate').filter((t) => t.e.va).map((t) => h('p', { class: 'nota' },
-              'Contro attacchi ravvicinati: ', h('strong', {}, `VA ${numero(d.difese.effettivo + t.e.va)}`), ` (${segno(t.e.va)} ${t.nome})`)),
+            // §3.5.5, Disciplina Guardia: bonus a Difese contro gli attacchi ravvicinati (con Padronanza
+            // della Disciplina anche a distanza); Controllo con Padronanza: resistere alle Manovre
+            ...valoriDisciplina(ctx.tab.scheda, ctx.dati).map((t) => h('p', { class: 'nota' },
+              `${t.testo}: `, t.contro === 'resistenza' ? h('strong', {}, segno(t.valore)) : h('strong', {}, `VA ${numero(d.difese.effettivo + t.valore)}`),
+              t.contro === 'resistenza' ? ` (${t.nome})` : ` (${segno(t.valore)} ${t.nome})`)),
             istintive.length ? h('p', { class: 'proprieta-arma' }, istintive.map((t) => h('span', { class: 'etichetta', title: t.testo }, t.nome))) : null) : null,
           ...riquadriTavolo(ctx)),
         idt?.salvezze ? h('div', { class: 'contatore-tavolo salvezze-tavolo' }, h('h3', {}, 'Prove Salvezza'),

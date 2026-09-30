@@ -33,10 +33,33 @@ export function condizioniAttive(sessione, dati, scheda = null) {
   if (cros?.penalita) out.push({ etichetta: cros.nome, fonte: 'corruzione', effetto: perAmbiti(r.corruzione.si_applica_a, cros.penalita) });
   // §5.18: solo gli Stati con effetti numerici nei dati; più Stati si sommano
   const attivi = new Set(Array.isArray(sessione.statiAttivi) ? sessione.statiAttivi : []);
+  // Talenti che riducono la penalità al VA di uno Stato, fino ad annullarla (effetti.valori
+  // «riduzione_stato»): Combattere alla Cieca (Accecato), Sangue Freddo (Terrorizzato, situazionale).
+  // Con l'interruttore «Bonus dei Talenti» spento non contano.
+  const accesiT = new Set(Array.isArray(sessione.talentiAccesi) ? sessione.talentiAccesi : []);
+  const riduzioni = scheda && bonusTalentiAccesi(sessione) ? effettiTalenti(scheda, dati)
+    .filter((e) => e.tipo === 'riduzione_stato' && (e.ambito === 'generale' || (e.ambito === 'situazionale' && accesiT.has(e.chiave)))) : [];
   for (const s of r.stati.elenco) {
     if (!attivi.has(s.id) || !s.effetti?.length) continue;
     // anche con soli usi specifici (Assordato): il VA generale non cambia, il valore d'uso sì
-    out.push({ etichetta: s.nome, fonte: 'stato', effetto: effettoDaEffetti(s.effetti), usi: s.effetti.filter((e) => e.ambito === 'uso_specifico') });
+    const effetto = effettoDaEffetti(s.effetti);
+    out.push({ etichetta: s.nome, fonte: 'stato', effetto, usi: s.effetti.filter((e) => e.ambito === 'uso_specifico') });
+    for (const t of riduzioni.filter((x) => x.stato === s.id)) {
+      // solo le penalità al VA (non le Prove Salvezza), ciascuna ridotta al più di «valore» e non oltre 0;
+      // con «prove» solo le Abilità di quel gruppo (Combattere alla Cieca: attaccare o difendersi)
+      const meno = (v) => (v < 0 ? Math.min(t.valore, -v) : 0);
+      const gruppi = r.categorie_prove ?? {};
+      const ammessa = (nome) => !t.prove || (gruppi[t.prove] ?? []).includes(nome);
+      const ridotto = {};
+      const perAbilita = (nomi, v) => { for (const a of nomi.filter(ammessa)) (ridotto.va_abilita ??= {})[a] = (ridotto.va_abilita[a] ?? 0) + meno(v); };
+      if (meno(effetto.va ?? 0)) { if (t.prove) perAbilita(gruppi[t.prove] ?? [], effetto.va); else ridotto.va = meno(effetto.va); }
+      for (const [g, v] of Object.entries(effetto.va_gruppi ?? {})) {
+        if (!meno(v)) continue;
+        if (t.prove) perAbilita(gruppi[g] ?? [], v); else (ridotto.va_gruppi ??= {})[g] = meno(v);
+      }
+      for (const [a, v] of Object.entries(effetto.va_abilita ?? {})) if (meno(v)) perAbilita([a], v);
+      if (Object.keys(ridotto).length) out.push({ etichetta: `${t.talento} (${s.nome})`, fonte: 'talento', effetto: ridotto });
+    }
   }
   // §5.2.6: il Sovraccarico penalizza le Prove fisiche, compresi attacchi e Difese
   if (scheda && r.carico) {
@@ -424,13 +447,18 @@ export function valoriTavolo(scheda, sessione, dati) {
 
   const base = scheda.movimento ?? {};
   const mov = scheda.equipaggiamento?.movimentoQ ?? 0;
+  // Assalto Armato (Assaltatore, Armamenti §7.11.1): riduce di 2 Q complessivi, fino a 0, la penalità
+  // MOV di armatura indossata e scudo impugnato (non quella delle armi)
+  const movProtezioni = scheda.equipaggiamento?.movimentoQProtezioni ?? 0;
+  const assalto = talOff ? [] : effettiTalenti(scheda, dati).filter((e) => e.tipo === 'movimento_armatura');
+  const vociAssalto = movProtezioni < 0 ? assalto.map((e) => voce(e.talento, Math.min(e.valore, -movProtezioni), 'talento')).slice(0, 1) : [];
   const carico = isOggetto(sessione) && r.carico ? (scheda.carico ?? calcolaCarico(scheda, sessione, dati)) : null;
   const liv = carico?.livello ?? null;
   const movimento = {};
   for (const modo of ['passo', 'corsa', 'scatto']) {
     const note = [];
     let voci = [voce(`${modo[0].toUpperCase()}${modo.slice(1)} da regole`, base[modo] ?? 0, 'regole')];
-    if (mov) voci.push(voce('Armatura (MOV)', mov, 'equipaggiamento'));
+    if (mov) voci.push(voce('Armatura (MOV)', mov, 'equipaggiamento'), ...vociAssalto);
     let disponibile = true;
     if (liv?.movimento_q && modo === 'passo') voci.push(voce(liv.nome, liv.movimento_q, 'carico'));
     // E&L 5 (A.31): oltre il carico massimo Movimento 0 Q
