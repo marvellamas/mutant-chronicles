@@ -22,7 +22,7 @@ test('inizializzazione: PV e PM ai massimi, Punti Eroe iniziali, il resto a zero
   assert.deepEqual(s, {
     pvAttuali: 16, pmAttuali: 9, puntiEroe: m.puntiEroeIniziali, distintivi: 0,
     statiAttivi: [], ferite: 0, affaticamento: 0, corruzione: 0, munizioni: {}, scorte: {}, chroma: {}, caricoExtra: 0,
-    crediti: null, creditiIniziali: null, condizioniOggetti: [], attacchi: {}, lanci: {}, integrita: {}, condizioniArmi: {}, note: '',
+    crediti: null, creditiIniziali: null, condizioniOggetti: [], bonusTalenti: true, talentiAccesi: [], attacchi: {}, lanci: {}, integrita: {}, condizioniArmi: {}, note: '',
   });
   // una sessione assente si inizializza
   assert.deepEqual(allineaSessione(null, m), s);

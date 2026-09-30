@@ -5,7 +5,8 @@
 
 import { descriviFerite } from './sessione.js';
 import { calcolaCarico } from './carico.js';
-import { aggiungiDanno } from './equipaggiamento.js';
+import { aggiungiDanno, infoArtefatto } from './equipaggiamento.js';
+import { effettiTalenti, bonusTalentiAccesi } from './talenti.js';
 import { calcolaAR, oggettiRotti } from './protezione.js';
 import { riga, provenienza, righeDaScomposizione, righeRegoleAbilita, righeRegoleSalvezza } from './provenienza.js';
 
@@ -148,16 +149,37 @@ function effettiOggettiAbilita(effetti, accesi, a) {
 /** Valore di ogni uso specifico: dal VA effettivo, con un solo bonus degli strumenti (§1.4.1). */
 function valoriUsi(usi, effettivo, bonusOn) {
   return [...usi].map(([uso, lista]) => {
-    const bonus = lista.filter((e) => e.valore > 0).reduce((m, e) => (!m || e.valore > m.valore ? e : m), null);
-    const penalita = lista.filter((e) => e.valore < 0).reduce((s, e) => s + e.valore, 0);
+    // i Talenti non sono strumenti: i loro bonus si sommano (docs/effetti-oggetti.md, «Talenti»)
+    const talenti = lista.filter((e) => e.talento).reduce((s, e) => s + e.valore, 0);
+    const strumenti = lista.filter((e) => !e.talento);
+    const bonus = strumenti.filter((e) => e.valore > 0).reduce((m, e) => (!m || e.valore > m.valore ? e : m), null);
+    const penalita = strumenti.filter((e) => e.valore < 0).reduce((s, e) => s + e.valore, 0);
     const giaAcceso = bonusOn?.valore ?? 0;
-    const valore = effettivo - giaAcceso + Math.max(giaAcceso, bonus?.valore ?? 0) + penalita;
+    const valore = effettivo - giaAcceso + Math.max(giaAcceso, bonus?.valore ?? 0) + penalita + talenti;
     return {
       uso, valore, base: effettivo, modificatore: valore - effettivo,
-      oggetti: lista.map((e) => ({ oggetto: e.oggetto, valore: e.valore, condizione: e.condizione ?? null, fonte: e.fonte ?? null, contato: e.valore < 0 || e === bonus })),
+      oggetti: lista.map((e) => ({ oggetto: e.oggetto, valore: e.valore, condizione: e.condizione ?? null, fonte: e.fonte ?? null, contato: e.talento || e.valore < 0 || e === bonus, talento: !!e.talento })),
       assorbito: !!bonus && giaAcceso >= bonus.valore, permanente: lista.every((e) => e.permanente),
     };
   });
+}
+
+/**
+ * Effetti dei Talenti su un'Abilità al tavolo (docs/censimento-talenti.md): generali sempre,
+ * situazionali con l'interruttore acceso (sessione → talentiAccesi), usi specifici come valore a parte.
+ * Con l'interruttore «Bonus dei Talenti» spento non contano: la provenienza li mostra barrati.
+ */
+function talentiAbilita(effetti, accesi, on, a) {
+  const miei = effetti.filter((e) => (e.tipo ?? 'va') === 'va' && e.abilita === a.nome);
+  const attivi = miei.filter((e) => e.ambito === 'generale' || (e.ambito === 'situazionale' && accesi.has(e.chiave)));
+  const etichetta = (e) => (e.ambito === 'situazionale' ? `${e.talento} (condizione attiva)` : e.talento);
+  return {
+    voci: on ? attivi.map((e) => voce(etichetta(e), e.valore, 'talento')) : [],
+    spenti: on ? [] : attivi.map((e) => ({ ...riga(etichetta(e), e.valore, 'Talenti spenti: non conta'), escluso: true, barrato: true })),
+    disponibili: miei.filter((e) => e.ambito === 'situazionale' && (!on || !accesi.has(e.chiave)))
+      .map((e) => ({ uid: e.chiave, oggetto: e.talento, valore: e.valore, condizione: e.condizione, fonte: e.fonte, talento: true })),
+    usi: on ? miei.filter((e) => e.ambito === 'uso_specifico') : [],
+  };
 }
 
 /** Voci delle condizioni per un'Abilità: [{ etichetta, valore, fonte }]. */
@@ -187,9 +209,21 @@ export function applicaCondizioni(scheda, sessione, dati) {
   const rotti = oggettiRotti(sessione, dati);
   const effettiOggetti = (scheda.equipaggiamento?.effettiOggetti ?? []).filter((e) => !rotti.has(e.uid));
   const accesi = new Set(isOggetto(sessione) && Array.isArray(sessione.condizioniOggetti) ? sessione.condizioniOggetti : []);
+  // Talenti (docs/censimento-talenti.md): solo al tavolo, con la sessione; senza sessione (stampa,
+  // avanzamento) i valori restano a riposo. L'interruttore «Bonus dei Talenti» li spegne tutti.
+  const alTavolo = isOggetto(sessione);
+  const talOn = bonusTalentiAccesi(sessione);
+  const effT = alTavolo ? effettiTalenti(scheda, dati) : [];
+  const talAccesi = new Set(alTavolo && Array.isArray(sessione.talentiAccesi) ? sessione.talentiAccesi : []);
+  scheda.bonusTalenti = talOn;
+  scheda.effettiTalenti = effT;
+  scheda.talentiAccesi = [...talAccesi];
+  const spento = (e, etichetta = e.talento) => ({ ...riga(etichetta, e.valore, 'Talenti spenti: non conta'), escluso: true, barrato: true });
   scheda.abilita = scheda.abilita.map((a) => {
     const cond = vociCondizioniAbilita(condizioni, a, dati);
     const ogg = effettiOggettiAbilita(effettiOggetti, accesi, a);
+    const tal = talentiAbilita(effT, talAccesi, talOn, a);
+    for (const e of tal.usi) (ogg.usi.get(e.uso) ?? ogg.usi.set(e.uso, []).get(e.uso)).push({ oggetto: e.talento, valore: e.valore, uso: e.uso, condizione: e.condizione, fonte: e.fonte, talento: true });
     // usi specifici degli Stati (A Terra: equilibrio; Assordato: udito): valore a parte, VA generale invariato
     for (const c of condizioni) {
       for (const e of c.usi ?? []) {
@@ -202,6 +236,7 @@ export function applicaCondizioni(scheda, sessione, dati) {
       voce('Valore da regole', a.totale, 'regole'),
       ...(a.componentiEquip ?? (a.equip ? [voce('Equipaggiamento', a.equip, 'equipaggiamento')] : [])).filter((c) => !(c.effetto && rotti.has(c.uid))),
       ...ogg.voci,
+      ...tal.voci,
       ...cond,
     ];
     const effettivo = somma(scomposizione);
@@ -213,24 +248,42 @@ export function applicaCondizioni(scheda, sessione, dati) {
       ...(scheda.equipaggiamento?.zeriEquip?.[a.nome] ?? []).map((z) => riga(z.etichetta, z.valore, z.nota)),
       ...righeDaScomposizione(ogg.voci),
       ...ogg.nonCumulati.map((e) => ({ ...riga(`${e.oggetto} (condizione attiva)`, e.valore, 'non si somma: un solo modificatore degli strumenti per Prova (§1.4.1)'), escluso: true })),
+      ...righeDaScomposizione(tal.voci),
+      ...tal.spenti,
       ...righeDaScomposizione(cond),
     ];
     const x = {
       ...a, effettivo, daRegole: a.totale, scomposizione, provenienza: provenienza(righe, effettivo), condizioni: somma(cond),
-      disponibili: ogg.disponibili, nonCumulati: ogg.nonCumulati, usiSpecifici: valoriUsi(ogg.usi, effettivo, ogg.bonusOn),
+      disponibili: [...ogg.disponibili, ...tal.disponibili], nonCumulati: ogg.nonCumulati, usiSpecifici: valoriUsi(ogg.usi, effettivo, ogg.bonusOn),
     };
     perNome.set(a.nome, x);
     return x;
   });
   scheda.oggettiAccesi = effettiOggetti.filter((e) => e.ambito === 'situazionale' && accesi.has(e.uid));
 
-  for (const s of Object.values(scheda.salvezze ?? {})) {
+  for (const [id, s] of Object.entries(scheda.salvezze ?? {})) {
     const cond = condizioni.filter((c) => c.effetto.salvezze).map((c) => voce(c.etichetta, c.effetto.salvezze, c.fonte));
-    s.scomposizione = [voce('Valore da regole', s.totale, 'regole'), ...cond];
+    // Talenti generali, o situazionali accesi, sulla Prova Salvezza (Scudo Spirituale)
+    const attiviT = effT.filter((e) => e.tipo === 'salvezza' && e.salvezza === id
+      && (e.ambito === 'generale' || (e.ambito === 'situazionale' && talAccesi.has(e.chiave))));
+    const etichettaT = (e) => (e.ambito === 'situazionale' ? `${e.talento} (condizione attiva)` : e.talento);
+    const vociT = talOn ? attiviT.map((e) => voce(etichettaT(e), e.valore, 'talento')) : [];
+    s.scomposizione = [voce('Valore da regole', s.totale, 'regole'), ...vociT, ...cond];
     s.effettivo = somma(s.scomposizione);
     s.daRegole = s.totale;
-    s.provenienza = provenienza([...righeRegoleSalvezza(s, scheda), ...righeDaScomposizione(cond)], s.effettivo);
+    s.provenienza = provenienza([...righeRegoleSalvezza(s, scheda), ...righeDaScomposizione(vociT), ...(talOn ? [] : attiviT.map((e) => spento(e, etichettaT(e)))), ...righeDaScomposizione(cond)], s.effettivo);
   }
+  // usi specifici dei Talenti sulle Prove Salvezza e sulle Prove di Caratteristica: valori a parte.
+  // Giocatore §8.6: strutturale + Prova Salvezza Migliorata + Resistenza specifica non oltre il tetto
+  scheda.usiSalvezzeTalenti = talOn ? effT.filter((e) => e.tipo === 'salvezza' && e.ambito === 'uso_specifico').map((e) => {
+    const s = e.salvezza ? scheda.salvezze?.[e.salvezza] : null;
+    if (!s) return { talento: e.talento, uso: e.uso, salvezza: null, nome: null, valore: null, modificatore: e.valore, condizione: e.condizione, fonte: e.fonte };
+    const mod = e.resistenza ? Math.min(s.tetto ?? Infinity, s.totale + e.valore) - s.totale : e.valore;
+    return { talento: e.talento, uso: e.uso, salvezza: e.salvezza, nome: s.nome, valore: s.effettivo + mod, modificatore: mod, limitato: mod < e.valore, condizione: e.condizione, fonte: e.fonte };
+  }) : [];
+  scheda.usiCaratteristicheTalenti = talOn ? effT.filter((e) => e.tipo === 'caratteristica').map((e) => ({
+    talento: e.talento, uso: e.uso, caratteristiche: e.caratteristiche, valore: e.valore, condizione: e.condizione, fonte: e.fonte,
+  })) : [];
 
   const eq = scheda.equipaggiamento;
   if (eq) {
@@ -257,7 +310,20 @@ export function applicaCondizioni(scheda, sessione, dati) {
           w.nome = w.nome.replace(w.statoAlternativo.nomeOpposto, w.statoAlternativo.nome);
         }
       }
-      const cond = [...condDi(w.abilita), ...(w.condizioneArma?.va ? [voce(w.condizioneArma.nome, w.condizioneArma.va, 'condizione')] : [])];
+      // Talenti: danno (Meccanica Potenziata, solo armi Artefatto) e VA per colpire, al tavolo
+      const def = (eq.oggetti ?? []).find((o) => o.uid === String(w.uid).split(':')[0])?.def ?? null;
+      const valeT = (e) => (e.attacchi === 'tutti' || (e.attacchi === 'ravvicinati') === (w.tipo === 'arma_ravvicinata'))
+        && (e.armi !== 'artefatto' || !!infoArtefatto(def, dati));
+      const dannoT = effT.filter((e) => e.tipo === 'danno' && e.ambito === 'generale' && valeT(e));
+      if (dannoT.length && w.danno) {
+        if (talOn) {
+          const n = dannoT.reduce((s, e) => s + e.valore, 0);
+          w.danno = { una_mano: aggiungiDanno(w.danno.una_mano, n), due_mani: aggiungiDanno(w.danno.due_mani, n) };
+          if (w.righeDanno) w.righeDanno = [...w.righeDanno, ...dannoT.map((e) => riga(e.talento, e.valore, 'Talento'))];
+        } else if (w.righeDanno) w.righeDanno = [...w.righeDanno, ...dannoT.map((e) => spento(e))];
+      }
+      const attaccoT = effT.filter((e) => e.tipo === 'attacco' && e.ambito === 'generale' && valeT(e));
+      const cond = [...condDi(w.abilita), ...(talOn ? attaccoT.map((e) => voce(e.talento, e.valore, 'talento')) : []), ...(w.condizioneArma?.va ? [voce(w.condizioneArma.nome, w.condizioneArma.va, 'condizione')] : [])];
       w.scomposizione = [...(w.componenti ?? []).map((c) => voce(c.nome, c.valore, c.fonte ?? 'equipaggiamento')), ...cond];
       w.vaEffettivo = w.va === null ? null : w.va + somma(cond);
       w.vaDaRegole = w.va === null ? null : daRegole(w.scomposizione);
@@ -284,7 +350,9 @@ export function applicaCondizioni(scheda, sessione, dati) {
           p.forMancante ? voce(`FOR insufficiente (${p.nome})`, -p.forMancante, 'equipaggiamento') : null].filter((x) => x && x.valore !== 0 || x?.fonte === 'regole');
         // se i conti a riposo non tornano (profili speciali) si tiene il valore calcolato come una voce sola
         const aRiposo = somma(voci) === p.parata[k] ? voci : [voce(`Parata di ${p.nome}`, p.parata[k], 'equipaggiamento')];
-        return [...aRiposo, ...condDifese];
+        // Talenti (Parata a Distanza: con lo scudo la penalità a distanza passa da −4 a −2)
+        const talP = talOn && p.tipo === 'scudo' ? effT.filter((e) => e.tipo === 'parata' && e.con === 'scudo' && e.contro === k).map((e) => voce(e.talento, e.valore, 'talento')) : [];
+        return [...aRiposo, ...talP, ...condDifese];
       };
       p.parata.scomposizioneRavvicinata = perDistanza('ravvicinata');
       p.parata.scomposizioneDistanza = perDistanza('distanza');
@@ -339,12 +407,18 @@ export function valoriTavolo(scheda, sessione, dati) {
   const attivi = new Set(isOggetto(sessione) && Array.isArray(sessione.statiAttivi) ? sessione.statiAttivi : []);
   const stati = r.stati.elenco.filter((s) => attivi.has(s.id));
 
-  const vociIni = (scheda.vociIniziativa ?? [{ etichetta: 'Iniziativa', valore: scheda.iniziativa ?? 0 }]).map((v) => voce(v.etichetta, v.valore, 'regole'));
+  // con l'interruttore «Bonus dei Talenti» spento le voci dei Talenti (Iniziativa Migliorata…) non contano
+  const talOff = scheda.bonusTalenti === false;
+  const tutteIni = (scheda.vociIniziativa ?? [{ etichetta: 'Iniziativa', valore: scheda.iniziativa ?? 0 }]).map((v) => voce(v.etichetta, v.valore, 'regole'));
+  const eMod = (v) => /^Mod /.test(v.etichetta) || v.etichetta === 'Iniziativa';
+  const vociIni = talOff ? tutteIni.filter(eMod) : tutteIni;
+  const iniSpente = talOff ? tutteIni.filter((v) => !eMod(v)) : [];
   // effetti «iniziativa» dell'equipaggiamento in uso (Allerta tattica dell'elmetto, Armamenti §7.21.2)
   const vociIniEquip = (scheda.equipaggiamento?.iniziativa ?? []).map((v) => voce(v.etichetta, v.valore, 'equipaggiamento'));
   const iniziativa = { effettivo: somma([...vociIni, ...vociIniEquip]), daRegole: somma(vociIni), scomposizione: [...vociIni, ...vociIniEquip], note: [] };
   iniziativa.provenienza = provenienza([
     ...vociIni.map((v) => riga(v.etichetta, v.valore, /^Mod /.test(v.etichetta) ? 'Caratteristica (§2.14)' : 'Talento')),
+    ...iniSpente.map((v) => ({ ...riga(v.etichetta, v.valore, 'Talenti spenti: non conta'), escluso: true, barrato: true })),
     ...righeDaScomposizione(vociIniEquip),
   ], iniziativa.effettivo);
 

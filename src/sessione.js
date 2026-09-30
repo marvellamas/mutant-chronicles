@@ -247,6 +247,9 @@ export function inizializzaSessione(m) {
     caricoExtra: 0,
     ...allineaCrediti({}, m),
     condizioniOggetti: [],
+    // Talenti (docs/censimento-talenti.md): interruttore globale e situazionali accesi
+    bonusTalenti: true,
+    talentiAccesi: [],
     attacchi: {},
     lanci: {},
     integrita: allineaIntegrita({}, m),
@@ -277,6 +280,8 @@ export function allineaSessione(sessione, m) {
     caricoExtra: chili(sessione.caricoExtra),
     ...allineaCrediti(sessione, m),
     condizioniOggetti: allineaCondizioniOggetti(sessione.condizioniOggetti, m),
+    bonusTalenti: sessione.bonusTalenti !== false,
+    talentiAccesi: Array.isArray(sessione.talentiAccesi) ? [...new Set(sessione.talentiAccesi.filter((x) => typeof x === 'string'))] : [],
     attacchi: Object.fromEntries(Object.entries(isOggetto(sessione.attacchi) ? sessione.attacchi : {})
       .filter(([uid, v]) => isOggetto(v) && (!m.caricatori || uid in m.caricatori || uid === SENZ_ARMI || (m.oggetti ?? []).includes(uid)))),
     lanci: Object.fromEntries(Object.entries(isOggetto(sessione.lanci) ? sessione.lanci : {}).filter(([, v]) => isOggetto(v))),

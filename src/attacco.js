@@ -24,6 +24,8 @@ const primaFrase = (t) => String(t ?? '').split(/(?<=\.)\s/)[0];
  * Talenti Liberi dal loro id, Talenti di Classe posseduti dalla scheda (con i loro effetti).
  */
 export function talentiAttacco(scheda, dati, chiave = 'attacco_distanza') {
+  // interruttore «Bonus dei Talenti» spento (src/talenti.js): le utility calcolano senza i Talenti
+  if (scheda?.bonusTalenti === false) return [];
   const liberi = (scheda?.talentiLiberi ?? []).map((t) => dati.talenti_liberi.talenti.find((x) => x.id === t.id)).filter(Boolean);
   const classe = (scheda?.classi ?? []).flatMap((c) => c.talenti ?? []);
   return [...liberi, ...classe].filter((t) => t.effetti?.[chiave] !== undefined)
