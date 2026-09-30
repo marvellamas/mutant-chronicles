@@ -95,6 +95,8 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 
 - tab Inventario (`docs/layout-sd.md`, pezzo 2): unica casa degli oggetti, con sezioni per famiglia (`src/palette.js` → `SEZIONI_INVENTARIO`), stato di ogni oggetto in `voce.stato` con il valore `deposito` (deposito comune: fuori dal carico, senza effetti, fuori dal tavolo), PI e Ripara nella riga, Carico e Crediti in testa, «Compra» dal catalogo.
 
+- tab Combattimento (`docs/layout-sd.md`, pezzo 3): colonna sinistra con valori, Prove Salvezza, armi in mano per mano (Ricarica e «Attacca!»), armi disponibili e Protezioni; colonna destra con Ferite, Affaticamento, Corruzione Oscura (§5.20, `regole.json` → `corruzione.stati`, `sessione.corruzione`, nei valori effettivi) e Stati. Caricatori di riserva, condizione delle armi e applicazioni sanitarie si cambiano nell'Inventario.
+
 Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, veicoli, capitoli 5, 7 e 8 del Manuale dell'Equipaggiamento (non ancora scritti).
 
 ## Riferimenti

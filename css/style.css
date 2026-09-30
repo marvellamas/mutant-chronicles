@@ -1418,3 +1418,45 @@ body.con-sfondo::before {
   .abilita-layout { grid-template-columns: minmax(0, 1fr); }
   .colonna-condizioni { position: static; }
 }
+
+/* Combattimento (docs/layout-sd.md, pezzo 3): colonna principale e, a destra, Ferite · Affaticamento ·
+   Corruzione · Stati in riquadri compatti; sotto ~52rem la colonna si stringe, sotto ~30rem scende */
+.combattimento-layout { display: grid; grid-template-columns: minmax(0, 1fr) 17rem; gap: 0 1.25rem; align-items: start; }
+.combattimento-principale > .sezione-tab { margin-top: 0.75rem; }
+.colonna-stati { position: sticky; top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.75rem; }
+.riquadro-gradi { margin: 0; padding: 0.45rem 0.6rem; }
+.testa-gradi { display: flex; align-items: baseline; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.35rem; }
+.testa-gradi h3 { margin: 0; font-size: 0.95rem; flex: 1 1 auto; }
+.grado-attuale { font-size: 0.85rem; color: var(--tenue); }
+.grado-attuale.con-penalita { color: var(--errore); font-weight: 700; }
+.info-gradi { min-width: 1.6rem; }
+.gradi-compatti { display: flex; flex-wrap: wrap; gap: 0.25rem; }
+.gradi-compatti .grado { min-height: 32px; padding: 0.1rem 0.45rem; font-size: 0.8rem; border: 1px solid var(--bordo); border-radius: var(--raggio); background: var(--superficie); color: var(--testo); cursor: pointer; }
+.gradi-compatti .grado.raggiunto { border-color: var(--attenzione); }
+.gradi-compatti .grado.attivo { border-color: var(--accento); background: var(--accento-tenue); color: var(--accento); font-weight: 700; }
+.stati-compatti { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.2rem; }
+.stati-compatti li { display: flex; align-items: center; justify-content: space-between; gap: 0.3rem; }
+.stato-compatto { display: flex; align-items: center; gap: 0.4rem; font-size: 0.88rem; min-height: 32px; }
+.stato-compatto input { width: 1.2rem; height: 1.2rem; margin: 0; }
+.stato-compatto.attivo span { color: var(--attenzione); font-weight: 700; }
+.pillole-salvezze { display: flex; flex-wrap: wrap; gap: 0.35rem 0.9rem; font-size: 1rem; }
+.salvezza-pillola { display: inline-flex; align-items: baseline; gap: 0.2rem; }
+.riquadri-mani { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 0.75rem; }
+.riquadro-mano { border: 1px solid var(--bordo); border-radius: var(--raggio); padding: 0.5rem; display: grid; gap: 0.5rem; align-content: start; }
+.riquadro-mano.due-mani { grid-column: 1 / -1; }
+.riquadro-mano.oltre { border-color: var(--errore); }
+.riquadro-mano.libera { border-style: dashed; }
+.testa-mano { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+.testa-mano h3 { margin: 0; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--tenue); }
+.elenco-disponibili { list-style: none; margin: 0 0 0.5rem; padding: 0; display: grid; gap: 0.25rem; }
+.elenco-disponibili li { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; padding: 0.2rem 0.4rem; border: 1px solid var(--bordo); border-radius: var(--raggio); }
+.elenco-disponibili li.attivo { border-color: var(--ok); }
+.tavolo-riga { display: grid; gap: 0.35rem; }
+@container (max-width: 52rem) {
+  .combattimento-layout { grid-template-columns: minmax(0, 1fr) 12.5rem; gap: 0 0.75rem; }
+  .riquadri-mani { grid-template-columns: minmax(0, 1fr); }
+}
+@container (max-width: 30rem) {
+  .combattimento-layout { grid-template-columns: minmax(0, 1fr); }
+  .colonna-stati { position: static; }
+}

@@ -15,7 +15,7 @@ import { descriviFerite } from '../sessione.js';
 import { statoIntegrita } from '../protezione.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
 import { testoDanno } from '../stampa.js';
-import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto } from '../equipaggiamento.js';
+import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto, catalogo, risolvi } from '../equipaggiamento.js';
 import { dotazioneApplicata, crediti } from '../dotazioni.js';
 import { provenienzaCarico } from '../carico.js';
 import { statoRicarica, disponibili } from '../ricarica.js';
@@ -467,6 +467,36 @@ function piRigaInventario(ctx, r) {
 }
 
 /**
+ * Comandi di tavolo nella riga dell'Inventario (docs/layout-sd.md, pezzo 3): condizione dell'arma
+ * (A.49, §5.17), caricatori pieni di riserva delle armi a distanza (§7.20.2) e applicazioni dei kit
+ * sanitari (§7.19). In Combattimento si vedono soltanto; «Ricarica» resta là.
+ */
+function tavoloRigaInventario(ctx, r) {
+  if (r.deposito || r.fuoriCatalogo) return null;
+  const nodi = [];
+  const condizioni = ctx.dati.regole.condizioni_armi;
+  if (condizioni && ['arma_ravvicinata', 'arma_distanza'].includes(r.tipo)) {
+    const attuale = ctx.sessione.condizioniArmi?.[r.uid] ?? 'integra';
+    nodi.push(h('label', { class: 'condizione-arma campo-inline', title: condizioni.elenco.find((c) => c.id === attuale)?.testo ?? 'Condizione dell’arma dopo una Complicazione (§5.17); distinta dai PI.' },
+      h('span', { class: 'sigla' }, 'Condizione '),
+      h('select', { onchange: (e) => ctx.azioni.condizioneArma(r.uid, e.target.value) },
+        condizioni.elenco.map((c) => h('option', { value: c.id, selected: attuale === c.id }, c.nome)))));
+  }
+  const info = r.tipo === 'arma_distanza' ? ctx.massimi.ricarica?.[r.uid] ?? null : null;
+  if (r.tipo === 'arma_distanza' && ctx.massimi.caricatori?.[r.uid] !== undefined && (!info || info.modo === 'caricatore' || info.modo === null)) {
+    const m = ctx.sessione.munizioni?.[r.uid] ?? { riserve: 0 };
+    const b = (d) => h('button', { type: 'button', class: 'btn-tavolo btn-mini', disabled: d < 0 && m.riserve <= 0,
+      'aria-label': `${d > 0 ? 'Aggiungi' : 'Togli'} un caricatore di riserva a ${r.nome}`, onclick: () => ctx.azioni.munizioni(r.uid, 'riserve', d) }, d > 0 ? '+' : '−');
+    nodi.push(h('div', { class: 'pi-voce' }, h('span', {}, info?.modo === 'caricatore' ? 'Caricatori pieni di riserva ' : 'Riserve '), h('strong', {}, String(m.riserve ?? 0)), h('span', { class: 'pi-comandi' }, b(-1), b(1))));
+  }
+  const kit = consumabili([r.voce], ctx.dati)[0];
+  if (kit) {
+    nodi.push(pannelloMunizioni(ctx, { uid: kit.uid, nome: kit.nome, munizioni: { capacita: kit.capacita, unita: kit.unita, ricarica: kit.ricarica ? `${kit.ricarica.applicazioni} ${kit.unita} costano ${kit.ricarica.costo.toLocaleString('it-IT')}` : null } }));
+  }
+  return nodi.length ? h('div', { class: 'tavolo-riga' }, nodi) : null;
+}
+
+/**
  * Peso e carico in testa all'Inventario (§5.2.6, Equipaggiamento §1.6): «peso attuale / soglia», con
  * la provenienza al tooltip (cosa pesa, cosa è escluso perché nel deposito comune, i pesi da
  * definire); soglie, penalità e peso aggiuntivo della sessione sotto. Era nella tab Combattimento.
@@ -522,7 +552,7 @@ function tabInventario(ctx) {
       renderEquipaggiamento({
         dati: ctx.dati, voci: ctx.scelte.equipaggiamento, ui: ctx.ui,
         aggiorna: ctx.azioni.equipaggiamento, ridisegna: ctx.azioni.ridisegna,
-        inventario: true, rigaExtra: (r) => piRigaInventario(ctx, r),
+        inventario: true, rigaExtra: (r) => [piRigaInventario(ctx, r), tavoloRigaInventario(ctx, r)],
         compra: ctx.azioni.compra, crediti: ctx.sessione.crediti,
       })),
   ];
@@ -678,6 +708,7 @@ function promemoriaPenalita(ctx, { soloSenzaEffetto = false } = {}) {
   const parti = [];
   if (ctx.sessione.ferite) parti.push(`Ferite: ${p.ferite.nome}${p.ferite.penalita ? ` ${segno(p.ferite.penalita)} a VA e Prove Salvezza` : ''}`);
   if (p.affaticamento.penalita) parti.push(`Affaticamento: ${p.affaticamento.nome} ${segno(p.affaticamento.penalita)} a tutte le Prove`);
+  if (p.corruzione?.penalita) parti.push(`Corruzione: ${p.corruzione.nome} ${segno(p.corruzione.penalita)} a tutte le Prove`);
   if (p.stati.length) parti.push(`Stati: ${p.stati.map((s) => s.nome).join(', ')}`);
   if (!parti.length) return null;
   const soloTesto = p.stati.filter((s) => !s.effetto);
@@ -813,7 +844,7 @@ function tabIdentita(ctx, d) {
             h('th', { scope: 'row' }, x.nome), h('td', {}, x.caratteristica),
             h('td', { class: 'cella-va', title: x.limitato ? `Limitato a ${x.tetto} (§1.2.3)` : null },
               valoreEffettivo(x.nome, x.effettivo, x.totale, x.scomposizione, { pillola: true, provenienza: x.provenienza }), x.limitato ? '*' : null))))),
-        d.salvezze.some((x) => x.effettivo !== x.totale) ? h('p', { class: 'nota' }, 'Con le condizioni della sessione (Ferite, Affaticamento, Stati).') : null,
+        d.salvezze.some((x) => x.effettivo !== x.totale) ? h('p', { class: 'nota' }, 'Con le condizioni della sessione (Ferite, Affaticamento, Corruzione, Stati).') : null,
         usiSalvezze(ctx, d.salvezze))),
 
     h('div', { class: 'griglia-tre' },
@@ -976,108 +1007,215 @@ function riquadriTavolo(ctx) {
 // ---------------------------------------------------------------------------
 // Combattimento
 
+/** Cambia lo stato di una voce dell'equipaggiamento (Impugna, Riponi, Indossa…): stesso campo dell'Inventario. */
+function cambiaStato(ctx, uid, stato) {
+  const base = String(uid).split(':')[0];
+  ctx.azioni.equipaggiamento((ctx.scelte.equipaggiamento ?? []).map((v) => (v.uid === base ? { ...v, stato } : v)));
+}
+
+/** Stato «a riposo» di un oggetto tolto di mano o di dosso: Addosso se il tipo lo prevede, altrimenti Nello zaino. */
+const statoRiposto = (stati) => (stati.includes('pronta') ? 'pronta' : 'zaino');
+
+/**
+ * Armi impugnate e scudo imbracciato nei riquadri delle mani (docs/layout-sd.md, pezzo 3): un riquadro
+ * «Due mani» per un'arma a due mani, altrimenti mano destra e mano sinistra nell'ordine dell'Inventario
+ * (l'app non registra quale mano: è solo l'ordine). Oltre le due mani un riquadro a parte (l'avviso
+ * sta sopra). I moduli integrati e l'attacco dello scudo stanno con il loro oggetto.
+ */
+function riquadriMani(ctx, d) {
+  const cat = catalogo(ctx.dati);
+  const perUid = new Map((ctx.scelte.equipaggiamento ?? []).map((v) => [v.uid, risolvi(v, cat)]));
+  const base = (uid) => String(uid).split(':')[0];
+  const armi = d.armiCalcolate.filter((a) => !a.moduloDi && !a.daScudo);
+  const figli = (uid) => d.armiCalcolate.filter((a) => (a.moduloDi || a.daScudo) && base(a.uid) === uid);
+  const scudi = d.protezioniCalcolate.filter((p) => p.tipo === 'scudo' && perUid.get(base(p.uid))?.voce.stato === 'imbracciato');
+  const riponi = (uid, nome) => {
+    const r = perUid.get(base(uid));
+    return r ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => cambiaStato(ctx, uid, statoRiposto(r.stati)), title: `Toglie ${nome} di mano (${NOMI_STATI[statoRiposto(r.stati)]}).` }, 'Riponi') : null;
+  };
+  const oggetti = [
+    ...armi.map((a) => ({ mani: a.mani === 2 ? 2 : 1, nodi: [schedaArma(ctx, a), ...figli(a.uid).map((x) => schedaArma(ctx, x))], riponi: riponi(a.uid, a.nome) })),
+    ...scudi.map((p) => ({ mani: 1, nodi: [schedaScudoInMano(ctx, p), ...figli(base(p.uid)).map((x) => schedaArma(ctx, x))], riponi: riponi(p.uid, p.nome) })),
+  ];
+  if (!oggetti.length) return [];
+  const riquadri = [];
+  let libere = 2;
+  for (const o of oggetti) {
+    const titolo = o.mani === 2 && libere === 2 ? 'Due mani' : libere === 2 ? 'Mano destra' : libere === 1 ? 'Mano sinistra' : 'Oltre le due mani';
+    libere = Math.max(0, libere - o.mani);
+    riquadri.push(h('section', { class: `riquadro-mano${titolo === 'Due mani' ? ' due-mani' : ''}${titolo === 'Oltre le due mani' ? ' oltre' : ''}`, 'aria-label': titolo },
+      h('header', { class: 'testa-mano' }, h('h3', {}, titolo), o.riponi), ...o.nodi));
+  }
+  if (libere === 1) riquadri.push(h('section', { class: 'riquadro-mano libera', 'aria-label': 'Mano sinistra' }, h('header', { class: 'testa-mano' }, h('h3', {}, 'Mano sinistra')), h('p', { class: 'vuoto' }, 'Libera.')));
+  return riquadri;
+}
+
+/** Scudo imbracciato nel riquadro della mano: AR e Parata ravvicinata / a distanza con la provenienza. */
+function schedaScudoInMano(ctx, p) {
+  return h('article', { class: 'arma-tab scudo-in-mano' },
+    h('div', { class: 'arma-testa' }, h('h3', {}, p.nome, h('small', { class: 'sigla' }, ' · Scudo'))),
+    h('div', { class: 'arma-valori' },
+      h('p', {}, h('span', { class: 'sigla' }, 'AR '), h('strong', {}, testoAr(p.ar))),
+      p.parata ? h('p', { class: 'valore-tavolo' }, h('span', {}, 'Parata '),
+        valoreEffettivo(`Parata ravvicinata (${p.nome})`, p.parata.ravvicinataEffettiva ?? p.parata.ravvicinata, p.parata.daRegole, p.parata.scomposizioneRavvicinata, { pillola: true, provenienza: p.parata.provenienzaRavvicinata }),
+        h('small', { class: 'sigla' }, ' ravv. · '),
+        valoreEffettivo(`Parata a distanza (${p.nome})`, p.parata.distanzaEffettiva ?? p.parata.distanza, p.parata.daRegole, p.parata.scomposizioneDistanza, { provenienza: p.parata.provenienzaDistanza }),
+        h('small', { class: 'sigla' }, ' dist.')) : null));
+}
+
+/**
+ * Oggetti disponibili da impugnare o da indossare (non nel deposito comune): una riga ciascuno con lo
+ * stato attuale e il pulsante che lo cambia. Lo stesso campo della riga dell'Inventario.
+ */
+function oggettiDisponibili(ctx, tipi, { verbo, statoAttivo, soloNonAttivi = false }) {
+  const cat = catalogo(ctx.dati);
+  const voci = (ctx.scelte.equipaggiamento ?? []).map((v) => risolvi(v, cat))
+    .filter((r) => tipi.includes(r.tipo) && !r.deposito && !r.fuoriCatalogo && !(soloNonAttivi && r.attivo));
+  if (!voci.length) return null;
+  return h('ul', { class: 'elenco-disponibili' }, voci.map((r) => {
+    const attivo = statoAttivo(r);
+    return h('li', { class: r.attivo ? 'attivo' : null },
+      h('span', {}, h('strong', {}, r.nome), h('small', { class: 'sigla' }, ` · ${NOMI_STATI[r.voce.stato] ?? 'Con sé'}`)),
+      r.attivo
+        ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => cambiaStato(ctx, r.uid, statoRiposto(r.stati)) }, r.tipo === 'scudo' || r.tipo === 'arma_ravvicinata' || r.tipo === 'arma_distanza' ? 'Riponi' : 'Togli')
+        : attivo ? h('button', { type: 'button', class: 'btn btn-piccolo primario', onclick: () => cambiaStato(ctx, r.uid, attivo) }, verbo(r)) : null);
+  }));
+}
+
+/** Riga compatta di un riquadro della colonna destra: titolo, stato attuale e gradi cliccabili. */
+function gradiCompatti(ctx, { titolo, campo, attuale, gradi, nota }) {
+  const g = gradi[attuale];
+  return h('section', { class: 'riquadro riquadro-gradi', 'aria-label': titolo },
+    h('header', { class: 'testa-gradi' }, h('h3', {}, titolo),
+      h('span', { class: `grado-attuale${g?.penalita ? ' con-penalita' : ''}` }, g ? `${g.nome}${g.penalita ? ` ${segno(g.penalita)}` : ''}` : '—'),
+      nota ? infoValore('?', { titolo, sezioni: [{ testo: nota }] }, { classe: 'info-gradi' }) : null),
+    h('div', { class: 'gradi-compatti', role: 'radiogroup', 'aria-label': titolo }, gradi.map((x, n) => h('button', {
+      type: 'button', role: 'radio', 'aria-checked': String(attuale === n), title: [x.nome, x.penalita === null ? null : x.penalita ? segno(x.penalita) : '0', x.descrizione].filter(Boolean).join(' · '),
+      class: `grado${attuale === n ? ' attivo' : ''}${n > 0 && attuale >= n ? ' raggiunto' : ''}`,
+      onclick: () => ctx.azioni.imposta(campo, n),
+    }, x.breve ?? x.nome))));
+}
+
+/**
+ * Tab Combattimento (docs/layout-sd.md, pezzo 3). Colonna sinistra: PV con l'AR (se la colonna delle
+ * risorse non c'è), Difese, Iniziativa, Movimento, Azioni, Prove Salvezza; le armi in mano nei riquadri
+ * delle mani, con «Attacca!» e «Ricarica»; le armi disponibili; le Protezioni; Artefatti e
+ * sintonizzazione (fino al pezzo 4). Colonna destra: Ferite, Affaticamento, Corruzione, Stati, con le
+ * penalità nei valori effettivi. Equipaggiamento, Integrità, Carico, caricatori di riserva, condizione
+ * delle armi e applicazioni sanitarie si cambiano nell'Inventario.
+ */
 function tabCombattimento(ctx, d) {
   const s = ctx.sessione;
   const m = ctx.massimi;
-  const gradini = Array.from({ length: m.ferite + 1 }, (_, n) => ({ n, ...descriviFerite(n, ctx.dati) }));
+  const idt = ctx.tab.tab.find((t) => t.id === 'identita')?.dati ?? null;
+  const talenti = new Set((ctx.tab.scheda.talentiLiberi ?? []).map((t) => t.id));
+  // Parata e Schivata Istintiva (§8.6.7): la «Parata/Schivata Libera» della proposta di Davide
+  const istintive = (ctx.dati.talenti_liberi?.talenti ?? []).filter((t) => talenti.has(t.id)
+    && (['parata-istintiva', 'schivata-istintiva'].includes(t.id) || (t.prerequisiti ?? []).some((p) => ['parata-istintiva', 'schivata-istintiva'].includes(p))));
+  const ferite = Array.from({ length: m.ferite + 1 }, (_, n) => ({ n, ...descriviFerite(n, ctx.dati) }))
+    .map((g) => ({ nome: g.nome, breve: g.n === 0 ? 'Nessuna' : g.n > ctx.dati.regole.ferite.stati.length ? 'Oltre' : g.nome, penalita: g.penalita, descrizione: g.menomazione ?? null }));
+  const mani = riquadriMani(ctx, d);
+  const sanitari = consumabili(normalizzaEquipaggiamento(ctx.scelte.equipaggiamento), ctx.dati).filter((c) => c.gruppo === 'sanitario');
   return [
     promemoriaPenalita(ctx),
     d.avvisiEquipaggiamento.length ? h('div', { class: 'riquadro attenzione' },
       h('p', {}, h('strong', {}, 'Equipaggiamento da controllare (avvisi, non blocchi: decide il master):')),
       h('ul', {}, d.avvisiEquipaggiamento.map((a) => h('li', {}, a)))) : null,
-    h('div', { class: 'griglia-tavolo' },
-      // con la colonna di sinistra (tab a sinistra, da 900 px) i PV sono già lì: qui non si ripetono
-      contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true, classe: 'riquadro-pv pv-pm-identita', extra: pilloleAR(ctx) }),
-      d.difese ? h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Difese'),
-        h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), valoreEffettivo('Difese', d.difese.effettivo, d.difese.totale, d.difese.scomposizione, { pillola: true, provenienza: d.difese.provenienza })),
-        h('p', { class: 'nota' }, `(${d.difese.caratteristica}) con l’equipaggiamento e le condizioni della sessione`),
-        // §3.5.5, Disciplina Guardia: bonus a Difese contro gli attacchi ravvicinati
-        ...talentiAttacco(ctx.tab.scheda, ctx.dati, 'difese_ravvicinate').filter((t) => t.e.va).map((t) => h('p', { class: 'nota' },
-          'Contro attacchi ravvicinati: ', h('strong', {}, `VA ${numero(d.difese.effettivo + t.e.va)}`), ` (${segno(t.e.va)} ${t.nome})`))) : null,
-      ...riquadriTavolo(ctx)),
+    h('div', { class: 'combattimento-layout' },
+      h('div', { class: 'combattimento-principale' },
+        h('div', { class: 'griglia-tavolo griglia-tavolo-compatta' },
+          // con la colonna delle risorse i PV sono già lì: qui non si ripetono (css/style.css)
+          contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true, classe: 'riquadro-pv pv-pm-identita', extra: pilloleAR(ctx) }),
+          d.difese ? h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Difese'),
+            h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), valoreEffettivo('Difese', d.difese.effettivo, d.difese.totale, d.difese.scomposizione, { pillola: true, provenienza: d.difese.provenienza })),
+            // §3.5.5, Disciplina Guardia: bonus a Difese contro gli attacchi ravvicinati
+            ...talentiAttacco(ctx.tab.scheda, ctx.dati, 'difese_ravvicinate').filter((t) => t.e.va).map((t) => h('p', { class: 'nota' },
+              'Contro attacchi ravvicinati: ', h('strong', {}, `VA ${numero(d.difese.effettivo + t.e.va)}`), ` (${segno(t.e.va)} ${t.nome})`)),
+            istintive.length ? h('p', { class: 'proprieta-arma' }, istintive.map((t) => h('span', { class: 'etichetta', title: t.testo }, t.nome))) : null) : null,
+          ...riquadriTavolo(ctx)),
+        idt?.salvezze ? h('div', { class: 'contatore-tavolo salvezze-tavolo' }, h('h3', {}, 'Prove Salvezza'),
+          h('p', { class: 'valore-tavolo pillole-salvezze' }, idt.salvezze.map((x) => h('span', { class: 'salvezza-pillola' }, h('small', { class: 'sigla' }, `${x.nome} `),
+            valoreEffettivo(x.nome, x.effettivo, x.totale, x.scomposizione, { pillola: true, provenienza: x.provenienza })))),
+          usiSalvezze(ctx, idt.salvezze)) : null,
 
-    sezione('Armi impugnate',
-      d.armiCalcolate.length ? null : h('p', { class: 'vuoto' }, 'Nessuna arma impugnata: cambia lo stato di un’arma in «Impugnata» nella tab Inventario.'),
-      d.armiCalcolate.length || senzArmiDisponibile(ctx.tab.scheda, ctx.dati)
-        ? h('div', { class: 'armi-tab' }, d.armiCalcolate.map((a) => schedaArma(ctx, a)), senzArmiDisponibile(ctx.tab.scheda, ctx.dati) ? schedaSenzArmi(ctx) : null) : null),
+        sezione('In mano',
+          mani.length ? h('div', { class: 'riquadri-mani' }, mani) : h('p', { class: 'vuoto' }, 'Nessuna arma impugnata né scudo imbracciato: scegli qui sotto, o nella tab Inventario.'),
+          senzArmiDisponibile(ctx.tab.scheda, ctx.dati) ? h('div', { class: 'armi-tab' }, schedaSenzArmi(ctx)) : null,
+          h('p', { class: 'nota' }, 'Caricatori di riserva e condizione delle armi qui si vedono soltanto: si cambiano nella tab Inventario. «Ricarica» consuma dalle riserve.')),
 
-    sezione('Protezioni', d.protezioniCalcolate.length
-      ? h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },
-        h('thead', {}, h('tr', {}, ['Protezione', 'AR', 'Categoria o taglia', 'Parata', 'Penalità', 'FOR'].map((c) => h('th', {}, c)))),
-        h('tbody', {}, d.protezioniCalcolate.flatMap((p) => [
-          h('tr', {},
-            h('th', { scope: 'row' }, p.nome, p.rinforzo ? h('small', { class: 'sigla' }, ` + ${p.rinforzo.nome}`) : null),
-            h('td', { class: 'forte' }, p.tipo === 'elmetto' ? '—' : testoAr(p.ar)),
-            h('td', { title: p.categoriaBase && p.categoria !== p.categoriaBase ? 'Leggera portata ad AR 3 o più da un rinforzo: penalità della Media (§7.11.2)' : null },
-              p.tipo === 'elmetto' ? 'Elmetto' : p.categoria !== p.categoriaBase && p.categoriaBase ? `${p.categoriaBase} → ${p.categoria}` : p.categoria ?? p.taglia ?? '—'),
-            h('td', { title: p.parata ? `Difese ${p.parata.difese} + modificatori dello Scudo ${segno(p.parata.modificatori.ravvicinata)} / ${segno(p.parata.modificatori.distanza)} (§7.4.11)` : null },
-              p.parata ? [
-                valoreEffettivo(`Parata ravvicinata (${p.nome})`, p.parata.ravvicinataEffettiva ?? p.parata.ravvicinata, p.parata.daRegole, p.parata.scomposizioneRavvicinata, { provenienza: p.parata.provenienzaRavvicinata }), ' ravv. · ',
-                valoreEffettivo(`Parata a distanza (${p.nome})`, p.parata.distanzaEffettiva ?? p.parata.distanza, p.parata.daRegole, p.parata.scomposizioneDistanza, { provenienza: p.parata.provenienzaDistanza }), ' dist.',
-              ] : '—'),
-            h('td', {}, testoPenalitaTab({ ...p.penalita, movimento_q: (p.penalita?.movimento_q ?? 0) + (p.mov ?? 0) || undefined })),
-            h('td', {}, p.forRichiesta ? `${p.forRichiesta}${p.forMancante ? ` (−${p.forMancante} VA${p.tipo === 'scudo' ? ' a Parate e attacchi con lo Scudo' : ''})` : ''}` : '—')),
-          ...p.alternative.map((a) => h('tr', { class: 'alternativa' },
-            h('td', { colspan: 6 }, h('small', {}, `↳ ${a.condizione}: `,
-              [a.ar ? `AR ${testoAr(a.ar)}` : null, a.parata ? `Parata ${numero(a.parata.ravvicinata)} ravv. · ${numero(a.parata.distanza)} dist.` : null,
-                a.forRichiesta ? `FOR ${a.forRichiesta}` : null, a.penalita ? `penalità: ${testoPenalitaTab(a.penalita)}` : null].filter(Boolean).join(' · '))))),
-          p.proprieta.length ? h('tr', { class: 'alternativa' }, h('td', { colspan: 6 },
-            h('span', { class: 'proprieta-arma' }, p.proprieta.map((x) => h('span', { class: 'etichetta', title: x.testo }, x.nome))))) : null,
-          // effetti tipizzati delle proprietà e promemoria (docs/effetti-oggetti.md, docs/proprieta-armature.md)
-          p.modifiche?.length || p.effetti?.some((e) => e.proprieta) || p.promemoria?.length ? h('tr', { class: 'alternativa' }, h('td', { colspan: 6 }, h('small', {},
-            p.modifiche?.length ? [h('strong', {}, p.tipo === 'armatura' ? 'Elmetto standard con: ' : 'Modifiche: '), p.modifiche.join(', '), '. '] : null,
-            p.effetti?.some((e) => e.proprieta) ? [h('strong', {}, 'Effetti: '), p.effetti.filter((e) => e.proprieta).map((e) => testoEffettoOggetto(e)).join(' · '), '. '] : null,
-            p.promemoria?.length ? [h('strong', {}, 'Promemoria: '), p.promemoria.join(', '), '.'] : null))) : null,
-        ]))))
-      : h('p', { class: 'vuoto' }, 'Nessuna protezione indossata o imbracciata.'),
-      resistenze(ctx),
-      d.protezioniCalcolate.length ? h('p', { class: 'nota' }, 'Agilità vale per Schivata e Prove fisiche di Atletica e Furtività ostacolate (già nel VA di quelle Abilità, colonna Equip); non per la Parata. La penalità MOV si sottrae una volta al budget di movimento (§7.11.1). La Parata con lo Scudo è già calcolata: Difese con l’equipaggiamento, modificatori propri dello Scudo (§7.4.11) e FOR insufficiente (§7.1.6). L’AR dello Scudo vale anche senza Parata, purché sia imbracciato; due scudi non si sommano (§7.4).') : null),
+        sezione('Armi disponibili',
+          oggettiDisponibili(ctx, ['arma_ravvicinata', 'arma_distanza'], { verbo: () => 'Impugna', statoAttivo: (r) => (r.stati.includes('impugnata') ? 'impugnata' : null), soloNonAttivi: true })
+            ?? h('p', { class: 'vuoto' }, 'Nessun’altra arma con sé.')),
 
-    // §7.19: applicazioni di kit e dispositivi sanitari, con il contatore delle munizioni
-    ...(() => {
-      const lista = consumabili(normalizzaEquipaggiamento(ctx.scelte.equipaggiamento), ctx.dati).filter((c) => c.gruppo === 'sanitario');
-      return lista.length ? [sezione('Sanitario (§7.19)', h('div', { class: 'armi-tab' }, lista.map((c) => h('article', { class: 'arma-tab' },
-        h('h3', {}, c.nome),
-        c.effettoBreve ? h('p', { class: 'effetto-breve' }, c.effettoBreve) : null,
-        pannelloMunizioni(ctx, { uid: c.uid, nome: c.nome, munizioni: { capacita: c.capacita, unita: c.unita, ricarica: c.ricarica ? `${c.ricarica.applicazioni} ${c.unita} costano ${c.ricarica.costo.toLocaleString('it-IT')}` : null } })))))] : [];
-    })(),
-    // §7.10: Artefatti, sintonizzazione e riserve di PM
-    ...(() => {
-      const st = ctx.tab.scheda.equipaggiamento?.sintonizzazione;
-      if (!st) return [];
-      // i contenitori delle armi stanno accanto all'arma; gli altri nella tab Magia, se c'è, altrimenti qui
-      const conMagia = ctx.tab.tab.some((t) => t.id === 'poteri' && t.dati);
-      const riserve = conMagia ? [] : (ctx.tab.scheda.equipaggiamento?.contenitori ?? []).filter((c) => !['arma_ravvicinata', 'arma_distanza'].includes(c.tipo));
-      return [sezione('Artefatti e sintonizzazione (§7.10)',
-        h('p', { class: `valore-tavolo${st.usata > st.capacita ? ' oltre' : ''}` }, h('span', {}, 'Sintonizzazione '), h('strong', {}, String(st.usata)), h('span', {}, ` / ${st.capacita}`)),
-        h('p', { class: 'nota' }, `Capacità per ${st.gradi} Grad${st.gradi === 1 ? 'o' : 'i'} complessiv${st.gradi === 1 ? 'o' : 'i'}${st.talento ? ` con ${st.talento}` : ''}, prima dell’eventuale riduzione per Umanità (§5.21). Si segna «Sintonizzato» nella lista dell’equipaggiamento.`),
-        h('ul', { class: 'elenco-sintonie' }, st.artefatti.map((x) => h('li', {}, `${x.sintonizzato ? '✔' : '○'} ${x.nome} · ${x.potenza}, costo ${x.costo}`))),
-        (ctx.tab.scheda.equipaggiamento?.contenitori ?? []).length ? h('p', { class: 'nota' }, `I PM dei cristalli si modificano nel riquadro Punti Magia (tab Identità${conMagia ? ' o Poteri' : ''}).`) : null,
-        riserve.length ? h('div', { class: 'armi-tab' }, riserve.map((c) => schedaContenitore(ctx, c))) : null)];
-    })(),
+      sezione('Protezioni',
+        oggettiDisponibili(ctx, ['armatura', 'scudo', 'elmetto'], { verbo: (r) => (r.tipo === 'scudo' ? 'Imbraccia' : 'Indossa'), statoAttivo: (r) => ['indossata', 'imbracciato'].find((x) => r.stati.includes(x)) ?? null }),
+        d.protezioniCalcolate.length
+        ? h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },
+          h('thead', {}, h('tr', {}, ['Protezione', 'AR', 'Categoria o taglia', 'Parata', 'Penalità', 'FOR'].map((c) => h('th', {}, c)))),
+          h('tbody', {}, d.protezioniCalcolate.flatMap((p) => [
+            h('tr', {},
+              h('th', { scope: 'row' }, p.nome, p.rinforzo ? h('small', { class: 'sigla' }, ` + ${p.rinforzo.nome}`) : null),
+              h('td', { class: 'forte' }, p.tipo === 'elmetto' ? '—' : testoAr(p.ar)),
+              h('td', { title: p.categoriaBase && p.categoria !== p.categoriaBase ? 'Leggera portata ad AR 3 o più da un rinforzo: penalità della Media (§7.11.2)' : null },
+                p.tipo === 'elmetto' ? 'Elmetto' : p.categoria !== p.categoriaBase && p.categoriaBase ? `${p.categoriaBase} → ${p.categoria}` : p.categoria ?? p.taglia ?? '—'),
+              h('td', { title: p.parata ? `Difese ${p.parata.difese} + modificatori dello Scudo ${segno(p.parata.modificatori.ravvicinata)} / ${segno(p.parata.modificatori.distanza)} (§7.4.11)` : null },
+                p.parata ? [
+                  valoreEffettivo(`Parata ravvicinata (${p.nome})`, p.parata.ravvicinataEffettiva ?? p.parata.ravvicinata, p.parata.daRegole, p.parata.scomposizioneRavvicinata, { provenienza: p.parata.provenienzaRavvicinata }), ' ravv. · ',
+                  valoreEffettivo(`Parata a distanza (${p.nome})`, p.parata.distanzaEffettiva ?? p.parata.distanza, p.parata.daRegole, p.parata.scomposizioneDistanza, { provenienza: p.parata.provenienzaDistanza }), ' dist.',
+                ] : '—'),
+              h('td', {}, testoPenalitaTab({ ...p.penalita, movimento_q: (p.penalita?.movimento_q ?? 0) + (p.mov ?? 0) || undefined })),
+              h('td', {}, p.forRichiesta ? `${p.forRichiesta}${p.forMancante ? ` (−${p.forMancante} VA${p.tipo === 'scudo' ? ' a Parate e attacchi con lo Scudo' : ''})` : ''}` : '—')),
+            ...p.alternative.map((a) => h('tr', { class: 'alternativa' },
+              h('td', { colspan: 6 }, h('small', {}, `↳ ${a.condizione}: `,
+                [a.ar ? `AR ${testoAr(a.ar)}` : null, a.parata ? `Parata ${numero(a.parata.ravvicinata)} ravv. · ${numero(a.parata.distanza)} dist.` : null,
+                  a.forRichiesta ? `FOR ${a.forRichiesta}` : null, a.penalita ? `penalità: ${testoPenalitaTab(a.penalita)}` : null].filter(Boolean).join(' · '))))),
+            p.proprieta.length ? h('tr', { class: 'alternativa' }, h('td', { colspan: 6 },
+              h('span', { class: 'proprieta-arma' }, p.proprieta.map((x) => h('span', { class: 'etichetta', title: x.testo }, x.nome))))) : null,
+            // effetti tipizzati delle proprietà e promemoria (docs/effetti-oggetti.md, docs/proprieta-armature.md)
+            p.modifiche?.length || p.effetti?.some((e) => e.proprieta) || p.promemoria?.length ? h('tr', { class: 'alternativa' }, h('td', { colspan: 6 }, h('small', {},
+              p.modifiche?.length ? [h('strong', {}, p.tipo === 'armatura' ? 'Elmetto standard con: ' : 'Modifiche: '), p.modifiche.join(', '), '. '] : null,
+              p.effetti?.some((e) => e.proprieta) ? [h('strong', {}, 'Effetti: '), p.effetti.filter((e) => e.proprieta).map((e) => testoEffettoOggetto(e)).join(' · '), '. '] : null,
+              p.promemoria?.length ? [h('strong', {}, 'Promemoria: '), p.promemoria.join(', '), '.'] : null))) : null,
+          ]))))
+        : h('p', { class: 'vuoto' }, 'Nessuna protezione indossata o imbracciata.'),
+        resistenze(ctx),
+        d.protezioniCalcolate.length ? h('p', { class: 'nota' }, 'Agilità vale per Schivata e Prove fisiche di Atletica e Furtività ostacolate (già nel VA di quelle Abilità, colonna Equip); non per la Parata. La penalità MOV si sottrae una volta al budget di movimento (§7.11.1). La Parata con lo Scudo è già calcolata: Difese con l’equipaggiamento, modificatori propri dello Scudo (§7.4.11) e FOR insufficiente (§7.1.6). L’AR dello Scudo vale anche senza Parata, purché sia imbracciato; due scudi non si sommano (§7.4).') : null),
 
-    sezione('Ferite (§5.14)',
-      h('p', { class: 'nota' }, 'Ogni nuova Ferita fa avanzare di un gradino. La penalità è cumulativa a VA e Prove Salvezza.'),
-      h('div', { class: 'selettore-livelli', role: 'radiogroup', 'aria-label': 'Ferite' }, gradini.map((g) => h('button', {
-        type: 'button', role: 'radio', 'aria-checked': String(s.ferite === g.n), class: `livello-tavolo${s.ferite === g.n ? ' attivo' : ''}${g.n > 0 && s.ferite >= g.n ? ' raggiunto' : ''}`,
-        onclick: () => ctx.azioni.imposta('ferite', g.n),
-      }, h('strong', {}, g.nome), h('span', {}, g.penalita === null ? '' : g.penalita ? segno(g.penalita) : '0'), g.menomazione ? h('small', {}, g.menomazione) : null)))),
+      // §7.10: Artefatti, sintonizzazione e riserve di PM
+      ...(() => {
+        const st = ctx.tab.scheda.equipaggiamento?.sintonizzazione;
+        if (!st) return [];
+        // i contenitori delle armi stanno accanto all'arma; gli altri nella tab Magia, se c'è, altrimenti qui
+        const conMagia = ctx.tab.tab.some((t) => t.id === 'poteri' && t.dati);
+        const riserve = conMagia ? [] : (ctx.tab.scheda.equipaggiamento?.contenitori ?? []).filter((c) => !['arma_ravvicinata', 'arma_distanza'].includes(c.tipo));
+        return [sezione('Artefatti e sintonizzazione (§7.10)',
+          h('p', { class: `valore-tavolo${st.usata > st.capacita ? ' oltre' : ''}` }, h('span', {}, 'Sintonizzazione '), h('strong', {}, String(st.usata)), h('span', {}, ` / ${st.capacita}`)),
+          h('p', { class: 'nota' }, `Capacità per ${st.gradi} Grad${st.gradi === 1 ? 'o' : 'i'} complessiv${st.gradi === 1 ? 'o' : 'i'}${st.talento ? ` con ${st.talento}` : ''}, prima dell’eventuale riduzione per Umanità (§5.21). Si segna «Sintonizzato» nella lista dell’equipaggiamento.`),
+          h('ul', { class: 'elenco-sintonie' }, st.artefatti.map((x) => h('li', {}, `${x.sintonizzato ? '✔' : '○'} ${x.nome} · ${x.potenza}, costo ${x.costo}`))),
+          (ctx.tab.scheda.equipaggiamento?.contenitori ?? []).length ? h('p', { class: 'nota' }, `I PM dei cristalli si modificano nel riquadro Punti Magia (tab Identità${conMagia ? ' o Poteri' : ''}).`) : null,
+          riserve.length ? h('div', { class: 'armi-tab' }, riserve.map((c) => schedaContenitore(ctx, c))) : null)];
+      })(),
 
-    sezione('Affaticamento (§5.19)',
-      h('p', { class: 'nota' }, 'Si applica solo la penalità dello Stato attuale, a tutte le Prove di Caratteristica, Abilità e Salvezza.'),
-      h('div', { class: 'selettore-livelli', role: 'radiogroup', 'aria-label': 'Affaticamento' }, d.affaticamento.map((a, n) => h('button', {
-        type: 'button', role: 'radio', 'aria-checked': String(s.affaticamento === n), class: `livello-tavolo${s.affaticamento === n ? ' attivo' : ''}`,
-        onclick: () => ctx.azioni.imposta('affaticamento', n),
-      }, h('strong', {}, a.nome), h('span', {}, a.penalita ? segno(a.penalita) : '0'))))),
+        sanitari.length ? h('p', { class: 'nota' }, `Kit e dispositivi sanitari (${sanitari.map((c) => c.nome).join(', ')}): le applicazioni si contano nella tab Inventario (§7.19).`) : null),
 
-    sezione('Stati attivi (§5.18)',
-      h('ul', { class: 'stati-tavolo' }, d.stati.map((st) => {
-        const attivo = s.statiAttivi.includes(st.id);
-        return h('li', {}, h('label', { class: `stato-tavolo${attivo ? ' attivo' : ''}` },
-          h('input', { type: 'checkbox', checked: attivo, onchange: () => ctx.azioni.commutaStato(st.id) }),
-          h('span', {}, h('strong', {}, st.nome), h('small', {}, ` · ${st.durata}`), h('br', {}), h('span', { class: 'promemoria-stato' }, st.promemoria, st.riassunto ? h('em', { class: 'riassunto' }, ' (riassunto, non testo del manuale)') : null))));
-      }))),
-
+      h('aside', { class: 'colonna-stati', 'aria-label': 'Ferite, Affaticamento, Corruzione e Stati' },
+        gradiCompatti(ctx, { titolo: 'Ferite (§5.14)', campo: 'ferite', attuale: s.ferite, gradi: ferite,
+          nota: 'Ogni nuova Ferita fa avanzare di un gradino. La penalità è cumulativa a VA e Prove Salvezza.' }),
+        gradiCompatti(ctx, { titolo: 'Affaticamento (§5.19)', campo: 'affaticamento', attuale: s.affaticamento, gradi: d.affaticamento,
+          nota: 'Si applica solo la penalità dello Stato attuale, a tutte le Prove di Caratteristica, Abilità e Salvezza.' }),
+        d.corruzione?.length ? gradiCompatti(ctx, { titolo: 'Corruzione (§5.20)', campo: 'corruzione', attuale: s.corruzione ?? 0,
+          gradi: d.corruzione.map((x) => ({ nome: x.nome, penalita: x.penalita, descrizione: x.manifestazioni })),
+          nota: 'Corruzione Oscura (CROS): si applica solo la penalità dello Stato attuale, a tutte le Prove di Caratteristica, Abilità e Salvezza, comprese quelle contro ulteriori esposizioni. Non cambia Iniziativa, Movimento, Azioni, danni, Armatura, PV e PM. Oscuro: il personaggio diventa un PNG. «Nuova sessione» non la azzera.' }) : null,
+        h('section', { class: 'riquadro riquadro-gradi', 'aria-label': 'Stati attivi' },
+          h('header', { class: 'testa-gradi' }, h('h3', {}, 'Stati (§5.18)'),
+            h('span', { class: `grado-attuale${s.statiAttivi.length ? ' con-penalita' : ''}` }, s.statiAttivi.length ? `${s.statiAttivi.length} attiv${s.statiAttivi.length === 1 ? 'o' : 'i'}` : 'nessuno')),
+          h('ul', { class: 'stati-compatti' }, d.stati.map((st) => {
+            const attivo = s.statiAttivi.includes(st.id);
+            return h('li', {}, h('label', { class: `stato-compatto${attivo ? ' attivo' : ''}` },
+              h('input', { type: 'checkbox', checked: attivo, onchange: () => ctx.azioni.commutaStato(st.id) }),
+              h('span', {}, st.nome)),
+            infoValore('?', { titolo: st.nome, sottotitolo: st.durata, sezioni: [{ testo: `${st.promemoria}${st.riassunto ? ' (riassunto, non testo del manuale)' : ''}` }] }, { classe: 'info-gradi' }));
+          }))))),
   ];
 }
 
@@ -1163,11 +1301,9 @@ function schedaArma(ctx, a) {
       a.va !== null ? h('button', { type: 'button', class: 'btn primario btn-attacca', disabled: !!a.rotta || a.condizioneArma?.utilizzabile === false,
         title: a.rotta ? 'Rotto (0 PI): non può attaccare finché non viene riparato (§7.2.1, A.44).' : a.condizioneArma?.utilizzabile === false ? `${a.condizioneArma.nome}: ${a.condizioneArma.testo}` : null,
         onclick: () => { ctx.ui.attacco = { uid: a.uid, passo: 0 }; ctx.azioni.ridisegna(); } }, 'Attacca!') : null),
-    // A.49: condizione dell'arma al tavolo (Giocatore §5.17), distinta dai PI
-    ctx.dati.regole.condizioni_armi && !a.daScudo && !a.moduloDi ? h('label', { class: 'condizione-arma', title: a.condizioneArma?.testo ?? 'Condizione dell’arma dopo una Complicazione (§5.17); distinta dai PI.' },
-      h('span', { class: 'sigla' }, 'Condizione '),
-      h('select', { onchange: (e) => ctx.azioni.condizioneArma(a.uid, e.target.value) },
-        ctx.dati.regole.condizioni_armi.elenco.map((c) => h('option', { value: c.id, selected: (a.condizioneArma?.id ?? 'integra') === c.id }, c.nome)))) : null,
+    // A.49: condizione dell'arma al tavolo (Giocatore §5.17), distinta dai PI: qui si legge, si cambia
+    // nell'Inventario (docs/layout-sd.md, pezzo 3)
+    a.condizioneArma && a.condizioneArma.id !== 'integra' ? h('p', { class: 'condizione-arma motivo', title: a.condizioneArma.testo }, h('span', { class: 'sigla' }, 'Condizione '), h('strong', {}, a.condizioneArma.nome)) : null,
     a.moduloDi ? h('p', { class: 'nota' }, `Modulo integrato di ${a.moduloDi}: si sceglie il profilo prima di ogni attacco; alimentazione separata (§7.8).`) : null,
     // risposta A.10: stato al tavolo dell'attacco (lama estratta), lo stesso interruttore della tab Abilità
     a.statoAlternativo ? h('label', { class: `stato-tavolo${a.statoAlternativo.acceso ? ' attivo' : ''}` },
@@ -1208,7 +1344,7 @@ function schedaArma(ctx, a) {
     mr ? h('p', { class: 'nota' }, `Con ${mr.nome}: ${mr.proprieta.join('; ')}. Danno, AC e RS sono della munizione, non bonus del lanciatore (§7.8).`) : null,
     // §7.5.1: la riserva di Chroma integrata non è un caricatore: +/− manuali, niente «Ricarica»
     a.contenitore ? pannelloChroma(ctx, (ctx.tab.scheda.equipaggiamento?.contenitori ?? []).find((c) => c.uid === a.uid), { conPulsanti: true })
-      : a.tipo === 'arma_distanza' || a.munizioni?.capacita ? pannelloMunizioni(ctx, a) : null);
+      : a.tipo === 'arma_distanza' || a.munizioni?.capacita ? pannelloMunizioni(ctx, a, { riserveModificabili: false }) : null);
 }
 
 const ETICHETTE_MUNIZIONI = { colpi: 'Caricatore', cariche: 'Cariche nella cella', PM: 'PM nella riserva', applicazioni: 'Applicazioni', dosi: 'Dosi', set: 'Set di materiali' };
@@ -1228,7 +1364,7 @@ const MODI_RICARICA = {
  * parziali e vuoti tolti, munizioni sciolte o celle dell'inventario. «Ricarica» è disabilitato,
  * con il motivo, se non c'è niente di compatibile. Le altre riserve si contano a mano.
  */
-function pannelloMunizioni(ctx, a) {
+function pannelloMunizioni(ctx, a, { riserveModificabili = true } = {}) {
   const m = ctx.sessione.munizioni[a.uid] ?? { colpi: 0, riserve: 0 };
   const capacita = a.munizioni?.capacita ?? null;
   const info = a.tipo === 'arma_distanza' ? ctx.massimi.ricarica?.[a.uid] ?? null : null;
@@ -1249,7 +1385,7 @@ function pannelloMunizioni(ctx, a) {
     stato.avviso ? h('small', { class: 'motivo' }, stato.avviso) : null,
     !info || info.modo === 'caricatore' || info.modo === null ? h('div', { class: 'riga-munizioni' },
       h('span', {}, info?.modo === 'caricatore' ? 'Caricatori pieni di riserva ' : 'Riserve ', h('strong', {}, String(m.riserve))),
-      pulsante('riserve', -1, 'riserve'), pulsante('riserve', 1, 'riserve')) : null,
+      riserveModificabili ? [pulsante('riserve', -1, 'riserve'), pulsante('riserve', 1, 'riserve')] : h('small', { class: 'sigla' }, ' (si cambiano nell’Inventario)')) : null,
     info?.modo === 'caricatore' && (m.parziali?.length || m.vuoti) ? h('p', { class: 'nota riga-munizioni' },
       m.parziali?.length ? `Caricatori parziali: ${m.parziali.map((n) => `${n} colpi`).join(', ')}` : null,
       m.parziali?.length && m.vuoti ? ' · ' : null,
