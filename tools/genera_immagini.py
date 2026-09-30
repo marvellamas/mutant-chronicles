@@ -84,10 +84,21 @@ def main(prova=False):
     manifesto = {'_nota': 'Generato da tools/genera_immagini.py. «sfondi» si può aggiornare anche a mano (README, «Ritratto e sfondi»).', 'corporazioni': {}, 'pagine': {}, 'sfondi': {}}
     totale = {'png': 0, 'webp': 0, 'servito': 0}
     righe = []
+    # voci già generate: se su questa macchina manca l'originale, restano come sono (i file serviti
+    # sono tracciati, gli originali no), invece di sparire dal manifesto
+    try:
+        precedente = json.loads((RADICE / 'img' / 'immagini.json').read_text(encoding='utf-8'))
+    except (OSError, ValueError):
+        precedente = {}
     for rel, (gruppo, id_) in SORGENTI.items():
         sorgente = ORIGINALI / rel
         if not sorgente.exists():
-            print(f'manca {sorgente.relative_to(RADICE)}: salto {gruppo}/{id_}')
+            vecchia = precedente.get(gruppo, {}).get(id_)
+            if vecchia and all((RADICE / f[k]).exists() for f in vecchia.values() for k in ('png', 'webp') if k in f):
+                manifesto[gruppo][id_] = vecchia
+                print(f'manca {sorgente.relative_to(RADICE)}: tengo {gruppo}/{id_} già generato')
+            else:
+                print(f'manca {sorgente.relative_to(RADICE)}: salto {gruppo}/{id_}')
             continue
         orig = Image.open(sorgente)
         uscita = RADICE / 'img' / gruppo

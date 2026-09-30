@@ -176,6 +176,70 @@
         "png": "img/pagine/magia-512-grigio.png",
         "byte_png": 76708
       }
+    },
+    "artefatti": {
+      "96": {
+        "png": "img/pagine/artefatti-96.png",
+        "byte_png": 5892
+      },
+      "512": {
+        "png": "img/pagine/artefatti-512.png",
+        "byte_png": 97782,
+        "webp": "img/pagine/artefatti-512.webp",
+        "byte_webp": 88626
+      },
+      "512-grigio": {
+        "png": "img/pagine/artefatti-512-grigio.png",
+        "byte_png": 67700
+      }
+    },
+    "cibernetica": {
+      "96": {
+        "png": "img/pagine/cibernetica-96.png",
+        "byte_png": 5955
+      },
+      "512": {
+        "png": "img/pagine/cibernetica-512.png",
+        "byte_png": 102292,
+        "webp": "img/pagine/cibernetica-512.webp",
+        "byte_webp": 90496
+      },
+      "512-grigio": {
+        "png": "img/pagine/cibernetica-512-grigio.png",
+        "byte_png": 72141
+      }
+    },
+    "veicoli": {
+      "96": {
+        "png": "img/pagine/veicoli-96.png",
+        "byte_png": 5779
+      },
+      "512": {
+        "png": "img/pagine/veicoli-512.png",
+        "byte_png": 95797,
+        "webp": "img/pagine/veicoli-512.webp",
+        "byte_webp": 88956
+      },
+      "512-grigio": {
+        "png": "img/pagine/veicoli-512-grigio.png",
+        "byte_png": 68399
+      }
+    },
+    "inventario": {
+      "96": {
+        "png": "img/pagine/inventario-96.png",
+        "byte_png": 6013
+      },
+      "512": {
+        "png": "img/pagine/inventario-512.png",
+        "byte_png": 106544,
+        "webp": "img/pagine/inventario-512.webp",
+        "byte_webp": 96316
+      },
+      "512-grigio": {
+        "png": "img/pagine/inventario-512-grigio.png",
+        "byte_png": 75366
+      }
     }
   },
   "sfondi": {}
