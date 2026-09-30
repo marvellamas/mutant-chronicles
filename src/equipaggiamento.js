@@ -206,7 +206,8 @@ function contenitoriRisolti(oggetti, dati) {
       uid: r.uid, nome: r.nome, tipo: r.tipo, integrato: !!c.integrato,
       energia: c.energia, energiaNome: colore.energia ?? null, macrofamiglie: colore.macrofamiglie ?? [], regoleRimandate: !!colore.regole_rimandate,
       capacita: c.capacita_pm, potenza: a.potenza, costo: a.sintonizzazione,
-      sintonizzato: r.voce.sintonizzato === true,
+      // nel deposito comune non è sintonizzabile (docs/layout-sd.md, pezzo 4): la scelta resta nella voce
+      sintonizzato: r.voce.sintonizzato === true && !r.deposito,
       // E&L 2 (A.19): PM di un contenitore trovato, impostati dal giocatore; null = acquistato, pieno
       pmIniziali: !c.integrato && Number.isInteger(r.voce.pm_iniziali) ? Math.min(r.voce.pm_iniziali, c.capacita_pm) : null,
       stato: r.voce.stato,
@@ -933,7 +934,8 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     const gradi = Math.min(Math.max(base.gradiComplessivi ?? 1, 1), rs.capacita_per_gradi.length);
     const talento = (base.talenti ?? []).includes(rs.talento.nome);
     const capacita = rs.capacita_per_gradi[gradi - 1] + (talento ? rs.talento.bonus : 0);
-    const elenco = artefatti.map(({ o, a }) => ({ uid: o.uid, nome: o.nome, costo: a.sintonizzazione, potenza: a.potenza, tipologia: a.tipologia, sintonizzato: o.voce.sintonizzato === true }));
+    // §7.10; un Artefatto nel deposito comune non è sintonizzabile e non occupa capacità (docs/layout-sd.md, pezzo 4)
+    const elenco = artefatti.map(({ o, a }) => ({ uid: o.uid, nome: o.nome, costo: a.sintonizzazione, potenza: a.potenza, tipologia: a.tipologia, sintonizzato: o.voce.sintonizzato === true && !o.deposito, deposito: o.deposito }));
     const usata = elenco.filter((x) => x.sintonizzato).reduce((s, x) => s + x.costo, 0);
     sintonizzazione = { capacita, usata, gradi, talento: talento ? rs.talento.nome : null, artefatti: elenco };
     if (usata > capacita) avvisi.push(`Sintonizzazioni oltre la capacità: ${usata} su ${capacita}. Il personaggio sceglie quali interrompere (§7.10).`);

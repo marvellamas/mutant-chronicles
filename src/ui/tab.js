@@ -15,7 +15,7 @@ import { descriviFerite } from '../sessione.js';
 import { statoIntegrita } from '../protezione.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
 import { testoDanno } from '../stampa.js';
-import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto, catalogo, risolvi, infoArtefattoVoce } from '../equipaggiamento.js';
+import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto, catalogo, risolvi, infoArtefattoVoce, regoleSintonizzazione } from '../equipaggiamento.js';
 import { dotazioneApplicata, crediti } from '../dotazioni.js';
 import { provenienzaCarico } from '../carico.js';
 import { statoRicarica, disponibili } from '../ricarica.js';
@@ -125,7 +125,7 @@ export function renderTab(ctx) {
     identita: tabIdentita, abilita: tabAbilita, combattimento: tabCombattimento, calendario: tabCalendario,
     // Poteri: per ora la tab Magia com'è; senza accesso alla magia «Nessun potere» (docs/layout-sd.md)
     poteri: tabPoteri,
-    artefatti: () => tabVuoto('In lavorazione.', 'Gli Artefatti Mistici posseduti, con PI, Sintonizzazione e riserve (docs/layout-sd.md, pezzo 4).'),
+    artefatti: (c) => tabArtefatti(c),
     cibernetica: () => tabVuoto('In lavorazione.'),
     inventario: (c) => tabInventario(c),
     veicoli: () => tabVuoto('In lavorazione.'),
@@ -1181,20 +1181,8 @@ function tabCombattimento(ctx, d) {
         resistenze(ctx),
         d.protezioniCalcolate.length ? h('p', { class: 'nota' }, 'Agilità vale per Schivata e Prove fisiche di Atletica e Furtività ostacolate (già nel VA di quelle Abilità, colonna Equip); non per la Parata. La penalità MOV si sottrae una volta al budget di movimento (§7.11.1). La Parata con lo Scudo è già calcolata: Difese con l’equipaggiamento, modificatori propri dello Scudo (§7.4.11) e FOR insufficiente (§7.1.6). L’AR dello Scudo vale anche senza Parata, purché sia imbracciato; due scudi non si sommano (§7.4).') : null),
 
-      // §7.10: Artefatti, sintonizzazione e riserve di PM
-      ...(() => {
-        const st = ctx.tab.scheda.equipaggiamento?.sintonizzazione;
-        if (!st) return [];
-        // i contenitori delle armi stanno accanto all'arma; gli altri nella tab Magia, se c'è, altrimenti qui
-        const conMagia = ctx.tab.tab.some((t) => t.id === 'poteri' && t.dati);
-        const riserve = conMagia ? [] : (ctx.tab.scheda.equipaggiamento?.contenitori ?? []).filter((c) => !['arma_ravvicinata', 'arma_distanza'].includes(c.tipo));
-        return [sezione('Artefatti e sintonizzazione (§7.10)',
-          h('p', { class: `valore-tavolo${st.usata > st.capacita ? ' oltre' : ''}` }, h('span', {}, 'Sintonizzazione '), h('strong', {}, String(st.usata)), h('span', {}, ` / ${st.capacita}`)),
-          h('p', { class: 'nota' }, `Capacità per ${st.gradi} Grad${st.gradi === 1 ? 'o' : 'i'} complessiv${st.gradi === 1 ? 'o' : 'i'}${st.talento ? ` con ${st.talento}` : ''}, prima dell’eventuale riduzione per Umanità (§5.21). Si segna «Sintonizzato» nella lista dell’equipaggiamento.`),
-          h('ul', { class: 'elenco-sintonie' }, st.artefatti.map((x) => h('li', {}, `${x.sintonizzato ? '✔' : '○'} ${x.nome} · ${x.potenza}, costo ${x.costo}`))),
-          (ctx.tab.scheda.equipaggiamento?.contenitori ?? []).length ? h('p', { class: 'nota' }, `I PM dei cristalli si modificano nel riquadro Punti Magia (tab Identità${conMagia ? ' o Poteri' : ''}).`) : null,
-          riserve.length ? h('div', { class: 'armi-tab' }, riserve.map((c) => schedaContenitore(ctx, c))) : null)];
-      })(),
+      // §7.10: sintonizzazione e riserve stanno nella tab Artefatti (docs/layout-sd.md, pezzo 4)
+      ctx.tab.scheda.equipaggiamento?.sintonizzazione ? h('p', { class: 'nota' }, 'Artefatti: sintonizzazione, attivazioni e riserve di Chroma nella tab Artefatti; qui le armi e le protezioni Artefatto mostrano già i loro effetti nei valori.') : null,
 
         sanitari.length ? h('p', { class: 'nota' }, `Kit e dispositivi sanitari (${sanitari.map((c) => c.nome).join(', ')}): le applicazioni si contano nella tab Inventario (§7.19).`) : null),
 
@@ -1533,6 +1521,72 @@ function sezioneDaArtefatti(ctx) {
         ris ? h('p', { class: 'nota' }, `Riserva integrata di Chroma ${ris.energia}, ${ris.capacita_pm} PM (§7.5.1).`) : null);
     })),
     h('p', { class: 'nota' }, 'Sola lettura: sintonizzazione e riserve si gestiscono nella tab Artefatti.'));
+}
+
+/**
+ * Tab Artefatti (docs/layout-sd.md, pezzo 4): la gestione degli Artefatti Mistici posseduti. In testa
+ * la sintonizzazione (§7.10: capacità per Gradi complessivi, bonus del Talento, cosa occupa quanto);
+ * poi una scheda per Artefatto con stato nell'Inventario, «Sintonizzato» (non nel deposito comune),
+ * potenza e costo, effetti con la provenienza (VA e danno dell'arma in mano, AR della protezione
+ * indossata, attivazione, riserva integrata); infine le riserve di Chroma a sé. Acquisto e possesso
+ * restano nell'Inventario. Stesso motore di prima (calcolaEquipaggiamento → sintonizzazione, contenitori).
+ */
+function tabArtefatti(ctx) {
+  const eq = ctx.tab.scheda.equipaggiamento;
+  const st = eq?.sintonizzazione;
+  if (!st) {
+    return [h('section', { class: 'riquadro nessun-potere' }, h('h2', {}, 'Nessun Artefatto'),
+      h('p', { class: 'nota' }, 'Gli Artefatti Mistici si acquistano e si tengono nella tab Inventario (sezione «Artefatti, cristalli e contenitori di Chroma»); qui si gestiscono sintonizzazione, attivazioni e riserve (Armamenti §7.5, §7.10).'))];
+  }
+  const rs = regoleSintonizzazione(ctx.dati);
+  const cat = catalogo(ctx.dati);
+  const perUid = new Map((ctx.scelte.equipaggiamento ?? []).map((v) => [v.uid, risolvi(v, cat)]));
+  const base = (uid) => String(uid).split(':')[0];
+  const sintonizza = (uid, si) => ctx.azioni.equipaggiamento((ctx.scelte.equipaggiamento ?? []).map((v) => {
+    if (v.uid !== uid) return v;
+    const w = { ...v };
+    if (si) w.sintonizzato = true; else delete w.sintonizzato;
+    return w;
+  }));
+  const contenitori = eq.contenitori ?? [];
+  const esterni = contenitori.filter((c) => !c.integrato);
+  const scheda = (x) => {
+    const r = perUid.get(x.uid);
+    const def = r?.def;
+    const arma = (eq.armi ?? []).find((a) => base(a.uid) === x.uid && !a.moduloDi);
+    const prot = (eq.protezioni ?? []).find((p) => base(p.uid) === x.uid);
+    const riserva = contenitori.find((c) => c.uid === x.uid && c.integrato);
+    return h('article', { class: `arma-tab artefatto-scheda${x.sintonizzato ? ' sintonizzato' : ''}${x.deposito ? ' in-deposito' : ''}` },
+      h('div', { class: 'arma-testa' },
+        h('h3', {}, def ? info('oggetto', def.rif, x.nome) : x.nome, h('small', { class: 'sigla' }, ` · ${x.tipologia ?? 'Artefatto'} · ${x.potenza}`))),
+      h('p', { class: 'nota' }, `Nell’Inventario: ${NOMI_STATI[r?.voce.stato] ?? 'con sé'}. Sintonizzazione ${x.costo}.`),
+      h('label', { class: `stato-tavolo${x.sintonizzato ? ' attivo' : ''}`, title: x.deposito ? 'Nel deposito comune un Artefatto non è sintonizzabile.' : null },
+        h('input', { type: 'checkbox', checked: x.sintonizzato, disabled: !!x.deposito, onchange: (e) => sintonizza(x.uid, e.target.checked) }),
+        h('span', {}, h('strong', {}, 'Sintonizzato'), h('small', {}, x.deposito ? ' · nel deposito comune: non sintonizzabile' : ` · occupa ${x.costo}`))),
+      // effetti con la provenienza, dove entrano: l'arma in mano, la protezione indossata
+      arma ? h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA per colpire '),
+        valoreEffettivo(`VA per colpire (${arma.nome})`, arma.vaEffettivo ?? arma.va, arma.vaDaRegole ?? arma.va, arma.scomposizione, { pillola: true, provenienza: arma.provenienza }),
+        h('span', { class: 'sigla' }, ' · danno '), dannoConProvenienza(arma, testoDanno(arma.danno))) : null,
+      prot && prot.tipo !== 'elmetto' ? h('p', {}, h('span', { class: 'sigla' }, 'AR '), h('strong', {}, testoAr(prot.ar))) : null,
+      def?.attivazione ? h('p', { class: 'nota', title: 'Proprietà a carica: si dichiara prima della Prova per colpire (§7.1.4)' },
+        h('strong', {}, 'Attivazione: '), `+${def.attivazione.danno_extra} ${def.attivazione.natura}${def.attivazione.anche ? ` e ${def.attivazione.anche}` : ''} al danno del colpo`) : null,
+      !arma && !prot && (r?.tipo === 'arma_ravvicinata' || r?.tipo === 'arma_distanza' || ['armatura', 'scudo'].includes(r?.tipo))
+        ? h('p', { class: 'nota' }, 'Non è in mano né indossato: i suoi effetti non contano ora.') : null,
+      riserva ? pannelloChroma(ctx, riserva, { conPulsanti: true }) : null);
+  };
+  return [
+    h('div', { class: 'griglia-tavolo' },
+      h('div', { class: `contatore-tavolo${st.usata > st.capacita ? ' oltre' : ''}` }, h('h3', {}, 'Sintonizzazione (§7.10)'),
+        h('p', { class: `valore-tavolo${st.usata > st.capacita ? ' oltre' : ''}` }, h('strong', {}, String(st.usata)), h('span', {}, ` / ${st.capacita}`)),
+        h('p', { class: 'nota' }, `Capacità per ${st.gradi} Grad${st.gradi === 1 ? 'o' : 'i'} complessiv${st.gradi === 1 ? 'o' : 'i'}: ${rs.capacita_per_gradi[st.gradi - 1]}`,
+          st.talento ? `, +${rs.talento.bonus} da ${st.talento}` : null, ', prima dell’eventuale riduzione per Umanità (§5.21).'),
+        st.usata > st.capacita ? h('p', { class: 'avviso-carico' }, `Oltre la capacità: il personaggio sceglie quali sintonizzazioni interrompere (§7.10).`) : null,
+        h('ul', { class: 'elenco-sintonie' }, st.artefatti.map((x) => h('li', {}, `${x.sintonizzato ? '✔' : '○'} ${x.nome} · ${x.costo}${x.deposito ? ' · deposito comune' : ''}`))))),
+    sezione('Artefatti posseduti', h('div', { class: 'armi-tab' }, st.artefatti.map(scheda))),
+    esterni.length ? sezione('Riserve di Chroma',
+      h('p', { class: 'nota' }, 'Cristalli, batterie e contenitori: i PM si modificano anche nel riquadro Punti Magia. Un contenitore alimenta un lancio se trasportato, sintonizzato e compatibile (Magia sez. 6).'),
+      h('div', { class: 'armi-tab' }, esterni.map((c) => schedaContenitore(ctx, c)))) : null,
+  ];
 }
 
 function tabMagia(ctx, d) {

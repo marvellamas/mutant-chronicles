@@ -118,4 +118,14 @@ Tab presenti e vuoti, con la scritta «In arrivo con il manuale».
   - **Mani:** l'app non registra quale mano tiene un oggetto: destra e sinistra seguono l'ordine dell'Inventario; oltre le due mani un riquadro a parte, con l'avviso di sempre.
   - **Sola lettura qui, modifica nell'Inventario:** caricatori di riserva, condizione dell'arma (A.49) e applicazioni dei kit sanitari (§7.19) sono passati nella riga dell'oggetto dell'Inventario; qui restano i colpi (−1, −5) e «Ricarica». Il Sanitario lascia in Combattimento solo un rimando.
   - **Corruzione:** nessuna scala provvisoria né domanda nuova, come previsto dal piano; esposizione, Intensità e Umanità restano fuori (backlog).
-- [ ] Pezzi 4–6.
+- [x] Pezzo 4: tab Poteri e Artefatti (`tabPoteri`, `tabArtefatti` in `src/ui/tab.js`).
+  - **Poteri:** per tutti; con la magia la tab Magia com'era (PM e cristalli, incantesimi, scala di Potere, riserve esterne, incantesimi per macrofamiglia, «Lancia!»); senza, il riquadro «Nessun potere» con la riga del Manuale della Magia sez. 1 (`regole.json` → `poteri.nessuno`). «Da artefatti»: gli Artefatti con attivazione o riserva integrata, in sola lettura. Poteri Sciamanici: sezione chiusa «in attesa del manuale» (`poteri.in_arrivo`). Icona: ancora quella della Magia.
+  - **Artefatti:** sintonizzazione in testa (usata / capacità per Gradi complessivi, bonus del Talento, elenco con i costi), una scheda per Artefatto (stato nell'Inventario, «Sintonizzato», potenza e costo, VA e danno con la provenienza se è l'arma in mano, AR se è la protezione indossata, attivazione, riserva integrata con i PM), le riserve di Chroma a sé. Icona `img/pagine/artefatti-*`. L'Inventario resta il possesso: lì «Sintonizzato» si legge soltanto (nel wizard resta il campo).
+  - **Da Combattimento** è uscito il blocco «Artefatti e sintonizzazione», con un rimando; armi e protezioni Artefatto mostrano i loro effetti nei valori, come prima.
+  - Test in `tests/poteri.test.js` e `tests/artefatti.test.js`. Verificato nel browser a 1280, 800 e 375 px.
+  Scostamenti dal piano:
+  - **Regola nuova, chiesta nel prompt del pezzo:** un Artefatto nel deposito comune non è sintonizzabile: non occupa capacità e la sua riserva non alimenta; la scelta «sintonizzato» resta nella voce e torna valida quando l'oggetto torna con sé (`src/equipaggiamento.js`).
+  - **Tecniche Interiori:** restano nella tab Abilità dove sono già (§8.9, dati in `tecniche_interiori.json`); il segnaposto chiuso è solo per i Poteri Sciamanici, che Davide sta scrivendo.
+  - **PI degli Artefatti:** si tengono nella riga dell'Inventario (pezzo 2), come per gli altri oggetti; la tab Artefatti non li ripete.
+  - Le batterie compaiono due volte nella tab Artefatti: fra gli Artefatti posseduti (sintonizzazione) e fra le riserve di Chroma (PM).
+- [ ] Pezzi 5–6.

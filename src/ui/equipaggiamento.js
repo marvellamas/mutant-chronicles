@@ -100,9 +100,10 @@ function voceEquip(ctx, r, risolte, cambia) {
         title: st === 'deposito' ? 'Resta del personaggio, ma fuori dal carico e senza effetti; non disponibile al tavolo.' : null,
       }, st === null ? 'Con sé' : NOMI_STATI[st]))) : null,
     ctx.rigaExtra ? ctx.rigaExtra(r) : null,
-    art ? h('label', { class: 'campo-inline' },
-      h('input', { type: 'checkbox', checked: v.sintonizzato === true, onchange: (e) => cambia(v.uid, { sintonizzato: e.target.checked || undefined }) }),
-      ` Sintonizzato (costo ${art.sintonizzazione}, §7.10)`) : null,
+    art && ctx.inventario ? h('p', { class: 'nota' }, `${v.sintonizzato === true && !r.deposito ? 'Sintonizzato' : 'Non sintonizzato'} (costo ${art.sintonizzazione}, §7.10): si gestisce nella tab Artefatti.`)
+      : art ? h('label', { class: 'campo-inline' },
+        h('input', { type: 'checkbox', checked: v.sintonizzato === true, onchange: (e) => cambia(v.uid, { sintonizzato: e.target.checked || undefined }) }),
+        ` Sintonizzato (costo ${art.sintonizzazione}, §7.10)`) : null,
     art?.contenitore ? h('p', { class: 'nota' }, `Chroma ${art.contenitore.energia}, ${art.contenitore.capacita_pm} PM${art.contenitore.integrato ? ', riserva integrata' : ''}.`) : null,
     // E&L 2 (A.19): acquistato pieno; trovato con la carica stabilita dal Direttore
     contenitoreSingolo ? h('div', { class: 'campo-inline' },

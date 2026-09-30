@@ -1469,3 +1469,7 @@ body.con-sfondo::before {
 .elenco-da-artefatti { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.4rem; }
 .elenco-da-artefatti li { border: 1px solid var(--bordo); border-radius: var(--raggio); padding: 0.4rem 0.6rem; }
 .elenco-da-artefatti p { margin: 0.15rem 0 0; }
+
+/* Artefatti (docs/layout-sd.md, pezzo 4) */
+.artefatto-scheda.sintonizzato { border-color: var(--ok); }
+.artefatto-scheda.in-deposito { opacity: 0.8; border-style: dashed; }

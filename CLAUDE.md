@@ -97,6 +97,8 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 
 - tab Combattimento (`docs/layout-sd.md`, pezzo 3): colonna sinistra con valori, Prove Salvezza, armi in mano per mano (Ricarica e «Attacca!»), armi disponibili e Protezioni; colonna destra con Ferite, Affaticamento, Corruzione Oscura (§5.20, `regole.json` → `corruzione.stati`, `sessione.corruzione`, nei valori effettivi) e Stati. Caricatori di riserva, condizione delle armi e applicazioni sanitarie si cambiano nell'Inventario.
 
+- tab Poteri e Artefatti (`docs/layout-sd.md`, pezzo 4): Poteri per tutti (la Magia di prima, o «Nessun potere» da `regole.json` → `poteri`; «Da artefatti» in sola lettura); Artefatti con sintonizzazione, schede degli Artefatti ed effetti con provenienza, riserve di Chroma. Un Artefatto nel deposito comune non è sintonizzabile.
+
 Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, veicoli, capitoli 5, 7 e 8 del Manuale dell'Equipaggiamento (non ancora scritti).
 
 ## Riferimenti
