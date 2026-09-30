@@ -107,3 +107,7 @@ Dopo un aggiornamento il browser può tenere in cache i moduli vecchi con i dati
 ## 18. Export/import del solo Calendario — FACILE
 
 Esportare e reimportare il blocco `calendario` di un personaggio da solo (per passarlo al master o fra personaggi del gruppo), senza toccare le scelte né la sessione.
+
+## 19. ✔ Bonus dei Talenti nei valori — fatto il 30 settembre 2026
+
+Censimento in docs/censimento-talenti.md (319 Talenti; 61 con effetti tipizzati, 97 effetti). Effetti in `effetti.valori` nello schema degli oggetti; al tavolo nei valori effettivi con la provenienza; interruttori dei situazionali; interruttore globale «Bonus dei Talenti» in Combattimento e Poteri. Resta: l'Arma Astrale del Custode come arma evocabile della scheda (Maestro d'Arma, Maestria Astrale).

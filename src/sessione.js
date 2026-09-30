@@ -155,6 +155,19 @@ export function commutaCondizioneOggetto(sessione, uid, m) {
   return modificaSessione(s, { condizioniOggetti: lista }, m);
 }
 
+/** Accende o spegne un Talento situazionale (chiave dell'acquisizione, src/talenti.js). */
+export function commutaTalento(sessione, chiave, m) {
+  const s = allineaSessione(sessione, m);
+  const lista = s.talentiAccesi.includes(chiave) ? s.talentiAccesi.filter((x) => x !== chiave) : [...s.talentiAccesi, chiave];
+  return modificaSessione(s, { talentiAccesi: lista }, m);
+}
+
+/** Interruttore «Bonus dei Talenti» (docs/censimento-talenti.md): acceso ↔ spento. */
+export function commutaBonusTalenti(sessione, m) {
+  const s = allineaSessione(sessione, m);
+  return modificaSessione(s, { bonusTalenti: !s.bonusTalenti }, m);
+}
+
 /** Crediti attuali allineati al saldo iniziale (vedi l'intestazione). */
 function allineaCrediti(sessione, m) {
   const saldo = Number.isInteger(m.creditiIniziali) ? m.creditiIniziali : null;

@@ -18,6 +18,7 @@ import { testoDanno } from '../stampa.js';
 import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto, catalogo, risolvi, infoArtefattoVoce, regoleSintonizzazione } from '../equipaggiamento.js';
 import { dotazioneApplicata, crediti } from '../dotazioni.js';
 import { provenienzaCarico } from '../carico.js';
+import { talentiSituazionali } from '../talenti.js';
 import { statoRicarica, disponibili } from '../ricarica.js';
 import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 import { pannelloAttacco } from './attacco.js';
@@ -642,6 +643,55 @@ function condizioniOggetti(ctx) {
     })));
 }
 
+/**
+ * Interruttore «Bonus dei Talenti» (docs/censimento-talenti.md), in testa a Combattimento e Poteri, con
+ * lo stesso componente dei toggle situazionali. Spento: i valori al tavolo, «Attacca!» e «Lancia!» non
+ * contano i Talenti; la provenienza li elenca barrati.
+ */
+function interruttoreTalenti(ctx) {
+  const effetti = ctx.tab.scheda.effettiTalenti ?? [];
+  const on = ctx.tab.scheda.bonusTalenti !== false;
+  const testo = on ? 'Bonus dei Talenti: contano nei valori, in «Attacca!» e in «Lancia!»'
+    : 'Bonus dei Talenti spenti: i valori non li contano (nella provenienza sono barrati)';
+  return h('div', { class: 'interruttore-talenti' },
+    h('label', { class: `pillola-condizionale${on ? ' attivo' : ''}`, title: testo },
+      h('input', { type: 'checkbox', role: 'switch', checked: on, 'aria-label': 'Bonus dei Talenti', onchange: ctx.azioni.bonusTalenti }),
+      h('span', { class: 'nome-condizionale' }, 'Bonus dei Talenti'),
+      h('span', { class: 'effetto-condizionale' }, on ? ` · accesi${effetti.length ? '' : ' (nessun effetto numerico tipizzato)'}` : ' · spenti')));
+}
+
+/**
+ * Talenti situazionali (docs/censimento-talenti.md): un interruttore per acquisizione, lo stesso dei
+ * bonus condizionali degli oggetti; il testo completo (la frase del manuale) nel tooltip. `filtro`
+ * sceglie quali effetti mostrare (per esempio solo Difese e Salvezze in Combattimento).
+ */
+function condizioniTalenti(ctx, { titolo = 'Talenti da attivare', filtro = () => true } = {}) {
+  const gruppi = talentiSituazionali(ctx.tab.scheda.effettiTalenti ?? []).filter((g) => g.effetti.some(filtro));
+  if (!gruppi.length) return null;
+  const accesi = new Set(ctx.tab.scheda.talentiAccesi ?? []);
+  const off = ctx.tab.scheda.bonusTalenti === false;
+  const breve = (e) => ((e.tipo ?? 'va') === 'va' ? `${segno(e.valore)} ${e.abilita}` : e.tipo === 'salvezza' ? `${segno(e.valore)} ${e.salvezza === 'volonta' ? 'Volontà' : e.salvezza[0].toUpperCase() + e.salvezza.slice(1)}` : testoEffettoOggetto(e));
+  return h('section', { class: 'riquadro condizionali-oggetti condizionali-talenti', 'aria-label': titolo },
+    h('h3', { title: 'Accendi il Talento quando ricorre la circostanza del manuale: il bonus entra nel valore. I bonus dei Talenti si sommano.' }, titolo),
+    off ? h('p', { class: 'nota' }, 'Bonus dei Talenti spenti: gli interruttori non hanno effetto.') : null,
+    h('div', { class: 'pillole-condizionali' }, gruppi.map((g) => {
+      const acceso = accesi.has(g.chiave);
+      const completo = `${g.talento}: ${g.condizione}`;
+      return h('label', { class: `pillola-condizionale${acceso ? ' attivo' : ''}`, title: completo },
+        h('input', { type: 'checkbox', role: 'switch', checked: acceso, 'aria-label': completo, onchange: () => ctx.azioni.talento(g.chiave) }),
+        h('span', { class: 'nome-condizionale' }, g.talento),
+        h('span', { class: 'effetto-condizionale' }, ` · ${g.effetti.map(breve).join(', ')}`));
+    })));
+}
+
+/** Usi specifici dei Talenti sulle Prove di Caratteristica (Prova di Caratteristica Migliorata): righe a parte. */
+function usiCaratteristicheTalenti(ctx) {
+  const lista = ctx.tab.scheda.usiCaratteristicheTalenti ?? [];
+  if (!lista.length) return null;
+  return h('ul', { class: 'usi-salvezze nota' }, lista.map((u) => h('li', { title: [u.condizione, u.fonte].filter(Boolean).join(' — ') },
+    h('strong', {}, `${segno(u.valore)} alle Prove dirette di ${u.caratteristiche.join(', ')}`), ` (${u.talento})`)));
+}
+
 /** A.47: PI fissati dal Direttore per gli oggetti senza PI a catalogo (facoltativo, nessun valore predefinito). */
 function campiPiDirettore(ctx) {
   const lista = ctx.tab.scheda.equipaggiamento?.senzaPi ?? [];
@@ -831,7 +881,8 @@ function tabIdentita(ctx, d) {
           h('thead', {}, h('tr', {}, h('th', {}, ''), h('th', {}, 'Valore'), h('th', {}, 'Mod'), h('th', {}, 'Mod Salv.'))),
           h('tbody', {}, d.caratteristiche.map((c) => h('tr', {},
             h('th', { scope: 'row' }, info('caratteristica', c.sigla, `${c.nome} (${c.sigla})`)),
-            h('td', { class: 'forte' }, String(c.valore)), h('td', {}, segno(c.mod)), h('td', {}, segno(c.modSalvezza))))))),
+            h('td', { class: 'forte' }, String(c.valore)), h('td', {}, segno(c.mod)), h('td', {}, segno(c.modSalvezza)))))),
+        usiCaratteristicheTalenti(ctx)),
       sezione('Prove Salvezza',
         h('table', { class: 'tabella compatta' },
           h('thead', {}, h('tr', {}, h('th', {}, ''), h('th', {}, 'Car.'), h('th', {}, 'Valore'))),
@@ -934,6 +985,7 @@ function tabAbilita(ctx, d) {
           condizioni.length ? h('ul', {}, condizioni.map(rigaCondizione)) : h('p', { class: 'nota' }, 'Nessuna: Ferite, Affaticamento e Stati si segnano nella tab Combattimento, il carico nell’Inventario.'),
           usi.length ? h('ul', { class: 'usi-specifici', 'aria-label': 'Solo per un uso specifico' }, usi.map(rigaCondizione)) : null),
         condizioniOggetti(ctx),
+        condizioniTalenti(ctx),
         promemoriaPenalita(ctx, { soloSenzaEffetto: true }))),
     h('div', { class: 'colonne-larghe' },
     sezione('Talenti di Classe', d.talentiClasse.map((t) => h('div', { class: 'talento' },
@@ -1112,10 +1164,12 @@ function tabCombattimento(ctx, d) {
   const mani = riquadriMani(ctx, d);
   const sanitari = consumabili(normalizzaEquipaggiamento(ctx.scelte.equipaggiamento), ctx.dati).filter((c) => c.gruppo === 'sanitario');
   return [
+    interruttoreTalenti(ctx),
     promemoriaPenalita(ctx),
     d.avvisiEquipaggiamento.length ? h('div', { class: 'riquadro attenzione' },
       h('p', {}, h('strong', {}, 'Equipaggiamento da controllare (avvisi, non blocchi: decide il master):')),
       h('ul', {}, d.avvisiEquipaggiamento.map((a) => h('li', {}, a)))) : null,
+    condizioniTalenti(ctx, { titolo: 'Talenti da attivare (Difese e Salvezze)', filtro: (e) => e.tipo === 'salvezza' || e.abilita === 'Difese' }),
     h('div', { class: 'combattimento-layout' },
       h('div', { class: 'combattimento-principale' },
         h('div', { class: 'griglia-tavolo griglia-tavolo-compatta' },
@@ -1246,13 +1300,17 @@ function schedaSenzArmi(ctx) {
  */
 function usiSalvezze(ctx, salvezze) {
   const effetti = (ctx.tab.scheda.equipaggiamento?.effettiOggetti ?? []).filter((e) => e.tipo === 'salvezza');
-  if (!effetti.length) return null;
+  // Talenti (Resistenze, Addestramento Militare…): già calcolati, con il tetto delle Resistenze (§8.6)
+  const talenti = ctx.tab.scheda.usiSalvezzeTalenti ?? [];
+  if (!effetti.length && !talenti.length) return null;
   return h('ul', { class: 'usi-salvezze nota' }, effetti.map((e) => {
     const s = e.salvezza ? salvezze.find((x) => x.id === e.salvezza || x.nome.toLowerCase() === e.salvezza) : null;
     return h('li', { title: [e.condizione, e.fonte].filter(Boolean).join(' — ') },
       s ? [h('strong', {}, `${s.nome} ${numero(s.effettivo + e.valore)}`), ` solo ${e.uso} (${segno(e.valore)} ${e.oggetto})`]
         : [h('strong', {}, `${segno(e.valore)} alla PS già prevista`), ` ${e.uso} (${e.oggetto})`]);
-  }));
+  }), talenti.map((u) => h('li', { title: [u.condizione, u.fonte, u.limitato ? 'Limitato dal tetto della Salvezza (Giocatore §8.6)' : null].filter(Boolean).join(' — ') },
+    u.nome ? [h('strong', {}, `${u.nome} ${numero(u.valore)}`), ` solo ${u.uso} (${segno(u.modificatore)} ${u.talento}${u.limitato ? ', al tetto' : ''})`]
+      : [h('strong', {}, `${segno(u.modificatore)} alla Prova prevista`), ` ${u.uso} (${u.talento})`])));
 }
 
 /** Resistenze delle protezioni in uso: Contromisure (soglie del §5.24) e AR contro un tipo di danno. */
@@ -1499,6 +1557,7 @@ function tabInArrivo(ctx, id) {
 function tabPoteri(ctx, d) {
   const p = ctx.dati.regole.poteri ?? {};
   return [
+    interruttoreTalenti(ctx),
     ...(d ? tabMagia(ctx, d) : [h('section', { class: 'riquadro nessun-potere' }, h('h2', {}, 'Nessun potere'), p.nessuno ? h('p', { class: 'nota' }, p.nessuno) : null)]),
     sezioneDaArtefatti(ctx),
     ...(p.in_arrivo ?? []).map((x) => h('details', { class: 'sezione-tab in-arrivo' },

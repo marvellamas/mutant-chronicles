@@ -138,3 +138,17 @@ test('migrazione: una sessione salvata prima ha i Talenti accesi e nessun situaz
   assert.equal(bonusTalentiAccesi(vecchia), true);
   assert.equal(allineaSessione({ ...vecchia, bonusTalenti: false }, m).bonusTalenti, false);
 });
+
+test('SD: accendere un situazionale e spegnere il «Bonus dei Talenti» sono modifiche della sessione', async () => {
+  const { commutaTalento, commutaBonusTalenti } = await import('../src/sessione.js');
+  const s = calcolaScheda({ creazione: MISHIMA_AGENTE, livelli: [] }, dati);
+  const m = massimiSessione(s, MISHIMA_AGENTE, dati);
+  const k = 'classe:Paramedico:Campo Sterile';
+  const acceso = commutaTalento(inizializzaSessione(m), k, m);
+  assert.deepEqual(acceso.talentiAccesi, [k]);
+  assert.deepEqual(commutaTalento(acceso, k, m).talentiAccesi, []);
+  const spento = commutaBonusTalenti(acceso, m);
+  assert.equal(spento.bonusTalenti, false);
+  assert.deepEqual(spento.talentiAccesi, [k]); // gli interruttori restano: riaccendendo, tornano
+  assert.equal(commutaBonusTalenti(spento, m).bonusTalenti, true);
+});

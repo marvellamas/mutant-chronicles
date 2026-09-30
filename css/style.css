@@ -1481,3 +1481,7 @@ body.con-sfondo::before {
 
 /* Cibernetica e Veicoli (docs/layout-sd.md, pezzo 5) */
 .tab-in-arrivo .rimandi { margin: 0.4rem 0 0; padding-left: 1.2rem; font-size: 0.9rem; color: var(--tenue); }
+
+/* Talenti (docs/censimento-talenti.md): interruttore globale in testa a Combattimento e Poteri */
+.interruttore-talenti { display: flex; justify-content: flex-end; margin: 0.25rem 0 0.5rem; }
+.condizionali-talenti { margin: 0.5rem 0; }

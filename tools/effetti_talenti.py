@@ -283,6 +283,13 @@ def scrivi_doc():
     for k, v in RIMANDATI.items():
         L.append(f'- **{k}**: {v}')
     L.append('')
+    L.append('## Cosa è stato implementato\n')
+    L.append('- **Dati:** `effetti.valori` nelle voci dei Talenti (`talenti_liberi.json`, `classi.json`), scritti da questo script; le chiavi di `effetti` già lette dal motore restano come sono. Validatore e `tools/verifica_frasi.mjs` controllano forma e frasi.')
+    L.append('- **Motore** (`src/talenti.js`, `src/condizioni.js`): solo al tavolo (con la sessione), nei valori effettivi; il totale da regole, l’avanzamento e la SS non cambiano. Generali sempre; situazionali con l’interruttore del Talento (`sessione.talentiAccesi`); usi specifici come valore a parte accanto all’Abilità, sotto le Prove Salvezza (Resistenze con il tetto del §8.6) e sotto le Caratteristiche. I bonus dei Talenti si sommano (la regola «un solo modificatore degli strumenti» vale per gli oggetti). Provenienza: una riga per Talento, con il suo nome.')
+    L.append('- **Interruttore «Bonus dei Talenti»** (`sessione.bonusTalenti`, predefinito acceso; nel salvataggio e nell’export, come le altre condizioni al tavolo): in testa alle tab Combattimento e Poteri. Spento: nessun effetto di `effetti.valori`, nemmeno i Talenti dell’Iniziativa; «Attacca!» e «Lancia!» calcolano senza Talenti (`talentiAttacco` vuoto); la provenienza elenca i Talenti barrati («Talenti spenti: non conta»). PV, PM, Prova Salvezza Migliorata e Movimento restano: sono il totale da regole.')
+    L.append('- **SD:** interruttori dei Talenti situazionali nella colonna Condizioni della tab Abilità e, per Difese e Salvezze, in testa alla tab Combattimento; usi delle Prove di Caratteristica sotto le Caratteristiche (Identità).')
+    L.append('- **Non applicati** (restano testo, motivo nella tabella): Sangue Freddo, Aura di Equilibrio, Assalto Armato, Evacuazione Medica, Supporto Avanzato, Capolavoro, Maestro d’Arma, Maestria Astrale (l’Arma Astrale non è ancora un’arma della scheda).')
+    L.append('')
     # fine riga LF anche su Windows (write_text userebbe CRLF)
     with open(RADICE / 'docs' / 'censimento-talenti.md', 'w', encoding='utf-8', newline='\n') as f:
         f.write('\n'.join(L) + '\n')

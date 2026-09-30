@@ -25,7 +25,7 @@ import { caricaImmagini } from './immagini.js';
 import { preparaStampa, preparaTab, normalizzaOpzioniStampa } from '../stampa.js';
 import { renderTab, tabFissi, ALIAS_TAB } from './tab.js';
 import {
-  massimiSessione, allineaSessione, variaSessione, modificaSessione, commutaStato, commutaCondizioneOggetto, impostaCondizioneArma, riparaOggetto, spendiPmLancio, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
+  massimiSessione, allineaSessione, variaSessione, modificaSessione, commutaStato, commutaCondizioneOggetto, commutaTalento, commutaBonusTalenti, impostaCondizioneArma, riparaOggetto, spendiPmLancio, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
   penalitaSessione, variaMunizioni, ricaricaArma, variaChroma, variaIntegrita,
 } from '../sessione.js';
 import { conOrdinale } from '../lingua.js';
@@ -721,6 +721,9 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       imposta: (campo, valore) => cambiaSessione(modificaSessione(stato.sessione, { [campo]: valore }, massimi)),
       commutaStato: (id) => cambiaSessione(commutaStato(stato.sessione, id, massimi)),
       condizioneOggetto: (uid) => cambiaSessione(commutaCondizioneOggetto(stato.sessione, uid, massimi)),
+      // Talenti (docs/censimento-talenti.md): situazionali e interruttore globale
+      talento: (chiave) => cambiaSessione(commutaTalento(stato.sessione, chiave, massimi)),
+      bonusTalenti: () => cambiaSessione(commutaBonusTalenti(stato.sessione, massimi)),
       condizioneArma: (uid, id) => cambiaSessione(impostaCondizioneArma(stato.sessione, uid, id, massimi)),
       ripara: (uid, piNuovi, costo) => cambiaSessione(riparaOggetto(stato.sessione, uid, piNuovi, costo, massimi)),
       // pannello «Attacca!»: le scelte si ricordano senza diventare «l'ultima modifica» da annullare;

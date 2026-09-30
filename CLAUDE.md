@@ -57,6 +57,7 @@ src/
   validate.js   invarianti dei dati
   calc.js       funzioni pure: modificatori, VA, Salvezze, PV/PM, Iniziativa
   competenze.js categorie di competenza (S/P/G/N): basi dalla prima Classe, limiti del VA personale (§8.3, §8.7)
+  talenti.js    effetti tipizzati dei Talenti al tavolo (effetti.valori), interruttore «Bonus dei Talenti»
   character.js  modello delle scelte + serializzazione JSON
   avanzamento.js  livelli 2–20 (cap. 8): ricalcolo, validazione, eventi
   incantesimi.js, checklist.js, descrizioni.js, tiri.js, lingua.js
@@ -106,6 +107,8 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 - tab Combattimento (`docs/layout-sd.md`, pezzo 3): colonna sinistra con valori, Prove Salvezza, armi in mano per mano (Ricarica e «Attacca!»), armi disponibili e Protezioni; colonna destra con Ferite, Affaticamento, Corruzione Oscura (§5.20, `regole.json` → `corruzione.stati`, `sessione.corruzione`, nei valori effettivi) e Stati. Caricatori di riserva, condizione delle armi e applicazioni sanitarie si cambiano nell'Inventario.
 
 - tab Poteri e Artefatti (`docs/layout-sd.md`, pezzo 4): Poteri per tutti (la Magia di prima, o «Nessun potere» da `regole.json` → `poteri`; «Da artefatti» in sola lettura); Artefatti con sintonizzazione, schede degli Artefatti ed effetti con provenienza, riserve di Chroma. Un Artefatto nel deposito comune non è sintonizzabile.
+
+- Talenti nei valori effettivi (`docs/censimento-talenti.md`): `effetti.valori` delle voci dei Talenti nello schema degli oggetti (scritti da `tools/effetti_talenti.py`), applicati al tavolo da `src/talenti.js` e `src/condizioni.js` (generali, situazionali con interruttore, usi specifici a parte); interruttore globale «Bonus dei Talenti» in `sessione.bonusTalenti` (Combattimento e Poteri), che spegne anche i Talenti di «Attacca!» e «Lancia!».
 
 Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, veicoli, capitoli 5, 7 e 8 del Manuale dell'Equipaggiamento (non ancora scritti).
 
