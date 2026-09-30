@@ -19,12 +19,12 @@
 |---|---|
 | generale | 3 |
 | situazionale | 7 |
-| uso_specifico | 51 |
+| uso_specifico | 52 |
 | testuale | 148 |
 | rimandato | 1 |
 | già gestito | 110 |
 
-Talenti con effetti tipizzati nuovi: **60**, per **94 effetti** (`effetti.valori`).
+Talenti con effetti tipizzati nuovi: **61**, per **97 effetti** (`effetti.valori`).
 
 ## Tipi dello schema
 
@@ -256,7 +256,7 @@ Nuovi o estesi per i Talenti (anche in `docs/effetti-oggetti.md` e nel validator
 | Lavoro a Regola d’Arte (Artigiano (fisso, Grado 3)) | Giocatore, Artigiano (§3.4; Talenti §3.5.8) | testuale | nessun valore numerico del personaggio |
 | Capolavoro (Artigiano (fisso, Grado 5)) | Giocatore, Artigiano (§3.4; Talenti §3.5.8) | testuale | numerico non applicato: bonus degli oggetti costruiti come Capolavoro: l’app non segna i Capolavori nell’Inventario |
 | Armaiolo (Artigiano (a scelta)) | Giocatore, Artigiano (§3.4; Talenti §3.5.8) | uso_specifico | +3 VA a Percezione (solo per costruire o riparare armi e munizioni); +3 VA a Scienza (solo per costruire o riparare armi e munizioni); +3 VA a Tecnologia (solo per costruire o riparare armi e munizioni) |
-| Corazzaio (Artigiano (a scelta)) | Giocatore, Artigiano (§3.4; Talenti §3.5.8) | rimandato | Il +1 Protezione dell’armatura Capolavoro «resta da raccordare alle regole definitive delle protezioni» (lo dice il manuale). |
+| Corazzaio (Artigiano (a scelta)) | Giocatore, Artigiano (§3.4; Talenti §3.5.8) | uso_specifico+rimandato | +3 VA a Percezione (solo per costruire o riparare protezioni); +3 VA a Scienza (solo per costruire o riparare protezioni); +3 VA a Tecnologia (solo per costruire o riparare protezioni) · rimandato: Il +1 Protezione dell’armatura Capolavoro «resta da raccordare alle regole definitive delle protezioni» (lo dice il manuale). |
 | Artefice di Precisione (Artigiano (a scelta)) | Giocatore, Artigiano (§3.4; Talenti §3.5.8) | uso_specifico | +3 VA a Percezione (solo per serrature e meccanismi di precisione); +3 VA a Tecnologia (solo per serrature e meccanismi di precisione) |
 | Maestro Manifattore (Artigiano (a scelta)) | Giocatore, Artigiano (§3.4; Talenti §3.5.8) | uso_specifico | +3 VA a Cultura (solo per manufatti ordinari); +3 VA a Tecnologia (solo per manufatti ordinari) |
 | Restauratore e Falsario (Artigiano (a scelta)) | Giocatore, Artigiano (§3.4; Talenti §3.5.8) | uso_specifico | +3 VA a Cultura (solo per restauri e contraffazioni); +3 VA a Percezione (solo per restauri e contraffazioni); +3 VA a Raggirare (solo per restauri e contraffazioni); +3 VA a Tecnologia (solo per restauri e contraffazioni) |

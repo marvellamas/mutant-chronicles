@@ -195,8 +195,11 @@ def categoria(x):
     nome = t['nome']
     ee = effetti_di(x)
     gia = [k for k in (t.get('effetti') or {}) if k != 'valori']
-    if nome in RIMANDATI:
+    if nome in RIMANDATI and not ee:
         return 'rimandato', RIMANDATI[nome]
+    if nome in RIMANDATI:
+        ambiti = sorted({e['ambito'] for e in ee})
+        return '+'.join([*ambiti, 'rimandato']), '; '.join(testo_effetto(e) for e in ee) + f' · rimandato: {RIMANDATI[nome]}'
     if ee:
         ambiti = sorted({e['ambito'] for e in ee})
         return '+'.join(ambiti), '; '.join(testo_effetto(e) for e in ee) + (f" · già gestito in parte: {', '.join(sorted({DOVE_CHIAVE.get(k, k) for k in gia}))}" if gia else '')
@@ -240,7 +243,7 @@ def scrivi_doc():
     for _, c, _ in righe:
         for k in c.split('+'):
             conta[k] = conta.get(k, 0) + 1
-    con_effetti = [r for r in righe if r[1] not in ('già gestito', 'testuale', 'rimandato')]
+    con_effetti = [r for r in righe if effetti_di(r[0])]
     n_effetti = sum(len(effetti_di(x)) for x, _, _ in con_effetti)
     L = []
     L.append('# Censimento dei Talenti: effetti numerici nei valori effettivi\n')
@@ -280,7 +283,9 @@ def scrivi_doc():
     for k, v in RIMANDATI.items():
         L.append(f'- **{k}**: {v}')
     L.append('')
-    (RADICE / 'docs' / 'censimento-talenti.md').write_text('\n'.join(L) + '\n', encoding='utf-8')
+    # fine riga LF anche su Windows (write_text userebbe CRLF)
+    with open(RADICE / 'docs' / 'censimento-talenti.md', 'w', encoding='utf-8', newline='\n') as f:
+        f.write('\n'.join(L) + '\n')
     print('scritto docs/censimento-talenti.md', conta, len(con_effetti), n_effetti)
 
 
@@ -296,8 +301,9 @@ def scrivi_dati():
             n += len(ee)
         if nome in RIMANDATI:
             t['TODO(Davide)'] = RIMANDATI[nome]
-    LIBERI.write_text(json.dumps(liberi, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    CLASSI.write_text(json.dumps(classi, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    for p, d in ((LIBERI, liberi), (CLASSI, classi)):
+        with open(p, 'w', encoding='utf-8', newline='\n') as f:
+            f.write(json.dumps(d, ensure_ascii=False, indent=2) + '\n')
     print('effetti scritti:', n)
 
 

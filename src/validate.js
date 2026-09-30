@@ -771,7 +771,7 @@ function validaSpecializzazioni(s, nomiAbilita, err) {
 }
 
 const MOLTEPLICITA = { una: null, per_caratteristica: 'caratteristica', per_salvezza_max2: 'salvezza', illimitata: null, limitata: null };
-const EFFETTI_NOTI = new Set(['iniziativa', 'pv', 'pm', 'salvezza', 'movimento', 'tecniche', 'accessoMagia', 'incantesimi', 'livelloMax', 'livelloMaxIncantesimi', 'magia', 'meditazione', 'attacco_distanza', 'attacco_ravvicinato', 'lancio']);
+const EFFETTI_NOTI = new Set(['iniziativa', 'pv', 'pm', 'salvezza', 'movimento', 'tecniche', 'accessoMagia', 'incantesimi', 'livelloMax', 'livelloMaxIncantesimi', 'magia', 'meditazione', 'attacco_distanza', 'attacco_ravvicinato', 'lancio', 'valori']);
 // effetti.magia: valori che sostituiscono la base di regole.json → lancio (numeri) o capacità (true)
 const EFFETTI_MAGIA = { focalizzazione_va: 'numero', penalita_ingaggio: 'numero', penalita_contromagia: 'numero', tiro_armi_da_lancio: 'numero', contromagia: 'vero', contromagia_senza_conoscenza: 'vero', occultata: 'vero' };
 const EFFETTI_MEDITAZIONE = { accesso: 'vero', pm_per_ora: 'numero', moltiplicatore_ore: 'numero' };
@@ -1536,19 +1536,30 @@ const TIPI_EFFETTO = {
   caratteristica: 'uso_specifico', contromisura: 'generale', ar_contro: 'generale', ar: null,
 };
 const ATTACCHI_EFFETTO = ['tutti', 'ravvicinati', 'distanza'];
+// Talenti (docs/censimento-talenti.md): in più il tipo «parata», le Salvezze anche generali o
+// situazionali (Scudo Spirituale), «resistenza», il danno per le armi Artefatto e la scelta del
+// giocatore («{parametro}», «{annotazione}»)
+const TIPI_EFFETTO_TALENTO = { ...TIPI_EFFETTO, salvezza: null, parata: 'generale' };
 function validaEffettiOggetto(effetti, F, K, nomiAbilita, err, ctx = {}) {
-  if (!Array.isArray(effetti)) return err(F, `${K}.effetti`, 'lista attesa');
+  const lista = ctx.chiave ?? `${K}.effetti`;
+  if (!Array.isArray(effetti)) return err(F, lista, 'lista attesa');
+  const TIPI = ctx.talento ? TIPI_EFFETTO_TALENTO : TIPI_EFFETTO;
   effetti.forEach((e, j) => {
-    const KE = `${K}.effetti[${j}]`;
+    const KE = `${lista}[${j}]`;
     if (!isOggetto(e)) return err(F, KE, 'oggetto atteso');
     const tipo = e.tipo ?? 'va';
-    if (!(tipo in TIPI_EFFETTO)) err(F, `${KE}.tipo`, `uno fra ${Object.keys(TIPI_EFFETTO).join(', ')}`);
+    if (!(tipo in TIPI)) err(F, `${KE}.tipo`, `uno fra ${Object.keys(TIPI).join(', ')}`);
     if (tipo === 'va' && !nomiAbilita.has(e.abilita)) err(F, `${KE}.abilita`, `"${e.abilita}" non è un'Abilità di abilita.json`);
     if (tipo !== 'va' && e.abilita !== undefined) err(F, `${KE}.abilita`, 'solo per il tipo "va"');
-    if (TIPI_EFFETTO[tipo] && e.ambito !== TIPI_EFFETTO[tipo]) err(F, `${KE}.ambito`, `il tipo "${tipo}" ha ambito "${TIPI_EFFETTO[tipo]}"`);
+    if (TIPI[tipo] && e.ambito !== TIPI[tipo]) err(F, `${KE}.ambito`, `il tipo "${tipo}" ha ambito "${TIPI[tipo]}"`);
     if ((tipo === 'attacco' || tipo === 'danno') && !ATTACCHI_EFFETTO.includes(e.attacchi)) err(F, `${KE}.attacchi`, `uno fra ${ATTACCHI_EFFETTO.join(', ')}`);
     if (tipo === 'salvezza' && e.salvezza !== null && !(ctx.salvezze ?? new Set()).has(e.salvezza)) err(F, `${KE}.salvezza`, 'id di una Prova Salvezza, oppure null («la PS già prevista»)');
-    if (tipo === 'caratteristica' && (!Array.isArray(e.caratteristiche) || !e.caratteristiche.length || e.caratteristiche.some((c) => !(ctx.sigle ?? new Set()).has(c)))) err(F, `${KE}.caratteristiche`, 'sigle di Caratteristiche attese');
+    if (tipo === 'salvezza' && e.ambito !== 'uso_specifico' && e.salvezza === null) err(F, `${KE}.salvezza`, 'una Salvezza generale o situazionale deve dire quale Prova Salvezza');
+    if (e.resistenza !== undefined && !(ctx.talento && tipo === 'salvezza' && e.resistenza === true)) err(F, `${KE}.resistenza`, 'solo true, per le Resistenze specifiche dei Talenti (tipo "salvezza")');
+    if (e.armi !== undefined && !(ctx.talento && tipo === 'danno' && e.armi === 'artefatto')) err(F, `${KE}.armi`, 'solo "artefatto", per il danno dei Talenti');
+    if (tipo === 'parata' && (e.con !== 'scudo' || !['distanza', 'ravvicinata'].includes(e.contro))) err(F, KE, 'parata: con "scudo", contro "distanza" o "ravvicinata"');
+    const sigla = (c) => (ctx.sigle ?? new Set()).has(c) || (ctx.talento && c === '{parametro}');
+    if (tipo === 'caratteristica' && (!Array.isArray(e.caratteristiche) || !e.caratteristiche.length || e.caratteristiche.some((c) => !sigla(c)))) err(F, `${KE}.caratteristiche`, 'sigle di Caratteristiche attese');
     if (tipo === 'contromisura' && (!isTesto(e.effetto) || !(e.valore > 0))) err(F, KE, 'contromisura: effetto aggiuntivo (§5.24) e soglia positiva');
     if (tipo === 'ar_contro' && !isTesto(e.contro)) err(F, `${KE}.contro`, 'tipo di danno mancante');
     if (tipo === 'ar' && e.ambito === 'uso_specifico') err(F, `${KE}.ambito`, 'l’AR è generale o situazionale');
@@ -1607,6 +1618,16 @@ function validaAttaccoDistanza(dati, err) {
   }
   const rif = new Set(Object.entries(dati.equipaggiamento?.file ?? {}).flatMap(([id, f]) => (f.oggetti ?? []).map((o) => `${id}:${o.id}`)));
   for (const r of a.imbracciatura?.armi ?? []) if (!rif.has(r)) err(F, 'attacco_distanza.imbracciatura.armi', `"${r}" non esiste nel catalogo`);
+  // effetti.valori dei Talenti (Liberi e di Classe): lo schema degli effetti degli oggetti (docs/censimento-talenti.md)
+  const nomiAbilitaT = new Set((dati.abilita?.abilita ?? []).map((x) => x.nome));
+  const talentiValori = [
+    ...(dati.talenti_liberi?.talenti ?? []).map((t) => ({ t, F: 'talenti_liberi' })),
+    ...(dati.classi?.classi ?? []).flatMap((c) => [...(c.talenti_fissi ?? []), ...(c.talenti_a_scelta ?? [])].map((t) => ({ t, F: 'classi', classe: c.nome }))),
+  ].filter(({ t }) => t.effetti?.valori !== undefined);
+  for (const { t, F: file, classe } of talentiValori) {
+    const K = classe ? `${classe}.${t.nome}` : t.nome;
+    validaEffettiOggetto(t.effetti.valori, file, K, nomiAbilitaT, err, { ...ctxEffetti(dati), talento: true, chiave: `${K}.effetti.valori` });
+  }
   // effetti.attacco_distanza dei Talenti (Liberi e di Classe)
   const talenti = [
     ...(dati.talenti_liberi?.talenti ?? []).map((t) => [`talenti_liberi`, t.id, t]),

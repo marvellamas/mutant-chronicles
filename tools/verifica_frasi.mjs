@@ -34,6 +34,15 @@ export function frasiEffetti() {
   for (const [id, o] of Object.entries(leggi('data/dotazioni.json').oggetti_dotazione)) {
     (o.effetti ?? []).forEach((e, i) => { if (e.condizione) out.push({ dove: `dotazioni:${id} effetti[${i}]`, frase: e.condizione }); });
   }
+  // Talenti Liberi e di Classe: effetti.valori (docs/censimento-talenti.md)
+  for (const t of leggi('data/talenti_liberi.json').talenti) {
+    (t.effetti?.valori ?? []).forEach((e, i) => { if (e.condizione) out.push({ dove: `talenti_liberi:${t.id} effetti.valori[${i}]`, frase: e.condizione }); });
+  }
+  for (const c of leggi('data/classi.json').classi) {
+    for (const t of [...c.talenti_fissi, ...c.talenti_a_scelta]) {
+      (t.effetti?.valori ?? []).forEach((e, i) => { if (e.condizione) out.push({ dove: `classi:${c.nome}/${t.nome} effetti.valori[${i}]`, frase: e.condizione }); });
+    }
+  }
   // regole.json → attacco_distanza: ogni «frasi» del blocco, a ogni profondità
   const visita = (v, dove) => {
     if (Array.isArray(v)) v.forEach((x, i) => visita(x, `${dove}[${i}]`));

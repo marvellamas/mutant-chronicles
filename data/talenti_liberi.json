@@ -134,7 +134,19 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Ottiene +3 VA alle Prove di Percezione per individuare imboscate, aggressori nascosti e pericoli improvvisi. Può effettuare la Prova anche quando non sta cercando attivamente la minaccia, purché questa sia concretamente percepibile. Il Talento non rivela minacce impercettibili e non concede immunità automatica alla Sorpresa."
+      "testo": "Ottiene +3 VA alle Prove di Percezione per individuare imboscate, aggressori nascosti e pericoli improvvisi. Può effettuare la Prova anche quando non sta cercando attivamente la minaccia, purché questa sia concretamente percepibile. Il Talento non rivela minacce impercettibili e non concede immunità automatica alla Sorpresa.",
+      "effetti": {
+        "valori": [
+          {
+            "abilita": "Percezione",
+            "valore": 3,
+            "ambito": "uso_specifico",
+            "uso": "imboscate e pericoli improvvisi",
+            "condizione": "Ottiene +3 VA alle Prove di Percezione per individuare imboscate, aggressori nascosti e pericoli improvvisi.",
+            "fonte": "Giocatore §8.6.1"
+          }
+        ]
+      }
     },
     {
       "id": "sonno-leggero",
@@ -167,7 +179,20 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Ottiene +3 alla PS di Tempra effettuata per evitare una Menomazione. Si applicano tutte le penalità ordinarie, comprese quelle dello Stato di Ferita appena raggiunto. Il bonus riguarda la Prova distinta per la Menomazione, non quella per limitare le nuove Ferite."
+      "testo": "Ottiene +3 alla PS di Tempra effettuata per evitare una Menomazione. Si applicano tutte le penalità ordinarie, comprese quelle dello Stato di Ferita appena raggiunto. Il bonus riguarda la Prova distinta per la Menomazione, non quella per limitare le nuove Ferite.",
+      "effetti": {
+        "valori": [
+          {
+            "tipo": "salvezza",
+            "salvezza": "tempra",
+            "valore": 3,
+            "ambito": "uso_specifico",
+            "uso": "per evitare una Menomazione",
+            "condizione": "Ottiene +3 alla PS di Tempra effettuata per evitare una Menomazione.",
+            "fonte": "Giocatore §8.6.1"
+          }
+        ]
+      }
     },
     {
       "id": "duro-a-morire",
@@ -177,7 +202,20 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Quando si trova a 0 PV, ottiene +3 alle PS di Tempra per evitare o ridurre nuove Ferite, sia a causa di un danno sia per Sanguinamento. Il beneficio non si applica alla distinta PS per evitare una Menomazione."
+      "testo": "Quando si trova a 0 PV, ottiene +3 alle PS di Tempra per evitare o ridurre nuove Ferite, sia a causa di un danno sia per Sanguinamento. Il beneficio non si applica alla distinta PS per evitare una Menomazione.",
+      "effetti": {
+        "valori": [
+          {
+            "tipo": "salvezza",
+            "salvezza": "tempra",
+            "valore": 3,
+            "ambito": "uso_specifico",
+            "uso": "a 0 PV, contro nuove Ferite",
+            "condizione": "Quando si trova a 0 PV, ottiene +3 alle PS di Tempra per evitare o ridurre nuove Ferite, sia a causa di un danno sia per Sanguinamento.",
+            "fonte": "Giocatore §8.6.1"
+          }
+        ]
+      }
     },
     {
       "id": "guarigione-migliorata",
@@ -197,7 +235,28 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Ottiene +3 VA alle Prove di Atletica per sollevare, sostenere, spingere, trascinare o trasportare carichi. Ottiene inoltre +3 alle PS di Tempra effettivamente richieste per resistere all’Affaticamento dovuto al trasporto di un carico. Il Talento non concede una Prova quando il peggioramento dell’Affaticamento è automatico. Non modifica i limiti di peso, la Forza, il danno o i requisiti delle armi e non riduce ulteriormente le penalità del carico."
+      "testo": "Ottiene +3 VA alle Prove di Atletica per sollevare, sostenere, spingere, trascinare o trasportare carichi. Ottiene inoltre +3 alle PS di Tempra effettivamente richieste per resistere all’Affaticamento dovuto al trasporto di un carico. Il Talento non concede una Prova quando il peggioramento dell’Affaticamento è automatico. Non modifica i limiti di peso, la Forza, il danno o i requisiti delle armi e non riduce ulteriormente le penalità del carico.",
+      "effetti": {
+        "valori": [
+          {
+            "abilita": "Atletica",
+            "valore": 3,
+            "ambito": "uso_specifico",
+            "uso": "sollevare e trasportare carichi",
+            "condizione": "Ottiene +3 VA alle Prove di Atletica per sollevare, sostenere, spingere, trascinare o trasportare carichi.",
+            "fonte": "Giocatore §8.6.1"
+          },
+          {
+            "tipo": "salvezza",
+            "salvezza": "tempra",
+            "valore": 3,
+            "ambito": "uso_specifico",
+            "uso": "Affaticamento da trasporto di carichi",
+            "condizione": "Ottiene inoltre +3 alle PS di Tempra effettivamente richieste per resistere all’Affaticamento dovuto al trasporto di un carico.",
+            "fonte": "Giocatore §8.6.1"
+          }
+        ]
+      }
     },
     {
       "id": "sport",
@@ -208,7 +267,19 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "All’acquisizione sceglie una sola disciplina sportiva. Ottiene +3 VA alle Prove di Atletica direttamente pertinenti a quella disciplina, anche fuori da una competizione. Il bonus non si applica ad attacchi, Difese o Prove Salvezza. Scegliendo Nuoto, per esempio, si applica alle relative Prove di Atletica per Corsa e Scatto.",
-      "annotazione": "disciplina sportiva scelta all'acquisizione"
+      "annotazione": "disciplina sportiva scelta all'acquisizione",
+      "effetti": {
+        "valori": [
+          {
+            "abilita": "Atletica",
+            "valore": 3,
+            "ambito": "uso_specifico",
+            "uso": "sport: {annotazione}",
+            "condizione": "All’acquisizione sceglie una sola disciplina sportiva.",
+            "fonte": "Giocatore §8.6.1"
+          }
+        ]
+      }
     },
     {
       "id": "visione-perfetta",
@@ -253,7 +324,22 @@
       "prerequisiti": [],
       "molteplicita": "per_caratteristica",
       "parametro": "caratteristica",
-      "testo": "Sceglie Forza, Costituzione, Destrezza, Intelligenza, Saggezza o Carisma e ottiene +3 alle Prove dirette di quella Caratteristica. Il valore della Caratteristica non cambia. Il bonus non si applica alle Abilità, alle Prove Salvezza, ai valori derivati di PV, PM, Iniziativa o danno, né ai requisiti dell’Equipaggiamento.\nPuò acquisire nuovamente il Talento scegliendo ogni volta una Caratteristica diversa. Ogni acquisizione utilizza una normale scelta di Talento Libero."
+      "testo": "Sceglie Forza, Costituzione, Destrezza, Intelligenza, Saggezza o Carisma e ottiene +3 alle Prove dirette di quella Caratteristica. Il valore della Caratteristica non cambia. Il bonus non si applica alle Abilità, alle Prove Salvezza, ai valori derivati di PV, PM, Iniziativa o danno, né ai requisiti dell’Equipaggiamento.\nPuò acquisire nuovamente il Talento scegliendo ogni volta una Caratteristica diversa. Ogni acquisizione utilizza una normale scelta di Talento Libero.",
+      "effetti": {
+        "valori": [
+          {
+            "tipo": "caratteristica",
+            "caratteristiche": [
+              "{parametro}"
+            ],
+            "valore": 3,
+            "ambito": "uso_specifico",
+            "uso": "Prove dirette di Caratteristica",
+            "condizione": "Sceglie Forza, Costituzione, Destrezza, Intelligenza, Saggezza o Carisma e ottiene +3 alle Prove dirette di quella Caratteristica.",
+            "fonte": "Giocatore §8.6.2"
+          }
+        ]
+      }
     },
     {
       "id": "prova-salvezza-migliorata",
@@ -276,7 +362,21 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Ottiene +2 alla PS per evitare o attenuare l’avvelenamento. Il bonus non si applica alle successive PS di Tempra per nuove Ferite causate dal danno del veleno quando il personaggio è già a 0 PV."
+      "testo": "Ottiene +2 alla PS per evitare o attenuare l’avvelenamento. Il bonus non si applica alle successive PS di Tempra per nuove Ferite causate dal danno del veleno quando il personaggio è già a 0 PV.",
+      "effetti": {
+        "valori": [
+          {
+            "tipo": "salvezza",
+            "salvezza": "tempra",
+            "valore": 2,
+            "ambito": "uso_specifico",
+            "uso": "contro l’avvelenamento",
+            "resistenza": true,
+            "condizione": "Ottiene +2 alla PS per evitare o attenuare l’avvelenamento.",
+            "fonte": "Giocatore §8.6.3"
+          }
+        ]
+      }
     },
     {
       "id": "resistenza-alle-malattie",
@@ -286,7 +386,21 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Ottiene +2 alle PS contro malattie e infezioni."
+      "testo": "Ottiene +2 alle PS contro malattie e infezioni.",
+      "effetti": {
+        "valori": [
+          {
+            "tipo": "salvezza",
+            "salvezza": "tempra",
+            "valore": 2,
+            "ambito": "uso_specifico",
+            "uso": "contro malattie e infezioni",
+            "resistenza": true,
+            "condizione": "Ottiene +2 alle PS contro malattie e infezioni.",
+            "fonte": "Giocatore §8.6.3"
+          }
+        ]
+      }
     },
     {
       "id": "resistenza-all-affaticamento",
@@ -296,7 +410,21 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Ottiene +2 alle PS per evitare o limitare il peggioramento dell’Affaticamento. I peggioramenti automatici restano automatici."
+      "testo": "Ottiene +2 alle PS per evitare o limitare il peggioramento dell’Affaticamento. I peggioramenti automatici restano automatici.",
+      "effetti": {
+        "valori": [
+          {
+            "tipo": "salvezza",
+            "salvezza": "tempra",
+            "valore": 2,
+            "ambito": "uso_specifico",
+            "uso": "contro l’Affaticamento",
+            "resistenza": true,
+            "condizione": "Ottiene +2 alle PS per evitare o limitare il peggioramento dell’Affaticamento.",
+            "fonte": "Giocatore §8.6.3"
+          }
+        ]
+      }
     },
     {
       "id": "resistenza-alla-paura",
@@ -306,7 +434,21 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Ottiene +2 alle PS contro paura, terrore, panico e demoralizzazione."
+      "testo": "Ottiene +2 alle PS contro paura, terrore, panico e demoralizzazione.",
+      "effetti": {
+        "valori": [
+          {
+            "tipo": "salvezza",
+            "salvezza": "volonta",
+            "valore": 2,
+            "ambito": "uso_specifico",
+            "uso": "contro paura e panico",
+            "resistenza": true,
+            "condizione": "Ottiene +2 alle PS contro paura, terrore, panico e demoralizzazione.",
+            "fonte": "Giocatore §8.6.3"
+          }
+        ]
+      }
     },
     {
       "id": "resistenza-al-controllo-mentale",
@@ -316,7 +458,21 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Ottiene +2 alle PS contro suggestioni e altri effetti che impongono o controllano le decisioni del personaggio. Non si applica alla normale persuasione."
+      "testo": "Ottiene +2 alle PS contro suggestioni e altri effetti che impongono o controllano le decisioni del personaggio. Non si applica alla normale persuasione.",
+      "effetti": {
+        "valori": [
+          {
+            "tipo": "salvezza",
+            "salvezza": "volonta",
+            "valore": 2,
+            "ambito": "uso_specifico",
+            "uso": "contro il controllo mentale",
+            "resistenza": true,
+            "condizione": "Ottiene +2 alle PS contro suggestioni e altri effetti che impongono o controllano le decisioni del personaggio.",
+            "fonte": "Giocatore §8.6.3"
+          }
+        ]
+      }
     },
     {
       "id": "resistenza-alla-corruzione",
@@ -326,7 +482,21 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Ottiene +2 alle PS per evitare di acquisire Corruzione Oscura o limitarne il peggioramento. Si usa la Salvezza indicata dall’effetto; nella procedura ordinaria di Corruzione è Magia (§5.20)."
+      "testo": "Ottiene +2 alle PS per evitare di acquisire Corruzione Oscura o limitarne il peggioramento. Si usa la Salvezza indicata dall’effetto; nella procedura ordinaria di Corruzione è Magia (§5.20).",
+      "effetti": {
+        "valori": [
+          {
+            "tipo": "salvezza",
+            "salvezza": "magia",
+            "valore": 2,
+            "ambito": "uso_specifico",
+            "uso": "contro la Corruzione Oscura",
+            "resistenza": true,
+            "condizione": "Ottiene +2 alle PS per evitare di acquisire Corruzione Oscura o limitarne il peggioramento.",
+            "fonte": "Giocatore §8.6.3"
+          }
+        ]
+      }
     },
     {
       "id": "mezzofondista",
@@ -832,7 +1002,17 @@
           "senz_armi": {
             "va": 1
           }
-        }
+        },
+        "valori": [
+          {
+            "abilita": "Difese",
+            "valore": 1,
+            "ambito": "uso_specifico",
+            "uso": "contro attacchi ravvicinati, senz’armi",
+            "condizione": "Ottiene +1 VA agli attacchi senz’armi e alle Prove di Difese contro attacchi Ravvicinati mentre combatte senz’armi.",
+            "fonte": "Giocatore §8.6.6"
+          }
+        ]
       }
     },
     {
@@ -1038,7 +1218,20 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Quando para con uno scudo, riduce di 2 le penalità della Parata a Distanza: da −4 a −2 VA contro un attacco ordinario e da −6 a −4 contro una Raffica. Non modifica la Parata effettuata con un’arma."
+      "testo": "Quando para con uno scudo, riduce di 2 le penalità della Parata a Distanza: da −4 a −2 VA contro un attacco ordinario e da −6 a −4 contro una Raffica. Non modifica la Parata effettuata con un’arma.",
+      "effetti": {
+        "valori": [
+          {
+            "tipo": "parata",
+            "con": "scudo",
+            "contro": "distanza",
+            "valore": 2,
+            "ambito": "generale",
+            "condizione": "Quando para con uno scudo, riduce di 2 le penalità della Parata a Distanza: da −4 a −2 VA contro un attacco ordinario e da −6 a −4 contro una Raffica.",
+            "fonte": "Giocatore §8.6.7"
+          }
+        ]
+      }
     },
     {
       "id": "parata-istintiva",
@@ -1112,7 +1305,19 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Una volta per sessione per ciascun sistema, dichiara prima della Prova l’uso del Talento e ottiene +2 VA a Tecnologia per intrusione informatica o sorveglianza elettronica. L’utilizzo si consuma anche se fallisce. Si somma a Specializzazione in Informatica quando pertinente, per +4 complessivo."
+      "testo": "Una volta per sessione per ciascun sistema, dichiara prima della Prova l’uso del Talento e ottiene +2 VA a Tecnologia per intrusione informatica o sorveglianza elettronica. L’utilizzo si consuma anche se fallisce. Si somma a Specializzazione in Informatica quando pertinente, per +4 complessivo.",
+      "effetti": {
+        "valori": [
+          {
+            "abilita": "Tecnologia",
+            "valore": 2,
+            "ambito": "uso_specifico",
+            "uso": "intrusione informatica e sorveglianza elettronica",
+            "condizione": "Una volta per sessione per ciascun sistema, dichiara prima della Prova l’uso del Talento e ottiene +2 VA a Tecnologia per intrusione informatica o sorveglianza elettronica.",
+            "fonte": "Giocatore §8.6.9"
+          }
+        ]
+      }
     },
     {
       "id": "mani-abili",
@@ -1220,7 +1425,19 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Ottiene +2 VA a Pilotare per inseguire o seminare un altro mezzo, indipendentemente dal tipo di veicolo. Si somma alla Specializzazione pertinente al veicolo, per +4 complessivo. Non impone penalità automatiche all’avversario. Il beneficio riguarda le manovre effettuate per mantenere o interrompere l’inseguimento; non aumenta il Movimento, non modifica Percezione e non si estende automaticamente a tutte le Prove della scena (Manuale dei Veicoli, §6.1)."
+      "testo": "Ottiene +2 VA a Pilotare per inseguire o seminare un altro mezzo, indipendentemente dal tipo di veicolo. Si somma alla Specializzazione pertinente al veicolo, per +4 complessivo. Non impone penalità automatiche all’avversario. Il beneficio riguarda le manovre effettuate per mantenere o interrompere l’inseguimento; non aumenta il Movimento, non modifica Percezione e non si estende automaticamente a tutte le Prove della scena (Manuale dei Veicoli, §6.1).",
+      "effetti": {
+        "valori": [
+          {
+            "abilita": "Pilotare",
+            "valore": 2,
+            "ambito": "uso_specifico",
+            "uso": "inseguire o seminare un mezzo",
+            "condizione": "Ottiene +2 VA a Pilotare per inseguire o seminare un altro mezzo, indipendentemente dal tipo di veicolo.",
+            "fonte": "Giocatore §8.6.9"
+          }
+        ]
+      }
     },
     {
       "id": "pilotaggio-acrobatico",
@@ -1619,7 +1836,20 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Passivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.\nOttiene +3 VA alle Prove Salvezza di Volontà effettuate per mantenere la Concentrazione su un Incantesimo. Si applica soltanto alle Prove già previste dalle regole, senza introdurne di nuove né modificarne la frequenza.\nIl beneficio non si applica alle altre PS di Volontà, alle Prove di Potere per il lancio o alle Prove per mantenere una Focalizzazione preparatoria. Non consente di mantenere più Incantesimi e non impedisce l’interruzione automatica per incoscienza, morte o perdita dei requisiti necessari.",
-      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)",
+      "effetti": {
+        "valori": [
+          {
+            "tipo": "salvezza",
+            "salvezza": "volonta",
+            "valore": 3,
+            "ambito": "uso_specifico",
+            "uso": "mantenere la Concentrazione",
+            "condizione": "Ottiene +3 VA alle Prove Salvezza di Volontà effettuate per mantenere la Concentrazione su un Incantesimo.",
+            "fonte": "Magia sez. 1"
+          }
+        ]
+      }
     },
     {
       "id": "concentrazione-operativa",

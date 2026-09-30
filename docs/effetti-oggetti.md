@@ -25,6 +25,13 @@ Stato al 27 settembre 2026. Dati: campo `effetti` degli oggetti del catalogo (`d
 | `ar_contro` | `contro`: tipo di danno (esplosioni…) | generale | «Resistenze» nella sezione Protezioni e valore «AR contro …» accanto all'AR: AR totale + il maggiore fra scudo e armatura (§7.4.3, §7.11.4) |
 | `ar` | `magica` (facoltativo): quanta parte dell'AR in più è magica | generale, situazionale | AR del personaggio (`src/protezione.js`, docs/ricognizione-ar-pi.md); situazionale con l'interruttore al tavolo (Scudo Magico delle Guardie Sacre, §7.4.10) |
 
+**Talenti** (dal 30 settembre 2026, `docs/censimento-talenti.md`): lo stesso schema in `effetti.valori` delle voci dei Talenti (`talenti_liberi.json`, `classi.json`), accanto alle chiavi di `effetti` che il motore legge già (`iniziativa`, `attacco_distanza`, `lancio`…). Contano solo al tavolo, nei valori effettivi (`src/talenti.js`, `src/condizioni.js`): il totale da regole e la SS non cambiano. In più per i Talenti:
+- `salvezza` anche **generale** o **situazionale**, con l'id della Prova Salvezza (Scudo Spirituale); `resistenza: true` per le Resistenze specifiche: strutturale + Prova Salvezza Migliorata + Resistenza non oltre 18 (Giocatore §8.6);
+- `parata` (nuovo): `con: "scudo"`, `contro: "distanza"` o `"ravvicinata"`, generale: modifica la Parata con lo Scudo (Parata a Distanza: +2 a distanza);
+- `danno` con `armi: "artefatto"`: solo le armi Artefatto (Mistiche o TecnoMistiche; Meccanica Potenziata);
+- `{parametro}` nelle `caratteristiche` e `{annotazione}` nell'`uso`: la scelta del giocatore (Prova di Caratteristica Migliorata, Sport);
+- i bonus dei Talenti **si sommano** fra loro e con gli strumenti: la regola «un solo modificatore degli strumenti» (§1.4.1) vale solo per gli oggetti.
+
 - `condizione` è la frase del manuale che dà il bonus, copiata intera. `node tools/verifica_frasi.mjs` controlla che esista nel testo dei Doc (`docs/manuali-txt/`); lo stesso controllo è nei test.
 - Armi: `specializzazione_danno: false` (campo dell'arma, non un effetto) vuol dire che la Specializzazione della sua famiglia dà solo il +1 VA, senza il +1 danno del §8.8.1. Caso unico: SA30 a dardi, proprietà Danno calibrato (risposta di Davide A.12, 28/09/2026). Il validatore ammette solo il valore `false`.
 - Un effetto conta solo con l'oggetto **in uso** (indossato, impugnato…). Gli oggetti senza stati propri (corredi, kit) ricevono «In uso» / «Nello zaino» quando hanno effetti.

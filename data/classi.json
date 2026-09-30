@@ -82,7 +82,39 @@
         {
           "grado": 5,
           "nome": "Ottime Credenziali",
-          "testo": "Con credenziali autentiche o un’autorità reale riconosciuta, ottiene +4 VA alle Prove Sociali pertinenti. Una volta per sessione può ottenere automaticamente una concessione ordinaria coerente con il proprio ruolo: accesso a un’area controllata, documenti non segreti, collaborazione temporanea di personale o equipaggiamento comune. La concessione non comprende risorse rare, segreti senza restrizioni, ordini suicidi o autorità superiore alla propria."
+          "testo": "Con credenziali autentiche o un’autorità reale riconosciuta, ottiene +4 VA alle Prove Sociali pertinenti. Una volta per sessione può ottenere automaticamente una concessione ordinaria coerente con il proprio ruolo: accesso a un’area controllata, documenti non segreti, collaborazione temporanea di personale o equipaggiamento comune. La concessione non comprende risorse rare, segreti senza restrizioni, ordini suicidi o autorità superiore alla propria.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Cultura",
+                "valore": 4,
+                "ambito": "situazionale",
+                "condizione": "Con credenziali autentiche o un’autorità reale riconosciuta, ottiene +4 VA alle Prove Sociali pertinenti.",
+                "fonte": "Giocatore, Agente (§3.4; Talenti §3.5.2)"
+              },
+              {
+                "abilita": "Intrattenere",
+                "valore": 4,
+                "ambito": "situazionale",
+                "condizione": "Con credenziali autentiche o un’autorità reale riconosciuta, ottiene +4 VA alle Prove Sociali pertinenti.",
+                "fonte": "Giocatore, Agente (§3.4; Talenti §3.5.2)"
+              },
+              {
+                "abilita": "Oratoria",
+                "valore": 4,
+                "ambito": "situazionale",
+                "condizione": "Con credenziali autentiche o un’autorità reale riconosciuta, ottiene +4 VA alle Prove Sociali pertinenti.",
+                "fonte": "Giocatore, Agente (§3.4; Talenti §3.5.2)"
+              },
+              {
+                "abilita": "Raggirare",
+                "valore": 4,
+                "ambito": "situazionale",
+                "condizione": "Con credenziali autentiche o un’autorità reale riconosciuta, ottiene +4 VA alle Prove Sociali pertinenti.",
+                "fonte": "Giocatore, Agente (§3.4; Talenti §3.5.2)"
+              }
+            ]
+          }
         }
       ],
       "talenti_a_scelta": [
@@ -118,7 +150,35 @@
         {
           "specializzazione": "Spionaggio",
           "nome": "Doppia Identità",
-          "testo": "Mantiene due identità alternative stabili, ciascuna con una storia credibile, contatti ordinari e documenti di base. Ottiene +3 VA alle Prove di Cultura, Oratoria e Raggirare per utilizzare o difendere tali identità. La compromissione di una non espone automaticamente l’altra. Ricostruire un’identità richiede una settimana e contatti, documenti o sistemi appropriati. Le identità non conferiscono automaticamente autorità autentica o privilegi."
+          "testo": "Mantiene due identità alternative stabili, ciascuna con una storia credibile, contatti ordinari e documenti di base. Ottiene +3 VA alle Prove di Cultura, Oratoria e Raggirare per utilizzare o difendere tali identità. La compromissione di una non espone automaticamente l’altra. Ricostruire un’identità richiede una settimana e contatti, documenti o sistemi appropriati. Le identità non conferiscono automaticamente autorità autentica o privilegi.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Cultura",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "usare o difendere le identità alternative",
+                "condizione": "Ottiene +3 VA alle Prove di Cultura, Oratoria e Raggirare per utilizzare o difendere tali identità.",
+                "fonte": "Giocatore, Agente (§3.4; Talenti §3.5.2)"
+              },
+              {
+                "abilita": "Oratoria",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "usare o difendere le identità alternative",
+                "condizione": "Ottiene +3 VA alle Prove di Cultura, Oratoria e Raggirare per utilizzare o difendere tali identità.",
+                "fonte": "Giocatore, Agente (§3.4; Talenti §3.5.2)"
+              },
+              {
+                "abilita": "Raggirare",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "usare o difendere le identità alternative",
+                "condizione": "Ottiene +3 VA alle Prove di Cultura, Oratoria e Raggirare per utilizzare o difendere tali identità.",
+                "fonte": "Giocatore, Agente (§3.4; Talenti §3.5.2)"
+              }
+            ]
+          }
         },
         {
           "specializzazione": "Comune",
@@ -210,7 +270,20 @@
         {
           "specializzazione": "Naturale",
           "nome": "Cacciatore Instancabile",
-          "testo": "Durante un inseguimento o una marcia forzata può guidare il gruppo. La prima Prova Salvezza richiesta al gruppo per sforzo, ritmo sostenuto, fame, sete o terreno ostile riceve +5 a Tempra.\nIl +5 di Cacciatore Instancabile si applica alla prima PS di Tempra pertinente già richiesta dalla fonte. Non trasforma un peggioramento automatico dell’Affaticamento in una Prova Salvezza (§5.19)."
+          "testo": "Durante un inseguimento o una marcia forzata può guidare il gruppo. La prima Prova Salvezza richiesta al gruppo per sforzo, ritmo sostenuto, fame, sete o terreno ostile riceve +5 a Tempra.\nIl +5 di Cacciatore Instancabile si applica alla prima PS di Tempra pertinente già richiesta dalla fonte. Non trasforma un peggioramento automatico dell’Affaticamento in una Prova Salvezza (§5.19).",
+          "effetti": {
+            "valori": [
+              {
+                "tipo": "salvezza",
+                "salvezza": "tempra",
+                "valore": 5,
+                "ambito": "uso_specifico",
+                "uso": "prima PS del gruppo in marcia forzata o inseguimento",
+                "condizione": "La prima Prova Salvezza richiesta al gruppo per sforzo, ritmo sostenuto, fame, sete o terreno ostile riceve +5 a Tempra.",
+                "fonte": "Giocatore, Cacciatore (§3.4; Talenti §3.5.2)"
+              }
+            ]
+          }
         },
         {
           "specializzazione": "Occulto",
@@ -220,7 +293,19 @@
         {
           "specializzazione": "Occulto",
           "nome": "Senso dell’Occulto",
-          "testo": "Spendendo 2 PM, avverte la presenza di creature mistiche o Oscure nell’area pertinente alla scena e ottiene +2 VA a Occultismo per comprenderne la possibile natura. Non identifica automaticamente numero, posizione o specie."
+          "testo": "Spendendo 2 PM, avverte la presenza di creature mistiche o Oscure nell’area pertinente alla scena e ottiene +2 VA a Occultismo per comprenderne la possibile natura. Non identifica automaticamente numero, posizione o specie.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Occultismo",
+                "valore": 2,
+                "ambito": "uso_specifico",
+                "uso": "natura delle creature avvertite",
+                "condizione": "Spendendo 2 PM, avverte la presenza di creature mistiche o Oscure nell’area pertinente alla scena e ottiene +2 VA a Occultismo per comprenderne la possibile natura.",
+                "fonte": "Giocatore, Cacciatore (§3.4; Talenti §3.5.2)"
+              }
+            ]
+          }
         },
         {
           "specializzazione": "Comune",
@@ -504,7 +589,19 @@
         {
           "grado": 3,
           "nome": "Strumentazione Efficace",
-          "testo": "Ottiene +2 VA a Medicina per Pronto Soccorso eseguito con strumenti. Il bonus si aggiunge al modificatore degli strumenti utilizzati: quelli improvvisati passano da −2 a 0, quelli standard da 0 a +2. Il Talento non permette di intervenire senza gli strumenti necessari."
+          "testo": "Ottiene +2 VA a Medicina per Pronto Soccorso eseguito con strumenti. Il bonus si aggiunge al modificatore degli strumenti utilizzati: quelli improvvisati passano da −2 a 0, quelli standard da 0 a +2. Il Talento non permette di intervenire senza gli strumenti necessari.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Medicina",
+                "valore": 2,
+                "ambito": "uso_specifico",
+                "uso": "Pronto Soccorso con strumenti",
+                "condizione": "Ottiene +2 VA a Medicina per Pronto Soccorso eseguito con strumenti.",
+                "fonte": "Giocatore, Paramedico (§3.4; Talenti §3.5.2)"
+              }
+            ]
+          }
         },
         {
           "grado": 5,
@@ -526,7 +623,18 @@
         {
           "specializzazione": "Traumatologo",
           "nome": "Campo Sterile",
-          "testo": "Con 10 minuti e strumenti medici appropriati prepara un’area di 2 Q. All’interno ottiene +2 VA a Medicina e, una volta per scena, può trasformare un proprio Fallimento Maldestro in un fallimento normale. L’area dura finché non viene abbandonata, contaminata, distrutta o spostata.\nIl bonus di Campo Sterile si applica anche ai trattamenti delle Menomazioni che il personaggio è autorizzato a eseguire. Nel trattamento di una Menomazione temporanea, trasformare un Fallimento Maldestro in un fallimento normale aumenta di 1 mese il recupero residuo, anziché portarlo a 6 mesi. Il tentativo rimane consumato. I benefici appartengono al Paramedico stesso e non si trasferiscono automaticamente agli altri operatori presenti nell’area."
+          "testo": "Con 10 minuti e strumenti medici appropriati prepara un’area di 2 Q. All’interno ottiene +2 VA a Medicina e, una volta per scena, può trasformare un proprio Fallimento Maldestro in un fallimento normale. L’area dura finché non viene abbandonata, contaminata, distrutta o spostata.\nIl bonus di Campo Sterile si applica anche ai trattamenti delle Menomazioni che il personaggio è autorizzato a eseguire. Nel trattamento di una Menomazione temporanea, trasformare un Fallimento Maldestro in un fallimento normale aumenta di 1 mese il recupero residuo, anziché portarlo a 6 mesi. Il tentativo rimane consumato. I benefici appartengono al Paramedico stesso e non si trasferiscono automaticamente agli altri operatori presenti nell’area.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Medicina",
+                "valore": 2,
+                "ambito": "situazionale",
+                "condizione": "All’interno ottiene +2 VA a Medicina e, una volta per scena, può trasformare un proprio Fallimento Maldestro in un fallimento normale.",
+                "fonte": "Giocatore, Paramedico (§3.4; Talenti §3.5.2)"
+              }
+            ]
+          }
         },
         {
           "specializzazione": "Traumatologo",
@@ -632,7 +740,19 @@
         {
           "grado": 5,
           "nome": "Armaiolo da Campo",
-          "testo": "Ottiene +2 VA a Tecnologia per manutenzione e riparazione delle armi da fuoco. Dopo un fallimento normale può rendere utilizzabile per il resto della scena un’arma Danneggiata o inutilizzabile, con −2 VA. Non opera dopo un Fallimento Maldestro."
+          "testo": "Ottiene +2 VA a Tecnologia per manutenzione e riparazione delle armi da fuoco. Dopo un fallimento normale può rendere utilizzabile per il resto della scena un’arma Danneggiata o inutilizzabile, con −2 VA. Non opera dopo un Fallimento Maldestro.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Tecnologia",
+                "valore": 2,
+                "ambito": "uso_specifico",
+                "uso": "riparare armi da fuoco",
+                "condizione": "Ottiene +2 VA a Tecnologia per manutenzione e riparazione delle armi da fuoco.",
+                "fonte": "Giocatore, Artigliere (§3.4; Talenti §3.5.3)"
+              }
+            ]
+          }
         }
       ],
       "talenti_a_scelta": [
@@ -736,7 +856,20 @@
         {
           "grado": 1,
           "nome": "Mantenere la Posizione",
-          "testo": "Ottiene +3 al valore delle Prove o delle Prove Salvezza previste per resistere o liberarsi da sbilanciamenti, spinte, spostamenti forzati, immobilizzazioni e disarmi. Si utilizza la Prova indicata dalla Manovra o dall’effetto.\nQuando un attacco impone uno spostamento senza una Prova per resistere, può effettuare una Prova Salvezza gratuita di Tempra con +3. Il successo evita soltanto lo spostamento; danni e altri effetti si applicano normalmente."
+          "testo": "Ottiene +3 al valore delle Prove o delle Prove Salvezza previste per resistere o liberarsi da sbilanciamenti, spinte, spostamenti forzati, immobilizzazioni e disarmi. Si utilizza la Prova indicata dalla Manovra o dall’effetto.\nQuando un attacco impone uno spostamento senza una Prova per resistere, può effettuare una Prova Salvezza gratuita di Tempra con +3. Il successo evita soltanto lo spostamento; danni e altri effetti si applicano normalmente.",
+          "effetti": {
+            "valori": [
+              {
+                "tipo": "salvezza",
+                "salvezza": null,
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "resistere a spinte, sbilanciamenti e disarmi",
+                "condizione": "Ottiene +3 al valore delle Prove o delle Prove Salvezza previste per resistere o liberarsi da sbilanciamenti, spinte, spostamenti forzati, immobilizzazioni e disarmi.",
+                "fonte": "Giocatore, Assaltatore (§3.4; Talenti §3.5.4)"
+              }
+            ]
+          }
         },
         {
           "grado": 3,
@@ -746,7 +879,18 @@
         {
           "grado": 5,
           "nome": "Presidio di Combattimento",
-          "testo": "All’arrivo della propria Iniziativa sceglie, senza spendere Azioni, un alleato adiacente. Entrambi ottengono +2 VA a Difese fino all’arrivo dell’Iniziativa successiva dell’Assaltatore, mentre rimangono adiacenti, l’Assaltatore è cosciente e almeno uno dei due è ingaggiato in Ravvicinato. Il beneficio riguarda un solo alleato e termina se si separano. Restano validi i normali costi e requisiti delle Difese."
+          "testo": "All’arrivo della propria Iniziativa sceglie, senza spendere Azioni, un alleato adiacente. Entrambi ottengono +2 VA a Difese fino all’arrivo dell’Iniziativa successiva dell’Assaltatore, mentre rimangono adiacenti, l’Assaltatore è cosciente e almeno uno dei due è ingaggiato in Ravvicinato. Il beneficio riguarda un solo alleato e termina se si separano. Restano validi i normali costi e requisiti delle Difese.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Difese",
+                "valore": 2,
+                "ambito": "situazionale",
+                "condizione": "Entrambi ottengono +2 VA a Difese fino all’arrivo dell’Iniziativa successiva dell’Assaltatore, mentre rimangono adiacenti, l’Assaltatore è cosciente e almeno uno dei due è ingaggiato in Ravvicinato.",
+                "fonte": "Giocatore, Assaltatore (§3.4; Talenti §3.5.4)"
+              }
+            ]
+          }
         }
       ],
       "talenti_a_scelta": [
@@ -914,7 +1058,17 @@
               "ignaro": {
                 "va": 2
               }
-            }
+            },
+            "valori": [
+              {
+                "abilita": "Furtività",
+                "valore": 2,
+                "ambito": "uso_specifico",
+                "uso": "avvicinarsi a un avversario senza essere visto",
+                "condizione": "Ottiene +2 VA a Furtività per avvicinarsi a un avversario senza essere individuato.",
+                "fonte": "Giocatore, Incursore (§3.4; Talenti §3.5.4)"
+              }
+            ]
           }
         },
         {
@@ -942,7 +1096,19 @@
         {
           "specializzazione": "Guastatore",
           "nome": "Sabotaggio Rapido",
-          "testo": "Ottiene +2 VA a Tecnologia per sabotare o disattivare dispositivi, allarmi, macchinari e sistemi di sicurezza. Dimezza il tempo operativo richiesto, fino a un minimo di un’Azione Principale; quando il tempo si misura in Round o Azioni, si arrotonda per eccesso. Restano necessari l’accesso al dispositivo e gli strumenti adeguati. Esempio: un’operazione da 4 Azioni Principali ne richiede 2."
+          "testo": "Ottiene +2 VA a Tecnologia per sabotare o disattivare dispositivi, allarmi, macchinari e sistemi di sicurezza. Dimezza il tempo operativo richiesto, fino a un minimo di un’Azione Principale; quando il tempo si misura in Round o Azioni, si arrotonda per eccesso. Restano necessari l’accesso al dispositivo e gli strumenti adeguati. Esempio: un’operazione da 4 Azioni Principali ne richiede 2.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Tecnologia",
+                "valore": 2,
+                "ambito": "uso_specifico",
+                "uso": "sabotare o disattivare dispositivi",
+                "condizione": "Ottiene +2 VA a Tecnologia per sabotare o disattivare dispositivi, allarmi, macchinari e sistemi di sicurezza.",
+                "fonte": "Giocatore, Incursore (§3.4; Talenti §3.5.4)"
+              }
+            ]
+          }
         },
         {
           "specializzazione": "Comune",
@@ -1242,7 +1408,20 @@
         {
           "grado": 1,
           "nome": "Addestramento Militare",
-          "testo": "Il Soldato ottiene +3 alle Prove Salvezza di Volontà contro paura, panico, Fuoco di Soppressione e altre pressioni provocate dal combattimento. In caso di fallimento subisce normalmente gli effetti previsti dalla regola applicabile."
+          "testo": "Il Soldato ottiene +3 alle Prove Salvezza di Volontà contro paura, panico, Fuoco di Soppressione e altre pressioni provocate dal combattimento. In caso di fallimento subisce normalmente gli effetti previsti dalla regola applicabile.",
+          "effetti": {
+            "valori": [
+              {
+                "tipo": "salvezza",
+                "salvezza": "volonta",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "contro paura e pressioni del combattimento",
+                "condizione": "Il Soldato ottiene +3 alle Prove Salvezza di Volontà contro paura, panico, Fuoco di Soppressione e altre pressioni provocate dal combattimento.",
+                "fonte": "Giocatore, Soldato (§3.4; Talenti §3.5.6)"
+              }
+            ]
+          }
         },
         {
           "grado": 3,
@@ -1264,17 +1443,68 @@
         {
           "specializzazione": "Supporto tattico",
           "nome": "Supporto di Difesa",
-          "testo": "Una volta per Round, il Soldato sceglie sé stesso oppure un alleato entro 6 Q. Il beneficiario ottiene +2 VA alle Prove di Difese fino all’arrivo dell’Iniziativa successiva del Soldato. Il bonus non si applica contro attacchi ad Area, inevitabili o non percepiti.\nIl beneficiario continua a spendere le azioni normalmente richieste per parare o schivare: il Talento migliora la Prova, ma non concede una Difesa gratuita."
+          "testo": "Una volta per Round, il Soldato sceglie sé stesso oppure un alleato entro 6 Q. Il beneficiario ottiene +2 VA alle Prove di Difese fino all’arrivo dell’Iniziativa successiva del Soldato. Il bonus non si applica contro attacchi ad Area, inevitabili o non percepiti.\nIl beneficiario continua a spendere le azioni normalmente richieste per parare o schivare: il Talento migliora la Prova, ma non concede una Difesa gratuita.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Difese",
+                "valore": 2,
+                "ambito": "situazionale",
+                "condizione": "Il beneficiario ottiene +2 VA alle Prove di Difese fino all’arrivo dell’Iniziativa successiva del Soldato.",
+                "fonte": "Giocatore, Soldato (§3.4; Talenti §3.5.6)"
+              }
+            ]
+          }
         },
         {
           "specializzazione": "Logistico",
           "nome": "Supporto Logistico",
-          "testo": "Il Soldato ottiene +2 VA alle Prove di Pilotare, Sopravvivenza o Tecnologia effettuate per costruire o riparare ripari e fortificazioni campali; organizzare un accampamento; gestire scorte, munizioni ed equipaggiamento; preparare mezzi e convogli; trasferire personale o materiali.\nIl bonus non si applica alla progettazione industriale o alle attività prive di finalità logistiche."
+          "testo": "Il Soldato ottiene +2 VA alle Prove di Pilotare, Sopravvivenza o Tecnologia effettuate per costruire o riparare ripari e fortificazioni campali; organizzare un accampamento; gestire scorte, munizioni ed equipaggiamento; preparare mezzi e convogli; trasferire personale o materiali.\nIl bonus non si applica alla progettazione industriale o alle attività prive di finalità logistiche.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Pilotare",
+                "valore": 2,
+                "ambito": "uso_specifico",
+                "uso": "attività logistiche",
+                "condizione": "Il Soldato ottiene +2 VA alle Prove di Pilotare, Sopravvivenza o Tecnologia effettuate per costruire o riparare ripari e fortificazioni campali; organizzare un accampamento; gestire scorte, munizioni ed equipaggiamento; preparare mezzi e convogli; trasferire personale o materiali.",
+                "fonte": "Giocatore, Soldato (§3.4; Talenti §3.5.6)"
+              },
+              {
+                "abilita": "Sopravvivenza",
+                "valore": 2,
+                "ambito": "uso_specifico",
+                "uso": "attività logistiche",
+                "condizione": "Il Soldato ottiene +2 VA alle Prove di Pilotare, Sopravvivenza o Tecnologia effettuate per costruire o riparare ripari e fortificazioni campali; organizzare un accampamento; gestire scorte, munizioni ed equipaggiamento; preparare mezzi e convogli; trasferire personale o materiali.",
+                "fonte": "Giocatore, Soldato (§3.4; Talenti §3.5.6)"
+              },
+              {
+                "abilita": "Tecnologia",
+                "valore": 2,
+                "ambito": "uso_specifico",
+                "uso": "attività logistiche",
+                "condizione": "Il Soldato ottiene +2 VA alle Prove di Pilotare, Sopravvivenza o Tecnologia effettuate per costruire o riparare ripari e fortificazioni campali; organizzare un accampamento; gestire scorte, munizioni ed equipaggiamento; preparare mezzi e convogli; trasferire personale o materiali.",
+                "fonte": "Giocatore, Soldato (§3.4; Talenti §3.5.6)"
+              }
+            ]
+          }
         },
         {
           "specializzazione": "Logistico",
           "nome": "Base Operativa",
-          "testo": "Requisito: Supporto Logistico. Con spazio e materiali adeguati, il Soldato può allestire una Base Operativa in un’ora. Può ospitare il Soldato e un numero di altre creature pari a 2 + Grado di Soldato.\nFinché si trovano nella Base, gli ospiti ottengono +2 VA a Percezione contro minacce provenienti dall’esterno. Una volta al giorno per ciascun ospite, la prima ora di Attività leggera trascorsa nella Base viene considerata Riposo breve ai fini del recupero di PV e PM. Quest’ora conta nel limite giornaliero del Riposo breve. Le Ferite seguono i tempi ordinari.\nLe fortificazioni costruite dal Soldato ottengono +1 AR non magica. Il beneficio si applica ai danni subiti dalla struttura prima di determinare l’eventuale perdita di PI. Non aumenta i PI o la PS Integrità, non modifica la categoria di Copertura e non concede direttamente Armatura alle creature riparate dietro la struttura. Non protegge dal Danno Etereo. I benefici strutturali di Base Operativa e Meccanizzazione Agricola non si sommano sulla stessa struttura: si applica un solo +1 AR."
+          "testo": "Requisito: Supporto Logistico. Con spazio e materiali adeguati, il Soldato può allestire una Base Operativa in un’ora. Può ospitare il Soldato e un numero di altre creature pari a 2 + Grado di Soldato.\nFinché si trovano nella Base, gli ospiti ottengono +2 VA a Percezione contro minacce provenienti dall’esterno. Una volta al giorno per ciascun ospite, la prima ora di Attività leggera trascorsa nella Base viene considerata Riposo breve ai fini del recupero di PV e PM. Quest’ora conta nel limite giornaliero del Riposo breve. Le Ferite seguono i tempi ordinari.\nLe fortificazioni costruite dal Soldato ottengono +1 AR non magica. Il beneficio si applica ai danni subiti dalla struttura prima di determinare l’eventuale perdita di PI. Non aumenta i PI o la PS Integrità, non modifica la categoria di Copertura e non concede direttamente Armatura alle creature riparate dietro la struttura. Non protegge dal Danno Etereo. I benefici strutturali di Base Operativa e Meccanizzazione Agricola non si sommano sulla stessa struttura: si applica un solo +1 AR.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Percezione",
+                "valore": 2,
+                "ambito": "uso_specifico",
+                "uso": "nella Base, minacce dall’esterno",
+                "condizione": "Finché si trovano nella Base, gli ospiti ottengono +2 VA a Percezione contro minacce provenienti dall’esterno.",
+                "fonte": "Giocatore, Soldato (§3.4; Talenti §3.5.6)"
+              }
+            ]
+          }
         },
         {
           "specializzazione": "Comune",
@@ -1347,7 +1577,20 @@
         {
           "grado": 1,
           "nome": "Addestramento Rurale",
-          "testo": "L’Agricoltore ottiene +3 alle Prove Salvezza di Tempra contro l’Affaticamento causato da lavoro fisico prolungato, attività agricole, trasporto manuale di materiali e condizioni climatiche sfavorevoli.\nUna volta al giorno riduce di 1 Stato il peggioramento di Affaticamento ricevuto per una di queste cause, fino a un minimo di 0 Stati ricevuti. Può quindi evitare un peggioramento di un solo Stato, anche automatico. Il beneficio non si applica a combattimento, fame, sete, malattie, veleni o effetti mistici. Il +3 alle PS di Tempra si applica soltanto quando una Prova è già prevista; non trasforma un peggioramento automatico in una Salvezza (§5.19)."
+          "testo": "L’Agricoltore ottiene +3 alle Prove Salvezza di Tempra contro l’Affaticamento causato da lavoro fisico prolungato, attività agricole, trasporto manuale di materiali e condizioni climatiche sfavorevoli.\nUna volta al giorno riduce di 1 Stato il peggioramento di Affaticamento ricevuto per una di queste cause, fino a un minimo di 0 Stati ricevuti. Può quindi evitare un peggioramento di un solo Stato, anche automatico. Il beneficio non si applica a combattimento, fame, sete, malattie, veleni o effetti mistici. Il +3 alle PS di Tempra si applica soltanto quando una Prova è già prevista; non trasforma un peggioramento automatico in una Salvezza (§5.19).",
+          "effetti": {
+            "valori": [
+              {
+                "tipo": "salvezza",
+                "salvezza": "tempra",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "Affaticamento da lavoro e clima",
+                "condizione": "L’Agricoltore ottiene +3 alle Prove Salvezza di Tempra contro l’Affaticamento causato da lavoro fisico prolungato, attività agricole, trasporto manuale di materiali e condizioni climatiche sfavorevoli.",
+                "fonte": "Giocatore, Agricoltore (§3.4; Talenti §3.5.7)"
+              }
+            ]
+          }
         },
         {
           "grado": 3,
@@ -1364,27 +1607,151 @@
         {
           "specializzazione": "Coltivatore",
           "nome": "Coltivatore Esperto",
-          "testo": "Ottiene +3 VA alle Prove pertinenti di Scienza, Sopravvivenza o Tecnologia per preparare e fertilizzare il terreno; seminare, irrigare e curare coltivazioni; riconoscere carenze e malattie ordinarie delle piante; raccogliere e selezionare prodotti agricoli coltivati.\nDimezza i tempi delle operazioni preparatorie e dei trattamenti, ma non accelera il naturale ciclo di crescita. Gli interventi sul funzionamento tecnico di macchinari e impianti appartengono invece a Meccanizzazione Agricola."
+          "testo": "Ottiene +3 VA alle Prove pertinenti di Scienza, Sopravvivenza o Tecnologia per preparare e fertilizzare il terreno; seminare, irrigare e curare coltivazioni; riconoscere carenze e malattie ordinarie delle piante; raccogliere e selezionare prodotti agricoli coltivati.\nDimezza i tempi delle operazioni preparatorie e dei trattamenti, ma non accelera il naturale ciclo di crescita. Gli interventi sul funzionamento tecnico di macchinari e impianti appartengono invece a Meccanizzazione Agricola.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Scienza",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "coltivazioni",
+                "condizione": "Ottiene +3 VA alle Prove pertinenti di Scienza, Sopravvivenza o Tecnologia per preparare e fertilizzare il terreno; seminare, irrigare e curare coltivazioni; riconoscere carenze e malattie ordinarie delle piante; raccogliere e selezionare prodotti agricoli coltivati.",
+                "fonte": "Giocatore, Agricoltore (§3.4; Talenti §3.5.7)"
+              },
+              {
+                "abilita": "Sopravvivenza",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "coltivazioni",
+                "condizione": "Ottiene +3 VA alle Prove pertinenti di Scienza, Sopravvivenza o Tecnologia per preparare e fertilizzare il terreno; seminare, irrigare e curare coltivazioni; riconoscere carenze e malattie ordinarie delle piante; raccogliere e selezionare prodotti agricoli coltivati.",
+                "fonte": "Giocatore, Agricoltore (§3.4; Talenti §3.5.7)"
+              },
+              {
+                "abilita": "Tecnologia",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "coltivazioni",
+                "condizione": "Ottiene +3 VA alle Prove pertinenti di Scienza, Sopravvivenza o Tecnologia per preparare e fertilizzare il terreno; seminare, irrigare e curare coltivazioni; riconoscere carenze e malattie ordinarie delle piante; raccogliere e selezionare prodotti agricoli coltivati.",
+                "fonte": "Giocatore, Agricoltore (§3.4; Talenti §3.5.7)"
+              }
+            ]
+          }
         },
         {
           "specializzazione": "Coltivatore",
           "nome": "Meccanizzazione Agricola",
-          "testo": "Ottiene +3 VA a Pilotare e Tecnologia per utilizzare, costruire o riparare macchinari agricoli, pompe, serre, impianti d’irrigazione, recinzioni, silos e veicoli agricoli. Il bonus riguarda il pilotaggio dei mezzi e il funzionamento, la costruzione, la manutenzione o la riparazione degli impianti.\nDimezza i tempi d’intervento. Le strutture agricole costruite o dirette personalmente dall’Agricoltore ottengono inoltre +1 AR non magica. Il beneficio si applica ai danni subiti dalla struttura prima di determinare l’eventuale perdita di PI. Non aumenta i PI o la PS Integrità, non modifica la categoria di Copertura e non concede direttamente Armatura alle creature riparate dietro la struttura. Non protegge dal Danno Etereo. I benefici strutturali di Base Operativa e Meccanizzazione Agricola non si sommano sulla stessa struttura: si applica un solo +1 AR."
+          "testo": "Ottiene +3 VA a Pilotare e Tecnologia per utilizzare, costruire o riparare macchinari agricoli, pompe, serre, impianti d’irrigazione, recinzioni, silos e veicoli agricoli. Il bonus riguarda il pilotaggio dei mezzi e il funzionamento, la costruzione, la manutenzione o la riparazione degli impianti.\nDimezza i tempi d’intervento. Le strutture agricole costruite o dirette personalmente dall’Agricoltore ottengono inoltre +1 AR non magica. Il beneficio si applica ai danni subiti dalla struttura prima di determinare l’eventuale perdita di PI. Non aumenta i PI o la PS Integrità, non modifica la categoria di Copertura e non concede direttamente Armatura alle creature riparate dietro la struttura. Non protegge dal Danno Etereo. I benefici strutturali di Base Operativa e Meccanizzazione Agricola non si sommano sulla stessa struttura: si applica un solo +1 AR.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Pilotare",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "macchinari e impianti agricoli",
+                "condizione": "Ottiene +3 VA a Pilotare e Tecnologia per utilizzare, costruire o riparare macchinari agricoli, pompe, serre, impianti d’irrigazione, recinzioni, silos e veicoli agricoli.",
+                "fonte": "Giocatore, Agricoltore (§3.4; Talenti §3.5.7)"
+              },
+              {
+                "abilita": "Tecnologia",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "macchinari e impianti agricoli",
+                "condizione": "Ottiene +3 VA a Pilotare e Tecnologia per utilizzare, costruire o riparare macchinari agricoli, pompe, serre, impianti d’irrigazione, recinzioni, silos e veicoli agricoli.",
+                "fonte": "Giocatore, Agricoltore (§3.4; Talenti §3.5.7)"
+              }
+            ]
+          }
         },
         {
           "specializzazione": "Allevatore",
           "nome": "Allevatore Esperto",
-          "testo": "Ottiene +3 VA alle Prove pertinenti di Medicina, Percezione o Sopravvivenza per allevare, nutrire, condurre, addestrare o curare animali domestici. Le operazioni ordinarie con animali abituati alla sua presenza riescono senza Prova.\nDedicando un’ora alle loro cure, seleziona fino a 2 + Grado di Agricoltore animali. Questi ottengono +3 alle Prove Salvezza di Tempra contro Malattie e Affaticamento fino al termine del loro successivo Riposo completo. Ulteriori applicazioni non sommano il bonus.\nAl termine del loro successivo Riposo completo, gli animali trattati ottengono 1 punto aggiuntivo complessivo di recupero dell’Affaticamento, secondo il §5.19. Il punto si aggiunge al recupero di quel riposo una sola volta, non a ogni ora; più applicazioni del Talento non sommano questo beneficio."
+          "testo": "Ottiene +3 VA alle Prove pertinenti di Medicina, Percezione o Sopravvivenza per allevare, nutrire, condurre, addestrare o curare animali domestici. Le operazioni ordinarie con animali abituati alla sua presenza riescono senza Prova.\nDedicando un’ora alle loro cure, seleziona fino a 2 + Grado di Agricoltore animali. Questi ottengono +3 alle Prove Salvezza di Tempra contro Malattie e Affaticamento fino al termine del loro successivo Riposo completo. Ulteriori applicazioni non sommano il bonus.\nAl termine del loro successivo Riposo completo, gli animali trattati ottengono 1 punto aggiuntivo complessivo di recupero dell’Affaticamento, secondo il §5.19. Il punto si aggiunge al recupero di quel riposo una sola volta, non a ogni ora; più applicazioni del Talento non sommano questo beneficio.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Medicina",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "animali domestici",
+                "condizione": "Ottiene +3 VA alle Prove pertinenti di Medicina, Percezione o Sopravvivenza per allevare, nutrire, condurre, addestrare o curare animali domestici.",
+                "fonte": "Giocatore, Agricoltore (§3.4; Talenti §3.5.7)"
+              },
+              {
+                "abilita": "Percezione",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "animali domestici",
+                "condizione": "Ottiene +3 VA alle Prove pertinenti di Medicina, Percezione o Sopravvivenza per allevare, nutrire, condurre, addestrare o curare animali domestici.",
+                "fonte": "Giocatore, Agricoltore (§3.4; Talenti §3.5.7)"
+              },
+              {
+                "abilita": "Sopravvivenza",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "animali domestici",
+                "condizione": "Ottiene +3 VA alle Prove pertinenti di Medicina, Percezione o Sopravvivenza per allevare, nutrire, condurre, addestrare o curare animali domestici.",
+                "fonte": "Giocatore, Agricoltore (§3.4; Talenti §3.5.7)"
+              }
+            ]
+          }
         },
         {
           "specializzazione": "Allevatore",
           "nome": "Caccia, Pesca e Raccolta",
-          "testo": "Ottiene +3 VA a Percezione e Sopravvivenza per seguire tracce, preparare trappole da cattura, cacciare, pescare e raccogliere risorse commestibili selvatiche.\nQuando utilizza Autosufficienza esclusivamente mediante risorse selvatiche, il tempo necessario scende da 4 a 2 ore. Il Talento non modifica la disponibilità reale delle risorse."
+          "testo": "Ottiene +3 VA a Percezione e Sopravvivenza per seguire tracce, preparare trappole da cattura, cacciare, pescare e raccogliere risorse commestibili selvatiche.\nQuando utilizza Autosufficienza esclusivamente mediante risorse selvatiche, il tempo necessario scende da 4 a 2 ore. Il Talento non modifica la disponibilità reale delle risorse.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Percezione",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "tracce, caccia, pesca e raccolta",
+                "condizione": "Ottiene +3 VA a Percezione e Sopravvivenza per seguire tracce, preparare trappole da cattura, cacciare, pescare e raccogliere risorse commestibili selvatiche.",
+                "fonte": "Giocatore, Agricoltore (§3.4; Talenti §3.5.7)"
+              },
+              {
+                "abilita": "Sopravvivenza",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "tracce, caccia, pesca e raccolta",
+                "condizione": "Ottiene +3 VA a Percezione e Sopravvivenza per seguire tracce, preparare trappole da cattura, cacciare, pescare e raccogliere risorse commestibili selvatiche.",
+                "fonte": "Giocatore, Agricoltore (§3.4; Talenti §3.5.7)"
+              }
+            ]
+          }
         },
         {
           "specializzazione": "Comune",
           "nome": "Conservazione delle Provviste",
-          "testo": "Ottiene +3 VA alle Prove pertinenti di Scienza, Sopravvivenza o Tecnologia per riconoscere deterioramenti, conservare alimenti, purificare acqua e organizzare scorte. Il suo ambito riguarda il trattamento e il controllo delle risorse già raccolte, oltre alla purificazione dell’acqua.\nDedicando un’ora al trattamento delle provviste, ne raddoppia la durata ordinaria. Il Talento non elimina automaticamente veleni, malattie, radiazioni, contaminazioni industriali o effetti mistici."
+          "testo": "Ottiene +3 VA alle Prove pertinenti di Scienza, Sopravvivenza o Tecnologia per riconoscere deterioramenti, conservare alimenti, purificare acqua e organizzare scorte. Il suo ambito riguarda il trattamento e il controllo delle risorse già raccolte, oltre alla purificazione dell’acqua.\nDedicando un’ora al trattamento delle provviste, ne raddoppia la durata ordinaria. Il Talento non elimina automaticamente veleni, malattie, radiazioni, contaminazioni industriali o effetti mistici.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Scienza",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "provviste e acqua",
+                "condizione": "Ottiene +3 VA alle Prove pertinenti di Scienza, Sopravvivenza o Tecnologia per riconoscere deterioramenti, conservare alimenti, purificare acqua e organizzare scorte.",
+                "fonte": "Giocatore, Agricoltore (§3.4; Talenti §3.5.7)"
+              },
+              {
+                "abilita": "Sopravvivenza",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "provviste e acqua",
+                "condizione": "Ottiene +3 VA alle Prove pertinenti di Scienza, Sopravvivenza o Tecnologia per riconoscere deterioramenti, conservare alimenti, purificare acqua e organizzare scorte.",
+                "fonte": "Giocatore, Agricoltore (§3.4; Talenti §3.5.7)"
+              },
+              {
+                "abilita": "Tecnologia",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "provviste e acqua",
+                "condizione": "Ottiene +3 VA alle Prove pertinenti di Scienza, Sopravvivenza o Tecnologia per riconoscere deterioramenti, conservare alimenti, purificare acqua e organizzare scorte.",
+                "fonte": "Giocatore, Agricoltore (§3.4; Talenti §3.5.7)"
+              }
+            ]
+          }
         }
       ],
       "note": [
@@ -1452,7 +1819,43 @@
         {
           "grado": 1,
           "nome": "Addestramento di Bottega",
-          "testo": "L’Artigiano ottiene +3 VA alle Prove pertinenti di Cultura, Percezione, Scienza o Tecnologia per riconoscere materiali e tecniche di fabbricazione; individuare difetti, usura e riparazioni; determinare strumenti e materiali necessari; valutare qualità e autenticità di un manufatto, compreso il riconoscimento di restauri e falsificazioni.\nRiduce inoltre di 2 le penalità causate da strumenti incompleti o improvvisati, fino a un minimo di 0. Non può sostituire attrezzature indispensabili come forge, forni o impianti industriali."
+          "testo": "L’Artigiano ottiene +3 VA alle Prove pertinenti di Cultura, Percezione, Scienza o Tecnologia per riconoscere materiali e tecniche di fabbricazione; individuare difetti, usura e riparazioni; determinare strumenti e materiali necessari; valutare qualità e autenticità di un manufatto, compreso il riconoscimento di restauri e falsificazioni.\nRiduce inoltre di 2 le penalità causate da strumenti incompleti o improvvisati, fino a un minimo di 0. Non può sostituire attrezzature indispensabili come forge, forni o impianti industriali.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Cultura",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "esaminare materiali e manufatti",
+                "condizione": "L’Artigiano ottiene +3 VA alle Prove pertinenti di Cultura, Percezione, Scienza o Tecnologia per riconoscere materiali e tecniche di fabbricazione; individuare difetti, usura e riparazioni; determinare strumenti e materiali necessari; valutare qualità e autenticità di un manufatto, compreso il riconoscimento di restauri e falsificazioni.",
+                "fonte": "Giocatore, Artigiano (§3.4; Talenti §3.5.8)"
+              },
+              {
+                "abilita": "Percezione",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "esaminare materiali e manufatti",
+                "condizione": "L’Artigiano ottiene +3 VA alle Prove pertinenti di Cultura, Percezione, Scienza o Tecnologia per riconoscere materiali e tecniche di fabbricazione; individuare difetti, usura e riparazioni; determinare strumenti e materiali necessari; valutare qualità e autenticità di un manufatto, compreso il riconoscimento di restauri e falsificazioni.",
+                "fonte": "Giocatore, Artigiano (§3.4; Talenti §3.5.8)"
+              },
+              {
+                "abilita": "Scienza",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "esaminare materiali e manufatti",
+                "condizione": "L’Artigiano ottiene +3 VA alle Prove pertinenti di Cultura, Percezione, Scienza o Tecnologia per riconoscere materiali e tecniche di fabbricazione; individuare difetti, usura e riparazioni; determinare strumenti e materiali necessari; valutare qualità e autenticità di un manufatto, compreso il riconoscimento di restauri e falsificazioni.",
+                "fonte": "Giocatore, Artigiano (§3.4; Talenti §3.5.8)"
+              },
+              {
+                "abilita": "Tecnologia",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "esaminare materiali e manufatti",
+                "condizione": "L’Artigiano ottiene +3 VA alle Prove pertinenti di Cultura, Percezione, Scienza o Tecnologia per riconoscere materiali e tecniche di fabbricazione; individuare difetti, usura e riparazioni; determinare strumenti e materiali necessari; valutare qualità e autenticità di un manufatto, compreso il riconoscimento di restauri e falsificazioni.",
+                "fonte": "Giocatore, Artigiano (§3.4; Talenti §3.5.8)"
+              }
+            ]
+          }
         },
         {
           "grado": 3,
@@ -1469,27 +1872,160 @@
         {
           "specializzazione": "Armaiolo",
           "nome": "Armaiolo",
-          "testo": "Ottiene +3 VA alle Prove pertinenti di Percezione, Scienza e Tecnologia per progettare, costruire o riparare armi, munizioni e componenti. Le attività di esame e valutazione utilizzano Addestramento di Bottega.\nCon un’ora di manutenzione, disponendo degli strumenti necessari, tratta fino a 2 + Grado di Artigiano armi. La manutenzione conta come Attività leggera. Per un giorno, ciascuna arma evita una sola volta l’acquisizione della condizione Inceppata oppure Danneggiata provocata da un Fallimento Maldestro. L’attacco fallisce comunque e si applicano le altre conseguenze. Il beneficio non impedisce che l’arma diventi Rotta o Distrutta. Un’arma trasformata in Capolavoro infligge inoltre +1 danno a una sola istanza per attacco. Ai profili del Manuale degli Armamenti si applicano questo bonus e i +3 PI massimi complessivi previsti dai Talenti; gli altri dati restano quelli del profilo, salvo proprietà espresse."
+          "testo": "Ottiene +3 VA alle Prove pertinenti di Percezione, Scienza e Tecnologia per progettare, costruire o riparare armi, munizioni e componenti. Le attività di esame e valutazione utilizzano Addestramento di Bottega.\nCon un’ora di manutenzione, disponendo degli strumenti necessari, tratta fino a 2 + Grado di Artigiano armi. La manutenzione conta come Attività leggera. Per un giorno, ciascuna arma evita una sola volta l’acquisizione della condizione Inceppata oppure Danneggiata provocata da un Fallimento Maldestro. L’attacco fallisce comunque e si applicano le altre conseguenze. Il beneficio non impedisce che l’arma diventi Rotta o Distrutta. Un’arma trasformata in Capolavoro infligge inoltre +1 danno a una sola istanza per attacco. Ai profili del Manuale degli Armamenti si applicano questo bonus e i +3 PI massimi complessivi previsti dai Talenti; gli altri dati restano quelli del profilo, salvo proprietà espresse.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Percezione",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "costruire o riparare armi e munizioni",
+                "condizione": "Ottiene +3 VA alle Prove pertinenti di Percezione, Scienza e Tecnologia per progettare, costruire o riparare armi, munizioni e componenti.",
+                "fonte": "Giocatore, Artigiano (§3.4; Talenti §3.5.8)"
+              },
+              {
+                "abilita": "Scienza",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "costruire o riparare armi e munizioni",
+                "condizione": "Ottiene +3 VA alle Prove pertinenti di Percezione, Scienza e Tecnologia per progettare, costruire o riparare armi, munizioni e componenti.",
+                "fonte": "Giocatore, Artigiano (§3.4; Talenti §3.5.8)"
+              },
+              {
+                "abilita": "Tecnologia",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "costruire o riparare armi e munizioni",
+                "condizione": "Ottiene +3 VA alle Prove pertinenti di Percezione, Scienza e Tecnologia per progettare, costruire o riparare armi, munizioni e componenti.",
+                "fonte": "Giocatore, Artigiano (§3.4; Talenti §3.5.8)"
+              }
+            ]
+          }
         },
         {
           "specializzazione": "Armaiolo",
           "nome": "Corazzaio",
-          "testo": "Ottiene +3 VA alle Prove pertinenti di Percezione, Scienza e Tecnologia per costruire, riparare o adattare armature, scudi e protezioni. Le attività di esame e valutazione utilizzano Addestramento di Bottega.\nDedicando un’ora ad adattare una protezione a uno specifico utilizzatore, riduce di 1 una sua penalità al Movimento o alle Prove, fino a un minimo di 0. Un’armatura realizzata come Capolavoro ottiene +1 Protezione contro una tipologia di danno scelta. Questo beneficio resta da raccordare alle regole definitive delle protezioni nel Manuale degli Armamenti. Uno Scudo Capolavoro concede +1 VA alle Prove di Difese effettuate per parare con quello Scudo. Si applicano normalmente costi, penalità ed effetti della Parata."
+          "testo": "Ottiene +3 VA alle Prove pertinenti di Percezione, Scienza e Tecnologia per costruire, riparare o adattare armature, scudi e protezioni. Le attività di esame e valutazione utilizzano Addestramento di Bottega.\nDedicando un’ora ad adattare una protezione a uno specifico utilizzatore, riduce di 1 una sua penalità al Movimento o alle Prove, fino a un minimo di 0. Un’armatura realizzata come Capolavoro ottiene +1 Protezione contro una tipologia di danno scelta. Questo beneficio resta da raccordare alle regole definitive delle protezioni nel Manuale degli Armamenti. Uno Scudo Capolavoro concede +1 VA alle Prove di Difese effettuate per parare con quello Scudo. Si applicano normalmente costi, penalità ed effetti della Parata.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Percezione",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "costruire o riparare protezioni",
+                "condizione": "Ottiene +3 VA alle Prove pertinenti di Percezione, Scienza e Tecnologia per costruire, riparare o adattare armature, scudi e protezioni.",
+                "fonte": "Giocatore, Artigiano (§3.4; Talenti §3.5.8)"
+              },
+              {
+                "abilita": "Scienza",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "costruire o riparare protezioni",
+                "condizione": "Ottiene +3 VA alle Prove pertinenti di Percezione, Scienza e Tecnologia per costruire, riparare o adattare armature, scudi e protezioni.",
+                "fonte": "Giocatore, Artigiano (§3.4; Talenti §3.5.8)"
+              },
+              {
+                "abilita": "Tecnologia",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "costruire o riparare protezioni",
+                "condizione": "Ottiene +3 VA alle Prove pertinenti di Percezione, Scienza e Tecnologia per costruire, riparare o adattare armature, scudi e protezioni.",
+                "fonte": "Giocatore, Artigiano (§3.4; Talenti §3.5.8)"
+              }
+            ]
+          },
+          "TODO(Davide)": "Il +1 Protezione dell’armatura Capolavoro «resta da raccordare alle regole definitive delle protezioni» (lo dice il manuale)."
         },
         {
           "specializzazione": "Manifattore",
           "nome": "Artefice di Precisione",
-          "testo": "Ottiene +3 VA alle Prove pertinenti di Percezione e Tecnologia per progettare, costruire o riparare serrature, trappole, strumenti di misura e di precisione e piccoli meccanismi non elettronici. Dimezza i relativi tempi di lavorazione.\nQuando realizza un Capolavoro di Precisione sceglie uno dei seguenti benefici. Strumento: il bonus alle Prove non offensive aumenta da +1 a +2 VA. Congegno: le Prove per individuarlo, comprenderlo o disattivarlo subiscono −4 VA."
+          "testo": "Ottiene +3 VA alle Prove pertinenti di Percezione e Tecnologia per progettare, costruire o riparare serrature, trappole, strumenti di misura e di precisione e piccoli meccanismi non elettronici. Dimezza i relativi tempi di lavorazione.\nQuando realizza un Capolavoro di Precisione sceglie uno dei seguenti benefici. Strumento: il bonus alle Prove non offensive aumenta da +1 a +2 VA. Congegno: le Prove per individuarlo, comprenderlo o disattivarlo subiscono −4 VA.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Percezione",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "serrature e meccanismi di precisione",
+                "condizione": "Ottiene +3 VA alle Prove pertinenti di Percezione e Tecnologia per progettare, costruire o riparare serrature, trappole, strumenti di misura e di precisione e piccoli meccanismi non elettronici.",
+                "fonte": "Giocatore, Artigiano (§3.4; Talenti §3.5.8)"
+              },
+              {
+                "abilita": "Tecnologia",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "serrature e meccanismi di precisione",
+                "condizione": "Ottiene +3 VA alle Prove pertinenti di Percezione e Tecnologia per progettare, costruire o riparare serrature, trappole, strumenti di misura e di precisione e piccoli meccanismi non elettronici.",
+                "fonte": "Giocatore, Artigiano (§3.4; Talenti §3.5.8)"
+              }
+            ]
+          }
         },
         {
           "specializzazione": "Manifattore",
           "nome": "Maestro Manifattore",
-          "testo": "Ottiene +3 VA alle Prove pertinenti di Cultura e Tecnologia per realizzare utensili ordinari, abiti, accessori, mobili, contenitori e manufatti ornamentali. La valutazione di tali oggetti utilizza Addestramento di Bottega. Consuma un quinto dei materiali in meno. Per questi oggetti, il bonus non offensivo di Capolavoro aumenta da +1 a +2 VA per una funzione stabilita durante la costruzione. Il bonus può applicarsi a una Prova Sociale soltanto quando qualità, abbigliamento o prestigio dell’oggetto siano direttamente pertinenti."
+          "testo": "Ottiene +3 VA alle Prove pertinenti di Cultura e Tecnologia per realizzare utensili ordinari, abiti, accessori, mobili, contenitori e manufatti ornamentali. La valutazione di tali oggetti utilizza Addestramento di Bottega. Consuma un quinto dei materiali in meno. Per questi oggetti, il bonus non offensivo di Capolavoro aumenta da +1 a +2 VA per una funzione stabilita durante la costruzione. Il bonus può applicarsi a una Prova Sociale soltanto quando qualità, abbigliamento o prestigio dell’oggetto siano direttamente pertinenti.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Cultura",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "manufatti ordinari",
+                "condizione": "Ottiene +3 VA alle Prove pertinenti di Cultura e Tecnologia per realizzare utensili ordinari, abiti, accessori, mobili, contenitori e manufatti ornamentali.",
+                "fonte": "Giocatore, Artigiano (§3.4; Talenti §3.5.8)"
+              },
+              {
+                "abilita": "Tecnologia",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "manufatti ordinari",
+                "condizione": "Ottiene +3 VA alle Prove pertinenti di Cultura e Tecnologia per realizzare utensili ordinari, abiti, accessori, mobili, contenitori e manufatti ornamentali.",
+                "fonte": "Giocatore, Artigiano (§3.4; Talenti §3.5.8)"
+              }
+            ]
+          }
         },
         {
           "specializzazione": "Comune",
           "nome": "Restauratore e Falsario",
-          "testo": "Ottiene +3 VA alle Prove pertinenti di Cultura, Percezione, Raggirare o Tecnologia per restaurare un manufatto, riprodurne materiali e tecniche oppure creare copie e contraffazioni. Il riconoscimento di restauri e falsificazioni utilizza Addestramento di Bottega. Chi esamina una falsificazione realizzata dall’Artigiano subisce −4 VA alla Prova per riconoscerla. Una replica realizzata come Capolavoro non può essere distinta dall’originale mediante un esame ordinario. Archivi, identificatori digitali, analisi scientifiche o mezzi mistici possono comunque rivelarne la natura."
+          "testo": "Ottiene +3 VA alle Prove pertinenti di Cultura, Percezione, Raggirare o Tecnologia per restaurare un manufatto, riprodurne materiali e tecniche oppure creare copie e contraffazioni. Il riconoscimento di restauri e falsificazioni utilizza Addestramento di Bottega. Chi esamina una falsificazione realizzata dall’Artigiano subisce −4 VA alla Prova per riconoscerla. Una replica realizzata come Capolavoro non può essere distinta dall’originale mediante un esame ordinario. Archivi, identificatori digitali, analisi scientifiche o mezzi mistici possono comunque rivelarne la natura.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Cultura",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "restauri e contraffazioni",
+                "condizione": "Ottiene +3 VA alle Prove pertinenti di Cultura, Percezione, Raggirare o Tecnologia per restaurare un manufatto, riprodurne materiali e tecniche oppure creare copie e contraffazioni.",
+                "fonte": "Giocatore, Artigiano (§3.4; Talenti §3.5.8)"
+              },
+              {
+                "abilita": "Percezione",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "restauri e contraffazioni",
+                "condizione": "Ottiene +3 VA alle Prove pertinenti di Cultura, Percezione, Raggirare o Tecnologia per restaurare un manufatto, riprodurne materiali e tecniche oppure creare copie e contraffazioni.",
+                "fonte": "Giocatore, Artigiano (§3.4; Talenti §3.5.8)"
+              },
+              {
+                "abilita": "Raggirare",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "restauri e contraffazioni",
+                "condizione": "Ottiene +3 VA alle Prove pertinenti di Cultura, Percezione, Raggirare o Tecnologia per restaurare un manufatto, riprodurne materiali e tecniche oppure creare copie e contraffazioni.",
+                "fonte": "Giocatore, Artigiano (§3.4; Talenti §3.5.8)"
+              },
+              {
+                "abilita": "Tecnologia",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "restauri e contraffazioni",
+                "condizione": "Ottiene +3 VA alle Prove pertinenti di Cultura, Percezione, Raggirare o Tecnologia per restaurare un manufatto, riprodurne materiali e tecniche oppure creare copie e contraffazioni.",
+                "fonte": "Giocatore, Artigiano (§3.4; Talenti §3.5.8)"
+              }
+            ]
+          }
         }
       ],
       "note": [
@@ -1557,7 +2093,35 @@
         {
           "grado": 1,
           "nome": "Duro Lavoro",
-          "testo": "L’Operaio ottiene +3 VA alle Prove pertinenti di Atletica, Pilotare o Tecnologia effettuate durante costruzioni e demolizioni, lavori pesanti, carico e scarico di materiali, trasporto industriale, impiego di macchinari da lavoro e riparazioni strutturali o meccaniche.\nIl bonus non si applica alla progettazione teorica o alla guida ordinaria di un veicolo."
+          "testo": "L’Operaio ottiene +3 VA alle Prove pertinenti di Atletica, Pilotare o Tecnologia effettuate durante costruzioni e demolizioni, lavori pesanti, carico e scarico di materiali, trasporto industriale, impiego di macchinari da lavoro e riparazioni strutturali o meccaniche.\nIl bonus non si applica alla progettazione teorica o alla guida ordinaria di un veicolo.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Atletica",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "lavori pesanti e riparazioni strutturali",
+                "condizione": "L’Operaio ottiene +3 VA alle Prove pertinenti di Atletica, Pilotare o Tecnologia effettuate durante costruzioni e demolizioni, lavori pesanti, carico e scarico di materiali, trasporto industriale, impiego di macchinari da lavoro e riparazioni strutturali o meccaniche.",
+                "fonte": "Giocatore, Operaio (§3.4; Talenti §3.5.9)"
+              },
+              {
+                "abilita": "Pilotare",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "lavori pesanti e riparazioni strutturali",
+                "condizione": "L’Operaio ottiene +3 VA alle Prove pertinenti di Atletica, Pilotare o Tecnologia effettuate durante costruzioni e demolizioni, lavori pesanti, carico e scarico di materiali, trasporto industriale, impiego di macchinari da lavoro e riparazioni strutturali o meccaniche.",
+                "fonte": "Giocatore, Operaio (§3.4; Talenti §3.5.9)"
+              },
+              {
+                "abilita": "Tecnologia",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "lavori pesanti e riparazioni strutturali",
+                "condizione": "L’Operaio ottiene +3 VA alle Prove pertinenti di Atletica, Pilotare o Tecnologia effettuate durante costruzioni e demolizioni, lavori pesanti, carico e scarico di materiali, trasporto industriale, impiego di macchinari da lavoro e riparazioni strutturali o meccaniche.",
+                "fonte": "Giocatore, Operaio (§3.4; Talenti §3.5.9)"
+              }
+            ]
+          }
         },
         {
           "grado": 3,
@@ -1669,7 +2233,19 @@
         {
           "grado": 5,
           "nome": "Sincronia Tattica",
-          "testo": "All’arrivo della propria Iniziativa, mentre occupa una postazione dalla quale può effettivamente controllare il veicolo, il Pilota sceglie un assetto senza spendere Azioni: Difensivo, ottenendo +2 VA alle proprie Prove di Pilotare per evitare attacchi, collisioni e pericoli; oppure Aggressivo, ottenendo +2 VA alla prima Prova offensiva che effettua personalmente con un’arma del veicolo. L’assetto dura fino all’arrivo dell’Iniziativa successiva. Non concede Azioni aggiuntive, non modifica le Prove Salvezza e non trasferisce automaticamente il bonus agli altri membri dell’equipaggio."
+          "testo": "All’arrivo della propria Iniziativa, mentre occupa una postazione dalla quale può effettivamente controllare il veicolo, il Pilota sceglie un assetto senza spendere Azioni: Difensivo, ottenendo +2 VA alle proprie Prove di Pilotare per evitare attacchi, collisioni e pericoli; oppure Aggressivo, ottenendo +2 VA alla prima Prova offensiva che effettua personalmente con un’arma del veicolo. L’assetto dura fino all’arrivo dell’Iniziativa successiva. Non concede Azioni aggiuntive, non modifica le Prove Salvezza e non trasferisce automaticamente il bonus agli altri membri dell’equipaggio.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Pilotare",
+                "valore": 2,
+                "ambito": "uso_specifico",
+                "uso": "assetto Difensivo: evitare attacchi e collisioni",
+                "condizione": "All’arrivo della propria Iniziativa, mentre occupa una postazione dalla quale può effettivamente controllare il veicolo, il Pilota sceglie un assetto senza spendere Azioni: Difensivo, ottenendo +2 VA alle proprie Prove di Pilotare per evitare attacchi, collisioni e pericoli; oppure Aggressivo, ottenendo +2 VA alla prima Prova offensiva che effettua personalmente con un’arma del veicolo.",
+                "fonte": "Giocatore, Pilota (§3.4; Talenti §3.5.10)"
+              }
+            ]
+          }
         }
       ],
       "talenti_a_scelta": [
@@ -1681,7 +2257,19 @@
         {
           "specializzazione": "Civile",
           "nome": "Meccanico di Bordo",
-          "testo": "Il Pilota ottiene +2 VA a Tecnologia per diagnosticare e riparare il veicolo sul quale si trova e dimezza i tempi necessari. Può intervenire su guida e controlli, propulsione, sensori e comunicazioni, sistemi energetici e armamenti di bordo.\nPuò utilizzare strumenti improvvisati quando l’intervento è concretamente realizzabile con tali strumenti, applicando la normale penalità di −2 VA. Il bonus del Talento si applica normalmente.\nNon può sostituire attrezzature indispensabili o componenti mancanti. Il Talento non rende istantanee le riparazioni e non ripristina automaticamente un veicolo distrutto.\nLa riparazione ordinaria di una struttura richiede 1 ora e Tecnologia: recupera 1 PI con successo o 2 con Magistrale. Meccanico di Bordo riduce l’intervento a 30 minuti. Le riduzioni combinate non scendono sotto metà del tempo ordinario; esiti completi, attrezzi e ricambi sono nel Manuale dei Veicoli, §7.1."
+          "testo": "Il Pilota ottiene +2 VA a Tecnologia per diagnosticare e riparare il veicolo sul quale si trova e dimezza i tempi necessari. Può intervenire su guida e controlli, propulsione, sensori e comunicazioni, sistemi energetici e armamenti di bordo.\nPuò utilizzare strumenti improvvisati quando l’intervento è concretamente realizzabile con tali strumenti, applicando la normale penalità di −2 VA. Il bonus del Talento si applica normalmente.\nNon può sostituire attrezzature indispensabili o componenti mancanti. Il Talento non rende istantanee le riparazioni e non ripristina automaticamente un veicolo distrutto.\nLa riparazione ordinaria di una struttura richiede 1 ora e Tecnologia: recupera 1 PI con successo o 2 con Magistrale. Meccanico di Bordo riduce l’intervento a 30 minuti. Le riduzioni combinate non scendono sotto metà del tempo ordinario; esiti completi, attrezzi e ricambi sono nel Manuale dei Veicoli, §7.1.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Tecnologia",
+                "valore": 2,
+                "ambito": "uso_specifico",
+                "uso": "riparare il proprio veicolo",
+                "condizione": "Il Pilota ottiene +2 VA a Tecnologia per diagnosticare e riparare il veicolo sul quale si trova e dimezza i tempi necessari.",
+                "fonte": "Giocatore, Pilota (§3.4; Talenti §3.5.10)"
+              }
+            ]
+          }
         },
         {
           "specializzazione": "Militare",
@@ -1761,7 +2349,19 @@
         {
           "grado": 1,
           "nome": "Mani Esperte",
-          "testo": "Il Tecnico ottiene +3 VA a Tecnologia per utilizzare, diagnosticare, configurare o riparare macchinari, sistemi elettronici, impianti energetici, computer e dispositivi automatizzati."
+          "testo": "Il Tecnico ottiene +3 VA a Tecnologia per utilizzare, diagnosticare, configurare o riparare macchinari, sistemi elettronici, impianti energetici, computer e dispositivi automatizzati.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Tecnologia",
+                "valore": 3,
+                "ambito": "uso_specifico",
+                "uso": "macchinari, elettronica e computer",
+                "condizione": "Il Tecnico ottiene +3 VA a Tecnologia per utilizzare, diagnosticare, configurare o riparare macchinari, sistemi elettronici, impianti energetici, computer e dispositivi automatizzati.",
+                "fonte": "Giocatore, Tecnico (§3.4; Talenti §3.5.11)"
+              }
+            ]
+          }
         },
         {
           "grado": 3,
@@ -1868,7 +2468,18 @@
         {
           "grado": 3,
           "nome": "Autorità Intellettuale",
-          "testo": "In ambienti accademici, scientifici o culturali, le interazioni ordinarie basate sulle sue qualifiche riconosciute riescono automaticamente. Nelle situazioni rischiose o contrastate ottiene +2 VA a Oratoria, purché la propria competenza sia pertinente. Il Talento non si applica a minacce o menzogne e non concede automaticamente informazioni segrete, accessi riservati o risorse costose."
+          "testo": "In ambienti accademici, scientifici o culturali, le interazioni ordinarie basate sulle sue qualifiche riconosciute riescono automaticamente. Nelle situazioni rischiose o contrastate ottiene +2 VA a Oratoria, purché la propria competenza sia pertinente. Il Talento non si applica a minacce o menzogne e non concede automaticamente informazioni segrete, accessi riservati o risorse costose.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Oratoria",
+                "valore": 2,
+                "ambito": "situazionale",
+                "condizione": "Nelle situazioni rischiose o contrastate ottiene +2 VA a Oratoria, purché la propria competenza sia pertinente.",
+                "fonte": "Giocatore, Accademico (§3.6; Talenti §3.7; Talenti §3.7.1)"
+              }
+            ]
+          }
         },
         {
           "grado": 5,
@@ -1880,7 +2491,27 @@
         {
           "specializzazione": "Scientifico",
           "nome": "Metodo di Ricerca",
-          "testo": "Quando consulta pubblicazioni, banche dati, campioni o archivi con fonti e strumenti adeguati, l’Accademico ottiene +2 VA alla Prova pertinente di Scienza o Tecnologia e dimezza il tempo necessario alla ricerca."
+          "testo": "Quando consulta pubblicazioni, banche dati, campioni o archivi con fonti e strumenti adeguati, l’Accademico ottiene +2 VA alla Prova pertinente di Scienza o Tecnologia e dimezza il tempo necessario alla ricerca.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Scienza",
+                "valore": 2,
+                "ambito": "uso_specifico",
+                "uso": "ricerca con fonti e strumenti adeguati",
+                "condizione": "Quando consulta pubblicazioni, banche dati, campioni o archivi con fonti e strumenti adeguati, l’Accademico ottiene +2 VA alla Prova pertinente di Scienza o Tecnologia e dimezza il tempo necessario alla ricerca.",
+                "fonte": "Giocatore, Accademico (§3.6; Talenti §3.7; Talenti §3.7.1)"
+              },
+              {
+                "abilita": "Tecnologia",
+                "valore": 2,
+                "ambito": "uso_specifico",
+                "uso": "ricerca con fonti e strumenti adeguati",
+                "condizione": "Quando consulta pubblicazioni, banche dati, campioni o archivi con fonti e strumenti adeguati, l’Accademico ottiene +2 VA alla Prova pertinente di Scienza o Tecnologia e dimezza il tempo necessario alla ricerca.",
+                "fonte": "Giocatore, Accademico (§3.6; Talenti §3.7; Talenti §3.7.1)"
+              }
+            ]
+          }
         },
         {
           "specializzazione": "Scientifico",
@@ -1982,7 +2613,19 @@
         {
           "specializzazione": "Burocrate",
           "nome": "Burocrate Esperto",
-          "testo": "L’Amministrativo ottiene +2 VA a Cultura per conoscere regolamenti, procedure, competenze degli uffici e cavilli legali. Il bonus serve a individuare la procedura corretta, non a convincere chi deve applicarla."
+          "testo": "L’Amministrativo ottiene +2 VA a Cultura per conoscere regolamenti, procedure, competenze degli uffici e cavilli legali. Il bonus serve a individuare la procedura corretta, non a convincere chi deve applicarla.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Cultura",
+                "valore": 2,
+                "ambito": "uso_specifico",
+                "uso": "regolamenti e procedure",
+                "condizione": "L’Amministrativo ottiene +2 VA a Cultura per conoscere regolamenti, procedure, competenze degli uffici e cavilli legali.",
+                "fonte": "Giocatore, Amministrativo (§3.6; Talenti §3.7; Talenti §3.7.2)"
+              }
+            ]
+          }
         },
         {
           "specializzazione": "Burocrate",
@@ -2002,7 +2645,19 @@
         {
           "specializzazione": "Comune",
           "nome": "Documentazione Perfetta",
-          "testo": "L’Amministrativo può compilare documenti autentici formalmente impeccabili quando possiede dati e autorizzazioni adeguati. La correttezza formale non rende vere informazioni false e non crea autorizzazioni mancanti.\nOttiene +2 VA a Raggirare per preparare documenti falsi. È necessaria anche una Prova di Tecnologia se deve introdursi in un sistema protetto o alterare un archivio elettronico; il normale uso di strumenti di scrittura e stampa non richiede una Prova aggiuntiva."
+          "testo": "L’Amministrativo può compilare documenti autentici formalmente impeccabili quando possiede dati e autorizzazioni adeguati. La correttezza formale non rende vere informazioni false e non crea autorizzazioni mancanti.\nOttiene +2 VA a Raggirare per preparare documenti falsi. È necessaria anche una Prova di Tecnologia se deve introdursi in un sistema protetto o alterare un archivio elettronico; il normale uso di strumenti di scrittura e stampa non richiede una Prova aggiuntiva.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Raggirare",
+                "valore": 2,
+                "ambito": "uso_specifico",
+                "uso": "preparare documenti falsi",
+                "condizione": "Ottiene +2 VA a Raggirare per preparare documenti falsi.",
+                "fonte": "Giocatore, Amministrativo (§3.6; Talenti §3.7; Talenti §3.7.2)"
+              }
+            ]
+          }
         }
       ]
     },
@@ -2099,7 +2754,27 @@
         {
           "specializzazione": "Mediatico",
           "nome": "Presenza Mediatica",
-          "testo": "L’Artista ottiene +2 VA a Cultura o Tecnologia per preparare, produrre, trasmettere o distribuire contenuti attraverso i mezzi di comunicazione e dimezza i relativi tempi di preparazione.\nLe Prove di Intrattenere o Oratoria attraverso trasmissioni, registrazioni e altri mezzi si risolvono normalmente. Una registrazione non può adattarsi alle reazioni del pubblico e non trasferisce automaticamente gli effetti degli altri Talenti a chi la riceve."
+          "testo": "L’Artista ottiene +2 VA a Cultura o Tecnologia per preparare, produrre, trasmettere o distribuire contenuti attraverso i mezzi di comunicazione e dimezza i relativi tempi di preparazione.\nLe Prove di Intrattenere o Oratoria attraverso trasmissioni, registrazioni e altri mezzi si risolvono normalmente. Una registrazione non può adattarsi alle reazioni del pubblico e non trasferisce automaticamente gli effetti degli altri Talenti a chi la riceve.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Cultura",
+                "valore": 2,
+                "ambito": "uso_specifico",
+                "uso": "contenuti per i mezzi di comunicazione",
+                "condizione": "L’Artista ottiene +2 VA a Cultura o Tecnologia per preparare, produrre, trasmettere o distribuire contenuti attraverso i mezzi di comunicazione e dimezza i relativi tempi di preparazione.",
+                "fonte": "Giocatore, Artista (§3.6; Talenti §3.7; Talenti §3.7.3)"
+              },
+              {
+                "abilita": "Tecnologia",
+                "valore": 2,
+                "ambito": "uso_specifico",
+                "uso": "contenuti per i mezzi di comunicazione",
+                "condizione": "L’Artista ottiene +2 VA a Cultura o Tecnologia per preparare, produrre, trasmettere o distribuire contenuti attraverso i mezzi di comunicazione e dimezza i relativi tempi di preparazione.",
+                "fonte": "Giocatore, Artista (§3.6; Talenti §3.7; Talenti §3.7.3)"
+              }
+            ]
+          }
         },
         {
           "specializzazione": "Comune",
@@ -2196,17 +2871,62 @@
         {
           "specializzazione": "Ricercatore",
           "nome": "Diagnosi Rapida",
-          "testo": "Il Medico può utilizzare Diagnosi Clinica osservando direttamente un paziente, senza effettuare un esame ravvicinato. Ottiene inoltre +2 VA a Medicina o Scienza per identificare malattie, infezioni, veleni e sostanze sconosciute.\nIl bonus di Diagnosi Rapida riguarda l’identificazione della condizione; non si applica automaticamente alla successiva Prova per eseguire il trattamento."
+          "testo": "Il Medico può utilizzare Diagnosi Clinica osservando direttamente un paziente, senza effettuare un esame ravvicinato. Ottiene inoltre +2 VA a Medicina o Scienza per identificare malattie, infezioni, veleni e sostanze sconosciute.\nIl bonus di Diagnosi Rapida riguarda l’identificazione della condizione; non si applica automaticamente alla successiva Prova per eseguire il trattamento.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Medicina",
+                "valore": 2,
+                "ambito": "uso_specifico",
+                "uso": "identificare malattie, veleni e sostanze",
+                "condizione": "Ottiene inoltre +2 VA a Medicina o Scienza per identificare malattie, infezioni, veleni e sostanze sconosciute.",
+                "fonte": "Giocatore, Medico (§3.6; Talenti §3.7; Talenti §3.7.4)"
+              },
+              {
+                "abilita": "Scienza",
+                "valore": 2,
+                "ambito": "uso_specifico",
+                "uso": "identificare malattie, veleni e sostanze",
+                "condizione": "Ottiene inoltre +2 VA a Medicina o Scienza per identificare malattie, infezioni, veleni e sostanze sconosciute.",
+                "fonte": "Giocatore, Medico (§3.6; Talenti §3.7; Talenti §3.7.4)"
+              }
+            ]
+          }
         },
         {
           "specializzazione": "Ricercatore",
           "nome": "Resistenza Clinica",
-          "testo": "Il Medico ottiene +2 alle Prove Salvezza di Tempra contro malattie, infezioni e veleni."
+          "testo": "Il Medico ottiene +2 alle Prove Salvezza di Tempra contro malattie, infezioni e veleni.",
+          "effetti": {
+            "valori": [
+              {
+                "tipo": "salvezza",
+                "salvezza": "tempra",
+                "valore": 2,
+                "ambito": "uso_specifico",
+                "uso": "contro malattie, infezioni e veleni",
+                "condizione": "Il Medico ottiene +2 alle Prove Salvezza di Tempra contro malattie, infezioni e veleni.",
+                "fonte": "Giocatore, Medico (§3.6; Talenti §3.7; Talenti §3.7.4)"
+              }
+            ]
+          }
         },
         {
           "specializzazione": "Comune",
           "nome": "Stabilizzazione",
-          "testo": "Il Medico ottiene +2 VA a Medicina per eseguire Pronto Soccorso e arrestare il Sanguinamento. Si applicano integralmente le regole del §5.15: almeno un minuto continuativo, strumenti necessari e sospensione del Sanguinamento durante l’intervento.\nSi applicano gli esiti del kit effettivamente utilizzato, compresi quelli del Successo Magistrale, secondo il §5.15. Il Talento concede il bonus alla Prova e non sostituisce gli effetti del kit.\nUn Sanguinamento arrestato non riprende soltanto perché cambia la scena. Nuove lesioni possono provocarne un altro."
+          "testo": "Il Medico ottiene +2 VA a Medicina per eseguire Pronto Soccorso e arrestare il Sanguinamento. Si applicano integralmente le regole del §5.15: almeno un minuto continuativo, strumenti necessari e sospensione del Sanguinamento durante l’intervento.\nSi applicano gli esiti del kit effettivamente utilizzato, compresi quelli del Successo Magistrale, secondo il §5.15. Il Talento concede il bonus alla Prova e non sostituisce gli effetti del kit.\nUn Sanguinamento arrestato non riprende soltanto perché cambia la scena. Nuove lesioni possono provocarne un altro.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Medicina",
+                "valore": 2,
+                "ambito": "uso_specifico",
+                "uso": "Pronto Soccorso e Sanguinamento",
+                "condizione": "Il Medico ottiene +2 VA a Medicina per eseguire Pronto Soccorso e arrestare il Sanguinamento.",
+                "fonte": "Giocatore, Medico (§3.6; Talenti §3.7; Talenti §3.7.4)"
+              }
+            ]
+          }
         }
       ],
       "note": [
@@ -2274,7 +2994,19 @@
         {
           "grado": 1,
           "nome": "Parola Ispiratrice",
-          "testo": "Il Predicatore ottiene +2 VA a Oratoria quando cerca di incoraggiare, consolare, guidare, richiamare a un principio morale o rafforzare la determinazione di una creatura o di un gruppo."
+          "testo": "Il Predicatore ottiene +2 VA a Oratoria quando cerca di incoraggiare, consolare, guidare, richiamare a un principio morale o rafforzare la determinazione di una creatura o di un gruppo.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Oratoria",
+                "valore": 2,
+                "ambito": "uso_specifico",
+                "uso": "incoraggiare, consolare, guidare",
+                "condizione": "Il Predicatore ottiene +2 VA a Oratoria quando cerca di incoraggiare, consolare, guidare, richiamare a un principio morale o rafforzare la determinazione di una creatura o di un gruppo.",
+                "fonte": "Giocatore, Predicatore (§3.6; Talenti §3.7; Talenti §3.7.5)"
+              }
+            ]
+          }
         },
         {
           "grado": 3,
@@ -2296,12 +3028,35 @@
         {
           "specializzazione": "Missionario",
           "nome": "Autorità Morale",
-          "testo": "Il Predicatore ottiene +2 VA a Oratoria con fedeli, comunità religiose e persone che riconoscono la sua autorità spirituale. Una volta per scena può ottenere da una comunità favorevole un aiuto ordinario: ospitalità modesta, un’udienza, informazioni pubbliche o assistenza non pericolosa."
+          "testo": "Il Predicatore ottiene +2 VA a Oratoria con fedeli, comunità religiose e persone che riconoscono la sua autorità spirituale. Una volta per scena può ottenere da una comunità favorevole un aiuto ordinario: ospitalità modesta, un’udienza, informazioni pubbliche o assistenza non pericolosa.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Oratoria",
+                "valore": 2,
+                "ambito": "situazionale",
+                "condizione": "Il Predicatore ottiene +2 VA a Oratoria con fedeli, comunità religiose e persone che riconoscono la sua autorità spirituale.",
+                "fonte": "Giocatore, Predicatore (§3.6; Talenti §3.7; Talenti §3.7.5)"
+              }
+            ]
+          }
         },
         {
           "specializzazione": "Teologo",
           "nome": "Devozione",
-          "testo": "Il Predicatore ottiene +2 VA a Occultismo per riconoscere religioni, culti, dottrine, riti, manifestazioni spirituali, segni di Corruzione e tradizioni religiose. Il Talento non concede Incantesimi o capacità taumaturgiche."
+          "testo": "Il Predicatore ottiene +2 VA a Occultismo per riconoscere religioni, culti, dottrine, riti, manifestazioni spirituali, segni di Corruzione e tradizioni religiose. Il Talento non concede Incantesimi o capacità taumaturgiche.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Occultismo",
+                "valore": 2,
+                "ambito": "uso_specifico",
+                "uso": "religioni, culti e segni di Corruzione",
+                "condizione": "Il Predicatore ottiene +2 VA a Occultismo per riconoscere religioni, culti, dottrine, riti, manifestazioni spirituali, segni di Corruzione e tradizioni religiose.",
+                "fonte": "Giocatore, Predicatore (§3.6; Talenti §3.7; Talenti §3.7.5)"
+              }
+            ]
+          }
         },
         {
           "specializzazione": "Teologo",
@@ -2854,7 +3609,43 @@
         {
           "specializzazione": "Comune",
           "nome": "Scudo Spirituale",
-          "testo": "Finché il Mistico è cosciente, lui e gli alleati entro 3 Q ottengono +1 alle Prove Salvezza di Volontà e Magia. Spendendo 2 PM, senza Azione Principale né Prova, il Mistico aumenta il bonus a +3 complessivo per 10 Round. Il potenziamento deve essere attivato prima della Prova interessata e può essere attivato anche fuori dall’Iniziativa del Mistico. Il Talento non richiede Concentrazione."
+          "testo": "Finché il Mistico è cosciente, lui e gli alleati entro 3 Q ottengono +1 alle Prove Salvezza di Volontà e Magia. Spendendo 2 PM, senza Azione Principale né Prova, il Mistico aumenta il bonus a +3 complessivo per 10 Round. Il potenziamento deve essere attivato prima della Prova interessata e può essere attivato anche fuori dall’Iniziativa del Mistico. Il Talento non richiede Concentrazione.",
+          "effetti": {
+            "valori": [
+              {
+                "tipo": "salvezza",
+                "salvezza": "volonta",
+                "valore": 1,
+                "ambito": "generale",
+                "condizione": "Finché il Mistico è cosciente, lui e gli alleati entro 3 Q ottengono +1 alle Prove Salvezza di Volontà e Magia.",
+                "fonte": "Giocatore, Mistico (§3.8; Talenti §3.9; Talenti §3.9.4)"
+              },
+              {
+                "tipo": "salvezza",
+                "salvezza": "magia",
+                "valore": 1,
+                "ambito": "generale",
+                "condizione": "Finché il Mistico è cosciente, lui e gli alleati entro 3 Q ottengono +1 alle Prove Salvezza di Volontà e Magia.",
+                "fonte": "Giocatore, Mistico (§3.8; Talenti §3.9; Talenti §3.9.4)"
+              },
+              {
+                "tipo": "salvezza",
+                "salvezza": "volonta",
+                "valore": 2,
+                "ambito": "situazionale",
+                "condizione": "Spendendo 2 PM, senza Azione Principale né Prova, il Mistico aumenta il bonus a +3 complessivo per 10 Round.",
+                "fonte": "Giocatore, Mistico (§3.8; Talenti §3.9; Talenti §3.9.4)"
+              },
+              {
+                "tipo": "salvezza",
+                "salvezza": "magia",
+                "valore": 2,
+                "ambito": "situazionale",
+                "condizione": "Spendendo 2 PM, senza Azione Principale né Prova, il Mistico aumenta il bonus a +3 complessivo per 10 Round.",
+                "fonte": "Giocatore, Mistico (§3.8; Talenti §3.9; Talenti §3.9.4)"
+              }
+            ]
+          }
         }
       ],
       "note": [
@@ -2951,7 +3742,20 @@
         {
           "specializzazione": "Forgiatore",
           "nome": "Meccanica Potenziata",
-          "testo": "Il Tecnomante ottiene +1 al danno di ogni colpo inflitto con un’arma Mistica o TecnoMistica utilizzata personalmente. Il bonus entra nel normale calcolo del danno, prima dei moltiplicatori e dell’Armatura, e si applica a ciascun colpo andato a segno, comprese le Raffiche.\nSe l’attacco genera danni persistenti, il bonus si applica al danno iniziale e non si ripete nei Round successivi. È compatibile con Sovrascrittura: anche il danno aggiuntivo diventa Etereo. Il beneficio è passivo e non richiede Azioni o PM."
+          "testo": "Il Tecnomante ottiene +1 al danno di ogni colpo inflitto con un’arma Mistica o TecnoMistica utilizzata personalmente. Il bonus entra nel normale calcolo del danno, prima dei moltiplicatori e dell’Armatura, e si applica a ciascun colpo andato a segno, comprese le Raffiche.\nSe l’attacco genera danni persistenti, il bonus si applica al danno iniziale e non si ripete nei Round successivi. È compatibile con Sovrascrittura: anche il danno aggiuntivo diventa Etereo. Il beneficio è passivo e non richiede Azioni o PM.",
+          "effetti": {
+            "valori": [
+              {
+                "tipo": "danno",
+                "armi": "artefatto",
+                "attacchi": "tutti",
+                "valore": 1,
+                "ambito": "generale",
+                "condizione": "Il Tecnomante ottiene +1 al danno di ogni colpo inflitto con un’arma Mistica o TecnoMistica utilizzata personalmente.",
+                "fonte": "Giocatore, Tecnomante (§3.8; Talenti §3.9; Talenti §3.9.5)"
+              }
+            ]
+          }
         },
         {
           "specializzazione": "Forgiatore",

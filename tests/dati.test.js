@@ -34,8 +34,9 @@ test('i TODO(Davide) sono elencabili', () => {
   assert.equal(todo.some((t) => t.percorso.startsWith('caratteristiche.json')), false);
   // Talenti di magia e tipo di tre Talenti Liberi: decisi dal master il 26/09/2026
   assert.equal(todo.some((t) => t.percorso.startsWith('talenti_liberi.json')), false);
-  // chiusi dalle risposte del master (docs/risposte-master.md)
-  assert.equal(todo.some((t) => t.percorso.startsWith('classi.json')), false);
+  // chiusi dalle risposte del master (docs/risposte-master.md); resta Corazzaio (per-davide A.61,
+  // docs/censimento-talenti.md): il +1 Protezione del Capolavoro «resta da raccordare»
+  assert.deepEqual(todo.filter((t) => t.percorso.startsWith('classi.json')).map((t) => /Corazzaio/.test(t.percorso) || /Capolavoro/.test(t.testo ?? t.valore ?? '')), [true]);
   // tutte chiuse dalle risposte ai 19 quesiti (E&L del 29/09)
   assert.deepEqual(todo.filter((t) => t.percorso.startsWith('regole.json')), []);
   // durate delle Tecniche Interiori: decise dal master il 26/09/2026 (A.4 del Doc E&L)
