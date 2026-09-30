@@ -24,6 +24,32 @@ export const GRUPPI_EQUIPAGGIAMENTO = [
   { tipo: 'altro', titolo: 'Altro', colore: 'cat-altro' },
 ];
 
+/**
+ * Sezioni della tab Inventario (docs/layout-sd.md, pezzo 2), nell'ordine del piano; stessi colori
+ * dei gruppi qui sopra. Un oggetto va nella prima sezione con il suo tipo e, se la sezione li
+ * elenca, con il catalogo del riferimento (prefisso di «rif»: gli «altro» dei capitoli del Manuale
+ * dell'Equipaggiamento). «Strumenti professionali» e «Razioni» arriveranno con i loro capitoli.
+ */
+export const SEZIONI_INVENTARIO = [
+  { id: 'armi', titolo: 'Armi', colore: 'cat-ravvicinate', tipi: ['arma_ravvicinata', 'arma_distanza'] },
+  { id: 'accessori', titolo: 'Accessori (armi, armature, elmetti)', colore: 'cat-accessori', tipi: ['accessorio'] },
+  { id: 'protezioni', titolo: 'Armature, scudi ed elmetti', colore: 'cat-armature', tipi: ['armatura', 'scudo', 'elmetto'] },
+  { id: 'munizioni', titolo: 'Munizioni e caricatori', colore: 'cat-munizioni', tipi: ['munizioni'] },
+  { id: 'dotazioni_personali', titolo: 'Dotazioni personali', colore: 'cat-altro', tipi: ['altro'], cataloghi: ['dotazioni_personali'] },
+  { id: 'esplorazione', titolo: 'Esplorazione e sopravvivenza', colore: 'cat-altro', tipi: ['altro'], cataloghi: ['esplorazione'] },
+  { id: 'comunicazione', titolo: 'Comunicazione e rilevamento', colore: 'cat-altro', tipi: ['altro'], cataloghi: ['comunicazione'] },
+  { id: 'sanitario', titolo: 'Sanitario', colore: 'cat-sanitario', tipi: ['sanitario'] },
+  { id: 'artefatti', titolo: 'Artefatti, cristalli e contenitori di Chroma', colore: 'cat-artefatti', tipi: ['artefatto'] },
+  { id: 'altro', titolo: 'Altro equipaggiamento', colore: 'cat-altro', tipi: ['altro'] },
+];
+
+/** Sezione dell'Inventario di una voce risolta (risolvi() in src/equipaggiamento.js). */
+export function sezioneInventario(r) {
+  const tipo = SEZIONI_INVENTARIO.some((s) => s.tipi.includes(r.tipo)) ? r.tipo : 'altro';
+  const cat = r.def?.rif ? String(r.def.rif).split(':')[0] : null;
+  return SEZIONI_INVENTARIO.find((s) => s.tipi.includes(tipo) && (!s.cataloghi || s.cataloghi.includes(cat)));
+}
+
 /** Colori riservati: non si usano per le categorie né per altro. */
 export const COLORI_RISERVATI = ['pv', 'pm', 'pe', 'fisica', 'mentale', 'spirituale'];
 

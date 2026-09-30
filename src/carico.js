@@ -15,6 +15,25 @@ export function pesoVoce(r) {
   return numero(r.def?.peso) ?? numero(r.voce?.personalizzato?.peso);
 }
 
+/**
+ * Provenienza del peso trasportato per il tooltip: { totale, righe: [{ fonte, valore, nota?, escluso? }] }.
+ * Le righe degli oggetti nel deposito comune sono escluse (non contano); quelle senza peso sono «da
+ * definire» (E&L 4). I valori sono testi in kg: il tooltip non li tratta come bonus.
+ */
+export function provenienzaCarico(c) {
+  const kg = (v) => `${String(arrotonda(v)).replace('.', ',')} kg`;
+  const nome = (x) => (x.quantita > 1 ? `${x.nome} ×${x.quantita}` : x.nome);
+  return {
+    totale: `${kg(c.peso)}${c.parziale ? ' noti' : ''}`,
+    righe: [
+      ...c.righe.map((x) => ({ fonte: nome(x), valore: kg(x.peso) })),
+      ...c.senzaPeso.map((n) => ({ fonte: n, valore: '—', nota: 'peso da definire (E&L 4, A.30)' })),
+      ...(c.pesoExtra ? [{ fonte: 'Peso aggiuntivo', valore: kg(c.pesoExtra), nota: 'bottino, creature trasportate…' }] : []),
+      ...c.esclusi.map((x) => ({ fonte: nome(x), valore: x.peso === null ? '—' : kg(x.peso), nota: 'deposito comune: fuori dal carico', escluso: true })),
+    ],
+  };
+}
+
 /** Nomi dei Talenti di Classe del personaggio, dalla scheda. */
 const talentiClasse = (scheda) => new Set((scheda.classi ?? []).flatMap((c) => (c.talenti ?? []).map((t) => t.nome)));
 
@@ -47,7 +66,9 @@ export function livelloCarico(peso, soglie, dati) {
 }
 
 /**
- * Carico del personaggio: { peso, pesoOggetti, pesoExtra, senzaPeso: [nomi], parziale, soglie, livello, passo }.
+ * Carico del personaggio: { peso, pesoOggetti, pesoExtra, senzaPeso: [nomi], parziale, soglie, livello, passo,
+ *   righe: [{ nome, quantita, peso }] (cosa pesa), esclusi: [{ nome, quantita, peso }] (nel deposito comune) }.
+ * Gli oggetti nel deposito comune restano del personaggio ma fuori dal carico (docs/layout-sd.md).
  * `passo` è il Passo con il −2 Q del Sovraccarico, prima delle altre penalità (esempio del §5.2.6); oltre il
  * massimo è 0 (E&L 5, A.31). `parziale`: qualche peso è «da definire» (E&L 4, A.30): il livello vale per il
  * peso noto e non esclude una penalità.
@@ -56,11 +77,18 @@ export function calcolaCarico(scheda, sessione, dati) {
   const oggetti = scheda.equipaggiamento?.oggetti ?? [];
   let pesoOggetti = 0;
   const senzaPeso = [];
+  const righe = [];
+  const esclusi = [];
   for (const r of oggetti) {
     if (r.fuoriCatalogo) continue;
     const p = pesoVoce(r);
+    const quantita = r.voce?.quantita ?? 1;
+    if (r.voce?.stato === 'deposito') { esclusi.push({ nome: r.nome, quantita, peso: p === null ? null : arrotonda(p * quantita) }); continue; }
     if (p === null) senzaPeso.push(r.nome);
-    else pesoOggetti += p * (r.voce?.quantita ?? 1);
+    else {
+      pesoOggetti += p * quantita;
+      righe.push({ nome: r.nome, quantita, peso: arrotonda(p * quantita) });
+    }
   }
   const pesoExtra = numero(sessione?.caricoExtra) ?? 0;
   const peso = arrotonda(pesoOggetti + pesoExtra);
@@ -68,5 +96,5 @@ export function calcolaCarico(scheda, sessione, dati) {
   const livello = livelloCarico(peso, soglie, dati);
   const passoBase = scheda.movimento?.passo ?? null;
   const passo = passoBase === null ? null : livello.movimento_zero ? 0 : Math.max(0, passoBase + (livello.movimento_q ?? 0));
-  return { peso, pesoOggetti: arrotonda(pesoOggetti), pesoExtra, senzaPeso, parziale: senzaPeso.length > 0, soglie, livello, passo };
+  return { peso, pesoOggetti: arrotonda(pesoOggetti), pesoExtra, senzaPeso, parziale: senzaPeso.length > 0, soglie, livello, passo, righe, esclusi };
 }

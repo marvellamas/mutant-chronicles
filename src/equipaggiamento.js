@@ -51,7 +51,12 @@ export const STATI = {
   altro: [],
 };
 
+// docs/layout-sd.md, «Inventario»: il deposito comune vale per ogni tipo. L'oggetto resta del
+// personaggio, ma fuori dal carico, senza effetti e non disponibile al tavolo (munizioni, applicazioni).
+export const STATO_DEPOSITO = 'deposito';
+
 export const NOMI_STATI = {
+  deposito: 'Deposito comune',
   impugnata: 'Impugnata',
   pronta: 'Addosso (pronta)',
   zaino: 'Nello zaino',
@@ -72,6 +77,17 @@ export function statiPer(tipo, effetti = []) {
   const s = STATI[tipo] ?? [];
   return s.length || !effetti.length ? s : STATI_CON_EFFETTI;
 }
+
+/**
+ * Scelte del controllo di stato dell'Inventario per una voce risolta: gli stati del tipo (null = «Con
+ * sé» per i tipi senza stati) più il deposito comune.
+ */
+export function statiInventario(r) {
+  return [...(r.stati.length ? r.stati : [null]), STATO_DEPOSITO];
+}
+
+/** true se la voce è nel deposito comune. */
+export const inDeposito = (voce) => voce?.stato === STATO_DEPOSITO;
 
 const NOMI_SALVEZZE = { tempra: 'Tempra', riflessi: 'Riflessi', volonta: 'Volontà', magia: 'Magia' };
 const segnoEff = (n) => `${n > 0 ? '+' : '−'}${Math.abs(n)}`;
@@ -210,6 +226,7 @@ export function consumabili(voci, dati) {
   const cat = catalogo(dati);
   const out = [];
   for (const r of (voci ?? []).map((v) => risolvi(v, cat))) {
+    if (r.deposito) continue; // nel deposito comune non si usa al tavolo
     if (r.def?.applicazioni) {
       out.push({ uid: r.uid, nome: r.nome, capacita: r.def.applicazioni * (r.voce.quantita ?? 1), unita: r.def.nome_applicazioni ?? 'applicazioni', ricarica: r.def.ricarica ?? null, gruppo: 'sanitario', effettoBreve: r.def.effetto_breve ?? null });
     }
@@ -403,7 +420,7 @@ export function risolvi(voce, cat) {
   const effetti = fuoriCatalogo ? [] : def?.effetti ?? cat.dotazione?.[voce.dotazione_id]?.effetti ?? voce.personalizzato?.effetti ?? [];
   const stati = statiPer(tipo, effetti);
   const attivo = !fuoriCatalogo && ATTIVI.has(voce.stato) && stati.includes(voce.stato);
-  return { voce, uid: voce.uid, def, tipo, nome, fuoriCatalogo, attivo, personalizzato: !voce.rif && !def, effetti, stati };
+  return { voce, uid: voce.uid, def, tipo, nome, fuoriCatalogo, attivo, personalizzato: !voce.rif && !def, effetti, stati, deposito: inDeposito(voce) };
 }
 
 // ---------------------------------------------------------------------------
@@ -715,7 +732,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   // §7.20: scorte di munizioni della lista compatibili con un'arma: stessa famiglia (§7.20.9) oppure
   // compatibilità espressa (razzi, celle, serbatoi, dardi)
   const famigliaMunizioni = tabellaMunizioniArmi(dati);
-  const munizioniInLista = oggetti.filter((x) => x.tipo === 'munizioni' && x.def);
+  const munizioniInLista = oggetti.filter((x) => x.tipo === 'munizioni' && x.def && !x.deposito);
   const scorteDi = (rif) => {
     const fam = famigliaMunizioni.get(rif) ?? null;
     return {

@@ -175,6 +175,7 @@ export function normalizza(scelteIn, dati) {
   for (const v of s.equipaggiamento) {
     const r = risolvi(v, cat);
     if (r.fuoriCatalogo) continue; // resta com'è: «non più in catalogo», senza effetti
+    if (r.deposito) continue; // il deposito comune vale per ogni tipo (docs/layout-sd.md)
     const stati = r.stati; // del tipo, oppure In uso / Nello zaino per gli oggetti con effetti
     // gli Artefatti salvati prima degli stati (batterie) erano con il personaggio: «trasportato»
     if (r.tipo === 'artefatto' && v.stato === null && stati.includes('trasportato')) { v.stato = 'trasportato'; continue; }

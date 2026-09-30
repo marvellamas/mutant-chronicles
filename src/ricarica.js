@@ -53,7 +53,8 @@ export function infoRicarica(voci, dati) {
   const cat = catalogo(dati);
   const r = regole(dati) ?? {};
   const risolte = (voci ?? []).map((v) => risolvi(v, cat));
-  const munizioni = risolte.filter((x) => x.tipo === 'munizioni' && x.def && !eVuoto(x.def));
+  // le munizioni nel deposito comune non sono a disposizione (docs/layout-sd.md, «Inventario»)
+  const munizioni = risolte.filter((x) => x.tipo === 'munizioni' && x.def && !eVuoto(x.def) && !x.deposito);
   const out = {};
   for (const a of risolte.filter((x) => x.tipo === 'arma_distanza' && x.def)) {
     const info = modoRicarica(a.def, dati, cat);

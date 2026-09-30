@@ -92,7 +92,7 @@ export function elencoZaino(zaino) {
   const out = [];
   for (const o of zaino) {
     const q = o.voce.quantita > 1 ? ` ×${o.voce.quantita}` : '';
-    const stato = o.fuoriCatalogo ? ' (non più in catalogo)' : o.voce.stato === 'pronta' ? ' (addosso)' : '';
+    const stato = o.fuoriCatalogo ? ' (non più in catalogo)' : o.voce.stato === 'pronta' ? ' (addosso)' : o.voce.stato === 'deposito' ? ' (deposito comune)' : '';
     const note = String(o.voce.note ?? '').trim();
     // solo il vecchio testo libero migrato si spezza in voci: un oggetto personalizzato con «;»
     // nelle note resta una voce sola, con il suo nome
