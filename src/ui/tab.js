@@ -48,7 +48,7 @@ export const TAB_FISSI = [
   { id: 'identita', etichetta: 'Identità' },
   { id: 'abilita', etichetta: 'Abilità' },
   { id: 'combattimento', etichetta: 'Combattimento' },
-  { id: 'poteri', etichetta: 'Poteri', titolo: 'Poteri', icona: 'magia', da: 'magia' },
+  { id: 'poteri', etichetta: 'Poteri', titolo: 'Poteri', icona: 'magia' },
   { id: 'artefatti', etichetta: 'Artefatti', titolo: 'Artefatti' },
   { id: 'cibernetica', etichetta: 'Cibernetica', titolo: 'Cibernetica' },
   { id: 'inventario', etichetta: 'Inventario', titolo: 'Inventario' },

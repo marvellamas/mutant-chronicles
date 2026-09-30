@@ -2,7 +2,7 @@
 // vista digitale (docs/roadmap-equipaggiamento-e-scheda.md, §2.2). I contenuti vengono da
 // preparaStampa() (src/stampa.js); qui solo HTML e impaginazione. Regole comuni (css/stampa.css):
 // il carattere non si riduce mai (--ss-font, --ss-font-small); i riempitivi prendono lo spazio che
-// resta. Il foglio 3 (Combattimento) e il foglio 4 (Magia) continuano in una pagina successiva
+// resta. Il foglio Combattimento e il foglio Poteri continuano in una pagina successiva
 // quando non entrano; se un foglio non entra comunque lo si segnala nella barra, senza rimpicciolire
 // il testo (e tools/collaudo_pdf.mjs fallisce).
 import { h, segno } from './dom.js';
@@ -10,7 +10,7 @@ import { stemma, iconaPagina } from './immagini.js';
 import { pallini } from './tooltip.js';
 import { crediti } from '../dotazioni.js';
 import { COLORI_MACROFAMIGLIE } from '../palette.js';
-import { normalizzaOpzioniStampa, fogliDaStampare } from '../stampa.js';
+import { normalizzaOpzioniStampa, fogliDaStampare, numeraPagine, testoPiede, iconaFoglio } from '../stampa.js';
 
 const FOGLIO_STILE = 'css/stampa.css';
 
@@ -30,27 +30,28 @@ export function esciDallaStampa() {
   document.getElementById('stile-stampa')?.remove();
 }
 
-const corpi = { identita: foglioIdentita, abilita: foglioAbilita, combattimento: foglioCombattimento, magia: foglioMagia };
+const corpi = { identita: foglioIdentita, abilita: foglioAbilita, combattimento: foglioCombattimento, poteri: foglioMagia };
 
 function creaFoglio(id, titolo, dati, piede, corpo = corpi[id]) {
-  return h('section', { class: `foglio foglio-${id}`, 'aria-label': titolo },
+  return h('section', { class: `foglio foglio-${id}`, 'aria-label': titolo, dataset: { foglio: id } },
     h('div', { class: 'pagina' },
       h('header', { class: 'foglio-testa' },
         // badge della pagina accanto al titolo (un <img>: si stampa anche senza «grafica di sfondo»)
-        h('span', { class: 'foglio-titolo' }, iconaPagina(id, '96', { classe: 'badge-foglio', lato: 48 }), titolo),
+        h('span', { class: 'foglio-titolo' }, iconaPagina(iconaFoglio(id), '96', { classe: 'badge-foglio', lato: 48 }), titolo),
         h('span', { class: 'foglio-nome' }, piede.nome)),
       id === 'identita' && dati.corporazione ? h('div', { class: 'filigrana-stampa', 'aria-hidden': 'true' }, stemma(dati.corporazione, '512', { alt: '' })) : null,
       h('div', { class: 'foglio-corpo' }, corpo(dati)),
       h('footer', { class: 'foglio-piede' })));
 }
 
-/** Scrive «foglio N di M» in tutti i piè di pagina, dopo la divisione del foglio Magia. */
-function numeraPiedi(contenitore, piede) {
-  const fogli = [...contenitore.querySelectorAll('.foglio')];
-  fogli.forEach((f, i) => {
-    f.querySelector('.foglio-piede').textContent =
-      `${piede.nome} · ${piede.livello}° livello · foglio ${i + 1} di ${fogli.length}${piede.versioni ? ` · Dati: ${piede.versioni}` : ''}`;
-  });
+/**
+ * Piè di pagina di tutte le pagine, dopo le continuazioni: «foglio N» fisso (fra i fogli del
+ * personaggio, anche se se ne stampano solo alcuni) e «pagina P di T» reale (docs/layout-ss.md, §5.2).
+ */
+function numeraPiedi(contenitore, piede, fogliPersonaggio) {
+  const pagine = [...contenitore.querySelectorAll('.foglio')];
+  const numeri = numeraPagine(pagine.map((f) => ({ id: f.dataset.foglio, seguito: f.classList.contains('seguito') })), fogliPersonaggio);
+  pagine.forEach((f, i) => { f.querySelector('.foglio-piede').textContent = testoPiede(piede, numeri[i]); });
 }
 
 const trabocca = (el) => el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1;
@@ -73,12 +74,12 @@ export function renderStampa({ stampa, torna, opzioni = null, cambiaOpzioni = nu
   const opz = normalizzaOpzioniStampa(opzioni);
   const fogli = fogliDaStampare(stampa.fogli, opz);
   const avvisi = h('div', { class: 'barra-avvisi' });
-  // scelta per il foglio Magia, solo se il personaggio ha la magia; la stima delle pagine in più
-  // arriva dopo l'impaginazione (schede reali, colonne per pagina)
+  // scelta per il foglio Poteri (docs/layout-ss.md, §5.3), solo se il personaggio ha la magia; la
+  // preferenza resta «magia»; la stima delle pagine in più arriva dopo l'impaginazione
   const stimaSchede = h('span', { class: 'stima-pagine' }, '');
-  const conMagia = fogli.some((f) => f.id === 'magia');
+  const conMagia = fogli.some((f) => f.id === 'poteri');
   const sceltaMagia = conMagia ? h('fieldset', { class: 'scelta-stampa' },
-    h('legend', {}, 'Foglio Magia'),
+    h('legend', {}, 'Foglio Poteri'),
     [['elenco', 'Solo elenco'], ['completo', 'Elenco e schede complete']].map(([valore, testo]) => h('label', {},
       h('input', { type: 'radio', name: 'stampa-magia', value: valore, checked: opz.magia === valore, onchange: () => cambiaOpzioni?.({ magia: valore }) }),
       ` ${testo}`, valore === 'completo' ? stimaSchede : null))) : null;
@@ -93,19 +94,19 @@ export function renderStampa({ stampa, torna, opzioni = null, cambiaOpzioni = nu
   }
   if (!stampa.completa) avvisi.append(h('p', {}, 'Scheda non ancora completa: alcuni valori possono mancare.'));
 
-  const contenitore = h('div', { class: 'fogli' }, fogli.map((f) => creaFoglio(f.id, f.titolo, { ...f.dati, ...(f.id === 'magia' ? { soloElenco: opz.magia === 'elenco' } : {}) }, stampa.piede)));
-  numeraPiedi(contenitore, stampa.piede);
+  const contenitore = h('div', { class: 'fogli' }, fogli.map((f) => creaFoglio(f.id, f.titolo, { ...f.dati, ...(f.id === 'poteri' ? { soloElenco: opz.magia === 'elenco' } : {}) }, stampa.piede)));
+  numeraPiedi(contenitore, stampa.piede, stampa.fogli);
   caricaStile().then(() => (document.fonts?.ready ?? Promise.resolve())).then(() => {
     const fuori = [];
     const controllati = new Set();
     // la continuazione del foglio 3 nasce nel ciclo: la lista si rilegge a ogni giro
     for (let f; (f = [...contenitore.querySelectorAll('.foglio')].find((x) => !controllati.has(x)));) {
       controllati.add(f);
-      if (f.classList.contains('foglio-magia') && f.classList.contains('seguito')) continue; // impaginate da impaginaMagia
-      if (f.classList.contains('foglio-magia')) {
-        const { pagine, pagineSchede } = impaginaMagia(contenitore, f, { ...stampa.fogli.find((x) => x.id === 'magia').dati, soloElenco: opz.magia === 'elenco' }, stampa.piede);
+      if (f.classList.contains('foglio-poteri') && f.classList.contains('seguito')) continue; // impaginate da impaginaMagia
+      if (f.classList.contains('foglio-poteri')) {
+        const { pagine, pagineSchede } = impaginaMagia(contenitore, f, { ...stampa.fogli.find((x) => x.id === 'poteri').dati, soloElenco: opz.magia === 'elenco' }, stampa.piede);
         stimaSchede.textContent = pagineSchede ? ` (≈ ${pagineSchede} ${pagineSchede === 1 ? 'pagina' : 'pagine'} in più)` : ' (nessuna pagina in più)';
-        if (pagine > 1) avvisi.append(h('p', {}, `Il foglio Magia è su ${pagine} pagine.`));
+        if (pagine > 1) avvisi.append(h('p', {}, `Il foglio Poteri è su ${pagine} pagine.`));
         continue;
       }
       if (f.classList.contains('foglio-combattimento') && !f.classList.contains('seguito')) {
@@ -118,7 +119,7 @@ export function renderStampa({ stampa, torna, opzioni = null, cambiaOpzioni = nu
         fuori.push(f.querySelector('.foglio-titolo').textContent);
       }
     }
-    numeraPiedi(contenitore, stampa.piede);
+    numeraPiedi(contenitore, stampa.piede, stampa.fogli);
     if (fuori.length) avvisi.append(h('p', { class: 'motivo' }, `Non entra nella pagina: ${fuori.join(', ')}. Il carattere non si riduce: accorcia i testi nella scheda digitale.`));
   });
   return [barra, contenitore];
@@ -539,7 +540,7 @@ function impaginaMagia(contenitore, foglio, d, piede) {
   let ultima = foglio;
   let pagine = 1;
   const nuovaPagina = (conIndice) => {
-    const f = creaFoglio('magia', 'Magia (continua)', d, piede, () => [
+    const f = creaFoglio('poteri', 'Poteri (continua)', d, piede, () => [
       conIndice ? box({ titolo: 'Incantesimi (continua)', classe: 'f4-indice-seguito' }, tabellaIndice(resto), d.soloElenco ? notaSoloElenco() : null) : null,
       h('div', { class: 'colonne-schede' }),
     ]);

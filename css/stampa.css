@@ -192,6 +192,8 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 @media print {
   body.vista-stampa { background: #fff; }
   .barra-stampa { display: none !important; }
+  /* il piè di pagina dell'app (versione) non va stampato: darebbe una pagina bianca in fondo */
+  body.vista-stampa > .piede { display: none !important; }
   .fogli { padding: 0; overflow: visible; }
   .foglio {
     width: auto; height: auto; padding: 0; margin: 0; outline: none;
@@ -315,7 +317,7 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .gruppo-pi .etichetta-colpi { font-weight: 700; color: var(--ss-inchiostro); }
 
 /* Foglio 4 — Magia */
-.foglio-magia .foglio-corpo { gap: 2mm; }
+.foglio-poteri .foglio-corpo { gap: 2mm; }
 .f4-testa { display: grid; grid-template-columns: 62mm 1fr 78mm; gap: 3mm; align-items: stretch; flex: none; }
 .f4-testa .voci-stampa { gap: 0.3mm 3mm; }
 .tabella-stampa.scala { margin-top: 1mm; }

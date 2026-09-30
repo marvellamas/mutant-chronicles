@@ -157,10 +157,10 @@ test('collaudo c: Freelance Lavoratore Tecnico, 5° livello, Risorse Interiori, 
   assert.equal(s.incantesimi.conosciuti.length, 0);
 });
 
-test('stampa dei tre personaggi: il foglio Magia solo per chi conosce incantesimi', () => {
+test('stampa dei tre personaggi: il foglio Poteri solo per chi conosce incantesimi', () => {
   const fogli = (f) => { const p = leggi(f); return preparaStampa({ creazione: p.creazione, livelli: p.livelli }, dati).fogli.map((x) => x.id); };
   assert.deepEqual(fogli('a_imperiale_assaltatore_l8.json'), ['identita', 'abilita', 'combattimento']);
-  assert.deepEqual(fogli('b_fratellanza_arcanista_l12.json'), ['identita', 'abilita', 'combattimento', 'magia']);
+  assert.deepEqual(fogli('b_fratellanza_arcanista_l12.json'), ['identita', 'abilita', 'combattimento', 'poteri']);
   assert.deepEqual(fogli('c_freelance_tecnico_l5.json'), ['identita', 'abilita', 'combattimento']);
 });
 

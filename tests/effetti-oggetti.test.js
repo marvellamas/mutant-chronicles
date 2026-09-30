@@ -73,14 +73,14 @@ test('uso specifico: il VA generale non cambia, accanto il valore per l’uso; u
   assert.equal(spento.usiSpecifici.find((u) => u.uso === 'orientamento').valore, spento.totale + 1);
 });
 
-test('armatura: il −1 al lancio con Potere è un uso specifico «lancio»; nella stampa compare nel foglio Magia', () => {
+test('armatura: il −1 al lancio con Potere è un uso specifico «lancio»; nella stampa compare nel foglio Poteri', () => {
   const armatura = { uid: 'a', rif: 'armature:armatura-civile-leggera', stato: 'indossata', quantita: 1, note: '' };
   const sc = scheda([armatura], sessione());
   const potere = abil(sc, 'Potere');
   assert.equal(potere.effettivo, potere.totale);
   assert.deepEqual(potere.usiSpecifici.map((u) => [u.uso, u.modificatore, u.permanente]), [['lancio', -1, true]]);
   const st = preparaStampa({ creazione: { ...ARCANISTA, equipaggiamento: [armatura] }, livelli: [] }, dati);
-  const magia = st.fogli.find((f) => f.id === 'magia');
+  const magia = st.fogli.find((f) => f.id === 'poteri');
   const potereArcanista = st.scheda.abilita.find((a) => a.nome === 'Potere');
   assert.deepEqual(magia.dati.lancio, { va: potereArcanista.vaEquip - 1, penalita: -1 });
 });

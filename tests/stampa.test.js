@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   preparaStampa, tronca, primaFrase, versioniAccessibili, vociEquipaggiamento, elencoZaino, intestazioneBreve, LIMITI_STAMPA,
-  preparaTab, spezzaMagia, contaIncantesimi, rinumera,
+  preparaTab, spezzaMagia, contaIncantesimi, numeraPagine, testoPiede, ordinaFogli, iconaFoglio,
 } from '../src/stampa.js';
 import { CAMPI_ANAGRAFICA } from '../src/character.js';
 import { datiReali } from './helpers.js';
@@ -52,11 +52,12 @@ test('elencoZaino: solo il vecchio testo libero si spezza; un oggetto personaliz
     ['Multiattrezzo di famiglia — regalo del padre; conta come attrezzi da lavoro']);
 });
 
-test('senza accesso alla magia: tre fogli, numerati «di 3», con il piede', () => {
+test('senza accesso alla magia: tre fogli, numerati 1–3, con il piede', () => {
   const st = preparaStampa(MISHIMA_AGENTE, dati, { versioniDati: 'Giocatore 0.43' });
   assert.equal(st.completa, true);
   assert.deepEqual(st.fogli.map((f) => f.id), ['identita', 'abilita', 'combattimento']);
-  assert.deepEqual(st.fogli.map((f) => `${f.numero}/${f.totale}`), ['1/3', '2/3', '3/3']);
+  // numero fisso del foglio (docs/layout-ss.md, §5.2): «pagina P di T» la scrive la vista, dopo le continuazioni
+  assert.deepEqual(st.fogli.map((f) => f.numero), [1, 2, 3]);
   assert.deepEqual(st.piede, { nome: MISHIMA_AGENTE.nome.trim(), livello: 1, versioni: 'Giocatore 0.43' });
 
   const id = foglio(st, 'identita').dati;
@@ -96,8 +97,8 @@ test('Background lungo troncato con «…»; il testo corto resta intero', () =>
 
 test('Taumaturgo: quattro fogli, incantesimi per macrofamiglia con le sole righe fino al livello massimo', () => {
   const st = preparaStampa(ARCANISTA, dati);
-  assert.deepEqual(st.fogli.map((f) => `${f.numero}/${f.totale}`), ['1/4', '2/4', '3/4', '4/4']);
-  const m = foglio(st, 'magia').dati;
+  assert.deepEqual(st.fogli.map((f) => f.numero), [1, 2, 3, 4]);
+  const m = foglio(st, 'poteri').dati;
   assert.equal(m.pm, 16);
   assert.equal(m.livelloMassimo, 3); // tabella del master: I Grado → 3
   assert.equal(m.scalaPotere, 'Taumaturgo');
@@ -118,7 +119,7 @@ test('Taumaturgo: quattro fogli, incantesimi per macrofamiglia con le sole righe
       { livello: 4, grado: { classe: 'Arcanista' }, tiroPV: tiro(2), tiroPM: tiro(3), talentoClasse: dati.classi.classi.find((c) => c.nome === 'Arcanista').talenti_a_scelta[0].nome },
     ],
   };
-  const m2 = foglio(preparaStampa(grado2, dati), 'magia').dati;
+  const m2 = foglio(preparaStampa(grado2, dati), 'poteri').dati;
   assert.equal(m2.livelloMassimo, 8);
   const colpo = m2.macrofamiglie.flatMap((x) => x.specializzazioni.flatMap((s) => s.incantesimi)).find((i) => i.nome === 'Colpo Elementale');
   if (colpo) assert.equal(colpo.righe.length, 8);
@@ -156,14 +157,14 @@ test('preparaTab: stesse sezioni della stampa senza troncamenti, con Progression
   const classe = dati.classi.classi.find((c) => c.nome === 'Agente');
   assert.equal(t.tab[1].dati.talentiClasse[0].frase, classe.talenti_fissi[0].testo.trim());
   // la tab Magia c'è solo con accesso agli incantesimi
-  assert.deepEqual(preparaTab(ARCANISTA, dati).tab.map((x) => x.id), ['identita', 'abilita', 'combattimento', 'magia']);
+  assert.deepEqual(preparaTab(ARCANISTA, dati).tab.map((x) => x.id), ['identita', 'abilita', 'combattimento', 'poteri']);
   // i fogli di stampa invece troncano
   const st = preparaStampa(lungo, dati);
   assert.ok(foglio(st, 'identita').dati.background.endsWith('…'));
 });
 
 test('spezzaMagia: pagine con i tagli indicati, intestazioni dei gruppi ripetute con «continua»', () => {
-  const magia = foglio(preparaStampa(ARCANISTA, dati), 'magia').dati;
+  const magia = foglio(preparaStampa(ARCANISTA, dati), 'poteri').dati;
   const totale = contaIncantesimi(magia.macrofamiglie);
   assert.equal(totale, ARCANISTA.incantesimi.length);
   const nomi = (pagina) => pagina.macrofamiglie.flatMap((m) => m.specializzazioni.flatMap((s) => s.incantesimi.map((i) => i.nome)));
@@ -201,12 +202,22 @@ test('spezzaMagia: pagine con i tagli indicati, intestazioni dei gruppi ripetute
   assert.equal(tre[2].pm, magia.pm);
 });
 
-test('rinumera: «foglio N di M» dopo aver aggiunto pagine Magia', () => {
+test('numerazione: «foglio N» fisso e «pagina P di T» reale, anche con le pagine del foglio Poteri', () => {
   const st = preparaStampa(ARCANISTA, dati);
-  const magia = foglio(st, 'magia');
-  const pagine = spezzaMagia(magia.dati, [6]).map((d) => ({ ...magia, dati: d }));
-  const fogli = rinumera([...st.fogli.filter((f) => f.id !== 'magia'), ...pagine]);
-  assert.deepEqual(fogli.map((f) => `${f.numero} di ${f.totale}`), ['1 di 5', '2 di 5', '3 di 5', '4 di 5', '5 di 5']);
+  // ordine dei fogli (docs/layout-ss.md, §5.1): prima i sempre presenti; numero fisso per foglio
+  assert.deepEqual(st.fogli.map((f) => [f.id, f.numero]), [['identita', 1], ['abilita', 2], ['combattimento', 3], ['poteri', 4]]);
+  const pagine = [{ id: 'identita' }, { id: 'abilita' }, { id: 'combattimento' }, { id: 'combattimento', seguito: true }, { id: 'poteri' }, { id: 'poteri', seguito: true }];
+  const n = numeraPagine(pagine, st.fogli);
+  assert.deepEqual(n.map((x) => [x.foglio, x.seguito, x.pagina, x.totale]),
+    [[1, false, 1, 6], [2, false, 2, 6], [3, false, 3, 6], [3, true, 4, 6], [4, false, 5, 6], [4, true, 6, 6]]);
+  assert.equal(testoPiede({ nome: 'Ada', livello: 12, versioni: 'Giocatore 0.43' }, n[3]), 'Ada · 12° livello · foglio 3 (segue) · pagina 4 di 6 · Dati: Giocatore 0.43');
+  // stampando solo alcuni fogli il numero del foglio resta quello fisso; le pagine sono quelle stampate
+  const solo = numeraPagine([{ id: 'poteri' }], st.fogli);
+  assert.deepEqual([solo[0].foglio, solo[0].pagina, solo[0].totale], [4, 1, 1]);
+  // senza magia niente foglio Poteri; Cibernetica e Veicoli non si stampano finché i tab sono in attesa
+  assert.deepEqual(ordinaFogli([{ id: 'veicoli' }, { id: 'abilita' }, { id: 'cibernetica' }, { id: 'identita' }], dati).map((f) => [f.id, f.numero]), [['identita', 1], ['abilita', 2]]);
+  assert.equal(iconaFoglio('poteri'), 'magia');
+  assert.equal(iconaFoglio('combattimento'), 'combattimento');
 });
 
 test('opzioni di stampa: predefinita «Solo elenco», valori sconosciuti ripuliti, scelta dei fogli pronta', async () => {
@@ -214,8 +225,9 @@ test('opzioni di stampa: predefinita «Solo elenco», valori sconosciuti ripulit
   assert.deepEqual(normalizzaOpzioniStampa(undefined), { fogli: null, magia: 'elenco' });
   assert.equal(OPZIONI_STAMPA_PREDEFINITE.magia, 'elenco');
   assert.deepEqual(normalizzaOpzioniStampa({ magia: 'completo' }), { fogli: null, magia: 'completo' });
-  assert.deepEqual(normalizzaOpzioniStampa({ magia: 'tutto', fogli: ['magia', 'x', 'identita'] }), { fogli: ['identita', 'magia'], magia: 'elenco' });
-  const fogli = [{ id: 'identita' }, { id: 'abilita' }, { id: 'combattimento' }, { id: 'magia' }];
+  // un vecchio «magia» fra i fogli scelti si legge «poteri» (§5.3); la preferenza della scelta resta «magia»
+  assert.deepEqual(normalizzaOpzioniStampa({ magia: 'tutto', fogli: ['magia', 'x', 'identita'] }), { fogli: ['identita', 'poteri'], magia: 'elenco' });
+  const fogli = [{ id: 'identita' }, { id: 'abilita' }, { id: 'combattimento' }, { id: 'poteri' }];
   assert.equal(fogliDaStampare(fogli, null).length, 4);
   assert.deepEqual(fogliDaStampare(fogli, { fogli: ['combattimento'] }).map((f) => f.id), ['combattimento']);
 });

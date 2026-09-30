@@ -1,5 +1,6 @@
-// Dati della scheda stampata (docs/roadmap-equipaggiamento-e-scheda.md, §2): quattro fogli A4
-// orizzontali, preparati solo da calcolaScheda e dai dati delle regole. Funzioni pure, senza DOM:
+// Dati della scheda stampata (docs/layout-ss.md): fogli A4 orizzontali come i tab della SD, nell'ordine
+// di FOGLI (prima i sempre presenti), preparati solo da calcolaScheda e dai dati delle regole.
+// Un foglio senza contenuto non si stampa. Funzioni pure, senza DOM:
 // la vista src/ui/stampa.js trasforma il risultato in HTML e lo impagina (il carattere non si
 // riduce: css/stampa.css, --ss-font).
 import { calcolaScheda } from './calc.js';
@@ -105,7 +106,7 @@ export function elencoZaino(zaino) {
   return out;
 }
 
-/** Il foglio Magia si stampa solo se il personaggio ha accesso agli incantesimi. */
+/** Il foglio Poteri si stampa solo se il personaggio ha accesso agli incantesimi. */
 export function haMagia(scheda) {
   const inc = scheda.incantesimi;
   return !!inc && (inc.quote.totale > 0 || inc.conosciuti.length > 0);
@@ -352,7 +353,7 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
       })).filter((x) => x.incantesimi.length),
     })).filter((x) => x.specializzazioni.length);
     fogli.push({
-      id: 'magia', titolo: 'Magia',
+      id: 'poteri', titolo: 'Poteri',
       dati: {
         pm: s.pm,
         // uso specifico permanente (docs/effetti-oggetti.md): Potere per lanciare con l'armatura
@@ -395,7 +396,7 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     completa: s.completa,
     errori: s.errori,
     scheda: s,
-    fogli: rinumera(fogli),
+    fogli: ordinaFogli(fogli, dati),
     piede: { nome, livello: s.livello, versioni: versioniDati },
   };
 }
@@ -488,37 +489,86 @@ export function equipaggiamentoStampa(s, dati, armi = null) {
 }
 
 /**
+ * Fogli della SS nell'ordine di stampa (docs/layout-ss.md, §5.1 e decisione 9.1): prima i sempre
+ * presenti (numero fisso 1–4), poi quelli che si stampano solo con un contenuto. `presente`
+ * (scheda, dati) dice se il foglio ha contenuto; `icona`: immagine del tab della SD (img/pagine/).
+ * Inventario e Artefatti arrivano con i pezzi 1 e 5; Cibernetica e Veicoli restano fuori finché i
+ * tab sono «In attesa del manuale» (regole.json → tab_in_arrivo).
+ */
+export const FOGLI = [
+  { id: 'identita', sempre: true },
+  { id: 'abilita', sempre: true },
+  { id: 'combattimento', sempre: true },
+  { id: 'inventario', sempre: true },
+  { id: 'poteri', icona: 'magia' },
+  { id: 'artefatti' },
+  { id: 'cibernetica', presente: (s, dati) => !dati.regole?.tab_in_arrivo?.cibernetica },
+  { id: 'veicoli', presente: (s, dati) => !dati.regole?.tab_in_arrivo?.veicoli },
+];
+const ID_FOGLI = FOGLI.map((f) => f.id);
+/** Vecchi id dei fogli nelle preferenze salvate: il foglio Magia è diventato Poteri. */
+const ALIAS_FOGLI = { magia: 'poteri' };
+
+/** Icona del foglio: quella del tab della SD (Poteri usa per ora quella della Magia). */
+export const iconaFoglio = (id) => FOGLI.find((f) => f.id === id)?.icona ?? id;
+
+/**
+ * Fogli preparati → nell'ordine di FOGLI, senza quelli vuoti (Cibernetica e Veicoli finché i tab
+ * sono in attesa del manuale), con il numero fisso: posizione fra i fogli del personaggio.
+ */
+export function ordinaFogli(fogli, dati) {
+  const ordinati = ID_FOGLI.map((id) => fogli.find((f) => f.id === id)).filter(Boolean)
+    .filter((f) => FOGLI.find((x) => x.id === f.id).presente?.(null, dati) ?? true);
+  return ordinati.map((f, i) => ({ ...f, numero: i + 1 }));
+}
+
+/**
+ * Numerazione delle pagine (docs/layout-ss.md, §5.2): «foglio N» fisso (il numero del foglio fra
+ * quelli del personaggio, anche se se ne stampano solo alcuni; «(segue)» nelle continuazioni) e
+ * «pagina P di T» con le pagine davvero stampate.
+ * @param pagine [{ id, seguito }] nell'ordine di stampa
+ * @param fogli i fogli del personaggio (preparaStampa → fogli, con `numero`)
+ * @returns [{ id, foglio, seguito, pagina, totale }]
+ */
+export function numeraPagine(pagine, fogli) {
+  const numero = new Map(fogli.map((f) => [f.id, f.numero]));
+  return pagine.map((p, i) => ({ id: p.id, foglio: numero.get(p.id) ?? null, seguito: !!p.seguito, pagina: i + 1, totale: pagine.length }));
+}
+
+/** Testo del piè di pagina: «Nome · 8° livello · foglio 3 (segue) · pagina 4 di 9 · Dati: …». */
+export function testoPiede(piede, n) {
+  return [piede.nome, `${piede.livello}° livello`, `foglio ${n.foglio ?? '—'}${n.seguito ? ' (segue)' : ''}`, `pagina ${n.pagina} di ${n.totale}`,
+    piede.versioni ? `Dati: ${piede.versioni}` : null].filter(Boolean).join(' · ');
+}
+
+/**
  * Preferenze di stampa del personaggio (salvate con il personaggio, non sono regole):
- * - magia: 'elenco' (solo la prima pagina del foglio 4 e il seguito dell'indice) oppure
- *   'completo' (anche le schede complete degli incantesimi);
- * - fogli: id dei fogli da stampare, o null = tutti (pronto per la scelta dei fogli 1–4).
+ * - magia: 'elenco' (solo la prima pagina del foglio Poteri e il seguito dell'indice) oppure
+ *   'completo' (anche le schede complete degli incantesimi). La chiave resta «magia» (§5.3):
+ *   nessuna migrazione del file del personaggio;
+ * - fogli: id dei fogli da stampare, o null = tutti; un vecchio «magia» si legge «poteri».
  */
 export const SCELTE_MAGIA = ['elenco', 'completo'];
 export const OPZIONI_STAMPA_PREDEFINITE = { fogli: null, magia: 'elenco' };
-const ID_FOGLI = ['identita', 'abilita', 'combattimento', 'magia'];
 
 /** Opzioni di stampa ripulite: valori sconosciuti → predefiniti. */
 export function normalizzaOpzioniStampa(o) {
   const x = o && typeof o === 'object' && !Array.isArray(o) ? o : {};
-  const fogli = Array.isArray(x.fogli) ? ID_FOGLI.filter((id) => x.fogli.includes(id)) : null;
+  const scelti = Array.isArray(x.fogli) ? x.fogli.map((id) => ALIAS_FOGLI[id] ?? id) : null;
+  const fogli = scelti ? ID_FOGLI.filter((id) => scelti.includes(id)) : null;
   return {
     fogli: fogli && fogli.length ? fogli : null,
     magia: SCELTE_MAGIA.includes(x.magia) ? x.magia : OPZIONI_STAMPA_PREDEFINITE.magia,
   };
 }
 
-/** I fogli da stampare secondo le opzioni (il foglio Magia esiste solo con la magia). */
+/** I fogli da stampare secondo le opzioni (il foglio Poteri esiste solo con la magia). */
 export function fogliDaStampare(fogli, opzioni) {
   const o = normalizzaOpzioniStampa(opzioni);
   return o.fogli ? fogli.filter((f) => o.fogli.includes(f.id)) : fogli;
 }
 
-/** Numera i fogli: «foglio N di M». */
-export function rinumera(fogli) {
-  return fogli.map((f, i) => ({ ...f, numero: i + 1, totale: fogli.length }));
-}
-
-/** Numero di incantesimi nei gruppi del foglio Magia. */
+/** Numero di incantesimi nei gruppi del foglio Poteri. */
 export function contaIncantesimi(macrofamiglie) {
   return macrofamiglie.reduce((n, m) => n + m.specializzazioni.reduce((k, sp) => k + sp.incantesimi.length, 0), 0);
 }
@@ -563,12 +613,12 @@ export function spezzaMagia(magia, tagli) {
   });
 }
 
-const TITOLI_TAB = { identita: 'Identità', abilita: 'Abilità', combattimento: 'Combattimento', magia: 'Magia' };
+const TITOLI_TAB = { identita: 'Identità', abilita: 'Abilità', combattimento: 'Combattimento', poteri: 'Poteri' };
 
 /**
  * Dati delle tab della scheda digitale (roadmap §3): gli stessi fogli della stampa, senza
- * troncamenti, più Progressione e controllo §2.17 nella tab Identità. La tab Magia c'è solo con
- * accesso agli incantesimi.
+ * troncamenti, più Progressione e controllo §2.17 nella tab Identità. I dati di Poteri (la Magia)
+ * ci sono solo con accesso agli incantesimi.
  * @returns {{ completa, errori, scheda, tab: {id, titolo, dati}[] }}
  */
 export function preparaTab(personaggio, dati, { sessione = null } = {}) {
