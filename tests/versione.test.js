@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { leggiVersione, serveAggiornamento, urlRicarica, testoVersione } from '../src/versione.js';
-import { htmlSenzaVersione, htmlConVersione, improntaContenuto, elencaFile, calcola } from '../tools/versione.mjs';
+import { htmlSenzaVersione, htmlConVersione, improntaContenuto, elencaFile, calcola, stato } from '../tools/versione.mjs';
 
 test('leggiVersione: versione.json valido o null', () => {
   assert.deepEqual(leggiVersione({ versione: '746c34f047', data: '2026-09-30 14:52' }), { versione: '746c34f047', data: '2026-09-30 14:52' });
@@ -73,4 +73,12 @@ test('repo: index.html mappa tutti i moduli di src/ e la versione è quella di v
   assert.equal(meta, file.versione, 'esegui node tools/versione.mjs');
   for (const m of moduli) assert.ok(html.includes(`"./${m}": "./${m}?v=${meta}"`), `${m} manca nell'importmap: esegui node tools/versione.mjs`);
   assert.equal(typeof calcola().versione, 'string');
+});
+
+// come node tools/versione.mjs --controlla: fallisce se si è committato (o si sta testando) senza
+// rigenerare dopo una modifica a src/, css/, data/, index.html o img/immagini.json. Di norma ci
+// pensa l'hook pre-commit (node tools/installa-hook.mjs, una volta per PC).
+test('repo: versione.json e index.html corrispondono al contenuto (tools/versione.mjs --controlla)', () => {
+  const s = stato();
+  assert.ok(s.aggiornato, `versione.json o index.html non aggiornati (impronta attuale ${s.versione}, in versione.json ${s.attuale?.versione}): esegui node tools/versione.mjs e committa i due file`);
 });

@@ -13,8 +13,15 @@
 // Se l'impronta non cambia non tocca nulla (niente modifiche inutili ai file tracciati).
 //
 // Uso: node tools/versione.mjs              aggiorna versione.json e index.html
-//      node tools/versione.mjs --controlla  esce con 1 se non sono aggiornati (prima di un commit)
+//      node tools/versione.mjs --controlla  esce con 1 se non sono aggiornati (lo fa anche npm test,
+//                                           tests/versione.test.js)
+//      node tools/versione.mjs --pre-commit dall'hook di Git (tools/hooks/pre-commit, installato con
+//                                           node tools/installa-hook.mjs): aggiorna e aggiunge i due
+//                                           file al commit; rifiuta il commit se nei file serviti ci
+//                                           sono modifiche non aggiunte (la versione non sarebbe
+//                                           quella del contenuto committato)
 import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -83,17 +90,44 @@ export function calcola(radice = RADICE) {
   return { versione, html, nuovoHtml: htmlConVersione(html, versione, moduli) };
 }
 
-function principale() {
-  const { versione, html, nuovoHtml } = calcola();
-  const pv = join(RADICE, 'versione.json');
+/** Stato della versione su disco: { versione, aggiornato } più quanto serve per scrivere. */
+export function stato(radice = RADICE) {
+  const { versione, html, nuovoHtml } = calcola(radice);
+  const pv = join(radice, 'versione.json');
   const attuale = existsSync(pv) ? JSON.parse(readFileSync(pv, 'utf8')) : null;
-  const aggiornato = attuale?.versione === versione && lf(html) === nuovoHtml;
+  return { versione, html, nuovoHtml, attuale, pv, aggiornato: attuale?.versione === versione && lf(html) === nuovoHtml };
+}
+
+// file che entrano nell'impronta (calcola): con modifiche non aggiunte il commit non avrebbe la
+// versione del proprio contenuto
+const SERVITI = ['index.html', 'src', 'css', 'data', 'img/immagini.json'];
+const git = (...a) => execFileSync('git', a, { cwd: RADICE, encoding: 'utf8' });
+
+function preCommit() {
+  const nonAggiunti = [
+    ...git('diff', '--name-only', '--', ...SERVITI).split('\n'),
+    ...git('ls-files', '--others', '--exclude-standard', '--', ...SERVITI).split('\n'),
+  // index.html: contano solo le parti scritte a mano (quelle generate le rifà questo script)
+  ].filter(Boolean).filter((p) => p !== 'index.html' || htmlSenzaVersione(git('show', ':index.html')) !== htmlSenzaVersione(readFileSync(join(RADICE, 'index.html'), 'utf8')));
+  if (nonAggiunti.length) {
+    console.error('Commit fermato dall\'hook di Mutant: questi file serviti dall\'app hanno modifiche non aggiunte al commit,');
+    console.error('quindi la versione dell\'app non corrisponderebbe al contenuto committato:');
+    for (const p of nonAggiunti) console.error(`  ${p}`);
+    console.error('Aggiungili (git add) o mettili da parte (git stash), poi rifai il commit.');
+    process.exit(1);
+  }
+  principale({ silenzioso: true });
+  git('add', '--', 'versione.json', 'index.html');
+}
+
+function principale({ silenzioso = false } = {}) {
+  const { versione, html, nuovoHtml, attuale, pv, aggiornato } = stato();
   if (process.argv.includes('--controlla')) {
     if (aggiornato) { console.log(`versione ${versione}: aggiornata`); return; }
     console.error(`versione.json o index.html non aggiornati (impronta attuale ${versione}): esegui node tools/versione.mjs`);
     process.exit(1);
   }
-  if (aggiornato) { console.log(`versione ${versione}: invariata`); return; }
+  if (aggiornato) { if (!silenzioso) console.log(`versione ${versione}: invariata`); return; }
   // fine riga come nel file originale (Windows con autocrlf: CRLF)
   const eol = html.includes('\r\n') ? '\r\n' : '\n';
   writeFileSync(join(RADICE, 'index.html'), nuovoHtml.replace(/\n/g, eol));
@@ -102,4 +136,6 @@ function principale() {
   console.log(`versione ${versione} (${data}): scritti versione.json e index.html`);
 }
 
-if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) principale();
+if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+  if (process.argv.includes('--pre-commit')) preCommit(); else principale();
+}

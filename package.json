@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "npx serve .",
-    "test": "node --test"
+    "test": "node --test",
+    "hook": "node tools/installa-hook.mjs"
   },
   "engines": {
     "node": ">=20"

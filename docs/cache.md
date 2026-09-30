@@ -115,8 +115,9 @@ Pages, i personaggi nel browser (`localStorage`) non si toccano.
    Pages quello può essere vecchio fino a 10 minuti, con il vecchio importmap. Un indirizzo nuovo
    per il documento costringe a prendere l'`index.html` nuovo, e con lui i moduli nuovi.
 5. **Avviatori.** `avvia.bat` e `distribuzione/3_avvia.bat` eseguono `node tools/versione.mjs`
-   prima di accendere il server; se non riesce si prosegue. Con Git basta `git pull` e
-   `avvia.bat`; con il pacchetto zip lo script ricalcola la versione della cartella scaricata.
+   prima di accendere il server; se non riesce si prosegue. Con Git si aggiorna con `aggiorna.bat`
+   (punto 7) e poi `avvia.bat`; con il pacchetto zip lo script ricalcola la versione della cartella
+   scaricata.
 6. **GitHub Pages** (se lo si attiva). `index.html` è in cache al massimo 10 minuti
    (`max-age=600`), quindi un giocatore che apre l'app entro 10 minuti da un aggiornamento può
    caricare ancora la versione precedente, ma intera e coerente, perché l'importmap porta gli
@@ -144,3 +145,27 @@ dell'anteprima.
 4. Premi **Ricarica**: l'indirizzo diventa `/?v=<nuova>`, i moduli arrivano con `?v=<nuova>`, il
    piè di pagina mostra la versione e il testo nuovi, la barra sparisce. Esito del 30/09: sì.
 5. Rimetti la riga com'era e rilancia `node tools/versione.mjs`.
+
+## 4. Versione sempre committata e pull che non si blocca (30/09/2026)
+
+Rischio: un commit che cambia `src/` (o `css/`, `data/`…) senza aver rigenerato. Su GitHub
+`versione.json` e l'importmap di `index.html` restano vecchi; sul PC di Davide `avvia.bat` li
+rigenera con l'impronta giusta, Git li vede modificati e al `git pull` successivo rifiuta
+(«Your local changes … would be overwritten»). Tre protezioni:
+
+7. **Lato Davide: `aggiorna.bat`** (radice, per la copia con Git). Prima del pull esegue
+   `git checkout -- versione.json index.html`: scarta solo le rigenerazioni locali di quei due
+   file, che `avvia.bat` rifà subito dopo; poi `git pull --ff-only`. Se il pull fallisce comunque
+   (altre modifiche locali, rete) stampa «Aggiornamento non riuscito: manda questo schermo a
+   Marcello» con `git status` e resta aperto. Il pacchetto zip (`distribuzione/1_…`) sostituisce
+   tutti i file e non ha questo problema.
+8. **Lato Marcello: hook pre-commit** (`tools/hooks/pre-commit`, installato una volta per PC con
+   `node tools/installa-hook.mjs` o `npm run hook`; `--rimuovi` lo toglie). Esegue
+   `node tools/versione.mjs --pre-commit`: rigenera e fa `git add` di `versione.json` e
+   `index.html`. Se nei file serviti ci sono modifiche non aggiunte o file nuovi non tracciati,
+   ferma il commit con l'elenco: la versione calcolata sul disco non sarebbe quella del contenuto
+   committato. Per `index.html` contano solo le parti scritte a mano.
+9. **Controllo in `npm test`** (`tests/versione.test.js`, come `--controlla`): fallisce se
+   `versione.json` e `index.html` non corrispondono al contenuto, per esempio dopo un commit fatto
+   senza hook.
+

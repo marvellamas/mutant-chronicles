@@ -39,9 +39,12 @@ Se la finestra dice che la porta 3000 è già in uso, Mutant è già acceso in u
 
 Quando Marcello pubblica una versione nuova (regole, correzioni, funzioni):
 
-- **con Git**: nella cartella di Mutant esegui
+- **con Git**: doppio clic su `aggiorna.bat` nella cartella di Mutant (scarta le versioni
+  rigenerate da `avvia.bat` e fa `git pull`; se qualcosa va storto lo dice e resta aperto), oppure
+  da terminale
 
   ```bash
+  git checkout -- versione.json index.html
   git pull
   ```
 

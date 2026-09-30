@@ -76,7 +76,7 @@ src/
   ui/           wizard a passi (fasi 0–9 del §2.0), scheda a tab, Sali di livello, stampa, import/export
 data/           JSON delle regole (fonte di verità): 10 file in data/, catalogo in data/equipaggiamento/ (index.json + 18 file)
 tests/          node --test; tests/collaudo/ tre personaggi di riferimento con PDF
-tools/          estrazione dai manuali, generatori dei lotti (tools/lotti/), collaudo_pdf.mjs, genera_immagini.py, versione.mjs
+tools/          estrazione dai manuali, generatori dei lotti (tools/lotti/), collaudo_pdf.mjs, genera_immagini.py, versione.mjs, installa-hook.mjs e hooks/pre-commit
 img/            stemmi e icone generati (img/immagini.json li elenca); originali in img/originali/, non tracciati
 docs/           studio di fattibilità, lotti, domande e risposte del master, roadmap
 distribuzione/  pacchetto per il master (guida e .bat)
@@ -136,7 +136,7 @@ Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, vei
 - Prima di scrivere codice che tocca una regola, citare il paragrafo del manuale nel commento (es. `// §2.13: Avanzamento iniziale ≤ 3, incluso il +1 di Classe`).
 - Quando un dato del manuale è ambiguo, non inventare: mettere un `TODO(Davide)` nel JSON o nel codice e segnalarlo a Marcello a fine sessione.
 - Le domande a Davide stanno nel Google Doc «per-davide.md» (fonte unica, link fisso) e seguono `docs/protocollo-davide.md`. Quando si **crea** un `TODO(Davide)`, la voce A.n nuova va nel «pacchetto per il Doc» di fine sessione (§5 del protocollo). Quando Davide **risponde** (in coda al Doc, sezione 7): riga datata in `docs/risposte-master.md`, decisione applicata nei dati, TODO tolto, e nel pacchetto lo spostamento della voce nella sezione «Risolte». Claude Code non scrive nei Google Doc e non modifica a mano `docs/per-davide.md`: il pacchetto lo applica Cowork (o Marcello).
-- Commit piccoli e descrittivi, in italiano. **Prima di ogni commit che tocca `src/`, `css/`, `data/`, `index.html` o `img/immagini.json`: `node tools/versione.mjs`** (aggiorna `versione.json` e l'importmap con `?v=` in `index.html`; `--controlla` dice se servirebbe) e si committano anche quei due file (docs/cache.md).
+- Commit piccoli e descrittivi, in italiano. **Prima di ogni commit che tocca `src/`, `css/`, `data/`, `index.html` o `img/immagini.json`: `node tools/versione.mjs`** (aggiorna `versione.json` e l'importmap con `?v=` in `index.html`; `--controlla` dice se servirebbe) e si committano anche quei due file (docs/cache.md). Lo fa da sé l'hook pre-commit, **da installare una volta per PC** con `node tools/installa-hook.mjs` (o `npm run hook`): rigenera e aggiunge i due file al commit, e ferma il commit se nei file serviti ci sono modifiche non aggiunte. `npm test` fallisce (tests/versione.test.js) se la versione non corrisponde al contenuto.
 
 ## Come trattare i prompt di Marcello
 

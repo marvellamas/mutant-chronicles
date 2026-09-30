@@ -1,0 +1,10 @@
+#!/bin/sh
+# Mutant: prima di ogni commit rigenera versione.json e l'importmap di index.html e li aggiunge al
+# commit (docs/cache.md). Si installa una volta per PC con: node tools/installa-hook.mjs
+# Il lavoro lo fa tools/versione.mjs --pre-commit; se Node.js non c'è, il commit si ferma.
+cd "$(git rev-parse --show-toplevel)" || exit 1
+if ! command -v node >/dev/null 2>&1; then
+  echo "Hook di Mutant: serve Node.js per aggiornare la versione dell'app (node tools/versione.mjs)." >&2
+  exit 1
+fi
+exec node tools/versione.mjs --pre-commit
