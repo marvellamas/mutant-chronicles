@@ -21,7 +21,15 @@ Drive si usa **in sola lettura**: mai scrivere nei Doc di Davide, nemmeno commen
 
 ## Glossario
 
-- **SD** = scheda digitale: la scheda a tab dell'app, con la modalità tavolo (`src/ui/tab.js`). Sul branch `layout-sd` otto tab (Identità, Abilità, Combattimento, Poteri, Artefatti, Cibernetica, Inventario, Veicoli; Calendario se attivo): piano e stato in `docs/layout-sd.md`.
+- **SD** = scheda digitale: la scheda a tab dell'app, con la modalità tavolo (`src/ui/tab.js`). Otto tab in una riga in alto (branch `layout-sd`, esito in `docs/layout-sd.md`), con Punti Eroe, PV e PM nella colonna di sinistra:
+  - **Identità:** anagrafica, Caratteristiche, Prove Salvezza, Distintivi, vantaggio, note;
+  - **Abilità:** tabella compatta, colonna Condizioni attive, Talenti, Specializzazioni, Tecniche Interiori;
+  - **Combattimento:** valori e Prove Salvezza, armi in mano per mano («Attacca!», «Ricarica»), armi disponibili, Protezioni; a destra Ferite, Affaticamento, Corruzione, Stati;
+  - **Poteri:** la Magia («Lancia!», PM, cristalli) o «Nessun potere»; «Da artefatti»;
+  - **Artefatti:** sintonizzazione, schede degli Artefatti, riserve di Chroma;
+  - **Cibernetica** e **Veicoli:** in attesa del manuale;
+  - **Inventario:** Carico e Crediti, Integrità, oggetti per sezione con stato (anche deposito comune), PI e Ripara, condizione delle armi, caricatori di riserva, applicazioni sanitarie, catalogo con «Compra»;
+  - Calendario in coda, se attivo.
 - **SS** = scheda da stampare: la vista di stampa A4 orizzontale (`#/p/<id>/stampa`, `src/ui/stampa.js`, `css/stampa.css`).
 
 ## Stack (deciso)

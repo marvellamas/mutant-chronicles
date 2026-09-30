@@ -80,6 +80,7 @@ Fonte: risposta di Davide A.21 (28/09/2026; `regole.json` → `corruzione.chroma
 - **Tracker dell'esposizione** in modalità tavolo, per ogni «Chroma Viola (frammento)» della lista: minuti di esposizione accumulati nell'ora, fascia più grave raggiunta (contatto, entro 1 Q, 1–6 Q, 6–12 Q), sospensione fuori dall'aura senza azzerare; alla scadenza dell'ora il promemoria della PS di Magia con modificatore e Intensità della fascia. Oggi l'app mostra solo le fasce nel tooltip e l'avviso nella SD.
 - **Corruzione e Umanità** come valori del personaggio (Stati di Corruzione, peggioramenti per esito, penalità da CROS e Umanità sulle PS, riduzione della capacità di sintonizzazione del §7.10): servono le scale complete di Davide.
 - Poi: collegare gli esiti della PS al peggioramento della Corruzione, senza tiri automatici (fuori perimetro).
+- Fatto sul branch `layout-sd` (pezzo 3): i gradi della Corruzione Oscura del §5.20 (Umano … Oscuro) nella sessione, con la penalità nei valori effettivi. Restano esposizione e Umanità.
 
 ## 14. Tavolo del Direttore — STRUTTURALE, su branch `tavolo-direttore`
 
@@ -90,3 +91,19 @@ Richiesta del 29/09/2026. Nessuna implementazione ancora: si parte da un **branc
 - **Pagina «Tavolo del Direttore»**: tutti i personaggi in griglia, una carta ciascuno con nome, PV e PM attuali/massimi, AR, Stati attivi, Ferite, Affaticamento e arma impugnata; aggiornata ogni pochi secondi. Solo lettura nella prima versione.
 - **Avvio**: `distribuzione/3_avvia.bat` avvia il nostro server invece di `serve`.
 - **Vincolo**: l'app statica deve continuare a funzionare senza server (GitHub Pages, `python -m http.server`, apertura in locale); il server è un'aggiunta, mai un requisito.
+
+## 15. ✔ Ristrutturazione della scheda digitale — fatta il 30 settembre 2026, su branch `layout-sd`
+
+Proposta di Davide «Modifiche Layout APP»: otto tab in una riga, Inventario, Combattimento a due colonne, Poteri, Artefatti, Cibernetica e Veicoli in attesa del manuale. Piano ed esito in docs/layout-sd.md. Il merge su `main` lo decide Marcello dopo la prova.
+
+## 16. Icone dei tab da Davide — ASPETTA LE IMMAGINI
+
+Le icone delle pagine sono generate da `tools/genera_immagini.py` dagli originali in `img/originali/` (non tracciati). Poteri usa ancora quella della Magia; le definitive arrivano da Davide con la stessa convenzione (originale 1254×1254 in `img/originali/Pages/`, voce in `SORGENTI`).
+
+## 17. Cache-busting dei moduli JS — FACILE/MEDIA
+
+Dopo un aggiornamento il browser può tenere in cache i moduli vecchi con i dati nuovi (visto il 30/09: import fallito finché non si ricarica con Ctrl+F5). Servono indirizzi dei moduli con la versione (per esempio `?v=<commit>` negli import di `index.html` e dei moduli) o un service worker che li aggiorni; senza build step.
+
+## 18. Export/import del solo Calendario — FACILE
+
+Esportare e reimportare il blocco `calendario` di un personaggio da solo (per passarlo al master o fra personaggi del gruppo), senza toccare le scelte né la sessione.

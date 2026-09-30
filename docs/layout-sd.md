@@ -107,7 +107,7 @@ Tab presenti e vuoti, con la scritta «In arrivo con il manuale».
 - [x] Pezzo 1: riga degli otto tab (Poteri con la Magia o «Nessun potere», gli altri «In lavorazione»), Punti Eroe sopra i PV nella colonna di sinistra, Abilità con la colonna Condizioni a destra (a ~800 px la tabella mostra la formula sotto il nome e la colonna resta a destra; sul telefono scende sotto). Verificato nel browser a 1280, 800 e 375 px.
 - [x] Pezzo 2: tab Inventario (`tabInventario` in `src/ui/tab.js`, modalità `inventario` di `src/ui/equipaggiamento.js`). In testa Carico (peso noto / soglia Ordinaria, provenienza al tooltip: cosa pesa, cosa è nel deposito, i pesi da definire; `provenienzaCarico` in `src/carico.js`) e Crediti; poi gli avvisi dell'equipaggiamento, il riquadro Integrità (spostato com'è) e le sezioni per famiglia (`SEZIONI_INVENTARIO` in `src/palette.js`, colori dei gruppi esistenti). Ogni riga: costo, Qualità, reperibilità, peso; un solo controllo di stato con «Deposito comune»; PI n/max con − e +, «Rotto», «Ripara» (il pannello si apre sotto la riga), PS Integrità. In fondo il catalogo con «Aggiungi» e «Compra (−N crediti)». Test in `tests/inventario.test.js`. Verificato nel browser a 1280, 800 e 375 px.
   Scostamenti dal piano:
-  - **Stato:** era già in un solo campo (`voce.stato`), letto da motore e SS: nessuna migrazione del formato. Si aggiunge il valore `deposito` (ammesso per ogni tipo; fuori dal carico, senza effetti, fuori dalle scorte di munizioni e dalle applicazioni sanitarie). Restano gli stati fini del tipo (Impugnata, Addosso, Imbracciato, Indossata, In uso, Trasportato, Nello zaino): il motore li usa, ridurli ai quattro del piano toglierebbe informazioni; per i tipi senza stati il controllo è «Con sé» / «Deposito comune». La SS scrive «(deposito comune)» accanto all'oggetto nel foglio 3.
+  - **Stato:** era già in un solo campo (`voce.stato`), letto da motore e SS: nessuna migrazione del formato. Si aggiunge il valore `deposito` (ammesso per ogni tipo; fuori dal carico, senza effetti, fuori dalle scorte di munizioni e dalle applicazioni sanitarie). Restano gli stati fini del tipo (Impugnata, Addosso, Imbracciato, Indossata, In uso, Trasportato, Nello zaino): il motore li usa, ridurli ai quattro del piano toglierebbe informazioni; per i tipi senza stati il controllo è «Con sé» / «Deposito comune». Nei dati del foglio 3 l'oggetto nel deposito porta «(deposito comune)» (`elencoZaino`), ma la tabella stampata dell'equipaggiamento non lo mostra: la SS resta invariata, come da piano (verificato nel pezzo 6).
   - **Sezioni:** «Strumenti professionali» e «Razioni» arriveranno con i loro capitoli del Manuale dell'Equipaggiamento (oggi nessun oggetto); in più «Artefatti, cristalli e contenitori di Chroma» e «Altro equipaggiamento». «Accessori» comprende anche rinforzi e modifiche d'elmetto.
   - **Spostati nell'Inventario** oltre all'equipaggiamento e all'Integrità: il Carico (dalla tab Combattimento) e i Crediti (dalla tab Identità), perché gli acquisti al tavolo si fanno da qui.
   - **Resta nel Combattimento** fino al pezzo 3–4: Sanitario (§7.19) e Artefatti e sintonizzazione.
@@ -128,4 +128,55 @@ Tab presenti e vuoti, con la scritta «In arrivo con il manuale».
   - **Tecniche Interiori:** restano nella tab Abilità dove sono già (§8.9, dati in `tecniche_interiori.json`); il segnaposto chiuso è solo per i Poteri Sciamanici, che Davide sta scrivendo.
   - **PI degli Artefatti:** si tengono nella riga dell'Inventario (pezzo 2), come per gli altri oggetti; la tab Artefatti non li ripete.
   - Le batterie compaiono due volte nella tab Artefatti: fra gli Artefatti posseduti (sintonizzazione) e fra le riserve di Chroma (PM).
-- [ ] Pezzi 5–6.
+- [x] Pezzo 5: tab Cibernetica e Veicoli, riquadro «In attesa del manuale» con i rimandi ai paragrafi che ne parlano già (Umanità, Giocatore §5.21; veicoli fuori dalle dotazioni, §2.16.30), testi in `regole.json` → `tab_in_arrivo`; icone `img/pagine/cibernetica-*` e `veicoli-*`. Nessun dato, nessun campo nel salvataggio.
+- [x] Pezzo 6: verifica complessiva (sotto, «Esito»).
+
+## Esito (30/09/2026)
+
+### Confronto con la proposta di Davide (`docs/manuali-txt/layout-app-davide.md`)
+
+24 punti: **12 fatti**, **9 fatti diversamente**, **3 rimandati**.
+
+| # | Proposta | Esito |
+|---|---|---|
+| 1.1 | Tab in una fila in alto, dove ora c'è il simbolo | Fatto: riga in alto predefinita; l'opzione dell'ingranaggio (sinistra, in basso) resta. |
+| 1.2 | IDENTITÀ · ABILITÀ · COMBATTIMENTO · POTERI · CIBERNETICA · INVENTARIO · VEICOLI | Fatto diversamente: otto tab, con ARTEFATTI a sé (decisione di Marcello); il Calendario resta in coda, se attivo. |
+| 1.3 | Selezionato evidenziato, gli altri in secondo piano | Fatto. |
+| 2.1 | Punti Eroe in alto a sinistra sopra i PV, usabili in Abilità e Combattimento | Fatto: colonna di sinistra in ogni tab; sul telefono una striscia compatta; con i tab in basso sul telefono restano in Identità. |
+| 2.2 | Il resto di Identità così | Fatto diversamente: i Crediti sono passati nell'Inventario, dove si comprano gli oggetti al tavolo («Compra»). |
+| 3.1 | Abilità in alto, spazi stretti, Condizioni attive in una colonna a destra | Fatto: sotto ~30rem la colonna scende sotto la tabella. |
+| 3.2 | Talenti così | Fatto. |
+| 4.1 | Blocco dell'equipaggiamento nel nuovo tab | Fatto: tab Inventario, con Integrità e Carico. |
+| 4.2 | Fila Iniziativa · Movimento · Azioni · Difese, con Parata/Schivata Libera se c'è il Talento | Fatto diversamente: riquadri nella colonna sinistra, con le Prove Salvezza; Parata e Schivata Istintiva (i nomi del manuale, §8.6.7) come etichette sotto Difese. |
+| 4.3 | Protezioni disponibili da indossare o dismettere, con Rinforzi, Scudi, Elmetti | Fatto diversamente: armature, scudi ed elmetti si indossano o si tolgono qui; i rinforzi si montano sull'armatura dall'Inventario («Montato su»). Le Protezioni vengono dopo le armi. |
+| 4.4 | Armi disponibili da impugnare | Fatto. |
+| 4.5 | Armi impugnate in due riquadri, mano destra e sinistra; uno solo con un'arma a due mani o lo scudo | Fatto diversamente: l'app non registra quale mano tiene l'oggetto; destra e sinistra seguono l'ordine dell'Inventario, «Due mani» per le armi a due mani, lo scudo occupa una mano. |
+| 4.6 | Condizione e caricatori solo in consultazione, si cambiano nell'Inventario o con «Ricarica» | Fatto (anche le applicazioni dei kit sanitari). |
+| 4.7 | Colonna destra Ferite · Affaticamento · Corruzione · Stati, selezionabili, info al mouse o «?» | Fatto: Corruzione con i gradi del Giocatore §5.20, nei valori effettivi. |
+| 4.8 | «Attacca!» così | Fatto. |
+| 5.1 | Poteri da zero, con gli Artefatti Mistici, adattabile alle scelte | Fatto diversamente: gli Artefatti hanno una tab propria; in Poteri una sezione «Da artefatti» in sola lettura. |
+| 5.2 | Taumaturgo → pagina della magia | Fatto (anche chi ha incantesimi con Usufruitore di Magia); senza magia il riquadro «Nessun potere». |
+| 5.3 | Risorse Interiori → Tecniche Interiori | Fatto diversamente: le Tecniche restano nella tab Abilità, dove erano già. |
+| 5.4 | Poteri Sciamanici → Rune e Tatuaggi | Rimandato: sezione chiusa «in attesa del manuale». |
+| 6 | Cibernetica come l'equipaggiamento, con l'Umanità | Rimandato: tab «In attesa del manuale», con il rimando al §5.21. |
+| 7.1 | Sezioni: Armi, Accessori armi, Armature e scudi, Munizioni, Dotazioni personali, Esplorazione, Comunicazione, Strumenti professionali, Sanitario, Razioni | Fatto diversamente: Strumenti professionali e Razioni arrivano con i loro capitoli; in più «Artefatti, cristalli e contenitori di Chroma» e «Altro»; «Accessori» comprende rinforzi e modifiche d'elmetto; gli elmetti stanno con armature e scudi. |
+| 7.2 | Riquadri piccoli a tendina | Fatto. |
+| 7.3 | Costo, Qualità, reperibilità, PI modificabili, PS Integrità, stato impugnato / indossato / zaino / deposito comune | Fatto diversamente: tutti i dati; lo stato tiene quelli del tipo (Impugnata, Addosso, Imbracciato, Indossata, In uso, Trasportato, Nello zaino) più «Deposito comune». |
+| 8 | Veicoli (scheda dello Scout) | Rimandato: tab «In attesa del manuale», con il rimando al §2.16.30. |
+
+Scostamenti dei pezzi 2–4 già annotati qui sopra, riassunti:
+- regola nuova del deposito comune: fuori dal carico, senza effetti, fuori dal tavolo; un Artefatto nel deposito non è sintonizzabile (la scelta resta; per-davide A.59);
+- Carico e Crediti nell'Inventario; ordine della colonna sinistra di Combattimento (valori, armi in mano, poi disponibili e Protezioni);
+- la SS è invariata: né il deposito né la Corruzione compaiono nei fogli stampati (non previsti dal piano).
+
+### Verifica nel browser
+
+Due personaggi (b, Arcanista con magia e Artefatti; a, Assaltatore senza), a 1280, 800 e 375 px: aperti, gli otto tab uno per uno; Bordone nel deposito comune dall'Inventario (Artefatti: sintonizzazione 4 → 2 su 7, «non sintonizzabile»; Combattimento: mani vuote) e di nuovo impugnato (4 su 7); Belliger impugnata e caricatore di riserva aggiunto dall'Inventario, 5 colpi sparati e «Ricarica» (10/10); Ferita Superficiale e Corruzione Contagiato (Difese −2 con la provenienza); «Lancia!» di Colpo Elementale al livello 1 (PM 41 → 40); esportato e reimportato (scelte e livelli identici, Ferita e Corruzione conservate nella sessione). Nessun errore in console, nessuno scorrimento orizzontale. Il personaggio salvato con le regole del 27/09 (`tests/collaudo/regole-27-09/`) mostra l'avviso «Regole aggiornate» in ogni tab, «Sali di livello» bloccato, «Assegna» apre il pannello.
+
+### Valori rispetto a `main`
+
+`calcolaScheda` a riposo e al tavolo (una Ferita e Rallentato) sui cinque file di `tests/collaudo/` (a, b, c, Lucas, la copia di b con le regole del 27/09), con il motore di `main` e con quello di `layout-sd`: **nessun valore cambia**. Le sole differenze sono campi aggiunti: `deposito` nelle voci risolte e negli Artefatti, `carico.righe` e `carico.esclusi`.
+
+### SS
+
+PDF di prova in `docs/esempi-stampa/` (`a_imperiale_assaltatore_l8-layout.pdf`, 3 pagine; `b_fratellanza_arcanista_l12-layout.pdf`, 5 pagine), con uno scudo (a) e una batteria (b) nel deposito comune e un grado di Corruzione nella sessione: i fogli 1–3 non superano la pagina. Il deposito e la Corruzione non compaiono nei fogli: il piano non li prevede nella SS; l'oggetto nel deposito resta fra gli oggetti del foglio 3, il carico stampato lo esclude.
