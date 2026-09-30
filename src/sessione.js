@@ -21,6 +21,7 @@
 // si ricaricano con «Ricarica» né con «Nuova sessione»: solo convertendo PM (Magia sez. 6, §7.5.1).
 // ferite: 0 = nessuna, 1…5 = gli Stati di Ferita di regole.json (§5.14), 6 = oltre Grave.
 // affaticamento: indice in regole.json → affaticamento.stati (§5.19), 0 = Riposato.
+// corruzione: indice in regole.json → corruzione.stati (§5.20), 0 = Umano; «Nuova sessione» non lo azzera.
 // caricoExtra: kg trasportati oltre all'equipaggiamento (bottino, una creatura trasportata con il
 // suo equipaggiamento: §5.2.6), sommati al peso degli oggetti per il carico (src/carico.js).
 // condizioniOggetti: oggetti con effetti situazionali la cui condizione è accesa al tavolo (corredo
@@ -56,6 +57,7 @@ export function massimiSessione(scheda, creazione, dati) {
     distintiviPerPuntoEroe: pe.distintivi_per_punto_eroe,
     ferite: dati.regole.ferite.stati.length + 1, // l'ultimo gradino è «oltre Grave»
     affaticamento: dati.regole.affaticamento.stati.length - 1,
+    corruzione: (dati.regole.corruzione?.stati?.length ?? 1) - 1,
     stati: dati.regole.stati.elenco.map((s) => s.id),
     // uid di tutti gli oggetti della lista: le scelte di «Attacca!» si conservano per ogni arma (anche ravvicinata)
     oggetti: normalizzaEquipaggiamento(creazione?.equipaggiamento).map((v) => v.uid),
@@ -238,6 +240,7 @@ export function inizializzaSessione(m) {
     statiAttivi: [],
     ferite: 0,
     affaticamento: 0,
+    corruzione: 0,
     munizioni: allineaMunizioni({}, m),
     scorte: {},
     chroma: allineaChroma({}, {}, m),
@@ -267,6 +270,7 @@ export function allineaSessione(sessione, m) {
     statiAttivi: Array.isArray(sessione.statiAttivi) ? [...new Set(sessione.statiAttivi.filter((id) => m.stati.includes(id)))] : [],
     ferite: limita(intero(sessione.ferite, 0), 0, m.ferite),
     affaticamento: limita(intero(sessione.affaticamento, 0), 0, m.affaticamento),
+    corruzione: limita(intero(sessione.corruzione, 0), 0, m.corruzione ?? 0),
     munizioni,
     scorte: allineaScorte(sessione.scorte, m),
     chroma: allineaChroma(sessione.chroma, sessione.munizioni, m),
@@ -365,7 +369,8 @@ export function commutaStato(sessione, id, m) {
 
 /**
  * «Nuova sessione / riposo completo»: PV e PM ai massimi, Stati, Ferite e Affaticamento a zero.
- * Restano note, Punti Eroe, Distintivi, munizioni, peso aggiuntivo e PI degli oggetti.
+ * Restano note, Punti Eroe, Distintivi, munizioni, peso aggiuntivo, PI degli oggetti e lo Stato di
+ * Corruzione (§5.20.2: si recupera solo con la purificazione).
  */
 export function nuovaSessione(sessione, m) {
   return { ...allineaSessione(sessione, m), pvAttuali: m.pv, pmAttuali: m.pm, statiAttivi: [], ferite: 0, affaticamento: 0 };
@@ -394,7 +399,9 @@ export function penalitaSessione(sessione, dati) {
   const ferite = descriviFerite(sessione.ferite, dati);
   const aft = dati.regole.affaticamento.stati[sessione.affaticamento] ?? dati.regole.affaticamento.stati[0];
   const stati = dati.regole.stati.elenco.filter((s) => sessione.statiAttivi.includes(s.id));
-  // §5.14: le Ferite penalizzano VA e Prove Salvezza; §5.19: l'Affaticamento tutte le Prove
-  const totale = (ferite.penalita ?? 0) + aft.penalita;
-  return { ferite, affaticamento: aft, stati, totale };
+  const crosStati = dati.regole.corruzione?.stati ?? [{ nome: 'Umano', penalita: 0 }];
+  const corruzione = crosStati[sessione.corruzione ?? 0] ?? crosStati[0];
+  // §5.14: le Ferite penalizzano VA e Prove Salvezza; §5.19 e §5.20: Affaticamento e Corruzione tutte le Prove
+  const totale = (ferite.penalita ?? 0) + aft.penalita + (corruzione.penalita ?? 0);
+  return { ferite, affaticamento: aft, corruzione, stati, totale };
 }

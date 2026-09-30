@@ -58,7 +58,7 @@ export function condizioniAttiveAbilita(scheda, dati) {
   for (const c of scheda.condizioni ?? []) {
     const testo = testoEffetto(c.effetto, dati);
     if (!testo) continue;
-    const nome = c.fonte === 'affaticamento' ? `${c.etichetta} (Affaticamento)` : c.fonte === 'carico' ? `${c.etichetta} (carico, §5.2.6)` : c.etichetta;
+    const nome = c.fonte === 'affaticamento' ? `${c.etichetta} (Affaticamento)` : c.fonte === 'corruzione' ? `${c.etichetta} (Corruzione)` : c.fonte === 'carico' ? `${c.etichetta} (carico, §5.2.6)` : c.etichetta;
     out.push({ fonte: 'sessione', nome, testo, verso: versoDi(c.effetto) });
   }
   // usi specifici degli Stati (A Terra: equilibrio; Assordato: udito): non cambiano il VA

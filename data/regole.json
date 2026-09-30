@@ -85,6 +85,19 @@
     "_nota": "Testo mostrato nel tooltip di ogni oggetto che è un Artefatto (src/descrizioni.js)."
   },
   "corruzione": {
+    "stati": [
+      { "nome": "Umano", "penalita": 0, "manifestazioni": "Nessuna contaminazione rilevabile." },
+      { "nome": "Esposto", "penalita": 0, "manifestazioni": "Tracce lievi dell’esposizione." },
+      { "nome": "Contagiato", "penalita": -1, "manifestazioni": "Irrequietezza, nervosismo e primi segni di contaminazione." },
+      { "nome": "Infetto", "penalita": -2, "manifestazioni": "Malessere persistente e aggressività verbale o emotiva." },
+      { "nome": "Corrotto", "penalita": -4, "manifestazioni": "Influenza oscura marcata e possibili perdite di controllo." },
+      { "nome": "Eretico", "penalita": -6, "manifestazioni": "Tendenza a servire il Caos e possibile comparsa di Mutazioni Oscure." },
+      { "nome": "Caotico", "penalita": -10, "manifestazioni": "Identità quasi perduta, instabilità e trasformazioni mostruose." },
+      { "nome": "Oscuro", "penalita": null, "irreversibile": true, "manifestazioni": "Corruzione irreversibile: il personaggio diventa un PNG." }
+    ],
+    "si_applica_a": ["abilita", "salvezze"],
+    "versione_manuale": "Giocatore 0.43 + Doc del 29/09/2026",
+    "_nota_stati": "Giocatore §5.20: un unico Stato di Corruzione Oscura (CROS); si applica soltanto la penalità dello Stato attuale, a tutte le Prove di Caratteristica, Abilità e Salvezza, comprese quelle contro ulteriori esposizioni. Non modifica Iniziativa, Movimento, Azioni, danni, Armatura, PV o PM. Oscuro: penalità «—», il personaggio diventa un PNG. Lo Stato attuale sta nella sessione (sessione → corruzione, indice in «stati»); «Nuova sessione» non lo azzera (il recupero segue il §5.20.2). Esposizione, Intensità ed esiti (§5.20.1) e l’Umanità (§5.21) non sono tracciati dall’app (docs/backlog.md).",
     "chroma_viola": {
       "oggetto": "artefatti:chroma-viola-frammento",
       "fasce": [

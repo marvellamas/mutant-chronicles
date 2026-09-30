@@ -281,6 +281,7 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     condizioni: s.condizioni ?? [],
     ferite: { stati: dati.regole.ferite.stati, oltre: dati.regole.ferite.oltre },
     affaticamento: dati.regole.affaticamento.stati,
+    corruzione: dati.regole.corruzione?.stati ?? [],
     stati: dati.regole.stati.elenco,
     equipaggiamento: completo ? equip : equip.slice(0, LIMITI_STAMPA.righeEquipaggiamento),
     equipaggiamentoTroncato: !completo && equip.length > LIMITI_STAMPA.righeEquipaggiamento,

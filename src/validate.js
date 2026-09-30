@@ -173,7 +173,7 @@ function validaEffettiCondizioni(dati, err) {
   const r = dati.regole;
   const nomi = new Set((dati.abilita.abilita ?? []).map((a) => a.nome));
   const categorie = new Set(dati.abilita.categorie ?? []);
-  for (const k of ['ferite', 'affaticamento']) {
+  for (const k of ['ferite', 'affaticamento', 'corruzione']) {
     const a = r[k]?.si_applica_a;
     if (!Array.isArray(a) || !a.length || !a.every((x) => ['abilita', 'salvezze'].includes(x))) err(F, `${k}.si_applica_a`, 'lista di "abilita" e/o "salvezze" mancante');
   }
@@ -491,6 +491,15 @@ function validaRegole(r, err, dati = {}) {
   else aft.forEach((x, i) => {
     if (!isTesto(x?.nome)) err(F, `affaticamento.stati[${i}].nome`, 'nome mancante');
     if (!isIntero(x?.penalita) || x.penalita > 0) err(F, `affaticamento.stati[${i}].penalita`, 'penalità intera ≤ 0 mancante');
+  });
+  // §5.20: Corruzione Oscura, un unico Stato con la sua penalità; l'ultimo (Oscuro) è irreversibile, senza penalità
+  const cros = r.corruzione?.stati;
+  if (!Array.isArray(cros) || !cros.length) err(F, 'corruzione.stati', 'elenco {nome, penalita} mancante (Giocatore §5.20)');
+  else cros.forEach((x, i) => {
+    if (!isTesto(x?.nome)) err(F, `corruzione.stati[${i}].nome`, 'nome mancante');
+    if (x?.irreversibile === true ? x.penalita !== null : !isIntero(x?.penalita) || x.penalita > 0) {
+      err(F, `corruzione.stati[${i}].penalita`, x?.irreversibile === true ? 'uno Stato irreversibile ha penalità null' : 'penalità intera ≤ 0 mancante');
+    }
   });
   if (!isIntero(r.difese?.parata_distanza_arma) || r.difese.parata_distanza_arma > 0) err(F, 'difese.parata_distanza_arma', 'penalità intera ≤ 0 mancante (Giocatore §5.9)');
   if (!isIntero(r.punti_eroe?.distintivi_per_punto_eroe) || r.punti_eroe.distintivi_per_punto_eroe < 1) {

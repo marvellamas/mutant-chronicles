@@ -13,7 +13,7 @@ const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v
 
 /**
  * Condizioni attive della sessione, con effetto strutturato:
- * [{ etichetta, fonte: 'ferite'|'affaticamento'|'stato'|'carico', effetto: { va, salvezze, va_categorie, va_abilita, va_gruppi } }].
+ * [{ etichetta, fonte: 'ferite'|'affaticamento'|'corruzione'|'stato'|'carico', effetto: { va, salvezze, va_categorie, va_abilita, va_gruppi } }].
  * Gli Stati senza `effetto` nei dati non compaiono: restano promemoria. Con la scheda (per il peso
  * dell'equipaggiamento e FOR) si aggiunge il carico, se supera la soglia ordinaria.
  */
@@ -27,6 +27,9 @@ export function condizioniAttive(sessione, dati, scheda = null) {
   // §5.19: si applica solo la penalità dello Stato di Affaticamento attuale
   const aft = r.affaticamento.stati[sessione.affaticamento];
   if (aft?.penalita) out.push({ etichetta: aft.nome, fonte: 'affaticamento', effetto: perAmbiti(r.affaticamento.si_applica_a, aft.penalita) });
+  // §5.20: solo la penalità dello Stato di Corruzione attuale, a tutte le Prove (Oscuro: nessuna, è un PNG)
+  const cros = r.corruzione?.stati?.[sessione.corruzione ?? 0];
+  if (cros?.penalita) out.push({ etichetta: cros.nome, fonte: 'corruzione', effetto: perAmbiti(r.corruzione.si_applica_a, cros.penalita) });
   // §5.18: solo gli Stati con effetti numerici nei dati; più Stati si sommano
   const attivi = new Set(Array.isArray(sessione.statiAttivi) ? sessione.statiAttivi : []);
   for (const s of r.stati.elenco) {
@@ -171,7 +174,7 @@ function vociCondizioniAbilita(condizioni, abilita, dati) {
  * - equipaggiamento.protezioni[i].parata: ravvicinataEffettiva, distanzaEffettiva, daRegole,
  *   scomposizioneRavvicinata, scomposizioneDistanza;
  * - condizioni: le condizioni attive; carico: il carico trasportato (src/carico.js), con la sessione.
- * Ogni scomposizione è [{ etichetta, valore, fonte: 'regole'|'equipaggiamento'|'ferite'|'affaticamento'|'stato'|'carico' }].
+ * Ogni scomposizione è [{ etichetta, valore, fonte: 'regole'|'equipaggiamento'|'ferite'|'affaticamento'|'corruzione'|'stato'|'carico' }].
  * Accanto, `provenienza` { totale, righe: [{ fonte, valore, nota? }] } (src/provenienza.js): gli stessi
  * contributi con il valore da regole scomposto nelle sue voci (Caratteristica, Addestramento,
  * Corporazione, Classe, Avanzamento) e le righe che non contano ma si vedono (oggetti a 0, Rotti,
