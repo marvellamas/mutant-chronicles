@@ -5,12 +5,11 @@
     "punti_caratteristica": 5,
     "massimo_caratteristica": 7,
     "punti_abilita_liberi": 10,
-    "avanzamento_massimo_iniziale": 3,
     "va_minimo_per_punti_liberi": 1,
     "bonus_classe_per_grado": 1,
     "dado_pv_massimizzato": true,
     "dado_pm_massimizzato": true,
-    "_nota": "§2.1: 5 punti, nessuna Caratteristica oltre 7 alla creazione, i valori iniziali non si riducono. §2.13: Avanzamento iniziale ≤ 3 incluso il +1 di Classe; l'Abilità deve avere VA almeno 1 prima dei punti liberi (i punti di Classe si assegnano prima, §3.1). Al 1° livello sono massimizzati il dado dei PV e quello dei PM: il §2.12 e il §3.3 indicano solo i PV, il master ha corretto (docs/risposte-master.md, decisione 6). Dal Grado successivo i dadi si tirano."
+    "_nota": "§2.1: 5 punti, nessuna Caratteristica oltre 7 alla creazione, i valori iniziali non si riducono. §2.13 (Giocatore del 29/09): ogni punto libero deve aumentare il VA personale, entro il limite della categoria di competenza al I Grado (regole.json → competenze); l'Abilità deve avere VA almeno 1 prima dei punti liberi (i punti di Classe si assegnano prima, §3.1). Al 1° livello sono massimizzati il dado dei PV e quello dei PM: il §2.12 e il §3.3 indicano solo i PV, il master ha corretto (docs/risposte-master.md, decisione 6). Dal Grado successivo i dadi si tirano."
   },
   "salvezze": {
     "base": 8,
@@ -149,17 +148,19 @@
     }
   },
   "regole_aggiornate": {
-    "punti_abilita": "Regole aggiornate (manuale del 27/09, confermato da Davide il 28/09)",
-    "_nota": "Titolo dell'avviso in cima alla SD quando un evento già registrato (creazione o livello) ha meno Punti Abilità Liberi di quelli previsti dalle regole correnti, o più: Giocatore, Doc del 27/09/2026 (10 punti invece di 5), per-davide A.52. Se le regole cambiano ancora, si aggiorna qui la data."
+    "punti_abilita": "Regole aggiornate (Giocatore del 27/09 e del 29/09)",
+    "_nota": "Titolo dell'avviso in cima alla SD quando un evento già registrato (creazione o livello) ha meno Punti Abilità Liberi di quelli previsti dalle regole correnti, o più, o punti che non aumentano più il VA personale: Giocatore, Doc del 27/09/2026 (10 punti invece di 5, per-davide A.52) e Doc del 29/09/2026 (categorie di competenza e limiti del VA personale, §2.13, §8.3). Se le regole cambiano ancora, si aggiorna qui la data."
   },
-  "addestramento": {
-    "punti_totali": 76,
-    "schema": {
-      "4": 8,
-      "3": 12,
-      "2": 4
+  "competenze": {
+    "paragrafo": "Giocatore §§1.2.1, 2.3, 2.12, 2.13, 4.2, 8.3, 8.7 (Doc del 29/09/2026, 23:45)",
+    "categorie": {
+      "S": { "nome": "Specializzate", "numero": 2, "base": 7, "limite": { "fisso": 10, "per_grado_totale": 1, "per_grado_categoria": 1 } },
+      "P": { "nome": "Professionali", "numero": 6, "base": 6, "limite": { "fisso": 7, "per_grado_totale": 1, "per_grado_categoria": 1 } },
+      "G": { "nome": "Generiche", "numero": 12, "base": 5, "limite": { "fisso": 5, "per_grado_totale": 2, "per_grado_categoria": 0 } },
+      "N": { "nome": "Non competenti", "numero": 4, "base": 3, "limite": { "fisso": 3, "per_grado_totale": 2, "per_grado_categoria": 0 } }
     },
-    "_nota": "§2.3: valore base → numero di Abilità con quel valore. Doc del Giocatore del 27/09/2026 (16:38): basi da 2 a 4, 76 punti; prima 48 punti con basi da 0 a 4."
+    "punti_base_totali": 122,
+    "_nota": "La prima Classe assegna a ciascuna delle 24 Abilità una categoria di competenza (classi.json → competenze) e la sua base, che resta fissa (§2.3). VA grezzo personale = Mod + Base + Corporazione + Avanzamento; VA personale = min(grezzo, limite) (§1.2.1). Limite di un'Abilità (§8.7): per ogni categoria che le attribuisce almeno una Classe posseduta, fisso + per_grado_totale × G + per_grado_categoria × g (G = Gradi di tutte le Classi, g = Gradi delle Classi che la mettono in quella categoria); vale il più alto. Con una sola Classe al Grado g dà la tabella del §8.3 (S 10 + 2g, P 7 + 2g, G 5 + 2g, N 3 + 2g). Bonus e penalità alla Prova (equipaggiamento, Talenti, Specializzazioni, condizioni) si applicano dopo il limite (§4.2). I +1 di Classe oltre il limite restano nel grezzo; i punti liberi valgono solo se aumentano il VA personale (§2.13, §8.3)."
   },
   "taumaturgo": {
     "addestramento": "Taumaturgo",
@@ -396,39 +397,7 @@
       }
     ],
     "_nota_massimo_caratteristica": "§8.2: al 6° livello il punto che non può andare oltre 10 si assegna a un’altra Caratteristica.",
-    "avanzamento_massimo_abilita": [
-      {
-        "da": 1,
-        "a": 3,
-        "massimo": 3
-      },
-      {
-        "da": 4,
-        "a": 7,
-        "massimo": 4
-      },
-      {
-        "da": 8,
-        "a": 11,
-        "massimo": 5
-      },
-      {
-        "da": 12,
-        "a": 15,
-        "massimo": 6
-      },
-      {
-        "da": 16,
-        "a": 19,
-        "massimo": 7
-      },
-      {
-        "da": 20,
-        "a": 20,
-        "massimo": 8
-      }
-    ],
-    "_nota_avanzamento": "§8.3: il limite comprende i punti fissi di Classe e i liberi; si assegnano prima i fissi. Un +1 di Classe che supererebbe il limite non si applica.",
+    "_nota_avanzamento": "§8.3 del 29/09: il vecchio tetto uniforme ai punti di Avanzamento è sostituito dai limiti del VA personale (competenze); si registrano prima i +1 di Classe, sempre, anche oltre il limite.",
     "classi_massime": 3,
     "grado_massimo": 6,
     "gradi_talento_fisso": [

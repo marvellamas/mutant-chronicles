@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Giocatore 0.43",
+  "versione_manuale": "Giocatore 0.43 + Doc del 29/09/2026",
   "fonte": "§3.4, §3.6, §3.8 (profili); §3.5.2–3.5.11, §3.7, §3.9 (Talenti)",
   "_nota": "PV e PM per Grado: fisso + 1d<dado> (dado 0 = nessun dado). Al 1° livello il dado dei PV è massimizzato (§2.12, §3.3). Le quote incantesimi valgono per le Classi taumaturgiche (§3.8).",
   "classi": [
@@ -18,6 +18,40 @@
         "Percezione",
         "Raggirare"
       ],
+      "competenze": {
+        "S": [
+          "Percezione",
+          "Raggirare"
+        ],
+        "P": [
+          "Armi leggere",
+          "Cultura",
+          "Furtività",
+          "Oratoria",
+          "Difese",
+          "Tecnologia"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi medie",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Artefatti",
+          "Occultismo",
+          "Atletica",
+          "Pilotare",
+          "Sopravvivenza",
+          "Medicina",
+          "Scienza",
+          "Intrattenere"
+        ],
+        "N": [
+          "Armi pesanti",
+          "Armi da guerra",
+          "Potere",
+          "Rituali"
+        ]
+      },
       "pv_per_grado": {
         "fisso": 4,
         "dado": 6
@@ -108,6 +142,40 @@
         "Percezione",
         "Sopravvivenza"
       ],
+      "competenze": {
+        "S": [
+          "Armi medie",
+          "Percezione"
+        ],
+        "P": [
+          "Armi da mischia",
+          "Difese",
+          "Occultismo",
+          "Atletica",
+          "Furtività",
+          "Sopravvivenza"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Corpo a corpo",
+          "Artefatti",
+          "Pilotare",
+          "Cultura",
+          "Medicina",
+          "Scienza",
+          "Tecnologia",
+          "Intrattenere",
+          "Oratoria",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi pesanti",
+          "Armi da guerra",
+          "Potere",
+          "Rituali"
+        ]
+      },
       "pv_per_grado": {
         "fisso": 4,
         "dado": 6
@@ -176,6 +244,40 @@
         "Pilotare",
         "Sopravvivenza"
       ],
+      "competenze": {
+        "S": [
+          "Percezione",
+          "Sopravvivenza"
+        ],
+        "P": [
+          "Difese",
+          "Atletica",
+          "Furtività",
+          "Pilotare",
+          "Scienza",
+          "Tecnologia"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi medie",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Artefatti",
+          "Occultismo",
+          "Cultura",
+          "Medicina",
+          "Intrattenere",
+          "Oratoria",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi pesanti",
+          "Armi da guerra",
+          "Potere",
+          "Rituali"
+        ]
+      },
       "pv_per_grado": {
         "fisso": 2,
         "dado": 6
@@ -244,6 +346,40 @@
         "Raggirare",
         "Tecnologia"
       ],
+      "competenze": {
+        "S": [
+          "Furtività",
+          "Raggirare"
+        ],
+        "P": [
+          "Armi da mischia",
+          "Difese",
+          "Atletica",
+          "Percezione",
+          "Tecnologia",
+          "Oratoria"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi medie",
+          "Corpo a corpo",
+          "Artefatti",
+          "Occultismo",
+          "Pilotare",
+          "Sopravvivenza",
+          "Cultura",
+          "Medicina",
+          "Scienza",
+          "Intrattenere"
+        ],
+        "N": [
+          "Armi pesanti",
+          "Armi da guerra",
+          "Potere",
+          "Rituali"
+        ]
+      },
       "pv_per_grado": {
         "fisso": 3,
         "dado": 6
@@ -317,6 +453,40 @@
         "Sopravvivenza",
         "Tecnologia"
       ],
+      "competenze": {
+        "S": [
+          "Percezione",
+          "Medicina"
+        ],
+        "P": [
+          "Difese",
+          "Atletica",
+          "Pilotare",
+          "Sopravvivenza",
+          "Scienza",
+          "Tecnologia"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi medie",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Artefatti",
+          "Occultismo",
+          "Furtività",
+          "Cultura",
+          "Intrattenere",
+          "Oratoria",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi pesanti",
+          "Armi da guerra",
+          "Potere",
+          "Rituali"
+        ]
+      },
       "pv_per_grado": {
         "fisso": 2,
         "dado": 6
@@ -388,6 +558,40 @@
         "Atletica",
         "Percezione"
       ],
+      "competenze": {
+        "S": [
+          "Armi medie",
+          "Armi pesanti"
+        ],
+        "P": [
+          "Armi leggere",
+          "Difese",
+          "Atletica",
+          "Furtività",
+          "Percezione",
+          "Tecnologia"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi da mischia",
+          "Armi da guerra",
+          "Corpo a corpo",
+          "Pilotare",
+          "Sopravvivenza",
+          "Cultura",
+          "Medicina",
+          "Scienza",
+          "Intrattenere",
+          "Oratoria",
+          "Raggirare"
+        ],
+        "N": [
+          "Artefatti",
+          "Occultismo",
+          "Potere",
+          "Rituali"
+        ]
+      },
       "pv_per_grado": {
         "fisso": 4,
         "dado": 8
@@ -486,6 +690,40 @@
         "Atletica",
         "Difese"
       ],
+      "competenze": {
+        "S": [
+          "Armi da mischia",
+          "Armi da guerra"
+        ],
+        "P": [
+          "Armi leggere",
+          "Corpo a corpo",
+          "Difese",
+          "Atletica",
+          "Percezione",
+          "Sopravvivenza"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi medie",
+          "Armi pesanti",
+          "Furtività",
+          "Pilotare",
+          "Cultura",
+          "Medicina",
+          "Scienza",
+          "Tecnologia",
+          "Intrattenere",
+          "Oratoria",
+          "Raggirare"
+        ],
+        "N": [
+          "Artefatti",
+          "Occultismo",
+          "Potere",
+          "Rituali"
+        ]
+      },
       "pv_per_grado": {
         "fisso": 5,
         "dado": 8
@@ -578,6 +816,40 @@
         "Percezione",
         "Tecnologia"
       ],
+      "competenze": {
+        "S": [
+          "Furtività",
+          "Tecnologia"
+        ],
+        "P": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi da mischia",
+          "Difese",
+          "Atletica",
+          "Percezione"
+        ],
+        "G": [
+          "Armi medie",
+          "Armi pesanti",
+          "Armi da guerra",
+          "Corpo a corpo",
+          "Pilotare",
+          "Sopravvivenza",
+          "Cultura",
+          "Medicina",
+          "Scienza",
+          "Intrattenere",
+          "Oratoria",
+          "Raggirare"
+        ],
+        "N": [
+          "Artefatti",
+          "Occultismo",
+          "Potere",
+          "Rituali"
+        ]
+      },
       "pv_per_grado": {
         "fisso": 3,
         "dado": 8
@@ -694,6 +966,40 @@
         "Difese",
         "Percezione"
       ],
+      "competenze": {
+        "S": [
+          "Corpo a corpo",
+          "Difese"
+        ],
+        "P": [
+          "Armi da mischia",
+          "Atletica",
+          "Furtività",
+          "Percezione",
+          "Sopravvivenza",
+          "Medicina"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi da guerra",
+          "Occultismo",
+          "Potere",
+          "Pilotare",
+          "Cultura",
+          "Scienza",
+          "Tecnologia",
+          "Intrattenere",
+          "Oratoria",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi medie",
+          "Armi pesanti",
+          "Artefatti",
+          "Rituali"
+        ]
+      },
       "pv_per_grado": {
         "fisso": 3,
         "dado": 8
@@ -890,6 +1196,40 @@
         "Percezione",
         "Sopravvivenza"
       ],
+      "competenze": {
+        "S": [
+          "Armi medie",
+          "Sopravvivenza"
+        ],
+        "P": [
+          "Armi leggere",
+          "Difese",
+          "Atletica",
+          "Percezione",
+          "Tecnologia",
+          "Oratoria"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi pesanti",
+          "Armi da mischia",
+          "Armi da guerra",
+          "Corpo a corpo",
+          "Furtività",
+          "Pilotare",
+          "Cultura",
+          "Medicina",
+          "Scienza",
+          "Intrattenere",
+          "Raggirare"
+        ],
+        "N": [
+          "Artefatti",
+          "Occultismo",
+          "Potere",
+          "Rituali"
+        ]
+      },
       "pv_per_grado": {
         "fisso": 4,
         "dado": 8
@@ -961,6 +1301,40 @@
         "Sopravvivenza",
         "Tecnologia"
       ],
+      "competenze": {
+        "S": [
+          "Sopravvivenza",
+          "Scienza"
+        ],
+        "P": [
+          "Atletica",
+          "Percezione",
+          "Pilotare",
+          "Medicina",
+          "Tecnologia",
+          "Oratoria"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi medie",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Difese",
+          "Artefatti",
+          "Occultismo",
+          "Furtività",
+          "Cultura",
+          "Intrattenere",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi pesanti",
+          "Armi da guerra",
+          "Potere",
+          "Rituali"
+        ]
+      },
       "pv_per_grado": {
         "fisso": 4,
         "dado": 6
@@ -1032,6 +1406,40 @@
         "Scienza",
         "Tecnologia"
       ],
+      "competenze": {
+        "S": [
+          "Cultura",
+          "Tecnologia"
+        ],
+        "P": [
+          "Atletica",
+          "Furtività",
+          "Percezione",
+          "Scienza",
+          "Oratoria",
+          "Raggirare"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi medie",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Difese",
+          "Artefatti",
+          "Occultismo",
+          "Pilotare",
+          "Sopravvivenza",
+          "Medicina",
+          "Intrattenere"
+        ],
+        "N": [
+          "Armi pesanti",
+          "Armi da guerra",
+          "Potere",
+          "Rituali"
+        ]
+      },
       "pv_per_grado": {
         "fisso": 3,
         "dado": 6
@@ -1103,6 +1511,40 @@
         "Pilotare",
         "Tecnologia"
       ],
+      "competenze": {
+        "S": [
+          "Atletica",
+          "Tecnologia"
+        ],
+        "P": [
+          "Armi da mischia",
+          "Difese",
+          "Percezione",
+          "Pilotare",
+          "Sopravvivenza",
+          "Scienza"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi medie",
+          "Armi pesanti",
+          "Armi da guerra",
+          "Corpo a corpo",
+          "Furtività",
+          "Cultura",
+          "Medicina",
+          "Intrattenere",
+          "Oratoria",
+          "Raggirare"
+        ],
+        "N": [
+          "Artefatti",
+          "Occultismo",
+          "Potere",
+          "Rituali"
+        ]
+      },
       "pv_per_grado": {
         "fisso": 4,
         "dado": 6
@@ -1171,6 +1613,40 @@
         "Sopravvivenza",
         "Tecnologia"
       ],
+      "competenze": {
+        "S": [
+          "Pilotare",
+          "Tecnologia"
+        ],
+        "P": [
+          "Armi leggere",
+          "Percezione",
+          "Sopravvivenza",
+          "Atletica",
+          "Scienza",
+          "Difese"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi medie",
+          "Armi pesanti",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Artefatti",
+          "Furtività",
+          "Cultura",
+          "Medicina",
+          "Intrattenere",
+          "Oratoria",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi da guerra",
+          "Occultismo",
+          "Potere",
+          "Rituali"
+        ]
+      },
       "pv_per_grado": {
         "fisso": 3,
         "dado": 6
@@ -1239,6 +1715,40 @@
         "Scienza",
         "Tecnologia"
       ],
+      "competenze": {
+        "S": [
+          "Scienza",
+          "Tecnologia"
+        ],
+        "P": [
+          "Atletica",
+          "Furtività",
+          "Percezione",
+          "Pilotare",
+          "Cultura",
+          "Raggirare"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi medie",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Difese",
+          "Artefatti",
+          "Occultismo",
+          "Sopravvivenza",
+          "Medicina",
+          "Intrattenere",
+          "Oratoria"
+        ],
+        "N": [
+          "Armi pesanti",
+          "Armi da guerra",
+          "Potere",
+          "Rituali"
+        ]
+      },
       "pv_per_grado": {
         "fisso": 3,
         "dado": 6
@@ -1307,6 +1817,40 @@
         "Scienza",
         "Tecnologia"
       ],
+      "competenze": {
+        "S": [
+          "Cultura",
+          "Scienza"
+        ],
+        "P": [
+          "Artefatti",
+          "Occultismo",
+          "Percezione",
+          "Medicina",
+          "Tecnologia",
+          "Oratoria"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Difese",
+          "Rituali",
+          "Atletica",
+          "Furtività",
+          "Pilotare",
+          "Sopravvivenza",
+          "Intrattenere",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi medie",
+          "Armi pesanti",
+          "Armi da guerra",
+          "Potere"
+        ]
+      },
       "pv_per_grado": {
         "fisso": 2,
         "dado": 4
@@ -1375,6 +1919,40 @@
         "Raggirare",
         "Tecnologia"
       ],
+      "competenze": {
+        "S": [
+          "Cultura",
+          "Oratoria"
+        ],
+        "P": [
+          "Percezione",
+          "Pilotare",
+          "Scienza",
+          "Tecnologia",
+          "Intrattenere",
+          "Raggirare"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi medie",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Difese",
+          "Artefatti",
+          "Occultismo",
+          "Atletica",
+          "Furtività",
+          "Sopravvivenza",
+          "Medicina"
+        ],
+        "N": [
+          "Armi pesanti",
+          "Armi da guerra",
+          "Potere",
+          "Rituali"
+        ]
+      },
       "pv_per_grado": {
         "fisso": 2,
         "dado": 4
@@ -1443,6 +2021,40 @@
         "Percezione",
         "Tecnologia"
       ],
+      "competenze": {
+        "S": [
+          "Intrattenere",
+          "Oratoria"
+        ],
+        "P": [
+          "Atletica",
+          "Furtività",
+          "Percezione",
+          "Cultura",
+          "Tecnologia",
+          "Raggirare"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi medie",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Difese",
+          "Artefatti",
+          "Occultismo",
+          "Pilotare",
+          "Sopravvivenza",
+          "Medicina",
+          "Scienza"
+        ],
+        "N": [
+          "Armi pesanti",
+          "Armi da guerra",
+          "Potere",
+          "Rituali"
+        ]
+      },
       "pv_per_grado": {
         "fisso": 2,
         "dado": 4
@@ -1511,6 +2123,40 @@
         "Scienza",
         "Tecnologia"
       ],
+      "competenze": {
+        "S": [
+          "Medicina",
+          "Scienza"
+        ],
+        "P": [
+          "Occultismo",
+          "Percezione",
+          "Sopravvivenza",
+          "Cultura",
+          "Tecnologia",
+          "Oratoria"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Difese",
+          "Artefatti",
+          "Rituali",
+          "Atletica",
+          "Furtività",
+          "Pilotare",
+          "Intrattenere",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi medie",
+          "Armi pesanti",
+          "Armi da guerra",
+          "Potere"
+        ]
+      },
       "pv_per_grado": {
         "fisso": 2,
         "dado": 4
@@ -1582,6 +2228,40 @@
         "Percezione",
         "Rituali"
       ],
+      "competenze": {
+        "S": [
+          "Occultismo",
+          "Oratoria"
+        ],
+        "P": [
+          "Artefatti",
+          "Rituali",
+          "Percezione",
+          "Cultura",
+          "Medicina",
+          "Intrattenere"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Difese",
+          "Atletica",
+          "Furtività",
+          "Pilotare",
+          "Sopravvivenza",
+          "Scienza",
+          "Tecnologia",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi medie",
+          "Armi pesanti",
+          "Armi da guerra",
+          "Potere"
+        ]
+      },
       "pv_per_grado": {
         "fisso": 1,
         "dado": 4
@@ -1654,6 +2334,40 @@
         "Potere",
         "Rituali"
       ],
+      "competenze": {
+        "S": [
+          "Potere",
+          "Rituali"
+        ],
+        "P": [
+          "Armi da lancio",
+          "Difese",
+          "Artefatti",
+          "Occultismo",
+          "Percezione",
+          "Cultura"
+        ],
+        "G": [
+          "Armi leggere",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Atletica",
+          "Furtività",
+          "Sopravvivenza",
+          "Medicina",
+          "Scienza",
+          "Tecnologia",
+          "Intrattenere",
+          "Oratoria",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi medie",
+          "Armi pesanti",
+          "Armi da guerra",
+          "Pilotare"
+        ]
+      },
       "pv_per_grado": {
         "fisso": 1,
         "dado": 4
@@ -1779,6 +2493,40 @@
         "Percezione",
         "Potere"
       ],
+      "competenze": {
+        "S": [
+          "Armi da mischia",
+          "Difese"
+        ],
+        "P": [
+          "Corpo a corpo",
+          "Artefatti",
+          "Occultismo",
+          "Potere",
+          "Atletica",
+          "Percezione"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi da guerra",
+          "Rituali",
+          "Furtività",
+          "Sopravvivenza",
+          "Cultura",
+          "Medicina",
+          "Tecnologia",
+          "Intrattenere",
+          "Oratoria",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi medie",
+          "Armi pesanti",
+          "Pilotare",
+          "Scienza"
+        ]
+      },
       "pv_per_grado": {
         "fisso": 4,
         "dado": 4
@@ -1859,6 +2607,40 @@
         "Percezione",
         "Potere"
       ],
+      "competenze": {
+        "S": [
+          "Occultismo",
+          "Potere"
+        ],
+        "P": [
+          "Armi da lancio",
+          "Corpo a corpo",
+          "Difese",
+          "Artefatti",
+          "Percezione",
+          "Oratoria"
+        ],
+        "G": [
+          "Armi leggere",
+          "Armi da mischia",
+          "Rituali",
+          "Atletica",
+          "Furtività",
+          "Pilotare",
+          "Sopravvivenza",
+          "Cultura",
+          "Medicina",
+          "Tecnologia",
+          "Intrattenere",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi medie",
+          "Armi pesanti",
+          "Armi da guerra",
+          "Scienza"
+        ]
+      },
       "pv_per_grado": {
         "fisso": 2,
         "dado": 4
@@ -1962,6 +2744,40 @@
         "Potere",
         "Rituali"
       ],
+      "competenze": {
+        "S": [
+          "Potere",
+          "Medicina"
+        ],
+        "P": [
+          "Difese",
+          "Artefatti",
+          "Occultismo",
+          "Rituali",
+          "Percezione",
+          "Oratoria"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Atletica",
+          "Furtività",
+          "Pilotare",
+          "Sopravvivenza",
+          "Cultura",
+          "Scienza",
+          "Intrattenere",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi medie",
+          "Armi pesanti",
+          "Armi da guerra",
+          "Tecnologia"
+        ]
+      },
       "pv_per_grado": {
         "fisso": 3,
         "dado": 4
@@ -2060,6 +2876,40 @@
         "Scienza",
         "Tecnologia"
       ],
+      "competenze": {
+        "S": [
+          "Artefatti",
+          "Tecnologia"
+        ],
+        "P": [
+          "Armi leggere",
+          "Difese",
+          "Potere",
+          "Rituali",
+          "Percezione",
+          "Scienza"
+        ],
+        "G": [
+          "Armi medie",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Occultismo",
+          "Atletica",
+          "Furtività",
+          "Pilotare",
+          "Cultura",
+          "Medicina",
+          "Intrattenere",
+          "Oratoria",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi da lancio",
+          "Armi pesanti",
+          "Armi da guerra",
+          "Sopravvivenza"
+        ]
+      },
       "pv_per_grado": {
         "fisso": 2,
         "dado": 4
@@ -2125,5 +2975,6 @@
         }
       ]
     }
-  ]
+  ],
+  "_nota_competenze": "Capitolo 3 del Giocatore (Doc del 29/09/2026, 23:45): per ogni Classe le categorie di competenza delle 24 Abilità (S Specializzate, P Professionali, G Generiche, N Non competenti; §2.3). La prima Classe fissa le basi; tutte le Classi possedute contano per i limiti del VA personale (§8.7). Estratte dal testo con tools/prototipo_competenze.mjs (profili in tools/profili_competenze_29-09.json)."
 }

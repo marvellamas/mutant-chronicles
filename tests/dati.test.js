@@ -58,29 +58,49 @@ function erroriDopo(modifica) {
   return validaDati(d);
 }
 
-test('validatore: Addestramento con somma o distribuzione sbagliata', () => {
-  // §2.3 (Doc del 27/09/2026): 76 punti, 8×4, 12×3, 4×2. Furtività 4 → 3: somma 75, 7×4 e 13×3.
-  const e = erroriDopo((d) => { d.addestramenti.addestramenti[0].valori_base['Furtività'] = 3; });
-  assert.ok(e.some((x) => x.file === 'addestramenti.json' && x.chiave.includes('Avventuriero') && /somma è 75/.test(x.problema)));
-  assert.ok(e.some((x) => /distribuzione/.test(x.problema)));
-  // una base 0 (ammessa dal vecchio schema) ora è fuori distribuzione anche a somma invariata
-  const zero = erroriDopo((d) => {
-    const vb = d.addestramenti.addestramenti[0].valori_base;
-    vb['Potere'] = 0; // 2 → 0
-    vb['Cultura'] = 4; vb['Medicina'] = 4; // 3 → 4 ciascuna: somma di nuovo 76
-  });
-  assert.equal(zero.some((x) => /somma/.test(x.problema)), false);
-  assert.ok(zero.some((x) => x.chiave.includes('Avventuriero') && /distribuzione/.test(x.problema)), JSON.stringify(zero));
+test('validatore: le 25 Classi coprono le 24 Abilità una volta ciascuna, 2 S / 6 P / 12 G / 4 N (§2.3 del 29/09)', () => {
+  const cc = dati.regole.competenze.categorie;
+  assert.deepEqual(Object.fromEntries(Object.entries(cc).map(([k, v]) => [k, [v.numero, v.base]])), { S: [2, 7], P: [6, 6], G: [12, 5], N: [4, 3] });
+  assert.equal(dati.regole.competenze.punti_base_totali, 122);
+  assert.equal(dati.classi.classi.length, 25);
+  const nomi = dati.abilita.abilita.map((a) => a.nome).sort();
+  for (const c of dati.classi.classi) {
+    const tutte = Object.values(c.competenze).flat();
+    assert.deepEqual([...tutte].sort(), nomi, c.nome);
+    for (const [k, v] of Object.entries(cc)) assert.equal(c.competenze[k].length, v.numero, `${c.nome} ${k}`);
+    // le basi sommano 122 (2×7 + 6×6 + 12×5 + 4×3)
+    assert.equal(Object.entries(c.competenze).reduce((t, [k, l]) => t + l.length * cc[k].base, 0), 122, c.nome);
+  }
+  // gli Addestramenti non hanno più i valori base
+  for (const a of dati.addestramenti.addestramenti) assert.equal(a.valori_base, undefined, a.nome);
 });
 
-test('validatore: Addestramento con Abilità mancante o inesistente', () => {
-  const e = erroriDopo((d) => {
-    const vb = d.addestramenti.addestramenti[1].valori_base;
-    vb['Furtivita'] = vb['Furtività'];
-    delete vb['Furtività'];
-  });
-  assert.ok(e.some((x) => /"Furtivita" non è un'Abilità/.test(x.problema)));
-  assert.ok(e.some((x) => /manca l'Abilità "Furtività"/.test(x.problema)));
+test('validatore: Classe con categoria di competenza sbagliata, Abilità ripetuta, mancante o inesistente', () => {
+  // una G spostata fra le S: 3 S e 11 G
+  const e = erroriDopo((d) => { const c = d.classi.classi[0].competenze; c.S.push(c.G.pop()); });
+  const k = (x) => x.file === 'classi.json' && x.chiave.includes('Agente');
+  assert.ok(e.some((x) => k(x) && x.chiave.endsWith('competenze.S') && /attese 2 Abilità, trovate 3/.test(x.problema)), JSON.stringify(e));
+  assert.ok(e.some((x) => k(x) && x.chiave.endsWith('competenze.G') && /attese 12 Abilità, trovate 11/.test(x.problema)));
+  // Abilità scritta male: inesistente e, di conseguenza, «Furtività» senza categoria
+  const m = erroriDopo((d) => { const c = d.classi.classi[1].competenze; for (const l of Object.values(c)) { const i = l.indexOf('Furtività'); if (i >= 0) l[i] = 'Furtivita'; } });
+  assert.ok(m.some((x) => /"Furtivita" non è un'Abilità esistente/.test(x.problema)));
+  assert.ok(m.some((x) => /l'Abilità "Furtività" non ha una categoria di competenza/.test(x.problema)));
+  // la stessa Abilità in due categorie
+  const r = erroriDopo((d) => { const c = d.classi.classi[0].competenze; c.N[0] = c.S[0]; });
+  assert.ok(r.some((x) => /è già fra le Specializzate: ogni Abilità sta in una sola categoria/.test(x.problema)), JSON.stringify(r));
+  // categoria mancante; categoria sconosciuta
+  assert.ok(erroriDopo((d) => { delete d.classi.classi[0].competenze.N; }).some((x) => /manca la categoria N \(Non competenti\)/.test(x.problema)));
+  assert.ok(erroriDopo((d) => { d.classi.classi[0].competenze.X = []; }).some((x) => /categoria "X" non in regole\.json/.test(x.problema)));
+});
+
+test('validatore: regole delle competenze con basi o numeri che non tornano, valori base rimessi negli Addestramenti', () => {
+  // base S 7 → 8: le basi sommano 124
+  const e = erroriDopo((d) => { d.regole.competenze.categorie.S.base = 8; });
+  assert.ok(e.some((x) => x.file === 'regole.json' && /le basi sommano 124, non 122/.test(x.problema)), JSON.stringify(e));
+  // numero S 2 → 3: le categorie coprono 25 Abilità (e ogni Classe ne ha una di troppo da trovare)
+  assert.ok(erroriDopo((d) => { d.regole.competenze.categorie.S.numero = 3; }).some((x) => /coprono 25 Abilità, le Abilità sono 24/.test(x.problema)));
+  // i valori_base del vecchio schema non si rimettono (le basi vengono dalla prima Classe)
+  assert.ok(erroriDopo((d) => { d.addestramenti.addestramenti[0].valori_base = { 'Furtività': 4 }; }).some((x) => x.file === 'addestramenti.json' && /valori_base/.test(x.chiave + x.problema)));
 });
 
 test('validatore: Corporazione con Caratteristica fuori scala, Abilità inesistente, Salvezza non 0/1', () => {
