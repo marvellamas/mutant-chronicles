@@ -489,6 +489,35 @@ export function equipaggiamentoStampa(s, dati, armi = null) {
 }
 
 /**
+ * Quadratini con un massimo (docs/layout-ss.md, §3; PV, PM, colpi, PI, applicazioni, cariche,
+ * riserve): righe da 10 con uno stacco dopo la quinta casella e il cumulato a destra, in blocchi
+ * da 5 righe (50 caselle). Le caselle oltre il massimo attuale si stampano in grigio: il tetto si
+ * vede e un aumento di livello non richiede di ristampare. `compatto`: il blocco si accorcia alla
+ * prima riga intera che contiene il massimo (colpi, PI, Punti Eroe); `bloccoInPiu`: un blocco
+ * grigio in più, da aggiungere solo se lo spazio lo consente (lo decide la vista).
+ * @returns {{ massimo, blocchi: [{ facoltativo, righe: [{ da, cumulato, caselle: boolean[] }] }] }}
+ *   caselle: true = disponibile (nera), false = oltre il massimo (grigia)
+ */
+export const QUADRATINI = { perRiga: 10, stacco: 5, righePerBlocco: 5 };
+
+export function schemaQuadratini(massimo, { compatto = false, bloccoInPiu = false } = {}) {
+  const { perRiga, righePerBlocco } = QUADRATINI;
+  const max = Math.max(0, Math.floor(Number(massimo) || 0));
+  const righeMinime = Math.max(1, Math.ceil(max / perRiga));
+  const righeTotali = compatto ? righeMinime : Math.ceil(righeMinime / righePerBlocco) * righePerBlocco;
+  const riga = (r) => ({
+    da: r * perRiga, cumulato: (r + 1) * perRiga,
+    caselle: Array.from({ length: perRiga }, (_, k) => r * perRiga + k < max),
+  });
+  const blocchi = [];
+  for (let r = 0; r < righeTotali; r += righePerBlocco) {
+    blocchi.push({ facoltativo: false, righe: Array.from({ length: Math.min(righePerBlocco, righeTotali - r) }, (_, k) => riga(r + k)) });
+  }
+  if (bloccoInPiu && !compatto) blocchi.push({ facoltativo: true, righe: Array.from({ length: righePerBlocco }, (_, k) => riga(righeTotali + k)) });
+  return { massimo: max, blocchi };
+}
+
+/**
  * Fogli della SS nell'ordine di stampa (docs/layout-ss.md, §5.1 e decisione 9.1): prima i sempre
  * presenti (numero fisso 1–4), poi quelli che si stampano solo con un contenuto. `presente`
  * (scheda, dati) dice se il foglio ha contenuto; `icona`: immagine del tab della SD (img/pagine/).

@@ -10,7 +10,7 @@ import { stemma, iconaPagina } from './immagini.js';
 import { pallini } from './tooltip.js';
 import { crediti } from '../dotazioni.js';
 import { COLORI_MACROFAMIGLIE } from '../palette.js';
-import { normalizzaOpzioniStampa, fogliDaStampare, numeraPagine, testoPiede, iconaFoglio } from '../stampa.js';
+import { normalizzaOpzioniStampa, fogliDaStampare, numeraPagine, testoPiede, iconaFoglio, schemaQuadratini } from '../stampa.js';
 
 const FOGLIO_STILE = 'css/stampa.css';
 
@@ -119,6 +119,7 @@ export function renderStampa({ stampa, torna, opzioni = null, cambiaOpzioni = nu
         fuori.push(f.querySelector('.foglio-titolo').textContent);
       }
     }
+    aggiungiBlocchiInPiu(contenitore);
     numeraPiedi(contenitore, stampa.piede, stampa.fogli);
     if (fuori.length) avvisi.append(h('p', { class: 'motivo' }, `Non entra nella pagina: ${fuori.join(', ')}. Il carattere non si riduce: accorcia i testi nella scheda digitale.`));
   });
@@ -148,22 +149,39 @@ function box({ titolo, tinta = null, forte = false, riempitivo = false, classe =
 }
 
 /**
- * Quadratini da segnare a matita: file da 10 con uno stacco ogni 5 e il numero progressivo a
- * destra (10, 20, 30…). `piu` aggiunge una fila in più, vuota.
+ * Quadratini con un massimo, il solo componente della SS (docs/layout-ss.md, §3; schema in
+ * src/stampa.js → schemaQuadratini): righe da 10 con stacco dopo la quinta e cumulato a destra,
+ * blocchi da 5 righe; caselle oltre il massimo in grigio (.casella.oltre). `compatto`: righe fino
+ * al massimo (colpi, PI, Punti Eroe, Distintivi, riserve); `bloccoInPiu`: un blocco grigio in più
+ * aggiunto dopo l'impaginazione solo se entra (aggiungiBlocchiInPiu).
  */
-function quadratini(n, { piu = false, perFila = 10 } = {}) {
-  const fila = (da, quanti, inPiu) => h('div', { class: `fila-quadratini${inPiu ? ' in-piu' : ''}` },
-    Array.from({ length: quanti }, (_, i) => [i && i % 5 === 0 ? h('span', { class: 'stacco' }) : null, h('span', { class: 'casella' })]),
-    h('span', { class: 'progressivo' }, String(da + quanti)));
-  const file = [];
-  for (let da = 0; da < n; da += perFila) file.push(fila(da, Math.min(perFila, n - da), false));
-  if (piu) file.push(fila(n, perFila, true));
-  return h('div', { class: 'quadratini' }, file);
+function quadratini(massimo, { compatto = false, bloccoInPiu = false } = {}) {
+  const el = h('div', { class: `quadratini${compatto ? ' compatti' : ''}` }, schemaQuadratini(massimo, { compatto }).blocchi.map(bloccoQuadratini));
+  if (bloccoInPiu) el.dataset.bloccoInPiu = String(massimo);
+  return el;
 }
 
-/** Fila di quadratini senza numeri (colpi di un caricatore): stacco ogni 5. */
-const filaCaselle = (n) => h('span', { class: 'fila-quadratini' },
-  Array.from({ length: n }, (_, i) => [i && i % 5 === 0 ? h('span', { class: 'stacco' }) : null, h('span', { class: 'casella' })]));
+function bloccoQuadratini(b) {
+  const riga = (r) => h('div', { class: `fila-quadratini${r.caselle.some(Boolean) ? '' : ' oltre'}` },
+    r.caselle.map((disponibile, k) => [k && k % 5 === 0 ? h('span', { class: 'stacco' }) : null, h('span', { class: `casella${disponibile ? '' : ' oltre'}` })]),
+    h('span', { class: 'progressivo' }, String(r.cumulato)));
+  return h('div', { class: `blocco-quadratini${b.facoltativo ? ' facoltativo' : ''}` }, b.righe.map(riga));
+}
+
+/**
+ * Blocchi in più dei quadratini (PV, PM): dopo l'impaginazione se ne aggiunge uno, grigio, e si
+ * toglie se fa uscire il contenuto dal riquadro o dalla pagina.
+ */
+function aggiungiBlocchiInPiu(contenitore) {
+  for (const q of contenitore.querySelectorAll('.quadratini[data-blocco-in-piu]')) {
+    const b = schemaQuadratini(Number(q.dataset.bloccoInPiu), { bloccoInPiu: true }).blocchi.at(-1);
+    const el = bloccoQuadratini(b);
+    q.append(el);
+    const corpo = q.closest('.foglio-corpo');
+    const riquadro = q.closest('.riquadro-stampa');
+    if ((corpo && eccede(corpo)) || (riquadro && trabocca(riquadro.querySelector(':scope > .contenuto') ?? riquadro))) el.remove();
+  }
+}
 
 /** Righe guida a matita: lo sfondo del riempitivo. */
 const righeGuida = () => h('div', { class: 'righe-guida' });
@@ -203,9 +221,9 @@ function foglioIdentita(d) {
       h('div', { class: 'f1-risorse' },
         box({ titolo: 'Punti Eroe', tinta: 'pe' },
           h('p', {}, d.puntiEroe.valore === null ? 'Iniziali: da determinare' : `Iniziali ${d.puntiEroe.valore} · riserva massima ${d.puntiEroe.massimo}`),
-          quadratini(d.puntiEroe.massimo)),
+          quadratini(d.puntiEroe.massimo, { compatto: true })),
         // §1.8.3: 5 Distintivi = 1 Punto Eroe; al quinto annerito si segna il Punto Eroe e si cancellano
-        box({ titolo: 'Distintivi', tinta: 'pe', classe: 'f1-distintivi' }, filaCaselle(5)),
+        box({ titolo: 'Distintivi', tinta: 'pe', classe: 'f1-distintivi' }, quadratini(5, { compatto: true })),
         box({ titolo: 'Vantaggio dell’Addestramento' }, h('p', {}, h('strong', {}, `${d.vantaggio.nome}. `), d.vantaggio.testo)),
         d.annotazioni.length ? box({ titolo: 'Note' }, h('ul', {}, d.annotazioni.map((x) => h('li', {}, x)))) : null),
       h('div', { class: 'f1-sotto' },
@@ -273,7 +291,7 @@ function fileColpi(c, pi = []) {
   const etichetta = !c ? null : c.modo === 'inserimento' ? () => 'colpi' : c.modo === 'cella' ? (k) => `cella ${k}` : (k) => `car. ${k}`;
   return h('div', { class: 'file-colpi' },
     c ? Array.from({ length: c.file }, (_, k) => h('div', { class: 'caricatore' },
-      h('span', { class: 'etichetta-colpi' }, etichetta(k + 1)), filaCaselle(c.capacita))) : null,
+      h('span', { class: 'etichetta-colpi' }, etichetta(k + 1)), quadratini(c.capacita, { compatto: true }))) : null,
     pi.map(gruppoPI));
 }
 
@@ -282,7 +300,7 @@ function fileColpi(c, pi = []) {
  * l'etichetta dell'oggetto. A 0 PI l'oggetto è Rotto.
  */
 const gruppoPI = ({ etichetta, pi }) => h('div', { class: 'caricatore gruppo-pi' },
-  h('span', { class: 'etichetta-colpi' }, etichetta ? `PI ${etichetta}` : 'PI'), filaCaselle(pi));
+  h('span', { class: 'etichetta-colpi' }, etichetta ? `PI ${etichetta}` : 'PI'), quadratini(pi, { compatto: true }));
 
 /** Protezioni con la colonna PI e, sotto ogni riga, i quadratini dei PI (armatura, rinforzo, elmetto). */
 function tabellaProtezioni(d) {
@@ -443,7 +461,7 @@ function foglioCombattimento(d) {
             h('span', {}, v.etichetta), h('span', { class: 'valore' }, String(v.valore))))),
         d.arStampa ? h('p', { class: 'piccolo provenienza-ar' }, d.arStampa.provenienza) : null,
         h('p', { class: 'piccolo' }, 'attuali'),
-        quadratini(d.pv, { piu: true }),
+        quadratini(d.pv, { bloccoInPiu: true }),
         righeGuida())),
   ];
 }
@@ -494,7 +512,7 @@ function foglioMagia(d) {
       box({ titolo: 'Punti Magia', tinta: 'pm', forte: true },
         h('div', { class: 'massimo' }, h('span', {}, 'massimi'), h('span', { class: 'valore' }, String(d.pm ?? '—'))),
         h('p', { class: 'piccolo' }, 'attuali'),
-        d.pm ? quadratini(d.pm, { piu: true }) : null),
+        d.pm ? quadratini(d.pm, { bloccoInPiu: true }) : null),
       box({ titolo: 'Lancio' },
         h('dl', { class: 'voci-stampa' },
           voce('Potere per lanciare', h('strong', {}, `VA ${v.potere ?? '—'}`), d.lancio ? ` (armatura ${segno(d.lancio.penalita)}, §7.11.1)` : null),
@@ -510,7 +528,7 @@ function foglioMagia(d) {
       d.riserve?.length ? box({ titolo: 'Contenitori di Chroma (Magia sez. 6)', classe: 'f4-riserve' },
         d.riserve.map((r) => h('div', { class: 'riserva' },
           h('p', {}, h('strong', {}, r.nome), h('span', { class: 'sigla' }, ` · ${r.energia} · ${r.integrato ? 'attivazioni (A.18)' : r.regoleRimandate ? 'regole rimandate' : r.macrofamiglie.length >= 3 ? 'tutte le macrofamiglie' : r.macrofamiglie.join(', ') || '—'} · ${r.sintonizzato ? 'sintonizzato' : 'da sintonizzare'} (${r.costo})`)),
-          quadratini(r.capacita)))) : null),
+          quadratini(r.capacita, { compatto: true })))) : null),
     box({ titolo: `Incantesimi (${incantesimi.length})`, riempitivo: true, classe: 'f4-indice' },
       incantesimi.length ? tabellaIndice(incantesimi.map(rigaIndice)) : h('p', {}, 'Nessun incantesimo scelto.'),
       d.soloElenco && incantesimi.length ? notaSoloElenco() : null),

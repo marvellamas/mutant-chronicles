@@ -231,3 +231,33 @@ test('opzioni di stampa: predefinita «Solo elenco», valori sconosciuti ripulit
   assert.equal(fogliDaStampare(fogli, null).length, 4);
   assert.deepEqual(fogliDaStampare(fogli, { fogli: ['combattimento'] }).map((f) => f.id), ['combattimento']);
 });
+
+test('quadratini (docs/layout-ss.md, §3): righe da 10, blocchi da 5 righe, grigi oltre il massimo', async () => {
+  const { schemaQuadratini } = await import('../src/stampa.js');
+  const conta = (s) => s.blocchi.flatMap((b) => b.righe.flatMap((r) => r.caselle));
+  // massimo 17 (PV di Lucas): un blocco di 5 righe, 17 nere e 33 grigie; cumulato 10, 20… 50
+  const pv = schemaQuadratini(17);
+  assert.equal(pv.blocchi.length, 1);
+  assert.equal(pv.blocchi[0].righe.length, 5);
+  assert.deepEqual([conta(pv).filter(Boolean).length, conta(pv).filter((x) => !x).length], [17, 33]);
+  assert.deepEqual(pv.blocchi[0].righe.map((r) => r.cumulato), [10, 20, 30, 40, 50]);
+  assert.ok(pv.blocchi[0].righe.every((r) => r.caselle.length === 10));
+  // massimo 2, compatto (colpi di un caricatore da 2): una riga, 2 nere e 8 grigie
+  const due = schemaQuadratini(2, { compatto: true });
+  assert.equal(due.blocchi.length, 1);
+  assert.equal(due.blocchi[0].righe.length, 1);
+  assert.deepEqual([conta(due).filter(Boolean).length, conta(due).filter((x) => !x).length], [2, 8]);
+  // compatto: la prima riga intera che contiene il massimo (PI 6 → una riga; 30 colpi → tre righe)
+  assert.equal(schemaQuadratini(6, { compatto: true }).blocchi[0].righe.length, 1);
+  assert.equal(schemaQuadratini(30, { compatto: true }).blocchi[0].righe.length, 3);
+  // oltre 50: un secondo blocco; blocco in più facoltativo, tutto grigio, dopo quelli necessari
+  const cento = schemaQuadratini(73);
+  assert.deepEqual(cento.blocchi.map((b) => b.righe.length), [5, 5]);
+  assert.equal(conta(cento).filter(Boolean).length, 73);
+  const inPiu = schemaQuadratini(17, { bloccoInPiu: true });
+  assert.deepEqual(inPiu.blocchi.map((b) => b.facoltativo), [false, true]);
+  assert.ok(inPiu.blocchi[1].righe.every((r) => r.caselle.every((x) => !x)));
+  assert.equal(inPiu.blocchi[1].righe[0].cumulato, 60);
+  // senza massimo: una riga grigia (nessuna casella disponibile)
+  assert.deepEqual(conta(schemaQuadratini(0, { compatto: true })).filter(Boolean).length, 0);
+});

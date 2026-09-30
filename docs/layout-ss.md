@@ -309,3 +309,33 @@ Un pezzo per foglio, un commit per pezzo, come per il layout della SD. Ogni pezz
 7. **Sanitario** in Combattimento: riquadro compatto nella zona sinistra (o dove entra), un kit per riga con le applicazioni a quadratini; in Inventario resta la riga di possesso senza quadratini. *Diverso dalla proposta* (sezione dell'Inventario con i quadratini).
 
 In più, la regola dei quadratini con un massimo (sezione 3), da fare nel pezzo 0 e applicare subito dove i quadratini esistono già.
+
+## 10. Stato
+
+- [x] Piano e decisioni (sezione 9).
+- [x] **Pezzo 0: impianto** (branch `layout-ss`).
+  - Fogli nell'ordine di `FOGLI` in `src/stampa.js` (`ordinaFogli`); un foglio senza contenuto non si stampa. Poteri solo con la magia; Cibernetica e Veicoli finché `regole.json` → `tab_in_arrivo` li elenca.
+  - Il foglio Magia è diventato Poteri (id `poteri`, icona del tab, per ora quella della Magia). `preparaTab` e il tab Poteri della SD leggono l'id nuovo.
+  - Piè di pagina «foglio N · pagina P di T» (`numeraPagine`, `testoPiede`), «(segue)» nelle continuazioni. Il numero è la posizione fra i fogli del personaggio: finché il foglio Inventario non c'è (pezzo 1), Poteri è il foglio 4; dopo sarà il 5.
+  - Barra di stampa: «Foglio Poteri» con le stesse scelte; la preferenza resta `magia`, un vecchio `magia` fra i fogli scelti si legge `poteri`.
+  - Quadratini con il componente unico (sezione 3), applicato a PV e PM (con il blocco in più se entra), riserve di Chroma, colpi, PI, Punti Eroe, Distintivi.
+  - Corretto in passando: il piè di pagina dell'app (versione, dal cache-busting) usciva in stampa su una pagina bianca in più.
+  - `tools/collaudo_pdf.mjs`:
+    - personaggi di prova del §7;
+    - controllo della numerazione;
+    - si ferma se i personaggi non si caricano (server spento);
+    - chiude tutti i processi di Edge headless.
+  - PDF in `docs/esempi-stampa/`:
+    - `c_freelance_tecnico_l5.pdf`, 4 pagine: fogli 1, 2, 3 e 3 (segue);
+    - `b_fratellanza_arcanista_l12-layout-solo-elenco.pdf`, 5 pagine: fogli 1, 2, 3, 4 e 4 (segue);
+    - `b_fratellanza_arcanista_l12-layout-schede-complete.pdf`, 32 pagine;
+    - Lucas solo nel controllo di sbordo, 5 pagine: PV 17 nere, 33 grigie e il secondo blocco grigio.
+    - Nessun foglio sborda.
+  - I PDF `-layout` di prima restano come stato di partenza.
+  - Test: numerazione e ordine dei fogli, opzioni, `schemaQuadratini` (17 → 17 nere e 33 grigie in 5 righe; 2 compatto → 2 nere e 8 grigie in una riga).
+- [ ] Pezzo 1: Inventario.
+- [ ] Pezzo 2: Abilità.
+- [ ] Pezzo 3: Combattimento.
+- [ ] Pezzo 4: Poteri.
+- [ ] Pezzo 5: Artefatti.
+- [ ] Pezzo 6: verifica e PDF.
