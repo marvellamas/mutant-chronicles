@@ -1,7 +1,9 @@
 // Completamento dei Punti Abilità Liberi di un evento passato (regole aggiornate: Giocatore, Doc del
-// 27/09/2026, 10 punti invece di 5; per-davide A.52). Un evento alla volta, dal più vecchio: la
-// creazione o un livello già preso. Stessa tabella di «Sali di livello», con i limiti di Avanzamento
-// di quell'evento; nessun dado, nessun'altra scelta. Fino alla conferma i punti restano in una bozza.
+// 27/09/2026, 10 punti invece di 5, per-davide A.52; Doc del 29/09/2026, categorie di competenza e limiti
+// del VA personale, §2.13, §8.3). Un evento alla volta, dal più vecchio: la creazione o un livello già
+// preso. I punti che non aumentano più il VA escono dall'evento alla conferma e si riassegnano insieme
+// ai mancanti. Stessa tabella di «Sali di livello», con i limiti di quell'evento; nessun dado,
+// nessun'altra scelta. Fino alla conferma i punti restano in una bozza.
 // Controlli: statoCompletamento() e validaCompletamento() del motore (src/avanzamento.js).
 import { h } from './dom.js';
 import { statoCompletamento } from '../avanzamento.js';
@@ -14,6 +16,8 @@ import { barraPassi } from './navigazione.js';
  * Contesto: { dati, personaggio, bozza, titoloAvviso, aggiornaBozza(punti), conferma(), esci() }
  * Restituisce i nodi della pagina.
  */
+const elenco = (punti) => Object.entries(punti ?? {}).map(([n, v]) => `${n} ${v}`).join(', ');
+
 export function renderCompleta(ctx) {
   const { dati, personaggio, bozza } = ctx;
   const st = statoCompletamento(personaggio, bozza, dati);
@@ -42,11 +46,12 @@ export function renderCompleta(ctx) {
         h('p', { class: 'sopratitolo' }, `${ctx.titoloAvviso} · ${st.livello === 1 ? '§2.13' : '§8.3'}`),
         h('h1', { id: 'titolo-passo' }, `Punti Abilità ${dell}`)),
       barra('cima'),
-      h('p', { class: 'guida' }, `Le regole correnti prevedono ${st.previsti} Punti Abilità Liberi ${dell}: ne erano stati assegnati ${st.assegnati}. `
-        + `Assegna i ${st.mancanti} mancanti: si aggiungono ${st.livello === 1 ? 'alla creazione' : `${conOrdinale('al', st.livello)} livello`}, con l’Avanzamento massimo di allora (${st.limite}), `
-        + `compresi i +1 di Classe già applicati; l’Abilità deve avere VA almeno ${minimo} prima dei punti liberi. I punti di Classe e le altre scelte non cambiano.`),
+      h('p', { class: 'guida' }, `Le regole correnti prevedono ${st.previsti} Punti Abilità Liberi ${dell}: ne erano stati assegnati ${st.assegnati}`
+        + (st.riassegna ? `, e ${st.assegnati - st.attivi} non aumentano più il VA personale perché superano il limite della categoria di competenza (${elenco(st.inattivi)}; §8.3): escono dall’evento. ` : '. ')
+        + `Assegna ${st.mancanti} punti ${st.livello === 1 ? 'alla creazione' : `${conOrdinale('al', st.livello)} livello`}, con i limiti di allora (colonna «Lim»), `
+        + `compresi i +1 di Classe già applicati; ogni punto deve aumentare il VA personale e l’Abilità deve avere VA almeno ${minimo} prima dei punti liberi. I punti di Classe e le altre scelte non cambiano.`),
       contatore(st.rimasti, st.mancanti, 'Punti Abilità'),
-      tabellaPuntiAbilita({ dati, abilita: st.abilita, limite: st.limite, rimasti: st.rimasti, imposta }),
+      tabellaPuntiAbilita({ dati, abilita: st.abilita, rimasti: st.rimasti, imposta }),
       bloccanti.length ? h('div', { class: 'riquadro attenzione' },
         h('ul', {}, bloccanti.map((e) => h('li', { class: 'motivo' }, e.problema)))) : null,
       barra('fondo'))),

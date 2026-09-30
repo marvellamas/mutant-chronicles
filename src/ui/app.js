@@ -523,13 +523,14 @@ function renderCompletaPagina() {
     conferma() {
       const ev = puntiDaCompletare(personaggio(), dati)[0];
       if (!ev || validaCompletamento(personaggio(), ev.livello, bozza.punti, dati).length) return renderCompletaPagina();
-      const p = applicaCompletamento(personaggio(), ev.livello, bozza.punti);
+      // i punti inattivi dell'evento escono, quelli della bozza entrano (§8.3)
+      const p = applicaCompletamento(personaggio(), ev.livello, bozza.punti, ev.inattivi);
       stato.scelte = p.creazione;
       stato.livelli = p.livelli;
       stato.completa = null;
       persisti();
       const restano = puntiDaCompletare(personaggio(), dati).reduce((s, c) => s + c.mancanti, 0);
-      stato.messaggioScheda = { tipo: 'ok', testo: `Punti Abilità ${ev.livello === 1 ? 'della creazione' : `${conOrdinale('del', ev.livello)} livello`} assegnati.${restano ? ` Ne restano ${restano} da assegnare.` : ''}` };
+      stato.messaggioScheda = { tipo: 'ok', testo: `Punti Abilità ${ev.livello === 1 ? 'della creazione' : `${conOrdinale('del', ev.livello)} livello`} ${ev.riassegna ? 'riassegnati' : 'assegnati'}.${restano ? ` Ne restano ${restano} da assegnare.` : ''}` };
       if (!stato.salvataggioOk) alert(`Punti assegnati, ma non salvati nel browser. ${testoSalvataggioFallito()}`);
       vai(`#/p/${stato.id}`);
     },

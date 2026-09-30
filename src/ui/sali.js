@@ -9,7 +9,7 @@ import { passiDelLivello, descriviVoce } from '../avanzamento.js';
 import { info, etichettaMacro, pallini } from './tooltip.js';
 import { classeMacrofamiglia } from '../palette.js';
 import { componenteTiro } from './tiro.js';
-import { dettagli, bottoneScelta, contatore, stepper, sceltaParametroTalento } from './passi.js';
+import { dettagli, bottoneScelta, contatore, stepper, sceltaParametroTalento, competenzeClasse } from './passi.js';
 import { conOrdinale } from '../lingua.js';
 import { barraPassi } from './navigazione.js';
 
@@ -255,7 +255,11 @@ function passoGrado(c) {
         h('ul', { class: 'elenco-talenti' }, nuove.filter((x) => x.addestramento === a.nome).map(riga))))),
     scelta ? h('section', { class: 'riquadro ok' },
       h('h3', {}, `${scelta.nome} — Grado ${GRADI_ROMANI[scelta.prossimoGrado]}`),
-      h('p', {}, h('strong', {}, 'Abilità di Classe (+1 entro il limite): '), def.abilita.join(', ')),
+      // §3.1 e §8.3: il +1 si registra sempre; oltre il limite conta quando il limite sale
+      h('p', {}, h('strong', {}, 'Abilità di Classe (+1, registrato anche oltre il limite): '), def.abilita.join(', ')),
+      // §8.7: una Classe nuova alza i limiti con le sue categorie, non cambia le basi (§2.3)
+      dettagli(c, `comp-sali:${def.nome}`, scelta.gradoAttuale ? 'Competenze della Classe (limiti del VA personale)' : 'Competenze della nuova Classe: alzano i limiti del VA personale, non le basi (§8.7)',
+        competenzeClasse(c, def, { primaClasse: false })),
       h('h4', {}, `Punti Vita: ${dadi(def.pv_per_grado)}`),
       componenteTiro({ id: 'tiro-pv', spec: scelta.tiroPV, tiro: voce.tiroPV ?? null, memoria: ui, imposta: (t) => c.aggiornaVoce({ tiroPV: t ?? undefined }) }),
       scelta.tiroPM ? h('h4', {}, `Punti Magia: ${dadi(def.pm_per_grado)}`) : h('p', {}, `Punti Magia: +${def.pm_per_grado.fisso}`),
@@ -378,51 +382,65 @@ function passoAbilita(c, passo) {
   const pa = voce.puntiAbilita ?? {};
   const k = passo.punti;
   const rimasti = k - somma(pa);
-  // Abilità dopo i punti fissi della Classe di questo livello (si assegnano prima dei liberi)
+  // Abilità dopo i +1 di Classe e i limiti del Grado di questo livello (si applicano prima dei liberi)
   const base = calcolaScheda(applicaLivello(personaggio, { ...voce, puntiAbilita: undefined }), dati).abilita;
-  const limite = prossimo.avanzamentoMassimo;
   const minimo = dati.regole.creazione.va_minimo_per_punti_liberi;
   const imposta = (n, v) => {
     const nuovo = { ...pa, [n]: v };
     if (v <= 0) delete nuovo[n];
     c.aggiornaVoce({ puntiAbilita: nuovo });
   };
-  // stesse regole di validaLivello: limite del livello e VA ≥ 1 prima dei punti liberi
+  // stesse regole di validaLivello: ogni punto aumenta il VA personale (§8.3) e VA ≥ 1 prima dei liberi
   const abilita = base.map((a) => {
     const punti = pa[a.nome] ?? 0;
-    const avanz = a.avanzamento + punti;
     const motivoPiu = rimasti <= 0 ? 'Nessun Punto Abilità Libero rimasto da spendere.'
-      : avanz + 1 > limite ? `Avanzamento ${avanz + 1}: ${conOrdinale('al', prossimo.livello)} livello il massimo è ${limite} (§8.3).`
+      : a.grezzo + punti + 1 > a.limite ? motivoAlLimite(a, punti, dati)
         : a.totale < minimo ? `VA ${a.totale} prima dei punti liberi: serve almeno ${minimo} (§2.13).` : null;
     return { ...a, punti, motivoPiu };
   });
   return [
-    h('p', { class: 'guida' }, `Distribuisci ${k} Punti Abilità Liberi. ${conOrdinale('Al', prossimo.livello)} livello l’Avanzamento massimo è ${limite}, compresi i +1 di Classe già applicati; l’Abilità deve avere VA almeno ${minimo} prima dei punti liberi.`),
+    h('p', { class: 'guida' }, `Distribuisci ${k} Punti Abilità Liberi. Ogni punto deve aumentare il VA personale: ${conOrdinale('al', prossimo.livello)} livello il VA non supera il limite della categoria di competenza (colonna «Lim», §8.3; con più Classi la categoria migliore, §8.7), compresi i +1 di Classe già applicati. L’Abilità deve avere VA almeno ${minimo} prima dei punti liberi.`),
     contatore(rimasti, k, 'Punti Abilità Liberi'),
-    tabellaPuntiAbilita({ dati, abilita, limite, rimasti, imposta }),
+    tabellaPuntiAbilita({ dati, abilita, rimasti, imposta }),
   ];
+}
+
+/** §8.3: perché un punto in più non si può spendere su un'Abilità già al limite. */
+export function motivoAlLimite(a, punti, dati) {
+  const cat = dati.regole.competenze.categorie[a.limiteCategoria]?.nome ?? a.limiteCategoria;
+  const va = Math.min(a.grezzo + punti, a.limite);
+  return `VA ${va} già al limite ${a.limite} (${cat}${a.limiteDa?.length ? `, ${a.limiteDa.join(' e ')}` : ''}, §8.3): un punto in più non aumenta il VA personale.`;
 }
 
 /**
  * Tabella di assegnazione dei Punti Abilità Liberi, comune a «Sali di livello» e al completamento
  * dei punti di un evento passato (src/ui/completa.js).
- * abilita: [{ nome, categoria, caratteristica, mod, base, corporazione, avanzamento, daClasse, totale, punti, motivoPiu }]
- * con avanzamento e totale prima dei punti della bozza.
+ * abilita: [{ nome, categoria, caratteristica, mod, base, competenza, corporazione, avanzamento, daClasse,
+ *   grezzo, limite, limiteCategoria, totale, punti, motivoPiu, inattivi? }]
+ * con avanzamento, grezzo e totale prima dei punti della bozza; inattivi: punti dell'evento che non
+ * aumentano più il VA (completamento, §8.3), tolti dall'evento alla conferma.
  */
-export function tabellaPuntiAbilita({ dati, abilita, limite, rimasti, imposta }) {
+export function tabellaPuntiAbilita({ dati, abilita, rimasti, imposta }) {
+  const C = dati.regole.competenze.categorie;
   const righe = (cat) => abilita.filter((a) => a.categoria === cat).map((a) => {
     const { punti, motivoPiu } = a;
     const avanz = a.avanzamento + punti;
-    const inRiga = motivoPiu && rimasti > 0 ? motivoPiu : null;
+    // §1.2.1: VA personale = min(grezzo, limite)
+    const va = a.limite === null || a.limite === undefined ? a.grezzo + punti : Math.min(a.grezzo + punti, a.limite);
+    const inattivi = a.inattivi ? `${a.inattivi === 1 ? '1 punto' : `${a.inattivi} punti`} di questo evento non ${a.inattivi === 1 ? 'aumentava' : 'aumentavano'} il VA: ${a.inattivi === 1 ? 'va riassegnato' : 'vanno riassegnati'}.` : null;
+    const inRiga = [inattivi, motivoPiu && rimasti > 0 ? motivoPiu : null].filter(Boolean).join(' ') || null;
+    const comp = a.competenza ? C[a.competenza] : null;
     return h('tr', { class: a.daClasse ? 'di-classe' : null },
       h('th', { scope: 'row' }, info('abilita', a.nome), h('span', { class: 'sigla' }, ` ${a.caratteristica}`),
-        h('small', { class: 'formula' }, `${segno(a.mod)} Mod + ${a.base} Base + ${a.corporazione} Corp + ${avanz} Avanz`),
+        comp ? h('span', { class: 'etichetta', title: `${comp.nome}: base ${comp.base} (§2.3)` }, a.competenza) : null,
+        h('small', { class: 'formula' }, `${segno(a.mod)} Mod + ${a.base} Base + ${a.corporazione} Corp + ${avanz} Avanz, limite ${a.limite ?? '—'}`),
         inRiga ? h('small', { class: 'motivo' }, inRiga) : null),
       h('td', { class: 'dettaglio' }, segno(a.mod)),
       h('td', { class: 'dettaglio' }, String(a.base)),
       h('td', { class: 'dettaglio' }, String(a.corporazione)),
-      h('td', { class: 'dettaglio' }, `${avanz}/${limite}`),
-      h('td', { class: 'forte' }, String(a.totale + punti)),
+      h('td', { class: 'dettaglio' }, String(avanz)),
+      h('td', { class: 'forte', title: a.grezzo + punti > va ? `VA grezzo ${a.grezzo + punti}, oltre il limite (§8.3)` : null }, String(va)),
+      h('td', { class: 'dettaglio', title: a.limiteCategoria ? `${C[a.limiteCategoria]?.nome ?? a.limiteCategoria}${a.limiteDa?.length ? ` (${a.limiteDa.join(', ')})` : ''}, §8.3` : null }, String(a.limite ?? '—')),
       h('td', {}, stepper(punti, {
         etichetta: a.nome, motivoPiu,
         motivoMeno: punti === 0 ? 'Nessun punto da togliere.' : null,
@@ -431,9 +449,9 @@ export function tabellaPuntiAbilita({ dati, abilita, limite, rimasti, imposta })
   });
   return h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella abilita' },
     h('thead', {}, h('tr', {}, h('th', {}, 'Abilità'),
-      h('th', { class: 'dettaglio' }, 'Mod'), h('th', { class: 'dettaglio' }, 'Base'), h('th', { class: 'dettaglio' }, 'Corp'),
-      h('th', { class: 'dettaglio' }, 'Avanz'), h('th', {}, 'VA'), h('th', {}, 'Punti'))),
-    dati.abilita.categorie.map((cat) => h('tbody', {}, h('tr', { class: 'categoria' }, h('th', { colspan: 7 }, cat)), righe(cat)))));
+      h('th', { class: 'dettaglio' }, 'Mod'), h('th', { class: 'dettaglio', title: 'Base della categoria di competenza nella prima Classe (§2.3)' }, 'Base'), h('th', { class: 'dettaglio' }, 'Corp'),
+      h('th', { class: 'dettaglio' }, 'Avanz'), h('th', {}, 'VA'), h('th', { class: 'dettaglio', title: 'Limite del VA personale (§8.3, §8.7)' }, 'Lim'), h('th', {}, 'Punti'))),
+    dati.abilita.categorie.map((cat) => h('tbody', {}, h('tr', { class: 'categoria' }, h('th', { colspan: 8 }, cat)), righe(cat)))));
 }
 
 // ---------------------------------------------------------------------------
