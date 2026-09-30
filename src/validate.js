@@ -370,6 +370,13 @@ function validaAR(dati, err) {
 }
 
 function validaRegole(r, err, dati = {}) {
+  // tab Poteri (docs/layout-sd.md, pezzo 4): testo per chi non ha poteri e sezioni in arrivo
+  if (r?.poteri !== undefined) {
+    if (!isTesto(r.poteri?.nessuno)) err('regole', 'poteri.nessuno', 'testo mancante (Manuale della Magia, sez. 1)');
+    (Array.isArray(r.poteri?.in_arrivo) ? r.poteri.in_arrivo : []).forEach((x, i) => {
+      if (!isTesto(x?.nome) || !isTesto(x?.nota)) err('regole', `poteri.in_arrivo[${i}]`, 'servono nome e nota');
+    });
+  }
   if (!isOggetto(r)) return;
   const F = 'regole';
   const interi = [

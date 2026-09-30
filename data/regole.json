@@ -160,6 +160,13 @@
       "_nota": "L’app non traccia l’esposizione (docs/backlog.md): mostra le fasce e l’avviso. Le regole per impiegare l’Energia Oscura restano da sviluppare."
     }
   },
+  "poteri": {
+    "nessuno": "I poteri magici si acquisiscono con l’Addestramento Taumaturgo o, per gli altri personaggi, con il Talento Libero Usufruitore di Magia (Manuale della Magia, sez. 1).",
+    "in_arrivo": [
+      { "nome": "Poteri Sciamanici (Rune e Tatuaggi)", "nota": "In attesa del manuale: Davide li sta scrivendo (proposta «Modifiche Layout APP»)." }
+    ],
+    "_nota": "Tab Poteri della scheda digitale (docs/layout-sd.md, pezzo 4): testo per chi non ha poteri, dal Manuale della Magia sez. 1 («Conoscenza e livello massimo», «Usufruitore di Magia»), e le sezioni future, chiuse e vuote finché il manuale non c’è."
+  },
   "regole_aggiornate": {
     "punti_abilita": "Regole aggiornate (Giocatore del 27/09 e del 29/09)",
     "_nota": "Titolo dell'avviso in cima alla SD quando un evento già registrato (creazione o livello) ha meno Punti Abilità Liberi di quelli previsti dalle regole correnti, o più, o punti che non aumentano più il VA personale: Giocatore, Doc del 27/09/2026 (10 punti invece di 5, per-davide A.52) e Doc del 29/09/2026 (categorie di competenza e limiti del VA personale, §2.13, §8.3). Se le regole cambiano ancora, si aggiorna qui la data."

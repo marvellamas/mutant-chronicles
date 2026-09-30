@@ -15,7 +15,7 @@ import { descriviFerite } from '../sessione.js';
 import { statoIntegrita } from '../protezione.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
 import { testoDanno } from '../stampa.js';
-import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto, catalogo, risolvi } from '../equipaggiamento.js';
+import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto, catalogo, risolvi, infoArtefattoVoce } from '../equipaggiamento.js';
 import { dotazioneApplicata, crediti } from '../dotazioni.js';
 import { provenienzaCarico } from '../carico.js';
 import { statoRicarica, disponibili } from '../ricarica.js';
@@ -124,7 +124,7 @@ export function renderTab(ctx) {
   const contenuti = {
     identita: tabIdentita, abilita: tabAbilita, combattimento: tabCombattimento, calendario: tabCalendario,
     // Poteri: per ora la tab Magia com'è; senza accesso alla magia «Nessun potere» (docs/layout-sd.md)
-    poteri: (c, d) => (d ? tabMagia(c, d) : tabVuoto('Nessun potere.', 'Tecniche Interiori e Poteri Sciamanici arriveranno qui.')),
+    poteri: tabPoteri,
     artefatti: () => tabVuoto('In lavorazione.', 'Gli Artefatti Mistici posseduti, con PI, Sintonizzazione e riserve (docs/layout-sd.md, pezzo 4).'),
     cibernetica: () => tabVuoto('In lavorazione.'),
     inventario: (c) => tabInventario(c),
@@ -1494,6 +1494,46 @@ function etichettaModalita(ctx, sigla, nomeCatalogo) {
 
 // ---------------------------------------------------------------------------
 // Magia
+
+/**
+ * Tab Poteri (docs/layout-sd.md, pezzo 4), per tutti i personaggi: la Magia com'è (PM, contenitori,
+ * valori di lancio, incantesimi, «Lancia!»); senza accesso alla magia un riquadro con la riga del
+ * manuale (regole.json → poteri.nessuno). Poi gli Artefatti con poteri, in sola lettura, e le sezioni
+ * future chiuse (regole.json → poteri.in_arrivo).
+ */
+function tabPoteri(ctx, d) {
+  const p = ctx.dati.regole.poteri ?? {};
+  return [
+    ...(d ? tabMagia(ctx, d) : [h('section', { class: 'riquadro nessun-potere' }, h('h2', {}, 'Nessun potere'), p.nessuno ? h('p', { class: 'nota' }, p.nessuno) : null)]),
+    sezioneDaArtefatti(ctx),
+    ...(p.in_arrivo ?? []).map((x) => h('details', { class: 'sezione-tab in-arrivo' },
+      h('summary', {}, h('h2', {}, x.nome)), h('p', { class: 'nota' }, x.nota))),
+  ];
+}
+
+/**
+ * «Da artefatti» (Poteri): gli Artefatti con un potere, cioè un'attivazione (§7.1.4) o una riserva
+ * di Chroma integrata (§7.5.1). Sola lettura: sintonizzazione e riserve si gestiscono nella tab
+ * Artefatti. Nulla se il personaggio non ne ha.
+ */
+function sezioneDaArtefatti(ctx) {
+  const st = ctx.tab.scheda.equipaggiamento?.sintonizzazione;
+  if (!st) return null;
+  const cat = catalogo(ctx.dati);
+  const perUid = new Map((ctx.scelte.equipaggiamento ?? []).map((v) => [v.uid, risolvi(v, cat)]));
+  const conPotere = st.artefatti.map((x) => ({ x, r: perUid.get(x.uid) })).filter(({ r }) => r?.def?.attivazione || infoArtefattoVoce(r, ctx.dati)?.contenitore?.integrato);
+  if (!conPotere.length) return null;
+  return sezione('Da artefatti',
+    h('ul', { class: 'elenco-da-artefatti' }, conPotere.map(({ x, r }) => {
+      const at = r.def?.attivazione;
+      const ris = infoArtefattoVoce(r, ctx.dati)?.contenitore;
+      return h('li', {},
+        h('strong', {}, x.nome), h('small', { class: 'sigla' }, ` · ${x.sintonizzato ? 'sintonizzato' : 'non sintonizzato'}${r.deposito ? ' · nel deposito comune' : ''}`),
+        at ? h('p', { class: 'nota' }, `Attivazione: +${at.danno_extra} ${at.natura}${at.anche ? ` e ${at.anche}` : ''} al danno del colpo (§7.1.4)${at.sintonizzazione ? `, Sintonizzazione ${at.sintonizzazione}` : ''}.`) : null,
+        ris ? h('p', { class: 'nota' }, `Riserva integrata di Chroma ${ris.energia}, ${ris.capacita_pm} PM (§7.5.1).`) : null);
+    })),
+    h('p', { class: 'nota' }, 'Sola lettura: sintonizzazione e riserve si gestiscono nella tab Artefatti.'));
+}
 
 function tabMagia(ctx, d) {
   const s = ctx.sessione;

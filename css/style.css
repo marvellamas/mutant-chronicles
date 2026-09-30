@@ -1460,3 +1460,12 @@ body.con-sfondo::before {
   .combattimento-layout { grid-template-columns: minmax(0, 1fr); }
   .colonna-stati { position: static; }
 }
+
+/* Poteri (docs/layout-sd.md, pezzo 4): senza magia, sezioni in arrivo, Da artefatti */
+.nessun-potere { margin: 0.75rem 0; }
+.nessun-potere h2 { margin: 0 0 0.25rem; font-size: 1.1rem; }
+.in-arrivo > summary { color: var(--tenue); }
+.in-arrivo > summary h2 { display: inline; font-size: 1rem; }
+.elenco-da-artefatti { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.4rem; }
+.elenco-da-artefatti li { border: 1px solid var(--bordo); border-radius: var(--raggio); padding: 0.4rem 0.6rem; }
+.elenco-da-artefatti p { margin: 0.15rem 0 0; }
