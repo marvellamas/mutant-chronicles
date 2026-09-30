@@ -21,7 +21,7 @@ test('Talenti con effetti sull’attacco a distanza: Liberi e di Classe', () => 
   const liberi = dati.talenti_liberi.talenti.filter((t) => t.effetti?.attacco_distanza).map((t) => t.id);
   assert.equal(liberi.length, 16);
   const classe = dati.classi.classi.flatMap((c) => [...c.talenti_fissi, ...c.talenti_a_scelta].filter((t) => t.effetti?.attacco_distanza).map((t) => `${c.nome}: ${t.nome}`));
-  assert.equal(classe.length, 10);
+  assert.equal(classe.length, 12); // con Bersaglio Designato e Reazione Operativa (censimento dei Talenti)
 });
 
 test('validatore: effetto sconosciuto e sigla inesistente sono errori leggibili', () => {

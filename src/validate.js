@@ -1539,7 +1539,12 @@ const ATTACCHI_EFFETTO = ['tutti', 'ravvicinati', 'distanza'];
 // Talenti (docs/censimento-talenti.md): in più il tipo «parata», le Salvezze anche generali o
 // situazionali (Scudo Spirituale), «resistenza», il danno per le armi Artefatto e la scelta del
 // giocatore («{parametro}», «{annotazione}»)
-const TIPI_EFFETTO_TALENTO = { ...TIPI_EFFETTO, salvezza: null, parata: 'generale', danno: null, dado_danno: null, cura: null, massimizza: null };
+const TIPI_EFFETTO_TALENTO = {
+  ...TIPI_EFFETTO, salvezza: null, parata: 'generale', danno: null, dado_danno: null, cura: null, massimizza: null,
+  // riduzione della penalità al VA di uno Stato (Combattere alla Cieca, Sangue Freddo); riduzione della
+  // penalità MOV di armatura e scudo (Assalto Armato)
+  riduzione_stato: null, movimento_armatura: 'generale',
+};
 // Talenti di lancio (src/lancio.js): a quali Incantesimi valgono
 const INCANTESIMI_EFFETTO = ['offensivi', 'area', 'cura', 'cura_ferite_contatto', 'danno_o_cura'];
 function validaEffettiOggetto(effetti, F, K, nomiAbilita, err, ctx = {}) {
@@ -1570,6 +1575,10 @@ function validaEffettiOggetto(effetti, F, K, nomiAbilita, err, ctx = {}) {
     if (tipo === 'salvezza' && e.ambito !== 'uso_specifico' && e.salvezza === null) err(F, `${KE}.salvezza`, 'una Salvezza generale o situazionale deve dire quale Prova Salvezza');
     if (e.resistenza !== undefined && !(ctx.talento && tipo === 'salvezza' && e.resistenza === true)) err(F, `${KE}.resistenza`, 'solo true, per le Resistenze specifiche dei Talenti (tipo "salvezza")');
     if (e.armi !== undefined && !(ctx.talento && tipo === 'danno' && e.armi === 'artefatto')) err(F, `${KE}.armi`, 'solo "artefatto", per il danno dei Talenti');
+    if (tipo === 'riduzione_stato' && !(ctx.stati ?? new Set()).has(e.stato)) err(F, `${KE}.stato`, `"${e.stato}" non è uno Stato di regole.json → stati.elenco`);
+    if (tipo === 'riduzione_stato' && e.prove !== undefined && !(ctx.gruppiProve ?? new Set()).has(e.prove)) err(F, `${KE}.prove`, `"${e.prove}" non è un gruppo di regole.json → categorie_prove`);
+    if (tipo === 'riduzione_stato' && e.ambito === 'uso_specifico') err(F, `${KE}.ambito`, 'la riduzione di uno Stato è generale o situazionale');
+    if (['riduzione_stato', 'movimento_armatura'].includes(tipo) && !(e.valore > 0)) err(F, `${KE}.valore`, 'la riduzione è un intero positivo');
     if (tipo === 'parata' && (e.con !== 'scudo' || !['distanza', 'ravvicinata'].includes(e.contro))) err(F, KE, 'parata: con "scudo", contro "distanza" o "ravvicinata"');
     const sigla = (c) => (ctx.sigle ?? new Set()).has(c) || (ctx.talento && c === '{parametro}');
     if (tipo === 'caratteristica' && (!Array.isArray(e.caratteristiche) || !e.caratteristiche.length || e.caratteristiche.some((c) => !sigla(c)))) err(F, `${KE}.caratteristiche`, 'sigle di Caratteristiche attese');
@@ -1592,6 +1601,8 @@ const ctxEffetti = (dati) => ({
   classi: new Set((dati.classi?.classi ?? []).map((c) => c.nome)),
   salvezze: new Set((dati.caratteristiche?.salvezze ?? []).map((s) => s.id)),
   sigle: new Set((dati.caratteristiche?.caratteristiche ?? []).map((c) => c.sigla)),
+  stati: new Set((dati.regole?.stati?.elenco ?? []).map((s) => s.id)),
+  gruppiProve: new Set(Object.keys(dati.regole?.categorie_prove ?? {}).filter((k) => !k.startsWith('_'))),
 });
 
 // Ricarica delle armi a distanza (munizioni.json → ricarica, src/ricarica.js; Armamenti §7.20.2)
@@ -1616,7 +1627,8 @@ function validaRicarica(dati, err) {
 
 // Attacco a distanza (regole.json → attacco_distanza, src/attacco.js; Giocatore §5.2, §5.8, §5.10, §5.11)
 const EFFETTI_ATTACCO = ['modalita', 'mirato', 'impegnato', 'ravvicinato', 'bruciapelo', 'distanza', 'azioni_distanza', 'copertura_propria',
-  'movimento_proprio', 'imbracciatura', 'promemoria', 'mira_selettiva', 'analisi_rapida', 'postura_assedio', 'silenzioso'];
+  'movimento_proprio', 'imbracciatura', 'promemoria', 'mira_selettiva', 'analisi_rapida', 'postura_assedio', 'silenzioso',
+  'primo_attacco', 'mirato_dopo_armatura', 'preparazione', 'nascosto'];
 function validaAttaccoDistanza(dati, err) {
   const F = 'regole';
   const a = dati.regole.attacco_distanza;

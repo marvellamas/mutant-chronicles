@@ -121,7 +121,12 @@
         {
           "specializzazione": "Sicurezza",
           "nome": "Reazione Operativa",
-          "testo": "Una volta per combattimento, quando un nemico visibile abbandona volontariamente una Copertura, anche per esporsi e attaccare, l’Agente può effettuare immediatamente un Tiro Singolo con un’arma pronta. Spende le Azioni Principali richieste e già disponibili, comprese quelle aggiuntive dovute a distanza e mirino. Il bersaglio non beneficia della Copertura appena abbandonata; gli altri modificatori si applicano normalmente. Non occorre preparare l’azione."
+          "testo": "Una volta per combattimento, quando un nemico visibile abbandona volontariamente una Copertura, anche per esporsi e attaccare, l’Agente può effettuare immediatamente un Tiro Singolo con un’arma pronta. Spende le Azioni Principali richieste e già disponibili, comprese quelle aggiuntive dovute a distanza e mirino. Il bersaglio non beneficia della Copertura appena abbandonata; gli altri modificatori si applicano normalmente. Non occorre preparare l’azione.",
+          "effetti": {
+            "attacco_distanza": {
+              "promemoria": "sempre"
+            }
+          }
         },
         {
           "specializzazione": "Sicurezza",
@@ -288,7 +293,19 @@
         {
           "specializzazione": "Occulto",
           "nome": "Sangue Freddo",
-          "testo": "Una volta al giorno, quando subisce una penalità al VA causata dalla paura o da un altro effetto mentale, può ridurla di 2, fino ad annullarla, per tutta la durata dell’effetto e senza spendere Azioni. Restano le altre restrizioni dell’effetto: per esempio, Terrorizzato passa da −4 a −2 VA, ma conserva i vincoli di comportamento. Il Talento non annulla la Corruzione Oscura."
+          "testo": "Una volta al giorno, quando subisce una penalità al VA causata dalla paura o da un altro effetto mentale, può ridurla di 2, fino ad annullarla, per tutta la durata dell’effetto e senza spendere Azioni. Restano le altre restrizioni dell’effetto: per esempio, Terrorizzato passa da −4 a −2 VA, ma conserva i vincoli di comportamento. Il Talento non annulla la Corruzione Oscura.",
+          "effetti": {
+            "valori": [
+              {
+                "tipo": "riduzione_stato",
+                "ambito": "situazionale",
+                "stato": "terrorizzato",
+                "valore": 2,
+                "condizione": "Una volta al giorno, quando subisce una penalità al VA causata dalla paura o da un altro effetto mentale, può ridurla di 2, fino ad annullarla, per tutta la durata dell’effetto e senza spendere Azioni.",
+                "fonte": "Giocatore, Cacciatore (§3.4; Talenti §3.5.2)"
+              }
+            ]
+          }
         },
         {
           "specializzazione": "Occulto",
@@ -786,7 +803,19 @@
         {
           "specializzazione": "Cecchino",
           "nome": "Bersaglio Designato",
-          "testo": "Ogni Azione Principale di preparazione prima del tiro concede +1 danno dopo l’Armatura, se almeno 1 danno l’ha superata, fino a +2. Solo Tiro Singolo o Raffica Breve."
+          "testo": "Ogni Azione Principale di preparazione prima del tiro concede +1 danno dopo l’Armatura, se almeno 1 danno l’ha superata, fino a +2. Solo Tiro Singolo o Raffica Breve.",
+          "effetti": {
+            "attacco_distanza": {
+              "preparazione": {
+                "dopo_armatura_per_azione": 1,
+                "massimo": 2,
+                "modalita": [
+                  "S",
+                  "RB"
+                ]
+              }
+            }
+          }
         },
         {
           "specializzazione": "Comune",
@@ -874,7 +903,18 @@
         {
           "grado": 3,
           "nome": "Assalto Armato",
-          "testo": "Riduce di 2 Q complessivi, fino a un minimo di 0, la penalità al Movimento prodotta dall’armatura indossata e dallo scudo impugnato. Si applicano prima le proprietà che riducono le penalità dei singoli oggetti, poi il Talento alla penalità residua complessiva. Armatura media e scudo enorme passano da −2 Q a 0; armatura pesante e scudo enorme da −3 Q a −1 Q (Manuale degli Armamenti, §§7.4 e 7.11.1).\nIl beneficio non riduce le penalità delle armi, del Sovraccarico, degli Stati o del terreno e non modifica le penalità al VA, comprese quelle di Corsa e Scatto."
+          "testo": "Riduce di 2 Q complessivi, fino a un minimo di 0, la penalità al Movimento prodotta dall’armatura indossata e dallo scudo impugnato. Si applicano prima le proprietà che riducono le penalità dei singoli oggetti, poi il Talento alla penalità residua complessiva. Armatura media e scudo enorme passano da −2 Q a 0; armatura pesante e scudo enorme da −3 Q a −1 Q (Manuale degli Armamenti, §§7.4 e 7.11.1).\nIl beneficio non riduce le penalità delle armi, del Sovraccarico, degli Stati o del terreno e non modifica le penalità al VA, comprese quelle di Corsa e Scatto.",
+          "effetti": {
+            "valori": [
+              {
+                "tipo": "movimento_armatura",
+                "ambito": "generale",
+                "valore": 2,
+                "condizione": "Riduce di 2 Q complessivi, fino a un minimo di 0, la penalità al Movimento prodotta dall’armatura indossata e dallo scudo impugnato.",
+                "fonte": "Giocatore, Assaltatore (§3.4; Talenti §3.5.4)"
+              }
+            ]
+          }
         },
         {
           "grado": 5,
@@ -1021,7 +1061,10 @@
           "testo": "Ottiene sempre +2 Iniziativa. Inoltre, in ogni combattimento ottiene +2 VA al primo attacco che esegue, se è un attacco ravvicinato oppure un attacco a distanza entro 10 Q. Il bonus si applica a una sola Prova per colpire, indipendentemente dal Round in cui attacca e dall’ordine delle Iniziative degli avversari.",
           "effetti": {
             "attacco_distanza": {
-              "promemoria": "entro_10"
+              "primo_attacco": {
+                "va": 2,
+                "distanza_max_q": 10
+              }
             },
             "attacco_ravvicinato": {
               "primo_attacco": {
@@ -1077,7 +1120,10 @@
           "testo": "Una volta per Round, quando colpisce con un Colpo Mirato o un Tiro Mirato un bersaglio entro 10 Q, infligge +2 danni ai PV dopo l’applicazione dell’Armatura, soltanto se almeno 1 danno ha superato la protezione. Il bonus si applica solo alla prima istanza di danno e non viene moltiplicato dal Successo Magistrale.\nEsempio: 8 danni contro AR 5 lasciano passare 3 danni; Punto Vitale porta il totale a 5. Se l’Armatura assorbe tutto il danno, il Talento non aggiunge danni.",
           "effetti": {
             "attacco_distanza": {
-              "promemoria": "mirato"
+              "mirato_dopo_armatura": {
+                "valore": 2,
+                "distanza_max_q": 10
+              }
             },
             "attacco_ravvicinato": {
               "manovra": {
@@ -1324,6 +1370,12 @@
               "padronanza_disciplina": {
                 "potenza": {
                   "annulla_dopo_attacco": true
+                },
+                "guardia": {
+                  "anche_distanza": true
+                },
+                "controllo": {
+                  "anche_resistenza": true
                 }
               },
               "promemoria": "senz_armi"

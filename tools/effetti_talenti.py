@@ -110,6 +110,17 @@ EFFETTI = {
         ('Spendendo 2 PM', [ps('volonta', 2, 'situazionale'), ps('magia', 2, 'situazionale')]),
     ],
     'Meccanica Potenziata': [('Il Tecnomante ottiene +1 al danno', [{'tipo': 'danno', 'armi': 'artefatto', 'attacchi': 'tutti', 'valore': 1, 'ambito': 'generale'}])],
+    # --- riduzioni di penalità già calcolate al tavolo (src/condizioni.js)
+    'Assalto Armato': [('Riduce di 2 Q complessivi, fino a un minimo di 0, la penalità al Movimento', [{
+        'tipo': 'movimento_armatura', 'ambito': 'generale', 'valore': 2}])],
+    # §5.18: Accecato −8 alle Prove che richiedono la vista; il Talento vale per attaccare o difendersi
+    # (le Abilità «vista» che sono anche «fisiche»: armi, Corpo a corpo, Difese; non Pilotare)
+    'Combattere alla Cieca': [('Riduce da −8 a −4 VA le penalità per attaccare o difendersi', [{
+        'tipo': 'riduzione_stato', 'ambito': 'generale', 'stato': 'accecato', 'prove': 'fisiche', 'valore': 4}])],
+    # «una volta al giorno … per tutta la durata dell'effetto»: interruttore al tavolo; l'unico Stato
+    # mentale con penalità nei dati è Terrorizzato
+    'Sangue Freddo': [('Una volta al giorno, quando subisce una penalità al VA causata dalla paura', [{
+        'tipo': 'riduzione_stato', 'ambito': 'situazionale', 'stato': 'terrorizzato', 'valore': 2}])],
     # --- Talenti di lancio, applicati da «Lancia!» (src/lancio.js). «incantesimi»: a quali Incantesimi
     # valgono (offensivi: hanno una colonna Danno con dadi; area: colonna Area/Raggio o Anticipazione
     # dell'Area; cura: colonna Guarigione con dadi; cura_ferite_contatto; danno_o_cura). Gli
@@ -130,31 +141,88 @@ EFFETTI = {
         'tipo': 'massimizza', 'ambito': 'situazionale', 'incantesimi': 'danno_o_cura', 'valore': 1, 'nota_inizio': 'Ogni dado della determinazione scelta assume'}])],
 }
 
-# Talenti con effetti già letti dal motore fuori da «effetti» (per nome o per id)
-GIA_PER_NOME = {
-    'Ricarica Rapida': 'data/equipaggiamento/munizioni.json → ricarica, src/ui/tab.js (promemoria)',
-    'Ricarica Migliorata': 'src/ricarica.js e src/sessione.js (munizioni per operazione)',
-    'Ricarica Efficiente': 'regole.json → chroma (rapporto di conversione)',
-    'Conversione Migliorata': 'regole.json → chroma (rapporto di conversione)',
-    'Forza da Lavoro': 'regole.json → carico.moltiplicatori, src/carico.js',
-    'Architetto TecnoMistico': 'artefatti.json → sintonizzazione.talento (+2 alla capacità), src/equipaggiamento.js',
-    'Corazza Potenziata': 'src/protezione.js (+1 AR magica)',
-    'Addestramento al Combattimento Senz’Armi': 'classi.json → parametro (Disciplina), src/attacco.js',
-    'Reazione Operativa': 'src/avanzamento.js (Talento di Classe a scelta)',
+# Talenti applicati dal motore fuori da «effetti» (per nome o per id): dove
+PER_NOME = {
+    'Ricarica Migliorata': 'munizioni per operazione della ricarica (src/ricarica.js)',
+    'Ricarica Efficiente': 'rapporto di Convertire Potere e della ricarica del Chroma (src/equipaggiamento.js → rapportoConversione, riquadro dei PM)',
+    'Conversione Migliorata': 'rapporto di Convertire Potere e della ricarica del Chroma (src/equipaggiamento.js → rapportoConversione, riquadro dei PM)',
+    'Forza da Lavoro': 'soglie del carico (regole.json → carico.moltiplicatori, src/carico.js)',
+    'Architetto TecnoMistico': 'capacità di sintonizzazione (artefatti.json → sintonizzazione.talento, src/equipaggiamento.js)',
+    'Corazza Potenziata': 'AR magica (src/protezione.js)',
+    'Addestramento al Combattimento Senz’Armi': 'danno senz’armi, Iniziativa e VA delle Manovre per Disciplina (classi.json → parametro, src/attacco.js)',
 }
+# dove il motore legge ogni chiave di «effetti»
 DOVE_CHIAVE = {
-    'attacco_distanza': 'src/attacco.js', 'attacco_ravvicinato': 'src/attacco.js', 'lancio': 'src/lancio.js',
-    'iniziativa': 'src/avanzamento.js', 'pv': 'src/avanzamento.js', 'pm': 'src/avanzamento.js', 'salvezza': 'src/avanzamento.js',
-    'movimento': 'src/avanzamento.js', 'magia': 'src/avanzamento.js', 'meditazione': 'src/avanzamento.js',
-    'tecniche': 'src/avanzamento.js', 'accessoMagia': 'src/incantesimi.js', 'incantesimi': 'src/incantesimi.js',
-    'livelloMax': 'src/incantesimi.js', 'livelloMaxIncantesimi': 'src/incantesimi.js',
+    'attacco_distanza': '«Attacca!» a distanza', 'attacco_ravvicinato': '«Attacca!» corpo a corpo', 'lancio': '«Lancia!»',
+    'iniziativa': 'Iniziativa', 'pv': 'PV massimi', 'pm': 'PM massimi', 'salvezza': 'Prova Salvezza scelta',
+    'movimento': 'Movimento', 'magia': 'valori di Magia della scheda', 'meditazione': 'Meditazione',
+    'tecniche': 'Tecniche Interiori ammesse', 'accessoMagia': 'accesso alla Magia', 'incantesimi': 'quote degli Incantesimi',
+    'livelloMax': 'livello massimo degli Incantesimi', 'livelloMaxIncantesimi': 'livello massimo degli Incantesimi',
 }
+# che cosa cambia ogni sottochiave (per la colonna «Dove» del censimento)
+SOTTOCHIAVI = {
+    'attacco_distanza': {
+        'modalita': 'modalità di fuoco (VA o munizioni)', 'mirato': 'Tiro Mirato (VA e danno)', 'impegnato': 'bersaglio impegnato (VA, seconda Prova)',
+        'ravvicinato': 'Tiro Ravvicinato', 'bruciapelo': 'Tiro a Bruciapelo (bersaglio consapevole)', 'distanza': 'penalità di distanza',
+        'azioni_distanza': 'Azioni per la distanza', 'copertura_propria': 'attacco dalla Copertura', 'movimento_proprio': 'penalità del proprio movimento',
+        'imbracciatura': 'Imbracciatura senza Azioni', 'mira_selettiva': 'Copertura del bersaglio con il Tiro Mirato', 'analisi_rapida': 'VA dopo l’analisi',
+        'postura_assedio': 'Imbracciatura e danno', 'silenzioso': 'VA contro un bersaglio ignaro con l’arma silenziata', 'primo_attacco': 'VA al primo attacco entro 10 Q',
+        'mirato_dopo_armatura': 'danno dopo l’Armatura con il Tiro Mirato', 'preparazione': 'Azioni e danno dopo l’Armatura', 'nascosto': 'danno e Copertura del bersaglio',
+    },
+    'attacco_ravvicinato': {
+        'manovra': 'Manovre ({})', 'due_armi': 'Combattere con due armi, a distanza e corpo a corpo', 'mano_non_dominante': 'mano non dominante, a distanza e corpo a corpo',
+        'senz_armi': 'attacco senz’armi', 'carica': 'Carica', 'imboscata': 'Imboscata', 'alleato_adiacente': 'VA con un alleato adiacente',
+        'ignaro': 'VA contro un bersaglio ignaro', 'primo_attacco': 'VA al primo attacco', 'raffica_di_colpi': 'Manovra Raffica di Colpi',
+        'punto_debole': 'Manovra Punto Debole', 'combattimento_multiplo': 'Manovra Combattimento Multiplo', 'dopo_attacco_senz_armi': 'Difese dopo l’attacco senz’armi',
+        'controllo': 'VA delle Manovre', 'padronanza_disciplina': 'Disciplina Potenza; Guardia e Controllo accanto alle Difese nella tab Combattimento',
+    },
+    'lancio': {
+        'pm': 'costo in PM', 'pm_minimo': None, 'riduzione_penalita_livello': 'penalità di livello', 'pm_una_volta_per_scena': 'costo in PM, una volta per scena',
+        'divinazione_va': 'VA di Potere per la Divinazione', 'escludi_componente': 'componente mancante', 'anticipazione_senza_raddoppio': 'costo dell’Anticipazione',
+        'anticipazione_senza_difficolta': 'penalità dell’Anticipazione', 'salvezza_bersaglio': 'Salvezza del bersaglio',
+    },
+    'magia': {
+        'focalizzazione_va': 'Focalizzazione', 'penalita_ingaggio': 'penalità di Ingaggio', 'contromagia': 'Contromagia',
+        'contromagia_senza_conoscenza': 'Contromagia senza conoscere l’Incantesimo', 'penalita_contromagia': 'penalità della Contromagia',
+        'tiro_armi_da_lancio': 'bonus di Armi da lancio per colpire', 'occultata': 'Magia Occultata',
+    },
+    'meditazione': {'accesso': 'accesso', 'pm_per_ora': 'PM per ora', 'moltiplicatore_ore': 'ore al giorno'},
+}
+
+
+def dove_chiave(k, v):
+    """«Attacca!» a distanza: Tiro Mirato (VA e danno) — dalla chiave di «effetti» e dalle sue sottochiavi."""
+    base = DOVE_CHIAVE.get(k, k)
+    # §5.7: due armi e mano non dominante valgono a distanza e corpo a corpo
+    if k == 'attacco_ravvicinato' and isinstance(v, dict) and set(v) <= {'due_armi', 'mano_non_dominante'}:
+        base = '«Attacca!»'
+    sotto = SOTTOCHIAVI.get(k)
+    if not sotto or not isinstance(v, dict):
+        return base
+    parti = []
+    for s, x in v.items():
+        if s == 'promemoria' or sotto.get(s, '') is None:
+            continue
+        frase = sotto.get(s, s)
+        if '{}' in frase:
+            frase = frase.format(', '.join(x) if isinstance(x, dict) else x)
+        parti.append(frase)
+    return f"{base}: {', '.join(parti)}" if parti else base
+
+
+# promemoria con un numero mostrato dall'app (fra parentesi o nella riga della regola)
+PROMEMORIA_NUMERO = {
+    'Canalizzazione Sicura': '«Lancia!», riga «Talenti»: PM recuperati se la Prova fallisce (metà dei PM spesi)',
+    'Geometria Arcana': '«Lancia!», riga «Talenti»: creature escludibili dall’Area (Mod INT, minimo 1)',
+    'Colpo di Opportunità Istintivo': '«Attacca!» corpo a corpo: «due per Round contro avversari diversi» nella riga dell’Attacco di Opportunità',
+    'Ricarica Rapida': 'nota della ricarica dell’arma: un’operazione di ricarica gratuita per Round',
+}
+# test che dimostrano, per ogni Talento applicato fuori da effetti.valori, che il risultato cambia
+TEST_VERIFICA = ['tests/talenti-gestiti.test.js', 'tests/talenti-lancio.test.js']
 
 # Numeri nel testo che non sono valori del personaggio da sommare: motivo (restano testo, promemoria).
 NUMERICI_NON_APPLICATI = {
-    'Sangue Freddo': 'riduce di 2, una volta al giorno, la penalità di un altro effetto mentale: la applica il giocatore al tavolo',
     'Aura di Equilibrio': 'attenua le penalità di Ferite e Corruzione per sé e per gli alleati: la applica il giocatore al tavolo',
-    'Assalto Armato': 'riduce la penalità di Movimento di una combinazione precisa di armatura e scudo enorme: l’app non la ricalcola',
     'Evacuazione Medica': 'toglie il −2 Q del Sovraccarico solo trasportando un ferito: la applica il giocatore al tavolo',
     'Supporto Avanzato': 'il Supporto migliorato si sceglie permanentemente, ma l’app non registra la scelta',
     'Capolavoro': 'bonus degli oggetti costruiti come Capolavoro: l’app non segna i Capolavori nell’Inventario',
@@ -212,30 +280,47 @@ def effetti_di(x):
     return out
 
 
+_TESTI_VERIFICA = None
+
+
+def verificato(nome):
+    """Il Talento compare in un test «con e senza» (TEST_VERIFICA)?"""
+    global _TESTI_VERIFICA
+    if _TESTI_VERIFICA is None:
+        _TESTI_VERIFICA = '\n'.join((RADICE / p).read_text(encoding='utf-8') for p in TEST_VERIFICA)
+    return re.search(r'(?<![\w’-])' + re.escape(nome) + r'(?![\w’-])', _TESTI_VERIFICA) is not None
+
+
 def categoria(x):
+    """(esito, nota): applicato | promemoria | testuale | rimandato (docs/censimento-talenti.md, «Metodo»)."""
     t = x['t']
     nome = t['nome']
     ee = effetti_di(x)
     solo_promemoria = lambda v: isinstance(v, dict) and set(v) <= {'promemoria'}
-    gia = [k for k, v in (t.get('effetti') or {}).items() if k != 'valori' and not solo_promemoria(v)]
-    promemoria = [k for k, v in (t.get('effetti') or {}).items() if k != 'valori' and solo_promemoria(v)]
-    if nome in RIMANDATI and not ee:
-        return 'rimandato', RIMANDATI[nome]
-    if nome in RIMANDATI:
-        ambiti = sorted({e['ambito'] for e in ee})
-        return '+'.join([*ambiti, 'rimandato']), '; '.join(testo_effetto(e) for e in ee) + f' · rimandato: {RIMANDATI[nome]}'
+    motore = [k for k, v in (t.get('effetti') or {}).items() if k != 'valori' and not solo_promemoria(v)]
+    promemoria = [k for k, v in (t.get('effetti') or {}).items() if k != 'valori' and (solo_promemoria(v) or (isinstance(v, dict) and 'promemoria' in v))]
+    dove = []
     if ee:
-        ambiti = sorted({e['ambito'] for e in ee})
-        return '+'.join(ambiti), '; '.join(testo_effetto(e) for e in ee) + (f" · già gestito in parte: {', '.join(sorted({DOVE_CHIAVE.get(k, k) for k in gia}))}" if gia else '')
-    if gia:
-        return 'già gestito', ', '.join(sorted({f'{k} → {DOVE_CHIAVE.get(k, "?")}' for k in gia}))
-    if nome in GIA_PER_NOME:
-        return 'già gestito', GIA_PER_NOME[nome]
+        dove.append('; '.join(testo_effetto(e) for e in ee))
+    if motore:
+        dove.append('; '.join(dict.fromkeys(dove_chiave(k, t['effetti'][k]) for k in motore)))
+    if nome in PER_NOME:
+        dove.append(PER_NOME[nome])
+    if nome in RIMANDATI:
+        return 'rimandato', ' · '.join([*dove, f'rimandato: {RIMANDATI[nome]}'])
+    if dove:
+        # effetti.valori: motore generico, un test per tipo e ambito (tests/talenti.test.js,
+        # tests/talenti-lancio.test.js); il resto: un test «con e senza» per Talento
+        if (motore or nome in PER_NOME) and not verificato(nome):
+            return 'non verificato', ' · '.join(dove)
+        return 'applicato', ' · '.join(dove)
+    if nome in PROMEMORIA_NUMERO:
+        return 'promemoria', PROMEMORIA_NUMERO[nome]
     if nome in NUMERICI_NON_APPLICATI:
-        return 'testuale', f'numerico non applicato: {NUMERICI_NON_APPLICATI[nome]}'
+        return 'testuale', f'numero non applicato: {NUMERICI_NON_APPLICATI[nome]}'
     if promemoria:
         dove = ', '.join(sorted({'«Lancia!»' if k == 'lancio' else '«Attacca!»' for k in promemoria}))
-        return 'testuale', f'promemoria in {dove} (prima frase del Talento), nessun valore'
+        return 'testuale', f'riga «Talenti: Nome — prima frase» in {dove}, nessun valore'
     if re.search(r'[+−-]\s?\d+\s*(VA|PV|PM|AR|Q\b|danni?|alle|al |a )', t.get('testo', '')):
         return 'testuale', MOMENTANEI
     return 'testuale', 'nessun valore numerico del personaggio'
@@ -260,6 +345,10 @@ def testo_effetto(e):
         s = f"{v} PV curati agli Incantesimi {e['incantesimi']}"
     elif tipo == 'massimizza':
         s = f"dadi al massimo (Incantesimi {e['incantesimi']})"
+    elif tipo == 'riduzione_stato':
+        s = f"riduce di {e['valore']} la penalità di {e['stato'].capitalize()}" + (f" (solo Prove {e['prove']})" if e.get('prove') else '')
+    elif tipo == 'movimento_armatura':
+        s = f"riduce di {e['valore']} Q la penalità MOV di armatura e scudo"
     elif tipo == 'danno':
         s = f"{v} danno con le armi Artefatto"
     else:
@@ -274,28 +363,37 @@ def testo_effetto(e):
 def scrivi_doc():
     _, _, tutti = talenti()
     righe = [(x, *categoria(x)) for x in tutti]
+    non_verificati = [x['t']['nome'] for x, c, _ in righe if c == 'non verificato']
+    if non_verificati:
+        sys.exit(f'Talenti applicati dal motore senza un test «con e senza» in {", ".join(TEST_VERIFICA)}: {", ".join(non_verificati)}')
     conta = {}
     for _, c, _ in righe:
-        for k in c.split('+'):
-            conta[k] = conta.get(k, 0) + 1
+        conta[c] = conta.get(c, 0) + 1
+    ambiti = {}
+    for x, c, _ in righe:
+        for a in sorted({e['ambito'] for e in effetti_di(x) or []}):
+            ambiti[a] = ambiti.get(a, 0) + 1
     con_effetti = [r for r in righe if effetti_di(r[0])]
     n_effetti = sum(len(effetti_di(x)) for x, _, _ in con_effetti)
     L = []
     L.append('# Censimento dei Talenti: effetti numerici nei valori effettivi\n')
     L.append('30 settembre 2026. Fonti: `data/talenti_liberi.json` (Giocatore §8.6, Magia sez. 1) e `data/classi.json` (Talenti fissi e a scelta delle 25 Classi, Giocatore cap. 3). Non ci sono Talenti di Corporazione nei dati: le Corporazioni danno solo +1 alle Abilità e alle Salvezze (già nel calcolo). Metodo come in `docs/proprieta-armature.md`: ogni Talento con il suo testo, la classificazione e, dove il testo dà un numero sui valori del personaggio, gli effetti nello schema degli oggetti (`docs/effetti-oggetti.md`). Generato da `tools/effetti_talenti.py --doc` (la stessa tabella scrive i dati con `--dati`).\n')
-    L.append('## Classificazione\n')
-    L.append('- **generale**: vale sempre, entra nel valore effettivo.')
-    L.append('- **situazionale**: il giocatore lo accende al tavolo quando ricorre la circostanza scritta in `condizione`.')
-    L.append('- **uso_specifico**: vale per un tipo di Prova (`uso`): valore a parte accanto all’Abilità o alla Salvezza.')
-    L.append('- **testuale**: nessun numero sui valori del personaggio, oppure un bonus momentaneo, per gli alleati o una penalità dell’avversario; oppure un numero che l’app non può applicare (motivo indicato). Resta testo del Talento.')
-    L.append('- **rimandato**: il manuale non definisce il valore o è ambiguo: `TODO(Davide)` nella voce.')
-    L.append('- **già gestito**: il motore lo applica già (chiavi di `effetti` lette da `src/attacco.js`, `src/lancio.js`, `src/avanzamento.js`, `src/incantesimi.js`, oppure per nome).\n')
+    L.append('## Metodo\n')
+    L.append('Un Talento è **applicato** solo se un test mostra che il risultato cambia con e senza il Talento. Non basta che il Talento abbia una chiave in `effetti`: una chiave con il solo `promemoria` mostra la prima frase del Talento, non applica un valore (è così che sei Talenti di lancio risultavano «già gestiti» senza esserlo, corretto il 30/09/2026). La prova:')
+    L.append('- per i Talenti con effetti letti dal motore (`effetti.attacco_distanza`, `attacco_ravvicinato`, `lancio`, `iniziativa`, `pv`, `magia`…) o applicati per nome, un caso con e senza il Talento in `tests/talenti-gestiti.test.js` o `tests/talenti-lancio.test.js`: lo script cerca il nome del Talento in quei file e si ferma se un Talento applicato non c’è;')
+    L.append('- per gli effetti tipizzati di `effetti.valori` (schema degli oggetti, motore comune in `src/talenti.js` e `src/condizioni.js`), i test per tipo e ambito (`tests/talenti.test.js`, `tests/talenti-lancio.test.js`, `tests/talenti-gestiti.test.js`); la frase del manuale di ciascuno è controllata da `tools/verifica_frasi.mjs`.\n')
+    L.append('Esiti (colonna «Esito»):')
+    L.append('- **applicato**: il numero entra dove indicato (VA delle Abilità, VA per colpire, danno, Difese, Salvezze, Iniziativa, Movimento, Azioni, AR, manovre e modalità di «Attacca!», «Lancia!», rapporti del Chroma, sintonizzazione). Per gli effetti tipizzati l’ambito: **generale** (sempre), **situazionale** (interruttore al tavolo, con la frase in `condizione`), **uso_specifico** (valore a parte per un tipo di Prova).')
+    L.append('- **promemoria**: l’app mostra il numero del Talento accanto alla regola (fra parentesi o nella riga), senza cambiare un valore.')
+    L.append('- **testuale**: nessun numero sui valori del personaggio (regola, bonus momentaneo, per gli alleati, penalità dell’avversario) o un numero che l’app non può applicare (motivo indicato). In «Attacca!» e «Lancia!» i Talenti pertinenti compaiono in una riga «Talenti: Nome — prima frase».')
+    L.append('- **rimandato**: il manuale non definisce il valore o è ambiguo: `TODO(Davide)` nella voce.\n')
     L.append('## Conteggi\n')
-    L.append(f'**{len(righe)} Talenti** (119 Liberi, {len(righe) - 119} di Classe). Un Talento con effetti di più ambiti conta in ciascuno.\n')
-    L.append('| Categoria | Talenti |')
+    L.append(f'**{len(righe)} Talenti** (119 Liberi, {len(righe) - 119} di Classe).\n')
+    L.append('| Esito | Talenti |')
     L.append('|---|---|')
-    for k in ['generale', 'situazionale', 'uso_specifico', 'testuale', 'rimandato', 'già gestito']:
+    for k in ['applicato', 'promemoria', 'testuale', 'rimandato']:
         L.append(f'| {k} | {conta.get(k, 0)} |')
+    L.append(f"\nFra gli applicati, con effetti tipizzati: generale {ambiti.get('generale', 0)}, situazionale {ambiti.get('situazionale', 0)}, uso_specifico {ambiti.get('uso_specifico', 0)} (un Talento con più ambiti conta in ciascuno).")
     L.append(f'\nTalenti con effetti tipizzati nuovi: **{len(con_effetti)}**, per **{n_effetti} effetti** (`effetti.valori`).\n')
     L.append('## Tipi dello schema\n')
     L.append('Nuovi o estesi per i Talenti (anche in `docs/effetti-oggetti.md` e nel validatore):')
@@ -306,7 +404,7 @@ def scrivi_doc():
     L.append('## Talenti\n')
     for titolo, filtro in [('Talenti Liberi', lambda x: x['gruppo'] == 'Libero'), ('Talenti di Classe', lambda x: x['gruppo'] != 'Libero')]:
         L.append(f'### {titolo}\n')
-        L.append('| Talento | Fonte | Categoria | Effetto o nota |')
+        L.append('| Talento | Fonte | Esito | Dove o nota |')
         L.append('|---|---|---|---|')
         for x, c, nota in righe:
             if not filtro(x):
@@ -323,9 +421,11 @@ def scrivi_doc():
     L.append('- **Motore** (`src/talenti.js`, `src/condizioni.js`): solo al tavolo (con la sessione), nei valori effettivi; il totale da regole, l’avanzamento e la SS non cambiano. Generali sempre; situazionali con l’interruttore del Talento (`sessione.talentiAccesi`); usi specifici come valore a parte accanto all’Abilità, sotto le Prove Salvezza (Resistenze con il tetto del §8.6) e sotto le Caratteristiche. I bonus dei Talenti si sommano (la regola «un solo modificatore degli strumenti» vale per gli oggetti). Provenienza: una riga per Talento, con il suo nome.')
     L.append('- **Interruttore «Bonus dei Talenti»** (`sessione.bonusTalenti`, predefinito acceso; nel salvataggio e nell’export, come le altre condizioni al tavolo): in testa alle tab Combattimento e Poteri. Spento: nessun effetto di `effetti.valori`, nemmeno i Talenti dell’Iniziativa; «Attacca!» e «Lancia!» calcolano senza Talenti (`talentiAttacco` vuoto); la provenienza elenca i Talenti barrati («Talenti spenti: non conta»). PV, PM, Prova Salvezza Migliorata e Movimento restano: sono il totale da regole.')
     L.append('- **Talenti di lancio** (`incantesimi` negli effetti, applicati da «Lancia!»): **offensivo** = la versione dell’Incantesimo ha una colonna che inizia con «Danno» e contiene dadi (in `incantesimi.json` non c’è un campo che dica «offensivo»); **ad Area** = offensivo con una colonna «Area» o «Raggio», o con l’Anticipazione dell’Area; **di cura** = una colonna «Guarigione» con dadi. Incantesimi Aggressivi (+1/+2/+3 per Grado di Invocatore), Controllo Arcano (+1 ad Area), Canale Vitale (+1 PV), Tocco Sacro (dadi al massimo) si applicano da soli; Sovraccarico Controllato (+1 dado) e Incantesimi Massimizzati sono interruttori del pannello. Il valore e il Grado compaiono nella provenienza del danno, la frase «una sola volta per bersaglio» sotto il danno.')
-    L.append('- **Promemoria di lancio senza numero** (Canalizzazione Implacabile, Controllo Superiore, Controllo dei Flussi, Calcolo Arcano, Manifestazioni Occultate; Canalizzazione Sicura e Geometria Arcana con il numero ricavato fra parentesi): una riga «Talenti: Nome — prima frase» nei promemoria di «Lancia!». Non sono «già gestiti»: il motore non applica nessun valore.')
+    L.append('- **Promemoria di lancio senza numero** (Canalizzazione Implacabile, Controllo Superiore, Controllo dei Flussi, Calcolo Arcano, Manifestazioni Occultate; Canalizzazione Sicura e Geometria Arcana con il numero ricavato fra parentesi): una riga «Talenti: Nome — prima frase» nei promemoria di «Lancia!». Il motore non applica nessun valore.')
+    L.append('- **Ripasso del 30/09/2026** (tutti i «già gestiti» e i testuali con numeri, un test con e senza per ciascuno in `tests/talenti-gestiti.test.js`). Risultavano gestiti senza esserlo, ora applicati: Pistolero e Ambidestro a distanza (Combattere con due armi e mano non dominante in «Attacca!» a distanza, §5.7; anche Duellante con l’arma a distanza in mano), Rapidità Operativa (+2 VA al primo attacco a distanza entro 10 Q), Punto Vitale (+2 dopo l’Armatura con il Tiro Mirato entro 10 Q), Ricarica Efficiente e Conversione Migliorata (rapporto del Chroma), Padronanza della Disciplina (Guardia anche a distanza, Controllo anche per resistere); Reazione Operativa passa a riga «Talenti». Testuali con un numero applicabile, ora applicati: Tiratore Imboscato, Bersaglio Designato, Immobilizzare Istintivo, Assalto Armato, Combattere alla Cieca, Sangue Freddo (interruttore).')
+    L.append('- **Schema** (anche in `docs/effetti-oggetti.md`): `riduzione_stato` (riduce la penalità al VA di uno Stato fino a 0, con `stato` e facoltativo `prove`), `movimento_armatura` (riduce la penalità MOV di armatura e scudo); in `effetti.attacco_distanza` le chiavi `primo_attacco`, `mirato_dopo_armatura`, `preparazione`, `nascosto`; `padronanza_disciplina.guardia` e `.controllo`.')
     L.append('- **SD:** interruttori dei Talenti situazionali nella colonna Condizioni della tab Abilità e, per Difese e Salvezze, in testa alla tab Combattimento; usi delle Prove di Caratteristica sotto le Caratteristiche (Identità).')
-    L.append('- **Non applicati** (restano testo, motivo nella tabella): Sangue Freddo, Aura di Equilibrio, Assalto Armato, Evacuazione Medica, Supporto Avanzato, Capolavoro, Maestro d’Arma, Maestria Astrale (l’Arma Astrale non è ancora un’arma della scheda).')
+    L.append('- **Non applicati** (restano testo, motivo nella tabella): Aura di Equilibrio, Evacuazione Medica, Supporto Avanzato, Capolavoro, Maestro d’Arma, Maestria Astrale (l’Arma Astrale non è ancora un’arma della scheda).')
     L.append('')
     # fine riga LF anche su Windows (write_text userebbe CRLF)
     with open(RADICE / 'docs' / 'censimento-talenti.md', 'w', encoding='utf-8', newline='\n') as f:

@@ -1062,7 +1062,18 @@
       "effetti": {
         "attacco_ravvicinato": {
           "promemoria": "sempre"
-        }
+        },
+        "valori": [
+          {
+            "tipo": "riduzione_stato",
+            "ambito": "generale",
+            "stato": "accecato",
+            "prove": "fisiche",
+            "valore": 4,
+            "condizione": "Riduce da −8 a −4 VA le penalità per attaccare o difendersi contro un avversario non visibile.",
+            "fonte": "Giocatore §8.6.6"
+          }
+        ]
       }
     },
     {
@@ -1095,7 +1106,11 @@
       "testo": "Quando riesce nella presa iniziale senz’armi di Immobilizzare, infligge anche il normale danno senz’armi, con l’AR pertinente. Il danno avviene una sola volta per la presa iniziale e non si ripete automaticamente mantenendola.",
       "effetti": {
         "attacco_ravvicinato": {
-          "promemoria": "immobilizzare"
+          "manovra": {
+            "immobilizzare": {
+              "danno_normale": true
+            }
+          }
         }
       }
     },
@@ -1403,7 +1418,13 @@
       "testo": "Una volta per Round, il primo attacco a Distanza effettuato mentre è nascosto contro un bersaglio inconsapevole ottiene +2 danni e riduce di 2 la penalità di Copertura Leggera, fino a 0. Il danno aggiuntivo riguarda soltanto il primo colpo. Non vale per attacchi ad Area e non riduce Copertura Media o Totale. La condizione nascosta segue Furtività; la Specializzazione nell’arma si somma normalmente.",
       "effetti": {
         "attacco_distanza": {
-          "promemoria": "ignaro"
+          "nascosto": {
+            "danno": 2,
+            "riduzione_copertura": 2,
+            "coperture": [
+              "leggera"
+            ]
+          }
         }
       }
     },
