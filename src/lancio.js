@@ -45,6 +45,18 @@ export function versioniLancio(incantesimo, scheda) {
   });
 }
 
+/**
+ * Stato del pulsante «Lancia!» di un incantesimo conosciuto: si lancia se almeno una versione è
+ * accessibile, qualunque siano i livelli della scheda (anche solo 3 e 6) e le sue colonne. Altrimenti
+ * il pulsante resta, disabilitato, con il motivo «richiede livello N» (la versione più bassa).
+ */
+export function statoPulsanteLancio(incantesimo, scheda) {
+  const v = versioniLancio(incantesimo, scheda);
+  if (v.some((x) => !x.motivo)) return { disabilitato: false, motivo: null };
+  const minimo = v.map((x) => x.livello).filter(Number.isInteger).sort((a, b) => a - b)[0];
+  return { disabilitato: true, motivo: minimo ? `richiede livello ${minimo}` : 'nessuna versione nella scheda' };
+}
+
 /** Contenitori per il lancio: compatibilità con la macrofamiglia e con i PM utilizzabili della scheda. */
 export function contenitoriLancio(personaggio, incantesimo) {
   const m = incantesimo.meccanica ?? {};

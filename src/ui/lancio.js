@@ -106,6 +106,8 @@ function corpo(ctx, inc, intestazione) {
 }
 
 function risultato(ctx, inc, r) {
+  // numeri di regola dai dati (regole.json → lancio): qui serve la penalità del Contatto (Magia sez. 2)
+  const L = ctx.dati.regole.lancio;
   // E&L 18: procedura rituale non ancora definita (Rigenerazione): nessun costo né Prova
   if (r.rituale_non_definito) {
     const [prima, ...resto] = String(r.impossibile?.motivo ?? '').split(/(?<=:)\s/);

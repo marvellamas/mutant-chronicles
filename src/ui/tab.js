@@ -24,6 +24,7 @@ import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 import { pannelloAttacco } from './attacco.js';
 import { profiloSenzArmi, senzArmiDisponibile, SENZ_ARMI, talentiAttacco } from '../attacco.js';
 import { pannelloLancio } from './lancio.js';
+import { statoPulsanteLancio } from '../lancio.js';
 import { tabCalendario, pannelloAttivazione } from './calendario.js';
 import { conOrdinale } from '../lingua.js';
 import { regoleRiparazione, esitoRiparazione, vaRiparazione, riparabile } from '../riparazione.js';
@@ -154,7 +155,15 @@ export function renderTab(ctx) {
   if (ctx.ui?.lancio && !incLancio) ctx.ui.lancio = null;
   return [h('div', { class: `scheda-tab pos-${ctx.posizione} larghezza-${ctx.larghezza ?? 'piena'}` }, barra, nav, lato, pannello),
     armaAttacco ? pannelloAttacco(ctx, armaAttacco) : null,
-    incLancio ? pannelloLancio(ctx, incLancio) : null,
+    incLancio ? (() => {
+      // un errore nel pannello non deve lasciare il clic senza risposta: si mostra il motivo
+      try { return pannelloLancio(ctx, incLancio); } catch (e) {
+        console.error(e);
+        return h('div', { class: 'riquadro errore', role: 'alert' },
+          h('p', {}, h('strong', {}, `«Lancia!» non si è aperto per ${incLancio.nome}. `), 'Segnala il problema con questo testo: ', h('code', {}, String(e?.message ?? e))),
+          h('button', { type: 'button', class: 'btn', onclick: () => { ctx.ui.lancio = null; ctx.azioni.ridisegna(); } }, 'Chiudi'));
+      }
+    })() : null,
     ctx.ui?.attivaCalendario ? pannelloAttivazione(ctx) : null];
 }
 
@@ -1694,7 +1703,13 @@ function tabMagia(ctx, d) {
         sp.incantesimi.map((i) => h('article', { class: `incantesimo-scheda ${classeMacrofamiglia(mf.nome)}` },
           h('div', { class: 'arma-testa' },
             h('h4', {}, info('incantesimo', i.nome), ' ', pallini(i.livelloBase), ' ', etichettaMacro(mf.nome), h('span', { class: 'sigla' }, ` · livello base ${i.livelloBase} · scheda ${i.scheda}`)),
-            h('button', { type: 'button', class: 'btn primario btn-attacca', onclick: () => { ctx.ui.lancio = { nome: i.nome, passo: 0 }; ctx.azioni.ridisegna(); } }, 'Lancia!')),
+            (() => {
+              // senza versioni accessibili il pulsante resta, disabilitato con il motivo (mai un pulsante muto)
+              const inc = ctx.dati.incantesimi.incantesimi.find((x) => x.nome === i.nome);
+              const st = inc ? statoPulsanteLancio(inc, ctx.tab.scheda) : { disabilitato: true, motivo: 'incantesimo non più nel catalogo' };
+              return h('button', { type: 'button', class: 'btn primario btn-attacca', disabled: st.disabilitato, title: st.motivo,
+                onclick: () => { ctx.ui.lancio = { nome: i.nome, passo: 0 }; ctx.azioni.ridisegna(); } }, 'Lancia!');
+            })()),
           i.intestazione ? h('p', { class: 'piccolo' }, i.intestazione) : null,
           i.lancio ? h('p', { class: 'piccolo' }, i.lancio) : null,
           i.righe.length ? h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },
