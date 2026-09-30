@@ -181,13 +181,14 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
       nome: cat,
       abilita: s.abilita.filter((a) => a.categoria === cat).map((a) => ({
         nome: a.nome, caratteristica: a.caratteristica, mod: a.mod, base: a.base, corporazione: a.corporazione,
+        // §2.3, §8.3: categoria di competenza, VA grezzo e limite del VA personale
+        competenza: a.competenza ?? null, grezzo: a.grezzo ?? a.totale, limite: a.limite ?? null,
         avanzamento: a.avanzamento, equip: a.equip ?? 0, va: a.vaEquip ?? a.totale, diClasse: a.daClasse > 0,
         totale: a.totale, effettivo: a.effettivo ?? a.vaEquip ?? a.totale, scomposizione: a.scomposizione ?? [], provenienza: a.provenienza ?? null,
         // effetti degli oggetti (docs/effetti-oggetti.md): situazionali spenti e valori d'uso specifico
         disponibili: a.disponibili ?? [], nonCumulati: a.nonCumulati ?? [], usiSpecifici: a.usiSpecifici ?? [],
       })),
     })),
-    limiteAvanzamento: s.abilita[0]?.limite ?? null,
     talentiClasse: s.classi.flatMap((cl) => cl.talenti.map((t) => ({
       nome: t.parametroNome ? `${t.nome} (${t.parametroNome})` : t.nome, classe: cl.nome, grado: GRADI_ROMANI[t.grado] ?? String(t.grado), scelto: !!t.scelto, frase: frase(t.testo),
     }))),

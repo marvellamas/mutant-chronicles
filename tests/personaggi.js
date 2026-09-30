@@ -12,8 +12,9 @@ export const MISHIMA_AGENTE = {
   puntiCaratteristica: { FOR: 1, COS: 2, DES: 1, SAG: 1 },
   addestramento: 'Avventuriero',
   classe: 'Agente',
+  // §2.13 del Giocatore del 29/09: esempio dell'Agente (Percezione 2, Tecnologia 2, Cultura 2, Raggirare 4)
   puntiAbilitaLiberi: {
-    'Furtività': 2, 'Percezione': 2, 'Medicina': 3, 'Armi leggere': 1, 'Cultura': 1, 'Raggirare': 1,
+    'Percezione': 2, 'Tecnologia': 2, 'Cultura': 2, 'Raggirare': 4,
   },
   puntiEroe: tiro(5),
 };
@@ -27,7 +28,8 @@ export const ARCANISTA = {
   puntiCaratteristica: { INT: 2, SAG: 1, COS: 2 },
   addestramento: 'Taumaturgo',
   classe: 'Arcanista',
-  puntiAbilitaLiberi: { 'Potere': 2, 'Occultismo': 2, 'Rituali': 2, 'Medicina': 2, 'Artefatti': 1, 'Cultura': 1 },
+  // limiti del I Grado (§2.13 del 29/09): ogni punto aumenta il VA personale
+  puntiAbilitaLiberi: { 'Potere': 2, 'Rituali': 2, 'Cultura': 1, 'Difese': 2, 'Armi da lancio': 2, 'Intrattenere': 1 },
   puntiEroe: tiro(6),
   incantesimi: ['Colpo Elementale', 'Controllo Elementale', 'Muro Elementale', 'Ampliare Sensi', 'Barriera Mentale',
     'Biomanipolazione', 'Cura Ferite', 'Cura Malattie', 'Cura Avvelenamenti', 'Dardo Psichico', 'Scudo',
@@ -43,10 +45,8 @@ export const LIVELLI_AGENTE = [
   { livello: 3, talentoLibero: { id: 'iniziativa-migliorata' } },
   {
     livello: 4, grado: { classe: 'Agente' }, tiroPV: tiro(4), talentoClasse: 'Reazione Operativa',
-    // limite 4: Furtività e Percezione sono già a 4 con il +1 di Classe, Medicina è a 3 dalla creazione
-    puntiAbilita: {
-      'Medicina': 1, 'Armi leggere': 1, 'Cultura': 1, 'Raggirare': 1, 'Sopravvivenza': 3, 'Atletica': 3,
-    },
+    // limiti del VA personale del Grado II (§8.3 del 29/09): ogni punto aumenta il VA
+    puntiAbilita: { 'Medicina': 1, 'Cultura': 1, 'Raggirare': 1, 'Sopravvivenza': 2, 'Atletica': 2, 'Difese': 1, 'Tecnologia': 2 },
   },
   { livello: 5, talentoLibero: { id: 'prova-salvezza-migliorata', parametro: 'tempra' } },
   { livello: 6, caratteristiche: { DES: 1, COS: 1 } }, // DES 10; il secondo punto va altrove
@@ -60,26 +60,20 @@ export const LIVELLI_AGENTE = [
   { livello: 11, talentoLibero: { id: 'specializzazione-spionaggio' } },
   {
     livello: 12, grado: { classe: 'Agente' }, tiroPV: tiro(5), talentoClasse: 'Analisi Rapida',
-    puntiAbilita: {
-      'Medicina': 1, 'Sopravvivenza': 1, 'Atletica': 1, 'Pilotare': 2, 'Tecnologia': 3, 'Difese': 2,
-    },
+    puntiAbilita: { 'Medicina': 1, 'Atletica': 2, 'Pilotare': 2, 'Tecnologia': 2, 'Difese': 3 },
   },
   { livello: 13, talentoLibero: { id: 'schivata-istintiva' } },
   { livello: 14, caratteristiche: { SAG: 1, INT: 1 } },
   { livello: 15, talentoLibero: { id: 'schivata-multipla' } },
   {
     livello: 16, grado: { classe: 'Agente' }, tiroPV: tiro(6),
-    puntiAbilita: {
-      'Medicina': 1, 'Sopravvivenza': 1, 'Atletica': 1, 'Tecnologia': 1, 'Pilotare': 3, 'Difese': 3,
-    },
+    puntiAbilita: { 'Medicina': 1, 'Sopravvivenza': 1, 'Atletica': 2, 'Tecnologia': 1, 'Pilotare': 3, 'Difese': 2 },
   },
   { livello: 17, talentoLibero: { id: 'prova-salvezza-migliorata', parametro: 'tempra' } },
   { livello: 18, caratteristiche: { FOR: 2 } },
   { livello: 19, talentoLibero: { id: 'duro-a-morire' } },
   {
     livello: 20, grado: { classe: 'Agente' }, tiroPV: tiro(2), talentoClasse: 'Doppia Identità',
-    puntiAbilita: {
-      'Medicina': 1, 'Sopravvivenza': 1, 'Atletica': 1, 'Tecnologia': 1, 'Pilotare': 1, 'Difese': 3, 'Armi medie': 2,
-    },
+    puntiAbilita: { 'Medicina': 1, 'Sopravvivenza': 2, 'Tecnologia': 2, 'Pilotare': 1, 'Difese': 2, 'Armi medie': 2 },
   },
 ];

@@ -1,6 +1,7 @@
 // Motore di calcolo: funzioni pure. Le costanti numeriche arrivano dai dati (data/*.json);
 // qui stanno solo le formule, ciascuna con il paragrafo del Manuale del Giocatore.
 import { calcolaSchedaPersonaggio } from './avanzamento.js';
+import { competenzaDi, baseIniziale, limiteAbilita, vaPersonale, puntiUtili } from './competenze.js';
 
 // Avanzamento di livello (cap. 8): la validazione di un livello sta in avanzamento.js.
 export { validaLivello } from './avanzamento.js';
@@ -21,7 +22,11 @@ function leggiTabella(tabella, valore, cosa) {
   return m;
 }
 
-/** §1.2.1 e §4.2: VA = Mod Caratteristica + Base Addestramento + Corporazione + Avanzamento. */
+/**
+ * §1.2.1 e §4.2 (Giocatore del 29/09): VA grezzo personale = Mod Caratteristica + Base iniziale (dalla
+ * prima Classe) + Corporazione + Avanzamento. Il VA personale è il minore fra questo e il limite
+ * (src/competenze.js).
+ */
 export function valoreAbilita({ mod, base, corporazione, avanzamento }) {
   return mod + base + corporazione + avanzamento;
 }
@@ -152,24 +157,35 @@ function caratteristicheFinali(corp, scelte, dati) {
   return out;
 }
 
-/** Le 24 Abilità scomposte nelle componenti del VA (§2.17). */
-function abilitaScomposte(car, corp, addestr, classe, scelte, dati) {
+/**
+ * Le 24 Abilità scomposte nelle componenti del VA (§2.17), al 1° livello (Giocatore del 29/09):
+ * base dalla categoria di competenza nella prima Classe (§2.3), limite della categoria al I Grado
+ * (§2.13, §8.3). I punti liberi che non aumentano il VA personale sono inattivi: non entrano nel
+ * grezzo (§2.13: «Non si possono accantonare punti liberi inattivi oltre il limite»).
+ */
+function abilitaScomposte(car, corp, classe, scelte, dati) {
   const bonusClasse = dati.regole.creazione.bonus_classe_per_grado;
   return dati.abilita.abilita.map(({ nome, categoria, caratteristica }) => {
     const componenti = {
       mod: car[caratteristica].mod,
-      base: addestr.valori_base[nome],
+      base: baseIniziale(classe, nome, dati.regole),
       corporazione: corp.abilita_bonus.includes(nome) ? 1 : 0,
     };
-    // §2.12: il +1 di Classe va nell'Avanzamento; §2.13: i punti liberi pure.
+    const competenza = competenzaDi(classe, nome);
+    const lim = limiteAbilita(nome, [{ def: classe, grado: 1 }], dati.regole);
+    // §2.12: il +1 di Classe va nell'Avanzamento, sempre; §3.1: prima i punti di Classe, poi i liberi
     const daClasse = classe.abilita.includes(nome) ? bonusClasse : 0;
-    const liberi = scelte.puntiAbilitaLiberi?.[nome] ?? 0;
+    const scelti = scelte.puntiAbilitaLiberi?.[nome] ?? 0;
+    const vaPrimaDeiLiberi = valoreAbilita({ ...componenti, avanzamento: daClasse });
+    const { utili: liberi, inattivi } = Number.isInteger(scelti) && scelti > 0 ? puntiUtili(vaPrimaDeiLiberi, lim.valore, scelti) : { utili: 0, inattivi: 0 };
     const avanzamento = daClasse + liberi;
+    const grezzo = valoreAbilita({ ...componenti, avanzamento });
     return {
       nome, categoria, caratteristica, ...componenti, daClasse, liberi, avanzamento,
-      // §3.1: si assegnano prima i punti di Classe e poi i liberi; §2.13 verifica il VA a quel punto.
-      vaPrimaDeiLiberi: valoreAbilita({ ...componenti, avanzamento: daClasse }),
-      totale: valoreAbilita({ ...componenti, avanzamento }),
+      competenza, competenzaDa: classe.nome, limite: lim.valore, limiteCategoria: lim.categoria, limiteDa: lim.classi,
+      // §2.13: il VA prima dei punti liberi (dopo il +1 di Classe) decide VA ≥ 1 e punti utili
+      vaPrimaDeiLiberi, grezzo, inattivi,
+      totale: vaPersonale(grezzo, lim.valore),
     };
   });
 }
@@ -208,7 +224,7 @@ export function validaScelte(scelte, dati) {
   if (spesiCar > cr.punti_caratteristica) err('puntiCaratteristica', `assegnati ${spesiCar} punti, il massimo è ${cr.punti_caratteristica}`);
   if (spesiCar < cr.punti_caratteristica) err('puntiCaratteristica', `assegnati ${spesiCar} punti su ${cr.punti_caratteristica}`, 'incompleto');
 
-  // §2.13: Punti Abilità Liberi (creazione.punti_abilita_liberi); Avanzamento iniziale ≤ 3 incluso il +1 di Classe; VA ≥ 1 prima dei punti liberi.
+  // §2.13: Punti Abilità Liberi (creazione.punti_abilita_liberi); ogni punto deve aumentare il VA personale entro il limite della categoria al I Grado; VA ≥ 1 prima dei punti liberi.
   const pa = scelte?.puntiAbilitaLiberi ?? {};
   const nomiAbilita = new Set(dati.abilita.abilita.map((a) => a.nome));
   for (const [n, p] of Object.entries(pa)) {
@@ -223,10 +239,14 @@ export function validaScelte(scelte, dati) {
   const strutturaOk = corp && addestr && classe && errori.every((e) => !e.campo.startsWith('puntiCaratteristica.'));
   if (strutturaOk) {
     const car = caratteristicheFinali(corp, scelte, dati);
-    for (const a of abilitaScomposte(car, corp, addestr, classe, scelte, dati)) {
-      if (a.liberi === 0) continue;
-      if (a.avanzamento > cr.avanzamento_massimo_iniziale) {
-        err(`puntiAbilitaLiberi.${a.nome}`, `Avanzamento ${a.avanzamento} (Classe ${a.daClasse} + liberi ${a.liberi}): alla creazione il massimo è ${cr.avanzamento_massimo_iniziale}`);
+    for (const a of abilitaScomposte(car, corp, classe, scelte, dati)) {
+      if (a.liberi === 0 && a.inattivi === 0) continue;
+      // §2.13 e §8.3: un punto libero che non aumenta il VA personale non si spende
+      if (a.inattivi) {
+        errori.push({
+          campo: `puntiAbilitaLiberi.${a.nome}`, tipo: 'violazione', inattivi: a.inattivi,
+          problema: `${a.inattivi === 1 ? '1 punto non aumenta' : `${a.inattivi} punti non aumentano`} il VA personale: ${a.liberi ? `con ${a.liberi === 1 ? '1 punto' : `${a.liberi} punti`} il VA arriva` : 'il VA è già'} al limite ${a.limite} (${dati.regole.competenze.categorie[a.limiteCategoria ?? a.competenza].nome} al I Grado, §2.13)`,
+        });
       }
       if (a.vaPrimaDeiLiberi < cr.va_minimo_per_punti_liberi) {
         err(`puntiAbilitaLiberi.${a.nome}`, `VA ${a.vaPrimaDeiLiberi} prima dei punti liberi: serve almeno ${cr.va_minimo_per_punti_liberi}`);
@@ -278,7 +298,7 @@ export function calcolaScheda(scelte, dati) {
   const r = dati.regole;
   const livello = 1;
   const car = caratteristicheFinali(corp, scelte, dati);
-  const abilita = abilitaScomposte(car, corp, addestr, classe, scelte, dati);
+  const abilita = abilitaScomposte(car, corp, classe, scelte, dati);
 
   const avanzSalvezze = bonusAvanzamentoSalvezze(livello, r);
   const salvezze = {};

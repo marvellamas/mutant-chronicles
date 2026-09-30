@@ -80,11 +80,11 @@ test('provenienza delle Difese: voci da regole, Stato attivo (Rallentato) e arma
   // somma delle righe che contano = VA effettivo mostrato
   assert.equal(sommaRighe(d.provenienza.righe), d.effettivo);
   assert.equal(d.provenienza.totale, d.effettivo);
-  // le voci da regole sono quelle che valoreAbilita somma (Caratteristica, Addestramento…)
+  // le voci da regole sono quelle che valoreAbilita somma (Caratteristica, competenza della prima Classe…)
   const reg = righeRegoleAbilita(d, s);
   assert.equal(sommaRighe(reg), d.totale);
   assert.equal(reg[0].fonte, `Mod ${d.caratteristica}`);
-  assert.match(reg[1].fonte, /^Addestramento /);
+  assert.match(reg[1].fonte, /^Competenza [SPGN] \(/);
   const stato = d.provenienza.righe.find((r) => r.fonte === 'Rallentato');
   assert.deepEqual([stato.valore, stato.nota], [-2, 'Stato (§5.18)']);
   const difensiva = d.provenienza.righe.find((r) => r.fonte === 'Difensiva (Tonfa)');

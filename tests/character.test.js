@@ -6,7 +6,7 @@ import {
 import { statoIncantesimi, motivoBloccoIncantesimo } from '../src/incantesimi.js';
 import { vociDotazione } from '../src/dotazioni.js';
 import { checklist } from '../src/checklist.js';
-import { calcolaScheda } from '../src/calc.js';
+import { calcolaScheda, validaScelte } from '../src/calc.js';
 import { datiReali, copia } from './helpers.js';
 
 const { dati } = await datiReali();
@@ -19,8 +19,9 @@ const MISHIMA_AGENTE = {
   puntiCaratteristica: { FOR: 1, COS: 2, DES: 1, SAG: 1 },
   addestramento: 'Avventuriero',
   classe: 'Agente',
+  // §2.13 del Giocatore del 29/09
   puntiAbilitaLiberi: {
-    'Furtività': 2, 'Percezione': 2, 'Medicina': 3, 'Armi leggere': 1, 'Cultura': 1, 'Raggirare': 1,
+    'Percezione': 2, 'Tecnologia': 2, 'Cultura': 2, 'Raggirare': 4,
   },
   puntiEroe: { valore: 5, origine: 'manuale' },
 };
@@ -33,7 +34,7 @@ const ARCANISTA = {
   puntiCaratteristica: { INT: 2, SAG: 1, COS: 2 },
   addestramento: 'Taumaturgo',
   classe: 'Arcanista',
-  puntiAbilitaLiberi: { 'Potere': 2, 'Occultismo': 2, 'Rituali': 2, 'Medicina': 2, 'Artefatti': 1, 'Cultura': 1 },
+  puntiAbilitaLiberi: { 'Potere': 2, 'Rituali': 2, 'Cultura': 1, 'Difese': 2, 'Armi da lancio': 2, 'Intrattenere': 1 },
   puntiEroe: { valore: 6, origine: 'app' },
 };
 
@@ -83,21 +84,23 @@ test('cambio di Corporazione: i Punti Caratteristica che superano 7 vengono rido
   assert.ok(r.avvisi.some((a) => /^COS:/.test(a)));
 });
 
-test('cambio di Classe: i punti liberi che sforano l’Avanzamento 3 vengono ridotti', () => {
-  // Medicina +3 liberi: va bene per l'Agente (non di Classe), non per il Paramedico (+1 di Classe).
-  const s = MISHIMA_AGENTE; // Medicina +3 come nell'esempio del §2.13
+test('cambio di Classe: i punti liberi che diventano inattivi restano nelle scelte e si segnalano (§2.13 del 29/09)', () => {
+  // Raggirare +4 va bene per l'Agente (S: 0 + 7 + 1 + 4 = 12), non per il Paramedico (G: 0 + 5 + 4, limite 7)
+  const s = MISHIMA_AGENTE;
   assert.deepEqual(normalizza(s, dati).avvisi, []);
   const r = applicaModifica(s, { classe: 'Paramedico' }, dati);
-  assert.equal(r.scelte.puntiAbilitaLiberi.Medicina, 2);
-  assert.ok(r.avvisi.some((a) => /^Medicina: punti liberi ridotti da 3 a 2/.test(a)));
+  assert.equal(r.scelte.puntiAbilitaLiberi.Raggirare, 4); // nessuna scelta persa
+  assert.deepEqual(r.avvisi, []);
+  const e = validaScelte(r.scelte, dati).find((x) => x.campo === 'puntiAbilitaLiberi.Raggirare');
+  assert.deepEqual([e.tipo, e.inattivi], ['violazione', 2]);
 });
 
 test('cambio di Corporazione: punti liberi su un’Abilità che scende sotto VA 1 vengono tolti', () => {
-  // Con le basi da 2 a 4 (Doc del 27/09/2026) nessun VA scende sotto 1 con i dati reali:
-  // il caso si prova su una copia dei dati con Rituali del Combattente a base 0.
+  // Con le basi da 3 a 7 (Doc del 29/09/2026) nessun VA scende sotto 1 con i dati reali: il caso si
+  // prova su una copia dei dati con la base delle Non competenti a 0.
   const d = copia(dati);
-  d.addestramenti.addestramenti.find((a) => a.nome === 'Combattente').valori_base['Rituali'] = 0;
-  // Combattente Soldato: Rituali ha base 0. Con Cybertronic (INT 6, Mod +1) il VA è 1 e il punto
+  d.regole.competenze.categorie.N.base = 0;
+  // Combattente Soldato: Rituali è N (base 0). Con Cybertronic (INT 6, Mod +1) il VA è 1 e il punto
   // libero è ammesso; con Capitol (INT 5) il VA scende a 0 e il punto va tolto.
   const s = {
     ...nuoveScelte(), corporazione: 'Cybertronic', puntiCaratteristica: { FOR: 1, DES: 2, SAG: 2 },
