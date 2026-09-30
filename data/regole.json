@@ -167,6 +167,17 @@
     ],
     "_nota": "Tab Poteri della scheda digitale (docs/layout-sd.md, pezzo 4): testo per chi non ha poteri, dal Manuale della Magia sez. 1 («Conoscenza e livello massimo», «Usufruitore di Magia»), e le sezioni future, chiuse e vuote finché il manuale non c’è."
   },
+  "tab_in_arrivo": {
+    "cibernetica": {
+      "testo": "Innesti e impianti cibernetici, gestiti come l’equipaggiamento, con lo stato dell’Umanità.",
+      "rimandi": ["Umanità (UMN): Giocatore §5.21. Ogni innesto indica nella propria scheda l’eventuale perdita di UMN; le schede degli impianti non sono ancora scritte."]
+    },
+    "veicoli": {
+      "testo": "La scheda dei veicoli arriva con il Manuale dei Veicoli (Davide prepara lo Scout come esempio).",
+      "rimandi": ["I veicoli sono esclusi dalle dotazioni iniziali; il Direttore di Gioco decide se e quali fornire al gruppo: Giocatore §2.16.30."]
+    },
+    "_nota": "Tab Cibernetica e Veicoli della scheda digitale (docs/layout-sd.md, pezzo 5): una riga e i rimandi ai paragrafi che ne parlano già. Nessun dato e nessun campo nel salvataggio."
+  },
   "regole_aggiornate": {
     "punti_abilita": "Regole aggiornate (Giocatore del 27/09 e del 29/09)",
     "_nota": "Titolo dell'avviso in cima alla SD quando un evento già registrato (creazione o livello) ha meno Punti Abilità Liberi di quelli previsti dalle regole correnti, o più, o punti che non aumentano più il VA personale: Giocatore, Doc del 27/09/2026 (10 punti invece di 5, per-davide A.52) e Doc del 29/09/2026 (categorie di competenza e limiti del VA personale, §2.13, §8.3). Se le regole cambiano ancora, si aggiorna qui la data."

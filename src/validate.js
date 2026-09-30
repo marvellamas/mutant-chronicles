@@ -370,6 +370,11 @@ function validaAR(dati, err) {
 }
 
 function validaRegole(r, err, dati = {}) {
+  // tab Cibernetica e Veicoli (docs/layout-sd.md, pezzo 5): testo e rimandi
+  for (const [k, x] of Object.entries(r?.tab_in_arrivo ?? {}).filter(([k]) => !k.startsWith('_'))) {
+    if (!isTesto(x?.testo)) err('regole', `tab_in_arrivo.${k}.testo`, 'testo mancante');
+    if (x?.rimandi !== undefined && (!Array.isArray(x.rimandi) || !x.rimandi.every(isTesto))) err('regole', `tab_in_arrivo.${k}.rimandi`, 'elenco di testi');
+  }
   // tab Poteri (docs/layout-sd.md, pezzo 4): testo per chi non ha poteri e sezioni in arrivo
   if (r?.poteri !== undefined) {
     if (!isTesto(r.poteri?.nessuno)) err('regole', 'poteri.nessuno', 'testo mancante (Manuale della Magia, sez. 1)');

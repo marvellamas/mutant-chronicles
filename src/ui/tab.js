@@ -126,9 +126,9 @@ export function renderTab(ctx) {
     // Poteri: per ora la tab Magia com'è; senza accesso alla magia «Nessun potere» (docs/layout-sd.md)
     poteri: tabPoteri,
     artefatti: (c) => tabArtefatti(c),
-    cibernetica: () => tabVuoto('In lavorazione.'),
+    cibernetica: (c) => tabInArrivo(c, 'cibernetica'),
     inventario: (c) => tabInventario(c),
-    veicoli: () => tabVuoto('In lavorazione.'),
+    veicoli: (c) => tabInArrivo(c, 'veicoli'),
   };
   // badge della pagina accanto al titolo della tab (solo con l'immagine: senza, il titolo è già nella barra delle tab)
   const badge = iconaPagina(corrente.icona ?? corrente.id, '96', { classe: 'badge-pagina', lato: 48 });
@@ -276,11 +276,6 @@ function contatoreTavolo(ctx, { titolo, campo, attuale, massimo, passi = [1, 5],
  * Riquadri dei Punti Vita e dei Punti Magia con barra, bordo colorato e +/−. Compatti nella colonna
  * di sinistra (senza l'elenco dei cristalli, che resta nella tab Magia).
  */
-/** Contenitore di un tab senza contenuti (ancora): una riga e una nota. */
-function tabVuoto(testo, nota = null) {
-  return h('div', { class: 'riquadro tab-vuoto' }, h('p', {}, h('strong', {}, testo)), nota ? h('p', { class: 'nota' }, nota) : null);
-}
-
 /** Colonna di sinistra, uguale in ogni tab: Punti Eroe sopra i PV, poi PV e PM (docs/layout-sd.md). */
 function colonnaRisorse(ctx) {
   const s = ctx.sessione;
@@ -1489,6 +1484,18 @@ function etichettaModalita(ctx, sigla, nomeCatalogo) {
  * manuale (regole.json → poteri.nessuno). Poi gli Artefatti con poteri, in sola lettura, e le sezioni
  * future chiuse (regole.json → poteri.in_arrivo).
  */
+/**
+ * Tab Cibernetica e Veicoli (docs/layout-sd.md, pezzo 5): lo stesso riquadro di «Nessun potere», con
+ * la riga «In attesa del manuale» e i rimandi ai paragrafi che ne parlano (regole.json → tab_in_arrivo).
+ */
+function tabInArrivo(ctx, id) {
+  const x = ctx.dati.regole.tab_in_arrivo?.[id];
+  return [h('section', { class: 'riquadro nessun-potere tab-in-arrivo' },
+    h('h2', {}, 'In attesa del manuale'),
+    x?.testo ? h('p', { class: 'nota' }, x.testo) : null,
+    x?.rimandi?.length ? h('ul', { class: 'rimandi' }, x.rimandi.map((r) => h('li', {}, r))) : null)];
+}
+
 function tabPoteri(ctx, d) {
   const p = ctx.dati.regole.poteri ?? {};
   return [

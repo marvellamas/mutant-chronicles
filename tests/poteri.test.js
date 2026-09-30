@@ -42,3 +42,13 @@ test('validatore: testo di «Nessun potere» mancante, sezione in arrivo senza n
   assert.match(e, /poteri\.nessuno: testo mancante/);
   assert.match(e, /poteri\.in_arrivo\[1\]: servono nome e nota/);
 });
+
+test('Cibernetica e Veicoli (pezzo 5): tab vuoti con testo e rimandi, nessun dato', () => {
+  const tab = tabFissi(preparaTab({ creazione: MISHIMA_AGENTE, livelli: [] }, dati).tab);
+  for (const id of ['cibernetica', 'veicoli']) {
+    assert.equal(tab.find((t) => t.id === id).dati, null);
+    assert.ok(dati.regole.tab_in_arrivo[id].testo.length > 20);
+  }
+  assert.match(dati.regole.tab_in_arrivo.cibernetica.rimandi[0], /§5\.21/);
+  assert.match(dati.regole.tab_in_arrivo.veicoli.rimandi[0], /§2\.16\.30/);
+});
