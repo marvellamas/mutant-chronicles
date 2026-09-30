@@ -757,9 +757,15 @@ test('rinforzi sulle armature corporative: proprietà native con le penalità de
   assert.equal(p.forRichiesta, 5);
   assert.equal(p.categoria, 'Media');
   assert.deepEqual(p.penalita, { attacchi_distanza: -1, attacchi_ravvicinati: -1, agilita: -1, movimento_q: -1, lancio_potere: -2 });
-  // §7.11.7: «Con la Divisa operativa: AR 4, FOR 5, penalità Media»
+  // Armamenti 0.55, §7.11.7 e §7.23.10: «Con la Divisa operativa: AR 4, FOR 5, penalità Leggera» (Abbinamento ottimizzato)
   ({ p } = rinforzata('armature_corporative:divisa-operativa-asa', 'soprabito-asa'));
-  assert.deepEqual([p.ar.totale, p.forRichiesta, p.categoria, p.rinforzo.nome], [4, 5, 'Media', 'Soprabito ASA']);
+  assert.deepEqual([p.ar.totale, p.forRichiesta, p.categoria, p.rinforzo.nome], [4, 5, 'Leggera', 'Soprabito ASA']);
+  // §7.23.10: Rinforzo flessibile Mortificator, la combinazione resta Leggera, penalità 0 anche al lancio
+  ({ p } = rinforzata('armature_corporative:tuta-del-mortificator', 'rinforzo-flessibile-mortificator'));
+  assert.deepEqual([p.ar, p.forRichiesta, p.categoria, p.penalita.lancio_potere ?? 0, p.penalita.agilita ?? 0], [{ totale: 4, magica: 1 }, 5, 'Leggera', 0, 0]);
+  // lo stesso rinforzo dedicato su un'altra armatura non è compatibile; il Mantello Venusiano lascia la Ranger Media
+  ({ p } = rinforzata('armature_corporative:armatura-dei-ranger-venusiani', 'mantello-venusiano'));
+  assert.deepEqual([p.ar.totale, p.forRichiesta, p.categoria], [4, 6, 'Media']);
   // Mercurio (Media) resta Media e conserva Assetto da incursione e Articolazione da ricognizione
   ({ p } = rinforzata('armature_corporative:armatura-mercurio', 'rinforzo-leggero'));
   assert.deepEqual([p.ar.totale, p.forRichiesta, p.categoria, p.penalita.movimento_q, p.penalita.agilita], [5, 6, 'Media', 0, 0]);

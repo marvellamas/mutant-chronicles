@@ -432,6 +432,8 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
   const formula = base ? aggiungiDanno(base, dannoBonus) : null;
   const G = dati.regole.attacco_ravvicinato?.magistrale;
   if (formula && G?.promemoria) promemoria.push(G.promemoria);
+  const mn = promemoriaMagistraleNaturale(somma(scomposizione), dati);
+  if (mn) promemoria.push(mn);
 
   return {
     va_finale: somma(scomposizione),
@@ -640,6 +642,12 @@ export function vincoliRavvicinato(personaggio, arma, dichiarazione, dati) {
     dueArmi: arma.senzArmi ? 'serve un’arma in ciascuna mano' : !s.arma ? 'serve una seconda arma impugnata' : !s.combinazione ? 'combinazione di armi non ammessa (§5.7)' : null,
     secondaArma: s.arma,
   };
+}
+
+/** §1.6 (Giocatore del 29/09): con VA finale almeno 21 anche il 2 naturale è Magistrale; il promemoria, o null. */
+export function promemoriaMagistraleNaturale(va, dati) {
+  const M = dati.regole.magistrale_naturale;
+  return M && Number.isFinite(va) && va >= M.soglia_va ? `VA finale ${va}: ${M.promemoria} (${M.paragrafo}).` : null;
 }
 
 /** §1.6: moltiplicatore con il Magistrale (×1 → ×2, ×2 → ×3, ×3 resta ×3). */
@@ -869,6 +877,9 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
     const q = t.e.promemoria;
     if (q === 'sempre' || (q === 'senz_armi' && arma.senzArmi)) promemoria.push(`${t.nome}: ${primaFrase(t.testo)}`);
   }
+
+  const mn = promemoriaMagistraleNaturale(attacchi[0]?.va ?? somma(scomposizione), dati);
+  if (mn) promemoria.push(mn);
 
   return {
     va_finale: attacchi[0]?.va ?? somma(scomposizione),

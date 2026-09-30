@@ -72,8 +72,9 @@ test('esempio del manuale: Mishima Avventuriero Agente (§2.14, §2.17)', () => 
   assert.equal(av('Armi leggere'), 2);
   assert.equal(av('Cultura'), 2);
   assert.equal(av('Raggirare'), 2);
-  // §2.17: Mishima riceve +1 ad Armi da mischia.
-  assert.equal(s.abilita.find((a) => a.nome === 'Armi da mischia').corporazione, 1);
+  // §2.17 (Giocatore del 29/09): Mishima riceve +1 ad Armi da guerra, non più ad Armi da mischia.
+  assert.equal(s.abilita.find((a) => a.nome === 'Armi da guerra').corporazione, 1);
+  assert.equal(s.abilita.find((a) => a.nome === 'Armi da mischia').corporazione, 0);
   assert.equal(s.abilita.length, 24);
   assert.equal(s.talenti.length, 1);
   assert.equal(s.talenti[0].nome, 'Fuoco Controllato');

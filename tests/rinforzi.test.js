@@ -15,9 +15,13 @@ const rinforzata = (armatura, kit) => {
 };
 const effetti = (eq, filtro) => eq.effettiOggetti.filter(filtro).map((e) => [e.oggetto, e.valore]);
 
-test('§7.23: 2 profili di categoria, 4 modelli commerciali, 2 soprabiti di base, 14 specialistici', () => {
+test('§7.23: 2 profili di categoria, 4 modelli commerciali, 2 soprabiti di base, 14 specialistici, 9 dedicati e il Mantello Venusiano (0.55)', () => {
   const r = catalogo(dati).oggetti.filter((o) => o.file === 'rinforzi');
-  assert.equal(r.length, 22);
+  assert.equal(r.length, 32);
+  // §7.23.10: nove rinforzi dedicati da 1.500, Rari, PS 12; ognuno ottimizzato solo sulla propria armatura
+  const dedicati = r.filter((o) => o.paragrafo === '§7.23.10');
+  assert.equal(dedicati.length, 9);
+  assert.ok(dedicati.every((o) => o.costo === 1500 && o.reperibilita === 'RA' && o.ps_int === 12 && o.abbinamento_ottimizzato.length === 1));
   const per = (id) => catalogo(dati).perRif.get(`rinforzi:${id}`);
   // §7.23.6: specialistici con Qualità Non comune e PS Integrità 12; Eisenwall 10 PI
   assert.deepEqual([per('piastre-eisenwall').pi, per('piastre-eisenwall').qualita, per('piastre-eisenwall').ps_int, per('piastre-eisenwall').costo], [10, 'Non comune', 12, 3200]);

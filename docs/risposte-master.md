@@ -507,3 +507,22 @@ Ricognizione e stime: `docs/ricognizione-2026-09-28.md`.
 
 Restano aperti di A.39 i punti 4 (tiro di contatto con i consenzienti) e 5 (Talenti fuori dal cumulo
 della sez. 7).
+
+## 30 settembre 2026 — manuali del 29/09 sera (Giocatore 23:45, Armamenti 0.55)
+
+Non sono risposte a domande dell'app ma cambi di regola nei manuali, applicati come fonte corrente
+(`docs/diff-manuali-2026-09-30.md`).
+
+62. **Abbinamenti ottimizzati e Mantello Venusiano** (Armamenti 0.55 §§7.23.10–7.23.11). Le coppie
+    armatura + rinforzo elencate restano nella categoria originaria anche ad AR 3 o più; il beneficio è
+    della coppia, non del nome o del marchio. → `rinforzi.json` (`abbinamento_ottimizzato`, 10 voci nuove),
+    `src/equipaggiamento.js`, validatore.
+
+63. **Mishima: +1 ad Armi da guerra** (Giocatore §2.2, §2.17 del 29/09), non più ad Armi da mischia.
+    → `corporazioni.json`.
+
+64. **2 naturale Magistrale con VA finale ≥ 21** (Giocatore §1.6), nelle Prove di Abilità.
+    → `regole.json` → `magistrale_naturale`; promemoria in «Attacca!» e «Lancia!».
+
+Da applicare: la riforma delle categorie di competenza (basi dalla prima Classe, limiti del VA personale,
+multiclasse §8.7), vedi `docs/diff-manuali-2026-09-30.md`.

@@ -1441,6 +1441,15 @@
     "parata_distanza_arma": -8,
     "_nota": "Giocatore §5.9, Parata a distanza: «Penalità −8 VA con un’arma e −4 VA con uno scudo». Gli scudi hanno i propri modificatori nel catalogo (Armamenti §7.4.11)."
   },
+  "magistrale_naturale": {
+    "paragrafo": "Giocatore §1.6",
+    "soglia_va": 21,
+    "promemoria": "anche il 2 naturale è un Successo Magistrale in questa Prova",
+    "frasi": [
+      "Nelle Prove di Abilità effettivamente richieste, con VA finale almeno 21 anche il 2 naturale è un Successo Magistrale."
+    ],
+    "_nota": "Giocatore del 29/09 (23:45). Si controlla il VA finale della singola Prova, dopo tutti i bonus e le penalità. «Attacca!» e «Lancia!» lo ricordano quando il VA finale raggiunge la soglia; Successo Magistrale Migliorato resta un promemoria del Talento."
+  },
   "danno_caratteristica": {
     "paragrafo": "Giocatore §5.13, «Danno base e bonus di Caratteristica»",
     "fasce": [

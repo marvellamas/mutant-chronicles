@@ -4,7 +4,7 @@
 
 ## Armi armature scudi e dotazioni operative
 
-**EDIZIONE 0.54**
+**EDIZIONE 0.55**
 
 Settembre 2026
 
@@ -2595,7 +2595,7 @@ Per ogni punto di FOR mancante rispetto al requisito si applica un ulteriore −
 
 Si può montare un solo rinforzo compatibile, scelto dal catalogo del §7.23. Non si sommano più kit e non si sovrappongono due armature complete. Il kit aumenta AR e requisito FOR dell’armatura; conserva PI e PS propri, registrati separatamente. Non si sommano i suoi PI a quelli della protezione. Le proprietà native restano applicabili nei rispettivi ambiti.
 
-La Leggera commerciale accetta Rinforzi Leggeri o Pesanti; la Media commerciale soltanto Leggeri; la Pesante commerciale nessuno. Per i modelli corporativi prevale la compatibilità indicata nella scheda. Un’armatura Leggera portata fisicamente ad AR 3 o superiore da un rinforzo utilizza le penalità di una Media. Un incremento della sola AR magica non cambia categoria. Un modello nativamente Leggero con AR superiore, come la Divisa operativa ASA, mantiene invece la categoria dichiarata fino all’aggiunta del rinforzo.
+La Leggera commerciale accetta Rinforzi Leggeri o Pesanti; la Media commerciale soltanto Leggeri; la Pesante commerciale nessuno. Per i modelli corporativi prevale la compatibilità indicata nella scheda. Un’armatura Leggera portata fisicamente ad AR 3 o superiore da un rinforzo utilizza le penalità di una Media, salvo un Abbinamento ottimizzato espressamente indicato nel §7.23.10. Un incremento della sola AR magica non cambia categoria. Un modello nativamente Leggero con AR superiore, come la Divisa operativa ASA, mantiene invece la categoria dichiarata anche con il rinforzo soltanto se la combinazione beneficia di Abbinamento ottimizzato; negli altri casi si applica la regola ordinaria.
 
 | Configurazione commerciale | AR finale | FOR finale | Penalità |
 | ----- | :---: | :---: | :---: |
@@ -2745,7 +2745,7 @@ I tredici modelli seguenti sono configurazioni Standard iconiche, ciascuna con i
 
 #### **Armatura dei Ranger Venusiani**
 
-**Proprietà:** Assetto da pattuglia, Mimetica ambientale 1, Filtro respiratorio 2\. La livrea si sceglie per l’ambiente operativo; i diversi ambienti non cambiano profilo o costo. MOV dell’armatura 0; le altre penalità Medie restano. Accetta soltanto Rinforzi Leggeri: AR 4, FOR 6\.
+**Proprietà:** Assetto da pattuglia, Mimetica ambientale 1, Filtro respiratorio 2\. La livrea si sceglie per l’ambiente operativo; i diversi ambienti non cambiano profilo o costo. MOV dell’armatura 0; le altre penalità Medie restano. Accetta soltanto Rinforzi Leggeri: AR 4, FOR 6\. Il Mantello Venusiano dedicato (§7.23.11) costa 2.500 e aggiunge Mimetica ambientale 2; con esso restano categoria Media e MOV 0, con AR 4 e FOR 6\.
 
 #### **Armatura d’assalto Blitzer**
 
@@ -2753,11 +2753,11 @@ I tredici modelli seguenti sono configurazioni Standard iconiche, ciascuna con i
 
 #### **Tuta delle Étoiles Mortants**
 
-**Proprietà unica:** Mimetismo 2\. AR 2 è nativa e conserva categoria Leggera e FOR 3\. Accetta soltanto Rinforzi Leggeri: AR 3, FOR 4, penalità Media. La tuta non concede automaticamente addestramento, capacità delle doppie lame o poteri dell’Arte.
+**Proprietà unica:** Mimetismo 2\. AR 2 è nativa e conserva categoria Leggera e FOR 3\. Accetta soltanto Rinforzi Leggeri: AR 3, FOR 4, penalità Media con rinforzi ordinari. Le Piastre flessibili Étoiles mantengono invece la categoria Leggera per Abbinamento ottimizzato (§7.23.10), con AR 3 e FOR 4\. La tuta non concede automaticamente addestramento, capacità delle doppie lame o poteri dell’Arte.
 
 #### **Armatura d’ordinanza BLEU**
 
-Protezione leggera del corpo di polizia corporativa. Proprietà: Imbottita 2 e Isolante 2\. Il Soprabito blu di ordinanza è un Rinforzo Leggero opzionale, con AR \+1, FOR \+1, PI 6, Qualità Comune, PS 10, REP NC e costo 1.000. Con il Soprabito: AR 3, FOR 5, penalità Media e costo totale 5.500. Occupa l’unico posto per rinforzi.
+Protezione leggera del corpo di polizia corporativa. Proprietà: Imbottita 2 e Isolante 2\. Il Soprabito blu di ordinanza è un Rinforzo Leggero opzionale, con AR \+1, FOR \+1, PI 6, Qualità Comune, PS 10, REP NC e costo 1.000. Con il Soprabito: AR 3, FOR 5, penalità Leggera per Abbinamento ottimizzato (§7.23.10) e costo totale 5.500. Occupa l’unico posto per rinforzi.
 
 #### **Armatura dell’Artillery Korps**
 
@@ -2777,7 +2777,7 @@ Protezione per gli equipaggi della forza corazzata, distinta dalla Corazza dei D
 
 #### **Armatura dei Jungle Kommandos**
 
-**Proprietà:** Mimetica ambientale 1 per giungla e vegetazione tropicale compatibile; Filtro respiratorio 2\. La mimetica non si estende automaticamente ad altri ambienti. Accetta soltanto Rinforzi Leggeri: AR 3, FOR 5, penalità Media, costo totale 7.500.
+**Proprietà:** Mimetica ambientale 1 per giungla e vegetazione tropicale compatibile; Filtro respiratorio 2\. La mimetica non si estende automaticamente ad altri ambienti. Accetta soltanto Rinforzi Leggeri: AR 3, FOR 5, penalità Media con il rinforzo ordinario da 1.000, costo totale 7.500. Con il Mantello da giungla Kommando conserva invece la categoria Leggera per Abbinamento ottimizzato (§7.23.10), con AR 3 e FOR 5\.
 
 #### **Corazza delle Guardie Ducali**
 
@@ -2851,7 +2851,7 @@ Marte, Vulcano e Mercurio comprendono AR magica 1 nel totale e possiedono Protez
 
 #### **Soprabito ASA**
 
-**Rinforzo Leggero opzionale:** AR \+1, FOR \+1, PI 6, Qualità Comune, PS Integrità 10, REP NC, costo 1.000. Con la Divisa d’ordinanza: AR 3, FOR 4, penalità Media e costo totale 5.000. Con la Divisa operativa: AR 4, FOR 5, penalità Media e costo totale 8.000. Non concede AR magica né Protezione occulta; mantiene Integrità propria e occupa l’unico posto per rinforzi.
+**Rinforzo Leggero opzionale:** AR \+1, FOR \+1, PI 6, Qualità Comune, PS Integrità 10, REP NC, costo 1.000. Con la Divisa d’ordinanza: AR 3, FOR 4, penalità Leggera e costo totale 5.000. Con la Divisa operativa: AR 4, FOR 5, penalità Leggera e costo totale 8.000. Non concede AR magica né Protezione occulta; mantiene Integrità propria e occupa l’unico posto per rinforzi. Il Soprabito ASA, base o riservato, costituisce un Abbinamento ottimizzato con entrambe le divise (§7.23.10).
 
 #### **Armatura Marte**
 
@@ -3008,7 +3008,7 @@ Protezione per ricognizione e pattugliamento. Assetto da pattuglia elimina solta
 
 #### **Armatura Airborne Rangers**
 
-Protezione della fanteria aviotrasportata. Possiede Imbottita 2 e Imbracatura da lancio 2\. L’imbracatura concede \+2 VA alle Prove di Pilotare richieste per controllare discesa e atterraggio con un paracadute compatibile.
+Protezione della fanteria aviotrasportata. Possiede Imbottita 2 e Imbracatura da lancio 2\. L’imbracatura concede \+2 VA alle Prove di Pilotare richieste per controllare discesa e atterraggio con un paracadute compatibile. Con le Piastre aviotrasportate Airborne conserva la categoria Leggera per Abbinamento ottimizzato (§7.23.10): AR 3 e FOR 5\.
 
 Il paracadute si acquista separatamente. L’armatura da sola non rallenta una Caduta e Imbottita non costituisce protezione dai danni da caduta.
 
@@ -3026,7 +3026,7 @@ La maschera caratteristica non infligge automaticamente Paura. Le regole del pro
 
 #### **Panther Sea Lions**
 
-Protezione per infiltrazione nella giungla. Mimetica ambientale 2 concede \+2 VA a Furtività per nascondersi o muoversi senza essere individuati nella giungla e nella vegetazione tropicale, quando le condizioni consentono di nascondersi.
+Protezione per infiltrazione nella giungla. Mimetica ambientale 2 concede \+2 VA a Furtività per nascondersi o muoversi senza essere individuati nella giungla e nella vegetazione tropicale, quando le condizioni consentono di nascondersi. Con il Mantello Panther conserva la categoria Leggera per Abbinamento ottimizzato (§7.23.10): AR 3 e FOR 5; la mimetica resta quella dell’armatura.
 
 Articolazione da arrampicata 2 concede \+2 VA ad Atletica per arrampicarsi usando appigli reali o attrezzatura adatta. Non aumenta automaticamente la distanza percorribile e non permette di aderire a superfici prive di appigli.
 
@@ -3074,7 +3074,7 @@ Paracadute, respiratore e sistema di eiezione sono dotazioni separate. Il bonus 
 | Corazza Tortoise Mk II e Sea Devil | Nessuno |
 | Tutti gli altri modelli di armatura Capitol del §7.13.1 | Un kit Leggero |
 
-**Si applica il §7.11.2:** un solo kit, PI e PS Integrità separati, aumento del requisito FOR e nessuna sovrapposizione di armature complete. Una Leggera portata fisicamente ad AR 3 o superiore da un rinforzo applica le penalità della Media. Le proprietà native continuano a funzionare nei rispettivi ambiti.
+**Si applica il §7.11.2:** un solo kit, PI e PS Integrità separati, aumento del requisito FOR e nessuna sovrapposizione di armature complete. Una Leggera portata fisicamente ad AR 3 o superiore da un rinforzo applica le penalità della Media, salvo gli Abbinamenti ottimizzati del §7.23.10 per Airborne Rangers e Panther Sea Lions. Le proprietà native continuano a funzionare nei rispettivi ambiti.
 
 | Reparto o impiego | Protezione assegnata |
 | :---- | :---- |
@@ -3337,7 +3337,7 @@ Articolazione d’assalto, Assetto da incursione e Filtro respiratorio 2\. La pe
 
 #### **Tenuta operativa Grey Ghost**
 
-Mimetica ambientale 2 urbana e Imbracatura tecnica 1\. La mimetica concede \+2 VA alla Prova unica di Furtività in ambiente urbano quando esistono condizioni concrete per nascondersi. L’imbracatura concede \+1 VA ad Atletica per arrampicarsi o calarsi usando corde e ancoraggi adeguati; tali strumenti si acquistano separatamente. Non aumenta automaticamente il movimento.
+Mimetica ambientale 2 urbana e Imbracatura tecnica 1\. La mimetica concede \+2 VA alla Prova unica di Furtività in ambiente urbano quando esistono condizioni concrete per nascondersi. L’imbracatura concede \+1 VA ad Atletica per arrampicarsi o calarsi usando corde e ancoraggi adeguati; tali strumenti si acquistano separatamente. Non aumenta automaticamente il movimento. Il Rivestimento flessibile Ghost mantiene la categoria Leggera per Abbinamento ottimizzato (§7.23.10): AR 3 e FOR 4\.
 
 #### **Corazza pesante Blood Beret**
 
@@ -3357,7 +3357,7 @@ Struttura robusta, Imbottita 2 e Stabile 1\. I 2 PI aggiuntivi sono inclusi nel 
 
 #### **Tenuta da ricognizione Pathfinder**
 
-Mimetismo 2 e Passo sicuro 1\. Concede \+2 VA alla Prova unica di Furtività nelle condizioni pertinenti. Passo sicuro 1 concede \+1 VA ad Atletica per mantenere l’equilibrio o attraversare terreni instabili o scivolosi, soltanto quando la Prova è già richiesta. Non riduce i costi di movimento e non si applica a salti, arrampicate o spostamenti forzati.
+Mimetismo 2 e Passo sicuro 1\. Concede \+2 VA alla Prova unica di Furtività nelle condizioni pertinenti. Passo sicuro 1 concede \+1 VA ad Atletica per mantenere l’equilibrio o attraversare terreni instabili o scivolosi, soltanto quando la Prova è già richiesta. Non riduce i costi di movimento e non si applica a salti, arrampicate o spostamenti forzati. Il Mantello Pathfinder mantiene la categoria Leggera per Abbinamento ottimizzato (§7.23.10): AR 3 e FOR 4\.
 
 #### **Armatura da cavalleria Fenris**
 
@@ -3400,9 +3400,9 @@ Autonomia: 8 ore di funzionamento. Ricarica completa: 8 ore. Una batteria di ric
 | Blood Beret e Mk.IV Felis Pattern | Nessuno |
 | ISC, Stormtrencher, Grey Ghost, Wolfbane, Headhunter, Pathfinder, Fenris, Life Dragoons e Mourning Wolves | Un kit Leggero |
 
-Vale il limite di un solo kit del §7.11.2. Rinforzi Leggeri: AR \+1, FOR \+1, costo 1.000. Rinforzi Pesanti: AR \+2, FOR \+2, costo 2.000. Il kit conserva PI e PS Integrità separati e non somma i propri PI a quelli dell’armatura.
+Vale il limite di un solo kit del §7.11.2. Profili standard: Rinforzi Leggeri: AR \+1, FOR \+1, costo 1.000. Rinforzi Pesanti: AR \+2, FOR \+2, costo 2.000. Il kit conserva PI e PS Integrità separati e non somma i propri PI a quelli dell’armatura.
 
-Tutte le Leggere Imperial di questo catalogo, quando ricevono un kit Leggero, usano le penalità della categoria Media. Wolfbane, Headhunter, Fenris e Mourning Wolves passano da AR 3 a AR 4; ISC, Grey Ghost e Pathfinder passano da AR 2 a AR 3\. Le proprietà native mantengono i propri limiti. La protezione Discreta dell’ISC non nasconde rinforzi visibili.
+Tutte le Leggere Imperial di questo catalogo, quando ricevono un kit Leggero, usano le penalità della categoria Media, salvo Grey Ghost con Rivestimento flessibile Ghost e Pathfinder con Mantello Pathfinder, che restano Leggere per Abbinamento ottimizzato (§7.23.10). Wolfbane, Headhunter, Fenris e Mourning Wolves passano da AR 3 a AR 4; ISC, Grey Ghost e Pathfinder passano da AR 2 a AR 3\. Le proprietà native mantengono i propri limiti. La protezione Discreta dell’ISC non nasconde rinforzi visibili.
 
 | Reparto o impiego | Profilo e dotazione caratteristica |
 | :---- | :---- |
@@ -3735,7 +3735,7 @@ Imbottita 1 e Isolante 1\. SIN 1: \+1 VA a Difese per Schivare. Accetta un Rinfo
 
 #### **Abito degli Agenti IES**
 
-Discreta, Mimetismo 1 e Isolante 1\. SIN 1: \+1 VA alla Prova unica di Furtività. Accetta un Rinforzo Leggero; componenti esterni visibili non vengono nascosti dalla proprietà Discreta.
+Discreta, Mimetismo 1 e Isolante 1\. SIN 1: \+1 VA alla Prova unica di Furtività. Accetta un Rinforzo Leggero; componenti esterni visibili non vengono nascosti dalla proprietà Discreta. La Sottogiacca protettiva IES conserva la categoria Leggera per Abbinamento ottimizzato (§7.23.10): AR 3 e FOR 4\. Indossata sotto l’abito, conserva Discreta finché nessuna componente corazzata è visibile.
 
 #### **Corazza Chasseur**
 
@@ -3765,7 +3765,7 @@ Isolante 2 e Antiesplosione 1: contro danni Naturali o Magici da esplosione l’
 
 Isolante 2 e Filtro respiratorio 2\. SIN 1: \+1 VA a Medicina o Tecnologia per assistenza medica e manutenzione cibernetica, usando strumenti appropriati. Il SIN non sostituisce competenze, materiali o strumenti. Accetta un Rinforzo Leggero; il corredo di assistenza è separato.
 
-Su Sicurezza, IES e Dr. Diana il Rinforzo Leggero porta AR da 2 a 3, aumenta FOR di 1 e applica le penalità della Media. Su Chasseur porta AR a 4 e FOR a 6, mantenendo la Media. I rinforzi costano 1.000 e conservano PI e PS propri (§7.11.2).
+Su Sicurezza, IES e Dr. Diana il Rinforzo Leggero porta AR da 2 a 3, aumenta FOR di 1 e applica le penalità della Media; fa eccezione IES con la Sottogiacca protettiva IES, che resta Leggera (§7.23.10). Su Chasseur porta AR a 4 e FOR a 6, mantenendo la Media. I rinforzi standard costano 1.000 e conservano PI e PS propri (§7.11.2).
 
 ### **7.15.4 Moduli specialistici**
 
@@ -3896,7 +3896,7 @@ Struttura robusta, Imbottita 2 e Filtro respiratorio 2\. I 2 PI aggiuntivi sono 
 
 #### **Tuta delle Ombre**
 
-Mimetismo 2, Imbottita 1 e Imbracatura tecnica 1\. Concede \+2 VA alla Prova unica di Furtività nelle condizioni appropriate; l’imbracatura concede \+1 VA ad Atletica per arrampicarsi o calarsi utilizzando effettivamente corde e attrezzature pertinenti.
+Mimetismo 2, Imbottita 1 e Imbracatura tecnica 1\. Concede \+2 VA alla Prova unica di Furtività nelle condizioni appropriate; l’imbracatura concede \+1 VA ad Atletica per arrampicarsi o calarsi utilizzando effettivamente corde e attrezzature pertinenti. Gli Inserti articolati delle Ombre mantengono la categoria Leggera per Abbinamento ottimizzato (§7.23.10): AR 3 e FOR 4\.
 
 #### **Armatura dei Portatori di Morte**
 
@@ -3945,7 +3945,7 @@ Il prezzo comprende una batteria carica. Accendere o spegnere il sistema richied
 | Bushido, Ronin, Draghi Tigre, Diavoli Scarlatti, Ombre e Portatori di Morte | Un Leggero |
 | Hatamoto, Droni, Powersuit, Shoa Ace Custom e Demonhunter | Nessuno ordinario |
 
-Si applicano aumenti di AR e FOR e PI separati del §7.11.2. Le Leggere rinforzate che raggiungono AR 3 o superiore utilizzano le penalità della Media; una categoria nativa Leggera con AR 3 non cambia invece senza rinforzo. Le proprietà del modello restano applicabili alle nuove penalità. I rinforzi ordinari non aumentano la componente magica.
+Si applicano aumenti di AR e FOR e PI separati del §7.11.2. Le Leggere rinforzate che raggiungono AR 3 o superiore utilizzano le penalità della Media, salvo la Tuta delle Ombre con gli Inserti articolati delle Ombre (§7.23.10); una categoria nativa Leggera con AR 3 non cambia invece senza rinforzo. Le proprietà del modello restano applicabili alle nuove penalità. I rinforzi ordinari non aumentano la componente magica.
 
 ### **7.16.5 Corredi operativi**
 
@@ -4118,7 +4118,7 @@ Protezione occulta 1, Assetto mistico 2, Articolazione d’assalto, Assetto da i
 
 #### **Tuta del Mortificator**
 
-Protezione occulta 1, Assetto mistico 1, Mimetismo 2, Imbottita 1, Imbracatura tecnica 1 e Struttura robusta. Concede \+2 VA alla Prova unica di Furtività nelle condizioni appropriate e \+1 VA ad Atletica per arrampicarsi o calarsi utilizzando effettivamente corde e attrezzatura pertinente. Gli 8 PI comprendono il beneficio della struttura. AR 3 nativa mantiene la categoria Leggera.
+Protezione occulta 1, Assetto mistico 1, Mimetismo 2, Imbottita 1, Imbracatura tecnica 1 e Struttura robusta. Concede \+2 VA alla Prova unica di Furtività nelle condizioni appropriate e \+1 VA ad Atletica per arrampicarsi o calarsi utilizzando effettivamente corde e attrezzatura pertinente. Gli 8 PI comprendono il beneficio della struttura. AR 3 nativa mantiene la categoria Leggera. Con il Rinforzo flessibile Mortificator conserva la categoria Leggera per Abbinamento ottimizzato (§7.23.10): AR totale 4, di cui 1 magica, e FOR 5\. Assetto mistico 1 mantiene a 0 la penalità dell’armatura al lancio.
 
 #### **Corazza del Custode dell’Arte**
 
@@ -4158,7 +4158,7 @@ I valori seguenti comprendono le proprietà native dell’armatura, prima di rin
 
 ### **7.17.5 Rinforzi e impieghi specialistici**
 
-Tutte le Leggere e Medie ammettono un solo Rinforzo Leggero, acquistato separatamente per 1.000. Aggiunge 1 AR ordinaria e 1 FOR richiesta; conserva PI propri e non aumenta AR magica. Furie, Sacri Guerrieri, Custode e Arcivescovi non ammettono rinforzi ordinari.
+Tutte le Leggere e Medie ammettono un solo Rinforzo Leggero, acquistato separatamente: il profilo standard costa 1.000; i modelli specialistici seguono il §7.23. Aggiunge 1 AR ordinaria e 1 FOR richiesta; conserva PI propri e non aumenta AR magica. Furie, Sacri Guerrieri, Custode e Arcivescovi non ammettono rinforzi ordinari.
 
 | Modello rinforzato | AR totale | Magica | FOR |
 | :---- | :---: | :---: | :---: |
@@ -4170,7 +4170,7 @@ Tutte le Leggere e Medie ammettono un solo Rinforzo Leggero, acquistato separata
 | Sentinella | 5 | 1 | 6 |
 | Arcangelo | 3 | 0 | 4 |
 
-Revisore, Mortificator e Arcangelo rinforzati utilizzano le penalità della Media, mantenendo le proprie proprietà. Mortificator rinforzato: −1 VA ad attacchi e Agilità, −1 MOV e −2 VA al lancio dopo Assetto mistico 1\. Per l’Arcangelo il rinforzo deve essere compatibile con sedile e imbracatura; la penalità al lancio diventa −3. Gli altri modelli restano Medi.
+Revisore, Mortificator e Arcangelo con rinforzi ordinari utilizzano le penalità della Media, mantenendo le proprie proprietà. Mortificator con rinforzo ordinario: −1 VA ad attacchi e Agilità, −1 MOV e −2 VA al lancio dopo Assetto mistico 1\. Per l’Arcangelo il rinforzo deve essere compatibile con sedile e imbracatura; la penalità al lancio diventa −3. Gli altri modelli restano Medi. Il Rinforzo flessibile Mortificator evita il passaggio a Media: la combinazione resta Leggera e conserva penalità 0 ad attacchi, Agilità, MOV e lancio dopo Assetto mistico 1 (§7.23.10).
 
 | Specializzazione | Profilo di protezione |
 | :---- | :---- |
@@ -5195,7 +5195,7 @@ Il prezzo dei kit riguarda l’intero insieme necessario a ottenere il bonus: og
 | Soprabito blu d’ordinanza BLEU | Bauhaus | Leggero | Armatura d’ordinanza BLEU. | 1.000 |
 | Soprabito ASA | Alleanza | Leggero | Divisa d’ordinanza ASA e Divisa operativa ASA. | 1.000 |
 
-Entrambi concedono AR \+1 e aumentano di 1 la FOR richiesta; hanno PI 6, Qualità Comune, PS Integrità 10 e Reperibilità Non comune. La forma di soprabito non aggiunge automaticamente Discreta, Mimetismo o altri vantaggi.
+Entrambi concedono AR \+1 e aumentano di 1 la FOR richiesta; hanno PI 6, Qualità Comune, PS Integrità 10 e Reperibilità Non comune. La forma di soprabito non aggiunge automaticamente Discreta, Mimetismo o altri vantaggi. Soprabito blu d’ordinanza BLEU e Soprabito ASA conservano la categoria Leggera delle rispettive armature grazie agli Abbinamenti ottimizzati del §7.23.10.
 
 ### **7.23.4 Regole generali**
 
@@ -5205,7 +5205,7 @@ Si applicano le regole già stabilite nel §7.11.2:
 * La Leggera commerciale ammette un Rinforzo Leggero oppure Pesante; la Media commerciale soltanto un Leggero; la Pesante commerciale nessuno. Per i modelli corporativi prevale la singola scheda.  
 * La forma dell’oggetto non supera i limiti di compatibilità: un soprabito non concede il bonus su un’armatura che non ammette rinforzi.  
 * Il rinforzo conserva PI e PS Integrità propri, registrati separatamente. I suoi PI non si aggiungono a quelli dell’armatura.  
-* Un’armatura Leggera portata fisicamente ad AR 3 o superiore mediante un rinforzo utilizza le penalità della Media. Le proprietà native continuano a funzionare nei rispettivi ambiti.  
+* Un’armatura Leggera portata fisicamente ad AR 3 o superiore mediante un rinforzo utilizza le penalità della Media, salvo gli Abbinamenti ottimizzati espressamente elencati nel §7.23.10. Le proprietà native continuano a funzionare nei rispettivi ambiti.  
 * Il requisito FOR aumenta; il rinforzo non aumenta la Caratteristica FOR del personaggio.
 
 I valori aggiuntivi descrivono l’impiego insieme a un’armatura compatibile; non costituiscono un profilo autonomo di armatura.
@@ -5220,7 +5220,7 @@ In tutti gli esempi i PI dell’armatura e quelli del rinforzo restano separati.
 
 ### **7.23.6 Rinforzi corporativi specialistici**
 
-Il catalogo comprende due rinforzi specialistici per ciascuna Corporazione, per la Fratellanza e per l’Alleanza, oltre ai soprabiti BLEU e ASA di base.
+Questa sezione comprende due rinforzi specialistici per ciascuna Corporazione, per la Fratellanza e per l’Alleanza, oltre ai soprabiti BLEU e ASA di base. I rinforzi dedicati per gli Abbinamenti ottimizzati e il Mantello Venusiano sono descritti nei §§7.23.10–7.23.11.
 
 Le differenze riguardano robustezza, protezioni specialistiche, discrezione e assistenza a impieghi precisi. Ogni rinforzo rimane un singolo oggetto acquistabile; le proprietà indicate sono comprese nel prezzo.
 
@@ -5295,9 +5295,9 @@ Batteria carica, cavo e alimentatore sono compresi nei 3.500. Accensione, spegni
 
 Le categorie ammesse dalla singola armatura restano vincolanti: un modello specialistico non permette di aggiungere un Rinforzo Pesante dove è consentito soltanto un Leggero, né un rinforzo a un’armatura che li esclude. Occorrono taglia, alloggiamenti e attacchi compatibili.
 
-Il Soprabito ASA riservato usa la compatibilità già prevista per il Soprabito ASA, sulle due divise ASA. Il marchio o il nome di un reparto non rende automaticamente compatibile un altro modello di armatura. Le Piastre Missione, in particolare, non si applicano alla Marte, che non accetta rinforzi esterni.
+Il Soprabito ASA riservato usa la compatibilità già prevista per il Soprabito ASA, sulle due divise ASA. Il marchio o il nome di un reparto non rende automaticamente compatibile un altro modello di armatura. Le Piastre Missione, in particolare, non si applicano alla Marte, che non accetta rinforzi esterni. Il Soprabito ASA riservato beneficia degli stessi Abbinamenti ottimizzati del modello base (§7.23.10).
 
-Restano l’unico rinforzo complessivo, i PI separati e le normali variazioni di categoria e penalità. A 0 PI il rinforzo perde sia l’AR sia le proprie proprietà; la protezione nativa dell’armatura resta distinta.
+Restano l’unico rinforzo complessivo, i PI separati e le normali variazioni di categoria e penalità, con le sole eccezioni degli Abbinamenti ottimizzati (§7.23.10). A 0 PI il rinforzo perde sia l’AR sia le proprie proprietà; la protezione nativa dell’armatura resta distinta.
 
 Proprietà uguali o benefici equivalenti presenti su più oggetti non si sommano: si usa il maggiore applicabile. Questo vale anche tra Mimetismo e Mimetica ambientale sulla stessa Prova, tra più Articolazioni d’assalto, tra Contromisure dello stesso tipo e tra Protezioni occulte. Proprietà diverse conservano ciascuna il proprio effetto; Antiesplosione usa il valore maggiore fra armatura, rinforzo e scudo.
 
@@ -5310,3 +5310,50 @@ Esempi:
 * Civile media \+ Sode d’assalto: AR 4 e FOR 6; penalità ravvicinata da −1 a 0, con le altre penalità della Media ancora applicabili.
 
 I prezzi riguardano i rinforzi completi. Le proprietà aggiuntive non sono un listino di modifiche liberamente combinabili o sommabili sullo stesso oggetto.
+
+### **7.23.10 Abbinamenti ottimizzati**
+
+Abbinamento ottimizzato. Quando l’armatura e il rinforzo formano una delle coppie espressamente elencate in questa sezione, la combinazione conserva la categoria originaria dell’armatura, anche se l’AR finale comporterebbe normalmente il passaggio a Media. Restano l’aumento del requisito FOR, le penalità per FOR insufficiente e le penalità proprie della categoria originaria, modificate soltanto dalle proprietà native e dai Talenti applicabili.
+
+Il beneficio appartiene alla coppia indicata. Lo stesso rinforzo, se materialmente compatibile con un’altra armatura, segue le regole ordinarie; nome, marchio e appartenenza corporativa non estendono l’eccezione. Restano un solo rinforzo complessivo, PI e PS separati e i normali limiti di compatibilità. I rinforzi aggiungono AR ordinaria e non aumentano la componente magica.
+
+#### **Soprabiti ASA e BLEU**
+
+I soprabiti già presenti mantengono prezzi, PI, Qualità, PS e proprietà delle rispettive schede. Il costo indicato riguarda il solo rinforzo. Il Soprabito ASA base non acquisisce Discreta: questa proprietà appartiene alla variante riservata.
+
+| Armatura | Rinforzo ottimizzato | AR finale | FOR finale | Costo rinforzo |
+| :---- | :---- | :---: | :---: | :---: |
+| Divisa d’ordinanza ASA | Soprabito ASA base / riservato | 3 | 4 | 1.000 / 1.800 |
+| Divisa operativa ASA | Soprabito ASA base / riservato | 4 | 5 | 1.000 / 1.800 |
+| Armatura d’ordinanza BLEU | Soprabito blu d’ordinanza BLEU | 3 | 5 | 1.000 |
+
+#### **Rinforzi dedicati**
+
+Tutti i nove modelli dedicati della tabella seguente sono Rinforzi Leggeri: AR \+1, requisito FOR \+1, PI 6, Qualità Non comune, PS Integrità 12, Reperibilità Rara e costo 1.500 ciascuno. Il prezzo comprende il rinforzo completo e l’Abbinamento ottimizzato, esclusa l’armatura. Funzionano passivamente e non richiedono alimentazione.
+
+| Catalogo | Armatura | Rinforzo dedicato | AR finale | FOR finale |
+| :---- | :---- | :---- | :---: | :---: |
+| Bauhaus | Tuta delle Étoiles Mortants | Piastre flessibili Étoiles | 3 | 4 |
+| Bauhaus | Armatura dei Jungle Kommandos | Mantello da giungla Kommando | 3 | 5 |
+| Capitol | Armatura Airborne Rangers | Piastre aviotrasportate Airborne | 3 | 5 |
+| Capitol | Panther Sea Lions | Mantello Panther | 3 | 5 |
+| Imperial | Tenuta operativa Grey Ghost | Rivestimento flessibile Ghost | 3 | 4 |
+| Imperial | Tenuta da ricognizione Pathfinder | Mantello Pathfinder | 3 | 4 |
+| Cybertronic | Abito degli Agenti IES | Sottogiacca protettiva IES | 3 | 4 |
+| Mishima | Tuta delle Ombre | Inserti articolati delle Ombre | 3 | 4 |
+| Fratellanza | Tuta del Mortificator | Rinforzo flessibile Mortificator | 4¹ | 5 |
+
+¹ AR totale 4, di cui 1 magica già appartenente alla Tuta del Mortificator.
+
+La forma e gli attacchi dei rinforzi dedicati accompagnano i movimenti del modello indicato. Piastre e inserti distribuiscono la protezione nelle sedi previste; mantelli e rivestimenti sono sagomati per l’armatura. Non concedono bonus autonomi a Furtività, attacchi o Difese. Restano le proprietà native dell’armatura, nei rispettivi ambiti: la Sottogiacca IES conserva Discreta quando è celata sotto l’abito e non rimangono componenti corazzati visibili.
+
+Le combinazioni ottimizzate delle due tabelle restano Leggere: penalità 0 ad attacchi ravvicinati, attacchi a distanza, Agilità e MOV, e −1 VA al lancio con Potere, prima di FOR insufficiente e altre cause. Il Mortificator conserva Assetto mistico 1 e porta a 0 anche la penalità al lancio. Mimetismo, Mimetica ambientale e gli altri benefici continuano a seguire le regole di cumulo; i nuovi rinforzi non li duplicano.
+
+### **7.23.11 Mantello Venusiano**
+
+Mantello Venusiano. Rinforzo Leggero Bauhaus dedicato all’Armatura dei Ranger Venusiani. AR ordinaria \+1, requisito FOR \+1, PI 6, Qualità Non comune, PS Integrità 12, Reperibilità Rara e costo 2.500. Il prezzo comprende il mantello completo; armatura esclusa. Funziona passivamente, senza alimentazione.
+
+Proprietà: Mimetica ambientale 2\. Concede \+2 VA alla Prova unica di Furtività nell’ambiente scelto per la livrea, quando esistono condizioni concrete per nascondersi. L’ambiente viene scelto all’acquisto e non cambia automaticamente. Con la Mimetica ambientale 1 dell’armatura si usa il maggiore applicabile, senza sommare i due valori; il bonus non elimina le penalità di Agilità della Media.
+
+Configurazione completa: AR 4, FOR richiesta 6 e costo complessivo 10.500. L’armatura resta Media e conserva Assetto da pattuglia: penalità MOV 0, −1 VA ad attacchi e Agilità e −3 VA al lancio con Potere, prima di altre cause. Un Rinforzo Leggero non farebbe già aumentare la categoria di questa armatura: il vantaggio specifico del mantello è la Mimetica ambientale 2\. Occupa l’unico posto per rinforzi e conserva PI e PS propri.
+

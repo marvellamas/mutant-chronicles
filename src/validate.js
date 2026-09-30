@@ -1175,6 +1175,14 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
         if (!Array.isArray(o.compatibile_con) || !o.compatibile_con.length) err(F, `${k}.compatibile_con`, 'elenco di riferimenti "file:id"');
         else o.compatibile_con.forEach((r, j) => rimandiCompatibili.push([F, `${k}.compatibile_con[${j}]`, r, o.tipo === 'munizioni' ? ['arma_ravvicinata', 'arma_distanza'] : ['armatura']]));
       }
+      // §7.23.10: Abbinamenti ottimizzati, fra le armature compatibili del rinforzo
+      if (o.abbinamento_ottimizzato !== undefined) {
+        if (!o.rinforzo || !Array.isArray(o.abbinamento_ottimizzato) || !o.abbinamento_ottimizzato.length) err(F, `${k}.abbinamento_ottimizzato`, 'elenco di armature, solo per i rinforzi');
+        else o.abbinamento_ottimizzato.forEach((r, j) => {
+          rimandiCompatibili.push([F, `${k}.abbinamento_ottimizzato[${j}]`, r, ['armatura']]);
+          if (o.compatibile_con && !o.compatibile_con.includes(r)) err(F, `${k}.abbinamento_ottimizzato[${j}]`, `"${r}" non è fra le armature compatibili del rinforzo`);
+        });
+      }
       if (o.reperibilita !== undefined && !(modulo && o.reperibilita === null) && !rep.includes(o.reperibilita)) err(F, `${k}.reperibilita`, `sigla "${o.reperibilita}" non in index.json (${rep.join(', ')})`);
       if (o.proprieta !== undefined) {
         if (!Array.isArray(o.proprieta)) err(F, `${k}.proprieta`, 'deve essere un elenco');

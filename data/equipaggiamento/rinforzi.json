@@ -1,7 +1,7 @@
 {
-  "versione_manuale": "Armamenti 0.53",
-  "fonte": "Manuale degli Armamenti v0.53, §7.23 Catalogo dei rinforzi (regole del §7.11.2)",
-  "_nota": "Generato da tools/lotti/lotto_rinforzi_723.py. Un rinforzo «in uso» e montato su un’armatura indossata ne aumenta AR e FOR richiesta, se l’armatura ammette la sua categoria («rinforzi_ammessi», e «compatibile_con» del rinforzo); le sue proprietà valgono solo in quel caso. Una Leggera portata fisicamente ad AR 3 o più usa le penalità della Media (§7.11.2, §7.23.4). Proprietà uguali o benefici equivalenti presenti su più oggetti non si sommano: si usa il maggiore applicabile. (§7.23.9)",
+  "versione_manuale": "Armamenti 0.55",
+  "fonte": "Manuale degli Armamenti v0.55, §7.23 Catalogo dei rinforzi (regole del §7.11.2), §§7.23.10–7.23.11",
+  "_nota": "Generato da tools/lotti/lotto_rinforzi_723.py. Un rinforzo «in uso» e montato su un’armatura indossata ne aumenta AR e FOR richiesta, se l’armatura ammette la sua categoria («rinforzi_ammessi», e «compatibile_con» del rinforzo); le sue proprietà valgono solo in quel caso. Una Leggera portata fisicamente ad AR 3 o più usa le penalità della Media (§7.11.2, §7.23.4). Proprietà uguali o benefici equivalenti presenti su più oggetti non si sommano: si usa il maggiore applicabile. (§7.23.9) Armamenti 0.55 (30/09, a mano: il generatore legge fino al §7.23.9): «abbinamento_ottimizzato» elenca le armature con cui la combinazione conserva la categoria originaria anche ad AR 3 o più (§7.23.10: soprabiti ASA e BLEU, nove rinforzi dedicati); Mantello Venusiano del §7.23.11.",
   "oggetti": [
     {
       "id": "rinforzo-leggero",
@@ -187,6 +187,9 @@
       "proprieta": [],
       "compatibile_con": [
         "armature_corporative:armatura-d-ordinanza-bleu"
+      ],
+      "abbinamento_ottimizzato": [
+        "armature_corporative:armatura-d-ordinanza-bleu"
       ]
     },
     {
@@ -214,6 +217,10 @@
       },
       "proprieta": [],
       "compatibile_con": [
+        "armature_corporative:divisa-d-ordinanza-asa",
+        "armature_corporative:divisa-operativa-asa"
+      ],
+      "abbinamento_ottimizzato": [
         "armature_corporative:divisa-d-ordinanza-asa",
         "armature_corporative:divisa-operativa-asa"
       ]
@@ -773,6 +780,10 @@
       "compatibile_con": [
         "armature_corporative:divisa-d-ordinanza-asa",
         "armature_corporative:divisa-operativa-asa"
+      ],
+      "abbinamento_ottimizzato": [
+        "armature_corporative:divisa-d-ordinanza-asa",
+        "armature_corporative:divisa-operativa-asa"
       ]
     },
     {
@@ -829,6 +840,329 @@
           "fonte": "Armamenti §7.23.7",
           "proprieta": "Isolante 2"
         }
+      ]
+    },
+    {
+      "id": "piastre-flessibili-etoiles",
+      "nome": "Piastre flessibili Étoiles",
+      "tipo": "accessorio",
+      "catalogo": "Bauhaus",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Tutti i nove modelli dedicati della tabella seguente sono Rinforzi Leggeri: AR +1, requisito FOR +1, PI 6, Qualità Non comune, PS Integrità 12, Reperibilità Rara e costo 1.500 ciascuno.",
+      "paragrafo": "§7.23.10",
+      "versione_manuale": "Armamenti 0.55",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 1500,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "proprieta": [],
+      "compatibile_con": [
+        "armature_corporative:tuta-delle-etoiles-mortants"
+      ],
+      "abbinamento_ottimizzato": [
+        "armature_corporative:tuta-delle-etoiles-mortants"
+      ]
+    },
+    {
+      "id": "mantello-da-giungla-kommando",
+      "nome": "Mantello da giungla Kommando",
+      "tipo": "accessorio",
+      "catalogo": "Bauhaus",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Tutti i nove modelli dedicati della tabella seguente sono Rinforzi Leggeri: AR +1, requisito FOR +1, PI 6, Qualità Non comune, PS Integrità 12, Reperibilità Rara e costo 1.500 ciascuno.",
+      "paragrafo": "§7.23.10",
+      "versione_manuale": "Armamenti 0.55",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 1500,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "proprieta": [],
+      "compatibile_con": [
+        "armature_corporative:armatura-dei-jungle-kommandos"
+      ],
+      "abbinamento_ottimizzato": [
+        "armature_corporative:armatura-dei-jungle-kommandos"
+      ]
+    },
+    {
+      "id": "piastre-aviotrasportate-airborne",
+      "nome": "Piastre aviotrasportate Airborne",
+      "tipo": "accessorio",
+      "catalogo": "Capitol",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Tutti i nove modelli dedicati della tabella seguente sono Rinforzi Leggeri: AR +1, requisito FOR +1, PI 6, Qualità Non comune, PS Integrità 12, Reperibilità Rara e costo 1.500 ciascuno.",
+      "paragrafo": "§7.23.10",
+      "versione_manuale": "Armamenti 0.55",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 1500,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "proprieta": [],
+      "compatibile_con": [
+        "armature_corporative:armatura-airborne-rangers"
+      ],
+      "abbinamento_ottimizzato": [
+        "armature_corporative:armatura-airborne-rangers"
+      ]
+    },
+    {
+      "id": "mantello-panther",
+      "nome": "Mantello Panther",
+      "tipo": "accessorio",
+      "catalogo": "Capitol",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Tutti i nove modelli dedicati della tabella seguente sono Rinforzi Leggeri: AR +1, requisito FOR +1, PI 6, Qualità Non comune, PS Integrità 12, Reperibilità Rara e costo 1.500 ciascuno.",
+      "paragrafo": "§7.23.10",
+      "versione_manuale": "Armamenti 0.55",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 1500,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "proprieta": [],
+      "compatibile_con": [
+        "armature_corporative:panther-sea-lions"
+      ],
+      "abbinamento_ottimizzato": [
+        "armature_corporative:panther-sea-lions"
+      ]
+    },
+    {
+      "id": "rivestimento-flessibile-ghost",
+      "nome": "Rivestimento flessibile Ghost",
+      "tipo": "accessorio",
+      "catalogo": "Imperial",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Tutti i nove modelli dedicati della tabella seguente sono Rinforzi Leggeri: AR +1, requisito FOR +1, PI 6, Qualità Non comune, PS Integrità 12, Reperibilità Rara e costo 1.500 ciascuno.",
+      "paragrafo": "§7.23.10",
+      "versione_manuale": "Armamenti 0.55",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 1500,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "proprieta": [],
+      "compatibile_con": [
+        "armature_corporative:tenuta-operativa-grey-ghost"
+      ],
+      "abbinamento_ottimizzato": [
+        "armature_corporative:tenuta-operativa-grey-ghost"
+      ]
+    },
+    {
+      "id": "mantello-pathfinder",
+      "nome": "Mantello Pathfinder",
+      "tipo": "accessorio",
+      "catalogo": "Imperial",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Tutti i nove modelli dedicati della tabella seguente sono Rinforzi Leggeri: AR +1, requisito FOR +1, PI 6, Qualità Non comune, PS Integrità 12, Reperibilità Rara e costo 1.500 ciascuno.",
+      "paragrafo": "§7.23.10",
+      "versione_manuale": "Armamenti 0.55",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 1500,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "proprieta": [],
+      "compatibile_con": [
+        "armature_corporative:tenuta-da-ricognizione-pathfinder"
+      ],
+      "abbinamento_ottimizzato": [
+        "armature_corporative:tenuta-da-ricognizione-pathfinder"
+      ]
+    },
+    {
+      "id": "sottogiacca-protettiva-ies",
+      "nome": "Sottogiacca protettiva IES",
+      "tipo": "accessorio",
+      "catalogo": "Cybertronic",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Tutti i nove modelli dedicati della tabella seguente sono Rinforzi Leggeri: AR +1, requisito FOR +1, PI 6, Qualità Non comune, PS Integrità 12, Reperibilità Rara e costo 1.500 ciascuno.",
+      "paragrafo": "§7.23.10",
+      "versione_manuale": "Armamenti 0.55",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 1500,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "proprieta": [],
+      "compatibile_con": [
+        "armature_corporative:abito-degli-agenti-ies"
+      ],
+      "abbinamento_ottimizzato": [
+        "armature_corporative:abito-degli-agenti-ies"
+      ]
+    },
+    {
+      "id": "inserti-articolati-delle-ombre",
+      "nome": "Inserti articolati delle Ombre",
+      "tipo": "accessorio",
+      "catalogo": "Mishima",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Tutti i nove modelli dedicati della tabella seguente sono Rinforzi Leggeri: AR +1, requisito FOR +1, PI 6, Qualità Non comune, PS Integrità 12, Reperibilità Rara e costo 1.500 ciascuno.",
+      "paragrafo": "§7.23.10",
+      "versione_manuale": "Armamenti 0.55",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 1500,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "proprieta": [],
+      "compatibile_con": [
+        "armature_corporative:tuta-delle-ombre"
+      ],
+      "abbinamento_ottimizzato": [
+        "armature_corporative:tuta-delle-ombre"
+      ]
+    },
+    {
+      "id": "rinforzo-flessibile-mortificator",
+      "nome": "Rinforzo flessibile Mortificator",
+      "tipo": "accessorio",
+      "catalogo": "Fratellanza",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Tutti i nove modelli dedicati della tabella seguente sono Rinforzi Leggeri: AR +1, requisito FOR +1, PI 6, Qualità Non comune, PS Integrità 12, Reperibilità Rara e costo 1.500 ciascuno.",
+      "paragrafo": "§7.23.10",
+      "versione_manuale": "Armamenti 0.55",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 1500,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "proprieta": [],
+      "compatibile_con": [
+        "armature_corporative:tuta-del-mortificator"
+      ],
+      "abbinamento_ottimizzato": [
+        "armature_corporative:tuta-del-mortificator"
+      ]
+    },
+    {
+      "id": "mantello-venusiano",
+      "nome": "Mantello Venusiano",
+      "tipo": "accessorio",
+      "catalogo": "Bauhaus",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [],
+      "note_manuale": "Rinforzo Leggero Bauhaus dedicato all’Armatura dei Ranger Venusiani. AR ordinaria +1, requisito FOR +1, PI 6, Qualità Non comune, PS Integrità 12, Reperibilità Rara e costo 2.500.",
+      "paragrafo": "§7.23.11",
+      "versione_manuale": "Armamenti 0.55",
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 2500,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "proprieta": [
+        {
+          "nome": "Mimetica ambientale 2",
+          "testo": "Concede +2 VA alla Prova unica di Furtività nell’ambiente scelto per la livrea, quando esistono condizioni concrete per nascondersi. L’ambiente viene scelto all’acquisto e non cambia automaticamente. Con la Mimetica ambientale 1 dell’armatura si usa il maggiore applicabile, senza sommare i due valori; il bonus non elimina le penalità di Agilità della Media."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Furtività",
+          "valore": 2,
+          "ambito": "situazionale",
+          "beneficio": "mimetismo",
+          "condizione": "Concede +2 VA alla Prova unica di Furtività nell’ambiente scelto per la livrea, quando esistono condizioni concrete per nascondersi.",
+          "fonte": "Armamenti §7.23.11",
+          "proprieta": "Mimetica ambientale 2"
+        }
+      ],
+      "compatibile_con": [
+        "armature_corporative:armatura-dei-ranger-venusiani"
       ]
     }
   ]

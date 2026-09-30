@@ -544,7 +544,9 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       const k = kit.def.rinforzo;
       ar = { totale: (ar?.totale ?? 0) + k.ar, magica: ar?.magica ?? 0 };
       forRichiesta = (forRichiesta ?? 0) + k.for;
-      if (d.categoria === 'Leggera' && ar.totale - ar.magica >= 3 && fileArmature.categorie?.Media) {
+      // §7.23.10 (Armamenti 0.55): un Abbinamento ottimizzato conserva la categoria originaria
+      const ottimizzato = (kit.def.abbinamento_ottimizzato ?? []).includes(d.rif);
+      if (d.categoria === 'Leggera' && !ottimizzato && ar.totale - ar.magica >= 3 && fileArmature.categorie?.Media) {
         categoria = 'Media';
         penalita = { ...penalitaConEffetti(fileArmature.categorie.Media, d.proprieta), ...(d.penalita?.abilita ? { abilita: d.penalita.abilita } : {}) };
       }

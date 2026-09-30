@@ -3,7 +3,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda, bonusDannoCaratteristica, caratteristicaDanno } from '../src/calc.js';
-import { profiloSenzArmi, calcolaAttaccoRavvicinato, vincoliRavvicinato, moltiplicatoreMagistrale } from '../src/attacco.js';
+import { profiloSenzArmi, promemoriaMagistraleNaturale, calcolaAttaccoRavvicinato, vincoliRavvicinato, moltiplicatoreMagistrale } from '../src/attacco.js';
 import { inizializzaSessione, massimiSessione, ricaricaArma, variaMunizioni, allineaSessione, modificaSessione } from '../src/sessione.js';
 import { calcolaLancio } from '../src/lancio.js';
 import { soglieCarico, pesoVoce } from '../src/carico.js';
@@ -292,4 +292,13 @@ test('E&L 2: contenitore acquistato pieno; trovato con i PM impostati nella voce
   const speso = modificaSessione(allineaSessione(s, trovato), { chroma: { b: { pmAttuali: 1, iniziale: 2 } } }, trovato);
   assert.equal(allineaSessione(speso, trovato).chroma.b.pmAttuali, 1);
   assert.equal(dati.regole.chroma['TODO(Davide)'], undefined);
+});
+
+// --- Giocatore del 29/09 (23:45): parti indipendenti dalle categorie di competenza -------------------
+
+test('Giocatore §1.6 del 29/09: con VA finale almeno 21 anche il 2 naturale è Magistrale; Mishima +1 ad Armi da guerra', () => {
+  assert.match(promemoriaMagistraleNaturale(21, dati), /2 naturale/);
+  assert.equal(promemoriaMagistraleNaturale(20, dati), null);
+  const mishima = dati.corporazioni.corporazioni.find((c) => c.nome === 'Mishima');
+  assert.ok(mishima.abilita_bonus.includes('Armi da guerra') && !mishima.abilita_bonus.includes('Armi da mischia'));
 });

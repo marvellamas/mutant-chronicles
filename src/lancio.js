@@ -5,7 +5,7 @@
 // 1–3, 5–7, 12.3; Giocatore §1.4, §1.7); dati di ogni scheda in incantesimi.json → meccanica;
 // Talenti con effetti.lancio (e effetti.magia già calcolati nella scheda: Focalizzazione, Ingaggio,
 // tiro con Armi da lancio).
-import { voce, somma, talentiAttacco } from './attacco.js';
+import { voce, somma, talentiAttacco, promemoriaMagistraleNaturale } from './attacco.js';
 import { avvisiStati } from './condizioni.js';
 import { provenienza, righeDaScomposizione, rigaConDettaglio } from './provenienza.js';
 import { bonusDannoCaratteristica } from './calc.js';
@@ -205,6 +205,8 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
 
   // 9. promemoria finali
   promemoria.push(L.magistrale.frasi[0], L.fallimento.frasi[0]);
+  const mn = prova ? promemoriaMagistraleNaturale(va, dati) : null;
+  if (mn) promemoria.push(mn);
   for (const t of con('promemoria')) promemoria.push(`${t.nome}: ${String(t.testo ?? '').split(/(?<=\.)\s/)[0]}`);
   if (aspetto && T.some((t) => t.nome === 'Calcolo Arcano')) promemoria.push(`Calcolo Arcano: ${A.frasi.at(-1)}`);
 

@@ -66,7 +66,7 @@ Sezioni e pagine di consultazione
 
 [2.2 Addestramenti](#bookmark=id.sywt88snicp7)	
 
-[2.3 Struttura comune dei profili](#bookmark=id.kw4bhob3k8xt)	
+2.3 Basi iniziali e categorie di competenza
 
 [2.4 Profilo: Avventuriero](#bookmark=id.fe6lh86wjwpr)	
 
@@ -210,7 +210,7 @@ Sezioni e pagine di consultazione
 
 [8.2 Progressione delle Caratteristiche](#bookmark=id.ga2l6t4rikwx)	
 
-[8.3 Punti Abilità e limiti di Avanzamento](#bookmark=id.fdlvk1dwl52y)	
+8.3 Punti Abilità e limiti del VA personale
 
 [8.4 Progressione massima di un’Abilità](#bookmark=id.s7aw5mtzuygv)	
 
@@ -283,16 +283,16 @@ Attacchi, Difese e lanci di Incantesimi utilizzano le Abilità pertinenti e le r
 
 ### **1.2.1 Prove di Abilità**
 
-**VA \= Modificatore della Caratteristica \+ Valore base di Addestramento \+ bonus di Corporazione \+ Avanzamento.**
+**VA grezzo personale \= Modificatore della Caratteristica \+ Base iniziale \+ bonus di Corporazione \+ Avanzamento. Il VA personale è il minore tra questa somma e il limite della categoria di competenza al Grado posseduto (§8.3). Il VA finale della Prova si ottiene applicando successivamente i bonus e le penalità pertinenti.**
 
 | Componente | Intervallo | Funzione |
 | ----- | ----- | :---- |
 | Caratteristica | −4 a \+5 | Modificatore della Caratteristica associata in modo fisso all’Abilità. |
-| Addestramento | 2–4 | Valore base determinato dall’Addestramento scelto alla creazione; varia secondo l’Abilità. |
-| Corporazione | 0–1 | Bonus eventuale concesso dalla Corporazione alla specifica Abilità. |
-| Avanzamento | 0–8 | Parte migliorabile attraverso creazione, Classi e punti assegnati liberamente. |
+| Base iniziale | 3, 5, 6 o 7 | Determinata dal profilo della prima Classe; resta invariata dopo la creazione. |
+| Corporazione | 0–1 | Bonus fisso della Corporazione alla specifica Abilità, incluso nel VA personale. |
+| Avanzamento | Variabile | Punti automatici di Classe e punti liberi. Il limite riguarda il VA personale complessivo. |
 
-**Il massimo teorico prima dei modificatori è 18:** 5 \+ 4 \+ 1 \+ 8\. In una Prova ordinaria corrisponde al 90% di probabilità di successo. Ogni Abilità mantiene la propria Caratteristica fissa.
+**Il VA personale massimo al VI Grado è 22 nelle Specializzate, 19 nelle Professionali, 17 nelle Generiche e 15 nelle Non competenti. Bonus e penalità alla Prova si applicano dopo questi limiti e possono portarli oltre la soglia. Ogni Abilità mantiene la propria Caratteristica fissa.**
 
 ### **1.2.2 Prove di Caratteristica**
 
@@ -311,7 +311,7 @@ Attacchi, Difese e lanci di Incantesimi utilizzano le Abilità pertinenti e le r
 | 9 | \+4 | 14 | 70% |
 | 10 | \+5 | 15 | 75% |
 
-Si applicano poi i modificatori pertinenti. Non si aggiungono il Valore base di Addestramento, i bonus di Corporazione alle Abilità o i punti di Avanzamento delle Abilità. Gli effetti che cambiano una Caratteristica sono già riflessi nel suo modificatore.
+Si applicano poi i modificatori pertinenti. Non si aggiungono la Base iniziale, i bonus di Corporazione alle Abilità o i punti di Avanzamento delle Abilità. Gli effetti che cambiano una Caratteristica sono già riflessi nel suo modificatore.
 
 Una Prova di Caratteristica non sostituisce un’Abilità appropriata soltanto perché offre un valore più alto. Per esempio, Destrezza 7 produce un modificatore di \+2 e una Prova di Caratteristica di 12; un tentativo di nascondersi usa comunque Furtività.
 
@@ -379,13 +379,13 @@ Una singola Prova risolve l’intera azione significativa, evitando tiri separat
 
 ### **1.3.1 Preparazione e accesso alle Abilità**
 
-Non esiste una penalità generale aggiuntiva per la minore preparazione. I profili iniziali assegnano basi da 2 a 4; anche un’Abilità con base 2 può essere sviluppata tramite Corporazione e Avanzamento. Si utilizza sempre il VA risultante dalle componenti possedute.
+Non esiste una penalità generale aggiuntiva per la minore preparazione. La prima Classe assegna basi 7, 6, 5 o 3 secondo la categoria di competenza; anche un’Abilità Non competente con base 3 può essere sviluppata tramite Corporazione e Avanzamento, entro il proprio limite. Si utilizza sempre il VA personale risultante dalle componenti possedute, poi si applicano i modificatori alla Prova.
 
 Le attività comuni o intuitive possono essere tentate con l’Abilità pertinente. Le attività specialistiche richiedono invece le conoscenze, gli strumenti e gli altri requisiti indicati dalle regole. Le capacità concesse da un Talento richiedono quel Talento: un VA elevato non ne conferisce automaticamente l’accesso.
 
 Istruzioni, supervisione o strumenti automatizzati possono rendere plausibile una procedura specialistica semplificata. Il Direttore applica le normali regole di assistenza e circostanze, senza attribuire al personaggio una competenza permanente.
 
-Un’Abilità con base 2 può essere utilizzata quando il VA e i requisiti lo consentono; possedere un VA positivo in Potere non concede da solo l’accesso agli Incantesimi. Una Prova di Caratteristica non può aggirare l’Abilità richiesta. Aiuti e strumenti possono migliorare un VA insufficiente, ma non sostituiscono requisiti indispensabili.
+Un’Abilità con base 3 può essere utilizzata quando il VA e i requisiti lo consentono; possedere un VA positivo in Potere non concede da solo l’accesso agli Incantesimi. Una Prova di Caratteristica non può aggirare l’Abilità richiesta. Aiuti e strumenti possono migliorare un VA insufficiente, ma non sostituiscono requisiti indispensabili.
 
 ### **1.3.2 Nuovi tentativi e ritiri**
 
@@ -459,12 +459,12 @@ Nelle Prove contrapposte non si ottiene un successo automatico con un valore par
 
 Quando il d20 viene utilizzato per una Prova, l’1 e il 20 naturali producono sempre un risultato speciale. I modificatori e i Punti Eroe non cambiano il valore naturale mostrato dal dado.
 
-Successo Magistrale Migliorato (§8.6.1) considera Magistrale anche un 2 naturale che supera la Prova. Con Valore finale 1, il 2 resta un fallimento. Questa eccezione vale per tutti i tipi di Prova e non assegna Distintivi. Restano vietati i tiri volontari per attività automatiche o prive di incertezza.
+Nelle Prove di Abilità effettivamente richieste, con VA finale almeno 21 anche il 2 naturale è un Successo Magistrale. La soglia si verifica dopo tutti i bonus e le penalità: VA personale 17 \+ Tiro Mirato Migliorato 4 \= 21 la raggiunge; VA personale 22 − Corsa 2 \= 20 no. Successo Magistrale Migliorato (§8.6.1) rende Magistrale un 2 riuscito anche sotto questa soglia e si applica a tutti i tipi di Prova; con Valore finale 1, il 2 resta un fallimento. Il 2 non assegna Distintivi. Restano vietati i tiri volontari per attività automatiche o prive di incertezza.
 
 | Risultato naturale | Esito |
 | :---- | :---- |
 | 1 | Successo Magistrale |
-| 2–19 | Successo o fallimento normale; il 2 riuscito diventa Magistrale con Successo Magistrale Migliorato. |
+| 2–19 | Successo o fallimento normale; il 2 è Magistrale con VA finale almeno 21 in una Prova di Abilità, oppure con Successo Magistrale Migliorato se la Prova riesce. |
 | 20 | Fallimento Maldestro |
 
 ### **Effetti del Successo Magistrale**
@@ -506,7 +506,7 @@ Le attività ordinarie prive di incertezza significativa si risolvono senza Prov
 
 ### **1.7.1 Prove obbligatorie**
 
-Quando una regola impone espressamente il tiro, l’obbligo prevale sul successo automatico. Con un valore di 20 o superiore si tira comunque e si applicano normalmente 1 e 20 naturali. L’obbligo di tiro non rende possibile una Prova con valore finale pari o inferiore a 0\.
+Quando una regola impone espressamente il tiro, l’obbligo prevale sul successo automatico. Con un valore di 20 o superiore si tira comunque e si applicano normalmente i risultati naturali, compreso il 2 Magistrale nelle Prove di Abilità con VA finale almeno 21 (§1.6). L’obbligo di tiro non rende possibile una Prova con valore finale pari o inferiore a 0\.
 
 Questo vale per le Prove Salvezza richieste dalle regole, per le Prove contrapposte e per le Prove di Potere obbligatorie: lancio di Incantesimi dal livello 4, lancio durante l’Ingaggio, lancio senza Addestramento Taumaturgo, componenti richieste mancanti, Contromagia e altre circostanze che impongono espressamente la Prova. Restano valide le condizioni e le penalità specifiche di ciascun caso.
 
@@ -535,7 +535,7 @@ Ogni incremento può concedere \+1 al risultato complessivo di un proprio tiro d
 
 Spendendo 3 Punti Eroe dopo il tiro, senza raddoppio del costo, il personaggio può annullare un proprio 20 naturale oppure un 1 naturale di un avversario direttamente coinvolto contro di lui. Il proprio 20 diventa un fallimento normale; l’1 avversario diventa un successo normale. Il risultato del dado non cambia e assegna comunque il Distintivo.
 
-Con Controllo del Fallimento (§8.6.1), annullare il proprio 20 costa 2 Punti Eroe anziché 3\. È inoltre possibile spendere 3 Punti Eroe per trasformare in successo normale il Magistrale ottenuto con un 2 naturale da un avversario che possiede Successo Magistrale Migliorato, alle stesse condizioni di coinvolgimento diretto. Il 2 non assegna Distintivi, prima o dopo l’annullamento.
+Con Controllo del Fallimento (§8.6.1), annullare il proprio 20 costa 2 Punti Eroe anziché 3\. È inoltre possibile spendere 3 Punti Eroe per trasformare in successo normale il Magistrale ottenuto con un 2 naturale da un avversario, sia per VA finale almeno 21 sia per Successo Magistrale Migliorato, alle stesse condizioni di coinvolgimento diretto. Il 2 non assegna Distintivi, prima o dopo l’annullamento.
 
 Questo annullamento è un utilizzo distinto dalla modifica numerica, con il costo fisso indicato sopra. Può quindi essere utilizzato anche se sono già stati dichiarati incrementi prima del tiro.
 
@@ -684,7 +684,7 @@ Il personaggio ha speso tutti e 5 i punti e nessuna Caratteristica supera 7\.
 
 ## **2.2 Addestramenti**
 
-Alla creazione il personaggio sceglie uno dei cinque Addestramenti. L’Addestramento determina il Valore Base Addestramento da 2 a 4 in ciascuna delle ventiquattro Abilità: questi valori sono fissi e non vengono distribuiti liberamente. Concede inoltre il vantaggio indicato al paragrafo 2.10 e i bonus alle Salvezze del paragrafo 2.11. La prima Classe deve appartenere all’Addestramento scelto.
+Alla creazione il personaggio sceglie uno dei cinque Addestramenti. L’Addestramento concede il vantaggio indicato al paragrafo 2.10, i bonus alle Salvezze del paragrafo 2.11 e l’accesso alle proprie Classi come prima scelta. Le basi delle ventiquattro Abilità dipendono invece dalla prima Classe, secondo le quattro categorie di competenza del paragrafo 2.3.
 
 | Addestramento | Identità generale |
 | :---- | :---- |
@@ -694,80 +694,51 @@ Alla creazione il personaggio sceglie uno dei cinque Addestramenti. L’Addestra
 | **Studioso** | Conoscenza, analisi, ricerca e applicazione metodica del sapere. |
 | **Taumaturgo** | Percezione, conoscenza e manipolazione delle forze mistiche. |
 
-I cinque profili hanno lo stesso totale numerico, ma distribuiscono i valori in modo differente sulle ventiquattro Abilità. L’equilibrio effettivo dipende anche dalla frequenza e dall’utilità delle Prove nel gioco.
+Ogni Classe assegna lo stesso numero di Abilità alle quattro categorie di competenza e lo stesso totale di punti base; cambia quali Abilità rientrano nelle categorie. Il profilo completo si trova nella descrizione della Classe, nel Capitolo 3\.
 
-## **2.3 Struttura comune dei profili**
+## **2.3 Basi iniziali e categorie di competenza**
 
-Ogni Addestramento distribuisce settantasei punti base complessivi sulle ventiquattro Abilità. La quantità di Abilità assegnata a ciascun valore è identica per tutti e cinque i profili; cambia soltanto quali Abilità ricevono quei valori.
+La prima Classe determina le basi delle ventiquattro Abilità: 2 Specializzate, 6 Professionali, 12 Generiche e 4 Non competenti. Queste categorie descrivono la competenza del personaggio e determinano base iniziale e limite del VA personale. Le cinque Abilità di Classe che ricevono \+1 a ogni Grado sono un beneficio distinto e restano quelle indicate nel Capitolo 3\.
 
-| Valore base | N. Abilità | Grado di preparazione | Punti |
+| Categoria di competenza | N. Abilità | Base iniziale | Punti |
 | :---: | :---: | ----- | :---: |
-| **4** | 8 | Competenze caratteristiche | 32 |
-| **3** | 12 | Preparazione solida | 36 |
-| **2** | 4 | Preparazione essenziale | 8 |
-| **Totale** | 24 | — | 76 |
+| Specializzate (S) | 2 | 7 | 14 |
+| Professionali (P) | 6 | 6 | 36 |
+| Generiche (G) | 12 | 5 | 60 |
+| Non competenti (N) | 4 | 3 | 12 |
+| Totale | 24 | — | 122 |
 
-L'uguaglianza dei settantasei punti garantisce lo stesso peso numerico iniziale. L'equilibrio effettivo dovrà essere verificato anche considerando frequenza e utilità delle Abilità assegnate a ciascun profilo.
+I 122 punti base sono assegnati dal profilo della prima Classe e non si distribuiscono liberamente. Restano fissi: acquisire una nuova Classe non riassegna né aumenta le basi iniziali. Le categorie delle Classi successive intervengono soltanto sui limiti del VA personale, secondo il multiclassamento (§8.7). Le sei categorie di consultazione del Capitolo 4 restano distinte: la sezione «Professionali» della scheda non indica automaticamente competenza P.
 
 ## **2.4 Profilo: Avventuriero**
 
 L'Avventuriero è versatile, autonomo e abituato all'esplorazione, all'infiltrazione, agli ambienti ostili e agli incarichi non convenzionali. Le competenze più alte attraversano più categorie e non coincidono automaticamente con tutte le Abilità Operative.
 
-| Valore base | N. Abilità | Abilità |
-| ----- | ----- | :---- |
-| **4** | 8 | Furtività, Percezione, Sopravvivenza, Raggirare, Armi leggere, Difese, Atletica, Pilotare |
-| **3** | 12 | Armi da lancio, Armi medie, Armi da mischia, Corpo a corpo, Cultura, Intrattenere, Medicina, Tecnologia, Armi da guerra, Artefatti, Oratoria, Scienza |
-| **2** | 4 | Armi pesanti, Occultismo, Potere, Rituali |
-
-**Totale:** ventiquattro Abilità e settantasei punti base.
+**Classi disponibili come prima scelta: Agente, Cacciatore, Esploratore, Lestofante, Paramedico. Le basi e le categorie di competenza dipendono dalla Classe scelta, non dall’Addestramento nel suo insieme.**
 
 ## **2.5 Profilo: Combattente**
 
 Il Combattente possiede una preparazione marziale ampia e affidabile, accompagnata da competenze operative e professionali utili sul campo. Il profilo rappresenta un combattente operativo e non presuppone capacità di comando, grado militare o formazione mistica.
 
-| Valore base | N. Abilità | Abilità |
-| ----- | ----- | :---- |
-| **4** | 8 | Armi leggere, Armi medie, Armi da guerra, Difese, Armi pesanti, Armi da mischia, Corpo a corpo, Atletica |
-| **3** | 12 | Armi da lancio, Furtività, Percezione, Sopravvivenza, Raggirare, Medicina, Pilotare, Tecnologia, Artefatti, Cultura, Intrattenere, Oratoria |
-| **2** | 4 | Occultismo, Potere, Rituali, Scienza |
-
-**Totale:** ventiquattro Abilità e settantasei punti base.
+**Classi disponibili come prima scelta: Artigliere, Assaltatore, Incursore, Lottatore, Soldato. Le basi e le categorie di competenza dipendono dalla Classe scelta, non dall’Addestramento nel suo insieme.**
 
 ## **2.6 Profilo: Lavoratore**
 
 Il Lavoratore rappresenta una preparazione pratica, tecnica e manuale. È competente nell'uso di strumenti e veicoli, sa affrontare ambienti difficili e possiede familiarità con armi e difese comuni, senza ricevere una formazione militare o mistica specialistica.
 
-| Valore base | N. Abilità | Abilità |
-| ----- | ----- | :---- |
-| **4** | 8 | Armi da mischia, Atletica, Pilotare, Tecnologia, Armi leggere, Medicina, Percezione, Sopravvivenza |
-| **3** | 12 | Armi da lancio, Armi medie, Corpo a corpo, Difese, Artefatti, Intrattenere, Raggirare, Scienza, Armi pesanti, Cultura, Furtività, Oratoria |
-| **2** | 4 | Armi da guerra, Occultismo, Potere, Rituali |
-
-**Totale:** ventiquattro Abilità e settantasei punti base.
+**Classi disponibili come prima scelta: Agricoltore, Artigiano, Operaio, Pilota, Tecnico. Le basi e le categorie di competenza dipendono dalla Classe scelta, non dall’Addestramento nel suo insieme.**
 
 ## **2.7 Profilo: Studioso**
 
 Lo Studioso comprende intellettuali, ricercatori, medici, amministratori, predicatori e comunicatori. Eccelle nell'analisi e nell'esposizione del sapere, possiede conoscenze occulte solide e una preparazione pratica limitata nelle discipline mistiche.
 
-| Valore base | N. Abilità | Abilità |
-| ----- | ----- | :---- |
-| **4** | 8 | Cultura, Medicina, Oratoria, Scienza, Artefatti, Occultismo, Percezione, Tecnologia |
-| **3** | 12 | Armi leggere, Difese, Furtività, Intrattenere, Pilotare, Raggirare, Rituali, Sopravvivenza, Armi da lancio, Armi da mischia, Corpo a corpo, Potere |
-| **2** | 4 | Armi medie, Armi pesanti, Armi da guerra, Atletica |
-
-**Totale:** ventiquattro Abilità e settantasei punti base.
+**Classi disponibili come prima scelta: Accademico, Amministrativo, Artista, Medico, Predicatore. Le basi e le categorie di competenza dipendono dalla Classe scelta, non dall’Addestramento nel suo insieme.**
 
 ## **2.8 Profilo: Taumaturgo**
 
-Il Taumaturgo è addestrato a percepire, comprendere e manipolare le Energie Astrali. Possiede una preparazione completa nelle quattro Abilità Mistiche e conoscenze complementari di carattere culturale, scientifico e sociale, ma una formazione fisica e marziale ridotta.
+Il Taumaturgo è addestrato a percepire, comprendere e manipolare le Energie Astrali. Le sue Classi sviluppano profili differenti: magia, rituali, guarigione, Artefatti, Tecnologia o combattimento ravvicinato. Il profilo della Classe stabilisce la competenza effettiva nelle singole Abilità.
 
-| Valore base | N. Abilità | Abilità |
-| ----- | ----- | :---- |
-| **4** | 8 | Artefatti, Occultismo, Potere, Rituali, Cultura, Oratoria, Percezione, Scienza |
-| **3** | 12 | Armi leggere, Difese, Furtività, Intrattenere, Medicina, Raggirare, Sopravvivenza, Tecnologia, Armi da lancio, Armi da mischia, Corpo a corpo, Pilotare |
-| **2** | 4 | Armi medie, Armi pesanti, Armi da guerra, Atletica |
-
-**Totale:** ventiquattro Abilità e settantasei punti base.
+**Classi disponibili come prima scelta: Arcanista, Custode, Invocatore, Mistico, Tecnomante. Le basi e le categorie di competenza dipendono dalla Classe scelta, non dall’Addestramento nel suo insieme.**
 
 Il valore posseduto in Potere non concede automaticamente l’accesso agli Incantesimi. Il vantaggio dell’Addestramento Taumaturgo e le regole di Classi e Talenti stabiliscono quali capacità mistiche il personaggio possa apprendere; il Valore Abilità determina soltanto l’efficacia delle Prove consentite.
 
@@ -782,7 +753,7 @@ Le origini disponibili alla creazione sono Bauhaus, Capitol, Cybertronic, Fratel
 | Cybertronic | 4 | 6 | 5 | 6 | 5 | 5 | Armi medie; Pilotare; Scienza; Tecnologia |
 | Fratellanza | 5 | 5 | 4 | 5 | 6 | 6 | Cultura; Oratoria; Occultismo; Percezione |
 | Imperiali | 6 | 6 | 5 | 4 | 5 | 5 | Armi medie; Armi da guerra; Atletica; Sopravvivenza |
-| Mishima | 5 | 4 | 6 | 5 | 6 | 5 | Armi da mischia; Corpo a corpo; Atletica; Occultismo |
+| Mishima | 5 | 4 | 6 | 5 | 6 | 5 | Armi da guerra; Corpo a corpo; Atletica; Occultismo |
 | Freelance | 5 | 6 | 5 | 5 | 5 | 6 | Armi leggere; Pilotare; Raggirare; Sopravvivenza |
 
 ### **2.9.1 Bauhaus**
@@ -916,7 +887,7 @@ Le Classi non assegnano bonus automatici alle Salvezze. Tutte e quattro aumentan
 
 Al 1° livello scegli una Classe appartenente al tuo Addestramento e acquisiscine il I Grado. Riporta sulla Scheda i benefici seguenti, usando il profilo della Classe nel Capitolo 3:
 
-* \+1 a ciascuna delle cinque Abilità di Classe. Questi punti si registrano nell’Avanzamento e non modificano il Valore Base Addestramento.  
+* Il profilo delle ventiquattro Abilità della prima Classe: 2 Specializzate con base 7, 6 Professionali con base 6, 12 Generiche con base 5 e 4 Non competenti con base 3\. Aggiungi poi \+1 a ciascuna delle cinque Abilità di Classe nell’Avanzamento; le basi restano invariate.  
 * Il Talento fisso del I Grado.  
 * I contributi della Classe a PV e PM. Alla creazione si massimizzano gli eventuali dadi sia dei PV sia dei PM della prima Classe; i contributi fissi si aggiungono normalmente.  
 * Gli Incantesimi o gli altri benefici espressamente previsti dalla Classe.
@@ -927,20 +898,20 @@ I tre Talenti fissi si ottengono ai Gradi I, III e V. Ai Gradi II, IV e VI si ac
 
 Alla creazione distribuisci 10 Punti Abilità Liberi. Ogni punto aggiunge \+1 all’Avanzamento dell’Abilità scelta, sia essa di Classe oppure no. L’Abilità deve avere VA almeno 1 prima dell’assegnazione dei punti liberi.
 
-Puoi assegnare più punti alla stessa Abilità, ma l’Avanzamento totale iniziale non può superare 3\. Nel limite rientra anche l’eventuale \+1 della Classe. I punti liberi non aumentano il Valore Base Addestramento e non modificano il bonus della Corporazione.
+Puoi assegnare più punti alla stessa Abilità soltanto quando ogni punto aumenta effettivamente il VA personale, senza superare il limite della sua categoria al I Grado: S 12, P 9, G 7, N 5\. Il limite comprende Modificatore, Base iniziale, Corporazione e Avanzamento. Non si possono accantonare punti liberi inattivi oltre il limite. I punti non cambiano la Base iniziale o il bonus della Corporazione.
 
 ### **Esempio per un Agente**
 
 | Abilità | Dalla Classe | Punti liberi | Avanzamento |
 | :---: | :---: | :---: | :---: |
-| Furtività | \+1 | \+2 | 3 |
+| Furtività | \+1 | 0 | 1 |
 | Percezione | \+1 | \+2 | 3 |
-| Medicina | 0 | \+3 | 3 |
-| Armi leggere | \+1 | \+1 | 2 |
-| Cultura | \+1 | \+1 | 2 |
-| Raggirare | \+1 | \+1 | 2 |
+| Tecnologia | 0 | \+2 | 2 |
+| Armi leggere | \+1 | 0 | 1 |
+| Cultura | \+1 | \+2 | 3 |
+| Raggirare | \+1 | \+4 | 5 |
 
-Sono stati spesi 10 punti liberi: 2 a Furtività, 2 a Percezione, 3 a Medicina e 1 ciascuno ad Armi leggere, Cultura e Raggirare. Nessuna Abilità supera Avanzamento 3\. Con Modificatore \+2, base 4, Corporazione \+1 e Avanzamento 3, il VA iniziale massimo ordinario è 10, pari al 50% di successo prima dei modificatori alla Prova.
+L’esempio usa il Mishima Agente del paragrafo 2.1, con modificatori DES \+2, SAG \+2, INT 0 e CAR 0\. I 10 punti liberi sono assegnati a Percezione (2), Tecnologia (2), Cultura (2) e Raggirare (4). Percezione: 2 \+ 7 \+ 0 \+ 3 \= VA 12; Raggirare: 0 \+ 7 \+ 0 \+ 5 \= VA 12; Tecnologia: 0 \+ 6 \+ 0 \+ 2 \= VA 8; Cultura: 0 \+ 6 \+ 0 \+ 3 \= VA 9\. Furtività e Armi leggere sono già al limite P: 2 \+ 6 \+ 0 \+ 1 \= VA 9\. Medicina è G e parte da 2 \+ 5 \= VA 7\. Tutti i punti spesi aumentano il VA personale e rispettano il limite della categoria.
 
 I 10 punti della creazione costituiscono l’assegnazione del 1° livello. Altri 10 Punti Abilità Liberi vengono assegnati ai livelli 4, 8, 12, 16 e 20, secondo il Capitolo 8; non si aggiunge un secondo gruppo di punti al 1° livello.
 
@@ -1848,18 +1819,18 @@ I veicoli sono esclusi dalla dotazione comune e dalle dotazioni iniziali di tutt
 
 Prima di iniziare a giocare, verifica le voci seguenti:
 
-* Concetto e Corporazione riportati, con valori iniziali e bonus fissi corretti. Mishima riceve \+1 ad Armi da mischia.  
+* Concetto e Corporazione riportati, con valori iniziali e bonus fissi corretti. Mishima riceve \+1 ad Armi da guerra.  
 * Tutti i 5 Punti Caratteristica assegnati, nessun valore iniziale superiore a 7 e modificatori calcolati come valore meno 5\.  
-* Uno dei cinque Addestramenti scelto, con il profilo completo delle ventiquattro Abilità, il vantaggio e i bonus alle Salvezze.  
-* Prima Classe appartenente all’Addestramento, registrata al I Grado: \+1 nelle cinque Abilità, Talento fisso iniziale e contributi a PV e PM. Nessun bonus automatico alle Salvezze dalla Classe.  
-* Tutti i 10 Punti Abilità Liberi assegnati ad Abilità ammesse, senza superare Avanzamento 3 in ciascuna.  
-* Per ogni Abilità, componenti e totale distinti: Modificatore \+ Valore Base Addestramento \+ Corporazione \+ Avanzamento.  
+* Uno dei cinque Addestramenti scelto, con il vantaggio e i bonus alle Salvezze corretti.  
+* Prima Classe appartenente all’Addestramento, registrata al I Grado: profilo completo 2 S / 6 P / 12 G / 4 N, basi 7 / 6 / 5 / 3, \+1 nelle cinque Abilità di Classe, Talento fisso iniziale e contributi a PV e PM. Nessun bonus automatico alle Salvezze dalla Classe.  
+* Tutti i 10 Punti Abilità Liberi assegnati ad Abilità ammesse, aumentando effettivamente il VA personale entro i limiti del I Grado.  
+* Per ogni Abilità, componenti e totale distinti: Modificatore \+ Base iniziale \+ Corporazione \+ Avanzamento; applicare il limite di categoria al VA personale prima dei modificatori alla Prova.  
 * PV, PM, quattro Salvezze, bonus Iniziativa, Movimento e Azioni calcolati. Per le Salvezze: base 8, modificatore specifico, bonus di Addestramento e Corporazione, Avanzamento 0 al 1° livello.  
 * Punti Eroe iniziali determinati e spazio dedicato ai Distintivi.  
 * Se previsti, Incantesimi conosciuti registrati per famiglia e livello, secondo Addestramento, Classe e Manuale della Magia.  
 * Nessun Talento Libero assegnato al 1° livello; equipaggiamento iniziale e crediti residui registrati, con modello effettivo, componenti compatibili ed eventuali conguagli del §2.16.
 
-Per esempio, la Furtività del Mishima Avventuriero Agente, dopo l’assegnazione mostrata al paragrafo 2.13, vale 2 \+ 4 \+ 0 \+ 3 \= VA 9\.
+Per esempio, la Furtività del Mishima Avventuriero Agente, dopo l’assegnazione mostrata al paragrafo 2.13, vale 2 \+ 6 \+ 0 \+ 1 \= VA 9, al limite Professionale del I Grado.
 
 # **Capitolo 3 — Classi**
 
@@ -1867,7 +1838,7 @@ Per esempio, la Furtività del Mishima Avventuriero Agente, dopo l’assegnazion
 
 La Classe definisce la specializzazione professionale e operativa del personaggio. Ogni Classe appartiene inizialmente a uno dei cinque Addestramenti e fornisce un profilo composto dagli elementi seguenti:
 
-* cinque Abilità di Classe, ciascuna con \+1 nell’Avanzamento a ogni Grado acquisito, entro il limite del Capitolo 8;
+* un profilo di competenza completo delle ventiquattro Abilità, con 2 Specializzate, 6 Professionali, 12 Generiche e 4 Non competenti; cinque Abilità di Classe, ciascuna con \+1 nell’Avanzamento a ogni Grado acquisito, soggette al limite del VA personale del Capitolo 8;
 
 * un incremento dei Punti Vita per Grado;
 
@@ -1883,9 +1854,9 @@ Le Salvezze dipendono da Caratteristica, Addestramento, Corporazione e livello d
 
 Il personaggio acquisisce un Grado di Classe ai livelli 1, 4, 8, 12, 16 e 20\. La prima Classe appartiene all’Addestramento scelto. Dalle acquisizioni successive può aumentare di un Grado una Classe posseduta oppure acquisire il I Grado di una nuova Classe, anche appartenente a un altro Addestramento. Può possedere al massimo tre Classi.
 
-Ogni Classe conserva il proprio Grado da I a VI, senza salti. Una nuova Classe non cambia l’Addestramento iniziale, i Valori Base Addestramento, il suo vantaggio o i suoi bonus alle Salvezze. Il livello del personaggio, i Gradi delle singole Classi e il numero complessivo di Gradi sono valori distinti.
+Ogni Classe conserva il proprio Grado da I a VI, senza salti. Una nuova Classe non cambia l’Addestramento iniziale, le Basi iniziali, il vantaggio di Addestramento o i suoi bonus alle Salvezze. I suoi profili di competenza possono invece aumentare i limiti del VA personale secondo il §8.7. Il livello del personaggio, i Gradi delle singole Classi e il numero complessivo di Gradi sono valori distinti.
 
-Ogni Grado acquisito concede \+1 alle cinque Abilità della Classe, i contributi a PV e PM, il Talento previsto per quel Grado e gli eventuali Incantesimi o benefici espressamente indicati. Si assegnano prima i punti fissi di Classe e poi i punti liberi, rispettando il limite di Avanzamento di ciascuna Abilità.
+Ogni Grado acquisito concede \+1 alle cinque Abilità della Classe, i contributi a PV e PM, il Talento previsto per quel Grado e gli eventuali Incantesimi o benefici espressamente indicati. Si registrano prima i punti automatici di Classe e poi si assegnano i punti liberi. I punti automatici oltre il limite restano registrati e possono diventare efficaci quando il limite aumenta; i punti liberi si spendono solo dove aumentano subito il VA personale (§8.3).
 
 ## **3.2 Talenti di Classe e Specializzazioni**
 
@@ -1989,6 +1960,14 @@ I Talenti fissi si acquisiscono ai Gradi I, III e V della singola Classe. Ai Gra
 
 ### **Agente**
 
+**Specializzate (S, base 7):** Percezione, Raggirare.
+
+**Professionali (P, base 6):** Armi leggere, Cultura, Furtività, Oratoria, Difese, Tecnologia.
+
+**Generiche (G, base 5):** Armi da lancio, Armi medie, Armi da mischia, Corpo a corpo, Artefatti, Occultismo, Atletica, Pilotare, Sopravvivenza, Medicina, Scienza, Intrattenere.
+
+**Non competenti (N, base 3):** Armi pesanti, Armi da guerra, Potere, Rituali.
+
 **Sicurezza:** Reazione Operativa, Mira Selettiva. Spionaggio: Analisi Rapida, Doppia Identità. Comune: Posizionamento Operativo.
 
 **I Grado — Fuoco Controllato.** Quando spara contro un avversario ingaggiato in Ravvicinato, protetto da un alleato o che usa un ostaggio come scudo, l’Agente elimina la penalità specifica e non effettua la seconda Prova di controllo. Un normale fallimento non colpisce l’alleato o l’ostaggio; un Fallimento Maldestro produce una complicazione non collaterale. Restano gli altri modificatori pertinenti, comprese distanza e Copertura.
@@ -2008,6 +1987,14 @@ I Talenti fissi si acquisiscono ai Gradi I, III e V della singola Classe. Ai Gra
 **Posizionamento Operativo.** Una volta per combattimento, dopo l’Iniziativa e prima del primo Round, può spostarsi gratuitamente fino a 3 Q, senza consumare l’Azione di Movimento. Si applicano terreno, ostacoli e Attacchi di Opportunità ordinari. Durante questo spostamento non svolge altri attacchi o azioni. Non può utilizzarlo se è Sorpreso.
 
 ### **Cacciatore**
+
+**Specializzate (S, base 7):** Armi medie, Percezione.
+
+**Professionali (P, base 6):** Armi da mischia, Difese, Occultismo, Atletica, Furtività, Sopravvivenza.
+
+**Generiche (G, base 5):** Armi da lancio, Armi leggere, Corpo a corpo, Artefatti, Pilotare, Cultura, Medicina, Scienza, Tecnologia, Intrattenere, Oratoria, Raggirare.
+
+**Non competenti (N, base 3):** Armi pesanti, Armi da guerra, Potere, Rituali.
 
 **Naturale:** Trappola Improvvisata, Cacciatore Instancabile. Occulto: Sangue Freddo, Senso dell’Occulto. Comune: Colpo di Abbattimento.
 
@@ -2033,6 +2020,14 @@ Il \+5 di Cacciatore Instancabile si applica alla prima PS di Tempra pertinente 
 
 ### **Esploratore**
 
+**Specializzate (S, base 7):** Percezione, Sopravvivenza.
+
+**Professionali (P, base 6):** Difese, Atletica, Furtività, Pilotare, Scienza, Tecnologia.
+
+**Generiche (G, base 5):** Armi da lancio, Armi leggere, Armi medie, Armi da mischia, Corpo a corpo, Artefatti, Occultismo, Cultura, Medicina, Intrattenere, Oratoria, Raggirare.
+
+**Non competenti (N, base 3):** Armi pesanti, Armi da guerra, Potere, Rituali.
+
 **Terrestre:** Segni di Passaggio, Adattamento Estremo. **Spaziale:** Mappa Mentale, Rotta Alternativa. **Comune:** Avanguardia.
 
 **I Grado — Apripista.** Quando entra in un’area sconosciuta o inizia un combattimento in un ambiente complesso, può indicare una linea di avanzamento sicura. Prima del tiro di Iniziativa o all’inizio della scena, fino a tre alleati entro 6 Q possono muoversi di 1 Q senza consumare Azioni, purché seguano l’indicazione.
@@ -2052,6 +2047,14 @@ III Grado — Occhio del Terreno. Una volta per scena, il giocatore indica un pe
 **Avanguardia.** Una volta per combattimento, durante la propria Iniziativa nel primo Round, se deve ancora agire almeno un nemico, può spendere un’Azione Principale per permettere a un alleato entro 6 Q di muoversi immediatamente fino a 4 Q. Lo spostamento segue le regole del Passo e non consuma l’Azione di Movimento dell’alleato. Rispetta ostacoli, terreno ed eventuali Attacchi di Opportunità e permette soltanto il movimento.
 
 ### **Lestofante**
+
+**Specializzate (S, base 7):** Furtività, Raggirare.
+
+**Professionali (P, base 6):** Armi da mischia, Difese, Atletica, Percezione, Tecnologia, Oratoria.
+
+**Generiche (G, base 5):** Armi da lancio, Armi leggere, Armi medie, Corpo a corpo, Artefatti, Occultismo, Pilotare, Sopravvivenza, Cultura, Medicina, Scienza, Intrattenere.
+
+**Non competenti (N, base 3):** Armi pesanti, Armi da guerra, Potere, Rituali.
 
 **Ladro:** Filo Nascosto, Mano Fantasma. Truffatore: Fumo e Specchi, Ricatto Operativo. Comune: Fuga tra la Folla.
 
@@ -2074,6 +2077,14 @@ L’azione si svolge dopo la risoluzione dell’evento e richiede le eventuali P
 **Fuga tra la Folla.** In un ambiente affollato, in rovina o ricco di Coperture, quando utilizza un’Azione di Movimento può confondersi con l’ambiente. Il primo attacco contro di lui prima della sua Iniziativa successiva deve scegliere un altro bersaglio valido oppure subisce una complicazione stabilita dal Direttore.
 
 ### **Paramedico**
+
+**Specializzate (S, base 7):** Percezione, Medicina.
+
+**Professionali (P, base 6):** Difese, Atletica, Pilotare, Sopravvivenza, Scienza, Tecnologia.
+
+**Generiche (G, base 5):** Armi da lancio, Armi leggere, Armi medie, Armi da mischia, Corpo a corpo, Artefatti, Occultismo, Furtività, Cultura, Intrattenere, Oratoria, Raggirare.
+
+**Non competenti (N, base 3):** Armi pesanti, Armi da guerra, Potere, Rituali.
 
 **Soccorritore:** Protocollo Shock, Evacuazione Medica. Traumatologo: Campo Sterile, Diagnosi sul Campo. Comune: Controllo del Trauma.
 
@@ -2113,6 +2124,14 @@ Se Controllo del Trauma è già attivo e sospende la penalità generale delle Fe
 
 ### **Artigliere — Talenti**
 
+**Specializzate (S, base 7):** Armi medie, Armi pesanti.
+
+**Professionali (P, base 6):** Armi leggere, Difese, Atletica, Furtività, Percezione, Tecnologia.
+
+**Generiche (G, base 5):** Armi da lancio, Armi da mischia, Armi da guerra, Corpo a corpo, Pilotare, Sopravvivenza, Cultura, Medicina, Scienza, Intrattenere, Oratoria, Raggirare.
+
+**Non competenti (N, base 3):** Artefatti, Occultismo, Potere, Rituali.
+
 | Talento | Effetto |
 | :---- | :---- |
 | I — Ottimizzare Gittata | Con Armi medie o pesanti riduce di 2 la penalità dovuta alla distanza. Si cumula con mirini e Tiro a Lunga Distanza, senza produrre bonus positivo, estendere la gittata massima o ridurre le Azioni richieste. |
@@ -2133,6 +2152,14 @@ Il controllo remoto richiede un controller compatibile, un collegamento attivo e
 Addestramento: Combattente. I Talenti fissi si acquisiscono ai Gradi I, III e V della singola Classe. Ai Gradi II, IV e VI si sceglie un Talento fra le cinque opzioni della Classe. Gli indirizzi di Classe sono indicazioni: non vincolano le scelte del giocatore.
 
 ### **Assaltatore — Talenti fissi**
+
+**Specializzate (S, base 7):** Armi da mischia, Armi da guerra.
+
+**Professionali (P, base 6):** Armi leggere, Corpo a corpo, Difese, Atletica, Percezione, Sopravvivenza.
+
+**Generiche (G, base 5):** Armi da lancio, Armi medie, Armi pesanti, Furtività, Pilotare, Cultura, Medicina, Scienza, Tecnologia, Intrattenere, Oratoria, Raggirare.
+
+**Non competenti (N, base 3):** Artefatti, Occultismo, Potere, Rituali.
 
 **I Grado — Mantenere la Posizione.** Ottiene \+3 al valore delle Prove o delle Prove Salvezza previste per resistere o liberarsi da sbilanciamenti, spinte, spostamenti forzati, immobilizzazioni e disarmi. Si utilizza la Prova indicata dalla Manovra o dall’effetto.
 
@@ -2160,6 +2187,14 @@ Non si applica agli attacchi ad Area o inevitabili. Le eventuali Difese richiedo
 
 ### **Incursore — Talenti fissi**
 
+**Specializzate (S, base 7):** Furtività, Tecnologia.
+
+**Professionali (P, base 6):** Armi da lancio, Armi leggere, Armi da mischia, Difese, Atletica, Percezione.
+
+**Generiche (G, base 5):** Armi medie, Armi pesanti, Armi da guerra, Corpo a corpo, Pilotare, Sopravvivenza, Cultura, Medicina, Scienza, Intrattenere, Oratoria, Raggirare.
+
+**Non competenti (N, base 3):** Artefatti, Occultismo, Potere, Rituali.
+
 **I Grado — Movimento Tattico.** Riduce di 2, fino a un minimo di 0, le penalità alle proprie Prove dovute esclusivamente al tipo di Movimento: Passo 0, Corsa 0, Scatto −4. Restano valide le altre penalità, comprese quelle di terreno, Stati, Equipaggiamento e Manovre. Il beneficio si somma alla riduzione di Movimento Fluido, fino a un minimo di 0 per la penalità pertinente.
 
 Le penalità degli avversari per colpirlo restano quelle ordinarie: Corsa −2 e Scatto −4, con la normale durata. Il beneficio è sempre attivo, senza costi o limiti di utilizzo.
@@ -2185,6 +2220,14 @@ Se termina il Movimento in una posizione adatta a nascondersi, può effettuare u
 **Comune — Piano di Riserva.** Una volta per sessione, dopo aver fallito una Prova di Furtività, una Prova di Tecnologia oppure una Prova Salvezza di Riflessi, può ritirare il dado prima che siano applicate le conseguenze. Deve accettare il secondo risultato. Si tratta dello stesso tentativo e non richiede ulteriori Azioni o risorse. Restano valide le regole generali sui nuovi tiri e sui Distintivi.
 
 ## **3.5.5 Talenti del Lottatore**
+
+**Specializzate (S, base 7):** Corpo a corpo, Difese.
+
+**Professionali (P, base 6):** Armi da mischia, Atletica, Furtività, Percezione, Sopravvivenza, Medicina.
+
+**Generiche (G, base 5):** Armi da lancio, Armi leggere, Armi da guerra, Occultismo, Potere, Pilotare, Cultura, Scienza, Tecnologia, Intrattenere, Oratoria, Raggirare.
+
+**Non competenti (N, base 3):** Armi medie, Armi pesanti, Artefatti, Rituali.
 
 Addestramento: Combattente. Specializzazioni: Marziale e Spirituale. Gli indirizzi di Classe sono indicazioni e non vincolano le scelte. I Talenti fissi si acquisiscono ai Gradi I, III e V della singola Classe; ai Gradi II, IV e VI si sceglie un Talento fra le cinque opzioni.
 
@@ -2253,6 +2296,14 @@ Non permette di parare attacchi a distanza, effetti ad Area o attacchi normalmen
 
 ## **3.5.6 Soldato**
 
+**Specializzate (S, base 7):** Armi medie, Sopravvivenza.
+
+**Professionali (P, base 6):** Armi leggere, Difese, Atletica, Percezione, Tecnologia, Oratoria.
+
+**Generiche (G, base 5):** Armi da lancio, Armi pesanti, Armi da mischia, Armi da guerra, Corpo a corpo, Furtività, Pilotare, Cultura, Medicina, Scienza, Intrattenere, Raggirare.
+
+**Non competenti (N, base 3):** Artefatti, Occultismo, Potere, Rituali.
+
 Combattente disciplinato, preparato a coordinare il gruppo e mantenerlo operativo. Il Supporto tattico dirige gli alleati durante lo scontro; il Logistico organizza equipaggiamento, trasporti e strutture campali.
 
 **Addestramento:** Combattente. Specializzazioni: Supporto tattico / Logistico.
@@ -2318,6 +2369,14 @@ Le fortificazioni costruite dal Soldato ottengono \+1 AR non magica. Il benefici
 **Logistico:** dimezza i tempi delle attività logistiche e concede \+2 alle Prove Salvezza di Tempra del gruppo contro l’Affaticamento causato dai viaggi organizzati dal Soldato. Il \+2 si applica soltanto alle PS richieste; non evita né trasforma in Prove i peggioramenti automatici (§5.19).
 
 ## **3.5.7 Agricoltore**
+
+**Specializzate (S, base 7):** Sopravvivenza, Scienza.
+
+**Professionali (P, base 6):** Atletica, Percezione, Pilotare, Medicina, Tecnologia, Oratoria.
+
+**Generiche (G, base 5):** Armi da lancio, Armi leggere, Armi medie, Armi da mischia, Corpo a corpo, Difese, Artefatti, Occultismo, Furtività, Cultura, Intrattenere, Raggirare.
+
+**Non competenti (N, base 3):** Armi pesanti, Armi da guerra, Potere, Rituali.
 
 Esperto nella produzione e gestione delle risorse naturali. Il Coltivatore si concentra su terreni, colture e impianti; l’Allevatore sulla cura degli animali e sul reperimento di risorse selvatiche.
 
@@ -2386,6 +2445,14 @@ Ottiene \+3 VA alle Prove pertinenti di Scienza, Sopravvivenza o Tecnologia per 
 Dedicando un’ora al trattamento delle provviste, ne raddoppia la durata ordinaria. Il Talento non elimina automaticamente veleni, malattie, radiazioni, contaminazioni industriali o effetti mistici.
 
 ## **3.5.8 Artigiano**
+
+**Specializzate (S, base 7):** Cultura, Tecnologia.
+
+**Professionali (P, base 6):** Atletica, Furtività, Percezione, Scienza, Oratoria, Raggirare.
+
+**Generiche (G, base 5):** Armi da lancio, Armi leggere, Armi medie, Armi da mischia, Corpo a corpo, Difese, Artefatti, Occultismo, Pilotare, Sopravvivenza, Medicina, Intrattenere.
+
+**Non competenti (N, base 3):** Armi pesanti, Armi da guerra, Potere, Rituali.
 
 Professionista capace di progettare, costruire, riparare e valutare manufatti. L’Armaiolo si specializza in armi e protezioni; il Manifattore in strumenti, meccanismi e beni artigianali.
 
@@ -2461,6 +2528,14 @@ Chi esamina una falsificazione realizzata dall’Artigiano subisce −4 VA alla 
 
 ## **3.5.9 Operaio**
 
+**Specializzate (S, base 7):** Atletica, Tecnologia.
+
+**Professionali (P, base 6):** Armi da mischia, Difese, Percezione, Pilotare, Sopravvivenza, Scienza.
+
+**Generiche (G, base 5):** Armi da lancio, Armi leggere, Armi medie, Armi pesanti, Armi da guerra, Corpo a corpo, Furtività, Cultura, Medicina, Intrattenere, Oratoria, Raggirare.
+
+**Non competenti (N, base 3):** Artefatti, Occultismo, Potere, Rituali.
+
 Specialista del lavoro fisico, delle infrastrutture e dei macchinari. Il Costruttore privilegia realizzazione, demolizione e produzione; il Riparatore mantiene operativi gli impianti e interviene quando mancano tempo o ricambi.
 
 **Addestramento:** Lavoratore. Specializzazioni: Costruttore / Riparatore.
@@ -2524,6 +2599,14 @@ Quando l’Operaio Aiuta in un’attività non offensiva, aumenta di \+1 il bonu
 Il bonus complessivo fornito da tutti gli aiutanti non può comunque superare \+5. Restano applicabili i requisiti della regola Assistenza: l’Operaio deve poter partecipare concretamente con il tempo, la posizione e gli strumenti necessari.
 
 ## **3.5.10 Pilota**
+
+**Specializzate (S, base 7):** Pilotare, Tecnologia.
+
+**Professionali (P, base 6):** Armi leggere, Percezione, Sopravvivenza, Atletica, Scienza, Difese.
+
+**Generiche (G, base 5):** Armi da lancio, Armi medie, Armi pesanti, Armi da mischia, Corpo a corpo, Artefatti, Furtività, Cultura, Medicina, Intrattenere, Oratoria, Raggirare.
+
+**Non competenti (N, base 3):** Armi da guerra, Occultismo, Potere, Rituali.
 
 Specialista nella conduzione di veicoli terrestri, marini, aerei e spaziali. Il Civile privilegia sicurezza, affidabilità e manutenzione; il Militare velocità, manovre evasive e combattimento.
 
@@ -2596,6 +2679,14 @@ Devono possedere un VA pertinente di almeno 1 e poter contribuire concretamente,
 Conduzione, Manovrabilità, velocità, attacchi, tre strutture con PI separati, collisioni e riparazioni sono nel Manuale dei Veicoli. I profili delle armi di bordo mantengono le regole del Manuale degli Armamenti.
 
 ## **3.5.11 Tecnico**
+
+**Specializzate (S, base 7):** Scienza, Tecnologia.
+
+**Professionali (P, base 6):** Atletica, Furtività, Percezione, Pilotare, Cultura, Raggirare.
+
+**Generiche (G, base 5):** Armi da lancio, Armi leggere, Armi medie, Armi da mischia, Corpo a corpo, Difese, Artefatti, Occultismo, Sopravvivenza, Medicina, Intrattenere, Oratoria.
+
+**Non competenti (N, base 3):** Armi pesanti, Armi da guerra, Potere, Rituali.
 
 Specialista di sistemi elettronici, macchinari automatizzati, reti e dispositivi complessi. Il Meccatronico migliora le prestazioni fisiche dei dispositivi; l’Informatico interviene su accessi, reti e sicurezza digitale.
 
@@ -2689,6 +2780,14 @@ I Talenti fissi si acquisiscono ai Gradi I, III e V; ai Gradi II, IV e VI si sce
 
 ### **3.7.1 Accademico**
 
+**Specializzate (S, base 7):** Cultura, Scienza.
+
+**Professionali (P, base 6):** Artefatti, Occultismo, Percezione, Medicina, Tecnologia, Oratoria.
+
+**Generiche (G, base 5):** Armi da lancio, Armi leggere, Armi da mischia, Corpo a corpo, Difese, Rituali, Atletica, Furtività, Pilotare, Sopravvivenza, Intrattenere, Raggirare.
+
+**Non competenti (N, base 3):** Armi medie, Armi pesanti, Armi da guerra, Potere.
+
 Studioso che applica conoscenze, ricerca e interpretazione critica. Lo Scientifico si concentra su dati e metodi di ricerca; l’Umanistico su storia, tradizioni e patrimonio culturale.
 
 **Addestramento:** Studioso. Specializzazioni: Scientifico / Umanistico.
@@ -2736,6 +2835,14 @@ Una volta per scena, l’Accademico può ottenere senza tiro un’informazione g
 **Ricercare informazioni non costituisce un’Abilità separata:** si usa Cultura per archivi e istituzioni, Scienza per pubblicazioni e dati, Tecnologia per reti e banche dati. Con le fonti personali si usa Oratoria per domandare o persuadere e Raggirare quando si ricorre a menzogne o inganni.
 
 ### **3.7.2 Amministrativo**
+
+**Specializzate (S, base 7):** Cultura, Oratoria.
+
+**Professionali (P, base 6):** Percezione, Pilotare, Scienza, Tecnologia, Intrattenere, Raggirare.
+
+**Generiche (G, base 5):** Armi da lancio, Armi leggere, Armi medie, Armi da mischia, Corpo a corpo, Difese, Artefatti, Occultismo, Atletica, Furtività, Sopravvivenza, Medicina.
+
+**Non competenti (N, base 3):** Armi pesanti, Armi da guerra, Potere, Rituali.
 
 Professionista delle procedure, delle organizzazioni e della gestione delle risorse. Il Burocrate conosce uffici e canali istituzionali; il Contabile organizza costi, forniture e pianificazione economica.
 
@@ -2788,6 +2895,14 @@ L’Amministrativo può compilare documenti autentici formalmente impeccabili qu
 Ottiene \+2 VA a Raggirare per preparare documenti falsi. È necessaria anche una Prova di Tecnologia se deve introdursi in un sistema protetto o alterare un archivio elettronico; il normale uso di strumenti di scrittura e stampa non richiede una Prova aggiuntiva.
 
 ### **3.7.3 Artista**
+
+**Specializzate (S, base 7):** Intrattenere, Oratoria.
+
+**Professionali (P, base 6):** Atletica, Furtività, Percezione, Cultura, Tecnologia, Raggirare.
+
+**Generiche (G, base 5):** Armi da lancio, Armi leggere, Armi medie, Armi da mischia, Corpo a corpo, Difese, Artefatti, Occultismo, Pilotare, Sopravvivenza, Medicina, Scienza.
+
+**Non competenti (N, base 3):** Armi pesanti, Armi da guerra, Potere, Rituali.
 
 Interprete e comunicatore capace di coinvolgere il pubblico. Lo Scenico privilegia l’esibizione dal vivo; il Mediatico prepara e diffonde contenuti attraverso i mezzi di comunicazione.
 
@@ -2846,6 +2961,14 @@ Una volta per scena, durante la propria Iniziativa e senza spendere Azioni, l’
 Il beneficio si dichiara prima del tiro e si consuma anche se la Prova fallisce. Non si somma con Assistenza o con un’altra Ispirazione: si applica il bonus più alto.
 
 ### **3.7.4 Medico**
+
+**Specializzate (S, base 7):** Medicina, Scienza.
+
+**Professionali (P, base 6):** Occultismo, Percezione, Sopravvivenza, Cultura, Tecnologia, Oratoria.
+
+**Generiche (G, base 5):** Armi da lancio, Armi leggere, Armi da mischia, Corpo a corpo, Difese, Artefatti, Rituali, Atletica, Furtività, Pilotare, Intrattenere, Raggirare.
+
+**Non competenti (N, base 3):** Armi medie, Armi pesanti, Armi da guerra, Potere.
 
 Professionista della diagnosi e del trattamento delle patologie e delle Ferite. Il Clinico si dedica alle cure e agli interventi sul paziente; il Ricercatore all’identificazione delle cause e allo studio delle condizioni sanitarie.
 
@@ -2914,6 +3037,14 @@ Si applicano gli esiti del kit effettivamente utilizzato, compresi quelli del Su
 Un Sanguinamento arrestato non riprende soltanto perché cambia la scena. Nuove lesioni possono provocarne un altro.
 
 ### **3.7.5 Predicatore**
+
+**Specializzate (S, base 7):** Occultismo, Oratoria.
+
+**Professionali (P, base 6):** Artefatti, Rituali, Percezione, Cultura, Medicina, Intrattenere.
+
+**Generiche (G, base 5):** Armi da lancio, Armi leggere, Armi da mischia, Corpo a corpo, Difese, Atletica, Furtività, Pilotare, Sopravvivenza, Scienza, Tecnologia, Raggirare.
+
+**Non competenti (N, base 3):** Armi medie, Armi pesanti, Armi da guerra, Potere.
 
 Guida spirituale che sostiene la determinazione e interpreta dottrine e tradizioni. Il Missionario opera attraverso la parola e il rapporto con le comunità; il Teologo approfondisce conoscenze religiose e pratiche espressamente concesse dai Talenti.
 
@@ -3001,6 +3132,14 @@ I Talenti non introducono una Reazione o un’Azione Bonus generale. Quando il t
 
 ### **3.9.1 Arcanista**
 
+**Specializzate (S, base 7):** Potere, Rituali.
+
+**Professionali (P, base 6):** Armi da lancio, Difese, Artefatti, Occultismo, Percezione, Cultura.
+
+**Generiche (G, base 5):** Armi leggere, Armi da mischia, Corpo a corpo, Atletica, Furtività, Sopravvivenza, Medicina, Scienza, Tecnologia, Intrattenere, Oratoria, Raggirare.
+
+**Non competenti (N, base 3):** Armi medie, Armi pesanti, Armi da guerra, Pilotare.
+
 Taumaturgo versatile che studia e controlla il funzionamento degli Incantesimi. Il Plasmatore ne adatta geometria e parametri; il Canalizzatore ne gestisce il costo e il flusso energetico.
 
 **Addestramento:** Taumaturgo. Specializzazioni: Plasmatore / Canalizzatore.
@@ -3054,6 +3193,14 @@ Gli Incantesimi lanciati senza Prova non attivano questo Talento. Non è possibi
 **Ordine dei costi:** si parte dal costo del livello dichiarato; si applicano Armonizzazione Arcana ed eventualmente Riserva Tecnica, con minimo 1 PM; un Successo Magistrale dimezza per difetto il costo risultante, sempre con minimo 1 PM; infine si applica Controllo dei Flussi. Un Incantesimo di livello 7 costa 6 PM con Armonizzazione Arcana, ma mantiene la Prova a −2 VA; Architetto Arcano elimina questa penalità, non la Prova.
 
 ### **3.9.2 Custode**
+
+**Specializzate (S, base 7):** Armi da mischia, Difese.
+
+**Professionali (P, base 6):** Corpo a corpo, Artefatti, Occultismo, Potere, Atletica, Percezione.
+
+**Generiche (G, base 5):** Armi da lancio, Armi leggere, Armi da guerra, Rituali, Furtività, Sopravvivenza, Cultura, Medicina, Tecnologia, Intrattenere, Oratoria, Raggirare.
+
+**Non competenti (N, base 3):** Armi medie, Armi pesanti, Pilotare, Scienza.
 
 Taumaturgo del combattimento ravvicinato e della protezione. Il Guerriero perfeziona l’impiego dell’Arma Astrale; la Sentinella si dedica alla difesa personale e all’intercettazione delle minacce rivolte agli alleati.
 
@@ -3122,6 +3269,14 @@ Una volta per Round, mentre impugna l’Arma Astrale, il Custode può effettuare
 
 ### **3.9.3 Invocatore**
 
+**Specializzate (S, base 7):** Occultismo, Potere.
+
+**Professionali (P, base 6):** Armi da lancio, Corpo a corpo, Difese, Artefatti, Percezione, Oratoria.
+
+**Generiche (G, base 5):** Armi leggere, Armi da mischia, Rituali, Atletica, Furtività, Pilotare, Sopravvivenza, Cultura, Medicina, Tecnologia, Intrattenere, Raggirare.
+
+**Non competenti (N, base 3):** Armi medie, Armi pesanti, Armi da guerra, Scienza.
+
 Taumaturgo specializzato nell’impiego offensivo della magia. Il Dirompente concentra l’energia negli effetti distruttivi; il Telecineta controlla urti, spostamenti e manipolazione a distanza.
 
 **Addestramento:** Taumaturgo. Specializzazioni: Dirompente / Telecineta.
@@ -3173,6 +3328,14 @@ Può ripetere anche un 20 naturale, conservando il Distintivo ottenuto dal primo
 Incantesimi Aggressivi, Sovraccarico Controllato e il danno aggiuntivo di Controllo Arcano sono cumulabili. Si applicano prima dei moltiplicatori, delle Difese e dell’Armatura, rispettando per ciascuno il limite di una sola applicazione per bersaglio e per Incantesimo. Il Successo Magistrale segue la regola generale sulla prima istanza di danno.
 
 ### **3.9.4 Mistico**
+
+**Specializzate (S, base 7):** Potere, Medicina.
+
+**Professionali (P, base 6):** Difese, Artefatti, Occultismo, Rituali, Percezione, Oratoria.
+
+**Generiche (G, base 5):** Armi da lancio, Armi leggere, Armi da mischia, Corpo a corpo, Atletica, Furtività, Pilotare, Sopravvivenza, Cultura, Scienza, Intrattenere, Raggirare.
+
+**Non competenti (N, base 3):** Armi medie, Armi pesanti, Armi da guerra, Tecnologia.
 
 Taumaturgo rivolto alla cura, alla percezione e alla protezione spirituale. Il Guaritore sostiene il recupero dei compagni; il Divinatore affina intuizione e lettura delle possibilità.
 
@@ -3231,6 +3394,14 @@ Se il Mistico perde conoscenza, terminano entrambe le aure e i relativi potenzia
 Scudo Spirituale si applica anche alle PS di Magia contro Corruzione. Le penalità da CROS e da perdita di UMN si applicano normalmente prima di determinare il Valore finale della Salvezza (§§5.20–5.21).
 
 ### **3.9.5 Tecnomante**
+
+**Specializzate (S, base 7):** Artefatti, Tecnologia.
+
+**Professionali (P, base 6):** Armi leggere, Difese, Potere, Rituali, Percezione, Scienza.
+
+**Generiche (G, base 5):** Armi medie, Armi da mischia, Corpo a corpo, Occultismo, Atletica, Furtività, Pilotare, Cultura, Medicina, Intrattenere, Oratoria, Raggirare.
+
+**Non competenti (N, base 3):** Armi da lancio, Armi pesanti, Armi da guerra, Sopravvivenza.
 
 Taumaturgo che unisce tecnologia e proprietà mistiche. Il Forgiatore si concentra su armi, armature e scudi; l’Artefice su batterie, strumenti, dispositivi, impianti e altri oggetti. La riserva di PM per Grado è inferiore a quella delle altre Classi taumaturgiche, coerentemente con il maggiore affidamento sugli Artefatti.
 
@@ -3331,20 +3502,22 @@ Non permette di sparare con un fucile TecnoMistico abbandonato a terra, a meno c
 
 ## **4.1 Struttura delle Abilità**
 
-Le Abilità sono ventiquattro, organizzate in sei categorie di consultazione. Ogni categoria contiene quattro Abilità. Le categorie servono esclusivamente a ordinare la scheda e il manuale: non concedono bonus e non costituiscono un ulteriore sottosistema.
+Le Abilità sono ventiquattro, organizzate in sei categorie di consultazione di quattro Abilità ciascuna. Questi gruppi ordinano scheda e manuale e non concedono bonus. Sono distinti dalle quattro categorie di competenza S, P, G e N, assegnate dalle Classi e usate per basi e limiti del VA personale (§§2.3 e 8.3).
 
 Ogni Abilità è associata a una Caratteristica fissa e possiede un Valore Abilità già calcolato sulla scheda.
 
 ## **4.2 Composizione del Valore Abilità**
 
-Il VA è la somma del Modificatore di Caratteristica, dell'Addestramento, dell'eventuale bonus di Corporazione e dell'Avanzamento. L'Addestramento fornisce un valore da 2 a 4 diverso per ciascuna Abilità, così da distinguere le competenze iniziali dei cinque profili senza modificare l'elenco delle Abilità.
+Somma Modificatore di Caratteristica, Base iniziale, bonus di Corporazione e Avanzamento per ottenere il VA grezzo personale. Applica poi il limite della categoria di competenza: il valore minore è il VA personale. Solo dopo aggiungi i bonus e sottrai le penalità pertinenti alla Prova, ottenendo il VA finale. La Base iniziale, da 3 a 7, è fissata dalla prima Classe; acquisire altre Classi non la modifica. I bonus alla Prova di Equipaggiamento, Talenti, manovre e circostanze si applicano dopo il limite, secondo le rispettive condizioni di utilizzo.
 
-| Componente | Massimo | Nota |
+I punti automatici di Classe e gli aumenti di Caratteristica restano conteggiati nella somma grezza anche oltre il limite: la parte eccedente diventa efficace quando il limite sale. Non si spendono punti liberi che rimarrebbero inattivi. Per esempio, somma grezza 16 con limite 14 dà VA personale 14; con limite 16 torna a dare 16\.
+
+| Componente | Valore | Nota |
 | ----- | ----- | :---- |
-| Caratteristica | 5 | Modificatore della Caratteristica associata; il valore effettivo varia da −4 a \+5. |
-| Addestramento | 4 | **Profilo iniziale:** Avventuriero, Combattente, Lavoratore, Studioso o Taumaturgo. |
-| Corporazione | 1 | Bonus eventuale e specifico. |
-| Avanzamento | 8 | Crescita ottenuta alla creazione e durante i livelli. |
+| Caratteristica | −4 a \+5 | Modificatore della Caratteristica associata. |
+| Base iniziale | 7 / 6 / 5 / 3 | S / P / G / N secondo la prima Classe; resta fissa. |
+| Corporazione | 0–1 | Bonus fisso specifico, incluso nel VA grezzo personale. |
+| Avanzamento | Variabile | Punti di Classe e liberi; il limite si applica alla somma personale. |
 
 ## **4.3 Quadro completo**
 
@@ -4710,7 +4883,7 @@ SIMPLY RPG prevede venti livelli. Alla creazione si acquisisce il primo Grado di
 | 19 | Un Talento Libero; \+1 a tutte le Prove Salvezza |
 | 20 | Un Grado di Classe e 10 Punti Abilità Liberi |
 
-Nel percorso completo si ricevono sei Gradi di Classe, 60 Punti Abilità Liberi, 10 Punti Caratteristica dopo la creazione e nove Talenti Liberi. Ogni Grado concede inoltre \+1 a ciascuna delle cinque Abilità della Classe, per 30 punti fissi complessivi, entro i limiti individuali di Avanzamento. Ai livelli 3, 11 e 19 si aggiunge inoltre \+1 a tutte le Salvezze, fino a \+3 complessivo.
+Nel percorso completo si ricevono sei Gradi di Classe, 60 Punti Abilità Liberi, 10 Punti Caratteristica dopo la creazione e nove Talenti Liberi. Ogni Grado concede inoltre \+1 a ciascuna delle cinque Abilità della Classe, per 30 punti automatici complessivi; quelli oltre il limite del VA personale restano registrati, temporaneamente inattivi. Ai livelli 3, 11 e 19 si aggiunge inoltre \+1 a tutte le Salvezze, fino a \+3 complessivo.
 
 ### 8.1.1 Avanzamento delle Prove Salvezza
 
@@ -4734,37 +4907,37 @@ Ai livelli 2, 6, 10, 14 e 18 si ricevono 2 Punti Caratteristica. Entrambi posson
 
 Una Caratteristica iniziale a 7 può salire a 9 al 2° livello e a 10 al 6° livello. Al 6° livello, il punto che non può essere assegnato oltre 10 viene destinato a un’altra Caratteristica.
 
-## **8.3 Punti Abilità e limiti di Avanzamento**
+## **8.3 Punti Abilità e limiti del VA personale**
 
-Si distribuiscono 10 Punti Abilità Liberi ai livelli 1, 4, 8, 12, 16 e 20\. I punti del 1° livello sono quelli già previsti dalla creazione, non un’assegnazione aggiuntiva. Ogni punto aggiunge \+1 all’Avanzamento di un’Abilità ammessa; si applicano i requisiti del paragrafo 2.13. Si assegnano prima i punti fissi della Classe e poi quelli liberi.
+Si distribuiscono 10 Punti Abilità Liberi ai livelli 1, 4, 8, 12, 16 e 20\. I punti del 1° livello sono quelli della creazione, non un’assegnazione aggiuntiva. Ogni punto aggiunge \+1 all’Avanzamento di un’Abilità ammessa (§2.13), purché aumenti effettivamente il VA personale. Si registrano prima i punti automatici della Classe e poi si spendono quelli liberi. La tabella riporta i limiti del VA personale per un personaggio con una sola Classe; il multiclasse usa il §8.7.
 
-| Livelli | Avanzamento massimo nella stessa Abilità |
-| :---- | :---- |
-| 1–3 | 3 |
-| 4–7 | 4 |
-| 8–11 | 5 |
-| 12–15 | 6 |
-| 16–19 | 7 |
-| 20 | 8 |
+| Grado | Specializzate | Professionali | Generiche | Non competenti |
+| :---- | :---- | :---- | :---- | :---- |
+| I | 12 | 9 | 7 | 5 |
+| II | 14 | 11 | 9 | 7 |
+| III | 16 | 13 | 11 | 9 |
+| IV | 18 | 15 | 13 | 11 |
+| V | 20 | 17 | 15 | 13 |
+| VI | 22 | 19 | 17 | 15 |
 
-Il limite comprende tutti i punti di Avanzamento, sia fissi di Classe sia liberi. Si possono assegnare più punti liberi alla stessa Abilità entro tale limite. Questi punti non modificano il Valore Base Addestramento o il bonus della Corporazione.
+Il limite riguarda la somma Modificatore \+ Base iniziale \+ Corporazione \+ Avanzamento e sostituisce il precedente tetto uniforme ai punti di Avanzamento. Non si sommano i due sistemi. I punti automatici oltre il limite e gli aumenti di Caratteristica restano nella somma grezza; la parte eccedente diventa efficace quando il limite aumenta. I punti liberi non possono essere accantonati o investiti oltre il limite senza effetto immediato. Bonus e penalità alla Prova si applicano successivamente e possono superare il limite della categoria.
 
 ## **8.4 Progressione massima di un’Abilità**
 
-La tabella mostra un’Abilità con base di Addestramento 4, bonus di Corporazione 0 oppure 1, Caratteristica iniziale 7 e investimenti sufficienti a raggiungere il limite corrente di Avanzamento. Non è la progressione automatica di tutte le Abilità.
+L’esempio segue un’Abilità Specializzata che riceve \+1 automatico a ogni Grado, ha bonus di Corporazione \+1 e Caratteristica iniziale 7, aumentata a 9 al livello 2 e a 10 al livello 6\. Si investe 1 punto libero alla creazione, 1 al livello 16 e 1 al livello 20; la tabella distingue la somma grezza dal VA personale, dopo il limite. Gli altri punti liberi si distribuiscono nelle altre Abilità.
 
-| Livello | Mod. | Base | Corp. | Avanz. | VA | Probabilità |
+| Livello | Grado | Mod. | Base \+ Corp. | Avanz. | VA grezzo | VA personale |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| 1 | \+2 | 4 | 0–1 | 3 | 9–10 | 45–50% |
-| 2 | \+4 | 4 | 0–1 | 3 | 11–12 | 55–60% |
-| 4 | \+4 | 4 | 0–1 | 4 | 12–13 | 60–65% |
-| 6 | \+5 | 4 | 0–1 | 4 | 13–14 | 65–70% |
-| 8 | \+5 | 4 | 0–1 | 5 | 14–15 | 70–75% |
-| 12 | \+5 | 4 | 0–1 | 6 | 15–16 | 75–80% |
-| 16 | \+5 | 4 | 0–1 | 7 | 16–17 | 80–85% |
-| 20 | \+5 | 4 | 0–1 | 8 | 17–18 | 85–90% |
+| 1 | I | \+2 | 7 \+ 1 | 2 | 12 | 12 |
+| 2 | I | \+4 | 7 \+ 1 | 2 | 14 | 12 |
+| 4 | II | \+4 | 7 \+ 1 | 3 | 15 | 14 |
+| 6 | II | \+5 | 7 \+ 1 | 3 | 16 | 14 |
+| 8 | III | \+5 | 7 \+ 1 | 4 | 17 | 16 |
+| 12 | IV | \+5 | 7 \+ 1 | 5 | 18 | 18 |
+| 16 | V | \+5 | 7 \+ 1 | 7 | 20 | 20 |
+| 20 | VI | \+5 | 7 \+ 1 | 9 | 22 | 22 |
 
-Il massimo ordinario è VA 18, pari al 90% prima dei modificatori. Senza il bonus di Corporazione, la stessa combinazione arriva a VA 17, pari all’85%.
+Al VI Grado i limiti personali sono S 22, P 19, G 17 e N 15\. Un VA finale pari o superiore a 20 rende automatiche le sole Prove ordinarie previste dal §1.7; nei tiri obbligatori, il 20 naturale resta Maldestro. Da VA finale 21 anche il 2 naturale è Magistrale. Con VA personale 17 e Tiro Mirato Migliorato \+4 si arriva a 21; con VA personale 22 e Corsa −2 si scende a 20\. Il controllo usa sempre il VA finale della singola Prova, dopo tutti i modificatori.
 
 ## **8.5 Azioni Principali**
 
@@ -4869,7 +5042,7 @@ Annullare un proprio 20 naturale costa 2 Punti Eroe anziché 3, secondo il §1.8
 
 *Passivo. Nessun prerequisito. Acquisibile una sola volta.*
 
-Un 2 naturale che supera la Prova viene considerato un Successo Magistrale. Il beneficio si applica a tutti i tipi di Prova. Con Valore finale 1, un risultato di 2 rimane un fallimento. Il 2 naturale non assegna Distintivi.
+Un 2 naturale che supera la Prova viene considerato un Successo Magistrale anche sotto VA finale 21\. Il beneficio si applica a tutti i tipi di Prova. Con Valore finale 1, un risultato di 2 rimane un fallimento. Da VA finale 21, il 2 è già Magistrale nelle Prove di Abilità per la regola generale: il Talento non amplia ulteriormente la soglia al 3 naturale e non concede un beneficio aggiuntivo sullo stesso risultato. Il 2 naturale non assegna Distintivi.
 
 Si applicano gli effetti ordinari del Magistrale previsti dalla Prova, comprese le regole sulle applicazioni multiple del danno: il danno normalmente ×2 diventa ×3, mentre un ×3 già previsto non aumenta ulteriormente. Il Talento non consente tiri volontari per attività automatiche o prive di incertezza.
 
@@ -5426,7 +5599,17 @@ Restano valide le regole del §8.9: una Tecnica attivata per Round, costi e Azio
 
 Ai livelli 1, 4, 8, 12, 16 e 20 si acquisisce un Grado. La prima Classe appartiene all’Addestramento iniziale; in seguito si può aumentare una Classe posseduta oppure iniziarne una nuova al I Grado, fino a tre Classi complessive. Ogni Classe conserva il proprio Grado e concede il relativo Talento: fisso ai Gradi I, III e V, a scelta ai Gradi II, IV e VI. L’ordine delle scelte segue il Grado della singola Classe.
 
-Con sei Gradi complessivi si ricevono sei Talenti di Classe, oltre ai nove Talenti Liberi. Gli indirizzi delle Classi restano indicativi. Una nuova Classe non riassegna Addestramento, Caratteristiche o bonus iniziali. I benefici per Grado e le formule di PV e PM sono descritti nel Capitolo 3; l’accesso e il livello massimo degli Incantesimi seguono il Manuale della Magia.
+Con sei Gradi complessivi si ricevono sei Talenti di Classe, oltre ai nove Talenti Liberi. Gli indirizzi delle Classi restano indicativi. Una nuova Classe non riassegna Addestramento, Caratteristiche, Basi iniziali o bonus di Corporazione. I benefici per Grado e le formule di PV e PM sono descritti nel Capitolo 3; l’accesso e il livello massimo degli Incantesimi seguono il Manuale della Magia.
+
+Per ciascuna Abilità, G indica il totale dei Gradi in tutte le Classi possedute (massimo 6); gS è la somma dei Gradi soltanto nelle Classi che la classificano Specializzata; gP è la somma dei Gradi soltanto nelle Classi che la classificano Professionale. Qui G è una variabile numerica, distinta dall’abbreviazione G della categoria Generica.
+
+Calcola soltanto i limiti delle categorie attribuite all’Abilità da almeno una Classe posseduta: Specializzata \= 10 \+ G \+ gS; Professionale \= 7 \+ G \+ gP; Generica \= 5 \+ 2 × G; Non competente \= 3 \+ 2 × G. Usa il limite più alto fra quelli disponibili. Non sommare i limiti e non unire gS e gP. Acquisire una Classe non abbassa mai il limite già posseduto e non cambia la Base iniziale.
+
+Esempio: Pilota I \+ Agente I ha G \= 2\. Pilotare è S per il Pilota e G per l’Agente: limite S 10 \+ 2 \+ 1 \= 13, limite G 5 \+ 4 \= 9; si usa 13\. Tecnologia è S per il Pilota e P per l’Agente: limite S 13, limite P 7 \+ 2 \+ 1 \= 10; si usa 13\. La Base iniziale dipende sempre dalla prima Classe.
+
+Esempio: Pilota V \+ Agente I ha G \= 6\. Cultura è G per il Pilota e P per l’Agente: limite G 17, limite P 7 \+ 6 \+ 1 \= 14; si usa 17\. Le categorie si confrontano per il risultato numerico, senza imporre la precedenza della Professionale sulla Generica.
+
+Con una sola Classe, gS oppure gP coincide con G e le formule restituiscono esattamente la tabella del §8.3. Dopo ogni Grado acquisito ricalcola i limiti, aggiungi i cinque incrementi automatici della Classe e assegna i 10 punti liberi soltanto dove aumentano il VA personale.
 
 ## 8.8 Specializzazioni nelle Abilità
 
