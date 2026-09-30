@@ -104,9 +104,9 @@ Le icone delle pagine sono generate da `tools/genera_immagini.py` dagli original
 
 Dopo un aggiornamento il browser può tenere in cache i moduli vecchi con i dati nuovi (visto il 30/09: import fallito finché non si ricarica con Ctrl+F5). Servono indirizzi dei moduli con la versione (per esempio `?v=<commit>` negli import di `index.html` e dei moduli) o un service worker che li aggiorni; senza build step.
 
-## 18. Export/import del solo Calendario — FACILE
+## 18. ✔ Export/import del solo Calendario — fatto il 30 settembre 2026
 
-Esportare e reimportare il blocco `calendario` di un personaggio da solo (per passarlo al master o fra personaggi del gruppo), senza toccare le scelte né la sessione.
+Esportare e reimportare il blocco `calendario` di un personaggio da solo (per passarlo al master o fra personaggi del gruppo), senza toccare le scelte né la sessione. File `calendario_<nome>_<data>.json` con intestazione `{ tipo: "calendario", versione: 1, app: "mutant", esportato, da }` e il blocco com'è nel salvataggio (`src/calendario.js` → `fileCalendario`, `leggiFileCalendario`). «Esporta calendario» e «Importa calendario» accanto al titolo della sezione; «Importa calendario» anche nel menu «Azioni» (serve sui personaggi senza calendario). L'import controlla tipo e versione, chiede conferma (da chi, di che data) e sostituisce l'intero blocco, attivando la sezione.
 
 ## 19. ✔ Bonus dei Talenti nei valori — fatto il 30 settembre 2026
 

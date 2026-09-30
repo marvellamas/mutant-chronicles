@@ -38,6 +38,7 @@ Drive si usa **in sola lettura**: mai scrivere nei Doc di Davide, nemmeno commen
 - Deve funzionare da browser desktop e telefono. Si serve con un qualunque server statico (`python -m http.server` in locale; GitHub Pages o simile per il gruppo).
 - Test: Node (`node --test`, cioè `npm test`) sulle funzioni pure del motore. I test non richiedono browser.
 - File del personaggio esportato: formato 7 (`VERSIONE_FORMATO` in `src/character.js`): `{ formato, versione, versioni_dati, scelte, livelli, sessione, calendario? }`, con i PI attuali degli oggetti in `sessione.integrita`. I formati precedenti si importano e si migrano (senza `calendario`: non attivo; senza `integrita`: oggetti ai PI massimi).
+- File del solo calendario: `calendario_<nome>_<data>.json`, `{ tipo: "calendario", versione: 1, app: "mutant", esportato, da, calendario }` con il blocco com'è nel salvataggio (`src/calendario.js` → `fileCalendario`, `leggiFileCalendario`); l'import sostituisce l'intero blocco dopo una conferma. L'export del personaggio non cambia.
 
 ## Principi non negoziabili
 

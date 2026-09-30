@@ -7,7 +7,7 @@ import { formattaErrore, trovaTodo } from '../validate.js';
 import { calcolaScheda, validaLivello } from '../calc.js';
 import { separaEsemplare } from '../equipaggiamento.js';
 import {
-  nuoveScelte, normalizza, applicaModifica, anteprima, serializza, nomeFileEsportazione, deserializzaPersonaggio, applicaLivello, annullaUltimoLivello,
+  nuoveScelte, normalizza, applicaModifica, anteprima, serializza, nomeFileEsportazione, nomeFileCalendario, deserializzaPersonaggio, applicaLivello, annullaUltimoLivello,
   CAMPI_ANAGRAFICA,
 } from '../character.js';
 import { h, svuota, scaricaFile } from './dom.js';
@@ -29,7 +29,7 @@ import {
   penalitaSessione, variaMunizioni, ricaricaArma, variaChroma, variaIntegrita,
 } from '../sessione.js';
 import { conOrdinale } from '../lingua.js';
-import { normalizzaCalendario, calendarioAttivo, attivaCalendario, disattivaCalendario, contaNote } from '../calendario.js';
+import { normalizzaCalendario, calendarioAttivo, attivaCalendario, disattivaCalendario, contaNote, fileCalendario, leggiFileCalendario } from '../calendario.js';
 import { testoNote } from './calendario.js';
 
 // Dopo la creazione si possono ancora cambiare solo i campi descrittivi: le altre scelte
@@ -180,6 +180,7 @@ function daIndirizzo() {
     stato.precedenteTavolo = null;
     stato.ui.calendario = null;
     stato.ui.attivaCalendario = null;
+    stato.ui.importaCalendario = null;
     stato.messaggioScheda = null;
     stato.avvisi = avvisi.length ? ['Il personaggio salvato non era più coerente con i dati attuali:', ...avvisi] : [];
     stato.precedente = null;
@@ -751,6 +752,28 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
         stato.calendario = nuovo;
         persisti();
         if (vaiA) return vaiTab(vaiA);
+        renderScheda({ mantieniScorrimento: true });
+      },
+      // file del solo calendario (src/calendario.js → fileCalendario): l'export del personaggio non cambia
+      esportaCalendario: () => {
+        if (stato.calendario) scaricaFile(nomeFileCalendario(stato.scelte.nome), `${JSON.stringify(fileCalendario(stato.calendario, stato.scelte.nome), null, 2)}\n`);
+      },
+      // import: prima si legge e si controlla il file, poi un riquadro chiede conferma (ui.importaCalendario)
+      leggiCalendario: async (file) => {
+        stato.ui.importaCalendario = leggiFileCalendario(await file.text(), dati);
+        renderScheda({ mantieniScorrimento: true });
+      },
+      confermaCalendario: () => {
+        const r = stato.ui.importaCalendario;
+        stato.ui.importaCalendario = null;
+        if (!r?.ok) return renderScheda({ mantieniScorrimento: true });
+        ricordaPrecedente();
+        stato.calendario = r.calendario;
+        persisti();
+        vaiTab('calendario');
+      },
+      annullaImportCalendario: () => {
+        stato.ui.importaCalendario = null;
         renderScheda({ mantieniScorrimento: true });
       },
       // ingranaggio: la prima attivazione chiede inizio e fascia (pannello); poi si accende e spegne

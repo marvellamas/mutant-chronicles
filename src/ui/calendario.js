@@ -72,7 +72,10 @@ export function tabCalendario(ctx) {
       h('button', { type: 'button', class: 'btn', onclick: () => { cambia(avanzaGiorno(cal, dati)); }, title: 'Mattina del giorno dopo' }, '+ giorno')));
 
   return h('div', { class: 'calendario', onwheel: zoomRotella(ctx, u) },
-    h('div', { class: 'titolo-tab' }, h('h2', {}, 'Calendario'), h('span', { class: 'cal-conteggio' }, testoNote(contaNote(cal)))),
+    h('div', { class: 'titolo-tab' }, h('h2', {}, 'Calendario'), h('span', { class: 'cal-conteggio' }, testoNote(contaNote(cal))),
+      h('div', { class: 'cal-file', role: 'group', 'aria-label': 'File del calendario' },
+        h('button', { type: 'button', class: 'btn', onclick: ctx.azioni.esportaCalendario, title: 'Scarica il solo calendario (giorno, fasce, note) in un file .json' }, 'Esporta calendario'),
+        pulsanteImportaCalendario(ctx))),
     ctx.spazioQuasiEsaurito ? h('p', { class: 'riquadro attenzione', role: 'status' },
       'Lo spazio del browser sta per finire (ritratti e note del calendario occupano spazio): usa «SALVA PG (Esporta JSON)» e rimuovi dalla pagina iniziale i personaggi che non servono.') : null,
     oggi,
@@ -261,6 +264,48 @@ function vistaMese(ctx, u, apriGiorno) {
         h('span', { class: 'cal-segni' }, COLORI.filter((c) => r.colori.includes(c)).map((c) => pallino(dati, c)), r.ricordare ? segnoM(dati) : null),
         r.n ? h('span', { class: 'cal-quante' }, String(r.n)) : null);
     }))));
+}
+
+// --- File del solo calendario ----------------------------------------------------------------
+
+/**
+ * «Importa calendario»: pulsante con il selettore di file nascosto. Il file si controlla subito;
+ * la sostituzione avviene solo dopo la conferma (pannelloImportaCalendario).
+ */
+export function pulsanteImportaCalendario(ctx, { etichetta = 'Importa calendario' } = {}) {
+  const input = h('input', {
+    type: 'file', accept: '.json,application/json', class: 'nascosto', 'aria-hidden': 'true', tabindex: '-1',
+    onchange: (e) => { const f = e.target.files?.[0]; e.target.value = ''; if (f) ctx.azioni.leggiCalendario(f); },
+  });
+  return [h('button', { type: 'button', class: 'btn', onclick: () => input.click(), title: 'Sostituisce il calendario con quello di un file calendario di Mutant, dopo una conferma' }, etichetta), input];
+}
+
+const dataOra = (iso) => {
+  const d = iso ? new Date(iso) : null;
+  return d && !Number.isNaN(d.getTime()) ? d.toLocaleString('it-IT', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'data sconosciuta';
+};
+
+/** Riquadro dell'import: errore (nessuna modifica) oppure conferma della sostituzione completa. */
+export function pannelloImportaCalendario(ctx) {
+  const r = ctx.ui.importaCalendario;
+  const chiudi = ctx.azioni.annullaImportCalendario;
+  const attuale = ctx.calendario;
+  return h('div', { class: 'attacco-sfondo', onclick: (e) => { if (e.target === e.currentTarget) chiudi(); } },
+    h('section', { class: 'attacco-pannello', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Importa calendario' },
+      h('header', { class: 'attacco-testa' }, h('h2', {}, 'Importa calendario')),
+      r.ok ? [
+        h('p', {}, 'Calendario di ', h('strong', {}, r.da || 'personaggio senza nome'), ', esportato il ', h('strong', {}, dataOra(r.esportato)),
+          `: oggi nel gioco ${nomeData(r.calendario.oggi.data)}, ${nomeFascia(ctx.dati, r.calendario.oggi.fascia)}; ${testoNote(contaNote(r.calendario))}.`),
+        h('p', { class: 'riquadro attenzione' }, attuale
+          ? `Il calendario attuale (${testoNote(contaNote(attuale))}) verrà sostituito per intero: le note non si uniscono.`
+          : 'Il personaggio non ha ancora un calendario: verrà creato e la sezione si attiverà.'),
+        h('div', { class: 'scelta-pulsanti' },
+          h('button', { type: 'button', class: 'btn primario', onclick: ctx.azioni.confermaCalendario }, 'Sostituisci il calendario'),
+          h('button', { type: 'button', class: 'btn', onclick: chiudi }, 'Annulla')),
+      ] : [
+        h('p', { class: 'riquadro errore', role: 'alert' }, r.errore),
+        h('div', { class: 'scelta-pulsanti' }, h('button', { type: 'button', class: 'btn', onclick: chiudi }, 'Chiudi')),
+      ]));
 }
 
 // --- Attivazione (ingranaggio) -------------------------------------------------------------

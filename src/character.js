@@ -387,15 +387,28 @@ export function anteprima(scelte, dati) {
  * dipende dal nome del file.
  */
 export function nomeFileEsportazione(nome, livello, data = new Date()) {
+  return `${nomeFilePulito(nome)}_liv${Number.isInteger(livello) && livello > 0 ? livello : 1}_${giornoFile(data)}.json`;
+}
+
+/** Nome del file del solo calendario: calendario_<nome>_<data>.json, con lo stesso ripulimento. */
+export function nomeFileCalendario(nome, data = new Date()) {
+  return `calendario_${nomeFilePulito(nome)}_${giornoFile(data)}.json`;
+}
+
+/** Nome del personaggio adatto a un nome di file (vuoto: «personaggio»). */
+function nomeFilePulito(nome) {
   const pulito = String(nome ?? '')
     .replace(/[\\/:*?"<>|\u0000-\u001f\u007f]/g, '')
     .trim()
     .replace(/\s+/g, '-')
     .replace(/-{2,}/g, '-')
     .replace(/^[.-]+|[.-]+$/g, '');
+  return pulito || 'personaggio';
+}
+
+function giornoFile(data) {
   const due = (n) => String(n).padStart(2, '0');
-  const giorno = `${data.getFullYear()}-${due(data.getMonth() + 1)}-${due(data.getDate())}`;
-  return `${pulito || 'personaggio'}_liv${Number.isInteger(livello) && livello > 0 ? livello : 1}_${giorno}.json`;
+  return `${data.getFullYear()}-${due(data.getMonth() + 1)}-${due(data.getDate())}`;
 }
 
 export function serializza(scelte, { versioniDati, livelli, sessione, calendario } = {}) {

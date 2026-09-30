@@ -1216,6 +1216,9 @@ body.con-sfondo::before {
 /* tab «Calendario» (src/ui/calendario.js): sezione facoltativa, a tocco (pulsanti ≥ 44 px) */
 .tab-contatore { display: block; font-size: 0.72rem; color: var(--tenue); font-weight: 400; }
 .cal-conteggio { color: var(--tenue); }
+/* Esporta e Importa del solo calendario, a destra del titolo; sul telefono vanno a capo */
+.calendario .titolo-tab { flex-wrap: wrap; }
+.cal-file { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-left: auto; }
 .cal-oggi { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem; padding: 0.5rem 0.75rem; border: 1px solid var(--bordo); border-left: 4px solid var(--accento); border-radius: var(--raggio); background: var(--superficie); }
 .cal-oggi p { margin: 0; }
 .cal-avanza, .cal-nav-azioni, .cal-zoom { display: flex; flex-wrap: wrap; gap: 0.35rem; }

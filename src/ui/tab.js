@@ -26,7 +26,7 @@ import { pannelloAttacco } from './attacco.js';
 import { profiloSenzArmi, senzArmiDisponibile, SENZ_ARMI, talentiAttacco, valoriDisciplina } from '../attacco.js';
 import { pannelloLancio } from './lancio.js';
 import { statoPulsanteLancio } from '../lancio.js';
-import { tabCalendario, pannelloAttivazione } from './calendario.js';
+import { tabCalendario, pannelloAttivazione, pannelloImportaCalendario, pulsanteImportaCalendario } from './calendario.js';
 import { conOrdinale } from '../lingua.js';
 import { regoleRiparazione, esitoRiparazione, vaRiparazione, riparabile } from '../riparazione.js';
 
@@ -165,7 +165,8 @@ export function renderTab(ctx) {
           h('button', { type: 'button', class: 'btn', onclick: () => { ctx.ui.lancio = null; ctx.azioni.ridisegna(); } }, 'Chiudi'));
       }
     })() : null,
-    ctx.ui?.attivaCalendario ? pannelloAttivazione(ctx) : null];
+    ctx.ui?.attivaCalendario ? pannelloAttivazione(ctx) : null,
+    ctx.ui?.importaCalendario ? pannelloImportaCalendario(ctx) : null];
 }
 
 /**
@@ -196,6 +197,8 @@ function menuAzioni(ctx) {
     h('div', { class: 'menu-voci' },
       voce('Stampa', azioni.stampa),
       voce('SALVA PG (Esporta JSON)', azioni.esporta),
+      // il solo calendario: anche su un personaggio senza calendario (lo crea e attiva la sezione)
+      pulsanteImportaCalendario(ctx),
       voce('Modifica creazione', () => azioni.modificaCreazione()),
       ctx.livelli.length ? voce('Annulla l’ultimo livello', azioni.annullaLivello, { pericolo: true }) : null,
       h('hr', {}),

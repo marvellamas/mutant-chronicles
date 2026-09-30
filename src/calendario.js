@@ -237,3 +237,34 @@ export function filtraNote(c, filtro, dati) {
 }
 
 export const contaNote = (c) => (Array.isArray(c?.note) ? c.note.length : 0);
+
+// --- File del solo calendario --------------------------------------------------------------
+// Il calendario è uno, quello di chi tiene il tempo: si passa da un personaggio all'altro con un
+// file a sé. Intestazione fissa, poi il blocco così com'è nel salvataggio del personaggio:
+//   { tipo: "calendario", versione: 1, app: "mutant", esportato: "<ISO>", da: "<nome>", calendario: {…} }
+// L'import sostituisce l'intero blocco (nessuna unione) e attiva la sezione.
+
+export const FILE_CALENDARIO = { tipo: 'calendario', versione: 1, app: 'mutant' };
+const NON_CALENDARIO = 'Non è un file calendario di Mutant: nessuna modifica.';
+
+/** Contenuto del file del solo calendario (oggetto da serializzare). */
+export function fileCalendario(c, da, esportato = new Date()) {
+  return { ...FILE_CALENDARIO, esportato: esportato.toISOString(), da: String(da ?? ''), calendario: c };
+}
+
+/**
+ * Legge un file del solo calendario. Tipo, app e versione devono tornare, e il blocco deve essere
+ * un calendario leggibile; altrimenti { ok: false, errore } e nulla cambia.
+ * @returns {{ ok: true, calendario, da, esportato } | { ok: false, errore }}
+ */
+export function leggiFileCalendario(testo, dati) {
+  let f = null;
+  try { f = JSON.parse(testo); } catch { f = null; }
+  if (!isOggetto(f) || f.tipo !== FILE_CALENDARIO.tipo || f.app !== FILE_CALENDARIO.app) return { ok: false, errore: NON_CALENDARIO };
+  if (f.versione !== FILE_CALENDARIO.versione) {
+    return { ok: false, errore: `Non è un file calendario di Mutant che questa versione sa leggere (versione ${f.versione}, attesa ${FILE_CALENDARIO.versione}): nessuna modifica.` };
+  }
+  const c = normalizzaCalendario(f.calendario, dati);
+  if (!c) return { ok: false, errore: 'Il file calendario di Mutant non contiene un calendario leggibile: nessuna modifica.' };
+  return { ok: true, calendario: { ...c, attivo: true }, da: typeof f.da === 'string' ? f.da : '', esportato: typeof f.esportato === 'string' ? f.esportato : null };
+}
