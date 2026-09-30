@@ -14,7 +14,8 @@ const N = 'Addestramento al Combattimento Senz’Armi';
 const LOTTATORE = {
   ...nuoveScelte(), nome: 'Brutus', corporazione: 'Bauhaus', puntiCaratteristica: { FOR: 2, COS: 1, DES: 2 },
   addestramento: 'Combattente', classe: 'Lottatore', puntiEroe: tiro(5),
-  puntiAbilitaLiberi: { 'Corpo a corpo': 2, 'Atletica': 2, 'Percezione': 1, 'Armi da mischia': 2, 'Difese': 2, 'Armi da guerra': 1 },
+  // §2.13 del 29/09: ogni punto aumenta il VA personale entro i limiti del I Grado
+  puntiAbilitaLiberi: { 'Corpo a corpo': 2, 'Difese': 2, 'Percezione': 2, 'Sopravvivenza': 3, 'Medicina': 1 },
 };
 const con = (disciplina) => ({ ...LOTTATORE, parametriTalenti: { [N]: disciplina } });
 const scheda = (creazione, livelli = []) => calcolaScheda({ creazione, livelli }, dati);

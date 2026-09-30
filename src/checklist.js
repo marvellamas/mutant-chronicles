@@ -16,10 +16,10 @@ export function checklist(scelte, dati) {
   return [
     { testo: 'Background e Corporazione riportati, con valori iniziali e bonus fissi', ok: !!scelte.nome?.trim() && !!scelte.concetto?.trim() && !manca('corporazione') },
     { testo: `Tutti i ${c.punti_caratteristica} Punti Caratteristica assegnati, nessun valore oltre ${c.massimo_caratteristica}, modificatori come valore − 5`, ok: !manca('corporazione') && !manca('puntiCaratteristica') },
-    { testo: 'Addestramento scelto, con il profilo delle Abilità, il vantaggio e i bonus alle Salvezze', ok: !manca('addestramento') },
-    { testo: 'Prima Classe dell’Addestramento al I Grado: +1 alle cinque Abilità, Talento fisso, contributi a PV e PM', ok: !manca('classe') && !manca('tiroDadoPM') },
-    { testo: `Tutti i ${c.punti_abilita_liberi} Punti Abilità Liberi assegnati ad Abilità ammesse, Avanzamento al massimo ${c.avanzamento_massimo_iniziale}`, ok: !!scheda.abilita && !manca('puntiAbilitaLiberi') },
-    { testo: 'Per ogni Abilità, componenti e totale distinti', ok: !!scheda.abilita },
+    { testo: 'Addestramento scelto, con il vantaggio e i bonus alle Salvezze', ok: !manca('addestramento') },
+    { testo: 'Prima Classe dell’Addestramento al I Grado: profilo 2 S / 6 P / 12 G / 4 N con basi 7 / 6 / 5 / 3, +1 alle cinque Abilità di Classe, Talento fisso, contributi a PV e PM', ok: !manca('classe') && !manca('tiroDadoPM') },
+    { testo: `Tutti i ${c.punti_abilita_liberi} Punti Abilità Liberi assegnati ad Abilità ammesse, aumentando il VA personale entro i limiti del I Grado`, ok: !!scheda.abilita && !manca('puntiAbilitaLiberi') },
+    { testo: 'Per ogni Abilità, componenti e totale distinti, con il limite della categoria applicato', ok: !!scheda.abilita },
     { testo: 'PV, PM, quattro Salvezze, Iniziativa, Movimento e Azioni calcolati', ok: Number.isInteger(scheda.pv) && Number.isInteger(scheda.pm) },
     { testo: 'Punti Eroe iniziali determinati e spazio per i Distintivi', ok: Number.isInteger(valoreTiro(scelte.puntiEroe)) },
     conMagia

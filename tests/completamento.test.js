@@ -1,5 +1,7 @@
-// Regole aggiornate (Giocatore, Doc del 27/09/2026: Addestramenti a 76 punti, 10 Punti Abilità Liberi
-// invece di 5; per-davide A.52): completamento dei punti negli eventi già registrati.
+// Regole aggiornate: completamento dei punti negli eventi già registrati (Giocatore, Doc del 27/09/2026:
+// 10 Punti Abilità Liberi invece di 5, per-davide A.52) e riassegnazione dei punti che con i limiti del
+// VA personale (Doc del 29/09/2026: categorie di competenza, §2.13, §8.3; per-davide A.57) non
+// aumentano più il VA.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda, validaLivello } from '../src/calc.js';
@@ -31,57 +33,56 @@ const carica = () => {
 };
 const va = (s, nome) => s.abilita.find((a) => a.nome === nome);
 
-test('formato precedente al 5° livello: basi nuove da sole, punti di Classe invariati, 10 punti da completare', () => {
+test('formato precedente al 5° livello: basi nuove da sole, punti di Classe invariati, punti da completare e da riassegnare', () => {
   const p = carica();
   assert.deepEqual(p.creazione.puntiAbilitaLiberi, { 'Furtività': 2, 'Percezione': 2, 'Medicina': 1 }); // nulla tolto al caricamento
   const s = calcolaScheda(p, dati);
   assert.equal(s.livello, 5);
-  // §2.4, Doc del 27/09: basi dell'Avventuriero rilette dai dati (Medicina 2 → 3, Armi medie 2 → 3)
-  assert.equal(va(s, 'Medicina').base, 3);
-  assert.equal(va(s, 'Armi medie').base, 3);
-  // +1 di Classe dell'Agente al Grado I e al Grado II: non cambiano
+  // §2.3 del 29/09: basi dalla prima Classe (Agente: Medicina G 5, Armi medie G 5, Furtività P 6)
+  assert.deepEqual(['Medicina', 'Armi medie', 'Furtività'].map((n) => [va(s, n).competenza, va(s, n).base]), [['G', 5], ['G', 5], ['P', 6]]);
+  // +1 di Classe dell'Agente al Grado I e al Grado II: sempre registrati
   for (const a of ['Furtività', 'Percezione', 'Armi leggere', 'Cultura', 'Raggirare']) assert.equal(va(s, a).daClasse, 2, a);
   assert.equal(va(s, 'Medicina').daClasse, 0);
-  // Medicina: Avanzamento 1 (creazione) + 3 (4° livello)
-  assert.equal(va(s, 'Medicina').avanzamento, 4);
-  assert.deepEqual(s.completamenti.map((c) => [c.livello, c.mancanti]), [[1, 5], [4, 5]]);
+  // Furtività (P): 2 + 6 + 0 + 1 = 9 = limite del I Grado alla creazione: i 2 punti liberi sono inattivi;
+  // Medicina (G): 2 + 5 = 7 = limite: il punto della creazione è inattivo; al 4° (limite 9) su 3 punti
+  // ne entrano 2
+  assert.deepEqual(s.completamenti.map((c) => [c.livello, c.mancanti, c.inattivi]), [[1, 8, { 'Furtività': 2, 'Medicina': 1 }], [4, 6, { 'Medicina': 1 }]]);
+  assert.deepEqual([va(s, 'Furtività').liberi, va(s, 'Medicina').liberi], [0, 2]);
   assert.deepEqual(s.errori, []); // non sono errori: modalità tavolo, utility e stampa funzionano
   assert.ok(preparaStampa(p, dati).fogli.length >= 3);
   // l'avanzamento è bloccato, con il motivo
   const e = validaLivello(p, { caratteristiche: { FOR: 2 } }, dati);
   assert.equal(e.length, 1);
-  assert.match(e[0].problema, /Regole aggiornate: prima di salire di livello assegna 10 Punti Abilità mancanti \(5 della creazione, 5 del 4° livello\)/);
+  assert.match(e[0].problema, /Regole aggiornate: prima di salire di livello assegna o riassegna 14 Punti Abilità \(8 della creazione, 6 del 4° livello\)/);
 });
 
 test('completamento: un evento alla volta dal più vecchio, con i limiti di quell’evento', () => {
   let p = carica();
   // prima la creazione
   assert.match(validaCompletamento(p, 4, { 'Atletica': 5 }, dati)[0].problema, /prima la creazione/);
-  // alla creazione l'Avanzamento massimo è 3: Furtività è già 1 + 2
-  assert.ok(validaCompletamento(p, 1, { 'Furtività': 1 }, dati).some((e) => e.tipo === 'violazione' && /il massimo è 3/.test(e.problema)));
-  // i punti non devono rendere irregolare un livello successivo: Medicina 1 + 3 al 4° è già 4
-  assert.ok(validaCompletamento(p, 1, { 'Medicina': 1 }, dati).some((e) => /al 4° livello: Avanzamento 5/.test(e.problema)));
-  // pannello: stessi dati della tabella di «Sali di livello», limite della creazione
-  const st = statoCompletamento(p, { 'Armi leggere': 1 }, dati);
-  assert.deepEqual([st.livello, st.mancanti, st.rimasti, st.limite], [1, 5, 4, 3]);
-  assert.equal(st.abilita.find((a) => a.nome === 'Furtività').motivoPiu !== null, true);
-  assert.equal(st.abilita.find((a) => a.nome === 'Atletica').motivoPiu, null);
+  // alla creazione Furtività è già al limite P del I Grado (9): nessun punto la aumenta
+  assert.ok(validaCompletamento(p, 1, { 'Furtività': 1 }, dati).some((e) => e.tipo === 'violazione' && /già al limite/.test(e.problema)));
+  // pannello: stessi dati della tabella di «Sali di livello», limite per Abilità
+  const st = statoCompletamento(p, { 'Tecnologia': 1 }, dati);
+  assert.deepEqual([st.livello, st.mancanti, st.rimasti, st.riassegna], [1, 8, 7, true]);
+  const ab = (n) => st.abilita.find((a) => a.nome === n);
+  assert.deepEqual([ab('Furtività').limite, ab('Furtività').totale, ab('Furtività').inattivi], [9, 9, 2]);
+  assert.equal(ab('Furtività').motivoPiu !== null, true);
+  assert.equal(ab('Raggirare').motivoPiu, null);
   // meno dei mancanti: incompleto
-  assert.deepEqual(validaCompletamento(p, 1, { 'Armi leggere': 1 }, dati).map((e) => e.tipo), ['incompleto']);
+  assert.deepEqual(validaCompletamento(p, 1, { 'Tecnologia': 1 }, dati).map((e) => e.tipo), ['incompleto']);
 
-  const creazione = { 'Armi leggere': 1, 'Cultura': 1, 'Raggirare': 1, 'Atletica': 2 };
+  // i punti inattivi escono dall'evento, quelli nuovi entrano; registrato nella creazione
+  const creazione = { 'Tecnologia': 2, 'Cultura': 2, 'Raggirare': 4 };
   assert.deepEqual(validaCompletamento(p, 1, creazione, dati), []);
-  p = applicaCompletamento(p, 1, creazione);
-  // registrato nella creazione, non come evento nuovo
+  p = applicaCompletamento(p, 1, creazione, puntiDaCompletare(p, dati)[0].inattivi);
   assert.equal(p.livelli.length, 4);
-  assert.deepEqual(p.creazione.puntiAbilitaLiberi, { 'Furtività': 2, 'Percezione': 2, 'Medicina': 1, 'Armi leggere': 1, 'Cultura': 1, 'Raggirare': 1, 'Atletica': 2 });
-  assert.deepEqual(puntiDaCompletare(p, dati).map((c) => [c.livello, c.mancanti]), [[4, 5]]);
-  // al 4° livello il limite è 4
-  assert.equal(statoCompletamento(p, {}, dati).limite, 4);
-  const quarto = { 'Tecnologia': 3, 'Pilotare': 2 };
+  assert.deepEqual(p.creazione.puntiAbilitaLiberi, { 'Percezione': 2, 'Tecnologia': 2, 'Cultura': 2, 'Raggirare': 4 });
+  assert.deepEqual(puntiDaCompletare(p, dati).map((c) => [c.livello, c.mancanti]), [[4, 6]]);
+  const quarto = { 'Tecnologia': 3, 'Pilotare': 3 };
   assert.deepEqual(validaCompletamento(p, 4, quarto, dati), []);
-  p = applicaCompletamento(p, 4, quarto);
-  assert.deepEqual(p.livelli[2].puntiAbilita, { 'Medicina': 3, 'Sopravvivenza': 2, 'Tecnologia': 3, 'Pilotare': 2 });
+  p = applicaCompletamento(p, 4, quarto, puntiDaCompletare(p, dati)[0].inattivi);
+  assert.deepEqual(p.livelli[2].puntiAbilita, { 'Medicina': 2, 'Sopravvivenza': 2, 'Tecnologia': 3, 'Pilotare': 3 });
   assert.deepEqual(puntiDaCompletare(p, dati), []);
   const s = calcolaScheda(p, dati);
   assert.deepEqual([s.errori, s.completamenti, s.eccessi], [[], [], []]);
@@ -92,7 +93,25 @@ test('completamento: un evento alla volta dal più vecchio, con i limiti di quel
   const senza4 = annullaUltimoLivello(annullaUltimoLivello(p));
   assert.equal(senza4.livelli.length, 2);
   assert.deepEqual(puntiDaCompletare(senza4, dati), []);
-  assert.equal(senza4.creazione.puntiAbilitaLiberi.Atletica, 2);
+  assert.equal(senza4.creazione.puntiAbilitaLiberi.Raggirare, 4);
+});
+
+test('riassegnazione: i punti nuovi non devono rendere inattivi quelli dei livelli successivi (§8.3)', () => {
+  // creazione con 2 punti inattivi su Furtività; al 4° livello 3 punti su Tecnologia (P, limite 11)
+  const p = {
+    creazione: { ...MISHIMA_AGENTE, puntiAbilitaLiberi: { 'Percezione': 2, 'Cultura': 2, 'Raggirare': 4, 'Furtività': 2 } },
+    livelli: [
+      { livello: 2, caratteristiche: { DES: 2 } },
+      { livello: 3, talentoLibero: { id: 'iniziativa-migliorata' } },
+      { livello: 4, grado: { classe: 'Agente' }, tiroPV: tiro(4), talentoClasse: 'Reazione Operativa', puntiAbilita: { 'Tecnologia': 3, 'Medicina': 2, 'Pilotare': 2, 'Oratoria': 3 } },
+    ],
+  };
+  assert.deepEqual(puntiDaCompletare(p, dati).map((c) => [c.livello, c.mancanti]), [[1, 2]]);
+  // Tecnologia alla creazione: 0 + 6 → 8, poi al 4° 8 + 3 = 11 = limite: resta tutto attivo
+  assert.deepEqual(validaCompletamento(p, 1, { 'Tecnologia': 2 }, dati), []);
+  // con 4 punti su Tecnologia al 4° livello lo spazio non c'è più: 8 + 4 = 12 oltre il limite 11
+  const oltre = { ...p, livelli: p.livelli.map((v) => (v.livello === 4 ? { ...v, puntiAbilita: { 'Tecnologia': 4, 'Medicina': 2, 'Pilotare': 2, 'Oratoria': 2 } } : v)) };
+  assert.ok(validaCompletamento(oltre, 1, { 'Tecnologia': 2 }, dati).some((x) => /renderebbe inattivi 1 punti di Tecnologia del 4° livello/.test(x.problema)));
 });
 
 test('punti in eccesso rispetto alle regole correnti: non si tolgono, si segnalano', () => {

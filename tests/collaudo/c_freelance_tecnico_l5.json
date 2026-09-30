@@ -37,11 +37,12 @@
     "classe": "Tecnico",
     "puntiAbilitaLiberi": {
       "Tecnologia": 2,
-      "Armi leggere": 2,
       "Scienza": 1,
-      "Raggirare": 2,
-      "Medicina": 2,
-      "Sopravvivenza": 1
+      "Medicina": 1,
+      "Cultura": 2,
+      "Oratoria": 1,
+      "Corpo a corpo": 2,
+      "Artefatti": 1
     },
     "incantesimi": [],
     "puntiEroe": {
@@ -158,11 +159,9 @@
       },
       "talentoClasse": "Manutenzione Preventiva",
       "puntiAbilita": {
-        "Armi leggere": 1,
         "Scienza": 1,
-        "Pilotare": 1,
-        "Percezione": 1,
-        "Furtività": 1,
+        "Percezione": 2,
+        "Furtività": 2,
         "Medicina": 2,
         "Sopravvivenza": 2,
         "Atletica": 1

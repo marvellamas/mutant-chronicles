@@ -57,21 +57,30 @@ export function rigaBonusCaratteristica(bc, fascia, livello) {
   return riga(`${bc.sigla} ${bc.valore}`, bc.bonus, nota);
 }
 
+const NOMI_COMPETENZA = { S: 'Specializzata', P: 'Professionale', G: 'Generica', N: 'Non competente' };
+
 /**
- * VA da regole di un'Abilità (§1.2.1, §4.2): Mod della Caratteristica + base dell'Addestramento +
- * Corporazione + Avanzamento (il +1 di Classe e i punti liberi). Le voci che valoreAbilita somma.
- * Se i componenti non tornano col totale (scheda di creazione incompleta), una riga sola.
+ * VA da regole di un'Abilità (§1.2.1, §4.2, Giocatore del 29/09): Mod della Caratteristica + base della
+ * categoria di competenza nella prima Classe + Corporazione + Avanzamento (il +1 di Classe e i punti
+ * liberi) = VA grezzo; se supera il limite della categoria al Grado (§8.3, §8.7), una riga lo riporta al
+ * limite (VA personale). Se i componenti non tornano col totale (creazione incompleta), una riga sola.
  */
 export function righeRegoleAbilita(a, scheda) {
+  const comp = a.competenza ? `Competenza ${a.competenza} (${a.competenzaDa ?? scheda.classi?.[0]?.nome ?? scheda.classe ?? 'prima Classe'})` : 'Base iniziale';
   const righe = [
     riga(`Mod ${a.caratteristica}`, a.mod, 'Caratteristica'),
-    riga(`Addestramento ${scheda.addestramento ?? ''}`.trim(), a.base, 'valore base (§2.13)'),
+    riga(comp, a.base, a.competenza ? `base ${NOMI_COMPETENZA[a.competenza] ?? a.competenza} (§2.3)` : '§2.3'),
     a.corporazione ? riga(`Corporazione ${scheda.corporazione ?? ''}`.trim(), a.corporazione, 'Abilità della Corporazione') : null,
   ].filter(Boolean);
   if (Number.isInteger(a.daClasse) || Number.isInteger(a.liberi)) {
-    if (a.daClasse) righe.push(riga('Classe', a.daClasse, 'Avanzamento di Classe: +1 per Grado (§2.13, §8.3)'));
+    if (a.daClasse) righe.push(riga('Classe', a.daClasse, 'Avanzamento di Classe: +1 per Grado (§2.12, §8.3)'));
     if (a.liberi) righe.push(riga('Avanzamento', a.liberi, 'punti liberi (§2.13, §8.3)'));
   } else if (a.avanzamento) righe.push(riga('Avanzamento', a.avanzamento));
+  // §8.3: il grezzo oltre il limite resta registrato ma non conta finché il limite non sale
+  if (Number.isInteger(a.grezzo) && Number.isInteger(a.limite) && a.grezzo > a.limite) {
+    righe.push(riga(`Limite ${a.limiteCategoria ?? ''} ${a.limite}`.replace('  ', ' '), a.limite - a.grezzo,
+      `VA grezzo ${a.grezzo} oltre il limite del VA personale${a.limiteDa?.length ? ` (${a.limiteDa.join(', ')})` : ''} (§8.3, §8.7)`));
+  }
   return righe.every((r) => Number.isInteger(r.valore)) && sommaRighe(righe) === a.totale ? righe : [riga('Valore da regole', a.totale)];
 }
 

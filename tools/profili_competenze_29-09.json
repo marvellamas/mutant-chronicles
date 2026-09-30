@@ -1,0 +1,852 @@
+{
+ "Agente": {
+  "S": [
+   "Percezione",
+   "Raggirare"
+  ],
+  "P": [
+   "Armi leggere",
+   "Cultura",
+   "Furtività",
+   "Oratoria",
+   "Difese",
+   "Tecnologia"
+  ],
+  "G": [
+   "Armi da lancio",
+   "Armi medie",
+   "Armi da mischia",
+   "Corpo a corpo",
+   "Artefatti",
+   "Occultismo",
+   "Atletica",
+   "Pilotare",
+   "Sopravvivenza",
+   "Medicina",
+   "Scienza",
+   "Intrattenere"
+  ],
+  "N": [
+   "Armi pesanti",
+   "Armi da guerra",
+   "Potere",
+   "Rituali"
+  ]
+ },
+ "Cacciatore": {
+  "S": [
+   "Armi medie",
+   "Percezione"
+  ],
+  "P": [
+   "Armi da mischia",
+   "Difese",
+   "Occultismo",
+   "Atletica",
+   "Furtività",
+   "Sopravvivenza"
+  ],
+  "G": [
+   "Armi da lancio",
+   "Armi leggere",
+   "Corpo a corpo",
+   "Artefatti",
+   "Pilotare",
+   "Cultura",
+   "Medicina",
+   "Scienza",
+   "Tecnologia",
+   "Intrattenere",
+   "Oratoria",
+   "Raggirare"
+  ],
+  "N": [
+   "Armi pesanti",
+   "Armi da guerra",
+   "Potere",
+   "Rituali"
+  ]
+ },
+ "Esploratore": {
+  "S": [
+   "Percezione",
+   "Sopravvivenza"
+  ],
+  "P": [
+   "Difese",
+   "Atletica",
+   "Furtività",
+   "Pilotare",
+   "Scienza",
+   "Tecnologia"
+  ],
+  "G": [
+   "Armi da lancio",
+   "Armi leggere",
+   "Armi medie",
+   "Armi da mischia",
+   "Corpo a corpo",
+   "Artefatti",
+   "Occultismo",
+   "Cultura",
+   "Medicina",
+   "Intrattenere",
+   "Oratoria",
+   "Raggirare"
+  ],
+  "N": [
+   "Armi pesanti",
+   "Armi da guerra",
+   "Potere",
+   "Rituali"
+  ]
+ },
+ "Lestofante": {
+  "S": [
+   "Furtività",
+   "Raggirare"
+  ],
+  "P": [
+   "Armi da mischia",
+   "Difese",
+   "Atletica",
+   "Percezione",
+   "Tecnologia",
+   "Oratoria"
+  ],
+  "G": [
+   "Armi da lancio",
+   "Armi leggere",
+   "Armi medie",
+   "Corpo a corpo",
+   "Artefatti",
+   "Occultismo",
+   "Pilotare",
+   "Sopravvivenza",
+   "Cultura",
+   "Medicina",
+   "Scienza",
+   "Intrattenere"
+  ],
+  "N": [
+   "Armi pesanti",
+   "Armi da guerra",
+   "Potere",
+   "Rituali"
+  ]
+ },
+ "Paramedico": {
+  "S": [
+   "Percezione",
+   "Medicina"
+  ],
+  "P": [
+   "Difese",
+   "Atletica",
+   "Pilotare",
+   "Sopravvivenza",
+   "Scienza",
+   "Tecnologia"
+  ],
+  "G": [
+   "Armi da lancio",
+   "Armi leggere",
+   "Armi medie",
+   "Armi da mischia",
+   "Corpo a corpo",
+   "Artefatti",
+   "Occultismo",
+   "Furtività",
+   "Cultura",
+   "Intrattenere",
+   "Oratoria",
+   "Raggirare"
+  ],
+  "N": [
+   "Armi pesanti",
+   "Armi da guerra",
+   "Potere",
+   "Rituali"
+  ]
+ },
+ "Artigliere": {
+  "S": [
+   "Armi medie",
+   "Armi pesanti"
+  ],
+  "P": [
+   "Armi leggere",
+   "Difese",
+   "Atletica",
+   "Furtività",
+   "Percezione",
+   "Tecnologia"
+  ],
+  "G": [
+   "Armi da lancio",
+   "Armi da mischia",
+   "Armi da guerra",
+   "Corpo a corpo",
+   "Pilotare",
+   "Sopravvivenza",
+   "Cultura",
+   "Medicina",
+   "Scienza",
+   "Intrattenere",
+   "Oratoria",
+   "Raggirare"
+  ],
+  "N": [
+   "Artefatti",
+   "Occultismo",
+   "Potere",
+   "Rituali"
+  ]
+ },
+ "Assaltatore": {
+  "S": [
+   "Armi da mischia",
+   "Armi da guerra"
+  ],
+  "P": [
+   "Armi leggere",
+   "Corpo a corpo",
+   "Difese",
+   "Atletica",
+   "Percezione",
+   "Sopravvivenza"
+  ],
+  "G": [
+   "Armi da lancio",
+   "Armi medie",
+   "Armi pesanti",
+   "Furtività",
+   "Pilotare",
+   "Cultura",
+   "Medicina",
+   "Scienza",
+   "Tecnologia",
+   "Intrattenere",
+   "Oratoria",
+   "Raggirare"
+  ],
+  "N": [
+   "Artefatti",
+   "Occultismo",
+   "Potere",
+   "Rituali"
+  ]
+ },
+ "Incursore": {
+  "S": [
+   "Furtività",
+   "Tecnologia"
+  ],
+  "P": [
+   "Armi da lancio",
+   "Armi leggere",
+   "Armi da mischia",
+   "Difese",
+   "Atletica",
+   "Percezione"
+  ],
+  "G": [
+   "Armi medie",
+   "Armi pesanti",
+   "Armi da guerra",
+   "Corpo a corpo",
+   "Pilotare",
+   "Sopravvivenza",
+   "Cultura",
+   "Medicina",
+   "Scienza",
+   "Intrattenere",
+   "Oratoria",
+   "Raggirare"
+  ],
+  "N": [
+   "Artefatti",
+   "Occultismo",
+   "Potere",
+   "Rituali"
+  ]
+ },
+ "Lottatore": {
+  "S": [
+   "Corpo a corpo",
+   "Difese"
+  ],
+  "P": [
+   "Armi da mischia",
+   "Atletica",
+   "Furtività",
+   "Percezione",
+   "Sopravvivenza",
+   "Medicina"
+  ],
+  "G": [
+   "Armi da lancio",
+   "Armi leggere",
+   "Armi da guerra",
+   "Occultismo",
+   "Potere",
+   "Pilotare",
+   "Cultura",
+   "Scienza",
+   "Tecnologia",
+   "Intrattenere",
+   "Oratoria",
+   "Raggirare"
+  ],
+  "N": [
+   "Armi medie",
+   "Armi pesanti",
+   "Artefatti",
+   "Rituali"
+  ]
+ },
+ "Soldato": {
+  "S": [
+   "Armi medie",
+   "Sopravvivenza"
+  ],
+  "P": [
+   "Armi leggere",
+   "Difese",
+   "Atletica",
+   "Percezione",
+   "Tecnologia",
+   "Oratoria"
+  ],
+  "G": [
+   "Armi da lancio",
+   "Armi pesanti",
+   "Armi da mischia",
+   "Armi da guerra",
+   "Corpo a corpo",
+   "Furtività",
+   "Pilotare",
+   "Cultura",
+   "Medicina",
+   "Scienza",
+   "Intrattenere",
+   "Raggirare"
+  ],
+  "N": [
+   "Artefatti",
+   "Occultismo",
+   "Potere",
+   "Rituali"
+  ]
+ },
+ "Agricoltore": {
+  "S": [
+   "Sopravvivenza",
+   "Scienza"
+  ],
+  "P": [
+   "Atletica",
+   "Percezione",
+   "Pilotare",
+   "Medicina",
+   "Tecnologia",
+   "Oratoria"
+  ],
+  "G": [
+   "Armi da lancio",
+   "Armi leggere",
+   "Armi medie",
+   "Armi da mischia",
+   "Corpo a corpo",
+   "Difese",
+   "Artefatti",
+   "Occultismo",
+   "Furtività",
+   "Cultura",
+   "Intrattenere",
+   "Raggirare"
+  ],
+  "N": [
+   "Armi pesanti",
+   "Armi da guerra",
+   "Potere",
+   "Rituali"
+  ]
+ },
+ "Artigiano": {
+  "S": [
+   "Cultura",
+   "Tecnologia"
+  ],
+  "P": [
+   "Atletica",
+   "Furtività",
+   "Percezione",
+   "Scienza",
+   "Oratoria",
+   "Raggirare"
+  ],
+  "G": [
+   "Armi da lancio",
+   "Armi leggere",
+   "Armi medie",
+   "Armi da mischia",
+   "Corpo a corpo",
+   "Difese",
+   "Artefatti",
+   "Occultismo",
+   "Pilotare",
+   "Sopravvivenza",
+   "Medicina",
+   "Intrattenere"
+  ],
+  "N": [
+   "Armi pesanti",
+   "Armi da guerra",
+   "Potere",
+   "Rituali"
+  ]
+ },
+ "Operaio": {
+  "S": [
+   "Atletica",
+   "Tecnologia"
+  ],
+  "P": [
+   "Armi da mischia",
+   "Difese",
+   "Percezione",
+   "Pilotare",
+   "Sopravvivenza",
+   "Scienza"
+  ],
+  "G": [
+   "Armi da lancio",
+   "Armi leggere",
+   "Armi medie",
+   "Armi pesanti",
+   "Armi da guerra",
+   "Corpo a corpo",
+   "Furtività",
+   "Cultura",
+   "Medicina",
+   "Intrattenere",
+   "Oratoria",
+   "Raggirare"
+  ],
+  "N": [
+   "Artefatti",
+   "Occultismo",
+   "Potere",
+   "Rituali"
+  ]
+ },
+ "Pilota": {
+  "S": [
+   "Pilotare",
+   "Tecnologia"
+  ],
+  "P": [
+   "Armi leggere",
+   "Percezione",
+   "Sopravvivenza",
+   "Atletica",
+   "Scienza",
+   "Difese"
+  ],
+  "G": [
+   "Armi da lancio",
+   "Armi medie",
+   "Armi pesanti",
+   "Armi da mischia",
+   "Corpo a corpo",
+   "Artefatti",
+   "Furtività",
+   "Cultura",
+   "Medicina",
+   "Intrattenere",
+   "Oratoria",
+   "Raggirare"
+  ],
+  "N": [
+   "Armi da guerra",
+   "Occultismo",
+   "Potere",
+   "Rituali"
+  ]
+ },
+ "Tecnico": {
+  "S": [
+   "Scienza",
+   "Tecnologia"
+  ],
+  "P": [
+   "Atletica",
+   "Furtività",
+   "Percezione",
+   "Pilotare",
+   "Cultura",
+   "Raggirare"
+  ],
+  "G": [
+   "Armi da lancio",
+   "Armi leggere",
+   "Armi medie",
+   "Armi da mischia",
+   "Corpo a corpo",
+   "Difese",
+   "Artefatti",
+   "Occultismo",
+   "Sopravvivenza",
+   "Medicina",
+   "Intrattenere",
+   "Oratoria"
+  ],
+  "N": [
+   "Armi pesanti",
+   "Armi da guerra",
+   "Potere",
+   "Rituali"
+  ]
+ },
+ "Accademico": {
+  "S": [
+   "Cultura",
+   "Scienza"
+  ],
+  "P": [
+   "Artefatti",
+   "Occultismo",
+   "Percezione",
+   "Medicina",
+   "Tecnologia",
+   "Oratoria"
+  ],
+  "G": [
+   "Armi da lancio",
+   "Armi leggere",
+   "Armi da mischia",
+   "Corpo a corpo",
+   "Difese",
+   "Rituali",
+   "Atletica",
+   "Furtività",
+   "Pilotare",
+   "Sopravvivenza",
+   "Intrattenere",
+   "Raggirare"
+  ],
+  "N": [
+   "Armi medie",
+   "Armi pesanti",
+   "Armi da guerra",
+   "Potere"
+  ]
+ },
+ "Amministrativo": {
+  "S": [
+   "Cultura",
+   "Oratoria"
+  ],
+  "P": [
+   "Percezione",
+   "Pilotare",
+   "Scienza",
+   "Tecnologia",
+   "Intrattenere",
+   "Raggirare"
+  ],
+  "G": [
+   "Armi da lancio",
+   "Armi leggere",
+   "Armi medie",
+   "Armi da mischia",
+   "Corpo a corpo",
+   "Difese",
+   "Artefatti",
+   "Occultismo",
+   "Atletica",
+   "Furtività",
+   "Sopravvivenza",
+   "Medicina"
+  ],
+  "N": [
+   "Armi pesanti",
+   "Armi da guerra",
+   "Potere",
+   "Rituali"
+  ]
+ },
+ "Artista": {
+  "S": [
+   "Intrattenere",
+   "Oratoria"
+  ],
+  "P": [
+   "Atletica",
+   "Furtività",
+   "Percezione",
+   "Cultura",
+   "Tecnologia",
+   "Raggirare"
+  ],
+  "G": [
+   "Armi da lancio",
+   "Armi leggere",
+   "Armi medie",
+   "Armi da mischia",
+   "Corpo a corpo",
+   "Difese",
+   "Artefatti",
+   "Occultismo",
+   "Pilotare",
+   "Sopravvivenza",
+   "Medicina",
+   "Scienza"
+  ],
+  "N": [
+   "Armi pesanti",
+   "Armi da guerra",
+   "Potere",
+   "Rituali"
+  ]
+ },
+ "Medico": {
+  "S": [
+   "Medicina",
+   "Scienza"
+  ],
+  "P": [
+   "Occultismo",
+   "Percezione",
+   "Sopravvivenza",
+   "Cultura",
+   "Tecnologia",
+   "Oratoria"
+  ],
+  "G": [
+   "Armi da lancio",
+   "Armi leggere",
+   "Armi da mischia",
+   "Corpo a corpo",
+   "Difese",
+   "Artefatti",
+   "Rituali",
+   "Atletica",
+   "Furtività",
+   "Pilotare",
+   "Intrattenere",
+   "Raggirare"
+  ],
+  "N": [
+   "Armi medie",
+   "Armi pesanti",
+   "Armi da guerra",
+   "Potere"
+  ]
+ },
+ "Predicatore": {
+  "S": [
+   "Occultismo",
+   "Oratoria"
+  ],
+  "P": [
+   "Artefatti",
+   "Rituali",
+   "Percezione",
+   "Cultura",
+   "Medicina",
+   "Intrattenere"
+  ],
+  "G": [
+   "Armi da lancio",
+   "Armi leggere",
+   "Armi da mischia",
+   "Corpo a corpo",
+   "Difese",
+   "Atletica",
+   "Furtività",
+   "Pilotare",
+   "Sopravvivenza",
+   "Scienza",
+   "Tecnologia",
+   "Raggirare"
+  ],
+  "N": [
+   "Armi medie",
+   "Armi pesanti",
+   "Armi da guerra",
+   "Potere"
+  ]
+ },
+ "Arcanista": {
+  "S": [
+   "Potere",
+   "Rituali"
+  ],
+  "P": [
+   "Armi da lancio",
+   "Difese",
+   "Artefatti",
+   "Occultismo",
+   "Percezione",
+   "Cultura"
+  ],
+  "G": [
+   "Armi leggere",
+   "Armi da mischia",
+   "Corpo a corpo",
+   "Atletica",
+   "Furtività",
+   "Sopravvivenza",
+   "Medicina",
+   "Scienza",
+   "Tecnologia",
+   "Intrattenere",
+   "Oratoria",
+   "Raggirare"
+  ],
+  "N": [
+   "Armi medie",
+   "Armi pesanti",
+   "Armi da guerra",
+   "Pilotare"
+  ]
+ },
+ "Custode": {
+  "S": [
+   "Armi da mischia",
+   "Difese"
+  ],
+  "P": [
+   "Corpo a corpo",
+   "Artefatti",
+   "Occultismo",
+   "Potere",
+   "Atletica",
+   "Percezione"
+  ],
+  "G": [
+   "Armi da lancio",
+   "Armi leggere",
+   "Armi da guerra",
+   "Rituali",
+   "Furtività",
+   "Sopravvivenza",
+   "Cultura",
+   "Medicina",
+   "Tecnologia",
+   "Intrattenere",
+   "Oratoria",
+   "Raggirare"
+  ],
+  "N": [
+   "Armi medie",
+   "Armi pesanti",
+   "Pilotare",
+   "Scienza"
+  ]
+ },
+ "Invocatore": {
+  "S": [
+   "Occultismo",
+   "Potere"
+  ],
+  "P": [
+   "Armi da lancio",
+   "Corpo a corpo",
+   "Difese",
+   "Artefatti",
+   "Percezione",
+   "Oratoria"
+  ],
+  "G": [
+   "Armi leggere",
+   "Armi da mischia",
+   "Rituali",
+   "Atletica",
+   "Furtività",
+   "Pilotare",
+   "Sopravvivenza",
+   "Cultura",
+   "Medicina",
+   "Tecnologia",
+   "Intrattenere",
+   "Raggirare"
+  ],
+  "N": [
+   "Armi medie",
+   "Armi pesanti",
+   "Armi da guerra",
+   "Scienza"
+  ]
+ },
+ "Mistico": {
+  "S": [
+   "Potere",
+   "Medicina"
+  ],
+  "P": [
+   "Difese",
+   "Artefatti",
+   "Occultismo",
+   "Rituali",
+   "Percezione",
+   "Oratoria"
+  ],
+  "G": [
+   "Armi da lancio",
+   "Armi leggere",
+   "Armi da mischia",
+   "Corpo a corpo",
+   "Atletica",
+   "Furtività",
+   "Pilotare",
+   "Sopravvivenza",
+   "Cultura",
+   "Scienza",
+   "Intrattenere",
+   "Raggirare"
+  ],
+  "N": [
+   "Armi medie",
+   "Armi pesanti",
+   "Armi da guerra",
+   "Tecnologia"
+  ]
+ },
+ "Tecnomante": {
+  "S": [
+   "Artefatti",
+   "Tecnologia"
+  ],
+  "P": [
+   "Armi leggere",
+   "Difese",
+   "Potere",
+   "Rituali",
+   "Percezione",
+   "Scienza"
+  ],
+  "G": [
+   "Armi medie",
+   "Armi da mischia",
+   "Corpo a corpo",
+   "Occultismo",
+   "Atletica",
+   "Furtività",
+   "Pilotare",
+   "Cultura",
+   "Medicina",
+   "Intrattenere",
+   "Oratoria",
+   "Raggirare"
+  ],
+  "N": [
+   "Armi da lancio",
+   "Armi pesanti",
+   "Armi da guerra",
+   "Sopravvivenza"
+  ]
+ }
+}

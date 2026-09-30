@@ -247,26 +247,10 @@ function passoCaratteristiche(ctx) {
 // ---------------------------------------------------------------------------
 // 3 Addestramento
 
-function tabellaValoriBase(ctx, valori) {
-  const { abilita, categorie } = ctx.dati.abilita;
-  return h('table', { class: 'tabella compatta' },
-    h('thead', {}, h('tr', {}, h('th', {}, 'Abilità'), h('th', {}, 'Car.'), h('th', {}, 'Base'))),
-    categorie.map((cat) => h('tbody', {},
-      h('tr', { class: 'categoria' }, h('th', { colspan: 3 }, cat)),
-      abilita.filter((a) => a.categoria === cat).map((a) => h('tr', {},
-        h('td', {}, info('abilita', a.nome)), h('td', {}, a.caratteristica),
-        h('td', { class: `base base-${valori[a.nome]}` }, String(valori[a.nome])))))));
-}
-
-// §2.3: valori base ammessi, dallo schema degli Addestramenti (es. «2–4»).
-function intervalloBasi(regole) {
-  const v = Object.keys(regole.addestramento.schema).map(Number);
-  return `${Math.min(...v)}–${Math.max(...v)}`;
-}
-
 function passoAddestramento(ctx) {
   return [
-    h('p', { class: 'guida' }, `L’Addestramento fissa il valore base (${intervalloBasi(ctx.dati.regole)}) delle 24 Abilità, concede un vantaggio e i bonus alle Salvezze. La prima Classe deve appartenere all’Addestramento scelto.`),
+    // §2.2 e §2.3 del Giocatore del 29/09: le basi delle Abilità vengono dalla prima Classe
+    h('p', { class: 'guida' }, 'L’Addestramento concede un vantaggio e i bonus alle Salvezze, e decide fra quali Classi scegliere la prima. I valori base delle 24 Abilità vengono dalla prima Classe (passo successivo).'),
     ctx.scelte.classe ? h('p', { class: 'nota' }, `Cambiare Addestramento azzera la Classe scelta (${ctx.scelte.classe}).`) : null,
     h('div', { class: 'griglia-carte' }, ctx.dati.addestramenti.addestramenti.map((a) => {
       const sel = ctx.scelte.addestramento === a.nome;
@@ -275,7 +259,6 @@ function passoAddestramento(ctx) {
         h('p', { class: 'identita' }, a.identita),
         h('p', {}, h('strong', {}, `Vantaggio — ${a.vantaggio.nome}. `), a.vantaggio.testo),
         h('p', {}, h('strong', {}, 'Salvezze: '), bonusSalvezze(ctx, a.salvezze)),
-        dettagli(ctx, `addestr:${a.nome}`, 'Valori base delle 24 Abilità', tabellaValoriBase(ctx, a.valori_base)),
       );
     })),
   ];
@@ -302,13 +285,26 @@ function talento(ctx, chiave, titolo, testo) {
   return dettagli(ctx, chiave, titolo, testo.split('\n').map((p) => h('p', {}, p)));
 }
 
+// §2.3 e §8.3: le quattro categorie di competenza di una Classe, con base iniziale e limite al I Grado
+// (numeri da regole.json → competenze).
+export function competenzeClasse(ctx, classe, { primaClasse = true } = {}) {
+  const C = ctx.dati.regole.competenze.categorie;
+  const limite1 = (L) => L.fisso + L.per_grado_totale + L.per_grado_categoria;
+  return h('dl', { class: 'voci competenze' }, Object.entries(C).map(([cat, c]) => h('div', {},
+    primaClasse
+      ? h('dt', { title: `base ${c.base}, limite del VA personale ${limite1(c.limite)} al I Grado (§8.3)` },
+        `${c.nome} `, h('small', {}, `base ${c.base} · limite ${limite1(c.limite)}`))
+      : h('dt', {}, c.nome),
+    h('dd', {}, elencoInfo('abilita', classe.competenze?.[cat] ?? [])))));
+}
+
 function passoClasse(ctx) {
   const { dati, scelte } = ctx;
   const classi = dati.classi.classi.filter((c) => c.addestramento === scelte.addestramento);
   const scelta = trova(classi, scelte.classe);
   const cos = ctx.ante.caratteristiche?.COS.valore;
   return [
-    h('p', { class: 'guida' }, `Le Classi dell’Addestramento ${scelte.addestramento}. Il I Grado concede +1 alle cinque Abilità di Classe, il Talento fisso del I Grado e i contributi a PV e PM; al 1° livello i dadi di PV e PM sono massimizzati.`),
+    h('p', { class: 'guida' }, `Le Classi dell’Addestramento ${scelte.addestramento}. La prima Classe fissa i valori base delle 24 Abilità con le sue categorie di competenza (Specializzate, Professionali, Generiche, Non competenti) e, al I Grado, il limite del VA personale di ciascuna; concede +1 alle cinque Abilità di Classe, il Talento fisso del I Grado e i contributi a PV e PM. Al 1° livello i dadi di PV e PM sono massimizzati.`),
     h('div', { class: 'griglia-carte' }, classi.map((c) => {
       const sel = scelte.classe === c.nome;
       const pv1 = c.pv_per_grado.fisso + c.pv_per_grado.dado;
@@ -316,6 +312,7 @@ function passoClasse(ctx) {
         h('header', {}, h('h3', {}, c.nome), bottoneScelta(sel, () => ctx.aggiorna({ classe: c.nome, parametriTalenti: {} }))),
         h('p', { class: 'identita' }, c.specializzazioni.join(' / ')),
         h('p', {}, h('strong', {}, 'Abilità di Classe: '), elencoInfo('abilita', c.abilita)),
+        dettagli(ctx, `comp:${c.nome}`, 'Competenze: basi e limiti delle 24 Abilità', competenzeClasse(ctx, c)),
         h('dl', { class: 'voci in-linea' },
           h('div', {}, h('dt', {}, 'PV/Grado'), h('dd', {}, dadi(c.pv_per_grado),
             h('small', {}, ` (1° livello: ${cos ? `${cos} COS + ${pv1} = ${cos + pv1}` : `+${pv1}`})`))),
@@ -345,40 +342,48 @@ function passoAbilita(ctx) {
   const imposta = (n, v) => ctx.aggiorna({ puntiAbilitaLiberi: { ...pa, [n]: v } });
   const rimasti = cr.punti_abilita_liberi - somma(pa);
 
+  const C = dati.regole.competenze.categorie;
   const righe = (cat) => scheda.abilita.filter((a) => a.categoria === cat).map((a) => {
-    const blocco = vietato(ctx, { puntiAbilitaLiberi: { ...pa, [a.nome]: a.liberi + 1 } }, ['puntiAbilitaLiberi', `puntiAbilitaLiberi.${a.nome}`]);
+    // i punti salvati, anche quelli che non aumentano il VA (a.liberi conta solo quelli utili)
+    const presi = pa[a.nome] ?? 0;
+    const blocco = vietato(ctx, { puntiAbilitaLiberi: { ...pa, [a.nome]: presi + 1 } }, ['puntiAbilitaLiberi', `puntiAbilitaLiberi.${a.nome}`]);
     const motivoPiu = blocco?.campo === 'puntiAbilitaLiberi' ? 'Nessun Punto Abilità Libero rimasto da spendere.' : blocco?.problema ?? null;
-    const inRiga = blocco && blocco.campo !== 'puntiAbilitaLiberi' ? motivoPiu : null;
-    return h('tr', { class: a.daClasse ? 'di-classe' : null },
+    // §2.13 del 29/09: punti che non aumentano il VA personale (limite della categoria al I Grado)
+    const inattivi = a.inattivi ? `${a.inattivi === 1 ? '1 punto non aumenta' : `${a.inattivi} punti non aumentano`} il VA: limite ${a.limite}. Toglili e assegnali altrove.` : null;
+    const inRiga = inattivi ?? (blocco && blocco.campo !== 'puntiAbilitaLiberi' ? motivoPiu : null);
+    const comp = a.competenza ? C[a.competenza] : null;
+    return h('tr', { class: [a.daClasse ? 'di-classe' : null, a.inattivi ? 'errore' : null].filter(Boolean).join(' ') || null },
       h('th', { scope: 'row' }, info('abilita', a.nome), h('span', { class: 'sigla' }, ` ${a.caratteristica}`),
+        comp ? h('span', { class: 'etichetta', title: `${comp.nome}: base ${comp.base} (§2.3)` }, a.competenza) : null,
         a.daClasse ? h('span', { class: 'etichetta' }, 'Classe') : null,
-        // su telefono le quattro colonne diventano una riga di testo
-        h('small', { class: 'formula' }, `${segno(a.mod)} Mod + ${a.base} Base + ${a.corporazione} Corp + ${a.avanzamento} Avanz`),
+        // su telefono le colonne diventano una riga di testo
+        h('small', { class: 'formula' }, `${segno(a.mod)} Mod + ${a.base} Base + ${a.corporazione} Corp + ${a.avanzamento} Avanz, limite ${a.limite}`),
         inRiga ? h('small', { class: 'motivo' }, inRiga) : null),
       h('td', { class: 'dettaglio' }, segno(a.mod)),
       h('td', { class: 'dettaglio' }, String(a.base)),
       h('td', { class: 'dettaglio' }, String(a.corporazione)),
       h('td', { class: 'dettaglio', title: `Classe ${a.daClasse} + liberi ${a.liberi}` }, String(a.avanzamento)),
       h('td', { class: 'forte' }, String(a.totale)),
-      h('td', {}, stepper(a.liberi, {
+      h('td', { class: 'dettaglio', title: a.limiteCategoria ? `${C[a.limiteCategoria]?.nome ?? a.limiteCategoria} al I Grado (§8.3)` : null }, String(a.limite ?? '—')),
+      h('td', {}, stepper(presi, {
         etichetta: a.nome, motivoPiu,
-        motivoMeno: a.liberi === 0 ? 'Nessun punto libero da togliere.' : null,
-        meno: () => imposta(a.nome, a.liberi - 1), piu: () => imposta(a.nome, a.liberi + 1),
+        motivoMeno: presi === 0 ? 'Nessun punto libero da togliere.' : null,
+        meno: () => imposta(a.nome, presi - 1), piu: () => imposta(a.nome, presi + 1),
       })));
   });
 
   return [
-    h('p', { class: 'guida' }, `Distribuisci ${cr.punti_abilita_liberi} Punti Abilità Liberi. Ogni punto aggiunge +1 all’Avanzamento; l’Avanzamento iniziale non può superare ${cr.avanzamento_massimo_iniziale}, compreso il +1 di Classe, e l’Abilità deve avere VA almeno ${cr.va_minimo_per_punti_liberi} prima dei punti liberi.`),
+    h('p', { class: 'guida' }, `Distribuisci ${cr.punti_abilita_liberi} Punti Abilità Liberi. Ogni punto aggiunge +1 all’Avanzamento e deve aumentare il VA personale: il VA non supera il limite della categoria di competenza al I Grado (colonna «Lim», §2.13), e l’Abilità deve avere VA almeno ${cr.va_minimo_per_punti_liberi} prima dei punti liberi.`),
     contatore(rimasti, cr.punti_abilita_liberi, 'Punti Abilità Liberi'),
     rimasti === 0 ? h('p', { class: 'nota' }, 'Punti esauriti: per spostarne uno, toglilo prima da un’altra Abilità.') : null,
     h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella abilita' },
       h('thead', {}, h('tr', {}, h('th', {}, 'Abilità'),
-        h('th', { class: 'dettaglio', title: 'Modificatore della Caratteristica' }, 'Mod'), h('th', { class: 'dettaglio', title: 'Valore base dell’Addestramento' }, 'Base'),
+        h('th', { class: 'dettaglio', title: 'Modificatore della Caratteristica' }, 'Mod'), h('th', { class: 'dettaglio', title: 'Base della categoria di competenza nella prima Classe (§2.3)' }, 'Base'),
         h('th', { class: 'dettaglio', title: 'Bonus di Corporazione' }, 'Corp'), h('th', { class: 'dettaglio', title: 'Avanzamento: Classe + punti liberi' }, 'Avanz'),
-        h('th', {}, 'VA'), h('th', {}, 'Liberi'))),
+        h('th', {}, 'VA'), h('th', { class: 'dettaglio', title: 'Limite del VA personale al I Grado (§8.3)' }, 'Lim'), h('th', {}, 'Liberi'))),
       dati.abilita.categorie.map((cat) => h('tbody', {},
-        h('tr', { class: 'categoria' }, h('th', { colspan: 7 }, cat)), righe(cat))))),
-    h('p', { class: 'nota' }, 'VA = Mod + Base + Corp + Avanz. Avanzamento = +1 di Classe + punti liberi.'),
+        h('tr', { class: 'categoria' }, h('th', { colspan: 8 }, cat)), righe(cat))))),
+    h('p', { class: 'nota' }, `VA = Mod + Base + Corp + Avanz, al massimo il limite. Base e limite al I Grado per categoria: ${Object.entries(C).map(([k, c]) => `${k} ${c.nome} ${c.base} / ${c.limite.fisso + c.limite.per_grado_totale + c.limite.per_grado_categoria}`).join(', ')}. Avanzamento = +1 di Classe + punti liberi.`),
   ];
 }
 

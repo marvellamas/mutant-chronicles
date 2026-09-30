@@ -374,10 +374,10 @@ function validaRegole(r, err, dati = {}) {
   const F = 'regole';
   const interi = [
     'creazione.punti_caratteristica', 'creazione.massimo_caratteristica', 'creazione.punti_abilita_liberi',
-    'creazione.avanzamento_massimo_iniziale', 'creazione.va_minimo_per_punti_liberi', 'creazione.bonus_classe_per_grado',
+    'creazione.va_minimo_per_punti_liberi', 'creazione.bonus_classe_per_grado',
     'salvezze.base', 'punti_eroe.dadi', 'punti_eroe.facce', 'punti_eroe.fisso', 'punti_eroe.minimo',
     'punti_eroe.massimo', 'punti_eroe.riserva_massima', 'movimento.passo', 'movimento.corsa', 'movimento.scatto',
-    'addestramento.punti_totali', 'taumaturgo.incantesimi_liberi.fisso', 'taumaturgo.incantesimi_liberi.minimo',
+    'competenze.punti_base_totali', 'taumaturgo.incantesimi_liberi.fisso', 'taumaturgo.incantesimi_liberi.minimo',
     'incantesimi.per_specializzazione',
   ];
   for (const percorso of interi) {
@@ -443,7 +443,24 @@ function validaRegole(r, err, dati = {}) {
   }
   if (!Array.isArray(r.salvezze?.avanzamento_per_livello)) err(F, 'salvezze.avanzamento_per_livello', 'tabella mancante');
   if (!Array.isArray(r.iniziativa?.caratteristiche)) err(F, 'iniziativa.caratteristiche', 'lista mancante');
-  for (const tab of ['addestramento.schema', 'incantesimi.schema_livello_base']) {
+  // §2.3, §8.3, §8.7 (Giocatore del 29/09): categorie di competenza con base, numero di Abilità e
+  // formula del limite del VA personale; la somma delle basi è punti_base_totali (122)
+  const cc = r.competenze?.categorie;
+  if (!isOggetto(cc) || !Object.keys(cc).length) err(F, 'competenze.categorie', 'categorie di competenza mancanti (§2.3)');
+  else {
+    let totale = 0;
+    for (const [id, c] of Object.entries(cc)) {
+      const K = `competenze.categorie.${id}`;
+      if (!isTesto(c?.nome) || !isIntero(c?.numero) || c.numero < 0 || !isIntero(c?.base)) { err(F, K, 'servono nome, numero di Abilità e base interi (§2.3)'); continue; }
+      const L = c.limite;
+      if (!isOggetto(L) || !['fisso', 'per_grado_totale', 'per_grado_categoria'].every((x) => isIntero(L[x]) && L[x] >= 0)) err(F, `${K}.limite`, 'serve { fisso, per_grado_totale, per_grado_categoria } interi ≥ 0 (§8.7)');
+      totale += c.numero * c.base;
+    }
+    const n = Object.values(cc).reduce((s, c) => s + (isIntero(c?.numero) ? c.numero : 0), 0);
+    if (dati.abilita?.abilita && n !== dati.abilita.abilita.length) err(F, 'competenze.categorie', `le categorie coprono ${n} Abilità, le Abilità sono ${dati.abilita.abilita.length}`);
+    if (isIntero(r.competenze.punti_base_totali) && totale !== r.competenze.punti_base_totali) err(F, 'competenze.punti_base_totali', `le basi sommano ${totale}, non ${r.competenze.punti_base_totali} (§2.3)`);
+  }
+  for (const tab of ['incantesimi.schema_livello_base']) {
     const v = tab.split('.').reduce((o, k) => o?.[k], r);
     if (!isOggetto(v) || !Object.values(v).every(isIntero)) err(F, tab, 'tabella {valore: quantità} mancante o non numerica');
   }
@@ -534,32 +551,11 @@ function validaCorporazioni(c, sigle, nomiAbilita, idSalvezze, car, err) {
 function validaAddestramenti(a, nomiAbilita, idSalvezze, regole, err) {
   if (!isOggetto(a)) return new Set();
   const F = 'addestramenti';
-  const schema = regole?.addestramento?.schema ?? {};
-  const totale = regole?.addestramento?.punti_totali;
   const lista = listaNominata(F, a, 'addestramenti', err);
   lista.forEach((x, i) => {
     const k = `addestramenti[${i}] (${x.nome})`;
-    const vb = isOggetto(x.valori_base) ? x.valori_base : {};
-    const chiavi = Object.keys(vb);
-    if (chiavi.length !== nomiAbilita.size) err(F, `${k}.valori_base`, `attese ${nomiAbilita.size} Abilità, trovate ${chiavi.length}`);
-    for (const n of chiavi) if (!nomiAbilita.has(n)) err(F, `${k}.valori_base.${n}`, `"${n}" non è un'Abilità esistente`);
-    for (const n of nomiAbilita) if (!(n in vb)) err(F, `${k}.valori_base`, `manca l'Abilità "${n}"`);
-
-    const valori = Object.values(vb);
-    if (!valori.every(isIntero)) {
-      err(F, `${k}.valori_base`, 'tutti i valori devono essere interi');
-    } else {
-      const somma = valori.reduce((s, v) => s + v, 0);
-      if (somma !== totale) err(F, `${k}.valori_base`, `la somma è ${somma}, deve essere ${totale} (§2.3)`);
-      const conteggio = {};
-      for (const v of valori) conteggio[v] = (conteggio[v] ?? 0) + 1;
-      const atteso = Object.entries(schema).map(([v, n]) => `${n}×${v}`).join(', ');
-      const ok = Object.keys({ ...schema, ...conteggio }).every((v) => (schema[v] ?? 0) === (conteggio[v] ?? 0));
-      if (!ok) {
-        const trovato = Object.entries(conteggio).sort((p, q) => q[0] - p[0]).map(([v, n]) => `${n}×${v}`).join(', ');
-        err(F, `${k}.valori_base`, `distribuzione ${trovato}, attesa ${atteso} (§2.3)`);
-      }
-    }
+    // §2.2 del 29/09: le basi delle Abilità vengono dalla prima Classe (classi.json → competenze)
+    if (x.valori_base !== undefined) err(F, `${k}.valori_base`, 'l’Addestramento non assegna più valori base alle Abilità: si ricavano dalla prima Classe (§2.3)');
     if (!isTesto(x.vantaggio?.nome) || !isTesto(x.vantaggio?.testo)) err(F, `${k}.vantaggio`, 'servono "nome" e "testo" (§2.10)');
     validaSalvezzeBonus(F, `${k}.salvezze`, x.salvezze, idSalvezze, err);
   });
@@ -710,7 +706,6 @@ function validaAvanzamento(r, err) {
   if (!eventi.find((e) => e?.livello === 1)?.eventi?.includes('creazione')) err(F, 'avanzamento.eventi', 'il livello 1 deve essere la creazione');
   for (const e of eventi) if (!isIntero(e?.livello) || e.livello < 1 || e.livello > max) err(F, 'avanzamento.eventi', `livello ${JSON.stringify(e?.livello)} fuori da 1–${max}`);
   validaFasce(F, 'avanzamento.massimo_caratteristica', av.massimo_caratteristica, 'massimo', max, err);
-  validaFasce(F, 'avanzamento.avanzamento_massimo_abilita', av.avanzamento_massimo_abilita, 'massimo', max, err);
   validaFasce(F, 'salvezze.avanzamento_per_livello', r.salvezze?.avanzamento_per_livello, 'bonus', max, err);
   // coerenza fra gli eventi "salvezze:+N" e la tabella del §1.2.3
   let cumulato = 0;
@@ -862,6 +857,25 @@ function validaClassi(c, nomiAddestramenti, nomiAbilita, macrofamiglie, regole, 
     if (ab.length !== ABILITA_CLASSE) err(F, `${k}.abilita`, `attese ${ABILITA_CLASSE} Abilità di Classe, trovate ${ab.length}`);
     if (new Set(ab).size !== ab.length) err(F, `${k}.abilita`, 'Abilità ripetute');
     ab.forEach((n) => { if (!nomiAbilita.has(n)) err(F, `${k}.abilita`, `"${n}" non è un'Abilità esistente`); });
+    // §2.3 e Capitolo 3 (Giocatore del 29/09): ogni Abilità in una sola categoria di competenza
+    const cc = regole?.competenze?.categorie ?? {};
+    const comp = isOggetto(x.competenze) ? x.competenze : null;
+    if (!comp) err(F, `${k}.competenze`, 'categorie di competenza mancanti (§2.3)');
+    else {
+      const viste = new Map();
+      for (const [cat, lista] of Object.entries(comp)) {
+        if (!(cat in cc)) { err(F, `${k}.competenze.${cat}`, `categoria "${cat}" non in regole.json → competenze (${Object.keys(cc).join(', ')})`); continue; }
+        if (!Array.isArray(lista)) { err(F, `${k}.competenze.${cat}`, 'serve un elenco di Abilità'); continue; }
+        if (lista.length !== cc[cat].numero) err(F, `${k}.competenze.${cat}`, `${cc[cat].nome}: attese ${cc[cat].numero} Abilità, trovate ${lista.length} (§2.3)`);
+        for (const n of lista) {
+          if (!nomiAbilita.has(n)) err(F, `${k}.competenze.${cat}`, `"${n}" non è un'Abilità esistente`);
+          else if (viste.has(n)) err(F, `${k}.competenze.${cat}`, `"${n}" è già fra le ${cc[viste.get(n)]?.nome ?? viste.get(n)}: ogni Abilità sta in una sola categoria`);
+          else viste.set(n, cat);
+        }
+      }
+      for (const cat of Object.keys(cc)) if (!(cat in comp)) err(F, `${k}.competenze`, `manca la categoria ${cat} (${cc[cat].nome})`);
+      for (const n of nomiAbilita) if (!viste.has(n)) err(F, `${k}.competenze`, `l'Abilità "${n}" non ha una categoria di competenza`);
+    }
 
     validaDadi(F, `${k}.pv_per_grado`, x.pv_per_grado, err);
     validaDadi(F, `${k}.pm_per_grado`, x.pm_per_grado, err);

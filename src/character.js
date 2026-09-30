@@ -266,10 +266,12 @@ export function normalizza(scelteIn, dati) {
   // Punti oltre il totale delle regole correnti: non si tolgono, la scheda li segnala come eccesso
   // (le regole possono cambiare: Giocatore, Doc del 27/09/2026; per-davide A.52)
   if (corp && addestr && classe) {
-    // Toglie un punto alla volta dove validaScelte segnala una violazione (Avanzamento > 3, VA < 1).
+    // Toglie un punto alla volta dove validaScelte segnala una violazione (VA < 1 prima dei punti). I
+    // punti che non aumentano il VA personale (limiti del 29/09, §2.13) non si tolgono da soli: restano
+    // nelle scelte, il wizard li segnala sulla riga e la scheda li fa riassegnare (per-davide A.57).
     const ridotti = new Map();
     for (let giro = 0; giro < 50; giro++) {
-      const v = validaScelte(s, dati).find((e) => e.tipo === 'violazione' && e.campo.startsWith('puntiAbilitaLiberi.'));
+      const v = validaScelte(s, dati).find((e) => e.tipo === 'violazione' && e.campo.startsWith('puntiAbilitaLiberi.') && !e.inattivi);
       if (!v) break;
       const nome = v.campo.slice('puntiAbilitaLiberi.'.length);
       if (!ridotti.has(nome)) ridotti.set(nome, { prima: s.puntiAbilitaLiberi[nome], motivo: v.problema });

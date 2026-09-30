@@ -381,8 +381,8 @@ test('scudi: due imbracciati non si sommano (avviso); stampa della riga Protezio
     .fogli.find((f) => f.id === 'combattimento').dati;
   const [riga] = f3.protezioni.righe;
   assert.deepEqual(riga.slice(0, 3), ['Scudo pesante Reaver', '3', 'Enorme']);
-  // Agente: Difese 6 (Mod DES +2, base Avventuriero 4), FOR 6 su 7 richiesta → −1 alle Parate con lo Scudo (§7.1.6)
-  assert.equal(riga[3], 'Parata 5 ravv. / 1 dist.; con SIN collegato (Innesto di Interfaccia Neurale attivo): Parata 6/2; MOV −1 Q; FOR 7 (−1)');
+  // Agente: Difese 8 (Mod DES +2, base Professionale 6, Giocatore del 29/09), FOR 6 su 7 richiesta → −1 alle Parate con lo Scudo (§7.1.6)
+  assert.equal(riga[3], 'Parata 7 ravv. / 3 dist.; con SIN collegato (Innesto di Interfaccia Neurale attivo): Parata 8/4; MOV −1 Q; FOR 7 (−1)');
 });
 
 test('validatore degli scudi: Parata, profili alternativi, attacco', () => {

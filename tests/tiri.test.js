@@ -63,7 +63,7 @@ test('un tiro dei PM fuori intervallo inserito a mano è rifiutato (Grado succes
     ],
   };
   const voce = { grado: { classe: 'Arcanista' }, tiroPV: { valore: 3, origine: 'app' }, tiroPM: { valore: 5, origine: 'manuale' },
-    talentoClasse: 'Geometria Arcana', puntiAbilita: { 'Percezione': 2, 'Artefatti': 1, 'Cultura': 3, 'Medicina': 2, 'Scienza': 2 },
+    talentoClasse: 'Geometria Arcana', puntiAbilita: { 'Artefatti': 1, 'Cultura': 2, 'Medicina': 2, 'Scienza': 2, 'Difese': 3 },
     incantesimi: ['Protezione dagli Elementi', 'Irrobustire', 'Distrazione', 'Empatia', 'Cura Spirituale', 'Arma Mistica'] };
   const e = validaLivello(p, voce, dati);
   assert.ok(e.some((x) => x.campo === 'tiroPM' && x.tipo === 'violazione' && /5 non è possibile con 1d4/.test(x.problema)), JSON.stringify(e));

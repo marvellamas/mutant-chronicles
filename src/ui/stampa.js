@@ -233,7 +233,8 @@ function foglioAbilita(d) {
     categorie.map((cat) => h('tbody', {},
       h('tr', { class: 'categoria' }, h('th', { colspan: 7 }, cat.nome)),
       cat.abilita.map((a) => h('tr', {},
-        h('th', { scope: 'row' }, `${a.nome} `, h('span', { class: 'sigla' }, a.caratteristica), a.diClasse ? ' •' : null),
+        h('th', { scope: 'row' }, `${a.nome} `, h('span', { class: 'sigla' }, a.competenza ? `${a.caratteristica} ${a.competenza}` : a.caratteristica), a.diClasse ? ' •' : null,
+          a.limite !== null && a.grezzo > a.limite ? ' ⚑' : null),
         h('td', {}, segno(a.mod)), h('td', {}, String(a.base)), h('td', {}, String(a.corporazione)),
         h('td', {}, String(a.avanzamento)), h('td', { title: a.equip ? 'Equipaggiamento indossato (§7.11.1)' : null }, a.equip ? segno(a.equip) : '0'),
         h('td', { class: 'va' }, String(a.va)))))));
@@ -241,7 +242,7 @@ function foglioAbilita(d) {
   return h('div', { class: 'f2-griglia' },
     box({ titolo: 'Abilità', tinta: 'accento', forte: true, classe: 'f2-abilita' },
       h('div', { class: 'abilita-affiancate' }, tabellaAbilita(d.categorie.slice(0, meta)), tabellaAbilita(d.categorie.slice(meta))),
-      h('p', { class: 'piccolo' }, `• Abilità di Classe. VA = Mod + Base + Corp + Avanz + Equip (equipaggiamento indossato). Avanzamento massimo: ${d.limiteAvanzamento ?? '—'}.`)),
+      h('p', { class: 'piccolo' }, '• Abilità di Classe. S / P / G / N: competenza (§2.3). VA = Mod + Base + Corp + Avanz, al massimo il limite (⚑: VA grezzo oltre il limite, §8.3), + Equip (equipaggiamento indossato).')),
     h('div', { class: 'colonna' },
       box({ titolo: 'Talenti di Classe' }, h('ul', { class: 'elenco-talenti-stampa' }, d.talentiClasse.map((t) =>
         talento(t, h('span', { class: 'sigla' }, ` ${t.classe} ${t.grado}${t.scelto ? ', a scelta' : ''}`))))),

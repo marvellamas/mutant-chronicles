@@ -91,10 +91,11 @@ test('3° livello: Salvezze +1 e un Talento Libero', () => {
   assert.ok(e.some((x) => x.campo === 'talentoLibero' && x.tipo === 'incompleto'));
 });
 
-test('4° livello: Grado II con Talento a scelta e limite di Avanzamento 4', () => {
+test('4° livello: Grado II con Talento a scelta e limiti del VA personale del Grado II (§8.3)', () => {
   const p3 = agente(3);
   const prossimo = prossimoLivello(p3, dati);
-  assert.equal(prossimo.avanzamentoMassimo, 4);
+  // prima del Grado del livello valgono i limiti del I Grado: Furtività (P) 9
+  assert.equal(prossimo.abilita.find((a) => a.nome === 'Furtività').limite, 9);
   const agenteInfo = prossimo.classi.find((c) => c.nome === 'Agente');
   assert.equal(agenteInfo.prossimoGrado, 2);
   assert.equal(agenteInfo.talentiAScelta.length, 5);
@@ -102,9 +103,10 @@ test('4° livello: Grado II con Talento a scelta e limite di Avanzamento 4', () 
 
   const { livello, ...base } = voce(4);
   assert.deepEqual(validaLivello(p3, base, dati), []);
-  // Furtività: 3 alla creazione + 1 di Classe = 4, già al limite
-  const troppo = validaLivello(p3, { ...base, puntiAbilita: { ...base.puntiAbilita, 'Furtività': 1, 'Atletica': 2 } }, dati);
-  assert.ok(problemi(troppo).includes('Avanzamento 5: al 4° livello il massimo è 4 (§8.3)'), JSON.stringify(troppo));
+  // Furtività (P): DES 9 (+4) + 6 + 0 + 2 di Classe = 12, già oltre il limite P del Grado II (11)
+  const troppo = validaLivello(p3, { ...base, puntiAbilita: { ...base.puntiAbilita, 'Furtività': 1, 'Tecnologia': 1 } }, dati);
+  const furtErr = troppo.find((x) => x.campo === 'puntiAbilita.Furtività');
+  assert.ok(furtErr && furtErr.inattivi === 1 && /limite 11/.test(furtErr.problema), JSON.stringify(troppo));
   const senzaTalento = validaLivello(p3, { ...base, talentoClasse: undefined }, dati);
   assert.ok(senzaTalento.some((x) => x.campo === 'talentoClasse' && x.tipo === 'incompleto'));
   const nonDellaClasse = validaLivello(p3, { ...base, talentoClasse: 'Predatore' }, dati);
@@ -116,7 +118,8 @@ test('4° livello: Grado II con Talento a scelta e limite di Avanzamento 4', () 
 
   const s4 = calcolaScheda(agente(4), dati);
   const furt = s4.abilita.find((a) => a.nome === 'Furtività');
-  assert.deepEqual([furt.daClasse, furt.liberi, furt.avanzamento, furt.limite], [2, 2, 4, 4]);
+  // §3.1: il +1 di Classe si registra anche oltre il limite; il VA personale resta al limite
+  assert.deepEqual([furt.daClasse, furt.liberi, furt.grezzo, furt.limite, furt.totale], [2, 0, 12, 11, 11]);
   assert.equal(s4.classi[0].grado, 2);
 });
 
@@ -137,11 +140,15 @@ test('12° livello: due Azioni Principali', () => {
   assert.equal(calcolaScheda(agente(12), dati).azioni.principali, 2);
 });
 
-test('20° livello: Avanzamento fino a 8 e Salvezze +3 di Avanzamento', () => {
+test('20° livello: limiti del VI Grado (S 22, P 19, G 17, N 15) e Salvezze +3 di Avanzamento', () => {
   const s = calcolaScheda(agente(20), dati);
-  for (const a of s.abilita) assert.equal(a.limite, 8);
-  assert.equal(Math.max(...s.abilita.map((a) => a.avanzamento)), 8);
-  assert.equal(s.abilita.find((a) => a.nome === 'Furtività').avanzamento, 8);
+  const attesi = { S: 22, P: 19, G: 17, N: 15 };
+  for (const a of s.abilita) {
+    assert.equal(a.limite, attesi[a.competenza], a.nome);
+    assert.equal(a.totale, Math.min(a.grezzo, a.limite), a.nome);
+  }
+  // Furtività (P): DES 10 (+5) + 6 + 0 + 6 di Classe = 17
+  assert.deepEqual(['avanzamento', 'totale'].map((k) => s.abilita.find((a) => a.nome === 'Furtività')[k]), [6, 17]);
   for (const x of Object.values(s.salvezze)) assert.equal(x.avanzamento, 3);
   // Tempra: 8 + 1 (COS 7) + 1 Avventuriero + 0 Mishima + 3 + 2 Prova Salvezza Migliorata
   assert.equal(s.salvezze.tempra.totale, 15);
@@ -150,18 +157,14 @@ test('20° livello: Avanzamento fino a 8 e Salvezze +3 di Avanzamento', () => {
   assert.match(oltre[0].problema, /livello massimo è 20/);
 });
 
-test('un +1 di Classe oltre il limite non si applica ed è annotato (§8.3)', () => {
-  // Con le tabelle attuali il limite sale di 1 a ogni Grado e il caso non si presenta; se Davide
-  // lasciasse il limite a 3 anche al 4° livello, il +1 dell'Agente a Furtività (già 3) andrebbe perso.
-  const d = copia(dati);
-  d.regole.avanzamento.avanzamento_massimo_abilita[1].massimo = 3;
-  // Medicina è già a 3 dalla creazione: i 10 punti vanno su Abilità che restano entro 3
-  const puntiAbilita = { 'Sopravvivenza': 3, 'Atletica': 3, 'Tecnologia': 3, 'Pilotare': 1 };
-  const p = fino(MISHIMA_AGENTE, [voce(2), voce(3), { ...voce(4), puntiAbilita }], 3);
-  const s = calcolaScheda(p, d);
-  assert.deepEqual(s.errori, []);
-  assert.equal(s.abilita.find((a) => a.nome === 'Furtività').avanzamento, 3);
-  assert.ok(s.annotazioni.includes('4° livello: il +1 di Agente a Furtività non si applica perché l’Avanzamento è già al limite 3 (§8.3).'), JSON.stringify(s.annotazioni));
+test('un +1 di Classe oltre il limite resta registrato e torna efficace quando il limite sale (§3.1, §8.3)', () => {
+  // Agente: al 2° livello DES 9 porta Furtività (P) a 4 + 6 + 0 + 1 = 11 oltre il limite P del I Grado (9)
+  const s2 = calcolaScheda(agente(2), dati);
+  const f2 = s2.abilita.find((a) => a.nome === 'Furtività');
+  assert.deepEqual([f2.grezzo, f2.limite, f2.totale], [11, 9, 9]);
+  // al 4° il +1 di Classe si registra (grezzo 12) e il limite sale a 11; al 8° il limite è 13
+  assert.deepEqual(['grezzo', 'limite', 'totale'].map((k) => calcolaScheda(agente(4), dati).abilita.find((a) => a.nome === 'Furtività')[k]), [12, 11, 11]);
+  assert.deepEqual(['grezzo', 'limite', 'totale'].map((k) => calcolaScheda(agente(8), dati).abilita.find((a) => a.nome === 'Furtività')[k]), [14, 13, 13]);
   assert.deepEqual(calcolaScheda(agente(20), dati).annotazioni, []);
 });
 
@@ -172,7 +175,7 @@ const MULTI = [
   { livello: 3, talentoLibero: { id: 'sempre-allerta' } },
   {
     livello: 4, grado: { classe: 'Soldato' }, tiroPV: tiro(5), // Combattente: nuova Classe di altro Addestramento
-    puntiAbilita: { 'Medicina': 1, 'Atletica': 3, 'Sopravvivenza': 3, 'Difese': 3 },
+    puntiAbilita: { 'Medicina': 1, 'Atletica': 2, 'Sopravvivenza': 5, 'Difese': 2 }, // Sopravvivenza S per il Soldato (§8.7)
   },
   { livello: 5, talentoLibero: { id: 'mulo-da-soma' } },
   { livello: 6, caratteristiche: { SAG: 2 } },
@@ -183,7 +186,7 @@ const MULTI = [
   { livello: 11, talentoLibero: { id: 'guarigione-migliorata' } },
   {
     livello: 12, grado: { classe: 'Agente' }, tiroPV: tiro(3), talentoClasse: 'Mira Selettiva',
-    puntiAbilita: { 'Furtività': 2, 'Sopravvivenza': 2, 'Scienza': 2, 'Raggirare': 2, 'Medicina': 2 },
+    puntiAbilita: { 'Furtività': 2, 'Scienza': 2, 'Raggirare': 2, 'Medicina': 2, 'Difese': 2 },
   },
   { livello: 13, talentoLibero: { id: 'struttura-robusta' } },
   { livello: 14, caratteristiche: { CAR: 2 } },
@@ -203,10 +206,24 @@ test('multiclasse: al 4° una nuova Classe di un altro Addestramento, al 20° la
   assert.deepEqual(s4.classi.map((c) => [c.nome, c.addestramento, c.grado]), [['Agente', 'Avventuriero', 1], ['Soldato', 'Combattente', 1]]);
   assert.equal(s4.addestramento, 'Avventuriero'); // la nuova Classe non cambia Addestramento
   assert.equal(s4.classi[1].talenti[0].nome, 'Addestramento Militare');
+  // §8.7, Agente I + Soldato I (G = 2): la categoria migliore fra le Classi possedute; le basi restano
+  // dell'Agente (§2.3)
+  const ab4 = (n) => s4.abilita.find((a) => a.nome === n);
+  const lim4 = (n) => [ab4(n).competenza, ab4(n).base, ab4(n).limiteCategoria, ab4(n).limite, ab4(n).limiteDa];
+  assert.deepEqual(lim4('Sopravvivenza'), ['G', 5, 'S', 13, ['Soldato']]); // S per il Soldato: 10 + 2 + 1
+  assert.deepEqual(lim4('Atletica'), ['G', 5, 'P', 10, ['Soldato']]); // P per il Soldato: 7 + 2 + 1 (G: 5 + 4 = 9)
+  assert.deepEqual(lim4('Difese'), ['P', 6, 'P', 11, ['Agente', 'Soldato']]); // P per entrambe: 7 + 2 + 2
+  assert.deepEqual(lim4('Armi da guerra'), ['N', 3, 'G', 9, ['Soldato']]); // G per il Soldato: 5 + 4
 
   const p19 = fino(MISHIMA_AGENTE, MULTI, MULTI.length);
   const s19 = calcolaScheda(p19, dati);
   assert.deepEqual(s19.errori, []);
+  // G = 5: Atletica G per Agente e Accademico (5 + 10 = 15) batte P per il Soldato (7 + 5 + 2 = 14)
+  const at = s19.abilita.find((a) => a.nome === 'Atletica');
+  assert.deepEqual([at.limiteCategoria, at.limite], ['G', 15]);
+  // Percezione: grezzo 18, limite S 10 + 5 + 2 = 17: il VA personale resta 17
+  const pe = s19.abilita.find((a) => a.nome === 'Percezione');
+  assert.deepEqual([pe.grezzo, pe.limite, pe.totale], [18, 17, 17]);
   assert.deepEqual(s19.classi.map((c) => [c.nome, c.grado]), [['Agente', 2], ['Soldato', 2], ['Accademico', 1]]);
   const quarta = { grado: { classe: 'Pilota' }, tiroPV: tiro(3), puntiAbilita: { 'Pilotare': 3, 'Tecnologia': 2 } };
   const e = validaLivello(p19, quarta, dati);
@@ -282,7 +299,7 @@ test('Specializzazione: un Talento Libero acquisibile una volta', () => {
 // --- incompatibilità magia / Risorse Interiori (§8.6.10) ------------------------------------
 
 /** 10 punti del 4° livello per l'Agente che prende un Grado di Arcanista: limite 4, Medicina già a 3. */
-const PUNTI_4_ARCANISTA = { 'Medicina': 1, 'Sopravvivenza': 3, 'Atletica': 3, 'Tecnologia': 3 };
+const PUNTI_4_ARCANISTA = { 'Medicina': 1, 'Sopravvivenza': 2, 'Atletica': 2, 'Tecnologia': 2, 'Difese': 1, 'Oratoria': 2 };
 
 const TECNICHE_4 = ['meditazione-profonda', 'vista-felina', 'aura-di-resistenza', 'salto-della-tigre'];
 
@@ -373,7 +390,7 @@ test('decisione 5 del master: al Grado II di Arcanista il livello massimo è 8, 
   const p3 = fino(ARCANISTA, liv, 2);
   const voce4 = {
     grado: { classe: 'Arcanista' }, tiroPV: tiro(2), tiroPM: tiro(3), talentoClasse: 'Riserva Tecnica',
-    puntiAbilita: { 'Percezione': 2, 'Artefatti': 1, 'Cultura': 3, 'Medicina': 2, 'Scienza': 2 },
+    puntiAbilita: { 'Artefatti': 1, 'Cultura': 2, 'Medicina': 2, 'Scienza': 2, 'Difese': 3 },
     // +2 per macrofamiglia; Evoca Elementale ha livello base 6
     incantesimi: ['Evoca Elementale', 'Irrobustire', 'Distrazione', 'Empatia', 'Cura Spirituale', 'Arma Mistica'],
   };
@@ -445,7 +462,7 @@ test('descriviVoce e progressione: una riga leggibile per scelta e per livello',
   assert.match(r5[0], /^Talento Libero: .+ \(Tempra\)$/);
   const r4 = descriviVoce(voce(4), dati, { Agente: 1 });
   assert.match(r4[0], /^Grado: Agente II — Talento a scelta Reazione Operativa; PV 1d6 = 4/);
-  assert.equal(r4[1], 'Punti Abilità: Medicina +1, Armi leggere +1, Cultura +1, Raggirare +1, Sopravvivenza +3, Atletica +3');
+  assert.equal(r4[1], 'Punti Abilità: Medicina +1, Cultura +1, Raggirare +1, Sopravvivenza +2, Atletica +2, Difese +1, Tecnologia +2');
 
   const pr = progressione(agente(4), dati);
   assert.deepEqual(pr.map((x) => x.livello), [1, 2, 3, 4]);

@@ -19,6 +19,7 @@ import { conOrdinale } from './lingua.js';
 import { saldoIniziale, contiDotazione, crediti } from './dotazioni.js';
 import { applicaCondizioni } from './condizioni.js';
 import { erroriParametriTalenti } from './calc.js';
+import { competenzaDi, baseIniziale, limiteAbilita, vaPersonale, puntiUtili } from './competenze.js';
 
 export const VERSIONE_PERSONAGGIO = 2;
 
@@ -100,7 +101,12 @@ function puntiEvento(tipo, livello, dati) {
 }
 
 const massimoCaratteristica = (livello, dati) => fascia(dati.regole.avanzamento.massimo_caratteristica, livello, 'massimo');
-const limiteAvanzamento = (livello, dati) => fascia(dati.regole.avanzamento.avanzamento_massimo_abilita, livello, 'massimo');
+
+// §2.3, §8.3, §8.7 (Giocatore del 29/09): base dalla prima Classe, limite del VA personale dalle Classi
+// possedute (src/competenze.js). Il grezzo comprende tutti i +1 di Classe e i soli punti liberi utili.
+const classiDef = (stato, dati) => stato.classi.map((c) => ({ def: trova(dati.classi.classi, c.nome), grado: c.grado }));
+const primaClasseDef = (stato, dati) => trova(dati.classi.classi, stato.classi[0].nome);
+const limiteDi = (stato, nomeAbilita, dati) => limiteAbilita(nomeAbilita, classiDef(stato, dati), dati.regole);
 
 // ---------------------------------------------------------------------------
 // Stato accumulato durante il ricalcolo
@@ -166,7 +172,9 @@ function statoCreazione(creazione, dati) {
   const addestr = trova(dati.addestramenti.addestramenti, creazione.addestramento);
   const classe = trova(dati.classi.classi, creazione.classe);
   const car = Object.fromEntries(Object.entries(s1.caratteristiche).map(([k, c]) => [k, c.valore]));
+  // i punti liberi inattivi (§2.13: non aumentano il VA personale) non entrano nel grezzo
   const abil = Object.fromEntries(s1.abilita.map((a) => [a.nome, { daClasse: a.daClasse, liberi: a.liberi }]));
+  const inattivi = s1.abilita.filter((a) => a.inattivi > 0).map((a) => ({ livello: 1, abilita: a.nome, punti: a.inattivi }));
   const { fisso, dado } = classe.pv_per_grado;
   const pvCreazione = fisso + (dati.regole.creazione.dado_pv_massimizzato ? dado : 0);
   // anche il dado dei PM è massimizzato alla creazione (decisione 6 del master)
@@ -182,7 +190,8 @@ function statoCreazione(creazione, dati) {
       dotazioniTecniche: [],
       tecniche: [],
       incantesimi: [...(creazione.incantesimi ?? [])],
-      persi: [],
+      // punti liberi salvati che non aumentano il VA personale: { livello, abilita, punti } (da riassegnare)
+      inattivi,
       scuola: null, // { nome, livello }: iniziazione dichiarata con la spunta (§8.9.3)
     },
   };
@@ -328,13 +337,10 @@ function applicaVoce(prima, voce, dati) {
       const t = def.talenti_a_scelta.find((x) => x.nome === v.talentoClasse);
       if (t) c.talenti.push({ grado: c.grado, ...t, scelto: true });
     }
-    const limite = limiteAvanzamento(n, dati);
+    // §3.1 e §8.3 (29/09): il +1 di Classe si registra sempre, anche oltre il limite: la parte
+    // eccedente diventa efficace quando il limite sale
     const bonus = dati.regole.creazione.bonus_classe_per_grado;
-    for (const a of def.abilita) {
-      const x = stato.abil[a];
-      if (x.daClasse + x.liberi + bonus <= limite) x.daClasse += bonus;
-      else stato.persi.push({ livello: n, classe: def.nome, abilita: a, limite });
-    }
+    for (const a of def.abilita) stato.abil[a].daClasse += bonus;
     stato.contributiPV.push({ livello: n, classe: def.nome, valore: def.pv_per_grado.fisso + (valoreTiro(v.tiroPV) ?? 0) });
     const tiroPM = valoreTiro(v.tiroPM);
     stato.contributiPM.push({
@@ -355,9 +361,14 @@ function applicaVoce(prima, voce, dati) {
     aggiungiDotazione(stato, v.talentoLibero.id, n, 'libero', dati);
   }
 
-  // §8.3: Punti Abilità Liberi
+  // §8.3: Punti Abilità Liberi, dopo Caratteristiche e Grado del livello; entrano solo quelli che
+  // aumentano il VA personale, gli altri restano inattivi (da riassegnare, non accantonati)
   for (const [a, p] of Object.entries(isOggetto(v.puntiAbilita) ? v.puntiAbilita : {})) {
-    if (a in stato.abil && Number.isInteger(p) && p > 0) stato.abil[a].liberi += p;
+    if (!(a in stato.abil) || !Number.isInteger(p) || p <= 0) continue;
+    const x = stato.abil[a];
+    const { utili, inattivi } = puntiUtili(grezzoDi(stato, a, x.daClasse + x.liberi, dati), limiteDi(stato, a, dati).valore, p);
+    x.liberi += utili;
+    if (inattivi) stato.inattivi.push({ livello: n, abilita: a, punti: inattivi });
   }
 
   if (typeof v.scuolaMishima === 'string' && v.scuolaMishima && !stato.scuola) stato.scuola = { nome: v.scuolaMishima, livello: n };
@@ -530,16 +541,21 @@ function controllaVoce(prima, voce, dati) {
   const conGradoApplicato = applicaVoce(prima, { caratteristiche: v.caratteristiche, grado: v.grado, talentoClasse: v.talentoClasse, tiroPV: v.tiroPV, tiroPM: v.tiroPM }, dati);
   if (kAbil) {
     const pa = isOggetto(v.puntiAbilita) ? v.puntiAbilita : {};
-    const limite = limiteAvanzamento(n, dati);
     const minimo = dati.regole.creazione.va_minimo_per_punti_liberi;
     for (const [a, p] of Object.entries(pa)) {
       const x = conGradoApplicato.abil[a];
       if (!x) { err(`puntiAbilita.${a}`, `"${a}" non è un'Abilità`); continue; }
       if (!Number.isInteger(p) || p < 0) { err(`puntiAbilita.${a}`, 'i punti devono essere interi ≥ 0'); continue; }
       if (p === 0) continue;
-      const avanz = x.daClasse + x.liberi;
-      if (avanz + p > limite) err(`puntiAbilita.${a}`, `Avanzamento ${avanz + p}: ${conOrdinale('al', n)} livello il massimo è ${limite} (§8.3)`);
-      const va = vaDi(conGradoApplicato, a, avanz, dati);
+      const va = grezzoDi(conGradoApplicato, a, x.daClasse + x.liberi, dati);
+      const lim = limiteDi(conGradoApplicato, a, dati);
+      const { inattivi } = puntiUtili(va, lim.valore, p);
+      if (inattivi) {
+        errori.push({
+          campo: `puntiAbilita.${a}`, tipo: 'violazione', inattivi,
+          problema: `${inattivi === 1 ? '1 punto non aumenta' : `${inattivi} punti non aumentano`} il VA personale: VA ${Math.min(va, lim.valore)}, limite ${lim.valore} (${dati.regole.competenze.categorie[lim.categoria].nome}, §8.3)`,
+        });
+      }
       if (va < minimo) err(`puntiAbilita.${a}`, `VA ${va} prima dei punti liberi: serve almeno ${minimo} (§2.13)`);
     }
     const spesi = somma(pa);
@@ -562,11 +578,12 @@ function controllaVoce(prima, voce, dati) {
   return errori;
 }
 
-function vaDi(stato, nomeAbilita, avanzamento, dati) {
+/** §1.2.1: VA grezzo personale di un'Abilità nello stato, con l'Avanzamento dato. */
+function grezzoDi(stato, nomeAbilita, avanzamento, dati) {
   const a = trova(dati.abilita.abilita, nomeAbilita);
   return valoreAbilita({
     mod: modDi(stato, a.caratteristica, dati),
-    base: stato.addestr.valori_base[nomeAbilita],
+    base: baseIniziale(primaClasseDef(stato, dati), nomeAbilita, dati.regole),
     corporazione: stato.corp.abilita_bonus.includes(nomeAbilita) ? 1 : 0,
     avanzamento,
   });
@@ -641,7 +658,7 @@ function ricalcola(personaggio, dati, finoA = Infinity) {
     errori.push(...e.map((x) => ({ ...x, livello: stato.livello + 1, campo: `livelli[${i}].${x.campo}` })));
     stato = applicaVoce(stato, voce, dati);
   });
-  return { stato, ...separaPuntiLiberi(p, errori, finoA, dati) };
+  return { stato, ...separaPuntiLiberi(p, errori, finoA, dati, stato) };
 }
 
 // ---------------------------------------------------------------------------
@@ -664,22 +681,32 @@ function eventiPuntiLiberi(p, finoA, dati) {
   return out;
 }
 
-function separaPuntiLiberi(p, errori, finoA, dati) {
+// Regole del 29/09 (Giocatore §2.13, §8.3; per-davide A.57): i punti liberi già salvati che con i
+// limiti del VA personale non aumentano più il VA sono inattivi. Non si tolgono dal personaggio: l'evento
+// che li contiene diventa un completamento da fare, con quei punti da riassegnare («inattivi»).
+function separaPuntiLiberi(p, errori, finoA, dati, stato = null) {
   const completamenti = [];
   const eccessi = [];
   const togli = new Set();
+  const inattiviDi = (livello) => Object.fromEntries((stato?.inattivi ?? []).filter((x) => x.livello === livello).map((x) => [x.abilita, x.punti]));
   // la creazione ancora in corso (altre scelte mancanti) resta un normale «incompleto» del wizard
-  const creazioneAperta = errori.some((e) => e.livello === 1 && e.campo !== 'creazione.puntiAbilitaLiberi');
+  const creazioneAperta = errori.some((e) => e.livello === 1 && e.campo !== 'creazione.puntiAbilitaLiberi' && !e.inattivi);
   for (const ev of eventiPuntiLiberi(p, finoA, dati)) {
     const { livello, previsti, assegnati } = ev;
-    if (assegnati < previsti && !(livello === 1 && creazioneAperta)) {
-      completamenti.push({ livello, evento: nomeEvento(livello), previsti, assegnati, mancanti: previsti - assegnati });
+    const aperta = livello === 1 && creazioneAperta;
+    const inattivi = aperta ? {} : inattiviDi(livello);
+    const nInattivi = somma(inattivi);
+    const attivi = assegnati - nInattivi;
+    if (attivi < previsti && !aperta) {
+      completamenti.push({ livello, evento: nomeEvento(livello), previsti, assegnati, attivi, mancanti: previsti - attivi, inattivi, riassegna: nInattivi > 0 });
       togli.add(`${ev.campo}|incompleto`);
     }
+    // i punti inattivi di un evento chiuso non sono errori: si riassegnano (o, oltre i previsti, sono eccesso)
+    for (const a of Object.keys(inattivi)) togli.add(`${ev.campo}.${a}|inattivi`);
     if (assegnati > previsti) eccessi.push({ livello, evento: nomeEvento(livello), previsti, assegnati, eccesso: assegnati - previsti });
     togli.add(`${ev.campo}|eccesso`);
   }
-  return { errori: errori.filter((e) => !togli.has(`${e.campo}|${e.tipo}`)), completamenti, eccessi };
+  return { errori: errori.filter((e) => !togli.has(`${e.campo}|${e.inattivi ? 'inattivi' : e.tipo}`)), completamenti, eccessi };
 }
 
 /** Punti Abilità Liberi da completare (regole aggiornate), dal più vecchio; [] se nessuno. */
@@ -687,11 +714,19 @@ export function puntiDaCompletare(personaggio, dati) {
   return ricalcola(personaggio, dati).completamenti;
 }
 
-/** Aggiunge i punti all'evento a cui appartengono (livello 1 = creazione): non crea eventi nuovi. */
-export function applicaCompletamento(personaggio, livello, punti) {
+/**
+ * Aggiunge i punti all'evento a cui appartengono (livello 1 = creazione): non crea eventi nuovi.
+ * `togli`: punti inattivi dell'evento da riassegnare (regole del 29/09), che escono dall'evento.
+ */
+export function applicaCompletamento(personaggio, livello, punti, togli = {}) {
   const p = migraPersonaggio(personaggio);
   const unisci = (prima) => {
     const out = { ...(isOggetto(prima) ? prima : {}) };
+    for (const [k, v] of Object.entries(togli ?? {})) {
+      if (!Number.isInteger(v) || v <= 0 || !Number.isInteger(out[k])) continue;
+      out[k] -= v;
+      if (out[k] <= 0) delete out[k];
+    }
     for (const [k, v] of Object.entries(punti ?? {})) if (Number.isInteger(v) && v > 0) out[k] = (out[k] ?? 0) + v;
     return out;
   };
@@ -701,8 +736,8 @@ export function applicaCompletamento(personaggio, livello, punti) {
 
 /**
  * Valida i punti da aggiungere al primo evento da completare. Oltre ai limiti di quell'evento
- * (Avanzamento massimo del livello, §8.3; VA ≥ 1, §2.13) i punti non devono rendere irregolari i
- * livelli successivi né togliere i +1 di Classe già applicati.
+ * (ogni punto aumenta il VA personale, §8.3; VA ≥ 1, §2.13) i punti non devono rendere irregolari i
+ * livelli successivi né renderne inattivi i punti liberi.
  * @returns {{campo, problema, tipo: 'violazione'|'incompleto'}[]}
  */
 export function validaCompletamento(personaggio, livello, punti, dati) {
@@ -720,17 +755,32 @@ export function validaCompletamento(personaggio, livello, punti, dati) {
   if (errori.length) return errori;
   const spesi = somma(pa);
   if (spesi > ev.mancanti) err('puntiAbilita', `assegnati ${spesi} punti, ne mancano ${ev.mancanti}`);
-  const dopo = ricalcola(applicaCompletamento(personaggio, livello, pa), dati);
+  const nuovo = applicaCompletamento(personaggio, livello, pa, ev.inattivi);
+  const dopo = ricalcola(nuovo, dati);
+  // stato all'evento (i livelli partono dal 2°): per il limite di allora nei messaggi
+  const statoEvento = ricalcola(nuovo, dati, livello - 1).stato;
   const chiave = (e) => `${e.campo}|${e.problema}`;
   const giaPrima = new Set(prima.errori.map(chiave));
   for (const e of dopo.errori.filter((x) => x.tipo === 'violazione' && !giaPrima.has(chiave(x)))) {
     const m = /\.(?:puntiAbilitaLiberi|puntiAbilita)\.(.+)$/.exec(e.campo);
     err(m ? `puntiAbilita.${m[1]}` : 'puntiAbilita', e.livello === livello ? e.problema : `${conOrdinale('al', e.livello)} livello: ${e.problema}`);
   }
-  // i punti di Classe già assegnati non si rimettono in discussione (§8.3: il +1 oltre il limite si perde)
-  const persi = new Set((prima.stato?.persi ?? []).map((x) => `${x.livello}|${x.abilita}`));
-  for (const x of (dopo.stato?.persi ?? []).filter((y) => !persi.has(`${y.livello}|${y.abilita}`))) {
-    err(`puntiAbilita.${x.abilita}`, `il +1 di ${x.classe} a ${x.abilita} ${conOrdinale('del', x.livello)} livello non si applicherebbe più (limite ${x.limite}, §8.3)`);
+  // §8.3: i punti nuovi devono aumentare il VA personale; e non devono rendere inattivi punti dei
+  // livelli successivi (li si dovrebbe riassegnare di nuovo)
+  const contaInattivi = (st) => {
+    const m = new Map();
+    for (const x of st?.inattivi ?? []) m.set(`${x.livello}|${x.abilita}`, (m.get(`${x.livello}|${x.abilita}`) ?? 0) + x.punti);
+    return m;
+  };
+  const primaI = contaInattivi(prima.stato);
+  for (const [k, n] of contaInattivi(dopo.stato)) {
+    const [l, a] = k.split('|');
+    const lv = Number(l);
+    if (lv === livello) {
+      const L = limiteDi(statoEvento, a, dati);
+      err(`puntiAbilita.${a}`, `${n === 1 ? '1 punto non aumenta' : `${n} punti non aumentano`} il VA personale di ${a}: già al limite ${L.valore} (${dati.regole.competenze.categorie[L.categoria]?.nome ?? L.categoria}, §8.3)`);
+    }
+    else if (lv > livello && n > (primaI.get(k) ?? 0)) err(`puntiAbilita.${a}`, `renderebbe inattivi ${n - (primaI.get(k) ?? 0)} punti di ${a} ${conOrdinale('del', lv)} livello (§8.3)`);
   }
   if (spesi < ev.mancanti) err('puntiAbilita', `assegnati ${spesi} punti su ${ev.mancanti}`, 'incompleto');
   return errori;
@@ -745,30 +795,35 @@ export function statoCompletamento(personaggio, bozza, dati) {
   const ev = ricalcola(p, dati).completamenti[0];
   if (!ev) return null;
   // Abilità a quell'evento, prima dei punti della bozza (dopo i +1 di Classe dell'evento)
+  // stato all'evento: con i punti attivi dell'evento (senza quelli inattivi da riassegnare)
   const stato = ev.livello === 1 ? statoCreazione(p.creazione, dati).stato : ricalcola(p, dati, ev.livello - 1).stato;
-  const limite = ev.livello === 1 ? dati.regole.creazione.avanzamento_massimo_iniziale : limiteAvanzamento(ev.livello, dati);
   const pa = isOggetto(bozza) ? bozza : {};
   const rimasti = ev.mancanti - somma(pa);
+  const prima = primaClasseDef(stato, dati);
   const abilita = dati.abilita.abilita.map(({ nome, categoria, caratteristica }) => {
     const x = stato.abil[nome];
     const avanzamento = x.daClasse + x.liberi;
     const punti = pa[nome] ?? 0;
+    const lim = limiteDi(stato, nome, dati);
+    const grezzo = grezzoDi(stato, nome, avanzamento, dati);
     const motivoPiu = rimasti <= 0 ? 'Nessun Punto Abilità da assegnare rimasto.'
       : validaCompletamento(p, ev.livello, { ...pa, [nome]: punti + 1 }, dati).find((e) => e.tipo === 'violazione')?.problema ?? null;
     return {
-      nome, categoria, caratteristica, mod: modDi(stato, caratteristica, dati), base: stato.addestr.valori_base[nome],
+      nome, categoria, caratteristica, mod: modDi(stato, caratteristica, dati), base: baseIniziale(prima, nome, dati.regole),
+      competenza: competenzaDi(prima, nome), limite: lim.valore, limiteCategoria: lim.categoria, limiteDa: lim.classi, grezzo,
       corporazione: stato.corp.abilita_bonus.includes(nome) ? 1 : 0, avanzamento, daClasse: x.daClasse,
-      totale: vaDi(stato, nome, avanzamento, dati), punti, motivoPiu,
+      totale: vaPersonale(grezzo, lim.valore), punti, motivoPiu, inattivi: ev.inattivi?.[nome] ?? 0,
     };
   });
-  return { ...ev, rimasti, limite, errori: validaCompletamento(p, ev.livello, pa, dati), abilita };
+  return { ...ev, rimasti, errori: validaCompletamento(p, ev.livello, pa, dati), abilita };
 }
 
-/** Perché non si sale di livello finché ci sono punti da completare (regole aggiornate). */
+/** Perché non si sale di livello finché ci sono punti da completare o da riassegnare (regole aggiornate). */
 export function motivoCompletamento(completamenti) {
   const n = completamenti.reduce((s, c) => s + c.mancanti, 0);
   const dove = completamenti.map((c) => `${c.mancanti} ${c.livello === 1 ? 'della creazione' : `${conOrdinale('del', c.livello)} livello`}`).join(', ');
-  return `Regole aggiornate: prima di salire di livello assegna ${n} Punti Abilità mancanti (${dove}) con «Assegna» in cima alla scheda.`;
+  const verbo = completamenti.some((c) => c.riassegna) ? 'assegna o riassegna' : 'assegna';
+  return `Regole aggiornate: prima di salire di livello ${verbo} ${n} Punti Abilità (${dove}) con «Assegna» in cima alla scheda.`;
 }
 
 /**
@@ -804,9 +859,9 @@ export function prossimoLivello(personaggio, dati) {
     puntiCaratteristica: puntiEvento('caratteristiche', n, dati),
     puntiAbilita: puntiEvento('punti_abilita', n, dati),
     massimoCaratteristica: massimoCaratteristica(n, dati),
-    avanzamentoMassimo: limiteAvanzamento(n, dati),
     caratteristiche: Object.fromEntries(Object.entries(stato.car).map(([s, v]) => [s, { valore: v, massimo: massimoCaratteristica(n, dati) }])),
-    abilita: Object.entries(stato.abil).map(([nome, x]) => ({ nome, avanzamento: x.daClasse + x.liberi, limite: limiteAvanzamento(n, dati) })),
+    // limite del VA personale prima del Grado di questo livello (§8.7: la Classe scelta lo può alzare)
+    abilita: Object.entries(stato.abil).map(([nome, x]) => ({ nome, avanzamento: x.daClasse + x.liberi, limite: limiteDi(stato, nome, dati).valore })),
     classi: [],
     talentiLiberi: [],
     incantesimi: statoQuote(stato, dati),
@@ -931,12 +986,20 @@ function schedaARiposo(personaggio, dati) {
     const valore = stato.car[sigla];
     caratteristiche[sigla] = { nome, valore, mod: modOrdinario(valore, tabOrd), modSalvezza: modSalvezza(valore, tabSal), massimo: massimoCaratteristica(n, dati) };
   }
-  const limite = limiteAvanzamento(n, dati);
+  // §1.2.1, §2.3, §8.7 (29/09): base dalla prima Classe, limite dalle Classi possedute; `totale` è il VA
+  // personale (grezzo limitato); equipaggiamento e condizioni si sommano dopo
+  const prima = primaClasseDef(stato, dati);
   const abilita = dati.abilita.abilita.map(({ nome, categoria, caratteristica }) => {
     const x = stato.abil[nome];
     const avanzamento = x.daClasse + x.liberi;
-    const componenti = { mod: caratteristiche[caratteristica].mod, base: stato.addestr.valori_base[nome], corporazione: stato.corp.abilita_bonus.includes(nome) ? 1 : 0, avanzamento };
-    return { nome, categoria, caratteristica, ...componenti, daClasse: x.daClasse, liberi: x.liberi, limite, totale: valoreAbilita(componenti) };
+    const componenti = { mod: caratteristiche[caratteristica].mod, base: baseIniziale(prima, nome, dati.regole), corporazione: stato.corp.abilita_bonus.includes(nome) ? 1 : 0, avanzamento };
+    const lim = limiteDi(stato, nome, dati);
+    const grezzo = valoreAbilita(componenti);
+    return {
+      nome, categoria, caratteristica, ...componenti, daClasse: x.daClasse, liberi: x.liberi,
+      competenza: competenzaDi(prima, nome), competenzaDa: prima.nome, limite: lim.valore, limiteCategoria: lim.categoria, limiteDa: lim.classi,
+      grezzo, totale: vaPersonale(grezzo, lim.valore),
+    };
   });
 
   // Equipaggiamento (roadmap §1.4): solo gli oggetti attivi. Il VA dell'Abilità con il componente
@@ -976,7 +1039,6 @@ function schedaARiposo(personaggio, dati) {
   const scuole = new Set(stato.tecniche.map((x) => catalogoTec.find((t) => t.id === x.id)?.gruppo).filter((g) => g?.startsWith('scuola:')));
   if (stato.scuola) annotazioni.push(`Iniziato alla Scuola ${stato.scuola.nome} (dichiarato ${conOrdinale('al', stato.scuola.livello)} livello): iniziazione e giuramento all’Overlord si verificano con il master (§8.9.3).`);
   for (const s of scuole) if (s.slice(7) !== stato.scuola?.nome) annotazioni.push(`Tecniche della Scuola ${s.slice(7)} senza iniziazione dichiarata (§8.9.3).`);
-  for (const x of stato.persi) annotazioni.push(`${x.livello}° livello: il +1 di ${x.classe} a ${x.abilita} non si applica perché l’Avanzamento è già al limite ${x.limite} (§8.3).`);
   const provvisori = talenti.filter((t) => t.provvisorio);
   if (provvisori.length) annotazioni.push(`Talenti provvisori, con prerequisiti da definire: ${provvisori.map((t) => t.nome).join(', ')}.`);
 

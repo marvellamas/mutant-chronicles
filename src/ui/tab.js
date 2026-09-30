@@ -157,18 +157,21 @@ export function renderTab(ctx) {
 }
 
 /**
- * Regole aggiornate (per-davide A.52): Punti Abilità da completare negli eventi passati, con
- * «Assegna» (un evento alla volta, dal più vecchio), e punti in eccesso, soltanto segnalati.
+ * Regole aggiornate (per-davide A.52; Giocatore del 29/09, §8.3): Punti Abilità da completare o da
+ * riassegnare (punti che non aumentano più il VA personale) negli eventi passati, con «Assegna» (un
+ * evento alla volta, dal più vecchio), e punti in eccesso, soltanto segnalati.
  */
 function avvisoRegoleAggiornate(ctx, scheda) {
   const da = scheda?.completamenti ?? [];
   const ecc = scheda?.eccessi ?? [];
   if (!da.length && !ecc.length) return null;
   const n = da.reduce((s, c) => s + c.mancanti, 0);
+  const r = da.reduce((s, c) => s + Object.values(c.inattivi ?? {}).reduce((t, v) => t + v, 0), 0);
   const dove = (c, k) => `${k} ${c.livello === 1 ? 'della creazione' : `${conOrdinale('del', c.livello)} livello`}`;
   return h('div', { class: 'riquadro attenzione avviso-regole', role: 'status' },
     da.length ? h('p', {}, h('strong', {}, `${ctx.avvisoRegole}: hai ${n} Punti Abilità da assegnare`),
       ` (${da.map((c) => dove(c, c.mancanti)).join(', ')}). `,
+      r ? `${r === n ? 'Sono' : `${r} sono`} punti già spesi che non aumentano più il VA personale (limiti delle categorie di competenza, §8.3): si riassegnano, gli altri restano. ` : null,
       h('button', { type: 'button', class: 'btn primario', onclick: ctx.azioni.completaPunti }, 'Assegna')) : null,
     ecc.length ? h('p', {}, `${ctx.avvisoRegole}: ${ecc.map((c) => `${c.eccesso} ${c.eccesso === 1 ? 'punto' : 'punti'} in eccesso rispetto alle regole correnti (${c.livello === 1 ? 'creazione' : `${c.livello}° livello`})`).join('; ')}.`) : null);
 }
@@ -769,12 +772,15 @@ function tabAbilita(ctx, d) {
     categorie.map((cat) => h('tbody', {},
       h('tr', { class: 'categoria' }, h('th', { colspan: 7 }, cat.nome)),
       cat.abilita.map((a) => h('tr', { class: a.diClasse ? 'di-classe' : null },
-        h('th', { scope: 'row' }, info('abilita', a.nome), h('span', { class: 'sigla' }, ` ${a.caratteristica}`), a.diClasse ? ' •' : null,
-          h('small', { class: 'formula' }, `${segno(a.mod)} Mod + ${a.base} Base + ${a.corporazione} Corp + ${a.avanzamento} Avanz${a.equip ? ` ${segno(a.equip)} Equip` : ''}`)),
+        h('th', { scope: 'row' }, info('abilita', a.nome), h('span', { class: 'sigla' }, ` ${a.caratteristica}`),
+          a.competenza ? h('span', { class: 'sigla', title: `Competenza ${a.competenza} (prima Classe, §2.3)` }, ` ${a.competenza}`) : null, a.diClasse ? ' •' : null,
+          // §8.3: VA grezzo oltre il limite del VA personale
+          a.limite !== null && a.grezzo > a.limite ? h('span', { class: 'al-limite', title: `VA grezzo ${a.grezzo} oltre il limite ${a.limite} (§8.3): conta ${a.limite}` }, ' ⚑') : null,
+          h('small', { class: 'formula' }, `${segno(a.mod)} Mod + ${a.base} Base + ${a.corporazione} Corp + ${a.avanzamento} Avanz${a.limite !== null ? `, limite ${a.limite}` : ''}${a.equip ? ` ${segno(a.equip)} Equip` : ''}`)),
         h('td', { class: 'dettaglio' }, segno(a.mod)), h('td', { class: 'dettaglio' }, String(a.base)), h('td', { class: 'dettaglio' }, String(a.corporazione)),
         h('td', { class: 'dettaglio' }, String(a.avanzamento)), h('td', { class: 'dettaglio', title: a.equip ? 'Equipaggiamento indossato (§7.11.1)' : null }, a.equip ? segno(a.equip) : '0'),
         h('td', { class: 'cella-va' }, h('span', { class: 'va-con-usi' }, valoreEffettivo(a.nome, a.effettivo, a.totale, a.scomposizione, {
-          pillola: true, dettaglio: a.provenienza ? null : `${segno(a.mod)} Mod + ${a.base} Base + ${a.corporazione} Corp + ${a.avanzamento} Avanz = ${a.totale}`,
+          pillola: true, dettaglio: a.provenienza ? null : `${segno(a.mod)} Mod + ${a.base} Base + ${a.corporazione} Corp + ${a.avanzamento} Avanz = ${a.grezzo}${a.grezzo !== a.totale ? `, limite ${a.totale}` : ''}`,
           disponibili: a.disponibili, nonCumulati: a.nonCumulati, provenienza: a.provenienza,
         }), valoriUso(a.nome, a.usiSpecifici))))))));
   const tutte = condizioniAttiveAbilita(ctx.tab.scheda, ctx.dati);
@@ -791,7 +797,7 @@ function tabAbilita(ctx, d) {
       h('div', { class: 'abilita-principale' },
         sezione('Abilità',
           h('div', { class: 'abilita-affiancate' }, tabella(d.categorie.slice(0, meta)), tabella(d.categorie.slice(meta))),
-          h('p', { class: 'nota' }, `• Abilità di Classe. VA = Mod + Base + Corp + Avanz + Equip (equipaggiamento indossato), più le condizioni della sessione (▼/▲ rispetto al valore da regole). Avanzamento massimo: ${d.limiteAvanzamento ?? '—'}.`))),
+          h('p', { class: 'nota' }, '• Abilità di Classe. S / P / G / N: competenza nella prima Classe (§2.3). VA = Mod + Base + Corp + Avanz, al massimo il limite della categoria (⚑: oltre il limite, §8.3), + Equip (equipaggiamento indossato), più le condizioni della sessione (▼/▲ rispetto al valore da regole).'))),
       h('aside', { class: 'colonna-condizioni', 'aria-label': 'Condizioni attive' },
         h('section', { class: 'riquadro condizioni-attive' },
           h('h2', {}, 'Condizioni attive'),
