@@ -69,6 +69,14 @@ La Magia (sez. 6\) chiama contenitore “qualunque oggetto che racchiuda un Chro
 **A.58 — Il \+1 di Corporazione può essere annullato dal limite (§1.2.1).** Il bonus di Corporazione sta dentro il VA personale: un’Abilità Non competente con Caratteristica 7 e bonus di Corporazione fa 2 \+ 3 \+ 1 \= 6 contro il limite 5 del I Grado, e il \+1 non conta finché il limite non sale. Capita anche con le Generiche: 2 \+ 5 \+ 1 \= 8 contro 7\. È voluto?  
 *Nel frattempo:* sì, come dice il testo; il \+1 resta e conta quando il limite sale.
 
+**A.59 — Artefatto nel deposito comune: resta sintonizzato?**
+
+L'app oggi non lo conta nella capacità di sintonizzazione (§7.10) e la sua riserva non alimenta, ma ricorda la scelta e la riattiva quando l'oggetto torna con sé. Va bene così, o un Artefatto lasciato in deposito perde la sintonizzazione?  
+*Nel frattempo:* come descritto; la sintonizzazione si gestisce nella nuova tab Artefatti.  
+**A.60 — Scheda digitale: dove l'app fa diversamente dalla tua proposta «Modifiche Layout APP»**  
+Otto tab (ARTEFATTI a sé). I Crediti stanno nell'Inventario, dove si comprano gli oggetti al tavolo. Le Tecniche Interiori restano nella tab Abilità. L'app non registra quale mano tiene un oggetto: destra e sinistra seguono l'ordine dell'Inventario, con un riquadro «Due mani» per le armi a due mani. I rinforzi si montano sull'armatura dall'Inventario. Nell'Inventario, Strumenti professionali e Razioni arriveranno con i loro capitoli; lo stato di un oggetto tiene quelli del tipo (Impugnata, Addosso, Imbracciato, Indossata, Nello zaino…) più «Deposito comune». Poteri Sciamanici, Cibernetica e Veicoli aspettano il manuale. Va bene così?  
+*Nel frattempo:* come descritto (dettaglio in docs/layout-sd.md, «Esito»).
+
 ### **Manovre ravvicinate**
 
 **A.40 — Carica oltre 12 Q (§5.6).** La tabella della Carica si ferma a 7–12 Q e la Carica «non può superare la Corsa». Chi ha una Corsa oltre 12 Q (Talenti di movimento) può caricare più lontano, e con quali penalità?  
