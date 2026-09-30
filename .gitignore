@@ -25,3 +25,6 @@ desktop.ini
 # Originali delle immagini (1254×1254, 2–3 MB l'uno): non si servono e non si tracciano.
 # Le versioni per l'app si generano con tools/genera_immagini.py (README, «Immagini»).
 img/originali/
+
+# prompt di lavoro (non fanno parte dell'app)
+Claude outputs/
