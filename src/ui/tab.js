@@ -19,6 +19,7 @@ import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, co
 import { dotazioneApplicata, crediti } from '../dotazioni.js';
 import { provenienzaCarico } from '../carico.js';
 import { talentiSituazionali } from '../talenti.js';
+import { gradiTaumaturgici } from '../incantesimi.js';
 import { statoRicarica, disponibili } from '../ricarica.js';
 import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 import { pannelloAttacco } from './attacco.js';
@@ -1672,6 +1673,23 @@ function tabArtefatti(ctx) {
   ];
 }
 
+/**
+ * Riquadro «Gradi taumaturgici» della tab Poteri (Magia sez. 1): Grado complessivo con le Classi che
+ * contribuiscono e il livello massimo degli Incantesimi che ne deriva; nel tooltip la provenienza.
+ * Valore calcolato (src/incantesimi.js → gradiTaumaturgici); senza Classi taumaturgiche non compare.
+ */
+function riquadroGradiTaumaturgici(ctx) {
+  const g = gradiTaumaturgici(ctx.tab.scheda, ctx.dati);
+  if (!g) return null;
+  return h('div', { class: 'contatore-tavolo gradi-taumaturgici' }, h('h3', {}, 'Gradi taumaturgici'),
+    h('p', { class: 'valore-tavolo' }, infoValore(h('strong', {}, g.testo), {
+      titolo: `Gradi taumaturgici: ${g.gradi}`,
+      sottotitolo: 'Somma dei Gradi delle Classi taumaturgiche (Magia sez. 1)',
+      provenienza: g.provenienza,
+    })),
+    h('p', { class: 'nota' }, `Livello massimo di incantesimo: ${g.livelloMassimo}`));
+}
+
 function tabMagia(ctx, d) {
   const s = ctx.sessione;
   const contenitori = ctx.tab.scheda.equipaggiamento?.contenitori ?? [];
@@ -1680,6 +1698,7 @@ function tabMagia(ctx, d) {
     h('div', { class: 'magia-testa' },
     h('div', { class: 'griglia-tavolo' },
       riquadroPM(ctx),
+      riquadroGradiTaumaturgici(ctx),
       h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Incantesimi'),
         h('p', { class: 'valore-tavolo' }, h('strong', {}, String(d.conosciuti)), h('span', {}, ` / ${d.quota}`)),
         h('p', { class: 'nota' }, `Livello massimo di lancio: ${d.livelloMassimo}`),

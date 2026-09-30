@@ -3,7 +3,40 @@
 //  - la quota di Classe di una macrofamiglia si spende in una qualunque delle sue specializzazioni;
 //  - gli incantesimi liberi (2 + Mod INT, minimo 1) possono essere di qualunque macrofamiglia;
 //  - sono ammessi gli incantesimi con livello base ≤ livello massimo della tabella per Gradi.
-import { calcolaScheda } from './calc.js';
+import { calcolaScheda, livelloMassimoIncantesimi } from './calc.js';
+import { riga, provenienza } from './provenienza.js';
+
+const ROMANI = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
+const romano = (n) => ROMANI[n] ?? String(n);
+
+/**
+ * Gradi taumaturgici complessivi (Magia sez. 1): la somma dei Gradi delle Classi taumaturgiche
+ * (Addestramento Taumaturgo, con quote di Incantesimi) e il livello massimo degli Incantesimi che ne
+ * deriva, dalla tabella di regole.json → taumaturgo.livello_massimo_per_gradi (la stessa che dà il
+ * livello massimo di «Lancia!»). Valore calcolato, per la tab Poteri; null senza Classi taumaturgiche.
+ * @param scheda risultato di calcolaScheda (classi: [{ nome, grado }])
+ * @returns {{ gradi, testo, classi: [{ nome, grado }], livelloMassimo, provenienza } | null}
+ */
+export function gradiTaumaturgici(scheda, dati) {
+  const r = dati.regole;
+  const classi = (scheda?.classi ?? []).filter((c) => {
+    const def = dati.classi.classi.find((x) => x.nome === c.nome);
+    return def?.addestramento === r.taumaturgo.addestramento && def.incantesimi && c.grado > 0;
+  }).map((c) => ({ nome: c.nome, grado: c.grado }));
+  if (!classi.length) return null;
+  const gradi = classi.reduce((s, c) => s + c.grado, 0);
+  const livelloMassimo = Math.min(r.avanzamento.livello_massimo_incantesimi, livelloMassimoIncantesimi(gradi, r));
+  return {
+    gradi,
+    testo: `${romano(gradi)} · ${classi.map((c) => `${c.nome} ${romano(c.grado)}`).join(' + ')}`,
+    classi,
+    livelloMassimo,
+    provenienza: provenienza([
+      ...classi.map((c) => riga(`${c.nome}, Grado ${romano(c.grado)}`, c.grado, 'Classe taumaturgica')),
+      riga('Livello massimo degli Incantesimi', `livello ${livelloMassimo}`, `Magia sez. 1; tabella dei Gradi taumaturgici (${r.taumaturgo.livello_massimo_per_gradi.map((x) => `${romano(x.gradi)} → ${x.livello}`).join(', ')}), docs/risposte-master.md, decisione 5`),
+    ], gradi),
+  };
+}
 
 /** Testo delle regole mostrato nel passo Incantesimi (i dati sono in regole.json). */
 export function regoleIncantesimi(dati) {
