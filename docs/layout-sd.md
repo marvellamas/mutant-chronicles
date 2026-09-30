@@ -1,0 +1,108 @@
+# Ristrutturazione della scheda digitale (branch `layout-sd`)
+
+**Fonti:**
+- la proposta di Davide nel Google Doc «Modifiche Layout APP», salvata in `docs/manuali-txt/layout-app-davide.md`;
+- le decisioni di Marcello del 30/09/2026, riportate qui sotto.
+
+Il lavoro si fa sul branch `layout-sd`, un pezzo alla volta, con un commit per pezzo.
+
+## Vincoli
+
+- **Nessuna modifica** a dati, motore e formato di salvataggio. Fanno eccezione:
+  - il nuovo stato di un oggetto «deposito comune»;
+  - i gradi di Corruzione in `regole.json`.
+- Tutto deve funzionare su tablet (~800 px), oltre che su desktop e telefono.
+- I test esistenti restano verdi.
+- La scheda da stampare (SS) resta invariata in questo lavoro; eventuali ritocchi dopo.
+- «Attacca!» e «Lancia!» restano come sono.
+
+## Struttura generale
+
+**Otto tab fissi**, in una riga in alto, per tutti i personaggi:
+
+**IDENTITÀ · ABILITÀ · COMBATTIMENTO · POTERI · ARTEFATTI · CIBERNETICA · INVENTARIO · VEICOLI**
+
+- Davide ne proponeva sette; Marcello ha aggiunto ARTEFATTI come tab a sé.
+- Il Calendario resta un tab facoltativo in coda, se attivo dall'ingranaggio.
+- Il tab selezionato è evidenziato, gli altri restano in secondo piano. Ogni tab ha icona e testo.
+- **Icone:**
+  - Quelle dei tab esistenti restano: `img/pagine/<id>-96.png`, generate da `tools/genera_immagini.py` dagli originali in `img/originali/`.
+  - I tab nuovi hanno un'icona provvisoria (un carattere) finché non c'è il file nel manifesto `img/immagini.json`.
+  - Poteri usa per ora l'icona della Magia.
+  - Le definitive arrivano da Marcello, con la stessa convenzione.
+  - In `img/pagine/` ci sono già quattro originali grandi, non tracciati: `Artefatti.png`, `Cibernetica.png`, `Veicoli.png`, `equipaggiamento.png`. Per usarli vanno spostati in `img/originali/Pages/`. Poi si lancia `python tools/genera_immagini.py`, che richiede Pillow; le corrispondenze con gli id `artefatti`, `cibernetica`, `veicoli` e `inventario` sono già nel generatore.
+- **Posizione della riga:** l'opzione dell'ingranaggio resta (Automatica, Sinistra, In basso, In alto), ma la riga in alto diventa la predefinita. I browser che avevano salvato «Automatica», il vecchio valore predefinito, passano una volta a «In alto». Poi ognuno può scegliere di nuovo.
+- **Colonna di sinistra**, visibile in ogni tab: Punti Eroe sopra i PV, poi PV e PM. Su telefono diventa una striscia compatta sopra il contenuto.
+- Il vecchio indirizzo `#/p/<id>/t/magia` apre Poteri.
+
+## I tab
+
+### Identità
+Com'è, senza i Punti Eroe: stanno nella colonna di sinistra. Restano solo dove la colonna non si vede, cioè con i tab in basso sul telefono.
+
+### Abilità
+- La tabella delle Abilità va in alto, compatta (spazi ridotti).
+- A destra una colonna **Condizioni attive**, non più sopra la tabella. Contiene:
+  - Ferite, Affaticamento, carico e Stati con il loro effetto;
+  - i bonus/malus condizionali degli oggetti, come interruttori;
+  - i promemoria delle penalità senza effetto numerico.
+- Sotto la tabella restano Talenti, Specializzazioni e Tecniche Interiori, come ora.
+- Quando il pannello è stretto (sotto ~52rem), la colonna scende sotto la tabella.
+
+### Combattimento
+- L'equipaggiamento esce e va in Inventario.
+- In alto una riga **Iniziativa · Movimento · Azioni · Difese**. Parata Istintiva e Schivata Istintiva compaiono accanto alle Difese se il personaggio ha il Talento. È la «Parata/Schivata Libera» di Davide: il Giocatore §5.13 dice «Parata Istintiva concede una Parata gratuita per Round».
+- **Colonna sinistra:**
+  1. le **Protezioni** disponibili, da indossare o dismettere: armature, rinforzi, scudi, elmetti;
+  2. le **armi disponibili** da impugnare;
+  3. le **armi impugnate** in due riquadri, mano destra e mano sinistra. Il riquadro è uno solo con un'arma a due mani o con lo scudo imbracciato.
+- La condizione dell'arma e il numero di caricatori qui sono in sola lettura: si cambiano in Inventario. «Ricarica» resta qui e consuma dalle riserve.
+- **Colonna destra:** FERITE · AFFATICAMENTO · CORRUZIONE · STATI ATTIVI, selezionabili, senza descrizioni estese, con tooltip (passaggio del mouse o «?» toccabile).
+- «Attacca!» e «Lancia!» restano come sono.
+
+### Corruzione
+Il Giocatore §5.20 definisce gli Stati di Corruzione Oscura (CROS): Umano 0, Esposto 0, Contagiato −1, Infetto −2, Corrotto −4, Eretico −6, Caotico −10, Oscuro (irreversibile: il personaggio diventa un PNG). La penalità:
+- vale solo per lo Stato attuale, senza sommare le precedenti;
+- interessa tutte le Prove di Caratteristica, Abilità e Salvezza.
+
+Il §5.20.1 dà esposizione, Intensità ed esiti della PS di Magia. Si usano quelli, in `regole.json` → `corruzione.stati`: nessuna scala provvisoria e nessuna domanda A.56. Lo Stato attuale va nella sessione, come l'Affaticamento, e la penalità entra nei valori effettivi (pezzo 3).
+
+### Poteri
+- Per ora contiene la tab Magia com'è.
+- Per chi non ha magia mostra «Nessun potere».
+- Tecniche Interiori (Risorse Interiori) e Poteri Sciamanici (Rune e Tatuaggi, in stesura da Davide) arriveranno.
+
+### Artefatti
+- Tab con gli Artefatti Mistici posseduti, gestiti come oggetti: PI, Sintonizzazione, riserve di Chroma.
+- Quelli con incantesimi compaiono anche in Poteri; quelli che attaccano anche in Combattimento.
+
+### Cibernetica e Veicoli
+Tab presenti e vuoti, con la scritta «In arrivo con il manuale».
+- Cibernetica: gestione simile all'equipaggiamento, con lo stato dell'Umanità.
+- Veicoli: Davide prepara la scheda dello Scout come esempio.
+
+### Inventario
+- **Sezioni:** ARMI · ACCESSORI ARMI · ARMATURE E SCUDI · MUNIZIONI · DOTAZIONI PERSONALI · ESPLORAZIONE E SOPRAVVIVENZA · COMUNICAZIONE E RILEVAMENTO · STRUMENTI PROFESSIONALI · SANITARIO · RAZIONI.
+- Riquadri compatti a tendina, come quelli attuali.
+- Per ogni oggetto:
+  - costo, Qualità, reperibilità;
+  - PI, modificabili, con «Ripara»;
+  - PS Integrità;
+  - lo stato: impugnato, indossato, zaino o **deposito comune**.
+- «Deposito comune» è uno stato nuovo: l'oggetto resta del personaggio ma fuori dal carico, senza gestione condivisa fra i personaggi.
+- Il riquadro «Integrità degli oggetti» del Combattimento si fonde qui.
+
+## Ordine dei pezzi
+
+1. **Riga dei tab, Punti Eroe, Abilità.** La riga degli otto tab: Poteri mostra la Magia (o «Nessun potere»), gli altri nuovi un contenitore vuoto «In lavorazione». Punti Eroe sopra i PV nella colonna di sinistra. Tab Abilità con la colonna Condizioni a destra.
+2. **Inventario:** sezioni, dati per oggetto, stato «deposito comune», Integrità.
+3. **Combattimento:** riga dei valori, Protezioni e armi, riquadri delle mani, colonna Ferite · Affaticamento · Corruzione · Stati, gradi di Corruzione.
+4. **Poteri e Artefatti.**
+5. **Cibernetica e Veicoli** («In arrivo con il manuale»).
+6. **Verifica complessiva e SS.**
+
+## Stato
+
+- [x] Piano (questo file).
+- [ ] Pezzo 1.
+- [ ] Pezzi 2–6.
