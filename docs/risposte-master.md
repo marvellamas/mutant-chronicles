@@ -524,5 +524,12 @@ Non sono risposte a domande dell'app ma cambi di regola nei manuali, applicati c
 64. **2 naturale Magistrale con VA finale ≥ 21** (Giocatore §1.6), nelle Prove di Abilità.
     → `regole.json` → `magistrale_naturale`; promemoria in «Attacca!» e «Lancia!».
 
-Da applicare: la riforma delle categorie di competenza (basi dalla prima Classe, limiti del VA personale,
-multiclasse §8.7), vedi `docs/diff-manuali-2026-09-30.md`.
+65. **Categorie di competenza** (Giocatore del 29/09, 23:45: §1.2.1, §2.3, §2.13, §8.3, §8.4, §8.7), applicate il 30/09.
+    È testo del manuale, non una risposta: si registra qui perché supera la decisione 33 (76 punti, basi 2–4,
+    limite di Avanzamento 3). Dei 76 punti resta solo la conferma dei 10 Punti Abilità Liberi per assegnazione.
+    Basi dalla prima Classe (S 7, P 6, G 5, N 3); VA personale = min(grezzo, limite della categoria migliore
+    fra le Classi possedute); +1 di Classe sempre registrato; punti liberi solo dove aumentano il VA personale.
+    → `classi.json` → `competenze`, `regole.json` → `competenze`, `src/competenze.js`, `calc.js`, `avanzamento.js`.
+    Scelte provvisorie dell'app, in attesa di Davide: A.56 (vale il manuale del 29/09), A.57 (i punti già spesi
+    che non aumentano più il VA si riassegnano, finché non si riassegnano non contano e l'avanzamento è bloccato),
+    A.58 (il +1 di Corporazione sta sotto il limite).

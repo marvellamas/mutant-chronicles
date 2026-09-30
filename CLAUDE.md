@@ -34,10 +34,10 @@ Drive si usa **in sola lettura**: mai scrivere nei Doc di Davide, nemmeno commen
 ## Principi non negoziabili
 
 1. **Tutte le regole numeriche stanno in `data/*.json`, mai nel codice.** Corporazioni, Addestramenti, Classi, Abilità, Talenti, Incantesimi, costanti (punti alla creazione, massimi, base delle Salvezze…). La UI si genera dai dati: aggiungere una Corporazione non deve richiedere di toccare HTML o JS.
-2. **Validatore dati all'avvio** (`src/validate.js`): controlla gli invarianti dei manuali (ogni Addestramento somma 76 con schema 8×4, 12×3, 4×2, da `regole.json`; ogni Classe ha 5 Abilità esistenti; ogni Abilità ha una Caratteristica valida; ecc.). Un errore deve dire *file, chiave e cosa non torna*, mai crashare in silenzio.
+2. **Validatore dati all'avvio** (`src/validate.js`): controlla gli invarianti dei manuali (ogni Classe classifica le 24 Abilità una volta ciascuna in 2 Specializzate, 6 Professionali, 12 Generiche e 4 Non competenti, con basi 7/6/5/3 che sommano 122, da `regole.json` → `competenze`; ogni Classe ha 5 Abilità di Classe esistenti; ogni Abilità ha una Caratteristica valida; ecc.). Un errore deve dire *file, chiave e cosa non torna*, mai crashare in silenzio.
 3. **Separare scelte da valori calcolati.** Il personaggio salvato contiene solo le scelte del giocatore (corporazione, punti assegnati, classe, incantesimi…). Tutti i valori derivati (VA, PV, PM, Salvezze, Iniziativa) si ricalcolano con funzioni pure in `src/calc.js`. Così se Davide cambia una tabella, ricaricare il personaggio lo aggiorna.
 4. **Ogni file dati riporta `versione_manuale`** (es. "Giocatore 0.43") e l'app la mostra.
-5. **Gli esempi numerici del manuale sono test.** Il Mishima Avventuriero Agente (§2.1, §2.13, §2.14, §2.17 del Manuale del Giocatore): FOR 6 COS 6 DES 7 INT 5 SAG 7 CAR 5 → PV 16, PM 9, Tempra 10, Riflessi 11, Volontà 9, Magia 10, Iniziativa +2, Furtività VA 9. L'esempio Bauhaus Assaltatore COS 7 (§1.2.3): Tempra 11.
+5. **Gli esempi numerici del manuale sono test.** Il Mishima Avventuriero Agente (§2.1, §2.13, §2.14, §2.17 del Manuale del Giocatore): FOR 6 COS 6 DES 7 INT 5 SAG 7 CAR 5 → PV 16, PM 9, Tempra 10, Riflessi 11, Volontà 9, Magia 10, Iniziativa +2, Furtività VA 9 (2 + 6 + 0 + 1, al limite Professionale del I Grado), Percezione e Raggirare VA 12 (§2.13 del 29/09). L'esempio Bauhaus Assaltatore COS 7 (§1.2.3): Tempra 11.
 
 ## Struttura
 
@@ -48,6 +48,7 @@ src/
   rules.js      carica data/*.json, espone i dati validati
   validate.js   invarianti dei dati
   calc.js       funzioni pure: modificatori, VA, Salvezze, PV/PM, Iniziativa
+  competenze.js categorie di competenza (S/P/G/N): basi dalla prima Classe, limiti del VA personale (§8.3, §8.7)
   character.js  modello delle scelte + serializzazione JSON
   avanzamento.js  livelli 2–20 (cap. 8): ricalcolo, validazione, eventi
   incantesimi.js, checklist.js, descrizioni.js, tiri.js, lingua.js
@@ -90,6 +91,7 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 - Calendario di gioco facoltativo (ingranaggio → Calendario): tab con viste Giorno / Settimana / Mese, note per fascia con bandierine e «M», ricerca, «Avanza»; fuori dalle regole, non tocca calcoli né stampa. `src/calendario.js` (funzioni pure), `src/ui/calendario.js`, `regole.json` → `calendario`, colori `--evento-*` in `css/palette.css`; blocco `calendario` nel personaggio (formato 6), non toccato da «Nuova sessione» né dai livelli;
 - ricarica dalle riserve (`src/ricarica.js`, `munizioni.json` → `ricarica`);
 - regole aggiornate sui Punti Abilità Liberi (Doc del 27/09, per-davide A.52): gli eventi già registrati con meno punti delle regole correnti si completano dall'avviso in cima alla SD («Assegna», `#/p/<id>/completa`, `src/ui/completa.js`; motore in `src/avanzamento.js` → `statoCompletamento`, `validaCompletamento`, `applicaCompletamento`), i punti si registrano nell'evento a cui appartengono; finché mancano, l'avanzamento è bloccato; i punti in eccesso si segnalano soltanto. Titolo dell'avviso in `regole.json` → `regole_aggiornate`.
+- categorie di competenza (Giocatore del 29/09 23:45, §2.3, §2.13, §8.3, §8.7): le basi delle Abilità vengono dalla prima Classe (`classi.json` → `competenze`, S 7 / P 6 / G 5 / N 3), l'Addestramento non ha più valori base; VA personale = min(Mod + Base + Corp + Avanzamento, limite della categoria migliore fra le Classi possedute), con le formule in `regole.json` → `competenze`; i +1 di Classe si registrano sempre, i punti liberi valgono solo se aumentano il VA personale. I punti già spesi che non lo aumentano più restano nel file, non contano e si riassegnano con lo stesso «Assegna» (`applicaCompletamento(…, inattivi)`); motore in `src/competenze.js`, ricognizione in `docs/ricognizione-abilita-2026-09-30.md`.
 
 Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, veicoli, capitoli 5, 7 e 8 del Manuale dell'Equipaggiamento (non ancora scritti).
 

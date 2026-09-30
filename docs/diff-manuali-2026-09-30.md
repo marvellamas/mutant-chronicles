@@ -21,15 +21,13 @@ Testo salvato in `docs/manuali-txt/`. Stato: ✔ recepito · ○ già così · �
 | §2.2 tabella, §2.17 | regola | Mishima: +1 ad **Armi da guerra** (non più Armi da mischia) | ✔ `corporazioni.json` |
 | §1.6, §1.7, §8.3 | regola nuova | Con VA finale almeno 21 anche il 2 naturale è Magistrale, nelle Prove di Abilità | ✔ `regole.json` → `magistrale_naturale`, promemoria in «Attacca!» e «Lancia!» |
 | §8.6.1 Successo Magistrale Migliorato | testo | Coordinato con la soglia 21 | ○ |
-| §1.2, §2.2–2.8, §2.13, §2.17, §3.x (profili delle 25 Classi), §4.1, §8.1, §8.3, §8.7 | **regola, riforma** | **Categorie di competenza.** Ogni Classe classifica le 24 Abilità: 2 Specializzate (base 7), 6 Professionali (6), 12 Generiche (5), 4 Non competenti (3); 122 punti base. Le basi vengono dalla **prima Classe**, non più dall’Addestramento (che resta per vantaggio, Salvezze e Classi ammesse). VA personale = min(somma grezza, limite): limiti per Grado S 12–22, P 9–19, G 7–17, N 5–15; nel multiclasse S 10 + G + gS, P 7 + G + gP, G 5 + 2G, N 3 + 2G, vale il più alto. Il vecchio tetto di Avanzamento (3 fino al 3° livello…) sparisce. I punti liberi si spendono solo dove alzano il VA personale; i punti automatici oltre il limite restano «inattivi» e tornano efficaci quando il limite sale. Nuovo esempio del §2.13 (Mishima Agente: Percezione 2, Tecnologia 2, Cultura 2, Raggirare 4). | ▢ **grande**, vedi sotto |
+| §1.2, §2.2–2.8, §2.13, §2.17, §3.x (profili delle 25 Classi), §4.1, §8.1, §8.3, §8.7 | **regola, riforma** | **Categorie di competenza.** Ogni Classe classifica le 24 Abilità: 2 Specializzate (base 7), 6 Professionali (6), 12 Generiche (5), 4 Non competenti (3); 122 punti base. Le basi vengono dalla **prima Classe**, non più dall’Addestramento (che resta per vantaggio, Salvezze e Classi ammesse). VA personale = min(somma grezza, limite): limiti per Grado S 12–22, P 9–19, G 7–17, N 5–15; nel multiclasse S 10 + G + gS, P 7 + G + gP, G 5 + 2G, N 3 + 2G, vale il più alto. Il vecchio tetto di Avanzamento (3 fino al 3° livello…) sparisce. I punti liberi si spendono solo dove alzano il VA personale; i punti automatici oltre il limite restano «inattivi» e tornano efficaci quando il limite sale. Nuovo esempio del §2.13 (Mishima Agente: Percezione 2, Tecnologia 2, Cultura 2, Raggirare 4). | ✔ 30/09, vedi sotto |
 
-### La riforma delle categorie di competenza (▢)
+### La riforma delle categorie di competenza (✔ 30/09)
 
-Non applicata in questa sessione. Dimensione del lavoro:
-- **dati:** profilo S/P/G/N di 25 Classi da estrarre dal Capitolo 3; basi e limiti in `regole.json`; le basi di `addestramenti.json` escono dal calcolo;
-- **motore:** somma grezza, limite, VA personale; validazione dei punti liberi alla creazione e ai livelli; limiti del multiclasse;
-- **personaggi esistenti:** i punti già spesi oltre il nuovo limite, come nell’avviso «Regole aggiornate» di A.52;
-- **interfaccia:** wizard (Addestramento, Classe, punti liberi), Sali di livello, provenienza dei VA;
-- **test e collaudo:** quasi tutti i VA cambiano; il personaggio di prova del §2.13 va rifatto sul nuovo esempio.
-
-Da fare in una sessione dedicata, con la sua ricognizione.
+Ricognizione in `docs/ricognizione-abilita-2026-09-30.md` (citazioni, profili delle 25 Classi, «prima → dopo», domande A.56–A.58). Applicata:
+- **dati:** `classi.json` → `competenze` per le 25 Classi; `regole.json` → `competenze` (basi, numeri, formule dei limiti, 122 punti); tolti `addestramento`, `avanzamento_massimo_iniziale`, `avanzamento_massimo_abilita`; `addestramenti.json` senza `valori_base`; validatore;
+- **motore:** `src/competenze.js`; `calc.js` e `avanzamento.js` con VA grezzo, limite e VA personale, multiclasse del §8.7, punti inattivi;
+- **personaggi esistenti:** nessuna scelta tolta; i punti che non aumentano più il VA si riassegnano dall'avviso «Regole aggiornate» (stesso pannello di A.52);
+- **interfaccia:** wizard (Addestramento, Classe con le quattro categorie, colonna «Lim»), «Sali di livello», «Assegna», provenienza dei VA, SD e SS (competenza e ⚑ oltre il limite);
+- **test e collaudo:** test adattati e nuovi (`tests/competenze.test.js`); i tre personaggi di collaudo riassegnati, PDF rigenerati; la copia di b con le regole del 27/09 in `tests/collaudo/regole-27-09/`.

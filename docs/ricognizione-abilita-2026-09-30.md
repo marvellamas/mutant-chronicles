@@ -1,5 +1,7 @@
 # Ricognizione: categorie di competenza e limiti del VA personale (Giocatore del 29/09, 23:45)
 
+Stato: **applicata il 30/09** (`docs/diff-manuali-2026-09-30.md`). Una differenza rispetto al §4, punto 6: la copia con le scelte vecchie è quella di b (15 punti inattivi, multiclasse), in `tests/collaudo/regole-27-09/`.
+
 Fonte: il Google Doc del Manuale del Giocatore del 29/09/2026 alle 23:45 UTC, salvato in `docs/manuali-txt/giocatore.md`. Il 30/09 il Doc risulta invariato. Le citazioni qui sotto sono testuali.
 
 Metodo:
