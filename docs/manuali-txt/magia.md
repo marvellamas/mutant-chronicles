@@ -4,7 +4,7 @@
 
 ## Regole della magia e novanta incantesimi
 
-**EDIZIONE 1.1**
+**EDIZIONE 1.3**
 
 Settembre 2026
 
@@ -443,7 +443,7 @@ Il contributo del Canale segue la procedura del Rituale; il Talento non assegna 
 
 Le componenti sono Focus personale, Somatizzazione mediante gesti e Invocazione mediante voce. Ogni componente richiesta ma mancante impone −2 VA a Potere, fino a −6, e rende necessaria la Prova anche ai livelli 1–3. Incantesimi e Talenti possono escludere espressamente una componente. Escludere la Componente Somatica, Escludere l’Invocazione ed Escludere il Focus eliminano, per la rispettiva componente, sia il −2 VA sia l’obbligo di Prova dovuto soltanto alla sua assenza; restano gli altri motivi che rendono necessaria la Prova. L’impiego delle componenti è incluso nel lancio. La voce obbligatoria integrata nel discorso segue l’eccezione descritta nella sezione 19 e non può essere omessa.
 
-Si possiede un solo Focus personale. Sintonizzare un nuovo Focus richiede tre ore di Meditazione senza Prova. Chi possiede Usufruitore di Magia può invece sintonizzare il proprio Focus con tre ore di preparazione senza Prova; questa preparazione non concede il recupero di PM della Meditazione. Il Focus non è la manovra Focalizzazione. Gesti e parole evidenti rendono percepibile il lancio; un incantesimo conosciuto si riconosce automaticamente. Fa eccezione il riconoscimento ai fini di Contromagia contro chi possiede Magia Occultata, che richiede una Prova di Occultismo senza costo in Azioni, anche con Contromagia Universale. Occultismo può identificare ciò che è stato percepito, ma non rivela da solo magia nascosta.
+Si possiede un solo Focus personale. Sintonizzare un nuovo Focus richiede tre ore di Meditazione senza Prova. Chi possiede Usufruitore di Magia può invece sintonizzare il proprio Focus con tre ore di preparazione senza Prova; questa preparazione non concede il recupero di PM della Meditazione. Il Focus personale semplice assegnato alla creazione è già sintonizzato e non aggiunge bonus o PM; il suo profilo di catalogo è nel Manuale dell’Equipaggiamento, §5.8. Il Focus non è la manovra Focalizzazione. Gesti e parole evidenti rendono percepibile il lancio; un incantesimo conosciuto si riconosce automaticamente. Fa eccezione il riconoscimento ai fini di Contromagia contro chi possiede Magia Occultata, che richiede una Prova di Occultismo senza costo in Azioni, anche con Contromagia Universale. Occultismo può identificare ciò che è stato percepito, ma non rivela da solo magia nascosta.
 
 ## **Durata e Concentrazione**
 
@@ -559,13 +559,13 @@ Se, al termine della risoluzione completa di un’azione, il personaggio rimane 
 | Aspetto del Chroma | Energia | Uso |
 | ----- | ----- | :---- |
 | Bianco | Universale | Può alimentare qualunque Incantesimo accessibile. |
-| Rosso | Fisica | Alimenta Incantesimi Fisici e celle energetiche. |
+| Rosso | Fisica | Alimenta Incantesimi Fisici e riserve mistiche Rosse. |
 | Blu | Mentale | Alimenta Incantesimi Mentali. |
 | Verde | Spirituale | Alimenta Incantesimi Spirituali. |
 | Viola | Oscura | Saturo di Energia Oscura: la vicinanza provoca esposizione passiva alla Corruzione. Non è in commercio. Gli impieghi energetici saranno definiti con l’Oscura Simmetria. |
 | Trasparente | Nessuna energia residua | Cristallo esausto, ancora mistico e ricaricabile. |
 
-Un cristallo esausto conserva un alone del colore originario, che ne identifica la natura anche quando è trasparente. Mantiene capacità e sintonizzazione. Il Chroma Rosso viene impiegato nelle celle che costituiscono la principale fonte di energia dell’ambientazione. Per le armi, la scheda distingue le riserve mistiche ricaricabili con PM dalle celle tecnologiche sostituibili, che non richiedono Sintonizzazione (Manuale dell’Equipaggiamento, §§7.1.4 e 7.5.1).
+Un cristallo esausto conserva un alone del colore originario e mantiene capacità e sintonizzazione. I Nuclei Energetici Cromatici, NEC Rossi, Blu e Verdi, sono la principale fonte energetica tecnologica: usano Lx, sono ricaricabili e non richiedono Sintonizzazione (Manuale dell’Equipaggiamento, §5.4). Le riserve mistiche usano PM e le regole di questa sezione. Non esiste una conversione automatica Lx–PM. Le celle tecnologiche delle armi seguono il Manuale degli Armamenti, §§7.1.4 e 7.20.5; le riserve mistiche integrate il §7.5.1 dello stesso volume.
 
 Contenitore indica qualunque oggetto che racchiuda un Chroma, indipendentemente da forma e materiale. La scheda riporta tipo di energia, PM attuali e capacità massima: per esempio «Chroma Rosso, 6/10 PM».
 
@@ -804,6 +804,8 @@ Un Dardo Psichico caricato resta bloccato da Barriera Mentale, mentre l’assorb
 ## **Beneficiari e recuperi**
 
 Cura Ferite, Corpo Adattivo e Psicometabolismo curano organismi biologicamente viventi. Nei cyborg recuperano i PV viventi, senza riparare impianti. Non curano elementali evocati, Ectoplasma, costrutti puramente meccanici o entità spirituali, salvo eccezione esplicita del Bestiario del Manuale del Direttore. Durante Forma Elementale non curano né la riserva della forma né il corpo originario sospeso: gli eventuali recuperi periodici trascorrono senza effetto e riprendono al ritorno se resta durata.
+
+Gli impianti singoli e la riparazione dei loro PI sono nel Manuale dell’Equipaggiamento, capitolo 7\. I chip del Processore neurale di Abilità (§7.10 di quel volume) non migliorano Incantesimi, Risorse Interiori, Sintonizzazione o altre applicazioni magiche. Il loro impiego è limitato a una attivazione ogni 24 ore, indipendente dal riposo; i costi UMN seguono il Manuale del Giocatore, §5.21.
 
 Le cure immediate sono compatibili con quelle periodiche. Fra i recuperi periodici concorrenti di Corpo Adattivo e Psicometabolismo si applica il maggiore. Se Corpo Adattivo sacrifica un’applicazione per ridurre Sanguinamento, Psicometabolismo può recuperare i propri PV in quel turno. Nessuna cura ordinaria supera il limite ridotto dai PV sacrificati con Convertire Potere.
 
@@ -4664,7 +4666,7 @@ Identifica completamente un oggetto entro il limite di livello, determinato dall
 
 **Confini:** non legge pensieri, non individua persone nascoste da Velo Psichico e non rivela automaticamente identità, intenzioni o posizione del creatore. La storia, i precedenti proprietari e la formula costruttiva restano informazioni distinte. Non insegna l’incantesimo analizzato né concede sintonizzazione. Le informazioni descrivono il momento del lancio e non si aggiornano automaticamente.
 
-**Interazione con Artefatti:** l’analisi del Tecnomante rivela struttura, proprietà e riserva energetica secondo il Manuale del Giocatore, §3.9.5, «Architetto TecnoMistico», e il Manuale dell’Equipaggiamento, §7.10, «Analizzare e identificare». Identificare Potere rende disponibili tutti i dati esatti della scheda quando il livello è sufficiente, senza richiedere l’analisi preventiva.
+**Interazione con Artefatti: l’analisi del Tecnomante rivela struttura, proprietà e riserva energetica secondo il Manuale del Giocatore, §3.9.5, «Architetto TecnoMistico», e il Manuale degli Armamenti, §7.10, «Analizzare e identificare». Identificare Potere rende disponibili tutti i dati esatti della scheda quando il livello è sufficiente, senza richiedere l’analisi preventiva.**
 
 **Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie livello massimo identificabile 3 → 6 → 9 → 12 → 15 → 18; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 Q; oppure bersagli 1 → 2 → 3 → 4\. Al livello 3, spendendo 6 PM per anticipare il limite a 6, si identifica completamente un oggetto Non Comune mantenendo Contatto e un bersaglio.
 

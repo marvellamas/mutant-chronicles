@@ -4,9 +4,9 @@
 
 ## Strumenti dotazioni e regole di impiego
 
-**EDIZIONE 0.3**
+**EDIZIONE 0.5**
 
-Settembre 2026
+Ottobre 2026
 
 **GIOCO DI RUOLO**
 
@@ -26,12 +26,12 @@ Ogni oggetto produce gli effetti indicati dalla propria scheda. Quando una sched
 | 2 Dotazioni personali | Abbigliamento, zaini, contenitori, illuminazione e oggetti quotidiani. |
 | 3 Esplorazione e sopravvivenza | Accampamento, viveri, acqua, orientamento e protezione ambientale. |
 | 4 Comunicazione e rilevamento | Comunicatori, sensori, strumenti ottici e sorveglianza. |
-| 5 Strumenti professionali | Attrezzature tecniche, artigianali, scientifiche, investigative e agricole. |
+| 5 Strumenti professionali | Attrezzature tecniche, artigianali, scientifiche, investigative e agricole; NEC, consumi e ricarica. |
 | 6 Equipaggiamento sanitario | Pronto soccorso, diagnostica, chirurgia e consumabili. |
-| 7 Dispositivi specialistici | Sicurezza, infiltrazione, controllo remoto e funzioni particolari. |
+| 7 Dispositivi specialistici | Impianti cibernetici, benefici, Umanità, Integrità e chip di Abilità. |
 | 8 Cataloghi e dotazioni iniziali | Prodotti commerciali, modelli corporativi e corredi per attività. |
 
-Questa edizione comprende le regole generali, le dotazioni personali, l’esplorazione e la sopravvivenza, la comunicazione e il rilevamento, oltre all’equipaggiamento sanitario. La numerazione dei capitoli segue l’organizzazione del volume indicata nella tabella.
+Questa edizione comprende le regole generali, le dotazioni personali, l’esplorazione, la comunicazione, gli strumenti professionali, i Nuclei Energetici Cromatici, l’equipaggiamento sanitario, il catalogo degli impianti cibernetici singoli e le regole di assegnazione delle dotazioni iniziali.
 
 ## **Rimandi agli altri manuali**
 
@@ -85,7 +85,7 @@ Armi, scudi e armature seguono le proprie regole di preparazione ed equipaggiame
 
 ## **1.5 Alimentazione e consumabili**
 
-La scheda indica il tipo di alimentazione, la compatibilità delle risorse e l’autonomia. Distingue gli impieghi a cariche o applicazioni dagli usi a consumo continuativo. Quantità, momento del consumo e conseguenze di fallimento o interruzione seguono la procedura dell’oggetto.
+La scheda indica alimentazione, compatibilità e autonomia, distinguendo cariche o applicazioni dagli usi continui. La principale fonte energetica è il NEC, nelle versioni Rossa, Blu e Verde (§5.4). Quantità, momento del consumo ed esiti seguono la procedura dell’oggetto. Le fonti a combustibile liquido non sono presenti.
 
 Un corredo può comprendere componenti riutilizzabili e materiali consumabili. Esauriti i materiali, restano possibili soltanto le attività che gli strumenti rimasti possono svolgere. Nel Kit trauma, per esempio, ogni tentativo di medicazione consuma un’applicazione all’inizio; una semplice diagnosi non la consuma (§6.1).
 
@@ -213,19 +213,18 @@ Accendere o spegnere una lampada richiede 1 AzP, secondo le regole di accessibil
 
 Pareti e ostacoli bloccano la luce; fumo e nebbia conservano i propri effetti. La sorgente può rivelare la posizione di chi la usa e non provoca automaticamente Accecato. Attivare un bastoncino richiede 1 AzP; una volta attivato, continua a consumarsi anche se coperto o riposto.
 
-### **Batteria di servizio**
+### **Alimentazione NEC**
 
-Le tre lampade elettriche usano la batteria di servizio già prevista per Torcia tattica e moduli di visione. I dispositivi del Capitolo 4 usano la stessa alimentazione; la compatibilità non si estende automaticamente ad altri oggetti.
+Torcia e Lampada frontale usano un NEC Verde compatto da 100 Lx: 1 Lx/h e 100 ore. La Lanterna usa un Verde standard da 1.000 Lx: 5 Lx/h e 200 ore. Il Bastoncino luminoso è monouso e non richiede NEC.
 
 | Voce | Regola |
 | :---- | :---- |
-| Autonomia | 24 ore effettive di funzionamento, anche non consecutive. |
-| Ricarica completa | 4 ore con una fonte energetica compatibile. |
-| Batteria carica di ricambio | Costo 10; Reperibilità Comune. |
-| Sostituzione | 1 AzP, senza Prova, con ricambio pronto. |
-| Dotazione compresa | Batteria carica, cavo e alimentatore. |
+| Ricarica completa | Un’ora con fonte e caricatore adeguati; 0,01 cr/Lx. |
+| Ricambio carico | Verde compatto 10 cr; Verde standard 100 cr; REP CO. |
+| Sostituzione | 1 AzP senza Prova, con ricambio pronto. |
+| Dotazione compresa | NEC carico, cavo e alimentatore. |
 
-Si annotano le ore di utilizzo quando serve; il consumo non si conteggia per Round. La ricarica ordinaria richiede energia disponibile e non ha un costo fisso da conteggiare. Le fonti mobili di energia restano dotazioni separate.
+Si annotano le ore effettive, anche non consecutive, senza conteggiarle per Round. Formati, ricarica e fonti mobili sono nel §5.4. I dispositivi del Capitolo 4 usano i NEC e le autonomie delle proprie schede.
 
 ## **2.4 Abbigliamento**
 
@@ -294,10 +293,12 @@ Tende e teli ordinari non proteggono da tempeste estreme, allagamenti, atmosfere
 | Razione da viaggio | Nutre una persona per un giorno. Pronta da consumare senza cottura. | 0,5 kg | 20 |
 | Razione concentrata | Stesso nutrimento della razione normale, con metà del peso. | 0,25 kg | 40 |
 | Tanica da 10 litri | Trasporta acqua o altri liquidi. Peso indicato a vuoto. | 0,5 kg | 40 |
-| Corredo da cucina da campo | Fornello, recipiente e stoviglie per quattro persone. Permette di cucinare senza raccogliere legna. Prima cartuccia compresa. | 1 kg | 150 |
-| Cartuccia di combustibile | 10 preparazioni, ciascuna per un massimo di quattro persone. | 0,2 kg | 20 |
+| Corredo da cucina da campo | Fornello a Chroma, recipiente e stoviglie per quattro persone. Primo NEC Rosso standard compreso; dieci preparazioni da 30 minuti. | 1 kg | 150 |
+| NEC Rosso standard | 500 Lx: dieci preparazioni da 50 Lx, fino a quattro persone. Ricaricabile. | 0,15 kg | 50 |
 | Depuratore portatile | Tratta acqua dolce con impurità e contaminazioni biologiche ordinarie: 1 litro al minuto, mediante pompa manuale. Primo filtro compreso. | 0,5 kg | 300 |
 | Filtro di ricambio | Permette di trattare 100 litri prima della sostituzione. | 0,1 kg | 50 |
+
+Il fornello consuma 100 Lx/h durante l’uso. Una preparazione ordinaria richiede 30 minuti e 50 Lx; si segnano le preparazioni oppure le ore, senza doppio conteggio. Ricaricare il NEC Rosso costa 5 cr e richiede un’ora con fonte adeguata (§5.4).
 
 Tutto ha Reperibilità Comune, tranne depuratore e filtri, Non comune. Il peso del corredo da cucina comprende la prima cartuccia; quello del depuratore comprende il primo filtro, con capacità di 100 litri.
 
@@ -370,6 +371,28 @@ La maschera riprende il Filtro respiratorio 2 del Manuale degli Armamenti: non f
 
 La tuta protegge dal contatto contaminante, ma non concede AR e non protegge automaticamente da acidi corrosivi, radiazioni, Fuoco o Gelo. Si conta soltanto l’autonomia delle bombole; la sostituzione ordinaria dei filtri rientra nella manutenzione. Maschere e tute devono essere integre e correttamente indossate.
 
+## **3.6 Mobilità e recupero**
+
+Le dotazioni seguenti sostengono fino a 200 kg, compreso l’equipaggiamento della persona trasportata. Entro tale portata e in condizioni ordinarie non richiedono PS Integrità. Occorrono appoggi o ancoraggi adeguati; il carico effettivo continua a seguire il §1.6.
+
+| Oggetto | Funzione | Peso | Costo / REP |
+| :---- | :---- | :---- | :---- |
+| Scala telescopica | Raggiunge 4 Q di altezza. Se fissata, la normale salita usa il movimento ordinario senza Prova di Atletica. | 5 kg | 400 / CO |
+| Passerella pieghevole | Supera una distanza di 2 Q fra due appoggi solidi; passa una persona alla volta con movimento ordinario. | 8 kg | 600 / NC |
+| Verricello portatile Chroma | Cavo da 20 Q; con 1 AzP sposta il carico di 2 Q in verticale. Il freno mantiene il carico senza energia. | 6 kg | 2.500 / NC |
+| Barella pieghevole | Due trasportatori, entrambe le mani impegnate: ciascuno sostiene metà del peso totale; si procede al Passo del più lento. | 3 kg | 200 / CO |
+
+Predisporre ciascun oggetto richiede un minuto. Per la barella questo tempo comprende assicurare un paziente accessibile in posizione supina; il trasporto non lo stabilizza e non lo cura. Pericoli, instabilità o manovre difficili mantengono le normali Prove.
+
+Il verricello comprende cavo, imbracatura, gancio, comando, NEC Rosso standard carico e alimentatore. Consuma 100 Lx/h durante il movimento: cinque ore effettive con 500 Lx; nessun consumo per tenere fermo il carico. Sostituzione della cella: 1 AzP; ricarica completa: un’ora e 5 cr con fonte adeguata. Gli altri oggetti non richiedono NEC.
+
+| Oggetto | Qualità | PS Integrità | PI |
+| :---- | :---- | :---- | :---- |
+| Scala telescopica | Comune | 10 | 4 |
+| Passerella pieghevole | Comune | 10 | 6 |
+| Verricello portatile Chroma | Non comune | 12 | 6 |
+| Barella pieghevole | Comune | 10 | 4 |
+
 # **4 Comunicazione e rilevamento**
 
 Comunicatori, ottiche e sensori permettono di trasmettere informazioni o rilevare elementi accessibili alle loro funzioni. Non concedono Azioni aggiuntive e non sostituiscono le Prove richieste dall’attività.
@@ -396,7 +419,7 @@ Accendere, spegnere o cambiare canale richiede 1 AzP. Una volta attivo, ascoltar
 
 ### **Alimentazione e riservatezza**
 
-Ogni modello usa la batteria di servizio del §2.3: 24 ore complessive, anche non consecutive; ricarica in 4 ore, ricambio carico 10 e sostituzione in 1 AzP. Le comunicazioni ordinarie non sono riservate: un ricevitore compatibile sintonizzato sul canale può ascoltarle. Questo profilo non comprende cifratura, intercettazione specialistica o disturbo intenzionale.
+Il personale usa un Verde compatto: 1 Lx/h e 100 ore. Quello da squadra usa un Verde standard: 5 Lx/h e 200 ore. La stazione radio usa un Verde standard: 25 Lx/h e 40 ore. Il consumo comprende ascolto e trasmissione. Ricarica e ricambi seguono il §5.4; sostituzione in 1 AzP. Le comunicazioni ordinarie sono ascoltabili da ricevitori compatibili sul canale; cifratura, intercettazione specialistica e disturbo intenzionale sono esclusi.
 
 ## **4.2 Strumenti ottici e visori**
 
@@ -423,7 +446,7 @@ Entrambi consentono di sfruttare la visione ottenuta negli attacchi, ma non aume
 
 ### **Impiego e alimentazione**
 
-Indossare e attivare un visore accessibile richiede 1 AzP e due mani. Una volta indossato, accenderlo o spegnerlo richiede 1 AzP; mantenerlo attivo non richiede Azioni. Ogni visore comprende batteria carica, cavo e alimentatore e segue il §2.3: 24 ore di autonomia, ricarica in 4 ore, ricambio 10 e sostituzione in 1 AzP. Binocolo e periscopio funzionano senza batterie.
+Indossare e attivare un visore accessibile richiede 1 AzP e due mani; da indossato, accenderlo o spegnerlo richiede 1 AzP. Il mantenimento non richiede Azioni. Ogni visore comprende un Verde standard da 1.000 Lx, cavo e alimentatore: 10 Lx/h, 100 ore e sostituzione in 1 AzP. Ricarica e ricambi: §5.4. Binocolo e periscopio funzionano senza NEC.
 
 ## **4.3 Rilevamento e sorveglianza**
 
@@ -452,7 +475,367 @@ Una lettura richiede 1 AzP, senza Prova per comprendere gli avvisi ordinari. Lo 
 
 ### **Alimentazione e collegamenti**
 
-Tutti usano la batteria di servizio del §2.3: 24 ore di funzionamento, ricarica in 4 ore, ricambio 10 e sostituzione in 1 AzP. I kit comprendono batterie cariche, cavi e alimentatori per tutti i componenti. I collegamenti remoti seguono i limiti dei comunicatori: ostacoli e interferenze possono interromperli.
+Registratore e Rilevatore ambientale usano un Verde compatto: 2 Lx/h e 50 ore. La videosorveglianza usa due Verdi compatti, uno per componente: ciascuno 2 Lx/h e 50 ore. L’allarme usa un Verde compatto per sensore e uno per avvisatore: ciascuno 1 Lx/h e 100 ore. Sono compresi NEC carichi, cavi e alimentatori. Ricarica: §5.4; sostituzione in 1 AzP. Ostacoli e interferenze possono interrompere i collegamenti remoti.
+
+# **5 Strumenti professionali**
+
+Le attrezzature professionali permettono di eseguire lavori tecnici, artigianali, scientifici, investigativi e agricoli. Il loro beneficio riguarda gli impieghi indicati: servono comunque conoscenze, materiali, accesso e condizioni adatte al lavoro.
+
+## **5.1 Strumenti tecnici e artigianali**
+
+| Dotazione | Beneficio | Peso | REP | Costo |
+| :---- | :---- | :---- | :---- | :---- |
+| Cassetta degli attrezzi | Strumenti Standard: consente smontaggio, montaggio, regolazioni e riparazioni meccaniche semplici, senza modificare il VA. | 3 kg | CO | 300 |
+| Corredo artigianale professionale | \+2 VA a Tecnologia per lavorare e riparare prodotti del mestiere scelto all’acquisto. | 4 kg | NC | 1.200 |
+| Corredo di manutenzione da campo | \+2 VA a Tecnologia per diagnosi, manutenzione e riparazioni sul campo di armi, armature, propulsori ed esoscheletri compatibili. | 5 kg | NC | 2.000 |
+| Postazione di lavoro specializzata | \+3 VA a Tecnologia per una specifica attività scelta all’acquisto, eseguibile con l’attrezzatura installata. | 40 kg | RA | 6.000 |
+
+### **Dotazione e impieghi**
+
+La cassetta degli attrezzi comprende chiavi, cacciaviti, pinze, martello, lime e strumenti di misura meccanici. Permette i lavori compatibili con questi utensili; non sostituisce apparecchi diagnostici elettronici o macchinari da officina.
+
+Il corredo artigianale professionale è dedicato a un mestiere, per esempio sartoria, pelletteria, falegnameria o lavorazione manuale dei metalli. Comprende gli utensili portatili e gli strumenti di misura pertinenti. Il \+2 vale soltanto per quel mestiere. Materiali da lavorare, ricambi, forge e macchinari pesanti sono separati.
+
+Il corredo di manutenzione da campo comprende utensili di precisione e strumenti diagnostici portatili. Mantiene il profilo del Manuale degli Armamenti, §7.13.7: 6 PI, Qualità Non comune e PS Integrità 12\. La diagnostica usa un NEC Verde standard da 1.000 Lx: 25 Lx/h e 40 ore di uso. NEC carico, cavo e alimentatore sono compresi; sostituzione in 1 AzP e ricarica secondo il §5.4. Gli utensili manuali restano utilizzabili anche senza alimentazione, per i lavori che possono svolgere.
+
+La postazione di lavoro specializzata comprende banco, fissaggi, strumenti di misura e utensili per un’attività precisa, per esempio riparazione di armi, riparazione di circuiti elettronici o confezione di abiti. Il \+3 vale esclusivamente per l’attività scelta. Richiede una superficie stabile, uno spazio di 2 × 2 Q e alimentazione esterna. Montarla o smontarla richiede 10 minuti a una persona, senza Prova in condizioni ordinarie. Consuma 1.000 Lx/h: una rete adeguata o un Modulo Rosso esterno da 5.000 Lx la alimentano; il Modulo offre cinque ore e si acquista separatamente. Non sostituisce impianti industriali.
+
+### **Regole comuni**
+
+Preparare gli strumenti portatili accessibili è compreso nel tempo del lavoro. Di norma si usano due mani. Restano i tempi, le Prove e gli esiti della procedura svolta: acquistare l’attrezzatura non concede Talenti, non ripristina automaticamente PI e non riduce da solo la durata del lavoro.
+
+Si applica un solo modificatore degli strumenti: usare un corredo da \+2 presso una postazione pertinente da \+3 concede complessivamente \+3. Talenti e circostanze mantengono le proprie regole.
+
+Pesi e prezzi comprendono contenitori e dotazione dichiarata. Si conteggiano separatamente materiali da lavorare, pezzi di ricambio e componenti che restano nell’oggetto. Lubrificanti, filo, piccole viti e altri consumabili minuti rientrano nel normale rifornimento del corredo, senza registrare ogni singolo impiego; questa dotazione non sostituisce i materiali richiesti da una specifica riparazione.
+
+## **5.2 Strumenti scientifici e investigativi**
+
+Queste dotazioni permettono di raccogliere campioni, esaminare tracce e svolgere analisi. Il beneficio si applica agli esami realmente eseguibili con gli strumenti disponibili.
+
+| Dotazione | Beneficio | Peso | REP | Costo |
+| :---- | :---- | :---- | :---- | :---- |
+| Kit di campionamento | Permette di prelevare, separare, etichettare e trasportare piccoli campioni con contenitori adatti. Strumenti Standard: nessun modificatore al VA. | 1 kg | CO | 200 |
+| Corredo di analisi da campo | \+2 VA a Scienza per analisi preliminari nel campo scelto all’acquisto. | 3 kg | NC | 1.500 |
+| Valigetta investigativa ASA | \+2 VA a Percezione per esaminare tracce materiali e a Scienza per analisi preliminari eseguibili con il corredo. | 3 kg | RA | 2.000 |
+| Laboratorio da campo specializzato | \+3 VA a Scienza per analisi nel campo scelto; permette anche esami che richiedono una postazione attrezzata, se compatibili con i suoi strumenti. | 60 kg | RA | 12.000 |
+
+### **Kit di campionamento**
+
+Comprende pinzette, spatole, guanti, provette, buste, etichette e contenitori richiudibili. Un prelievo semplice da materiale accessibile richiede 1 minuto, senza Prova in condizioni ordinarie. Campioni delicati o difficili da raggiungere seguono i requisiti del caso.
+
+Il kit evita di mescolare i campioni quando viene usato correttamente. Non identifica le sostanze e non comprende refrigerazione o contenimento per materiali particolarmente pericolosi. Questi richiedono dotazioni appropriate.
+
+### **Corredo di analisi da campo**
+
+Si sceglie un campo, per esempio chimica, biologia o geologia. Il corredo comprende piccoli strumenti di misura, ottiche e test pertinenti, oltre al necessario per i normali prelievi.
+
+Un’analisi preliminare richiede normalmente 10 minuti. Il \+2 a Scienza si applica alle informazioni che il corredo può ricavare: per esempio confrontare due campioni, riconoscere un materiale noto o rilevare una contaminazione compatibile con i test disponibili. Un successo non fornisce informazioni oltre le capacità dell’attrezzatura.
+
+### **Valigetta investigativa ASA**
+
+Comprende lenti, strumenti di misura, illuminazione d’esame, materiali per rilevare e conservare tracce e test preliminari. Conserva il profilo del Manuale degli Armamenti, §7.12: 4 PI, Qualità Non comune e PS Integrità 12\. La versione Capitol segue lo stesso profilo.
+
+Il \+2 a Percezione riguarda l’esame ravvicinato di impronte, residui, segni e altre tracce materiali mediante gli strumenti; non migliora la vigilanza generale o l’ascolto. Il \+2 a Scienza riguarda gli esami preliminari concretamente eseguibili. Il semplice esame visivo segue le normali Azioni di osservazione; un’analisi preliminare richiede normalmente 10 minuti.
+
+La valigetta non identifica automaticamente un colpevole: collegare una traccia a una persona richiede elementi di confronto e una conclusione sostenuta dalle prove raccolte.
+
+### **Laboratorio da campo specializzato**
+
+Si sceglie un campo preciso, per esempio analisi chimiche, biologiche, geologiche o forensi. Comprende banco, strumenti di misura, apparecchi d’esame e dotazione ordinaria per preparare i campioni.
+
+Richiede una superficie stabile, uno spazio di 2 × 2 Q e alimentazione esterna. Una persona lo prepara o lo smonta in 30 minuti, senza Prova in condizioni ordinarie. Consuma 1.000 Lx/h: un Modulo Rosso esterno da 5.000 Lx offre cinque ore di uso e si acquista separatamente.
+
+Un’analisi ordinaria di laboratorio richiede normalmente 1 ora; analisi complesse possono richiedere più tempo. Il \+3 vale nel campo scelto. Il laboratorio non comprende automaticamente strumentazione clinica o chirurgica, contenimento avanzato o strumenti per analizzare fenomeni soprannaturali.
+
+### **Impiego comune**
+
+Il corredo portatile e la valigetta comprendono ciascuno un NEC Verde standard carico, cavo e alimentatore: 1.000 Lx, 25 Lx/h e 40 ore di uso. Ricarica e ricambi seguono il §5.4; sostituzione in 1 AzP. Il kit di campionamento non richiede alimentazione. Pesi e prezzi comprendono la dotazione dichiarata.
+
+Si effettua una Prova quando l’esito è incerto. Si applica un solo modificatore degli strumenti alla Prova pertinente: corredo da \+2 e laboratorio da \+3 concedono complessivamente \+3. Percezione e Scienza si usano in base all’attività svolta, senza moltiplicare i tiri per lo stesso esame.
+
+Contenitori, reagenti e materiali ordinari sono compresi e si reintegrano con il normale rifornimento, senza contare ogni singolo utilizzo. Reagenti rari, materiali speciali e apparecchi aggiuntivi si acquistano separatamente.
+
+## **5.3 Attrezzature agricole e per l’allevamento**
+
+Queste dotazioni permettono di lavorare piccole coltivazioni e accudire animali domestici. Le operazioni ordinarie, svolte in condizioni adatte, non richiedono Prove. Quando l’esito è incerto, si applica il beneficio degli strumenti effettivamente utilizzati.
+
+| Dotazione | Beneficio | Peso | REP | Costo |
+| :---- | :---- | :---- | :---- | :---- |
+| Attrezzi agricoli di base | Permettono di preparare piccoli appezzamenti, seminare, potare e raccogliere. Strumenti Standard: nessun modificatore al VA. | 5 kg | CO | 200 |
+| Corredo del coltivatore | \+2 VA a Sopravvivenza per coltivare, trattare e raccogliere prodotti agricoli; \+2 VA a Scienza per controlli semplici su terreno e colture eseguibili con gli strumenti compresi. | 6 kg | NC | 1.000 |
+| Corredo dell’allevatore | \+2 VA a Sopravvivenza per accudire, alimentare e condurre animali domestici quando vengono impiegati gli strumenti del corredo. | 3 kg | NC | 800 |
+
+### **Attrezzi agricoli di base**
+
+Comprendono vanga, zappa, cesoie, piccolo rastrello e contenitore da raccolta. Sono sufficienti per lavori manuali su orti, aiuole e piccoli appezzamenti. Il peso comprende l’intera dotazione.
+
+### **Corredo del coltivatore**
+
+Comprende gli attrezzi di base, utensili di precisione per semina, innesto e potatura, un piccolo irroratore manuale e semplici strumenti per controllare umidità e caratteristiche del terreno.
+
+Il prezzo e il peso comprendono tutti i componenti: non occorre acquistare anche gli attrezzi di base. Gli strumenti sono manuali e non richiedono batterie.
+
+Il bonus a Scienza vale soltanto per i controlli alla portata della dotazione. Analisi approfondite di contaminazioni o malattie richiedono strumenti appropriati del §5.2. Gli interventi sui macchinari agricoli richiedono invece Tecnologia e attrezzature tecniche adeguate.
+
+### **Corredo dell’allevatore**
+
+Comprende spazzole, utensili per la pulizia ordinaria, recipienti pieghevoli, misurini per il mangime, capezze e lunghine adatte agli animali seguiti. Consente di accudirli e guidarli a mano mediante l’attrezzatura.
+
+Il bonus non si applica a cavalcare, combattere dalla sella o addomesticare automaticamente una creatura selvatica. Selle, finimenti da traino, gabbie e recinti sono separati.
+
+Le cure veterinarie usano Medicina e attrezzature sanitarie appropriate: il corredo non recupera PV, non cura Ferite o Malattie e non concede bonus alle PS degli animali.
+
+### **Impiego e rifornimento**
+
+La preparazione degli strumenti accessibili è compresa nel tempo del lavoro. L’attività conserva la propria durata: questi corredi non accelerano la crescita delle colture, non raddoppiano i raccolti e non producono risorse assenti. I Talenti dell’Agricoltore mantengono i propri benefici e requisiti.
+
+I modificatori degli strumenti e dei Talenti seguono il §1.2; si usa l’Abilità pertinente senza moltiplicare le Prove per lo stesso compito.
+
+Sementi, concimi, trattamenti, mangimi e acqua sono risorse separate. Piccoli ricambi e materiali ordinari di pulizia rientrano nel normale rifornimento del corredo, senza contare ogni singolo utilizzo. Non si introducono registri quotidiani per colture o animali: le scorte si annotano quando quantità e disponibilità sono rilevanti per la partita.
+
+## **5.4 Nuclei Energetici Cromatici**
+
+I Nuclei Energetici Cromatici, abbreviati NEC, sono la principale fonte energetica dell’ambientazione. Esistono tre tipi: Rosso, Blu e Verde. Il colore identifica il comportamento energetico, non la Qualità costruttiva. Le fonti a combustibile liquido non sono presenti.
+
+### **5.4.1 Capacità ed erogazione**
+
+L’energia si misura in Lux, Lx. Un Lx alimenta per un’ora la torcia di riferimento, che consuma 1 Lx/h. La capacità massima e la carica residua si misurano in Lx; l’erogazione continua massima in Lx/h. L’erogazione è un limite: il NEC fornisce soltanto quanto richiesto dal dispositivo.
+
+| NEC standard | Capacità | Erogazione continua | Impiego |
+| :---- | :---- | :---- | :---- |
+| Rosso | 500 Lx | 100 Lx/h | Capacità ed erogazione medie; alimentazione ordinaria. |
+| Blu | 250 Lx | 200 Lx/h | Capacità bassa ed erogazione alta; richieste intense e brevi. |
+| Verde | 1.000 Lx | 50 Lx/h | Capacità alta ed erogazione bassa; lunga autonomia. |
+
+Una cella standard pesa 150 g e occupa circa 0,055 L. Il Verde compatto contiene 100 Lx, eroga fino a 5 Lx/h, pesa 15 g e occupa circa 0,0055 L. È una taglia dello stesso tipo Verde.
+
+Le scale maggiori usano kLx, MLx, GLx e TLx: ciascun passaggio moltiplica per 1.000. Un kLx equivale a 1.000 Lx; un MLx a un milione; un GLx a un miliardo; un TLx a mille miliardi. Il prefisso indica la quantità di energia, non un nuovo tipo di NEC. La scheda specifica capacità, erogazione e formato fisico.
+
+### **5.4.2 Ore di funzionamento e cariche**
+
+Per il funzionamento continuo valgono due regole: l’erogazione disponibile deve essere almeno pari al consumo e l’autonomia in ore è la carica residua divisa per il consumo. A 25 Lx/h un Verde standard pieno dura 40 ore. Una cella piena può essere inadatta quando non raggiunge l’erogazione richiesta.
+
+Gli impieghi a impulsi consumano Lx per attivazione. Il Blu standard, in un dispositivo predisposto, può erogare impulsi immediati da 50 Lx: la riserva di 250 Lx permette cinque attivazioni. Possono avvenire in successione secondo le normali Azioni dell’oggetto, senza ulteriori tempi di attesa. Questa capacità è distinta dal limite continuo di 200 Lx/h e non permette un funzionamento prolungato oltre quel limite. Altri formati dichiarano l’impulso ammesso.
+
+La scheda riporta ore oppure cariche: non occorre annotare entrambe queste misure e i Lx. Le ore sono effettive, anche non consecutive; non si contano per Round. Una carica è l’attivazione dell’oggetto, non un’unità energetica universale. I colpi delle quattro armi a energia del §7.20.5 del Manuale degli Armamenti consumano 25 Lx; una carica ravvicinata o un getto di lanciafiamme consuma 50 Lx.
+
+### **5.4.3 Celle e pacchi**
+
+«Batteria» è il termine generico; una cella è un singolo NEC. Un Modulo contiene 10 celle, un Banco 100 e una Matrice 10.000. Nei pacchi predisposti per il collegamento in parallelo si sommano capacità, carica residua ed erogazione delle celle operative. Una cella non operativa non contribuisce alla riserva utilizzabile o all’erogazione. Se l’erogazione rimasta non sostiene il carico, il dispositivo non funziona.
+
+| Formato | Celle | Massa delle sole celle | Volume delle sole celle |
+| :---- | :---- | :---- | :---- |
+| Cella | 1 | 150 g | 0,055 L |
+| Modulo | 10 | 1,5 kg | 0,55 L |
+| Banco | 100 | 15 kg | 5,5 L |
+| Matrice | 10.000 | 1,5 t | 550 L |
+
+Il catalogo indica separatamente il peso del pacco completo, comprensivo di involucro e collegamenti. I formati ad alta densità per navi e infrastrutture sono impianti su commessa: prezzo e caratteristiche appartengono alla scheda del mezzo o dell’impianto.
+
+### **5.4.4 Catalogo delle celle e dei pacchi**
+
+I prezzi sono in crediti e comprendono la prima carica. Gli apparecchi già venduti con batteria comprendono il NEC della loro scheda: il prezzo del ricambio non si aggiunge nuovamente al costo dell’oggetto.
+
+| Cella | Capacità | Erogazione continua massima | Peso | REP | Prezzo carica |
+| :---- | :---- | :---- | :---- | :---- | :---- |
+| Verde compatta | 100 Lx | 5 Lx/h | 15 g | CO | 10 cr |
+| Rossa standard | 500 Lx | 100 Lx/h | 150 g | CO | 50 cr |
+| Blu standard | 250 Lx | 200 Lx/h | 150 g | NC | 200 cr |
+| Verde standard | 1.000 Lx | 50 Lx/h | 150 g | CO | 100 cr |
+
+La Blu standard nel formato ravvicinato fornisce cinque attivazioni da 50 Lx. Le celle d’arma dedicate e i pacchi per lanciafiamme sono nel Manuale degli Armamenti, §§7.20.5–7.20.6.
+
+Un Modulo commerciale contiene dieci celle standard dello stesso tipo: costa quanto le celle più 100 cr per involucro e collegamenti e pesa 2 kg complessivi. Un Banco contiene dieci Moduli, pesa 20 kg e ha prezzo e valori energetici dieci volte superiori a quelli del Modulo.
+
+| Pacco completo | Capacità | Erogazione continua massima | Peso completo | REP | Prezzo carico |
+| :---- | :---- | :---- | :---- | :---- | :---- |
+| Modulo Rosso | 5.000 Lx | 1.000 Lx/h | 2 kg | NC | 600 cr |
+| Modulo Blu | 2.500 Lx | 2.000 Lx/h | 2 kg | NC | 2.100 cr |
+| Modulo Verde | 10.000 Lx | 500 Lx/h | 2 kg | NC | 1.100 cr |
+| Banco Rosso | 50.000 Lx | 10.000 Lx/h | 20 kg | RA | 6.000 cr |
+| Banco Blu | 25.000 Lx | 20.000 Lx/h | 20 kg | RA | 21.000 cr |
+| Banco Verde | 100.000 Lx | 5.000 Lx/h | 20 kg | RA | 11.000 cr |
+
+Un contenitore riutilizzabile vuoto costa 100 cr per Modulo o 1.000 cr per Banco con i dieci alloggiamenti. Le singole celle possono essere sostituite senza ricomprare il contenitore.
+
+### **5.4.5 Compatibilità e sostituzione**
+
+L’alloggiamento indica formato e tipi di NEC accettati. Cella compatta, standard, formato d’arma e Modulo non sono automaticamente intercambiabili. Un NEC più capiente aumenta l’autonomia soltanto dove il formato è ammesso; non aumenta danni, bonus, portata o Azioni. Collegamenti esterni richiedono una predisposizione dichiarata.
+
+Sostituire una cella o un Modulo accessibile con ricambio pronto e attacco rapido compatibile richiede 1 AzP. Installare o spostare un Banco richiede un minuto fuori dal combattimento; gli impianti specialistici mantengono i propri tempi. Aprire un involucro per ripararlo non è una sostituzione rapida.
+
+### **5.4.6 Ricarica**
+
+I NEC sono riutilizzabili. Celle e pacchi del catalogo si ricaricano normalmente in un’ora con caricatore e fonte adeguati. Mezza riserva richiede 30 minuti; una carica della Blu ravvicinata richiede 12 minuti. Il limite ordinario di ingresso è la capacità del pacco per ora, distinto dall’erogazione in uscita. Con una fonte meno potente la ricarica dura più a lungo.
+
+| Caricatore | Formato | Trasferimento massimo | Peso | REP | Prezzo |
+| :---- | :---- | :---- | :---- | :---- | :---- |
+| Caricatore portatile | Una cella compatta, standard o ravvicinata | 1.000 Lx/h | 0,5 kg | NC | 500 cr |
+| Stazione per moduli | Un modulo o fino a dieci celle standard | 10.000 Lx/h totali | 3 kg | NC | 2.000 cr |
+| Stazione per banchi | Un banco o fino a dieci moduli | 100.000 Lx/h totali | 15 kg | RA | 8.000 cr |
+
+I caricatori non contengono una riserva: richiedono rete o banchi compatibili. Il caricatore portatile comprende i connettori per le celle d’arma dedicate, pesa 0,5 kg e mantiene 4 PI, Qualità Comune e PS Integrità 10\. L’energia ricevuta dal NEC è sottratta alla fonte; non si contano perdite ordinarie di conversione. Cavi e alimentatori inclusi negli apparecchi permettono la ricarica del formato previsto con una fonte adeguata e non costituiscono una riserva.
+
+La tariffa ordinaria è 0,01 cr per Lx ripristinato. Una ricarica completa costa 1 cr per il Verde compatto, 5 cr per il Rosso standard, 2,5 cr per il Blu standard e 10 cr per il Verde standard. Per un Modulo i costi sono rispettivamente Rosso 50, Blu 25 e Verde 100 cr; per un Banco Rosso 500, Blu 250 e Verde 1.000 cr. Non si aggiungono i vecchi costi forfettari. Un servizio particolare può avere un sovrapprezzo dichiarato.
+
+I formati d’arma fino a 750 Lx si ricaricano in un’ora con caricatore portatile adeguatamente alimentato. Il pacco Gehemmapuker da 2.500 Lx richiede un’ora con stazione per Moduli oppure due ore e mezza con caricatore portatile a piena potenza. I dispositivi specialistici che dichiarano un proprio tempo di ricarica conservano quel tempo.
+
+### **5.4.7 Consumi dell’equipaggiamento**
+
+| Dispositivo | NEC | Riserva | Consumo | Autonomia |
+| :---- | :---- | :---- | :---- | :---- |
+| Torcia a mano di riferimento | Verde compatto | 100 Lx | 1 Lx/h | 100 ore |
+| Lampada frontale | Verde compatto | 100 Lx | 1 Lx/h | 100 ore |
+| Lanterna elettrica | Verde standard | 1.000 Lx | 5 Lx/h | 200 ore |
+| Comunicatore personale | Verde compatto | 100 Lx | 1 Lx/h | 100 ore |
+| Comunicatore da squadra | Verde standard | 1.000 Lx | 5 Lx/h | 200 ore |
+| Stazione radio portatile | Verde standard | 1.000 Lx | 25 Lx/h | 40 ore |
+| Visore notturno o termico autonomo | Verde standard | 1.000 Lx | 10 Lx/h | 100 ore |
+| Elmetto ASA Recon e altri elmetti elettronici | Verde standard | 1.000 Lx | 25 Lx/h complessivi | 40 ore |
+| Registratore audiovisivo | Verde compatto | 100 Lx | 2 Lx/h | 50 ore |
+| Kit di videosorveglianza | Due Verdi compatti, uno per componente | 100 Lx per componente | 2 Lx/h per componente | 50 ore per componente |
+| Kit di allarme perimetrale | Due Verdi compatti, sensore e avvisatore | 100 Lx per componente | 1 Lx/h per componente | 100 ore per componente |
+| Rilevatore ambientale | Verde compatto | 100 Lx | 2 Lx/h | 50 ore |
+| Scanner diagnostico portatile o Cybertronic | Verde standard | 1.000 Lx | 25 Lx/h | 40 ore di uso |
+| Utensile elettrico portatile di riferimento | Rosso standard | 500 Lx | 100 Lx/h durante l’uso | 5 ore di uso |
+| Drone leggero di riferimento | Rosso standard | 500 Lx | 100 Lx/h | 5 ore |
+| Postazione medica da campo | Modulo di 10 Rossi standard, oppure rete adeguata | 5.000 Lx nel modulo | 1.000 Lx/h | 5 ore con modulo |
+| Spada CSA 404 e altre armi con cella ravvicinata comune | Blu standard, formato ravvicinato | 250 Lx | 50 Lx per attivazione | 5 attivazioni |
+
+La Torcia tattica da 20 Q usa un Verde compatto, 2 Lx/h e 50 ore; i moduli di visione da arma seguono i visori autonomi. Diagnostica del Corredo di manutenzione, Corredo di analisi e Valigetta ASA usano ciascuno un Verde standard, 25 Lx/h e 40 ore. Postazione tecnica e Laboratorio da campo consumano 1.000 Lx/h: un Modulo Rosso esterno offre cinque ore. Il fornello del §3.2 usa un Rosso standard da dieci preparazioni.
+
+I comunicatori hanno un unico consumo operativo comprendente ascolto e trasmissione, senza contare le frasi. I kit con due componenti hanno una cella per componente. Il drone è un profilo leggero di riferimento: i robot già descritti conservano l’autonomia propria. I moduli esterni per le postazioni di questo paragrafo non sono compresi nel prezzo. Le postazioni medicochirurgiche del §6.8 includono invece i NEC dichiarati e seguono le proprie riserve per operazioni e giorni.
+
+### **5.4.8 Elmetto Recon e spada CSA 404**
+
+L’ASA Recon dell’Alleanza usa un Verde standard da 1.000 Lx. Visione notturna, Sensori 1 a vista e udito e Allerta tattica 1 condividono un consumo complessivo di 25 Lx/h e 40 ore di autonomia. Il Filtro respiratorio 2 è passivo. Non si ricalcola il consumo disattivando una sola funzione; spegnendo tutta l’elettronica il consumo si arresta. A riserva esaurita cessano i benefici elettronici, mentre il filtro resta disponibile. Un’Iniziativa già determinata non si ricalcola allo spegnimento. Gli altri elmetti elettronici usano lo stesso profilo energetico e conservano i propri benefici.
+
+La CSA 404 Cybertronic usa un Blu standard da 250 Lx: ogni carica consumata spende 50 Lx e aggiunge il previsto \+2d6 Elettricità. Le cinque cariche sono quote di una sola riserva. Gli attacchi ordinari non consumano energia; a zero cariche rimane il profilo non attivato. Dichiarazione, PS per risparmiare una carica dopo un attacco fallito ed eccezioni dei Talenti seguono il Manuale degli Armamenti, §7.1.4. La medesima cella alimenta tutte le armi del formato ravvicinato comune del §7.20.5; ciascuna conserva il proprio effetto.
+
+### **5.4.9 La Neverlost e gli altri impieghi**
+
+La Neverlost usa banchi Blu per entrare e uscire dalla traiettoria: alta erogazione immediata per pochi minuti. I Verdi sostengono a lungo il supporto vitale, che richiede potenza contenuta. I Rossi alimentano motori, scudi e gli altri sistemi ordinari. Durante la manovra i tre gruppi continuano ad alimentare i rispettivi impianti, con riserve distinte.
+
+| Famiglia | NEC adatto | Modalità di impiego |
+| :---- | :---- | :---- |
+| Diagnostica tecnica, analisi scientifica e kit investigativo ASA | Verde per i sensori; Rosso per eventuali strumenti motorizzati | Ore di uso; il consumo del kit comprende i componenti della configurazione dichiarata. |
+| Laboratori e postazioni tecniche | Rosso | Alimentazione continua da modulo, banco o rete durante il lavoro. |
+| UMC e iniettori sanitari elettronici | Verde | Alimentazione dei controlli e dell’erogatore; si mantengono le cartucce come unico consumo ordinario da segnare. |
+| Conservazione refrigerata di medicinali e campioni | Verde | Funzionamento continuo; occorre dimensionare il banco per la potenza richiesta. |
+| Fornelli e attrezzature di cottura a Chroma | Rosso | Consumo durante la preparazione; profilo del fornello al §3.2. |
+| Esoscheletri e robot | Rosso | Alimentazione dei motori durante il funzionamento; riserva e autonomia dipendono dal modello. |
+| Impianti cibernetici singoli | Solo se richiesto dalla scheda | Nessun consumo o autonomia da registrare salvo indicazione esplicita. L’interfaccia neurale usa la bioenergia del corpo; catalogo nel capitolo 7\. |
+| Propulsori personali e sistemi di salto | Blu | Erogazione elevata per una breve manovra; energia per uso e limite di erogazione vanno dimensionati per modello. |
+| Armi a energia a distanza | Blu | Consumo per colpo. I formati e le capacità sono: plasma commerciale 20, Hellblazer 30, KEP 808 10 e Intruder 30; 25 Lx per colpo per questi quattro modelli. |
+| Mezzi terrestri, motori e scudi delle navi | Rosso | Consumo durante il funzionamento; moduli o banchi secondo potenza e autonomia del mezzo. |
+| Supporto vitale di navi e habitat | Verde | Alimentazione continua di lunga durata, con riserva dedicata. |
+| Ingresso e uscita dalla traiettoria | Blu | Banchi dedicati alle richieste elevate durante i pochi minuti della manovra. |
+| Edifici e infrastrutture | Rosso per gli impianti generali; Verde per servizi a basso consumo e riserve prolungate | Alimentazione da rete o banchi dimensionati per ciascun servizio. |
+| Stazioni di ricarica | Rete o banchi NEC compatibili | Trasferiscono energia alle celle; una stazione priva di riserva propria richiede una fonte esterna. |
+
+### **5.4.10 Alimentazione tecnologica e riserve mistiche**
+
+I NEC descritti qui alimentano tecnologia in Lx e non richiedono Sintonizzazione. I contenitori mistici conservano capacità in PM, Sintonizzazione e procedure del Manuale della Magia. Non esiste una conversione automatica Lx–PM: un caricatore tecnologico non ricarica una riserva mistica spendendo PM e una cella NEC non paga automaticamente un Incantesimo.
+
+Abiti e protezioni passive, utensili manuali, corde, tende, binocoli e periscopi ottici non richiedono NEC. Antibagliore, Protezione acustica e Filtro respiratorio degli elmetti restano passivi. UMC e iniettori sanitari elettronici usano NEC Verdi, ma si mantengono le cartucce come unico consumo ordinario da segnare. Le postazioni medicochirurgiche registrano separatamente operazioni Rosse, giorni Verdi e consumabili (§6.8). Energia, medicinali, reagenti, ossigeno e munizioni materiali sono risorse distinte.
+
+## **5.5 Accesso e ispezione**
+
+| Oggetto | Beneficio | Peso | Costo / REP |
+| :---- | :---- | :---- | :---- |
+| Piede di porco | \+2 alle Prove di Forza per fare leva, con un punto di appoggio adatto. | 1,5 kg | 100 / CO |
+| Corredo da scasso Standard | Consente interventi su serrature meccaniche ed elettroniche compatibili; strumenti 0\. | 2 kg | 800 / NC |
+| Corredo da scasso Professionale | Come lo Standard, con \+2 alla Prova pertinente. | 2 kg | 2.400 / RA |
+| Sonda ottica flessibile | Telecamera, luce e schermo; cavo da 2 Q, illuminazione fino a 1 Q davanti alla sonda. | 0,5 kg | 800 / NC |
+
+Il piede di porco richiede due mani e 1 AzP per un tentativo ordinario. Il bonus riguarda soltanto una Prova di Forza in cui si usa concretamente la leva; non concede un bonus generico agli attacchi.
+
+Entrambi i corredi da scasso comprendono grimaldelli, utensili di precisione, sonde meccaniche, interfaccia elettronica, cavi e adattatori. Si usa Furtività per serrature meccaniche e Tecnologia per quelle elettroniche. Un tentativo ordinario richiede un minuto, due mani e accesso alla serratura; per lavori complessi il Direttore stabilisce prima un tempo maggiore. Si applicano le normali regole sui nuovi tentativi. Aprire una serratura non disattiva automaticamente gli allarmi.
+
+Ogni corredo da scasso comprende un NEC Verde standard carico, cavo e alimentatore: 1.000 Lx, consumo complessivo 25 Lx/h, autonomia 40 ore effettive. Gli utensili manuali restano utilizzabili senza energia.
+
+Inserire e usare la sonda attraverso un’apertura accessibile richiede 1 AzP e due mani. L’osservazione usa le normali regole di Percezione, senza bonus; la sonda non offre visione termica. Un Verde compatto da 100 Lx alimenta l’intero dispositivo a 2 Lx/h per 50 ore; NEC carico, cavo e alimentatore compresi. Sostituire una cella accessibile richiede 1 AzP.
+
+| Oggetto | Qualità | PS Integrità | PI |
+| :---- | :---- | :---- | :---- |
+| Piede di porco | Comune | 10 | 6 |
+| Scasso Standard | Comune | 10 | 4 |
+| Scasso Professionale | Non comune | 12 | 4 |
+| Sonda ottica flessibile | Non comune | 12 | 2 |
+
+## **5.6 Camuffamento e occultamento**
+
+| Oggetto | Beneficio | Peso | Costo / REP |
+| :---- | :---- | :---- | :---- |
+| Corredo da camuffamento Standard | Trucchi, parrucche, barbe finte e piccoli accessori; modificatore degli strumenti 0\. | 2 kg | 300 / CO |
+| Corredo da camuffamento Professionale | \+2 a Raggirare quando l’aspetto realizzato contribuisce al travestimento. | 2 kg | 1.200 / NC |
+| Telo mimetico personale | \+2 a Furtività per nascondersi rimanendo immobili, con colori e trama adatti al terreno. | 1 kg | 250 / NC |
+| Rete mimetica da campo | \+2 a Furtività per occultare una postazione, materiali o un veicolo fermo interamente coperto; copre 4 × 4 Q. | 4 kg | 600 / NC |
+
+Preparare un travestimento richiede dieci minuti e due mani, su sé stessi o su una persona collaborativa. Non occorre una Prova aggiuntiva per la sola preparazione: si usa Raggirare quando il travestimento viene valutato. Per impersonare una persona servono riferimenti adeguati. Il bonus Professionale non migliora automaticamente voce, menzogne estranee all’aspetto o conoscenza di parole d’ordine. Uniformi complete, documenti e credenziali sono separati; i materiali ordinari di trucco rientrano nel normale rifornimento.
+
+Sistemare il telo richiede 1 AzP; il bonus vale finché il personaggio rimane immobile. Montare la rete richiede cinque minuti a una persona, con i fissaggi compresi. Telo e rete devono essere adatti all’ambiente; non schermano la visione termica, non concedono AR e non nascondono automaticamente rumori, luci o tracce. Si applica un solo bonus degli strumenti, fino a \+2. Nessuno di questi oggetti richiede NEC.
+
+| Oggetto | Qualità | PS Integrità | PI |
+| :---- | :---- | :---- | :---- |
+| Camuffamento Standard | Comune | 10 | 4 |
+| Camuffamento Professionale | Non comune | 12 | 4 |
+| Telo mimetico personale | Comune | 10 | 2 |
+| Rete mimetica da campo | Comune | 10 | 4 |
+
+## **5.7 Elettronica e informatica**
+
+| Oggetto | Beneficio | Peso | Costo / REP |
+| :---- | :---- | :---- | :---- |
+| Terminale palmare | Consulta mappe, documenti e registrazioni; scambia dati con sistemi compatibili. Modificatore strumenti 0\. | 0,3 kg | 400 / CO |
+| Corredo elettronico e informatico Standard | Diagnostica, programmazione, configurazione e piccoli interventi elettronici compatibili; strumenti 0\. | 2,5 kg | 1.000 / NC |
+| Corredo elettronico e informatico Professionale | Come lo Standard; \+2 a Tecnologia per lavori adeguati all’attrezzatura. | 2,5 kg | 3.000 / RA |
+
+Il palmare richiede una mano e 1 AzP per richiamare un’informazione nota, mostrarla o avviare un trasferimento. I dati devono essere disponibili e il collegamento utilizzabile; non comprende utensili per intervenire sui circuiti.
+
+Ogni corredo comprende già un terminale tecnico, programmi di diagnostica e configurazione, multimetro, sonde, utensili di precisione, cavi e adattatori per collegamenti fisici entro 2 Q. Non occorre comprare anche il palmare. Restano necessari accesso, compatibilità ed eventuali ricambi: il corredo non concede automaticamente il controllo di un sistema.
+
+Una diagnosi o configurazione ordinaria richiede dieci minuti; un intervento ordinario su una serratura elettronica richiede un minuto. Le riparazioni mantengono i tempi della propria procedura. Il \+2 Professionale si applica soltanto a Tecnologia pertinente e non si somma al bonus di un corredo da scasso sulla stessa Prova.
+
+Il palmare comprende un NEC Verde compatto da 100 Lx: 2 Lx/h, 50 ore. Ogni corredo usa un solo Verde standard da 1.000 Lx, alloggiato nel terminale, per tutti i componenti della configurazione: 25 Lx/h e 40 ore. NEC carichi, cavi e alimentatori compresi; sostituzione 1 AzP. Le autonomie indicate sostituiscono i precedenti formati dedicati da 24 ore per queste dotazioni.
+
+| Oggetto | Qualità | PS Integrità | PI |
+| :---- | :---- | :---- | :---- |
+| Terminale palmare | Comune | 10 | 2 |
+| Corredo Standard | Comune | 10 | 4 |
+| Corredo Professionale | Non comune | 12 | 4 |
+
+La perdita di PI non comporta automaticamente la cancellazione dei dati; a 0 PI cessa il normale funzionamento dell’apparecchio, secondo il §1.7.
+
+## **5.8 Strumenti culturali artistici e rituali**
+
+I corredi e gli strumenti di questo paragrafo completano le dotazioni iniziali delle Classi. Le versioni Standard hanno modificatore degli strumenti 0 al VA: rendono possibili le attività indicate, con le normali Abilità e Prove pertinenti. Il possesso degli strumenti non concede Talenti, conoscenze segrete, autorizzazioni o accesso a sistemi riservati.
+
+| Oggetto | Contenuto e funzione | Peso | Costo / REP |
+| :---- | :---- | :---- | :---- |
+| Corredo di ricerca documentale Standard | Terminale, riferimenti ordinari su un ambito scelto, taccuino e strumenti di scrittura. Permette consultazione e confronto delle fonti disponibili. | 1,5 kg | 600 / CO |
+| Corredo amministrativo Standard | Terminale con programmi di scrittura, contabilità e gestione dati; cartella e cancelleria. Permette di elaborare documenti, bilanci e registri. | 1 kg | 500 / CO |
+| Strumento musicale portatile acustico | Uno strumento a scelta, con custodia e accessori necessari alla sua esecuzione. | 2 kg | 400 / CO |
+| Strumento musicale portatile elettronico | Uno strumento con riproduzione sonora integrata, custodia e accessori. | 3 kg | 800 / NC |
+| Corredo scenico Standard | Costume, trucco e piccoli oggetti di scena per una forma di spettacolo scelta. | 2 kg | 300 / CO |
+| Terminale per produzione multimediale | Dispositivo con programmi per scrittura, composizione e montaggio audio e video. Le riprese richiedono il registratore separato. | 0,5 kg | 800 / NC |
+| Corredo rituale Standard | Testo di riferimento, telo, ciotola, piccolo braciere, gessetti, incenso e strumenti di scrittura. Fornisce gli utensili ordinari per i Rituali pertinenti. | 2 kg | 300 / CO |
+| Materiale della tradizione | Testo dottrinale e simbolo ordinario della propria tradizione. Non hanno proprietà magiche. | 0,5 kg | 100 / CO |
+| Focus personale semplice | Un piccolo oggetto, come un medaglione o una bacchetta, utilizzabile come Focus dopo la normale Sintonizzazione. Non aggiunge bonus o PM. | 0,1 kg | 50 / CO |
+
+Tutti gli oggetti della tabella hanno Qualità Comune e PS Integrità 10\. Strumenti e corredi hanno 4 PI; Materiale della tradizione e Focus personale semplice hanno 2 PI. Il Livello Standard e la Reperibilità sono distinti dalla Qualità costruttiva.
+
+Prezzi e pesi comprendono custodie, accessori e componenti dichiarati. Le fonti documentali devono essere effettivamente disponibili; testi e programmi ordinari non sostituiscono credenziali, dati mancanti o conoscenze riservate. Il Corredo scenico fornisce materiali per lo spettacolo scelto, senza concedere automaticamente i benefici del Corredo da camuffamento.
+
+Il Corredo rituale richiede comunque i materiali specifici indicati dal singolo Rituale. Il Focus semplice segue le regole magiche del Manuale della Magia: quello assegnato alla creazione è già sintonizzato; un ricambio richiede la normale Sintonizzazione. Non è una riserva energetica e non contiene PM.
+
+### **Alimentazione e impiego**
+
+Il terminale di ciascun Corredo di ricerca o amministrativo, il Terminale per produzione multimediale e lo Strumento musicale elettronico utilizzano ciascuno un NEC Verde compatto da 100 Lx: consumo 2 Lx/h e autonomia 50 ore effettive, anche non consecutive. NEC carico, cavo e alimentatore sono compresi. Il NEC del terminale è già parte del corredo e non si registra una seconda volta.
+
+Ricambio Verde compatto carico: 10 cr, REP CO. Sostituzione con ricambio accessibile: 1 AzP. Ricarica completa: un’ora e 1 cr con fonte e alimentatore adeguati, secondo il §5.4. Gli altri oggetti di questo paragrafo non richiedono NEC.
+
+Preparazione e utilizzo seguono il §1.4 e i tempi dell’attività svolta. Scrittura, ricerca, esecuzione artistica e Rituali mantengono le normali Prove quando l’esito è incerto. Cancelleria, trucco e materiali ordinari si reintegrano durante il normale rifornimento, senza registrare ogni singolo impiego; materiali speciali e componenti dei Rituali restano separati.
 
 # **6 Equipaggiamento sanitario**
 
@@ -500,7 +883,7 @@ Soccorso Immediato del Paramedico riduce il pronto soccorso a due Round consecut
 
 Intervento Mirato del Medico riduce di uno stato una Ferita con una Prova riuscita di Medicina, dieci minuti fuori combattimento e strumenti almeno Standard appropriati. Terapia Intensiva riduce di due stati una Ferita con la propria procedura di un’ora e una struttura sanitaria adatta. Questi Talenti condividono il limite di un tentativo ogni sette giorni sullo stesso paziente, anche in caso di fallimento. Il limite riguarda le cure delle Ferite dei Talenti, non il pronto soccorso ai PV.
 
-Possedere un kit Professionale o chirurgico non concede quei Talenti. Il Magistrale del pronto soccorso non raddoppia gli stati di Ferita curati da una procedura diversa. Le Menomazioni seguono requisiti, tempi e trattamenti propri del Manuale del Giocatore.
+Possedere un kit Professionale o chirurgico non concede quei Talenti. I programmi delle postazioni medicochirurgiche del §6.8 consentono invece le procedure elencate, con i medesimi limiti dei trattamenti. Il Magistrale del pronto soccorso non raddoppia gli stati di Ferita curati da una procedura diversa. Le Menomazioni seguono requisiti, tempi e trattamenti propri del Manuale del Giocatore.
 
 ## **6.2 Cartucce sanitarie e somministrazione rapida**
 
@@ -518,7 +901,7 @@ La Curativa e lo Spray rimarginante recuperano PV soltanto se il paziente non è
 
 ### **Un’unica somministrazione rapida per Round**
 
-Ogni destinatario può ricevere una sola somministrazione medica rapida per Round complessivamente da UMC, Iniettore sanitario, Pistola sanitaria e Spray rimarginante, comprese le monodosi del §6.6. Il limite riguarda il paziente, anche se intervengono più persone o dispositivi. Un’attivazione automatica e una manuale non aggirano questo limite.
+Ogni destinatario può ricevere una sola somministrazione medica rapida per Round complessivamente da UMC, Iniettore sanitario, Pistola sanitaria, Spray rimarginante, impianti e postazioni medicochirurgiche, comprese le monodosi del §6.6 e i naniti del §6.7. Il limite riguarda il paziente, anche se intervengono più persone o dispositivi. Un’attivazione automatica e una manuale non aggirano questo limite.
 
 Se il paziente ha già ricevuto una Curativa nel Round, l’emergenza automatica della UMC deve attendere il Round successivo; se ha ricevuto l’emostatica automatica, non può ricevere anche una Curativa nello stesso Round. Medicazioni, Talenti e magia seguono le rispettive procedure e limiti; non sono trasformati in somministrazioni rapide.
 
@@ -526,7 +909,7 @@ Quando una ferita attiva un protocollo d’emergenza, prima si risolvono interam
 
 ## **6.3 Unità Medica di Combattimento UMC**
 
-La UMC è un modulo sanitario applicabile alle armature compatibili, con un collegamento effettivo al corpo dell’utilizzatore. I tre modelli usano le stesse cartucce. I prezzi del modulo sono a vuoto; non si conteggia una durata di batteria per il funzionamento ordinario della UMC.
+La UMC è un modulo sanitario applicabile alle armature compatibili, con un collegamento effettivo al corpo dell’utilizzatore. I tre modelli usano le stesse cartucce. I prezzi del modulo sono a vuoto; i NEC Verdi alimentano controlli ed erogatore. Le cartucce restano l’unico consumo ordinario da segnare, senza un contatore separato di autonomia.
 
 | Modello | Cartucce | PI | Qualità | PS INT | REP | Costo vuoto |
 | :---- | :---- | :---- | :---- | :---- | :---- | :---- |
@@ -555,6 +938,8 @@ Il giocatore può comandare una Curativa senza Prova e senza Azione, anche fuori
 Il modulo è applicabile a Leggere, Medie e Pesanti con spazio e accesso al corpo adeguati. È consentita una sola UMC operativa per utilizzatore. Non occupa il posto del rinforzo, non modifica AR, FOR richiesta o categoria e mantiene PI propri. A 0 PI perde la funzione.
 
 Su un’armatura Discreta un’installazione esterna resta visibile; un alloggiamento interno idoneo ne conserva la discrezione. Gli esoscheletri indossabili possono ospitare una UMC collegata al pilota. Un abitacolo richiede invece un’installazione dedicata. Occorre compatibilità biologica con il destinatario: il modulo non ripara robot o componenti meccanici.
+
+Gli iniettori sanitari impiantati del §7.9 condividono il limite di una somministrazione rapida per destinatario e Round del §6.2. Se è presente anche una UMC, si mantiene un solo protocollo automatico d’emergenza attivo.
 
 Su armatura predisposta il montaggio richiede dieci minuti. Negli altri casi servono un adattamento da 500, un’ora in officina e una Prova di Tecnologia–Strumentazione, purché il modello consenta materialmente l’installazione. Rifornire il contenitore richiede un minuto con modulo disattivato; si annota il nuovo carico misto.
 
@@ -601,7 +986,7 @@ Spendendo 1 AzP e una dose, senza Prova, recupera 1d3 PV fino al massimo. Richie
 
 ### **Scanner diagnostico portatile**
 
-Richiede una mano e contatto con il corpo o con porte diagnostiche compatibili dell’armatura. Una scansione rapida di 1 AzP rileva automaticamente parametri vitali di base, come battito, respirazione e temperatura. Non identifica automaticamente la causa di un’anomalia.
+Richiede una mano e contatto con il corpo o con porte diagnostiche compatibili dell’armatura. Una scansione rapida di 1 AzP rileva automaticamente parametri vitali di base, come battito, respirazione e temperatura. Non identifica automaticamente la causa di un’anomalia. I due scanner diagnostici usano un Verde standard: 25 Lx/h e 40 ore di uso; NEC carico e alimentatore compresi (§5.4).
 
 Una diagnosi richiede almeno un minuto e una Prova di Medicina con \+2 VA degli strumenti, per lesioni e anomalie rilevabili dall’apparecchio. Analisi più approfondite possono richiedere tempo, campioni o un laboratorio. Il bonus vale per la diagnosi, non si trasferisce alla successiva cura e non si somma ad altri bonus degli strumenti alla stessa Prova.
 
@@ -617,7 +1002,7 @@ Comprende cinque set di materiali per procedura. Un set viene consumato all’in
 
 ### **Postazione medica da campo**
 
-Richiede un’ora di montaggio da parte di due persone, un’area riparata di 2 × 2 Q e alimentazione continua da rete o generatore separato. Accoglie un paziente alla volta. Comprende scanner diagnostico standard, strumenti chirurgici e cinque set di materiali per procedura; i ricambi seguono i prezzi del Kit chirurgico.
+Richiede un’ora di montaggio da parte di due persone, un’area riparata di 2 × 2 Q e alimentazione continua da rete oppure Modulo Rosso separato: 1.000 Lx/h, cinque ore con un Modulo da 5.000 Lx. Accoglie un paziente alla volta. Comprende scanner diagnostico standard, strumenti chirurgici e cinque set di materiali per procedura; i ricambi seguono i prezzi del Kit chirurgico.
 
 Fornisce una struttura sanitaria utilizzabile per Terapia Intensiva e per trattamenti di Menomazioni permanenti compatibili con le attrezzature presenti e le competenze del personale. Concede \+3 VA a Medicina per chirurgia e trattamenti delle Ferite o delle Menomazioni; la diagnostica mantiene il \+2 del proprio scanner. Si applica un solo bonus degli strumenti per Prova, senza sommare postazione, scanner e kit. Restano tempi, consumi, Talenti e limiti delle procedure effettuate.
 
@@ -652,3 +1037,428 @@ Le monodosi di questo paragrafo sono confezioni pronte all’impiego e non si ca
 L’anestesia appropriata alla procedura è compresa nel set di materiali del Kit chirurgico e della Postazione medica. Non si acquistano o contano dosi aggiuntive per l’impiego ordinario. Preparazione, somministrazione e assistenza anestesiologica rientrano nei tempi e nella Prova del trattamento.
 
 L’anestesia consente di eseguire l’intervento nelle condizioni richieste. Non concede bonus aggiuntivi, non cura Ferite e non elimina le loro penalità dopo l’operazione. Questo impiego clinico non permette di rendere automaticamente Svenuto un avversario in combattimento. Il Dardo Sedativo segue il proprio profilo nel Manuale degli Armamenti, §7.20.8.
+
+## **6.7 Naniti medici**
+
+Una cartuccia di naniti medici riduce la Ferita di un solo stato al termine del trattamento. La durata dipende dalla gravità al momento della somministrazione; il tempo viene fissato allora. La dose non cura più stati in successione.
+
+| Stato iniziale | Durata | Esito se lo stato non cambia nel frattempo |
+| :---- | :---- | :---- |
+| Superficiale | 10 minuti | Guarita |
+| Importante | 20 minuti | Superficiale |
+| Profonda | 30 minuti | Importante |
+| Seria | 40 minuti | Profonda |
+| Grave | 50 minuti | Seria |
+
+Ogni paziente può ricevere una dose ogni 24 ore, conteggiate dalla precedente somministrazione. Il trattamento non consuma il tentativo medico ogni sette giorni ed è compatibile con Intervento Mirato, Terapia Intensiva e le procedure equivalenti delle postazioni, prima o dopo di esse. Non si accumula un beneficio da usare su Ferite future se il paziente è già guarito alla conclusione.
+
+I naniti non recuperano PV, non arrestano il Sanguinamento e non curano Menomazioni o componenti meccanici. Una dose occupa un alloggiamento e si consuma alla somministrazione. È compatibile con UMC, iniettori, pistole sanitarie, iniettori impiantati e postazioni medicochirurgiche; segue le Azioni e le Prove del dispositivo usato e il limite di una somministrazione rapida per Round. Non richiede un conteggio energetico separato.
+
+Prezzo: 5.000 cr per cartuccia monouso. Reperibilità Molto rara, REP MR.
+
+## **6.8 Postazioni medicochirurgiche**
+
+Una postazione medicochirurgica è una mini sala operatoria per un paziente, in forma di lettino attrezzato o capsula. Comprende diagnostica, strumenti chirurgici, bracci assistiti, somministrazione di farmaci e supporto vitale. Per la stasi il paziente viene racchiuso nel compartimento protetto. Tutti i modelli esistono in versione fissa o mobile.
+
+### **6.8.1 Operatore e intelligenza artificiale**
+
+| Modello | Prova medica | Riserva Verde |
+| :---- | :---- | :---- |
+| Semiautomatica | Medicina dell’operatore \+3 strumenti | 10 giorni |
+| Automatica Standard | IA con VA 12 | 10 giorni |
+| Automatica Professionale | IA con VA 15 | 20 giorni |
+| Automatica Specializzata | IA con VA 18 | 30 giorni |
+
+La Semiautomatica richiede un operatore presente che dirige la procedura. Il \+3 sostituisce gli altri bonus degli strumenti. I modelli automatici eseguono gli interventi senza un operatore esterno, usando il VA indicato: comprende già l’attrezzatura e non riceve un ulteriore \+3. Si effettua la normale Prova di Medicina, con Successo, Magistrale, Fallimento e Maldestro della procedura.
+
+I programmi chirurgici costituiscono un’eccezione esplicita ai requisiti ordinari: permettono le procedure elencate anche se l’operatore della Semiautomatica non possiede l’Addestramento Medico o i Talenti corrispondenti. Si usa comunque la sua Medicina. Kit chirurgici e Postazione medica da campo del §6.5 mantengono invece i normali requisiti.
+
+Un modello automatico può essere comandato manualmente. Prima del tentativo si sceglie una sola modalità: VA dell’IA oppure Medicina dell’operatore \+3. Non si effettuano due Prove per lo stesso intervento. Un Medico che opera manualmente applica i propri Talenti pertinenti, compresi Mano Sicura e Chirurgia Precisa; l’IA usa i tempi ordinari.
+
+### **6.8.2 Procedure e limiti**
+
+| Procedura | Tempo ordinario | Effetto con successo |
+| :---- | :---- | :---- |
+| Trattamento mirato delle Ferite | 10 minuti | Riduce la Ferita di uno stato. |
+| Trattamento intensivo delle Ferite | 1 ora | Riduce la Ferita di due stati. |
+| Trattamento di Menomazione temporanea | Secondo la procedura | Applica gli esiti del Manuale del Giocatore, §5.16.5. |
+| Intervento su Menomazione permanente | Secondo la procedura | Diventa temporanea Seria; con Magistrale diventa temporanea Leggera. |
+
+Gli interventi sulle Menomazioni conservano tempi operativi stabiliti dal Direttore, componenti e protesi necessari, esiti e convalescenza delle procedure ordinarie. Il Magistrale non raddoppia automaticamente gli stati di Ferita curati.
+
+Mirato e intensivo condividono un tentativo ogni sette giorni per paziente con Intervento Mirato e Terapia Intensiva del Medico. Il tentativo conta anche se fallisce. Per le Menomazioni permanenti resta un tentativo ogni sette giorni sulla stessa lesione; per le temporanee uno per ciascuno stadio della stessa Menomazione. Cambiare medico, IA o postazione non azzera alcun limite. I naniti mantengono il limite distinto di 24 ore.
+
+### **6.8.3 Energia e materiali chirurgici**
+
+Ogni postazione comprende un Modulo NEC Rosso carico, sufficiente per dieci operazioni, e cinque cartucce chirurgiche. Una singola procedura su una Ferita o una Menomazione è un’operazione: all’inizio consuma un ciclo energetico Rosso e una cartuccia chirurgica, anche se fallisce o viene interrotta. Curare una Ferita e una Menomazione richiede due operazioni. Si segnano operazioni residue e cartucce residue separatamente, senza conteggiare ore o Lx durante l’intervento.
+
+La cartuccia chirurgica comprende anestetici ordinari, disinfettanti, suture e materiali da medicazione. Farmaci specifici, cartucce Curative, naniti, protesi e componenti speciali sono separati. Scansioni semplici e somministrazioni di farmaci non consumano un intero ciclo operatorio.
+
+### **6.8.4 Alloggiamenti e farmaci aggiuntivi**
+
+| Modello | Chirurgiche | Farmacologiche | Ricariche nutritive |
+| :---- | :---- | :---- | :---- |
+| Semiautomatica | 5 | 10 | 10 |
+| Automatica Standard | 5 | 10 | 10 |
+| Automatica Professionale | 5 | 20 | 20 |
+| Automatica Specializzata | 5 | 30 | 30 |
+
+Ogni alloggiamento farmacologico contiene una singola dose: Emostatica, Coagulante, Curativa, naniti, antidoto specifico o farmaco terapeutico specifico in formato compatibile. Il carico è liberamente misto: per esempio quattro Curative, tre Coagulanti, due Emostatiche e una dose di naniti occupano i dieci posti di una Standard. Si annotano le dosi per tipo. Gli alloggiamenti chirurgici e nutritivi sono separati e non aumentano la capacità farmacologica.
+
+La somministrazione automatica usa soltanto dosi effettivamente caricate. Una dose consumata libera il posto. Caricare o sostituire una cartuccia farmacologica richiede 1 AzP, senza Prova. Il vano esterno permette a un assistente di rifornire la postazione durante l’intervento senza interromperlo.
+
+Durante l’operazione si possono somministrare farmaci aggiuntivi tramite la postazione: ogni dose si consuma separatamente, senza una seconda Prova, senza allungare l’intervento e senza spendere un altro ciclo Rosso. Restano i requisiti e i limiti di ogni farmaco. In particolare, una Curativa recupera 1d6 PV soltanto senza Sanguinamento attivo, anche durante una sospensione valida.
+
+Vale una sola somministrazione rapida per paziente e Round, complessivamente fra postazione, dispositivi esterni e impianti. Il consumo della cartuccia chirurgica non è una somministrazione rapida. Gli effetti dei farmaci sono indipendenti dall’esito chirurgico: una Curativa già somministrata conserva i PV recuperati anche se l’intervento fallisce. I naniti mantengono la propria durata e il limite ogni 24 ore.
+
+Antidoti e farmaci terapeutici sono disponibili anche in cartucce compatibili con queste postazioni, allo stesso prezzo delle monodosi del §6.6. Le confezioni manuali ordinarie restano utilizzabili esternamente e non diventano compatibili con UMC, iniettori o pistole sanitarie.
+
+### **6.8.5 Degenza e stasi**
+
+La degenza assistita vale come ricovero ospedaliero: una Ferita migliora di uno stato ogni tre giorni secondo le normali condizioni del Manuale del Giocatore, §5.16. La Semiautomatica richiede l’assistenza dell’operatore; i modelli automatici svolgono autonomamente monitoraggio e cure ordinarie. Non si consumano cartucce chirurgiche o cicli operatori per la sola degenza.
+
+La stasi mantiene un paziente vivente sospendendo Sanguinamento, normale progressione biologica di malattie e veleni e recupero naturale. Non cura e non riporta in vita; gli effetti magici o soprannaturali seguono la propria fonte. Per operare occorre uscire dalla stasi.
+
+Degenza e stasi condividono la riserva Verde, separata dal NEC Rosso: dieci giorni per Semiautomatica e Standard, venti per Professionale, trenta per Specializzata. I giorni consumati sono cumulativi: cinque giorni di degenza su una Professionale lasciano quindici giorni di riserva. Fermare e riavviare la funzione non ripristina la riserva. Non si conteggia un consumo orario.
+
+Durante la degenza serve una ricarica nutritiva sanitaria per paziente e giorno: comprende il nutrimento equivalente a una razione e due litri d’acqua. Chi può mangiare e bere può usare normali provviste. I nutrimenti non accelerano la guarigione. Durante la stasi non si consumano ricariche nutritive, ma continua a esaurirsi la riserva Verde.
+
+Le postazioni fisse alimentate dalla rete conservano normalmente le batterie come riserva; anche le mobili possono collegarsi a una fonte esterna adeguata. L’esaurimento del Rosso non spegne il supporto vitale se il Verde è disponibile. Per sostituire un Verde senza interrompere la stasi occorre una seconda fonte collegata. Ogni Modulo accessibile si sostituisce in 1 AzP; ricarica e compatibilità seguono il §5.4.
+
+### **6.8.6 Catalogo e installazione**
+
+| Modello | Fissa | Mobile | Peso operativo |
+| :---- | :---- | :---- | :---- |
+| Semiautomatica | 60.000 cr | 75.000 cr | 250 kg |
+| Automatica Standard | 100.000 cr | 125.000 cr | 300 kg |
+| Automatica Professionale | 180.000 cr | 225.000 cr | 350 kg |
+| Automatica Specializzata | 300.000 cr | 375.000 cr | 400 kg |
+
+La versione mobile costa il 25% in più e comprende telaio da trasporto, ancoraggi e componenti protetti; conserva le stesse funzioni mediche. Richiede una superficie di lavoro stabile: non è una dotazione indossabile. L’area operativa è 2 × 2 Q. Dopo il trasporto occorrono dieci minuti di preparazione da parte di due persone, senza Prova ordinaria. Una postazione già installata su un mezzo sanitario resta predisposta fra gli spostamenti; una fissa è pronta dopo l’installazione.
+
+Prezzo e peso operativo comprendono NEC previsti e cinque cartucce chirurgiche. Sono esclusi paziente, scorte aggiuntive, farmaci, nutrimenti e protesi. Gli alloggiamenti farmacologici e nutritivi sono vuoti all’acquisto. I nomi Standard, Professionale e Specializzata descrivono il modello; la Qualità costruttiva resta il dato seguente.
+
+| Modello | Qualità | PS Integrità | PI | REP |
+| :---- | :---- | :---- | :---- | :---- |
+| Semiautomatica | Rara | 14 | 16 | RA |
+| Automatica Standard | Rara | 14 | 16 | RA |
+| Automatica Professionale | Molto rara | 16 | 20 | MR |
+| Automatica Specializzata | Molto rara | 16 | 24 | MR |
+
+Si applicano le normali PS Integrità nei casi previsti dal §1.7. Un fallimento di Medicina non danneggia automaticamente la macchina. A 0 PI le funzioni si arrestano; resta possibile l’apertura manuale d’emergenza. Le condizioni del paziente riprendono secondo le proprie regole: il guasto non provoca automaticamente la morte.
+
+### **6.8.7 Cartucce ricambi e nutrimenti**
+
+| Consumabile | Prezzo | Impiego |
+| :---- | :---- | :---- |
+| Cartuccia chirurgica | 500 cr | Una operazione; confezione da cinque 2.500 cr. |
+| Emostatica | 200 cr | Sospende il Sanguinamento per cinque Round. |
+| Coagulante | 600 cr | Arresta il Sanguinamento. |
+| Curativa | 500 cr | 1d6 PV alle condizioni del §6.2. |
+| Naniti medici | 5.000 cr | Uno stato di Ferita; tempi e limiti del §6.7. |
+| Antidoto specifico | 500 cr | Tratta il veleno corrispondente. |
+| Farmaco terapeutico specifico | 100 cr | Dose con copertura di 24 ore. |
+| Ricarica nutritiva sanitaria | 50 cr | Un paziente per un giorno di degenza; 2,5 kg; REP NC. |
+
+Cinque ricariche nutritive costano 250 cr e pesano 12,5 kg; dieci costano 500 cr e pesano 25 kg. La scorta caricata si aggiunge al peso operativo della postazione. Le cartucce mantengono la Reperibilità indicata nei §§6.2, 6.6 e 6.7.
+
+| NEC di ricambio | Riserva assegnata | Peso | Carico | Ricarica completa |
+| :---- | :---- | :---- | :---- | :---- |
+| Modulo Rosso | 10 operazioni | 2 kg | 600 cr | 50 cr |
+| Modulo Verde | 10 giorni di degenza o stasi | 2 kg | 1.100 cr | 100 cr |
+
+| Modello | NEC compresi | Set di ricambio carico | Ricarica completa |
+| :---- | :---- | :---- | :---- |
+| Semiautomatica / Standard | 1 Rosso \+ 1 Verde | 1.700 cr | 150 cr |
+| Professionale | 1 Rosso \+ 2 Verdi | 2.800 cr | 250 cr |
+| Specializzata | 1 Rosso \+ 3 Verdi | 3.900 cr | 350 cr |
+
+Tutti i Moduli sono riutilizzabili, REP NC. Il primo set è già compreso nel prezzo della postazione. I costi di ricarica corrispondono all’energia ripristinata alla tariffa ordinaria del §5.4; tempi e potenza disponibile seguono le regole generali, senza aggiungere un consumo orario alla gestione degli interventi.
+
+# **7 Dispositivi specialistici**
+
+Il catalogo seguente descrive gli impianti cibernetici singoli utilizzabili dai personaggi. Ogni scheda indica il beneficio concreto, il costo in Umanità, i prezzi e l’Integrità. I corpi cyborg completi e le loro centrali energetiche non fanno parte di questo catalogo.
+
+## **7.1 Regole comuni**
+
+Una protesi sostitutiva ripristina la normale funzione della parte del corpo. I potenziamenti aggiungono soltanto i benefici dichiarati. Un arto artificiale non aumenta automaticamente Caratteristiche, PV, AR, numero di attacchi o Azioni.
+
+Umanità. Il costo UMN si applica all’installazione, secondo il Manuale del Giocatore, §5.21. I modelli CYBERTRONIC costano metà UMN degli equivalenti standard. Le tabelle riportano entrambi i valori: non dimezzare nuovamente la colonna CYBERTRONIC. Collegare equipaggiamento all’interfaccia o cambiare un chip non comporta ulteriori perdite di UMN.
+
+Alimentazione. Gli impianti di questo catalogo non richiedono NEC, ricariche o conteggio dell’autonomia. Un consumo energetico si gestisce soltanto quando la scheda lo prevede espressamente. L’Interfaccia neurale e gli impianti neurali alimentati dalla bioenergia del corpo non consumano PV, PM o altre risorse di gioco. Restano le cartucce degli iniettori e il limite di 24 ore del Processore neurale di Abilità.
+
+Installazione. Richiede una struttura medica attrezzata. Una normale installazione acquistata come servizio non richiede prove aggiuntive o salvezze casuali di rigetto. Il costo d’installazione si aggiunge al prezzo dell’impianto; i prezzi sono in crediti. Le versioni potenziate sono impianti completi e comprendono già la protesi sostitutiva.
+
+Cumulo. I benefici tecnologici equivalenti sulla stessa Prova o sullo stesso danno non si sommano: si applica il maggiore, anche con elmetti ed esoscheletri. Funzioni diverse possono coesistere. Il SIN segue la propria regola distinta: un solo bonus SIN pertinente per Prova, fino a \+2. Per strumenti, Talenti e altre fonti si rispettano le rispettive regole di cumulo.
+
+I costi UMN di impianti diversi si sommano. Spegnimento, rottura o rimozione di un chip non restituiscono Umanità. Il recupero di UMN richiede una procedura che ne specifichi condizioni e punti restituiti; le cure e le riparazioni ordinarie non la recuperano automaticamente.
+
+Qualità e Reperibilità restano dati distinti. Salvo una scheda diversa, standard e CYBERTRONIC hanno gli stessi effetti, PI e PS Integrità; cambiano i prezzi e il costo UMN indicati.
+
+## **7.2 Integrità e riparazione**
+
+La PS Integrità appartiene all’impianto e dipende dalla Qualità costruttiva. Si tira 1d20: un risultato pari o inferiore alla PS è un successo, senza aggiungere le Salvezze del personaggio. I PI massimi sono quelli della scheda; si annotano separatamente i PI attuali.
+
+| Qualità | Scarsa | Comune | Non comune | Rara | Molto rara | Leggendaria |
+| :---- | :---- | :---- | :---- | :---- | :---- | :---- |
+| PS Integrità | 8 | 10 | 12 | 14 | 16 | 18 |
+
+Si effettua la PS solo quando una regola coinvolge effettivamente l’impianto, secondo il Manuale degli Armamenti, §7.2.1. Una normale ferita del portatore non impone automaticamente una PS agli innesti interni.
+
+| Causa | Perdita se la PS fallisce |
+| :---- | :---- |
+| Attacco intenzionale per danneggiare l’impianto | 1 PI ogni 5 danni residui o frazione, dopo le protezioni applicabili. |
+| Attacco Magistrale che coinvolge l’impianto | 1 PI aggiuntivo, insieme alle eventuali altre perdite. |
+| Proprietà o effetto di deterioramento | I PI o la conseguenza indicati dall’effetto. |
+| Danno Etereo subito dall’impianto | 1 PI ogni 5 danni residui o frazione; protegge soltanto l’AR magica. |
+
+Si effettua una sola PS per impianto e per colpo, riunendo tutte le cause. Il successo evita le perdite strutturali previste; il fallimento le somma. La conversione dello stesso danno in PI si conta una sola volta anche se è Etereo e deriva da un attacco intenzionale per rompere.
+
+A 0 PI l’impianto è Rotto e perde la funzione indicata. Un arto sostitutivo o potenziato diventa inutilizzabile. Se una gamba della coppia potenziata è inutilizzabile, cessano i benefici della coppia, mentre l’altra conserva il proprio funzionamento. Un modulo accessorio rotto non rende automaticamente inutilizzabile l’arto che lo ospita.
+
+I PI non sono PV aggiuntivi e non assorbono i danni destinati al personaggio. Non si applicano penalità progressive per la sola perdita di PI; eventuali condizioni specifiche seguono la regola che le ha causate.
+
+### **Riparazione meccanica**
+
+Un’ora di lavoro su un impianto con strumenti, materiali e ricambi adatti, poi una Prova di Tecnologia: Successo \+1 PI; Magistrale \+2 PI; fallimento nessun recupero; Maldestro −1 PI, minimo 0, senza PS Integrità. Non si supera il massimo. Strumenti improvvisati, Talenti e condizioni indipendenti seguono il §7.2.1 del Manuale degli Armamenti. Gli interventi sui tessuti biologici competono a Medicina.
+
+## **7.3 Interfaccia neurale**
+
+L’Interfaccia neurale collega il sistema nervoso ai dispositivi compatibili con SIN. Il beneficio dipende dalla scheda dell’equipaggiamento collegato: SIN 1 concede \+1 VA e SIN 2 concede \+2 VA soltanto alle Prove espressamente indicate. Un oggetto privo di SIN non riceve il bonus.
+
+| Modello | UMN | PI | Qualità | PS INT | REP | Costo |
+| :---- | :---- | :---- | :---- | :---- | :---- | :---- |
+| Interfaccia neurale CYBERTRONIC | 1 | 4 | Non comune | 12 | RA | 5.000 |
+
+Installazione: 2.000 cr. L’equivalente standard ha costo 2 UMN. L’interfaccia usa la bioenergia del corpo e non richiede NEC, ricariche o registrazione dell’autonomia.
+
+Gli innesti CYBERTRONIC si abbinano automaticamente all’equipaggiamento CYBERTRONIC. Un’interfaccia di altra marca richiede un minuto di configurazione e una Prova di Tecnologia: con successo l’abbinamento viene memorizzato; con fallimento rimane disponibile il funzionamento ordinario del dispositivo. Non si ripete la Prova a ogni utilizzo.
+
+Si applica un solo SIN pertinente per Prova, scegliendo il maggiore fino a \+2. Il SIN è distinto dal beneficio ordinario dello strumento e dai modificatori nativi dell’equipaggiamento. Non aumenta automaticamente danni, portata, capacità, potenza o numero di Azioni.
+
+Un’interfaccia di comando permette i comandi e lo scambio di dati previsti dal dispositivo; un comando automatico privo di Prova non riceve un bonus numerico. Le procedure complete e le compatibilità sono nel Manuale degli Armamenti, §7.15.1.
+
+Esempio: con la spada CSA 404 il SIN previsto migliora il tiro per colpire. Le cinque scariche restano alimentate dal NEC Blu della spada e non aumentano grazie all’interfaccia. La pistola P500 rimane priva di SIN.
+
+A 0 PI cessano collegamento neurale e relativi benefici. L’equipaggiamento collegato mantiene il funzionamento ordinario, salvo un requisito espresso di collegamento neurale. Non si perde UMN per ciascun oggetto connesso.
+
+## **7.4 Impianti sensoriali**
+
+Ogni voce è un impianto completo: prezzo e UMN non si raddoppiano se coinvolge entrambi gli occhi o entrambe le orecchie. Gli impianti funzionano autonomamente, senza richiedere l’Interfaccia neurale.
+
+| Impianto | Beneficio |
+| :---- | :---- |
+| Potenziamento visivo | \+2 VA a Percezione tramite la vista per individuare movimenti, esaminare particolari e riconoscere dettagli visibili. |
+| Visione notturna | Entro 80 Q elimina le penalità per scarsa illuminazione. Richiede luce ambientale residua. |
+| Visione termica | Entro 40 Q osserva e prende di mira bersagli con sufficiente contrasto termico, anche nel buio naturale completo. |
+| Potenziamento uditivo | \+2 VA a Percezione tramite l’udito per distinguere passi, voci e suoni effettivamente percepibili. |
+
+| Impianto | UMN std / CYB | Costo std / CYB | REP |
+| :---- | :---- | :---- | :---- |
+| Potenziamento visivo | 2 / 1 | 4.000 / 6.000 | RA |
+| Visione notturna | 2 / 1 | 5.000 / 7.500 | RA |
+| Visione termica | 2 / 1 | 8.000 / 12.000 | MR |
+| Potenziamento uditivo | 2 / 1 | 4.000 / 6.000 | RA |
+
+Tutti i modelli: Qualità Non comune, PS Integrità 12, 4 PI. Installazione: 1.000 cr per impianto. Nessun consumo energetico da registrare.
+
+Attivare, disattivare o cambiare una modalità di visione richiede 1 AzP; mantenerla non richiede Azioni. Osservare, ascoltare o cercare mantiene il normale costo. Si effettua una sola Prova di Percezione: vista e udito potenziati insieme concedono \+2, non \+4. Sensori equivalenti dell’elmetto applicano soltanto il bonus maggiore; il SIN resta distinto.
+
+La visione notturna non funziona nel buio completo; fumo, nebbia e ostacoli conservano i propri effetti. La termica ignora il −4 VA della Fumogena standard se distingue il bersaglio, ma non vede attraverso coperture solide e non identifica automaticamente persone o creature nascoste. Gli effetti soprannaturali seguono la loro fonte.
+
+Visione notturna e termica non aumentano direttamente il VA per colpire e non riducono le penalità di distanza. Il Potenziamento visivo può migliorare Percezione anche durante la visione termica. A 0 PI cessa la funzione concessa dall’impianto.
+
+## **7.5 Protesi degli arti**
+
+| Impianto | Beneficio |
+| :---- | :---- |
+| Braccio sostitutivo | Ripristina le funzioni di braccio e mano: impugnare, manipolare, attaccare e usare strumenti. |
+| Braccio potenziato | Come il sostitutivo; \+2 VA a Forza o Atletica per sollevare, spingere, trascinare o sfondare usando il braccio; \+1 danno agli attacchi ravvicinati effettuati con quell’arto. |
+| Gamba sostitutiva | Ripristina le funzioni di gamba e piede: camminare, correre, saltare e sferrare calci. |
+| Gambe potenziate in coppia | Ripristinano le funzioni di entrambe le gambe; \+1 Q al Movimento e \+2 VA ad Atletica per saltare e mantenere l’equilibrio. |
+
+| Impianto | UMN std / CYB | Costo std / CYB | REP |
+| :---- | :---- | :---- | :---- |
+| Braccio sostitutivo | 2 / 1 | 6.000 / 9.000 | NC |
+| Braccio potenziato | 6 / 3 | 10.000 / 15.000 | RA |
+| Gamba sostitutiva | 2 / 1 | 6.000 / 9.000 | NC |
+| Gambe potenziate in coppia | 10 / 5 | 18.000 / 27.000 | RA |
+
+| Impianto | Qualità | PS INT | PI |
+| :---- | :---- | :---- | :---- |
+| Braccio sostitutivo | Non comune | 12 | 6 |
+| Braccio potenziato | Rara | 14 | 8 |
+| Gamba sostitutiva | Non comune | 12 | 8 |
+| Gambe potenziate in coppia | Rara | 14 | 10 per gamba |
+
+Installazione: 2.000 cr per arto; 4.000 cr per la coppia di gambe. Prezzo e UMN della coppia sono complessivi, mentre i PI si registrano per ciascuna gamba. Il braccio comprende la mano e la gamba comprende il piede. Nessun consumo energetico da registrare.
+
+La protesi elimina le limitazioni dovute all’assenza dell’arto sostituito; non cura altre Ferite o Menomazioni. I potenziamenti non aumentano FOR o DES, non soddisfano requisiti delle armi e non modificano automaticamente tiri per colpire, Difese, PV o AR.
+
+Il \+1 danno del braccio vale per pugni, gomitate e armi da mischia impugnate con quell’arto, anche a due mani, una sola volta per colpo. Non aumenta il danno di armi da fuoco o da lancio. Due braccia potenziate mantengono \+2 alla Prova pertinente e \+1 danno al colpo: i benefici equivalenti non si sommano, anche con esoscheletri. A 0 PI l’arto è inutilizzabile; per la coppia di gambe si applica il §7.2.
+
+## **7.6 Protezione e supporto organico**
+
+| Impianto | Beneficio |
+| :---- | :---- |
+| Filtro respiratorio impiantato | \+2 alle PS Tempra contro veleni e agenti patogeni inalati; richiede aria con ossigeno sufficiente. |
+| Filtro ematico | \+2 alle PS Tempra contro i veleni, indipendentemente dalla via d’ingresso nell’organismo. |
+| Termoregolatore interno | \+2 alle PS Tempra contro caldo e freddo ambientali. |
+| Rinforzo sottocutaneo | Una rete protettiva sotto la pelle concede \+1 AR non magica, anche senza armatura indossata. |
+
+| Impianto | UMN std / CYB | Costo std / CYB |
+| :---- | :---- | :---- |
+| Filtro respiratorio impiantato | 2 / 1 | 4.000 / 6.000 |
+| Filtro ematico | 2 / 1 | 5.000 / 7.500 |
+| Termoregolatore interno | 2 / 1 | 6.000 / 9.000 |
+| Rinforzo sottocutaneo | 4 / 2 | 10.000 / 15.000 |
+
+| Impianto | Qualità | PS INT | PI |
+| :---- | :---- | :---- | :---- |
+| Filtri e termoregolatore, ciascuno | Non comune | 12 | 4 |
+| Rinforzo sottocutaneo | Rara | 14 | 6 |
+
+Tutti i modelli: REP Rara; installazione 2.000 cr per impianto. Benefici sempre attivi, senza consumo energetico da registrare.
+
+Filtri e termoregolatore migliorano soltanto le PS già previste dal pericolo. Il filtro respiratorio non fornisce ossigeno, respirazione subacquea o protezione nel vuoto. Il filtro ematico non cura automaticamente un avvelenamento in corso e non protegge in generale da malattie o Corruzione. Il termoregolatore non riduce danni di Fuoco o Gelo e non elimina il bisogno di acqua, riposo o protezione ambientale.
+
+Il rinforzo sottocutaneo si somma all’AR di armatura, rinforzo indossato e scudo. Non occupa il posto del rinforzo dell’armatura e non ne cambia categoria, requisito FOR o penalità. Si beneficia di un solo rinforzo sottocutaneo; la sua AR protegge dai danni Naturali e Magici, non dagli Eterei.
+
+Bonus equivalenti alle Salvezze usano soltanto il maggiore: maschera, filtro respiratorio e filtro ematico concedono complessivamente \+2 alla stessa PS contro un veleno inalato. A 0 PI cessa il beneficio. La rottura di filtri o termoregolatore non arresta automaticamente gli organi naturali; il rinforzo rotto perde soltanto il proprio \+1 AR.
+
+## **7.7 Coordinamento neurale**
+
+| Impianto | Beneficio |
+| :---- | :---- |
+| Acceleratore dei riflessi | \+1 Iniziativa, applicato quando viene determinata. |
+| Coordinatore offensivo | \+1 VA alle Prove per colpire ravvicinate e a distanza, compresi attacchi senz’armi e armi da lancio. |
+| Coordinatore difensivo | \+1 VA a Parata e Schivata; inoltre \+1 alla PS Riflessi usata per Elusione. |
+
+| Impianto | UMN std / CYB | Costo std / CYB |
+| :---- | :---- | :---- |
+| Acceleratore dei riflessi | 2 / 1 | 4.000 / 6.000 |
+| Coordinatore offensivo | 4 / 2 | 8.000 / 12.000 |
+| Coordinatore difensivo | 4 / 2 | 8.000 / 12.000 |
+
+Tutti i modelli: Qualità Non comune, PS Integrità 12, 4 PI, REP Rara. Installazione: 2.000 cr per impianto. Usano la bioenergia del corpo, senza consumo da registrare. Funzionano autonomamente, senza richiedere l’Interfaccia neurale; i benefici sono passivi e non richiedono Azioni di attivazione.
+
+L’Acceleratore dei riflessi non concede Azioni aggiuntive e non impedisce automaticamente la Sorpresa. Il suo ripristino durante lo scontro non fa ricalcolare l’Iniziativa.
+
+Il Coordinatore offensivo migliora il tiro per colpire, senza aumentare danni o numero di attacchi. Si applica anche all’eventuale Prova separata per colpire con un Incantesimo, ma non alla Prova di Potere per lanciarlo.
+
+Il Coordinatore difensivo si applica alle Difese consentite al personaggio, mantenendone costi e requisiti. Su Elusione vale soltanto il \+1 alla PS Riflessi, una volta sola; non modifica le altre PS Riflessi.
+
+Le assistenze tecnologiche equivalenti non si sommano. Coordinatore offensivo e Assistenza offensiva dell’elmetto concedono complessivamente \+1, non \+2. Lo stesso criterio vale per Iniziativa e Difese. Il SIN mantiene la propria regola distinta quando pertinente.
+
+A 0 PI cessa soltanto il beneficio dell’impianto; il personaggio conserva le proprie capacità ordinarie. Si applicano Integrità e riparazione del §7.2.
+
+## **7.8 Comunicazione e strumenti incorporati**
+
+| Impianto | Beneficio |
+| :---- | :---- |
+| Comunicatore impiantato | Comunicazioni vocali entro 10 km, con ricevitore interno e microfono subvocale: si parla sottovoce senza impugnare dispositivi. |
+| Registratore audiovisivo impiantato | Registra immagini e suoni dal punto di vista del portatore; conserva file riproducibili o esportabili su un dispositivo compatibile. |
+| Microattrezzi integrati | Utensili retrattili nella mano o nell’avambraccio per piccoli interventi meccanici: strumenti Standard, modificatore 0\. |
+
+| Impianto | UMN std / CYB | Costo std / CYB |
+| :---- | :---- | :---- |
+| Comunicatore impiantato | 2 / 1 | 4.000 / 6.000 |
+| Registratore audiovisivo impiantato | 2 / 1 | 3.000 / 4.500 |
+| Microattrezzi integrati | 2 / 1 | 3.000 / 4.500 |
+
+Tutti i modelli: Qualità Non comune, PS Integrità 12, 4 PI, REP Non comune. Installazione: 1.000 cr per impianto. Nessun consumo energetico o autonomia da registrare.
+
+Comunicatore. Accendere, spegnere o cambiare canale richiede 1 AzP. Da attivo, ascoltare e pronunciare una breve frase non richiede altre Azioni; Ordini e Talenti mantengono i propri costi. Per il collegamento bidirezionale si usa la portata del dispositivo più debole, in condizioni favorevoli. Ostacoli e interferenze possono interromperlo. Parlare sottovoce non concede automaticamente bonus a Furtività o comunicazioni non intercettabili; valgono le regole radio del §4.1.
+
+Registratore. Avviare o interrompere una registrazione richiede 1 AzP. Registra ciò che i sensori possono effettivamente vedere e udire, senza bonus a Percezione o ricostruzione di dettagli nascosti. Collegato a un impianto di visione notturna o termica, può conservarne le immagini durante l’utilizzo.
+
+Microattrezzi. Comprendono piccoli cacciaviti, pinze, chiavi e strumenti di misura. Estrarli o riporli richiede 1 AzP. Durante il lavoro la mano è impegnata; Prove e tempi dell’intervento restano ordinari. Ricambi, materiali e attrezzature da officina sono separati. Possono essere installati su un arto naturale; su una protesi sono un modulo aggiuntivo con propri UMN e PI.
+
+A 0 PI cessa la funzione del modulo. La rottura dei microattrezzi non rende automaticamente inutilizzabile la mano che li ospita. Integrità e riparazione seguono il §7.2.
+
+## **7.9 Iniettori sanitari impiantati**
+
+| Impianto | Beneficio |
+| :---- | :---- |
+| Iniettore sanitario impiantato | Somministra al portatore una cartuccia scelta con 1 AzP, senza Prova e senza usare le mani. Richiede che il personaggio sia cosciente. |
+| Iniettore sanitario d’emergenza | Comprende la funzione precedente e somministra automaticamente un’emostatica o una coagulante quando il portatore subisce Sanguinamento. |
+
+| Impianto | Cartucce | UMN std / CYB | Costo std / CYB |
+| :---- | :---- | :---- | :---- |
+| Sanitario impiantato | 5 | 2 / 1 | 5.000 / 7.500 |
+| Sanitario d’emergenza | 5 | 4 / 2 | 10.000 / 15.000 |
+
+| Impianto | Qualità | PS INT | PI | REP |
+| :---- | :---- | :---- | :---- | :---- |
+| Sanitario impiantato | Non comune | 12 | 4 | RA |
+| Sanitario d’emergenza | Rara | 14 | 6 | MR |
+
+Installazione: 2.000 cr per impianto. Sono venduti senza cartucce. Il modello d’emergenza è completo: non si sommano prezzo e UMN del modello base. Non richiedono NEC o conteggio dell’autonomia; si registrano soltanto le cartucce.
+
+Entrambi accettano emostatiche, coagulanti e curative del §6.2 e naniti del §6.7, mantenendone effetti e limiti. Il caricatore contiene una combinazione libera fino a cinque cartucce. Rifornirlo richiede un minuto, con impianto disattivato e sportello accessibile, senza chirurgia.
+
+All’allestimento del modello d’emergenza si sceglie la priorità fra coagulante ed emostatica; se la prima manca, usa l’altra disponibile. Interviene dopo la risoluzione del colpo e della perdita iniziale da Sanguinamento, senza Azioni o Prove, anche se il portatore è incosciente purché ancora assistibile. Non consuma un’altra emostatica mentre è già valida una sospensione del Sanguinamento. Le curative restano volontarie e richiedono 1 AzP anche nel modello d’emergenza.
+
+Resta una sola somministrazione rapida per destinatario e Round, condivisa con UMC, iniettori esterni e altri dispositivi sanitari (§6.2). Se è presente anche una UMC, si sceglie un solo protocollo automatico d’emergenza attivo. Il trattamento non annulla retroattivamente Ferite o morte già risolte.
+
+A 0 PI l’impianto smette di somministrare cartucce; non perde automaticamente quelle rimaste e non interrompe gli effetti dei medicinali già somministrati. Per ripararlo si usa il §7.2.
+
+## **7.10 Processore neurale di Abilità**
+
+Un impianto cerebrale con un alloggiamento per chip intercambiabili. Un chip concede un bonus temporaneo al VA di una sola Abilità: non ne modifica il grado e non assegna Talenti, capacità, conoscenze segrete o autorizzazioni.
+
+| UMN std / CYB | Costo std / CYB | Qualità | PS INT | PI | REP |
+| :---- | :---- | :---- | :---- | :---- | :---- |
+| 4 / 2 | 8.000 / 12.000 | Rara | 14 | 4 | RA |
+
+Installazione: 2.000 cr. Il prezzo non comprende chip. Alimentazione tramite bioenergia, senza consumo da registrare. Inserire o cambiare chip non comporta ulteriori costi UMN.
+
+| Chip | Beneficio | Prezzo | REP |
+| :---- | :---- | :---- | :---- |
+| Assistenza | \+2 VA all’Abilità indicata | 1.000 | RA |
+| Competenza avanzata | \+4 VA all’Abilità indicata | 4.000 | MR |
+
+Ogni chip è dedicato a un’Abilità scelta all’acquisto: Atletica, Furtività, Percezione, Pilotare, Cultura, Intrattenere, Medicina, Oratoria, Raggirare, Scienza, Sopravvivenza o Tecnologia. I chip sono riutilizzabili e non si consumano.
+
+### **Attivazione durata e limite di utilizzo**
+
+Un solo chip attivo alla volta. Attivarlo richiede 1 AzP e il bonus dura 30 minuti consecutivi. Sostituirlo con un ricambio accessibile richiede 1 AzP; rimuoverlo interrompe l’effetto e fa perdere la durata restante.
+
+Il Processore consente una sola attivazione ogni 24 ore, conteggiate dal momento dell’attivazione precedente. Cambiare chip o interrompere anticipatamente l’effetto non azzera il conteggio. Trascorse le 24 ore torna utilizzabile, senza condizioni legate al riposo.
+
+### **Impieghi consentiti**
+
+È utilizzabile da tutti i personaggi, compresi quelli con Addestramento Combattente. Il bonus è escluso dalle Prove di combattimento, dagli Incantesimi, dalle Risorse Interiori e da qualsiasi applicazione magica, compresa la Sintonizzazione. Non si applica ad attacchi, Difese o Manovre di combattimento.
+
+Conta la natura della Prova: un chip Medicina può assistere una cura durante uno scontro e un chip Tecnologia una riparazione sotto il fuoco. Un chip Atletica aiuta ad arrampicarsi, ma non a eseguire una Manovra di combattimento. Restano strumenti, materiali, tempi e condizioni necessari alla Prova, e le normali regole di cumulo del §7.1.
+
+A 0 PI il Processore interrompe l’effetto e non può attivare chip finché non viene riparato. Si applica il §7.2.
+
+# **8 Cataloghi e dotazioni iniziali**
+
+Ogni personaggio riceve una dotazione comune, la dotazione della propria Classe iniziale, i modelli corporativi espressamente previsti e 1.000 \+ (2d6 × 100\) crediti. Le dotazioni si ricevono una sola volta, alla creazione: acquisire successivamente un’altra Classe non assegna nuovo equipaggiamento.
+
+La dotazione comune e le scelte complete delle 25 Classi sono nel Manuale del Giocatore, §§2.16.1–2.16.26. Le corrispondenze corporative, i crediti, gli acquisti e i veicoli sono nei §§2.16.27–2.16.30 dello stesso volume. I profili tecnici degli armamenti restano nel Manuale degli Armamenti; gli strumenti e i consumabili seguono il catalogo pertinente di questo manuale.
+
+## **8.1 Assegnazione e registrazione**
+
+| Caso | Regola |
+| :---- | :---- |
+| Oggetto previsto dalla dotazione | Si riceve integro, funzionante e senza Prova di Reperibilità. |
+| Dispositivo alimentato | Comprende il NEC carico previsto dalla propria scheda. I ricambi si aggiungono soltanto se espressamente elencati. |
+| Consumabili | Si ricevono esattamente le quantità indicate di cartucce, applicazioni, munizioni e set chirurgici. |
+| Oggetto sostitutivo | Si registra soltanto l’oggetto sostitutivo: per esempio il Comunicatore da squadra al posto di quello personale. |
+| Modello corporativo | Si usa soltanto una corrispondenza espressamente indicata. Dove manca, si mantiene il modello commerciale. |
+| Acquisti e conguagli | Durante la creazione gli armamenti ceduti valgono il 100% del prezzo di catalogo. Si paga o si riceve la differenza rispetto al nuovo acquisto. |
+| Veicoli | Sono assegnazioni separate, decise dal Direttore di Gioco secondo le esigenze della campagna. |
+
+Nell’inventario si registrano nome del modello effettivo, quantità, peso e risorse disponibili. I requisiti e le penalità restano quelli della scheda dell’oggetto. Gli accessori già compresi, i NEC installati e i componenti dei corredi si conteggiano una sola volta. Il carico segue il §1.6; un peso ancora assente resta da definire e il totale si indica come parziale.
+
+## **8.2 Crediti acquisti e assegnazioni di missione**
+
+I crediti iniziali si aggiungono agli oggetti assegnati: da 1.200 a 2.200 cr, con valore medio 1.700 cr. Il denaro non speso rimane al personaggio. Per i conguagli si usa il prezzo dell’armamento effettivamente ceduto, corporativo o commerciale, senza attribuirgli anche il valore del profilo di riferimento. La valutazione al 100% vale soltanto durante la creazione e non determina i prezzi di rivendita durante le avventure.
+
+Le munizioni conservano il totale assegnato dalla Classe anche quando cambia la capacità dei caricatori del modello corporativo. Caricatori e accessori devono essere compatibili. Le sostituzioni mediante acquisto conteggiano gli eventuali costi di adattamento secondo il Manuale del Giocatore, §2.16.29.
+
+Medico e Paramedico conservano le dotazioni già previste dalle rispettive Classi. Naniti e postazioni medicochirurgiche sono acquisti o dotazioni di missione: non sono assegnati gratuitamente come parte della dotazione personale iniziale. Anche i veicoli restano separati, compreso quello eventualmente fornito a un Pilota.
+

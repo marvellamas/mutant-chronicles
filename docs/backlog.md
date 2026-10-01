@@ -115,3 +115,25 @@ Censimento in docs/censimento-talenti.md (319 Talenti; 61 con effetti tipizzati,
 ## 20. ✔ Rimodulazione della SS sui tab della SD — fatta il 1° ottobre 2026, su branch `layout-ss`
 
 Fogli 1 Identità, 2 Abilità, 3 Combattimento, 4 Inventario sempre; 5 Poteri e 6 Artefatti quando servono; numerazione fissa e «pagina P di T»; quadratini con un massimo in un solo componente. Piano ed esito in docs/layout-ss.md, PDF in `docs/esempi-stampa/`. Il merge su `main` lo decide Marcello dopo la prova su carta.
+
+## 21. Equipaggiamento 0.5, lotto 2: cap. 5 «Strumenti professionali» e NEC — PROSSIMO
+
+Fonte: Manuale dell'Equipaggiamento 0.5 (Google Doc del 01/10/2026, testo in `docs/manuali-txt/equipaggiamento.md`; diff in `docs/diff-manuali-2026-10-01.md`).
+- **§5.4 Nuclei Energetici Cromatici:** catalogo di celle e pacchi (Verdi, Blu, Rossi; compatti, standard, Moduli), ricarica, consumi dell'equipaggiamento.
+  - Rifare con questo catalogo i due NEC Verdi di ricambio del §7.3.4 degli Armamenti, oggi in `accessori_armi.json`.
+  - Rifare l'alimentazione dei cap. 2–4, oggi aggiornata solo nelle schede collegate alle dotazioni e scritta anche in `tools/lotti/lotto_equipaggiamento_03.mjs`, da rigenerare.
+- **§§5.1–5.3, 5.5–5.8:** strumenti tecnici, scientifici, agricoli, accesso e ispezione, camuffamento, elettronica, strumenti culturali e rituali, con il **Focus personale semplice** (§5.8).
+  - Collegare con `rif` le voci di dotazione dei Corredi e del Focus (A.34).
+
+## 22. Equipaggiamento 0.5, lotto 3: cap. 7 «Dispositivi specialistici» e tab Cibernetica
+
+- Impianti: interfaccia neurale, sensoriali, protesi, protezione organica, coordinamento neurale, strumenti incorporati, iniettori, Processore neurale di Abilità.
+  - Ogni impianto con PI e UMN standard o CYBERTRONIC.
+  - Il Processore non aiuta la magia (Magia 1.3 sez. 8; Giocatore §5.21).
+- Tab Cibernetica della SD (oggi «in attesa del manuale», `regole.json` → `tab_in_arrivo`) e foglio 7 della SS.
+- Prima va decisa l'Umanità (backlog 13).
+
+## 23. Equipaggiamento 0.5, lotto 4: cap. 8 «Cataloghi e dotazioni iniziali», cap. 6 ampliato
+
+- Cap. 8: assegnazione e registrazione, crediti, acquisti e assegnazioni di missione; confronto con `dotazioni.json` e `src/dotazioni.js`.
+- Cap. 6: naniti medici (una dose ogni 24 ore, fuori dal tentativo settimanale) e postazioni medicochirurgiche (§6.8), che toccano anche le cure del Giocatore (§5.15–5.16).

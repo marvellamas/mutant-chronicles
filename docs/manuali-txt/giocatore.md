@@ -4,7 +4,7 @@
 
 ## Personaggi e regole di gioco
 
-**EDIZIONE CONSULTABILE 0.43**
+**EDIZIONE CONSULTABILE 0.45**
 
 Settembre 2026
 
@@ -627,7 +627,7 @@ Compila la Scheda seguendo questa sequenza. I rimandi indicano dove trovare i va
 | 5 | Distribuire 10 Punti Abilità Liberi | 2.13 |
 | 6 | Calcolare i valori derivati | 2.14 |
 | 7 | Determinare i Punti Eroe | 2.15 |
-| 8 | Equipaggiamento iniziale — integrazione successiva | 2.16 |
+| 8 | Equipaggiamento iniziale | 2.16 |
 | 9 | Controllare la Scheda completa | 2.17 |
 
 ### **Concetto del personaggio**
@@ -963,6 +963,8 @@ Ogni scelta deve rispettare i requisiti degli oggetti. Le dotazioni comuni e del
 
 I profili degli oggetti e le relative regole si consultano nel Manuale degli Armamenti e nel Manuale degli Equipaggiamenti.
 
+Le dotazioni si ricevono una sola volta, alla creazione: acquisire successivamente un’altra Classe non assegna nuovo equipaggiamento. Ogni oggetto previsto si riceve integro, funzionante e senza Prova di Reperibilità. NEC carichi e componenti dichiarati sono compresi; ricambi e consumabili sono limitati alle quantità espressamente indicate. Quando un oggetto ne sostituisce un altro si registra soltanto quello sostitutivo. Le regole riassuntive sono nel Manuale dell’Equipaggiamento, Capitolo 8\.
+
 ### **2.16.1 Dotazione iniziale comune**
 
 | Oggetto | Quantità |
@@ -979,7 +981,9 @@ I profili degli oggetti e le relative regole si consultano nel Manuale degli Arm
 | Sacco a pelo | 1 |
 | Razione da viaggio | 3 |
 
-Torcia e comunicatore comprendono ciascuno una batteria carica, cavo e alimentatore, con 24 ore di autonomia per dispositivo.
+Torcia e comunicatore personale comprendono ciascuno un NEC Verde compatto carico, cavo e alimentatore: 100 ore per dispositivo. Consumi, ricambi e ricarica sono nel Manuale dell’Equipaggiamento, §5.4.
+
+I NEC sono ricaricabili; celle e pacchi comuni seguono il Manuale dell’Equipaggiamento, §5.4. Si usa l’autonomia della scheda: Corredi da scasso ed elettronici 40 ore; terminali palmari, terminali dei Corredi di ricerca e amministrativi, Terminale per produzione multimediale e Strumento musicale elettronico 50 ore (§§5.5, 5.7 e 5.8). Le batterie mistiche continuano a usare PM e Sintonizzazione.
 
 Le scorte iniziali comprendono tre giorni di cibo e due litri d’acqua. L’acqua copre un giorno di consumo ordinario e richiede rifornimenti durante il viaggio.
 
@@ -1000,7 +1004,7 @@ Requisiti: entrambe le armi da fuoco, il Randello e l’Armatura civile leggera 
 
 L’armatura concede AR 1\. L’elmetto standard incluso non aggiunge AR.
 
-Il registratore comprende batteria carica, cavo e alimentatore, con 24 ore di autonomia. Il binocolo non richiede batterie.
+Il registratore comprende NEC Verde compatto carico, cavo e alimentatore: 50 ore di autonomia. Il binocolo non richiede NEC.
 
 I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27).
 
@@ -1047,7 +1051,7 @@ Corredo da assalto verticale: comprende imbracatura, corda da 20 Q, discensore, 
 
 Corredo di sopravvivenza ambientale: si sceglie un ambiente fra Artico, Forestale, Desertico, Urbano, Pianure, Sottosuolo e Apocalittico. Concede i benefici previsti dalla propria scheda.
 
-Rilevatore ambientale: segnala carenza d’ossigeno, gas nocivi conosciuti dal dispositivo e radiazioni nel punto esaminato. Comprende batteria carica, cavo e alimentatore, con 24 ore di autonomia.
+Rilevatore ambientale: segnala carenza d’ossigeno, gas nocivi conosciuti dal dispositivo e radiazioni nel punto esaminato. Comprende NEC Verde compatto carico, cavo e alimentatore, con 50 ore di autonomia.
 
 Requisiti: pistola e armatura richiedono FOR 3; il Coltello richiede FOR 2\.
 
@@ -1081,7 +1085,7 @@ Il Monocolo periscopico permette di osservare oltre un bordo o un angolo senza e
 
 Corredo da scasso. Comprende grimaldelli, attrezzi di precisione, sonde e un’interfaccia portatile per serrature elettroniche compatibili. Si utilizza con Furtività per scassinare serrature e dispositivi meccanici e con Tecnologia per intervenire sulle serrature elettroniche.
 
-L’interfaccia comprende batteria carica, cavo e alimentatore, con 24 ore di autonomia. Restano necessarie le normali Prove e l’accesso ai componenti interessati.
+L’interfaccia comprende un NEC Verde standard carico da 1.000 Lx, cavo e alimentatore: 25 Lx/h e 40 ore di autonomia (Manuale dell’Equipaggiamento, §5.5). Restano necessarie le normali Prove e l’accesso ai componenti interessati.
 
 Corredo da camuffamento. Comprende trucchi, parrucche, barbe finte, piccoli accessori e materiali per modificare l’aspetto personale. Si utilizza con Raggirare per preparare e sostenere un travestimento o un’impersonificazione. Il beneficio riguarda il camuffamento effettivamente realizzato; documenti falsi e credenziali richiedono risorse separate.
 
@@ -1205,7 +1209,7 @@ L’Armatura civile leggera concede AR 1 e richiede FOR 3; l’elmetto standard 
 
 Il Silenziatore rende inudibile lo sparo, applicando −2 VA al tiro e −1 danno. Restano percepibili gli eventuali impatti e gli altri indizi dell’attacco.
 
-Il Corredo da scasso Standard comprende grimaldelli, utensili di precisione, sonde e un’interfaccia elettronica compatibile. Si usa Furtività per le serrature meccaniche e Tecnologia per quelle elettroniche, effettuando le normali Prove. L’interfaccia comprende batteria carica da 24 ore, cavo e caricatore.
+Il Corredo da scasso Standard comprende grimaldelli, utensili di precisione, sonde e un’interfaccia elettronica compatibile. Si usa Furtività per le serrature meccaniche e Tecnologia per quelle elettroniche, effettuando le normali Prove. L’interfaccia comprende un NEC Verde standard carico da 1.000 Lx, cavo e caricatore: 25 Lx/h e 40 ore (Manuale dell’Equipaggiamento, §5.5).
 
 Il Corredo da assalto verticale comprende imbracatura, corda da 20 Q, discensore, moschettoni e ancoraggi. Concede \+2 VA ad Atletica per arrampicate e discese effettuate utilizzandolo.
 
@@ -1263,7 +1267,7 @@ L’Armatura civile leggera concede AR 1 e richiede FOR 3; l’elmetto standard 
 
 L’Armatura civile media concede AR 3 e richiede FOR 5\. Conserva le normali penalità: −1 VA agli attacchi e alle Prove di Agilità, −1 Q al Movimento e −3 VA al lancio tramite Potere.
 
-Il Comunicatore da squadra comprende microfono, auricolare, batteria carica da 24 ore, cavo e caricatore. Ha una portata nominale di 10 km; collegandosi a un comunicatore personale, la comunicazione bidirezionale resta limitata dalla portata del dispositivo più debole. Le distanze previste dai Talenti di comando restano quelle indicate nei Talenti.
+Il Comunicatore da squadra comprende microfono, auricolare, NEC Verde standard carico da 200 ore, cavo e caricatore. Ha una portata nominale di 10 km; collegandosi a un comunicatore personale, la comunicazione bidirezionale resta limitata dalla portata del dispositivo più debole. Le distanze previste dai Talenti di comando restano quelle indicate nei Talenti.
 
 Il Kit di pronto soccorso Standard non concede bonus a Medicina: un successo arresta il Sanguinamento; un Magistrale recupera anche 1d4 PV. Ogni tentativo consuma un’applicazione.
 
@@ -1322,11 +1326,11 @@ Requisiti delle armi da mischia: FOR 2 per il Coltello; FOR 4 per il Martello.
 
 Il Corredo artigianale professionale viene dedicato a un mestiere, per esempio sartoria, pelletteria, falegnameria o lavorazione manuale dei metalli. Concede \+2 VA a Tecnologia per lavorare e riparare i prodotti di quel mestiere.
 
-Il Corredo di manutenzione da campo concede \+2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo di armi, armature, propulsori ed esoscheletri compatibili. La diagnostica comprende batteria carica da 24 ore, cavo e alimentatore.
+Il Corredo di manutenzione da campo concede \+2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo di armi, armature, propulsori ed esoscheletri compatibili. La diagnostica comprende NEC Verde standard carico da 40 ore, cavo e alimentatore.
 
-La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Comprende batteria carica da 24 ore, cavo e alimentatore.
+La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Comprende NEC Verde compatto carico da 100 ore, cavo e alimentatore.
 
-Il Registratore audiovisivo permette di documentare manufatti, difetti e lavorazioni, conservando immagini e suoni effettivamente ripresi. Comprende batteria carica da 24 ore, cavo e alimentatore.
+Il Registratore audiovisivo permette di documentare manufatti, difetti e lavorazioni, conservando immagini e suoni effettivamente ripresi. Comprende NEC Verde compatto carico da 50 ore, cavo e alimentatore.
 
 Si applica un solo modificatore pertinente degli strumenti, senza sommare i bonus dei corredi. Materiali da lavorare e ricambi restano separati.
 
@@ -1357,7 +1361,7 @@ Il Corredo da assalto verticale comprende imbracatura, corda da 20 Q, discensore
 
 La Maschera filtrante concede \+2 alle PS di Tempra contro veleni e agenti patogeni inalati. Richiede aria con ossigeno sufficiente; la sostituzione ordinaria dei filtri rientra nella manutenzione.
 
-La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Comprende batteria carica da 24 ore, cavo e alimentatore.
+La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Comprende NEC Verde compatto carico da 100 ore, cavo e alimentatore.
 
 Si applica un solo modificatore pertinente degli strumenti, senza sommare i bonus dei corredi. Materiali da lavorare e ricambi restano separati.
 
@@ -1388,7 +1392,7 @@ Ricambi e attrezzature richiesti dalla specifica riparazione restano necessari.
 
 Il Corredo di orientamento concede \+1 VA a Sopravvivenza per orientarsi, quando esistono riferimenti utilizzabili. Il Binocolo concede \+1 VA a Percezione per esaminare dettagli lontani, con luce e visuale sufficienti.
 
-Il Comunicatore da squadra ha portata nominale di 10 km; con un comunicatore personale, la comunicazione bidirezionale resta limitata a 1 km, in condizioni favorevoli. Comprende batteria carica da 24 ore, cavo e alimentatore.
+Il Comunicatore da squadra ha portata nominale di 10 km; con un comunicatore personale, la comunicazione bidirezionale resta limitata a 1 km, in condizioni favorevoli. Comprende NEC Verde standard carico da 200 ore, cavo e alimentatore.
 
 Il veicolo non è compreso nella dotazione iniziale del Pilota. Il Direttore di Gioco decide se e quali veicoli fornire al gruppo in base alla campagna (§2.16.30).
 
@@ -1416,13 +1420,13 @@ Requisito del Coltello: FOR 2\.
 
 Il Corredo elettronico e informatico Standard comprende un terminale portatile con programmi di diagnostica e configurazione; un multimetro, sonde e utensili di precisione; cavi e adattatori per collegarsi fisicamente a sistemi compatibili, entro 2 Q.
 
-Permette diagnosi, configurazione e interventi portatili compatibili con i componenti disponibili. È Standard: modificatore degli strumenti 0 al VA. Intrusioni e controllo dei dispositivi richiedono comunque accesso utilizzabile, compatibilità e normali Prove. I dispositivi elettronici del corredo comprendono batterie cariche da 24 ore, cavi e alimentatori.
+Permette diagnosi, configurazione e interventi portatili compatibili con i componenti disponibili. È Standard: modificatore degli strumenti 0 al VA. Intrusioni e controllo dei dispositivi richiedono comunque accesso utilizzabile, compatibilità e normali Prove. L’intero corredo usa un solo NEC Verde standard carico da 1.000 Lx nel terminale: 25 Lx/h e 40 ore; cavi e alimentatore compresi (Manuale dell’Equipaggiamento, §5.7).
 
-Il Corredo di manutenzione da campo concede \+2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo di armi, armature, propulsori ed esoscheletri compatibili. La diagnostica comprende batteria carica da 24 ore, cavo e alimentatore.
+Il Corredo di manutenzione da campo concede \+2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo di armi, armature, propulsori ed esoscheletri compatibili. La diagnostica comprende NEC Verde standard carico da 40 ore, cavo e alimentatore.
 
-Il Kit di videosorveglianza comprende una videocamera e un monitor palmare, collegati entro 1 km. Usa vista e udito ordinari, richiede illuminazione sufficiente e non concede bonus automatici a Percezione. Tutti i componenti comprendono batterie cariche da 24 ore, cavi e alimentatori.
+Il Kit di videosorveglianza comprende una videocamera e un monitor palmare, collegati entro 1 km. Usa vista e udito ordinari, richiede illuminazione sufficiente e non concede bonus automatici a Percezione. Tutti i componenti comprendono NEC Verdi compatti carichi da 50 ore, cavi e alimentatori.
 
-La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Comprende batteria carica da 24 ore, cavo e alimentatore.
+La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Comprende NEC Verde compatto carico da 100 ore, cavo e alimentatore.
 
 Si applica un solo modificatore pertinente degli strumenti, senza sommare i bonus dei corredi. Materiali da lavorare e ricambi restano separati.
 
@@ -1454,7 +1458,7 @@ Il Binocolo concede \+1 VA a Percezione per distinguere dettagli lontani; il Cor
 
 Il Registratore audiovisivo registra immagini e suoni effettivamente rilevati.
 
-Ogni dispositivo elettronico della dotazione comprende batteria carica da 24 ore, cavo e alimentatore. La stessa autonomia si applica al terminale e ai dispositivi del Corredo di analisi.
+I dispositivi comprendono NEC carichi, cavi e alimentatori. Il Corredo di analisi usa un Verde standard e dura 40 ore; il terminale palmare usa un Verde compatto da 100 Lx, 2 Lx/h e 50 ore (§5.7 dello stesso manuale). Le altre autonomie seguono il Manuale dell’Equipaggiamento, §5.4.
 
 I consumabili ordinari di scrittura, trucco, manutenzione e analisi si reintegrano durante il normale rifornimento; applicazioni mediche e set chirurgici si conteggiano separatamente.
 
@@ -1486,7 +1490,7 @@ Il Registratore audiovisivo registra immagini e suoni effettivamente rilevati.
 
 Il Comunicatore da squadra sostituisce il Comunicatore personale della dotazione comune. Ha portata nominale di 10 km; con un comunicatore personale la comunicazione bidirezionale è limitata a 1 km, in condizioni favorevoli.
 
-Ogni dispositivo elettronico della dotazione comprende batteria carica da 24 ore, cavo e alimentatore. L’autonomia di 24 ore si applica anche al nuovo terminale.
+I dispositivi comprendono NEC carichi, cavi e alimentatori; le autonomie seguono il Manuale dell’Equipaggiamento, §5.4. Il terminale palmare usa un Verde compatto da 100 Lx, 2 Lx/h e 50 ore (§5.7 dello stesso manuale).
 
 I consumabili ordinari di scrittura, trucco, manutenzione e analisi si reintegrano durante il normale rifornimento; applicazioni mediche e set chirurgici si conteggiano separatamente.
 
@@ -1516,7 +1520,7 @@ Le tre opzioni sono Standard, con modificatore degli strumenti 0 al VA. Gli Abit
 
 Il Registratore audiovisivo registra immagini e suoni effettivamente rilevati. La diffusione richiede canali e collegamenti disponibili; i Talenti che agiscono su registrazioni o trasmissioni seguono le proprie regole.
 
-Ogni dispositivo elettronico della dotazione comprende batteria carica da 24 ore, cavo e alimentatore. Sono compresi il terminale e gli eventuali strumenti musicali elettronici.
+I dispositivi comprendono NEC carichi, cavi e alimentatori. Terminale per produzione multimediale e Strumento musicale elettronico utilizzano ciascuno un NEC Verde compatto da 100 Lx: 2 Lx/h e 50 ore di autonomia. Lo strumento acustico non richiede NEC. Profili, pesi, prezzi e Integrità degli strumenti artistici sono nel Manuale dell’Equipaggiamento, §5.8; il Registratore segue il §4.3 dello stesso volume.
 
 I consumabili ordinari di scrittura, trucco, manutenzione e analisi si reintegrano durante il normale rifornimento; applicazioni mediche e set chirurgici si conteggiano separatamente.
 
@@ -1546,7 +1550,7 @@ Lo Scanner diagnostico portatile rileva automaticamente i parametri vitali di ba
 
 Il Kit chirurgico da campo concede \+2 VA a Medicina per le procedure sul campo pertinenti. Richiede 10 minuti di preparazione, un piano stabile e condizioni appropriate; ogni procedura consuma un set all’inizio, anche in caso di fallimento o interruzione. L’anestesia ordinaria è inclusa; restano necessari i Talenti e gli altri requisiti della procedura.
 
-La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Lampada e Scanner includono ciascuno batteria carica da 24 ore, cavo e alimentatore. Applicazioni mediche e set chirurgici si conteggiano e reintegrano separatamente.
+La Lampada frontale illumina fino a 6 Q a mani libere e include un Verde compatto da 100 ore. Lo Scanner include un Verde standard da 40 ore. Cavi e alimentatori sono compresi. Applicazioni mediche e set chirurgici restano consumi separati.
 
 ### **2.16.21 Dotazione iniziale — Predicatore**
 
@@ -1575,7 +1579,7 @@ Il Kit di pronto soccorso Standard contiene 5 applicazioni e non concede bonus a
 
 Per il Corredo di sopravvivenza ambientale si sceglie Artico, Forestale, Desertico, Urbano, Pianure, Sottosuolo oppure Apocalittico. Concede \+2 VA a Sopravvivenza per gli impieghi pertinenti alla versione scelta; non aggiunge acqua, viveri o medicinali alla dotazione.
 
-La Lanterna elettrica illumina un raggio di 6 Q e comprende batteria carica da 24 ore, cavo e alimentatore. Le applicazioni mediche si conteggiano e reintegrano separatamente.
+La Lanterna elettrica illumina un raggio di 6 Q e comprende NEC Verde standard carico da 200 ore, cavo e alimentatore. Le applicazioni mediche si conteggiano e reintegrano separatamente.
 
 ### **2.16.22 Dotazione iniziale — Arcanista**
 
@@ -1603,7 +1607,7 @@ Il Coltello richiede FOR 2\. Il corredo documentale comprende terminale, riferim
 
 Per il Corredo di analisi si sceglie un ambito, per esempio chimica, biologia o geologia: \+2 VA a Scienza per le analisi preliminari pertinenti, normalmente in 10 minuti. Il Binocolo concede \+1 VA a Percezione sui dettagli lontani; il Corredo di orientamento \+1 VA a Sopravvivenza con riferimenti utilizzabili. Il Registratore conserva immagini e suoni effettivamente rilevati.
 
-Tutti i dispositivi elettronici indicati comprendono batterie cariche da 24 ore, cavi e alimentatori. Questa autonomia riguarda l’alimentazione elettronica, distinta dai 5 PM della batteria mistica.
+I dispositivi elettronici comprendono NEC carichi, cavi e alimentatori; ciascuno usa l’autonomia della propria scheda (Manuale dell’Equipaggiamento, §5.4). I NEC tecnologici in Lx sono distinti dalla batteria mistica da 5 PM e non richiedono Sintonizzazione.
 
 ### **2.16.23 Dotazione iniziale — Custode**
 
@@ -1635,7 +1639,7 @@ L’Arma Astrale segue il Talento del Custode; la CyberArma personale si ottiene
 
 Il Comunicatore da squadra sostituisce quello personale: portata nominale 10 km, limitata a 1 km per il collegamento bidirezionale con un comunicatore personale, in condizioni favorevoli.
 
-Tutti i dispositivi elettronici indicati comprendono batterie cariche da 24 ore, cavi e alimentatori. Questa autonomia riguarda l’alimentazione elettronica, distinta dai 5 PM della batteria mistica.
+I dispositivi elettronici comprendono NEC carichi, cavi e alimentatori; ciascuno usa l’autonomia della propria scheda (Manuale dell’Equipaggiamento, §5.4). I NEC tecnologici in Lx sono distinti dalla batteria mistica da 5 PM e non richiedono Sintonizzazione.
 
 ### **2.16.24 Dotazione iniziale — Invocatore**
 
@@ -1667,7 +1671,7 @@ Il Corredo da assalto verticale comprende imbracatura, corda da 20 Q, discensore
 
 Il Comunicatore da squadra sostituisce quello personale: portata nominale 10 km, limitata a 1 km per il collegamento bidirezionale con un comunicatore personale, in condizioni favorevoli.
 
-Tutti i dispositivi elettronici indicati comprendono batterie cariche da 24 ore, cavi e alimentatori. Questa autonomia riguarda l’alimentazione elettronica, distinta dai 5 PM della batteria mistica.
+I dispositivi elettronici comprendono NEC carichi, cavi e alimentatori; ciascuno usa l’autonomia della propria scheda (Manuale dell’Equipaggiamento, §5.4). I NEC tecnologici in Lx sono distinti dalla batteria mistica da 5 PM e non richiedono Sintonizzazione.
 
 ### **2.16.25 Dotazione iniziale — Mistico**
 
@@ -1700,7 +1704,7 @@ Il Kit trauma Professionale concede \+2 VA a Medicina per il primo soccorso. Con
 
 La Lanterna elettrica illumina un raggio di 6 Q e sostituisce la torcia comune.
 
-Tutti i dispositivi elettronici indicati comprendono batterie cariche da 24 ore, cavi e alimentatori. Questa autonomia riguarda l’alimentazione elettronica, distinta dai 5 PM della batteria mistica.
+I dispositivi elettronici comprendono NEC carichi, cavi e alimentatori; ciascuno usa l’autonomia della propria scheda (Manuale dell’Equipaggiamento, §5.4). I NEC tecnologici in Lx sono distinti dalla batteria mistica da 5 PM e non richiedono Sintonizzazione.
 
 ### **2.16.26 Dotazione iniziale — Tecnomante**
 
@@ -1732,13 +1736,15 @@ I bonus degli strumenti non si trasferiscono automaticamente alle Prove di Artef
 
 La Lampada frontale illumina fino a 6 Q, lasciando libere le mani, e sostituisce la torcia comune.
 
-Tutti i dispositivi elettronici indicati comprendono batterie cariche da 24 ore, cavi e alimentatori. Questa autonomia riguarda l’alimentazione elettronica, distinta dai 5 PM della batteria mistica.
+I dispositivi elettronici comprendono NEC carichi, cavi e alimentatori; ciascuno usa l’autonomia della propria scheda (Manuale dell’Equipaggiamento, §5.4). I NEC tecnologici in Lx sono distinti dalla batteria mistica da 5 PM e non richiedono Sintonizzazione.
+
+I profili completi dei Corredi di ricerca documentale, amministrativo, scenico e rituale, degli strumenti musicali, del Terminale per produzione multimediale, del Materiale della tradizione e del Focus personale semplice sono nel Manuale dell’Equipaggiamento, §5.8. Le dotazioni delle Classi usano questi profili. Il Focus iniziale è semplice e già sintonizzato; non aggiunge bonus o PM.
 
 ### **2.16.27 Armamenti corporativi di base**
 
 La Classe iniziale assegna direttamente gli armamenti di base della Corporazione del personaggio corrispondenti ai profili commerciali indicati nelle tabelle dei §§2.16.2–2.16.26. L’assegnazione è compresa nella dotazione iniziale e non richiede un conguaglio rispetto al prezzo del modello commerciale.
 
-I nomi commerciali nelle tabelle identificano il tipo di dotazione e le alternative della Classe. La corrispondenza riguarda il modello corporativo di base con tipologia e funzione equivalenti: pistola con pistola, armatura leggera con armatura leggera, scudo piccolo con scudo piccolo. La sola Qualità costruttiva non determina l’equivalenza.
+I nomi commerciali nelle tabelle identificano il tipo di dotazione e le alternative della Classe. Si usa soltanto una corrispondenza corporativa espressamente indicata nei manuali; dove manca, si mantiene il modello commerciale. La corrispondenza riguarda il modello di base previsto, con tipologia e funzione equivalenti. La sola Qualità costruttiva o l’appartenenza allo stesso catalogo non determina l’equivalenza e non assegna un modello superiore.
 
 Nell’inventario si registra il modello corporativo effettivamente assegnato, con valori, proprietà, requisiti, penalità e prezzo della sua scheda. Il personaggio deve rispettarne i requisiti; i dati del profilo commerciale non sostituiscono quelli del modello corporativo.
 
@@ -1810,6 +1816,8 @@ Esempio: cedendo un’arma di base valutata 1.500 crediti per acquistare un mode
 Il nuovo equipaggiamento deve rispettare requisiti e autorizzazioni della propria scheda. Munizioni, caricatori e accessori vanno adattati al modello acquistato, conteggiando gli eventuali costi di sostituzione senza duplicare componenti già inclusi nel prezzo.
 
 La valutazione integrale degli armamenti ceduti vale per la creazione del personaggio e non stabilisce il prezzo di rivendita durante le avventure. Le configurazioni Migliorata e Potenziata diventano acquistabili quando dispongono di profili e prezzi definiti.
+
+Medico e Paramedico mantengono le dotazioni elencate ai §§2.16.20 e 2.16.6. Naniti e postazioni medicochirurgiche sono acquisti o dotazioni di missione e non vengono assegnati gratuitamente come parte della dotazione personale iniziale.
 
 ### **2.16.30 Veicoli**
 
@@ -3438,7 +3446,7 @@ Si applicano le regole generali delle Prove Aperte, dei nuovi tentativi, del Suc
 
 **Esempio:** esaminando un bracciale, il Tecnomante può apprendere che possiede una proprietà passiva e una attiva, che quest’ultima richiede una Prova e che la riserva universale contiene 3 PM su 8\. Per sapere che la proprietà crea una barriera con AR 4 per 10 Round al costo di 2 PM occorre identificarne l’effetto.
 
-Sintonizzazione automatica. Il Tecnomante completa la preparazione di un minuto a contatto con l’Artefatto senza effettuare la Prova di Artefatti. Rispetta normalmente capacità di sintonizzazione, requisiti, costi e le eventuali Prove di attivazione espressamente richieste dalle proprietà (Manuale degli Equipaggiamenti, §7.10). La sintonizzazione non concede l’identificazione completa.
+Sintonizzazione automatica. Il Tecnomante completa la preparazione di un minuto a contatto con l’Artefatto senza effettuare la Prova di Artefatti. Rispetta normalmente capacità di sintonizzazione, requisiti, costi e le eventuali Prove di attivazione espressamente richieste dalle proprietà (Manuale degli Armamenti, §7.10). La sintonizzazione non concede l’identificazione completa.
 
 Capacità superiore. Il Tecnomante ottiene \+2 alla capacità complessiva di sintonizzazione, una sola volta. Con un Grado complessivo parte da 6; con sei Gradi complessivi arriva a 11\. Nel multiclasse il \+2 si aggiunge alla capacità già determinata dai Gradi complessivi, senza ricominciare la progressione e senza concedere una capacità separata. A questo totale si applica la riduzione dovuta all’Umanità, fino a un minimo di 0; la sintonizzazione automatica rispetta la capacità risultante (§§5.21 e 6.12).
 
@@ -3486,7 +3494,7 @@ Si utilizzano normalmente l’Azione e le eventuali Prove dell’Artefatto. Dopo
 
 Una volta al giorno, dopo un fallimento ordinario in una Prova di Artefatti per attivare una proprietà di una Batteria Mistica o di un Accessorio Mistico o TecnoMistico, il Tecnomante può ripetere la Prova.
 
-Non spende nuovamente l’Azione o i PM dell’attivazione e deve accettare il secondo risultato. Non può utilizzare il Talento su un Fallimento Maldestro. Il Talento si applica soltanto alle proprietà che richiedono espressamente una Prova di Artefatti: le normali attivazioni dopo la Sintonizzazione sono automatiche (Manuale degli Equipaggiamenti, §7.10).
+Non spende nuovamente l’Azione o i PM dell’attivazione e deve accettare il secondo risultato. Non può utilizzare il Talento su un Fallimento Maldestro. Il Talento si applica soltanto alle proprietà che richiedono espressamente una Prova di Artefatti: le normali attivazioni dopo la Sintonizzazione sono automatiche (Manuale degli Armamenti, §7.10).
 
 #### **Comune Interfaccia Remota**
 
@@ -3598,7 +3606,7 @@ Comprende schivare, parare, deviare un colpo, utilizzare uno scudo e reagire a u
 
 Artefatti (Saggezza) permette di comprendere e utilizzare artefatti, reliquie, sigilli e dispositivi dotati di proprietà mistiche, nei limiti delle rispettive caratteristiche.
 
-Le proprietà passive non richiedono sintonizzazione. Per utilizzare le proprietà attive occorre sintonizzarsi mediante una Prova di Artefatti, salvo quanto previsto da specifici Talenti (Manuale degli Equipaggiamenti, §7.10). Una volta sintonizzati, l’attivazione è automatica e non richiede Componenti; si rispettano costi e condizioni. Soltanto una proprietà che lo specifichi nella propria scheda richiede una Prova di attivazione (Manuale degli Equipaggiamenti, §7.10).
+Le proprietà passive non richiedono sintonizzazione. Per utilizzare le proprietà attive occorre sintonizzarsi mediante una Prova di Artefatti, salvo quanto previsto da specifici Talenti (Manuale degli Armamenti, §7.10). Una volta sintonizzati, l’attivazione è automatica e non richiede Componenti; si rispettano costi e condizioni. Soltanto una proprietà che lo specifichi nella propria scheda richiede una Prova di attivazione (Manuale degli Armamenti, §7.10).
 
 L’**analisi mistica** mediante questa Abilità richiede l’**Addestramento Taumaturgo oppure almeno un Grado in una Classe taumaturgica**. Una Prova riuscita permette di ricavare informazioni sulla **Struttura** dell’oggetto. Gli altri personaggi possono rilevare gli indizi apertamente osservabili, ma non effettuare un’analisi mistica tramite una Prova di Artefatti.
 
@@ -4311,11 +4319,15 @@ La sequenza è Grave → Seria → Profonda → Importante → Superficiale → 
 
 Intervento Mirato e Terapia Intensiva del Medico possono ridurre rispettivamente uno o due stati di Ferita, compresa la guarigione della Ferita Superficiale. Ogni paziente può ricevere un solo tentativo di uno dei due trattamenti ogni sette giorni, anche se fallisce e indipendentemente dal numero di Medici. Requisiti, tempi e limiti sono descritti integralmente nel §3.7.4; Chirurgia Precisa riduce il tempo operativo, non la convalescenza o questo intervallo. Questi Talenti curano gli stati di Ferita; il trattamento delle Menomazioni richiede le procedure dedicate riportate di seguito.
 
+Naniti medici. Una dose riduce una Ferita di un solo stato al termine di 10 minuti per Superficiale, 20 per Importante, 30 per Profonda, 40 per Seria o 50 per Grave, secondo lo stato alla somministrazione. Una dose ogni 24 ore dall’uso precedente; non consuma il tentativo settimanale e si può combinare con un intervento medico. Non recupera PV, non arresta il Sanguinamento e non cura Menomazioni. Regole e prezzo nel Manuale dell’Equipaggiamento, §6.7.
+
+Postazioni medicochirurgiche. La Semiautomatica usa Medicina dell’operatore \+3 strumenti; le Automatiche Standard, Professionale e Specializzata usano rispettivamente VA 12, 15 e 18, già comprensivi dell’attrezzatura. I programmi consentono le procedure elencate anche senza i normali Talenti dell’operatore. Le cure mirate e intensive condividono il tentativo ogni sette giorni con i Talenti del Medico. La degenza vale come ricovero ospedaliero; la stasi sospende anche il recupero naturale. Procedure, alloggiamenti e risorse nel Manuale dell’Equipaggiamento, §6.8.
+
 ### **5.16.3 Recupero delle Menomazioni temporanee**
 
 Una Menomazione temporanea **seria** diventa **leggera dopo 3 mesi**. Una Menomazione temporanea **leggera** scompare dopo **3 mesi**. Partendo da seria, occorrono quindi **6 mesi complessivi**. Ogni periodo decorre da quando la Menomazione assume quello stadio, salvo l’esito di un trattamento.
 
-Guarire le Ferite non elimina le Menomazioni né le loro penalità. Le Menomazioni seguono il proprio decorso, anche quando il personaggio ha recuperato i PV e guarito le Ferite. Una Menomazione permanente richiede necessariamente l’intervento specialistico di un Medico.
+Guarire le Ferite non elimina le Menomazioni né le loro penalità. Le Menomazioni seguono il proprio decorso, anche quando il personaggio ha recuperato i PV e guarito le Ferite. Una Menomazione permanente richiede un intervento specialistico di un Medico oppure una procedura autorizzata delle postazioni medicochirurgiche del Manuale dell’Equipaggiamento, §6.8.
 
 ### **5.16.4 Intervento sulle Menomazioni permanenti**
 
@@ -4351,6 +4363,8 @@ Quando una Menomazione seria diventa leggera, comincia il normale periodo di **3
 
 Campo Sterile e Diagnosi sul Campo si applicano nei rispettivi limiti al personaggio che possiede i Talenti. Mano Sicura interviene sulle penalità ambientali previste; Chirurgia Precisa riduce il tempo operativo dei trattamenti prolungati, senza modificare i mesi di recupero o i tentativi consentiti (§§3.5.2 e 3.7.4).
 
+Le postazioni medicochirurgiche applicano gli stessi esiti e limiti delle procedure sulle Menomazioni e richiedono i componenti e le protesi pertinenti. Il loro programma autorizza il trattamento secondo il Manuale dell’Equipaggiamento, §6.8. Cambiare operatore o macchina non concede ulteriori tentativi.
+
 ### **5.16.6 Limiti distinti dei trattamenti**
 
 | Trattamento | Limite |
@@ -4360,6 +4374,8 @@ Campo Sterile e Diagnosi sul Campo si applicano nei rispettivi limiti al persona
 | Menomazione temporanea | **Un tentativo per ciascuno stadio della stessa Menomazione:** uno a seria e uno a leggera. |
 
 I tre limiti sono distinti. Cambiare operatore non li azzera. Un trattamento delle Ferite e un trattamento della Menomazione seguono ciascuno la propria procedura, Prova ed esito.
+
+I limiti dei tre trattamenti medici si condividono anche con le procedure equivalenti delle postazioni medicochirurgiche. I naniti hanno invece un limite separato di una somministrazione ogni 24 ore per paziente e non consumano tentativi settimanali.
 
 ## **5.17 Fallimenti Maldestri nel Combattimento**
 
@@ -4626,7 +4642,9 @@ Ogni periodo permette un solo passaggio verso lo Stato precedente. Incantesimi e
 
 L’**Umanità (UMN)** misura quanto il personaggio conserva della propria natura biologica, emotiva e spirituale dopo innesti cibernetici o altre trasformazioni permanenti. Il valore va da 0 a 20; un essere umano non modificato parte normalmente da UMN 20\.
 
-Ogni innesto o trasformazione indica nella propria descrizione l’eventuale perdita di UMN. I costi dei singoli impianti devono comparire nelle relative schede. Si applica soltanto la fascia del valore attuale, senza sommare i modificatori delle fasce precedenti.
+Ogni innesto o trasformazione indica nella propria descrizione l’eventuale perdita di UMN. Gli impianti singoli, con costi standard e CYBERTRONIC, sono nel capitolo 7 del Manuale dell’Equipaggiamento. Si applica soltanto la fascia del valore attuale, senza sommare i modificatori delle fasce precedenti.
+
+Le protesi sostitutive di un braccio o di una gamba costano 2 UMN standard o 1 UMN CYBERTRONIC. Collegare equipaggiamento all’Interfaccia neurale o cambiare chip non costa altri UMN. Gli innesti non richiedono consumi energetici salvo indicazione espressa; l’Interfaccia neurale usa la bioenergia del corpo.
 
 | UMN | Condizione | PM Massimi | PS Magia contro CROS | Capacità di Sintonizzazione |
 | :---: | :---: | :---: | :---: | :---: |
@@ -4661,7 +4679,7 @@ UMN e CROS si registrano separatamente. La perdita di UMN aumenta la vulnerabili
 
 ### **5.21.3 Capacità di Sintonizzazione**
 
-La riduzione indicata nella tabella si applica alla Capacità complessiva di Sintonizzazione, inclusi i bonus dei Talenti, fino a un minimo di 0\. La capacità di base dipende dai Gradi complessivi; Architetto TecnoMistico aggiunge \+2 una sola volta (Manuale degli Equipaggiamenti, §7.10).
+La riduzione indicata nella tabella si applica alla Capacità complessiva di Sintonizzazione, inclusi i bonus dei Talenti, fino a un minimo di 0\. La capacità di base dipende dai Gradi complessivi; Architetto TecnoMistico aggiunge \+2 una sola volta (Manuale degli Armamenti, §7.10).
 
 Se la capacità diminuisce e non basta più per gli Artefatti sintonizzati, il personaggio **sceglie immediatamente quali sintonizzazioni interrompere**, finché la somma dei costi rispetta il nuovo limite. Un successivo aumento della capacità permette di sintonizzarsi nuovamente secondo la procedura ordinaria.
 
@@ -4676,6 +4694,8 @@ A UMN 0 il personaggio non può utilizzare **Risorse Interiori**, comprese le Te
 L’Umanità **non si recupera naturalmente**. Può aumentare mediante rimozione o sostituzione degli innesti, Medicina avanzata, interventi cibernetici, Magia o altri effetti che lo prevedano espressamente. Ogni procedura indica quanti punti restituisce e a quali condizioni, fino al massimo di 20\.
 
 I trattamenti delle Ferite e delle Menomazioni del Medico e i Talenti del Tecnomante per lavorare sugli Artefatti non restituiscono automaticamente UMN: occorre una procedura specifica. I benefici del Predicatore e del Mistico alle PS contro Corruzione funzionano normalmente; Purificazione, Purificatore e Aura di Equilibrio non ripristinano UMN né attenuano gli effetti della sua perdita.
+
+Processore neurale di Abilità. I chip concedono \+2 o \+4 VA a una sola Abilità per 30 minuti consecutivi: una sola attivazione del Processore ogni 24 ore dall’uso precedente, indipendente dal riposo. Tutti gli Addestramenti possono usarli; sono escluse Prove di combattimento, Incantesimi, Risorse Interiori e applicazioni magiche. Cambiare chip non rinnova l’utilizzo. Scheda completa nel Manuale dell’Equipaggiamento, §7.10.
 
 ## **5.22 Cadute**
 
