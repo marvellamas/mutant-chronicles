@@ -335,7 +335,13 @@
       ],
       "portata_q": 20,
       "proprieta": [],
-      "effetto_breve": "Si monta su un’arma predisposta e illumina nella direzione verso cui viene puntata, entro 20 Q."
+      "effetto_breve": "Si monta su un’arma predisposta e illumina nella direzione verso cui viene puntata, entro 20 Q.",
+      "alimentazione": {
+        "nec": "nec:verde-compatto",
+        "consumo_lxh": 2,
+        "autonomia_ore": 50,
+        "paragrafo": "§5.4.7"
+      }
     },
     {
       "id": "modulo-di-visione-notturna",
@@ -358,7 +364,13 @@
       "gruppo_esclusivo": "modulo_visione",
       "portata_q": 80,
       "proprieta": [],
-      "effetto_breve": "Si applica a un mirino compatibile e permette di osservare e sparare attraverso di esso ignorando, entro 80 Q, le penalità dovute alla scarsa illuminazione."
+      "effetto_breve": "Si applica a un mirino compatibile e permette di osservare e sparare attraverso di esso ignorando, entro 80 Q, le penalità dovute alla scarsa illuminazione.",
+      "alimentazione": {
+        "nec": "nec:verde-standard",
+        "consumo_lxh": 10,
+        "autonomia_ore": 100,
+        "paragrafo": "§5.4.7"
+      }
     },
     {
       "id": "modulo-di-visione-termica",
@@ -381,102 +393,13 @@
       "gruppo_esclusivo": "modulo_visione",
       "portata_q": 40,
       "proprieta": [],
-      "effetto_breve": "Permette di osservare e prendere di mira, entro 40 Q, bersagli con un contrasto termico sufficiente rispetto all’ambiente, anche nel buio naturale completo."
-    },
-    {
-      "id": "batteria-di-servizio",
-      "nome": "NEC Verde compatto di ricambio",
-      "tipo": "altro",
-      "catalogo": "Commerciale",
-      "famiglia": "Illuminazione e visione",
-      "nomi_alternativi": [
-        "Batteria di servizio",
-        "Batteria carica di ricambio"
-      ],
-      "note_manuale": "Gli accessori elettronici usano NEC Verdi ricaricabili. Ogni accessorio autonomo impiega la propria cella; le funzioni integrate nell’elmetto condividono invece il NEC dell’elmetto. Le ore sono effettive e non si contano per Round. NEC carico, cavo e alimentatore sono compresi. Ricarica completa in un’ora con fonte adeguata, a 0,01 cr/Lx; un Verde compatto richiede 1 cr, uno standard 10 cr. Ricambio carico: 10 cr compatto, 100 cr standard, REP CO. Sostituire un NEC pronto richiede 1 AzP senza Prova. Il cavo non contiene una riserva. Gli elmetti del §7.21 hanno un consumo complessivo unico. Catalogo, formati e ricarica dei NEC sono nel Manuale dell’Equipaggiamento, §5.4. Celle d’arma e pacchi dei lanciafiamme sono nel §7.20. Robot, propulsori ed esoscheletri mantengono le autonomie specifiche; le riserve mistiche restano in PM.",
-      "paragrafo": "§7.3.4",
-      "versione_manuale": "Armamenti 0.58",
-      "reperibilita": "CO",
-      "costo": 10,
-      "tabelle": [
-        {
-          "titolo": "NEC degli accessori",
-          "colonne": [
-            "Dispositivo",
-            "NEC",
-            "Consumo",
-            "Autonomia"
-          ],
-          "righe": [
-            [
-              "Torcia tattica",
-              "Verde compatto 100 Lx",
-              "2 Lx/h",
-              "50 ore"
-            ],
-            [
-              "Visione notturna o termica",
-              "Verde standard 1.000 Lx",
-              "10 Lx/h",
-              "100 ore"
-            ],
-            [
-              "Elmetto elettronico",
-              "Verde standard 1.000 Lx",
-              "25 Lx/h",
-              "40 ore"
-            ]
-          ]
-        }
-      ],
-      "proprieta": [],
-      "effetto_breve": "Ricambio carico del NEC della Torcia tattica (§7.3.4)."
-    },
-    {
-      "id": "nec-verde-standard-di-ricambio",
-      "nome": "NEC Verde standard di ricambio",
-      "tipo": "altro",
-      "catalogo": "Commerciale",
-      "famiglia": "Illuminazione e visione",
-      "nomi_alternativi": [],
-      "note_manuale": "Gli accessori elettronici usano NEC Verdi ricaricabili. Ogni accessorio autonomo impiega la propria cella; le funzioni integrate nell’elmetto condividono invece il NEC dell’elmetto. Le ore sono effettive e non si contano per Round. NEC carico, cavo e alimentatore sono compresi. Ricarica completa in un’ora con fonte adeguata, a 0,01 cr/Lx; un Verde compatto richiede 1 cr, uno standard 10 cr. Ricambio carico: 10 cr compatto, 100 cr standard, REP CO. Sostituire un NEC pronto richiede 1 AzP senza Prova. Il cavo non contiene una riserva. Gli elmetti del §7.21 hanno un consumo complessivo unico. Catalogo, formati e ricarica dei NEC sono nel Manuale dell’Equipaggiamento, §5.4. Celle d’arma e pacchi dei lanciafiamme sono nel §7.20. Robot, propulsori ed esoscheletri mantengono le autonomie specifiche; le riserve mistiche restano in PM.",
-      "paragrafo": "§7.3.4",
-      "versione_manuale": "Armamenti 0.58",
-      "reperibilita": "CO",
-      "costo": 100,
-      "tabelle": [
-        {
-          "titolo": "NEC degli accessori",
-          "colonne": [
-            "Dispositivo",
-            "NEC",
-            "Consumo",
-            "Autonomia"
-          ],
-          "righe": [
-            [
-              "Torcia tattica",
-              "Verde compatto 100 Lx",
-              "2 Lx/h",
-              "50 ore"
-            ],
-            [
-              "Visione notturna o termica",
-              "Verde standard 1.000 Lx",
-              "10 Lx/h",
-              "100 ore"
-            ],
-            [
-              "Elmetto elettronico",
-              "Verde standard 1.000 Lx",
-              "25 Lx/h",
-              "40 ore"
-            ]
-          ]
-        }
-      ],
-      "proprieta": [],
-      "effetto_breve": "Ricambio carico del NEC dei moduli di visione e dell’elmetto elettronico (§7.3.4)."
+      "effetto_breve": "Permette di osservare e prendere di mira, entro 40 Q, bersagli con un contrasto termico sufficiente rispetto all’ambiente, anche nel buio naturale completo.",
+      "alimentazione": {
+        "nec": "nec:verde-standard",
+        "consumo_lxh": 10,
+        "autonomia_ore": 100,
+        "paragrafo": "§5.4.7"
+      }
     }
   ]
 }

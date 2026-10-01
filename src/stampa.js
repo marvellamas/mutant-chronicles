@@ -9,7 +9,7 @@ import { valoreTiro } from './tiri.js';
 import { rigaAlLivello } from './descrizioni.js';
 import { CAMPI_ANAGRAFICA } from './character.js';
 import { checklist } from './checklist.js';
-import { aggiungiDanno, NOME_TESTO_PRECEDENTE, catalogo, normalizzaEquipaggiamento, STATO_DEPOSITO, consumabili, rapportoConversione, risolvi, infoArtefattoVoce, regoleSintonizzazione, NOMI_STATI } from './equipaggiamento.js';
+import { aggiungiDanno, NOME_TESTO_PRECEDENTE, catalogo, normalizzaEquipaggiamento, STATO_DEPOSITO, consumabili, rapportoConversione, risolvi, infoArtefattoVoce, regoleSintonizzazione, NOMI_STATI, riserveNec } from './equipaggiamento.js';
 import { gradiTaumaturgici } from './incantesimi.js';
 import { saldoIniziale, crediti } from './dotazioni.js';
 import { SEZIONI_INVENTARIO, sezioneInventario, COLORI_MACROFAMIGLIE } from './palette.js';
@@ -722,6 +722,19 @@ const kg = (v) => `${String(Math.round(v * 100) / 100).replace('.', ',')} kg`;
  * noto con le soglie (§5.2.6). A riposo, come tutta la SS: lo stato è la scelta salvata della voce.
  * @returns {{ creditiIniziali, carico, stati, sezioni: { id, titolo, colore, righe }[] }}
  */
+/**
+ * Quadratini della riserva di un NEC nella SS (foglio 4): una casella per unità fino a 50 (ore, usi);
+ * oltre, 10 caselle che valgono un decimo della riserva ciascuna («1 casella = 100 Lx»). È una scelta
+ * di presentazione per la carta, non una regola del manuale: la riserva esatta si segna nella SD.
+ */
+export function quadratiniNec(r, nomeOggetto = r.nome) {
+  const parte = r.nome !== nomeOggetto ? r.nome.slice(nomeOggetto.length).trim() : '';
+  const etichetta = `${r.unita === 'Lx' ? 'Riserva' : 'NEC'}${parte ? ` ${parte}` : ''}`;
+  if (r.massimo <= 50) return { etichetta, caselle: r.massimo, perCasella: 1, unita: r.unita, massimo: r.massimo };
+  const perCasella = r.massimo / 10;
+  return { etichetta, caselle: 10, perCasella, unita: r.unita, massimo: r.massimo };
+}
+
 export function inventarioStampa(s, dati, creditiIniziali = null) {
   const eq = s.equipaggiamento;
   const integrita = new Map((eq?.integrita ?? []).map((x) => [x.uid, x]));
@@ -743,6 +756,8 @@ export function inventarioStampa(s, dati, creditiIniziali = null) {
       piMax: x?.piMax ?? null,
       ps: x?.ps ?? null,
       condizioni: ['arma_ravvicinata', 'arma_distanza'].includes(o.tipo) && condizioni.length ? condizioni : null,
+      // NEC (Equipaggiamento 0.5, §5.4): quadratini della riserva, da annerire a matita
+      nec: riserveNec([o.voce], dati).map((r) => quadratiniNec(r, o.nome)),
     };
   });
   const c = eq && dati.regole.carico ? calcolaCarico(s, null, dati) : null;

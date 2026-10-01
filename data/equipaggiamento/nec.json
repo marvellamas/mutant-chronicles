@@ -1,0 +1,312 @@
+{
+  "versione_manuale": "Equipaggiamento 0.5",
+  "fonte": "Manuale dell’Equipaggiamento 0.5, §5.4 Nuclei Energetici Cromatici (Google Doc del 01/10/2026)",
+  "_nota": "Generato da tools/lotti/lotto_equipaggiamento_05.mjs --parte nec. «nec»: colore, formato (compatto, standard, modulo, banco), celle, capacità in Lx ed erogazione continua massima in Lx/h (§5.4.1, §5.4.4); «ricarica_costo»: ricarica completa a 0,01 cr/Lx (§5.4.6). Le celle d’arma dedicate e i pacchi dei lanciafiamme restano in munizioni.json (Armamenti §§7.20.5–7.20.6); il caricatore portatile è il «Caricatore da campo» di munizioni.json. Al tavolo la riserva in Lx si segna come i PM dei contenitori (src/equipaggiamento.js → riserveNec).",
+  "oggetti": [
+    {
+      "id": "verde-compatto",
+      "nome": "NEC Verde compatto",
+      "tipo": "altro",
+      "catalogo": "Commerciale",
+      "famiglia": "Celle",
+      "nomi_alternativi": [
+        "Cella Verde compatta"
+      ],
+      "note_manuale": "Capacità alta ed erogazione bassa; lunga autonomia. Capacità 100 Lx, erogazione continua fino a 5 Lx/h; ricarica completa 1 cr. I Nuclei Energetici Cromatici, abbreviati NEC, sono la principale fonte energetica dell’ambientazione. Esistono tre tipi: Rosso, Blu e Verde. Il colore identifica il comportamento energetico, non la Qualità costruttiva. I NEC sono riutilizzabili. Celle e pacchi del catalogo si ricaricano normalmente in un’ora con caricatore e fonte adeguati. Mezza riserva richiede 30 minuti; una carica della Blu ravvicinata richiede 12 minuti. La tariffa ordinaria è 0,01 cr per Lx ripristinato. Il Verde compatto contiene 100 Lx, eroga fino a 5 Lx/h, pesa 15 g e occupa circa 0,0055 L. È una taglia dello stesso tipo Verde. Sostituire una cella o un Modulo accessibile con ricambio pronto e attacco rapido compatibile richiede 1 AzP.",
+      "paragrafo": "§5.4.4",
+      "versione_manuale": "Equipaggiamento 0.5",
+      "peso": 0.015,
+      "reperibilita": "CO",
+      "costo": 10,
+      "nec": {
+        "colore": "Verde",
+        "formato": "compatto",
+        "celle": 1,
+        "capacita_lx": 100,
+        "erogazione_lxh": 5
+      },
+      "ricarica_costo": 1,
+      "proprieta": []
+    },
+    {
+      "id": "rosso-standard",
+      "nome": "NEC Rosso standard",
+      "tipo": "altro",
+      "catalogo": "Commerciale",
+      "famiglia": "Celle",
+      "nomi_alternativi": [
+        "Cella Rossa standard",
+        "Cartuccia di combustibile"
+      ],
+      "note_manuale": "Capacità ed erogazione medie; alimentazione ordinaria. Capacità 500 Lx, erogazione continua fino a 100 Lx/h; ricarica completa 5 cr. I Nuclei Energetici Cromatici, abbreviati NEC, sono la principale fonte energetica dell’ambientazione. Esistono tre tipi: Rosso, Blu e Verde. Il colore identifica il comportamento energetico, non la Qualità costruttiva. I NEC sono riutilizzabili. Celle e pacchi del catalogo si ricaricano normalmente in un’ora con caricatore e fonte adeguati. Mezza riserva richiede 30 minuti; una carica della Blu ravvicinata richiede 12 minuti. La tariffa ordinaria è 0,01 cr per Lx ripristinato. Sostituire una cella o un Modulo accessibile con ricambio pronto e attacco rapido compatibile richiede 1 AzP.",
+      "paragrafo": "§5.4.4",
+      "versione_manuale": "Equipaggiamento 0.5",
+      "peso": 0.15,
+      "reperibilita": "CO",
+      "costo": 50,
+      "nec": {
+        "colore": "Rosso",
+        "formato": "standard",
+        "celle": 1,
+        "capacita_lx": 500,
+        "erogazione_lxh": 100
+      },
+      "ricarica_costo": 5,
+      "proprieta": []
+    },
+    {
+      "id": "blu-standard",
+      "nome": "NEC Blu standard",
+      "tipo": "altro",
+      "catalogo": "Commerciale",
+      "famiglia": "Celle",
+      "nomi_alternativi": [
+        "Cella Blu standard"
+      ],
+      "note_manuale": "Capacità bassa ed erogazione alta; richieste intense e brevi. Capacità 250 Lx, erogazione continua fino a 200 Lx/h; ricarica completa 2,5 cr. I Nuclei Energetici Cromatici, abbreviati NEC, sono la principale fonte energetica dell’ambientazione. Esistono tre tipi: Rosso, Blu e Verde. Il colore identifica il comportamento energetico, non la Qualità costruttiva. I NEC sono riutilizzabili. Celle e pacchi del catalogo si ricaricano normalmente in un’ora con caricatore e fonte adeguati. Mezza riserva richiede 30 minuti; una carica della Blu ravvicinata richiede 12 minuti. La tariffa ordinaria è 0,01 cr per Lx ripristinato. Gli impieghi a impulsi consumano Lx per attivazione. Il Blu standard, in un dispositivo predisposto, può erogare impulsi immediati da 50 Lx: la riserva di 250 Lx permette cinque attivazioni. Le celle d’arma dedicate e i pacchi per lanciafiamme sono nel Manuale degli Armamenti, §§7.20.5–7.20.6. Sostituire una cella o un Modulo accessibile con ricambio pronto e attacco rapido compatibile richiede 1 AzP.",
+      "paragrafo": "§5.4.4",
+      "versione_manuale": "Equipaggiamento 0.5",
+      "peso": 0.15,
+      "reperibilita": "NC",
+      "costo": 200,
+      "nec": {
+        "colore": "Blu",
+        "formato": "standard",
+        "celle": 1,
+        "capacita_lx": 250,
+        "erogazione_lxh": 200
+      },
+      "ricarica_costo": 2.5,
+      "proprieta": []
+    },
+    {
+      "id": "verde-standard",
+      "nome": "NEC Verde standard",
+      "tipo": "altro",
+      "catalogo": "Commerciale",
+      "famiglia": "Celle",
+      "nomi_alternativi": [
+        "Cella Verde standard"
+      ],
+      "note_manuale": "Capacità alta ed erogazione bassa; lunga autonomia. Capacità 1000 Lx, erogazione continua fino a 50 Lx/h; ricarica completa 10 cr. I Nuclei Energetici Cromatici, abbreviati NEC, sono la principale fonte energetica dell’ambientazione. Esistono tre tipi: Rosso, Blu e Verde. Il colore identifica il comportamento energetico, non la Qualità costruttiva. I NEC sono riutilizzabili. Celle e pacchi del catalogo si ricaricano normalmente in un’ora con caricatore e fonte adeguati. Mezza riserva richiede 30 minuti; una carica della Blu ravvicinata richiede 12 minuti. La tariffa ordinaria è 0,01 cr per Lx ripristinato. Sostituire una cella o un Modulo accessibile con ricambio pronto e attacco rapido compatibile richiede 1 AzP.",
+      "paragrafo": "§5.4.4",
+      "versione_manuale": "Equipaggiamento 0.5",
+      "peso": 0.15,
+      "reperibilita": "CO",
+      "costo": 100,
+      "nec": {
+        "colore": "Verde",
+        "formato": "standard",
+        "celle": 1,
+        "capacita_lx": 1000,
+        "erogazione_lxh": 50
+      },
+      "ricarica_costo": 10,
+      "proprieta": []
+    },
+    {
+      "id": "modulo-rosso",
+      "nome": "Modulo Rosso",
+      "tipo": "altro",
+      "catalogo": "Commerciale",
+      "famiglia": "Moduli e banchi",
+      "nomi_alternativi": [
+        "Modulo Rosso esterno"
+      ],
+      "note_manuale": "Capacità ed erogazione medie; alimentazione ordinaria. Capacità 5000 Lx, erogazione continua fino a 1000 Lx/h; ricarica completa 50 cr. I Nuclei Energetici Cromatici, abbreviati NEC, sono la principale fonte energetica dell’ambientazione. Esistono tre tipi: Rosso, Blu e Verde. Il colore identifica il comportamento energetico, non la Qualità costruttiva. I NEC sono riutilizzabili. Celle e pacchi del catalogo si ricaricano normalmente in un’ora con caricatore e fonte adeguati. Mezza riserva richiede 30 minuti; una carica della Blu ravvicinata richiede 12 minuti. La tariffa ordinaria è 0,01 cr per Lx ripristinato. Un Modulo commerciale contiene dieci celle standard dello stesso tipo: costa quanto le celle più 100 cr per involucro e collegamenti e pesa 2 kg complessivi. Sostituire una cella o un Modulo accessibile con ricambio pronto e attacco rapido compatibile richiede 1 AzP.",
+      "paragrafo": "§5.4.4",
+      "versione_manuale": "Equipaggiamento 0.5",
+      "peso": 2,
+      "reperibilita": "NC",
+      "costo": 600,
+      "nec": {
+        "colore": "Rosso",
+        "formato": "modulo",
+        "celle": 10,
+        "capacita_lx": 5000,
+        "erogazione_lxh": 1000
+      },
+      "ricarica_costo": 50,
+      "proprieta": []
+    },
+    {
+      "id": "modulo-blu",
+      "nome": "Modulo Blu",
+      "tipo": "altro",
+      "catalogo": "Commerciale",
+      "famiglia": "Moduli e banchi",
+      "nomi_alternativi": [],
+      "note_manuale": "Capacità bassa ed erogazione alta; richieste intense e brevi. Capacità 2500 Lx, erogazione continua fino a 2000 Lx/h; ricarica completa 25 cr. I Nuclei Energetici Cromatici, abbreviati NEC, sono la principale fonte energetica dell’ambientazione. Esistono tre tipi: Rosso, Blu e Verde. Il colore identifica il comportamento energetico, non la Qualità costruttiva. I NEC sono riutilizzabili. Celle e pacchi del catalogo si ricaricano normalmente in un’ora con caricatore e fonte adeguati. Mezza riserva richiede 30 minuti; una carica della Blu ravvicinata richiede 12 minuti. La tariffa ordinaria è 0,01 cr per Lx ripristinato. Un Modulo commerciale contiene dieci celle standard dello stesso tipo: costa quanto le celle più 100 cr per involucro e collegamenti e pesa 2 kg complessivi. Sostituire una cella o un Modulo accessibile con ricambio pronto e attacco rapido compatibile richiede 1 AzP.",
+      "paragrafo": "§5.4.4",
+      "versione_manuale": "Equipaggiamento 0.5",
+      "peso": 2,
+      "reperibilita": "NC",
+      "costo": 2100,
+      "nec": {
+        "colore": "Blu",
+        "formato": "modulo",
+        "celle": 10,
+        "capacita_lx": 2500,
+        "erogazione_lxh": 2000
+      },
+      "ricarica_costo": 25,
+      "proprieta": []
+    },
+    {
+      "id": "modulo-verde",
+      "nome": "Modulo Verde",
+      "tipo": "altro",
+      "catalogo": "Commerciale",
+      "famiglia": "Moduli e banchi",
+      "nomi_alternativi": [],
+      "note_manuale": "Capacità alta ed erogazione bassa; lunga autonomia. Capacità 10.000 Lx, erogazione continua fino a 500 Lx/h; ricarica completa 100 cr. I Nuclei Energetici Cromatici, abbreviati NEC, sono la principale fonte energetica dell’ambientazione. Esistono tre tipi: Rosso, Blu e Verde. Il colore identifica il comportamento energetico, non la Qualità costruttiva. I NEC sono riutilizzabili. Celle e pacchi del catalogo si ricaricano normalmente in un’ora con caricatore e fonte adeguati. Mezza riserva richiede 30 minuti; una carica della Blu ravvicinata richiede 12 minuti. La tariffa ordinaria è 0,01 cr per Lx ripristinato. Un Modulo commerciale contiene dieci celle standard dello stesso tipo: costa quanto le celle più 100 cr per involucro e collegamenti e pesa 2 kg complessivi. Sostituire una cella o un Modulo accessibile con ricambio pronto e attacco rapido compatibile richiede 1 AzP.",
+      "paragrafo": "§5.4.4",
+      "versione_manuale": "Equipaggiamento 0.5",
+      "peso": 2,
+      "reperibilita": "NC",
+      "costo": 1100,
+      "nec": {
+        "colore": "Verde",
+        "formato": "modulo",
+        "celle": 10,
+        "capacita_lx": 10000,
+        "erogazione_lxh": 500
+      },
+      "ricarica_costo": 100,
+      "proprieta": []
+    },
+    {
+      "id": "banco-rosso",
+      "nome": "Banco Rosso",
+      "tipo": "altro",
+      "catalogo": "Commerciale",
+      "famiglia": "Moduli e banchi",
+      "nomi_alternativi": [],
+      "note_manuale": "Capacità ed erogazione medie; alimentazione ordinaria. Capacità 50.000 Lx, erogazione continua fino a 10.000 Lx/h; ricarica completa 500 cr. I Nuclei Energetici Cromatici, abbreviati NEC, sono la principale fonte energetica dell’ambientazione. Esistono tre tipi: Rosso, Blu e Verde. Il colore identifica il comportamento energetico, non la Qualità costruttiva. I NEC sono riutilizzabili. Celle e pacchi del catalogo si ricaricano normalmente in un’ora con caricatore e fonte adeguati. Mezza riserva richiede 30 minuti; una carica della Blu ravvicinata richiede 12 minuti. La tariffa ordinaria è 0,01 cr per Lx ripristinato. Un Banco contiene dieci Moduli, pesa 20 kg e ha prezzo e valori energetici dieci volte superiori a quelli del Modulo. Installare o spostare un Banco richiede un minuto fuori dal combattimento; gli impianti specialistici mantengono i propri tempi.",
+      "paragrafo": "§5.4.4",
+      "versione_manuale": "Equipaggiamento 0.5",
+      "peso": 20,
+      "reperibilita": "RA",
+      "costo": 6000,
+      "nec": {
+        "colore": "Rosso",
+        "formato": "banco",
+        "celle": 100,
+        "capacita_lx": 50000,
+        "erogazione_lxh": 10000
+      },
+      "ricarica_costo": 500,
+      "proprieta": []
+    },
+    {
+      "id": "banco-blu",
+      "nome": "Banco Blu",
+      "tipo": "altro",
+      "catalogo": "Commerciale",
+      "famiglia": "Moduli e banchi",
+      "nomi_alternativi": [],
+      "note_manuale": "Capacità bassa ed erogazione alta; richieste intense e brevi. Capacità 25.000 Lx, erogazione continua fino a 20.000 Lx/h; ricarica completa 250 cr. I Nuclei Energetici Cromatici, abbreviati NEC, sono la principale fonte energetica dell’ambientazione. Esistono tre tipi: Rosso, Blu e Verde. Il colore identifica il comportamento energetico, non la Qualità costruttiva. I NEC sono riutilizzabili. Celle e pacchi del catalogo si ricaricano normalmente in un’ora con caricatore e fonte adeguati. Mezza riserva richiede 30 minuti; una carica della Blu ravvicinata richiede 12 minuti. La tariffa ordinaria è 0,01 cr per Lx ripristinato. Un Banco contiene dieci Moduli, pesa 20 kg e ha prezzo e valori energetici dieci volte superiori a quelli del Modulo. Installare o spostare un Banco richiede un minuto fuori dal combattimento; gli impianti specialistici mantengono i propri tempi.",
+      "paragrafo": "§5.4.4",
+      "versione_manuale": "Equipaggiamento 0.5",
+      "peso": 20,
+      "reperibilita": "RA",
+      "costo": 21000,
+      "nec": {
+        "colore": "Blu",
+        "formato": "banco",
+        "celle": 100,
+        "capacita_lx": 25000,
+        "erogazione_lxh": 20000
+      },
+      "ricarica_costo": 250,
+      "proprieta": []
+    },
+    {
+      "id": "banco-verde",
+      "nome": "Banco Verde",
+      "tipo": "altro",
+      "catalogo": "Commerciale",
+      "famiglia": "Moduli e banchi",
+      "nomi_alternativi": [],
+      "note_manuale": "Capacità alta ed erogazione bassa; lunga autonomia. Capacità 100.000 Lx, erogazione continua fino a 5000 Lx/h; ricarica completa 1000 cr. I Nuclei Energetici Cromatici, abbreviati NEC, sono la principale fonte energetica dell’ambientazione. Esistono tre tipi: Rosso, Blu e Verde. Il colore identifica il comportamento energetico, non la Qualità costruttiva. I NEC sono riutilizzabili. Celle e pacchi del catalogo si ricaricano normalmente in un’ora con caricatore e fonte adeguati. Mezza riserva richiede 30 minuti; una carica della Blu ravvicinata richiede 12 minuti. La tariffa ordinaria è 0,01 cr per Lx ripristinato. Un Banco contiene dieci Moduli, pesa 20 kg e ha prezzo e valori energetici dieci volte superiori a quelli del Modulo. Installare o spostare un Banco richiede un minuto fuori dal combattimento; gli impianti specialistici mantengono i propri tempi.",
+      "paragrafo": "§5.4.4",
+      "versione_manuale": "Equipaggiamento 0.5",
+      "peso": 20,
+      "reperibilita": "RA",
+      "costo": 11000,
+      "nec": {
+        "colore": "Verde",
+        "formato": "banco",
+        "celle": 100,
+        "capacita_lx": 100000,
+        "erogazione_lxh": 5000
+      },
+      "ricarica_costo": 1000,
+      "proprieta": []
+    },
+    {
+      "id": "contenitore-vuoto-per-modulo",
+      "nome": "Contenitore vuoto per Modulo",
+      "tipo": "altro",
+      "catalogo": "Commerciale",
+      "famiglia": "Moduli e banchi",
+      "nomi_alternativi": [],
+      "note_manuale": "Un contenitore riutilizzabile vuoto costa 100 cr per Modulo o 1.000 cr per Banco con i dieci alloggiamenti. Le singole celle possono essere sostituite senza ricomprare il contenitore.",
+      "paragrafo": "§5.4.4",
+      "versione_manuale": "Equipaggiamento 0.5",
+      "costo": 100,
+      "proprieta": []
+    },
+    {
+      "id": "contenitore-vuoto-per-banco",
+      "nome": "Contenitore vuoto per Banco",
+      "tipo": "altro",
+      "catalogo": "Commerciale",
+      "famiglia": "Moduli e banchi",
+      "nomi_alternativi": [],
+      "note_manuale": "Un contenitore riutilizzabile vuoto costa 100 cr per Modulo o 1.000 cr per Banco con i dieci alloggiamenti. Le singole celle possono essere sostituite senza ricomprare il contenitore.",
+      "paragrafo": "§5.4.4",
+      "versione_manuale": "Equipaggiamento 0.5",
+      "costo": 1000,
+      "proprieta": []
+    },
+    {
+      "id": "stazione-per-moduli",
+      "nome": "Stazione per moduli",
+      "tipo": "altro",
+      "catalogo": "Commerciale",
+      "famiglia": "Caricatori",
+      "nomi_alternativi": [],
+      "note_manuale": "Un modulo o fino a dieci celle standard; trasferimento massimo 10.000 Lx/h totali. I caricatori non contengono una riserva: richiedono rete o banchi compatibili. Il pacco Gehemmapuker da 2.500 Lx richiede un’ora con stazione per Moduli oppure due ore e mezza con caricatore portatile a piena potenza.",
+      "paragrafo": "§5.4.6",
+      "versione_manuale": "Equipaggiamento 0.5",
+      "peso": 3,
+      "reperibilita": "NC",
+      "costo": 2000,
+      "caricatore": {
+        "formato": "Un modulo o fino a dieci celle standard",
+        "trasferimento_lxh": 10000
+      },
+      "proprieta": []
+    },
+    {
+      "id": "stazione-per-banchi",
+      "nome": "Stazione per banchi",
+      "tipo": "altro",
+      "catalogo": "Commerciale",
+      "famiglia": "Caricatori",
+      "nomi_alternativi": [],
+      "note_manuale": "Un banco o fino a dieci moduli; trasferimento massimo 100.000 Lx/h totali. I caricatori non contengono una riserva: richiedono rete o banchi compatibili.",
+      "paragrafo": "§5.4.6",
+      "versione_manuale": "Equipaggiamento 0.5",
+      "peso": 15,
+      "reperibilita": "RA",
+      "costo": 8000,
+      "caricatore": {
+        "formato": "Un banco o fino a dieci moduli",
+        "trasferimento_lxh": 100000
+      },
+      "proprieta": []
+    }
+  ]
+}

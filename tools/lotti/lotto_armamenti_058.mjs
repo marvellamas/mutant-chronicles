@@ -40,6 +40,7 @@ const ryujin = {
   reperibilita: 'RA', costo: 4000,
   attivazione: structuredClone(dusk.attivazione),
   munizioni: structuredClone(dusk.munizioni),
+  'TODO(Davide)': 'A.62: attivata, la Ryūjin infligge 1d8+1+1d6 «risolto come un unico colpo Naturale», ma lo stesso paragrafo dice che aggiunge +1d6 Plasma e che l’effetto Plasma segue il §7.5.1. Il danno attivato è Naturale con l’effetto secondario del Plasma, o di natura Plasma? Nel frattempo l’app la tratta come la Lancia Duskdealer (+1d6 Plasma) e riporta la frase del manuale.',
 };
 const iK = armi.oggetti.findIndex((o) => o.id === 'katana');
 armi.oggetti = armi.oggetti.filter((o) => o.id !== 'katana-ryujin');
@@ -128,18 +129,11 @@ for (const [id, [, nec, consumo, autonomia]] of Object.entries(PER_ACCESSORIO)) 
   if (!o.note_manuale.includes('NEC Verdi ricaricabili')) throw new Error(`${id}: testo del §7.3.4 non aggiornato`);
   o.versione_manuale = VERSIONE;
 }
-const tabella734 = { titolo: 'NEC degli accessori', colonne: ['Dispositivo', 'NEC', 'Consumo', 'Autonomia'], righe: RIGHE_734 };
-const ricambio = (id, nome, alt, costo) => ({
-  id, nome, tipo: 'altro', catalogo: 'Commerciale', famiglia: 'Illuminazione e visione', nomi_alternativi: alt,
-  note_manuale: `${NUOVE_734} ${RICARICA_734} ${frase('Gli elmetti del §7.21 hanno un consumo complessivo unico. Catalogo, formati e ricarica dei NEC sono nel Manuale dell’Equipaggiamento, §5.4. Celle d’arma e pacchi dei lanciafiamme sono nel §7.20. Robot, propulsori ed esoscheletri mantengono le autonomie specifiche; le riserve mistiche restano in PM.')}`,
-  paragrafo: '§7.3.4', versione_manuale: VERSIONE, reperibilita: 'CO', costo, tabelle: [tabella734], proprieta: [],
-  effetto_breve: `Ricambio carico del NEC ${nome.includes('compatto') ? 'della Torcia tattica' : 'dei moduli di visione e dell’elmetto elettronico'} (§7.3.4).`,
-});
-// l'id della vecchia «Batteria di servizio» resta (voci salvate); il ricambio standard è nuovo
-const iB = acc.oggetti.findIndex((x) => x.id === 'batteria-di-servizio');
-acc.oggetti[iB] = ricambio('batteria-di-servizio', 'NEC Verde compatto di ricambio', ['Batteria di servizio', 'Batteria carica di ricambio'], 10);
-acc.oggetti = acc.oggetti.filter((x) => x.id !== 'nec-verde-standard-di-ricambio');
-acc.oggetti.splice(iB + 1, 0, ricambio('nec-verde-standard-di-ricambio', 'NEC Verde standard di ricambio', [], 100));
+// i NEC di ricambio del §7.3.4 (Verde compatto 10 cr, standard 100 cr) sono le celle del catalogo NEC
+// (nec.json, Equipaggiamento §5.4.4, tools/lotti/lotto_equipaggiamento_05.mjs): la vecchia «Batteria di
+// servizio» e il ricambio standard escono dagli accessori, senza doppioni
+frase(RICARICA_734);
+acc.oggetti = acc.oggetti.filter((x) => !['batteria-di-servizio', 'nec-verde-standard-di-ricambio'].includes(x.id));
 salva('accessori_armi', acc);
 
 // --- rinforzo CS-R20 (§7.23) e Gehemmapuker (§7.17) ---------------------------------------------------

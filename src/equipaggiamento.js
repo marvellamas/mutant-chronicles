@@ -214,6 +214,57 @@ export function coloriChroma(dati) {
  * «integrati» sono la riserva di un oggetto (Bordone Templare, Scudo delle Guardie Sacre…): hanno
  * lo stesso uid dell'oggetto e un solo costo di sintonizzazione, quello dell'oggetto.
  */
+/**
+ * Riserve dei NEC da segnare al tavolo (Equipaggiamento 0.5, §5.4; regole.json → nec), come i PM dei
+ * contenitori di Chroma ma con unità tecnologiche:
+ * - celle e pacchi del catalogo (nec.json): la riserva in Lx (capacità × quantità);
+ * - apparecchi con un NEC compreso (campo «alimentazione»): ore di autonomia o usi, come la scheda
+ *   («La scheda riporta ore oppure cariche», §5.4.2); una riserva per componente (videosorveglianza,
+ *   allarme). Le alimentazioni «esterne» (postazioni, laboratorio) non hanno riserva propria: conta il
+ *   Modulo che le alimenta. Le celle d'arma restano colpi e cariche delle munizioni.
+ * `provenienza`: { totale, righe } come i valori calcolati (src/provenienza.js), per il tooltip.
+ * @returns {{ chiave, uid, nome, unita, massimo, passi: number[], nec: string|null, provenienza }[]}
+ */
+export function riserveNec(voci, dati) {
+  const R = dati?.regole?.nec;
+  if (!R) return [];
+  const cat = catalogo(dati);
+  const passi = R.passi_tavolo ?? {};
+  const par = (p) => (String(p).startsWith('§') ? `Equipaggiamento ${p}` : p);
+  const out = [];
+  for (const v of voci ?? []) {
+    const r = risolvi(v, cat);
+    if (r.fuoriCatalogo || !r.def) continue;
+    const d = r.def;
+    if (d.nec) {
+      // §5.4.1: «La capacità massima e la carica residua si misurano in Lx»
+      const q = Math.max(1, Number.isInteger(v.quantita) ? v.quantita : 1);
+      const massimo = d.nec.capacita_lx * q;
+      out.push({
+        chiave: r.uid, uid: r.uid, nome: r.nome, unita: 'Lx', massimo, nec: d.rif,
+        passi: massimo > 10000 ? passi.lx_grandi ?? [100, 1000] : passi.lx ?? [10, 100],
+        provenienza: { totale: `${massimo.toLocaleString('it-IT')} Lx`, righe: [{ fonte: q > 1 ? `${d.nome} ×${q}` : d.nome, valore: `${d.nec.capacita_lx.toLocaleString('it-IT')} Lx`, nota: `erogazione fino a ${d.nec.erogazione_lxh.toLocaleString('it-IT')} Lx/h (${par(d.paragrafo)})` }] },
+      });
+      continue;
+    }
+    const a = d.alimentazione;
+    if (!a || a.esterna) continue;
+    const fonte = a.nec ? cat.perRif.get(a.nec)?.nome ?? a.nec : a.descrizione;
+    const usi = a.usi !== undefined;
+    const massimo = usi ? a.usi : a.autonomia_ore;
+    const unita = usi ? a.unita_usi : 'ore';
+    const riga = usi
+      ? { fonte, valore: `${a.usi} ${a.unita_usi}`, nota: `${a.lx_per_uso} Lx per uso${a.consumo_lxh ? `, ${a.consumo_lxh} Lx/h durante l’uso` : ''} (${par(a.paragrafo)})` }
+      : { fonte, valore: `${a.autonomia_ore} ore`, nota: `${a.consumo_lxh ? `${a.consumo_lxh} Lx/h` : 'autonomia della scheda'} (${par(a.paragrafo)})` };
+    (a.componenti ?? [null]).forEach((comp, i) => out.push({
+      chiave: comp ? `${r.uid}#${i}` : r.uid, uid: r.uid, nome: comp ? `${r.nome} (${comp})` : r.nome, unita, massimo, nec: a.nec,
+      passi: usi ? passi.usi ?? [1] : passi.ore ?? [1, 5],
+      provenienza: { totale: `${massimo} ${unita}`, righe: [comp ? { ...riga, fonte: `${fonte}, ${comp}` } : riga] },
+    }));
+  }
+  return out;
+}
+
 export function contenitori(voci, dati) {
   const cat = catalogo(dati);
   return contenitoriRisolti((voci ?? []).map((v) => risolvi(v, cat)), dati);

@@ -40,9 +40,10 @@ test('§7.20.6: i lanciafiamme usano pacchi NEC Blu (50 Lx a getto), si ricarica
   assert.ok(r('armi_distanza_corporative:gehemmapuker').note_manuale.includes('Pacco NEC Blu separato (§7.20.6).'));
 });
 
-test('§7.3.4: accessori a NEC Verdi; i ricambi carichi costano 10 (compatto) e 100 (standard)', () => {
-  assert.deepEqual([r('accessori_armi:batteria-di-servizio').nome, r('accessori_armi:batteria-di-servizio').costo], ['NEC Verde compatto di ricambio', 10]);
-  assert.equal(r('accessori_armi:nec-verde-standard-di-ricambio').costo, 100);
+test('§7.3.4: accessori a NEC Verdi; i ricambi carichi (10 compatto, 100 standard) sono le celle del catalogo NEC', () => {
+  assert.deepEqual([r('nec:verde-compatto').costo, r('nec:verde-standard').costo], [10, 100]);
+  assert.ok(!r('accessori_armi:batteria-di-servizio') && !r('accessori_armi:nec-verde-standard-di-ricambio')); // niente doppioni
+  assert.deepEqual(r('accessori_armi:torcia-tattica').alimentazione, { nec: 'nec:verde-compatto', consumo_lxh: 2, autonomia_ore: 50, paragrafo: '§5.4.7' });
   assert.ok(r('accessori_armi:torcia-tattica').note_manuale.includes('Verde compatto 100 Lx, 2 Lx/h, 50 ore'));
   assert.ok(r('accessori_armi:modulo-di-visione-termica').note_manuale.includes('Verde standard 1.000 Lx, 10 Lx/h, 100 ore'));
   assert.ok(!/batteria di servizio/.test(r('rinforzi:piastre-reattive-cs-r20').note_manuale));

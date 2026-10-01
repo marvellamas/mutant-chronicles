@@ -55,6 +55,11 @@
       "descrizione": "Munizioni ordinarie e speciali, granate, razzi, celle e pacchi NEC dei lanciafiamme, dardi chimici; compatibilità balistiche (§7.20)"
     },
     {
+      "id": "nec",
+      "file": "nec.json",
+      "descrizione": "Nuclei Energetici Cromatici: celle, moduli, banchi e stazioni di ricarica (Equipaggiamento 0.5, §5.4)"
+    },
+    {
       "id": "sanitario",
       "file": "sanitario.json",
       "descrizione": "Kit di pronto soccorso, cartucce, UMC, dispositivi portatili, diagnostica e chirurgia (§7.19)"

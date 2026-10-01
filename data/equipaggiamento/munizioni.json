@@ -896,7 +896,9 @@
       "tipo": "altro",
       "catalogo": "Commerciale",
       "famiglia": "Celle energetiche",
-      "nomi_alternativi": [],
+      "nomi_alternativi": [
+        "Caricatore portatile"
+      ],
       "note_manuale": "Costa 500 cr, pesa 0,5 kg, REP NC, PI 4, Qualità Comune e PS Integrità 10. Ricarica una cella alla volta, fino a 1.000 Lx/h, e comprende i connettori per le celle della tabella. Richiede una fonte esterna e non contiene una riserva. Ricarica i NEC tecnologici; non ricarica riserve mistiche in PM. Le riserve mistiche mantengono il §7.5.1 e il Manuale della Magia. Robot, esoscheletri, propulsori e moduli specialistici conservano formati, autonomie e tempi delle proprie schede: non adottano automaticamente le celle comuni. Capacità o consumi in Lx non ancora dichiarati restano da dimensionare per il modello. Le celle di trazione sono NEC Rossi riutilizzabili, ricaricabili e sostituibili. Formati, capacità e autonomie dei mezzi seguono le rispettive schede; non si trasferiscono automaticamente i tempi delle celle portatili. Regole comuni e catalogo NEC: Manuale dell’Equipaggiamento, §5.4.",
       "paragrafo": "§7.20.5",
       "versione_manuale": "Armamenti 0.58",
@@ -906,7 +908,11 @@
       "reperibilita": "NC",
       "costo": 500,
       "proprieta": [],
-      "peso": 0.5
+      "peso": 0.5,
+      "caricatore": {
+        "formato": "Una cella compatta, standard o ravvicinata",
+        "trasferimento_lxh": 1000
+      }
     },
     {
       "id": "pacco-nec-nemesis-214",
@@ -1026,7 +1032,8 @@
       "compatibile_con": [
         "armi_distanza_corporative:gehemmapuker"
       ],
-      "proprieta": []
+      "proprieta": [],
+      "TODO(Davide)": "A.67: il Gehemmapuker «usa un Modulo Blu» (Armamenti §7.20.6), con 2.500 Lx e 2.100 cr come il Modulo Blu del catalogo NEC (Equipaggiamento §5.4.4). È lo stesso Modulo (intercambiabile) o un formato d’arma dedicato (§5.4.5: «formato d’arma e Modulo non sono automaticamente intercambiabili»)? Nel frattempo due voci con gli stessi valori: questa, per la ricarica al tavolo, e nec:modulo-blu."
     },
     {
       "id": "proiettili-da-pistola-perforante-1",

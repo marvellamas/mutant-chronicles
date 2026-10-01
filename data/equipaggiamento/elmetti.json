@@ -1433,7 +1433,13 @@
           "proprieta": "Allerta tattica 1",
           "fonte": "Armamenti §7.21.2"
         }
-      ]
+      ],
+      "alimentazione": {
+        "nec": "nec:verde-standard",
+        "consumo_lxh": 25,
+        "autonomia_ore": 40,
+        "paragrafo": "§5.4.8"
+      }
     },
     {
       "id": "elmetto-doomtrooper-assault",

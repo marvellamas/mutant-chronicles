@@ -123,7 +123,13 @@
           "condizione": "+2 VA a Percezione per esaminare tracce materiali mediante gli strumenti del corredo e a Scienza per analisi preliminari eseguibili con una dotazione portatile.",
           "fonte": "Armamenti §7.12"
         }
-      ]
+      ],
+      "alimentazione": {
+        "nec": "nec:verde-standard",
+        "consumo_lxh": 25,
+        "autonomia_ore": 40,
+        "paragrafo": "§5.2"
+      }
     },
     {
       "id": "corredo-d-intrusione-asa",
@@ -441,7 +447,13 @@
           "condizione": "Concede +2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo.",
           "fonte": "Armamenti §7.13.7"
         }
-      ]
+      ],
+      "alimentazione": {
+        "nec": "nec:verde-standard",
+        "consumo_lxh": 25,
+        "autonomia_ore": 40,
+        "paragrafo": "§5.1"
+      }
     },
     {
       "id": "valigetta-investigativa-capitol",
@@ -482,7 +494,13 @@
           "condizione": "+2 VA a Percezione per esaminare tracce materiali mediante gli strumenti e a Scienza per analisi preliminari eseguibili con dotazione portatile.",
           "fonte": "Armamenti §7.13.8"
         }
-      ]
+      ],
+      "alimentazione": {
+        "nec": "nec:verde-standard",
+        "consumo_lxh": 25,
+        "autonomia_ore": 40,
+        "paragrafo": "§5.2"
+      }
     },
     {
       "id": "corredo-d-intrusione-capitol",

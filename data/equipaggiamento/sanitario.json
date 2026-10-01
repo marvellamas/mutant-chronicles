@@ -419,7 +419,13 @@
           "condizione": "Una diagnosi richiede almeno un minuto e una Prova di Medicina con +2 VA degli strumenti, per lesioni e anomalie rilevabili dall’apparecchio.",
           "fonte": "Armamenti §7.19.5"
         }
-      ]
+      ],
+      "alimentazione": {
+        "nec": "nec:verde-standard",
+        "consumo_lxh": 25,
+        "autonomia_ore": 40,
+        "paragrafo": "§5.4.7"
+      }
     },
     {
       "id": "scanner-diagnostico-cybertronic",
@@ -451,7 +457,13 @@
           "condizione": "Mantiene le funzioni e il +2 VA diagnostico del modello portatile",
           "fonte": "Armamenti §7.19.5"
         }
-      ]
+      ],
+      "alimentazione": {
+        "nec": "nec:verde-standard",
+        "consumo_lxh": 25,
+        "autonomia_ore": 40,
+        "paragrafo": "§5.4.7"
+      }
     },
     {
       "id": "kit-chirurgico-da-campo",
@@ -553,7 +565,14 @@
           "condizione": "Concede +3 VA a Medicina per chirurgia e trattamenti delle Ferite o delle Menomazioni; la diagnostica mantiene il +2 del proprio scanner.",
           "fonte": "Armamenti §7.19.5"
         }
-      ]
+      ],
+      "alimentazione": {
+        "nec": "nec:modulo-rosso",
+        "consumo_lxh": 1000,
+        "autonomia_ore": 5,
+        "paragrafo": "§5.4.7",
+        "esterna": true
+      }
     },
     {
       "id": "farmaco-terapeutico-specifico",

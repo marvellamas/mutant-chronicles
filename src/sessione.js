@@ -7,7 +7,10 @@
 //              affaticamento, munizioni: { uid: { colpi, riserve, parziali, vuoti } }, scorte: { uid: consumate },
 //              chroma: { uid: { pmAttuali, iniziale? } } (iniziale: PM impostati per un contenitore trovato, E&L 2),
 //              caricoExtra, crediti, creditiIniziali, condizioniOggetti: [uid], attacchi: { uid: scelte },
-//              lanci: { incantesimo: scelte }, integrita: { uid: piAttuali }, note }
+//              lanci: { incantesimo: scelte }, integrita: { uid: piAttuali }, nec: { chiave: attuale }, note }
+// nec: riserva attuale dei NEC (Equipaggiamento 0.5, §5.4; src/equipaggiamento.js → riserveNec): Lx di celle e
+// pacchi, ore o usi degli apparecchi che li comprendono; i nuovi partono carichi («I prezzi … comprendono la
+// prima carica», §5.4.4); «Nuova sessione» non li ricarica (serve caricatore e fonte, §5.4.6).
 // integrita: PI attuali degli oggetti con PI (Armamenti §7.2.1: «si annotano separatamente quelli
 // attuali»), entro 0 e i massimi del catalogo; gli oggetti nuovi partono integri (formato 7).
 // lanci: le ultime scelte del pannello «Lancia!» per ogni incantesimo (src/ui/lancio.js).
@@ -34,7 +37,7 @@ import { valoreTiro } from './tiri.js';
 import { SENZ_ARMI } from './attacco.js';
 import { saldoIniziale } from './dotazioni.js';
 import { infoRicarica, eseguiRicarica, perOperazione } from './ricarica.js';
-import { caricatori, contenitori, normalizzaEquipaggiamento, catalogo, risolvi } from './equipaggiamento.js';
+import { caricatori, contenitori, normalizzaEquipaggiamento, catalogo, risolvi, riserveNec } from './equipaggiamento.js';
 import { oggettiConPi } from './protezione.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
@@ -80,6 +83,8 @@ export function massimiSessione(scheda, creazione, dati) {
     condizioniArmi: (dati.regole.condizioni_armi?.elenco ?? []).map((c) => c.id),
     // PI massimi degli oggetti con PI (uid → PI), Armamenti §7.2.1
     integrita: dati.equipaggiamento && dati.regole.integrita ? piMassimi(creazione, dati) : null,
+    // riserve dei NEC (chiave → massimo in Lx, ore o usi), Equipaggiamento §5.4
+    nec: dati.equipaggiamento && dati.regole.nec ? Object.fromEntries(riserveNec(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati).map((x) => [x.chiave, x.massimo])) : null,
   };
 }
 
@@ -95,6 +100,20 @@ function allineaIntegrita(v, m) {
   const src = isOggetto(v) ? v : {};
   if (!m.integrita) return Object.fromEntries(Object.entries(src).filter(([, n]) => Number.isInteger(n) && n >= 0));
   return Object.fromEntries(Object.entries(m.integrita).map(([uid, max]) => [uid, limita(intero(src[uid], max), 0, max)]));
+}
+
+/** Riserve dei NEC: i nuovi partono carichi, i valori restano entro 0 e il massimo, quelli tolti spariscono. */
+function allineaNec(v, m) {
+  const src = isOggetto(v) ? v : {};
+  if (!m.nec) return Object.fromEntries(Object.entries(src).filter(([, n]) => Number.isInteger(n) && n >= 0));
+  return Object.fromEntries(Object.entries(m.nec).map(([k, max]) => [k, limita(intero(src[k], max), 0, max)]));
+}
+
+/** Riserva di un NEC al tavolo: +/− manuali (ore, usi o Lx), entro 0 e il massimo (§5.4.2). */
+export function variaNec(sessione, chiave, delta, m) {
+  const s = allineaSessione(sessione, m);
+  if (!(chiave in s.nec)) return s;
+  return modificaSessione(s, { nec: { ...s.nec, [chiave]: s.nec[chiave] + delta } }, m);
 }
 
 /** PI attuali di un oggetto: +/− al tavolo, entro 0 e i massimi (la riparazione la decide il master, A.46). */
@@ -266,6 +285,7 @@ export function inizializzaSessione(m) {
     attacchi: {},
     lanci: {},
     integrita: allineaIntegrita({}, m),
+    nec: allineaNec({}, m),
     condizioniArmi: {},
     note: '',
   };
@@ -299,6 +319,7 @@ export function allineaSessione(sessione, m) {
       .filter(([uid, v]) => isOggetto(v) && (!m.caricatori || uid in m.caricatori || uid === SENZ_ARMI || (m.oggetti ?? []).includes(uid)))),
     lanci: Object.fromEntries(Object.entries(isOggetto(sessione.lanci) ? sessione.lanci : {}).filter(([, v]) => isOggetto(v))),
     integrita: allineaIntegrita(sessione.integrita, m),
+    nec: allineaNec(sessione.nec, m),
     // condizione di ogni arma (uid → id; «integra» non si salva)
     condizioniArmi: Object.fromEntries(Object.entries(isOggetto(sessione.condizioniArmi) ? sessione.condizioniArmi : {})
       .filter(([uid, id]) => id !== 'integra' && (m.condizioniArmi ?? []).includes(id) && (!m.oggetti || m.oggetti.includes(uid)))),

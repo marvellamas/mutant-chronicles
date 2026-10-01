@@ -62,6 +62,7 @@ export function validaDati(dati) {
   validaTecniche(dati.tecniche_interiori, err);
   validaEquipaggiamento(dati.equipaggiamento, [...nomiAbilita], [...(idSpec ?? [])], err, Object.keys(dati.regole?.chroma?.colori ?? {}).filter((c) => !dati.regole.chroma.colori[c]?.esausto && dati.regole.chroma.colori[c]?.contenitore !== false), Object.keys(dati.regole?.corruzione ?? {}));
   if (dati.regole?.chroma !== undefined) validaChroma(dati, err);
+  if (dati.equipaggiamento?.file) validaNec(dati, err);
   if (dati.regole) validaSchedaDigitale(dati, err);
   if (isOggetto(dati.dotazioni)) validaDotazioni(dati, err);
   if (dati.equipaggiamento?.file?.munizioni?.ricarica !== undefined) validaRicarica(dati, err);
@@ -1426,6 +1427,78 @@ function numeroOpz(F, k, v, min, max, err) {
   if (v === undefined || v === null) return;
   if (typeof v !== 'number' || !Number.isFinite(v)) err(F, k, `deve essere un numero, trovato ${JSON.stringify(v)}`);
   else if (v < min || v > max) err(F, k, `fuori intervallo (${min}–${max}): ${v}`);
+}
+
+// ---------------------------------------------------------------------------
+// Nuclei Energetici Cromatici (Equipaggiamento 0.5, §5.4): catalogo (nec.json), caricatori e campo
+// «alimentazione» degli oggetti; regole in regole.json → nec
+
+const COLORI_NEC = ['Rosso', 'Blu', 'Verde'];
+const FORMATI_NEC = ['compatto', 'standard', 'modulo', 'banco'];
+
+function validaNec(dati, err) {
+  const R = dati.regole?.nec;
+  const FR = 'regole';
+  const conAlimentazione = Object.values(dati.equipaggiamento.file).some((f) => (f?.oggetti ?? []).some((o) => o?.alimentazione !== undefined || o?.nec !== undefined));
+  if (!isOggetto(R)) {
+    if (conAlimentazione) err(FR, 'nec', 'regole dei NEC mancanti (Equipaggiamento §5.4): servono a ricarica e consumi');
+    return;
+  }
+  if (!(Number.isFinite(R.tariffa_cr_per_lx) && R.tariffa_cr_per_lx > 0)) err(FR, 'nec.tariffa_cr_per_lx', 'serve la tariffa di ricarica in cr per Lx (§5.4.6)');
+  for (const c of COLORI_NEC) {
+    const x = R.colori?.[c];
+    if (!(isOggetto(x) && isIntero(x.capacita_lx) && x.capacita_lx > 0 && isIntero(x.erogazione_lxh) && x.erogazione_lxh > 0)) err(FR, `nec.colori.${c}`, 'servono capacita_lx ed erogazione_lxh interi positivi (§5.4.1)');
+  }
+  for (const [u, passi] of Object.entries(R.passi_tavolo ?? {})) {
+    if (!(Array.isArray(passi) && passi.length && passi.every((p) => isIntero(p) && p > 0))) err(FR, `nec.passi_tavolo.${u}`, 'elenco di passi interi positivi');
+  }
+  // catalogo
+  const nec = new Map();
+  for (const [fileId, f] of Object.entries(dati.equipaggiamento.file)) {
+    for (const o of f?.oggetti ?? []) {
+      if (o?.nec === undefined) continue;
+      const F = `equipaggiamento/${fileId}`;
+      const k = `oggetti (${o.id}).nec`;
+      const n = o.nec;
+      if (!(isOggetto(n) && COLORI_NEC.includes(n.colore) && FORMATI_NEC.includes(n.formato) && isIntero(n.celle) && n.celle >= 1
+        && isIntero(n.capacita_lx) && n.capacita_lx > 0 && isIntero(n.erogazione_lxh) && n.erogazione_lxh > 0)) {
+        err(F, k, `serve { colore: ${COLORI_NEC.join('|')}, formato: ${FORMATI_NEC.join('|')}, celle ≥ 1, capacita_lx, erogazione_lxh } (§5.4.4)`);
+        continue;
+      }
+      // §5.4.6: «La tariffa ordinaria è 0,01 cr per Lx ripristinato»
+      const attesa = Math.round(n.capacita_lx * R.tariffa_cr_per_lx * 100) / 100;
+      if (o.ricarica_costo !== attesa) err(F, `oggetti (${o.id}).ricarica_costo`, `con ${n.capacita_lx} Lx a ${R.tariffa_cr_per_lx} cr/Lx la ricarica completa costa ${attesa} cr, trovato ${JSON.stringify(o.ricarica_costo)}`);
+      nec.set(`${fileId}:${o.id}`, o);
+    }
+  }
+  for (const [fileId, f] of Object.entries(dati.equipaggiamento.file)) {
+    for (const o of f?.oggetti ?? []) {
+      const F = `equipaggiamento/${fileId}`;
+      if (o?.caricatore !== undefined && !(isOggetto(o.caricatore) && isTesto(o.caricatore.formato) && isIntero(o.caricatore.trasferimento_lxh) && o.caricatore.trasferimento_lxh > 0)) {
+        err(F, `oggetti (${o.id}).caricatore`, 'serve { formato, trasferimento_lxh } (§5.4.6)');
+      }
+      const a = o?.alimentazione;
+      if (a === undefined) continue;
+      const k = `oggetti (${o.id}).alimentazione`;
+      if (!isOggetto(a)) { err(F, k, 'non è un oggetto'); continue; }
+      if (a.nec !== null && !nec.has(a.nec)) err(F, `${k}.nec`, `"${a.nec}" non è un NEC del catalogo (nec.json); per un NEC dedicato: nec null e «descrizione»`);
+      if (a.nec === null && !isTesto(a.descrizione)) err(F, `${k}.descrizione`, 'un NEC dedicato (nec: null) richiede la descrizione');
+      // §5.4.2: «La scheda riporta ore oppure cariche»
+      const conOre = a.autonomia_ore !== undefined;
+      const conUsi = a.usi !== undefined;
+      if (!conOre && !conUsi) err(F, k, 'serve autonomia_ore oppure usi (§5.4.2)');
+      if (conOre && !(isIntero(a.autonomia_ore) && a.autonomia_ore > 0)) err(F, `${k}.autonomia_ore`, 'intero positivo');
+      if (conUsi && !(isIntero(a.usi) && a.usi > 0 && isTesto(a.unita_usi) && isIntero(a.lx_per_uso) && a.lx_per_uso > 0)) err(F, k, 'con «usi» servono usi, unita_usi e lx_per_uso');
+      if (a.consumo_lxh !== undefined && !(isIntero(a.consumo_lxh) && a.consumo_lxh > 0)) err(F, `${k}.consumo_lxh`, 'intero positivo');
+      if (a.componenti !== undefined && !(Array.isArray(a.componenti) && a.componenti.length >= 2 && a.componenti.every(isTesto))) err(F, `${k}.componenti`, 'almeno due nomi di componente');
+      if (a.esterna !== undefined && a.esterna !== true) err(F, `${k}.esterna`, 'solo true (il NEC non è compreso)');
+      if (!isTesto(a.paragrafo)) err(F, `${k}.paragrafo`, 'paragrafo del manuale mancante');
+      // il NEC del catalogo deve bastare: «l’autonomia in ore è la carica residua divisa per il consumo» (§5.4.2)
+      const n = nec.get(a.nec)?.nec;
+      if (n && conOre && isIntero(a.consumo_lxh) && n.capacita_lx / a.consumo_lxh < a.autonomia_ore) err(F, k, `${a.autonomia_ore} ore a ${a.consumo_lxh} Lx/h superano i ${n.capacita_lx} Lx di ${a.nec}`);
+      if (n && isIntero(a.consumo_lxh) && n.erogazione_lxh < a.consumo_lxh && a.esterna !== true) err(F, k, `${a.nec} eroga ${n.erogazione_lxh} Lx/h, meno dei ${a.consumo_lxh} richiesti (§5.4.2)`);
+    }
+  }
 }
 
 // ---------------------------------------------------------------------------

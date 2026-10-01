@@ -35,9 +35,12 @@ export const SEZIONI_INVENTARIO = [
   { id: 'accessori', titolo: 'Accessori (armi, armature, elmetti)', colore: 'cat-accessori', tipi: ['accessorio'] },
   { id: 'protezioni', titolo: 'Armature, scudi ed elmetti', colore: 'cat-armature', tipi: ['armatura', 'scudo', 'elmetto'] },
   { id: 'munizioni', titolo: 'Munizioni e caricatori', colore: 'cat-munizioni', tipi: ['munizioni'] },
+  // Equipaggiamento 0.5, §5.4: energia tecnologica in Lx, distinta dalle riserve mistiche in PM (§5.4.10)
+  { id: 'nec', titolo: 'NEC e stazioni di ricarica', colore: 'cat-munizioni', tipi: ['altro'], cataloghi: ['nec'] },
   { id: 'dotazioni_personali', titolo: 'Dotazioni personali', colore: 'cat-altro', tipi: ['altro'], cataloghi: ['dotazioni_personali'] },
   { id: 'esplorazione', titolo: 'Esplorazione e sopravvivenza', colore: 'cat-altro', tipi: ['altro'], cataloghi: ['esplorazione'] },
   { id: 'comunicazione', titolo: 'Comunicazione e rilevamento', colore: 'cat-altro', tipi: ['altro'], cataloghi: ['comunicazione'] },
+  { id: 'strumenti', titolo: 'Strumenti professionali', colore: 'cat-altro', tipi: ['altro'], cataloghi: ['strumenti_professionali'] },
   { id: 'sanitario', titolo: 'Sanitario', colore: 'cat-sanitario', tipi: ['sanitario'] },
   { id: 'artefatti', titolo: 'Artefatti, cristalli e contenitori di Chroma', colore: 'cat-artefatti', tipi: ['artefatto'] },
   { id: 'altro', titolo: 'Altro equipaggiamento', colore: 'cat-altro', tipi: ['altro'] },

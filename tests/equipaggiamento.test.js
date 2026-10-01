@@ -17,7 +17,7 @@ const voce = (uid, rif, stato, extra = {}) => ({ uid, rif, stato, quantita: 1, n
 const scheda = (creazione, equipaggiamento, livelli = []) => calcolaScheda({ creazione: { ...creazione, equipaggiamento }, livelli }, dati);
 
 test('catalogo: caricato dall’indice, un lotto = un file e una riga; riferimenti "file:id"', () => {
-  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armi_corporative', 'armi_distanza', 'armi_distanza_corporative', 'accessori_armi', 'munizioni', 'sanitario', 'artefatti', 'unita_robotiche', 'armature', 'armature_corporative', 'elmetti', 'rinforzi', 'scudi', 'corredi_dispositivi', 'dotazioni_personali', 'esplorazione', 'comunicazione']);
+  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armi_corporative', 'armi_distanza', 'armi_distanza_corporative', 'accessori_armi', 'munizioni', 'nec', 'sanitario', 'artefatti', 'unita_robotiche', 'armature', 'armature_corporative', 'elmetti', 'rinforzi', 'scudi', 'corredi_dispositivi', 'dotazioni_personali', 'esplorazione', 'comunicazione', 'strumenti_professionali']);
   const cat = catalogo(dati);
   assert.equal(cat.oggetti.filter((o) => o.tipo === 'arma_ravvicinata' && o.catalogo === 'Commerciale').length, 28); // §7.1.1: 28 profili
   assert.equal(cat.oggetti.filter((o) => o.tipo === 'armatura' && o.catalogo === 'Commerciale').length, 3); // §7.11.3
@@ -672,9 +672,9 @@ test('validatore di corredi e dispositivi: SIN, compatibilità, tabelle, scudo i
 
 // --- Lotto 8: accessori delle armi (§7.3) -------------------------------------------------
 
-test('lotto 8: 16 accessori delle armi dal §7.3, con le versioni rinforzate dei silenziatori e i due NEC di ricambio (0.58)', () => {
+test('lotto 8: 14 accessori delle armi dal §7.3, con le versioni rinforzate dei silenziatori (i NEC di ricambio sono nel catalogo NEC)', () => {
   const tutti = catalogo(dati).oggetti.filter((o) => o.file === 'accessori_armi');
-  assert.equal(tutti.length, 16); // §7.3.4 (0.58): NEC Verde compatto (la vecchia Batteria di servizio) e standard di ricambio
+  assert.equal(tutti.length, 14); // §7.3.4 (0.58): la Batteria di servizio è il NEC Verde compatto di nec.json (Equipaggiamento §5.4.4)
   const r = (id) => catalogo(dati).perRif.get(`accessori_armi:${id}`);
   assert.deepEqual(r('mirino-ottico').mirino, { riduzione: 4, distanza_max_q: 500, azp_minime: 2, testo: 'Fino a 500 Q; almeno 2 Azioni Principali complessive.' });
   assert.equal(r('mirino-di-precisione').mirino.distanza_max_q, null); // «Entro la gittata massima dell’arma»
@@ -684,7 +684,7 @@ test('lotto 8: 16 accessori delle armi dal §7.3, con le versioni rinforzate dei
   assert.equal(r('silenziatore-rinforzato').pi, 4);
   assert.deepEqual(r('bipiede').bonus_condizionato, { va: 1, condizione: 'finché il personaggio mantiene posizione e appoggio' });
   assert.deepEqual(r('modulo-di-visione-termica').si_monta_su, ['mirino']);
-  assert.equal(r('batteria-di-servizio').costo, 10);
+  assert.equal(catalogo(dati).perRif.get('nec:verde-compatto').costo, 10); // ricambio della Torcia tattica (§7.3.4)
 });
 
 test('accessori montati su un’arma impugnata: silenziatore nel VA e nel danno, mirino, modulo sul mirino, bipiede', () => {

@@ -15,7 +15,7 @@ import { descriviFerite } from '../sessione.js';
 import { statoIntegrita } from '../protezione.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
 import { testoDanno } from '../stampa.js';
-import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto, catalogo, risolvi, infoArtefattoVoce, regoleSintonizzazione, rapportoConversione } from '../equipaggiamento.js';
+import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto, catalogo, risolvi, infoArtefattoVoce, regoleSintonizzazione, rapportoConversione, riserveNec } from '../equipaggiamento.js';
 import { dotazioneApplicata, crediti } from '../dotazioni.js';
 import { provenienzaCarico } from '../carico.js';
 import { talentiSituazionali } from '../talenti.js';
@@ -498,11 +498,35 @@ function tavoloRigaInventario(ctx, r) {
       'aria-label': `${d > 0 ? 'Aggiungi' : 'Togli'} un caricatore di riserva a ${r.nome}`, onclick: () => ctx.azioni.munizioni(r.uid, 'riserve', d) }, d > 0 ? '+' : '−');
     nodi.push(h('div', { class: 'pi-voce' }, h('span', {}, info?.modo === 'caricatore' ? 'Caricatori pieni di riserva ' : 'Riserve '), h('strong', {}, String(m.riserve ?? 0)), h('span', { class: 'pi-comandi' }, b(-1), b(1))));
   }
+  // NEC (Equipaggiamento 0.5, §5.4): riserva attuale come i PM dei contenitori, con − e + e la provenienza
+  for (const x of riserveNec([r.voce], ctx.dati)) nodi.push(rigaNec(ctx, r, x));
   const kit = consumabili([r.voce], ctx.dati)[0];
   if (kit) {
     nodi.push(pannelloMunizioni(ctx, { uid: kit.uid, nome: kit.nome, munizioni: { capacita: kit.capacita, unita: kit.unita, ricarica: kit.ricarica ? `${kit.ricarica.applicazioni} ${kit.unita} costano ${kit.ricarica.costo.toLocaleString('it-IT')}` : null } }));
   }
   return nodi.length ? h('div', { class: 'tavolo-riga' }, nodi) : null;
+}
+
+/**
+ * Riserva di un NEC nella riga dell'Inventario: «NEC 87 / 100 ore» (o Lx, o usi) con i pulsanti dei
+ * passi di regole.json → nec.passi_tavolo e la provenienza al tooltip (quale NEC, consumo, paragrafo).
+ * Si segna a mano: «Nuova sessione» non ricarica (§5.4.6).
+ */
+function rigaNec(ctx, r, x) {
+  const n = ctx.sessione.nec?.[x.chiave] ?? x.massimo;
+  const parte = x.nome !== r.nome ? x.nome.slice(r.nome.length).trim() : '';
+  const b = (d) => h('button', {
+    type: 'button', class: 'btn-tavolo btn-mini', disabled: d < 0 ? n <= 0 : n >= x.massimo,
+    'aria-label': `${d > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(d)} ${x.unita} a ${x.nome}`, onclick: () => ctx.azioni.nec(x.chiave, d),
+  }, d > 0 ? `+${d}` : `−${-d}`);
+  return h('div', { class: `pi-voce riserva-nec${n === 0 ? ' esaurita' : ''}` },
+    h('span', {}, `${x.unita === 'Lx' ? 'Riserva' : 'NEC'}${parte ? ` ${parte}` : ''} `),
+    infoValore([h('strong', {}, n.toLocaleString('it-IT')), ` / ${x.massimo.toLocaleString('it-IT')} ${x.unita}`], {
+      titolo: `Riserva: ${x.nome}`,
+      sottotitolo: 'Si segna a mano (Equipaggiamento §5.4): «Nuova sessione» non ricarica; la ricarica completa richiede caricatore e fonte, un’ora.',
+      provenienza: x.provenienza,
+    }, { classe: 'valore-nec' }),
+    h('span', { class: 'pi-comandi' }, [...x.passi].reverse().map((p) => b(-p)), x.passi.map((p) => b(p))));
 }
 
 /**

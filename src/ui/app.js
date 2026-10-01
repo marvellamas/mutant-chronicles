@@ -26,7 +26,7 @@ import { preparaStampa, preparaTab, normalizzaOpzioniStampa } from '../stampa.js
 import { renderTab, tabFissi, ALIAS_TAB } from './tab.js';
 import {
   massimiSessione, allineaSessione, variaSessione, modificaSessione, commutaStato, commutaCondizioneOggetto, commutaTalento, commutaBonusTalenti, impostaCondizioneArma, riparaOggetto, spendiPmLancio, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
-  penalitaSessione, variaMunizioni, ricaricaArma, variaChroma, variaIntegrita,
+  penalitaSessione, variaMunizioni, ricaricaArma, variaChroma, variaIntegrita, variaNec,
 } from '../sessione.js';
 import { conOrdinale } from '../lingua.js';
 import { normalizzaCalendario, calendarioAttivo, attivaCalendario, disattivaCalendario, contaNote, fileCalendario, leggiFileCalendario } from '../calendario.js';
@@ -827,6 +827,8 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       ricarica: (uid) => cambiaSessione(ricaricaArma(stato.sessione, uid, massimi)),
       chroma: (uid, delta) => cambiaSessione(variaChroma(stato.sessione, uid, delta, massimi)),
       integrita: (uid, delta) => cambiaSessione(variaIntegrita(stato.sessione, uid, delta, massimi)),
+      // riserva di un NEC (Equipaggiamento §5.4): ore, usi o Lx
+      nec: (chiave, delta) => cambiaSessione(variaNec(stato.sessione, chiave, delta, massimi)),
       puntiEsperienza: (valore) => {
         stato.scelte = applicaModifica(stato.scelte, { puntiEsperienza: valore }, dati).scelte;
         persisti();

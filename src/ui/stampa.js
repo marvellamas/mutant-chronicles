@@ -650,8 +650,11 @@ function tabellaInventario(d, righe, { vuote = 0 } = {}) {
       h('th', { scope: 'row' }, r.nome, r.note ? h('span', { class: 'sigla' }, ` — ${r.note}`) : null),
       h('td', { class: 'costo-inv' }, r.costo), h('td', { class: 'qualita-inv' }, r.qualita), h('td', { class: 'peso-inv' }, r.peso),
       caselle(r.stato), h('td', { class: 'ps-inv' }, r.ps ?? '—')),
-    r.piMax || r.condizioni ? h('tr', { class: 'riga-pi' }, h('td', { colspan: n },
+    r.piMax || r.condizioni || r.nec?.length ? h('tr', { class: 'riga-pi' }, h('td', { colspan: n },
       r.piMax ? h('div', { class: 'pi-inv' }, h('span', { class: 'etichetta-colpi' }, 'PI'), quadratini(r.piMax, { compatto: true })) : null,
+      // NEC (Equipaggiamento §5.4): riserva a quadratini, una casella per unità o per decimo della riserva
+      (r.nec ?? []).map((x) => h('div', { class: 'pi-inv nec-inv' }, h('span', { class: 'etichetta-colpi' }, x.etichetta), quadratini(x.caselle, { compatto: true }),
+        h('span', { class: 'sigla' }, x.perCasella === 1 ? ` ${x.massimo} ${x.unita}` : ` 1 casella = ${x.perCasella.toLocaleString('it-IT')} ${x.unita} (${x.massimo.toLocaleString('it-IT')} ${x.unita})`))),
       r.condizioni ? h('p', { class: 'condizioni-inv sigla' }, 'Condizione (A.49): ', r.condizioni.join(' · ')) : null)) : null);
   // «Da aggiungere»: righe vuote con le stesse colonne e i PI a caselle vuote (da scrivere a matita)
   const vuota = () => {

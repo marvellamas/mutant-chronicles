@@ -101,7 +101,13 @@
           ]
         }
       ],
-      "proprieta": []
+      "proprieta": [],
+      "alimentazione": {
+        "nec": null,
+        "descrizione": "NEC Rosso dedicato",
+        "autonomia_ore": 8,
+        "paragrafo": "Armamenti §7.18"
+      }
     },
     {
       "id": "generatore-di-risonanza-rf366",
