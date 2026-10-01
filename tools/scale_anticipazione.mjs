@@ -24,14 +24,16 @@ const CATEGORIA_COLONNA = { durata: /durata|concentr/i, gittata: /gittata|portat
 
 /** Colonne della scheda candidate per l'aspetto, con il punteggio di somiglianza del nome. */
 function candidate(aspetto, colonne) {
-  const at = [...new Set([...tokens(aspetto.nome), ...tokens(aspetto.etichetta)])].filter((t) => !['anticipazione'].includes(t));
+  const at = [...new Set([...tokens(aspetto.nome), ...tokens(aspetto.etichetta)].map((t) => SINONIMI[t] ?? t))].filter((t) => !['anticipazione'].includes(t));
   const punteggio = (c) => at.filter((t) => tokensColonna(c).some((x) => affine(t, x))).length;
   let out = colonne.map((c) => ({ c, p: punteggio(c) })).filter((x) => x.p > 0);
   if (!out.length && CATEGORIA_COLONNA[aspetto.categoria]) out = colonne.filter((c) => CATEGORIA_COLONNA[aspetto.categoria].test(c)).map((c) => ({ c, p: 1 }));
   // «a Concentrazione» / «fissa»: la colonna giusta fra le durate
   const g = aspetto.gradino.toLowerCase();
-  if (out.length > 1 && /concentrazione/.test(g + aspetto.nome.toLowerCase())) out = out.filter((x) => /con/i.test(x.c)) .length ? out.filter((x) => /con/i.test(x.c)) : out;
-  if (out.length > 1 && /fissa/.test(g + aspetto.nome.toLowerCase())) out = out.filter((x) => /fiss/i.test(x.c)).length ? out.filter((x) => /fiss/i.test(x.c)) : out;
+  // entrambe le modalità nominate («oltre 8 ore Con…, oltre 1 ora fissa…»): restano tutte e due le colonne
+  const entrambe = /\bcon\b|concentrazione/i.test(aspetto.gradino) && /fissa/i.test(aspetto.gradino);
+  if (!entrambe && out.length > 1 && /concentrazione/.test(g + aspetto.nome.toLowerCase())) out = out.filter((x) => /con/i.test(x.c)) .length ? out.filter((x) => /con/i.test(x.c)) : out;
+  if (!entrambe && out.length > 1 && /fissa/.test(g + aspetto.nome.toLowerCase())) out = out.filter((x) => /fiss/i.test(x.c)).length ? out.filter((x) => /fiss/i.test(x.c)) : out;
   const max = Math.max(0, ...out.map((x) => x.p));
   return out.filter((x) => x.p === max).map((x) => x.c);
 }
@@ -134,7 +136,7 @@ export function scalaAspetto(aspetto, versioni, precedente = null) {
     return { scala: { tipo: 'incremento', colonna: numeriche[0], passo, ...(max !== undefined ? { massimo: numeroFirmato(max) } : {}) } };
   }
   // 3. riga successiva della tabella: «alla riga successiva», «valore successivo», «gradino nella durata»
-  if (/successiv|riga|gradino|voce/.test(g)) {
+  if (/successiv|riga|gradino|voce/.test(g) || /oltre [^:]+:/.test(g)) {
     if (!cand.length) return nulla('nessuna colonna della tabella corrisponde all’aspetto');
     const oltre = [...g.matchAll(/oltre\s+([^:;,()]+?):\s*([^;,()]+)/g)].map((m) => ({ da: m[1].replace(/\s+(Con|fissa)$/i, '').trim(), a: m[2].trim() }));
     const ultima = /fino a\s+([^,;()]+?)\s+oltre\s+(?:l’ultima riga|la riga|il livello)/.exec(g)?.[1] ?? /con\s+(\S+)\s+come gradino aggiuntivo/.exec(g)?.[1];

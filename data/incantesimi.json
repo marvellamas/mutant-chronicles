@@ -3970,16 +3970,36 @@
               "gradino": "lunghezza (oltre 15 Q: 18 Q)",
               "categoria": "area",
               "nome": "Lunghezza",
-              "scala": null,
-              "scala_motivo": "la scheda nomina l’aspetto senza scrivere la scala dei gradini"
+              "scala": {
+                "tipo": "riga_successiva",
+                "colonne": [
+                  "Lunghezza max"
+                ],
+                "oltre": [
+                  {
+                    "da": "15 Q",
+                    "a": "18 Q"
+                  }
+                ]
+              }
             },
             {
               "etichetta": "durata",
               "gradino": "durata (oltre 1 ora: 2 ore)",
               "categoria": "durata",
               "nome": "Durata",
-              "scala": null,
-              "scala_motivo": "la scheda nomina l’aspetto senza scrivere la scala dei gradini"
+              "scala": {
+                "tipo": "riga_successiva",
+                "colonne": [
+                  "Durata"
+                ],
+                "oltre": [
+                  {
+                    "da": "1 ora",
+                    "a": "2 ore"
+                  }
+                ]
+              }
             },
             {
               "etichetta": "interferenza magica",
@@ -4316,8 +4336,23 @@
               "gradino": "durata scelta (oltre 8 ore Con: 12 ore, oltre 1 ora fissa: 2 ore)",
               "categoria": "durata",
               "nome": "Durata",
-              "scala": null,
-              "scala_motivo": "la scheda nomina l’aspetto senza scrivere la scala dei gradini"
+              "scala": {
+                "tipo": "riga_successiva",
+                "colonne": [
+                  "Durata Con",
+                  "Durata fissa"
+                ],
+                "oltre": [
+                  {
+                    "da": "8 ore",
+                    "a": "12 ore"
+                  },
+                  {
+                    "da": "1 ora",
+                    "a": "2 ore"
+                  }
+                ]
+              }
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie il carico successivo (oltre 1.200 kg: 1.600 kg), le dimensioni (1 × 1 → 2 × 1 → 2 × 2 → 3 × 2 → 3 × 3 → 4 × 3 Q), il budget di movimento da 6 a 8 Q, +1 al bonus stabilità oppure la durata scelta (oltre 8 ore Con: 12 ore; oltre 1 ora fissa: 2 ore). Il movimento verticale costa sempre 2; dimensioni e carico restano aspetti distinti."
@@ -9606,8 +9641,11 @@
               "gradino": "+1 al bonus INI",
               "categoria": "valori",
               "nome": "Bonus INI +1",
-              "scala": null,
-              "scala_motivo": "più colonne possibili (Bonus INI, Bonus Elusione)",
+              "scala": {
+                "tipo": "incremento",
+                "colonna": "Bonus INI",
+                "passo": 1
+              },
               "conseguenze": [
                 "Il limite di una difesa automatica per RND e il bonus fisso +2 a Elusione rimangono invariati."
               ]
