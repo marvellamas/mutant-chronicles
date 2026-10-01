@@ -333,7 +333,34 @@ In più, la regola dei quadratini con un massimo (sezione 3), da fare nel pezzo 
     - Nessun foglio sborda.
   - I PDF `-layout` di prima restano come stato di partenza.
   - Test: numerazione e ordine dei fogli, opzioni, `schemaQuadratini` (17 → 17 nere e 33 grigie in 5 righe; 2 compatto → 2 nere e 8 grigie in una riga).
-- [ ] Pezzo 1: Inventario.
+- [x] **Pezzo 1: Inventario** (1° ottobre 2026, branch `layout-ss`).
+  - Dati: `inventarioStampa` in `src/stampa.js`.
+    - Sezioni di `SEZIONI_INVENTARIO`, solo quelle con oggetti, nell'ordine della tab.
+    - Per ogni oggetto: nome con quantità e nota breve, costo, Qualità, peso («da def.» se manca), stato, PI massimi e PS Integrità dalla riga di Integrità della SD; per le armi i gradi della condizione (A.49).
+    - In testa: saldo iniziale e carico noto con le soglie Ordinaria e di Sovraccarico (§5.2.6).
+  - Stato in quattro caselle: **sé** con sé (anche oggetti senza stato, «pronta», «trasportato»), **uso** (impugnato, imbracciato, indossato, montato), **zai** zaino, **dep** deposito comune (`STATI_INVENTARIO_STAMPA`).
+  - Foglio 4: testa su una riga (Crediti e Carico con lo spazio da scrivere, più la legenda degli stati), poi le sezioni su due colonne (CSS columns) con l'intestazione nel colore della categoria; i PI a quadratini (componente unico, blocco corto) sotto la riga dell'oggetto.
+    - Riempitivo «Da aggiungere»: righe con le stesse colonne e una riga di 10 caselle per i PI; non si stampa se restano meno di due righe.
+  - Continuazione (`impaginaInventario`):
+    - una sezione che non entra nello spazio rimasto passa intera alla pagina dopo («Inventario (continua)», senza la testa);
+    - una sezione più alta di una colonna si divide fra le due colonne, mai dentro la riga di un oggetto;
+    - il collaudo fallisce solo se una sezione non entra in una pagina intera.
+  - Numerazione: Inventario è il foglio 4 fisso; Poteri scala al 5 (Artefatti sarà il 6). `preparaTab` non passa il foglio alla SD, che ha il suo tab Inventario.
+  - Foglio 3: via la tabella Equipaggiamento con crediti e carico; il riempitivo Punti Vita prende lo spazio (griglia a due colonne: Ferite, Specializzazioni e Tecniche | Punti Vita). La continuazione non ha più la parte dell'Equipaggiamento.
+  - Corretto in passando: le pagine di continuazione dell'Inventario nascono con il piè di pagina già scritto. Prima, misurando, il corpo risultava più alto di quello stampato e l'ultima sezione sbordava di due righe.
+  - Collaudo, porta 3000:
+    - c: 5 pagine, fogli 1 · 2 · 3 · 3 (segue) · 4;
+    - b «solo elenco»: 6 pagine, 1 · 2 · 3 · 4 · 5 · 5 (segue);
+    - b «schede complete»: 33 pagine;
+    - Lucas: 7 pagine, Inventario su 2 (1 · 2 · 3 · 3 (segue) · 4 · 4 (segue) · 5);
+    - nessuno sbordo.
+  - Il Combattimento di c resta su 2 pagine per le Tecniche Interiori, come già su main: si spostano nel foglio 2 con il pezzo 2.
+  - **Scostamenti dal piano:**
+    - lo stato salvato è **prestampato pieno** (il piano diceva caselle vuote), come chiesto;
+    - i caricatori di riserva delle armi a quadratini nella riga delle Munizioni non ci sono: le riserve sono un valore di sessione e restano nella SD;
+    - una sezione divisa fra le due colonne non ripete il titolo «(segue)»;
+    - il riempitivo parte dove finiscono le sezioni e può occupare il fondo della prima colonna e la seconda, non solo il fondo della seconda;
+    - il Sanitario ha la sola riga di possesso (decisione 7), le applicazioni arrivano nel foglio 3 con il pezzo 3.
 - [ ] Pezzo 2: Abilità.
 - [ ] Pezzo 3: Combattimento.
 - [ ] Pezzo 4: Poteri.
