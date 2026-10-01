@@ -100,7 +100,13 @@ function controllaFogli() {
   let ultimo = 0;
   pagine.forEach((f, i) => {
     const piede = f.querySelector('.foglio-piede')?.textContent ?? '';
-    const p = /pagina (\d+) di (\d+)/.exec(piede);
+    const p = /(?:pagina |\d+\/\d+ · )(\d+) di (\d+)/.exec(piede);
+    // foglio 3 (ritocchi post-stampa): «pagina k/n» dentro il foglio, di seguito
+    const parte = /foglio \d+ · pagina (\d+)\/(\d+)/.exec(piede);
+    if (parte) {
+      const stesse = pagine.filter((x) => x.dataset.foglio === f.dataset.foglio);
+      if (Number(parte[1]) !== stesse.indexOf(f) + 1 || Number(parte[2]) !== stesse.length) out.push(`numerazione: pagina ${i + 1} ha «${piede}» (pagina del foglio)`);
+    }
     const n = Number(/foglio (\d+)/.exec(piede)?.[1]);
     if (!p || Number(p[1]) !== i + 1 || Number(p[2]) !== pagine.length) out.push(`numerazione: pagina ${i + 1} ha «${piede}»`);
     const seguito = f.classList.contains('seguito');
@@ -123,6 +129,15 @@ function controllaFogli() {
   }
   const primo = document.querySelector('.foglio-combattimento:not(.seguito)');
   if (primo && !primo.querySelector('.f3-pv')) out.push('Combattimento: manca il riquadro Punti Vita nella prima pagina');
+  if (primo && !primo.querySelector('.f3-sintesi')) out.push('Combattimento: manca la sintesi nella prima pagina');
+  // ritocchi post-stampa: il foglio 3 ha sempre la pagina 2 (Condizione), ultima del foglio, con Protezioni
+  const pagine3 = [...document.querySelectorAll('.foglio-combattimento')];
+  if (primo) {
+    const ultima = pagine3.at(-1);
+    if (pagine3.length < 2 || !ultima.classList.contains('f3-pagina-condizione')) out.push('Combattimento: manca la pagina 2 (Condizione) in fondo al foglio');
+    else if (!ultima.querySelector('.f3-protezioni') || !ultima.querySelector('.f3-ferite')) out.push('Combattimento: la pagina 2 non ha Ferite e Protezioni');
+    if (primo.querySelector('.f3-protezioni, .f3-sanitario, .f3-ferite')) out.push('Combattimento: Protezioni, Sanitario o Ferite nella pagina 1');
+  }
   // pezzo 2: Specializzazioni e Tecniche Interiori stanno nel foglio 2, non più nel 3
   for (const h2 of document.querySelectorAll('.foglio-combattimento .riquadro-stampa > h2')) {
     if (/^(Specializzazioni|Tecniche Interiori)/.test(h2.textContent)) out.push(`Combattimento: «${h2.textContent}» dovrebbe stare nel foglio Abilità`);
@@ -168,13 +183,15 @@ for (const { id, pdf: conPdf, variante } of lavori) {
   const sequenza = await valuta(`[...document.querySelectorAll('.foglio')].map((f) => { const p = f.querySelector('.foglio-piede')?.textContent ?? ''; return (/foglio (\\d+)/.exec(p)?.[1] ?? '?') + (f.classList.contains('seguito') ? '+' : '') + ' ' + (f.querySelector('.foglio-titolo')?.textContent ?? '').replace(' (continua)', ''); }).join(' · ')`);
   // colonna destra del foglio 2: riquadri e altezza delle Annotazioni (mm)
   const colonna2 = await valuta(`(() => { const f = document.querySelector('.foglio-abilita:not(.seguito)'); if (!f) return '—'; const a = f.querySelector('.f2-annotazioni'); return [...f.querySelectorAll('.f2-griglia > .colonna > .riquadro-stampa > h2')].map((x) => x.textContent).join(', ') + (a ? ' · Annotazioni ' + Math.round(a.getBoundingClientRect().height * 25.4 / 96) + ' mm' : ''); })()`);
-  if (!conPdf) { console.log(`${nome}: ${pagineVista} pagine (solo controllo di sbordo) | ${avvisi.replace(/\n/g, ' / ')}\n  fogli: ${sequenza}\n  foglio 2: ${colonna2}`); continue; }
+  // foglio 3: pagine e gruppi del riquadro Azioni di combattimento nella pagina 2
+  const foglio3 = await valuta(`(() => { const p = document.querySelectorAll('.foglio-combattimento').length; const g = [...document.querySelectorAll('.f3-pagina-condizione .azioni-gruppo > h3')].map((x) => x.textContent); return p + ' pagine · Azioni di combattimento: ' + (g.length ? g.join(', ') : 'no'); })()`);
+  if (!conPdf) { console.log(`${nome}: ${pagineVista} pagine (solo controllo di sbordo) | ${avvisi.replace(/\n/g, ' / ')}\n  fogli: ${sequenza}\n  foglio 2: ${colonna2}\n  foglio 3: ${foglio3}`); continue; }
   const pdf = await cdp('Page.printToPDF', { preferCSSPageSize: true, printBackground: true });
   const buf = Buffer.from(pdf.result.data, 'base64');
   writeFileSync(`${OUT}/${nome}.pdf`, buf);
   const pagine = (buf.toString('latin1').match(/\/Type\s*\/Page[^s]/g) ?? []).length;
   const box = /\/MediaBox\s*\[([^\]]+)\]/.exec(buf.toString('latin1'))?.[1];
-  console.log(`${nome}: ${pagine} pagine, MediaBox ${box}, ${Math.round(buf.length / 1024)} kB | ${avvisi.replace(/\n/g, ' / ')}\n  fogli: ${sequenza}\n  foglio 2: ${colonna2}`);
+  console.log(`${nome}: ${pagine} pagine, MediaBox ${box}, ${Math.round(buf.length / 1024)} kB | ${avvisi.replace(/\n/g, ' / ')}\n  fogli: ${sequenza}\n  foglio 2: ${colonna2}\n  foglio 3: ${foglio3}`);
   if (pagine !== pagineVista) sbordati.push(`${nome}: il PDF ha ${pagine} pagine, la vista ${pagineVista}`);
 }
 ws.close();

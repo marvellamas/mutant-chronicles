@@ -296,15 +296,36 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 /* Foglio 3 — Combattimento ed equipaggiamento */
 .foglio-combattimento .foglio-corpo { gap: 2mm; line-height: 1.18; }
 .foglio-combattimento .tabella-stampa th, .foglio-combattimento .tabella-stampa td { padding-top: 0.25mm; padding-bottom: 0.25mm; }
-/* Foglio 3 (pezzo 3): colonna sinistra larga (sintesi, Armi, Protezioni, Sanitario, Punti Vita) e
-   colonna destra a tutta altezza (Ferite, Affaticamento, Corruzione, Stati) */
-.f3-griglia { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 100mm; gap: 3mm; }
-.f3-sinistra, .f3-destra { min-height: 0; }
-.f3-sintesi { flex: none; }
-.sintesi { display: flex; flex-wrap: wrap; gap: 1mm 3.5mm; align-items: baseline; }
-.cella-sintesi { display: flex; align-items: baseline; gap: 1.2mm; }
-.cella-sintesi .nome-cella { font-size: var(--ss-font-small); color: var(--ss-grigio); font-weight: 600; }
-.cella-sintesi .valore-cella { font-size: 11pt; font-weight: 800; }
+/* Foglio 3 su due pagine fisse (ritocchi post-stampa). Le colonne sono quarti della pagina: la
+   sintesi della pagina 1 è larga quanto un riquadro di stato della pagina 2 */
+.f3-fascia { flex: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 3mm; align-items: stretch; }
+.f3-fascia > .f3-pv { grid-column: span 3; }
+.f3-pv > .contenuto { flex-direction: row; gap: 5mm; align-items: flex-start; }
+.f3-pv-quadratini { flex: none; display: flex; flex-direction: column; gap: 0.6mm; }
+.f3-pv-quadratini > p { margin: 0; }
+.f3-valori { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1mm; }
+.f3-valori > p { margin: 0; }
+.massimo.tinta-difese { --tinta: var(--ss-inchiostro); }
+.massimo.tinta-difese .valore { font-size: 15pt; }
+.tabella-sintesi { width: 100%; border-collapse: collapse; }
+.tabella-sintesi th { text-align: left; font-weight: 600; color: var(--ss-grigio); font-size: var(--ss-font-small); padding: 0.2mm 2mm 0.2mm 0; white-space: nowrap; }
+.tabella-sintesi td { font-weight: 800; padding: 0.2mm 0; }
+.f3-condizione-griglia { flex: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: auto 1fr; gap: 3mm; align-items: start; }
+.f3-condizione-griglia > .f3-ferite { grid-area: 1 / 1; }
+.f3-condizione-griglia > .f3-affaticamento { grid-area: 1 / 2; }
+.f3-condizione-griglia > .f3-corruzione { grid-area: 1 / 3; }
+.f3-condizione-griglia > .f3-stati { grid-area: 1 / 4 / 3 / 5; }
+.f3-condizione-griglia > .f3-protezioni { grid-area: 2 / 1 / 3 / 3; }
+.f3-condizione-griglia > .f3-sanitario { grid-area: 2 / 3; }
+.f3-condizione-griglia.senza-sanitario > .f3-protezioni { grid-area: 2 / 1 / 3 / 4; }
+.f3-condizione-griglia > .riquadro-stampa > .contenuto { padding: 0.6mm 1.5mm; }
+.f3-azioni { flex: none; }
+.azioni-gruppi { display: flex; flex-wrap: wrap; gap: 1.5mm 5mm; align-items: flex-start; }
+.azioni-gruppo { flex: 1 1 120mm; min-width: 0; }
+.azioni-gruppo.largo { flex-basis: 100%; }
+.azioni-meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5mm; align-items: start; }
+.azioni-gruppo > h3 { margin: 0 0 0.5mm; font-size: var(--ss-font-small); text-transform: uppercase; letter-spacing: 0.03em; color: var(--ss-grigio); }
+.azioni-stampa tbody th { white-space: nowrap; } /* il nome intero; le altre colonne vanno a capo se serve */
 .f3-armi { flex: none; }
 .armi-stampa th, .armi-stampa td { padding: 0.3mm 0.7mm; }
 .armi-stampa tbody + tbody { border-top: 1pt solid var(--ss-acciaio); }
@@ -316,7 +337,7 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .dettagli-arma { margin: 0.3mm 0 0 4mm; }
 .armi-stampa .col-abilita, .armi-stampa .col-qualita, .armi-stampa .col-danno, .armi-stampa .col-gittata, .armi-stampa .col-parata { white-space: nowrap; }
 .armi-stampa .col-modalita { white-space: nowrap; }
-.armi-stampa thead th.col-nome { width: 40mm; }
+.armi-stampa tbody th { white-space: nowrap; } /* a tutta larghezza: il nome dell'arma non va a capo */
 .specializzazioni-stampa { margin: 0.5mm 0 0; }
 .riga-colpi td { padding-top: 0.3mm; padding-bottom: 0.5mm; }
 .file-colpi { display: flex; flex-wrap: wrap; gap: 0.8mm 9mm; padding-left: 4mm; }
@@ -327,28 +348,14 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .protezioni-stampa { margin-top: 1mm; }
 /* gradi da cerchiare con la penalità accanto (Ferite, Affaticamento, Corruzione) e Stati con l'effetto */
 .gradi-stampa th, .gradi-stampa td { padding-top: 0.15mm; padding-bottom: 0.15mm; line-height: 1.12; }
-.f3-destra { gap: 1.5mm; }
-.f3-destra .riquadro-stampa > .contenuto { padding: 0.6mm 1.5mm; }
 .gradi-stampa .col-casella { width: 5mm; }
 .gradi-stampa .col-penalita { width: 8mm; text-align: right; font-weight: 700; white-space: nowrap; }
 .gradi-stampa tbody th { font-weight: 600; white-space: nowrap; }
 .gradi-stampa .nota-grado { padding-left: 1.5mm; }
-/* Affaticamento e Corruzione su due colonne per stare nell'altezza */
-.gradi-stampa.due-colonne tbody { display: grid; grid-template-columns: 1fr 1fr; column-gap: 3mm; }
-.gradi-stampa.due-colonne tr { display: grid; grid-template-columns: 5mm minmax(0, 1fr) 8mm; align-items: center; }
-.gradi-stampa.due-colonne tbody th { white-space: normal; }
 .stati-gradi .col-penalita { display: none; }
 .f3-sanitario .kit-sanitario { flex-wrap: wrap; }
 .nome-kit { font-weight: 600; min-width: 24mm; }
-.f3-pv > .contenuto { gap: 1.2mm; }
-.f3-pv .righe-guida { min-height: 7mm; } /* almeno una riga per le note (pezzo 3: la colonna sinistra ha anche le Protezioni e il Sanitario) */
-/* il riquadro Punti Vita non si schiaccia: massimi, AR, quadratini e due righe guida restano
-   sempre interi; se il foglio non ci sta, il resto continua nella pagina dopo (impaginaCombattimento) */
-.f3-pv { min-height: min-content; }
-.f3-pv > .contenuto { flex: 1 0 auto; } /* il contenuto conta nell'altezza minima */
-/* continuazione del foglio 3: Armi, Protezioni e Sanitario a tutta larghezza; la colonna destra non si ripete */
-.f3-seguito { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 2mm; }
-/* AR accanto ai PV massimi, stessa dimensione (grigio acciaio delle protezioni) */
+/* PV massimi, AR (grigio acciaio delle protezioni) e VA Difese, uno accanto all'altro */
 .f3-massimi { display: flex; flex-wrap: wrap; gap: 1.5mm; align-items: stretch; }
 .f3-massimi .massimo { align-self: stretch; }
 .massimo.tinta-ar { --tinta: var(--ss-acciaio); border-color: var(--ss-acciaio); }

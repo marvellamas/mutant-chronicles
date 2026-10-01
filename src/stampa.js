@@ -324,6 +324,9 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     condizioniArmi: [...new Set((dati.regole.condizioni_armi?.elenco ?? []).map((x) => x.nome.replace(/\s*\(.*\)\s*$/, '')))],
   };
 
+  // foglio 3, pagina 2 (ritocchi post-stampa): tabella di consultazione delle azioni, dai soli dati
+  combattimento.azioni = azioniCombattimento(dati, combattimento.armiStampa);
+
   const fogli = [
     { id: 'identita', titolo: 'Identità', dati: identita },
     { id: 'abilita', titolo: 'Abilità e statistiche', dati: abilita },
@@ -605,6 +608,58 @@ export function artefattiStampa(s, creazione, dati, { conPoteri = false } = {}) 
   };
 }
 
+const valoreAzione = (v) => (v === null || v === undefined ? '—' : conSegno(v));
+/** Codici delle modalità di fuoco delle armi stampate («S RB RM» → S, RB, RM). */
+const codiciModalita = (armi) => [...new Set(armi.flatMap((a) => (a.modalita && a.modalita !== '—' ? a.modalita.split(/\s+/) : [])))];
+
+/**
+ * Riquadro «Azioni di combattimento» del foglio 3, pagina 2 (docs/layout-ss.md, ritocchi
+ * post-stampa): tabella di consultazione con i soli valori di data/regole.json, a riposo (niente
+ * Talenti né situazione: quelli li fa «Attacca!» nella SD). Gruppi interi, nell'ordine di stampa:
+ * con armi a distanza prima il tiro (modalità di fuoco delle armi del personaggio, §5.10; manovre
+ * di tiro e Imbracciatura, §5.10), poi il corpo a corpo (manovre del §5.12 e Carica del §5.6);
+ * senza armi a distanza il contrario, con tutte le modalità. La vista toglie i gruppi dall'ultimo
+ * se lo spazio non basta.
+ * @returns {{ id, titolo, colonne: string[], righe: string[][] }[]}
+ */
+export function azioniCombattimento(dati, armi = []) {
+  const R = dati.regole;
+  const D = R.attacco_distanza;
+  const A = R.attacco_ravvicinato;
+  const MF = R.modalita_di_fuoco;
+  const gruppi = { distanza: [], ravvicinato: [] };
+  const codici = codiciModalita(armi);
+  if (MF && D) {
+    const M = D.modalita ?? {};
+    const aSegno = (k) => (M.area?.[k] ? `area ${M.area[k]}` : M.applicazioni?.[k] ? `${M.applicazioni[k]} applicazioni` : M.tiri?.[k] ? `${M.colpi_a_segno?.[k] ?? '—'} × ${M.tiri[k]} tiri` : String(M.colpi_a_segno?.[k] ?? '—'));
+    // Tiro Mirato sta fra le manovre di tiro, con il suo danno
+    const elenco = Object.keys(MF).filter((k) => !k.startsWith('_') && k !== 'TM' && (!codici.length || codici.includes(k)));
+    if (elenco.length) gruppi.distanza.push({
+      id: 'modalita', titolo: `Modalità di fuoco (${MF[elenco[0]].paragrafo ?? '§5.10'})`,
+      colonne: ['Modalità', 'Colpi', 'AzP', 'VA', 'A segno'],
+      righe: elenco.map((k) => [`${MF[k].nome} (${k})`, String(MF[k].colpi_consumati), String(MF[k].azioni_principali), valoreAzione(MF[k].modificatore_va), aSegno(k)]),
+    });
+    const T = D.manovre ?? {};
+    const righe = [];
+    if (T.mirato) righe.push([T.mirato.nome, `+${T.mirato.azioni_principali}`, valoreAzione(T.mirato.va), valoreAzione(T.mirato.danno), '—']);
+    if (T.ravvicinato) righe.push([T.ravvicinato.nome, '—', Object.entries(T.ravvicinato.va_per_abilita ?? {}).map(([ab, v]) => `${valoreAzione(v)} ${ab}`).join(' / '), valoreAzione(T.ravvicinato.danno), `≤ ${T.ravvicinato.distanza_max_q} Q`]);
+    if (T.bruciapelo) righe.push([T.bruciapelo.nome, '—', '0', `×${T.bruciapelo.moltiplicatore}`, `≤ ${T.bruciapelo.distanza_max_q} Q`]);
+    if (D.imbracciatura) righe.push(['Senza Imbracciatura', '—', valoreAzione(D.imbracciatura.va), '—', D.imbracciatura.abilita?.join(', ') ?? '—']);
+    if (righe.length) gruppi.distanza.push({ id: 'manovre-tiro', titolo: 'Manovre di tiro (§5.10)', colonne: ['Manovra', 'AzP', 'VA', 'Danno', 'Distanza'], righe });
+  }
+  if (A?.manovre) {
+    const effetto = (m) => [m.effetto && m.effetto.length <= 24 ? m.effetto : null,
+      m.dopo_armatura?.stato ? `${m.dopo_armatura.stato}${m.dopo_armatura.valore ? ` ${m.dopo_armatura.valore}` : ''}${m.dopo_armatura.salvezza ? ` (${m.dopo_armatura.salvezza})` : ''}` : null,
+      m.spinta_q ? `spinta ${m.spinta_q} Q` : null].filter(Boolean).join(', ') || '—';
+    const va = (m) => (m.va_per_bersagli ? Object.entries(m.va_per_bersagli).map(([n, v]) => `${valoreAzione(v)} (${n})`).join(' / ') : valoreAzione(m.va));
+    const righe = Object.values(A.manovre).map((m) => [m.nome, String(m.azioni_principali), va(m), m.danno === null ? '—' : valoreAzione(m.danno), m.prova?.tipo === 'contrapposta' ? 'contrapposta' : 'per colpire', effetto(m)]);
+    if (A.carica) righe.push(['Carica', `${A.carica.azioni_principali} + ${A.carica.azioni_movimento} AzM`,
+      A.carica.fasce.map((f) => `${valoreAzione(f.va)} (${f.da}–${f.a} Q)`).join(' / '), `×${A.carica.moltiplicatore}`, 'per colpire', '—']);
+    gruppi.ravvicinato.push({ id: 'manovre-ravvicinate', titolo: `Manovre corpo a corpo (${(A.paragrafo ?? '§5.12').replace(/^Giocatore\s+/, '')})`, colonne: ['Manovra', 'AzP', 'VA', 'Danno', 'Prova', 'Effetto'], righe });
+  }
+  return codici.length ? [...gruppi.distanza, ...gruppi.ravvicinato] : [...gruppi.ravvicinato, ...gruppi.distanza];
+}
+
 /**
  * Stato di un oggetto nel foglio Inventario (docs/layout-ss.md, foglio 4): quattro caselle, una per
  * gruppo di stati della SD (src/equipaggiamento.js → STATI), con quella attuale prestampata piena.
@@ -673,16 +728,18 @@ export function inventarioStampa(s, dati, creditiIniziali = null) {
  */
 export const QUADRATINI = { perRiga: 10, stacco: 5, righePerBlocco: 5 };
 
-export function schemaQuadratini(massimo, { compatto = false, bloccoInPiu = false } = {}) {
-  const { perRiga, righePerBlocco } = QUADRATINI;
+export function schemaQuadratini(massimo, { compatto = false, bloccoInPiu = false, perRiga = QUADRATINI.perRiga, righeInPiu = 0 } = {}) {
+  const { righePerBlocco } = QUADRATINI;
   const max = Math.max(0, Math.floor(Number(massimo) || 0));
   const righeMinime = Math.max(1, Math.ceil(max / perRiga));
-  const righeTotali = compatto ? righeMinime : Math.ceil(righeMinime / righePerBlocco) * righePerBlocco;
+  // compatto: le righe fino al massimo, più `righeInPiu` grigie (PV del foglio 3 a righe lunghe)
+  const righeTotali = compatto ? righeMinime + righeInPiu : Math.ceil(righeMinime / righePerBlocco) * righePerBlocco;
   const riga = (r) => ({
     da: r * perRiga, cumulato: (r + 1) * perRiga,
     caselle: Array.from({ length: perRiga }, (_, k) => r * perRiga + k < max),
   });
   const blocchi = [];
+  if (compatto) return { massimo: max, blocchi: [{ facoltativo: false, righe: Array.from({ length: righeTotali }, (_, k) => riga(k)) }] };
   for (let r = 0; r < righeTotali; r += righePerBlocco) {
     blocchi.push({ facoltativo: false, righe: Array.from({ length: Math.min(righePerBlocco, righeTotali - r) }, (_, k) => riga(r + k)) });
   }
@@ -734,12 +791,25 @@ export function ordinaFogli(fogli, dati) {
  */
 export function numeraPagine(pagine, fogli) {
   const numero = new Map(fogli.map((f) => [f.id, f.numero]));
-  return pagine.map((p, i) => ({ id: p.id, foglio: numero.get(p.id) ?? null, seguito: !!p.seguito, pagina: i + 1, totale: pagine.length }));
+  return pagine.map((p, i) => {
+    const n = { id: p.id, foglio: numero.get(p.id) ?? null, seguito: !!p.seguito, pagina: i + 1, totale: pagine.length };
+    // fogli a pagine proprie (il 3, ritocchi post-stampa): «pagina k/n» dentro il foglio, al posto di «(segue)»
+    if (p.parti) {
+      const stesse = pagine.filter((x) => x.id === p.id);
+      Object.assign(n, { parte: stesse.indexOf(p) + 1, parti: stesse.length });
+    }
+    return n;
+  });
 }
 
-/** Testo del piè di pagina: «Nome · 8° livello · foglio 3 (segue) · pagina 4 di 9 · Dati: …». */
+/**
+ * Testo del piè di pagina: «Nome · 8° livello · foglio 3 (segue) · pagina 4 di 9 · Dati: …»; per i
+ * fogli a pagine proprie «foglio 3 · pagina 1/2 · 4 di 9».
+ */
 export function testoPiede(piede, n) {
-  return [piede.nome, `${piede.livello}° livello`, `foglio ${n.foglio ?? '—'}${n.seguito ? ' (segue)' : ''}`, `pagina ${n.pagina} di ${n.totale}`,
+  const foglio = n.parti ? `foglio ${n.foglio ?? '—'} · pagina ${n.parte}/${n.parti}` : `foglio ${n.foglio ?? '—'}${n.seguito ? ' (segue)' : ''}`;
+  const pagina = n.parti ? `${n.pagina} di ${n.totale}` : `pagina ${n.pagina} di ${n.totale}`;
+  return [piede.nome, `${piede.livello}° livello`, foglio, pagina,
     piede.versioni ? `Dati: ${piede.versioni}` : null].filter(Boolean).join(' · ');
 }
 

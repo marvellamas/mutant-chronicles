@@ -50,7 +50,7 @@ function creaFoglio(id, titolo, dati, piede, corpo = corpi[id]) {
  */
 function numeraPiedi(contenitore, piede, fogliPersonaggio) {
   const pagine = [...contenitore.querySelectorAll('.foglio')];
-  const numeri = numeraPagine(pagine.map((f) => ({ id: f.dataset.foglio, seguito: f.classList.contains('seguito') })), fogliPersonaggio);
+  const numeri = numeraPagine(pagine.map((f) => ({ id: f.dataset.foglio, seguito: f.classList.contains('seguito'), parti: f.classList.contains('pagine-proprie') })), fogliPersonaggio);
   pagine.forEach((f, i) => { f.querySelector('.foglio-piede').textContent = testoPiede(piede, numeri[i]); });
 }
 
@@ -94,7 +94,16 @@ export function renderStampa({ stampa, torna, opzioni = null, cambiaOpzioni = nu
   }
   if (!stampa.completa) avvisi.append(h('p', {}, 'Scheda non ancora completa: alcuni valori possono mancare.'));
 
-  const contenitore = h('div', { class: 'fogli' }, fogli.map((f) => creaFoglio(f.id, f.titolo, { ...f.dati, ...(f.id === 'poteri' ? { soloElenco: opz.magia === 'elenco' } : {}) }, stampa.piede)));
+  const contenitore = h('div', { class: 'fogli' }, fogli.map((f) => {
+    const foglio = creaFoglio(f.id, f.titolo, { ...f.dati, ...(f.id === 'poteri' ? { soloElenco: opz.magia === 'elenco' } : {}) }, stampa.piede);
+    if (f.id !== 'combattimento') return foglio;
+    // foglio 3 su due pagine fisse (docs/layout-ss.md, ritocchi post-stampa): Armi, poi Condizione
+    // ed equipaggiamento indossato; le continuazioni delle armi si inseriscono fra le due
+    const condizione = creaFoglio(f.id, 'Condizione ed equipaggiamento indossato', f.dati, stampa.piede, foglioCondizione);
+    foglio.classList.add('pagine-proprie');
+    condizione.classList.add('seguito', 'pagine-proprie', 'f3-pagina-condizione');
+    return [foglio, condizione];
+  }));
   numeraPiedi(contenitore, stampa.piede, stampa.fogli);
   caricaStile().then(() => (document.fonts?.ready ?? Promise.resolve())).then(() => {
     const fuori = [];
@@ -131,9 +140,10 @@ export function renderStampa({ stampa, torna, opzioni = null, cambiaOpzioni = nu
         continue;
       }
       if (f.classList.contains('foglio-combattimento') && !f.classList.contains('seguito')) {
-        const pagine = impaginaCombattimento(f, stampa.fogli.find((x) => x.id === 'combattimento').dati, stampa.piede);
-        if (pagine > 1) avvisi.append(h('p', {}, `Il foglio Combattimento è su ${pagine} pagine.`));
+        const pagine = impaginaCombattimento(f, stampa.fogli.find((x) => x.id === 'combattimento').dati, stampa.piede) + 1;
+        if (pagine > 2) avvisi.append(h('p', {}, `Il foglio Combattimento è su ${pagine} pagine (le armi continuano).`));
       }
+      if (f.classList.contains('f3-pagina-condizione')) impaginaCondizione(f);
       riempiRighe(f);
       if (eccede(f.querySelector('.foglio-corpo'))) {
         f.dataset.fuori = '1'; // lo legge tools/collaudo_pdf.mjs
@@ -176,8 +186,8 @@ function box({ titolo, tinta = null, forte = false, riempitivo = false, classe =
  * al massimo (colpi, PI, Punti Eroe, Distintivi, riserve); `bloccoInPiu`: un blocco grigio in più
  * aggiunto dopo l'impaginazione solo se entra (aggiungiBlocchiInPiu).
  */
-function quadratini(massimo, { compatto = false, bloccoInPiu = false, pieni = 0 } = {}) {
-  const el = h('div', { class: `quadratini${compatto ? ' compatti' : ''}` }, schemaQuadratini(massimo, { compatto }).blocchi.map(bloccoQuadratini));
+function quadratini(massimo, { compatto = false, bloccoInPiu = false, pieni = 0, perRiga, righeInPiu = 0 } = {}) {
+  const el = h('div', { class: `quadratini${compatto ? ' compatti' : ''}` }, schemaQuadratini(massimo, { compatto, perRiga, righeInPiu }).blocchi.map(bloccoQuadratini));
   // i primi «pieni» prestampati (punti di sintonizzazione già occupati, scelta salvata nel file)
   [...el.querySelectorAll('.casella:not(.oltre)')].slice(0, Math.max(0, pieni)).forEach((c) => c.classList.add('piena'));
   if (bloccoInPiu) el.dataset.bloccoInPiu = String(massimo);
@@ -337,12 +347,13 @@ function impaginaAbilita(foglio, d, piede) {
 }
 
 // ---------------------------------------------------------------------------
-// Foglio 3 — Combattimento (docs/layout-ss.md, pezzo 3). Due colonne come la tab della SD: a
-// sinistra la sintesi (Iniziativa, Movimento, Azioni, Difese con Parata/Schivata Istintiva, Prove
-// Salvezza), le Armi con il profilo d'uso, la casella «in mano» e sotto ogni arma colpi, PI e
-// condizione; le Protezioni con i PI; il Sanitario con le applicazioni; i Punti Vita come
-// riempitivo. A destra, a tutta altezza, Ferite, Affaticamento, Corruzione Oscura e Stati, con la
-// penalità dei dati accanto a ogni grado.
+// Foglio 3 — Combattimento, su due pagine fisse (docs/layout-ss.md, pezzo 3 e ritocchi post-stampa).
+// Pagina 1, Armi: in alto la fascia con i Punti Vita (quadratini a righe lunghe, PV massimi, AR e
+// VA Difese in evidenza) e la sintesi (Iniziativa, Movimento, Azioni, Prove Salvezza); sotto, le
+// Armi a tutta larghezza con il profilo d'uso, la casella «in mano», colpi, PI e condizione; le armi
+// che non entrano continuano su pagine in più del foglio 3. Pagina 2, Condizione ed equipaggiamento
+// indossato: Ferite, Affaticamento, Corruzione Oscura e Stati su quattro colonne, Protezioni e
+// Sanitario, e se avanza spazio il riquadro «Azioni di combattimento» (solo valori dei dati).
 
 // profilo d'uso dell'arma (decisione 4: il possesso, cioè costo, Qualità, peso, stato, sta nel foglio 4)
 const COLONNE_ARMI = [
@@ -419,107 +430,133 @@ const tabellaGradi = (righe, { classe = '' } = {}) => h('table', { class: `tabel
 
 const penalitaTesto = (v) => (v === null || v === undefined ? '—' : v === 0 ? '0' : segno(v));
 
-/** Colonna destra del foglio 3: Ferite, Affaticamento, Corruzione Oscura, Stati (§5.14, §5.19, §5.20, §5.18). */
-function colonnaCondizioni(d) {
-  return h('div', { class: 'colonna f3-destra' },
+/** Riquadri di stato della pagina 2 del foglio 3: Ferite, Affaticamento, Corruzione Oscura, Stati (§5.14, §5.19, §5.20, §5.18). */
+function riquadriCondizioni(d) {
+  return [
     box({ titolo: 'Ferite (§5.14)', classe: 'f3-ferite' },
       tabellaGradi([...d.ferite.stati.map((f) => ({ nome: f.nome, penalita: penalitaTesto(f.penalita), nota: f.menomazione ?? '' })),
         { nome: 'Oltre Grave', penalita: '', nota: d.ferite.oltre }])),
     box({ titolo: 'Affaticamento (§5.19)', classe: 'f3-affaticamento' },
-      tabellaGradi(d.affaticamento.map((x) => ({ nome: x.nome, penalita: penalitaTesto(x.penalita) })), { classe: 'due-colonne' })),
+      tabellaGradi(d.affaticamento.map((x) => ({ nome: x.nome, penalita: penalitaTesto(x.penalita) })))),
     d.corruzione.length ? box({ titolo: 'Corruzione Oscura (§5.20)', classe: 'f3-corruzione' },
-      tabellaGradi(d.corruzione.map((x) => ({ nome: x.irreversibile ? `${x.nome} (irreversibile)` : x.nome, penalita: penalitaTesto(x.penalita) })), { classe: 'due-colonne' })) : null,
+      tabellaGradi(d.corruzione.map((x) => ({ nome: x.irreversibile ? `${x.nome} (irreversibile)` : x.nome, penalita: penalitaTesto(x.penalita) })))) : null,
     box({ titolo: 'Stati (§5.18)', classe: 'f3-stati' },
-      tabellaGradi(d.statiStampa.map((x) => ({ nome: x.nome, penalita: '', nota: x.effetto || '—' })), { classe: 'stati-gradi' })));
+      tabellaGradi(d.statiStampa.map((x) => ({ nome: x.nome, penalita: '', nota: x.effetto || '—' })), { classe: 'stati-gradi' })),
+  ];
 }
 
 /**
- * Continuazione del foglio 3: se la colonna sinistra non entra, ciò che non sta passa a una pagina
- * «Combattimento (continua)» a tutta larghezza (la colonna destra non si ripete). Passano, dall'ultimo
- * in ordine di lettura: il Sanitario, le Protezioni, le armi (un'arma con le sue file è un tbody,
- * mai spezzato). Nella prima pagina restano la sintesi e il riquadro Punti Vita, con l'altezza
- * minima di css/stampa.css (.f3-pv).
- * @returns {number} pagine del foglio
+ * Continuazione delle armi del foglio 3: se la pagina 1 non entra, le armi passano, dall'ultima, a
+ * pagine «Combattimento (continua)» inserite prima della pagina 2 (un'arma con le sue file è un
+ * tbody, mai spezzato; nella pagina 1 resta almeno un'arma). La fascia dei PV non si sposta.
+ * @returns {number} pagine delle armi (la pagina 1 e le sue continuazioni)
  */
 function impaginaCombattimento(foglio, d, piede) {
   const corpo = foglio.querySelector('.foglio-corpo');
-  // conta solo la colonna sinistra: la colonna destra (Ferite, Stati…) non passa alla continuazione
-  const sinistra = corpo.querySelector('.f3-sinistra');
-  const eccedeIn = (el) => trabocca(el) || [...el.querySelectorAll('.riquadro-stampa, .riquadro-stampa > .contenuto')].some(trabocca);
-  if (!eccedeIn(sinistra)) return 1;
+  if (!eccede(corpo)) return 1;
   const theadArmi = corpo.querySelector('.armi-stampa thead');
-  const pagine = [{ corpo, contenitore: sinistra }];
+  const pagine = [{ foglio, corpo }];
   const nuovaPagina = () => {
     const armi = box({ titolo: 'Armi (continua)', classe: 'f3-armi' }, h('table', { class: 'tabella-stampa armi-stampa' }, theadArmi.cloneNode(true)));
-    const contenitore = h('div', { class: 'colonna f3-seguito' }, armi);
-    const f = creaFoglio('combattimento', 'Combattimento (continua)', d, piede, () => contenitore);
-    f.classList.add('seguito');
+    const f = creaFoglio('combattimento', 'Combattimento (continua)', d, piede, () => armi);
+    f.classList.add('seguito', 'pagine-proprie');
     // lo stesso piè di pagina del foglio: misurando, l'altezza del corpo è già quella vera
     f.querySelector('.foglio-piede').textContent = foglio.querySelector('.foglio-piede').textContent;
-    (pagine.at(-1).foglio ?? foglio).after(f);
-    const pg = { foglio: f, corpo: f.querySelector('.foglio-corpo'), contenitore };
+    pagine.at(-1).foglio.after(f);
+    const pg = { foglio: f, corpo: f.querySelector('.foglio-corpo') };
     pagine.push(pg);
     return pg;
   };
-  const tabArmi = (pg) => pg.contenitore.querySelector(':scope > .f3-armi .armi-stampa');
-  const armiDi = (pg) => [...(tabArmi(pg)?.querySelectorAll(':scope > tbody') ?? [])];
-  const riquadri = (pg) => [...pg.contenitore.querySelectorAll(':scope > .f3-protezioni, :scope > .f3-sanitario')];
-  const verso = (k) => pagine[k + 1] ?? nuovaPagina();
-  const sposta = (k) => {
-    const pg = pagine[k];
-    const r = riquadri(pg);
-    if (r.length) {
-      const dopo = verso(k);
-      dopo.contenitore.insertBefore(r.at(-1), dopo.contenitore.querySelector(':scope > .f3-armi').nextSibling);
-      return true;
-    }
-    const a = armiDi(pg);
-    if (a.length > (k > 0 ? 1 : 0)) {
-      const t = tabArmi(verso(k));
-      t.insertBefore(a.at(-1), t.querySelector(':scope > tbody'));
-      return true;
-    }
-    return false;
-  };
+  const tabArmi = (pg) => pg.corpo.querySelector('.f3-armi .armi-stampa');
+  const armiDi = (pg) => [...tabArmi(pg).querySelectorAll(':scope > tbody')];
   for (let k = 0; k < pagine.length && k < 10; k++) {
-    for (let giro = 0; giro < 300 && eccedeIn(pagine[k].contenitore) && sposta(k); giro++);
-  }
-  // riquadri Armi rimasti senza armi
-  for (const pg of pagine) {
-    const box = pg.contenitore.querySelector(':scope > .f3-armi');
-    if (box && !armiDi(pg).length) box.remove();
+    for (let giro = 0; giro < 300 && eccede(pagine[k].corpo); giro++) {
+      const a = armiDi(pagine[k]);
+      if (a.length <= 1) break;
+      const t = tabArmi(pagine[k + 1] ?? nuovaPagina());
+      t.insertBefore(a.at(-1), t.querySelector(':scope > tbody'));
+    }
   }
   return pagine.length;
 }
 
+/**
+ * Pagina 2 del foglio 3: il riquadro «Azioni di combattimento» si stampa solo per gruppi interi che
+ * entrano. I gruppi si provano nell'ordine dei dati (prima il tiro se ci sono armi a distanza,
+ * altrimenti le manovre corpo a corpo): uno che non entra si salta e si prova il seguente. Senza
+ * gruppi il riquadro non c'è. Mai una terza pagina.
+ */
+function impaginaCondizione(foglio) {
+  const corpo = foglio.querySelector('.foglio-corpo');
+  const riquadro = corpo.querySelector('.f3-azioni');
+  if (!riquadro) return;
+  const contenitore = riquadro.querySelector('.azioni-gruppi');
+  const gruppi = [...contenitore.children];
+  gruppi.forEach((g) => g.remove());
+  for (const g of gruppi) {
+    contenitore.append(g);
+    if (eccede(corpo)) g.remove();
+  }
+  if (!contenitore.children.length) riquadro.remove();
+}
+
+/** Un gruppo del riquadro Azioni: oltre 6 righe, la tabella si divide in due metà affiancate. */
+function gruppoAzioni(g) {
+  const meta = Math.ceil(g.righe.length / 2);
+  const tabelle = g.righe.length > 6
+    ? h('div', { class: 'azioni-meta' }, tabella(g.colonne, g.righe.slice(0, meta), { classe: 'azioni-stampa' }), tabella(g.colonne, g.righe.slice(meta), { classe: 'azioni-stampa' }))
+    : tabella(g.colonne, g.righe, { classe: 'azioni-stampa' });
+  return h('div', { class: `azioni-gruppo${g.righe.length > 6 ? ' largo' : ''}`, dataset: { gruppo: g.id } }, h('h3', {}, g.titolo), tabelle);
+}
+
+/** Pagina 1 del foglio 3: fascia Punti Vita + sintesi, poi le Armi a tutta larghezza. */
 function foglioCombattimento(d) {
   const s = d.sintesi;
   const mov = s.movimento;
-  const cella = (etichetta, ...valore) => h('div', { class: 'cella-sintesi' }, h('span', { class: 'nome-cella' }, etichetta), h('span', { class: 'valore-cella' }, ...valore));
-  return h('div', { class: 'f3-griglia' },
-    h('div', { class: 'colonna f3-sinistra' },
-      // la fila dei nomi degli Stati non c'è più: gli Stati hanno il loro riquadro a destra
-      box({ titolo: null, classe: 'f3-sintesi' },
-        h('div', { class: 'sintesi' },
-          cella('Iniziativa', `${segno(s.iniziativa)} + ${s.dadoIniziativa}`),
-          cella('Movimento', `Passo ${mov.passo} · Corsa ${mov.corsa} · Scatto ${mov.scatto} ${mov.unita}`),
-          cella('Azioni', `${s.azioni.movimento} Mov. · ${s.azioni.principali} Princ.`),
-          s.difese ? cella('Difese', `VA ${s.difese.va}`, d.istintive?.length ? h('span', { class: 'sigla' }, ` (${d.istintive.join(', ')})`) : null) : null,
-          s.salvezze.map((x) => cella(x.nome, `${x.totale}${x.limitato ? '*' : ''}`)))),
-      box({ titolo: 'Armi', classe: 'f3-armi' }, tabellaArmi(d.armiStampa, d.condizioniArmi ?? [])),
+  const voce = (nome, ...valore) => h('tr', {}, h('th', { scope: 'row' }, nome), h('td', {}, ...valore));
+  const valore = (etichetta, v, classe = '') => h('div', { class: `massimo ${classe}`.trim() }, h('span', {}, etichetta), h('span', { class: 'valore' }, String(v)));
+  return [
+    h('div', { class: 'f3-fascia' },
+      box({ titolo: 'Punti Vita', tinta: 'pv', forte: true, classe: 'f3-pv' },
+        h('div', { class: 'f3-pv-quadratini' },
+          h('p', { class: 'piccolo' }, 'attuali'),
+          // righe da 25, stacco ogni 5, cumulato a destra; neri fino al massimo, grigi a completare
+          // almeno tre righe, e sempre una riga grigia oltre il massimo
+          quadratini(d.pv, { compatto: true, perRiga: 25, righeInPiu: Math.max(1, 3 - Math.ceil(d.pv / 25)) })),
+        h('div', { class: 'f3-valori' },
+          h('div', { class: 'f3-massimi' },
+            valore('massimi', d.pv),
+            // AR in evidenza (docs/ricognizione-ar-pi.md), un riquadro per valore con la sua etichetta
+            (d.arStampa?.valori ?? []).map((v) => valore(v.etichetta, v.valore, `tinta-ar${v.principale ? ' principale' : ''}`)),
+            // VA Difese, il valore già calcolato (con la Caratteristica)
+            s.difese ? valore(`Difese (${s.difese.caratteristica})`, `VA ${s.difese.va}`, 'tinta-difese') : null),
+          d.istintive?.length ? h('p', { class: 'piccolo' }, d.istintive.join(', ')) : null,
+          d.arStampa ? h('p', { class: 'piccolo provenienza-ar' }, d.arStampa.provenienza) : null)),
+      // sintesi: stessa larghezza dei riquadri di stato della pagina 2, verde dei Punti Eroe
+      box({ titolo: 'Sintesi', tinta: 'pe', forte: true, classe: 'f3-sintesi' },
+        h('table', { class: 'tabella-sintesi' }, h('tbody', {},
+          voce('Iniziativa', `${segno(s.iniziativa)} + ${s.dadoIniziativa}`),
+          voce('Movimento', `Passo ${mov.passo} · Corsa ${mov.corsa} · Scatto ${mov.scatto} ${mov.unita}`),
+          voce('Azioni', `${s.azioni.movimento} Mov. · ${s.azioni.principali} Princ.`),
+          s.salvezze.map((x) => voce(x.nome, `${x.totale}${x.limitato ? '*' : ''}`)))))),
+    box({ titolo: 'Armi', classe: 'f3-armi' }, tabellaArmi(d.armiStampa, d.condizioniArmi ?? [])),
+  ];
+}
+
+/**
+ * Pagina 2 del foglio 3: stato su quattro colonne (gli Stati, i più lunghi, nella quarta a tutta
+ * altezza); Protezioni e Sanitario nelle prime tre, sotto Ferite, Affaticamento e Corruzione;
+ * in fondo le Azioni di combattimento.
+ */
+function foglioCondizione(d) {
+  return [
+    h('div', { class: `f3-condizione-griglia${d.sanitario?.length ? '' : ' senza-sanitario'}` },
+      riquadriCondizioni(d),
       box({ titolo: 'Protezioni', classe: 'f3-protezioni' }, tabellaProtezioni(d)),
-      d.sanitario?.length ? boxSanitario(d.sanitario) : null,
-      box({ titolo: 'Punti Vita', tinta: 'pv', forte: true, riempitivo: true, classe: 'f3-pv' },
-        // PV massimi e, accanto, l'AR in evidenza (docs/ricognizione-ar-pi.md): un sottoriquadro per valore
-        h('div', { class: 'f3-massimi' },
-          h('div', { class: 'massimo' }, h('span', {}, 'massimi'), h('span', { class: 'valore' }, String(d.pv))),
-          (d.arStampa?.valori ?? []).map((v) => h('div', { class: `massimo tinta-ar${v.principale ? ' principale' : ''}` },
-            h('span', {}, v.etichetta), h('span', { class: 'valore' }, String(v.valore))))),
-        d.arStampa ? h('p', { class: 'piccolo provenienza-ar' }, d.arStampa.provenienza) : null,
-        h('p', { class: 'piccolo' }, 'attuali'),
-        quadratini(d.pv, { bloccoInPiu: true }),
-        righeGuida())),
-    colonnaCondizioni(d));
+      d.sanitario?.length ? boxSanitario(d.sanitario) : null),
+    d.azioni?.length ? box({ titolo: 'Azioni di combattimento', classe: 'f3-azioni' },
+      h('div', { class: 'azioni-gruppi' }, d.azioni.map(gruppoAzioni))) : null,
+  ];
 }
 
 // ---------------------------------------------------------------------------

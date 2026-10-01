@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   preparaStampa, tronca, primaFrase, versioniAccessibili, vociEquipaggiamento, elencoZaino, intestazioneBreve, LIMITI_STAMPA,
-  preparaTab, spezzaMagia, contaIncantesimi, numeraPagine, testoPiede, ordinaFogli, iconaFoglio,
+  preparaTab, spezzaMagia, contaIncantesimi, numeraPagine, testoPiede, ordinaFogli, iconaFoglio, azioniCombattimento, schemaQuadratini,
 } from '../src/stampa.js';
 import { CAMPI_ANAGRAFICA } from '../src/character.js';
 import { datiReali } from './helpers.js';
@@ -392,5 +392,48 @@ test('foglio Artefatti (docs/layout-ss.md, pezzo 5): sintonizzazione, schede, ri
   // la SD ha la sua tab Artefatti: il foglio di stampa non diventa una tab
   const pb = leggi('b_fratellanza_arcanista_l12.json');
   assert.ok(!preparaTab({ creazione: pb.creazione, livelli: pb.livelli }, dati).tab.some((t) => t.id === 'artefatti'));
+});
+
+test('foglio 3 su due pagine (ritocchi post-stampa): «pagina k/n» dentro il foglio, PV a righe da 25, AR e VA Difese nei dati', () => {
+  const fogli = [{ id: 'identita', numero: 1 }, { id: 'combattimento', numero: 3 }, { id: 'inventario', numero: 4 }];
+  // pagina 1 (Armi), una continuazione delle armi, pagina 2 (Condizione): 1/3, 2/3, 3/3
+  const n = numeraPagine([{ id: 'identita' }, { id: 'combattimento', parti: true }, { id: 'combattimento', seguito: true, parti: true },
+    { id: 'combattimento', seguito: true, parti: true }, { id: 'inventario' }], fogli);
+  assert.deepEqual(n.filter((x) => x.id === 'combattimento').map((x) => [x.foglio, x.parte, x.parti]), [[3, 1, 3], [3, 2, 3], [3, 3, 3]]);
+  const piede = { nome: 'Lucas', livello: 6, versioni: null };
+  assert.equal(testoPiede(piede, n[1]), 'Lucas · 6° livello · foglio 3 · pagina 1/3 · 2 di 5');
+  assert.equal(testoPiede(piede, n[4]), 'Lucas · 6° livello · foglio 4 · pagina 5 di 5'); // gli altri fogli come prima
+  // PV a righe lunghe: 17 → righe da 25 con stacco ogni 5, 17 nere; con due righe grigie in più tre righe
+  const pv = schemaQuadratini(17, { compatto: true, perRiga: 25, righeInPiu: 2 });
+  const righe = pv.blocchi.flatMap((b) => b.righe);
+  assert.deepEqual([righe.length, righe[0].caselle.length, righe.map((r) => r.cumulato).join(',')], [3, 25, '25,50,75']);
+  assert.equal(righe.flatMap((r) => r.caselle).filter(Boolean).length, 17);
+  // le regole di sempre non cambiano: righe da 10, blocchi da 5
+  assert.equal(schemaQuadratini(17).blocchi[0].righe[0].caselle.length, 10);
+  // la fascia dei PV ha AR e VA Difese già calcolati
+  const d = foglio(preparaStampa(MISHIMA_AGENTE, dati), 'combattimento').dati;
+  assert.ok(Number.isInteger(d.pv) && d.arStampa?.valori?.length && Number.isInteger(d.sintesi.difese.va));
+});
+
+test('Azioni di combattimento (foglio 3, pagina 2): solo valori dei dati, gruppi nell’ordine giusto', async () => {
+  const { readFileSync } = await import('node:fs');
+  const { deserializzaPersonaggio } = await import('../src/character.js');
+  const leggi = (f) => deserializzaPersonaggio(readFileSync(new URL(`collaudo/${f}`, import.meta.url), 'utf8'));
+  const azioni = (f) => { const p = leggi(f); return foglio(preparaStampa({ creazione: p.creazione, livelli: p.livelli }, dati), 'combattimento').dati.azioni; };
+  const MF = dati.regole.modalita_di_fuoco;
+  // Lucas ha la Carabina (S RB RM RL TR FS): prima il tiro, con le sole modalità delle sue armi
+  const lucas = azioni('Lucas_liv6_2026-09-28 (2).json');
+  assert.deepEqual(lucas.map((g) => g.id), ['modalita', 'manovre-tiro', 'manovre-ravvicinate']);
+  assert.deepEqual(lucas[0].righe.map((r) => r[0]), ['S', 'RB', 'RM', 'RL', 'TR', 'FS'].map((k) => `${MF[k].nome} (${k})`));
+  const rb = lucas[0].righe.find((r) => r[0].includes('(RB)'));
+  assert.deepEqual(rb.slice(1, 4), [String(MF.RB.colpi_consumati), String(MF.RB.azioni_principali), `+${MF.RB.modificatore_va}`]);
+  // b senza armi a distanza: prima le manovre corpo a corpo (con la Carica), poi tutte le modalità
+  const b = azioni('b_fratellanza_arcanista_l12.json');
+  assert.equal(b[0].id, 'manovre-ravvicinate');
+  const M = dati.regole.attacco_ravvicinato.manovre;
+  assert.deepEqual(b[0].righe.map((r) => r[0]), [...Object.values(M).map((m) => m.nome), 'Carica']);
+  assert.equal(b[0].righe.find((r) => r[0] === M.mirato.nome)[1], String(M.mirato.azioni_principali));
+  assert.ok(b.find((g) => g.id === 'modalita').righe.length >= 7); // tutte, senza Tiro Mirato (sta fra le manovre)
+  assert.ok(!b.find((g) => g.id === 'modalita').righe.some((r) => r[0].includes('(TM)')));
 });
 
