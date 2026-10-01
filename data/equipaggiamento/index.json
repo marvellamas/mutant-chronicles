@@ -107,17 +107,22 @@
     {
       "id": "dotazioni_personali",
       "file": "dotazioni_personali.json",
-      "descrizione": "Dotazioni personali: contenitori, illuminazione, abbigliamento, oggetti quotidiani (Equipaggiamento 0.3, cap. 2)"
+      "descrizione": "Dotazioni personali: contenitori, illuminazione, abbigliamento, oggetti quotidiani (Equipaggiamento 0.5, cap. 2)"
     },
     {
       "id": "esplorazione",
       "file": "esplorazione.json",
-      "descrizione": "Esplorazione e sopravvivenza: accampamento, viveri, orientamento, protezioni ambientali (Equipaggiamento 0.3, cap. 3)"
+      "descrizione": "Esplorazione e sopravvivenza: accampamento, viveri, orientamento, protezioni ambientali, mobilità (Equipaggiamento 0.5, cap. 3)"
     },
     {
       "id": "comunicazione",
       "file": "comunicazione.json",
-      "descrizione": "Comunicazione e rilevamento: comunicatori, ottiche e visori, sorveglianza (Equipaggiamento 0.3, cap. 4)"
+      "descrizione": "Comunicazione e rilevamento: comunicatori, ottiche e visori, sorveglianza (Equipaggiamento 0.5, cap. 4)"
+    },
+    {
+      "id": "strumenti_professionali",
+      "file": "strumenti_professionali.json",
+      "descrizione": "Strumenti professionali: tecnici, scientifici, agricoli, accesso, camuffamento, elettronica, culturali e rituali (Equipaggiamento 0.5, cap. 5)"
     }
   ],
   "_nota_reperibilita": "Scala: Comune, Non comune, Rara, Molto rara, Leggendaria (risposta di Davide A.14, 28/09/2026). Leggendaria è superiore a Molto rara. I valori economici degli oggetti rari sono riferimenti per eventuali scambi, non un listino che garantisce l’acquisto: deve prima esistere un produttore o possessore disposto a cedere l’oggetto; una Prova di Oratoria, da sola, non crea questa disponibilità. La reperibilità resta distinta dalla potenza mistica e dalla Qualità costruttiva."

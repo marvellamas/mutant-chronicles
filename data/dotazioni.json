@@ -11,7 +11,7 @@
     "I profili degli oggetti e le relative regole si consultano nel Manuale degli Armamenti e nel Manuale degli Equipaggiamenti.",
     "Le dotazioni si ricevono una sola volta, alla creazione: acquisire successivamente un’altra Classe non assegna nuovo equipaggiamento. Ogni oggetto previsto si riceve integro, funzionante e senza Prova di Reperibilità. NEC carichi e componenti dichiarati sono compresi; ricambi e consumabili sono limitati alle quantità espressamente indicate. Quando un oggetto ne sostituisce un altro si registra soltanto quello sostitutivo. Le regole riassuntive sono nel Manuale dell’Equipaggiamento, Capitolo 8."
   ],
-  "_nota_oggetti_dotazione": "Voci della dotazione del §2.16 senza modello di armamento. Con «rif» hanno una scheda di catalogo (Manuale dell’Equipaggiamento 0.3, cap. 2–6, tools/lotti/lotto_equipaggiamento_03.mjs; Corredo di manutenzione da campo: Armamenti §7.13.7): nome della dotazione, peso, prezzo, Qualità, PI ed effetti dalla scheda, anche per i personaggi già salvati (risolvi() tramite dotazione_id). Senza «rif» restano «da definire» (A.34: peso assente non è 0 kg, prezzo assente non dà credito di scambio). Nessun oggetto della dotazione che non sia un armamento assegnato si cede nello scambio iniziale (§2.16.29).",
+  "_nota_oggetti_dotazione": "Voci della dotazione del §2.16 senza modello di armamento. Con «rif» hanno una scheda di catalogo (Manuale dell’Equipaggiamento 0.3–0.5, cap. 2–6, tools/lotti/lotto_equipaggiamento_03.mjs; cap. 5, tools/lotti/lotto_equipaggiamento_05.mjs; Corredo di manutenzione da campo: Armamenti §7.13.7): nome della dotazione, peso, prezzo, Qualità, PI ed effetti dalla scheda, anche per i personaggi già salvati (risolvi() tramite dotazione_id). Senza «rif» restano «da definire» (A.34: peso assente non è 0 kg, prezzo assente non dà credito di scambio). Nessun oggetto della dotazione che non sia un armamento assegnato si cede nello scambio iniziale (§2.16.29).",
   "comune": {
     "paragrafo": "2.16.1",
     "oggetti": [
@@ -3822,10 +3822,12 @@
       "rif": "comunicazione:monocolo-periscopico"
     },
     "corredo-da-scasso": {
-      "nome": "Corredo da scasso (Standard)"
+      "nome": "Corredo da scasso (Standard)",
+      "rif": "strumenti_professionali:corredo-da-scasso-standard"
     },
     "corredo-da-camuffamento": {
-      "nome": "Corredo da camuffamento (Standard)"
+      "nome": "Corredo da camuffamento (Standard)",
+      "rif": "strumenti_professionali:corredo-da-camuffamento-standard"
     },
     "ricarica-kit-trauma": {
       "nome": "Ricarica per il Kit trauma (5 applicazioni)",
@@ -3846,20 +3848,12 @@
     },
     "corredo-agricolo": {
       "nome": "Corredo agricolo (Standard)",
-      "sotto": "corredo_agricolo"
+      "sotto": "corredo_agricolo",
+      "TODO(Davide)": "A.65: il Corredo agricolo Standard si sceglie fra coltivazione e allevamento (§2.16.23); il §5.3 ha gli Attrezzi agricoli di base (Standard, coltivazione) ma per l’allevamento solo il Corredo dell’allevatore (+2, 800). Quale scheda per la versione «allevamento»? Nel frattempo la voce resta senza scheda (peso e prezzo da definire)."
     },
     "corredo-artigianale-professionale": {
       "nome": "Corredo artigianale professionale",
-      "effetti": [
-        {
-          "abilita": "Tecnologia",
-          "valore": 2,
-          "ambito": "uso_specifico",
-          "uso": "lavori del mestiere",
-          "condizione": "Concede +2 VA a Tecnologia per lavorare e riparare i prodotti di quel mestiere.",
-          "fonte": "Giocatore §2.16.13"
-        }
-      ]
+      "rif": "strumenti_professionali:corredo-artigianale-professionale"
     },
     "corredo-manutenzione-campo": {
       "nome": "Corredo di manutenzione da campo",
@@ -3871,50 +3865,49 @@
       "sostituisce": "torcia-elettrica"
     },
     "cassetta-attrezzi": {
-      "nome": "Cassetta degli attrezzi (Standard)"
+      "nome": "Cassetta degli attrezzi (Standard)",
+      "rif": "strumenti_professionali:cassetta-degli-attrezzi"
     },
     "maschera-filtrante": {
       "nome": "Maschera filtrante",
       "rif": "esplorazione:maschera-filtrante"
     },
     "corredo-elettronico-informatico": {
-      "nome": "Corredo elettronico e informatico (Standard)"
+      "nome": "Corredo elettronico e informatico (Standard)",
+      "rif": "strumenti_professionali:corredo-elettronico-e-informatico-standard"
     },
     "kit-videosorveglianza": {
       "nome": "Kit di videosorveglianza",
       "rif": "comunicazione:kit-di-videosorveglianza"
     },
     "corredo-ricerca-documentale": {
-      "nome": "Corredo di ricerca documentale (Standard)"
+      "nome": "Corredo di ricerca documentale (Standard)",
+      "rif": "strumenti_professionali:corredo-di-ricerca-documentale-standard"
     },
     "corredo-analisi-campo": {
       "nome": "Corredo di analisi da campo",
-      "sotto": "ambito_analisi",
-      "effetti": [
-        {
-          "abilita": "Scienza",
-          "valore": 2,
-          "ambito": "uso_specifico",
-          "uso": "analisi",
-          "condizione": "Comprende strumenti di misura, ottiche, test e materiale ordinario per il campionamento; concede +2 VA a Scienza per analisi preliminari realmente eseguibili, normalmente in 10 minuti.",
-          "fonte": "Giocatore §2.16.17"
-        }
-      ]
+      "rif": "strumenti_professionali:corredo-di-analisi-da-campo",
+      "sotto": "ambito_analisi"
     },
     "corredo-amministrativo": {
-      "nome": "Corredo amministrativo (Standard)"
+      "nome": "Corredo amministrativo (Standard)",
+      "rif": "strumenti_professionali:corredo-amministrativo-standard"
     },
     "strumento-musicale-portatile": {
-      "nome": "Strumento musicale portatile (Standard)"
+      "nome": "Strumento musicale portatile (Standard)",
+      "TODO(Davide)": "A.65: lo Strumento musicale portatile Standard della dotazione è acustico o elettronico (§5.8: due schede, 400 e 800)? Nel frattempo la voce resta senza scheda (peso e prezzo da definire)."
     },
     "corredo-scenico": {
-      "nome": "Corredo scenico (Standard)"
+      "nome": "Corredo scenico (Standard)",
+      "rif": "strumenti_professionali:corredo-scenico-standard"
     },
     "terminale-produzione-multimediale": {
-      "nome": "Terminale per produzione multimediale (Standard)"
+      "nome": "Terminale per produzione multimediale (Standard)",
+      "rif": "strumenti_professionali:terminale-per-produzione-multimediale"
     },
     "testo-dottrinale-e-simbolo": {
-      "nome": "Testo dottrinale e simbolo della propria tradizione"
+      "nome": "Testo dottrinale e simbolo della propria tradizione",
+      "rif": "strumenti_professionali:materiale-della-tradizione"
     },
     "completo-cerimoniale": {
       "nome": "Completo cerimoniale, comprese le calzature (profilo Abiti eleganti)",
@@ -3927,10 +3920,12 @@
     },
     "focus-personale": {
       "nome": "Focus personale, già sintonizzato prima dell’avventura",
+      "rif": "strumenti_professionali:focus-personale-semplice",
       "nota": "Magia 1.3, sez. 2 (Google Doc del 01/10/2026): il Focus personale semplice assegnato alla creazione è già sintonizzato e non aggiunge bonus o PM; non è un Artefatto e non occupa capacità di sintonizzazione. Profilo di catalogo nel Manuale dell’Equipaggiamento 0.5, §5.8 (lotto del cap. 5)."
     },
     "corredo-rituale": {
-      "nome": "Corredo rituale (Standard)"
+      "nome": "Corredo rituale (Standard)",
+      "rif": "strumenti_professionali:corredo-rituale-standard"
     }
   },
   "sotto_scelte": {
