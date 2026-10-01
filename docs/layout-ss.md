@@ -525,3 +525,36 @@ Dopo la prova su carta di Marcello cambia solo il foglio 3; i fogli 1, 2, 4, 5 e
   - la fascia dei PV è di circa 45 mm (richiesti 50–60): con tre righe di quadratini non serve di più;
   - nel piè di pagina resta anche la posizione nella stampa («· 4 di 9»), oltre a «pagina 1/2».
 
+### Foglio 5: prima pagina con tutto il «di base» (1° ottobre 2026)
+
+Dopo la prova su carta cambia solo la prima pagina del foglio 5; le schede complete seguono dalle pagine dopo con il sistema di prima (`impaginaMagia`, invariato dal passo 2).
+
+- **Due colonne.** La destra è larga quanto le righe dell'elenco (`max-content`): nessun a capo, circa 105 mm per b e Lucas; la sinistra prende il resto.
+  - **Colonna sinistra, tre riquadri compatti:**
+    - **Punti Magia:** PM massimi e recupero con la Meditazione su una riga (`meditazione` nei dati, come il riquadro della SD; senza la capacità la riga non c'è); quadratini a righe da 25 come i PV del foglio 3 (almeno due righe, sempre una grigia).
+    - **Batterie e riserve di Chroma:** una riga per contenitore (pallino, nome, energia, sintonizzazione, PM a quadratini a destra); conversione in una riga.
+    - **Lancio:** etichetta: valore, due per riga, la riga intera per le voci lunghe; poi la scala della Prova di Potere.
+    - In fondo il rimando «Da artefatti… vedi foglio 6» e, con «Solo elenco», la nota sulle schede.
+  - **Colonna destra, a tutta altezza:** gli incantesimi conosciuti (`righeElencoIncantesimi` in `src/stampa.js`):
+    - un'intestazione per macrofamiglia, piena nel suo colore, con il numero di incantesimi;
+    - poi una riga per incantesimo, tinta della famiglia: nome, livello base, PM, gittata, durata, numero di scheda del Manuale della Magia (13.1…).
+    - Il tempo di lancio esce dall'elenco: resta nella scheda completa.
+- **Se l'elenco non entra** (`impaginaElenco`): le righe in più continuano sotto la colonna sinistra («Incantesimi (continua)», con l'intestazione della famiglia ripetuta) e solo in ultimo su «5 (segue)». Il carattere resta `--ss-font`; le righe dell'elenco hanno il margine verticale ridotto (0,1 mm).
+- **Esito** (`PORTA=3000 node tools/collaudo_pdf.mjs`): nessuno sbordo, numerazione corretta.
+  - b: 31 incantesimi, tutti nella prima pagina; foglio 5 su una pagina con «solo elenco».
+  - Lucas: 15 incantesimi, tutti nella prima pagina; foglio 5 su una pagina con «solo elenco».
+  - c invariato, senza foglio 5.
+  - Pagine:
+    - b 8 «solo elenco», 35 «schede complete»;
+    - Lucas 8 e 21;
+    - c 6.
+  - Le schede complete sono le stesse pagine di prima: 27 per b, 13 per Lucas.
+- Il collaudo controlla anche la prima pagina del foglio 5:
+  - Punti Magia e Lancio presenti, nessuna scheda;
+  - con 20 incantesimi o meno, l'elenco intero;
+  - lo sbordo, come gli altri fogli;
+  - in uscita, la riga «foglio 5» con pagine e incantesimi nella prima pagina.
+- **Scostamenti:**
+  - la richiesta indicava 15 incantesimi per b, ma b ne conosce 31: entrano comunque tutti nella prima pagina, senza continuazione sotto la colonna sinistra;
+  - nell'elenco le macrofamiglie sono intestazioni, non una colonna, per tenere la riga corta; la specializzazione esce dall'elenco e resta nelle schede.
+
