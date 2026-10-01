@@ -743,3 +743,34 @@ Fonte: Equipaggiamento 0.5, cap. 7, e Giocatore 0.45, §5.21 (Google Doc del 01/
   - L'Interfaccia Neurale degli Armamenti (§7.15.1) esce da `corredi_dispositivi`. `index.json` → `rif_sostituiti` porta le voci salvate all'impianto: «in uso» diventa «installato» e la perdita di UMN si registra.
   - Chiavi `beneficio` comuni con gli esoscheletri, perché i benefici equivalenti non si sommano (§7.1, «Cumulo»).
 - **Sezione dell'Inventario.** «Impianti cibernetici e chip», dopo gli Artefatti, in indaco (`--cat-impianti`).
+
+## Manuale dell'Equipaggiamento 0.5: lotto 4, capitolo 6 ampliato e capitolo 8 (01/10/2026)
+
+Fonte: Equipaggiamento 0.5 (Google Doc del 01/10/2026, 08:32 UTC) letto con il Giocatore 0.45, §§5.16.2–5.16.6 (cure). I due testi coincidono: nessuna contraddizione.
+
+- **Cap. 6** (`tools/lotti/lotto_equipaggiamento_06.mjs`, idempotente, con i controlli):
+  - le 22 schede dei §§6.1–6.6 già nel catalogo hanno i valori delle tabelle della 0.5;
+  - aggiornate le frasi cambiate: somministrazione rapida con impianti, postazioni e naniti (§6.2); antidoti e farmaci in cartucce per le postazioni (§6.8.4);
+  - **naniti medici** (§6.7): 5.000 cr, MR; uno stato di Ferita in 10/20/30/40/50 minuti secondo lo stato; una dose ogni 24 ore; non consumano il tentativo settimanale;
+  - **postazioni medicochirurgiche** (§6.8), otto voci (quattro modelli, fissi e mobili):
+
+    | Modello | Prova | Prezzo fissa / mobile | Peso | PI |
+    |---|---|---|---|---|
+    | Semiautomatica | Medicina dell'operatore +3 | 60.000 / 75.000 | 250 kg | 16 |
+    | Automatica Standard | IA VA 12 | 100.000 / 125.000 | 300 kg | 16 |
+    | Automatica Professionale | IA VA 15 | 180.000 / 225.000 | 350 kg | 20 |
+    | Automatica Specializzata | IA VA 18 | 300.000 / 375.000 | 400 kg | 24 |
+
+    - Ogni postazione ha alloggiamenti, procedure, degenza (uno stato di Ferita ogni 3 giorni) e stasi.
+    - Al tavolo si contano le 10 operazioni del Modulo Rosso, i giorni di degenza o stasi dei Verdi (10/10/20/30) e le 5 cartucce chirurgiche.
+  - consumabili del §6.8.7: cartuccia chirurgica (A.71), confezione da cinque, ricarica nutritiva sanitaria. I set NEC di ricambio coincidono con i Moduli del catalogo NEC; il controllo è nel generatore;
+  - campo tipizzato **`cura`** (PV, Sanguinamento, Round, stati di Ferita, durate, intervalli, procedure, Azioni, Prova). Lo mostrano il tooltip e la riga dell'Inventario (`testoCura`);
+  - **`alimentazione`** può essere un elenco (più NEC) con `moduli`;
+  - chiave `beneficio` **`strumenti_chirurgia`**: un solo bonus degli strumenti per Prova.
+- **Impianti:** il cap. 6 non collega le postazioni all'installazione degli impianti (§7.1 chiede solo «una struttura medica attrezzata»). Nulla cambia in `regole.json` → `impianti` né in A.69.
+- **Cap. 8** (`tools/lotti/lotto_equipaggiamento_08.mjs`, controlli):
+  - Il capitolo non ha cataloghi propri: rimanda ai §§2.16.1–2.16.30 del Giocatore (lotto 1) e li riassume.
+  - Sette controlli su dati e motore, tutti verdi: crediti, una sola volta, cessione al 100%, naniti e postazioni non gratuiti, Giocatore 0.45, rif del catalogo, NEC compresi.
+  - Nessuna regola nuova nel wizard; in `regole.json` → `dotazioni_iniziali.paragrafo` c'è il rimando al cap. 8.
+
+**Stato:** con il lotto 4 tutti i capitoli dell'Equipaggiamento 0.5 sono nel catalogo (cap. 1–8). Lotti 1–4 dell'aggiornamento del 01/10 chiusi.

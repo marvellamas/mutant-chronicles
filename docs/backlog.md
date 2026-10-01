@@ -152,7 +152,11 @@ Piano di partenza:
 - Tab Cibernetica della SD (oggi «in attesa del manuale», `regole.json` → `tab_in_arrivo`) e foglio 7 della SS.
 - Prima va decisa l'Umanità (backlog 13).
 
-## 23. Equipaggiamento 0.5, lotto 4: cap. 8 «Cataloghi e dotazioni iniziali», cap. 6 ampliato
+## 23. ✔ Equipaggiamento 0.5, lotto 4: cap. 8 «Cataloghi e dotazioni iniziali», cap. 6 ampliato — fatto il 1° ottobre 2026
+
+Esito in `docs/equipaggiamento-lotti.md` («lotto 4»): naniti medici, otto postazioni medicochirurgiche, campo «cura»; il cap. 8 conferma il §2.16 del Giocatore (sette controlli, nessuna regola nuova); A.71 al Doc. Con questo lotto tutti i lotti dell'aggiornamento del 01/10 sono chiusi.
+
+Piano di partenza:
 
 - Cap. 8: assegnazione e registrazione, crediti, acquisti e assegnazioni di missione; confronto con `dotazioni.json` e `src/dotazioni.js`.
 - Cap. 6: naniti medici (una dose ogni 24 ore, fuori dal tentativo settimanale) e postazioni medicochirurgiche (§6.8), che toccano anche le cure del Giocatore (§5.15–5.16).

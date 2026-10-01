@@ -127,7 +127,9 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
   - la fascia riduce PM Massimi, capacità di Sintonizzazione e PS di Magia contro la Corruzione;
   - tab Cibernetica della SD e foglio Cibernetica della SS, che si stampa solo con impianti installati o Umanità ridotta.
 
-Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, veicoli, capitoli 6 (ampliato) e 8 dell'Equipaggiamento 0.5 (lotto 4, `docs/backlog.md`).
+- Equipaggiamento 0.5, cap. 6 ampliato e cap. 8 (lotto 4 del 01/10): naniti medici e postazioni medicochirurgiche in `sanitario.json`, campo `cura` con i numeri delle cure (`src/equipaggiamento.js` → `testoCura`, tooltip e Inventario), `alimentazione` anche come elenco di NEC; il cap. 8 riassume il §2.16 del Giocatore, controllato da `tools/lotti/lotto_equipaggiamento_08.mjs`. Tutti i capitoli dell'Equipaggiamento 0.5 sono nel catalogo.
+
+Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, veicoli.
 
 ## Riferimenti
 

@@ -179,6 +179,7 @@ const consumabili = [
     id: 'cartuccia-chirurgica', nome: 'Cartuccia chirurgica', tipo: 'sanitario', catalogo: 'Commerciale', famiglia: 'Postazioni medicochirurgiche', nomi_alternativi: [],
     note_manuale: frasi('La cartuccia chirurgica comprende anestetici ordinari, disinfettanti, suture e materiali da medicazione. Farmaci specifici, cartucce Curative, naniti, protesi e componenti speciali sono separati.', 'Cartuccia chirurgica | 500 cr | Una operazione; confezione da cinque 2.500 cr.'),
     paragrafo: '§6.8.7', versione_manuale: VERSIONE, costo: 500, proprieta: [], effetto_breve: 'Una operazione di una postazione medicochirurgica.',
+    'TODO(Davide)': 'A.71: la cartuccia chirurgica delle postazioni (§6.8.7, 500 cr) e il set chirurgico del Kit chirurgico e della Postazione medica da campo (§6.5, 500 cr) hanno lo stesso contenuto e lo stesso prezzo: sono lo stesso consumabile, intercambiabile? Nel frattempo due voci distinte.',
   },
   {
     id: 'confezione-da-cinque-cartucce-chirurgiche', nome: 'Confezione da cinque cartucce chirurgiche', tipo: 'sanitario', catalogo: 'Commerciale', famiglia: 'Postazioni medicochirurgiche', nomi_alternativi: [],
