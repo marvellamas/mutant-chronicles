@@ -382,7 +382,7 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .f4-indice-seguito { flex: none; }
 /* Foglio 5, prima pagina (ritocchi post-stampa): a sinistra Punti Magia, riserve, Lancio e il
    rimando; a destra l'elenco degli incantesimi, largo quanto le sue righe (nessun a capo) */
-.f5-griglia { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) max-content; grid-template-rows: minmax(0, 1fr); gap: 3mm; }
+.f5-griglia { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(140mm, max-content); /* elenco largo almeno 140 mm (seconda prova di stampa) */ grid-template-rows: minmax(0, 1fr); gap: 3mm; }
 .f5-sinistra { min-height: 0; display: flex; flex-direction: column; gap: 2mm; }
 .f5-sinistra > .riquadro-stampa { flex: none; }
 .f5-sinistra > .f5-elenco-seguito { flex: 1 1 0; min-height: 0; }

@@ -564,7 +564,8 @@ Dopo la prova su carta cambia solo la prima pagina del foglio 5; le schede compl
 - **Elenco:**
   - nomi a 11 pt (prima 10), celle a `--ss-font` 10 pt, intestazioni di colonna e di macrofamiglia a 10 pt (prima 9);
   - righe senza margine verticale (prima 0,1 mm), interlinea 1,1;
-  - la colonna destra si allarga da sola: 112 mm (prima circa 105), la sinistra 162 mm.
+  - la colonna destra è larga almeno 140 mm (`minmax(140mm, max-content)`; prima circa 105), la sinistra 134 mm: dopo la prova, 112 mm erano troppo pochi;
+  - le sigle delle riserve possono andare a capo su due righe.
 - **Colonna sinistra abbreviata, solo sulla carta** (`abbreviaSS` in `src/stampa.js`; la SD scrive per intero, i numeri non si toccano):
   - nomi delle riserve: «Batt. 5 PM (Chroma R./V./B./Bi./Vi./T.)»;
   - sigle: «sint.», «da sint.», «tutte le macrof.», «attiv.»;
