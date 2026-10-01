@@ -492,3 +492,36 @@ Punti del piano (sezioni 3–6, 8 e 9): **24 fatti**, **9 fatti diversamente**, 
 **Rimandati** (2):
 1. Caricatori di riserva a quadratini nella riga delle Munizioni dell'Inventario: le riserve sono un valore di sessione e restano nella SD.
 2. Fogli 7 e 8, Cibernetica e Veicoli: aspettano i manuali; la regola «foglio senza contenuto non si stampa» è già quella giusta.
+
+## Ritocchi post-stampa (1° ottobre 2026)
+
+Dopo la prova su carta di Marcello cambia solo il foglio 3; i fogli 1, 2, 4, 5 e 6 restano come sopra.
+
+**Foglio 3 su due pagine fisse.** Le due pagine sono entrambe foglio 3: piè di pagina «foglio 3 · pagina 1/2 · 4 di 9» (la pagina dentro il foglio, poi la posizione nella stampa). Le continuazioni delle armi sono pagine in più del foglio 3, fra la 1 e la 2 («pagina 2/3»). Gli altri fogli tengono «foglio N (segue) · pagina P di T».
+
+- **Pagina 1, Armi.**
+  - In alto una fascia di circa 45 mm. A sinistra (tre quarti della larghezza) i Punti Vita: quadratini a righe da 25 con stacco ogni 5 e cumulato a destra, neri fino al massimo e grigi a completare, almeno tre righe e sempre una riga grigia (`schemaQuadratini` con `perRiga` e `righeInPiu`); accanto PV massimi, AR (e «contro Etereo») e VA Difese con la Caratteristica, la provenienza dell'AR in piccolo.
+  - A destra (un quarto, la larghezza dei riquadri di stato della pagina 2) la Sintesi in verde Punti Eroe: Iniziativa, Movimento, Azioni, Prove Salvezza.
+  - Sotto, le Armi a tutta larghezza, come prima; il nome dell'arma non va più a capo.
+  - Niente più riempitivo Punti Vita né righe guida.
+- **Pagina 2, Condizione ed equipaggiamento indossato** (sempre stampata).
+  - Ferite, Affaticamento, Corruzione Oscura e Stati su quattro colonne. Gli Stati occupano la quarta a tutta altezza; Protezioni (con i PI) e Sanitario (con le applicazioni) stanno sotto le prime tre.
+  - **Azioni di combattimento**, se avanza spazio: tabella di consultazione con i soli valori di `regole.json` (`azioniCombattimento` in `src/stampa.js`):
+    - modalità di fuoco delle armi del personaggio (colpi, AzP, VA, colpi a segno);
+    - manovre di tiro (Tiro Mirato, Ravvicinato, a Bruciapelo, senza Imbracciatura);
+    - manovre corpo a corpo del §5.12 con la Carica (AzP, VA, danno, tipo di Prova, effetto).
+  - Ordine dei gruppi: con armi a distanza prima il tiro, altrimenti le manovre corpo a corpo. Si prova un gruppo alla volta: uno che non entra si salta (`impaginaCondizione`); un gruppo di oltre 6 righe si divide in due metà affiancate. Senza gruppi il riquadro non c'è; mai una terza pagina.
+- **Esito del collaudo** (`PORTA=3000 node tools/collaudo_pdf.mjs`), nessuno sbordo, numerazione corretta; il foglio 3 è su 2 pagine per tutti:
+  - c: 6 pagine; Azioni di combattimento con modalità di fuoco (Tiro Singolo, Tiro Rapido) e manovre di tiro (le manovre corpo a corpo non entrano);
+  - b: 9 pagine «solo elenco», 36 «schede complete»; Azioni di combattimento con le manovre corpo a corpo e la Carica (nessuna arma a distanza; le modalità non entrano);
+  - Lucas: 8 pagine «solo elenco», 21 «schede complete»; Azioni come c, con le sei modalità della Carabina. Le armi entrano nella pagina 1, senza continuazione.
+- Il collaudo controlla anche:
+  - sintesi e Punti Vita nella pagina 1, Ferite e Protezioni nella pagina 2, che è l'ultima del foglio 3;
+  - niente Protezioni, Sanitario o Ferite nella pagina 1;
+  - «pagina k/n» del foglio 3;
+  - in uscita stampa le pagine del foglio 3 e i gruppi del riquadro Azioni.
+- **Scostamenti dalla richiesta:**
+  - Protezioni e Sanitario sono sotto Ferite, Affaticamento e Corruzione, accanto agli Stati, invece che sotto l'intera fila: così il riquadro Azioni guadagna circa 25 mm e per b entrano le manovre corpo a corpo;
+  - la fascia dei PV è di circa 45 mm (richiesti 50–60): con tre righe di quadratini non serve di più;
+  - nel piè di pagina resta anche la posizione nella stampa («· 4 di 9»), oltre a «pagina 1/2».
+

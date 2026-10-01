@@ -31,9 +31,9 @@ Drive si usa **in sola lettura**: mai scrivere nei Doc di Davide, nemmeno commen
   - **Inventario:** Carico e Crediti, Integrità, oggetti per sezione con stato (anche deposito comune), PI e Ripara, condizione delle armi, caricatori di riserva, applicazioni sanitarie, catalogo con «Compra»;
   - Calendario in coda, se attivo.
 - **SS** = scheda da stampare: la vista di stampa A4 orizzontale (`#/p/<id>/stampa`, `src/ui/stampa.js`, `css/stampa.css`). Fogli come i tab della SD (branch `layout-ss`, esito in `docs/layout-ss.md`):
-  - 1 Identità, 2 Abilità, 3 Combattimento, 4 Inventario sempre;
+  - 1 Identità, 2 Abilità, 3 Combattimento (due pagine fisse: Armi; Condizione ed equipaggiamento indossato), 4 Inventario sempre;
   - 5 Poteri con la magia; 6 Artefatti con Artefatti o riserve di Chroma;
-  - piè di pagina «foglio N · pagina P di T».
+  - piè di pagina «foglio N · pagina P di T»; nel foglio 3 «foglio 3 · pagina 1/2 · P di T».
 
 ## Stack (deciso)
 
