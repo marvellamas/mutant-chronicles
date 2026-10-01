@@ -407,6 +407,23 @@ In più, la regola dei quadratini con un massimo (sezione 3), da fare nel pezzo 
     - **colonne delle Armi:** è rimasta anche Parata (profilo d'uso delle armi ravvicinate); AC, Qualità, Capacità e PI escono dalla tabella; le proprietà stanno in piccolo sotto l'arma;
     - **Punti Vita:** l'altezza minima tiene una sola riga guida per le note, non due;
     - **foglio 2:** quando le Annotazioni non entrano, la continuazione può contenere le sole Annotazioni a pagina intera (c e b).
-- [ ] Pezzo 4: Poteri.
+- [x] **Pezzo 4: Poteri** (1° ottobre 2026, branch `layout-ss`).
+  - Foglio 5, solo con la magia; c non lo ha. Prima pagina:
+    - **Punti Magia** a quadratini, con il blocco grigio in più se entra;
+    - **Lancio:** come prima, più la riga «Gradi taumaturgici: IV · Arcanista II + Mistico II», la stessa della SD (`gradiTaumaturgici`), sotto «Incantesimi … livello massimo N»;
+    - **Batterie e riserve di Chroma** (decisione 5): pallino del colore dell'energia, PM a quadratini (neri fino alla capacità, grigi a completare la riga), nota «Convertire Potere e ricaricare: 3:1; Bianco 2:1 in entrambi i sensi» come nel riquadro dei PM della SD.
+  - Rimando «Da artefatti: Bordone Templare — vedi foglio 6» per gli Artefatti con attivazione o riserva integrata. Il numero è quello del foglio Artefatti, o il posto che prenderà dopo Poteri (`foglioArtefatti` nei dati).
+  - Indice e schede degli incantesimi invariati.
+  - Collaudo, porta 3000:
+    - b «solo elenco»: 7 pagine (1 · 2 · 2 (segue) · 3 · 4 · 5 · 5 (segue));
+    - b «schede complete»: 34 pagine;
+    - Lucas: 7 pagine (1 · 2 · 3 · 3 (segue) · 4 · 4 (segue) · 5);
+    - c: 5 pagine, senza foglio 5;
+    - nessuno sbordo.
+  - Test: Gradi taumaturgici uguali alla SD per b e Lucas; batteria da 5 PM → 5 caselle nere e 5 grigie; rapporto di conversione; rimando agli Artefatti; senza contenitori nessun riquadro delle riserve.
+  - **Scostamenti dal piano:**
+    - **«Da artefatti»:** è una riga di rimando con i nomi, non un elenco con attivazioni e riserve, che stanno nel foglio Artefatti;
+    - **rimando a un foglio che non c'è ancora:** finché non arriva il pezzo 5, il rimando punta al foglio 6 Artefatti, che non si stampa;
+    - **riserve integrate degli Artefatti** (Bordone Templare): i PM sono qui con le altre riserve, come chiede la decisione 5. Il foglio Artefatti avrà solo la sintonizzazione.
 - [ ] Pezzo 5: Artefatti.
 - [ ] Pezzo 6: verifica e PDF.
