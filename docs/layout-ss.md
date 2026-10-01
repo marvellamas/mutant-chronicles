@@ -100,7 +100,7 @@ Come oggi.
 - Tecniche Interiori: nome, costo, azione.
 - **Riempitivo:** Annotazioni.
 - **Quadratini:** nessuno.
-- **Continuazione:** no. Se Talenti e Tecniche non entrano nella colonna destra, il collaudo lo segnala. Oggi c'è margine: la colonna ha 68 mm di Annotazioni, che si restringono.
+- **Continuazione** (decisa con il pezzo 2): la tabella delle Abilità non si spezza mai. Se la colonna destra non entra, prima si restringe il riempitivo Annotazioni fino a tre righe guida, poi i riquadri della colonna passano, dall'ultimo, a una pagina «Abilità (continua)».
 
 ### Foglio 3 — Combattimento (sempre)
 
@@ -361,7 +361,24 @@ In più, la regola dei quadratini con un massimo (sezione 3), da fare nel pezzo 
     - una sezione divisa fra le due colonne non ripete il titolo «(segue)»;
     - il riempitivo parte dove finiscono le sezioni e può occupare il fondo della prima colonna e la seconda, non solo il fondo della seconda;
     - il Sanitario ha la sola riga di possesso (decisione 7), le applicazioni arrivano nel foglio 3 con il pezzo 3.
-- [ ] Pezzo 2: Abilità.
+- [x] **Pezzo 2: Abilità** (1° ottobre 2026, branch `layout-ss`).
+  - Colonna destra del foglio 2, dall'alto: Talenti di Classe, Talenti Liberi (con la prima frase, come prima), Specializzazioni, Tecniche Interiori (nome, costo, azione), Annotazioni come riempitivo con le righe guida.
+    - Specializzazioni e Tecniche sono stampate come nel foglio 3, nella larghezza della colonna.
+    - I riquadri senza contenuto non si stampano.
+  - Continuazione (`impaginaAbilita`):
+    - il riempitivo si restringe fino a 3 righe guida (altezza minima `.f2-annotazioni` in `css/stampa.css`);
+    - poi i riquadri passano, dall'ultimo, a «Abilità (continua)», allineati a destra come nella prima pagina;
+    - la tabella delle Abilità non si spezza.
+  - Foglio 3: escono Specializzazioni e Tecniche Interiori; nella colonna restano le Ferite.
+  - Collaudo, porta 3000:
+    - c: 5 pagine (1 · 2 · 2 (segue) · 3 · 4). Il Combattimento torna su una pagina. Le Tecniche (riquadro di circa 60 mm) non entrano sotto Talenti e Specializzazioni con le Annotazioni a tre righe, e passano in «2 (segue)».
+    - b «solo elenco»: 7 pagine (1 · 2 · 2 (segue) · 3 · 4 · 5 · 5 (segue)).
+    - Lucas: 7 pagine (1 · 2 · 3 · 3 (segue) · 4 · 4 (segue) · 5), senza Tecniche né Specializzazioni, Annotazioni di 100 mm. Il Combattimento di Lucas va su 2 pagine per le Armi, come prima.
+    - Nessuno sbordo.
+  - Il collaudo controlla anche che il foglio 3 non abbia più Specializzazioni né Tecniche e che le Annotazioni del foglio 2 abbiano almeno tre righe guida; nell'esito riporta i riquadri della colonna destra e l'altezza delle Annotazioni.
+  - **Scostamenti dal piano:**
+    - il piano diceva «nessuna continuazione» per il foglio 2: ora c'è, con la regola del pezzo 2;
+    - c e b hanno una pagina «Abilità (continua)», quasi vuota, perché la colonna destra è stretta (94 mm). Le pagine di c restano 5: sparisce «3 (segue)», compare «2 (segue)».
 - [ ] Pezzo 3: Combattimento.
 - [ ] Pezzo 4: Poteri.
 - [ ] Pezzo 5: Artefatti.
