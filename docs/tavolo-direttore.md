@@ -1,12 +1,12 @@
 # Tavolo del Direttore: piano di fattibilità
 
-Branch `tavolo-direttore`, 1° ottobre 2026. È un piano: non c'è ancora nessuna plancia.
+Branch `tavolo-direttore`, 1° ottobre 2026. Piano di fattibilità; il pezzo 1 (plancia dei PG in sola lettura) è fatto.
 
 La visione di partenza è in `docs/backlog.md`, voce 14, su `main`. Al tavolo molti giocatori usano la scheda di carta. Il Direttore tiene lo stato della scena su una plancia con PG e nemici:
 
 - ordine di Iniziativa;
 - PV, PM e Stati con indicatori;
-- danno applicato con il calcolo dell'app;
+- danno applicato con il calcolo dell'app (Difesa → AR per applicazione → PV → Ferite: non ci sono locativi);
 - attacchi dei nemici, con il dado tirato dal vivo o dal sistema.
 
 Il server gira sul PC di Davide o di Marcello. Gli altri si collegano con l'indirizzo IP, sulla stessa rete.
@@ -14,6 +14,19 @@ Il server gira sul PC di Davide o di Marcello. Gli altri si collegano con l'indi
 Regole del branch:
 - `main` non si tocca.
 - I dati di gioco (`data/*`) non si modificano qui. Se un pezzo li richiede (per esempio un bestiario), si fa su `main` e si porta dentro con un merge.
+
+## Deciso (Marcello, 1° ottobre 2026)
+
+1. **Server.** Deve funzionare allo stesso modo sul PC di Davide (con `--rete`, Marcello collegato dal portatile via IP) o su quello di Marcello: nessuna dipendenza dalla macchina.
+2. **Giocatori.** Per lo più su carta. La plancia è del Direttore, che importa le schede e tiene lui lo stato. I giocatori collegati con l'app sono un di più (pezzo 6), non il caso base.
+3. **Locativi.** Non esistono nel regolamento attuale (tolti da Davide). «Danno applicato» = Difesa → AR per applicazione → PV → Ferite, come nel Giocatore 0.45 (§5.13–5.15).
+4. **Bestiario.**
+   - Il formato di un nemico (campi, validatore) è una regola di gioco: andrà in `data/` su `main`, proposto da noi con `TODO(Davide)` finché Davide non scrive un bestiario.
+   - I nemici di una campagna sono dati del Direttore in `nemici/`, fuori da git come `personaggi/`.
+5. **Dadi dei nemici.** Entrambi i modi, come in tutta l'app: tiro dal vivo con override, oppure tiro dell'app.
+6. **Vista giocatori su schermo.** Non ora; si rivaluta dopo il pezzo 2.
+
+**Da portare nel backlog su `main`** (qui `docs/backlog.md` non si tocca): l'icona del Tavolo del Direttore la fornirà Davide. Per ora il pulsante e la plancia usano l'icona della pagina Combattimento.
 
 ## 1. Che cosa c'è già (pezzo 0a, fatto)
 
@@ -69,7 +82,7 @@ PC del Direttore (server.mjs --rete)
 ## 3. Che cosa serve dai dati e oggi manca
 
 1. **Bestiario dei nemici.** Oggi non esiste: i manuali non hanno ancora un capitolo dei nemici.
-   - Formato proposto, un file per nemico in `nemici/` (o un `data/bestiario.json` su `main`, se Davide vuole che sia regola condivisa):
+   - Formato proposto (deciso, punto 4: il formato e il validatore vanno in `data/` su `main` con `TODO(Davide)`; i nemici della campagna in `nemici/`, un file per nemico):
      ```json
      { "id": "legionario-non-morto", "nome": "Legionario Non Morto", "fonte": "Direttore",
        "pv": 22, "ar": { "totale": 3, "magica": 0 }, "difese": 9, "salvezze": { "tempra": 12, "riflessi": 8, "volonta": 14, "magia": 10 },
@@ -85,7 +98,7 @@ PC del Direttore (server.mjs --rete)
 4. **Danno ricevuto:** la sequenza c'è (Giocatore §5.13–5.15).
    - Si applicano Difesa e Armatura, separatamente per ogni applicazione (AC), poi PV, PS Tempra per le Ferite e Sanguinamento.
    - Oggi l'app la mostra solo come testo: manca la funzione pura «applica un colpo» che parta dal danno tirato e restituisca la nuova sessione e il registro.
-   - **«Locativo»:** il Giocatore 0.45 dice che le AC «non assegnano locativi» e che l'Armatura «non viene suddivisa per parti anatomiche». Quindi oggi non c'è una tabella dei locativi da calcolare (vedi le domande, §6).
+   - **Niente locativi** (deciso, punto 3): le AC «non assegnano locativi» e l'Armatura «non viene suddivisa per parti anatomiche» (Giocatore 0.45, §5.10 e §5.13). Il danno applicato è Difesa → AR per applicazione → PV → Ferite.
 
 ## 4. Che cosa si riusa dell'app di oggi
 
@@ -103,10 +116,19 @@ PC del Direttore (server.mjs --rete)
 
 Ogni pezzo ha test sulle funzioni pure e una prova nel browser; i primi due non toccano `data/`.
 
-1. **Pezzo 1 — Plancia in sola lettura dei PG.** Rotta `#/tavolo`, solo con il server: una carta per PG da `personaggi/`.
-   - Ogni carta mostra nome, PV e PM attuali/massimi con le barre, AR, Stati, Ferite, Affaticamento e arma in mano.
-   - Polling ogni 3 secondi con l'`mtime`; avviso quando un file non si legge.
-   - È un prompt solo: funzioni già pronte e nessuna scrittura.
+1. ✔ **Pezzo 1 — Plancia in sola lettura dei PG** (fatto il 1° ottobre 2026). Rotta `#/tavolo`, solo con il server: una carta per PG da `personaggi/`.
+   - **Ingresso.** Pulsante «Tavolo del Direttore» nella pagina iniziale, solo se `/api/ping` risponde. Dalla plancia, «Personaggi» torna indietro. Senza server, `#/tavolo` porta alla pagina iniziale con l'avviso «serve avvia-server.bat».
+   - **Chi è al tavolo.** Il Direttore spunta i personaggi della cartella. La selezione è salvata sul server in `tavolo/sessione.json` (`GET/PUT /api/tavolo`, fuori da git); per ognuno conta il file più recente.
+   - **Carta del PG** (`src/tavolo.js` → `vistaPlancia`, `src/ui/tavolo.js`):
+     - nome, ritratto, Corporazione, Classi e livello;
+     - barre di PV (rosso), PM (blu, se ne ha) e Punti Eroe (verde);
+     - AR (con contro Etereo) e Difese;
+     - Ferita, Affaticamento e Corruzione col grado attivo, Stati come pillole;
+     - armi in mano con VA e danno.
+   - **Valori.** Vengono tutti da `calcolaScheda` con la sessione del file, come nella scheda digitale, con la provenienza nel tooltip. Nessun calcolo duplicato.
+   - **Aggiornamento.** Ogni 3 secondi la plancia rilegge l'elenco della cartella e solo i file cambiati (mtime); l'indicatore dice «aggiornato N s fa». Il clic sul nome apre il personaggio nell'app, dove si fanno le modifiche.
+   - **Server.** `--cartella=…` e `--tavolo=…` permettono di usare altre cartelle, per le prove o per più campagne.
+   - **Test.** `tests/tavolo.test.js`: stessi valori di `calcolaScheda` per b, c, Lucas e d; selezione salvata e riletta; senza server niente plancia.
 2. **Pezzo 2 — Scontro e Iniziativa.**
    - `scontri/` sul server con la versione (`If-Match`).
    - Si crea uno scontro e si aggiungono i PG; il d10 è dal vivo o dell'app, poi ordine, spareggi e Round/turno corrente con «Avanti».
@@ -145,12 +167,4 @@ Ogni pezzo ha test sulle funzioni pure e una prova nel browser; i primi due non 
   - Il server non cancella. Un comando «archivia i vecchi» si può aggiungere quando serve.
 - **R6. Telefono dei giocatori.** Polling e scritture ogni 1,5 secondi vanno bene in rete locale; con molti giocatori vanno contenuti (scrittura solo a riposo, già così).
 
-**Domande per Marcello**
-1. **Dove gira il server al tavolo:** sul PC di Davide (il Direttore) o su quello di Marcello? Cambia chi deve avere Node e chi apre `avvia-server.bat --rete`.
-2. **I giocatori usano l'app al tavolo** (telefono o portatile collegati al server) **o solo la carta?** Se solo la carta, i PG nella plancia sono quelli importati dal Direttore e il pezzo 6 non serve.
-3. **«Danno con locativo calcolato dal sistema»:** il Giocatore 0.45 non ha locativi (§5.10, «AC … non assegna locativi»; §5.13, Armatura «non suddivisa per parti anatomiche»).
-   - S'intende l'applicazione del danno con Difesa, AR per applicazione, PV e Ferite (pezzo 4), oppure Davide ha in mente una tabella dei locativi?
-   - Nel secondo caso è una regola da chiedere a Davide.
-4. **Bestiario:** dati del Direttore (in `nemici/`, fuori da git come `personaggi/`) o regola condivisa (`data/bestiario.json` su `main`, validato)? Lo decide Davide; per partire propongo `nemici/` locale.
-5. **Dadi dei nemici:** di default dal vivo (il Direttore tira e scrive) o dell'app?
-6. **Visibilità:** la plancia è solo del Direttore, o serve anche una vista «giocatori» in sola lettura (ordine di Iniziativa, chi è di turno) da mostrare su uno schermo?
+**Domande per Marcello:** tutte risposte, nella sezione «Deciso» in testa.
