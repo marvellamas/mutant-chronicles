@@ -1512,7 +1512,7 @@ body.con-sfondo::before {
 /* Cartella dei personaggi (server.mjs): origine nella pagina iniziale */
 .origine-personaggio { margin-left: 0.5rem; font-size: 0.75rem; font-weight: 500; vertical-align: middle; }
 
-/* Tavolo del Direttore, pezzo 1 (docs/tavolo-direttore.md): plancia dei PG in sola lettura */
+/* Tavolo del Master, pezzo 1 (docs/tavolo-direttore.md): plancia dei PG in sola lettura */
 .btn-tavolo-direttore { display: inline-flex; align-items: center; gap: 0.4rem; }
 .btn-tavolo-direttore .icona-pulsante { width: 24px; height: 24px; }
 .plancia { max-width: 1880px; margin: 0 auto; }

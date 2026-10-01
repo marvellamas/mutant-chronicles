@@ -1,4 +1,4 @@
-// Tavolo del Direttore, pezzo 1 (docs/tavolo-direttore.md): la plancia legge gli stessi valori di
+// Tavolo del Master, pezzo 1 (docs/tavolo-direttore.md): la plancia legge gli stessi valori di
 // calcolaScheda (src/tavolo.js → vistaPlancia), la selezione «al tavolo» si salva sul server e senza
 // server l'app non offre la plancia.
 import { test, before, after } from 'node:test';
@@ -102,5 +102,5 @@ test('senza server la plancia non c’è: /api/ping assente → niente server (p
   // l'app mostra il pulsante e apre #/tavolo solo con stato.cartella (src/ui/app.js)
   const app = readFileSync(new URL('../src/ui/app.js', import.meta.url), 'utf8');
   assert.match(app, /stato\.cartella \? h\('button', \{ type: 'button', class: 'btn btn-tavolo-direttore'/);
-  assert.match(app, /if \(!stato\.cartella\) \{\s+stato\.messaggioHome = \{ tipo: 'attenzione', testo: 'Il Tavolo del Direttore serve il server di Mutant/);
+  assert.match(app, /if \(!stato\.cartella\) \{\s+stato\.messaggioHome = \{ tipo: 'attenzione', testo: 'Il Tavolo del Master serve il server di Mutant/);
 });

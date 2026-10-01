@@ -1,5 +1,5 @@
-// Tavolo del Direttore, pezzo 1 (docs/tavolo-direttore.md): la plancia dei PG in sola lettura, rotta
-// #/tavolo, solo con il server della cartella (server.mjs). Il Direttore sceglie quali personaggi di
+// Tavolo del Master, pezzo 1 (docs/tavolo-direttore.md): la plancia dei PG in sola lettura, rotta
+// #/tavolo, solo con il server della cartella (server.mjs). Il master sceglie quali personaggi di
 // personaggi/ sono «al tavolo» (selezione salvata sul server, tavolo/sessione.json); per ognuno conta il
 // file più recente. Le schede si rileggono ogni pochi secondi, solo se il file è cambiato; i valori e
 // le provenienze sono quelli di calcolaScheda (src/tavolo.js → vistaPlancia).
@@ -53,7 +53,7 @@ export function renderTavolo(radice, ctx) {
     const alTavolo = stato.selezione.map((k) => ultimi.get(k) ?? { mancante: k });
     svuota(radice, h('section', { class: 'plancia' },
       h('header', { class: 'plancia-testa' },
-        h('h1', { class: 'titolo-con-stemma' }, iconaPagina('combattimento', '96', { classe: 'badge-pagina', lato: 40 }), 'Tavolo del Direttore'),
+        h('h1', { class: 'titolo-con-stemma' }, iconaPagina('combattimento', '96', { classe: 'badge-pagina', lato: 40 }), 'Tavolo del Master'),
         h('div', { class: 'riga-azioni' },
           h('span', { class: 'nota plancia-aggiornato', 'aria-live': 'polite' }, stato.errore ?? testoAggiornato(stato.ultimo)),
           h('button', { type: 'button', class: `btn${stato.sceltaAperta ? ' primario' : ''}`, 'aria-expanded': String(stato.sceltaAperta), onclick: () => { stato.sceltaAperta = !stato.sceltaAperta; disegna(); } }, 'Chi è al tavolo'),

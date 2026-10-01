@@ -1,8 +1,8 @@
-# Tavolo del Direttore: piano di fattibilità
+# Tavolo del Master: piano di fattibilità
 
 Branch `tavolo-direttore`, 1° ottobre 2026. Piano di fattibilità; il pezzo 1 (plancia dei PG in sola lettura) è fatto.
 
-La visione di partenza è in `docs/backlog.md`, voce 14, su `main`. Al tavolo molti giocatori usano la scheda di carta. Il Direttore tiene lo stato della scena su una plancia con PG e nemici:
+La visione di partenza è in `docs/backlog.md`, voce 14, su `main`. Al tavolo molti giocatori usano la scheda di carta. Il master tiene lo stato della scena su una plancia con PG e nemici:
 
 - ordine di Iniziativa;
 - PV, PM e Stati con indicatori;
@@ -15,18 +15,25 @@ Regole del branch:
 - `main` non si tocca.
 - I dati di gioco (`data/*`) non si modificano qui. Se un pezzo li richiede (per esempio un bestiario), si fa su `main` e si porta dentro con un merge.
 
+## Regole di lavoro (Marcello, 1° ottobre 2026)
+
+1. **Mai nelle cartelle reali.** Non si scrive mai in `personaggi/`, `tavolo/`, `scontri/` e `nemici/` nella radice del repo, e non si usa la porta 3000: è il server acceso di Marcello.
+   - Per ogni prova si usa un server su un'altra porta, con `--cartella=`, `--tavolo=`, `--scontri=` (e le opzioni future) puntate a cartelle temporanee fuori dal repo, cancellate a fine prova.
+   - Se una prova richiede i file di Marcello, ci si ferma e si chiede.
+2. **Nome.** «Tavolo del Master», non «del Direttore», ovunque sia visibile all'utente: pulsante, titoli, avvisi, docs. Il nome del branch e dei file di codice resta com'è.
+
 ## Deciso (Marcello, 1° ottobre 2026)
 
 1. **Server.** Deve funzionare allo stesso modo sul PC di Davide (con `--rete`, Marcello collegato dal portatile via IP) o su quello di Marcello: nessuna dipendenza dalla macchina.
-2. **Giocatori.** Per lo più su carta. La plancia è del Direttore, che importa le schede e tiene lui lo stato. I giocatori collegati con l'app sono un di più (pezzo 6), non il caso base.
+2. **Giocatori.** Per lo più su carta. La plancia è del master, che importa le schede e tiene lui lo stato. I giocatori collegati con l'app sono un di più (pezzo 6), non il caso base.
 3. **Locativi.** Non esistono nel regolamento attuale (tolti da Davide). «Danno applicato» = Difesa → AR per applicazione → PV → Ferite, come nel Giocatore 0.45 (§5.13–5.15).
 4. **Bestiario.**
    - Il formato di un nemico (campi, validatore) è una regola di gioco: andrà in `data/` su `main`, proposto da noi con `TODO(Davide)` finché Davide non scrive un bestiario.
-   - I nemici di una campagna sono dati del Direttore in `nemici/`, fuori da git come `personaggi/`.
+   - I nemici di una campagna sono dati del master in `nemici/`, fuori da git come `personaggi/`.
 5. **Dadi dei nemici.** Entrambi i modi, come in tutta l'app: tiro dal vivo con override, oppure tiro dell'app.
 6. **Vista giocatori su schermo.** Non ora; si rivaluta dopo il pezzo 2.
 
-**Da portare nel backlog su `main`** (qui `docs/backlog.md` non si tocca): l'icona del Tavolo del Direttore la fornirà Davide. Per ora il pulsante e la plancia usano l'icona della pagina Combattimento.
+**Da portare nel backlog su `main`** (qui `docs/backlog.md` non si tocca): l'icona del Tavolo del Master la fornirà Davide. Per ora il pulsante e la plancia usano l'icona della pagina Combattimento.
 
 ## 1. Che cosa c'è già (pezzo 0a, fatto)
 
@@ -43,16 +50,16 @@ Regole del branch:
 - La pagina iniziale unisce browser e cartella, segnando l'origine di ogni personaggio. Se le due copie differiscono vince la più recente, con un avviso (`src/cartella.js`).
 - Senza server l'app resta com'era: localStorage, export e import.
 
-Questa è la base della plancia. I personaggi dei giocatori sono già file leggibili dal PC del Direttore, se i giocatori aprono l'app servita da quel PC.
+Questa è la base della plancia. I personaggi dei giocatori sono già file leggibili dal PC del master, se i giocatori aprono l'app servita da quel PC.
 
 ## 2. Architettura minima
 
 ```
-PC del Direttore (server.mjs --rete)
-├── personaggi/            PG: file dell'export, scritti dalle schede dei giocatori o dal Direttore
+PC del master (server.mjs --rete)
+├── personaggi/            PG: file dell'export, scritti dalle schede dei giocatori o dal master
 ├── scontri/               uno stato di scontro per file (nuovo)
 │   └── <id>.json          { versione, nome, round, turno, partecipanti: [...], registro: [...] }
-├── nemici/                bestiario della campagna (nuovo, dati del Direttore: vedi §3)
+├── nemici/                bestiario della campagna (nuovo, dati del master: vedi §3)
 └── app                    index.html + #/tavolo (plancia), stesso codice dell'app
 ```
 
@@ -68,7 +75,7 @@ PC del Direttore (server.mjs --rete)
 - il registro degli eventi («Round 2: Dex colpisce Non Morto 1, 7 danni, AR 2 → 5 PV»).
 
 **I valori attuali dei PG** restano nella sessione del loro file: è la stessa `sessione` della scheda digitale.
-- Quando il Direttore cambia i PV di un PG, la plancia riscrive il file del PG.
+- Quando il master cambia i PV di un PG, la plancia riscrive il file del PG.
 - La scheda del giocatore se ne accorge al prossimo controllo, con la regola già fatta: vince il più recente, con un avviso.
 - Per evitare scritture incrociate serve una scrittura con versione (§5, R1).
 
@@ -84,15 +91,15 @@ PC del Direttore (server.mjs --rete)
 1. **Bestiario dei nemici.** Oggi non esiste: i manuali non hanno ancora un capitolo dei nemici.
    - Formato proposto (deciso, punto 4: il formato e il validatore vanno in `data/` su `main` con `TODO(Davide)`; i nemici della campagna in `nemici/`, un file per nemico):
      ```json
-     { "id": "legionario-non-morto", "nome": "Legionario Non Morto", "fonte": "Direttore",
+     { "id": "legionario-non-morto", "nome": "Legionario Non Morto", "fonte": "master",
        "pv": 22, "ar": { "totale": 3, "magica": 0 }, "difese": 9, "salvezze": { "tempra": 12, "riflessi": 8, "volonta": 14, "magia": 10 },
        "iniziativa": 1, "movimento": { "passo": 6 },
        "attacchi": [ { "nome": "Spada da cerimonia", "va": 11, "danno": "1d8+2", "tipo": "ravvicinato", "portata_q": 1, "proprieta": [] } ],
        "note": "Immune alla Paura." }
      ```
-   - Sono numeri «già fatti», come li scrive il Direttore: non serve ricostruire un nemico con Caratteristiche e Classi.
+   - Sono numeri «già fatti», come li scrive il master: non serve ricostruire un nemico con Caratteristiche e Classi.
    - Le armi possono puntare al catalogo (`"rif": "armi:spada-lunga"`), e allora il danno viene dalla scheda dell'arma.
-   - **Chi lo inserisce:** il Direttore, con un piccolo editor nella plancia (pezzo 3) o copiando file JSON. Davide decide se alcuni nemici diventano «ufficiali» (allora su `main`, in `data/`, con il validatore).
+   - **Chi lo inserisce:** il master, con un piccolo editor nella plancia (pezzo 3) o copiando file JSON. Davide decide se alcuni nemici diventano «ufficiali» (allora su `main`, in `data/`, con il validatore).
 2. **Valori dei nemici al tavolo:** PV attuali, Stati, Ferite, Sanguinamento. Il formato può essere quello di `sessione` dei PG (`src/sessione.js`), con i massimi presi dal nemico e non da `calcolaScheda`.
 3. **Iniziativa:** la regola c'è (Giocatore §2.14: «Mod DES + Mod INT; in combattimento si aggiunge 1d10»; parità nel §5.1, «Parità di Iniziativa»). Va solo applicata: valore della scheda o del nemico + d10 dal vivo o dell'app, ordine e spareggi.
 4. **Danno ricevuto:** la sequenza c'è (Giocatore §5.13–5.15).
@@ -117,8 +124,8 @@ PC del Direttore (server.mjs --rete)
 Ogni pezzo ha test sulle funzioni pure e una prova nel browser; i primi due non toccano `data/`.
 
 1. ✔ **Pezzo 1 — Plancia in sola lettura dei PG** (fatto il 1° ottobre 2026). Rotta `#/tavolo`, solo con il server: una carta per PG da `personaggi/`.
-   - **Ingresso.** Pulsante «Tavolo del Direttore» nella pagina iniziale, solo se `/api/ping` risponde. Dalla plancia, «Personaggi» torna indietro. Senza server, `#/tavolo` porta alla pagina iniziale con l'avviso «serve avvia-server.bat».
-   - **Chi è al tavolo.** Il Direttore spunta i personaggi della cartella. La selezione è salvata sul server in `tavolo/sessione.json` (`GET/PUT /api/tavolo`, fuori da git); per ognuno conta il file più recente.
+   - **Ingresso.** Pulsante «Tavolo del Master» nella pagina iniziale, solo se `/api/ping` risponde. Dalla plancia, «Personaggi» torna indietro. Senza server, `#/tavolo` porta alla pagina iniziale con l'avviso «serve avvia-server.bat».
+   - **Chi è al tavolo.** Il master spunta i personaggi della cartella. La selezione è salvata sul server in `tavolo/sessione.json` (`GET/PUT /api/tavolo`, fuori da git); per ognuno conta il file più recente.
    - **Carta del PG** (`src/tavolo.js` → `vistaPlancia`, `src/ui/tavolo.js`):
      - nome, ritratto, Corporazione, Classi e livello;
      - barre di PV (rosso), PM (blu, se ne ha) e Punti Eroe (verde);
@@ -152,8 +159,8 @@ Ogni pezzo ha test sulle funzioni pure e una prova nel browser; i primi due non 
 ## 6. Rischi e domande aperte
 
 **Rischi**
-- **R1. Scritture incrociate.** Giocatore e Direttore cambiano lo stesso PG insieme. Oggi vince il più recente, ma si può perdere una modifica.
-  - Proposta per il pezzo 6: il Direttore scrive solo la `sessione`, il giocatore solo le scelte. Il server unisce i due blocchi, con una versione per blocco.
+- **R1. Scritture incrociate.** Giocatore e master cambiano lo stesso PG insieme. Oggi vince il più recente, ma si può perdere una modifica.
+  - Proposta per il pezzo 6: il master scrive solo la `sessione`, il giocatore solo le scelte. Il server unisce i due blocchi, con una versione per blocco.
   - È l'unica «unione», ed è per blocchi interi.
 - **R2. Rete e sicurezza.** Con `--rete` chiunque sulla rete locale può scrivere in `personaggi/` e `scontri/`.
   - Va bene a casa, non su una rete pubblica.

@@ -146,7 +146,7 @@ function daIndirizzo() {
   }
   esciDallaStampa();
   applicaSfondo(null); // lo sfondo scelto vale solo nella SD (renderScheda)
-  // Tavolo del Direttore (docs/tavolo-direttore.md, pezzo 1): uscendo si ferma l'aggiornamento periodico
+  // Tavolo del Master (docs/tavolo-direttore.md, pezzo 1): uscendo si ferma l'aggiornamento periodico
   stato.fermaTavolo?.();
   stato.fermaTavolo = null;
   if (location.hash === '#/tavolo') {
@@ -154,10 +154,10 @@ function daIndirizzo() {
     stato.scelte = null;
     stato.livelli = [];
     if (!stato.cartella) {
-      stato.messaggioHome = { tipo: 'attenzione', testo: 'Il Tavolo del Direttore serve il server di Mutant: avvia l’app con avvia-server.bat (node server.mjs).' };
+      stato.messaggioHome = { tipo: 'attenzione', testo: 'Il Tavolo del Master serve il server di Mutant: avvia l’app con avvia-server.bat (node server.mjs).' };
       return vai('#/');
     }
-    document.title = 'Tavolo del Direttore · Mutant';
+    document.title = 'Tavolo del Master · Mutant';
     stato.fermaTavolo = renderTavolo(radice, { dati: stato.dati, azioni: { personaggi: () => vai('#/'), apri: apriDaCartella } });
     return;
   }
@@ -383,9 +383,9 @@ function renderHome(unito = null) {
     h('div', { class: 'riga-azioni' },
       h('button', { type: 'button', class: 'btn primario', onclick: nuovoPersonaggio }, 'Nuovo personaggio'),
       h('button', { type: 'button', class: 'btn', onclick: () => inputFile.click() }, 'Importa file JSON'),
-      // Tavolo del Direttore: solo con il server della cartella (server.mjs)
+      // Tavolo del Master: solo con il server della cartella (server.mjs)
       stato.cartella ? h('button', { type: 'button', class: 'btn btn-tavolo-direttore', onclick: () => vai('#/tavolo') },
-        iconaPagina('combattimento', '96', { classe: 'icona-pulsante', lato: 24 }), 'Tavolo del Direttore') : null,
+        iconaPagina('combattimento', '96', { classe: 'icona-pulsante', lato: 24 }), 'Tavolo del Master') : null,
       inputFile),
     righe.length
       ? h('ul', { class: 'elenco-personaggi' }, righe.map((r) => (r.voce ? rigaPersonaggio(r.voce, r.origine) : rigaCartella(r.remoto))))
@@ -426,7 +426,7 @@ function rigaPersonaggio(p, origine = 'browser') {
 }
 
 /**
- * Apre nell'app un personaggio della cartella (pagina iniziale, Tavolo del Direttore): prima si
+ * Apre nell'app un personaggio della cartella (pagina iniziale, Tavolo del Master): prima si
  * sincronizzano browser e cartella (vince il più recente), poi si apre la copia del browser; se il
  * personaggio è solo nella cartella lo si porta nel browser.
  */

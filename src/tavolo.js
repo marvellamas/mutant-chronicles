@@ -1,4 +1,4 @@
-// Tavolo del Direttore, pezzo 1 (docs/tavolo-direttore.md): i dati di una scheda compatta della plancia
+// Tavolo del Master, pezzo 1 (docs/tavolo-direttore.md): i dati di una scheda compatta della plancia
 // a partire dal file di un personaggio in personaggi/. Funzione pura e nessun calcolo nuovo: valori
 // effettivi e provenienze vengono da calcolaScheda con la sessione del file, come nella scheda digitale.
 import { deserializzaPersonaggio, normalizza } from './character.js';

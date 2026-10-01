@@ -10,7 +10,7 @@
 //   GET /api/personaggi                [{ file, nome, livello, data, mtime, dimensione }] dei file in personaggi/
 //   GET /api/personaggi/<file>         il file com'è (testo dell'export, byte per byte)
 //   PUT /api/personaggi/<file>         scrive il file (corpo = testo dell'export); risponde { file, mtime }
-//   GET /api/tavolo                    selezione del Tavolo del Direttore: { versione, personaggi: [nomi] }
+//   GET /api/tavolo                    selezione del Tavolo del Master: { versione, personaggi: [nomi] }
 //   PUT /api/tavolo                    la salva in tavolo/sessione.json (fuori da git come personaggi/)
 // Nessuna cancellazione dal server: i file vecchi si tolgono a mano dalla cartella.
 import { createServer } from 'node:http';
