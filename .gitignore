@@ -28,3 +28,8 @@ img/originali/
 
 # prompt di lavoro (non fanno parte dell'app)
 Claude outputs/
+
+# Personaggi salvati dal server di Mutant (server.mjs): dati dei giocatori, non codice.
+# Si traccia solo il LEGGIMI che spiega la cartella.
+personaggi/*
+!personaggi/LEGGIMI.txt

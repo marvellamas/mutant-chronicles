@@ -68,7 +68,20 @@ export function carica(id) {
 export function salva({ id, scelte, livelli = [], sessione = null, calendario = null, stampa = null, passo }) {
   const tutti = leggiTutti();
   // stampa: preferenze di stampa (src/stampa.js → normalizzaOpzioniStampa), non regole
-  tutti[id] = { id, scelte, livelli, sessione, ...(calendario ? { calendario } : {}), ...(stampa ? { stampa } : {}), passo, aggiornato: new Date().toISOString() };
+  // `cartella`: ultima sincronizzazione con la cartella dei personaggi (src/cartella.js), si conserva
+  const cartella = tutti[id]?.cartella;
+  tutti[id] = { id, scelte, livelli, sessione, ...(calendario ? { calendario } : {}), ...(stampa ? { stampa } : {}), passo, aggiornato: new Date().toISOString(), ...(cartella ? { cartella } : {}) };
+  return scriviTutti(tutti);
+}
+
+/**
+ * Registra l'ultima sincronizzazione con la cartella dei personaggi ({ file, mtime, salvato }: file e
+ * data del server, «aggiornato» della voce in quel momento), senza toccare «aggiornato».
+ */
+export function segnaCartella(id, cartella) {
+  const tutti = leggiTutti();
+  if (!tutti[id]) return false;
+  tutti[id] = { ...tutti[id], cartella };
   return scriviTutti(tutti);
 }
 

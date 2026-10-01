@@ -1,0 +1,47 @@
+// Collegamento con il server della cartella dei personaggi (server.mjs, branch tavolo-direttore). Se il
+// server non c'è (npx serve, GitHub Pages) ogni funzione risponde «niente server» e l'app resta com'era:
+// localStorage più export e import.
+
+let disponibile = null; // null: non ancora chiesto
+
+/** C'è il server della cartella? Una sola chiamata a /api/ping, con un secondo di attesa al massimo. */
+export async function serverCartella() {
+  if (disponibile !== null) return disponibile;
+  try {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 1000);
+    const r = await fetch('api/ping', { signal: ctrl.signal, cache: 'no-store' });
+    clearTimeout(t);
+    const j = r.ok ? await r.json() : null;
+    disponibile = j?.ok === true && j.app === 'mutant';
+  } catch {
+    disponibile = false;
+  }
+  return disponibile;
+}
+
+/** Elenco dei file della cartella, o null se non si legge. */
+export async function elencoCartella() {
+  if (!(await serverCartella())) return null;
+  try {
+    const r = await fetch('api/personaggi', { cache: 'no-store' });
+    return r.ok ? await r.json() : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Testo di un file della cartella. */
+export async function leggiCartella(file) {
+  const r = await fetch(`api/personaggi/${encodeURIComponent(file)}`, { cache: 'no-store' });
+  if (!r.ok) throw new Error((await r.json().catch(() => ({}))).errore ?? `errore ${r.status}`);
+  return r.text();
+}
+
+/** Scrive un file nella cartella: { file, mtime }. */
+export async function scriviCartella(file, testo) {
+  const r = await fetch(`api/personaggi/${encodeURIComponent(file)}`, { method: 'PUT', body: testo, headers: { 'Content-Type': 'application/json' } });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.errore ?? `errore ${r.status}`);
+  return j;
+}

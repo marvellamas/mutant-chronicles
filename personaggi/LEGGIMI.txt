@@ -1,0 +1,18 @@
+Cartella dei personaggi di Mutant
+=================================
+
+Qui il server di Mutant (avvia-server.bat, cioe' node server.mjs) salva i personaggi creati
+nell'app. Ogni file e' identico a quello di "SALVA PG (Esporta JSON)":
+
+    Nome_livN_AAAA-MM-GG.json      (per esempio Lucas_liv6_2026-10-01.json)
+
+- Un nuovo giorno di gioco o un nuovo livello creano un file nuovo: quelli vecchi restano come
+  storico. Il server non cancella nulla; i file superflui si tolgono a mano.
+- Per passare un personaggio a un altro computer basta copiare il suo file in questa cartella
+  dell'altro computer: all'avvio l'app lo mostra come "solo cartella" e lo apre con "Apri".
+- Se lo stesso personaggio (stesso nome) e' cambiato sia nel browser sia qui, vince la copia piu'
+  recente e l'app lo dice con un avviso.
+- I file di questa cartella non vanno su GitHub (.gitignore): sono dati dei giocatori.
+
+Senza il server (avvia.bat, npx serve, GitHub Pages) questa cartella non si usa: i personaggi
+restano nel browser e si spostano con Esporta e Importa, come sempre.

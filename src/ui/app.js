@@ -12,6 +12,8 @@ import {
 } from '../character.js';
 import { h, svuota, scaricaFile } from './dom.js';
 import * as archivio from './storage.js';
+import { serverCartella, elencoCartella, leggiCartella, scriviCartella } from './cartella.js';
+import { elencoUnito, confronta, chiaveDaFile, chiavePersonaggio } from '../cartella.js';
 import { PASSI, passoVisibile, requisitoPasso } from './passi.js';
 import { inizializzaTooltip, nascondiTooltip } from './tooltip.js';
 import { renderRiepilogo } from './riepilogo.js';
@@ -86,6 +88,8 @@ async function avvia() {
   inizializzaTooltip(stato.dati);
   await caricaImmagini(stato.dati);
   stato.sfondi = cercaSfondi(stato.dati.corporazioni.corporazioni);
+  // cartella dei personaggi (server.mjs): se il server non c'è l'app resta com'era
+  stato.cartella = await serverCartella();
   window.addEventListener('hashchange', daIndirizzo);
   // I menu della scheda (Azioni, impostazioni) si chiudono toccando altrove
   document.addEventListener('click', (e) => {
@@ -223,11 +227,41 @@ function testoSalvataggioFallito() {
 function persisti() {
   if (!stato.id) return;
   stato.salvataggioOk = archivio.salva({ id: stato.id, scelte: stato.scelte, livelli: stato.livelli, sessione: stato.sessione, calendario: stato.calendario, stampa: stato.opzioniStampa ?? null, passo: stato.passo });
+  if (stato.cartella) programmaCartella(stato.id);
+}
+
+/** Nome e testo dell'export di un personaggio: gli stessi per «SALVA PG» e per la cartella. */
+function fileEsportazione(scelte, livelli = [], sessione = null, calendario = null) {
+  const versioniDatiFile = Object.fromEntries(Object.entries(stato.dati).map(([k, v]) => [k, v.versione_manuale]));
+  return { file: nomeFileEsportazione(scelte.nome, 1 + livelli.length), testo: serializza(scelte, { versioniDati: versioniDatiFile, livelli, sessione, calendario }) };
 }
 
 function esporta(scelte, livelli = [], sessione = null, calendario = null) {
-  const versioniDatiFile = Object.fromEntries(Object.entries(stato.dati).map(([k, v]) => [k, v.versione_manuale]));
-  scaricaFile(nomeFileEsportazione(scelte.nome, 1 + livelli.length), serializza(scelte, { versioniDati: versioniDatiFile, livelli, sessione, calendario }));
+  const { file, testo } = fileEsportazione(scelte, livelli, sessione, calendario);
+  scaricaFile(file, testo);
+}
+
+// Cartella dei personaggi (server.mjs, src/cartella.js): dopo ogni salvataggio nel browser il personaggio
+// si scrive anche in personaggi/, con il testo dell'export; le scritture ravvicinate si raccolgono
+const attesaCartella = new Map();
+function programmaCartella(id) {
+  clearTimeout(attesaCartella.get(id));
+  attesaCartella.set(id, setTimeout(() => { attesaCartella.delete(id); scriviInCartella(id); }, 1500));
+}
+
+async function scriviInCartella(id) {
+  const p = archivio.carica(id);
+  if (!p) return null;
+  const { scelte } = normalizza(p.scelte, stato.dati);
+  const { file, testo } = fileEsportazione(scelte, p.livelli ?? [], p.sessione ?? null, normalizzaCalendario(p.calendario, stato.dati));
+  try {
+    const r = await scriviCartella(file, testo);
+    archivio.segnaCartella(id, { file: r.file, mtime: r.mtime, salvato: p.aggiornato });
+    return r;
+  } catch (e) {
+    stato.messaggioScheda = { tipo: 'attenzione', testo: `Salvataggio nella cartella personaggi/ non riuscito: ${e.message}. Il personaggio resta salvato nel browser.` };
+    return null;
+  }
 }
 
 /** Sessione allineata ai massimi attuali (inizializzata se manca), o null se la scheda non si calcola. */
@@ -237,20 +271,62 @@ function sessioneAllineata(creazione, livelli, sessione) {
   return allineaSessione(sessione, massimiSessione(scheda, creazione, stato.dati));
 }
 
+/**
+ * Personaggio dal testo di un export (file importato o file della cartella), salvato nel browser con
+ * `id` (nuovo se manca). @returns {{ id, scelte, avvisi }}
+ */
+function salvaDaTesto(testo, id = archivio.nuovoId(), passo = null) {
+  const { creazione, livelli, sessione: sessioneFile, calendario: calendarioFile } = deserializzaPersonaggio(testo);
+  const { scelte, avvisi } = normalizza(creazione, stato.dati);
+  const errLivelli = livelli.length ? calcolaScheda({ creazione: scelte, livelli }, stato.dati).errori.filter((e) => e.campo.startsWith('livelli')) : [];
+  if (errLivelli.length) avvisi.push(`Livelli con errori rispetto ai dati attuali: ${errLivelli[0].problema}`);
+  const sessione = sessioneAllineata(scelte, livelli, sessioneFile);
+  const calendario = normalizzaCalendario(calendarioFile, stato.dati);
+  if (!archivio.salva({ id, scelte, livelli, sessione, calendario, passo: passo ?? (livelli.length || calcolaScheda(scelte, stato.dati).completa ? PASSO_SCHEDA : 0) })) {
+    throw new Error(archivio.erroreSalvataggio() === 'quota' ? 'spazio del browser esaurito: esporta e rimuovi personaggi vecchi, poi riprova.' : 'il browser non permette di salvare (navigazione privata o permessi).');
+  }
+  return { id, scelte, avvisi };
+}
+
+/**
+ * Sincronizza browser e cartella (src/cartella.js → confronta): vince il più recente, con un avviso.
+ * @returns elenco unito per la pagina iniziale, con gli avvisi
+ */
+async function sincronizzaCartella() {
+  const remoti = await elencoCartella();
+  if (!remoti) return { righe: elencoUnito(archivio.elenco(), null), avvisi: ['Cartella personaggi/ non leggibile: elenco del solo browser.'] };
+  const avvisi = [];
+  for (const r of elencoUnito(archivio.elenco(), remoti).filter((x) => x.origine === 'entrambi')) {
+    const { azione, conflitto } = confronta(r.voce, r.remoto);
+    const nome = r.voce.scelte?.nome?.trim() || 'Senza nome';
+    if (azione === 'leggi') {
+      try {
+        const testo = await leggiCartella(r.remoto.file);
+        const prima = r.voce.aggiornato;
+        salvaDaTesto(testo, r.voce.id, r.voce.passo);
+        archivio.segnaCartella(r.voce.id, { file: r.remoto.file, mtime: r.remoto.mtime, salvato: archivio.carica(r.voce.id).aggiornato });
+        avvisi.push(conflitto || prima
+          ? `«${nome}»: la copia nella cartella (${r.remoto.file}) era più recente di quella del browser ed è stata caricata.`
+          : `«${nome}»: caricata dalla cartella (${r.remoto.file}).`);
+      } catch (e) {
+        avvisi.push(`«${nome}»: file ${r.remoto.file} non leggibile (${e.message}); resta la copia del browser.`);
+      }
+    } else if (azione === 'scrivi') {
+      const w = await scriviInCartella(r.voce.id);
+      if (w && conflitto) avvisi.push(`«${nome}»: la copia del browser era più recente di quella nella cartella ed è stata salvata come ${w.file}.`);
+    }
+  }
+  // personaggi del browser mai salvati nella cartella (creati prima del server): ci vanno ora; chi è già
+  // stato sincronizzato e non ha più il file è stato tolto a mano dalla cartella, e non si ricrea
+  for (const r of elencoUnito(archivio.elenco(), remoti).filter((x) => x.origine === 'browser' && !x.voce.cartella
+    && !remoti.some((f) => chiaveDaFile(f.file) === chiavePersonaggio(x.voce.scelte?.nome)))) await scriviInCartella(r.voce.id);
+  return { righe: elencoUnito(archivio.elenco(), await elencoCartella()), avvisi };
+}
+
 async function importa(file) {
   try {
-    const { creazione, livelli, sessione: sessioneFile, calendario: calendarioFile } = deserializzaPersonaggio(await file.text());
-    const { scelte, avvisi } = normalizza(creazione, stato.dati);
-    const id = archivio.nuovoId();
-    // I livelli non si correggono in automatico: eventuali errori compaiono nella scheda.
-    const errLivelli = livelli.length ? calcolaScheda({ creazione: scelte, livelli }, stato.dati).errori.filter((e) => e.campo.startsWith('livelli')) : [];
-    if (errLivelli.length) avvisi.push(`Livelli con errori rispetto ai dati attuali: ${errLivelli[0].problema}`);
-    // senza `sessione` nel file la si inizializza ai massimi; altrimenti la si limita ai massimi attuali
-    const sessione = sessioneAllineata(scelte, livelli, sessioneFile);
-    const calendario = normalizzaCalendario(calendarioFile, stato.dati);
-    if (!archivio.salva({ id, scelte, livelli, sessione, calendario, passo: livelli.length || calcolaScheda(scelte, stato.dati).completa ? PASSO_SCHEDA : 0 })) {
-      throw new Error(archivio.erroreSalvataggio() === 'quota' ? 'spazio del browser esaurito: esporta e rimuovi personaggi vecchi, poi riprova.' : 'il browser non permette di salvare (navigazione privata o permessi).');
-    }
+    const { id, scelte, avvisi } = salvaDaTesto(await file.text());
+    if (stato.cartella) await scriviInCartella(id);
     stato.messaggioHome = {
       tipo: avvisi.length ? 'attenzione' : 'ok',
       testo: `Importato «${scelte.nome || file.name}».`,
@@ -262,16 +338,24 @@ async function importa(file) {
   renderHome();
 }
 
+
 // ---------------------------------------------------------------------------
 // Home
 
-function renderHome() {
+/**
+ * Pagina iniziale. Con il server della cartella (server.mjs) prima si mostra il browser, poi si
+ * sincronizza con personaggi/ e si ridisegna con l'elenco unito (`unito`: { righe, avvisi }).
+ */
+function renderHome(unito = null) {
   nascondiTooltip();
   document.title = 'Mutant — Creazione personaggio';
-  const personaggi = archivio.elenco();
+  const righe = unito?.righe ?? elencoUnito(archivio.elenco(), null);
   const todo = trovaTodo(stato.dati);
-  const msg = stato.messaggioHome;
+  const msg = stato.messaggioHome ?? (unito?.avvisi.length ? { tipo: 'attenzione', testo: 'Cartella personaggi/', dettagli: unito.avvisi } : null);
   stato.messaggioHome = null;
+  if (stato.cartella && !unito) {
+    sincronizzaCartella().then((u) => { if (!/^#\/p\//.test(location.hash)) renderHome(u); });
+  }
 
   const inputFile = h('input', { type: 'file', accept: '.json,application/json', class: 'nascosto',
     onchange: (e) => e.target.files[0] && importa(e.target.files[0]) });
@@ -284,10 +368,12 @@ function renderHome() {
       h('button', { type: 'button', class: 'btn primario', onclick: nuovoPersonaggio }, 'Nuovo personaggio'),
       h('button', { type: 'button', class: 'btn', onclick: () => inputFile.click() }, 'Importa file JSON'),
       inputFile),
-    personaggi.length
-      ? h('ul', { class: 'elenco-personaggi' }, personaggi.map(rigaPersonaggio))
-      : h('p', { class: 'vuoto' }, 'Nessun personaggio salvato in questo browser.'),
-    h('p', { class: 'nota' }, 'I personaggi si salvano automaticamente in questo browser. Per spostarli su un altro dispositivo o passarli al master, usa «SALVA PG (Esporta JSON)» e Importa.'),
+    righe.length
+      ? h('ul', { class: 'elenco-personaggi' }, righe.map((r) => (r.voce ? rigaPersonaggio(r.voce, r.origine) : rigaCartella(r.remoto))))
+      : h('p', { class: 'vuoto' }, stato.cartella ? 'Nessun personaggio nel browser né nella cartella personaggi/.' : 'Nessun personaggio salvato in questo browser.'),
+    h('p', { class: 'nota' }, stato.cartella
+      ? 'I personaggi si salvano in questo browser e nella cartella personaggi/ del progetto (server di Mutant): i file sono gli stessi di «SALVA PG». Se le due copie differiscono vince la più recente, con un avviso.'
+      : 'I personaggi si salvano automaticamente in questo browser. Per spostarli su un altro dispositivo o passarli al master, usa «SALVA PG (Esporta JSON)» e Importa.'),
     h('section', { class: 'info-dati' },
       h('h2', {}, 'Dati delle regole'),
       h('p', {}, stato.versioni),
@@ -297,15 +383,18 @@ function renderHome() {
         h('ul', {}, todo.map((t) => h('li', {}, h('code', {}, t.percorso), ' — ', t.testo)))) : null)));
 }
 
-function rigaPersonaggio(p) {
+// origine di un personaggio nella pagina iniziale, con il server della cartella
+const ORIGINI = { browser: 'solo browser', entrambi: 'cartella e browser', cartella: 'solo cartella' };
+
+function rigaPersonaggio(p, origine = 'browser') {
   const s = p.scelte ?? {};
   const livelli = Array.isArray(p.livelli) ? p.livelli : [];
   const data = p.aggiornato ? new Date(p.aggiornato).toLocaleString('it-IT', { dateStyle: 'short', timeStyle: 'short' }) : '';
   return h('li', { class: 'carta personaggio' },
     h('div', {},
-      h('h2', {}, s.nome?.trim() || 'Senza nome'),
+      h('h2', {}, s.nome?.trim() || 'Senza nome', stato.cartella ? h('span', { class: 'etichetta origine-personaggio' }, ORIGINI[origine]) : null),
       h('p', {}, h('strong', {}, `Livello ${1 + livelli.length}`), ' · ', [s.corporazione, s.addestramento, s.classe].filter(Boolean).join(' · ') || 'Appena iniziato'),
-      h('p', { class: 'nota' }, `Modificato ${data}`)),
+      h('p', { class: 'nota' }, `Modificato ${data}`, p.cartella?.file ? ` · cartella: ${p.cartella.file}` : '')),
     h('div', { class: 'riga-azioni' },
       h('button', { type: 'button', class: 'btn primario', onclick: () => vai(p.passo === PASSO_SCHEDA ? `#/p/${p.id}` : `#/p/${p.id}/${p.passo ?? 0}`) }, 'Apri'),
       h('button', { type: 'button', class: 'btn', onclick: () => esporta(normalizza(s, stato.dati).scelte, livelli, p.sessione ?? null, normalizzaCalendario(p.calendario, stato.dati)) }, 'SALVA PG (Esporta JSON)'),
@@ -315,6 +404,30 @@ function rigaPersonaggio(p) {
           renderHome();
         }
       } }, 'Elimina')));
+}
+
+/** Personaggio presente solo nella cartella (creato su un altro PC o copiato a mano): «Apri» lo porta nel browser. */
+function rigaCartella(r) {
+  const data = new Date(r.mtime).toLocaleString('it-IT', { dateStyle: 'short', timeStyle: 'short' });
+  const apri = async () => {
+    try {
+      const testo = await leggiCartella(r.file);
+      const { id, avvisi } = salvaDaTesto(testo);
+      archivio.segnaCartella(id, { file: r.file, mtime: r.mtime, salvato: archivio.carica(id).aggiornato });
+      if (avvisi.length) stato.messaggioScheda = { tipo: 'attenzione', testo: avvisi.join(' ') };
+      const p = archivio.carica(id);
+      vai(p.passo === PASSO_SCHEDA ? `#/p/${id}` : `#/p/${id}/${p.passo ?? 0}`);
+    } catch (e) {
+      stato.messaggioHome = { tipo: 'errore', testo: `Apertura di ${r.file} non riuscita: ${e.message}` };
+      renderHome();
+    }
+  };
+  return h('li', { class: 'carta personaggio' },
+    h('div', {},
+      h('h2', {}, r.nome.replace(/-/g, ' '), h('span', { class: 'etichetta origine-personaggio' }, ORIGINI.cartella)),
+      h('p', {}, h('strong', {}, `Livello ${r.livello}`), ' · ', r.file),
+      h('p', { class: 'nota' }, `Modificato ${data}`)),
+    h('div', { class: 'riga-azioni' }, h('button', { type: 'button', class: 'btn primario', onclick: apri }, 'Apri')));
 }
 
 function nuovoPersonaggio() {
