@@ -4,8 +4,8 @@
 //   node server.mjs                 http://localhost:3000, solo da questo computer
 //   node server.mjs --rete          anche dagli altri dispositivi della stessa rete (http://<IP>:3000)
 //   PORTA=8080 node server.mjs      altra porta (oppure --porta=8080)
-//   --cartella=<dir> --tavolo=<dir> --scontri=<dir>  altre cartelle per personaggi, tavolo e scontri
-//                                    (prove, più campagne)
+//   --cartella=<dir> --tavolo=<dir> --scontri=<dir> --nemici=<dir>  altre cartelle per personaggi,
+//                                    tavolo, scontri e bestiario (prove, più campagne)
 // API (JSON):
 //   GET /api/ping                      { ok: true, app: 'mutant', cartella: 'personaggi' }: l'app capisce che il server c'è
 //   GET /api/personaggi                [{ file, nome, livello, data, mtime, dimensione }] dei file in personaggi/
@@ -18,18 +18,25 @@
 //   PUT /api/scontri/<id>              lo salva se `revisione` è quella del file (altrimenti 409 con lo
 //                                      scontro attuale) e porta la revisione a +1; uno scontro «chiuso»
 //                                      passa in scontri/archivio/ (non si cancella)
+//   GET /api/nemici                    bestiario in nemici/: [{ file, mtime, nemico } | { file, mtime, errore }]
+//   PUT /api/nemici/<id>               salva nemici/<id>.json se è valido (data/formato_nemici.json,
+//                                      src/validate.js → validaNemico); altrimenti 400 con gli errori
 // Nessuna cancellazione dal server: i file vecchi si tolgono a mano dalla cartella.
 import { createServer } from 'node:http';
 import { readFile, writeFile, readdir, stat, mkdir, rename } from 'node:fs/promises';
 import { extname, join, normalize, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { validaScontro } from './src/scontro.js';
+import { caricaDati } from './src/rules.js';
+import { validaNemico, formattaErrore } from './src/validate.js';
 
 const RADICE = fileURLToPath(new URL('.', import.meta.url));
 const CARTELLA = 'personaggi';
 const TAVOLO = 'tavolo';
 const SCONTRI = 'scontri';
 const ID_SCONTRO = /^[a-z0-9-]{1,60}$/;
+const NEMICI = 'nemici';
+const ID_NEMICO = /^[a-z0-9-]{1,60}$/;
 
 const TIPI = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8',
@@ -122,8 +129,43 @@ async function apiScontri(req, res, percorso, scontri) {
   return json(res, 200, nuovo);
 }
 
-async function api(req, res, percorso, cartella, tavolo, scontri) {
+/** Dati delle regole letti dal disco una volta sola, per validare i nemici come fa l'app. */
+const datiPerRadice = new Map();
+function datiDelServer(radice) {
+  if (!datiPerRadice.has(radice)) datiPerRadice.set(radice, caricaDati((nome) => readFile(join(radice, 'data', `${nome}.json`), 'utf8')));
+  return datiPerRadice.get(radice);
+}
+
+/** Bestiario (pezzo 3): un file per tipo di nemico, nemici/<id>.json. */
+async function apiNemici(req, res, percorso, nemici, radice) {
+  if (percorso === '/api/nemici' && req.method === 'GET') {
+    await mkdir(nemici, { recursive: true });
+    const nomi = (await readdir(nemici)).filter((f) => f.endsWith('.json'));
+    const lista = await Promise.all(nomi.map(async (file) => {
+      const mtime = (await stat(join(nemici, file))).mtimeMs;
+      // un file rovinato si elenca con l'errore: la plancia lo segnala senza fermarsi
+      try { return { file, mtime, nemico: await leggiJson(join(nemici, file)) }; } catch (e) { return { file, mtime, errore: `JSON non valido: ${e.message}` }; }
+    }));
+    return json(res, 200, lista.sort((a, b) => a.file.localeCompare(b.file)));
+  }
+  const m = /^\/api\/nemici\/([^/]+)$/.exec(percorso);
+  if (!m || !ID_NEMICO.test(m[1])) return json(res, 400, { errore: 'id di nemico non valido: minuscole, cifre e trattini' });
+  const id = m[1];
+  if (req.method !== 'PUT') return json(res, 405, { errore: 'metodo non ammesso' });
+  let n;
+  try { n = JSON.parse((await leggiCorpo(req)).toString('utf8')); } catch (e) { return json(res, 400, { errore: `contenuto non valido: ${e.message}` }); }
+  const { dati } = await datiDelServer(radice);
+  const errori = validaNemico(n, dati, `${NEMICI}/${id}.json`);
+  if (n?.id !== id) errori.push({ file: `${NEMICI}/${id}.json`, chiave: 'id', problema: 'non corrisponde al nome del file' });
+  if (errori.length) return json(res, 400, { errore: errori.map(formattaErrore).join('; '), errori });
+  await mkdir(nemici, { recursive: true });
+  await scriviJson(join(nemici, `${id}.json`), n);
+  return json(res, 200, { file: `${id}.json`, mtime: (await stat(join(nemici, `${id}.json`))).mtimeMs, nemico: n });
+}
+
+async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice) {
   if (percorso === '/api/ping') return json(res, 200, { ok: true, app: 'mutant', cartella: CARTELLA });
+  if (percorso === '/api/nemici' || percorso.startsWith('/api/nemici/')) return apiNemici(req, res, percorso, nemici, radice);
   if (percorso === '/api/scontri' || percorso.startsWith('/api/scontri/')) return apiScontri(req, res, percorso, scontri);
   if (percorso === '/api/tavolo') {
     const dove = join(tavolo, 'sessione.json');
@@ -191,7 +233,7 @@ async function statico(req, res, percorso, radice) {
   let rel = percorso === '/' ? '/index.html' : percorso;
   // niente uscite dalla cartella del progetto, niente file nascosti né la cartella dei personaggi (passa dall'API)
   const pieno = normalize(join(radice, rel));
-  if (!pieno.startsWith(radice) || rel.split('/').some((p) => p.startsWith('.')) || rel.startsWith(`/${CARTELLA}/`) || rel.startsWith(`/${TAVOLO}/`) || rel.startsWith(`/${SCONTRI}/`) || rel.startsWith('/nemici/')) {
+  if (!pieno.startsWith(radice) || rel.split('/').some((p) => p.startsWith('.')) || rel.startsWith(`/${CARTELLA}/`) || rel.startsWith(`/${TAVOLO}/`) || rel.startsWith(`/${SCONTRI}/`) || rel.startsWith(`/${NEMICI}/`)) {
     res.writeHead(404); return res.end('Non trovato');
   }
   try {
@@ -214,12 +256,12 @@ async function statico(req, res, percorso, radice) {
  * Crea il server. `radice`: cartella dell'app; `cartella`: dove stanno i personaggi (per i test, una
  * cartella temporanea).
  */
-export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA), tavolo = join(RADICE, TAVOLO), scontri = join(RADICE, SCONTRI) } = {}) {
+export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA), tavolo = join(RADICE, TAVOLO), scontri = join(RADICE, SCONTRI), nemici = join(RADICE, NEMICI) } = {}) {
   const base = normalize(radice.endsWith(sep) ? radice : radice + sep);
   return createServer(async (req, res) => {
     try {
       const percorso = decodeURI(new URL(req.url, 'http://x').pathname);
-      if (percorso.startsWith('/api/')) return await api(req, res, percorso, cartella, tavolo, scontri);
+      if (percorso.startsWith('/api/')) return await api(req, res, percorso, cartella, tavolo, scontri, nemici, base);
       return await statico(req, res, percorso, base);
     } catch (e) {
       if (!res.headersSent) json(res, 500, { errore: e.message });
@@ -237,7 +279,8 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const cartella = arg('cartella') ? normalize(arg('cartella')) : join(RADICE, CARTELLA);
   const tavolo = arg('tavolo') ? normalize(arg('tavolo')) : join(RADICE, TAVOLO);
   const scontri = arg('scontri') ? normalize(arg('scontri')) : join(RADICE, SCONTRI);
-  creaServer({ cartella, tavolo, scontri }).listen(porta, host, () => {
+  const nemici = arg('nemici') ? normalize(arg('nemici')) : join(RADICE, NEMICI);
+  creaServer({ cartella, tavolo, scontri, nemici }).listen(porta, host, () => {
     console.log(`Mutant con la cartella dei personaggi: http://localhost:${porta}`);
     console.log(host === '0.0.0.0' ? 'Raggiungibile anche dagli altri dispositivi della stessa rete (indirizzo IP di questo computer).' : 'Solo da questo computer (per la rete: node server.mjs --rete).');
     console.log(`Personaggi salvati in ${cartella}`);

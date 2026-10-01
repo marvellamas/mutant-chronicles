@@ -1,13 +1,13 @@
-// Tavolo del Master, pezzo 2 (docs/tavolo-direttore.md): riquadro dello scontro nella plancia. Ordine
-// d'Iniziativa con il dado dal vivo o dell'app, turni e Round, partecipanti scritti a mano (provvisori,
-// fino ai nemici del pezzo 3), durate degli Stati, registro. Le regole stanno in src/scontro.js; qui la
+// Tavolo del Master, pezzi 2 e 3 (docs/tavolo-direttore.md): riquadro dello scontro nella plancia. Ordine
+// d'Iniziativa con il dado dal vivo o dell'app, turni e Round, nemici dal bestiario (copie numerate),
+// partecipanti scritti a mano (provvisori), durate degli Stati, registro. Le regole stanno in src/scontro.js; qui la
 // presentazione e il salvataggio sul server con la revisione (server.mjs → /api/scontri).
 import { h } from './dom.js';
 import { infoValore } from './tooltip.js';
 import { tira, tiroManuale } from '../tiri.js';
 import {
   nuovoScontro, aggiungiPartecipante, togliPartecipante, registraTiro, ordineIniziativa, spostaAlleato,
-  diTurno, registraDurata, avanti, chiudi, dadoIniziativa, durataStato,
+  diTurno, registraDurata, avanti, chiudi, dadoIniziativa, durataStato, aggiungiNemici,
 } from '../scontro.js';
 
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
@@ -46,7 +46,8 @@ const idNuovo = (d = new Date()) => {
 /**
  * Riquadro dello scontro.
  * @param ctx { dati }
- * @param st stato della plancia: { scontro, viste (file → vista), pgAlTavolo: [vista], avvisoScontro, registroAperto, bozza }
+ * @param st stato della plancia: { scontro, viste (file → vista), pgAlTavolo: [vista], avvisoScontro, registroAperto, bozza,
+ *   bestiario: voci di src/nemici.js → vociBestiario, bozzaNemici }
  * @param modifica (fn: scontro → scontro) salva il nuovo stato con la revisione
  * @param crea (scontro) salva uno scontro nuovo
  */
@@ -87,7 +88,9 @@ export function pannelloScontro(ctx, st, { modifica, crea, ridisegna }) {
     const gruppoAlleati = scelteAlleati.find((g) => g.includes(p.id));
     return h('tr', { class: `${diT?.id === p.id ? 'di-turno' : ''}${p.provvisorio ? ' provvisorio' : ''}`.trim(), 'aria-current': diT?.id === p.id ? 'true' : null },
       h('td', { class: 'pos-scontro' }, diT?.id === p.id ? '▶' : String(i + 1)),
-      h('th', { scope: 'row' }, p.nome, p.provvisorio ? h('span', { class: 'etichetta' }, 'provvisorio') : null, p.lato === 'avversario' ? h('small', { class: 'nota' }, ' avversario') : null),
+      h('th', { scope: 'row', class: p.tipo === 'nemico' ? `lato-${p.lato}` : null }, p.nome, p.provvisorio ? h('span', { class: 'etichetta' }, 'provvisorio') : null,
+        p.lato === 'avversario' || p.tipo === 'nemico' ? h('small', { class: 'nota nome-lato' }, ` ${p.lato}`) : null,
+        p.tipo === 'nemico' ? h('small', { class: 'nota' }, ` · PV ${p.pv.attuali}/${p.pv.massimo}`) : null),
       h('td', {}, baseConProvenienza(p), ` + ${p.d10.valore}`, h('small', { class: 'nota' }, ` (${origine(p.d10)})`)),
       h('td', { class: 'totale-scontro' }, h('strong', {}, numero(p.base + p.d10.valore))),
       h('td', { class: 'parita-scontro' },
@@ -96,11 +99,12 @@ export function pannelloScontro(ctx, st, { modifica, crea, ridisegna }) {
         gruppoAlleati ? h('span', { class: 'sposta-alleato', title: 'Parità fra alleati: scelgono loro l’ordine (§5.1)' },
           h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-label': `${p.nome} prima`, onclick: () => modifica((x) => spostaAlleato(x, p.id, -1)) }, '↑'),
           h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-label': `${p.nome} dopo`, onclick: () => modifica((x) => spostaAlleato(x, p.id, 1)) }, '↓')) : null),
-      h('td', {}, p.tipo === 'manuale' ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => modifica((x) => togliPartecipante(x, p.id)) }, 'Togli') : null));
+      h('td', {}, p.tipo === 'manuale' || p.tipo === 'nemico' ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => modifica((x) => togliPartecipante(x, p.id)) }, 'Togli') : null));
   };
 
-  // durate degli Stati dei PG (dati: «1+1d3 Round»), registrate nello scontro e scalate a fine Round
-  const statiPg = s.partecipanti.filter((p) => p.tipo === 'pg').flatMap((p) => (vistaDi(p)?.stati ?? []).map((x) => ({ p, stato: ctx.dati.regole.stati.elenco.find((y) => y.id === x.id) })))
+  // durate degli Stati di PG e nemici (dati: «1+1d3 Round»), registrate nello scontro e scalate a fine Round
+  const idStati = (p) => (p.tipo === 'pg' ? (vistaDi(p)?.stati ?? []).map((x) => x.id) : p.tipo === 'nemico' ? p.stati : []);
+  const statiPg = s.partecipanti.flatMap((p) => idStati(p).map((id) => ({ p, stato: ctx.dati.regole.stati.elenco.find((y) => y.id === id) })))
     .filter((x) => x.stato);
   const durata = ({ p, stato }) => {
     const spec = durataStato(stato);
@@ -114,6 +118,23 @@ export function pannelloScontro(ctx, st, { modifica, crea, ridisegna }) {
   };
 
   const b = (st.bozza ??= { nome: '', base: '', lato: 'avversario', des: '', int: '' });
+  // «Aggiungi nemici»: un tipo valido del bestiario e quante copie
+  const tipi = (st.bestiario ?? []).filter((v) => v.nemico);
+  const bn = (st.bozzaNemici ??= { tipo: '', quante: '1', lato: 'avversario' });
+  if (!tipi.some((v) => v.id === bn.tipo)) bn.tipo = tipi[0]?.id ?? '';
+  const aggiungiNemiciRiga = h('div', { class: 'aggiungi-nemici' },
+    h('h3', {}, 'Aggiungi nemici'),
+    tipi.length ? h('div', { class: 'riga-aggiungi' },
+      h('label', {}, 'Tipo ', h('select', { onchange: (e) => { bn.tipo = e.target.value; } },
+        tipi.map((v) => h('option', { value: v.id, selected: v.id === bn.tipo }, `${v.nemico.nome} (Iniziativa ${numero(v.nemico.iniziativa)}, PV ${v.nemico.pv})`)))),
+      h('label', {}, 'Quanti ', h('input', { type: 'number', min: 1, max: 30, step: 1, class: 'input-d10', value: bn.quante, oninput: (e) => { bn.quante = e.target.value; } })),
+      h('label', {}, 'Lato ', h('select', { onchange: (e) => { bn.lato = e.target.value; } },
+        h('option', { value: 'avversario', selected: bn.lato === 'avversario' }, 'avversario'), h('option', { value: 'alleato', selected: bn.lato === 'alleato' }, 'alleato'))),
+      h('button', { type: 'button', class: 'btn', onclick: () => {
+        const tipo = tipi.find((v) => v.id === bn.tipo)?.nemico;
+        modifica((x) => aggiungiNemici(x, tipo, Number(bn.quante), { lato: bn.lato }));
+      } }, 'Aggiungi'))
+      : h('p', { class: 'nota' }, 'Nessun tipo valido nel bestiario: crealo con «Nuovo tipo» (riquadro Bestiario, in fondo alla plancia).'));
   const campo = (k, attr) => h('input', { ...attr, value: b[k], oninput: (e) => { b[k] = e.target.value; } });
   const intero = (v) => (v === '' ? null : Number(v));
 
@@ -132,7 +153,8 @@ export function pannelloScontro(ctx, st, { modifica, crea, ridisegna }) {
       h('h3', {}, `Da tirare (${dado.formula})`),
       h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => modifica((x) => daTirare.reduce((acc, p) => registraTiro(acc, p.id, 'd10', tira(dado).tiro, ctx.dati), x)) }, 'Tira per tutti con l’app'),
       h('ul', {}, daTirare.map((p) => h('li', {}, h('strong', {}, p.nome), p.provvisorio ? h('span', { class: 'etichetta' }, 'provvisorio') : null, ' · Iniziativa ', baseConProvenienza(p), ' + ', tiroDalVivo(p, 'd10'))))) : null,
-    h('details', { class: 'aggiungi-partecipante' }, h('summary', {}, 'Aggiungi partecipante (provvisorio: i nemici arrivano con il pezzo 3)'),
+    aggiungiNemiciRiga,
+    h('details', { class: 'aggiungi-partecipante' }, h('summary', {}, 'Aggiungi partecipante a mano (provvisorio, senza scheda)'),
       h('div', { class: 'riga-aggiungi' },
         h('label', {}, 'Nome ', campo('nome', { type: 'text', maxlength: 60 })),
         h('label', {}, 'Iniziativa ', campo('base', { type: 'number', step: 1, class: 'input-d10' })),

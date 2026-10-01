@@ -12,6 +12,11 @@
 //   stabilisce l’ordine e non modifica il Valore di Iniziativa.»
 // - Stati (regole.json → stati.elenco[].durata): «1+1d3 Round» e simili; la durata si tira quando lo
 //   Stato comincia e scala a fine Round; senza un numero di Round («fino a quando…») solo promemoria.
+//
+// Pezzo 3: i nemici. Un tipo del bestiario (nemici/<id>.json, formato di data/formato_nemici.json) entra
+// nello scontro in una o più copie con etichette automatiche («Legionario 1», «Legionario 2»…). Ogni copia
+// ha una fotografia del tipo, i propri PV attuali e i propri Stati; l'Iniziativa è quella del tipo più il
+// dado, con le stesse regole di parità (DES e INT dalle Caratteristiche del tipo, se scritte).
 import { specTiro, motivoFuoriIntervallo } from './tiri.js';
 
 export const FORMATO_SCONTRO = 'mutant-scontro';
@@ -57,7 +62,69 @@ export function aggiungiPartecipante(s, { nome, base, lato = 'avversario', des =
   return conRiga({ ...s, partecipanti: [...s.partecipanti, p] }, `Aggiunto ${p.nome} (provvisorio, ${p.lato}, Iniziativa ${base}).`, adesso);
 }
 
-/** Toglie un partecipante (solo quelli scritti a mano: i PG escono togliendoli dal tavolo). */
+/**
+ * Aggiunge `quante` copie di un tipo di nemico (file del bestiario, già validato), con etichette
+ * numerate dopo tutte quelle già usate per quel tipo nello scontro (anche se tolte: nel registro
+ * un'etichetta indica sempre lo stesso nemico), PV pieni e gli Stati con cui il tipo entra in scena.
+ */
+export function aggiungiNemici(s, nemico, quante = 1, { lato = 'avversario' } = {}, adesso) {
+  if (!nemico?.id || !nemico?.nome) throw new Error('tipo di nemico non valido');
+  if (!Number.isInteger(quante) || quante < 1 || quante > 30) throw new Error('quante copie: da 1 a 30');
+  const gia = s.partecipanti.filter((p) => p.tipo === 'nemico' && p.nemico === nemico.id).map((p) => p.numero);
+  const primo = Math.max(0, ...gia, s.numerazione?.[nemico.id] ?? 0) + 1;
+  const scheda = structuredClone(nemico);
+  const nuovi = Array.from({ length: quante }, (_, i) => {
+    const numero = primo + i;
+    return {
+      id: `nem:${nemico.id}:${numero}`, tipo: 'nemico', nemico: nemico.id, numero, nome: `${nemico.nome} ${numero}`,
+      lato: lato === 'alleato' ? 'alleato' : 'avversario', base: nemico.iniziativa,
+      des: nemico.caratteristiche?.DES ?? null, int: nemico.caratteristiche?.INT ?? null, d10: null, spareggio: null,
+      pv: { attuali: nemico.pv, massimo: nemico.pv }, stati: [...(nemico.stati ?? [])], scheda,
+    };
+  });
+  const etichette = nuovi.length > 1 ? `${nuovi[0].nome} … ${nuovi.at(-1).nome}` : nuovi[0].nome;
+  return conRiga({ ...s, partecipanti: [...s.partecipanti, ...nuovi], numerazione: { ...s.numerazione, [nemico.id]: primo + quante - 1 } },
+    `Entra${quante > 1 ? 'no' : ''} ${etichette} (${nemico.nome}, ${quante > 1 ? `${quante} copie, ` : ''}${nuovi[0].lato}, Iniziativa ${nemico.iniziativa}, PV ${nemico.pv}).`, adesso);
+}
+
+/**
+ * PV di un nemico: −/+ a mano (il danno applicato è il pezzo 4). Fra 0 e il massimo. Più clic di fila
+ * sullo stesso nemico nello stesso Round fanno una sola riga di registro («PV 22 → 17»).
+ */
+export function variaPvNemico(s, id, delta, adesso) {
+  const p = s.partecipanti.find((x) => x.id === id);
+  if (p?.tipo !== 'nemico') throw new Error('partecipante non trovato fra i nemici');
+  const attuali = Math.max(0, Math.min(p.pv.massimo, p.pv.attuali + delta));
+  if (attuali === p.pv.attuali) return s;
+  const t = { ...s, partecipanti: s.partecipanti.map((x) => (x.id === id ? { ...x, pv: { ...x.pv, attuali } } : x)) };
+  const ultima = s.registro.at(-1);
+  const daPrima = ultima?.pv?.id === id && ultima.round === s.round ? ultima.pv.da : p.pv.attuali;
+  const diff = attuali - daPrima;
+  const riga = { ora: ora(adesso), round: s.round, pv: { id, da: daPrima },
+    testo: `${p.nome}: PV ${daPrima} → ${attuali} (${diff > 0 ? '+' : '−'}${Math.abs(diff)})${attuali === 0 ? ', a 0 PV' : ''}.` };
+  if (diff === 0) return { ...t, registro: ultima?.pv?.id === id && ultima.round === s.round ? s.registro.slice(0, -1) : s.registro };
+  return { ...t, registro: ultima?.pv?.id === id && ultima.round === s.round ? [...s.registro.slice(0, -1), riga] : [...s.registro, riga] };
+}
+
+/**
+ * Stato di un nemico acceso o spento (regole.json → stati.elenco). Le immunità del tipo lo impediscono;
+ * spegnendolo si toglie anche la sua durata.
+ */
+export function cambiaStatoNemico(s, id, stato, attivo, adesso) {
+  const p = s.partecipanti.find((x) => x.id === id);
+  if (p?.tipo !== 'nemico') throw new Error('partecipante non trovato fra i nemici');
+  if (attivo && (p.scheda?.immunita ?? []).includes(stato.id)) throw new Error(`${p.nome} è immune a ${stato.nome}`);
+  if (attivo === p.stati.includes(stato.id)) return s;
+  const stati = attivo ? [...p.stati, stato.id] : p.stati.filter((x) => x !== stato.id);
+  const t = {
+    ...s,
+    partecipanti: s.partecipanti.map((x) => (x.id === id ? { ...x, stati } : x)),
+    durate: attivo ? s.durate : s.durate.filter((d) => !(d.partecipante === id && d.stato === stato.id)),
+  };
+  return conRiga(t, `${p.nome}: ${stato.nome} ${attivo ? 'attivo' : 'tolto'}.`, adesso);
+}
+
+/** Toglie un partecipante scritto a mano o un nemico (i PG escono togliendoli dal tavolo). */
 export function togliPartecipante(s, id, adesso) {
   const p = s.partecipanti.find((x) => x.id === id);
   if (!p) return s;
@@ -176,7 +243,11 @@ export function avanti(s, adesso) {
   t = conRiga(t, `Round ${t.round}. Tocca a ${ordinati[0].nome}.`, adesso);
   for (const d of finite) {
     const p = s.partecipanti.find((x) => x.id === d.partecipante);
-    t = conRiga(t, `${d.nome} di ${p?.nome ?? d.partecipante} è finito: toglilo dalla scheda.`, adesso);
+    if (p?.tipo === 'nemico') {
+      // lo Stato di un nemico sta nello scontro: finisce da sé
+      t = { ...t, partecipanti: t.partecipanti.map((x) => (x.id === p.id ? { ...x, stati: x.stati.filter((y) => y !== d.stato) } : x)) };
+      t = conRiga(t, `${d.nome} di ${p.nome} è finito.`, adesso);
+    } else t = conRiga(t, `${d.nome} di ${p?.nome ?? d.partecipante} è finito: toglilo dalla scheda.`, adesso);
   }
   return t;
 }
@@ -195,5 +266,8 @@ export function validaScontro(s) {
   if (!['aperto', 'chiuso'].includes(s.stato)) return 'stato non valido';
   if (!Array.isArray(s.partecipanti) || !Array.isArray(s.registro) || !Array.isArray(s.durate) || !Array.isArray(s.ordineAlleati)) return 'struttura incompleta';
   if (!Number.isInteger(s.round) || s.round < 1 || !Number.isInteger(s.turno) || s.turno < 0) return 'Round o turno non validi';
+  const nemicoRotto = s.partecipanti.find((p) => p?.tipo === 'nemico'
+    && !(Number.isInteger(p.pv?.attuali) && Number.isInteger(p.pv?.massimo) && Array.isArray(p.stati) && p.scheda && typeof p.scheda === 'object'));
+  if (nemicoRotto) return `nemico ${nemicoRotto.nome ?? nemicoRotto.id}: PV, Stati o scheda mancanti`;
   return null;
 }

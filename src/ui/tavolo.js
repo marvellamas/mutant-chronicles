@@ -11,7 +11,9 @@ import { vistaPlancia } from '../tavolo.js';
 import { ultimiPerPersonaggio, chiaveDaFile } from '../cartella.js';
 import { elencoCartella, leggiCartella } from './cartella.js';
 import { pannelloScontro, leggiScontroAperto, leggiScontro, salvaScontro } from './scontro.js';
+import { pannelloBestiario, elencoNemici, cartaNemico } from './nemici.js';
 import { diTurno } from '../scontro.js';
+import { vociBestiario } from '../nemici.js';
 
 const INTERVALLO_MS = 3000;
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
@@ -51,6 +53,11 @@ export function renderTavolo(radice, ctx) {
     avvisoScontro: null,
     registroAperto: false,
     bozza: null,
+    // pezzo 3: bestiario (nemici/ sul server), validato a ogni lettura
+    bestiario: [],
+    firmaBestiario: null,
+    bestiarioAperto: false,
+    bozzaNemici: null,
   };
 
   // salva una modifica dello scontro; con una revisione vecchia (altra finestra) ricarica quello attuale
@@ -72,10 +79,17 @@ export function renderTavolo(radice, ctx) {
       return false;
     }
   };
-  const modifica = async (fn) => {
-    let nuovo;
-    try { nuovo = fn(stato.scontro); } catch (e) { stato.avvisoScontro = e.message; disegna(); return false; }
-    return salva(nuovo);
+  // le modifiche si mettono in fila: ognuna parte dallo scontro salvato dalla precedente (clic rapidi su − e +)
+  let coda = Promise.resolve(true);
+  const modifica = (fn) => {
+    coda = coda.then(async () => {
+      if (!stato.scontro) return false;
+      let nuovo;
+      try { nuovo = fn(stato.scontro); } catch (e) { stato.avvisoScontro = e.message; disegna(); return false; }
+      if (nuovo === stato.scontro) return true;
+      return salva(nuovo);
+    });
+    return coda;
   };
 
   const disegna = () => {
@@ -100,7 +114,27 @@ export function renderTavolo(radice, ctx) {
       alTavolo.length
         ? h('div', { class: 'plancia-griglia' }, alTavolo.map((r) => (r.mancante ? cartaMancante(r.mancante)
           : stato.viste.get(r.file) ? cartaPg(ctx, stato.viste.get(r.file), r, turnoDi(r)) : cartaErrore(r, stato.errori.get(r.file)))))
-        : h('p', { class: 'vuoto' }, 'Nessun personaggio al tavolo: sceglili con «Chi è al tavolo».')));
+        : h('p', { class: 'vuoto' }, 'Nessun personaggio al tavolo: sceglili con «Chi è al tavolo».'),
+      nemiciInScontro().length ? [
+        h('h2', { class: 'plancia-sezione' }, 'Nemici nello scontro'),
+        h('div', { class: 'plancia-griglia' }, nemiciInScontro().map((p) => cartaNemico(ctx, p, { modifica, diTurnoOra: diTurno(stato.scontro)?.id === p.id }))),
+      ] : null,
+      pannelloBestiario(ctx, stato.bestiario, {
+        aperto: stato.bestiarioAperto,
+        onToggle: (v) => { stato.bestiarioAperto = v; },
+        salvato: async () => { stato.firmaBestiario = null; await aggiornaBestiario(); disegna(); },
+      })));
+  };
+  const nemiciInScontro = () => (stato.scontro?.partecipanti ?? []).filter((p) => p.tipo === 'nemico');
+
+  // bestiario: si rilegge a ogni giro, si rivalida solo se un file è cambiato (nome e mtime)
+  const aggiornaBestiario = async () => {
+    const lista = await elencoNemici();
+    const firma = JSON.stringify(lista.map((x) => [x.file, x.mtime]));
+    if (firma === stato.firmaBestiario) return false;
+    stato.firmaBestiario = firma;
+    stato.bestiario = vociBestiario(lista, ctx.dati);
+    return true;
   };
 
   const turnoDi = (r) => {
@@ -130,6 +164,11 @@ export function renderTavolo(radice, ctx) {
       }
       visti.set(r.file, r.mtime);
       cambiato = true;
+    }
+    try {
+      if (await aggiornaBestiario()) cambiato = true;
+    } catch (e) {
+      stato.errore = e.message;
     }
     // scontro aperto: si rilegge quando cambia la revisione (un'altra finestra, un altro PC)
     try {
