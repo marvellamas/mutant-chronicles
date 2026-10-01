@@ -9,7 +9,8 @@ import { valoreTiro } from './tiri.js';
 import { rigaAlLivello } from './descrizioni.js';
 import { CAMPI_ANAGRAFICA } from './character.js';
 import { checklist } from './checklist.js';
-import { aggiungiDanno, NOME_TESTO_PRECEDENTE, catalogo, normalizzaEquipaggiamento, STATO_DEPOSITO, consumabili } from './equipaggiamento.js';
+import { aggiungiDanno, NOME_TESTO_PRECEDENTE, catalogo, normalizzaEquipaggiamento, STATO_DEPOSITO, consumabili, rapportoConversione, risolvi, infoArtefattoVoce } from './equipaggiamento.js';
+import { gradiTaumaturgici } from './incantesimi.js';
 import { saldoIniziale, crediti } from './dotazioni.js';
 import { SEZIONI_INVENTARIO, sezioneInventario } from './palette.js';
 import { modoRicarica } from './ricarica.js';
@@ -398,20 +399,48 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
           armiDaLancio: s.magia?.tiroArmiDaLancio ?? dati.regole.lancio.tiro_armi_da_lancio,
           anticipazione: dati.regole.lancio.anticipazione.moltiplicatore_costo,
         },
-        // Magia sez. 6: riserve esterne, con le caselle per i PM attuali (a penna)
+        // Magia sez. 6: riserve esterne, con le caselle per i PM attuali (a penna). Decisione 5 del
+        // piano SS: i PM delle batterie e riserve di Chroma stanno qui; il foglio Artefatti avrà solo
+        // la sintonizzazione
         riserve: (s.equipaggiamento?.contenitori ?? []).map((c) => ({
           nome: c.nome, energia: c.energia, capacita: c.capacita, macrofamiglie: c.macrofamiglie,
           regoleRimandate: c.regoleRimandate, integrato: c.integrato, sintonizzato: c.sintonizzato, costo: c.costo,
         })),
+        // Convertire Potere e ricaricare (Magia sez. 6): rapporto con i Talenti, come nel riquadro dei PM della SD
+        conversione: (() => {
+          const cv = rapportoConversione(s, dati);
+          return cv?.disponibile ? { rapporto: cv.rapporto, talenti: cv.talenti, fissi: cv.fissi } : null;
+        })(),
+        // Magia sez. 1: Gradi taumaturgici complessivi (la riga del riquadro Incantesimi della SD)
+        gradi: (() => {
+          const g = gradiTaumaturgici(s, dati);
+          return g ? { testo: g.testo, gradi: g.gradi, livelloMassimo: g.livelloMassimo } : null;
+        })(),
+        // «Da artefatti» (come la tab Poteri della SD): Artefatti con attivazione o riserva integrata;
+        // il loro dettaglio sta nel foglio Artefatti, qui solo il rimando
+        daArtefatti: (() => {
+          const st = s.equipaggiamento?.sintonizzazione;
+          if (!st) return [];
+          const cat = catalogo(dati);
+          const perUid = new Map((c.equipaggiamento ?? []).map((v) => [v.uid, risolvi(v, cat)]));
+          return st.artefatti.map((x) => ({ x, r: perUid.get(x.uid) }))
+            .filter(({ r }) => r?.def?.attivazione || infoArtefattoVoce(r, dati)?.contenitore?.integrato).map(({ x }) => x.nome);
+        })(),
       },
     });
   }
+
+  const ordinati = ordinaFogli(fogli, dati);
+  // numero del foglio Artefatti per il rimando del foglio Poteri: quello del foglio, o il posto che
+  // prenderà subito dopo Poteri (docs/layout-ss.md, §5.1)
+  const poteri = ordinati.find((f) => f.id === 'poteri');
+  if (poteri) poteri.dati.foglioArtefatti = ordinati.find((f) => f.id === 'artefatti')?.numero ?? poteri.numero + 1;
 
   return {
     completa: s.completa,
     errori: s.errori,
     scheda: s,
-    fogli: ordinaFogli(fogli, dati),
+    fogli: ordinati,
     piede: { nome, livello: s.livello, versioni: versioniDati },
   };
 }

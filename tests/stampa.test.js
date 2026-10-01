@@ -335,3 +335,35 @@ test('foglio Combattimento (docs/layout-ss.md, pezzo 3): Corruzione, caricatori,
   assert.equal(lucas.statiStampa.length, dati.regole.stati.elenco.length);
   assert.ok(lucas.condizioniArmi.includes('Riparata sul campo') && !lucas.condizioniArmi.some((x) => /\(/.test(x)));
 });
+
+test('foglio Poteri (docs/layout-ss.md, pezzo 4): Gradi taumaturgici come nella SD, riserve di Chroma con i PM, rimando agli Artefatti', async () => {
+  const { readFileSync } = await import('node:fs');
+  const { deserializzaPersonaggio } = await import('../src/character.js');
+  const { calcolaScheda } = await import('../src/calc.js');
+  const { gradiTaumaturgici } = await import('../src/incantesimi.js');
+  const { schemaQuadratini } = await import('../src/stampa.js');
+  const leggi = (f) => deserializzaPersonaggio(readFileSync(new URL(`collaudo/${f}`, import.meta.url), 'utf8'));
+  for (const [f, testo] of [['b_fratellanza_arcanista_l12.json', 'IV · Arcanista II + Mistico II'], ['Lucas_liv6_2026-09-28 (2).json', 'II · Invocatore II']]) {
+    const p = leggi(f);
+    const pf = foglio(preparaStampa({ creazione: p.creazione, livelli: p.livelli }, dati), 'poteri');
+    // la stessa riga della SD (src/incantesimi.js → gradiTaumaturgici)
+    const sd = gradiTaumaturgici(calcolaScheda({ creazione: p.creazione, livelli: p.livelli }, dati), dati);
+    assert.deepEqual([pf.dati.gradi.testo, pf.dati.gradi.livelloMassimo], [sd.testo, sd.livelloMassimo]);
+    assert.equal(pf.dati.gradi.testo, testo);
+    assert.equal(pf.numero, 5);
+  }
+  // batteria da 5 PM → 5 quadratini neri e 5 grigi, nel foglio Poteri (decisione 5)
+  const lucas = leggi('Lucas_liv6_2026-09-28 (2).json');
+  const pl = foglio(preparaStampa({ creazione: lucas.creazione, livelli: lucas.livelli }, dati), 'poteri').dati;
+  const batteria = pl.riserve.find((r) => /Batteria da 5 PM/.test(r.nome));
+  const caselle = schemaQuadratini(batteria.capacita, { compatto: true }).blocchi.flatMap((b) => b.righe.flatMap((r) => r.caselle));
+  assert.deepEqual([caselle.filter(Boolean).length, caselle.filter((x) => !x).length], [5, 5]);
+  assert.equal(pl.conversione.rapporto, 3); // Taumaturgo senza Talenti di conversione
+  assert.deepEqual(pl.daArtefatti, []); // le batterie non hanno attivazioni: nessun rimando
+  // b: il Bordone Templare ha un'attivazione → rimando al foglio Artefatti (6, dopo Poteri)
+  const b = leggi('b_fratellanza_arcanista_l12.json');
+  const pb = foglio(preparaStampa({ creazione: b.creazione, livelli: b.livelli }, dati), 'poteri').dati;
+  assert.deepEqual([pb.daArtefatti, pb.foglioArtefatti], [['Bordone Templare'], 6]);
+  // senza contenitori nessun riquadro delle riserve
+  assert.deepEqual(foglio(preparaStampa(ARCANISTA, dati), 'poteri').dati.riserve, []);
+});

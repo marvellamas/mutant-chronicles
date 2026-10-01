@@ -361,6 +361,9 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .foglio-poteri .foglio-corpo { gap: 2mm; }
 .f4-testa { display: grid; grid-template-columns: 62mm 1fr 78mm; gap: 3mm; align-items: stretch; flex: none; }
 .f4-testa .voci-stampa { gap: 0.3mm 3mm; }
+/* rimando «Da artefatti» del foglio Poteri (il dettaglio sta nel foglio Artefatti) */
+.da-artefatti-stampa { margin: 0; flex: none; }
+.f4-riserve .chroma-punto { width: 3mm; height: 3mm; margin-right: 1.2mm; vertical-align: -0.3mm; border-width: 0.6pt; }
 .tabella-stampa.scala { margin-top: 1mm; }
 .tabella-stampa.scala td, .tabella-stampa.scala th { text-align: center; border: 0.5pt solid var(--ss-linea-tenue); }
 .tabella-stampa.scala tbody tr > * { background: none; }
