@@ -309,3 +309,29 @@ test('foglio Abilità (docs/layout-ss.md, pezzo 2): Specializzazioni e Tecniche 
   assert.deepEqual([m.tecniche.length, m.tecnicheAmmesse, m.specializzazioni.length], [0, 0, 0]);
 });
 
+
+test('foglio Combattimento (docs/layout-ss.md, pezzo 3): Corruzione, caricatori, Sanitario, Stati, condizione delle armi', async () => {
+  const { readFileSync } = await import('node:fs');
+  const { deserializzaPersonaggio } = await import('../src/character.js');
+  const { schemaQuadratini, effettoStato } = await import('../src/stampa.js');
+  const leggi = (f) => { const p = deserializzaPersonaggio(readFileSync(new URL(`collaudo/${f}`, import.meta.url), 'utf8')); return foglio(preparaStampa({ creazione: p.creazione, livelli: p.livelli }, dati), 'combattimento').dati; };
+  const nere = (s) => s.blocchi.flatMap((b) => b.righe.flatMap((r) => r.caselle)).filter(Boolean).length;
+  // penalità della Corruzione Oscura stampate uguali ai dati (§5.20)
+  const lucas = leggi('Lucas_liv6_2026-09-28 (2).json');
+  assert.deepEqual(lucas.corruzione.map((x) => [x.nome, x.penalita]), dati.regole.corruzione.stati.map((x) => [x.nome, x.penalita]));
+  assert.deepEqual(lucas.affaticamento.map((x) => x.penalita), dati.regole.affaticamento.stati.map((x) => x.penalita));
+  // arma con due caricatori: due file di quadratini («car. 1», «car. 2»), ciascuna della capacità
+  const carabina = lucas.armiStampa.find((a) => a.nome === 'Carabina Punisher');
+  assert.deepEqual([carabina.colpi.modo, carabina.colpi.file, carabina.colpi.capacita], ['caricatore', 2, 30]);
+  assert.equal(nere(schemaQuadratini(carabina.colpi.capacita, { compatto: true })), 30);
+  // kit sanitario con N applicazioni → N quadratini neri (b: Kit trauma, 5 applicazioni)
+  const b = leggi('b_fratellanza_arcanista_l12.json');
+  const kit = b.sanitario.find((k) => k.nome === 'Kit trauma');
+  assert.equal(kit.applicazioni, 5);
+  assert.equal(nere(schemaQuadratini(kit.applicazioni, { compatto: true })), 5);
+  assert.deepEqual(lucas.sanitario, []); // nessun kit, nessun riquadro
+  // Stati: solo l'effetto numerico dei dati; condizione delle armi con il nome breve, una volta sola
+  assert.equal(effettoStato(dati.regole.stati.elenco.find((x) => x.id === 'rallentato')), '−2 fisiche, solo Passo, Passo 3 Q');
+  assert.equal(lucas.statiStampa.length, dati.regole.stati.elenco.length);
+  assert.ok(lucas.condizioniArmi.includes('Riparata sul campo') && !lucas.condizioniArmi.some((x) => /\(/.test(x)));
+});

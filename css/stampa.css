@@ -296,6 +296,10 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 /* Foglio 3 — Combattimento ed equipaggiamento */
 .foglio-combattimento .foglio-corpo { gap: 2mm; line-height: 1.18; }
 .foglio-combattimento .tabella-stampa th, .foglio-combattimento .tabella-stampa td { padding-top: 0.25mm; padding-bottom: 0.25mm; }
+/* Foglio 3 (pezzo 3): colonna sinistra larga (sintesi, Armi, Protezioni, Sanitario, Punti Vita) e
+   colonna destra a tutta altezza (Ferite, Affaticamento, Corruzione, Stati) */
+.f3-griglia { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 100mm; gap: 3mm; }
+.f3-sinistra, .f3-destra { min-height: 0; }
 .f3-sintesi { flex: none; }
 .sintesi { display: flex; flex-wrap: wrap; gap: 1mm 3.5mm; align-items: baseline; }
 .cella-sintesi { display: flex; align-items: baseline; gap: 1.2mm; }
@@ -307,10 +311,12 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .armi-stampa tbody tr:nth-child(even) > * { background: none; }
 .armi-stampa tr.riga-arma > * { background: color-mix(in srgb, var(--ss-acciaio-tenue) 80%, transparent); }
 .armi-stampa .col-va { font-weight: 800; text-align: center; }
-.armi-stampa .col-ac, .armi-stampa .col-inc, .armi-stampa .col-mani, .armi-stampa .col-forza, .armi-stampa .col-pi, .armi-stampa .col-capacita { text-align: center; }
+.armi-stampa .col-inc, .armi-stampa .col-mani, .armi-stampa .col-forza { text-align: center; }
+.armi-stampa .col-in-mano { width: 9mm; text-align: center; white-space: nowrap; font-size: var(--ss-font-small); }
+.dettagli-arma { margin: 0.3mm 0 0 4mm; }
 .armi-stampa .col-abilita, .armi-stampa .col-qualita, .armi-stampa .col-danno, .armi-stampa .col-gittata, .armi-stampa .col-parata { white-space: nowrap; }
 .armi-stampa .col-modalita { white-space: nowrap; }
-.armi-stampa thead th:first-child { width: 44mm; }
+.armi-stampa thead th.col-nome { width: 40mm; }
 .specializzazioni-stampa { margin: 0.5mm 0 0; }
 .riga-colpi td { padding-top: 0.3mm; padding-bottom: 0.5mm; }
 .file-colpi { display: flex; flex-wrap: wrap; gap: 0.8mm 9mm; padding-left: 4mm; }
@@ -318,22 +324,30 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 /* un nastro più lungo della riga (Mitragliatore leggero, 100 colpi) va a capo invece di sbordare */
 .caricatore > .quadratini { min-width: 0; }
 .etichetta-colpi { font-size: var(--ss-font-small); color: var(--ss-grigio); min-width: 11mm; }
-/* l'Equipaggiamento è nel foglio Inventario (pezzo 1): restano la colonna di Ferite e il riempitivo Punti Vita */
-.f3-basso { flex: 1; min-height: 0; display: grid; grid-template-columns: 106mm 1fr; gap: 3mm; }
 .protezioni-stampa { margin-top: 1mm; }
-.f3-basso > .colonna { min-height: 0; }
-.ferite td:first-child { width: 5mm; }
-.stati-nomi { display: flex; flex-wrap: wrap; gap: 1mm 4.5mm; margin: 1mm 0 0; padding-top: 1mm; border-top: 0.5pt solid var(--ss-linea-tenue); }
-.stati-nomi span { white-space: nowrap; }
+/* gradi da cerchiare con la penalità accanto (Ferite, Affaticamento, Corruzione) e Stati con l'effetto */
+.gradi-stampa th, .gradi-stampa td { padding-top: 0.15mm; padding-bottom: 0.15mm; line-height: 1.12; }
+.f3-destra { gap: 1.5mm; }
+.f3-destra .riquadro-stampa > .contenuto { padding: 0.6mm 1.5mm; }
+.gradi-stampa .col-casella { width: 5mm; }
+.gradi-stampa .col-penalita { width: 8mm; text-align: right; font-weight: 700; white-space: nowrap; }
+.gradi-stampa tbody th { font-weight: 600; white-space: nowrap; }
+.gradi-stampa .nota-grado { padding-left: 1.5mm; }
+/* Affaticamento e Corruzione su due colonne per stare nell'altezza */
+.gradi-stampa.due-colonne tbody { display: grid; grid-template-columns: 1fr 1fr; column-gap: 3mm; }
+.gradi-stampa.due-colonne tr { display: grid; grid-template-columns: 5mm minmax(0, 1fr) 8mm; align-items: center; }
+.gradi-stampa.due-colonne tbody th { white-space: normal; }
+.stati-gradi .col-penalita { display: none; }
+.f3-sanitario .kit-sanitario { flex-wrap: wrap; }
+.nome-kit { font-weight: 600; min-width: 24mm; }
 .f3-pv > .contenuto { gap: 1.2mm; }
-.f3-pv .righe-guida { min-height: 14mm; } /* almeno due righe per le note */
+.f3-pv .righe-guida { min-height: 7mm; } /* almeno una riga per le note (pezzo 3: la colonna sinistra ha anche le Protezioni e il Sanitario) */
 /* il riquadro Punti Vita non si schiaccia: massimi, AR, quadratini e due righe guida restano
    sempre interi; se il foglio non ci sta, il resto continua nella pagina dopo (impaginaCombattimento) */
 .f3-pv { min-height: min-content; }
 .f3-pv > .contenuto { flex: 1 0 auto; } /* il contenuto conta nell'altezza minima */
-/* seconda pagina del foglio 3: Armi a tutta larghezza, sotto Equipaggiamento e i riquadri della colonna centrale */
+/* continuazione del foglio 3: Armi, Protezioni e Sanitario a tutta larghezza; la colonna destra non si ripete */
 .f3-seguito { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 2mm; }
-.f3-seguito-basso { display: grid; grid-template-columns: 106mm 1fr; gap: 3mm; align-items: start; min-height: 0; }
 /* AR accanto ai PV massimi, stessa dimensione (grigio acciaio delle protezioni) */
 .f3-massimi { display: flex; flex-wrap: wrap; gap: 1.5mm; align-items: stretch; }
 .f3-massimi .massimo { align-self: stretch; }

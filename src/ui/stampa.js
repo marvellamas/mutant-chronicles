@@ -328,20 +328,23 @@ function impaginaAbilita(foglio, d, piede) {
 }
 
 // ---------------------------------------------------------------------------
-// Foglio 3 — Combattimento ed equipaggiamento: in alto il riquadro compatto (Iniziativa,
-// Movimento, Azioni, Difese, Prove Salvezza); poi le Armi con tutte le colonne e le file dei
-// colpi; sotto Protezioni ed Equipaggiamento, Ferite e Stati, Punti Vita (riempitivo).
+// Foglio 3 — Combattimento (docs/layout-ss.md, pezzo 3). Due colonne come la tab della SD: a
+// sinistra la sintesi (Iniziativa, Movimento, Azioni, Difese con Parata/Schivata Istintiva, Prove
+// Salvezza), le Armi con il profilo d'uso, la casella «in mano» e sotto ogni arma colpi, PI e
+// condizione; le Protezioni con i PI; il Sanitario con le applicazioni; i Punti Vita come
+// riempitivo. A destra, a tutta altezza, Ferite, Affaticamento, Corruzione Oscura e Stati, con la
+// penalità dei dati accanto a ogni grado.
 
+// profilo d'uso dell'arma (decisione 4: il possesso, cioè costo, Qualità, peso, stato, sta nel foglio 4)
 const COLONNE_ARMI = [
-  ['nome', 'Arma'], ['abilita', 'Abilità'], ['va', 'VA'], ['danno', 'Danno'], ['ac', 'AC'], ['gittata', 'Gittata / portata'],
-  ['inc', 'INC'], ['parata', 'Parata'], ['mani', 'Mani'], ['forza', 'FOR'], ['pi', 'PI'], ['qualita', 'Qualità'],
-  ['capacita', 'Cap.'], ['modalita', 'Modalità'], ['proprieta', 'Proprietà'],
+  ['nome', 'Arma'], ['abilita', 'Abilità'], ['va', 'VA'], ['danno', 'Danno'], ['gittata', 'Gittata / portata'],
+  ['mani', 'Mani'], ['modalita', 'Modalità'], ['inc', 'INC'], ['parata', 'Parata'], ['forza', 'FOR'],
 ];
 
 /**
  * Colpi sotto l'arma: un gruppo di quadratini per caricatore (etichetta «car. N») o per cella;
  * «colpi» per le armi a inserimento. I gruppi si affiancano quando entrano, con uno stacco largo,
- * e vanno a capo quando non entrano (un caricatore da 30 occupa una fila).
+ * e vanno a capo quando non entrano (un caricatore da 30 occupa tre righe).
  */
 function fileColpi(c, pi = []) {
   const etichetta = !c ? null : c.modo === 'inserimento' ? () => 'colpi' : c.modo === 'cella' ? (k) => `cella ${k}` : (k) => `car. ${k}`;
@@ -352,106 +355,130 @@ function fileColpi(c, pi = []) {
 }
 
 /**
- * PI da annerire a matita (Armamenti §7.2.1): un quadratino per PI massimo, stacco ogni 5, con
- * l'etichetta dell'oggetto. A 0 PI l'oggetto è Rotto.
+ * PI da annerire a matita (Armamenti §7.2.1), anche qui oltre che nel foglio 4 (decisione 6): un
+ * quadratino per PI massimo, con l'etichetta dell'oggetto. A 0 PI l'oggetto è Rotto.
  */
 const gruppoPI = ({ etichetta, pi }) => h('div', { class: 'caricatore gruppo-pi' },
   h('span', { class: 'etichetta-colpi' }, etichetta ? `PI ${etichetta}` : 'PI'), quadratini(pi, { compatto: true }));
 
-/** Protezioni con la colonna PI e, sotto ogni riga, i quadratini dei PI (armatura, rinforzo, elmetto). */
+/** Protezioni indossate con AR, categoria e note (proprietà) e, sotto ogni riga, i PI a quadratini. */
 function tabellaProtezioni(d) {
-  const colonne = [...d.protezioni.colonne, 'PI'];
+  const colonne = d.protezioni.colonne;
   return h('table', { class: 'tabella-stampa protezioni-stampa' },
-    h('thead', {}, h('tr', {}, colonne.map((c) => h('th', { class: c === 'PI' ? 'col-pi' : null }, c)))),
+    h('thead', {}, h('tr', {}, colonne.map((c) => h('th', {}, c)))),
     d.protezioni.righe.length ? d.protezioni.righe.map((r, i) => {
       const pi = d.piProtezioni?.[i] ?? [];
       return h('tbody', {},
-        h('tr', { class: 'riga-arma' }, r.map((v, j) => (j === 0 ? h('th', { scope: 'row' }, v) : h('td', {}, v))),
-          h('td', { class: 'col-pi' }, pi.length ? pi.map((x) => x.pi).join(' + ') : '—')),
+        h('tr', { class: 'riga-arma' }, r.map((v, j) => (j === 0 ? h('th', { scope: 'row' }, v) : h('td', {}, v)))),
         pi.length ? h('tr', { class: 'riga-colpi' }, h('td', { colspan: colonne.length }, fileColpi(null, pi))) : null);
     }) : h('tbody', {}, h('tr', { class: 'da-compilare' }, colonne.map(() => h('td', {}, ' ')))));
 }
 
-function tabellaArmi(armi) {
-  const n = COLONNE_ARMI.length;
+/**
+ * Armi: una riga per arma con il profilo d'uso e la casella «in mano» (sulla carta la mano non
+ * conta); sotto, colpi a quadratini per caricatore, PI a quadratini, condizione da cerchiare (A.49)
+ * e proprietà in piccolo. Un'arma con le sue righe è un tbody: la continuazione non lo spezza.
+ */
+function tabellaArmi(armi, condizioni = []) {
+  const n = COLONNE_ARMI.length + 1;
   return h('table', { class: 'tabella-stampa armi-stampa' },
-    h('thead', {}, h('tr', {}, COLONNE_ARMI.map(([k, t]) => h('th', { class: `col-${k}` }, t)))),
+    h('thead', {}, h('tr', {}, h('th', { class: 'col-in-mano', title: 'In mano' }, 'In mano'), COLONNE_ARMI.map(([k, t]) => h('th', { class: `col-${k}` }, t)))),
     armi.map((a) => h('tbody', {},
-      h('tr', { class: 'riga-arma' }, COLONNE_ARMI.map(([k]) => (k === 'nome'
-        ? h('th', { scope: 'row' }, a.nome, a.addosso ? h('span', { class: 'sigla' }, ' addosso') : null,
-          // senza colpi, i PI stanno sotto il nome: la riga delle proprietà è spesso già su due righe
-          !a.colpi && a.piMax ? fileColpi(null, [{ etichetta: '', pi: a.piMax }]) : null)
-        : h('td', { class: `col-${k}` }, a[k] || '—')))),
-      a.colpi ? h('tr', { class: 'riga-colpi' }, h('td', { colspan: n }, fileColpi(a.colpi, a.piMax ? [{ etichetta: '', pi: a.piMax }] : []))) : null)));
+      h('tr', { class: 'riga-arma' },
+        h('td', { class: 'col-in-mano' }, h('span', { class: 'casella' })),
+        COLONNE_ARMI.map(([k]) => (k === 'nome'
+          ? h('th', { scope: 'row' }, a.nome, a.addosso ? h('span', { class: 'sigla' }, ' addosso') : null)
+          : h('td', { class: `col-${k}` }, a[k] || '—')))),
+      h('tr', { class: 'riga-colpi' }, h('td', { colspan: n },
+        fileColpi(a.colpi ?? null, a.piMax ? [{ etichetta: '', pi: a.piMax }] : []),
+        condizioni.length || (a.proprieta && a.proprieta !== '—') ? h('p', { class: 'dettagli-arma sigla' },
+          condizioni.length ? ['Condizione (A.49): ', condizioni.join(' · ')] : null,
+          a.proprieta && a.proprieta !== '—' ? [condizioni.length ? ' — ' : null, 'Proprietà: ', a.proprieta] : null) : null)))));
+}
+
+/** Sanitario (decisione 7): un kit per riga, con le applicazioni a quadratini (§7.19). */
+const boxSanitario = (kit) => box({ titolo: 'Sanitario', classe: 'f3-sanitario' },
+  kit.map((k) => h('div', { class: 'caricatore kit-sanitario' }, h('span', { class: 'nome-kit' }, k.nome), h('span', { class: 'etichetta-colpi' }, k.unita), quadratini(k.applicazioni, { compatto: true }))));
+
+/** Gradi da cerchiare con la penalità accanto (Ferite, Affaticamento, Corruzione): una tabella. */
+const tabellaGradi = (righe, { classe = '' } = {}) => h('table', { class: `tabella-stampa gradi-stampa ${classe}`.trim() },
+  h('tbody', {}, righe.map((r) => h('tr', {},
+    h('td', { class: 'col-casella' }, h('span', { class: 'casella' })),
+    h('th', { scope: 'row' }, r.nome),
+    h('td', { class: 'col-penalita' }, r.penalita),
+    r.nota !== undefined ? h('td', { class: 'nota-grado sigla' }, r.nota ?? '') : null))));
+
+const penalitaTesto = (v) => (v === null || v === undefined ? '—' : v === 0 ? '0' : segno(v));
+
+/** Colonna destra del foglio 3: Ferite, Affaticamento, Corruzione Oscura, Stati (§5.14, §5.19, §5.20, §5.18). */
+function colonnaCondizioni(d) {
+  return h('div', { class: 'colonna f3-destra' },
+    box({ titolo: 'Ferite (§5.14)', classe: 'f3-ferite' },
+      tabellaGradi([...d.ferite.stati.map((f) => ({ nome: f.nome, penalita: penalitaTesto(f.penalita), nota: f.menomazione ?? '' })),
+        { nome: 'Oltre Grave', penalita: '', nota: d.ferite.oltre }])),
+    box({ titolo: 'Affaticamento (§5.19)', classe: 'f3-affaticamento' },
+      tabellaGradi(d.affaticamento.map((x) => ({ nome: x.nome, penalita: penalitaTesto(x.penalita) })), { classe: 'due-colonne' })),
+    d.corruzione.length ? box({ titolo: 'Corruzione Oscura (§5.20)', classe: 'f3-corruzione' },
+      tabellaGradi(d.corruzione.map((x) => ({ nome: x.irreversibile ? `${x.nome} (irreversibile)` : x.nome, penalita: penalitaTesto(x.penalita) })), { classe: 'due-colonne' })) : null,
+    box({ titolo: 'Stati (§5.18)', classe: 'f3-stati' },
+      tabellaGradi(d.statiStampa.map((x) => ({ nome: x.nome, penalita: '', nota: x.effetto || '—' })), { classe: 'stati-gradi' })));
 }
 
 /**
- * Continuazione del foglio 3: se il contenuto non entra, ciò che non sta passa a una pagina
- * successiva con la stessa intestazione (e da questa alla seguente, se serve). Si spezza fra i
- * riquadri e, nelle tabelle, fra le righe (un'arma con le sue file di colpi e di PI è una riga
- * sola): mai dentro una riga. Nella prima pagina restano la sintesi e il riquadro Punti Vita, con
- * l'altezza minima di css/stampa.css (.f3-pv); passano, in quest'ordine: i riquadri della colonna
- * centrale oltre il primo (Ferite), Protezioni e Armi dall'ultima se schiacciano la parte bassa, le
- * righe dell'Equipaggiamento che il riquadro taglierebbe. Da una continuazione alla successiva
- * passa l'ultimo elemento in ordine di lettura.
+ * Continuazione del foglio 3: se la colonna sinistra non entra, ciò che non sta passa a una pagina
+ * «Combattimento (continua)» a tutta larghezza (la colonna destra non si ripete). Passano, dall'ultimo
+ * in ordine di lettura: il Sanitario, le Protezioni, le armi (un'arma con le sue file è un tbody,
+ * mai spezzato). Nella prima pagina restano la sintesi e il riquadro Punti Vita, con l'altezza
+ * minima di css/stampa.css (.f3-pv).
  * @returns {number} pagine del foglio
  */
 function impaginaCombattimento(foglio, d, piede) {
   const corpo = foglio.querySelector('.foglio-corpo');
-  if (!eccede(corpo)) return 1;
+  // conta solo la colonna sinistra: la colonna destra (Ferite, Stati…) non passa alla continuazione
+  const sinistra = corpo.querySelector('.f3-sinistra');
+  const eccedeIn = (el) => trabocca(el) || [...el.querySelectorAll('.riquadro-stampa, .riquadro-stampa > .contenuto')].some(trabocca);
+  if (!eccedeIn(sinistra)) return 1;
   const theadArmi = corpo.querySelector('.armi-stampa thead');
-  const pagina1 = { corpo, colonna: corpo.querySelector('.f3-basso > .colonna'), contenutoArmi: corpo.querySelector('.f3-armi > .contenuto') };
-  const pagine = [pagina1];
-
-  // pagina di continuazione: Armi (e Protezioni) a tutta larghezza, sotto i riquadri della colonna
+  const pagine = [{ corpo, contenitore: sinistra }];
   const nuovaPagina = () => {
     const armi = box({ titolo: 'Armi (continua)', classe: 'f3-armi' }, h('table', { class: 'tabella-stampa armi-stampa' }, theadArmi.cloneNode(true)));
-    const colonna = h('div', { class: 'colonna f3-seguito-colonna' });
-    const f = creaFoglio('combattimento', 'Combattimento (continua)', d, piede, () => h('div', { class: 'f3-seguito' }, armi, h('div', { class: 'f3-seguito-basso' }, colonna)));
+    const contenitore = h('div', { class: 'colonna f3-seguito' }, armi);
+    const f = creaFoglio('combattimento', 'Combattimento (continua)', d, piede, () => contenitore);
     f.classList.add('seguito');
+    // lo stesso piè di pagina del foglio: misurando, l'altezza del corpo è già quella vera
+    f.querySelector('.foglio-piede').textContent = foglio.querySelector('.foglio-piede').textContent;
     (pagine.at(-1).foglio ?? foglio).after(f);
-    const pg = { foglio: f, corpo: f.querySelector('.foglio-corpo'), colonna, contenutoArmi: armi.querySelector('.contenuto') };
+    const pg = { foglio: f, corpo: f.querySelector('.foglio-corpo'), contenitore };
     pagine.push(pg);
     return pg;
   };
-  const tabArmi = (pg) => pg.contenutoArmi?.querySelector('.armi-stampa') ?? null;
+  const tabArmi = (pg) => pg.contenitore.querySelector(':scope > .f3-armi .armi-stampa');
   const armiDi = (pg) => [...(tabArmi(pg)?.querySelectorAll(':scope > tbody') ?? [])];
-  const protDi = (pg) => pg.contenutoArmi?.querySelector('.protezioni-stampa') ?? null;
-  // spostamenti verso la pagina dopo, sempre in testa: l'ordine di lettura si conserva
+  const riquadri = (pg) => [...pg.contenitore.querySelectorAll(':scope > .f3-protezioni, :scope > .f3-sanitario')];
   const verso = (k) => pagine[k + 1] ?? nuovaPagina();
-  const sposta = {
-    riquadro: (k) => verso(k).colonna.prepend(pagine[k].colonna.lastElementChild),
-    protezioni: (k) => { const pg = verso(k); pg.contenutoArmi.insertBefore(protDi(pagine[k]), tabArmi(pg).nextSibling); },
-    arma: (k) => { const t = tabArmi(verso(k)); t.insertBefore(armiDi(pagine[k]).pop(), t.querySelector(':scope > tbody')); },
-  };
-
-  for (let k = 0; k < pagine.length && k < 10; k++) {
+  const sposta = (k) => {
     const pg = pagine[k];
-    for (let giro = 0; giro < 300 && eccede(pg.corpo); giro++) {
-      const unita = pg.colonna.children.length + (protDi(pg) ? 1 : 0) + armiDi(pg).length;
-      if (k > 0 && unita <= 1) break; // un elemento solo più alto della pagina: resta, e lo si segnala
-      if (k === 0) {
-        const centrale = trabocca(pg.colonna);
-        const pv = pg.corpo.querySelector('.f3-pv');
-        if (centrale && pg.colonna.children.length > 1) sposta.riquadro(k);
-        else if (trabocca(pg.corpo) || centrale || (pv && (trabocca(pv) || trabocca(pv.querySelector(':scope > .contenuto'))))) {
-          if (protDi(pg)) sposta.protezioni(k);
-          else if (armiDi(pg).length) sposta.arma(k);
-          else if (pg.colonna.children.length) sposta.riquadro(k);
-          else break;
-        } else break;
-      } else if (pg.colonna.children.length) sposta.riquadro(k);
-      else if (protDi(pg)) sposta.protezioni(k);
-      else if (armiDi(pg).length > 1) sposta.arma(k);
-      else break;
+    const r = riquadri(pg);
+    if (r.length) {
+      const dopo = verso(k);
+      dopo.contenitore.insertBefore(r.at(-1), dopo.contenitore.querySelector(':scope > .f3-armi').nextSibling);
+      return true;
     }
+    const a = armiDi(pg);
+    if (a.length > (k > 0 ? 1 : 0)) {
+      const t = tabArmi(verso(k));
+      t.insertBefore(a.at(-1), t.querySelector(':scope > tbody'));
+      return true;
+    }
+    return false;
+  };
+  for (let k = 0; k < pagine.length && k < 10; k++) {
+    for (let giro = 0; giro < 300 && eccedeIn(pagine[k].contenitore) && sposta(k); giro++);
   }
-
-  // riquadri rimasti vuoti
+  // riquadri Armi rimasti senza armi
   for (const pg of pagine) {
-    if (tabArmi(pg) && !armiDi(pg).length) tabArmi(pg).remove();
-    const boxArmi = pg.contenutoArmi?.closest('.riquadro-stampa');
-    if (boxArmi && !boxArmi.querySelector('table')) boxArmi.remove();
+    const box = pg.contenitore.querySelector(':scope > .f3-armi');
+    if (box && !armiDi(pg).length) box.remove();
   }
   return pagine.length;
 }
@@ -460,31 +487,21 @@ function foglioCombattimento(d) {
   const s = d.sintesi;
   const mov = s.movimento;
   const cella = (etichetta, ...valore) => h('div', { class: 'cella-sintesi' }, h('span', { class: 'nome-cella' }, etichetta), h('span', { class: 'valore-cella' }, ...valore));
-  const casella = () => h('span', { class: 'casella' });
-  return [
-    box({ titolo: null, classe: 'f3-sintesi' },
-      h('div', { class: 'sintesi' },
-        cella('Iniziativa', `${segno(s.iniziativa)} + ${s.dadoIniziativa}`),
-        cella('Movimento', `Passo ${mov.passo} · Corsa ${mov.corsa} · Scatto ${mov.scatto} ${mov.unita}`),
-        cella('Azioni', `${s.azioni.movimento} Mov. · ${s.azioni.principali} Princ.`),
-        s.difese ? cella('Difese', `VA ${s.difese.va}`) : null,
-        s.salvezze.map((x) => cella(x.nome, `${x.totale}${x.limitato ? '*' : ''}`))),
-      // §5.18: i riassunti degli Stati non entrano a 10 pt; resta una fila di nomi da cerchiare
-      h('p', { class: 'stati-nomi' }, h('strong', {}, 'Stati (§5.18)'), d.statiRiassunto.map((x) => h('span', {}, x.nome)))),
-    box({ titolo: 'Armi', classe: 'f3-armi' }, tabellaArmi(d.armiStampa),
-      tabellaProtezioni(d)),
-    // l'Equipaggiamento è passato al foglio Inventario (pezzo 1): il riempitivo Punti Vita prende lo spazio
-    h('div', { class: 'f3-basso' },
-      h('div', { class: 'colonna' },
-        box({ titolo: 'Ferite (§5.14)' },
-          // senza intestazione: ferita, penalità a VA e PS, menomazione
-          h('table', { class: 'tabella-stampa ferite' },
-            h('tbody', {}, d.ferite.stati.map((f) => h('tr', {},
-              h('td', {}, casella()), h('th', { scope: 'row' }, f.nome), h('td', {}, segno(f.penalita)), h('td', {}, f.menomazione ?? ''))),
-            h('tr', {}, h('td', {}, casella()), h('th', { scope: 'row' }, 'Oltre Grave'), h('td', { colspan: 2 }, d.ferite.oltre)))))),
-        // Specializzazioni e Tecniche Interiori sono nel foglio 2 (pezzo 2)
+  return h('div', { class: 'f3-griglia' },
+    h('div', { class: 'colonna f3-sinistra' },
+      // la fila dei nomi degli Stati non c'è più: gli Stati hanno il loro riquadro a destra
+      box({ titolo: null, classe: 'f3-sintesi' },
+        h('div', { class: 'sintesi' },
+          cella('Iniziativa', `${segno(s.iniziativa)} + ${s.dadoIniziativa}`),
+          cella('Movimento', `Passo ${mov.passo} · Corsa ${mov.corsa} · Scatto ${mov.scatto} ${mov.unita}`),
+          cella('Azioni', `${s.azioni.movimento} Mov. · ${s.azioni.principali} Princ.`),
+          s.difese ? cella('Difese', `VA ${s.difese.va}`, d.istintive?.length ? h('span', { class: 'sigla' }, ` (${d.istintive.join(', ')})`) : null) : null,
+          s.salvezze.map((x) => cella(x.nome, `${x.totale}${x.limitato ? '*' : ''}`)))),
+      box({ titolo: 'Armi', classe: 'f3-armi' }, tabellaArmi(d.armiStampa, d.condizioniArmi ?? [])),
+      box({ titolo: 'Protezioni', classe: 'f3-protezioni' }, tabellaProtezioni(d)),
+      d.sanitario?.length ? boxSanitario(d.sanitario) : null,
       box({ titolo: 'Punti Vita', tinta: 'pv', forte: true, riempitivo: true, classe: 'f3-pv' },
-        // PV massimi e, accanto, l'AR (docs/ricognizione-ar-pi.md): un sottoriquadro per valore
+        // PV massimi e, accanto, l'AR in evidenza (docs/ricognizione-ar-pi.md): un sottoriquadro per valore
         h('div', { class: 'f3-massimi' },
           h('div', { class: 'massimo' }, h('span', {}, 'massimi'), h('span', { class: 'valore' }, String(d.pv))),
           (d.arStampa?.valori ?? []).map((v) => h('div', { class: `massimo tinta-ar${v.principale ? ' principale' : ''}` },
@@ -493,7 +510,7 @@ function foglioCombattimento(d) {
         h('p', { class: 'piccolo' }, 'attuali'),
         quadratini(d.pv, { bloccoInPiu: true }),
         righeGuida())),
-  ];
+    colonnaCondizioni(d));
 }
 
 // ---------------------------------------------------------------------------

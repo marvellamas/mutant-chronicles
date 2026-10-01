@@ -9,7 +9,7 @@ import { valoreTiro } from './tiri.js';
 import { rigaAlLivello } from './descrizioni.js';
 import { CAMPI_ANAGRAFICA } from './character.js';
 import { checklist } from './checklist.js';
-import { aggiungiDanno, NOME_TESTO_PRECEDENTE, catalogo, normalizzaEquipaggiamento, STATO_DEPOSITO } from './equipaggiamento.js';
+import { aggiungiDanno, NOME_TESTO_PRECEDENTE, catalogo, normalizzaEquipaggiamento, STATO_DEPOSITO, consumabili } from './equipaggiamento.js';
 import { saldoIniziale, crediti } from './dotazioni.js';
 import { SEZIONI_INVENTARIO, sezioneInventario } from './palette.js';
 import { modoRicarica } from './ricarica.js';
@@ -308,6 +308,19 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     tecniche: abilita.tecniche,
     tecnicheAmmesse: abilita.tecnicheAmmesse,
     statiRiassunto: dati.regole.stati.elenco.map((x) => ({ id: x.id, nome: x.nome, riassunto: x.promemoria ?? '' })),
+    // foglio 3, colonna destra (docs/layout-ss.md, pezzo 3): Stati con il solo effetto numerico dai dati
+    statiStampa: dati.regole.stati.elenco.map((x) => ({ id: x.id, nome: x.nome, effetto: effettoStato(x) })),
+    // §7.19: kit sanitari (non nel deposito comune) con le applicazioni da annerire
+    sanitario: consumabili(c.equipaggiamento ?? [], dati).map((k) => ({ uid: k.uid, nome: k.nome, applicazioni: k.capacita, unita: k.unita })),
+    // §8.6.7: Parata e Schivata Istintiva (e i Talenti che le richiedono), accanto alle Difese
+    istintive: (() => {
+      const ids = ['parata-istintiva', 'schivata-istintiva'];
+      const posseduti = new Set((s.talentiLiberi ?? []).map((t) => t.id));
+      return (dati.talenti_liberi?.talenti ?? []).filter((t) => posseduti.has(t.id) && (ids.includes(t.id) || (t.prerequisiti ?? []).some((p) => ids.includes(p)))).map((t) => t.nome);
+    })(),
+    // A.49, §5.17: condizione delle armi, i gradi da cerchiare; sulla carta il nome breve, senza la
+    // precisazione fra parentesi («Riparata sul campo (era Rotta)» → «Riparata sul campo»), una volta sola
+    condizioniArmi: [...new Set((dati.regole.condizioni_armi?.elenco ?? []).map((x) => x.nome.replace(/\s*\(.*\)\s*$/, '')))],
   };
 
   const fogli = [
@@ -470,6 +483,35 @@ export function schedaConArmiAddosso(p, dati) {
   const creazione = { ...p.creazione, equipaggiamento: voci.map((v) => (pronte.has(v.uid) ? { ...v, stato: 'impugnata' } : v)) };
   const s = calcolaScheda({ ...p, creazione }, dati);
   return s.equipaggiamento ? Object.assign(s, { armiAddosso: pronte }) : null;
+}
+
+const conSegnoStampa = (n) => (n < 0 ? `−${-n}` : `+${n}`);
+const GRUPPI_PROVE = { tutte: 'tutte le Prove', fisiche: 'fisiche', fisiche_ravvicinate: 'fisiche ravvicinate', vista: 'vista', udito: 'udito' };
+/**
+ * Effetto numerico di uno Stato (regole.json → stati.elenco, §5.18) in poche parole, per la colonna
+ * destra del foglio 3: «−2 fisiche, Passo 3 Q». Solo i numeri dei dati, senza descrizioni.
+ */
+export function effettoStato(x) {
+  const parti = [];
+  for (const e of x.effetti ?? []) {
+    const uso = e.ambito === 'uso_specifico' && e.uso ? ` (${e.uso})` : '';
+    if (e.tipo === 'salvezza') parti.push(`${conSegnoStampa(e.valore)} Salvezze${uso}`);
+    else if (e.prove) parti.push(`${conSegnoStampa(e.valore)} ${GRUPPI_PROVE[e.prove] ?? e.prove}${uso}`);
+    else if (e.abilita) parti.push(`${conSegnoStampa(e.valore)} ${e.abilita}${uso}`);
+  }
+  const m = x.movimento;
+  if (m?.nessuno) parti.push('nessun Movimento');
+  else {
+    if (m?.solo_passo) parti.push('solo Passo');
+    if (Number.isInteger(m?.passo_q)) parti.push(`Passo ${m.passo_q} Q`);
+  }
+  const a = x.azioni;
+  if (a?.principali === 0 && a?.movimento === 0) parti.push('nessuna Azione');
+  else {
+    if (Number.isInteger(a?.principali)) parti.push(a.principali ? `${a.principali} AzP` : 'nessuna AzP');
+    if (Number.isInteger(a?.movimento)) parti.push(a.movimento ? `${a.movimento} AzM` : 'nessuna AzM');
+  }
+  return parti.join(', ');
 }
 
 /**
