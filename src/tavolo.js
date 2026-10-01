@@ -6,6 +6,7 @@ import { calcolaScheda } from './calc.js';
 import { massimiSessione, allineaSessione, descriviFerite } from './sessione.js';
 import { testoDanno } from './stampa.js';
 import { aggiungiDanno } from './equipaggiamento.js';
+import { chiaveDaFile } from './cartella.js';
 
 /**
  * Scheda compatta di un PG per la plancia.
@@ -19,7 +20,8 @@ export function vistaPlancia(testo, dati, file = null) {
   const { scelte } = normalizza(p.creazione, dati);
   const livelli = p.livelli ?? [];
   const nome = scelte.nome?.trim() || 'Senza nome';
-  const base = { file, nome, ritratto: scelte.ritratto ?? null, livello: 1 + livelli.length };
+  // chiaveCartella: il nome del personaggio nei file di personaggi/ (src/cartella.js), che lo identifica al tavolo
+  const base = { file, chiaveCartella: file ? chiaveDaFile(file) : null, nome, ritratto: scelte.ritratto ?? null, livello: 1 + livelli.length };
   const riposo = calcolaScheda({ creazione: scelte, livelli }, dati);
   if (!riposo.caratteristiche) return { ...base, completa: false, classi: [], corporazione: scelte.corporazione ?? null };
   // la sessione del file, allineata ai massimi attuali (come all'apertura della scheda digitale)
@@ -39,6 +41,9 @@ export function vistaPlancia(testo, dati, file = null) {
     pv: { attuali: sessione.pvAttuali, massimo: massimi.pv },
     pm: massimi.pm ? { attuali: sessione.pmAttuali, massimo: massimi.pm } : null,
     pe: { attuali: sessione.puntiEroe, massimo: massimi.puntiEroe },
+    // Iniziativa effettiva (src/condizioni.js → valoriTavolo) e le Caratteristiche per la parità (§5.1)
+    iniziativa: { valore: scheda.tavolo?.iniziativa?.effettivo ?? scheda.iniziativa, provenienza: scheda.tavolo?.iniziativa?.provenienza ?? null },
+    caratteristichePerParita: Object.fromEntries((r.iniziativa?.caratteristiche ?? []).map((k) => [k, scheda.caratteristiche[k]?.valore ?? null])),
     // AR al tavolo (src/condizioni.js): il valore principale e gli altri (contro Etereo, esplosioni)
     ar: ar ? { totale: ar.totale, magica: ar.magica, valori: (ar.valori ?? []).map((v) => ({ id: v.id, etichetta: v.etichetta, valore: v.valore, principale: !!v.principale, provenienza: v.provenienza })) } : null,
     difese: difese ? { valore: difese.effettivo ?? difese.totale, daRegole: difese.totale, provenienza: difese.provenienza ?? null } : null,

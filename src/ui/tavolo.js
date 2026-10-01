@@ -10,6 +10,8 @@ import { riempimento } from '../interfaccia.js';
 import { vistaPlancia } from '../tavolo.js';
 import { ultimiPerPersonaggio, chiaveDaFile } from '../cartella.js';
 import { elencoCartella, leggiCartella } from './cartella.js';
+import { pannelloScontro, leggiScontroAperto, leggiScontro, salvaScontro } from './scontro.js';
+import { diTurno } from '../scontro.js';
 
 const INTERVALLO_MS = 3000;
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
@@ -44,6 +46,36 @@ export function renderTavolo(radice, ctx) {
     errore: null,
     sceltaAperta: false,
     attivo: true,
+    // pezzo 2: scontro aperto (server, scontri/), avviso dopo un conflitto di revisione, registro aperto
+    scontro: null,
+    avvisoScontro: null,
+    registroAperto: false,
+    bozza: null,
+  };
+
+  // salva una modifica dello scontro; con una revisione vecchia (altra finestra) ricarica quello attuale
+  const salva = async (nuovo) => {
+    try {
+      const r = await salvaScontro(nuovo);
+      if (r.conflitto !== undefined) {
+        stato.scontro = r.conflitto?.stato === 'aperto' ? r.conflitto : null;
+        stato.avvisoScontro = 'Lo scontro è stato cambiato in un’altra finestra: ho ricaricato lo stato attuale. Ripeti l’ultima azione se serve ancora.';
+      } else {
+        stato.avvisoScontro = r.scontro.stato === 'chiuso' ? `«${r.scontro.nome}» chiuso e archiviato in scontri/archivio/.` : null;
+        stato.scontro = r.scontro.stato === 'aperto' ? r.scontro : null;
+      }
+      disegna();
+      return r.conflitto === undefined;
+    } catch (e) {
+      stato.avvisoScontro = `Scontro non salvato: ${e.message}`;
+      disegna();
+      return false;
+    }
+  };
+  const modifica = async (fn) => {
+    let nuovo;
+    try { nuovo = fn(stato.scontro); } catch (e) { stato.avvisoScontro = e.message; disegna(); return false; }
+    return salva(nuovo);
   };
 
   const disegna = () => {
@@ -63,10 +95,17 @@ export function renderTavolo(radice, ctx) {
         try { stato.selezione = await scriviSelezione(nuova); } catch (e) { alert(`Selezione non salvata: ${e.message}`); }
         await aggiorna(true);
       }) : null,
+      pannelloScontro(ctx, Object.assign(stato, { pgAlTavolo: alTavolo.map((r) => stato.viste.get(r.file)).filter((v) => v?.completa) }),
+        { modifica, crea: (s) => salva(s), ridisegna: disegna }),
       alTavolo.length
         ? h('div', { class: 'plancia-griglia' }, alTavolo.map((r) => (r.mancante ? cartaMancante(r.mancante)
-          : stato.viste.get(r.file) ? cartaPg(ctx, stato.viste.get(r.file), r) : cartaErrore(r, stato.errori.get(r.file)))))
+          : stato.viste.get(r.file) ? cartaPg(ctx, stato.viste.get(r.file), r, turnoDi(r)) : cartaErrore(r, stato.errori.get(r.file)))))
         : h('p', { class: 'vuoto' }, 'Nessun personaggio al tavolo: sceglili con «Chi è al tavolo».')));
+  };
+
+  const turnoDi = (r) => {
+    const t = stato.scontro ? diTurno(stato.scontro) : null;
+    return !!t && t.tipo === 'pg' && t.chiave === chiaveDaFile(r.file);
   };
 
   // rilegge l'elenco e i file cambiati dei personaggi al tavolo (confronto sull'mtime)
@@ -92,6 +131,18 @@ export function renderTavolo(radice, ctx) {
       visti.set(r.file, r.mtime);
       cambiato = true;
     }
+    // scontro aperto: si rilegge quando cambia la revisione (un'altra finestra, un altro PC)
+    try {
+      const aperto = await leggiScontroAperto();
+      if (!aperto && stato.scontro) { stato.scontro = null; cambiato = true; }
+      if (aperto && (aperto.id !== stato.scontro?.id || aperto.revisione !== stato.scontro?.revisione)) {
+        stato.scontro = await leggiScontro(aperto.id);
+        cambiato = true;
+      }
+    } catch (e) {
+      stato.errore = e.message;
+    }
+    if (!stato.attivo) return;
     stato.ultimo = Date.now();
     if (cambiato || stato.sceltaAperta) disegna();
     else aggiornaIndicatore();
@@ -138,8 +189,8 @@ const pillola = (titolo, valore, provenienza, classe = '') => (provenienza
   ? infoValore(h('strong', {}, numero(valore)), { titolo: `${titolo}: ${numero(valore)}`, provenienza }, { classe: `pillola-plancia ${classe}`.trim() })
   : h('strong', { class: `pillola-plancia ${classe}`.trim() }, numero(valore)));
 
-/** Scheda compatta di un PG: risorse, AR e Difese, condizioni, Stati, armi in mano. */
-function cartaPg(ctx, v, r) {
+/** Scheda compatta di un PG: risorse, AR e Difese, condizioni, Stati, armi in mano; evidenziata se è di turno. */
+function cartaPg(ctx, v, r, diTurnoOra = false) {
   const apri = () => ctx.azioni.apri(r);
   const condizioni = [
     v.ferite?.grado ? `Ferita ${v.ferite.nome}` : null,
@@ -147,7 +198,7 @@ function cartaPg(ctx, v, r) {
     v.corruzione?.grado ? v.corruzione.nome : null,
   ].filter(Boolean);
   const arPrincipale = v.ar?.valori.find((x) => x.principale) ?? v.ar?.valori[0] ?? null;
-  return h('article', { class: 'carta-plancia', 'aria-label': v.nome },
+  return h('article', { class: `carta-plancia${diTurnoOra ? ' di-turno' : ''}`, 'aria-label': diTurnoOra ? `${v.nome}, di turno` : v.nome },
     h('header', { class: 'carta-plancia-testa' },
       v.ritratto ? h('img', { class: 'ritratto-plancia', src: v.ritratto, alt: '' }) : null,
       h('div', {},

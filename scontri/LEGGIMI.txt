@@ -1,0 +1,11 @@
+Scontri del Tavolo del Master
+=============================
+
+Qui il server di Mutant (avvia-server.bat, cioe' node server.mjs) salva gli scontri aperti dalla
+plancia del Tavolo del Master: un file per scontro (scontro-AAAAMMGG-HHMMSS.json) con i
+partecipanti, l'Iniziativa, il Round, il turno, le durate degli Stati e il registro degli eventi.
+
+- Ogni salvataggio porta un numero di revisione: se due finestre cambiano lo stesso scontro, la
+  seconda scrittura viene rifiutata e la plancia ricarica lo stato piu' recente.
+- "Fine scontro" sposta il file in archivio/: non si cancella nulla.
+- I file di questa cartella non vanno su GitHub (.gitignore): sono dati di gioco.

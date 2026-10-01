@@ -1544,3 +1544,21 @@ body.con-sfondo::before {
 .stato-plancia { background: var(--accento-tenue, #f3e3d8); }
 .plancia-armi { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.25rem; font-size: 0.92rem; }
 .plancia-armi li { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.3rem; border-top: 1px solid var(--bordo); padding-top: 0.25rem; }
+
+/* Tavolo del Master, pezzo 2: scontro, Iniziativa, turni e Round */
+.scontro-pannello { margin: 0.75rem 0; }
+.scontro-testa { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem; }
+.scontro-testa h2 { margin: 0; }
+.di-turno-testo { margin: 0.4rem 0; font-size: 1.05rem; }
+.ordine-iniziativa tr.di-turno { background: var(--accento-tenue); }
+.ordine-iniziativa tr.di-turno th, .ordine-iniziativa tr.di-turno .pos-scontro { color: var(--accento); }
+.ordine-iniziativa tr.provvisorio th { font-style: italic; }
+.ordine-iniziativa .totale-scontro { font-size: 1.1rem; }
+.pos-scontro { width: 2rem; text-align: center; font-weight: 700; }
+.tiro-scontro, .sposta-alleato { display: inline-flex; flex-wrap: wrap; gap: 0.25rem; align-items: center; }
+.input-d10 { width: 4.2rem; }
+.da-tirare ul, .durate-stati ul { margin: 0.3rem 0; padding-left: 1.1rem; }
+.da-tirare li, .durate-stati li { margin: 0.25rem 0; }
+.riga-aggiungi { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: end; margin: 0.4rem 0; }
+.registro-scontro ol { margin: 0.4rem 0; padding-left: 2.2rem; max-height: 16rem; overflow: auto; }
+.carta-plancia.di-turno { border-color: var(--accento); box-shadow: 0 0 0 2px var(--accento); }

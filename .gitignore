@@ -36,3 +36,7 @@ personaggi/*
 
 # Selezione «al tavolo» e stato del Tavolo del Direttore (server.mjs): dati di gioco, non codice
 tavolo/
+
+# Scontri del Tavolo del Master (server.mjs): dati di gioco; si traccia solo il LEGGIMI
+scontri/*
+!scontri/LEGGIMI.txt
