@@ -403,6 +403,15 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .indice-magia th, .indice-magia td { white-space: nowrap; }
 .foglio-poteri .indice-magia th, .foglio-poteri .indice-magia td { padding-top: 0.1mm; padding-bottom: 0.1mm; line-height: 1.12; }
 .indice-magia tbody tr.macro-riga[class*="tinta-"] > th { background: var(--tinta); color: #fff; border-left: 0; text-transform: uppercase; letter-spacing: 0.03em; font-size: var(--ss-font-small); }
+/* prima pagina del foglio 5 (ritocchi post-stampa, 2): elenco a --ss-font pieno, nomi un punto sopra;
+   la colonna si allarga da sola (max-content). Margine verticale delle righe ridotto per i 31 di b */
+.f5-elenco .indice-magia td, .f5-elenco-seguito .indice-magia td { font-size: var(--ss-font); }
+.f5-elenco .indice-magia tbody th, .f5-elenco-seguito .indice-magia tbody th { font-size: 11pt; }
+.f5-elenco .indice-magia thead th, .f5-elenco .indice-magia tbody tr.macro-riga[class*="tinta-"] > th { font-size: var(--ss-font); }
+.f5-elenco .indice-magia th, .f5-elenco .indice-magia td { padding-top: 0; padding-bottom: 0; line-height: 1.1; }
+.scala-verticale { width: auto; }
+.scala-verticale td, .scala-verticale th { text-align: left !important; padding: 0.1mm 2mm; }
+.scala-verticale td:first-child { white-space: nowrap; }
 .nota-solo-elenco { margin: 1mm 0 0; }
 .colonne-schede { flex: 1; min-height: 0; overflow: hidden; column-count: 3; column-gap: 4mm; column-fill: auto; }
 .scheda-incantesimo {

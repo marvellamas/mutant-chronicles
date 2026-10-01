@@ -663,6 +663,22 @@ export function azioniCombattimento(dati, armi = []) {
 }
 
 /**
+ * Abbreviazioni della SS (foglio 5, prima pagina; ritocchi post-stampa): solo parole, mai numeri,
+ * e solo sulla carta (la SD scrive per intero). L'energia di Chroma resta scritta per intero nella
+ * riga accanto al pallino, così nulla si legge solo per il colore.
+ */
+export const ABBREVIAZIONI_SS = [
+  [/Batteria da /g, 'Batt. '], [/\bBatterie\b/g, 'Batt.'],
+  [/Chroma Rosso\b/g, 'Chroma R.'], [/Chroma Verde\b/g, 'Chroma V.'], [/Chroma Blu\b/g, 'Chroma B.'],
+  [/Chroma Bianco\b/g, 'Chroma Bi.'], [/Chroma Viola\b/g, 'Chroma Vi.'], [/Chroma Trasparente\b/g, 'Chroma T.'],
+  [/\bsintonizzato\b/g, 'sint.'], [/da sintonizzare/g, 'da sint.'], [/tutte le macrofamiglie/g, 'tutte le macrof.'],
+  [/\battivazioni\b/g, 'attiv.'], [/regole rimandate/g, 'regole rimand.'],
+];
+
+/** Testo abbreviato per la SS (ABBREVIAZIONI_SS). */
+export const abbreviaSS = (testo) => ABBREVIAZIONI_SS.reduce((t, [da, a]) => t.replace(da, a), String(testo ?? ''));
+
+/**
  * Elenco degli incantesimi conosciuti della prima pagina del foglio Poteri (docs/layout-ss.md,
  * ritocchi post-stampa): un'intestazione per macrofamiglia, poi una riga per incantesimo con le
  * sole colonne essenziali (livello base, PM, gittata, durata, numero di scheda del Manuale della

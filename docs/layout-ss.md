@@ -558,3 +558,19 @@ Dopo la prova su carta cambia solo la prima pagina del foglio 5; le schede compl
   - la richiesta indicava 15 incantesimi per b, ma b ne conosce 31: entrano comunque tutti nella prima pagina, senza continuazione sotto la colonna sinistra;
   - nell'elenco le macrofamiglie sono intestazioni, non una colonna, per tenere la riga corta; la specializzazione esce dall'elenco e resta nelle schede.
 
+
+### Foglio 5, prima pagina: elenco più grande (1° ottobre 2026, seconda prova)
+
+- **Elenco:**
+  - nomi a 11 pt (prima 10), celle a `--ss-font` 10 pt, intestazioni di colonna e di macrofamiglia a 10 pt (prima 9);
+  - righe senza margine verticale (prima 0,1 mm), interlinea 1,1;
+  - la colonna destra si allarga da sola: 112 mm (prima circa 105), la sinistra 162 mm.
+- **Colonna sinistra abbreviata, solo sulla carta** (`abbreviaSS` in `src/stampa.js`; la SD scrive per intero, i numeri non si toccano):
+  - nomi delle riserve: «Batt. 5 PM (Chroma R./V./B./Bi./Vi./T.)»;
+  - sigle: «sint.», «da sint.», «tutte le macrof.», «attiv.»;
+  - titolo «Batt. e riserve di Chroma»;
+  - Lancio: «Focalizz.», «Anticip.», «Incant.», «Gradi taum.», «liv. max», «Potere più diff. di una categ.»;
+  - PM e conversione: «Recupero (Meditaz.) … ore/g.», «Conv. Potere e ricarica … nei due sensi».
+  - L'energia resta scritta per intero nella sigla accanto al pallino.
+- **Lancio:** una voce per riga quando supera 38 caratteri; scala della Prova di Potere in verticale (Livello | Prova).
+- **Esito:** b 31 su 31 e Lucas 15 su 15 nella prima pagina, foglio 5 di una pagina con «solo elenco»; pagine invariate (c 6, b 8 e 35, Lucas 8 e 21); nessuno sbordo.

@@ -10,7 +10,7 @@ import { stemma, iconaPagina } from './immagini.js';
 import { pallini } from './tooltip.js';
 import { crediti } from '../dotazioni.js';
 import { COLORI_MACROFAMIGLIE } from '../palette.js';
-import { normalizzaOpzioniStampa, fogliDaStampare, numeraPagine, testoPiede, iconaFoglio, schemaQuadratini, righeElencoIncantesimi } from '../stampa.js';
+import { normalizzaOpzioniStampa, fogliDaStampare, numeraPagine, testoPiede, iconaFoglio, schemaQuadratini, righeElencoIncantesimi, abbreviaSS } from '../stampa.js';
 
 const FOGLIO_STILE = 'css/stampa.css';
 
@@ -796,43 +796,44 @@ function foglioMagia(d) {
   // etichetta: valore, due per riga; le voci lunghe prendono la riga intera
   const voce = (nome, ...valore) => {
     const testo = [nome, ...valore].map((x) => (typeof x === 'string' ? x : x?.textContent ?? '')).join(' ');
-    return h('div', { class: `f5-voce${testo.length > 44 ? ' intera' : ''}` }, h('span', { class: 'f5-etichetta' }, `${nome}:`), ' ', ...valore);
+    return h('div', { class: `f5-voce${testo.length > 38 ? ' intera' : ''}` }, h('span', { class: 'f5-etichetta' }, `${nome}:`), ' ', ...valore);
   };
-  const conversione = d.conversione ? [`Convertire Potere e ricaricare: ${d.conversione.rapporto}:1`,
+  const conversione = d.conversione ? [`Conv. Potere e ricarica: ${d.conversione.rapporto}:1`,
     d.conversione.talenti.length ? ` (${d.conversione.talenti.join(' e ')})` : '',
-    Object.keys(d.conversione.fissi).length ? `; ${Object.entries(d.conversione.fissi).map(([c, n]) => `${c} ${n}:1`).join(', ')} in entrambi i sensi` : '', '.'].join('') : null;
+    Object.keys(d.conversione.fissi).length ? `; ${Object.entries(d.conversione.fissi).map(([c, n]) => `${c} ${n}:1`).join(', ')} nei due sensi` : '', '.'].join('') : null;
   return h('div', { class: 'f5-griglia' },
     h('div', { class: 'colonna f5-sinistra' },
       box({ titolo: 'Punti Magia', tinta: 'pm', forte: true, classe: 'f5-pm' },
         h('div', { class: 'f5-pm-testa' },
           h('div', { class: 'massimo' }, h('span', {}, 'massimi'), h('span', { class: 'valore' }, String(d.pm ?? '—'))),
           // Magia sez. 6: recupero con la Meditazione, come nel riquadro della SD
-          med ? h('span', {}, `Recupero con Meditazione: ${med.pmPerOra} PM/ora, ${med.orePerGiorno} ${med.orePerGiorno === 1 ? 'ora' : 'ore'}/giorno`) : null),
+          med ? h('span', {}, `Recupero (Meditaz.): ${med.pmPerOra} PM/ora, ${med.orePerGiorno} ${med.orePerGiorno === 1 ? 'ora' : 'ore'}/g.`) : null),
         h('p', { class: 'piccolo' }, 'attuali'),
         // come i PV del foglio 3: righe da 25, stacco ogni 5, almeno due righe e sempre una riga grigia
         d.pm ? quadratini(d.pm, { compatto: true, perRiga: 25, righeInPiu: Math.max(1, 2 - Math.ceil(d.pm / 25)) }) : null),
       // decisione 5: batterie e riserve di Chroma con i PM qui (il foglio Artefatti ha la sola sintonizzazione)
-      d.riserve?.length ? box({ titolo: 'Batterie e riserve di Chroma (Magia sez. 6)', classe: 'f4-riserve f5-riserve' },
+      // abbreviazioni solo sulla carta (abbreviaSS): «Batt. 5 PM (Chroma R.)»; l'energia resta per intero nella sigla
+      d.riserve?.length ? box({ titolo: 'Batt. e riserve di Chroma (Magia sez. 6)', classe: 'f4-riserve f5-riserve' },
         d.riserve.map((r) => h('div', { class: 'f5-riserva' },
           h('span', { class: `chroma-punto chroma-${String(r.energia).toLowerCase()}`, 'aria-hidden': 'true' }),
-          h('span', { class: 'f5-riserva-nome' }, h('strong', {}, r.nome),
-            h('span', { class: 'sigla' }, ` · ${r.energia} · ${r.integrato ? 'attivazioni (A.18)' : r.regoleRimandate ? 'regole rimandate' : r.macrofamiglie.length >= 3 ? 'tutte le macrofamiglie' : r.macrofamiglie.join(', ') || '—'} · ${r.sintonizzato ? 'sintonizzato' : 'da sintonizzare'} (${r.costo})`)),
+          h('span', { class: 'f5-riserva-nome' }, h('strong', {}, abbreviaSS(r.nome)),
+            h('span', { class: 'sigla' }, abbreviaSS(` · ${r.energia} · ${r.integrato ? 'attivazioni (A.18)' : r.regoleRimandate ? 'regole rimandate' : r.macrofamiglie.length >= 3 ? 'tutte le macrofamiglie' : r.macrofamiglie.join(', ') || '—'} · ${r.sintonizzato ? 'sintonizzato' : 'da sintonizzare'} (${r.costo})`))),
           quadratini(r.capacita, { compatto: true }))),
         conversione ? h('p', { class: 'piccolo f5-conversione' }, conversione) : null) : null,
       box({ titolo: 'Lancio', classe: 'f5-lancio' },
         h('div', { class: 'f5-voci' },
           voce('Potere per lanciare', h('strong', {}, `VA ${v.potere ?? '—'}`), d.lancio ? ` (armatura ${segno(d.lancio.penalita)}, §7.11.1)` : ''),
-          voce('Armi da lancio', `${segno(v.armiDaLancio)} negli Incantesimi`),
-          voce('Focalizzazione', `${segno(v.focalizzazione)} a Potere (1 AzP prima)`),
+          voce('Armi da lancio', `${segno(v.armiDaLancio)} negli Incant.`),
+          voce('Focalizz.', `${segno(v.focalizzazione)} a Potere (1 AzP prima)`),
           voce('Ingaggio', `${segno(v.ingaggio)} a Potere, Prova sempre`),
-          voce('Anticipazione', `PM ×${v.anticipazione}, Potere più difficile di una categoria`),
-          voce('Incantesimi', `conosciuti ${d.conosciuti} / ${d.quota} · livello massimo ${d.livelloMassimo}`),
+          voce('Anticip.', `PM ×${v.anticipazione}, Potere più diff. di una categ.`),
+          voce('Incant.', `conosciuti ${d.conosciuti} / ${d.quota} · liv. max ${d.livelloMassimo}`),
           // Magia sez. 1, come nel riquadro Incantesimi della SD
-          d.gradi ? voce('Gradi taumaturgici', d.gradi.testo) : null),
-        h('table', { class: 'tabella-stampa scala' },
-          h('tbody', {},
-            h('tr', {}, h('th', {}, `Livello (${d.scalaPotere})`), d.scala.map((r) => h('td', {}, r.livelli))),
-            h('tr', {}, h('th', {}, 'Prova di Potere'), d.scala.map((r) => h('td', {}, r.prova)))))),
+          d.gradi ? voce('Gradi taum.', d.gradi.testo) : null),
+        // scala della Prova di Potere in verticale: stretta in larghezza, più lunga in altezza
+        h('table', { class: 'tabella-stampa scala scala-verticale' },
+          h('thead', {}, h('tr', {}, h('th', {}, `Livello (${d.scalaPotere})`), h('th', {}, 'Prova di Potere'))),
+          h('tbody', {}, d.scala.map((r) => h('tr', {}, h('td', {}, r.livelli), h('td', {}, r.prova)))))),
       h('div', { class: 'f5-coda' },
         d.daArtefatti?.length ? h('p', { class: 'da-artefatti-stampa' }, h('strong', {}, 'Da artefatti: '), `${d.daArtefatti.join(', ')}${d.foglioArtefatti ? ` — vedi foglio ${d.foglioArtefatti}` : ''}.`) : null,
         d.soloElenco && incantesimi.length ? notaSoloElenco() : null)),
