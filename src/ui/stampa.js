@@ -30,7 +30,7 @@ export function esciDallaStampa() {
   document.getElementById('stile-stampa')?.remove();
 }
 
-const corpi = { identita: foglioIdentita, abilita: foglioAbilita, combattimento: foglioCombattimento, poteri: foglioMagia };
+const corpi = { identita: foglioIdentita, abilita: foglioAbilita, combattimento: foglioCombattimento, inventario: foglioInventario, poteri: foglioMagia };
 
 function creaFoglio(id, titolo, dati, piede, corpo = corpi[id]) {
   return h('section', { class: `foglio foglio-${id}`, 'aria-label': titolo, dataset: { foglio: id } },
@@ -107,6 +107,16 @@ export function renderStampa({ stampa, torna, opzioni = null, cambiaOpzioni = nu
         const { pagine, pagineSchede } = impaginaMagia(contenitore, f, { ...stampa.fogli.find((x) => x.id === 'poteri').dati, soloElenco: opz.magia === 'elenco' }, stampa.piede);
         stimaSchede.textContent = pagineSchede ? ` (≈ ${pagineSchede} ${pagineSchede === 1 ? 'pagina' : 'pagine'} in più)` : ' (nessuna pagina in più)';
         if (pagine > 1) avvisi.append(h('p', {}, `Il foglio Poteri è su ${pagine} pagine.`));
+        continue;
+      }
+      if (f.classList.contains('foglio-inventario') && f.classList.contains('seguito')) continue; // impaginate da impaginaInventario
+      if (f.classList.contains('foglio-inventario')) {
+        const { pagine, troppoLunghe } = impaginaInventario(f, stampa.fogli.find((x) => x.id === 'inventario').dati, stampa.piede);
+        if (pagine > 1) avvisi.append(h('p', {}, `Il foglio Inventario è su ${pagine} pagine.`));
+        if (troppoLunghe.length) {
+          f.dataset.fuori = '1';
+          fuori.push(`Inventario (sezioni più lunghe di una pagina: ${troppoLunghe.join(', ')})`);
+        }
         continue;
       }
       if (f.classList.contains('foglio-combattimento') && !f.classList.contains('seguito')) {
@@ -344,17 +354,14 @@ function impaginaCombattimento(foglio, d, piede) {
   const corpo = foglio.querySelector('.foglio-corpo');
   if (!eccede(corpo)) return 1;
   const theadArmi = corpo.querySelector('.armi-stampa thead');
-  const theadEquip = corpo.querySelector('.equip-stampa thead');
-  const pagina1 = { corpo, colonna: corpo.querySelectorAll('.f3-basso > .colonna')[1], contenutoArmi: corpo.querySelector('.f3-armi > .contenuto') };
+  const pagina1 = { corpo, colonna: corpo.querySelector('.f3-basso > .colonna'), contenutoArmi: corpo.querySelector('.f3-armi > .contenuto') };
   const pagine = [pagina1];
 
-  // pagina di continuazione: Armi (e Protezioni) a tutta larghezza, sotto Equipaggiamento e riquadri
+  // pagina di continuazione: Armi (e Protezioni) a tutta larghezza, sotto i riquadri della colonna
   const nuovaPagina = () => {
     const armi = box({ titolo: 'Armi (continua)', classe: 'f3-armi' }, h('table', { class: 'tabella-stampa armi-stampa' }, theadArmi.cloneNode(true)));
-    const equip = box({ titolo: 'Equipaggiamento (continua)', classe: 'f3-equip-seguito' },
-      h('table', { class: 'tabella-stampa equip-stampa' }, theadEquip.cloneNode(true), h('tbody', {})));
     const colonna = h('div', { class: 'colonna f3-seguito-colonna' });
-    const f = creaFoglio('combattimento', 'Combattimento (continua)', d, piede, () => h('div', { class: 'f3-seguito' }, armi, h('div', { class: 'f3-seguito-basso' }, equip, colonna)));
+    const f = creaFoglio('combattimento', 'Combattimento (continua)', d, piede, () => h('div', { class: 'f3-seguito' }, armi, h('div', { class: 'f3-seguito-basso' }, colonna)));
     f.classList.add('seguito');
     (pagine.at(-1).foglio ?? foglio).after(f);
     const pg = { foglio: f, corpo: f.querySelector('.foglio-corpo'), colonna, contenutoArmi: armi.querySelector('.contenuto') };
@@ -364,12 +371,10 @@ function impaginaCombattimento(foglio, d, piede) {
   const tabArmi = (pg) => pg.contenutoArmi?.querySelector('.armi-stampa') ?? null;
   const armiDi = (pg) => [...(tabArmi(pg)?.querySelectorAll(':scope > tbody') ?? [])];
   const protDi = (pg) => pg.contenutoArmi?.querySelector('.protezioni-stampa') ?? null;
-  const equipDi = (pg) => [...pg.corpo.querySelectorAll('.equip-stampa tbody > tr')].filter((r) => !r.dataset.vuota);
   // spostamenti verso la pagina dopo, sempre in testa: l'ordine di lettura si conserva
   const verso = (k) => pagine[k + 1] ?? nuovaPagina();
   const sposta = {
     riquadro: (k) => verso(k).colonna.prepend(pagine[k].colonna.lastElementChild),
-    riga: (k) => verso(k).corpo.querySelector('.equip-stampa tbody').prepend(equipDi(pagine[k]).pop()),
     protezioni: (k) => { const pg = verso(k); pg.contenutoArmi.insertBefore(protDi(pagine[k]), tabArmi(pg).nextSibling); },
     arma: (k) => { const t = tabArmi(verso(k)); t.insertBefore(armiDi(pagine[k]).pop(), t.querySelector(':scope > tbody')); },
   };
@@ -377,7 +382,7 @@ function impaginaCombattimento(foglio, d, piede) {
   for (let k = 0; k < pagine.length && k < 10; k++) {
     const pg = pagine[k];
     for (let giro = 0; giro < 300 && eccede(pg.corpo); giro++) {
-      const unita = pg.colonna.children.length + equipDi(pg).length + (protDi(pg) ? 1 : 0) + armiDi(pg).length;
+      const unita = pg.colonna.children.length + (protDi(pg) ? 1 : 0) + armiDi(pg).length;
       if (k > 0 && unita <= 1) break; // un elemento solo più alto della pagina: resta, e lo si segnala
       if (k === 0) {
         const centrale = trabocca(pg.colonna);
@@ -388,10 +393,8 @@ function impaginaCombattimento(foglio, d, piede) {
           else if (armiDi(pg).length) sposta.arma(k);
           else if (pg.colonna.children.length) sposta.riquadro(k);
           else break;
-        } else if (righeTagliate(pg.corpo) && equipDi(pg).length) sposta.riga(k);
-        else break;
+        } else break;
       } else if (pg.colonna.children.length) sposta.riquadro(k);
-      else if (equipDi(pg).length) sposta.riga(k);
       else if (protDi(pg)) sposta.protezioni(k);
       else if (armiDi(pg).length > 1) sposta.arma(k);
       else break;
@@ -403,10 +406,6 @@ function impaginaCombattimento(foglio, d, piede) {
     if (tabArmi(pg) && !armiDi(pg).length) tabArmi(pg).remove();
     const boxArmi = pg.contenutoArmi?.closest('.riquadro-stampa');
     if (boxArmi && !boxArmi.querySelector('table')) boxArmi.remove();
-    if (pg.foglio) {
-      const boxEquip = pg.corpo.querySelector('.f3-equip-seguito');
-      if (boxEquip && !equipDi(pg).length) boxEquip.remove();
-    }
   }
   return pagine.length;
 }
@@ -415,11 +414,7 @@ function foglioCombattimento(d) {
   const s = d.sintesi;
   const mov = s.movimento;
   const cella = (etichetta, ...valore) => h('div', { class: 'cella-sintesi' }, h('span', { class: 'nome-cella' }, etichetta), h('span', { class: 'valore-cella' }, ...valore));
-  const eq = d.equipaggiamentoStampa;
   const casella = () => h('span', { class: 'casella' });
-  const rigaEquip = (r) => h('tr', {}, h('th', { scope: 'row' }, r.nome, r.note ? h('span', { class: 'sigla' }, ` — ${r.note}`) : null),
-    h('td', { class: 'peso' }, r.peso), h('td', { class: 'dove' }, casella()), h('td', { class: 'dove' }, casella()), h('td', { class: 'dove' }, casella()));
-  const vuota = () => { const r = h('tr', { class: 'da-compilare' }, h('th', {}, ' '), h('td', {}, ' '), h('td', { class: 'dove' }, casella()), h('td', { class: 'dove' }, casella()), h('td', { class: 'dove' }, casella())); r.dataset.vuota = '1'; return r; };
   return [
     box({ titolo: null, classe: 'f3-sintesi' },
       h('div', { class: 'sintesi' },
@@ -432,16 +427,8 @@ function foglioCombattimento(d) {
       h('p', { class: 'stati-nomi' }, h('strong', {}, 'Stati (§5.18)'), d.statiRiassunto.map((x) => h('span', {}, x.nome)))),
     box({ titolo: 'Armi', classe: 'f3-armi' }, tabellaArmi(d.armiStampa),
       tabellaProtezioni(d)),
+    // l'Equipaggiamento è passato al foglio Inventario (pezzo 1): il riempitivo Punti Vita prende lo spazio
     h('div', { class: 'f3-basso' },
-      h('div', { class: 'colonna' },
-        box({ titolo: 'Equipaggiamento', riempitivo: true },
-          h('p', { class: 'crediti-stampa' }, h('strong', {}, 'Crediti '), h('span', { class: 'casella-lunga' }),
-            d.creditiIniziali !== null ? h('span', { class: 'sigla' }, ` saldo iniziale ${crediti(d.creditiIniziali)}`) : null,
-            eq.carico ? h('span', { class: 'sigla' }, ` · carico ${eq.carico.peso} kg (≤ ${eq.carico.ordinario} / ${eq.carico.massimo})${eq.carico.senzaPeso ? ` · ${eq.carico.senzaPeso} da definire, totale parziale` : ''}`) : null),
-          h('div', { class: 'riempi-righe' },
-            h('table', { class: 'tabella-stampa equip-stampa' },
-              h('thead', {}, h('tr', {}, h('th', {}, 'Oggetto'), h('th', {}, 'Peso'), h('th', { class: 'dove' }, 'ind'), h('th', { class: 'dove' }, 'zai'), h('th', { class: 'dove' }, 'Altro'))),
-              h('tbody', {}, eq.righe.map(rigaEquip), Array.from({ length: 30 }, vuota)))))),
       h('div', { class: 'colonna' },
         box({ titolo: 'Ferite (§5.14)' },
           // senza intestazione: ferita, penalità a VA e PS, menomazione
@@ -467,7 +454,99 @@ function foglioCombattimento(d) {
 }
 
 // ---------------------------------------------------------------------------
-// Foglio 4 — Magia (anche più pagine). Prima pagina: Punti Magia, valori di lancio, contenitori
+// Foglio 4 — Inventario (docs/layout-ss.md, pezzo 1): in testa Crediti e Carico su una riga; poi le
+// sezioni della tab Inventario su due colonne (CSS columns), una tabella per sezione con
+// l'intestazione nel colore della categoria; per ogni oggetto costo, Qualità, peso, quattro
+// caselle di stato (l'attuale prestampata piena), PS Integrità e, sotto, i PI a quadratini. In fondo
+// il riempitivo «Da aggiungere». Le sezioni che non entrano passano alla pagina dopo, intere.
+
+const COLONNE_INVENTARIO = (d) => ['Oggetto', 'Costo', 'Qualità', 'Peso', ...d.stati.map((x) => x.sigla), 'PS'];
+
+function tabellaInventario(d, righe, { vuote = 0 } = {}) {
+  const n = COLONNE_INVENTARIO(d).length;
+  const caselle = (stato) => d.stati.map((x) => h('td', { class: 'stato-inv', title: x.nome }, h('span', { class: `casella${x.id === stato ? ' piena' : ''}` })));
+  const voce = (r) => h('tbody', { class: 'oggetto-inv' },
+    h('tr', {},
+      h('th', { scope: 'row' }, r.nome, r.note ? h('span', { class: 'sigla' }, ` — ${r.note}`) : null),
+      h('td', { class: 'costo-inv' }, r.costo), h('td', { class: 'qualita-inv' }, r.qualita), h('td', { class: 'peso-inv' }, r.peso),
+      caselle(r.stato), h('td', { class: 'ps-inv' }, r.ps ?? '—')),
+    r.piMax || r.condizioni ? h('tr', { class: 'riga-pi' }, h('td', { colspan: n },
+      r.piMax ? h('div', { class: 'pi-inv' }, h('span', { class: 'etichetta-colpi' }, 'PI'), quadratini(r.piMax, { compatto: true })) : null,
+      r.condizioni ? h('p', { class: 'condizioni-inv sigla' }, 'Condizione (A.49): ', r.condizioni.join(' · ')) : null)) : null);
+  // «Da aggiungere»: righe vuote con le stesse colonne e i PI a caselle vuote (da scrivere a matita)
+  const vuota = () => {
+    const t = h('tbody', { class: 'oggetto-inv da-compilare' },
+      h('tr', {}, h('th', {}, ' '), h('td', {}, ' '), h('td', {}, ' '), h('td', {}, ' '), caselle(null), h('td', {}, ' ')),
+      // una riga di 10 caselle tutte disponibili: il massimo si scrive a matita
+      h('tr', { class: 'riga-pi' }, h('td', { colspan: n }, h('div', { class: 'pi-inv' }, h('span', { class: 'etichetta-colpi' }, 'PI'), quadratini(10, { compatto: true })))));
+    t.dataset.vuota = '1';
+    return t;
+  };
+  return h('table', { class: 'tabella-stampa inventario-stampa' },
+    h('thead', {}, h('tr', {}, COLONNE_INVENTARIO(d).map((c, i) => h('th', { class: i >= 4 && i < 4 + d.stati.length ? 'stato-inv' : null }, c)))),
+    righe.map(voce), Array.from({ length: vuote }, vuota));
+}
+
+const sezioneInventario = (d, s) => box({ titolo: `${s.titolo} (${s.righe.length})`, classe: `inv-sezione tinta-${s.colore}` }, tabellaInventario(d, s.righe));
+
+function testaInventario(d) {
+  const c = d.carico;
+  return h('div', { class: 'inv-testa' },
+    h('p', {}, h('strong', {}, 'Crediti '), h('span', { class: 'casella-lunga' }),
+      d.creditiIniziali !== null ? h('span', { class: 'sigla' }, ` saldo iniziale ${crediti(d.creditiIniziali)}`) : null),
+    c ? h('p', {}, h('strong', {}, 'Carico '), h('span', { class: 'casella-lunga corta' }), ' kg',
+      h('span', { class: 'sigla' }, ` · noto ${c.peso}${c.parziale ? ` (${c.senzaPeso} da definire)` : ''} · Ordinario ≤ ${c.ordinario} · Sovraccarico ≤ ${c.massimo} (§5.2.6)`)) : null,
+    h('p', { class: 'sigla legenda-stati' }, 'Stato: ', d.stati.map((x, i) => [i ? ' · ' : null, h('strong', {}, x.sigla), ` ${x.nome}`]), ' — la casella piena è lo stato salvato.'));
+}
+
+function foglioInventario(d) {
+  return [testaInventario(d), h('div', { class: 'inv-colonne' }, d.sezioni.map((s) => sezioneInventario(d, s)))];
+}
+
+/**
+ * Impagina il foglio Inventario: le sezioni entrano nelle due colonne della pagina nell'ordine della
+ * tab; una sezione che non entra nello spazio rimasto passa intera alla pagina dopo («Inventario
+ * (continua)», senza la testa). Una sezione più alta di una colonna si divide fra le due colonne;
+ * solo se non entra neppure in una pagina intera si segnala (e il collaudo fallisce). In fondo
+ * all'ultima pagina il riempitivo «Da aggiungere», con le righe che entrano.
+ * @returns {{ pagine, troppoLunghe: string[] }}
+ */
+function impaginaInventario(foglio, d, piede) {
+  let colonne = foglio.querySelector('.inv-colonne');
+  const sezioni = [...colonne.children];
+  sezioni.forEach((s) => s.remove());
+  let ultima = foglio;
+  let pagine = 1;
+  const nuovaPagina = () => {
+    const f = creaFoglio('inventario', 'Inventario (continua)', d, piede, () => h('div', { class: 'inv-colonne' }));
+    f.classList.add('seguito');
+    // lo stesso piè di pagina del foglio (si riscrive alla fine): misurando, l'altezza del corpo è già quella vera
+    f.querySelector('.foglio-piede').textContent = foglio.querySelector('.foglio-piede').textContent;
+    ultima.after(f);
+    ultima = f;
+    pagine++;
+    return f.querySelector('.inv-colonne');
+  };
+  const troppoLunghe = [];
+  for (const s of sezioni) {
+    colonne.append(s);
+    if (trabocca(colonne) && colonne.children.length > 1) {
+      colonne = nuovaPagina();
+      colonne.append(s);
+    }
+    if (trabocca(colonne)) troppoLunghe.push(s.querySelector('h2')?.textContent ?? '?');
+  }
+  // riempitivo: righe vuote finché entrano; con meno di due righe libere non si stampa
+  const extra = box({ titolo: 'Da aggiungere', classe: 'inv-sezione inv-da-aggiungere' }, tabellaInventario(d, [], { vuote: 30 }));
+  colonne.append(extra);
+  const vuote = () => [...extra.querySelectorAll('tbody[data-vuota]')];
+  while (trabocca(colonne) && vuote().length) vuote().at(-1).remove();
+  if (vuote().length < 2) extra.remove();
+  return { pagine, troppoLunghe };
+}
+
+// ---------------------------------------------------------------------------
+// Foglio 5 — Poteri (oggi la Magia; anche più pagine). Prima pagina: Punti Magia, valori di lancio, contenitori
 // di Chroma e l'indice degli incantesimi (una riga ciascuno, colorata per macrofamiglia); le
 // righe che non entrano continuano nella pagina dopo. Poi una scheda per incantesimo con il testo
 // completo, nell'ordine dell'indice, in tre colonne; una scheda non si spezza se entra in una

@@ -52,12 +52,12 @@ test('elencoZaino: solo il vecchio testo libero si spezza; un oggetto personaliz
     ['Multiattrezzo di famiglia — regalo del padre; conta come attrezzi da lavoro']);
 });
 
-test('senza accesso alla magia: tre fogli, numerati 1–3, con il piede', () => {
+test('senza accesso alla magia: quattro fogli (con l’Inventario), numerati 1–4, con il piede', () => {
   const st = preparaStampa(MISHIMA_AGENTE, dati, { versioniDati: 'Giocatore 0.43' });
   assert.equal(st.completa, true);
-  assert.deepEqual(st.fogli.map((f) => f.id), ['identita', 'abilita', 'combattimento']);
+  assert.deepEqual(st.fogli.map((f) => f.id), ['identita', 'abilita', 'combattimento', 'inventario']);
   // numero fisso del foglio (docs/layout-ss.md, §5.2): «pagina P di T» la scrive la vista, dopo le continuazioni
-  assert.deepEqual(st.fogli.map((f) => f.numero), [1, 2, 3]);
+  assert.deepEqual(st.fogli.map((f) => f.numero), [1, 2, 3, 4]);
   assert.deepEqual(st.piede, { nome: MISHIMA_AGENTE.nome.trim(), livello: 1, versioni: 'Giocatore 0.43' });
 
   const id = foglio(st, 'identita').dati;
@@ -95,9 +95,9 @@ test('Background lungo troncato con «…»; il testo corto resta intero', () =>
   assert.equal(corto.backgroundTroncato, false);
 });
 
-test('Taumaturgo: quattro fogli, incantesimi per macrofamiglia con le sole righe fino al livello massimo', () => {
+test('Taumaturgo: cinque fogli (Poteri dopo l’Inventario), incantesimi per macrofamiglia con le sole righe fino al livello massimo', () => {
   const st = preparaStampa(ARCANISTA, dati);
-  assert.deepEqual(st.fogli.map((f) => f.numero), [1, 2, 3, 4]);
+  assert.deepEqual(st.fogli.map((f) => f.numero), [1, 2, 3, 4, 5]);
   const m = foglio(st, 'poteri').dati;
   assert.equal(m.pm, 16);
   assert.equal(m.livelloMassimo, 3); // tabella del master: I Grado → 3
@@ -205,15 +205,16 @@ test('spezzaMagia: pagine con i tagli indicati, intestazioni dei gruppi ripetute
 test('numerazione: «foglio N» fisso e «pagina P di T» reale, anche con le pagine del foglio Poteri', () => {
   const st = preparaStampa(ARCANISTA, dati);
   // ordine dei fogli (docs/layout-ss.md, §5.1): prima i sempre presenti; numero fisso per foglio
-  assert.deepEqual(st.fogli.map((f) => [f.id, f.numero]), [['identita', 1], ['abilita', 2], ['combattimento', 3], ['poteri', 4]]);
-  const pagine = [{ id: 'identita' }, { id: 'abilita' }, { id: 'combattimento' }, { id: 'combattimento', seguito: true }, { id: 'poteri' }, { id: 'poteri', seguito: true }];
+  // Inventario è il foglio 4 fisso; Poteri scala al 5 (docs/layout-ss.md, pezzo 1)
+  assert.deepEqual(st.fogli.map((f) => [f.id, f.numero]), [['identita', 1], ['abilita', 2], ['combattimento', 3], ['inventario', 4], ['poteri', 5]]);
+  const pagine = [{ id: 'identita' }, { id: 'abilita' }, { id: 'combattimento' }, { id: 'combattimento', seguito: true }, { id: 'inventario' }, { id: 'poteri' }, { id: 'poteri', seguito: true }];
   const n = numeraPagine(pagine, st.fogli);
   assert.deepEqual(n.map((x) => [x.foglio, x.seguito, x.pagina, x.totale]),
-    [[1, false, 1, 6], [2, false, 2, 6], [3, false, 3, 6], [3, true, 4, 6], [4, false, 5, 6], [4, true, 6, 6]]);
-  assert.equal(testoPiede({ nome: 'Ada', livello: 12, versioni: 'Giocatore 0.43' }, n[3]), 'Ada · 12° livello · foglio 3 (segue) · pagina 4 di 6 · Dati: Giocatore 0.43');
+    [[1, false, 1, 7], [2, false, 2, 7], [3, false, 3, 7], [3, true, 4, 7], [4, false, 5, 7], [5, false, 6, 7], [5, true, 7, 7]]);
+  assert.equal(testoPiede({ nome: 'Ada', livello: 12, versioni: 'Giocatore 0.43' }, n[3]), 'Ada · 12° livello · foglio 3 (segue) · pagina 4 di 7 · Dati: Giocatore 0.43');
   // stampando solo alcuni fogli il numero del foglio resta quello fisso; le pagine sono quelle stampate
   const solo = numeraPagine([{ id: 'poteri' }], st.fogli);
-  assert.deepEqual([solo[0].foglio, solo[0].pagina, solo[0].totale], [4, 1, 1]);
+  assert.deepEqual([solo[0].foglio, solo[0].pagina, solo[0].totale], [5, 1, 1]);
   // senza magia niente foglio Poteri; Cibernetica e Veicoli non si stampano finché i tab sono in attesa
   assert.deepEqual(ordinaFogli([{ id: 'veicoli' }, { id: 'abilita' }, { id: 'cibernetica' }, { id: 'identita' }], dati).map((f) => [f.id, f.numero]), [['identita', 1], ['abilita', 2]]);
   assert.equal(iconaFoglio('poteri'), 'magia');
@@ -260,4 +261,37 @@ test('quadratini (docs/layout-ss.md, §3): righe da 10, blocchi da 5 righe, grig
   assert.equal(inPiu.blocchi[1].righe[0].cumulato, 60);
   // senza massimo: una riga grigia (nessuna casella disponibile)
   assert.deepEqual(conta(schemaQuadratini(0, { compatto: true })).filter(Boolean).length, 0);
+});
+
+test('foglio Inventario (docs/layout-ss.md, pezzo 1): sezioni della tab, stato prestampato, sezioni vuote non stampate', async () => {
+  const { inventarioStampa, statoInventarioStampa, STATI_INVENTARIO_STAMPA } = await import('../src/stampa.js');
+  const voce = (uid, rif, stato, extra = {}) => ({ uid, rif, stato, quantita: 1, note: '', ...extra });
+  const creazione = { ...MISHIMA_AGENTE, equipaggiamento: [
+    voce('p', 'armi:pugnale', 'pronta'),
+    voce('d', 'armi:pugnale', 'deposito'),
+    voce('a', 'armature_corporative:divisa-d-ordinanza-asa', 'indossata'),
+    voce('t', 'dotazioni_personali:torcia-elettrica', null, { quantita: 2 }),
+  ] };
+  const st = preparaStampa({ creazione, livelli: [] }, dati);
+  const inv = foglio(st, 'inventario');
+  assert.equal(inv.numero, 4);
+  // solo le sezioni con oggetti, nell'ordine della tab
+  assert.deepEqual(inv.dati.sezioni.map((s) => s.id), ['armi', 'protezioni', 'dotazioni_personali']);
+  const riga = (uid) => inv.dati.sezioni.flatMap((s) => s.righe).find((r) => r.uid === uid);
+  // stato prestampato: il deposito comune ha la sua casella; «pronta» e senza stato sono «con sé»
+  assert.equal(riga('d').stato, 'deposito');
+  assert.deepEqual(['p', 'a', 't'].map((u) => riga(u).stato), ['conse', 'inuso', 'conse']);
+  assert.deepEqual(STATI_INVENTARIO_STAMPA.map((x) => x.id), ['conse', 'inuso', 'zaino', 'deposito']);
+  assert.equal(statoInventarioStampa('zaino'), 'zaino');
+  // costo, Qualità, PI e PS Integrità; quantità nel nome
+  assert.equal(riga('t').nome, 'Torcia elettrica ×2');
+  assert.equal(riga('a').costo, '4.000 cr');
+  assert.ok(riga('a').piMax > 0 && riga('a').ps > 0);
+  assert.ok(riga('p').condizioni.includes('Integra')); // condizione dell'arma (A.49), solo per le armi
+  assert.equal(riga('t').condizioni, null);
+  // un personaggio senza oggetti: il foglio c'è, senza sezioni
+  const vuoto = foglio(preparaStampa(MISHIMA_AGENTE, dati), 'inventario');
+  assert.deepEqual([vuoto.numero, vuoto.dati.sezioni.length], [4, 0]);
+  // la SD ha il suo tab Inventario: il foglio di stampa non diventa un tab
+  assert.ok(!preparaTab({ creazione, livelli: [] }, dati).tab.some((t) => t.id === 'inventario'));
 });

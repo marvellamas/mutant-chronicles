@@ -159,9 +159,10 @@ test('collaudo c: Freelance Lavoratore Tecnico, 5° livello, Risorse Interiori, 
 
 test('stampa dei tre personaggi: il foglio Poteri solo per chi conosce incantesimi', () => {
   const fogli = (f) => { const p = leggi(f); return preparaStampa({ creazione: p.creazione, livelli: p.livelli }, dati).fogli.map((x) => x.id); };
-  assert.deepEqual(fogli('a_imperiale_assaltatore_l8.json'), ['identita', 'abilita', 'combattimento']);
-  assert.deepEqual(fogli('b_fratellanza_arcanista_l12.json'), ['identita', 'abilita', 'combattimento', 'poteri']);
-  assert.deepEqual(fogli('c_freelance_tecnico_l5.json'), ['identita', 'abilita', 'combattimento']);
+  // il foglio Inventario (4) c'è per tutti (docs/layout-ss.md, pezzo 1)
+  assert.deepEqual(fogli('a_imperiale_assaltatore_l8.json'), ['identita', 'abilita', 'combattimento', 'inventario']);
+  assert.deepEqual(fogli('b_fratellanza_arcanista_l12.json'), ['identita', 'abilita', 'combattimento', 'inventario', 'poteri']);
+  assert.deepEqual(fogli('c_freelance_tecnico_l5.json'), ['identita', 'abilita', 'combattimento', 'inventario']);
 });
 
 test('sessione dopo un cambio di livello: PV e PM attuali seguono i massimi (§8.1.2, Buona Costituzione §8.6.1)', () => {

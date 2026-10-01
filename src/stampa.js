@@ -9,8 +9,9 @@ import { valoreTiro } from './tiri.js';
 import { rigaAlLivello } from './descrizioni.js';
 import { CAMPI_ANAGRAFICA } from './character.js';
 import { checklist } from './checklist.js';
-import { aggiungiDanno, NOME_TESTO_PRECEDENTE, catalogo, normalizzaEquipaggiamento } from './equipaggiamento.js';
-import { saldoIniziale } from './dotazioni.js';
+import { aggiungiDanno, NOME_TESTO_PRECEDENTE, catalogo, normalizzaEquipaggiamento, STATO_DEPOSITO } from './equipaggiamento.js';
+import { saldoIniziale, crediti } from './dotazioni.js';
+import { SEZIONI_INVENTARIO, sezioneInventario } from './palette.js';
 import { modoRicarica } from './ricarica.js';
 import { calcolaCarico, pesoVoce } from './carico.js';
 import { testoProvenienza } from './provenienza.js';
@@ -303,7 +304,6 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
       salvezze: identita.salvezze, difese: difese ? { va: difese.vaEquip ?? difese.totale, caratteristica: difese.caratteristica } : null,
     },
     armiStampa: armiStampa(sArmi, c, dati),
-    equipaggiamentoStampa: equipaggiamentoStampa(s, dati, sArmi.equipaggiamento?.armi),
     specializzazioni: abilita.specializzazioni,
     tecniche: abilita.tecniche,
     tecnicheAmmesse: abilita.tecnicheAmmesse,
@@ -314,6 +314,8 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     { id: 'identita', titolo: 'Identità', dati: identita },
     { id: 'abilita', titolo: 'Abilità e statistiche', dati: abilita },
     { id: 'combattimento', titolo: 'Combattimento', dati: combattimento },
+    // foglio 4 (docs/layout-ss.md, pezzo 1): l'Equipaggiamento esce dal foglio 3 e vive qui
+    { id: 'inventario', titolo: 'Inventario', dati: inventarioStampa(s, dati, combattimento.creditiIniziali) },
   ];
 
   if (haMagia(s)) {
@@ -471,21 +473,59 @@ export function schedaConArmiAddosso(p, dati) {
 }
 
 /**
- * Equipaggiamento per la SS: una riga per oggetto non già nelle tabelle Armi e Protezioni, con
- * quantità e peso; carico noto (Giocatore §5.2.6) e oggetti senza peso nel catalogo.
+ * Stato di un oggetto nel foglio Inventario (docs/layout-ss.md, foglio 4): quattro caselle, una per
+ * gruppo di stati della SD (src/equipaggiamento.js → STATI), con quella attuale prestampata piena.
+ * «Con sé» comprende gli oggetti senza stati propri (null), «pronta» e «trasportato».
  */
-export function equipaggiamentoStampa(s, dati, armi = null) {
+export const STATI_INVENTARIO_STAMPA = [
+  { id: 'conse', sigla: 'sé', nome: 'Con sé', stati: [null, 'pronta', 'trasportato'] },
+  { id: 'inuso', sigla: 'uso', nome: 'In uso (impugnato, imbracciato, indossato, montato)', stati: ['impugnata', 'imbracciato', 'indossata', 'in_uso'] },
+  { id: 'zaino', sigla: 'zai', nome: 'Zaino', stati: ['zaino'] },
+  { id: 'deposito', sigla: 'dep', nome: 'Deposito comune', stati: [STATO_DEPOSITO] },
+];
+/** Gruppo di stato della stampa per lo stato salvato di una voce (sconosciuto → «con sé»). */
+export const statoInventarioStampa = (stato) => (STATI_INVENTARIO_STAMPA.find((x) => x.stati.includes(stato ?? null)) ?? STATI_INVENTARIO_STAMPA[0]).id;
+
+const kg = (v) => `${String(Math.round(v * 100) / 100).replace('.', ',')} kg`;
+
+/**
+ * Foglio Inventario della SS (docs/layout-ss.md, foglio 4): le sezioni della tab Inventario della SD
+ * (SEZIONI_INVENTARIO, nell'ordine della tab, solo quelle con oggetti), una riga per oggetto con
+ * costo, Qualità, peso, stato, PI massimi e PS Integrità; in testa Crediti (saldo iniziale) e Carico
+ * noto con le soglie (§5.2.6). A riposo, come tutta la SS: lo stato è la scelta salvata della voce.
+ * @returns {{ creditiIniziali, carico, stati, sezioni: { id, titolo, colore, righe }[] }}
+ */
+export function inventarioStampa(s, dati, creditiIniziali = null) {
   const eq = s.equipaggiamento;
-  if (!eq) return { righe: [], carico: null };
-  const giaInTabella = new Set([...(armi ?? eq.armi).map((a) => String(a.uid).split(':')[0]), ...eq.protezioni.map((p) => p.uid)]);
-  // gli accessori montati su un'arma o un'armatura stanno già nella loro riga (colonna Proprietà)
-  const righe = eq.oggetti.filter((o) => !giaInTabella.has(o.uid) && !(o.voce.montato_su && giaInTabella.has(o.voce.montato_su))).map((o) => {
+  const integrita = new Map((eq?.integrita ?? []).map((x) => [x.uid, x]));
+  // A.49, §5.17: condizione dell'arma, i gradi da cerchiare (distinta dai PI)
+  const condizioni = (dati.regole.condizioni_armi?.elenco ?? []).map((c) => c.nome);
+  const righe = (eq?.oggetti ?? []).map((o) => {
     const q = o.voce.quantita ?? 1;
     const p = pesoVoce(o);
-    return { nome: `${o.nome}${q > 1 ? ` ×${q}` : ''}`, peso: p === null ? '—' : `${Math.round(p * q * 100) / 100} kg`, note: String(o.voce.note ?? '').trim() };
+    const x = integrita.get(o.uid);
+    return {
+      uid: o.uid,
+      sezione: sezioneInventario(o)?.id ?? 'altro',
+      nome: `${o.nome}${q > 1 ? ` ×${q}` : ''}`,
+      note: tronca(String(o.voce.note ?? '').trim(), LIMITI_STAMPA.frase),
+      costo: Number.isInteger(o.def?.costo) ? crediti(o.def.costo) : '—',
+      qualita: x?.qualita ?? o.def?.qualita ?? '—',
+      peso: p === null ? 'da def.' : kg(p * q),
+      stato: statoInventarioStampa(o.voce.stato),
+      piMax: x?.piMax ?? null,
+      ps: x?.ps ?? null,
+      condizioni: ['arma_ravvicinata', 'arma_distanza'].includes(o.tipo) && condizioni.length ? condizioni : null,
+    };
   });
-  const c = dati.regole.carico ? calcolaCarico(s, null, dati) : null;
-  return { righe, carico: c ? { peso: c.peso, senzaPeso: c.senzaPeso.length, ordinario: c.soglie.ordinario, massimo: c.soglie.massimo } : null };
+  const c = eq && dati.regole.carico ? calcolaCarico(s, null, dati) : null;
+  return {
+    creditiIniziali,
+    carico: c ? { peso: kg(c.peso), parziale: c.parziale, senzaPeso: c.senzaPeso.length, ordinario: kg(c.soglie.ordinario), massimo: kg(c.soglie.massimo) } : null,
+    stati: STATI_INVENTARIO_STAMPA.map(({ id, sigla, nome }) => ({ id, sigla, nome })),
+    sezioni: SEZIONI_INVENTARIO.map((x) => ({ id: x.id, titolo: x.titolo, colore: x.colore, righe: righe.filter((r) => r.sezione === x.id) }))
+      .filter((x) => x.righe.length),
+  };
 }
 
 /**
@@ -653,7 +693,8 @@ const TITOLI_TAB = { identita: 'Identità', abilita: 'Abilità', combattimento: 
 export function preparaTab(personaggio, dati, { sessione = null } = {}) {
   const st = preparaStampa(personaggio, dati, { completo: true, sessione });
   const p = migraPersonaggio(personaggio);
-  const tab = st.fogli.map((f) => ({ id: f.id, titolo: TITOLI_TAB[f.id], dati: { ...f.dati } }));
+  // la SD ha il suo tab Inventario (src/ui/tab.js): il foglio di stampa non diventa un tab
+  const tab = st.fogli.filter((f) => f.id !== 'inventario').map((f) => ({ id: f.id, titolo: TITOLI_TAB[f.id], dati: { ...f.dati } }));
   const identita = tab.find((t) => t.id === 'identita');
   if (identita) {
     identita.dati.progressione = st.scheda.progressione ?? [];

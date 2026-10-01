@@ -9,7 +9,9 @@
 // Controllo: esce con codice 1 se un foglio (tranne Poteri, che si impagina da sé; continuazioni
 // comprese) supera la sua pagina, cioè se il corpo, un riquadro o una colonna tagliano il contenuto
 // o un riempitivo taglia righe vere; se manca il riquadro Punti Vita nella prima pagina del foglio
-// Combattimento; se la numerazione non torna («pagina P di T» di seguito, «foglio N» fisso).
+// Combattimento; se la numerazione non torna («pagina P di T» di seguito, «foglio N» fisso). Il foglio
+// Inventario si impagina per sezioni: fallisce solo se una sezione non entra in una pagina intera
+// (le sezioni divise fra le due colonne sono ammesse).
 // Variabili facoltative: PORTA (8000), CARTELLA, IMMAGINI (cartella dove salvare un PNG per ogni
 // pagina), STAMPA_MAGIA ("elenco,completo": un PDF per ogni scelta del foglio Poteri,
 // <nome>-solo-elenco.pdf e <nome>-schede-complete.pdf; senza magia un PDF solo, <nome>.pdf; senza
@@ -105,7 +107,11 @@ function controllaFogli() {
     if (!n || (seguito ? n !== ultimo : n <= ultimo)) out.push(`numerazione: «foglio ${n}» dopo il foglio ${ultimo}${seguito ? ' (seguito)' : ''}`);
     ultimo = n;
   });
-  for (const f of document.querySelectorAll('.foglio:not(.foglio-poteri)')) {
+  for (const f of document.querySelectorAll('.foglio-inventario')) {
+    const colonne = f.querySelector('.inv-colonne');
+    if (trabocca(f.querySelector('.foglio-corpo')) || (colonne && trabocca(colonne))) out.push(`${f.querySelector('.foglio-titolo')?.textContent ?? 'Inventario'}: una sezione non entra in una pagina intera`);
+  }
+  for (const f of document.querySelectorAll('.foglio:not(.foglio-poteri):not(.foglio-inventario)')) {
     const titolo = f.querySelector('.foglio-titolo')?.textContent ?? '?';
     const corpo = f.querySelector('.foglio-corpo');
     const fuori = [corpo, ...corpo.querySelectorAll('.riquadro-stampa, .riquadro-stampa > .contenuto, .colonna')].find(trabocca);
@@ -151,13 +157,16 @@ for (const { id, pdf: conPdf, variante } of lavori) {
   }
   const pagineVista = await valuta(`document.querySelectorAll('.foglio').length`);
   if (!pagineVista) { sbordati.push(`${nome}: nessun foglio nella vista di stampa`); continue; }
-  if (!conPdf) { console.log(`${nome}: ${pagineVista} pagine (solo controllo di sbordo) | ${avvisi.replace(/\n/g, ' / ')}`); continue; }
+  // fogli pagina per pagina, dal piè di pagina: «3», «3+» per la continuazione
+  const sequenza = await valuta(`[...document.querySelectorAll('.foglio')].map((f) => { const p = f.querySelector('.foglio-piede')?.textContent ?? ''; return (/foglio (\\d+)/.exec(p)?.[1] ?? '?') + (f.classList.contains('seguito') ? '+' : '') + ' ' + (f.querySelector('.foglio-titolo')?.textContent ?? '').replace(' (continua)', ''); }).join(' · ')`);
+  if (!conPdf) { console.log(`${nome}: ${pagineVista} pagine (solo controllo di sbordo) | ${avvisi.replace(/\n/g, ' / ')}\n  fogli: ${sequenza}`); continue; }
   const pdf = await cdp('Page.printToPDF', { preferCSSPageSize: true, printBackground: true });
   const buf = Buffer.from(pdf.result.data, 'base64');
   writeFileSync(`${OUT}/${nome}.pdf`, buf);
   const pagine = (buf.toString('latin1').match(/\/Type\s*\/Page[^s]/g) ?? []).length;
   const box = /\/MediaBox\s*\[([^\]]+)\]/.exec(buf.toString('latin1'))?.[1];
-  console.log(`${nome}: ${pagine} pagine, MediaBox ${box}, ${Math.round(buf.length / 1024)} kB | ${avvisi.replace(/\n/g, ' / ')}`);
+  console.log(`${nome}: ${pagine} pagine, MediaBox ${box}, ${Math.round(buf.length / 1024)} kB | ${avvisi.replace(/\n/g, ' / ')}\n  fogli: ${sequenza}`);
+  if (pagine !== pagineVista) sbordati.push(`${nome}: il PDF ha ${pagine} pagine, la vista ${pagineVista}`);
 }
 ws.close();
 chiudiEdge();
