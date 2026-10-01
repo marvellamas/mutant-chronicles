@@ -14,6 +14,7 @@ import { h, svuota, scaricaFile } from './dom.js';
 import * as archivio from './storage.js';
 import { serverCartella, elencoCartella, leggiCartella, scriviCartella } from './cartella.js';
 import { elencoUnito, confronta, chiaveDaFile, chiavePersonaggio } from '../cartella.js';
+import { renderTavolo } from './tavolo.js';
 import { PASSI, passoVisibile, requisitoPasso } from './passi.js';
 import { inizializzaTooltip, nascondiTooltip } from './tooltip.js';
 import { renderRiepilogo } from './riepilogo.js';
@@ -23,7 +24,7 @@ import { validaCompletamento, applicaCompletamento, puntiDaCompletare, motivoCom
 import { renderStampa, esciDallaStampa } from './stampa.js';
 import { barraPassi, barraFondoSeServe } from './navigazione.js';
 import { cercaSfondi, applicaSfondo } from './sfondi.js';
-import { caricaImmagini } from './immagini.js';
+import { caricaImmagini, iconaPagina } from './immagini.js';
 import { preparaStampa, preparaTab, normalizzaOpzioniStampa } from '../stampa.js';
 import { renderTab, tabFissi, ALIAS_TAB } from './tab.js';
 import {
@@ -145,6 +146,21 @@ function daIndirizzo() {
   }
   esciDallaStampa();
   applicaSfondo(null); // lo sfondo scelto vale solo nella SD (renderScheda)
+  // Tavolo del Direttore (docs/tavolo-direttore.md, pezzo 1): uscendo si ferma l'aggiornamento periodico
+  stato.fermaTavolo?.();
+  stato.fermaTavolo = null;
+  if (location.hash === '#/tavolo') {
+    stato.id = null;
+    stato.scelte = null;
+    stato.livelli = [];
+    if (!stato.cartella) {
+      stato.messaggioHome = { tipo: 'attenzione', testo: 'Il Tavolo del Direttore serve il server di Mutant: avvia l’app con avvia-server.bat (node server.mjs).' };
+      return vai('#/');
+    }
+    document.title = 'Tavolo del Direttore · Mutant';
+    stato.fermaTavolo = renderTavolo(radice, { dati: stato.dati, azioni: { personaggi: () => vai('#/'), apri: apriDaCartella } });
+    return;
+  }
   const sali = location.hash.match(/^#\/p\/([\w-]+)\/sali\/(\d+)$/);
   // Uscire dalla bozza del livello (tasto Indietro, link, indirizzo) chiede conferma.
   if (stato.sali && !(sali && sali[1] === stato.id)) {
@@ -354,7 +370,7 @@ function renderHome(unito = null) {
   const msg = stato.messaggioHome ?? (unito?.avvisi.length ? { tipo: 'attenzione', testo: 'Cartella personaggi/', dettagli: unito.avvisi } : null);
   stato.messaggioHome = null;
   if (stato.cartella && !unito) {
-    sincronizzaCartella().then((u) => { if (!/^#\/p\//.test(location.hash)) renderHome(u); });
+    sincronizzaCartella().then((u) => { if (['', '#', '#/'].includes(location.hash)) renderHome(u); });
   }
 
   const inputFile = h('input', { type: 'file', accept: '.json,application/json', class: 'nascosto',
@@ -367,6 +383,9 @@ function renderHome(unito = null) {
     h('div', { class: 'riga-azioni' },
       h('button', { type: 'button', class: 'btn primario', onclick: nuovoPersonaggio }, 'Nuovo personaggio'),
       h('button', { type: 'button', class: 'btn', onclick: () => inputFile.click() }, 'Importa file JSON'),
+      // Tavolo del Direttore: solo con il server della cartella (server.mjs)
+      stato.cartella ? h('button', { type: 'button', class: 'btn btn-tavolo-direttore', onclick: () => vai('#/tavolo') },
+        iconaPagina('combattimento', '96', { classe: 'icona-pulsante', lato: 24 }), 'Tavolo del Direttore') : null,
       inputFile),
     righe.length
       ? h('ul', { class: 'elenco-personaggi' }, righe.map((r) => (r.voce ? rigaPersonaggio(r.voce, r.origine) : rigaCartella(r.remoto))))
@@ -406,22 +425,35 @@ function rigaPersonaggio(p, origine = 'browser') {
       } }, 'Elimina')));
 }
 
+/**
+ * Apre nell'app un personaggio della cartella (pagina iniziale, Tavolo del Direttore): prima si
+ * sincronizzano browser e cartella (vince il più recente), poi si apre la copia del browser; se il
+ * personaggio è solo nella cartella lo si porta nel browser.
+ */
+async function apriDaCartella(r) {
+  try {
+    await sincronizzaCartella();
+    const locale = elencoUnito(archivio.elenco(), [r]).find((x) => x.origine === 'entrambi')?.voce ?? null;
+    let id = locale?.id ?? null;
+    if (!id) {
+      const testo = await leggiCartella(r.file);
+      const nuovo = salvaDaTesto(testo);
+      id = nuovo.id;
+      archivio.segnaCartella(id, { file: r.file, mtime: r.mtime, salvato: archivio.carica(id).aggiornato });
+      if (nuovo.avvisi.length) stato.messaggioScheda = { tipo: 'attenzione', testo: nuovo.avvisi.join(' ') };
+    }
+    const p = archivio.carica(id);
+    vai(p.passo === PASSO_SCHEDA ? `#/p/${id}` : `#/p/${id}/${p.passo ?? 0}`);
+  } catch (e) {
+    stato.messaggioHome = { tipo: 'errore', testo: `Apertura di ${r.file} non riuscita: ${e.message}` };
+    vai('#/');
+  }
+}
+
 /** Personaggio presente solo nella cartella (creato su un altro PC o copiato a mano): «Apri» lo porta nel browser. */
 function rigaCartella(r) {
   const data = new Date(r.mtime).toLocaleString('it-IT', { dateStyle: 'short', timeStyle: 'short' });
-  const apri = async () => {
-    try {
-      const testo = await leggiCartella(r.file);
-      const { id, avvisi } = salvaDaTesto(testo);
-      archivio.segnaCartella(id, { file: r.file, mtime: r.mtime, salvato: archivio.carica(id).aggiornato });
-      if (avvisi.length) stato.messaggioScheda = { tipo: 'attenzione', testo: avvisi.join(' ') };
-      const p = archivio.carica(id);
-      vai(p.passo === PASSO_SCHEDA ? `#/p/${id}` : `#/p/${id}/${p.passo ?? 0}`);
-    } catch (e) {
-      stato.messaggioHome = { tipo: 'errore', testo: `Apertura di ${r.file} non riuscita: ${e.message}` };
-      renderHome();
-    }
-  };
+  const apri = () => apriDaCartella(r);
   return h('li', { class: 'carta personaggio' },
     h('div', {},
       h('h2', {}, r.nome.replace(/-/g, ' '), h('span', { class: 'etichetta origine-personaggio' }, ORIGINI.cartella)),

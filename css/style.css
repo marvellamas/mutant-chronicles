@@ -1511,3 +1511,36 @@ body.con-sfondo::before {
 
 /* Cartella dei personaggi (server.mjs): origine nella pagina iniziale */
 .origine-personaggio { margin-left: 0.5rem; font-size: 0.75rem; font-weight: 500; vertical-align: middle; }
+
+/* Tavolo del Direttore, pezzo 1 (docs/tavolo-direttore.md): plancia dei PG in sola lettura */
+.btn-tavolo-direttore { display: inline-flex; align-items: center; gap: 0.4rem; }
+.btn-tavolo-direttore .icona-pulsante { width: 24px; height: 24px; }
+.plancia { max-width: 1880px; margin: 0 auto; }
+.plancia-testa { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; }
+.plancia-testa h1 { margin: 0.5rem 0; }
+.plancia-aggiornato { min-width: 9rem; }
+.plancia-scelta-elenco { list-style: none; padding: 0; margin: 0.4rem 0 0; columns: 3 14rem; }
+.plancia-scelta-elenco li { break-inside: avoid; padding: 0.15rem 0; }
+.plancia-griglia { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); gap: 0.9rem; margin-top: 0.75rem; }
+.carta-plancia { background: var(--superficie); border: 1px solid var(--bordo); border-radius: var(--raggio); padding: 0.75rem 0.85rem; display: flex; flex-direction: column; gap: 0.4rem; min-width: 0; }
+.carta-plancia.mancante { border-style: dashed; opacity: 0.85; }
+.carta-plancia-testa { display: flex; gap: 0.6rem; align-items: center; }
+.carta-plancia-testa h2 { margin: 0; font-size: 1.15rem; }
+.carta-plancia-testa p { margin: 0.1rem 0 0; }
+.ritratto-plancia { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; flex: none; }
+.nome-plancia { font-weight: 700; font-size: inherit; text-align: left; }
+.plancia-barra { display: flex; align-items: center; gap: 0.45rem; font-size: 0.9rem; }
+.plancia-barra .barra-traccia { height: 0.7rem; }
+.plancia-barra .barra-numero { min-width: 4.2rem; text-align: right; font-variant-numeric: tabular-nums; }
+.plancia-barra.risorsa-pv .barra-etichetta { color: var(--pv); }
+.plancia-barra.risorsa-pv .barra-riempimento { background: var(--pv); }
+.plancia-barra.risorsa-pm .barra-etichetta { color: var(--pm); }
+.plancia-barra.risorsa-pm .barra-riempimento { background: var(--pm); }
+.plancia-barra.risorsa-pe .barra-etichetta { color: var(--pe); }
+.plancia-barra.risorsa-pe .barra-riempimento { background: var(--pe); }
+.plancia-valori, .plancia-condizioni, .plancia-stati { margin: 0; display: flex; flex-wrap: wrap; gap: 0.3rem; align-items: center; }
+.pillola-plancia { font-size: 1.05rem; }
+.condizione-plancia { background: var(--barra-giallo, #a87400); color: #fff; }
+.stato-plancia { background: var(--accento-tenue, #f3e3d8); }
+.plancia-armi { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.25rem; font-size: 0.92rem; }
+.plancia-armi li { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.3rem; border-top: 1px solid var(--bordo); padding-top: 0.25rem; }

@@ -33,3 +33,6 @@ Claude outputs/
 # Si traccia solo il LEGGIMI che spiega la cartella.
 personaggi/*
 !personaggi/LEGGIMI.txt
+
+# Selezione «al tavolo» e stato del Tavolo del Direttore (server.mjs): dati di gioco, non codice
+tavolo/
