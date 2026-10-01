@@ -273,8 +273,16 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
    l'intestazione; sotto questa altezza i riquadri della colonna passano alla continuazione */
 .f2-annotazioni { min-height: 29mm; }
 .f2-annotazioni .righe-guida { min-height: 21mm; }
-/* continuazione del foglio 2: i riquadri della colonna destra, larghi come nella prima pagina */
-.f2-seguito { flex: 1; min-height: 0; width: calc(277mm - 180mm - 3mm); margin-left: auto; }
+/* continuazione del foglio 2 (impaginaAbilita): tutta la larghezza. I riquadri passati su
+   --colonne colonne larghe un terzo della pagina, a sinistra, e le Annotazioni accanto a tutta
+   altezza; con .sotto i riquadri su tre colonne e le Annotazioni sotto, a riempire la pagina */
+.f2-seguito { flex: 1; min-height: 0; display: flex; gap: 3mm; }
+.f2-seguito-riquadri { flex: none; align-self: flex-start; column-count: var(--colonne, 1); column-gap: 3mm;
+  width: calc((277mm - 6mm) / 3 * var(--colonne, 1) + 3mm * (var(--colonne, 1) - 1)); }
+.f2-seguito-riquadri > .riquadro-stampa { margin-bottom: 2mm; }
+.f2-seguito > .f2-annotazioni { flex: 1 1 0; min-width: 0; }
+.f2-seguito.sotto { flex-direction: column; }
+.f2-seguito.sotto > .f2-seguito-riquadri { width: 100%; }
 .abilita-stampa { height: 100%; }
 .abilita-stampa th, .abilita-stampa td { padding-left: 0.6mm; padding-right: 0.6mm; }
 .abilita-stampa th, .abilita-stampa td { vertical-align: middle; }

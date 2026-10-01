@@ -291,25 +291,40 @@ function foglioAbilita(d) {
 }
 
 /**
- * Continuazione del foglio 2 (docs/layout-ss.md, pezzo 2): la tabella delle Abilità non si spezza
- * mai. Se la colonna destra non entra, prima si restringe il riempitivo Annotazioni (fino a tre righe
- * guida: altezza minima in css/stampa.css), poi i riquadri della colonna passano, dall'ultimo, a una
- * pagina «Abilità (continua)», che li riceve in testa (l'ordine di lettura si conserva).
- * @returns {{ pagine, fuori: boolean }} fuori: un riquadro solo non entra neppure nella continuazione
+ * Continuazione del foglio 2 (docs/layout-ss.md, pezzi 2 e 3): la tabella delle Abilità non si
+ * spezza mai. Se la colonna destra entra con le Annotazioni (almeno tre righe guida), resta tutto
+ * nella prima pagina e le Annotazioni riempiono la colonna. Altrimenti le Annotazioni vanno per
+ * ultime nella pagina «Abilità (continua)» e i riquadri che non entrano passano lì, dall'ultimo;
+ * la continuazione usa tutta la larghezza: riquadri su una o due colonne a sinistra e Annotazioni a
+ * destra a tutta altezza, oppure riquadri su tre colonne e Annotazioni sotto, a riempire la pagina.
+ * @returns {{ pagine, fuori: boolean }} fuori: i riquadri non entrano neppure nella continuazione
  */
 function impaginaAbilita(foglio, d, piede) {
   const corpo = foglio.querySelector('.foglio-corpo');
   if (!eccede(corpo)) return { pagine: 1, fuori: false };
   const colonna = corpo.querySelector('.f2-griglia > .colonna');
-  const spostabili = () => [...colonna.querySelectorAll(':scope > .riquadro-stampa:not(.f2-annotazioni)')];
-  const f = creaFoglio('abilita', 'Abilità (continua)', d, piede, () => h('div', { class: 'colonna f2-seguito' }));
+  const annotazioni = colonna.querySelector('.f2-annotazioni');
+  annotazioni.remove();
+  const spostabili = () => [...colonna.querySelectorAll(':scope > .riquadro-stampa')];
+  const riquadri = h('div', { class: 'f2-seguito-riquadri' });
+  const f = creaFoglio('abilita', 'Abilità (continua)', d, piede, () => h('div', { class: 'f2-seguito' }, riquadri, annotazioni));
   f.classList.add('seguito');
   // lo stesso piè di pagina del foglio: misurando, l'altezza del corpo è già quella vera
   f.querySelector('.foglio-piede').textContent = foglio.querySelector('.foglio-piede').textContent;
   foglio.after(f);
+  for (let giro = 0; giro < 20 && eccede(corpo) && spostabili().length; giro++) riquadri.prepend(spostabili().at(-1));
+  // disposizione della continuazione: la prima che entra
   const seguito = f.querySelector('.f2-seguito');
-  for (let giro = 0; giro < 20 && eccede(corpo) && spostabili().length; giro++) seguito.prepend(spostabili().at(-1));
-  return { pagine: 2, fuori: eccede(corpo) || eccede(f.querySelector('.foglio-corpo')) };
+  const corpo2 = f.querySelector('.foglio-corpo');
+  const n = riquadri.children.length;
+  if (!n) riquadri.remove(); // sono passate solo le Annotazioni: tutta la pagina
+  const prova = ([k, sotto]) => {
+    seguito.classList.toggle('sotto', sotto);
+    seguito.style.setProperty('--colonne', String(k));
+    return !eccede(corpo2);
+  };
+  const ok = [[Math.max(1, Math.min(n, 2)), false], [2, false], [3, true]].some(prova);
+  return { pagine: 2, fuori: eccede(corpo) || !ok };
 }
 
 // ---------------------------------------------------------------------------
