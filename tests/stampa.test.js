@@ -295,3 +295,17 @@ test('foglio Inventario (docs/layout-ss.md, pezzo 1): sezioni della tab, stato p
   // la SD ha il suo tab Inventario: il foglio di stampa non diventa un tab
   assert.ok(!preparaTab({ creazione, livelli: [] }, dati).tab.some((t) => t.id === 'inventario'));
 });
+
+test('foglio Abilità (docs/layout-ss.md, pezzo 2): Specializzazioni e Tecniche Interiori nei dati del foglio 2', async () => {
+  const { readFileSync } = await import('node:fs');
+  const { deserializzaPersonaggio } = await import('../src/character.js');
+  const p = deserializzaPersonaggio(readFileSync(new URL('collaudo/c_freelance_tecnico_l5.json', import.meta.url), 'utf8'));
+  const ab = foglio(preparaStampa({ creazione: p.creazione, livelli: p.livelli }, dati), 'abilita').dati;
+  // c (Tecnico 5°, Risorse Interiori): tre Tecniche e una Specializzazione nel foglio 2
+  assert.deepEqual([ab.tecniche.length, ab.tecnicheAmmesse, ab.specializzazioni.length], [3, 3, 1]);
+  assert.deepEqual(ab.tecniche.map((x) => Object.keys(x).filter((k) => ['nome', 'costo', 'azione'].includes(k)).length), [3, 3, 3]);
+  // senza Tecniche né Specializzazioni la colonna destra ha solo Talenti e Annotazioni (riquadri vuoti non stampati)
+  const m = foglio(preparaStampa(MISHIMA_AGENTE, dati), 'abilita').dati;
+  assert.deepEqual([m.tecniche.length, m.tecnicheAmmesse, m.specializzazioni.length], [0, 0, 0]);
+});
+

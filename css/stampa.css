@@ -269,6 +269,12 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .f2-griglia { flex: 1; min-height: 0; display: grid; grid-template-columns: 180mm 1fr; gap: 3mm; }
 .abilita-affiancate { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5mm; }
 .f2-abilita > .contenuto { flex: 1; }
+/* Annotazioni, riempitivo della colonna destra: si restringe fino a tre righe guida (7 mm l'una) più
+   l'intestazione; sotto questa altezza i riquadri della colonna passano alla continuazione */
+.f2-annotazioni { min-height: 29mm; }
+.f2-annotazioni .righe-guida { min-height: 21mm; }
+/* continuazione del foglio 2: i riquadri della colonna destra, larghi come nella prima pagina */
+.f2-seguito { flex: 1; min-height: 0; width: calc(277mm - 180mm - 3mm); margin-left: auto; }
 .abilita-stampa { height: 100%; }
 .abilita-stampa th, .abilita-stampa td { padding-left: 0.6mm; padding-right: 0.6mm; }
 .abilita-stampa th, .abilita-stampa td { vertical-align: middle; }

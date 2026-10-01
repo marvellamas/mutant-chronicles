@@ -109,6 +109,10 @@ export function renderStampa({ stampa, torna, opzioni = null, cambiaOpzioni = nu
         if (pagine > 1) avvisi.append(h('p', {}, `Il foglio Poteri è su ${pagine} pagine.`));
         continue;
       }
+      if (f.classList.contains('foglio-abilita') && !f.classList.contains('seguito')) {
+        const { pagine } = impaginaAbilita(f, stampa.fogli.find((x) => x.id === 'abilita').dati, stampa.piede);
+        if (pagine > 1) avvisi.append(h('p', {}, `Il foglio Abilità è su ${pagine} pagine.`));
+      }
       if (f.classList.contains('foglio-inventario') && f.classList.contains('seguito')) continue; // impaginate da impaginaInventario
       if (f.classList.contains('foglio-inventario')) {
         const { pagine, troppoLunghe } = impaginaInventario(f, stampa.fogli.find((x) => x.id === 'inventario').dati, stampa.piede);
@@ -278,7 +282,34 @@ function foglioAbilita(d) {
       d.talentiLiberi.length ? box({ titolo: 'Talenti Liberi' }, h('ul', { class: 'elenco-talenti-stampa' }, d.talentiLiberi.map((t) =>
         talento(t, [t.parametro ? ` (${t.parametro})` : null, t.annotazione ? ` — ${t.annotazione}` : null,
           h('span', { class: 'sigla' }, ` ${t.livello}° liv.`), t.provvisorio ? h('em', {}, ' provvisorio') : null])))) : null,
-      box({ titolo: 'Annotazioni', riempitivo: true }, righeGuida())));
+      // dal foglio 3 (pezzo 2): Specializzazioni e Tecniche Interiori, come nella tab Abilità della SD
+      d.specializzazioni.length ? box({ titolo: 'Specializzazioni', classe: 'f2-spostabile' }, h('ul', { class: 'elenco-talenti-stampa' }, d.specializzazioni.map((x) => h('li', {},
+        h('strong', {}, x.nome), ` — ${x.abilita}; ${x.effetto}`)))) : null,
+      d.tecniche.length || d.tecnicheAmmesse ? box({ titolo: `Tecniche Interiori (${d.tecniche.length} / ${d.tecnicheAmmesse})`, classe: 'f2-spostabile' },
+        tabella(['Tecnica', 'Costo', 'Azione'], d.tecniche.map((x) => [x.nome, x.costo, x.azione]))) : null,
+      box({ titolo: 'Annotazioni', riempitivo: true, classe: 'f2-annotazioni' }, righeGuida())));
+}
+
+/**
+ * Continuazione del foglio 2 (docs/layout-ss.md, pezzo 2): la tabella delle Abilità non si spezza
+ * mai. Se la colonna destra non entra, prima si restringe il riempitivo Annotazioni (fino a tre righe
+ * guida: altezza minima in css/stampa.css), poi i riquadri della colonna passano, dall'ultimo, a una
+ * pagina «Abilità (continua)», che li riceve in testa (l'ordine di lettura si conserva).
+ * @returns {{ pagine, fuori: boolean }} fuori: un riquadro solo non entra neppure nella continuazione
+ */
+function impaginaAbilita(foglio, d, piede) {
+  const corpo = foglio.querySelector('.foglio-corpo');
+  if (!eccede(corpo)) return { pagine: 1, fuori: false };
+  const colonna = corpo.querySelector('.f2-griglia > .colonna');
+  const spostabili = () => [...colonna.querySelectorAll(':scope > .riquadro-stampa:not(.f2-annotazioni)')];
+  const f = creaFoglio('abilita', 'Abilità (continua)', d, piede, () => h('div', { class: 'colonna f2-seguito' }));
+  f.classList.add('seguito');
+  // lo stesso piè di pagina del foglio: misurando, l'altezza del corpo è già quella vera
+  f.querySelector('.foglio-piede').textContent = foglio.querySelector('.foglio-piede').textContent;
+  foglio.after(f);
+  const seguito = f.querySelector('.f2-seguito');
+  for (let giro = 0; giro < 20 && eccede(corpo) && spostabili().length; giro++) seguito.prepend(spostabili().at(-1));
+  return { pagine: 2, fuori: eccede(corpo) || eccede(f.querySelector('.foglio-corpo')) };
 }
 
 // ---------------------------------------------------------------------------
@@ -435,11 +466,8 @@ function foglioCombattimento(d) {
           h('table', { class: 'tabella-stampa ferite' },
             h('tbody', {}, d.ferite.stati.map((f) => h('tr', {},
               h('td', {}, casella()), h('th', { scope: 'row' }, f.nome), h('td', {}, segno(f.penalita)), h('td', {}, f.menomazione ?? ''))),
-            h('tr', {}, h('td', {}, casella()), h('th', { scope: 'row' }, 'Oltre Grave'), h('td', { colspan: 2 }, d.ferite.oltre))))),
-        d.specializzazioni.length ? box({ titolo: 'Specializzazioni' }, h('ul', { class: 'elenco-talenti-stampa' }, d.specializzazioni.map((x) => h('li', {},
-          h('strong', {}, x.nome), ` — ${x.abilita}; ${x.effetto}`)))) : null,
-        d.tecniche.length || d.tecnicheAmmesse ? box({ titolo: `Tecniche Interiori (${d.tecniche.length} / ${d.tecnicheAmmesse})` },
-          tabella(['Tecnica', 'Costo', 'Azione'], d.tecniche.map((x) => [x.nome, x.costo, x.azione]))) : null),
+            h('tr', {}, h('td', {}, casella()), h('th', { scope: 'row' }, 'Oltre Grave'), h('td', { colspan: 2 }, d.ferite.oltre)))))),
+        // Specializzazioni e Tecniche Interiori sono nel foglio 2 (pezzo 2)
       box({ titolo: 'Punti Vita', tinta: 'pv', forte: true, riempitivo: true, classe: 'f3-pv' },
         // PV massimi e, accanto, l'AR (docs/ricognizione-ar-pi.md): un sottoriquadro per valore
         h('div', { class: 'f3-massimi' },

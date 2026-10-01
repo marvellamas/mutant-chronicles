@@ -123,6 +123,13 @@ function controllaFogli() {
   }
   const primo = document.querySelector('.foglio-combattimento:not(.seguito)');
   if (primo && !primo.querySelector('.f3-pv')) out.push('Combattimento: manca il riquadro Punti Vita nella prima pagina');
+  // pezzo 2: Specializzazioni e Tecniche Interiori stanno nel foglio 2, non più nel 3
+  for (const h2 of document.querySelectorAll('.foglio-combattimento .riquadro-stampa > h2')) {
+    if (/^(Specializzazioni|Tecniche Interiori)/.test(h2.textContent)) out.push(`Combattimento: «${h2.textContent}» dovrebbe stare nel foglio Abilità`);
+  }
+  // Annotazioni del foglio 2: almeno tre righe guida (21 mm)
+  const righe = document.querySelector('.foglio-abilita:not(.seguito) .f2-annotazioni .righe-guida');
+  if (righe && righe.getBoundingClientRect().height < 21 * 96 / 25.4 - 1) out.push('Abilità: Annotazioni sotto le tre righe guida');
   return out;
 }
 const sbordati = [];
@@ -159,13 +166,15 @@ for (const { id, pdf: conPdf, variante } of lavori) {
   if (!pagineVista) { sbordati.push(`${nome}: nessun foglio nella vista di stampa`); continue; }
   // fogli pagina per pagina, dal piè di pagina: «3», «3+» per la continuazione
   const sequenza = await valuta(`[...document.querySelectorAll('.foglio')].map((f) => { const p = f.querySelector('.foglio-piede')?.textContent ?? ''; return (/foglio (\\d+)/.exec(p)?.[1] ?? '?') + (f.classList.contains('seguito') ? '+' : '') + ' ' + (f.querySelector('.foglio-titolo')?.textContent ?? '').replace(' (continua)', ''); }).join(' · ')`);
-  if (!conPdf) { console.log(`${nome}: ${pagineVista} pagine (solo controllo di sbordo) | ${avvisi.replace(/\n/g, ' / ')}\n  fogli: ${sequenza}`); continue; }
+  // colonna destra del foglio 2: riquadri e altezza delle Annotazioni (mm)
+  const colonna2 = await valuta(`(() => { const f = document.querySelector('.foglio-abilita:not(.seguito)'); if (!f) return '—'; const a = f.querySelector('.f2-annotazioni'); return [...f.querySelectorAll('.f2-griglia > .colonna > .riquadro-stampa > h2')].map((x) => x.textContent).join(', ') + (a ? ' · Annotazioni ' + Math.round(a.getBoundingClientRect().height * 25.4 / 96) + ' mm' : ''); })()`);
+  if (!conPdf) { console.log(`${nome}: ${pagineVista} pagine (solo controllo di sbordo) | ${avvisi.replace(/\n/g, ' / ')}\n  fogli: ${sequenza}\n  foglio 2: ${colonna2}`); continue; }
   const pdf = await cdp('Page.printToPDF', { preferCSSPageSize: true, printBackground: true });
   const buf = Buffer.from(pdf.result.data, 'base64');
   writeFileSync(`${OUT}/${nome}.pdf`, buf);
   const pagine = (buf.toString('latin1').match(/\/Type\s*\/Page[^s]/g) ?? []).length;
   const box = /\/MediaBox\s*\[([^\]]+)\]/.exec(buf.toString('latin1'))?.[1];
-  console.log(`${nome}: ${pagine} pagine, MediaBox ${box}, ${Math.round(buf.length / 1024)} kB | ${avvisi.replace(/\n/g, ' / ')}\n  fogli: ${sequenza}`);
+  console.log(`${nome}: ${pagine} pagine, MediaBox ${box}, ${Math.round(buf.length / 1024)} kB | ${avvisi.replace(/\n/g, ' / ')}\n  fogli: ${sequenza}\n  foglio 2: ${colonna2}`);
   if (pagine !== pagineVista) sbordati.push(`${nome}: il PDF ha ${pagine} pagine, la vista ${pagineVista}`);
 }
 ws.close();
