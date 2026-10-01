@@ -111,3 +111,7 @@ Esportare e reimportare il blocco `calendario` di un personaggio da solo (per pa
 ## 19. ✔ Bonus dei Talenti nei valori — fatto il 30 settembre 2026
 
 Censimento in docs/censimento-talenti.md (319 Talenti; 61 con effetti tipizzati, 97 effetti). Effetti in `effetti.valori` nello schema degli oggetti; al tavolo nei valori effettivi con la provenienza; interruttori dei situazionali; interruttore globale «Bonus dei Talenti» in Combattimento e Poteri. Resta: l'Arma Astrale del Custode come arma evocabile della scheda (Maestro d'Arma, Maestria Astrale).
+
+## 20. ✔ Rimodulazione della SS sui tab della SD — fatta il 1° ottobre 2026, su branch `layout-ss`
+
+Fogli 1 Identità, 2 Abilità, 3 Combattimento, 4 Inventario sempre; 5 Poteri e 6 Artefatti quando servono; numerazione fissa e «pagina P di T»; quadratini con un massimo in un solo componente. Piano ed esito in docs/layout-ss.md, PDF in `docs/esempi-stampa/`. Il merge su `main` lo decide Marcello dopo la prova su carta.

@@ -425,5 +425,70 @@ In più, la regola dei quadratini con un massimo (sezione 3), da fare nel pezzo 
     - **«Da artefatti»:** è una riga di rimando con i nomi, non un elenco con attivazioni e riserve, che stanno nel foglio Artefatti;
     - **rimando a un foglio che non c'è ancora:** finché non arriva il pezzo 5, il rimando punta al foglio 6 Artefatti, che non si stampa;
     - **riserve integrate degli Artefatti** (Bordone Templare): i PM sono qui con le altre riserve, come chiede la decisione 5. Il foglio Artefatti avrà solo la sintonizzazione.
-- [ ] Pezzo 5: Artefatti.
-- [ ] Pezzo 6: verifica e PDF.
+- [x] **Pezzo 5: Artefatti** (1° ottobre 2026, branch `layout-ss`).
+  - Foglio 6, solo se il personaggio ha Artefatti o riserve di Chroma (`artefattiStampa` in `src/stampa.js`); c non lo ha, b e Lucas sì.
+  - **Sintonizzazione (§7.10)** in testa:
+    - capacità in evidenza, con la provenienza in piccolo («7 per 4 Gradi complessivi», «+2 da Tecnomante» se c'è);
+    - quadratini lunghi quanto la capacità: pieni i punti occupati dagli Artefatti segnati «sintonizzato» nel file, bianchi i liberi, grigi oltre la capacità (opzione `pieni` del componente unico);
+    - elenco di cosa occupa quanto, con la casella «sintonizzato» e il deposito comune.
+  - **Una scheda per Artefatto**, come nella tab:
+    - nome, tipologia, potenza; casella «Sintonizzato» (piena se lo è) e costo; stato nell'Inventario;
+    - VA e danno con la provenienza se l'arma è in mano, AR se la protezione è indossata, altrimenti «non in uso»;
+    - attivazione con il costo in PM; riserva integrata con «PM: vedi foglio 5».
+  - **Riserve di Chroma** (batterie, cristalli): una riga ciascuna con casella «sintonizzato», pallino dell'energia, capacità, potenza, costo, deposito comune; nessun quadratino dei PM e «PM: vedi foglio 5» (decisione 5). Senza magia (nessun foglio Poteri) i quadratini dei PM vanno qui.
+  - Schede e riserve su tre colonne, una scheda non si spezza; **Note sugli Artefatti** come riempitivo.
+  - Continuazione (`impaginaArtefatti`): se le schede con le Note non entrano, le schede passano dall'ultima ad «Artefatti (continua)», che riceve anche le Note.
+  - Il rimando del foglio 5 («Da artefatti… vedi foglio 6») ora punta a un foglio che esiste; senza foglio Artefatti il rimando non c'è. `preparaTab` non passa il foglio alla SD, che ha la sua tab.
+  - Test: foglio 6 per b e Lucas, assente per c; numero 6 e rimando al 5; nessun doppione fra schede e riserve; Lucas capacità 5, occupata 1.
+- [x] **Pezzo 6: verifica e PDF** (1° ottobre 2026, branch `layout-ss`).
+  - **Collaudo** (`PORTA=3000 node tools/collaudo_pdf.mjs`), nessuno sbordo, numerazione corretta:
+    - c: 5 pagine (1 · 2 · 2 (segue) · 3 · 4);
+    - b «solo elenco»: 8 pagine (1 · 2 · 2 (segue) · 3 · 4 · 5 · 5 (segue) · 6);
+    - b «schede complete»: 35 pagine;
+    - Lucas «solo elenco»: 8 pagine (1 · 2 · 3 · 3 (segue) · 4 · 4 (segue) · 5 · 6); «schede complete»: 21.
+  - Controllo a occhio delle immagini: quadratini della stessa misura in tutti i fogli, grigi oltre il massimo; colori stampati (`print-color-adjust: exact`); filigrana solo nel foglio 1.
+  - **Bianco e nero:** le pagine di b convertite in scala di grigi si leggono tutte. Il colore non porta mai da solo un'informazione: l'energia di Chroma è scritta accanto al pallino, la macrofamiglia accanto alla barra, PV e PM hanno il titolo, le caselle piene, vuote e grigie restano distinguibili.
+  - **Confronto con main:**
+    - `calcolaScheda` uguale (confronto profondo) per a, b, c e Lucas;
+    - dati stampati uguali: Caratteristiche, Salvezze, Abilità e Combattimento (PV, Iniziativa, armi con VA e danno);
+    - fuori da `src/stampa.js`, `src/ui/stampa.js` e `css/stampa.css` il branch tocca solo una riga di `src/ui/tab.js` (id del tab Poteri);
+    - la SS di c cambia solo nell'impaginazione.
+  - PDF finali in `docs/esempi-stampa/` con i JSON accanto (`c_freelance_tecnico_l5.json` aggiunto).
+
+## Esito
+
+Il branch `layout-ss` porta la SS ai fogli della SD:
+- 1 Identità, 2 Abilità, 3 Combattimento, 4 Inventario sempre;
+- 5 Poteri con la magia;
+- 6 Artefatti con Artefatti o riserve.
+
+Cibernetica e Veicoli non si stampano finché aspettano il manuale. Il merge su `main` lo decide Marcello dopo la prova su carta.
+
+Punti del piano (sezioni 3–6, 8 e 9): **24 fatti**, **9 fatti diversamente**, **2 rimandati**.
+
+**Fatti come scritto** (24):
+- regole generali: A4 orizzontale e caratteri fissi; un riempitivo per pagina; colori della palette con `print-color-adjust`; filigrana nel foglio 1; SS a riposo;
+- quadratini con un massimo (righe da 10, blocchi da 5, grigi oltre il massimo) in un solo componente;
+- ordine dei fogli (§5.1); numerazione fissa 1–4 e «pagina P di T» (§5.2); fogli senza contenuto non stampati; opzione «Foglio Poteri» con la lettura di `magia` (§5.3); schede degli Artefatti sempre intere;
+- foglio 4 con sezioni, Crediti e Carico, PI, «Da aggiungere» e continuazione per sezioni;
+- foglio 2 con Specializzazioni e Tecniche;
+- foglio 3 con colonna destra (Ferite, Affaticamento, Corruzione, Stati), «in mano», PI accanto ad armi e protezioni, Sanitario con le applicazioni, continuazione che non ripete la colonna destra;
+- foglio 5 con Gradi taumaturgici, livello massimo, riserve con i PM e rimando agli Artefatti;
+- foglio 6 con sintonizzazione, schede, riserve senza PM e continuazione per schede;
+- decisioni 1–7 della sezione 9;
+- collaudo che fallisce sugli sbordi; PDF dei personaggi del §7.
+
+**Fatti diversamente** (9):
+1. Stato nell'Inventario **prestampato pieno** (il piano: caselle vuote), su richiesta di Marcello.
+2. Foglio 2 **con continuazione** (il piano: nessuna): Annotazioni ultime, fino a pagina intera; c e b ne hanno una.
+3. Una sezione dell'Inventario divisa fra le due colonne **non ripete il titolo**; il riempitivo «Da aggiungere» parte dove finiscono le sezioni.
+4. Gradi della condizione delle armi **nel nome breve** e senza doppioni (7 invece di 8), per stare su una riga.
+5. Colonne delle Armi nel foglio 3: **resta Parata**, escono AC, Qualità, Capacità e PI (i PI a quadratini sotto l'arma).
+6. Punti Vita nel foglio 3 con **una sola riga guida** minima, non due.
+7. «Da artefatti» nel foglio 5 è **una riga di rimando** con i nomi, non un elenco.
+8. Sintonizzazione nel foglio 6: le caselle dei punti occupati sono **prestampate piene** dalla scelta del file (il piano: vuote per il tavolo), come chiesto nel pezzo 5; bianche le libere, grigie oltre la capacità.
+9. Riserva integrata di un Artefatto (Bordone Templare): **PM nel foglio 5** con le altre riserve e nel foglio 6 il solo rimando, estendendo la decisione 5 (il piano: quadratini nella scheda).
+
+**Rimandati** (2):
+1. Caricatori di riserva a quadratini nella riga delle Munizioni dell'Inventario: le riserve sono un valore di sessione e restano nella SD.
+2. Fogli 7 e 8, Cibernetica e Veicoli: aspettano i manuali; la regola «foglio senza contenuto non si stampa» è già quella giusta.
