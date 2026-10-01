@@ -81,6 +81,7 @@ Fonte: risposta di Davide A.21 (28/09/2026; `regole.json` → `corruzione.chroma
 - **Corruzione e Umanità** come valori del personaggio (Stati di Corruzione, peggioramenti per esito, penalità da CROS e Umanità sulle PS, riduzione della capacità di sintonizzazione del §7.10): servono le scale complete di Davide.
 - Poi: collegare gli esiti della PS al peggioramento della Corruzione, senza tiri automatici (fuori perimetro).
 - Fatto sul branch `layout-sd` (pezzo 3): i gradi della Corruzione Oscura del §5.20 (Umano … Oscuro) nella sessione, con la penalità nei valori effettivi. Restano esposizione e Umanità.
+- ✔ **Umanità** (1° ottobre 2026, lotto 3, backlog 22): valore del personaggio dalle perdite registrate all'installazione degli impianti, fasce del §5.21 nei PM Massimi, nella PS di Magia contro la Corruzione e nella capacità di sintonizzazione, tab Cibernetica e foglio della SS (`docs/ricognizione-cibernetica.md`). Resta il tracker dell'esposizione.
 
 ## 14. Tavolo del Direttore — STRUTTURALE, su branch `tavolo-direttore`
 
@@ -134,7 +135,16 @@ Fonte: Manuale dell'Equipaggiamento 0.5 (Google Doc del 01/10/2026, testo in `do
 - **§§5.1–5.3, 5.5–5.8:** strumenti tecnici, scientifici, agricoli, accesso e ispezione, camuffamento, elettronica, strumenti culturali e rituali, con il **Focus personale semplice** (§5.8).
   - Collegare con `rif` le voci di dotazione dei Corredi e del Focus (A.34).
 
-## 22. Equipaggiamento 0.5, lotto 3: cap. 7 «Dispositivi specialistici» e tab Cibernetica — PROSSIMO
+## 22. ✔ Equipaggiamento 0.5, lotto 3: cap. 7 «Dispositivi specialistici» e tab Cibernetica — fatto il 1° ottobre 2026
+
+Esito in `docs/ricognizione-cibernetica.md` (§5) e in `docs/equipaggiamento-lotti.md` («lotto 3»):
+- 44 impianti (standard e CYBERTRONIC) e 24 chip in `impianti.json`;
+- `regole.json` → `umanita` e → `impianti`;
+- Umanità nel motore (formato 8);
+- tab Cibernetica, foglio Cibernetica della SS;
+- A.68–A.70 al Doc.
+
+Piano di partenza:
 
 - Impianti: interfaccia neurale, sensoriali, protesi, protezione organica, coordinamento neurale, strumenti incorporati, iniettori, Processore neurale di Abilità.
   - Ogni impianto con PI e UMN standard o CYBERTRONIC.

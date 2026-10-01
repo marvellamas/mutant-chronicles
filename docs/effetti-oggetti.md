@@ -24,6 +24,9 @@ Stato al 27 settembre 2026. Dati: campo `effetti` degli oggetti del catalogo (`d
 | `contromisura` | `effetto`: effetto aggiuntivo del §5.24 (Concussivo, Elettricità, Fuoco…); `valore` = soglia | generale | «Resistenze» nella sezione Protezioni (vicino all'AR), non fra le Abilità |
 | `ar_contro` | `contro`: tipo di danno (esplosioni…) | generale | «Resistenze» nella sezione Protezioni e valore «AR contro …» accanto all'AR: AR totale + il maggiore fra scudo e armatura (§7.4.3, §7.11.4) |
 | `ar` | `magica` (facoltativo): quanta parte dell'AR in più è magica | generale, situazionale | AR del personaggio (`src/protezione.js`, docs/ricognizione-ar-pi.md); situazionale con l'interruttore al tavolo (Scudo Magico delle Guardie Sacre, §7.4.10) |
+| `movimento` | — | generale | Q in più al Movimento effettivo (Passo, Corsa, Scatto), con la riga dell'oggetto: Gambe potenziate, Equipaggiamento §7.5 |
+
+Gli impianti cibernetici (Equipaggiamento 0.5, cap. 7) usano lo stesso schema quando sono «installati». Un chip del Processore (`richiede_innesto: "processore"`) conta solo con un Processore installato. La fascia di Umanità (Giocatore §5.21) aggiunge una riga `salvezza` Magia «contro la Corruzione» generata dal motore, con `umanita: true` (`docs/ricognizione-cibernetica.md`).
 
 **Talenti** (dal 30 settembre 2026, `docs/censimento-talenti.md`): lo stesso schema in `effetti.valori` delle voci dei Talenti (`talenti_liberi.json`, `classi.json`), accanto alle chiavi di `effetti` che il motore legge già (`iniziativa`, `attacco_distanza`, `lancio`…). Contano solo al tavolo, nei valori effettivi (`src/talenti.js`, `src/condizioni.js`): il totale da regole e la SS non cambiano. In più per i Talenti:
 - `salvezza` anche **generale** o **situazionale**, con l'id della Prova Salvezza (Scudo Spirituale); `resistenza: true` per le Resistenze specifiche: strutturale + Prova Salvezza Migliorata + Resistenza non oltre 18 (Giocatore §8.6);

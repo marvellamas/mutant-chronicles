@@ -719,3 +719,27 @@ Fonte: Google Doc del 01/10/2026, 08:32 UTC (`docs/manuali-txt/equipaggiamento.m
 - **Senza doppioni.**
   - I due NEC di ricambio messi fra gli accessori nel lotto 1 escono: i ricambi sono le celle del catalogo.
   - I lotti storici 1–14, lotto_7_22, lotto_elmetti, i tre lotti Python e `genera_dotazioni.py` non riscrivono più senza `--forza` (`tools/lotti/superato.mjs`): un rilancio riporterebbe indietro i dati.
+
+## Manuale dell'Equipaggiamento 0.5: lotto 3, capitolo 7 «Dispositivi specialistici» e Umanità (01/10/2026)
+
+Fonte: Equipaggiamento 0.5, cap. 7, e Giocatore 0.45, §5.21 (Google Doc del 01/10/2026). Ricognizione, ipotesi H1–H9 ed esito in `docs/ricognizione-cibernetica.md`.
+
+- **Catalogo degli impianti (§§7.3–7.10).** File `impianti.json`, generato da `tools/lotti/lotto_equipaggiamento_07.mjs` (idempotente, ogni frase controllata nel Doc). Contiene 68 voci:
+  - 44 impianti di tipo `impianto`: 22 standard nel catalogo Commerciale e 22 CYBERTRONIC, con metà UMN e prezzo maggiore. Per famiglia:
+    - Interfaccia neurale 2, sensoriali 8, protesi degli arti 8;
+    - protezione e supporto organico 8, coordinamento neurale 6;
+    - comunicazione e strumenti incorporati 6, iniettori sanitari 4, Processore neurale di Abilità 2.
+  - 24 chip del Processore (tipo `altro`): Assistenza +2 e Competenza avanzata +4 per 12 Abilità.
+- **Campi.**
+  - `umn` (costo in Umanità) e `installazione_costo` (servizio a parte, §7.1);
+  - `innesto` (`interfaccia_neurale`, `processore`), `richiede_innesto` nei chip, `cartucce` negli iniettori;
+  - effetti nello schema di `docs/effetti-oggetti.md`, con il tipo nuovo `movimento` (Gambe potenziate).
+- **Interfaccia standard.** C'è senza prezzo (A.68): non si compra.
+- **Regole.**
+  - `regole.json` → `umanita`: fasce del §5.21, minimi di PM e sintonizzazione, UMN 0.
+  - `regole.json` → `impianti`: stato «installato», installazione, chip.
+  - `integrita.tipi_tracciati` comprende `impianto` (§7.2).
+- **Raccordi.**
+  - L'Interfaccia Neurale degli Armamenti (§7.15.1) esce da `corredi_dispositivi`. `index.json` → `rif_sostituiti` porta le voci salvate all'impianto: «in uso» diventa «installato» e la perdita di UMN si registra.
+  - Chiavi `beneficio` comuni con gli esoscheletri, perché i benefici equivalenti non si sommano (§7.1, «Cumulo»).
+- **Sezione dell'Inventario.** «Impianti cibernetici e chip», dopo gli Artefatti, in indaco (`--cat-impianti`).

@@ -118,7 +118,7 @@ Regola derivata: 24 voci di chip (2 per Abilità), nessuna per le Abilità di co
 
 ## 3. Cosa si implementa (lotto 3)
 
-- **Dati.** `data/equipaggiamento/impianti.json` (cap. 7) con tipo nuovo `impianto`: stati «installato» e «nello zaino», campi `umn`, `installazione_costo`, `innesto`, effetti. I chip sono di tipo `altro` con `richiede_impianto`. Regole in `regole.json` → `umanita` (iniziale, massimo, fasce e i loro effetti, minimi, frasi) e → `impianti` (stati, installazione, cumulo, chip).
+- **Dati.** `data/equipaggiamento/impianti.json` (cap. 7) con tipo nuovo `impianto`: stati «installato» e «nello zaino», campi `umn`, `installazione_costo`, `innesto`, effetti. I chip sono di tipo `altro` con `richiede_innesto`. Regole in `regole.json` → `umanita` (iniziale, massimo, fasce e i loro effetti, minimi, frasi) e → `impianti` (stati, installazione, cumulo, chip).
 - **Motore.**
   - `src/umanita.js`: registro, valore attuale con provenienza, fascia.
   - PM Massimi (minimo 1), capacità di Sintonizzazione (minimo 0), PS Magia contro CROS, avviso a UMN 0 sulle Risorse Interiori.
@@ -133,6 +133,38 @@ Regola derivata: 24 voci di chip (2 per Abilità), nessuna per le Abilità di co
 - **A.69 — Installare, togliere e reinstallare un impianto** (§7.1, §5.21.4): tempi, chi la esegue fuori da un servizio, se la rimozione restituisce UMN e quanta; se reinstallare lo stesso impianto costa di nuovo. Nel frattempo: stato cambiato a mano; la perdita resta registrata; lo stesso esemplare non costa due volte.
 - **A.70 — Procedure di recupero dell'Umanità** (§5.21.4): quali procedure (Medicina avanzata, interventi cibernetici, Magia) e quanti punti. Nel frattempo: «recupero concesso dal Direttore» con punti e nota.
 
-## 5. Implementato
+## 5. Implementato (1° ottobre 2026)
 
-Vedi la sezione aggiunta a fine lotto (sotto).
+Cinque commit su `main`: ricognizione, dati, motore e test, SD, SS.
+
+- **Dati** (`tools/lotti/lotto_equipaggiamento_07.mjs`, idempotente, frasi verificate):
+  - `data/equipaggiamento/impianti.json`: 44 impianti (22 standard nel catalogo Commerciale, 22 CYBERTRONIC) e 24 chip.
+    - Interfaccia neurale 2, sensoriali 8, protesi 8, organici 8, coordinamento 6, comunicazione 6, iniettori 4, Processore 2.
+    - Campi: `umn`, `installazione_costo`, `innesto` (`interfaccia_neurale`, `processore`), `cartucce`; nei chip `richiede_innesto`.
+  - `regole.json` → `umanita` (fasce del §5.21, minimi, UMN 0, frasi) e → `impianti` (stato, installazione, chip).
+  - `integrita.tipi_tracciati` comprende `impianto` (§7.2). `tab_in_arrivo.cibernetica` tolto.
+  - L'Interfaccia degli Armamenti esce da `corredi_dispositivi`. `index.json` → `rif_sostituiti` la porta all'impianto (in uso → installato). Porta anche i doppioni NEC del lotto 2 e i serbatoi diventati pacchi NEC.
+  - Chiavi `beneficio` comuni con gli esoscheletri: `assistenza_muscolare_for`, `assistenza_muscolare_atletica`, `colpo_assistito`, `termoregolazione`.
+  - Validatore: tipo `impianto`, `umn`, innesti, effetto `movimento`, fasce senza buchi, `rif_sostituiti`.
+- **Motore:**
+  - `src/umanita.js`:
+    - `registraInstallazioni` è chiamato da `normalizza`, a ogni modifica e al caricamento;
+    - `umanita` dà il valore con la provenienza e la fascia;
+    - `pmConUmanita` applica la riduzione ai PM;
+    - `annullaPerdita`, `aggiungiRecupero`, `togliRecupero`.
+  - Effetti della fascia:
+    - PM Massimi (`scheda.pm`, riduzione in `scheda.pmUmanita`);
+    - Capacità di Sintonizzazione, con la provenienza in `sintonizzazione.provenienza`;
+    - PS di Magia contro la Corruzione come uso specifico con la riga «Umanità N (condizione)»;
+    - a UMN 0 un'annotazione sulle Risorse Interiori.
+  - Impianti «installati» attivi come gli oggetti in uso. Il Movimento al tavolo comprende `movimentoEquip`. I chip contano con un Processore installato, e c'è un avviso con più chip in uso. Gli impianti installati sono fuori dal carico.
+  - Formato 8: `scelte.umanita` è scritto solo se non è vuoto.
+- **SD:** tab Cibernetica.
+  - Umanità con tooltip della provenienza, quadratini (pieni = perduti), fascia ed effetti.
+  - Schede degli impianti per famiglia, perdite (con «Annulla (errore)» se non più installati) e recuperi del Direttore.
+  - Sezione dell'Inventario «Impianti cibernetici e chip»: i chip e gli impianti si comprano lì; le righe mostrano UMN e installazione.
+- **SS:** foglio Cibernetica dopo Artefatti (`docs/layout-ss.md`, foglio 7); collaudo `d_freelance_cibernetica_l5`.
+- **Ipotesi aggiunta H9.** Un impianto installato non pesa: fa parte del corpo. Nel catalogo non ha peso e la stampa scrive «corpo». Nessuna domanda: è un limite dell'app.
+- **Limiti noti.**
+  - Un Processore Rotto (0 PI) non spegne da sé l'effetto del chip: l'interruttore al tavolo si spegne a mano.
+  - L'Interfaccia standard non si compra (A.68).

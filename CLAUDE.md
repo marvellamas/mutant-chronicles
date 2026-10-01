@@ -27,7 +27,8 @@ Drive si usa **in sola lettura**: mai scrivere nei Doc di Davide, nemmeno commen
   - **Combattimento:** valori e Prove Salvezza, armi in mano per mano («Attacca!», «Ricarica»), armi disponibili, Protezioni; a destra Ferite, Affaticamento, Corruzione, Stati;
   - **Poteri:** la Magia («Lancia!», PM, cristalli) o «Nessun potere»; «Da artefatti»;
   - **Artefatti:** sintonizzazione, schede degli Artefatti, riserve di Chroma;
-  - **Cibernetica** e **Veicoli:** in attesa del manuale;
+  - **Cibernetica:** Umanità con la provenienza e gli effetti della fascia, impianti installati per famiglia, chip, perdite e recuperi;
+  - **Veicoli:** in attesa del manuale;
   - **Inventario:** Carico e Crediti, Integrità, oggetti per sezione con stato (anche deposito comune), PI e Ripara, condizione delle armi, caricatori di riserva, applicazioni sanitarie, catalogo con «Compra»;
   - Calendario in coda, se attivo.
 - **SS** = scheda da stampare: la vista di stampa A4 orizzontale (`#/p/<id>/stampa`, `src/ui/stampa.js`, `css/stampa.css`). Fogli come i tab della SD (branch `layout-ss`, esito in `docs/layout-ss.md`):
@@ -40,7 +41,7 @@ Drive si usa **in sola lettura**: mai scrivere nei Doc di Davide, nemmeno commen
 - Web app statica, **senza build step**: `index.html` + `src/*.js` (ES modules) + `css/`. Vanilla JS. Nessun framework, nessun bundler, nessuna dipendenza npm a runtime.
 - Deve funzionare da browser desktop e telefono. Si serve con un qualunque server statico (`python -m http.server` in locale; GitHub Pages o simile per il gruppo).
 - Test: Node (`node --test`, cioè `npm test`) sulle funzioni pure del motore. I test non richiedono browser.
-- File del personaggio esportato: formato 7 (`VERSIONE_FORMATO` in `src/character.js`): `{ formato, versione, versioni_dati, scelte, livelli, sessione, calendario? }`, con i PI attuali degli oggetti in `sessione.integrita`. I formati precedenti si importano e si migrano (senza `calendario`: non attivo; senza `integrita`: oggetti ai PI massimi).
+- File del personaggio esportato: formato 8 (`VERSIONE_FORMATO` in `src/character.js`): `{ formato, versione, versioni_dati, scelte, livelli, sessione, calendario? }`, con i PI attuali degli oggetti in `sessione.integrita` e l'Umanità in `scelte.umanita` (scritta solo se non vuota). I formati precedenti si importano e si migrano (senza `calendario`: non attivo; senza `integrita`: oggetti ai PI massimi; senza `umanita`: si registrano gli impianti già installati).
 - File del solo calendario: `calendario_<nome>_<data>.json`, `{ tipo: "calendario", versione: 1, app: "mutant", esportato, da, calendario }` con il blocco com'è nel salvataggio (`src/calendario.js` → `fileCalendario`, `leggiFileCalendario`); l'import sostituisce l'intero blocco dopo una conferma. L'export del personaggio non cambia.
 
 ## Principi non negoziabili
@@ -73,11 +74,12 @@ src/
   ricarica.js   ricarica delle armi a distanza dalle riserve
   dotazioni.js  equipaggiamento iniziale (§2.16): scelte, crediti, acquisti, voci della dotazione
   sessione.js   valori attuali di sessione (modalità tavolo)
+  umanita.js    Umanità (Giocatore §5.21): registro delle installazioni, valore con provenienza, fascia
   versione.js   confronto fra versione caricata e versione.json; ui/aggiornamento.js la barra «Nuova versione»
   provenienza.js  righe { fonte, valore, nota? } dei valori calcolati (AR, VA, Salvezze, Iniziativa, Movimento, danno): le stampano i tooltip della SD e la SS
   stampa.js     dati dei fogli di stampa e delle tab
   ui/           wizard a passi (fasi 0–9 del §2.0), scheda a tab, Sali di livello, stampa, import/export
-data/           JSON delle regole (fonte di verità): 10 file in data/, catalogo in data/equipaggiamento/ (index.json + 20 file)
+data/           JSON delle regole (fonte di verità): 10 file in data/, catalogo in data/equipaggiamento/ (index.json + 21 file)
 tests/          node --test; tests/collaudo/ tre personaggi di riferimento con PDF
 tools/          estrazione dai manuali, generatori dei lotti (tools/lotti/), collaudo_pdf.mjs, genera_immagini.py, versione.mjs, installa-hook.mjs e hooks/pre-commit
 img/            stemmi e icone generati (img/immagini.json li elenca); originali in img/originali/, non tracciati
@@ -119,7 +121,13 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 
 - NEC e strumenti professionali (Equipaggiamento 0.5, cap. 5; lotto 2 del 01/10): catalogo NEC in `data/equipaggiamento/nec.json` e regole in `regole.json` → `nec`; strumenti in `strumenti_professionali.json`; campo `alimentazione` degli oggetti (NEC, consumo, ore o usi); riserva al tavolo in `sessione.nec` (`src/equipaggiamento.js` → `riserveNec`, − e + nella riga dell'Inventario) e quadratini nel foglio 4 della SS. I lotti storici non riscrivono senza `--forza` (`tools/lotti/superato.mjs`).
 
-Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, veicoli, capitoli 6 (ampliato), 7 e 8 dell'Equipaggiamento 0.5 (lotti 3–4, `docs/backlog.md`).
+- Cibernetica e Umanità (Equipaggiamento 0.5, cap. 7; Giocatore §5.21; lotto 3 del 01/10, `docs/ricognizione-cibernetica.md`):
+  - impianti in `data/equipaggiamento/impianti.json`: tipo `impianto`, stati «installato» e «zaino», con UMN e chip del Processore; regole in `regole.json` → `umanita` e → `impianti`;
+  - `src/umanita.js`: la perdita si registra all'installazione (`normalizza`) e resta se l'impianto si toglie; i recuperi li concede il Direttore;
+  - la fascia riduce PM Massimi, capacità di Sintonizzazione e PS di Magia contro la Corruzione;
+  - tab Cibernetica della SD e foglio Cibernetica della SS, che si stampa solo con impianti installati o Umanità ridotta.
+
+Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, veicoli, capitoli 6 (ampliato) e 8 dell'Equipaggiamento 0.5 (lotto 4, `docs/backlog.md`).
 
 ## Riferimenti
 
