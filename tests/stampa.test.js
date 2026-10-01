@@ -367,3 +367,30 @@ test('foglio Poteri (docs/layout-ss.md, pezzo 4): Gradi taumaturgici come nella 
   // senza contenitori nessun riquadro delle riserve
   assert.deepEqual(foglio(preparaStampa(ARCANISTA, dati), 'poteri').dati.riserve, []);
 });
+
+test('foglio Artefatti (docs/layout-ss.md, pezzo 5): sintonizzazione, schede, riserve senza i PM doppi', async () => {
+  const { readFileSync } = await import('node:fs');
+  const { deserializzaPersonaggio } = await import('../src/character.js');
+  const leggi = (f) => deserializzaPersonaggio(readFileSync(new URL(`collaudo/${f}`, import.meta.url), 'utf8'));
+  const prepara = (p) => preparaStampa({ creazione: p.creazione, livelli: p.livelli }, dati);
+  // c non ha Artefatti: nessun foglio 6, il foglio Poteri non c'è
+  assert.equal(foglio(prepara(leggi('c_freelance_tecnico_l5.json')), 'artefatti'), undefined);
+  // b: foglio 6, il Bordone Templare con arma, attivazione e riserva integrata; la batteria fra le riserve
+  const sb = prepara(leggi('b_fratellanza_arcanista_l12.json'));
+  const ab = foglio(sb, 'artefatti');
+  assert.equal(ab.numero, 6);
+  assert.equal(ab.dati.foglioPoteri, 5);
+  assert.equal(ab.dati.pmQui, false); // decisione 5: i PM delle riserve stanno nel foglio Poteri
+  const bordone = ab.dati.schede.find((x) => x.nome === 'Bordone Templare');
+  assert.ok(bordone.attivazione && bordone.riserva && bordone.arma);
+  assert.ok(ab.dati.sintonizzazione.capacita >= ab.dati.sintonizzazione.usata);
+  assert.ok(ab.dati.riserve.every((r) => !ab.dati.schede.some((x) => x.uid === r.uid))); // nessun doppione
+  // Lucas: solo batterie, foglio 6 con le riserve e nessuna scheda
+  const al = foglio(prepara(leggi('Lucas_liv6_2026-09-28 (2).json')), 'artefatti');
+  assert.deepEqual([al.numero, al.dati.schede.length, al.dati.riserve.length], [6, 0, 2]);
+  assert.deepEqual([al.dati.sintonizzazione.capacita, al.dati.sintonizzazione.usata], [5, 1]);
+  // la SD ha la sua tab Artefatti: il foglio di stampa non diventa una tab
+  const pb = leggi('b_fratellanza_arcanista_l12.json');
+  assert.ok(!preparaTab({ creazione: pb.creazione, livelli: pb.livelli }, dati).tab.some((t) => t.id === 'artefatti'));
+});
+

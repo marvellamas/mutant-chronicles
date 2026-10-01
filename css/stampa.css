@@ -423,3 +423,21 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .pi-inv { display: flex; align-items: center; gap: 2mm; padding-left: 4mm; }
 .condizioni-inv { margin: 0.3mm 0 0 4mm; }
 
+/* Foglio 6 — Artefatti (docs/layout-ss.md, pezzo 5) */
+.foglio-artefatti .foglio-corpo { gap: 2mm; }
+.art-sintonia { flex: none; }
+.art-sintonia-testa { display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr); gap: 2mm 5mm; align-items: start; }
+.art-sintonia .massimo { --tinta: var(--ss-cat-artefatti); }
+.elenco-sintonie-stampa { margin: 0; padding: 0; list-style: none; columns: 1; }
+.elenco-sintonie-stampa li { display: flex; align-items: center; gap: 1.5mm; }
+/* schede e riserve su tre colonne bilanciate; una scheda non si spezza */
+.art-colonne { flex: none; columns: 3; column-gap: 3mm; }
+.art-colonne > .riquadro-stampa { margin-bottom: 2mm; break-inside: avoid; --tinta: var(--ss-cat-artefatti); --tinta-tenue: #f3e9f5; }
+.scheda-artefatto > h2 .sigla { text-transform: none; letter-spacing: 0; font-weight: 500; }
+.scheda-artefatto p, .riserva-art p { margin: 0; }
+.scheda-artefatto .casella, .riserva-art .casella, .elenco-sintonie-stampa .casella { vertical-align: -0.4mm; }
+.provenienza-art { color: var(--ss-grigio); }
+.riserva-art { display: flex; flex-direction: column; gap: 0.6mm; }
+.art-colonne .chroma-punto, .elenco-sintonie-stampa .chroma-punto { width: 3mm; height: 3mm; margin-right: 1.2mm; vertical-align: -0.3mm; border-width: 0.6pt; }
+.art-note { min-height: 20mm; }
+

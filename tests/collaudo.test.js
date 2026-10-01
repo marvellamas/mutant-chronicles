@@ -157,11 +157,12 @@ test('collaudo c: Freelance Lavoratore Tecnico, 5° livello, Risorse Interiori, 
   assert.equal(s.incantesimi.conosciuti.length, 0);
 });
 
-test('stampa dei tre personaggi: il foglio Poteri solo per chi conosce incantesimi', () => {
+test('stampa dei tre personaggi: il foglio Poteri solo per chi conosce incantesimi, gli Artefatti per chi li ha', () => {
   const fogli = (f) => { const p = leggi(f); return preparaStampa({ creazione: p.creazione, livelli: p.livelli }, dati).fogli.map((x) => x.id); };
   // il foglio Inventario (4) c'è per tutti (docs/layout-ss.md, pezzo 1)
   assert.deepEqual(fogli('a_imperiale_assaltatore_l8.json'), ['identita', 'abilita', 'combattimento', 'inventario']);
-  assert.deepEqual(fogli('b_fratellanza_arcanista_l12.json'), ['identita', 'abilita', 'combattimento', 'inventario', 'poteri']);
+  // il Bordone Templare e la batteria: foglio Artefatti (6) dopo Poteri (docs/layout-ss.md, pezzo 5)
+  assert.deepEqual(fogli('b_fratellanza_arcanista_l12.json'), ['identita', 'abilita', 'combattimento', 'inventario', 'poteri', 'artefatti']);
   assert.deepEqual(fogli('c_freelance_tecnico_l5.json'), ['identita', 'abilita', 'combattimento', 'inventario']);
 });
 

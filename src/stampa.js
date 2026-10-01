@@ -9,7 +9,7 @@ import { valoreTiro } from './tiri.js';
 import { rigaAlLivello } from './descrizioni.js';
 import { CAMPI_ANAGRAFICA } from './character.js';
 import { checklist } from './checklist.js';
-import { aggiungiDanno, NOME_TESTO_PRECEDENTE, catalogo, normalizzaEquipaggiamento, STATO_DEPOSITO, consumabili, rapportoConversione, risolvi, infoArtefattoVoce } from './equipaggiamento.js';
+import { aggiungiDanno, NOME_TESTO_PRECEDENTE, catalogo, normalizzaEquipaggiamento, STATO_DEPOSITO, consumabili, rapportoConversione, risolvi, infoArtefattoVoce, regoleSintonizzazione, NOMI_STATI } from './equipaggiamento.js';
 import { gradiTaumaturgici } from './incantesimi.js';
 import { saldoIniziale, crediti } from './dotazioni.js';
 import { SEZIONI_INVENTARIO, sezioneInventario } from './palette.js';
@@ -430,11 +430,17 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     });
   }
 
+  // foglio 6 (docs/layout-ss.md, pezzo 5): solo con Artefatti, contenitori di Chroma compresi
+  if (s.equipaggiamento?.sintonizzazione?.artefatti?.length) {
+    fogli.push({ id: 'artefatti', titolo: 'Artefatti', dati: artefattiStampa(s, c, dati, { conPoteri: haMagia(s) }) });
+  }
+
   const ordinati = ordinaFogli(fogli, dati);
-  // numero del foglio Artefatti per il rimando del foglio Poteri: quello del foglio, o il posto che
-  // prenderà subito dopo Poteri (docs/layout-ss.md, §5.1)
+  // rimandi fra i fogli 5 e 6 (decisione 5: i PM delle riserve stanno nel foglio Poteri)
   const poteri = ordinati.find((f) => f.id === 'poteri');
-  if (poteri) poteri.dati.foglioArtefatti = ordinati.find((f) => f.id === 'artefatti')?.numero ?? poteri.numero + 1;
+  const artefatti = ordinati.find((f) => f.id === 'artefatti');
+  if (poteri) poteri.dati.foglioArtefatti = artefatti?.numero ?? null;
+  if (artefatti) artefatti.dati.foglioPoteri = poteri?.numero ?? null;
 
   return {
     completa: s.completa,
@@ -541,6 +547,62 @@ export function effettoStato(x) {
     if (Number.isInteger(a?.movimento)) parti.push(a.movimento ? `${a.movimento} AzM` : 'nessuna AzM');
   }
   return parti.join(', ');
+}
+
+const testoAr = (ar) => (ar ? `${ar.totale}${ar.magica ? ` (${ar.magica} magica)` : ''}` : '—');
+const IN_USO = ['impugnata', 'imbracciato', 'indossata', 'in_uso'];
+
+/**
+ * Foglio Artefatti della SS (docs/layout-ss.md, foglio 6; pezzo 5), come la tab Artefatti della SD:
+ * - sintonizzazione (§7.10): capacità per Gradi complessivi e bonus del Talento, punti occupati
+ *   dagli Artefatti segnati «sintonizzati» nel file (a riposo, come la SD), elenco con i costi;
+ * - una scheda per Artefatto: tipologia, potenza, costo, stato nell'Inventario, «Sintonizzato»,
+ *   effetti se in uso (VA e danno dell'arma in mano, AR della protezione indossata, con la
+ *   provenienza in una riga), attivazione con il costo in PM, riserva integrata;
+ * - riserve di Chroma (batterie, cristalli, contenitori): una riga di sintonizzazione ciascuna.
+ * I PM delle riserve stanno nel foglio Poteri (decisione 5); senza magia (niente foglio Poteri) qui.
+ */
+export function artefattiStampa(s, creazione, dati, { conPoteri = false } = {}) {
+  const eq = s.equipaggiamento;
+  const st = eq.sintonizzazione;
+  const rs = regoleSintonizzazione(dati);
+  const cat = catalogo(dati);
+  const perUid = new Map((creazione.equipaggiamento ?? []).map((v) => [v.uid, risolvi(v, cat)]));
+  const base = (uid) => String(uid).split(':')[0];
+  const contenitori = eq.contenitori ?? [];
+  const riga = (p) => (p?.righe?.length ? testoProvenienza(p, { totale: null, separatore: ' · ', note: false }) : null);
+  const schede = st.artefatti.filter((x) => !contenitori.some((c) => c.uid === x.uid && !c.integrato)).map((x) => {
+    const r = perUid.get(x.uid);
+    const def = r?.def;
+    const inUso = IN_USO.includes(r?.voce.stato);
+    const arma = inUso ? (eq.armi ?? []).find((a) => base(a.uid) === x.uid && !a.moduloDi) : null;
+    const prot = inUso ? (eq.protezioni ?? []).find((p) => base(p.uid) === x.uid && p.tipo !== 'elmetto') : null;
+    const riserva = contenitori.find((c) => c.uid === x.uid && c.integrato);
+    const effettiPossibili = ['arma_ravvicinata', 'arma_distanza', 'armatura', 'scudo'].includes(r?.tipo);
+    return {
+      uid: x.uid, nome: x.nome, tipologia: x.tipologia ?? 'Artefatto', potenza: x.potenza, costo: x.costo,
+      sintonizzato: x.sintonizzato, deposito: x.deposito, stato: NOMI_STATI[r?.voce.stato] ?? 'Con sé',
+      arma: arma ? { va: arma.va, danno: testoDanno(arma.danno), provenienzaVa: riga(arma.provenienza), provenienzaDanno: riga(arma.provenienzaDanno) } : null,
+      ar: prot ? { testo: testoAr(prot.ar), provenienza: riga(prot.provenienza) } : null,
+      nonInUso: !arma && !prot && effettiPossibili,
+      attivazione: def?.attivazione?.testo ?? null,
+      riserva: riserva ? { energia: riserva.energia, capacita: riserva.capacita } : null,
+    };
+  });
+  return {
+    sintonizzazione: {
+      capacita: st.capacita, usata: st.usata, gradi: st.gradi,
+      daGradi: rs.capacita_per_gradi[st.gradi - 1] ?? null, talento: st.talento, bonusTalento: st.talento ? rs.talento.bonus : 0,
+      elenco: st.artefatti.map((x) => ({ nome: x.nome, costo: x.costo, sintonizzato: x.sintonizzato, deposito: x.deposito })),
+    },
+    schede,
+    riserve: contenitori.filter((c) => !c.integrato).map((c) => ({
+      uid: c.uid, nome: c.nome, energia: c.energia, capacita: c.capacita, costo: c.costo, sintonizzato: c.sintonizzato, potenza: c.potenza,
+      deposito: st.artefatti.find((x) => x.uid === c.uid)?.deposito ?? false,
+    })),
+    // decisione 5: i PM delle riserve si segnano nel foglio Poteri; senza foglio Poteri, qui
+    pmQui: !conPoteri,
+  };
 }
 
 /**
@@ -764,8 +826,8 @@ const TITOLI_TAB = { identita: 'Identità', abilita: 'Abilità', combattimento: 
 export function preparaTab(personaggio, dati, { sessione = null } = {}) {
   const st = preparaStampa(personaggio, dati, { completo: true, sessione });
   const p = migraPersonaggio(personaggio);
-  // la SD ha il suo tab Inventario (src/ui/tab.js): il foglio di stampa non diventa un tab
-  const tab = st.fogli.filter((f) => f.id !== 'inventario').map((f) => ({ id: f.id, titolo: TITOLI_TAB[f.id], dati: { ...f.dati } }));
+  // la SD ha i suoi tab Inventario e Artefatti (src/ui/tab.js): i fogli di stampa non diventano tab
+  const tab = st.fogli.filter((f) => !['inventario', 'artefatti'].includes(f.id)).map((f) => ({ id: f.id, titolo: TITOLI_TAB[f.id], dati: { ...f.dati } }));
   const identita = tab.find((t) => t.id === 'identita');
   if (identita) {
     identita.dati.progressione = st.scheda.progressione ?? [];

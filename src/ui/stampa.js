@@ -30,7 +30,7 @@ export function esciDallaStampa() {
   document.getElementById('stile-stampa')?.remove();
 }
 
-const corpi = { identita: foglioIdentita, abilita: foglioAbilita, combattimento: foglioCombattimento, inventario: foglioInventario, poteri: foglioMagia };
+const corpi = { identita: foglioIdentita, abilita: foglioAbilita, combattimento: foglioCombattimento, inventario: foglioInventario, poteri: foglioMagia, artefatti: foglioArtefatti };
 
 function creaFoglio(id, titolo, dati, piede, corpo = corpi[id]) {
   return h('section', { class: `foglio foglio-${id}`, 'aria-label': titolo, dataset: { foglio: id } },
@@ -113,6 +113,13 @@ export function renderStampa({ stampa, torna, opzioni = null, cambiaOpzioni = nu
         const { pagine } = impaginaAbilita(f, stampa.fogli.find((x) => x.id === 'abilita').dati, stampa.piede);
         if (pagine > 1) avvisi.append(h('p', {}, `Il foglio Abilità è su ${pagine} pagine.`));
       }
+      if (f.classList.contains('foglio-artefatti') && f.classList.contains('seguito')) continue; // impaginate da impaginaArtefatti
+      if (f.classList.contains('foglio-artefatti')) {
+        const pagine = impaginaArtefatti(f, stampa.fogli.find((x) => x.id === 'artefatti').dati, stampa.piede);
+        if (pagine > 1) avvisi.append(h('p', {}, `Il foglio Artefatti è su ${pagine} pagine.`));
+        if (eccede(f.querySelector('.foglio-corpo'))) { f.dataset.fuori = '1'; fuori.push('Artefatti'); }
+        continue;
+      }
       if (f.classList.contains('foglio-inventario') && f.classList.contains('seguito')) continue; // impaginate da impaginaInventario
       if (f.classList.contains('foglio-inventario')) {
         const { pagine, troppoLunghe } = impaginaInventario(f, stampa.fogli.find((x) => x.id === 'inventario').dati, stampa.piede);
@@ -169,8 +176,10 @@ function box({ titolo, tinta = null, forte = false, riempitivo = false, classe =
  * al massimo (colpi, PI, Punti Eroe, Distintivi, riserve); `bloccoInPiu`: un blocco grigio in più
  * aggiunto dopo l'impaginazione solo se entra (aggiungiBlocchiInPiu).
  */
-function quadratini(massimo, { compatto = false, bloccoInPiu = false } = {}) {
+function quadratini(massimo, { compatto = false, bloccoInPiu = false, pieni = 0 } = {}) {
   const el = h('div', { class: `quadratini${compatto ? ' compatti' : ''}` }, schemaQuadratini(massimo, { compatto }).blocchi.map(bloccoQuadratini));
+  // i primi «pieni» prestampati (punti di sintonizzazione già occupati, scelta salvata nel file)
+  [...el.querySelectorAll('.casella:not(.oltre)')].slice(0, Math.max(0, pieni)).forEach((c) => c.classList.add('piena'));
   if (bloccoInPiu) el.dataset.bloccoInPiu = String(massimo);
   return el;
 }
@@ -514,6 +523,80 @@ function foglioCombattimento(d) {
 }
 
 // ---------------------------------------------------------------------------
+// Foglio 6 — Artefatti (docs/layout-ss.md, pezzo 5): in testa la sintonizzazione (capacità con la
+// provenienza, punti occupati a quadratini, elenco con i costi); poi una scheda per Artefatto come
+// nella tab della SD e una riga per ogni riserva di Chroma, su tre colonne; in fondo le Note come
+// riempitivo. I PM delle riserve stanno nel foglio Poteri (decisione 5): qui il rimando, salvo che
+// il personaggio non abbia la magia.
+
+const puntoChroma = (energia) => h('span', { class: `chroma-punto chroma-${String(energia).toLowerCase()}`, 'aria-hidden': 'true' });
+const casellaSi = (si) => h('span', { class: `casella${si ? ' piena' : ''}` });
+const rimandoPM = (d) => (d.foglioPoteri ? `PM: vedi foglio ${d.foglioPoteri}` : null);
+
+function schedaArtefatto(d, a) {
+  return h('article', { class: 'scheda-artefatto riquadro-stampa' },
+    h('h2', {}, a.nome, h('span', { class: 'sigla' }, ` · ${a.tipologia} · ${a.potenza}`)),
+    h('div', { class: 'contenuto' },
+      h('p', {}, casellaSi(a.sintonizzato), h('strong', {}, ' Sintonizzato'), ` · occupa ${a.costo}`,
+        h('span', { class: 'sigla' }, ` · nell’Inventario: ${a.stato}${a.deposito ? ' (non sintonizzabile)' : ''}`)),
+      a.arma ? h('p', {}, h('strong', {}, `VA ${a.arma.va}`), ` · danno ${a.arma.danno}`,
+        a.arma.provenienzaVa ? h('span', { class: 'piccolo provenienza-art' }, ` (${a.arma.provenienzaVa})`) : null,
+        a.arma.provenienzaDanno ? h('span', { class: 'piccolo provenienza-art' }, ` · danno: ${a.arma.provenienzaDanno}`) : null) : null,
+      a.ar ? h('p', {}, h('strong', {}, `AR ${a.ar.testo}`), a.ar.provenienza ? h('span', { class: 'piccolo provenienza-art' }, ` ${a.ar.provenienza}`) : null) : null,
+      a.nonInUso ? h('p', { class: 'piccolo' }, 'Non è in mano né indossato: i suoi effetti non contano ora.') : null,
+      a.attivazione ? h('p', {}, h('strong', {}, 'Attivazione: '), a.attivazione, h('span', { class: 'sigla' }, ' (§7.1.4)')) : null,
+      a.riserva ? h('p', {}, puntoChroma(a.riserva.energia), h('strong', {}, 'Riserva integrata: '), `Chroma ${a.riserva.energia}, ${a.riserva.capacita} PM`,
+        d.pmQui ? quadratini(a.riserva.capacita, { compatto: true }) : h('span', { class: 'sigla' }, ` — ${rimandoPM(d)}`)) : null));
+}
+
+function rigaRiserva(d, r) {
+  return h('div', { class: 'riserva-art' },
+    h('p', {}, casellaSi(r.sintonizzato), ' ', puntoChroma(r.energia), h('strong', {}, r.nome),
+      h('span', { class: 'sigla' }, ` · ${r.energia} · ${r.capacita} PM · ${r.potenza} · occupa ${r.costo}${r.deposito ? ' · deposito comune' : ''}${d.pmQui ? '' : ` · ${rimandoPM(d)}`}`)),
+    d.pmQui ? quadratini(r.capacita, { compatto: true }) : null);
+}
+
+function foglioArtefatti(d) {
+  const s = d.sintonizzazione;
+  return [
+    box({ titolo: 'Sintonizzazione (§7.10)', classe: 'art-sintonia' },
+      h('div', { class: 'art-sintonia-testa' },
+        h('div', { class: 'massimo' }, h('span', {}, 'capacità'), h('span', { class: 'valore' }, String(s.capacita))),
+        h('div', {},
+          h('p', { class: 'piccolo' }, `${s.daGradi ?? '—'} per ${s.gradi} Grad${s.gradi === 1 ? 'o' : 'i'} complessiv${s.gradi === 1 ? 'o' : 'i'}`,
+            s.talento ? `, +${s.bonusTalento} da ${s.talento}` : '', ', prima dell’eventuale riduzione per Umanità (§5.21).'),
+          h('p', { class: 'piccolo' }, `Occupati ora: ${s.usata} (caselle piene: Artefatti segnati «sintonizzato»).`),
+          quadratini(s.capacita, { compatto: true, pieni: s.usata })),
+        h('ul', { class: 'elenco-sintonie-stampa' }, s.elenco.map((x) => h('li', {}, casellaSi(x.sintonizzato), ` ${x.nome} · ${x.costo}${x.deposito ? ' · deposito comune' : ''}`))))),
+    h('div', { class: 'art-colonne' },
+      d.schede.map((a) => schedaArtefatto(d, a)),
+      d.riserve.length ? box({ titolo: 'Riserve di Chroma', classe: 'art-riserve' }, d.riserve.map((r) => rigaRiserva(d, r))) : null),
+    box({ titolo: 'Note sugli Artefatti', riempitivo: true, classe: 'art-note' }, righeGuida()),
+  ];
+}
+
+/**
+ * Impagina il foglio Artefatti: le schede (e il riquadro delle riserve) su tre colonne bilanciate;
+ * se con le Note (almeno due righe guida) la pagina non entra, le schede passano, dall'ultima, a
+ * «Artefatti (continua)», che riceve anche le Note. Una scheda non si spezza.
+ * @returns {number} pagine del foglio
+ */
+function impaginaArtefatti(foglio, d, piede) {
+  const corpo = foglio.querySelector('.foglio-corpo');
+  if (!eccede(corpo)) return 1;
+  const colonne = corpo.querySelector('.art-colonne');
+  const note = corpo.querySelector('.art-note');
+  const seguito = h('div', { class: 'art-colonne' });
+  const f = creaFoglio('artefatti', 'Artefatti (continua)', d, piede, () => [seguito]);
+  f.classList.add('seguito');
+  f.querySelector('.foglio-piede').textContent = foglio.querySelector('.foglio-piede').textContent;
+  foglio.after(f);
+  f.querySelector('.foglio-corpo').append(note);
+  for (let giro = 0; giro < 50 && eccede(corpo) && colonne.children.length > 1; giro++) seguito.prepend(colonne.lastElementChild);
+  return 2;
+}
+
+// ---------------------------------------------------------------------------
 // Foglio 4 — Inventario (docs/layout-ss.md, pezzo 1): in testa Crediti e Carico su una riga; poi le
 // sezioni della tab Inventario su due colonne (CSS columns), una tabella per sezione con
 // l'intestazione nel colore della categoria; per ogni oggetto costo, Qualità, peso, quattro
@@ -675,7 +758,7 @@ function foglioMagia(d) {
         d.conversione ? h('p', { class: 'piccolo' }, `Convertire Potere e ricaricare: ${d.conversione.rapporto}:1`,
           d.conversione.talenti.length ? ` (${d.conversione.talenti.join(' e ')})` : '',
           Object.keys(d.conversione.fissi).length ? `; ${Object.entries(d.conversione.fissi).map(([c, n]) => `${c} ${n}:1`).join(', ')} in entrambi i sensi` : '', '.') : null) : null),
-    d.daArtefatti?.length ? h('p', { class: 'da-artefatti-stampa' }, h('strong', {}, 'Da artefatti: '), `${d.daArtefatti.join(', ')} — vedi foglio ${d.foglioArtefatti}.`) : null,
+    d.daArtefatti?.length ? h('p', { class: 'da-artefatti-stampa' }, h('strong', {}, 'Da artefatti: '), `${d.daArtefatti.join(', ')}${d.foglioArtefatti ? ` — vedi foglio ${d.foglioArtefatti}` : ''}.`) : null,
     box({ titolo: `Incantesimi (${incantesimi.length})`, riempitivo: true, classe: 'f4-indice' },
       incantesimi.length ? tabellaIndice(incantesimi.map(rigaIndice)) : h('p', {}, 'Nessun incantesimo scelto.'),
       d.soloElenco && incantesimi.length ? notaSoloElenco() : null),
