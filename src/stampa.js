@@ -12,7 +12,7 @@ import { checklist } from './checklist.js';
 import { aggiungiDanno, NOME_TESTO_PRECEDENTE, catalogo, normalizzaEquipaggiamento, STATO_DEPOSITO, consumabili, rapportoConversione, risolvi, infoArtefattoVoce, regoleSintonizzazione, NOMI_STATI } from './equipaggiamento.js';
 import { gradiTaumaturgici } from './incantesimi.js';
 import { saldoIniziale, crediti } from './dotazioni.js';
-import { SEZIONI_INVENTARIO, sezioneInventario } from './palette.js';
+import { SEZIONI_INVENTARIO, sezioneInventario, COLORI_MACROFAMIGLIE } from './palette.js';
 import { modoRicarica } from './ricarica.js';
 import { calcolaCarico, pesoVoce } from './carico.js';
 import { testoProvenienza } from './provenienza.js';
@@ -375,6 +375,8 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
       id: 'poteri', titolo: 'Poteri',
       dati: {
         pm: s.pm,
+        // Magia sez. 6, Meditazione: recupero dei PM come nel riquadro della SD (null senza la capacità)
+        meditazione: s.magia?.meditazione ?? null,
         // uso specifico permanente (docs/effetti-oggetti.md): Potere per lanciare con l'armatura
         // indossata (§7.11.1), a riposo come il resto della stampa
         lancio: (() => {
@@ -658,6 +660,27 @@ export function azioniCombattimento(dati, armi = []) {
     gruppi.ravvicinato.push({ id: 'manovre-ravvicinate', titolo: `Manovre corpo a corpo (${(A.paragrafo ?? '§5.12').replace(/^Giocatore\s+/, '')})`, colonne: ['Manovra', 'AzP', 'VA', 'Danno', 'Prova', 'Effetto'], righe });
   }
   return codici.length ? [...gruppi.distanza, ...gruppi.ravvicinato] : [...gruppi.ravvicinato, ...gruppi.distanza];
+}
+
+/**
+ * Elenco degli incantesimi conosciuti della prima pagina del foglio Poteri (docs/layout-ss.md,
+ * ritocchi post-stampa): un'intestazione per macrofamiglia, poi una riga per incantesimo con le
+ * sole colonne essenziali (livello base, PM, gittata, durata, numero di scheda del Manuale della
+ * Magia); `tinta` è il colore della famiglia (palette.js), per la riga e l'intestazione.
+ * @returns {({ tipo: 'macro', nome, tinta, numero } | { tipo: 'incantesimo', nome, livello, pm, gittata, durata, scheda, macrofamiglia, tinta })[]}
+ */
+export function righeElencoIncantesimi(macrofamiglie) {
+  return macrofamiglie.flatMap((m) => {
+    const tinta = COLORI_MACROFAMIGLIE[m.nome] ?? null;
+    const incantesimi = m.specializzazioni.flatMap((sp) => sp.incantesimi);
+    return [
+      { tipo: 'macro', nome: m.nome, tinta, numero: incantesimi.length },
+      ...incantesimi.map((i) => ({
+        tipo: 'incantesimo', nome: i.nome, livello: i.livelloBase, pm: i.indice.pm, gittata: i.indice.gittata, durata: i.indice.durata,
+        scheda: i.scheda ?? '—', macrofamiglia: i.macrofamiglia ?? m.nome, tinta: COLORI_MACROFAMIGLIE[i.macrofamiglia ?? m.nome] ?? tinta,
+      })),
+    ];
+  });
 }
 
 /**

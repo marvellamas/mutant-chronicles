@@ -10,7 +10,7 @@ import { stemma, iconaPagina } from './immagini.js';
 import { pallini } from './tooltip.js';
 import { crediti } from '../dotazioni.js';
 import { COLORI_MACROFAMIGLIE } from '../palette.js';
-import { normalizzaOpzioniStampa, fogliDaStampare, numeraPagine, testoPiede, iconaFoglio, schemaQuadratini } from '../stampa.js';
+import { normalizzaOpzioniStampa, fogliDaStampare, numeraPagine, testoPiede, iconaFoglio, schemaQuadratini, righeElencoIncantesimi } from '../stampa.js';
 
 const FOGLIO_STILE = 'css/stampa.css';
 
@@ -726,25 +726,52 @@ function impaginaInventario(foglio, d, piede) {
 }
 
 // ---------------------------------------------------------------------------
-// Foglio 5 — Poteri (oggi la Magia; anche più pagine). Prima pagina: Punti Magia, valori di lancio, contenitori
-// di Chroma e l'indice degli incantesimi (una riga ciascuno, colorata per macrofamiglia); le
-// righe che non entrano continuano nella pagina dopo. Poi una scheda per incantesimo con il testo
-// completo, nell'ordine dell'indice, in tre colonne; una scheda non si spezza se entra in una
-// colonna (break-inside: avoid).
+// Foglio 5 — Poteri (docs/layout-ss.md, pezzo 4 e ritocchi post-stampa). Prima pagina con tutto il
+// «di base» su due colonne: a sinistra Punti Magia (quadratini a righe lunghe), batterie e riserve
+// di Chroma, Lancio su righe compatte e il rimando agli Artefatti; a destra, a tutta altezza,
+// l'elenco degli incantesimi conosciuti (una riga ciascuno, tinta della macrofamiglia, numero di
+// scheda). Se l'elenco non entra continua sotto la colonna sinistra e solo in ultimo su «5 (segue)».
+// Poi, con «Elenco e schede complete», una scheda per incantesimo con il testo completo,
+// nell'ordine dell'elenco, in tre colonne; una scheda non si spezza se entra in una colonna.
 
 const tintaMacro = (m) => COLORI_MACROFAMIGLIE[m] ?? null;
 const elencoIncantesimi = (d) => d.macrofamiglie.flatMap((m) => m.specializzazioni.flatMap((sp) =>
   sp.incantesimi.map((i) => ({ ...i, macrofamiglia: i.macrofamiglia ?? m.nome, specializzazione: sp.nome }))));
 
-function rigaIndice(i) {
-  return h('tr', { class: `tinta-${tintaMacro(i.macrofamiglia)}` },
-    h('th', { scope: 'row' }, i.nome), h('td', { class: 'centro' }, String(i.livelloBase)), h('td', {}, `${i.macrofamiglia} · ${i.specializzazione}`),
-    h('td', { class: 'centro' }, i.indice.pm), h('td', {}, i.indice.tempo), h('td', {}, i.indice.gittata), h('td', {}, i.indice.durata));
+const COLONNE_ELENCO = ['Incantesimo', 'Liv.', 'PM', 'Gittata', 'Durata', 'Scheda'];
+
+/** Riga dell'elenco: intestazione della macrofamiglia o incantesimo (righeElencoIncantesimi in src/stampa.js). */
+function rigaIndice(r, { continua = false } = {}) {
+  if (r.tipo === 'macro') {
+    return h('tr', { class: `macro-riga tinta-${r.tinta}`, dataset: { macro: r.nome } },
+      h('th', { colspan: COLONNE_ELENCO.length, scope: 'rowgroup' }, `${r.nome}${continua ? ' (continua)' : ` · ${r.numero}`}`));
+  }
+  return h('tr', { class: `tinta-${r.tinta}`, dataset: { macro: r.macrofamiglia } },
+    h('th', { scope: 'row' }, r.nome), h('td', { class: 'centro' }, String(r.livello)), h('td', { class: 'centro' }, r.pm),
+    h('td', {}, r.gittata), h('td', {}, r.durata), h('td', { class: 'centro' }, r.scheda));
 }
 
 const tabellaIndice = (righe) => h('table', { class: 'tabella-stampa indice-magia' },
-  h('thead', {}, h('tr', {}, ['Incantesimo', 'Liv.', 'Macrofamiglia', 'PM', 'Tempo di lancio', 'Gittata', 'Durata'].map((c) => h('th', {}, c)))),
+  h('thead', {}, h('tr', {}, COLONNE_ELENCO.map((c) => h('th', {}, c)))),
   h('tbody', {}, righe));
+
+/** Righe tolte da un elenco e messe in un altro: si apre con l'intestazione della macrofamiglia («continua»). */
+function conIntestazione(righe, macrofamiglie) {
+  const prima = righe[0];
+  if (!prima || prima.classList.contains('macro-riga')) return righe;
+  const m = macrofamiglie.find((x) => x.nome === prima.dataset.macro);
+  return [rigaIndice({ tipo: 'macro', nome: prima.dataset.macro, tinta: tintaMacro(m?.nome ?? prima.dataset.macro) }, { continua: true }), ...righe];
+}
+
+/** Righe di un elenco che escono dal fondo del contenitore; un'intestazione rimasta sola le segue. */
+function righeOltre(tbody, contenitore) {
+  const fondo = contenitore.getBoundingClientRect().bottom - 0.5;
+  const righe = [...tbody.rows];
+  let k = righe.findIndex((r) => r.getBoundingClientRect().bottom > fondo);
+  if (k < 0) return [];
+  if (k > 0 && righe[k - 1].classList.contains('macro-riga')) k--;
+  return righe.slice(k);
+}
 
 function schedaIncantesimo(i) {
   return h('article', { class: `scheda-incantesimo tinta-${tintaMacro(i.macrofamiglia)}` },
@@ -764,42 +791,80 @@ const notaSoloElenco = () => h('p', { class: 'piccolo nota-solo-elenco' }, 'Sche
 
 function foglioMagia(d) {
   const v = d.valoriLancio;
-  const voce = (nome, valore) => [h('dt', {}, nome), h('dd', {}, valore)];
   const incantesimi = elencoIncantesimi(d);
-  return [
-    h('div', { class: 'f4-testa' },
-      box({ titolo: 'Punti Magia', tinta: 'pm', forte: true },
-        h('div', { class: 'massimo' }, h('span', {}, 'massimi'), h('span', { class: 'valore' }, String(d.pm ?? '—'))),
+  const med = d.meditazione;
+  // etichetta: valore, due per riga; le voci lunghe prendono la riga intera
+  const voce = (nome, ...valore) => {
+    const testo = [nome, ...valore].map((x) => (typeof x === 'string' ? x : x?.textContent ?? '')).join(' ');
+    return h('div', { class: `f5-voce${testo.length > 44 ? ' intera' : ''}` }, h('span', { class: 'f5-etichetta' }, `${nome}:`), ' ', ...valore);
+  };
+  const conversione = d.conversione ? [`Convertire Potere e ricaricare: ${d.conversione.rapporto}:1`,
+    d.conversione.talenti.length ? ` (${d.conversione.talenti.join(' e ')})` : '',
+    Object.keys(d.conversione.fissi).length ? `; ${Object.entries(d.conversione.fissi).map(([c, n]) => `${c} ${n}:1`).join(', ')} in entrambi i sensi` : '', '.'].join('') : null;
+  return h('div', { class: 'f5-griglia' },
+    h('div', { class: 'colonna f5-sinistra' },
+      box({ titolo: 'Punti Magia', tinta: 'pm', forte: true, classe: 'f5-pm' },
+        h('div', { class: 'f5-pm-testa' },
+          h('div', { class: 'massimo' }, h('span', {}, 'massimi'), h('span', { class: 'valore' }, String(d.pm ?? '—'))),
+          // Magia sez. 6: recupero con la Meditazione, come nel riquadro della SD
+          med ? h('span', {}, `Recupero con Meditazione: ${med.pmPerOra} PM/ora, ${med.orePerGiorno} ${med.orePerGiorno === 1 ? 'ora' : 'ore'}/giorno`) : null),
         h('p', { class: 'piccolo' }, 'attuali'),
-        d.pm ? quadratini(d.pm, { bloccoInPiu: true }) : null),
-      box({ titolo: 'Lancio' },
-        h('dl', { class: 'voci-stampa' },
-          voce('Potere per lanciare', h('strong', {}, `VA ${v.potere ?? '—'}`), d.lancio ? ` (armatura ${segno(d.lancio.penalita)}, §7.11.1)` : null),
-          voce('Focalizzazione', `${segno(v.focalizzazione)} a Potere (1 Azione Principale prima)`),
-          voce('Ingaggio', `${segno(v.ingaggio)} a Potere, Prova sempre richiesta`),
-          voce('Anticipazione', `PM ×${v.anticipazione}, Potere più difficile di una categoria`),
+        // come i PV del foglio 3: righe da 25, stacco ogni 5, almeno due righe e sempre una riga grigia
+        d.pm ? quadratini(d.pm, { compatto: true, perRiga: 25, righeInPiu: Math.max(1, 2 - Math.ceil(d.pm / 25)) }) : null),
+      // decisione 5: batterie e riserve di Chroma con i PM qui (il foglio Artefatti ha la sola sintonizzazione)
+      d.riserve?.length ? box({ titolo: 'Batterie e riserve di Chroma (Magia sez. 6)', classe: 'f4-riserve f5-riserve' },
+        d.riserve.map((r) => h('div', { class: 'f5-riserva' },
+          h('span', { class: `chroma-punto chroma-${String(r.energia).toLowerCase()}`, 'aria-hidden': 'true' }),
+          h('span', { class: 'f5-riserva-nome' }, h('strong', {}, r.nome),
+            h('span', { class: 'sigla' }, ` · ${r.energia} · ${r.integrato ? 'attivazioni (A.18)' : r.regoleRimandate ? 'regole rimandate' : r.macrofamiglie.length >= 3 ? 'tutte le macrofamiglie' : r.macrofamiglie.join(', ') || '—'} · ${r.sintonizzato ? 'sintonizzato' : 'da sintonizzare'} (${r.costo})`)),
+          quadratini(r.capacita, { compatto: true }))),
+        conversione ? h('p', { class: 'piccolo f5-conversione' }, conversione) : null) : null,
+      box({ titolo: 'Lancio', classe: 'f5-lancio' },
+        h('div', { class: 'f5-voci' },
+          voce('Potere per lanciare', h('strong', {}, `VA ${v.potere ?? '—'}`), d.lancio ? ` (armatura ${segno(d.lancio.penalita)}, §7.11.1)` : ''),
           voce('Armi da lancio', `${segno(v.armiDaLancio)} negli Incantesimi`),
+          voce('Focalizzazione', `${segno(v.focalizzazione)} a Potere (1 AzP prima)`),
+          voce('Ingaggio', `${segno(v.ingaggio)} a Potere, Prova sempre`),
+          voce('Anticipazione', `PM ×${v.anticipazione}, Potere più difficile di una categoria`),
           voce('Incantesimi', `conosciuti ${d.conosciuti} / ${d.quota} · livello massimo ${d.livelloMassimo}`),
           // Magia sez. 1, come nel riquadro Incantesimi della SD
           d.gradi ? voce('Gradi taumaturgici', d.gradi.testo) : null),
         h('table', { class: 'tabella-stampa scala' },
           h('tbody', {},
-            h('tr', {}, h('th', {}, `Livello (scala ${d.scalaPotere})`), d.scala.map((r) => h('td', {}, r.livelli))),
+            h('tr', {}, h('th', {}, `Livello (${d.scalaPotere})`), d.scala.map((r) => h('td', {}, r.livelli))),
             h('tr', {}, h('th', {}, 'Prova di Potere'), d.scala.map((r) => h('td', {}, r.prova)))))),
-      // decisione 5: batterie e riserve di Chroma con i PM qui (il foglio Artefatti ha la sola sintonizzazione)
-      d.riserve?.length ? box({ titolo: 'Batterie e riserve di Chroma (Magia sez. 6)', classe: 'f4-riserve' },
-        d.riserve.map((r) => h('div', { class: 'riserva' },
-          h('p', {}, h('span', { class: `chroma-punto chroma-${String(r.energia).toLowerCase()}`, 'aria-hidden': 'true' }), h('strong', {}, r.nome),
-            h('span', { class: 'sigla' }, ` · ${r.energia} · ${r.integrato ? 'attivazioni (A.18)' : r.regoleRimandate ? 'regole rimandate' : r.macrofamiglie.length >= 3 ? 'tutte le macrofamiglie' : r.macrofamiglie.join(', ') || '—'} · ${r.sintonizzato ? 'sintonizzato' : 'da sintonizzare'} (${r.costo})`)),
-          quadratini(r.capacita, { compatto: true }))),
-        d.conversione ? h('p', { class: 'piccolo' }, `Convertire Potere e ricaricare: ${d.conversione.rapporto}:1`,
-          d.conversione.talenti.length ? ` (${d.conversione.talenti.join(' e ')})` : '',
-          Object.keys(d.conversione.fissi).length ? `; ${Object.entries(d.conversione.fissi).map(([c, n]) => `${c} ${n}:1`).join(', ')} in entrambi i sensi` : '', '.') : null) : null),
-    d.daArtefatti?.length ? h('p', { class: 'da-artefatti-stampa' }, h('strong', {}, 'Da artefatti: '), `${d.daArtefatti.join(', ')}${d.foglioArtefatti ? ` — vedi foglio ${d.foglioArtefatti}` : ''}.`) : null,
-    box({ titolo: `Incantesimi (${incantesimi.length})`, riempitivo: true, classe: 'f4-indice' },
-      incantesimi.length ? tabellaIndice(incantesimi.map(rigaIndice)) : h('p', {}, 'Nessun incantesimo scelto.'),
-      d.soloElenco && incantesimi.length ? notaSoloElenco() : null),
-  ];
+      h('div', { class: 'f5-coda' },
+        d.daArtefatti?.length ? h('p', { class: 'da-artefatti-stampa' }, h('strong', {}, 'Da artefatti: '), `${d.daArtefatti.join(', ')}${d.foglioArtefatti ? ` — vedi foglio ${d.foglioArtefatti}` : ''}.`) : null,
+        d.soloElenco && incantesimi.length ? notaSoloElenco() : null)),
+    box({ titolo: `Incantesimi conosciuti (${incantesimi.length})`, classe: 'f4-indice f5-elenco' },
+      incantesimi.length ? tabellaIndice(righeElencoIncantesimi(d.macrofamiglie).map((r) => rigaIndice(r))) : h('p', {}, 'Nessun incantesimo scelto.')));
+}
+
+/**
+ * Elenco della prima pagina del foglio 5: le righe oltre il fondo della colonna destra continuano
+ * sotto la colonna sinistra («Incantesimi (continua)»); quelle che non entrano neanche lì passano a
+ * «5 (segue)». Il carattere non si riduce.
+ * @returns {HTMLTableRowElement[]} righe per la pagina dopo
+ */
+function impaginaElenco(foglio, d) {
+  const elenco = foglio.querySelector('.f5-elenco');
+  const tbody = elenco?.querySelector('.indice-magia tbody');
+  if (!tbody) return [];
+  const fuori = righeOltre(tbody, elenco.querySelector(':scope > .contenuto'));
+  if (!fuori.length) return [];
+  fuori.forEach((r) => r.remove());
+  const sinistra = foglio.querySelector('.f5-sinistra');
+  const tabella2 = tabellaIndice(conIntestazione(fuori, d.macrofamiglie));
+  const seguito = box({ titolo: 'Incantesimi (continua)', classe: 'f5-elenco-seguito' }, tabella2);
+  sinistra.insertBefore(seguito, sinistra.querySelector(':scope > .f5-coda'));
+  const resto = righeOltre(tabella2.tBodies[0], seguito.querySelector(':scope > .contenuto'));
+  resto.forEach((r) => r.remove());
+  // un seguito senza incantesimi non serve: tutto alla pagina dopo
+  if (!tabella2.querySelector('tbody tr:not(.macro-riga)')) {
+    seguito.remove();
+    return conIntestazione(fuori, d.macrofamiglie);
+  }
+  return conIntestazione(resto, d.macrofamiglie);
 }
 
 /**
@@ -810,17 +875,11 @@ function foglioMagia(d) {
  */
 function impaginaMagia(contenitore, foglio, d, piede) {
   const incantesimi = elencoIncantesimi(d);
-  // 1. indice: le righe oltre il fondo del riquadro passano alla pagina dopo (la nota di «Solo
-  // elenco» resta in fondo all'indice, anche quando l'indice continua)
-  const box1 = foglio.querySelector('.f4-indice > .contenuto');
-  const nota = box1.querySelector('.nota-solo-elenco');
-  const fondo = box1.getBoundingClientRect().bottom - 1 - (nota ? nota.getBoundingClientRect().height : 0);
-  const righe = [...foglio.querySelectorAll('.indice-magia tbody tr')];
-  const primaFuori = righe.findIndex((r) => r.getBoundingClientRect().bottom > fondo);
-  const resto = primaFuori < 0 ? [] : righe.slice(primaFuori);
-  resto.forEach((r) => r.remove());
-  if (resto.length && nota) nota.remove();
+  // 1. elenco: colonna destra, poi sotto la colonna sinistra, poi la pagina dopo
+  const resto = impaginaElenco(foglio, d);
   if (!incantesimi.length) return { pagine: 1, pagineSchede: 0 };
+  // la nota di «Solo elenco» va in fondo all'elenco: se l'elenco continua, la porta la pagina dopo
+  if (resto.length) foglio.querySelector('.f5-coda .nota-solo-elenco')?.remove();
 
   let ultima = foglio;
   let pagine = 1;

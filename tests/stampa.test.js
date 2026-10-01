@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   preparaStampa, tronca, primaFrase, versioniAccessibili, vociEquipaggiamento, elencoZaino, intestazioneBreve, LIMITI_STAMPA,
-  preparaTab, spezzaMagia, contaIncantesimi, numeraPagine, testoPiede, ordinaFogli, iconaFoglio, azioniCombattimento, schemaQuadratini,
+  preparaTab, spezzaMagia, contaIncantesimi, numeraPagine, testoPiede, ordinaFogli, iconaFoglio, azioniCombattimento, schemaQuadratini, righeElencoIncantesimi,
 } from '../src/stampa.js';
 import { CAMPI_ANAGRAFICA } from '../src/character.js';
 import { datiReali } from './helpers.js';
@@ -435,5 +435,31 @@ test('Azioni di combattimento (foglio 3, pagina 2): solo valori dei dati, gruppi
   assert.equal(b[0].righe.find((r) => r[0] === M.mirato.nome)[1], String(M.mirato.azioni_principali));
   assert.ok(b.find((g) => g.id === 'modalita').righe.length >= 7); // tutte, senza Tiro Mirato (sta fra le manovre)
   assert.ok(!b.find((g) => g.id === 'modalita').righe.some((r) => r[0].includes('(TM)')));
+});
+
+test('foglio 5, prima pagina (ritocchi post-stampa): elenco completo, una intestazione e una tinta per macrofamiglia, numero di scheda', async () => {
+  const { readFileSync } = await import('node:fs');
+  const { deserializzaPersonaggio } = await import('../src/character.js');
+  const { COLORI_MACROFAMIGLIE } = await import('../src/palette.js');
+  for (const [f, n] of [['b_fratellanza_arcanista_l12.json', 31], ['Lucas_liv6_2026-09-28 (2).json', 15]]) {
+    const p = deserializzaPersonaggio(readFileSync(new URL(`collaudo/${f}`, import.meta.url), 'utf8'));
+    const d = foglio(preparaStampa({ creazione: p.creazione, livelli: p.livelli }, dati), 'poteri').dati;
+    const righe = righeElencoIncantesimi(d.macrofamiglie);
+    const inc = righe.filter((r) => r.tipo === 'incantesimo');
+    // tutti gli incantesimi conosciuti, nell'ordine delle schede complete
+    assert.equal(inc.length, n);
+    assert.equal(inc.length, d.conosciuti);
+    assert.deepEqual(inc.map((r) => r.nome), d.macrofamiglie.flatMap((m) => m.specializzazioni.flatMap((sp) => sp.incantesimi.map((i) => i.nome))));
+    // un'intestazione per macrofamiglia, con il numero; ogni riga ha la tinta della sua famiglia
+    const macro = righe.filter((r) => r.tipo === 'macro');
+    assert.deepEqual(macro.map((r) => r.nome), d.macrofamiglie.map((m) => m.nome));
+    assert.equal(macro.reduce((s, r) => s + r.numero, 0), n);
+    assert.ok(inc.every((r) => r.tinta === COLORI_MACROFAMIGLIE[r.macrofamiglia] && r.tinta));
+    // colonne essenziali: livello base, PM, gittata, durata e numero di scheda («13.1»)
+    assert.ok(inc.every((r) => Number.isInteger(r.livello) && r.pm && r.gittata && r.durata && /^\d+\.\d+$/.test(r.scheda)));
+    // le schede complete restano nei dati del foglio (pagine seguenti, sistema invariato)
+    assert.ok(d.macrofamiglie.every((m) => m.specializzazioni.every((sp) => sp.incantesimi.every((i) => 'descrizione' in i))));
+    assert.ok(d.meditazione && d.meditazione.pmPerOra >= 3);
+  }
 });
 

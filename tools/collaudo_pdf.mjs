@@ -117,7 +117,17 @@ function controllaFogli() {
     const colonne = f.querySelector('.inv-colonne');
     if (trabocca(f.querySelector('.foglio-corpo')) || (colonne && trabocca(colonne))) out.push(`${f.querySelector('.foglio-titolo')?.textContent ?? 'Inventario'}: una sezione non entra in una pagina intera`);
   }
-  for (const f of document.querySelectorAll('.foglio:not(.foglio-poteri):not(.foglio-inventario)')) {
+  // foglio 5, prima pagina (ritocchi post-stampa): tutto il «di base»; con 20 incantesimi o meno l'elenco intero
+  const p5 = document.querySelector('.foglio-poteri:not(.seguito)');
+  if (p5) {
+    if (!p5.querySelector('.f5-pm') || !p5.querySelector('.f5-lancio')) out.push('Poteri: Punti Magia o Lancio fuori dalla prima pagina');
+    if (p5.querySelector('.scheda-incantesimo')) out.push('Poteri: schede complete nella prima pagina');
+    const n = Number(/\((\d+)\)/.exec(p5.querySelector('.f5-elenco > h2')?.textContent ?? '')?.[1] ?? 0);
+    const qui = p5.querySelectorAll('.indice-magia tbody tr:not(.macro-riga)').length;
+    if (n <= 20 && qui < n) out.push(`Poteri: nella prima pagina ${qui} incantesimi su ${n}`);
+  }
+  // la prima pagina del foglio 5 si controlla come le altre (le continuazioni sono impaginate a parte)
+  for (const f of document.querySelectorAll('.foglio:not(.foglio-poteri.seguito):not(.foglio-inventario)')) {
     const titolo = f.querySelector('.foglio-titolo')?.textContent ?? '?';
     const corpo = f.querySelector('.foglio-corpo');
     const fuori = [corpo, ...corpo.querySelectorAll('.riquadro-stampa, .riquadro-stampa > .contenuto, .colonna')].find(trabocca);
@@ -184,14 +194,17 @@ for (const { id, pdf: conPdf, variante } of lavori) {
   // colonna destra del foglio 2: riquadri e altezza delle Annotazioni (mm)
   const colonna2 = await valuta(`(() => { const f = document.querySelector('.foglio-abilita:not(.seguito)'); if (!f) return '—'; const a = f.querySelector('.f2-annotazioni'); return [...f.querySelectorAll('.f2-griglia > .colonna > .riquadro-stampa > h2')].map((x) => x.textContent).join(', ') + (a ? ' · Annotazioni ' + Math.round(a.getBoundingClientRect().height * 25.4 / 96) + ' mm' : ''); })()`);
   // foglio 3: pagine e gruppi del riquadro Azioni di combattimento nella pagina 2
+  const foglio5 = await valuta(`(() => { const p = document.querySelector('.foglio-poteri:not(.seguito)'); if (!p) return '—'; const n = /\\((\\d+)\\)/.exec(p.querySelector('.f5-elenco > h2')?.textContent ?? '')?.[1]; return document.querySelectorAll('.foglio-poteri').length + ' pagina/e · elenco nella prima pagina: ' + p.querySelectorAll('.indice-magia tbody tr:not(.macro-riga)').length + ' / ' + n + (p.querySelector('.f5-elenco-seguito') ? ' (continua sotto la colonna sinistra)' : ''); })()`);
   const foglio3 = await valuta(`(() => { const p = document.querySelectorAll('.foglio-combattimento').length; const g = [...document.querySelectorAll('.f3-pagina-condizione .azioni-gruppo > h3')].map((x) => x.textContent); return p + ' pagine · Azioni di combattimento: ' + (g.length ? g.join(', ') : 'no'); })()`);
-  if (!conPdf) { console.log(`${nome}: ${pagineVista} pagine (solo controllo di sbordo) | ${avvisi.replace(/\n/g, ' / ')}\n  fogli: ${sequenza}\n  foglio 2: ${colonna2}\n  foglio 3: ${foglio3}`); continue; }
+  if (!conPdf) { console.log(`${nome}: ${pagineVista} pagine (solo controllo di sbordo) | ${avvisi.replace(/\n/g, ' / ')}\n  fogli: ${sequenza}\n  foglio 2: ${colonna2}\n  foglio 3: ${foglio3}
+  foglio 5: ${foglio5}`); continue; }
   const pdf = await cdp('Page.printToPDF', { preferCSSPageSize: true, printBackground: true });
   const buf = Buffer.from(pdf.result.data, 'base64');
   writeFileSync(`${OUT}/${nome}.pdf`, buf);
   const pagine = (buf.toString('latin1').match(/\/Type\s*\/Page[^s]/g) ?? []).length;
   const box = /\/MediaBox\s*\[([^\]]+)\]/.exec(buf.toString('latin1'))?.[1];
-  console.log(`${nome}: ${pagine} pagine, MediaBox ${box}, ${Math.round(buf.length / 1024)} kB | ${avvisi.replace(/\n/g, ' / ')}\n  fogli: ${sequenza}\n  foglio 2: ${colonna2}\n  foglio 3: ${foglio3}`);
+  console.log(`${nome}: ${pagine} pagine, MediaBox ${box}, ${Math.round(buf.length / 1024)} kB | ${avvisi.replace(/\n/g, ' / ')}\n  fogli: ${sequenza}\n  foglio 2: ${colonna2}\n  foglio 3: ${foglio3}
+  foglio 5: ${foglio5}`);
   if (pagine !== pagineVista) sbordati.push(`${nome}: il PDF ha ${pagine} pagine, la vista ${pagineVista}`);
 }
 ws.close();
