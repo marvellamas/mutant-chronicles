@@ -11,6 +11,7 @@ import { provenienza, righeDaScomposizione, rigaConDettaglio } from './provenien
 import { bonusDannoCaratteristica } from './calc.js';
 import { aggiungiDanno } from './equipaggiamento.js';
 import { effettiTalenti } from './talenti.js';
+import { valoreAnticipato } from './anticipazione.js';
 
 const GRADI_ROMANI = ['', 'I', 'II', 'III', 'IV', 'V', 'VI'];
 /** «2d6+5» + 1 dado → «3d6+5» (il primo gruppo di dadi; Sovraccarico Controllato). */
@@ -34,6 +35,46 @@ const pmVersione = (r) => numero(r?.PM ?? r?.['Livello e PM']);
 const modPsVersione = (r) => { const k = Object.keys(r ?? {}).find((x) => /^Mod\.? PS$/.test(x)); return k ? String(r[k]) : null; };
 // energia dei contenitori → PM utilizzabili della scheda (Magia sez. 6)
 const PM_DI_ENERGIA = { Universale: 'universali', Fisica: 'fisici', Mentale: 'mentali', Spirituale: 'spirituali' };
+
+const CATEGORIE_TALENTO = { durata: 'la Durata', bersagli: 'il numero di Bersagli', area: 'l’Area', gittata: 'la Gittata', valori: 'i valori numerici' };
+
+/**
+ * Anticipazione di un lancio (Magia sez. 12.3, Talenti con effetti.lancio): cosa vale davvero con i
+ * Talenti del personaggio (righe { testo, fonte } per il riquadro, con la provenienza), il valore
+ * anticipato dalla scala della scheda (src/anticipazione.js) e gli aspetti consentiti dalla scheda.
+ * @returns {{ regole: {testo, fonte}[], consentiti: string, talentiNonUsabili: string[], valore: object|null }|null}
+ */
+export function regoleAnticipazione(m, aspetto, versione, con, dati, righe = []) {
+  const aspetti = m.anticipazione?.aspetti ?? [];
+  if (!aspetti.length) return null;
+  const A = dati.regole.lancio.anticipazione;
+  const fonteSez = A.paragrafo;
+  const raddoppio = con('anticipazione_senza_raddoppio');
+  const migliorata = con('anticipazione_senza_difficolta')[0] ?? null;
+  const categorie = new Set(aspetti.map((a) => a.categoria));
+  const consentiti = `La scheda di questo incantesimo consente: ${aspetti.map((a) => a.nome ?? a.etichetta).join(', ')}.`;
+  // Talenti di Anticipazione che questa scheda non permette di usare (Incantesimi Plurimi senza Bersagli)
+  const talentiNonUsabili = raddoppio.filter((t) => !categorie.has(t.e.anticipazione_senza_raddoppio))
+    .map((t) => `${t.nome}: qui non si usa, la scheda non consente di anticipare ${CATEGORIE_TALENTO[t.e.anticipazione_senza_raddoppio] ?? t.e.anticipazione_senza_raddoppio}.`);
+  const regole = [];
+  const pm = versione?.pm ?? null;
+  if (aspetto) {
+    const t = raddoppio.find((x) => x.e.anticipazione_senza_raddoppio === aspetto.categoria);
+    regole.push(t ? { testo: `${t.nome}: niente raddoppio PM (${pm} PM).`, fonte: `Talento ${t.nome}` }
+      : { testo: `PM ×${A.moltiplicatore_costo}: ${pm} → ${pm * A.moltiplicatore_costo} PM.`, fonte: fonteSez });
+  } else {
+    for (const t of raddoppio.filter((x) => categorie.has(x.e.anticipazione_senza_raddoppio))) {
+      regole.push({ testo: `${t.nome}: anticipando ${CATEGORIE_TALENTO[t.e.anticipazione_senza_raddoppio]} niente raddoppio PM; gli altri aspetti costano ×${A.moltiplicatore_costo}.`, fonte: `Talento ${t.nome}` });
+    }
+    if (!regole.length) regole.push({ testo: `PM ×${A.moltiplicatore_costo} per l’aspetto anticipato.`, fonte: fonteSez });
+  }
+  regole.push(migliorata
+    ? { testo: `${migliorata.nome}: Prova obbligatoria, con la difficoltà del livello dichiarato.`, fonte: `Talento ${migliorata.nome}` }
+    : { testo: 'Prova obbligatoria, Potere più difficile di una categoria (Anticipazione Migliorata la eliminerebbe).', fonte: fonteSez });
+  regole.push({ testo: 'Non cumulabile con Calcolo Arcano sullo stesso lancio.', fonte: fonteSez });
+  const valore = aspetto ? { ...valoreAnticipato(aspetto, versione?.riga, righe), aspetto: aspetto.nome ?? aspetto.etichetta, conseguenze: aspetto.conseguenze ?? [] } : null;
+  return { regole, consentiti, talentiNonUsabili, valore };
+}
 
 /** Dichiarazione completa, con i valori predefiniti. */
 export function dichiarazioneLancio(d = {}) {
@@ -126,12 +167,12 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
   if (d.anticipazione !== null && !aspetto) blocca('Aspetto dell’Anticipazione non previsto dalla scheda.');
   const senzaDifficolta = aspetto && con('anticipazione_senza_difficolta').length > 0;
   const senzaRaddoppio = aspetto ? con('anticipazione_senza_raddoppio').find((t) => t.e.anticipazione_senza_raddoppio === aspetto.categoria) : null;
+  const anticipazione = regoleAnticipazione(m, aspetto, v, con, dati, incantesimo.versioni ?? []);
 
   // 3. costo in PM: base, raddoppio, riduzioni dei Talenti (minimo 1); le riduzioni non toccano livello e penalità
   let pm = v?.pm ?? livello;
   const costo = [{ etichetta: `Versione di livello ${livello}`, valore: pm }];
   if (aspetto && !senzaRaddoppio) { costo.push({ etichetta: `Anticipazione (${aspetto.nome ?? aspetto.etichetta}): ×${A.moltiplicatore_costo}`, valore: pm * (A.moltiplicatore_costo - 1) }); pm *= A.moltiplicatore_costo; }
-  if (aspetto && senzaRaddoppio) promemoria.push(`${senzaRaddoppio.nome}: l’Anticipazione di questo aspetto non raddoppia il costo.`);
   const minimo = Math.max(1, ...con('pm_minimo').map((t) => t.e.pm_minimo));
   for (const t of con('pm')) { const r = Math.max(minimo, pm + t.e.pm) - pm; if (r) { costo.push({ etichetta: t.nome, valore: r }); pm += r; } }
   if (d.riservaTecnica) for (const t of con('pm_una_volta_per_scena')) { const r = Math.max(minimo, pm + t.e.pm_una_volta_per_scena) - pm; if (r) { costo.push({ etichetta: `${t.nome} (una volta per scena)`, valore: r }); pm += r; } }
@@ -163,7 +204,7 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
   if (aspetto && !senzaDifficolta) {
     const i = Math.max(0, fascia);
     penLivello = taumaturgo ? A.penalita_taumaturgo[i] : (L.penalita_livello.fasce[i + 1]?.altri ?? riga.altri - 2);
-  } else if (aspetto && senzaDifficolta) promemoria.push(`${con('anticipazione_senza_difficolta')[0].nome}: la difficoltà resta quella del livello dichiarato; la Prova resta obbligatoria.`);
+  }
   const etLivello = `Livello ${livello}${aspetto && !senzaDifficolta ? ', con Anticipazione' : ''} (${taumaturgo ? 'Taumaturgo' : 'altri utilizzatori'})`;
   if (penLivello) scomposizione.push(voce(etLivello, penLivello, 'livello', aspetto && !senzaDifficolta ? A.paragrafo : L.penalita_livello.paragrafo));
   const architetto = con('riduzione_penalita_livello')[0];
@@ -297,7 +338,6 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
   }
   // Controllo Arcano: oltre al +1 danno, l'esclusione di 1 + Mod INT creature dagli Incantesimi ad Area
   if (adArea && T.some((t) => t.nome === 'Controllo Arcano')) promemoria.push(`Controllo Arcano: puoi escludere fino a ${1 + Math.max(0, scheda?.caratteristiche?.INT?.mod ?? 0)} creature dall’Area.`);
-  if (aspetto && T.some((t) => t.nome === 'Calcolo Arcano')) promemoria.push(`Calcolo Arcano: ${A.frasi.at(-1)}`);
 
   return {
     livello,
@@ -320,6 +360,9 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
     azioni: { ...m.azioni, focalizzazione: d.focalizzazione ? 1 : 0 },
     concentrazione: m.concentrazione ?? null,
     aspetto,
+    // Anticipazione (sez. 12.3): regole che valgono per questo lancio con questi Talenti, il valore
+    // anticipato dalla scala della scheda e gli aspetti che la scheda consente
+    anticipazione,
     impossibile,
     promemoria,
     // Stati attivi senza Azione Principale o con sole azioni difensive (regole.json → stati)

@@ -57,10 +57,14 @@ function corpo(ctx, inc, intestazione) {
       })(),
     ],
     Anticipazione: conAnticipazione ? [
-      rigaScelte('Aspetto da anticipare (uno solo)', [{ valore: null, etichetta: 'Nessuna' }, ...m.anticipazione.aspetti.map((a, i) => ({ valore: i, etichetta: a.nome ?? a.etichetta, titolo: a.gradino }))],
-        d.anticipazione, (x) => imposta({ anticipazione: x })),
+      // tooltip sull'elenco: gli aspetti sono solo quelli della scheda (Incantesimi Plurimi non vale dove i Bersagli non ci sono)
+      h('div', { class: 'aspetti-anticipazione', title: [r.anticipazione?.consentiti, ...(r.anticipazione?.talentiNonUsabili ?? [])].filter(Boolean).join('\n') },
+        rigaScelte('Aspetto da anticipare (uno solo)', [{ valore: null, etichetta: 'Nessuna' }, ...m.anticipazione.aspetti.map((a, i) => ({ valore: i, etichetta: a.nome ?? a.etichetta, titolo: a.gradino }))],
+          d.anticipazione, (x) => imposta({ anticipazione: x }))),
+      h('p', { class: 'nota' }, r.anticipazione?.consentiti, ...(r.anticipazione?.talentiNonUsabili ?? []).map((t) => [' ', t])),
       d.anticipazione !== null ? h('p', { class: 'nota' }, h('strong', {}, 'Gradino: '), m.anticipazione.aspetti[d.anticipazione]?.gradino) : null,
-      h('p', { class: 'riquadro attenzione' }, `PM ×${L.anticipazione.moltiplicatore_costo}, Potere più difficile di una categoria; la Prova è sempre obbligatoria (Magia sez. 12.3).`),
+      valoreAnticipatoUi(r.anticipazione?.valore),
+      riquadroAnticipazione(r.anticipazione),
       h('details', {}, h('summary', {}, 'Testo della scheda'), h('p', { class: 'nota' }, m.anticipazione.frase)),
     ] : [],
     Condizioni: [
@@ -108,6 +112,25 @@ function corpo(ctx, inc, intestazione) {
   return pannelloPassi({ ...intestazione, passi: titoli.map((t) => ({ titolo: t, contenuto: passi[t] })), stato, ridisegna: ctx.azioni.ridisegna });
 }
 
+/**
+ * Riquadro dell'Anticipazione: cosa vale per questo lancio con i Talenti del personaggio (raddoppio dei
+ * PM, difficoltà, Calcolo Arcano), una riga per regola con la fonte.
+ */
+function riquadroAnticipazione(a) {
+  if (!a?.regole?.length) return null;
+  return h('div', { class: 'riquadro attenzione regole-anticipazione' },
+    h('ul', {}, a.regole.map((x) => h('li', {}, x.testo, h('small', { class: 'nota' }, ` (${x.fonte})`)))));
+}
+
+/** Valore che si ottiene con l'aspetto anticipato (scala della scheda), oppure «da definire al tavolo». */
+function valoreAnticipatoUi(v) {
+  if (!v) return null;
+  if (v.daDefinire) return h('p', { class: 'valore-anticipato' }, h('strong', {}, `${v.aspetto}: valore da definire al tavolo`), h('small', { class: 'nota' }, ` (${v.daDefinire})`));
+  return h('div', { class: 'valore-anticipato' },
+    v.righe.map((x) => h('p', {}, `${x.colonna}: `, h('strong', {}, x.a), h('small', { class: 'nota' }, ` (era ${x.da}${x.nota ? `; ${x.nota}` : ''})`))),
+    v.conseguenze?.length ? h('ul', { class: 'nota' }, v.conseguenze.map((c) => h('li', {}, c))) : null);
+}
+
 function risultato(ctx, inc, r) {
   // numeri di regola dai dati (regole.json → lancio): qui serve la penalità del Contatto (Magia sez. 2)
   const L = ctx.dati.regole.lancio;
@@ -130,6 +153,11 @@ function risultato(ctx, inc, r) {
           h('div', { class: 'provenienza-attacco' }, listaProvenienza(r.provenienza, 'VA di Potere'))]
         : h('p', { class: 'va-attacco' }, h('strong', {}, 'Prova di Potere: non richiesta'), h('small', { class: 'nota' }, ' (livelli 1–3 del Taumaturgo, senza obblighi)')),
       h('dl', { class: 'voci griglia-voci' },
+        // Anticipazione (sez. 12.3): il valore nuovo dell'aspetto, dalla scala della scheda
+        ...(r.anticipazione?.valore ? (r.anticipazione.valore.daDefinire
+          ? [h('div', { class: 'riga-anticipata' }, h('dt', {}, `${r.anticipazione.valore.aspetto} (anticipata)`), h('dd', {}, h('strong', {}, 'valore da definire al tavolo'), h('small', { class: 'nota' }, ` (${r.anticipazione.valore.daDefinire})`)))]
+          : r.anticipazione.valore.righe.map((x) => h('div', { class: 'riga-anticipata' }, h('dt', {}, `${x.colonna} (anticipata)`),
+            h('dd', {}, h('strong', {}, x.a), h('small', { class: 'nota' }, ` (era ${x.da}${x.nota ? `; ${x.nota}` : ''})`))))) : []),
         h('div', {}, h('dt', {}, 'Azioni'), h('dd', {}, azioni ?? '—', r.azioni.focalizzazione ? ' + 1 AP di Focalizzazione prima' : '')),
         h('div', {}, h('dt', {}, 'Concentrazione'), h('dd', {}, CONCENTRAZIONE[r.concentrazione] ?? 'da verificare')),
         r.tiro_per_colpire ? h('div', {}, h('dt', {}, 'Tiro per colpire'), h('dd', {}, `${r.tiro_per_colpire.abilita} ${numero(r.tiro_per_colpire.va)} (${segno(r.tiro_per_colpire.bonus)})`)) : null,
@@ -143,6 +171,9 @@ function risultato(ctx, inc, r) {
         r.salvezza_bersaglio ? h('div', {}, h('dt', {}, 'Salvezza del bersaglio'), h('dd', {}, r.salvezza_bersaglio.testo,
           r.salvezza_bersaglio.mod_ps ? ` · Mod. PS ${r.salvezza_bersaglio.mod_ps}` : '',
           r.salvezza_bersaglio.talento ? ` · ${r.salvezza_bersaglio.talento.nome} ${segno(r.salvezza_bersaglio.talento.valore)}` : '')) : null),
+      // Anticipazione: le conseguenze che la scheda lega all'aspetto e le regole che valgono con i Talenti
+      r.anticipazione?.valore?.conseguenze?.length ? h('ul', { class: 'promemoria-attacco' }, r.anticipazione.valore.conseguenze.map((c) => h('li', {}, c))) : null,
+      r.aspetto ? riquadroAnticipazione(r.anticipazione) : null,
       // note del manuale dei Talenti sotto il danno («una sola volta per bersaglio, al primo colpo»)
       r.danno?.note?.length ? h('ul', { class: 'note-danno nota' }, r.danno.note.map((n) => h('li', {}, n))) : null,
       r.promemoria.length ? h('ul', { class: 'promemoria-attacco' }, r.promemoria.map((p) => h('li', {}, p))) : null,
