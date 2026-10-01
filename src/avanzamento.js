@@ -18,6 +18,7 @@ import { calcolaEquipaggiamento, normalizzaEquipaggiamento } from './equipaggiam
 import { conOrdinale } from './lingua.js';
 import { saldoIniziale, contiDotazione, crediti } from './dotazioni.js';
 import { applicaCondizioni } from './condizioni.js';
+import { umanita, pmConUmanita } from './umanita.js';
 import { erroriParametriTalenti } from './calc.js';
 import { competenzaDi, baseIniziale, limiteAbilita, vaPersonale, puntiUtili } from './competenze.js';
 
@@ -1005,14 +1006,18 @@ function schedaARiposo(personaggio, dati) {
   // Equipaggiamento (roadmap §1.4): solo gli oggetti attivi. Il VA dell'Abilità con il componente
   // «Equip» è `vaEquip`; `totale` resta quello delle regole di creazione e avanzamento.
   const specPossedute = stato.talentiLiberi.filter((t) => talentoLiberoDef(t.id, dati).specializzazione).map((t) => ({ id: t.id }));
+  // Giocatore §5.21: Umanità dalle perdite registrate all'installazione degli impianti (src/umanita.js)
+  const creazione = migraPersonaggio(personaggio).creazione;
+  const umn = umanita(creazione, dati);
   const equipaggiamento = calcolaEquipaggiamento({
     // §5.13: il livello limita il bonus di Caratteristica al danno
     livello: n, caratteristiche, abilita, specializzazioni: specPossedute,
     // §7.10: capacità di sintonizzazione per Gradi complessivi e Talenti di Classe
     gradiComplessivi: stato.classi.reduce((s, c) => s + c.grado, 0),
     talenti: stato.classi.flatMap((c) => c.talenti.map((t) => t.nome)),
+    umanita: umn,
   },
-    normalizzaEquipaggiamento(migraPersonaggio(personaggio).creazione.equipaggiamento), dati);
+    normalizzaEquipaggiamento(creazione.equipaggiamento), dati);
   const abilitaEquip = abilita.map((a) => {
     const equip = equipaggiamento.equipAbilita[a.nome] ?? 0;
     return { ...a, equip, vaEquip: a.totale + equip, componentiEquip: equipaggiamento.componentiEquip[a.nome] ?? [] };
@@ -1039,10 +1044,16 @@ function schedaARiposo(personaggio, dati) {
   const scuole = new Set(stato.tecniche.map((x) => catalogoTec.find((t) => t.id === x.id)?.gruppo).filter((g) => g?.startsWith('scuola:')));
   if (stato.scuola) annotazioni.push(`Iniziato alla Scuola ${stato.scuola.nome} (dichiarato ${conOrdinale('al', stato.scuola.livello)} livello): iniziazione e giuramento all’Overlord si verificano con il master (§8.9.3).`);
   for (const s of scuole) if (s.slice(7) !== stato.scuola?.nome) annotazioni.push(`Tecniche della Scuola ${s.slice(7)} senza iniziazione dichiarata (§8.9.3).`);
+  // §5.21: a UMN 0 niente Risorse Interiori, comprese le Tecniche che ne dipendono
+  if (umn && !umn.risorseInteriori) annotazioni.push(`Umanità ${umn.valore} (${umn.condizione}): il personaggio non può utilizzare Risorse Interiori, comprese le Tecniche che ne dipendono (Giocatore §5.21).`);
   const provvisori = talenti.filter((t) => t.provvisorio);
   if (provvisori.length) annotazioni.push(`Talenti provvisori, con prerequisiti da definire: ${provvisori.map((t) => t.nome).join(', ')}.`);
 
   const primaClasse = stato.classi[0];
+  // Magia sez. 1, Potere Mistico: +5 PM Massimi per acquisizione (effetti.pm), fino a +15; poi la fascia
+  // di Umanità (§5.21), non sotto 1
+  const pmRegole = pmMancanti ? null : stato.car.SAG + stato.contributiPM.reduce((s, c) => s + c.valore, 0) + effetto('pm');
+  const pmUmn = pmConUmanita(pmRegole, umn);
   return {
     livello: n,
     corporazione: stato.corp.nome,
@@ -1058,8 +1069,10 @@ function schedaARiposo(personaggio, dati) {
     equipaggiamento,
     salvezze: salvezzeDi(stato, dati),
     pv: stato.car.COS + stato.contributiPV.reduce((s, c) => s + c.valore, 0) + effetto('pv'),
-    // Magia sez. 1, Potere Mistico: +5 PM Massimi per acquisizione (effetti.pm), fino a +15
-    pm: pmMancanti ? null : stato.car.SAG + stato.contributiPM.reduce((s, c) => s + c.valore, 0) + effetto('pm'),
+    pm: pmUmn.pm,
+    // riduzione dei PM Massimi per l'Umanità (≤ 0), già compresa in `pm`
+    pmUmanita: pmUmn.riduzione,
+    umanita: umn,
     iniziativa: sommaIniziativa(...vociIniziativa.map((v) => v.valore)),
     // §2.14 più i Talenti con un bonus fisso all'Iniziativa (Liberi e di Classe): la scomposizione della SD
     vociIniziativa,

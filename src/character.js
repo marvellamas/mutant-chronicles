@@ -10,6 +10,7 @@ import { specTiro, migraTiro, motivoFuoriIntervallo } from './tiri.js';
 import { normalizzaEquipaggiamento, catalogo, risolvi, STATI, NOMI_TIPI, infoArtefattoVoce } from './equipaggiamento.js';
 import { ritrattoValido } from './ritratto.js';
 import { normalizzaDotazione } from './dotazioni.js';
+import { registraInstallazioni } from './umanita.js';
 
 // Personaggio a livelli { creazione, livelli } (cap. 8): modello e funzioni in avanzamento.js.
 export {
@@ -24,7 +25,10 @@ export const FORMATO_FILE = 'mutant-personaggio';
 // 6: blocco facoltativo "calendario" (src/calendario.js); senza, il calendario non è attivo.
 // 7: PI attuali degli oggetti nella sessione ("sessione.integrita", Armamenti §7.2.1); nei file
 //    fino al 6 manca, e allineaSessione (src/sessione.js) mette ogni oggetto ai PI massimi.
-export const VERSIONE_FORMATO = 7;
+// 8: blocco facoltativo "umanita" nelle scelte (src/umanita.js: perdite registrate all'installazione
+//    degli impianti e recuperi concessi dal Direttore, Giocatore §5.21). Senza, nessuna perdita: al
+//    caricamento si registrano gli impianti già installati (l'Interfaccia neurale «in uso» di prima).
+export const VERSIONE_FORMATO = 8;
 
 /**
  * Anagrafica del passo «Background e anagrafica»: tutti campi facoltativi e descrittivi, senza
@@ -72,6 +76,8 @@ export function nuoveScelte() {
     ritratto: null, // data URL JPEG o PNG, ridimensionato nel browser (src/ritratto.js)
     // parametri dei Talenti di Classe del 1° livello: { nome del Talento: id dell'opzione } (Disciplina del Lottatore, §3.5.5)
     parametriTalenti: {},
+    // Giocatore §5.21: { perdite: [{ uid, rif, nome, umn }], recuperi: [{ punti, nota }] } (src/umanita.js)
+    umanita: null,
   };
 }
 
@@ -171,6 +177,15 @@ export function normalizza(scelteIn, dati) {
     avvisi.push(`«${v.personalizzato.nome}»: il Chroma ${c[0]} non è più un contenitore di PM ma una fonte di Corruzione passiva (risposta di Davide A.21). Ora è «Chroma Viola (frammento)», senza PM.`);
     return { uid: v.uid, rif, stato: null, quantita: v.quantita, note: [v.note, v.personalizzato.nome !== 'Chroma Viola (frammento)' ? `era «${v.personalizzato.nome}»` : ''].filter(Boolean).join(' · ') };
   });
+  // voci di catalogo sostituite da un'altra scheda (index.json → rif_sostituiti): l'Interfaccia neurale
+  // degli Armamenti è l'impianto del §7.3 (in uso → installato), i doppioni dei NEC sono il catalogo NEC
+  const sostituiti = dati.equipaggiamento?.indice?.rif_sostituiti ?? {};
+  for (const v of s.equipaggiamento) {
+    const x = v.rif ? sostituiti[v.rif] : null;
+    if (!x) continue;
+    v.rif = x.rif;
+    if (x.stati && v.stato in x.stati) v.stato = x.stati[v.stato];
+  }
   const cat = catalogo(dati);
   for (const v of s.equipaggiamento) {
     const r = risolvi(v, cat);
@@ -187,6 +202,8 @@ export function normalizza(scelteIn, dati) {
     }
   }
   s.equipaggiamento = dividiContenitori(s.equipaggiamento, dati, avvisi);
+  // Equipaggiamento §7.1: il costo UMN si registra all'installazione e non si restituisce
+  s.umanita = registraInstallazioni(s.umanita, s.equipaggiamento, dati, avvisi);
   // Anagrafica: facoltativa; i personaggi salvati prima l'hanno vuota.
   for (const { campo } of CAMPI_ANAGRAFICA) {
     if (typeof s[campo] !== 'string') s[campo] = '';
@@ -418,6 +435,7 @@ export function serializza(scelte, { versioniDati, livelli, sessione, calendario
   // identici byte per byte
   if (pulite.ritratto === null) delete pulite.ritratto;
   if (pulite.dotazione === null) delete pulite.dotazione;
+  if (pulite.umanita === null) delete pulite.umanita;
   if (!Object.keys(pulite.parametriTalenti ?? {}).length) delete pulite.parametriTalenti;
   const file = { formato: FORMATO_FILE, versione: VERSIONE_FORMATO };
   // in ordine alfabetico: l'ordine di caricamento dei file dati varia, il file esportato no

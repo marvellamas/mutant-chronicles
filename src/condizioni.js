@@ -459,6 +459,8 @@ export function valoriTavolo(scheda, sessione, dati) {
     const note = [];
     let voci = [voce(`${modo[0].toUpperCase()}${modo.slice(1)} da regole`, base[modo] ?? 0, 'regole')];
     if (mov) voci.push(voce('Armatura (MOV)', mov, 'equipaggiamento'), ...vociAssalto);
+    // Equipaggiamento §7.5: Q in più al Movimento degli impianti installati (gambe potenziate)
+    for (const m of scheda.equipaggiamento?.movimentoEquip ?? []) voci.push(voce(m.etichetta, m.valore, 'equipaggiamento'));
     let disponibile = true;
     if (liv?.movimento_q && modo === 'passo') voci.push(voce(liv.nome, liv.movimento_q, 'carico'));
     // E&L 5 (A.31): oltre il carico massimo Movimento 0 Q

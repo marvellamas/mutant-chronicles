@@ -17,7 +17,7 @@
 // peso: kg per unità (Equipaggiamento §1.6, §1.10), per il carico (src/carico.js).
 
 import { bonusDannoCaratteristica, caratteristicaDanno } from './calc.js';
-import { riga, rigaBonusCaratteristica as rigaBonus } from './provenienza.js';
+import { riga, provenienza, rigaBonusCaratteristica as rigaBonus } from './provenienza.js';
 import { calcolaAR, oggettiConPi, oggettiSenzaPi } from './protezione.js';
 
 export const TIPI = ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'elmetto', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'impianto', 'altro'];
@@ -719,8 +719,11 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     const su = perUidOgg.get(o.voce.montato_su);
     return !!su && su.attivo && puoMontare(o, su);
   };
+  // Equipaggiamento §7.10: un chip conta solo con un Processore installato («richiede_innesto»)
+  const innesti = new Set(oggetti.filter((x) => x.attivo && x.def?.innesto).map((x) => x.def.innesto));
+  const conInnesto = (o) => !o.def?.richiede_innesto || innesti.has(o.def.richiede_innesto);
   const candidati = [];
-  for (const o of oggetti.filter((x) => x.attivo && x.effetti.length && modificaOperativa(x))) {
+  for (const o of oggetti.filter((x) => x.attivo && x.effetti.length && modificaOperativa(x) && conInnesto(x))) {
     for (const e of o.effetti) candidati.push({ o, e });
   }
   // §7.21.1: «copie dello stesso beneficio non si sommano»: vale il maggiore
@@ -732,6 +735,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   const bonusAttacco = [];
   const dannoEquip = [];
   const iniziativaEquip = [];
+  const movimentoEquip = [];
   for (const { o, e } of candidati) {
     if (e.beneficio && migliore.get(e.beneficio) !== candidati.find((c) => c.o === o && c.e === e)) continue;
     const tipo = e.tipo ?? 'va';
@@ -741,6 +745,8 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     } else if (tipo === 'attacco') bonusAttacco.push({ nome: o.nome, valore: e.valore, attacchi: e.attacchi });
     else if (tipo === 'danno') dannoEquip.push({ nome: o.nome, valore: e.valore, attacchi: e.attacchi });
     else if (tipo === 'iniziativa') iniziativaEquip.push({ etichetta: o.nome, valore: e.valore });
+    // Equipaggiamento §7.5: Q in più al Movimento (gambe potenziate)
+    else if (tipo === 'movimento') movimentoEquip.push({ etichetta: o.nome, valore: e.valore });
     effettiOggetti.push({ uid: o.uid, oggetto: o.nome, ...e });
   }
   // effetti e promemoria per protezione (SD, sezione Protezioni): le proprietà senza effetto e non
@@ -760,6 +766,16 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     effettiOggetti.push({
       uid: p.uid, oggetto: p.nome, abilita: 'Potere', valore: p.penalita.lancio_potere, ambito: 'uso_specifico', uso: 'lancio',
       condizione: 'Penalità dell’armatura alle Prove di Potere per lanciare Incantesimi.', fonte: 'Armamenti §7.11.1', permanente: true,
+    });
+  }
+
+  // Giocatore §5.21: la fascia di Umanità penalizza soltanto le PS di Magia contro la Corruzione
+  const umn = base.umanita;
+  if (umn?.modificatori?.ps_magia_corruzione) {
+    effettiOggetti.push({
+      uid: null, oggetto: `Umanità ${umn.valore} (${umn.condizione})`, tipo: 'salvezza', salvezza: 'magia', valore: umn.modificatori.ps_magia_corruzione,
+      ambito: 'uso_specifico', uso: 'contro la Corruzione', condizione: 'La penalità alla Salvezza si applica esclusivamente alle PS di Magia contro la Corruzione.',
+      fonte: 'Giocatore §5.21', permanente: true, umanita: true,
     });
   }
 
@@ -1019,13 +1035,28 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   if (rs && artefatti.length) {
     const gradi = Math.min(Math.max(base.gradiComplessivi ?? 1, 1), rs.capacita_per_gradi.length);
     const talento = (base.talenti ?? []).includes(rs.talento.nome);
-    const capacita = rs.capacita_per_gradi[gradi - 1] + (talento ? rs.talento.bonus : 0);
+    const daGradi = rs.capacita_per_gradi[gradi - 1] + (talento ? rs.talento.bonus : 0);
+    // Giocatore §5.21: la fascia di Umanità riduce la Capacità complessiva, Talenti compresi, fino a 0
+    const umn = base.umanita ?? null;
+    const modUmn = umn?.modificatori?.sintonizzazione ?? 0;
+    const capacita = modUmn ? Math.max(umn.sintonizzazioneMinimo ?? 0, daGradi + modUmn) : daGradi;
+    const righe = [
+      riga(`${gradi} Grad${gradi === 1 ? 'o' : 'i'} complessiv${gradi === 1 ? 'o' : 'i'}`, rs.capacita_per_gradi[gradi - 1], 'Armamenti §7.10'),
+      ...(talento ? [riga(rs.talento.nome, rs.talento.bonus, 'Talento')] : []),
+      ...(modUmn ? [riga(`Umanità ${umn.valore} (${umn.condizione})`, capacita - daGradi, capacita - daGradi !== modUmn ? `${modUmn}, fino a un minimo di ${umn.sintonizzazioneMinimo ?? 0} (Giocatore §5.21)` : 'Giocatore §5.21')] : []),
+    ];
     // §7.10; un Artefatto nel deposito comune non è sintonizzabile e non occupa capacità (docs/layout-sd.md, pezzo 4)
     const elenco = artefatti.map(({ o, a }) => ({ uid: o.uid, nome: o.nome, costo: a.sintonizzazione, potenza: a.potenza, tipologia: a.tipologia, sintonizzato: o.voce.sintonizzato === true && !o.deposito, deposito: o.deposito }));
     const usata = elenco.filter((x) => x.sintonizzato).reduce((s, x) => s + x.costo, 0);
-    sintonizzazione = { capacita, usata, gradi, talento: talento ? rs.talento.nome : null, artefatti: elenco };
+    sintonizzazione = { capacita, usata, gradi, talento: talento ? rs.talento.nome : null, artefatti: elenco, umanita: capacita - daGradi, provenienza: provenienza(righe, capacita) };
     if (usata > capacita) avvisi.push(`Sintonizzazioni oltre la capacità: ${usata} su ${capacita}. Il personaggio sceglie quali interrompere (§7.10).`);
   }
+
+  // Equipaggiamento §7.10: chip senza Processore installato; un solo chip alla volta nell'alloggiamento
+  const chip = oggetti.filter((x) => x.attivo && x.def?.richiede_innesto);
+  for (const x of chip.filter((o) => !conInnesto(o))) avvisi.push(`${x.nome}: nessun effetto senza un Processore neurale di Abilità installato (Equipaggiamento §7.10).`);
+  const chipInseriti = chip.filter(conInnesto);
+  if (chipInseriti.length > (dati.regole?.impianti?.chip?.attivi_massimo ?? 1)) avvisi.push(`Chip in uso: ${chipInseriti.map((x) => x.nome).join(', ')}. Il Processore ne attiva uno alla volta (Equipaggiamento §7.10).`);
 
   // §7.19.3: «È consentita una sola UMC operativa per utilizzatore»
   const unici = new Map();
@@ -1057,6 +1088,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     bonusAttacco,
     bonusDanno: dannoEquip,
     iniziativa: iniziativaEquip,
+    movimentoEquip,
     contenitori: contenitoriRisolti(oggetti, dati),
     abilitaDifese: difeseAbilita,
     movimentoQ,

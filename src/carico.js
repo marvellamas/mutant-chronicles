@@ -84,6 +84,8 @@ export function calcolaCarico(scheda, sessione, dati) {
     const p = pesoVoce(r);
     const quantita = r.voce?.quantita ?? 1;
     if (r.voce?.stato === 'deposito') { esclusi.push({ nome: r.nome, quantita, peso: p === null ? null : arrotonda(p * quantita) }); continue; }
+    // Equipaggiamento §7.1: l'impianto installato fa parte del corpo, non è un carico (docs/ricognizione-cibernetica.md H9)
+    if (r.voce?.stato === 'installato') continue;
     if (p === null) senzaPeso.push(r.nome);
     else {
       pesoOggetti += p * quantita;

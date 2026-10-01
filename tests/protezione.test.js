@@ -112,12 +112,12 @@ test('PI a 0 di un elmetto: perde i suoi vantaggi (§7.21.3), l’AR dell’arma
 });
 
 test('formato 7: i PI vanno e tornano nel file; un file del formato 6 senza PI si legge con gli oggetti integri', () => {
-  assert.equal(VERSIONE_FORMATO, 7);
+  assert.ok(VERSIONE_FORMATO >= 7); // il formato 8 aggiunge l'Umanità nelle scelte
   const c = creazione(CORREDO);
   const m = massimi(c);
   const s = variaIntegrita(inizializzaSessione(m), 'arm', -2, m);
   const testo = serializza(c, { sessione: s });
-  assert.equal(JSON.parse(testo).versione, 7);
+  assert.equal(JSON.parse(testo).versione, VERSIONE_FORMATO);
   assert.deepEqual(deserializzaPersonaggio(testo).sessione.integrita, { arm: 4, kit: 6, scu: 6, elm: 4 });
   // file del formato 6: stessa sessione senza «integrita»
   const vecchio = JSON.parse(testo);
