@@ -439,7 +439,7 @@ for nome, q in comune['tabella']:
     oggetti_comune.append(voce)
 
 risultato = {
-    'versione_manuale': 'Giocatore 0.43 + Google Doc del 27/09/2026',
+    'versione_manuale': 'Giocatore 0.45 (Google Doc del 01/10/2026)',
     'fonte': 'Manuale del Giocatore §2.16, §§2.16.1–2.16.29 (Google Doc del 27/09/2026); risposte del master E&L A.5–A.5.29 (docs/risposte-master.md, decisioni 12–19)',
     '_nota': 'Generato da tools/genera_dotazioni.py; da qui in poi si può correggere a mano. «testo», «introduzione» e «note» sono copiati dal Doc. Un’opzione ha uno o più «oggetti»: «rif» del catalogo oppure «dotazione» (oggetti_dotazione, non ancora a catalogo). «for_dichiarata» è il requisito di FOR scritto nel §2.16: il validatore lo confronta con quello del catalogo. «munizioni» segue l’arma scelta; «segue» lega un’opzione a quella di un altro gruppo; «sotto» (negli oggetti) chiede una scelta ulteriore.',
     'introduzione': introduzione,

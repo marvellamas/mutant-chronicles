@@ -58,6 +58,14 @@
     "massimo": 2200,
     "_nota": "§2.16.28 (E&L A.5.28, risposte-master 18): si tirano 2d6, si moltiplica per 100 e si aggiunge 1.000. Il tiro salvato è quello dei 2d6; i crediti si ricalcolano."
   },
+  "dotazioni_iniziali": {
+    "una_sola_volta": true,
+    "paragrafo": "Giocatore §2.16 (0.45, Google Doc del 01/10/2026)",
+    "frasi": [
+      "Le dotazioni si ricevono una sola volta, alla creazione: acquisire successivamente un’altra Classe non assegna nuovo equipaggiamento."
+    ],
+    "_nota": "La dotazione viene dalla sola Classe iniziale (creazione → classe, scelte in creazione → dotazione): i livelli che aggiungono una Classe (cap. 8) non assegnano equipaggiamento. Così era già nell'app; ora è scritto e un test lo garantisce (tests/dotazioni.test.js)."
+  },
   "movimento": {
     "unita": "Q",
     "passo": 6,

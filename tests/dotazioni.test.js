@@ -246,3 +246,42 @@ test('A.5.30 (§7.22): 48 abbinamenti di fucili, armature e scudi, più le 6 pis
   // 41 profili nuovi con versione 0.52
   assert.equal(cat.oggetti.filter((o) => o.paragrafo?.startsWith('§7.22')).length, 41);
 });
+
+test('Giocatore 0.45 §2.16: la dotazione si riceve una sola volta, alla creazione; un’altra Classe non ne assegna', async () => {
+  const { calcolaScheda } = await import('../src/calc.js');
+  const { MISHIMA_AGENTE } = await import('./personaggi.js');
+  assert.equal(dati.regole.dotazioni_iniziali.una_sola_volta, true);
+  const equipaggiamento = applicaDotazione([], vociDotazione(AGENTE, 'Agente', 'Mishima', dati));
+  const creazione = { ...MISHIMA_AGENTE, dotazione: AGENTE, equipaggiamento };
+  // i primi livelli della multiclasse di tests/avanzamento.test.js: al 4° l'Agente prende il Soldato
+  const livelli = [
+    { livello: 2, caratteristiche: { FOR: 1, COS: 1 } },
+    { livello: 3, talentoLibero: { id: 'sempre-allerta' } },
+    { livello: 4, grado: { classe: 'Soldato' }, tiroPV: tiro(5), puntiAbilita: { 'Medicina': 1, 'Atletica': 2, 'Sopravvivenza': 5, 'Difese': 2 } },
+  ];
+  const s1 = calcolaScheda({ versione: 2, creazione, livelli: [] }, dati);
+  const s4 = calcolaScheda({ versione: 2, creazione, livelli }, dati);
+  assert.deepEqual(s4.errori, []);
+  assert.deepEqual(s4.classi.map((c) => c.nome), ['Agente', 'Soldato']);
+  // stessa dotazione: nessuna voce del Soldato, le stesse armi e protezioni
+  const nomi = (s) => [...(s.equipaggiamento?.armi ?? []), ...(s.equipaggiamento?.protezioni ?? [])].map((x) => x.nome).sort();
+  assert.deepEqual(nomi(s4), nomi(s1));
+  const chiave = (v) => v.rif ?? v.personalizzato?.nome;
+  const soloSoldato = vociDotazione(AGENTE, 'Soldato', 'Mishima', dati).map(chiave).filter((k) => !equipaggiamento.some((e) => chiave(e) === k));
+  assert.deepEqual(soloSoldato, ['Comunicatore da squadra']); // la voce del Soldato che l'Agente non ha non arriva
+});
+
+test('Magia 1.3 sez. 2: il Focus personale della dotazione è già sintonizzato, non occupa sintonizzazione né dà PM', async () => {
+  const { calcolaScheda } = await import('../src/calc.js');
+  const { ARCANISTA } = await import('./personaggi.js');
+  const scelte = { opzioni: {}, sotto: {}, crediti: tiro(7), acquisti: [] };
+  const voci = vociDotazione(scelte, 'Arcanista', 'Fratellanza', dati);
+  const focus = voci.find((v) => v.dotazione_id === 'focus-personale');
+  assert.ok(focus && !focus.rif && !dati.dotazioni.oggetti_dotazione['focus-personale'].effetti);
+  const senza = calcolaScheda({ ...ARCANISTA, corporazione: 'Fratellanza' }, dati);
+  const con = calcolaScheda({ ...ARCANISTA, corporazione: 'Fratellanza', dotazione: scelte, equipaggiamento: applicaDotazione([], voci) }, dati);
+  assert.equal(con.pm, senza.pm);
+  const usata = (s) => s.equipaggiamento?.sintonizzazione?.usata ?? 0;
+  assert.equal(usata(con), 0);
+  assert.ok(!(con.equipaggiamento?.sintonizzazione?.artefatti ?? []).some((a) => /focus/i.test(a.nome)));
+});

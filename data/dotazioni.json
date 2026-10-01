@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Giocatore 0.43 + Google Doc del 27/09/2026",
+  "versione_manuale": "Giocatore 0.45 (Google Doc del 01/10/2026)",
   "fonte": "Manuale del Giocatore §2.16, §§2.16.1–2.16.29 (Google Doc del 27/09/2026); risposte del master E&L A.5–A.5.29 (docs/risposte-master.md, decisioni 12–19)",
   "_nota": "Generato da tools/genera_dotazioni.py; da qui in poi si può correggere a mano. «testo», «introduzione» e «note» sono copiati dal Doc. Un’opzione ha uno o più «oggetti»: «rif» del catalogo oppure «dotazione» (oggetti_dotazione, non ancora a catalogo). «for_dichiarata» è il requisito di FOR scritto nel §2.16: il validatore lo confronta con quello del catalogo. «munizioni» segue l’arma scelta; «segue» lega un’opzione a quella di un altro gruppo; «sotto» (negli oggetti) chiede una scelta ulteriore.",
   "introduzione": [
@@ -8,7 +8,8 @@
     "Una dotazione legata alla Classe iniziale, con scelte predefinite fra armi, protezioni e strumenti adatti al ruolo.",
     "Armamenti di base della propria Corporazione, corrispondenti ai profili commerciali della Classe (§2.16.27).",
     "Ogni scelta deve rispettare i requisiti degli oggetti. Le dotazioni comuni e delle 25 Classi sono nei §§2.16.1–2.16.26; i modelli corporativi di base, i crediti iniziali e gli acquisti sono disciplinati nei §§2.16.27–2.16.29. I veicoli sono esclusi dalle dotazioni iniziali; il Direttore di Gioco decide se e quali fornire al gruppo secondo il §2.16.30.",
-    "I profili degli oggetti e le relative regole si consultano nel Manuale degli Armamenti e nel Manuale degli Equipaggiamenti."
+    "I profili degli oggetti e le relative regole si consultano nel Manuale degli Armamenti e nel Manuale degli Equipaggiamenti.",
+    "Le dotazioni si ricevono una sola volta, alla creazione: acquisire successivamente un’altra Classe non assegna nuovo equipaggiamento. Ogni oggetto previsto si riceve integro, funzionante e senza Prova di Reperibilità. NEC carichi e componenti dichiarati sono compresi; ricambi e consumabili sono limitati alle quantità espressamente indicate. Quando un oggetto ne sostituisce un altro si registra soltanto quello sostitutivo. Le regole riassuntive sono nel Manuale dell’Equipaggiamento, Capitolo 8."
   ],
   "_nota_oggetti_dotazione": "Voci della dotazione del §2.16 senza modello di armamento. Con «rif» hanno una scheda di catalogo (Manuale dell’Equipaggiamento 0.3, cap. 2–6, tools/lotti/lotto_equipaggiamento_03.mjs; Corredo di manutenzione da campo: Armamenti §7.13.7): nome della dotazione, peso, prezzo, Qualità, PI ed effetti dalla scheda, anche per i personaggi già salvati (risolvi() tramite dotazione_id). Senza «rif» restano «da definire» (A.34: peso assente non è 0 kg, prezzo assente non dà credito di scambio). Nessun oggetto della dotazione che non sia un armamento assegnato si cede nello scambio iniziale (§2.16.29).",
   "comune": {
@@ -61,7 +62,8 @@
       }
     ],
     "note": [
-      "Torcia e comunicatore comprendono ciascuno una batteria carica, cavo e alimentatore, con 24 ore di autonomia per dispositivo.",
+      "Torcia e comunicatore personale comprendono ciascuno un NEC Verde compatto carico, cavo e alimentatore: 100 ore per dispositivo. Consumi, ricambi e ricarica sono nel Manuale dell’Equipaggiamento, §5.4.",
+      "I NEC sono ricaricabili; celle e pacchi comuni seguono il Manuale dell’Equipaggiamento, §5.4. Si usa l’autonomia della scheda: Corredi da scasso ed elettronici 40 ore; terminali palmari, terminali dei Corredi di ricerca e amministrativi, Terminale per produzione multimediale e Strumento musicale elettronico 50 ore (§§5.5, 5.7 e 5.8). Le batterie mistiche continuano a usare PM e Sintonizzazione.",
       "Le scorte iniziali comprendono tre giorni di cibo e due litri d’acqua. L’acqua copre un giorno di consumo ordinario e richiede rifornimenti durante il viaggio."
     ]
   },
@@ -187,7 +189,7 @@
       "note": [
         "Requisiti: entrambe le armi da fuoco, il Randello e l’Armatura civile leggera richiedono FOR 3; il Coltello richiede FOR 2.",
         "L’armatura concede AR 1. L’elmetto standard incluso non aggiunge AR.",
-        "Il registratore comprende batteria carica, cavo e alimentatore, con 24 ore di autonomia. Il binocolo non richiede batterie.",
+        "Il registratore comprende NEC Verde compatto carico, cavo e alimentatore: 50 ore di autonomia. Il binocolo non richiede NEC.",
         "I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27)."
       ]
     },
@@ -449,7 +451,7 @@
         "Lo strumento specialistico si sceglie liberamente:",
         "Corredo da assalto verticale: comprende imbracatura, corda da 20 Q, discensore, moschettoni e ancoraggi. Concede +2 VA ad Atletica per arrampicarsi o calarsi usando il corredo.",
         "Corredo di sopravvivenza ambientale: si sceglie un ambiente fra Artico, Forestale, Desertico, Urbano, Pianure, Sottosuolo e Apocalittico. Concede i benefici previsti dalla propria scheda.",
-        "Rilevatore ambientale: segnala carenza d’ossigeno, gas nocivi conosciuti dal dispositivo e radiazioni nel punto esaminato. Comprende batteria carica, cavo e alimentatore, con 24 ore di autonomia.",
+        "Rilevatore ambientale: segnala carenza d’ossigeno, gas nocivi conosciuti dal dispositivo e radiazioni nel punto esaminato. Comprende NEC Verde compatto carico, cavo e alimentatore, con 50 ore di autonomia.",
         "Requisiti: pistola e armatura richiedono FOR 3; il Coltello richiede FOR 2.",
         "L’armatura concede AR 1; l’elmetto standard non aggiunge AR. Il binocolo non richiede batterie.",
         "Il Corredo di orientamento concede +1 VA a Sopravvivenza per orientarsi, quando esistono riferimenti utilizzabili. Questo bonus non si somma a quello del Corredo di sopravvivenza ambientale.",
@@ -591,7 +593,7 @@
         "Gli Abiti eleganti concedono +1 VA a Oratoria negli ambienti formali appropriati, secondo la propria scheda.",
         "Il Monocolo periscopico permette di osservare oltre un bordo o un angolo senza esporre la testa, purché l’ottica raggiunga una posizione con visuale. Non richiede batterie.",
         "Corredo da scasso. Comprende grimaldelli, attrezzi di precisione, sonde e un’interfaccia portatile per serrature elettroniche compatibili. Si utilizza con Furtività per scassinare serrature e dispositivi meccanici e con Tecnologia per intervenire sulle serrature elettroniche.",
-        "L’interfaccia comprende batteria carica, cavo e alimentatore, con 24 ore di autonomia. Restano necessarie le normali Prove e l’accesso ai componenti interessati.",
+        "L’interfaccia comprende un NEC Verde standard carico da 1.000 Lx, cavo e alimentatore: 25 Lx/h e 40 ore di autonomia (Manuale dell’Equipaggiamento, §5.5). Restano necessarie le normali Prove e l’accesso ai componenti interessati.",
         "Corredo da camuffamento. Comprende trucchi, parrucche, barbe finte, piccoli accessori e materiali per modificare l’aspetto personale. Si utilizza con Raggirare per preparare e sostenere un travestimento o un’impersonificazione. Il beneficio riguarda il camuffamento effettivamente realizzato; documenti falsi e credenziali richiedono risorse separate.",
         "I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27)."
       ]
@@ -1143,7 +1145,7 @@
         "Requisiti: FOR 3 per pistola, Pugnale da combattimento e armatura.",
         "L’Armatura civile leggera concede AR 1 e richiede FOR 3; l’elmetto standard incluso non aggiunge AR.",
         "Il Silenziatore rende inudibile lo sparo, applicando −2 VA al tiro e −1 danno. Restano percepibili gli eventuali impatti e gli altri indizi dell’attacco.",
-        "Il Corredo da scasso Standard comprende grimaldelli, utensili di precisione, sonde e un’interfaccia elettronica compatibile. Si usa Furtività per le serrature meccaniche e Tecnologia per quelle elettroniche, effettuando le normali Prove. L’interfaccia comprende batteria carica da 24 ore, cavo e caricatore.",
+        "Il Corredo da scasso Standard comprende grimaldelli, utensili di precisione, sonde e un’interfaccia elettronica compatibile. Si usa Furtività per le serrature meccaniche e Tecnologia per quelle elettroniche, effettuando le normali Prove. L’interfaccia comprende un NEC Verde standard carico da 1.000 Lx, cavo e caricatore: 25 Lx/h e 40 ore (Manuale dell’Equipaggiamento, §5.5).",
         "Il Corredo da assalto verticale comprende imbracatura, corda da 20 Q, discensore, moschettoni e ancoraggi. Concede +2 VA ad Atletica per arrampicate e discese effettuate utilizzandolo.",
         "I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27)."
       ]
@@ -1397,7 +1399,7 @@
         "Requisiti: FOR 4 per la Carabina, FOR 5 per il Fucile d’assalto, FOR 2 per il Coltello; FOR 3 o 5 per l’armatura scelta.",
         "L’Armatura civile leggera concede AR 1 e richiede FOR 3; l’elmetto standard incluso non aggiunge AR.",
         "L’Armatura civile media concede AR 3 e richiede FOR 5. Conserva le normali penalità: −1 VA agli attacchi e alle Prove di Agilità, −1 Q al Movimento e −3 VA al lancio tramite Potere.",
-        "Il Comunicatore da squadra comprende microfono, auricolare, batteria carica da 24 ore, cavo e caricatore. Ha una portata nominale di 10 km; collegandosi a un comunicatore personale, la comunicazione bidirezionale resta limitata dalla portata del dispositivo più debole. Le distanze previste dai Talenti di comando restano quelle indicate nei Talenti.",
+        "Il Comunicatore da squadra comprende microfono, auricolare, NEC Verde standard carico da 200 ore, cavo e caricatore. Ha una portata nominale di 10 km; collegandosi a un comunicatore personale, la comunicazione bidirezionale resta limitata dalla portata del dispositivo più debole. Le distanze previste dai Talenti di comando restano quelle indicate nei Talenti.",
         "Il Kit di pronto soccorso Standard non concede bonus a Medicina: un successo arresta il Sanguinamento; un Magistrale recupera anche 1d4 PV. Ogni tentativo consuma un’applicazione.",
         "I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27)."
       ]
@@ -1661,9 +1663,9 @@
         "Pistola e armatura richiedono FOR 3. L’armatura concede AR 1; l’elmetto standard incluso non aggiunge AR.",
         "Requisiti delle armi da mischia: FOR 2 per il Coltello; FOR 4 per il Martello.",
         "Il Corredo artigianale professionale viene dedicato a un mestiere, per esempio sartoria, pelletteria, falegnameria o lavorazione manuale dei metalli. Concede +2 VA a Tecnologia per lavorare e riparare i prodotti di quel mestiere.",
-        "Il Corredo di manutenzione da campo concede +2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo di armi, armature, propulsori ed esoscheletri compatibili. La diagnostica comprende batteria carica da 24 ore, cavo e alimentatore.",
-        "La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Comprende batteria carica da 24 ore, cavo e alimentatore.",
-        "Il Registratore audiovisivo permette di documentare manufatti, difetti e lavorazioni, conservando immagini e suoni effettivamente ripresi. Comprende batteria carica da 24 ore, cavo e alimentatore.",
+        "Il Corredo di manutenzione da campo concede +2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo di armi, armature, propulsori ed esoscheletri compatibili. La diagnostica comprende NEC Verde standard carico da 40 ore, cavo e alimentatore.",
+        "La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Comprende NEC Verde compatto carico da 100 ore, cavo e alimentatore.",
+        "Il Registratore audiovisivo permette di documentare manufatti, difetti e lavorazioni, conservando immagini e suoni effettivamente ripresi. Comprende NEC Verde compatto carico da 50 ore, cavo e alimentatore.",
         "Si applica un solo modificatore pertinente degli strumenti, senza sommare i bonus dei corredi. Materiali da lavorare e ricambi restano separati."
       ]
     },
@@ -1810,7 +1812,7 @@
         "La Cassetta degli attrezzi comprende chiavi, cacciaviti, pinze, martello, lime e strumenti di misura meccanici. Consente gli interventi compatibili con questi utensili, con modificatore degli strumenti 0 al VA.",
         "Il Corredo da assalto verticale comprende imbracatura, corda da 20 Q, discensore, moschettoni e ancoraggi. Concede +2 VA ad Atletica per arrampicate e discese effettuate utilizzandolo.",
         "La Maschera filtrante concede +2 alle PS di Tempra contro veleni e agenti patogeni inalati. Richiede aria con ossigeno sufficiente; la sostituzione ordinaria dei filtri rientra nella manutenzione.",
-        "La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Comprende batteria carica da 24 ore, cavo e alimentatore.",
+        "La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Comprende NEC Verde compatto carico da 100 ore, cavo e alimentatore.",
         "Si applica un solo modificatore pertinente degli strumenti, senza sommare i bonus dei corredi. Materiali da lavorare e ricambi restano separati."
       ]
     },
@@ -1947,7 +1949,7 @@
         "La Cassetta degli attrezzi comprende chiavi, cacciaviti, pinze, martello, lime e strumenti di misura meccanici. Consente gli interventi compatibili con questi utensili, con modificatore degli strumenti 0 al VA.",
         "Ricambi e attrezzature richiesti dalla specifica riparazione restano necessari.",
         "Il Corredo di orientamento concede +1 VA a Sopravvivenza per orientarsi, quando esistono riferimenti utilizzabili. Il Binocolo concede +1 VA a Percezione per esaminare dettagli lontani, con luce e visuale sufficienti.",
-        "Il Comunicatore da squadra ha portata nominale di 10 km; con un comunicatore personale, la comunicazione bidirezionale resta limitata a 1 km, in condizioni favorevoli. Comprende batteria carica da 24 ore, cavo e alimentatore.",
+        "Il Comunicatore da squadra ha portata nominale di 10 km; con un comunicatore personale, la comunicazione bidirezionale resta limitata a 1 km, in condizioni favorevoli. Comprende NEC Verde standard carico da 200 ore, cavo e alimentatore.",
         "Il veicolo non è compreso nella dotazione iniziale del Pilota. Il Direttore di Gioco decide se e quali veicoli fornire al gruppo in base alla campagna (§2.16.30).",
         "Si applica un solo modificatore pertinente degli strumenti, senza sommare i bonus dei corredi. Materiali da lavorare e ricambi restano separati."
       ]
@@ -2076,10 +2078,10 @@
         "Pistola e armatura richiedono FOR 3. L’armatura concede AR 1; l’elmetto standard incluso non aggiunge AR.",
         "Requisito del Coltello: FOR 2.",
         "Il Corredo elettronico e informatico Standard comprende un terminale portatile con programmi di diagnostica e configurazione; un multimetro, sonde e utensili di precisione; cavi e adattatori per collegarsi fisicamente a sistemi compatibili, entro 2 Q.",
-        "Permette diagnosi, configurazione e interventi portatili compatibili con i componenti disponibili. È Standard: modificatore degli strumenti 0 al VA. Intrusioni e controllo dei dispositivi richiedono comunque accesso utilizzabile, compatibilità e normali Prove. I dispositivi elettronici del corredo comprendono batterie cariche da 24 ore, cavi e alimentatori.",
-        "Il Corredo di manutenzione da campo concede +2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo di armi, armature, propulsori ed esoscheletri compatibili. La diagnostica comprende batteria carica da 24 ore, cavo e alimentatore.",
-        "Il Kit di videosorveglianza comprende una videocamera e un monitor palmare, collegati entro 1 km. Usa vista e udito ordinari, richiede illuminazione sufficiente e non concede bonus automatici a Percezione. Tutti i componenti comprendono batterie cariche da 24 ore, cavi e alimentatori.",
-        "La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Comprende batteria carica da 24 ore, cavo e alimentatore.",
+        "Permette diagnosi, configurazione e interventi portatili compatibili con i componenti disponibili. È Standard: modificatore degli strumenti 0 al VA. Intrusioni e controllo dei dispositivi richiedono comunque accesso utilizzabile, compatibilità e normali Prove. L’intero corredo usa un solo NEC Verde standard carico da 1.000 Lx nel terminale: 25 Lx/h e 40 ore; cavi e alimentatore compresi (Manuale dell’Equipaggiamento, §5.7).",
+        "Il Corredo di manutenzione da campo concede +2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo di armi, armature, propulsori ed esoscheletri compatibili. La diagnostica comprende NEC Verde standard carico da 40 ore, cavo e alimentatore.",
+        "Il Kit di videosorveglianza comprende una videocamera e un monitor palmare, collegati entro 1 km. Usa vista e udito ordinari, richiede illuminazione sufficiente e non concede bonus automatici a Percezione. Tutti i componenti comprendono NEC Verdi compatti carichi da 50 ore, cavi e alimentatori.",
+        "La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Comprende NEC Verde compatto carico da 100 ore, cavo e alimentatore.",
         "Si applica un solo modificatore pertinente degli strumenti, senza sommare i bonus dei corredi. Materiali da lavorare e ricambi restano separati."
       ]
     },
@@ -2213,7 +2215,7 @@
         "Per il Corredo di analisi da campo si sceglie un ambito, per esempio chimica, biologia o geologia. Comprende strumenti di misura, ottiche, test e materiale ordinario per il campionamento; concede +2 VA a Scienza per analisi preliminari realmente eseguibili, normalmente in 10 minuti.",
         "Il Binocolo concede +1 VA a Percezione per distinguere dettagli lontani; il Corredo di orientamento concede +1 VA a Sopravvivenza quando sono disponibili riferimenti utilizzabili.",
         "Il Registratore audiovisivo registra immagini e suoni effettivamente rilevati.",
-        "Ogni dispositivo elettronico della dotazione comprende batteria carica da 24 ore, cavo e alimentatore. La stessa autonomia si applica al terminale e ai dispositivi del Corredo di analisi.",
+        "I dispositivi comprendono NEC carichi, cavi e alimentatori. Il Corredo di analisi usa un Verde standard e dura 40 ore; il terminale palmare usa un Verde compatto da 100 Lx, 2 Lx/h e 50 ore (§5.7 dello stesso manuale). Le altre autonomie seguono il Manuale dell’Equipaggiamento, §5.4.",
         "I consumabili ordinari di scrittura, trucco, manutenzione e analisi si reintegrano durante il normale rifornimento; applicazioni mediche e set chirurgici si conteggiano separatamente."
       ]
     },
@@ -2344,7 +2346,7 @@
         "Gli Abiti eleganti concedono +1 VA a Oratoria nelle situazioni formali appropriate.",
         "Il Registratore audiovisivo registra immagini e suoni effettivamente rilevati.",
         "Il Comunicatore da squadra sostituisce il Comunicatore personale della dotazione comune. Ha portata nominale di 10 km; con un comunicatore personale la comunicazione bidirezionale è limitata a 1 km, in condizioni favorevoli.",
-        "Ogni dispositivo elettronico della dotazione comprende batteria carica da 24 ore, cavo e alimentatore. L’autonomia di 24 ore si applica anche al nuovo terminale.",
+        "I dispositivi comprendono NEC carichi, cavi e alimentatori; le autonomie seguono il Manuale dell’Equipaggiamento, §5.4. Il terminale palmare usa un Verde compatto da 100 Lx, 2 Lx/h e 50 ore (§5.7 dello stesso manuale).",
         "I consumabili ordinari di scrittura, trucco, manutenzione e analisi si reintegrano durante il normale rifornimento; applicazioni mediche e set chirurgici si conteggiano separatamente."
       ]
     },
@@ -2483,7 +2485,7 @@
         "Lo Strumento musicale portatile è uno strumento a scelta, con custodia e accessori ordinari necessari. Il Corredo scenico comprende un costume, trucco, piccoli oggetti di scena e materiale di manutenzione adatti alla performance scelta. Il Terminale per produzione multimediale è un dispositivo portatile con programmi per scrivere, montare e preparare contenuti audio e video.",
         "Le tre opzioni sono Standard, con modificatore degli strumenti 0 al VA. Gli Abiti eleganti concedono +1 VA a Oratoria nelle situazioni formali appropriate.",
         "Il Registratore audiovisivo registra immagini e suoni effettivamente rilevati. La diffusione richiede canali e collegamenti disponibili; i Talenti che agiscono su registrazioni o trasmissioni seguono le proprie regole.",
-        "Ogni dispositivo elettronico della dotazione comprende batteria carica da 24 ore, cavo e alimentatore. Sono compresi il terminale e gli eventuali strumenti musicali elettronici.",
+        "I dispositivi comprendono NEC carichi, cavi e alimentatori. Terminale per produzione multimediale e Strumento musicale elettronico utilizzano ciascuno un NEC Verde compatto da 100 Lx: 2 Lx/h e 50 ore di autonomia. Lo strumento acustico non richiede NEC. Profili, pesi, prezzi e Integrità degli strumenti artistici sono nel Manuale dell’Equipaggiamento, §5.8; il Registratore segue il §4.3 dello stesso volume.",
         "I consumabili ordinari di scrittura, trucco, manutenzione e analisi si reintegrano durante il normale rifornimento; applicazioni mediche e set chirurgici si conteggiano separatamente."
       ]
     },
@@ -2616,7 +2618,7 @@
         "Il Kit trauma Professionale concede +2 VA a Medicina per il primo soccorso. Con successo arresta il Sanguinamento e recupera 1d4 PV; con esito Magistrale si raddoppia il risultato del dado. Ogni tentativo consuma un’applicazione.",
         "Lo Scanner diagnostico portatile rileva automaticamente i parametri vitali di base con 1 Azione Principale. Una diagnosi richiede almeno 1 minuto e una Prova di Medicina con +2 VA, limitata alle anomalie rilevabili; il bonus non si trasferisce alle cure.",
         "Il Kit chirurgico da campo concede +2 VA a Medicina per le procedure sul campo pertinenti. Richiede 10 minuti di preparazione, un piano stabile e condizioni appropriate; ogni procedura consuma un set all’inizio, anche in caso di fallimento o interruzione. L’anestesia ordinaria è inclusa; restano necessari i Talenti e gli altri requisiti della procedura.",
-        "La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Lampada e Scanner includono ciascuno batteria carica da 24 ore, cavo e alimentatore. Applicazioni mediche e set chirurgici si conteggiano e reintegrano separatamente."
+        "La Lampada frontale illumina fino a 6 Q a mani libere e include un Verde compatto da 100 ore. Lo Scanner include un Verde standard da 40 ore. Cavi e alimentatori sono compresi. Applicazioni mediche e set chirurgici restano consumi separati."
       ]
     },
     "Predicatore": {
@@ -2771,7 +2773,7 @@
         "Il testo e il simbolo della tradizione sono oggetti ordinari: non hanno proprietà magiche e non concedono accesso automatico agli Incantesimi. L’abito cerimoniale usa il profilo degli Abiti eleganti: +1 VA a Oratoria nelle situazioni cerimoniali o formali appropriate.",
         "Il Kit di pronto soccorso Standard contiene 5 applicazioni e non concede bonus al VA. Con successo arresta il Sanguinamento; con esito Magistrale recupera anche 1d4 PV. Ogni tentativo consuma un’applicazione.",
         "Per il Corredo di sopravvivenza ambientale si sceglie Artico, Forestale, Desertico, Urbano, Pianure, Sottosuolo oppure Apocalittico. Concede +2 VA a Sopravvivenza per gli impieghi pertinenti alla versione scelta; non aggiunge acqua, viveri o medicinali alla dotazione.",
-        "La Lanterna elettrica illumina un raggio di 6 Q e comprende batteria carica da 24 ore, cavo e alimentatore. Le applicazioni mediche si conteggiano e reintegrano separatamente."
+        "La Lanterna elettrica illumina un raggio di 6 Q e comprende NEC Verde standard carico da 200 ore, cavo e alimentatore. Le applicazioni mediche si conteggiano e reintegrano separatamente."
       ]
     },
     "Arcanista": {
@@ -2961,7 +2963,7 @@
         "Il Focus ha una forma coerente con il personaggio e serve come componente del lancio; non concede automaticamente bonus o PM. La batteria mistica si annota come 5/5 PM: è di potenza Comune, costa 1 punto di sintonizzazione e richiede la normale Sintonizzazione. Alimenta solo gli impieghi compatibili con la propria energia, segue le normali regole di ricarica e non aumenta il massimo dei PM personali.",
         "Il Coltello richiede FOR 2. Il corredo documentale comprende terminale, riferimenti ordinari, taccuino e strumenti di scrittura: modificatore degli strumenti 0 al VA. I testi consentono ricerca e consultazione; l’apprendimento degli Incantesimi segue le proprie regole.",
         "Per il Corredo di analisi si sceglie un ambito, per esempio chimica, biologia o geologia: +2 VA a Scienza per le analisi preliminari pertinenti, normalmente in 10 minuti. Il Binocolo concede +1 VA a Percezione sui dettagli lontani; il Corredo di orientamento +1 VA a Sopravvivenza con riferimenti utilizzabili. Il Registratore conserva immagini e suoni effettivamente rilevati.",
-        "Tutti i dispositivi elettronici indicati comprendono batterie cariche da 24 ore, cavi e alimentatori. Questa autonomia riguarda l’alimentazione elettronica, distinta dai 5 PM della batteria mistica."
+        "I dispositivi elettronici comprendono NEC carichi, cavi e alimentatori; ciascuno usa l’autonomia della propria scheda (Manuale dell’Equipaggiamento, §5.4). I NEC tecnologici in Lx sono distinti dalla batteria mistica da 5 PM e non richiedono Sintonizzazione."
       ]
     },
     "Custode": {
@@ -3152,7 +3154,7 @@
         "Il Kit di pronto soccorso Standard contiene 5 applicazioni e non concede bonus al VA. Con successo arresta il Sanguinamento; con esito Magistrale recupera anche 1d4 PV. Ogni tentativo consuma un’applicazione.",
         "L’Arma Astrale segue il Talento del Custode; la CyberArma personale si ottiene al III Grado. Durante il lancio degli Incantesimi restano necessari i gesti e gli altri componenti previsti.",
         "Il Comunicatore da squadra sostituisce quello personale: portata nominale 10 km, limitata a 1 km per il collegamento bidirezionale con un comunicatore personale, in condizioni favorevoli.",
-        "Tutti i dispositivi elettronici indicati comprendono batterie cariche da 24 ore, cavi e alimentatori. Questa autonomia riguarda l’alimentazione elettronica, distinta dai 5 PM della batteria mistica."
+        "I dispositivi elettronici comprendono NEC carichi, cavi e alimentatori; ciascuno usa l’autonomia della propria scheda (Manuale dell’Equipaggiamento, §5.4). I NEC tecnologici in Lx sono distinti dalla batteria mistica da 5 PM e non richiedono Sintonizzazione."
       ]
     },
     "Invocatore": {
@@ -3341,7 +3343,7 @@
         "Per il Corredo di sopravvivenza ambientale si sceglie Artico, Forestale, Desertico, Urbano, Pianure, Sottosuolo oppure Apocalittico: +2 VA a Sopravvivenza negli impieghi pertinenti. Acqua e viveri restano quelli della dotazione comune.",
         "Il Corredo da assalto verticale comprende imbracatura, corda da 20 Q, discensore, moschettoni e ancoraggi; concede +2 VA ad Atletica per arrampicarsi o calarsi utilizzandolo.",
         "Il Comunicatore da squadra sostituisce quello personale: portata nominale 10 km, limitata a 1 km per il collegamento bidirezionale con un comunicatore personale, in condizioni favorevoli.",
-        "Tutti i dispositivi elettronici indicati comprendono batterie cariche da 24 ore, cavi e alimentatori. Questa autonomia riguarda l’alimentazione elettronica, distinta dai 5 PM della batteria mistica."
+        "I dispositivi elettronici comprendono NEC carichi, cavi e alimentatori; ciascuno usa l’autonomia della propria scheda (Manuale dell’Equipaggiamento, §5.4). I NEC tecnologici in Lx sono distinti dalla batteria mistica da 5 PM e non richiedono Sintonizzazione."
       ]
     },
     "Mistico": {
@@ -3547,7 +3549,7 @@
         "Il Corredo rituale Standard comprende un testo di riferimento della propria tradizione, un telo, una ciotola, un piccolo braciere, gessetti, incenso e strumenti di scrittura. Ha modificatore degli strumenti 0 al VA; i materiali specifici richiesti dai singoli Rituali si procurano separatamente.",
         "Il Kit trauma Professionale concede +2 VA a Medicina per il primo soccorso. Con successo arresta il Sanguinamento e recupera 1d4 PV; un esito Magistrale raddoppia il risultato del dado. Ogni tentativo consuma un’applicazione.",
         "La Lanterna elettrica illumina un raggio di 6 Q e sostituisce la torcia comune.",
-        "Tutti i dispositivi elettronici indicati comprendono batterie cariche da 24 ore, cavi e alimentatori. Questa autonomia riguarda l’alimentazione elettronica, distinta dai 5 PM della batteria mistica."
+        "I dispositivi elettronici comprendono NEC carichi, cavi e alimentatori; ciascuno usa l’autonomia della propria scheda (Manuale dell’Equipaggiamento, §5.4). I NEC tecnologici in Lx sono distinti dalla batteria mistica da 5 PM e non richiedono Sintonizzazione."
       ]
     },
     "Tecnomante": {
@@ -3736,7 +3738,8 @@
         "Il Corredo di manutenzione da campo concede +2 VA a Tecnologia per gli interventi sul campo previsti su armi, armature, propulsori ed esoscheletri compatibili. Il Corredo di analisi concede +2 VA a Scienza per analisi preliminari pertinenti all’ambito scelto, normalmente in 10 minuti.",
         "I bonus degli strumenti non si trasferiscono automaticamente alle Prove di Artefatti o ai Rituali di creazione. Il Tecnomante applica alla batteria le regole di Sintonizzazione di Architetto TecnoMistico.",
         "La Lampada frontale illumina fino a 6 Q, lasciando libere le mani, e sostituisce la torcia comune.",
-        "Tutti i dispositivi elettronici indicati comprendono batterie cariche da 24 ore, cavi e alimentatori. Questa autonomia riguarda l’alimentazione elettronica, distinta dai 5 PM della batteria mistica."
+        "I dispositivi elettronici comprendono NEC carichi, cavi e alimentatori; ciascuno usa l’autonomia della propria scheda (Manuale dell’Equipaggiamento, §5.4). I NEC tecnologici in Lx sono distinti dalla batteria mistica da 5 PM e non richiedono Sintonizzazione.",
+        "I profili completi dei Corredi di ricerca documentale, amministrativo, scenico e rituale, degli strumenti musicali, del Terminale per produzione multimediale, del Materiale della tradizione e del Focus personale semplice sono nel Manuale dell’Equipaggiamento, §5.8. Le dotazioni delle Classi usano questi profili. Il Focus iniziale è semplice e già sintonizzato; non aggiunge bonus o PM."
       ]
     }
   },
@@ -3923,7 +3926,8 @@
       "sostituisce": "torcia-elettrica"
     },
     "focus-personale": {
-      "nome": "Focus personale, già sintonizzato prima dell’avventura"
+      "nome": "Focus personale, già sintonizzato prima dell’avventura",
+      "nota": "Magia 1.3, sez. 2 (Google Doc del 01/10/2026): il Focus personale semplice assegnato alla creazione è già sintonizzato e non aggiunge bonus o PM; non è un Artefatto e non occupa capacità di sintonizzazione. Profilo di catalogo nel Manuale dell’Equipaggiamento 0.5, §5.8 (lotto del cap. 5)."
     },
     "corredo-rituale": {
       "nome": "Corredo rituale (Standard)"
@@ -3972,7 +3976,7 @@
     "paragrafo": "2.16.27",
     "testo": [
       "La Classe iniziale assegna direttamente gli armamenti di base della Corporazione del personaggio corrispondenti ai profili commerciali indicati nelle tabelle dei §§2.16.2–2.16.26. L’assegnazione è compresa nella dotazione iniziale e non richiede un conguaglio rispetto al prezzo del modello commerciale.",
-      "I nomi commerciali nelle tabelle identificano il tipo di dotazione e le alternative della Classe. La corrispondenza riguarda il modello corporativo di base con tipologia e funzione equivalenti: pistola con pistola, armatura leggera con armatura leggera, scudo piccolo con scudo piccolo. La sola Qualità costruttiva non determina l’equivalenza.",
+      "I nomi commerciali nelle tabelle identificano il tipo di dotazione e le alternative della Classe. Si usa soltanto una corrispondenza corporativa espressamente indicata nei manuali; dove manca, si mantiene il modello commerciale. La corrispondenza riguarda il modello di base previsto, con tipologia e funzione equivalenti. La sola Qualità costruttiva o l’appartenenza allo stesso catalogo non determina l’equivalenza e non assegna un modello superiore.",
       "Nell’inventario si registra il modello corporativo effettivamente assegnato, con valori, proprietà, requisiti, penalità e prezzo della sua scheda. Il personaggio deve rispettarne i requisiti; i dati del profilo commerciale non sostituiscono quelli del modello corporativo.",
       "Le munizioni mantengono il numero complessivo già previsto dalla Classe e vengono assegnate automaticamente, senza costi aggiuntivi, nel tipo ordinario compatibile con il modello corporativo di base. I caricatori già previsti sono forniti nel formato compatibile, con la capacità reale del modello. La ripartizione fra arma, caricatori e riserva si adegua a tale capacità senza aumentare o diminuire il totale dei colpi. Alimentazioni e accessori devono essere compatibili; gli oggetti si registrano una sola volta.",
       "I Freelance fanno riferimento al catalogo Commerciale. La dotazione comune e gli strumenti non interessati da una corrispondenza corporativa mantengono i profili già indicati."
@@ -4166,7 +4170,8 @@
       "Gli armamenti ceduti vengono valutati al 100% del loro prezzo di catalogo. Il conguaglio è pari al prezzo del nuovo equipaggiamento meno il valore degli armamenti ceduti. Si usa il prezzo del modello corporativo assegnato, oppure quello commerciale per la dotazione Commerciale; non si attribuisce al medesimo oggetto anche il valore del profilo usato come riferimento.",
       "Esempio: cedendo un’arma di base valutata 1.500 crediti per acquistare un modello da 2.100, il personaggio paga 600 crediti. L’arma ceduta viene rimossa dall’inventario e sostituita dal nuovo modello.",
       "Il nuovo equipaggiamento deve rispettare requisiti e autorizzazioni della propria scheda. Munizioni, caricatori e accessori vanno adattati al modello acquistato, conteggiando gli eventuali costi di sostituzione senza duplicare componenti già inclusi nel prezzo.",
-      "La valutazione integrale degli armamenti ceduti vale per la creazione del personaggio e non stabilisce il prezzo di rivendita durante le avventure. Le configurazioni Migliorata e Potenziata diventano acquistabili quando dispongono di profili e prezzi definiti."
+      "La valutazione integrale degli armamenti ceduti vale per la creazione del personaggio e non stabilisce il prezzo di rivendita durante le avventure. Le configurazioni Migliorata e Potenziata diventano acquistabili quando dispongono di profili e prezzi definiti.",
+      "Medico e Paramedico mantengono le dotazioni elencate ai §§2.16.20 e 2.16.6. Naniti e postazioni medicochirurgiche sono acquisti o dotazioni di missione e non vengono assegnati gratuitamente come parte della dotazione personale iniziale."
     ],
     "valutazione_cessione": 1,
     "_nota": "§2.16.29: gli armamenti di base ceduti valgono il 100 % del prezzo di catalogo del modello assegnato; conguaglio = prezzo del nuovo − valore dei ceduti; solo alla creazione."
