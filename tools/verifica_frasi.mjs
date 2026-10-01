@@ -71,6 +71,8 @@ export function frasiEffetti() {
     if (i.lancio) out.push({ dove: `${dove} lancio`, frase: i.lancio });
     if (m.salvezza?.testo) out.push({ dove: `${dove} salvezza`, frase: m.salvezza.testo });
     if (m.anticipazione?.frase) out.push({ dove: `${dove} anticipazione`, frase: m.anticipazione.frase });
+    // conseguenze legate a un aspetto (tools/scale_anticipazione.mjs): frasi del paragrafo, una per una
+    (m.anticipazione?.aspetti ?? []).forEach((x, k) => (x.conseguenze ?? []).forEach((f, j) => out.push({ dove: `${dove} anticipazione.aspetti[${k}].conseguenze[${j}]`, frase: f })));
     (m.frasi ?? []).forEach((f, k) => out.push({ dove: `${dove} frasi[${k}]`, frase: f }));
   }
   return out;

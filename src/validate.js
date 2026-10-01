@@ -1943,6 +1943,24 @@ function validaMeccanicaIncantesimi(dati, err) {
         if (!isTesto(x?.etichetta) || !isTesto(x?.gradino)) err(F, `${K}.anticipazione.aspetti[${j}]`, 'etichetta e gradino attesi');
         if (x?.nome !== undefined && !isTesto(x.nome)) err(F, `${K}.anticipazione.aspetti[${j}].nome`, 'nome breve: testo non vuoto');
         if (!CATEGORIE_ASPETTO.includes(x?.categoria)) err(F, `${K}.anticipazione.aspetti[${j}].categoria`, `una fra ${CATEGORIE_ASPETTO.join(', ')}`);
+        // scala del gradino (src/anticipazione.js, tools/scale_anticipazione.mjs): strutturata oppure null con il motivo
+        const KA = `${K}.anticipazione.aspetti[${j}]`;
+        // con la tabella marcata TODO non si controllano le colonne
+        const colonne = Array.isArray(i.versioni) ? new Set(Object.keys(i.versioni[0] ?? {})) : null;
+        const s = x?.scala;
+        if (s === undefined) err(F, `${KA}.scala`, 'mancante: rilanciare tools/scale_anticipazione.mjs --scrivi');
+        else if (s === null) { if (!isTesto(x.scala_motivo)) err(F, `${KA}.scala_motivo`, 'senza scala serve il motivo («da definire al tavolo»)'); }
+        else if (s.tipo === 'sequenza') {
+          if (!(Array.isArray(s.valori) && s.valori.length >= 2 && s.valori.every(isTesto))) err(F, `${KA}.scala.valori`, 'almeno due voci');
+          if (colonne && s.colonna !== null && !colonne.has(s.colonna)) err(F, `${KA}.scala.colonna`, `"${s.colonna}" non è una colonna della tabella`);
+        } else if (s.tipo === 'incremento') {
+          if (colonne && !colonne.has(s.colonna)) err(F, `${KA}.scala.colonna`, `"${s.colonna}" non è una colonna della tabella`);
+          if (!(isIntero(s.passo) && s.passo !== 0)) err(F, `${KA}.scala.passo`, 'intero diverso da 0');
+          if (s.massimo !== undefined && !isIntero(s.massimo)) err(F, `${KA}.scala.massimo`, 'intero');
+        } else if (s.tipo === 'riga_successiva') {
+          if (!(Array.isArray(s.colonne) && s.colonne.length && s.colonne.every((c) => !colonne || colonne.has(c)))) err(F, `${KA}.scala.colonne`, 'colonne della tabella');
+        } else err(F, `${KA}.scala.tipo`, 'sequenza, incremento o riga_successiva');
+        if (x?.conseguenze !== undefined && !(Array.isArray(x.conseguenze) && x.conseguenze.every(isTesto))) err(F, `${KA}.conseguenze`, 'frasi della scheda');
       });
     } else if (!todo) err(F, `${K}.anticipazione`, 'mancante: serve un TODO(Davide)');
   });
