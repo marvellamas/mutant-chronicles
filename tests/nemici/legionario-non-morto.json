@@ -1,0 +1,20 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "legionario-non-morto",
+  "nome": "Legionario Non Morto",
+  "fonte": "esempio dei test (non è un nemico ufficiale)",
+  "caratteristiche": { "FOR": 7, "COS": 8, "DES": 4, "INT": 2 },
+  "pv": 22,
+  "ar": { "totale": 3, "magica": 0 },
+  "difese": 9,
+  "iniziativa": 1,
+  "movimento": { "passo": 6 },
+  "salvezze": { "tempra": 12, "riflessi": 8, "volonta": 14, "magia": 10 },
+  "attacchi": [
+    { "nome": "Spada da cerimonia", "tipo": "ravvicinato", "va": 11, "danno": "1d8+2", "natura": "Naturale", "portata_q": 1, "rif": "armi:spada-leggera" },
+    { "nome": "Fucile d'assalto", "tipo": "distanza", "va": 9, "danno": "1d10", "natura": "Naturale", "gittata_q": 60, "modalita": ["S", "RB"], "ac": 1 }
+  ],
+  "immunita": ["terrorizzato", "sanguinamento"],
+  "note": "Non sente dolore né paura."
+}

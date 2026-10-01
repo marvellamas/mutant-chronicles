@@ -2,7 +2,7 @@
 import { validaDati, avvisiDati } from './validate.js';
 
 export const FILE_DATI = ['caratteristiche', 'abilita', 'corporazioni', 'addestramenti', 'classi', 'incantesimi', 'regole',
-  'talenti_liberi', 'specializzazioni', 'tecniche_interiori', 'dotazioni'];
+  'talenti_liberi', 'specializzazioni', 'tecniche_interiori', 'dotazioni', 'formato_nemici'];
 
 /** Lettore per il browser: scarica data/<nome>.json accanto a index.html. */
 export function lettoreFetch(base = 'data/') {
