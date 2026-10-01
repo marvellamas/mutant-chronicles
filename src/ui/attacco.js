@@ -9,6 +9,7 @@ import { infoValore, listaProvenienza } from './tooltip.js';
 import {
   calcolaAttaccoDistanza, vincoliDistanza, dichiarazioneDistanza, richiedeImbracciatura, talentiAttacco, descriviModalita, descriviManovraDistanza,
   calcolaAttaccoRavvicinato, vincoliRavvicinato, dichiarazioneRavvicinato, manovreRavvicinate, descriviManovraRavvicinata,
+  modificatoriDistanza, vaDueArmi,
 } from '../attacco.js';
 import { rigaScelte, interruttore, pannelloPassi } from './pannello-passi.js';
 
@@ -45,7 +46,12 @@ function corpoRavvicinato(ctx, a, intestazione) {
   const carica = R.carica.fasce.find((f) => d.percorsoQ >= f.da && d.percorsoQ <= f.a);
   const cm = T.find((t) => t.e.carica?.moltiplicatore);
   const molt = cm ? cm.e.carica.moltiplicatore : R.carica.moltiplicatore;
-  const tDue = T.find((t) => t.e.due_armi);
+  // §5.7: il VA della coppia in mano, con il Talento di quella combinazione (lo stesso del calcolo)
+  const due = vaDueArmi(ctx.tab.scheda, a, ctx.dati);
+  // Manovre con più bersagli (Spazzata, Combattimento Multiplo): VA per numero, con la versione Migliorata
+  const mScelta = manovreRavvicinate(ctx.tab.scheda, ctx.dati)[manovraScelta];
+  const migB = mScelta?.va_per_bersagli ? T.find((t) => t.e.manovra?.[mScelta.riduzione_da ?? manovraScelta]) : null;
+  const vaBersagli = (n) => { const va = mScelta.va_per_bersagli[n]; const rid = migB?.e.manovra[mScelta.riduzione_da ?? manovraScelta].riduzione ?? 0; return va + Math.min(rid, -va); };
 
   const passi = [
     { titolo: 'Il tuo movimento', contenuto: [
@@ -65,7 +71,7 @@ function corpoRavvicinato(ctx, a, intestazione) {
       interruttore('Sei A Terra', d.aTerra || statoATerra, (x) => imposta({ aTerra: x }),
         { motivo: statoATerra ? `dallo Stato della sessione: il ${numero(R.a_terra.proprio)} è già nel VA` : null, mod: numero(R.a_terra.proprio), info: infoRegola('A Terra', R.a_terra) }),
       interruttore('Combatti con due armi', d.dueArmi, (x) => imposta({ dueArmi: x, ...(x ? { manovra: 'normale' } : {}) }),
-        { motivo: v.dueArmi, mod: `${v.secondaArma ? `con ${v.secondaArma.nome} · ` : ''}${numero(tDue?.e.due_armi.va ?? R.due_armi.va)} a ciascuno`, info: infoRegola('Combattere con due armi', R.due_armi) }),
+        { motivo: v.dueArmi, mod: `${v.secondaArma ? `con ${v.secondaArma.nome} · ` : ''}${numero(due.va)} a ciascuno${due.talento ? ` (${due.talento})` : ''}`, info: infoRegola('Combattere con due armi', R.due_armi) }),
       !d.dueArmi && !a.senzArmi ? interruttore('Solo la mano non dominante', d.manoNonDominante, (x) => imposta({ manoNonDominante: x }),
         { mod: T.some((t) => t.e.mano_non_dominante) ? '0 (Ambidestro)' : numero(R.mano_non_dominante.va), info: infoRegola('Mano non dominante', R.mano_non_dominante) }) : null,
       interruttore('Imboscata (Azione dichiarata)', d.imboscata, (x) => imposta({ imboscata: x }),
@@ -106,7 +112,7 @@ function corpoRavvicinato(ctx, a, intestazione) {
       // §5.12 (E&L 7–8): l'opposizione la sceglie il bersaglio prima del tiro
       R.manovre[manovraScelta]?.prova?.scelta_bersaglio ? rigaScelte('Il bersaglio si oppone con (lo sceglie lui, prima del tiro)',
         R.manovre[manovraScelta].prova.contro.map((x) => ({ valore: x, etichetta: x })), d.opposizione, (x) => imposta({ opposizione: x })) : null,
-      manovraScelta === 'spazzata' ? rigaScelte('Bersagli della Spazzata', Object.keys(R.manovre.spazzata.va_per_bersagli).map(Number).map((n) => ({ valore: n, etichetta: `${n} bersagli`, riga: `${numero(R.manovre.spazzata.va_per_bersagli[n])} VA` })), d.bersagli, (x) => imposta({ bersagli: x })) : null,
+      mScelta?.va_per_bersagli ? rigaScelte(`Bersagli (${mScelta.nome})`, Object.keys(mScelta.va_per_bersagli).map(Number).map((n) => ({ valore: n, etichetta: `${n} bersagli`, riga: `${numero(vaBersagli(n))} VA${migB ? ` (${migB.nome})` : ''}` })), d.bersagli, (x) => imposta({ bersagli: x })) : null,
       a.senzArmi ? h('p', { class: 'nota' }, `Danno senz’armi: ${a.danno.una_mano} (${a.dannoOrigine === 'base' ? `base ${a.dannoBase}` : `${a.dannoBase}, ${a.dannoOrigine}`}${a.bonusCaratteristica?.bonus ? `, ${a.bonusCaratteristica.sigla} ${a.bonusCaratteristica.bonus > 0 ? '+' : ''}${a.bonusCaratteristica.bonus}` : ''}; §5.13).`) : null,
     ] },
     { titolo: 'Risultato', contenuto: risultatoRavvicinato(ctx, a, r) },
@@ -127,7 +133,7 @@ function risultatoRavvicinato(ctx, a, r) {
     h('div', { class: 'attacco-risultato' },
       h('p', { class: 'va-attacco' }, `${r.prova?.tipo === 'contrapposta' ? 'VA della Prova ' : 'VA finale '}`, pillola(a.nome, r.va_finale, r.provenienza),
         h('small', { class: 'nota' }, ` · ${r.manovra?.nome ?? ''}`)),
-      r.attacchi.length > 1 ? h('ul', { class: 'promemoria-attacco' }, r.attacchi.map((x) => h('li', {}, `${x.etichetta}: VA ${numero(x.va)}`))) : null,
+      r.attacchi.length > 1 ? h('ul', { class: 'promemoria-attacco' }, r.attacchi.map((x) => h('li', {}, `${x.etichetta}: VA ${numero(x.va)}${x.danno ? ` · danno ${x.danno} (della propria arma)` : ''}`))) : null,
       h('div', { class: 'provenienza-attacco' }, listaProvenienza(r.provenienza, 'VA finale')),
       h('dl', { class: 'voci griglia-voci' },
         h('div', {}, h('dt', {}, 'Azioni'), h('dd', {}, r.azioni_principali ? `${r.azioni_principali} ${r.azioni_principali === 1 ? 'Principale' : 'Principali'}` : 'nessuna (gratuito)', r.azioni_movimento ? ` + ${r.azioni_movimento} di Movimento` : '')),
@@ -176,22 +182,25 @@ function corpoDistanza(ctx, a, intestazione) {
   // §5.7 (regole e Talenti in attacco_ravvicinato: Pistolero, Duellante, Ambidestro)
   const R7 = ctx.dati.regole.attacco_ravvicinato;
   const T7 = talentiAttacco(ctx.tab.scheda, ctx.dati, 'attacco_ravvicinato');
-  const tDue = T7.find((t) => t.e.due_armi && ['leggere_distanza', 'mista'].includes(t.e.due_armi.combinazione));
+  // etichette con i Talenti del personaggio, come nel calcolo (src/attacco.js → modificatoriDistanza, vaDueArmi)
+  const MD = modificatoriDistanza(ctx.tab.scheda, ctx.dati);
+  const due = vaDueArmi(ctx.tab.scheda, a, ctx.dati);
+  const conTal = (n) => (n ? ` (${n})` : '');
 
   const passi = [
     [
       rigaScelte('Movimento', [
         { valore: 'fermo', etichetta: 'Fermo' }, { valore: 'passo', etichetta: 'Passo' },
-        { valore: 'corsa', etichetta: `Corsa ${numero(R.movimento.proprio.corsa)}` }, { valore: 'scatto', etichetta: `Scatto ${numero(R.movimento.proprio.scatto)}` },
+        { valore: 'corsa', etichetta: `Corsa ${numero(MD.movimento.corsa)}${conTal(MD.talenti.movimento)}` }, { valore: 'scatto', etichetta: `Scatto ${numero(MD.movimento.scatto)}${conTal(MD.talenti.movimento)}` },
       ], d.movimento, (x) => imposta({ movimento: x, ...(x === 'fermo' ? { evasivo: false } : {}), ...(!['fermo', 'passo'].includes(x) ? { coperturaPropria: 'nessuna' } : {}) })),
       interruttore('Movimento Evasivo', d.evasivo, (x) => imposta({ evasivo: x }), { motivo: v.evasivo, mod: `AzM + AzP${evasivoProprio ? ` · ${numero(evasivoProprio)}` : ''}` }),
       rigaScelte('Attacco dalla Copertura (AzM)', [
         { valore: 'nessuna', etichetta: 'Nessuna' },
-        { valore: 'leggera', etichetta: `Leggera ${numero(R.copertura.propria.leggera)}`, motivo: v.coperturaPropria },
-        { valore: 'media', etichetta: `Media ${numero(R.copertura.propria.media)}`, motivo: v.coperturaPropria },
+        { valore: 'leggera', etichetta: `Leggera ${numero(MD.copertura.leggera)}${conTal(MD.talenti.copertura)}`, motivo: v.coperturaPropria },
+        { valore: 'media', etichetta: `Media ${numero(MD.copertura.media)}${conTal(MD.talenti.copertura)}`, motivo: v.coperturaPropria },
       ], d.coperturaPropria, (x) => imposta({ coperturaPropria: x })),
       interruttore('Combatti con due armi', d.dueArmi, (x) => imposta({ dueArmi: x, ...(x ? { modalita: 'S', mirato: false } : {}) }),
-        { motivo: v.dueArmi, mod: `${v.secondaArma ? `con ${v.secondaArma.nome} · ` : ''}${numero(tDue?.e.due_armi.va ?? R7.due_armi.va)} a ciascuno` }),
+        { motivo: v.dueArmi, mod: `${v.secondaArma ? `con ${v.secondaArma.nome} · ` : ''}${numero(due.va)} a ciascuno${conTal(due.talento)}` }),
       !d.dueArmi ? interruttore('Solo la mano non dominante', d.manoNonDominante, (x) => imposta({ manoNonDominante: x }),
         { mod: T7.some((t) => t.e.mano_non_dominante) ? '0 (Ambidestro)' : numero(R7.mano_non_dominante.va) }) : null,
     ],
@@ -206,7 +215,7 @@ function corpoDistanza(ctx, a, intestazione) {
         { valore: 'nessuna', etichetta: 'Nessuna' }, { valore: 'leggera', etichetta: `Leggera ${numero(R.copertura.bersaglio.leggera)}` },
         { valore: 'media', etichetta: `Media ${numero(R.copertura.bersaglio.media)}` }, { valore: 'totale', etichetta: 'Totale' },
       ], d.bersaglio.copertura, (x) => b({ copertura: x })),
-      interruttore('Impegnato in Ravvicinato, protetto da un alleato o con un ostaggio', d.bersaglio.impegnato, (x) => b({ impegnato: x }), { mod: numero(R.bersaglio_impegnato.va) }),
+      interruttore('Impegnato in Ravvicinato, protetto da un alleato o con un ostaggio', d.bersaglio.impegnato, (x) => b({ impegnato: x }), { mod: `${numero(MD.impegnato)}${conTal(MD.talenti.impegnato)}` }),
       interruttore('Ignaro, immobilizzato o incapace di reagire', d.bersaglio.ignaro, (x) => b({ ignaro: x }), { mod: M.bruciapelo.nome.replace('Tiro a ', '') }),
       interruttore('Ti impegna in Ravvicinato', d.bersaglio.tiImpegna, (x) => b({ tiImpegna: x }), { mod: `${M.ravvicinato.nome.replace('Tiro ', '')} obbligatorio` }),
       analisi ? interruttore('Analisi Rapida (una volta)', d.analisiRapida, (x) => imposta({ analisiRapida: x }), { mod: segno(analisi.e.analisi_rapida.va) }) : null,
@@ -287,9 +296,10 @@ function risultato(ctx, a, r, colpi, imposta) {
         h('div', {}, h('dt', {}, 'Azioni'), h('dd', {}, `${r.azioni_principali} ${r.azioni_principali === 1 ? 'Principale' : 'Principali'}${r.azioni_movimento ? ` + ${r.azioni_movimento} di Movimento` : ''}`)),
         h('div', {}, h('dt', {}, 'Munizioni'), h('dd', {}, `${r.munizioni}${colpi !== null ? ` (nel caricatore ${colpi})` : ''}`)),
         h('div', {}, h('dt', {}, 'Colpi a segno'), h('dd', {}, r.colpi_a_segno ? `${r.colpi_a_segno}${r.tiri > 1 ? ' per tiro riuscito' : ' con la Prova riuscita'}` : 'nessuno: effetto ad Area')),
-        h('div', {}, h('dt', {}, 'Danno per colpo'), h('dd', {}, r.danno_per_colpo ?? '—', r.applicazioni !== 1 ? ` · ${r.applicazioni} applicazioni` : '')),
+        h('div', {}, h('dt', {}, 'Danno per colpo'), h('dd', {}, r.danno_per_colpo ?? '—', r.applicazioni !== 1 ? ` · ${r.applicazioni} applicazioni` : '',
+          r.danno_magistrale && r.danno_magistrale !== r.danno_per_colpo ? h('small', { class: 'nota' }, ` · Magistrale ${r.danno_magistrale}`) : null)),
         r.dopo_armatura?.length ? h('div', {}, h('dt', {}, 'Dopo l’Armatura'), h('dd', {}, r.dopo_armatura.map((x) => x.etichetta).join(' · '), h('small', { class: 'nota' }, ' (solo se almeno 1 danno la supera)'))) : null),
-      r.attacchi?.length > 1 ? h('ul', { class: 'promemoria-attacco' }, r.attacchi.map((x) => h('li', {}, `${x.etichetta}: VA ${numero(x.va)}`))) : null,
+      r.attacchi?.length > 1 ? h('ul', { class: 'promemoria-attacco' }, r.attacchi.map((x) => h('li', {}, `${x.etichetta}: VA ${numero(x.va)}${x.danno ? ` · danno ${x.danno} (della propria arma)` : ''}`))) : null,
       r.dopo_armatura?.length ? h('ul', { class: 'promemoria-attacco' }, r.dopo_armatura.map((x) => h('li', {}, x.testo))) : null,
       r.seconda_prova ? h('p', { class: 'nota' }, h('strong', {}, `Seconda Prova se fallisci: VA ${numero(r.seconda_prova.va)}. `), r.seconda_prova.testo) : null,
       r.promemoria.length ? h('ul', { class: 'promemoria-attacco' }, r.promemoria.map((p) => h('li', {}, p))) : null,

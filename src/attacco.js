@@ -226,6 +226,36 @@ export function descriviModalita(m, dati, T = []) {
 }
 
 /**
+ * Modificatori delle scelte dell'attacco a distanza con i Talenti del personaggio, per le etichette del
+ * pannello (gli stessi del calcolo): movimento proprio (Movimento Fluido/Tattico), attacco dalla
+ * Copertura (Copertura Tattica), bersaglio impegnato (Fuoco Controllato, Fuoco di Precisione).
+ * @returns {{ movimento: {corsa, scatto}, copertura: {leggera, media}, impegnato: number, talenti: {movimento, copertura, impegnato} }}
+ */
+export function modificatoriDistanza(scheda, dati) {
+  const A = dati.regole.attacco_distanza;
+  const T = talentiAttacco(scheda, dati);
+  const con = (k) => T.filter((t) => t.e[k] !== undefined);
+  const ridMov = con('movimento_proprio').reduce((best, t) => (t.e.movimento_proprio.riduzione > (best?.e.movimento_proprio.riduzione ?? 0) ? t : best), null);
+  const ct = con('copertura_propria')[0] ?? null;
+  const imp = con('impegnato').sort((x, y) => (y.e.impegnato.va ?? -99) - (x.e.impegnato.va ?? -99))[0] ?? null;
+  const conRid = (pen, r) => (pen < 0 && r ? pen + Math.min(r, -pen) : pen);
+  return {
+    movimento: { corsa: conRid(A.movimento.proprio.corsa, ridMov?.e.movimento_proprio.riduzione), scatto: conRid(A.movimento.proprio.scatto, ridMov?.e.movimento_proprio.riduzione) },
+    copertura: { leggera: conRid(A.copertura.propria.leggera, ct?.e.copertura_propria.riduzione), media: conRid(A.copertura.propria.media, ct?.e.copertura_propria.riduzione) },
+    impegnato: imp ? imp.e.impegnato.va : A.bersaglio_impegnato.va,
+    talenti: { movimento: ridMov?.nome ?? null, copertura: ct?.nome ?? null, impegnato: imp?.nome ?? null },
+  };
+}
+
+/** VA di Combattere con due armi per la coppia in mano (§5.7), con il Talento della combinazione. */
+export function vaDueArmi(scheda, arma, dati) {
+  const R7 = dati.regole.attacco_ravvicinato;
+  const s = arma ? secondaArma(scheda, arma) : { combinazione: null };
+  const tal = talentiAttacco(scheda, dati, 'attacco_ravvicinato').find((t) => t.e.due_armi?.combinazione === s.combinazione) ?? null;
+  return { va: tal ? tal.e.due_armi.va : R7.due_armi.va, talento: tal?.nome ?? null };
+}
+
+/**
  * Interruttore di una manovra a distanza (Tiro Mirato, Ravvicinato, a Bruciapelo, §5.10): riga
  * compatta con l'effetto e tooltip con condizioni, incompatibilità e testo del manuale.
  */
@@ -239,8 +269,13 @@ export function descriviManovraDistanza(id, arma, dati, T = []) {
     const mig = T.find((t) => t.e.mirato)?.e.mirato;
     riga = `${conSegno(mig?.va ?? M.va)} VA · +${mig?.danno ?? M.danno} danno · +${M.azioni_principali} AzP`;
   } else if (id === 'ravvicinato') {
-    const va = M.va_per_abilita[arma?.abilita];
-    riga = `${va === undefined ? 'solo Armi leggere o medie' : `${conSegno(va)} VA`} · +${M.danno} danno`;
+    // con i Talenti (Tiro Ravvicinato Istintivo riduce la penalità, Migliorato aumenta il danno), come nel calcolo
+    const base = M.va_per_abilita[arma?.abilita];
+    const tal = T.filter((t) => t.e.ravvicinato);
+    const rid = Math.max(0, ...tal.map((t) => t.e.ravvicinato.riduzione ?? 0));
+    const danno = Math.max(M.danno, ...tal.map((t) => t.e.ravvicinato.danno ?? 0));
+    const va = base === undefined ? undefined : base + Math.min(rid, -base);
+    riga = `${va === undefined ? 'solo Armi leggere o medie' : `${conSegno(va)} VA`} · +${danno} danno${tal.length ? ` (${tal.map((t) => t.nome).join(', ')})` : ''}`;
   } else riga = `danno ×${M.moltiplicatore}`;
   return {
     riga,
@@ -438,6 +473,8 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
   // Tiratore Imboscato (§8.6): nascosto contro un bersaglio inconsapevole, non ad Area: +2 danni al
   // primo colpo e Copertura Leggera ridotta di 2 fino a 0
   const imboscato = con('nascosto')[0];
+  // con il Fuoco di Soppressione (effetto ad Area) il Talento non vale: lo si dice
+  if (imboscato && d.nascosto && m === 'FS') promemoria.push(`${imboscato.nome}: non vale con il Fuoco di Soppressione (effetto ad Area).`);
   if (imboscato && d.nascosto && b.ignaro && m !== 'FS') {
     const n = imboscato.e.nascosto;
     dannoBonus += n.danno;
@@ -476,7 +513,7 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
     // la seconda arma a distanza ha gli stessi modificatori del tiro; nella combinazione mista l'arma
     // ravvicinata ha solo la penalità della manovra
     const situazione = s.arma?.tipo === arma.tipo ? somma(scomposizione.slice(nBase)) : scomposizione.at(-1).valore;
-    if (s.arma) attacchi.push({ etichetta: s.arma.nome, va: (s.arma.vaEffettivo ?? s.arma.va ?? 0) + situazione });
+    if (s.arma) attacchi.push({ etichetta: s.arma.nome, va: (s.arma.vaEffettivo ?? s.arma.va ?? 0) + situazione, danno: dannoBase(s.arma) });
     promemoria.push('Combattere con due armi: due Prove e risoluzioni separate, ciascuna con il danno e le munizioni della propria arma (§5.7).');
     if (T7.some((t) => t.e.mano_non_dominante)) promemoria.push('Ambidestro non modifica Combattere con due armi (§5.7).');
   } else if (d.manoNonDominante) {
@@ -493,7 +530,11 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
 
   // 8. Azioni (§5.11): distanza e mirino, Mira Rapida (minimo 1), poi Tiro Mirato e Movimento Evasivo
   let azioni = Math.max(azioniDistanza(d.distanza, dati), azioniMinime);
-  if (con('azioni_distanza').length) azioni = Math.max(1, azioni + con('azioni_distanza')[0].e.azioni_distanza);
+  if (con('azioni_distanza').length) {
+    const prima = azioni;
+    azioni = Math.max(1, azioni + con('azioni_distanza')[0].e.azioni_distanza);
+    if (azioni !== prima) promemoria.push(`${con('azioni_distanza')[0].nome}: ${prima} → ${azioni} ${azioni === 1 ? 'Azione Principale' : 'Azioni Principali'} per la distanza e il mirino (§5.11).`);
+  }
   azioni += azioniExtra.reduce((s, x) => s + x, 0);
   if (azioniDistanza(d.distanza, dati) > 1 || azioniMinime > 1) promemoria.push(D.frasi.at(-1));
   const doppie = (personaggio.scheda?.azioni?.principali ?? 1) >= 2;
@@ -518,6 +559,8 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
     colpi_a_segno: A.modalita.colpi_a_segno[m] ?? 1,
     tiri: A.modalita.tiri[m] ?? 1,
     danno_per_colpo: testoDanno(formula, moltiplicatore),
+    // §5.13: con il Successo Magistrale il moltiplicatore sale (come nel corpo a corpo)
+    danno_magistrale: formula ? testoDanno(formula, moltiplicatoreMagistrale(moltiplicatore, dati)) : null,
     dopo_armatura: dopo,
     attacchi,
     applicazioni: A.modalita.applicazioni[m] ?? arma.ac ?? 1,
@@ -925,7 +968,7 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
     scomposizione.push(voce(tal ? `Combattere con due armi (${tal.nome})` : 'Combattere con due armi', tal ? tal.e.due_armi.va : D.va, tal ? 'talento' : 'manovra', D.paragrafo));
     const va2 = tal ? tal.e.due_armi.va : D.va;
     attacchi = [{ etichetta: arma.nome, va: somma(scomposizione) }];
-    if (s.arma) attacchi.push({ etichetta: s.arma.nome, va: (s.arma.vaEffettivo ?? s.arma.va) + somma(situazione) + va2 });
+    if (s.arma) attacchi.push({ etichetta: s.arma.nome, va: (s.arma.vaEffettivo ?? s.arma.va) + somma(situazione) + va2, danno: dannoBase(s.arma) });
     if (con('mano_non_dominante').length) promemoria.push('Ambidestro non modifica Combattere con due armi (§5.7).');
     if ((personaggio.scheda?.azioni?.principali ?? 1) >= 2) promemoria.push(D.frasi[2]);
   } else if (m.attacchi) {
@@ -1011,7 +1054,8 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
 export function descriviManovraRavvicinata(id, scheda, dati) {
   const m = manovreRavvicinate(scheda, dati)[id];
   const T = talentiAttacco(scheda, dati, 'attacco_ravvicinato');
-  const mig = T.find((t) => t.e.manovra?.[id])?.e.manovra[id] ?? {};
+  // la versione Migliorata della manovra di riferimento (Combattimento Multiplo usa Spazzata Migliorata), come nel calcolo
+  const mig = T.find((t) => t.e.manovra?.[m.riduzione_da ?? id])?.e.manovra[m.riduzione_da ?? id] ?? {};
   const parti = [];
   if (m.va_per_bersagli) parti.push(Object.entries(m.va_per_bersagli).map(([n, v]) => `${conSegno(Math.min(0, v + (mig.riduzione ?? 0)))} VA contro ${n}`).join(', '));
   else { const va = mig.va ?? m.va; if (va) parti.push(`${conSegno(va)} VA`); }

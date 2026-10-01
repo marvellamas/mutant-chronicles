@@ -26,12 +26,23 @@ export function esitoRiparazione({ piAttuali, piMax, costo }, esito, r) {
   return { piNuovi, recuperati, costoMateriali };
 }
 
-/** VA della Prova di riparazione: Abilità della regola (valore al tavolo), con gli strumenti improvvisati. */
-export function vaRiparazione(scheda, improvvisati, r) {
+/**
+ * VA della Prova di riparazione: Abilità della regola (valore al tavolo), con gli strumenti improvvisati
+ * e, se il giocatore lo sceglie, un uso specifico pertinente dell'Abilità (Talenti e oggetti con un uso
+ * di riparazione: Armaiolo da Campo «riparare armi da fuoco», corredi di manutenzione, l'armatura che
+ * si ripara da sé). `usi`: gli usi specifici dell'Abilità che parlano di riparazione o manutenzione.
+ * @param uso nome dell'uso scelto (o null)
+ */
+export function vaRiparazione(scheda, improvvisati, r, uso = null) {
   const a = (scheda?.abilita ?? []).find((x) => x.nome === r.abilita);
   if (!a) return null;
   const base = a.effettivo ?? a.totale;
-  return { base, improvvisati: improvvisati ? r.strumenti_improvvisati_va : 0, totale: base + (improvvisati ? r.strumenti_improvvisati_va : 0) };
+  const usi = (a.usiSpecifici ?? []).filter((u) => /ripar|manutenz/i.test(u.uso)).map((u) => ({
+    uso: u.uso, modificatore: u.modificatore, fonti: u.oggetti.filter((o) => o.contato).map((o) => o.oggetto),
+  }));
+  const scelto = usi.find((u) => u.uso === uso) ?? null;
+  const imp = improvvisati ? r.strumenti_improvvisati_va : 0;
+  return { base, improvvisati: imp, usi, uso: scelto, totale: base + imp + (scelto?.modificatore ?? 0) };
 }
 
 /** L'oggetto si ripara con questa procedura? (tipo ammesso, non Distrutto) */

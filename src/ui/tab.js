@@ -409,7 +409,7 @@ function sezioneIntegrita(ctx) {
       h('tbody', {}, righe.map(riga)))),
     dalRiquadro ? pannelloRiparazione(ctx, lista, pi, rip) : null,
     campiPiDirettore(ctx),
-    h('p', { class: 'nota' }, 'Un colpo o una Parata ordinari non tolgono PI: si perdono con un attacco per rompere l’oggetto, un Magistrale che lo coinvolge, Corrosivo o Demolitrice e il danno Etereo, se la PS Integrità (1d20 ≤ PS) fallisce. A 0 PI l’oggetto è Rotto: non dà AR né i suoi effetti. La riparazione la decide il master: si rimettono i PI con +.'));
+    h('p', { class: 'nota' }, 'Un colpo o una Parata ordinari non tolgono PI: si perdono con un attacco per rompere l’oggetto, un Magistrale che lo coinvolge, Corrosivo o Demolitrice e il danno Etereo, se la PS Integrità (1d20 ≤ PS) fallisce. A 0 PI l’oggetto è Rotto: non dà AR né i suoi effetti. Si ripara con «Ripara» (un’ora, Prova di Tecnologia, esito scelto dopo il tiro, A.46); il Direttore può sempre rimettere i PI con +.'));
 }
 
 /**
@@ -763,14 +763,21 @@ function pannelloRiparazione(ctx, lista, pi, rip) {
   const x = stato && lista.find((o) => o.uid === stato.uid);
   if (!rip || !x) return null;
   const n = pi[x.uid] ?? x.piMax;
-  const va = vaRiparazione(ctx.tab.scheda, stato.improvvisati, rip);
+  const va = vaRiparazione(ctx.tab.scheda, stato.improvvisati, rip, stato.uso ?? null);
   const e = stato.esito ? esitoRiparazione({ piAttuali: n, piMax: x.piMax, costo: x.costo }, stato.esito, rip) : null;
   const crediti = ctx.sessione.crediti;
   const chiudi = () => { ctx.ui.riparazione = null; ctx.azioni.ridisegna(); };
   return h('div', { class: 'riquadro pannello-riparazione', role: 'group', 'aria-label': `Riparazione di ${x.nome}` },
     h('h3', {}, `Ripara ${x.nome} · PI ${n}/${x.piMax}`),
     h('p', {}, `${rip.ore} ora di lavoro, Prova di ${rip.abilita}: `, h('strong', {}, va ? `VA ${va.totale}` : '—'),
-      va?.improvvisati ? h('span', { class: 'sigla' }, ` (${va.base} ${segno(va.improvvisati)} strumenti improvvisati)`) : null),
+      va && (va.improvvisati || va.uso) ? h('span', { class: 'sigla' }, ` (${va.base}${va.improvvisati ? ` ${segno(va.improvvisati)} strumenti improvvisati` : ''}${va.uso ? ` ${segno(va.uso.modificatore)} ${va.uso.fonti.join(', ') || va.uso.uso}` : ''})`) : null),
+    // usi specifici di riparazione (Talenti, corredi): li sceglie il giocatore, se valgono per questo oggetto
+    va?.usi?.length ? h('div', { class: 'scelte-esito' }, h('span', { class: 'nota' }, 'Uso specifico pertinente: '),
+      [{ uso: null }, ...va.usi].map((u) => h('button', {
+        type: 'button', class: `btn${(stato.uso ?? null) === u.uso ? ' primario' : ''}`, 'aria-pressed': String((stato.uso ?? null) === u.uso),
+        title: u.uso ? `${u.fonti.join(', ')}: vale solo se l’oggetto rientra nell’uso` : null,
+        onclick: () => { stato.uso = u.uso; ctx.azioni.ridisegna(); },
+      }, u.uso ? `${u.uso} ${segno(u.modificatore)}` : 'Nessuno'))) : null,
     h('label', {}, h('input', { type: 'checkbox', checked: stato.improvvisati, onchange: () => { stato.improvvisati = !stato.improvvisati; ctx.azioni.ridisegna(); } }),
       ` Strumenti improvvisati (${segno(rip.strumenti_improvvisati_va)} VA)`),
     h('p', { class: 'nota' }, 'Tira al tavolo, poi scegli l’esito:'),
@@ -1456,6 +1463,9 @@ function pannelloMunizioni(ctx, a, { riserveModificabili = true } = {}) {
   const capacita = a.munizioni?.capacita ?? null;
   const info = a.tipo === 'arma_distanza' ? ctx.massimi.ricarica?.[a.uid] ?? null : null;
   const stato = info ? statoRicarica(info, m, ctx.sessione.scorte) : { possibile: capacita !== null && m.colpi < capacita, motivo: null, avviso: null };
+  // Azione della ricarica: quella della scheda dell'arma se la dà (Balestre: «1 AzM»), altrimenti 1 AzP (Giocatore §5.1.1)
+  const voceArma = (ctx.scelte.equipaggiamento ?? []).find((v) => v.uid === String(a.uid).split(':')[0]);
+  const azioneRicarica = (voceArma?.rif ? catalogo(ctx.dati).perRif.get(voceArma.rif)?.ricarica : null) ?? '1 AzP, Giocatore §5.1.1';
   const pulsante = (campo, d, etichetta) => h('button', {
     type: 'button', class: 'btn-tavolo', disabled: (d < 0 && m[campo] <= 0) || (campo === 'colpi' && d > 0 && capacita !== null && m.colpi >= capacita),
     'aria-label': `${d > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(d)} ${etichetta} a ${a.nome}`,
@@ -1466,7 +1476,7 @@ function pannelloMunizioni(ctx, a, { riserveModificabili = true } = {}) {
       h('span', {}, ETICHETTE_MUNIZIONI[a.munizioni?.unita ?? 'colpi'] ?? 'Caricatore', ' ', h('strong', {}, String(m.colpi)), capacita !== null ? ` / ${capacita}` : ''),
       pulsante('colpi', -1, 'colpi'),
       capacita !== null && capacita >= 10 ? pulsante('colpi', -5, 'colpi') : null,
-      capacita !== null ? h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.ricarica(a.uid), disabled: !stato.possibile, title: stato.motivo ?? 'Ricarica (1 AzP, Giocatore §5.1.1)' },
+      capacita !== null ? h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.ricarica(a.uid), disabled: !stato.possibile, title: stato.motivo ?? `Ricarica (${azioneRicarica})` },
         info?.singolo ? `Ricarica +${Math.min(info.perOperazione ?? 1, capacita - m.colpi) || info.perOperazione || 1}` : 'Ricarica') : pulsante('colpi', 1, 'colpi')),
     stato.motivo && capacita !== null && m.colpi < capacita ? h('small', { class: 'motivo', role: 'status' }, `Ricarica: ${stato.motivo}.`) : null,
     stato.avviso ? h('small', { class: 'motivo' }, stato.avviso) : null,
