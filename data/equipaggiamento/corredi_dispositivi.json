@@ -2321,24 +2321,6 @@
       ]
     },
     {
-      "id": "interfaccia-neurale-cybertronic",
-      "nome": "Interfaccia Neurale Cybertronic",
-      "tipo": "accessorio",
-      "catalogo": "Cybertronic",
-      "famiglia": "Innesti",
-      "nomi_alternativi": [],
-      "note_manuale": "Il Sistema di Interfaccia Neurale, SIN, collega l’equipaggiamento a un Innesto di Interfaccia Neurale compatibile. SIN 1 concede +1 VA e SIN 2 concede +2 VA alle sole Prove indicate nella scheda. Senza connessione l’oggetto mantiene il funzionamento ordinario, salvo un requisito espresso del dispositivo. La P500 è priva di SIN e non riceve il bonus di collegamento, anche se il tiratore possiede un Innesto di Interfaccia Neurale. I modelli compatibili sono elencati nelle tabelle seguenti. Gli innesti Cybertronic si collegano automaticamente. Un innesto di altra marca richiede un minuto di configurazione e una Prova di Tecnologia: con successo l’abbinamento viene memorizzato; con fallimento resta disponibile soltanto l’impiego ordinario, senza il bonus SIN. Il collegamento non richiede una Prova a ogni utilizzo. Si applica un solo bonus SIN alla stessa Prova, scegliendo il maggiore pertinente fino a +2: due SIN 1 non diventano SIN 2. Il bonus è distinto dal VA nativo dell’oggetto e dai modificatori degli strumenti. Non aumenta automaticamente danno, gittata, capacità, potenza o numero di Azioni. Le penalità dell’armatura continuano ad applicarsi. Interfaccia di comando indica il collegamento ai comandi e alle informazioni operative di un dispositivo automatico: non assegna un bonus numerico quando non viene effettuata una Prova. Furtività è sempre una Prova unica; i benefici acustici specifici si applicano mediante Soppressione acustica. L’installazione dell’innesto costa 2.000 oltre al prezzo. L’Interfaccia neurale CYBERTRONIC costa 1 UMN; l’equivalente standard 2 UMN. Usa la bioenergia del corpo, senza NEC, ricariche o consumi da registrare. Il SIN non aggiunge costi UMN per ogni oggetto connesso. Scheda e rottura dell’innesto: Manuale dell’Equipaggiamento, §7.3. Il SIN non si aggiunge automaticamente a Parata, danno o attivazione delle cariche. I profili e i costi delle armi rimangono quelli dei §§7.1.9 e 7.8; il SIN indicato è parte della dotazione del modello.",
-      "paragrafo": "§7.15.1",
-      "versione_manuale": "Armamenti 0.58",
-      "pi": 4,
-      "qualita": "Non comune",
-      "ps_int": 12,
-      "reperibilita": "RA",
-      "costo": 5000,
-      "innesto": "interfaccia_neurale",
-      "proprieta": []
-    },
-    {
       "id": "ias3100-generatore-blink",
       "nome": "IAS3100 Generatore Blink",
       "tipo": "accessorio",

@@ -815,7 +815,8 @@ export const FOGLI = [
   { id: 'inventario', sempre: true },
   { id: 'poteri', icona: 'magia' },
   { id: 'artefatti' },
-  { id: 'cibernetica', presente: (s, dati) => !dati.regole?.tab_in_arrivo?.cibernetica },
+  // foglio del lotto 3 (Equipaggiamento 0.5, cap. 7): in preparazione
+  { id: 'cibernetica', presente: () => false },
   { id: 'veicoli', presente: (s, dati) => !dati.regole?.tab_in_arrivo?.veicoli },
 ];
 const ID_FOGLI = FOGLI.map((f) => f.id);

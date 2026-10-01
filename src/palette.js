@@ -21,6 +21,7 @@ export const GRUPPI_EQUIPAGGIAMENTO = [
   { tipo: 'munizioni', titolo: 'Munizioni', colore: 'cat-munizioni' },
   { tipo: 'sanitario', titolo: 'Sanitario', colore: 'cat-sanitario' },
   { tipo: 'artefatto', titolo: 'Artefatti e Chroma', colore: 'cat-artefatti' },
+  { tipo: 'impianto', titolo: 'Impianti cibernetici', colore: 'cat-impianti' },
   { tipo: 'altro', titolo: 'Altro', colore: 'cat-altro' },
 ];
 
@@ -43,6 +44,9 @@ export const SEZIONI_INVENTARIO = [
   { id: 'strumenti', titolo: 'Strumenti professionali', colore: 'cat-altro', tipi: ['altro'], cataloghi: ['strumenti_professionali'] },
   { id: 'sanitario', titolo: 'Sanitario', colore: 'cat-sanitario', tipi: ['sanitario'] },
   { id: 'artefatti', titolo: 'Artefatti, cristalli e contenitori di Chroma', colore: 'cat-artefatti', tipi: ['artefatto'] },
+  // Equipaggiamento 0.5, cap. 7: impianti (installati o no) e chip del Processore; si comprano qui, la tab
+  // Cibernetica mostra quelli installati
+  { id: 'impianti', titolo: 'Impianti cibernetici e chip', colore: 'cat-impianti', tipi: ['impianto', 'altro'], cataloghi: ['impianti'] },
   { id: 'altro', titolo: 'Altro equipaggiamento', colore: 'cat-altro', tipi: ['altro'] },
 ];
 
@@ -50,7 +54,8 @@ export const SEZIONI_INVENTARIO = [
 export function sezioneInventario(r) {
   const tipo = SEZIONI_INVENTARIO.some((s) => s.tipi.includes(r.tipo)) ? r.tipo : 'altro';
   const cat = r.def?.rif ? String(r.def.rif).split(':')[0] : null;
-  return SEZIONI_INVENTARIO.find((s) => s.tipi.includes(tipo) && (!s.cataloghi || s.cataloghi.includes(cat)));
+  // i cataloghi distinguono soltanto gli «altro»; un impianto personalizzato va comunque fra gli impianti
+  return SEZIONI_INVENTARIO.find((s) => s.tipi.includes(tipo) && (!s.cataloghi || tipo !== 'altro' || s.cataloghi.includes(cat)));
 }
 
 /** Colori riservati: non si usano per le categorie né per altro. */

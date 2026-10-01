@@ -17,7 +17,7 @@ const voce = (uid, rif, stato, extra = {}) => ({ uid, rif, stato, quantita: 1, n
 const scheda = (creazione, equipaggiamento, livelli = []) => calcolaScheda({ creazione: { ...creazione, equipaggiamento }, livelli }, dati);
 
 test('catalogo: caricato dall’indice, un lotto = un file e una riga; riferimenti "file:id"', () => {
-  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armi_corporative', 'armi_distanza', 'armi_distanza_corporative', 'accessori_armi', 'munizioni', 'nec', 'sanitario', 'artefatti', 'unita_robotiche', 'armature', 'armature_corporative', 'elmetti', 'rinforzi', 'scudi', 'corredi_dispositivi', 'dotazioni_personali', 'esplorazione', 'comunicazione', 'strumenti_professionali']);
+  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armi_corporative', 'armi_distanza', 'armi_distanza_corporative', 'accessori_armi', 'munizioni', 'nec', 'sanitario', 'artefatti', 'unita_robotiche', 'armature', 'armature_corporative', 'elmetti', 'rinforzi', 'scudi', 'corredi_dispositivi', 'dotazioni_personali', 'esplorazione', 'comunicazione', 'strumenti_professionali', 'impianti']);
   const cat = catalogo(dati);
   assert.equal(cat.oggetti.filter((o) => o.tipo === 'arma_ravvicinata' && o.catalogo === 'Commerciale').length, 28); // §7.1.1: 28 profili
   assert.equal(cat.oggetti.filter((o) => o.tipo === 'armatura' && o.catalogo === 'Commerciale').length, 3); // §7.11.3
@@ -32,7 +32,7 @@ test('catalogo: caricato dall’indice, un lotto = un file e una riga; riferimen
 
 test('cascata e ricerca: solo ciò che esiste; i nomi alternativi portano al profilo', () => {
   const o = opzioniCascata(dati, { tipo: 'arma_ravvicinata', catalogo: 'Commerciale', famiglia: 'Spade' });
-  assert.deepEqual(o.tipi, ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'elmetto', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'altro']);
+  assert.deepEqual(o.tipi, ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'elmetto', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'impianto', 'altro']);
   assert.deepEqual(o.cataloghi, ['Commerciale', 'Bauhaus', 'Capitol', 'Cybertronic', 'Fratellanza', 'Imperial', 'Mishima', 'Alleanza']);
   assert.ok(o.famiglie.includes('Armi da pugno'));
   assert.deepEqual(o.profili.map((p) => p.nome), ['Spada leggera', 'Stocco', 'Spada lunga', 'Spada bastarda', 'Spadone']);
@@ -606,7 +606,7 @@ test('validatore delle armature corporative: rinforzi, profili alternativi, pena
 
 test('lotto 7: corredi, dispositivi, APE, Iron Mastiff, armi e granate Imperial, SIN Cybertronic', () => {
   const tutti = catalogo(dati).oggetti.filter((o) => o.file === 'corredi_dispositivi');
-  assert.equal(tutti.length, 60);
+  assert.equal(tutti.length, 59); // l'Interfaccia neurale è passata agli impianti (Equipaggiamento §7.3)
   assert.equal(tutti.filter((o) => o.famiglia === 'Corredi professionali').length, 39); // 4 Alleanza, 9 Capitol, 8 Imperial, 8 Mishima, 9 Fratellanza, Dr. Diana
   assert.equal(tutti.filter((o) => o.tipo === 'sanitario').length, 5); // Kit trauma = Kit di pronto soccorso Professionale (§7.19)
   const r = (id) => catalogo(dati).perRif.get(`corredi_dispositivi:${id}`);
@@ -627,16 +627,16 @@ test('lotto 7: corredi, dispositivi, APE, Iron Mastiff, armi e granate Imperial,
   assert.ok(!trovaTodo(dati).some((t) => /Rainy Dayer/.test(t.testo))); // risposta A.13
 });
 
-test('SIN: con l’Interfaccia Neurale in uso le armi Cybertronic hanno +SIN al VA per colpire (§7.15.1)', () => {
+test('SIN: con l’Interfaccia Neurale installata le armi Cybertronic hanno +SIN al VA per colpire (§7.15.1)', () => {
   const arma = voce('c', 'armi_distanza_corporative:caw2000', 'impugnata');
   const senza = scheda(MISHIMA_AGENTE, [arma]).equipaggiamento.armi;
-  const con = scheda(MISHIMA_AGENTE, [arma, voce('i', 'corredi_dispositivi:interfaccia-neurale-cybertronic', 'in_uso')]).equipaggiamento.armi;
+  const con = scheda(MISHIMA_AGENTE, [arma, voce('i', 'impianti:interfaccia-neurale-cybertronic', 'installato')]).equipaggiamento.armi;
   assert.equal(con[0].va, senza[0].va + 1);
   assert.ok(con[0].componenti.some((c) => /^SIN 1/.test(c.nome)));
   assert.equal(con[1].nome, 'Lanciagranate CAW2000'); // anche il modulo: «Per colpire con il modulo»
   assert.equal(con[1].va, senza[1].va + 1);
   // interfaccia nello zaino: nessun bonus
-  const zaino = scheda(MISHIMA_AGENTE, [arma, voce('i', 'corredi_dispositivi:interfaccia-neurale-cybertronic', 'zaino')]).equipaggiamento.armi;
+  const zaino = scheda(MISHIMA_AGENTE, [arma, voce('i', 'impianti:interfaccia-neurale-cybertronic', 'zaino')]).equipaggiamento.armi;
   assert.equal(zaino[0].va, senza[0].va);
   assert.match(testoTooltip('oggetto', 'armi_distanza_corporative:sr3500', dati), /SIN 2: \+2 VA \(per colpire\)/);
 });

@@ -1,7 +1,7 @@
 // Validatore dei dati delle regole (data/*.json).
 // Controlla gli invarianti dei manuali e restituisce errori leggibili: file, chiave, problema.
 // Non lancia eccezioni: un file malformato produce errori, non un crash.
-import { TIPI as TIPI_EQUIP } from './equipaggiamento.js';
+import { TIPI as TIPI_EQUIP, STATI } from './equipaggiamento.js';
 
 // Invarianti strutturali dei manuali. I valori numerici "di gioco" stanno in regole.json;
 // qui restano solo le forme fisse descritte dai paragrafi citati.
@@ -63,6 +63,7 @@ export function validaDati(dati) {
   validaEquipaggiamento(dati.equipaggiamento, [...nomiAbilita], [...(idSpec ?? [])], err, Object.keys(dati.regole?.chroma?.colori ?? {}).filter((c) => !dati.regole.chroma.colori[c]?.esausto && dati.regole.chroma.colori[c]?.contenitore !== false), Object.keys(dati.regole?.corruzione ?? {}));
   if (dati.regole?.chroma !== undefined) validaChroma(dati, err);
   if (dati.equipaggiamento?.file) validaNec(dati, err);
+  if (dati.equipaggiamento?.file) validaUmanita(dati, err);
   if (dati.regole) validaSchedaDigitale(dati, err);
   if (isOggetto(dati.dotazioni)) validaDotazioni(dati, err);
   if (dati.equipaggiamento?.file?.munizioni?.ricarica !== undefined) validaRicarica(dati, err);
@@ -1208,7 +1209,13 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
       if (o.effetto_arma !== undefined && !(isOggetto(o.effetto_arma) && isIntero(o.effetto_arma.va ?? 0) && isIntero(o.effetto_arma.danno ?? 0))) err(F, `${k}.effetto_arma`, 'serve { va, danno } interi');
       if (o.bonus_condizionato !== undefined && !(isOggetto(o.bonus_condizionato) && isIntero(o.bonus_condizionato.va) && isTesto(o.bonus_condizionato.condizione))) err(F, `${k}.bonus_condizionato`, 'serve { va, condizione }');
       if (o.tipo === 'accessorio') numeroOpz(F, `${k}.portata_q`, o.portata_q, 1, 999, err);
-      if (o.innesto !== undefined && !['interfaccia_neurale'].includes(o.innesto)) err(F, `${k}.innesto`, 'innesto sconosciuto (ammesso: interfaccia_neurale)');
+      if (o.innesto !== undefined && !INNESTI.includes(o.innesto)) err(F, `${k}.innesto`, `innesto sconosciuto (ammessi: ${INNESTI.join(', ')})`);
+      if (o.richiede_innesto !== undefined && !INNESTI.includes(o.richiede_innesto)) err(F, `${k}.richiede_innesto`, `innesto sconosciuto (ammessi: ${INNESTI.join(', ')})`);
+      // Equipaggiamento §7.1: impianti cibernetici, costo UMN all'installazione e servizio d'installazione
+      if (o.tipo === 'impianto' && !(isIntero(o.umn) && o.umn >= 0 && o.umn <= 20)) err(F, `${k}.umn`, 'costo UMN dell’impianto: intero da 0 a 20 (Giocatore §5.21)');
+      if (o.tipo !== 'impianto' && o.umn !== undefined) err(F, `${k}.umn`, 'solo per il tipo "impianto"');
+      if (o.installazione_costo !== undefined && !(o.tipo === 'impianto' && isIntero(o.installazione_costo) && o.installazione_costo >= 0)) err(F, `${k}.installazione_costo`, 'crediti interi ≥ 0, solo per il tipo "impianto"');
+      if (o.cartucce !== undefined && !(isIntero(o.cartucce) && o.cartucce >= 1)) err(F, `${k}.cartucce`, 'intero ≥ 1');
       if (o.compatibile_con !== undefined) {
         if (!Array.isArray(o.compatibile_con) || !o.compatibile_con.length) err(F, `${k}.compatibile_con`, 'elenco di riferimenti "file:id"');
         else o.compatibile_con.forEach((r, j) => rimandiCompatibili.push([F, `${k}.compatibile_con[${j}]`, r, o.tipo === 'munizioni' ? ['arma_ravvicinata', 'arma_distanza'] : ['armatura']]));
@@ -1504,6 +1511,62 @@ function validaNec(dati, err) {
 // ---------------------------------------------------------------------------
 // Equipaggiamento iniziale (data/dotazioni.json, Giocatore §2.16, E&L A.5–A.5.29)
 
+// Giocatore §5.21 e Equipaggiamento §7.1: Umanità, fasce e impianti; rif_sostituiti dell'indice
+function validaUmanita(dati, err) {
+  const FR = 'regole';
+  const conImpianti = Object.values(dati.equipaggiamento.file).some((f) => (f?.oggetti ?? []).some((o) => o?.tipo === 'impianto'));
+  const U = dati.regole?.umanita;
+  if (!isOggetto(U)) {
+    if (conImpianti) err(FR, 'umanita', 'regole dell’Umanità mancanti (Giocatore §5.21): servono agli impianti');
+  } else {
+    if (!(isIntero(U.minimo) && isIntero(U.massimo) && U.minimo < U.massimo)) err(FR, 'umanita.minimo', 'minimo e massimo interi, minimo < massimo');
+    if (!(isIntero(U.iniziale) && U.iniziale >= U.minimo && U.iniziale <= U.massimo)) err(FR, 'umanita.iniziale', 'intero fra minimo e massimo');
+    if (!isIntero(U.pm_minimo) || !isIntero(U.sintonizzazione_minimo)) err(FR, 'umanita.pm_minimo', 'pm_minimo e sintonizzazione_minimo interi');
+    const fasce = Array.isArray(U.fasce) ? U.fasce : [];
+    if (!fasce.length) err(FR, 'umanita.fasce', 'elenco delle fasce del §5.21 mancante');
+    const coperti = new Map();
+    fasce.forEach((f, i) => {
+      const k = `umanita.fasce[${i}]`;
+      if (!(isOggetto(f) && isIntero(f.min) && isIntero(f.max) && f.min <= f.max && isTesto(f.condizione))) return err(FR, k, 'serve { min ≤ max, condizione }');
+      for (const c of ['pm_massimi', 'ps_magia_corruzione', 'sintonizzazione']) if (!(isIntero(f[c]) && f[c] <= 0)) err(FR, `${k}.${c}`, 'modificatore intero ≤ 0');
+      for (let v = f.min; v <= f.max; v++) {
+        if (coperti.has(v)) err(FR, k, `UMN ${v} è già nella fascia ${coperti.get(v)}`);
+        coperti.set(v, i);
+      }
+    });
+    if (fasce.length && isIntero(U.minimo) && isIntero(U.massimo)) {
+      const mancanti = [];
+      for (let v = U.minimo; v <= U.massimo; v++) if (!coperti.has(v)) mancanti.push(v);
+      if (mancanti.length) err(FR, 'umanita.fasce', `valori di UMN senza fascia: ${mancanti.join(', ')}`);
+    }
+  }
+  const I = dati.regole?.impianti;
+  if (conImpianti && !isOggetto(I)) err(FR, 'impianti', 'regole degli impianti mancanti (Equipaggiamento §7.1)');
+  else if (isOggetto(I)) {
+    if (I.stato_installato !== 'installato') err(FR, 'impianti.stato_installato', '"installato" atteso');
+    const c = I.chip;
+    if (!(isOggetto(c) && isIntero(c.attivi_massimo) && c.attivi_massimo >= 1 && INNESTI.includes(c.innesto))) err(FR, 'impianti.chip', `serve { attivi_massimo ≥ 1, innesto fra ${INNESTI.join(', ')} }`);
+  }
+  // rif sostituiti: la voce nuova deve esistere, la vecchia non più
+  const FI = 'equipaggiamento/index';
+  const sost = dati.equipaggiamento.indice?.rif_sostituiti;
+  if (sost === undefined) return;
+  if (!isOggetto(sost)) return err(FI, 'rif_sostituiti', 'oggetto { "file:id vecchio": { rif, stati? } } atteso');
+  const trova = (r) => {
+    const [f, id] = String(r).split(':');
+    return (dati.equipaggiamento.file[f]?.oggetti ?? []).find((o) => o.id === id);
+  };
+  for (const [vecchio, v] of Object.entries(sost)) {
+    const k = `rif_sostituiti["${vecchio}"]`;
+    if (trova(vecchio)) err(FI, k, `"${vecchio}" è ancora nel catalogo`);
+    const nuovo = isOggetto(v) ? trova(v.rif) : null;
+    if (!nuovo) { err(FI, `${k}.rif`, `"${v?.rif}" non è nel catalogo`); continue; }
+    for (const [da, a] of Object.entries(v.stati ?? {})) {
+      if (!(STATI[nuovo.tipo] ?? []).includes(a)) err(FI, `${k}.stati.${da}`, `"${a}" non è uno stato del tipo "${nuovo.tipo}"`);
+    }
+  }
+}
+
 function validaDotazioni(dati, err) {
   const F = 'dotazioni';
   const d = dati.dotazioni;
@@ -1604,11 +1667,14 @@ function validaDotazioni(dati, err) {
 }
 
 // Effetti degli oggetti (docs/effetti-oggetti.md): catalogo e oggetti di dotazione. Tipi: va
-// (Abilità), attacco, danno, iniziativa, salvezza, caratteristica, contromisura, ar_contro, ar.
+// (Abilità), attacco, danno, iniziativa, salvezza, caratteristica, contromisura, ar_contro, ar, movimento
+// (Q in più al Movimento: gambe potenziate, Equipaggiamento §7.5).
+// Equipaggiamento §7.3, §7.10: innesti che altri oggetti richiedono (SIN, chip)
+const INNESTI = ['interfaccia_neurale', 'processore'];
 const AMBITI_EFFETTO = ['generale', 'situazionale', 'uso_specifico'];
 const TIPI_EFFETTO = {
   va: null, attacco: 'generale', danno: 'generale', iniziativa: 'generale', salvezza: 'uso_specifico',
-  caratteristica: 'uso_specifico', contromisura: 'generale', ar_contro: 'generale', ar: null,
+  caratteristica: 'uso_specifico', contromisura: 'generale', ar_contro: 'generale', ar: null, movimento: 'generale',
 };
 const ATTACCHI_EFFETTO = ['tutti', 'ravvicinati', 'distanza'];
 // Talenti (docs/censimento-talenti.md): in più il tipo «parata», le Salvezze anche generali o

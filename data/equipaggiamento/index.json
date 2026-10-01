@@ -123,7 +123,46 @@
       "id": "strumenti_professionali",
       "file": "strumenti_professionali.json",
       "descrizione": "Strumenti professionali: tecnici, scientifici, agricoli, accesso, camuffamento, elettronica, culturali e rituali (Equipaggiamento 0.5, cap. 5)"
+    },
+    {
+      "id": "impianti",
+      "file": "impianti.json",
+      "descrizione": "Impianti cibernetici e chip del Processore neurale (Equipaggiamento 0.5, cap. 7)"
     }
   ],
-  "_nota_reperibilita": "Scala: Comune, Non comune, Rara, Molto rara, Leggendaria (risposta di Davide A.14, 28/09/2026). Leggendaria è superiore a Molto rara. I valori economici degli oggetti rari sono riferimenti per eventuali scambi, non un listino che garantisce l’acquisto: deve prima esistere un produttore o possessore disposto a cedere l’oggetto; una Prova di Oratoria, da sola, non crea questa disponibilità. La reperibilità resta distinta dalla potenza mistica e dalla Qualità costruttiva."
+  "_nota_reperibilita": "Scala: Comune, Non comune, Rara, Molto rara, Leggendaria (risposta di Davide A.14, 28/09/2026). Leggendaria è superiore a Molto rara. I valori economici degli oggetti rari sono riferimenti per eventuali scambi, non un listino che garantisce l’acquisto: deve prima esistere un produttore o possessore disposto a cedere l’oggetto; una Prova di Oratoria, da sola, non crea questa disponibilità. La reperibilità resta distinta dalla potenza mistica e dalla Qualità costruttiva.",
+  "rif_sostituiti": {
+    "corredi_dispositivi:interfaccia-neurale-cybertronic": {
+      "rif": "impianti:interfaccia-neurale-cybertronic",
+      "stati": {
+        "in_uso": "installato",
+        "zaino": "zaino"
+      }
+    },
+    "accessori_armi:batteria-di-servizio": {
+      "rif": "nec:verde-compatto"
+    },
+    "accessori_armi:nec-verde-standard-di-ricambio": {
+      "rif": "nec:verde-standard"
+    },
+    "esplorazione:cartuccia-di-combustibile": {
+      "rif": "nec:rosso-standard"
+    },
+    "munizioni:serbatoio-vuoto-nemesis-214": {
+      "rif": "munizioni:pacco-nec-nemesis-214"
+    },
+    "munizioni:serbatoio-vuoto-del-lanciafiamme-commerciale": {
+      "rif": "munizioni:pacco-nec-lanciafiamme-commerciale"
+    },
+    "munizioni:serbatoio-vuoto-eruptor": {
+      "rif": "munizioni:pacco-nec-eruptor"
+    },
+    "munizioni:serbatoio-vuoto-purifier": {
+      "rif": "munizioni:pacco-nec-purifier"
+    },
+    "munizioni:serbatoio-vuoto-gehemmapuker": {
+      "rif": "munizioni:pacco-nec-gehemmapuker"
+    }
+  },
+  "_nota_rif_sostituiti": "Voci di catalogo uscite perché sostituite da un’altra scheda: al caricamento di un personaggio (src/character.js → normalizza) la voce passa al rif nuovo, con lo stato tradotto se indicato."
 }

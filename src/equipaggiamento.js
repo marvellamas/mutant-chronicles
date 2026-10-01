@@ -20,7 +20,7 @@ import { bonusDannoCaratteristica, caratteristicaDanno } from './calc.js';
 import { riga, rigaBonusCaratteristica as rigaBonus } from './provenienza.js';
 import { calcolaAR, oggettiConPi, oggettiSenzaPi } from './protezione.js';
 
-export const TIPI = ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'elmetto', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'altro'];
+export const TIPI = ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'elmetto', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'impianto', 'altro'];
 
 export const NOMI_TIPI = {
   arma_ravvicinata: 'Arma ravvicinata',
@@ -32,6 +32,7 @@ export const NOMI_TIPI = {
   munizioni: 'Munizioni',
   sanitario: 'Sanitario',
   artefatto: 'Artefatto',
+  impianto: 'Impianto cibernetico',
   altro: 'Altro',
 };
 
@@ -48,6 +49,9 @@ export const STATI = {
   sanitario: [],
   // Magia sez. 6: il contenitore deve essere trasportato per alimentare un lancio
   artefatto: ['trasportato', 'zaino'],
+  // Equipaggiamento §7.1: l'impianto installato è parte del corpo; posseduto e non installato, nello zaino
+  // (installare e togliere: cambi di stato fatti a mano, docs/ricognizione-cibernetica.md H3)
+  impianto: ['installato', 'zaino'],
   altro: [],
 };
 
@@ -64,9 +68,10 @@ export const NOMI_STATI = {
   indossata: 'Indossata',
   in_uso: 'In uso / montato',
   trasportato: 'Trasportato',
+  installato: 'Installato',
 };
 
-const ATTIVI = new Set(['impugnata', 'imbracciato', 'indossata', 'in_uso']);
+const ATTIVI = new Set(['impugnata', 'imbracciato', 'indossata', 'in_uso', 'installato']);
 // stati degli oggetti senza stati propri (altro, sanitario, munizioni) quando hanno effetti sui VA
 const STATI_CON_EFFETTI = ['in_uso', 'zaino'];
 export const AMBITI_EFFETTO = ['generale', 'situazionale', 'uso_specifico'];
@@ -99,6 +104,7 @@ export function testoEffettoOggetto(e) {
   if (tipo === 'attacco') return `${segnoEff(e.valore)} VA ${ATTACCHI_TESTO[e.attacchi] ?? ''}`.trim();
   if (tipo === 'danno') return `${segnoEff(e.valore)} danno ${ATTACCHI_TESTO[e.attacchi] ?? ''}`.trim();
   if (tipo === 'iniziativa') return `${segnoEff(e.valore)} Iniziativa`;
+  if (tipo === 'movimento') return `${segnoEff(e.valore)} Q al Movimento`;
   if (tipo === 'salvezza') return `${segnoEff(e.valore)} alla PS ${e.salvezza ? NOMI_SALVEZZE[e.salvezza] ?? e.salvezza : 'già prevista'} (solo ${e.uso})`;
   if (tipo === 'caratteristica') return `${segnoEff(e.valore)} alla Prova di ${e.caratteristiche.join(' o ')} (solo ${e.uso})`;
   if (tipo === 'contromisura') return `Contromisura ${e.effetto} ${e.valore}`;

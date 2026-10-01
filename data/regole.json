@@ -176,10 +176,6 @@
     "_nota": "Tab Poteri della scheda digitale (docs/layout-sd.md, pezzo 4): testo per chi non ha poteri, dal Manuale della Magia sez. 1 («Conoscenza e livello massimo», «Usufruitore di Magia»), e le sezioni future, chiuse e vuote finché il manuale non c’è."
   },
   "tab_in_arrivo": {
-    "cibernetica": {
-      "testo": "Innesti e impianti cibernetici, gestiti come l’equipaggiamento, con lo stato dell’Umanità.",
-      "rimandi": ["Umanità (UMN): Giocatore §5.21. Ogni innesto indica nella propria scheda l’eventuale perdita di UMN; le schede degli impianti non sono ancora scritte."]
-    },
     "veicoli": {
       "testo": "La scheda dei veicoli arriva con il Manuale dei Veicoli (Davide prepara lo Scout come esempio).",
       "rimandi": ["I veicoli sono esclusi dalle dotazioni iniziali; il Direttore di Gioco decide se e quali fornire al gruppo: Giocatore §2.16.30."]
@@ -1191,6 +1187,130 @@
       "I NEC descritti qui alimentano tecnologia in Lx e non richiedono Sintonizzazione."
     ],
     "_nota": "Equipaggiamento 0.5, §5.4 (01/10/2026). Catalogo in data/equipaggiamento/nec.json; alimentazione degli oggetti nel campo «alimentazione» delle schede: NEC del catalogo (o descrizione per i NEC dedicati), consumo in Lx/h e autonomia in ore, oppure Lx per uso e numero di usi (§5.4.2: «ore oppure cariche»); «esterna»: l’oggetto non comprende il NEC (postazioni, laboratorio). Al tavolo si segna la riserva in ore o usi per gli apparecchi, in Lx per celle e pacchi; «Nuova sessione» non ricarica (serve caricatore e fonte, §5.4.6)."
+  },
+  "umanita": {
+    "paragrafo": "Giocatore §5.21 (0.45, 01/10/2026); Equipaggiamento §7.1",
+    "iniziale": 20,
+    "massimo": 20,
+    "minimo": 0,
+    "fasce": [
+      {
+        "min": 19,
+        "max": 20,
+        "condizione": "Umano",
+        "pm_massimi": 0,
+        "ps_magia_corruzione": 0,
+        "sintonizzazione": 0
+      },
+      {
+        "min": 16,
+        "max": 18,
+        "condizione": "Potenziato",
+        "pm_massimi": 0,
+        "ps_magia_corruzione": -1,
+        "sintonizzazione": 0
+      },
+      {
+        "min": 13,
+        "max": 15,
+        "condizione": "Potenziato",
+        "pm_massimi": -1,
+        "ps_magia_corruzione": -2,
+        "sintonizzazione": -1
+      },
+      {
+        "min": 10,
+        "max": 12,
+        "condizione": "Cyborg",
+        "pm_massimi": -2,
+        "ps_magia_corruzione": -3,
+        "sintonizzazione": -2
+      },
+      {
+        "min": 7,
+        "max": 9,
+        "condizione": "Cyborg",
+        "pm_massimi": -4,
+        "ps_magia_corruzione": -4,
+        "sintonizzazione": -4
+      },
+      {
+        "min": 4,
+        "max": 6,
+        "condizione": "Transumano",
+        "pm_massimi": -8,
+        "ps_magia_corruzione": -5,
+        "sintonizzazione": -6
+      },
+      {
+        "min": 1,
+        "max": 3,
+        "condizione": "Transumano",
+        "pm_massimi": -15,
+        "ps_magia_corruzione": -7,
+        "sintonizzazione": -8
+      },
+      {
+        "min": 0,
+        "max": 0,
+        "condizione": "Macchina",
+        "pm_massimi": -20,
+        "ps_magia_corruzione": -10,
+        "sintonizzazione": -10
+      }
+    ],
+    "pm_minimo": 1,
+    "sintonizzazione_minimo": 0,
+    "zero": {
+      "risorse_interiori": false
+    },
+    "frasi": [
+      "Il valore va da 0 a 20; un essere umano non modificato parte normalmente da UMN 20.",
+      "Si applica soltanto la fascia del valore attuale, senza sommare i modificatori delle fasce precedenti.",
+      "La riduzione dovuta all’Umanità non può portare i PM Massimi sotto 1.",
+      "La penalità alla Salvezza si applica esclusivamente alle PS di Magia contro la Corruzione.",
+      "La riduzione indicata nella tabella si applica alla Capacità complessiva di Sintonizzazione, inclusi i bonus dei Talenti, fino a un minimo di 0.",
+      "A UMN 0 il personaggio non può utilizzare Risorse Interiori, comprese le Tecniche che ne dipendono, salvo un’eccezione espressamente prevista.",
+      "Il costo UMN si applica all’installazione, secondo il Manuale del Giocatore, §5.21.",
+      "Spegnimento, rottura o rimozione di un chip non restituiscono Umanità. Il recupero di UMN richiede una procedura che ne specifichi condizioni e punti restituiti; le cure e le riparazioni ordinarie non la recuperano automaticamente."
+    ],
+    "_nota": "Umanità del personaggio (src/umanita.js): iniziale − costi UMN registrati all’installazione degli impianti (scelte.umanita.perdite: restano anche se l’impianto si toglie o si rompe, §7.1) + recuperi concessi dal Direttore (scelte.umanita.recuperi; nessuna procedura ancora descritta, A.70). Fasce del §5.21: modificatori ai PM Massimi (minimo 1, solo per chi ha PM), alla sola PS di Magia contro la Corruzione e alla Capacità di Sintonizzazione (minimo 0); a 0 niente Risorse Interiori. Ipotesi in docs/ricognizione-cibernetica.md (H1–H2, A.69–A.70)."
+  },
+  "impianti": {
+    "paragrafo": "Equipaggiamento §7.1–7.10 (0.5, 01/10/2026)",
+    "stato_installato": "installato",
+    "installazione": {
+      "struttura": "struttura medica attrezzata",
+      "prova": false,
+      "frasi": [
+        "Installazione. Richiede una struttura medica attrezzata. Una normale installazione acquistata come servizio non richiede prove aggiuntive o salvezze casuali di rigetto."
+      ]
+    },
+    "chip": {
+      "durata_minuti": 30,
+      "intervallo_ore": 24,
+      "attivi_massimo": 1,
+      "innesto": "processore",
+      "abilita": [
+        "Atletica",
+        "Furtività",
+        "Percezione",
+        "Pilotare",
+        "Cultura",
+        "Intrattenere",
+        "Medicina",
+        "Oratoria",
+        "Raggirare",
+        "Scienza",
+        "Sopravvivenza",
+        "Tecnologia"
+      ]
+    },
+    "frasi": [
+      "I benefici tecnologici equivalenti sulla stessa Prova o sullo stesso danno non si sommano: si applica il maggiore, anche con elmetti ed esoscheletri.",
+      "Gli impianti di questo catalogo non richiedono NEC, ricariche o conteggio dell’autonomia."
+    ],
+    "_nota": "Impianti cibernetici (data/equipaggiamento/impianti.json): tipo «impianto», stato «installato» (effetti come un oggetto in uso) o «zaino» (posseduto). Installare e togliere sono cambi di stato fatti a mano (ipotesi H3, A.69); il costo d’installazione si paga a parte. Gli impianti installati non pesano nel carico (fanno parte del corpo). I chip contano solo con un Processore installato; un solo chip attivo: con più chip accesi l’app avvisa (ipotesi H7)."
   },
   "ferite": {
     "stati": [

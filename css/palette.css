@@ -47,6 +47,7 @@
   --cat-munizioni: #6b4423;    /* cuoio */
   --cat-sanitario: #0e6863;    /* verde petrolio */
   --cat-artefatti: #7a2f86;    /* viola */
+  --cat-impianti: #4a3f9a;     /* indaco */
   --cat-altro: #5f5f66;        /* grigio */
 
   /* bandierine del calendario: pallino e bordo della nota */
@@ -84,6 +85,7 @@
     --cat-munizioni: #d6a67c;
     --cat-sanitario: #6fd1c7;
     --cat-artefatti: #dd9ce8;
+    --cat-impianti: #b3aaf0;
     --cat-altro: #b4b4bc;
 
     --evento-rosso: #ff8c5a;
