@@ -1,6 +1,6 @@
 # Tavolo del Master: piano di fattibilità
 
-Branch `tavolo-direttore`, 1° ottobre 2026. Piano di fattibilità; sono fatti il pezzo 1 (plancia dei PG in sola lettura) e il pezzo 2 (scontro e Iniziativa).
+Branch `tavolo-direttore`, 1° ottobre 2026. Piano di fattibilità; sono fatti il pezzo 1 (plancia dei PG in sola lettura), il pezzo 2 (scontro e Iniziativa) e il pezzo 3 (nemici).
 
 La visione di partenza è in `docs/backlog.md`, voce 14, su `main`. Al tavolo molti giocatori usano la scheda di carta. Il master tiene lo stato della scena su una plancia con PG e nemici:
 
@@ -18,8 +18,9 @@ Regole del branch:
 ## Regole di lavoro (Marcello, 1° ottobre 2026)
 
 1. **Mai nelle cartelle reali.** Non si scrive mai in `personaggi/`, `tavolo/`, `scontri/` e `nemici/` nella radice del repo, e non si usa la porta 3000: è il server acceso di Marcello.
-   - Per ogni prova si usa un server su un'altra porta, con `--cartella=`, `--tavolo=`, `--scontri=` (e le opzioni future) puntate a cartelle temporanee fuori dal repo, cancellate a fine prova.
+   - Per ogni prova si usa un server su un'altra porta, con `--cartella=`, `--tavolo=`, `--scontri=`, `--nemici=` (e le opzioni future) puntate a cartelle temporanee fuori dal repo, cancellate a fine prova.
    - Se una prova richiede i file di Marcello, ci si ferma e si chiede.
+   - Il cambio di branch tocca i LEGGIMI: `personaggi/LEGGIMI.txt`, `scontri/LEGGIMI.txt` e `nemici/LEGGIMI.txt` sono tracciati solo su questo branch. Passando a `main` git li toglie, tornando li rimette (stesso contenuto, data nuova). Gli altri file di quelle cartelle non sono tracciati e git non li tocca. Da sapere quando si confrontano le date delle cartelle prima e dopo una prova.
 2. **Nome.** «Tavolo del Master», non «del Direttore», ovunque sia visibile all'utente: pulsante, titoli, avvisi, docs. Il nome del branch e dei file di codice resta com'è.
 
 ## Deciso (Marcello, 1° ottobre 2026)
@@ -84,12 +85,12 @@ PC del master (server.mjs --rete)
 **API nuove**, sullo stesso schema di quelle dei personaggi:
 - `GET/PUT /api/scontri/<id>`, con un controllo di versione che rifiuta una scrittura su una versione vecchia (fatto con un contatore `revisione`, pezzo 2);
 - `GET /api/scontri`;
-- `GET /api/nemici`.
+- `GET /api/nemici` e `PUT /api/nemici/<id>` (pezzo 3).
 
 ## 3. Che cosa serve dai dati e oggi manca
 
 1. **Bestiario dei nemici.** Oggi non esiste: i manuali non hanno ancora un capitolo dei nemici.
-   - Formato proposto (deciso, punto 4: il formato e il validatore vanno in `data/` su `main` con `TODO(Davide)`; i nemici della campagna in `nemici/`, un file per nemico):
+   - Fatto: il formato è `data/formato_nemici.json` su `main` (1° ottobre 2026, per-davide A.73), con il validatore `validaNemico` in `src/validate.js` e un nemico d'esempio in `tests/nemici/`. La proposta di partenza era questa:
      ```json
      { "id": "legionario-non-morto", "nome": "Legionario Non Morto", "fonte": "master",
        "pv": 22, "ar": { "totale": 3, "magica": 0 }, "difese": 9, "salvezze": { "tempra": 12, "riflessi": 8, "volonta": 14, "magia": 10 },
@@ -151,9 +152,21 @@ Ogni pezzo ha test sulle funzioni pure e una prova nel browser; i primi due non 
      - Contatore `revisione` nel corpo invece di `If-Match` (più semplice da leggere e da provare).
      - L'Iniziativa dei PG è fotografata alla creazione dello scontro: Stati presi dopo non la cambiano.
      - Le durate degli Stati stanno nello scontro, non nella scheda del PG; la plancia non tocca i file dei PG fino al pezzo 6.
-3. **Pezzo 3 — Nemici.**
-   - Formato del bestiario (§3) in `nemici/`, con un validatore dedicato e un editor minimo nella plancia.
-   - Si aggiungono più copie di un nemico con etichette diverse; PV e Stati sono indicatori nella plancia.
+3. ✔ **Pezzo 3 — Nemici** (fatto il 1° ottobre 2026). Il formato su `main`, il resto sul branch.
+   - **Formato** (su `main`, portato qui con un merge). `data/formato_nemici.json` descrive i campi di un file nemico con un piccolo schema: tipo, obbligatorio, minimi, valori ammessi presi dagli altri dati (Stati, Salvezze, modalità di fuoco, nature del danno del §5.24), campi richiesti o ammessi secondo il tipo di attacco. `validaFormatoNemici` controlla il file all'avvio, `validaNemico` un file nemico. I punti che il Giocatore 0.45 non definisce sono `TODO(Davide)` con la scelta dichiarata (per-davide A.73).
+     - Campi: formato, versione, id, nome, fonte; Caratteristiche facoltative (DES e INT per la parità); PV; PM; AR totale e magica; Difese; Iniziativa; Movimento (Passo; Corsa e Scatto facoltativi); quattro Salvezze; attacchi (nome, tipo ravvicinato o distanza, VA, danno, natura, proprietà, portata o gittata, modalità, AC, riferimento al catalogo, note); Stati iniziali; immunità agli Stati; incantesimi come promemoria; note.
+   - **Bestiario.** `nemici/<id>.json`, un file per tipo, fuori da git tranne `nemici/LEGGIMI.txt`; `--nemici=…` per un'altra cartella. `GET /api/nemici` elenca i file (un JSON rotto con l'errore), `PUT /api/nemici/<id>` salva solo un tipo valido: il server carica i dati delle regole e usa lo stesso `validaNemico`. La plancia rivalida l'elenco quando cambia un file (`src/nemici.js` → `vociBestiario`): un file non valido è segnalato con gli errori e resta fuori dagli scontri, senza fermare la plancia.
+   - **Editor.** Riquadro «Bestiario» in fondo alla plancia: «Nuovo tipo» e «Modifica» aprono una finestra con un modulo generato dal formato (`src/ui/nemici.js`). Un campo nuovo nel formato compare da sé. L'identificativo si propone dal nome; «Salva in nemici/» pulisce i campi vuoti, valida e mostra gli errori accanto ai campi. Il file si scrive con le chiavi nell'ordine del formato.
+   - **Nello scontro.** «Aggiungi nemici»: tipo, quanti, lato. Le copie si chiamano «Nome 1», «Nome 2»…: la numerazione continua dopo quelle già usate, anche se tolte, così nel registro un'etichetta è sempre lo stesso nemico. Ogni copia porta una fotografia del tipo, i propri PV e i propri Stati. Iniziativa = valore del tipo + d10 (dal vivo o dell'app), con le parità del pezzo 2: DES e INT dalle Caratteristiche del tipo; se mancano, spareggio col dado contro un avversario. I partecipanti scritti a mano restano («Aggiungi partecipante a mano»).
+   - **Carta del nemico.** Bordo col colore del lato (`--lato-avversario`, `--lato-alleato`, docs/palette.md), PV con − e +, AR e contro Etereo, Difese, Iniziativa, Salvezze, Movimento, Stati (aggiungi da un elenco senza quelli a cui è immune, togli con ×), attacchi, incantesimi e note. Più clic di fila su − o + fanno una sola riga di registro («PV 15 → 11 (−4)»). Le durate degli Stati in Round valgono anche per i nemici; alla fine lo Stato di un nemico si toglie da sé.
+   - **Test.** `tests/nemici.test.js` (su `main`): formato valido e rotto, nemico valido, campi mancanti, valori non ammessi. `tests/nemici-scontro.test.js`: copie con etichette e PV indipendenti, registro dei PV, Iniziativa con le parità (DES, spareggio fra copie, tipo senza Caratteristiche, alleato), Stati e immunità, bestiario con file rotti, editor (bozza, pulizia), server.
+   - **Prova nel browser.** Server sulla porta 3001 con cartelle temporanee: un tipo creato dall'editor (prima salvato vuoto, per vedere gli errori), poi modificato; un file rotto segnalato; tre copie con due PG di collaudo; parità PG-nemico risolta per Destrezza e spareggio fra copie con un pari da ritirare; due Round con PV a mano, uno Stato con durata e due finestre che si aggiornano a vicenda.
+   - **Scostamenti dal piano.**
+     - Il formato è uno schema nei dati, non solo un elenco di campi: validatore ed editor lo leggono.
+     - Niente `rif` che prende il danno dal catalogo: il riferimento all'arma è solo informativo, i numeri restano quelli scritti (numeri già fatti).
+     - Ferite e Affaticamento dei nemici non ci sono ancora (TODO(Davide) A.73): solo PV e Stati.
+     - Il salvataggio di un tipo non ha revisione: due finestre che modificano lo stesso tipo, vince l'ultima (caso raro, a differenza dello scontro).
+     - Le modifiche dello scontro dalla stessa finestra si mettono in fila, così i clic rapidi su − e + non vanno in conflitto fra loro.
 4. **Pezzo 4 — Danno applicato.**
    - Funzione pura `applicaColpo(bersaglio, danno tirato, natura, AC)` secondo §5.13–5.15: Difesa, AR per applicazione, PV, PS Tempra suggerita, Sanguinamento. Restituisce la nuova sessione e la riga del registro.
    - Plancia: «Colpito» su un partecipante.
