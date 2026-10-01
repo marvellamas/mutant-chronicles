@@ -1,6 +1,6 @@
 # Tavolo del Master: piano di fattibilità
 
-Branch `tavolo-direttore`, 1° ottobre 2026. Piano di fattibilità; il pezzo 1 (plancia dei PG in sola lettura) è fatto.
+Branch `tavolo-direttore`, 1° ottobre 2026. Piano di fattibilità; sono fatti il pezzo 1 (plancia dei PG in sola lettura) e il pezzo 2 (scontro e Iniziativa).
 
 La visione di partenza è in `docs/backlog.md`, voce 14, su `main`. Al tavolo molti giocatori usano la scheda di carta. Il master tiene lo stato della scena su una plancia con PG e nemici:
 
@@ -82,7 +82,7 @@ PC del master (server.mjs --rete)
 **Aggiornamento:** polling ogni 2–3 secondi su `GET /api/scontri/<id>` e sull'elenco dei personaggi, con l'`mtime` per non rileggere i file invariati. Niente WebSocket nella prima versione: sono zero dipendenze, sulla stessa rete bastano.
 
 **API nuove**, sullo stesso schema di quelle dei personaggi:
-- `GET/PUT /api/scontri/<id>`, con un controllo di versione (`If-Match`: mtime o contatore) che rifiuta una scrittura su una versione vecchia;
+- `GET/PUT /api/scontri/<id>`, con un controllo di versione che rifiuta una scrittura su una versione vecchia (fatto con un contatore `revisione`, pezzo 2);
 - `GET /api/scontri`;
 - `GET /api/nemici`.
 
@@ -136,10 +136,21 @@ Ogni pezzo ha test sulle funzioni pure e una prova nel browser; i primi due non 
    - **Aggiornamento.** Ogni 3 secondi la plancia rilegge l'elenco della cartella e solo i file cambiati (mtime); l'indicatore dice «aggiornato N s fa». Il clic sul nome apre il personaggio nell'app, dove si fanno le modifiche.
    - **Server.** `--cartella=…` e `--tavolo=…` permettono di usare altre cartelle, per le prove o per più campagne.
    - **Test.** `tests/tavolo.test.js`: stessi valori di `calcolaScheda` per b, c, Lucas e d; selezione salvata e riletta; senza server niente plancia.
-2. **Pezzo 2 — Scontro e Iniziativa.**
-   - `scontri/` sul server con la versione (`If-Match`).
-   - Si crea uno scontro e si aggiungono i PG; il d10 è dal vivo o dell'app, poi ordine, spareggi e Round/turno corrente con «Avanti».
-   - Il registro degli eventi è in sola aggiunta.
+2. ✔ **Pezzo 2 — Scontro e Iniziativa** (fatto il 1° ottobre 2026). Riquadro «Scontro» in cima alla plancia; motore puro in `src/scontro.js`, interfaccia in `src/ui/scontro.js`.
+   - **Server.** `scontri/<id>.json`, uno per scontro (fuori da git, tranne `scontri/LEGGIMI.txt`); `--scontri=…` per un'altra cartella. `GET /api/scontri` elenca gli aperti, `GET/PUT /api/scontri/<id>` legge e salva.
+   - **Revisione.** Ogni file ha un contatore `revisione`: il `PUT` passa quella letta, il server la confronta con quella del file e salva con +1. Se non coincide risponde 409 con lo scontro attuale: la plancia lo ricarica e avvisa «cambiato in un'altra finestra, ripeti l'ultima azione».
+   - **Nuovo scontro.** Parte con i PG al tavolo. Valore di Iniziativa = quello effettivo di `calcolaScheda` (Giocatore §2.14, con la provenienza nel tooltip), più 1d10 (`regole.json` → `iniziativa.dado_in_combattimento`): dal vivo (casella) o «Tira» dell'app, anche «Tira per tutti».
+   - **Ordine e parità** (Giocatore §5.1). Totale più alto prima. A pari totale: Destrezza più alta, poi Intelligenza più alta. Se restano pari due alleati, scelgono loro (↑ ↓, ordine salvato). Se c'è di mezzo un avversario, spareggio con lo stesso dado, ritirato finché resta pari; lo spareggio non cambia il valore.
+   - **Turni e Round.** La riga di turno e la carta del PG sono evidenziate. «Avanti» passa al successivo; dopo l'ultimo comincia il Round dopo. Le durate degli Stati in Round («1+1d3 Round») si tirano o si scrivono nel riquadro e scalano a ogni Round. Quando finiscono, il registro dice di togliere lo Stato dalla scheda. Le altre durate («fino a quando…») sono solo un promemoria.
+   - **Partecipanti a mano.** «Aggiungi partecipante»: nome, Iniziativa, lato, DES e INT facoltative. Segnato «provvisorio» finché non ci sono i nemici (pezzo 3); si può togliere.
+   - **Registro.** Una riga per evento, con ora e Round (creazione, tiri, spareggi, scelte d'ordine, partecipanti, durate, turni, Round, chiusura). Si apre e si chiude; il più recente in alto.
+   - **Fine scontro.** Lo stato passa a «chiuso» e il file va in `scontri/archivio/<id>.json`. Non si cancella nulla.
+   - **Test.** `tests/scontro.test.js`: dado e durate dai dati; ordine con parità (DES, INT, alleati, spareggio ritirato); partecipante a mano; Round e durate; 409 su revisione vecchia; archivio.
+   - **Prova nel browser.** Server sulla porta 3001 con cartelle temporanee: tre PG di collaudo, un partecipante a mano, tre Round giocati da due finestre, una scrittura vecchia rifiutata con l'avviso, chiusura con archivio.
+   - **Scostamenti dal piano.**
+     - Contatore `revisione` nel corpo invece di `If-Match` (più semplice da leggere e da provare).
+     - L'Iniziativa dei PG è fotografata alla creazione dello scontro: Stati presi dopo non la cambiano.
+     - Le durate degli Stati stanno nello scontro, non nella scheda del PG; la plancia non tocca i file dei PG fino al pezzo 6.
 3. **Pezzo 3 — Nemici.**
    - Formato del bestiario (§3) in `nemici/`, con un validatore dedicato e un editor minimo nella plancia.
    - Si aggiungono più copie di un nemico con etichette diverse; PV e Stati sono indicatori nella plancia.
