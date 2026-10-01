@@ -127,6 +127,12 @@ test('chip del Processore: contano solo con il Processore installato, uno alla v
   assert.ok(s.equipaggiamento.avvisi.some((a) => /Il Processore ne attiva uno alla volta/.test(a)));
 });
 
+test('Integrità: gli impianti hanno PI tracciati (Equipaggiamento §7.2); le gambe in coppia una riga da 10 (H6)', () => {
+  const c = normalizza({ ...MISHIMA_AGENTE, equipaggiamento: [voce('br', 'impianti:braccio-potenziato', 'installato'), voce('ga', 'impianti:gambe-potenziate-in-coppia', 'installato')] }, dati).scelte;
+  const s = calcolaScheda({ creazione: c, livelli: [] }, dati);
+  assert.deepEqual(massimiSessione(s, c, dati).integrita, { br: 8, ga: 10 });
+});
+
 test('carico: l’impianto installato non pesa; lo stesso impianto nello zaino resta da pesare', () => {
   const agente = (voci) => calcolaScheda({ creazione: normalizza({ ...MISHIMA_AGENTE, equipaggiamento: voci }, dati).scelte, livelli: [] }, dati);
   const s1 = agente([voce('br', 'impianti:braccio-sostitutivo', 'installato')]);

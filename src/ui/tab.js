@@ -29,6 +29,7 @@ import { statoPulsanteLancio } from '../lancio.js';
 import { tabCalendario, pannelloAttivazione, pannelloImportaCalendario, pulsanteImportaCalendario } from './calendario.js';
 import { conOrdinale } from '../lingua.js';
 import { regoleRiparazione, esitoRiparazione, vaRiparazione, riparabile } from '../riparazione.js';
+import { annullaPerdita, aggiungiRecupero, togliRecupero } from '../umanita.js';
 
 export const POSIZIONI_TAB = [
   { id: 'alto', etichetta: 'In alto, con Punti Eroe, PV e PM a sinistra (predefinita)' },
@@ -129,7 +130,7 @@ export function renderTab(ctx) {
     // Poteri: per ora la tab Magia com'è; senza accesso alla magia «Nessun potere» (docs/layout-sd.md)
     poteri: tabPoteri,
     artefatti: (c) => tabArtefatti(c),
-    cibernetica: (c) => tabInArrivo(c, 'cibernetica'),
+    cibernetica: (c) => tabCibernetica(c),
     inventario: (c) => tabInventario(c),
     veicoli: (c) => tabInArrivo(c, 'veicoli'),
   };
@@ -897,7 +898,7 @@ function tabIdentita(ctx, d) {
       h('div', { class: 'anagrafica-testa' },
         h('h2', {}, 'Anagrafica'),
         h('button', {
-          type: 'button', class: 'btn piccolo', 'aria-expanded': String(espansa), 'aria-controls': 'anagrafica-dettaglio',
+          type: 'button', class: 'btn btn-piccolo', 'aria-expanded': String(espansa), 'aria-controls': 'anagrafica-dettaglio',
           onclick: () => { salvaImpostazioni({ ...leggiImpostazioni(), anagraficaEspansa: !espansa }); ctx.azioni.ridisegna(); },
         }, espansa ? 'Riduci' : 'Espandi')),
       espansa ? null : h('p', { class: 'anagrafica-riga', title: riga }, riga),
@@ -1690,13 +1691,121 @@ function tabArtefatti(ctx) {
       h('div', { class: `contatore-tavolo${st.usata > st.capacita ? ' oltre' : ''}` }, h('h3', {}, 'Sintonizzazione (§7.10)'),
         h('p', { class: `valore-tavolo${st.usata > st.capacita ? ' oltre' : ''}` }, h('strong', {}, String(st.usata)), h('span', {}, ` / ${st.capacita}`)),
         h('p', { class: 'nota' }, `Capacità per ${st.gradi} Grad${st.gradi === 1 ? 'o' : 'i'} complessiv${st.gradi === 1 ? 'o' : 'i'}: ${rs.capacita_per_gradi[st.gradi - 1]}`,
-          st.talento ? `, +${rs.talento.bonus} da ${st.talento}` : null, ', prima dell’eventuale riduzione per Umanità (§5.21).'),
+          st.talento ? `, +${rs.talento.bonus} da ${st.talento}` : null,
+          st.umanita ? [', ', infoValore(`${segno(st.umanita)} per l’Umanità`, { titolo: `Capacità di Sintonizzazione: ${st.capacita}`, sottotitolo: 'Armamenti §7.10, Giocatore §5.21', provenienza: st.provenienza }), ' (tab Cibernetica).'] : '.'),
         st.usata > st.capacita ? h('p', { class: 'avviso-carico' }, `Oltre la capacità: il personaggio sceglie quali sintonizzazioni interrompere (§7.10).`) : null,
         h('ul', { class: 'elenco-sintonie' }, st.artefatti.map((x) => h('li', {}, `${x.sintonizzato ? '✔' : '○'} ${x.nome} · ${x.costo}${x.deposito ? ' · deposito comune' : ''}`))))),
     sezione('Artefatti posseduti', h('div', { class: 'armi-tab' }, st.artefatti.map(scheda))),
     esterni.length ? sezione('Riserve di Chroma',
       h('p', { class: 'nota' }, 'Cristalli, batterie e contenitori: i PM si modificano anche nel riquadro Punti Magia. Un contenitore alimenta un lancio se trasportato, sintonizzato e compatibile (Magia sez. 6).'),
       h('div', { class: 'armi-tab' }, esterni.map((c) => schedaContenitore(ctx, c)))) : null,
+  ];
+}
+
+/**
+ * Tab Cibernetica (Equipaggiamento 0.5, cap. 7; Giocatore §5.21): Umanità con la provenienza, gli
+ * effetti della fascia, gli impianti installati per famiglia come schede (effetti con la loro
+ * provenienza, chip del Processore), le perdite registrate e i recuperi concessi dal Direttore. Gli
+ * impianti si comprano e si installano nell'Inventario (sezione «Impianti cibernetici e chip»): lo stato
+ * «Installato» registra il costo UMN (src/umanita.js).
+ */
+function tabCibernetica(ctx) {
+  const scheda = ctx.tab.scheda;
+  const u = scheda.umanita;
+  const eq = scheda.equipaggiamento;
+  const cat = catalogo(ctx.dati);
+  const voci = (ctx.scelte.equipaggiamento ?? []).map((v) => risolvi(v, cat));
+  const installati = voci.filter((r) => r.tipo === 'impianto' && r.voce.stato === 'installato');
+  const chip = voci.filter((r) => r.def?.richiede_innesto);
+  const versoInventario = h('p', { class: 'nota rimando-inventario' },
+    'Gli impianti e i chip si comprano e si installano nella tab ',
+    h('button', { type: 'button', class: 'btn-link', onclick: () => ctx.azioni.vaiTab('inventario') }, 'Inventario'),
+    ', sezione «Impianti cibernetici e chip»: lo stato «Installato» registra il costo UMN. L’installazione richiede una struttura medica attrezzata e si paga a parte (Equipaggiamento §7.1).');
+  if (!u) return [h('section', { class: 'riquadro nessun-potere' }, h('h2', {}, 'Umanità non disponibile'), h('p', { class: 'nota' }, 'Mancano le regole dell’Umanità (regole.json → umanita).'))];
+
+  // Umanità: valore con la provenienza, quadratini (neri = UMN perduta, docs/layout-ss.md), fascia
+  const quadratini = h('div', { class: 'quadratini-umanita', role: 'img', 'aria-label': `Umanità ${u.valore} su ${u.massimo}: ${u.massimo - u.valore} perduti` },
+    Array.from({ length: u.massimo }, (_, i) => h('span', { class: `casella${i >= u.valore ? ' persa' : ''}` })));
+  const m = u.modificatori;
+  const st = eq?.sintonizzazione;
+  const effetti = [
+    h('li', {}, h('strong', {}, 'PM Massimi: '), m.pm ? `${segno(m.pm)}${scheda.pmUmanita !== m.pm ? ` (applicato ${segno(scheda.pmUmanita)}: non sotto ${u.pmMinimo})` : ''}` : 'nessuna riduzione'),
+    h('li', {}, h('strong', {}, 'PS di Magia contro la Corruzione: '), m.ps_magia_corruzione ? `${segno(m.ps_magia_corruzione)} (solo contro la Corruzione)` : 'nessuna penalità'),
+    h('li', {}, h('strong', {}, 'Capacità di Sintonizzazione: '), m.sintonizzazione
+      ? [segno(m.sintonizzazione), st ? [' · ', infoValore(`ora ${st.capacita}`, { titolo: `Capacità di Sintonizzazione: ${st.capacita}`, sottotitolo: 'Armamenti §7.10, Giocatore §5.21', provenienza: st.provenienza })] : null, ` (minimo ${u.sintonizzazioneMinimo})`]
+      : 'nessuna riduzione'),
+    u.risorseInteriori ? null : h('li', { class: 'avviso-carico' }, 'A UMN 0 il personaggio non può utilizzare Risorse Interiori, comprese le Tecniche che ne dipendono.'),
+  ];
+  const testa = h('div', { class: 'griglia-tavolo' },
+    h('div', { class: `contatore-tavolo umanita-tavolo${u.valore < u.massimo ? ' ridotta' : ''}` }, h('h3', {}, 'Umanità (§5.21)'),
+      h('p', { class: 'valore-tavolo' }, infoValore(h('strong', {}, String(u.valore)), {
+        titolo: `Umanità: ${u.valore}`, sottotitolo: `${u.condizione} · Giocatore §5.21, Equipaggiamento §7.1`, provenienza: u.provenienza,
+      }), h('span', {}, ` / ${u.massimo}`)),
+      quadratini,
+      h('p', { class: 'nota' }, h('strong', {}, u.condizione), ` (fascia ${u.fascia.min === u.fascia.max ? u.fascia.min : `${u.fascia.min}–${u.fascia.max}`}). Nessun recupero naturale: cure e riparazioni non restituiscono Umanità.`)),
+    h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Effetti della fascia'), h('ul', { class: 'effetti-umanita' }, effetti)));
+
+  // schede degli impianti installati, per famiglia del manuale (ordine del catalogo)
+  const famiglie = [...new Set(installati.map((r) => r.def?.famiglia ?? 'Impianti personalizzati'))];
+  const effettiDi = (uid) => (eq?.effettiOggetti ?? []).filter((e) => e.uid === uid);
+  const schedaImpianto = (r) => {
+    const def = r.def;
+    const miei = effettiDi(r.uid);
+    // effetti scartati perché un beneficio equivalente maggiore vale già (§7.1, «Cumulo»)
+    const scartati = (r.effetti ?? []).filter((e) => !miei.some((x) => x.condizione === e.condizione && x.valore === e.valore && (x.tipo ?? 'va') === (e.tipo ?? 'va')));
+    const piMax = ctx.massimi?.integrita?.[r.uid];
+    const pi = Number.isInteger(piMax) ? (ctx.sessione.integrita?.[r.uid] ?? piMax) : null;
+    const mieiChip = def?.innesto ? chip.filter((c) => c.def.richiede_innesto === def.innesto) : [];
+    return h('article', { class: 'arma-tab impianto-scheda' },
+      h('div', { class: 'arma-testa' },
+        h('h3', {}, def ? info('oggetto', def.rif, r.nome) : r.nome,
+          h('small', { class: 'sigla' }, ` · ${def?.catalogo === 'Cybertronic' ? 'CYBERTRONIC' : 'standard'} · UMN ${def?.umn ?? r.voce.personalizzato?.umn ?? 0}${def?.paragrafo ? ` · ${def.paragrafo}` : ''}`))),
+      def?.effetto_breve ? h('p', { class: 'nota' }, def.effetto_breve) : null,
+      miei.length ? h('ul', { class: 'effetti-impianto' }, miei.map((e) => h('li', { title: [e.condizione, e.fonte].filter(Boolean).join(' — ') },
+        h('strong', {}, testoEffettoOggetto(e)), e.ambito === 'situazionale' ? ' · interruttore al tavolo (Abilità, Combattimento)' : null))) : null,
+      scartati.length ? h('p', { class: 'nota' }, `Non si somma con un beneficio equivalente già attivo (§7.1, «Cumulo»): ${scartati.map((e) => testoEffettoOggetto(e)).join('; ')}.`) : null,
+      def?.innesto === 'interfaccia_neurale' ? h('p', { class: 'nota' }, 'Le armi e i dispositivi con SIN in mano ricevono il bonus indicato dalla loro scheda (tab Combattimento).') : null,
+      def?.cartucce ? h('p', { class: 'nota' }, `Cartucce: ${def.cartucce}, vendute a parte (Equipaggiamento §7.9).`) : null,
+      def?.innesto === 'processore' ? h('div', { class: 'chip-processore' },
+        h('h4', {}, 'Chip'),
+        mieiChip.length ? h('ul', {}, mieiChip.map((c) => h('li', {}, info('oggetto', c.def.rif, c.nome), ` · ${c.voce.stato === 'in_uso' ? 'inserito' : NOMI_STATI[c.voce.stato] ?? 'con sé'}`)))
+          : h('p', { class: 'nota' }, 'Nessun chip: si comprano nell’Inventario.'),
+        h('p', { class: 'nota' }, `Un solo chip alla volta, ${ctx.dati.regole.impianti?.chip?.durata_minuti ?? 30} minuti, una attivazione ogni ${ctx.dati.regole.impianti?.chip?.intervallo_ore ?? 24} ore; il bonus non vale per combattimento, Incantesimi, Risorse Interiori e Sintonizzazione (§7.10).`)) : null,
+      h('p', { class: 'nota' }, [pi !== null ? `PI ${pi} / ${piMax} (Ripara nell’Inventario)` : null, def?.installazione_costo ? `installazione ${def.installazione_costo.toLocaleString('it-IT')} cr` : null].filter(Boolean).join(' · ')));
+  };
+
+  // perdite registrate (restano anche se l'impianto si toglie) e recuperi concessi dal Direttore
+  const blocco = ctx.scelte.umanita ?? null;
+  const NOTE_PERDITA = { installato: 'installato', tolto: 'tolto: la perdita resta', assente: 'non più nell’inventario: la perdita resta' };
+  const perdite = u.perdite.length ? h('ul', { class: 'perdite-umanita' }, u.perdite.map((p) => h('li', {},
+    h('strong', {}, `−${p.umn}`), ` ${p.nome} · ${NOTE_PERDITA[p.stato]}`,
+    p.stato !== 'installato' ? h('button', {
+      type: 'button', class: 'btn btn-piccolo', title: 'Solo per un impianto segnato «Installato» per errore: §7.1, la rimozione non restituisce Umanità.',
+      onclick: () => { if (confirm(`Annullare la perdita di ${p.umn} UMN per «${p.nome}»? Solo se l’impianto era stato segnato installato per errore.`)) ctx.azioni.umanita(annullaPerdita(blocco, p.uid)); },
+    }, 'Annulla (errore)') : null))) : h('p', { class: 'vuoto' }, 'Nessuna perdita registrata.');
+  const recuperi = h('div', { class: 'recuperi-umanita' },
+    u.recuperi.length ? h('ul', {}, u.recuperi.map((x, i) => h('li', {}, h('strong', {}, `+${x.punti}`), x.nota ? ` ${x.nota}` : ' recupero concesso dal Direttore',
+      h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => ctx.azioni.umanita(togliRecupero(blocco, i)) }, 'Togli')))) : null,
+    h('form', {
+      class: 'riga-recupero', onsubmit: (e) => {
+        e.preventDefault();
+        const f = e.target;
+        const punti = Number(f.punti.value);
+        if (Number.isInteger(punti) && punti > 0) ctx.azioni.umanita(aggiungiRecupero(blocco, punti, f.nota.value));
+      },
+    },
+    h('label', {}, 'Punti ', h('input', { name: 'punti', type: 'number', min: 1, max: u.massimo, step: 1, required: true, inputmode: 'numeric' })),
+    h('label', {}, 'Nota ', h('input', { name: 'nota', type: 'text', maxlength: 80, placeholder: 'procedura, sessione…' })),
+    h('button', { type: 'submit', class: 'btn' }, 'Registra')),
+    h('p', { class: 'nota' }, 'Il manuale non descrive ancora procedure di recupero (§5.21): si registra solo un recupero concesso dal Direttore.'));
+
+  return [
+    testa,
+    versoInventario,
+    installati.length
+      ? famiglie.map((f) => sezione(f, h('div', { class: 'armi-tab' }, installati.filter((r) => (r.def?.famiglia ?? 'Impianti personalizzati') === f).map(schedaImpianto))))
+      : sezione('Impianti installati', h('p', { class: 'vuoto' }, 'Nessun impianto installato.')),
+    sezione('Perdite e recuperi di Umanità', perdite, recuperi),
   ];
 }
 

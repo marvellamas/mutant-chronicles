@@ -1484,6 +1484,21 @@ body.con-sfondo::before {
 
 /* Cibernetica e Veicoli (docs/layout-sd.md, pezzo 5) */
 .tab-in-arrivo .rimandi { margin: 0.4rem 0 0; padding-left: 1.2rem; font-size: 0.9rem; color: var(--tenue); }
+/* Cibernetica (Equipaggiamento 0.5, cap. 7; Giocatore §5.21): quadratini dell'Umanità, neri = perduti */
+.quadratini-umanita { display: grid; grid-template-columns: repeat(10, 1rem); gap: 3px; margin: 0.35rem 0; }
+.quadratini-umanita .casella { width: 1rem; height: 1rem; border: 1.5px solid var(--cat-impianti); border-radius: 2px; background: var(--superficie); }
+.quadratini-umanita .casella.persa { background: var(--cat-impianti); }
+.umanita-tavolo.ridotta { border-color: var(--cat-impianti); }
+.effetti-umanita, .effetti-impianto, .perdite-umanita, .recuperi-umanita ul { margin: 0.3rem 0; padding-left: 1.1rem; }
+.effetti-umanita li, .perdite-umanita li, .recuperi-umanita li { margin: 0.15rem 0; }
+.perdite-umanita .btn, .recuperi-umanita li .btn { margin-left: 0.5rem; }
+.impianto-scheda { border-left: 4px solid var(--cat-impianti); }
+.chip-processore h4 { margin: 0.4rem 0 0.1rem; font-size: 0.95rem; }
+.chip-processore ul { margin: 0.2rem 0; padding-left: 1.1rem; }
+.riga-recupero { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: end; margin: 0.4rem 0; }
+.riga-recupero input[type="number"] { width: 4.5rem; }
+.riga-recupero input[type="text"] { width: min(16rem, 100%); }
+.btn-link { background: none; border: 0; padding: 0; color: var(--accento); text-decoration: underline; font: inherit; cursor: pointer; }
 
 /* Talenti (docs/censimento-talenti.md): interruttore globale in testa a Combattimento e Poteri */
 .interruttore-talenti { display: flex; justify-content: flex-end; margin: 0.25rem 0 0.5rem; }

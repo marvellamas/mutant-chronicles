@@ -813,6 +813,12 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
         renderScheda({ mantieniScorrimento: true });
       },
       ridisegna: () => renderScheda({ mantieniScorrimento: true }),
+      // tab Cibernetica: perdite annullate per errore e recuperi concessi dal Direttore (Giocatore §5.21)
+      umanita: (blocco) => {
+        stato.scelte = applicaModifica(stato.scelte, { umanita: blocco }, dati).scelte;
+        persisti();
+        renderScheda({ mantieniScorrimento: true });
+      },
       // A.47: separa un esemplare danneggiato dal gruppo, con 1 PI in meno
       danneggiaEsemplare: (uid) => {
         const { voci, uid: nuovo } = separaEsemplare(stato.scelte.equipaggiamento, uid);

@@ -302,6 +302,8 @@ for (const k of ['umanita', 'impianti']) testo = testo.replace(new RegExp(`\\n {
 const blocco = (k, v) => `  "${k}": ${JSON.stringify(v, null, 2).replace(/\n/g, '\n  ')},`;
 const dopoNec = testo.indexOf('\n  },\n', testo.indexOf('\n  "nec": {')) + '\n  },'.length;
 testo = `${testo.slice(0, dopoNec)}\n${blocco('umanita', umanita)}\n${blocco('impianti', impianti)}${testo.slice(dopoNec)}`;
+// Equipaggiamento §7.2: gli impianti hanno PI e PS Integrità come gli altri oggetti (a 0 PI cessa il beneficio)
+testo = testo.replace(/("tipi_tracciati": \[[^\]]*?)"altro"\]/, (m, a) => (a.includes('"impianto"') ? m : `${a}"impianto", "altro"]`));
 // la tab Cibernetica non è più «in attesa del manuale»
 const j = JSON.parse(testo);
 if (j.tab_in_arrivo?.cibernetica) testo = testo.replace(/\n {4}"cibernetica": \{\n[\s\S]*?\n {4}\},(?=\n)/, '');

@@ -156,9 +156,13 @@ function datiOggetto(ctx, r) {
   const peso = pesoVoce(r);
   const parti = [
     Number.isFinite(d.costo) ? `costo ${d.costo.toLocaleString('it-IT')}` : null,
+    // Equipaggiamento §7.1: costo UMN registrato all'installazione e servizio d'installazione a parte
+    Number.isInteger(d.umn) ? h('span', { title: 'Costo in Umanità, registrato quando l’impianto passa a «Installato» (Giocatore §5.21): toglierlo non lo restituisce.' }, `UMN ${d.umn}`) : null,
+    Number.isFinite(d.installazione_costo) ? `installazione ${d.installazione_costo.toLocaleString('it-IT')}` : null,
     d.qualita ? `Qualità ${d.qualita}` : null,
     d.reperibilita ? h('span', { title: rep ? `${rep.nome}: ${rep.ricerca}` : null }, `reperibilità ${(rep?.nome ?? d.reperibilita).toLowerCase()}`) : null,
-    peso !== null ? `${String(peso).replace('.', ',')} kg${r.voce.quantita > 1 ? ' l’uno' : ''}` : r.fuoriCatalogo ? null : 'peso da definire',
+    r.voce.stato === 'installato' ? 'installato: fuori dal carico'
+      : peso !== null ? `${String(peso).replace('.', ',')} kg${r.voce.quantita > 1 ? ' l’uno' : ''}` : r.fuoriCatalogo ? null : 'peso da definire',
   ].filter(Boolean);
   if (!parti.length) return null;
   return h('p', { class: 'dati-oggetto' }, parti.flatMap((x, i) => (i ? [' · ', x] : [x])));
