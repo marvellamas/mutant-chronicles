@@ -9,7 +9,7 @@ import { h } from './dom.js';
 import { info } from './tooltip.js';
 import {
   TIPI, NOMI_TIPI, STATI, NOMI_STATI, catalogo, risolvi, opzioniCascata, cercaNelCatalogo, statoIniziale, puoMontare, infoArtefattoVoce,
-  regoleSintonizzazione, coloriChroma, testoEffettoOggetto, AMBITI_EFFETTO, NOMI_AMBITI, statiInventario,
+  regoleSintonizzazione, coloriChroma, testoEffettoOggetto, AMBITI_EFFETTO, NOMI_AMBITI, statiInventario, testoCura,
 } from '../equipaggiamento.js';
 import { pesoVoce } from '../carico.js';
 
@@ -87,6 +87,8 @@ function voceEquip(ctx, r, risolte, cambia) {
           : r.personalizzato ? h('span', { class: 'etichetta' }, 'personalizzato') : null,
         // riga breve con l'effetto dal manuale (catalogo → effetto_breve)
         r.def?.effetto_breve ? h('p', { class: 'effetto-breve' }, r.def.effetto_breve) : null,
+        // Equipaggiamento 0.5, cap. 6: promemoria delle cure con i numeri (campo «cura»), senza tiri
+        ctx.inventario && r.def?.cura ? h('p', { class: 'nota promemoria-cura' }, testoCura(r.def.cura)) : null,
         r.fuoriCatalogo ? h('p', { class: 'motivo' }, 'Non più in catalogo: resta in lista, senza effetti.') : null,
         ctx.inventario ? datiOggetto(ctx, r) : null),
       h('button', {

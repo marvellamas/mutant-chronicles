@@ -1180,7 +1180,17 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
         err(F, `${k}.cella`, 'serve { capacita ≥ 1, unita: cariche|colpi|getti, ricarica_costo ≥ 0, riserva_lx? intero ≥ 1 }');
       }
       // §7.19: equipaggiamento sanitario
-      if (o.nome_applicazioni !== undefined && !['applicazioni', 'dosi', 'set'].includes(o.nome_applicazioni)) err(F, `${k}.nome_applicazioni`, 'applicazioni, dosi o set');
+      if (o.nome_applicazioni !== undefined && !['applicazioni', 'dosi', 'set', 'cartucce chirurgiche'].includes(o.nome_applicazioni)) err(F, `${k}.nome_applicazioni`, 'applicazioni, dosi, set o cartucce chirurgiche');
+      // Equipaggiamento 0.5, cap. 6: numeri delle cure (src/equipaggiamento.js → testoCura)
+      if (o.cura !== undefined) validaCura(F, `${k}.cura`, o.cura, err);
+      // §6.8: postazioni medicochirurgiche
+      if (o.postazione !== undefined) {
+        const p = o.postazione;
+        const prova = p?.prova?.tipo === 'operatore' ? isIntero(p.prova.bonus) : p?.prova?.tipo === 'ia' ? isIntero(p.prova.va) && p.prova.va > 0 : false;
+        if (!isOggetto(p) || !isTesto(p.modello) || typeof p.mobile !== 'boolean' || !prova) err(F, `${k}.postazione`, 'serve { modello, mobile, prova: { tipo: "operatore", bonus } | { tipo: "ia", va } }');
+        else if (!(isIntero(p.riserva_verde_giorni) && p.riserva_verde_giorni > 0 && isIntero(p.operazioni) && p.operazioni > 0 && isOggetto(p.alloggiamenti)
+          && ['chirurgiche', 'farmacologiche', 'nutritive'].every((x) => isIntero(p.alloggiamenti[x]) && p.alloggiamenti[x] >= 0))) err(F, `${k}.postazione`, 'servono riserva_verde_giorni, operazioni e alloggiamenti { chirurgiche, farmacologiche, nutritive } interi');
+      }
       if (o.strumenti !== undefined && !(isOggetto(o.strumenti) && isIntero(o.strumenti.va) && isTesto(o.strumenti.prova))) err(F, `${k}.strumenti`, 'serve { va, prova }');
       if (o.esiti !== undefined && !(isOggetto(o.esiti) && isTesto(o.esiti.successo) && isTesto(o.esiti.magistrale))) err(F, `${k}.esiti`, 'serve { successo, magistrale }');
       if (o.capacita_cartucce !== undefined && !(isIntero(o.capacita_cartucce) && o.capacita_cartucce >= 1)) err(F, `${k}.capacita_cartucce`, 'intero ≥ 1');
@@ -1484,10 +1494,14 @@ function validaNec(dati, err) {
       if (o?.caricatore !== undefined && !(isOggetto(o.caricatore) && isTesto(o.caricatore.formato) && isIntero(o.caricatore.trasferimento_lxh) && o.caricatore.trasferimento_lxh > 0)) {
         err(F, `oggetti (${o.id}).caricatore`, 'serve { formato, trasferimento_lxh } (§5.4.6)');
       }
-      const a = o?.alimentazione;
-      if (a === undefined) continue;
-      const k = `oggetti (${o.id}).alimentazione`;
-      if (!isOggetto(a)) { err(F, k, 'non è un oggetto'); continue; }
+      if (o?.alimentazione === undefined) continue;
+      // un oggetto o, con più NEC (postazioni medicochirurgiche: Rosso e Verdi, §6.8.3), un elenco
+      const elenco = Array.isArray(o.alimentazione) ? o.alimentazione : [o.alimentazione];
+      if (!elenco.length) err(F, `oggetti (${o.id}).alimentazione`, 'elenco vuoto');
+      elenco.forEach((a, j) => {
+      const k = `oggetti (${o.id}).alimentazione${Array.isArray(o.alimentazione) ? `[${j}]` : ''}`;
+      if (!isOggetto(a)) { err(F, k, 'non è un oggetto'); return; }
+      if (a.moduli !== undefined && !(isIntero(a.moduli) && a.moduli >= 1)) err(F, `${k}.moduli`, 'intero ≥ 1 (numero di Moduli compresi)');
       if (a.nec !== null && !nec.has(a.nec)) err(F, `${k}.nec`, `"${a.nec}" non è un NEC del catalogo (nec.json); per un NEC dedicato: nec null e «descrizione»`);
       if (a.nec === null && !isTesto(a.descrizione)) err(F, `${k}.descrizione`, 'un NEC dedicato (nec: null) richiede la descrizione');
       // §5.4.2: «La scheda riporta ore oppure cariche»
@@ -1504,8 +1518,29 @@ function validaNec(dati, err) {
       const n = nec.get(a.nec)?.nec;
       if (n && conOre && isIntero(a.consumo_lxh) && n.capacita_lx / a.consumo_lxh < a.autonomia_ore) err(F, k, `${a.autonomia_ore} ore a ${a.consumo_lxh} Lx/h superano i ${n.capacita_lx} Lx di ${a.nec}`);
       if (n && isIntero(a.consumo_lxh) && n.erogazione_lxh < a.consumo_lxh && a.esterna !== true) err(F, k, `${a.nec} eroga ${n.erogazione_lxh} Lx/h, meno dei ${a.consumo_lxh} richiesti (§5.4.2)`);
+      // usi contati: la carica dei Moduli compresi deve bastare
+      if (n && conUsi && isIntero(a.lx_per_uso) && a.usi * a.lx_per_uso > n.capacita_lx * (a.moduli ?? 1)) err(F, k, `${a.usi} ${a.unita_usi} da ${a.lx_per_uso} Lx superano la carica di ${a.moduli ?? 1} × ${a.nec}`);
+      });
     }
   }
+}
+
+// Equipaggiamento 0.5, cap. 6 e Giocatore §5.16: campo «cura» degli oggetti sanitari
+const DADO_CURA = /^\d+d\d+$/;
+function validaCura(F, k, c, err) {
+  if (!isOggetto(c)) return err(F, k, 'oggetto atteso');
+  if (!isTesto(c.fonte)) err(F, `${k}.fonte`, 'paragrafo del manuale mancante');
+  if (c.pv !== undefined && !DADO_CURA.test(String(c.pv))) err(F, `${k}.pv`, 'dado dei PV recuperati (es. "1d6")');
+  if (c.sanguinamento !== undefined && !['sospende', 'arresta'].includes(c.sanguinamento)) err(F, `${k}.sanguinamento`, '"sospende" o "arresta"');
+  if (c.sanguinamento === 'sospende' && !(isIntero(c.round) && c.round > 0)) err(F, `${k}.round`, 'la sospensione dura un numero di Round');
+  if (c.ferita_stati !== undefined && !(isIntero(c.ferita_stati) && c.ferita_stati > 0)) err(F, `${k}.ferita_stati`, 'intero positivo');
+  if (c.durate !== undefined && !(Array.isArray(c.durate) && c.durate.every((x) => isTesto(x?.stato) && isIntero(x.minuti) && x.minuti > 0 && isTesto(x.esito)))) err(F, `${k}.durate`, 'elenco di { stato, minuti, esito }');
+  if (c.intervallo_ore !== undefined && !(isIntero(c.intervallo_ore) && c.intervallo_ore > 0)) err(F, `${k}.intervallo_ore`, 'intero positivo');
+  if (c.procedure !== undefined && !(Array.isArray(c.procedure) && c.procedure.every((x) => isTesto(x?.nome) && isTesto(x.tempo) && isTesto(x.effetto)))) err(F, `${k}.procedure`, 'elenco di { nome, tempo, effetto }');
+  if (c.degenza_giorni_per_stato !== undefined && !(isIntero(c.degenza_giorni_per_stato) && c.degenza_giorni_per_stato > 0)) err(F, `${k}.degenza_giorni_per_stato`, 'intero positivo');
+  if (c.azp !== undefined && !(isIntero(c.azp) && c.azp > 0)) err(F, `${k}.azp`, 'intero positivo');
+  if (c.prova !== undefined && c.prova !== false && !isTesto(c.prova)) err(F, `${k}.prova`, 'false (senza Prova) oppure la Prova');
+  for (const b of ['senza_sanguinamento', 'tentativo_settimanale']) if (c[b] !== undefined && typeof c[b] !== 'boolean') err(F, `${k}.${b}`, 'true o false');
 }
 
 // ---------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 // Contenuto dei tooltip e della scheda completa degli incantesimi, ricavato solo dai dati.
 // Funzioni pure: la UI (src/ui/tooltip.js) trasforma il risultato in DOM.
-import { catalogo, NOMI_TIPI, moduliDi, munizioneDiRiferimento, tabellaSin, tabellaMunizioniArmi, NOMI_FAMIGLIE_MUNIZIONI, infoArtefatto } from './equipaggiamento.js';
+import { catalogo, NOMI_TIPI, moduliDi, munizioneDiRiferimento, tabellaSin, tabellaMunizioniArmi, NOMI_FAMIGLIE_MUNIZIONI, infoArtefatto, testoCura, testoProvaPostazione } from './equipaggiamento.js';
 
 const trova = (lista, nome) => lista.find((x) => x.nome === nome);
 const eTodo = (v) => typeof v === 'string' && v.startsWith('TODO(');
@@ -131,7 +131,7 @@ function tooltipOggetto(rif, dati) {
     sezioni.push({ etichetta: 'Munizione di riferimento', testo: mr ? `${mr.nome}: danno ${mr.danno}, AC ${mr.ac}, RS ${mr.rs_q} Q; ${mr.proprieta.join('; ')}.` : o.munizioni.riferimento });
   }
   if (o.munizioni?.ricarica) sezioni.push({ etichetta: 'Ricarica', testo: o.munizioni.ricarica });
-  if (o.ricarica?.applicazioni) sezioni.push({ etichetta: 'Ricarica', testo: `${o.ricarica.applicazioni} applicazioni, costo ${o.ricarica.costo.toLocaleString('it-IT')}` });
+  if (o.ricarica?.applicazioni) sezioni.push({ etichetta: 'Ricarica', testo: `${o.ricarica.applicazioni} ${o.nome_applicazioni ?? 'applicazioni'}, costo ${o.ricarica.costo.toLocaleString('it-IT')}` });
   const s = tabellaSin(dati).get(rif);
   if (s) sezioni.push({ etichetta: `SIN ${s.valore}`, testo: `+${s.valore} VA (${s.prova.toLowerCase()}) con un Innesto di Interfaccia Neurale in uso (§7.15.1).` });
   if (o.innesto === 'interfaccia_neurale') sezioni.push({ etichetta: 'In uso', testo: 'Le armi con SIN ricevono il bonus al VA per colpire nella scheda (§7.15.1).' });
@@ -162,6 +162,12 @@ function tooltipOggetto(rif, dati) {
   if (art && dati.regole?.artefatti_mistici?.disponibilita) sezioni.push({ etichetta: 'Disponibilità', testo: dati.regole.artefatti_mistici.disponibilita });
   if (o.strumenti) sezioni.push({ etichetta: 'Strumenti', testo: `${o.strumenti.va > 0 ? '+' : o.strumenti.va < 0 ? '−' : ''}${Math.abs(o.strumenti.va)} VA a ${o.strumenti.prova}; un solo modificatore degli strumenti per Prova.` });
   if (o.esiti) sezioni.push({ etichetta: 'Successo', testo: o.esiti.successo }, { etichetta: 'Magistrale', testo: o.esiti.magistrale });
+  // Equipaggiamento 0.5, cap. 6: numeri delle cure e postazioni medicochirurgiche (§6.8)
+  if (o.cura) sezioni.push({ etichetta: 'Cura', testo: testoCura(o.cura) });
+  if (o.postazione) {
+    const p = o.postazione;
+    sezioni.push({ etichetta: 'Postazione', testo: `${testoProvaPostazione(p)}; ${p.operazioni} operazioni con il Modulo Rosso, ${p.riserva_verde_giorni} giorni di degenza o stasi; alloggiamenti: ${p.alloggiamenti.chirurgiche} chirurgici, ${p.alloggiamenti.farmacologiche} farmacologici, ${p.alloggiamenti.nutritive} nutritivi (§6.8).` });
+  }
   if (o.effetto) sezioni.push({ etichetta: 'Effetto', testo: o.effetto });
   if (o.capacita_cartucce) riga.Cartucce = String(o.capacita_cartucce);
   if (o.rinforzo) sezioni.push({ etichetta: `Kit ${o.rinforzo.kit}`, testo: `AR +${o.rinforzo.ar}, FOR richiesta +${o.rinforzo.for}; PI e PS propri. Una Leggera portata fisicamente ad AR 3 o più usa le penalità della Media (§7.11.2).` });

@@ -253,9 +253,13 @@ export function riserveNec(voci, dati) {
       });
       continue;
     }
-    const a = d.alimentazione;
-    if (!a || a.esterna) continue;
-    const fonte = a.nec ? cat.perRif.get(a.nec)?.nome ?? a.nec : a.descrizione;
+    // un'alimentazione o più (postazioni medicochirurgiche: Rosso per le operazioni, Verdi per la degenza, §6.8)
+    const alimentazioni = Array.isArray(d.alimentazione) ? d.alimentazione : d.alimentazione ? [d.alimentazione] : [];
+    alimentazioni.forEach((a, j) => {
+    if (a.esterna) return;
+    const fonte = `${a.moduli > 1 ? `${a.moduli} × ` : ''}${a.nec ? cat.perRif.get(a.nec)?.nome ?? a.nec : a.descrizione}`;
+    const base = j ? `${r.uid}#a${j}` : r.uid;
+    const nomeBase = alimentazioni.length > 1 ? `${r.nome} (${a.unita_usi ?? 'ore'})` : r.nome;
     const usi = a.usi !== undefined;
     const massimo = usi ? a.usi : a.autonomia_ore;
     const unita = usi ? a.unita_usi : 'ore';
@@ -263,12 +267,43 @@ export function riserveNec(voci, dati) {
       ? { fonte, valore: `${a.usi} ${a.unita_usi}`, nota: `${a.lx_per_uso} Lx per uso${a.consumo_lxh ? `, ${a.consumo_lxh} Lx/h durante l’uso` : ''} (${par(a.paragrafo)})` }
       : { fonte, valore: `${a.autonomia_ore} ore`, nota: `${a.consumo_lxh ? `${a.consumo_lxh} Lx/h` : 'autonomia della scheda'} (${par(a.paragrafo)})` };
     (a.componenti ?? [null]).forEach((comp, i) => out.push({
-      chiave: comp ? `${r.uid}#${i}` : r.uid, uid: r.uid, nome: comp ? `${r.nome} (${comp})` : r.nome, unita, massimo, nec: a.nec,
+      chiave: comp ? `${base}#${i}` : base, uid: r.uid, nome: comp ? `${nomeBase} (${comp})` : nomeBase, unita, massimo, nec: a.nec,
       passi: usi ? passi.usi ?? [1] : passi.ore ?? [1, 5],
       provenienza: { totale: `${massimo} ${unita}`, righe: [comp ? { ...riga, fonte: `${fonte}, ${comp}` } : riga] },
     }));
+    });
   }
   return out;
+}
+
+/**
+ * Promemoria delle cure di un oggetto sanitario (campo «cura», Equipaggiamento 0.5 cap. 6; Giocatore
+ * §5.16): una frase con i numeri, per tooltip, Inventario e stampa. Nessun tiro: i dadi si tirano al tavolo.
+ * @returns {string|null}
+ */
+export function testoCura(c) {
+  if (!c) return null;
+  const parti = [];
+  if (c.sanguinamento === 'sospende') parti.push(`sospende il Sanguinamento per ${c.round} Round`);
+  if (c.sanguinamento === 'arresta') parti.push('arresta il Sanguinamento');
+  if (c.pv) parti.push(`recupera ${c.pv} PV fino al massimo${c.senza_sanguinamento ? ', solo senza Sanguinamento attivo (anche durante una sospensione)' : ''}`);
+  if (c.ferita_stati) parti.push(`riduce la Ferita di ${c.ferita_stati === 1 ? 'uno stato' : `${c.ferita_stati} stati`}${c.durate ? ` in ${c.durate.map((x) => `${x.minuti}′ da ${x.stato}`).join(', ')}` : ''}`);
+  if (c.procedure) parti.push(c.procedure.map((p) => `${p.nome} (${p.tempo}): ${p.effetto.replace(/\.$/, '')}`).join('; '));
+  if (c.degenza_giorni_per_stato) parti.push(`degenza: uno stato di Ferita ogni ${c.degenza_giorni_per_stato} giorni`);
+  if (c.intervallo_ore) parti.push(`una dose ogni ${c.intervallo_ore} ore`);
+  if (c.tentativo_settimanale === false) parti.push('non consuma il tentativo ogni sette giorni');
+  if (c.tentativo_settimanale === true) parti.push('un tentativo ogni sette giorni, condiviso con Intervento Mirato e Terapia Intensiva');
+  if (c.azp) parti.push(`${c.azp} AzP${c.prova === false ? ', senza Prova' : ''}`);
+  else if (c.prova === false) parti.push('senza Prova');
+  if (!parti.length) return null;
+  const t = parti.join('; ');
+  return `${t[0].toUpperCase()}${t.slice(1)} (${c.fonte.startsWith('§') ? `Equipaggiamento ${c.fonte}` : c.fonte}).`;
+}
+
+/** Prova medica di una postazione medicochirurgica (§6.8.1): «Medicina dell’operatore +3» o «IA con VA 12». */
+export function testoProvaPostazione(p) {
+  if (!p?.prova) return null;
+  return p.prova.tipo === 'ia' ? `IA con VA ${p.prova.va} (oppure, a scelta, Medicina dell’operatore +3)` : `Medicina dell’operatore +${p.prova.bonus} strumenti`;
 }
 
 export function contenitori(voci, dati) {

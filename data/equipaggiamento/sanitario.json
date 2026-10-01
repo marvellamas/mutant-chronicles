@@ -1,6 +1,6 @@
 {
-  "versione_manuale": "Armamenti 0.50",
-  "fonte": "Manuale degli Armamenti v0.50, §7.19 Equipaggiamento sanitario (pp. 109–113), lotto 11; Manuale dell’Equipaggiamento 0.3, cap. 6 (stesse schede e valori; ricariche, ricambi, farmaci e antidoti)",
+  "versione_manuale": "Equipaggiamento 0.5",
+  "fonte": "Manuale degli Armamenti v0.50, §7.19 Equipaggiamento sanitario (pp. 109–113), lotto 11; Manuale dell’Equipaggiamento 0.5, cap. 6 (Google Doc del 01/10/2026): stesse schede e valori dei §§6.1–6.6, ricariche, ricambi, farmaci e antidoti, naniti medici (§6.7) e postazioni medicochirurgiche (§6.8)",
   "_nota": "Generato da tools/lotti/lotto11_sanitario.mjs; da qui in poi si modifica questo file. «applicazioni» è il contatore della modalità tavolo (con «nome_applicazioni»: dosi, set); «ricarica» il costo per ripristinarlo. «strumenti» è il modificatore degli strumenti alla Prova indicata: resta un promemoria, non entra nei VA. La UMC si monta su un’armatura; ne vale una sola per personaggio.",
   "oggetti": [
     {
@@ -135,14 +135,19 @@
       "catalogo": "Commerciale",
       "famiglia": "Cartucce sanitarie",
       "nomi_alternativi": [],
-      "note_manuale": "Le cartucce sono compatibili con UMC, iniettori e pistole sanitarie descritti in questa sezione. Ogni cartuccia fornisce una sola somministrazione e occupa un posto nella capacità del dispositivo. I carichi possono essere misti e si annotano separatamente per tipo. L’emostatica sospende le ricorrenze del Sanguinamento senza arrestarlo: dopo cinque Round riprende se nessun effetto lo ha arrestato. La coagulante lo arresta, ma un nuovo effetto Sanguinante può applicarlo nuovamente. Nessuna cartuccia restituisce la perdita iniziale già subita o annulla conseguenze già risolte. La Curativa e lo Spray rimarginante recuperano PV soltanto se il paziente non è in Sanguinamento attivo: il recupero è possibile anche durante una sospensione valida del Sanguinamento. Non curano stati di Ferita o Menomazioni. I PV recuperati non superano il massimo del paziente. Un’unica somministrazione rapida per Round Ogni destinatario può ricevere una sola somministrazione medica rapida per Round complessivamente da UMC, Iniettore sanitario, Pistola sanitaria e Spray rimarginante. Il limite riguarda il paziente, anche se intervengono più persone o dispositivi. Un’attivazione automatica e una manuale non aggirano questo limite. Se il paziente ha già ricevuto una Curativa nel Round, l’emergenza automatica della UMC deve attendere il Round successivo; se ha ricevuto l’emostatica automatica, non può ricevere anche una Curativa nello stesso Round. Medicazioni, Talenti e magia seguono le rispettive procedure e limiti; non sono trasformati in somministrazioni rapide. Quando una ferita attiva un protocollo d’emergenza, prima si risolvono interamente attacco, perdita iniziale da Sanguinamento, Prove Salvezza, Ferite ed eventuale morte. Poi interviene il dispositivo, se il paziente è ancora assistibile e il limite del Round lo consente. Il trattamento non annulla retroattivamente una morte già risolta.",
+      "note_manuale": "Le cartucce sono compatibili con UMC, iniettori e pistole sanitarie descritti in questa sezione. Ogni cartuccia fornisce una sola somministrazione e occupa un posto nella capacità del dispositivo. I carichi possono essere misti e si annotano separatamente per tipo. L’emostatica sospende le ricorrenze del Sanguinamento senza arrestarlo: dopo cinque Round riprende se nessun effetto lo ha arrestato. La coagulante lo arresta, ma un nuovo effetto Sanguinante può applicarlo nuovamente. Nessuna cartuccia restituisce la perdita iniziale già subita o annulla conseguenze già risolte. La Curativa e lo Spray rimarginante recuperano PV soltanto se il paziente non è in Sanguinamento attivo: il recupero è possibile anche durante una sospensione valida del Sanguinamento. Non curano stati di Ferita o Menomazioni. I PV recuperati non superano il massimo del paziente. Un’unica somministrazione rapida per Round Ogni destinatario può ricevere una sola somministrazione medica rapida per Round complessivamente da UMC, Iniettore sanitario, Pistola sanitaria, Spray rimarginante, impianti e postazioni medicochirurgiche, comprese le monodosi del §6.6 e i naniti del §6.7. Il limite riguarda il paziente, anche se intervengono più persone o dispositivi. Un’attivazione automatica e una manuale non aggirano questo limite. Se il paziente ha già ricevuto una Curativa nel Round, l’emergenza automatica della UMC deve attendere il Round successivo; se ha ricevuto l’emostatica automatica, non può ricevere anche una Curativa nello stesso Round. Medicazioni, Talenti e magia seguono le rispettive procedure e limiti; non sono trasformati in somministrazioni rapide. Quando una ferita attiva un protocollo d’emergenza, prima si risolvono interamente attacco, perdita iniziale da Sanguinamento, Prove Salvezza, Ferite ed eventuale morte. Poi interviene il dispositivo, se il paziente è ancora assistibile e il limite del Round lo consente. Il trattamento non annulla retroattivamente una morte già risolta.",
       "paragrafo": "§7.19.2",
       "versione_manuale": "Armamenti 0.50",
       "reperibilita": "NC",
       "costo": 200,
       "effetto": "Sospende il Sanguinamento per 5 Round",
       "proprieta": [],
-      "effetto_breve": "Sospende il Sanguinamento per 5 Round"
+      "effetto_breve": "Sospende il Sanguinamento per 5 Round",
+      "cura": {
+        "sanguinamento": "sospende",
+        "round": 5,
+        "fonte": "§6.2"
+      }
     },
     {
       "id": "cartuccia-coagulante",
@@ -151,14 +156,18 @@
       "catalogo": "Commerciale",
       "famiglia": "Cartucce sanitarie",
       "nomi_alternativi": [],
-      "note_manuale": "Le cartucce sono compatibili con UMC, iniettori e pistole sanitarie descritti in questa sezione. Ogni cartuccia fornisce una sola somministrazione e occupa un posto nella capacità del dispositivo. I carichi possono essere misti e si annotano separatamente per tipo. L’emostatica sospende le ricorrenze del Sanguinamento senza arrestarlo: dopo cinque Round riprende se nessun effetto lo ha arrestato. La coagulante lo arresta, ma un nuovo effetto Sanguinante può applicarlo nuovamente. Nessuna cartuccia restituisce la perdita iniziale già subita o annulla conseguenze già risolte. La Curativa e lo Spray rimarginante recuperano PV soltanto se il paziente non è in Sanguinamento attivo: il recupero è possibile anche durante una sospensione valida del Sanguinamento. Non curano stati di Ferita o Menomazioni. I PV recuperati non superano il massimo del paziente. Un’unica somministrazione rapida per Round Ogni destinatario può ricevere una sola somministrazione medica rapida per Round complessivamente da UMC, Iniettore sanitario, Pistola sanitaria e Spray rimarginante. Il limite riguarda il paziente, anche se intervengono più persone o dispositivi. Un’attivazione automatica e una manuale non aggirano questo limite. Se il paziente ha già ricevuto una Curativa nel Round, l’emergenza automatica della UMC deve attendere il Round successivo; se ha ricevuto l’emostatica automatica, non può ricevere anche una Curativa nello stesso Round. Medicazioni, Talenti e magia seguono le rispettive procedure e limiti; non sono trasformati in somministrazioni rapide. Quando una ferita attiva un protocollo d’emergenza, prima si risolvono interamente attacco, perdita iniziale da Sanguinamento, Prove Salvezza, Ferite ed eventuale morte. Poi interviene il dispositivo, se il paziente è ancora assistibile e il limite del Round lo consente. Il trattamento non annulla retroattivamente una morte già risolta.",
+      "note_manuale": "Le cartucce sono compatibili con UMC, iniettori e pistole sanitarie descritti in questa sezione. Ogni cartuccia fornisce una sola somministrazione e occupa un posto nella capacità del dispositivo. I carichi possono essere misti e si annotano separatamente per tipo. L’emostatica sospende le ricorrenze del Sanguinamento senza arrestarlo: dopo cinque Round riprende se nessun effetto lo ha arrestato. La coagulante lo arresta, ma un nuovo effetto Sanguinante può applicarlo nuovamente. Nessuna cartuccia restituisce la perdita iniziale già subita o annulla conseguenze già risolte. La Curativa e lo Spray rimarginante recuperano PV soltanto se il paziente non è in Sanguinamento attivo: il recupero è possibile anche durante una sospensione valida del Sanguinamento. Non curano stati di Ferita o Menomazioni. I PV recuperati non superano il massimo del paziente. Un’unica somministrazione rapida per Round Ogni destinatario può ricevere una sola somministrazione medica rapida per Round complessivamente da UMC, Iniettore sanitario, Pistola sanitaria, Spray rimarginante, impianti e postazioni medicochirurgiche, comprese le monodosi del §6.6 e i naniti del §6.7. Il limite riguarda il paziente, anche se intervengono più persone o dispositivi. Un’attivazione automatica e una manuale non aggirano questo limite. Se il paziente ha già ricevuto una Curativa nel Round, l’emergenza automatica della UMC deve attendere il Round successivo; se ha ricevuto l’emostatica automatica, non può ricevere anche una Curativa nello stesso Round. Medicazioni, Talenti e magia seguono le rispettive procedure e limiti; non sono trasformati in somministrazioni rapide. Quando una ferita attiva un protocollo d’emergenza, prima si risolvono interamente attacco, perdita iniziale da Sanguinamento, Prove Salvezza, Ferite ed eventuale morte. Poi interviene il dispositivo, se il paziente è ancora assistibile e il limite del Round lo consente. Il trattamento non annulla retroattivamente una morte già risolta.",
       "paragrafo": "§7.19.2",
       "versione_manuale": "Armamenti 0.50",
       "reperibilita": "RA",
       "costo": 600,
       "effetto": "Arresta il Sanguinamento",
       "proprieta": [],
-      "effetto_breve": "Arresta il Sanguinamento"
+      "effetto_breve": "Arresta il Sanguinamento",
+      "cura": {
+        "sanguinamento": "arresta",
+        "fonte": "§6.2"
+      }
     },
     {
       "id": "cartuccia-curativa",
@@ -167,14 +176,19 @@
       "catalogo": "Commerciale",
       "famiglia": "Cartucce sanitarie",
       "nomi_alternativi": [],
-      "note_manuale": "Le cartucce sono compatibili con UMC, iniettori e pistole sanitarie descritti in questa sezione. Ogni cartuccia fornisce una sola somministrazione e occupa un posto nella capacità del dispositivo. I carichi possono essere misti e si annotano separatamente per tipo. L’emostatica sospende le ricorrenze del Sanguinamento senza arrestarlo: dopo cinque Round riprende se nessun effetto lo ha arrestato. La coagulante lo arresta, ma un nuovo effetto Sanguinante può applicarlo nuovamente. Nessuna cartuccia restituisce la perdita iniziale già subita o annulla conseguenze già risolte. La Curativa e lo Spray rimarginante recuperano PV soltanto se il paziente non è in Sanguinamento attivo: il recupero è possibile anche durante una sospensione valida del Sanguinamento. Non curano stati di Ferita o Menomazioni. I PV recuperati non superano il massimo del paziente. Un’unica somministrazione rapida per Round Ogni destinatario può ricevere una sola somministrazione medica rapida per Round complessivamente da UMC, Iniettore sanitario, Pistola sanitaria e Spray rimarginante. Il limite riguarda il paziente, anche se intervengono più persone o dispositivi. Un’attivazione automatica e una manuale non aggirano questo limite. Se il paziente ha già ricevuto una Curativa nel Round, l’emergenza automatica della UMC deve attendere il Round successivo; se ha ricevuto l’emostatica automatica, non può ricevere anche una Curativa nello stesso Round. Medicazioni, Talenti e magia seguono le rispettive procedure e limiti; non sono trasformati in somministrazioni rapide. Quando una ferita attiva un protocollo d’emergenza, prima si risolvono interamente attacco, perdita iniziale da Sanguinamento, Prove Salvezza, Ferite ed eventuale morte. Poi interviene il dispositivo, se il paziente è ancora assistibile e il limite del Round lo consente. Il trattamento non annulla retroattivamente una morte già risolta.",
+      "note_manuale": "Le cartucce sono compatibili con UMC, iniettori e pistole sanitarie descritti in questa sezione. Ogni cartuccia fornisce una sola somministrazione e occupa un posto nella capacità del dispositivo. I carichi possono essere misti e si annotano separatamente per tipo. L’emostatica sospende le ricorrenze del Sanguinamento senza arrestarlo: dopo cinque Round riprende se nessun effetto lo ha arrestato. La coagulante lo arresta, ma un nuovo effetto Sanguinante può applicarlo nuovamente. Nessuna cartuccia restituisce la perdita iniziale già subita o annulla conseguenze già risolte. La Curativa e lo Spray rimarginante recuperano PV soltanto se il paziente non è in Sanguinamento attivo: il recupero è possibile anche durante una sospensione valida del Sanguinamento. Non curano stati di Ferita o Menomazioni. I PV recuperati non superano il massimo del paziente. Un’unica somministrazione rapida per Round Ogni destinatario può ricevere una sola somministrazione medica rapida per Round complessivamente da UMC, Iniettore sanitario, Pistola sanitaria, Spray rimarginante, impianti e postazioni medicochirurgiche, comprese le monodosi del §6.6 e i naniti del §6.7. Il limite riguarda il paziente, anche se intervengono più persone o dispositivi. Un’attivazione automatica e una manuale non aggirano questo limite. Se il paziente ha già ricevuto una Curativa nel Round, l’emergenza automatica della UMC deve attendere il Round successivo; se ha ricevuto l’emostatica automatica, non può ricevere anche una Curativa nello stesso Round. Medicazioni, Talenti e magia seguono le rispettive procedure e limiti; non sono trasformati in somministrazioni rapide. Quando una ferita attiva un protocollo d’emergenza, prima si risolvono interamente attacco, perdita iniziale da Sanguinamento, Prove Salvezza, Ferite ed eventuale morte. Poi interviene il dispositivo, se il paziente è ancora assistibile e il limite del Round lo consente. Il trattamento non annulla retroattivamente una morte già risolta.",
       "paragrafo": "§7.19.2",
       "versione_manuale": "Armamenti 0.50",
       "reperibilita": "RA",
       "costo": 500,
       "effetto": "Recupera 1d6 PV, fino ai PV massimi",
       "proprieta": [],
-      "effetto_breve": "Recupera 1d6 PV, fino ai PV massimi"
+      "effetto_breve": "Recupera 1d6 PV, fino ai PV massimi",
+      "cura": {
+        "pv": "1d6",
+        "senza_sanguinamento": true,
+        "fonte": "§6.2"
+      }
     },
     {
       "id": "umc-passiva",
@@ -374,7 +388,14 @@
         "costo": 1000
       },
       "proprieta": [],
-      "effetto_breve": "Spendendo 1 AzP e una dose, senza Prova, recupera 1d3 PV fino al massimo."
+      "effetto_breve": "Spendendo 1 AzP e una dose, senza Prova, recupera 1d3 PV fino al massimo.",
+      "cura": {
+        "pv": "1d3",
+        "azp": 1,
+        "prova": false,
+        "senza_sanguinamento": true,
+        "fonte": "§6.4"
+      }
     },
     {
       "id": "contenitore-di-ricambio-spray-rimarginante",
@@ -499,7 +520,8 @@
           "ambito": "uso_specifico",
           "uso": "chirurgia",
           "condizione": "È una dotazione Professionale: +2 VA a Medicina per interventi chirurgici e procedure pertinenti eseguibili sul campo.",
-          "fonte": "Armamenti §7.19.5"
+          "fonte": "Armamenti §7.19.5",
+          "beneficio": "strumenti_chirurgia"
         }
       ]
     },
@@ -563,7 +585,8 @@
           "ambito": "uso_specifico",
           "uso": "chirurgia e Ferite",
           "condizione": "Concede +3 VA a Medicina per chirurgia e trattamenti delle Ferite o delle Menomazioni; la diagnostica mantiene il +2 del proprio scanner.",
-          "fonte": "Armamenti §7.19.5"
+          "fonte": "Armamenti §7.19.5",
+          "beneficio": "strumenti_chirurgia"
         }
       ],
       "alimentazione": {
@@ -581,9 +604,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Farmaci e antidoti",
       "nomi_alternativi": [],
-      "note_manuale": "Una monodose per 24 ore. Concede +2 alle PS di Tempra previste dalla malattia o infezione per cui è indicato, per 24 ore. Non concede nuove PS, non restituisce PV, non cura Ferite o Menomazioni e non arresta il Sanguinamento. Più dosi non sommano il bonus. Somministrazione 1 AzP e una mano; rientra nel limite di una somministrazione rapida per Round.",
+      "note_manuale": "Una monodose per 24 ore. Concede +2 alle PS di Tempra previste dalla malattia o infezione per cui è indicato, per 24 ore. Non concede nuove PS, non restituisce PV, non cura Ferite o Menomazioni e non arresta il Sanguinamento. Più dosi non sommano il bonus. Somministrazione 1 AzP e una mano; rientra nel limite di una somministrazione rapida per Round. Antidoti e farmaci terapeutici sono disponibili anche in cartucce compatibili con queste postazioni, allo stesso prezzo delle monodosi del §6.6. (§6.8.4)",
       "paragrafo": "§6.6",
-      "versione_manuale": "Equipaggiamento 0.3",
+      "versione_manuale": "Equipaggiamento 0.5",
       "reperibilita": "NC",
       "costo": 100,
       "proprieta": [],
@@ -598,7 +621,12 @@
           "condizione": "Concede +2 alle PS di Tempra previste dalla malattia o infezione per cui è indicato, per 24 ore.",
           "fonte": "Equipaggiamento §6.6"
         }
-      ]
+      ],
+      "cura": {
+        "azp": 1,
+        "prova": false,
+        "fonte": "§6.6"
+      }
     },
     {
       "id": "antidoto-specifico",
@@ -607,12 +635,844 @@
       "catalogo": "Commerciale",
       "famiglia": "Farmaci e antidoti",
       "nomi_alternativi": [],
-      "note_manuale": "Una monodose pronta all’impiego. L’antidoto adatto termina immediatamente l’avvelenamento a cui è destinato (Giocatore §5.18, Avvelenato). Non restituisce PV già persi, non elimina Ferite o Menomazioni e non protegge da una nuova esposizione. Somministrazione 1 AzP e una mano; rientra nel limite di una somministrazione rapida per Round.",
+      "note_manuale": "Una monodose pronta all’impiego. L’antidoto adatto termina immediatamente l’avvelenamento a cui è destinato (Giocatore §5.18, Avvelenato). Non restituisce PV già persi, non elimina Ferite o Menomazioni e non protegge da una nuova esposizione. Somministrazione 1 AzP e una mano; rientra nel limite di una somministrazione rapida per Round. Antidoti e farmaci terapeutici sono disponibili anche in cartucce compatibili con queste postazioni, allo stesso prezzo delle monodosi del §6.6. (§6.8.4)",
       "paragrafo": "§6.6",
-      "versione_manuale": "Equipaggiamento 0.3",
+      "versione_manuale": "Equipaggiamento 0.5",
       "reperibilita": "RA",
       "costo": 500,
-      "proprieta": []
+      "proprieta": [],
+      "cura": {
+        "azp": 1,
+        "prova": false,
+        "fonte": "§6.6"
+      }
+    },
+    {
+      "id": "naniti-medici",
+      "nome": "Naniti medici",
+      "tipo": "sanitario",
+      "catalogo": "Commerciale",
+      "famiglia": "Cartucce sanitarie",
+      "nomi_alternativi": [
+        "Cartuccia di naniti medici"
+      ],
+      "note_manuale": "Una cartuccia di naniti medici riduce la Ferita di un solo stato al termine del trattamento. La durata dipende dalla gravità al momento della somministrazione; il tempo viene fissato allora. La dose non cura più stati in successione. Ogni paziente può ricevere una dose ogni 24 ore, conteggiate dalla precedente somministrazione. Il trattamento non consuma il tentativo medico ogni sette giorni ed è compatibile con Intervento Mirato, Terapia Intensiva e le procedure equivalenti delle postazioni, prima o dopo di esse. I naniti non recuperano PV, non arrestano il Sanguinamento e non curano Menomazioni o componenti meccanici. Una dose occupa un alloggiamento e si consuma alla somministrazione. È compatibile con UMC, iniettori, pistole sanitarie, iniettori impiantati e postazioni medicochirurgiche; segue le Azioni e le Prove del dispositivo usato e il limite di una somministrazione rapida per Round.",
+      "paragrafo": "§6.7",
+      "versione_manuale": "Equipaggiamento 0.5",
+      "reperibilita": "MR",
+      "costo": 5000,
+      "effetto": "Riduce la Ferita di un solo stato al termine del trattamento (10–50 minuti secondo lo stato)",
+      "cura": {
+        "ferita_stati": 1,
+        "durate": [
+          {
+            "stato": "Superficiale",
+            "minuti": 10,
+            "esito": "Guarita"
+          },
+          {
+            "stato": "Importante",
+            "minuti": 20,
+            "esito": "Superficiale"
+          },
+          {
+            "stato": "Profonda",
+            "minuti": 30,
+            "esito": "Importante"
+          },
+          {
+            "stato": "Seria",
+            "minuti": 40,
+            "esito": "Profonda"
+          },
+          {
+            "stato": "Grave",
+            "minuti": 50,
+            "esito": "Seria"
+          }
+        ],
+        "intervallo_ore": 24,
+        "tentativo_settimanale": false,
+        "fonte": "§6.7; Giocatore §5.16.2"
+      },
+      "tabelle": [
+        {
+          "titolo": "Durata dei naniti (§6.7)",
+          "colonne": [
+            "Stato iniziale",
+            "Durata",
+            "Esito"
+          ],
+          "righe": [
+            [
+              "Superficiale",
+              "10 minuti",
+              "Guarita"
+            ],
+            [
+              "Importante",
+              "20 minuti",
+              "Superficiale"
+            ],
+            [
+              "Profonda",
+              "30 minuti",
+              "Importante"
+            ],
+            [
+              "Seria",
+              "40 minuti",
+              "Profonda"
+            ],
+            [
+              "Grave",
+              "50 minuti",
+              "Seria"
+            ]
+          ]
+        }
+      ],
+      "proprieta": [],
+      "effetto_breve": "Una dose riduce la Ferita di uno stato in 10–50 minuti; una dose ogni 24 ore."
+    },
+    {
+      "id": "postazione-semiautomatica-fissa",
+      "nome": "Postazione medicochirurgica Semiautomatica fissa",
+      "tipo": "sanitario",
+      "catalogo": "Commerciale",
+      "famiglia": "Postazioni medicochirurgiche",
+      "nomi_alternativi": [],
+      "note_manuale": "Una postazione medicochirurgica è una mini sala operatoria per un paziente, in forma di lettino attrezzato o capsula. Comprende diagnostica, strumenti chirurgici, bracci assistiti, somministrazione di farmaci e supporto vitale. I programmi chirurgici costituiscono un’eccezione esplicita ai requisiti ordinari: permettono le procedure elencate anche se l’operatore della Semiautomatica non possiede l’Addestramento Medico o i Talenti corrispondenti. Mirato e intensivo condividono un tentativo ogni sette giorni per paziente con Intervento Mirato e Terapia Intensiva del Medico. Il tentativo conta anche se fallisce. Ogni postazione comprende un Modulo NEC Rosso carico, sufficiente per dieci operazioni, e cinque cartucce chirurgiche. Una singola procedura su una Ferita o una Menomazione è un’operazione: all’inizio consuma un ciclo energetico Rosso e una cartuccia chirurgica, anche se fallisce o viene interrotta. La degenza assistita vale come ricovero ospedaliero: una Ferita migliora di uno stato ogni tre giorni secondo le normali condizioni del Manuale del Giocatore, §5.16. La stasi mantiene un paziente vivente sospendendo Sanguinamento, normale progressione biologica di malattie e veleni e recupero naturale. Durante la degenza serve una ricarica nutritiva sanitaria per paziente e giorno Gli alloggiamenti farmacologici e nutritivi sono vuoti all’acquisto. A 0 PI le funzioni si arrestano; resta possibile l’apertura manuale d’emergenza.",
+      "paragrafo": "§6.8",
+      "versione_manuale": "Equipaggiamento 0.5",
+      "pi": 16,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "RA",
+      "costo": 60000,
+      "peso": 250,
+      "applicazioni": 5,
+      "nome_applicazioni": "cartucce chirurgiche",
+      "ricarica": {
+        "applicazioni": 5,
+        "costo": 2500
+      },
+      "postazione": {
+        "modello": "Semiautomatica",
+        "mobile": false,
+        "prova": {
+          "tipo": "operatore",
+          "bonus": 3
+        },
+        "riserva_verde_giorni": 10,
+        "alloggiamenti": {
+          "chirurgiche": 5,
+          "farmacologiche": 10,
+          "nutritive": 10
+        },
+        "operazioni": 10
+      },
+      "cura": {
+        "procedure": [
+          {
+            "nome": "Trattamento mirato delle Ferite",
+            "tempo": "10 minuti",
+            "effetto": "Riduce la Ferita di uno stato."
+          },
+          {
+            "nome": "Trattamento intensivo delle Ferite",
+            "tempo": "1 ora",
+            "effetto": "Riduce la Ferita di due stati."
+          },
+          {
+            "nome": "Trattamento di Menomazione temporanea",
+            "tempo": "Secondo la procedura",
+            "effetto": "Applica gli esiti del Manuale del Giocatore, §5.16.5."
+          },
+          {
+            "nome": "Intervento su Menomazione permanente",
+            "tempo": "Secondo la procedura",
+            "effetto": "Diventa temporanea Seria; con Magistrale diventa temporanea Leggera."
+          }
+        ],
+        "tentativo_settimanale": true,
+        "degenza_giorni_per_stato": 3,
+        "fonte": "§6.8.2, §6.8.5; Giocatore §5.16.2, §5.16.6"
+      },
+      "alimentazione": [
+        {
+          "nec": "nec:modulo-rosso",
+          "usi": 10,
+          "unita_usi": "operazioni",
+          "lx_per_uso": 500,
+          "paragrafo": "§6.8.3"
+        },
+        {
+          "nec": "nec:modulo-verde",
+          "moduli": 1,
+          "usi": 10,
+          "unita_usi": "giorni di degenza o stasi",
+          "lx_per_uso": 1000,
+          "paragrafo": "§6.8.5"
+        }
+      ],
+      "proprieta": [],
+      "effetto_breve": "Medicina dell’operatore +3 strumenti per le procedure del programma; degenza come ricovero ospedaliero, stasi.",
+      "effetti": [
+        {
+          "abilita": "Medicina",
+          "valore": 3,
+          "ambito": "uso_specifico",
+          "uso": "procedure della postazione",
+          "condizione": "Medicina dell’operatore +3 strumenti",
+          "fonte": "Equipaggiamento §6.8.1",
+          "beneficio": "strumenti_chirurgia"
+        }
+      ]
+    },
+    {
+      "id": "postazione-semiautomatica-mobile",
+      "nome": "Postazione medicochirurgica Semiautomatica mobile",
+      "tipo": "sanitario",
+      "catalogo": "Commerciale",
+      "famiglia": "Postazioni medicochirurgiche",
+      "nomi_alternativi": [],
+      "note_manuale": "Una postazione medicochirurgica è una mini sala operatoria per un paziente, in forma di lettino attrezzato o capsula. Comprende diagnostica, strumenti chirurgici, bracci assistiti, somministrazione di farmaci e supporto vitale. I programmi chirurgici costituiscono un’eccezione esplicita ai requisiti ordinari: permettono le procedure elencate anche se l’operatore della Semiautomatica non possiede l’Addestramento Medico o i Talenti corrispondenti. Mirato e intensivo condividono un tentativo ogni sette giorni per paziente con Intervento Mirato e Terapia Intensiva del Medico. Il tentativo conta anche se fallisce. Ogni postazione comprende un Modulo NEC Rosso carico, sufficiente per dieci operazioni, e cinque cartucce chirurgiche. Una singola procedura su una Ferita o una Menomazione è un’operazione: all’inizio consuma un ciclo energetico Rosso e una cartuccia chirurgica, anche se fallisce o viene interrotta. La degenza assistita vale come ricovero ospedaliero: una Ferita migliora di uno stato ogni tre giorni secondo le normali condizioni del Manuale del Giocatore, §5.16. La stasi mantiene un paziente vivente sospendendo Sanguinamento, normale progressione biologica di malattie e veleni e recupero naturale. Durante la degenza serve una ricarica nutritiva sanitaria per paziente e giorno Gli alloggiamenti farmacologici e nutritivi sono vuoti all’acquisto. A 0 PI le funzioni si arrestano; resta possibile l’apertura manuale d’emergenza. La versione mobile costa il 25% in più e comprende telaio da trasporto, ancoraggi e componenti protetti; conserva le stesse funzioni mediche. Dopo il trasporto occorrono dieci minuti di preparazione da parte di due persone, senza Prova ordinaria.",
+      "paragrafo": "§6.8",
+      "versione_manuale": "Equipaggiamento 0.5",
+      "pi": 16,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "RA",
+      "costo": 75000,
+      "peso": 250,
+      "applicazioni": 5,
+      "nome_applicazioni": "cartucce chirurgiche",
+      "ricarica": {
+        "applicazioni": 5,
+        "costo": 2500
+      },
+      "postazione": {
+        "modello": "Semiautomatica",
+        "mobile": true,
+        "prova": {
+          "tipo": "operatore",
+          "bonus": 3
+        },
+        "riserva_verde_giorni": 10,
+        "alloggiamenti": {
+          "chirurgiche": 5,
+          "farmacologiche": 10,
+          "nutritive": 10
+        },
+        "operazioni": 10
+      },
+      "cura": {
+        "procedure": [
+          {
+            "nome": "Trattamento mirato delle Ferite",
+            "tempo": "10 minuti",
+            "effetto": "Riduce la Ferita di uno stato."
+          },
+          {
+            "nome": "Trattamento intensivo delle Ferite",
+            "tempo": "1 ora",
+            "effetto": "Riduce la Ferita di due stati."
+          },
+          {
+            "nome": "Trattamento di Menomazione temporanea",
+            "tempo": "Secondo la procedura",
+            "effetto": "Applica gli esiti del Manuale del Giocatore, §5.16.5."
+          },
+          {
+            "nome": "Intervento su Menomazione permanente",
+            "tempo": "Secondo la procedura",
+            "effetto": "Diventa temporanea Seria; con Magistrale diventa temporanea Leggera."
+          }
+        ],
+        "tentativo_settimanale": true,
+        "degenza_giorni_per_stato": 3,
+        "fonte": "§6.8.2, §6.8.5; Giocatore §5.16.2, §5.16.6"
+      },
+      "alimentazione": [
+        {
+          "nec": "nec:modulo-rosso",
+          "usi": 10,
+          "unita_usi": "operazioni",
+          "lx_per_uso": 500,
+          "paragrafo": "§6.8.3"
+        },
+        {
+          "nec": "nec:modulo-verde",
+          "moduli": 1,
+          "usi": 10,
+          "unita_usi": "giorni di degenza o stasi",
+          "lx_per_uso": 1000,
+          "paragrafo": "§6.8.5"
+        }
+      ],
+      "proprieta": [],
+      "effetto_breve": "Medicina dell’operatore +3 strumenti per le procedure del programma; degenza come ricovero ospedaliero, stasi.",
+      "effetti": [
+        {
+          "abilita": "Medicina",
+          "valore": 3,
+          "ambito": "uso_specifico",
+          "uso": "procedure della postazione",
+          "condizione": "Medicina dell’operatore +3 strumenti",
+          "fonte": "Equipaggiamento §6.8.1",
+          "beneficio": "strumenti_chirurgia"
+        }
+      ]
+    },
+    {
+      "id": "postazione-automatica-standard-fissa",
+      "nome": "Postazione medicochirurgica Automatica Standard fissa",
+      "tipo": "sanitario",
+      "catalogo": "Commerciale",
+      "famiglia": "Postazioni medicochirurgiche",
+      "nomi_alternativi": [],
+      "note_manuale": "Una postazione medicochirurgica è una mini sala operatoria per un paziente, in forma di lettino attrezzato o capsula. Comprende diagnostica, strumenti chirurgici, bracci assistiti, somministrazione di farmaci e supporto vitale. I programmi chirurgici costituiscono un’eccezione esplicita ai requisiti ordinari: permettono le procedure elencate anche se l’operatore della Semiautomatica non possiede l’Addestramento Medico o i Talenti corrispondenti. Mirato e intensivo condividono un tentativo ogni sette giorni per paziente con Intervento Mirato e Terapia Intensiva del Medico. Il tentativo conta anche se fallisce. Ogni postazione comprende un Modulo NEC Rosso carico, sufficiente per dieci operazioni, e cinque cartucce chirurgiche. Una singola procedura su una Ferita o una Menomazione è un’operazione: all’inizio consuma un ciclo energetico Rosso e una cartuccia chirurgica, anche se fallisce o viene interrotta. La degenza assistita vale come ricovero ospedaliero: una Ferita migliora di uno stato ogni tre giorni secondo le normali condizioni del Manuale del Giocatore, §5.16. La stasi mantiene un paziente vivente sospendendo Sanguinamento, normale progressione biologica di malattie e veleni e recupero naturale. Durante la degenza serve una ricarica nutritiva sanitaria per paziente e giorno Gli alloggiamenti farmacologici e nutritivi sono vuoti all’acquisto. A 0 PI le funzioni si arrestano; resta possibile l’apertura manuale d’emergenza.",
+      "paragrafo": "§6.8",
+      "versione_manuale": "Equipaggiamento 0.5",
+      "pi": 16,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "RA",
+      "costo": 100000,
+      "peso": 300,
+      "applicazioni": 5,
+      "nome_applicazioni": "cartucce chirurgiche",
+      "ricarica": {
+        "applicazioni": 5,
+        "costo": 2500
+      },
+      "postazione": {
+        "modello": "Automatica Standard",
+        "mobile": false,
+        "prova": {
+          "tipo": "ia",
+          "va": 12
+        },
+        "riserva_verde_giorni": 10,
+        "alloggiamenti": {
+          "chirurgiche": 5,
+          "farmacologiche": 10,
+          "nutritive": 10
+        },
+        "operazioni": 10
+      },
+      "cura": {
+        "procedure": [
+          {
+            "nome": "Trattamento mirato delle Ferite",
+            "tempo": "10 minuti",
+            "effetto": "Riduce la Ferita di uno stato."
+          },
+          {
+            "nome": "Trattamento intensivo delle Ferite",
+            "tempo": "1 ora",
+            "effetto": "Riduce la Ferita di due stati."
+          },
+          {
+            "nome": "Trattamento di Menomazione temporanea",
+            "tempo": "Secondo la procedura",
+            "effetto": "Applica gli esiti del Manuale del Giocatore, §5.16.5."
+          },
+          {
+            "nome": "Intervento su Menomazione permanente",
+            "tempo": "Secondo la procedura",
+            "effetto": "Diventa temporanea Seria; con Magistrale diventa temporanea Leggera."
+          }
+        ],
+        "tentativo_settimanale": true,
+        "degenza_giorni_per_stato": 3,
+        "fonte": "§6.8.2, §6.8.5; Giocatore §5.16.2, §5.16.6"
+      },
+      "alimentazione": [
+        {
+          "nec": "nec:modulo-rosso",
+          "usi": 10,
+          "unita_usi": "operazioni",
+          "lx_per_uso": 500,
+          "paragrafo": "§6.8.3"
+        },
+        {
+          "nec": "nec:modulo-verde",
+          "moduli": 1,
+          "usi": 10,
+          "unita_usi": "giorni di degenza o stasi",
+          "lx_per_uso": 1000,
+          "paragrafo": "§6.8.5"
+        }
+      ],
+      "proprieta": [],
+      "effetto_breve": "IA con VA 12 per le procedure del programma; degenza come ricovero ospedaliero, stasi."
+    },
+    {
+      "id": "postazione-automatica-standard-mobile",
+      "nome": "Postazione medicochirurgica Automatica Standard mobile",
+      "tipo": "sanitario",
+      "catalogo": "Commerciale",
+      "famiglia": "Postazioni medicochirurgiche",
+      "nomi_alternativi": [],
+      "note_manuale": "Una postazione medicochirurgica è una mini sala operatoria per un paziente, in forma di lettino attrezzato o capsula. Comprende diagnostica, strumenti chirurgici, bracci assistiti, somministrazione di farmaci e supporto vitale. I programmi chirurgici costituiscono un’eccezione esplicita ai requisiti ordinari: permettono le procedure elencate anche se l’operatore della Semiautomatica non possiede l’Addestramento Medico o i Talenti corrispondenti. Mirato e intensivo condividono un tentativo ogni sette giorni per paziente con Intervento Mirato e Terapia Intensiva del Medico. Il tentativo conta anche se fallisce. Ogni postazione comprende un Modulo NEC Rosso carico, sufficiente per dieci operazioni, e cinque cartucce chirurgiche. Una singola procedura su una Ferita o una Menomazione è un’operazione: all’inizio consuma un ciclo energetico Rosso e una cartuccia chirurgica, anche se fallisce o viene interrotta. La degenza assistita vale come ricovero ospedaliero: una Ferita migliora di uno stato ogni tre giorni secondo le normali condizioni del Manuale del Giocatore, §5.16. La stasi mantiene un paziente vivente sospendendo Sanguinamento, normale progressione biologica di malattie e veleni e recupero naturale. Durante la degenza serve una ricarica nutritiva sanitaria per paziente e giorno Gli alloggiamenti farmacologici e nutritivi sono vuoti all’acquisto. A 0 PI le funzioni si arrestano; resta possibile l’apertura manuale d’emergenza. La versione mobile costa il 25% in più e comprende telaio da trasporto, ancoraggi e componenti protetti; conserva le stesse funzioni mediche. Dopo il trasporto occorrono dieci minuti di preparazione da parte di due persone, senza Prova ordinaria.",
+      "paragrafo": "§6.8",
+      "versione_manuale": "Equipaggiamento 0.5",
+      "pi": 16,
+      "qualita": "Rara",
+      "ps_int": 14,
+      "reperibilita": "RA",
+      "costo": 125000,
+      "peso": 300,
+      "applicazioni": 5,
+      "nome_applicazioni": "cartucce chirurgiche",
+      "ricarica": {
+        "applicazioni": 5,
+        "costo": 2500
+      },
+      "postazione": {
+        "modello": "Automatica Standard",
+        "mobile": true,
+        "prova": {
+          "tipo": "ia",
+          "va": 12
+        },
+        "riserva_verde_giorni": 10,
+        "alloggiamenti": {
+          "chirurgiche": 5,
+          "farmacologiche": 10,
+          "nutritive": 10
+        },
+        "operazioni": 10
+      },
+      "cura": {
+        "procedure": [
+          {
+            "nome": "Trattamento mirato delle Ferite",
+            "tempo": "10 minuti",
+            "effetto": "Riduce la Ferita di uno stato."
+          },
+          {
+            "nome": "Trattamento intensivo delle Ferite",
+            "tempo": "1 ora",
+            "effetto": "Riduce la Ferita di due stati."
+          },
+          {
+            "nome": "Trattamento di Menomazione temporanea",
+            "tempo": "Secondo la procedura",
+            "effetto": "Applica gli esiti del Manuale del Giocatore, §5.16.5."
+          },
+          {
+            "nome": "Intervento su Menomazione permanente",
+            "tempo": "Secondo la procedura",
+            "effetto": "Diventa temporanea Seria; con Magistrale diventa temporanea Leggera."
+          }
+        ],
+        "tentativo_settimanale": true,
+        "degenza_giorni_per_stato": 3,
+        "fonte": "§6.8.2, §6.8.5; Giocatore §5.16.2, §5.16.6"
+      },
+      "alimentazione": [
+        {
+          "nec": "nec:modulo-rosso",
+          "usi": 10,
+          "unita_usi": "operazioni",
+          "lx_per_uso": 500,
+          "paragrafo": "§6.8.3"
+        },
+        {
+          "nec": "nec:modulo-verde",
+          "moduli": 1,
+          "usi": 10,
+          "unita_usi": "giorni di degenza o stasi",
+          "lx_per_uso": 1000,
+          "paragrafo": "§6.8.5"
+        }
+      ],
+      "proprieta": [],
+      "effetto_breve": "IA con VA 12 per le procedure del programma; degenza come ricovero ospedaliero, stasi."
+    },
+    {
+      "id": "postazione-automatica-professionale-fissa",
+      "nome": "Postazione medicochirurgica Automatica Professionale fissa",
+      "tipo": "sanitario",
+      "catalogo": "Commerciale",
+      "famiglia": "Postazioni medicochirurgiche",
+      "nomi_alternativi": [],
+      "note_manuale": "Una postazione medicochirurgica è una mini sala operatoria per un paziente, in forma di lettino attrezzato o capsula. Comprende diagnostica, strumenti chirurgici, bracci assistiti, somministrazione di farmaci e supporto vitale. I programmi chirurgici costituiscono un’eccezione esplicita ai requisiti ordinari: permettono le procedure elencate anche se l’operatore della Semiautomatica non possiede l’Addestramento Medico o i Talenti corrispondenti. Mirato e intensivo condividono un tentativo ogni sette giorni per paziente con Intervento Mirato e Terapia Intensiva del Medico. Il tentativo conta anche se fallisce. Ogni postazione comprende un Modulo NEC Rosso carico, sufficiente per dieci operazioni, e cinque cartucce chirurgiche. Una singola procedura su una Ferita o una Menomazione è un’operazione: all’inizio consuma un ciclo energetico Rosso e una cartuccia chirurgica, anche se fallisce o viene interrotta. La degenza assistita vale come ricovero ospedaliero: una Ferita migliora di uno stato ogni tre giorni secondo le normali condizioni del Manuale del Giocatore, §5.16. La stasi mantiene un paziente vivente sospendendo Sanguinamento, normale progressione biologica di malattie e veleni e recupero naturale. Durante la degenza serve una ricarica nutritiva sanitaria per paziente e giorno Gli alloggiamenti farmacologici e nutritivi sono vuoti all’acquisto. A 0 PI le funzioni si arrestano; resta possibile l’apertura manuale d’emergenza.",
+      "paragrafo": "§6.8",
+      "versione_manuale": "Equipaggiamento 0.5",
+      "pi": 20,
+      "qualita": "Molto rara",
+      "ps_int": 16,
+      "reperibilita": "MR",
+      "costo": 180000,
+      "peso": 350,
+      "applicazioni": 5,
+      "nome_applicazioni": "cartucce chirurgiche",
+      "ricarica": {
+        "applicazioni": 5,
+        "costo": 2500
+      },
+      "postazione": {
+        "modello": "Automatica Professionale",
+        "mobile": false,
+        "prova": {
+          "tipo": "ia",
+          "va": 15
+        },
+        "riserva_verde_giorni": 20,
+        "alloggiamenti": {
+          "chirurgiche": 5,
+          "farmacologiche": 20,
+          "nutritive": 20
+        },
+        "operazioni": 10
+      },
+      "cura": {
+        "procedure": [
+          {
+            "nome": "Trattamento mirato delle Ferite",
+            "tempo": "10 minuti",
+            "effetto": "Riduce la Ferita di uno stato."
+          },
+          {
+            "nome": "Trattamento intensivo delle Ferite",
+            "tempo": "1 ora",
+            "effetto": "Riduce la Ferita di due stati."
+          },
+          {
+            "nome": "Trattamento di Menomazione temporanea",
+            "tempo": "Secondo la procedura",
+            "effetto": "Applica gli esiti del Manuale del Giocatore, §5.16.5."
+          },
+          {
+            "nome": "Intervento su Menomazione permanente",
+            "tempo": "Secondo la procedura",
+            "effetto": "Diventa temporanea Seria; con Magistrale diventa temporanea Leggera."
+          }
+        ],
+        "tentativo_settimanale": true,
+        "degenza_giorni_per_stato": 3,
+        "fonte": "§6.8.2, §6.8.5; Giocatore §5.16.2, §5.16.6"
+      },
+      "alimentazione": [
+        {
+          "nec": "nec:modulo-rosso",
+          "usi": 10,
+          "unita_usi": "operazioni",
+          "lx_per_uso": 500,
+          "paragrafo": "§6.8.3"
+        },
+        {
+          "nec": "nec:modulo-verde",
+          "moduli": 2,
+          "usi": 20,
+          "unita_usi": "giorni di degenza o stasi",
+          "lx_per_uso": 1000,
+          "paragrafo": "§6.8.5"
+        }
+      ],
+      "proprieta": [],
+      "effetto_breve": "IA con VA 15 per le procedure del programma; degenza come ricovero ospedaliero, stasi."
+    },
+    {
+      "id": "postazione-automatica-professionale-mobile",
+      "nome": "Postazione medicochirurgica Automatica Professionale mobile",
+      "tipo": "sanitario",
+      "catalogo": "Commerciale",
+      "famiglia": "Postazioni medicochirurgiche",
+      "nomi_alternativi": [],
+      "note_manuale": "Una postazione medicochirurgica è una mini sala operatoria per un paziente, in forma di lettino attrezzato o capsula. Comprende diagnostica, strumenti chirurgici, bracci assistiti, somministrazione di farmaci e supporto vitale. I programmi chirurgici costituiscono un’eccezione esplicita ai requisiti ordinari: permettono le procedure elencate anche se l’operatore della Semiautomatica non possiede l’Addestramento Medico o i Talenti corrispondenti. Mirato e intensivo condividono un tentativo ogni sette giorni per paziente con Intervento Mirato e Terapia Intensiva del Medico. Il tentativo conta anche se fallisce. Ogni postazione comprende un Modulo NEC Rosso carico, sufficiente per dieci operazioni, e cinque cartucce chirurgiche. Una singola procedura su una Ferita o una Menomazione è un’operazione: all’inizio consuma un ciclo energetico Rosso e una cartuccia chirurgica, anche se fallisce o viene interrotta. La degenza assistita vale come ricovero ospedaliero: una Ferita migliora di uno stato ogni tre giorni secondo le normali condizioni del Manuale del Giocatore, §5.16. La stasi mantiene un paziente vivente sospendendo Sanguinamento, normale progressione biologica di malattie e veleni e recupero naturale. Durante la degenza serve una ricarica nutritiva sanitaria per paziente e giorno Gli alloggiamenti farmacologici e nutritivi sono vuoti all’acquisto. A 0 PI le funzioni si arrestano; resta possibile l’apertura manuale d’emergenza. La versione mobile costa il 25% in più e comprende telaio da trasporto, ancoraggi e componenti protetti; conserva le stesse funzioni mediche. Dopo il trasporto occorrono dieci minuti di preparazione da parte di due persone, senza Prova ordinaria.",
+      "paragrafo": "§6.8",
+      "versione_manuale": "Equipaggiamento 0.5",
+      "pi": 20,
+      "qualita": "Molto rara",
+      "ps_int": 16,
+      "reperibilita": "MR",
+      "costo": 225000,
+      "peso": 350,
+      "applicazioni": 5,
+      "nome_applicazioni": "cartucce chirurgiche",
+      "ricarica": {
+        "applicazioni": 5,
+        "costo": 2500
+      },
+      "postazione": {
+        "modello": "Automatica Professionale",
+        "mobile": true,
+        "prova": {
+          "tipo": "ia",
+          "va": 15
+        },
+        "riserva_verde_giorni": 20,
+        "alloggiamenti": {
+          "chirurgiche": 5,
+          "farmacologiche": 20,
+          "nutritive": 20
+        },
+        "operazioni": 10
+      },
+      "cura": {
+        "procedure": [
+          {
+            "nome": "Trattamento mirato delle Ferite",
+            "tempo": "10 minuti",
+            "effetto": "Riduce la Ferita di uno stato."
+          },
+          {
+            "nome": "Trattamento intensivo delle Ferite",
+            "tempo": "1 ora",
+            "effetto": "Riduce la Ferita di due stati."
+          },
+          {
+            "nome": "Trattamento di Menomazione temporanea",
+            "tempo": "Secondo la procedura",
+            "effetto": "Applica gli esiti del Manuale del Giocatore, §5.16.5."
+          },
+          {
+            "nome": "Intervento su Menomazione permanente",
+            "tempo": "Secondo la procedura",
+            "effetto": "Diventa temporanea Seria; con Magistrale diventa temporanea Leggera."
+          }
+        ],
+        "tentativo_settimanale": true,
+        "degenza_giorni_per_stato": 3,
+        "fonte": "§6.8.2, §6.8.5; Giocatore §5.16.2, §5.16.6"
+      },
+      "alimentazione": [
+        {
+          "nec": "nec:modulo-rosso",
+          "usi": 10,
+          "unita_usi": "operazioni",
+          "lx_per_uso": 500,
+          "paragrafo": "§6.8.3"
+        },
+        {
+          "nec": "nec:modulo-verde",
+          "moduli": 2,
+          "usi": 20,
+          "unita_usi": "giorni di degenza o stasi",
+          "lx_per_uso": 1000,
+          "paragrafo": "§6.8.5"
+        }
+      ],
+      "proprieta": [],
+      "effetto_breve": "IA con VA 15 per le procedure del programma; degenza come ricovero ospedaliero, stasi."
+    },
+    {
+      "id": "postazione-automatica-specializzata-fissa",
+      "nome": "Postazione medicochirurgica Automatica Specializzata fissa",
+      "tipo": "sanitario",
+      "catalogo": "Commerciale",
+      "famiglia": "Postazioni medicochirurgiche",
+      "nomi_alternativi": [],
+      "note_manuale": "Una postazione medicochirurgica è una mini sala operatoria per un paziente, in forma di lettino attrezzato o capsula. Comprende diagnostica, strumenti chirurgici, bracci assistiti, somministrazione di farmaci e supporto vitale. I programmi chirurgici costituiscono un’eccezione esplicita ai requisiti ordinari: permettono le procedure elencate anche se l’operatore della Semiautomatica non possiede l’Addestramento Medico o i Talenti corrispondenti. Mirato e intensivo condividono un tentativo ogni sette giorni per paziente con Intervento Mirato e Terapia Intensiva del Medico. Il tentativo conta anche se fallisce. Ogni postazione comprende un Modulo NEC Rosso carico, sufficiente per dieci operazioni, e cinque cartucce chirurgiche. Una singola procedura su una Ferita o una Menomazione è un’operazione: all’inizio consuma un ciclo energetico Rosso e una cartuccia chirurgica, anche se fallisce o viene interrotta. La degenza assistita vale come ricovero ospedaliero: una Ferita migliora di uno stato ogni tre giorni secondo le normali condizioni del Manuale del Giocatore, §5.16. La stasi mantiene un paziente vivente sospendendo Sanguinamento, normale progressione biologica di malattie e veleni e recupero naturale. Durante la degenza serve una ricarica nutritiva sanitaria per paziente e giorno Gli alloggiamenti farmacologici e nutritivi sono vuoti all’acquisto. A 0 PI le funzioni si arrestano; resta possibile l’apertura manuale d’emergenza.",
+      "paragrafo": "§6.8",
+      "versione_manuale": "Equipaggiamento 0.5",
+      "pi": 24,
+      "qualita": "Molto rara",
+      "ps_int": 16,
+      "reperibilita": "MR",
+      "costo": 300000,
+      "peso": 400,
+      "applicazioni": 5,
+      "nome_applicazioni": "cartucce chirurgiche",
+      "ricarica": {
+        "applicazioni": 5,
+        "costo": 2500
+      },
+      "postazione": {
+        "modello": "Automatica Specializzata",
+        "mobile": false,
+        "prova": {
+          "tipo": "ia",
+          "va": 18
+        },
+        "riserva_verde_giorni": 30,
+        "alloggiamenti": {
+          "chirurgiche": 5,
+          "farmacologiche": 30,
+          "nutritive": 30
+        },
+        "operazioni": 10
+      },
+      "cura": {
+        "procedure": [
+          {
+            "nome": "Trattamento mirato delle Ferite",
+            "tempo": "10 minuti",
+            "effetto": "Riduce la Ferita di uno stato."
+          },
+          {
+            "nome": "Trattamento intensivo delle Ferite",
+            "tempo": "1 ora",
+            "effetto": "Riduce la Ferita di due stati."
+          },
+          {
+            "nome": "Trattamento di Menomazione temporanea",
+            "tempo": "Secondo la procedura",
+            "effetto": "Applica gli esiti del Manuale del Giocatore, §5.16.5."
+          },
+          {
+            "nome": "Intervento su Menomazione permanente",
+            "tempo": "Secondo la procedura",
+            "effetto": "Diventa temporanea Seria; con Magistrale diventa temporanea Leggera."
+          }
+        ],
+        "tentativo_settimanale": true,
+        "degenza_giorni_per_stato": 3,
+        "fonte": "§6.8.2, §6.8.5; Giocatore §5.16.2, §5.16.6"
+      },
+      "alimentazione": [
+        {
+          "nec": "nec:modulo-rosso",
+          "usi": 10,
+          "unita_usi": "operazioni",
+          "lx_per_uso": 500,
+          "paragrafo": "§6.8.3"
+        },
+        {
+          "nec": "nec:modulo-verde",
+          "moduli": 3,
+          "usi": 30,
+          "unita_usi": "giorni di degenza o stasi",
+          "lx_per_uso": 1000,
+          "paragrafo": "§6.8.5"
+        }
+      ],
+      "proprieta": [],
+      "effetto_breve": "IA con VA 18 per le procedure del programma; degenza come ricovero ospedaliero, stasi."
+    },
+    {
+      "id": "postazione-automatica-specializzata-mobile",
+      "nome": "Postazione medicochirurgica Automatica Specializzata mobile",
+      "tipo": "sanitario",
+      "catalogo": "Commerciale",
+      "famiglia": "Postazioni medicochirurgiche",
+      "nomi_alternativi": [],
+      "note_manuale": "Una postazione medicochirurgica è una mini sala operatoria per un paziente, in forma di lettino attrezzato o capsula. Comprende diagnostica, strumenti chirurgici, bracci assistiti, somministrazione di farmaci e supporto vitale. I programmi chirurgici costituiscono un’eccezione esplicita ai requisiti ordinari: permettono le procedure elencate anche se l’operatore della Semiautomatica non possiede l’Addestramento Medico o i Talenti corrispondenti. Mirato e intensivo condividono un tentativo ogni sette giorni per paziente con Intervento Mirato e Terapia Intensiva del Medico. Il tentativo conta anche se fallisce. Ogni postazione comprende un Modulo NEC Rosso carico, sufficiente per dieci operazioni, e cinque cartucce chirurgiche. Una singola procedura su una Ferita o una Menomazione è un’operazione: all’inizio consuma un ciclo energetico Rosso e una cartuccia chirurgica, anche se fallisce o viene interrotta. La degenza assistita vale come ricovero ospedaliero: una Ferita migliora di uno stato ogni tre giorni secondo le normali condizioni del Manuale del Giocatore, §5.16. La stasi mantiene un paziente vivente sospendendo Sanguinamento, normale progressione biologica di malattie e veleni e recupero naturale. Durante la degenza serve una ricarica nutritiva sanitaria per paziente e giorno Gli alloggiamenti farmacologici e nutritivi sono vuoti all’acquisto. A 0 PI le funzioni si arrestano; resta possibile l’apertura manuale d’emergenza. La versione mobile costa il 25% in più e comprende telaio da trasporto, ancoraggi e componenti protetti; conserva le stesse funzioni mediche. Dopo il trasporto occorrono dieci minuti di preparazione da parte di due persone, senza Prova ordinaria.",
+      "paragrafo": "§6.8",
+      "versione_manuale": "Equipaggiamento 0.5",
+      "pi": 24,
+      "qualita": "Molto rara",
+      "ps_int": 16,
+      "reperibilita": "MR",
+      "costo": 375000,
+      "peso": 400,
+      "applicazioni": 5,
+      "nome_applicazioni": "cartucce chirurgiche",
+      "ricarica": {
+        "applicazioni": 5,
+        "costo": 2500
+      },
+      "postazione": {
+        "modello": "Automatica Specializzata",
+        "mobile": true,
+        "prova": {
+          "tipo": "ia",
+          "va": 18
+        },
+        "riserva_verde_giorni": 30,
+        "alloggiamenti": {
+          "chirurgiche": 5,
+          "farmacologiche": 30,
+          "nutritive": 30
+        },
+        "operazioni": 10
+      },
+      "cura": {
+        "procedure": [
+          {
+            "nome": "Trattamento mirato delle Ferite",
+            "tempo": "10 minuti",
+            "effetto": "Riduce la Ferita di uno stato."
+          },
+          {
+            "nome": "Trattamento intensivo delle Ferite",
+            "tempo": "1 ora",
+            "effetto": "Riduce la Ferita di due stati."
+          },
+          {
+            "nome": "Trattamento di Menomazione temporanea",
+            "tempo": "Secondo la procedura",
+            "effetto": "Applica gli esiti del Manuale del Giocatore, §5.16.5."
+          },
+          {
+            "nome": "Intervento su Menomazione permanente",
+            "tempo": "Secondo la procedura",
+            "effetto": "Diventa temporanea Seria; con Magistrale diventa temporanea Leggera."
+          }
+        ],
+        "tentativo_settimanale": true,
+        "degenza_giorni_per_stato": 3,
+        "fonte": "§6.8.2, §6.8.5; Giocatore §5.16.2, §5.16.6"
+      },
+      "alimentazione": [
+        {
+          "nec": "nec:modulo-rosso",
+          "usi": 10,
+          "unita_usi": "operazioni",
+          "lx_per_uso": 500,
+          "paragrafo": "§6.8.3"
+        },
+        {
+          "nec": "nec:modulo-verde",
+          "moduli": 3,
+          "usi": 30,
+          "unita_usi": "giorni di degenza o stasi",
+          "lx_per_uso": 1000,
+          "paragrafo": "§6.8.5"
+        }
+      ],
+      "proprieta": [],
+      "effetto_breve": "IA con VA 18 per le procedure del programma; degenza come ricovero ospedaliero, stasi."
+    },
+    {
+      "id": "cartuccia-chirurgica",
+      "nome": "Cartuccia chirurgica",
+      "tipo": "sanitario",
+      "catalogo": "Commerciale",
+      "famiglia": "Postazioni medicochirurgiche",
+      "nomi_alternativi": [],
+      "note_manuale": "La cartuccia chirurgica comprende anestetici ordinari, disinfettanti, suture e materiali da medicazione. Farmaci specifici, cartucce Curative, naniti, protesi e componenti speciali sono separati. Cartuccia chirurgica | 500 cr | Una operazione; confezione da cinque 2.500 cr.",
+      "paragrafo": "§6.8.7",
+      "versione_manuale": "Equipaggiamento 0.5",
+      "costo": 500,
+      "proprieta": [],
+      "effetto_breve": "Una operazione di una postazione medicochirurgica."
+    },
+    {
+      "id": "confezione-da-cinque-cartucce-chirurgiche",
+      "nome": "Confezione da cinque cartucce chirurgiche",
+      "tipo": "sanitario",
+      "catalogo": "Commerciale",
+      "famiglia": "Postazioni medicochirurgiche",
+      "nomi_alternativi": [],
+      "note_manuale": "Cinque cartucce chirurgiche per le postazioni medicochirurgiche (§6.8.7: «confezione da cinque 2.500 cr»).",
+      "paragrafo": "§6.8.7",
+      "versione_manuale": "Equipaggiamento 0.5",
+      "costo": 2500,
+      "proprieta": [],
+      "effetto_breve": "Cinque operazioni di una postazione medicochirurgica."
+    },
+    {
+      "id": "ricarica-nutritiva-sanitaria",
+      "nome": "Ricarica nutritiva sanitaria",
+      "tipo": "sanitario",
+      "catalogo": "Commerciale",
+      "famiglia": "Postazioni medicochirurgiche",
+      "nomi_alternativi": [],
+      "note_manuale": "Durante la degenza serve una ricarica nutritiva sanitaria per paziente e giorno: comprende il nutrimento equivalente a una razione e due litri d’acqua. Chi può mangiare e bere può usare normali provviste. I nutrimenti non accelerano la guarigione. Ricarica nutritiva sanitaria | 50 cr | Un paziente per un giorno di degenza; 2,5 kg; REP NC.",
+      "paragrafo": "§6.8.7",
+      "versione_manuale": "Equipaggiamento 0.5",
+      "reperibilita": "NC",
+      "costo": 50,
+      "peso": 2.5,
+      "proprieta": [],
+      "effetto_breve": "Un paziente per un giorno di degenza."
     }
-  ]
+  ],
+  "_nota_cura": "Campo «cura» (Equipaggiamento 0.5, cap. 6; Giocatore §5.16): i numeri delle cure per tooltip e promemoria, senza tiri automatici. pv: dado di PV recuperati; sanguinamento: «sospende» (per «round») o «arresta»; senza_sanguinamento: recupera PV solo senza Sanguinamento attivo; ferita_stati e durate (naniti); intervallo_ore; tentativo_settimanale (condiviso con Intervento Mirato e Terapia Intensiva); procedure e degenza_giorni_per_stato (postazioni); azp e prova (false = senza Prova)."
 }

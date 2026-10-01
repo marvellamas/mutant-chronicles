@@ -43,7 +43,8 @@ test('raccordo con il lotto 1: niente doppioni, gli apparecchi puntano al catalo
   // ogni alimentazione punta a un NEC del catalogo, o è un NEC dedicato descritto
   const conAlimentazione = cat.oggetti.filter((o) => o.alimentazione);
   assert.ok(conAlimentazione.length >= 30);
-  for (const o of conAlimentazione) assert.ok(o.alimentazione.nec === null ? o.alimentazione.descrizione : r(o.alimentazione.nec)?.nec, o.rif);
+  // un'alimentazione, o più (postazioni medicochirurgiche: Rosso e Verdi, Equipaggiamento §6.8)
+  for (const o of conAlimentazione) for (const a of [o.alimentazione].flat()) assert.ok(a.nec === null ? a.descrizione : r(a.nec)?.nec, o.rif);
   // la torcia della dotazione comune (Giocatore 0.45: NEC Verde compatto, 100 ore) e la scheda del §5.4.7
   const torcia = risolvi({ uid: 'dot-comune-5', rif: null, personalizzato: { nome: 'Torcia elettrica', tipo: 'altro' }, dotazione_id: 'torcia-elettrica', dotazione_iniziale: true, quantita: 1, note: '' }, cat);
   assert.deepEqual(torcia.def.alimentazione, { nec: 'nec:verde-compatto', consumo_lxh: 1, autonomia_ore: 100, paragrafo: '§2.3' });

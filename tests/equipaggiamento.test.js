@@ -862,7 +862,7 @@ test('validatore delle munizioni: famiglia, esplosivo, cella, compatibilità, ta
 // --- Lotto 11: equipaggiamento sanitario (§7.19) -------------------------------------------
 
 test('lotto 11: kit, cartucce, UMC, dispositivi, diagnostica e chirurgia del §7.19', () => {
-  const tutti = catalogo(dati).oggetti.filter((o) => o.file === 'sanitario' && o.versione_manuale !== 'Equipaggiamento 0.3'); // le 7 voci del cap. 6 dell'Equipaggiamento stanno in tests/equipaggiamento-03.test.js
+  const tutti = catalogo(dati).oggetti.filter((o) => o.file === 'sanitario' && o.versione_manuale.startsWith('Armamenti')); // le voci del cap. 6 dell'Equipaggiamento stanno in tests/equipaggiamento-03.test.js e tests/sanitario-05.test.js
   assert.equal(tutti.length, 16);
   const r = (id) => catalogo(dati).perRif.get(`sanitario:${id}`);
   // tabella degli esiti ricostruita per colonna più vicina (p. 109)
@@ -905,7 +905,7 @@ test('modalità tavolo: applicazioni di kit e Spray con il contatore; una sola U
 test('validatore del sanitario', () => {
   const e = (modifica) => { const d = copia(dati); modifica(d); return validaDati(d).map((x) => `${x.chiave}: ${x.problema}`).join('\n'); };
   const o = (d, id) => d.equipaggiamento.file.sanitario.oggetti.find((x) => x.id === id);
-  assert.match(e((d) => { o(d, 'spray-rimarginante').nome_applicazioni = 'litri'; }), /applicazioni, dosi o set/);
+  assert.match(e((d) => { o(d, 'spray-rimarginante').nome_applicazioni = 'litri'; }), /applicazioni, dosi, set o cartucce chirurgiche/);
   assert.match(e((d) => { o(d, 'kit-chirurgico-da-campo').strumenti = { va: 2 }; }), /strumenti: serve/);
   assert.match(e((d) => { o(d, 'kit-di-pronto-soccorso-standard').esiti = { successo: 'x' }; }), /esiti: serve/);
   assert.match(e((d) => { o(d, 'umc-passiva').capacita_cartucce = 0; }), /capacita_cartucce: intero/);
