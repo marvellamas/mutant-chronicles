@@ -52,7 +52,7 @@
     {
       "id": "munizioni",
       "file": "munizioni.json",
-      "descrizione": "Munizioni ordinarie e speciali, granate, razzi, celle, combustibile, dardi chimici; compatibilità balistiche (§7.20)"
+      "descrizione": "Munizioni ordinarie e speciali, granate, razzi, celle e pacchi NEC dei lanciafiamme, dardi chimici; compatibilità balistiche (§7.20)"
     },
     {
       "id": "sanitario",

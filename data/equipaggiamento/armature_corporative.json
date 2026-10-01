@@ -923,7 +923,8 @@
           "fonte": "Armamenti §7.11.6",
           "proprieta": "Stabile 2"
         }
-      ]
+      ],
+      "TODO(Davide)": "A.63: la 0.58 porta a NEC le celle di armi, accessori, elmetti, robot (NEC Rosso dedicato) e mezzi, ma gli esoscheletri scrivono ancora «batteria». Sono NEC (di che colore e formato) o restano batterie dedicate con le autonomie della scheda? Nel frattempo l’app tiene il testo della scheda."
     },
     {
       "id": "vulkan",
@@ -1004,7 +1005,8 @@
           "fonte": "Armamenti §7.11.6",
           "proprieta": "Stabile 2"
         }
-      ]
+      ],
+      "TODO(Davide)": "A.63: la 0.58 porta a NEC le celle di armi, accessori, elmetti, robot (NEC Rosso dedicato) e mezzi, ma gli esoscheletri scrivono ancora «batteria». Sono NEC (di che colore e formato) o restano batterie dedicate con le autonomie della scheda? Nel frattempo l’app tiene il testo della scheda."
     },
     {
       "id": "divisa-d-ordinanza-asa",
@@ -2884,7 +2886,8 @@
           "fonte": "Armamenti §7.14.1",
           "proprieta": "Termoregolazione 2"
         }
-      ]
+      ],
+      "TODO(Davide)": "A.63: la 0.58 porta a NEC le celle di armi, accessori, elmetti, robot (NEC Rosso dedicato) e mezzi, ma gli esoscheletri scrivono ancora «batteria». Sono NEC (di che colore e formato) o restano batterie dedicate con le autonomie della scheda? Nel frattempo l’app tiene il testo della scheda."
     },
     {
       "id": "armatura-da-incursione-wolfbane",
@@ -4659,7 +4662,8 @@
           "fonte": "Armamenti §7.16.1",
           "proprieta": "Termoregolazione 2"
         }
-      ]
+      ],
+      "TODO(Davide)": "A.63: la 0.58 porta a NEC le celle di armi, accessori, elmetti, robot (NEC Rosso dedicato) e mezzi, ma gli esoscheletri scrivono ancora «batteria». Sono NEC (di che colore e formato) o restano batterie dedicate con le autonomie della scheda? Nel frattempo l’app tiene il testo della scheda."
     },
     {
       "id": "shoa-ace-custom",
@@ -4772,7 +4776,8 @@
           "fonte": "Armamenti §7.16.1",
           "proprieta": "Termoregolazione 2"
         }
-      ]
+      ],
+      "TODO(Davide)": "A.63: la 0.58 porta a NEC le celle di armi, accessori, elmetti, robot (NEC Rosso dedicato) e mezzi, ma gli esoscheletri scrivono ancora «batteria». Sono NEC (di che colore e formato) o restano batterie dedicate con le autonomie della scheda? Nel frattempo l’app tiene il testo della scheda."
     },
     {
       "id": "demonhunter",
@@ -4899,7 +4904,8 @@
           "fonte": "Armamenti §7.16.1",
           "proprieta": "Sigilli d’interdizione 2"
         }
-      ]
+      ],
+      "TODO(Davide)": "A.63: la 0.58 porta a NEC le celle di armi, accessori, elmetti, robot (NEC Rosso dedicato) e mezzi, ma gli esoscheletri scrivono ancora «batteria». Sono NEC (di che colore e formato) o restano batterie dedicate con le autonomie della scheda? Nel frattempo l’app tiene il testo della scheda."
     },
     {
       "id": "abito-protettivo-del-revisore",

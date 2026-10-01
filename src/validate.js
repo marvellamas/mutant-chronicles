@@ -1172,8 +1172,10 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
         const x = o.esplosivo;
         if (!isOggetto(x) || !DADI.test(String(x.danno)) || !(isIntero(x.ac) || DADI.test(String(x.ac))) || !(isIntero(x.rs_q) && x.rs_q >= 0) || !Array.isArray(x.proprieta)) err(F, `${k}.esplosivo`, 'serve { danno, ac, rs_q, proprieta }');
       }
-      if (o.cella !== undefined && !(isOggetto(o.cella) && isIntero(o.cella.capacita) && o.cella.capacita >= 1 && ['cariche', 'colpi', 'getti'].includes(o.cella.unita) && isIntero(o.cella.ricarica_costo))) {
-        err(F, `${k}.cella`, 'serve { capacita ≥ 1, unita: cariche|colpi|getti, ricarica_costo }');
+      // §7.20.5–7.20.6 (Armamenti 0.58): NEC Blu con riserva in Lx; la ricarica costa 0,01 cr/Lx (anche 2,5 cr)
+      if (o.cella !== undefined && !(isOggetto(o.cella) && isIntero(o.cella.capacita) && o.cella.capacita >= 1 && ['cariche', 'colpi', 'getti'].includes(o.cella.unita)
+        && Number.isFinite(o.cella.ricarica_costo) && o.cella.ricarica_costo >= 0 && (o.cella.riserva_lx === undefined || (isIntero(o.cella.riserva_lx) && o.cella.riserva_lx >= 1)))) {
+        err(F, `${k}.cella`, 'serve { capacita ≥ 1, unita: cariche|colpi|getti, ricarica_costo ≥ 0, riserva_lx? intero ≥ 1 }');
       }
       // §7.19: equipaggiamento sanitario
       if (o.nome_applicazioni !== undefined && !['applicazioni', 'dosi', 'set'].includes(o.nome_applicazioni)) err(F, `${k}.nome_applicazioni`, 'applicazioni, dosi o set');

@@ -15,7 +15,8 @@ test('KEP 808: pistola al plasma, Armi al Plasma, AC 1d3, +1 VA già nella sched
   assert.deepEqual([k.abilita, k.danno.una_mano, k.ac, k.modificatore_va, k.gittata_q, k.for_richiesta, k.costo], ['Armi leggere', '1d6+1', '1d3', 1, 20, 6, 12500]);
   assert.ok(k.proprieta.some((p) => p.nome === 'Plasma'));
   assert.equal(modoRicarica(k, dati, cat).modo, 'cella');
-  assert.deepEqual(r('munizioni:cella-kep-808').cella, { capacita: 10, unita: 'colpi', ricarica_costo: 60 });
+  // Armamenti 0.58 §7.20.5: NEC Blu da 250 Lx, carica 200 cr, ricarica 2,5 cr
+  assert.deepEqual(r('munizioni:cella-kep-808').cella, { capacita: 10, unita: 'colpi', ricarica_costo: 2.5, riserva_lx: 250 });
 });
 
 test('Colt Hammershot: revolver pesante, Pistole, tamburo da 6 riempito in una operazione (E&L 19)', () => {

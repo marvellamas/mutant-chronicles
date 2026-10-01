@@ -397,9 +397,9 @@ test('validatore degli scudi: Parata, profili alternativi, attacco', () => {
 
 // --- Lotto 4: armi ravvicinate corporative (§7.1.9) --------------------------------------
 
-test('lotto 4: 39 armi ravvicinate corporative in 7 cataloghi; lo Scudo delle Guardie Sacre resta negli scudi', () => {
+test('lotto 4: 40 armi ravvicinate corporative in 7 cataloghi (con la Katana Ryūjin, 0.58); lo Scudo delle Guardie Sacre resta negli scudi', () => {
   const armi = catalogo(dati).oggetti.filter((o) => o.file === 'armi_corporative');
-  assert.equal(armi.length, 39); // §7.1.9: «39 armi ravvicinate e uno Scudo corporativo»
+  assert.equal(armi.length, 40); // §7.1.9 (0.58): «40 armi ravvicinate e uno Scudo corporativo»
   assert.deepEqual([...new Set(armi.map((o) => o.catalogo))], ['Bauhaus', 'Capitol', 'Cybertronic', 'Fratellanza', 'Imperial', 'Mishima', 'Alleanza']);
   assert.ok(!armi.some((o) => o.nome === 'Scudo delle Guardie Sacre'));
   const r = (id) => catalogo(dati).perRif.get(`armi_corporative:${id}`);
@@ -672,9 +672,9 @@ test('validatore di corredi e dispositivi: SIN, compatibilità, tabelle, scudo i
 
 // --- Lotto 8: accessori delle armi (§7.3) -------------------------------------------------
 
-test('lotto 8: 15 accessori delle armi dal §7.3, con le versioni rinforzate dei silenziatori', () => {
+test('lotto 8: 16 accessori delle armi dal §7.3, con le versioni rinforzate dei silenziatori e i due NEC di ricambio (0.58)', () => {
   const tutti = catalogo(dati).oggetti.filter((o) => o.file === 'accessori_armi');
-  assert.equal(tutti.length, 15);
+  assert.equal(tutti.length, 16); // §7.3.4 (0.58): NEC Verde compatto (la vecchia Batteria di servizio) e standard di ricambio
   const r = (id) => catalogo(dati).perRif.get(`accessori_armi:${id}`);
   assert.deepEqual(r('mirino-ottico').mirino, { riduzione: 4, distanza_max_q: 500, azp_minime: 2, testo: 'Fino a 500 Q; almeno 2 Azioni Principali complessive.' });
   assert.equal(r('mirino-di-precisione').mirino.distanza_max_q, null); // «Entro la gittata massima dell’arma»
@@ -794,9 +794,9 @@ test('validatore dei rinforzi e degli effetti sulle penalità', () => {
 
 // --- Lotto 10: munizioni e alimentazioni (§7.20) -------------------------------------------
 
-test('lotto 10: munizioni, celle, combustibile e compatibilità balistiche del §7.20', () => {
+test('lotto 10: munizioni, celle, pacchi NEC dei lanciafiamme e compatibilità balistiche del §7.20', () => {
   const tutti = catalogo(dati).oggetti.filter((o) => o.file === 'munizioni');
-  assert.equal(tutti.length, 50); // con la cella KEP 808 (Armamenti 0.54)
+  assert.equal(tutti.length, 49); // con la cella KEP 808 (0.54); senza il combustibile (0.58: pacchi NEC)
   const r = (id) => catalogo(dati).perRif.get(`munizioni:${id}`);
   assert.deepEqual(r('proiettili-da-fucile').munizione, { famiglia: 'fucile', confezione: { quantita: 50, costo: 150 } });
   // §7.20.7: prezzo speciale = ordinario × moltiplicatore; confezione da dieci
@@ -806,9 +806,11 @@ test('lotto 10: munizioni, celle, combustibile e compatibilità balistiche del �
   assert.deepEqual(r('granata-a-frammentazione-pesante').compatibile_con, ['armi_distanza_corporative:lanciagranate-deathlock-drum']);
   assert.deepEqual(r('razzo-standard').compatibile_con, ['armi_distanza:lanciarazzi', 'armi_distanza_corporative:lanciarazzi-deuce', 'armi_distanza_corporative:lanciarazzi-daimyo']);
   const cella = r('cella-ravvicinata-comune');
-  assert.equal(cella.compatibile_con.length, 17);
+  assert.equal(cella.compatibile_con.length, 18); // con la Katana Ryūjin (0.58)
   assert.ok(cella.compatibile_con.includes('armi:tirapugni-concussivo'));
-  assert.deepEqual(r('serbatoio-vuoto-gehemmapuker').cella, { capacita: 50, unita: 'getti', ricarica_costo: 500 });
+  // §7.20.6 (0.58): niente combustibile liquido; pacchi NEC Blu carichi, 50 Lx per getto
+  assert.deepEqual([r('pacco-nec-gehemmapuker').costo, r('pacco-nec-gehemmapuker').cella], [2100, { capacita: 50, unita: 'getti', ricarica_costo: 25, riserva_lx: 2500 }]);
+  assert.ok(!tutti.some((o) => /combustibile|vuoto-.*(nemesis-214|eruptor|purifier|gehemmapuker)/i.test(o.id)));
   // granate standard, Fumogena ed Elettroshock sono già nel catalogo: niente doppioni
   assert.ok(!tutti.some((o) => /fumogena|elettroshock|frammentazione standard/i.test(o.nome)));
   const tab = dati.equipaggiamento.file.munizioni.munizioni_armi;

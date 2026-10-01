@@ -349,7 +349,7 @@
     }
   ],
   "ricarica": {
-    "_nota": "Come si ricarica un’arma a distanza nella modalità tavolo (src/ricarica.js). Giocatore §5.1.1: una ricarica costa 1 AzP; Armamenti §7.20.2: «Serve sempre un caricatore compatibile con il modello. Questi prezzi non introducono caricatori amovibili per revolver o serbatoi fissi». Modi: «caricatore» (armi con famiglia di munizioni del §7.20.9: si sostituisce un caricatore pieno di riserva e quello tolto resta, vuoto o parziale); «inserimento» (armi elencate qui: si inseriscono munizioni sciolte compatibili fino alla capacità); «cella» (armi con celle compatibili: una cella piena sostituisce quella esaurita); le munizioni con «compatibile_con» e senza famiglia (razzi, dardi chimici, combustibile) si inseriscono come sciolte. Senza dati di compatibilità la ricarica resta libera, con un avviso.",
+    "_nota": "Come si ricarica un’arma a distanza nella modalità tavolo (src/ricarica.js). Giocatore §5.1.1: una ricarica costa 1 AzP; Armamenti §7.20.2: «Serve sempre un caricatore compatibile con il modello. Questi prezzi non introducono caricatori amovibili per revolver o serbatoi fissi». Modi: «caricatore» (armi con famiglia di munizioni del §7.20.9: si sostituisce un caricatore pieno di riserva e quello tolto resta, vuoto o parziale); «inserimento» (armi elencate qui: si inseriscono munizioni sciolte compatibili fino alla capacità); «cella» (armi con celle compatibili, compresi i pacchi NEC dei lanciafiamme del §7.20.6: una cella piena sostituisce quella esaurita); le munizioni con «compatibile_con» e senza famiglia (razzi, dardi chimici) si inseriscono come sciolte. Senza dati di compatibilità la ricarica resta libera, con un avviso.",
     "inserimento_singolo": {
       "_nota": "E&L del 29/09, risposta 19 (A.37): la ricarica segue il sistema di alimentazione del modello. Doppiette (cartucce nelle canne), fucili a pompa ordinari e di base (serbatoio tubolare fisso), archi e balestre: una operazione (1 AzP, Giocatore §5.1.1) inserisce 1 munizione; Ricarica Migliorata fino a 3 (§8.6.4), senza superare la capacità. «caricatore_amovibile»: modelli delle stesse famiglie con caricatore amovibile specifico (M310 da 20, SA SG2001 da 10): si sostituisce il caricatore.",
       "famiglie": [
@@ -550,9 +550,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Caricatori e contenitori",
       "nomi_alternativi": [],
-      "note_manuale": "Il prezzo del caricatore ordinario amovibile vuoto dipende dalla categoria dell’arma. Serve sempre un caricatore compatibile con il modello. Questi prezzi non introducono caricatori amovibili per revolver o serbatoi fissi; celle, serbatoi di combustibile e contenitori per nastri hanno le proprie voci.",
+      "note_manuale": "Il prezzo del caricatore ordinario amovibile vuoto dipende dalla categoria dell’arma. Serve sempre un caricatore compatibile con il modello. Questi prezzi non introducono caricatori amovibili per revolver o serbatoi fissi; celle, pacchi NEC dei lanciafiamme e contenitori per nastri hanno le proprie voci.",
       "paragrafo": "§7.20.2",
-      "versione_manuale": "Armamenti 0.50",
+      "versione_manuale": "Armamenti 0.58",
       "costo": 50,
       "proprieta": []
     },
@@ -563,9 +563,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Caricatori e contenitori",
       "nomi_alternativi": [],
-      "note_manuale": "Il prezzo del caricatore ordinario amovibile vuoto dipende dalla categoria dell’arma. Serve sempre un caricatore compatibile con il modello. Questi prezzi non introducono caricatori amovibili per revolver o serbatoi fissi; celle, serbatoi di combustibile e contenitori per nastri hanno le proprie voci.",
+      "note_manuale": "Il prezzo del caricatore ordinario amovibile vuoto dipende dalla categoria dell’arma. Serve sempre un caricatore compatibile con il modello. Questi prezzi non introducono caricatori amovibili per revolver o serbatoi fissi; celle, pacchi NEC dei lanciafiamme e contenitori per nastri hanno le proprie voci.",
       "paragrafo": "§7.20.2",
-      "versione_manuale": "Armamenti 0.50",
+      "versione_manuale": "Armamenti 0.58",
       "costo": 100,
       "proprieta": []
     },
@@ -576,9 +576,9 @@
       "catalogo": "Commerciale",
       "famiglia": "Caricatori e contenitori",
       "nomi_alternativi": [],
-      "note_manuale": "Il prezzo del caricatore ordinario amovibile vuoto dipende dalla categoria dell’arma. Serve sempre un caricatore compatibile con il modello. Questi prezzi non introducono caricatori amovibili per revolver o serbatoi fissi; celle, serbatoi di combustibile e contenitori per nastri hanno le proprie voci.",
+      "note_manuale": "Il prezzo del caricatore ordinario amovibile vuoto dipende dalla categoria dell’arma. Serve sempre un caricatore compatibile con il modello. Questi prezzi non introducono caricatori amovibili per revolver o serbatoi fissi; celle, pacchi NEC dei lanciafiamme e contenitori per nastri hanno le proprie voci.",
       "paragrafo": "§7.20.2",
-      "versione_manuale": "Armamenti 0.50",
+      "versione_manuale": "Armamenti 0.58",
       "costo": 200,
       "proprieta": []
     },
@@ -765,15 +765,16 @@
       "catalogo": "Commerciale",
       "famiglia": "Celle energetiche",
       "nomi_alternativi": [],
-      "note_manuale": "Le celle tecnologiche sono riutilizzabili e si acquistano cariche. Il costo di ricarica comprende energia e materiali di servizio. Il produttore della cella non modifica danni, INC, SIN o proprietà dell’arma. Carica indica il prezzo della cella piena. Il formato ravvicinato da cinque cariche è comune ai modelli elencati sotto. Le tre celle delle armi a distanza sono invece specifiche: Hellblazer e Intruder non sono intercambiabili anche se entrambe contengono trenta colpi. Per le armi ravvicinate si dichiara l’attivazione prima dell’attacco e si applica la PS Riflessi per risparmiare la carica in caso di Prova per colpire fallita (§7.1.4). Un attacco riuscito ma poi evitato o assorbito consuma la carica. Ogni attivazione ordinaria consuma una carica; a zero cariche resta il profilo non attivato dell’arma. Per le armi a energia a distanza ogni colpo sparato consuma una carica anche se manca il bersaglio. AC non moltiplica il consumo e non è prevista la PS per risparmiare il colpo. A zero cariche l’arma non può sparare. Sostituzione e ricarica Sostituire una cella compatibile già pronta richiede 1 AzP, senza Prova, disponendo delle mani necessarie. Ricaricare da vuota una delle celle in tabella richiede un’ora, un caricatore adatto e una fonte di energia adeguata. In condizioni ordinarie non occorre una Prova. Tempo e costo di una ricarica parziale sono proporzionali alle cariche ripristinate. Se la ricarica si interrompe, restano soltanto le cariche completate. Esempio: la cella ravvicinata ripristina una carica ogni 12 minuti, al costo di 8 per carica.",
+      "note_manuale": "Le celle tecnologiche delle armi sono NEC Blu riutilizzabili e venduti carichi. L’energia si misura in Lx; il giocatore annota le cariche o i colpi. La ricarica costa 0,01 cr/Lx. Il produttore della cella non modifica danni, INC, SIN o proprietà dell’arma. La ravvicinata comune usa una Blu standard da 250 Lx: cinque impulsi immediati da 50 Lx. Le quattro armi a distanza consumano 25 Lx per colpo e usano formati dedicati con una, due o tre celle secondo la riserva. Hellblazer e Intruder non sono intercambiabili. La cadenza resta quella dell’arma; un NEC più grande non aumenta i danni. Per le armi ravvicinate si dichiara l’attivazione prima dell’attacco e si applica la PS Riflessi per risparmiare la carica in caso di Prova per colpire fallita (§7.1.4). Un attacco riuscito ma poi evitato o assorbito consuma la carica. Ogni attivazione ordinaria consuma una carica; a zero cariche resta il profilo non attivato dell’arma. Per le armi a energia a distanza ogni colpo sparato consuma una carica anche se manca il bersaglio. AC non moltiplica il consumo e non è prevista la PS per risparmiare il colpo. A zero cariche l’arma non può sparare. Sostituire una cella compatibile già pronta richiede 1 AzP, senza Prova, disponendo delle mani necessarie. Ricaricare da vuota una delle celle in tabella richiede un’ora, un caricatore adatto e una fonte di energia adeguata. In condizioni ordinarie non occorre una Prova. Tempo e costo della ricarica parziale sono proporzionali all’energia ripristinata. Si possono usare soltanto le cariche complete disponibili. La cella ravvicinata ripristina una carica ogni 12 minuti, al costo di 0,5 cr. Un attacco ordinario senza elettrificazione non consuma la carica.",
       "paragrafo": "§7.20.5",
-      "versione_manuale": "Armamenti 0.50",
+      "versione_manuale": "Armamenti 0.58",
       "reperibilita": "NC",
       "costo": 200,
       "cella": {
         "capacita": 5,
         "unita": "cariche",
-        "ricarica_costo": 40
+        "ricarica_costo": 2.5,
+        "riserva_lx": 250
       },
       "compatibile_con": [
         "armi:tirapugni-concussivo",
@@ -790,6 +791,7 @@
         "armi_corporative:martello-spaccateste-a-una-mano",
         "armi_corporative:martello-spaccateste-a-due-mani",
         "armi_corporative:spada-violator",
+        "armi_corporative:katana-ryujin",
         "armi_corporative:lancia-duskdealer",
         "armi_corporative:nunchaku-elettrificato",
         "armi_corporative:spada-punisher"
@@ -803,15 +805,16 @@
       "catalogo": "Commerciale",
       "famiglia": "Celle energetiche",
       "nomi_alternativi": [],
-      "note_manuale": "Le celle tecnologiche sono riutilizzabili e si acquistano cariche. Il costo di ricarica comprende energia e materiali di servizio. Il produttore della cella non modifica danni, INC, SIN o proprietà dell’arma. Carica indica il prezzo della cella piena. Il formato ravvicinato da cinque cariche è comune ai modelli elencati sotto. Le tre celle delle armi a distanza sono invece specifiche: Hellblazer e Intruder non sono intercambiabili anche se entrambe contengono trenta colpi. Per le armi ravvicinate si dichiara l’attivazione prima dell’attacco e si applica la PS Riflessi per risparmiare la carica in caso di Prova per colpire fallita (§7.1.4). Un attacco riuscito ma poi evitato o assorbito consuma la carica. Ogni attivazione ordinaria consuma una carica; a zero cariche resta il profilo non attivato dell’arma. Per le armi a energia a distanza ogni colpo sparato consuma una carica anche se manca il bersaglio. AC non moltiplica il consumo e non è prevista la PS per risparmiare il colpo. A zero cariche l’arma non può sparare. Sostituzione e ricarica Sostituire una cella compatibile già pronta richiede 1 AzP, senza Prova, disponendo delle mani necessarie. Ricaricare da vuota una delle celle in tabella richiede un’ora, un caricatore adatto e una fonte di energia adeguata. In condizioni ordinarie non occorre una Prova. Tempo e costo di una ricarica parziale sono proporzionali alle cariche ripristinate. Se la ricarica si interrompe, restano soltanto le cariche completate. Esempio: la cella ravvicinata ripristina una carica ogni 12 minuti, al costo di 8 per carica.",
+      "note_manuale": "Le celle tecnologiche delle armi sono NEC Blu riutilizzabili e venduti carichi. L’energia si misura in Lx; il giocatore annota le cariche o i colpi. La ricarica costa 0,01 cr/Lx. Il produttore della cella non modifica danni, INC, SIN o proprietà dell’arma. La ravvicinata comune usa una Blu standard da 250 Lx: cinque impulsi immediati da 50 Lx. Le quattro armi a distanza consumano 25 Lx per colpo e usano formati dedicati con una, due o tre celle secondo la riserva. Hellblazer e Intruder non sono intercambiabili. La cadenza resta quella dell’arma; un NEC più grande non aumenta i danni. Per le armi ravvicinate si dichiara l’attivazione prima dell’attacco e si applica la PS Riflessi per risparmiare la carica in caso di Prova per colpire fallita (§7.1.4). Un attacco riuscito ma poi evitato o assorbito consuma la carica. Ogni attivazione ordinaria consuma una carica; a zero cariche resta il profilo non attivato dell’arma. Per le armi a energia a distanza ogni colpo sparato consuma una carica anche se manca il bersaglio. AC non moltiplica il consumo e non è prevista la PS per risparmiare il colpo. A zero cariche l’arma non può sparare. Sostituire una cella compatibile già pronta richiede 1 AzP, senza Prova, disponendo delle mani necessarie. Ricaricare da vuota una delle celle in tabella richiede un’ora, un caricatore adatto e una fonte di energia adeguata. In condizioni ordinarie non occorre una Prova. Tempo e costo della ricarica parziale sono proporzionali all’energia ripristinata. Si possono usare soltanto le cariche complete disponibili. La cella ravvicinata ripristina una carica ogni 12 minuti, al costo di 0,5 cr. Un attacco ordinario senza elettrificazione non consuma la carica.",
       "paragrafo": "§7.20.5",
-      "versione_manuale": "Armamenti 0.50",
+      "versione_manuale": "Armamenti 0.58",
       "reperibilita": "RA",
       "costo": 400,
       "cella": {
         "capacita": 20,
         "unita": "colpi",
-        "ricarica_costo": 80
+        "ricarica_costo": 5,
+        "riserva_lx": 500
       },
       "compatibile_con": [
         "armi_distanza:fucile-al-plasma"
@@ -825,15 +828,16 @@
       "catalogo": "Alleanza",
       "famiglia": "Celle energetiche",
       "nomi_alternativi": [],
-      "note_manuale": "Le celle tecnologiche sono riutilizzabili e si acquistano cariche. Il costo di ricarica comprende energia e materiali di servizio. Il produttore della cella non modifica danni, INC, SIN o proprietà dell’arma. Carica indica il prezzo della cella piena. Il formato ravvicinato da cinque cariche è comune ai modelli elencati sotto. Le tre celle delle armi a distanza sono invece specifiche: Hellblazer e Intruder non sono intercambiabili anche se entrambe contengono trenta colpi. Per le armi ravvicinate si dichiara l’attivazione prima dell’attacco e si applica la PS Riflessi per risparmiare la carica in caso di Prova per colpire fallita (§7.1.4). Un attacco riuscito ma poi evitato o assorbito consuma la carica. Ogni attivazione ordinaria consuma una carica; a zero cariche resta il profilo non attivato dell’arma. Per le armi a energia a distanza ogni colpo sparato consuma una carica anche se manca il bersaglio. AC non moltiplica il consumo e non è prevista la PS per risparmiare il colpo. A zero cariche l’arma non può sparare. Sostituzione e ricarica Sostituire una cella compatibile già pronta richiede 1 AzP, senza Prova, disponendo delle mani necessarie. Ricaricare da vuota una delle celle in tabella richiede un’ora, un caricatore adatto e una fonte di energia adeguata. In condizioni ordinarie non occorre una Prova. Tempo e costo di una ricarica parziale sono proporzionali alle cariche ripristinate. Se la ricarica si interrompe, restano soltanto le cariche completate. Esempio: la cella ravvicinata ripristina una carica ogni 12 minuti, al costo di 8 per carica.",
+      "note_manuale": "Le celle tecnologiche delle armi sono NEC Blu riutilizzabili e venduti carichi. L’energia si misura in Lx; il giocatore annota le cariche o i colpi. La ricarica costa 0,01 cr/Lx. Il produttore della cella non modifica danni, INC, SIN o proprietà dell’arma. La ravvicinata comune usa una Blu standard da 250 Lx: cinque impulsi immediati da 50 Lx. Le quattro armi a distanza consumano 25 Lx per colpo e usano formati dedicati con una, due o tre celle secondo la riserva. Hellblazer e Intruder non sono intercambiabili. La cadenza resta quella dell’arma; un NEC più grande non aumenta i danni. Per le armi ravvicinate si dichiara l’attivazione prima dell’attacco e si applica la PS Riflessi per risparmiare la carica in caso di Prova per colpire fallita (§7.1.4). Un attacco riuscito ma poi evitato o assorbito consuma la carica. Ogni attivazione ordinaria consuma una carica; a zero cariche resta il profilo non attivato dell’arma. Per le armi a energia a distanza ogni colpo sparato consuma una carica anche se manca il bersaglio. AC non moltiplica il consumo e non è prevista la PS per risparmiare il colpo. A zero cariche l’arma non può sparare. Sostituire una cella compatibile già pronta richiede 1 AzP, senza Prova, disponendo delle mani necessarie. Ricaricare da vuota una delle celle in tabella richiede un’ora, un caricatore adatto e una fonte di energia adeguata. In condizioni ordinarie non occorre una Prova. Tempo e costo della ricarica parziale sono proporzionali all’energia ripristinata. Si possono usare soltanto le cariche complete disponibili. La cella ravvicinata ripristina una carica ogni 12 minuti, al costo di 0,5 cr. Un attacco ordinario senza elettrificazione non consuma la carica.",
       "paragrafo": "§7.20.5",
-      "versione_manuale": "Armamenti 0.50",
+      "versione_manuale": "Armamenti 0.58",
       "reperibilita": "RA",
-      "costo": 450,
+      "costo": 600,
       "cella": {
         "capacita": 30,
         "unita": "colpi",
-        "ricarica_costo": 90
+        "ricarica_costo": 7.5,
+        "riserva_lx": 750
       },
       "compatibile_con": [
         "armi_distanza_corporative:hellblazer"
@@ -847,15 +851,16 @@
       "catalogo": "Alleanza",
       "famiglia": "Celle energetiche",
       "nomi_alternativi": [],
-      "note_manuale": "Le celle tecnologiche sono riutilizzabili e si acquistano cariche. Il costo di ricarica comprende energia e materiali di servizio. Il produttore della cella non modifica danni, INC, SIN o proprietà dell’arma. Carica indica il prezzo della cella piena. Il formato ravvicinato da cinque cariche è comune ai modelli elencati sotto. Le tre celle delle armi a distanza sono invece specifiche: Hellblazer e Intruder non sono intercambiabili anche se entrambe contengono trenta colpi. Per le armi ravvicinate si dichiara l’attivazione prima dell’attacco e si applica la PS Riflessi per risparmiare la carica in caso di Prova per colpire fallita (§7.1.4). Un attacco riuscito ma poi evitato o assorbito consuma la carica. Ogni attivazione ordinaria consuma una carica; a zero cariche resta il profilo non attivato dell’arma. Per le armi a energia a distanza ogni colpo sparato consuma una carica anche se manca il bersaglio. AC non moltiplica il consumo e non è prevista la PS per risparmiare il colpo. A zero cariche l’arma non può sparare. Sostituzione e ricarica Sostituire una cella compatibile già pronta richiede 1 AzP, senza Prova, disponendo delle mani necessarie. Ricaricare da vuota una delle celle in tabella richiede un’ora, un caricatore adatto e una fonte di energia adeguata. In condizioni ordinarie non occorre una Prova. Tempo e costo di una ricarica parziale sono proporzionali alle cariche ripristinate. Se la ricarica si interrompe, restano soltanto le cariche completate. Esempio: la cella ravvicinata ripristina una carica ogni 12 minuti, al costo di 8 per carica.",
+      "note_manuale": "Le celle tecnologiche delle armi sono NEC Blu riutilizzabili e venduti carichi. L’energia si misura in Lx; il giocatore annota le cariche o i colpi. La ricarica costa 0,01 cr/Lx. Il produttore della cella non modifica danni, INC, SIN o proprietà dell’arma. La ravvicinata comune usa una Blu standard da 250 Lx: cinque impulsi immediati da 50 Lx. Le quattro armi a distanza consumano 25 Lx per colpo e usano formati dedicati con una, due o tre celle secondo la riserva. Hellblazer e Intruder non sono intercambiabili. La cadenza resta quella dell’arma; un NEC più grande non aumenta i danni. Per le armi ravvicinate si dichiara l’attivazione prima dell’attacco e si applica la PS Riflessi per risparmiare la carica in caso di Prova per colpire fallita (§7.1.4). Un attacco riuscito ma poi evitato o assorbito consuma la carica. Ogni attivazione ordinaria consuma una carica; a zero cariche resta il profilo non attivato dell’arma. Per le armi a energia a distanza ogni colpo sparato consuma una carica anche se manca il bersaglio. AC non moltiplica il consumo e non è prevista la PS per risparmiare il colpo. A zero cariche l’arma non può sparare. Sostituire una cella compatibile già pronta richiede 1 AzP, senza Prova, disponendo delle mani necessarie. Ricaricare da vuota una delle celle in tabella richiede un’ora, un caricatore adatto e una fonte di energia adeguata. In condizioni ordinarie non occorre una Prova. Tempo e costo della ricarica parziale sono proporzionali all’energia ripristinata. Si possono usare soltanto le cariche complete disponibili. La cella ravvicinata ripristina una carica ogni 12 minuti, al costo di 0,5 cr. Un attacco ordinario senza elettrificazione non consuma la carica.",
       "paragrafo": "§7.20.5",
-      "versione_manuale": "Armamenti 0.54",
+      "versione_manuale": "Armamenti 0.58",
       "reperibilita": "RA",
-      "costo": 300,
+      "costo": 200,
       "cella": {
         "capacita": 10,
         "unita": "colpi",
-        "ricarica_costo": 60
+        "ricarica_costo": 2.5,
+        "riserva_lx": 250
       },
       "compatibile_con": [
         "armi_distanza_corporative:kep-808"
@@ -869,15 +874,16 @@
       "catalogo": "Alleanza",
       "famiglia": "Celle energetiche",
       "nomi_alternativi": [],
-      "note_manuale": "Le celle tecnologiche sono riutilizzabili e si acquistano cariche. Il costo di ricarica comprende energia e materiali di servizio. Il produttore della cella non modifica danni, INC, SIN o proprietà dell’arma. Carica indica il prezzo della cella piena. Il formato ravvicinato da cinque cariche è comune ai modelli elencati sotto. Le tre celle delle armi a distanza sono invece specifiche: Hellblazer e Intruder non sono intercambiabili anche se entrambe contengono trenta colpi. Per le armi ravvicinate si dichiara l’attivazione prima dell’attacco e si applica la PS Riflessi per risparmiare la carica in caso di Prova per colpire fallita (§7.1.4). Un attacco riuscito ma poi evitato o assorbito consuma la carica. Ogni attivazione ordinaria consuma una carica; a zero cariche resta il profilo non attivato dell’arma. Per le armi a energia a distanza ogni colpo sparato consuma una carica anche se manca il bersaglio. AC non moltiplica il consumo e non è prevista la PS per risparmiare il colpo. A zero cariche l’arma non può sparare. Sostituzione e ricarica Sostituire una cella compatibile già pronta richiede 1 AzP, senza Prova, disponendo delle mani necessarie. Ricaricare da vuota una delle celle in tabella richiede un’ora, un caricatore adatto e una fonte di energia adeguata. In condizioni ordinarie non occorre una Prova. Tempo e costo di una ricarica parziale sono proporzionali alle cariche ripristinate. Se la ricarica si interrompe, restano soltanto le cariche completate. Esempio: la cella ravvicinata ripristina una carica ogni 12 minuti, al costo di 8 per carica.",
+      "note_manuale": "Le celle tecnologiche delle armi sono NEC Blu riutilizzabili e venduti carichi. L’energia si misura in Lx; il giocatore annota le cariche o i colpi. La ricarica costa 0,01 cr/Lx. Il produttore della cella non modifica danni, INC, SIN o proprietà dell’arma. La ravvicinata comune usa una Blu standard da 250 Lx: cinque impulsi immediati da 50 Lx. Le quattro armi a distanza consumano 25 Lx per colpo e usano formati dedicati con una, due o tre celle secondo la riserva. Hellblazer e Intruder non sono intercambiabili. La cadenza resta quella dell’arma; un NEC più grande non aumenta i danni. Per le armi ravvicinate si dichiara l’attivazione prima dell’attacco e si applica la PS Riflessi per risparmiare la carica in caso di Prova per colpire fallita (§7.1.4). Un attacco riuscito ma poi evitato o assorbito consuma la carica. Ogni attivazione ordinaria consuma una carica; a zero cariche resta il profilo non attivato dell’arma. Per le armi a energia a distanza ogni colpo sparato consuma una carica anche se manca il bersaglio. AC non moltiplica il consumo e non è prevista la PS per risparmiare il colpo. A zero cariche l’arma non può sparare. Sostituire una cella compatibile già pronta richiede 1 AzP, senza Prova, disponendo delle mani necessarie. Ricaricare da vuota una delle celle in tabella richiede un’ora, un caricatore adatto e una fonte di energia adeguata. In condizioni ordinarie non occorre una Prova. Tempo e costo della ricarica parziale sono proporzionali all’energia ripristinata. Si possono usare soltanto le cariche complete disponibili. La cella ravvicinata ripristina una carica ogni 12 minuti, al costo di 0,5 cr. Un attacco ordinario senza elettrificazione non consuma la carica.",
       "paragrafo": "§7.20.5",
-      "versione_manuale": "Armamenti 0.50",
+      "versione_manuale": "Armamenti 0.58",
       "reperibilita": "RA",
       "costo": 600,
       "cella": {
         "capacita": 30,
         "unita": "colpi",
-        "ricarica_costo": 120
+        "ricarica_costo": 7.5,
+        "riserva_lx": 750
       },
       "compatibile_con": [
         "armi_distanza_corporative:plasma-intruder"
@@ -891,59 +897,35 @@
       "catalogo": "Commerciale",
       "famiglia": "Celle energetiche",
       "nomi_alternativi": [],
-      "note_manuale": "Caricatore da campo Costa 500, Reperibilità Non comune, PI 4, Qualità Comune e PS Integrità 10. Comprende i connettori per tutte le celle della tabella e ricarica una cella alla volta. Richiede una fonte esterna: non contiene una riserva propria. Non ricarica Chroma né converte PM personali in energia tecnologica. Riserve mistiche, PM e Chroma mantengono le regole del §7.5.1 e del Manuale della Magia. Robot, esoscheletri, propulsori e altri moduli seguono le capacità e le alimentazioni delle proprie schede; non adottano automaticamente questi formati. Le celle di trazione dei veicoli sono a base Chroma, non ricaricabili e sostituibili. Non adottano i tempi e i formati di ricarica delle celle delle armi. Alimentazione e autonomia dei mezzi seguono il Manuale dei Veicoli, §1.5, e le rispettive schede.",
+      "note_manuale": "Costa 500 cr, pesa 0,5 kg, REP NC, PI 4, Qualità Comune e PS Integrità 10. Ricarica una cella alla volta, fino a 1.000 Lx/h, e comprende i connettori per le celle della tabella. Richiede una fonte esterna e non contiene una riserva. Ricarica i NEC tecnologici; non ricarica riserve mistiche in PM. Le riserve mistiche mantengono il §7.5.1 e il Manuale della Magia. Robot, esoscheletri, propulsori e moduli specialistici conservano formati, autonomie e tempi delle proprie schede: non adottano automaticamente le celle comuni. Capacità o consumi in Lx non ancora dichiarati restano da dimensionare per il modello. Le celle di trazione sono NEC Rossi riutilizzabili, ricaricabili e sostituibili. Formati, capacità e autonomie dei mezzi seguono le rispettive schede; non si trasferiscono automaticamente i tempi delle celle portatili. Regole comuni e catalogo NEC: Manuale dell’Equipaggiamento, §5.4.",
       "paragrafo": "§7.20.5",
-      "versione_manuale": "Armamenti 0.50",
+      "versione_manuale": "Armamenti 0.58",
       "pi": 4,
       "qualita": "Comune",
       "ps_int": 10,
       "reperibilita": "NC",
       "costo": 500,
-      "proprieta": []
+      "proprieta": [],
+      "peso": 0.5
     },
     {
-      "id": "combustibile-per-lanciafiamme",
-      "nome": "Combustibile per lanciafiamme",
-      "tipo": "munizioni",
-      "catalogo": "Commerciale",
-      "famiglia": "Combustibile e serbatoi",
-      "nomi_alternativi": [],
-      "note_manuale": "Il combustibile standard è compatibile con tutti i lanciafiamme seguenti e si contabilizza in getti: una scorta da 10 getti costa 100, Reperibilità Non comune, pari a 10 per getto. Il serbatoio deve essere compatibile con il modello. Il prezzo dell’arma comprende il serbatoio, mentre il combustibile è separato. Ogni attacco consuma un getto anche se manca il bersaglio. AC 1d3 non moltiplica il consumo. Il combustibile non cambia danno, gittata, INC o proprietà del lanciafiamme. Sostituire un serbatoio compatibile già pieno e pronto richiede 1 AzP, entrambe le mani e nessuna Prova. Riempire un serbatoio dalle scorte richiede un minuto ogni 10 getti o frazione, senza Prova in condizioni ordinarie. Serbatoio e pieno si acquistano separatamente quando serve un ricambio aggiuntivo.",
-      "paragrafo": "§7.20.6",
-      "versione_manuale": "Armamenti 0.50",
-      "reperibilita": "NC",
-      "costo": 10,
-      "munizione": {
-        "famiglia": "combustibile",
-        "confezione": {
-          "quantita": 10,
-          "costo": 100
-        }
-      },
-      "compatibile_con": [
-        "armi_distanza_corporative:lanciafiamme-nemesis-214",
-        "armi_distanza:lanciafiamme",
-        "armi_distanza_corporative:lanciafiamme-eruptor",
-        "armi_distanza_corporative:lanciafiamme-purifier",
-        "armi_distanza_corporative:gehemmapuker"
-      ],
-      "proprieta": []
-    },
-    {
-      "id": "serbatoio-vuoto-nemesis-214",
-      "nome": "Serbatoio vuoto Nemesis 214",
+      "id": "pacco-nec-nemesis-214",
+      "nome": "Pacco NEC Blu Nemesis 214",
       "tipo": "munizioni",
       "catalogo": "Fratellanza",
-      "famiglia": "Combustibile e serbatoi",
-      "nomi_alternativi": [],
-      "note_manuale": "Il combustibile standard è compatibile con tutti i lanciafiamme seguenti e si contabilizza in getti: una scorta da 10 getti costa 100, Reperibilità Non comune, pari a 10 per getto. Il serbatoio deve essere compatibile con il modello. Il prezzo dell’arma comprende il serbatoio, mentre il combustibile è separato. Ogni attacco consuma un getto anche se manca il bersaglio. AC 1d3 non moltiplica il consumo. Il combustibile non cambia danno, gittata, INC o proprietà del lanciafiamme. Sostituire un serbatoio compatibile già pieno e pronto richiede 1 AzP, entrambe le mani e nessuna Prova. Riempire un serbatoio dalle scorte richiede un minuto ogni 10 getti o frazione, senza Prova in condizioni ordinarie. Serbatoio e pieno si acquistano separatamente quando serve un ricambio aggiuntivo.",
+      "famiglia": "Celle energetiche",
+      "nomi_alternativi": [
+        "Serbatoio Nemesis 214"
+      ],
+      "note_manuale": "I lanciafiamme sono emettitori termici alimentati da NEC Blu: non impiegano combustibile liquido. Un getto consuma 50 Lx. Ogni pacco ha un formato compatibile con il modello; l’alloggiamento fisso è compreso nell’arma, mentre il pacco carico si acquista separatamente. Ogni attacco consuma un getto anche se manca il bersaglio. AC 1d3 non moltiplica il consumo. Restano danno, proprietà Fuoco, gittata, INC e modalità del modello. I pacchi da 250, 500 e 750 Lx contengono una, due e tre celle Blu; il Gehemmapuker usa un Modulo Blu. Sostituire un pacco compatibile pronto richiede 1 AzP, entrambe le mani e nessuna Prova. I pacchi fino a 750 Lx si ricaricano in un’ora con caricatore portatile e fonte adeguati. Il Gehemmapuker richiede un’ora con stazione per Moduli o due ore e mezza con caricatore portatile a piena potenza. Ricariche parziali proporzionali; prezzi e stazioni nel Manuale dell’Equipaggiamento, §5.4.",
       "paragrafo": "§7.20.6",
-      "versione_manuale": "Armamenti 0.50",
-      "costo": 100,
+      "versione_manuale": "Armamenti 0.58",
+      "costo": 200,
       "cella": {
         "capacita": 5,
         "unita": "getti",
-        "ricarica_costo": 50
+        "ricarica_costo": 2.5,
+        "riserva_lx": 250
       },
       "compatibile_con": [
         "armi_distanza_corporative:lanciafiamme-nemesis-214"
@@ -951,20 +933,23 @@
       "proprieta": []
     },
     {
-      "id": "serbatoio-vuoto-del-lanciafiamme-commerciale",
-      "nome": "Serbatoio vuoto del lanciafiamme commerciale",
+      "id": "pacco-nec-lanciafiamme-commerciale",
+      "nome": "Pacco NEC Blu del lanciafiamme commerciale",
       "tipo": "munizioni",
       "catalogo": "Commerciale",
-      "famiglia": "Combustibile e serbatoi",
-      "nomi_alternativi": [],
-      "note_manuale": "Il combustibile standard è compatibile con tutti i lanciafiamme seguenti e si contabilizza in getti: una scorta da 10 getti costa 100, Reperibilità Non comune, pari a 10 per getto. Il serbatoio deve essere compatibile con il modello. Il prezzo dell’arma comprende il serbatoio, mentre il combustibile è separato. Ogni attacco consuma un getto anche se manca il bersaglio. AC 1d3 non moltiplica il consumo. Il combustibile non cambia danno, gittata, INC o proprietà del lanciafiamme. Sostituire un serbatoio compatibile già pieno e pronto richiede 1 AzP, entrambe le mani e nessuna Prova. Riempire un serbatoio dalle scorte richiede un minuto ogni 10 getti o frazione, senza Prova in condizioni ordinarie. Serbatoio e pieno si acquistano separatamente quando serve un ricambio aggiuntivo.",
+      "famiglia": "Celle energetiche",
+      "nomi_alternativi": [
+        "Serbatoio del lanciafiamme commerciale"
+      ],
+      "note_manuale": "I lanciafiamme sono emettitori termici alimentati da NEC Blu: non impiegano combustibile liquido. Un getto consuma 50 Lx. Ogni pacco ha un formato compatibile con il modello; l’alloggiamento fisso è compreso nell’arma, mentre il pacco carico si acquista separatamente. Ogni attacco consuma un getto anche se manca il bersaglio. AC 1d3 non moltiplica il consumo. Restano danno, proprietà Fuoco, gittata, INC e modalità del modello. I pacchi da 250, 500 e 750 Lx contengono una, due e tre celle Blu; il Gehemmapuker usa un Modulo Blu. Sostituire un pacco compatibile pronto richiede 1 AzP, entrambe le mani e nessuna Prova. I pacchi fino a 750 Lx si ricaricano in un’ora con caricatore portatile e fonte adeguati. Il Gehemmapuker richiede un’ora con stazione per Moduli o due ore e mezza con caricatore portatile a piena potenza. Ricariche parziali proporzionali; prezzi e stazioni nel Manuale dell’Equipaggiamento, §5.4.",
       "paragrafo": "§7.20.6",
-      "versione_manuale": "Armamenti 0.50",
-      "costo": 100,
+      "versione_manuale": "Armamenti 0.58",
+      "costo": 400,
       "cella": {
         "capacita": 10,
         "unita": "getti",
-        "ricarica_costo": 100
+        "ricarica_costo": 5,
+        "riserva_lx": 500
       },
       "compatibile_con": [
         "armi_distanza:lanciafiamme"
@@ -972,20 +957,23 @@
       "proprieta": []
     },
     {
-      "id": "serbatoio-vuoto-eruptor",
-      "nome": "Serbatoio vuoto Eruptor",
+      "id": "pacco-nec-eruptor",
+      "nome": "Pacco NEC Blu Eruptor",
       "tipo": "munizioni",
       "catalogo": "Fratellanza",
-      "famiglia": "Combustibile e serbatoi",
-      "nomi_alternativi": [],
-      "note_manuale": "Il combustibile standard è compatibile con tutti i lanciafiamme seguenti e si contabilizza in getti: una scorta da 10 getti costa 100, Reperibilità Non comune, pari a 10 per getto. Il serbatoio deve essere compatibile con il modello. Il prezzo dell’arma comprende il serbatoio, mentre il combustibile è separato. Ogni attacco consuma un getto anche se manca il bersaglio. AC 1d3 non moltiplica il consumo. Il combustibile non cambia danno, gittata, INC o proprietà del lanciafiamme. Sostituire un serbatoio compatibile già pieno e pronto richiede 1 AzP, entrambe le mani e nessuna Prova. Riempire un serbatoio dalle scorte richiede un minuto ogni 10 getti o frazione, senza Prova in condizioni ordinarie. Serbatoio e pieno si acquistano separatamente quando serve un ricambio aggiuntivo.",
+      "famiglia": "Celle energetiche",
+      "nomi_alternativi": [
+        "Serbatoio Eruptor"
+      ],
+      "note_manuale": "I lanciafiamme sono emettitori termici alimentati da NEC Blu: non impiegano combustibile liquido. Un getto consuma 50 Lx. Ogni pacco ha un formato compatibile con il modello; l’alloggiamento fisso è compreso nell’arma, mentre il pacco carico si acquista separatamente. Ogni attacco consuma un getto anche se manca il bersaglio. AC 1d3 non moltiplica il consumo. Restano danno, proprietà Fuoco, gittata, INC e modalità del modello. I pacchi da 250, 500 e 750 Lx contengono una, due e tre celle Blu; il Gehemmapuker usa un Modulo Blu. Sostituire un pacco compatibile pronto richiede 1 AzP, entrambe le mani e nessuna Prova. I pacchi fino a 750 Lx si ricaricano in un’ora con caricatore portatile e fonte adeguati. Il Gehemmapuker richiede un’ora con stazione per Moduli o due ore e mezza con caricatore portatile a piena potenza. Ricariche parziali proporzionali; prezzi e stazioni nel Manuale dell’Equipaggiamento, §5.4.",
       "paragrafo": "§7.20.6",
-      "versione_manuale": "Armamenti 0.50",
-      "costo": 100,
+      "versione_manuale": "Armamenti 0.58",
+      "costo": 400,
       "cella": {
         "capacita": 10,
         "unita": "getti",
-        "ricarica_costo": 100
+        "ricarica_costo": 5,
+        "riserva_lx": 500
       },
       "compatibile_con": [
         "armi_distanza_corporative:lanciafiamme-eruptor"
@@ -993,20 +981,23 @@
       "proprieta": []
     },
     {
-      "id": "serbatoio-vuoto-purifier",
-      "nome": "Serbatoio vuoto Purifier",
+      "id": "pacco-nec-purifier",
+      "nome": "Pacco NEC Blu Purifier",
       "tipo": "munizioni",
       "catalogo": "Fratellanza",
-      "famiglia": "Combustibile e serbatoi",
-      "nomi_alternativi": [],
-      "note_manuale": "Il combustibile standard è compatibile con tutti i lanciafiamme seguenti e si contabilizza in getti: una scorta da 10 getti costa 100, Reperibilità Non comune, pari a 10 per getto. Il serbatoio deve essere compatibile con il modello. Il prezzo dell’arma comprende il serbatoio, mentre il combustibile è separato. Ogni attacco consuma un getto anche se manca il bersaglio. AC 1d3 non moltiplica il consumo. Il combustibile non cambia danno, gittata, INC o proprietà del lanciafiamme. Sostituire un serbatoio compatibile già pieno e pronto richiede 1 AzP, entrambe le mani e nessuna Prova. Riempire un serbatoio dalle scorte richiede un minuto ogni 10 getti o frazione, senza Prova in condizioni ordinarie. Serbatoio e pieno si acquistano separatamente quando serve un ricambio aggiuntivo.",
+      "famiglia": "Celle energetiche",
+      "nomi_alternativi": [
+        "Serbatoio Purifier"
+      ],
+      "note_manuale": "I lanciafiamme sono emettitori termici alimentati da NEC Blu: non impiegano combustibile liquido. Un getto consuma 50 Lx. Ogni pacco ha un formato compatibile con il modello; l’alloggiamento fisso è compreso nell’arma, mentre il pacco carico si acquista separatamente. Ogni attacco consuma un getto anche se manca il bersaglio. AC 1d3 non moltiplica il consumo. Restano danno, proprietà Fuoco, gittata, INC e modalità del modello. I pacchi da 250, 500 e 750 Lx contengono una, due e tre celle Blu; il Gehemmapuker usa un Modulo Blu. Sostituire un pacco compatibile pronto richiede 1 AzP, entrambe le mani e nessuna Prova. I pacchi fino a 750 Lx si ricaricano in un’ora con caricatore portatile e fonte adeguati. Il Gehemmapuker richiede un’ora con stazione per Moduli o due ore e mezza con caricatore portatile a piena potenza. Ricariche parziali proporzionali; prezzi e stazioni nel Manuale dell’Equipaggiamento, §5.4.",
       "paragrafo": "§7.20.6",
-      "versione_manuale": "Armamenti 0.50",
-      "costo": 150,
+      "versione_manuale": "Armamenti 0.58",
+      "costo": 600,
       "cella": {
         "capacita": 15,
         "unita": "getti",
-        "ricarica_costo": 150
+        "ricarica_costo": 7.5,
+        "riserva_lx": 750
       },
       "compatibile_con": [
         "armi_distanza_corporative:lanciafiamme-purifier"
@@ -1014,20 +1005,23 @@
       "proprieta": []
     },
     {
-      "id": "serbatoio-vuoto-gehemmapuker",
-      "nome": "Serbatoio vuoto Gehemmapuker",
+      "id": "pacco-nec-gehemmapuker",
+      "nome": "Modulo Blu Gehemmapuker",
       "tipo": "munizioni",
       "catalogo": "Alleanza",
-      "famiglia": "Combustibile e serbatoi",
-      "nomi_alternativi": [],
-      "note_manuale": "Il combustibile standard è compatibile con tutti i lanciafiamme seguenti e si contabilizza in getti: una scorta da 10 getti costa 100, Reperibilità Non comune, pari a 10 per getto. Il serbatoio deve essere compatibile con il modello. Il prezzo dell’arma comprende il serbatoio, mentre il combustibile è separato. Ogni attacco consuma un getto anche se manca il bersaglio. AC 1d3 non moltiplica il consumo. Il combustibile non cambia danno, gittata, INC o proprietà del lanciafiamme. Sostituire un serbatoio compatibile già pieno e pronto richiede 1 AzP, entrambe le mani e nessuna Prova. Riempire un serbatoio dalle scorte richiede un minuto ogni 10 getti o frazione, senza Prova in condizioni ordinarie. Serbatoio e pieno si acquistano separatamente quando serve un ricambio aggiuntivo.",
+      "famiglia": "Celle energetiche",
+      "nomi_alternativi": [
+        "Serbatoio Gehemmapuker"
+      ],
+      "note_manuale": "I lanciafiamme sono emettitori termici alimentati da NEC Blu: non impiegano combustibile liquido. Un getto consuma 50 Lx. Ogni pacco ha un formato compatibile con il modello; l’alloggiamento fisso è compreso nell’arma, mentre il pacco carico si acquista separatamente. Ogni attacco consuma un getto anche se manca il bersaglio. AC 1d3 non moltiplica il consumo. Restano danno, proprietà Fuoco, gittata, INC e modalità del modello. I pacchi da 250, 500 e 750 Lx contengono una, due e tre celle Blu; il Gehemmapuker usa un Modulo Blu. Sostituire un pacco compatibile pronto richiede 1 AzP, entrambe le mani e nessuna Prova. I pacchi fino a 750 Lx si ricaricano in un’ora con caricatore portatile e fonte adeguati. Il Gehemmapuker richiede un’ora con stazione per Moduli o due ore e mezza con caricatore portatile a piena potenza. Ricariche parziali proporzionali; prezzi e stazioni nel Manuale dell’Equipaggiamento, §5.4.",
       "paragrafo": "§7.20.6",
-      "versione_manuale": "Armamenti 0.50",
-      "costo": 500,
+      "versione_manuale": "Armamenti 0.58",
+      "costo": 2100,
       "cella": {
         "capacita": 50,
         "unita": "getti",
-        "ricarica_costo": 500
+        "ricarica_costo": 25,
+        "riserva_lx": 2500
       },
       "compatibile_con": [
         "armi_distanza_corporative:gehemmapuker"

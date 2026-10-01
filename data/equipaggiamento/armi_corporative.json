@@ -8,7 +8,7 @@
     "Cybertronic": "Tutti questi modelli possiedono Affidabile +2 e cinque cariche a cella; non richiedono Sintonizzazione. La sostituzione della cella richiede 1 AzP. La Baionetta deve essere montata ed estratta per essere usata. L’Elettrosega CSB600 applica Demolitrice 1 soltanto durante l’attivazione e solo contro oggetti attaccati per romperli. La Frusta elettrificata può Immobilizzare entro 3 Q, ma la presa non infligge danno e non produce Elettricità.",
     "Fratellanza": "Scudo delle Guardie Sacre. Proprietà: Scudo grande AR 2; Lama Retrattile. Attivazione: Scudo Magico; 5 PM; Sintonizzazione 3. Manovre compatibili: quelle generali. La Deathdealer infligge sempre danno Magico. Contro creature o servitori dell’Oscura Simmetria il danno è ×2, oppure ×3 con un Magistrale. Non aggiunge anche Purificatrice 1. Il beneficio è passivo e non richiede Sintonizzazione. Vindicator, Deliverer e Castigator adottano il profilo di carica magica del §7.5.1: Chroma Rosso da 5 PM, un PM per +1d6 Magico e costo totale di Sintonizzazione 2. Purificatrice 1 resta passiva. La Sbudellatrice mantiene Sanguinante 1 e Demolitrice 1 passive, senza cariche. Lo Scudo delle Guardie Sacre si usa con una mano. Gli attacchi impiegano Armi da guerra (FOR); le Parate impiegano Difese (DES). L’AR ordinaria è 2, la Parata ravvicinata non ha bonus e la Parata a distanza subisce −4 VA. Lama Retrattile dello Scudo. Estrarre o ritrarre la lama costa 1 AzP. Quando è estratta, il danno dell’attacco diventa 1d6+1+1d4 Naturale. La lama non consuma cariche per colpo e non richiede Sintonizzazione. Scudo Magico. Dopo la Sintonizzazione, 1 AzP e una carica attivano per 5 Round +2 AR magica, +2 VA alle Parate ravvicinate e +1 VA alle Parate a distanza effettuate con lo Scudo. L’AR dello Scudo diventa 4, di cui 2 magica; la penalità della sua Parata a distanza diventa −3 VA. L’AR resta passiva anche se non si para, si fallisce la Parata o si para con un’altra arma. I bonus alla Prova valgono soltanto parando con lo Scudo. Lo Scudo Magico scade alla fine del Round di attivazione +5. Una nuova attivazione rinnova la durata e non somma i benefici. La riserva è un Chroma Rosso da 5 PM: un PM alimenta un’attivazione. La potenza è Rara e il costo totale di Sintonizzazione è 3, inclusa la riserva. Ricarica e attivazione seguono il §7.5.1; la PS Integrità segue il §7.2.1.",
     "Imperial": "Affidabilità ridotta −2 si applica agli otto modelli meccanici indicati; Catena chiodata e Claymore ne sono prive. La proprietà modifica le Complicazioni ravvicinate e non la Prova per colpire né la PS Integrità. Le due Tagliateste e la Violator applicano Plasma soltanto attivando la carica; i due Spaccateste applicano Concussivo nello stesso modo. Tutti e cinque i modelli usano celle da cinque cariche, senza Sintonizzazione. Stordire +1 del Martello Spaccateste a due mani concede +1 VA alla Manovra Stordire: la penalità ordinaria diventa −5 VA, quella di Stordire Migliorato −3 VA. Non richiede l’attivazione di una carica. La Catena chiodata Immobilizza entro 2 Q con la procedura della Frusta, senza danno né Sanguinamento durante la presa. Chainreaper mantiene Demolitrice 1 passiva. L’Ascia Tagliateste a due mani conserva il danno base 2d8+1.",
-    "Mishima": "Tutti i modelli hanno Precisa 1, salvo la Mushashi che ha Precisa 2. Non si applica alle armi ravvicinate la minore affidabilità prevista dalla convenzione Mishima per le armi a distanza. La Mushashi infligge danno Magico passivo, senza necessità di Sintonizzazione. La nota «Utilizzo Potere KI» resta da raccordare alle Tecniche Interiori del Lottatore: non introduce una nuova Abilità e non concede automaticamente Tecniche. Risorse Interiori continua a usare PM secondo il §3.5.5. La Demontooth adotta il profilo del §7.5.1: +1d6 Magico per un PM del Chroma Rosso da 5 PM, con costo totale di Sintonizzazione 2. Il suo Affondo è una compatibilità specifica del modello. La Duskdealer aggiunge +1d6 Plasma quando si attiva una carica. Il Nunchaku elettrificato aggiunge +1d4 Elettricità. Entrambi usano celle da cinque cariche e non richiedono Sintonizzazione. I due Nunchaku conservano il requisito di Contatto per Stordire, anche se la loro portata ordinaria è 2 Q.",
+    "Mishima": "Tutti i modelli hanno Precisa 1, salvo la Mushashi che ha Precisa 2. Non si applica alle armi ravvicinate la minore affidabilità prevista dalla convenzione Mishima per le armi a distanza. La Mushashi infligge danno Magico passivo, senza necessità di Sintonizzazione. La nota «Utilizzo Potere KI» resta da raccordare alle Tecniche Interiori del Lottatore: non introduce una nuova Abilità e non concede automaticamente Tecniche. Risorse Interiori continua a usare PM secondo il §3.5.5. La Demontooth adotta il profilo del §7.5.1: +1d6 Magico per un PM del Chroma Rosso da 5 PM, con costo totale di Sintonizzazione 2. Il suo Affondo è una compatibilità specifica del modello. La Duskdealer e la Katana Ryūjin aggiungono +1d6 Plasma quando si attiva una carica. Il Nunchaku elettrificato aggiunge +1d4 Elettricità. Tutti e tre usano celle da cinque cariche e non richiedono Sintonizzazione. I due Nunchaku conservano il requisito di Contatto per Stordire, anche se la loro portata ordinaria è 2 Q.",
     "Alleanza": "La Punisher ha Precisa 1 e Affidabile +1 passive. Spendendo una delle cinque cariche a cella aggiunge +2d4 danni e applica Plasma allo stesso colpo. Non richiede Sintonizzazione. Si applicano la dichiarazione preventiva e la PS Riflessi in caso di attacco fallito, salvo Attivazione Tempestiva (§7.1.4)."
   },
   "oggetti": [
@@ -1461,6 +1461,59 @@
         "Affondo",
         "Spazzata"
       ]
+    },
+    {
+      "id": "katana-ryujin",
+      "nome": "Katana Ryūjin",
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Mishima",
+      "famiglia": "Spade",
+      "nomi_alternativi": [],
+      "note_manuale": "Katana Ryūjin. Lama al plasma. Proprietà: Precisa 1. Attivazione: +1d6 Plasma; 5 cariche a cella. Manovre compatibili: Affondo, Spazzata. La Ryūjin conserva una lama metallica: a cella scarica usa il profilo ordinario della Katana. L’attivazione avvolge il filo con un impulso di plasma e porta il danno a 1d8+1+1d6, risolto come un unico colpo Naturale. Il prezzo comprende una cella ravvicinata comune NEC Blu da 250 Lx, carica: 5 attivazioni da 50 Lx. Dichiarazione, consumo e PS Riflessi seguono il §7.1.4; l’effetto Plasma segue il §7.5.1. Ricambio carico 200 cr; ricarica completa 2,5 cr in un’ora; sostituzione 1 AzP (§7.20.5).",
+      "paragrafo": "§7.1.9",
+      "versione_manuale": "Armamenti 0.58",
+      "abilita": "Armi da guerra",
+      "specializzazione": "specializzazione-spade",
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d8+1",
+        "due_mani": null
+      },
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 4,
+      "inc": null,
+      "pi": 5,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 4000,
+      "proprieta": [
+        {
+          "nome": "Precisa 1",
+          "testo": "Precisa X. Concede +X VA alle Prove per colpire con l’arma, comprese le Manovre che richiedono una Prova per colpire. Non si applica a Parate, Salvezze o altre Prove contrapposte (§7.1.3).",
+          "effetto": {
+            "va": 1
+          }
+        }
+      ],
+      "manovre": [
+        "Affondo",
+        "Spazzata"
+      ],
+      "attivazione": {
+        "testo": "+1d6 Plasma; 5 cariche a cella",
+        "danno_extra": "1d6",
+        "natura": "Plasma"
+      },
+      "munizioni": {
+        "capacita": 5,
+        "unita": "cariche",
+        "ricarica": "sostituire la cella pronta richiede 1 AzP (§7.1.4)",
+        "consumo": "una carica per attivazione (§7.1.4)",
+        "riferimento": "cella energetica sostituibile (§7.20.5)"
+      },
+      "TODO(Davide)": "A.62: attivata, la Ryūjin infligge 1d8+1+1d6 «risolto come un unico colpo Naturale», ma lo stesso paragrafo dice che aggiunge +1d6 Plasma e che l’effetto Plasma segue il §7.5.1. Il danno attivato è Naturale con l’effetto secondario del Plasma, o di natura Plasma? Nel frattempo l’app la tratta come la Lancia Duskdealer (+1d6 Plasma) e riporta la frase del manuale."
     },
     {
       "id": "lama-mushashi",
