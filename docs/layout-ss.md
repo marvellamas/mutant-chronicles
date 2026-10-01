@@ -100,7 +100,10 @@ Come oggi.
 - Tecniche Interiori: nome, costo, azione.
 - **Riempitivo:** Annotazioni.
 - **Quadratini:** nessuno.
-- **Continuazione** (decisa con il pezzo 2): la tabella delle Abilità non si spezza mai. Se la colonna destra non entra, prima si restringe il riempitivo Annotazioni fino a tre righe guida, poi i riquadri della colonna passano, dall'ultimo, a una pagina «Abilità (continua)».
+- **Continuazione** (pezzo 2, corretta con il pezzo 3): la tabella delle Abilità non si spezza mai.
+  - Se la colonna destra entra con le Annotazioni (almeno tre righe guida), resta tutto nella prima pagina.
+  - Altrimenti le Annotazioni vanno per ultime nella pagina «Abilità (continua)» e la riempiono, e i riquadri che non entrano passano lì, dall'ultimo.
+  - La continuazione usa tutta la larghezza: riquadri su una o due colonne con le Annotazioni accanto, oppure su tre colonne con le Annotazioni sotto.
 
 ### Foglio 3 — Combattimento (sempre)
 
@@ -379,7 +382,31 @@ In più, la regola dei quadratini con un massimo (sezione 3), da fare nel pezzo 
   - **Scostamenti dal piano:**
     - il piano diceva «nessuna continuazione» per il foglio 2: ora c'è, con la regola del pezzo 2;
     - c e b hanno una pagina «Abilità (continua)», quasi vuota, perché la colonna destra è stretta (94 mm). Le pagine di c restano 5: sparisce «3 (segue)», compare «2 (segue)».
-- [ ] Pezzo 3: Combattimento.
+- [x] **Pezzo 3: Combattimento** (1° ottobre 2026, branch `layout-ss`).
+  - Correzione del foglio 2: la pagina «Abilità (continua)» non è più una colonna stretta in una pagina vuota.
+    - Le Annotazioni vanno per ultime e riempiono la pagina dove finiscono; i riquadri passati stanno accanto, su una o due colonne, oppure su tre colonne con le Annotazioni sotto.
+    - Per c e b, a destra nella prima pagina entrano tutti i riquadri tranne le Annotazioni, che occupano tutta la continuazione.
+  - Foglio 3, colonna sinistra:
+    - sintesi: Iniziativa, Movimento, Azioni, Difese con Parata/Schivata Istintiva, Prove Salvezza; la fila dei nomi degli Stati non c'è più;
+    - Armi: profilo d'uso (Abilità, VA, Danno, Gittata/portata, Mani, Modalità, INC, Parata, FOR) e casella «in mano». Sotto ogni arma: colpi per caricatore («car. N», «cella N»), PI a quadratini, gradi di condizione (A.49) e proprietà;
+    - Protezioni con AR, categoria, note e PI a quadratini;
+    - Sanitario: un kit per riga con le applicazioni a quadratini;
+    - Punti Vita come riempitivo, con l'AR in evidenza.
+  - Foglio 3, colonna destra (100 mm, a tutta altezza):
+    - Ferite (con la menomazione), Affaticamento e Corruzione Oscura (su due colonne, Oscuro «irreversibile»), con la penalità dei dati accanto a ogni grado;
+    - Stati con il solo effetto numerico (`effettoStato`: «−2 fisiche, solo Passo, Passo 3 Q»); Avvelenato e Sanguinamento non hanno numeri («—»).
+  - Continuazione del foglio 3: conta solo la colonna sinistra. Passano Sanitario, Protezioni e poi le armi dall'ultima, a tutta larghezza; la colonna destra non si ripete.
+  - Collaudo, porta 3000:
+    - c: 5 pagine (1 · 2 · 2 (segue) · 3 · 4);
+    - b «solo elenco»: 7 pagine (1 · 2 · 2 (segue) · 3 · 4 · 5 · 5 (segue));
+    - Lucas: 7 pagine (1 · 2 · 3 · 3 (segue) · 4 · 4 (segue) · 5), con il lanciagranate e il pugnale nella continuazione;
+    - nessuno sbordo.
+  - Test: penalità di Corruzione e Affaticamento uguali ai dati; arma con due caricatori; kit con 5 applicazioni → 5 quadratini neri; effetto degli Stati; nomi brevi della condizione.
+  - **Scostamenti dal piano:**
+    - **gradi della condizione:** nel nome breve, senza la precisazione fra parentesi e senza doppioni (7 invece di 8: «Riparata sul campo» una volta), così stanno su una riga;
+    - **colonne delle Armi:** è rimasta anche Parata (profilo d'uso delle armi ravvicinate); AC, Qualità, Capacità e PI escono dalla tabella; le proprietà stanno in piccolo sotto l'arma;
+    - **Punti Vita:** l'altezza minima tiene una sola riga guida per le note, non due;
+    - **foglio 2:** quando le Annotazioni non entrano, la continuazione può contenere le sole Annotazioni a pagina intera (c e b).
 - [ ] Pezzo 4: Poteri.
 - [ ] Pezzo 5: Artefatti.
 - [ ] Pezzo 6: verifica e PDF.
