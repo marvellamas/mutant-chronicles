@@ -3,7 +3,8 @@
 //   node tools/collaudo_pdf.mjs
 // Senza CARTELLA usa i personaggi di prova della SS (docs/layout-ss.md, §7): PDF in
 // docs/esempi-stampa/ di c_freelance_tecnico_l5 (senza magia) e di b_fratellanza_arcanista_l12-layout
-// (magia e Artefatti, «solo elenco» e «schede complete»); Lucas solo per il controllo di sbordo.
+// (magia e Artefatti, «solo elenco» e «schede complete»), d_freelance_cibernetica_l5 (foglio Cibernetica);
+// Lucas solo per il controllo di sbordo.
 // Con CARTELLA (relativa alla radice del repo) usa tutti i .json di quella cartella e ci scrive i PDF.
 // Stampa pagine, formato e avvisi della barra di stampa.
 // Controllo: esce con codice 1 se un foglio (tranne Poteri, che si impagina da sé; continuazioni
@@ -29,6 +30,8 @@ const OUT = fileURLToPath(new URL(CARTELLA ?? 'docs/esempi-stampa', RADICE));
 const PROVA = [
   { file: 'tests/collaudo/c_freelance_tecnico_l5.json', pdf: true },
   { file: 'docs/esempi-stampa/b_fratellanza_arcanista_l12-layout.json', pdf: true },
+  // impianti installati e Umanità ridotta: il foglio Cibernetica (Equipaggiamento 0.5, cap. 7)
+  { file: 'docs/esempi-stampa/d_freelance_cibernetica_l5.json', pdf: true },
   { file: 'tests/collaudo/Lucas_liv6_2026-09-28 (2).json', pdf: false },
 ];
 const PORTA = process.env.PORTA ?? '8000';

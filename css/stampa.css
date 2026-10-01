@@ -30,6 +30,7 @@ body.vista-stampa {
   /* categorie degli oggetti, come le sezioni della tab Inventario (css/palette.css → --cat-*) */
   --ss-cat-ravvicinate: #8a3b12; --ss-cat-accessori: #5a4870; --ss-cat-armature: #4a5260; --ss-cat-munizioni: #6b4423;
   --ss-cat-sanitario: #0e6863;   --ss-cat-artefatti: #7a2f86; --ss-cat-altro: #5f5f66;
+  --ss-cat-impianti: #4a3f9a;
 
   color-scheme: light;
   background: #e6e6e6;
@@ -152,6 +153,7 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .tinta-cat-sanitario { --tinta: var(--ss-cat-sanitario); --tinta-tenue: #e5f1f0; }
 .tinta-cat-artefatti { --tinta: var(--ss-cat-artefatti); --tinta-tenue: #f3e9f5; }
 .tinta-cat-altro { --tinta: var(--ss-cat-altro); --tinta-tenue: #efeff1; }
+.tinta-cat-impianti { --tinta: var(--ss-cat-impianti); --tinta-tenue: #ecebf6; }
 
 /* riempitivo: prende tutto lo spazio che resta nella pagina o nella colonna */
 .riquadro-stampa { flex: none; }
@@ -477,4 +479,19 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .riserva-art { display: flex; flex-direction: column; gap: 0.6mm; }
 .art-colonne .chroma-punto, .elenco-sintonie-stampa .chroma-punto { width: 3mm; height: 3mm; margin-right: 1.2mm; vertical-align: -0.3mm; border-width: 0.6pt; }
 .art-note { min-height: 20mm; }
+
+/* Foglio Cibernetica (Equipaggiamento 0.5, cap. 7; Giocatore §5.21) */
+.foglio-cibernetica .foglio-corpo { gap: 2mm; }
+.cib-testa { flex: none; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 3mm; }
+.cib-testa > .riquadro-stampa, .cib-colonne > .riquadro-stampa { --tinta: var(--ss-cat-impianti); --tinta-tenue: #ecebf6; }
+.cib-umanita-testa { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2mm 4mm; align-items: start; }
+.cib-umanita .massimo { --tinta: var(--ss-cat-impianti); flex-direction: column; align-items: center; gap: 0.5mm; }
+.cib-umanita p { margin: 0.6mm 0 0; }
+.fasce-umanita td, .fasce-umanita th { padding: 0.3mm 1.2mm; text-align: center; }
+.fasce-umanita tr.attuale { font-weight: 700; background: var(--tinta-tenue); }
+.fasce-umanita .casella { vertical-align: -0.4mm; }
+.cib-fasce p { margin: 0.8mm 0 0; }
+.scheda-impianto p { margin: 0; }
+.scheda-impianto .pi-inv { padding-left: 0; margin-top: 0.6mm; }
+.chip-stampa .casella { vertical-align: -0.4mm; }
 

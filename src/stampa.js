@@ -9,7 +9,7 @@ import { valoreTiro } from './tiri.js';
 import { rigaAlLivello } from './descrizioni.js';
 import { CAMPI_ANAGRAFICA } from './character.js';
 import { checklist } from './checklist.js';
-import { aggiungiDanno, NOME_TESTO_PRECEDENTE, catalogo, normalizzaEquipaggiamento, STATO_DEPOSITO, consumabili, rapportoConversione, risolvi, infoArtefattoVoce, regoleSintonizzazione, NOMI_STATI, riserveNec } from './equipaggiamento.js';
+import { aggiungiDanno, NOME_TESTO_PRECEDENTE, catalogo, normalizzaEquipaggiamento, STATO_DEPOSITO, consumabili, rapportoConversione, risolvi, infoArtefattoVoce, regoleSintonizzazione, NOMI_STATI, riserveNec, testoEffettoOggetto } from './equipaggiamento.js';
 import { gradiTaumaturgici } from './incantesimi.js';
 import { saldoIniziale, crediti } from './dotazioni.js';
 import { SEZIONI_INVENTARIO, sezioneInventario, COLORI_MACROFAMIGLIE } from './palette.js';
@@ -439,13 +439,23 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
   if (s.equipaggiamento?.sintonizzazione?.artefatti?.length) {
     fogli.push({ id: 'artefatti', titolo: 'Artefatti', dati: artefattiStampa(s, c, dati, { conPoteri: haMagia(s) }) });
   }
+  // foglio Cibernetica (Equipaggiamento 0.5, cap. 7; docs/layout-ss.md): solo con impianti installati o
+  // Umanità ridotta; chi non ne ha non stampa il foglio e gli altri fogli non cambiano
+  const cib = ciberneticaStampa(s, c, dati);
+  if (cib) fogli.push({ id: 'cibernetica', titolo: 'Cibernetica', dati: cib });
 
   const ordinati = ordinaFogli(fogli, dati);
   // rimandi fra i fogli 5 e 6 (decisione 5: i PM delle riserve stanno nel foglio Poteri)
   const poteri = ordinati.find((f) => f.id === 'poteri');
   const artefatti = ordinati.find((f) => f.id === 'artefatti');
+  const cibernetica = ordinati.find((f) => f.id === 'cibernetica');
   if (poteri) poteri.dati.foglioArtefatti = artefatti?.numero ?? null;
   if (artefatti) artefatti.dati.foglioPoteri = poteri?.numero ?? null;
+  if (artefatti) artefatti.dati.foglioCibernetica = cibernetica?.numero ?? null;
+  if (cibernetica) {
+    cibernetica.dati.foglioInventario = ordinati.find((f) => f.id === 'inventario')?.numero ?? null;
+    cibernetica.dati.foglioArtefatti = artefatti?.numero ?? null;
+  }
 
   return {
     completa: s.completa,
@@ -598,6 +608,8 @@ export function artefattiStampa(s, creazione, dati, { conPoteri = false } = {}) 
     sintonizzazione: {
       capacita: st.capacita, usata: st.usata, gradi: st.gradi,
       daGradi: rs.capacita_per_gradi[st.gradi - 1] ?? null, talento: st.talento, bonusTalento: st.talento ? rs.talento.bonus : 0,
+      // Giocatore §5.21: riduzione per l'Umanità già compresa nella capacità (0 senza impianti)
+      umanita: st.umanita ?? 0,
       elenco: st.artefatti.map((x) => ({ nome: x.nome, costo: x.costo, sintonizzato: x.sintonizzato, deposito: x.deposito })),
     },
     schede,
@@ -607,6 +619,61 @@ export function artefattiStampa(s, creazione, dati, { conPoteri = false } = {}) 
     })),
     // decisione 5: i PM delle riserve si segnano nel foglio Poteri; senza foglio Poteri, qui
     pmQui: !conPoteri,
+  };
+}
+
+/**
+ * Foglio Cibernetica della SS (Equipaggiamento 0.5, cap. 7; Giocatore §5.21; docs/layout-ss.md): null
+ * se il personaggio non ha impianti installati e ha l'Umanità intera.
+ * - umanita: valore, quadratini (caselle piene = UMN perduta, da sinistra; le bianche sono l'Umanità
+ *   attuale), provenienza in una riga, tabella delle fasce con la riga attuale, effetti attuali;
+ * - gruppi: schede degli impianti installati per famiglia del manuale (effetti, chip, PI);
+ * - perdite registrate e recuperi concessi dal Direttore.
+ */
+export function ciberneticaStampa(s, creazione, dati) {
+  const u = s.umanita;
+  if (!u) return null;
+  const cat = catalogo(dati);
+  const voci = (creazione.equipaggiamento ?? []).map((v) => risolvi(v, cat));
+  const installati = voci.filter((r) => r.tipo === 'impianto' && r.voce.stato === (dati.regole.impianti?.stato_installato ?? 'installato'));
+  if (!installati.length && u.valore >= u.massimo) return null;
+  const eq = s.equipaggiamento;
+  const chip = voci.filter((r) => r.def?.richiede_innesto && r.voce.stato !== STATO_DEPOSITO);
+  const scheda = (r) => {
+    const def = r.def ?? {};
+    const miei = (eq?.effettiOggetti ?? []).filter((e) => e.uid === r.uid);
+    const scartati = (r.effetti ?? []).filter((e) => !miei.some((x) => x.condizione === e.condizione && x.valore === e.valore && (x.tipo ?? 'va') === (e.tipo ?? 'va')));
+    return {
+      uid: r.uid, nome: r.nome, cybertronic: def.catalogo === 'Cybertronic', umn: def.umn ?? r.voce.personalizzato?.umn ?? 0, paragrafo: def.paragrafo ?? null,
+      breve: def.effetto_breve ?? null,
+      effetti: miei.map((e) => testoEffettoOggetto(e)),
+      scartati: scartati.map((e) => testoEffettoOggetto(e)),
+      sin: def.innesto === 'interfaccia_neurale',
+      cartucce: def.cartucce ?? null,
+      chip: def.innesto === 'processore' ? chip.filter((c) => c.def.richiede_innesto === def.innesto).map((c) => ({ nome: c.nome, inserito: c.voce.stato === 'in_uso' })) : null,
+      piMax: def.pi ?? null, ps: def.ps_int ?? null,
+      installazione: def.installazione_costo ?? null,
+    };
+  };
+  const famiglie = [...new Set(installati.map((r) => r.def?.famiglia ?? 'Impianti personalizzati'))];
+  const prov = u.provenienza.righe.length > 1 ? testoProvenienza(u.provenienza, { totale: null, separatore: ' · ', note: false }) : null;
+  return {
+    umanita: {
+      valore: u.valore, massimo: u.massimo, perduta: u.massimo - u.valore, condizione: u.condizione, provenienza: prov,
+      fasce: (dati.regole.umanita?.fasce ?? []).map((f) => ({
+        umn: f.min === f.max ? String(f.min) : `${f.max}–${f.min}`, perduti: u.massimo - f.max === u.massimo - f.min ? String(u.massimo - f.max) : `${u.massimo - f.max}–${u.massimo - f.min}`,
+        condizione: f.condizione, pm: f.pm_massimi, ps: f.ps_magia_corruzione, sintonizzazione: f.sintonizzazione, attuale: u.valore >= f.min && u.valore <= f.max,
+      })),
+      pm: s.pm, pmUmanita: s.pmUmanita ?? 0, pmMinimo: u.pmMinimo,
+      ps: u.modificatori.ps_magia_corruzione,
+      sintonizzazione: eq?.sintonizzazione ? { capacita: eq.sintonizzazione.capacita, riduzione: eq.sintonizzazione.umanita ?? 0 } : null,
+      sintonizzazioneMinimo: u.sintonizzazioneMinimo,
+      risorseInteriori: u.risorseInteriori,
+    },
+    gruppi: famiglie.map((f) => ({ famiglia: f, schede: installati.filter((r) => (r.def?.famiglia ?? 'Impianti personalizzati') === f).map(scheda) })),
+    perdite: u.perdite.map((p) => ({ nome: p.nome, umn: p.umn, stato: p.stato })),
+    recuperi: u.recuperi.map((x) => ({ punti: x.punti, nota: x.nota })),
+    chipDurata: dati.regole.impianti?.chip?.durata_minuti ?? null, chipIntervallo: dati.regole.impianti?.chip?.intervallo_ore ?? null,
   };
 }
 
@@ -706,7 +773,8 @@ export function righeElencoIncantesimi(macrofamiglie) {
  */
 export const STATI_INVENTARIO_STAMPA = [
   { id: 'conse', sigla: 'sé', nome: 'Con sé', stati: [null, 'pronta', 'trasportato'] },
-  { id: 'inuso', sigla: 'uso', nome: 'In uso (impugnato, imbracciato, indossato, montato)', stati: ['impugnata', 'imbracciato', 'indossata', 'in_uso'] },
+  // l'impianto installato (Equipaggiamento §7.1) è «in uso»: stessa casella, legenda invariata
+  { id: 'inuso', sigla: 'uso', nome: 'In uso (impugnato, imbracciato, indossato, montato)', stati: ['impugnata', 'imbracciato', 'indossata', 'in_uso', 'installato'] },
   { id: 'zaino', sigla: 'zai', nome: 'Zaino', stati: ['zaino'] },
   { id: 'deposito', sigla: 'dep', nome: 'Deposito comune', stati: [STATO_DEPOSITO] },
 ];
@@ -751,7 +819,8 @@ export function inventarioStampa(s, dati, creditiIniziali = null) {
       note: tronca(String(o.voce.note ?? '').trim(), LIMITI_STAMPA.frase),
       costo: Number.isInteger(o.def?.costo) ? crediti(o.def.costo) : '—',
       qualita: x?.qualita ?? o.def?.qualita ?? '—',
-      peso: p === null ? 'da def.' : kg(p * q),
+      // Equipaggiamento §7.1: l'impianto installato è parte del corpo, fuori dal carico
+      peso: o.voce.stato === 'installato' ? 'corpo' : p === null ? 'da def.' : kg(p * q),
       stato: statoInventarioStampa(o.voce.stato),
       piMax: x?.piMax ?? null,
       ps: x?.ps ?? null,
@@ -805,8 +874,9 @@ export function schemaQuadratini(massimo, { compatto = false, bloccoInPiu = fals
  * Fogli della SS nell'ordine di stampa (docs/layout-ss.md, §5.1 e decisione 9.1): prima i sempre
  * presenti (numero fisso 1–4), poi quelli che si stampano solo con un contenuto. `presente`
  * (scheda, dati) dice se il foglio ha contenuto; `icona`: immagine del tab della SD (img/pagine/).
- * Inventario e Artefatti arrivano con i pezzi 1 e 5; Cibernetica e Veicoli restano fuori finché i
- * tab sono «In attesa del manuale» (regole.json → tab_in_arrivo).
+ * Inventario e Artefatti arrivano con i pezzi 1 e 5; Cibernetica con il lotto 3 dell'Equipaggiamento
+ * 0.5 (solo con impianti installati o Umanità ridotta); Veicoli resta fuori finché il tab è «In attesa
+ * del manuale» (regole.json → tab_in_arrivo).
  */
 export const FOGLI = [
   { id: 'identita', sempre: true },
@@ -815,8 +885,7 @@ export const FOGLI = [
   { id: 'inventario', sempre: true },
   { id: 'poteri', icona: 'magia' },
   { id: 'artefatti' },
-  // foglio del lotto 3 (Equipaggiamento 0.5, cap. 7): in preparazione
-  { id: 'cibernetica', presente: () => false },
+  { id: 'cibernetica' },
   { id: 'veicoli', presente: (s, dati) => !dati.regole?.tab_in_arrivo?.veicoli },
 ];
 const ID_FOGLI = FOGLI.map((f) => f.id);

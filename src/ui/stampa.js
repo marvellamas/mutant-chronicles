@@ -30,7 +30,7 @@ export function esciDallaStampa() {
   document.getElementById('stile-stampa')?.remove();
 }
 
-const corpi = { identita: foglioIdentita, abilita: foglioAbilita, combattimento: foglioCombattimento, inventario: foglioInventario, poteri: foglioMagia, artefatti: foglioArtefatti };
+const corpi = { identita: foglioIdentita, abilita: foglioAbilita, combattimento: foglioCombattimento, inventario: foglioInventario, poteri: foglioMagia, artefatti: foglioArtefatti, cibernetica: foglioCibernetica };
 
 function creaFoglio(id, titolo, dati, piede, corpo = corpi[id]) {
   return h('section', { class: `foglio foglio-${id}`, 'aria-label': titolo, dataset: { foglio: id } },
@@ -121,6 +121,13 @@ export function renderStampa({ stampa, torna, opzioni = null, cambiaOpzioni = nu
       if (f.classList.contains('foglio-abilita') && !f.classList.contains('seguito')) {
         const { pagine } = impaginaAbilita(f, stampa.fogli.find((x) => x.id === 'abilita').dati, stampa.piede);
         if (pagine > 1) avvisi.append(h('p', {}, `Il foglio Abilità è su ${pagine} pagine.`));
+      }
+      if (f.classList.contains('foglio-cibernetica') && f.classList.contains('seguito')) continue; // impaginate da impaginaCibernetica
+      if (f.classList.contains('foglio-cibernetica')) {
+        const pagine = impaginaCibernetica(f, stampa.fogli.find((x) => x.id === 'cibernetica').dati, stampa.piede);
+        if (pagine > 1) avvisi.append(h('p', {}, `Il foglio Cibernetica è su ${pagine} pagine.`));
+        if (eccede(f.querySelector('.foglio-corpo'))) { f.dataset.fuori = '1'; fuori.push('Cibernetica'); }
+        continue;
       }
       if (f.classList.contains('foglio-artefatti') && f.classList.contains('seguito')) continue; // impaginate da impaginaArtefatti
       if (f.classList.contains('foglio-artefatti')) {
@@ -601,7 +608,8 @@ function foglioArtefatti(d) {
         h('div', { class: 'massimo' }, h('span', {}, 'capacità'), h('span', { class: 'valore' }, String(s.capacita))),
         h('div', {},
           h('p', { class: 'piccolo' }, `${s.daGradi ?? '—'} per ${s.gradi} Grad${s.gradi === 1 ? 'o' : 'i'} complessiv${s.gradi === 1 ? 'o' : 'i'}`,
-            s.talento ? `, +${s.bonusTalento} da ${s.talento}` : '', ', prima dell’eventuale riduzione per Umanità (§5.21).'),
+            s.talento ? `, +${s.bonusTalento} da ${s.talento}` : '',
+            s.umanita ? `, ${segno(s.umanita)} per l’Umanità (§5.21${d.foglioCibernetica ? `, foglio ${d.foglioCibernetica}` : ''}).` : ', prima dell’eventuale riduzione per Umanità (§5.21).'),
           h('p', { class: 'piccolo' }, `Occupati ora: ${s.usata} (caselle piene: Artefatti segnati «sintonizzato»).`),
           quadratini(s.capacita, { compatto: true, pieni: s.usata })),
         h('ul', { class: 'elenco-sintonie-stampa' }, s.elenco.map((x) => h('li', {}, casellaSi(x.sintonizzato), ` ${x.nome} · ${x.costo}${x.deposito ? ' · deposito comune' : ''}`))))),
@@ -625,6 +633,91 @@ function impaginaArtefatti(foglio, d, piede) {
   const note = corpo.querySelector('.art-note');
   const seguito = h('div', { class: 'art-colonne' });
   const f = creaFoglio('artefatti', 'Artefatti (continua)', d, piede, () => [seguito]);
+  f.classList.add('seguito');
+  f.querySelector('.foglio-piede').textContent = foglio.querySelector('.foglio-piede').textContent;
+  foglio.after(f);
+  f.querySelector('.foglio-corpo').append(note);
+  for (let giro = 0; giro < 50 && eccede(corpo) && colonne.children.length > 1; giro++) seguito.prepend(colonne.lastElementChild);
+  return 2;
+}
+
+// ---------------------------------------------------------------------------
+// Foglio Cibernetica (Equipaggiamento 0.5, cap. 7; Giocatore §5.21; docs/layout-ss.md): in testa
+// l'Umanità (valore, quadratini con le caselle piene = UMN perduta, provenienza) e accanto la tabella
+// delle fasce con la riga attuale e gli effetti attuali; poi le schede degli impianti installati per
+// famiglia su tre colonne, le perdite e i recuperi, il rimando al foglio 4; in fondo le Note.
+
+function testaCibernetica(d) {
+  const u = d.umanita;
+  const tabFasce = h('table', { class: 'tabella-stampa fasce-umanita' },
+    h('thead', {}, h('tr', {}, ['', 'UMN', 'Caselle piene', 'Condizione', 'PM Max', 'PS Magia vs Corr.', 'Sintonizz.'].map((c) => h('th', {}, c)))),
+    h('tbody', {}, u.fasce.map((f) => h('tr', { class: f.attuale ? 'attuale' : null },
+      h('td', {}, casellaSi(f.attuale)), h('th', { scope: 'row' }, f.umn), h('td', {}, f.perduti), h('td', {}, f.condizione),
+      h('td', {}, f.pm ? segno(f.pm) : '0'), h('td', {}, f.ps ? segno(f.ps) : '0'), h('td', {}, f.sintonizzazione ? segno(f.sintonizzazione) : '0')))));
+  const effetti = [
+    `PM Massimi ${u.pm ?? '—'}${u.pmUmanita ? ` (${segno(u.pmUmanita)} per l’Umanità, mai sotto ${u.pmMinimo})` : ''}`,
+    u.ps ? `PS di Magia ${segno(u.ps)} solo contro la Corruzione` : null,
+    u.sintonizzazione ? `Capacità di Sintonizzazione ${u.sintonizzazione.capacita}${u.sintonizzazione.riduzione ? ` (${segno(u.sintonizzazione.riduzione)}, minimo ${u.sintonizzazioneMinimo}${d.foglioArtefatti ? `, foglio ${d.foglioArtefatti}` : ''})` : ''}` : null,
+    u.risorseInteriori ? null : 'a UMN 0 niente Risorse Interiori, né Tecniche che ne dipendono',
+  ].filter(Boolean);
+  return h('div', { class: 'cib-testa' },
+    box({ titolo: 'Umanità (§5.21)', classe: 'cib-umanita' },
+      h('div', { class: 'cib-umanita-testa' },
+        h('div', { class: 'massimo' }, h('span', {}, 'attuale'), h('span', { class: 'valore' }, String(u.valore)), h('span', {}, `su ${u.massimo}`)),
+        h('div', {},
+          quadratini(u.massimo, { compatto: true, pieni: u.perduta }),
+          h('p', { class: 'piccolo' }, 'Caselle piene = UMN perduta: alla prossima installazione si anneriscono da sinistra quante il costo UMN. Le bianche sono l’Umanità attuale; nessun recupero naturale.'))),
+      u.provenienza ? h('p', { class: 'piccolo provenienza-art' }, u.provenienza) : null,
+      h('p', {}, h('strong', {}, `${u.condizione}: `), effetti.join(' · '), '.')),
+    box({ titolo: 'Fasce di Umanità', classe: 'cib-fasce' }, tabFasce,
+      h('p', { class: 'piccolo' }, 'Vale soltanto la fascia del valore attuale. PM Massimi mai sotto 1; Sintonizzazione mai sotto 0; a UMN 0 niente Risorse Interiori.')));
+}
+
+function schedaImpianto(d, a, famiglia) {
+  return h('article', { class: 'scheda-artefatto scheda-impianto riquadro-stampa' },
+    h('h2', {}, a.nome, h('span', { class: 'sigla' }, ` · UMN ${a.umn}${a.paragrafo ? ` · ${a.paragrafo}` : ''}`)),
+    h('div', { class: 'contenuto' },
+      h('p', { class: 'sigla' }, famiglia),
+      a.breve && !a.effetti.length ? h('p', {}, a.breve) : null,
+      a.effetti.length ? h('p', {}, h('strong', {}, 'Effetti: '), a.effetti.join(' · ')) : null,
+      a.scartati.length ? h('p', { class: 'piccolo' }, `Non si somma con un beneficio equivalente già attivo (§7.1): ${a.scartati.join(' · ')}.`) : null,
+      a.sin ? h('p', { class: 'piccolo' }, 'Armi e dispositivi con SIN: bonus della loro scheda (foglio 3).') : null,
+      a.cartucce ? h('p', { class: 'piccolo' }, `Cartucce ${a.cartucce}, vendute a parte (§7.9).`) : null,
+      a.chip ? h('div', { class: 'chip-stampa' }, h('p', {}, h('strong', {}, 'Chip: '), a.chip.length ? a.chip.map((c, i) => [i ? ' · ' : null, casellaSi(c.inserito), ` ${c.nome}`]) : 'nessuno'),
+        h('p', { class: 'piccolo' }, `Uno alla volta, ${d.chipDurata ?? 30} minuti, una attivazione ogni ${d.chipIntervallo ?? 24} ore; non per combattimento, Incantesimi, Risorse Interiori e Sintonizzazione (§7.10). Ultima attivazione: ________`)) : null,
+      a.piMax ? h('div', { class: 'pi-inv' }, h('span', { class: 'etichetta-colpi' }, 'PI'), quadratini(a.piMax, { compatto: true }),
+        h('span', { class: 'sigla' }, ` PS Integrità ${a.ps ?? '—'}`)) : null));
+}
+
+function foglioCibernetica(d) {
+  const schede = d.gruppi.flatMap((g) => g.schede.map((a) => schedaImpianto(d, a, g.famiglia)));
+  const stati = { installato: 'installato', tolto: 'tolto: la perdita resta', assente: 'non più nell’inventario: la perdita resta' };
+  return [
+    testaCibernetica(d),
+    h('div', { class: 'art-colonne cib-colonne' },
+      schede.length ? schede : box({ titolo: 'Impianti installati' }, h('p', {}, 'Nessun impianto installato.')),
+      box({ titolo: 'Perdite e recuperi di Umanità', classe: 'cib-perdite' },
+        d.perdite.length ? h('ul', { class: 'elenco-sintonie-stampa' }, d.perdite.map((p) => h('li', {}, h('strong', {}, `−${p.umn}`), ` ${p.nome} · ${stati[p.stato]}`))) : h('p', {}, 'Nessuna perdita registrata.'),
+        d.recuperi.length ? h('ul', { class: 'elenco-sintonie-stampa' }, d.recuperi.map((x) => h('li', {}, h('strong', {}, `+${x.punti}`), ` ${x.nota || 'recupero concesso dal Direttore'}`))) : null,
+        h('p', { class: 'piccolo' }, `Impianti non installati, chip e PI: foglio ${d.foglioInventario ?? 4} (Inventario). Installazione in una struttura medica attrezzata, a parte (§7.1).`))),
+    box({ titolo: 'Note sulla cibernetica', riempitivo: true, classe: 'art-note cib-note' }, righeGuida()),
+  ];
+}
+
+/**
+ * Impagina il foglio Cibernetica come il foglio Artefatti: se con le Note la pagina non entra, le
+ * schede passano, dall'ultima, a «Cibernetica (continua)», che riceve anche le Note. Se senza le Note
+ * tutto entra, le Note si tolgono: niente pagina con le sole righe guida.
+ */
+function impaginaCibernetica(foglio, d, piede) {
+  const corpo = foglio.querySelector('.foglio-corpo');
+  if (!eccede(corpo)) return 1;
+  const colonne = corpo.querySelector('.cib-colonne');
+  const note = corpo.querySelector('.cib-note');
+  note.remove();
+  if (!eccede(corpo)) return 1;
+  const seguito = h('div', { class: 'art-colonne cib-colonne' });
+  const f = creaFoglio('cibernetica', 'Cibernetica (continua)', d, piede, () => [seguito]);
   f.classList.add('seguito');
   f.querySelector('.foglio-piede').textContent = foglio.querySelector('.foglio-piede').textContent;
   foglio.after(f);

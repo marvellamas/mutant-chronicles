@@ -216,14 +216,44 @@ Si stampa se il personaggio possiede almeno un Artefatto (sintonizzato o no) o u
 - **Riempitivo:** Note sugli Artefatti (righe guida).
 - **Continuazione:** sì, per le schede, come le schede degli incantesimi (una scheda non si spezza).
 
-### Fogli 7 e 8 — Cibernetica e Veicoli (segnaposto)
+### Foglio 7 — Cibernetica (solo con impianti installati o Umanità ridotta)
 
-Non si stampano finché i tab sono «In attesa del manuale» (`regole.json` → `tab_in_arrivo`).
-Quando arriveranno i dati:
-- Cibernetica: come l'Inventario, con l'Umanità (Giocatore §5.21) in testa e i suoi quadratini;
-- Veicoli: una scheda per veicolo, sul modello della scheda dello Scout di Davide.
+Fatto con il lotto 3 dell'Equipaggiamento 0.5 (cap. 7; Giocatore §5.21; `docs/ricognizione-cibernetica.md`).
+Dati da `ciberneticaStampa` in `src/stampa.js`, disegno in `foglioCibernetica` di `src/ui/stampa.js`.
 
-La regola del generatore è già quella giusta: un foglio senza contenuto non esiste.
+- **Quando si stampa:** se il personaggio ha almeno un impianto «installato» oppure l'Umanità sotto 20
+  (impianti tolti: la perdita resta). Chi non ha impianti non stampa il foglio e gli altri fogli non
+  cambiano.
+- **Testa, a sinistra: Umanità.** Valore attuale nel riquadro «su 20», 20 quadratini e la provenienza in
+  una riga (partenza, una voce per impianto, recuperi).
+  - **Verso dei quadratini:** le caselle piene sono l'UMN perduta, prestampate da sinistra. Alla prossima
+    installazione si anneriscono, sempre da sinistra, quante il costo UMN. Le bianche restanti sono
+    l'Umanità attuale; il numero a destra di ogni fila conta le caselle piene.
+  - Scelto così perché è lo stesso verso della sintonizzazione nel foglio Artefatti (piene = occupate):
+    nero è ciò che è consumato, e non c'è recupero naturale da cancellare.
+  - Sotto, la condizione e gli effetti attuali: PM Massimi con la riduzione, PS di Magia contro la
+    Corruzione, Capacità di Sintonizzazione con il rimando al foglio Artefatti, Risorse Interiori a 0.
+- **Testa, a destra: Fasce di Umanità.** La tabella del §5.21, con UMN, caselle piene corrispondenti,
+  condizione e i tre modificatori; la riga attuale ha la casella piena e il grassetto.
+- **Corpo:** una scheda per impianto installato, su tre colonne come gli Artefatti, nel colore della
+  categoria (indaco, `--ss-cat-impianti`). Ogni scheda ha:
+  - famiglia del manuale, effetti (o la descrizione breve se non ha effetti numerici) e i benefici
+    equivalenti scartati;
+  - chip del Processore con la casella «inserito» e lo spazio per l'ultima attivazione;
+  - PI a quadratini e PS Integrità.
+- **Perdite e recuperi:** l'elenco del registro (installato / tolto / non più nell'inventario) e i
+  recuperi concessi dal Direttore. Rimando al foglio 4 per gli impianti non installati, i chip e i PI.
+- **Riempitivo:** Note sulla cibernetica (righe guida).
+- **Continuazione:** come gli Artefatti. Se tutto entra senza le Note, le Note si tolgono (niente pagina
+  con le sole righe guida).
+- **Foglio 4:** l'impianto installato ha la casella «uso» (stessa legenda) e peso «corpo»: è fuori dal
+  carico.
+
+### Foglio 8 — Veicoli (segnaposto)
+
+Non si stampa finché il tab è «In attesa del manuale» (`regole.json` → `tab_in_arrivo`). Quando
+arriveranno i dati: una scheda per veicolo, sul modello della scheda dello Scout di Davide. La regola del
+generatore è già quella giusta: un foglio senza contenuto non esiste.
 
 ## 5. Ordine, numerazione, opzioni
 
@@ -271,6 +301,8 @@ In `docs/esempi-stampa/`, rigenerati con `tools/collaudo_pdf.mjs`:
 
 - **Senza magia: `c_freelance_tecnico_l5`** (Tecnico 5°). Tre Tecniche Interiori (foglio 2), due armi con caricatori, nove oggetti. Proposta al posto di «a», che ha una sola arma e cinque oggetti.
 - **Con magia e Artefatti: `b_fratellanza_arcanista_l12-layout`** (Arcanista 12°). 31 incantesimi (Poteri su più pagine), due Artefatti e due riserve di Chroma, un oggetto nel deposito comune, un grado di Corruzione nella sessione. PDF «solo elenco» e «schede complete».
+
+- **Con impianti: `d_freelance_cibernetica_l5`** (il collaudo c con sei impianti installati, una gamba sostitutiva tolta, due chip e un recupero di 1). UMN 2, Transumano. Foglio Cibernetica su due pagine. Si rigenera con `node tools/esempio_cibernetica.mjs`.
 
 In più, senza PDF: `Lucas_liv6_2026-09-28 (2)` nel controllo di sbordo, per l'Inventario lungo (22 oggetti, dotazione guidata).
 

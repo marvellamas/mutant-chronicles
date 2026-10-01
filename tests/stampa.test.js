@@ -215,8 +215,9 @@ test('numerazione: «foglio N» fisso e «pagina P di T» reale, anche con le pa
   // stampando solo alcuni fogli il numero del foglio resta quello fisso; le pagine sono quelle stampate
   const solo = numeraPagine([{ id: 'poteri' }], st.fogli);
   assert.deepEqual([solo[0].foglio, solo[0].pagina, solo[0].totale], [5, 1, 1]);
-  // senza magia niente foglio Poteri; Cibernetica e Veicoli non si stampano finché i tab sono in attesa
-  assert.deepEqual(ordinaFogli([{ id: 'veicoli' }, { id: 'abilita' }, { id: 'cibernetica' }, { id: 'identita' }], dati).map((f) => [f.id, f.numero]), [['identita', 1], ['abilita', 2]]);
+  // senza magia niente foglio Poteri; Veicoli non si stampa finché il tab è in attesa; Cibernetica (se
+  // preparato: impianti o Umanità ridotta) dopo Artefatti
+  assert.deepEqual(ordinaFogli([{ id: 'veicoli' }, { id: 'abilita' }, { id: 'cibernetica' }, { id: 'identita' }], dati).map((f) => [f.id, f.numero]), [['identita', 1], ['abilita', 2], ['cibernetica', 3]]);
   assert.equal(iconaFoglio('poteri'), 'magia');
   assert.equal(iconaFoglio('combattimento'), 'combattimento');
 });

@@ -162,6 +162,30 @@ test(`formato ${VERSIONE_FORMATO}: Umanità nel file; l’Interfaccia neurale «
   assert.deepEqual(riletto.umanita, scelte.umanita);
 });
 
+test('SS: foglio Cibernetica solo con impianti installati o Umanità ridotta, dopo Artefatti', async () => {
+  const { preparaStampa } = await import('../src/stampa.js');
+  // senza impianti: nessun foglio (c, b, Lucas)
+  for (const f of ['c_freelance_tecnico_l5.json', 'b_fratellanza_arcanista_l12.json', 'Lucas_liv6_2026-09-28 (2).json']) {
+    const p = leggi(f);
+    assert.ok(!preparaStampa({ creazione: normalizza(p.creazione, dati).scelte, livelli: p.livelli }, dati).fogli.some((x) => x.id === 'cibernetica'), f);
+  }
+  // personaggio di prova del collaudo PDF (docs/esempi-stampa): UMN 2, Transumano
+  const d = deserializzaPersonaggio(readFileSync(new URL('../docs/esempi-stampa/d_freelance_cibernetica_l5.json', import.meta.url), 'utf8'));
+  const st = preparaStampa({ creazione: normalizza(d.creazione, dati).scelte, livelli: d.livelli }, dati);
+  assert.deepEqual(st.fogli.map((f) => [f.id, f.numero]).slice(-2), [['inventario', 4], ['cibernetica', 5]]);
+  const cib = st.fogli.find((f) => f.id === 'cibernetica').dati;
+  assert.deepEqual([cib.umanita.valore, cib.umanita.perduta, cib.umanita.condizione, cib.foglioInventario], [2, 18, 'Transumano', 4]);
+  assert.deepEqual(cib.umanita.fasce.filter((f) => f.attuale).map((f) => [f.umn, f.perduti]), [['3–1', '17–19']]);
+  assert.equal(cib.gruppi.flatMap((g) => g.schede).length, 6);
+  assert.deepEqual(cib.gruppi.find((g) => g.famiglia === 'Processore neurale di Abilità').schede[0].chip, [
+    { nome: 'Chip Competenza avanzata: Tecnologia', inserito: true }, { nome: 'Chip Assistenza: Percezione', inserito: false }]);
+  assert.deepEqual(cib.perdite.at(-1), { nome: 'Gamba sostitutiva', umn: 2, stato: 'tolto' });
+  // Umanità ridotta senza impianti installati (tutti tolti): il foglio c'è ancora
+  const tolti = normalizza({ ...d.creazione, equipaggiamento: d.creazione.equipaggiamento.map((v) => (v.stato === 'installato' ? { ...v, stato: 'zaino' } : v)) }, dati).scelte;
+  const st2 = preparaStampa({ creazione: tolti, livelli: d.livelli }, dati);
+  assert.deepEqual(st2.fogli.find((f) => f.id === 'cibernetica').dati.gruppi, []);
+});
+
 test('personaggi senza impianti: c, b e Lucas invariati, nessun campo Umanità nel file', () => {
   for (const f of ['c_freelance_tecnico_l5.json', 'b_fratellanza_arcanista_l12.json', 'Lucas_liv6_2026-09-28 (2).json']) {
     const p = leggi(f);
