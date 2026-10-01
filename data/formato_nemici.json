@@ -1,0 +1,91 @@
+{
+  "versione_manuale": "Giocatore 0.45 (Google Doc del 01/10/2026)",
+  "fonte": "Il Giocatore 0.45 non ha un capitolo dei nemici. Formato proposto da Marcello e Claude Code il 01/10/2026 (docs/tavolo-direttore.md, decisione 4; per-davide A.73): un nemico è un tipo con i numeri già fatti, come li scrive il master. Le regole che usa sono quelle dei PG: AR «totale, di cui magica» (§5.24), Difese (§5.9), Iniziativa (§2.14, parità §5.1), Movimento (§2.14), Prove Salvezza (§1.2.3), Stati (§5.18).",
+  "_nota": "Questo file descrive i campi di un file nemico (nemici/<id>.json sul server del Tavolo del Master). src/validate.js → validaNemico lo legge: tipi «costante», «testo» (modello), «intero» (min, max, non_oltre: un campo fratello), «dadi», «scelta» (valori o valori_da), «lista» (voce, min), «oggetto» (campi), «mappa» (chiavi_da, valore, tutte); per ogni campo «obbligatorio», «richiesto_se» e «ammesso_se» ({ campo fratello: valore }). valori_da / chiavi_da: caratteristiche (sigle), salvezze (id), stati (regole.json → stati.elenco), modalita_di_fuoco (regole.json), nature_danno (questo file). Aggiungere un campo = aggiungere una voce qui.",
+  "TODO(Davide)": [
+    "A.73: formato dei nemici. Mancano campi, o il bestiario avrà un formato suo? Nel frattempo: questo formato, a numeri già fatti.",
+    "A.73: Caratteristiche dei nemici. Nel frattempo facoltative: servono solo DES e INT per la parità d'Iniziativa (§5.1); senza, la parità con un nemico si decide con lo spareggio del dado.",
+    "A.73: Ferite e Affaticamento dei nemici (§5.14). Nel frattempo la plancia tiene solo PV e Stati dei nemici.",
+    "A.73: incantesimi dei nemici (VA di lancio, costo in PM). Nel frattempo nome, VA facoltativo e note, senza «Lancia!».",
+    "A.73: Corsa e Scatto dei nemici. Nel frattempo facoltativi: se mancano valgono il doppio e il triplo del Passo, come i 6/12/18 Q del §2.14."
+  ],
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "nature_danno": ["Naturale", "Magico", "Etereo"],
+  "_nota_nature_danno": "Giocatore §5.24: Naturale e Magico sono assorbiti da qualsiasi protezione pertinente, Etereo solo dalla componente magica.",
+  "campi": {
+    "formato": { "tipo": "costante", "valore": "mutant-nemico", "obbligatorio": true },
+    "versione": { "tipo": "costante", "valore": 1, "obbligatorio": true },
+    "id": { "tipo": "testo", "modello": "^[a-z0-9-]{1,60}$", "obbligatorio": true, "descrizione": "Identificativo del tipo: minuscole, cifre e trattini; è anche il nome del file." },
+    "nome": { "tipo": "testo", "obbligatorio": true, "descrizione": "Nome del tipo; le copie nello scontro diventano «Nome 1», «Nome 2»…" },
+    "fonte": { "tipo": "testo", "obbligatorio": false, "descrizione": "Chi l'ha scritto o da dove viene (per esempio «master» o un paragrafo)." },
+    "caratteristiche": {
+      "tipo": "mappa", "chiavi_da": "caratteristiche", "tutte": false, "obbligatorio": false,
+      "valore": { "tipo": "intero", "min": 0 },
+      "descrizione": "Facoltative (TODO(Davide) A.73). DES e INT servono per la parità d'Iniziativa (§5.1)."
+    },
+    "pv": { "tipo": "intero", "min": 1, "obbligatorio": true, "descrizione": "PV massimi; ogni copia nello scontro parte da qui." },
+    "pm": { "tipo": "intero", "min": 0, "obbligatorio": false, "descrizione": "PM massimi, se ne ha." },
+    "ar": {
+      "tipo": "oggetto", "obbligatorio": true,
+      "descrizione": "Armatura come per i PG: «AR totale, di cui magica» (§5.24); contro il danno Etereo vale solo la magica.",
+      "campi": {
+        "totale": { "tipo": "intero", "min": 0, "obbligatorio": true },
+        "magica": { "tipo": "intero", "min": 0, "non_oltre": "totale", "obbligatorio": true }
+      }
+    },
+    "difese": { "tipo": "intero", "min": 0, "obbligatorio": true, "descrizione": "VA delle Difese (§5.9)." },
+    "iniziativa": { "tipo": "intero", "obbligatorio": true, "descrizione": "Valore di Iniziativa senza il dado; in combattimento si aggiunge 1d10 (§2.14)." },
+    "movimento": {
+      "tipo": "oggetto", "obbligatorio": true,
+      "descrizione": "In Q (§2.14). Corsa e Scatto facoltativi (TODO(Davide) A.73): se mancano, il doppio e il triplo del Passo.",
+      "campi": {
+        "passo": { "tipo": "intero", "min": 0, "obbligatorio": true },
+        "corsa": { "tipo": "intero", "min": 0, "obbligatorio": false },
+        "scatto": { "tipo": "intero", "min": 0, "obbligatorio": false }
+      }
+    },
+    "salvezze": {
+      "tipo": "mappa", "chiavi_da": "salvezze", "tutte": true, "obbligatorio": true,
+      "valore": { "tipo": "intero", "min": 0 },
+      "descrizione": "Valori delle quattro Prove Salvezza (§1.2.3)."
+    },
+    "attacchi": {
+      "tipo": "lista", "min": 0, "obbligatorio": true,
+      "descrizione": "Attacchi con i numeri già fatti.",
+      "voce": {
+        "tipo": "oggetto",
+        "campi": {
+          "nome": { "tipo": "testo", "obbligatorio": true },
+          "tipo": { "tipo": "scelta", "valori": ["ravvicinato", "distanza"], "obbligatorio": true },
+          "va": { "tipo": "intero", "obbligatorio": true, "descrizione": "VA della Prova per colpire." },
+          "danno": { "tipo": "dadi", "obbligatorio": true, "descrizione": "Dadi e bonus, come nel catalogo (es. «1d8+2»)." },
+          "natura": { "tipo": "scelta", "valori_da": "nature_danno", "obbligatorio": true, "descrizione": "§5.24." },
+          "proprieta": { "tipo": "lista", "voce": { "tipo": "testo" }, "obbligatorio": false, "descrizione": "Proprietà del danno o dell'arma, come testo (es. «Fuoco», «Perforante 2»)." },
+          "portata_q": { "tipo": "intero", "min": 1, "obbligatorio": false, "richiesto_se": { "tipo": "ravvicinato" }, "ammesso_se": { "tipo": "ravvicinato" } },
+          "gittata_q": { "tipo": "intero", "min": 1, "obbligatorio": false, "richiesto_se": { "tipo": "distanza" }, "ammesso_se": { "tipo": "distanza" } },
+          "modalita": { "tipo": "lista", "min": 1, "voce": { "tipo": "scelta", "valori_da": "modalita_di_fuoco" }, "obbligatorio": false, "richiesto_se": { "tipo": "distanza" }, "ammesso_se": { "tipo": "distanza" }, "descrizione": "Modalità di fuoco (§5.10), sigle come nel catalogo." },
+          "ac": { "tipo": "intero", "min": 1, "obbligatorio": false, "descrizione": "Applicazioni del colpo, come nel catalogo delle armi a distanza." },
+          "rif": { "tipo": "testo", "modello": "^[a-z_]+:[a-z0-9-]+$", "obbligatorio": false, "descrizione": "Arma del catalogo a cui somiglia (es. «armi:spada-lunga»), solo come riferimento: i numeri restano quelli scritti qui." },
+          "note": { "tipo": "testo", "obbligatorio": false }
+        }
+      }
+    },
+    "stati": { "tipo": "lista", "voce": { "tipo": "scelta", "valori_da": "stati" }, "obbligatorio": false, "descrizione": "Stati con cui entra in scena (§5.18)." },
+    "immunita": { "tipo": "lista", "voce": { "tipo": "scelta", "valori_da": "stati" }, "obbligatorio": false, "descrizione": "Stati che non subisce. Le altre immunità e resistenze vanno nelle note." },
+    "incantesimi": {
+      "tipo": "lista", "obbligatorio": false,
+      "descrizione": "TODO(Davide) A.73: per ora solo un promemoria, senza «Lancia!».",
+      "voce": {
+        "tipo": "oggetto",
+        "campi": {
+          "nome": { "tipo": "testo", "obbligatorio": true },
+          "va": { "tipo": "intero", "obbligatorio": false },
+          "costo_pm": { "tipo": "intero", "min": 0, "obbligatorio": false },
+          "note": { "tipo": "testo", "obbligatorio": false }
+        }
+      }
+    },
+    "note": { "tipo": "testo", "obbligatorio": false, "descrizione": "Comportamento, immunità e resistenze non tabellate, tattica." }
+  }
+}

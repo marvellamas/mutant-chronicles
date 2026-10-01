@@ -19,7 +19,7 @@ const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v
 const isTodo = (v) => typeof v === 'string' && v.startsWith('TODO(');
 
 const FILE_VALIDATI = ['caratteristiche', 'abilita', 'corporazioni', 'addestramenti', 'classi', 'incantesimi', 'regole',
-  'talenti_liberi', 'specializzazioni', 'tecniche_interiori', 'dotazioni'];
+  'talenti_liberi', 'specializzazioni', 'tecniche_interiori', 'dotazioni', 'formato_nemici'];
 
 /** Formatta un errore come riga leggibile. */
 export function formattaErrore(e) {
@@ -70,6 +70,7 @@ export function validaDati(dati) {
   if (dati.regole?.attacco_distanza !== undefined) validaAttaccoDistanza(dati, err);
   if (dati.regole?.attacco_ravvicinato !== undefined) validaAttaccoRavvicinato(dati, err);
   if (dati.incantesimi?.incantesimi?.some((i) => i.meccanica)) validaMeccanicaIncantesimi(dati, err);
+  if (isOggetto(dati.formato_nemici)) validaFormatoNemici(dati, err);
 
   return errori;
 }
@@ -1975,4 +1976,132 @@ function validaMeccanicaIncantesimi(dati, err) {
     if (e.escludi_componente !== undefined && !COMPONENTI.includes(e.escludi_componente)) err(file, `${nome}.effetti.lancio.escludi_componente`, `una fra ${COMPONENTI.join(', ')}`);
     if (e.anticipazione_senza_raddoppio !== undefined && !CATEGORIE_ASPETTO.includes(e.anticipazione_senza_raddoppio)) err(file, `${nome}.effetti.lancio.anticipazione_senza_raddoppio`, `una fra ${CATEGORIE_ASPETTO.join(', ')}`);
   }
+}
+
+// ---------------------------------------------------------------------------
+// Formato dei nemici del Tavolo del Master (data/formato_nemici.json, per-davide A.73): il file descrive
+// i campi, validaNemico controlla un file nemico. Il Giocatore 0.45 non ha un capitolo dei nemici.
+
+const TIPI_CAMPO_NEMICO = ['costante', 'testo', 'intero', 'dadi', 'scelta', 'lista', 'oggetto', 'mappa'];
+
+/** Valori ammessi per «valori_da» e «chiavi_da» del formato, presi dagli altri dati. */
+function sorgentiNemico(dati) {
+  return {
+    caratteristiche: (dati?.caratteristiche?.caratteristiche ?? []).map((c) => c?.sigla),
+    salvezze: (dati?.caratteristiche?.salvezze ?? []).map((s) => s?.id),
+    stati: (dati?.regole?.stati?.elenco ?? []).map((s) => s?.id),
+    modalita_di_fuoco: Object.keys(dati?.regole?.modalita_di_fuoco ?? {}).filter((k) => !k.startsWith('_')),
+    nature_danno: dati?.formato_nemici?.nature_danno ?? [],
+  };
+}
+
+/** Controlla la descrizione di un campo del formato (all'avvio, con gli altri dati). */
+function validaSchemaNemico(F, k, s, sorgenti, err) {
+  if (!isOggetto(s)) { err(F, k, 'descrizione del campo mancante'); return; }
+  if (!TIPI_CAMPO_NEMICO.includes(s.tipo)) { err(F, `${k}.tipo`, `uno fra ${TIPI_CAMPO_NEMICO.join(', ')}`); return; }
+  if (s.obbligatorio !== undefined && typeof s.obbligatorio !== 'boolean') err(F, `${k}.obbligatorio`, 'true o false');
+  for (const c of ['min', 'max']) if (s[c] !== undefined && !isIntero(s[c])) err(F, `${k}.${c}`, 'intero');
+  if (s.modello !== undefined) { try { new RegExp(s.modello); } catch { err(F, `${k}.modello`, 'espressione regolare non valida'); } }
+  for (const c of ['valori_da', 'chiavi_da']) if (s[c] !== undefined && !(s[c] in sorgenti)) err(F, `${k}.${c}`, `uno fra ${Object.keys(sorgenti).join(', ')}`);
+  if (s.tipo === 'scelta' && !(Array.isArray(s.valori) && s.valori.length) && s.valori_da === undefined) err(F, k, 'una scelta vuole «valori» o «valori_da»');
+  if (s.tipo === 'lista') validaSchemaNemico(F, `${k}.voce`, s.voce, sorgenti, err);
+  if (s.tipo === 'mappa') {
+    if (s.chiavi_da === undefined) err(F, `${k}.chiavi_da`, 'mancante');
+    validaSchemaNemico(F, `${k}.valore`, s.valore, sorgenti, err);
+  }
+  if (s.tipo === 'oggetto') {
+    if (!isOggetto(s.campi)) { err(F, `${k}.campi`, 'mancante'); return; }
+    for (const [n, c] of Object.entries(s.campi)) {
+      validaSchemaNemico(F, `${k}.campi.${n}`, c, sorgenti, err);
+      if (c?.non_oltre !== undefined && s.campi[c.non_oltre]?.tipo !== 'intero') err(F, `${k}.campi.${n}.non_oltre`, 'deve nominare un campo intero fratello');
+      for (const cond of ['richiesto_se', 'ammesso_se']) {
+        for (const f of Object.keys(c?.[cond] ?? {})) if (!(f in s.campi)) err(F, `${k}.campi.${n}.${cond}`, `«${f}» non è un campo fratello`);
+      }
+    }
+  }
+}
+
+function validaFormatoNemici(dati, err) {
+  const f = dati.formato_nemici;
+  const F = 'formato_nemici';
+  if (!isTesto(f.formato)) err(F, 'formato', 'manca il nome del formato dei file nemico');
+  if (!isIntero(f.versione)) err(F, 'versione', 'intero');
+  if (!(Array.isArray(f.nature_danno) && f.nature_danno.length && f.nature_danno.every(isTesto))) err(F, 'nature_danno', 'elenco delle nature del danno (§5.24)');
+  if (!isOggetto(f.campi)) { err(F, 'campi', 'mancante'); return; }
+  validaSchemaNemico(F, '(nemico)', { tipo: 'oggetto', campi: f.campi }, sorgentiNemico(dati), err);
+  for (const c of ['formato', 'id', 'nome']) if (f.campi[c]?.obbligatorio !== true) err(F, `campi.${c}`, 'campo obbligatorio per riconoscere il file');
+}
+
+/**
+ * Valida un file nemico (nemici/<id>.json) col formato di data/formato_nemici.json.
+ * @param nemico contenuto del file
+ * @param dati dati validati dell'app
+ * @param file nome da mostrare negli errori
+ * @returns {{file: string, chiave: string, problema: string}[]} lista vuota se il nemico è valido
+ */
+export function validaNemico(nemico, dati, file = 'nemico') {
+  const errori = [];
+  const err = (chiave, problema) => errori.push({ file, chiave, problema });
+  const formato = dati?.formato_nemici;
+  if (!isOggetto(formato?.campi)) { err('', 'formato dei nemici non caricato (data/formato_nemici.json)'); return errori; }
+  const sorgenti = sorgentiNemico(dati);
+  const elenco = (v) => (v.length > 8 ? `${v.slice(0, 8).join(', ')}…` : v.join(', '));
+  const controlla = (k, s, v, fratelli = {}) => {
+    switch (s.tipo) {
+      case 'costante':
+        if (v !== s.valore) err(k, `deve valere ${JSON.stringify(s.valore)}`);
+        return;
+      case 'testo':
+        if (!isTesto(v)) err(k, 'testo non vuoto');
+        else if (s.modello && !new RegExp(s.modello).test(v)) err(k, `«${v}» non segue il modello ${s.modello}`);
+        return;
+      case 'intero':
+        if (!isIntero(v)) { err(k, 'numero intero'); return; }
+        if (s.min !== undefined && v < s.min) err(k, `almeno ${s.min}`);
+        if (s.max !== undefined && v > s.max) err(k, `al massimo ${s.max}`);
+        if (s.non_oltre !== undefined && isIntero(fratelli[s.non_oltre]) && v > fratelli[s.non_oltre]) err(k, `non oltre ${s.non_oltre} (${fratelli[s.non_oltre]})`);
+        return;
+      case 'dadi':
+        if (!(typeof v === 'string' && DADI.test(v.replace(/\s+/g, '')))) err(k, `dadi come «1d8+2», non ${JSON.stringify(v)}`);
+        return;
+      case 'scelta': {
+        const ammessi = s.valori ?? sorgenti[s.valori_da] ?? [];
+        if (!ammessi.includes(v)) err(k, `${JSON.stringify(v)} non ammesso (uno fra ${elenco(ammessi)})`);
+        return;
+      }
+      case 'lista':
+        if (!Array.isArray(v)) { err(k, 'elenco'); return; }
+        if (s.min !== undefined && v.length < s.min) err(k, `almeno ${s.min} voci`);
+        v.forEach((x, i) => controlla(`${k}[${i}]`, s.voce, x));
+        return;
+      case 'mappa': {
+        if (!isOggetto(v)) { err(k, 'oggetto'); return; }
+        const chiavi = sorgenti[s.chiavi_da] ?? [];
+        for (const c of Object.keys(v)) if (!chiavi.includes(c)) err(`${k}.${c}`, `chiave non ammessa (una fra ${elenco(chiavi)})`);
+        if (s.tutte) for (const c of chiavi) if (v[c] === undefined) err(`${k}.${c}`, 'mancante');
+        for (const [c, x] of Object.entries(v)) if (chiavi.includes(c)) controlla(`${k}.${c}`, s.valore, x);
+        return;
+      }
+      case 'oggetto': {
+        if (!isOggetto(v)) { err(k || '(nemico)', 'oggetto'); return; }
+        const pre = k ? `${k}.` : '';
+        const vale = (cond) => Object.entries(cond ?? {}).every(([f, x]) => v[f] === x);
+        for (const [n, c] of Object.entries(s.campi)) {
+          const presente = v[n] !== undefined && v[n] !== null;
+          if (!presente) {
+            if (c.obbligatorio || (c.richiesto_se && vale(c.richiesto_se))) err(`${pre}${n}`, 'mancante');
+            continue;
+          }
+          if (c.ammesso_se && !vale(c.ammesso_se)) { err(`${pre}${n}`, `ammesso solo con ${Object.entries(c.ammesso_se).map(([f, x]) => `${f} «${x}»`).join(', ')}`); continue; }
+          controlla(`${pre}${n}`, c, v[n], v);
+        }
+        for (const n of Object.keys(v)) if (!(n in s.campi) && !n.startsWith('_')) err(`${pre}${n}`, 'campo sconosciuto al formato');
+        return;
+      }
+      default:
+        err(k, `tipo di campo sconosciuto: ${s.tipo}`);
+    }
+  };
+  controlla('', { tipo: 'oggetto', campi: formato.campi }, nemico);
+  return errori;
 }

@@ -79,7 +79,7 @@ src/
   provenienza.js  righe { fonte, valore, nota? } dei valori calcolati (AR, VA, Salvezze, Iniziativa, Movimento, danno): le stampano i tooltip della SD e la SS
   stampa.js     dati dei fogli di stampa e delle tab
   ui/           wizard a passi (fasi 0–9 del §2.0), scheda a tab, Sali di livello, stampa, import/export
-data/           JSON delle regole (fonte di verità): 10 file in data/, catalogo in data/equipaggiamento/ (index.json + 21 file)
+data/           JSON delle regole (fonte di verità): 12 file in data/ (formato_nemici.json: formato dei nemici del Tavolo del Master, per-davide A.73, validaNemico in validate.js), catalogo in data/equipaggiamento/ (index.json + 21 file)
 tests/          node --test; tests/collaudo/ tre personaggi di riferimento con PDF
 tools/          estrazione dai manuali, generatori dei lotti (tools/lotti/), collaudo_pdf.mjs, genera_immagini.py, versione.mjs, installa-hook.mjs e hooks/pre-commit
 img/            stemmi e icone generati (img/immagini.json li elenca); originali in img/originali/, non tracciati
