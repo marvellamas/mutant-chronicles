@@ -1,0 +1,122 @@
+{
+  "formato": "mutant-personaggio",
+  "versione": 7,
+  "versioni_dati": {
+    "abilita": "Giocatore 0.43 + Google Doc del 27/09/2026",
+    "addestramenti": "Giocatore 0.43 + Google Doc del 27/09/2026",
+    "caratteristiche": "Giocatore 0.43",
+    "classi": "Giocatore 0.43",
+    "corporazioni": "Giocatore 0.43",
+    "dotazioni": "Giocatore 0.43 + Google Doc del 27/09/2026",
+    "equipaggiamento": "Armamenti 0.52",
+    "incantesimi": "Magia 1.1",
+    "regole": "Giocatore 0.43; Magia 1.1; Equipaggiamento 0.1",
+    "specializzazioni": "Giocatore 0.43",
+    "talenti_liberi": "Giocatore 0.43; Magia 1.1 + Google Doc del 27/09/2026",
+    "tecniche_interiori": "Giocatore 0.43 + Google Doc del 27/09/2026"
+  },
+  "scelte": {
+    "nome": "BOTHA PRETORIUS",
+    "concetto": "",
+    "soprannome": "",
+    "eta": "",
+    "cittaNascita": "",
+    "altezza": "",
+    "peso": "",
+    "occhi": "",
+    "capelli": "",
+    "manoDominante": "",
+    "segniDistintivi": "",
+    "puntiEsperienza": null,
+    "corporazione": "Freelance",
+    "puntiCaratteristica": {
+      "INT": 2,
+      "COS": 1,
+      "DES": 2
+    },
+    "addestramento": "Combattente",
+    "classe": "Artigliere",
+    "puntiAbilitaLiberi": {
+      "Armi medie": 2,
+      "Armi leggere": 1,
+      "Corpo a corpo": 1,
+      "Percezione": 1,
+      "Tecnologia": 2,
+      "Scienza": 1,
+      "Atletica": 2
+    },
+    "incantesimi": [],
+    "puntiEroe": null,
+    "equipaggiamento": []
+  },
+  "livelli": [
+    {
+      "livello": 2,
+      "caratteristiche": {
+        "SAG": 1,
+        "COS": 1
+      }
+    },
+    {
+      "livello": 3,
+      "talentoLibero": {
+        "id": "tiro-mirato-migliorato"
+      }
+    },
+    {
+      "livello": 4,
+      "grado": {
+        "classe": "Artigliere"
+      },
+      "tiroPV": {
+        "valore": 4,
+        "origine": "manuale"
+      },
+      "talentoClasse": "Bersaglio Designato",
+      "puntiAbilita": {
+        "Armi leggere": 1,
+        "Difese": 2,
+        "Percezione": 1,
+        "Sopravvivenza": 1,
+        "Medicina": 2,
+        "Scienza": 1,
+        "Furtività": 1,
+        "Pilotare": 1
+      }
+    },
+    {
+      "livello": 5,
+      "talentoLibero": {
+        "id": "specializzazione-carabine"
+      }
+    },
+    {
+      "livello": 6,
+      "caratteristiche": {
+        "FOR": 1,
+        "INT": 1
+      }
+    }
+  ],
+  "sessione": {
+    "pvAttuali": 28,
+    "pmAttuali": 10,
+    "puntiEroe": 0,
+    "distintivi": 0,
+    "statiAttivi": [],
+    "ferite": 0,
+    "affaticamento": 0,
+    "munizioni": {},
+    "scorte": {},
+    "chroma": {},
+    "caricoExtra": 0,
+    "crediti": null,
+    "creditiIniziali": null,
+    "condizioniOggetti": [],
+    "attacchi": {},
+    "lanci": {},
+    "integrita": {},
+    "condizioniArmi": {},
+    "note": ""
+  }
+}

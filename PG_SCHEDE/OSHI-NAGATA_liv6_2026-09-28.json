@@ -1,0 +1,135 @@
+{
+  "formato": "mutant-personaggio",
+  "versione": 7,
+  "versioni_dati": {
+    "abilita": "Giocatore 0.43 + Google Doc del 27/09/2026",
+    "addestramenti": "Giocatore 0.43 + Google Doc del 27/09/2026",
+    "caratteristiche": "Giocatore 0.43",
+    "classi": "Giocatore 0.43",
+    "corporazioni": "Giocatore 0.43",
+    "dotazioni": "Giocatore 0.43 + Google Doc del 27/09/2026",
+    "equipaggiamento": "Armamenti 0.52",
+    "incantesimi": "Magia 1.1",
+    "regole": "Giocatore 0.43; Magia 1.1; Equipaggiamento 0.1",
+    "specializzazioni": "Giocatore 0.43",
+    "talenti_liberi": "Giocatore 0.43; Magia 1.1 + Google Doc del 27/09/2026",
+    "tecniche_interiori": "Giocatore 0.43 + Google Doc del 27/09/2026"
+  },
+  "scelte": {
+    "nome": "OSHI NAGATA",
+    "concetto": "",
+    "soprannome": "",
+    "eta": "",
+    "cittaNascita": "",
+    "altezza": "",
+    "peso": "",
+    "occhi": "",
+    "capelli": "",
+    "manoDominante": "",
+    "segniDistintivi": "",
+    "puntiEsperienza": null,
+    "corporazione": "Mishima",
+    "puntiCaratteristica": {
+      "FOR": 2,
+      "COS": 2,
+      "DES": 1
+    },
+    "addestramento": "Combattente",
+    "classe": "Assaltatore",
+    "puntiAbilitaLiberi": {
+      "Armi da guerra": 2,
+      "Difese": 2,
+      "Armi leggere": 2,
+      "Percezione": 2,
+      "Furtività": 1,
+      "Medicina": 1
+    },
+    "incantesimi": [],
+    "puntiEroe": null,
+    "equipaggiamento": [
+      {
+        "uid": "emuli6dz0mkzq",
+        "rif": "armature_corporative:divisa-operativa-asa",
+        "stato": "indossata",
+        "quantita": 1,
+        "note": ""
+      }
+    ]
+  },
+  "livelli": [
+    {
+      "livello": 2,
+      "caratteristiche": {
+        "FOR": 1,
+        "DES": 1
+      }
+    },
+    {
+      "livello": 3,
+      "talentoLibero": {
+        "id": "schermidore"
+      }
+    },
+    {
+      "livello": 4,
+      "grado": {
+        "classe": "Assaltatore"
+      },
+      "tiroPV": {
+        "valore": 8,
+        "origine": "manuale"
+      },
+      "talentoClasse": "Carica Brutale",
+      "puntiAbilita": {
+        "Armi da mischia": 1,
+        "Atletica": 2,
+        "Furtività": 2,
+        "Percezione": 2,
+        "Sopravvivenza": 2,
+        "Raggirare": 1
+      }
+    },
+    {
+      "livello": 5,
+      "talentoLibero": {
+        "id": "risorse-interiori"
+      },
+      "tecniche": [
+        "pelle-camaleontica",
+        "meditazione-profonda",
+        "colpo-del-cobra"
+      ],
+      "scuolaMishima": "Sole"
+    },
+    {
+      "livello": 6,
+      "caratteristiche": {
+        "COS": 1,
+        "FOR": 1
+      }
+    }
+  ],
+  "sessione": {
+    "pvAttuali": 33,
+    "pmAttuali": 8,
+    "puntiEroe": 0,
+    "distintivi": 0,
+    "statiAttivi": [],
+    "ferite": 0,
+    "affaticamento": 0,
+    "munizioni": {},
+    "scorte": {},
+    "chroma": {},
+    "caricoExtra": 0,
+    "crediti": null,
+    "creditiIniziali": null,
+    "condizioniOggetti": [],
+    "attacchi": {},
+    "lanci": {},
+    "integrita": {
+      "emuli6dz0mkzq": 8
+    },
+    "condizioniArmi": {},
+    "note": ""
+  }
+}
