@@ -1,0 +1,194 @@
+{
+  "formato": "mutant-personaggio",
+  "versione": 7,
+  "versioni_dati": {
+    "abilita": "Giocatore 0.43",
+    "addestramenti": "Giocatore 0.43",
+    "caratteristiche": "Giocatore 0.43",
+    "classi": "Giocatore 0.43",
+    "corporazioni": "Giocatore 0.43",
+    "equipaggiamento": "Armamenti 0.50",
+    "incantesimi": "Magia 1.1",
+    "regole": "Giocatore 0.43; Magia 1.1",
+    "specializzazioni": "Giocatore 0.43",
+    "talenti_liberi": "Giocatore 0.43; Magia 1.1",
+    "tecniche_interiori": "Giocatore 0.43"
+  },
+  "scelte": {
+    "nome": "Dex Moreau",
+    "concetto": "",
+    "soprannome": "",
+    "eta": "",
+    "cittaNascita": "",
+    "altezza": "",
+    "peso": "",
+    "occhi": "",
+    "capelli": "",
+    "manoDominante": "",
+    "segniDistintivi": "",
+    "puntiEsperienza": null,
+    "corporazione": "Freelance",
+    "puntiCaratteristica": {
+      "INT": 2,
+      "DES": 2,
+      "SAG": 1
+    },
+    "addestramento": "Lavoratore",
+    "classe": "Tecnico",
+    "puntiAbilitaLiberi": {
+      "Tecnologia": 2,
+      "Scienza": 1,
+      "Medicina": 1,
+      "Cultura": 2,
+      "Oratoria": 1,
+      "Corpo a corpo": 2,
+      "Artefatti": 1
+    },
+    "incantesimi": [],
+    "puntiEroe": {
+      "valore": 6,
+      "origine": "manuale"
+    },
+    "equipaggiamento": [
+      {
+        "uid": "emui9ss48kk06",
+        "rif": "armi_distanza:pistola-semiautomatica",
+        "stato": "impugnata",
+        "quantita": 1,
+        "note": ""
+      },
+      {
+        "uid": "emui9ssybwt8l",
+        "rif": "accessori_armi:mirino-reflex",
+        "stato": "in_uso",
+        "quantita": 1,
+        "note": "",
+        "montato_su": "emui9ss48kk06"
+      },
+      {
+        "uid": "emui9stsat60f",
+        "rif": "accessori_armi:smorzatore",
+        "stato": "in_uso",
+        "quantita": 1,
+        "note": "",
+        "montato_su": "emui9ss48kk06"
+      },
+      {
+        "uid": "emui9sumivgjf",
+        "rif": "accessori_armi:torcia-tattica",
+        "stato": "in_uso",
+        "quantita": 1,
+        "note": "",
+        "montato_su": "emui9ss48kk06"
+      },
+      {
+        "uid": "emui9svgnij0u",
+        "rif": "armature:armatura-civile-leggera",
+        "stato": "indossata",
+        "quantita": 1,
+        "note": ""
+      },
+      {
+        "uid": "emui9swb9jk35",
+        "rif": "rinforzi:rinforzo-leggero",
+        "stato": "in_uso",
+        "quantita": 1,
+        "note": "",
+        "montato_su": "emui9svgnij0u"
+      },
+      {
+        "uid": "emui9sx5qdoyp",
+        "rif": "munizioni:proiettili-da-pistola",
+        "stato": null,
+        "quantita": 30,
+        "note": ""
+      },
+      {
+        "uid": "emui9tsu7lxkk",
+        "rif": null,
+        "stato": "impugnata",
+        "quantita": 1,
+        "note": "",
+        "personalizzato": {
+          "nome": "Chiave idraulica pesante",
+          "tipo": "arma_ravvicinata",
+          "abilita": "Armi da mischia",
+          "danno": "1d6"
+        }
+      },
+      {
+        "uid": "emui9ttpo8vwa",
+        "rif": null,
+        "stato": null,
+        "quantita": 1,
+        "note": "regalo del padre; conta come attrezzi da lavoro",
+        "personalizzato": {
+          "nome": "Multiattrezzo di famiglia",
+          "tipo": "altro"
+        }
+      }
+    ]
+  },
+  "livelli": [
+    {
+      "livello": 2,
+      "caratteristiche": {
+        "INT": 1,
+        "DES": 1
+      }
+    },
+    {
+      "livello": 3,
+      "talentoLibero": {
+        "id": "risorse-interiori"
+      },
+      "tecniche": [
+        "vista-felina",
+        "pelle-camaleontica",
+        "passo-della-mangusta"
+      ]
+    },
+    {
+      "livello": 4,
+      "grado": {
+        "classe": "Tecnico"
+      },
+      "tiroPV": {
+        "valore": 4,
+        "origine": "manuale"
+      },
+      "talentoClasse": "Manutenzione Preventiva",
+      "puntiAbilita": {
+        "Scienza": 1,
+        "Percezione": 2,
+        "Furtività": 2,
+        "Medicina": 2,
+        "Sopravvivenza": 2,
+        "Atletica": 1
+      }
+    },
+    {
+      "livello": 5,
+      "talentoLibero": {
+        "id": "specializzazione-pistole"
+      }
+    }
+  ],
+  "sessione": {
+    "pvAttuali": 22,
+    "pmAttuali": 10,
+    "puntiEroe": 6,
+    "distintivi": 0,
+    "statiAttivi": [],
+    "ferite": 0,
+    "affaticamento": 0,
+    "munizioni": {
+      "emui9ss48kk06": {
+        "colpi": 15,
+        "riserve": 0
+      }
+    },
+    "chroma": {},
+    "note": ""
+  }
+}
