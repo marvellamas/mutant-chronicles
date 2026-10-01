@@ -65,7 +65,23 @@ Testo salvato. Cambia molto:
 - cap. 7 «Dispositivi specialistici» (cibernetica: interfaccia neurale, impianti, protesi, Processore neurale);
 - cap. 8 «Cataloghi e dotazioni iniziali».
 
-▢ Lotti 2–4 (`docs/backlog.md`). In questo lotto, solo l'alimentazione NEC delle schede collegate alle dotazioni (vedi Giocatore).
+▢ Lotti 2–4 (`docs/backlog.md`). Nel lotto 1, solo l'alimentazione NEC delle schede collegate alle dotazioni (vedi Giocatore).
+
+**✔ Lotto 2 (01/10):** cap. 5 (§5.4 NEC e strumenti professionali) e cap. 2–4 alla 0.5. Dettagli in `docs/equipaggiamento-lotti.md`.
+- **Raccordo con il lotto 1:** il §5.4 non contraddice nessun valore inserito nel lotto 1. Coincidono:
+  - autonomie delle dotazioni;
+  - celle d'arma Blu (250 Lx, 200 cr);
+  - ricambi del §7.3.4;
+  - caricatore da campo, che è il caricatore portatile;
+  - Modulo Rosso della postazione medica;
+  - Modulo Blu del Gehemmapuker.
+  I due NEC di ricambio fra gli accessori diventano le celle del catalogo e la Cartuccia di combustibile del §3.2 è il NEC Rosso standard.
+- **Ambiguità:**
+  - A.65: Corredo agricolo Standard «allevamento» e Strumento musicale portatile, senza una scheda sola;
+  - A.66: §3.2 con 30 e 15 minuti per preparazione e «cartuccia» accanto al NEC;
+  - A.67: il Modulo Blu del Gehemmapuker è il Modulo del catalogo o un formato d'arma.
+- **Errata:** §4.1 «batteria carica» dei comunicatori.
+- ▢ Cap. 6 (lotto 4), cap. 7 (lotto 3), cap. 8 (lotto 4).
 
 ## E&L (01/10 07:25)
 

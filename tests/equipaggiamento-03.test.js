@@ -44,10 +44,13 @@ test('dotazione collegata alla scheda: un personaggio già salvato vede peso, pr
   assert.equal(cer.effetti[0].abilita, 'Oratoria');
   // Corredo di manutenzione da campo: scheda degli Armamenti (§7.13.7)
   assert.equal(risolvi(vecchiaDotazione('corredo-manutenzione-campo', 'Corredo di manutenzione da campo'), cat).def?.id, 'corredo-di-manutenzione-da-campo');
-  // senza scheda: resta personalizzato, peso «da definire»
+  // Equipaggiamento 0.5, cap. 5: il Corredo da scasso ha la sua scheda (§5.5)
   const scasso = risolvi(vecchiaDotazione('corredo-da-scasso', 'Corredo da scasso (Standard)'), cat);
-  assert.equal(scasso.def, null);
-  assert.equal(pesoVoce(scasso), null);
+  assert.deepEqual([scasso.def?.id, pesoVoce(scasso), scasso.nome], ['corredo-da-scasso-standard', 2, 'Corredo da scasso (Standard)']);
+  // senza scheda (A.65): resta personalizzato, peso «da definire»
+  const musica = risolvi(vecchiaDotazione('strumento-musicale-portatile', 'Strumento musicale portatile (Standard)'), cat);
+  assert.equal(musica.def, null);
+  assert.equal(pesoVoce(musica), null);
 });
 
 test('abiti da viaggio in uso: +1 ad Atletica per equilibrio e per arrampicata, il VA generale non cambia', () => {
@@ -62,10 +65,11 @@ test('acquistabili alla creazione: le voci del catalogo Commerciale con prezzo (
   assert.ok(ids.has('dotazioni_personali:zaino-da-viaggio'));
 });
 
-test('cap. 3: 21 voci; PI e Qualità solo dove la scheda li dà; effetti di sopravvivenza e protezione', () => {
+test('cap. 3 (0.5): 24 voci (−1 cartuccia, ora NEC Rosso; +4 del §3.6); PI e Qualità solo dove la scheda li dà; effetti di sopravvivenza e protezione', () => {
   const tutte = deiFile('esplorazione');
-  assert.equal(tutte.length, 21);
-  assert.deepEqual(tutte.filter((o) => o.pi !== undefined).map((o) => [o.id, o.pi, o.ps_int]), [['corredo-da-assalto-verticale', 6, 12], ['corredo-di-sopravvivenza-ambientale', 4, 12]]);
+  assert.equal(tutte.length, 24);
+  assert.deepEqual(tutte.filter((o) => o.pi !== undefined).map((o) => [o.id, o.pi, o.ps_int]), [['corredo-da-assalto-verticale', 6, 12], ['corredo-di-sopravvivenza-ambientale', 4, 12],
+    ['scala-telescopica', 4, 10], ['passerella-pieghevole', 6, 10], ['verricello-portatile-chroma', 6, 12], ['barella-pieghevole', 4, 10]]);
   assert.equal(r('esplorazione:depuratore-portatile').reperibilita, 'NC');
   assert.deepEqual(r('esplorazione:corredo-di-sopravvivenza-ambientale').effetti.map((e) => [e.abilita, e.valore, e.ambito]), [['Sopravvivenza', 2, 'situazionale']]);
   assert.equal(r('esplorazione:maschera-filtrante').effetti[0].beneficio, 'filtro_respiratorio');

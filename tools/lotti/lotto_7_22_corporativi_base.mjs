@@ -4,6 +4,8 @@
 // conservano i propri valori. Riempie data/dotazioni.json → corporativi.abbinamenti (§2.16.27).
 // Idempotente: i modelli già presenti non si toccano. Uso: node tools/lotti/lotto_7_22_corporativi_base.mjs
 import fs from 'node:fs';
+import { bloccaRiscrittura } from './superato.mjs';
+bloccaRiscrittura('lotto_7_22_corporativi_base');
 
 const V = 'Armamenti 0.52';
 const leggi = (p) => JSON.parse(fs.readFileSync(p, 'utf8'));

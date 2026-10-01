@@ -77,7 +77,7 @@ src/
   provenienza.js  righe { fonte, valore, nota? } dei valori calcolati (AR, VA, Salvezze, Iniziativa, Movimento, danno): le stampano i tooltip della SD e la SS
   stampa.js     dati dei fogli di stampa e delle tab
   ui/           wizard a passi (fasi 0–9 del §2.0), scheda a tab, Sali di livello, stampa, import/export
-data/           JSON delle regole (fonte di verità): 10 file in data/, catalogo in data/equipaggiamento/ (index.json + 18 file)
+data/           JSON delle regole (fonte di verità): 10 file in data/, catalogo in data/equipaggiamento/ (index.json + 20 file)
 tests/          node --test; tests/collaudo/ tre personaggi di riferimento con PDF
 tools/          estrazione dai manuali, generatori dei lotti (tools/lotti/), collaudo_pdf.mjs, genera_immagini.py, versione.mjs, installa-hook.mjs e hooks/pre-commit
 img/            stemmi e icone generati (img/immagini.json li elenca); originali in img/originali/, non tracciati
@@ -117,7 +117,9 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 
 - Talenti nei valori effettivi (`docs/censimento-talenti.md`): `effetti.valori` delle voci dei Talenti nello schema degli oggetti (scritti da `tools/effetti_talenti.py`), applicati al tavolo da `src/talenti.js` e `src/condizioni.js` (generali, situazionali con interruttore, usi specifici a parte); interruttore globale «Bonus dei Talenti» in `sessione.bonusTalenti` (Combattimento e Poteri), che spegne anche i Talenti di «Attacca!» e «Lancia!».
 
-Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, veicoli, capitoli 5, 7 e 8 del Manuale dell'Equipaggiamento (non ancora scritti).
+- NEC e strumenti professionali (Equipaggiamento 0.5, cap. 5; lotto 2 del 01/10): catalogo NEC in `data/equipaggiamento/nec.json` e regole in `regole.json` → `nec`; strumenti in `strumenti_professionali.json`; campo `alimentazione` degli oggetti (NEC, consumo, ore o usi); riserva al tavolo in `sessione.nec` (`src/equipaggiamento.js` → `riserveNec`, − e + nella riga dell'Inventario) e quadratini nel foglio 4 della SS. I lotti storici non riscrivono senza `--forza` (`tools/lotti/superato.mjs`).
+
+Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, veicoli, capitoli 6 (ampliato), 7 e 8 dell'Equipaggiamento 0.5 (lotti 3–4, `docs/backlog.md`).
 
 ## Riferimenti
 

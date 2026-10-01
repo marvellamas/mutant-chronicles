@@ -20,6 +20,8 @@
 //    (§7.1.1); gli altri modelli restano «Da classificare», senza Specializzazione, con TODO(Davide).
 // 4. Lo Scudo delle Guardie Sacre, che il §7.1.9 elenca con le armi, è già in scudi.json (lotto 3).
 import { readFileSync, writeFileSync, readdirSync, mkdirSync } from 'node:fs';
+import { bloccaRiscrittura } from './superato.mjs';
+bloccaRiscrittura('lotto4_armi_ravvicinate_corporative');
 
 const RADICE = new URL('../../', import.meta.url);
 const LOTTO = new URL('docs/lotti/lotto4-armi-ravvicinate-corporative/', RADICE);

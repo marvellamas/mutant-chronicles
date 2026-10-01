@@ -5,6 +5,8 @@
 // (docs/effetti-oggetti.md); le altre restano testo. Nessun peso: il manuale non lo dà (A.30).
 // Uso: node tools/lotti/lotto_elmetti.mjs
 import fs from 'node:fs';
+import { bloccaRiscrittura } from './superato.mjs';
+bloccaRiscrittura('lotto_elmetti');
 
 const V = 'Armamenti 0.52';
 const slug = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/['’]/g, '-').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');

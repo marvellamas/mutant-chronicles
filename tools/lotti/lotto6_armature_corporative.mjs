@@ -29,6 +29,8 @@
 //    (estrazione indipendente dello stesso PDF); altrimenti il generatore si ferma.
 import { readFileSync, writeFileSync, readdirSync, mkdirSync } from 'node:fs';
 import { penalitaConEffetti } from '../../src/equipaggiamento.js';
+import { bloccaRiscrittura } from './superato.mjs';
+bloccaRiscrittura('lotto6_armature_corporative');
 
 const RADICE = new URL('../../', import.meta.url);
 const LOTTO = new URL('docs/lotti/lotto6-armature-corporative/', RADICE);

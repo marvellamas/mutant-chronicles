@@ -116,7 +116,16 @@ Censimento in docs/censimento-talenti.md (319 Talenti; 61 con effetti tipizzati,
 
 Fogli 1 Identità, 2 Abilità, 3 Combattimento, 4 Inventario sempre; 5 Poteri e 6 Artefatti quando servono; numerazione fissa e «pagina P di T»; quadratini con un massimo in un solo componente. Piano ed esito in docs/layout-ss.md, PDF in `docs/esempi-stampa/`. Il merge su `main` lo decide Marcello dopo la prova su carta.
 
-## 21. Equipaggiamento 0.5, lotto 2: cap. 5 «Strumenti professionali» e NEC — PROSSIMO
+## 21. ✔ Equipaggiamento 0.5, lotto 2: cap. 5 «Strumenti professionali» e NEC — fatto il 1° ottobre 2026
+
+Esito in docs/equipaggiamento-lotti.md («lotto 2»):
+- catalogo NEC (`nec.json`, 14 voci) e `regole.json` → `nec`;
+- 29 strumenti in `strumenti_professionali.json`;
+- alimentazione degli oggetti, con la riserva al tavolo e i quadratini nella SS;
+- cap. 2–4 alla 0.5;
+- 13 voci di dotazione collegate; A.65–A.67 al Doc.
+
+Piano di partenza:
 
 Fonte: Manuale dell'Equipaggiamento 0.5 (Google Doc del 01/10/2026, testo in `docs/manuali-txt/equipaggiamento.md`; diff in `docs/diff-manuali-2026-10-01.md`).
 - **§5.4 Nuclei Energetici Cromatici:** catalogo di celle e pacchi (Verdi, Blu, Rossi; compatti, standard, Moduli), ricarica, consumi dell'equipaggiamento.
@@ -125,7 +134,7 @@ Fonte: Manuale dell'Equipaggiamento 0.5 (Google Doc del 01/10/2026, testo in `do
 - **§§5.1–5.3, 5.5–5.8:** strumenti tecnici, scientifici, agricoli, accesso e ispezione, camuffamento, elettronica, strumenti culturali e rituali, con il **Focus personale semplice** (§5.8).
   - Collegare con `rif` le voci di dotazione dei Corredi e del Focus (A.34).
 
-## 22. Equipaggiamento 0.5, lotto 3: cap. 7 «Dispositivi specialistici» e tab Cibernetica
+## 22. Equipaggiamento 0.5, lotto 3: cap. 7 «Dispositivi specialistici» e tab Cibernetica — PROSSIMO
 
 - Impianti: interfaccia neurale, sensoriali, protesi, protezione organica, coordinamento neurale, strumenti incorporati, iniettori, Processore neurale di Abilità.
   - Ogni impianto con PI e UMN standard o CYBERTRONIC.

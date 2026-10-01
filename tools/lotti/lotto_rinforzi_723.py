@@ -20,6 +20,12 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from lotto_proprieta_armature import effetti_di, base, norm, TESTO_DOC, GESTITE, TESTUALI  # noqa: E402
 
+# lotto storico (tools/lotti/superato.mjs): i dati sono poi cambiati con i lotti successivi; un
+# rilancio li riporterebbe indietro. Si esegue solo con --forza.
+import sys as _sys  # noqa: E402
+if __name__ == '__main__' and '--forza' not in _sys.argv:
+    _sys.exit('lotto_rinforzi_723.py: lotto storico, i dati che scrive sono stati aggiornati dai lotti successivi (Armamenti 0.55–0.58, Equipaggiamento 0.5): non rilanciarlo. Per forzare: --forza.')
+
 RADICE = Path(__file__).resolve().parent.parent.parent
 CART = RADICE / 'data' / 'equipaggiamento'
 VERSIONE = 'Armamenti 0.53'

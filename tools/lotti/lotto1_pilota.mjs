@@ -5,6 +5,8 @@
 //   node tools/lotti/lotto1_pilota.mjs --scrivi   scrive i file
 // Testi e annotazioni vengono dal Manuale degli Armamenti v0.50, paragrafi citati accanto.
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { bloccaRiscrittura } from './superato.mjs';
+bloccaRiscrittura('lotto1_pilota');
 
 const RADICE = new URL('../../', import.meta.url);
 const PULITO = new URL('docs/pilota-estrazione-armamenti/pulito/', RADICE);

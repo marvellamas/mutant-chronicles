@@ -45,7 +45,6 @@ const MAPPA = {
     'torcia-tattica': 'Si monta su un’arma predisposta e illumina nella direzione verso cui viene puntata, entro 20 Q.',
     'modulo-di-visione-notturna': 'Si applica a un mirino compatibile e permette di osservare e sparare attraverso di esso ignorando, entro 80 Q, le penalità dovute alla scarsa illuminazione.',
     'modulo-di-visione-termica': 'Permette di osservare e prendere di mira, entro 40 Q, bersagli con un contrasto termico sufficiente rispetto all’ambiente, anche nel buio naturale completo.',
-    'batteria-di-servizio': 'Ogni accessorio impiega la propria batteria e dispone di 24 ore effettive di funzionamento, anche non consecutive.',
   },
 };
 // Munizioni speciali e dardi: la frase della proprietà che porta il numero (o l'effetto)

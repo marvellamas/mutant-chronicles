@@ -28,6 +28,8 @@
 //    modalità RM RL FS → Mitragliatori).
 //    Gli altri restano senza Specializzazione, con TODO(Davide).
 import { readFileSync, writeFileSync, readdirSync, mkdirSync } from 'node:fs';
+import { bloccaRiscrittura } from './superato.mjs';
+bloccaRiscrittura('lotto5_armi_distanza_corporative');
 
 const RADICE = new URL('../../', import.meta.url);
 const LOTTO = new URL('docs/lotti/lotto5-armi-distanza-corporative/', RADICE);

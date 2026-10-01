@@ -691,3 +691,31 @@ Generatore unico `tools/lotti/lotto_equipaggiamento_03.mjs --capitolo N [--scriv
 - ✔ **Cap. 3** — `esplorazione.json`, 21 voci (6 con effetti); 7 voci di dotazione collegate.
 - ✔ **Cap. 4** — `comunicazione.json`, 11 voci (1 con effetti); 7 voci di dotazione collegate. Differenza segnalata: Binocolo, «situazionale» nel §2.16.7, uso specifico nel §4.2 (vale la scheda).
 - ✔ **Cap. 6** — `sanitario.json` aggiornato: le 16 schede del §7.19 coincidono; 7 voci nuove (1 con effetti); 1 voce di dotazione collegata.
+
+## Manuale dell'Equipaggiamento 0.5: lotto 2, capitolo 5 e NEC (01/10/2026)
+
+Fonte: Google Doc del 01/10/2026, 08:32 UTC (`docs/manuali-txt/equipaggiamento.md`). Diff e stato in `docs/diff-manuali-2026-10-01.md`.
+
+- **Catalogo NEC (§5.4).** File `nec.json`, generato da `tools/lotti/lotto_equipaggiamento_05.mjs --parte nec`, con 14 voci:
+  - 4 celle: Verde compatto, Rosso, Blu e Verde standard;
+  - 6 pacchi: Moduli e Banchi Rosso, Blu e Verde;
+  - 2 contenitori vuoti;
+  - 2 stazioni di ricarica.
+
+  Ogni NEC ha `nec` (colore, formato, celle, capacità in Lx, erogazione in Lx/h) e `ricarica_costo` (0,01 cr/Lx, controllato dal validatore). Le regole stanno in `regole.json` → `nec` (tariffa, tempi di ricarica e sostituzione, tabella dei tipi, passi al tavolo, frasi controllate).
+  - Il caricatore portatile del §5.4.6 è il «Caricatore da campo» degli Armamenti (`munizioni.json`): stessi valori, riceve nome alternativo e trasferimento.
+  - Celle d'arma e pacchi dei lanciafiamme restano in `munizioni.json` (Armamenti §§7.20.5–7.20.6).
+- **Alimentazione degli oggetti.** Campo `alimentazione`: NEC del catalogo (`nec:…`, oppure `null` con `descrizione` per un NEC dedicato), poi `consumo_lxh` e `autonomia_ore`, oppure `lx_per_uso`, `usi` e `unita_usi` (§5.4.2: «ore oppure cariche»).
+  - Campi facoltativi: `componenti` (videosorveglianza, allarme) ed `esterna` (postazioni e laboratorio, che non comprendono il NEC).
+  - Scritto nei cap. 2–4 da `lotto_equipaggiamento_03.mjs` (ora alla 0.5) e negli altri oggetti da `--parte alimentazione`: accessori delle armi, scanner, elmetto ASA Recon, corredi degli Armamenti, Cuirassier, postazione medica.
+- **Al tavolo.** `src/equipaggiamento.js` → `riserveNec`: Lx per celle e pacchi, ore o usi per gli apparecchi. Nella sessione il blocco `nec`: i nuovi partono carichi e «Nuova sessione» non ricarica. Nella riga dell'Inventario «NEC 87 / 100 ore» con − e + e la provenienza al tooltip.
+  - SS, foglio 4: quadratini, uno per unità fino a 50, altrimenti dieci caselle da un decimo («1 casella = 10 ore»). È una scelta di presentazione, non una regola.
+- **Strumenti professionali** (§§5.1–5.3, 5.5–5.8). File `strumenti_professionali.json`, `--parte strumenti`: 29 voci, 12 con effetti nello schema (uso specifico accanto all'Abilità; Telo mimetico situazionale; Piede di porco +2 FOR per fare leva).
+  - Corredo di manutenzione da campo e Valigetta ASA restano le schede degli Armamenti, con l'alimentazione.
+  - Il Focus personale semplice (§5.8) è a catalogo.
+  - Collegate 13 voci di dotazione (A.34). Restano senza scheda il Corredo agricolo Standard e lo Strumento musicale portatile (A.65).
+- **Cap. 2–4 alla 0.5.** Alimentazione NEC; §3.2 con il NEC Rosso del fornello (10 preparazioni; la «Cartuccia di combustibile» è ora `nec:rosso-standard`); §3.6 «Mobilità e recupero» nuovo (4 voci); frase sulla riservatezza dei comunicatori. Il cap. 6 resta alla 0.3 (lotto 4).
+- **Sezioni dell'Inventario.** «NEC e stazioni di ricarica» dopo le munizioni; «Strumenti professionali» dopo la comunicazione (`src/palette.js`).
+- **Senza doppioni.**
+  - I due NEC di ricambio messi fra gli accessori nel lotto 1 escono: i ricambi sono le celle del catalogo.
+  - I lotti storici 1–14, lotto_7_22, lotto_elmetti, i tre lotti Python e `genera_dotazioni.py` non riscrivono più senza `--forza` (`tools/lotti/superato.mjs`): un rilancio riporterebbe indietro i dati.

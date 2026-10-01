@@ -16,6 +16,8 @@
 // 4. Controlli incrociati: costo di ogni configurazione = telaio + prezzo dell'arma già nel
 //    catalogo (lotto 5); ogni riga ritrovata nel testo in prosa.
 import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
+import { bloccaRiscrittura } from './superato.mjs';
+bloccaRiscrittura('lotto14_unita_robotiche');
 
 const RADICE = new URL('../../', import.meta.url);
 const LOTTO = new URL('docs/lotti/lotto14-unita-robotiche/', RADICE);

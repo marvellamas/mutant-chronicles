@@ -15,6 +15,8 @@
 // 2. pulito → JSON, con le annotazioni del testo sotto le tabelle (proprietà, munizione di
 //    riferimento, ricarica), citate con il paragrafo. Da qui in poi la fonte è il JSON.
 import { readFileSync, writeFileSync, readdirSync, mkdirSync } from 'node:fs';
+import { bloccaRiscrittura } from './superato.mjs';
+bloccaRiscrittura('lotto2_armi_distanza');
 
 const RADICE = new URL('../../', import.meta.url);
 const LOTTO = new URL('docs/lotti/lotto2-armi-distanza/', RADICE);

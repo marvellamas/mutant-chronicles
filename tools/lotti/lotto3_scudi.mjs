@@ -23,6 +23,8 @@
 //    ogni sezione i paragrafi successivi sono note della sezione (note_per_catalogo), salvo lo
 //    Scudo delle Guardie Sacre, che ha più paragrafi propri.
 import { readFileSync, writeFileSync, readdirSync, mkdirSync } from 'node:fs';
+import { bloccaRiscrittura } from './superato.mjs';
+bloccaRiscrittura('lotto3_scudi');
 
 const RADICE = new URL('../../', import.meta.url);
 const LOTTO = new URL('docs/lotti/lotto3-scudi/', RADICE);

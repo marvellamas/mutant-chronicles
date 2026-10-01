@@ -28,6 +28,8 @@
 // 7. La Frammentazione del §7.14.7 è la Granata a frammentazione commerciale (stessi valori e
 //    prezzo): non si duplica.
 import { readFileSync, writeFileSync, readdirSync, mkdirSync } from 'node:fs';
+import { bloccaRiscrittura } from './superato.mjs';
+bloccaRiscrittura('lotto7_corredi_dispositivi');
 
 const RADICE = new URL('../../', import.meta.url);
 const LOTTO = new URL('docs/lotti/lotto7-corredi-dispositivi/', RADICE);

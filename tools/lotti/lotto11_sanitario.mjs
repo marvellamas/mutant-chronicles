@@ -20,6 +20,8 @@
 //    (stessi PI, Qualità, PS, REP, costo, applicazioni e ricarica); i carichi di esempio delle UMC
 //    (p. 112) tornano con i prezzi delle cartucce; ogni riga ritrovata nel testo in prosa.
 import { readFileSync, writeFileSync, readdirSync, mkdirSync } from 'node:fs';
+import { bloccaRiscrittura } from './superato.mjs';
+bloccaRiscrittura('lotto11_sanitario');
 
 const RADICE = new URL('../../', import.meta.url);
 const LOTTO = new URL('docs/lotti/lotto11-sanitario/', RADICE);

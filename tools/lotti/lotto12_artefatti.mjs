@@ -20,6 +20,8 @@
 //    prezzo, PI e reperibilità restano TODO(Davide).
 // 4. Ogni costo di sintonizzazione deve coincidere con la potenza dichiarata.
 import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
+import { bloccaRiscrittura } from './superato.mjs';
+bloccaRiscrittura('lotto12_artefatti');
 
 const RADICE = new URL('../../', import.meta.url);
 const LOTTO = new URL('docs/lotti/lotto12-artefatti/', RADICE);

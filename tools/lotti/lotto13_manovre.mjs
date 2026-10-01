@@ -16,6 +16,8 @@
 //    prima di `proprieta`, e controlla che il resto di ogni oggetto resti identico.
 // 4. Ogni riga ritrovata nel testo in prosa.
 import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
+import { bloccaRiscrittura } from './superato.mjs';
+bloccaRiscrittura('lotto13_manovre');
 
 const RADICE = new URL('../../', import.meta.url);
 const LOTTO = new URL('docs/lotti/lotto13-manovre/', RADICE);

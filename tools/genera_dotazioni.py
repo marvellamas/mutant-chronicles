@@ -13,6 +13,14 @@ import json
 import re
 from pathlib import Path
 
+# Dopo la prima generazione dotazioni.json è stato completato dai lotti (collegamenti «rif» alle schede,
+# abbinamenti corporativi del §7.22, Giocatore 0.45): un rilancio li perderebbe. Si esegue solo con --forza;
+# per aggiornare i testi da una nuova edizione del manuale si fondono i soli paragrafi cambiati
+# (docs/diff-manuali-2026-10-01.md).
+import sys as _sys  # noqa: E402
+if __name__ == '__main__' and '--forza' not in _sys.argv:
+    _sys.exit('genera_dotazioni.py: dotazioni.json è stato completato dai lotti successivi; un rilancio li perderebbe. Per forzare: --forza.')
+
 RADICE = Path(__file__).resolve().parent.parent
 DOC = RADICE / 'docs' / 'manuali-txt' / 'giocatore.md'
 USCITA = RADICE / 'data' / 'dotazioni.json'

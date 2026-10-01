@@ -15,6 +15,8 @@
 // 3. Le configurazioni commerciali della tabella p. 62 («Leggera + Rinforzi Pesanti → AR 3, FOR 5,
 //    Media») non diventano dati: sono il test del calcolo (tests/equipaggiamento.test.js).
 import { readFileSync, writeFileSync, readdirSync, mkdirSync } from 'node:fs';
+import { bloccaRiscrittura } from './superato.mjs';
+bloccaRiscrittura('lotto9_rinforzi');
 
 const RADICE = new URL('../../', import.meta.url);
 const LOTTO = new URL('docs/lotti/lotto9-rinforzi/', RADICE);

@@ -21,6 +21,8 @@
 // 5. Controllo incrociato: ogni riga di dati compare identica nel testo in prosa (le celle andate a
 //    capo si confrontano sulla riga unita).
 import { readFileSync, writeFileSync, readdirSync, mkdirSync } from 'node:fs';
+import { bloccaRiscrittura } from './superato.mjs';
+bloccaRiscrittura('lotto8_accessori_armi');
 
 const RADICE = new URL('../../', import.meta.url);
 const LOTTO = new URL('docs/lotti/lotto8-accessori-armi/', RADICE);

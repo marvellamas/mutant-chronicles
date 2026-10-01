@@ -23,6 +23,8 @@
 //    - capacità di celle, serbatoi e dardi = capacità delle armi compatibili;
 //    - ogni riga di tabella ritrovata nel testo in prosa.
 import { readFileSync, writeFileSync, readdirSync, mkdirSync } from 'node:fs';
+import { bloccaRiscrittura } from './superato.mjs';
+bloccaRiscrittura('lotto10_munizioni');
 
 const RADICE = new URL('../../', import.meta.url);
 const LOTTO = new URL('docs/lotti/lotto10-munizioni/', RADICE);
