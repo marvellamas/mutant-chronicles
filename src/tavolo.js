@@ -1,7 +1,7 @@
 // Tavolo del Master, pezzo 1 (docs/tavolo-direttore.md): i dati di una scheda compatta della plancia
 // a partire dal file di un personaggio in personaggi/. Funzione pura e nessun calcolo nuovo: valori
 // effettivi e provenienze vengono da calcolaScheda con la sessione del file, come nella scheda digitale.
-import { deserializzaPersonaggio, normalizza } from './character.js';
+import { deserializzaPersonaggio, normalizza, serializza } from './character.js';
 import { calcolaScheda } from './calc.js';
 import { massimiSessione, allineaSessione, descriviFerite } from './sessione.js';
 import { testoDanno } from './stampa.js';
@@ -61,4 +61,19 @@ export function vistaPlancia(testo, dati, file = null) {
     })),
     scheda, sessione, massimi,
   };
+}
+
+/**
+ * Testo del file di un PG con i valori di sessione cambiati dalla plancia (pezzo 4: «Colpito», «Annulla
+ * ultimo colpo»): gli stessi campi che scrive la scheda digitale (pvAttuali, ferite, statiAttivi), con la
+ * serializzazione dell'app (src/character.js), così il file resta quello di un export.
+ * @param valori { pvAttuali?, ferite?, statiAttivi? }
+ */
+export function testoConSessione(testo, valori, dati) {
+  const file = JSON.parse(testo);
+  const p = deserializzaPersonaggio(testo);
+  const { scelte } = normalizza(p.creazione, dati);
+  const riposo = calcolaScheda({ creazione: scelte, livelli: p.livelli ?? [] }, dati);
+  const sessione = allineaSessione({ ...allineaSessione(p.sessione, massimiSessione(riposo, scelte, dati)), ...valori }, massimiSessione(riposo, scelte, dati));
+  return serializza(scelte, { versioniDati: file.versioni_dati, livelli: p.livelli ?? [], sessione, calendario: p.calendario });
 }

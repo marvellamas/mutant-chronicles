@@ -1718,6 +1718,162 @@
     ],
     "_nota": "Giocatore del 29/09 (23:45). Si controlla il VA finale della singola Prova, dopo tutti i bonus e le penalità. «Attacca!» e «Lancia!» lo ricordano quando il VA finale raggiunge la soglia; Successo Magistrale Migliorato resta un promemoria del Talento."
   },
+  "danno_applicato": {
+    "paragrafo": "Giocatore 0.45: §5.10 «AC e applicazioni separate del danno», §5.13, §5.14, §5.24 (Google Doc del 01/10/2026)",
+    "_nota": "Danno applicato dal Tavolo del Master (src/danno.js → applicaColpo), decisione 3 del piano (niente locativi): per ogni applicazione Difesa → AR applicabile alla natura (con Perforante e Laser) → PV → Ferite. Il danno tirato è quello finale dei dadi con bonus e moltiplicatori (passi 1–3 del §5.13), scritto al tavolo o tirato dall’app. «difese»: effetto di una Difesa riuscita su ogni applicazione. «ar_per_natura»: quale valore dell’AR del bersaglio vale per la natura (src/protezione.js → valori: totale, magica, contro:…). «ar_contro»: valore «contro» da usare per un tipo di attacco, se il bersaglio lo ha e la natura non è Etereo. «nuove_ferite»: §5.14, nuove Ferite di un personaggio già a 0 PV per fascia di danno finale ed esito della PS di Tempra.",
+    "difese": [
+      {
+        "id": "nessuna",
+        "nome": "Nessuna Difesa riuscita",
+        "effetto": "intero"
+      },
+      {
+        "id": "parata",
+        "nome": "Parata riuscita",
+        "effetto": "dimezza_per_eccesso"
+      },
+      {
+        "id": "parata_magistrale",
+        "nome": "Parata Magistrale",
+        "effetto": "evita"
+      },
+      {
+        "id": "schivata",
+        "nome": "Schivata riuscita",
+        "effetto": "evita"
+      }
+    ],
+    "ar_per_natura": {
+      "Naturale": "totale",
+      "Magico": "totale",
+      "Etereo": "magica"
+    },
+    "ar_contro": {
+      "ravvicinato": "contro:ravvicinato"
+    },
+    "proprieta_ar": {
+      "Perforante": {
+        "effetto": "sottrae_non_magica",
+        "non_contro": [
+          "Etereo"
+        ]
+      },
+      "Laser": {
+        "effetto": "dimezza_per_difetto"
+      }
+    },
+    "proprieta_effetti": [
+      {
+        "nome": "Elettricità",
+        "prova": "Tempra",
+        "testo": "PS Tempra; con fallimento non spende Azioni fuori dalla propria Iniziativa.",
+        "durata": "1+1d3 Round",
+        "contromisura": "Isolante X"
+      },
+      {
+        "nome": "Plasma",
+        "prova": "Tempra",
+        "testo": "PS Tempra; con fallimento −2 VA.",
+        "durata": "1+1d3 Round",
+        "contromisura": "Dissipante X"
+      },
+      {
+        "nome": "Gelo",
+        "prova": "Tempra",
+        "testo": "PS Tempra; con fallimento Rallentato.",
+        "durata": "1+1d3 Round",
+        "contromisura": "Termico X",
+        "stato": "rallentato"
+      },
+      {
+        "nome": "Fuoco",
+        "prova": "Riflessi",
+        "testo": "PS Riflessi; con fallimento Incendiato.",
+        "durata": "1+1d3 Round, salvo spegnimento",
+        "contromisura": "Ignifugo X",
+        "stato": "incendiato"
+      },
+      {
+        "nome": "Concussivo",
+        "prova": "Tempra",
+        "testo": "PS Tempra; con fallimento −2 VA a Difese.",
+        "durata": "1+1d3 Round",
+        "contromisura": "Imbottita X"
+      },
+      {
+        "nome": "Sanguinante",
+        "prova": null,
+        "testo": "Sanguinamento X immediato; ricorrenze all’Iniziativa della fonte.",
+        "durata": "Fino a quando viene fermato",
+        "contromisura": "Secondo la fonte",
+        "stato": "sanguinamento"
+      }
+    ],
+    "nuove_ferite": {
+      "esiti": {
+        "successo_magistrale": "Successo Magistrale",
+        "successo": "Successo",
+        "fallimento": "Fallimento",
+        "fallimento_maldestro": "Fallimento Maldestro"
+      },
+      "fasce": [
+        {
+          "fino_a": 5,
+          "successo_magistrale": 0,
+          "successo": 1,
+          "fallimento": 1,
+          "fallimento_maldestro": 2
+        },
+        {
+          "fino_a": 10,
+          "successo_magistrale": 0,
+          "successo": 1,
+          "fallimento": 2,
+          "fallimento_maldestro": 3
+        },
+        {
+          "fino_a": 15,
+          "successo_magistrale": 0,
+          "successo": 2,
+          "fallimento": 3,
+          "fallimento_maldestro": 4
+        },
+        {
+          "fino_a": 20,
+          "successo_magistrale": 0,
+          "successo": 3,
+          "fallimento": 4,
+          "fallimento_maldestro": 5
+        },
+        {
+          "fino_a": 25,
+          "successo_magistrale": 0,
+          "successo": 4,
+          "fallimento": 5,
+          "fallimento_maldestro": 6
+        },
+        {
+          "fino_a": null,
+          "successo_magistrale": 0,
+          "successo": 5,
+          "fallimento": 6,
+          "fallimento_maldestro": 7
+        }
+      ]
+    },
+    "frasi": [
+      "AC indica il numero di applicazioni di danno prodotte da un colpo a segno; non assegna locativi.",
+      "Ogni applicazione usa il danno indicato dal profilo, applica separatamente Difesa e Armatura e modifica PV e Ferite prima della successiva.",
+      "Una Parata riuscita dimezza per eccesso ogni applicazione prima dell’Armatura; una Parata Magistrale evita tutti i danni.",
+      "Una Schivata riuscita evita tutte le applicazioni.",
+      "Il danno finale non può essere inferiore a 0.",
+      "Quando i PV raggiungono 0 il personaggio non sviene automaticamente e può continuare ad agire.",
+      "Non può scendere sotto 0 PV; i danni successivi producono Ferite.",
+      "Ogni volta che un personaggio già a 0 PV subisce un danno finale positivo, effettua una PS di Tempra con i modificatori applicabili.",
+      "Ogni nuova Ferita fa avanzare di uno stato.",
+      "I danni Eterei sono assorbiti soltanto dalle protezioni magiche o dalla componente magica dell’Armatura."
+    ]
+  },
   "danno_caratteristica": {
     "paragrafo": "Giocatore §5.13, «Danno base e bonus di Caratteristica»",
     "fasce": [

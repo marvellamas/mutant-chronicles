@@ -1,6 +1,6 @@
 # Tavolo del Master: piano di fattibilità
 
-Branch `tavolo-direttore`, 1° ottobre 2026. Piano di fattibilità; sono fatti il pezzo 1 (plancia dei PG in sola lettura), il pezzo 2 (scontro e Iniziativa) e il pezzo 3 (nemici).
+Branch `tavolo-direttore`, 1° ottobre 2026. Piano di fattibilità; sono fatti il pezzo 1 (plancia dei PG in sola lettura), il pezzo 2 (scontro e Iniziativa), il pezzo 3 (nemici) e il pezzo 4 (danno applicato), più gli esempi del 2 ottobre.
 
 La visione di partenza è in `docs/backlog.md`, voce 14, su `main`. Al tavolo molti giocatori usano la scheda di carta. Il master tiene lo stato della scena su una plancia con PG e nemici:
 
@@ -167,10 +167,30 @@ Ogni pezzo ha test sulle funzioni pure e una prova nel browser; i primi due non 
      - Ferite e Affaticamento dei nemici non ci sono ancora (TODO(Davide) A.73): solo PV e Stati.
      - Il salvataggio di un tipo non ha revisione: due finestre che modificano lo stesso tipo, vince l'ultima (caso raro, a differenza dello scontro).
      - Le modifiche dello scontro dalla stessa finestra si mettono in fila, così i clic rapidi su − e + non vanno in conflitto fra loro.
-4. **Pezzo 4 — Danno applicato.**
-   - Funzione pura `applicaColpo(bersaglio, danno tirato, natura, AC)` secondo §5.13–5.15: Difesa, AR per applicazione, PV, PS Tempra suggerita, Sanguinamento. Restituisce la nuova sessione e la riga del registro.
-   - Plancia: «Colpito» su un partecipante.
-   - Per i PG la plancia scrive anche il file del giocatore.
+   - **Esempi** (2 ottobre 2026). `esempi/` è tracciata in git: quattro PG inventati, scritti da `tools/genera_esempi.mjs` con il motore dell'app e controllati (validatore, checklist del §2.17, livelli, nessun avviso dell'equipaggiamento):
+     - Rhea Valdis, Capitol, Artigliere, 5° livello: a distanza;
+     - Torvald Krane, Bauhaus, Assaltatore, 6° livello: corpo a corpo, scudo, armatura;
+     - Fratello Anselmo Viri, Fratellanza, Custode, 3° livello: due batterie e il Bordone Templare;
+     - Nadia Ferro, Cybertronic, Tecnico, 4° livello: tre impianti e un chip.
+     In `esempi/nemici/` due tipi: Predone delle Lande (debole, da gruppo) e Legionario Oscuro (forte). Nella plancia «Carica esempi» (`POST /api/esempi`) li copia in `personaggi/` e `nemici/` del server attivo, senza mai sovrascrivere (`COPYFILE_EXCL`): i file già presenti sono «saltati» e segnalati. I test del tavolo usano gli esempi al posto dei personaggi di collaudo.
+4. ✔ **Pezzo 4 — Danno applicato** (fatto il 2 ottobre 2026), con la decisione 3 (niente locativi).
+   - **Regole nei dati.** `regole.json` → `danno_applicato` (Giocatore §5.10, §5.13, §5.14, §5.24): effetto delle Difese su ogni applicazione (Parata dimezza per eccesso, Parata Magistrale e Schivata evitano), AR per natura (Etereo: solo la componente magica), valore «contro ravvicinato» se il bersaglio lo ha, Perforante e Laser, effetti delle proprietà, tabella delle nuove Ferite per fascia ed esito della Tempra; frasi verificate da `tools/verifica_frasi.mjs`.
+   - **`applicaColpo`** (`src/danno.js`, funzione pura). Per ogni applicazione (AC): Difesa → AR applicabile (con la provenienza) → PV, mai sotto 0. Il danno oltre lo 0 dell'applicazione che ci arriva non fa Ferite. A 0 PV un danno finale positivo chiede la PS di Tempra: le nuove Ferite vengono dalla fascia e dall'esito scelto al tavolo, con la Morte oltre Grave e il promemoria delle Menomazioni (§5.14.1). Gli effetti delle proprietà (§5.24) valgono solo se almeno 1 danno supera l'AR: Sanguinante come Stato applicato, gli altri come Stato da applicare se la Prova fallisce, Laser porta con sé Plasma. Per i nemici niente Ferite (per-davide A.73): a 0 PV solo il promemoria.
+   - **Plancia.** «Colpito» su ogni carta (PG e nemici), solo con uno scontro aperto. La finestra chiede applicazioni, danno (dal vivo o «Tira con l'app» da una formula), natura, tipo d'attacco, Difesa e proprietà. L'anteprima mostra la provenienza dell'AR per applicazione; «Applica» resta spento finché manca un esito della Tempra.
+   - **Scrittura.** Per un PG la plancia rilegge il file con la sua revisione (data di modifica, intestazione `X-Mutant-Mtime`), cambia solo `pvAttuali`, `ferite` e `statiAttivi` con la serializzazione dell'app (`src/tavolo.js` → `testoConSessione`) e lo riscrive. Se nel frattempo il file è cambiato, il server risponde 409 e la plancia chiede di riaprire il colpo. Senza l'intestazione (la scheda digitale) la scrittura è quella di sempre. Per un nemico i valori stanno nello scontro.
+   - **Registro e annullamento.** Ogni colpo è una riga di registro (danno, Difesa, AR, PV, Ferite) e va in una pila nello scontro (`colpi`, ultimi 30). «Annulla ultimo colpo» rimette PV, Ferite e Stati di prima: per un PG riscrive il file, solo se è ancora quello lasciato dal colpo.
+   - **Test.** `tests/danno.test.js` (casi del manuale: AR che azzera, Etereo, Perforante e Laser, più applicazioni, Parata e Schivata, soglie delle Ferite, Morte, bersaglio PG), `tests/colpo-plancia.test.js` (file del PG riscritto con la revisione, 409, la scheda rilegge; colpi su un nemico e annullamento), `tests/esempi.test.js`.
+   - **Prova nel browser.** Server sulla porta 3001 con cartelle temporanee: «Carica esempi» due volte (la seconda tutto saltato); scontro con Rhea e Torvald, due Predoni e un Legionario. Un colpo per tipo:
+     - Torvald, corpo a corpo con Parata: 11 → 6 − AR 5 = 1;
+     - Predone, a distanza, tirato dall'app;
+     - Legionario, Etereo: solo l'AR magica 2;
+     - Rhea, tre applicazioni fino a 0 PV, con la Tempra fallita: Ferita Importante e Sanguinamento.
+     Poi «Annulla ultimo colpo» su Rhea, e la scheda digitale di Torvald che legge PV 31/32.
+   - **Scostamenti dal piano.**
+     - La revisione dei file dei PG è la data di modifica, non un contatore: il formato del personaggio non cambia.
+     - Il danno da scrivere è quello tirato con bonus e moltiplicatori (passi 1–3 del §5.13). Magistrale e moltiplicatori non li calcola la plancia.
+     - Contromisure (Ignifugo X e simili) e perdita immediata del Sanguinamento solo come testo (per-davide A.76). Per Perforante con più applicazioni c'è la domanda A.77.
+5. **Pezzo 5 — Attacchi dei nemici.**
 5. **Pezzo 5 — Attacchi dei nemici.**
    - Adattatore nemico → «Attacca!» (VA con la situazione, Difese del bersaglio).
    - Dado dal vivo o dell'app, poi «applica» con il pezzo 4.

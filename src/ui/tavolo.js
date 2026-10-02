@@ -7,12 +7,14 @@ import { h, svuota } from './dom.js';
 import { infoValore, nascondiTooltip } from './tooltip.js';
 import { iconaPagina } from './immagini.js';
 import { riempimento } from '../interfaccia.js';
-import { vistaPlancia } from '../tavolo.js';
+import { vistaPlancia, testoConSessione } from '../tavolo.js';
 import { ultimiPerPersonaggio, chiaveDaFile } from '../cartella.js';
-import { elencoCartella, leggiCartella } from './cartella.js';
+import { elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella } from './cartella.js';
+import { apriColpo } from './colpo.js';
+import { testoColpo } from '../danno.js';
 import { pannelloScontro, leggiScontroAperto, leggiScontro, salvaScontro } from './scontro.js';
 import { pannelloBestiario, elencoNemici, cartaNemico } from './nemici.js';
-import { diTurno } from '../scontro.js';
+import { diTurno, registraColpo, annullaUltimoColpo } from '../scontro.js';
 import { vociBestiario } from '../nemici.js';
 
 const INTERVALLO_MS = 3000;
@@ -112,14 +114,14 @@ export function renderTavolo(radice, ctx) {
         await aggiorna(true);
       }) : null,
       pannelloScontro(ctx, Object.assign(stato, { pgAlTavolo: alTavolo.map((r) => stato.viste.get(r.file)).filter((v) => v?.completa) }),
-        { modifica, crea: (s) => salva(s), ridisegna: disegna }),
+        { modifica, crea: (s) => salva(s), ridisegna: disegna, annullaColpo }),
       alTavolo.length
         ? h('div', { class: 'plancia-griglia' }, alTavolo.map((r) => (r.mancante ? cartaMancante(r.mancante)
-          : stato.viste.get(r.file) ? cartaPg(ctx, stato.viste.get(r.file), r, turnoDi(r)) : cartaErrore(r, stato.errori.get(r.file)))))
+          : stato.viste.get(r.file) ? cartaPg(ctx, stato.viste.get(r.file), r, turnoDi(r), colpitoPg) : cartaErrore(r, stato.errori.get(r.file)))))
         : h('p', { class: 'vuoto' }, 'Nessun personaggio al tavolo: sceglili con «Chi è al tavolo».'),
       nemiciInScontro().length ? [
         h('h2', { class: 'plancia-sezione' }, 'Nemici nello scontro'),
-        h('div', { class: 'plancia-griglia' }, nemiciInScontro().map((p) => cartaNemico(ctx, p, { modifica, diTurnoOra: diTurno(stato.scontro)?.id === p.id }))),
+        h('div', { class: 'plancia-griglia' }, nemiciInScontro().map((p) => cartaNemico(ctx, p, { modifica, diTurnoOra: diTurno(stato.scontro)?.id === p.id, onColpito: () => colpitoNemico(p) }))),
       ] : null,
       pannelloBestiario(ctx, stato.bestiario, {
         aperto: stato.bestiarioAperto,
@@ -140,6 +142,67 @@ export function renderTavolo(radice, ctx) {
     stato.firmaBestiario = null;
     await aggiorna(true);
   };
+  // Pezzo 4: «Colpito» (src/danno.js → applicaColpo, finestra src/ui/colpo.js). Serve uno scontro aperto:
+  // il colpo va nel registro e si può annullare. Il PG si scrive nel suo file con la revisione (mtime).
+  const statiValidi = (ids, immuni = []) => ids.filter((id) => !immuni.includes(id));
+  const colpitoPg = (v, r) => {
+    if (!stato.scontro) return;
+    const bersaglio = { nome: v.nome, pv: v.pv, ferite: v.ferite.grado, ar: v.ar };
+    apriColpo(ctx, bersaglio, {
+      applica: async (ris, colpo, stati) => {
+        const { testo, mtime } = await leggiCartellaConRevisione(r.file);
+        const ora = vistaPlancia(testo, ctx.dati, r.file);
+        if (ora.pv.attuali !== v.pv.attuali || ora.ferite.grado !== v.ferite.grado) throw new Error(`${v.nome} è cambiato nel frattempo (PV ${ora.pv.attuali}, Ferite ${ora.ferite.grado}): chiudi e riapri «Colpito».`);
+        const prima = { pv: ora.pv.attuali, ferite: ora.ferite.grado, stati: ora.sessione.statiAttivi ?? [] };
+        const dopo = { pv: ris.pv.dopo, ferite: ris.ferite.dopo, stati: [...new Set([...prima.stati, ...stati])] };
+        try {
+          await scriviCartella(r.file, testoConSessione(testo, { pvAttuali: dopo.pv, ferite: dopo.ferite, statiAttivi: dopo.stati }, ctx.dati), { mtime });
+        } catch (e) {
+          throw new Error(e.conflitto ? `${v.nome} è stato salvato altrove proprio ora: chiudi e riapri «Colpito».` : e.message);
+        }
+        const ok = await modifica((x) => registraColpo(x, { bersaglio: `pg:${v.chiaveCartella}`, nome: v.nome, tipo: 'pg', file: r.file, testo: testoColpo(v.nome, colpo, ris), prima, dopo }));
+        await aggiorna(true);
+        return ok;
+      },
+    });
+  };
+  const colpitoNemico = (p) => {
+    if (!stato.scontro) return;
+    const bersaglio = { nome: p.nome, pv: p.pv, ferite: null, ar: p.scheda.ar };
+    apriColpo(ctx, bersaglio, {
+      applica: async (ris, colpo, stati) => modifica((x) => {
+        const q = x.partecipanti.find((y) => y.id === p.id);
+        if (!q || q.pv.attuali !== p.pv.attuali) throw new Error(`${p.nome} è cambiato nel frattempo: chiudi e riapri «Colpito».`);
+        const dopoStati = [...new Set([...q.stati, ...statiValidi(stati, q.scheda?.immunita ?? [])])];
+        return registraColpo(x, { bersaglio: p.id, nome: p.nome, tipo: 'nemico', testo: testoColpo(p.nome, colpo, ris), prima: { pv: q.pv.attuali, stati: q.stati }, dopo: { pv: ris.pv.dopo, stati: dopoStati } });
+      }),
+    });
+  };
+  // «Annulla ultimo colpo»: per un PG si rimettono nel file PV, Ferite e Stati di prima (con la revisione)
+  const annullaColpo = async () => {
+    let esito;
+    try { esito = annullaUltimoColpo(stato.scontro); } catch (e) { stato.avvisoScontro = e.message; disegna(); return; }
+    const { colpo } = esito;
+    if (colpo.tipo === 'pg' && colpo.file) {
+      try {
+        const { testo, mtime } = await leggiCartellaConRevisione(colpo.file);
+        const ora = vistaPlancia(testo, ctx.dati, colpo.file);
+        if (ora.pv.attuali !== colpo.dopo.pv || ora.ferite.grado !== colpo.dopo.ferite) {
+          stato.avvisoScontro = `${colpo.nome} è cambiato dopo il colpo (PV ${ora.pv.attuali}): annullamento non fatto, correggi dalla sua scheda.`;
+          disegna();
+          return;
+        }
+        await scriviCartella(colpo.file, testoConSessione(testo, { pvAttuali: colpo.prima.pv, ferite: colpo.prima.ferite, statiAttivi: colpo.prima.stati }, ctx.dati), { mtime });
+      } catch (e) {
+        stato.avvisoScontro = `Annullamento non fatto: ${e.message}`;
+        disegna();
+        return;
+      }
+    }
+    await salva(esito.scontro);
+    await aggiorna(true);
+  };
+  ctx.scontroAperto = () => !!stato.scontro;
   const nemiciInScontro = () => (stato.scontro?.partecipanti ?? []).filter((p) => p.tipo === 'nemico');
 
   // bestiario: si rilegge a ogni giro, si rivalida solo se un file è cambiato (nome e mtime)
@@ -244,7 +307,7 @@ const pillola = (titolo, valore, provenienza, classe = '') => (provenienza
   : h('strong', { class: `pillola-plancia ${classe}`.trim() }, numero(valore)));
 
 /** Scheda compatta di un PG: risorse, AR e Difese, condizioni, Stati, armi in mano; evidenziata se è di turno. */
-function cartaPg(ctx, v, r, diTurnoOra = false) {
+function cartaPg(ctx, v, r, diTurnoOra = false, colpito = null) {
   const apri = () => ctx.azioni.apri(r);
   const condizioni = [
     v.ferite?.grado ? `Ferita ${v.ferite.nome}` : null,
@@ -257,7 +320,8 @@ function cartaPg(ctx, v, r, diTurnoOra = false) {
       v.ritratto ? h('img', { class: 'ritratto-plancia', src: v.ritratto, alt: '' }) : null,
       h('div', {},
         h('h2', {}, h('button', { type: 'button', class: 'btn-link nome-plancia', title: `Apri ${v.nome} (le modifiche si fanno nella sua scheda)`, onclick: apri }, v.nome)),
-        h('p', { class: 'nota' }, `${v.livello}° livello · ${v.completa ? [v.corporazione, v.classi.map((c) => `${c.nome} ${c.grado}`).join(', ')].filter(Boolean).join(' · ') : 'scheda incompleta'}`))),
+        h('p', { class: 'nota' }, `${v.livello}° livello · ${v.completa ? [v.corporazione, v.classi.map((c) => `${c.nome} ${c.grado}`).join(', ')].filter(Boolean).join(' · ') : 'scheda incompleta'}`)),
+      v.completa && colpito && ctx.scontroAperto?.() ? pulsanteColpito(ctx, () => colpito(v, r)) : null),
     v.completa ? [
       barra('risorsa-pv', 'PV', v.pv.attuali, v.pv.massimo),
       v.pm ? barra('risorsa-pm', 'PM', v.pm.attuali, v.pm.massimo) : null,
@@ -274,6 +338,11 @@ function cartaPg(ctx, v, r, diTurnoOra = false) {
           a.provenienzaDanno ? infoValore(h('strong', {}, a.danno), { titolo: `Danno ${a.nome}: ${a.danno}`, provenienza: a.provenienzaDanno }) : h('strong', {}, a.danno)))))
         : h('p', { class: 'nota' }, 'Nessuna arma in mano.'),
     ] : h('p', { class: 'nota' }, 'Il personaggio non ha ancora Corporazione, Addestramento e Classe.'));
+}
+
+/** «Colpito» (pezzo 4): serve uno scontro aperto, dove il colpo si registra e si può annullare. */
+export function pulsanteColpito(ctx, apri) {
+  return h('button', { type: 'button', class: 'btn btn-piccolo btn-colpito', onclick: apri }, 'Colpito');
 }
 
 function cartaMancante(k) {

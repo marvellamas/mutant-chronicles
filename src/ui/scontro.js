@@ -51,7 +51,7 @@ const idNuovo = (d = new Date()) => {
  * @param modifica (fn: scontro → scontro) salva il nuovo stato con la revisione
  * @param crea (scontro) salva uno scontro nuovo
  */
-export function pannelloScontro(ctx, st, { modifica, crea, ridisegna }) {
+export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaColpo = null }) {
   const s = st.scontro;
   const dado = dadoIniziativa(ctx.dati);
   if (!s) {
@@ -143,6 +143,8 @@ export function pannelloScontro(ctx, st, { modifica, crea, ridisegna }) {
       h('h2', {}, `${s.nome} · Round ${s.round}`),
       h('div', { class: 'riga-azioni' },
         h('button', { type: 'button', class: 'btn primario', disabled: !ordinati.length, onclick: () => modifica((x) => avanti(x)) }, 'Avanti'),
+        // pezzo 4: annulla l'ultimo colpo applicato (PV, Ferite e Stati di prima)
+        annullaColpo && s.colpi?.length ? h('button', { type: 'button', class: 'btn', title: `Ultimo: ${s.colpi.at(-1).testo}`, onclick: () => { if (confirm(`Annullare l’ultimo colpo a ${s.colpi.at(-1).nome}?`)) annullaColpo(); } }, 'Annulla ultimo colpo') : null,
         h('button', { type: 'button', class: 'btn', onclick: () => { if (confirm('Chiudere lo scontro? Il file passa in scontri/archivio/.')) modifica((x) => chiudi(x)); } }, 'Fine scontro'))),
     st.avvisoScontro ? h('p', { class: 'riquadro attenzione', role: 'status' }, st.avvisoScontro) : null,
     diT ? h('p', { class: 'di-turno-testo' }, 'Di turno: ', h('strong', {}, diT.nome)) : null,

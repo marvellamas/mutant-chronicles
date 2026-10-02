@@ -38,10 +38,21 @@ export async function leggiCartella(file) {
   return r.text();
 }
 
-/** Scrive un file nella cartella: { file, mtime }. */
-export async function scriviCartella(file, testo) {
-  const r = await fetch(`api/personaggi/${encodeURIComponent(file)}`, { method: 'PUT', body: testo, headers: { 'Content-Type': 'application/json' } });
+/** Testo di un file con la sua revisione (data di modifica sul server): { testo, mtime }. */
+export async function leggiCartellaConRevisione(file) {
+  const r = await fetch(`api/personaggi/${encodeURIComponent(file)}`, { cache: 'no-store' });
+  if (!r.ok) throw new Error((await r.json().catch(() => ({}))).errore ?? `errore ${r.status}`);
+  return { testo: await r.text(), mtime: r.headers.get('X-Mutant-Mtime') };
+}
+
+/**
+ * Scrive un file nella cartella: { file, mtime }. Con `mtime` (la revisione letta) il server rifiuta la
+ * scrittura se il file è cambiato nel frattempo: errore con `conflitto: true`.
+ */
+export async function scriviCartella(file, testo, { mtime } = {}) {
+  const headers = { 'Content-Type': 'application/json', ...(mtime ? { 'X-Mutant-Mtime': String(mtime) } : {}) };
+  const r = await fetch(`api/personaggi/${encodeURIComponent(file)}`, { method: 'PUT', body: testo, headers });
   const j = await r.json().catch(() => ({}));
-  if (!r.ok) throw new Error(j.errore ?? `errore ${r.status}`);
+  if (!r.ok) throw Object.assign(new Error(j.errore ?? `errore ${r.status}`), { conflitto: r.status === 409 });
   return j;
 }

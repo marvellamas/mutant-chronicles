@@ -10,7 +10,9 @@
 //   GET /api/ping                      { ok: true, app: 'mutant', cartella: 'personaggi' }: l'app capisce che il server c'è
 //   GET /api/personaggi                [{ file, nome, livello, data, mtime, dimensione }] dei file in personaggi/
 //   GET /api/personaggi/<file>         il file com'è (testo dell'export, byte per byte)
-//   PUT /api/personaggi/<file>         scrive il file (corpo = testo dell'export); risponde { file, mtime }
+//   PUT /api/personaggi/<file>         scrive il file (corpo = testo dell'export); risponde { file, mtime }.
+//                                      Con l'intestazione X-Mutant-Mtime (la data letta) scrive solo se il file
+//                                      non è cambiato nel frattempo, altrimenti 409 con la data attuale (plancia)
 //   GET /api/tavolo                    selezione del Tavolo del Master: { versione, personaggi: [nomi] }
 //   PUT /api/tavolo                    la salva in tavolo/sessione.json (fuori da git come personaggi/)
 //   GET /api/scontri                   scontri aperti in scontri/: [{ id, nome, stato, round, revisione, mtime }]
@@ -227,7 +229,9 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
   if (req.method === 'GET') {
     try {
       const testo = await readFile(dove);
-      res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-cache' });
+      const s = await stat(dove);
+      // la data del file è la revisione per chi riscrive (Tavolo del Master, pezzo 4)
+      res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-cache', 'X-Mutant-Mtime': String(s.mtimeMs) });
       return res.end(testo);
     } catch {
       return json(res, 404, { errore: 'file non trovato' });
@@ -242,6 +246,12 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
       if (o?.formato !== 'mutant-personaggio') throw new Error('non è un personaggio di Mutant');
     } catch (e) {
       return json(res, 400, { errore: `contenuto non valido: ${e.message}` });
+    }
+    // revisione (Tavolo del Master, pezzo 4): la plancia scrive solo se il file è quello che ha letto
+    const attesa = req.headers['x-mutant-mtime'];
+    if (attesa !== undefined) {
+      const attuale = await stat(dove).then((s) => String(s.mtimeMs), () => null);
+      if (attuale !== attesa) return json(res, 409, { errore: 'il personaggio è stato cambiato altrove: rileggi', mtime: attuale });
     }
     await mkdir(cartella, { recursive: true });
     // scrittura atomica: un file temporaneo e poi la rinomina, così una lettura non vede mai mezzo file

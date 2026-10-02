@@ -271,3 +271,29 @@ export function validaScontro(s) {
   if (nemicoRotto) return `nemico ${nemicoRotto.nome ?? nemicoRotto.id}: PV, Stati o scheda mancanti`;
   return null;
 }
+
+/**
+ * Colpo applicato dalla plancia (pezzo 4, src/danno.js → applicaColpo): riga di registro e pila dei colpi per
+ * «Annulla ultimo colpo». Per un nemico i valori stanno nello scontro e si aggiornano qui; per un PG nel suo
+ * file (la plancia lo riscrive), qui resta la traccia con i valori di prima per annullare.
+ * @param colpo { bersaglio: id del partecipante o «pg:<chiave>», nome, tipo: 'pg'|'nemico', file?, testo,
+ *   prima: { pv, ferite, stati }, dopo: { pv, ferite, stati } }
+ */
+export function registraColpo(s, colpo, adesso) {
+  let t = { ...s, colpi: [...(s.colpi ?? []), { ...colpo, ora: ora(adesso), round: s.round }].slice(-30) };
+  if (colpo.tipo === 'nemico') {
+    t = { ...t, partecipanti: t.partecipanti.map((p) => (p.id === colpo.bersaglio ? { ...p, pv: { ...p.pv, attuali: colpo.dopo.pv }, stati: colpo.dopo.stati ?? p.stati } : p)) };
+  }
+  return conRiga(t, colpo.testo, adesso);
+}
+
+/** Toglie l'ultimo colpo: per un nemico rimette PV e Stati di prima; restituisce anche il colpo, per il file del PG. */
+export function annullaUltimoColpo(s, adesso) {
+  const colpo = (s.colpi ?? []).at(-1);
+  if (!colpo) throw new Error('nessun colpo da annullare');
+  let t = { ...s, colpi: s.colpi.slice(0, -1) };
+  if (colpo.tipo === 'nemico') {
+    t = { ...t, partecipanti: t.partecipanti.map((p) => (p.id === colpo.bersaglio ? { ...p, pv: { ...p.pv, attuali: colpo.prima.pv }, stati: colpo.prima.stati ?? p.stati } : p)) };
+  }
+  return { scontro: conRiga(t, `Annullato l’ultimo colpo a ${colpo.nome}: PV ${colpo.dopo.pv} → ${colpo.prima.pv}${colpo.prima.ferite !== undefined && colpo.prima.ferite !== colpo.dopo.ferite ? `, Ferite ${colpo.dopo.ferite} → ${colpo.prima.ferite}` : ''}.`, adesso), colpo };
+}

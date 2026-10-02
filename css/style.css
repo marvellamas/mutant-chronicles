@@ -1591,3 +1591,11 @@ body.con-sfondo::before {
 .voce-nemico { border: 1px dashed var(--bordo); border-radius: var(--raggio); padding: 0.4rem 0.6rem; margin: 0.4rem 0; }
 .riga-mappa { display: flex; flex-wrap: wrap; gap: 0.5rem 0.9rem; }
 .caselle-nemico { display: flex; flex-wrap: wrap; gap: 0.2rem 0.9rem; }
+
+/* Tavolo del Master, pezzo 4: «Colpito» e anteprima del danno applicato */
+.btn-colpito { margin-left: auto; align-self: flex-start; }
+.finestra-colpo .danni-colpo { display: flex; flex-wrap: wrap; gap: 0.5rem 0.9rem; margin: 0.4rem 0; }
+.finestra-colpo .input-formula { width: 7rem; }
+.anteprima-colpo ol { margin: 0.3rem 0; padding-left: 1.4rem; }
+.anteprima-colpo li { margin: 0.25rem 0; }
+.tempra-colpo select { font-size: 0.9rem; }
