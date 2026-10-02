@@ -25,6 +25,7 @@ export function apriColpo(ctx, bersaglio, { applica, proposta = {} }) {
   const st = {
     ac: proposta.ac ?? 1, formula: proposta.formula ?? '', danni: [], natura: proposta.natura ?? 'Naturale', tipo: proposta.tipo ?? 'distanza',
     difesa: 'nessuna', proprieta: (proposta.proprieta ?? []).join(', '), tempra: [], stati: null, errore: null, inCorso: false,
+    moltiplicatore: proposta.moltiplicatore ?? 1, moltiplicatorePrimo: proposta.moltiplicatorePrimo ?? proposta.moltiplicatore ?? 1,
   };
   const finestra = h('dialog', { class: 'pannello-scheda finestra-colpo', 'aria-labelledby': 'colpo-titolo' });
   // chiusa con Esc o dai pulsanti: si toglie subito dalla pagina
@@ -56,14 +57,16 @@ export function apriColpo(ctx, bersaglio, { applica, proposta = {} }) {
         h('h2', { id: 'colpo-titolo' }, `Colpito: ${bersaglio.nome}`),
         h('button', { type: 'button', class: 'btn tondo chiudi', 'aria-label': 'Chiudi', onclick: () => chiudi() }, '×')),
       h('p', { class: 'nota' }, `PV ${bersaglio.pv.attuali} / ${bersaglio.pv.massimo}${bersaglio.ferite !== null ? ` · Ferite ${bersaglio.ferite}` : ''} · AR ${bersaglio.ar?.totale ?? 0}${bersaglio.ar?.magica ? `, di cui ${bersaglio.ar.magica} magica` : ''}. Il danno è quello tirato, con bonus e moltiplicatori (§5.13, passi 1–3).`),
-      scelta('Applicazioni (AC, §5.10)', [1, 2, 3, 4].map((n) => ({ valore: n, etichetta: String(n) })), st.ac, (v) => { st.ac = v; }),
+      scelta('Applicazioni (AC, §5.10)', [1, 2, 3, 4, 5, 6].map((n) => ({ valore: n, etichetta: String(n) })), st.ac, (v) => { st.ac = v; }),
+      st.moltiplicatore > 1 || st.moltiplicatorePrimo > 1 ? h('p', { class: 'nota' }, `Dall’attacco: «Tira con l’app» moltiplica ×${st.moltiplicatore} ogni applicazione${st.moltiplicatorePrimo !== st.moltiplicatore ? ` e ×${st.moltiplicatorePrimo} la prima (Successo Magistrale, §1.6)` : ''}. Dal vivo scrivi il danno già moltiplicato.`) : null,
       h('div', { class: 'distanza-riga' },
         h('label', {}, 'Formula ', h('input', { type: 'text', class: 'input-formula', placeholder: '1d8+2', value: st.formula, oninput: (e) => { st.formula = e.target.value; } })),
         h('button', { type: 'button', class: 'btn', title: 'Un gruppo di dadi più un fisso, per esempio «1d8+2»', onclick: () => {
           const s = specDaFormula(st.formula);
           if (!s) { st.errore = 'Formula non riconosciuta: scrivi per esempio «1d8+2», oppure i danni dal vivo.'; disegna(); return; }
           st.errore = null;
-          st.danni = Array.from({ length: st.ac }, () => tira(s).tiro.valore); disegna();
+          // moltiplicatori dell'attacco (pezzo 5): di ogni applicazione e, con il Magistrale, della sola prima (§1.6)
+          st.danni = Array.from({ length: st.ac }, (_, i) => tira(s).tiro.valore * (i === 0 ? st.moltiplicatorePrimo : st.moltiplicatore)); disegna();
         } }, 'Tira con l’app')),
       h('div', { class: 'danni-colpo' }, Array.from({ length: st.ac }, (_, i) => h('label', {}, `Danno ${i + 1} `,
         h('input', { type: 'number', min: 0, step: 1, class: 'input-d10', value: st.danni[i] ?? '', 'aria-label': `Danno dell’applicazione ${i + 1}, dal vivo`,

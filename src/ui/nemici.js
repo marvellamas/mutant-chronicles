@@ -211,7 +211,7 @@ const barraPv = (p, modifica) => h('div', { class: 'plancia-barra risorsa-pv' },
     h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-label': `${p.nome}: +1 PV`, disabled: p.pv.attuali >= p.pv.massimo, onclick: () => modifica((x) => variaPvNemico(x, p.id, 1)) }, '+')));
 
 /** Carta compatta di un nemico nello scontro: PV con − e +, AR, Difese, attacchi, Stati. */
-export function cartaNemico(ctx, p, { modifica, diTurnoOra = false, onColpito = null }) {
+export function cartaNemico(ctx, p, { modifica, diTurnoOra = false, onColpito = null, onAttacca = null }) {
   const n = p.scheda;
   const dati = ctx.dati;
   const stati = dati.regole.stati?.elenco ?? [];
@@ -231,7 +231,10 @@ export function cartaNemico(ctx, p, { modifica, diTurnoOra = false, onColpito = 
       h('h2', {}, p.nome),
       h('p', { class: 'nota' }, h('span', { class: 'nome-lato' }, p.lato), ` · ${n.nome}`, n.fonte ? ` · ${n.fonte}` : '')),
       // pezzo 4: «Colpito» (src/ui/colpo.js)
-      onColpito ? h('button', { type: 'button', class: 'btn btn-piccolo btn-colpito', onclick: onColpito }, 'Colpito') : null),
+      h('span', { class: 'pulsanti-carta' },
+        // pezzo 5: «Attacca» (src/ui/attacco-nemico.js)
+        onAttacca ? h('button', { type: 'button', class: 'btn btn-piccolo btn-attacca', onclick: onAttacca }, 'Attacca') : null,
+        onColpito ? h('button', { type: 'button', class: 'btn btn-piccolo btn-colpito', onclick: onColpito }, 'Colpito') : null)),
     barraPv(p, modifica),
     n.pm !== undefined ? h('p', { class: 'nota' }, `PM ${n.pm}`) : null,
     h('p', { class: 'plancia-valori' },

@@ -57,6 +57,7 @@ export function frasiEffetti() {
   visita(leggi('data/regole.json').lancio ?? {}, 'regole:lancio');
   visita(leggi('data/regole.json').rituali ?? {}, 'regole:rituali');
   visita(leggi('data/regole.json').danno_applicato ?? {}, 'regole:danno_applicato');
+  visita(leggi('data/regole.json').prova ?? {}, 'regole:prova');
   visita(leggi('data/regole.json').attacco_ravvicinato ?? {}, 'regole:attacco_ravvicinato');
   visita(leggi('data/regole.json').elmetti ?? {}, 'regole:elmetti');
   visita(leggi('data/regole.json').dotazioni_iniziali ?? {}, 'regole:dotazioni_iniziali');

@@ -1718,6 +1718,20 @@
     ],
     "_nota": "Giocatore del 29/09 (23:45). Si controlla il VA finale della singola Prova, dopo tutti i bonus e le penalità. «Attacca!» e «Lancia!» lo ricordano quando il VA finale raggiunge la soglia; Successo Magistrale Migliorato resta un promemoria del Talento."
   },
+  "prova": {
+    "paragrafo": "Giocatore 0.45: §1.6 «Risultati naturali», §1.7 «Successi automatici e azioni impossibili»",
+    "_nota": "Esito di una Prova con il d20 (src/prova.js → esitoProva), usato dal Tavolo del Master per il tiro per colpire dei nemici. Il 2 naturale Magistrale con VA finale almeno la soglia è in regole.json → magistrale_naturale. Con VA finale da «successo_automatico_da» in su il successo è automatico, senza tiro (§1.7), salvo una Prova resa obbligatoria da una regola (§1.7.1).",
+    "naturale_magistrale": 1,
+    "naturale_maldestro": 20,
+    "successo_automatico_da": 20,
+    "impossibile_fino_a": 0,
+    "frasi": [
+      "Quando il d20 viene utilizzato per una Prova, l’1 e il 20 naturali producono sempre un risultato speciale.",
+      "I modificatori e i Punti Eroe non cambiano il valore naturale mostrato dal dado.",
+      "Il successo automatico è un successo normale: non produce un Successo Magistrale o Distintivi e non elimina il consumo ordinario di tempo e risorse."
+    ],
+    "TODO(Davide)": "A.78: un attacco con VA finale 20 o più è un successo automatico senza tiro (§1.7), quindi senza Magistrale né Maldestro, oppure si tira comunque? Nel frattempo successo automatico, senza tiro."
+  },
   "danno_applicato": {
     "paragrafo": "Giocatore 0.45: §5.10 «AC e applicazioni separate del danno», §5.13, §5.14, §5.24 (Google Doc del 01/10/2026)",
     "_nota": "Danno applicato dal Tavolo del Master (src/danno.js → applicaColpo), decisione 3 del piano (niente locativi): per ogni applicazione Difesa → AR applicabile alla natura (con Perforante e Laser) → PV → Ferite. Il danno tirato è quello finale dei dadi con bonus e moltiplicatori (passi 1–3 del §5.13), scritto al tavolo o tirato dall’app. «difese»: effetto di una Difesa riuscita su ogni applicazione. «ar_per_natura»: quale valore dell’AR del bersaglio vale per la natura (src/protezione.js → valori: totale, magica, contro:…). «ar_contro»: valore «contro» da usare per un tipo di attacco, se il bersaglio lo ha e la natura non è Etereo. «nuove_ferite»: §5.14, nuove Ferite di un personaggio già a 0 PV per fascia di danno finale ed esito della PS di Tempra.",

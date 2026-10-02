@@ -6,7 +6,7 @@ import { h } from './dom.js';
 import { infoValore } from './tooltip.js';
 import { tira, tiroManuale } from '../tiri.js';
 import {
-  nuovoScontro, aggiungiPartecipante, togliPartecipante, registraTiro, ordineIniziativa, spostaAlleato,
+  nuovoScontro, aggiungiPartecipante, attaccoManuale, togliPartecipante, registraTiro, ordineIniziativa, spostaAlleato,
   diTurno, registraDurata, avanti, chiudi, dadoIniziativa, durataStato, aggiungiNemici,
 } from '../scontro.js';
 
@@ -51,7 +51,7 @@ const idNuovo = (d = new Date()) => {
  * @param modifica (fn: scontro → scontro) salva il nuovo stato con la revisione
  * @param crea (scontro) salva uno scontro nuovo
  */
-export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaColpo = null }) {
+export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaColpo = null, attacca = null }) {
   const s = st.scontro;
   const dado = dadoIniziativa(ctx.dati);
   if (!s) {
@@ -99,7 +99,10 @@ export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaCol
         gruppoAlleati ? h('span', { class: 'sposta-alleato', title: 'Parità fra alleati: scelgono loro l’ordine (§5.1)' },
           h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-label': `${p.nome} prima`, onclick: () => modifica((x) => spostaAlleato(x, p.id, -1)) }, '↑'),
           h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-label': `${p.nome} dopo`, onclick: () => modifica((x) => spostaAlleato(x, p.id, 1)) }, '↓')) : null),
-      h('td', {}, p.tipo === 'manuale' || p.tipo === 'nemico' ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => modifica((x) => togliPartecipante(x, p.id)) }, 'Togli') : null));
+      h('td', { class: 'azioni-scontro' },
+        // pezzo 5: un partecipante a mano con un attacco scritto può attaccare (i nemici dalla loro carta)
+        attacca && p.tipo === 'manuale' && p.attacco ? h('button', { type: 'button', class: 'btn btn-piccolo btn-attacca', title: `${p.attacco.nome}: VA ${p.attacco.va}, ${p.attacco.danno} ${p.attacco.natura}`, onclick: () => attacca(p) }, 'Attacca') : null,
+        p.tipo === 'manuale' || p.tipo === 'nemico' ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => modifica((x) => togliPartecipante(x, p.id)) }, 'Togli') : null));
   };
 
   // durate degli Stati di PG e nemici (dati: «1+1d3 Round»), registrate nello scontro e scalate a fine Round
@@ -117,7 +120,7 @@ export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaCol
       h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => modifica((x) => registraDurata(x, p.id, stato, tira(spec).tiro)) }, `Tira ${spec.formula}`));
   };
 
-  const b = (st.bozza ??= { nome: '', base: '', lato: 'avversario', des: '', int: '' });
+  const b = (st.bozza ??= { nome: '', base: '', lato: 'avversario', des: '', int: '', aNome: '', aTipo: 'ravvicinato', aVa: '', aDanno: '', aNatura: 'Naturale' });
   // «Aggiungi nemici»: un tipo valido del bestiario e quante copie
   const tipi = (st.bestiario ?? []).filter((v) => v.nemico);
   const bn = (st.bozzaNemici ??= { tipo: '', quante: '1', lato: 'avversario' });
@@ -163,9 +166,20 @@ export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaCol
         h('label', {}, 'Lato ', h('select', { onchange: (e) => { b.lato = e.target.value; } },
           h('option', { value: 'avversario', selected: b.lato === 'avversario' }, 'avversario'), h('option', { value: 'alleato', selected: b.lato === 'alleato' }, 'alleato'))),
         h('label', { title: 'Per la parità (§5.1): facoltativo' }, 'DES ', campo('des', { type: 'number', step: 1, class: 'input-d10' })),
-        h('label', { title: 'Per la parità (§5.1): facoltativo' }, 'INT ', campo('int', { type: 'number', step: 1, class: 'input-d10' })),
+        h('label', { title: 'Per la parità (§5.1): facoltativo' }, 'INT ', campo('int', { type: 'number', step: 1, class: 'input-d10' }))),
+      // pezzo 5: attacco facoltativo (senza, il pulsante «Attacca» non c'è)
+      h('div', { class: 'riga-aggiungi' },
+        h('label', { title: 'Facoltativo: con un attacco il partecipante può usare «Attacca»' }, 'Attacco ', campo('aNome', { type: 'text', maxlength: 60, placeholder: 'es. Pistola' })),
+        h('label', {}, 'Tipo ', h('select', { onchange: (e) => { b.aTipo = e.target.value; } },
+          h('option', { value: 'ravvicinato', selected: b.aTipo === 'ravvicinato' }, 'ravvicinato'), h('option', { value: 'distanza', selected: b.aTipo === 'distanza' }, 'a distanza'))),
+        h('label', {}, 'VA ', campo('aVa', { type: 'number', step: 1, class: 'input-d10' })),
+        h('label', {}, 'Danno ', campo('aDanno', { type: 'text', maxlength: 20, class: 'input-formula', placeholder: '1d8+2' })),
+        h('label', {}, 'Natura ', h('select', { onchange: (e) => { b.aNatura = e.target.value; } },
+          ['Naturale', 'Magico', 'Etereo'].map((n) => h('option', { value: n, selected: b.aNatura === n }, n)))),
         h('button', { type: 'button', class: 'btn', onclick: () => {
-          const dati = { nome: b.nome, base: intero(b.base), lato: b.lato, des: intero(b.des), int: intero(b.int) };
+          const attacco = (b.aNome ?? '').trim() ? { nome: b.aNome, tipo: b.aTipo, va: intero(b.aVa), danno: b.aDanno, natura: b.aNatura } : null;
+          if (attacco && !attaccoManuale(attacco)) { alert('Attacco incompleto: servono nome, VA intero e danno come «1d8+2» (oppure lascia vuoto il nome dell’attacco).'); return; }
+          const dati = { nome: b.nome, base: intero(b.base), lato: b.lato, des: intero(b.des), int: intero(b.int), attacco };
           modifica((x) => aggiungiPartecipante(x, dati)).then((ok) => { if (ok) { st.bozza = null; ridisegna(); } });
         } }, 'Aggiungi'))),
     statiPg.length ? h('div', { class: 'durate-stati' }, h('h3', {}, 'Durate degli Stati'), h('ul', {}, statiPg.map(durata))) : null,

@@ -1598,6 +1598,18 @@ body.con-sfondo::before {
 .finestra-colpo .input-formula { width: 7rem; }
 .anteprima-colpo ol { margin: 0.3rem 0; padding-left: 1.4rem; }
 .anteprima-colpo li { margin: 0.25rem 0; }
+
+/* Tavolo del Master, pezzo 5: «Attacca» dei nemici (src/ui/attacco-nemico.js) */
+.pulsanti-carta { margin-left: auto; align-self: flex-start; display: flex; gap: 0.3rem; }
+.pulsanti-carta .btn-colpito { margin-left: 0; }
+.azioni-scontro { white-space: nowrap; }
+.azioni-scontro .btn + .btn { margin-left: 0.3rem; }
+.scelta-pulsanti.scelta-colonna { flex-direction: column; align-items: stretch; }
+.scelta-colonna .scelta-btn { text-align: left; }
+.tiro-colpire { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem 0.5rem; margin: 0.3rem 0; }
+.esito-attacco { margin: 0.4rem 0; padding: 0.3rem 0.6rem; border-radius: var(--raggio); border-left: 4px solid var(--bordo); }
+.esito-attacco.esito-successo, .esito-attacco.esito-magistrale, .esito-attacco.esito-automatico { border-left-color: var(--pe); background: var(--pe-tenue); color: var(--testo); }
+.esito-attacco.esito-fallimento, .esito-attacco.esito-maldestro, .esito-attacco.esito-impossibile { border-left-color: var(--pv); background: var(--pv-tenue); color: var(--testo); }
 .tempra-colpo select { font-size: 0.9rem; }
 
 /* «← Torna al tavolo» nella barra della scheda aperta dalla plancia (src/ui/ritorno.js) */

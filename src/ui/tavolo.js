@@ -11,10 +11,12 @@ import { vistaPlancia, testoConSessione, pgDaAggiungere } from '../tavolo.js';
 import { ultimiPerPersonaggio, chiaveDaFile } from '../cartella.js';
 import { elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, creaInCartella } from './cartella.js';
 import { apriColpo } from './colpo.js';
+import { apriAttaccoNemico } from './attacco-nemico.js';
+import { attacchiDi } from '../nemico-attacco.js';
 import { testoColpo } from '../danno.js';
 import { pannelloScontro, leggiScontroAperto, leggiScontro, salvaScontro } from './scontro.js';
 import { pannelloBestiario, elencoNemici, cartaNemico } from './nemici.js';
-import { diTurno, registraColpo, annullaUltimoColpo } from '../scontro.js';
+import { diTurno, registraColpo, annullaUltimoColpo, registraAttacco } from '../scontro.js';
 import { vociBestiario } from '../nemici.js';
 
 const INTERVALLO_MS = 3000;
@@ -116,14 +118,14 @@ export function renderTavolo(radice, ctx) {
         await aggiorna(true);
       }) : null,
       pannelloScontro(ctx, Object.assign(stato, { pgAlTavolo: alTavolo.map((r) => stato.viste.get(r.file)).filter((v) => v?.completa) }),
-        { modifica, crea: (s) => salva(s), ridisegna: disegna, annullaColpo }),
+        { modifica, crea: (s) => salva(s), ridisegna: disegna, annullaColpo, attacca: (p) => attacca(p, alTavolo) }),
       alTavolo.length
         ? h('div', { class: 'plancia-griglia' }, alTavolo.map((r) => (r.mancante ? cartaMancante(r.mancante)
           : stato.viste.get(r.file) ? cartaPg(ctx, stato.viste.get(r.file), r, turnoDi(r), colpitoPg) : cartaErrore(r, stato.errori.get(r.file)))))
         : h('p', { class: 'vuoto' }, 'Nessun personaggio al tavolo: sceglili con «Chi è al tavolo».'),
       nemiciInScontro().length ? [
         h('h2', { class: 'plancia-sezione' }, 'Nemici nello scontro'),
-        h('div', { class: 'plancia-griglia' }, nemiciInScontro().map((p) => cartaNemico(ctx, p, { modifica, diTurnoOra: diTurno(stato.scontro)?.id === p.id, onColpito: () => colpitoNemico(p) }))),
+        h('div', { class: 'plancia-griglia' }, nemiciInScontro().map((p) => cartaNemico(ctx, p, { modifica, diTurnoOra: diTurno(stato.scontro)?.id === p.id, onColpito: () => colpitoNemico(p), onAttacca: attacchiDi(p).length ? () => attacca(p, alTavolo) : null }))),
       ] : null,
       pannelloBestiario(ctx, stato.bestiario, {
         aperto: stato.bestiarioAperto,
@@ -147,10 +149,11 @@ export function renderTavolo(radice, ctx) {
   // Pezzo 4: «Colpito» (src/danno.js → applicaColpo, finestra src/ui/colpo.js). Serve uno scontro aperto:
   // il colpo va nel registro e si può annullare. Il PG si scrive nel suo file con la revisione (mtime).
   const statiValidi = (ids, immuni = []) => ids.filter((id) => !immuni.includes(id));
-  const colpitoPg = (v, r) => {
+  const colpitoPg = (v, r, proposta = {}) => {
     if (!stato.scontro) return;
     const bersaglio = { nome: v.nome, pv: v.pv, ferite: v.ferite.grado, ar: v.ar };
     apriColpo(ctx, bersaglio, {
+      proposta,
       applica: async (ris, colpo, stati) => {
         const { testo, mtime } = await leggiCartellaConRevisione(r.file);
         const ora = vistaPlancia(testo, ctx.dati, r.file);
@@ -168,10 +171,11 @@ export function renderTavolo(radice, ctx) {
       },
     });
   };
-  const colpitoNemico = (p) => {
+  const colpitoNemico = (p, proposta = {}) => {
     if (!stato.scontro) return;
     const bersaglio = { nome: p.nome, pv: p.pv, ferite: null, ar: p.scheda.ar };
     apriColpo(ctx, bersaglio, {
+      proposta,
       applica: async (ris, colpo, stati) => modifica((x) => {
         const q = x.partecipanti.find((y) => y.id === p.id);
         if (!q || q.pv.attuali !== p.pv.attuali) throw new Error(`${p.nome} è cambiato nel frattempo: chiudi e riapri «Colpito».`);
@@ -179,6 +183,19 @@ export function renderTavolo(radice, ctx) {
         return registraColpo(x, { bersaglio: p.id, nome: p.nome, tipo: 'nemico', testo: testoColpo(p.nome, colpo, ris), prima: { pv: q.pv.attuali, stati: q.stati }, dopo: { pv: ris.pv.dopo, stati: dopoStati } });
       }),
     });
+  };
+  // Pezzo 5: «Attacca» di un nemico o di un partecipante manuale con un attacco (src/ui/attacco-nemico.js).
+  // Bersagli: i PG al tavolo (Difese dalla scheda) e gli altri nemici dello scontro (Difese dal formato).
+  const attacca = (p, alTavolo) => {
+    if (!stato.scontro) return;
+    const pg = alTavolo.filter((r) => !r.mancante && stato.viste.get(r.file)?.completa).map((r) => {
+      const v = stato.viste.get(r.file);
+      return { id: `pg:${v.chiaveCartella}`, nome: v.nome, descrizione: `PG · PV ${v.pv.attuali}/${v.pv.massimo}${v.difese ? ` · Difese ${v.difese.valore}` : ''} · AR ${v.ar?.valori[0]?.valore ?? 0}`, colpito: (proposta) => colpitoPg(v, r, proposta) };
+    });
+    const nemici = nemiciInScontro().filter((q) => q.id !== p.id).map((q) => ({
+      id: q.id, nome: q.nome, descrizione: `${q.lato} · PV ${q.pv.attuali}/${q.pv.massimo} · Difese ${q.scheda.difese} · AR ${q.scheda.ar.totale}`, colpito: (proposta) => colpitoNemico(q, proposta),
+    }));
+    apriAttaccoNemico(ctx, p, { bersagli: [...pg, ...nemici], registra: (a) => modifica((x) => registraAttacco(x, a)) });
   };
   // «Annulla ultimo colpo»: per un PG si rimettono nel file PV, Ferite e Stati di prima (con la revisione)
   const annullaColpo = async () => {

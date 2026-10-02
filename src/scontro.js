@@ -55,11 +55,13 @@ export function nuovoScontro({ id, nome, pg = [], adesso = new Date() }) {
 }
 
 /** Partecipante scritto a mano (i nemici arrivano con il pezzo 3): provvisorio. */
-export function aggiungiPartecipante(s, { nome, base, lato = 'avversario', des = null, int = null }, adesso) {
+export function aggiungiPartecipante(s, { nome, base, lato = 'avversario', des = null, int = null, attacco = null }, adesso) {
   if (!String(nome ?? '').trim() || !Number.isInteger(base)) throw new Error('servono un nome e un’Iniziativa intera');
   const id = `man:${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
-  const p = { id, tipo: 'manuale', provvisorio: true, nome: String(nome).trim(), lato: lato === 'alleato' ? 'alleato' : 'avversario', base, des: Number.isInteger(des) ? des : null, int: Number.isInteger(int) ? int : null, d10: null, spareggio: null };
-  return conRiga({ ...s, partecipanti: [...s.partecipanti, p] }, `Aggiunto ${p.nome} (provvisorio, ${p.lato}, Iniziativa ${base}).`, adesso);
+  // pezzo 5: un attacco scritto a mano (stessi campi di un attacco del formato dei nemici), facoltativo
+  const att = attaccoManuale(attacco);
+  const p = { id, tipo: 'manuale', provvisorio: true, nome: String(nome).trim(), lato: lato === 'alleato' ? 'alleato' : 'avversario', base, des: Number.isInteger(des) ? des : null, int: Number.isInteger(int) ? int : null, d10: null, spareggio: null, ...(att ? { attacco: att } : {}) };
+  return conRiga({ ...s, partecipanti: [...s.partecipanti, p] }, `Aggiunto ${p.nome} (provvisorio, ${p.lato}, Iniziativa ${base}${att ? `; ${att.nome} VA ${att.va}, ${att.danno} ${att.natura}` : ''}).`, adesso);
 }
 
 /**
@@ -296,4 +298,31 @@ export function annullaUltimoColpo(s, adesso) {
     t = { ...t, partecipanti: t.partecipanti.map((p) => (p.id === colpo.bersaglio ? { ...p, pv: { ...p.pv, attuali: colpo.prima.pv }, stati: colpo.prima.stati ?? p.stati } : p)) };
   }
   return { scontro: conRiga(t, `Annullato l’ultimo colpo a ${colpo.nome}: PV ${colpo.dopo.pv} → ${colpo.prima.pv}${colpo.prima.ferite !== undefined && colpo.prima.ferite !== colpo.dopo.ferite ? `, Ferite ${colpo.dopo.ferite} → ${colpo.prima.ferite}` : ''}.`, adesso), colpo };
+}
+
+/**
+ * Attacco scritto a mano per un partecipante provvisorio (pezzo 5): nome, ravvicinato o a distanza, VA, danno
+ * («1d6+2»), natura; portata o gittata predefinite (1 Q, 10 Q). null se mancano i dati essenziali.
+ */
+export function attaccoManuale(a) {
+  if (!a || !String(a.nome ?? '').trim() || !Number.isInteger(a.va) || !/^\d+d\d+([+-]\d+)?$/.test(String(a.danno ?? '').replace(/\s+/g, ''))) return null;
+  const distanza = a.tipo === 'distanza';
+  return {
+    nome: String(a.nome).trim(), tipo: distanza ? 'distanza' : 'ravvicinato', va: a.va, danno: String(a.danno).replace(/\s+/g, ''),
+    natura: ['Naturale', 'Magico', 'Etereo'].includes(a.natura) ? a.natura : 'Naturale',
+    ...(distanza ? { gittata_q: Number.isInteger(a.gittata_q) ? a.gittata_q : 10, modalita: ['S'] } : { portata_q: Number.isInteger(a.portata_q) ? a.portata_q : 1 }),
+  };
+}
+
+/**
+ * Attacco di un partecipante (pezzo 5, «Attacca!» dei nemici): una riga di registro con chi attacca, chi,
+ * con che cosa, il VA, i tiri e l'esito. Va prima della riga del colpo (pezzo 4) se colpisce.
+ * @param a { attaccante, bersaglio, arma, va, tiri: [{ valore, origine, esito }], esito }
+ */
+export function registraAttacco(s, a, adesso) {
+  const ESITI = { magistrale: 'Successo Magistrale, colpito', successo: 'colpito', fallimento: 'mancato', maldestro: 'Fallimento Maldestro', automatico: 'colpito (successo automatico, §1.7)', impossibile: 'impossibile' };
+  // con più tiri (raffiche, Manovre con più attacchi) l'esito di ciascuno; i tiri non necessari (successo automatico) non si scrivono
+  const fatti = (a.tiri ?? []).filter((t) => Number.isInteger(t.valore));
+  const tiri = fatti.map((t) => `${t.valore}${t.origine === 'app' ? ' (app)' : ' (dal vivo)'}${fatti.length > 1 ? ` ${ESITI[t.esito] ?? t.esito}` : ''}`).join(', ');
+  return conRiga(s, `${a.attaccante} attacca ${a.bersaglio} con ${a.arma}: VA ${a.va}${tiri ? `, tiro ${tiri}` : ''} → ${ESITI[a.esito] ?? a.esito}.`, adesso);
 }

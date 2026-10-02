@@ -70,9 +70,10 @@ function corpoRavvicinato(ctx, a, intestazione) {
         { motivo: d.controcarica ? v.controcarica : null, mod: `${numero(R.controcarica.va)} · danno ×${molt}`, info: infoRegola('Controcarica', R.controcarica) }),
       interruttore('Sei A Terra', d.aTerra || statoATerra, (x) => imposta({ aTerra: x }),
         { motivo: statoATerra ? `dallo Stato della sessione: il ${numero(R.a_terra.proprio)} è già nel VA` : null, mod: numero(R.a_terra.proprio), info: infoRegola('A Terra', R.a_terra) }),
-      interruttore('Combatti con due armi', d.dueArmi, (x) => imposta({ dueArmi: x, ...(x ? { manovra: 'normale' } : {}) }),
+      // attaccante esterno (nemico del Tavolo del Master): niente opzioni di mani ed equipaggiamento del PG
+      a.esterno ? null : interruttore('Combatti con due armi', d.dueArmi, (x) => imposta({ dueArmi: x, ...(x ? { manovra: 'normale' } : {}) }),
         { motivo: v.dueArmi, mod: `${v.secondaArma ? `con ${v.secondaArma.nome} · ` : ''}${numero(due.va)} a ciascuno${due.talento ? ` (${due.talento})` : ''}`, info: infoRegola('Combattere con due armi', R.due_armi) }),
-      !d.dueArmi && !a.senzArmi ? interruttore('Solo la mano non dominante', d.manoNonDominante, (x) => imposta({ manoNonDominante: x }),
+      !d.dueArmi && !a.senzArmi && !a.esterno ? interruttore('Solo la mano non dominante', d.manoNonDominante, (x) => imposta({ manoNonDominante: x }),
         { mod: T.some((t) => t.e.mano_non_dominante) ? '0 (Ambidestro)' : numero(R.mano_non_dominante.va), info: infoRegola('Mano non dominante', R.mano_non_dominante) }) : null,
       interruttore('Imboscata (Azione dichiarata)', d.imboscata, (x) => imposta({ imboscata: x }),
         { mod: numero(ha('imboscata')?.e.imboscata.va ?? R.imboscata.va), info: infoRegola('Imboscata', R.imboscata) }),
@@ -145,7 +146,8 @@ function risultatoRavvicinato(ctx, a, r) {
       r.dopo_armatura.length ? h('ul', { class: 'promemoria-attacco' }, r.dopo_armatura.map((x) => h('li', {}, x.testo))) : null,
       r.promemoria.length ? h('ul', { class: 'promemoria-attacco' }, r.promemoria.map((p) => h('li', {}, p))) : null,
       promemoriaAR(ctx, a),
-      h('div', { class: 'attacco-azioni' },
+      // Tavolo del Master (pezzo 5): un attaccante esterno sostituisce la riga finale con tiro per colpire ed esito
+      ctx.azioni.finale ? ctx.azioni.finale(r) : h('div', { class: 'attacco-azioni' },
         h('button', {
           type: 'button', class: 'btn primario btn-grande', disabled: !!r.impossibile, title: r.impossibile?.motivo ?? null,
           onclick: () => ctx.azioni.ricordaAttacco(a.uid, { ...(ctx.sessione.attacchi?.[a.uid] ?? {}), ultima: { manovra: r.manovra.id, nome: r.manovra.nome } }),
@@ -199,9 +201,9 @@ function corpoDistanza(ctx, a, intestazione) {
         { valore: 'leggera', etichetta: `Leggera ${numero(MD.copertura.leggera)}${conTal(MD.talenti.copertura)}`, motivo: v.coperturaPropria },
         { valore: 'media', etichetta: `Media ${numero(MD.copertura.media)}${conTal(MD.talenti.copertura)}`, motivo: v.coperturaPropria },
       ], d.coperturaPropria, (x) => imposta({ coperturaPropria: x })),
-      interruttore('Combatti con due armi', d.dueArmi, (x) => imposta({ dueArmi: x, ...(x ? { modalita: 'S', mirato: false } : {}) }),
+      a.esterno ? null : interruttore('Combatti con due armi', d.dueArmi, (x) => imposta({ dueArmi: x, ...(x ? { modalita: 'S', mirato: false } : {}) }),
         { motivo: v.dueArmi, mod: `${v.secondaArma ? `con ${v.secondaArma.nome} · ` : ''}${numero(due.va)} a ciascuno${conTal(due.talento)}` }),
-      !d.dueArmi ? interruttore('Solo la mano non dominante', d.manoNonDominante, (x) => imposta({ manoNonDominante: x }),
+      !d.dueArmi && !a.esterno ? interruttore('Solo la mano non dominante', d.manoNonDominante, (x) => imposta({ manoNonDominante: x }),
         { mod: T7.some((t) => t.e.mano_non_dominante) ? '0 (Ambidestro)' : numero(R7.mano_non_dominante.va) }) : null,
     ],
     [
@@ -239,7 +241,7 @@ function corpoDistanza(ctx, a, intestazione) {
         h('div', { class: 'scelta-pulsanti' }, RAPIDE.filter((q) => !a.gittataQ || q <= a.gittataQ).map((q) => h('button', {
           type: 'button', class: `btn scelta-btn${d.distanza === q ? ' scelta' : ''}`, onclick: () => imposta({ distanza: q }),
         }, `${q}`)))),
-      h('p', { class: 'nota' }, a.mirino
+      a.esterno ? null : h('p', { class: 'nota' }, a.mirino
         ? `Mirino montato: ${a.mirino.nome} (riduce la penalità di ${a.mirino.riduzione}${a.mirino.distanza_max_q ? ` fino a ${a.mirino.distanza_max_q} Q` : ' entro la gittata'}${a.mirino.azp_minime > 1 ? `, almeno ${a.mirino.azp_minime} AzP` : ''}).`
         : 'Nessun mirino montato sull’arma (inventario).'),
     ],
@@ -304,7 +306,8 @@ function risultato(ctx, a, r, colpi, imposta) {
       r.seconda_prova ? h('p', { class: 'nota' }, h('strong', {}, `Seconda Prova se fallisci: VA ${numero(r.seconda_prova.va)}. `), r.seconda_prova.testo) : null,
       r.promemoria.length ? h('ul', { class: 'promemoria-attacco' }, r.promemoria.map((p) => h('li', {}, p))) : null,
       promemoriaAR(ctx, a),
-      h('div', { class: 'attacco-azioni' },
+      // Tavolo del Master (pezzo 5): un attaccante esterno sostituisce la riga finale con tiro per colpire ed esito
+      ctx.azioni.finale ? ctx.azioni.finale(r) : h('div', { class: 'attacco-azioni' },
         h('button', {
           type: 'button', class: 'btn primario btn-grande', disabled: !!r.impossibile || (colpi !== null && colpi < r.munizioni),
           title: r.impossibile?.motivo ?? null, onclick: spara,
