@@ -33,3 +33,12 @@ Le scelte più discutibili della bozza 0.2 di docs/bestiario/bestiario.md, una p
 - Equipaggiamento per grado (Armatura civile leggera, media, pesante; Mitragliatore pesante al Molto potente): le fasce vanno bene, o il bestiario deve usare i modelli corporativi?
 - Bestiario umano: Recluta, Veterano ed Élite diventano Minore, Semplice e Medio; Comandante (12°) e Campione (16°) sono da preparare. I nomi ti vanno bene?
 - Prove della creatura non in scheda: VA delle Difese come riferimento, ±2 secondo la natura. Va bene una regola così generica, ora che le schede hanno una riga Abilità?
+- Armatura: ogni punto di AR in più allunga di circa un terzo la resistenza di una creatura contro le armi dei PG. Per questo Carapace scende a +1 AR (costo +½), Pelle di cenere aggiunge +½ al costo del Corrotto e i PV del Boss calano del 30% per ogni punto di AR oltre il grado. Ti sembra giusto, o l'AR delle creature va tenuta più bassa in generale?
+
+## Creature pronte (cap. 5)
+
+- Sette creature originali (Scavafosse, Regina della Covata, Tessitrice d’Ombra, Madre dei Fili Neri, Squarciatore, Bruto della Breccia, Eretico corrotto): i nomi e le descrizioni sono nel tono che vuoi per l’ambientazione?
+- Madre dei Fili Neri: il morso Etereo ignora l’Armatura di chi non ha AR magica, quindi è molto più pericolosa di quanto dicano le misure. Va bene un attacco Etereo in una creatura da Medio in su, o va limitato al Boss?
+- Eretico corrotto: le Manifestazioni oscure del cap. 4 (Sussurro continuo, Sguardo del vuoto, Grido dell’Oscura Simmetria) sostituiscono i «Doni dell’Oscura Simmetria» lasciati in sospeso nel bestiario umano. Ti va bene come soluzione, o hai in mente poteri dell’ambientazione con un nome?
+- L’Eretico corrotto è più fragile del suo grado (1,2–2,6 Round di resistenza invece di 1,5–4,5), perché combatte da Incursore. Lo lasciamo così, da usare con l’Imboscata o in gruppo, o gli diamo PV in più?
+- Capacità dei Boss nelle creature pronte (Covata, Tela che beve la luce, Non si ferma): sono nel tono giusto per la seconda fase?
