@@ -26,7 +26,7 @@ test('dati: 32 rinforzi di tipo «rinforzo»; soprabiti e mantelli indossabili d
   assert.equal(r.filter((o) => o.indossabile_da_solo).length, 14);
   // §7.23.4: «non costituiscono un profilo autonomo di armatura»; il resto con Davide (A.80)
   assert.equal(dati.regole.rinforzi.da_solo.ar, 'nessuna');
-  assert.match(dati.regole.rinforzi['TODO(Davide)'], /A\.79/);
+  assert.match(dati.regole.rinforzi['TODO(Davide)'], /A.80/);
 });
 
 test('montato su un’armatura compatibile: AR dell’armatura più il kit (§7.23.5: civile leggera + soprabito = AR 2)', () => {
