@@ -148,7 +148,7 @@ function tooltipOggetto(rif, dati) {
   if (o.esplosivo) sezioni.push({ etichetta: 'Carico', testo: `danno ${o.esplosivo.danno}, AC ${o.esplosivo.ac}, RS ${o.esplosivo.rs_q} Q; ${o.esplosivo.proprieta.join(', ')}` });
   if (o.cella) sezioni.push({ etichetta: 'Capacità', testo: `${o.cella.capacita} ${o.cella.unita}; riempirla o ricaricarla costa ${o.cella.ricarica_costo.toLocaleString('it-IT')}` });
   const art = infoArtefatto(o, dati);
-  if (art) sezioni.push({ etichetta: 'Artefatto', testo: `${art.tipologia}; potenza ${art.potenza}, costo di sintonizzazione ${art.sintonizzazione}${art.contenitore ? `; ${art.contenitore.integrato ? 'riserva integrata' : 'contenitore'} di ${art.contenitore.capacita_pm} PM (Chroma ${art.contenitore.energia})` : ''} (§7.10).` });
+  if (art) sezioni.push({ etichetta: 'Artefatto', testo: `${art.tipologia}; potenza ${art.potenza}, SnT ${art.sintonizzazione} (costo di Sintonizzazione)${art.contenitore ? `; ${art.contenitore.integrato ? 'riserva integrata' : 'contenitore'} di ${art.contenitore.capacita_pm} PM (Chroma ${art.contenitore.energia})` : ''} (§7.10).` });
   // risposta A.21: fonte di Corruzione passiva (regole.json → corruzione)
   const cp = o.corruzione_passiva ? dati.regole?.corruzione?.[o.corruzione_passiva] : null;
   if (cp) {

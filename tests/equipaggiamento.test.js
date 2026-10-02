@@ -952,7 +952,7 @@ test('sintonizzazione: capacità per Gradi e Talento, somma dei costi, avviso ol
   const m = massimiSessione(calcolaScheda({ creazione, livelli: [] }, dati), creazione, dati);
   assert.deepEqual(m.caricatori, {});
   assert.deepEqual(m.contenitori, { b: 5, s: 5, v: 5 });
-  assert.match(testoTooltip('oggetto', 'armi_corporative:spada-deliverer', dati), /Artefatto: Armi; potenza Non Comune, costo di sintonizzazione 2; riserva integrata di 5 PM \(Chroma Rosso\)/);
+  assert.match(testoTooltip('oggetto', 'armi_corporative:spada-deliverer', dati), /Artefatto: Armi; potenza Non Comune, SnT 2 \(costo di Sintonizzazione\); riserva integrata di 5 PM \(Chroma Rosso\)/);
 });
 
 test('validatore degli Artefatti: costo = potenza, riferimenti, regole', () => {

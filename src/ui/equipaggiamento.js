@@ -288,7 +288,7 @@ function pannelloAggiungi(ctx) {
         // §7.10: la potenza dà il costo di sintonizzazione; Magia sez. 6: colore e capacità del Chroma
         p.tipo === 'artefatto' ? h('label', { class: 'campo' }, h('span', {}, 'Potenza'),
           h('select', { onchange: (e) => { p.potenza = e.target.value; } }, h('option', { value: '' }, '—'),
-            potenze.map((x) => h('option', { value: x, selected: p.potenza === x }, `${x} (costo ${regoleSintonizzazione(dati).potenze[x]})`)))) : null,
+            potenze.map((x) => h('option', { value: x, selected: p.potenza === x }, `${x} (SnT ${regoleSintonizzazione(dati).potenze[x]})`)))) : null,
         p.tipo === 'artefatto' ? h('label', { class: 'campo' }, h('span', {}, 'Chroma (contenitore)'),
           h('select', { onchange: (e) => { p.energia = e.target.value; } }, h('option', { value: '' }, 'nessuno'),
             colori.map((x) => h('option', { value: x, selected: p.energia === x }, x)))) : null,
@@ -311,7 +311,7 @@ function pannelloAggiungi(ctx) {
             personalizzato.peso = peso;
           }
           if (p.tipo === 'artefatto') {
-            if (!p.potenza) { alert('Scegli la potenza dell’Artefatto: dà il costo di sintonizzazione (§7.10).'); return; }
+            if (!p.potenza) { alert('Scegli la potenza dell’Artefatto: dà la SnT, il costo di Sintonizzazione (§7.10).'); return; }
             personalizzato.potenza = p.potenza;
             if (p.energia) {
               const capacita = Number(p.capacita);
