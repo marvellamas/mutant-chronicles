@@ -167,7 +167,17 @@
       "rif": "munizioni:pacco-nec-purifier"
     },
     "munizioni:serbatoio-vuoto-gehemmapuker": {
-      "rif": "munizioni:pacco-nec-gehemmapuker"
+      "rif": "nec:modulo-blu"
+    },
+    "munizioni:pacco-nec-gehemmapuker": {
+      "rif": "nec:modulo-blu"
+    },
+    "sanitario:set-chirurgico-di-ricambio": {
+      "rif": "sanitario:cartuccia-chirurgica"
+    },
+    "sanitario:confezione-da-cinque-set-chirurgici": {
+      "rif": "sanitario:cartuccia-chirurgica",
+      "quantita_per": 5
     }
   },
   "_nota_rif_sostituiti": "Voci di catalogo uscite perché sostituite da un’altra scheda: al caricamento di un personaggio (src/character.js → normalizza) la voce passa al rif nuovo, con lo stato tradotto se indicato."

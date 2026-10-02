@@ -12,6 +12,10 @@
 //   ed esoscheletri»).
 import { readFileSync, writeFileSync } from 'node:fs';
 import { normalizza, testoManuali } from '../verifica_frasi.mjs';
+import { bloccaRiscrittura } from './superato.mjs';
+// superato il 02/10/2026 dalle risposte di Davide (tools/lotti/lotto_risposte_equip_0210.mjs, A.62–A.71): un
+// rilancio con --scrivi riporterebbe i TODO(Davide) e le voci doppie
+bloccaRiscrittura('lotto_equipaggiamento_07');
 
 const RADICE = new URL('../../', import.meta.url);
 const scrivi = process.argv.includes('--scrivi');

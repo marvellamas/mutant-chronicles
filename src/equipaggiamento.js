@@ -555,11 +555,24 @@ export function separaEsemplare(voci, uid) {
  * Collega una voce al catalogo. Un riferimento che non esiste più resta in lista come «non più in
  * catalogo», senza effetti.
  */
+/**
+ * Scheda di catalogo di un oggetto di dotazione: «rif», oppure, con una sotto-scelta che cambia la scheda
+ * («rif_per_sotto», A.65: corredo agricolo, strumento musicale), quella del valore scelto, che sta fra
+ * parentesi in fondo al nome della voce («Corredo agricolo (Standard) (Allevamento)»).
+ */
+export function schedaDiDotazione(o, nome) {
+  if (!o) return null;
+  if (o.rif) return o.rif;
+  if (!o.rif_per_sotto) return null;
+  const scelta = /\(([^()]+)\)\s*$/.exec(String(nome ?? ''))?.[1]?.trim();
+  return (scelta && o.rif_per_sotto[scelta]) ?? null;
+}
+
 export function risolvi(voce, cat) {
   // oggetto di dotazione con scheda di catalogo (Equipaggiamento 0.3, oggetti_dotazione[id].rif): peso,
   // prezzo, Qualità, PI ed effetti dalla scheda, anche per le voci salvate prima; il nome resta
   // quello della dotazione (porta l'ambiente scelto e le calzature comprese)
-  const schedaDotazione = !voce.rif && voce.dotazione_id ? cat.dotazione?.[voce.dotazione_id]?.rif ?? null : null;
+  const schedaDotazione = !voce.rif && voce.dotazione_id ? schedaDiDotazione(cat.dotazione?.[voce.dotazione_id], voce.personalizzato?.nome) : null;
   const def = voce.rif ? cat.perRif.get(voce.rif) ?? null : schedaDotazione ? cat.perRif.get(schedaDotazione) ?? null : null;
   const fuoriCatalogo = !!voce.rif && !def;
   const tipo = def?.tipo ?? voce.personalizzato?.tipo ?? 'altro';

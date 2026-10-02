@@ -796,7 +796,7 @@ test('validatore dei rinforzi e degli effetti sulle penalità', () => {
 
 test('lotto 10: munizioni, celle, pacchi NEC dei lanciafiamme e compatibilità balistiche del §7.20', () => {
   const tutti = catalogo(dati).oggetti.filter((o) => o.file === 'munizioni');
-  assert.equal(tutti.length, 49); // con la cella KEP 808 (0.54); senza il combustibile (0.58: pacchi NEC)
+  assert.equal(tutti.length, 48); // con la cella KEP 808 (0.54); senza il combustibile (0.58: pacchi NEC); senza il pacco del Gehemmapuker (A.67)
   const r = (id) => catalogo(dati).perRif.get(`munizioni:${id}`);
   assert.deepEqual(r('proiettili-da-fucile').munizione, { famiglia: 'fucile', confezione: { quantita: 50, costo: 150 } });
   // §7.20.7: prezzo speciale = ordinario × moltiplicatore; confezione da dieci
@@ -809,7 +809,9 @@ test('lotto 10: munizioni, celle, pacchi NEC dei lanciafiamme e compatibilità b
   assert.equal(cella.compatibile_con.length, 18); // con la Katana Ryūjin (0.58)
   assert.ok(cella.compatibile_con.includes('armi:tirapugni-concussivo'));
   // §7.20.6 (0.58): niente combustibile liquido; pacchi NEC Blu carichi, 50 Lx per getto
-  assert.deepEqual([r('pacco-nec-gehemmapuker').costo, r('pacco-nec-gehemmapuker').cella], [2100, { capacita: 50, unita: 'getti', ricarica_costo: 25, riserva_lx: 2500 }]);
+  // A.67 (E&L del 02/10): il Gehemmapuker usa il Modulo Blu del catalogo NEC, una voce sola
+  assert.equal(r('pacco-nec-gehemmapuker'), undefined);
+  assert.deepEqual([catalogo(dati).perRif.get('nec:modulo-blu').costo, catalogo(dati).perRif.get('nec:modulo-blu').cella], [2100, { capacita: 50, unita: 'getti', lx_per_colpo: 50, riserva_lx: 2500, ricarica_costo: 25 }]);
   assert.ok(!tutti.some((o) => /combustibile|vuoto-.*(nemesis-214|eruptor|purifier|gehemmapuker)/i.test(o.id)));
   // granate standard, Fumogena ed Elettroshock sono già nel catalogo: niente doppioni
   assert.ok(!tutti.some((o) => /fumogena|elettroshock|frammentazione standard/i.test(o.nome)));

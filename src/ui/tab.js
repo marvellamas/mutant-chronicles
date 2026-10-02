@@ -533,7 +533,8 @@ function rigaNec(ctx, r, x) {
     h('span', {}, `${x.unita === 'Lx' ? 'Riserva' : 'NEC'}${parte ? ` ${parte}` : ''} `),
     infoValore([h('strong', {}, n.toLocaleString('it-IT')), ` / ${x.massimo.toLocaleString('it-IT')} ${x.unita}`], {
       titolo: `Riserva: ${x.nome}`,
-      sottotitolo: 'Si segna a mano (Equipaggiamento §5.4): «Nuova sessione» non ricarica; la ricarica completa richiede caricatore e fonte, un’ora.',
+      // A.67 (E&L del 02/10): niente travaso di energia fra NEC (regole.json → nec.travaso)
+      sottotitolo: `Si segna a mano (Equipaggiamento §5.4): «Nuova sessione» non ricarica; la ricarica completa richiede caricatore e fonte, un’ora.${ctx.dati.regole.nec?.travaso?.ammesso === false ? ` ${ctx.dati.regole.nec.travaso.decisione}` : ''}`,
       provenienza: x.provenienza,
     }, { classe: 'valore-nec' }),
     h('span', { class: 'pi-comandi' }, [...x.passi].reverse().map((p) => b(-p)), x.passi.map((p) => b(p))));

@@ -1460,6 +1460,11 @@
     "_nota_nec": "Magia 1.3 sez. 6 (Google Doc del 01/10/2026): il Rosso alimenta Incantesimi Fisici e riserve mistiche Rosse. I Nuclei Energetici Cromatici (NEC Rossi, Blu e Verdi) sono la fonte energetica tecnologica: usano Lx, sono ricaricabili e non richiedono Sintonizzazione (Equipaggiamento §5.4); le riserve mistiche usano PM e le regole di questa sezione. Nessuna conversione automatica Lx–PM. Solo promemoria: il catalogo dei NEC arriva con il lotto del cap. 5 dell'Equipaggiamento 0.5."
   },
   "nec": {
+    "travaso": {
+      "ammesso": false,
+      "decisione": "Le cariche o l’energia residue non possono essere riversate o trasferite in un altro NEC. È consentito spostare fisicamente lo stesso NEC fra dispositivi compatibili, conservandone la riserva residua.",
+      "fonte": "E&L del 02/10/2026, decisione 14 (per-davide A.67); docs/risposte-master.md, decisione 76"
+    },
     "paragrafo": "Equipaggiamento §5.4",
     "unita": "Lx",
     "tariffa_cr_per_lx": 0.01,

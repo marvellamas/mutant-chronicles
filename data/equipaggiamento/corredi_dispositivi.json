@@ -1850,7 +1850,12 @@
           "testo": "Concede +1 alla Prova di Caratteristica FOR o DES richiesta contro Sbilanciante. Non è una Prova Salvezza e non si estende automaticamente ad altri tentativi di mantenere l’equilibrio o agli spostamenti di Sbalzante. Più proprietà Stabile applicabili, comprese quelle di scudo e armatura, non si sommano: si usa il valore maggiore (§7.4.3, §7.11.4)."
         }
       ],
-      "TODO(Davide)": "A.63: «batteria carica» dell’esoscheletro: NEC o batteria dedicata? (vedi le armature servoassistite). Nel frattempo resta il testo della scheda."
+      "alimentazione": {
+        "nec": null,
+        "descrizione": "NEC Rosso di formato dedicato (APE Capitol): ricarica 6 ore, ricambio 2000 cr, sostituzione 1 minuto",
+        "autonomia_ore": 6,
+        "paragrafo": "§7.13.6; E&L del 02/10/2026, decisione 18"
+      }
     },
     {
       "id": "iron-mastiff",
@@ -2367,7 +2372,14 @@
         }
       ],
       "proprieta": [],
-      "TODO(Davide)": "A.64: il NEC Blu IAS contiene 20 cariche, ma «il consumo in Lx resta da dimensionare per il modello» (§7.15.4). Riserva in Lx e consumo per carica? Nel frattempo l’app conta le 20 cariche e il servizio di ricarica da 50."
+      "alimentazione": {
+        "nec": null,
+        "descrizione": "NEC Blu specialistico IAS: 1.000 Lx = 20 cariche IAS da 50 Lx; ricambio carico 1.000 cr, ricarica 50 cr in 1 ora, sostituzione 1 minuto a sistema spento",
+        "usi": 20,
+        "unita_usi": "cariche (Blink 1, Power Blink 2)",
+        "lx_per_uso": 50,
+        "paragrafo": "§7.15.4; E&L del 02/10/2026, decisione 20"
+      }
     },
     {
       "id": "ias3200-imbracatura-antigravita",
@@ -2389,7 +2401,14 @@
         "armature_corporative:ia3000-silent"
       ],
       "proprieta": [],
-      "TODO(Davide)": "A.64: il NEC Blu IAS contiene 20 cariche, ma «il consumo in Lx resta da dimensionare per il modello» (§7.15.4). Riserva in Lx e consumo per carica? Nel frattempo l’app conta le 20 cariche e il servizio di ricarica da 50."
+      "alimentazione": {
+        "nec": null,
+        "descrizione": "NEC Blu specialistico IAS: 1.000 Lx = 20 cariche IAS da 50 Lx; ricambio carico 1.000 cr, ricarica 50 cr in 1 ora, sostituzione 1 minuto a sistema spento",
+        "usi": 20,
+        "unita_usi": "Round di volo",
+        "lx_per_uso": 50,
+        "paragrafo": "§7.15.4; E&L del 02/10/2026, decisione 20"
+      }
     },
     {
       "id": "ias3300-mirrorshard",
@@ -2419,7 +2438,14 @@
           "fonte": "Armamenti §7.15.4"
         }
       ],
-      "TODO(Davide)": "A.64: il NEC Blu IAS contiene 20 cariche, ma «il consumo in Lx resta da dimensionare per il modello» (§7.15.4). Riserva in Lx e consumo per carica? Nel frattempo l’app conta le 20 cariche e il servizio di ricarica da 50."
+      "alimentazione": {
+        "nec": null,
+        "descrizione": "NEC Blu specialistico IAS: 1.000 Lx = 20 cariche IAS da 50 Lx; ricambio carico 1.000 cr, ricarica 50 cr in 1 ora, sostituzione 1 minuto a sistema spento",
+        "usi": 20,
+        "unita_usi": "minuti",
+        "lx_per_uso": 50,
+        "paragrafo": "§7.15.4; E&L del 02/10/2026, decisione 20"
+      }
     },
     {
       "id": "ias3400-disturbatore-metafisico",
@@ -2440,7 +2466,14 @@
         "armature_corporative:ia3000-reaver"
       ],
       "proprieta": [],
-      "TODO(Davide)": "A.64: il NEC Blu IAS contiene 20 cariche, ma «il consumo in Lx resta da dimensionare per il modello» (§7.15.4). Riserva in Lx e consumo per carica? Nel frattempo l’app conta le 20 cariche e il servizio di ricarica da 50."
+      "alimentazione": {
+        "nec": null,
+        "descrizione": "NEC Blu specialistico IAS: 1.000 Lx = 20 cariche IAS da 50 Lx; ricambio carico 1.000 cr, ricarica 50 cr in 1 ora, sostituzione 1 minuto a sistema spento",
+        "usi": 20,
+        "unita_usi": "Round",
+        "lx_per_uso": 50,
+        "paragrafo": "§7.15.4; E&L del 02/10/2026, decisione 20"
+      }
     },
     {
       "id": "smorzatore-acustico-silent",
@@ -2461,7 +2494,14 @@
         "armature_corporative:ia3000-silent"
       ],
       "proprieta": [],
-      "TODO(Davide)": "A.64: il NEC Blu IAS contiene 20 cariche, ma «il consumo in Lx resta da dimensionare per il modello» (§7.15.4). Riserva in Lx e consumo per carica? Nel frattempo l’app conta le 20 cariche e il servizio di ricarica da 50."
+      "alimentazione": {
+        "nec": null,
+        "descrizione": "NEC Blu specialistico IAS: 1.000 Lx = 20 cariche IAS da 50 Lx; ricambio carico 1.000 cr, ricarica 50 cr in 1 ora, sostituzione 1 minuto a sistema spento",
+        "usi": 20,
+        "unita_usi": "minuti",
+        "lx_per_uso": 50,
+        "paragrafo": "§7.15.4; E&L del 02/10/2026, decisione 20"
+      }
     },
     {
       "id": "corredo-di-assistenza-dr-diana",

@@ -1252,7 +1252,7 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
       if (o.cartucce !== undefined && !(isIntero(o.cartucce) && o.cartucce >= 1)) err(F, `${k}.cartucce`, 'intero ≥ 1');
       if (o.compatibile_con !== undefined) {
         if (!Array.isArray(o.compatibile_con) || !o.compatibile_con.length) err(F, `${k}.compatibile_con`, 'elenco di riferimenti "file:id"');
-        else o.compatibile_con.forEach((r, j) => rimandiCompatibili.push([F, `${k}.compatibile_con[${j}]`, r, o.tipo === 'munizioni' ? ['arma_ravvicinata', 'arma_distanza'] : ['armatura']]));
+        else o.compatibile_con.forEach((r, j) => rimandiCompatibili.push([F, `${k}.compatibile_con[${j}]`, r, o.tipo === 'munizioni' || o.cella ? ['arma_ravvicinata', 'arma_distanza'] : ['armatura']]));
       }
       // §7.23.10: Abbinamenti ottimizzati, fra le armature compatibili del rinforzo
       if (o.abbinamento_ottimizzato !== undefined) {
@@ -1665,6 +1665,15 @@ function validaDotazioni(dati, err) {
     if (o?.effetti !== undefined) validaEffettiOggetto(o.effetti, F, K, nomiAbilita, err, ctxEffetti(dati));
     // scheda di catalogo collegata (Equipaggiamento 0.3): deve esistere; peso ed effetti vengono da lì
     if (o?.rif !== undefined && !cat.has(o.rif)) err(F, `${K}.rif`, `"${o.rif}" non esiste nel catalogo (data/equipaggiamento/)`);
+    // A.65: una scheda per ogni valore della sotto-scelta (corredo agricolo, strumento musicale)
+    if (o?.rif_per_sotto !== undefined) {
+      const valori = sotto[o.sotto]?.valori ?? [];
+      if (!isOggetto(o.rif_per_sotto) || o.rif !== undefined) err(F, `${K}.rif_per_sotto`, 'oggetto { valore della sotto-scelta: rif }, senza «rif»');
+      else for (const [v, r] of Object.entries(o.rif_per_sotto)) {
+        if (!valori.includes(v)) err(F, `${K}.rif_per_sotto.${v}`, `"${v}" non è un valore di sotto_scelte.${o.sotto}`);
+        if (!cat.has(r)) err(F, `${K}.rif_per_sotto.${v}`, `"${r}" non esiste nel catalogo`);
+      }
+    }
     if (o?.rif !== undefined && (o.effetti !== undefined || o.peso !== undefined)) err(F, K, 'con «rif» peso ed effetti vengono dalla scheda di catalogo: niente «peso» o «effetti» qui');
     for (const k of ['peso', 'costo']) if (o?.[k] !== undefined && !(typeof o[k] === 'number' && o[k] >= 0)) err(F, `${K}.${k}`, 'numero ≥ 0 atteso (senza il campo: «da definire»)');
   }

@@ -596,3 +596,32 @@ manuali; la 69 chiude in parte una domanda.
     `artefatti.json` (19 TODO tolti; `tools/lotti/lotto_artefatti_cap10.mjs`, con il catalogo del cap. 10:
     Batterie Matrice, Schegge instabili, Pietra, Guanti). REP «Epica» nuova sigla (`index.json`, EP), con la
     domanda A.83 sulla Prova di ricerca.
+73. **Katana Ryūjin** (A.62; E&L del 02/10/2026, decisione 15). Natura Naturale; attiva 1d8 + 1 + 1d6 con la
+    proprietà Plasma, un solo colpo (Difese e AR una volta); «Plasma» non è una Natura. → `armi_corporative.json`
+    (attivazione: natura Naturale, «anche» la proprietà Plasma).
+74. **Esoscheletri e armature servoassistite** (A.63; decisione 18). NEC Rossi di formato dedicato al modello,
+    con autonomia, ricarica e ricambio della scheda (XO-102 8 h, 1.500 cr; Vulkan 8 h, 3.000; APE 6 h, 2.000;
+    Mk IV Felis 8 h, 2.000; Powersuit 8 h, 2.000; Shoa Ace Custom 6 h, 2.500; Demonhunter 6 h, 2.500);
+    sostituzione 1 minuto; nessuna intercambiabilità implicita. → `alimentazione` in ore (riserva al tavolo).
+75. **NEC Blu IAS** (A.64; decisione 20). 1.000 Lx = 20 cariche IAS da 50 Lx: Blink 20, Power Blink 10,
+    Antigrav 20 Round, Mirrorshard 20 minuti, Disturbatore 20 Round, Silent 20 minuti; ricambio 1.000 cr,
+    ricarica 50 cr in 1 ora, sostituzione 1 minuto a sistema spento. → `alimentazione` a usi dei 5 moduli.
+76. **Modulo Blu del Gehemmapuker; niente travaso fra NEC** (A.67; decisione 14). Il Gehemmapuker usa
+    `nec:modulo-blu` (2.500 Lx, 50 Lx per attacco, 50 getti; cambio 1 AzP); una sola voce di catalogo. Regola
+    generale: l'energia di un NEC non si riversa in un altro; si sposta solo il NEC fisico. → `nec.json` (cella
+    e compatibilità del Modulo Blu), voce `munizioni:pacco-nec-gehemmapuker` tolta con migrazione
+    (`index.json` → `rif_sostituiti`), `regole.json` → `nec.travaso`; `src/ricarica.js` accetta un NEC come cella.
+77. **Dotazioni con più schede** (A.65; decisioni 10 e 11). Nuova scheda «Corredo agricolo Standard —
+    Allevamento» (2 kg, 200 cr, CO, +0); la coltivazione resta sugli Attrezzi agricoli di base. Strumento
+    musicale portatile a scelta, acustico (2 kg, 400 cr) o elettronico (3 kg, 800 cr, NEC Verde compatto), senza
+    sovrapprezzo. → `strumenti_professionali.json`, `dotazioni.json` (`rif_per_sotto`, sotto-scelta
+    «strumento_musicale» nel wizard), `src/equipaggiamento.js` → `schedaDiDotazione`.
+78. **Pasto con il Corredo da cucina** (A.66; decisione 19). 30 minuti per fino a quattro persone, senza Prova;
+    NEC Rosso standard da 500 Lx, 50 Lx a preparazione (10); cambio 1 AzP; ricarica 1 ora, 5 cr. → TODO tolto
+    (i dati coincidevano).
+79. **Interfaccia neurale standard** (A.68; decisione 21). 3.500 cr + 2.000 di installazione, 2 UMN; profilo
+    come la CYBERTRONIC; associazione a equipaggiamento CYBERTRONIC con 1 minuto e una Prova di Tecnologia.
+    → `impianti.json` (prezzo: si compra).
+80. **Cartuccia chirurgica e set chirurgico** (A.71; decisione 17). Un solo consumabile, «Cartuccia chirurgica —
+    set sterile monouso», 500 cr o 2.500 per cinque, consumato all'inizio di ogni procedura. → `sanitario.json`
+    (una voce, con la confezione), voci del set tolte con migrazione (la confezione diventa cinque cartucce).

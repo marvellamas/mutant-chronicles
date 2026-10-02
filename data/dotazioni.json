@@ -3849,7 +3849,10 @@
     "corredo-agricolo": {
       "nome": "Corredo agricolo (Standard)",
       "sotto": "corredo_agricolo",
-      "TODO(Davide)": "A.65: il Corredo agricolo Standard si sceglie fra coltivazione e allevamento (§2.16.23); il §5.3 ha gli Attrezzi agricoli di base (Standard, coltivazione) ma per l’allevamento solo il Corredo dell’allevatore (+2, 800). Quale scheda per la versione «allevamento»? Nel frattempo la voce resta senza scheda (peso e prezzo da definire)."
+      "rif_per_sotto": {
+        "Coltivazione": "strumenti_professionali:attrezzi-agricoli-di-base",
+        "Allevamento": "strumenti_professionali:corredo-agricolo-standard-allevamento"
+      }
     },
     "corredo-artigianale-professionale": {
       "nome": "Corredo artigianale professionale",
@@ -3895,7 +3898,11 @@
     },
     "strumento-musicale-portatile": {
       "nome": "Strumento musicale portatile (Standard)",
-      "TODO(Davide)": "A.65: lo Strumento musicale portatile Standard della dotazione è acustico o elettronico (§5.8: due schede, 400 e 800)? Nel frattempo la voce resta senza scheda (peso e prezzo da definire)."
+      "sotto": "strumento_musicale",
+      "rif_per_sotto": {
+        "Acustico": "strumenti_professionali:strumento-musicale-portatile-acustico",
+        "Elettronico": "strumenti_professionali:strumento-musicale-portatile-elettronico"
+      }
     },
     "corredo-scenico": {
       "nome": "Corredo scenico (Standard)",
@@ -3956,6 +3963,14 @@
         "biologia",
         "geologia"
       ]
+    },
+    "strumento_musicale": {
+      "etichetta": "Tipo di strumento musicale",
+      "valori": [
+        "Acustico",
+        "Elettronico"
+      ],
+      "fonte": "E&L del 02/10/2026, decisione 11: scelta libera, senza sovrapprezzo"
     }
   },
   "cataloghi_corporazioni": {

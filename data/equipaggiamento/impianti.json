@@ -22,7 +22,8 @@
       "innesto": "interfaccia_neurale",
       "proprieta": [],
       "effetto_breve": "Collega i dispositivi con SIN: +1 o +2 VA alle Prove indicate dalla loro scheda.",
-      "TODO(Davide)": "A.68: il §7.3 dà prezzo, REP e Integrità della sola Interfaccia CYBERTRONIC; dell’equivalente standard solo il costo di 2 UMN. Prezzo e profilo? Nel frattempo profilo della CYBERTRONIC (§7.1: «Salvo una scheda diversa, standard e CYBERTRONIC hanno gli stessi effetti, PI e PS Integrità») e nessun prezzo: non si compra."
+      "costo": 3500,
+      "decisione": "A.68 (E&L del 02/10/2026, decisione 21): impianto 3.500 cr, installazione 2.000 cr (5.500), 2 UMN; Non Comune, PS Integrità 12, 4 PI, REP Rara; bioenergetica, senza NEC. L’associazione a equipaggiamento CYBERTRONIC richiede 1 minuto e una Prova di Tecnologia, poi resta memorizzata."
     },
     {
       "id": "interfaccia-neurale-cybertronic",

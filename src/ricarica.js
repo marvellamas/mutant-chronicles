@@ -17,6 +17,8 @@ import { catalogo, risolvi, tabellaMunizioniArmi } from './equipaggiamento.js';
 
 const regole = (dati) => dati?.equipaggiamento?.file?.munizioni?.ricarica ?? null;
 const eVuoto = (o) => /vuot/i.test(o.id);
+// una scorta è una munizione, oppure un NEC che fa da cella di un'arma (A.67: il Modulo Blu del Gehemmapuker)
+const eScorta = (o) => o?.tipo === 'munizioni' || !!o?.cella;
 
 /**
  * Modo di ricarica di un'arma del catalogo.
@@ -28,7 +30,7 @@ export function modoRicarica(def, dati, cat = catalogo(dati)) {
   const famiglia = tabellaMunizioniArmi(dati).get(def.rif) ?? null;
   const ins = r.inserimento_singolo ?? {};
   const tamburo = r.tamburo ?? {};
-  const compatibili = cat.oggetti.filter((o) => o.tipo === 'munizioni' && !eVuoto(o) && o.compatibile_con?.includes(def.rif));
+  const compatibili = cat.oggetti.filter((o) => eScorta(o) && !eVuoto(o) && o.compatibile_con?.includes(def.rif));
   const amovibile = (ins.caricatore_amovibile ?? []).includes(def.rif);
   if ((tamburo.armi ?? []).includes(def.rif) || (tamburo.famiglie ?? []).includes(def.famiglia)) return { modo: 'tamburo', famiglia, vuoto: null };
   if (!amovibile && ((ins.armi ?? []).includes(def.rif) || (ins.famiglie ?? []).includes(def.famiglia))) return { modo: 'inserimento', famiglia, vuoto: null, singolo: true };
@@ -39,7 +41,7 @@ export function modoRicarica(def, dati, cat = catalogo(dati)) {
     const vuoto = rifVuoto && cat.perRif.get(rifVuoto) ? { rif: rifVuoto, nome: cat.perRif.get(rifVuoto).nome } : null;
     return { modo: 'caricatore', famiglia, vuoto };
   }
-  if (compatibili.some((o) => (r.famiglie_celle ?? []).includes(o.famiglia))) return { modo: 'cella', famiglia: null, vuoto: null };
+  if (compatibili.some((o) => (r.famiglie_celle ?? []).includes(o.famiglia) || (o.cella && o.tipo !== 'munizioni'))) return { modo: 'cella', famiglia: null, vuoto: null };
   if (compatibili.length) return { modo: 'inserimento', famiglia: null, vuoto: null };
   return { modo: null, famiglia: null, vuoto: null };
 }
@@ -54,13 +56,13 @@ export function infoRicarica(voci, dati) {
   const r = regole(dati) ?? {};
   const risolte = (voci ?? []).map((v) => risolvi(v, cat));
   // le munizioni nel deposito comune non sono a disposizione (docs/layout-sd.md, «Inventario»)
-  const munizioni = risolte.filter((x) => x.tipo === 'munizioni' && x.def && !eVuoto(x.def) && !x.deposito);
+  const munizioni = risolte.filter((x) => eScorta(x.def) && x.def && !eVuoto(x.def) && !x.deposito);
   const out = {};
   for (const a of risolte.filter((x) => x.tipo === 'arma_distanza' && x.def)) {
     const info = modoRicarica(a.def, dati, cat);
     const compatibile = (m) => (info.famiglia && m.def.munizione?.famiglia === info.famiglia) || m.def.compatibile_con?.includes(a.def.rif);
     const scorte = munizioni.filter(compatibile)
-      .filter((m) => info.modo !== 'cella' || (r.famiglie_celle ?? []).includes(m.def.famiglia))
+      .filter((m) => info.modo !== 'cella' || (r.famiglie_celle ?? []).includes(m.def.famiglia) || (m.def.cella && m.def.tipo !== 'munizioni'))
       // prima le munizioni ordinarie, poi le speciali (l'ordine d'inserimento lo sceglie il giocatore al tavolo)
       .sort((x, y) => Number(x.def.famiglia !== 'Munizioni ordinarie') - Number(y.def.famiglia !== 'Munizioni ordinarie'))
       .map((m) => ({ uid: m.uid, nome: m.nome, quantita: m.voce.quantita }));

@@ -13,6 +13,10 @@
 //   strumenti per Prova», §6.5; «Il +3 sostituisce gli altri bonus degli strumenti», §6.8.1).
 import { readFileSync, writeFileSync } from 'node:fs';
 import { normalizza, testoManuali } from '../verifica_frasi.mjs';
+import { bloccaRiscrittura } from './superato.mjs';
+// superato il 02/10/2026 dalle risposte di Davide (tools/lotti/lotto_risposte_equip_0210.mjs, A.62–A.71): un
+// rilancio con --scrivi riporterebbe i TODO(Davide) e le voci doppie
+bloccaRiscrittura('lotto_equipaggiamento_06');
 
 const RADICE = new URL('../../', import.meta.url);
 const scrivi = process.argv.includes('--scrivi');
