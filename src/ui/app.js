@@ -12,7 +12,10 @@ import {
 } from '../character.js';
 import { h, svuota, scaricaFile } from './dom.js';
 import * as archivio from './storage.js';
-import { serverCartella, elencoCartella, leggiCartella, scriviCartella } from './cartella.js';
+import { serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella } from './cartella.js';
+import { controllaRemoto, revisioneDaScrivere, differenzeSessione, testoScelta, indicatoreCollegamento, impronta } from '../collegamento.js';
+import { leggiScontroAperto, leggiScontro, salvaScontro } from './scontro.js';
+import { registraRiga } from '../scontro.js';
 import { elencoUnito, confronta, chiaveDaFile, chiavePersonaggio } from '../cartella.js';
 import { renderTavolo } from './tavolo.js';
 import { segnaDalTavolo, arrivoDalTavolo, tornaAlTavolo, scorrimentoDaRimettere, dimenticaTavolo } from './ritorno.js';
@@ -69,6 +72,9 @@ const stato = {
   salvataggioOk: true,
   sfondi: [], // sfondi di Corporazione presenti in img/sfondi/ (src/ui/sfondi.js)
   ui: { aperti: new Set(), riepilogoAperto: false, tiroPE: null },
+  // Tavolo del Master, pezzo 6: scheda collegata al server (solo con stato.cartella). stato: 'collegato' o
+  // 'non_collegato' (ultimo controllo); conflitto: { file, mtime, testo, sessione } del master in attesa di una scelta
+  collegamento: { stato: 'collegato', conflitto: null, scrivendo: false },
 };
 
 avvia();
@@ -92,6 +98,8 @@ async function avvia() {
   stato.sfondi = cercaSfondi(stato.dati.corporazioni.corporazioni);
   // cartella dei personaggi (server.mjs): se il server non c'è l'app resta com'era
   stato.cartella = await serverCartella();
+  // pezzo 6: con il server la scheda aperta controlla il proprio file (come la plancia, ogni 3 secondi)
+  if (stato.cartella) setInterval(controllaScheda, INTERVALLO_COLLEGAMENTO_MS);
   window.addEventListener('hashchange', daIndirizzo);
   // I menu della scheda (Azioni, impostazioni) si chiudono toccando altrove
   document.addEventListener('click', (e) => {
@@ -203,6 +211,7 @@ function daIndirizzo() {
     stato.calendario = normalizzaCalendario(salvato.calendario, stato.dati);
     stato.opzioniStampa = normalizzaOpzioniStampa(salvato.stampa);
     stato.precedenteTavolo = null;
+    stato.collegamento.conflitto = null;
     stato.ui.calendario = null;
     stato.ui.attivaCalendario = null;
     stato.ui.importaCalendario = null;
@@ -267,22 +276,191 @@ function esporta(scelte, livelli = [], sessione = null, calendario = null) {
 const attesaCartella = new Map();
 function programmaCartella(id) {
   clearTimeout(attesaCartella.get(id));
-  attesaCartella.set(id, setTimeout(() => { attesaCartella.delete(id); scriviInCartella(id); }, 1500));
+  // pezzo 6: con un aggiornamento del master in attesa di una scelta la scheda non scrive
+  if (id === stato.id && stato.collegamento.conflitto) return;
+  attesaCartella.set(id, setTimeout(() => { attesaCartella.delete(id); scriviInCartella(id, { revisione: id === stato.id }); }, 1500));
 }
 
-async function scriviInCartella(id) {
+/**
+ * Scrive il personaggio nella cartella. Con `revisione` (la scheda aperta, pezzo 6) scrive solo se il file
+ * non è cambiato dall'ultima sincronizzazione, come la plancia (pezzo 4): altrimenti apre il conflitto.
+ * `mtime`: revisione da usare al posto di quella ricordata («Tieni la mia»).
+ */
+async function scriviInCartella(id, { revisione = false, mtime = null } = {}) {
   const p = archivio.carica(id);
   if (!p) return null;
   const { scelte } = normalizza(p.scelte, stato.dati);
   const { file, testo } = fileEsportazione(scelte, p.livelli ?? [], p.sessione ?? null, normalizzaCalendario(p.calendario, stato.dati));
+  const conRevisione = revisione && p.cartella;
+  // pezzo 6: il contenuto è quello già nella cartella (la scheda si è solo riaperta): niente da scrivere
+  if (conRevisione && !mtime && p.cartella.file === file && p.cartella.impronta === impronta(testo)) return null;
+  if (conRevisione) stato.collegamento.scrivendo = true;
   try {
-    const r = await scriviCartella(file, testo);
-    archivio.segnaCartella(id, { file: r.file, mtime: r.mtime, salvato: p.aggiornato });
+    let rev = mtime ?? (conRevisione ? revisioneDaScrivere(p, file) : null);
+    if (conRevisione && !rev) {
+      // file nuovo (nuovo giorno o livello): prima si controlla che quello vecchio non sia cambiato
+      const lista = await elencoCartella();
+      if (lista && controllaRemoto(p, lista).azione !== 'niente') { stato.collegamento.scrivendo = false; await apriConflitto(); return null; }
+      rev = lista?.some((f) => f.file === file) ? String(lista.find((f) => f.file === file).mtime) : null;
+    }
+    const r = await scriviCartella(file, testo, { mtime: rev });
+    archivio.segnaCartella(id, { file: r.file, mtime: r.mtime, salvato: p.aggiornato, impronta: impronta(testo) });
     return r;
   } catch (e) {
+    if (conRevisione && e.conflitto) { stato.collegamento.scrivendo = false; await apriConflitto(); return null; }
     stato.messaggioScheda = { tipo: 'attenzione', testo: `Salvataggio nella cartella personaggi/ non riuscito: ${e.message}. Il personaggio resta salvato nel browser.` };
     return null;
+  } finally {
+    if (conRevisione) stato.collegamento.scrivendo = false;
   }
+}
+
+// ---------------------------------------------------------------------------
+// Tavolo del Master, pezzo 6: scheda del giocatore collegata (src/collegamento.js)
+
+const INTERVALLO_COLLEGAMENTO_MS = 3000;
+// la scheda a tab del personaggio aperto (non il wizard, «Sali», «Assegna» o la stampa)
+const inScheda = () => !!stato.id && new RegExp(`^#/p/${stato.id}(?:/t/\\w+)?$`).test(location.hash);
+const nomeStato = (id) => stato.dati.regole.stati?.elenco?.find((s) => s.id === id)?.nome ?? id;
+
+/** Indicatore in testa alla scheda: si aggiorna sul posto, senza ridisegnare. */
+function mostraCollegamento(nuovo) {
+  if (stato.collegamento.stato === nuovo) return;
+  stato.collegamento.stato = nuovo;
+  const el = document.querySelector('.indicatore-collegamento');
+  if (!el) return;
+  const i = indicatoreCollegamento(true, nuovo === 'collegato');
+  el.className = `indicatore-collegamento ${i.stato}`;
+  el.textContent = i.testo;
+  el.title = i.titolo;
+}
+
+/** Un giro di controllo: il file del personaggio è cambiato sul server? */
+async function controllaScheda() {
+  if (!inScheda() || stato.collegamento.scrivendo) return;
+  const id = stato.id;
+  const lista = await elencoCartella();
+  mostraCollegamento(lista ? 'collegato' : 'non_collegato');
+  if (!lista || id !== stato.id || !inScheda() || stato.collegamento.scrivendo) return;
+  const voce = archivio.carica(id);
+  const { azione } = controllaRemoto(voce, lista, !!stato.collegamento.conflitto, improntaLocale(id));
+  if (azione === 'ricarica') await ricaricaDaCartella();
+  else if (azione === 'conflitto') await apriConflitto();
+}
+
+/** Impronta del testo che l'export (e la cartella) darebbe oggi al personaggio. */
+function improntaLocale(id) {
+  const p = archivio.carica(id);
+  if (!p) return null;
+  return impronta(fileEsportazione(normalizza(p.scelte, stato.dati).scelte, p.livelli ?? [], p.sessione ?? null, normalizzaCalendario(p.calendario, stato.dati)).testo);
+}
+
+/** Registra la sincronizzazione con il file `file` alla revisione `mtime`, con l'impronta del contenuto attuale. */
+function segnaSincronizzato(id, file, mtime) {
+  archivio.segnaCartella(id, { file, mtime, salvato: archivio.carica(id).aggiornato, impronta: improntaLocale(id) });
+}
+
+/** Ultima versione del file del personaggio aperto: { file, mtime, testo, sessione } o null. */
+async function versioneRemota() {
+  const voce = archivio.carica(stato.id);
+  const lista = await elencoCartella();
+  const { remoto } = controllaRemoto(voce, lista ?? []);
+  if (!remoto) return null;
+  const { testo, mtime } = await leggiCartellaConRevisione(remoto.file);
+  const p = deserializzaPersonaggio(testo);
+  const { scelte } = normalizza(p.creazione, stato.dati);
+  return { file: remoto.file, mtime: Number(mtime), testo, sessione: sessioneAllineata(scelte, p.livelli ?? [], p.sessione) };
+}
+
+/**
+ * Carica nella scheda la versione del file (il master l'ha cambiata): la voce del browser prende il
+ * testo del file, la scheda resta sulla stessa tab e allo stesso punto.
+ */
+async function ricaricaDaCartella(v = null) {
+  const id = stato.id;
+  try {
+    v ??= await versioneRemota();
+  } catch {
+    return false;
+  }
+  if (!v || id !== stato.id) return false;
+  const prima = stato.sessione;
+  clearTimeout(attesaCartella.get(id));
+  attesaCartella.delete(id);
+  const voce = archivio.carica(id);
+  salvaDaTesto(v.testo, id, voce?.passo ?? PASSO_SCHEDA);
+  const ora = archivio.carica(id);
+  segnaSincronizzato(id, v.file, v.mtime);
+  stato.scelte = normalizza(ora.scelte, stato.dati).scelte;
+  stato.livelli = ora.livelli ?? [];
+  stato.sessione = ora.sessione;
+  stato.calendario = normalizzaCalendario(ora.calendario, stato.dati);
+  // «Annulla» riporterebbe i valori di prima del master
+  stato.precedenteTavolo = null;
+  stato.collegamento.conflitto = null;
+  const diff = differenzeSessione(prima, stato.sessione, nomeStato);
+  stato.messaggioScheda = { tipo: 'ok', testo: `Il master ha aggiornato la tua scheda${diff.length ? `: ${diff.join('; ')}` : ''}.` };
+  if (inScheda()) renderScheda({ mantieniScorrimento: true });
+  return true;
+}
+
+/** Il file è cambiato mentre la scheda aveva modifiche da scrivere: avviso con «Aggiorna» e «Tieni la mia». */
+async function apriConflitto() {
+  const id = stato.id;
+  // nessuna modifica vera (il contenuto è quello già sincronizzato): si ricarica e basta
+  const voce = archivio.carica(id);
+  if (!stato.collegamento.conflitto && voce?.cartella?.impronta && voce.cartella.impronta === improntaLocale(id)) return ricaricaDaCartella();
+  let v;
+  try {
+    v = await versioneRemota();
+  } catch {
+    return;
+  }
+  if (!v || id !== stato.id) return;
+  clearTimeout(attesaCartella.get(id));
+  attesaCartella.delete(id);
+  const c = stato.collegamento.conflitto;
+  if (c && c.file === v.file && c.mtime === v.mtime) return;
+  stato.collegamento.conflitto = v;
+  if (inScheda()) renderScheda({ mantieniScorrimento: true });
+}
+
+/** Riga nel registro dello scontro aperto (se c'è), con un nuovo tentativo se un'altra finestra l'ha cambiato. */
+async function rigaRegistro(testo) {
+  try {
+    const aperto = await leggiScontroAperto();
+    if (!aperto) return;
+    let s = await leggiScontro(aperto.id);
+    for (let i = 0; i < 3; i++) {
+      const r = await salvaScontro(registraRiga(s, testo));
+      if (r.conflitto === undefined || !r.conflitto || r.conflitto.stato !== 'aperto') return;
+      s = r.conflitto;
+    }
+  } catch {
+    // il registro è un promemoria: senza scontro leggibile la scelta vale comunque
+  }
+}
+
+/** Scelte dell'avviso. «Aggiorna»: la versione del master. «Tieni la mia»: la scheda riscrive il file. */
+async function sceltaConflitto(scelta) {
+  const c = stato.collegamento.conflitto;
+  if (!c) return;
+  const nome = stato.scelte.nome.trim() || 'Personaggio';
+  if (scelta === 'aggiorna') {
+    const diff = differenzeSessione(stato.sessione, c.sessione, nomeStato);
+    // la versione più recente del file, se nel frattempo è cambiata ancora
+    if (await ricaricaDaCartella()) rigaRegistro(testoScelta(nome, 'aggiorna', diff));
+    return;
+  }
+  const diff = differenzeSessione(c.sessione, stato.sessione, nomeStato);
+  stato.collegamento.conflitto = null;
+  // con la revisione vista nell'avviso: se il master ha scritto ancora, l'avviso torna con i suoi valori nuovi
+  const r = await scriviInCartella(stato.id, { revisione: true, mtime: String(c.mtime) });
+  if (r) {
+    stato.messaggioScheda = { tipo: 'ok', testo: 'Hai tenuto la tua versione: è stata salvata nella cartella al posto di quella del master.' };
+    rigaRegistro(testoScelta(nome, 'tieni', diff));
+  }
+  if (inScheda()) renderScheda({ mantieniScorrimento: true });
 }
 
 /** Sessione allineata ai massimi attuali (inizializzata se manca), o null se la scheda non si calcola. */
@@ -325,7 +503,7 @@ async function sincronizzaCartella() {
         const testo = await leggiCartella(r.remoto.file);
         const prima = r.voce.aggiornato;
         salvaDaTesto(testo, r.voce.id, r.voce.passo);
-        archivio.segnaCartella(r.voce.id, { file: r.remoto.file, mtime: r.remoto.mtime, salvato: archivio.carica(r.voce.id).aggiornato });
+        segnaSincronizzato(r.voce.id, r.remoto.file, r.remoto.mtime);
         avvisi.push(conflitto || prima
           ? `«${nome}»: la copia nella cartella (${r.remoto.file}) era più recente di quella del browser ed è stata caricata.`
           : `«${nome}»: caricata dalla cartella (${r.remoto.file}).`);
@@ -444,7 +622,7 @@ async function apriDaCartella(r, { dalTavolo = false } = {}) {
       const testo = await leggiCartella(r.file);
       const nuovo = salvaDaTesto(testo);
       id = nuovo.id;
-      archivio.segnaCartella(id, { file: r.file, mtime: r.mtime, salvato: archivio.carica(id).aggiornato });
+      segnaSincronizzato(id, r.file, r.mtime);
       if (nuovo.avvisi.length) stato.messaggioScheda = { tipo: 'attenzione', testo: nuovo.avvisi.join(' ') };
     }
     const p = archivio.carica(id);
@@ -843,6 +1021,14 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
     puoAnnullareSessione: !!stato.precedenteTavolo,
     // scheda aperta dalla plancia del Tavolo del Master: il pulsante per tornarci (src/ui/ritorno.js)
     tornaAlTavolo: arrivoDalTavolo(sessionStorage, stato.id) ? () => { tornaAlTavolo(sessionStorage); vai('#/tavolo'); } : null,
+    // pezzo 6: indicatore e avviso del collegamento, solo con il server della cartella
+    collegamento: indicatoreCollegamento(stato.cartella, stato.collegamento.stato === 'collegato'),
+    avvisoMaster: stato.cartella && stato.collegamento.conflitto ? {
+      differenze: differenzeSessione(stato.sessione, stato.collegamento.conflitto.sessione, nomeStato),
+      ora: new Date(stato.collegamento.conflitto.mtime),
+      aggiorna: () => sceltaConflitto('aggiorna'),
+      tieni: () => sceltaConflitto('tieni'),
+    } : null,
     calendario: stato.calendario,
     spazioQuasiEsaurito: archivio.spazioQuasiEsaurito(),
     motivoNoSalita: tab.scheda.completamenti?.length ? motivoCompletamento(tab.scheda.completamenti)

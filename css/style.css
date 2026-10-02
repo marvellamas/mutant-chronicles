@@ -1614,3 +1614,10 @@ body.con-sfondo::before {
 
 /* «← Torna al tavolo» nella barra della scheda aperta dalla plancia (src/ui/ritorno.js) */
 .btn-torna-tavolo { font-weight: 700; border-color: var(--accento); color: var(--accento); }
+
+/* Tavolo del Master, pezzo 6: scheda del giocatore collegata al server */
+.indicatore-collegamento { align-self: center; font-size: 0.8rem; padding: 0.1rem 0.55rem; border-radius: 999px; border: 1px solid var(--bordo); white-space: nowrap; }
+.indicatore-collegamento::before { content: "●"; margin-right: 0.3rem; }
+.indicatore-collegamento.collegato { color: var(--ok); border-color: var(--ok); background: var(--ok-tenue); }
+.indicatore-collegamento.non_collegato { color: var(--tenue); }
+.avviso-master .riga-azioni { margin: 0.4rem 0; }

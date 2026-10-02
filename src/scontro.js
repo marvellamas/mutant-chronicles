@@ -326,3 +326,9 @@ export function registraAttacco(s, a, adesso) {
   const tiri = fatti.map((t) => `${t.valore}${t.origine === 'app' ? ' (app)' : ' (dal vivo)'}${fatti.length > 1 ? ` ${ESITI[t.esito] ?? t.esito}` : ''}`).join(', ');
   return conRiga(s, `${a.attaccante} attacca ${a.bersaglio} con ${a.arma}: VA ${a.va}${tiri ? `, tiro ${tiri}` : ''} → ${ESITI[a.esito] ?? a.esito}.`, adesso);
 }
+
+/** Una riga di registro scritta da fuori della plancia (pezzo 6: la scelta di un giocatore nella sua scheda). */
+export function registraRiga(s, testo, adesso) {
+  if (!String(testo ?? '').trim()) throw new Error('riga di registro vuota');
+  return conRiga(s, String(testo).trim(), adesso);
+}
