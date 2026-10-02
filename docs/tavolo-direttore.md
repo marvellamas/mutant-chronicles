@@ -190,7 +190,10 @@ Ogni pezzo ha test sulle funzioni pure e una prova nel browser; i primi due non 
      - La revisione dei file dei PG è la data di modifica, non un contatore: il formato del personaggio non cambia.
      - Il danno da scrivere è quello tirato con bonus e moltiplicatori (passi 1–3 del §5.13). Magistrale e moltiplicatori non li calcola la plancia.
      - Contromisure (Ignifugo X e simili) e perdita immediata del Sanguinamento solo come testo (per-davide A.76). Per Perforante con più applicazioni c'è la domanda A.77.
-5. **Pezzo 5 — Attacchi dei nemici.**
+   - **Ritocchi del 2 ottobre** (richiesti da Marcello dopo la prova del pezzo 4).
+     - «← Torna al tavolo»: la scheda di un PG aperta dal nome nella plancia ha il pulsante nella barra del titolo, primo a sinistra di «Sali al livello» e «Azioni». Riporta alla plancia con lo scontro aperto e lo stesso scorrimento. La provenienza sta in sessionStorage (`src/ui/ritorno.js`): resiste a F5 e lascia l'indirizzo com'è, quindi il tasto indietro funziona. La pagina iniziale la cancella: aperta da lì, la scheda non ha il pulsante.
+     - «Aggiungi PG al tavolo», accanto a «Chi è al tavolo»: sceglie uno o più file JSON di «SALVA PG» e li controlla come «Importa» (`src/tavolo.js` → `pgDaAggiungere`). Li scrive in `personaggi/` solo se lì non c'è già un file con lo stesso nome (intestazione `X-Mutant-Nuovo`, altrimenti 409) e li mette al tavolo; un doppione è saltato, non sovrascritto, e comunque messo al tavolo. Un nome che non segue il formato dell'export (per esempio «… (2).json» di un download doppio) si rifà dal nome e dal livello nel JSON, con la data di oggi. Un file non valido è segnalato e non si scrive.
+     - Test: `tests/ritorno-aggiungi.test.js`. Prova nel browser sulla porta 3001 con cartelle temporanee e con gli esempi.
 5. **Pezzo 5 — Attacchi dei nemici.**
    - Adattatore nemico → «Attacca!» (VA con la situazione, Difese del bersaglio).
    - Dado dal vivo o dell'app, poi «applica» con il pezzo 4.
