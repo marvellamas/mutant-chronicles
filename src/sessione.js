@@ -144,6 +144,8 @@ function oggettiSituazionali(creazione, dati, scheda = null) {
   return [
     ...risolti.filter((r) => r.effetti.some((e) => e.ambito === 'situazionale')).map((r) => r.uid),
     ...risolti.filter((r) => r.def?.attacco?.stato).map((r) => `${r.uid}:${r.def.attacco.stato.id}`),
+    // attivazione di un Artefatto con durata (Guanti da Combattimento Mistico, Armamenti §7.24): «Attiva» la accende
+    ...risolti.filter((r) => r.def?.attivazione_artefatto).map((r) => `attivazione:${r.uid}`),
   ];
 }
 
@@ -425,6 +427,35 @@ export function commutaStato(sessione, id, m) {
  * Restano note, Punti Eroe, Distintivi, munizioni, peso aggiuntivo, PI degli oggetti e lo Stato di
  * Corruzione (§5.20.2: si recupera solo con la purificazione).
  */
+/**
+ * Ricarica automatica di una Batteria Matrice (Magia §26.4; regole.json → chroma.matrice): `ore` passate entro
+ * il raggio della Matrice d'origine (`presso: 'origine'`, 2 PM/ora) o di un'altra Matrice dello stesso colore
+ * (`'stesso_colore'`, 1 PM/ora); senza Prove, PM personali o sintonizzazione, fino alla capacità.
+ * La applica il pulsante «Ricarica dalla Matrice» (tab Artefatti): «Nuova sessione» non riempie i contenitori.
+ */
+export function ricaricaMatrice(sessione, uid, ore, presso, dati, m) {
+  const s = allineaSessione(sessione, m);
+  const M = dati.regole.chroma?.matrice;
+  const velocita = presso === 'origine' ? M?.pm_ora_origine : presso === 'stesso_colore' ? M?.pm_ora_stesso_colore : 0;
+  if (!s.chroma[uid] || !Number.isInteger(ore) || ore <= 0 || !velocita) return s;
+  const max = m.contenitori?.[uid] ?? s.chroma[uid].pmAttuali;
+  const pm = Math.min(max, s.chroma[uid].pmAttuali + ore * velocita);
+  return modificaSessione(s, { chroma: { ...s.chroma, [uid]: { ...s.chroma[uid], pmAttuali: pm } } }, m);
+}
+
+/**
+ * Attivazione di un Artefatto con durata (Guanti da Combattimento Mistico, Armamenti §7.24): i PM dalla riserva
+ * interna (proprietà Esclusiva) e la condizione «attivazione:<uid>» accesa, in una modifica sola. null se la
+ * riserva non basta. Si termina spegnendo la condizione.
+ */
+export function attivaArtefatto(sessione, uid, pm, m) {
+  const s = allineaSessione(sessione, m);
+  const c = s.chroma[uid];
+  if (!c || c.pmAttuali < pm) return null;
+  const chiave = `attivazione:${uid}`;
+  return modificaSessione(s, { chroma: { ...s.chroma, [uid]: { ...c, pmAttuali: c.pmAttuali - pm } }, condizioniOggetti: [...new Set([...s.condizioniOggetti, chiave])] }, m);
+}
+
 export function nuovaSessione(sessione, m) {
   return { ...allineaSessione(sessione, m), pvAttuali: m.pv, pmAttuali: m.pm, statiAttivi: [], ferite: 0, affaticamento: 0, round: 1, ultimaTecnica: null, tecnicheAttive: [] };
 }

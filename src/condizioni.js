@@ -293,6 +293,8 @@ export function applicaCondizioni(scheda, sessione, dati) {
     return x;
   });
   scheda.oggettiAccesi = effettiOggetti.filter((e) => e.ambito === 'situazionale' && accesi.has(e.uid));
+  // attivazioni di Artefatti accese al tavolo (Guanti da Combattimento Mistico, Armamenti §7.24): oggetto in uso
+  if (scheda.equipaggiamento) scheda.equipaggiamento.attivazioniAccese = (scheda.equipaggiamento.attivazioniArtefatti ?? []).filter((x) => x.attivo && accesi.has(x.chiave) && !rotti.has(x.uid));
 
   for (const [id, s] of Object.entries(scheda.salvezze ?? {})) {
     const cond = condizioni.filter((c) => c.effetto.salvezze).map((c) => voce(c.etichetta, c.effetto.salvezze, c.fonte));

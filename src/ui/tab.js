@@ -15,7 +15,7 @@ import { descriviFerite } from '../sessione.js';
 import { statoIntegrita } from '../protezione.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
 import { testoDanno } from '../stampa.js';
-import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto, catalogo, risolvi, infoArtefattoVoce, regoleSintonizzazione, rapportoConversione, riserveNec } from '../equipaggiamento.js';
+import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto, catalogo, risolvi, infoArtefattoVoce, infusiDi, regoleSintonizzazione, rapportoConversione, riserveNec } from '../equipaggiamento.js';
 import { dotazioneApplicata, crediti } from '../dotazioni.js';
 import { provenienzaCarico } from '../carico.js';
 import { talentiSituazionali } from '../talenti.js';
@@ -1586,15 +1586,68 @@ function pannelloChroma(ctx, c, { conPulsanti = true } = {}) {
     ].join(' ')));
 }
 
+/**
+ * Attivazione a durata di un Artefatto (Guanti da Combattimento Mistico, Armamenti §7.24): i PM dalla riserva
+ * interna e la condizione accesa in una modifica sola; «Termina» la spegne. L'effetto entra in «Attacca!».
+ */
+function attivazioneArtefattoUi(ctx, x, r, riserva) {
+  const at = r?.def?.attivazione_artefatto;
+  if (!at) return null;
+  const chiave = `attivazione:${x.uid}`;
+  const accesa = (ctx.sessione.condizioniOggetti ?? []).includes(chiave);
+  const pm = riserva ? ctx.sessione.chroma?.[riserva.uid]?.pmAttuali ?? 0 : 0;
+  const motivo = x.deposito ? 'nel deposito comune' : !x.sintonizzato ? 'non sintonizzato' : !r.attivo ? 'non indossato' : pm < at.pm ? `la riserva ha ${pm} PM, ne servono ${at.pm}` : null;
+  return h('div', { class: 'attivazione-infusa' },
+    h('p', {}, h('strong', {}, 'Attivazione: '), `${at.pm} PM dalla riserva interna, ${at.azione}, ${at.durata}: pugni ${at.natura} e +${at.danno} al danno (${at.fonte}).`),
+    accesa ? h('p', { class: 'nota' }, h('strong', {}, 'Attiva'), ` · vale in «Attacca!» senz’armi; dura ${at.durata}. `,
+      h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => ctx.azioni.condizioneOggetto(chiave) }, 'Termina')) : null,
+    motivo && !accesa ? h('p', { class: 'nota motivo' }, `Non attivabile ora: ${motivo}.`) : null,
+    h('button', { type: 'button', class: 'btn', disabled: !!motivo, title: motivo ?? `Scala ${at.pm} PM dalla riserva e accende l’effetto; una nuova attivazione rinnova la durata`,
+      onclick: () => ctx.azioni.attivaArtefatto(x.uid, at.pm) }, accesa ? `Rinnova (−${at.pm} PM)` : `Attiva (−${at.pm} PM)`));
+}
+
+/**
+ * Batteria Matrice (Magia §26.4): Matrice d'origine sulla voce e ricarica automatica per le ore passate entro il
+ * raggio della Matrice d'origine (2 PM/ora) o di un'altra dello stesso colore (1 PM/ora). La tabella dei
+ * Cristalli Matrice (Magia §26.3) è nel tooltip.
+ */
+function ricaricaMatriceUi(ctx, c) {
+  if (!c.matrice) return null;
+  const M = ctx.dati.regole.chroma.matrice;
+  const C = ctx.dati.regole.chroma.cristalli_matrice;
+  const u = (ctx.ui.matrice ??= {})[c.uid] ??= { ore: 1, presso: 'origine' };
+  const cambiaOrigine = (testo) => ctx.azioni.equipaggiamento((ctx.scelte.equipaggiamento ?? []).map((v) => {
+    if (v.uid !== c.uid) return v;
+    const w = { ...v };
+    if (testo.trim()) w.matrice = testo.trim(); else delete w.matrice;
+    return w;
+  }));
+  const raggio = (m) => (m >= 1000 ? `${m / 1000} km` : `${m} m`);
+  return h('div', { class: 'ricarica-matrice' },
+    h('label', { class: 'campo' }, h('span', {}, 'Matrice d’origine'),
+      h('input', { type: 'text', value: c.matrice.origine ?? '', placeholder: 'da registrare (Equipaggiamento §10.3)', onchange: (e) => cambiaOrigine(e.target.value) })),
+    h('p', { class: 'nota' }, h('strong', {}, 'Ricarica dalla Matrice'), ` (Magia §26.4): ${M.frasi[0]} ${M.frasi[1]} ${M.frasi[2]}`,
+      C ? h('span', { class: 'sottolineato-info', title: C.livelli.map((l) => `Livello ${l.livello}: ${l.altezza_m} × ${l.larghezza_m} m, raggio ${raggio(l.raggio_m)}`).join(' · ') }, ' Raggi dei Cristalli Matrice per livello (Magia §26.3): passa il mouse.') : null),
+    h('div', { class: 'riga-azioni' },
+      h('select', { onchange: (e) => { u.presso = e.target.value; } },
+        h('option', { value: 'origine', selected: u.presso === 'origine' }, `presso la Matrice d’origine (${M.pm_ora_origine} PM/ora)`),
+        h('option', { value: 'stesso_colore', selected: u.presso === 'stesso_colore' }, `presso un’altra Matrice ${c.energia} (${M.pm_ora_stesso_colore} PM/ora)`)),
+      h('input', { type: 'number', min: 1, step: 1, value: u.ore, 'aria-label': 'Ore passate', onchange: (e) => { u.ore = Math.max(1, Math.round(Number(e.target.value) || 1)); } }),
+      h('span', {}, ' ore '),
+      h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.ricaricaMatrice(c.uid, u.ore, u.presso) }, 'Ricarica dalla Matrice')));
+}
+
 /** Scheda di un contenitore: nome, colore, PM, sintonizzazione, trasporto. */
 function schedaContenitore(ctx, c) {
   return h('article', { class: 'arma-tab contenitore-tab' },
     h('h3', {}, c.nome, h('small', { class: 'sigla' }, c.integrato ? ` · riserva integrata nell’oggetto: ${nomeRiserva(c.riserva, ctx.dati)}, proprietà ${nomeAlimentazione(c.alimentazione, ctx.dati)}` : ` · ${c.potenza}`)),
     h('p', { class: 'nota' },
-      c.sintonizzato ? `✔ Sintonizzato (SnT ${c.costo}, §7.10)` : `○ Non sintonizzato (SnT ${c.costo}): senza sintonizzazione non alimenta lanci`,
+      c.scheggia ? 'Scheggia instabile: SnT 0, non si sintonizza; ogni prelievo richiede una Prova di Potere di estrazione (Magia §26.5)'
+        : c.sintonizzato ? `✔ Sintonizzato (SnT ${c.costo}, §7.10)` : `○ Non sintonizzato (SnT ${c.costo}): senza sintonizzazione non alimenta lanci`,
       ' · ', c.trasportato ? 'trasportato' : c.integrato ? `oggetto ${NOMI_STATI[c.stato]?.toLowerCase() ?? 'non trasportato'}` : 'nello zaino'),
     // vista estesa, in sola lettura: i PM si modificano nel riquadro Punti Magia
-    pannelloChroma(ctx, c, { conPulsanti: false }));
+    pannelloChroma(ctx, c, { conPulsanti: false }),
+    ricaricaMatriceUi(ctx, c));
 }
 
 /** Sigla di una modalità di fuoco con il tooltip del §5.10 (regole.json → modalita_di_fuoco). */
@@ -1664,7 +1717,7 @@ function sezioneDaArtefatti(ctx) {
   if (!st) return null;
   const cat = catalogo(ctx.dati);
   const perUid = new Map((ctx.scelte.equipaggiamento ?? []).map((v) => [v.uid, risolvi(v, cat)]));
-  const conPotere = st.artefatti.map((x) => ({ x, r: perUid.get(x.uid) })).filter(({ r }) => r?.def?.attivazione || infoArtefattoVoce(r, ctx.dati)?.contenitore?.integrato || infoArtefattoVoce(r, ctx.dati)?.infuso);
+  const conPotere = st.artefatti.map((x) => ({ x, r: perUid.get(x.uid) })).filter(({ r }) => r?.def?.attivazione || infoArtefattoVoce(r, ctx.dati)?.contenitore?.integrato || infusiDi(infoArtefattoVoce(r, ctx.dati)).length);
   const contenitori = ctx.tab.scheda.equipaggiamento?.contenitori ?? [];
   if (!conPotere.length) return null;
   return sezione('Da artefatti',
@@ -1717,8 +1770,8 @@ function tabArtefatti(ctx) {
       h('div', { class: 'arma-testa' },
         h('h3', {}, def ? info('oggetto', def.rif, x.nome) : x.nome, h('small', { class: 'sigla' }, ` · ${x.tipologia ?? 'Artefatto'} · ${x.potenza}`))),
       h('p', { class: 'nota' }, `Nell’Inventario: ${NOMI_STATI[r?.voce.stato] ?? 'con sé'}. SnT ${x.costo}.`),
-      // §7.10: con sole proprietà passive SnT 0, nessuna sintonizzazione
-      !x.sintonizzabile ? h('p', { class: 'nota' }, 'Sole proprietà passive: SnT 0, si usano senza sintonizzazione (Armamenti §7.10).')
+      // §7.10: con sole proprietà passive SnT 0, nessuna sintonizzazione; Magia §26.5: Schegge instabili SnT 0
+      !x.sintonizzabile ? h('p', { class: 'nota' }, def?.artefatto?.scheggia ? 'Scheggia instabile: SnT 0, non si sintonizza; estrarre PM richiede una Prova di Potere (Magia §26.5).' : 'Sole proprietà passive: SnT 0, si usano senza sintonizzazione (Armamenti §7.10).')
         : h('label', { class: `stato-tavolo${x.sintonizzato ? ' attivo' : ''}`, title: x.deposito ? 'Nel deposito comune un Artefatto non è sintonizzabile.' : null },
           h('input', { type: 'checkbox', checked: x.sintonizzato, disabled: !!x.deposito, onchange: (e) => sintonizza(x.uid, e.target.checked) }),
           h('span', {}, h('strong', {}, 'Sintonizzato'), h('small', {}, x.deposito ? ' · nel deposito comune: non sintonizzabile' : ` · SnT ${x.costo}`))),
@@ -1732,6 +1785,7 @@ function tabArtefatti(ctx) {
       !arma && !prot && (r?.tipo === 'arma_ravvicinata' || r?.tipo === 'arma_distanza' || ['armatura', 'scudo'].includes(r?.tipo))
         ? h('p', { class: 'nota' }, 'Non è in mano né indossato: i suoi effetti non contano ora.') : null,
       attivazioneInfusaUi(ctx, x, r, riserva, { conPulsante: true }),
+      attivazioneArtefattoUi(ctx, x, r, riserva),
       riserva ? pannelloChroma(ctx, riserva, { conPulsanti: true }) : null);
   };
   return [
@@ -1935,12 +1989,18 @@ function tabMagia(ctx, d) {
  * dalla riserva integrata, senza Prove; tempo di attivazione. Nella tab Artefatti con il pulsante
  * «Attiva» (scala la riserva, annullabile); in Poteri «Da artefatti» in sola lettura.
  */
-function attivazioneInfusaUi(ctx, x, r, riserva, { conPulsante }) {
+function attivazioneInfusaUi(ctx, x, r, riserva, opz) {
   const info = r ? infoArtefattoVoce(r, ctx.dati) : null;
-  if (!info?.infuso) return null;
+  const infusi = infusiDi(info);
+  if (!infusi.length) return null;
+  // più proprietà infuse (Pietra della Vigilanza): una riga per ciascuna, la riserva è condivisa
+  return infusi.length === 1 ? attivazioneInfusaRiga(ctx, x, infusi[0], riserva, opz) : h('div', {}, infusi.map((i) => attivazioneInfusaRiga(ctx, x, i, riserva, opz)));
+}
+
+function attivazioneInfusaRiga(ctx, x, infuso, riserva, { conPulsante }) {
   const pm = riserva ? ctx.sessione.chroma?.[riserva.uid]?.pmAttuali ?? 0 : 0;
-  const a = attivazioneInfusa(info.infuso, riserva ?? null, { pm, personali: ctx.sessione.pmAttuali, sintonizzato: x.sintonizzato, deposito: x.deposito }, ctx.dati);
-  if (!a) return h('p', { class: 'nota motivo' }, `Incantesimo infuso «${info.infuso.incantesimo}» non trovato fra gli incantesimi.`);
+  const a = attivazioneInfusa(infuso, riserva ?? null, { pm, personali: ctx.sessione.pmAttuali, sintonizzato: x.sintonizzato, deposito: x.deposito }, ctx.dati);
+  if (!a) return h('p', { class: 'nota motivo' }, `Incantesimo infuso «${infuso.incantesimo}» non trovato fra gli incantesimi.`);
   // Magia §26.2: Esclusiva solo dalla riserva interna; Universale anche con PM personali, una sola fonte esterna
   const universale = a.alimentazione === 'universale';
   const quote = a.pagamento && universale && a.pagamento.personali ? `${a.pagamento.interna} dalla riserva e ${a.pagamento.personali} personali` : `${a.pm} PM dalla riserva dell’Artefatto`;

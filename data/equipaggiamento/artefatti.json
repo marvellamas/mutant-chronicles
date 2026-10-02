@@ -1,6 +1,6 @@
 {
-  "versione_manuale": "Armamenti 0.58 (Google Doc del 02/10/2026, 09:02 UTC)",
-  "fonte": "Manuale degli Armamenti v0.50, §7.5 Artefatti (pp. 30–31) e §7.10 Artefatti e sintonizzazione (pp. 58–60); lotto 12; prezzi delle batterie e SnT dei soli passivi dal Doc del 01/10/2026 sera (Armamenti §7.5, §7.10; Magia §24.2, §24.7; docs/diff-manuali-2026-10-02.md, lotto 2)",
+  "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+  "fonte": "Manuale degli Armamenti v0.50, §7.5 Artefatti (pp. 30–31) e §7.10 Artefatti e sintonizzazione (pp. 58–60); lotto 12; prezzi delle batterie e SnT dei soli passivi dal Doc del 01/10/2026 sera (Armamenti §7.5, §7.10; Magia §24.2, §24.7; docs/diff-manuali-2026-10-02.md, lotto 2); capitolo 10 dell'Equipaggiamento 0.5 e Magia §26 (Doc del 02/10/2026; tools/lotti/lotto_artefatti_cap10.mjs)",
   "_nota": "Generato da tools/lotti/lotto12_artefatti.mjs; da qui in poi si modifica questo file. «sintonizzazione» contiene le regole del §7.10: capacità per Gradi complessivi (indice 0 = Grado I), bonus del Talento, costo per potenza. «artefatti_catalogo» dà tipologia e potenza agli Artefatti già presenti in altri file. «contenitore» descrive la riserva di Chroma (Magia sez. 6): energia (colore di regole.json → chroma.colori), capacita_pm; «integrato»: true quando la riserva è dentro l'oggetto (§7.5.1: Bordone Templare, Spade Vindicator e Deliverer, Lancia Castigator, Lama Demontooth, Scudo delle Guardie Sacre), con un solo costo di sintonizzazione. «sintonizzabile»: le proprietà attive richiedono sintonizzazione (§7.10). Batterie da 5 PM: profilo della risposta di Davide A.14 (28/09/2026) con i prezzi indicativi del 01/10/2026 sera, 1.000 crediti le colorate e 5.000 la Bianca (Armamenti §7.5; Magia §24.7: 200 e 1.000 crediti per PM; E&L, «Regole consolidate»); i 10.000 e 50.000 di A.14 non valgono più. «proprieta_attive»: true se l’Artefatto ha almeno una proprietà attiva, e allora la SnT è quella della potenza (il Grado finale, Magia §24.2); false con sole proprietà passive, e allora SnT 0 e niente sintonizzazione (Armamenti §7.10). Controllo voce per voce del 02/10: tutte le voci del catalogo hanno proprietà attive (attivazione offensiva o Scudo Magico, §7.5.1) oppure sono batterie autonome (SnT pari al Grado).",
   "sintonizzazione": {
     "capacita_per_gradi": [
@@ -146,8 +146,8 @@
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
       "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche NEC usano Lx, non richiedono Sintonizzazione e seguono i §§7.1.4 e 7.20.5. Le batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni, con SnT 1; quella con Chroma Bianco è Non Comune, con SnT 2. Le batterie mistiche Rosse, Blu e Verdi da 5 PM hanno ciascuna prezzo indicativo di 1.000 crediti, REP Molto rara, potenza Comune e SnT 1. Quella Bianca da 5 PM ha prezzo indicativo di 5.000 crediti, REP Leggendaria, potenza Non Comune e SnT 2. Tutte pesano 0,2 kg, hanno Qualità Comune, PS Integrità 10 e 3 PI; all’acquisto contengono 5/5 PM. Per le capacità superiori, fino a 30 PM colorati e 25 PM Bianchi nella scala ordinaria, vedere il Manuale della Magia, §24.7. I prezzi restano soggetti al playtest e non garantiscono la reperibilità.",
-      "paragrafo": "§7.10",
-      "versione_manuale": "Armamenti 0.58 (Google Doc del 01/10/2026, 21:26 UTC)",
+      "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
       "costo": 1000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -165,7 +165,8 @@
       "qualita": "Comune",
       "ps_int": 10,
       "pi": 3,
-      "peso": 0.2
+      "peso": 0.2,
+      "creazione_cr": 650
     },
     {
       "id": "batteria-da-5-pm-chroma-blu",
@@ -175,8 +176,8 @@
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
       "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche NEC usano Lx, non richiedono Sintonizzazione e seguono i §§7.1.4 e 7.20.5. Le batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni, con SnT 1; quella con Chroma Bianco è Non Comune, con SnT 2. Le batterie mistiche Rosse, Blu e Verdi da 5 PM hanno ciascuna prezzo indicativo di 1.000 crediti, REP Molto rara, potenza Comune e SnT 1. Quella Bianca da 5 PM ha prezzo indicativo di 5.000 crediti, REP Leggendaria, potenza Non Comune e SnT 2. Tutte pesano 0,2 kg, hanno Qualità Comune, PS Integrità 10 e 3 PI; all’acquisto contengono 5/5 PM. Per le capacità superiori, fino a 30 PM colorati e 25 PM Bianchi nella scala ordinaria, vedere il Manuale della Magia, §24.7. I prezzi restano soggetti al playtest e non garantiscono la reperibilità.",
-      "paragrafo": "§7.10",
-      "versione_manuale": "Armamenti 0.58 (Google Doc del 01/10/2026, 21:26 UTC)",
+      "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
       "costo": 1000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -194,7 +195,8 @@
       "qualita": "Comune",
       "ps_int": 10,
       "pi": 3,
-      "peso": 0.2
+      "peso": 0.2,
+      "creazione_cr": 650
     },
     {
       "id": "batteria-da-5-pm-chroma-verde",
@@ -204,8 +206,8 @@
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
       "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche NEC usano Lx, non richiedono Sintonizzazione e seguono i §§7.1.4 e 7.20.5. Le batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni, con SnT 1; quella con Chroma Bianco è Non Comune, con SnT 2. Le batterie mistiche Rosse, Blu e Verdi da 5 PM hanno ciascuna prezzo indicativo di 1.000 crediti, REP Molto rara, potenza Comune e SnT 1. Quella Bianca da 5 PM ha prezzo indicativo di 5.000 crediti, REP Leggendaria, potenza Non Comune e SnT 2. Tutte pesano 0,2 kg, hanno Qualità Comune, PS Integrità 10 e 3 PI; all’acquisto contengono 5/5 PM. Per le capacità superiori, fino a 30 PM colorati e 25 PM Bianchi nella scala ordinaria, vedere il Manuale della Magia, §24.7. I prezzi restano soggetti al playtest e non garantiscono la reperibilità.",
-      "paragrafo": "§7.10",
-      "versione_manuale": "Armamenti 0.58 (Google Doc del 01/10/2026, 21:26 UTC)",
+      "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
       "costo": 1000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -223,7 +225,8 @@
       "qualita": "Comune",
       "ps_int": 10,
       "pi": 3,
-      "peso": 0.2
+      "peso": 0.2,
+      "creazione_cr": 650
     },
     {
       "id": "batteria-da-5-pm-chroma-bianco",
@@ -233,8 +236,8 @@
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
       "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche NEC usano Lx, non richiedono Sintonizzazione e seguono i §§7.1.4 e 7.20.5. Le batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni, con SnT 1; quella con Chroma Bianco è Non Comune, con SnT 2. Le batterie mistiche Rosse, Blu e Verdi da 5 PM hanno ciascuna prezzo indicativo di 1.000 crediti, REP Molto rara, potenza Comune e SnT 1. Quella Bianca da 5 PM ha prezzo indicativo di 5.000 crediti, REP Leggendaria, potenza Non Comune e SnT 2. Tutte pesano 0,2 kg, hanno Qualità Comune, PS Integrità 10 e 3 PI; all’acquisto contengono 5/5 PM. Per le capacità superiori, fino a 30 PM colorati e 25 PM Bianchi nella scala ordinaria, vedere il Manuale della Magia, §24.7. I prezzi restano soggetti al playtest e non garantiscono la reperibilità.",
-      "paragrafo": "§7.10",
-      "versione_manuale": "Armamenti 0.58 (Google Doc del 01/10/2026, 21:26 UTC)",
+      "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
       "costo": 5000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -252,7 +255,8 @@
       "qualita": "Comune",
       "ps_int": 10,
       "pi": 3,
-      "peso": 0.2
+      "peso": 0.2,
+      "creazione_cr": 2200
     },
     {
       "id": "batteria-da-10-pm-chroma-rosso",
@@ -262,8 +266,8 @@
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
-      "paragrafo": "Magia §24.7",
-      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
       "costo": 2000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -282,7 +286,7 @@
       "ps_int": 10,
       "pi": 3,
       "peso": 0.2,
-      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+      "creazione_cr": 1200
     },
     {
       "id": "batteria-da-15-pm-chroma-rosso",
@@ -292,8 +296,8 @@
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
-      "paragrafo": "Magia §24.7",
-      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
       "costo": 3000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -312,7 +316,7 @@
       "ps_int": 10,
       "pi": 3,
       "peso": 0.2,
-      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+      "creazione_cr": 1750
     },
     {
       "id": "batteria-da-20-pm-chroma-rosso",
@@ -322,8 +326,8 @@
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
-      "paragrafo": "Magia §24.7",
-      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
       "costo": 4000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -342,7 +346,7 @@
       "ps_int": 10,
       "pi": 3,
       "peso": 0.2,
-      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+      "creazione_cr": 2300
     },
     {
       "id": "batteria-da-25-pm-chroma-rosso",
@@ -352,8 +356,8 @@
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
-      "paragrafo": "Magia §24.7",
-      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
       "costo": 5000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -372,7 +376,7 @@
       "ps_int": 10,
       "pi": 3,
       "peso": 0.2,
-      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+      "creazione_cr": 2850
     },
     {
       "id": "batteria-da-30-pm-chroma-rosso",
@@ -382,8 +386,8 @@
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
-      "paragrafo": "Magia §24.7",
-      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
       "costo": 6000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -402,7 +406,7 @@
       "ps_int": 10,
       "pi": 3,
       "peso": 0.2,
-      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+      "creazione_cr": 3400
     },
     {
       "id": "batteria-da-10-pm-chroma-blu",
@@ -412,8 +416,8 @@
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
-      "paragrafo": "Magia §24.7",
-      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
       "costo": 2000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -432,7 +436,7 @@
       "ps_int": 10,
       "pi": 3,
       "peso": 0.2,
-      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+      "creazione_cr": 1200
     },
     {
       "id": "batteria-da-15-pm-chroma-blu",
@@ -442,8 +446,8 @@
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
-      "paragrafo": "Magia §24.7",
-      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
       "costo": 3000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -462,7 +466,7 @@
       "ps_int": 10,
       "pi": 3,
       "peso": 0.2,
-      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+      "creazione_cr": 1750
     },
     {
       "id": "batteria-da-20-pm-chroma-blu",
@@ -472,8 +476,8 @@
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
-      "paragrafo": "Magia §24.7",
-      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
       "costo": 4000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -492,7 +496,7 @@
       "ps_int": 10,
       "pi": 3,
       "peso": 0.2,
-      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+      "creazione_cr": 2300
     },
     {
       "id": "batteria-da-25-pm-chroma-blu",
@@ -502,8 +506,8 @@
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
-      "paragrafo": "Magia §24.7",
-      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
       "costo": 5000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -522,7 +526,7 @@
       "ps_int": 10,
       "pi": 3,
       "peso": 0.2,
-      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+      "creazione_cr": 2850
     },
     {
       "id": "batteria-da-30-pm-chroma-blu",
@@ -532,8 +536,8 @@
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
-      "paragrafo": "Magia §24.7",
-      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
       "costo": 6000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -552,7 +556,7 @@
       "ps_int": 10,
       "pi": 3,
       "peso": 0.2,
-      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+      "creazione_cr": 3400
     },
     {
       "id": "batteria-da-10-pm-chroma-verde",
@@ -562,8 +566,8 @@
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
-      "paragrafo": "Magia §24.7",
-      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
       "costo": 2000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -582,7 +586,7 @@
       "ps_int": 10,
       "pi": 3,
       "peso": 0.2,
-      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+      "creazione_cr": 1200
     },
     {
       "id": "batteria-da-15-pm-chroma-verde",
@@ -592,8 +596,8 @@
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
-      "paragrafo": "Magia §24.7",
-      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
       "costo": 3000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -612,7 +616,7 @@
       "ps_int": 10,
       "pi": 3,
       "peso": 0.2,
-      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+      "creazione_cr": 1750
     },
     {
       "id": "batteria-da-20-pm-chroma-verde",
@@ -622,8 +626,8 @@
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
-      "paragrafo": "Magia §24.7",
-      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
       "costo": 4000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -642,7 +646,7 @@
       "ps_int": 10,
       "pi": 3,
       "peso": 0.2,
-      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+      "creazione_cr": 2300
     },
     {
       "id": "batteria-da-25-pm-chroma-verde",
@@ -652,8 +656,8 @@
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
-      "paragrafo": "Magia §24.7",
-      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
       "costo": 5000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -672,7 +676,7 @@
       "ps_int": 10,
       "pi": 3,
       "peso": 0.2,
-      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+      "creazione_cr": 2850
     },
     {
       "id": "batteria-da-30-pm-chroma-verde",
@@ -682,8 +686,8 @@
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
-      "paragrafo": "Magia §24.7",
-      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
       "costo": 6000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -702,7 +706,7 @@
       "ps_int": 10,
       "pi": 3,
       "peso": 0.2,
-      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+      "creazione_cr": 3400
     },
     {
       "id": "batteria-da-10-pm-chroma-bianco",
@@ -712,8 +716,8 @@
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
-      "paragrafo": "Magia §24.7",
-      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
       "costo": 10000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -732,7 +736,7 @@
       "ps_int": 10,
       "pi": 3,
       "peso": 0.2,
-      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+      "creazione_cr": 4250
     },
     {
       "id": "batteria-da-15-pm-chroma-bianco",
@@ -742,8 +746,8 @@
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
-      "paragrafo": "Magia §24.7",
-      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
       "costo": 15000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -762,7 +766,7 @@
       "ps_int": 10,
       "pi": 3,
       "peso": 0.2,
-      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+      "creazione_cr": 6300
     },
     {
       "id": "batteria-da-20-pm-chroma-bianco",
@@ -772,8 +776,8 @@
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
-      "paragrafo": "Magia §24.7",
-      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
       "costo": 20000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -792,7 +796,7 @@
       "ps_int": 10,
       "pi": 3,
       "peso": 0.2,
-      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+      "creazione_cr": 8350
     },
     {
       "id": "batteria-da-25-pm-chroma-bianco",
@@ -802,8 +806,8 @@
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
-      "paragrafo": "Magia §24.7",
-      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
       "costo": 25000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -822,7 +826,7 @@
       "ps_int": 10,
       "pi": 3,
       "peso": 0.2,
-      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+      "creazione_cr": 10400
     },
     {
       "id": "chroma-viola-frammento",
@@ -839,6 +843,1414 @@
       "costo": null,
       "corruzione_passiva": "chroma_viola",
       "proprieta": []
+    },
+    {
+      "id": "batteria-matrice-da-5-pm-chroma-rosso",
+      "nome": "Batteria Matrice da 5 PM (Chroma Rosso)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
+      "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 1500,
+      "creazione_cr": 1200,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Non Comune",
+        "sintonizzazione": 2,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Rosso",
+          "capacita_pm": 5,
+          "matrice": true
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "EP",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2
+    },
+    {
+      "id": "batteria-matrice-da-10-pm-chroma-rosso",
+      "nome": "Batteria Matrice da 10 PM (Chroma Rosso)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
+      "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 3000,
+      "creazione_cr": 2250,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Rara",
+        "sintonizzazione": 3,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Rosso",
+          "capacita_pm": 10,
+          "matrice": true
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "EP",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2
+    },
+    {
+      "id": "batteria-matrice-da-15-pm-chroma-rosso",
+      "nome": "Batteria Matrice da 15 PM (Chroma Rosso)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
+      "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 4500,
+      "creazione_cr": 3300,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Molto Rara",
+        "sintonizzazione": 4,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Rosso",
+          "capacita_pm": 15,
+          "matrice": true
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "EP",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2
+    },
+    {
+      "id": "batteria-matrice-da-20-pm-chroma-rosso",
+      "nome": "Batteria Matrice da 20 PM (Chroma Rosso)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
+      "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 6000,
+      "creazione_cr": 4350,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Epica",
+        "sintonizzazione": 5,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Rosso",
+          "capacita_pm": 20,
+          "matrice": true
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "EP",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2
+    },
+    {
+      "id": "batteria-matrice-da-25-pm-chroma-rosso",
+      "nome": "Batteria Matrice da 25 PM (Chroma Rosso)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
+      "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 7500,
+      "creazione_cr": 5400,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Leggendaria",
+        "sintonizzazione": 6,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Rosso",
+          "capacita_pm": 25,
+          "matrice": true
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "EP",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2
+    },
+    {
+      "id": "batteria-matrice-da-5-pm-chroma-blu",
+      "nome": "Batteria Matrice da 5 PM (Chroma Blu)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
+      "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 1500,
+      "creazione_cr": 1200,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Non Comune",
+        "sintonizzazione": 2,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Blu",
+          "capacita_pm": 5,
+          "matrice": true
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "EP",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2
+    },
+    {
+      "id": "batteria-matrice-da-10-pm-chroma-blu",
+      "nome": "Batteria Matrice da 10 PM (Chroma Blu)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
+      "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 3000,
+      "creazione_cr": 2250,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Rara",
+        "sintonizzazione": 3,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Blu",
+          "capacita_pm": 10,
+          "matrice": true
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "EP",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2
+    },
+    {
+      "id": "batteria-matrice-da-15-pm-chroma-blu",
+      "nome": "Batteria Matrice da 15 PM (Chroma Blu)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
+      "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 4500,
+      "creazione_cr": 3300,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Molto Rara",
+        "sintonizzazione": 4,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Blu",
+          "capacita_pm": 15,
+          "matrice": true
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "EP",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2
+    },
+    {
+      "id": "batteria-matrice-da-20-pm-chroma-blu",
+      "nome": "Batteria Matrice da 20 PM (Chroma Blu)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
+      "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 6000,
+      "creazione_cr": 4350,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Epica",
+        "sintonizzazione": 5,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Blu",
+          "capacita_pm": 20,
+          "matrice": true
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "EP",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2
+    },
+    {
+      "id": "batteria-matrice-da-25-pm-chroma-blu",
+      "nome": "Batteria Matrice da 25 PM (Chroma Blu)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
+      "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 7500,
+      "creazione_cr": 5400,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Leggendaria",
+        "sintonizzazione": 6,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Blu",
+          "capacita_pm": 25,
+          "matrice": true
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "EP",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2
+    },
+    {
+      "id": "batteria-matrice-da-5-pm-chroma-verde",
+      "nome": "Batteria Matrice da 5 PM (Chroma Verde)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
+      "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 1500,
+      "creazione_cr": 1200,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Non Comune",
+        "sintonizzazione": 2,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Verde",
+          "capacita_pm": 5,
+          "matrice": true
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "EP",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2
+    },
+    {
+      "id": "batteria-matrice-da-10-pm-chroma-verde",
+      "nome": "Batteria Matrice da 10 PM (Chroma Verde)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
+      "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 3000,
+      "creazione_cr": 2250,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Rara",
+        "sintonizzazione": 3,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Verde",
+          "capacita_pm": 10,
+          "matrice": true
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "EP",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2
+    },
+    {
+      "id": "batteria-matrice-da-15-pm-chroma-verde",
+      "nome": "Batteria Matrice da 15 PM (Chroma Verde)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
+      "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 4500,
+      "creazione_cr": 3300,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Molto Rara",
+        "sintonizzazione": 4,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Verde",
+          "capacita_pm": 15,
+          "matrice": true
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "EP",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2
+    },
+    {
+      "id": "batteria-matrice-da-20-pm-chroma-verde",
+      "nome": "Batteria Matrice da 20 PM (Chroma Verde)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
+      "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 6000,
+      "creazione_cr": 4350,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Epica",
+        "sintonizzazione": 5,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Verde",
+          "capacita_pm": 20,
+          "matrice": true
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "EP",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2
+    },
+    {
+      "id": "batteria-matrice-da-25-pm-chroma-verde",
+      "nome": "Batteria Matrice da 25 PM (Chroma Verde)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
+      "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 7500,
+      "creazione_cr": 5400,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Leggendaria",
+        "sintonizzazione": 6,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Verde",
+          "capacita_pm": 25,
+          "matrice": true
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "EP",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2
+    },
+    {
+      "id": "batteria-matrice-da-5-pm-chroma-bianco",
+      "nome": "Batteria Matrice da 5 PM (Chroma Bianco)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
+      "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 7500,
+      "creazione_cr": 4250,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Rara",
+        "sintonizzazione": 3,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Bianco",
+          "capacita_pm": 5,
+          "matrice": true
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "LE",
+      "disponibilita_eccezionale": true,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2
+    },
+    {
+      "id": "batteria-matrice-da-10-pm-chroma-bianco",
+      "nome": "Batteria Matrice da 10 PM (Chroma Bianco)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
+      "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 15000,
+      "creazione_cr": 8300,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Molto Rara",
+        "sintonizzazione": 4,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Bianco",
+          "capacita_pm": 10,
+          "matrice": true
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "LE",
+      "disponibilita_eccezionale": true,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2
+    },
+    {
+      "id": "batteria-matrice-da-15-pm-chroma-bianco",
+      "nome": "Batteria Matrice da 15 PM (Chroma Bianco)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
+      "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 22500,
+      "creazione_cr": 12350,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Epica",
+        "sintonizzazione": 5,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Bianco",
+          "capacita_pm": 15,
+          "matrice": true
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "LE",
+      "disponibilita_eccezionale": true,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2
+    },
+    {
+      "id": "batteria-matrice-da-20-pm-chroma-bianco",
+      "nome": "Batteria Matrice da 20 PM (Chroma Bianco)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
+      "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 30000,
+      "creazione_cr": 16400,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Leggendaria",
+        "sintonizzazione": 6,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Bianco",
+          "capacita_pm": 20,
+          "matrice": true
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "LE",
+      "disponibilita_eccezionale": true,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2
+    },
+    {
+      "id": "scheggia-instabile-da-5-pm-chroma-rosso",
+      "nome": "Scheggia instabile da 5 PM (Chroma Rosso)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Le Schegge non hanno un Grado di Artefatto e non richiedono sintonizzazione: SnT 0 per tutte. Non si possono sommare più Schegge nello stesso lancio. Estrarre PM richiede Potere −2 VA per ogni gruppo di 3 PM o frazione. Tutte le Schegge instabili sono presentate con Qualità fisica Comune, PS Integrità 10, 1 PI e peso indicativo 0,05 kg per scheggia; questi dati fisici e la loro REP sono parametri iniziali di playtest.",
+      "paragrafo": "Equipaggiamento §10.4; Magia §26.5",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 500,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "scheggia": true,
+        "contenitore": {
+          "energia": "Rosso",
+          "capacita_pm": 5
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "RA",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1,
+      "peso": 0.05
+    },
+    {
+      "id": "scheggia-instabile-da-10-pm-chroma-rosso",
+      "nome": "Scheggia instabile da 10 PM (Chroma Rosso)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Le Schegge non hanno un Grado di Artefatto e non richiedono sintonizzazione: SnT 0 per tutte. Non si possono sommare più Schegge nello stesso lancio. Estrarre PM richiede Potere −2 VA per ogni gruppo di 3 PM o frazione. Tutte le Schegge instabili sono presentate con Qualità fisica Comune, PS Integrità 10, 1 PI e peso indicativo 0,05 kg per scheggia; questi dati fisici e la loro REP sono parametri iniziali di playtest.",
+      "paragrafo": "Equipaggiamento §10.4; Magia §26.5",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 1000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "scheggia": true,
+        "contenitore": {
+          "energia": "Rosso",
+          "capacita_pm": 10
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "RA",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1,
+      "peso": 0.05
+    },
+    {
+      "id": "scheggia-instabile-da-15-pm-chroma-rosso",
+      "nome": "Scheggia instabile da 15 PM (Chroma Rosso)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Le Schegge non hanno un Grado di Artefatto e non richiedono sintonizzazione: SnT 0 per tutte. Non si possono sommare più Schegge nello stesso lancio. Estrarre PM richiede Potere −2 VA per ogni gruppo di 3 PM o frazione. Tutte le Schegge instabili sono presentate con Qualità fisica Comune, PS Integrità 10, 1 PI e peso indicativo 0,05 kg per scheggia; questi dati fisici e la loro REP sono parametri iniziali di playtest.",
+      "paragrafo": "Equipaggiamento §10.4; Magia §26.5",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 1500,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "scheggia": true,
+        "contenitore": {
+          "energia": "Rosso",
+          "capacita_pm": 15
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "RA",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1,
+      "peso": 0.05
+    },
+    {
+      "id": "scheggia-instabile-da-20-pm-chroma-rosso",
+      "nome": "Scheggia instabile da 20 PM (Chroma Rosso)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Le Schegge non hanno un Grado di Artefatto e non richiedono sintonizzazione: SnT 0 per tutte. Non si possono sommare più Schegge nello stesso lancio. Estrarre PM richiede Potere −2 VA per ogni gruppo di 3 PM o frazione. Tutte le Schegge instabili sono presentate con Qualità fisica Comune, PS Integrità 10, 1 PI e peso indicativo 0,05 kg per scheggia; questi dati fisici e la loro REP sono parametri iniziali di playtest.",
+      "paragrafo": "Equipaggiamento §10.4; Magia §26.5",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 2000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "scheggia": true,
+        "contenitore": {
+          "energia": "Rosso",
+          "capacita_pm": 20
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "RA",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1,
+      "peso": 0.05
+    },
+    {
+      "id": "scheggia-instabile-da-25-pm-chroma-rosso",
+      "nome": "Scheggia instabile da 25 PM (Chroma Rosso)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Le Schegge non hanno un Grado di Artefatto e non richiedono sintonizzazione: SnT 0 per tutte. Non si possono sommare più Schegge nello stesso lancio. Estrarre PM richiede Potere −2 VA per ogni gruppo di 3 PM o frazione. Tutte le Schegge instabili sono presentate con Qualità fisica Comune, PS Integrità 10, 1 PI e peso indicativo 0,05 kg per scheggia; questi dati fisici e la loro REP sono parametri iniziali di playtest.",
+      "paragrafo": "Equipaggiamento §10.4; Magia §26.5",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 2500,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "scheggia": true,
+        "contenitore": {
+          "energia": "Rosso",
+          "capacita_pm": 25
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "RA",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1,
+      "peso": 0.05
+    },
+    {
+      "id": "scheggia-instabile-da-30-pm-chroma-rosso",
+      "nome": "Scheggia instabile da 30 PM (Chroma Rosso)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Le Schegge non hanno un Grado di Artefatto e non richiedono sintonizzazione: SnT 0 per tutte. Non si possono sommare più Schegge nello stesso lancio. Estrarre PM richiede Potere −2 VA per ogni gruppo di 3 PM o frazione. Tutte le Schegge instabili sono presentate con Qualità fisica Comune, PS Integrità 10, 1 PI e peso indicativo 0,05 kg per scheggia; questi dati fisici e la loro REP sono parametri iniziali di playtest.",
+      "paragrafo": "Equipaggiamento §10.4; Magia §26.5",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 3000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "scheggia": true,
+        "contenitore": {
+          "energia": "Rosso",
+          "capacita_pm": 30
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "RA",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1,
+      "peso": 0.05
+    },
+    {
+      "id": "scheggia-instabile-da-5-pm-chroma-blu",
+      "nome": "Scheggia instabile da 5 PM (Chroma Blu)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Le Schegge non hanno un Grado di Artefatto e non richiedono sintonizzazione: SnT 0 per tutte. Non si possono sommare più Schegge nello stesso lancio. Estrarre PM richiede Potere −2 VA per ogni gruppo di 3 PM o frazione. Tutte le Schegge instabili sono presentate con Qualità fisica Comune, PS Integrità 10, 1 PI e peso indicativo 0,05 kg per scheggia; questi dati fisici e la loro REP sono parametri iniziali di playtest.",
+      "paragrafo": "Equipaggiamento §10.4; Magia §26.5",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 500,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "scheggia": true,
+        "contenitore": {
+          "energia": "Blu",
+          "capacita_pm": 5
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "RA",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1,
+      "peso": 0.05
+    },
+    {
+      "id": "scheggia-instabile-da-10-pm-chroma-blu",
+      "nome": "Scheggia instabile da 10 PM (Chroma Blu)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Le Schegge non hanno un Grado di Artefatto e non richiedono sintonizzazione: SnT 0 per tutte. Non si possono sommare più Schegge nello stesso lancio. Estrarre PM richiede Potere −2 VA per ogni gruppo di 3 PM o frazione. Tutte le Schegge instabili sono presentate con Qualità fisica Comune, PS Integrità 10, 1 PI e peso indicativo 0,05 kg per scheggia; questi dati fisici e la loro REP sono parametri iniziali di playtest.",
+      "paragrafo": "Equipaggiamento §10.4; Magia §26.5",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 1000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "scheggia": true,
+        "contenitore": {
+          "energia": "Blu",
+          "capacita_pm": 10
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "RA",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1,
+      "peso": 0.05
+    },
+    {
+      "id": "scheggia-instabile-da-15-pm-chroma-blu",
+      "nome": "Scheggia instabile da 15 PM (Chroma Blu)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Le Schegge non hanno un Grado di Artefatto e non richiedono sintonizzazione: SnT 0 per tutte. Non si possono sommare più Schegge nello stesso lancio. Estrarre PM richiede Potere −2 VA per ogni gruppo di 3 PM o frazione. Tutte le Schegge instabili sono presentate con Qualità fisica Comune, PS Integrità 10, 1 PI e peso indicativo 0,05 kg per scheggia; questi dati fisici e la loro REP sono parametri iniziali di playtest.",
+      "paragrafo": "Equipaggiamento §10.4; Magia §26.5",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 1500,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "scheggia": true,
+        "contenitore": {
+          "energia": "Blu",
+          "capacita_pm": 15
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "RA",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1,
+      "peso": 0.05
+    },
+    {
+      "id": "scheggia-instabile-da-20-pm-chroma-blu",
+      "nome": "Scheggia instabile da 20 PM (Chroma Blu)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Le Schegge non hanno un Grado di Artefatto e non richiedono sintonizzazione: SnT 0 per tutte. Non si possono sommare più Schegge nello stesso lancio. Estrarre PM richiede Potere −2 VA per ogni gruppo di 3 PM o frazione. Tutte le Schegge instabili sono presentate con Qualità fisica Comune, PS Integrità 10, 1 PI e peso indicativo 0,05 kg per scheggia; questi dati fisici e la loro REP sono parametri iniziali di playtest.",
+      "paragrafo": "Equipaggiamento §10.4; Magia §26.5",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 2000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "scheggia": true,
+        "contenitore": {
+          "energia": "Blu",
+          "capacita_pm": 20
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "RA",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1,
+      "peso": 0.05
+    },
+    {
+      "id": "scheggia-instabile-da-25-pm-chroma-blu",
+      "nome": "Scheggia instabile da 25 PM (Chroma Blu)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Le Schegge non hanno un Grado di Artefatto e non richiedono sintonizzazione: SnT 0 per tutte. Non si possono sommare più Schegge nello stesso lancio. Estrarre PM richiede Potere −2 VA per ogni gruppo di 3 PM o frazione. Tutte le Schegge instabili sono presentate con Qualità fisica Comune, PS Integrità 10, 1 PI e peso indicativo 0,05 kg per scheggia; questi dati fisici e la loro REP sono parametri iniziali di playtest.",
+      "paragrafo": "Equipaggiamento §10.4; Magia §26.5",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 2500,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "scheggia": true,
+        "contenitore": {
+          "energia": "Blu",
+          "capacita_pm": 25
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "RA",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1,
+      "peso": 0.05
+    },
+    {
+      "id": "scheggia-instabile-da-30-pm-chroma-blu",
+      "nome": "Scheggia instabile da 30 PM (Chroma Blu)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Le Schegge non hanno un Grado di Artefatto e non richiedono sintonizzazione: SnT 0 per tutte. Non si possono sommare più Schegge nello stesso lancio. Estrarre PM richiede Potere −2 VA per ogni gruppo di 3 PM o frazione. Tutte le Schegge instabili sono presentate con Qualità fisica Comune, PS Integrità 10, 1 PI e peso indicativo 0,05 kg per scheggia; questi dati fisici e la loro REP sono parametri iniziali di playtest.",
+      "paragrafo": "Equipaggiamento §10.4; Magia §26.5",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 3000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "scheggia": true,
+        "contenitore": {
+          "energia": "Blu",
+          "capacita_pm": 30
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "RA",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1,
+      "peso": 0.05
+    },
+    {
+      "id": "scheggia-instabile-da-5-pm-chroma-verde",
+      "nome": "Scheggia instabile da 5 PM (Chroma Verde)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Le Schegge non hanno un Grado di Artefatto e non richiedono sintonizzazione: SnT 0 per tutte. Non si possono sommare più Schegge nello stesso lancio. Estrarre PM richiede Potere −2 VA per ogni gruppo di 3 PM o frazione. Tutte le Schegge instabili sono presentate con Qualità fisica Comune, PS Integrità 10, 1 PI e peso indicativo 0,05 kg per scheggia; questi dati fisici e la loro REP sono parametri iniziali di playtest.",
+      "paragrafo": "Equipaggiamento §10.4; Magia §26.5",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 500,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "scheggia": true,
+        "contenitore": {
+          "energia": "Verde",
+          "capacita_pm": 5
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "RA",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1,
+      "peso": 0.05
+    },
+    {
+      "id": "scheggia-instabile-da-10-pm-chroma-verde",
+      "nome": "Scheggia instabile da 10 PM (Chroma Verde)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Le Schegge non hanno un Grado di Artefatto e non richiedono sintonizzazione: SnT 0 per tutte. Non si possono sommare più Schegge nello stesso lancio. Estrarre PM richiede Potere −2 VA per ogni gruppo di 3 PM o frazione. Tutte le Schegge instabili sono presentate con Qualità fisica Comune, PS Integrità 10, 1 PI e peso indicativo 0,05 kg per scheggia; questi dati fisici e la loro REP sono parametri iniziali di playtest.",
+      "paragrafo": "Equipaggiamento §10.4; Magia §26.5",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 1000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "scheggia": true,
+        "contenitore": {
+          "energia": "Verde",
+          "capacita_pm": 10
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "RA",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1,
+      "peso": 0.05
+    },
+    {
+      "id": "scheggia-instabile-da-15-pm-chroma-verde",
+      "nome": "Scheggia instabile da 15 PM (Chroma Verde)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Le Schegge non hanno un Grado di Artefatto e non richiedono sintonizzazione: SnT 0 per tutte. Non si possono sommare più Schegge nello stesso lancio. Estrarre PM richiede Potere −2 VA per ogni gruppo di 3 PM o frazione. Tutte le Schegge instabili sono presentate con Qualità fisica Comune, PS Integrità 10, 1 PI e peso indicativo 0,05 kg per scheggia; questi dati fisici e la loro REP sono parametri iniziali di playtest.",
+      "paragrafo": "Equipaggiamento §10.4; Magia §26.5",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 1500,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "scheggia": true,
+        "contenitore": {
+          "energia": "Verde",
+          "capacita_pm": 15
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "RA",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1,
+      "peso": 0.05
+    },
+    {
+      "id": "scheggia-instabile-da-20-pm-chroma-verde",
+      "nome": "Scheggia instabile da 20 PM (Chroma Verde)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Le Schegge non hanno un Grado di Artefatto e non richiedono sintonizzazione: SnT 0 per tutte. Non si possono sommare più Schegge nello stesso lancio. Estrarre PM richiede Potere −2 VA per ogni gruppo di 3 PM o frazione. Tutte le Schegge instabili sono presentate con Qualità fisica Comune, PS Integrità 10, 1 PI e peso indicativo 0,05 kg per scheggia; questi dati fisici e la loro REP sono parametri iniziali di playtest.",
+      "paragrafo": "Equipaggiamento §10.4; Magia §26.5",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 2000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "scheggia": true,
+        "contenitore": {
+          "energia": "Verde",
+          "capacita_pm": 20
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "RA",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1,
+      "peso": 0.05
+    },
+    {
+      "id": "scheggia-instabile-da-25-pm-chroma-verde",
+      "nome": "Scheggia instabile da 25 PM (Chroma Verde)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Le Schegge non hanno un Grado di Artefatto e non richiedono sintonizzazione: SnT 0 per tutte. Non si possono sommare più Schegge nello stesso lancio. Estrarre PM richiede Potere −2 VA per ogni gruppo di 3 PM o frazione. Tutte le Schegge instabili sono presentate con Qualità fisica Comune, PS Integrità 10, 1 PI e peso indicativo 0,05 kg per scheggia; questi dati fisici e la loro REP sono parametri iniziali di playtest.",
+      "paragrafo": "Equipaggiamento §10.4; Magia §26.5",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 2500,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "scheggia": true,
+        "contenitore": {
+          "energia": "Verde",
+          "capacita_pm": 25
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "RA",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1,
+      "peso": 0.05
+    },
+    {
+      "id": "scheggia-instabile-da-30-pm-chroma-verde",
+      "nome": "Scheggia instabile da 30 PM (Chroma Verde)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Le Schegge non hanno un Grado di Artefatto e non richiedono sintonizzazione: SnT 0 per tutte. Non si possono sommare più Schegge nello stesso lancio. Estrarre PM richiede Potere −2 VA per ogni gruppo di 3 PM o frazione. Tutte le Schegge instabili sono presentate con Qualità fisica Comune, PS Integrità 10, 1 PI e peso indicativo 0,05 kg per scheggia; questi dati fisici e la loro REP sono parametri iniziali di playtest.",
+      "paragrafo": "Equipaggiamento §10.4; Magia §26.5",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 3000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "scheggia": true,
+        "contenitore": {
+          "energia": "Verde",
+          "capacita_pm": 30
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "RA",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1,
+      "peso": 0.05
+    },
+    {
+      "id": "scheggia-instabile-da-5-pm-chroma-bianco",
+      "nome": "Scheggia instabile da 5 PM (Chroma Bianco)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Le Schegge non hanno un Grado di Artefatto e non richiedono sintonizzazione: SnT 0 per tutte. Non si possono sommare più Schegge nello stesso lancio. Estrarre PM richiede Potere −2 VA per ogni gruppo di 3 PM o frazione. Tutte le Schegge instabili sono presentate con Qualità fisica Comune, PS Integrità 10, 1 PI e peso indicativo 0,05 kg per scheggia; questi dati fisici e la loro REP sono parametri iniziali di playtest.",
+      "paragrafo": "Equipaggiamento §10.4; Magia §26.5",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 2000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "scheggia": true,
+        "contenitore": {
+          "energia": "Bianco",
+          "capacita_pm": 5
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1,
+      "peso": 0.05
+    },
+    {
+      "id": "scheggia-instabile-da-10-pm-chroma-bianco",
+      "nome": "Scheggia instabile da 10 PM (Chroma Bianco)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Le Schegge non hanno un Grado di Artefatto e non richiedono sintonizzazione: SnT 0 per tutte. Non si possono sommare più Schegge nello stesso lancio. Estrarre PM richiede Potere −2 VA per ogni gruppo di 3 PM o frazione. Tutte le Schegge instabili sono presentate con Qualità fisica Comune, PS Integrità 10, 1 PI e peso indicativo 0,05 kg per scheggia; questi dati fisici e la loro REP sono parametri iniziali di playtest.",
+      "paragrafo": "Equipaggiamento §10.4; Magia §26.5",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 4000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "scheggia": true,
+        "contenitore": {
+          "energia": "Bianco",
+          "capacita_pm": 10
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1,
+      "peso": 0.05
+    },
+    {
+      "id": "scheggia-instabile-da-15-pm-chroma-bianco",
+      "nome": "Scheggia instabile da 15 PM (Chroma Bianco)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Le Schegge non hanno un Grado di Artefatto e non richiedono sintonizzazione: SnT 0 per tutte. Non si possono sommare più Schegge nello stesso lancio. Estrarre PM richiede Potere −2 VA per ogni gruppo di 3 PM o frazione. Tutte le Schegge instabili sono presentate con Qualità fisica Comune, PS Integrità 10, 1 PI e peso indicativo 0,05 kg per scheggia; questi dati fisici e la loro REP sono parametri iniziali di playtest.",
+      "paragrafo": "Equipaggiamento §10.4; Magia §26.5",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 6000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "scheggia": true,
+        "contenitore": {
+          "energia": "Bianco",
+          "capacita_pm": 15
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1,
+      "peso": 0.05
+    },
+    {
+      "id": "scheggia-instabile-da-20-pm-chroma-bianco",
+      "nome": "Scheggia instabile da 20 PM (Chroma Bianco)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Le Schegge non hanno un Grado di Artefatto e non richiedono sintonizzazione: SnT 0 per tutte. Non si possono sommare più Schegge nello stesso lancio. Estrarre PM richiede Potere −2 VA per ogni gruppo di 3 PM o frazione. Tutte le Schegge instabili sono presentate con Qualità fisica Comune, PS Integrità 10, 1 PI e peso indicativo 0,05 kg per scheggia; questi dati fisici e la loro REP sono parametri iniziali di playtest.",
+      "paragrafo": "Equipaggiamento §10.4; Magia §26.5",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 8000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "scheggia": true,
+        "contenitore": {
+          "energia": "Bianco",
+          "capacita_pm": 20
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1,
+      "peso": 0.05
+    },
+    {
+      "id": "scheggia-instabile-da-25-pm-chroma-bianco",
+      "nome": "Scheggia instabile da 25 PM (Chroma Bianco)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Le Schegge non hanno un Grado di Artefatto e non richiedono sintonizzazione: SnT 0 per tutte. Non si possono sommare più Schegge nello stesso lancio. Estrarre PM richiede Potere −2 VA per ogni gruppo di 3 PM o frazione. Tutte le Schegge instabili sono presentate con Qualità fisica Comune, PS Integrità 10, 1 PI e peso indicativo 0,05 kg per scheggia; questi dati fisici e la loro REP sono parametri iniziali di playtest.",
+      "paragrafo": "Equipaggiamento §10.4; Magia §26.5",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 10000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "sintonizzazione": 0,
+        "sintonizzabile": false,
+        "proprieta_attive": true,
+        "scheggia": true,
+        "contenitore": {
+          "energia": "Bianco",
+          "capacita_pm": 25
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 1,
+      "peso": 0.05
+    },
+    {
+      "id": "pietra-della-vigilanza",
+      "nome": "Pietra della Vigilanza",
+      "tipo": "artefatto",
+      "catalogo": "Artefatti di campagna",
+      "famiglia": "Artefatti",
+      "nomi_alternativi": [],
+      "note_manuale": "La Pietra della Vigilanza è un Artefatto Mistico e una Batteria Mistica Verde da 10 PM. Possiede due proprietà attive Universali: Individuare 6 ed Esorcizzare Corruzione 6. Entrambe richiedono la sintonizzazione alla Pietra, ma non la conoscenza degli Incantesimi né una Prova di Potere per attivarle. Riserva e alimentazione. I 10 PM sono condivisi fra le due proprietà e gli altri impieghi della Batteria. Può avere effetto una sola volta ogni 24 ore sul medesimo destinatario, considerando insieme tutti gli utilizzatori e le fonti. Prezzo e profilo fisico sono parametri di catalogo da verificare in playtest.",
+      "paragrafo": "Equipaggiamento §10.5; Magia §26.6.1",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 4000,
+      "artefatto": {
+        "tipologia": "Accessori",
+        "potenza": "Rara",
+        "sintonizzazione": 3,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Verde",
+          "capacita_pm": 10,
+          "integrato": true,
+          "riserva": "batteria",
+          "alimentazione": "universale"
+        },
+        "infusi": [
+          {
+            "incantesimo": "Individuare",
+            "livello": 6
+          },
+          {
+            "incantesimo": "Esorcizzare Corruzione",
+            "livello": 6
+          }
+        ]
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "pi": 4,
+      "peso": 0.2
+    },
+    {
+      "id": "guanti-da-combattimento-mistico",
+      "nome": "Guanti da Combattimento Mistico",
+      "tipo": "artefatto",
+      "catalogo": "Artefatti di campagna",
+      "famiglia": "Artefatti",
+      "nomi_alternativi": [],
+      "note_manuale": "I Guanti da Combattimento Mistico sono una coppia di guanti e costituiscono un unico Artefatto Mistico da indossare sulle mani. Conferiscono +1 VA alle Prove per colpire con i pugni e alle Prove per colpire in corpo a corpo richieste dagli Incantesimi. Il beneficio passivo funziona anche senza sintonizzazione. Riserva. Cariche Verdi da 10 PM, utilizzabili soltanto per alimentare i Guanti. Spendendo 3 PM dalla riserva interna e 1 AzP, per 5 RND i danni dei pugni diventano Magici e ottengono +1 al danno. L’effetto non potenzia il danno degli Incantesimi e non si cumula con ulteriori attivazioni della stessa proprietà; una nuova attivazione rinnova la durata. Prezzo e profilo fisico sono parametri di catalogo da verificare in playtest.",
+      "paragrafo": "Equipaggiamento §10.6; Armamenti §7.24; Magia §26.6.2",
+      "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
+      "costo": 3000,
+      "indossabile": true,
+      "artefatto": {
+        "tipologia": "Armi",
+        "potenza": "Non Comune",
+        "sintonizzazione": 2,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Verde",
+          "capacita_pm": 10,
+          "integrato": true,
+          "riserva": "cariche",
+          "alimentazione": "esclusiva"
+        }
+      },
+      "effetti": [
+        {
+          "tipo": "attacco",
+          "attacchi": "senz_armi",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Conferiscono +1 VA alle Prove per colpire con i pugni e alle Prove per colpire in corpo a corpo richieste dagli Incantesimi.",
+          "fonte": "Armamenti §7.24"
+        },
+        {
+          "tipo": "attacco",
+          "attacchi": "contatto_incantesimi",
+          "valore": 1,
+          "ambito": "generale",
+          "condizione": "Conferiscono +1 VA alle Prove per colpire con i pugni e alle Prove per colpire in corpo a corpo richieste dagli Incantesimi.",
+          "fonte": "Armamenti §7.24"
+        }
+      ],
+      "attivazione_artefatto": {
+        "pm": 3,
+        "azione": "1 AzP",
+        "durata": "5 RND",
+        "attacchi": "senz_armi",
+        "danno": 1,
+        "natura": "Magico",
+        "condizione": "Spendendo 3 PM dalla riserva interna e 1 AzP, per 5 RND i danni dei pugni diventano Magici e ottengono +1 al danno.",
+        "fonte": "Armamenti §7.24"
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "pi": 4,
+      "peso": 0.5
     }
-  ]
+  ],
+  "fuori_scala": {
+    "_nota": "Equipaggiamento §10.3: configurazioni oltre il Grado VI (VII*), «Ricetta speciale» e disponibilità eccezionale: non sono oggetti acquistabili né sintonizzabili con le fasce di potenza del §7.10; tabella di consultazione.",
+    "profili": [
+      {
+        "profilo": "Batteria Matrice",
+        "energia": "Rosso",
+        "capacita_pm": 30,
+        "grado": "VII*",
+        "snt": 7,
+        "prezzo_cr": 9000,
+        "creazione": "Ricetta speciale",
+        "reperibilita": "Eccezionale"
+      },
+      {
+        "profilo": "Batteria Matrice",
+        "energia": "Blu",
+        "capacita_pm": 30,
+        "grado": "VII*",
+        "snt": 7,
+        "prezzo_cr": 9000,
+        "creazione": "Ricetta speciale",
+        "reperibilita": "Eccezionale"
+      },
+      {
+        "profilo": "Batteria Matrice",
+        "energia": "Verde",
+        "capacita_pm": 30,
+        "grado": "VII*",
+        "snt": 7,
+        "prezzo_cr": 9000,
+        "creazione": "Ricetta speciale",
+        "reperibilita": "Eccezionale"
+      },
+      {
+        "profilo": "Batteria Matrice",
+        "energia": "Bianco",
+        "capacita_pm": 25,
+        "grado": "VII*",
+        "snt": 7,
+        "prezzo_cr": 37500,
+        "creazione": "Ricetta speciale",
+        "reperibilita": "Eccezionale"
+      }
+    ]
+  }
 }

@@ -590,3 +590,9 @@ manuali; la 69 chiude in parte una domanda.
     `regole.json` → `prova` (`tiro_sempre`, `magistrale_migliorato`; TODO tolto), `src/prova.js`
     (`esitoProva` con `tipo`, `limiteMagistrale`), promemoria di «Attacca!» e «Lancia!» (`src/attacco.js` →
     `promemoriaMagistraleNaturale`).
+72. **Batterie oltre i 5 PM: peso, Qualità, PS e PI** (A.75; E&L del 02/10/2026, decisione 16; Equipaggiamento
+    0.5 §10.1). Tutte le Batterie del campionario usano il supporto base: 0,2 kg, Qualità Comune, PS Integrità 10,
+    3 PI, anche oltre i 5 PM e anche per le Batterie Matrice; non vale per Pietra della Vigilanza e Guanti. →
+    `artefatti.json` (19 TODO tolti; `tools/lotti/lotto_artefatti_cap10.mjs`, con il catalogo del cap. 10:
+    Batterie Matrice, Schegge instabili, Pietra, Guanti). REP «Epica» nuova sigla (`index.json`, EP), con la
+    domanda A.83 sulla Prova di ricerca.

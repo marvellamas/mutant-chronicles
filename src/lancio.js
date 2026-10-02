@@ -138,16 +138,35 @@ export function statoPulsanteLancio(incantesimo, scheda, dati = null) {
  * alimentano soltanto il proprio Artefatto (le riserve integrate delle armi del §7.5.1: risposta A.18).
  * Un solo contenitore per lancio, eventualmente con PM personali (regole.json → chroma.riserve).
  */
+/**
+ * Promemoria della Prova di estrazione da una Scheggia instabile (Magia §26.5.1; regole.json → chroma.schegge):
+ * penalità per i PM estratti dalla scheggia, poi la Prova di lancio distinta.
+ */
+export function penalitaEstrazione(pm, dati) {
+  const S = dati.regole.chroma?.schegge;
+  if (!S || pm <= 0) return 0;
+  const r = S.estrazione.find((x) => pm >= x.pm_da && pm <= x.pm_a);
+  if (r) return r.va;
+  const ultima = S.estrazione.at(-1);
+  return ultima.va + Math.ceil((pm - ultima.pm_a) / S.estrazione_oltre.ogni_pm) * S.estrazione_oltre.va;
+}
+
+export function testoEstrazione(pm, dati) {
+  const S = dati.regole.chroma.schegge;
+  return `Scheggia instabile: prima una Prova di Potere obbligatoria per estrarre ${pm} PM (${penalitaEstrazione(pm, dati)} VA); ${S.frasi[0]} ${S.frasi[1]} (Magia §26.5.1)`;
+}
+
 export function contenitoriLancio(personaggio, incantesimo) {
   const m = incantesimo.meccanica ?? {};
   return (personaggio.scheda?.equipaggiamento?.contenitori ?? []).filter((c) => c.fontePg ?? !c.integrato).map((c) => {
     const pm = personaggio.sessione?.chroma?.[c.uid]?.pmAttuali ?? c.capacita ?? 0;
     const tipoPm = PM_DI_ENERGIA[c.energiaNome];
-    const motivo = !c.trasportato ? 'non trasportato' : !c.sintonizzato ? 'non sintonizzato'
+    // Magia §26.5: una Scheggia instabile non si sintonizza (SnT 0)
+    const motivo = !c.trasportato ? 'non trasportato' : !c.sintonizzato && !c.scheggia ? 'non sintonizzato'
       : c.regoleRimandate || !c.macrofamiglie?.includes(incantesimo.macrofamiglia) || (m.pm_utilizzabili && !m.pm_utilizzabili.includes(tipoPm))
         ? `energia ${c.energiaNome ?? c.energia} non compatibile con un incantesimo ${incantesimo.macrofamiglia} (PM ${(m.pm_utilizzabili ?? []).join(' o ')})`
         : pm <= 0 ? 'vuoto' : null;
-    return { uid: c.uid, nome: c.nome, energia: c.energia, energiaNome: c.energiaNome, pm, capacita: c.capacita, motivo };
+    return { uid: c.uid, nome: c.nome, energia: c.energia, energiaNome: c.energiaNome, pm, capacita: c.capacita, motivo, ...(c.scheggia ? { scheggia: true } : {}) };
   });
 }
 
@@ -270,6 +289,8 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
     if (c && !c.motivo && quotaContenitore > c.pm) blocca(`${c.nome}: ${c.pm} PM, ne servono ${quotaContenitore}.`);
   }
   const quotaPersonali = pm - quotaContenitore;
+  // Magia §26.5.1: da una Scheggia instabile due Prove distinte e obbligatorie, estrazione e poi lancio
+  if (c?.scheggia && quotaContenitore > 0) promemoria.push(testoEstrazione(quotaContenitore, dati));
   if (quotaPersonali > personali) blocca(`PM personali insufficienti: ${personali}, ne servono ${quotaPersonali}.`);
   if (!impossibile && personali - quotaPersonali === 0) promemoria.push(L.svenimento.frasi[0] + ' ' + L.svenimento.frasi[1]);
 
@@ -277,7 +298,9 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
   const abil = (n) => (scheda?.abilita ?? []).find((a) => a.nome === n);
   const tiro = m.richiede_colpire ? { abilita: L.colpire.abilita, va: (abil(L.colpire.abilita)?.effettivo ?? abil(L.colpire.abilita)?.totale ?? 0) + (mg.tiroArmiDaLancio ?? L.tiro_armi_da_lancio), bonus: mg.tiroArmiDaLancio ?? L.tiro_armi_da_lancio } : null;
   const gittata = String(v?.riga?.Gittata ?? v?.riga?.['Gittata Q'] ?? '');
-  const contatto = /Contatto/.test(gittata) ? { abilita: L.contatto.abilita, va: (abil(L.contatto.abilita)?.effettivo ?? abil(L.contatto.abilita)?.totale ?? 0) + L.contatto.va, nota: L.contatto.frasi[1] } : null;
+  // Guanti da Combattimento Mistico (Armamenti §7.24): +1 alle Prove per colpire in corpo a corpo richieste dagli Incantesimi
+  const bonusContatto = (scheda?.equipaggiamento?.bonusAttacco ?? []).filter((b) => b.attacchi === 'contatto_incantesimi');
+  const contatto = /Contatto/.test(gittata) ? { abilita: L.contatto.abilita, va: (abil(L.contatto.abilita)?.effettivo ?? abil(L.contatto.abilita)?.totale ?? 0) + L.contatto.va + bonusContatto.reduce((s, b) => s + b.valore, 0), nota: [L.contatto.frasi[1], ...bonusContatto.map((b) => `${b.nome}: +${b.valore} (Armamenti §7.24).`)].join(' ') } : null;
   const inarrestabili = con('salvezza_bersaglio')[0];
   const salvezza = m.salvezza?.tipi?.length ? { tipi: m.salvezza.tipi, testo: [m.salvezza.testo, m.salvezza.dettaglio].filter(Boolean).join(' '), mod_ps: modPsVersione(v?.riga), talento: inarrestabili ? { nome: inarrestabili.nome, valore: inarrestabili.e.salvezza_bersaglio } : null }
     : m.salvezza ? { tipi: [], testo: m.salvezza.testo, mod_ps: modPsVersione(v?.riga), talento: null } : null;

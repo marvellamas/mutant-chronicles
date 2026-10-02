@@ -68,6 +68,8 @@ export function frasiEffetti() {
   // Magia §26.2: riserve Batteria/Cariche e alimentazione Esclusiva/Universale (frasi e testi delle tabelle)
   const RIS = leggi('data/regole.json').chroma?.riserve ?? {};
   visita(RIS, 'regole:chroma.riserve');
+  // Magia §26.3–26.5: Batterie Matrice, Cristalli Matrice, Schegge instabili
+  for (const k of ['matrice', 'cristalli_matrice', 'schegge']) visita(leggi('data/regole.json').chroma?.[k] ?? {}, `regole:chroma.${k}`);
   for (const g of ['tipi', 'alimentazioni']) for (const [k, x] of Object.entries(RIS[g] ?? {})) if (x.testo) out.push({ dove: `regole:chroma.riserve.${g}.${k}`, frase: x.testo });
   visita(leggi('data/regole.json').lancio ?? {}, 'regole:lancio');
   visita(leggi('data/regole.json').rituali ?? {}, 'regole:rituali');

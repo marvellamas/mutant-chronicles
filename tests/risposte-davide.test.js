@@ -112,7 +112,7 @@ test('A.14: batterie da 5 PM con i valori approvati, cariche all’acquisto; sca
     assert.deepEqual([b.reperibilita, b.costo, b.qualita, b.ps_int, b.pi, b.peso, b.artefatto.contenitore.capacita_pm], [rep, costo, 'Comune', 10, 3, 0.2, 5], c);
     assert.deepEqual([b.artefatto.potenza, b.artefatto.sintonizzazione], [pot, sint], c); // invariati (§7.10)
   }
-  assert.deepEqual(Object.values(dati.equipaggiamento.indice.reperibilita).map((r) => r.nome), ['Comune', 'Non comune', 'Rara', 'Molto rara', 'Leggendaria']);
+  assert.deepEqual(Object.values(dati.equipaggiamento.indice.reperibilita).map((r) => r.nome), ['Comune', 'Non comune', 'Rara', 'Molto rara', 'Epica', 'Leggendaria']); // Magia §26.4: Epica per le Batterie Matrice (A.83)
   assert.match(dati.equipaggiamento.indice._nota_reperibilita, /non un listino/);
   // cariche all'acquisto (A.19): il contenitore nuovo è pieno
   const creazione = { ...MISHIMA_AGENTE, equipaggiamento: [voce('b', 'artefatti:batteria-da-5-pm-chroma-verde', 'trasportato')] };

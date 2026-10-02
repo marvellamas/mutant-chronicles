@@ -1422,7 +1422,15 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
   }
   for (const [F, k, r] of rimandiArtefatti) if (!rif.has(r)) err(F, k, `"${r}" non è un oggetto del catalogo (formato "file:id")`);
   for (const [F, k, a] of artefattiDaControllare) {
+    // Magia §26.5: Scheggia instabile, senza Grado né potenza, SnT 0, non sintonizzabile, con un contenitore
+    if (isOggetto(a) && a.scheggia === true) {
+      if (a.sintonizzazione !== 0 || a.sintonizzabile !== false || a.potenza !== undefined) err(F, k, 'una Scheggia instabile ha SnT 0, non è sintonizzabile e non ha potenza (Magia §26.5)');
+      if (!isOggetto(a.contenitore) || !coloriChroma.includes(a.contenitore.energia) || !isIntero(a.contenitore.capacita_pm) || a.contenitore.integrato) err(F, `${k}.contenitore`, 'serve { energia, capacita_pm }, non integrato');
+      continue;
+    }
     if (!isOggetto(a) || !isTesto(a.tipologia) || !isTesto(a.potenza) || !isIntero(a.sintonizzazione)) { err(F, k, 'serve { tipologia, potenza, sintonizzazione, sintonizzabile, contenitore? }'); continue; }
+    // Magia §24.2: proprietà infuse di un Artefatto del catalogo (Pietra della Vigilanza): incantesimo e livello
+    if (a.infusi !== undefined && !(Array.isArray(a.infusi) && a.infusi.every((x) => isOggetto(x) && isTesto(x.incantesimo) && isIntero(x.livello)))) err(F, `${k}.infusi`, 'serve [{ incantesimo, livello }]');
     // §7.10: con almeno una proprietà attiva SnT della potenza e sintonizzazione; con sole passive SnT 0, senza
     if (typeof a.proprieta_attive !== 'boolean') err(F, `${k}.proprieta_attive`, 'true o false: con sole proprietà passive la SnT è 0 (§7.10)');
     if (a.proprieta_attive === false) {
@@ -1446,7 +1454,9 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
         if (c.riserva !== undefined && !['batteria', 'cariche'].includes(c.riserva)) err(F, `${k}.contenitore.riserva`, '"batteria" o "cariche"');
         if (c.alimentazione !== undefined && !['esclusiva', 'universale'].includes(c.alimentazione)) err(F, `${k}.contenitore.alimentazione`, '"esclusiva" o "universale"');
         if ((c.riserva !== undefined || c.alimentazione !== undefined) && c.integrato !== true) err(F, `${k}.contenitore`, 'riserva e alimentazione si indicano per le riserve integrate in un Artefatto');
-        for (const x of Object.keys(c)) if (!['energia', 'capacita_pm', 'integrato', 'riserva', 'alimentazione'].includes(x)) err(F, `${k}.contenitore.${x}`, 'campo sconosciuto');
+        // Magia §26.4: Batteria Matrice (Matrice d'origine sulla voce, ricarica automatica)
+        if (c.matrice !== undefined && c.matrice !== true) err(F, `${k}.contenitore.matrice`, 'solo true');
+        for (const x of Object.keys(c)) if (!['energia', 'capacita_pm', 'integrato', 'riserva', 'alimentazione', 'matrice'].includes(x)) err(F, `${k}.contenitore.${x}`, 'campo sconosciuto');
       }
     }
   }
@@ -1747,7 +1757,9 @@ const TIPI_EFFETTO = {
   va: null, attacco: 'generale', danno: 'generale', iniziativa: 'generale', salvezza: 'uso_specifico',
   caratteristica: 'uso_specifico', contromisura: 'generale', ar_contro: 'generale', ar: null, movimento: 'generale',
 };
-const ATTACCHI_EFFETTO = ['tutti', 'ravvicinati', 'distanza'];
+// «senz_armi»: solo i pugni («Senz'armi» in «Attacca!»); «contatto_incantesimi»: Prove per colpire in corpo a
+// corpo richieste dagli Incantesimi (Guanti da Combattimento Mistico, Armamenti §7.24)
+const ATTACCHI_EFFETTO = ['tutti', 'ravvicinati', 'distanza', 'senz_armi', 'contatto_incantesimi'];
 // Talenti (docs/censimento-talenti.md): in più il tipo «parata», le Salvezze anche generali o
 // situazionali (Scudo Spirituale), «resistenza», il danno per le armi Artefatto e la scelta del
 // giocatore («{parametro}», «{annotazione}»)

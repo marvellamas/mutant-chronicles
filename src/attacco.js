@@ -619,7 +619,10 @@ export function profiloSenzArmi(scheda, dati, { onda = null } = {}) {
   // dell'elmetto: «comprese armi da lancio e attacchi senz’armi», §7.21.2). Onda Interiore ha Vettore
   // Distanza (§8.9.4): solo i bonus per tutti gli attacchi, non quelli dei soli ravvicinati
   const eq = scheda?.equipaggiamento ?? {};
-  const ravv = (b) => b.attacchi === 'tutti' || (!onda && b.attacchi === 'ravvicinati');
+  // «senz_armi»: solo i pugni (Guanti da Combattimento Mistico, Armamenti §7.24), non Onda Interiore
+  const ravv = (b) => b.attacchi === 'tutti' || (!onda && (b.attacchi === 'ravvicinati' || b.attacchi === 'senz_armi'));
+  // attivazione accesa dei Guanti: pugni Magici e +1 al danno (Armamenti §7.24)
+  const attivazioni = onda ? [] : (eq.attivazioniAccese ?? []).filter((x) => x.attacchi === 'senz_armi');
   const bonusVa = (eq.bonusAttacco ?? []).filter(ravv).map((b) => voce(b.nome, b.valore, 'equipaggiamento'));
   const bonusDannoEq = (eq.bonusDanno ?? []).filter(ravv).reduce((s, b) => s + b.valore, 0);
   // Tecniche in corso con un bonus al danno (Pelle di Rinoceronte: +2 al danno Ravvicinato, §8.9.3)
@@ -633,7 +636,7 @@ export function profiloSenzArmi(scheda, dati, { onda = null } = {}) {
   const sigla = onda && !onda.bonusCaratteristica ? null : dati.regole.danno_caratteristica?.senz_armi ?? null;
   const valoreCar = sigla ? scheda?.caratteristiche?.[sigla]?.valore ?? null : null;
   const bonusCaratteristica = sigla && valoreCar !== null ? { sigla, valore: valoreCar, bonus: bonusDannoCaratteristica(valoreCar, scheda?.livello ?? 1, dati.regole), esclusoDa: null } : null;
-  const extra = bonusDannoEq + (bonusCaratteristica?.bonus ?? 0) + dannoTec.reduce((s, e) => s + e.valore, 0);
+  const extra = bonusDannoEq + (bonusCaratteristica?.bonus ?? 0) + dannoTec.reduce((s, e) => s + e.valore, 0) + attivazioni.reduce((s, x) => s + (x.danno ?? 0), 0);
   const danno = dannoBase && extra ? aggiungiDanno(dannoBase, extra) : dannoBase;
   const scomposizione = a ? [...(a.scomposizione ?? [voce('Valore da regole', a.totale, 'regole')]), ...bonusVa] : [];
   const vaEffettivo = a ? (a.effettivo ?? a.totale) + somma(bonusVa) : null;
@@ -645,6 +648,7 @@ export function profiloSenzArmi(scheda, dati, { onda = null } = {}) {
     ...(bonusCaratteristica ? [rigaBonusCaratteristica(bonusCaratteristica, bonusDannoCaratteristica(valoreCar, Number.MAX_SAFE_INTEGER, dati.regole), scheda?.livello)] : []),
     ...(eq.bonusDanno ?? []).filter(ravv).map((b) => riga(b.nome, b.valore, 'effetto dell’oggetto')),
     ...dannoTec.map((e) => riga(e.talento, e.valore, 'Tecnica Interiore (§8.9)')),
+    ...attivazioni.filter((x) => x.danno).map((x) => riga(`${x.nome} (attivazione)`, x.danno, `${x.durata}, ${x.fonte}`)),
   ] : null;
   if (onda) {
     return {
@@ -664,6 +668,8 @@ export function profiloSenzArmi(scheda, dati, { onda = null } = {}) {
     scomposizione: scomposizione.map((x, i) => (i === 0 && x.fonte === 'regole' ? { ...x, etichetta: `VA ${S.abilita}` } : x)),
     danno: { una_mano: danno, due_mani: null }, dannoBase, dannoOrigine: daDati ? daDati.nome : 'base', dannoDaDati: true, bonusCaratteristica,
     mani: 1, portataQ: S.portata_q, manovre: [],
+    // Guanti attivati: «i danni dei pugni diventano Magici» (Armamenti §7.24)
+    ...(attivazioni.find((x) => x.natura) ? { natura: attivazioni.find((x) => x.natura).natura } : {}),
   };
 }
 

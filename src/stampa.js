@@ -9,7 +9,7 @@ import { valoreTiro } from './tiri.js';
 import { rigaAlLivello } from './descrizioni.js';
 import { CAMPI_ANAGRAFICA } from './character.js';
 import { checklist } from './checklist.js';
-import { aggiungiDanno, NOME_TESTO_PRECEDENTE, catalogo, normalizzaEquipaggiamento, STATO_DEPOSITO, consumabili, rapportoConversione, risolvi, infoArtefattoVoce, regoleSintonizzazione, NOMI_STATI, riserveNec, testoEffettoOggetto } from './equipaggiamento.js';
+import { aggiungiDanno, NOME_TESTO_PRECEDENTE, catalogo, normalizzaEquipaggiamento, STATO_DEPOSITO, consumabili, rapportoConversione, risolvi, infoArtefattoVoce, infusiDi, regoleSintonizzazione, NOMI_STATI, riserveNec, testoEffettoOggetto } from './equipaggiamento.js';
 import { gradiTaumaturgici } from './incantesimi.js';
 import { saldoIniziale, crediti } from './dotazioni.js';
 import { SEZIONI_INVENTARIO, sezioneInventario, COLORI_MACROFAMIGLIE } from './palette.js';
@@ -638,7 +638,7 @@ export function artefattiStampa(s, creazione, dati, { conPoteri = false } = {}) 
       ar: prot ? { testo: testoAr(prot.ar), provenienza: riga(prot.provenienza) } : null,
       nonInUso: !arma && !prot && effettiPossibili,
       // Magia §24.2, §25.4: incantesimo infuso, pagato dalla riserva integrata, senza Prove
-      attivazione: def?.attivazione?.testo ?? testoInfuso(r, dati),
+      attivazione: def?.attivazione?.testo ?? (def?.attivazione_artefatto ? `${def.attivazione_artefatto.pm} PM dalla riserva interna, ${def.attivazione_artefatto.azione}, ${def.attivazione_artefatto.durata}: pugni ${def.attivazione_artefatto.natura} e +${def.attivazione_artefatto.danno} al danno` : testoInfuso(r, dati)),
       riserva: riserva ? { energia: riserva.energia, capacita: riserva.capacita } : null,
     };
   });
@@ -1076,7 +1076,10 @@ export function preparaTab(personaggio, dati, { sessione = null } = {}) {
 /** Testo dell'attivazione di un incantesimo infuso in un Artefatto personalizzato (foglio 6). */
 function testoInfuso(r, dati) {
   const info = r ? infoArtefattoVoce(r, dati) : null;
-  if (!info?.infuso) return null;
-  const a = attivazioneInfusa(info.infuso, info.contenitore ? { energia: info.contenitore.energia, macrofamiglie: dati.regole?.chroma?.colori?.[info.contenitore.energia]?.macrofamiglie ?? [] } : null, { pm: Infinity, sintonizzato: true, deposito: false }, dati);
-  return a ? `${a.incantesimo} ${a.livello}: ${a.pm} PM dalla riserva, ${a.tempo}, nessuna Prova` : null;
+  const infusi = infusiDi(info);
+  if (!infusi.length) return null;
+  const riserva = info.contenitore ? { energia: info.contenitore.energia, macrofamiglie: dati.regole?.chroma?.colori?.[info.contenitore.energia]?.macrofamiglie ?? [], alimentazione: info.contenitore.alimentazione } : null;
+  const testi = infusi.map((i) => attivazioneInfusa(i, riserva, { pm: Infinity, personali: Infinity, sintonizzato: true, deposito: false }, dati))
+    .filter(Boolean).map((a) => `${a.incantesimo} ${a.livello}: ${a.pm} PM ${a.alimentazione === 'universale' ? 'dalla riserva o personali' : 'dalla riserva'}, ${a.tempo}, nessuna Prova`);
+  return testi.length ? testi.join(' · ') : null;
 }

@@ -350,6 +350,8 @@ function contenitoriRisolti(oggetti, dati) {
       stato: r.voce.stato,
       // un contenitore a sé è trasportato nello stato omonimo; uno integrato segue l'oggetto
       trasportato: c.integrato ? ['impugnata', 'imbracciato', 'pronta', 'indossata', 'in_uso', 'trasportato'].includes(r.voce.stato) : r.voce.stato === 'trasportato',
+      // Magia §26.5: Scheggia instabile, SnT 0, senza sintonizzazione; §26.4: Batteria Matrice, con la Matrice d'origine sulla voce
+      scheggia: !!a.scheggia, matrice: c.matrice ? { origine: typeof r.voce.matrice === 'string' && r.voce.matrice.trim() ? r.voce.matrice.trim() : null } : null,
       personalizzato: r.personalizzato,
     });
   }
@@ -523,6 +525,7 @@ export function normalizzaEquipaggiamento(valore) {
     if (v.sintonizzato === true) out.sintonizzato = true; // §7.10: scelta del giocatore
     if (Number.isInteger(v.pi_direttore) && v.pi_direttore >= 1) out.pi_direttore = v.pi_direttore; // A.47: PI fissati dal Direttore
     if (Number.isInteger(v.pm_iniziali) && v.pm_iniziali >= 0) out.pm_iniziali = v.pm_iniziali; // E&L 2 (A.19): contenitore trovato
+    if (testo(v.matrice)) out.matrice = v.matrice.trim().slice(0, 80); // Magia §26.4: Matrice d'origine di una Batteria Matrice
     if (v.dotazione_iniziale === true) out.dotazione_iniziale = true; // §2.16: voce della dotazione iniziale (src/dotazioni.js)
     if (!out.rif && testo(v.dotazione_id)) out.dotazione_id = v.dotazione_id; // oggetto di dotazione: effetti dai dati
     return out;
@@ -563,7 +566,9 @@ export function risolvi(voce, cat) {
   const nome = (schedaDotazione ? voce.personalizzato?.nome : null) ?? def?.nome ?? voce.personalizzato?.nome ?? (fuoriCatalogo ? voce.rif : 'Oggetto');
   const effetti = fuoriCatalogo ? [] : def?.effetti ?? cat.dotazione?.[voce.dotazione_id]?.effetti ?? voce.personalizzato?.effetti ?? [];
   // un rinforzo si indossa da solo solo se la sua voce lo consente (rinforzi.json → indossabile_da_solo)
-  const stati = statiPer(tipo, effetti).filter((s) => !(tipo === 'rinforzo' && s === 'indossata' && !def?.indossabile_da_solo));
+  const stati0 = statiPer(tipo, effetti).filter((s) => !(tipo === 'rinforzo' && s === 'indossata' && !def?.indossabile_da_solo));
+  // un Artefatto da indossare (Guanti da Combattimento Mistico, Armamenti §7.24): anche «Indossata»
+  const stati = tipo === 'artefatto' && def?.indossabile ? ['indossata', ...stati0] : stati0;
   const attivo = !fuoriCatalogo && ATTIVI.has(voce.stato) && stati.includes(voce.stato);
   return { voce, uid: voce.uid, def, tipo, nome, fuoriCatalogo, attivo, personalizzato: !voce.rif && !def, effetti, stati, deposito: inDeposito(voce) };
 }
@@ -594,8 +599,12 @@ const maniDi = (def) => (def?.mani === 2 ? 2 : def?.mani === 0 ? 0 : 1);
  * §7.3.3). Gli accessori personalizzati si montano sulle armi.
  */
 /** Un effetto «attacco» o «danno» vale per il tipo d'arma: tutti, ravvicinati, a distanza. */
+/** Incantesimi infusi di un Artefatto: uno (personalizzato, «infuso») o più (catalogo, «infusi»: Pietra della Vigilanza). */
+export const infusiDi = (info) => info?.infusi ?? (info?.infuso ? [info.infuso] : []);
+
 export function valePer(b, tipoArma) {
-  return b.attacchi === 'tutti' || (b.attacchi === 'ravvicinati' ? tipoArma === 'arma_ravvicinata' : tipoArma === 'arma_distanza');
+  // «senz_armi» e «contatto_incantesimi» (Guanti, Armamenti §7.24) non valgono per le armi impugnate
+  return b.attacchi === 'tutti' || (b.attacchi === 'ravvicinati' && tipoArma === 'arma_ravvicinata') || (b.attacchi === 'distanza' && tipoArma === 'arma_distanza');
 }
 
 export function puoMontare(acc, su) {
@@ -1174,6 +1183,10 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     effettiOggetti,
     bonusAttacco,
     bonusDanno: dannoEquip,
+    // attivazioni di Artefatti con durata (Guanti da Combattimento Mistico, Armamenti §7.24): l'effetto vale con
+    // la condizione «attivazione:<uid>» accesa al tavolo (src/condizioni.js), l'oggetto in uso e non nel deposito
+    attivazioniArtefatti: oggetti.filter((o) => o.def?.attivazione_artefatto && !o.deposito)
+      .map((o) => ({ uid: o.uid, nome: o.nome, chiave: `attivazione:${o.uid}`, attivo: o.attivo, sintonizzato: o.voce.sintonizzato === true, ...o.def.attivazione_artefatto })),
     iniziativa: iniziativaEquip,
     movimentoEquip,
     contenitori: contenitoriRisolti(oggetti, dati),
