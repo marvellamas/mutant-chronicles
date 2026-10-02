@@ -566,3 +566,18 @@ manuali; la 69 chiude in parte una domanda.
     Mistici e delle batterie autonome, Rituale di Rigenerazione). Conferma indiretta che i due Talenti sono
     definitivi; A.32 resta aperta per gli altri 16 Talenti. → `talenti_liberi.json` (fonte dei due Talenti;
     il testo aveva già i Gradi I–III e IV–VI).
+
+70. **Rigenerazione: Rituale della sez. 25 e attivazione da Artefatto** (A.39 punto 3, già chiuso con
+    «procedura non ancora definita»: supera la decisione E&L 18; E&L del 01/10 sera, Magia 21.10, sez. 25,
+    §24.6, Armamenti §7.10). Esecuzione diretta: Rituale con un'unica Prova di Rituali dell'Officiante al
+    termine (penalità del Grado: −4 per III, −6, −8, −10), Ritualista Minore per il Grado III, Maggiore per
+    IV–VI; PM della tabella = **costo totale** (9, 10, 12, 15, 18), l'Officiante ne versa almeno il Grado;
+    Canali fino al Grado, con aiuto al VA da +0 a +4 e massimo +5; celebrazione di 3, 3, 4, 6, 8 ore con
+    contatto; reagenti 500 cr per Grado; Magistrale a metà PM e reagenti; Maldestro: niente nuovo Rituale per
+    24 ore; interruzione: reagenti persi, PM no. Da Artefatto (§25.4): chi soddisfa la SnT lo attiva senza
+    Ritualista, senza Prove e senza Canali; l'intero costo dalla riserva integrata Verde o Bianca; l'attivazione
+    continua dura quanto la celebrazione. → `incantesimi.json` (Rigenerazione: `procedura_rituale`),
+    `regole.json` → `rituali` (§24.6), `src/lancio.js` (`calcolaRituale`, `attivazioneInfusa`), «Lancia!»
+    (passi Versione, Rituale, Risultato), tab Artefatti e «Da artefatti», Artefatto personalizzato con
+    «Incantesimo infuso». Scelte provvisorie nella nuova domanda **A.74** (VA del Canale = Rituali;
+    Magistrale: i Canali tengono la quota; PM solo personali; conta Ritualista, non il livello massimo).

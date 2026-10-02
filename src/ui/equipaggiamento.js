@@ -292,6 +292,13 @@ function pannelloAggiungi(ctx) {
         // Armamenti §7.10: con sole proprietà passive la SnT è 0, qualunque sia la potenza
         p.tipo === 'artefatto' ? h('label', { class: 'campo campo-casella', title: 'Armamenti §7.10: «Un Artefatto con sole proprietà passive ha SnT 0, qualunque sia la sua potenza.»' },
           h('input', { type: 'checkbox', checked: !!p.soloPassive, onchange: (e) => { p.soloPassive = e.target.checked; } }), h('span', {}, ' Sole proprietà passive (SnT 0)')) : null,
+        // Magia §24.2, §25.4: incantesimo infuso (proprietà attiva), pagato dalla riserva integrata, senza Prove
+        p.tipo === 'artefatto' ? h('label', { class: 'campo', title: 'Magia §24.2: una proprietà ad attivazione riproduce una versione completa della scheda; dopo la Sintonizzazione si attiva senza Potere né Componenti e paga dalla riserva dell’Artefatto.' },
+          h('span', {}, 'Incantesimo infuso (facoltativo)'),
+          h('select', { onchange: (e) => { p.infuso = e.target.value; } }, h('option', { value: '' }, 'nessuno'),
+            [...(dati.incantesimi?.incantesimi ?? [])].sort((a, b) => a.nome.localeCompare(b.nome, 'it')).map((i) => h('option', { value: i.nome, selected: p.infuso === i.nome }, i.nome)))) : null,
+        p.tipo === 'artefatto' ? h('label', { class: 'campo' }, h('span', {}, 'Livello della versione infusa'),
+          h('input', { type: 'number', min: 1, max: 18, step: 1, value: p.livelloInfuso ?? '', oninput: (e) => { p.livelloInfuso = e.target.value; } })) : null,
         p.tipo === 'artefatto' ? h('label', { class: 'campo' }, h('span', {}, 'Chroma (contenitore)'),
           h('select', { onchange: (e) => { p.energia = e.target.value; } }, h('option', { value: '' }, 'nessuno'),
             colori.map((x) => h('option', { value: x, selected: p.energia === x }, x)))) : null,
@@ -318,13 +325,21 @@ function pannelloAggiungi(ctx) {
             personalizzato.potenza = p.potenza;
             if (p.soloPassive && p.energia) { alert('Un Artefatto con sole proprietà passive non ha una riserva di Chroma: la riserva alimenta proprietà attive (Magia §24.2).'); return; }
             if (p.soloPassive) personalizzato.solo_passive = true;
+            if (p.infuso) {
+              const livello = Number(p.livelloInfuso);
+              const inc = dati.incantesimi.incantesimi.find((i) => i.nome === p.infuso);
+              const livelli = (inc?.versioni ?? []).map((r) => Number(String(r.Livello ?? r['Livello e PM'] ?? '').replace(/[^\d]/g, '')));
+              if (p.soloPassive) { alert('Un incantesimo infuso ad attivazione è una proprietà attiva: togli «Sole proprietà passive».'); return; }
+              if (!livelli.includes(livello)) { alert(`Livello della versione infusa: uno fra ${livelli.join(', ')} (scheda di ${p.infuso}).`); return; }
+              personalizzato.infuso = { incantesimo: p.infuso, livello };
+            }
             if (p.energia) {
               const capacita = Number(p.capacita);
               if (!Number.isInteger(capacita) || capacita < 1) { alert('Indica la capacità del contenitore in PM (intero ≥ 1).'); return; }
               Object.assign(personalizzato, { energia: p.energia, capacita_pm: capacita });
             }
           }
-          Object.assign(p, { nome: '', abilita: '', danno: '', ar: '', potenza: '', energia: '', capacita: '', peso: '', soloPassive: false });
+          Object.assign(p, { nome: '', abilita: '', danno: '', ar: '', potenza: '', energia: '', capacita: '', peso: '', soloPassive: false, infuso: '', livelloInfuso: '' });
           aggiungiVoce({ uid: nuovoUid(), rif: null, personalizzato, stato: statoIniziale(personalizzato.tipo, ctx.voci, dati), quantita: 1, note: '' });
         },
       }, 'Aggiungi oggetto personalizzato')));

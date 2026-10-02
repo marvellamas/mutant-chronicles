@@ -117,6 +117,15 @@ Due punti di contorno, senza effetto oggi:
   - Artefatto personalizzato: casella «Sole proprietà passive (SnT 0)»; non si sintonizza, non occupa capacità, nella tab Artefatti e nel foglio 6 compare «Sole proprietà passive · SnT 0» al posto della casella.
   - A.18: «Lancia!» offriva la riserva integrata (Bordone Templare, Spade Vindicator e Deliverer, Lancia Castigator, Lama Demontooth, Scudo delle Guardie Sacre) come fonte di PM per gli incantesimi della sua macrofamiglia. Corretto: `contenitoriLancio` la esclude; tab Poteri e SS dicono «alimenta soltanto le attivazioni dell'oggetto».
 
+- ✔ **Lotto 3** (02/10): Rigenerazione (decisione 70, A.39 punto 3).
+  - `incantesimi.json`: «Lancio diretto» e «PM» della scheda 21.10 nuovi; `meccanica.procedura_rituale` con la tabella del §25.1 (livello, Grado, penalità, ore, PM totali, reagenti, rigenerazione successiva) e le frasi del §25.4; Concentrazione «no» (§25.3) e niente Anticipazione ordinaria. Chiude l'ultima frase mancante di `verifica_frasi`.
+  - `regole.json` → `rituali`: accesso per Grado (Ritualista Minore I–III, Maggiore IV–VI), Canali e aiuto al VA (§24.6), minimo dell'Officiante, Magistrale; frasi verificate.
+  - «Lancia!»: Rigenerazione ha i passi Versione, Rituale (Canali con VA e PM, circostanza), Risultato (Prova di Rituali con la provenienza, Grado, ore, reagenti, rigenerazione successiva, Magistrale) e due pulsanti: «Rituale concluso» (successo o fallimento: PM consumati) e «Con Successo Magistrale». Le versioni dipendono da Ritualista, non dal livello massimo degli Incantesimi.
+  - Attivazione da Artefatto: nessuna voce del catalogo ha Rigenerazione; l'Artefatto personalizzato ha «Incantesimo infuso» e livello; la sua riserva è integrata (A.18). Nella tab Artefatti «Attiva (−9 PM dalla riserva)», senza Prova; in Poteri «Da artefatti» la stessa riga in sola lettura; nel foglio 6 della SS il testo dell'attivazione.
+  - Una correzione trovata nella prova: la riserva integrata di un Artefatto «Trasportato» risultava «non trasportato».
+  - Nuova domanda A.74 (quattro punti) nel pacchetto per il Doc.
+  - Collaudo: cambia solo il testo di Rigenerazione nel foglio 5 di Sorella Ilaria Venn (tempo, «Lancio diretto», PM). Nessun valore numerico.
+
 ### SnT del catalogo, voce per voce (Armamenti §7.10 e §7.5.1 del 01/10 sera)
 
 | Voce | Proprietà | SnT prima → dopo |

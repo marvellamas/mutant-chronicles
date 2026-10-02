@@ -272,10 +272,16 @@ test('E&L 17: Colpo Elementale colpisce automaticamente; PS solo per gli effetti
   assert.deepEqual(r.danno.voci.map((x) => [x.colonna, x.testo]), [['Danno per colpo', '1d6+1']]);
 });
 
-test('E&L 18: Rigenerazione solo Rituale: «procedura rituale non ancora definita», nessun calcolo (A.39.3)', () => {
-  const r = calcolaLancio(mago({ max: 18 }), incantesimo('Rigenerazione'), {}, dati);
-  assert.equal(r.rituale_non_definito, true);
-  assert.match(r.impossibile.motivo, /Procedura rituale non ancora definita/);
+// la risposta 18 («procedura non ancora definita») è superata dall'E&L del 01/10 sera e dalla Magia sez. 25:
+// tests/rigenerazione.test.js
+test('E&L 18, superata (A.39.3): Rigenerazione è un Rituale della sez. 25, con Ritualista', () => {
+  const senza = calcolaLancio(mago({ max: 18 }), incantesimo('Rigenerazione'), {}, dati);
+  assert.equal(senza.rituale_non_definito, false);
+  assert.match(senza.impossibile.motivo, /serve Ritualista Minore o Ritualista Maggiore/);
+  const r = calcolaLancio(mago({ max: 18, liberi: ['ritualista-minore'] }), incantesimo('Rigenerazione'), { versione: 9 }, dati);
+  // senza l'Abilità Rituali (VA 0) e con la penalità del Grado III la Prova è impossibile (Giocatore §1.7)
+  assert.deepEqual([r.pm_costo, r.rituale.grado, r.va_potere_finale], [9, 3, -4]);
+  assert.match(r.impossibile.motivo, /VA -4: Prova impossibile/);
 });
 
 test('E&L 2: contenitore acquistato pieno; trovato con i PM impostati nella voce (A.19)', () => {

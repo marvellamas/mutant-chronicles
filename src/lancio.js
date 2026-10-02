@@ -93,12 +93,25 @@ export function dichiarazioneLancio(d = {}) {
     // Talenti di lancio situazionali accesi per questo lancio (chiavi di src/talenti.js): Sovraccarico
     // Controllato, Incantesimi Massimizzati
     talentiLancio: Array.isArray(d.talentiLancio) ? d.talentiLancio.filter((x) => typeof x === 'string') : [],
+    // Rituale (Magia §24.6): i Canali, ciascuno con il VA pertinente e i PM che versa
+    canali: Array.isArray(d.canali) ? d.canali.filter((c) => c && Number.isInteger(c.va) && Number.isInteger(c.pm) && c.pm >= 0).slice(0, 6).map((c) => ({ va: c.va, pm: c.pm })) : [],
   };
 }
 
-/** Versioni della scheda con il motivo se non accessibili (livello oltre il massimo del personaggio). */
-export function versioniLancio(incantesimo, scheda) {
+/**
+ * Versioni della scheda con il motivo se non accessibili: livello oltre il massimo del personaggio; per
+ * un Rituale con procedura definita (Rigenerazione, Magia §25.1) il Grado accessibile con Ritualista.
+ */
+export function versioniLancio(incantesimo, scheda, dati = null) {
   const max = scheda?.incantesimi?.livelloMassimo ?? 0;
+  const P = incantesimo.meccanica?.procedura_rituale;
+  if (P?.stato === 'definita' && dati?.regole?.rituali) {
+    return (incantesimo.versioni ?? []).map((r) => {
+      const livello = livelloVersione(r);
+      const pv = P.versioni.find((x) => x.livello === livello);
+      return { livello, pm: pv?.pm ?? livello, riga: r, motivo: pv ? accessoRituale(pv.grado, scheda, dati).motivo : 'versione assente dalla tabella del Rituale' };
+    });
+  }
   return (incantesimo.versioni ?? []).map((r) => {
     const livello = livelloVersione(r);
     return { livello, pm: pmVersione(r) ?? livello, riga: r, motivo: livello > max ? `oltre il tuo livello massimo (${max})` : null };
@@ -110,9 +123,11 @@ export function versioniLancio(incantesimo, scheda) {
  * accessibile, qualunque siano i livelli della scheda (anche solo 3 e 6) e le sue colonne. Altrimenti
  * il pulsante resta, disabilitato, con il motivo «richiede livello N» (la versione più bassa).
  */
-export function statoPulsanteLancio(incantesimo, scheda) {
-  const v = versioniLancio(incantesimo, scheda);
+export function statoPulsanteLancio(incantesimo, scheda, dati = null) {
+  const v = versioniLancio(incantesimo, scheda, dati);
   if (v.some((x) => !x.motivo)) return { disabilitato: false, motivo: null };
+  // Rituale (Magia §25.1): il motivo è il Talento che manca per il Grado più basso
+  if (incantesimo.meccanica?.procedura_rituale?.stato === 'definita' && dati?.regole?.rituali && v.length) return { disabilitato: true, motivo: `Rituale: ${v[0].motivo}` };
   const minimo = v.map((x) => x.livello).filter(Number.isInteger).sort((a, b) => a - b)[0];
   return { disabilitato: true, motivo: minimo ? `richiede livello ${minimo}` : 'nessuna versione nella scheda' };
 }
@@ -148,6 +163,8 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
   const d = dichiarazioneLancio(dichiarazione);
   const { scheda, sessione } = personaggio;
   const m = incantesimo.meccanica ?? {};
+  // Magia sez. 25: incantesimo eseguito con un Rituale definito (Rigenerazione)
+  if (m.procedura_rituale?.stato === 'definita' && dati.regole.rituali) return calcolaRituale(personaggio, incantesimo, d, dati);
   const T = talentiAttacco(scheda, dati, 'lancio');
   const con = (k) => T.filter((t) => t.e[k] !== undefined);
   const promemoria = [];
@@ -372,4 +389,149 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
     // Stati attivi senza Azione Principale o con sole azioni difensive (regole.json → stati)
     avvisi: avvisiStati(sessione, dati),
   };
+}
+
+// ---------------------------------------------------------------------------
+// Rituali (Magia §24.6 e sez. 25): Rigenerazione si esegue con il Rituale, non con un lancio ordinario.
+
+/** Gradi accessibili come Officiante dai Talenti (regole.json → rituali.accesso: Ritualista Minore e Maggiore). */
+export function accessoRituale(grado, scheda, dati) {
+  const R = dati?.regole?.rituali;
+  const voce = (R?.accesso ?? []).find((a) => a.gradi.includes(grado));
+  if (!voce) return { ok: false, motivo: `Grado ${GRADI_ROMANI[grado] ?? grado}: nessun accesso previsto` };
+  const posseduti = new Set((scheda?.talentiLiberi ?? []).map((t) => t.id));
+  if (voce.talenti.some((t) => posseduti.has(t))) return { ok: true, motivo: null };
+  const nomi = voce.talenti.map((id) => dati.talenti_liberi?.talenti?.find((t) => t.id === id)?.nome ?? id);
+  return { ok: false, motivo: `Grado ${GRADI_ROMANI[grado] ?? grado}: serve ${nomi.join(' o ')} (Magia §24.1, §25.1)` };
+}
+
+/** Aiuto al VA dell'Officiante dato da un Canale (Magia §24.6, tabella «VA pertinente del Canale»). */
+export function aiutoCanale(va, dati) {
+  const fasce = dati.regole.rituali.canali.aiuto_va;
+  return (fasce.find((f) => f.fino_a === null || va <= f.fino_a) ?? fasce.at(-1)).aiuto;
+}
+
+/**
+ * Rituale di un incantesimo con procedura definita (Rigenerazione, Magia sez. 25): un'unica Prova di
+ * Rituali dell'Officiante al termine, con la penalità del Grado e l'aiuto dei Canali (fino a +5);
+ * PM totali della versione ripartiti fra l'Officiante (almeno il Grado) e i Canali; reagenti, ore e
+ * rigenerazione successiva dalla tabella. Stessa forma del risultato di calcolaLancio, più «rituale».
+ * Scelte provvisorie in attesa di Davide (per-davide A.74, TODO nei dati): VA pertinente del Canale =
+ * Rituali; PM solo personali (niente batterie); conta Ritualista, non il livello massimo degli Incantesimi;
+ * con il Magistrale i Canali tengono le quote e l'Officiante paga il resto, almeno metà Grado.
+ */
+function calcolaRituale(personaggio, incantesimo, d, dati) {
+  const R = dati.regole.rituali;
+  const P = incantesimo.meccanica.procedura_rituale;
+  const { scheda, sessione } = personaggio;
+  const promemoria = [];
+  let impossibile = null;
+  const blocca = (motivo) => { impossibile ??= { motivo }; };
+  const versioni = versioniLancio(incantesimo, scheda, dati);
+  const v = versioni.find((x) => x.livello === d.versione) ?? versioni.find((x) => !x.motivo) ?? versioni[0];
+  if (!v) blocca('La scheda non ha versioni.');
+  else if (v.motivo) blocca(`Versione di livello ${v.livello}: ${v.motivo}.`);
+  const pv = P.versioni.find((x) => x.livello === v?.livello) ?? P.versioni[0];
+  const grado = pv.grado;
+
+  // Canali (§24.6): al massimo tanti quanto il Grado; aiuto per VA, fino a +5 complessivo; nessun tiro separato
+  const canali = d.canali.map((c) => ({ ...c, aiuto: aiutoCanale(c.va, dati) }));
+  if (canali.length > grado) blocca(`Al massimo ${grado} Canali per un Rituale di Grado ${GRADI_ROMANI[grado]} (Magia §24.6).`);
+  const aiutoGrezzo = canali.reduce((s, c) => s + c.aiuto, 0);
+  const aiuto = Math.min(aiutoGrezzo, R.canali.aiuto_massimo);
+
+  // Prova di Rituali dell'Officiante (§25.1): VA di Rituali, penalità del Grado, aiuto dei Canali, circostanza
+  const abil = (scheda?.abilita ?? []).find((a) => a.nome === R.abilita);
+  const scomposizione = (abil?.scomposizione?.length ? abil.scomposizione : [voce(`VA ${R.abilita}`, abil?.effettivo ?? abil?.totale ?? 0, 'regole')]).map((x) => ({ paragrafo: null, ...x }));
+  const nBase = scomposizione.length;
+  scomposizione.push(voce(`Rituale di Grado ${GRADI_ROMANI[grado]}`, pv.va, 'livello', P.paragrafo));
+  if (aiuto) scomposizione.push(voce(`Canali (${canali.length})${aiutoGrezzo > aiuto ? `, massimo +${R.canali.aiuto_massimo}` : ''}`, aiuto, 'manovra', 'Magia §24.6'));
+  if (d.circostanza) scomposizione.push(voce('Circostanza (Direttore)', d.circostanza, 'circostanze', dati.regole.lancio.circostanze.paragrafo));
+  const va = somma(scomposizione);
+  if (va <= 0) blocca(`VA ${va}: Prova impossibile nelle condizioni attuali (Giocatore §1.7).`);
+
+  // PM (§25.1, §24.6): il totale della tabella, quote dichiarate; l'Officiante almeno il Grado
+  const pmCanali = canali.reduce((s, c) => s + c.pm, 0);
+  const officiante = pv.pm - pmCanali;
+  if (officiante < grado) blocca(`L’Officiante versa almeno ${grado} PM personali (Magia §24.6): i Canali possono dare al massimo ${pv.pm - grado} PM.`);
+  const personali = sessione?.pmAttuali ?? scheda?.pm ?? 0;
+  if (officiante > personali) blocca(`PM personali insufficienti: ${personali}, ne servono ${officiante}.`);
+  // Successo Magistrale: metà del totale per eccesso; i Canali tengono le quote, l'Officiante il resto (A.74)
+  const totaleMagistrale = Math.ceil(pv.pm / 2);
+  const minimoMagistrale = Math.ceil(grado / 2);
+  const officianteMagistrale = Math.min(Math.max(officiante, 0), Math.max(minimoMagistrale, totaleMagistrale - pmCanali));
+
+  const ritualista = (dati.talenti_liberi?.talenti ?? []).filter((t) => R.accesso.find((a) => a.gradi.includes(grado))?.talenti.includes(t.id)).map((t) => t.nome);
+  promemoria.push(
+    `Contatto con i beneficiari per tutte le ${pv.ore} ore della celebrazione; beneficiari viventi e consenzienti, oppure incoscienti soccorsi; nessuna PS.`,
+    `Reagenti: ${pv.reagenti.toLocaleString('it-IT')} crediti (${P.reagenti_per_grado} per Grado), predisposti all’inizio; si scalano a parte dai Crediti.`,
+    'Successo: inizia la rigenerazione. Successo Magistrale: metà dei PM e dei reagenti. Fallimento: PM e reagenti consumati, nessuna rigenerazione. Fallimento Maldestro: come il fallimento, e i beneficiari non possono ricevere un nuovo Rituale di Rigenerazione per 24 ore.',
+    'Interruzione prima della Prova finale: reagenti consumati, PM non spesi, la rigenerazione non inizia.',
+    `Rigenerazione completa ${pv.rigenerazione} dopo il successo. Un beneficiario può avere una sola Rigenerazione attiva.`,
+    `Officiante: conoscere la procedura e possedere ${ritualista.join(' o ')}.`,
+    'Scelte provvisorie (per-davide A.74): VA dei Canali = Rituali; PM solo personali; conta Ritualista, non il livello massimo degli Incantesimi.',
+  );
+
+  return {
+    livello: pv.livello,
+    pm_costo: pv.pm,
+    costo: [{ etichetta: `Versione di livello ${pv.livello} (totale del Rituale)`, valore: pv.pm }],
+    fonte_pm: { personali: officiante, contenitore: null },
+    prova_richiesta: true,
+    prova_abilita: R.abilita,
+    motivi_prova: ['un’unica Prova dell’Officiante al termine del Rituale (Magia §25.1)'],
+    va_potere_finale: va,
+    provenienza: provenienza([rigaConDettaglio(`VA ${R.abilita}`, somma(scomposizione.slice(0, nBase)), abil?.provenienza), ...righeDaScomposizione(scomposizione.slice(nBase))], va),
+    cumulo: { applicati: [], esclusi: [] },
+    tiro_per_colpire: null,
+    contatto: null,
+    salvezza_bersaglio: { tipi: [], testo: 'Nessuna PS.', mod_ps: null, talento: null },
+    danno: null,
+    cura: null,
+    talenti_lancio: [],
+    rituale_non_definito: false,
+    rituale: {
+      grado, grado_romano: GRADI_ROMANI[grado], ore: pv.ore, reagenti: pv.reagenti, rigenerazione: pv.rigenerazione,
+      canali, canali_massimo: grado, aiuto, aiuto_massimo: R.canali.aiuto_massimo, pm_canali: pmCanali,
+      officiante, officiante_minimo: grado, abilita: R.abilita,
+      magistrale: { totale: totaleMagistrale, officiante: officianteMagistrale, canali: totaleMagistrale - officianteMagistrale },
+    },
+    azioni: { tempo: `${pv.ore} ore di celebrazione continua`, focalizzazione: 0 },
+    concentrazione: null,
+    aspetto: null,
+    anticipazione: null,
+    impossibile,
+    promemoria,
+    avvisi: avvisiStati(sessione, dati),
+  };
+}
+
+/**
+ * Attivazione di un incantesimo infuso in un Artefatto (Magia §24.2; per Rigenerazione §25.4): dopo la
+ * Sintonizzazione è automatica, senza Prove di Potere o Rituali, senza Componenti e senza Canali; l'intero
+ * costo in PM della versione si paga dalla riserva integrata, che alimenta solo l'Artefatto (A.18).
+ * @param infuso { incantesimo, livello } dell'Artefatto
+ * @param riserva contenitore integrato dell'Artefatto ({ energia, energiaNome, macrofamiglie, capacita }) o null
+ * @param stato { pm: PM nella riserva, sintonizzato, deposito }
+ * @returns {{ incantesimo, livello, pm, tempo, prova: false, energie, motivo: string|null, frasi: string[] }|null}
+ */
+export function attivazioneInfusa(infuso, riserva, stato, dati) {
+  const inc = (dati.incantesimi?.incantesimi ?? []).find((i) => i.nome === infuso?.incantesimo);
+  if (!inc) return null;
+  const riga = (inc.versioni ?? []).find((r) => livelloVersione(r) === infuso.livello);
+  const P = inc.meccanica?.procedura_rituale;
+  const pv = P?.stato === 'definita' ? P.versioni.find((x) => x.livello === infuso.livello) : null;
+  const pm = pv?.pm ?? (riga ? pmVersione(riga) ?? infuso.livello : null);
+  // §25.4: la durata della celebrazione diventa il tempo di attivazione continua dell'oggetto
+  const tempo = pv ? `${pv.ore} ore di attivazione continua, con contatto` : inc.meccanica?.azioni?.azioni_principali
+    ? `${inc.meccanica.azioni.azioni_principali} ${inc.meccanica.azioni.azioni_principali === 1 ? 'Azione Principale' : 'Azioni Principali'}` : inc.meccanica?.azioni?.tempo ?? '—';
+  // energia: quella che la scheda ammette (§25.4: Verde o Bianca), altrimenti la macrofamiglia dell'incantesimo
+  const energie = P?.artefatto?.energie ?? null;
+  const compatibile = riserva ? (energie ? energie.includes(riserva.energia) : (riserva.macrofamiglie ?? []).includes(inc.macrofamiglia)) : false;
+  const motivo = !riga ? `la scheda di ${inc.nome} non ha la versione di livello ${infuso.livello}`
+    : !riserva ? 'nessuna riserva integrata: l’intero costo si paga dalla riserva dell’Artefatto (Magia §25.4)'
+      : !compatibile ? `riserva ${riserva.energia} non compatibile${energie ? ` (serve ${energie.join(' o ')}, Magia §25.4)` : ` con un incantesimo ${inc.macrofamiglia}`}`
+        : stato.deposito ? 'nel deposito comune' : !stato.sintonizzato ? 'non sintonizzato'
+          : stato.pm < pm ? `la riserva ha ${stato.pm} PM, ne servono ${pm}` : null;
+  return { incantesimo: inc.nome, livello: infuso.livello, pm, tempo, prova: false, energie, motivo, frasi: P?.artefatto?.frasi ?? [] };
 }

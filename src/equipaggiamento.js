@@ -208,6 +208,12 @@ export function infoArtefattoVoce(r, dati) {
   // Armamenti §7.10 (01/10 sera): «Un Artefatto con sole proprietà passive ha SnT 0, qualunque sia la sua potenza»
   if (p.solo_passive) return { tipologia: 'Accessori', potenza: p.potenza, sintonizzazione: rs.solo_passive?.snt ?? 0, sintonizzabile: false, proprieta_attive: false };
   const costo = rs.potenze[p.potenza];
+  // Magia §24.2: un incantesimo infuso è una proprietà attiva; la riserva, se c'è, è integrata e alimenta solo l'Artefatto (A.18)
+  const infuso = p.infuso && typeof p.infuso.incantesimo === 'string' && Number.isInteger(p.infuso.livello) ? { incantesimo: p.infuso.incantesimo, livello: p.infuso.livello } : null;
+  if (infuso) {
+    const riserva = p.energia && Number.isInteger(p.capacita_pm) ? { energia: p.energia, capacita_pm: p.capacita_pm, integrato: true } : undefined;
+    return { tipologia: 'Accessori', potenza: p.potenza, sintonizzazione: costo, sintonizzabile: true, proprieta_attive: true, infuso, ...(riserva ? { contenitore: riserva } : {}) };
+  }
   const contenitore = p.energia && Number.isInteger(p.capacita_pm) ? { energia: p.energia, capacita_pm: p.capacita_pm } : undefined;
   return { tipologia: contenitore ? 'Batterie e contenitori' : 'Accessori', potenza: p.potenza, sintonizzazione: costo, sintonizzabile: true, proprieta_attive: true, ...(contenitore ? { contenitore } : {}) };
 }
@@ -333,7 +339,7 @@ function contenitoriRisolti(oggetti, dati) {
       pmIniziali: !c.integrato && Number.isInteger(r.voce.pm_iniziali) ? Math.min(r.voce.pm_iniziali, c.capacita_pm) : null,
       stato: r.voce.stato,
       // un contenitore a sé è trasportato nello stato omonimo; uno integrato segue l'oggetto
-      trasportato: c.integrato ? ['impugnata', 'imbracciato', 'pronta', 'indossata', 'in_uso'].includes(r.voce.stato) : r.voce.stato === 'trasportato',
+      trasportato: c.integrato ? ['impugnata', 'imbracciato', 'pronta', 'indossata', 'in_uso', 'trasportato'].includes(r.voce.stato) : r.voce.stato === 'trasportato',
       personalizzato: r.personalizzato,
     });
   }
@@ -490,6 +496,8 @@ export function normalizzaEquipaggiamento(valore) {
         // Artefatto personalizzato (§7.5, §7.10): potenza → costo di sintonizzazione; contenitore di Chroma
         ...(testo(p.potenza) ? { potenza: p.potenza } : {}),
         ...(p.solo_passive === true ? { solo_passive: true } : {}), // §7.10: SnT 0
+        // Magia §24.2, §25.4: incantesimo infuso (proprietà attiva), pagato dalla riserva integrata
+        ...(isOggetto(p.infuso) && testo(p.infuso.incantesimo) && Number.isInteger(p.infuso.livello) ? { infuso: { incantesimo: p.infuso.incantesimo, livello: p.infuso.livello } } : {}),
         ...(testo(p.energia) ? { energia: p.energia } : {}),
         ...(Number.isInteger(p.capacita_pm) && p.capacita_pm >= 1 ? { capacita_pm: p.capacita_pm } : {}),
         // §1.6: peso in kg per unità, per il carico

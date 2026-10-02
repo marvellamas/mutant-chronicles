@@ -11317,7 +11317,7 @@
       "livello_base": 9,
       "pagina": 122,
       "intestazione": "Scheda 21.10 • Macrofamiglia Spirituale • Specializzazione Esorcismo • Rituale: obbligatorio; nessuna versione ordinaria • PM utilizzabili: universali o spirituali.",
-      "lancio": "Lancio: esclusivamente mediante Rituale, con contatto durante la procedura. Beneficiari viventi consenzienti; è consentito il soccorso a chi è incosciente. Nessuna PS. Procedure, Prove e costo di esecuzione verranno integrati successivamente con le regole dei Rituali nel Manuale della Magia. L’esecuzione richiede tali regole.",
+      "lancio": "Lancio diretto: esclusivamente mediante il Rituale della sezione 25, con contatto durante la procedura. Beneficiari viventi consenzienti; è consentito il soccorso a chi è incosciente. Nessuna PS. Un Artefatto sintonizzato può riprodurre l’effetto secondo il §25.4, senza richiedere all’utilizzatore il talento Ritualista o la conoscenza della procedura.",
       "descrizione": "Ripara Menomazioni permanenti e, alle versioni appropriate, rigenera parti mancanti. Il tempo in tabella decorre dal completamento del Rituale, non ne rappresenta il tempo di esecuzione.",
       "versioni": [
         {
@@ -11356,7 +11356,7 @@
           "Tempo dopo il Rituale": "12 ore"
         }
       ],
-      "regole": "PM base: il valore in tabella è la base per il costo rituale. Il costo di esecuzione verrà integrato successivamente con le regole dei Rituali. La versione di livello 10 conserva capacità, beneficiari e Menomazioni del livello 9 e riduce il tempo di rigenerazione.\nProcesso di rigenerazione e limiti\nDopo il Rituale: il processo prosegue per il tempo fissato senza Concentrazione. Il Taumaturgo è libero di agire; non occorre mantenere contatto o gittata. Penalità e impedimenti delle Menomazioni restano fino al completamento, quando le parti curate recuperano interamente la funzione, senza dover passare prima per gli stadi temporanei.\nConteggio: si considerano le Menomazioni registrate nella scheda; per esempio, due gambe menomate contano come due Menomazioni. Le lesioni nuove non sono automaticamente comprese nel processo già avviato. Un beneficiario può avere una sola Rigenerazione attiva; dopo la sua conclusione si può eseguire un nuovo Rituale per altre Menomazioni.\nSensi e cause: ripristina i sensi perduti per lesione anatomica curabile, non quelli impediti da una sostanza o da una magia ancora attiva. Non guarisce Ferite, Sanguinamento, Affaticamento, malattie, avvelenamenti o Corruzione e non elimina automaticamente mutazioni e altre conseguenze speciali. Non recupera normalmente PV o PM.\nAnatomia e vita: non resuscita, non ricrea creature morte e non aggiunge arti o capacità oltre la normale anatomia del beneficiario.\nProtesi e impianti: non vengono rimossi automaticamente. La sostituzione con parti rigenerate richiede una procedura compatibile; il recupero di Umanità non è automatico e segue il Manuale del Giocatore, §5.21. Le regole specifiche per un eventuale recupero di Umanità dopo Rigenerazione verranno integrate successivamente nel Manuale della Magia.\nInterruzione: Negare Potere può interrompere il processo ancora in corso secondo la propria scheda. Una ricostruzione già completata è fisicamente reale e non viene annullata retroattivamente.\nTalenti: Canale Vitale concede 1 PV per beneficiario, una sola volta al completamento della rigenerazione.\nFlusso Sacro non si applica.\nAnticipazione e amplificazioni rituali: le relative regole verranno integrate successivamente nel Manuale della Magia. Non si applica l’Anticipazione ordinaria; il divieto di resurrezione rimane assoluto.",
+      "regole": "PM: il valore in tabella è il costo totale della versione, prima dell’eventuale Successo Magistrale del Rituale. Tempi di celebrazione, reagenti ed esiti sono nella sezione 25. La versione di livello 10 conserva capacità, beneficiari e Menomazioni del livello 9 e riduce il tempo di rigenerazione. L’Artefatto paga tutti i PM con la propria riserva, secondo il §25.4.\nProcesso di rigenerazione e limiti\nDopo il Rituale: il processo prosegue per il tempo fissato senza Concentrazione. Il Taumaturgo è libero di agire; non occorre mantenere contatto o gittata. Penalità e impedimenti delle Menomazioni restano fino al completamento, quando le parti curate recuperano interamente la funzione, senza dover passare prima per gli stadi temporanei.\nConteggio: si considerano le Menomazioni registrate nella scheda; per esempio, due gambe menomate contano come due Menomazioni. Le lesioni nuove non sono automaticamente comprese nel processo già avviato. Un beneficiario può avere una sola Rigenerazione attiva; dopo la sua conclusione si può eseguire un nuovo Rituale per altre Menomazioni.\nSensi e cause: ripristina i sensi perduti per lesione anatomica curabile, non quelli impediti da una sostanza o da una magia ancora attiva. Non guarisce Ferite, Sanguinamento, Affaticamento, malattie, avvelenamenti o Corruzione e non elimina automaticamente mutazioni e altre conseguenze speciali. Non recupera normalmente PV o PM.\nAnatomia e vita: non resuscita, non ricrea creature morte e non aggiunge arti o capacità oltre la normale anatomia del beneficiario.\nProtesi e impianti: non vengono rimossi automaticamente. La sostituzione con parti rigenerate richiede una procedura compatibile; il recupero di Umanità non è automatico e segue il Manuale del Giocatore, §5.21. Le regole specifiche per un eventuale recupero di Umanità dopo Rigenerazione verranno integrate successivamente nel Manuale della Magia.\nInterruzione: Negare Potere può interrompere il processo ancora in corso secondo la propria scheda. Una ricostruzione già completata è fisicamente reale e non viene annullata retroattivamente.\nTalenti: Canale Vitale concede 1 PV per beneficiario, una sola volta al completamento della rigenerazione.\nFlusso Sacro non si applica.\nAnticipazione e amplificazioni rituali: le relative regole verranno integrate successivamente nel Manuale della Magia. Non si applica l’Anticipazione ordinaria; il divieto di resurrezione rimane assoluto.",
       "altre_tabelle": [
         {
           "righe": [
@@ -11381,7 +11381,7 @@
       ],
       "meccanica": {
         "azioni": {
-          "tempo": "esclusivamente mediante Rituale"
+          "tempo": "Rituale di 3–8 ore (sez. 25)"
         },
         "componenti": [],
         "richiede_colpire": false,
@@ -11390,7 +11390,7 @@
           "tipi": [],
           "testo": "Nessuna PS."
         },
-        "concentrazione": null,
+        "concentrazione": "no",
         "rituale": "obbligatorio",
         "pm_utilizzabili": [
           "universali",
@@ -11398,13 +11398,86 @@
         ],
         "anticipazione": null,
         "procedura_rituale": {
-          "stato": "non_definita",
-          "testo": "Procedura rituale non ancora definita: componenti, esecuzione e costo finale arriveranno con le regole generali dei Rituali (E&L 18). I PM della tabella sono la base del costo rituale, non il costo finale; i tempi indicano la rigenerazione dopo il Rituale. Contatto durante il Rituale; bersaglio vivente e consenziente, oppure incosciente e soccorso, senza PS. Anticipazione ordinaria non applicabile."
+          "stato": "definita",
+          "paragrafo": "Magia sez. 25 (Google Doc del 01/10/2026, 21:50 UTC)",
+          "versioni": [
+            {
+              "livello": 9,
+              "grado": 3,
+              "va": -4,
+              "ore": 3,
+              "pm": 9,
+              "reagenti": 1500,
+              "rigenerazione": "5 giorni"
+            },
+            {
+              "livello": 10,
+              "grado": 3,
+              "va": -4,
+              "ore": 3,
+              "pm": 10,
+              "reagenti": 1500,
+              "rigenerazione": "3 giorni"
+            },
+            {
+              "livello": 12,
+              "grado": 4,
+              "va": -6,
+              "ore": 4,
+              "pm": 12,
+              "reagenti": 2000,
+              "rigenerazione": "2 giorni"
+            },
+            {
+              "livello": 15,
+              "grado": 5,
+              "va": -8,
+              "ore": 6,
+              "pm": 15,
+              "reagenti": 2500,
+              "rigenerazione": "1 giorno"
+            },
+            {
+              "livello": 18,
+              "grado": 6,
+              "va": -10,
+              "ore": 8,
+              "pm": 18,
+              "reagenti": 3000,
+              "rigenerazione": "12 ore"
+            }
+          ],
+          "reagenti_per_grado": 500,
+          "contatto": true,
+          "testo": "Rituale della sezione 25: un’unica Prova di Rituali dell’Officiante al termine della celebrazione, con la penalità del Grado e l’aiuto dei Canali (§24.6). I PM della tabella sono il totale del Rituale; i reagenti si predispongono all’inizio. Contatto con i beneficiari per tutta la celebrazione; nessuna PS.",
+          "artefatto": {
+            "paragrafo": "Magia §25.4",
+            "energie": [
+              "Verde",
+              "Bianco"
+            ],
+            "frasi": [
+              "Qualsiasi personaggio che soddisfi la SnT dell’artefatto può utilizzarne la funzione, senza Ritualista, senza conoscere l’incantesimo e senza apprendere la procedura.",
+              "L’attivazione è automatica, senza Prove di Potere o Rituali e senza Canali.",
+              "L’intero costo in PM della versione viene pagato dalla riserva integrata, compatibile Verde o Bianca.",
+              "Un’interruzione precedente impedisce l’effetto senza consumare PM."
+            ]
+          },
+          "TODO(Davide)": [
+            "A.74 punto 3: i PM del Rituale possono venire anche da una batteria Verde o Bianca (la scheda dice «PM utilizzabili: universali o spirituali»), o solo dalle quote personali dell’Officiante e dei Canali (§25.1)? Nel frattempo solo personali.",
+            "A.74 punto 4: il livello massimo degli Incantesimi dell’Officiante limita le versioni del Rituale, o conta solo Ritualista (Minore per il Grado III, Maggiore per IV–VI)? Nel frattempo conta solo Ritualista."
+          ]
         },
         "frasi": [
-          "La voce Rituale indica l’ammissibilità di una versione rituale."
+          "La voce Rituale indica l’ammissibilità di una versione rituale.",
+          "L’Officiante deve conoscere la procedura e possedere Ritualista Minore per le versioni di Grado III oppure Ritualista Maggiore per quelle di Grado IV–VI.",
+          "I reagenti costano 500 cr per Grado e coprono tutti i beneficiari consentiti dalla versione.",
+          "Il costo in PM della tabella è il totale del rituale: non si aggiungono i PM dell’infusione.",
+          "L’Officiante effettua un’unica Prova di Rituali al termine.",
+          "Fallimento: nessuna rigenerazione, PM e reagenti interamente consumati.",
+          "Se la celebrazione viene interrotta prima della Prova finale, i reagenti sono interamente consumati, i PM non vengono spesi e la rigenerazione non inizia."
         ],
-        "_nota": "E&L del 29/09, risposta 18 (A.39.3): solo mediante Rituale; l’app non lo tratta come un lancio normale e non inventa costi o componenti.",
+        "_nota": "E&L del 01/10 sera («Riferimento storico: A.39» e «Regole consolidate»; A.39 punto 3) e Magia sez. 25: Rigenerazione si esegue con il Rituale della sez. 25 («procedura_rituale.versioni»: Grado, penalità, ore, PM totali, reagenti, rigenerazione successiva) oppure si attiva da un Artefatto sintonizzato (§25.4: senza Prove, PM dalla riserva Verde o Bianca). Supera la decisione E&L 18 («procedura non ancora definita»).",
         "da_verificare": [
           "componenti",
           "concentrazione",

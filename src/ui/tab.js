@@ -25,7 +25,7 @@ import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 import { pannelloAttacco } from './attacco.js';
 import { profiloSenzArmi, senzArmiDisponibile, SENZ_ARMI, talentiAttacco, valoriDisciplina } from '../attacco.js';
 import { pannelloLancio } from './lancio.js';
-import { statoPulsanteLancio } from '../lancio.js';
+import { statoPulsanteLancio, attivazioneInfusa } from '../lancio.js';
 import { tabCalendario, pannelloAttivazione, pannelloImportaCalendario, pulsanteImportaCalendario } from './calendario.js';
 import { conOrdinale } from '../lingua.js';
 import { regoleRiparazione, esitoRiparazione, vaRiparazione, riparabile } from '../riparazione.js';
@@ -1631,7 +1631,8 @@ function sezioneDaArtefatti(ctx) {
   if (!st) return null;
   const cat = catalogo(ctx.dati);
   const perUid = new Map((ctx.scelte.equipaggiamento ?? []).map((v) => [v.uid, risolvi(v, cat)]));
-  const conPotere = st.artefatti.map((x) => ({ x, r: perUid.get(x.uid) })).filter(({ r }) => r?.def?.attivazione || infoArtefattoVoce(r, ctx.dati)?.contenitore?.integrato);
+  const conPotere = st.artefatti.map((x) => ({ x, r: perUid.get(x.uid) })).filter(({ r }) => r?.def?.attivazione || infoArtefattoVoce(r, ctx.dati)?.contenitore?.integrato || infoArtefattoVoce(r, ctx.dati)?.infuso);
+  const contenitori = ctx.tab.scheda.equipaggiamento?.contenitori ?? [];
   if (!conPotere.length) return null;
   return sezione('Da artefatti',
     h('ul', { class: 'elenco-da-artefatti' }, conPotere.map(({ x, r }) => {
@@ -1640,7 +1641,8 @@ function sezioneDaArtefatti(ctx) {
       return h('li', {},
         h('strong', {}, x.nome), h('small', { class: 'sigla' }, ` · ${x.sintonizzato ? 'sintonizzato' : 'non sintonizzato'}${r.deposito ? ' · nel deposito comune' : ''}`),
         at ? h('p', { class: 'nota' }, `Attivazione: +${at.danno_extra} ${at.natura}${at.anche ? ` e ${at.anche}` : ''} al danno del colpo (§7.1.4)${at.sintonizzazione ? `, Sintonizzazione ${at.sintonizzazione}` : ''}.`) : null,
-        ris ? h('p', { class: 'nota' }, `Riserva integrata di Chroma ${ris.energia}, ${ris.capacita_pm} PM (§7.5.1).`) : null);
+        ris ? h('p', { class: 'nota' }, `Riserva integrata di Chroma ${ris.energia}, ${ris.capacita_pm} PM (§7.5.1).`) : null,
+        attivazioneInfusaUi(ctx, x, r, contenitori.find((c) => c.uid === x.uid && c.integrato), { conPulsante: false }));
     })),
     h('p', { class: 'nota' }, 'Sola lettura: sintonizzazione e riserve si gestiscono nella tab Artefatti.'));
 }
@@ -1696,6 +1698,7 @@ function tabArtefatti(ctx) {
         h('strong', {}, 'Attivazione: '), `+${def.attivazione.danno_extra} ${def.attivazione.natura}${def.attivazione.anche ? ` e ${def.attivazione.anche}` : ''} al danno del colpo`) : null,
       !arma && !prot && (r?.tipo === 'arma_ravvicinata' || r?.tipo === 'arma_distanza' || ['armatura', 'scudo'].includes(r?.tipo))
         ? h('p', { class: 'nota' }, 'Non è in mano né indossato: i suoi effetti non contano ora.') : null,
+      attivazioneInfusaUi(ctx, x, r, riserva, { conPulsante: true }),
       riserva ? pannelloChroma(ctx, riserva, { conPulsanti: true }) : null);
   };
   return [
@@ -1880,7 +1883,7 @@ function tabMagia(ctx, d) {
             (() => {
               // senza versioni accessibili il pulsante resta, disabilitato con il motivo (mai un pulsante muto)
               const inc = ctx.dati.incantesimi.incantesimi.find((x) => x.nome === i.nome);
-              const st = inc ? statoPulsanteLancio(inc, ctx.tab.scheda) : { disabilitato: true, motivo: 'incantesimo non più nel catalogo' };
+              const st = inc ? statoPulsanteLancio(inc, ctx.tab.scheda, ctx.dati) : { disabilitato: true, motivo: 'incantesimo non più nel catalogo' };
               return h('button', { type: 'button', class: 'btn primario btn-attacca', disabled: st.disabilitato, title: st.motivo,
                 onclick: () => { ctx.ui.lancio = { nome: i.nome, passo: 0 }; ctx.azioni.ridisegna(); } }, 'Lancia!');
             })()),
@@ -1892,4 +1895,22 @@ function tabMagia(ctx, d) {
             : h('p', { class: 'nota' }, `Tabella non disponibile: Manuale della Magia, scheda ${i.scheda}.`)))))))
       : sezione('Incantesimi', h('p', { class: 'vuoto' }, 'Nessun incantesimo scelto.')),
   ];
+}
+
+/**
+ * Attivazione di un incantesimo infuso (Magia §24.2; Rigenerazione §25.4): costo in PM della versione
+ * dalla riserva integrata, senza Prove; tempo di attivazione. Nella tab Artefatti con il pulsante
+ * «Attiva» (scala la riserva, annullabile); in Poteri «Da artefatti» in sola lettura.
+ */
+function attivazioneInfusaUi(ctx, x, r, riserva, { conPulsante }) {
+  const info = r ? infoArtefattoVoce(r, ctx.dati) : null;
+  if (!info?.infuso) return null;
+  const pm = riserva ? ctx.sessione.chroma?.[riserva.uid]?.pmAttuali ?? 0 : 0;
+  const a = attivazioneInfusa(info.infuso, riserva ?? null, { pm, sintonizzato: x.sintonizzato, deposito: x.deposito }, ctx.dati);
+  if (!a) return h('p', { class: 'nota motivo' }, `Incantesimo infuso «${info.infuso.incantesimo}» non trovato fra gli incantesimi.`);
+  return h('div', { class: 'attivazione-infusa' },
+    h('p', {}, h('strong', {}, `${a.incantesimo} ${a.livello}: `), `${a.pm} PM dalla riserva dell’Artefatto · ${a.tempo} · nessuna Prova (Magia §24.2${a.energie ? ', §25.4' : ''}).`),
+    a.motivo ? h('p', { class: 'nota motivo' }, `Non attivabile ora: ${a.motivo}.`) : null,
+    conPulsante ? h('button', { type: 'button', class: 'btn', disabled: !!a.motivo, title: a.motivo ?? 'Scala i PM dalla riserva; «Annulla» li restituisce',
+      onclick: () => ctx.azioni.chroma(riserva.uid, -a.pm) }, `Attiva (−${a.pm} PM dalla riserva)`) : null);
 }

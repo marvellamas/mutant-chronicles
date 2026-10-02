@@ -1944,6 +1944,23 @@ function validaMeccanicaIncantesimi(dati, err) {
     if (!isOggetto(m)) return err(F, K, 'campi del lancio mancanti (tools/estrai_lancio.py)');
     // E&L 18: un incantesimo solo rituale con procedura non definita non ha ancora questi campi
     const todo = Object.keys(m).some((x) => x.startsWith('TODO(')) || m.procedura_rituale?.stato === 'non_definita';
+    // Magia sez. 25: Rituale definito (Rigenerazione); «L’Anticipazione ordinaria non si applica» (§25.3)
+    const rituale = m.procedura_rituale?.stato === 'definita';
+    if (rituale) {
+      const P = m.procedura_rituale;
+      const livelli = new Set((i.versioni ?? []).map((r) => Number(r.Livello)));
+      if (!Array.isArray(P.versioni) || !P.versioni.length) err(F, `${K}.procedura_rituale.versioni`, 'tabella del Rituale mancante');
+      else P.versioni.forEach((x, j) => {
+        const KV = `${K}.procedura_rituale.versioni[${j}]`;
+        if (!['livello', 'grado', 'va', 'ore', 'pm', 'reagenti'].every((c) => isIntero(x?.[c])) || !isTesto(x?.rigenerazione)) err(F, KV, 'servono livello, grado, va, ore, pm, reagenti interi e rigenerazione');
+        else {
+          if (!livelli.has(x.livello)) err(F, `${KV}.livello`, `${x.livello} non è una versione della scheda`);
+          if (x.grado < 1 || x.grado > 6) err(F, `${KV}.grado`, 'Grado da 1 a 6');
+          if (isIntero(P.reagenti_per_grado) && x.reagenti !== P.reagenti_per_grado * x.grado) err(F, `${KV}.reagenti`, `${P.reagenti_per_grado} per Grado: atteso ${P.reagenti_per_grado * x.grado}`);
+        }
+      });
+      if (!isOggetto(dati.regole?.rituali)) err('regole', 'rituali', 'regole dei Rituali mancanti (Magia §24.6), richieste da un Rituale definito');
+    }
     if (!isOggetto(m.azioni) || (!isIntero(m.azioni.azioni_principali) && !isTesto(m.azioni.tempo))) err(F, `${K}.azioni`, '{ azioni_principali } oppure { tempo } atteso');
     if (!Array.isArray(m.componenti) || m.componenti.some((c) => !COMPONENTI.includes(c))) err(F, `${K}.componenti`, `lista fra ${COMPONENTI.join(', ')}`);
     if (m.concentrazione !== null && !CONCENTRAZIONE.includes(m.concentrazione)) err(F, `${K}.concentrazione`, `uno fra ${CONCENTRAZIONE.join(', ')}`);
@@ -1975,7 +1992,7 @@ function validaMeccanicaIncantesimi(dati, err) {
         } else err(F, `${KA}.scala.tipo`, 'sequenza, incremento o riga_successiva');
         if (x?.conseguenze !== undefined && !(Array.isArray(x.conseguenze) && x.conseguenze.every(isTesto))) err(F, `${KA}.conseguenze`, 'frasi della scheda');
       });
-    } else if (!todo) err(F, `${K}.anticipazione`, 'mancante: serve un TODO(Davide)');
+    } else if (!todo && !rituale) err(F, `${K}.anticipazione`, 'mancante: serve un TODO(Davide)');
   });
   const talenti = [
     ...(dati.talenti_liberi?.talenti ?? []).map((t) => ['talenti_liberi', t.id, t]),

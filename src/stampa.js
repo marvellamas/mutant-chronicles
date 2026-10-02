@@ -16,6 +16,7 @@ import { SEZIONI_INVENTARIO, sezioneInventario, COLORI_MACROFAMIGLIE } from './p
 import { modoRicarica } from './ricarica.js';
 import { calcolaCarico, pesoVoce } from './carico.js';
 import { testoProvenienza } from './provenienza.js';
+import { attivazioneInfusa } from './lancio.js';
 
 /** Limiti di impaginazione (non regole di gioco): lunghezze massime dei testi stampati. */
 export const LIMITI_STAMPA = {
@@ -600,7 +601,8 @@ export function artefattiStampa(s, creazione, dati, { conPoteri = false } = {}) 
       arma: arma ? { va: arma.va, danno: testoDanno(arma.danno), provenienzaVa: riga(arma.provenienza), provenienzaDanno: riga(arma.provenienzaDanno) } : null,
       ar: prot ? { testo: testoAr(prot.ar), provenienza: riga(prot.provenienza) } : null,
       nonInUso: !arma && !prot && effettiPossibili,
-      attivazione: def?.attivazione?.testo ?? null,
+      // Magia §24.2, §25.4: incantesimo infuso, pagato dalla riserva integrata, senza Prove
+      attivazione: def?.attivazione?.testo ?? testoInfuso(r, dati),
       riserva: riserva ? { energia: riserva.energia, capacita: riserva.capacita } : null,
     };
   });
@@ -1028,4 +1030,12 @@ export function preparaTab(personaggio, dati, { sessione = null } = {}) {
     identita.dati.checklist = checklist(p.creazione, dati);
   }
   return { completa: st.completa, errori: st.errori, scheda: st.scheda, tab };
+}
+
+/** Testo dell'attivazione di un incantesimo infuso in un Artefatto personalizzato (foglio 6). */
+function testoInfuso(r, dati) {
+  const info = r ? infoArtefattoVoce(r, dati) : null;
+  if (!info?.infuso) return null;
+  const a = attivazioneInfusa(info.infuso, info.contenitore ? { energia: info.contenitore.energia, macrofamiglie: dati.regole?.chroma?.colori?.[info.contenitore.energia]?.macrofamiglie ?? [] } : null, { pm: Infinity, sintonizzato: true, deposito: false }, dati);
+  return a ? `${a.incantesimo} ${a.livello}: ${a.pm} PM dalla riserva, ${a.tempo}, nessuna Prova` : null;
 }
