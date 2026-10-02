@@ -130,7 +130,7 @@ Fatto il **prompt 1** della proposta, con la richiesta di Davide («Risorse Inte
 - **Verifica:** nessun valore calcolato cambia rispetto a `main` (a, b, c, Lucas, d; a riposo e con una Ferita e Rallentato).
 
 Fatto il **prompt 2** (02/10, sera):
-- **Dati:** `effetti` nelle 28 schede (`tools/effetti_tecniche.mjs`; frasi in `tools/verifica_frasi.mjs`): 14 con effetti applicati (valori, «Attacca!», cura), 14 solo promemoria; TODO(Davide) A.81 (Pelle di Rinoceronte, manovre di forza) e A.82 (Onda Interiore, bonus pertinenti).
+- **Dati:** `effetti` nelle 28 schede (`tools/effetti_tecniche.mjs`; frasi in `tools/verifica_frasi.mjs`): 18 con effetti applicati (valori, «Attacca!», cura), 10 solo promemoria; TODO(Davide) A.81 (Pelle di Rinoceronte, manovre di forza) e A.82 (Onda Interiore, bonus pertinenti).
 - **Motore:** `src/tecniche.js` (`effettiTecniche`, `tecnicheAttacco`, `curaTecnica`), `src/condizioni.js` (VA, usi specifici, PS, Caratteristiche, danno, Movimento, Sensi), `src/attacco.js` (`profiloOndaInteriore`, effetti d'attacco, riga «Tecniche attive»; la stessa riga in «Lancia!»). Le istantanee restano in corso fino alla fine del Round.
 - **SD:** riquadro delle Tecniche attive con l'effetto in breve e le regole; Imposizione con «Su chi» e il dado; Onda Interiore fra le armi della tab Combattimento; riquadro Sensi.
 - **SS:** colonna «Effetto» nel foglio 5 se l'elenco entra; seguito nella colonna sinistra.
