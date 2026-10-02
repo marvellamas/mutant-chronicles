@@ -133,7 +133,7 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 
 - Equipaggiamento 0.5, cap. 6 ampliato e cap. 8 (lotto 4 del 01/10): naniti medici e postazioni medicochirurgiche in `sanitario.json`, campo `cura` con i numeri delle cure (`src/equipaggiamento.js` → `testoCura`, tooltip e Inventario), `alimentazione` anche come elenco di NEC; il cap. 8 riassume il §2.16 del Giocatore, controllato da `tools/lotti/lotto_equipaggiamento_08.mjs`. Tutti i capitoli dell'Equipaggiamento 0.5 sono nel catalogo.
 
-- Rinforzi come sottocategoria delle armature (richiesta di Davide del 02/10): tipo `rinforzo` (`rinforzi.json`, lotto `tools/lotti/lotto_rinforzi_armature.mjs`), «Montata su:» con le armature indossate compatibili e, per soprabiti e mantelli (`indossabile_da_solo`), «Indossato da solo»; regole da solo e ad armatura tolta in `regole.json` → `rinforzi`, con TODO(Davide) A.79.
+- Rinforzi come sottocategoria delle armature (richiesta di Davide del 02/10): tipo `rinforzo` (`rinforzi.json`, lotto `tools/lotti/lotto_rinforzi_armature.mjs`), «Montata su:» con le armature indossate compatibili e, per soprabiti e mantelli (`indossabile_da_solo`), «Indossato da solo»; regole da solo e ad armatura tolta in `regole.json` → `rinforzi`, con TODO(Davide) A.80.
 
 Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, veicoli.
 

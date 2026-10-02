@@ -1639,7 +1639,7 @@
     },
     "armatura_tolta": "resta_montato",
     "_nota_armatura_tolta": "Se l’armatura su cui è montato non è più indossata, il rinforzo resta montato su di lei e non dà nulla; l’Inventario lo dice. Il manuale non ne parla.",
-    "TODO(Davide)": "per-davide A.79: il manuale (§7.23.4) dice che i rinforzi non hanno un profilo autonomo; soprabiti e mantelli indossati da soli danno AR, le loro proprietà valgono, e quali altri rinforzi si possono indossare da soli? Che cosa succede al rinforzo quando si toglie l’armatura su cui è montato?"
+    "TODO(Davide)": "per-davide A.80: il manuale (§7.23.4) dice che i rinforzi non hanno un profilo autonomo; soprabiti e mantelli indossati da soli danno AR, le loro proprietà valgono, e quali altri rinforzi si possono indossare da soli? Che cosa succede al rinforzo quando si toglie l’armatura su cui è montato?"
   },
   "integrita": {
     "versione_manuale": "Equipaggiamento 0.1",

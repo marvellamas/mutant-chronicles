@@ -126,7 +126,7 @@ export function calcolaAR(equip, dati, { talenti = [], accesi = new Set(), rotti
   for (const p of protezioni.filter((x) => x.tipo === 'elmetto')) righe.push(riga(p.nome, 0, 'elmetto: nessuna AR (§7.21.1)'));
 
   // rinforzi indossati da soli (soprabiti e mantelli, richiesta di Davide del 02/10; regole.json →
-  // rinforzi.da_solo, TODO(Davide) A.79): §7.23.4 «non costituiscono un profilo autonomo di armatura»
+  // rinforzi.da_solo, TODO(Davide) A.80): §7.23.4 «non costituiscono un profilo autonomo di armatura»
   const RD = dati.regole?.rinforzi?.da_solo ?? {};
   for (const x of equip?.rinforziDaSoli ?? []) {
     if (rotti.has(x.uid)) { righe.push({ ...riga(x.nome, x.ar, ROTTO), escluso: true, barrato: true }); continue; }

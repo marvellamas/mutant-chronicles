@@ -113,7 +113,7 @@ function montataSu(ctx, r, risolte, cambia) {
 /** Che cosa dà un rinforzo indossato da solo, dalla regola nei dati (regole.json → rinforzi.da_solo). */
 function testoDaSolo(dati) {
   const d = dati.regole?.rinforzi?.da_solo ?? {};
-  return d.ar === 'propria' ? 'Da solo: AR del rinforzo, senza armatura.' : 'Da solo: nessuna AR (§7.23.4: non è un profilo autonomo di armatura), in attesa di Davide (A.79).';
+  return d.ar === 'propria' ? 'Da solo: AR del rinforzo, senza armatura.' : 'Da solo: nessuna AR (§7.23.4: non è un profilo autonomo di armatura), in attesa di Davide (A.80).';
 }
 
 /** Una voce dell'elenco, completa di stato, quantità, peso e note. */

@@ -779,7 +779,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   // una modifica d'elmetto conta solo montata su un elmetto (o un'armatura, per il suo elmetto
   // standard) indossato (Armamenti §7.21.1, §7.21.4)
   // un rinforzo conta solo come kit valido di un'armatura indossata (Armamenti §7.23.4, §7.23.9)
-  // rinforzi indossati da soli (indossabile_da_solo; regole.json → rinforzi.da_solo, per-davide A.79)
+  // rinforzi indossati da soli (indossabile_da_solo; regole.json → rinforzi.da_solo, per-davide A.80)
   const regoleDaSolo = dati.regole?.rinforzi?.da_solo ?? {};
   const armaturaIndossata = oggetti.some((x) => x.attivo && x.tipo === 'armatura');
   const rinforziDaSoli = oggetti.filter((x) => x.attivo && x.tipo === 'rinforzo' && x.voce.stato === 'indossata' && x.def?.rinforzo)

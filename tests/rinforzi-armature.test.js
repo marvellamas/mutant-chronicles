@@ -1,5 +1,5 @@
 // Rinforzi come sottocategoria delle armature (richiesta di Davide del 02/10; Armamenti §7.11.2,
-// §7.23; regole.json → rinforzi, per-davide A.79).
+// §7.23; regole.json → rinforzi, per-davide A.80).
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';
@@ -24,7 +24,7 @@ test('dati: 32 rinforzi di tipo «rinforzo»; soprabiti e mantelli indossabili d
   assert.ok(TIPI.includes('rinforzo'));
   assert.deepEqual(r.filter((o) => o.indossabile_da_solo).every((o) => /^(Soprabito|Mantello)/.test(o.nome)), true);
   assert.equal(r.filter((o) => o.indossabile_da_solo).length, 14);
-  // §7.23.4: «non costituiscono un profilo autonomo di armatura»; il resto con Davide (A.79)
+  // §7.23.4: «non costituiscono un profilo autonomo di armatura»; il resto con Davide (A.80)
   assert.equal(dati.regole.rinforzi.da_solo.ar, 'nessuna');
   assert.match(dati.regole.rinforzi['TODO(Davide)'], /A\.79/);
 });
