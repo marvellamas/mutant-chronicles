@@ -26,7 +26,7 @@ import { preparaStampa, preparaTab, normalizzaOpzioniStampa } from '../stampa.js
 import { renderTab, tabFissi, ALIAS_TAB } from './tab.js';
 import {
   massimiSessione, allineaSessione, variaSessione, modificaSessione, commutaStato, commutaCondizioneOggetto, commutaTalento, commutaBonusTalenti, impostaCondizioneArma, riparaOggetto, spendiPmLancio, ricaricaMatrice, attivaArtefatto, attivaTecnicaSessione, nuovoRoundSessione, terminaTecnicaSessione, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
-  penalitaSessione, variaMunizioni, ricaricaArma, variaChroma, variaIntegrita, variaNec,
+  penalitaSessione, variaMunizioni, consumaColpi, scegliGranata, ricaricaArma, variaChroma, variaIntegrita, variaNec,
 } from '../sessione.js';
 import { conOrdinale } from '../lingua.js';
 import { normalizzaCalendario, calendarioAttivo, attivaCalendario, disattivaCalendario, contaNote, fileCalendario, leggiFileCalendario } from '../calendario.js';
@@ -734,7 +734,8 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
         persisti();
         renderScheda({ mantieniScorrimento: true });
       },
-      spara: (uid, munizioni) => cambiaSessione(variaMunizioni(stato.sessione, uid, 'colpi', -munizioni, massimi)),
+      // granate da lancio: il colpo si scala dalla voce (Armamenti §7.20.3, src/sessione.js → consumaColpi)
+      spara: (uid, munizioni) => cambiaSessione(consumaColpi(stato.sessione, uid, munizioni, massimi)),
       // pannello «Lancia!»: come per l'attacco, le scelte si ricordano senza diventare l'ultima modifica
       ricordaLancio: (nome, scelte) => {
         stato.sessione = modificaSessione(stato.sessione, { lanci: { ...(stato.sessione?.lanci ?? {}), [nome]: scelte } }, massimi);
@@ -838,6 +839,8 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       },
       munizioni: (uid, campo, delta) => cambiaSessione(variaMunizioni(stato.sessione, uid, campo, delta, massimi)),
       ricarica: (uid) => cambiaSessione(ricaricaArma(stato.sessione, uid, massimi)),
+      // §7.20.3: granata da caricare in un lanciagranate (un tipo alla volta)
+      scegliGranata: (uid, voceUid) => cambiaSessione(scegliGranata(stato.sessione, uid, voceUid, massimi)),
       chroma: (uid, delta) => cambiaSessione(variaChroma(stato.sessione, uid, delta, massimi)),
       integrita: (uid, delta) => cambiaSessione(variaIntegrita(stato.sessione, uid, delta, massimi)),
       // riserva di un NEC (Equipaggiamento §5.4): ore, usi o Lx

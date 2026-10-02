@@ -340,7 +340,12 @@ function pannelloAggiungi(ctx) {
         ctx.compra ? bottoneCompra(ctx, scelto, () => {
           Object.assign(s, { rif: null });
           return { uid: nuovoUid(), rif: scelto.rif, stato: statoIniziale(scelto.tipo, ctx.voci, dati, scelto.effetti ?? []), quantita: 1, note: '' };
-        }) : null)) : null,
+        }) : null,
+        // confezione (granate da cinque, Armamenti §7.20.3: «singole o in confezioni da cinque, senza sconto»)
+        ctx.compra && scelto.confezione ? bottoneCompra(ctx, { ...scelto, costo: scelto.confezione.costo }, () => {
+          Object.assign(s, { rif: null });
+          return { uid: nuovoUid(), rif: scelto.rif, stato: statoIniziale(scelto.tipo, ctx.voci, dati, scelto.effetti ?? []), quantita: scelto.confezione.quantita, note: '' };
+        }, `Compra ${scelto.confezione.quantita}`) : null)) : null,
     h('details', { class: 'personalizzato', open: !!ui.equipPersAperto, ontoggle: (e) => { ui.equipPersAperto = e.target.open; } },
       h('summary', {}, 'Oggetto personalizzato'),
       h('p', { class: 'nota' }, 'Per ciò che il catalogo non ha ancora o per le improvvisazioni del master. Un’arma con l’Abilità indicata mostra il VA per colpire; un’armatura con l’AR mostra la protezione.'),
@@ -428,7 +433,7 @@ function pannelloAggiungi(ctx) {
 }
 
 /** «Compra (−N crediti)»: disabilitato, con il motivo, se il prezzo manca o i crediti non bastano. */
-function bottoneCompra(ctx, scelto, nuovaVoce) {
+function bottoneCompra(ctx, scelto, nuovaVoce, etichetta = 'Compra') {
   const costo = Number.isFinite(scelto.costo) ? scelto.costo : null;
   const motivo = costo === null ? 'Prezzo di catalogo assente: aggiungi l’oggetto e scala i crediti a mano.'
     : !Number.isInteger(ctx.crediti) ? 'Crediti non tracciati: applica prima la dotazione iniziale, oppure aggiungi l’oggetto e annota la spesa a mano.'
@@ -436,7 +441,7 @@ function bottoneCompra(ctx, scelto, nuovaVoce) {
   return h('button', {
     type: 'button', class: 'btn', disabled: !!motivo, title: motivo,
     onclick: () => ctx.compra(nuovaVoce(), costo),
-  }, costo === null ? 'Compra' : `Compra (−${costo.toLocaleString('it-IT')} crediti)`);
+  }, costo === null ? etichetta : `${etichetta} (−${costo.toLocaleString('it-IT')} crediti)`);
 }
 
 function riassuntoProfilo(o) {

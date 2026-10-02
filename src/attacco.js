@@ -146,7 +146,8 @@ export function vincoliDistanza(personaggio, arma, dichiarazione, dati) {
   const MF = dati.regole.modalita_di_fuoco;
   const d = dichiarazioneDistanza(dichiarazione);
   const T = talentiAttacco(personaggio.scheda, dati);
-  const colpi = personaggio.sessione?.munizioni?.[arma.uid]?.colpi ?? null;
+  // granate da lancio (§7.20.3): quelle rimaste nella voce
+  const colpi = arma.granata ? arma.granata.disponibili ?? null : personaggio.sessione?.munizioni?.[arma.uid]?.colpi ?? null;
   const ammesse = A.modalita.manovre_ammesse;
   const modalita = {};
   for (const m of (arma.modalita ?? []).filter((x) => x !== 'TM' && MF[x])) {
@@ -341,7 +342,8 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
   const m = d.modalita;
   const M = MF[m];
   if (!M || !(arma.modalita ?? []).includes(m) || m === 'TM') blocca(`L’arma non ha la modalità ${M?.nome ?? m}.`);
-  const colpi = personaggio.sessione?.munizioni?.[arma.uid]?.colpi ?? null;
+  // granate da lancio (§7.20.3): quelle rimaste nella voce
+  const colpi = arma.granata ? arma.granata.disponibili ?? null : personaggio.sessione?.munizioni?.[arma.uid]?.colpi ?? null;
   const munizioni = M ? munizioniModalita(m, dati, T) : 1;
   if (vincoli.modalita[m]) {
     const i = A.modalita.ordine_inferiore.indexOf(m);
@@ -558,7 +560,10 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
 
   // 9. danno, applicazioni e colpi (§5.10, AC)
   const base = dannoBase(arma);
-  if (arma.dannoDaMunizione) promemoria.push('Il danno dipende dalla munizione caricata.');
+  // Armamenti §7.20.3: la munizione caricata stabilisce danno, AC, RS e proprietà (Abilità, VA e gittata sono del lanciatore)
+  const mun = arma.dannoDaMunizione ? arma.munizioneRiferimento : null;
+  if (mun) promemoria.push(`Munizione caricata: ${mun.nome}${mun.danno ? `, danno ${mun.danno}, AC ${mun.ac}` : ', nessun danno'}, RS ${mun.rs_q} Q${mun.proprieta?.length ? `; ${mun.proprieta.join(', ')}` : ''} (§7.20.3). Un colpo consuma una munizione.`);
+  else if (arma.dannoDaMunizione) promemoria.push('Il danno dipende dalla munizione caricata.');
   const formula = base ? aggiungiDanno(base, dannoBonus) : null;
   const G = dati.regole.attacco_ravvicinato?.magistrale;
   if (formula && G?.promemoria) promemoria.push(G.promemoria);

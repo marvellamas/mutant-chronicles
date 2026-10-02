@@ -2220,7 +2220,38 @@
             ]
           ]
         }
-      ]
+      ],
+      "esplosivo": {
+        "danno": null,
+        "ac": null,
+        "rs_q": 2,
+        "proprieta": []
+      },
+      "compatibile_con": [
+        "armi_distanza:lanciagranate",
+        "armi_distanza_corporative:lanciagranate-alleanza",
+        "armi_distanza_corporative:lanciagranate-carabina-punisher",
+        "armi_distanza_corporative:lanciagranate-mp105gw",
+        "armi_distanza_corporative:lanciagranate-panzerknacker",
+        "armi_distanza_corporative:lanciagranate-bolter-20",
+        "armi_distanza_corporative:lanciagranate-ironfist-15",
+        "armi_distanza_corporative:lanciagranate-car24",
+        "armi_distanza_corporative:lanciagranate-m50",
+        "armi_distanza_corporative:lanciagranate-caw2000",
+        "armi_distanza_corporative:lanciagranate-ar3000",
+        "armi_distanza_corporative:lanciagranate-nemesis-221",
+        "armi_distanza_corporative:lanciagranate-volcano",
+        "corredi_dispositivi:howler",
+        "armi_distanza_corporative:lanciagranate-interceptor",
+        "armi_distanza_corporative:lanciagranate-invader",
+        "armi_distanza_corporative:lanciagranate-windrider-n4",
+        "armi_distanza_corporative:lanciagranate-shogun"
+      ],
+      "confezione": {
+        "quantita": 5,
+        "costo": 600
+      },
+      "fonte_munizione": "Armamenti §7.20.3 (Granate; Compatibilità del formato standard), §7.14.7; correzione di Davide del 02/10/2026; lotto tools/lotti/lotto_granate_0210.mjs"
     },
     {
       "id": "granata-elettroshock",
@@ -2323,7 +2354,40 @@
             ]
           ]
         }
-      ]
+      ],
+      "esplosivo": {
+        "danno": "2d4",
+        "ac": 1,
+        "rs_q": 1,
+        "proprieta": [
+          "Elettricità"
+        ]
+      },
+      "compatibile_con": [
+        "armi_distanza:lanciagranate",
+        "armi_distanza_corporative:lanciagranate-alleanza",
+        "armi_distanza_corporative:lanciagranate-carabina-punisher",
+        "armi_distanza_corporative:lanciagranate-mp105gw",
+        "armi_distanza_corporative:lanciagranate-panzerknacker",
+        "armi_distanza_corporative:lanciagranate-bolter-20",
+        "armi_distanza_corporative:lanciagranate-ironfist-15",
+        "armi_distanza_corporative:lanciagranate-car24",
+        "armi_distanza_corporative:lanciagranate-m50",
+        "armi_distanza_corporative:lanciagranate-caw2000",
+        "armi_distanza_corporative:lanciagranate-ar3000",
+        "armi_distanza_corporative:lanciagranate-nemesis-221",
+        "armi_distanza_corporative:lanciagranate-volcano",
+        "corredi_dispositivi:howler",
+        "armi_distanza_corporative:lanciagranate-interceptor",
+        "armi_distanza_corporative:lanciagranate-invader",
+        "armi_distanza_corporative:lanciagranate-windrider-n4",
+        "armi_distanza_corporative:lanciagranate-shogun"
+      ],
+      "confezione": {
+        "quantita": 5,
+        "costo": 1000
+      },
+      "fonte_munizione": "Armamenti §7.20.3 (Granate; Compatibilità del formato standard), §7.14.7; correzione di Davide del 02/10/2026; lotto tools/lotti/lotto_granate_0210.mjs"
     },
     {
       "id": "ias3100-generatore-blink",

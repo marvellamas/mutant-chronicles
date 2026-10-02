@@ -31,7 +31,9 @@ test('modo di ricarica dai dati: caricatore, inserimento, tamburo, cella, nessun
   assert.equal(modo('armi_distanza_corporative:sa-sg2001'), 'caricatore');
   assert.equal(modo('armi_distanza:fucile-al-plasma'), 'cella');
   assert.equal(modo('armi_distanza:lanciarazzi'), 'inserimento'); // razzi compatibili, uno per colpo
-  assert.equal(modo('armi_distanza:lanciagranate'), null);
+  // §7.20.3: le granate del formato standard si inseriscono nel lanciagranate
+  assert.equal(modo('armi_distanza:lanciagranate'), 'inserimento');
+  assert.equal(modo('armi_distanza:shuriken'), null);
   assert.deepEqual(modoRicarica(cat.perRif.get('armi_distanza:carabina'), dati, cat).vuoto,
     { rif: 'munizioni:caricatore-vuoto-per-arma-media', nome: 'Caricatore vuoto per Arma Media' });
 });
@@ -71,7 +73,7 @@ test('caricatore parziale: il caricatore tolto resta con i suoi colpi e si può 
 
 test('munizioni sciolte (revolver): si inseriscono fino alla capacità, la scorta scende della quantità inserita', () => {
   let { m, s } = prepara([voce('r', 'armi_distanza:revolver', 'impugnata'), voce('m', 'munizioni:proiettili-da-pistola', null, 5)]);
-  assert.deepEqual(m.ricarica.r.scorte, [{ uid: 'm', nome: 'Proiettili da pistola', quantita: 5 }]);
+  assert.deepEqual(m.ricarica.r.scorte, [{ uid: 'm', nome: 'Proiettili da pistola', quantita: 5, rif: 'munizioni:proiettili-da-pistola' }]);
   s = variaMunizioni(s, 'r', 'colpi', -4, m); // 2 nel tamburo
   s = ricaricaArma(s, 'r', m);
   assert.equal(s.munizioni.r.colpi, 6);
@@ -95,12 +97,13 @@ test('celle: una cella piena sostituisce quella esaurita', () => {
 });
 
 test('senza dati di compatibilità: avviso e ricarica libera, nessun blocco', () => {
-  let { m, s } = prepara([voce('g', 'armi_distanza:lanciagranate', 'impugnata')]);
-  s = variaMunizioni(s, 'g', 'colpi', -6, m);
+  let { m, s } = prepara([voce('g', 'armi_distanza_corporative:kr10', 'impugnata')]);
+  const cap = m.caricatori.g;
+  s = variaMunizioni(s, 'g', 'colpi', -cap, m);
   const st = stato(s, m, 'g');
   assert.equal(st.possibile, true);
   assert.match(st.avviso, /non nei dati/);
-  assert.equal(ricaricaArma(s, 'g', m).munizioni.g.colpi, 6);
+  assert.equal(ricaricaArma(s, 'g', m).munizioni.g.colpi, cap);
 });
 
 test('«Annulla ultima modifica»: la ricarica è una modifica di sessione come le altre (stato precedente intatto)', () => {

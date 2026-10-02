@@ -9,7 +9,7 @@ import { valoreTiro } from './tiri.js';
 import { rigaAlLivello } from './descrizioni.js';
 import { CAMPI_ANAGRAFICA } from './character.js';
 import { checklist } from './checklist.js';
-import { aggiungiDanno, NOME_TESTO_PRECEDENTE, catalogo, normalizzaEquipaggiamento, STATO_DEPOSITO, consumabili, rapportoConversione, risolvi, infoArtefattoVoce, infusiDi, regoleSintonizzazione, NOMI_STATI, riserveNec, testoEffettoOggetto } from './equipaggiamento.js';
+import { aggiungiDanno, NOME_TESTO_PRECEDENTE, catalogo, normalizzaEquipaggiamento, STATO_DEPOSITO, consumabili, rapportoConversione, risolvi, infoArtefattoVoce, infusiDi, regoleSintonizzazione, NOMI_STATI, riserveNec, testoEffettoOggetto, eGranata } from './equipaggiamento.js';
 import { gradiTaumaturgici } from './incantesimi.js';
 import { saldoIniziale, crediti } from './dotazioni.js';
 import { SEZIONI_INVENTARIO, sezioneInventario, COLORI_MACROFAMIGLIE } from './palette.js';
@@ -519,7 +519,10 @@ export function armiStampa(s, creazione, dati) {
     let colpi = null;
     if (Number.isInteger(cap) && cap > 0 && a.tipo === 'arma_distanza') {
       const r = modoRicarica(def, dati, cat);
-      if (r.modo === 'inserimento') colpi = { modo: 'inserimento', capacita: cap, file: 1 };
+      // lanciagranate del formato standard (§7.20.3): due file «car.» come prima delle granate in catalogo
+      const granate = def?.danno_da_munizione && cat.oggetti.some((o) => eGranata(o) && o.compatibile_con.includes(def.rif));
+      if (r.modo === 'inserimento' && !granate) colpi = { modo: 'inserimento', capacita: cap, file: 1 };
+      else if (granate) colpi = { modo: 'caricatore', capacita: cap, file: 2 };
       else if (r.modo === 'cella') colpi = { modo: 'cella', capacita: cap, file: 2 };
       else colpi = { modo: 'caricatore', capacita: cap, file: Math.max(2, 1 + (r.vuoto ? quantita(r.vuoto.rif) : 0)) };
     } else if (Number.isInteger(cap) && cap > 0) colpi = { modo: 'cella', capacita: cap, file: 2 }; // cariche di armi ravvicinate (PM, batterie)

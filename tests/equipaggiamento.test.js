@@ -269,7 +269,7 @@ test('arma a distanza impugnata: VA per colpire, gittata (anche FOR × 3), MOV, 
   assert.match(f3.armi.righe[0][6], /INC 6; S TR/);
 });
 
-test('Specializzazione Pistole sulla pistola; il danno «dalla munizione» resta senza bonus', () => {
+test('Specializzazione Pistole sulla pistola; il danno del lanciagranate è quello della granata, senza il bonus della pistola', () => {
   const livelli = [{ livello: 2, caratteristiche: { DES: 2 } }, { livello: 3, talentoLibero: { id: 'specializzazione-pistole' } }];
   const s = scheda(MISHIMA_AGENTE, [voce('p', 'armi_distanza:revolver', 'impugnata'), voce('l', 'armi_distanza:lanciagranate', 'impugnata')], livelli);
   const base = s.abilita.find((a) => a.nome === 'Armi leggere').totale;
@@ -277,7 +277,8 @@ test('Specializzazione Pistole sulla pistola; il danno «dalla munizione» resta
   // revolver 1d6+1, +1 della Specializzazione, +1 di DES 9 (tetto +1 al 3° livello, §5.13)
   assert.deepEqual(s.equipaggiamento.armi[0].danno, { una_mano: '1d6+3', due_mani: null });
   assert.equal(s.equipaggiamento.armi[1].dannoDaMunizione, true);
-  assert.equal(s.equipaggiamento.armi[1].danno, null);
+  // §7.20.3: la granata stabilisce il danno (munizione di riferimento, §7.8)
+  assert.deepEqual(s.equipaggiamento.armi[1].danno, { una_mano: '1d6+1', due_mani: '1d6+1' });
 });
 
 test('munizioni in sessione: il contatore parte dalla capacità, «Ricarica» usa un caricatore di riserva', () => {
@@ -517,8 +518,12 @@ test('arma con modulo integrato impugnata: due profili, alimentazioni separate, 
   let ses = variaMunizioni(inizializzaSessione(m), 'g:lanciagranate-mp105gw', 'colpi', -1, m);
   assert.equal(ses.munizioni['g:lanciagranate-mp105gw'].colpi, 0);
   assert.equal(ses.munizioni.g.colpi, 40);
-  ses = ricaricaArma(ses, 'g:lanciagranate-mp105gw', m);
-  assert.equal(ses.munizioni['g:lanciagranate-mp105gw'].colpi, 1);
+  // §7.20.3: senza granate compatibili nell'Inventario il modulo non si ricarica
+  assert.equal(ricaricaArma(ses, 'g:lanciagranate-mp105gw', m).munizioni['g:lanciagranate-mp105gw'].colpi, 0);
+  const conGranate = { ...creazione, equipaggiamento: [...creazione.equipaggiamento, { ...voce('n', 'armi_distanza:granata-a-frammentazione', 'zaino'), quantita: 2 }] };
+  const m2 = massimiSessione(calcolaScheda({ creazione: conGranate, livelli: [] }, dati), conGranate, dati);
+  ses = ricaricaArma(variaMunizioni(inizializzaSessione(m2), 'g:lanciagranate-mp105gw', 'colpi', -1, m2), 'g:lanciagranate-mp105gw', m2);
+  assert.deepEqual([ses.munizioni['g:lanciagranate-mp105gw'].colpi, ses.scorte.n], [1, 1]);
   // stampa: riga del modulo con il danno della munizione, AC e RS
   const f3 = preparaStampa(creazione, dati).fogli.find((f) => f.id === 'combattimento').dati;
   const riga = f3.armi.righe.find((x) => x[0] === 'Lanciagranate MP105GW');

@@ -5,7 +5,7 @@
 
 import { descriviFerite } from './sessione.js';
 import { calcolaCarico } from './carico.js';
-import { aggiungiDanno, infoArtefatto } from './equipaggiamento.js';
+import { aggiungiDanno, infoArtefatto, applicaMunizione } from './equipaggiamento.js';
 import { effettiTalenti, bonusTalentiAccesi } from './talenti.js';
 import { calcolaAR, oggettiRotti } from './protezione.js';
 import { chiaviTecnicheAttive, effettiTecniche } from './tecniche.js';
@@ -336,6 +336,14 @@ export function applicaCondizioni(scheda, sessione, dati) {
     const condArmi = new Map((dati.regole.condizioni_armi?.elenco ?? []).map((c) => [c.id, c]));
     const statiArmi = isOggetto(sessione?.condizioniArmi) ? sessione.condizioniArmi : {};
     for (const w of eq.armi) {
+      // Armamenti §7.20.3: la granata caricata nel lanciatore stabilisce danno, AC, RS e proprietà; senza una
+      // scelta resta la munizione di riferimento (§7.8). Le granate da lancio: quante ne restano nella voce.
+      if (w.granate) {
+        const g = w.granate.find((x) => x.uid === sessione?.munizioni?.[w.uid]?.tipo);
+        if (g) applicaMunizione(w, g.esplosivo);
+        w.granataCaricata = g ? { uid: g.uid, nome: g.nome } : w.munizioneRiferimento ? { uid: null, nome: w.munizioneRiferimento.nome } : null;
+      }
+      if (w.granata) w.granata.disponibili = Math.max(0, w.granata.quantita - (sessione?.scorte?.[w.uid] ?? 0));
       // A.49: condizione dell'arma al tavolo (Giocatore §5.17), distinta dai PI
       const ca = condArmi.get(statiArmi[String(w.uid).split(':')[0]] ?? statiArmi[w.uid]);
       w.condizioneArma = ca && ca.id !== 'integra' ? { id: ca.id, nome: ca.nome, va: ca.va, utilizzabile: ca.utilizzabile, testo: ca.testo } : null;
