@@ -1,0 +1,117 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "agente-cybertronic-veterano",
+  "nome": "Agente Cybertronic — Veterano",
+  "fonte": "costruito come PG (Cybertronic, Agente 2, 5° livello)",
+  "caratteristiche": {
+    "FOR": 4,
+    "COS": 6,
+    "DES": 8,
+    "INT": 8,
+    "SAG": 7,
+    "CAR": 5
+  },
+  "pv": 24,
+  "pm": 11,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 6,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 12,
+    "volonta": 10,
+    "magia": 11
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "P500",
+      "tipo": "distanza",
+      "va": 11,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "gittata_q": 30,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "ac": 1,
+      "rif": "armi_distanza_corporative:p500",
+      "note": "caricatore 12 colpi"
+    },
+    {
+      "nome": "Coltello",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "rif": "armi:coltello",
+      "note": "Manovre: Affondo"
+    }
+  ],
+  "contromisure": [
+    {
+      "nome": "Isolante",
+      "valore": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi leggere",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    },
+    {
+      "nome": "Cultura",
+      "va": 8
+    },
+    {
+      "nome": "Raggirare",
+      "va": 14
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Fuoco Controllato",
+      "effetto": "Quando spara contro un avversario ingaggiato in Ravvicinato, protetto da un alleato o che usa un ostaggio come scudo, l’Agente elimina la penalità specifica e non effettua la seconda Prova di controllo."
+    },
+    {
+      "nome": "Mira Selettiva",
+      "effetto": "Quando effettua un Tiro Mirato e rimane fermo per tutto il Round in cui spara, riduce di 2 la penalità dovuta alla Copertura del bersaglio: Leggera diventa 0 e Media diventa −2."
+    },
+    {
+      "nome": "Pistolero",
+      "effetto": "Con due Armi leggere a distanza, la penalità di Combattere con due armi passa da −4 a −2 VA a ciascuno dei due attacchi."
+    },
+    {
+      "nome": "Estrazione Rapida",
+      "effetto": "Un utilizzo per Round, durante la propria Iniziativa."
+    }
+  ],
+  "stati": [],
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Agente Cybertronic Veterano, Cybertronic Avventuriero, Agente 2, 5° livello. Talenti fra le capacità speciali: gli effetti generali sono già nei valori, quelli situazionali si applicano a mano."
+}

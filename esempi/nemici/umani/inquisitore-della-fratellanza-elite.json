@@ -1,0 +1,178 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "inquisitore-della-fratellanza-elite",
+  "nome": "Inquisitore della Fratellanza — Élite",
+  "fonte": "costruito come PG (Fratellanza, Custode 3, 8° livello)",
+  "caratteristiche": {
+    "FOR": 7,
+    "COS": 9,
+    "DES": 4,
+    "INT": 5,
+    "SAG": 9,
+    "CAR": 6
+  },
+  "pv": 31,
+  "pm": 28,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 16,
+  "iniziativa": -1,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 8,
+    "volonta": 12,
+    "magia": 13
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Spada leggera",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "rif": "armi:spada-leggera",
+      "note": "Manovre: Affondo, Spazzata"
+    },
+    {
+      "nome": "Nemesis 100",
+      "tipo": "distanza",
+      "va": 4,
+      "danno": "1d6",
+      "natura": "Naturale",
+      "proprieta": [
+        "Purificatrice 1"
+      ],
+      "gittata_q": 15,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "ac": 1,
+      "rif": "armi_distanza_corporative:nemesis-100",
+      "note": "caricatore 8 colpi"
+    }
+  ],
+  "contromisure": [
+    {
+      "nome": "Imbottita",
+      "valore": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 16
+    },
+    {
+      "nome": "Difese",
+      "va": 16
+    },
+    {
+      "nome": "Potere",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 4
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Arma Astrale",
+      "effetto": "Con un’Azione Principale e 2 PM, il Custode evoca un’Arma Astrale per 10 Round."
+    },
+    {
+      "nome": "Fenditura Mistica",
+      "effetto": "Una volta per scena, dopo aver colpito con l’Arma Astrale ma prima di tirare il danno, il Custode può rendere Etereo il danno di quel singolo colpo."
+    },
+    {
+      "nome": "Maestro d’Arma",
+      "effetto": "Il Custode ottiene o costruisce una CyberArma personale."
+    },
+    {
+      "nome": "Resistenza alla Corruzione",
+      "effetto": "Ottiene +2 alle PS per evitare di acquisire Corruzione Oscura o limitarne il peggioramento."
+    },
+    {
+      "nome": "Lancio in Combattimento",
+      "effetto": "Quando lancia un Incantesimo durante l’Ingaggio, il personaggio non applica la penalità di −2 al VA di Potere dovuta all’Ingaggio."
+    },
+    {
+      "nome": "Resistenza alla Paura",
+      "effetto": "Ottiene +2 alle PS contro paura, terrore, panico e demoralizzazione."
+    }
+  ],
+  "stati": [],
+  "incantesimi": [
+    {
+      "nome": "Agilità Mutata",
+      "livello": 9,
+      "va": 10,
+      "costo_pm": 9
+    },
+    {
+      "nome": "Alterare Immagine",
+      "livello": 9,
+      "va": 10,
+      "costo_pm": 9
+    },
+    {
+      "nome": "Ampliare Sensi",
+      "livello": 9,
+      "va": 10,
+      "costo_pm": 9
+    },
+    {
+      "nome": "Arma Mistica",
+      "livello": 9,
+      "va": 10,
+      "costo_pm": 9
+    },
+    {
+      "nome": "Armatura di Forza",
+      "livello": 9,
+      "va": 10,
+      "costo_pm": 9
+    },
+    {
+      "nome": "Armatura Mistica",
+      "livello": 9,
+      "va": 10,
+      "costo_pm": 9
+    },
+    {
+      "nome": "Barriera Mentale",
+      "livello": 9,
+      "va": 10,
+      "costo_pm": 9
+    },
+    {
+      "nome": "Colpo Elementale",
+      "livello": 10,
+      "va": 8,
+      "costo_pm": 10
+    }
+  ],
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Inquisitore della Fratellanza Élite, Fratellanza Taumaturgo, Custode 3, 8° livello. Talenti fra le capacità speciali: gli effetti generali sono già nei valori, quelli situazionali si applicano a mano."
+}

@@ -105,6 +105,11 @@ export function renderTab(ctx) {
         barraRisorsa(ctx, 'PV', ctx.sessione.pvAttuali, ctx.massimi.pv, { classe: 'risorsa-pv' }),
         ctx.massimi.pm ? barraRisorsa(ctx, 'PM', ctx.sessione.pmAttuali, ctx.massimi.pm, { classe: 'risorsa-pm' }) : null)),
     h('div', { class: 'barra-azioni' },
+      // aperta dalla plancia del Tavolo del Master (src/ui/ritorno.js)
+      ctx.tornaAlTavolo ? h('button', { type: 'button', class: 'btn btn-torna-tavolo', onclick: ctx.tornaAlTavolo, title: 'Torna alla plancia del Tavolo del Master, allo stesso punto' }, '← Torna al tavolo') : null,
+      // Tavolo del Master, pezzo 6: solo con il server di Mutant
+      ctx.collegamento ? h('span', { class: `indicatore-collegamento ${ctx.collegamento.stato}`, role: 'status', title: ctx.collegamento.titolo },
+        ctx.collegamento.testo) : null,
       ctx.puoAnnullareSessione ? h('button', { type: 'button', class: 'btn', onclick: azioni.annullaSessione, title: 'Annulla l’ultima modifica ai valori di sessione o al calendario' }, '↶ Annulla') : null,
       id.livello < livelloMax
         ? h('button', { type: 'button', class: 'btn primario', disabled: !!ctx.motivoNoSalita, title: ctx.motivoNoSalita, onclick: azioni.sali }, `Sali al livello ${id.livello + 1}`)
@@ -145,6 +150,7 @@ export function renderTab(ctx) {
     filigrana ? h('div', { class: 'filigrana-contenitore', 'aria-hidden': 'true' }, filigrana) : null,
     badge ? h('div', { class: 'titolo-tab' }, badge, h('h2', {}, corrente.titolo)) : null,
     ctx.messaggio ? h('p', { class: `riquadro ${ctx.messaggio.tipo}`, role: 'status' }, ctx.messaggio.testo) : null,
+    avvisoMaster(ctx.avvisoMaster),
     avvisoRegoleAggiornate(ctx, tab.scheda),
     tab.errori?.length ? h('div', { class: 'riquadro attenzione' },
       h('p', {}, h('strong', {}, 'Scheda non ancora completa:')),
@@ -2034,4 +2040,20 @@ function attivazioneInfusaRiga(ctx, x, infuso, riserva, { conPulsante }) {
       onclick: () => (universale && a.pagamento?.personali
         ? ctx.azioni.lancia({ personali: a.pagamento.personali, contenitore: riserva && a.pagamento.interna ? { uid: riserva.uid, pm: a.pagamento.interna } : null })
         : ctx.azioni.chroma(riserva.uid, -a.pm)) }, `Attiva (−${a.pm} PM)`) : null);
+}
+
+/**
+ * Tavolo del Master, pezzo 6: il master ha cambiato la scheda mentre il giocatore aveva modifiche non
+ * ancora salvate nella cartella. «Aggiorna» prende la versione del master, «Tieni la mia» la sovrascrive.
+ */
+function avvisoMaster(a) {
+  if (!a) return null;
+  const ora = a.ora.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  return h('div', { class: 'riquadro attenzione avviso-master', role: 'alert' },
+    h('p', {}, h('strong', {}, 'Il master ha aggiornato la tua scheda'), ` (alle ${ora}) mentre avevi una modifica non ancora salvata nella cartella.`),
+    a.differenze.length ? h('p', {}, 'Nella versione del master: ', a.differenze.join('; '), '.') : null,
+    h('div', { class: 'riga-azioni' },
+      h('button', { type: 'button', class: 'btn primario', onclick: a.aggiorna, title: 'Prende la versione del master; la tua ultima modifica si perde' }, 'Aggiorna'),
+      h('button', { type: 'button', class: 'btn', onclick: a.tieni, title: 'Salva la tua versione al posto di quella del master, solo se nel frattempo non l’ha cambiata ancora' }, 'Tieni la mia')),
+    h('p', { class: 'nota' }, 'Finché non scegli, la scheda resta salvata nel browser ma non nella cartella. La scelta va nel registro dello scontro.'));
 }

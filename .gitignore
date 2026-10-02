@@ -34,8 +34,9 @@ Claude outputs/
 personaggi/*
 !personaggi/LEGGIMI.txt
 
-# Selezione «al tavolo» e stato del Tavolo del Master (server.mjs): dati di gioco, non codice
-tavolo/
+# Selezione «al tavolo» e stato del Tavolo del Master (server.mjs): dati di gioco; si traccia solo il LEGGIMI
+tavolo/*
+!tavolo/LEGGIMI.txt
 
 # Scontri del Tavolo del Master (server.mjs): dati di gioco; si traccia solo il LEGGIMI
 scontri/*

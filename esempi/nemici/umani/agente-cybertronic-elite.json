@@ -1,0 +1,125 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "agente-cybertronic-elite",
+  "nome": "Agente Cybertronic — Élite",
+  "fonte": "costruito come PG (Cybertronic, Agente 3, 8° livello)",
+  "caratteristiche": {
+    "FOR": 4,
+    "COS": 6,
+    "DES": 9,
+    "INT": 9,
+    "SAG": 7,
+    "CAR": 5
+  },
+  "pv": 32,
+  "pm": 13,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 13,
+  "iniziativa": 8,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 12,
+    "volonta": 10,
+    "magia": 11
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "P500",
+      "tipo": "distanza",
+      "va": 13,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "gittata_q": 30,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "ac": 1,
+      "rif": "armi_distanza_corporative:p500",
+      "note": "caricatore 12 colpi"
+    },
+    {
+      "nome": "Coltello",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d4+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "rif": "armi:coltello",
+      "note": "Manovre: Affondo"
+    }
+  ],
+  "contromisure": [
+    {
+      "nome": "Isolante",
+      "valore": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi leggere",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 16
+    },
+    {
+      "nome": "Cultura",
+      "va": 9
+    },
+    {
+      "nome": "Raggirare",
+      "va": 16
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Fuoco Controllato",
+      "effetto": "Quando spara contro un avversario ingaggiato in Ravvicinato, protetto da un alleato o che usa un ostaggio come scudo, l’Agente elimina la penalità specifica e non effettua la seconda Prova di controllo."
+    },
+    {
+      "nome": "Mira Selettiva",
+      "effetto": "Quando effettua un Tiro Mirato e rimane fermo per tutto il Round in cui spara, riduce di 2 la penalità dovuta alla Copertura del bersaglio: Leggera diventa 0 e Media diventa −2."
+    },
+    {
+      "nome": "Rete di Informatori",
+      "effetto": "Una volta per sessione, dedicando almeno un’ora ai propri contatti in un luogo abitato o tramite una rete di comunicazione, ottiene un’informazione attendibile e pertinente su una persona, un’organizzazione, un luogo, un crimine, un evento recente, beni o servizi."
+    },
+    {
+      "nome": "Pistolero",
+      "effetto": "Con due Armi leggere a distanza, la penalità di Combattere con due armi passa da −4 a −2 VA a ciascuno dei due attacchi."
+    },
+    {
+      "nome": "Estrazione Rapida",
+      "effetto": "Un utilizzo per Round, durante la propria Iniziativa."
+    },
+    {
+      "nome": "Schivata Migliorata",
+      "effetto": "La penalità alla Schivata contro attacchi a Distanza diventa −4 VA; contro una Raffica diventa −6 VA."
+    }
+  ],
+  "stati": [],
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Agente Cybertronic Élite, Cybertronic Avventuriero, Agente 3, 8° livello. Talenti fra le capacità speciali: gli effetti generali sono già nei valori, quelli situazionali si applicano a mano."
+}

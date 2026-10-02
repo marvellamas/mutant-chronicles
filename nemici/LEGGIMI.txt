@@ -1,0 +1,14 @@
+Bestiario del Tavolo del Master
+==============================
+
+Qui il server di Mutant (avvia-server.bat, cioe' node server.mjs) salva i tipi di nemico della
+campagna: un file per tipo (<id>.json, per esempio legionario-non-morto.json), con i numeri gia'
+fatti come li scrive il master (PV, AR, Difese, Iniziativa, Movimento, Salvezze, attacchi...).
+
+- I campi sono quelli di data/formato_nemici.json: un file che non li rispetta viene segnalato
+  nella plancia e non si puo' mettere in uno scontro.
+- I tipi si creano e si modificano dalla plancia ("Bestiario", "Nuovo tipo" o "Modifica"), oppure
+  copiando qui i file JSON.
+- Nello scontro ogni copia ("Legionario 1", "Legionario 2"...) ha i propri PV e Stati: il file del
+  tipo non cambia.
+- I file di questa cartella non vanno su GitHub (.gitignore): sono dati del master.

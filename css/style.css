@@ -1523,3 +1523,118 @@ body.con-sfondo::before {
 .barra-aggiornamento { position: sticky; top: 0; z-index: 1000; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.5rem 0.75rem; padding: 0.5rem 1rem; background: var(--attenzione-tenue); border-bottom: 2px solid var(--attenzione); font-size: 0.95rem; }
 .piede { padding: 0.5rem 1rem 1rem; text-align: center; color: var(--tenue); }
 .piede small { font-size: 0.75rem; }
+
+/* Cartella dei personaggi (server.mjs): origine nella pagina iniziale */
+.origine-personaggio { margin-left: 0.5rem; font-size: 0.75rem; font-weight: 500; vertical-align: middle; }
+
+/* Tavolo del Master, pezzo 1 (docs/tavolo-direttore.md): plancia dei PG in sola lettura */
+.btn-tavolo-direttore { display: inline-flex; align-items: center; gap: 0.4rem; }
+.btn-tavolo-direttore .icona-pulsante { width: 24px; height: 24px; }
+.plancia { max-width: 1880px; margin: 0 auto; }
+.plancia-testa { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; }
+.plancia-testa h1 { margin: 0.5rem 0; }
+.plancia-aggiornato { min-width: 9rem; }
+.plancia-scelta-elenco { list-style: none; padding: 0; margin: 0.4rem 0 0; columns: 3 14rem; }
+.plancia-scelta-elenco li { break-inside: avoid; padding: 0.15rem 0; }
+.plancia-griglia { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); gap: 0.9rem; margin-top: 0.75rem; }
+.carta-plancia { background: var(--superficie); border: 1px solid var(--bordo); border-radius: var(--raggio); padding: 0.75rem 0.85rem; display: flex; flex-direction: column; gap: 0.4rem; min-width: 0; }
+.carta-plancia.mancante { border-style: dashed; opacity: 0.85; }
+.carta-plancia-testa { display: flex; gap: 0.6rem; align-items: center; }
+.carta-plancia-testa h2 { margin: 0; font-size: 1.15rem; }
+.carta-plancia-testa p { margin: 0.1rem 0 0; }
+.ritratto-plancia { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; flex: none; }
+.nome-plancia { font-weight: 700; font-size: inherit; text-align: left; }
+.plancia-barra { display: flex; align-items: center; gap: 0.45rem; font-size: 0.9rem; }
+.plancia-barra .barra-traccia { height: 0.7rem; }
+.plancia-barra .barra-numero { min-width: 4.2rem; text-align: right; font-variant-numeric: tabular-nums; }
+.plancia-barra.risorsa-pv .barra-etichetta { color: var(--pv); }
+.plancia-barra.risorsa-pv .barra-riempimento { background: var(--pv); }
+.plancia-barra.risorsa-pm .barra-etichetta { color: var(--pm); }
+.plancia-barra.risorsa-pm .barra-riempimento { background: var(--pm); }
+.plancia-barra.risorsa-pe .barra-etichetta { color: var(--pe); }
+.plancia-barra.risorsa-pe .barra-riempimento { background: var(--pe); }
+.plancia-valori, .plancia-condizioni, .plancia-stati { margin: 0; display: flex; flex-wrap: wrap; gap: 0.3rem; align-items: center; }
+.pillola-plancia { font-size: 1.05rem; }
+.condizione-plancia { background: var(--barra-giallo, #a87400); color: #fff; }
+.intero-oppure { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+.carta-nemico .capacita-nemico summary { cursor: pointer; font-size: 0.9em; }
+.stato-plancia { background: var(--accento-tenue, #f3e3d8); }
+.plancia-armi { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.25rem; font-size: 0.92rem; }
+.plancia-armi li { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.3rem; border-top: 1px solid var(--bordo); padding-top: 0.25rem; }
+
+/* Tavolo del Master, pezzo 2: scontro, Iniziativa, turni e Round */
+.scontro-pannello { margin: 0.75rem 0; }
+.scontro-testa { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem; }
+.scontro-testa h2 { margin: 0; }
+.di-turno-testo { margin: 0.4rem 0; font-size: 1.05rem; }
+.ordine-iniziativa tr.di-turno { background: var(--accento-tenue); }
+.ordine-iniziativa tr.di-turno th, .ordine-iniziativa tr.di-turno .pos-scontro { color: var(--accento); }
+.ordine-iniziativa tr.provvisorio th { font-style: italic; }
+.ordine-iniziativa .totale-scontro { font-size: 1.1rem; }
+.pos-scontro { width: 2rem; text-align: center; font-weight: 700; }
+.tiro-scontro, .sposta-alleato { display: inline-flex; flex-wrap: wrap; gap: 0.25rem; align-items: center; }
+.input-d10 { width: 4.2rem; }
+.da-tirare ul, .durate-stati ul { margin: 0.3rem 0; padding-left: 1.1rem; }
+.da-tirare li, .durate-stati li { margin: 0.25rem 0; }
+.riga-aggiungi { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: end; margin: 0.4rem 0; }
+.registro-scontro ol { margin: 0.4rem 0; padding-left: 2.2rem; max-height: 16rem; overflow: auto; }
+.carta-plancia.di-turno { border-color: var(--accento); box-shadow: 0 0 0 2px var(--accento); }
+
+/* Tavolo del Master, pezzo 3: nemici (carta col colore del lato, css/palette.css → --lato-*), bestiario, editor */
+.carta-nemico { border-left-width: 5px; }
+.carta-nemico.lato-avversario { border-left-color: var(--lato-avversario); }
+.carta-nemico.lato-alleato { border-left-color: var(--lato-alleato); }
+.carta-nemico.a-zero { opacity: 0.7; }
+.carta-nemico.di-turno.lato-avversario, .carta-nemico.di-turno.lato-alleato { border-left-width: 5px; }
+.lato-avversario .nome-lato, th.lato-avversario .nome-lato { color: var(--lato-avversario); font-weight: 600; }
+.lato-alleato .nome-lato, th.lato-alleato .nome-lato { color: var(--lato-alleato); font-weight: 600; }
+.pv-nemico-pulsanti { display: inline-flex; gap: 0.2rem; }
+.aggiungi-stato { font-size: 0.85rem; padding: 0.1rem 0.25rem; }
+.stato-plancia .btn-link { padding: 0 0.15rem; }
+.plancia-sezione { margin: 1rem 0 0; font-size: 1.15rem; }
+.aggiungi-nemici h3 { margin: 0.6rem 0 0; }
+.bestiario { margin-top: 1rem; }
+.bestiario > summary { cursor: pointer; }
+.bestiario-elenco { margin: 0.4rem 0; padding-left: 1.1rem; }
+.bestiario-elenco li { margin: 0.3rem 0; }
+.editor-nemico .campi-nemico { display: flex; flex-wrap: wrap; gap: 0.5rem 0.9rem; align-items: flex-start; }
+.campo-nemico { display: flex; flex-direction: column; gap: 0.15rem; font-size: 0.92rem; }
+.campo-nemico > span { font-weight: 600; }
+.campo-nemico.gruppo { flex-basis: 100%; border: 1px solid var(--bordo); border-radius: var(--raggio); padding: 0.4rem 0.6rem 0.6rem; margin: 0; }
+.campo-nemico.gruppo legend { font-weight: 600; padding: 0 0.3rem; }
+.campo-nemico.con-errore input, .campo-nemico.con-errore select { border-color: var(--errore); }
+.campo-nemico input[type="text"] { min-width: 12rem; }
+.campo-nemico .input-numero { width: 5.5rem; }
+.voce-nemico { border: 1px dashed var(--bordo); border-radius: var(--raggio); padding: 0.4rem 0.6rem; margin: 0.4rem 0; }
+.riga-mappa { display: flex; flex-wrap: wrap; gap: 0.5rem 0.9rem; }
+.caselle-nemico { display: flex; flex-wrap: wrap; gap: 0.2rem 0.9rem; }
+
+/* Tavolo del Master, pezzo 4: «Colpito» e anteprima del danno applicato */
+.btn-colpito { margin-left: auto; align-self: flex-start; }
+.finestra-colpo .danni-colpo { display: flex; flex-wrap: wrap; gap: 0.5rem 0.9rem; margin: 0.4rem 0; }
+.finestra-colpo .input-formula { width: 7rem; }
+.anteprima-colpo ol { margin: 0.3rem 0; padding-left: 1.4rem; }
+.anteprima-colpo li { margin: 0.25rem 0; }
+
+/* Tavolo del Master, pezzo 5: «Attacca» dei nemici (src/ui/attacco-nemico.js) */
+.pulsanti-carta { margin-left: auto; align-self: flex-start; display: flex; gap: 0.3rem; }
+.pulsanti-carta .btn-colpito { margin-left: 0; }
+.azioni-scontro { white-space: nowrap; }
+.azioni-scontro .btn + .btn { margin-left: 0.3rem; }
+.scelta-pulsanti.scelta-colonna { flex-direction: column; align-items: stretch; }
+.scelta-colonna .scelta-btn { text-align: left; }
+.tiro-colpire { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem 0.5rem; margin: 0.3rem 0; }
+.esito-attacco { margin: 0.4rem 0; padding: 0.3rem 0.6rem; border-radius: var(--raggio); border-left: 4px solid var(--bordo); }
+.esito-attacco.esito-successo, .esito-attacco.esito-magistrale, .esito-attacco.esito-automatico { border-left-color: var(--pe); background: var(--pe-tenue); color: var(--testo); }
+.esito-attacco.esito-fallimento, .esito-attacco.esito-maldestro, .esito-attacco.esito-impossibile { border-left-color: var(--pv); background: var(--pv-tenue); color: var(--testo); }
+.tempra-colpo select { font-size: 0.9rem; }
+
+/* «← Torna al tavolo» nella barra della scheda aperta dalla plancia (src/ui/ritorno.js) */
+.btn-torna-tavolo { font-weight: 700; border-color: var(--accento); color: var(--accento); }
+
+/* Tavolo del Master, pezzo 6: scheda del giocatore collegata al server */
+.indicatore-collegamento { align-self: center; font-size: 0.8rem; padding: 0.1rem 0.55rem; border-radius: 999px; border: 1px solid var(--bordo); white-space: nowrap; }
+.indicatore-collegamento::before { content: "●"; margin-right: 0.3rem; }
+.indicatore-collegamento.collegato { color: var(--ok); border-color: var(--ok); background: var(--ok-tenue); }
+.indicatore-collegamento.non_collegato { color: var(--tenue); }
+.avviso-master .riga-azioni { margin: 0.4rem 0; }

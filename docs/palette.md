@@ -74,6 +74,17 @@ Segnano l'importanza di una nota nel Calendario della SD (pallini in Settimana e
 
 Sono distinte dai colori riservati: il rosso delle bandierine tende all'arancio, quello dei PV al cremisi; il verde è oliva, quello dei Punti Eroe è un verde bosco. Accanto al colore c'è sempre il nome (tooltip e filtri), per chi non distingue i colori. Il test controlla che siano tre colori diversi, lontani da quelli riservati e delle categorie, con contrasto ≥ 3:1 sulla superficie.
 
+## Lato nel Tavolo del Master
+
+Nella plancia del Tavolo del Master il bordo sinistro della carta di un nemico e il nome del suo lato dicono da che parte sta. Il nome del lato è sempre scritto accanto al colore.
+
+| Lato | Variabile | Chiaro | Scuro |
+|---|---|---|---|
+| avversario | `--lato-avversario` (magenta scuro) | `#a3238f` | `#f28be0` |
+| alleato | `--lato-alleato` (petrolio) | `#0b7377` | `#5fd6d6` |
+
+Sono lontani dai colori riservati (PV cremisi, PM blu, Punti Eroe verde) e dalle bandierine. Il test controlla il contrasto ≥ 4.5:1 sulla superficie, perché il nome del lato è testo.
+
 ## Altri colori (css/style.css, non riservati)
 
 - `--accento`: link, pulsanti primari, marchio.

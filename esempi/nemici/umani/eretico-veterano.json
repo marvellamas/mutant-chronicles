@@ -1,0 +1,111 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "eretico-veterano",
+  "nome": "Eretico — Veterano",
+  "fonte": "costruito come PG (Freelance, Incursore 2, 5° livello)",
+  "caratteristiche": {
+    "FOR": 8,
+    "COS": 6,
+    "DES": 8,
+    "INT": 5,
+    "SAG": 5,
+    "CAR": 7
+  },
+  "pv": 25,
+  "pm": 9,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 3,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 13,
+    "volonta": 10,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Pistola semiautomatica",
+      "tipo": "distanza",
+      "va": 9,
+      "danno": "1d6",
+      "natura": "Naturale",
+      "gittata_q": 30,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "ac": 1,
+      "rif": "armi_distanza:pistola-semiautomatica",
+      "note": "caricatore 15 colpi"
+    },
+    {
+      "nome": "Pugnale da combattimento",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "rif": "armi:pugnale-da-combattimento",
+      "note": "Manovre: Affondo"
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi leggere",
+      "va": 11
+    },
+    {
+      "nome": "Armi da mischia",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Tecnologia",
+      "va": 9
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Movimento Tattico",
+      "effetto": "Riduce di 2, fino a un minimo di 0, le penalità alle proprie Prove dovute esclusivamente al tipo di Movimento: Passo 0, Corsa 0, Scatto −4."
+    },
+    {
+      "nome": "Attacco Silenzioso",
+      "effetto": "Ottiene +2 VA a Furtività per avvicinarsi a un avversario senza essere individuato."
+    },
+    {
+      "nome": "Imboscata Migliorata",
+      "effetto": "Elimina il −2 VA all’Azione Principale eseguita quando si verifica l’evento dichiarato mediante Imboscata."
+    },
+    {
+      "nome": "Resistenza alla Corruzione",
+      "effetto": "Ottiene +2 alle PS per evitare di acquisire Corruzione Oscura o limitarne il peggioramento."
+    }
+  ],
+  "stati": [],
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Solo la parte umana. TODO(Davide): eventuali Doni dell’Oscura Simmetria o poteri dell’Oscura Legione, da aggiungere quando ci sono le regole. Costruito come PG: Eretico Veterano, Freelance Combattente, Incursore 2, 5° livello. Talenti fra le capacità speciali: gli effetti generali sono già nei valori, quelli situazionali si applicano a mano."
+}

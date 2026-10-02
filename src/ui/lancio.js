@@ -29,7 +29,8 @@ function corpo(ctx, inc, intestazione) {
   const versioni = versioniLancio(inc, ctx.tab.scheda, ctx.dati);
   if (d.versione === null || !versioni.some((v) => v.livello === d.versione && !v.motivo)) d.versione = [...versioni].reverse().find((v) => !v.motivo)?.livello ?? versioni[0]?.livello ?? null;
   const imposta = (modifica) => ctx.azioni.ricordaLancio(inc.nome, { ...d, ...modifica });
-  const r = calcolaLancio(personaggio, inc, d, ctx.dati);
+  // ctx.calcola: un lanciatore esterno (i nemici del Tavolo del Master, src/nemico-lancio.js) con il suo adattatore
+  const r = ctx.calcola ? ctx.calcola(d) : calcolaLancio(personaggio, inc, d, ctx.dati);
   const contenitori = contenitoriLancio(personaggio, inc);
   const stato = (ctx.ui.lancio ??= { nome: inc.nome, passo: 0 });
   const conAnticipazione = !!m.anticipazione?.aspetti?.length;
@@ -184,7 +185,9 @@ function risultato(ctx, inc, r) {
           type: 'button', class: 'btn primario btn-grande', disabled: !!r.impossibile, title: r.impossibile?.motivo ?? null,
           onclick: () => ctx.azioni.lancia({ personali: f.personali, contenitore: f.contenitore }),
         }, `Lancia (−${r.pm_costo} PM)`),
-        h('small', { class: 'nota' }, 'Tira 1d20 al tavolo, se serve la Prova. «Annulla» nell’intestazione annulla la spesa; il pannello resta aperto per rilanciare.'))),
+        h('small', { class: 'nota' }, ctx.calcola
+          ? 'Tira 1d20 al tavolo, se serve la Prova. Il lancio va nel registro dello scontro; i PM si correggono con − e + sulla carta.'
+          : 'Tira 1d20 al tavolo, se serve la Prova. «Annulla» nell’intestazione annulla la spesa; il pannello resta aperto per rilanciare.'))),
   ];
 }
 

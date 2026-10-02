@@ -1,0 +1,115 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "guerriero-mishima-veterano",
+  "nome": "Guerriero Mishima — Veterano",
+  "fonte": "costruito come PG (Mishima, Assaltatore 2, 5° livello)",
+  "caratteristiche": {
+    "FOR": 8,
+    "COS": 6,
+    "DES": 8,
+    "INT": 5,
+    "SAG": 6,
+    "CAR": 5
+  },
+  "pv": 29,
+  "pm": 8,
+  "ar": {
+    "totale": 5,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 3,
+  "movimento": {
+    "passo": 5,
+    "corsa": 11,
+    "scatto": 17
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 13,
+    "volonta": 9,
+    "magia": 11
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Spada lunga",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "rif": "armi:spada-lunga",
+      "note": "Manovre: Affondo, Spazzata"
+    },
+    {
+      "nome": "Ronin 25AP",
+      "tipo": "distanza",
+      "va": 10,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "gittata_q": 25,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "ac": 1,
+      "rif": "armi_distanza_corporative:ronin-25ap",
+      "note": "caricatore 10 colpi"
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi leggere",
+      "va": 11
+    },
+    {
+      "nome": "Armi da guerra",
+      "va": 14
+    },
+    {
+      "nome": "Armi da mischia",
+      "va": 14
+    },
+    {
+      "nome": "Difese",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 8
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Mantenere la Posizione",
+      "effetto": "Ottiene +3 al valore delle Prove o delle Prove Salvezza previste per resistere o liberarsi da sbilanciamenti, spinte, spostamenti forzati, immobilizzazioni e disarmi."
+    },
+    {
+      "nome": "Carica Brutale",
+      "effetto": "Ottiene +2 al danno base della Carica, prima di applicare il moltiplicatore."
+    },
+    {
+      "nome": "Affondo Migliorato",
+      "effetto": "Con Affondo porta il bonus al danno da +1 a +2 e applica Sanguinamento 2 anziché 1, se almeno 1 danno supera l’AR."
+    },
+    {
+      "nome": "Parata Migliorata",
+      "effetto": "Dopo una Parata riuscita con un’arma, dimezza per eccesso il danno e lo riduce di altri 2 punti, fino a un minimo di 0, prima di applicare l’AR."
+    }
+  ],
+  "stati": [],
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Guerriero Mishima Veterano, Mishima Combattente, Assaltatore 2, 5° livello. Talenti fra le capacità speciali: gli effetti generali sono già nei valori, quelli situazionali si applicano a mano."
+}

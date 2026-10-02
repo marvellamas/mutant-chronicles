@@ -1,0 +1,123 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "criminale-di-strada-elite",
+  "nome": "Criminale di strada — Élite",
+  "fonte": "costruito come PG (Freelance, Lestofante 3, 8° livello)",
+  "caratteristiche": {
+    "FOR": 5,
+    "COS": 6,
+    "DES": 9,
+    "INT": 7,
+    "SAG": 5,
+    "CAR": 9
+  },
+  "pv": 29,
+  "pm": 11,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 13,
+  "iniziativa": 6,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 13,
+    "volonta": 12,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Pistola semiautomatica",
+      "tipo": "distanza",
+      "va": 11,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "gittata_q": 30,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "ac": 1,
+      "rif": "armi_distanza:pistola-semiautomatica",
+      "note": "caricatore 15 colpi"
+    },
+    {
+      "nome": "Pugnale",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d4+3",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "rif": "armi:pugnale",
+      "note": "Manovre: Affondo"
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 13
+    },
+    {
+      "nome": "Difese",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 16
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Raggirare",
+      "va": 16
+    },
+    {
+      "nome": "Tecnologia",
+      "va": 13
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Colpo Sleale",
+      "effetto": "Una volta per Round, quando colpisce un bersaglio che ignora la sua presenza, è ingaggiato con un altro avversario oppure ha esaurito le proprie Azioni Principali, può scegliere uno dei seguenti benefici: Ferire, +2 al danno; Spostare, spostamento del bersaglio di 1 Q se fisicamente possibile, con le regole del Movimento forzato; Distrarre, il bersaglio non può effettuare Attacchi di Opportunità fino all’arrivo dell’Iniziativa successiva del Lestofante."
+    },
+    {
+      "nome": "Fuga tra la Folla",
+      "effetto": "In un ambiente affollato, in rovina o ricco di Coperture, quando utilizza un’Azione di Movimento può confondersi con l’ambiente."
+    },
+    {
+      "nome": "Opportunista",
+      "effetto": "Una volta per Round, quando un avversario entro 6 Q fallisce una Prova, manca un attacco oppure termina la propria ultima Azione Principale disponibile, può spendere immediatamente un’Azione Principale disponibile, anche fuori dalla propria Iniziativa, per effettuare un Passo fino a 6 Q, utilizzare un piccolo oggetto, nascondersi se la posizione lo permette oppure interagire con l’ambiente."
+    },
+    {
+      "nome": "Estrazione Rapida",
+      "effetto": "Un utilizzo per Round, durante la propria Iniziativa."
+    },
+    {
+      "nome": "Pistolero",
+      "effetto": "Con due Armi leggere a distanza, la penalità di Combattere con due armi passa da −4 a −2 VA a ciascuno dei due attacchi."
+    },
+    {
+      "nome": "Ritirata Migliorata",
+      "effetto": "Durante il Movimento effettuato con Ritirata evita tutti gli attacchi di opportunità, anche quelli di avversari con cui non era impegnato all’inizio del Movimento."
+    }
+  ],
+  "stati": [],
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Criminale di strada Élite, Freelance Avventuriero, Lestofante 3, 8° livello. Talenti fra le capacità speciali: gli effetti generali sono già nei valori, quelli situazionali si applicano a mano."
+}

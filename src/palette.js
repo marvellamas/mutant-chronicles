@@ -73,6 +73,9 @@ export const COLORI_RISERVATI = ['pv', 'pm', 'pe', 'fisica', 'mentale', 'spiritu
 /** Bandierine del calendario (regole.json → calendario.bandierine): variabile CSS di ogni colore. */
 export const COLORI_EVENTO = ['evento-rosso', 'evento-giallo', 'evento-verde'];
 
+/** Lato di un partecipante nel Tavolo del Master: bordo della carta e nome del lato. */
+export const COLORI_LATO = ['lato-avversario', 'lato-alleato'];
+
 /**
  * Coppie da controllare: [primo piano, sfondo, contrasto minimo]. Testo ≥ 4.5:1 (WCAG AA);
  * bordi e barre ≥ 3:1 (elementi grafici). «testo» e «superficie» vengono da css/style.css.
@@ -95,6 +98,8 @@ export const COPPIE_CONTRASTO = [
   ...GRUPPI_EQUIPAGGIAMENTO.map((g) => ['cat-testo', g.colore, 4.5]),
   // bandierine del calendario: pallini e bordi delle note (elementi grafici)
   ...COLORI_EVENTO.map((c) => [c, 'superficie', 3]),
+  // lato nel Tavolo del Master: il nome del lato è testo
+  ...COLORI_LATO.map((c) => [c, 'superficie', 4.5]),
 ];
 
 // ---------------------------------------------------------------------------

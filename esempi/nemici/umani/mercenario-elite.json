@@ -1,0 +1,123 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "mercenario-elite",
+  "nome": "Mercenario — Élite",
+  "fonte": "costruito come PG (Freelance, Artigliere 3, 8° livello)",
+  "caratteristiche": {
+    "FOR": 5,
+    "COS": 9,
+    "DES": 9,
+    "INT": 7,
+    "SAG": 5,
+    "CAR": 6
+  },
+  "pv": 39,
+  "pm": 11,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 13,
+  "iniziativa": 6,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 13,
+    "volonta": 10,
+    "magia": 9
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Fucile d’assalto",
+      "tipo": "distanza",
+      "va": 16,
+      "danno": "1d6+3",
+      "natura": "Naturale",
+      "gittata_q": 160,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "RL",
+        "TR",
+        "FS"
+      ],
+      "ac": 1,
+      "rif": "armi_distanza:fucile-d-assalto",
+      "note": "caricatore 30 colpi"
+    },
+    {
+      "nome": "Coltello",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d4+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "rif": "armi:coltello",
+      "note": "Manovre: Affondo"
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi leggere",
+      "va": 13
+    },
+    {
+      "nome": "Armi medie",
+      "va": 16
+    },
+    {
+      "nome": "Armi pesanti",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Ottimizzare Gittata",
+      "effetto": "Con Armi medie o pesanti riduce di 2 la penalità dovuta alla distanza."
+    },
+    {
+      "nome": "Raffica Estesa",
+      "effetto": "Con Raffica Media o Lunga può distribuire i colpi fra bersagli entro 2 Q dal principale, almeno un colpo per bersaglio."
+    },
+    {
+      "nome": "Ottimizzare Proiettili",
+      "effetto": "Una Raffica Breve consuma 2 colpi, una Media 4, una Lunga 8 e il Fuoco di Soppressione 8; il numero di colpi a segno non cambia."
+    },
+    {
+      "nome": "Raffica Breve Migliorata",
+      "effetto": "Porta il bonus della Raffica Breve da +2 a +4 VA."
+    },
+    {
+      "nome": "Mira Rapida",
+      "effetto": "Riduce di 1, fino a un minimo di 1, le Azioni Principali complessivamente richieste dalla distanza e dal mirino."
+    },
+    {
+      "nome": "Ricarica Rapida",
+      "effetto": "Un utilizzo per Round, durante la propria Iniziativa."
+    }
+  ],
+  "stati": [],
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Mercenario Élite, Freelance Combattente, Artigliere 3, 8° livello. Talenti fra le capacità speciali: gli effetti generali sono già nei valori, quelli situazionali si applicano a mano."
+}

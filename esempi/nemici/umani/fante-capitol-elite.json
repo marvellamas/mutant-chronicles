@@ -1,0 +1,133 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "fante-capitol-elite",
+  "nome": "Fante Capitol — Élite",
+  "fonte": "costruito come PG (Capitol, Soldato 3, 8° livello)",
+  "caratteristiche": {
+    "FOR": 7,
+    "COS": 9,
+    "DES": 9,
+    "INT": 5,
+    "SAG": 4,
+    "CAR": 6
+  },
+  "pv": 39,
+  "pm": 10,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 13,
+  "iniziativa": 4,
+  "movimento": {
+    "passo": 5,
+    "corsa": 11,
+    "scatto": 17
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 13,
+    "volonta": 11,
+    "magia": 8
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "M40",
+      "tipo": "distanza",
+      "va": 15,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "gittata_q": 160,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "RL",
+        "TR",
+        "FS"
+      ],
+      "ac": 1,
+      "rif": "armi_distanza_corporative:m40",
+      "note": "caricatore 30 colpi"
+    },
+    {
+      "nome": "Coltello",
+      "tipo": "ravvicinato",
+      "va": 8,
+      "danno": "1d4+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "rif": "armi:coltello",
+      "note": "Manovre: Affondo"
+    }
+  ],
+  "contromisure": [
+    {
+      "nome": "Imbottita",
+      "valore": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi leggere",
+      "va": 13
+    },
+    {
+      "nome": "Armi medie",
+      "va": 16
+    },
+    {
+      "nome": "Difese",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 8
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 16
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Addestramento Militare",
+      "effetto": "Il Soldato ottiene +3 alle Prove Salvezza di Volontà contro paura, panico, Fuoco di Soppressione e altre pressioni provocate dal combattimento."
+    },
+    {
+      "nome": "Supporto d’Attacco",
+      "effetto": "Una volta per Round, il Soldato designa un avversario che può percepire e sceglie un alleato entro 6 Q."
+    },
+    {
+      "nome": "Coordinamento di Squadra",
+      "effetto": "Una volta per Round, prima che un alleato entro 6 Q effettui una Prova richiesta da una Manovra di combattimento, il Soldato può ridurre di 2 la penalità propria della Manovra, fino a un minimo di 0."
+    },
+    {
+      "nome": "Mira Rapida",
+      "effetto": "Riduce di 1, fino a un minimo di 1, le Azioni Principali complessivamente richieste dalla distanza e dal mirino."
+    },
+    {
+      "nome": "Raffica Breve Migliorata",
+      "effetto": "Porta il bonus della Raffica Breve da +2 a +4 VA."
+    },
+    {
+      "nome": "Copertura Migliorata",
+      "effetto": "Quando beneficia di Copertura Leggera, la penalità avversaria per colpirlo diventa −4 VA e il bonus pertinente a Riflessi +4; con Copertura Media diventano −6 VA e +6."
+    }
+  ],
+  "stati": [],
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Fante Capitol Élite, Capitol Combattente, Soldato 3, 8° livello. Talenti fra le capacità speciali: gli effetti generali sono già nei valori, quelli situazionali si applicano a mano."
+}

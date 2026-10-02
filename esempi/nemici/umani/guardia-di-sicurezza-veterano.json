@@ -1,0 +1,115 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "guardia-di-sicurezza-veterano",
+  "nome": "Guardia di sicurezza — Veterano",
+  "fonte": "costruito come PG (Freelance, Soldato 2, 5° livello)",
+  "caratteristiche": {
+    "FOR": 5,
+    "COS": 8,
+    "DES": 8,
+    "INT": 5,
+    "SAG": 7,
+    "CAR": 6
+  },
+  "pv": 29,
+  "pm": 11,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 3,
+  "movimento": {
+    "passo": 5,
+    "corsa": 11,
+    "scatto": 17
+  },
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 13,
+    "volonta": 10,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "Carabina",
+      "tipo": "distanza",
+      "va": 13,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "gittata_q": 80,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "ac": 1,
+      "rif": "armi_distanza:carabina",
+      "note": "caricatore 15 colpi"
+    },
+    {
+      "nome": "Coltello",
+      "tipo": "ravvicinato",
+      "va": 7,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "rif": "armi:coltello",
+      "note": "Manovre: Affondo"
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi leggere",
+      "va": 11
+    },
+    {
+      "nome": "Armi medie",
+      "va": 14
+    },
+    {
+      "nome": "Difese",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 7
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 14
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Addestramento Militare",
+      "effetto": "Il Soldato ottiene +3 alle Prove Salvezza di Volontà contro paura, panico, Fuoco di Soppressione e altre pressioni provocate dal combattimento."
+    },
+    {
+      "nome": "Supporto di Difesa",
+      "effetto": "Una volta per Round, il Soldato sceglie sé stesso oppure un alleato entro 6 Q."
+    },
+    {
+      "nome": "Sempre Allerta",
+      "effetto": "Ottiene +3 VA alle Prove di Percezione per individuare imboscate, aggressori nascosti e pericoli improvvisi."
+    },
+    {
+      "nome": "Copertura Migliorata",
+      "effetto": "Quando beneficia di Copertura Leggera, la penalità avversaria per colpirlo diventa −4 VA e il bonus pertinente a Riflessi +4; con Copertura Media diventano −6 VA e +6."
+    }
+  ],
+  "stati": [],
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Guardia di sicurezza Veterano, Freelance Combattente, Soldato 2, 5° livello. Talenti fra le capacità speciali: gli effetti generali sono già nei valori, quelli situazionali si applicano a mano."
+}

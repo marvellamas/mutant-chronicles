@@ -1,0 +1,105 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "agente-cybertronic-recluta",
+  "nome": "Agente Cybertronic — Recluta",
+  "fonte": "costruito come PG (Cybertronic, Agente 1, 2° livello)",
+  "caratteristiche": {
+    "FOR": 4,
+    "COS": 6,
+    "DES": 8,
+    "INT": 8,
+    "SAG": 7,
+    "CAR": 5
+  },
+  "pv": 16,
+  "pm": 9,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 6,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 11,
+    "volonta": 9,
+    "magia": 10
+  },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "attacchi": [
+    {
+      "nome": "P500",
+      "tipo": "distanza",
+      "va": 9,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "gittata_q": 30,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "ac": 1,
+      "rif": "armi_distanza_corporative:p500",
+      "note": "caricatore 12 colpi"
+    },
+    {
+      "nome": "Coltello",
+      "tipo": "ravvicinato",
+      "va": 7,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "rif": "armi:coltello",
+      "note": "Manovre: Affondo"
+    }
+  ],
+  "contromisure": [
+    {
+      "nome": "Isolante",
+      "valore": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi leggere",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 7
+    },
+    {
+      "nome": "Furtività",
+      "va": 9
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Cultura",
+      "va": 7
+    },
+    {
+      "nome": "Raggirare",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Fuoco Controllato",
+      "effetto": "Quando spara contro un avversario ingaggiato in Ravvicinato, protetto da un alleato o che usa un ostaggio come scudo, l’Agente elimina la penalità specifica e non effettua la seconda Prova di controllo."
+    }
+  ],
+  "stati": [],
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Agente Cybertronic Recluta, Cybertronic Avventuriero, Agente 1, 2° livello. Talenti fra le capacità speciali: gli effetti generali sono già nei valori, quelli situazionali si applicano a mano."
+}

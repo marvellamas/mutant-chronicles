@@ -13,6 +13,7 @@
 
    Bandierine del calendario (importanza di una nota): --evento-rosso (cruciale), --evento-giallo
    (importante), --evento-verde (minore). Rosso vermiglio e verde oliva, lontani da --pv e --pe.
+   Lato nel Tavolo del Master: --lato-avversario (magenta scuro), --lato-alleato (petrolio).
 
    Categorie dell'equipaggiamento (etichette dei gruppi nella tab Combattimento): --cat-*.
    Il colore dice «che cos'è»; lo stato (verde/giallo/rosso delle barre) resta in style.css. */
@@ -58,6 +59,10 @@
   --evento-rosso: #d9480f;     /* vermiglio: cruciale */
   --evento-giallo: #a67c00;    /* ambra: importante */
   --evento-verde: #5c8a00;     /* oliva: minore */
+
+  /* lato nel Tavolo del Master: bordo della carta e nome del lato */
+  --lato-avversario: #a3238f;  /* magenta scuro */
+  --lato-alleato: #0b7377;     /* petrolio */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -98,5 +103,8 @@
     --evento-rosso: #ff8c5a;
     --evento-giallo: #ffd23f;
     --evento-verde: #b8e05a;
+
+    --lato-avversario: #f28be0;
+    --lato-alleato: #5fd6d6;
   }
 }
