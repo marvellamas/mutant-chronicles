@@ -9,7 +9,7 @@ import { h } from './dom.js';
 import { info } from './tooltip.js';
 import {
   TIPI, NOMI_TIPI, STATI, NOMI_STATI, catalogo, risolvi, opzioniCascata, cercaNelCatalogo, statoIniziale, puoMontare, rinforzoCompatibile, infoArtefattoVoce,
-  regoleSintonizzazione, coloriChroma, testoEffettoOggetto, AMBITI_EFFETTO, NOMI_AMBITI, statiInventario, testoCura,
+  regoleSintonizzazione, coloriChroma, testoEffettoOggetto, regolaCapolavoro, AMBITI_EFFETTO, NOMI_AMBITI, statiInventario, testoCura,
 } from '../equipaggiamento.js';
 import { pesoVoce } from '../carico.js';
 
@@ -83,6 +83,22 @@ function elencoVoci(ctx) {
  * regole.json → rinforzi), nello zaino e, nell'Inventario, il deposito comune. Se l'armatura su cui è
  * montato non è più indossata il rinforzo resta montato su di lei (rinforzi.armatura_tolta) e qui si dice.
  */
+/**
+ * Armatura Capolavoro del Corazzaio (A.61, E&L del 02/10; classi.json → capolavoro_armatura): la Contromisura
+ * numerica scelta alla costruzione, +1 (assente: 1). Si salva sulla voce («capolavoro»), l'effetto è nelle
+ * Resistenze e una riga nella provenienza dell'AR.
+ */
+function sceltaCapolavoro(ctx, r, cambia) {
+  const R = regolaCapolavoro(ctx.dati);
+  if (!R) return null;
+  const v = r.voce;
+  return h('label', { class: 'campo campo-riga capolavoro', title: R.decisione },
+    h('span', {}, `Capolavoro (${R.talento}): `),
+    h('select', { onchange: (e) => cambia(v.uid, { capolavoro: e.target.value ? { contromisura: e.target.value } : undefined }) },
+      h('option', { value: '', selected: !v.capolavoro }, 'no'),
+      R.contromisure.map((x) => h('option', { value: x.nome, selected: v.capolavoro?.contromisura === x.nome }, `${x.nome} +${R.valore} (contro ${x.effetto})`))));
+}
+
 function montataSu(ctx, r, risolte, cambia) {
   const v = r.voce;
   const armature = risolte.filter((t) => t.tipo === 'armatura' && t.uid !== r.uid);
@@ -145,6 +161,7 @@ function voceEquip(ctx, r, risolte, cambia) {
         onclick: () => { if (confirm(`Togliere «${r.nome}» dall’equipaggiamento?`)) ctx.aggiorna(voci.filter((x) => x.uid !== v.uid)); },
       }, 'Togli')),
     r.tipo === 'rinforzo' && !r.fuoriCatalogo ? montataSu(ctx, r, risolte, cambia) : null,
+    ctx.inventario && r.tipo === 'armatura' && !r.fuoriCatalogo ? sceltaCapolavoro(ctx, r, cambia) : null,
     r.tipo !== 'rinforzo' && stati.length && (!r.fuoriCatalogo || ctx.inventario) ? h('div', { class: 'stati-equip', role: 'radiogroup', 'aria-label': `Stato di ${r.nome}` },
       stati.map((st) => h('button', {
         type: 'button', role: 'radio', 'aria-checked': String(v.stato === st),

@@ -1369,7 +1369,7 @@ function schedaSenzArmi(ctx) {
     h('div', { class: 'arma-valori' },
       h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), a.va === null ? h('strong', {}, '—') : valoreEffettivo(`VA senz’armi (${a.abilita})`, a.vaEffettivo, a.va, a.scomposizione, { pillola: true, provenienza: a.provenienza })),
       h('p', {}, h('span', { class: 'sigla' }, 'Danno '), dannoConProvenienza(a, a.danno.una_mano ?? '—'),
-        h('small', { class: 'sigla' }, ` (${a.dannoOrigine === 'base' ? 'base' : a.dannoOrigine}${a.bonusCaratteristica?.bonus ? `, ${a.bonusCaratteristica.sigla} ${segno(a.bonusCaratteristica.bonus)}` : ''})`)),
+        h('small', { class: 'sigla' }, ` (${a.dannoOrigine === 'base' ? 'base' : a.dannoOrigine}${a.bonusCaratteristica?.bonus ? `, ${a.bonusCaratteristica.sigla} ${segno(a.bonusCaratteristica.bonus)}` : ''})${a.natura ? ` · ${a.natura}` : ''}`)),
       h('p', {}, h('span', { class: 'sigla' }, 'Portata '), `${a.portataQ} Q`)),
     ultima ? h('p', { class: 'nota' }, `Ultima Manovra: ${ultima.nome}`) : null);
 }
@@ -1599,7 +1599,7 @@ function attivazioneArtefattoUi(ctx, x, r, riserva) {
   const pm = riserva ? ctx.sessione.chroma?.[riserva.uid]?.pmAttuali ?? 0 : 0;
   const motivo = x.deposito ? 'nel deposito comune' : !x.sintonizzato ? 'non sintonizzato' : !r.attivo ? 'non indossato' : pm < at.pm ? `la riserva ha ${pm} PM, ne servono ${at.pm}` : null;
   return h('div', { class: 'attivazione-infusa' },
-    h('p', {}, h('strong', {}, 'Attivazione: '), `${at.pm} PM dalla riserva interna, ${at.azione}, ${at.durata}: pugni ${at.natura} e +${at.danno} al danno (${at.fonte}).`),
+    h('p', {}, h('strong', {}, 'Attivazione: '), `${at.pm} PM dalla riserva interna, ${at.azione}, ${at.durata}: danni dei pugni di natura ${at.natura} e +${at.danno} al danno (${at.fonte}).`),
     accesa ? h('p', { class: 'nota' }, h('strong', {}, 'Attiva'), ` · vale in «Attacca!» senz’armi; dura ${at.durata}. `,
       h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => ctx.azioni.condizioneOggetto(chiave) }, 'Termina')) : null,
     motivo && !accesa ? h('p', { class: 'nota motivo' }, `Non attivabile ora: ${motivo}.`) : null,

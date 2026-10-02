@@ -1986,7 +1986,37 @@
               }
             ]
           },
-          "TODO(Davide)": "Il +1 Protezione dell’armatura Capolavoro «resta da raccordare alle regole definitive delle protezioni» (lo dice il manuale)."
+          "capolavoro_armatura": {
+            "valore": 1,
+            "contromisure": [
+              {
+                "nome": "Ignifugo",
+                "effetto": "Fuoco"
+              },
+              {
+                "nome": "Termico",
+                "effetto": "Gelo"
+              },
+              {
+                "nome": "Isolante",
+                "effetto": "Elettricità"
+              },
+              {
+                "nome": "Dissipante",
+                "effetto": "Plasma"
+              },
+              {
+                "nome": "Imbottita",
+                "effetto": "Concussivo"
+              },
+              {
+                "nome": "Anticorrosivo",
+                "effetto": "Corrosivo"
+              }
+            ],
+            "decisione": "Il beneficio provvisorio «+1 Protezione» dell’armatura Capolavoro diventa +1 a una sola Contromisura numerica, scelta al momento della costruzione: Ignifugo, Termico, Isolante, Dissipante, Imbottita o Anticorrosivo. Se la Contromisura scelta è assente, assume valore 1; se ha già valore X, passa a X + 1. Il beneficio non aumenta l’AR e non sottrae direttamente 1 ai danni ai PV; Riflettente è esclusa perché non è numerica.",
+            "fonte": "E&L del 02/10/2026, decisione 4 (per-davide A.61); docs/risposte-master.md, decisione 82"
+          }
         },
         {
           "specializzazione": "Manifattore",

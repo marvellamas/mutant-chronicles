@@ -638,7 +638,7 @@ export function artefattiStampa(s, creazione, dati, { conPoteri = false } = {}) 
       ar: prot ? { testo: testoAr(prot.ar), provenienza: riga(prot.provenienza) } : null,
       nonInUso: !arma && !prot && effettiPossibili,
       // Magia §24.2, §25.4: incantesimo infuso, pagato dalla riserva integrata, senza Prove
-      attivazione: def?.attivazione?.testo ?? (def?.attivazione_artefatto ? `${def.attivazione_artefatto.pm} PM dalla riserva interna, ${def.attivazione_artefatto.azione}, ${def.attivazione_artefatto.durata}: pugni ${def.attivazione_artefatto.natura} e +${def.attivazione_artefatto.danno} al danno` : testoInfuso(r, dati)),
+      attivazione: def?.attivazione?.testo ?? (def?.attivazione_artefatto ? `${def.attivazione_artefatto.pm} PM dalla riserva interna, ${def.attivazione_artefatto.azione}, ${def.attivazione_artefatto.durata}: danni dei pugni di natura ${def.attivazione_artefatto.natura} e +${def.attivazione_artefatto.danno} al danno` : testoInfuso(r, dati)),
       riserva: riserva ? { energia: riserva.energia, capacita: riserva.capacita } : null,
     };
   });

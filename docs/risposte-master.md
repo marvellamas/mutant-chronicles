@@ -636,3 +636,10 @@ manuali; la 69 chiude in parte una domanda.
     massimo degli Incantesimi. → `regole.json` → `rituali` (`magistrale`, `bonus_costruzione_magistrale`,
     `decisioni`; TODO tolti), `incantesimi.json` (Rigenerazione: `decisioni`), `src/lancio.js` →
     `ripartizioneMagistrale`, passo Risultato del Rituale in «Lancia!» con le quote modificabili.
+82. **Capolavoro del Corazzaio** (A.61, per il Corazzaio; E&L del 02/10/2026, decisione 4). Il «+1 Protezione»
+    dell'armatura Capolavoro diventa +1 a una sola Contromisura numerica scelta alla costruzione (Ignifugo,
+    Termico, Isolante, Dissipante, Imbottita, Anticorrosivo): assente vale 1, con valore X passa a X + 1; non
+    aumenta l'AR né riduce i danni ai PV; Riflettente esclusa. → `classi.json` (Corazzaio:
+    `capolavoro_armatura`, TODO tolto), scelta sulla voce dell'armatura (`capolavoro`) nell'Inventario,
+    effetto «contromisura» nelle Resistenze e riga di provenienza nell'AR (`src/equipaggiamento.js` →
+    `effettoCapolavoro`, `src/protezione.js`). Restano aperte per A.61 gli altri Talenti del censimento.

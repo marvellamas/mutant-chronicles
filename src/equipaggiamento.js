@@ -523,6 +523,8 @@ export function normalizzaEquipaggiamento(valore) {
     }
     if (typeof v.montato_su === 'string' && v.montato_su) out.montato_su = v.montato_su;
     if (v.sintonizzato === true) out.sintonizzato = true; // §7.10: scelta del giocatore
+    // A.61: armatura Capolavoro del Corazzaio, con la Contromisura scelta alla costruzione
+    if (isOggetto(v.capolavoro) && testo(v.capolavoro.contromisura)) out.capolavoro = { contromisura: v.capolavoro.contromisura };
     if (Number.isInteger(v.pi_direttore) && v.pi_direttore >= 1) out.pi_direttore = v.pi_direttore; // A.47: PI fissati dal Direttore
     if (Number.isInteger(v.pm_iniziali) && v.pm_iniziali >= 0) out.pm_iniziali = v.pm_iniziali; // E&L 2 (A.19): contenitore trovato
     if (testo(v.matrice)) out.matrice = v.matrice.trim().slice(0, 80); // Magia §26.4: Matrice d'origine di una Batteria Matrice
@@ -612,6 +614,25 @@ const maniDi = (def) => (def?.mani === 2 ? 2 : def?.mani === 0 ? 0 : 1);
  * §7.3.3). Gli accessori personalizzati si montano sulle armi.
  */
 /** Un effetto «attacco» o «danno» vale per il tipo d'arma: tutti, ravvicinati, a distanza. */
+/** Regola del Capolavoro dell'armatura (classi.json → Corazzaio → capolavoro_armatura; A.61). */
+export function regolaCapolavoro(dati) {
+  for (const c of dati?.classi?.classi ?? []) for (const t of [...(c.talenti_fissi ?? []), ...(c.talenti_a_scelta ?? [])]) if (t.capolavoro_armatura) return { talento: t.nome, ...t.capolavoro_armatura };
+  return null;
+}
+
+/**
+ * Effetto «contromisura» del Capolavoro su un'armatura risolta (voce.capolavoro.contromisura): la Contromisura
+ * scelta vale 1 se l'armatura non l'ha, X + 1 se l'ha già con valore X (A.61). null se la scelta non è ammessa.
+ */
+export function effettoCapolavoro(o, dati) {
+  const R = regolaCapolavoro(dati);
+  const scelta = R?.contromisure.find((x) => x.nome === o.voce?.capolavoro?.contromisura);
+  if (!scelta) return null;
+  const base = (o.effetti ?? []).filter((x) => x.tipo === 'contromisura' && x.effetto === scelta.effetto).reduce((m, x) => Math.max(m, x.valore), 0);
+  const chiave = scelta.effetto.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  return { tipo: 'contromisura', effetto: scelta.effetto, valore: base + R.valore, ambito: 'generale', beneficio: `contromisura_${chiave}`, condizione: R.decisione, fonte: R.fonte, capolavoro: scelta.nome };
+}
+
 /** Incantesimi infusi di un Artefatto: uno (personalizzato, «infuso») o più (catalogo, «infusi»: Pietra della Vigilanza). */
 export const infusiDi = (info) => info?.infusi ?? (info?.infuso ? [info.infuso] : []);
 
@@ -761,6 +782,8 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       arKit: kit ? kit.def.rinforzo.ar : 0,
       // A.48: protezione classificata Artefatto Mistico o TecnoMistico (Corazza Potenziata)
       artefatto: !!d && infoArtefatto(d, dati)?.tipologia === 'Protezioni',
+      // A.61: Capolavoro del Corazzaio (Contromisura +1, non AR): per la riga di provenienza dell'AR
+      capolavoro: o.tipo === 'armatura' && o.voce.capolavoro ? effettoCapolavoro(o, dati) : null,
       ar, penalita, forRichiesta, forMancante, personalizzato: o.personalizzato,
       mov: d?.mov ?? 0, parata: null, proprieta: d?.proprieta ?? [],
       // §7.14.2, §7.16.3: armature servoassistite a sistema spento (FOR e penalità proprie), mostrate
@@ -828,6 +851,12 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   const candidati = [];
   for (const o of oggetti.filter((x) => x.attivo && x.effetti.length && modificaOperativa(x) && conInnesto(x))) {
     for (const e of o.effetti) candidati.push({ o, e });
+  }
+  // A.61 (E&L del 02/10): armatura Capolavoro del Corazzaio, +1 alla Contromisura scelta (assente: 1; X: X + 1),
+  // come copia dello stesso beneficio, quindi vale la maggiore; non tocca l'AR
+  for (const o of oggetti.filter((x) => x.attivo && x.tipo === 'armatura' && x.voce.capolavoro)) {
+    const cap = effettoCapolavoro(o, dati);
+    if (cap) candidati.push({ o: { ...o, nome: `${o.nome} (Capolavoro)` }, e: cap });
   }
   // §7.21.1: «copie dello stesso beneficio non si sommano»: vale il maggiore
   const migliore = new Map();

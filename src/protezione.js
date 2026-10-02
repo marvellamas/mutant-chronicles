@@ -124,6 +124,8 @@ export function calcolaAR(equip, dati, { talenti = [], accesi = new Set(), rotti
   }
   // §7.21.1: gli elmetti indossati non danno AR, neppure magica (riga a 0: l'app li ha visti)
   for (const p of protezioni.filter((x) => x.tipo === 'elmetto')) righe.push(riga(p.nome, 0, 'elmetto: nessuna AR (§7.21.1)'));
+  // A.61 (E&L del 02/10): l'armatura Capolavoro del Corazzaio migliora una Contromisura, non l'AR
+  for (const p of armature.filter((x) => x.capolavoro)) righe.push({ ...riga(`${p.nome}: Capolavoro, ${p.capolavoro.capolavoro} ${p.capolavoro.valore}`, 0, `Contromisura contro ${p.capolavoro.effetto}, non AR (A.61): vedi Resistenze`), escluso: true });
 
   // rinforzi indossati da soli (soprabiti e mantelli, richiesta di Davide del 02/10; regole.json →
   // rinforzi.da_solo, TODO(Davide) A.80): §7.23.4 «non costituiscono un profilo autonomo di armatura»

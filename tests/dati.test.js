@@ -34,9 +34,8 @@ test('i TODO(Davide) sono elencabili', () => {
   assert.equal(todo.some((t) => t.percorso.startsWith('caratteristiche.json')), false);
   // Talenti di magia e tipo di tre Talenti Liberi: decisi dal master il 26/09/2026
   assert.equal(todo.some((t) => t.percorso.startsWith('talenti_liberi.json')), false);
-  // chiusi dalle risposte del master (docs/risposte-master.md); resta Corazzaio (per-davide A.61,
-  // docs/censimento-talenti.md): il +1 Protezione del Capolavoro «resta da raccordare»
-  assert.deepEqual(todo.filter((t) => t.percorso.startsWith('classi.json')).map((t) => /Corazzaio/.test(t.percorso) || /Capolavoro/.test(t.testo ?? t.valore ?? '')), [true]);
+  // chiusi dalle risposte del master (docs/risposte-master.md); il Capolavoro del Corazzaio (A.61) il 02/10
+  assert.equal(todo.some((t) => t.percorso.startsWith('classi.json')), false);
   // tutte chiuse dalle risposte ai 19 quesiti (E&L del 29/09); restano le scelte sui Rituali (per-davide A.74); A.78 chiusa il 02/10 (decisione 71)
   assert.ok(todo.filter((t) => t.percorso.startsWith('regole.json')).every((t) => (/^regole\.json\.rituali/.test(t.percorso) && /A\.74/.test(t.testo))    // rinforzi indossati da soli e armatura tolta (richiesta di Davide del 02/10, per-davide A.80)
     || (/^regole\.json\.rinforzi/.test(t.percorso) && /A.80/.test(t.testo))));
