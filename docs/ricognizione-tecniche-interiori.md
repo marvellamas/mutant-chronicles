@@ -129,8 +129,9 @@ Fatto il **prompt 1** della proposta, con la richiesta di Davide («Risorse Inte
 - **SS:** le Tecniche lasciano il foglio 2 (che torna alle Annotazioni) e vanno nel foglio 5 (Poteri), che si stampa anche per chi ha solo le Tecniche. In quel caso a sinistra ci sono PM e regole comuni, a destra l'elenco con Costo, Azione, Durata e Bersaglio.
 - **Verifica:** nessun valore calcolato cambia rispetto a `main` (a, b, c, Lucas, d; a riposo e con una Ferita e Rallentato).
 
-Resta per il **prompt 2**:
-- gli effetti numerici delle altre Tecniche nello schema degli oggetti (VA, danno, movimento), applicati finché sono attive, a cominciare dal resto di Pelle di Rinoceronte (+3 FOR, +3 Atletica e Corpo a corpo nelle manovre di forza, +2 danno ravvicinato);
-- i dadi di Onda Interiore per Disciplina e Grado;
-- Durata e Bersaglio anche nella SD per le Tecniche già attive al tavolo, dove servono.
-
+Fatto il **prompt 2** (02/10, sera):
+- **Dati:** `effetti` nelle 28 schede (`tools/effetti_tecniche.mjs`; frasi in `tools/verifica_frasi.mjs`): 14 con effetti applicati (valori, «Attacca!», cura), 14 solo promemoria; TODO(Davide) A.81 (Pelle di Rinoceronte, manovre di forza) e A.82 (Onda Interiore, bonus pertinenti).
+- **Motore:** `src/tecniche.js` (`effettiTecniche`, `tecnicheAttacco`, `curaTecnica`), `src/condizioni.js` (VA, usi specifici, PS, Caratteristiche, danno, Movimento, Sensi), `src/attacco.js` (`profiloOndaInteriore`, effetti d'attacco, riga «Tecniche attive»; la stessa riga in «Lancia!»). Le istantanee restano in corso fino alla fine del Round.
+- **SD:** riquadro delle Tecniche attive con l'effetto in breve e le regole; Imposizione con «Su chi» e il dado; Onda Interiore fra le armi della tab Combattimento; riquadro Sensi.
+- **SS:** colonna «Effetto» nel foglio 5 se l'elenco entra; seguito nella colonna sinistra.
+- Test in `tests/tecniche-effetti.test.js`.
