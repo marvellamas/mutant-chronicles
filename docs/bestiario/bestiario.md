@@ -50,7 +50,9 @@ Capitolo 5 — Creature pronte
 
 5.1 Lettura delle creature pronte · 5.2 Insettoidi: Scavafosse, Regina della Covata · 5.3 Aracnoidi: Tessitrice d’Ombra, Madre dei Fili Neri · 5.4 Umanoidi mostruosi: Squarciatore, Bruto della Breccia · 5.5 Umani corrotti: Eretico corrotto
 
-Capitolo 6 — Generazione casuale (in preparazione)
+Capitolo 6 — Generazione casuale
+
+6.1 Formato delle tabelle · 6.2 Base · 6.3 Grado · 6.4 Moduli · 6.5 Corruzione · 6.6 Crea un nemico a caso
 
 Appendice A — Taratura
 
@@ -895,7 +897,186 @@ I valori umani vengono dal convertitore (Eretico Recluta, Veterano ed Élite del
 
 # **Capitolo 6 — Generazione casuale**
 
-*In preparazione.*
+## **6.1 Formato delle tabelle**
+
+Le tabelle di questo capitolo hanno tutte la stessa forma, perché si possano usare al tavolo e leggere da un programma (il generatore del Tavolo del Master):
+
+* la **prima colonna** è il dado (d20, d10 o d6) e contiene un numero o un intervallo «a–b»; gli intervalli coprono ogni faccia del dado una volta sola, in ordine;
+* la **seconda colonna** è il risultato, con il nome usato nel resto del Bestiario;
+* la **terza colonna**, «id», è il codice del risultato: lettere minuscole senza accenti, parole separate da un trattino;
+* le colonne successive sono i dati del risultato (costo, scarto, basi ammesse), con «—» quando non si applicano.
+
+Un risultato non ammesso (una Mutazione che la base non può avere, un modulo già preso, un costo oltre +2) **si ritira**, salvo diversa indicazione della tabella.
+
+## **6.2 Base**
+
+| d20 | Base | id | Paragrafo |
+| :---: | :---- | :---- | :---: |
+| 1–6 | Umano | umano | §3.2 |
+| 7–11 | Insettoide | insettoide | §3.3 |
+| 12–15 | Aracnoide | aracnoide | §3.4 |
+| 16–20 | Umanoide mostruoso | umanoide-mostruoso | §3.5 |
+
+## **6.3 Grado**
+
+Il grado si tira rispetto al **grado del gruppo**, quello della fascia dei personaggi nel §2.1 (per esempio Medio per personaggi di 8°–11° livello). Lo scarto sposta il grado di uno o due gradini; un risultato sotto il Minore resta Minore, uno sopra il Molto potente resta Molto potente. Si usa la tabella del contesto.
+
+### **6.3.1 Pattuglia**
+
+Creature in movimento, sentinelle, incontri lungo la strada.
+
+| d20 | Grado | id | Scarto |
+| :---: | :---- | :---- | :---: |
+| 1–6 | Due gradi sotto | due-sotto | −2 |
+| 7–14 | Un grado sotto | uno-sotto | −1 |
+| 15–19 | Grado del gruppo | pari | 0 |
+| 20 | Un grado sopra | uno-sopra | +1 |
+
+### **6.3.2 Scontro**
+
+Lo scontro preparato di una sessione.
+
+| d20 | Grado | id | Scarto |
+| :---: | :---- | :---- | :---: |
+| 1–3 | Due gradi sotto | due-sotto | −2 |
+| 4–9 | Un grado sotto | uno-sotto | −1 |
+| 10–17 | Grado del gruppo | pari | 0 |
+| 18–19 | Un grado sopra | uno-sopra | +1 |
+| 20 | Boss del grado del gruppo | boss | 0 |
+
+### **6.3.3 Tana**
+
+Il nido, il covo, il luogo dove le creature vivono e difendono qualcosa.
+
+| d20 | Grado | id | Scarto |
+| :---: | :---- | :---- | :---: |
+| 1–2 | Due gradi sotto | due-sotto | −2 |
+| 3–6 | Un grado sotto | uno-sotto | −1 |
+| 7–13 | Grado del gruppo | pari | 0 |
+| 14–17 | Un grado sopra | uno-sopra | +1 |
+| 18–20 | Boss del grado del gruppo | boss | 0 |
+
+### **6.3.4 Difficoltà**
+
+| d6 | Difficoltà | id | Fattore |
+| :---: | :---- | :---- | :---: |
+| 1–2 | Facile | facile | 0,7 |
+| 3–5 | Normale | normale | 1 |
+| 6 | Duro | duro | 1,3 |
+
+Il **numero di creature** è quello della tabella dei gruppi misti del §2.3 (livello dei personaggi, grado effettivo della creatura) moltiplicato per il fattore, arrotondato all’unità e almeno 1. Un Boss è sempre uno solo. I fattori vengono dal bilancio del §2.3: con la legge del quadrato, il 30% e il 100% della forza del gruppo richiedono circa 0,7 e 1,3 volte le creature dello scontro normale (Appendice A.3).
+
+## **6.4 Moduli**
+
+### **6.4.1 Numero di moduli**
+
+| d6 | Moduli | id | Numero |
+| :---: | :---- | :---- | :---: |
+| 1–2 | Nessuno | nessuno | 0 |
+| 3–4 | Uno | uno | 1 |
+| 5 | Due | due | 2 |
+| 6 | Tre | tre | 3 |
+
+Si tirano i moduli uno alla volta, in ordine. Quando il costo totale arriverebbe oltre +2 (§2.4), quel modulo si scarta e si smette di tirare.
+
+### **6.4.2 Tipo di modulo**
+
+| d6 | Tipo | id | Tabella |
+| :---: | :---- | :---- | :---: |
+| 1–3 | Mutazione | mutazione | 6.4.3 |
+| 4–5 | Corrotto dall’Oscura Simmetria | corrotto | 6.5 |
+| 6 | Equipaggiamento | equipaggiamento | 6.4.4 |
+
+Il Corrotto si prende una sola volta: se esce di nuovo vale Mutazione. L’Equipaggiamento vale soltanto per Umano e Umanoide mostruoso: per le altre basi vale Mutazione.
+
+### **6.4.3 Mutazione**
+
+| d20 | Mutazione | id | Costo | Basi |
+| :---: | :---- | :---- | :---: | :---- |
+| 1–2 | Carapace | carapace | +½ | Tutte |
+| 3–4 | Arti in più | arti-in-piu | +1 | Tutte |
+| 5–6 | Veleno | veleno | +½ | Tutte |
+| 7–8 | Rigenerazione | rigenerazione | +½ (+1 dal Potente) | Tutte |
+| 9–10 | Sangue acido | sangue-acido | +½ | Tutte |
+| 11 | Sensi oscuri | sensi-oscuri | +0 | Tutte |
+| 12–13 | Aculei | aculei | +½ | Tutte |
+| 14 | Mole | mole | +1 | Insettoide, Aracnoide, Umanoide mostruoso |
+| 15 | Ali membranose | ali-membranose | +½ | Insettoide, Umanoide mostruoso |
+| 16 | Scavatore | scavatore | +0 | Insettoide, Aracnoide, Umanoide mostruoso |
+| 17–18 | Mimetismo | mimetismo | +½ | Tutte |
+| 19–20 | Balzo | balzo | +½ | Insettoide, Aracnoide, Umanoide mostruoso |
+
+Effetti nel §4.3. Una Mutazione già presa o non ammessa per la base si ritira.
+
+### **6.4.4 Equipaggiamento**
+
+| d6 | Fascia | id | Costo |
+| :---: | :---- | :---- | :---: |
+| 1–4 | Della fascia del grado | del-grado | +0 |
+| 5 | Della fascia del grado successivo | grado-successivo | +½ |
+| 6 | Di due fasce sopra | due-fasce-sopra | +1 |
+
+L’equipaggiamento della fascia è quello della tabella del §4.4; la scelta dell’arma è del Direttore.
+
+## **6.5 Corruzione**
+
+### **6.5.1 Livello di Corruzione**
+
+| d10 | Livello | id | Costo | Manifestazioni minori | Manifestazioni maggiori |
+| :---: | :---- | :---- | :---: | :---: | :---: |
+| 1–6 | Toccato | toccato | +½ | 1 | 0 |
+| 7–9 | Posseduto | posseduto | +1 | 1 | 1 |
+| 10 | Consacrato | consacrato | +2 | 1 | 2 |
+
+Se il livello porta il costo totale oltre +2, si scende al livello inferiore che ci sta; se non ci sta neppure il Toccato, il modulo si scarta. Effetti nel §4.2.
+
+### **6.5.2 Manifestazione minore**
+
+| d6 | Manifestazione | id | Costo |
+| :---: | :---- | :---- | :---: |
+| 1 | Occhi senza luce | occhi-senza-luce | +0 |
+| 2 | Pelle di cenere | pelle-di-cenere | +½ |
+| 3 | Sangue fermo | sangue-fermo | +0 |
+| 4 | Sussurro continuo | sussurro-continuo | +0 |
+| 5 | Gelo dell’abisso | gelo-dell-abisso | +0 |
+| 6 | Passo senza peso | passo-senza-peso | +0 |
+
+Il costo è quello che si aggiunge al modulo Corrotto (§4.1). Una Manifestazione che la creatura possiede già come capacità della base (per esempio Occhi senza luce per un Aracnoide, che ha la Visione al buio) si ritira.
+
+### **6.5.3 Manifestazione maggiore**
+
+| d6 | Manifestazione | id | Costo |
+| :---: | :---- | :---- | :---: |
+| 1 | Ferite che non si chiudono | ferite-che-non-si-chiudono | +0 |
+| 2 | Fiamma nera | fiamma-nera | +0 |
+| 3 | Sguardo del vuoto | sguardo-del-vuoto | +0 |
+| 4 | Carne che ricorda | carne-che-ricorda | +0 |
+| 5 | Grido dell’Oscura Simmetria | grido-dell-oscura-simmetria | +0 |
+| 6 | Ritorno | ritorno | +0 |
+
+Le Manifestazioni non si ripetono: un risultato già preso si ritira. Effetti nel §4.2.4.
+
+## **6.6 Crea un nemico a caso**
+
+| Passo | Operazione | Tabelle |
+| :---: | :---- | :---- |
+| 1 | **Grado e difficoltà.** Si trova il grado del gruppo (§2.1), si sceglie il contesto e si tira lo scarto; poi la difficoltà. | 6.3.1–6.3.3, 6.3.4 |
+| 2 | **Base.** Si tira la base e se ne copia la colonna del grado (Capitolo 3). | 6.2 |
+| 3 | **Moduli.** Si tira il numero di moduli; per ciascuno il tipo e poi il modulo, rispettando basi ammesse e costo massimo +2. | 6.4.1–6.4.4 |
+| 4 | **Corruzione.** Per il modulo Corrotto si tirano il livello e le Manifestazioni. | 6.5.1–6.5.3 |
+| 5 | **Scheda e numero.** Si applicano gli effetti dei moduli alla colonna della base, si calcola il grado effettivo (§2.4) e il numero di creature dalla tabella dei gruppi misti del §2.3, con il fattore della difficoltà. Per un Boss si applica il §2.5. | §2.3, §2.4, §2.5 |
+
+### **6.6.1 Esempio svolto**
+
+Sette personaggi di 8° livello entrano in un deposito sotterraneo: il grado del gruppo è Medio e il contesto è uno scontro.
+
+1. **Grado e difficoltà.** Tabella 6.3.2, d20 = 12: grado del gruppo, quindi Medio. Tabella 6.3.4, d6 = 4: normale, fattore 1.
+2. **Base.** Tabella 6.2, d20 = 13: Aracnoide. Colonna Medio del §3.4: PV 59, AR 3, Morso VA 15 2d6+2, Ragnatela VA 14 a 9 Q, Difese 14, 2 AzP.
+3. **Moduli.** Tabella 6.4.1, d6 = 4: un modulo. Tabella 6.4.2, d6 = 5: Corrotto.
+4. **Corruzione.** Tabella 6.5.1, d10 = 8: Posseduto (+1), una Manifestazione minore e una maggiore. Tabella 6.5.2, d6 = 1: Occhi senza luce, che l’Aracnoide ha già come Visione al buio: si ritira, d6 = 3, Sangue fermo. Tabella 6.5.3, d6 = 3: Sguardo del vuoto.
+5. **Scheda e numero.** Natura Oscura Simmetria; AR 4, di cui 1 magica; Morso di danno Magico; PS di Volontà 13; Presenza terrificante, Sangue fermo, Sguardo del vuoto; chi è ferito è esposto alla Corruzione con intensità Debole. Il costo è +1: grado effettivo Potente. Nella tabella dei gruppi misti del §2.3, contro personaggi di 8° livello, il Potente vale 1: **una creatura**.
+
+Con il modello dell’Appendice A questa creatura resiste circa 5,5 Round contro i sette personaggi e ne abbatte uno, che para, in circa 6 Round; lo Sguardo del vuoto e la Ragnatela la rendono più pericolosa di quanto dicano i numeri.
 
 # **Appendice A — Taratura**
 
