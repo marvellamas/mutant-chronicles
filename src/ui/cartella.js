@@ -4,12 +4,18 @@
 
 let disponibile = null; // null: non ancora chiesto
 
-/** C'è il server della cartella? Una sola chiamata a /api/ping, con un secondo di attesa al massimo. */
+/**
+ * C'è il server della cartella? Prima una HEAD su versione.json, che c'è con qualunque server statico: solo
+ * server.mjs risponde con l'intestazione X-Mutant-Server (così senza server nessuna richiesta fallisce e la
+ * console resta pulita); poi /api/ping. Un secondo di attesa al massimo per ciascuna.
+ */
 export async function serverCartella() {
   if (disponibile !== null) return disponibile;
   try {
     const ctrl = new AbortController();
     const t = setTimeout(() => ctrl.abort(), 1000);
+    const h = await fetch('versione.json', { method: 'HEAD', signal: ctrl.signal, cache: 'no-store' });
+    if (h.headers.get('X-Mutant-Server') !== '1') { clearTimeout(t); disponibile = false; return disponibile; }
     const r = await fetch('api/ping', { signal: ctrl.signal, cache: 'no-store' });
     clearTimeout(t);
     const j = r.ok ? await r.json() : null;

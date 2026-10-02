@@ -90,11 +90,15 @@ test('selezione «al tavolo»: vuota all’inizio, salvata sul server e riletta;
 test('senza server la plancia non c’è: /api/ping assente → niente server (pulsante e rotta nascosti)', async () => {
   const fetchVero = globalThis.fetch;
   try {
-    globalThis.fetch = async () => new Response('Non trovato', { status: 404 });
+    // server statico qualunque: versione.json c'è, ma senza X-Mutant-Server (nessuna richiesta a /api)
+    const chieste = [];
+    globalThis.fetch = async (u) => { chieste.push(String(u)); return String(u).startsWith('versione.json') ? new Response('{}', { status: 200 }) : new Response('Non trovato', { status: 404 }); };
     const senza = await import('../src/ui/cartella.js?senza-server');
     assert.equal(await senza.serverCartella(), false);
     assert.equal(await senza.elencoCartella(), null);
-    globalThis.fetch = async () => new Response(JSON.stringify({ ok: true, app: 'mutant', cartella: 'personaggi' }), { status: 200 });
+    assert.deepEqual(chieste, ['versione.json']);
+    // il server di Mutant si riconosce dall'intestazione X-Mutant-Server (HEAD su versione.json), poi /api/ping
+    globalThis.fetch = async () => new Response(JSON.stringify({ ok: true, app: 'mutant', cartella: 'personaggi' }), { status: 200, headers: { 'X-Mutant-Server': '1' } });
     const con = await import('../src/ui/cartella.js?con-server');
     assert.equal(await con.serverCartella(), true);
   } finally {

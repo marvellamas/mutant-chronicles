@@ -285,7 +285,9 @@ async function statico(req, res, percorso, radice) {
     let file = pieno;
     if (s.isDirectory()) { file = join(pieno, 'index.html'); s = await stat(file); rel = `${rel.replace(/\/$/, '')}/index.html`; }
     const est = extname(file).toLowerCase();
-    const intestazioni = { 'Content-Type': TIPI[est] ?? 'application/octet-stream', 'Content-Length': s.size };
+    // X-Mutant-Server: l'app capisce che c'è questo server con una HEAD su versione.json, che esiste anche con
+    // un server statico qualunque: senza server nessuna richiesta fallita e nessun errore in console
+    const intestazioni = { 'Content-Type': TIPI[est] ?? 'application/octet-stream', 'Content-Length': s.size, 'X-Mutant-Server': '1' };
     if (NO_CACHE.has(est)) intestazioni['Cache-Control'] = 'no-cache';
     res.writeHead(200, intestazioni);
     if (req.method === 'HEAD') return res.end();
