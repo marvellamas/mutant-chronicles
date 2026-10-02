@@ -82,6 +82,7 @@ src/
   ui/           wizard a passi (fasi 0–9 del §2.0), scheda a tab, Sali di livello, stampa, import/export
 data/           JSON delle regole (fonte di verità): 12 file in data/ (formato_nemici.json: formato dei nemici del Tavolo del Master, per-davide A.73, validaNemico in validate.js), catalogo in data/equipaggiamento/ (index.json + 21 file)
 tests/          node --test; tests/collaudo/ tre personaggi di riferimento con PDF
+esempi/         PG d'esempio (Aiko Tenzan, Lottatrice Mishima con le Tecniche Interiori), scritto da tools/genera_esempio_tecniche.mjs
 tools/          estrazione dai manuali, generatori dei lotti (tools/lotti/), collaudo_pdf.mjs, genera_immagini.py, versione.mjs, installa-hook.mjs e hooks/pre-commit
 img/            stemmi e icone generati (img/immagini.json li elenca); originali in img/originali/, non tracciati
 docs/           studio di fattibilità, lotti, domande e risposte del master, roadmap
@@ -112,7 +113,7 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 - regole aggiornate sui Punti Abilità Liberi (Doc del 27/09, per-davide A.52): gli eventi già registrati con meno punti delle regole correnti si completano dall'avviso in cima alla SD («Assegna», `#/p/<id>/completa`, `src/ui/completa.js`; motore in `src/avanzamento.js` → `statoCompletamento`, `validaCompletamento`, `applicaCompletamento`), i punti si registrano nell'evento a cui appartengono; finché mancano, l'avanzamento è bloccato; i punti in eccesso si segnalano soltanto. Titolo dell'avviso in `regole.json` → `regole_aggiornate`.
 - categorie di competenza (Giocatore del 29/09 23:45, §2.3, §2.13, §8.3, §8.7): le basi delle Abilità vengono dalla prima Classe (`classi.json` → `competenze`, S 7 / P 6 / G 5 / N 3), l'Addestramento non ha più valori base; VA personale = min(Mod + Base + Corp + Avanzamento, limite della categoria migliore fra le Classi possedute), con le formule in `regole.json` → `competenze`; i +1 di Classe si registrano sempre, i punti liberi valgono solo se aumentano il VA personale. I punti già spesi che non lo aumentano più restano nel file, non contano e si riassegnano con lo stesso «Assegna» (`applicaCompletamento(…, inattivi)`); motore in `src/competenze.js`, ricognizione in `docs/ricognizione-abilita-2026-09-30.md`.
 
-- tab Inventario (`docs/layout-sd.md`, pezzo 2): unica casa degli oggetti, con sezioni per famiglia (`src/palette.js` → `SEZIONI_INVENTARIO`), stato di ogni oggetto in `voce.stato` con il valore `deposito` (deposito comune: fuori dal carico, senza effetti, fuori dal tavolo), PI e Ripara nella riga, Carico e Crediti in testa, «Compra» dal catalogo.
+- tab Inventario (`docs/layout-sd.md`, pezzo 2): unica casa degli oggetti, con sezioni per famiglia su due colonne nell'ordine di Davide del 02/10 (`src/palette.js` → `SEZIONI_INVENTARIO`, campo `colonna`; una colonna sola sotto i 46rem; stesso ordine nel foglio 4 della SS), stato di ogni oggetto in `voce.stato` con il valore `deposito` (deposito comune: fuori dal carico, senza effetti, fuori dal tavolo), PI e Ripara nella riga, Carico e Crediti in testa, «Compra» dal catalogo.
 
 - tab Combattimento (`docs/layout-sd.md`, pezzo 3): colonna sinistra con valori, Prove Salvezza, armi in mano per mano (Ricarica e «Attacca!»), armi disponibili e Protezioni; colonna destra con Ferite, Affaticamento, Corruzione Oscura (§5.20, `regole.json` → `corruzione.stati`, `sessione.corruzione`, nei valori effettivi) e Stati. Caricatori di riserva, condizione delle armi e applicazioni sanitarie si cambiano nell'Inventario.
 
@@ -131,6 +132,8 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
   - tab Cibernetica della SD e foglio Cibernetica della SS, che si stampa solo con impianti installati o Umanità ridotta.
 
 - Equipaggiamento 0.5, cap. 6 ampliato e cap. 8 (lotto 4 del 01/10): naniti medici e postazioni medicochirurgiche in `sanitario.json`, campo `cura` con i numeri delle cure (`src/equipaggiamento.js` → `testoCura`, tooltip e Inventario), `alimentazione` anche come elenco di NEC; il cap. 8 riassume il §2.16 del Giocatore, controllato da `tools/lotti/lotto_equipaggiamento_08.mjs`. Tutti i capitoli dell'Equipaggiamento 0.5 sono nel catalogo.
+
+- Rinforzi come sottocategoria delle armature (richiesta di Davide del 02/10): tipo `rinforzo` (`rinforzi.json`, lotto `tools/lotti/lotto_rinforzi_armature.mjs`), «Montata su:» con le armature indossate compatibili e, per soprabiti e mantelli (`indossabile_da_solo`), «Indossato da solo»; regole da solo e ad armatura tolta in `regole.json` → `rinforzi`, con TODO(Davide) A.79.
 
 Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, veicoli.
 
