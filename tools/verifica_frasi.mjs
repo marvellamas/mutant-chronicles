@@ -59,6 +59,8 @@ export function frasiEffetti() {
   visita(leggi('data/regole.json').elmetti ?? {}, 'regole:elmetti');
   visita(leggi('data/regole.json').dotazioni_iniziali ?? {}, 'regole:dotazioni_iniziali');
   visita(leggi('data/regole.json').nec ?? {}, 'regole:nec');
+  // Armamenti §7.10: SnT 0 per gli Artefatti con sole proprietà passive (docs/diff-manuali-2026-10-02.md)
+  visita(leggi('data/equipaggiamento/artefatti.json').sintonizzazione ?? {}, 'artefatti:sintonizzazione');
   // regole.json → stati: la «condizione» degli effetti e il testo dei limiti (docs/ricognizione-stati.md)
   for (const s of leggi('data/regole.json').stati?.elenco ?? []) {
     (s.effetti ?? []).forEach((e, i) => out.push({ dove: `regole:stati ${s.nome} effetti[${i}]`, frase: e.condizione }));

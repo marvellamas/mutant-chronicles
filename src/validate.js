@@ -1060,6 +1060,7 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
   const rimandiArtefatti = []; // [file, chiave, riferimento] di «artefatti_catalogo» (§7.5.1)
   const artefattiDaControllare = []; // [file, chiave, dati] di Artefatto: potenza e costo (§7.10)
   let potenzeArtefatti = null;
+  let sntSoloPassive = null; // §7.10: SnT degli Artefatti con sole proprietà passive
   const rimandiArmi = []; // [file, chiave, riferimento] di «sin_armi» (§7.15.1): devono essere armi
   // [file, chiave, riferimento, tipi ammessi] di «compatibile_con»: armature per gli accessori
   // (moduli IAS §7.15.4, soprabiti §7.11.2), armi per munizioni, celle e serbatoi (§7.20)
@@ -1088,6 +1089,9 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
       if (!isOggetto(s?.talento) || !isTesto(s.talento.nome) || !isIntero(s.talento.bonus)) err(F, 'sintonizzazione.talento', 'serve { nome, bonus }');
       if (!isOggetto(s?.potenze) || Object.values(s.potenze).some((x) => !isIntero(x) || x < 1)) err(F, 'sintonizzazione.potenze', 'serve { potenza: costo intero ≥ 1 }');
       else potenzeArtefatti = s.potenze;
+      // Armamenti §7.10 (01/10 sera): «Un Artefatto con sole proprietà passive ha SnT 0, qualunque sia la sua potenza.»
+      if (!isOggetto(s?.solo_passive) || !isIntero(s.solo_passive.snt) || s.solo_passive.snt < 0 || !Array.isArray(s.solo_passive.frasi)) err(F, 'sintonizzazione.solo_passive', 'serve { snt: intero ≥ 0, frasi: [...] , fonte }');
+      else sntSoloPassive = s.solo_passive.snt;
     }
     for (const [j, a] of (f.artefatti_catalogo ?? []).entries()) {
       artefattiDaControllare.push([F, `artefatti_catalogo[${j}]`, a]);
@@ -1400,6 +1404,14 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
   for (const [F, k, r] of rimandiArtefatti) if (!rif.has(r)) err(F, k, `"${r}" non è un oggetto del catalogo (formato "file:id")`);
   for (const [F, k, a] of artefattiDaControllare) {
     if (!isOggetto(a) || !isTesto(a.tipologia) || !isTesto(a.potenza) || !isIntero(a.sintonizzazione)) { err(F, k, 'serve { tipologia, potenza, sintonizzazione, sintonizzabile, contenitore? }'); continue; }
+    // §7.10: con almeno una proprietà attiva SnT della potenza e sintonizzazione; con sole passive SnT 0, senza
+    if (typeof a.proprieta_attive !== 'boolean') err(F, `${k}.proprieta_attive`, 'true o false: con sole proprietà passive la SnT è 0 (§7.10)');
+    if (a.proprieta_attive === false) {
+      if (a.sintonizzabile !== false) err(F, `${k}.sintonizzabile`, 'con sole proprietà passive deve valere false (§7.10)');
+      if (sntSoloPassive !== null && a.sintonizzazione !== sntSoloPassive) err(F, `${k}.sintonizzazione`, `con sole proprietà passive la SnT è ${sntSoloPassive} (§7.10), trovato ${a.sintonizzazione}`);
+      if (a.contenitore !== undefined) err(F, `${k}.contenitore`, 'una riserva serve a proprietà attive: con sole passive non c’è (Magia §24.2)');
+      continue;
+    }
     if (a.sintonizzabile !== true) err(F, `${k}.sintonizzabile`, 'deve valere true: le proprietà attive richiedono sintonizzazione (§7.10)');
     if (a.riserva !== undefined) err(F, `${k}.riserva`, 'campo sostituito da "contenitore": { energia, capacita_pm, integrato? }');
     if (potenzeArtefatti && potenzeArtefatti[a.potenza] !== a.sintonizzazione) err(F, `${k}.sintonizzazione`, `potenza ${a.potenza}: il costo di sintonizzazione è ${potenzeArtefatti[a.potenza] ?? 'sconosciuto'} (§7.10), trovato ${a.sintonizzazione}`);

@@ -1512,8 +1512,8 @@ const AGGETTIVI_MACRO = { Fisica: 'Fisici', Mentale: 'Mentali', Spirituale: 'Spi
 /** Quali Incantesimi può alimentare un contenitore, dal colore (regole.json → chroma.colori). */
 function testoAlimenta(c) {
   if (c.regoleRimandate) return `Chroma ${c.energia} (energia ${c.energiaNome ?? '—'}): regole di impiego rimandate (Magia sez. 6).`;
-  // §7.5.1: la riserva integrata alimenta le attivazioni; per i lanci si attende Davide (per-davide A.18)
-  if (c.integrato) return `Energia ${c.energiaNome}: alimenta le attivazioni dell’oggetto (§7.5.1); se alimenti anche gli Incantesimi è da confermare (per-davide A.18).`;
+  // risposta A.18 (Magia §24.2, §24.7): la riserva integrata alimenta soltanto le funzioni del proprio Artefatto
+  if (c.integrato) return `Energia ${c.energiaNome}: alimenta soltanto le attivazioni dell’oggetto (§7.5.1); non paga Incantesimi e non si preleva (Magia §24.2, §24.7).`;
   if (!c.macrofamiglie.length) return 'Non alimenta Incantesimi.';
   if (c.macrofamiglie.length >= 3) return `Energia ${c.energiaNome}: alimenta Incantesimi di ogni macrofamiglia.`;
   return `Energia ${c.energiaNome}: alimenta Incantesimi ${c.macrofamiglie.map((m) => AGGETTIVI_MACRO[m] ?? m).join(' e ')}.`;
@@ -1563,7 +1563,7 @@ function schedaContenitore(ctx, c) {
   return h('article', { class: 'arma-tab contenitore-tab' },
     h('h3', {}, c.nome, h('small', { class: 'sigla' }, c.integrato ? ' · riserva integrata nell’oggetto' : ` · ${c.potenza}`)),
     h('p', { class: 'nota' },
-      c.sintonizzato ? `✔ Sintonizzato (costo ${c.costo}, §7.10)` : `○ Non sintonizzato (costo ${c.costo}): senza sintonizzazione non alimenta lanci`,
+      c.sintonizzato ? `✔ Sintonizzato (SnT ${c.costo}, §7.10)` : `○ Non sintonizzato (SnT ${c.costo}): senza sintonizzazione non alimenta lanci`,
       ' · ', c.trasportato ? 'trasportato' : c.integrato ? `oggetto ${NOMI_STATI[c.stato]?.toLowerCase() ?? 'non trasportato'}` : 'nello zaino'),
     // vista estesa, in sola lettura: i PM si modificano nel riquadro Punti Magia
     pannelloChroma(ctx, c, { conPulsanti: false }));
@@ -1682,9 +1682,11 @@ function tabArtefatti(ctx) {
       h('div', { class: 'arma-testa' },
         h('h3', {}, def ? info('oggetto', def.rif, x.nome) : x.nome, h('small', { class: 'sigla' }, ` · ${x.tipologia ?? 'Artefatto'} · ${x.potenza}`))),
       h('p', { class: 'nota' }, `Nell’Inventario: ${NOMI_STATI[r?.voce.stato] ?? 'con sé'}. SnT ${x.costo}.`),
-      h('label', { class: `stato-tavolo${x.sintonizzato ? ' attivo' : ''}`, title: x.deposito ? 'Nel deposito comune un Artefatto non è sintonizzabile.' : null },
-        h('input', { type: 'checkbox', checked: x.sintonizzato, disabled: !!x.deposito, onchange: (e) => sintonizza(x.uid, e.target.checked) }),
-        h('span', {}, h('strong', {}, 'Sintonizzato'), h('small', {}, x.deposito ? ' · nel deposito comune: non sintonizzabile' : ` · SnT ${x.costo}`))),
+      // §7.10: con sole proprietà passive SnT 0, nessuna sintonizzazione
+      !x.sintonizzabile ? h('p', { class: 'nota' }, 'Sole proprietà passive: SnT 0, si usano senza sintonizzazione (Armamenti §7.10).')
+        : h('label', { class: `stato-tavolo${x.sintonizzato ? ' attivo' : ''}`, title: x.deposito ? 'Nel deposito comune un Artefatto non è sintonizzabile.' : null },
+          h('input', { type: 'checkbox', checked: x.sintonizzato, disabled: !!x.deposito, onchange: (e) => sintonizza(x.uid, e.target.checked) }),
+          h('span', {}, h('strong', {}, 'Sintonizzato'), h('small', {}, x.deposito ? ' · nel deposito comune: non sintonizzabile' : ` · SnT ${x.costo}`))),
       // effetti con la provenienza, dove entrano: l'arma in mano, la protezione indossata
       arma ? h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA per colpire '),
         valoreEffettivo(`VA per colpire (${arma.nome})`, arma.vaEffettivo ?? arma.va, arma.vaDaRegole ?? arma.va, arma.scomposizione, { pillola: true, provenienza: arma.provenienza }),

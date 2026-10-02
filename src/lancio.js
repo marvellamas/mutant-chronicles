@@ -117,10 +117,14 @@ export function statoPulsanteLancio(incantesimo, scheda) {
   return { disabilitato: true, motivo: minimo ? `richiede livello ${minimo}` : 'nessuna versione nella scheda' };
 }
 
-/** Contenitori per il lancio: compatibilità con la macrofamiglia e con i PM utilizzabili della scheda. */
+/**
+ * Contenitori per il lancio: compatibilità con la macrofamiglia e con i PM utilizzabili della scheda.
+ * Risposta A.18 (Magia §24.2, §24.7): la riserva integrata di un Artefatto alimenta soltanto le sue
+ * funzioni, «non permette di prelevare PM né di alimentare gli incantesimi personali»: non è una fonte.
+ */
 export function contenitoriLancio(personaggio, incantesimo) {
   const m = incantesimo.meccanica ?? {};
-  return (personaggio.scheda?.equipaggiamento?.contenitori ?? []).map((c) => {
+  return (personaggio.scheda?.equipaggiamento?.contenitori ?? []).filter((c) => !c.integrato).map((c) => {
     const pm = personaggio.sessione?.chroma?.[c.uid]?.pmAttuali ?? c.capacita ?? 0;
     const tipoPm = PM_DI_ENERGIA[c.energiaNome];
     const motivo = !c.trasportato ? 'non trasportato' : !c.sintonizzato ? 'non sintonizzato'

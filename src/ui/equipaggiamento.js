@@ -102,10 +102,10 @@ function voceEquip(ctx, r, risolte, cambia) {
         title: st === 'deposito' ? 'Resta del personaggio, ma fuori dal carico e senza effetti; non disponibile al tavolo.' : null,
       }, st === null ? 'Con sé' : NOMI_STATI[st]))) : null,
     ctx.rigaExtra ? ctx.rigaExtra(r) : null,
-    art && ctx.inventario ? h('p', { class: 'nota' }, `${v.sintonizzato === true && !r.deposito ? 'Sintonizzato' : 'Non sintonizzato'} (costo ${art.sintonizzazione}, §7.10): si gestisce nella tab Artefatti.`)
+    art && ctx.inventario ? h('p', { class: 'nota' }, `${v.sintonizzato === true && !r.deposito ? 'Sintonizzato' : 'Non sintonizzato'} (SnT ${art.sintonizzazione}, §7.10): si gestisce nella tab Artefatti.`)
       : art ? h('label', { class: 'campo-inline' },
         h('input', { type: 'checkbox', checked: v.sintonizzato === true, onchange: (e) => cambia(v.uid, { sintonizzato: e.target.checked || undefined }) }),
-        ` Sintonizzato (costo ${art.sintonizzazione}, §7.10)`) : null,
+        ` Sintonizzato (SnT ${art.sintonizzazione}, §7.10)`) : null,
     art?.contenitore ? h('p', { class: 'nota' }, `Chroma ${art.contenitore.energia}, ${art.contenitore.capacita_pm} PM${art.contenitore.integrato ? ', riserva integrata' : ''}.`) : null,
     // E&L 2 (A.19): acquistato pieno; trovato con la carica stabilita dal Direttore
     contenitoreSingolo ? h('div', { class: 'campo-inline' },
@@ -289,6 +289,9 @@ function pannelloAggiungi(ctx) {
         p.tipo === 'artefatto' ? h('label', { class: 'campo' }, h('span', {}, 'Potenza'),
           h('select', { onchange: (e) => { p.potenza = e.target.value; } }, h('option', { value: '' }, '—'),
             potenze.map((x) => h('option', { value: x, selected: p.potenza === x }, `${x} (SnT ${regoleSintonizzazione(dati).potenze[x]})`)))) : null,
+        // Armamenti §7.10: con sole proprietà passive la SnT è 0, qualunque sia la potenza
+        p.tipo === 'artefatto' ? h('label', { class: 'campo campo-casella', title: 'Armamenti §7.10: «Un Artefatto con sole proprietà passive ha SnT 0, qualunque sia la sua potenza.»' },
+          h('input', { type: 'checkbox', checked: !!p.soloPassive, onchange: (e) => { p.soloPassive = e.target.checked; } }), h('span', {}, ' Sole proprietà passive (SnT 0)')) : null,
         p.tipo === 'artefatto' ? h('label', { class: 'campo' }, h('span', {}, 'Chroma (contenitore)'),
           h('select', { onchange: (e) => { p.energia = e.target.value; } }, h('option', { value: '' }, 'nessuno'),
             colori.map((x) => h('option', { value: x, selected: p.energia === x }, x)))) : null,
@@ -313,13 +316,15 @@ function pannelloAggiungi(ctx) {
           if (p.tipo === 'artefatto') {
             if (!p.potenza) { alert('Scegli la potenza dell’Artefatto: dà la SnT, il costo di Sintonizzazione (§7.10).'); return; }
             personalizzato.potenza = p.potenza;
+            if (p.soloPassive && p.energia) { alert('Un Artefatto con sole proprietà passive non ha una riserva di Chroma: la riserva alimenta proprietà attive (Magia §24.2).'); return; }
+            if (p.soloPassive) personalizzato.solo_passive = true;
             if (p.energia) {
               const capacita = Number(p.capacita);
               if (!Number.isInteger(capacita) || capacita < 1) { alert('Indica la capacità del contenitore in PM (intero ≥ 1).'); return; }
               Object.assign(personalizzato, { energia: p.energia, capacita_pm: capacita });
             }
           }
-          Object.assign(p, { nome: '', abilita: '', danno: '', ar: '', potenza: '', energia: '', capacita: '', peso: '' });
+          Object.assign(p, { nome: '', abilita: '', danno: '', ar: '', potenza: '', energia: '', capacita: '', peso: '', soloPassive: false });
           aggiungiVoce({ uid: nuovoUid(), rif: null, personalizzato, stato: statoIniziale(personalizzato.tipo, ctx.voci, dati), quantita: 1, note: '' });
         },
       }, 'Aggiungi oggetto personalizzato')));

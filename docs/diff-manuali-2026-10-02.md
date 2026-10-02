@@ -109,6 +109,39 @@ Due punti di contorno, senza effetto oggi:
 - **Armatura Mistica permanente** (Magia §24.2): la componente fisica dell'AR diventa Magica (+0/+1/+2/+3). Per un nemico si scrive già con «AR totale, di cui magica» del formato; per il danno applicato (pezzo 4) vale la tabella del §5.24, invariata.
 - **Arma Mistica permanente**: danno Magico o Etereo con bonus. Per gli attacchi dei nemici (pezzo 5) basta il campo «natura» del formato.
 
+## Stato dei lotti
+
+- ✔ **Lotto 1** (02/10): testi di `abilita.json` (Artefatti, Rituali), `classi.json` (Creazione TecnoMistica) e `incantesimi.json` (Batteria Mistica) con i paragrafi nuovi, verificati sul testo dei manuali (`tests/rimandi-manuali.test.js`). Restano nei dati i rimandi che il manuale contiene ancora (Telemeccanica, Presenza, Vincolo Spirituale, Impronta Mistica, Premonizione, Capolavoro, Predicatore) e quelli di Rigenerazione (lotto 3). Fasce rinominate in Identificare Potere, Rompere Vincolo, Impronta Mistica e Individuare: nelle schede il manuale usa il maschile («Epico», «Leggendario», come «Raro»); `artefatti.json` usava già Epica e Leggendaria. La «Leggendaria» della reperibilità non cambia. Sigla SnT nelle etichette della tab Artefatti, dell'Inventario, della tab Poteri, dei tooltip e della SS.
+- ✔ **Lotto 2** (02/10): prezzi delle batterie, SnT dei soli passivi, A.18 e A.32 in `docs/risposte-master.md` (decisioni 66–69).
+  - `artefatti.json`: batterie da 5 PM a 1.000 crediti (Rosse, Blu, Verdi) e 5.000 (Bianca), con la nota del §7.5 nuovo; `sintonizzazione.solo_passive` (SnT 0, frase verificata da `tools/verifica_frasi.mjs`); `proprieta_attive` voce per voce, controllato dal validatore.
+  - Artefatto personalizzato: casella «Sole proprietà passive (SnT 0)»; non si sintonizza, non occupa capacità, nella tab Artefatti e nel foglio 6 compare «Sole proprietà passive · SnT 0» al posto della casella.
+  - A.18: «Lancia!» offriva la riserva integrata (Bordone Templare, Spade Vindicator e Deliverer, Lancia Castigator, Lama Demontooth, Scudo delle Guardie Sacre) come fonte di PM per gli incantesimi della sua macrofamiglia. Corretto: `contenitoriLancio` la esclude; tab Poteri e SS dicono «alimenta soltanto le attivazioni dell'oggetto».
+
+### SnT del catalogo, voce per voce (Armamenti §7.10 e §7.5.1 del 01/10 sera)
+
+| Voce | Proprietà | SnT prima → dopo |
+|---|---|---|
+| Bordone Templare | attive (attivazione offensiva: +1d6 Magico per PM, §7.5.1) | 2 → 2 |
+| Spada Vindicator | attive (come sopra) | 2 → 2 |
+| Spada Deliverer | attive (come sopra) | 2 → 2 |
+| Lancia Castigator | attive (come sopra) | 2 → 2 |
+| Lama Demontooth | attive (come sopra) | 2 → 2 |
+| Scudo delle Guardie Sacre | attive (Scudo Magico, 1 PM per 5 Round) | 3 → 3 |
+| Batteria da 5 PM (Chroma Rosso) | batteria autonoma: SnT pari al Grado (I) | 1 → 1 |
+| Batteria da 5 PM (Chroma Blu) | come sopra | 1 → 1 |
+| Batteria da 5 PM (Chroma Verde) | come sopra | 1 → 1 |
+| Batteria da 5 PM (Chroma Bianco) | batteria autonoma, Grado II | 2 → 2 |
+
+Nessuna voce del catalogo cambia SnT: la regola dei soli passivi vale per gli Artefatti personalizzati (e per quelli che arriveranno nel catalogo).
+
+### Collaudo
+
+Confronto dei quattro personaggi di `tests/collaudo/` fra il codice del lotto 1 e quello del lotto 2 (scheda calcolata e dati della SS):
+- **Lucas** (due batterie Rosse): prezzo in Inventario e nel foglio 4 della SS 10.000 → **1.000 cr** ciascuna; i materiali di «Ripara» (5% del prezzo per PI) passano da 500 a 50 crediti per PI.
+- **Sorella Ilaria Venn** (batteria Bianca e Bordone Templare): batteria 50.000 → **5.000 cr**; «Ripara» da 2.500 a 250 crediti per PI. Bordone Templare invariato.
+- **Dex Moreau** e **Varek McCraig**: nessun Artefatto, nessun cambiamento.
+- Crediti, SnT, capacità di sintonizzazione, valori di combattimento e magia: invariati per tutti.
+
 ## Lotti proposti, in ordine
 
 1. **Testi e rimandi** (piccolo): togliere i «verranno integrati successivamente» da `abilita.json` (Artefatti, Rituali), `classi.json` (Creazione TecnoMistica) e `incantesimi.json` (introduzione dell'Esorcismo, Rigenerazione, Batteria Mistica, §12.4); rinominare le fasce Epica/Leggendaria in Identificare Potere, Rompere Vincolo, Impronta Mistica e Individuare; sigla SnT dove l'app scrive «costo di sintonizzazione»; `versione_manuale` con le date del 01/10 sera.

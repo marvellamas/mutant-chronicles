@@ -596,7 +596,7 @@ export function artefattiStampa(s, creazione, dati, { conPoteri = false } = {}) 
     const effettiPossibili = ['arma_ravvicinata', 'arma_distanza', 'armatura', 'scudo'].includes(r?.tipo);
     return {
       uid: x.uid, nome: x.nome, tipologia: x.tipologia ?? 'Artefatto', potenza: x.potenza, costo: x.costo,
-      sintonizzato: x.sintonizzato, deposito: x.deposito, stato: NOMI_STATI[r?.voce.stato] ?? 'Con sé',
+      sintonizzabile: x.sintonizzabile !== false, sintonizzato: x.sintonizzato, deposito: x.deposito, stato: NOMI_STATI[r?.voce.stato] ?? 'Con sé',
       arma: arma ? { va: arma.va, danno: testoDanno(arma.danno), provenienzaVa: riga(arma.provenienza), provenienzaDanno: riga(arma.provenienzaDanno) } : null,
       ar: prot ? { testo: testoAr(prot.ar), provenienza: riga(prot.provenienza) } : null,
       nonInUso: !arma && !prot && effettiPossibili,

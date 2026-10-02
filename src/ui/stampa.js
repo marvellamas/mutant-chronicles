@@ -581,7 +581,8 @@ function schedaArtefatto(d, a) {
   return h('article', { class: 'scheda-artefatto riquadro-stampa' },
     h('h2', {}, a.nome, h('span', { class: 'sigla' }, ` · ${a.tipologia} · ${a.potenza}`)),
     h('div', { class: 'contenuto' },
-      h('p', {}, casellaSi(a.sintonizzato), h('strong', {}, ' Sintonizzato'), ` · SnT ${a.costo}`,
+      // §7.10: con sole proprietà passive SnT 0, nessuna casella da sintonizzare
+      a.sintonizzabile === false ? h('p', {}, h('strong', {}, 'Sole proprietà passive'), ' · SnT 0, senza sintonizzazione') : h('p', {}, casellaSi(a.sintonizzato), h('strong', {}, ' Sintonizzato'), ` · SnT ${a.costo}`,
         h('span', { class: 'sigla' }, ` · nell’Inventario: ${a.stato}${a.deposito ? ' (non sintonizzabile)' : ''}`)),
       a.arma ? h('p', {}, h('strong', {}, `VA ${a.arma.va}`), ` · danno ${a.arma.danno}`,
         a.arma.provenienzaVa ? h('span', { class: 'piccolo provenienza-art' }, ` (${a.arma.provenienzaVa})`) : null,
@@ -913,7 +914,7 @@ function foglioMagia(d) {
         d.riserve.map((r) => h('div', { class: 'f5-riserva' },
           h('span', { class: `chroma-punto chroma-${String(r.energia).toLowerCase()}`, 'aria-hidden': 'true' }),
           h('span', { class: 'f5-riserva-nome' }, h('strong', {}, abbreviaSS(r.nome)),
-            h('span', { class: 'sigla' }, abbreviaSS(` · ${r.energia} · ${r.integrato ? 'attivazioni (A.18)' : r.regoleRimandate ? 'regole rimandate' : r.macrofamiglie.length >= 3 ? 'tutte le macrofamiglie' : r.macrofamiglie.join(', ') || '—'} · ${r.sintonizzato ? 'sintonizzato' : 'da sintonizzare'} (SnT ${r.costo})`))),
+            h('span', { class: 'sigla' }, abbreviaSS(` · ${r.energia} · ${r.integrato ? 'solo l’oggetto (A.18)' : r.regoleRimandate ? 'regole rimandate' : r.macrofamiglie.length >= 3 ? 'tutte le macrofamiglie' : r.macrofamiglie.join(', ') || '—'} · ${r.sintonizzato ? 'sintonizzato' : 'da sintonizzare'} (SnT ${r.costo})`))),
           quadratini(r.capacita, { compatto: true }))),
         conversione ? h('p', { class: 'piccolo f5-conversione' }, conversione) : null) : null,
       box({ titolo: 'Lancio', classe: 'f5-lancio' },

@@ -203,10 +203,13 @@ export function infoArtefattoVoce(r, dati) {
   if (r.def) return infoArtefatto(r.def, dati);
   const p = r.voce?.personalizzato;
   if (!p || p.tipo !== 'artefatto' || !p.potenza) return null;
-  const costo = regoleSintonizzazione(dati)?.potenze?.[p.potenza];
-  if (!Number.isInteger(costo)) return null;
+  const rs = regoleSintonizzazione(dati);
+  if (!Number.isInteger(rs?.potenze?.[p.potenza])) return null;
+  // Armamenti §7.10 (01/10 sera): «Un Artefatto con sole proprietà passive ha SnT 0, qualunque sia la sua potenza»
+  if (p.solo_passive) return { tipologia: 'Accessori', potenza: p.potenza, sintonizzazione: rs.solo_passive?.snt ?? 0, sintonizzabile: false, proprieta_attive: false };
+  const costo = rs.potenze[p.potenza];
   const contenitore = p.energia && Number.isInteger(p.capacita_pm) ? { energia: p.energia, capacita_pm: p.capacita_pm } : undefined;
-  return { tipologia: contenitore ? 'Batterie e contenitori' : 'Accessori', potenza: p.potenza, sintonizzazione: costo, sintonizzabile: true, ...(contenitore ? { contenitore } : {}) };
+  return { tipologia: contenitore ? 'Batterie e contenitori' : 'Accessori', potenza: p.potenza, sintonizzazione: costo, sintonizzabile: true, proprieta_attive: true, ...(contenitore ? { contenitore } : {}) };
 }
 
 /** Colori del Chroma (regole.json → chroma.colori), con il loro nome. */
@@ -486,6 +489,7 @@ export function normalizzaEquipaggiamento(valore) {
         ...(testo(p.testo) ? { testo: p.testo } : {}),
         // Artefatto personalizzato (§7.5, §7.10): potenza → costo di sintonizzazione; contenitore di Chroma
         ...(testo(p.potenza) ? { potenza: p.potenza } : {}),
+        ...(p.solo_passive === true ? { solo_passive: true } : {}), // §7.10: SnT 0
         ...(testo(p.energia) ? { energia: p.energia } : {}),
         ...(Number.isInteger(p.capacita_pm) && p.capacita_pm >= 1 ? { capacita_pm: p.capacita_pm } : {}),
         // §1.6: peso in kg per unità, per il carico
@@ -1081,7 +1085,8 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       ...(modUmn ? [riga(`Umanità ${umn.valore} (${umn.condizione})`, capacita - daGradi, capacita - daGradi !== modUmn ? `${modUmn}, fino a un minimo di ${umn.sintonizzazioneMinimo ?? 0} (Giocatore §5.21)` : 'Giocatore §5.21')] : []),
     ];
     // §7.10; un Artefatto nel deposito comune non è sintonizzabile e non occupa capacità (docs/layout-sd.md, pezzo 4)
-    const elenco = artefatti.map(({ o, a }) => ({ uid: o.uid, nome: o.nome, costo: a.sintonizzazione, potenza: a.potenza, tipologia: a.tipologia, sintonizzato: o.voce.sintonizzato === true && !o.deposito, deposito: o.deposito }));
+    // §7.10: un Artefatto con sole proprietà passive (SnT 0) non si sintonizza
+    const elenco = artefatti.map(({ o, a }) => ({ uid: o.uid, nome: o.nome, costo: a.sintonizzazione, potenza: a.potenza, tipologia: a.tipologia, sintonizzabile: a.sintonizzabile !== false, sintonizzato: a.sintonizzabile !== false && o.voce.sintonizzato === true && !o.deposito, deposito: o.deposito }));
     const usata = elenco.filter((x) => x.sintonizzato).reduce((s, x) => s + x.costo, 0);
     sintonizzazione = { capacita, usata, gradi, talento: talento ? rs.talento.nome : null, artefatti: elenco, umanita: capacita - daGradi, provenienza: provenienza(righe, capacita) };
     if (usata > capacita) avvisi.push(`Sintonizzazioni oltre la capacità: ${usata} su ${capacita}. Il personaggio sceglie quali interrompere (§7.10).`);
