@@ -8,6 +8,7 @@ import { nemicoDaPg } from '../src/nemico-da-pg.js';
 import { vistaPlancia } from '../src/tavolo.js';
 import { calcolaAttaccoRavvicinato, dichiarazioneRavvicinato } from '../src/attacco.js';
 import { calcolaAttaccoNemico } from '../src/nemico-attacco.js';
+import { calcolaLancioNemico, statoIncantesimoNemico } from '../src/nemico-lancio.js';
 import { aggiungiNemici, nuovoScontro } from '../src/scontro.js';
 import { validaNemico, formattaErrore } from '../src/validate.js';
 import { TIPI, GRADI, nemiciUmani } from '../tools/genera_nemici_umani.mjs';
@@ -35,7 +36,26 @@ test('convertitore su Torvald: PV, AR, Difese, Iniziativa, VA e danno uguali a q
   assert.ok(pistola && pistola.gittata_q > 0 && pistola.modalita.length && Number.isInteger(pistola.va));
   assert.equal(nemico.stati.length, 0);
   assert.match(nemico.fonte, /^costruito come PG \(Bauhaus, Assaltatore 2, 6° livello\)$/);
-  assert.match(nemico.note, /Talenti.*Parata Migliorata/);
+  // A.73, decisioni 5–6: sei Caratteristiche, Azioni, Abilità di Classe con il VA, Talenti fra le capacità
+  assert.deepEqual(nemico.caratteristiche, Object.fromEntries(Object.entries(v.scheda.caratteristiche).map(([k, c]) => [k, c.valore])));
+  assert.equal(Object.keys(nemico.caratteristiche).length, 6);
+  assert.deepEqual(nemico.azioni, { principali: v.scheda.azioni.principali, movimento: v.scheda.azioni.movimento });
+  const percezione = v.scheda.abilita.find((a) => a.nome === 'Percezione');
+  assert.equal(nemico.abilita.find((a) => a.nome === 'Percezione').va, percezione.effettivo ?? percezione.totale);
+  assert.ok(nemico.capacita.some((c) => c.nome === 'Parata Migliorata' && c.effetto.length > 10));
+  assert.match(nemico.note, /Talenti fra le capacità speciali/);
+});
+
+test('convertitore su un Taumaturgo: incantesimi completi per «Lancia!» (A.73, decisione 8), uguali al PG', () => {
+  const n = JSON.parse(readFileSync(new URL('nemici/umani/inquisitore-della-fratellanza-veterano.json', esempi), 'utf8'));
+  assert.ok(n.pm > 0 && n.incantesimi.length > 0);
+  for (const [i, x] of n.incantesimi.entries()) {
+    assert.ok(statoIncantesimoNemico(x, dati).completo, x.nome);
+    // con l'adattatore il nemico ha il VA e il costo che il convertitore ha preso da «Lancia!» del PG
+    const p = { id: 'nem:inq:1', tipo: 'nemico', nome: n.nome, stati: [], pm: { attuali: n.pm, massimo: n.pm }, scheda: n };
+    const r = calcolaLancioNemico(p, i, {}, dati).risultato;
+    assert.deepEqual([r.va_potere_finale, r.pm_costo], [x.va, x.costo_pm], x.nome);
+  }
 });
 
 test('convertitore e «Attacca!»: il nemico ha lo stesso VA finale del PG con la stessa dichiarazione', () => {

@@ -62,13 +62,14 @@ export function arApplicabile(ar, colpo, dati) {
 
 /**
  * Applica un colpo a un bersaglio.
- * @param bersaglio { nome, pv: { attuali, massimo }, ferite: grado attuale (null per chi non le ha: i nemici,
- *   per-davide A.73), ar: { totale, magica, valori? } }
+ * @param bersaglio { nome, pv: { attuali, massimo }, ferite: grado attuale (anche i nemici, che seguono la
+ *   procedura dei PG: per-davide A.73, decisione 7; null per chi non le registra), ar: { totale, magica, valori? } }
  * @param colpo { danni: [danno tirato per applicazione], natura: 'Naturale'|'Magico'|'Etereo',
  *   tipo: 'ravvicinato'|'distanza'|null, difesa: id di regole.json → danno_applicato.difese,
  *   proprieta: ['Perforante 2', 'Laser', …], tempra: [esito della PS di Tempra per applicazione, se serve] }
  * @returns {{ applicazioni, pv: {prima, dopo}, ferite: {prima, dopo, nome}|null, morte, pvPersi,
- *   tempraMancanti: number[], stati: {id, nome, automatico, testo}[], promemoria: string[] }}
+ *   tempraMancanti: number[], stati: {id, nome, automatico, testo}[], menomazioni: {stato, testo}[],
+ *   promemoria: string[] }}
  */
 export function applicaColpo(bersaglio, colpo, dati) {
   const D = dati.regole.danno_applicato;
@@ -102,16 +103,20 @@ export function applicaColpo(bersaglio, colpo, dati) {
         if (esito === null) tempraMancanti.push(i);
         else { a.feriteNuove = nf.ferite; ferite += nf.ferite; }
       } else {
-        promemoria.push(`Applicazione ${i + 1}: ${finale} danni a 0 PV; Ferite dei nemici non gestite dalla plancia (per-davide A.73).`);
+        promemoria.push(`Applicazione ${i + 1}: ${finale} danni a 0 PV; Ferite non registrate per ${bersaglio.nome} (§5.14).`);
       }
     }
     applicazioni.push(a);
   });
   const morte = conFerite && ferite > dati.regole.ferite.stati.length;
   if (morte) promemoria.push(`${bersaglio.nome}: oltre Grave, ${dati.regole.ferite.oltre} (§5.14).`);
+  // §5.14.1: al primo raggiungimento di Profonda, Seria e Grave, PS di Tempra per la Menomazione
+  const menomazioni = [];
   if (conFerite && ferite > (bersaglio.ferite ?? 0)) {
-    const menomazioni = dati.regole.ferite.stati.slice(bersaglio.ferite ?? 0, Math.min(ferite, dati.regole.ferite.stati.length)).filter((s) => s.menomazione);
-    for (const s of menomazioni) promemoria.push(`Prima volta a ${s.nome}: PS di Tempra per la Menomazione (${s.menomazione}, §5.14.1).`);
+    for (const s of dati.regole.ferite.stati.slice(bersaglio.ferite ?? 0, Math.min(ferite, dati.regole.ferite.stati.length)).filter((x) => x.menomazione)) {
+      menomazioni.push({ stato: s.nome, testo: s.menomazione });
+      promemoria.push(`Prima volta a ${s.nome}: PS di Tempra per la Menomazione (${s.menomazione}, §5.14.1).`);
+    }
   }
   // §5.24: effetti delle proprietà, solo se almeno 1 danno ha superato l'Armatura (salvo Contromisura)
   const stati = [];
@@ -136,6 +141,7 @@ export function applicaColpo(bersaglio, colpo, dati) {
     pvPersi,
     tempraMancanti,
     stati,
+    menomazioni,
     promemoria,
   };
 }

@@ -15,8 +15,9 @@
 //
 // Pezzo 3: i nemici. Un tipo del bestiario (nemici/<id>.json, formato di data/formato_nemici.json) entra
 // nello scontro in una o più copie con etichette automatiche («Legionario 1», «Legionario 2»…). Ogni copia
-// ha una fotografia del tipo, i propri PV attuali e i propri Stati; l'Iniziativa è quella del tipo più il
-// dado, con le stesse regole di parità (DES e INT dalle Caratteristiche del tipo, se scritte).
+// ha una fotografia del tipo, i propri PV attuali, Ferite, Menomazioni, PM e Stati (A.73, decisioni 7–8);
+// l'Iniziativa è quella del tipo più il dado, con le stesse regole di parità (DES e INT dalle Caratteristiche
+// del tipo; se una manca, spareggio con 1d10: A.73, decisione 6).
 import { specTiro, motivoFuoriIntervallo } from './tiri.js';
 
 export const FORMATO_SCONTRO = 'mutant-scontro';
@@ -81,7 +82,9 @@ export function aggiungiNemici(s, nemico, quante = 1, { lato = 'avversario' } = 
       id: `nem:${nemico.id}:${numero}`, tipo: 'nemico', nemico: nemico.id, numero, nome: `${nemico.nome} ${numero}`,
       lato: lato === 'alleato' ? 'alleato' : 'avversario', base: nemico.iniziativa,
       des: nemico.caratteristiche?.DES ?? null, int: nemico.caratteristiche?.INT ?? null, d10: null, spareggio: null,
-      pv: { attuali: nemico.pv, massimo: nemico.pv }, stati: [...(nemico.stati ?? [])], scheda,
+      // A.73, decisione 7: PV attuali e massimi, Stato di Ferita e Menomazioni come i PG; PM per «Lancia!» (decisione 8)
+      pv: { attuali: nemico.pv, massimo: nemico.pv }, ferite: 0, menomazioni: [], stati: [...(nemico.stati ?? [])], scheda,
+      ...(Number.isInteger(nemico.pm) ? { pm: { attuali: nemico.pm, massimo: nemico.pm } } : {}),
     };
   });
   const etichette = nuovi.length > 1 ? `${nuovi[0].nome} … ${nuovi.at(-1).nome}` : nuovi[0].nome;
@@ -106,6 +109,31 @@ export function variaPvNemico(s, id, delta, adesso) {
     testo: `${p.nome}: PV ${daPrima} → ${attuali} (${diff > 0 ? '+' : '−'}${Math.abs(diff)})${attuali === 0 ? ', a 0 PV' : ''}.` };
   if (diff === 0) return { ...t, registro: ultima?.pv?.id === id && ultima.round === s.round ? s.registro.slice(0, -1) : s.registro };
   return { ...t, registro: ultima?.pv?.id === id && ultima.round === s.round ? [...s.registro.slice(0, -1), riga] : [...s.registro, riga] };
+}
+
+/** PM di un nemico: −/+ a mano, fra 0 e il massimo (A.73, decisione 8). Una riga di registro. */
+export function variaPmNemico(s, id, delta, adesso) {
+  const p = s.partecipanti.find((x) => x.id === id);
+  if (p?.tipo !== 'nemico' || !p.pm) throw new Error('nemico senza PM');
+  const attuali = Math.max(0, Math.min(p.pm.massimo, p.pm.attuali + delta));
+  if (attuali === p.pm.attuali) return s;
+  const t = { ...s, partecipanti: s.partecipanti.map((x) => (x.id === id ? { ...x, pm: { ...x.pm, attuali } } : x)) };
+  return conRiga(t, `${p.nome}: PM ${p.pm.attuali} → ${attuali}.`, adesso);
+}
+
+/**
+ * «Lancia!» di un nemico (A.73, decisione 8; src/nemico-lancio.js): i PM si scalano dalla sua riserva nello
+ * scontro, con una riga di registro. Errore se i PM non bastano.
+ * @param l { id, incantesimo, livello, pm, testo? }
+ */
+export function registraLancioNemico(s, l, adesso) {
+  const p = s.partecipanti.find((x) => x.id === l.id);
+  if (p?.tipo !== 'nemico' || !p.pm) throw new Error('nemico senza PM');
+  if (!Number.isInteger(l.pm) || l.pm < 0) throw new Error('costo in PM non valido');
+  if (l.pm > p.pm.attuali) throw new Error(`${p.nome}: ${p.pm.attuali} PM, ne servono ${l.pm}`);
+  const attuali = p.pm.attuali - l.pm;
+  const t = { ...s, partecipanti: s.partecipanti.map((x) => (x.id === l.id ? { ...x, pm: { ...x.pm, attuali } } : x)) };
+  return conRiga(t, `${p.nome} lancia ${l.incantesimo} (livello ${l.livello}): PM ${p.pm.attuali} → ${attuali}${l.testo ? `; ${l.testo}` : ''}${attuali === 0 ? '; a 0 PM: sviene finché non recupera almeno 1 PM (Magia sez. 6)' : ''}.`, adesso);
 }
 
 /**
@@ -155,7 +183,16 @@ export function registraTiro(s, id, campo, tiro, dati, adesso) {
 }
 
 const totale = (p) => (p.d10 ? p.base + p.d10.valore : null);
-const parimerito = (a, b, car) => totale(a) === totale(b) && car.every((k) => (a[k] ?? null) === (b[k] ?? null) || a[k] === null || b[k] === null);
+// A.73, decisione 6: DES, poi INT; se manca una Caratteristica necessaria al confronto, si va allo spareggio
+// (il confronto si ferma lì: un valore mancante non vale 0 e non si salta alla Caratteristica successiva)
+function confrontoCar(a, b, car) {
+  for (const k of car) {
+    if ((a[k] ?? null) === null || (b[k] ?? null) === null) return 0;
+    if (a[k] !== b[k]) return b[k] - a[k];
+  }
+  return 0;
+}
+const parimerito = (a, b, car) => totale(a) === totale(b) && confrontoCar(a, b, car) === 0;
 
 /**
  * Ordine d'Iniziativa (§5.1). Chi non ha ancora tirato resta in fondo, «da tirare».
@@ -169,8 +206,9 @@ export function ordineIniziativa(s) {
   const pos = (id) => { const i = s.ordineAlleati.indexOf(id); return i < 0 ? Number.MAX_SAFE_INTEGER : i; };
   const confronta = (a, b) => {
     if (totale(a) !== totale(b)) return totale(b) - totale(a);
-    // Destrezza, poi Intelligenza, se note per entrambi
-    for (const k of car) if (a[k] !== null && b[k] !== null && a[k] !== b[k]) return b[k] - a[k];
+    // Destrezza, poi Intelligenza; con una mancante, direttamente allo spareggio (A.73)
+    const c = confrontoCar(a, b, car);
+    if (c) return c;
     // alleati fra loro: l'ordine che scelgono; altrimenti lo spareggio con il dado
     if (a.lato === 'alleato' && b.lato === 'alleato') return pos(a.id) - pos(b.id) || a.id.localeCompare(b.id);
     if (a.spareggio && b.spareggio && a.spareggio.valore !== b.spareggio.valore) return b.spareggio.valore - a.spareggio.valore;
@@ -279,23 +317,32 @@ export function validaScontro(s) {
  * «Annulla ultimo colpo». Per un nemico i valori stanno nello scontro e si aggiornano qui; per un PG nel suo
  * file (la plancia lo riscrive), qui resta la traccia con i valori di prima per annullare.
  * @param colpo { bersaglio: id del partecipante o «pg:<chiave>», nome, tipo: 'pg'|'nemico', file?, testo,
- *   prima: { pv, ferite, stati }, dopo: { pv, ferite, stati } }
+ *   prima: { pv, ferite, menomazioni?, stati }, dopo: { pv, ferite, menomazioni?, stati } }
  */
 export function registraColpo(s, colpo, adesso) {
   let t = { ...s, colpi: [...(s.colpi ?? []), { ...colpo, ora: ora(adesso), round: s.round }].slice(-30) };
   if (colpo.tipo === 'nemico') {
-    t = { ...t, partecipanti: t.partecipanti.map((p) => (p.id === colpo.bersaglio ? { ...p, pv: { ...p.pv, attuali: colpo.dopo.pv }, stati: colpo.dopo.stati ?? p.stati } : p)) };
+    t = { ...t, partecipanti: t.partecipanti.map((p) => (p.id === colpo.bersaglio ? statoNemico(p, colpo.dopo) : p)) };
   }
   return conRiga(t, colpo.testo, adesso);
 }
 
-/** Toglie l'ultimo colpo: per un nemico rimette PV e Stati di prima; restituisce anche il colpo, per il file del PG. */
+/** Valori di un nemico dopo (o prima di) un colpo: PV, Ferite, Menomazioni e Stati (A.73, decisione 7). */
+function statoNemico(p, v) {
+  return {
+    ...p, pv: { ...p.pv, attuali: v.pv }, stati: v.stati ?? p.stati,
+    ...(Number.isInteger(v.ferite) ? { ferite: v.ferite } : {}),
+    ...(Array.isArray(v.menomazioni) ? { menomazioni: v.menomazioni } : {}),
+  };
+}
+
+/** Toglie l'ultimo colpo: per un nemico rimette PV, Ferite, Menomazioni e Stati di prima; restituisce anche il colpo, per il file del PG. */
 export function annullaUltimoColpo(s, adesso) {
   const colpo = (s.colpi ?? []).at(-1);
   if (!colpo) throw new Error('nessun colpo da annullare');
   let t = { ...s, colpi: s.colpi.slice(0, -1) };
   if (colpo.tipo === 'nemico') {
-    t = { ...t, partecipanti: t.partecipanti.map((p) => (p.id === colpo.bersaglio ? { ...p, pv: { ...p.pv, attuali: colpo.prima.pv }, stati: colpo.prima.stati ?? p.stati } : p)) };
+    t = { ...t, partecipanti: t.partecipanti.map((p) => (p.id === colpo.bersaglio ? statoNemico(p, colpo.prima) : p)) };
   }
   return { scontro: conRiga(t, `Annullato l’ultimo colpo a ${colpo.nome}: PV ${colpo.dopo.pv} → ${colpo.prima.pv}${colpo.prima.ferite !== undefined && colpo.prima.ferite !== colpo.dopo.ferite ? `, Ferite ${colpo.dopo.ferite} → ${colpo.prima.ferite}` : ''}.`, adesso), colpo };
 }

@@ -73,3 +73,29 @@ export function pulisciNemico(bozza, dati) {
   };
   return pulisci({ tipo: 'oggetto', campi: dati.formato_nemici.campi }, bozza);
 }
+
+/**
+ * Movimento di un nemico al tavolo (A.73, decisione 9): Passo obbligatorio; Corsa e Scatto mancanti si
+ * calcolano dal Passo (data/formato_nemici.json → movimento.moltiplicatori), i valori espliciti prevalgono;
+ * «non_consentito» resta tale (il nemico non ha quella modalità), senza calcolo.
+ * @returns {{ passo, corsa, scatto }} numeri in Q oppure null (non consentito), con `calcolati` per i derivati
+ */
+export function movimentoNemico(n, dati) {
+  const M = dati.formato_nemici.campi.movimento.moltiplicatori;
+  const mov = n?.movimento ?? {};
+  const calcolati = [];
+  const valore = (k) => {
+    if (mov[k] === 'non_consentito') return null;
+    if (Number.isInteger(mov[k])) return mov[k];
+    calcolati.push(k);
+    return mov.passo * M[k];
+  };
+  return { passo: mov.passo, corsa: valore('corsa'), scatto: valore('scatto'), calcolati };
+}
+
+/** «Passo 6 Q · Corsa 12 Q* · Scatto non consentito» per la carta del nemico (* calcolato dal Passo). */
+export function testoMovimento(n, dati) {
+  const m = movimentoNemico(n, dati);
+  const v = (nome, k, nonConsentito) => (m[k] === null ? `${nome} ${nonConsentito}` : `${nome} ${m[k]} Q${m.calcolati.includes(k) ? '*' : ''}`);
+  return [v('Passo', 'passo'), v('Corsa', 'corsa', 'non consentita'), v('Scatto', 'scatto', 'non consentito')].join(' · ') + (m.calcolati.length ? ' (* dal Passo)' : '');
+}

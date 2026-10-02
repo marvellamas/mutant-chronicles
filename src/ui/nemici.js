@@ -4,9 +4,11 @@
 // nello scontro sono in src/scontro.js; qui presentazione e salvataggio (server.mjs → /api/nemici).
 import { h } from './dom.js';
 import { riempimento } from '../interfaccia.js';
-import { validaNemico, formattaErrore } from '../validate.js';
-import { nemicoVuoto, voceVuota, pulisciNemico, idDaNome } from '../nemici.js';
-import { variaPvNemico, cambiaStatoNemico } from '../scontro.js';
+import { validaNemico, formattaErrore, sorgentiNemico } from '../validate.js';
+import { nemicoVuoto, voceVuota, pulisciNemico, idDaNome, testoMovimento } from '../nemici.js';
+import { variaPvNemico, variaPmNemico, cambiaStatoNemico } from '../scontro.js';
+import { statoIncantesimoNemico } from '../nemico-lancio.js';
+import { nomeFerita } from '../danno.js';
 import { nemicoDaPg } from '../nemico-da-pg.js';
 import { elencoCartella, leggiCartella } from './cartella.js';
 import { ultimiPerPersonaggio } from '../cartella.js';
@@ -32,6 +34,7 @@ const ETICHETTE = {
   pv: 'PV', pm: 'PM', ar: 'AR', va: 'VA', ac: 'AC', id: 'Identificativo (nome del file)', portata_q: 'Portata (Q)', gittata_q: 'Gittata (Q)',
   costo_pm: 'Costo (PM)', immunita: 'Immunità', modalita: 'Modalità', proprieta: 'Proprietà', magica: 'di cui magica',
   totale: 'totale', difese: 'Difese', iniziativa: 'Iniziativa', movimento: 'Movimento (Q)', salvezze: 'Prove Salvezza',
+  azioni: 'Azioni per Round', principali: 'Azioni Principali', abilita: 'Abilità', capacita: 'Capacità speciali e Talenti', livello: 'Livello della versione',
 };
 const etichetta = (k) => ETICHETTE[k] ?? (k.charAt(0).toUpperCase() + k.slice(1).replace(/_/g, ' '));
 
@@ -45,14 +48,8 @@ function nomiValori(dati) {
 }
 function valoriAmmessi(s, dati) {
   if (s.valori) return s.valori;
-  const fonti = {
-    caratteristiche: dati.caratteristiche.caratteristiche.map((c) => c.sigla),
-    salvezze: dati.caratteristiche.salvezze.map((x) => x.id),
-    stati: (dati.regole.stati?.elenco ?? []).map((x) => x.id),
-    modalita_di_fuoco: Object.keys(dati.regole.modalita_di_fuoco ?? {}).filter((k) => !k.startsWith('_')),
-    nature_danno: dati.formato_nemici.nature_danno,
-  };
-  return fonti[s.valori_da ?? s.chiavi_da] ?? [];
+  // le stesse fonti del validatore (src/validate.js): Stati, Salvezze, Contromisure, Abilità…
+  return sorgentiNemico(dati)[s.valori_da ?? s.chiavi_da] ?? [];
 }
 
 /**
@@ -64,7 +61,7 @@ export function pannelloBestiario(ctx, voci, { aperto, onToggle, salvato }) {
   const rotti = voci.filter((v) => !v.nemico);
   return h('details', { class: 'riquadro bestiario', open: aperto, ontoggle: (e) => onToggle(e.target.open) },
     h('summary', {}, h('strong', {}, 'Bestiario'), ` (${validi.length} tip${validi.length === 1 ? 'o' : 'i'}${rotti.length ? `, ${rotti.length} file non valid${rotti.length === 1 ? 'o' : 'i'}` : ''})`),
-    h('p', { class: 'nota' }, 'Tipi di nemico della campagna, in nemici/ sul server: numeri già fatti, come li scrive il master. Il formato dei campi è una proposta in attesa di Davide (per-davide A.73).'),
+    h('p', { class: 'nota' }, 'Tipi di nemico della campagna, in nemici/ sul server: numeri già fatti, come li scrive il master, nel formato deciso da Davide (per-davide A.73).'),
     h('div', { class: 'riga-azioni' },
       h('button', { type: 'button', class: 'btn', onclick: () => apriEditorNemico(ctx, null, voci, salvato) }, 'Nuovo tipo'),
       h('button', { type: 'button', class: 'btn', title: 'Un tipo di nemico con i numeri di un personaggio (da personaggi/ o dal computer): il personaggio non cambia', onclick: () => apriDaPg(ctx, voci, salvato) }, 'Crea da un PG')),
@@ -116,6 +113,18 @@ export function apriEditorNemico(ctx, nemico, voci, salvato, { modello = null, o
           dataset: { campo: percorso },
         }));
       case 'intero':
+        // A.73, decisione 9: un valore alternativo al numero («non_consentito»), con una casella
+        if (s.oppure?.length) {
+          const alt = s.oppure[0];
+          const attivo = cont[k] === alt;
+          return lab(h('span', { class: 'intero-oppure' },
+            h('input', {
+              type: 'number', step: 1, min: s.min ?? null, inputmode: 'numeric', class: 'input-numero', value: attivo ? '' : (cont[k] ?? ''), disabled: attivo,
+              placeholder: s.obbligatorio ? null : 'dal Passo',
+              oninput: (e) => { const v = e.target.value; imposta(v === '' ? undefined : (Number.isInteger(Number(v)) ? Number(v) : v)); },
+            }),
+            h('label', { class: 'casella-oppure' }, h('input', { type: 'checkbox', checked: attivo, onchange: (e) => { imposta(e.target.checked ? alt : undefined); disegna(); } }), ' ' + alt.replace(/_/g, ' '))));
+        }
         return lab(h('input', {
           type: 'number', step: 1, min: s.min ?? null, max: s.max ?? null, inputmode: 'numeric', class: 'input-numero', value: cont[k] ?? '',
           oninput: (e) => { const v = e.target.value; imposta(v === '' ? undefined : (Number.isInteger(Number(v)) ? Number(v) : v)); },
@@ -178,7 +187,7 @@ export function apriEditorNemico(ctx, nemico, voci, salvato, { modello = null, o
       h('header', { class: 'pannello-testa' },
         h('h2', { id: 'editor-nemico-titolo' }, nuovo ? (origine ? `Nuovo tipo di nemico da ${origine}` : 'Nuovo tipo di nemico') : `Modifica: ${nemico.nome}`),
         h('button', { type: 'button', class: 'btn tondo chiudi', 'aria-label': 'Chiudi', onclick: () => finestra.close() }, '×')),
-      h('p', { class: 'nota' }, 'Campi di data/formato_nemici.json (* obbligatori): numeri già fatti, nessun calcolo. Il formato è una proposta in attesa di Davide (per-davide A.73); tieni il puntatore su un campo per la sua descrizione.'),
+      h('p', { class: 'nota' }, 'Campi di data/formato_nemici.json (* obbligatori): numeri già fatti, nessun calcolo; Corsa e Scatto vuoti si calcolano dal Passo (per-davide A.73). Tieni il puntatore su un campo per la sua descrizione.'),
       origine ? h('p', { class: 'riquadro ok' }, `Numeri calcolati dalla scheda di ${origine} con le regole attuali (PV pieni, nessuno Stato). Dai un nome al tipo e salvalo: il personaggio non cambia.`) : null,
       avvisi.length ? h('div', { class: 'riquadro attenzione' }, h('p', {}, h('strong', {}, 'Da controllare:')), h('ul', {}, avvisi.map((x) => h('li', {}, x)))) : null,
       errori.length ? h('div', { class: 'riquadro attenzione', role: 'alert' }, h('p', {}, h('strong', {}, `Da correggere (${errori.length}):`)),
@@ -218,15 +227,35 @@ const barraPv = (p, modifica) => h('div', { class: 'plancia-barra risorsa-pv' },
     h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-label': `${p.nome}: −1 PV`, disabled: p.pv.attuali <= 0, onclick: () => modifica((x) => variaPvNemico(x, p.id, -1)) }, '−'),
     h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-label': `${p.nome}: +1 PV`, disabled: p.pv.attuali >= p.pv.massimo, onclick: () => modifica((x) => variaPvNemico(x, p.id, 1)) }, '+')));
 
-/** Carta compatta di un nemico nello scontro: PV con − e +, AR, Difese, attacchi, Stati. */
-export function cartaNemico(ctx, p, { modifica, diTurnoOra = false, onColpito = null, onAttacca = null }) {
+const barraPm = (p, modifica) => h('div', { class: 'plancia-barra risorsa-pm' },
+  h('span', { class: 'barra-etichetta' }, 'PM'),
+  h('span', { class: 'barra-traccia', role: 'meter', 'aria-label': `PM di ${p.nome}`, 'aria-valuemin': 0, 'aria-valuemax': p.pm.massimo, 'aria-valuenow': p.pm.attuali },
+    h('span', { class: 'barra-riempimento', style: `width: ${riempimento(p.pm.attuali, p.pm.massimo)}%` })),
+  h('span', { class: 'barra-numero' }, `${p.pm.attuali} / ${p.pm.massimo}`),
+  h('span', { class: 'pv-nemico-pulsanti' },
+    h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-label': `${p.nome}: −1 PM`, disabled: p.pm.attuali <= 0, onclick: () => modifica((x) => variaPmNemico(x, p.id, -1)) }, '−'),
+    h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-label': `${p.nome}: +1 PM`, disabled: p.pm.attuali >= p.pm.massimo, onclick: () => modifica((x) => variaPmNemico(x, p.id, 1)) }, '+')));
+
+/** «1 Azione Principale e 1 di Movimento» dal campo azioni (A.73, decisione 5). */
+function testoAzioni(a) {
+  const pl = (n, uno, piu) => `${n} ${n === 1 ? uno : piu}`;
+  return `${pl(a.principali, 'Azione Principale', 'Azioni Principali')} e ${a.movimento} di Movimento${a.eccezioni ? ` (${a.eccezioni})` : ''}`;
+}
+
+/**
+ * Carta compatta di un nemico nello scontro: PV e PM con − e +, Ferita e Menomazioni (A.73, decisione 7), AR,
+ * Difese, Azioni, Movimento, Resistenze (Immunità e Contromisure), Abilità, attacchi, incantesimi con «Lancia!»
+ * (decisione 8) e capacità come promemoria.
+ */
+export function cartaNemico(ctx, p, { modifica, diTurnoOra = false, onColpito = null, onAttacca = null, onLancia = null }) {
   const n = p.scheda;
   const dati = ctx.dati;
   const stati = dati.regole.stati?.elenco ?? [];
   const nomeStato = (id) => stati.find((s) => s.id === id)?.nome ?? id;
   const salvezze = dati.caratteristiche.salvezze.map((s) => `${s.nome.slice(0, 3)} ${n.salvezze?.[s.id] ?? '—'}`).join(' · ');
-  const mov = n.movimento ?? {};
   const aggiungibili = stati.filter((s) => !p.stati.includes(s.id) && !(n.immunita ?? []).includes(s.id));
+  const ferite = p.ferite ?? 0;
+  const ferita = ferite ? dati.regole.ferite.stati[ferite - 1] : null;
   const attacco = (a) => h('li', {},
     h('span', {}, a.nome),
     h('span', {}, ' VA ', h('strong', {}, numero(a.va)), ' · danno ', h('strong', {}, a.danno), ` ${a.natura}`,
@@ -234,6 +263,22 @@ export function cartaNemico(ctx, p, { modifica, diTurnoOra = false, onColpito = 
       a.modalita?.length ? ` · ${a.modalita.join(', ')}` : '', a.ac ? ` · AC ${a.ac}` : '',
       a.proprieta?.length ? h('small', { class: 'nota' }, ` · ${a.proprieta.join(', ')}`) : null,
       a.note ? h('small', { class: 'nota' }, ` · ${a.note}`) : null));
+  // A.73, decisione 8: completi con «Lancia!», incompleti come promemoria con il motivo
+  const incantesimo = (i, k) => {
+    const st = statoIncantesimoNemico(i, dati);
+    const senzaPm = !p.pm ? 'il nemico non ha PM' : p.pm.attuali < i.costo_pm ? `PM insufficienti: ${p.pm.attuali}` : null;
+    return h('li', {},
+      h('span', {}, i.nome, i.livello ? ` (livello ${i.livello})` : ''),
+      h('span', {}, i.va !== undefined ? [' VA ', h('strong', {}, numero(i.va))] : null, i.costo_pm !== undefined ? ` · ${i.costo_pm} PM` : '',
+        i.note ? h('small', { class: 'nota' }, ` · ${i.note}`) : null,
+        st.completo && onLancia
+          ? [' ', h('button', { type: 'button', class: 'btn btn-piccolo btn-lancia', disabled: !!senzaPm, title: senzaPm, onclick: () => onLancia(k) }, 'Lancia!')]
+          : h('small', { class: 'nota' }, ` · promemoria${st.motivo ? `: ${st.motivo}` : ''}`)));
+  };
+  const resistenze = [
+    n.immunita?.length ? `Immune a: ${n.immunita.map(nomeStato).join(', ')}` : null,
+    n.contromisure?.length ? `Contromisure: ${n.contromisure.map((c) => (c.valore ? `${c.nome} ${c.valore}` : c.nome)).join(', ')}` : null,
+  ].filter(Boolean);
   return h('article', { class: `carta-plancia carta-nemico lato-${p.lato}${diTurnoOra ? ' di-turno' : ''}${p.pv.attuali === 0 ? ' a-zero' : ''}`, 'aria-label': `${p.nome}, ${p.lato}${diTurnoOra ? ', di turno' : ''}` },
     h('header', { class: 'carta-plancia-testa' }, h('div', {},
       h('h2', {}, p.nome),
@@ -244,13 +289,18 @@ export function cartaNemico(ctx, p, { modifica, diTurnoOra = false, onColpito = 
         onAttacca ? h('button', { type: 'button', class: 'btn btn-piccolo btn-attacca', onclick: onAttacca }, 'Attacca') : null,
         onColpito ? h('button', { type: 'button', class: 'btn btn-piccolo btn-colpito', onclick: onColpito }, 'Colpito') : null)),
     barraPv(p, modifica),
-    n.pm !== undefined ? h('p', { class: 'nota' }, `PM ${n.pm}`) : null,
+    p.pm ? barraPm(p, modifica) : n.pm !== undefined ? h('p', { class: 'nota' }, `PM ${n.pm}`) : null,
+    // A.73, decisione 7: Stato di Ferita e Menomazioni come i PG (§5.14, §5.14.1); nessun Affaticamento
+    ferite || p.menomazioni?.length ? h('p', { class: 'plancia-condizioni' },
+      ferite ? h('span', { class: 'etichetta condizione-plancia' }, `Ferita ${nomeFerita(ferite, dati)}${ferita ? ` (${numero(ferita.penalita)})` : ''}`) : null,
+      (p.menomazioni ?? []).map((m) => [' ', h('span', { class: 'etichetta condizione-plancia menomazione-plancia', title: 'PS di Tempra per la Menomazione (§5.14.1)' }, `Menomazione (${m.stato}, PS di Tempra): ${m.testo}`)])) : null,
     h('p', { class: 'plancia-valori' },
       h('span', {}, 'AR ', h('strong', { class: 'pillola-plancia pillola-ar' }, String(n.ar.totale)),
         n.ar.magica !== n.ar.totale ? h('small', { class: 'nota' }, ' · contro Etereo ', h('strong', { class: 'pillola-plancia' }, String(n.ar.magica))) : null),
       h('span', {}, ' · Difese ', h('strong', { class: 'pillola-plancia' }, numero(n.difese))),
       h('span', {}, ' · Iniziativa ', h('strong', { class: 'pillola-plancia' }, numero(n.iniziativa)))),
-    h('p', { class: 'nota' }, `Salvezze: ${salvezze} · Movimento ${mov.passo} / ${mov.corsa ?? mov.passo * 2} / ${mov.scatto ?? mov.passo * 3} Q`),
+    n.azioni ? h('p', { class: 'nota azioni-nemico' }, `Azioni per Round: ${testoAzioni(n.azioni)}`) : null,
+    h('p', { class: 'nota' }, `Salvezze: ${salvezze} · ${testoMovimento(n, dati)}`),
     h('p', { class: 'plancia-stati' },
       p.stati.map((id) => h('span', { class: 'etichetta stato-plancia' }, nomeStato(id), ' ',
         h('button', { type: 'button', class: 'btn-link', 'aria-label': `Togli ${nomeStato(id)} a ${p.nome}`, onclick: () => modifica((x) => cambiaStatoNemico(x, p.id, stati.find((s) => s.id === id), false)) }, '×'))),
@@ -258,9 +308,12 @@ export function cartaNemico(ctx, p, { modifica, diTurnoOra = false, onColpito = 
         const s = stati.find((x) => x.id === e.target.value);
         if (s) modifica((x) => cambiaStatoNemico(x, p.id, s, true));
       } }, h('option', { value: '' }, '+ Stato'), aggiungibili.map((s) => h('option', { value: s.id }, s.nome))) : null),
-    n.immunita?.length ? h('p', { class: 'nota' }, `Immune a: ${n.immunita.map(nomeStato).join(', ')}`) : null,
+    resistenze.length ? h('p', { class: 'nota resistenze-nemico' }, resistenze.join(' · ')) : null,
+    n.abilita?.length ? h('p', { class: 'nota abilita-nemico' }, 'Abilità: ', n.abilita.map((a) => `${a.nome} ${numero(a.va)}`).join(' · ')) : null,
     n.attacchi.length ? h('ul', { class: 'plancia-armi' }, n.attacchi.map(attacco)) : h('p', { class: 'nota' }, 'Nessun attacco.'),
-    n.incantesimi?.length ? h('p', { class: 'nota' }, 'Incantesimi: ', n.incantesimi.map((i) => [i.nome, i.va !== undefined ? ` VA ${i.va}` : '', i.costo_pm !== undefined ? ` (${i.costo_pm} PM)` : ''].join('')).join(', ')) : null,
+    n.incantesimi?.length ? h('ul', { class: 'plancia-armi incantesimi-nemico', 'aria-label': 'Incantesimi' }, n.incantesimi.map(incantesimo)) : null,
+    n.capacita?.length ? h('details', { class: 'capacita-nemico' }, h('summary', {}, `Capacità speciali (${n.capacita.length})`),
+      h('ul', { class: 'nota' }, n.capacita.map((c) => h('li', {}, h('strong', {}, c.nome), `: ${c.effetto}`, c.costo ? ` · costo ${c.costo}` : '', c.limiti ? ` · ${c.limiti}` : '')))) : null,
     n.note ? h('p', { class: 'nota' }, n.note) : null);
 }
 

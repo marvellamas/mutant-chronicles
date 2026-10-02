@@ -31,6 +31,10 @@
     "volonta": 9,
     "magia": 8
   },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
   "attacchi": [
     {
       "nome": "Fucile d’assalto",
@@ -62,6 +66,38 @@
       "note": "Manovre: Affondo"
     }
   ],
+  "abilita": [
+    {
+      "nome": "Armi leggere",
+      "va": 9
+    },
+    {
+      "nome": "Armi medie",
+      "va": 12
+    },
+    {
+      "nome": "Armi pesanti",
+      "va": 8
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    },
+    {
+      "nome": "Furtività",
+      "va": 9
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Ottimizzare Gittata",
+      "effetto": "Con Armi medie o pesanti riduce di 2 la penalità dovuta alla distanza."
+    }
+  ],
   "stati": [],
-  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Mercenario Recluta, Freelance Combattente, Artigliere 1, 2° livello. Talenti (gli effetti situazionali si applicano a mano): Ottimizzare Gittata."
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Mercenario Recluta, Freelance Combattente, Artigliere 1, 2° livello. Talenti fra le capacità speciali: gli effetti generali sono già nei valori, quelli situazionali si applicano a mano."
 }

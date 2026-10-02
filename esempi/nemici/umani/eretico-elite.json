@@ -31,6 +31,10 @@
     "volonta": 10,
     "magia": 9
   },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
   "attacchi": [
     {
       "nome": "Pistola semiautomatica",
@@ -58,6 +62,58 @@
       "note": "Manovre: Affondo"
     }
   ],
+  "abilita": [
+    {
+      "nome": "Armi leggere",
+      "va": 13
+    },
+    {
+      "nome": "Armi da mischia",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 16
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Tecnologia",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Movimento Tattico",
+      "effetto": "Riduce di 2, fino a un minimo di 0, le penalità alle proprie Prove dovute esclusivamente al tipo di Movimento: Passo 0, Corsa 0, Scatto −4."
+    },
+    {
+      "nome": "Attacco Silenzioso",
+      "effetto": "Ottiene +2 VA a Furtività per avvicinarsi a un avversario senza essere individuato."
+    },
+    {
+      "nome": "Rapidità Operativa",
+      "effetto": "Ottiene sempre +2 Iniziativa."
+    },
+    {
+      "nome": "Imboscata Migliorata",
+      "effetto": "Elimina il −2 VA all’Azione Principale eseguita quando si verifica l’evento dichiarato mediante Imboscata."
+    },
+    {
+      "nome": "Resistenza alla Corruzione",
+      "effetto": "Ottiene +2 alle PS per evitare di acquisire Corruzione Oscura o limitarne il peggioramento."
+    },
+    {
+      "nome": "Affondo Migliorato",
+      "effetto": "Con Affondo porta il bonus al danno da +1 a +2 e applica Sanguinamento 2 anziché 1, se almeno 1 danno supera l’AR."
+    }
+  ],
   "stati": [],
-  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Solo la parte umana. TODO(Davide): eventuali Doni dell’Oscura Simmetria o poteri dell’Oscura Legione, da aggiungere quando ci sono le regole. Costruito come PG: Eretico Élite, Freelance Combattente, Incursore 3, 8° livello. Talenti (gli effetti situazionali si applicano a mano): Movimento Tattico, Attacco Silenzioso, Rapidità Operativa, Imboscata Migliorata, Resistenza alla Corruzione, Affondo Migliorato."
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Solo la parte umana. TODO(Davide): eventuali Doni dell’Oscura Simmetria o poteri dell’Oscura Legione, da aggiungere quando ci sono le regole. Costruito come PG: Eretico Élite, Freelance Combattente, Incursore 3, 8° livello. Talenti fra le capacità speciali: gli effetti generali sono già nei valori, quelli situazionali si applicano a mano."
 }

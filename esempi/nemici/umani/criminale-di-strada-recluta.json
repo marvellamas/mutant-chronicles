@@ -31,6 +31,10 @@
     "volonta": 11,
     "magia": 8
   },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
   "attacchi": [
     {
       "nome": "Pistola semiautomatica",
@@ -58,6 +62,42 @@
       "note": "Manovre: Affondo"
     }
   ],
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 9
+    },
+    {
+      "nome": "Difese",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    },
+    {
+      "nome": "Raggirare",
+      "va": 12
+    },
+    {
+      "nome": "Tecnologia",
+      "va": 9
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Colpo Sleale",
+      "effetto": "Una volta per Round, quando colpisce un bersaglio che ignora la sua presenza, è ingaggiato con un altro avversario oppure ha esaurito le proprie Azioni Principali, può scegliere uno dei seguenti benefici: Ferire, +2 al danno; Spostare, spostamento del bersaglio di 1 Q se fisicamente possibile, con le regole del Movimento forzato; Distrarre, il bersaglio non può effettuare Attacchi di Opportunità fino all’arrivo dell’Iniziativa successiva del Lestofante."
+    }
+  ],
   "stati": [],
-  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Criminale di strada Recluta, Freelance Avventuriero, Lestofante 1, 2° livello. Talenti (gli effetti situazionali si applicano a mano): Colpo Sleale."
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Criminale di strada Recluta, Freelance Avventuriero, Lestofante 1, 2° livello. Talenti fra le capacità speciali: gli effetti generali sono già nei valori, quelli situazionali si applicano a mano."
 }

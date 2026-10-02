@@ -31,6 +31,10 @@
     "volonta": 10,
     "magia": 7
   },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
   "attacchi": [
     {
       "nome": "CAR10",
@@ -58,6 +62,42 @@
       "note": "Manovre: Affondo"
     }
   ],
+  "abilita": [
+    {
+      "nome": "Armi leggere",
+      "va": 9
+    },
+    {
+      "nome": "Armi medie",
+      "va": 11
+    },
+    {
+      "nome": "Difese",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    },
+    {
+      "nome": "Furtività",
+      "va": 7
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Addestramento Militare",
+      "effetto": "Il Soldato ottiene +3 alle Prove Salvezza di Volontà contro paura, panico, Fuoco di Soppressione e altre pressioni provocate dal combattimento."
+    }
+  ],
   "stati": [],
-  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Fante Capitol Recluta, Capitol Combattente, Soldato 1, 2° livello. Talenti (gli effetti situazionali si applicano a mano): Addestramento Militare."
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Fante Capitol Recluta, Capitol Combattente, Soldato 1, 2° livello. Talenti fra le capacità speciali: gli effetti generali sono già nei valori, quelli situazionali si applicano a mano."
 }

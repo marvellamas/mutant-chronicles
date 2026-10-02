@@ -36,7 +36,8 @@ export function tiriRichiesti(arma, r) {
  * @param valori d20 naturali (null se non ancora tirato), uno per tiro
  */
 export function esitoAttacco(tiri, valori, dati) {
-  const esiti = tiri.map((t, i) => esitoProva(t.va, valori[i] ?? null, dati, { obbligatoria: !!t.obbligatoria }));
+  // A.78 (E&L del 02/10, decisione 3): gli attacchi si tirano anche con VA finale 20 o più
+  const esiti = tiri.map((t, i) => esitoProva(t.va, valori[i] ?? null, dati, { obbligatoria: !!t.obbligatoria, tipo: 'attacco' }));
   const completo = esiti.length > 0 && esiti.every((e) => e.esito !== 'da_tirare');
   const riusciti = esiti.filter((e) => e.riuscita);
   const esito = !completo ? 'da_tirare'

@@ -31,6 +31,10 @@
     "volonta": 9,
     "magia": 11
   },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
   "attacchi": [
     {
       "nome": "Spada lunga",
@@ -58,6 +62,62 @@
       "note": "caricatore 10 colpi"
     }
   ],
+  "abilita": [
+    {
+      "nome": "Armi leggere",
+      "va": 13
+    },
+    {
+      "nome": "Armi da guerra",
+      "va": 16
+    },
+    {
+      "nome": "Armi da mischia",
+      "va": 16
+    },
+    {
+      "nome": "Difese",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Mantenere la Posizione",
+      "effetto": "Ottiene +3 al valore delle Prove o delle Prove Salvezza previste per resistere o liberarsi da sbilanciamenti, spinte, spostamenti forzati, immobilizzazioni e disarmi."
+    },
+    {
+      "nome": "Carica Brutale",
+      "effetto": "Ottiene +2 al danno base della Carica, prima di applicare il moltiplicatore."
+    },
+    {
+      "nome": "Assalto Armato",
+      "effetto": "Riduce di 2 Q complessivi, fino a un minimo di 0, la penalità al Movimento prodotta dall’armatura indossata e dallo scudo impugnato."
+    },
+    {
+      "nome": "Affondo Migliorato",
+      "effetto": "Con Affondo porta il bonus al danno da +1 a +2 e applica Sanguinamento 2 anziché 1, se almeno 1 danno supera l’AR."
+    },
+    {
+      "nome": "Parata Migliorata",
+      "effetto": "Dopo una Parata riuscita con un’arma, dimezza per eccesso il danno e lo riduce di altri 2 punti, fino a un minimo di 0, prima di applicare l’AR."
+    },
+    {
+      "nome": "Iniziativa Migliorata",
+      "effetto": "Il personaggio ottiene un bonus permanente di +3 all’Iniziativa."
+    }
+  ],
   "stati": [],
-  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Guerriero Mishima Élite, Mishima Combattente, Assaltatore 3, 8° livello. Talenti (gli effetti situazionali si applicano a mano): Mantenere la Posizione, Carica Brutale, Assalto Armato, Affondo Migliorato, Parata Migliorata, Iniziativa Migliorata."
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Guerriero Mishima Élite, Mishima Combattente, Assaltatore 3, 8° livello. Talenti fra le capacità speciali: gli effetti generali sono già nei valori, quelli situazionali si applicano a mano."
 }

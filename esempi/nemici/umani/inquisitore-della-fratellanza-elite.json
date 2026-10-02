@@ -31,6 +31,10 @@
     "volonta": 12,
     "magia": 13
   },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
   "attacchi": [
     {
       "nome": "Spada leggera",
@@ -61,40 +65,114 @@
       "note": "caricatore 8 colpi"
     }
   ],
+  "contromisure": [
+    {
+      "nome": "Imbottita",
+      "valore": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 16
+    },
+    {
+      "nome": "Difese",
+      "va": 16
+    },
+    {
+      "nome": "Potere",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 4
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Arma Astrale",
+      "effetto": "Con un’Azione Principale e 2 PM, il Custode evoca un’Arma Astrale per 10 Round."
+    },
+    {
+      "nome": "Fenditura Mistica",
+      "effetto": "Una volta per scena, dopo aver colpito con l’Arma Astrale ma prima di tirare il danno, il Custode può rendere Etereo il danno di quel singolo colpo."
+    },
+    {
+      "nome": "Maestro d’Arma",
+      "effetto": "Il Custode ottiene o costruisce una CyberArma personale."
+    },
+    {
+      "nome": "Resistenza alla Corruzione",
+      "effetto": "Ottiene +2 alle PS per evitare di acquisire Corruzione Oscura o limitarne il peggioramento."
+    },
+    {
+      "nome": "Lancio in Combattimento",
+      "effetto": "Quando lancia un Incantesimo durante l’Ingaggio, il personaggio non applica la penalità di −2 al VA di Potere dovuta all’Ingaggio."
+    },
+    {
+      "nome": "Resistenza alla Paura",
+      "effetto": "Ottiene +2 alle PS contro paura, terrore, panico e demoralizzazione."
+    }
+  ],
   "stati": [],
   "incantesimi": [
     {
       "nome": "Agilità Mutata",
-      "note": "promemoria: si lancia come per i PG (per-davide A.73)"
+      "livello": 9,
+      "va": 10,
+      "costo_pm": 9
     },
     {
       "nome": "Alterare Immagine",
-      "note": "promemoria: si lancia come per i PG (per-davide A.73)"
+      "livello": 9,
+      "va": 10,
+      "costo_pm": 9
     },
     {
       "nome": "Ampliare Sensi",
-      "note": "promemoria: si lancia come per i PG (per-davide A.73)"
+      "livello": 9,
+      "va": 10,
+      "costo_pm": 9
     },
     {
       "nome": "Arma Mistica",
-      "note": "promemoria: si lancia come per i PG (per-davide A.73)"
+      "livello": 9,
+      "va": 10,
+      "costo_pm": 9
     },
     {
       "nome": "Armatura di Forza",
-      "note": "promemoria: si lancia come per i PG (per-davide A.73)"
+      "livello": 9,
+      "va": 10,
+      "costo_pm": 9
     },
     {
       "nome": "Armatura Mistica",
-      "note": "promemoria: si lancia come per i PG (per-davide A.73)"
+      "livello": 9,
+      "va": 10,
+      "costo_pm": 9
     },
     {
       "nome": "Barriera Mentale",
-      "note": "promemoria: si lancia come per i PG (per-davide A.73)"
+      "livello": 9,
+      "va": 10,
+      "costo_pm": 9
     },
     {
       "nome": "Colpo Elementale",
-      "note": "promemoria: si lancia come per i PG (per-davide A.73)"
+      "livello": 10,
+      "va": 8,
+      "costo_pm": 10
     }
   ],
-  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Inquisitore della Fratellanza Élite, Fratellanza Taumaturgo, Custode 3, 8° livello. Talenti (gli effetti situazionali si applicano a mano): Arma Astrale, Fenditura Mistica, Maestro d’Arma, Resistenza alla Corruzione, Lancio in Combattimento, Resistenza alla Paura."
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Inquisitore della Fratellanza Élite, Fratellanza Taumaturgo, Custode 3, 8° livello. Talenti fra le capacità speciali: gli effetti generali sono già nei valori, quelli situazionali si applicano a mano."
 }

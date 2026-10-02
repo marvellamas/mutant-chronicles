@@ -31,6 +31,10 @@
     "volonta": 10,
     "magia": 9
   },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
   "attacchi": [
     {
       "nome": "Fucile d’assalto",
@@ -62,6 +66,50 @@
       "note": "Manovre: Affondo"
     }
   ],
+  "abilita": [
+    {
+      "nome": "Armi leggere",
+      "va": 11
+    },
+    {
+      "nome": "Armi medie",
+      "va": 14
+    },
+    {
+      "nome": "Armi pesanti",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 9
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Ottimizzare Gittata",
+      "effetto": "Con Armi medie o pesanti riduce di 2 la penalità dovuta alla distanza."
+    },
+    {
+      "nome": "Raffica Estesa",
+      "effetto": "Con Raffica Media o Lunga può distribuire i colpi fra bersagli entro 2 Q dal principale, almeno un colpo per bersaglio."
+    },
+    {
+      "nome": "Raffica Breve Migliorata",
+      "effetto": "Porta il bonus della Raffica Breve da +2 a +4 VA."
+    },
+    {
+      "nome": "Mira Rapida",
+      "effetto": "Riduce di 1, fino a un minimo di 1, le Azioni Principali complessivamente richieste dalla distanza e dal mirino."
+    }
+  ],
   "stati": [],
-  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Mercenario Veterano, Freelance Combattente, Artigliere 2, 5° livello. Talenti (gli effetti situazionali si applicano a mano): Ottimizzare Gittata, Raffica Estesa, Raffica Breve Migliorata, Mira Rapida."
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Mercenario Veterano, Freelance Combattente, Artigliere 2, 5° livello. Talenti fra le capacità speciali: gli effetti generali sono già nei valori, quelli situazionali si applicano a mano."
 }

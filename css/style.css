@@ -1556,6 +1556,8 @@ body.con-sfondo::before {
 .plancia-valori, .plancia-condizioni, .plancia-stati { margin: 0; display: flex; flex-wrap: wrap; gap: 0.3rem; align-items: center; }
 .pillola-plancia { font-size: 1.05rem; }
 .condizione-plancia { background: var(--barra-giallo, #a87400); color: #fff; }
+.intero-oppure { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+.carta-nemico .capacita-nemico summary { cursor: pointer; font-size: 0.9em; }
 .stato-plancia { background: var(--accento-tenue, #f3e3d8); }
 .plancia-armi { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.25rem; font-size: 0.92rem; }
 .plancia-armi li { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.3rem; border-top: 1px solid var(--bordo); padding-top: 0.25rem; }

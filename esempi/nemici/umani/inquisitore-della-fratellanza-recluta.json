@@ -31,6 +31,10 @@
     "volonta": 11,
     "magia": 12
   },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
   "attacchi": [
     {
       "nome": "Spada leggera",
@@ -61,40 +65,94 @@
       "note": "caricatore 8 colpi"
     }
   ],
+  "contromisure": [
+    {
+      "nome": "Imbottita",
+      "valore": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 10
+    },
+    {
+      "nome": "Difese",
+      "va": 10
+    },
+    {
+      "nome": "Potere",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    },
+    {
+      "nome": "Furtività",
+      "va": 4
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Arma Astrale",
+      "effetto": "Con un’Azione Principale e 2 PM, il Custode evoca un’Arma Astrale per 10 Round."
+    }
+  ],
   "stati": [],
   "incantesimi": [
     {
       "nome": "Agilità Mutata",
-      "note": "promemoria: si lancia come per i PG (per-davide A.73)"
+      "livello": 3,
+      "va": 8,
+      "costo_pm": 3
     },
     {
       "nome": "Alterare Immagine",
-      "note": "promemoria: si lancia come per i PG (per-davide A.73)"
+      "livello": 3,
+      "va": 8,
+      "costo_pm": 3
     },
     {
       "nome": "Ampliare Sensi",
-      "note": "promemoria: si lancia come per i PG (per-davide A.73)"
+      "livello": 3,
+      "va": 8,
+      "costo_pm": 3
     },
     {
       "nome": "Arma Mistica",
-      "note": "promemoria: si lancia come per i PG (per-davide A.73)"
+      "livello": 3,
+      "va": 8,
+      "costo_pm": 3
     },
     {
       "nome": "Armatura di Forza",
-      "note": "promemoria: si lancia come per i PG (per-davide A.73)"
+      "livello": 3,
+      "va": 8,
+      "costo_pm": 3
     },
     {
       "nome": "Armatura Mistica",
-      "note": "promemoria: si lancia come per i PG (per-davide A.73)"
+      "livello": 3,
+      "va": 8,
+      "costo_pm": 3
     },
     {
       "nome": "Barriera Mentale",
-      "note": "promemoria: si lancia come per i PG (per-davide A.73)"
+      "livello": 3,
+      "va": 8,
+      "costo_pm": 3
     },
     {
       "nome": "Colpo Elementale",
-      "note": "promemoria: si lancia come per i PG (per-davide A.73)"
+      "livello": 3,
+      "va": 8,
+      "costo_pm": 3
     }
   ],
-  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Inquisitore della Fratellanza Recluta, Fratellanza Taumaturgo, Custode 1, 2° livello. Talenti (gli effetti situazionali si applicano a mano): Arma Astrale."
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Inquisitore della Fratellanza Recluta, Fratellanza Taumaturgo, Custode 1, 2° livello. Talenti fra le capacità speciali: gli effetti generali sono già nei valori, quelli situazionali si applicano a mano."
 }

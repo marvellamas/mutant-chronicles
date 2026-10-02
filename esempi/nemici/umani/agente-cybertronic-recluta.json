@@ -31,6 +31,10 @@
     "volonta": 9,
     "magia": 10
   },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
   "attacchi": [
     {
       "nome": "P500",
@@ -58,6 +62,44 @@
       "note": "Manovre: Affondo"
     }
   ],
+  "contromisure": [
+    {
+      "nome": "Isolante",
+      "valore": 1
+    }
+  ],
+  "abilita": [
+    {
+      "nome": "Armi leggere",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 7
+    },
+    {
+      "nome": "Furtività",
+      "va": 9
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Cultura",
+      "va": 7
+    },
+    {
+      "nome": "Raggirare",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Fuoco Controllato",
+      "effetto": "Quando spara contro un avversario ingaggiato in Ravvicinato, protetto da un alleato o che usa un ostaggio come scudo, l’Agente elimina la penalità specifica e non effettua la seconda Prova di controllo."
+    }
+  ],
   "stati": [],
-  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Agente Cybertronic Recluta, Cybertronic Avventuriero, Agente 1, 2° livello. Talenti (gli effetti situazionali si applicano a mano): Fuoco Controllato."
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Agente Cybertronic Recluta, Cybertronic Avventuriero, Agente 1, 2° livello. Talenti fra le capacità speciali: gli effetti generali sono già nei valori, quelli situazionali si applicano a mano."
 }

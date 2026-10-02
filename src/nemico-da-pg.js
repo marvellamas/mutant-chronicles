@@ -5,10 +5,14 @@
 // apertura; ogni attacco viene dalla stessa voce di scheda.equipaggiamento.armi che usa «Attacca!»
 // (VA effettivo, danno con il bonus di Caratteristica, portata o gittata, modalità, AC, proprietà).
 // Un'arma non in mano si misura mettendola in mano in una copia del personaggio: il PG d'origine non cambia.
+// Lotto 8 (per-davide A.73, decisioni 5–8): anche le sei Caratteristiche, le Azioni per Round, le Contromisure
+// delle protezioni in uso, le Abilità rilevanti con il VA, i Talenti come capacità speciali e gli incantesimi
+// con livello, VA di lancio e costo della versione più alta accessibile, calcolati da «Lancia!» (src/lancio.js).
 import { deserializzaPersonaggio, normalizza } from './character.js';
 import { calcolaScheda } from './calc.js';
 import { massimiSessione, inizializzaSessione } from './sessione.js';
-import { catalogo, risolvi, aggiungiDanno } from './equipaggiamento.js';
+import { catalogo, risolvi, aggiungiDanno, regolaCapolavoro } from './equipaggiamento.js';
+import { calcolaLancio, versioniLancio } from './lancio.js';
 import { idDaNome } from './nemici.js';
 
 const TIPI_ARMA = ['arma_ravvicinata', 'arma_distanza'];
@@ -26,10 +30,10 @@ function leggiPg(file, dati) {
 /** Scheda con una sessione nuova (PV e PM pieni, nessuno Stato, nessuna Ferita). */
 function schedaFresca(scelte, livelli, dati) {
   const riposo = calcolaScheda({ creazione: scelte, livelli }, dati);
-  if (!riposo.caratteristiche) return { riposo, scheda: null, massimi: null };
+  if (!riposo.caratteristiche) return { riposo, scheda: null, massimi: null, sessione: null };
   const massimi = massimiSessione(riposo, scelte, dati);
   const sessione = inizializzaSessione(massimi);
-  return { riposo, scheda: calcolaScheda({ creazione: scelte, livelli, sessione }, dati), massimi };
+  return { riposo, scheda: calcolaScheda({ creazione: scelte, livelli, sessione }, dati), massimi, sessione };
 }
 
 /**
@@ -105,6 +109,45 @@ export function attaccoDaArma(a, dati) {
   return { attacco, avvisi };
 }
 
+// Abilità rilevanti per le Prove al tavolo, oltre alle Abilità di Classe (A.73, decisione 5)
+const ABILITA_COMUNI = ['Percezione', 'Furtività', 'Atletica'];
+
+/** Contromisure delle protezioni in uso (effetti «contromisura» degli oggetti), con il nome del §5.24. */
+function contromisureDa(scheda, dati) {
+  const nomi = new Map((regolaCapolavoro(dati)?.contromisure ?? []).map((c) => [c.effetto, c.nome]));
+  const valori = new Map();
+  for (const e of scheda.equipaggiamento?.effettiOggetti ?? []) {
+    if (e.tipo !== 'contromisura' || !nomi.has(e.effetto)) continue;
+    valori.set(nomi.get(e.effetto), Math.max(valori.get(nomi.get(e.effetto)) ?? 0, e.valore));
+  }
+  return dati.formato_nemici.contromisure.filter((n) => valori.has(n)).map((nome) => ({ nome, valore: valori.get(nome) }));
+}
+
+/** Abilità di Classe del personaggio e quelle comuni delle Prove, con il VA effettivo, nell'ordine del manuale. */
+function abilitaDa(scheda, scelte, dati) {
+  const classi = new Set((scheda.classi ?? []).map((c) => c.nome));
+  const scelte_ = new Set([...ABILITA_COMUNI, ...dati.classi.classi.filter((c) => classi.has(c.nome)).flatMap((c) => c.abilita)]);
+  return scheda.abilita.filter((a) => scelte_.has(a.nome)).map((a) => ({ nome: a.nome, va: a.effettivo ?? a.totale }));
+}
+
+/** Prima frase di un testo, per l'effetto di una capacità. */
+const primaFrase = (t) => String(t ?? '').replace(/\s+/g, ' ').trim().split(/(?<=\.)\s/)[0];
+
+/**
+ * Incantesimi del PG per «Lancia!» dei nemici (A.73, decisione 8): la versione più alta accessibile, con il VA
+ * di Potere e il costo che «Lancia!» calcola per il PG senza modificatori temporanei. Un incantesimo che non si
+ * lancia così (Rituale) resta un promemoria.
+ */
+function incantesimiDa(scelte, scheda, sessione, dati) {
+  return (scelte.incantesimi ?? []).map((nome) => {
+    const inc = dati.incantesimi.incantesimi.find((i) => i.nome === nome);
+    const v = inc ? versioniLancio(inc, scheda).filter((x) => !x.motivo).at(-1) : null;
+    if (!inc || !v || inc.meccanica?.procedura_rituale?.stato) return { nome, note: 'promemoria: si lancia al tavolo' };
+    const r = calcolaLancio({ scheda, sessione }, inc, { versione: v.livello }, dati);
+    return { nome, livello: v.livello, va: r.va_potere_finale, costo_pm: r.pm_costo };
+  });
+}
+
 /**
  * Il nemico costruito dal PG.
  * @param file testo o oggetto dell'export del personaggio
@@ -120,7 +163,7 @@ export function nemicoDaPg(file, dati, { nome = null, id = null, nota = null } =
     return { errore: `file del personaggio non leggibile: ${e.message}` };
   }
   const { scelte, livelli } = pg;
-  const { scheda, massimi } = schedaFresca(scelte, livelli, dati);
+  const { scheda, massimi, sessione } = schedaFresca(scelte, livelli, dati);
   if (!scheda) return { errore: 'il personaggio non ha ancora Corporazione, Addestramento e Classe: la scheda non si calcola' };
   const eq = scheda.equipaggiamento ?? {};
   const ar = eq.arEffettiva ?? eq.ar ?? { totale: 0, magica: 0 };
@@ -136,14 +179,17 @@ export function nemicoDaPg(file, dati, { nome = null, id = null, nota = null } =
   const livello = 1 + livelli.length;
   const classi = (scheda.classi ?? []).map((c) => `${c.nome} ${c.grado}`).join(', ');
   const nomeTipo = String(nome ?? scelte.nome ?? '').trim() || 'Nemico';
-  // Talenti di Classe e liberi, come promemoria: gli effetti generali sono già nei valori della scheda; quelli
-  // situazionali e le opzioni di «Attacca!» legate ai Talenti si applicano a mano al tavolo
-  const talenti = [...(scheda.talenti ?? []), ...(scheda.talentiLiberi ?? [])].map((x) => x.nome ?? x).filter((x) => typeof x === 'string');
-  const incantesimi = (scelte.incantesimi ?? []).map((n) => ({ nome: n, note: 'promemoria: si lancia come per i PG (per-davide A.73)' }));
+  // Talenti di Classe e liberi come capacità speciali (A.73, decisione 5): gli effetti generali sono già nei
+  // valori della scheda; quelli situazionali e le opzioni di «Attacca!» legate ai Talenti si applicano a mano
+  const capacita = [...(scheda.talenti ?? []), ...(scheda.talentiLiberi ?? [])].filter((x) => typeof x?.nome === 'string')
+    .map((t) => ({ nome: t.nome, effetto: primaFrase(t.testo ?? dati.talenti_liberi.talenti.find((x) => x.id === t.id)?.testo) || 'vedi la scheda del Talento' }));
+  const incantesimi = incantesimiDa(scelte, scheda, sessione, dati);
+  const contromisure = contromisureDa(scheda, dati);
+  const abilita = abilitaDa(scheda, scelte, dati);
   const note = [
     nota,
     `Costruito come PG: ${scelte.nome?.trim() || 'senza nome'}, ${[scelte.corporazione, scelte.addestramento].filter(Boolean).join(' ')}, ${classi}, ${livello}° livello.`,
-    talenti.length ? `Talenti (gli effetti situazionali si applicano a mano): ${talenti.join(', ')}.` : null,
+    capacita.length ? 'Talenti fra le capacità speciali: gli effetti generali sono già nei valori, quelli situazionali si applicano a mano.' : null,
   ].filter(Boolean).join(' ');
   const nemico = {
     formato: dati.formato_nemici.formato,
@@ -159,7 +205,11 @@ export function nemicoDaPg(file, dati, { nome = null, id = null, nota = null } =
     iniziativa: t.iniziativa?.effettivo ?? scheda.iniziativa ?? 0,
     movimento: { passo: mov('passo'), corsa: mov('corsa'), scatto: mov('scatto') },
     salvezze: Object.fromEntries(dati.caratteristiche.salvezze.map((s) => [s.id, scheda.salvezze[s.id].effettivo ?? scheda.salvezze[s.id].totale])),
+    azioni: { principali: t.azioni?.principali?.effettivo ?? scheda.azioni.principali, movimento: t.azioni?.movimento?.effettivo ?? scheda.azioni.movimento },
     attacchi,
+    ...(contromisure.length ? { contromisure } : {}),
+    ...(abilita.length ? { abilita } : {}),
+    ...(capacita.length ? { capacita } : {}),
     stati: [],
     ...(incantesimi.length ? { incantesimi } : {}),
     note,

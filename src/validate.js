@@ -2058,7 +2058,7 @@ function validaMeccanicaIncantesimi(dati, err) {
 const TIPI_CAMPO_NEMICO = ['costante', 'testo', 'intero', 'dadi', 'scelta', 'lista', 'oggetto', 'mappa'];
 
 /** Valori ammessi per «valori_da» e «chiavi_da» del formato, presi dagli altri dati. */
-function sorgentiNemico(dati) {
+export function sorgentiNemico(dati) {
   return {
     caratteristiche: (dati?.caratteristiche?.caratteristiche ?? []).map((c) => c?.sigla),
     salvezze: (dati?.caratteristiche?.salvezze ?? []).map((s) => s?.id),

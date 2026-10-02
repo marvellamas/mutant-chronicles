@@ -31,6 +31,10 @@
     "volonta": 10,
     "magia": 10
   },
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
   "attacchi": [
     {
       "nome": "Conqueror 10",
@@ -62,6 +66,54 @@
       "note": "Manovre: Affondo"
     }
   ],
+  "abilita": [
+    {
+      "nome": "Armi leggere",
+      "va": 11
+    },
+    {
+      "nome": "Armi medie",
+      "va": 14
+    },
+    {
+      "nome": "Difese",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 7
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 14
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Addestramento Militare",
+      "effetto": "Il Soldato ottiene +3 alle Prove Salvezza di Volontà contro paura, panico, Fuoco di Soppressione e altre pressioni provocate dal combattimento."
+    },
+    {
+      "nome": "Supporto d’Attacco",
+      "effetto": "Una volta per Round, il Soldato designa un avversario che può percepire e sceglie un alleato entro 6 Q."
+    },
+    {
+      "nome": "Mira Rapida",
+      "effetto": "Riduce di 1, fino a un minimo di 1, le Azioni Principali complessivamente richieste dalla distanza e dal mirino."
+    },
+    {
+      "nome": "Sempre Allerta",
+      "effetto": "Ottiene +3 VA alle Prove di Percezione per individuare imboscate, aggressori nascosti e pericoli improvvisi."
+    }
+  ],
   "stati": [],
-  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Soldato Imperiale Veterano, Imperiali Combattente, Soldato 2, 5° livello. Talenti (gli effetti situazionali si applicano a mano): Addestramento Militare, Supporto d’Attacco, Mira Rapida, Sempre Allerta."
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Soldato Imperiale Veterano, Imperiali Combattente, Soldato 2, 5° livello. Talenti fra le capacità speciali: gli effetti generali sono già nei valori, quelli situazionali si applicano a mano."
 }

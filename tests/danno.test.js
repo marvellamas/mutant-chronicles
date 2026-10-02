@@ -65,13 +65,15 @@ test('§5.14: soglie delle nuove Ferite per fascia ed esito; oltre Grave la Mort
   const r = applicaColpo(bersaglio({ pv: 0, ferite: 2, totale: 0 }), colpo([12], { tempra: ['fallimento'] }), dati);
   assert.deepEqual([r.ferite.dopo, r.ferite.nome, r.morte], [5, 'Grave', false]);
   assert.ok(r.promemoria.some((p) => /Profonda: PS di Tempra per la Menomazione/.test(p)));
+  // le Menomazioni raggiunte per la prima volta, anche come dato (i nemici le registrano: A.73, decisione 7)
+  assert.deepEqual(r.menomazioni.map((x) => x.stato), ['Profonda', 'Seria', 'Grave']);
   // 26+ con fallimento: 6 Ferite, oltre Grave → Morte
   const m = applicaColpo(bersaglio({ pv: 0, ferite: 0, totale: 0 }), colpo([30], { tempra: ['fallimento'] }), dati);
   assert.deepEqual([m.ferite.dopo, m.ferite.nome, m.morte], [6, 'Morte', true]);
-  // un nemico (senza Ferite, per-davide A.73): a 0 PV solo il promemoria
+  // senza grado di Ferite (null): a 0 PV solo il promemoria, nessuna PS di Tempra
   const n = applicaColpo({ ...bersaglio({ pv: 0 }), ferite: null }, colpo([10]), dati);
-  assert.deepEqual([n.ferite, n.tempraMancanti], [null, []]);
-  assert.match(n.promemoria[0], /A\.73/);
+  assert.deepEqual([n.ferite, n.tempraMancanti, n.menomazioni], [null, [], []]);
+  assert.match(n.promemoria[0], /Ferite non registrate/);
 });
 
 test('bersaglio PG dalla scheda: AR della vista della plancia (valori con la provenienza), Sanguinante come Stato', () => {
