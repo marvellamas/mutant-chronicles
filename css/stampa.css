@@ -27,6 +27,7 @@ body.vista-stampa {
   --ss-spirituale: #3e9a4f; --ss-spirituale-tenue: #ebf6ed;
   --ss-accento: #8a3b12;   --ss-accento-tenue: #f6e8df;
   --ss-acciaio: #4a5260;   --ss-acciaio-tenue: #eceef1;
+  --ss-tecnica: #9a5b13;   --ss-tecnica-tenue: #f8efe4;  /* Tecniche Interiori (foglio 5), come --tecnica */
   /* categorie degli oggetti, come le sezioni della tab Inventario (css/palette.css → --cat-*) */
   --ss-cat-ravvicinate: #8a3b12; --ss-cat-accessori: #5a4870; --ss-cat-armature: #4a5260; --ss-cat-munizioni: #6b4423;
   --ss-cat-sanitario: #0e6863;   --ss-cat-artefatti: #7a2f86; --ss-cat-altro: #5f5f66;
@@ -145,6 +146,13 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .tinta-fisica { --tinta: var(--ss-fisica); --tinta-tenue: var(--ss-fisica-tenue); }
 .tinta-mentale { --tinta: var(--ss-mentale); --tinta-tenue: var(--ss-mentale-tenue); }
 .tinta-spirituale { --tinta: var(--ss-spirituale); --tinta-tenue: var(--ss-spirituale-tenue); }
+.tinta-tecnica { --tinta: var(--ss-tecnica); --tinta-tenue: var(--ss-tecnica-tenue); }
+/* foglio 5 con le Tecniche Interiori: l'elenco a destra come quello degli incantesimi */
+/* due colonne fisse: le «Azioni» delle Tecniche sono lunghe e la tabella andrebbe a capo male in max-content */
+.f5-griglia.f5-griglia-tecniche { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }  /* sinistra ~136 mm: i PM in righe da 25 */
+.tecniche-stampa td { font-size: var(--ss-font); }
+.tecniche-stampa tbody th { font-size: 11pt; }
+.tecniche-stampa tr.macro-riga > th { font-size: var(--ss-font); text-transform: uppercase; letter-spacing: 0.05em; color: var(--tinta); background: #fff; border-bottom: 1pt solid var(--tinta); }
 /* sezioni dell'Inventario: il colore della categoria (src/palette.js → SEZIONI_INVENTARIO) */
 .tinta-cat-ravvicinate { --tinta: var(--ss-cat-ravvicinate); --tinta-tenue: #f6ebe4; }
 .tinta-cat-accessori { --tinta: var(--ss-cat-accessori); --tinta-tenue: #efecf3; }

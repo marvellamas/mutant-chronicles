@@ -17,6 +17,19 @@
 // sessione (l'ultima modifica): l'attivazione è una modifica sola.
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
+const ARTICOLI_SCUOLE = { Sole: 'del Sole', Luna: 'della Luna', Terra: 'della Terra' };
+
+/** Gruppo di una Tecnica (§8.9.2–8.9.4): titolo della sezione ed etichetta breve. */
+export function gruppoTecnica(gruppo) {
+  if (gruppo === 'generica') return { titolo: 'Tecniche generiche (§8.9.2)', etichetta: 'Generica' };
+  if (gruppo === 'lottatore') return { titolo: 'Tecniche del Lottatore (§8.9.4)', etichetta: 'Lottatore' };
+  const s = String(gruppo).replace(/^scuola:/, '');
+  const nome = `Scuola ${ARTICOLI_SCUOLE[s] ?? s}`;
+  return { titolo: `${nome} (§8.9.3)`, etichetta: nome };
+}
+
+/** Ordine dei gruppi come nel manuale: generiche, Scuole, Lottatore. */
+export const ordineGruppo = (g) => (g === 'generica' ? 0 : g === 'lottatore' ? 2 : 1);
 
 /** Il personaggio ha accesso alle Tecniche (Risorse Interiori, come Talento Libero o di Classe). */
 export const haRisorseInteriori = (scheda) => (scheda?.tecnicheAmmesse ?? 0) > 0 || (scheda?.tecniche?.length ?? 0) > 0;

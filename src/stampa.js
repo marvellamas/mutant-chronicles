@@ -17,6 +17,7 @@ import { modoRicarica } from './ricarica.js';
 import { calcolaCarico, pesoVoce } from './carico.js';
 import { testoProvenienza } from './provenienza.js';
 import { attivazioneInfusa } from './lancio.js';
+import { gruppoTecnica, ordineGruppo } from './tecniche.js';
 
 /** Limiti di impaginazione (non regole di gioco): lunghezze massime dei testi stampati. */
 export const LIMITI_STAMPA = {
@@ -107,6 +108,38 @@ export function elencoZaino(zaino) {
     out.push(`${o.nome}${q}${stato}${note ? ` — ${note.replace(/\s+/g, ' ')}` : ''}`);
   }
   return out;
+}
+
+/** Batterie e riserve di Chroma del foglio Poteri (Magia sez. 6; decisione 5 del piano SS). */
+function riserveStampa(s) {
+  return (s.equipaggiamento?.contenitori ?? []).map((c) => ({
+    nome: c.nome, energia: c.energia, capacita: c.capacita, macrofamiglie: c.macrofamiglie,
+    regoleRimandate: c.regoleRimandate, integrato: c.integrato, sintonizzato: c.sintonizzato, costo: c.costo,
+  }));
+}
+
+/** «Da artefatti» (come la tab Poteri della SD): Artefatti con attivazione o riserva integrata. */
+function daArtefattiStampa(s, c, dati) {
+          const st = s.equipaggiamento?.sintonizzazione;
+          if (!st) return [];
+          const cat = catalogo(dati);
+          const perUid = new Map((c.equipaggiamento ?? []).map((v) => [v.uid, risolvi(v, cat)]));
+          return st.artefatti.map((x) => ({ x, r: perUid.get(x.uid) }))
+            .filter(({ r }) => r?.def?.attivazione || infoArtefattoVoce(r, dati)?.contenitore?.integrato).map(({ x }) => x.nome);
+}
+
+/**
+ * Tecniche Interiori del foglio Poteri (Giocatore §8.9): nell'ordine del manuale, con Costo,
+ * Azione, Durata e Bersaglio; le regole comuni del §8.9.1 in breve. Vuoto senza Tecniche.
+ */
+function tecnicheStampa(s, dati) {
+  const tecniche = [...(s.tecniche ?? [])].sort((a, b) => ordineGruppo(a.gruppo) - ordineGruppo(b.gruppo) || String(a.gruppo).localeCompare(b.gruppo));
+  if (!tecniche.length) return { tecniche: [], tecnicheAmmesse: s.tecnicheAmmesse ?? 0, regoleTecniche: [] };
+  return {
+    tecniche: tecniche.map((t) => ({ nome: t.nome, gruppo: gruppoTecnica(t.gruppo).etichetta, costo: t.costo, azione: t.azione, durata: t.durata, bersaglio: t.bersaglio })),
+    tecnicheAmmesse: s.tecnicheAmmesse ?? tecniche.length,
+    regoleTecniche: dati.tecniche_interiori?.attivazione?.frasi ?? [],
+  };
 }
 
 /** Il foglio Poteri si stampa solo se il personaggio ha accesso agli incantesimi. */
@@ -375,6 +408,7 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     fogli.push({
       id: 'poteri', titolo: 'Poteri',
       dati: {
+        conMagia: true,
         pm: s.pm,
         // Magia sez. 6, Meditazione: recupero dei PM come nel riquadro della SD (null senza la capacità)
         meditazione: s.magia?.meditazione ?? null,
@@ -408,10 +442,7 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
         // Magia sez. 6: riserve esterne, con le caselle per i PM attuali (a penna). Decisione 5 del
         // piano SS: i PM delle batterie e riserve di Chroma stanno qui; il foglio Artefatti avrà solo
         // la sintonizzazione
-        riserve: (s.equipaggiamento?.contenitori ?? []).map((c) => ({
-          nome: c.nome, energia: c.energia, capacita: c.capacita, macrofamiglie: c.macrofamiglie,
-          regoleRimandate: c.regoleRimandate, integrato: c.integrato, sintonizzato: c.sintonizzato, costo: c.costo,
-        })),
+        riserve: riserveStampa(s),
         // Convertire Potere e ricaricare (Magia sez. 6): rapporto con i Talenti, come nel riquadro dei PM della SD
         conversione: (() => {
           const cv = rapportoConversione(s, dati);
@@ -424,15 +455,19 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
         })(),
         // «Da artefatti» (come la tab Poteri della SD): Artefatti con attivazione o riserva integrata;
         // il loro dettaglio sta nel foglio Artefatti, qui solo il rimando
-        daArtefatti: (() => {
-          const st = s.equipaggiamento?.sintonizzazione;
-          if (!st) return [];
-          const cat = catalogo(dati);
-          const perUid = new Map((c.equipaggiamento ?? []).map((v) => [v.uid, risolvi(v, cat)]));
-          return st.artefatti.map((x) => ({ x, r: perUid.get(x.uid) }))
-            .filter(({ r }) => r?.def?.attivazione || infoArtefattoVoce(r, dati)?.contenitore?.integrato).map(({ x }) => x.nome);
-        })(),
+        daArtefatti: daArtefattiStampa(s, c, dati),
+        // Tecniche Interiori (Giocatore §8.9; richiesta di Davide del 02/10): dal foglio 2 a qui
+        ...tecnicheStampa(s, dati),
       },
+    });
+  }
+
+  // foglio 5 anche per chi ha solo le Tecniche Interiori (Risorse Interiori è incompatibile con la
+  // magia, §8.6.10): PM personali, riserve e l'elenco delle Tecniche
+  if (!haMagia(s) && (s.tecniche ?? []).length) {
+    fogli.push({
+      id: 'poteri', titolo: 'Poteri',
+      dati: { conMagia: false, pm: s.pm, meditazione: null, riserve: riserveStampa(s), conversione: null, macrofamiglie: [], daArtefatti: daArtefattiStampa(s, c, dati), ...tecnicheStampa(s, dati) },
     });
   }
 

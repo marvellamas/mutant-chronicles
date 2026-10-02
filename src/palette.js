@@ -59,7 +59,7 @@ export function sezioneInventario(r) {
 }
 
 /** Colori riservati: non si usano per le categorie né per altro. */
-export const COLORI_RISERVATI = ['pv', 'pm', 'pe', 'fisica', 'mentale', 'spirituale'];
+export const COLORI_RISERVATI = ['pv', 'pm', 'pe', 'fisica', 'mentale', 'spirituale', 'tecnica'];
 
 /** Bandierine del calendario (regole.json → calendario.bandierine): variabile CSS di ogni colore. */
 export const COLORI_EVENTO = ['evento-rosso', 'evento-giallo', 'evento-verde'];
@@ -74,7 +74,8 @@ export const COPPIE_CONTRASTO = [
     [c, `${c}-tenue`, 4.5],
     ['testo', `${c}-tenue`, 4.5],
   ]),
-  ...['fisica', 'mentale', 'spirituale'].flatMap((c) => [
+  // macrofamiglie degli incantesimi e Tecniche Interiori (stessa scheda, colore proprio)
+  ...['fisica', 'mentale', 'spirituale', 'tecnica'].flatMap((c) => [
     [c, 'superficie', 3], // barra laterale
     [c, `${c}-tenue`, 3],
     [`${c}-testo`, `${c}-tenue`, 4.5], // etichetta con il nome della macrofamiglia

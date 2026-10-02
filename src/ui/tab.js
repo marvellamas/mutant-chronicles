@@ -25,6 +25,8 @@ import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 import { pannelloAttacco } from './attacco.js';
 import { profiloSenzArmi, senzArmiDisponibile, SENZ_ARMI, talentiAttacco, valoriDisciplina } from '../attacco.js';
 import { pannelloLancio } from './lancio.js';
+import { sezioneRisorseInteriori, pannelloTecnica } from './tecniche.js';
+import { tecnicaDi, testoFine } from '../tecniche.js';
 import { statoPulsanteLancio, attivazioneInfusa } from '../lancio.js';
 import { tabCalendario, pannelloAttivazione, pannelloImportaCalendario, pulsanteImportaCalendario } from './calendario.js';
 import { conOrdinale } from '../lingua.js';
@@ -155,6 +157,9 @@ export function renderTab(ctx) {
   // pannello «Lancia!» dell'incantesimo scelto (src/ui/lancio.js)
   const incLancio = ctx.ui?.lancio ? (ctx.dati.incantesimi.incantesimi.find((i) => i.nome === ctx.ui.lancio.nome) ?? null) : null;
   if (ctx.ui?.lancio && !incLancio) ctx.ui.lancio = null;
+  // pannello «Attiva» della Tecnica Interiore scelta (src/ui/tecniche.js)
+  const tecAttiva = ctx.ui?.tecnica ? tecnicaDi(ctx.ui.tecnica.id, ctx.dati) : null;
+  if (ctx.ui?.tecnica && !tecAttiva) ctx.ui.tecnica = null;
   return [h('div', { class: `scheda-tab pos-${ctx.posizione} larghezza-${ctx.larghezza ?? 'piena'}` }, barra, nav, lato, pannello),
     armaAttacco ? pannelloAttacco(ctx, armaAttacco) : null,
     incLancio ? (() => {
@@ -166,6 +171,7 @@ export function renderTab(ctx) {
           h('button', { type: 'button', class: 'btn', onclick: () => { ctx.ui.lancio = null; ctx.azioni.ridisegna(); } }, 'Chiudi'));
       }
     })() : null,
+    tecAttiva ? pannelloTecnica(ctx, tecAttiva) : null,
     ctx.ui?.attivaCalendario ? pannelloAttivazione(ctx) : null,
     ctx.ui?.importaCalendario ? pannelloImportaCalendario(ctx) : null];
 }
@@ -327,10 +333,10 @@ function pilloleAR(ctx) {
     totale: 'Contro danno Naturale e Magico (§5.13, §5.24)',
     magica: 'Contro danno Etereo vale solo la parte magica (§5.24)',
   };
-  // A.48: Tecniche Interiori che danno AR, accese al tavolo (3 Round), per chi le possiede
-  const possedute = new Set((ctx.tab.scheda.tecniche ?? []).map((t) => t.id));
-  const tecniche = (R.tecniche ?? []).filter((t) => possedute.has(t.tecnica));
-  const accese = new Set(ctx.sessione?.condizioniOggetti ?? []);
+  // A.48: Tecniche Interiori che danno AR finché sono attive: si accendono con «Attiva» (tab Poteri,
+  // §8.9.1) e qui si leggono soltanto, con il Round in cui scadono
+  const attive = new Map((ctx.sessione?.tecnicheAttive ?? []).map((x) => [x.id, x]));
+  const tecniche = (R.tecniche ?? []).filter((t) => attive.has(t.tecnica));
   return [
     h('div', { class: 'pillole-ar', role: 'group', 'aria-label': 'Armatura' },
       ar.valori.map((v) => infoValore([h('span', { class: 'etichetta-ar' }, v.etichetta), h('strong', {}, String(v.valore))], {
@@ -340,13 +346,12 @@ function pilloleAR(ctx) {
         sezioni: v.id === 'totale' && R.promemoria_cumulo_magia ? [{ testo: R.promemoria_cumulo_magia }] : [],
       }, { classe: `pillola-ar${v.principale ? ' principale' : ''}` }))),
     tecniche.length ? h('div', { class: 'pillole-condizionali tecniche-ar' }, tecniche.map((t) => {
-      const chiave = `tecnica:${t.tecnica}`;
-      const nome = ctx.dati.tecniche_interiori.tecniche.find((x) => x.id === t.tecnica)?.nome ?? t.tecnica;
-      const effetto = `+${t.totale} AR${t.magica ? ' magica' : ''}${t.contro ? ` contro ${t.contro}` : ''}`;
-      const acceso = accese.has(chiave);
-      return h('label', { class: `pillola-condizionale${acceso ? ' attivo' : ''}`, title: `${nome}: ${effetto} per ${t.durata}; si somma alle altre protezioni (A.48).` },
-        h('input', { type: 'checkbox', role: 'switch', checked: acceso, 'aria-label': `${nome}: ${effetto}`, onchange: () => ctx.azioni.condizioneOggetto(chiave) }),
-        h('span', { class: 'nome-condizionale' }, nome), h('span', { class: 'effetto-condizionale' }, ` · ${effetto}`));
+      const tec = tecnicaDi(t.tecnica, ctx.dati);
+      const nome = tec?.nome ?? t.tecnica;
+      const effetto = `+${t.totale} AR${t.magica ? ' magica' : ' non magica'}${t.contro ? ` contro ${t.contro}` : ''}`;
+      const fine = tec ? testoFine(tec, attive.get(t.tecnica)) : '';
+      return h('span', { class: 'pillola-condizionale attivo', title: `${nome}: ${effetto}, ${fine}; si somma alle altre protezioni (A.48). Si attiva nella tab Poteri.` },
+        h('span', { class: 'nome-condizionale' }, nome), h('span', { class: 'effetto-condizionale' }, ` · ${effetto} · ${fine}`));
     })) : null,
   ];
 }
@@ -1049,8 +1054,8 @@ function tabAbilita(ctx, d) {
       paragrafi(t.frase)))) : null),
     d.specializzazioni.length ? sezione('Specializzazioni', h('ul', {}, d.specializzazioni.map((x) => h('li', {},
       info('talento', x.id, x.nome), ` — ${x.abilita}; ${x.effetto} (${x.livello}° livello)`)))) : null,
-    d.tecniche.length || d.tecnicheAmmesse ? sezione(`Tecniche Interiori (${d.tecniche.length} / ${d.tecnicheAmmesse})`,
-      h('ul', {}, d.tecniche.map((t) => h('li', {}, info('tecnica', t.id, t.nome), ` — costo ${t.costo}; ${t.azione}; durata ${t.durata}`)))) : null,
+    // Tecniche Interiori: nella tab Poteri, con «Attiva» (richiesta di Davide del 02/10)
+    d.tecniche.length || d.tecnicheAmmesse ? h('p', { class: 'nota rimando-tecniche' }, `Tecniche Interiori (${d.tecniche.length} / ${d.tecnicheAmmesse}): vedi Poteri.`) : null,
   ];
 }
 
@@ -1612,9 +1617,14 @@ function tabInArrivo(ctx, id) {
 
 function tabPoteri(ctx, d) {
   const p = ctx.dati.regole.poteri ?? {};
+  const risorse = sezioneRisorseInteriori(ctx);
+  // i dati del foglio Poteri esistono anche con le sole Tecniche (conMagia: false): la Magia solo se c'è
+  if (d && d.conMagia === false) d = null;
   return [
     interruttoreTalenti(ctx),
-    ...(d ? tabMagia(ctx, d) : [h('section', { class: 'riquadro nessun-potere' }, h('h2', {}, 'Nessun potere'), p.nessuno ? h('p', { class: 'nota' }, p.nessuno) : null)]),
+    ...(d ? tabMagia(ctx, d) : risorse ? [] : [h('section', { class: 'riquadro nessun-potere' }, h('h2', {}, 'Nessun potere'), p.nessuno ? h('p', { class: 'nota' }, p.nessuno) : null)]),
+    // Risorse Interiori (Giocatore §8.9; richiesta di Davide del 02/10): le Tecniche con «Attiva»
+    risorse,
     sezioneDaArtefatti(ctx),
     ...(p.in_arrivo ?? []).map((x) => h('details', { class: 'sezione-tab in-arrivo' },
       h('summary', {}, h('h2', {}, x.nome)), h('p', { class: 'nota' }, x.nota))),

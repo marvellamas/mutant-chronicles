@@ -163,7 +163,8 @@ test('stampa dei tre personaggi: il foglio Poteri solo per chi conosce incantesi
   assert.deepEqual(fogli('a_imperiale_assaltatore_l8.json'), ['identita', 'abilita', 'combattimento', 'inventario']);
   // il Bordone Templare e la batteria: foglio Artefatti (6) dopo Poteri (docs/layout-ss.md, pezzo 5)
   assert.deepEqual(fogli('b_fratellanza_arcanista_l12.json'), ['identita', 'abilita', 'combattimento', 'inventario', 'poteri', 'artefatti']);
-  assert.deepEqual(fogli('c_freelance_tecnico_l5.json'), ['identita', 'abilita', 'combattimento', 'inventario']);
+  // c ha Risorse Interiori: il foglio Poteri con le Tecniche (richiesta di Davide del 02/10)
+  assert.deepEqual(fogli('c_freelance_tecnico_l5.json'), ['identita', 'abilita', 'combattimento', 'inventario', 'poteri']);
 });
 
 test('sessione dopo un cambio di livello: PV e PM attuali seguono i massimi (§8.1.2, Buona Costituzione §8.6.1)', () => {

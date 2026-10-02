@@ -9,6 +9,7 @@
    --fisica      rosa        magia Fisica
    --mentale     azzurro     magia Mentale
    --spirituale  verde chiaro magia Spirituale
+   --tecnica     bronzo      Tecniche Interiori (non sono Incantesimi: colore proprio)
 
    Bandierine del calendario (importanza di una nota): --evento-rosso (cruciale), --evento-giallo
    (importante), --evento-verde (minore). Rosso vermiglio e verde oliva, lontani da --pv e --pe.
@@ -35,6 +36,9 @@
   --spirituale: #3e9a4f;
   --spirituale-tenue: #ebf6ed;
   --spirituale-testo: #2a6934;
+  --tecnica: #9a5b13;
+  --tecnica-tenue: #f8efe4;
+  --tecnica-testo: #7a4408;
 
   /* categorie dell'equipaggiamento: fondo dell'etichetta (testo --cat-testo) */
   --cat-testo: #ffffff;
@@ -74,6 +78,9 @@
     --spirituale: #8ed79a;
     --spirituale-tenue: #1b3321;
     --spirituale-testo: #b6ecbe;
+    --tecnica: #e8a865;
+    --tecnica-tenue: #33261a;
+    --tecnica-testo: #f3c896;
 
     --cat-testo: #17171a;
     --cat-ravvicinate: #e8a07a;

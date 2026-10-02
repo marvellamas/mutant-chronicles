@@ -77,7 +77,8 @@ export function renderStampa({ stampa, torna, opzioni = null, cambiaOpzioni = nu
   // scelta per il foglio Poteri (docs/layout-ss.md, §5.3), solo se il personaggio ha la magia; la
   // preferenza resta «magia»; la stima delle pagine in più arriva dopo l'impaginazione
   const stimaSchede = h('span', { class: 'stima-pagine' }, '');
-  const conMagia = fogli.some((f) => f.id === 'poteri');
+  // la scelta vale per gli incantesimi: senza magia (solo Tecniche Interiori) non si mostra
+  const conMagia = fogli.some((f) => f.id === 'poteri' && f.dati?.conMagia !== false);
   const sceltaMagia = conMagia ? h('fieldset', { class: 'scelta-stampa' },
     h('legend', {}, 'Foglio Poteri'),
     [['elenco', 'Solo elenco'], ['completo', 'Elenco e schede complete']].map(([valore, testo]) => h('label', {},
@@ -311,8 +312,7 @@ function foglioAbilita(d) {
       // dal foglio 3 (pezzo 2): Specializzazioni e Tecniche Interiori, come nella tab Abilità della SD
       d.specializzazioni.length ? box({ titolo: 'Specializzazioni', classe: 'f2-spostabile' }, h('ul', { class: 'elenco-talenti-stampa' }, d.specializzazioni.map((x) => h('li', {},
         h('strong', {}, x.nome), ` — ${x.abilita}; ${x.effetto}`)))) : null,
-      d.tecniche.length || d.tecnicheAmmesse ? box({ titolo: `Tecniche Interiori (${d.tecniche.length} / ${d.tecnicheAmmesse})`, classe: 'f2-spostabile' },
-        tabella(['Tecnica', 'Costo', 'Azione'], d.tecniche.map((x) => [x.nome, x.costo, x.azione]))) : null,
+      // Tecniche Interiori: nel foglio 5 (Poteri), come nella SD (richiesta di Davide del 02/10)
       box({ titolo: 'Annotazioni', riempitivo: true, classe: 'f2-annotazioni' }, righeGuida())));
 }
 
@@ -883,13 +883,69 @@ function schedaIncantesimo(i) {
       i.regole ? h('p', { class: 'testo-lungo' }, i.regole) : null));
 }
 
+/** Punti Magia del foglio 5 (anche per le Tecniche Interiori, che si pagano con i PM personali). */
+function riquadroPM(d) {
+  const med = d.meditazione;
+  return box({ titolo: 'Punti Magia', tinta: 'pm', forte: true, classe: 'f5-pm' },
+    h('div', { class: 'f5-pm-testa' },
+      h('div', { class: 'massimo' }, h('span', {}, 'massimi'), h('span', { class: 'valore' }, String(d.pm ?? '—'))),
+      // Magia sez. 6: recupero con la Meditazione, come nel riquadro della SD
+      med ? h('span', {}, `Recupero (Meditaz.): ${med.pmPerOra} PM/ora, ${med.orePerGiorno} ${med.orePerGiorno === 1 ? 'ora' : 'ore'}/g.`) : null),
+    h('p', { class: 'piccolo' }, 'attuali'),
+    // come i PV del foglio 3: righe da 25, stacco ogni 5, almeno due righe e sempre una riga grigia
+    d.pm ? quadratini(d.pm, { compatto: true, perRiga: 25, righeInPiu: Math.max(1, 2 - Math.ceil(d.pm / 25)) }) : null);
+}
+
+/** Batterie e riserve di Chroma con i loro PM (decisione 5 del piano SS). */
+function riquadroRiserve(d, conversione = null) {
+  return (d.riserve?.length ? box({ titolo: 'Batt. e riserve di Chroma (Magia sez. 6)', classe: 'f4-riserve f5-riserve' },
+        d.riserve.map((r) => h('div', { class: 'f5-riserva' },
+          h('span', { class: `chroma-punto chroma-${String(r.energia).toLowerCase()}`, 'aria-hidden': 'true' }),
+          h('span', { class: 'f5-riserva-nome' }, h('strong', {}, abbreviaSS(r.nome)),
+            h('span', { class: 'sigla' }, abbreviaSS(` · ${r.energia} · ${r.integrato ? 'solo l’oggetto (A.18)' : r.regoleRimandate ? 'regole rimandate' : r.macrofamiglie.length >= 3 ? 'tutte le macrofamiglie' : r.macrofamiglie.join(', ') || '—'} · ${r.sintonizzato ? 'sintonizzato' : 'da sintonizzare'} (SnT ${r.costo})`))),
+          quadratini(r.capacita, { compatto: true }))),
+        conversione ? h('p', { class: 'piccolo f5-conversione' }, conversione) : null) : null);
+}
+
+/**
+ * Foglio 5 per chi ha le Tecniche Interiori e non la magia (Risorse Interiori è incompatibile con
+ * la magia, Giocatore §8.6.10). A sinistra PM personali, riserve e le regole comuni del §8.9.1; a
+ * destra l'elenco delle Tecniche, come quello degli incantesimi: Costo, Azione, Durata, Bersaglio.
+ */
+function foglioTecniche(d) {
+  return h('div', { class: 'f5-griglia f5-griglia-tecniche' },
+    h('div', { class: 'colonna f5-sinistra' },
+      riquadroPM(d),
+      riquadroRiserve(d),
+      d.regoleTecniche.length ? box({ titolo: 'Tecniche Interiori: regole comuni (§8.9.1)', classe: 'f5-regole-tecniche' },
+        h('ul', { class: 'elenco-talenti-stampa' }, d.regoleTecniche.map((x) => h('li', {}, x)))) : null,
+      h('div', { class: 'f5-coda' },
+        d.daArtefatti?.length ? h('p', { class: 'da-artefatti-stampa' }, h('strong', {}, 'Da artefatti: '), `${d.daArtefatti.join(', ')}${d.foglioArtefatti ? ` — vedi foglio ${d.foglioArtefatti}` : ''}.`) : null)),
+    elencoTecniche(d));
+}
+
+/** Elenco delle Tecniche Interiori del foglio 5, raggruppate come nel manuale. */
+function elencoTecniche(d) {
+  const righe = [];
+  let gruppo = null;
+  for (const x of d.tecniche) {
+    if (x.gruppo !== gruppo) { gruppo = x.gruppo; righe.push(h('tr', { class: 'macro-riga tinta-tecnica' }, h('th', { colspan: 5 }, gruppo))); }
+    righe.push(h('tr', { class: 'tinta-tecnica' }, h('th', { scope: 'row' }, x.nome), h('td', {}, x.costo), h('td', {}, x.azione), h('td', {}, x.durata), h('td', {}, x.bersaglio)));
+  }
+  return box({ titolo: `Tecniche Interiori (${d.tecniche.length} / ${d.tecnicheAmmesse})`, tinta: 'tecnica', classe: 'f5-elenco f5-tecniche' },
+    h('table', { class: 'tabella-stampa tecniche-stampa' },
+      h('thead', {}, h('tr', {}, ['Tecnica', 'Costo', 'Azione', 'Durata', 'Bersaglio'].map((c) => h('th', {}, c)))),
+      h('tbody', {}, righe)));
+}
+
 /** «Solo elenco»: in fondo all'indice, perché mancano le schede. */
 const notaSoloElenco = () => h('p', { class: 'piccolo nota-solo-elenco' }, 'Schede complete non stampate: testo nel Manuale della Magia.');
 
 function foglioMagia(d) {
+  // senza magia, con le sole Tecniche Interiori: la forma del foglio per le Tecniche
+  if (d.conMagia === false) return foglioTecniche(d);
   const v = d.valoriLancio;
   const incantesimi = elencoIncantesimi(d);
-  const med = d.meditazione;
   // etichetta: valore, due per riga; le voci lunghe prendono la riga intera
   const voce = (nome, ...valore) => {
     const testo = [nome, ...valore].map((x) => (typeof x === 'string' ? x : x?.textContent ?? '')).join(' ');
@@ -900,23 +956,8 @@ function foglioMagia(d) {
     Object.keys(d.conversione.fissi).length ? `; ${Object.entries(d.conversione.fissi).map(([c, n]) => `${c} ${n}:1`).join(', ')} nei due sensi` : '', '.'].join('') : null;
   return h('div', { class: 'f5-griglia' },
     h('div', { class: 'colonna f5-sinistra' },
-      box({ titolo: 'Punti Magia', tinta: 'pm', forte: true, classe: 'f5-pm' },
-        h('div', { class: 'f5-pm-testa' },
-          h('div', { class: 'massimo' }, h('span', {}, 'massimi'), h('span', { class: 'valore' }, String(d.pm ?? '—'))),
-          // Magia sez. 6: recupero con la Meditazione, come nel riquadro della SD
-          med ? h('span', {}, `Recupero (Meditaz.): ${med.pmPerOra} PM/ora, ${med.orePerGiorno} ${med.orePerGiorno === 1 ? 'ora' : 'ore'}/g.`) : null),
-        h('p', { class: 'piccolo' }, 'attuali'),
-        // come i PV del foglio 3: righe da 25, stacco ogni 5, almeno due righe e sempre una riga grigia
-        d.pm ? quadratini(d.pm, { compatto: true, perRiga: 25, righeInPiu: Math.max(1, 2 - Math.ceil(d.pm / 25)) }) : null),
-      // decisione 5: batterie e riserve di Chroma con i PM qui (il foglio Artefatti ha la sola sintonizzazione)
-      // abbreviazioni solo sulla carta (abbreviaSS): «Batt. 5 PM (Chroma R.)»; l'energia resta per intero nella sigla
-      d.riserve?.length ? box({ titolo: 'Batt. e riserve di Chroma (Magia sez. 6)', classe: 'f4-riserve f5-riserve' },
-        d.riserve.map((r) => h('div', { class: 'f5-riserva' },
-          h('span', { class: `chroma-punto chroma-${String(r.energia).toLowerCase()}`, 'aria-hidden': 'true' }),
-          h('span', { class: 'f5-riserva-nome' }, h('strong', {}, abbreviaSS(r.nome)),
-            h('span', { class: 'sigla' }, abbreviaSS(` · ${r.energia} · ${r.integrato ? 'solo l’oggetto (A.18)' : r.regoleRimandate ? 'regole rimandate' : r.macrofamiglie.length >= 3 ? 'tutte le macrofamiglie' : r.macrofamiglie.join(', ') || '—'} · ${r.sintonizzato ? 'sintonizzato' : 'da sintonizzare'} (SnT ${r.costo})`))),
-          quadratini(r.capacita, { compatto: true }))),
-        conversione ? h('p', { class: 'piccolo f5-conversione' }, conversione) : null) : null,
+      riquadroPM(d),
+      riquadroRiserve(d, conversione),
       box({ titolo: 'Lancio', classe: 'f5-lancio' },
         h('div', { class: 'f5-voci' },
           voce('Potere per lanciare', h('strong', {}, `VA ${v.potere ?? '—'}`), d.lancio ? ` (armatura ${segno(d.lancio.penalita)}, §7.11.1)` : ''),

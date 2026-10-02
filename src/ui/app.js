@@ -25,7 +25,7 @@ import { caricaImmagini } from './immagini.js';
 import { preparaStampa, preparaTab, normalizzaOpzioniStampa } from '../stampa.js';
 import { renderTab, tabFissi, ALIAS_TAB } from './tab.js';
 import {
-  massimiSessione, allineaSessione, variaSessione, modificaSessione, commutaStato, commutaCondizioneOggetto, commutaTalento, commutaBonusTalenti, impostaCondizioneArma, riparaOggetto, spendiPmLancio, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
+  massimiSessione, allineaSessione, variaSessione, modificaSessione, commutaStato, commutaCondizioneOggetto, commutaTalento, commutaBonusTalenti, impostaCondizioneArma, riparaOggetto, spendiPmLancio, attivaTecnicaSessione, nuovoRoundSessione, terminaTecnicaSessione, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
   penalitaSessione, variaMunizioni, ricaricaArma, variaChroma, variaIntegrita, variaNec,
 } from '../sessione.js';
 import { conOrdinale } from '../lingua.js';
@@ -708,7 +708,7 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       esporta: () => esporta(stato.scelte, stato.livelli, stato.sessione, stato.calendario),
       modificaCreazione: (passo = 0) => vaiAlPasso(passo),
       nuovaSessione: () => {
-        if (!confirm('Nuova sessione: PV e PM tornano ai massimi, Stati, Ferite e Affaticamento si azzerano. Note, Punti Eroe e Distintivi restano. Procedere?')) return;
+        if (!confirm('Nuova sessione: PV e PM tornano ai massimi, Stati, Ferite e Affaticamento si azzerano, il Round torna a 1 senza Tecniche attive. Note, Punti Eroe e Distintivi restano. Procedere?')) return;
         cambiaSessione(nuovaSessione(stato.sessione, massimi));
       },
       annullaSessione: () => {
@@ -742,6 +742,10 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
         renderScheda({ mantieniScorrimento: true });
       },
       lancia: (fonte) => cambiaSessione(spendiPmLancio(stato.sessione, fonte, massimi)),
+      // Tecniche Interiori (Giocatore §8.9.1, src/tecniche.js): ogni passo è una modifica annullabile
+      attivaTecnica: (id, opz) => cambiaSessione(attivaTecnicaSessione(stato.sessione, tab.scheda, id, dati, opz, massimi)),
+      nuovoRound: () => cambiaSessione(nuovoRoundSessione(stato.sessione, massimi)),
+      terminaTecnica: (id) => cambiaSessione(terminaTecnicaSessione(stato.sessione, id, massimi)),
       convertiDistintivi: () => cambiaSessione(convertiDistintivi(stato.sessione, massimi)),
       // le note si salvano a ogni tasto; l'annullamento riporta al testo di prima della modifica
       inizioNote: ricordaPrecedente,

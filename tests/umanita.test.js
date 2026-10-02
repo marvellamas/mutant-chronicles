@@ -172,7 +172,8 @@ test('SS: foglio Cibernetica solo con impianti installati o Umanità ridotta, do
   // personaggio di prova del collaudo PDF (docs/esempi-stampa): UMN 2, Transumano
   const d = deserializzaPersonaggio(readFileSync(new URL('../docs/esempi-stampa/d_freelance_cibernetica_l5.json', import.meta.url), 'utf8'));
   const st = preparaStampa({ creazione: normalizza(d.creazione, dati).scelte, livelli: d.livelli }, dati);
-  assert.deepEqual(st.fogli.map((f) => [f.id, f.numero]).slice(-2), [['inventario', 4], ['cibernetica', 5]]);
+  // d è una copia di c con Risorse Interiori: il foglio Poteri (Tecniche) viene prima di Cibernetica
+  assert.deepEqual(st.fogli.map((f) => [f.id, f.numero]).slice(-3), [['inventario', 4], ['poteri', 5], ['cibernetica', 6]]);
   const cib = st.fogli.find((f) => f.id === 'cibernetica').dati;
   assert.deepEqual([cib.umanita.valore, cib.umanita.perduta, cib.umanita.condizione, cib.foglioInventario], [2, 18, 'Transumano', 4]);
   assert.deepEqual(cib.umanita.fasce.filter((f) => f.attuale).map((f) => [f.umn, f.perduti]), [['3–1', '17–19']]);
