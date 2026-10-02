@@ -1,6 +1,6 @@
 # Tavolo del Master: piano di fattibilità
 
-Branch `tavolo-direttore`, 1° ottobre 2026. Piano di fattibilità; sono fatti il pezzo 1 (plancia dei PG in sola lettura), il pezzo 2 (scontro e Iniziativa), il pezzo 3 (nemici), il pezzo 4 (danno applicato) e il pezzo 5 (attacchi dei nemici), più gli esempi del 2 ottobre.
+Branch `tavolo-direttore`, 1° ottobre 2026. Piano di fattibilità; sono fatti il pezzo 1 (plancia dei PG in sola lettura), il pezzo 2 (scontro e Iniziativa), il pezzo 3 (nemici), il pezzo 4 (danno applicato), il pezzo 5 (attacchi dei nemici) e il pezzo 6 (giocatori collegati), più gli esempi del 2 ottobre. Resta il pezzo 7.
 
 La visione di partenza è in `docs/backlog.md`, voce 14, su `main`. Al tavolo molti giocatori usano la scheda di carta. Il master tiene lo stato della scena su una plancia con PG e nemici:
 
@@ -22,6 +22,8 @@ Regole del branch:
    - Se una prova richiede i file di Marcello, ci si ferma e si chiede.
    - Il cambio di branch tocca i LEGGIMI: `personaggi/LEGGIMI.txt`, `scontri/LEGGIMI.txt` e `nemici/LEGGIMI.txt` sono tracciati solo su questo branch. Passando a `main` git li toglie, tornando li rimette (stesso contenuto, data nuova). Gli altri file di quelle cartelle non sono tracciati e git non li tocca. Da sapere quando si confrontano le date delle cartelle prima e dopo una prova.
 2. **Nome.** «Tavolo del Master», non «del Direttore», ovunque sia visibile all'utente: pulsante, titoli, avvisi, docs. Il nome del branch e dei file di codice resta com'è.
+3. **Dati di gioco su `main`** (Marcello, 2 ottobre 2026). Se un pezzo del tavolo ha bisogno di dati di gioco nuovi (`data/*`), si fanno prima su main e si portano nel branch con un merge.
+   - Il 2 ottobre sono passati su `main` `regole.json` → `prova` (pezzo 5) e → `danno_applicato` (pezzo 4), con `src/prova.js` e i controlli delle frasi. Da allora `data/` è uguale nei due branch.
 
 ## Deciso (Marcello, 1° ottobre 2026)
 
@@ -204,10 +206,30 @@ Ogni pezzo ha test sulle funzioni pure e una prova nel browser; i primi due non 
    - **Test.** `tests/attacco-nemico.test.js`: VA e danno dal formato, distanza che cambia il VA, esiti del d20, «Colpito» precompilata per Legionario Oscuro → Torvald e Predone → Rhea, nemico contro nemico con attacco e colpo nel registro, partecipante a mano con attacco.
    - **Prova nel browser.** Server sulla porta 3001 con cartelle temporanee e gli esempi. Legionario Oscuro 1 → Torvald con la Lama nefaria: tiro 7 dal vivo, colpito; «Colpito» con 1d10+3 Magico e Perforante 1, tirato dall'app 6 − AR 4 = 2, PV 32 → 30. Predone delle Lande 1 → Rhea col fucile a canne mozze a 5 Q: 2 tirato dall'app, colpito; 6 dal vivo − AR 1 = 5, PV 28 → 23. Poi Legionario → Predone con un 20 (Maldestro, solo registro) e un Sicario a mano con una pistola.
    - **Scostamenti dal piano.** Il nemico non ha Difese «attive» nel tiro per colpire: come per i PG, la Difesa si sceglie in «Colpito» (§5.10). In `src/ui/attacco.js` due ritocchi soltanto: le opzioni nascoste con un'arma `esterno` e il gancio della riga finale.
-6. **Pezzo 6 — Scrittura delle schede dei giocatori al tavolo.**
-   - La scheda del giocatore ricarica la propria sessione se la plancia l'ha cambiata (polling sul proprio file, regola del più recente con avviso).
-   - Indicatore «collegato / non collegato».
-7. **Pezzo 7 — Prova al tavolo e merge su `main`**, dopo una sessione di gioco vera.
+6. ✔ **Pezzo 6 — Giocatori collegati** (fatto il 2 ottobre 2026). Caso: il giocatore ha la sua scheda aperta nell'app, collegata al server (anche con `--rete`), mentre il master gli applica un colpo dalla plancia.
+   - **Controllo del proprio file.** Con il server, la scheda a tab aperta controlla ogni 3 secondi l'elenco di `personaggi/` (come la plancia), solo per il proprio personaggio: il file più recente con il suo nome. La voce del browser ricorda file, revisione (data di modifica sul server) e impronta del testo esportato dell'ultima sincronizzazione (`cartella`). Funzioni pure in `src/collegamento.js`.
+   - **Aggiornamento.** Se il file non è più quello ricordato e la scheda non ha modifiche da scrivere, la scheda prende il file (sessione: PV, PM, Ferite, Affaticamento, Corruzione, Stati, munizioni, e tutto il resto) e resta sulla stessa tab e allo stesso punto, con l'avviso «Il master ha aggiornato la tua scheda: PV 28 → 25». «Annulla» non riporta indietro il colpo.
+   - **Modifica locale.** Si confronta il contenuto (impronta del testo esportato), non le date: riaprire la scheda la risalva senza cambiarla e non deve fare un conflitto.
+   - **Scritture della scheda con la revisione**, come la plancia nel pezzo 4: se il master ha scritto nel frattempo il server risponde 409 e la scheda non sovrascrive. Prima del pezzo 6 la scheda scriveva senza revisione e poteva cancellare un colpo appena applicato.
+   - **Conflitto.** Il file è cambiato mentre la scheda aveva una modifica non ancora scritta nella cartella (le scritture si raccolgono per 1,5 secondi). Avviso in testa alla tab, con le differenze della versione del master:
+     - «Aggiorna» prende la versione del master; la modifica del giocatore si perde;
+     - «Tieni la mia» riscrive il file con la revisione vista nell'avviso, quindi vince solo se il master non ha scritto ancora. Se l'ha fatto, l'avviso torna con i valori nuovi.
+     Finché non sceglie, la scheda resta salvata nel browser ma non scrive nella cartella.
+   - **Registro.** La scelta va in una riga del registro dello scontro aperto, se c'è (`src/scontro.js` → `registraRiga`). Esempio: «Torvald Krane: il giocatore ha tenuto la sua versione della scheda al posto di quella del master (PV 20 → 25; Punti Eroe 5 → 4)».
+   - **Indicatore** in testa alla scheda, accanto ai pulsanti: «collegato al tavolo» (verde) se l'ultimo controllo è riuscito, «non collegato» (grigio) se il server non risponde. Senza il server di Mutant non compare, e l'app non fa controlli periodici: resta com'era.
+   - **Test.** `tests/collegamento.test.js`, con il server vero su cartelle temporanee. Coprono la rilettura del file cambiato dal master, il conflitto con «Aggiorna» e «Tieni la mia» (409 con una revisione vecchia), la scheda riaperta che non fa conflitto, le differenze, la riga di registro e l'indicatore assente senza server.
+   - **Prova nel browser.** Server sulla porta 3001 con cartelle temporanee e gli esempi; plancia in una scheda del browser, Torvald nell'altra, sulla tab Combattimento.
+     - Colpo dalla plancia, 8 − AR 5: la scheda passa da PV 28 a 25 da sola, sulla stessa tab e allo stesso punto.
+     - Punto Eroe tolto nella scheda e subito un colpo, 10 − AR 5: avviso, file del master intatto (PV 20). «Tieni la mia»: PV 25 e Punti Eroe 4 nel file, riga nel registro. «Aggiorna» provato su un conflitto precedente, con la sua riga.
+     - Server spento: indicatore grigio, poi di nuovo verde. Stessa scheda servita senza server di Mutant (porta 3002): nessun indicatore, solo il `ping` dell'avvio.
+   - **Scostamenti dal piano.** Non c'è l'unione per blocchi del rischio R1, cioè il master che scrive solo la `sessione` e il giocatore solo le scelte. Bastano la revisione e la scelta del giocatore. La regola «vince il più recente» resta per la pagina iniziale.
+7. **Pezzo 7 — Prova al tavolo e merge su `main`**, dopo una sessione di gioco vera. Che cosa manca:
+   - una sessione vera con i giocatori collegati in rete (`--rete`) e su carta, per vedere tempi del controllo, avvisi e registro con più persone;
+   - R2: un codice di sessione se il server gira su una rete non di casa;
+   - R3: con PC diversi le date dei file sono del server, quelle della voce del browser no; per il pezzo 6 conta solo la revisione del server, ma la sincronizzazione della pagina iniziale usa ancora le due date;
+   - le risposte di Davide alle domande nate da questo branch ancora aperte (per esempio A.76, A.77, A.78), prima del merge;
+   - la pulizia dei LEGGIMI tracciati solo qui (`personaggi/`, `scontri/`, `nemici/`) e del pulsante «Carica esempi», da decidere se restano su `main`;
+   - il merge su `main` con i test e la prova dell'app senza server.
 
 ## 6. Rischi e domande aperte
 
