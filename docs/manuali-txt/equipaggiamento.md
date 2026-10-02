@@ -30,6 +30,7 @@ Ogni oggetto produce gli effetti indicati dalla propria scheda. Quando una sched
 | 6 Equipaggiamento sanitario | Pronto soccorso, diagnostica, chirurgia e consumabili. |
 | 7 Dispositivi specialistici | Impianti cibernetici, benefici, Umanità, Integrità e chip di Abilità. |
 | 8 Cataloghi e dotazioni iniziali | Prodotti commerciali, modelli corporativi e corredi per attività. |
+| 9 Lavorazione di artefatti e batterie mistiche | Progetto, preventivo, costruzione, batterie, riparazioni e modifiche; rimando alla procedura mistica. |
 
 Questa edizione comprende le regole generali, le dotazioni personali, l’esplorazione, la comunicazione, gli strumenti professionali, i Nuclei Energetici Cromatici, l’equipaggiamento sanitario, il catalogo degli impianti cibernetici singoli e le regole di assegnazione delle dotazioni iniziali.
 
@@ -1461,4 +1462,28 @@ I crediti iniziali si aggiungono agli oggetti assegnati: da 1.200 a 2.200 cr, co
 Le munizioni conservano il totale assegnato dalla Classe anche quando cambia la capacità dei caricatori del modello corporativo. Caricatori e accessori devono essere compatibili. Le sostituzioni mediante acquisto conteggiano gli eventuali costi di adattamento secondo il Manuale del Giocatore, §2.16.29.
 
 Medico e Paramedico conservano le dotazioni già previste dalle rispettive Classi. Naniti e postazioni medicochirurgiche sono acquisti o dotazioni di missione: non sono assegnati gratuitamente come parte della dotazione personale iniziale. Anche i veicoli restano separati, compreso quello eventualmente fornito a un Pilota.
+
+# **9 Lavorazione di artefatti e batterie mistiche**
+
+La procedura completa è nel Manuale della Magia, sezione 24\. Artefatti produce il progetto obbligatorio; Tecnologia costruisce o adatta il supporto; Rituali infonde gli effetti. Il progetto può essere fornito da altri e il costruttore fisico non deve essere un Ritualista. Natura Mistica o TecnoMistica, proprietà, potenza e SnT derivano dalla configurazione costruita.
+
+## **9.1 Progetto e preventivo**
+
+Il progetto è permanente, riutilizzabile e commerciabile: non si consuma con la costruzione. Un progetto Magistrale concede per sempre \+2 alle Prove di Tecnologia che lo seguono fedelmente. Il bonus non si applica direttamente a Rituali. La progettazione di un nuovo schema consuma comunque le risorse previste; prezzi e reperibilità dei progetti sono nel Manuale della Magia, §24.3.
+
+Il preventivo distingue il supporto ordinario, la lavorazione fisica, l’eventuale Chroma, il progetto e i reagenti d’infusione. Materiali e ore dipendono dalla costruzione concreta. L’adattamento base di un’arma o di uno scudo costa 200 cr ed è Ordinario; il contenitore base di una batteria costa 100 cr ed è Semplice. Questi importi non sono un prezzo universale per ogni anello, armatura o dispositivo. Si riusano le parti compatibili già possedute.
+
+## **9.2 Tecnologia e infusione**
+
+La complessità fisica determina la Prova di Tecnologia e il lavoro: Semplice 0 VA e 4 ore; Ordinaria −2 VA e 8 ore; Complessa −4 VA e 16 ore; Molto complessa −6 VA e 32 ore. Si possono lavorare al massimo 8 ore al giorno. Il Grado mistico determina separatamente la difficoltà e i costi d’infusione.
+
+Un Successo Magistrale nella costruzione concede \+2 al Rituale d’infusione di quello specifico supporto; il beneficio si conserva nei nuovi tentativi e nelle riparazioni fedeli. Dopo un fallimento, il nuovo tentativo richiede metà del tempo base e materiali aggiuntivi pari al 25% del costo di lavorazione. Dopo un Maldestro richiede tempo intero e costo intero dei materiali di lavorazione; supporto originario e Chroma restano recuperabili.
+
+## **9.3 Batterie, riparazioni e modifiche**
+
+Il contenitore base pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e 3 PI. Il Chroma grezzo costa 100 cr per PM di capacità se Rosso, Blu o Verde, e 400 cr per PM se Bianco. Una batteria finita ha prezzo indicativo di 200 cr per PM colorato o 1.000 cr per PM Bianco. REP Molto rara per le colorate, Leggendaria per le universali; il prezzo non garantisce l’esistenza di un’offerta. Capacità, Grado e SnT seguono il Manuale della Magia, §24.7. Una riserva appena creata è vuota; una batteria acquistata è piena.
+
+Una riparazione richiede 1 ora e una Prova di Tecnologia: \+1 PI con successo, \+2 PI con un Magistrale, nessun recupero con fallimento, perdita di 1 PI con un Maldestro, fino al minimo di 0\. Il costo è il 5% del valore fisico per ogni PI effettivamente ripristinato, escludendo progetto, Chroma e infusione. A 0 PI l’oggetto è inutilizzabile, ma le componenti mistiche non sono automaticamente perdute.
+
+Se le parti mistiche rimangono integre basta la riparazione fisica. Sostituire una componente mistica o il Chroma richiede il progetto pertinente, il lavoro necessario e una nuova infusione completa. Aggiungere proprietà o capacità richiede il progetto della nuova configurazione e l’infusione dell’intero Grado finale, riusando le parti compatibili. Esiti, costi e casi particolari sono nel Manuale della Magia, §24.8.
 

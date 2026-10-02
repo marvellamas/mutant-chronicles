@@ -30,7 +30,7 @@ Q indica un quadrato di 1,5 metri; RND un round; AP un’Azione Principale; AC u
 
 I rimandi esterni indicano il nome del manuale e il paragrafo da consultare. I rimandi alle sezioni di questo volume riguardano il Manuale della Magia. Il sommario e le pagine del repertorio sono collegamenti interni utilizzabili nella versione digitale.
 
-La voce Rituale indica l’ammissibilità di una versione rituale. Le procedure dei Rituali verranno integrate successivamente nel Manuale della Magia; sono necessarie anche per eseguire Rigenerazione. Gli impieghi specifici concessi dai Talenti seguono le rispettive descrizioni nel Manuale del Giocatore, capitolo 3 e §8.6.
+La voce Rituale indica l’ammissibilità di una versione rituale. La creazione degli Artefatti e delle batterie è disciplinata dalla sezione 24; Rigenerazione dalla sezione 25\. Le altre conversioni rituali richiedono una procedura espressamente definita. Gli impieghi specifici concessi dai Talenti seguono le rispettive descrizioni nel Manuale del Giocatore, capitolo 3 e §8.6.
 
 **Sommario**
 
@@ -38,49 +38,53 @@ Sezioni e pagine di consultazione
 
 [**1 Motore del lancio e accesso alla magia**](#bookmark=id.d843mafgtfnw)	**[4](#bookmark=id.d843mafgtfnw)**
 
-[**2 Componenti concentrazione e manovre**](#bookmark=id.8xvdpqor3tme)	**[5](#bookmark=id.8xvdpqor3tme)**
+[**2 Componenti concentrazione e manovre**](#bookmark=id.8xvdpqor3tme)	**12**
 
-[**3 Bersagli gittate e risoluzione degli effetti**](#bookmark=id.u9gqkqeypbyw)	**[6](#bookmark=id.u9gqkqeypbyw)**
+[**3 Bersagli gittate e risoluzione degli effetti**](#bookmark=id.u9gqkqeypbyw)	**14**
 
-[**4 Danno difese e protezioni**](#bookmark=id.8ztkmj78qrjv)	**[6](#bookmark=id.8ztkmj78qrjv)**
+[**4 Danno difese e protezioni**](#bookmark=id.8ztkmj78qrjv)	**15**
 
-[**5 Risultati naturali e Fallimento Maldestro**](#bookmark=id.ygf9v5veat2l)	**[7](#bookmark=id.ygf9v5veat2l)**
+[**5 Risultati naturali e Fallimento Maldestro**](#bookmark=id.ygf9v5veat2l)	**15**
 
-[**6 Punti Magia Chroma e recupero**](#bookmark=id.im6gqrs4037o)	**[8](#bookmark=id.im6gqrs4037o)**
+[**6 Punti Magia Chroma e recupero**](#bookmark=id.im6gqrs4037o)	**16**
 
-[**7 Cumulo prove ripetute e aree persistenti**](#bookmark=id.t6orwwsvk90r)	**[13](#bookmark=id.t6orwwsvk90r)**
+[**7 Cumulo prove ripetute e aree persistenti**](#bookmark=id.t6orwwsvk90r)	**21**
 
-[**8 Individuazione e occultamento**](#bookmark=id.1k62dg70ault)	**[14](#bookmark=id.1k62dg70ault)**
+[**8 Individuazione e occultamento**](#bookmark=id.1k62dg70ault)	**23**
 
-[**9 Impronte trappole e barriere**](#bookmark=id.3c4jb5au16qe)	**[15](#bookmark=id.3c4jb5au16qe)**
+[**9 Impronte trappole e barriere**](#bookmark=id.3c4jb5au16qe)	**24**
 
-[**10 Cure Stati e rimozione degli effetti**](#bookmark=id.ze8o5feg9efu)	**[16](#bookmark=id.ze8o5feg9efu)**
+[**10 Cure Stati e rimozione degli effetti**](#bookmark=id.ze8o5feg9efu)	**25**
 
-[**11 Indice degli incantesimi**](#bookmark=id.g1a3gk9n3efz)	**[18](#bookmark=id.g1a3gk9n3efz)**
+[**11 Indice degli incantesimi**](#bookmark=id.g1a3gk9n3efz)	**27**
 
-[**12 Regole elementali**](#bookmark=id.attf9aqj1m86)	**[21](#bookmark=id.attf9aqj1m86)**
+[**12 Regole elementali**](#bookmark=id.attf9aqj1m86)	**30**
 
-[**13 Incantesimi della specializzazione Elementi**](#bookmark=id.26x0purqxjav)	**[24](#bookmark=id.26x0purqxjav)**
+[**13 Incantesimi della specializzazione Elementi**](#bookmark=id.26x0purqxjav)	**34**
 
-[**14 Schede degli elementali**](#bookmark=id.34z0vf6ehey)	**[35](#bookmark=id.34z0vf6ehey)**
+[**14 Schede degli elementali**](#bookmark=id.34z0vf6ehey)	**47**
 
-[**15 Rimandi alle regole generali**](#bookmark=id.6auhjdb6pakm)	**[49](#bookmark=id.6auhjdb6pakm)**
+[**15 Rimandi alle regole generali**](#bookmark=id.6auhjdb6pakm)	**61**
 
-[**16 Incantesimi della specializzazione Cambiamento**](#bookmark=id.6yuyp5hynyt2)	**[50](#bookmark=id.6yuyp5hynyt2)**
+[**16 Incantesimi della specializzazione Cambiamento**](#bookmark=id.6yuyp5hynyt2)	**62**
 
-[**17 Incantesimi della specializzazione Manifestazione**](#bookmark=id.nqtfox29ggt4)	**[60](#bookmark=id.nqtfox29ggt4)**
+[**17 Incantesimi della specializzazione Manifestazione**](#bookmark=id.nqtfox29ggt4)	**71**
 
-[**18 Incantesimi della specializzazione Psionica**](#bookmark=id.tlf9smn6nu2p)	**[70](#bookmark=id.tlf9smn6nu2p)**
+[**18 Incantesimi della specializzazione Psionica**](#bookmark=id.tlf9smn6nu2p)	**81**
 
-[**19 Incantesimi della specializzazione Influenza**](#bookmark=id.g2mlre7l8xwu)	**[82](#bookmark=id.g2mlre7l8xwu)**
+[**19 Incantesimi della specializzazione Influenza**](#bookmark=id.g2mlre7l8xwu)	**93**
 
-[**20 Incantesimi della specializzazione Sintonia**](#bookmark=id.o1kdjrq533i0)	**[98](#bookmark=id.o1kdjrq533i0)**
+[**20 Incantesimi della specializzazione Sintonia**](#bookmark=id.o1kdjrq533i0)	**108**
 
-[**21 Incantesimi della specializzazione Esorcismo**](#bookmark=id.a8o8p98179z7)	**[111](#bookmark=id.a8o8p98179z7)**
+[**21 Incantesimi della specializzazione Esorcismo**](#bookmark=id.a8o8p98179z7)	**120**
 
-[**22 Incantesimi della specializzazione Incantamento**](#bookmark=id.27o85hv40bcc)	**[124](#bookmark=id.27o85hv40bcc)**
+[**22 Incantesimi della specializzazione Incantamento**](#bookmark=id.27o85hv40bcc)	**133**
 
-[**23 Incantesimi della specializzazione Trascendenza**](#bookmark=id.qo0sx89v139z)	**[138](#bookmark=id.qo0sx89v139z)**
+[**23 Incantesimi della specializzazione Trascendenza**](#bookmark=id.qo0sx89v139z)	**147**
+
+[**24 Creazione di artefatti e batterie mistiche	160**](#24-creazione-di-artefatti-e-batterie-mistiche)
+
+[**25 Rigenerazione: rituale e artefatti	165**](#25-rigenerazione:-rituale-e-artefatti)
 
 # **1 Motore del lancio e accesso alla magia**
 
@@ -825,7 +829,7 @@ Tocco Sacro massimizza i dadi di Cura Ferite a contatto. Canale Vitale aggiunge 
 | Congelato o immobilizzazione materiale | Rimuovere o sciogliere il vincolo materiale; Controllo Elementale nei propri limiti |
 | A Terra | Rialzarsi: Manuale del Giocatore, §5.5. |
 | Menomazione temporanea | Recupero Rapido; trattamenti nel Manuale del Giocatore, §§5.16.3–5.16.6. |
-| Menomazione permanente | Rigenerazione; le procedure rituali verranno integrate successivamente nel Manuale della Magia. |
+| Menomazione permanente | Rigenerazione: vedere la scheda 21.10 e la procedura della sezione 25\. |
 | Svenuto per PM 0 | Recuperare almeno 1 PM personale |
 
 Prima si identifica la causa. Cura Spirituale non elimina una malattia, un veleno, una menomazione anatomica o un mantenimento magico ancora attivo. Sovraccarico Sinaptico richiede la cessazione della Concentrazione o Negare Potere. Indurre Sonno può essere rimosso da Cura Spirituale 6, Negare Potere oppure due RND di scuotimento energico; i danni non svegliano. Rimuovere Terrore non consente alla stessa aura di riapplicarlo.
@@ -1043,7 +1047,7 @@ Restano applicabili le ulteriori penalità per componenti mancanti, Ingaggio o a
 
 ## **12 4 Ammissibilità dei Rituali**
 
-La voce Rituale indica se l’incantesimo ammette una versione rituale. Le procedure di esecuzione, con tempi, costi, Prove, partecipanti e limiti, verranno integrate successivamente nel Manuale della Magia.
+La voce Rituale indica se l’incantesimo ammette una versione rituale. Le procedure complete per la creazione di Artefatti e batterie sono nella sezione 24; quelle di Rigenerazione nella sezione 25\. Le altre conversioni rituali richiedono una procedura espressamente definita.
 
 Ritualista Minore permette di apprendere ed eseguire Rituali di Grado I–III come Officiante o Canale, senza richiedere l’Addestramento Taumaturgo. Ritualista Maggiore richiede Ritualista Minore ed estende l’accesso ai Gradi IV–VI. Non si apprendono automaticamente le procedure e non si ottengono bonus numerici automatici al contributo del Canale: restano requisiti, tempi, materiali e costi del singolo Rituale.
 
@@ -3927,7 +3931,7 @@ Permette di percepire forme, posizioni e movimenti nel buio completo e attravers
 
 # **21 Incantesimi della specializzazione Esorcismo**
 
-Le dieci schede seguenti impiegano PM universali o spirituali per curare e purificare. Guarigione tratta le Ferite, Recupero Rapido le Menomazioni temporanee e Rigenerazione quelle permanenti e le parti mancanti. Tutte ammettono il Rituale, eccetto Esorcizzare Oscurità; Rigenerazione è esclusivamente rituale. Le procedure rituali verranno integrate successivamente nel Manuale della Magia.
+Le dieci schede seguenti impiegano PM universali o spirituali per curare e purificare. Guarigione tratta le Ferite, Recupero Rapido le Menomazioni temporanee e Rigenerazione quelle permanenti e le parti mancanti. Tutte ammettono il Rituale, eccetto Esorcizzare Oscurità. Rigenerazione eseguita direttamente richiede il Rituale della sezione 25; un Artefatto sintonizzato può riprodurne l’effetto secondo il §25.4. Le altre conversioni rituali richiedono una procedura espressamente definita.
 
 ### **Pericolosità e limiti delle cure magiche**
 
@@ -4327,7 +4331,7 @@ Interrompe una Possessione mentale o spirituale e può bandire l’emanazione di
 
 Scheda 21.10 • Macrofamiglia Spirituale • Specializzazione Esorcismo • Rituale: obbligatorio; nessuna versione ordinaria • PM utilizzabili: universali o spirituali.
 
-Lancio: esclusivamente mediante Rituale, con contatto durante la procedura. Beneficiari viventi consenzienti; è consentito il soccorso a chi è incosciente. Nessuna PS. Procedure, Prove e costo di esecuzione verranno integrati successivamente con le regole dei Rituali nel Manuale della Magia. L’esecuzione richiede tali regole.
+Lancio diretto: esclusivamente mediante il Rituale della sezione 25, con contatto durante la procedura. Beneficiari viventi consenzienti; è consentito il soccorso a chi è incosciente. Nessuna PS. Un Artefatto sintonizzato può riprodurre l’effetto secondo il §25.4, senza richiedere all’utilizzatore il talento Ritualista o la conoscenza della procedura.
 
 Ripara Menomazioni permanenti e, alle versioni appropriate, rigenera parti mancanti. Il tempo in tabella decorre dal completamento del Rituale, non ne rappresenta il tempo di esecuzione.
 
@@ -4339,7 +4343,7 @@ Ripara Menomazioni permanenti e, alle versioni appropriate, rigenera parti manca
 | 15 | 15 | 2 | 2 | 24 ore • 1 giorno |
 | 18 | 18 | 3 | Tutte consentite | 12 ore |
 
-**PM base:** il valore in tabella è la base per il costo rituale. Il costo di esecuzione verrà integrato successivamente con le regole dei Rituali. La versione di livello 10 conserva capacità, beneficiari e Menomazioni del livello 9 e riduce il tempo di rigenerazione.
+**PM: il valore in tabella è il costo totale della versione, prima dell’eventuale Successo Magistrale del Rituale. Tempi di celebrazione, reagenti ed esiti sono nella sezione 25\. La versione di livello 10 conserva capacità, beneficiari e Menomazioni del livello 9 e riduce il tempo di rigenerazione. L’Artefatto paga tutti i PM con la propria riserva, secondo il §25.4.**
 
 | Dal livello | Capacità cumulativa |
 | :---- | :---- |
@@ -4385,10 +4389,10 @@ Le dieci schede seguenti definiscono potenziamenti dell’equipaggiamento, prote
 | Non Comune | 6 | 2 |
 | Raro | 9 | 3 |
 | Molto Raro | 12 | 4 |
-| Leggendario | 15 | 5 |
-| Unico | 18 | 6 |
+| Epico | 15 | 5 |
+| Leggendario | 18 | 6 |
 
-**Rarità e Sintonizzazione:** la quinta fascia è Leggendario, con costo di Sintonizzazione 5; la sesta è Unico, con costo di Sintonizzazione 6\. Questa scala determina il livello dell’oggetto per Identificare Potere e quello dei vincoli incorporati per Rompere Vincolo. Un incantesimo applicato successivamente si valuta invece secondo il proprio livello.
+**Potenza e Sintonizzazione: la quinta fascia è Epica e la sesta Leggendaria. Per gli Artefatti con proprietà attive, il costo SnT è pari al Grado finale; quelli con sole proprietà passive hanno SnT 0 (§24.2). La scala di potenza determina il livello dell’oggetto per Identificare Potere e quello dei vincoli incorporati per Rompere Vincolo. Un incantesimo applicato successivamente si valuta invece secondo il proprio livello.**
 
 ### **Maledizioni e vincoli**
 
@@ -4605,7 +4609,7 @@ Scheda 22.6 • Macrofamiglia Spirituale • Specializzazione Incantamento • L
 
 **Lancio:** 1 minuto; Focus, Gesto e Invocazione. Normali regole Potere. Gittata Contatto; un contenitore mistico con Chroma. Nessuna PS o Concentrazione.
 
-Espande temporaneamente la capacità di una batteria esistente. La capacità aggiuntiva è inizialmente vuota: l’incantesimo non crea PM e non ricarica automaticamente il contenitore. Le procedure rituali per la creazione di batterie permanenti verranno integrate successivamente nel Manuale della Magia; le procedure di costruzione verranno integrate successivamente nel Manuale dell’Equipaggiamento.
+Espande temporaneamente la capacità di una batteria esistente. La capacità aggiuntiva è inizialmente vuota: l’incantesimo non crea PM e non ricarica automaticamente il contenitore. La creazione di batterie permanenti segue la sezione 24 e non è un effetto di questo incantesimo; costruzione, infusione e ricarica restano operazioni distinte.
 
 | Livello | PM | Capacità aggiuntiva | Durata |
 | :---: | :---: | :---: | :---: |
@@ -4651,8 +4655,8 @@ Identifica completamente un oggetto entro il limite di livello, determinato dall
 | 6 | 6 | 3 Q | 1 | 6 | Non Comune |
 | 9 | 9 | 6 Q | 1 | 9 | Raro |
 | 12 | 12 | 10 Q | 2 | 12 | Molto Raro |
-| 15 | 15 | 15 Q | 2 | 15 | Leggendario |
-| 18 | 18 | 20 Q | 3 | 18 | Unico |
+| 15 | 15 | 15 Q | 2 | 15 | Epico |
+| 18 | 18 | 20 Q | 3 | 18 | Leggendario |
 
 **Bersagli:** oggetti o singoli effetti attivi, anche applicati a creature, percepibili o già localizzati e in gittata; per quelli multipli vale la concatenazione entro 2 Q. Non effettua una ricerca nell’area circostante. Il contatto della versione base può comunque attivare una trappola; le versioni a distanza permettono l’esame senza toccare.
 
@@ -4704,7 +4708,7 @@ Recide un legame mistico che collega un oggetto a una persona, a un altro oggett
 
 **Parità:** una sola PS Volontà del Taumaturgo per lancio vale per tutti i vincoli di pari livello, distinta dalla Prova Potere. Proprietario, creatore del vincolo e persona vincolata non tirano.
 
-**Livello del vincolo:** per un incantesimo applicato all’oggetto vale il livello dell’effetto attivo; per una proprietà incorporata vale quello della rarità dell’oggetto, da Comune 3 a Unico 18\. Un vincolo di livello 15 applicato successivamente a un oggetto Comune rimane di livello 15\. Sono disponibili tutti i livelli interi da 6 a 18: PM e Potere di rottura sono pari al livello, mentre gittata e oggetti conservano l’ultima soglia raggiunta. Un’Anticipazione di un singolo parametro avversario non aumenta il livello del vincolo da confrontare.
+**Livello del vincolo: per un incantesimo applicato all’oggetto vale il livello dell’effetto attivo; per una proprietà incorporata vale quello della rarità dell’oggetto, da Comune 3 a Leggendario 18\. Un vincolo di livello 15 applicato successivamente a un oggetto Comune rimane di livello 15\. Sono disponibili tutti i livelli interi da 6 a 18: PM e Potere di rottura sono pari al livello, mentre gittata e oggetti conservano l’ultima soglia raggiunta. Un’Anticipazione di un singolo parametro avversario non aumenta il livello del vincolo da confrontare.**
 
 **Legami rimovibili:** Vincolo Spirituale; maledizioni che vietano di togliere, abbandonare o cedere un oggetto o puniscono la separazione; vincoli mistici fra oggetti o fra oggetto e proprietario.
 
@@ -4793,8 +4797,8 @@ Imprime in un oggetto una Memoria oppure un Incantesimo dormiente. Il costo dell
 | ----- | ----- | ----- |
 | 9 | Raro | 3 |
 | 12 | Molto Raro | 4 |
-| 15 | Leggendario | 5 |
-| 18 | Unico | 6 |
+| 15 | Epico | 5 |
+| 18 | Leggendario | 6 |
 
 **Sintonizzazione:** richiesta per la modalità Incantesimo dormiente. Se l’oggetto è già un Artefatto, si usa il maggiore costo fra quello originario e quello dell’impronta, senza sommarli. Consumare o terminare l’impronta elimina la relativa maggiorazione. L’autorizzazione di accesso non sostituisce questa sintonizzazione.
 
@@ -5174,7 +5178,7 @@ Un unico incantesimo consente di alternare una percezione estesa e generica con 
 
 ### **Livello 12**
 
-**Aura:** potenziale magico nelle fasce di livello 1–6, 7–12 o 13–18; rileva inoltre presenza o assenza di Corruzione Oscura, senza determinarne lo stato. Incantesimi: livello esatto dell’effetto attivo. Artefatti: fascia di rarità Comune o Non Comune, Raro o Molto Raro, Leggendario o Unico.
+**Aura: potenziale magico nelle fasce di livello 1–6, 7–12 o 13–18; rileva inoltre presenza o assenza di Corruzione Oscura, senza determinarne lo stato. Incantesimi: livello esatto dell’effetto attivo. Artefatti: fascia di rarità Comune o Non Comune, Raro o Molto Raro, Epico o Leggendario.**
 
 ### **Livello 15**
 
@@ -5256,3 +5260,208 @@ Mantiene percepibile l’emanazione spirituale ma ne falsifica il profilo, facen
 **Azioni e cessazione:** nella versione a durata fissa le azioni offensive non terminano l’alterazione, ma le capacità mostrate possono contraddire il profilo falso. La versione a Concentrazione segue tutte le sue limitazioni e le normali Prove quando si subiscono danni; la perdita di Concentrazione termina l’effetto su tutti. Negare Potere può rimuoverlo separatamente da ciascun beneficiario, se validamente individuato.
 
 **Anticipazione:** un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie Potere di Falsificazione aumentato di 3, anche ai livelli intermedi, massimo 21; massimo potenziale magico apparente aumentato di 3, fino a 18; beneficiari 1 → 2 → 3 → 4; gittata Personale → Contatto → 3 Q → 6 Q → 10 Q → 15 Q; Concentrazione 2 → 4 → 8 → 16 → 24 ore; oppure durata fissa 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore. Il Potere di Falsificazione anticipato non aumenta il livello dell’effetto ai fini di Negare Potere.
+
+# **24 Creazione di artefatti e batterie mistiche** {#24-creazione-di-artefatti-e-batterie-mistiche}
+
+La creazione comprende tre fasi distinte: Artefatti per il progetto, Tecnologia per costruire o adattare il supporto e Rituali per l’infusione mistica. Il progetto è obbligatorio prima della costruzione e può essere stato realizzato da altri. Le tre fasi possono essere svolte da persone diverse; ciascuna deve possedere i requisiti della propria fase. Le procedure e i costi di questo capitolo costituiscono la base approvata per il playtest.
+
+## **24.1 Progetto, supporto e accesso**
+
+Il progetto identifica il supporto, ogni incantesimo e la sua versione completa, l’impiego permanente o ad attivazione, le condizioni d’uso, l’eventuale Chroma e la capacità della riserva. La natura Mistica o TecnoMistica deriva dalla costruzione e dalle caratteristiche del manufatto, secondo il Manuale degli Armamenti; non viene scelta per ottenere un diverso costo di sintonizzazione.
+
+Architetto TecnoMistico concede al Tecnomante l’accesso esclusivo al progetto e alla responsabilità dell’infusione degli Artefatti TecnoMistici, entro il proprio Grado di Classe. Per i manufatti Mistici e le batterie autonome occorre Ritualista Minore per i Gradi I–III oppure Ritualista Maggiore per i Gradi IV–VI, oltre alla conoscenza della procedura. Il costruttore fisico può essere un altro personaggio competente in Tecnologia e non deve essere un Ritualista.
+
+Durante l’infusione deve essere presente chi conosce e può utilizzare ciascuna versione da infondere. Può essere una persona diversa dall’Officiante. La sua competenza fornisce l’accesso alla versione; per contribuire come Canale deve soddisfare anche i requisiti di partecipazione rituale.
+
+## **24.2 Effetti, Grado e sintonizzazione**
+
+Si parte dagli incantesimi esistenti: ciascuna proprietà riproduce una versione completa della relativa scheda. Un insieme di bonus appartenenti alla stessa versione conta come una sola proprietà. Non si combinano liberamente valori presi da righe diverse.
+
+| Livello della versione | Grado | Potenza |
+| :---- | :---- | :---- |
+| 1–3 | I | Comune |
+| 4–8 | II | Non Comune |
+| 9–11 | III | Rara |
+| 12–14 | IV | Molto Rara |
+| 15–17 | V | Epica |
+| 18 | VI | Leggendaria |
+
+Grado delle proprietà \= Grado della proprietà più elevata \+ 1 per ogni ulteriore proprietà. Una proprietà permanente sul supporto e una funzione separatamente attivabile, anche derivate dallo stesso incantesimo, contano come due proprietà. Il Grado finale dell’artefatto è il maggiore fra Grado delle proprietà e Grado della riserva. Le configurazioni superiori al VI richiedono una ricetta eccezionale: non vengono ricondotte automaticamente al VI.
+
+SnT indica il costo di Sintonizzazione ed è distinta da SIN, Sistema di Interfaccia Neurale. Un manufatto con sole proprietà passive ha SnT 0\. Se possiede almeno una proprietà attiva, la SnT è pari al Grado finale, comprendendo l’eventuale riserva. Una batteria autonoma ha SnT pari al proprio Grado. Le proprietà passive di un artefatto misto restano utilizzabili secondo i propri requisiti anche senza sintonizzazione.
+
+Una proprietà ad attivazione conserva effetti, PM, tempo di esecuzione, gittata, bersagli, durata, Concentrazione, Prove Salvezza, cumuli e limitazioni della versione infusa. Dopo la Sintonizzazione l’attivazione è automatica e non richiede Potere né Componenti, salvo un’eccezione espressamente prevista dalla specifica proprietà. Restano le eventuali Prove per colpire, Difese e Salvezze. L’utilizzatore non deve conoscere l’incantesimo. Per Rigenerazione infusa si applica il §25.4.
+
+La riserva integrata deve essere compatibile e contenere almeno il costo di un utilizzo della versione più costosa. Alimenta esclusivamente le funzioni dell’artefatto: non permette di prelevare PM né di alimentare gli incantesimi personali. Più proprietà di macrofamiglie differenti richiedono energia compatibile con tutte, normalmente Chroma Bianco.
+
+Una proprietà permanente migliora l’uso o la natura del supporto al quale viene vincolata. Non richiede una riserva, non consuma PM durante l’uso e non aggiunge un sovrapprezzo automatico in Gradi. Cure istantanee, attacchi separati, teletrasporti ed evocazioni mantengono il funzionamento ad attivazione; la permanenza non li rende ripetibili gratuitamente.
+
+Per una proprietà permanente si sceglie la versione minima completa che fornisce i benefici desiderati sul supporto. Miglioramenti di gittata, durata o numero di bersagli inutilizzabili su quell’unico oggetto non obbligano a una versione superiore. Restano requisiti d’impiego e limiti di cumulo.
+
+Arma Mistica permanente: livello 1, danno Magico senza bonus; livello 3, danno Magico e \+1 al VA degli attacchi e al danno; livello 9, danno Magico e \+2/+2; livello 15, danno Etereo e \+3/+3. I bonus al VA non si applicano alla Parata. Le versioni 6, 12 e 18 non aggiungono benefici permanenti rispetto, rispettivamente, a 3, 9 e 15\.
+
+Armatura Mistica permanente: la componente fisica dell’AR dell’armatura diventa Magica; il bonus aggiuntivo è 0 al livello 1, \+1 al livello 3, \+2 al livello 9 e \+3 al livello 15\. Le versioni 6, 12 e 18 equivalgono alle precedenti ai fini del beneficio permanente. Sono esclusi scudi, pelle naturale e protezioni create da incantesimi. Le altre applicazioni permanenti richiedono una compatibilità esplicita con il supporto e con la scheda dell’incantesimo.
+
+## **24.3 Progettazione e commercio dei progetti**
+
+Un progetto riuscito è permanente, riutilizzabile, copiabile e vendibile. Non viene consumato costruendo l’oggetto. Possedere un progetto già pronto permette di passare alla costruzione senza ripetere la Prova di Artefatti.
+
+| Grado | Artefatti | Lavoro | Risorse per tentativo |
+| :---- | :---- | :---- | :---- |
+| I | 0 VA | 4 ore | 100 cr |
+| II | −2 VA | 8 ore | 200 cr |
+| III | −4 VA | 16 ore | 400 cr |
+| IV | −6 VA | 32 ore | 800 cr |
+| V | −8 VA | 64 ore | 1.600 cr |
+| VI | −10 VA | 128 ore | 3.200 cr |
+
+Si svolgono normalmente fino a 8 ore di lavoro produttivo al giorno e la progettazione può essere ripartita su più giornate. Le risorse indicate vengono consumate anche se il progetto fallisce; non comprendono il supporto fisico, il Chroma o i reagenti d’infusione.
+
+Successo: progetto ordinario. Successo Magistrale: progetto magistrale, che conserva per sempre \+2 VA alle Prove di Tecnologia per realizzarlo, anche nelle copie e nelle costruzioni successive. Il bonus non si applica direttamente alla Prova di Rituali. Fallimento: un nuovo tentativo richiede metà del tempo base e tutte le risorse di progettazione. Fallimento Maldestro: un nuovo tentativo richiede l’intero tempo base e tutte le risorse.
+
+| Grado | Ordinario | REP ordinario | Magistrale | REP magistrale |
+| :---- | :---- | :---- | :---- | :---- |
+| I | 500 cr | Rara | 1.500 cr | Molto Rara |
+| II | 1.000 cr | Molto Rara | 3.000 cr | Leggendaria |
+| III | 2.000 cr | Molto Rara | 6.000 cr | Leggendaria |
+| IV | 4.000 cr | Leggendaria | 12.000 cr | Leggendaria |
+| V | 8.000 cr | Leggendaria | 24.000 cr | Leggendaria |
+| VI | 16.000 cr | Leggendaria | 48.000 cr | Leggendaria |
+
+Il prezzo ordinario di riferimento è cinque volte il costo delle risorse di progettazione; quello magistrale è tre volte l’ordinario. Sono valori provvisori da verificare con il playtest. La reperibilità parte da Rara; il possesso di un progetto o della sua copia non garantisce un compratore né una vendita al prezzo di riferimento.
+
+## **24.4 Costruzione o adattamento**
+
+Tecnologia realizza il supporto previsto dal progetto oppure adatta un oggetto esistente. La complessità fisica è indipendente dal Grado mistico. Le procedure specifiche di fabbricazione dell’oggetto prevalgono sulla seguente scala generale di lavorazione.
+
+| Complessità | Tecnologia | Lavoro |
+| :---- | :---- | :---- |
+| Semplice | 0 VA | 4 ore |
+| Ordinaria | −2 VA | 8 ore |
+| Complessa | −4 VA | 16 ore |
+| Molto complessa | −6 VA | 32 ore |
+
+Il costo dei materiali fisici è indicato dalla ricetta o dal preventivo di lavorazione e si aggiunge all’eventuale acquisto del supporto. Gli esempi di base prevedono 100 cr e lavorazione Semplice per un supporto di batteria, oppure 200 cr e lavorazione Ordinaria per l’adattamento di un’arma o di uno scudo. Il costo di 200 cr non è una tariffa universale per ogni oggetto.
+
+Successo: supporto pronto per l’infusione. Successo Magistrale: \+2 VA alla Prova di Rituali d’infusione di quell’esemplare. Il beneficio resta disponibile nei nuovi tentativi se il supporto è integro o viene riparato fedelmente. Fallimento: nuovo tentativo con metà del tempo base e materiali aggiuntivi pari al 25% del costo di lavorazione. Fallimento Maldestro: nuovo tentativo con tempo intero e costo intero dei materiali di lavorazione; supporto di base e Chroma restano recuperabili.
+
+## **24.5 Infusione mistica**
+
+L’infusione comprende in un unico rituale tutte le proprietà e l’eventuale riserva del manufatto. Si usa il Grado finale. La durata è continua e la Prova di Rituali si effettua al termine; i PM richiesti sono personali e vengono spesi alla risoluzione finale.
+
+| Grado | Rituali | Durata | PM totali | Reagenti |
+| :---- | :---- | :---- | :---- | :---- |
+| I | 0 VA | 1 ora | 3 | 250 cr |
+| II | −2 VA | 2 ore | 6 | 500 cr |
+| III | −4 VA | 3 ore | 9 | 1.000 cr |
+| IV | −6 VA | 4 ore | 12 | 2.000 cr |
+| V | −8 VA | 6 ore | 15 | 4.000 cr |
+| VI | −10 VA | 8 ore | 18 | 8.000 cr |
+
+Per una batteria mistica autonoma i reagenti costano invece 50 cr per Grado. Restano la durata, la penalità e i PM della tabella. Questa eccezione non si applica alla riserva integrata in un artefatto dotato di altre funzioni.
+
+Successo: infusione completata. Successo Magistrale: si consumano metà dei PM totali e metà dei reagenti, arrotondando per eccesso. Fallimento: PM e reagenti sono consumati; il supporto può essere riutilizzato. Fallimento Maldestro: stesso consumo, inoltre il supporto perde 1 PI e deve essere riparato prima di ritentare. Se la procedura viene interrotta prima della Prova finale, si consumano i reagenti ma non i PM finali; il tentativo va ricominciato.
+
+La riserva di un manufatto appena creato è vuota e deve essere caricata separatamente. Una batteria acquistata è normalmente carica; per gli oggetti trovati il Direttore stabilisce i PM presenti.
+
+## **24.6 Officiante e Canali**
+
+Oltre all’Officiante possono partecipare al massimo tanti Canali quanto il Grado del rituale. Ogni Canale deve avere accesso a quel Grado e partecipare per l’intera celebrazione. Può contribuire PM personali, aiuto al VA finale oppure entrambi. Un Canale che offre soltanto aiuto può non spendere PM; chi contribuisce energia versa almeno 1 PM.
+
+L’Officiante versa normalmente almeno tanti PM personali quanto il Grado. Le quote si ripartiscono prima della celebrazione e insieme costituiscono il costo totale: non si aggiungono nuovamente i PM del rituale. I PM devono essere disponibili al momento della Prova finale.
+
+| VA pertinente del Canale | Aiuto al VA dell’Officiante |
+| :---- | :---- |
+| 0 o inferiore | \+0 |
+| 1–8 | \+1 |
+| 9–14 | \+2 |
+| 15–19 | \+3 |
+| 20 o superiore | \+4 |
+
+I Canali non effettuano tiri separati. Si sommano gli aiuti fino a un massimo complessivo di \+5 VA. Il \+2 dovuto al supporto costruito con Successo Magistrale si aggiunge a questo limite durante l’infusione. Il bonus del progetto magistrale appartiene invece alla Prova di Tecnologia.
+
+Con un Successo Magistrale si dimezza il totale dei PM una sola volta, arrotondando per eccesso, poi si ripartisce il consumo effettivo senza aumentare la quota dichiarata di alcun partecipante. Il minimo dell’Officiante diventa metà del Grado, arrotondata per eccesso.
+
+## **24.7 Batterie mistiche e riserve**
+
+Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti.
+
+| Capacità | Grado colorato | Grado Bianco | Batteria colorata finita | Batteria Bianca finita |
+| :---- | :---- | :---- | :---- | :---- |
+| 5 PM | I | II | 1.000 cr | 5.000 cr |
+| 10 PM | II | III | 2.000 cr | 10.000 cr |
+| 15 PM | III | IV | 3.000 cr | 15.000 cr |
+| 20 PM | IV | V | 4.000 cr | 20.000 cr |
+| 25 PM | V | VI | 5.000 cr | 25.000 cr |
+| 30 PM | VI | Fuori scala ordinaria | 6.000 cr | Ricetta eccezionale |
+
+Chroma grezzo: 100 cr per PM di capacità per Rosso, Blu e Verde; 400 cr per PM per il Bianco. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. Questi prezzi di riferimento restano soggetti al playtest. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza.
+
+Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3\. Il costo di creazione comprende progetto se necessario, supporto e lavorazione, Chroma grezzo e reagenti; non coincide automaticamente con il prezzo di vendita del manufatto finito.
+
+La ricarica delle riserve colorate usa normalmente 3 PM personali per ottenere 1 PM immagazzinato. Ricarica Efficiente oppure Conversione Migliorata porta il rapporto a 2:1; entrambe lo portano a 1:1. Il Chroma Bianco conserva il rapporto 2:1 in entrambi i sensi. La ricarica non richiede una nuova spesa in crediti e rispetta accesso, compatibilità e procedure del §6. Il recupero dei PM personali non ricarica automaticamente le riserve esterne.
+
+Per un singolo incantesimo si può usare un solo contenitore esterno insieme agli eventuali PM personali. Una batteria autonoma conserva i normali usi consentiti; una riserva integrata alimenta soltanto le funzioni del proprio artefatto. Arrivare a 0 PM personali provoca Svenuto dopo la risoluzione dell’azione anche se una riserva esterna contiene ancora energia.
+
+## **24.8 Riparazioni e modifiche**
+
+Una riparazione ordinaria richiede 1 ora e una Prova di Tecnologia: successo recupera 1 PI; Successo Magistrale 2 PI; fallimento nessun PI; Fallimento Maldestro perde 1 PI, fino a un minimo di 0\. Per ogni PI effettivamente riparato si spendono materiali pari al 5% del valore fisico del supporto: oggetto di base e materiali di adattamento, escludendo progetto, Chroma e infusione.
+
+A 0 PI l’oggetto non è utilizzabile, ma Chroma, PM residui e infusione non sono automaticamente distrutti. Se le parti mistiche sono integre, basta riparare il supporto senza ripetere il rituale. La sostituzione di un componente mistico o del Chroma distrutto richiede il progetto originale, la lavorazione effettivamente necessaria e una nuova infusione completa.
+
+Aggiungere o potenziare una proprietà, oppure aumentare la capacità della riserva, richiede il progetto della nuova configurazione, le modifiche fisiche necessarie e una nuova infusione completa al nuovo Grado finale. Le parti compatibili possono essere riutilizzate; non si ottiene automaticamente un rimborso in crediti per quelle sostituite. Il vecchio progetto resta valido e l’eventuale qualità magistrale del progetto modificato dipende dalla nuova Prova di Artefatti.
+
+## **24.9 Scheda del manufatto**
+
+La scheda riporta nome e natura del supporto; progetto e sua qualità; proprietà con riferimento all’incantesimo e versione; impiego permanente o attivo; Grado delle proprietà, Grado della riserva e Grado finale; SnT; Chroma, capacità e PM presenti; tempi, costi e condizioni d’attivazione; effetti e limitazioni; valore fisico rilevante per le riparazioni; PI e componenti da preservare. I dati derivano dalle scelte del progetto e dalle normali schede di incantesimi e oggetti.
+
+Esempio: una spada con Arma Mistica 3 permanente riceve danno Magico, \+1 VA agli attacchi e \+1 danno come un’unica proprietà di Grado I, con SnT 0 e nessuna riserva. Con supporto e progetto già disponibili, l’adattamento esemplificativo di 200 cr e i reagenti di 250 cr danno 450 cr di creazione; sviluppare il progetto aggiunge 100 cr. Se si aggiunge una funzione separata di Cura Ferite 3, il Grado delle proprietà diventa II; una riserva Verde da 5 PM è di Grado I e il manufatto finale ha Grado II e SnT 2\.
+
+# **25 Rigenerazione: rituale e artefatti** {#25-rigenerazione:-rituale-e-artefatti}
+
+Questo capitolo completa la procedura della scheda 21.10. L’esecuzione diretta richiede un Rituale; un artefatto che contiene la proprietà permette invece l’attivazione automatica descritta al §25.4. Le capacità e i limiti della versione infusa restano quelli di Rigenerazione.
+
+## **25.1 Accesso, tempi e risorse del rituale**
+
+L’Officiante deve conoscere la procedura e possedere Ritualista Minore per le versioni di Grado III oppure Ritualista Maggiore per quelle di Grado IV–VI. Occorre mantenere il contatto con i beneficiari durante l’intera celebrazione. I beneficiari sono viventi e consenzienti, oppure incoscienti soccorsi; non effettuano una Prova Salvezza.
+
+| Versione | Rituali | Celebrazione | PM totali | Reagenti | Rigenerazione successiva |
+| :---- | :---- | :---- | :---- | :---- | :---- |
+| 9 · Grado III | −4 VA | 3 ore | 9 | 1.500 cr | 5 giorni |
+| 10 · Grado III | −4 VA | 3 ore | 10 | 1.500 cr | 3 giorni |
+| 12 · Grado IV | −6 VA | 4 ore | 12 | 2.000 cr | 2 giorni |
+| 15 · Grado V | −8 VA | 6 ore | 15 | 2.500 cr | 1 giorno |
+| 18 · Grado VI | −10 VA | 8 ore | 18 | 3.000 cr | 12 ore |
+
+I reagenti costano 500 cr per Grado e coprono tutti i beneficiari consentiti dalla versione. Il costo in PM della tabella è il totale del rituale: non si aggiungono i PM dell’infusione. Si applicano i Canali del §24.6, compresi il massimo di partecipanti, il limite di \+5 VA, le quote personali e il minimo dell’Officiante pari al Grado.
+
+I reagenti vengono predisposti all’inizio. Prima della celebrazione si dichiarano le quote di PM, che devono essere disponibili alla Prova finale. L’Officiante effettua un’unica Prova di Rituali al termine. Il tempo di rigenerazione indicato nell’ultima colonna decorre dal successo finale e si aggiunge alla celebrazione.
+
+## **25.2 Esiti, interruzioni e nuovi tentativi**
+
+Successo: inizia la rigenerazione e si consumano tutti i PM e i reagenti previsti. Successo Magistrale: inizia la stessa rigenerazione, con i normali tempi; si consumano metà dei PM totali e metà dei reagenti, arrotondando per eccesso. Si dimezza il totale dei PM una sola volta e si ripartiscono le quote senza aumentare quelle dichiarate; il minimo dell’Officiante diventa metà del Grado arrotondata per eccesso.
+
+Fallimento: nessuna rigenerazione, PM e reagenti interamente consumati. Fallimento Maldestro: stesso esito e consumo; inoltre tutti i beneficiari coinvolti non possono ricevere un nuovo Rituale di Rigenerazione per 24 ore, anche cambiando Officiante.
+
+Se la celebrazione viene interrotta prima della Prova finale, i reagenti sono interamente consumati, i PM non vengono spesi e la rigenerazione non inizia. Dopo un’interruzione o un fallimento si può ritentare con nuovi reagenti e l’intera durata di celebrazione; dopo un Fallimento Maldestro occorre anche attendere le 24 ore.
+
+Esempio: Rigenerazione 9 richiede 3 ore, 9 PM e 1.500 cr. Con un Successo Magistrale consuma 5 PM e 750 cr; il minimo personale dell’Officiante è 2 PM e il completamento richiede comunque 5 giorni dopo la celebrazione.
+
+## **25.3 Processo e limiti**
+
+Dopo il successo il processo prosegue autonomamente, senza contatto o Concentrazione. Un beneficiario può avere una sola Rigenerazione attiva. Le Menomazioni interessate restano fino al completamento; le nuove lesioni non sono comprese automaticamente. Se l’effetto viene annullato prima del completamento, le Menomazioni trattate rimangono e un nuovo rituale ricomincia l’intero processo.
+
+Le versioni 9–10 riparano una Menomazione permanente quando la parte è ancora presente; il 12 può ricreare parti circoscritte mancanti; il 15 arti interi o un organo interno in un beneficiario vivente; il 18 può ricostituire tutte le parti consentite dalla scheda. Restano i limiti della scheda 21.10: nessuna resurrezione, nessuna aggiunta di capacità oltre l’anatomia ordinaria e nessun recupero automatico di Umanità. L’Anticipazione ordinaria non si applica; eventuali amplificazioni rituali richiedono una procedura specifica.
+
+## **25.4 Rigenerazione infusa in un artefatto**
+
+Le competenze per infondere Rigenerazione riguardano il creatore. Qualsiasi personaggio che soddisfi la SnT dell’artefatto può utilizzarne la funzione, senza Ritualista, senza conoscere l’incantesimo e senza apprendere la procedura. L’attivazione è automatica, senza Prove di Potere o Rituali e senza Canali.
+
+L’intero costo in PM della versione viene pagato dalla riserva integrata, compatibile Verde o Bianca. Non sono richiesti PM personali. La creazione segue le normali tre fasi e i costi del §24; i 500 cr per Grado sono reagenti dell’esecuzione diretta del rituale e non un costo per utilizzare l’artefatto.
+
+La durata della celebrazione diventa il tempo di attivazione continua dell’oggetto: 3 ore per le versioni 9–10, 4 ore per la 12, 6 ore per la 15 e 8 ore per la 18\. Per tutto il tempo si devono rispettare contatto e condizioni della versione. Al completamento si consumano i PM e inizia il processo autonomo di rigenerazione. Un’interruzione precedente impedisce l’effetto senza consumare PM.
+
+Beneficiari, capacità, tempi successivi e limiti restano quelli della versione infusa. L’attivazione automatica non genera Successi Magistrali, fallimenti di prova o Fallimenti Maldestri; gli esiti del §25.2 appartengono al rituale eseguito direttamente da un Officiante.
+
+Esempio: un anello con la sola Rigenerazione 9 e Chroma Verde da 10 PM è di Grado III, con SnT 3\. Ogni utilizzo consuma 9 PM dalla riserva dopo 3 ore di attivazione continua e avvia la riparazione di una Menomazione permanente quando la parte è ancora presente; il completamento richiede ulteriori 5 giorni. Il personaggio sintonizzato non deve essere un Ritualista.
+

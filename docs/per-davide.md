@@ -83,6 +83,61 @@ Otto tab (ARTEFATTI a sé). I Crediti stanno nell'Inventario, dove si comprano g
 Corazzaio: un'armatura realizzata come Capolavoro ottiene \+1 Protezione contro una tipologia di danno scelta, ma il manuale dice che «questo beneficio resta da raccordare alle regole definitive delle protezioni». Come si applica? Come AR aggiuntiva contro quel tipo di danno, come le proprietà delle armature?  
 *Nel frattempo:* l'app applica i \+3 VA di Corazzaio (per costruire o riparare protezioni) e lascia il beneficio del Capolavoro come testo.
 
+**A.62 — Katana Ryūjin: natura del danno attivato (Armamenti 0.58, §7.1.9)**  
+Attivata, la Ryūjin infligge 1d8+1+1d6 «risolto come un unico colpo Naturale», ma lo stesso paragrafo dice che aggiunge \+1d6 Plasma e che l'effetto Plasma segue il §7.5.1. Il danno attivato è Naturale con l'effetto secondario del Plasma, oppure di natura Plasma?  
+*Nel frattempo:* l'app la tratta come la Lancia Duskdealer (+1d6 Plasma) e riporta la frase del manuale.
+
+**A.63 — Esoscheletri: batteria o NEC? (Armamenti 0.58, §§7.11.6, 7.15, 7.16, 7.18)**  
+La 0.58 porta ai NEC celle d'arma, accessori, elmetti, robot (NEC Rosso dedicato) e mezzi. Powersuit, Shoa Ace Custom, Demonhunter, Felis, Juggernaut, Vulkan e APE Capitol scrivono ancora «batteria». Sono NEC (quale colore e formato) o restano batterie dedicate con l'autonomia della scheda?  
+*Nel frattempo:* l'app tiene il testo della scheda.
+
+**A.64 — Moduli IAS: riserva e consumo in Lx (Armamenti 0.58, §7.15.4)**  
+Il NEC Blu IAS contiene 20 cariche, ma «il consumo in Lx resta da dimensionare per il modello». Quanti Lx ha la riserva e quanti ne consuma una carica?  
+*Nel frattempo:* l'app conta le 20 cariche e il servizio di ricarica da 50\.  
+**— In sezione 3 (errata), sotto «Manuale del Giocatore» —**  
+§2.16 (dotazioni di Esploratore e Agente): «Il binocolo non richiede batterie» in due punti, mentre altrove il testo 0.45 dice «non richiede
+
+**A.65 — Dotazioni con più di una scheda possibile (Equipaggiamento 0.5, §§5.3 e 5.8)**  
+Il Corredo agricolo Standard si sceglie fra coltivazione e allevamento (Giocatore §2.16.23): per la coltivazione c'è la scheda Standard degli Attrezzi agricoli di base, per l'allevamento solo il Corredo dell'allevatore (+2, 800). Quale scheda vale per la versione «allevamento»? E lo Strumento musicale portatile della dotazione è quello acustico (400) o quello elettronico (800)?  
+*Nel frattempo:* le due voci restano senza scheda (peso e prezzo da definire).  
+**A.66 — Fornello del Corredo da cucina: tempi e «cartuccia» (Equipaggiamento 0.5, §3.2)**  
+La tabella e il paragrafo sul NEC dicono una preparazione da 30 minuti e 50 Lx; «Preparazione e limiti» dice ancora 15 minuti, «un uso della cartuccia» e sostituzione in 1 minuto, mentre il NEC si sostituisce in 1 AzP (§5.4.5). Quali valgono?  
+*Nel frattempo:* l'app conta 10 preparazioni da 50 Lx e riporta la tabella.  
+**A.67 — Il Modulo Blu del Gehemmapuker (Armamenti §7.20.6, Equipaggiamento §5.4.4–5.4.5)**  
+Il Gehemmapuker «usa un Modulo Blu» da 2.500 Lx e 2.100 cr, gli stessi valori del Modulo Blu del catalogo NEC. È lo stesso Modulo (intercambiabile) o un formato d'arma dedicato (§5.4.5: formato d'arma e Modulo non sono automaticamente intercambiabili)?  
+*Nel frattempo:* due voci con gli stessi valori, il pacco del lanciafiamme (per la ricarica al tavolo) e il Modulo Blu.
+
+**A.68 — Interfaccia neurale standard: prezzo e profilo (Equipaggiamento 0.5, §7.3)**  
+Il capitolo 7 descrive l'Interfaccia neurale standard ma non ne dà il prezzo (la CYBERTRONIC sì). Quanto costa, e ha un profilo suo (PI, reperibilità) o vale quello della CYBERTRONIC senza lo sconto UMN?  
+*Nel frattempo:* la voce esiste in catalogo ma senza prezzo, quindi non si può comprare; chi la riceve dal Direttore la segna a mano.  
+**A.69 — Installare, togliere e reinstallare un impianto (Equipaggiamento 0.5 §7.1, Giocatore §5.21.4)**  
+Il manuale non definisce la procedura: dove si installa (serve una postazione medicochirurgica del cap. 6?), con quali costi, tempi e Prove, e cosa succede togliendo o reinstallando lo stesso impianto.  
+*Nel frattempo:* installare e togliere sono cambi di stato fatti a mano nell'app; il costo d'installazione è mostrato ma non scalato dai crediti; l'UMN si perde alla prima installazione e lo stesso esemplare non si conta due volte; la perdita resta anche togliendo l'impianto.  
+**A.70 — Procedure di recupero dell'Umanità (Giocatore §5.21.4)**  
+Il §5.21.4 accenna al recupero dell'Umanità ma non dà procedure, costi o limiti. Come si recupera?  
+*Nel frattempo:* l'app registra i recuperi solo come «concessi dal Direttore», con un modulo nella tab Cibernetica che tiene l'elenco di perdite e recuperi.
+
+**A.71 — Cartuccia chirurgica e set chirurgico (Equipaggiamento §6.5, §6.8.7)**  
+La cartuccia chirurgica delle postazioni medicochirurgiche (500 cr, «una operazione») e il set chirurgico del Kit chirurgico e della Postazione medica da campo (500 cr, un set per procedura) hanno lo stesso contenuto (anestetici, disinfettanti, suture, materiali) e lo stesso prezzo. Sono lo stesso consumabile, intercambiabile fra kit e postazioni, oppure due formati distinti?  
+*Nel frattempo:* due voci distinte allo stesso prezzo, ciascuna per i propri dispositivi.
+
+**A.72 — Anticipazione senza scala leggibile in alcune schede (Magia sez. 12.3)**  
+La sez. 12.3 dice «le altre scale e i massimi sono specificati nelle schede», ma in 29 schede (46 aspetti) i gradini non sono scritti. Gli esempi principali:
+
+> * Irrobustire: «quantità di PV temporanei» e «durata» senza i gradini.  
+> * Telecinesi: «durata della modalità scelta».  
+> * Mente Disincarnata: «distanza dal corpo».  
+> * Illusione: «grado di complessità della tabella».  
+> * Muro, Armatura, Esplosione e Cono Elementale: «natura del danno» senza dire se vale Naturale → Magico → Etereo.  
+> * Resistenza Fisica ed Efficienza: il \+1 va su una colonna con due valori («+1 / \+3»), senza dire a quale parte.
+
+Quali sono i gradini di questi aspetti? (L'elenco completo dei 46 è in docs nel repo, \`docs/\` censimento Anticipazione.)  
+*Nel frattempo:* l'app mostra «valore da definire al tavolo» con il motivo; PM e Prova si calcolano comunque.
+
+**A.73 — Formato dei nemici per il Tavolo del Master**  
+Per la plancia del master proponiamo un formato dei nemici con i numeri già fatti: nome; PV; PM se ne ha; AR totale e di cui magica; Difese; Iniziativa; Movimento (Passo, Corsa, Scatto); le quattro Prove Salvezza; attacchi (nome, ravvicinato o a distanza, VA, danno, natura Naturale, Magico o Etereo, proprietà, portata o gittata, modalità di fuoco, AC); Stati con cui entra in scena; immunità agli Stati; incantesimi; note; Caratteristiche facoltative. Manca qualcosa, o il bestiario avrà un formato suo? In particolare: i nemici hanno Ferite e Affaticamento come i PG (§5.14)? Come lanciano gli incantesimi (VA, costo in PM)?  
+*Nel frattempo:* questo formato. Le Caratteristiche sono facoltative: servono DES e INT per la parità d'Iniziativa; senza, si fa lo spareggio col dado. Se mancano Corsa e Scatto valgono il doppio e il triplo del Passo. Dei nemici la plancia tiene solo PV e Stati. Gli incantesimi sono un promemoria, senza «Lancia\!».
+
 ### **Manovre ravvicinate**
 
 **A.40 — Carica oltre 12 Q (§5.6).** La tabella della Carica si ferma a 7–12 Q e la Carica «non può superare la Corsa». Chi ha una Corsa oltre 12 Q (Talenti di movimento) può caricare più lontano, e con quali penalità?  
@@ -124,6 +179,10 @@ Decisioni già prese o errori evidenti: l’app segue la decisione, il testo sta
 > * §7.4.1 / §7.4.2 Scudo Punisher: “Grande” vs “Medio”.  
 > * ~~§7.4.10 Scudo delle Guardie Sacre: con la lama estratta il danno è 1d6+1+1d4 Naturale~~ — fatto nel Google Doc (verificato il 28/09).  
 > * §7.8, schede di M310 e SA SG2001: indicare che usano un caricatore amovibile specifico e che la sostituzione con un caricatore pronto costa 1 AzP (E\&L 19: «va esplicitata nelle relative schede di catalogo»).
+
+**Manuale dell'Equipaggiamento**
+
+> * «Ogni modello comprende microfono, auricolare, batteria carica, cavo e alimentatore» — con la 0.5 è un NEC Verde (compatto o standard), come dice il paragrafo «Alimentazione e riservatezza
 
 ## ---
 

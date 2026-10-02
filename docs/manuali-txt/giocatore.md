@@ -3450,7 +3450,7 @@ Sintonizzazione automatica. Il Tecnomante completa la preparazione di un minuto 
 
 Capacità superiore. Il Tecnomante ottiene \+2 alla capacità complessiva di sintonizzazione, una sola volta. Con un Grado complessivo parte da 6; con sei Gradi complessivi arriva a 11\. Nel multiclasse il \+2 si aggiunge alla capacità già determinata dai Gradi complessivi, senza ricominciare la progressione e senza concedere una capacità separata. A questo totale si applica la riduzione dovuta all’Umanità, fino a un minimo di 0; la sintonizzazione automatica rispetta la capacità risultante (§§5.21 e 6.12).
 
-Creazione TecnoMistica. Il Talento concede l’accesso esclusivo alla creazione degli Artefatti TecnoMistici mediante le procedure di costruzione e il Rituale finale. Le procedure complete verranno integrate successivamente nel Manuale della Magia; il Talento non le sostituisce con una singola Prova.
+Creazione TecnoMistica. Il Talento concede l’accesso esclusivo al progetto e alla responsabilità dell’infusione degli Artefatti TecnoMistici entro il proprio Grado di Classe. La creazione comprende Artefatti per il progetto obbligatorio, Tecnologia per la costruzione e Rituali per l’infusione (Manuale della Magia, sezione 24). Il progetto può essere già disponibile e la costruzione fisica può essere affidata a un altro tecnico; il Talento non sostituisce le tre fasi con una singola Prova.
 
 #### **III Grado Ricarica Efficiente**
 
@@ -3614,7 +3614,7 @@ Il Tecnomante dotato del Talento **Architetto TecnoMistico** può effettuare un�
 
 L’analisi non attiva né ripara l’oggetto e non sostituisce l’**Incantesimo di Identificazione**, necessario per conoscerne gli effetti esatti.
 
-Le eventuali componenti meccaniche o elettroniche ricadono nell’Abilità Tecnologia. Le regole di creazione degli Artefatti e del relativo Rituale finale verranno integrate successivamente nel Manuale della Magia.
+Artefatti serve a realizzare il progetto mistico obbligatorio; Tecnologia costruisce o adatta il supporto; Rituali esegue l’infusione. Progetto e costruzione possono essere forniti da altri, nel rispetto dei requisiti di ciascuna fase. I progetti sono permanenti, riutilizzabili e commerciabili; un progetto Magistrale conserva il proprio \+2 alle Prove di Tecnologia. La procedura completa è nel Manuale della Magia, sezione 24\.
 
 ### **Occultismo**
 
@@ -3660,7 +3660,7 @@ Rituali (Intelligenza) rappresenta la conoscenza delle procedure, delle preparaz
 
 Il possesso dell’Abilità non concede automaticamente la conoscenza o la possibilità di eseguire qualsiasi Rituale. Le procedure operative sono descritte nel Manuale della Magia e nelle capacità che ne autorizzano l’utilizzo. Ritualista Minore permette l’accesso ai Gradi I–III e Ritualista Maggiore ai Gradi IV–VI come Officiante o Canale; occorre comunque apprendere la singola procedura e soddisfarne i requisiti. Restano validi gli utilizzi specifici autorizzati da altre capacità, come Purificazione.
 
-L’esecuzione generale dei Rituali verrà integrata successivamente (Manuale della Magia); rimangono utilizzabili le pratiche già autorizzate espressamente, come la Purificazione del Predicatore (§3.7.5). Quando l’esecuzione sarà accessibile, si userà questa Abilità anche per il Rituale finale di creazione degli Artefatti.
+Rituali si usa per l’infusione finale degli Artefatti e delle batterie (Manuale della Magia, sezione 24\) e per eseguire direttamente Rigenerazione (sezione 25), rispettando i requisiti di accesso. Rimangono utilizzabili le pratiche autorizzate espressamente, come la Purificazione del Predicatore (§3.7.5); le altre conversioni rituali richiedono una procedura definita. L’uso di un Artefatto di Rigenerazione già creato non richiede il talento Ritualista né una Prova di Rituali.
 
 ## **Operative**
 
