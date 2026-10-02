@@ -1,8 +1,28 @@
-# Normalize EOL for all files that Git considers text files.
+# Fine riga fissati per tutto il repo, uguali su ogni PC (anche con core.autocrlf diverso o GitHub Desktop):
+# nel repo e nelle copie di lavoro il testo è LF, i comandi di Windows sono CRLF, i binari non si toccano.
+
+# Testo: normalizzato a LF
 * text=auto eol=lf
 
-# I file .bat di Windows vogliono CRLF
+# Comandi di Windows: CRLF
 *.bat text eol=crlf
+*.cmd text eol=crlf
 
 # La guida del pacchetto per il master si apre con il Blocco note di Windows
 distribuzione/*.txt text eol=crlf
+
+# Binari: nessuna conversione né diff testuale
+*.png binary
+*.webp binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.docx binary
+*.xlsx binary
+*.zip binary
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary
