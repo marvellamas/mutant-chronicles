@@ -23,7 +23,7 @@ import { gradiTaumaturgici } from '../incantesimi.js';
 import { statoRicarica, disponibili } from '../ricarica.js';
 import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 import { pannelloAttacco } from './attacco.js';
-import { profiloSenzArmi, senzArmiDisponibile, SENZ_ARMI, talentiAttacco, valoriDisciplina } from '../attacco.js';
+import { profiloSenzArmi, profiloOndaInteriore, senzArmiDisponibile, SENZ_ARMI, ONDA, talentiAttacco, valoriDisciplina } from '../attacco.js';
 import { pannelloLancio } from './lancio.js';
 import { sezioneRisorseInteriori, pannelloTecnica } from './tecniche.js';
 import { tecnicaDi, testoFine } from '../tecniche.js';
@@ -152,7 +152,10 @@ export function renderTab(ctx) {
 
   // pannello «Attacca!» dell'arma scelta (src/ui/attacco.js), sopra la scheda
   // «Senz'armi»: profilo costruito qui (Corpo a corpo e danno dichiarato, src/attacco.js)
-  const armaAttacco = !ctx.ui?.attacco ? null : ctx.ui.attacco.uid === SENZ_ARMI ? senzArmi(ctx) : (tab.scheda.equipaggiamento?.armi ?? []).find((a) => a.uid === ctx.ui.attacco.uid);
+  // Onda Interiore (§8.9.4): profilo d'attacco finché la Tecnica è in corso
+  const armaAttacco = !ctx.ui?.attacco ? null : ctx.ui.attacco.uid === SENZ_ARMI ? senzArmi(ctx)
+    : ctx.ui.attacco.uid === ONDA ? profiloOndaInteriore(tab.scheda, ctx.sessione, ctx.dati)
+      : (tab.scheda.equipaggiamento?.armi ?? []).find((a) => a.uid === ctx.ui.attacco.uid);
   if (ctx.ui?.attacco && !armaAttacco) ctx.ui.attacco = null;
   // pannello «Lancia!» dell'incantesimo scelto (src/ui/lancio.js)
   const incLancio = ctx.ui?.lancio ? (ctx.dati.incantesimi.incantesimi.find((i) => i.nome === ctx.ui.lancio.nome) ?? null) : null;
@@ -1101,6 +1104,9 @@ function riquadriTavolo(ctx) {
     h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Movimento'),
       h('p', { class: 'valore-tavolo' }, pillolaTavolo('Movimento', [{ nome: 'Passo', v: t.movimento.passo }, { nome: 'Corsa', v: t.movimento.corsa }, { nome: 'Scatto', v: t.movimento.scatto }]), h('span', {}, ` ${u}`)),
       h('p', { class: 'nota' }, 'Passo · Corsa · Scatto (§5.2)')),
+    ...(ctx.tab.scheda.sensi?.length ? [h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Sensi'),
+      ctx.tab.scheda.sensi.map((s) => h('p', { class: 'valore-tavolo', title: [s.condizione, s.fonte].join(' — ') }, h('strong', {}, `${s.raggioQ} Q`), ` ${s.nome}`)),
+      h('p', { class: 'nota' }, ctx.tab.scheda.sensi.map((s) => s.fonte).join(' · ')))] : []),
     h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Azioni'),
       h('p', { class: 'valore-tavolo' }, pillolaTavolo('Azioni', [{ nome: 'Principali', v: t.azioni.principali }, { nome: 'di Movimento', v: t.azioni.movimento }])),
       h('p', { class: 'nota' }, 'Principali · di Movimento per Round (§5.1)')),
@@ -1248,6 +1254,7 @@ function tabCombattimento(ctx, d) {
         sezione('In mano',
           mani.length ? h('div', { class: 'riquadri-mani' }, mani) : h('p', { class: 'vuoto' }, 'Nessuna arma impugnata né scudo imbracciato: scegli qui sotto, o nella tab Inventario.'),
           senzArmiDisponibile(ctx.tab.scheda, ctx.dati) ? h('div', { class: 'armi-tab' }, schedaSenzArmi(ctx)) : null,
+          schedaOnda(ctx),
           h('p', { class: 'nota' }, 'Caricatori di riserva e condizione delle armi qui si vedono soltanto: si cambiano nella tab Inventario. «Ricarica» consuma dalle riserve.')),
 
         sezione('Armi disponibili',
@@ -1333,6 +1340,20 @@ const numero = (n) => (n < 0 ? `−${-n}` : String(n));
 /** Profilo «Senz'armi»: 1d4 o il dado dei Talenti, con il bonus di FOR (§5.13). */
 function senzArmi(ctx) {
   return profiloSenzArmi(ctx.tab.scheda, ctx.dati);
+}
+
+/** Onda Interiore in corso (§8.9.4): il pugno proiettato a distanza, con «Attacca!». null altrimenti. */
+function schedaOnda(ctx) {
+  const a = profiloOndaInteriore(ctx.tab.scheda, ctx.sessione, ctx.dati);
+  if (!a) return null;
+  return h('div', { class: 'armi-tab' }, h('article', { class: 'arma-tab macro-tecnica' },
+    h('div', { class: 'arma-testa' },
+      h('h3', {}, a.nome, h('small', { class: 'sigla' }, ` · ${a.abilita} · ${a.tecnica.etichetta.replace(/^Tecnica: [^(]*/, '')}`)),
+      a.va !== null ? h('button', { type: 'button', class: 'btn primario btn-attacca', onclick: () => { ctx.ui.attacco = { uid: ONDA, passo: 0 }; ctx.azioni.ridisegna(); } }, 'Attacca!') : null),
+    h('div', { class: 'arma-valori' },
+      h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), a.va === null ? h('strong', {}, '—') : valoreEffettivo(`VA Onda Interiore (${a.abilita})`, a.vaEffettivo, a.va, a.scomposizione, { pillola: true, provenienza: a.provenienza })),
+      h('p', {}, h('span', { class: 'sigla' }, 'Danno '), dannoConProvenienza(a, a.danno.una_mano ?? '—'), h('small', { class: 'sigla' }, ` ${a.natura}`)),
+      h('p', {}, h('span', { class: 'sigla' }, 'Gittata '), `${a.portataQ} Q`))));
 }
 
 /** Voce fissa «Senz'armi» fra le armi (se non impugna nulla, ha Arti Marziali o è Lottatore). */

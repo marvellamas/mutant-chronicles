@@ -6,7 +6,7 @@
 import { h } from './dom.js';
 import { info } from './tooltip.js';
 import { rigaScelte, interruttore, pannelloPassi } from './pannello-passi.js';
-import { haRisorseInteriori, tecnicaDi, statoAttivazione, roundAttuale, inScadenza, testoFine, costoTecnica, gruppoTecnica, ordineGruppo } from '../tecniche.js';
+import { haRisorseInteriori, tecnicaDi, statoAttivazione, roundAttuale, inScadenza, testoFine, costoTecnica, gruppoTecnica, ordineGruppo, tecnicheInCorso, righeInCorso, sintesiTecnica, curaTecnica } from '../tecniche.js';
 
 const etichettaTecnica = (gruppo) => h('span', { class: 'etichetta-macro' }, gruppoTecnica(gruppo).etichetta);
 
@@ -52,13 +52,17 @@ export function sezioneRisorseInteriori(ctx) {
 
 /** Riquadro delle Tecniche attive, con il loro scadere e «Termina» per quelle a tempo. */
 function tecnicheAttive(ctx) {
-  const attive = ctx.sessione.tecnicheAttive ?? [];
+  // effetti in corso (§8.9): i numeri sono già nei valori della scheda, con la provenienza «Tecnica: …»;
+  // qui l'effetto in breve e le regole che non sono un numero
+  const attive = tecnicheInCorso(ctx.sessione, ctx.dati);
   return h('div', { class: 'contatore-tavolo tecniche-attive' }, h('h3', {}, 'Tecniche attive'),
     attive.length ? h('ul', {}, attive.map((x) => {
-      const t = tecnicaDi(x.id, ctx.dati);
-      if (!t) return null;
-      return h('li', {}, h('strong', {}, t.nome), ` · dal Round ${x.dal}, ${testoFine(t, x)} `,
-        x.al === null ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => ctx.azioni.terminaTecnica(x.id) }, 'Termina') : null);
+      const t = x.t;
+      const breve = sintesiTecnica(t);
+      const righe = righeInCorso(x, ctx.tab.scheda);
+      return h('li', {}, h('strong', {}, t.nome), breve ? ` (${breve})` : null, ` · dal Round ${x.dal}, ${testoFine(t, x)} `,
+        x.al === null || t.durata_tipo === 'istantanea' ? h('button', { type: 'button', class: 'btn btn-piccolo', title: t.durata_tipo === 'istantanea' ? 'Effetto usato: toglila dalle Tecniche in corso' : null, onclick: () => ctx.azioni.terminaTecnica(x.id) }, 'Termina') : null,
+        righe.length ? h('ul', { class: 'nota' }, righe.map((r) => h('li', {}, r))) : null);
     })) : h('p', { class: 'nota' }, 'Nessuna.'));
 }
 
@@ -90,9 +94,13 @@ export function pannelloTecnica(ctx, t) {
   const A = ctx.dati.tecniche_interiori.attivazione ?? {};
   const st = statoAttivazione(ctx.tab.scheda, ctx.sessione, t, ctx.dati, { opzione: u.opzione, silenzioMentale: u.silenzio });
   const opz = Array.isArray(t.opzioni_costo) ? t.opzioni_costo[u.opzione] : null;
-  const fine = t.durata_tipo === 'round' ? `fino alla fine del Round ${st.round + (t.durata_round ?? 0)} (Round ${st.round} + ${t.durata_round ?? 0})`
-    : t.durata_tipo === 'tempo' ? `${t.durata}: resta attiva finché non la termini` : `${t.durata}: non resta attiva`;
-  const bloccato = !st.possibile || (st.conferma && !u.conferma);
+  // Imposizione della Mano Curativa: effetto sul proprio personaggio, o promemoria per un altro (§8.9.2)
+  const cura = curaTecnica(ctx.tab.scheda, ctx.sessione, t, u.opzione, ctx.dati, { bersaglio: u.bersaglio, dado: u.dado });
+  const dadoCura = t.effetti?.cura?.[u.opzione]?.dado ?? null;
+  const breve = sintesiTecnica(t);
+  const fine = cura ? (cura.al ? `Sanguinamento sospeso fino alla fine del Round ${cura.al}` : t.durata) : t.durata_tipo === 'round' ? `fino alla fine del Round ${st.round + (t.durata_round ?? 0)} (Round ${st.round} + ${t.durata_round ?? 0})`
+    : t.durata_tipo === 'tempo' ? `${t.durata}: resta attiva finché non la termini` : `${t.durata}: in corso fino alla fine del Round ${st.round}, per il colpo o la reazione`;
+  const bloccato = !st.possibile || (st.conferma && !u.conferma) || (cura && !cura.pronto);
   const passi = [
     {
       titolo: 'Tecnica',
@@ -102,6 +110,13 @@ export function pannelloTecnica(ctx, t) {
           valore: i, etichetta: `${o.pm} PM`, riga: `${o.tempo} · ${o.effetto}`,
           motivo: o.pm > ctx.sessione.pmAttuali ? `servono ${o.pm} PM personali, ne hai ${ctx.sessione.pmAttuali}` : null,
         })), u.opzione, (i) => imposta({ opzione: i, conferma: false })) : null,
+        cura ? rigaScelte('Su chi', [
+          { valore: 'se', etichetta: 'Su me stesso', riga: 'l’effetto si applica alla scheda' },
+          { valore: 'altro', etichetta: 'Su un altro personaggio', riga: 'promemoria: l’effetto si segna sulla sua scheda' },
+        ], u.bersaglio ?? 'se', (x) => imposta({ bersaglio: x })) : null,
+        cura && dadoCura ? h('label', { class: 'campo-dado' }, `Risultato di ${dadoCura} `,
+          h('input', { type: 'number', min: 1, max: Number(/d(\d+)/.exec(dadoCura)?.[1] ?? 4), step: 1, value: u.dado ?? '', inputmode: 'numeric',
+            onchange: (e) => imposta({ dado: e.target.value === '' ? null : Number(e.target.value) }) })) : null,
         A.silenzio_mentale ? interruttore('Sotto Silenzio Mentale', u.silenzio, (x) => imposta({ silenzio: x }), {
           info: { titolo: 'Silenzio Mentale', sottotitolo: A.silenzio_mentale.fonte, sezioni: [{ testo: A.silenzio_mentale.testo }] },
         }) : null,
@@ -117,9 +132,10 @@ export function pannelloTecnica(ctx, t) {
             h('div', {}, h('dt', {}, 'Azioni'), h('dd', {}, opz ? opz.tempo : t.azione)),
             h('div', {}, h('dt', {}, 'Durata'), h('dd', {}, fine)),
             h('div', {}, h('dt', {}, 'Bersaglio'), h('dd', {}, t.bersaglio)),
-            opz ? h('div', {}, h('dt', {}, 'Effetto'), h('dd', {}, opz.effetto)) : null,
+            opz ? h('div', {}, h('dt', {}, 'Effetto'), h('dd', {}, opz.effetto)) : breve ? h('div', {}, h('dt', {}, 'Effetto'), h('dd', {}, breve)) : null,
+            cura ? h('div', {}, h('dt', {}, cura.sul === 'se' ? 'Sulla scheda' : 'Promemoria'), h('dd', {}, cura.righe.join(' '))) : null,
             h('div', {}, h('dt', {}, 'Prova'), h('dd', {}, st.potere))),
-          st.avvisi.length ? h('div', { class: 'riquadro attenzione' }, st.avvisi.map((x) => h('p', {}, x))) : null,
+          [...st.avvisi, ...(cura?.avvisi ?? [])].length ? h('div', { class: 'riquadro attenzione' }, [...st.avvisi, ...(cura?.avvisi ?? [])].map((x) => h('p', {}, x))) : null,
           st.conferma ? h('label', { class: 'conferma-tecnica' },
             h('input', { type: 'checkbox', checked: !!u.conferma, onchange: (e) => imposta({ conferma: e.target.checked }) }),
             ' Confermo: la riserva resta a 0 PM e il personaggio è Svenuto') : null,
@@ -127,7 +143,7 @@ export function pannelloTecnica(ctx, t) {
             h('button', {
               type: 'button', class: 'btn primario btn-grande', disabled: bloccato,
               title: !st.possibile ? st.motivo : bloccato ? 'Serve la conferma qui sopra' : null,
-              onclick: () => { ctx.ui.tecnica = null; ctx.azioni.attivaTecnica(t.id, { opzione: u.opzione, silenzioMentale: u.silenzio }); },
+              onclick: () => { ctx.ui.tecnica = null; ctx.azioni.attivaTecnica(t.id, { opzione: u.opzione, silenzioMentale: u.silenzio, cura: { bersaglio: u.bersaglio ?? 'se', dado: u.dado ?? null } }); },
             }, `Attiva (−${st.costo} PM)`),
             h('small', { class: 'nota' }, 'Una sola Tecnica per Round (§8.9.1). «Annulla» nell’intestazione annulla l’attivazione e restituisce i PM.'))),
       ],
