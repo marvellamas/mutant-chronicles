@@ -1160,11 +1160,11 @@ Esempio: armatura AR 3 e Scudo Medio AR \+2 forniscono AR totale 5\. Contro 10 d
 
 ## **7.5 Artefatti**
 
-Le proprietà passive sono utilizzabili da tutti nei normali limiti dell’oggetto; le proprietà attive richiedono sintonizzazione e, una volta sintonizzati, si attivano automaticamente senza Componenti, rispettando costi e condizioni. Soltanto le proprietà che lo prevedono espressamente richiedono una Prova di attivazione. Il §7.10 distingue tipologia, classificazione di potenza e costo di sintonizzazione. La capacità ordinaria va da 4 a 9 secondo i Gradi complessivi; Architetto TecnoMistico aggiunge \+2 una sola volta. Al totale si applica la riduzione dovuta all’Umanità, fino a un minimo di 0 (§5.21); l’eventuale eccesso di sintonizzazioni si risolve secondo il §7.10. Ogni scheda deve riportare proprietà passive e attive, effetti, costo di sintonizzazione, eventuali PM, Azioni e requisiti; per le proprietà che richiedono una Prova di attivazione, ne specifica l’Abilità e le modalità di risoluzione. Progetto, costruzione e infusione seguono il Manuale della Magia, sezione 24\. SnT indica il costo di Sintonizzazione; SIN resta la sigla dell’interfaccia neurale.
+Le proprietà passive sono utilizzabili da tutti nei normali limiti dell’oggetto; le proprietà attive richiedono sintonizzazione e, una volta sintonizzati, si attivano automaticamente senza Componenti, rispettando costi e condizioni. Soltanto le proprietà che lo prevedono espressamente richiedono una Prova di attivazione. Il §7.10 distingue tipologia, classificazione di potenza e costo di sintonizzazione. La capacità ordinaria va da 8 a 13 secondo i Gradi complessivi; Architetto TecnoMistico aggiunge \+2 una sola volta. Al totale si applica la riduzione dovuta all’Umanità, fino a un minimo di 0 (§5.21); l’eventuale eccesso di sintonizzazioni si risolve secondo il §7.10. Ogni scheda deve riportare proprietà passive e attive, effetti, costo di sintonizzazione, eventuali PM, Azioni e requisiti; per le proprietà che richiedono una Prova di attivazione, ne specifica l’Abilità e le modalità di risoluzione. Progetto, costruzione e infusione seguono il Manuale della Magia, sezione 24\. SnT indica il costo di Sintonizzazione; SIN resta la sigla dell’interfaccia neurale.
 
 Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche NEC usano Lx, non richiedono Sintonizzazione e seguono i §§7.1.4 e 7.20.5. Non esiste una conversione automatica fra Lx e PM.
 
-Le riserve integrate in un Artefatto alimentano soltanto quell’Artefatto: non possono pagare Incantesimi personali né essere prelevate o convertite nella riserva personale. Un oggetto acquistato viene consegnato con la riserva piena; per uno trovato il Direttore stabilisce i PM residui secondo le circostanze.
+Le riserve integrate si distinguono in Batterie, che alimentano anche gli Incantesimi personali compatibili, e Cariche, riservate alle funzioni del proprio Artefatto. Una proprietà Esclusiva usa soltanto la riserva interna; una Universale può usare anche PM personali o un’altra fonte esterna compatibile. Per ogni pagamento vale il limite di una fonte esterna, eventualmente integrata con PM personali (Manuale della Magia, §26.2). Le Cariche mistiche si misurano in PM. Un oggetto acquistato ha la riserva piena; per un oggetto trovato decide il Direttore.
 
 Le regole di impiego degli Artefatti sono nel Manuale della Magia e nel §7.10 di questo volume; Architetto TecnoMistico e gli altri Talenti del Tecnomante sono nel Manuale del Giocatore, §3.9.5. Il catalogo ravvicinato e il §7.5.1 comprendono i profili con riserva mistica. Progettazione, costruzione, infusione, riparazioni e modifiche seguono il Manuale della Magia, sezione 24\.
 
@@ -1178,9 +1178,9 @@ Le batterie mistiche Rosse, Blu e Verdi da 5 PM hanno ciascuna prezzo indicativo
 
 ### **7.5.1 Profili con riserva mistica**
 
-Bordone Templare, Spada Vindicator, Spada Deliverer, Lancia Castigator e Lama Demontooth possiedono un Chroma Rosso integrato da 5 PM, corrispondenti a cinque cariche. Ogni attivazione offensiva spende un PM della riserva per aggiungere 1d6 danni Magici al medesimo colpo. La potenza mistica è Non comune e il costo totale di Sintonizzazione è 2, riserva compresa, anche quando la Qualità costruttiva è Rara.
+Bordone Templare, Spada Vindicator, Spada Deliverer, Lancia Castigator e Lama Demontooth possiedono un Chroma Rosso integrato da 5 PM, registrati come Cariche e sufficienti per cinque attivazioni Esclusive. Ogni attivazione offensiva spende un PM della riserva per aggiungere 1d6 danni Magici al medesimo colpo. La potenza mistica è Non comune e il costo totale di Sintonizzazione è 2, riserva compresa, anche quando la Qualità costruttiva è Rara.
 
-Lo Scudo delle Guardie Sacre usa una riserva di pari capacità, ma un PM alimenta Scudo Magico per 5 Round. La potenza è Rara e il costo totale di Sintonizzazione è 3, riserva compresa. La lama meccanica rimane indipendente da questa riserva.
+Lo Scudo delle Guardie Sacre usa Cariche Rosse di pari capacità, ma un PM alimenta la proprietà Esclusiva Scudo Magico per 5 Round. La potenza è Rara e il costo totale di Sintonizzazione è 3, riserva compresa. La lama meccanica rimane indipendente da questa riserva.
 
 La Sintonizzazione iniziale richiede 1 minuto a contatto e una Prova di Artefatti, salvo l’automatismo del Tecnomante. Le attivazioni successive sono automatiche, senza Componenti e senza ulteriori Prove di attivazione; rimangono le Prove per colpire. Le proprietà passive sono utilizzabili senza Sintonizzazione, rispettando i normali requisiti.
 
@@ -2476,14 +2476,14 @@ Un Artefatto può possedere proprietà passive e attive. Le proprietà passive s
 
 | Gradi complessivi | Capacità ordinaria | Addestramento Taumaturgo | Con Architetto TecnoMistico |
 | :---: | :---: | :---: | :---: |
-| I | 4 | 4 | 6 |
-| II | 5 | 5 | 7 |
-| III | 6 | 6 | 8 |
-| IV | 7 | 7 | 9 |
-| V | 8 | 8 | 10 |
-| VI | 9 | 9 | 11 |
+| I | 8 | 8 | 10 |
+| II | 9 | 9 | 11 |
+| III | 10 | 10 | 12 |
+| IV | 11 | 11 | 13 |
+| V | 12 | 12 | 14 |
+| VI | 13 | 13 | 15 |
 
-La capacità di sintonizzazione è un unico budget del personaggio, non un numero fisso di oggetti né un limite separato per ciascuna Classe. Parte da 4 al I Grado complessivo e aumenta di 1 per ogni Grado complessivo successivo, fino a 9 al VI. L’Addestramento Taumaturgo segue la medesima progressione. Architetto TecnoMistico aggiunge \+2 una sola volta: da 6 al I Grado complessivo a 11 al VI. Il Tecnomante non possiede più una capacità illimitata. I valori della tabella precedono l’eventuale riduzione dovuta all’Umanità (§5.21), applicata dopo i bonus e fino a un minimo di 0\.
+La capacità di sintonizzazione è un unico budget del personaggio, non un numero fisso di oggetti né un limite separato per ciascuna Classe. Parte da 8 al I Grado complessivo e aumenta di 1 per ogni Grado complessivo successivo, fino a 13 al VI. L’Addestramento Taumaturgo segue la medesima progressione. Architetto TecnoMistico aggiunge \+2 una sola volta: da 10 al I Grado complessivo a 15 al VI. Il Tecnomante non possiede più una capacità illimitata. I valori della tabella precedono l’eventuale riduzione dovuta all’Umanità (§5.21), applicata dopo i bonus e fino a un minimo di 0\.
 
 Si sommano i costi di sintonizzazione degli Artefatti attualmente sintonizzati: la somma non può superare la capacità del personaggio. La potenza non impone da sola un livello minimo; un Tecnomante con capacità 6 può quindi sintonizzarsi con un Artefatto Leggendario da costo 6, se lo possiede e ne rispetta i requisiti. Disponibilità e ritrovamento degli oggetti potenti dipendono dall’ambientazione e dal Direttore.
 
@@ -5360,4 +5360,22 @@ Mantello Venusiano. Rinforzo Leggero Bauhaus dedicato all’Armatura dei Ranger 
 Proprietà: Mimetica ambientale 2\. Concede \+2 VA alla Prova unica di Furtività nell’ambiente scelto per la livrea, quando esistono condizioni concrete per nascondersi. L’ambiente viene scelto all’acquisto e non cambia automaticamente. Con la Mimetica ambientale 1 dell’armatura si usa il maggiore applicabile, senza sommare i due valori; il bonus non elimina le penalità di Agilità della Media.
 
 Configurazione completa: AR 4, FOR richiesta 6 e costo complessivo 10.500. L’armatura resta Media e conserva Assetto da pattuglia: penalità MOV 0, −1 VA ad attacchi e Agilità e −3 VA al lancio con Potere, prima di altre cause. Un Rinforzo Leggero non farebbe già aumentare la categoria di questa armatura: il vantaggio specifico del mantello è la Mimetica ambientale 2\. Occupa l’unico posto per rinforzi e conserva PI e PS propri.
+
+## **7.24 Guanti da Combattimento Mistico**
+
+I Guanti da Combattimento Mistico sono una coppia di guanti e costituiscono un unico Artefatto Mistico da indossare sulle mani. Potenza Non Comune, Grado II, SnT 2 complessivi. Qualità fisica Non Comune, PS Integrità 12, 4 PI, peso complessivo 0,5 kg. Prezzo indicativo 3.000 cr; REP Molto Rara. Prezzo e profilo fisico sono parametri di catalogo da verificare in playtest.
+
+Proprietà passiva. Conferiscono \+1 VA alle Prove per colpire con i pugni e alle Prove per colpire in corpo a corpo richieste dagli Incantesimi. Il beneficio passivo funziona anche senza sintonizzazione. Non concede danno passivo aggiuntivo e non si applica a calci, armi impugnate, attacchi a distanza, Prove di Potere per lanciare Incantesimi o danni degli Incantesimi.
+
+Riserva. Cariche Verdi da 10 PM, utilizzabili soltanto per alimentare i Guanti. Non sono una Batteria per il personaggio. La parola Cariche indica una riserva in PM: non significa dieci attivazioni.
+
+Proprietà attiva Esclusiva. Spendendo 3 PM dalla riserva interna e 1 AzP, per 5 RND i danni dei pugni diventano Magici e ottengono \+1 al danno. L’attivazione richiede sintonizzazione, è automatica e non richiede Concentrazione. Non cambia il bonus passivo di \+1 a colpire. L’effetto non potenzia il danno degli Incantesimi e non si cumula con ulteriori attivazioni della stessa proprietà; una nuova attivazione rinnova la durata. I Guanti pieni consentono tre attivazioni e conservano 1 PM.
+
+Ricarica. Le Cariche si ricaricano con la normale procedura delle riserve Verdi: stessi requisiti, rapporti di conversione e Prove delle Batterie Mistiche. L’utilizzatore non può pagare l’attivazione Esclusiva con PM personali o Batterie esterne.
+
+Creazione. La ricetta approvata tratta il beneficio passivo come Grado I e l’attivazione come Grado I; la combinazione porta le proprietà al Grado II. Anche la riserva da 10 PM è di Grado II: il risultato resta Grado II e SnT 2\. Questa ricetta specifica non autorizza a scomporre liberamente altri Incantesimi per abbassarne il Grado. Supporto 100 cr, adattamento 200 cr, Chroma Verde 1.000 cr e reagenti 500 cr: 1.800 cr con progetto posseduto; 2.000 cr progettando un nuovo schema, comprese 200 cr di risorse. Un progetto standard acquistato costa invece 1.000 cr. Costruzione Ordinaria: Tecnologia −2 VA, 8 ore. Infusione: Rituali −2 VA, 6 PM e 2 ore; valgono gli aiuti e gli esiti ordinari. La riserva appena creata è vuota.
+
+Il danno base dei pugni resta quello del personaggio, con FOR, Arti Marziali e gli altri benefici pertinenti. I Guanti aggiungono soltanto i bonus descritti. La scheda commerciale è nel Manuale dell’Equipaggiamento, §10.6; regole delle fonti e della sintonizzazione nel Manuale della Magia, §§26.1–26.2. È un unico oggetto visibile sia negli Armamenti sia negli Artefatti: il peso di 0,5 kg, i 10 PM e SnT 2 si contano una volta sola.
+
+Il campionario di Batterie Mistiche, Batterie Matrice e Schegge instabili, con tutti i colori e le capacità, è nel Manuale dell’Equipaggiamento, §§10.2–10.4. La Pietra della Vigilanza, che è anche una Batteria, è descritta nel §10.5 dello stesso manuale.
 

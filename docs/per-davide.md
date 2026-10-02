@@ -19,10 +19,9 @@ Rispondere a queste per prime: senza, la seconda sessione dei Chroma resta ferma
 
 ### **Chroma (sessione 2: Convertire Potere, ricarica, prelievo)**
 
-**A.18 — Le riserve integrate nelle armi pagano gli incantesimi?**  
-La Magia (sez. 6\) chiama contenitore “qualunque oggetto che racchiuda un Chroma”. Il §7.5.1 degli Armamenti descrive la riserva del Bordone Templare (e di Vindicator, Deliverer, Castigator, Demontooth, Scudo delle Guardie Sacre) come “cinque cariche” per le attivazioni. Un Taumaturgo può usarla per lanciare incantesimi Fisici, o convertirla in PM personali? O alimenta solo l’oggetto?  
-*Nel frattempo:* l’app la mostra come contenitore integrato, PM contati a mano, non usabile per i lanci.  
-**A.20 — Prelievo dal Chroma Bianco senza Addestramento Taumaturgo.**  
+> * **A.18 — Riserve integrate nelle armi**: alimentano soltanto le funzioni del proprio Artefatto, non pagano Incantesimi e non si prelevano (Magia §24.2 e §24.7, Doc del 01/10); «Lancia\!» non le offre più come fonte di PM — implementata il 02/10.  
+> * **A.20 — Prelievo dal Chroma Bianco senza Addestramento Taumaturgo.**
+
 “Un personaggio cosciente può prelevare PM da un contenitore Bianco sintonizzato”: vale per chiunque, anche un Combattente senza magia? O serve almeno l’accesso alla magia?  
 *Nel frattempo:* non ancora implementato; è la domanda che decide come.
 
@@ -34,14 +33,14 @@ La Magia (sez. 6\) chiama contenitore “qualunque oggetto che racchiuda un Chro
 
 **A.32 — 18 nuovi Talenti magici e mistici (Magia sez. 1, Giocatore §8.6.8, Doc del 27/09).** Nella copia condivisa sono comparse 18 schede nuove (Potere Mistico, Recupero Mistico, Escludere la Componente Somatica / l’Invocazione / il Focus, Concentrazione Migliorata e Operativa, Incantesimi Ampliati, Estesi, Proiettati, Plurimi, Intensificati, Anticipazione Migliorata, Incantesimi Inarrestabili e Massimizzati, Manifestazioni Occultate, Ritualista Minore e Maggiore) e la Concentrazione su un Incantesimo passa dalla Prova di Potere alla PS di Volontà. Non sono fra le risposte approvate del Doc E\&L: sono definitive?  
 *Nel frattempo:* l’app le recepisce dal manuale condiviso (fonte corrente): Talenti acquisibili con il testo della scheda, Potere Mistico \+5 PM Massimi per acquisizione; «possedere una riserva personale di PM» vale per tutti.  
+*Nota del 02/10:* Ritualista Minore e Ritualista Maggiore sono ora i requisiti dell'Officiante per i Gradi I–III e IV–VI (Magia §24.1 e §25.1): l'app li considera definitivi. La domanda resta aperta per gli altri 16 Talenti.
+
 **A.35 — Acquisti iniziali: valore ceduto maggiore del prezzo (§2.16.29).** Il paragrafo dice che si paga la differenza; se gli armamenti ceduti valgono più del nuovo oggetto (per esempio si cede l’armatura da 1.500 per un’arma da 800), la differenza torna in crediti o si perde?  
-*Nel frattempo:* il conguaglio non scende sotto zero (la differenza si perde) e l’app lo segnala accanto all’acquisto.  
-**A.39 — Lancia un incantesimo: punti ancora da confermare (Magia sez. 3, 7).** I punti 1–3 hanno risposta (E\&L 1, 17, 18).
+*Nel frattempo:* il conguaglio non scende sotto zero (la differenza si perde) e l’app lo segnala accanto all’acquisto.
 
-> 4. *Tiro di contatto (Corpo a corpo \+4).* Vale per le versioni con Gittata «Contatto» contro un bersaglio non consenziente; l’app lo ricorda sempre accanto al risultato. Serve anche con i beneficiari consenzienti delle schede che parlano solo di «consenzienti»? (L’app dice di no: sez. 3.)  
-> 5. *Cumulo della sez. 7 sul lancio.* L’app lo applica agli effetti magici sul lanciatore dichiarati al tavolo (Benedizione, Maledizione…): vale il bonus magico maggiore e la penalità magica maggiore; livello, componenti, Ingaggio, circostanze e Talenti restano fuori dal cumulo. I Talenti (Focalizzazione, Occhio Interiore) sono fuori dal cumulo?
+**A.39, punti 1–3** — Anticipazione senza Addestramento (colonna «altri» −2), Colpo Elementale (PS solo per gli effetti secondari, per elemento) — implementata il 29/09. Punto 3, Rigenerazione: procedura completa (Magia sez. 25, E\&L del 01/10): Rituale con Prova di Rituali, PM totali, ore, reagenti e Canali; da Artefatto sintonizzato senza Prove, con i PM dalla riserva Verde o Bianca (§25.4) — implementata il 02/10.  
+*Nel frattempo:* le scelte sopra.
 
-*Nel frattempo:* le scelte sopra.  
 **A.38 — Attacco a distanza: punti da confermare (Giocatore §5.2, §5.8, §5.10, §5.11).** L’utility «Attacca\!» applica il testo; dove non è esplicito ha scelto così:
 
 > 1. *Movimento Tattico (Incursore) e Movimento Fluido* riducono entrambi di 2 le penalità del proprio movimento: si sommano? L’app usa una sola riduzione (Scatto −6 → −4).  
@@ -91,11 +90,9 @@ Attivata, la Ryūjin infligge 1d8+1+1d6 «risolto come un unico colpo Naturale»
 La 0.58 porta ai NEC celle d'arma, accessori, elmetti, robot (NEC Rosso dedicato) e mezzi. Powersuit, Shoa Ace Custom, Demonhunter, Felis, Juggernaut, Vulkan e APE Capitol scrivono ancora «batteria». Sono NEC (quale colore e formato) o restano batterie dedicate con l'autonomia della scheda?  
 *Nel frattempo:* l'app tiene il testo della scheda.
 
-**A.64 — Moduli IAS: riserva e consumo in Lx (Armamenti 0.58, §7.15.4)**  
+**A.64 —Moduli IAS: riserva e consumo in Lx (Armamenti 0.58, §7.15.4)**  
 Il NEC Blu IAS contiene 20 cariche, ma «il consumo in Lx resta da dimensionare per il modello». Quanti Lx ha la riserva e quanti ne consuma una carica?  
-*Nel frattempo:* l'app conta le 20 cariche e il servizio di ricarica da 50\.  
-**— In sezione 3 (errata), sotto «Manuale del Giocatore» —**  
-§2.16 (dotazioni di Esploratore e Agente): «Il binocolo non richiede batterie» in due punti, mentre altrove il testo 0.45 dice «non richiede
+*Nel frattempo:* l'app conta le 20 cariche e il servizio di ricarica da 50\.
 
 **A.65 — Dotazioni con più di una scheda possibile (Equipaggiamento 0.5, §§5.3 e 5.8)**  
 Il Corredo agricolo Standard si sceglie fra coltivazione e allevamento (Giocatore §2.16.23): per la coltivazione c'è la scheda Standard degli Attrezzi agricoli di base, per l'allevamento solo il Corredo dell'allevatore (+2, 800). Quale scheda vale per la versione «allevamento»? E lo Strumento musicale portatile della dotazione è quello acustico (400) o quello elettronico (800)?  
@@ -138,6 +135,62 @@ Quali sono i gradini di questi aspetti? (L'elenco completo dei 46 è in docs nel
 Per la plancia del master proponiamo un formato dei nemici con i numeri già fatti: nome; PV; PM se ne ha; AR totale e di cui magica; Difese; Iniziativa; Movimento (Passo, Corsa, Scatto); le quattro Prove Salvezza; attacchi (nome, ravvicinato o a distanza, VA, danno, natura Naturale, Magico o Etereo, proprietà, portata o gittata, modalità di fuoco, AC); Stati con cui entra in scena; immunità agli Stati; incantesimi; note; Caratteristiche facoltative. Manca qualcosa, o il bestiario avrà un formato suo? In particolare: i nemici hanno Ferite e Affaticamento come i PG (§5.14)? Come lanciano gli incantesimi (VA, costo in PM)?  
 *Nel frattempo:* questo formato. Le Caratteristiche sono facoltative: servono DES e INT per la parità d'Iniziativa; senza, si fa lo spareggio col dado. Se mancano Corsa e Scatto valgono il doppio e il triplo del Passo. Dei nemici la plancia tiene solo PV e Stati. Gli incantesimi sono un promemoria, senza «Lancia\!».
 
+**A.74 — Rituale di Rigenerazione: quattro punti non scritti (Magia §24.6, sez. 25\)**  
+1\. «VA pertinente del Canale» (tabella del §24.6): quale Abilità del Canale conta?  
+2\. Successo Magistrale con i Canali: il totale dei PM si dimezza e le quote si ripartiscono «senza aumentare la quota dichiarata di alcun partecipante». Chi risparmia?  
+3\. La scheda dice «PM utilizzabili: universali o spirituali»: i PM del Rituale possono venire anche da una batteria Verde o Bianca, o solo dalle quote personali dell'Officiante e dei Canali?  
+4\. Il livello massimo degli Incantesimi dell'Officiante limita le versioni del Rituale, o conta solo Ritualista (Minore per il Grado III, Maggiore per IV–VI)?  
+*Nel frattempo:* 1\. il VA di Rituali del Canale; 2\. i Canali tengono la quota dichiarata e l'Officiante paga il resto, almeno metà Grado; 3\. solo PM personali; 4\. conta solo Ritualista.
+
+**A.75 — Batterie oltre i 5 PM: peso, Qualità e PI (Magia §24.7)**  
+La tabella del §24.7 dà Grado e prezzo delle batterie da 10 a 30 PM, ma peso, Qualità, PS Integrità e PI solo per il supporto di base (0,2 kg, Comune, PS 10, 3 PI). Valgono anche per le batterie più grandi?  
+*Nel frattempo:* sì, tutte come il supporto di base.
+
+**A.76 — Sanguinante X portato da un colpo (Giocatore §5.15, §5.24)**  
+Un colpo con la proprietà Sanguinante X che supera l'Armatura applica Sanguinamento X. Il §5.15 dice che «alla prima applicazione» si perdono subito X PV, ignorando Armatura, Parata e Schivata. Questa perdita si aggiunge al danno dello stesso colpo, oppure arriva solo all'Iniziativa successiva di chi l'ha procurato?  
+*Nel frattempo:* la plancia applica lo Stato Sanguinamento al bersaglio e lascia al master la perdita degli X PV immediati.
+
+**A.77 — Perforante con più applicazioni (AC) (Giocatore §5.10, §5.24)**  
+«Perforante X sottrae X una sola volta alla componente non magica del colpo.» Con AC 2 o più, l'AR si sottrae separatamente a ogni applicazione (§5.13). Perforante riduce l'AR di ogni applicazione, oppure di una sola per colpo?  
+*Nel frattempo:* l'app la riduce in ogni applicazione.
+
+**A.78 — Attacco con VA finale 20 o più (Giocatore §1.6, §1.7)**  
+Il §1.7 dice che con valore 20 o superiore il successo è automatico, senza tiro: niente Successo Magistrale né Fallimento Maldestro. Il §1.6 però rende Magistrale il 2 naturale con VA finale almeno 21 «nelle Prove di Abilità effettivamente richieste». Fuori da un tiro imposto (§1.7.1) o da una Prova contrapposta quella soglia non si raggiunge mai. Un attacco con VA finale 20 o più (per esempio un nemico forte che colpisce un bersaglio Ignaro o A Terra) è un successo automatico senza tiro, e quindi senza Magistrale? Oppure per gli attacchi si tira comunque, con 1, 2 e 20 naturali?  
+*Nel frattempo:* l'app applica il successo automatico senza tiro.
+
+**A.79 — Bestiario umano proposto per il Tavolo del Master**  
+**Metodo.** Non c'è ancora un bestiario. Per avere subito nemici umani con numeri coerenti, ognuno è costruito come un PG con le regole del Giocatore 0.45: creazione completa, equipaggiamento iniziale del §2.16 con il modello corporativo, avanzamento del cap. 8\. L'app lo converte poi in un nemico, con PV, AR, Difese, Iniziativa, Movimento, Salvezze e attacchi calcolati dal motore. Ci sono tre gradi: Recluta (2° livello), Veterano (5°) ed Élite (8°). Le scelte che il manuale lascia libere sono le più ovvie per il ruolo: Talenti, ordine di Caratteristiche e Abilità, dado dei PV dei Gradi al valore medio arrotondato per eccesso, opzioni migliori di arma e armatura dal Veterano in su. Ogni file è marcato «Proposta, da validare con Davide».  
+**Tipi, arma principale, PV Recluta / Veterano / Élite:**
+
+> * Fante Capitol (Soldato): carabina CAR10, poi fucile d'assalto M40. PV 20 / 29 / 39\.  
+> * Soldato Bauhaus (Soldato): carabina KR10, poi fucile d'assalto STG10. PV 20 / 29 / 44\.  
+> * Guerriero Mishima (Assaltatore): spada leggera e scudo, poi spada lunga. PV 19 / 29 / 39\.  
+> * Agente Cybertronic (Agente): pistola P500. PV 16 / 24 / 32\.  
+> * Soldato Imperiale (Soldato): carabina Defender, poi fucile d'assalto Conqueror 10\. PV 20 / 29 / 39\.  
+> * Inquisitore della Fratellanza (Custode): spada leggera e incantesimi. PV 16 / 23 / 31\.  
+> * Guardia di sicurezza (Freelance, Soldato): carabina. PV 20 / 29 / 39\.  
+> * Criminale di strada (Freelance, Lestofante): pistola semiautomatica e pugnale. PV 15 / 22 / 29\.  
+> * Mercenario (Freelance, Artigliere): fucile d'assalto con mirino. PV 20 / 29 / 39\.  
+> * Eretico (Freelance, Incursore): pistola silenziata e pugnale; solo la parte umana, nessun potere dell'Oscura Legione. PV 17 / 25 / 33\.
+
+**Domanda.** Vanno bene come base per i PNG umani? Oppure il tuo bestiario avrà regole diverse per loro, per esempio PNG semplificati, gradi diversi o altri livelli di riferimento? E per l'Eretico: quali poteri dell'Oscura Simmetria vanno aggiunti, e con quali regole?  
+*Nel frattempo:* questi, marcati co
+
+**A.80 — Rinforzi indossati da soli e ad armatura tolta (Armamenti §7.23, §7.11.2)**  
+Hai chiesto che soprabiti e mantelli si possano indossare da soli. Il §7.23.4 dice però che i valori dei rinforzi «descrivono l'impiego insieme a un'armatura compatibile; non costituiscono un profilo autonomo di armatura». Domande:  
+(1) Un soprabito o un mantello indossato da solo dà AR? Se sì, quale?  
+(2) Le sue proprietà (per esempio contro Etereo o le Qualità) valgono anche da solo?  
+(3) Oltre a soprabiti e mantelli, quali altri rinforzi si possono indossare da soli (per esempio Tabardo consacrato, Sottogiacca IES, rivestimenti)?  
+(4) Che cosa succede a un rinforzo montato quando si toglie l'armatura su cui è montato?  
+*Nel frattempo:* si indossano da soli solo i 14 soprabiti e mantelli; da soli danno AR 0 e nessuna proprietà; indossati da soli sopra un'armatura non contano e vanno montati; ad armatura tolta restano montati ma senza effetto.
+
+**A.81 — Pelle di Rinoceronte: manovre di forza (Giocatore §8.9.3)**  
+La scheda concede «+3 ad Atletica e alle prove di Corpo a Corpo nelle manovre in cui si impiega direttamente la forza fisica». Quali Manovre del §5.12 sono «di forza»: Immobilizzare, Sbilanciare, Disarmare, Incalzare? Il \+3 ad Atletica vale per ogni uso di Atletica o solo quando si usa la forza?  
+*Nel frattempo:* \+3 ad Atletica e a Corpo a corpo come usi specifici «manovre di forza», mostrati a parte; in «Attacca\!» un promemoria, senza somma automatica.  
+**A.82 — Onda Interiore: bonus pertinenti (Giocatore §8.9.4)**  
+«Infligge il danno senz'armi della propria Disciplina e del Grado nella Classe, più i bonus pertinenti al singolo attacco.» Il bonus di FOR al danno senz'armi (§5.13) è fra questi? E il \+2 al danno Ravvicinato di Pelle di Rinoceronte vale, visto che Onda ha Vettore Distanza?  
+*Nel frattempo:* il bonus di FOR sì, Pelle di R
+
 ### **Manovre ravvicinate**
 
 **A.40 — Carica oltre 12 Q (§5.6).** La tabella della Carica si ferma a 7–12 Q e la Carica «non può superare la Corsa». Chi ha una Corsa oltre 12 Q (Talenti di movimento) può caricare più lontano, e con quali penalità?  
@@ -160,7 +213,8 @@ Decisioni già prese o errori evidenti: l’app segue la decisione, il testo sta
 > * ~~§2.12 e §3.3: al 1° livello sono massimizzati sia i PV sia i PM~~ — fatto nel Google Doc (verificato il 28/09).  
 > * ~~§2.10, §3.8: “minimo 1” ai “2 \+ Mod INT incantesimi”~~ — fatto nel Google Doc (verificato il 28/09).  
 > * §3.5.3 Bersaglio Designato: impaginazione rotta nel PDF.  
-> * §8.6 Attivazione Tempestiva: sta prima del §8.6.1, fuori da ogni sottosezione.
+> * §8.6 Attivazione Tempestiva: sta prima del §8.6.1, fuori da ogni sottosezione.  
+> * §2.16.3 (Cacciatore) e §2.16.4 (Esploratore): «Il binocolo non richiede batterie.» Nel §2.16.2 (Agente) il testo 0.45 dice già «Il binocolo non richiede NEC.»: uniformare a «non richiede NEC».
 
 **Manuale della Magia**
 
@@ -180,9 +234,10 @@ Decisioni già prese o errori evidenti: l’app segue la decisione, il testo sta
 > * ~~§7.4.10 Scudo delle Guardie Sacre: con la lama estratta il danno è 1d6+1+1d4 Naturale~~ — fatto nel Google Doc (verificato il 28/09).  
 > * §7.8, schede di M310 e SA SG2001: indicare che usano un caricatore amovibile specifico e che la sostituzione con un caricatore pronto costa 1 AzP (E\&L 19: «va esplicitata nelle relative schede di catalogo»).
 
-**Manuale dell'Equipaggiamento**
+**Manuale dell'Equipaggiamento**  
+> 
 
-> * «Ogni modello comprende microfono, auricolare, batteria carica, cavo e alimentatore» — con la 0.5 è un NEC Verde (compatto o standard), come dice il paragrafo «Alimentazione e riservatezza
+> * §4.1 Comunicatori: «Ogni modello comprende microfono, auricolare, batteria carica, cavo e alimentatore» — con la 0.5 l'alimentazione è un NEC Verde (compatto per il comunicatore personale, standard per quello da squadra e per la stazione radio), come dice il paragrafo «Alimentazione e riservatezza» dello stesso §4.1. Sostituire «batteria carica» con «NEC Verde carico».
 
 ## ---
 
@@ -220,7 +275,7 @@ Voci con risposta recepita e funzione implementata nell’app. La data è quella
 > * **A.10 — Scudo delle Guardie Sacre**: 1d6+1 con la lama ritratta, 1d6+1+1d4 con la lama estratta; nell’app la lama si estrae e ritrae al tavolo — implementata il 28/09.  
 > * **A.11 — Specializzazioni delle 16 armi a distanza corporative** (Panzerknacker nei Fucili d’Assalto) — implementata il 28/09.  
 > * **A.12 — Specializzazioni delle altre armi corporative per analogia**; SA30 a dardi con solo \+1 VA (Danno calibrato) — implementata il 28/09.  
-> * **A.14 — Batterie da 5 PM** (Rosso, Blu, Verde Molto rara 10.000; Bianco Leggendaria 50.000), scala di reperibilità fino a Leggendaria, disponibilità degli Artefatti Mistici — implementata il 28/09.  
+> * **A.14 — Batterie da 5 PM** (Rosso, Blu, Verde Molto rara; Bianco Leggendaria), scala di reperibilità fino a Leggendaria, disponibilità degli Artefatti Mistici — implementata il 28/09. Prezzi aggiornati il 02/10 a 1.000 crediti (Rosso, Blu, Verde) e 5.000 (Bianco), come nell'Armamenti §7.5, nella Magia §24.7 e nell'E\&L del 01/10.  
 > * **A.21 — Chroma Viola come fonte di Corruzione passiva**: fasce, frequenza ed esiti nell’app; il frammento si registra nell’inventario senza PM; il conteggio dell’esposizione arriverà insieme a Corruzione e Umanità — implementata il 28/09.  
 > * **A.52 — Addestramenti a 76 punti e 10 Punti Abilità Liberi**: confermati da Davide; nessun cambio alle regole dell’app, l’avviso ai personaggi esistenti lo cita — implementata il 28/09.  
 > * **A.51 — Categorie di Prove degli Stati**: Percezione tolta da «vista», Assordato come valore a parte, nei promemoria la frase sull’azione esclusivamente visiva o uditiva che fallisce — implementata il 28/09.  

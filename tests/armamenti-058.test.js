@@ -15,7 +15,8 @@ test('Katana Ryūjin (§7.1.9): profilo della Katana, +1d6 Plasma a cella da 5, 
   assert.deepEqual([k.catalogo, k.famiglia, k.abilita, k.specializzazione, k.danno.una_mano, k.portata_q, k.for_richiesta, k.pi, k.ps_int, k.qualita],
     [base.catalogo, base.famiglia, base.abilita, base.specializzazione, '1d8+1', 1, 4, 5, 12, 'Non comune']);
   assert.deepEqual([k.reperibilita, k.costo, k.manovre], ['RA', 4000, ['Affondo', 'Spazzata']]);
-  assert.deepEqual([k.attivazione.danno_extra, k.attivazione.natura, k.munizioni.capacita, k.munizioni.unita], ['1d6', 'Plasma', 5, 'cariche']);
+  assert.deepEqual([k.attivazione.danno_extra, k.attivazione.natura, k.munizioni.capacita, k.munizioni.unita], ['1d6', 'Naturale', 5, 'cariche']); // A.62 (E&L del 02/10): natura Naturale, proprietà Plasma
+  assert.equal(k.attivazione.anche, 'la proprietà Plasma');
   assert.ok(k.proprieta.some((p) => p.nome === 'Precisa 1'));
   assert.ok(r('munizioni:cella-ravvicinata-comune').compatibile_con.includes('armi_corporative:katana-ryujin'));
   // come la Lancia Duskdealer: la cella si cambia dalla carica dell'arma ravvicinata, non dalla ricarica a distanza
@@ -33,7 +34,8 @@ test('§7.20.5: celle NEC Blu con riserva in Lx; carica e ricarica ai prezzi del
 
 test('§7.20.6: i lanciafiamme usano pacchi NEC Blu (50 Lx a getto), si ricaricano cambiando il pacco; niente combustibile', () => {
   const pacchi = cat.oggetti.filter((o) => o.file === 'munizioni' && o.id.startsWith('pacco-nec-'));
-  assert.equal(pacchi.length, 5);
+  assert.equal(pacchi.length, 4); // A.67: il Gehemmapuker usa il Modulo Blu del catalogo NEC
+  assert.deepEqual([r('nec:modulo-blu').cella.capacita, r('nec:modulo-blu').compatibile_con], [50, ['armi_distanza_corporative:gehemmapuker']]);
   for (const p of pacchi) assert.equal(p.cella.riserva_lx, p.cella.capacita * 50, p.id);
   assert.ok(!cat.oggetti.some((o) => o.file === 'munizioni' && /combustibile/i.test(o.id))); // la cartuccia da campeggio (esplorazione) resta
   for (const arma of ['armi_distanza:lanciafiamme', 'armi_distanza_corporative:gehemmapuker']) assert.equal(modoRicarica(r(arma), dati, cat).modo, 'cella', arma);

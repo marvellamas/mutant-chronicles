@@ -5,7 +5,7 @@
 // 1–3, 5–7, 12.3; Giocatore §1.4, §1.7); dati di ogni scheda in incantesimi.json → meccanica;
 // Talenti con effetti.lancio (e effetti.magia già calcolati nella scheda: Focalizzazione, Ingaggio,
 // tiro con Armi da lancio).
-import { voce, somma, talentiAttacco, promemoriaMagistraleNaturale } from './attacco.js';
+import { voce, somma, talentiAttacco, promemoriaMagistraleNaturale, haMagistraleMigliorato, rigaTecnicheAttive } from './attacco.js';
 import { avvisiStati } from './condizioni.js';
 import { provenienza, righeDaScomposizione, rigaConDettaglio } from './provenienza.js';
 import { bonusDannoCaratteristica } from './calc.js';
@@ -95,6 +95,9 @@ export function dichiarazioneLancio(d = {}) {
     talentiLancio: Array.isArray(d.talentiLancio) ? d.talentiLancio.filter((x) => typeof x === 'string') : [],
     // Rituale (Magia §24.6): i Canali, ciascuno con il VA pertinente e i PM che versa
     canali: Array.isArray(d.canali) ? d.canali.filter((c) => c && Number.isInteger(c.va) && Number.isInteger(c.pm) && c.pm >= 0).slice(0, 6).map((c) => ({ va: c.va, pm: c.pm })) : [],
+    // A.74 punto 2: ripartizione del costo dimezzato dopo un Successo Magistrale, scelta dopo l'esito
+    magistrale: d.magistrale && typeof d.magistrale === 'object' && Number.isInteger(d.magistrale.officiante) && Array.isArray(d.magistrale.canali) && d.magistrale.canali.every(Number.isInteger)
+      ? { officiante: d.magistrale.officiante, canali: [...d.magistrale.canali] } : null,
   };
 }
 
@@ -134,19 +137,39 @@ export function statoPulsanteLancio(incantesimo, scheda, dati = null) {
 
 /**
  * Contenitori per il lancio: compatibilità con la macrofamiglia e con i PM utilizzabili della scheda.
- * Risposta A.18 (Magia §24.2, §24.7): la riserva integrata di un Artefatto alimenta soltanto le sue
- * funzioni, «non permette di prelevare PM né di alimentare gli incantesimi personali»: non è una fonte.
+ * Magia §26.2 (Doc del 02/10): sono fonti le Batterie, a sé o integrate in un Artefatto; le Cariche
+ * alimentano soltanto il proprio Artefatto (le riserve integrate delle armi del §7.5.1: risposta A.18).
+ * Un solo contenitore per lancio, eventualmente con PM personali (regole.json → chroma.riserve).
  */
+/**
+ * Promemoria della Prova di estrazione da una Scheggia instabile (Magia §26.5.1; regole.json → chroma.schegge):
+ * penalità per i PM estratti dalla scheggia, poi la Prova di lancio distinta.
+ */
+export function penalitaEstrazione(pm, dati) {
+  const S = dati.regole.chroma?.schegge;
+  if (!S || pm <= 0) return 0;
+  const r = S.estrazione.find((x) => pm >= x.pm_da && pm <= x.pm_a);
+  if (r) return r.va;
+  const ultima = S.estrazione.at(-1);
+  return ultima.va + Math.ceil((pm - ultima.pm_a) / S.estrazione_oltre.ogni_pm) * S.estrazione_oltre.va;
+}
+
+export function testoEstrazione(pm, dati) {
+  const S = dati.regole.chroma.schegge;
+  return `Scheggia instabile: prima una Prova di Potere obbligatoria per estrarre ${pm} PM (${penalitaEstrazione(pm, dati)} VA); ${S.frasi[0]} ${S.frasi[1]} (Magia §26.5.1)`;
+}
+
 export function contenitoriLancio(personaggio, incantesimo) {
   const m = incantesimo.meccanica ?? {};
-  return (personaggio.scheda?.equipaggiamento?.contenitori ?? []).filter((c) => !c.integrato).map((c) => {
+  return (personaggio.scheda?.equipaggiamento?.contenitori ?? []).filter((c) => c.fontePg ?? !c.integrato).map((c) => {
     const pm = personaggio.sessione?.chroma?.[c.uid]?.pmAttuali ?? c.capacita ?? 0;
     const tipoPm = PM_DI_ENERGIA[c.energiaNome];
-    const motivo = !c.trasportato ? 'non trasportato' : !c.sintonizzato ? 'non sintonizzato'
+    // Magia §26.5: una Scheggia instabile non si sintonizza (SnT 0)
+    const motivo = !c.trasportato ? 'non trasportato' : !c.sintonizzato && !c.scheggia ? 'non sintonizzato'
       : c.regoleRimandate || !c.macrofamiglie?.includes(incantesimo.macrofamiglia) || (m.pm_utilizzabili && !m.pm_utilizzabili.includes(tipoPm))
         ? `energia ${c.energiaNome ?? c.energia} non compatibile con un incantesimo ${incantesimo.macrofamiglia} (PM ${(m.pm_utilizzabili ?? []).join(' o ')})`
         : pm <= 0 ? 'vuoto' : null;
-    return { uid: c.uid, nome: c.nome, energia: c.energia, energiaNome: c.energiaNome, pm, capacita: c.capacita, motivo };
+    return { uid: c.uid, nome: c.nome, energia: c.energia, energiaNome: c.energiaNome, pm, capacita: c.capacita, motivo, ...(c.scheggia ? { scheggia: true } : {}) };
   });
 }
 
@@ -269,6 +292,8 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
     if (c && !c.motivo && quotaContenitore > c.pm) blocca(`${c.nome}: ${c.pm} PM, ne servono ${quotaContenitore}.`);
   }
   const quotaPersonali = pm - quotaContenitore;
+  // Magia §26.5.1: da una Scheggia instabile due Prove distinte e obbligatorie, estrazione e poi lancio
+  if (c?.scheggia && quotaContenitore > 0) promemoria.push(testoEstrazione(quotaContenitore, dati));
   if (quotaPersonali > personali) blocca(`PM personali insufficienti: ${personali}, ne servono ${quotaPersonali}.`);
   if (!impossibile && personali - quotaPersonali === 0) promemoria.push(L.svenimento.frasi[0] + ' ' + L.svenimento.frasi[1]);
 
@@ -276,7 +301,9 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
   const abil = (n) => (scheda?.abilita ?? []).find((a) => a.nome === n);
   const tiro = m.richiede_colpire ? { abilita: L.colpire.abilita, va: (abil(L.colpire.abilita)?.effettivo ?? abil(L.colpire.abilita)?.totale ?? 0) + (mg.tiroArmiDaLancio ?? L.tiro_armi_da_lancio), bonus: mg.tiroArmiDaLancio ?? L.tiro_armi_da_lancio } : null;
   const gittata = String(v?.riga?.Gittata ?? v?.riga?.['Gittata Q'] ?? '');
-  const contatto = /Contatto/.test(gittata) ? { abilita: L.contatto.abilita, va: (abil(L.contatto.abilita)?.effettivo ?? abil(L.contatto.abilita)?.totale ?? 0) + L.contatto.va, nota: L.contatto.frasi[1] } : null;
+  // Guanti da Combattimento Mistico (Armamenti §7.24): +1 alle Prove per colpire in corpo a corpo richieste dagli Incantesimi
+  const bonusContatto = (scheda?.equipaggiamento?.bonusAttacco ?? []).filter((b) => b.attacchi === 'contatto_incantesimi');
+  const contatto = /Contatto/.test(gittata) ? { abilita: L.contatto.abilita, va: (abil(L.contatto.abilita)?.effettivo ?? abil(L.contatto.abilita)?.totale ?? 0) + L.contatto.va + bonusContatto.reduce((s, b) => s + b.valore, 0), nota: [L.contatto.frasi[1], ...bonusContatto.map((b) => `${b.nome}: +${b.valore} (Armamenti §7.24).`)].join(' ') } : null;
   const inarrestabili = con('salvezza_bersaglio')[0];
   const salvezza = m.salvezza?.tipi?.length ? { tipi: m.salvezza.tipi, testo: [m.salvezza.testo, m.salvezza.dettaglio].filter(Boolean).join(' '), mod_ps: modPsVersione(v?.riga), talento: inarrestabili ? { nome: inarrestabili.nome, valore: inarrestabili.e.salvezza_bersaglio } : null }
     : m.salvezza ? { tipi: [], testo: m.salvezza.testo, mod_ps: modPsVersione(v?.riga), talento: null } : null;
@@ -345,7 +372,7 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
 
   // 9. promemoria finali
   promemoria.push(L.magistrale.frasi[0], L.fallimento.frasi[0]);
-  const mn = prova ? promemoriaMagistraleNaturale(va, dati) : null;
+  const mn = prova ? promemoriaMagistraleNaturale(va, dati, { magistraleMigliorato: haMagistraleMigliorato(scheda, dati) }) : null;
   if (mn) promemoria.push(mn);
   const conValori = new Set(talentiLancio.map((e) => e.talento));
   const modInt = Math.max(1, scheda?.caratteristiche?.INT?.mod ?? 0);
@@ -358,6 +385,9 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
     promemoria.push(`Talenti: ${soloTesto.map((t) => `${t.nome} — ${String(t.testo ?? '').split(/(?<=\.)\s/)[0]}${numeri[t.nome] ? ` (${numeri[t.nome]})` : ''}`).join(' · ')}`);
   }
   // Controllo Arcano: oltre al +1 danno, l'esclusione di 1 + Mod INT creature dagli Incantesimi ad Area
+  // Tecniche Interiori in corso (§8.9): la stessa riga di «Attacca!» (src/attacco.js)
+  const tecRiga = rigaTecnicheAttive(personaggio.sessione, dati);
+  if (tecRiga) promemoria.push(tecRiga);
   if (adArea && T.some((t) => t.nome === 'Controllo Arcano')) promemoria.push(`Controllo Arcano: puoi escludere fino a ${1 + Math.max(0, scheda?.caratteristiche?.INT?.mod ?? 0)} creature dall’Area.`);
 
   return {
@@ -406,6 +436,41 @@ export function accessoRituale(grado, scheda, dati) {
 }
 
 /** Aiuto al VA dell'Officiante dato da un Canale (Magia §24.6, tabella «VA pertinente del Canale»). */
+/**
+ * Ripartizione del costo dopo un Successo Magistrale (A.74 punto 2, E&L del 02/10; regole.json → rituali.magistrale):
+ * costo totale dimezzato per eccesso; la somma delle quote coincide con il nuovo costo; nessuno oltre la quota
+ * dichiarata; l'Officiante almeno metà Grado per eccesso; ogni Canale con un contributo almeno 1 PM, quello con
+ * quota 0 resta a 0. Senza una scelta propone una ripartizione valida: i Canali almeno 1 PM e poi fino alla
+ * quota, l'Officiante il resto (al minimo metà Grado).
+ * @returns {{ totale, officiante, canali: number[], errori: string[], proposta: boolean }}
+ */
+export function ripartizioneMagistrale({ pm, grado, officiante, canali }, scelta, dati) {
+  const M = dati.regole.rituali.magistrale;
+  const totale = Math.ceil(pm / 2);
+  const minimo = Math.ceil(grado / 2);
+  const minC = M.canale_minimo_se_contributo ?? 1;
+  let o; let c;
+  const proposta = !scelta || scelta.canali.length !== canali.length;
+  if (!proposta) { o = scelta.officiante; c = [...scelta.canali]; } else {
+    o = Math.min(officiante, Math.max(minimo, totale - canali.reduce((s, x) => s + x, 0)));
+    let resto = totale - o;
+    c = canali.map((q) => { const v = q > 0 ? Math.min(minC, resto) : 0; resto -= v; return v; });
+    c = c.map((v, i) => { const piu = Math.min(canali[i] - v, resto); resto -= piu; return v + piu; });
+    const piuO = Math.min(officiante - o, resto); o += piuO;
+  }
+  const errori = [];
+  const somma = o + c.reduce((s, x) => s + x, 0);
+  if (somma !== totale) errori.push(`le quote fanno ${somma} PM, il costo dimezzato è ${totale}`);
+  if (o < minimo) errori.push(`l’Officiante paga almeno metà del Grado, ${minimo} PM`);
+  if (o > officiante) errori.push(`l’Officiante non paga più della quota dichiarata (${officiante} PM)`);
+  c.forEach((v, i) => {
+    if (v > canali[i]) errori.push(`il Canale ${i + 1} non paga più della quota dichiarata (${canali[i]} PM)`);
+    if (canali[i] > 0 && v < minC) errori.push(`il Canale ${i + 1} aveva dichiarato un contributo: almeno ${minC} PM`);
+    if (canali[i] === 0 && v !== 0) errori.push(`il Canale ${i + 1} non aveva dichiarato PM: resta a 0`);
+  });
+  return { totale, officiante: o, canali: c, errori, proposta };
+}
+
 export function aiutoCanale(va, dati) {
   const fasce = dati.regole.rituali.canali.aiuto_va;
   return (fasce.find((f) => f.fino_a === null || va <= f.fino_a) ?? fasce.at(-1)).aiuto;
@@ -416,9 +481,9 @@ export function aiutoCanale(va, dati) {
  * Rituali dell'Officiante al termine, con la penalità del Grado e l'aiuto dei Canali (fino a +5);
  * PM totali della versione ripartiti fra l'Officiante (almeno il Grado) e i Canali; reagenti, ore e
  * rigenerazione successiva dalla tabella. Stessa forma del risultato di calcolaLancio, più «rituale».
- * Scelte provvisorie in attesa di Davide (per-davide A.74, TODO nei dati): VA pertinente del Canale =
- * Rituali; PM solo personali (niente batterie); conta Ritualista, non il livello massimo degli Incantesimi;
- * con il Magistrale i Canali tengono le quote e l'Officiante paga il resto, almeno metà Grado.
+ * Decisioni di Davide (A.74, E&L del 02/10/2026): VA pertinente del Canale = Rituali; PM solo personali
+ * (niente batterie); conta Ritualista, non il livello massimo degli Incantesimi; con il Magistrale la
+ * ripartizione del costo dimezzato è libera entro i limiti (ripartizioneMagistrale).
  */
 function calcolaRituale(personaggio, incantesimo, d, dati) {
   const R = dati.regole.rituali;
@@ -456,10 +521,8 @@ function calcolaRituale(personaggio, incantesimo, d, dati) {
   if (officiante < grado) blocca(`L’Officiante versa almeno ${grado} PM personali (Magia §24.6): i Canali possono dare al massimo ${pv.pm - grado} PM.`);
   const personali = sessione?.pmAttuali ?? scheda?.pm ?? 0;
   if (officiante > personali) blocca(`PM personali insufficienti: ${personali}, ne servono ${officiante}.`);
-  // Successo Magistrale: metà del totale per eccesso; i Canali tengono le quote, l'Officiante il resto (A.74)
-  const totaleMagistrale = Math.ceil(pv.pm / 2);
-  const minimoMagistrale = Math.ceil(grado / 2);
-  const officianteMagistrale = Math.min(Math.max(officiante, 0), Math.max(minimoMagistrale, totaleMagistrale - pmCanali));
+  // Successo Magistrale (A.74 punto 2): costo dimezzato, ripartizione libera entro i limiti
+  const magistrale = ripartizioneMagistrale({ pm: pv.pm, grado, officiante: Math.max(officiante, 0), canali: canali.map((c) => c.pm) }, d.magistrale, dati);
 
   const ritualista = (dati.talenti_liberi?.talenti ?? []).filter((t) => R.accesso.find((a) => a.gradi.includes(grado))?.talenti.includes(t.id)).map((t) => t.nome);
   promemoria.push(
@@ -469,7 +532,7 @@ function calcolaRituale(personaggio, incantesimo, d, dati) {
     'Interruzione prima della Prova finale: reagenti consumati, PM non spesi, la rigenerazione non inizia.',
     `Rigenerazione completa ${pv.rigenerazione} dopo il successo. Un beneficiario può avere una sola Rigenerazione attiva.`,
     `Officiante: conoscere la procedura e possedere ${ritualista.join(' o ')}.`,
-    'Scelte provvisorie (per-davide A.74): VA dei Canali = Rituali; PM solo personali; conta Ritualista, non il livello massimo degli Incantesimi.',
+    'PM solo personali dell’Officiante e dei Canali: le batterie non pagano il Rituale diretto (A.74, E&L del 02/10). Conta Ritualista, non il livello massimo degli Incantesimi.',
   );
 
   return {
@@ -494,7 +557,7 @@ function calcolaRituale(personaggio, incantesimo, d, dati) {
       grado, grado_romano: GRADI_ROMANI[grado], ore: pv.ore, reagenti: pv.reagenti, rigenerazione: pv.rigenerazione,
       canali, canali_massimo: grado, aiuto, aiuto_massimo: R.canali.aiuto_massimo, pm_canali: pmCanali,
       officiante, officiante_minimo: grado, abilita: R.abilita,
-      magistrale: { totale: totaleMagistrale, officiante: officianteMagistrale, canali: totaleMagistrale - officianteMagistrale },
+      magistrale: { ...magistrale, canaliTotale: magistrale.canali.reduce((s, x) => s + x, 0) },
     },
     azioni: { tempo: `${pv.ore} ore di celebrazione continua`, focalizzazione: 0 },
     concentrazione: null,
@@ -508,12 +571,15 @@ function calcolaRituale(personaggio, incantesimo, d, dati) {
 
 /**
  * Attivazione di un incantesimo infuso in un Artefatto (Magia §24.2; per Rigenerazione §25.4): dopo la
- * Sintonizzazione è automatica, senza Prove di Potere o Rituali, senza Componenti e senza Canali; l'intero
- * costo in PM della versione si paga dalla riserva integrata, che alimenta solo l'Artefatto (A.18).
+ * Sintonizzazione è automatica, senza Prove di Potere o Rituali, senza Componenti e senza Canali.
+ * Magia §26.2: una proprietà Esclusiva si paga soltanto con la riserva interna; una Universale anche con PM
+ * personali (qui: la riserva interna per quanto ha, il resto con i PM personali; la riserva dell'Artefatto
+ * è già la fonte esterna del pagamento, quindi niente altre Batterie).
  * @param infuso { incantesimo, livello } dell'Artefatto
- * @param riserva contenitore integrato dell'Artefatto ({ energia, energiaNome, macrofamiglie, capacita }) o null
- * @param stato { pm: PM nella riserva, sintonizzato, deposito }
- * @returns {{ incantesimo, livello, pm, tempo, prova: false, energie, motivo: string|null, frasi: string[] }|null}
+ * @param riserva contenitore integrato dell'Artefatto ({ energia, energiaNome, macrofamiglie, capacita, alimentazione }) o null
+ * @param stato { pm: PM nella riserva, personali: PM personali attuali, sintonizzato, deposito }
+ * @returns {{ incantesimo, livello, pm, tempo, prova: false, energie, alimentazione, pagamento: { interna, personali }|null,
+ *   motivo: string|null, frasi: string[] }|null}
  */
 export function attivazioneInfusa(infuso, riserva, stato, dati) {
   const inc = (dati.incantesimi?.incantesimi ?? []).find((i) => i.nome === infuso?.incantesimo);
@@ -528,10 +594,17 @@ export function attivazioneInfusa(infuso, riserva, stato, dati) {
   // energia: quella che la scheda ammette (§25.4: Verde o Bianca), altrimenti la macrofamiglia dell'incantesimo
   const energie = P?.artefatto?.energie ?? null;
   const compatibile = riserva ? (energie ? energie.includes(riserva.energia) : (riserva.macrofamiglie ?? []).includes(inc.macrofamiglia)) : false;
+  const alim = riserva?.alimentazione ?? dati?.regole?.chroma?.riserve?.proprieta_predefinita ?? 'esclusiva';
+  const universale = alim === 'universale';
+  // Universale: la riserva interna per quanto ha, il resto dai PM personali (una sola fonte esterna, §26.2)
+  const interna = riserva && Number.isInteger(pm) ? Math.min(stato.pm ?? 0, pm) : 0;
+  const personali = universale && Number.isInteger(pm) ? pm - interna : 0;
   const motivo = !riga ? `la scheda di ${inc.nome} non ha la versione di livello ${infuso.livello}`
-    : !riserva ? 'nessuna riserva integrata: l’intero costo si paga dalla riserva dell’Artefatto (Magia §25.4)'
-      : !compatibile ? `riserva ${riserva.energia} non compatibile${energie ? ` (serve ${energie.join(' o ')}, Magia §25.4)` : ` con un incantesimo ${inc.macrofamiglia}`}`
+    : !riserva && !universale ? 'nessuna riserva integrata: l’intero costo si paga dalla riserva dell’Artefatto (Magia §25.4)'
+      : riserva && !compatibile ? `riserva ${riserva.energia} non compatibile${energie ? ` (serve ${energie.join(' o ')}, Magia §25.4)` : ` con un incantesimo ${inc.macrofamiglia}`}`
         : stato.deposito ? 'nel deposito comune' : !stato.sintonizzato ? 'non sintonizzato'
-          : stato.pm < pm ? `la riserva ha ${stato.pm} PM, ne servono ${pm}` : null;
-  return { incantesimo: inc.nome, livello: infuso.livello, pm, tempo, prova: false, energie, motivo, frasi: P?.artefatto?.frasi ?? [] };
+          : !universale && stato.pm < pm ? `la riserva ha ${stato.pm} PM, ne servono ${pm} (proprietà Esclusiva: solo la riserva interna, Magia §26.2)`
+            : universale && personali > (stato.personali ?? 0) ? `servono ${pm} PM: ${interna} dalla riserva e ${personali} personali, ne hai ${stato.personali ?? 0}` : null;
+  return { incantesimo: inc.nome, livello: infuso.livello, pm, tempo, prova: false, energie, alimentazione: alim,
+    pagamento: Number.isInteger(pm) ? { interna, personali } : null, motivo, frasi: P?.artefatto?.frasi ?? [] };
 }

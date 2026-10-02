@@ -112,8 +112,8 @@ test('collaudo b: Fratellanza Taumaturgo Arcanista, 12° livello, Mistico II', (
   const [armatura] = s.equipaggiamento.protezioni;
   assert.deepEqual(armatura.ar, { totale: 4, magica: 1 }); // §7.17.2
   assert.equal(s.equipaggiamento.lancioPotere, 0); // Media −3, Assetto mistico 3 (§7.17.4)
-  // §7.10: 4 Gradi complessivi → capacità 7; Bordone 2 + batteria Chroma Bianco 2
-  assert.deepEqual([s.equipaggiamento.sintonizzazione.capacita, s.equipaggiamento.sintonizzazione.usata], [7, 4]);
+  // §7.10 (Doc del 02/10): 4 Gradi complessivi → capacità 11; Bordone 2 + batteria Chroma Bianco 2
+  assert.deepEqual([s.equipaggiamento.sintonizzazione.capacita, s.equipaggiamento.sintonizzazione.usata], [11, 4]);
   // Magia §1 e §3.8: Arcanista I–II 5+5+5, Mistico I–II 0+3+7, 2 + Mod INT 4 = 6 liberi → 31; livello massimo 14 (4 Gradi, decisione 5 del master)
   assert.equal(s.incantesimi.conosciuti.length, 31);
   assert.deepEqual(s.incantesimi.quote, { perMacro: { Fisica: 5, Mentale: 8, Spirituale: 12 }, liberi: 6, totale: 31, liberiUsati: 6 });
@@ -163,7 +163,8 @@ test('stampa dei tre personaggi: il foglio Poteri solo per chi conosce incantesi
   assert.deepEqual(fogli('a_imperiale_assaltatore_l8.json'), ['identita', 'abilita', 'combattimento', 'inventario']);
   // il Bordone Templare e la batteria: foglio Artefatti (6) dopo Poteri (docs/layout-ss.md, pezzo 5)
   assert.deepEqual(fogli('b_fratellanza_arcanista_l12.json'), ['identita', 'abilita', 'combattimento', 'inventario', 'poteri', 'artefatti']);
-  assert.deepEqual(fogli('c_freelance_tecnico_l5.json'), ['identita', 'abilita', 'combattimento', 'inventario']);
+  // c ha Risorse Interiori: il foglio Poteri con le Tecniche (richiesta di Davide del 02/10)
+  assert.deepEqual(fogli('c_freelance_tecnico_l5.json'), ['identita', 'abilita', 'combattimento', 'inventario', 'poteri']);
 });
 
 test('sessione dopo un cambio di livello: PV e PM attuali seguono i massimi (§8.1.2, Buona Costituzione §8.6.1)', () => {

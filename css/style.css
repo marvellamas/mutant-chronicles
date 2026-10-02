@@ -321,6 +321,21 @@ dl.voci.in-linea dt::after { content: ":"; }
 .macro-fisica { --macro: var(--fisica); --macro-tenue: var(--fisica-tenue); --macro-testo: var(--fisica-testo); }
 .macro-mentale { --macro: var(--mentale); --macro-tenue: var(--mentale-tenue); --macro-testo: var(--mentale-testo); }
 .macro-spirituale { --macro: var(--spirituale); --macro-tenue: var(--spirituale-tenue); --macro-testo: var(--spirituale-testo); }
+/* Tecniche Interiori (tab Poteri, src/ui/tecniche.js): stessa scheda degli incantesimi, colore proprio */
+/* Inventario su due colonne (richiesta di Davide del 02/10): ognuna scorre per conto suo solo se serve;
+   in uno spazio stretto una colonna sola, prima la sinistra e poi la destra */
+.inventario-colonne { container-type: inline-size; }
+@container (min-width: 46rem) {
+  .inventario-colonne { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 1rem; align-items: start; }
+  .colonna-inventario { max-height: calc(100vh - 10rem); overflow-y: auto; overscroll-behavior: contain; padding-right: 0.25rem; }
+}
+.gruppo-equip.sottosezione { margin-left: 0.75rem; }
+.macro-tecnica { --macro: var(--tecnica); --macro-tenue: var(--tecnica-tenue); --macro-testo: var(--tecnica-testo); }
+.voci-tecnica { margin: 0.3rem 0; }
+.testo-tecnica summary { cursor: pointer; font-size: 0.85rem; color: var(--tenue); }
+.tecniche-attive ul { margin: 0.2rem 0 0; padding-left: 1.1rem; }
+.conferma-tecnica { display: flex; gap: 0.4rem; align-items: center; font-weight: 600; margin: 0.5rem 0; }
+.rimando-tecniche { margin-top: 0.8rem; }
 .incantesimo[class*="macro-"], .incantesimo-scheda[class*="macro-"], .tooltip.tooltip-incantesimo, .pannello-contenuto[class*="macro-"] {
   background: var(--macro-tenue); color: var(--testo); border-left: 4px solid var(--macro);
 }

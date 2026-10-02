@@ -1011,31 +1011,6 @@
       "proprieta": []
     },
     {
-      "id": "pacco-nec-gehemmapuker",
-      "nome": "Modulo Blu Gehemmapuker",
-      "tipo": "munizioni",
-      "catalogo": "Alleanza",
-      "famiglia": "Celle energetiche",
-      "nomi_alternativi": [
-        "Serbatoio Gehemmapuker"
-      ],
-      "note_manuale": "I lanciafiamme sono emettitori termici alimentati da NEC Blu: non impiegano combustibile liquido. Un getto consuma 50 Lx. Ogni pacco ha un formato compatibile con il modello; l’alloggiamento fisso è compreso nell’arma, mentre il pacco carico si acquista separatamente. Ogni attacco consuma un getto anche se manca il bersaglio. AC 1d3 non moltiplica il consumo. Restano danno, proprietà Fuoco, gittata, INC e modalità del modello. I pacchi da 250, 500 e 750 Lx contengono una, due e tre celle Blu; il Gehemmapuker usa un Modulo Blu. Sostituire un pacco compatibile pronto richiede 1 AzP, entrambe le mani e nessuna Prova. I pacchi fino a 750 Lx si ricaricano in un’ora con caricatore portatile e fonte adeguati. Il Gehemmapuker richiede un’ora con stazione per Moduli o due ore e mezza con caricatore portatile a piena potenza. Ricariche parziali proporzionali; prezzi e stazioni nel Manuale dell’Equipaggiamento, §5.4.",
-      "paragrafo": "§7.20.6",
-      "versione_manuale": "Armamenti 0.58",
-      "costo": 2100,
-      "cella": {
-        "capacita": 50,
-        "unita": "getti",
-        "ricarica_costo": 25,
-        "riserva_lx": 2500
-      },
-      "compatibile_con": [
-        "armi_distanza_corporative:gehemmapuker"
-      ],
-      "proprieta": [],
-      "TODO(Davide)": "A.67: il Gehemmapuker «usa un Modulo Blu» (Armamenti §7.20.6), con 2.500 Lx e 2.100 cr come il Modulo Blu del catalogo NEC (Equipaggiamento §5.4.4). È lo stesso Modulo (intercambiabile) o un formato d’arma dedicato (§5.4.5: «formato d’arma e Modulo non sono automaticamente intercambiabili»)? Nel frattempo due voci con gli stessi valori: questa, per la ricarica al tavolo, e nec:modulo-blu."
-    },
-    {
       "id": "proiettili-da-pistola-perforante-1",
       "nome": "Proiettili da pistola, perforante 1",
       "tipo": "munizioni",

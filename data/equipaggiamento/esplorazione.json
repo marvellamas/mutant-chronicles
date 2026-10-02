@@ -174,8 +174,8 @@
         "unita_usi": "preparazioni",
         "paragrafo": "§3.2"
       },
-      "TODO(Davide)": "A.66: il §3.2 dà due tempi per la stessa preparazione (30 minuti nella tabella e nel paragrafo sul NEC, 15 minuti in «Preparazione e limiti») e parla ancora di «cartuccia» (prima cartuccia nel peso, sostituzione in 1 minuto) accanto al NEC Rosso (sostituzione 1 AzP, §5.4.5). Quali valgono? Nel frattempo l’app conta 10 preparazioni da 50 Lx e riporta la tabella.",
-      "proprieta": []
+      "proprieta": [],
+      "decisione": "A.66 (E&L del 02/10/2026, decisione 19): un pasto semplice per fino a quattro persone in 30 minuti, senza Prova; 50 Lx a preparazione (10 con un NEC Rosso standard pieno); cambio del NEC 1 AzP; ricarica 1 ora, 5 cr. La sostituzione del filtro del depuratore resta un’operazione distinta da 1 minuto."
     },
     {
       "id": "depuratore-portatile",

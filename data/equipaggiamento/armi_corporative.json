@@ -1502,9 +1502,10 @@
         "Spazzata"
       ],
       "attivazione": {
-        "testo": "+1d6 Plasma; 5 cariche a cella",
+        "testo": "+1d6, natura Naturale, con la proprietà Plasma; 5 cariche a cella",
         "danno_extra": "1d6",
-        "natura": "Plasma"
+        "natura": "Naturale",
+        "anche": "la proprietà Plasma"
       },
       "munizioni": {
         "capacita": 5,
@@ -1513,7 +1514,7 @@
         "consumo": "una carica per attivazione (§7.1.4)",
         "riferimento": "cella energetica sostituibile (§7.20.5)"
       },
-      "TODO(Davide)": "A.62: attivata, la Ryūjin infligge 1d8+1+1d6 «risolto come un unico colpo Naturale», ma lo stesso paragrafo dice che aggiunge +1d6 Plasma e che l’effetto Plasma segue il §7.5.1. Il danno attivato è Naturale con l’effetto secondario del Plasma, o di natura Plasma? Nel frattempo l’app la tratta come la Lancia Duskdealer (+1d6 Plasma) e riporta la frase del manuale."
+      "decisione": "A.62 (E&L del 02/10/2026, decisione 15): la Natura resta Naturale; attiva infligge 1d8 + 1 + 1d6 con la proprietà Plasma, un solo colpo (Difese e AR una volta); «Plasma» non è una Natura."
     },
     {
       "id": "lama-mushashi",

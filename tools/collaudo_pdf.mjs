@@ -123,7 +123,9 @@ function controllaFogli() {
   // foglio 5, prima pagina (ritocchi post-stampa): tutto il «di base»; con 20 incantesimi o meno l'elenco intero
   const p5 = document.querySelector('.foglio-poteri:not(.seguito)');
   if (p5) {
-    if (!p5.querySelector('.f5-pm') || !p5.querySelector('.f5-lancio')) out.push('Poteri: Punti Magia o Lancio fuori dalla prima pagina');
+    // con le sole Tecniche Interiori (Risorse Interiori, incompatibile con la magia) non c'è il riquadro Lancio
+    const soloTecniche = !!p5.querySelector('.f5-tecniche') && !p5.querySelector('.indice-magia');
+    if (!p5.querySelector('.f5-pm') || (!soloTecniche && !p5.querySelector('.f5-lancio'))) out.push('Poteri: Punti Magia o Lancio fuori dalla prima pagina');
     if (p5.querySelector('.scheda-incantesimo')) out.push('Poteri: schede complete nella prima pagina');
     const n = Number(/\((\d+)\)/.exec(p5.querySelector('.f5-elenco > h2')?.textContent ?? '')?.[1] ?? 0);
     const qui = p5.querySelectorAll('.indice-magia tbody tr:not(.macro-riga)').length;

@@ -924,7 +924,12 @@
           "proprieta": "Stabile 2"
         }
       ],
-      "TODO(Davide)": "A.63: la 0.58 porta a NEC le celle di armi, accessori, elmetti, robot (NEC Rosso dedicato) e mezzi, ma gli esoscheletri scrivono ancora «batteria». Sono NEC (di che colore e formato) o restano batterie dedicate con le autonomie della scheda? Nel frattempo l’app tiene il testo della scheda."
+      "alimentazione": {
+        "nec": null,
+        "descrizione": "NEC Rosso di formato dedicato (Juggernaut XO-102 Steel Strider): ricarica 8 ore, ricambio 1500 cr, sostituzione 1 minuto",
+        "autonomia_ore": 8,
+        "paragrafo": "§7.11.6; E&L del 02/10/2026, decisione 18"
+      }
     },
     {
       "id": "vulkan",
@@ -1006,7 +1011,12 @@
           "proprieta": "Stabile 2"
         }
       ],
-      "TODO(Davide)": "A.63: la 0.58 porta a NEC le celle di armi, accessori, elmetti, robot (NEC Rosso dedicato) e mezzi, ma gli esoscheletri scrivono ancora «batteria». Sono NEC (di che colore e formato) o restano batterie dedicate con le autonomie della scheda? Nel frattempo l’app tiene il testo della scheda."
+      "alimentazione": {
+        "nec": null,
+        "descrizione": "NEC Rosso di formato dedicato (Vulkan): ricarica 8 ore, ricambio 3000 cr, sostituzione 1 minuto",
+        "autonomia_ore": 8,
+        "paragrafo": "§7.11.6; E&L del 02/10/2026, decisione 18"
+      }
     },
     {
       "id": "divisa-d-ordinanza-asa",
@@ -2891,7 +2901,12 @@
           "beneficio": "termoregolazione"
         }
       ],
-      "TODO(Davide)": "A.63: la 0.58 porta a NEC le celle di armi, accessori, elmetti, robot (NEC Rosso dedicato) e mezzi, ma gli esoscheletri scrivono ancora «batteria». Sono NEC (di che colore e formato) o restano batterie dedicate con le autonomie della scheda? Nel frattempo l’app tiene il testo della scheda."
+      "alimentazione": {
+        "nec": null,
+        "descrizione": "NEC Rosso di formato dedicato (Mk.IV Felis Pattern dei Golden Lions): ricarica 8 ore, ricambio 2000 cr, sostituzione 1 minuto",
+        "autonomia_ore": 8,
+        "paragrafo": "§7.14.1; E&L del 02/10/2026, decisione 18"
+      }
     },
     {
       "id": "armatura-da-incursione-wolfbane",
@@ -4671,7 +4686,12 @@
           "beneficio": "termoregolazione"
         }
       ],
-      "TODO(Davide)": "A.63: la 0.58 porta a NEC le celle di armi, accessori, elmetti, robot (NEC Rosso dedicato) e mezzi, ma gli esoscheletri scrivono ancora «batteria». Sono NEC (di che colore e formato) o restano batterie dedicate con le autonomie della scheda? Nel frattempo l’app tiene il testo della scheda."
+      "alimentazione": {
+        "nec": null,
+        "descrizione": "NEC Rosso di formato dedicato (Powersuit): ricarica 8 ore, ricambio 2000 cr, sostituzione 1 minuto",
+        "autonomia_ore": 8,
+        "paragrafo": "§7.16.1; E&L del 02/10/2026, decisione 18"
+      }
     },
     {
       "id": "shoa-ace-custom",
@@ -4789,7 +4809,12 @@
           "beneficio": "termoregolazione"
         }
       ],
-      "TODO(Davide)": "A.63: la 0.58 porta a NEC le celle di armi, accessori, elmetti, robot (NEC Rosso dedicato) e mezzi, ma gli esoscheletri scrivono ancora «batteria». Sono NEC (di che colore e formato) o restano batterie dedicate con le autonomie della scheda? Nel frattempo l’app tiene il testo della scheda."
+      "alimentazione": {
+        "nec": null,
+        "descrizione": "NEC Rosso di formato dedicato (Shoa Ace Custom): ricarica 6 ore, ricambio 2500 cr, sostituzione 1 minuto",
+        "autonomia_ore": 6,
+        "paragrafo": "§7.16.1; E&L del 02/10/2026, decisione 18"
+      }
     },
     {
       "id": "demonhunter",
@@ -4921,7 +4946,12 @@
           "proprieta": "Sigilli d’interdizione 2"
         }
       ],
-      "TODO(Davide)": "A.63: la 0.58 porta a NEC le celle di armi, accessori, elmetti, robot (NEC Rosso dedicato) e mezzi, ma gli esoscheletri scrivono ancora «batteria». Sono NEC (di che colore e formato) o restano batterie dedicate con le autonomie della scheda? Nel frattempo l’app tiene il testo della scheda."
+      "alimentazione": {
+        "nec": null,
+        "descrizione": "NEC Rosso di formato dedicato (Demonhunter): ricarica 6 ore, ricambio 2500 cr, sostituzione 1 minuto",
+        "autonomia_ore": 6,
+        "paragrafo": "§7.16.1; E&L del 02/10/2026, decisione 18"
+      }
     },
     {
       "id": "abito-protettivo-del-revisore",

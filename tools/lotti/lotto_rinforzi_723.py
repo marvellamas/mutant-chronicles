@@ -145,7 +145,7 @@ assert NOTA_CUMULO in norm(S9)
 def oggetto(id_, nome, catalogo, categoria, paragrafo, note, extra=None, profilo=None):
     p = {**PROFILI[categoria], **(profilo or {})}
     o = {
-        'id': id_, 'nome': nome, 'tipo': 'accessorio', 'catalogo': catalogo, 'famiglia': 'Rinforzi',
+        'id': id_, 'nome': nome, 'tipo': 'rinforzo', 'catalogo': catalogo, 'famiglia': 'Rinforzi',
         'nomi_alternativi': [], 'note_manuale': note, 'paragrafo': paragrafo, 'versione_manuale': VERSIONE,
         'pi': p['pi'], 'qualita': p['qualita'], 'ps_int': p['ps_int'], 'reperibilita': p['reperibilita'], 'costo': p['costo'],
         'si_monta_su': ['armatura'], 'rinforzo': {'kit': categoria, 'ar': p['ar'], 'for': p['for']}, 'proprieta': [],

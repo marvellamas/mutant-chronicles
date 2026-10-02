@@ -108,7 +108,7 @@ function corpo(ctx, inc, intestazione) {
       contenitori.length ? null : h('p', { class: 'nota' }, 'Nessun contenitore di Chroma nell’inventario.'),
     ],
     Rituale: r.rituale ? passoRituale(ctx, d, r, imposta) : [],
-    Risultato: r.rituale ? risultatoRituale(ctx, inc, r) : risultato(ctx, inc, r),
+    Risultato: r.rituale ? risultatoRituale(ctx, inc, r, d, imposta) : risultato(ctx, inc, r),
   };
 
   return pannelloPassi({ ...intestazione, passi: titoli.map((t) => ({ titolo: t, contenuto: passi[t] })), stato, ridisegna: ctx.azioni.ridisegna });
@@ -214,7 +214,7 @@ function passoRituale(ctx, d, r, imposta) {
 }
 
 /** Risultato del Rituale: requisiti, Prova di Rituali con la provenienza, PM e pulsanti per l'esito. */
-function risultatoRituale(ctx, inc, r) {
+function risultatoRituale(ctx, inc, r, d, imposta) {
   const R = r.rituale;
   const M = R.magistrale;
   return [
@@ -231,7 +231,16 @@ function risultatoRituale(ctx, inc, r) {
         h('div', {}, h('dt', {}, 'Reagenti'), h('dd', {}, `${R.reagenti.toLocaleString('it-IT')} cr`)),
         h('div', {}, h('dt', {}, 'Canali'), h('dd', {}, `${R.canali.length} su ${R.canali_massimo}${R.aiuto ? ` · aiuto ${segno(R.aiuto)}` : ''}`)),
         h('div', {}, h('dt', {}, 'Rigenerazione'), h('dd', {}, `${R.rigenerazione} dopo il successo`)),
-        h('div', {}, h('dt', {}, 'Successo Magistrale'), h('dd', {}, `${M.totale} PM (Officiante ${M.officiante}${M.canali ? `, Canali ${M.canali}` : ''}), metà dei reagenti`))),
+        h('div', {}, h('dt', {}, 'Successo Magistrale'), h('dd', {}, `${M.totale} PM (Officiante ${M.officiante}${M.canaliTotale ? `, Canali ${M.canali.join(' + ')}` : ''}), metà dei reagenti`))),
+      // A.74 punto 2 (E&L del 02/10): dopo il Magistrale i partecipanti ripartiscono liberamente il costo dimezzato
+      h('div', { class: 'ripartizione-magistrale' },
+        h('p', { class: 'nota' }, h('strong', {}, 'Ripartizione dopo un Successo Magistrale: '), `${M.totale} PM in tutto; nessuno oltre la quota dichiarata, l’Officiante almeno metà Grado, ogni Canale con un contributo almeno 1 PM${M.proposta ? ' (proposta: si può cambiare)' : ''}.`),
+        h('div', { class: 'distanza-riga' },
+          h('label', {}, 'Officiante ', h('input', { type: 'number', min: 0, step: 1, class: 'input-d10', value: M.officiante,
+            onchange: (e) => imposta({ magistrale: { officiante: Math.round(Number(e.target.value) || 0), canali: M.canali } }) })),
+          M.canali.map((v, i) => h('label', {}, ` Canale ${i + 1} `, h('input', { type: 'number', min: 0, step: 1, class: 'input-d10', value: v,
+            onchange: (e) => imposta({ magistrale: { officiante: M.officiante, canali: M.canali.map((x, j) => (j === i ? Math.round(Number(e.target.value) || 0) : x)) } }) })))),
+        M.errori.length ? h('ul', { class: 'nota motivo' }, M.errori.map((x) => h('li', {}, x))) : null),
       r.promemoria.length ? h('ul', { class: 'promemoria-attacco' }, r.promemoria.map((p) => h('li', {}, p))) : null,
       h('div', { class: 'attacco-azioni' },
         h('button', {
@@ -239,7 +248,7 @@ function risultatoRituale(ctx, inc, r) {
           onclick: () => ctx.azioni.lancia({ personali: R.officiante, contenitore: null }),
         }, `Rituale concluso (−${R.officiante} PM)`),
         h('button', {
-          type: 'button', class: 'btn btn-grande', disabled: !!r.impossibile,
+          type: 'button', class: 'btn btn-grande', disabled: !!r.impossibile || M.errori.length > 0, title: M.errori[0] ?? null,
           onclick: () => ctx.azioni.lancia({ personali: M.officiante, contenitore: null }),
         }, `Con Successo Magistrale (−${M.officiante} PM)`),
         h('small', { class: 'nota' }, 'Tira 1d20 al tavolo alla fine della celebrazione. Successo o fallimento consumano i PM; se la celebrazione si interrompe prima della Prova non si spendono. «Annulla» nell’intestazione annulla la spesa.'))),

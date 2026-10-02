@@ -581,3 +581,77 @@ manuali; la 69 chiude in parte una domanda.
     (passi Versione, Rituale, Risultato), tab Artefatti e «Da artefatti», Artefatto personalizzato con
     «Incantesimo infuso». Scelte provvisorie nella nuova domanda **A.74** (VA del Canale = Rituali;
     Magistrale: i Canali tengono la quota; PM solo personali; conta Ritualista, non il livello massimo).
+71. **Attacchi e Difese con VA finale 20 o più** (A.78; E&L del 02/10/2026, «Risposte approvate ai 52
+    riferimenti dell'app», decisione 3). Gli attacchi e le Difese attive si tirano anche con VA finale 20 o
+    più; restano le eccezioni esplicite che colpiscono automaticamente (Colpo Elementale). Naturali
+    Magistrali: 1 con VA finale 20, 1–2 da VA 21; con Successo Magistrale Migliorato 1–2 con VA 20 e 1–2–3
+    da VA 21 (correzione al manuale: il 3 diventa Magistrale già da VA 21); il 20 resta Maldestro. Le altre
+    Prove seguono il §1.7 (successo automatico da 20, salvo le Prove obbligatorie del §1.7.1). →
+    `regole.json` → `prova` (`tiro_sempre`, `magistrale_migliorato`; TODO tolto), `src/prova.js`
+    (`esitoProva` con `tipo`, `limiteMagistrale`), promemoria di «Attacca!» e «Lancia!» (`src/attacco.js` →
+    `promemoriaMagistraleNaturale`).
+72. **Batterie oltre i 5 PM: peso, Qualità, PS e PI** (A.75; E&L del 02/10/2026, decisione 16; Equipaggiamento
+    0.5 §10.1). Tutte le Batterie del campionario usano il supporto base: 0,2 kg, Qualità Comune, PS Integrità 10,
+    3 PI, anche oltre i 5 PM e anche per le Batterie Matrice; non vale per Pietra della Vigilanza e Guanti. →
+    `artefatti.json` (19 TODO tolti; `tools/lotti/lotto_artefatti_cap10.mjs`, con il catalogo del cap. 10:
+    Batterie Matrice, Schegge instabili, Pietra, Guanti). REP «Epica» nuova sigla (`index.json`, EP), con la
+    domanda A.83 sulla Prova di ricerca.
+73. **Katana Ryūjin** (A.62; E&L del 02/10/2026, decisione 15). Natura Naturale; attiva 1d8 + 1 + 1d6 con la
+    proprietà Plasma, un solo colpo (Difese e AR una volta); «Plasma» non è una Natura. → `armi_corporative.json`
+    (attivazione: natura Naturale, «anche» la proprietà Plasma).
+74. **Esoscheletri e armature servoassistite** (A.63; decisione 18). NEC Rossi di formato dedicato al modello,
+    con autonomia, ricarica e ricambio della scheda (XO-102 8 h, 1.500 cr; Vulkan 8 h, 3.000; APE 6 h, 2.000;
+    Mk IV Felis 8 h, 2.000; Powersuit 8 h, 2.000; Shoa Ace Custom 6 h, 2.500; Demonhunter 6 h, 2.500);
+    sostituzione 1 minuto; nessuna intercambiabilità implicita. → `alimentazione` in ore (riserva al tavolo).
+75. **NEC Blu IAS** (A.64; decisione 20). 1.000 Lx = 20 cariche IAS da 50 Lx: Blink 20, Power Blink 10,
+    Antigrav 20 Round, Mirrorshard 20 minuti, Disturbatore 20 Round, Silent 20 minuti; ricambio 1.000 cr,
+    ricarica 50 cr in 1 ora, sostituzione 1 minuto a sistema spento. → `alimentazione` a usi dei 5 moduli.
+76. **Modulo Blu del Gehemmapuker; niente travaso fra NEC** (A.67; decisione 14). Il Gehemmapuker usa
+    `nec:modulo-blu` (2.500 Lx, 50 Lx per attacco, 50 getti; cambio 1 AzP); una sola voce di catalogo. Regola
+    generale: l'energia di un NEC non si riversa in un altro; si sposta solo il NEC fisico. → `nec.json` (cella
+    e compatibilità del Modulo Blu), voce `munizioni:pacco-nec-gehemmapuker` tolta con migrazione
+    (`index.json` → `rif_sostituiti`), `regole.json` → `nec.travaso`; `src/ricarica.js` accetta un NEC come cella.
+77. **Dotazioni con più schede** (A.65; decisioni 10 e 11). Nuova scheda «Corredo agricolo Standard —
+    Allevamento» (2 kg, 200 cr, CO, +0); la coltivazione resta sugli Attrezzi agricoli di base. Strumento
+    musicale portatile a scelta, acustico (2 kg, 400 cr) o elettronico (3 kg, 800 cr, NEC Verde compatto), senza
+    sovrapprezzo. → `strumenti_professionali.json`, `dotazioni.json` (`rif_per_sotto`, sotto-scelta
+    «strumento_musicale» nel wizard), `src/equipaggiamento.js` → `schedaDiDotazione`.
+78. **Pasto con il Corredo da cucina** (A.66; decisione 19). 30 minuti per fino a quattro persone, senza Prova;
+    NEC Rosso standard da 500 Lx, 50 Lx a preparazione (10); cambio 1 AzP; ricarica 1 ora, 5 cr. → TODO tolto
+    (i dati coincidevano).
+79. **Interfaccia neurale standard** (A.68; decisione 21). 3.500 cr + 2.000 di installazione, 2 UMN; profilo
+    come la CYBERTRONIC; associazione a equipaggiamento CYBERTRONIC con 1 minuto e una Prova di Tecnologia.
+    → `impianti.json` (prezzo: si compra).
+80. **Cartuccia chirurgica e set chirurgico** (A.71; decisione 17). Un solo consumabile, «Cartuccia chirurgica —
+    set sterile monouso», 500 cr o 2.500 per cinque, consumato all'inizio di ogni procedura. → `sanitario.json`
+    (una voce, con la confezione), voci del set tolte con migrazione (la confezione diventa cinque cartucce).
+81. **Rituale di Rigenerazione: i quattro punti** (A.74; E&L del 02/10/2026, decisioni 1, 2, 12, 13). 1. Il VA
+    pertinente del Canale è il suo VA di Rituali (contributo +0…+4 per fascia, massimo +5 in tutto; il +2 della
+    costruzione Magistrale del supporto è a parte e non consuma il limite). 2. Dopo un Successo Magistrale il
+    costo si dimezza una volta (per eccesso) e la ripartizione è libera: somma uguale al nuovo costo, nessuno
+    oltre la quota dichiarata, Officiante almeno metà Grado, ogni Canale con un contributo almeno 1 PM, quello con
+    quota 0 resta a 0 (supera la scelta provvisoria «i Canali tengono la quota»). 3. Il Rituale diretto si paga
+    solo con PM personali di Officiante e Canali; l'attivazione da Artefatto segue Esclusiva/Universale (§26.2).
+    4. Le versioni dipendono da Ritualista (Minore 9–10, Maggiore 12–18) e dalla procedura, non dal livello
+    massimo degli Incantesimi. → `regole.json` → `rituali` (`magistrale`, `bonus_costruzione_magistrale`,
+    `decisioni`; TODO tolti), `incantesimi.json` (Rigenerazione: `decisioni`), `src/lancio.js` →
+    `ripartizioneMagistrale`, passo Risultato del Rituale in «Lancia!» con le quote modificabili.
+82. **Capolavoro del Corazzaio** (A.61, per il Corazzaio; E&L del 02/10/2026, decisione 4). Il «+1 Protezione»
+    dell'armatura Capolavoro diventa +1 a una sola Contromisura numerica scelta alla costruzione (Ignifugo,
+    Termico, Isolante, Dissipante, Imbottita, Anticorrosivo): assente vale 1, con valore X passa a X + 1; non
+    aumenta l'AR né riduce i danni ai PV; Riflettente esclusa. → `classi.json` (Corazzaio:
+    `capolavoro_armatura`, TODO tolto), scelta sulla voce dell'armatura (`capolavoro`) nell'Inventario,
+    effetto «contromisura» nelle Resistenze e riga di provenienza nell'AR (`src/equipaggiamento.js` →
+    `effettoCapolavoro`, `src/protezione.js`). Restano aperte per A.61 gli altri Talenti del censimento.
+83. **Formato dei nemici** (A.73; E&L del 02/10/2026, decisioni 5–9). Formato confermato, a valori già
+    calcolati e comune all'app e al futuro bestiario, con quattro campi in più: azioni per turno (AzP, AzM ed
+    eccezioni), Contromisure con nomi e valori, Abilità rilevanti con VA, talenti e capacità speciali con effetto,
+    costo e limiti. Le sei Caratteristiche nel bestiario, facoltative nell'app (mancante ≠ 0, nessun
+    ricalcolo); parità d'Iniziativa DES → INT → 1d10 se manca una Caratteristica. Al tavolo PV attuali e
+    massimi, Ferita e Menomazioni con la procedura dei PG (§5.14); nessun Affaticamento. Incantesimi con
+    «Lancia!» quando ci sono nome, versione, VA di lancio e costo in PM (PM dalla riserva del nemico);
+    incompleti, promemoria. Movimento: Passo obbligatorio, Corsa 2× e Scatto 3× se mancano, «non consentito»
+    distinto da «mancante». → `data/formato_nemici.json` (TODO tolti, `decisioni`, `tavolo`, `contromisure`,
+    campi `azioni`, `contromisure`, `abilita`, `capacita`, incantesimi con `livello`, movimento «non_consentito»),
+    `src/validate.js` (`oppure`, sorgenti `abilita` e `contromisure`). Il Tavolo del Master (branch
+    `tavolo-direttore`) applica Ferite, «Lancia!» e i campi nuovi.

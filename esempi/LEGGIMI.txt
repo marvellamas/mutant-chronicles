@@ -7,6 +7,7 @@ Personaggi e nemici inventati per provare il Tavolo del Master senza toccare i p
 - Torvald Krane (Bauhaus, Assaltatore, 6o livello): combattente corpo a corpo, scudo e armatura.
 - Fratello Anselmo Viri (Fratellanza, Custode, 3o livello): Taumaturgo con due batterie e il Bordone Templare.
 - Nadia Ferro (Cybertronic, Tecnico, 4o livello): impianti cibernetici e un chip.
+- Aiko Tenzan (Mishima, Lottatore, 5o livello): Tecniche Interiori della Scuola della Terra e del Lottatore (tools/genera_esempio_tecniche.mjs).
 - nemici/predone-delle-lande.json: nemico debole, da gruppo.
 - nemici/legionario-oscuro.json: nemico forte.
 - nemici/umani/: bestiario umano proposto, 10 tipi in tre gradi (Recluta 2o livello, Veterano 5o,

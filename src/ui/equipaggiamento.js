@@ -8,12 +8,13 @@
 import { h } from './dom.js';
 import { info } from './tooltip.js';
 import {
-  TIPI, NOMI_TIPI, STATI, NOMI_STATI, catalogo, risolvi, opzioniCascata, cercaNelCatalogo, statoIniziale, puoMontare, infoArtefattoVoce,
-  regoleSintonizzazione, coloriChroma, testoEffettoOggetto, AMBITI_EFFETTO, NOMI_AMBITI, statiInventario, testoCura,
+  TIPI, NOMI_TIPI, STATI, NOMI_STATI, catalogo, risolvi, opzioniCascata, cercaNelCatalogo, statoIniziale, puoMontare, rinforzoCompatibile, infoArtefattoVoce,
+  regoleSintonizzazione, coloriChroma, testoEffettoOggetto, regolaCapolavoro, AMBITI_EFFETTO, NOMI_AMBITI, statiInventario, testoCura,
 } from '../equipaggiamento.js';
 import { pesoVoce } from '../carico.js';
 
 import { GRUPPI_EQUIPAGGIAMENTO, SEZIONI_INVENTARIO, sezioneInventario } from '../palette.js';
+import { tipoRiserva, alimentazione as alimentazioneRiserva, nomeRiserva, nomeAlimentazione } from '../fonti.js';
 import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 
 const nuovoUid = () => `e${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
@@ -43,14 +44,14 @@ function elencoVoci(ctx) {
   const chiave = ctx.inventario ? 'sezioniInventarioChiuse' : 'gruppiEquipChiusi';
   const chiusi = new Set(leggiImpostazioni()[chiave] ?? []);
   const gruppi = ctx.inventario
-    ? SEZIONI_INVENTARIO.map((s) => ({ id: s.id, titolo: s.titolo, colore: s.colore, voci: risolte.filter((r) => sezioneInventario(r)?.id === s.id) }))
+    ? SEZIONI_INVENTARIO.map((s) => ({ id: s.id, titolo: s.titolo, colore: s.colore, colonna: s.colonna, sotto: !!s.sottosezioneDi, voci: risolte.filter((r) => sezioneInventario(r)?.id === s.id) }))
     : GRUPPI_EQUIPAGGIAMENTO.map((g) => ({ id: g.tipo, titolo: g.titolo, colore: g.colore, voci: risolte.filter((r) => (TIPI.includes(r.tipo) ? r.tipo : 'altro') === g.tipo) }));
-  return h('div', { class: 'gruppi-equip' }, gruppi.map((g) => {
+  const sezione = (g) => {
     const delGruppo = g.voci;
     if (!delGruppo.length) return null;
     const aperto = !chiusi.has(g.id);
     const attivi = delGruppo.filter((r) => r.attivo);
-    return h('section', { class: `gruppo-equip${aperto ? '' : ' chiuso'}` },
+    return h('section', { class: `gruppo-equip${aperto ? '' : ' chiuso'}${g.sotto ? ' sottosezione' : ''}` },
       h('details', {
         open: aperto,
         ontoggle: (e) => {
@@ -65,7 +66,71 @@ function elencoVoci(ctx) {
       h('ul', { class: 'elenco-equip' }, delGruppo.map((r) => voceEquip(ctx, r, risolte, cambia)))),
       !aperto && attivi.length ? h('ul', { class: 'elenco-compatto', 'aria-label': `${g.titolo}: oggetti attivi` }, attivi.map((r) => h('li', {},
         h('strong', {}, r.nome), h('small', { class: 'sigla' }, ` · ${NOMI_STATI[r.voce.stato] ?? ''}${r.voce.quantita > 1 ? ` · ×${r.voce.quantita}` : ''}`)))) : null);
-  }));
+  };
+  // Inventario (richiesta di Davide del 02/10): due colonne con le sezioni nell'ordine dei dati
+  // (src/palette.js → SEZIONI_INVENTARIO, «colonna»); su schermi stretti una colonna sola, prima la
+  // sinistra poi la destra. Nel wizard i gruppi restano in una colonna.
+  if (ctx.inventario) {
+    const colonna = (lato) => h('div', { class: `colonna-inventario ${lato}` }, gruppi.filter((g) => (g.colonna ?? 'destra') === lato).map(sezione));
+    return h('div', { class: 'gruppi-equip inventario-colonne' }, colonna('sinistra'), colonna('destra'));
+  }
+  return h('div', { class: 'gruppi-equip' }, gruppi.map(sezione));
+}
+
+/**
+ * «Montata su:» di un rinforzo (richiesta di Davide del 02/10; Armamenti §7.11.2, §7.23.9): le sole
+ * armature indossate e compatibili, «Indossato da solo» per soprabiti e mantelli (indossabile_da_solo,
+ * regole.json → rinforzi), nello zaino e, nell'Inventario, il deposito comune. Se l'armatura su cui è
+ * montato non è più indossata il rinforzo resta montato su di lei (rinforzi.armatura_tolta) e qui si dice.
+ */
+/**
+ * Armatura Capolavoro del Corazzaio (A.61, E&L del 02/10; classi.json → capolavoro_armatura): la Contromisura
+ * numerica scelta alla costruzione, +1 (assente: 1). Si salva sulla voce («capolavoro»), l'effetto è nelle
+ * Resistenze e una riga nella provenienza dell'AR.
+ */
+function sceltaCapolavoro(ctx, r, cambia) {
+  const R = regolaCapolavoro(ctx.dati);
+  if (!R) return null;
+  const v = r.voce;
+  return h('label', { class: 'campo campo-riga capolavoro', title: R.decisione },
+    h('span', {}, `Capolavoro (${R.talento}): `),
+    h('select', { onchange: (e) => cambia(v.uid, { capolavoro: e.target.value ? { contromisura: e.target.value } : undefined }) },
+      h('option', { value: '', selected: !v.capolavoro }, 'no'),
+      R.contromisure.map((x) => h('option', { value: x.nome, selected: v.capolavoro?.contromisura === x.nome }, `${x.nome} +${R.valore} (contro ${x.effetto})`))));
+}
+
+function montataSu(ctx, r, risolte, cambia) {
+  const v = r.voce;
+  const armature = risolte.filter((t) => t.tipo === 'armatura' && t.uid !== r.uid);
+  const compatibili = armature.filter((t) => t.attivo && rinforzoCompatibile(r, t));
+  const su = v.stato === 'in_uso' && v.montato_su ? armature.find((t) => t.uid === v.montato_su) ?? null : null;
+  // «in uso» senza armatura (salvataggi in cui il rinforzo non era stato montato): da scegliere
+  const valore = su ? `arm:${su.uid}` : v.stato === 'in_uso' ? 'scegli' : v.stato === 'indossata' ? 'da-solo' : v.stato === 'deposito' ? 'deposito' : 'zaino';
+  const scelte = [...compatibili, ...(su && !compatibili.includes(su) ? [su] : [])];
+  const scegli = (x) => {
+    if (x.startsWith('arm:')) cambia(v.uid, { stato: 'in_uso', montato_su: x.slice(4) });
+    else cambia(v.uid, { stato: x === 'da-solo' ? 'indossata' : x, montato_su: undefined });
+  };
+  const nota = su && !su.attivo ? `Resta montato su ${su.nome}, che non è indossata: nessun effetto finché non la indossi (regole.json → rinforzi).`
+    : su && !rinforzoCompatibile(r, su) ? `${su.nome} non ammette questo rinforzo: nessun effetto (§7.11.2).`
+      : v.stato === 'in_uso' && !su ? 'Scegli l’armatura su cui è montato.'
+        : !compatibili.length && !r.def?.indossabile_da_solo ? 'Nessuna armatura indossata lo ammette: indossane una compatibile per montarlo.' : null;
+  return h('div', { class: 'montata-su' },
+    h('label', { class: 'campo-inline' }, 'Montata su: ',
+      h('select', { onchange: (e) => scegli(e.target.value), 'aria-label': `${r.nome}: montata su` },
+        valore === 'scegli' ? h('option', { value: '', disabled: true, selected: true }, '— scegli l’armatura —') : null,
+        scelte.map((a) => h('option', { value: `arm:${a.uid}`, selected: valore === `arm:${a.uid}` }, `${a.nome}${a.attivo ? '' : ' (non indossata)'}`)),
+        r.def?.indossabile_da_solo ? h('option', { value: 'da-solo', selected: valore === 'da-solo' }, 'Indossato da solo') : null,
+        h('option', { value: 'zaino', selected: valore === 'zaino' }, NOMI_STATI.zaino),
+        ctx.inventario ? h('option', { value: 'deposito', selected: valore === 'deposito' }, NOMI_STATI.deposito) : null)),
+    valore === 'da-solo' ? h('small', { class: 'nota' }, ` ${testoDaSolo(ctx.dati)}`) : null,
+    nota ? h('p', { class: 'nota motivo' }, nota) : null);
+}
+
+/** Che cosa dà un rinforzo indossato da solo, dalla regola nei dati (regole.json → rinforzi.da_solo). */
+function testoDaSolo(dati) {
+  const d = dati.regole?.rinforzi?.da_solo ?? {};
+  return d.ar === 'propria' ? 'Da solo: AR del rinforzo, senza armatura.' : 'Da solo: nessuna AR (§7.23.4: non è un profilo autonomo di armatura), in attesa di Davide (A.80).';
 }
 
 /** Una voce dell'elenco, completa di stato, quantità, peso e note. */
@@ -95,7 +160,9 @@ function voceEquip(ctx, r, risolte, cambia) {
         type: 'button', class: 'btn pericolo piccolo-btn', 'aria-label': `Togli ${r.nome}`,
         onclick: () => { if (confirm(`Togliere «${r.nome}» dall’equipaggiamento?`)) ctx.aggiorna(voci.filter((x) => x.uid !== v.uid)); },
       }, 'Togli')),
-    stati.length && (!r.fuoriCatalogo || ctx.inventario) ? h('div', { class: 'stati-equip', role: 'radiogroup', 'aria-label': `Stato di ${r.nome}` },
+    r.tipo === 'rinforzo' && !r.fuoriCatalogo ? montataSu(ctx, r, risolte, cambia) : null,
+    ctx.inventario && r.tipo === 'armatura' && !r.fuoriCatalogo ? sceltaCapolavoro(ctx, r, cambia) : null,
+    r.tipo !== 'rinforzo' && stati.length && (!r.fuoriCatalogo || ctx.inventario) ? h('div', { class: 'stati-equip', role: 'radiogroup', 'aria-label': `Stato di ${r.nome}` },
       stati.map((st) => h('button', {
         type: 'button', role: 'radio', 'aria-checked': String(v.stato === st),
         class: `stato-equip${v.stato === st ? ' attivo' : ''}${st === 'deposito' ? ' stato-deposito' : ''}`, onclick: () => cambia(v.uid, { stato: st }),
@@ -106,7 +173,7 @@ function voceEquip(ctx, r, risolte, cambia) {
       : art ? h('label', { class: 'campo-inline' },
         h('input', { type: 'checkbox', checked: v.sintonizzato === true, onchange: (e) => cambia(v.uid, { sintonizzato: e.target.checked || undefined }) }),
         ` Sintonizzato (SnT ${art.sintonizzazione}, §7.10)`) : null,
-    art?.contenitore ? h('p', { class: 'nota' }, `Chroma ${art.contenitore.energia}, ${art.contenitore.capacita_pm} PM${art.contenitore.integrato ? ', riserva integrata' : ''}.`) : null,
+    art?.contenitore ? h('p', { class: 'nota' }, `Chroma ${art.contenitore.energia}, ${art.contenitore.capacita_pm} PM${art.contenitore.integrato ? `, riserva integrata: ${nomeRiserva(tipoRiserva(art.contenitore, dati), dati)}, proprietà ${nomeAlimentazione(alimentazioneRiserva(art.contenitore, dati), dati)} (Magia §26.2)` : ''}.`) : null,
     // E&L 2 (A.19): acquistato pieno; trovato con la carica stabilita dal Direttore
     contenitoreSingolo ? h('div', { class: 'campo-inline' },
       h('label', {}, h('input', { type: 'checkbox', checked: Number.isInteger(v.pm_iniziali), onchange: (e) => cambia(v.uid, { pm_iniziali: e.target.checked ? 0 : undefined }) }),
@@ -304,6 +371,16 @@ function pannelloAggiungi(ctx) {
             colori.map((x) => h('option', { value: x, selected: p.energia === x }, x)))) : null,
         p.tipo === 'artefatto' ? h('label', { class: 'campo' }, h('span', {}, 'Capacità (PM)'),
           h('input', { type: 'number', min: 1, step: 1, value: p.capacita, oninput: (e) => { p.capacita = e.target.value; } })) : null,
+        // Magia §26.2: con un incantesimo infuso la riserva è integrata; il progetto dice se è Batteria o
+        // Cariche e se la proprietà è Esclusiva o Universale (predefiniti: Cariche, Esclusiva)
+        p.tipo === 'artefatto' ? h('label', { class: 'campo', title: dati.regole.chroma.riserve?.tipi ? Object.values(dati.regole.chroma.riserve.tipi).map((x) => `${x.nome}: ${x.testo}`).join(' · ') : null },
+          h('span', {}, 'Riserva integrata (con incantesimo infuso)'),
+          h('select', { onchange: (e) => { p.riserva = e.target.value; } },
+            Object.entries(dati.regole.chroma.riserve?.tipi ?? {}).map(([k, x]) => h('option', { value: k, selected: (p.riserva || dati.regole.chroma.riserve.integrata_predefinita) === k }, x.nome)))) : null,
+        p.tipo === 'artefatto' ? h('label', { class: 'campo', title: dati.regole.chroma.riserve?.alimentazioni ? Object.values(dati.regole.chroma.riserve.alimentazioni).map((x) => `${x.nome}: ${x.testo}`).join(' · ') : null },
+          h('span', {}, 'Proprietà infusa'),
+          h('select', { onchange: (e) => { p.alimentazione = e.target.value; } },
+            Object.entries(dati.regole.chroma.riserve?.alimentazioni ?? {}).map(([k, x]) => h('option', { value: k, selected: (p.alimentazione || dati.regole.chroma.riserve.proprieta_predefinita) === k }, x.nome)))) : null,
         // Equipaggiamento §1.6: peso per unità, per il carico della modalità tavolo
         h('label', { class: 'campo' }, h('span', {}, 'Peso (kg per unità)'),
           h('input', { type: 'number', min: 0, step: 0.1, value: p.peso ?? '', oninput: (e) => { p.peso = e.target.value; } }))),
@@ -337,9 +414,14 @@ function pannelloAggiungi(ctx) {
               const capacita = Number(p.capacita);
               if (!Number.isInteger(capacita) || capacita < 1) { alert('Indica la capacità del contenitore in PM (intero ≥ 1).'); return; }
               Object.assign(personalizzato, { energia: p.energia, capacita_pm: capacita });
+              // Magia §26.2: tipo di riserva e alimentazione, solo per la riserva integrata di un incantesimo infuso
+              if (personalizzato.infuso) {
+                if (p.riserva) personalizzato.riserva = p.riserva;
+                if (p.alimentazione) personalizzato.alimentazione = p.alimentazione;
+              }
             }
           }
-          Object.assign(p, { nome: '', abilita: '', danno: '', ar: '', potenza: '', energia: '', capacita: '', peso: '', soloPassive: false, infuso: '', livelloInfuso: '' });
+          Object.assign(p, { nome: '', abilita: '', danno: '', ar: '', potenza: '', energia: '', capacita: '', peso: '', soloPassive: false, infuso: '', livelloInfuso: '', riserva: '', alimentazione: '' });
           aggiungiVoce({ uid: nuovoUid(), rif: null, personalizzato, stato: statoIniziale(personalizzato.tipo, ctx.voci, dati), quantita: 1, note: '' });
         },
       }, 'Aggiungi oggetto personalizzato')));

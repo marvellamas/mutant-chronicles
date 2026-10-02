@@ -8,6 +8,7 @@ import { calcolaCarico } from './carico.js';
 import { aggiungiDanno, infoArtefatto } from './equipaggiamento.js';
 import { effettiTalenti, bonusTalentiAccesi } from './talenti.js';
 import { calcolaAR, oggettiRotti } from './protezione.js';
+import { chiaviTecnicheAttive, effettiTecniche } from './tecniche.js';
 import { riga, provenienza, righeDaScomposizione, righeRegoleAbilita, righeRegoleSalvezza } from './provenienza.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
@@ -192,18 +193,21 @@ function valoriUsi(usi, effettivo, bonusOn) {
  * situazionali con l'interruttore acceso (sessione → talentiAccesi), usi specifici come valore a parte.
  * Con l'interruttore «Bonus dei Talenti» spento non contano: la provenienza li mostra barrati.
  */
-function talentiAbilita(effetti, accesi, on, a) {
+function talentiAbilita(effetti, accesi, vale, a) {
   const miei = effetti.filter((e) => (e.tipo ?? 'va') === 'va' && e.abilita === a.nome);
   const attivi = miei.filter((e) => e.ambito === 'generale' || (e.ambito === 'situazionale' && accesi.has(e.chiave)));
   const etichetta = (e) => (e.ambito === 'situazionale' ? `${e.talento} (condizione attiva)` : e.talento);
   return {
-    voci: on ? attivi.map((e) => voce(etichetta(e), e.valore, 'talento')) : [],
-    spenti: on ? [] : attivi.map((e) => ({ ...riga(etichetta(e), e.valore, 'Talenti spenti: non conta'), escluso: true, barrato: true })),
-    disponibili: miei.filter((e) => e.ambito === 'situazionale' && (!on || !accesi.has(e.chiave)))
+    voci: attivi.filter(vale).map((e) => voce(etichetta(e), e.valore, fonteEffetto(e))),
+    spenti: attivi.filter((e) => !vale(e)).map((e) => ({ ...riga(etichetta(e), e.valore, 'Talenti spenti: non conta'), escluso: true, barrato: true })),
+    disponibili: miei.filter((e) => e.ambito === 'situazionale' && (!vale(e) || !accesi.has(e.chiave)))
       .map((e) => ({ uid: e.chiave, oggetto: e.talento, valore: e.valore, condizione: e.condizione, fonte: e.fonte, talento: true })),
-    usi: on ? miei.filter((e) => e.ambito === 'uso_specifico') : [],
+    usi: miei.filter((e) => e.ambito === 'uso_specifico' && vale(e)),
   };
 }
+
+/** Categoria della voce di un effetto di Talento o di Tecnica in corso (nota della provenienza). */
+const fonteEffetto = (e) => (e.tecnica ? 'tecnica' : 'talento');
 
 /** Voci delle condizioni per un'Abilità: [{ etichetta, valore, fonte }]. */
 function vociCondizioniAbilita(condizioni, abilita, dati) {
@@ -241,11 +245,17 @@ export function applicaCondizioni(scheda, sessione, dati) {
   scheda.bonusTalenti = talOn;
   scheda.effettiTalenti = effT;
   scheda.talentiAccesi = [...talAccesi];
+  // Tecniche Interiori in corso (src/tecniche.js): stesso schema dei Talenti, valgono finché sono attive
+  // e anche con «Bonus dei Talenti» spento (sono attivazioni pagate, non Talenti passivi)
+  const effTec = alTavolo ? effettiTecniche(sessione, dati) : [];
+  scheda.effettiTecniche = effTec;
+  const effV = [...effT, ...effTec];
+  const vale = (e) => talOn || !!e.tecnica;
   const spento = (e, etichetta = e.talento) => ({ ...riga(etichetta, e.valore, 'Talenti spenti: non conta'), escluso: true, barrato: true });
   scheda.abilita = scheda.abilita.map((a) => {
     const cond = vociCondizioniAbilita(condizioni, a, dati);
     const ogg = effettiOggettiAbilita(effettiOggetti, accesi, a);
-    const tal = talentiAbilita(effT, talAccesi, talOn, a);
+    const tal = talentiAbilita(effV, talAccesi, vale, a);
     for (const e of tal.usi) (ogg.usi.get(e.uso) ?? ogg.usi.set(e.uso, []).get(e.uso)).push({ oggetto: e.talento, valore: e.valore, uso: e.uso, condizione: e.condizione, fonte: e.fonte, talento: true });
     // usi specifici degli Stati (A Terra: equilibrio; Assordato: udito): valore a parte, VA generale invariato
     for (const c of condizioni) {
@@ -283,30 +293,35 @@ export function applicaCondizioni(scheda, sessione, dati) {
     return x;
   });
   scheda.oggettiAccesi = effettiOggetti.filter((e) => e.ambito === 'situazionale' && accesi.has(e.uid));
+  // attivazioni di Artefatti accese al tavolo (Guanti da Combattimento Mistico, Armamenti §7.24): oggetto in uso
+  if (scheda.equipaggiamento) scheda.equipaggiamento.attivazioniAccese = (scheda.equipaggiamento.attivazioniArtefatti ?? []).filter((x) => x.attivo && accesi.has(x.chiave) && !rotti.has(x.uid));
 
   for (const [id, s] of Object.entries(scheda.salvezze ?? {})) {
     const cond = condizioni.filter((c) => c.effetto.salvezze).map((c) => voce(c.etichetta, c.effetto.salvezze, c.fonte));
     // Talenti generali, o situazionali accesi, sulla Prova Salvezza (Scudo Spirituale)
-    const attiviT = effT.filter((e) => e.tipo === 'salvezza' && e.salvezza === id
+    const attiviT = effV.filter((e) => e.tipo === 'salvezza' && e.salvezza === id
       && (e.ambito === 'generale' || (e.ambito === 'situazionale' && talAccesi.has(e.chiave))));
     const etichettaT = (e) => (e.ambito === 'situazionale' ? `${e.talento} (condizione attiva)` : e.talento);
-    const vociT = talOn ? attiviT.map((e) => voce(etichettaT(e), e.valore, 'talento')) : [];
+    const vociT = attiviT.filter(vale).map((e) => voce(etichettaT(e), e.valore, fonteEffetto(e)));
     s.scomposizione = [voce('Valore da regole', s.totale, 'regole'), ...vociT, ...cond];
     s.effettivo = somma(s.scomposizione);
     s.daRegole = s.totale;
-    s.provenienza = provenienza([...righeRegoleSalvezza(s, scheda), ...righeDaScomposizione(vociT), ...(talOn ? [] : attiviT.map((e) => spento(e, etichettaT(e)))), ...righeDaScomposizione(cond)], s.effettivo);
+    s.provenienza = provenienza([...righeRegoleSalvezza(s, scheda), ...righeDaScomposizione(vociT), ...attiviT.filter((e) => !vale(e)).map((e) => spento(e, etichettaT(e))), ...righeDaScomposizione(cond)], s.effettivo);
   }
-  // usi specifici dei Talenti sulle Prove Salvezza e sulle Prove di Caratteristica: valori a parte.
+  // usi specifici dei Talenti (e delle Tecniche in corso) sulle Prove Salvezza e sulle Prove di
+  // Caratteristica: valori a parte.
   // Giocatore §8.6: strutturale + Prova Salvezza Migliorata + Resistenza specifica non oltre il tetto
-  scheda.usiSalvezzeTalenti = talOn ? effT.filter((e) => e.tipo === 'salvezza' && e.ambito === 'uso_specifico').map((e) => {
+  scheda.usiSalvezzeTalenti = effV.filter((e) => e.tipo === 'salvezza' && e.ambito === 'uso_specifico' && vale(e)).map((e) => {
     const s = e.salvezza ? scheda.salvezze?.[e.salvezza] : null;
     if (!s) return { talento: e.talento, uso: e.uso, salvezza: null, nome: null, valore: null, modificatore: e.valore, condizione: e.condizione, fonte: e.fonte };
     const mod = e.resistenza ? Math.min(s.tetto ?? Infinity, s.totale + e.valore) - s.totale : e.valore;
     return { talento: e.talento, uso: e.uso, salvezza: e.salvezza, nome: s.nome, valore: s.effettivo + mod, modificatore: mod, limitato: mod < e.valore, condizione: e.condizione, fonte: e.fonte };
-  }) : [];
-  scheda.usiCaratteristicheTalenti = talOn ? effT.filter((e) => e.tipo === 'caratteristica').map((e) => ({
+  });
+  scheda.usiCaratteristicheTalenti = effV.filter((e) => e.tipo === 'caratteristica' && vale(e)).map((e) => ({
     talento: e.talento, uso: e.uso, caratteristiche: e.caratteristiche, valore: e.valore, condizione: e.condizione, fonte: e.fonte,
-  })) : [];
+  }));
+  // sensi delle Tecniche in corso (Vista Felina, Eco del Pipistrello): { nome, raggio_q, fonte, condizione }
+  scheda.sensi = effTec.filter((e) => e.tipo === 'senso').map((e) => ({ nome: e.senso, raggioQ: e.raggio_q, fonte: e.talento, condizione: e.condizione }));
 
   const eq = scheda.equipaggiamento;
   if (eq) {
@@ -337,16 +352,14 @@ export function applicaCondizioni(scheda, sessione, dati) {
       const def = (eq.oggetti ?? []).find((o) => o.uid === String(w.uid).split(':')[0])?.def ?? null;
       const valeT = (e) => (e.attacchi === 'tutti' || (e.attacchi === 'ravvicinati') === (w.tipo === 'arma_ravvicinata'))
         && (e.armi !== 'artefatto' || !!infoArtefatto(def, dati));
-      const dannoT = effT.filter((e) => e.tipo === 'danno' && e.ambito === 'generale' && valeT(e));
+      const dannoT = effV.filter((e) => e.tipo === 'danno' && e.ambito === 'generale' && valeT(e));
       if (dannoT.length && w.danno) {
-        if (talOn) {
-          const n = dannoT.reduce((s, e) => s + e.valore, 0);
-          w.danno = { una_mano: aggiungiDanno(w.danno.una_mano, n), due_mani: aggiungiDanno(w.danno.due_mani, n) };
-          if (w.righeDanno) w.righeDanno = [...w.righeDanno, ...dannoT.map((e) => riga(e.talento, e.valore, 'Talento'))];
-        } else if (w.righeDanno) w.righeDanno = [...w.righeDanno, ...dannoT.map((e) => spento(e))];
+        const n = dannoT.filter(vale).reduce((s, e) => s + e.valore, 0);
+        if (n) w.danno = { una_mano: aggiungiDanno(w.danno.una_mano, n), due_mani: aggiungiDanno(w.danno.due_mani, n) };
+        if (w.righeDanno) w.righeDanno = [...w.righeDanno, ...dannoT.map((e) => (vale(e) ? riga(e.talento, e.valore, e.tecnica ? 'Tecnica Interiore (§8.9)' : 'Talento') : spento(e)))];
       }
-      const attaccoT = effT.filter((e) => e.tipo === 'attacco' && e.ambito === 'generale' && valeT(e));
-      const cond = [...condDi(w.abilita), ...(talOn ? attaccoT.map((e) => voce(e.talento, e.valore, 'talento')) : []), ...(w.condizioneArma?.va ? [voce(w.condizioneArma.nome, w.condizioneArma.va, 'condizione')] : [])];
+      const attaccoT = effV.filter((e) => e.tipo === 'attacco' && e.ambito === 'generale' && valeT(e));
+      const cond = [...condDi(w.abilita), ...attaccoT.filter(vale).map((e) => voce(e.talento, e.valore, fonteEffetto(e))), ...(w.condizioneArma?.va ? [voce(w.condizioneArma.nome, w.condizioneArma.va, 'condizione')] : [])];
       w.scomposizione = [...(w.componenti ?? []).map((c) => voce(c.nome, c.valore, c.fonte ?? 'equipaggiamento')), ...cond];
       w.vaEffettivo = w.va === null ? null : w.va + somma(cond);
       w.vaDaRegole = w.va === null ? null : daRegole(w.scomposizione);
@@ -402,7 +415,9 @@ export function applicaCondizioni(scheda, sessione, dati) {
   if (eq) {
     // AR al tavolo: effetti situazionali accesi, oggetti Rotti esclusi (docs/ricognizione-ar-pi.md)
     const talenti = (scheda.classi ?? []).flatMap((c) => (c.talenti ?? []).map((t) => t.nome));
-    eq.arEffettiva = calcolaAR(eq, dati, { talenti, accesi, rotti, tecniche: (scheda.tecniche ?? []).map((t) => t.id) });
+    // A.48: Aura di Resistenza e Pelle di Rinoceronte valgono finché sono attive («Attiva», §8.9.1)
+    const conTecniche = new Set([...accesi, ...chiaviTecnicheAttive(sessione)]);
+    eq.arEffettiva = calcolaAR(eq, dati, { talenti, accesi: conTecniche, rotti, tecniche: (scheda.tecniche ?? []).map((t) => t.id) });
     eq.rotti = [...rotti];
     for (const w of eq.armi) w.rotta = rotti.has(String(w.uid).split(':')[0]);
     for (const p of eq.protezioni) p.rotta = rotti.has(String(p.uid).split(':')[0]);
@@ -454,6 +469,7 @@ export function valoriTavolo(scheda, sessione, dati) {
   const vociAssalto = movProtezioni < 0 ? assalto.map((e) => voce(e.talento, Math.min(e.valore, -movProtezioni), 'talento')).slice(0, 1) : [];
   const carico = isOggetto(sessione) && r.carico ? (scheda.carico ?? calcolaCarico(scheda, sessione, dati)) : null;
   const liv = carico?.livello ?? null;
+  const tecMov = scheda.effettiTecniche ?? [];
   const movimento = {};
   for (const modo of ['passo', 'corsa', 'scatto']) {
     const note = [];
@@ -466,6 +482,11 @@ export function valoriTavolo(scheda, sessione, dati) {
     // E&L 5 (A.31): oltre il carico massimo Movimento 0 Q
     if (liv?.movimento_zero) { disponibile = modo === 'passo'; if (modo === 'passo') voci.push(voce(liv.nome, -Math.max(0, somma(voci)), 'carico')); else note.push(`${liv.nome}: Movimento 0 Q (§5.2.6)`); }
     if (liv?.solo_passo && modo !== 'passo') { disponibile = false; note.push(`${liv.nome}: soltanto Passo (§5.2.6)`); }
+    // Tecniche in corso (§8.9): Corsa di Nomura raddoppia il movimento attuale
+    for (const e of tecMov.filter((x) => x.tipo === 'movimento_moltiplicatore')) {
+      const ora = Math.max(0, somma(voci));
+      voci.push(voce(`${e.talento} (×${e.valore})`, ora * (e.valore - 1), 'tecnica'));
+    }
     for (const s of stati) {
       const m = s.movimento;
       if (!m) continue;
@@ -475,6 +496,11 @@ export function valoriTavolo(scheda, sessione, dati) {
         const ora = Math.max(0, somma(voci));
         if (m.passo_q < ora) voci.push(voce(`${s.nome} (Passo ${m.passo_q} Q)`, m.passo_q - ora, 'stato'));
       }
+    }
+    // Radici della Montagna: «Il movimento disponibile diventa 0.»
+    for (const e of tecMov.filter((x) => x.tipo === 'movimento_zero')) {
+      const ora = Math.max(0, somma(voci));
+      if (ora) voci.push(voce(e.talento, -ora, 'tecnica'));
     }
     // il budget non scende sotto 0 (§5.2.6: «minimo 0»)
     const totale = Math.max(0, somma(voci));

@@ -77,7 +77,8 @@ export function renderStampa({ stampa, torna, opzioni = null, cambiaOpzioni = nu
   // scelta per il foglio Poteri (docs/layout-ss.md, §5.3), solo se il personaggio ha la magia; la
   // preferenza resta «magia»; la stima delle pagine in più arriva dopo l'impaginazione
   const stimaSchede = h('span', { class: 'stima-pagine' }, '');
-  const conMagia = fogli.some((f) => f.id === 'poteri');
+  // la scelta vale per gli incantesimi: senza magia (solo Tecniche Interiori) non si mostra
+  const conMagia = fogli.some((f) => f.id === 'poteri' && f.dati?.conMagia !== false);
   const sceltaMagia = conMagia ? h('fieldset', { class: 'scelta-stampa' },
     h('legend', {}, 'Foglio Poteri'),
     [['elenco', 'Solo elenco'], ['completo', 'Elenco e schede complete']].map(([valore, testo]) => h('label', {},
@@ -311,8 +312,7 @@ function foglioAbilita(d) {
       // dal foglio 3 (pezzo 2): Specializzazioni e Tecniche Interiori, come nella tab Abilità della SD
       d.specializzazioni.length ? box({ titolo: 'Specializzazioni', classe: 'f2-spostabile' }, h('ul', { class: 'elenco-talenti-stampa' }, d.specializzazioni.map((x) => h('li', {},
         h('strong', {}, x.nome), ` — ${x.abilita}; ${x.effetto}`)))) : null,
-      d.tecniche.length || d.tecnicheAmmesse ? box({ titolo: `Tecniche Interiori (${d.tecniche.length} / ${d.tecnicheAmmesse})`, classe: 'f2-spostabile' },
-        tabella(['Tecnica', 'Costo', 'Azione'], d.tecniche.map((x) => [x.nome, x.costo, x.azione]))) : null,
+      // Tecniche Interiori: nel foglio 5 (Poteri), come nella SD (richiesta di Davide del 02/10)
       box({ titolo: 'Annotazioni', riempitivo: true, classe: 'f2-annotazioni' }, righeGuida())));
 }
 
@@ -736,7 +736,7 @@ function impaginaCibernetica(foglio, d, piede) {
 
 const COLONNE_INVENTARIO = (d) => ['Oggetto', 'Costo', 'Qualità', 'Peso', ...d.stati.map((x) => x.sigla), 'PS'];
 
-function tabellaInventario(d, righe, { vuote = 0 } = {}) {
+function tabellaInventario(d, righe, { vuote = 0, sottosezioni = [] } = {}) {
   const n = COLONNE_INVENTARIO(d).length;
   const caselle = (stato) => d.stati.map((x) => h('td', { class: 'stato-inv', title: x.nome }, h('span', { class: `casella${x.id === stato ? ' piena' : ''}` })));
   const voce = (r) => h('tbody', { class: 'oggetto-inv' },
@@ -759,12 +759,14 @@ function tabellaInventario(d, righe, { vuote = 0 } = {}) {
     t.dataset.vuota = '1';
     return t;
   };
+  // sottosezioni (Rinforzi sotto Armature, NEC sotto Munizioni): un sottotitolo nella stessa tabella
+  const sotto = (x) => [h('tbody', { class: 'oggetto-inv sottotitolo-inv' }, h('tr', { class: 'categoria' }, h('th', { colspan: n }, `${x.titolo} (${x.righe.length})`))), x.righe.map(voce)];
   return h('table', { class: 'tabella-stampa inventario-stampa' },
     h('thead', {}, h('tr', {}, COLONNE_INVENTARIO(d).map((c, i) => h('th', { class: i >= 4 && i < 4 + d.stati.length ? 'stato-inv' : null }, c)))),
-    righe.map(voce), Array.from({ length: vuote }, vuota));
+    righe.map(voce), sottosezioni.map(sotto), Array.from({ length: vuote }, vuota));
 }
 
-const sezioneInventario = (d, s) => box({ titolo: `${s.titolo} (${s.righe.length})`, classe: `inv-sezione tinta-${s.colore}` }, tabellaInventario(d, s.righe));
+const sezioneInventario = (d, s) => box({ titolo: `${s.titolo} (${s.righe.length})`, classe: `inv-sezione tinta-${s.colore}` }, tabellaInventario(d, s.righe, { sottosezioni: s.sottosezioni ?? [] }));
 
 function testaInventario(d) {
   const c = d.carico;
@@ -777,7 +779,13 @@ function testaInventario(d) {
 }
 
 function foglioInventario(d) {
-  return [testaInventario(d), h('div', { class: 'inv-colonne' }, d.sezioni.map((s) => sezioneInventario(d, s)))];
+  // la colonna destra della tab (Sanitario, Artefatti…) comincia in cima alla seconda colonna
+  const primaDestra = d.sezioni.find((s) => s.colonna === 'destra');
+  return [testaInventario(d), h('div', { class: 'inv-colonne' }, d.sezioni.map((s) => {
+    const el = sezioneInventario(d, s);
+    if (s === primaDestra) el.classList.add('inv-inizio-destra');
+    return el;
+  }))];
 }
 
 /**
@@ -789,37 +797,56 @@ function foglioInventario(d) {
  * @returns {{ pagine, troppoLunghe: string[] }}
  */
 function impaginaInventario(foglio, d, piede) {
-  let colonne = foglio.querySelector('.inv-colonne');
-  const sezioni = [...colonne.children];
-  sezioni.forEach((s) => s.remove());
-  let ultima = foglio;
-  let pagine = 1;
-  const nuovaPagina = () => {
-    const f = creaFoglio('inventario', 'Inventario (continua)', d, piede, () => h('div', { class: 'inv-colonne' }));
-    f.classList.add('seguito');
-    // lo stesso piè di pagina del foglio (si riscrive alla fine): misurando, l'altezza del corpo è già quella vera
-    f.querySelector('.foglio-piede').textContent = foglio.querySelector('.foglio-piede').textContent;
-    ultima.after(f);
-    ultima = f;
-    pagine++;
-    return f.querySelector('.inv-colonne');
-  };
-  const troppoLunghe = [];
-  for (const s of sezioni) {
-    colonne.append(s);
-    if (trabocca(colonne) && colonne.children.length > 1) {
-      colonne = nuovaPagina();
+  // le sezioni come le ha disegnate foglioInventario: si riparte da loro a ogni prova
+  const modelli = [...foglio.querySelector('.inv-colonne').children].map((s) => s.cloneNode(true));
+  // con la divisione della tab (la colonna destra comincia in cima alla seconda colonna); se costa una
+  // pagina in più, le sezioni scorrono nello stesso ordine senza la divisione
+  const prova = (divisione) => {
+    let colonne = foglio.querySelector('.inv-colonne');
+    colonne.replaceChildren();
+    const sezioni = modelli.map((s) => s.cloneNode(true));
+    if (!divisione) sezioni.forEach((s) => s.classList.remove('inv-inizio-destra'));
+    let ultima = foglio;
+    const nuove = [];
+    const nuovaPagina = () => {
+      const f = creaFoglio('inventario', 'Inventario (continua)', d, piede, () => h('div', { class: 'inv-colonne' }));
+      f.classList.add('seguito');
+      // lo stesso piè di pagina del foglio (si riscrive alla fine): misurando, l'altezza del corpo è già quella vera
+      f.querySelector('.foglio-piede').textContent = foglio.querySelector('.foglio-piede').textContent;
+      ultima.after(f);
+      ultima = f;
+      nuove.push(f);
+      return f.querySelector('.inv-colonne');
+    };
+    const troppoLunghe = [];
+    for (const s of sezioni) {
+      // in cima a una pagina nuova la colonna destra non deve lasciare vuota la sinistra
+      if (!colonne.children.length) s.classList.remove('inv-inizio-destra');
       colonne.append(s);
+      if (trabocca(colonne) && colonne.children.length > 1) {
+        colonne = nuovaPagina();
+        s.classList.remove('inv-inizio-destra');
+        colonne.append(s);
+      }
+      if (trabocca(colonne)) troppoLunghe.push(s.querySelector('h2')?.textContent ?? '?');
     }
-    if (trabocca(colonne)) troppoLunghe.push(s.querySelector('h2')?.textContent ?? '?');
+    // riempitivo: righe vuote finché entrano; con meno di due righe libere non si stampa
+    const extra = box({ titolo: 'Da aggiungere', classe: 'inv-sezione inv-da-aggiungere' }, tabellaInventario(d, [], { vuote: 30 }));
+    colonne.append(extra);
+    const vuote = () => [...extra.querySelectorAll('tbody[data-vuota]')];
+    while (trabocca(colonne) && vuote().length) vuote().at(-1).remove();
+    if (vuote().length < 2) extra.remove();
+    return { pagine: 1 + nuove.length, troppoLunghe, nuove };
+  };
+  let r = prova(true);
+  if (r.pagine > 1) {
+    r.nuove.forEach((f) => f.remove());
+    const libera = prova(false);
+    if (libera.pagine < r.pagine) return { pagine: libera.pagine, troppoLunghe: libera.troppoLunghe, divisione: false };
+    libera.nuove.forEach((f) => f.remove());
+    r = prova(true);
   }
-  // riempitivo: righe vuote finché entrano; con meno di due righe libere non si stampa
-  const extra = box({ titolo: 'Da aggiungere', classe: 'inv-sezione inv-da-aggiungere' }, tabellaInventario(d, [], { vuote: 30 }));
-  colonne.append(extra);
-  const vuote = () => [...extra.querySelectorAll('tbody[data-vuota]')];
-  while (trabocca(colonne) && vuote().length) vuote().at(-1).remove();
-  if (vuote().length < 2) extra.remove();
-  return { pagine, troppoLunghe };
+  return { pagine: r.pagine, troppoLunghe: r.troppoLunghe, divisione: true };
 }
 
 // ---------------------------------------------------------------------------
@@ -883,13 +910,114 @@ function schedaIncantesimo(i) {
       i.regole ? h('p', { class: 'testo-lungo' }, i.regole) : null));
 }
 
+/** Punti Magia del foglio 5 (anche per le Tecniche Interiori, che si pagano con i PM personali). */
+function riquadroPM(d) {
+  const med = d.meditazione;
+  return box({ titolo: 'Punti Magia', tinta: 'pm', forte: true, classe: 'f5-pm' },
+    h('div', { class: 'f5-pm-testa' },
+      h('div', { class: 'massimo' }, h('span', {}, 'massimi'), h('span', { class: 'valore' }, String(d.pm ?? '—'))),
+      // Magia sez. 6: recupero con la Meditazione, come nel riquadro della SD
+      med ? h('span', {}, `Recupero (Meditaz.): ${med.pmPerOra} PM/ora, ${med.orePerGiorno} ${med.orePerGiorno === 1 ? 'ora' : 'ore'}/g.`) : null),
+    h('p', { class: 'piccolo' }, 'attuali'),
+    // come i PV del foglio 3: righe da 25, stacco ogni 5, almeno due righe e sempre una riga grigia
+    d.pm ? quadratini(d.pm, { compatto: true, perRiga: 25, righeInPiu: Math.max(1, 2 - Math.ceil(d.pm / 25)) }) : null);
+}
+
+/** Batterie e riserve di Chroma con i loro PM (decisione 5 del piano SS). */
+function riquadroRiserve(d, conversione = null) {
+  return (d.riserve?.length ? box({ titolo: 'Batt. e riserve di Chroma (Magia sez. 6)', classe: 'f4-riserve f5-riserve' },
+        d.riserve.map((r) => h('div', { class: 'f5-riserva' },
+          h('span', { class: `chroma-punto chroma-${String(r.energia).toLowerCase()}`, 'aria-hidden': 'true' }),
+          h('span', { class: 'f5-riserva-nome' }, h('strong', {}, abbreviaSS(r.nome)),
+            h('span', { class: 'sigla' }, abbreviaSS(` · ${r.energia} · ${r.integrato ? 'solo l’oggetto (A.18)' : r.regoleRimandate ? 'regole rimandate' : r.macrofamiglie.length >= 3 ? 'tutte le macrofamiglie' : r.macrofamiglie.join(', ') || '—'} · ${r.sintonizzato ? 'sintonizzato' : 'da sintonizzare'} (SnT ${r.costo})`))),
+          quadratini(r.capacita, { compatto: true }))),
+        conversione ? h('p', { class: 'piccolo f5-conversione' }, conversione) : null) : null);
+}
+
+/**
+ * Foglio 5 per chi ha le Tecniche Interiori e non la magia (Risorse Interiori è incompatibile con
+ * la magia, Giocatore §8.6.10). A sinistra PM personali, riserve e le regole comuni del §8.9.1; a
+ * destra l'elenco delle Tecniche, come quello degli incantesimi: Costo, Azione, Durata, Bersaglio.
+ */
+function foglioTecniche(d) {
+  return h('div', { class: 'f5-griglia f5-griglia-tecniche' },
+    h('div', { class: 'colonna f5-sinistra' },
+      riquadroPM(d),
+      riquadroRiserve(d),
+      d.regoleTecniche.length ? box({ titolo: 'Tecniche Interiori: regole comuni (§8.9.1)', classe: 'f5-regole-tecniche' },
+        h('ul', { class: 'elenco-talenti-stampa' }, d.regoleTecniche.map((x) => h('li', {}, x)))) : null,
+      h('div', { class: 'f5-coda' },
+        d.daArtefatti?.length ? h('p', { class: 'da-artefatti-stampa' }, h('strong', {}, 'Da artefatti: '), `${d.daArtefatti.join(', ')}${d.foglioArtefatti ? ` — vedi foglio ${d.foglioArtefatti}` : ''}.`) : null)),
+    elencoTecniche(d));
+}
+
+/** Elenco delle Tecniche Interiori del foglio 5, raggruppate come nel manuale. */
+function elencoTecniche(d) {
+  const righe = [];
+  let gruppo = null;
+  for (const x of d.tecniche) {
+    if (x.gruppo !== gruppo) { gruppo = x.gruppo; righe.push(h('tr', { class: 'macro-riga tinta-tecnica' }, h('th', { colspan: 6 }, gruppo))); }
+    righe.push(h('tr', { class: 'tinta-tecnica' }, h('th', { scope: 'row' }, x.nome), h('td', { class: 'effetto-tecnica' }, x.effetto ?? ''), h('td', {}, x.costo), h('td', {}, x.azione), h('td', {}, x.durata), h('td', {}, x.bersaglio)));
+  }
+  return box({ titolo: `Tecniche Interiori (${d.tecniche.length} / ${d.tecnicheAmmesse})`, tinta: 'tecnica', classe: 'f5-elenco f5-tecniche' },
+    h('table', { class: 'tabella-stampa tecniche-stampa' },
+      h('thead', {}, h('tr', {}, ['Tecnica', 'Effetto', 'Costo', 'Azione', 'Durata', 'Bersaglio'].map((c) => h('th', {}, c)))),
+      h('tbody', {}, righe)));
+}
+
+/**
+ * Impagina l'elenco delle Tecniche del foglio 5 senza magia, misurando nel DOM: la colonna «Effetto»
+ * resta solo se tutto l'elenco entra nella colonna destra (altrimenti si toglie); le righe che non
+ * entrano continuano sotto, nella colonna sinistra, e poi in una pagina in più.
+ * @returns pagine del foglio
+ */
+function impaginaTecniche(foglio, d, piede) {
+  const elenco = foglio.querySelector('.f5-tecniche');
+  const tbody = elenco?.querySelector('.tecniche-stampa tbody');
+  if (!tbody) return 1;
+  const contenuto = (b) => b.querySelector(':scope > .contenuto');
+  if (righeOltre(tbody, contenuto(elenco)).length) {
+    for (const tr of elenco.querySelectorAll('.tecniche-stampa thead tr')) tr.cells[1]?.remove();
+    elenco.querySelectorAll('td.effetto-tecnica').forEach((x) => x.remove());
+    elenco.querySelectorAll('tr.macro-riga > th[colspan]').forEach((x) => { x.colSpan -= 1; });
+  }
+  // righe spostate, con l'intestazione del gruppo ripetuta («(continua)»)
+  const sposta = (righe) => {
+    if (!righe.length || righe[0].classList.contains('macro-riga')) return righe;
+    let g = righe[0].previousElementSibling;
+    while (g && !g.classList.contains('macro-riga')) g = g.previousElementSibling;
+    const testa = g?.cloneNode(true);
+    if (testa) testa.cells[0].textContent += ' (continua)';
+    return testa ? [testa, ...righe] : righe;
+  };
+  const tabella = (righe) => {
+    const t = elenco.querySelector('.tecniche-stampa').cloneNode(false);
+    t.append(elenco.querySelector('.tecniche-stampa thead').cloneNode(true), h('tbody', {}, righe));
+    return t;
+  };
+  let fuori = sposta(righeOltre(tbody, contenuto(elenco)));
+  if (!fuori.length) return 1;
+  fuori.forEach((r) => r.remove());
+  const sinistra = foglio.querySelector('.f5-sinistra');
+  const seguito = box({ titolo: 'Tecniche Interiori (continua)', tinta: 'tecnica', classe: 'f5-elenco-seguito f5-tecniche' }, tabella(fuori));
+  sinistra.insertBefore(seguito, sinistra.querySelector(':scope > .f5-coda'));
+  fuori = sposta(righeOltre(seguito.querySelector('tbody'), contenuto(seguito)));
+  if (!fuori.length) return 1;
+  fuori.forEach((r) => r.remove());
+  const f = creaFoglio('poteri', 'Poteri (continua)', d, piede, () => [box({ titolo: 'Tecniche Interiori (continua)', tinta: 'tecnica', classe: 'f5-tecniche' }, tabella(fuori))]);
+  f.classList.add('seguito');
+  foglio.after(f);
+  return 2;
+}
+
 /** «Solo elenco»: in fondo all'indice, perché mancano le schede. */
 const notaSoloElenco = () => h('p', { class: 'piccolo nota-solo-elenco' }, 'Schede complete non stampate: testo nel Manuale della Magia.');
 
 function foglioMagia(d) {
+  // senza magia, con le sole Tecniche Interiori: la forma del foglio per le Tecniche
+  if (d.conMagia === false) return foglioTecniche(d);
   const v = d.valoriLancio;
   const incantesimi = elencoIncantesimi(d);
-  const med = d.meditazione;
   // etichetta: valore, due per riga; le voci lunghe prendono la riga intera
   const voce = (nome, ...valore) => {
     const testo = [nome, ...valore].map((x) => (typeof x === 'string' ? x : x?.textContent ?? '')).join(' ');
@@ -900,23 +1028,8 @@ function foglioMagia(d) {
     Object.keys(d.conversione.fissi).length ? `; ${Object.entries(d.conversione.fissi).map(([c, n]) => `${c} ${n}:1`).join(', ')} nei due sensi` : '', '.'].join('') : null;
   return h('div', { class: 'f5-griglia' },
     h('div', { class: 'colonna f5-sinistra' },
-      box({ titolo: 'Punti Magia', tinta: 'pm', forte: true, classe: 'f5-pm' },
-        h('div', { class: 'f5-pm-testa' },
-          h('div', { class: 'massimo' }, h('span', {}, 'massimi'), h('span', { class: 'valore' }, String(d.pm ?? '—'))),
-          // Magia sez. 6: recupero con la Meditazione, come nel riquadro della SD
-          med ? h('span', {}, `Recupero (Meditaz.): ${med.pmPerOra} PM/ora, ${med.orePerGiorno} ${med.orePerGiorno === 1 ? 'ora' : 'ore'}/g.`) : null),
-        h('p', { class: 'piccolo' }, 'attuali'),
-        // come i PV del foglio 3: righe da 25, stacco ogni 5, almeno due righe e sempre una riga grigia
-        d.pm ? quadratini(d.pm, { compatto: true, perRiga: 25, righeInPiu: Math.max(1, 2 - Math.ceil(d.pm / 25)) }) : null),
-      // decisione 5: batterie e riserve di Chroma con i PM qui (il foglio Artefatti ha la sola sintonizzazione)
-      // abbreviazioni solo sulla carta (abbreviaSS): «Batt. 5 PM (Chroma R.)»; l'energia resta per intero nella sigla
-      d.riserve?.length ? box({ titolo: 'Batt. e riserve di Chroma (Magia sez. 6)', classe: 'f4-riserve f5-riserve' },
-        d.riserve.map((r) => h('div', { class: 'f5-riserva' },
-          h('span', { class: `chroma-punto chroma-${String(r.energia).toLowerCase()}`, 'aria-hidden': 'true' }),
-          h('span', { class: 'f5-riserva-nome' }, h('strong', {}, abbreviaSS(r.nome)),
-            h('span', { class: 'sigla' }, abbreviaSS(` · ${r.energia} · ${r.integrato ? 'solo l’oggetto (A.18)' : r.regoleRimandate ? 'regole rimandate' : r.macrofamiglie.length >= 3 ? 'tutte le macrofamiglie' : r.macrofamiglie.join(', ') || '—'} · ${r.sintonizzato ? 'sintonizzato' : 'da sintonizzare'} (SnT ${r.costo})`))),
-          quadratini(r.capacita, { compatto: true }))),
-        conversione ? h('p', { class: 'piccolo f5-conversione' }, conversione) : null) : null,
+      riquadroPM(d),
+      riquadroRiserve(d, conversione),
       box({ titolo: 'Lancio', classe: 'f5-lancio' },
         h('div', { class: 'f5-voci' },
           voce('Potere per lanciare', h('strong', {}, `VA ${v.potere ?? '—'}`), d.lancio ? ` (armatura ${segno(d.lancio.penalita)}, §7.11.1)` : ''),
@@ -972,6 +1085,7 @@ function impaginaElenco(foglio, d) {
  * @returns {{ pagine, pagineSchede }} pagine stampate e pagine che aggiungono le schede complete
  */
 function impaginaMagia(contenitore, foglio, d, piede) {
+  if (d.conMagia === false) return { pagine: impaginaTecniche(foglio, d, piede), pagineSchede: 0 };
   const incantesimi = elencoIncantesimi(d);
   // 1. elenco: colonna destra, poi sotto la colonna sinistra, poi la pagina dopo
   const resto = impaginaElenco(foglio, d);

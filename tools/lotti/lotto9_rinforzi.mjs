@@ -48,7 +48,7 @@ if (int.join('|') !== 'Rinforzo|AR|FOR richiesta|PI|Qualità|PS INT|REP|Costo') 
 for (const [kit, ar, forR, pi, qualita, ps, rep, costo] of righe) {
   if (!testo.includes([kit, ar, forR, pi, qualita, ps, rep, costo].join(' '))) throw new Error(`riga non ritrovata nel testo: ${kit}`);
   oggetti.push({
-    id: `rinforzo-${kit.toLowerCase()}`, nome: `Rinforzo ${kit}`, tipo: 'accessorio', catalogo: 'Commerciale', famiglia: 'Rinforzi',
+    id: `rinforzo-${kit.toLowerCase()}`, nome: `Rinforzo ${kit}`, tipo: 'rinforzo', catalogo: 'Commerciale', famiglia: 'Rinforzi',
     nomi_alternativi: [`Rinforzi ${kit === 'Leggero' ? 'Leggeri' : 'Pesanti'}`, `Kit di rinforzo ${kit.toLowerCase()}`],
     note_manuale: regole, paragrafo: '§7.11.2', versione_manuale: VERSIONE,
     pi: num(pi), qualita, ps_int: num(ps), reperibilita: rep, costo: num(costo),
@@ -78,7 +78,7 @@ for (const s of SOPRABITI) {
   if (!m) throw new Error(`${s.nome}: frase dei valori non trovata`);
   const [, ar, forR, pi, qualita, ps, rep, costo] = m;
   const o = {
-    id: s.nome.toLowerCase().replace(/ /g, '-'), nome: s.nome, tipo: 'accessorio', catalogo: s.catalogo, famiglia: 'Rinforzi', nomi_alternativi: [],
+    id: s.nome.toLowerCase().replace(/ /g, '-'), nome: s.nome, tipo: 'rinforzo', catalogo: s.catalogo, famiglia: 'Rinforzi', nomi_alternativi: [],
     note_manuale: tra(...s.nota), paragrafo: s.paragrafo, versione_manuale: VERSIONE,
     pi: num(pi), qualita, ps_int: num(ps), reperibilita: rep, costo: num(costo),
     si_monta_su: ['armatura'],

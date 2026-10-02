@@ -526,32 +526,6 @@
       ]
     },
     {
-      "id": "set-chirurgico-di-ricambio",
-      "nome": "Set chirurgico di ricambio",
-      "tipo": "sanitario",
-      "catalogo": "Commerciale",
-      "famiglia": "Diagnostica e chirurgia",
-      "nomi_alternativi": [],
-      "note_manuale": "Un set di materiali per procedura del Kit chirurgico da campo o della Postazione medica, anestesia compresa; si consuma all’inizio di ogni intervento.",
-      "paragrafo": "§6.5",
-      "versione_manuale": "Equipaggiamento 0.3",
-      "costo": 500,
-      "proprieta": []
-    },
-    {
-      "id": "confezione-da-cinque-set-chirurgici",
-      "nome": "Confezione da cinque set chirurgici",
-      "tipo": "sanitario",
-      "catalogo": "Commerciale",
-      "famiglia": "Diagnostica e chirurgia",
-      "nomi_alternativi": [],
-      "note_manuale": "Cinque set di materiali per procedura, anestesia compresa.",
-      "paragrafo": "§6.5",
-      "versione_manuale": "Equipaggiamento 0.3",
-      "costo": 2500,
-      "proprieta": []
-    },
-    {
       "id": "postazione-medica-da-campo",
       "nome": "Postazione medica da campo",
       "tipo": "sanitario",
@@ -1431,18 +1405,24 @@
     },
     {
       "id": "cartuccia-chirurgica",
-      "nome": "Cartuccia chirurgica",
+      "nome": "Cartuccia chirurgica — set sterile monouso",
       "tipo": "sanitario",
       "catalogo": "Commerciale",
       "famiglia": "Postazioni medicochirurgiche",
-      "nomi_alternativi": [],
+      "nomi_alternativi": [
+        "Set chirurgico di ricambio",
+        "Cartuccia chirurgica"
+      ],
       "note_manuale": "La cartuccia chirurgica comprende anestetici ordinari, disinfettanti, suture e materiali da medicazione. Farmaci specifici, cartucce Curative, naniti, protesi e componenti speciali sono separati. Cartuccia chirurgica | 500 cr | Una operazione; confezione da cinque 2.500 cr.",
-      "paragrafo": "§6.8.7",
+      "paragrafo": "§6.5, §6.8.7; E&L del 02/10/2026, decisione 17",
       "versione_manuale": "Equipaggiamento 0.5",
       "costo": 500,
       "proprieta": [],
-      "effetto_breve": "Una operazione di una postazione medicochirurgica.",
-      "TODO(Davide)": "A.71: la cartuccia chirurgica delle postazioni (§6.8.7, 500 cr) e il set chirurgico del Kit chirurgico e della Postazione medica da campo (§6.5, 500 cr) hanno lo stesso contenuto e lo stesso prezzo: sono lo stesso consumabile, intercambiabile? Nel frattempo due voci distinte."
+      "effetto_breve": "Una procedura del Kit chirurgico, della Postazione medica da campo o di una postazione medicochirurgica: si consuma all’inizio, anche se la procedura fallisce. 500 cr, o 2.500 cr per cinque.",
+      "confezione": {
+        "quantita": 5,
+        "costo": 2500
+      }
     },
     {
       "id": "confezione-da-cinque-cartucce-chirurgiche",

@@ -1154,7 +1154,18 @@
     },
     "magistrale": {
       "pm": "meta_per_eccesso",
-      "officiante_minimo": "meta_grado_per_eccesso"
+      "officiante_minimo": "meta_grado_per_eccesso",
+      "ripartizione": "libera",
+      "massimo_per_partecipante": "quota_dichiarata",
+      "canale_minimo_se_contributo": 1,
+      "decisione": "Con un Successo Magistrale si dimezza una sola volta il costo totale in PM del Rituale, arrotondando per eccesso. Dopo l’esito, i partecipanti scelgono liberamente come ripartire il costo ridotto: la somma delle quote coincide con il nuovo costo; nessuno paga più della quota dichiarata prima della Prova; l’Officiante paga almeno metà del Grado, per eccesso; ogni Canale che aveva dichiarato un contributo energetico spende almeno 1 PM, uno con quota 0 spende 0.",
+      "fonte": "E&L del 02/10/2026, decisione 2 (per-davide A.74 punto 2); docs/risposte-master.md, decisione 81"
+    },
+    "bonus_costruzione_magistrale": {
+      "va": 2,
+      "nel_limite_dei_canali": false,
+      "decisione": "Il +2 all’infusione ottenuto con un Successo Magistrale nella costruzione del supporto resta un beneficio distinto: non consuma il limite di +5 dei Canali.",
+      "fonte": "E&L del 02/10/2026, decisione 1 (per-davide A.74 punto 1)"
     },
     "frasi": [
       "Oltre all’Officiante possono partecipare al massimo tanti Canali quanto il Grado del rituale.",
@@ -1164,9 +1175,9 @@
       "Si sommano gli aiuti fino a un massimo complessivo di +5 VA.",
       "Con un Successo Magistrale si dimezza il totale dei PM una sola volta, arrotondando per eccesso, poi si ripartisce il consumo effettivo senza aumentare la quota dichiarata di alcun partecipante."
     ],
-    "TODO(Davide)": [
-      "A.74 punto 1: «VA pertinente del Canale» (Magia §24.6): quale Abilità? Nel frattempo il VA di Rituali del Canale.",
-      "A.74 punto 2: Successo Magistrale con i Canali (Magia §24.6, §25.2): come si ripartisce la metà dei PM? Nel frattempo i Canali tengono le quote dichiarate (al massimo il nuovo totale) e l’Officiante paga il resto, almeno metà Grado per eccesso."
+    "decisioni": [
+      "A.74 punto 1 (E&L del 02/10/2026, decisione 1): il «VA pertinente del Canale» è il VA di Rituali del Canale; il Canale non effettua una Prova separata.",
+      "A.74 punto 2 (E&L del 02/10/2026, decisione 2): dopo un Successo Magistrale la ripartizione del costo dimezzato è libera entro i limiti («magistrale»)."
     ]
   },
   "meditazione": {
@@ -1194,12 +1205,277 @@
       "fonte": "Magia sez. 6, pp. 9–10 (tabella «Convertire Potere, ricaricare e prelevare» e Prova per gruppi); Armamenti §7.5.1; Giocatore §3.9.5 (Ricarica Efficiente)"
     },
     "contenitori_per_lancio": 1,
+    "riserve": {
+      "paragrafo": "Magia 1.3 §26.2, Armamenti 0.58 §7.5 (Google Doc del 02/10/2026)",
+      "_nota": "Ogni riserva è Batteria o Cariche; ogni proprietà infusa è Esclusiva o Universale (src/fonti.js). Le riserve a sé (batterie del catalogo) sono Batterie; le riserve integrate senza indicazione sono Cariche con proprietà Esclusive («integrata_predefinita», «proprieta_predefinita»: schede anteriori alla distinzione, armi con Chroma integrato del §7.5.1, risposta A.18). «fonti_esterne_per_pagamento»: una sola fonte esterna per lancio o attivazione, eventualmente con PM personali; la riserva di un Artefatto è esterna rispetto al personaggio.",
+      "tipi": {
+        "batteria": { "nome": "Batteria", "fonte_per_pg": true, "testo": "Alimenta l’Artefatto ed è una fonte esterna per gli Incantesimi compatibili del personaggio; segue le normali regole di conversione." },
+        "cariche": { "nome": "Cariche", "fonte_per_pg": false, "testo": "Alimenta soltanto il proprio Artefatto. Non si possono prelevare PM per Incantesimi personali o convertirli in PM personali." }
+      },
+      "alimentazioni": {
+        "esclusiva": { "nome": "Esclusiva", "fonti": ["interna"], "testo": "Soltanto la riserva interna del medesimo oggetto, sia essa Batteria o Cariche." },
+        "universale": { "nome": "Universale", "fonti": ["interna", "personali", "esterna"], "testo": "Riserva interna, PM personali oppure un’altra fonte esterna compatibile, secondo i limiti ordinari." }
+      },
+      "integrata_predefinita": "cariche",
+      "proprieta_predefinita": "esclusiva",
+      "fonti_esterne_per_pagamento": 1,
+      "frasi": [
+        "Sia Batterie sia Cariche si misurano in PM.",
+        "In un singolo lancio o attivazione si usa al massimo una riserva esterna, eventualmente integrata con PM personali.",
+        "La riserva dell’Artefatto è esterna rispetto al personaggio: non può essere sommata a un’altra Batteria nello stesso pagamento.",
+        "Le schede anteriori a questa distinzione che prevedono una riserva utilizzabile soltanto dall’oggetto conservano quel funzionamento: si registrano come Cariche e le relative proprietà come Esclusive, finché una scheda specifica dispone diversamente."
+      ]
+    },
+    "matrice": {
+      "paragrafo": "Magia 1.3 §26.4, Equipaggiamento 0.5 §10.3 (Google Doc del 02/10/2026)",
+      "_nota": "Batterie Matrice (contenitore «matrice» nel catalogo): Grado e SnT +1 rispetto alla Batteria ordinaria; ricarica automatica in PM per ora presso la Matrice d’origine o presso un’altra Matrice dello stesso colore, senza Prove, sintonizzazione né cumulo, fino alla capacità. Nell’app si applica con «Ricarica dalla Matrice» nella tab Artefatti (ore passate e Matrice), non con «Nuova sessione», che non riempie i contenitori.",
+      "pm_ora_origine": 2,
+      "pm_ora_stesso_colore": 1,
+      "frasi": [
+        "Entro il raggio della propria Matrice d’origine, la Batteria recupera automaticamente 2 PM all’ora.",
+        "Entro quello di un’altra Matrice dello stesso colore recupera 1 PM all’ora.",
+        "Una Matrice di colore diverso non la ricarica: anche il Bianco ricarica soltanto Batterie Matrice Bianche.",
+        "Il recupero non richiede Prove, spesa di PM personali o sintonizzazione e non supera la capacità massima.",
+        "In zone sovrapposte si applica soltanto la velocità migliore, senza sommare le fonti."
+      ]
+    },
+    "cristalli_matrice": {
+      "paragrafo": "Magia 1.3 §26.3",
+      "_nota": "Tabella di consultazione: il livello 1–20 dà dimensioni e raggio d’influenza (raggio in metri) e non coincide con il Grado degli Artefatti. La legge il tooltip delle Batterie Matrice.",
+      "livelli": [
+        {
+          "livello": 1,
+          "altezza_m": 1,
+          "larghezza_m": 0.4,
+          "raggio_m": 100
+        },
+        {
+          "livello": 2,
+          "altezza_m": 1.5,
+          "larghezza_m": 0.6,
+          "raggio_m": 500
+        },
+        {
+          "livello": 3,
+          "altezza_m": 2,
+          "larghezza_m": 0.8,
+          "raggio_m": 1000
+        },
+        {
+          "livello": 4,
+          "altezza_m": 3,
+          "larghezza_m": 1.2,
+          "raggio_m": 5000
+        },
+        {
+          "livello": 5,
+          "altezza_m": 4.5,
+          "larghezza_m": 1.8,
+          "raggio_m": 10000
+        },
+        {
+          "livello": 6,
+          "altezza_m": 6,
+          "larghezza_m": 2.5,
+          "raggio_m": 15000
+        },
+        {
+          "livello": 7,
+          "altezza_m": 9,
+          "larghezza_m": 3.6,
+          "raggio_m": 20000
+        },
+        {
+          "livello": 8,
+          "altezza_m": 12,
+          "larghezza_m": 4.8,
+          "raggio_m": 30000
+        },
+        {
+          "livello": 9,
+          "altezza_m": 18,
+          "larghezza_m": 7.2,
+          "raggio_m": 50000
+        },
+        {
+          "livello": 10,
+          "altezza_m": 25,
+          "larghezza_m": 10,
+          "raggio_m": 75000
+        },
+        {
+          "livello": 11,
+          "altezza_m": 35,
+          "larghezza_m": 14,
+          "raggio_m": 100000
+        },
+        {
+          "livello": 12,
+          "altezza_m": 50,
+          "larghezza_m": 20,
+          "raggio_m": 150000
+        },
+        {
+          "livello": 13,
+          "altezza_m": 70,
+          "larghezza_m": 28,
+          "raggio_m": 200000
+        },
+        {
+          "livello": 14,
+          "altezza_m": 100,
+          "larghezza_m": 40,
+          "raggio_m": 300000
+        },
+        {
+          "livello": 15,
+          "altezza_m": 150,
+          "larghezza_m": 60,
+          "raggio_m": 500000
+        },
+        {
+          "livello": 16,
+          "altezza_m": 200,
+          "larghezza_m": 80,
+          "raggio_m": 1000000
+        },
+        {
+          "livello": 17,
+          "altezza_m": 300,
+          "larghezza_m": 120,
+          "raggio_m": 2000000
+        },
+        {
+          "livello": 18,
+          "altezza_m": 450,
+          "larghezza_m": 180,
+          "raggio_m": 5000000
+        },
+        {
+          "livello": 19,
+          "altezza_m": 650,
+          "larghezza_m": 260,
+          "raggio_m": 10000000
+        },
+        {
+          "livello": 20,
+          "altezza_m": 1000,
+          "larghezza_m": 400,
+          "raggio_m": 20000000
+        }
+      ],
+      "frasi": [
+        "Il livello da 1 a 20 indica dimensioni e raggio di influenza e non coincide con il Grado I–VI degli Artefatti.",
+        "Il loro controllo e la loro realizzazione non sono attualmente accessibili ai personaggi."
+      ]
+    },
+    "schegge": {
+      "paragrafo": "Magia 1.3 §26.5, Equipaggiamento 0.5 §10.4",
+      "_nota": "Schegge instabili (artefatto «scheggia» nel catalogo): SnT 0, senza sintonizzazione; come fonte di «Lancia!» due Prove distinte e obbligatorie: l’estrazione con la penalità per i PM estratti (oltre la tabella −2 VA ogni 3 PM o frazione) e poi il lancio; la ricarica con la penalità per i PM immagazzinati (oltre 6, −2 VA per PM).",
+      "estrazione": [
+        {
+          "pm_da": 1,
+          "pm_a": 3,
+          "va": -2
+        },
+        {
+          "pm_da": 4,
+          "pm_a": 6,
+          "va": -4
+        },
+        {
+          "pm_da": 7,
+          "pm_a": 9,
+          "va": -6
+        },
+        {
+          "pm_da": 10,
+          "pm_a": 12,
+          "va": -8
+        },
+        {
+          "pm_da": 13,
+          "pm_a": 15,
+          "va": -10
+        },
+        {
+          "pm_da": 16,
+          "pm_a": 18,
+          "va": -12
+        },
+        {
+          "pm_da": 19,
+          "pm_a": 21,
+          "va": -14
+        },
+        {
+          "pm_da": 22,
+          "pm_a": 24,
+          "va": -16
+        },
+        {
+          "pm_da": 25,
+          "pm_a": 27,
+          "va": -18
+        },
+        {
+          "pm_da": 28,
+          "pm_a": 30,
+          "va": -20
+        }
+      ],
+      "estrazione_oltre": {
+        "ogni_pm": 3,
+        "va": -2
+      },
+      "ricarica": [
+        {
+          "pm": 1,
+          "va": -2
+        },
+        {
+          "pm": 2,
+          "va": -2
+        },
+        {
+          "pm": 3,
+          "va": -4
+        },
+        {
+          "pm": 4,
+          "va": -6
+        },
+        {
+          "pm": 5,
+          "va": -8
+        },
+        {
+          "pm": 6,
+          "va": -10
+        }
+      ],
+      "ricarica_oltre": {
+        "ogni_pm": 1,
+        "va": -2
+      },
+      "frasi": [
+        "Se la Prova fallisce, i PM dichiarati vengono dispersi dalla scheggia: l’Incantesimo non viene lanciato e non si effettua la Prova di lancio.",
+        "Se l’estrazione riesce, si passa separatamente alla Prova di Potere per lanciare l’Incantesimo personale.",
+        "Non si possono sommare più schegge per pagare uno stesso lancio: vale il limite di una sola fonte esterna, eventualmente integrata con PM personali.",
+        "Se la ricarica fallisce, tutti i PM personali impegnati vengono consumati e dispersi e la scheggia non riceve PM."
+      ]
+    },
     "contenitore_nuovo": "pieno",
     "_nota_contenitore_nuovo": "E&L del 29/09, risposta 2 (A.19): un contenitore acquistato è pieno (PM attuali = capacità). Uno trovato ha la carica stabilita dal Direttore: il giocatore la imposta nella voce dell’equipaggiamento («PM attuali, se trovato»: campo pm_iniziali), senza considerarla pari alla capacità.",
     "_nota": "Magia sez. 6 e Armamenti §7.5, §7.10. «colori»: energia e macrofamiglie di Incantesimi alimentate; Viola non è un contenitore di PM ma una fonte di Corruzione passiva («contenitore»: false; regole in «corruzione.chroma_viola», risposta A.21); Trasparente non è un colore da scegliere ma il contenitore esausto (0 PM), che conserva l'alone del colore d'origine, capacità e sintonizzazione. «conversione»: rapporto ordinario 3:1, ridotto di uno per ciascun Talento posseduto fra quelli elencati (rapporto_per_talenti, indice = numero di Talenti); il Bianco resta 2:1 in entrambi i sensi. Convertire Potere e ricaricare richiedono l'Addestramento Taumaturgo; un gruppo è automatico, da due in su una sola Prova di Potere con la penalità indicata. «contenitori_per_lancio»: un solo contenitore compatibile per lancio, eventualmente con PM personali.",
     "_nota_nec": "Magia 1.3 sez. 6 (Google Doc del 01/10/2026): il Rosso alimenta Incantesimi Fisici e riserve mistiche Rosse. I Nuclei Energetici Cromatici (NEC Rossi, Blu e Verdi) sono la fonte energetica tecnologica: usano Lx, sono ricaricabili e non richiedono Sintonizzazione (Equipaggiamento §5.4); le riserve mistiche usano PM e le regole di questa sezione. Nessuna conversione automatica Lx–PM. Solo promemoria: il catalogo dei NEC arriva con il lotto del cap. 5 dell'Equipaggiamento 0.5."
   },
   "nec": {
+    "travaso": {
+      "ammesso": false,
+      "decisione": "Le cariche o l’energia residue non possono essere riversate o trasferite in un altro NEC. È consentito spostare fisicamente lo stesso NEC fra dispositivi compatibili, conservandone la riserva residua.",
+      "fonte": "E&L del 02/10/2026, decisione 14 (per-davide A.67); docs/risposte-master.md, decisione 76"
+    },
     "paragrafo": "Equipaggiamento §5.4",
     "unita": "Lx",
     "tariffa_cr_per_lx": 0.01,
@@ -1626,6 +1902,21 @@
     "_nota_pesi": "E&L del 29/09, risposte 4–5 (A.30, A.31): si conta tutto ciò che si trasporta, senza contare due volte gli stessi oggetti; un peso mancante è «da definire», non 0 kg: il totale noto è parziale e non attesta l’assenza di penalità. Forza da Lavoro porta il massimo a FOR × 40 kg e il trascinamento a FOR × 80 kg prima del confronto.",
     "_nota": "Soglie = valore di FOR (non il modificatore) × kg per punto, moltiplicate dai Talenti di «moltiplicatori». Le Prove fisiche sono quelle di regole.json → categorie_prove.fisiche (domande aperte A.16, A.51). Il peso trasportato è la somma dei pesi dell’equipaggiamento (campo «peso» del catalogo, in kg per unità, o dell’oggetto personalizzato) più il peso aggiuntivo della sessione. Mulo da Soma ed Evacuazione Medica non cambiano le soglie: restano nel testo dei Talenti. «Oltre il massimo» con le penalità del Sovraccarico è una scelta dell’app: il manuale dice solo che il carico non si trasporta."
   },
+  "rinforzi": {
+    "paragrafo": "Armamenti §7.11.2, §7.23.4, §7.23.9",
+    "frasi": [
+      "I valori aggiuntivi descrivono l’impiego insieme a un’armatura compatibile; non costituiscono un profilo autonomo di armatura."
+    ],
+    "da_solo": {
+      "ar": "nessuna",
+      "proprieta": false,
+      "con_armatura_indossata": "nessun_effetto",
+      "_nota": "Rinforzo con «indossabile_da_solo» (rinforzi.json: soprabiti e mantelli, richiesta di Davide del 02/10) portato senza montarlo su un’armatura. «ar»: «nessuna» (§7.23.4: nessun profilo autonomo di armatura) oppure «propria» (il +AR del kit come AR ordinaria). «proprieta»: se valgono le proprietà ed effetti del rinforzo (Contromisure, Mimetismo, Protezione occulta…). «con_armatura_indossata»: indossato da solo mentre si porta un’armatura non conta (va montato, §7.11.2: un solo rinforzo compatibile)."
+    },
+    "armatura_tolta": "resta_montato",
+    "_nota_armatura_tolta": "Se l’armatura su cui è montato non è più indossata, il rinforzo resta montato su di lei e non dà nulla; l’Inventario lo dice. Il manuale non ne parla.",
+    "TODO(Davide)": "per-davide A.80: il manuale (§7.23.4) dice che i rinforzi non hanno un profilo autonomo; soprabiti e mantelli indossati da soli danno AR, le loro proprietà valgono, e quali altri rinforzi si possono indossare da soli? Che cosa succede al rinforzo quando si toglie l’armatura su cui è montato?"
+  },
   "integrita": {
     "versione_manuale": "Equipaggiamento 0.1",
     "fonte": "Equipaggiamento 0.1 §1.7 «Integrità e manutenzione», che rimanda ad Armamenti §7.2.1: stessa tabella.",
@@ -1644,7 +1935,7 @@
       "A 0 PI l’oggetto è Rotto e non può essere utilizzato finché non viene riparato.",
       "Una perdita di PI non assegna automaticamente la condizione Danneggiata e la relativa penalità di −2 VA."
     ],
-    "tipi_tracciati": ["arma_ravvicinata", "arma_distanza", "scudo", "armatura", "elmetto", "accessorio", "artefatto", "sanitario", "impianto", "altro"],
+    "tipi_tracciati": ["arma_ravvicinata", "arma_distanza", "scudo", "armatura", "rinforzo", "elmetto", "accessorio", "artefatto", "sanitario", "impianto", "altro"],
     "_nota_tipi_tracciati": "Risposta A.47 (Armamenti §7.2.1 del 28/09): si tracciano gli oggetti con «pi» nella scheda, sanitari compresi (kit Standard 4, Professionale 6, iniettore 2); le munizioni e i consumabili contano quantità, dosi o applicazioni. Ogni esemplare ha i propri PI: esemplari identici restano raggruppati finché integri e si separano appena uno viene danneggiato («Danneggia uno»). Senza «pi» a catalogo nessun valore, nemmeno 0: il Direttore può fissarlo in modalità tavolo («pi_direttore» della voce).",
     "riparazione": {
       "ore": 1,
@@ -1657,7 +1948,7 @@
       ],
       "strumenti_improvvisati_va": -2,
       "materiali_percentuale": 5,
-      "tipi": ["arma_ravvicinata", "arma_distanza", "armatura", "scudo", "elmetto", "accessorio"],
+      "tipi": ["arma_ravvicinata", "arma_distanza", "armatura", "rinforzo", "scudo", "elmetto", "accessorio"],
       "esclusi": ["distrutta"],
       "fonte": "Armamenti §7.2.1 (28/09), «Riparazione strutturale degli oggetti personali»; risposta di Davide A.46",
       "_nota": "Un intervento: un oggetto, 1 ora, Prova di Tecnologia. Successo +1 PI, Magistrale +2, Fallimento nessun PI e tempo consumato, Maldestro −1 PI fino a 0 senza PS Integrità; mai oltre il massimo. Strumenti improvvisati −2 VA. Materiali: 5% del prezzo di catalogo per ogni PI effettivamente recuperato (un’armatura da 2.000 crediti: 100 per PI); la manodopera di un riparatore esterno si paga a parte. Un oggetto Rotto a 0 PI torna utilizzabile con almeno 1 PI. «accessorio»: i rinforzi. Distrutti e componenti mistiche da ricostruire: procedure specifiche. Nessun dado nell’app: l’esito si sceglie dopo il tiro al tavolo (src/riparazione.js)."
@@ -1720,7 +2011,7 @@
   },
   "prova": {
     "paragrafo": "Giocatore 0.45: §1.6 «Risultati naturali», §1.7 «Successi automatici e azioni impossibili»",
-    "_nota": "Esito di una Prova con il d20 (src/prova.js → esitoProva), usato dal Tavolo del Master per il tiro per colpire dei nemici. Il 2 naturale Magistrale con VA finale almeno la soglia è in regole.json → magistrale_naturale. Con VA finale da «successo_automatico_da» in su il successo è automatico, senza tiro (§1.7), salvo una Prova resa obbligatoria da una regola (§1.7.1).",
+    "_nota": "Esito di una Prova con il d20 (src/prova.js → esitoProva), usato dal Tavolo del Master per il tiro per colpire dei nemici. Il 2 naturale Magistrale con VA finale almeno la soglia è in regole.json → magistrale_naturale. Con VA finale da «successo_automatico_da» in su il successo è automatico, senza tiro (§1.7), salvo una Prova resa obbligatoria da una regola (§1.7.1) e salvo attacchi e Difese attive, che si tirano sempre («tiro_sempre», A.78). «magistrale_migliorato»: naturali Magistrali con il Talento, per VA finale.",
     "naturale_magistrale": 1,
     "naturale_maldestro": 20,
     "successo_automatico_da": 20,
@@ -1730,7 +2021,21 @@
       "I modificatori e i Punti Eroe non cambiano il valore naturale mostrato dal dado.",
       "Il successo automatico è un successo normale: non produce un Successo Magistrale o Distintivi e non elimina il consumo ordinario di tempo e risorse."
     ],
-    "TODO(Davide)": "A.78: un attacco con VA finale 20 o più è un successo automatico senza tiro (§1.7), quindi senza Magistrale né Maldestro, oppure si tira comunque? Nel frattempo successo automatico, senza tiro."
+    "tiro_sempre": {
+      "tipi": ["attacco", "difesa"],
+      "decisione": "Gli attacchi e le Difese attive richiedono il tiro anche quando il VA finale è 20 o superiore. Si applicano prima tutti i modificatori e poi si determina il VA finale. Restano valide le eccezioni esplicite che colpiscono automaticamente, come Colpo Elementale.",
+      "promemoria": "si tira comunque: attacchi e Difese non hanno il successo automatico",
+      "fonte": "E&L del 02/10/2026, decisione 3 (per-davide A.78); docs/risposte-master.md, decisione 71"
+    },
+    "magistrale_migliorato": {
+      "talento": "successo-magistrale-migliorato",
+      "naturali": [
+        { "va_da": 1, "fino_a": 2 },
+        { "va_da": 21, "fino_a": 3 }
+      ],
+      "decisione": "Con Successo Magistrale Migliorato: con VA finale 20, sono Magistrali 1–2; da VA finale 21 sono Magistrali 1–2–3. Il 20 naturale rimane Maldestro. Correzione espressamente approvata: con il talento, il 3 naturale diventa Magistrale già da VA 21.",
+      "fonte": "E&L del 02/10/2026, decisione 3 (per-davide A.78); Giocatore §8.6.1"
+    }
   },
   "danno_applicato": {
     "paragrafo": "Giocatore 0.45: §5.10 «AC e applicazioni separate del danno», §5.13, §5.14, §5.24 (Google Doc del 01/10/2026)",

@@ -15,7 +15,7 @@ import { descriviFerite } from '../sessione.js';
 import { statoIntegrita } from '../protezione.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
 import { testoDanno } from '../stampa.js';
-import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto, catalogo, risolvi, infoArtefattoVoce, regoleSintonizzazione, rapportoConversione, riserveNec } from '../equipaggiamento.js';
+import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto, catalogo, risolvi, infoArtefattoVoce, infusiDi, regoleSintonizzazione, rapportoConversione, riserveNec } from '../equipaggiamento.js';
 import { dotazioneApplicata, crediti } from '../dotazioni.js';
 import { provenienzaCarico } from '../carico.js';
 import { talentiSituazionali } from '../talenti.js';
@@ -23,9 +23,12 @@ import { gradiTaumaturgici } from '../incantesimi.js';
 import { statoRicarica, disponibili } from '../ricarica.js';
 import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 import { pannelloAttacco } from './attacco.js';
-import { profiloSenzArmi, senzArmiDisponibile, SENZ_ARMI, talentiAttacco, valoriDisciplina } from '../attacco.js';
+import { profiloSenzArmi, profiloOndaInteriore, senzArmiDisponibile, SENZ_ARMI, ONDA, talentiAttacco, valoriDisciplina } from '../attacco.js';
 import { pannelloLancio } from './lancio.js';
+import { sezioneRisorseInteriori, pannelloTecnica } from './tecniche.js';
+import { tecnicaDi, testoFine } from '../tecniche.js';
 import { statoPulsanteLancio, attivazioneInfusa } from '../lancio.js';
+import { nomeRiserva, nomeAlimentazione } from '../fonti.js';
 import { tabCalendario, pannelloAttivazione, pannelloImportaCalendario, pulsanteImportaCalendario } from './calendario.js';
 import { conOrdinale } from '../lingua.js';
 import { regoleRiparazione, esitoRiparazione, vaRiparazione, riparabile } from '../riparazione.js';
@@ -156,11 +159,17 @@ export function renderTab(ctx) {
 
   // pannello «Attacca!» dell'arma scelta (src/ui/attacco.js), sopra la scheda
   // «Senz'armi»: profilo costruito qui (Corpo a corpo e danno dichiarato, src/attacco.js)
-  const armaAttacco = !ctx.ui?.attacco ? null : ctx.ui.attacco.uid === SENZ_ARMI ? senzArmi(ctx) : (tab.scheda.equipaggiamento?.armi ?? []).find((a) => a.uid === ctx.ui.attacco.uid);
+  // Onda Interiore (§8.9.4): profilo d'attacco finché la Tecnica è in corso
+  const armaAttacco = !ctx.ui?.attacco ? null : ctx.ui.attacco.uid === SENZ_ARMI ? senzArmi(ctx)
+    : ctx.ui.attacco.uid === ONDA ? profiloOndaInteriore(tab.scheda, ctx.sessione, ctx.dati)
+      : (tab.scheda.equipaggiamento?.armi ?? []).find((a) => a.uid === ctx.ui.attacco.uid);
   if (ctx.ui?.attacco && !armaAttacco) ctx.ui.attacco = null;
   // pannello «Lancia!» dell'incantesimo scelto (src/ui/lancio.js)
   const incLancio = ctx.ui?.lancio ? (ctx.dati.incantesimi.incantesimi.find((i) => i.nome === ctx.ui.lancio.nome) ?? null) : null;
   if (ctx.ui?.lancio && !incLancio) ctx.ui.lancio = null;
+  // pannello «Attiva» della Tecnica Interiore scelta (src/ui/tecniche.js)
+  const tecAttiva = ctx.ui?.tecnica ? tecnicaDi(ctx.ui.tecnica.id, ctx.dati) : null;
+  if (ctx.ui?.tecnica && !tecAttiva) ctx.ui.tecnica = null;
   return [h('div', { class: `scheda-tab pos-${ctx.posizione} larghezza-${ctx.larghezza ?? 'piena'}` }, barra, nav, lato, pannello),
     armaAttacco ? pannelloAttacco(ctx, armaAttacco) : null,
     incLancio ? (() => {
@@ -172,6 +181,7 @@ export function renderTab(ctx) {
           h('button', { type: 'button', class: 'btn', onclick: () => { ctx.ui.lancio = null; ctx.azioni.ridisegna(); } }, 'Chiudi'));
       }
     })() : null,
+    tecAttiva ? pannelloTecnica(ctx, tecAttiva) : null,
     ctx.ui?.attivaCalendario ? pannelloAttivazione(ctx) : null,
     ctx.ui?.importaCalendario ? pannelloImportaCalendario(ctx) : null];
 }
@@ -333,10 +343,10 @@ function pilloleAR(ctx) {
     totale: 'Contro danno Naturale e Magico (§5.13, §5.24)',
     magica: 'Contro danno Etereo vale solo la parte magica (§5.24)',
   };
-  // A.48: Tecniche Interiori che danno AR, accese al tavolo (3 Round), per chi le possiede
-  const possedute = new Set((ctx.tab.scheda.tecniche ?? []).map((t) => t.id));
-  const tecniche = (R.tecniche ?? []).filter((t) => possedute.has(t.tecnica));
-  const accese = new Set(ctx.sessione?.condizioniOggetti ?? []);
+  // A.48: Tecniche Interiori che danno AR finché sono attive: si accendono con «Attiva» (tab Poteri,
+  // §8.9.1) e qui si leggono soltanto, con il Round in cui scadono
+  const attive = new Map((ctx.sessione?.tecnicheAttive ?? []).map((x) => [x.id, x]));
+  const tecniche = (R.tecniche ?? []).filter((t) => attive.has(t.tecnica));
   return [
     h('div', { class: 'pillole-ar', role: 'group', 'aria-label': 'Armatura' },
       ar.valori.map((v) => infoValore([h('span', { class: 'etichetta-ar' }, v.etichetta), h('strong', {}, String(v.valore))], {
@@ -346,13 +356,12 @@ function pilloleAR(ctx) {
         sezioni: v.id === 'totale' && R.promemoria_cumulo_magia ? [{ testo: R.promemoria_cumulo_magia }] : [],
       }, { classe: `pillola-ar${v.principale ? ' principale' : ''}` }))),
     tecniche.length ? h('div', { class: 'pillole-condizionali tecniche-ar' }, tecniche.map((t) => {
-      const chiave = `tecnica:${t.tecnica}`;
-      const nome = ctx.dati.tecniche_interiori.tecniche.find((x) => x.id === t.tecnica)?.nome ?? t.tecnica;
-      const effetto = `+${t.totale} AR${t.magica ? ' magica' : ''}${t.contro ? ` contro ${t.contro}` : ''}`;
-      const acceso = accese.has(chiave);
-      return h('label', { class: `pillola-condizionale${acceso ? ' attivo' : ''}`, title: `${nome}: ${effetto} per ${t.durata}; si somma alle altre protezioni (A.48).` },
-        h('input', { type: 'checkbox', role: 'switch', checked: acceso, 'aria-label': `${nome}: ${effetto}`, onchange: () => ctx.azioni.condizioneOggetto(chiave) }),
-        h('span', { class: 'nome-condizionale' }, nome), h('span', { class: 'effetto-condizionale' }, ` · ${effetto}`));
+      const tec = tecnicaDi(t.tecnica, ctx.dati);
+      const nome = tec?.nome ?? t.tecnica;
+      const effetto = `+${t.totale} AR${t.magica ? ' magica' : ' non magica'}${t.contro ? ` contro ${t.contro}` : ''}`;
+      const fine = tec ? testoFine(tec, attive.get(t.tecnica)) : '';
+      return h('span', { class: 'pillola-condizionale attivo', title: `${nome}: ${effetto}, ${fine}; si somma alle altre protezioni (A.48). Si attiva nella tab Poteri.` },
+        h('span', { class: 'nome-condizionale' }, nome), h('span', { class: 'effetto-condizionale' }, ` · ${effetto} · ${fine}`));
     })) : null,
   ];
 }
@@ -530,7 +539,8 @@ function rigaNec(ctx, r, x) {
     h('span', {}, `${x.unita === 'Lx' ? 'Riserva' : 'NEC'}${parte ? ` ${parte}` : ''} `),
     infoValore([h('strong', {}, n.toLocaleString('it-IT')), ` / ${x.massimo.toLocaleString('it-IT')} ${x.unita}`], {
       titolo: `Riserva: ${x.nome}`,
-      sottotitolo: 'Si segna a mano (Equipaggiamento §5.4): «Nuova sessione» non ricarica; la ricarica completa richiede caricatore e fonte, un’ora.',
+      // A.67 (E&L del 02/10): niente travaso di energia fra NEC (regole.json → nec.travaso)
+      sottotitolo: `Si segna a mano (Equipaggiamento §5.4): «Nuova sessione» non ricarica; la ricarica completa richiede caricatore e fonte, un’ora.${ctx.dati.regole.nec?.travaso?.ammesso === false ? ` ${ctx.dati.regole.nec.travaso.decisione}` : ''}`,
       provenienza: x.provenienza,
     }, { classe: 'valore-nec' }),
     h('span', { class: 'pi-comandi' }, [...x.passi].reverse().map((p) => b(-p)), x.passi.map((p) => b(p))));
@@ -1055,8 +1065,8 @@ function tabAbilita(ctx, d) {
       paragrafi(t.frase)))) : null),
     d.specializzazioni.length ? sezione('Specializzazioni', h('ul', {}, d.specializzazioni.map((x) => h('li', {},
       info('talento', x.id, x.nome), ` — ${x.abilita}; ${x.effetto} (${x.livello}° livello)`)))) : null,
-    d.tecniche.length || d.tecnicheAmmesse ? sezione(`Tecniche Interiori (${d.tecniche.length} / ${d.tecnicheAmmesse})`,
-      h('ul', {}, d.tecniche.map((t) => h('li', {}, info('tecnica', t.id, t.nome), ` — costo ${t.costo}; ${t.azione}; durata ${t.durata}`)))) : null,
+    // Tecniche Interiori: nella tab Poteri, con «Attiva» (richiesta di Davide del 02/10)
+    d.tecniche.length || d.tecnicheAmmesse ? h('p', { class: 'nota rimando-tecniche' }, `Tecniche Interiori (${d.tecniche.length} / ${d.tecnicheAmmesse}): vedi Poteri.`) : null,
   ];
 }
 
@@ -1102,6 +1112,9 @@ function riquadriTavolo(ctx) {
     h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Movimento'),
       h('p', { class: 'valore-tavolo' }, pillolaTavolo('Movimento', [{ nome: 'Passo', v: t.movimento.passo }, { nome: 'Corsa', v: t.movimento.corsa }, { nome: 'Scatto', v: t.movimento.scatto }]), h('span', {}, ` ${u}`)),
       h('p', { class: 'nota' }, 'Passo · Corsa · Scatto (§5.2)')),
+    ...(ctx.tab.scheda.sensi?.length ? [h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Sensi'),
+      ctx.tab.scheda.sensi.map((s) => h('p', { class: 'valore-tavolo', title: [s.condizione, s.fonte].join(' — ') }, h('strong', {}, `${s.raggioQ} Q`), ` ${s.nome}`)),
+      h('p', { class: 'nota' }, ctx.tab.scheda.sensi.map((s) => s.fonte).join(' · ')))] : []),
     h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Azioni'),
       h('p', { class: 'valore-tavolo' }, pillolaTavolo('Azioni', [{ nome: 'Principali', v: t.azioni.principali }, { nome: 'di Movimento', v: t.azioni.movimento }])),
       h('p', { class: 'nota' }, 'Principali · di Movimento per Round (§5.1)')),
@@ -1249,6 +1262,7 @@ function tabCombattimento(ctx, d) {
         sezione('In mano',
           mani.length ? h('div', { class: 'riquadri-mani' }, mani) : h('p', { class: 'vuoto' }, 'Nessuna arma impugnata né scudo imbracciato: scegli qui sotto, o nella tab Inventario.'),
           senzArmiDisponibile(ctx.tab.scheda, ctx.dati) ? h('div', { class: 'armi-tab' }, schedaSenzArmi(ctx)) : null,
+          schedaOnda(ctx),
           h('p', { class: 'nota' }, 'Caricatori di riserva e condizione delle armi qui si vedono soltanto: si cambiano nella tab Inventario. «Ricarica» consuma dalle riserve.')),
 
         sezione('Armi disponibili',
@@ -1336,6 +1350,20 @@ function senzArmi(ctx) {
   return profiloSenzArmi(ctx.tab.scheda, ctx.dati);
 }
 
+/** Onda Interiore in corso (§8.9.4): il pugno proiettato a distanza, con «Attacca!». null altrimenti. */
+function schedaOnda(ctx) {
+  const a = profiloOndaInteriore(ctx.tab.scheda, ctx.sessione, ctx.dati);
+  if (!a) return null;
+  return h('div', { class: 'armi-tab' }, h('article', { class: 'arma-tab macro-tecnica' },
+    h('div', { class: 'arma-testa' },
+      h('h3', {}, a.nome, h('small', { class: 'sigla' }, ` · ${a.abilita} · ${a.tecnica.etichetta.replace(/^Tecnica: [^(]*/, '')}`)),
+      a.va !== null ? h('button', { type: 'button', class: 'btn primario btn-attacca', onclick: () => { ctx.ui.attacco = { uid: ONDA, passo: 0 }; ctx.azioni.ridisegna(); } }, 'Attacca!') : null),
+    h('div', { class: 'arma-valori' },
+      h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), a.va === null ? h('strong', {}, '—') : valoreEffettivo(`VA Onda Interiore (${a.abilita})`, a.vaEffettivo, a.va, a.scomposizione, { pillola: true, provenienza: a.provenienza })),
+      h('p', {}, h('span', { class: 'sigla' }, 'Danno '), dannoConProvenienza(a, a.danno.una_mano ?? '—'), h('small', { class: 'sigla' }, ` ${a.natura}`)),
+      h('p', {}, h('span', { class: 'sigla' }, 'Gittata '), `${a.portataQ} Q`))));
+}
+
 /** Voce fissa «Senz'armi» fra le armi (se non impugna nulla, ha Arti Marziali o è Lottatore). */
 function schedaSenzArmi(ctx) {
   const a = senzArmi(ctx);
@@ -1347,7 +1375,7 @@ function schedaSenzArmi(ctx) {
     h('div', { class: 'arma-valori' },
       h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), a.va === null ? h('strong', {}, '—') : valoreEffettivo(`VA senz’armi (${a.abilita})`, a.vaEffettivo, a.va, a.scomposizione, { pillola: true, provenienza: a.provenienza })),
       h('p', {}, h('span', { class: 'sigla' }, 'Danno '), dannoConProvenienza(a, a.danno.una_mano ?? '—'),
-        h('small', { class: 'sigla' }, ` (${a.dannoOrigine === 'base' ? 'base' : a.dannoOrigine}${a.bonusCaratteristica?.bonus ? `, ${a.bonusCaratteristica.sigla} ${segno(a.bonusCaratteristica.bonus)}` : ''})`)),
+        h('small', { class: 'sigla' }, ` (${a.dannoOrigine === 'base' ? 'base' : a.dannoOrigine}${a.bonusCaratteristica?.bonus ? `, ${a.bonusCaratteristica.sigla} ${segno(a.bonusCaratteristica.bonus)}` : ''})${a.natura ? ` · ${a.natura}` : ''}`)),
       h('p', {}, h('span', { class: 'sigla' }, 'Portata '), `${a.portataQ} Q`)),
     ultima ? h('p', { class: 'nota' }, `Ultima Manovra: ${ultima.nome}`) : null);
 }
@@ -1518,8 +1546,9 @@ const AGGETTIVI_MACRO = { Fisica: 'Fisici', Mentale: 'Mentali', Spirituale: 'Spi
 /** Quali Incantesimi può alimentare un contenitore, dal colore (regole.json → chroma.colori). */
 function testoAlimenta(c) {
   if (c.regoleRimandate) return `Chroma ${c.energia} (energia ${c.energiaNome ?? '—'}): regole di impiego rimandate (Magia sez. 6).`;
-  // risposta A.18 (Magia §24.2, §24.7): la riserva integrata alimenta soltanto le funzioni del proprio Artefatto
-  if (c.integrato) return `Energia ${c.energiaNome}: alimenta soltanto le attivazioni dell’oggetto (§7.5.1); non paga Incantesimi e non si preleva (Magia §24.2, §24.7).`;
+  // Magia §26.2: le Cariche alimentano soltanto il proprio Artefatto (le armi del §7.5.1, risposta A.18);
+  // una Batteria integrata è anche una fonte per gli Incantesimi compatibili
+  if (c.integrato && !c.fontePg) return `Cariche, energia ${c.energiaNome}: alimentano soltanto le attivazioni dell’oggetto; non pagano Incantesimi e non si prelevano (Magia §26.2).`;
   if (!c.macrofamiglie.length) return 'Non alimenta Incantesimi.';
   if (c.macrofamiglie.length >= 3) return `Energia ${c.energiaNome}: alimenta Incantesimi di ogni macrofamiglia.`;
   return `Energia ${c.energiaNome}: alimenta Incantesimi ${c.macrofamiglie.map((m) => AGGETTIVI_MACRO[m] ?? m).join(' e ')}.`;
@@ -1564,15 +1593,68 @@ function pannelloChroma(ctx, c, { conPulsanti = true } = {}) {
     ].join(' ')));
 }
 
+/**
+ * Attivazione a durata di un Artefatto (Guanti da Combattimento Mistico, Armamenti §7.24): i PM dalla riserva
+ * interna e la condizione accesa in una modifica sola; «Termina» la spegne. L'effetto entra in «Attacca!».
+ */
+function attivazioneArtefattoUi(ctx, x, r, riserva) {
+  const at = r?.def?.attivazione_artefatto;
+  if (!at) return null;
+  const chiave = `attivazione:${x.uid}`;
+  const accesa = (ctx.sessione.condizioniOggetti ?? []).includes(chiave);
+  const pm = riserva ? ctx.sessione.chroma?.[riserva.uid]?.pmAttuali ?? 0 : 0;
+  const motivo = x.deposito ? 'nel deposito comune' : !x.sintonizzato ? 'non sintonizzato' : !r.attivo ? 'non indossato' : pm < at.pm ? `la riserva ha ${pm} PM, ne servono ${at.pm}` : null;
+  return h('div', { class: 'attivazione-infusa' },
+    h('p', {}, h('strong', {}, 'Attivazione: '), `${at.pm} PM dalla riserva interna, ${at.azione}, ${at.durata}: danni dei pugni di natura ${at.natura} e +${at.danno} al danno (${at.fonte}).`),
+    accesa ? h('p', { class: 'nota' }, h('strong', {}, 'Attiva'), ` · vale in «Attacca!» senz’armi; dura ${at.durata}. `,
+      h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => ctx.azioni.condizioneOggetto(chiave) }, 'Termina')) : null,
+    motivo && !accesa ? h('p', { class: 'nota motivo' }, `Non attivabile ora: ${motivo}.`) : null,
+    h('button', { type: 'button', class: 'btn', disabled: !!motivo, title: motivo ?? `Scala ${at.pm} PM dalla riserva e accende l’effetto; una nuova attivazione rinnova la durata`,
+      onclick: () => ctx.azioni.attivaArtefatto(x.uid, at.pm) }, accesa ? `Rinnova (−${at.pm} PM)` : `Attiva (−${at.pm} PM)`));
+}
+
+/**
+ * Batteria Matrice (Magia §26.4): Matrice d'origine sulla voce e ricarica automatica per le ore passate entro il
+ * raggio della Matrice d'origine (2 PM/ora) o di un'altra dello stesso colore (1 PM/ora). La tabella dei
+ * Cristalli Matrice (Magia §26.3) è nel tooltip.
+ */
+function ricaricaMatriceUi(ctx, c) {
+  if (!c.matrice) return null;
+  const M = ctx.dati.regole.chroma.matrice;
+  const C = ctx.dati.regole.chroma.cristalli_matrice;
+  const u = (ctx.ui.matrice ??= {})[c.uid] ??= { ore: 1, presso: 'origine' };
+  const cambiaOrigine = (testo) => ctx.azioni.equipaggiamento((ctx.scelte.equipaggiamento ?? []).map((v) => {
+    if (v.uid !== c.uid) return v;
+    const w = { ...v };
+    if (testo.trim()) w.matrice = testo.trim(); else delete w.matrice;
+    return w;
+  }));
+  const raggio = (m) => (m >= 1000 ? `${m / 1000} km` : `${m} m`);
+  return h('div', { class: 'ricarica-matrice' },
+    h('label', { class: 'campo' }, h('span', {}, 'Matrice d’origine'),
+      h('input', { type: 'text', value: c.matrice.origine ?? '', placeholder: 'da registrare (Equipaggiamento §10.3)', onchange: (e) => cambiaOrigine(e.target.value) })),
+    h('p', { class: 'nota' }, h('strong', {}, 'Ricarica dalla Matrice'), ` (Magia §26.4): ${M.frasi[0]} ${M.frasi[1]} ${M.frasi[2]}`,
+      C ? h('span', { class: 'sottolineato-info', title: C.livelli.map((l) => `Livello ${l.livello}: ${l.altezza_m} × ${l.larghezza_m} m, raggio ${raggio(l.raggio_m)}`).join(' · ') }, ' Raggi dei Cristalli Matrice per livello (Magia §26.3): passa il mouse.') : null),
+    h('div', { class: 'riga-azioni' },
+      h('select', { onchange: (e) => { u.presso = e.target.value; } },
+        h('option', { value: 'origine', selected: u.presso === 'origine' }, `presso la Matrice d’origine (${M.pm_ora_origine} PM/ora)`),
+        h('option', { value: 'stesso_colore', selected: u.presso === 'stesso_colore' }, `presso un’altra Matrice ${c.energia} (${M.pm_ora_stesso_colore} PM/ora)`)),
+      h('input', { type: 'number', min: 1, step: 1, value: u.ore, 'aria-label': 'Ore passate', onchange: (e) => { u.ore = Math.max(1, Math.round(Number(e.target.value) || 1)); } }),
+      h('span', {}, ' ore '),
+      h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.ricaricaMatrice(c.uid, u.ore, u.presso) }, 'Ricarica dalla Matrice')));
+}
+
 /** Scheda di un contenitore: nome, colore, PM, sintonizzazione, trasporto. */
 function schedaContenitore(ctx, c) {
   return h('article', { class: 'arma-tab contenitore-tab' },
-    h('h3', {}, c.nome, h('small', { class: 'sigla' }, c.integrato ? ' · riserva integrata nell’oggetto' : ` · ${c.potenza}`)),
+    h('h3', {}, c.nome, h('small', { class: 'sigla' }, c.integrato ? ` · riserva integrata nell’oggetto: ${nomeRiserva(c.riserva, ctx.dati)}, proprietà ${nomeAlimentazione(c.alimentazione, ctx.dati)}` : ` · ${c.potenza}`)),
     h('p', { class: 'nota' },
-      c.sintonizzato ? `✔ Sintonizzato (SnT ${c.costo}, §7.10)` : `○ Non sintonizzato (SnT ${c.costo}): senza sintonizzazione non alimenta lanci`,
+      c.scheggia ? 'Scheggia instabile: SnT 0, non si sintonizza; ogni prelievo richiede una Prova di Potere di estrazione (Magia §26.5)'
+        : c.sintonizzato ? `✔ Sintonizzato (SnT ${c.costo}, §7.10)` : `○ Non sintonizzato (SnT ${c.costo}): senza sintonizzazione non alimenta lanci`,
       ' · ', c.trasportato ? 'trasportato' : c.integrato ? `oggetto ${NOMI_STATI[c.stato]?.toLowerCase() ?? 'non trasportato'}` : 'nello zaino'),
     // vista estesa, in sola lettura: i PM si modificano nel riquadro Punti Magia
-    pannelloChroma(ctx, c, { conPulsanti: false }));
+    pannelloChroma(ctx, c, { conPulsanti: false }),
+    ricaricaMatriceUi(ctx, c));
 }
 
 /** Sigla di una modalità di fuoco con il tooltip del §5.10 (regole.json → modalita_di_fuoco). */
@@ -1618,9 +1700,14 @@ function tabInArrivo(ctx, id) {
 
 function tabPoteri(ctx, d) {
   const p = ctx.dati.regole.poteri ?? {};
+  const risorse = sezioneRisorseInteriori(ctx);
+  // i dati del foglio Poteri esistono anche con le sole Tecniche (conMagia: false): la Magia solo se c'è
+  if (d && d.conMagia === false) d = null;
   return [
     interruttoreTalenti(ctx),
-    ...(d ? tabMagia(ctx, d) : [h('section', { class: 'riquadro nessun-potere' }, h('h2', {}, 'Nessun potere'), p.nessuno ? h('p', { class: 'nota' }, p.nessuno) : null)]),
+    ...(d ? tabMagia(ctx, d) : risorse ? [] : [h('section', { class: 'riquadro nessun-potere' }, h('h2', {}, 'Nessun potere'), p.nessuno ? h('p', { class: 'nota' }, p.nessuno) : null)]),
+    // Risorse Interiori (Giocatore §8.9; richiesta di Davide del 02/10): le Tecniche con «Attiva»
+    risorse,
     sezioneDaArtefatti(ctx),
     ...(p.in_arrivo ?? []).map((x) => h('details', { class: 'sezione-tab in-arrivo' },
       h('summary', {}, h('h2', {}, x.nome)), h('p', { class: 'nota' }, x.nota))),
@@ -1637,7 +1724,7 @@ function sezioneDaArtefatti(ctx) {
   if (!st) return null;
   const cat = catalogo(ctx.dati);
   const perUid = new Map((ctx.scelte.equipaggiamento ?? []).map((v) => [v.uid, risolvi(v, cat)]));
-  const conPotere = st.artefatti.map((x) => ({ x, r: perUid.get(x.uid) })).filter(({ r }) => r?.def?.attivazione || infoArtefattoVoce(r, ctx.dati)?.contenitore?.integrato || infoArtefattoVoce(r, ctx.dati)?.infuso);
+  const conPotere = st.artefatti.map((x) => ({ x, r: perUid.get(x.uid) })).filter(({ r }) => r?.def?.attivazione || infoArtefattoVoce(r, ctx.dati)?.contenitore?.integrato || infusiDi(infoArtefattoVoce(r, ctx.dati)).length);
   const contenitori = ctx.tab.scheda.equipaggiamento?.contenitori ?? [];
   if (!conPotere.length) return null;
   return sezione('Da artefatti',
@@ -1647,7 +1734,7 @@ function sezioneDaArtefatti(ctx) {
       return h('li', {},
         h('strong', {}, x.nome), h('small', { class: 'sigla' }, ` · ${x.sintonizzato ? 'sintonizzato' : 'non sintonizzato'}${r.deposito ? ' · nel deposito comune' : ''}`),
         at ? h('p', { class: 'nota' }, `Attivazione: +${at.danno_extra} ${at.natura}${at.anche ? ` e ${at.anche}` : ''} al danno del colpo (§7.1.4)${at.sintonizzazione ? `, Sintonizzazione ${at.sintonizzazione}` : ''}.`) : null,
-        ris ? h('p', { class: 'nota' }, `Riserva integrata di Chroma ${ris.energia}, ${ris.capacita_pm} PM (§7.5.1).`) : null,
+        ris ? h('p', { class: 'nota' }, `Riserva integrata di Chroma ${ris.energia}, ${ris.capacita_pm} PM: ${nomeRiserva(ris.riserva ?? ctx.dati.regole.chroma.riserve?.integrata_predefinita, ctx.dati)}, proprietà ${nomeAlimentazione(ris.alimentazione ?? ctx.dati.regole.chroma.riserve?.proprieta_predefinita, ctx.dati)} (Magia §26.2).`) : null,
         attivazioneInfusaUi(ctx, x, r, contenitori.find((c) => c.uid === x.uid && c.integrato), { conPulsante: false }));
     })),
     h('p', { class: 'nota' }, 'Sola lettura: sintonizzazione e riserve si gestiscono nella tab Artefatti.'));
@@ -1690,8 +1777,8 @@ function tabArtefatti(ctx) {
       h('div', { class: 'arma-testa' },
         h('h3', {}, def ? info('oggetto', def.rif, x.nome) : x.nome, h('small', { class: 'sigla' }, ` · ${x.tipologia ?? 'Artefatto'} · ${x.potenza}`))),
       h('p', { class: 'nota' }, `Nell’Inventario: ${NOMI_STATI[r?.voce.stato] ?? 'con sé'}. SnT ${x.costo}.`),
-      // §7.10: con sole proprietà passive SnT 0, nessuna sintonizzazione
-      !x.sintonizzabile ? h('p', { class: 'nota' }, 'Sole proprietà passive: SnT 0, si usano senza sintonizzazione (Armamenti §7.10).')
+      // §7.10: con sole proprietà passive SnT 0, nessuna sintonizzazione; Magia §26.5: Schegge instabili SnT 0
+      !x.sintonizzabile ? h('p', { class: 'nota' }, def?.artefatto?.scheggia ? 'Scheggia instabile: SnT 0, non si sintonizza; estrarre PM richiede una Prova di Potere (Magia §26.5).' : 'Sole proprietà passive: SnT 0, si usano senza sintonizzazione (Armamenti §7.10).')
         : h('label', { class: `stato-tavolo${x.sintonizzato ? ' attivo' : ''}`, title: x.deposito ? 'Nel deposito comune un Artefatto non è sintonizzabile.' : null },
           h('input', { type: 'checkbox', checked: x.sintonizzato, disabled: !!x.deposito, onchange: (e) => sintonizza(x.uid, e.target.checked) }),
           h('span', {}, h('strong', {}, 'Sintonizzato'), h('small', {}, x.deposito ? ' · nel deposito comune: non sintonizzabile' : ` · SnT ${x.costo}`))),
@@ -1705,6 +1792,7 @@ function tabArtefatti(ctx) {
       !arma && !prot && (r?.tipo === 'arma_ravvicinata' || r?.tipo === 'arma_distanza' || ['armatura', 'scudo'].includes(r?.tipo))
         ? h('p', { class: 'nota' }, 'Non è in mano né indossato: i suoi effetti non contano ora.') : null,
       attivazioneInfusaUi(ctx, x, r, riserva, { conPulsante: true }),
+      attivazioneArtefattoUi(ctx, x, r, riserva),
       riserva ? pannelloChroma(ctx, riserva, { conPulsanti: true }) : null);
   };
   return [
@@ -1908,17 +1996,28 @@ function tabMagia(ctx, d) {
  * dalla riserva integrata, senza Prove; tempo di attivazione. Nella tab Artefatti con il pulsante
  * «Attiva» (scala la riserva, annullabile); in Poteri «Da artefatti» in sola lettura.
  */
-function attivazioneInfusaUi(ctx, x, r, riserva, { conPulsante }) {
+function attivazioneInfusaUi(ctx, x, r, riserva, opz) {
   const info = r ? infoArtefattoVoce(r, ctx.dati) : null;
-  if (!info?.infuso) return null;
+  const infusi = infusiDi(info);
+  if (!infusi.length) return null;
+  // più proprietà infuse (Pietra della Vigilanza): una riga per ciascuna, la riserva è condivisa
+  return infusi.length === 1 ? attivazioneInfusaRiga(ctx, x, infusi[0], riserva, opz) : h('div', {}, infusi.map((i) => attivazioneInfusaRiga(ctx, x, i, riserva, opz)));
+}
+
+function attivazioneInfusaRiga(ctx, x, infuso, riserva, { conPulsante }) {
   const pm = riserva ? ctx.sessione.chroma?.[riserva.uid]?.pmAttuali ?? 0 : 0;
-  const a = attivazioneInfusa(info.infuso, riserva ?? null, { pm, sintonizzato: x.sintonizzato, deposito: x.deposito }, ctx.dati);
-  if (!a) return h('p', { class: 'nota motivo' }, `Incantesimo infuso «${info.infuso.incantesimo}» non trovato fra gli incantesimi.`);
+  const a = attivazioneInfusa(infuso, riserva ?? null, { pm, personali: ctx.sessione.pmAttuali, sintonizzato: x.sintonizzato, deposito: x.deposito }, ctx.dati);
+  if (!a) return h('p', { class: 'nota motivo' }, `Incantesimo infuso «${infuso.incantesimo}» non trovato fra gli incantesimi.`);
+  // Magia §26.2: Esclusiva solo dalla riserva interna; Universale anche con PM personali, una sola fonte esterna
+  const universale = a.alimentazione === 'universale';
+  const quote = a.pagamento && universale && a.pagamento.personali ? `${a.pagamento.interna} dalla riserva e ${a.pagamento.personali} personali` : `${a.pm} PM dalla riserva dell’Artefatto`;
   return h('div', { class: 'attivazione-infusa' },
-    h('p', {}, h('strong', {}, `${a.incantesimo} ${a.livello}: `), `${a.pm} PM dalla riserva dell’Artefatto · ${a.tempo} · nessuna Prova (Magia §24.2${a.energie ? ', §25.4' : ''}).`),
+    h('p', {}, h('strong', {}, `${a.incantesimo} ${a.livello}: `), `${quote} · ${a.tempo} · nessuna Prova (Magia §24.2${a.energie ? ', §25.4' : ''}) · proprietà ${nomeAlimentazione(a.alimentazione, ctx.dati)} (§26.2).`),
     a.motivo ? h('p', { class: 'nota motivo' }, `Non attivabile ora: ${a.motivo}.`) : null,
-    conPulsante ? h('button', { type: 'button', class: 'btn', disabled: !!a.motivo, title: a.motivo ?? 'Scala i PM dalla riserva; «Annulla» li restituisce',
-      onclick: () => ctx.azioni.chroma(riserva.uid, -a.pm) }, `Attiva (−${a.pm} PM dalla riserva)`) : null);
+    conPulsante ? h('button', { type: 'button', class: 'btn', disabled: !!a.motivo, title: a.motivo ?? 'Scala i PM; «Annulla» li restituisce',
+      onclick: () => (universale && a.pagamento?.personali
+        ? ctx.azioni.lancia({ personali: a.pagamento.personali, contenitore: riserva && a.pagamento.interna ? { uid: riserva.uid, pm: a.pagamento.interna } : null })
+        : ctx.azioni.chroma(riserva.uid, -a.pm)) }, `Attiva (−${a.pm} PM)`) : null);
 }
 
 /**

@@ -37,7 +37,11 @@ for (const [tema, v] of Object.entries(temi)) {
 test('categorie dell’equipaggiamento: una per tipo di oggetto, colori distinti, mai quelli riservati', () => {
   assert.deepEqual(GRUPPI_EQUIPAGGIAMENTO.map((g) => g.tipo), TIPI);
   for (const tema of ['chiaro', 'scuro']) {
-    const colori = GRUPPI_EQUIPAGGIAMENTO.map((g) => temi[tema][g.colore].toLowerCase());
+    // le sottocategorie (Rinforzi sotto Armature) usano di proposito il colore della loro famiglia
+    for (const g of GRUPPI_EQUIPAGGIAMENTO.filter((x) => x.sottocategoriaDi)) {
+      assert.equal(g.colore, GRUPPI_EQUIPAGGIAMENTO.find((x) => x.tipo === g.sottocategoriaDi).colore, g.tipo);
+    }
+    const colori = GRUPPI_EQUIPAGGIAMENTO.filter((g) => !g.sottocategoriaDi).map((g) => temi[tema][g.colore].toLowerCase());
     assert.equal(new Set(colori).size, colori.length, `colori ripetuti nel tema ${tema}`);
     const riservati = new Set(COLORI_RISERVATI.flatMap((c) => [c, `${c}-tenue`, `${c}-testo`]).map((c) => temi[tema][c]?.toLowerCase()).filter(Boolean));
     assert.deepEqual(colori.filter((c) => riservati.has(c)), [], `tema ${tema}`);

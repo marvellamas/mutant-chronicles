@@ -7,6 +7,8 @@ import { readFileSync, readdirSync, mkdtempSync, rmSync, writeFileSync } from 'n
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { ESEMPI, costruisci } from '../tools/genera_esempi.mjs';
+// il PG con le Tecniche Interiori (Aiko Tenzan, da main): stesso costruttore, file suo
+import { ESEMPIO_TECNICHE, costruisci as costruisciTecniche } from '../tools/genera_esempio_tecniche.mjs';
 import { validaNemico, formattaErrore } from '../src/validate.js';
 import { creaServer } from '../server.mjs';
 import { datiReali } from './helpers.js';
@@ -17,7 +19,8 @@ const cartellaEsempi = new URL('../esempi/', import.meta.url);
 test('i 4 PG d’esempio: validi, wizard senza avvisi, livelli fra 3 e 8, file in sincronia con il generatore', () => {
   const file = readdirSync(cartellaEsempi).filter((f) => f.endsWith('.json')).sort();
   const costruiti = ESEMPI.map((s) => costruisci(s, dati));
-  assert.deepEqual(costruiti.map((r) => r.file).sort(), file);
+  // più Aiko Tenzan (tools/genera_esempio_tecniche.mjs, tests/esempio-tecniche.test.js)
+  assert.deepEqual([...costruiti.map((r) => r.file), costruisciTecniche(ESEMPIO_TECNICHE, dati).file].sort(), file);
   for (const r of costruiti) {
     assert.deepEqual(r.problemi, [], r.file);
     const livello = 1 + r.personaggio.livelli.length;
@@ -67,14 +70,14 @@ test('«Carica esempi»: copia nelle cartelle attive, non sovrascrive mai, segna
   assert.deepEqual(r.saltati, ['Rhea-Valdis_liv5_2026-10-02.json']);
   const umani = readdirSync(new URL('nemici/umani/', cartellaEsempi)).filter((f) => f.endsWith('.json'));
   assert.equal(umani.length, 30);
-  assert.deepEqual(r.copiati.sort(), ['Fratello-Anselmo-Viri_liv3_2026-10-02.json', 'Nadia-Ferro_liv4_2026-10-02.json', 'Torvald-Krane_liv6_2026-10-02.json', 'legionario-oscuro.json', 'predone-delle-lande.json', ...umani].sort());
+  assert.deepEqual(r.copiati.sort(), ['Aiko-Tenzan_liv5_2026-10-02.json', 'Fratello-Anselmo-Viri_liv3_2026-10-02.json', 'Nadia-Ferro_liv4_2026-10-02.json', 'Torvald-Krane_liv6_2026-10-02.json', 'legionario-oscuro.json', 'predone-delle-lande.json', ...umani].sort());
   assert.equal(readFileSync(join(cPersonaggi, 'Rhea-Valdis_liv5_2026-10-02.json'), 'utf8'), 'IL MIO FILE');
   assert.deepEqual(readdirSync(cNemici).sort(), ['legionario-oscuro.json', 'predone-delle-lande.json', ...umani].sort());
   // seconda volta: tutto già presente, nulla copiato
   const r2 = await (await fetch(`${base}/api/esempi`, { method: 'POST' })).json();
-  assert.deepEqual([r2.copiati, r2.saltati.length], [[], 36]);
+  assert.deepEqual([r2.copiati, r2.saltati.length], [[], 37]);
   assert.equal((await fetch(`${base}/api/esempi`)).status, 405);
   // i PG copiati si leggono dall'elenco della cartella
   const elenco = await (await fetch(`${base}/api/personaggi`)).json();
-  assert.equal(elenco.length, 4);
+  assert.equal(elenco.length, 5);
 });

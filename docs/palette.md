@@ -29,8 +29,13 @@ Se si cambia un valore, `npm test` dice se il contrasto non basta più.
 | `--spirituale` | magia Spirituale: barra laterale | `#3e9a4f` | `#8ed79a` |
 | `--spirituale-tenue` | magia Spirituale: tinta di sfondo | `#ebf6ed` | `#1b3321` |
 | `--spirituale-testo` | magia Spirituale: etichetta «Spirituale» | `#2a6934` | `#b6ecbe` |
+| `--tecnica` | Tecniche Interiori: barra laterale della scheda (tab Poteri) | `#9a5b13` | `#e8a865` |
+| `--tecnica-tenue` | Tecniche Interiori: tinta di sfondo della scheda | `#f8efe4` | `#33261a` |
+| `--tecnica-testo` | Tecniche Interiori: etichetta del gruppo (Generica, Scuola…, Lottatore) | `#7a4408` | `#f3c896` |
 
 Sulle tinte delle macrofamiglie il testo dell'incantesimo resta quello normale (`--testo`, nero o bianco pieno): la tinta è leggera e non toglie leggibilità. Accanto alla barra colorata c'è sempre l'etichetta con il nome della macrofamiglia, per chi non distingue i colori.
+
+Le Tecniche Interiori usano la stessa scheda degli incantesimi con un colore proprio, il bronzo: «non sono Incantesimi» (Giocatore §8.9), quindi non prendono il colore di una macrofamiglia. Accanto c'è sempre l'etichetta del gruppo.
 
 Verde dei Punti Eroe e verde chiaro della magia Spirituale si distinguono per luminosità. La magia Spirituale compare inoltre sempre con la sua etichetta.
 
@@ -99,5 +104,6 @@ La SS definisce i suoi colori in `body.vista-stampa` come `--ss-*`, con gli stes
 | Incantesimi di macrofamiglia Fisica, Mentale, Spirituale (righe dell'indice, intestazione delle schede) | `--ss-fisica`, `--ss-mentale`, `--ss-spirituale` e i `-tenue` | come `--fisica`, `--mentale`, `--spirituale` |
 | Caratteristiche e Abilità (i riquadri principali dei fogli 1 e 2) | `--ss-accento`, `--ss-accento-tenue` | `#8a3b12`, `#f6e8df` |
 | Riquadri neutri, testate dei fogli, righe delle armi | `--ss-acciaio`, `--ss-acciaio-tenue` | `#4a5260`, `#eceef1` |
+| Tecniche Interiori (elenco del foglio 5) | `--ss-tecnica`, `--ss-tecnica-tenue` | come `--tecnica`, `--tecnica-tenue` |
 
 In bianco e nero le intestazioni diventano grigio scuro con testo bianco e i fondi tenui quasi bianchi: la scheda resta leggibile. La filigrana del foglio 1 è lo stemma della Corporazione in scala di grigi all'8%.

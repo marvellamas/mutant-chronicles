@@ -109,12 +109,13 @@ test('cap. 4: 11 voci con REP propria; Binocolo +1 Percezione per un uso (vale l
 test('cap. 6: le 16 schede del §7.19 restano (stessi valori); 7 voci nuove: ricariche, ricambi, farmaco, antidoto', () => {
   const tutte = deiFile('sanitario');
   // 23 fino alla 0.3; la 0.5 aggiunge naniti, 8 postazioni e 3 consumabili del §6.8 (tests/sanitario-05.test.js)
-  assert.equal(tutte.length, 35);
+  assert.equal(tutte.length, 33); // A.71 (E&L del 02/10): set e confezione di set chirurgici uniti nella Cartuccia chirurgica
   // valori del §6.1 e §6.4 uguali a quelli già nel catalogo
   assert.deepEqual([r('sanitario:kit-di-pronto-soccorso-standard').pi, r('sanitario:kit-di-pronto-soccorso-standard').costo], [4, 1000]);
   assert.deepEqual(r('sanitario:kit-di-pronto-soccorso-professionale').ricarica, { applicazioni: 5, costo: 300 });
   assert.equal(r('sanitario:ricarica-kit-di-pronto-soccorso-professionale').costo, 300);
-  assert.equal(r('sanitario:confezione-da-cinque-set-chirurgici').costo, 2500);
+  // A.71: una voce sola, 500 cr o 2.500 cr per cinque
+  assert.deepEqual([r('sanitario:cartuccia-chirurgica').costo, r('sanitario:cartuccia-chirurgica').confezione], [500, { quantita: 5, costo: 2500 }]);
   const f = r('sanitario:farmaco-terapeutico-specifico').effetti[0];
   assert.deepEqual([f.tipo, f.salvezza, f.valore, f.ambito], ['salvezza', 'tempra', 2, 'uso_specifico']);
   assert.equal(r('sanitario:antidoto-specifico').effetti, undefined); // testuale: termina l'avvelenamento

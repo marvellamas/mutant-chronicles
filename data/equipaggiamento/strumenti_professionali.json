@@ -173,6 +173,21 @@
       "proprieta": []
     },
     {
+      "id": "corredo-agricolo-standard-allevamento",
+      "nome": "Corredo agricolo Standard — Allevamento",
+      "tipo": "altro",
+      "catalogo": "Commerciale",
+      "famiglia": "Attrezzature agricole e per l’allevamento",
+      "nomi_alternativi": [],
+      "note_manuale": "Comprende longhina, cavezza regolabile, spazzole, striglia, cesoie e piccoli attrezzi per la cura ordinaria di animali di taglia compatibile. Mangimi e medicinali si acquistano separatamente; non sostituisce gli strumenti veterinari. Strumento Standard: nessun modificatore al VA.",
+      "paragrafo": "§5.3; E&L del 02/10/2026, decisione 10",
+      "versione_manuale": "Equipaggiamento 0.5",
+      "peso": 2,
+      "reperibilita": "CO",
+      "costo": 200,
+      "proprieta": []
+    },
+    {
       "id": "corredo-del-coltivatore",
       "nome": "Corredo del coltivatore",
       "tipo": "altro",

@@ -857,7 +857,18 @@ function validaTecniche(t, err) {
     ids.add(x.id);
     if (!/^(generica|lottatore|scuola:.+)$/.test(x.gruppo ?? '')) err(F, `${k}.gruppo`, 'atteso "generica", "lottatore" o "scuola:<nome>"');
     for (const c of ['costo', 'azione', 'bersaglio', 'durata', 'testo']) if (!isTesto(x[c])) err(F, `${k}.${c}`, 'campo mancante o vuoto');
+    // «Attiva» (§8.9.1, src/tecniche.js): costo in PM fisso, oppure una tabella di costi a scelta
+    const opzioni = Array.isArray(x.opzioni_costo) ? x.opzioni_costo : null;
+    if (opzioni) {
+      if (!opzioni.length) err(F, `${k}.opzioni_costo`, 'tabella dei costi vuota');
+      opzioni.forEach((o, j) => { if (!isIntero(o?.pm) || o.pm < 0 || !isTesto(o?.effetto)) err(F, `${k}.opzioni_costo[${j}]`, 'servono "pm" intero ≥ 0 ed "effetto"'); });
+    } else if (!isIntero(x.costo_pm) || x.costo_pm < 0) err(F, `${k}.costo_pm`, 'costo in PM intero ≥ 0 (o "opzioni_costo")');
+    if (!['round', 'tempo', 'istantanea'].includes(x.durata_tipo)) err(F, `${k}.durata_tipo`, 'atteso "round", "tempo" o "istantanea"');
+    if (x.durata_tipo === 'round' && (!isIntero(x.durata_round) || x.durata_round < 0)) err(F, `${k}.durata_round`, 'numero di Round intero ≥ 0 (la durata finisce alla fine del Round R + N)');
   });
+  const a = t.attivazione;
+  if (!isOggetto(a)) err(F, 'attivazione', 'regole dell’attivazione (§8.9.1) mancanti');
+  else if (!isTesto(a.stato_a_zero_pm)) err(F, 'attivazione.stato_a_zero_pm', 'id dello Stato a 0 PM (Svenuto) mancante');
 }
 
 function validaDadi(F, chiave, v, err) {
@@ -994,6 +1005,14 @@ function validaChroma(dati, err) {
   }
   if (!isIntero(c.contenitori_per_lancio) || c.contenitori_per_lancio < 1) err(F, 'chroma.contenitori_per_lancio', 'intero ≥ 1 mancante');
   if (!['pieno', 'vuoto'].includes(c.contenitore_nuovo)) err(F, 'chroma.contenitore_nuovo', 'deve essere "pieno" o "vuoto"');
+  // Magia §26.2: riserve Batteria/Cariche, alimentazione Esclusiva/Universale, una fonte esterna per pagamento
+  const R = c.riserve;
+  if (!isOggetto(R)) { err(F, 'chroma.riserve', 'manca { tipi, alimentazioni, integrata_predefinita, proprieta_predefinita, fonti_esterne_per_pagamento }'); return; }
+  for (const k of ['batteria', 'cariche']) if (!isOggetto(R.tipi?.[k]) || typeof R.tipi[k].fonte_per_pg !== 'boolean') err(F, `chroma.riserve.tipi.${k}`, 'serve { nome, fonte_per_pg: vero o falso, testo }');
+  for (const k of ['esclusiva', 'universale']) if (!isOggetto(R.alimentazioni?.[k]) || !Array.isArray(R.alimentazioni[k].fonti) || !R.alimentazioni[k].fonti.every((x) => ['interna', 'personali', 'esterna'].includes(x))) err(F, `chroma.riserve.alimentazioni.${k}`, 'serve { nome, fonti: ["interna" | "personali" | "esterna"], testo }');
+  if (!R.tipi?.[R.integrata_predefinita]) err(F, 'chroma.riserve.integrata_predefinita', `"${R.integrata_predefinita}" non è un tipo di riserva`);
+  if (!R.alimentazioni?.[R.proprieta_predefinita]) err(F, 'chroma.riserve.proprieta_predefinita', `"${R.proprieta_predefinita}" non è un'alimentazione`);
+  if (!isIntero(R.fonti_esterne_per_pagamento) || R.fonti_esterne_per_pagamento < 1) err(F, 'chroma.riserve.fonti_esterne_per_pagamento', 'intero ≥ 1 mancante');
 }
 
 /**
@@ -1233,7 +1252,7 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
       if (o.cartucce !== undefined && !(isIntero(o.cartucce) && o.cartucce >= 1)) err(F, `${k}.cartucce`, 'intero ≥ 1');
       if (o.compatibile_con !== undefined) {
         if (!Array.isArray(o.compatibile_con) || !o.compatibile_con.length) err(F, `${k}.compatibile_con`, 'elenco di riferimenti "file:id"');
-        else o.compatibile_con.forEach((r, j) => rimandiCompatibili.push([F, `${k}.compatibile_con[${j}]`, r, o.tipo === 'munizioni' ? ['arma_ravvicinata', 'arma_distanza'] : ['armatura']]));
+        else o.compatibile_con.forEach((r, j) => rimandiCompatibili.push([F, `${k}.compatibile_con[${j}]`, r, o.tipo === 'munizioni' || o.cella ? ['arma_ravvicinata', 'arma_distanza'] : ['armatura']]));
       }
       // §7.23.10: Abbinamenti ottimizzati, fra le armature compatibili del rinforzo
       if (o.abbinamento_ottimizzato !== undefined) {
@@ -1403,7 +1422,15 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
   }
   for (const [F, k, r] of rimandiArtefatti) if (!rif.has(r)) err(F, k, `"${r}" non è un oggetto del catalogo (formato "file:id")`);
   for (const [F, k, a] of artefattiDaControllare) {
+    // Magia §26.5: Scheggia instabile, senza Grado né potenza, SnT 0, non sintonizzabile, con un contenitore
+    if (isOggetto(a) && a.scheggia === true) {
+      if (a.sintonizzazione !== 0 || a.sintonizzabile !== false || a.potenza !== undefined) err(F, k, 'una Scheggia instabile ha SnT 0, non è sintonizzabile e non ha potenza (Magia §26.5)');
+      if (!isOggetto(a.contenitore) || !coloriChroma.includes(a.contenitore.energia) || !isIntero(a.contenitore.capacita_pm) || a.contenitore.integrato) err(F, `${k}.contenitore`, 'serve { energia, capacita_pm }, non integrato');
+      continue;
+    }
     if (!isOggetto(a) || !isTesto(a.tipologia) || !isTesto(a.potenza) || !isIntero(a.sintonizzazione)) { err(F, k, 'serve { tipologia, potenza, sintonizzazione, sintonizzabile, contenitore? }'); continue; }
+    // Magia §24.2: proprietà infuse di un Artefatto del catalogo (Pietra della Vigilanza): incantesimo e livello
+    if (a.infusi !== undefined && !(Array.isArray(a.infusi) && a.infusi.every((x) => isOggetto(x) && isTesto(x.incantesimo) && isIntero(x.livello)))) err(F, `${k}.infusi`, 'serve [{ incantesimo, livello }]');
     // §7.10: con almeno una proprietà attiva SnT della potenza e sintonizzazione; con sole passive SnT 0, senza
     if (typeof a.proprieta_attive !== 'boolean') err(F, `${k}.proprieta_attive`, 'true o false: con sole proprietà passive la SnT è 0 (§7.10)');
     if (a.proprieta_attive === false) {
@@ -1423,7 +1450,13 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
         if (coloriChroma.length && !coloriChroma.includes(c.energia)) err(F, `${k}.contenitore.energia`, `"${c.energia}" non è un colore del Chroma (${coloriChroma.join(', ')})`);
         if (!isIntero(c.capacita_pm) || c.capacita_pm < 1) err(F, `${k}.contenitore.capacita_pm`, 'intero ≥ 1 atteso');
         if (c.integrato !== undefined && typeof c.integrato !== 'boolean') err(F, `${k}.contenitore.integrato`, 'vero o falso');
-        for (const x of Object.keys(c)) if (!['energia', 'capacita_pm', 'integrato'].includes(x)) err(F, `${k}.contenitore.${x}`, 'campo sconosciuto');
+        // Magia §26.2: tipo di riserva e alimentazione delle proprietà (solo per le riserve integrate)
+        if (c.riserva !== undefined && !['batteria', 'cariche'].includes(c.riserva)) err(F, `${k}.contenitore.riserva`, '"batteria" o "cariche"');
+        if (c.alimentazione !== undefined && !['esclusiva', 'universale'].includes(c.alimentazione)) err(F, `${k}.contenitore.alimentazione`, '"esclusiva" o "universale"');
+        if ((c.riserva !== undefined || c.alimentazione !== undefined) && c.integrato !== true) err(F, `${k}.contenitore`, 'riserva e alimentazione si indicano per le riserve integrate in un Artefatto');
+        // Magia §26.4: Batteria Matrice (Matrice d'origine sulla voce, ricarica automatica)
+        if (c.matrice !== undefined && c.matrice !== true) err(F, `${k}.contenitore.matrice`, 'solo true');
+        for (const x of Object.keys(c)) if (!['energia', 'capacita_pm', 'integrato', 'riserva', 'alimentazione', 'matrice'].includes(x)) err(F, `${k}.contenitore.${x}`, 'campo sconosciuto');
       }
     }
   }
@@ -1632,6 +1665,15 @@ function validaDotazioni(dati, err) {
     if (o?.effetti !== undefined) validaEffettiOggetto(o.effetti, F, K, nomiAbilita, err, ctxEffetti(dati));
     // scheda di catalogo collegata (Equipaggiamento 0.3): deve esistere; peso ed effetti vengono da lì
     if (o?.rif !== undefined && !cat.has(o.rif)) err(F, `${K}.rif`, `"${o.rif}" non esiste nel catalogo (data/equipaggiamento/)`);
+    // A.65: una scheda per ogni valore della sotto-scelta (corredo agricolo, strumento musicale)
+    if (o?.rif_per_sotto !== undefined) {
+      const valori = sotto[o.sotto]?.valori ?? [];
+      if (!isOggetto(o.rif_per_sotto) || o.rif !== undefined) err(F, `${K}.rif_per_sotto`, 'oggetto { valore della sotto-scelta: rif }, senza «rif»');
+      else for (const [v, r] of Object.entries(o.rif_per_sotto)) {
+        if (!valori.includes(v)) err(F, `${K}.rif_per_sotto.${v}`, `"${v}" non è un valore di sotto_scelte.${o.sotto}`);
+        if (!cat.has(r)) err(F, `${K}.rif_per_sotto.${v}`, `"${r}" non esiste nel catalogo`);
+      }
+    }
     if (o?.rif !== undefined && (o.effetti !== undefined || o.peso !== undefined)) err(F, K, 'con «rif» peso ed effetti vengono dalla scheda di catalogo: niente «peso» o «effetti» qui');
     for (const k of ['peso', 'costo']) if (o?.[k] !== undefined && !(typeof o[k] === 'number' && o[k] >= 0)) err(F, `${K}.${k}`, 'numero ≥ 0 atteso (senza il campo: «da definire»)');
   }
@@ -1724,7 +1766,9 @@ const TIPI_EFFETTO = {
   va: null, attacco: 'generale', danno: 'generale', iniziativa: 'generale', salvezza: 'uso_specifico',
   caratteristica: 'uso_specifico', contromisura: 'generale', ar_contro: 'generale', ar: null, movimento: 'generale',
 };
-const ATTACCHI_EFFETTO = ['tutti', 'ravvicinati', 'distanza'];
+// «senz_armi»: solo i pugni («Senz'armi» in «Attacca!»); «contatto_incantesimi»: Prove per colpire in corpo a
+// corpo richieste dagli Incantesimi (Guanti da Combattimento Mistico, Armamenti §7.24)
+const ATTACCHI_EFFETTO = ['tutti', 'ravvicinati', 'distanza', 'senz_armi', 'contatto_incantesimi'];
 // Talenti (docs/censimento-talenti.md): in più il tipo «parata», le Salvezze anche generali o
 // situazionali (Scudo Spirituale), «resistenza», il danno per le armi Artefatto e la scelta del
 // giocatore («{parametro}», «{annotazione}»)
@@ -2021,6 +2065,9 @@ function sorgentiNemico(dati) {
     stati: (dati?.regole?.stati?.elenco ?? []).map((s) => s?.id),
     modalita_di_fuoco: Object.keys(dati?.regole?.modalita_di_fuoco ?? {}).filter((k) => !k.startsWith('_')),
     nature_danno: dati?.formato_nemici?.nature_danno ?? [],
+    // A.73 (E&L del 02/10): Contromisure (questo formato) e Abilità rilevanti (abilita.json)
+    contromisure: dati?.formato_nemici?.contromisure ?? [],
+    abilita: (dati?.abilita?.abilita ?? []).map((a) => a?.nome),
   };
 }
 
@@ -2033,7 +2080,9 @@ function validaSchemaNemico(F, k, s, sorgenti, err) {
   if (s.modello !== undefined) { try { new RegExp(s.modello); } catch { err(F, `${k}.modello`, 'espressione regolare non valida'); } }
   for (const c of ['valori_da', 'chiavi_da']) if (s[c] !== undefined && !(s[c] in sorgenti)) err(F, `${k}.${c}`, `uno fra ${Object.keys(sorgenti).join(', ')}`);
   if (s.tipo === 'scelta' && !(Array.isArray(s.valori) && s.valori.length) && s.valori_da === undefined) err(F, k, 'una scelta vuole «valori» o «valori_da»');
+  if (s.oppure !== undefined && !(s.tipo === 'intero' && Array.isArray(s.oppure) && s.oppure.every(isTesto))) err(F, `${k}.oppure`, 'solo per un intero: elenco di valori testuali');
   if (s.tipo === 'lista') validaSchemaNemico(F, `${k}.voce`, s.voce, sorgenti, err);
+  if (s.completo_se !== undefined && !(s.tipo === 'lista' && Array.isArray(s.completo_se) && s.completo_se.every((c) => c in (s.voce?.campi ?? {})))) err(F, `${k}.completo_se`, 'campi della voce della lista');
   if (s.tipo === 'mappa') {
     if (s.chiavi_da === undefined) err(F, `${k}.chiavi_da`, 'mancante');
     validaSchemaNemico(F, `${k}.valore`, s.valore, sorgenti, err);
@@ -2056,6 +2105,15 @@ function validaFormatoNemici(dati, err) {
   if (!isTesto(f.formato)) err(F, 'formato', 'manca il nome del formato dei file nemico');
   if (!isIntero(f.versione)) err(F, 'versione', 'intero');
   if (!(Array.isArray(f.nature_danno) && f.nature_danno.length && f.nature_danno.every(isTesto))) err(F, 'nature_danno', 'elenco delle nature del danno (§5.24)');
+  if (!(Array.isArray(f.contromisure) && f.contromisure.length && f.contromisure.every(isTesto))) err(F, 'contromisure', 'elenco delle Contromisure (§5.24)');
+  // A.73, decisioni 6 e 7: stato del nemico al tavolo e parità d'Iniziativa
+  const T = f.tavolo;
+  const sigle = (dati.caratteristiche?.caratteristiche ?? []).map((c) => c?.sigla);
+  if (!isOggetto(T) || !Array.isArray(T.tiene) || !T.tiene.every(isTesto) || typeof T.affaticamento !== 'boolean') err(F, 'tavolo', 'serve { tiene: [...], affaticamento: vero o falso, parita_iniziativa, spareggio }');
+  else {
+    if (!(Array.isArray(T.parita_iniziativa) && T.parita_iniziativa.every((x) => sigle.includes(x)))) err(F, 'tavolo.parita_iniziativa', 'sigle di Caratteristiche');
+    if (!(typeof T.spareggio === 'string' && DADI.test(T.spareggio))) err(F, 'tavolo.spareggio', 'dado dello spareggio, es. «1d10»');
+  }
   if (!isOggetto(f.campi)) { err(F, 'campi', 'mancante'); return; }
   validaSchemaNemico(F, '(nemico)', { tipo: 'oggetto', campi: f.campi }, sorgentiNemico(dati), err);
   for (const c of ['formato', 'id', 'nome']) if (f.campi[c]?.obbligatorio !== true) err(F, `campi.${c}`, 'campo obbligatorio per riconoscere il file');
@@ -2085,7 +2143,9 @@ export function validaNemico(nemico, dati, file = 'nemico') {
         else if (s.modello && !new RegExp(s.modello).test(v)) err(k, `«${v}» non segue il modello ${s.modello}`);
         return;
       case 'intero':
-        if (!isIntero(v)) { err(k, 'numero intero'); return; }
+        // «oppure»: valori testuali ammessi al posto del numero (movimento «non_consentito», A.73)
+        if ((s.oppure ?? []).includes(v)) return;
+        if (!isIntero(v)) { err(k, (s.oppure ?? []).length ? `numero intero oppure ${s.oppure.map((x) => `«${x}»`).join(', ')}` : 'numero intero'); return; }
         if (s.min !== undefined && v < s.min) err(k, `almeno ${s.min}`);
         if (s.max !== undefined && v > s.max) err(k, `al massimo ${s.max}`);
         if (s.non_oltre !== undefined && isIntero(fratelli[s.non_oltre]) && v > fratelli[s.non_oltre]) err(k, `non oltre ${s.non_oltre} (${fratelli[s.non_oltre]})`);

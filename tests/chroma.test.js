@@ -71,7 +71,7 @@ test('contenitori: batterie del catalogo, riserve integrate (Bordone, Scudo dell
   assert.deepEqual(caricatori(normalizzaEquipaggiamento(voci), dati), {});
   // l'arma porta con sé il contenitore integrato, per mostrarlo accanto all'arma
   const arma = calcolaScheda({ creazione: { ...MISHIMA_AGENTE, equipaggiamento: [voci[1]] }, livelli: [] }, dati).equipaggiamento.armi[0];
-  assert.deepEqual(arma.contenitore, { energia: 'Rosso', capacita_pm: 5, integrato: true });
+  assert.deepEqual(arma.contenitore, { energia: 'Rosso', capacita_pm: 5, integrato: true, riserva: 'cariche', alimentazione: 'esclusiva' });
 });
 
 test('migrazione: un contenitore per voce (quantità > 1 divisa), stato «trasportato» per le batterie salvate prima', () => {

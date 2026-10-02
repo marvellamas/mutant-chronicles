@@ -9,7 +9,7 @@
 // rifare la dotazione le sostituisce (non le somma) e lascia com'è tutto il resto. Crediti iniziali,
 // conguagli e saldo si ricalcolano sempre dalle scelte.
 import { specTiro, valoreTiro } from './tiri.js';
-import { catalogo, risolvi, statoIniziale, puoMontare, tabellaMunizioniArmi, testoEffettoOggetto } from './equipaggiamento.js';
+import { catalogo, risolvi, statoIniziale, puoMontare, rinforzoCompatibile, tabellaMunizioniArmi, testoEffettoOggetto, schedaDiDotazione } from './equipaggiamento.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 
@@ -205,7 +205,8 @@ export function vociDotazione(dotazione, classe, corporazione, dati) {
     const personalizzato = { nome: sotto ? `${o.nome} (${sotto})` : o.nome, tipo: 'altro', ...(Number.isFinite(o.peso) ? { peso: o.peso } : {}) };
     // gli effetti sui VA si leggono dai dati attraverso dotazione_id: dalla scheda di catalogo
     // collegata (oggetti_dotazione[id].rif, Equipaggiamento 0.3), altrimenti dalla dotazione
-    const scheda = o.rif ? cat.perRif.get(o.rif) : null;
+    const rifScheda = schedaDiDotazione(o, personalizzato.nome);
+    const scheda = rifScheda ? cat.perRif.get(rifScheda) : null;
     const effetti = scheda?.effetti ?? o.effetti;
     const stato = effetti?.length ? statoIniziale(scheda?.tipo ?? 'altro', [], null, effetti) : null;
     return { uid, rif: null, personalizzato, stato, quantita: quantita ?? 1, note: '', dotazione_iniziale: true, dotazione_id: id };
@@ -260,8 +261,10 @@ export function vociDotazione(dotazione, classe, corporazione, dati) {
   // («L’arma viene fornita predisposta per gli accessori assegnati», §2.16.7)
   const risolte = voci.map((v) => risolvi(v, cat));
   for (const r of risolte) {
-    if (r.tipo !== 'accessorio') continue;
-    const su = risolte.find((x) => x.tipo !== 'accessorio' && puoMontare(r, x)) ?? risolte.find((x) => puoMontare(r, x));
+    if (r.tipo !== 'accessorio' && r.tipo !== 'rinforzo') continue;
+    // un rinforzo (§7.11.2) va sulla prima armatura della dotazione che lo ammette
+    const su = r.tipo === 'rinforzo' ? risolte.find((x) => rinforzoCompatibile(r, x))
+      : risolte.find((x) => x.tipo !== 'accessorio' && puoMontare(r, x)) ?? risolte.find((x) => puoMontare(r, x));
     if (su) { r.voce.montato_su = su.uid; r.voce.stato = 'in_uso'; }
   }
   return voci;

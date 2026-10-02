@@ -246,7 +246,7 @@ test('Architetto TecnoMistico: +2 alla capacità di sintonizzazione', () => {
   const s = calcolaScheda({ creazione: MISHIMA_AGENTE, livelli: [] }, dati);
   const art = [{ uid: 'b', rif: 'artefatti:batteria-da-5-pm-chroma-verde', stato: null, quantita: 1, note: '', sintonizzato: true }];
   const cap = (talenti) => calcolaEquipaggiamento({ caratteristiche: s.caratteristiche, abilita: s.abilita, specializzazioni: [], gradiComplessivi: 3, talenti }, art, dati).sintonizzazione.capacita;
-  assert.deepEqual([cap([]), cap(['Architetto TecnoMistico'])], [6, 8]);
+  assert.deepEqual([cap([]), cap(['Architetto TecnoMistico'])], [10, 12]);
 });
 test('Corazza Potenziata: +1 AR magica con una protezione Artefatto', () => {
   const eq = { protezioni: [{ uid: 'a', nome: 'Armatura', tipo: 'armatura', ar: { totale: 5, magica: 1 }, artefatto: true }], effettiOggetti: [] };

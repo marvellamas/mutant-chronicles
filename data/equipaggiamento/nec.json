@@ -150,7 +150,18 @@
         "erogazione_lxh": 2000
       },
       "ricarica_costo": 25,
-      "proprieta": []
+      "proprieta": [],
+      "cella": {
+        "capacita": 50,
+        "unita": "getti",
+        "lx_per_colpo": 50,
+        "riserva_lx": 2500,
+        "ricarica_costo": 25
+      },
+      "compatibile_con": [
+        "armi_distanza_corporative:gehemmapuker"
+      ],
+      "decisione": "A.67 (E&L del 02/10/2026, decisione 14): il Gehemmapuker usa lo stesso Modulo NEC Blu del catalogo, intercambiabile fra i dispositivi che accettano quel formato; 50 Lx per attacco (50 getti), AC 1d3 non moltiplica il consumo; sostituzione 1 AzP, entrambe le mani, nessuna Prova. I getti disponibili sono la parte intera dei Lx residui / 50."
     },
     {
       "id": "modulo-verde",

@@ -19,14 +19,16 @@
 import { bonusDannoCaratteristica, caratteristicaDanno } from './calc.js';
 import { riga, provenienza, rigaBonusCaratteristica as rigaBonus } from './provenienza.js';
 import { calcolaAR, oggettiConPi, oggettiSenzaPi } from './protezione.js';
+import { tipoRiserva, alimentazione as alimentazioneRiserva, fontePerPg } from './fonti.js';
 
-export const TIPI = ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'elmetto', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'impianto', 'altro'];
+export const TIPI = ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'rinforzo', 'elmetto', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'impianto', 'altro'];
 
 export const NOMI_TIPI = {
   arma_ravvicinata: 'Arma ravvicinata',
   arma_distanza: 'Arma a distanza',
   scudo: 'Scudo',
   armatura: 'Armatura',
+  rinforzo: 'Rinforzo',
   elmetto: 'Elmetto',
   accessorio: 'Accessorio',
   munizioni: 'Munizioni',
@@ -42,6 +44,10 @@ export const STATI = {
   arma_distanza: ['impugnata', 'pronta', 'zaino'],
   scudo: ['imbracciato', 'pronta', 'zaino'],
   armatura: ['indossata', 'zaino'],
+  // Armamenti §7.11.2, §7.23 (sottocategoria delle armature, richiesta di Davide del 02/10): montato su
+  // un'armatura compatibile («in uso»), indossato da solo se la voce lo consente (indossabile_da_solo,
+  // regole.json → rinforzi), nello zaino
+  rinforzo: ['in_uso', 'indossata', 'zaino'],
   // Armamenti §7.21.1: un solo elmetto indossato; indossarlo o toglierlo costa 1 AzP
   elmetto: ['indossata', 'zaino'],
   accessorio: ['in_uso', 'zaino'],
@@ -211,7 +217,9 @@ export function infoArtefattoVoce(r, dati) {
   // Magia §24.2: un incantesimo infuso è una proprietà attiva; la riserva, se c'è, è integrata e alimenta solo l'Artefatto (A.18)
   const infuso = p.infuso && typeof p.infuso.incantesimo === 'string' && Number.isInteger(p.infuso.livello) ? { incantesimo: p.infuso.incantesimo, livello: p.infuso.livello } : null;
   if (infuso) {
-    const riserva = p.energia && Number.isInteger(p.capacita_pm) ? { energia: p.energia, capacita_pm: p.capacita_pm, integrato: true } : undefined;
+    // Magia §26.2: tipo di riserva e alimentazione scelti nel progetto (predefiniti: Cariche, Esclusiva)
+    const riserva = p.energia && Number.isInteger(p.capacita_pm) ? { energia: p.energia, capacita_pm: p.capacita_pm, integrato: true,
+      ...(p.riserva ? { riserva: p.riserva } : {}), ...(p.alimentazione ? { alimentazione: p.alimentazione } : {}) } : undefined;
     return { tipologia: 'Accessori', potenza: p.potenza, sintonizzazione: costo, sintonizzabile: true, proprieta_attive: true, infuso, ...(riserva ? { contenitore: riserva } : {}) };
   }
   const contenitore = p.energia && Number.isInteger(p.capacita_pm) ? { energia: p.energia, capacita_pm: p.capacita_pm } : undefined;
@@ -331,6 +339,8 @@ function contenitoriRisolti(oggetti, dati) {
     const colore = colori[c.energia] ?? {};
     out.push({
       uid: r.uid, nome: r.nome, tipo: r.tipo, integrato: !!c.integrato,
+      // Magia §26.2: Batteria (fonte anche per il personaggio) o Cariche (solo l'oggetto); proprietà Esclusive o Universali
+      riserva: tipoRiserva(c, dati), alimentazione: alimentazioneRiserva(c, dati), fontePg: fontePerPg(c, dati),
       energia: c.energia, energiaNome: colore.energia ?? null, macrofamiglie: colore.macrofamiglie ?? [], regoleRimandate: !!colore.regole_rimandate,
       capacita: c.capacita_pm, potenza: a.potenza, costo: a.sintonizzazione,
       // nel deposito comune non è sintonizzabile (docs/layout-sd.md, pezzo 4): la scelta resta nella voce
@@ -340,6 +350,8 @@ function contenitoriRisolti(oggetti, dati) {
       stato: r.voce.stato,
       // un contenitore a sé è trasportato nello stato omonimo; uno integrato segue l'oggetto
       trasportato: c.integrato ? ['impugnata', 'imbracciato', 'pronta', 'indossata', 'in_uso', 'trasportato'].includes(r.voce.stato) : r.voce.stato === 'trasportato',
+      // Magia §26.5: Scheggia instabile, SnT 0, senza sintonizzazione; §26.4: Batteria Matrice, con la Matrice d'origine sulla voce
+      scheggia: !!a.scheggia, matrice: c.matrice ? { origine: typeof r.voce.matrice === 'string' && r.voce.matrice.trim() ? r.voce.matrice.trim() : null } : null,
       personalizzato: r.personalizzato,
     });
   }
@@ -451,7 +463,7 @@ export function statoIniziale(tipo, voci = [], dati = null, effetti = []) {
     const giaIndossata = dati && voci.some((v) => v.stato === 'indossata' && risolvi(v, catalogo(dati)).tipo === 'armatura');
     return giaIndossata ? 'zaino' : 'indossata';
   }
-  if (tipo === 'accessorio') return 'zaino';
+  if (tipo === 'accessorio' || tipo === 'rinforzo') return 'zaino';
   return stati.includes('pronta') ? 'pronta' : stati[0];
 }
 
@@ -499,6 +511,9 @@ export function normalizzaEquipaggiamento(valore) {
         // Magia §24.2, §25.4: incantesimo infuso (proprietà attiva), pagato dalla riserva integrata
         ...(isOggetto(p.infuso) && testo(p.infuso.incantesimo) && Number.isInteger(p.infuso.livello) ? { infuso: { incantesimo: p.infuso.incantesimo, livello: p.infuso.livello } } : {}),
         ...(testo(p.energia) ? { energia: p.energia } : {}),
+        // Magia §26.2: riserva integrata Batteria o Cariche, proprietà Esclusiva o Universale
+        ...(['batteria', 'cariche'].includes(p.riserva) ? { riserva: p.riserva } : {}),
+        ...(['esclusiva', 'universale'].includes(p.alimentazione) ? { alimentazione: p.alimentazione } : {}),
         ...(Number.isInteger(p.capacita_pm) && p.capacita_pm >= 1 ? { capacita_pm: p.capacita_pm } : {}),
         // §1.6: peso in kg per unità, per il carico
         ...(typeof p.peso === 'number' && Number.isFinite(p.peso) && p.peso >= 0 ? { peso: Math.round(p.peso * 100) / 100 } : {}),
@@ -508,8 +523,11 @@ export function normalizzaEquipaggiamento(valore) {
     }
     if (typeof v.montato_su === 'string' && v.montato_su) out.montato_su = v.montato_su;
     if (v.sintonizzato === true) out.sintonizzato = true; // §7.10: scelta del giocatore
+    // A.61: armatura Capolavoro del Corazzaio, con la Contromisura scelta alla costruzione
+    if (isOggetto(v.capolavoro) && testo(v.capolavoro.contromisura)) out.capolavoro = { contromisura: v.capolavoro.contromisura };
     if (Number.isInteger(v.pi_direttore) && v.pi_direttore >= 1) out.pi_direttore = v.pi_direttore; // A.47: PI fissati dal Direttore
     if (Number.isInteger(v.pm_iniziali) && v.pm_iniziali >= 0) out.pm_iniziali = v.pm_iniziali; // E&L 2 (A.19): contenitore trovato
+    if (testo(v.matrice)) out.matrice = v.matrice.trim().slice(0, 80); // Magia §26.4: Matrice d'origine di una Batteria Matrice
     if (v.dotazione_iniziale === true) out.dotazione_iniziale = true; // §2.16: voce della dotazione iniziale (src/dotazioni.js)
     if (!out.rif && testo(v.dotazione_id)) out.dotazione_id = v.dotazione_id; // oggetto di dotazione: effetti dai dati
     return out;
@@ -539,17 +557,33 @@ export function separaEsemplare(voci, uid) {
  * Collega una voce al catalogo. Un riferimento che non esiste più resta in lista come «non più in
  * catalogo», senza effetti.
  */
+/**
+ * Scheda di catalogo di un oggetto di dotazione: «rif», oppure, con una sotto-scelta che cambia la scheda
+ * («rif_per_sotto», A.65: corredo agricolo, strumento musicale), quella del valore scelto, che sta fra
+ * parentesi in fondo al nome della voce («Corredo agricolo (Standard) (Allevamento)»).
+ */
+export function schedaDiDotazione(o, nome) {
+  if (!o) return null;
+  if (o.rif) return o.rif;
+  if (!o.rif_per_sotto) return null;
+  const scelta = /\(([^()]+)\)\s*$/.exec(String(nome ?? ''))?.[1]?.trim();
+  return (scelta && o.rif_per_sotto[scelta]) ?? null;
+}
+
 export function risolvi(voce, cat) {
   // oggetto di dotazione con scheda di catalogo (Equipaggiamento 0.3, oggetti_dotazione[id].rif): peso,
   // prezzo, Qualità, PI ed effetti dalla scheda, anche per le voci salvate prima; il nome resta
   // quello della dotazione (porta l'ambiente scelto e le calzature comprese)
-  const schedaDotazione = !voce.rif && voce.dotazione_id ? cat.dotazione?.[voce.dotazione_id]?.rif ?? null : null;
+  const schedaDotazione = !voce.rif && voce.dotazione_id ? schedaDiDotazione(cat.dotazione?.[voce.dotazione_id], voce.personalizzato?.nome) : null;
   const def = voce.rif ? cat.perRif.get(voce.rif) ?? null : schedaDotazione ? cat.perRif.get(schedaDotazione) ?? null : null;
   const fuoriCatalogo = !!voce.rif && !def;
   const tipo = def?.tipo ?? voce.personalizzato?.tipo ?? 'altro';
   const nome = (schedaDotazione ? voce.personalizzato?.nome : null) ?? def?.nome ?? voce.personalizzato?.nome ?? (fuoriCatalogo ? voce.rif : 'Oggetto');
   const effetti = fuoriCatalogo ? [] : def?.effetti ?? cat.dotazione?.[voce.dotazione_id]?.effetti ?? voce.personalizzato?.effetti ?? [];
-  const stati = statiPer(tipo, effetti);
+  // un rinforzo si indossa da solo solo se la sua voce lo consente (rinforzi.json → indossabile_da_solo)
+  const stati0 = statiPer(tipo, effetti).filter((s) => !(tipo === 'rinforzo' && s === 'indossata' && !def?.indossabile_da_solo));
+  // un Artefatto da indossare (Guanti da Combattimento Mistico, Armamenti §7.24): anche «Indossata»
+  const stati = tipo === 'artefatto' && def?.indossabile ? ['indossata', ...stati0] : stati0;
   const attivo = !fuoriCatalogo && ATTIVI.has(voce.stato) && stati.includes(voce.stato);
   return { voce, uid: voce.uid, def, tipo, nome, fuoriCatalogo, attivo, personalizzato: !voce.rif && !def, effetti, stati, deposito: inDeposito(voce) };
 }
@@ -580,8 +614,31 @@ const maniDi = (def) => (def?.mani === 2 ? 2 : def?.mani === 0 ? 0 : 1);
  * §7.3.3). Gli accessori personalizzati si montano sulle armi.
  */
 /** Un effetto «attacco» o «danno» vale per il tipo d'arma: tutti, ravvicinati, a distanza. */
+/** Regola del Capolavoro dell'armatura (classi.json → Corazzaio → capolavoro_armatura; A.61). */
+export function regolaCapolavoro(dati) {
+  for (const c of dati?.classi?.classi ?? []) for (const t of [...(c.talenti_fissi ?? []), ...(c.talenti_a_scelta ?? [])]) if (t.capolavoro_armatura) return { talento: t.nome, ...t.capolavoro_armatura };
+  return null;
+}
+
+/**
+ * Effetto «contromisura» del Capolavoro su un'armatura risolta (voce.capolavoro.contromisura): la Contromisura
+ * scelta vale 1 se l'armatura non l'ha, X + 1 se l'ha già con valore X (A.61). null se la scelta non è ammessa.
+ */
+export function effettoCapolavoro(o, dati) {
+  const R = regolaCapolavoro(dati);
+  const scelta = R?.contromisure.find((x) => x.nome === o.voce?.capolavoro?.contromisura);
+  if (!scelta) return null;
+  const base = (o.effetti ?? []).filter((x) => x.tipo === 'contromisura' && x.effetto === scelta.effetto).reduce((m, x) => Math.max(m, x.valore), 0);
+  const chiave = scelta.effetto.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  return { tipo: 'contromisura', effetto: scelta.effetto, valore: base + R.valore, ambito: 'generale', beneficio: `contromisura_${chiave}`, condizione: R.decisione, fonte: R.fonte, capolavoro: scelta.nome };
+}
+
+/** Incantesimi infusi di un Artefatto: uno (personalizzato, «infuso») o più (catalogo, «infusi»: Pietra della Vigilanza). */
+export const infusiDi = (info) => info?.infusi ?? (info?.infuso ? [info.infuso] : []);
+
 export function valePer(b, tipoArma) {
-  return b.attacchi === 'tutti' || (b.attacchi === 'ravvicinati' ? tipoArma === 'arma_ravvicinata' : tipoArma === 'arma_distanza');
+  // «senz_armi» e «contatto_incantesimi» (Guanti, Armamenti §7.24) non valgono per le armi impugnate
+  return b.attacchi === 'tutti' || (b.attacchi === 'ravvicinati' && tipoArma === 'arma_ravvicinata') || (b.attacchi === 'distanza' && tipoArma === 'arma_distanza');
 }
 
 export function puoMontare(acc, su) {
@@ -607,13 +664,25 @@ export function penalitaConEffetti(base, proprieta = []) {
 }
 
 /**
+ * Il rinforzo si può montare su questa armatura? (§7.11.2, §7.23.9): categoria ammessa dal modello
+ * («rinforzi_ammessi») e, per i rinforzi corporativi, armatura fra quelle compatibili del kit.
+ * @param rinforzo, armatura voci risolte (risolvi)
+ */
+export function rinforzoCompatibile(rinforzo, armatura) {
+  const d = armatura?.def;
+  const k = rinforzo?.def?.rinforzo;
+  if (!d || !k || armatura.tipo !== 'armatura') return false;
+  return (d.rinforzi_ammessi ?? []).includes(k.kit) && (!rinforzo.def.compatibile_con || rinforzo.def.compatibile_con.includes(d.rif));
+}
+
+/**
  * Il kit di rinforzo che vale per l'armatura (§7.11.2): il primo compatibile. Avvisi per kit non
  * ammessi dal modello («rinforzi_ammessi», «compatibile_con» del kit) e per più kit insieme.
  */
 function rinforzoValido(armatura, kits, avvisi) {
   const d = armatura.def;
   const validi = kits.filter((x) => {
-    const ammesso = (d.rinforzi_ammessi ?? []).includes(x.def.rinforzo.kit) && (!x.def.compatibile_con || x.def.compatibile_con.includes(d.rif));
+    const ammesso = rinforzoCompatibile(x, armatura);
     if (!ammesso) avvisi.push(`${x.nome} non è ammesso su ${armatura.nome} (rinforzi ammessi: ${(d.rinforzi_ammessi ?? []).join(', ') || 'nessuno'}): nessun effetto (§7.11.2).`);
     return ammesso;
   });
@@ -655,7 +724,8 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   const difeseAbilita = fileArmature.abilita_difese ?? null;
   const avvisi = [];
   // accessori in uso montati su un altro oggetto (§7.3 sulle armi, §7.11.2 sulle armature)
-  const accessoriMontati = oggetti.filter((x) => x.attivo && x.tipo === 'accessorio' && x.voce.montato_su);
+  // i rinforzi montati («in uso») seguono le stesse regole di montaggio degli accessori (§7.11.2)
+  const accessoriMontati = oggetti.filter((x) => x.attivo && (x.tipo === 'accessorio' || (x.tipo === 'rinforzo' && x.voce.stato === 'in_uso')) && x.voce.montato_su);
   const montatiSu = (uid) => accessoriMontati.filter((x) => x.voce.montato_su === uid);
 
   // Protezioni (armature indossate, scudi imbracciati) — §7.11.1
@@ -712,6 +782,8 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       arKit: kit ? kit.def.rinforzo.ar : 0,
       // A.48: protezione classificata Artefatto Mistico o TecnoMistico (Corazza Potenziata)
       artefatto: !!d && infoArtefatto(d, dati)?.tipologia === 'Protezioni',
+      // A.61: Capolavoro del Corazzaio (Contromisura +1, non AR): per la riga di provenienza dell'AR
+      capolavoro: o.tipo === 'armatura' && o.voce.capolavoro ? effettoCapolavoro(o, dati) : null,
       ar, penalita, forRichiesta, forMancante, personalizzato: o.personalizzato,
       mov: d?.mov ?? 0, parata: null, proprieta: d?.proprieta ?? [],
       // §7.14.2, §7.16.3: armature servoassistite a sistema spento (FOR e penalità proprie), mostrate
@@ -760,8 +832,15 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   // una modifica d'elmetto conta solo montata su un elmetto (o un'armatura, per il suo elmetto
   // standard) indossato (Armamenti §7.21.1, §7.21.4)
   // un rinforzo conta solo come kit valido di un'armatura indossata (Armamenti §7.23.4, §7.23.9)
+  // rinforzi indossati da soli (indossabile_da_solo; regole.json → rinforzi.da_solo, per-davide A.80)
+  const regoleDaSolo = dati.regole?.rinforzi?.da_solo ?? {};
+  const armaturaIndossata = oggetti.some((x) => x.attivo && x.tipo === 'armatura');
+  const rinforziDaSoli = oggetti.filter((x) => x.attivo && x.tipo === 'rinforzo' && x.voce.stato === 'indossata' && x.def?.rinforzo)
+    .map((x) => ({ uid: x.uid, nome: x.nome, ar: x.def.rinforzo.ar, kit: x.def.rinforzo.kit, conArmatura: armaturaIndossata }));
+  const daSoloOperativo = (o) => o.voce.stato === 'indossata' && regoleDaSolo.proprieta === true
+    && !(armaturaIndossata && regoleDaSolo.con_armatura_indossata !== 'vale');
   const modificaOperativa = (o) => {
-    if (o.def?.rinforzo) return rinforziValidi.has(o.uid);
+    if (o.def?.rinforzo) return rinforziValidi.has(o.uid) || daSoloOperativo(o);
     if (!o.def?.modifica_elmetto) return true;
     const su = perUidOgg.get(o.voce.montato_su);
     return !!su && su.attivo && puoMontare(o, su);
@@ -772,6 +851,12 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   const candidati = [];
   for (const o of oggetti.filter((x) => x.attivo && x.effetti.length && modificaOperativa(x) && conInnesto(x))) {
     for (const e of o.effetti) candidati.push({ o, e });
+  }
+  // A.61 (E&L del 02/10): armatura Capolavoro del Corazzaio, +1 alla Contromisura scelta (assente: 1; X: X + 1),
+  // come copia dello stesso beneficio, quindi vale la maggiore; non tocca l'AR
+  for (const o of oggetti.filter((x) => x.attivo && x.tipo === 'armatura' && x.voce.capolavoro)) {
+    const cap = effettoCapolavoro(o, dati);
+    if (cap) candidati.push({ o: { ...o, nome: `${o.nome} (Capolavoro)` }, e: cap });
   }
   // §7.21.1: «copie dello stesso beneficio non si sommano»: vale il maggiore
   const migliore = new Map();
@@ -1062,6 +1147,9 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   const perUid = new Map(oggetti.map((o) => [o.uid, o]));
   const operativo = (su) => (su.def?.mirino ? su.attivo && operativo(perUid.get(su.voce.montato_su) ?? {}) && puoMontare(su, perUid.get(su.voce.montato_su)) : !!su.attivo);
   const NON_ATTIVO = { armatura: 'indossata', elmetto: 'indossato', accessorio: 'montato su un’arma impugnata' };
+  for (const x of rinforziDaSoli.filter((r) => r.conArmatura && regoleDaSolo.con_armatura_indossata !== 'vale')) {
+    avvisi.push(`${x.nome} è indossato da solo, ma c’è un’armatura indossata: per contare va montato su di lei («Montata su:»), un solo rinforzo compatibile (§7.11.2).`);
+  }
   for (const x of accessoriMontati) {
     const su = perUid.get(x.voce.montato_su);
     if (!su) avvisi.push(`${x.nome} è montato su un oggetto che non è più nella lista.`);
@@ -1088,7 +1176,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     const modUmn = umn?.modificatori?.sintonizzazione ?? 0;
     const capacita = modUmn ? Math.max(umn.sintonizzazioneMinimo ?? 0, daGradi + modUmn) : daGradi;
     const righe = [
-      riga(`${gradi} Grad${gradi === 1 ? 'o' : 'i'} complessiv${gradi === 1 ? 'o' : 'i'}`, rs.capacita_per_gradi[gradi - 1], 'Armamenti §7.10'),
+      riga(`${gradi} Grad${gradi === 1 ? 'o' : 'i'} complessiv${gradi === 1 ? 'o' : 'i'}`, rs.capacita_per_gradi[gradi - 1], 'Armamenti §7.10, Magia §26.1'),
       ...(talento ? [riga(rs.talento.nome, rs.talento.bonus, 'Talento')] : []),
       ...(modUmn ? [riga(`Umanità ${umn.valore} (${umn.condizione})`, capacita - daGradi, capacita - daGradi !== modUmn ? `${modUmn}, fino a un minimo di ${umn.sintonizzazioneMinimo ?? 0} (Giocatore §5.21)` : 'Giocatore §5.21')] : []),
     ];
@@ -1117,12 +1205,14 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   for (const x of oggetti.filter((o) => o.fuoriCatalogo)) avvisi.push(`«${x.voce.rif}» non è più nel catalogo: resta in lista senza effetti.`);
 
   // AR a riposo (docs/ricognizione-ar-pi.md): al tavolo la ricalcola applicaCondizioni (src/condizioni.js)
-  const ar = calcolaAR({ protezioni, effettiOggetti }, dati, { talenti: base.talenti ?? [] });
+  const ar = calcolaAR({ protezioni, effettiOggetti, rinforziDaSoli }, dati, { talenti: base.talenti ?? [] });
 
   return {
     oggetti,
     armi,
     protezioni,
+    // rinforzi indossati senza armatura su cui montarli (regole.json → rinforzi.da_solo)
+    rinforziDaSoli,
     ar,
     // oggetti con Punti Integrità da tracciare (Armamenti §7.2.1)
     integrita: dati.regole?.integrita ? oggettiConPi(oggetti, dati) : [],
@@ -1135,6 +1225,10 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     effettiOggetti,
     bonusAttacco,
     bonusDanno: dannoEquip,
+    // attivazioni di Artefatti con durata (Guanti da Combattimento Mistico, Armamenti §7.24): l'effetto vale con
+    // la condizione «attivazione:<uid>» accesa al tavolo (src/condizioni.js), l'oggetto in uso e non nel deposito
+    attivazioniArtefatti: oggetti.filter((o) => o.def?.attivazione_artefatto && !o.deposito)
+      .map((o) => ({ uid: o.uid, nome: o.nome, chiave: `attivazione:${o.uid}`, attivo: o.attivo, sintonizzato: o.voce.sintonizzato === true, ...o.def.attivazione_artefatto })),
     iniziativa: iniziativaEquip,
     movimentoEquip,
     contenitori: contenitoriRisolti(oggetti, dati),

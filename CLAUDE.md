@@ -23,9 +23,9 @@ Drive si usa **in sola lettura**: mai scrivere nei Doc di Davide, nemmeno commen
 
 - **SD** = scheda digitale: la scheda a tab dell'app, con la modalità tavolo (`src/ui/tab.js`). Otto tab in una riga in alto (branch `layout-sd`, esito in `docs/layout-sd.md`), con Punti Eroe, PV e PM nella colonna di sinistra:
   - **Identità:** anagrafica, Caratteristiche, Prove Salvezza, Distintivi, vantaggio, note;
-  - **Abilità:** tabella compatta, colonna Condizioni attive, Talenti, Specializzazioni, Tecniche Interiori;
+  - **Abilità:** tabella compatta, colonna Condizioni attive, Talenti, Specializzazioni; per le Tecniche Interiori solo il rimando a Poteri;
   - **Combattimento:** valori e Prove Salvezza, armi in mano per mano («Attacca!», «Ricarica»), armi disponibili, Protezioni; a destra Ferite, Affaticamento, Corruzione, Stati;
-  - **Poteri:** la Magia («Lancia!», PM, cristalli) o «Nessun potere»; «Da artefatti»;
+  - **Poteri:** la Magia («Lancia!», PM, cristalli); Risorse Interiori (le Tecniche Interiori come gli incantesimi, «Attiva», Round e Tecniche attive); «Nessun potere» senza l'una e l'altra; «Da artefatti»;
   - **Artefatti:** sintonizzazione, schede degli Artefatti, riserve di Chroma;
   - **Cibernetica:** Umanità con la provenienza e gli effetti della fascia, impianti installati per famiglia, chip, perdite e recuperi;
   - **Veicoli:** in attesa del manuale;
@@ -74,6 +74,7 @@ src/
   ricarica.js   ricarica delle armi a distanza dalle riserve
   dotazioni.js  equipaggiamento iniziale (§2.16): scelte, crediti, acquisti, voci della dotazione
   sessione.js   valori attuali di sessione (modalità tavolo)
+  tecniche.js   «Attiva» delle Tecniche Interiori (§8.9.1): solo PM personali, una per Round, durata R+N, Svenuto, Umanità 0
   umanita.js    Umanità (Giocatore §5.21): registro delle installazioni, valore con provenienza, fascia
   versione.js   confronto fra versione caricata e versione.json; ui/aggiornamento.js la barra «Nuova versione»
   provenienza.js  righe { fonte, valore, nota? } dei valori calcolati (AR, VA, Salvezze, Iniziativa, Movimento, danno): le stampano i tooltip della SD e la SS
@@ -81,6 +82,7 @@ src/
   ui/           wizard a passi (fasi 0–9 del §2.0), scheda a tab, Sali di livello, stampa, import/export
 data/           JSON delle regole (fonte di verità): 12 file in data/ (formato_nemici.json: formato dei nemici del Tavolo del Master, per-davide A.73, validaNemico in validate.js), catalogo in data/equipaggiamento/ (index.json + 21 file)
 tests/          node --test; tests/collaudo/ tre personaggi di riferimento con PDF
+esempi/         PG d'esempio (Aiko Tenzan, Lottatrice Mishima con le Tecniche Interiori), scritto da tools/genera_esempio_tecniche.mjs
 tools/          estrazione dai manuali, generatori dei lotti (tools/lotti/), collaudo_pdf.mjs, genera_immagini.py, versione.mjs, installa-hook.mjs e hooks/pre-commit
 img/            stemmi e icone generati (img/immagini.json li elenca); originali in img/originali/, non tracciati
 docs/           studio di fattibilità, lotti, domande e risposte del master, roadmap
@@ -111,11 +113,13 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 - regole aggiornate sui Punti Abilità Liberi (Doc del 27/09, per-davide A.52): gli eventi già registrati con meno punti delle regole correnti si completano dall'avviso in cima alla SD («Assegna», `#/p/<id>/completa`, `src/ui/completa.js`; motore in `src/avanzamento.js` → `statoCompletamento`, `validaCompletamento`, `applicaCompletamento`), i punti si registrano nell'evento a cui appartengono; finché mancano, l'avanzamento è bloccato; i punti in eccesso si segnalano soltanto. Titolo dell'avviso in `regole.json` → `regole_aggiornate`.
 - categorie di competenza (Giocatore del 29/09 23:45, §2.3, §2.13, §8.3, §8.7): le basi delle Abilità vengono dalla prima Classe (`classi.json` → `competenze`, S 7 / P 6 / G 5 / N 3), l'Addestramento non ha più valori base; VA personale = min(Mod + Base + Corp + Avanzamento, limite della categoria migliore fra le Classi possedute), con le formule in `regole.json` → `competenze`; i +1 di Classe si registrano sempre, i punti liberi valgono solo se aumentano il VA personale. I punti già spesi che non lo aumentano più restano nel file, non contano e si riassegnano con lo stesso «Assegna» (`applicaCompletamento(…, inattivi)`); motore in `src/competenze.js`, ricognizione in `docs/ricognizione-abilita-2026-09-30.md`.
 
-- tab Inventario (`docs/layout-sd.md`, pezzo 2): unica casa degli oggetti, con sezioni per famiglia (`src/palette.js` → `SEZIONI_INVENTARIO`), stato di ogni oggetto in `voce.stato` con il valore `deposito` (deposito comune: fuori dal carico, senza effetti, fuori dal tavolo), PI e Ripara nella riga, Carico e Crediti in testa, «Compra» dal catalogo.
+- tab Inventario (`docs/layout-sd.md`, pezzo 2): unica casa degli oggetti, con sezioni per famiglia su due colonne nell'ordine di Davide del 02/10 (`src/palette.js` → `SEZIONI_INVENTARIO`, campo `colonna`; una colonna sola sotto i 46rem; stesso ordine nel foglio 4 della SS), stato di ogni oggetto in `voce.stato` con il valore `deposito` (deposito comune: fuori dal carico, senza effetti, fuori dal tavolo), PI e Ripara nella riga, Carico e Crediti in testa, «Compra» dal catalogo.
 
 - tab Combattimento (`docs/layout-sd.md`, pezzo 3): colonna sinistra con valori, Prove Salvezza, armi in mano per mano (Ricarica e «Attacca!»), armi disponibili e Protezioni; colonna destra con Ferite, Affaticamento, Corruzione Oscura (§5.20, `regole.json` → `corruzione.stati`, `sessione.corruzione`, nei valori effettivi) e Stati. Caricatori di riserva, condizione delle armi e applicazioni sanitarie si cambiano nell'Inventario.
 
 - tab Poteri e Artefatti (`docs/layout-sd.md`, pezzo 4): Poteri per tutti (la Magia di prima, o «Nessun potere» da `regole.json` → `poteri`; «Da artefatti» in sola lettura); Artefatti con sintonizzazione, schede degli Artefatti ed effetti con provenienza, riserve di Chroma. Un Artefatto nel deposito comune non è sintonizzabile.
+
+- Tecniche Interiori al tavolo (richiesta di Davide del 02/10, `docs/ricognizione-tecniche-interiori.md`): sezione «Risorse Interiori» della tab Poteri per chi ha Risorse Interiori, una scheda per Tecnica con «Attiva» (`src/ui/tecniche.js`, pannello come «Lancia!»); motore puro `src/tecniche.js` sulle regole comuni del §8.9.1 (solo PM personali, avviso se non bastano, conferma e Svenuto se la riserva resta a 0, una per Round con «Nuovo Round», durata dal Round R alla fine di R + N, durate a tempo terminate a mano, blocco a Umanità 0, nessuna Prova di Potere salvo Silenzio Mentale); sessione `round`, `ultimaTecnica`, `tecnicheAttive`; costi e durate numerici in `tecniche_interiori.json` (`costo_pm`, `opzioni_costo`, `durata_tipo`, `durata_round`, `attivazione`). Aura di Resistenza e Pelle di Rinoceronte danno AR finché sono attive. Effetti delle 28 Tecniche (prompt 2): `effetti` in `tecniche_interiori.json` (`tools/effetti_tecniche.mjs`), nei valori effettivi e in «Attacca!» finché sono in corso (le istantanee fino alla fine del Round), provenienza «Tecnica: Nome (fino al Round N)», non spenti da «Bonus dei Talenti»; Imposizione della Mano Curativa applicabile dal pannello; Onda Interiore come profilo d'attacco. SS: elenco delle Tecniche nel foglio 5 (Poteri), che si stampa anche senza magia, con la colonna «Effetto» se l'elenco entra.
 
 - Talenti nei valori effettivi (`docs/censimento-talenti.md`): `effetti.valori` delle voci dei Talenti nello schema degli oggetti (scritti da `tools/effetti_talenti.py`), applicati al tavolo da `src/talenti.js` e `src/condizioni.js` (generali, situazionali con interruttore, usi specifici a parte); interruttore globale «Bonus dei Talenti» in `sessione.bonusTalenti` (Combattimento e Poteri), che spegne anche i Talenti di «Attacca!» e «Lancia!».
 
@@ -128,6 +132,10 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
   - tab Cibernetica della SD e foglio Cibernetica della SS, che si stampa solo con impianti installati o Umanità ridotta.
 
 - Equipaggiamento 0.5, cap. 6 ampliato e cap. 8 (lotto 4 del 01/10): naniti medici e postazioni medicochirurgiche in `sanitario.json`, campo `cura` con i numeri delle cure (`src/equipaggiamento.js` → `testoCura`, tooltip e Inventario), `alimentazione` anche come elenco di NEC; il cap. 8 riassume il §2.16 del Giocatore, controllato da `tools/lotti/lotto_equipaggiamento_08.mjs`. Tutti i capitoli dell'Equipaggiamento 0.5 sono nel catalogo.
+
+- Rinforzi come sottocategoria delle armature (richiesta di Davide del 02/10): tipo `rinforzo` (`rinforzi.json`, lotto `tools/lotti/lotto_rinforzi_armature.mjs`), «Montata su:» con le armature indossate compatibili e, per soprabiti e mantelli (`indossabile_da_solo`), «Indossato da solo»; regole da solo e ad armatura tolta in `regole.json` → `rinforzi`, con TODO(Davide) A.80.
+
+- Manuali del 02/10 (`docs/diff-manuali-2026-10-02-sera.md`), lotti 1–3: capacità di sintonizzazione 8–13 (Architetto 10–15, `artefatti.json` → `sintonizzazione`); A.78, attacchi e Difese si tirano anche con VA ≥ 20 (`regole.json` → `prova.tiro_sempre`, `magistrale_migliorato`; `src/prova.js`); riserve Batteria/Cariche e proprietà Esclusive/Universali con una sola fonte esterna per pagamento (`regole.json` → `chroma.riserve`, `src/fonti.js`; le armi del §7.5.1 restano a Cariche). Lotti 4–7: catalogo del cap. 10 (`tools/lotti/lotto_artefatti_cap10.mjs`: Batterie Mistiche e Matrice, Schegge instabili, Pietra della Vigilanza, Guanti da Combattimento Mistico; `regole.json` → `chroma.matrice`, `cristalli_matrice`, `schegge`; «Ricarica dalla Matrice» nella tab Artefatti), risposte dell'equipaggiamento A.62–A.68 e A.71 (`tools/lotti/lotto_risposte_equip_0210.mjs`, voci uscite in `index.json` → `rif_sostituiti`), Rituali A.74 (`ripartizioneMagistrale`), Capolavoro del Corazzaio A.61 (`effettoCapolavoro`, scelta sulla voce dell'armatura).
 
 Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, veicoli.
 

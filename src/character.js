@@ -185,6 +185,8 @@ export function normalizza(scelteIn, dati) {
     if (!x) continue;
     v.rif = x.rif;
     if (x.stati && v.stato in x.stati) v.stato = x.stati[v.stato];
+    // una confezione diventa le sue unità (A.71: cinque set chirurgici → cinque Cartucce chirurgiche)
+    if (Number.isInteger(x.quantita_per) && x.quantita_per > 1) v.quantita = (Number.isInteger(v.quantita) ? v.quantita : 1) * x.quantita_per;
   }
   const cat = catalogo(dati);
   for (const v of s.equipaggiamento) {

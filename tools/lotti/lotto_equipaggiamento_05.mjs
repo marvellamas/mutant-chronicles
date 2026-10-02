@@ -15,6 +15,10 @@
 //   Armamenti, postazione medica). I cap. 2–4 li scrive tools/lotti/lotto_equipaggiamento_03.mjs.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { normalizza, testoManuali } from '../verifica_frasi.mjs';
+import { bloccaRiscrittura } from './superato.mjs';
+// superato il 02/10/2026 dalle risposte di Davide (tools/lotti/lotto_risposte_equip_0210.mjs, A.62–A.71): un
+// rilancio con --scrivi riporterebbe i TODO(Davide) e le voci doppie
+bloccaRiscrittura('lotto_equipaggiamento_05');
 
 const RADICE = new URL('../../', import.meta.url);
 const arg = (k) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : null; };
