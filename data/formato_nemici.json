@@ -1,18 +1,28 @@
 {
-  "versione_manuale": "Giocatore 0.45 (Google Doc del 01/10/2026)",
-  "fonte": "Il Giocatore 0.45 non ha un capitolo dei nemici. Formato proposto da Marcello e Claude Code il 01/10/2026 (docs/tavolo-direttore.md, decisione 4; per-davide A.73): un nemico è un tipo con i numeri già fatti, come li scrive il master. Le regole che usa sono quelle dei PG: AR «totale, di cui magica» (§5.24), Difese (§5.9), Iniziativa (§2.14, parità §5.1), Movimento (§2.14), Prove Salvezza (§1.2.3), Stati (§5.18).",
-  "_nota": "Questo file descrive i campi di un file nemico (nemici/<id>.json sul server del Tavolo del Master). src/validate.js → validaNemico lo legge: tipi «costante», «testo» (modello), «intero» (min, max, non_oltre: un campo fratello), «dadi», «scelta» (valori o valori_da), «lista» (voce, min), «oggetto» (campi), «mappa» (chiavi_da, valore, tutte); per ogni campo «obbligatorio», «richiesto_se» e «ammesso_se» ({ campo fratello: valore }). valori_da / chiavi_da: caratteristiche (sigle), salvezze (id), stati (regole.json → stati.elenco), modalita_di_fuoco (regole.json), nature_danno (questo file). Aggiungere un campo = aggiungere una voce qui.",
-  "TODO(Davide)": [
-    "A.73: formato dei nemici. Mancano campi, o il bestiario avrà un formato suo? Nel frattempo: questo formato, a numeri già fatti.",
-    "A.73: Caratteristiche dei nemici. Nel frattempo facoltative: servono solo DES e INT per la parità d'Iniziativa (§5.1); senza, la parità con un nemico si decide con lo spareggio del dado.",
-    "A.73: Ferite e Affaticamento dei nemici (§5.14). Nel frattempo la plancia tiene solo PV e Stati dei nemici.",
-    "A.73: incantesimi dei nemici (VA di lancio, costo in PM). Nel frattempo nome, VA facoltativo e note, senza «Lancia!».",
-    "A.73: Corsa e Scatto dei nemici. Nel frattempo facoltativi: se mancano valgono il doppio e il triplo del Passo, come i 6/12/18 Q del §2.14."
+  "versione_manuale": "Giocatore 0.45 (Google Doc del 01/10/2026); E&L del 02/10/2026, decisioni 5–9 (A.73)",
+  "fonte": "Il Giocatore 0.45 non ha un capitolo dei nemici. Formato proposto da Marcello e Claude Code il 01/10/2026 (docs/tavolo-direttore.md, decisione 4; per-davide A.73) e approvato da Davide il 02/10/2026 (E&L, decisioni 5–9): un nemico è un tipo con i numeri già fatti, come li scrive il master, comune all’app e al futuro bestiario. Le regole che usa sono quelle dei PG: AR «totale, di cui magica» (§5.24), Difese (§5.9), Iniziativa (§2.14, parità §5.1), Movimento (§2.14), Prove Salvezza (§1.2.3), Ferite (§5.14), Stati (§5.18).",
+  "_nota": "Questo file descrive i campi di un file nemico (nemici/<id>.json sul server del Tavolo del Master). src/validate.js → validaNemico lo legge: tipi «costante», «testo» (modello), «intero» (min, max, non_oltre: un campo fratello; oppure: valori testuali ammessi al posto del numero), «dadi», «scelta» (valori o valori_da), «lista» (voce, min), «oggetto» (campi), «mappa» (chiavi_da, valore, tutte); per ogni campo «obbligatorio», «richiesto_se» e «ammesso_se» ({ campo fratello: valore }). valori_da / chiavi_da: caratteristiche (sigle), salvezze (id), stati (regole.json → stati.elenco), modalita_di_fuoco (regole.json), abilita (abilita.json), nature_danno e contromisure (questo file). Aggiungere un campo = aggiungere una voce qui.",
+  "decisioni": [
+    "A.73, decisione 5 (E&L del 02/10/2026): il formato usa valori di gioco già calcolati ed è comune all’app e al futuro bestiario; il bestiario può avere impaginazione e descrizioni proprie con gli stessi campi meccanici. Si aggiungono azioni per turno, Contromisure, Abilità rilevanti con VA, talenti e capacità speciali. I valori già calcolati non si ricostruiscono automaticamente da dati incompleti.",
+    "A.73, decisione 6: il bestiario riporta tutte e sei le Caratteristiche; nell’app restano facoltative per l’inserimento rapido. Un valore mancante non equivale a 0 e non ricalcola VA, danni o PV. Parità d’Iniziativa: prima DES, poi INT; se manca una Caratteristica necessaria al confronto, spareggio con 1d10, ripetuto finché c’è parità (Giocatore §5.1).",
+    "A.73, decisione 7: la plancia registra PV attuali, PV massimi, Stato di Ferita e Menomazioni; salvo eccezione della scheda i nemici seguono la procedura dei PG (0 PV non è svenimento o morte automatica; i danni a 0 PV attivano Tempra e Ferite, §5.14). Nessun tracciato dell’Affaticamento: un effetto eccezionale va nelle note.",
+    "A.73, decisione 8: gli incantesimi dei nemici si lanciano con «Lancia!» come per i PG quando ci sono nome e versione, VA di lancio già calcolato, costo in PM, riferimento alla scheda; i PM si scalano dalla riserva del nemico. Una voce incompleta resta un promemoria: non si inventano valori.",
+    "A.73, decisione 9: il Passo è obbligatorio, in Q; se mancano, Corsa = 2 × Passo e Scatto = 3 × Passo; i valori espliciti prevalgono. «Mancante» (si calcola) è diverso da «non consentito» (il nemico non ha quella modalità di movimento)."
   ],
   "formato": "mutant-nemico",
   "versione": 1,
   "nature_danno": ["Naturale", "Magico", "Etereo"],
   "_nota_nature_danno": "Giocatore §5.24: Naturale e Magico sono assorbiti da qualsiasi protezione pertinente, Etereo solo dalla componente magica.",
+  "contromisure": ["Ignifugo", "Termico", "Isolante", "Dissipante", "Imbottita", "Anticorrosivo", "Riflettente"],
+  "_nota_contromisure": "Contromisure del Giocatore §5.24: Ignifugo contro Fuoco, Termico contro Gelo, Isolante contro Elettricità, Dissipante contro Plasma, Imbottita contro Concussivo, Anticorrosivo contro Corrosivo; Riflettente (contro Laser) non è numerica.",
+  "tavolo": {
+    "tiene": ["pv_attuali", "pv_massimi", "ferite", "menomazioni", "stati", "pm_attuali"],
+    "affaticamento": false,
+    "procedura_ferite": "pg",
+    "parita_iniziativa": ["DES", "INT"],
+    "spareggio": "1d10",
+    "_nota": "Stato di un nemico nello scontro (Tavolo del Master): come i PG (Giocatore §5.14, §5.18), senza Affaticamento (A.73, decisione 7). Parità d’Iniziativa: le Caratteristiche nell’ordine; se ne manca una necessaria, il dado (decisione 6)."
+  },
   "campi": {
     "formato": { "tipo": "costante", "valore": "mutant-nemico", "obbligatorio": true },
     "versione": { "tipo": "costante", "valore": 1, "obbligatorio": true },
@@ -22,10 +32,10 @@
     "caratteristiche": {
       "tipo": "mappa", "chiavi_da": "caratteristiche", "tutte": false, "obbligatorio": false,
       "valore": { "tipo": "intero", "min": 0 },
-      "descrizione": "Facoltative (TODO(Davide) A.73). DES e INT servono per la parità d'Iniziativa (§5.1)."
+      "descrizione": "Le sei Caratteristiche: il bestiario le riporta tutte, nell’app sono facoltative (A.73). Mancante non vale 0 e non ricalcola nulla; DES e INT servono per la parità d’Iniziativa (§5.1)."
     },
-    "pv": { "tipo": "intero", "min": 1, "obbligatorio": true, "descrizione": "PV massimi; ogni copia nello scontro parte da qui." },
-    "pm": { "tipo": "intero", "min": 0, "obbligatorio": false, "descrizione": "PM massimi, se ne ha." },
+    "pv": { "tipo": "intero", "min": 1, "obbligatorio": true, "descrizione": "PV massimi; ogni copia nello scontro parte da qui. Al tavolo PV attuali, Ferite e Menomazioni come i PG (A.73)." },
+    "pm": { "tipo": "intero", "min": 0, "obbligatorio": false, "descrizione": "PM massimi, se ne ha: la riserva da cui «Lancia!» scala i PM." },
     "ar": {
       "tipo": "oggetto", "obbligatorio": true,
       "descrizione": "Armatura come per i PG: «AR totale, di cui magica» (§5.24); contro il danno Etereo vale solo la magica.",
@@ -38,17 +48,27 @@
     "iniziativa": { "tipo": "intero", "obbligatorio": true, "descrizione": "Valore di Iniziativa senza il dado; in combattimento si aggiunge 1d10 (§2.14)." },
     "movimento": {
       "tipo": "oggetto", "obbligatorio": true,
-      "descrizione": "In Q (§2.14). Corsa e Scatto facoltativi (TODO(Davide) A.73): se mancano, il doppio e il triplo del Passo.",
+      "descrizione": "In Q (§2.14). Passo obbligatorio. Corsa e Scatto: se mancano, il doppio e il triplo del Passo; «non_consentito» se il nemico non ha quella modalità (A.73, decisione 9).",
+      "moltiplicatori": { "corsa": 2, "scatto": 3 },
       "campi": {
         "passo": { "tipo": "intero", "min": 0, "obbligatorio": true },
-        "corsa": { "tipo": "intero", "min": 0, "obbligatorio": false },
-        "scatto": { "tipo": "intero", "min": 0, "obbligatorio": false }
+        "corsa": { "tipo": "intero", "min": 0, "oppure": ["non_consentito"], "obbligatorio": false },
+        "scatto": { "tipo": "intero", "min": 0, "oppure": ["non_consentito"], "obbligatorio": false }
       }
     },
     "salvezze": {
       "tipo": "mappa", "chiavi_da": "salvezze", "tutte": true, "obbligatorio": true,
       "valore": { "tipo": "intero", "min": 0 },
       "descrizione": "Valori delle quattro Prove Salvezza (§1.2.3)."
+    },
+    "azioni": {
+      "tipo": "oggetto", "obbligatorio": false,
+      "descrizione": "Azioni per turno (A.73): Azioni Principali e di Movimento, con le eventuali eccezioni. Se mancano, quelle ordinarie (§5.1).",
+      "campi": {
+        "principali": { "tipo": "intero", "min": 0, "obbligatorio": true },
+        "movimento": { "tipo": "intero", "min": 0, "obbligatorio": true },
+        "eccezioni": { "tipo": "testo", "obbligatorio": false }
+      }
     },
     "attacchi": {
       "tipo": "lista", "min": 0, "obbligatorio": true,
@@ -71,17 +91,56 @@
         }
       }
     },
-    "stati": { "tipo": "lista", "voce": { "tipo": "scelta", "valori_da": "stati" }, "obbligatorio": false, "descrizione": "Stati con cui entra in scena (§5.18)." },
-    "immunita": { "tipo": "lista", "voce": { "tipo": "scelta", "valori_da": "stati" }, "obbligatorio": false, "descrizione": "Stati che non subisce. Le altre immunità e resistenze vanno nelle note." },
-    "incantesimi": {
+    "contromisure": {
       "tipo": "lista", "obbligatorio": false,
-      "descrizione": "TODO(Davide) A.73: per ora solo un promemoria, senza «Lancia!».",
+      "descrizione": "Contromisure con nomi e valori (A.73; Giocatore §5.24), come le proprietà delle armature: soglie contro gli effetti aggiuntivi dopo l’Armatura.",
+      "voce": {
+        "tipo": "oggetto",
+        "campi": {
+          "nome": { "tipo": "scelta", "valori_da": "contromisure", "obbligatorio": true },
+          "valore": { "tipo": "intero", "min": 1, "obbligatorio": false, "descrizione": "Soglia; manca solo per Riflettente." }
+        }
+      }
+    },
+    "abilita": {
+      "tipo": "lista", "obbligatorio": false,
+      "descrizione": "Abilità rilevanti con il VA già calcolato (A.73), usate dalle Prove del nemico al tavolo.",
+      "voce": {
+        "tipo": "oggetto",
+        "campi": {
+          "nome": { "tipo": "scelta", "valori_da": "abilita", "obbligatorio": true },
+          "va": { "tipo": "intero", "obbligatorio": true }
+        }
+      }
+    },
+    "capacita": {
+      "tipo": "lista", "obbligatorio": false,
+      "descrizione": "Talenti e capacità speciali (A.73) con effetto, costo e limiti d’uso: promemoria al tavolo.",
       "voce": {
         "tipo": "oggetto",
         "campi": {
           "nome": { "tipo": "testo", "obbligatorio": true },
-          "va": { "tipo": "intero", "obbligatorio": false },
+          "effetto": { "tipo": "testo", "obbligatorio": true },
+          "costo": { "tipo": "testo", "obbligatorio": false },
+          "limiti": { "tipo": "testo", "obbligatorio": false }
+        }
+      }
+    },
+    "stati": { "tipo": "lista", "voce": { "tipo": "scelta", "valori_da": "stati" }, "obbligatorio": false, "descrizione": "Stati con cui entra in scena (§5.18)." },
+    "immunita": { "tipo": "lista", "voce": { "tipo": "scelta", "valori_da": "stati" }, "obbligatorio": false, "descrizione": "Stati che non subisce. Le altre immunità e resistenze vanno nelle note." },
+    "incantesimi": {
+      "tipo": "lista", "obbligatorio": false,
+      "descrizione": "Incantesimi del nemico (A.73, decisione 8). Con nome della scheda, livello della versione, VA di lancio e costo in PM si lanciano con «Lancia!», scalando i PM del nemico; incompleti restano un promemoria.",
+      "completo_se": ["nome", "livello", "va", "costo_pm"],
+      "voce": {
+        "tipo": "oggetto",
+        "campi": {
+          "nome": { "tipo": "testo", "obbligatorio": true, "descrizione": "Nome della scheda in incantesimi.json." },
+          "livello": { "tipo": "intero", "min": 1, "obbligatorio": false, "descrizione": "Livello della versione utilizzabile." },
+          "va": { "tipo": "intero", "obbligatorio": false, "descrizione": "VA di lancio già calcolato per quella versione, prima dei modificatori temporanei." },
           "costo_pm": { "tipo": "intero", "min": 0, "obbligatorio": false },
+          "azioni": { "tipo": "testo", "obbligatorio": false, "descrizione": "Azioni e durata del lancio, se diverse dalla scheda." },
+          "eccezioni": { "tipo": "testo", "obbligatorio": false, "descrizione": "Eccezioni specifiche del nemico." },
           "note": { "tipo": "testo", "obbligatorio": false }
         }
       }

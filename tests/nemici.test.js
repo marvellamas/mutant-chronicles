@@ -9,11 +9,37 @@ const { dati } = await datiReali();
 const esempio = JSON.parse(readFileSync(new URL('./nemici/legionario-non-morto.json', import.meta.url), 'utf8'));
 const chiavi = (n) => validaNemico(n, dati).map((e) => e.chiave);
 
-test('formato dei nemici: caricato con gli altri dati, valido, con i TODO(Davide) di A.73', () => {
+test('formato dei nemici: caricato con gli altri dati, valido; A.73 chiusa (E&L del 02/10, decisioni 5–9)', () => {
   assert.equal(dati.formato_nemici.formato, 'mutant-nemico');
   assert.deepEqual(validaDati(dati), []);
-  assert.ok(trovaTodo(dati).filter((t) => t.percorso.startsWith('formato_nemici.json')).every((t) => /A\.73/.test(t.testo)));
-  assert.ok(trovaTodo(dati).some((t) => t.percorso.startsWith('formato_nemici.json')));
+  assert.equal(trovaTodo(dati).some((t) => t.percorso.startsWith('formato_nemici.json')), false);
+  assert.equal(dati.formato_nemici.decisioni.length, 5);
+  // stato al tavolo come i PG, senza Affaticamento; parità d'Iniziativa DES → INT → 1d10
+  const T = dati.formato_nemici.tavolo;
+  assert.deepEqual([T.affaticamento, T.parita_iniziativa, T.spareggio, T.tiene.includes('ferite'), T.tiene.includes('menomazioni')], [false, ['DES', 'INT'], '1d10', true, true]);
+  assert.deepEqual(dati.formato_nemici.campi.movimento.moltiplicatori, { corsa: 2, scatto: 3 });
+});
+
+test('A.73: campi nuovi (azioni, Contromisure, Abilità, capacità), sei Caratteristiche, movimento non consentito, incantesimi per «Lancia!»', () => {
+  const n = copia(esempio);
+  n.caratteristiche = { FOR: 7, COS: 8, DES: 4, INT: 2, SAG: 3, CAR: 2 };
+  n.azioni = { principali: 1, movimento: 1, eccezioni: 'Non corre mai.' };
+  n.contromisure = [{ nome: 'Imbottita', valore: 2 }, { nome: 'Riflettente' }];
+  n.abilita = [{ nome: 'Percezione', va: 9 }, { nome: 'Atletica', va: 11 }];
+  n.capacita = [{ nome: 'Senza dolore', effetto: 'Ignora le penalità delle Ferite Superficiali.', limiti: 'sempre attiva' }];
+  n.movimento = { passo: 6, corsa: 'non_consentito', scatto: 'non_consentito' };
+  n.pm = 12;
+  n.incantesimi = [{ nome: 'Dardo Psichico', livello: 3, va: 14, costo_pm: 3 }, { nome: 'Rito senza scheda', note: 'promemoria' }];
+  assert.deepEqual(validaNemico(n, dati), []);
+  const e = copia(n);
+  e.movimento.corsa = 'mai';
+  e.contromisure[0].nome = 'Antiproiettile';
+  e.abilita[0].nome = 'Percepire';
+  e.capacita[0] = { nome: 'Senza effetto' };
+  e.azioni = { principali: 1 };
+  e.incantesimi[0].livello = 0;
+  assert.deepEqual(chiavi(e).sort(), ['abilita[0].nome', 'azioni.movimento', 'capacita[0].effetto', 'contromisure[0].nome', 'incantesimi[0].livello', 'movimento.corsa'].sort());
+  assert.match(validaNemico(e, dati).find((x) => x.chiave === 'movimento.corsa').problema, /oppure «non_consentito»/);
 });
 
 test('formato dei nemici rotto: il validatore dice file, chiave e problema', () => {

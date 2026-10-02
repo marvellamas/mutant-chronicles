@@ -2065,6 +2065,9 @@ function sorgentiNemico(dati) {
     stati: (dati?.regole?.stati?.elenco ?? []).map((s) => s?.id),
     modalita_di_fuoco: Object.keys(dati?.regole?.modalita_di_fuoco ?? {}).filter((k) => !k.startsWith('_')),
     nature_danno: dati?.formato_nemici?.nature_danno ?? [],
+    // A.73 (E&L del 02/10): Contromisure (questo formato) e Abilità rilevanti (abilita.json)
+    contromisure: dati?.formato_nemici?.contromisure ?? [],
+    abilita: (dati?.abilita?.abilita ?? []).map((a) => a?.nome),
   };
 }
 
@@ -2077,7 +2080,9 @@ function validaSchemaNemico(F, k, s, sorgenti, err) {
   if (s.modello !== undefined) { try { new RegExp(s.modello); } catch { err(F, `${k}.modello`, 'espressione regolare non valida'); } }
   for (const c of ['valori_da', 'chiavi_da']) if (s[c] !== undefined && !(s[c] in sorgenti)) err(F, `${k}.${c}`, `uno fra ${Object.keys(sorgenti).join(', ')}`);
   if (s.tipo === 'scelta' && !(Array.isArray(s.valori) && s.valori.length) && s.valori_da === undefined) err(F, k, 'una scelta vuole «valori» o «valori_da»');
+  if (s.oppure !== undefined && !(s.tipo === 'intero' && Array.isArray(s.oppure) && s.oppure.every(isTesto))) err(F, `${k}.oppure`, 'solo per un intero: elenco di valori testuali');
   if (s.tipo === 'lista') validaSchemaNemico(F, `${k}.voce`, s.voce, sorgenti, err);
+  if (s.completo_se !== undefined && !(s.tipo === 'lista' && Array.isArray(s.completo_se) && s.completo_se.every((c) => c in (s.voce?.campi ?? {})))) err(F, `${k}.completo_se`, 'campi della voce della lista');
   if (s.tipo === 'mappa') {
     if (s.chiavi_da === undefined) err(F, `${k}.chiavi_da`, 'mancante');
     validaSchemaNemico(F, `${k}.valore`, s.valore, sorgenti, err);
@@ -2100,6 +2105,15 @@ function validaFormatoNemici(dati, err) {
   if (!isTesto(f.formato)) err(F, 'formato', 'manca il nome del formato dei file nemico');
   if (!isIntero(f.versione)) err(F, 'versione', 'intero');
   if (!(Array.isArray(f.nature_danno) && f.nature_danno.length && f.nature_danno.every(isTesto))) err(F, 'nature_danno', 'elenco delle nature del danno (§5.24)');
+  if (!(Array.isArray(f.contromisure) && f.contromisure.length && f.contromisure.every(isTesto))) err(F, 'contromisure', 'elenco delle Contromisure (§5.24)');
+  // A.73, decisioni 6 e 7: stato del nemico al tavolo e parità d'Iniziativa
+  const T = f.tavolo;
+  const sigle = (dati.caratteristiche?.caratteristiche ?? []).map((c) => c?.sigla);
+  if (!isOggetto(T) || !Array.isArray(T.tiene) || !T.tiene.every(isTesto) || typeof T.affaticamento !== 'boolean') err(F, 'tavolo', 'serve { tiene: [...], affaticamento: vero o falso, parita_iniziativa, spareggio }');
+  else {
+    if (!(Array.isArray(T.parita_iniziativa) && T.parita_iniziativa.every((x) => sigle.includes(x)))) err(F, 'tavolo.parita_iniziativa', 'sigle di Caratteristiche');
+    if (!(typeof T.spareggio === 'string' && DADI.test(T.spareggio))) err(F, 'tavolo.spareggio', 'dado dello spareggio, es. «1d10»');
+  }
   if (!isOggetto(f.campi)) { err(F, 'campi', 'mancante'); return; }
   validaSchemaNemico(F, '(nemico)', { tipo: 'oggetto', campi: f.campi }, sorgentiNemico(dati), err);
   for (const c of ['formato', 'id', 'nome']) if (f.campi[c]?.obbligatorio !== true) err(F, `campi.${c}`, 'campo obbligatorio per riconoscere il file');
@@ -2129,7 +2143,9 @@ export function validaNemico(nemico, dati, file = 'nemico') {
         else if (s.modello && !new RegExp(s.modello).test(v)) err(k, `«${v}» non segue il modello ${s.modello}`);
         return;
       case 'intero':
-        if (!isIntero(v)) { err(k, 'numero intero'); return; }
+        // «oppure»: valori testuali ammessi al posto del numero (movimento «non_consentito», A.73)
+        if ((s.oppure ?? []).includes(v)) return;
+        if (!isIntero(v)) { err(k, (s.oppure ?? []).length ? `numero intero oppure ${s.oppure.map((x) => `«${x}»`).join(', ')}` : 'numero intero'); return; }
         if (s.min !== undefined && v < s.min) err(k, `almeno ${s.min}`);
         if (s.max !== undefined && v > s.max) err(k, `al massimo ${s.max}`);
         if (s.non_oltre !== undefined && isIntero(fratelli[s.non_oltre]) && v > fratelli[s.non_oltre]) err(k, `non oltre ${s.non_oltre} (${fratelli[s.non_oltre]})`);

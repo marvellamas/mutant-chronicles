@@ -643,3 +643,15 @@ manuali; la 69 chiude in parte una domanda.
     `capolavoro_armatura`, TODO tolto), scelta sulla voce dell'armatura (`capolavoro`) nell'Inventario,
     effetto «contromisura» nelle Resistenze e riga di provenienza nell'AR (`src/equipaggiamento.js` →
     `effettoCapolavoro`, `src/protezione.js`). Restano aperte per A.61 gli altri Talenti del censimento.
+83. **Formato dei nemici** (A.73; E&L del 02/10/2026, decisioni 5–9). Formato confermato, a valori già
+    calcolati e comune all'app e al futuro bestiario, con quattro campi in più: azioni per turno (AzP, AzM ed
+    eccezioni), Contromisure con nomi e valori, Abilità rilevanti con VA, talenti e capacità speciali con effetto,
+    costo e limiti. Le sei Caratteristiche nel bestiario, facoltative nell'app (mancante ≠ 0, nessun
+    ricalcolo); parità d'Iniziativa DES → INT → 1d10 se manca una Caratteristica. Al tavolo PV attuali e
+    massimi, Ferita e Menomazioni con la procedura dei PG (§5.14); nessun Affaticamento. Incantesimi con
+    «Lancia!» quando ci sono nome, versione, VA di lancio e costo in PM (PM dalla riserva del nemico);
+    incompleti, promemoria. Movimento: Passo obbligatorio, Corsa 2× e Scatto 3× se mancano, «non consentito»
+    distinto da «mancante». → `data/formato_nemici.json` (TODO tolti, `decisioni`, `tavolo`, `contromisure`,
+    campi `azioni`, `contromisure`, `abilita`, `capacita`, incantesimi con `livello`, movimento «non_consentito»),
+    `src/validate.js` (`oppure`, sorgenti `abilita` e `contromisure`). Il Tavolo del Master (branch
+    `tavolo-direttore`) applica Ferite, «Lancia!» e i campi nuovi.
