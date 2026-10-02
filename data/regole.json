@@ -1735,7 +1735,7 @@
   },
   "prova": {
     "paragrafo": "Giocatore 0.45: §1.6 «Risultati naturali», §1.7 «Successi automatici e azioni impossibili»",
-    "_nota": "Esito di una Prova con il d20 (src/prova.js → esitoProva), usato dal Tavolo del Master per il tiro per colpire dei nemici. Il 2 naturale Magistrale con VA finale almeno la soglia è in regole.json → magistrale_naturale. Con VA finale da «successo_automatico_da» in su il successo è automatico, senza tiro (§1.7), salvo una Prova resa obbligatoria da una regola (§1.7.1).",
+    "_nota": "Esito di una Prova con il d20 (src/prova.js → esitoProva), usato dal Tavolo del Master per il tiro per colpire dei nemici. Il 2 naturale Magistrale con VA finale almeno la soglia è in regole.json → magistrale_naturale. Con VA finale da «successo_automatico_da» in su il successo è automatico, senza tiro (§1.7), salvo una Prova resa obbligatoria da una regola (§1.7.1) e salvo attacchi e Difese attive, che si tirano sempre («tiro_sempre», A.78). «magistrale_migliorato»: naturali Magistrali con il Talento, per VA finale.",
     "naturale_magistrale": 1,
     "naturale_maldestro": 20,
     "successo_automatico_da": 20,
@@ -1745,7 +1745,21 @@
       "I modificatori e i Punti Eroe non cambiano il valore naturale mostrato dal dado.",
       "Il successo automatico è un successo normale: non produce un Successo Magistrale o Distintivi e non elimina il consumo ordinario di tempo e risorse."
     ],
-    "TODO(Davide)": "A.78: un attacco con VA finale 20 o più è un successo automatico senza tiro (§1.7), quindi senza Magistrale né Maldestro, oppure si tira comunque? Nel frattempo successo automatico, senza tiro."
+    "tiro_sempre": {
+      "tipi": ["attacco", "difesa"],
+      "decisione": "Gli attacchi e le Difese attive richiedono il tiro anche quando il VA finale è 20 o superiore. Si applicano prima tutti i modificatori e poi si determina il VA finale. Restano valide le eccezioni esplicite che colpiscono automaticamente, come Colpo Elementale.",
+      "promemoria": "si tira comunque: attacchi e Difese non hanno il successo automatico",
+      "fonte": "E&L del 02/10/2026, decisione 3 (per-davide A.78); docs/risposte-master.md, decisione 71"
+    },
+    "magistrale_migliorato": {
+      "talento": "successo-magistrale-migliorato",
+      "naturali": [
+        { "va_da": 1, "fino_a": 2 },
+        { "va_da": 21, "fino_a": 3 }
+      ],
+      "decisione": "Con Successo Magistrale Migliorato: con VA finale 20, sono Magistrali 1–2; da VA finale 21 sono Magistrali 1–2–3. Il 20 naturale rimane Maldestro. Correzione espressamente approvata: con il talento, il 3 naturale diventa Magistrale già da VA 21.",
+      "fonte": "E&L del 02/10/2026, decisione 3 (per-davide A.78); Giocatore §8.6.1"
+    }
   },
   "danno_applicato": {
     "paragrafo": "Giocatore 0.45: §5.10 «AC e applicazioni separate del danno», §5.13, §5.14, §5.24 (Google Doc del 01/10/2026)",

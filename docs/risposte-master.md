@@ -581,3 +581,12 @@ manuali; la 69 chiude in parte una domanda.
     (passi Versione, Rituale, Risultato), tab Artefatti e «Da artefatti», Artefatto personalizzato con
     «Incantesimo infuso». Scelte provvisorie nella nuova domanda **A.74** (VA del Canale = Rituali;
     Magistrale: i Canali tengono la quota; PM solo personali; conta Ritualista, non il livello massimo).
+71. **Attacchi e Difese con VA finale 20 o più** (A.78; E&L del 02/10/2026, «Risposte approvate ai 52
+    riferimenti dell'app», decisione 3). Gli attacchi e le Difese attive si tirano anche con VA finale 20 o
+    più; restano le eccezioni esplicite che colpiscono automaticamente (Colpo Elementale). Naturali
+    Magistrali: 1 con VA finale 20, 1–2 da VA 21; con Successo Magistrale Migliorato 1–2 con VA 20 e 1–2–3
+    da VA 21 (correzione al manuale: il 3 diventa Magistrale già da VA 21); il 20 resta Maldestro. Le altre
+    Prove seguono il §1.7 (successo automatico da 20, salvo le Prove obbligatorie del §1.7.1). →
+    `regole.json` → `prova` (`tiro_sempre`, `magistrale_migliorato`; TODO tolto), `src/prova.js`
+    (`esitoProva` con `tipo`, `limiteMagistrale`), promemoria di «Attacca!» e «Lancia!» (`src/attacco.js` →
+    `promemoriaMagistraleNaturale`).

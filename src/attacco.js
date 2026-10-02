@@ -15,6 +15,7 @@ import { bonusDannoCaratteristica } from './calc.js';
 import { avvisiStati, limitiStati } from './condizioni.js';
 import { riga, provenienza, righeDaScomposizione, righeBase, rigaConDettaglio, rigaBonusCaratteristica } from './provenienza.js';
 import { tecnicheAttacco, tecnicheInCorso, mezzoAmmesso } from './tecniche.js';
+import { limiteMagistrale } from './prova.js';
 
 export const voce = (etichetta, valore, fonte, paragrafo = null) => ({ etichetta, valore, fonte, paragrafo });
 export const somma = (voci) => voci.reduce((s, x) => s + x.valore, 0);
@@ -561,7 +562,8 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
   const formula = base ? aggiungiDanno(base, dannoBonus) : null;
   const G = dati.regole.attacco_ravvicinato?.magistrale;
   if (formula && G?.promemoria) promemoria.push(G.promemoria);
-  const mn = promemoriaMagistraleNaturale(somma(scomposizione), dati);
+  // A.78: gli attacchi si tirano anche con VA finale 20 o più
+  const mn = promemoriaMagistraleNaturale(somma(scomposizione), dati, { tiroSempre: true, magistraleMigliorato: haMagistraleMigliorato(personaggio.scheda, dati) });
   if (mn) promemoria.push(mn);
 
   return {
@@ -841,10 +843,29 @@ export function vincoliRavvicinato(personaggio, arma, dichiarazione, dati) {
   };
 }
 
-/** §1.6 (Giocatore del 29/09): con VA finale almeno 21 anche il 2 naturale è Magistrale; il promemoria, o null. */
-export function promemoriaMagistraleNaturale(va, dati) {
+/** Il personaggio ha Successo Magistrale Migliorato (§8.6.1), con i Talenti accesi? */
+export function haMagistraleMigliorato(scheda, dati) {
+  const id = dati.regole.prova.magistrale_migliorato?.talento;
+  return !!id && scheda?.bonusTalenti !== false && (scheda?.talentiLiberi ?? []).some((t) => t.id === id);
+}
+
+/**
+ * Promemoria del tiro per VA finale, o null:
+ * - A.78 (E&L del 02/10): con `tiroSempre` (attacchi e Difese) e VA finale 20 o più si tira comunque;
+ * - §1.6 (Giocatore del 29/09): con VA finale almeno 21 anche il 2 naturale è Magistrale;
+ * - Successo Magistrale Migliorato (§8.6.1, A.78): naturali Magistrali 1–2, o 1–3 da VA 21.
+ */
+export function promemoriaMagistraleNaturale(va, dati, { tiroSempre = false, magistraleMigliorato = false } = {}) {
+  if (!Number.isFinite(va)) return null;
   const M = dati.regole.magistrale_naturale;
-  return M && Number.isFinite(va) && va >= M.soglia_va ? `VA finale ${va}: ${M.promemoria} (${M.paragrafo}).` : null;
+  const P = dati.regole.prova;
+  const parti = [];
+  if (tiroSempre && va >= P.successo_automatico_da && P.tiro_sempre) parti.push(`VA finale ${va}: ${P.tiro_sempre.promemoria} (A.78).`);
+  if (magistraleMigliorato) {
+    const l = limiteMagistrale(va, dati, { magistraleMigliorato: true });
+    parti.push(`Successo Magistrale Migliorato: con VA finale ${va} sono Magistrali i naturali 1–${l}, se la Prova riesce (§8.6.1, A.78).`);
+  } else if (M && va >= M.soglia_va) parti.push(`VA finale ${va}: ${M.promemoria} (${M.paragrafo}).`);
+  return parti.length ? parti.join(' ') : null;
 }
 
 /** §1.6: moltiplicatore con il Magistrale (×1 → ×2, ×2 → ×3, ×3 resta ×3). */
@@ -1110,7 +1131,7 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
   const tecRiga = rigaTecnicheAttive(personaggio.sessione, dati);
   if (tecRiga) promemoria.push(tecRiga);
 
-  const mn = promemoriaMagistraleNaturale(attacchi[0]?.va ?? somma(scomposizione), dati);
+  const mn = promemoriaMagistraleNaturale(attacchi[0]?.va ?? somma(scomposizione), dati, { tiroSempre: true, magistraleMigliorato: haMagistraleMigliorato(personaggio.scheda, dati) });
   if (mn) promemoria.push(mn);
 
   return {
