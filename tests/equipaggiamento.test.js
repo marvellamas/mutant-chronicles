@@ -32,7 +32,7 @@ test('catalogo: caricato dall’indice, un lotto = un file e una riga; riferimen
 
 test('cascata e ricerca: solo ciò che esiste; i nomi alternativi portano al profilo', () => {
   const o = opzioniCascata(dati, { tipo: 'arma_ravvicinata', catalogo: 'Commerciale', famiglia: 'Spade' });
-  assert.deepEqual(o.tipi, ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'elmetto', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'impianto', 'altro']);
+  assert.deepEqual(o.tipi, ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'rinforzo', 'elmetto', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'impianto', 'altro']);
   assert.deepEqual(o.cataloghi, ['Commerciale', 'Bauhaus', 'Capitol', 'Cybertronic', 'Fratellanza', 'Imperial', 'Mishima', 'Alleanza']);
   assert.ok(o.famiglie.includes('Armi da pugno'));
   assert.deepEqual(o.profili.map((p) => p.nome), ['Spada leggera', 'Stocco', 'Spada lunga', 'Spada bastarda', 'Spadone']);

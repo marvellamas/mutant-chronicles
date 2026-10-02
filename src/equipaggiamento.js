@@ -20,13 +20,14 @@ import { bonusDannoCaratteristica, caratteristicaDanno } from './calc.js';
 import { riga, provenienza, rigaBonusCaratteristica as rigaBonus } from './provenienza.js';
 import { calcolaAR, oggettiConPi, oggettiSenzaPi } from './protezione.js';
 
-export const TIPI = ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'elmetto', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'impianto', 'altro'];
+export const TIPI = ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'rinforzo', 'elmetto', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'impianto', 'altro'];
 
 export const NOMI_TIPI = {
   arma_ravvicinata: 'Arma ravvicinata',
   arma_distanza: 'Arma a distanza',
   scudo: 'Scudo',
   armatura: 'Armatura',
+  rinforzo: 'Rinforzo',
   elmetto: 'Elmetto',
   accessorio: 'Accessorio',
   munizioni: 'Munizioni',
@@ -42,6 +43,10 @@ export const STATI = {
   arma_distanza: ['impugnata', 'pronta', 'zaino'],
   scudo: ['imbracciato', 'pronta', 'zaino'],
   armatura: ['indossata', 'zaino'],
+  // Armamenti §7.11.2, §7.23 (sottocategoria delle armature, richiesta di Davide del 02/10): montato su
+  // un'armatura compatibile («in uso»), indossato da solo se la voce lo consente (indossabile_da_solo,
+  // regole.json → rinforzi), nello zaino
+  rinforzo: ['in_uso', 'indossata', 'zaino'],
   // Armamenti §7.21.1: un solo elmetto indossato; indossarlo o toglierlo costa 1 AzP
   elmetto: ['indossata', 'zaino'],
   accessorio: ['in_uso', 'zaino'],
@@ -451,7 +456,7 @@ export function statoIniziale(tipo, voci = [], dati = null, effetti = []) {
     const giaIndossata = dati && voci.some((v) => v.stato === 'indossata' && risolvi(v, catalogo(dati)).tipo === 'armatura');
     return giaIndossata ? 'zaino' : 'indossata';
   }
-  if (tipo === 'accessorio') return 'zaino';
+  if (tipo === 'accessorio' || tipo === 'rinforzo') return 'zaino';
   return stati.includes('pronta') ? 'pronta' : stati[0];
 }
 
@@ -549,7 +554,8 @@ export function risolvi(voce, cat) {
   const tipo = def?.tipo ?? voce.personalizzato?.tipo ?? 'altro';
   const nome = (schedaDotazione ? voce.personalizzato?.nome : null) ?? def?.nome ?? voce.personalizzato?.nome ?? (fuoriCatalogo ? voce.rif : 'Oggetto');
   const effetti = fuoriCatalogo ? [] : def?.effetti ?? cat.dotazione?.[voce.dotazione_id]?.effetti ?? voce.personalizzato?.effetti ?? [];
-  const stati = statiPer(tipo, effetti);
+  // un rinforzo si indossa da solo solo se la sua voce lo consente (rinforzi.json → indossabile_da_solo)
+  const stati = statiPer(tipo, effetti).filter((s) => !(tipo === 'rinforzo' && s === 'indossata' && !def?.indossabile_da_solo));
   const attivo = !fuoriCatalogo && ATTIVI.has(voce.stato) && stati.includes(voce.stato);
   return { voce, uid: voce.uid, def, tipo, nome, fuoriCatalogo, attivo, personalizzato: !voce.rif && !def, effetti, stati, deposito: inDeposito(voce) };
 }
@@ -607,13 +613,25 @@ export function penalitaConEffetti(base, proprieta = []) {
 }
 
 /**
+ * Il rinforzo si può montare su questa armatura? (§7.11.2, §7.23.9): categoria ammessa dal modello
+ * («rinforzi_ammessi») e, per i rinforzi corporativi, armatura fra quelle compatibili del kit.
+ * @param rinforzo, armatura voci risolte (risolvi)
+ */
+export function rinforzoCompatibile(rinforzo, armatura) {
+  const d = armatura?.def;
+  const k = rinforzo?.def?.rinforzo;
+  if (!d || !k || armatura.tipo !== 'armatura') return false;
+  return (d.rinforzi_ammessi ?? []).includes(k.kit) && (!rinforzo.def.compatibile_con || rinforzo.def.compatibile_con.includes(d.rif));
+}
+
+/**
  * Il kit di rinforzo che vale per l'armatura (§7.11.2): il primo compatibile. Avvisi per kit non
  * ammessi dal modello («rinforzi_ammessi», «compatibile_con» del kit) e per più kit insieme.
  */
 function rinforzoValido(armatura, kits, avvisi) {
   const d = armatura.def;
   const validi = kits.filter((x) => {
-    const ammesso = (d.rinforzi_ammessi ?? []).includes(x.def.rinforzo.kit) && (!x.def.compatibile_con || x.def.compatibile_con.includes(d.rif));
+    const ammesso = rinforzoCompatibile(x, armatura);
     if (!ammesso) avvisi.push(`${x.nome} non è ammesso su ${armatura.nome} (rinforzi ammessi: ${(d.rinforzi_ammessi ?? []).join(', ') || 'nessuno'}): nessun effetto (§7.11.2).`);
     return ammesso;
   });
@@ -655,7 +673,8 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   const difeseAbilita = fileArmature.abilita_difese ?? null;
   const avvisi = [];
   // accessori in uso montati su un altro oggetto (§7.3 sulle armi, §7.11.2 sulle armature)
-  const accessoriMontati = oggetti.filter((x) => x.attivo && x.tipo === 'accessorio' && x.voce.montato_su);
+  // i rinforzi montati («in uso») seguono le stesse regole di montaggio degli accessori (§7.11.2)
+  const accessoriMontati = oggetti.filter((x) => x.attivo && (x.tipo === 'accessorio' || (x.tipo === 'rinforzo' && x.voce.stato === 'in_uso')) && x.voce.montato_su);
   const montatiSu = (uid) => accessoriMontati.filter((x) => x.voce.montato_su === uid);
 
   // Protezioni (armature indossate, scudi imbracciati) — §7.11.1
@@ -760,8 +779,15 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   // una modifica d'elmetto conta solo montata su un elmetto (o un'armatura, per il suo elmetto
   // standard) indossato (Armamenti §7.21.1, §7.21.4)
   // un rinforzo conta solo come kit valido di un'armatura indossata (Armamenti §7.23.4, §7.23.9)
+  // rinforzi indossati da soli (indossabile_da_solo; regole.json → rinforzi.da_solo, per-davide A.79)
+  const regoleDaSolo = dati.regole?.rinforzi?.da_solo ?? {};
+  const armaturaIndossata = oggetti.some((x) => x.attivo && x.tipo === 'armatura');
+  const rinforziDaSoli = oggetti.filter((x) => x.attivo && x.tipo === 'rinforzo' && x.voce.stato === 'indossata' && x.def?.rinforzo)
+    .map((x) => ({ uid: x.uid, nome: x.nome, ar: x.def.rinforzo.ar, kit: x.def.rinforzo.kit, conArmatura: armaturaIndossata }));
+  const daSoloOperativo = (o) => o.voce.stato === 'indossata' && regoleDaSolo.proprieta === true
+    && !(armaturaIndossata && regoleDaSolo.con_armatura_indossata !== 'vale');
   const modificaOperativa = (o) => {
-    if (o.def?.rinforzo) return rinforziValidi.has(o.uid);
+    if (o.def?.rinforzo) return rinforziValidi.has(o.uid) || daSoloOperativo(o);
     if (!o.def?.modifica_elmetto) return true;
     const su = perUidOgg.get(o.voce.montato_su);
     return !!su && su.attivo && puoMontare(o, su);
@@ -1062,6 +1088,9 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   const perUid = new Map(oggetti.map((o) => [o.uid, o]));
   const operativo = (su) => (su.def?.mirino ? su.attivo && operativo(perUid.get(su.voce.montato_su) ?? {}) && puoMontare(su, perUid.get(su.voce.montato_su)) : !!su.attivo);
   const NON_ATTIVO = { armatura: 'indossata', elmetto: 'indossato', accessorio: 'montato su un’arma impugnata' };
+  for (const x of rinforziDaSoli.filter((r) => r.conArmatura && regoleDaSolo.con_armatura_indossata !== 'vale')) {
+    avvisi.push(`${x.nome} è indossato da solo, ma c’è un’armatura indossata: per contare va montato su di lei («Montata su:»), un solo rinforzo compatibile (§7.11.2).`);
+  }
   for (const x of accessoriMontati) {
     const su = perUid.get(x.voce.montato_su);
     if (!su) avvisi.push(`${x.nome} è montato su un oggetto che non è più nella lista.`);
@@ -1117,12 +1146,14 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   for (const x of oggetti.filter((o) => o.fuoriCatalogo)) avvisi.push(`«${x.voce.rif}» non è più nel catalogo: resta in lista senza effetti.`);
 
   // AR a riposo (docs/ricognizione-ar-pi.md): al tavolo la ricalcola applicaCondizioni (src/condizioni.js)
-  const ar = calcolaAR({ protezioni, effettiOggetti }, dati, { talenti: base.talenti ?? [] });
+  const ar = calcolaAR({ protezioni, effettiOggetti, rinforziDaSoli }, dati, { talenti: base.talenti ?? [] });
 
   return {
     oggetti,
     armi,
     protezioni,
+    // rinforzi indossati senza armatura su cui montarli (regole.json → rinforzi.da_solo)
+    rinforziDaSoli,
     ar,
     // oggetti con Punti Integrità da tracciare (Armamenti §7.2.1)
     integrita: dati.regole?.integrita ? oggettiConPi(oggetti, dati) : [],

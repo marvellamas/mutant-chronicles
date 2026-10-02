@@ -6,7 +6,7 @@
     {
       "id": "rinforzo-leggero",
       "nome": "Rinforzo Leggero",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Commerciale",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [
@@ -29,12 +29,13 @@
         "ar": 1,
         "for": 1
       },
-      "proprieta": []
+      "proprieta": [],
+      "indossabile_da_solo": false
     },
     {
       "id": "rinforzo-pesante",
       "nome": "Rinforzo Pesante",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Commerciale",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [
@@ -57,12 +58,13 @@
         "ar": 2,
         "for": 2
       },
-      "proprieta": []
+      "proprieta": [],
+      "indossabile_da_solo": false
     },
     {
       "id": "soprabito-balistico",
       "nome": "Soprabito balistico",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Commerciale",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -82,12 +84,13 @@
         "ar": 1,
         "for": 1
       },
-      "proprieta": []
+      "proprieta": [],
+      "indossabile_da_solo": true
     },
     {
       "id": "mantello-balistico",
       "nome": "Mantello balistico",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Commerciale",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -107,12 +110,13 @@
         "ar": 1,
         "for": 1
       },
-      "proprieta": []
+      "proprieta": [],
+      "indossabile_da_solo": true
     },
     {
       "id": "kit-di-piastre-supplementari-leggere",
       "nome": "Kit di piastre supplementari leggere",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Commerciale",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -132,12 +136,13 @@
         "ar": 1,
         "for": 1
       },
-      "proprieta": []
+      "proprieta": [],
+      "indossabile_da_solo": false
     },
     {
       "id": "kit-di-piastre-supplementari-pesanti",
       "nome": "Kit di piastre supplementari pesanti",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Commerciale",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -157,12 +162,13 @@
         "ar": 2,
         "for": 2
       },
-      "proprieta": []
+      "proprieta": [],
+      "indossabile_da_solo": false
     },
     {
       "id": "soprabito-blu-di-ordinanza",
       "nome": "Soprabito blu d’ordinanza BLEU",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Bauhaus",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [
@@ -190,12 +196,13 @@
       ],
       "abbinamento_ottimizzato": [
         "armature_corporative:armatura-d-ordinanza-bleu"
-      ]
+      ],
+      "indossabile_da_solo": true
     },
     {
       "id": "soprabito-asa",
       "nome": "Soprabito ASA",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Alleanza",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -223,12 +230,13 @@
       "abbinamento_ottimizzato": [
         "armature_corporative:divisa-d-ordinanza-asa",
         "armature_corporative:divisa-operativa-asa"
-      ]
+      ],
+      "indossabile_da_solo": true
     },
     {
       "id": "soprabito-feldmantel",
       "nome": "Soprabito Feldmantel",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Bauhaus",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -265,12 +273,13 @@
           "fonte": "Armamenti §7.23.7",
           "proprieta": "Ignifuga 2"
         }
-      ]
+      ],
+      "indossabile_da_solo": true
     },
     {
       "id": "piastre-eisenwall",
       "nome": "Piastre Eisenwall",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Bauhaus",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -315,12 +324,13 @@
           "fonte": "Armamenti §7.23.7",
           "proprieta": "Stabile 1"
         }
-      ]
+      ],
+      "indossabile_da_solo": false
     },
     {
       "id": "piastre-breacher",
       "nome": "Piastre Breacher",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Capitol",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -356,12 +366,13 @@
           "fonte": "Armamenti §7.23.7",
           "proprieta": "Antiesplosione 1"
         }
-      ]
+      ],
+      "indossabile_da_solo": false
     },
     {
       "id": "mantello-ranger",
       "nome": "Mantello Ranger",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Capitol",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -397,12 +408,13 @@
           "fonte": "Armamenti §7.23.7",
           "proprieta": "Mimetica ambientale 1"
         }
-      ]
+      ],
+      "indossabile_da_solo": true
     },
     {
       "id": "soprabito-trenchcoat",
       "nome": "Soprabito Trenchcoat",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Imperial",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -439,12 +451,13 @@
           "fonte": "Armamenti §7.23.7",
           "proprieta": "Imbottita 2"
         }
-      ]
+      ],
+      "indossabile_da_solo": true
     },
     {
       "id": "piastre-highland-guard",
       "nome": "Piastre Highland Guard",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Imperial",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -485,12 +498,13 @@
           "fonte": "Armamenti §7.23.7",
           "proprieta": "Stabile 2"
         }
-      ]
+      ],
+      "indossabile_da_solo": false
     },
     {
       "id": "rivestimento-cs-r10",
       "nome": "Rivestimento CS-R10",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Cybertronic",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -527,12 +541,13 @@
           "fonte": "Armamenti §7.23.7",
           "proprieta": "Isolante 2"
         }
-      ]
+      ],
+      "indossabile_da_solo": false
     },
     {
       "id": "piastre-reattive-cs-r20",
       "nome": "Piastre reattive CS-R20",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Cybertronic",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -569,12 +584,13 @@
           "fonte": "Armamenti §7.23.7",
           "proprieta": "SIN 1"
         }
-      ]
+      ],
+      "indossabile_da_solo": false
     },
     {
       "id": "mantello-kasumi",
       "nome": "Mantello Kasumi",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Mishima",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -610,12 +626,13 @@
           "fonte": "Armamenti §7.23.7",
           "proprieta": "Mimetismo 1"
         }
-      ]
+      ],
+      "indossabile_da_solo": true
     },
     {
       "id": "piastre-sode-d-assalto",
       "nome": "Piastre Sode d’assalto",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Mishima",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -647,12 +664,13 @@
             }
           }
         }
-      ]
+      ],
+      "indossabile_da_solo": false
     },
     {
       "id": "tabardo-consacrato",
       "nome": "Tabardo consacrato",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Fratellanza",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -690,12 +708,13 @@
           "fonte": "Armamenti §7.23.7",
           "proprieta": "Protezione occulta 1"
         }
-      ]
+      ],
+      "indossabile_da_solo": false
     },
     {
       "id": "mantello-del-pellegrino",
       "nome": "Mantello del Pellegrino",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Fratellanza",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -746,12 +765,13 @@
           "fonte": "Armamenti §7.23.7",
           "proprieta": "Imbottita 2"
         }
-      ]
+      ],
+      "indossabile_da_solo": true
     },
     {
       "id": "soprabito-asa-riservato",
       "nome": "Soprabito ASA riservato",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Alleanza",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -784,12 +804,13 @@
       "abbinamento_ottimizzato": [
         "armature_corporative:divisa-d-ordinanza-asa",
         "armature_corporative:divisa-operativa-asa"
-      ]
+      ],
+      "indossabile_da_solo": true
     },
     {
       "id": "piastre-missione",
       "nome": "Piastre Missione",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Alleanza",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -840,12 +861,13 @@
           "fonte": "Armamenti §7.23.7",
           "proprieta": "Isolante 2"
         }
-      ]
+      ],
+      "indossabile_da_solo": false
     },
     {
       "id": "piastre-flessibili-etoiles",
       "nome": "Piastre flessibili Étoiles",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Bauhaus",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -871,12 +893,13 @@
       ],
       "abbinamento_ottimizzato": [
         "armature_corporative:tuta-delle-etoiles-mortants"
-      ]
+      ],
+      "indossabile_da_solo": false
     },
     {
       "id": "mantello-da-giungla-kommando",
       "nome": "Mantello da giungla Kommando",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Bauhaus",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -902,12 +925,13 @@
       ],
       "abbinamento_ottimizzato": [
         "armature_corporative:armatura-dei-jungle-kommandos"
-      ]
+      ],
+      "indossabile_da_solo": true
     },
     {
       "id": "piastre-aviotrasportate-airborne",
       "nome": "Piastre aviotrasportate Airborne",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Capitol",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -933,12 +957,13 @@
       ],
       "abbinamento_ottimizzato": [
         "armature_corporative:armatura-airborne-rangers"
-      ]
+      ],
+      "indossabile_da_solo": false
     },
     {
       "id": "mantello-panther",
       "nome": "Mantello Panther",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Capitol",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -964,12 +989,13 @@
       ],
       "abbinamento_ottimizzato": [
         "armature_corporative:panther-sea-lions"
-      ]
+      ],
+      "indossabile_da_solo": true
     },
     {
       "id": "rivestimento-flessibile-ghost",
       "nome": "Rivestimento flessibile Ghost",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Imperial",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -995,12 +1021,13 @@
       ],
       "abbinamento_ottimizzato": [
         "armature_corporative:tenuta-operativa-grey-ghost"
-      ]
+      ],
+      "indossabile_da_solo": false
     },
     {
       "id": "mantello-pathfinder",
       "nome": "Mantello Pathfinder",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Imperial",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -1026,12 +1053,13 @@
       ],
       "abbinamento_ottimizzato": [
         "armature_corporative:tenuta-da-ricognizione-pathfinder"
-      ]
+      ],
+      "indossabile_da_solo": true
     },
     {
       "id": "sottogiacca-protettiva-ies",
       "nome": "Sottogiacca protettiva IES",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Cybertronic",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -1057,12 +1085,13 @@
       ],
       "abbinamento_ottimizzato": [
         "armature_corporative:abito-degli-agenti-ies"
-      ]
+      ],
+      "indossabile_da_solo": false
     },
     {
       "id": "inserti-articolati-delle-ombre",
       "nome": "Inserti articolati delle Ombre",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Mishima",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -1088,12 +1117,13 @@
       ],
       "abbinamento_ottimizzato": [
         "armature_corporative:tuta-delle-ombre"
-      ]
+      ],
+      "indossabile_da_solo": false
     },
     {
       "id": "rinforzo-flessibile-mortificator",
       "nome": "Rinforzo flessibile Mortificator",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Fratellanza",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -1119,12 +1149,13 @@
       ],
       "abbinamento_ottimizzato": [
         "armature_corporative:tuta-del-mortificator"
-      ]
+      ],
+      "indossabile_da_solo": false
     },
     {
       "id": "mantello-venusiano",
       "nome": "Mantello Venusiano",
-      "tipo": "accessorio",
+      "tipo": "rinforzo",
       "catalogo": "Bauhaus",
       "famiglia": "Rinforzi",
       "nomi_alternativi": [],
@@ -1163,7 +1194,8 @@
       ],
       "compatibile_con": [
         "armature_corporative:armatura-dei-ranger-venusiani"
-      ]
+      ],
+      "indossabile_da_solo": true
     }
   ]
 }

@@ -16,6 +16,8 @@ export const GRUPPI_EQUIPAGGIAMENTO = [
   { tipo: 'arma_distanza', titolo: 'Armi a distanza', colore: 'cat-distanza' },
   { tipo: 'scudo', titolo: 'Scudi', colore: 'cat-scudi' },
   { tipo: 'armatura', titolo: 'Armature', colore: 'cat-armature' },
+  // sottocategoria delle armature (richiesta di Davide del 02/10): stesso colore della famiglia
+  { tipo: 'rinforzo', titolo: 'Rinforzi', colore: 'cat-armature', sottocategoriaDi: 'armatura' },
   { tipo: 'elmetto', titolo: 'Elmetti', colore: 'cat-elmetti' },
   { tipo: 'accessorio', titolo: 'Accessori', colore: 'cat-accessori' },
   { tipo: 'munizioni', titolo: 'Munizioni', colore: 'cat-munizioni' },
@@ -33,8 +35,10 @@ export const GRUPPI_EQUIPAGGIAMENTO = [
  */
 export const SEZIONI_INVENTARIO = [
   { id: 'armi', titolo: 'Armi', colore: 'cat-ravvicinate', tipi: ['arma_ravvicinata', 'arma_distanza'] },
-  { id: 'accessori', titolo: 'Accessori (armi, armature, elmetti)', colore: 'cat-accessori', tipi: ['accessorio'] },
+  { id: 'accessori', titolo: 'Accessori (armi ed elmetti)', colore: 'cat-accessori', tipi: ['accessorio'] },
   { id: 'protezioni', titolo: 'Armature, scudi ed elmetti', colore: 'cat-armature', tipi: ['armatura', 'scudo', 'elmetto'] },
+  // sottocategoria delle armature (richiesta di Davide del 02/10): soprabiti, mantelli, piastre (§7.23)
+  { id: 'rinforzi', titolo: 'Rinforzi', colore: 'cat-armature', tipi: ['rinforzo'], sottosezioneDi: 'protezioni' },
   { id: 'munizioni', titolo: 'Munizioni e caricatori', colore: 'cat-munizioni', tipi: ['munizioni'] },
   // Equipaggiamento 0.5, §5.4: energia tecnologica in Lx, distinta dalle riserve mistiche in PM (§5.4.10)
   { id: 'nec', titolo: 'NEC e stazioni di ricarica', colore: 'cat-munizioni', tipi: ['altro'], cataloghi: ['nec'] },

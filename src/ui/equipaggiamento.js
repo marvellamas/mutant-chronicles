@@ -8,7 +8,7 @@
 import { h } from './dom.js';
 import { info } from './tooltip.js';
 import {
-  TIPI, NOMI_TIPI, STATI, NOMI_STATI, catalogo, risolvi, opzioniCascata, cercaNelCatalogo, statoIniziale, puoMontare, infoArtefattoVoce,
+  TIPI, NOMI_TIPI, STATI, NOMI_STATI, catalogo, risolvi, opzioniCascata, cercaNelCatalogo, statoIniziale, puoMontare, rinforzoCompatibile, infoArtefattoVoce,
   regoleSintonizzazione, coloriChroma, testoEffettoOggetto, AMBITI_EFFETTO, NOMI_AMBITI, statiInventario, testoCura,
 } from '../equipaggiamento.js';
 import { pesoVoce } from '../carico.js';
@@ -68,6 +68,44 @@ function elencoVoci(ctx) {
   }));
 }
 
+/**
+ * «Montata su:» di un rinforzo (richiesta di Davide del 02/10; Armamenti §7.11.2, §7.23.9): le sole
+ * armature indossate e compatibili, «Indossato da solo» per soprabiti e mantelli (indossabile_da_solo,
+ * regole.json → rinforzi), nello zaino e, nell'Inventario, il deposito comune. Se l'armatura su cui è
+ * montato non è più indossata il rinforzo resta montato su di lei (rinforzi.armatura_tolta) e qui si dice.
+ */
+function montataSu(ctx, r, risolte, cambia) {
+  const v = r.voce;
+  const armature = risolte.filter((t) => t.tipo === 'armatura' && t.uid !== r.uid);
+  const compatibili = armature.filter((t) => t.attivo && rinforzoCompatibile(r, t));
+  const su = v.stato === 'in_uso' && v.montato_su ? armature.find((t) => t.uid === v.montato_su) ?? null : null;
+  const valore = su ? `arm:${su.uid}` : v.stato === 'indossata' ? 'da-solo' : v.stato === 'deposito' ? 'deposito' : 'zaino';
+  const scelte = [...compatibili, ...(su && !compatibili.includes(su) ? [su] : [])];
+  const scegli = (x) => {
+    if (x.startsWith('arm:')) cambia(v.uid, { stato: 'in_uso', montato_su: x.slice(4) });
+    else cambia(v.uid, { stato: x === 'da-solo' ? 'indossata' : x, montato_su: undefined });
+  };
+  const nota = su && !su.attivo ? `Resta montato su ${su.nome}, che non è indossata: nessun effetto finché non la indossi (regole.json → rinforzi).`
+    : su && !rinforzoCompatibile(r, su) ? `${su.nome} non ammette questo rinforzo: nessun effetto (§7.11.2).`
+      : v.stato === 'in_uso' && !su ? 'Scegli l’armatura su cui è montato.'
+        : !compatibili.length && !r.def?.indossabile_da_solo ? 'Nessuna armatura indossata lo ammette: indossane una compatibile per montarlo.' : null;
+  return h('div', { class: 'montata-su' },
+    h('label', { class: 'campo-inline' }, 'Montata su: ',
+      h('select', { onchange: (e) => scegli(e.target.value), 'aria-label': `${r.nome}: montata su` },
+        scelte.map((a) => h('option', { value: `arm:${a.uid}`, selected: valore === `arm:${a.uid}` }, `${a.nome}${a.attivo ? '' : ' (non indossata)'}`)),
+        r.def?.indossabile_da_solo ? h('option', { value: 'da-solo', selected: valore === 'da-solo' }, 'Indossato da solo') : null,
+        h('option', { value: 'zaino', selected: valore === 'zaino' }, NOMI_STATI.zaino),
+        ctx.inventario ? h('option', { value: 'deposito', selected: valore === 'deposito' }, NOMI_STATI.deposito) : null)),
+    valore === 'da-solo' ? h('small', { class: 'nota' }, ` ${testoDaSolo(ctx.dati)}`) : null,
+    nota ? h('p', { class: 'nota motivo' }, nota) : null);
+}
+
+/** Che cosa dà un rinforzo indossato da solo, dalla regola nei dati (regole.json → rinforzi.da_solo). */
+function testoDaSolo(dati) {
+  const d = dati.regole?.rinforzi?.da_solo ?? {};
+  return d.ar === 'propria' ? 'Da solo: AR del rinforzo, senza armatura.' : 'Da solo: nessuna AR (§7.23.4: non è un profilo autonomo di armatura), in attesa di Davide (A.79).';
+}
+
 /** Una voce dell'elenco, completa di stato, quantità, peso e note. */
 function voceEquip(ctx, r, risolte, cambia) {
   const { dati, voci } = ctx;
@@ -95,7 +133,8 @@ function voceEquip(ctx, r, risolte, cambia) {
         type: 'button', class: 'btn pericolo piccolo-btn', 'aria-label': `Togli ${r.nome}`,
         onclick: () => { if (confirm(`Togliere «${r.nome}» dall’equipaggiamento?`)) ctx.aggiorna(voci.filter((x) => x.uid !== v.uid)); },
       }, 'Togli')),
-    stati.length && (!r.fuoriCatalogo || ctx.inventario) ? h('div', { class: 'stati-equip', role: 'radiogroup', 'aria-label': `Stato di ${r.nome}` },
+    r.tipo === 'rinforzo' && !r.fuoriCatalogo ? montataSu(ctx, r, risolte, cambia) : null,
+    r.tipo !== 'rinforzo' && stati.length && (!r.fuoriCatalogo || ctx.inventario) ? h('div', { class: 'stati-equip', role: 'radiogroup', 'aria-label': `Stato di ${r.nome}` },
       stati.map((st) => h('button', {
         type: 'button', role: 'radio', 'aria-checked': String(v.stato === st),
         class: `stato-equip${v.stato === st ? ' attivo' : ''}${st === 'deposito' ? ' stato-deposito' : ''}`, onclick: () => cambia(v.uid, { stato: st }),

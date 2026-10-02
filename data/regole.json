@@ -1626,6 +1626,21 @@
     "_nota_pesi": "E&L del 29/09, risposte 4–5 (A.30, A.31): si conta tutto ciò che si trasporta, senza contare due volte gli stessi oggetti; un peso mancante è «da definire», non 0 kg: il totale noto è parziale e non attesta l’assenza di penalità. Forza da Lavoro porta il massimo a FOR × 40 kg e il trascinamento a FOR × 80 kg prima del confronto.",
     "_nota": "Soglie = valore di FOR (non il modificatore) × kg per punto, moltiplicate dai Talenti di «moltiplicatori». Le Prove fisiche sono quelle di regole.json → categorie_prove.fisiche (domande aperte A.16, A.51). Il peso trasportato è la somma dei pesi dell’equipaggiamento (campo «peso» del catalogo, in kg per unità, o dell’oggetto personalizzato) più il peso aggiuntivo della sessione. Mulo da Soma ed Evacuazione Medica non cambiano le soglie: restano nel testo dei Talenti. «Oltre il massimo» con le penalità del Sovraccarico è una scelta dell’app: il manuale dice solo che il carico non si trasporta."
   },
+  "rinforzi": {
+    "paragrafo": "Armamenti §7.11.2, §7.23.4, §7.23.9",
+    "frasi": [
+      "I valori aggiuntivi descrivono l’impiego insieme a un’armatura compatibile; non costituiscono un profilo autonomo di armatura."
+    ],
+    "da_solo": {
+      "ar": "nessuna",
+      "proprieta": false,
+      "con_armatura_indossata": "nessun_effetto",
+      "_nota": "Rinforzo con «indossabile_da_solo» (rinforzi.json: soprabiti e mantelli, richiesta di Davide del 02/10) portato senza montarlo su un’armatura. «ar»: «nessuna» (§7.23.4: nessun profilo autonomo di armatura) oppure «propria» (il +AR del kit come AR ordinaria). «proprieta»: se valgono le proprietà ed effetti del rinforzo (Contromisure, Mimetismo, Protezione occulta…). «con_armatura_indossata»: indossato da solo mentre si porta un’armatura non conta (va montato, §7.11.2: un solo rinforzo compatibile)."
+    },
+    "armatura_tolta": "resta_montato",
+    "_nota_armatura_tolta": "Se l’armatura su cui è montato non è più indossata, il rinforzo resta montato su di lei e non dà nulla; l’Inventario lo dice. Il manuale non ne parla.",
+    "TODO(Davide)": "per-davide A.79: il manuale (§7.23.4) dice che i rinforzi non hanno un profilo autonomo; soprabiti e mantelli indossati da soli danno AR, le loro proprietà valgono, e quali altri rinforzi si possono indossare da soli? Che cosa succede al rinforzo quando si toglie l’armatura su cui è montato?"
+  },
   "integrita": {
     "versione_manuale": "Equipaggiamento 0.1",
     "fonte": "Equipaggiamento 0.1 §1.7 «Integrità e manutenzione», che rimanda ad Armamenti §7.2.1: stessa tabella.",
@@ -1644,7 +1659,7 @@
       "A 0 PI l’oggetto è Rotto e non può essere utilizzato finché non viene riparato.",
       "Una perdita di PI non assegna automaticamente la condizione Danneggiata e la relativa penalità di −2 VA."
     ],
-    "tipi_tracciati": ["arma_ravvicinata", "arma_distanza", "scudo", "armatura", "elmetto", "accessorio", "artefatto", "sanitario", "impianto", "altro"],
+    "tipi_tracciati": ["arma_ravvicinata", "arma_distanza", "scudo", "armatura", "rinforzo", "elmetto", "accessorio", "artefatto", "sanitario", "impianto", "altro"],
     "_nota_tipi_tracciati": "Risposta A.47 (Armamenti §7.2.1 del 28/09): si tracciano gli oggetti con «pi» nella scheda, sanitari compresi (kit Standard 4, Professionale 6, iniettore 2); le munizioni e i consumabili contano quantità, dosi o applicazioni. Ogni esemplare ha i propri PI: esemplari identici restano raggruppati finché integri e si separano appena uno viene danneggiato («Danneggia uno»). Senza «pi» a catalogo nessun valore, nemmeno 0: il Direttore può fissarlo in modalità tavolo («pi_direttore» della voce).",
     "riparazione": {
       "ore": 1,
@@ -1657,7 +1672,7 @@
       ],
       "strumenti_improvvisati_va": -2,
       "materiali_percentuale": 5,
-      "tipi": ["arma_ravvicinata", "arma_distanza", "armatura", "scudo", "elmetto", "accessorio"],
+      "tipi": ["arma_ravvicinata", "arma_distanza", "armatura", "rinforzo", "scudo", "elmetto", "accessorio"],
       "esclusi": ["distrutta"],
       "fonte": "Armamenti §7.2.1 (28/09), «Riparazione strutturale degli oggetti personali»; risposta di Davide A.46",
       "_nota": "Un intervento: un oggetto, 1 ora, Prova di Tecnologia. Successo +1 PI, Magistrale +2, Fallimento nessun PI e tempo consumato, Maldestro −1 PI fino a 0 senza PS Integrità; mai oltre il massimo. Strumenti improvvisati −2 VA. Materiali: 5% del prezzo di catalogo per ogni PI effettivamente recuperato (un’armatura da 2.000 crediti: 100 per PI); la manodopera di un riparatore esterno si paga a parte. Un oggetto Rotto a 0 PI torna utilizzabile con almeno 1 PI. «accessorio»: i rinforzi. Distrutti e componenti mistiche da ricostruire: procedure specifiche. Nessun dado nell’app: l’esito si sceglie dopo il tiro al tavolo (src/riparazione.js)."
