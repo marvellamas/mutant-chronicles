@@ -7,6 +7,9 @@ import { riempimento } from '../interfaccia.js';
 import { validaNemico, formattaErrore } from '../validate.js';
 import { nemicoVuoto, voceVuota, pulisciNemico, idDaNome } from '../nemici.js';
 import { variaPvNemico, cambiaStatoNemico } from '../scontro.js';
+import { nemicoDaPg } from '../nemico-da-pg.js';
+import { elencoCartella, leggiCartella } from './cartella.js';
+import { ultimiPerPersonaggio } from '../cartella.js';
 
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
 
@@ -62,7 +65,9 @@ export function pannelloBestiario(ctx, voci, { aperto, onToggle, salvato }) {
   return h('details', { class: 'riquadro bestiario', open: aperto, ontoggle: (e) => onToggle(e.target.open) },
     h('summary', {}, h('strong', {}, 'Bestiario'), ` (${validi.length} tip${validi.length === 1 ? 'o' : 'i'}${rotti.length ? `, ${rotti.length} file non valid${rotti.length === 1 ? 'o' : 'i'}` : ''})`),
     h('p', { class: 'nota' }, 'Tipi di nemico della campagna, in nemici/ sul server: numeri già fatti, come li scrive il master. Il formato dei campi è una proposta in attesa di Davide (per-davide A.73).'),
-    h('div', { class: 'riga-azioni' }, h('button', { type: 'button', class: 'btn', onclick: () => apriEditorNemico(ctx, null, voci, salvato) }, 'Nuovo tipo')),
+    h('div', { class: 'riga-azioni' },
+      h('button', { type: 'button', class: 'btn', onclick: () => apriEditorNemico(ctx, null, voci, salvato) }, 'Nuovo tipo'),
+      h('button', { type: 'button', class: 'btn', title: 'Un tipo di nemico con i numeri di un personaggio (da personaggi/ o dal computer): il personaggio non cambia', onclick: () => apriDaPg(ctx, voci, salvato) }, 'Crea da un PG')),
     validi.length ? h('ul', { class: 'bestiario-elenco' }, validi.map((v) => h('li', {},
       h('strong', {}, v.nemico.nome), h('small', { class: 'nota' }, ` ${v.file}`), ' · ',
       `PV ${v.nemico.pv} · AR ${v.nemico.ar.totale} · Difese ${v.nemico.difese} · Iniziativa ${numero(v.nemico.iniziativa)} · ${v.nemico.attacchi.length} attacc${v.nemico.attacchi.length === 1 ? 'o' : 'hi'} `,
@@ -77,12 +82,13 @@ export function pannelloBestiario(ctx, voci, { aperto, onToggle, salvato }) {
  * Editor di un tipo di nemico in una finestra modale (fuori dalla plancia, che si ridisegna ogni pochi
  * secondi): un modulo generato dal formato, la validazione e il salvataggio in nemici/.
  */
-export function apriEditorNemico(ctx, nemico, voci, salvato) {
+export function apriEditorNemico(ctx, nemico, voci, salvato, { modello = null, origine = null, avvisi = [] } = {}) {
   const dati = ctx.dati;
   const formato = dati.formato_nemici;
   const nomi = nomiValori(dati);
   const nuovo = !nemico;
-  const bozza = nemico ? structuredClone(nemico) : nemicoVuoto(dati);
+  // «Crea da un PG»: un tipo nuovo già compilato dal convertitore (src/nemico-da-pg.js), da rinominare
+  const bozza = nemico ? structuredClone(nemico) : modello ? structuredClone(modello) : nemicoVuoto(dati);
   let errori = [];
   let idToccato = !nuovo;
   const finestra = h('dialog', { class: 'pannello-scheda editor-nemico', 'aria-labelledby': 'editor-nemico-titolo' });
@@ -170,9 +176,11 @@ export function apriEditorNemico(ctx, nemico, voci, salvato) {
   const disegna = () => {
     finestra.replaceChildren(h('form', { class: 'pannello-contenuto', method: 'dialog', onsubmit: (e) => e.preventDefault() },
       h('header', { class: 'pannello-testa' },
-        h('h2', { id: 'editor-nemico-titolo' }, nuovo ? 'Nuovo tipo di nemico' : `Modifica: ${nemico.nome}`),
+        h('h2', { id: 'editor-nemico-titolo' }, nuovo ? (origine ? `Nuovo tipo di nemico da ${origine}` : 'Nuovo tipo di nemico') : `Modifica: ${nemico.nome}`),
         h('button', { type: 'button', class: 'btn tondo chiudi', 'aria-label': 'Chiudi', onclick: () => finestra.close() }, '×')),
       h('p', { class: 'nota' }, 'Campi di data/formato_nemici.json (* obbligatori): numeri già fatti, nessun calcolo. Il formato è una proposta in attesa di Davide (per-davide A.73); tieni il puntatore su un campo per la sua descrizione.'),
+      origine ? h('p', { class: 'riquadro ok' }, `Numeri calcolati dalla scheda di ${origine} con le regole attuali (PV pieni, nessuno Stato). Dai un nome al tipo e salvalo: il personaggio non cambia.`) : null,
+      avvisi.length ? h('div', { class: 'riquadro attenzione' }, h('p', {}, h('strong', {}, 'Da controllare:')), h('ul', {}, avvisi.map((x) => h('li', {}, x)))) : null,
       errori.length ? h('div', { class: 'riquadro attenzione', role: 'alert' }, h('p', {}, h('strong', {}, `Da correggere (${errori.length}):`)),
         h('ul', {}, errori.map((e) => h('li', {}, formattaErrore({ ...e, file: '' }).replace(/^ › /, ''))))) : null,
       campiOggetto({ campi: formato.campi }, bozza, '', disegna),
@@ -254,4 +262,50 @@ export function cartaNemico(ctx, p, { modifica, diTurnoOra = false, onColpito = 
     n.attacchi.length ? h('ul', { class: 'plancia-armi' }, n.attacchi.map(attacco)) : h('p', { class: 'nota' }, 'Nessun attacco.'),
     n.incantesimi?.length ? h('p', { class: 'nota' }, 'Incantesimi: ', n.incantesimi.map((i) => [i.nome, i.va !== undefined ? ` VA ${i.va}` : '', i.costo_pm !== undefined ? ` (${i.costo_pm} PM)` : ''].join('')).join(', ')) : null,
     n.note ? h('p', { class: 'nota' }, n.note) : null);
+}
+
+/**
+ * «Crea da un PG»: sceglie un personaggio (l'ultimo file di ognuno in personaggi/, o un file dal computer), lo
+ * converte con src/nemico-da-pg.js e apre l'editor del nemico già compilato. Il file del PG si legge soltanto.
+ */
+export async function apriDaPg(ctx, voci, salvato) {
+  const finestra = h('dialog', { class: 'pannello-scheda scelta-pg-nemico', 'aria-labelledby': 'scelta-pg-titolo' });
+  finestra.addEventListener('close', () => finestra.remove());
+  let errore = null;
+  let lista = null;
+  const converti = (testo, origine) => {
+    const r = nemicoDaPg(testo, ctx.dati);
+    if (r.errore) { errore = `${origine}: ${r.errore}`; disegna(); return; }
+    finestra.close();
+    apriEditorNemico(ctx, null, voci, salvato, { modello: r.nemico, origine: r.nemico.nome, avvisi: r.avvisi });
+  };
+  const daCartella = async (f) => {
+    try { converti(await leggiCartella(f.file), f.file); } catch (e) { errore = `${f.file}: ${e.message}`; disegna(); }
+  };
+  const scelta = h('input', { type: 'file', accept: '.json,application/json', hidden: true, onchange: async (e) => {
+    const f = e.target.files[0];
+    if (f) converti(await f.text(), f.name);
+  } });
+  const disegna = () => {
+    finestra.replaceChildren(h('div', { class: 'pannello-contenuto' },
+      h('header', { class: 'pannello-testa' },
+        h('h2', { id: 'scelta-pg-titolo' }, 'Crea un nemico da un PG'),
+        h('button', { type: 'button', class: 'btn tondo chiudi', 'aria-label': 'Chiudi', onclick: () => finestra.close() }, '×')),
+      h('p', { class: 'nota' }, 'PV, AR, Difese, Iniziativa, Movimento, Salvezze e attacchi vengono dalla scheda del personaggio, come li calcola l’app. Poi si apre l’editor: dai un nome al tipo e salvalo in nemici/.'),
+      errore ? h('p', { class: 'riquadro attenzione', role: 'alert' }, errore) : null,
+      lista === null ? h('p', { class: 'nota' }, 'Lettura di personaggi/…')
+        : lista.length ? h('ul', { class: 'bestiario-elenco' }, lista.map((f) => h('li', {},
+          h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => daCartella(f) }, f.nome.replace(/-/g, ' ')), h('small', { class: 'nota' }, ` ${f.file}`))))
+          : h('p', { class: 'vuoto' }, 'Nessun personaggio in personaggi/.'),
+      h('div', { class: 'riga-azioni' },
+        h('button', { type: 'button', class: 'btn', onclick: () => scelta.click() }, 'Dal computer…'), scelta,
+        h('button', { type: 'button', class: 'btn', onclick: () => finestra.close() }, 'Annulla'))));
+  };
+  disegna();
+  document.body.append(finestra);
+  finestra.showModal();
+  const elenco = await elencoCartella();
+  lista = [...ultimiPerPersonaggio(elenco ?? []).values()].sort((a, b) => a.file.localeCompare(b.file, 'it'));
+  if (!elenco) errore = 'personaggi/ non leggibile: scegli un file dal computer.';
+  if (finestra.isConnected) disegna();
 }

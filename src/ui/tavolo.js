@@ -139,7 +139,9 @@ export function renderTavolo(radice, ctx) {
       const r = await fetch('api/esempi', { method: 'POST' });
       if (!r.ok) throw new Error(`errore ${r.status}`);
       const { copiati, saltati } = await r.json();
-      stato.esitoEsempi = `Esempi: ${copiati.length ? `copiati ${copiati.join(', ')}` : 'nessun file nuovo'}${saltati.length ? `; saltati perché già presenti (non sovrascritti): ${saltati.join(', ')}` : ''}. I personaggi si mettono al tavolo con «Chi è al tavolo».`;
+      // con il bestiario umano i file sono decine: oltre otto si dice quanti
+      const elenco = (xs) => (xs.length > 8 ? `${xs.length} file` : xs.join(', '));
+      stato.esitoEsempi = `Esempi: ${copiati.length ? `copiati ${elenco(copiati)}` : 'nessun file nuovo'}${saltati.length ? `; saltati perché già presenti (non sovrascritti): ${elenco(saltati)}` : ''}. I personaggi si mettono al tavolo con «Chi è al tavolo»; i nemici sono nel Bestiario.`;
     } catch (e) {
       stato.esitoEsempi = `Esempi non caricati: ${e.message}`;
     }
