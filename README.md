@@ -22,6 +22,11 @@ clic, senza terminale, Git o Node già installati:
 Il file 1 scarica senza autenticazione, quindi funziona solo se il repository GitHub è
 pubblico.
 
+### Per Davide: avvia.bat e avvia-server.bat
+
+- **`avvia.bat`**: l'app come prima, i personaggi salvati nel browser.
+- **`avvia-server.bat`**: l'app con il Tavolo del Master (plancia, scontri, nemici): i personaggi stanno nella cartella `personaggi/` del PC che fa da server.
+
 ### Avvio diretto dal repo: avvia.bat
 
 Chi lavora sul repo può fare doppio clic su **`avvia.bat`**, nella cartella principale:

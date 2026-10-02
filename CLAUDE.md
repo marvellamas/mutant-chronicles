@@ -40,6 +40,8 @@ Drive si usa **in sola lettura**: mai scrivere nei Doc di Davide, nemmeno commen
 
 - Web app statica, **senza build step**: `index.html` + `src/*.js` (ES modules) + `css/`. Vanilla JS. Nessun framework, nessun bundler, nessuna dipendenza npm a runtime.
 - Deve funzionare da browser desktop e telefono. Si serve con un qualunque server statico (`python -m http.server` in locale; GitHub Pages o simile per il gruppo).
+- Avvio con e senza server: `avvia.bat` (e `npm start`, `npx serve`, GitHub Pages) è l'app di sempre, con i personaggi nel browser; `avvia-server.bat` (`node server.mjs`, porta 3000, `--rete` per la rete di casa) aggiunge il Tavolo del Master e la cartella dei personaggi. L'app riconosce il server dall'intestazione `X-Mutant-Server` su `versione.json` (`src/ui/cartella.js`): senza server nessuna richiesta a `/api`. Piano ed esito in `docs/tavolo-direttore.md`; resta il pezzo 7 (sessione di prova vera).
+- Cartelle del server, fuori da git salvo il `LEGGIMI.txt`: `personaggi/` (file dei PG), `tavolo/` (chi è al tavolo), `scontri/` (scontri e archivio), `nemici/` (bestiario della campagna). `esempi/` (tracciata): PG d'esempio, `esempi/nemici/` e il bestiario umano `esempi/nemici/umani/`, copiati da «Carica esempi» della plancia senza sovrascrivere.
 - Test: Node (`node --test`, cioè `npm test`) sulle funzioni pure del motore. I test non richiedono browser.
 - File del personaggio esportato: formato 8 (`VERSIONE_FORMATO` in `src/character.js`): `{ formato, versione, versioni_dati, scelte, livelli, sessione, calendario? }`, con i PI attuali degli oggetti in `sessione.integrita` e l'Umanità in `scelte.umanita` (scritta solo se non vuota). I formati precedenti si importano e si migrano (senza `calendario`: non attivo; senza `integrita`: oggetti ai PI massimi; senza `umanita`: si registrano gli impianti già installati).
 - File del solo calendario: `calendario_<nome>_<data>.json`, `{ tipo: "calendario", versione: 1, app: "mutant", esportato, da, calendario }` con il blocco com'è nel salvataggio (`src/calendario.js` → `fileCalendario`, `leggiFileCalendario`); l'import sostituisce l'intero blocco dopo una conferma. L'export del personaggio non cambia.
@@ -81,8 +83,10 @@ src/
   stampa.js     dati dei fogli di stampa e delle tab
   ui/           wizard a passi (fasi 0–9 del §2.0), scheda a tab, Sali di livello, stampa, import/export
 data/           JSON delle regole (fonte di verità): 12 file in data/ (formato_nemici.json: formato dei nemici del Tavolo del Master, per-davide A.73, validaNemico in validate.js), catalogo in data/equipaggiamento/ (index.json + 21 file)
+server.mjs      server di Mutant per il Tavolo del Master (avvia-server.bat): file statici, /api per personaggi, tavolo, scontri, nemici, esempi
+personaggi/ tavolo/ scontri/ nemici/  dati del server, fuori da git (si traccia il LEGGIMI)
 tests/          node --test; tests/collaudo/ tre personaggi di riferimento con PDF
-esempi/         PG d'esempio (Aiko Tenzan, Lottatrice Mishima con le Tecniche Interiori), scritto da tools/genera_esempio_tecniche.mjs
+esempi/         PG d'esempio (tools/genera_esempi.mjs; Aiko Tenzan da tools/genera_esempio_tecniche.mjs), nemici/ e nemici/umani/ (tools/genera_nemici_umani.mjs)
 tools/          estrazione dai manuali, generatori dei lotti (tools/lotti/), collaudo_pdf.mjs, genera_immagini.py, versione.mjs, installa-hook.mjs e hooks/pre-commit
 img/            stemmi e icone generati (img/immagini.json li elenca); originali in img/originali/, non tracciati
 docs/           studio di fattibilità, lotti, domande e risposte del master, roadmap
@@ -137,7 +141,9 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 
 - Manuali del 02/10 (`docs/diff-manuali-2026-10-02-sera.md`), lotti 1–3: capacità di sintonizzazione 8–13 (Architetto 10–15, `artefatti.json` → `sintonizzazione`); A.78, attacchi e Difese si tirano anche con VA ≥ 20 (`regole.json` → `prova.tiro_sempre`, `magistrale_migliorato`; `src/prova.js`); riserve Batteria/Cariche e proprietà Esclusive/Universali con una sola fonte esterna per pagamento (`regole.json` → `chroma.riserve`, `src/fonti.js`; le armi del §7.5.1 restano a Cariche). Lotti 4–7: catalogo del cap. 10 (`tools/lotti/lotto_artefatti_cap10.mjs`: Batterie Mistiche e Matrice, Schegge instabili, Pietra della Vigilanza, Guanti da Combattimento Mistico; `regole.json` → `chroma.matrice`, `cristalli_matrice`, `schegge`; «Ricarica dalla Matrice» nella tab Artefatti), risposte dell'equipaggiamento A.62–A.68 e A.71 (`tools/lotti/lotto_risposte_equip_0210.mjs`, voci uscite in `index.json` → `rif_sostituiti`), Rituali A.74 (`ripartizioneMagistrale`), Capolavoro del Corazzaio A.61 (`effettoCapolavoro`, scelta sulla voce dell'armatura).
 
-Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, veicoli.
+- Tavolo del Master (su main dal 02/10; solo con `avvia-server.bat`, `docs/tavolo-direttore.md`): plancia con i PG al tavolo in sola lettura, scontro con Iniziativa e parità, Round e durate degli Stati, nemici dal bestiario (`data/formato_nemici.json`, A.73) con Ferite, Menomazioni, PM e «Lancia!», danno applicato («Colpito»), «Attacca» dei nemici con il pannello dei PG, giocatori collegati con revisione; convertitore «PG → nemico» (`src/nemico-da-pg.js`). Bestiario proposto in `docs/bestiario/` (`bestiario.md`, `bestiario.html` per Google Doc, `tools/taratura_bestiario.mjs`).
+
+Fuori perimetro per ora: tiri automatici fuori dalla plancia, veicoli.
 
 ## Riferimenti
 

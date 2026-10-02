@@ -83,14 +83,20 @@ Fonte: risposta di Davide A.21 (28/09/2026; `regole.json` → `corruzione.chroma
 - Fatto sul branch `layout-sd` (pezzo 3): i gradi della Corruzione Oscura del §5.20 (Umano … Oscuro) nella sessione, con la penalità nei valori effettivi. Restano esposizione e Umanità.
 - ✔ **Umanità** (1° ottobre 2026, lotto 3, backlog 22): valore del personaggio dalle perdite registrate all'installazione degli impianti, fasce del §5.21 nei PM Massimi, nella PS di Magia contro la Corruzione e nella capacità di sintonizzazione, tab Cibernetica e foglio della SS (`docs/ricognizione-cibernetica.md`). Resta il tracker dell'esposizione.
 
-## 14. Tavolo del Direttore — STRUTTURALE, su branch `tavolo-direttore`
+## 14. Tavolo del Master — su `main` dal 2 ottobre 2026 (pezzi 1–6 e lotto 8); resta il pezzo 7
 
-Richiesta del 29/09/2026. Nessuna implementazione ancora: si parte da un **branch dedicato** (`tavolo-direttore`) e si porta su `main` solo quando è provato al tavolo.
+Richiesta del 29/09/2026. Sviluppato sul branch `tavolo-direttore` (piano ed esito in `docs/tavolo-direttore.md`) e unito in `main` il 2 ottobre 2026, per decisione di Marcello, prima della sessione di prova. Si attiva solo con `avvia-server.bat` (`node server.mjs`); con `avvia.bat` e senza server l'app è quella di prima.
+
+**Resta da fare:**
+- **pezzo 7: sessione di prova vera**, con i giocatori collegati in rete (`--rete`) e su carta: tempi dei controlli, avvisi, registro con più persone; R2 (codice di sessione su reti non di casa) e R3 (date dei file fra PC diversi) del piano;
+- **poi il generatore di nemici dal Bestiario** nella plancia, dalle tabelle del cap. 6 di `docs/bestiario/bestiario.md` (formato regolare, colonna «id»).
+
+La richiesta di partenza era questa:
 
 - **Server Node nostro** al posto di `serve`: oltre a servire i file statici accetta due richieste, «salva personaggio» (il JSON del personaggio, formato di `src/character.js`) e «elenca personaggi»; tiene i JSON in `personaggi/` sul PC che fa da server (un file per personaggio, nome dall'id).
 - **Invio dai browser dei giocatori**: in modalità tavolo ogni modifica della scheda si manda anche al server. Se il server non risponde, l'app resta locale come oggi (`localStorage`), senza errori bloccanti: al massimo un indicatore «non collegato».
 - **Pagina «Tavolo del Direttore»**: tutti i personaggi in griglia, una carta ciascuno con nome, PV e PM attuali/massimi, AR, Stati attivi, Ferite, Affaticamento e arma impugnata; aggiornata ogni pochi secondi. Solo lettura nella prima versione.
-- **Avvio**: `distribuzione/3_avvia.bat` avvia il nostro server invece di `serve`.
+- **Avvio**: `avvia-server.bat` avvia il nostro server (`node server.mjs`); `avvia.bat` resta l'avvio senza server.
 - **Vincolo**: l'app statica deve continuare a funzionare senza server (GitHub Pages, `python -m http.server`, apertura in locale); il server è un'aggiunta, mai un requisito.
 
 ## 15. ✔ Ristrutturazione della scheda digitale — fatta il 30 settembre 2026, su branch `layout-sd`

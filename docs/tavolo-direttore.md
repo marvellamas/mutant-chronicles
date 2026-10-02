@@ -1,6 +1,6 @@
 # Tavolo del Master: piano di fattibilità
 
-Branch `tavolo-direttore`, 1° ottobre 2026. Piano di fattibilità; sono fatti il pezzo 1 (plancia dei PG in sola lettura), il pezzo 2 (scontro e Iniziativa), il pezzo 3 (nemici), il pezzo 4 (danno applicato), il pezzo 5 (attacchi dei nemici) e il pezzo 6 (giocatori collegati), più gli esempi del 2 ottobre e i nemici secondo le risposte di Davide ad A.73 (lotto 8). Resta il pezzo 7.
+Branch `tavolo-direttore`, 1° ottobre 2026; **unito in `main` il 2 ottobre 2026** (decisione di Marcello, prima della sessione di prova: il pezzo 7 si fa su `main`). Piano di fattibilità; sono fatti il pezzo 1 (plancia dei PG in sola lettura), il pezzo 2 (scontro e Iniziativa), il pezzo 3 (nemici), il pezzo 4 (danno applicato), il pezzo 5 (attacchi dei nemici) e il pezzo 6 (giocatori collegati), più gli esempi del 2 ottobre e i nemici secondo le risposte di Davide ad A.73 (lotto 8). Resta il pezzo 7.
 
 La visione di partenza è in `docs/backlog.md`, voce 14, su `main`. Al tavolo molti giocatori usano la scheda di carta. Il master tiene lo stato della scena su una plancia con PG e nemici:
 
