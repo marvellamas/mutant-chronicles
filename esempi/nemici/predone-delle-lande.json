@@ -1,0 +1,19 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "predone-delle-lande",
+  "nome": "Predone delle Lande",
+  "fonte": "esempio del Tavolo del Master (nemico debole, da gruppo)",
+  "caratteristiche": { "FOR": 5, "COS": 5, "DES": 6, "INT": 4 },
+  "pv": 12,
+  "ar": { "totale": 1, "magica": 0 },
+  "difese": 7,
+  "iniziativa": 1,
+  "movimento": { "passo": 6 },
+  "salvezze": { "tempra": 9, "riflessi": 10, "volonta": 8, "magia": 8 },
+  "attacchi": [
+    { "nome": "Machete", "tipo": "ravvicinato", "va": 8, "danno": "1d6+1", "natura": "Naturale", "portata_q": 1 },
+    { "nome": "Fucile a canne mozze", "tipo": "distanza", "va": 7, "danno": "2d4", "natura": "Naturale", "gittata_q": 15, "modalita": ["S"], "ac": 1 }
+  ],
+  "note": "Si muovono in bande da quattro a otto. Fuggono quando metà della banda è a terra."
+}

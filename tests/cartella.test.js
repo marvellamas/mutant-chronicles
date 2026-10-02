@@ -40,8 +40,8 @@ test('server: ping, file dell’app con gli header di serve.json, niente uscite 
 });
 
 test('salvataggio e ricaricamento via server: identici byte per byte all’export', async () => {
-  const testo = readFileSync(new URL('collaudo/c_freelance_tecnico_l5.json', import.meta.url), 'utf8');
-  // il testo è quello dell'export dell'app (tests/collaudo.test.js lo verifica): si rifà qui
+  // un personaggio d'esempio (esempi/, tools/genera_esempi.mjs): il testo è quello dell'export dell'app, si rifà qui
+  const testo = readFileSync(new URL('../esempi/Nadia-Ferro_liv4_2026-10-02.json', import.meta.url), 'utf8');
   const p = deserializzaPersonaggio(testo);
   const { scelte } = normalizza(p.creazione, dati);
   const esportato = serializza(scelte, { versioniDati: JSON.parse(testo).versioni_dati, livelli: p.livelli, sessione: p.sessione });
@@ -61,7 +61,7 @@ test('salvataggio e ricaricamento via server: identici byte per byte all’expor
   assert.equal(serializza(normalizza(q.creazione, dati).scelte, { versioniDati: JSON.parse(letto).versioni_dati, livelli: q.livelli, sessione: q.sessione }), testo);
   // l'elenco lo mostra, con nome, livello e data dal nome del file
   const lista = await (await fetch(`${base}/api/personaggi`)).json();
-  assert.deepEqual(lista.map((x) => [x.file, x.nome, x.livello, x.data]), [[file, chiaveDaFile(file), 5, '2026-10-01']]);
+  assert.deepEqual(lista.map((x) => [x.file, x.nome, x.livello, x.data]), [[file, chiaveDaFile(file), 4, '2026-10-01']]);
   // nessun file temporaneo rimasto
   assert.deepEqual(readdirSync(cartella), [file]);
 });

@@ -14,11 +14,12 @@ import { creaServer } from '../server.mjs';
 import { datiReali } from './helpers.js';
 
 const { dati } = await datiReali();
+// i personaggi d'esempio del repo (esempi/, tools/genera_esempi.mjs): a distanza, corpo a corpo, Taumaturgo, cibernetica
 const FILE = {
-  b: 'tests/collaudo/b_fratellanza_arcanista_l12.json',
-  c: 'tests/collaudo/c_freelance_tecnico_l5.json',
-  Lucas: 'tests/collaudo/Lucas_liv6_2026-09-28 (2).json',
-  d: 'docs/esempi-stampa/d_freelance_cibernetica_l5.json',
+  Rhea: 'esempi/Rhea-Valdis_liv5_2026-10-02.json',
+  Torvald: 'esempi/Torvald-Krane_liv6_2026-10-02.json',
+  Anselmo: 'esempi/Fratello-Anselmo-Viri_liv3_2026-10-02.json',
+  Nadia: 'esempi/Nadia-Ferro_liv4_2026-10-02.json',
 };
 const leggi = (f) => readFileSync(new URL(`../${f}`, import.meta.url), 'utf8');
 
@@ -51,7 +52,7 @@ for (const [nome, f] of Object.entries(FILE)) {
 }
 
 test('plancia: la sessione del file cambia i valori effettivi (PV, Ferita, Stati) come nella scheda', () => {
-  const o = JSON.parse(leggi(FILE.c));
+  const o = JSON.parse(leggi(FILE.Nadia));
   const base = vistaPlancia(JSON.stringify(o), dati);
   o.sessione = { ...base.sessione, pvAttuali: 3, ferite: 1, statiAttivi: ['a-terra'] };
   const v = vistaPlancia(JSON.stringify(o), dati);
@@ -77,11 +78,11 @@ after(() => { server.close(); rmSync(tavolo, { recursive: true, force: true }); 
 
 test('selezione «al tavolo»: vuota all’inizio, salvata sul server e riletta; dati non validi rifiutati', async () => {
   assert.deepEqual(await (await fetch(`${base}/api/tavolo`)).json(), { versione: 1, personaggi: [] });
-  const w = await fetch(`${base}/api/tavolo`, { method: 'PUT', body: JSON.stringify({ personaggi: ['Lucas', 'Dex-Moreau', 'Lucas'] }) });
-  assert.deepEqual(await w.json(), { versione: 1, personaggi: ['Lucas', 'Dex-Moreau'] });
-  assert.deepEqual(await (await fetch(`${base}/api/tavolo`)).json(), { versione: 1, personaggi: ['Lucas', 'Dex-Moreau'] });
-  assert.deepEqual(JSON.parse(readFileSync(join(tavolo, 'sessione.json'), 'utf8')).personaggi, ['Lucas', 'Dex-Moreau']);
-  assert.equal((await fetch(`${base}/api/tavolo`, { method: 'PUT', body: '{"personaggi": "Lucas"}' })).status, 400);
+  const w = await fetch(`${base}/api/tavolo`, { method: 'PUT', body: JSON.stringify({ personaggi: ['Rhea-Valdis', 'Torvald-Krane', 'Rhea-Valdis'] }) });
+  assert.deepEqual(await w.json(), { versione: 1, personaggi: ['Rhea-Valdis', 'Torvald-Krane'] });
+  assert.deepEqual(await (await fetch(`${base}/api/tavolo`)).json(), { versione: 1, personaggi: ['Rhea-Valdis', 'Torvald-Krane'] });
+  assert.deepEqual(JSON.parse(readFileSync(join(tavolo, 'sessione.json'), 'utf8')).personaggi, ['Rhea-Valdis', 'Torvald-Krane']);
+  assert.equal((await fetch(`${base}/api/tavolo`, { method: 'PUT', body: '{"personaggi": "Rhea-Valdis"}' })).status, 400);
   // la cartella del tavolo non si serve come file statico
   assert.equal((await fetch(`${base}/tavolo/sessione.json`)).status, 404);
 });

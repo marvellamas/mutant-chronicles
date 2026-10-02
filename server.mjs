@@ -19,11 +19,13 @@
 //                                      scontro attuale) e porta la revisione a +1; uno scontro «chiuso»
 //                                      passa in scontri/archivio/ (non si cancella)
 //   GET /api/nemici                    bestiario in nemici/: [{ file, mtime, nemico } | { file, mtime, errore }]
+//   POST /api/esempi                   copia esempi/ (PG) in personaggi/ ed esempi/nemici/ in nemici/, solo i
+//                                      file che lì non ci sono: { copiati: [...], saltati: [...] }
 //   PUT /api/nemici/<id>               salva nemici/<id>.json se è valido (data/formato_nemici.json,
 //                                      src/validate.js → validaNemico); altrimenti 400 con gli errori
 // Nessuna cancellazione dal server: i file vecchi si tolgono a mano dalla cartella.
 import { createServer } from 'node:http';
-import { readFile, writeFile, readdir, stat, mkdir, rename } from 'node:fs/promises';
+import { readFile, writeFile, readdir, stat, mkdir, rename, copyFile, constants } from 'node:fs/promises';
 import { extname, join, normalize, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { validaScontro } from './src/scontro.js';
@@ -163,8 +165,32 @@ async function apiNemici(req, res, percorso, nemici, radice) {
   return json(res, 200, { file: `${id}.json`, mtime: (await stat(join(nemici, `${id}.json`))).mtimeMs, nemico: n });
 }
 
+/**
+ * «Carica esempi» (Tavolo del Master): i personaggi d'esempio del repo (esempi/) nella cartella dei
+ * personaggi e i nemici d'esempio (esempi/nemici/) nel bestiario. Non sovrascrive mai: un file con lo
+ * stesso nome già presente si salta e si segnala (COPYFILE_EXCL, anche fra due richieste contemporanee).
+ */
+async function caricaEsempi(radice, cartella, nemici) {
+  const copiati = [];
+  const saltati = [];
+  const copia = async (da, a, filtro) => {
+    let nomi = [];
+    try { nomi = (await readdir(da)).filter(filtro); } catch { return; }
+    await mkdir(a, { recursive: true });
+    for (const f of nomi.sort()) {
+      try { await copyFile(join(da, f), join(a, f), constants.COPYFILE_EXCL); copiati.push(f); } catch (e) {
+        if (e.code === 'EEXIST') saltati.push(f); else throw e;
+      }
+    }
+  };
+  await copia(join(radice, 'esempi'), cartella, (f) => NOME_FILE.test(f));
+  await copia(join(radice, 'esempi', NEMICI), nemici, (f) => f.endsWith('.json') && ID_NEMICO.test(f.slice(0, -5)));
+  return { copiati, saltati };
+}
+
 async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice) {
   if (percorso === '/api/ping') return json(res, 200, { ok: true, app: 'mutant', cartella: CARTELLA });
+  if (percorso === '/api/esempi') return req.method === 'POST' ? json(res, 200, await caricaEsempi(radice, cartella, nemici)) : json(res, 405, { errore: 'metodo non ammesso' });
   if (percorso === '/api/nemici' || percorso.startsWith('/api/nemici/')) return apiNemici(req, res, percorso, nemici, radice);
   if (percorso === '/api/scontri' || percorso.startsWith('/api/scontri/')) return apiScontri(req, res, percorso, scontri);
   if (percorso === '/api/tavolo') {

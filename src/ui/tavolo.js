@@ -103,7 +103,9 @@ export function renderTavolo(radice, ctx) {
         h('div', { class: 'riga-azioni' },
           h('span', { class: 'nota plancia-aggiornato', 'aria-live': 'polite' }, stato.errore ?? testoAggiornato(stato.ultimo)),
           h('button', { type: 'button', class: `btn${stato.sceltaAperta ? ' primario' : ''}`, 'aria-expanded': String(stato.sceltaAperta), onclick: () => { stato.sceltaAperta = !stato.sceltaAperta; disegna(); } }, 'Chi è al tavolo'),
+          h('button', { type: 'button', class: 'btn', title: 'Copia i personaggi e i nemici d’esempio del repo (esempi/) nelle cartelle del server; non sovrascrive mai un file già presente', onclick: caricaEsempi }, 'Carica esempi'),
           h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.personaggi() }, 'Personaggi'))),
+      stato.esitoEsempi ? h('p', { class: 'riquadro attenzione', role: 'status' }, stato.esitoEsempi) : null,
       h('p', { class: 'nota' }, 'Sola lettura: i valori sono quelli delle schede in personaggi/, ricalcolati con le regole attuali. Per cambiarli si apre il personaggio (clic sulla carta).'),
       stato.sceltaAperta ? sceltaAlTavolo(stato, ultimi, async (nuova) => {
         try { stato.selezione = await scriviSelezione(nuova); } catch (e) { alert(`Selezione non salvata: ${e.message}`); }
@@ -124,6 +126,19 @@ export function renderTavolo(radice, ctx) {
         onToggle: (v) => { stato.bestiarioAperto = v; },
         salvato: async () => { stato.firmaBestiario = null; await aggiornaBestiario(); disegna(); },
       })));
+  };
+  // «Carica esempi»: copia esempi/ nelle cartelle del server senza sovrascrivere (server.mjs → /api/esempi)
+  const caricaEsempi = async () => {
+    try {
+      const r = await fetch('api/esempi', { method: 'POST' });
+      if (!r.ok) throw new Error(`errore ${r.status}`);
+      const { copiati, saltati } = await r.json();
+      stato.esitoEsempi = `Esempi: ${copiati.length ? `copiati ${copiati.join(', ')}` : 'nessun file nuovo'}${saltati.length ? `; saltati perché già presenti (non sovrascritti): ${saltati.join(', ')}` : ''}. I personaggi si mettono al tavolo con «Chi è al tavolo».`;
+    } catch (e) {
+      stato.esitoEsempi = `Esempi non caricati: ${e.message}`;
+    }
+    stato.firmaBestiario = null;
+    await aggiorna(true);
   };
   const nemiciInScontro = () => (stato.scontro?.partecipanti ?? []).filter((p) => p.tipo === 'nemico');
 

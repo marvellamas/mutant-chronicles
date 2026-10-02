@@ -1,0 +1,18 @@
+Esempi del Tavolo del Master
+============================
+
+Personaggi e nemici inventati per provare il Tavolo del Master senza toccare i personaggi veri.
+
+- Rhea Valdis (Capitol, Artigliere, 5o livello): combattente a distanza.
+- Torvald Krane (Bauhaus, Assaltatore, 6o livello): combattente corpo a corpo, scudo e armatura.
+- Fratello Anselmo Viri (Fratellanza, Custode, 3o livello): Taumaturgo con due batterie e il Bordone Templare.
+- Nadia Ferro (Cybertronic, Tecnico, 4o livello): impianti cibernetici e un chip.
+- nemici/predone-delle-lande.json: nemico debole, da gruppo.
+- nemici/legionario-oscuro.json: nemico forte.
+
+Nella plancia, "Carica esempi" copia questi file in personaggi/ e in nemici/ del server: un file con
+lo stesso nome gia' presente non viene mai sovrascritto (lo segnala come saltato).
+
+I personaggi li scrive tools/genera_esempi.mjs con il motore dell'app (creazione, equipaggiamento
+iniziale, livelli) e controlla che passino il validatore e la checklist del wizard. Se le regole
+cambiano: node tools/genera_esempi.mjs (tests/esempi.test.js dice se servirebbe).

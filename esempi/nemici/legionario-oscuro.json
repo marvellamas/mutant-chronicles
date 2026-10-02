@@ -1,0 +1,22 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "legionario-oscuro",
+  "nome": "Legionario Oscuro",
+  "fonte": "esempio del Tavolo del Master (nemico forte)",
+  "caratteristiche": { "FOR": 8, "COS": 9, "DES": 6, "INT": 3 },
+  "pv": 38,
+  "pm": 6,
+  "ar": { "totale": 5, "magica": 2 },
+  "difese": 11,
+  "iniziativa": 2,
+  "movimento": { "passo": 6, "corsa": 10, "scatto": 14 },
+  "salvezze": { "tempra": 14, "riflessi": 10, "volonta": 13, "magia": 12 },
+  "attacchi": [
+    { "nome": "Lama nefaria", "tipo": "ravvicinato", "va": 13, "danno": "1d10+3", "natura": "Magico", "portata_q": 1, "proprieta": ["Perforante 1"] },
+    { "nome": "Fucile d'assalto", "tipo": "distanza", "va": 11, "danno": "1d8+1", "natura": "Naturale", "gittata_q": 60, "modalita": ["S", "RB"], "ac": 1 }
+  ],
+  "immunita": ["terrorizzato"],
+  "incantesimi": [ { "nome": "Dardo Psichico", "va": 10, "costo_pm": 3 } ],
+  "note": "Non sente dolore. Contro i Taumaturghi concentra gli attacchi a distanza."
+}
