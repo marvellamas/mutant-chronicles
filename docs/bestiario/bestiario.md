@@ -4,7 +4,7 @@
 
 ## Creature e avversari per il Direttore
 
-**BOZZA 0.1 — PROPOSTA DA VALIDARE**
+**BOZZA 0.2 — PROPOSTA DA VALIDARE**
 
 Ottobre 2026
 
@@ -14,7 +14,7 @@ Giocatore  ·  Magia  ·  Armamenti  ·  Equipaggiamenti  ·  Veicoli  ·  Diret
 
 **Usare questo manuale**
 
-Questo volume raccoglie gli strumenti per costruire gli avversari: una scala di potenza in sei gradi, le basi delle creature, i moduli che le modificano e le regole dei Boss. Tutti i valori sono tarati sui personaggi costruiti con il Manuale del Giocatore, così che una creatura di un certo grado regga il confronto con personaggi del livello corrispondente. Il sommario conduce ai capitoli e alle sezioni principali.
+Questo volume raccoglie gli strumenti per costruire gli avversari: una scala di potenza in sei gradi, le basi delle creature, i moduli che le modificano e le regole dei Boss. I valori sono tarati su un gruppo di sette personaggi costruiti con il Manuale del Giocatore: ogni grado indica quanti Round una creatura resiste a un gruppo del livello corrispondente e quanti Round le servono per abbattere un personaggio. Il sommario conduce ai capitoli e alle sezioni principali.
 
 ## **I manuali di SIMPLY RPG**
 
@@ -22,7 +22,7 @@ Il Manuale del Giocatore raccoglie personaggi e regole comuni; il Manuale della 
 
 ## **Numerazione e rimandi**
 
-Questa bozza comprende i Capitoli 1–4 e l’Appendice A; i Capitoli 5 e 6 sono in preparazione. I rimandi ai paragrafi di questo volume ne riportano il numero; per i contenuti esterni è indicato il manuale da consultare, per esempio «(Giocatore §5.18)». Stati, nature del danno e proprietà sono quelli del Manuale del Giocatore (§§5.18, 5.24): questo volume non ne introduce di nuovi.
+Questa bozza comprende i Capitoli 1–6 e l’Appendice A. I rimandi ai paragrafi di questo volume ne riportano il numero; per i contenuti esterni è indicato il manuale da consultare, per esempio «(Giocatore §5.18)». Stati, nature del danno e proprietà sono quelli del Manuale del Giocatore (§§5.18, 5.24): questo volume non ne introduce di nuovi.
 
 ## **Consultazione**
 
@@ -32,7 +32,7 @@ Le regole delle singole creature prevalgono sulle regole generali soltanto quand
 
 Capitolo 1 — Come si usa il Bestiario
 
-1.1 Natura della proposta · 1.2 Grado, base e moduli · 1.3 Lettura della scheda di creatura · 1.4 Natura delle creature · 1.5 Punti Vita, Ferite e Stati delle creature · 1.6 Rapporto con il Tavolo del Master · 1.7 Costruire una creatura
+1.1 Natura della proposta · 1.2 Grado, base e moduli · 1.3 Lettura della scheda di creatura · 1.4 Natura delle creature · 1.5 Punti Vita, Ferite, Menomazioni e Stati · 1.6 Rapporto con il Tavolo del Master · 1.7 Costruire una creatura
 
 Capitolo 2 — Scala di potenza
 
@@ -56,7 +56,7 @@ Appendice A — Taratura
 
 ## **1.1 Natura della proposta**
 
-**Questo Bestiario è una proposta da validare.** Il Manuale del Giocatore 0.45 non contiene un capitolo dei nemici; questa bozza ne propone uno, costruito sulle stesse regole dei personaggi. Ogni valore numerico deriva dalle regole di creazione e avanzamento (Giocatore, Capitoli 2 e 8) attraverso la taratura dell’Appendice A; le scelte che il manuale non vincola sono dichiarate nel testo e raccolte fra le domande per il Direttore del gioco.
+**Questo Bestiario è una proposta da validare.** Il Manuale del Giocatore 0.45 non contiene un capitolo dei nemici; questa bozza ne propone uno, costruito sulle stesse regole dei personaggi. I valori numerici derivano dai personaggi costruiti con le regole di creazione e avanzamento (Giocatore, Capitoli 2 e 8) e dal modello di scontro dell’Appendice A; le scelte che il manuale non vincola sono dichiarate nel testo e raccolte fra le domande per il Direttore del gioco.
 
 Le creature e i loro nomi sono originali di SIMPLY RPG. L’ambientazione resta quella dei manuali: le mutazioni e le corruzioni di queste pagine nascono dall’Oscura Simmetria e dalla Corruzione Oscura (Giocatore §5.20).
 
@@ -74,31 +74,36 @@ Il grado fissa i valori; la base li redistribuisce senza cambiare il peso comple
 
 ## **1.3 Lettura della scheda di creatura**
 
-La scheda presenta una colonna per grado, come le schede degli elementali (Manuale della Magia, sezione 14), oppure una sola colonna quando la creatura esiste in un unico grado. Le righe seguono sempre questo ordine.
+La scheda presenta una colonna per grado, come le schede degli elementali (Manuale della Magia, sezione 14), oppure una sola colonna quando la creatura esiste in un unico grado. Le righe seguono sempre questo ordine e corrispondono ai campi del formato dei nemici del Tavolo del Master (§1.6).
 
 | Riga | Contenuto |
 | :---- | :---- |
 | Natura | Comune oppure Oscura Simmetria (§1.4). |
-| FOR, COS, DES, INT, SAG, CAR | Caratteristiche: servono per le Prove di Caratteristica, per i bonus al danno delle armi impugnate e per la parità d’Iniziativa (Giocatore §5.1). |
-| PV | Punti Vita massimi. |
+| FOR, COS, DES, INT, SAG, CAR | Tutte e sei le Caratteristiche: servono per le Prove di Caratteristica, per i bonus al danno delle armi impugnate e per la parità d’Iniziativa (Giocatore §5.1). |
+| PV | Punti Vita massimi. Al tavolo si tengono anche PV attuali, Ferite e Menomazioni (§1.5). |
+| PM | Punti Magia, soltanto per le creature con Incantesimi. |
 | AR | Armatura complessiva, con la componente magica annotata separatamente (Giocatore §5.13). |
 | VA | Valore d’attacco della Prova per colpire, già comprensivo di ogni bonus ordinario. |
 | VA Difese | Valore della Prova di Difese (Giocatore §5.9). |
 | PS Tempra, Riflessi, Volontà, Magia | Valori delle Prove Salvezza (Giocatore §1.2.3). |
 | Iniziativa | Valore senza il dado; in combattimento si aggiunge 1d10 (Giocatore §2.14). |
-| Movimento | Passo in Q; Corsa e Scatto ne sono il doppio e il triplo, salvo indicazione. Arrampicata, Volo, Nuoto e Scavo sono indicati a parte. |
+| Movimento | Passo in Q; Corsa e Scatto ne sono il doppio e il triplo, salvo indicazione. «Non consentito» indica una modalità che la creatura non ha. Arrampicata, Volo, Nuoto e Scavo sono indicati a parte. |
 | Spazio occupato | 1 Q, oppure 2 × 2 Q per le creature grandi. |
-| Azioni | Azione di Movimento e Azioni Principali (AzP) per Round. |
+| Azioni | Azioni Principali (AzP) e di Movimento per Round, con le eccezioni. |
 | Sensi | Vista, udito e i sensi particolari della creatura. |
 | Attacchi | Nome, danno, natura, proprietà, portata o gittata, AC. |
+| Contromisure | Contromisure del Giocatore §5.24 con il loro valore. |
+| Abilità | Le Abilità che la creatura usa al tavolo, con il VA (§1.3.1). |
+| Capacità | Capacità speciali, Manifestazioni e Talenti, con effetto, costo e limiti. |
+| Incantesimi | Nome, livello della versione, VA di lancio e costo in PM, se la creatura ne usa. |
 | Danno ricevuto | Immunità, dimezzamenti e vulnerabilità, come nelle schede degli elementali. |
 | Comportamento | Tattica, condizioni di fuga, eventuali soglie di fase (§2.5.3). |
 
-**I valori della scheda sono già fatti:** il Direttore non li ricalcola dalle Caratteristiche. Le Caratteristiche restano per le Prove non coperte dalla scheda; i bonus al danno sono già compresi negli attacchi.
+**I valori della scheda sono già fatti:** il Direttore non li ricalcola dalle Caratteristiche. Le Caratteristiche restano per le Prove non coperte dalla scheda; i bonus al danno sono già compresi negli attacchi. Una riga vuota (nessuna Contromisura, nessun Incantesimo) si omette.
 
 ### **1.3.1 Prove della creatura**
 
-Una creatura usa i VA della scheda per attaccare e difendersi. Per un’Abilità non indicata, il Direttore usa il VA delle Difese del grado come riferimento, con −2 se l’Abilità è estranea alla natura della creatura e +2 se ne è il tratto distintivo (per esempio Furtività di un Aracnoide). Le Prove di Caratteristica seguono il Manuale del Giocatore (§1.2.2).
+Una creatura usa i VA della scheda per attaccare e difendersi, e la riga Abilità per le Prove che fa più spesso. Per un’Abilità non indicata, il Direttore usa il VA delle Difese del grado come riferimento, con −2 se l’Abilità è estranea alla natura della creatura e +2 se ne è il tratto distintivo (per esempio Furtività di un Aracnoide). Le Prove di Caratteristica seguono il Manuale del Giocatore (§1.2.2).
 
 ## **1.4 Natura delle creature**
 
@@ -106,28 +111,44 @@ Ogni creatura ha una **Natura**: **Comune** oppure **Oscura Simmetria**. La Natu
 
 La Natura non coincide con la Corruzione Oscura dei personaggi (Giocatore §5.20): un umano Corrotto, Eretico, Caotico od Oscuro conserva la propria CROS; il Manuale della Magia indica caso per caso quando la CROS equivale alla Natura Oscura Simmetria.
 
-## **1.5 Punti Vita, Ferite e Stati delle creature**
+## **1.5 Punti Vita, Ferite, Menomazioni e Stati**
 
-Le creature hanno soltanto **PV**. A 0 PV una creatura è fuori combattimento: muore, fugge o cade, secondo la scheda e la scelta del Direttore. Non subisce Ferite, Menomazioni, Affaticamento o Corruzione, salvo diversa indicazione della scheda; la stessa scelta vale per i nemici del Tavolo del Master in attesa di una regola definitiva.
+Le creature seguono la procedura dei personaggi, salvo eccezione della scheda.
+
+* **PV attuali e massimi.** Il danno riduce i PV attuali; non si scende sotto 0. Arrivare a 0 PV non è di per sé svenimento né morte.
+* **Ferite.** Il danno finale subito a 0 PV attiva la PS di Tempra e lo Stato di Ferita per fascia, come per i personaggi (Giocatore §5.14). Oltre Grave la creatura muore.
+* **Menomazioni.** Al primo raggiungimento di Profonda, Seria e Grave la creatura effettua la PS di Tempra per la Menomazione (Giocatore §5.14.1).
+* **Nessun Affaticamento.** Le creature non hanno il tracciato dell’Affaticamento; un effetto eccezionale che lo richiede va nelle note della scheda.
+* **Fuori combattimento.** Il Direttore può comunque far fuggire o arrendere una creatura a 0 PV secondo il suo Comportamento: è una scelta della scena, non una regola dei PV.
 
 Gli Stati si applicano alle creature come ai personaggi (Giocatore §5.18), con le immunità indicate dalla scheda. Una creatura priva di vista non può essere Accecata; una creatura priva di udito non può essere Assordata. Il Boss segue inoltre il §2.5.2.
 
+Le Ferite allungano la vita di una creatura oltre i PV della scheda, come per i personaggi. Il modello di taratura (Appendice A) conta i Round fino a 0 PV: le Ferite sono il margine del Direttore per chiudere lo scontro.
+
 ## **1.6 Rapporto con il Tavolo del Master**
 
-Il Tavolo del Master dell’app gestisce i nemici con un file per tipo nel formato dei nemici dell’app. Una scheda del Bestiario diventa un file scegliendo un grado e copiando i valori.
+Il Tavolo del Master dell’app gestisce i nemici con un file per tipo nel formato dei nemici dell’app (data/formato_nemici.json). Una scheda del Bestiario diventa un file scegliendo un grado e copiando i valori.
 
 | Scheda del Bestiario | File del nemico |
 | :---- | :---- |
 | Nome e grado | nome, per esempio «Insettoide da guardia — Medio» |
-| Caratteristiche | caratteristiche |
-| PV, AR (di cui magica), VA Difese, Iniziativa | pv, ar.totale e ar.magica, difese, iniziativa |
-| Passo, Corsa, Scatto | movimento |
+| Caratteristiche (tutte e sei) | caratteristiche |
+| PV, PM | pv, pm |
+| AR (di cui magica), VA Difese, Iniziativa | ar.totale e ar.magica, difese, iniziativa |
+| Passo, Corsa, Scatto | movimento (passo; corsa e scatto se diversi dal doppio e dal triplo, oppure «non_consentito») |
 | PS | salvezze |
+| Azioni | azioni: principali, movimento, eccezioni |
 | Attacchi | attacchi: nome, ravvicinato o a distanza, VA, danno, natura, proprietà, portata o gittata, AC |
+| Contromisure | contromisure: nome e valore |
+| Abilità | abilita: nome e VA |
+| Capacità e Manifestazioni | capacita: nome, effetto, costo, limiti |
+| Incantesimi | incantesimi: nome, livello, VA di lancio, costo in PM |
 | Immunità agli Stati | immunita |
-| Natura, Azioni, Arrampicata, Volo, Scavo, sensi, Danno ricevuto, Manifestazioni, regole del Boss | note |
+| Natura, Spazio, Arrampicata, Volo, Scavo, sensi, Danno ricevuto, regole del Boss | note |
 
-Gli **umani** si ottengono anche dal convertitore «PG → nemico» del Tavolo del Master: si costruisce un personaggio con le regole del Giocatore e lo si converte. È lo stesso procedimento con cui è stata tarata la scala (Appendice A) e con cui è stato preparato il bestiario umano (§3.2).
+Al tavolo la plancia tiene per ogni nemico PV attuali e massimi, Ferite, Menomazioni, PM e Stati, e lancia gli incantesimi completi con «Lancia!».
+
+Gli **umani** si ottengono anche dal convertitore «PG → nemico» del Tavolo del Master: si costruisce un personaggio con le regole del Giocatore, lo si converte e lo si porta al grado con il moltiplicatore del §3.2. È lo stesso procedimento con cui è stata tarata la scala (Appendice A).
 
 ## **1.7 Costruire una creatura**
 
@@ -138,28 +159,37 @@ Gli **umani** si ottengono anche dal convertitore «PG → nemico» del Tavolo d
 | 3 | Aggiungere i moduli, applicandone gli effetti e annotandone il costo (Capitolo 4). |
 | 4 | Calcolare il grado effettivo (§2.4) e controllare il bilancio dello scontro (§2.3). |
 
-**Esempio.** Il Direttore vuole un insetto da guardia per un gruppo di quattro personaggi di 8° livello. Sceglie la base Insettoide al grado Semplice: PV 25, AR 4, VA 13, Difese 11, Mandibole 1d8+1. Aggiunge Veleno (+½) e Carapace (+½): AR 6, Avvelenato con le mandibole. Il grado effettivo è Medio (§2.4); contro quattro personaggi di 8° livello tre creature così formano uno scontro equilibrato (§2.3).
+**Esempio.** Il Direttore vuole insetti da guardia per un gruppo di sette personaggi di 8° livello. Sceglie la base Insettoide al grado Semplice: PV 38, AR 3, VA 13, Difese 11, 2 AzP con Mandibole 1d8+2. Aggiunge Veleno (+½) e Carapace (+½): AR 5, Avvelenato con le mandibole. Il grado effettivo è Medio (§2.4); per uno scontro normale contro sette personaggi di 8° livello servono 2 creature di grado Medio (§2.3): due insetti così.
 
 # **Capitolo 2 — Scala di potenza**
 
 ## **2.1 I sei gradi**
 
-La scala comprende sei gradi. I primi cinque corrispondono ciascuno a una fascia di livelli dei personaggi: i valori sono quelli di un personaggio combattente costruito al livello di riferimento della fascia (Appendice A). Il sesto, il Boss, è un avversario unico che vale da solo un intero scontro (§2.5).
+La scala comprende sei gradi. I primi cinque corrispondono ciascuno a una fascia di livelli dei personaggi; il sesto, il Boss, è un avversario unico che vale da solo un intero scontro (§2.5).
 
-| Grado | Livelli dei PG | Riferimento | PV | VA | VA Difese | AR | Danno medio | Esempio di danno | AzP |
-| :---- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| Minore | 1–3 | 2° | 19 | 11 | 9 | 1 | 5,3 | 1d6+2 | 1 |
-| Semplice | 4–7 | 5° | 28 | 13 | 11 | 3 | 5,8 | 1d8+1 | 1 |
-| Medio | 8–11 | 8° | 37 | 15 | 13 | 3 | 6,3 | 1d8+2 | 1 |
-| Potente | 12–15 | 12° | 47 | 17 | 15 | 3 | 6,3 | 1d8+2 | 2 |
-| Molto potente | 16–20 | 16° | 56 | 19 | 17 | 3 | 7,0 | 1d10+2 | 2 |
-| Boss | Livello del gruppo | — | ×3 | Del grado | Del grado | Del grado | Del grado | Del grado | ×3 |
+I valori sono tarati su un **gruppo di sette personaggi** del livello di riferimento (Appendice A). Due colonne dicono che cosa aspettarsi:
 
-Le fasce seguono il ritmo dell’avanzamento: PV, VA e Difese crescono soprattutto con i Gradi di Classe del 4°, 8°, 12°, 16° e 20° livello, e la seconda Azione Principale arriva al 12° (Giocatore §2.14, §8.1). Il danno cresce poco, come per i personaggi: il bonus di Caratteristica al danno è limitato dal livello (Giocatore §5.13).
+* **Round di resistenza:** quanti Round una sola creatura del grado resiste contro sette personaggi del livello di riferimento, che la attaccano con le loro armi; il personaggio che la creatura sta attaccando tiene la propria Azione Principale per la Parata.
+* **Round per abbattere un PG:** quanti Round la creatura, da sola, impiega a portare a 0 PV un personaggio del livello di riferimento che para il primo colpo di ogni Round (Giocatore §5.9).
 
-Il **danno medio** è quello di un singolo attacco riuscito, prima dell’Armatura del bersaglio. L’esempio di danno è una formula con una media vicina; le basi del Capitolo 3 ne indicano una propria.
+| Grado | Livelli dei PG | Riferimento | PV | VA | VA Difese | AR | Danno medio | Esempio di danno | AzP | Round di resistenza | Round per abbattere un PG |
+| :---- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| Minore | 1–3 | 2° | 21 | 11 | 9 | 1 | 6,5 | 1d8+2 | 1 | 1,5 | 9 |
+| Semplice | 4–7 | 5° | 42 | 13 | 11 | 2 | 7,5 | 1d8+3 | 2 | 3 | 7 |
+| Medio | 8–11 | 8° | 65 | 15 | 13 | 3 | 9 | 2d6+2 | 2 | 4,5 | 6 |
+| Potente | 12–15 | 12° | 180 | 17 | 15 | 4 | 11 | 2d8+2 | 2 | 7 | 5 |
+| Molto potente | 16–20 | 16° | 265 | 19 | 17 | 5 | 12 | 2d8+3 | 2 | 10 | 4,5 |
+| Boss | Livello del gruppo | — | §2.5.1 | Del grado | Del grado | Del grado | Del grado | Del grado | Del grado + 1 | 12 | Del grado |
 
-**Il grado non è il livello.** Una creatura Minore non è debole in assoluto: contro personaggi di 2° livello vale quanto uno di loro. Un Minore contro personaggi di 16° livello è invece un avversario da gruppo numeroso (§2.3).
+Gli obiettivi dei Round di resistenza sono: Minore 1–2, Semplice 2–4, Medio 3–6, Potente 5–10, Molto potente 6–15, Boss 10–20.
+
+**AzP.** Dal grado Semplice le creature hanno due Azioni Principali: attaccano due volte per Round, con armi, artigli o due arti diversi. Il salto dei PV al grado Potente segue i personaggi: dal 12° livello hanno due Azioni Principali e un gruppo infligge il doppio del danno per Round (Giocatore §2.14, §8.1).
+
+**Pericolo.** Un Minore graffia: impiega circa nove Round per abbattere da solo un personaggio. Dal Potente in su un personaggio che non para va a terra in tre o quattro Round. Senza Parata i Round per abbattere un PG scendono a circa 6,5 (Minore), 5 (Semplice), 4 (Medio), 3,5 (Potente) e 3 (Molto potente).
+
+Il **danno medio** è quello di un singolo attacco riuscito, prima dell’Armatura del bersaglio. L’esempio di danno è la formula usata nella taratura; le basi del Capitolo 3 ne indicano una propria.
+
+**Il grado non è il livello.** Una creatura Minore non è debole in assoluto: contro personaggi di 2° livello è un avversario da gruppo. Un Minore contro personaggi di 16° livello è invece carne da cannone, da usare in numero (§2.3).
 
 ## **2.2 Valori derivati per grado**
 
@@ -175,23 +205,35 @@ Una creatura ha una PS forte, due medie e una debole, scelte secondo la base. Le
 
 ## **2.3 Bilancio dello scontro**
 
-**Tre creature di un grado formano uno scontro equilibrato contro quattro personaggi della fascia corrispondente.** Uno scontro è equilibrato quando il gruppo prevale consumando risorse: PV, Punti Eroe, munizioni, Azioni dedicate alle Difese. La tabella indica quante creature di ciascun grado formano uno scontro equilibrato contro quattro personaggi del livello indicato.
+**Contro sette personaggi del livello di riferimento, uno scontro normale con creature del grado corrispondente ne conta quante indica la colonna «Normale».** Uno scontro è normale quando il gruppo prevale consumando risorse: PV, Punti Eroe, munizioni, Azioni dedicate alle Difese.
+
+| Grado (contro PG della sua fascia) | Facile | Normale | Duro |
+| :---- | :---: | :---: | :---: |
+| Minore | 3 | 5 | 6 |
+| Semplice | 2 | 3 | 3–4 |
+| Medio | 1–2 | 2 | 3 |
+| Potente | 1 | 1–2 | 2 |
+| Molto potente | 1 | 1 | 1–2 |
+
+Facile, normale e duro corrispondono a creature con il 30%, il 60% e il 100% della forza del gruppo (Appendice A.3).
+
+**Gruppi misti e livelli diversi.** La tabella indica quante creature di ciascun grado formano uno scontro normale contro sette personaggi del livello indicato.
 
 | Livello dei PG | Minore | Semplice | Medio | Potente | Molto potente |
 | :---: | :---: | :---: | :---: | :---: | :---: |
-| 2° | 3 | 2 | 1 | — | — |
-| 5° | 5 | 3 | 2 | 1 | 1 |
-| 8° | 6–7 | 4 | 3 | 2 | 1 |
-| 12° | 11 | 6–7 | 5 | 3 | 2 |
-| 16° | 14 | 8 | 6 | 3–4 | 3 |
+| 2° | 5 | 2 | 1 | — | — |
+| 5° | 7 | 3 | 1–2 | — | — |
+| 8° | 9–10 | 3–4 | 2 | 1 | — |
+| 12° | 16 | 6 | 3–4 | 1–2 | 1 |
+| 16° | 20 | 7–8 | 4–5 | 2 | 1 |
 
-Un trattino indica una creatura troppo forte per essere affrontata da sola da quel gruppo: si usa come Boss di grado inferiore (§2.5) o si evita.
+Un trattino indica una creatura troppo forte per quel gruppo anche da sola: si usa come Boss di grado inferiore (§2.5) o si evita.
 
-**Gruppi misti.** Ogni creatura vale una frazione dello scontro pari a 1 diviso il numero della tabella. Lo scontro è equilibrato quando le frazioni sommano circa 1; con 1,5 è duro, con 2 o più è mortale.
+Ogni creatura vale una frazione dello scontro pari a 1 diviso il numero della tabella. Lo scontro è normale quando le frazioni sommano circa 1; con ½ è facile, con 1,5 è duro, con 2 o più è mortale.
 
-**Esempio.** Contro quattro personaggi di 8° livello, un Potente (½) e due Semplici (¼ ciascuno) sommano 1: scontro equilibrato. Aggiungere un Medio (⅓) lo rende duro.
+**Esempio.** Contro sette personaggi di 8° livello, un Potente (1) basta per uno scontro normale; un Medio (½) e due Semplici (circa ¼ ciascuno) sommano 1. Aggiungere un altro Medio lo rende duro.
 
-**Durata.** Con questi valori uno scontro dura a lungo: un Minore impiega in media 8 o 9 Round per abbattere da solo un personaggio di 2° livello, un Medio circa 14 Round con uno di 8°. Il Direttore regola la difficoltà soprattutto con il numero delle creature, la Copertura, l’Iniziativa e il terreno, più che con il danno.
+**Durata.** Se il gruppo concentra gli attacchi su una creatura alla volta, uno scontro normale dura circa i Round di resistenza del §2.1 moltiplicati per il numero di creature: da sette a dieci Round, più o meno a ogni livello. Il Direttore regola la difficoltà soprattutto con il numero delle creature, la Copertura, l’Iniziativa e il terreno.
 
 ## **2.4 Costo dei moduli e grado effettivo**
 
@@ -209,22 +251,34 @@ Una creatura non supera +2 gradi di moduli: oltre, si sceglie direttamente un gr
 
 ## **2.5 Boss**
 
-Il **Boss** è un avversario unico che vale da solo uno scontro equilibrato contro quattro personaggi del proprio livello. Si costruisce su un grado, di solito quello della fascia del gruppo, e ne cambia i valori con le regole seguenti. Le regole del Boss si aggiungono a quelle della base e dei moduli.
+Il **Boss** è un avversario unico che vale da solo uno scontro contro sette personaggi del proprio livello. Si costruisce su un grado, di solito quello della fascia del gruppo, e ne cambia i valori con le regole seguenti. Le regole del Boss si aggiungono a quelle della base e dei moduli.
 
 ### **2.5.1 Valori del Boss**
 
 | Valore | Boss |
 | :---- | :---- |
-| PV | PV del grado × 3 |
-| Azioni Principali | AzP del grado × 3 |
+| PV | Quelli della tabella qui sotto, per il grado su cui è costruito |
+| Azioni Principali | AzP del grado + 1 |
 | VA, Difese, AR, danno, PS, Iniziativa | Quelli del grado |
 | Movimento | Quello della base; un’Azione di Movimento per Round |
 
-**Azioni fuori dall’Iniziativa.** Alla propria Iniziativa il Boss usa le AzP del grado. Le altre le spende una alla volta, ciascuna al termine dell’Iniziativa di un personaggio diverso, fino all’Iniziativa successiva del Boss. Può usarle per attaccare, per le Difese o per una capacità della scheda; non può spenderne due di seguito contro lo stesso personaggio fuori dalla propria Iniziativa.
+| Boss di grado | PV | AzP | Round di resistenza | Round per abbattere un PG | PG a terra, gruppo che para | PG a terra, gruppo che non para |
+| :---- | :---: | :---: | :---: | :---: | :---: | :---: |
+| Minore | 160 | 2 | 12 | 9 | 1–2 | 2 |
+| Semplice | 160 | 3 | 12 | 7 | 2 | 2–3 |
+| Medio | 155 | 3 | 12 | 6 | 2 | 3 |
+| Potente | 290 | 3 | 12 | 5 | 2–3 | 3–4 |
+| Molto potente | 295 | 3 | 12 | 4,5 | 2–3 | 3–4 |
+
+I PV portano il Boss a dodici Round di resistenza contro sette personaggi del suo livello, contando la sua Parata. Le ultime due colonne dicono quanti personaggi può portare a 0 PV in quei dodici Round concentrando gli attacchi: con un gruppo che para, si cura e si copre ne abbatte due o tre al massimo; con un gruppo che gioca male, tre o quattro.
+
+**L’AzP in più non attacca.** Il Boss attacca quante volte attacca il grado; l’AzP in più gli serve per la Parata, per terminare uno Stato (§2.5.2) o per una capacità della scheda.
+
+**Azioni fuori dall’Iniziativa.** Alla propria Iniziativa il Boss usa una sola AzP. Le altre le spende una alla volta, ciascuna al termine dell’Iniziativa di un personaggio diverso, fino all’Iniziativa successiva del Boss; la Parata si spende quando serve, come per i personaggi. Non può spendere due AzP di seguito contro lo stesso personaggio fuori dalla propria Iniziativa.
 
 ### **2.5.2 Resistenza agli Stati**
 
-Il Boss riceve +2 a tutte le Prove Salvezza per evitare uno Stato. Gli Stati temporanei che subisce durano la metà, arrotondata per eccesso. All’inizio della propria Iniziativa può spendere una delle AzP fuori dall’Iniziativa del Round per terminare uno Stato temporaneo; non può terminare in questo modo Immobilizzato da una presa né Sanguinamento, che seguono le proprie procedure (Giocatore §5.15, §5.18).
+Il Boss riceve +2 a tutte le Prove Salvezza per evitare uno Stato. Gli Stati temporanei che subisce durano la metà, arrotondata per eccesso. All’inizio della propria Iniziativa può spendere l’AzP in più del Round per terminare uno Stato temporaneo, rinunciando alla Parata fino all’Iniziativa successiva; non può terminare in questo modo Immobilizzato da una presa né Sanguinamento, che seguono le proprie procedure (Giocatore §5.15, §5.18).
 
 ### **2.5.3 Soglie di fase**
 
@@ -238,7 +292,7 @@ La soglia si verifica dopo il colpo che la supera: gli effetti di quel colpo si 
 
 ### **2.5.4 Esempio**
 
-Un Boss Medio per quattro personaggi di 8° livello ha PV 111, 3 AzP, VA 15, Difese 13, AR 3 e attacchi da 1d8+2. Alla propria Iniziativa usa 1 AzP; le altre 2 le spende al termine dell’Iniziativa di due personaggi diversi. A 55 PV cambia fase. Con la base Umanoide mostruoso i PV diventano 135 (45 × 3) e le Difese 11.
+Un Boss Medio per sette personaggi di 8° livello ha PV 155, 3 AzP, VA 15, Difese 13, AR 3 e attacchi da 2d6+2. Alla propria Iniziativa usa 1 AzP; un secondo attacco lo porta al termine dell’Iniziativa di un personaggio, la terza AzP la tiene per la Parata. A 77 PV cambia fase. Con la base Umanoide mostruoso i PV diventano 170 (× 1,1), le Difese 11 e gli Artigli 2d6+3.
 
 # **Capitolo 3 — Basi**
 
@@ -246,35 +300,52 @@ Un Boss Medio per quattro personaggi di 8° livello ha PV 111, 3 AzP, VA 15, Dif
 
 Una base descrive la forma di una creatura a ogni grado: Caratteristiche tipiche, valori, Movimento, sensi, attacchi naturali e Danno ricevuto. I valori di una base partono da quelli del grado e li redistribuiscono: più PV e meno Difese, più Armatura e meno PV, e così via. Il peso complessivo resta vicino a quello del grado (Appendice A.4); le capacità particolari di ogni base sono indicate nel testo.
 
+| Base | PV | AR | VA Difese | Attacco principale |
+| :---- | :---: | :---: | :---: | :---- |
+| Umano | Convertitore × moltiplicatore (§3.2) | Equipaggiamento | Convertitore | Armi, con il bonus di grado |
+| Insettoide | Grado × 0,9 | Grado + 1 | Grado | Mandibole |
+| Aracnoide | Grado × 0,9 | Grado | Grado + 1 | Morso, Ragnatela |
+| Umanoide mostruoso | Grado × 1,1 | Grado − 1 (minimo 1) | Grado − 2 | Artigli |
+
 Le Caratteristiche tipiche servono alle Prove di Caratteristica e all’uso di armi: i valori derivati della scheda non si ricalcolano da esse.
 
 ## **3.2 Umano**
 
-**Natura Comune.** Combattenti, guardie, criminali, mercenari ed eretici al servizio dell’Oscura Simmetria. Gli umani si costruiscono come personaggi (Giocatore, Capitoli 2 e 8) e si convertono in nemici con il convertitore del Tavolo del Master (§1.6): i loro valori sono, per definizione, quelli del grado.
+**Natura Comune.** Combattenti, guardie, criminali, mercenari ed eretici al servizio dell’Oscura Simmetria. Gli umani si costruiscono come personaggi (Giocatore, Capitoli 2 e 8) e si convertono in nemici con il convertitore del Tavolo del Master (§1.6). Il bestiario umano già preparato per il Tavolo del Master comprende dieci tipi in tre gradi e resta la base: non si ricostruisce.
 
-Il bestiario umano già preparato per il Tavolo del Master comprende dieci tipi in tre gradi. Si allinea alla scala così:
+**Portare un umano al grado.** Un personaggio convertito ha i PV e l’attacco di un singolo personaggio: contro sette personaggi cadrebbe troppo in fretta. Per portarlo al grado si applicano tre modifiche, e soltanto queste:
 
-| Bestiario umano | Livello | Grado |
-| :---- | :---: | :---- |
-| Recluta | 2° | Minore |
-| Veterano | 5° | Semplice |
-| Élite | 8° | Medio |
-| Comandante (da preparare) | 12° | Potente |
-| Campione (da preparare) | 16° | Molto potente |
+* **PV × moltiplicatore** del grado, arrotondati all’unità;
+* **AzP del grado:** dal Semplice due Azioni Principali, entrambe per attaccare;
+* **bonus di grado al danno** di ogni attacco, prima dell’Armatura.
+
+VA, Difese, AR, PS, Iniziativa, Movimento, Abilità e capacità restano quelli del convertitore.
+
+| Bestiario umano | Livello | Grado | PV × | AzP | Bonus al danno | Round di resistenza | Round per abbattere un PG |
+| :---- | :---: | :---- | :---: | :---: | :---: | :---: | :---: |
+| Recluta | 2° | Minore | 1 | 1 | +2 | 1,4 | 8 |
+| Veterano | 5° | Semplice | 1 | 2 | +2 | 2,8 | 7,5 |
+| Élite | 8° | Medio | 1,5 | 2 | +3 | 4,3 | 6 |
+| Comandante (da preparare) | 12° | Potente | 5 | 2 | +5 | 7,2 | 5 |
+| Campione (da preparare) | 16° | Molto potente | 8,25 | 2 | +6 | 10,2 | 4,3 |
+
+Le ultime due colonne sono la media dei quattro archetipi dell’Appendice A portati al grado. Il moltiplicatore cresce molto agli ultimi gradi perché i personaggi di 12° e 16° livello hanno due Azioni Principali e armature poco più pesanti di quelle del 5°.
+
+**Esempio.** L’Eretico Élite del bestiario umano ha PV 33, pugnale da combattimento VA 13 1d6+3 e pistola semiautomatica VA 11 1d6+1. Al grado Medio: PV 50 (33 × 1,5), 2 AzP, pugnale 1d6+6 e pistola 1d6+4.
 
 I tipi sono: Fante Capitol, Soldato Bauhaus, Guerriero Mishima, Agente Cybertronic, Soldato Imperiale, Inquisitore della Fratellanza, Guardia di sicurezza, Criminale di strada, Mercenario, Eretico. Comandante e Campione si costruiscono con lo stesso procedimento ai livelli 12 e 16.
 
 | Valore | Minore | Semplice | Medio | Potente | Molto potente |
 | :---- | :---: | :---: | :---: | :---: | :---: |
-| PV | 19 | 28 | 37 | 47 | 56 |
+| Caratteristiche | Convertitore | Convertitore | Convertitore | Convertitore | Convertitore |
+| PV | Convertitore × 1 | × 1 | × 1,5 | × 5 | × 8,25 |
 | AR | Equipaggiamento (§4.4) | Equipaggiamento | Equipaggiamento | Equipaggiamento | Equipaggiamento |
-| VA | 11 | 13 | 15 | 17 | 19 |
-| VA Difese | 9 | 11 | 13 | 15 | 17 |
-| Iniziativa | 4 | 4 | 6 | 8 | 10 |
+| VA | Convertitore | Convertitore | Convertitore | Convertitore | Convertitore |
+| Danno | Arma +2 | Arma +2 | Arma +3 | Arma +5 | Arma +6 |
 | Passo | 6 Q | 6 Q | 6 Q | 6 Q | 6 Q |
-| AzP | 1 | 1 | 1 | 2 | 2 |
+| AzP | 1 | 2 | 2 | 2 | 2 |
 
-**Sensi:** quelli umani. **Attacchi:** quelli delle armi (§4.4). **Danno ricevuto:** normale.
+**Sensi:** quelli umani. **Attacchi:** quelli delle armi (§4.4), con il bonus di grado. **Danno ricevuto:** normale.
 
 ## **3.3 Insettoide**
 
@@ -285,9 +356,11 @@ I tipi sono: Fante Capitol, Soldato Bauhaus, Guerriero Mishima, Agente Cybertron
 | FOR | 5 | 6 | 6 | 7 | 8 |
 | COS | 5 | 6 | 7 | 7 | 8 |
 | DES | 7 | 8 | 8 | 9 | 9 |
-| INT SAG CAR | 2 / 5 / 1 | 2 / 5 / 1 | 2 / 6 / 1 | 3 / 6 / 1 | 3 / 7 / 1 |
-| PV | 17 | 25 | 33 | 42 | 50 |
-| AR | 2 | 4 | 4 | 4 | 4 |
+| INT | 2 | 2 | 2 | 3 | 3 |
+| SAG | 5 | 5 | 6 | 6 | 7 |
+| CAR | 1 | 1 | 1 | 1 | 1 |
+| PV | 19 | 38 | 59 | 162 | 239 |
+| AR | 2 | 3 | 4 | 5 | 6 |
 | Natura AR | Naturale | Naturale | Naturale | Naturale | Naturale |
 | VA Mandibole | 11 | 13 | 15 | 17 | 19 |
 | VA Difese | 9 | 11 | 13 | 15 | 17 |
@@ -298,18 +371,24 @@ I tipi sono: Fante Capitol, Soldato Bauhaus, Guerriero Mishima, Agente Cybertron
 | Iniziativa | 5 | 5 | 7 | 9 | 11 |
 | Passo Q | 8 | 8 | 8 | 8 | 8 |
 | Spazio occupato | 1 Q | 1 Q | 1 Q | 1 Q | 1 Q |
-| AzP | 1 | 1 | 1 | 2 | 2 |
+| AzP | 1 | 2 | 2 | 2 | 2 |
 | **Attacco** | **Minore** | **Semplice** | **Medio** | **Potente** | **Molto potente** |
-| Mandibole | 1d6+1 | 1d8+1 | 1d8+2 | 1d8+2 | 1d10+2 |
+| Mandibole | 1d8+1 | 1d8+2 | 2d6+1 | 2d8+1 | 2d8+2 |
 | Natura | Naturale | Naturale | Naturale | Naturale | Naturale |
 | Portata Q | 1 | 1 | 1 | 1 | 1 |
 | AC | 1 | 1 | 1 | 1 | 1 |
+| **Abilità** | **Minore** | **Semplice** | **Medio** | **Potente** | **Molto potente** |
+| Atletica | 11 | 13 | 15 | 17 | 19 |
+| Percezione | 9 | 11 | 13 | 15 | 17 |
+| Furtività | 7 | 9 | 11 | 13 | 15 |
+
+**Azioni.** AzP della tabella e 1 Azione di Movimento.
 
 **Movimento.** Passo 8 Q, Corsa 16 Q, Scatto 24 Q. **Arrampicata:** si muove su pareti verticali al Passo, senza Prova; sui soffitti con Passo dimezzato. Non nuota: in acqua profonda si applica il Giocatore §5.23.
 
 **Sensi.** Vista ordinaria. **Vibrazioni:** percepisce le creature che si muovono a contatto con il suolo entro 6 Q anche senza vederle; contro di loro non subisce le penalità di Accecato o dell’oscurità per individuarle e attaccarle. Una creatura ferma, in volo o sospesa non viene percepita in questo modo.
 
-**Danno ricevuto.** Normale. **Immunità:** Terrorizzato, salvo effetti magici.
+**Contromisure.** Nessuna. **Danno ricevuto.** Normale. **Immunità:** Terrorizzato, salvo effetti magici.
 
 **Comportamento.** Attacca in gruppo il bersaglio più vicino; ogni Insettoide oltre il primo ingaggiato con lo stesso bersaglio applica la Superiorità numerica come i personaggi. Fugge quando metà del gruppo è a 0 PV, salvo un ordine o un modulo che lo impedisca.
 
@@ -322,9 +401,11 @@ I tipi sono: Fante Capitol, Soldato Bauhaus, Guerriero Mishima, Agente Cybertron
 | FOR | 5 | 6 | 7 | 8 | 9 |
 | COS | 5 | 6 | 6 | 7 | 8 |
 | DES | 8 | 8 | 9 | 9 | 10 |
-| INT SAG CAR | 3 / 6 / 1 | 3 / 6 / 1 | 3 / 7 / 1 | 4 / 7 / 2 | 4 / 8 / 2 |
-| PV | 17 | 25 | 33 | 42 | 50 |
-| AR | 1 | 2 | 2 | 2 | 2 |
+| INT | 3 | 3 | 3 | 4 | 4 |
+| SAG | 6 | 6 | 7 | 7 | 8 |
+| CAR | 1 | 1 | 1 | 2 | 2 |
+| PV | 19 | 38 | 59 | 162 | 239 |
+| AR | 1 | 2 | 3 | 4 | 5 |
 | Natura AR | Naturale | Naturale | Naturale | Naturale | Naturale |
 | VA Morso | 11 | 13 | 15 | 17 | 19 |
 | VA Ragnatela | 10 | 12 | 14 | 16 | 18 |
@@ -336,13 +417,19 @@ I tipi sono: Fante Capitol, Soldato Bauhaus, Guerriero Mishima, Agente Cybertron
 | Iniziativa | 6 | 6 | 8 | 10 | 12 |
 | Passo Q | 6 | 6 | 6 | 6 | 6 |
 | Spazio occupato | 1 Q | 1 Q | 1 Q | 2 × 2 Q | 2 × 2 Q |
-| AzP | 1 | 1 | 1 | 2 | 2 |
+| AzP | 1 | 2 | 2 | 2 | 2 |
 | **Attacco** | **Minore** | **Semplice** | **Medio** | **Potente** | **Molto potente** |
-| Morso | 1d6+1 | 1d6+2 | 1d8+2 | 1d8+2 | 1d10+2 |
+| Morso | 1d6+2 | 1d8+2 | 2d6+2 | 2d8+2 | 2d8+3 |
 | Natura | Naturale | Naturale | Naturale | Naturale | Naturale |
 | Portata Q | 1 | 1 | 1 | 2 | 2 |
 | Ragnatela, gittata Q | 6 | 6 | 9 | 9 | 12 |
 | AC | 1 | 1 | 1 | 1 | 1 |
+| **Abilità** | **Minore** | **Semplice** | **Medio** | **Potente** | **Molto potente** |
+| Furtività | 12 | 14 | 16 | 18 | 20 |
+| Atletica | 10 | 12 | 14 | 16 | 18 |
+| Percezione | 10 | 12 | 14 | 16 | 18 |
+
+**Azioni.** AzP della tabella e 1 Azione di Movimento. La Ragnatela costa un’AzP al posto di un Morso.
 
 **Ragnatela.** Attacco a distanza con 1 AzP, senza danno. Il bersaglio colpito effettua una PS di Riflessi: con successo evita l’effetto; con fallimento è Immobilizzato (Giocatore §5.18). Liberarsi richiede 1 AzP e una Prova di Atletica o una Prova di Forza contro il VA della Ragnatela; un alleato adiacente può liberarlo con 1 AzP e la stessa Prova, oppure tagliando i fili con un’arma da taglio senza Prova. Il fuoco libera automaticamente, applicando al bersaglio la propria proprietà. Una sola Ragnatela per bersaglio alla volta.
 
@@ -350,7 +437,7 @@ I tipi sono: Fante Capitol, Soldato Bauhaus, Guerriero Mishima, Agente Cybertron
 
 **Sensi.** **Visione al buio:** non subisce le penalità dell’oscurità ordinaria. **Vibrazioni nella tela:** percepisce ogni creatura che tocca i propri fili entro 12 Q.
 
-**Danno ricevuto.** Normale. Il Fuoco gli applica sempre la PS per Incendiato anche quando il danno non supera l’Armatura, senza perdita di PV.
+**Contromisure.** Nessuna. **Danno ricevuto.** Normale. Il Fuoco gli applica sempre la PS per Incendiato anche quando il danno non supera l’Armatura, senza perdita di PV.
 
 **Comportamento.** Prepara la zona con i fili, attende in alto o in un passaggio stretto, usa la Ragnatela sul bersaglio più pericoloso e morde quello Immobilizzato. Si ritira lungo pareti e soffitti quando scende sotto un quarto dei PV.
 
@@ -363,9 +450,11 @@ I tipi sono: Fante Capitol, Soldato Bauhaus, Guerriero Mishima, Agente Cybertron
 | FOR | 7 | 8 | 8 | 9 | 10 |
 | COS | 7 | 8 | 8 | 9 | 10 |
 | DES | 5 | 5 | 6 | 6 | 7 |
-| INT SAG CAR | 3 / 5 / 3 | 3 / 5 / 3 | 4 / 5 / 3 | 4 / 6 / 3 | 5 / 6 / 4 |
-| PV | 23 | 34 | 45 | 56 | 67 |
-| AR | 1 | 2 | 2 | 2 | 2 |
+| INT | 3 | 3 | 4 | 4 | 5 |
+| SAG | 5 | 5 | 5 | 6 | 6 |
+| CAR | 3 | 3 | 3 | 3 | 4 |
+| PV | 23 | 46 | 72 | 198 | 292 |
+| AR | 1 | 1 | 2 | 3 | 4 |
 | Natura AR | Naturale | Naturale | Naturale | Naturale | Naturale |
 | VA Artigli | 11 | 13 | 15 | 17 | 19 |
 | VA Difese | 7 | 9 | 11 | 13 | 15 |
@@ -376,12 +465,18 @@ I tipi sono: Fante Capitol, Soldato Bauhaus, Guerriero Mishima, Agente Cybertron
 | Iniziativa | 3 | 3 | 5 | 7 | 9 |
 | Passo Q | 6 | 6 | 6 | 6 | 6 |
 | Spazio occupato | 1 Q | 1 Q | 1 Q | 1 Q | 1 Q |
-| AzP | 1 | 1 | 1 | 2 | 2 |
+| AzP | 1 | 2 | 2 | 2 | 2 |
 | **Attacco** | **Minore** | **Semplice** | **Medio** | **Potente** | **Molto potente** |
-| Artigli | 1d6+2 | 1d8+1 | 1d8+2 | 1d8+2 | 1d10+2 |
+| Artigli | 1d8+3 | 1d10+3 | 2d6+3 | 2d8+3 | 2d8+4 |
 | Natura | Naturale | Naturale | Naturale | Naturale | Naturale |
 | Portata Q | 1 | 1 | 1 | 1 | 1 |
 | AC | 1 | 1 | 1 | 1 | 1 |
+| **Abilità** | **Minore** | **Semplice** | **Medio** | **Potente** | **Molto potente** |
+| Atletica | 11 | 13 | 15 | 17 | 19 |
+| Percezione | 9 | 11 | 13 | 15 | 17 |
+| Sopravvivenza | 9 | 11 | 13 | 15 | 17 |
+
+**Azioni.** AzP della tabella e 1 Azione di Movimento.
 
 **Artigli.** Si usano come un’arma ravvicinata leggera; consentono le Manovre del §5.12 del Giocatore che non richiedono un’arma con lama o un’asta. Con una Carica riuscita il colpo applica Sbalzante 1 (Giocatore §5.24).
 
@@ -389,7 +484,7 @@ I tipi sono: Fante Capitol, Soldato Bauhaus, Guerriero Mishima, Agente Cybertron
 
 **Sensi.** **Olfatto:** segue una traccia fino a un giorno di età; +2 alle Prove di Percezione basate sull’odore entro 30 Q.
 
-**Danno ricevuto.** Normale.
+**Contromisure.** Nessuna. **Danno ricevuto.** Normale.
 
 **Comportamento.** Carica il bersaglio più vicino o quello che lo ha ferito per ultimo; non usa le Difese se può attaccare. Usa le armi che trova, con i limiti del §4.4.
 
@@ -405,7 +500,7 @@ Un modulo si somma a una base e ne modifica i valori o aggiunge capacità. Ogni 
 | Basi | Le basi a cui si applica. |
 | Effetto | Le modifiche in numeri, con i rimandi alle regole. |
 
-Lo stesso modulo si applica una sola volta, salvo indicazione. Gli effetti che modificano la stessa voce si sommano, salvo che la regola indichi di usare il migliore. Il totale dei costi non supera +2 (§2.4).
+Lo stesso modulo si applica una sola volta, salvo indicazione. Gli effetti che modificano la stessa voce si sommano, salvo che la regola indichi di usare il migliore. Il totale dei costi non supera +2 (§2.4). Le capacità dei moduli vanno nella riga Capacità della scheda.
 
 ## **4.2 Corrotto dall’Oscura Simmetria**
 
@@ -433,7 +528,7 @@ La creatura è uno strumento dichiarato dell’Oscura Simmetria. L’AR magica s
 
 ### **4.2.4 Manifestazioni oscure**
 
-Le Manifestazioni sono i segni visibili della corruzione. Non si scelgono due volte.
+Le Manifestazioni sono i segni visibili della corruzione. Non si scelgono due volte. Su una creatura senza attacchi naturali, come un umano, «attacchi naturali» indica gli attacchi in mischia.
 
 | Manifestazione minore | Effetto |
 | :---- | :---- |
@@ -449,9 +544,9 @@ Le Manifestazioni sono i segni visibili della corruzione. Non si scelgono due vo
 | Ferite che non si chiudono | Gli attacchi naturali hanno Sanguinante 1; dal grado Potente Sanguinante 2. |
 | Fiamma nera | Gli attacchi naturali hanno la proprietà Fuoco: PS di Riflessi o Incendiato (Giocatore §5.24). |
 | Sguardo del vuoto | 1 AzP, un bersaglio entro 6 Q che lo veda: PS di Volontà o Stordito (Giocatore §5.18). Una volta per Round. |
-| Carne che ricorda | All’inizio della propria Iniziativa recupera 2 PV, 3 dal grado Potente, se ha almeno 1 PV. Non recupera nel Round in cui ha subito danno Magico, Etereo o da un’arma Purificatrice. |
+| Carne che ricorda | All’inizio della propria Iniziativa recupera 3 PV, 10 dal grado Potente, se ha almeno 1 PV. Non recupera nel Round in cui ha subito danno Magico, Etereo o da un’arma Purificatrice. |
 | Grido dell’Oscura Simmetria | 1 AzP, una volta per Scena: ogni personaggio entro 9 Q effettua una PS di Volontà; con fallimento è Terrorizzato. Chi è già Terrorizzato è anche Assordato. |
-| Ritorno | La prima volta in una Scena che arriva a 0 PV, all’Iniziativa successiva si rialza con PV pari a un terzo dei massimi. Non si attiva se l’ultimo danno era Magico, Etereo o da un’arma Purificatrice. |
+| Ritorno | La prima volta in una Scena che arriva a 0 PV, all’Iniziativa successiva si rialza con PV pari a un terzo dei massimi, senza le Ferite di quell’ultimo colpo. Non si attiva se l’ultimo danno era Magico, Etereo o da un’arma Purificatrice. |
 
 ### **4.2.5 Esposizione alla Corruzione**
 
@@ -486,11 +581,11 @@ L’esposizione non modifica i danni né gli Stati dell’attacco. Gli esiti e l
 
 **Carapace.** L’AR naturale aumenta di 2, sempre non magica. Le basi con Passo 8 Q scendono a 6 Q.
 
-**Arti in più.** Dopo aver attaccato con un’AzP, la creatura effettua un secondo attacco naturale con −2 VA contro lo stesso bersaglio o un altro entro portata, senza spendere Azioni. Una volta per Round. Il Boss non moltiplica questo attacco con le proprie AzP aggiuntive.
+**Arti in più.** Dopo aver attaccato con un’AzP, la creatura effettua un attacco naturale aggiuntivo con −2 VA contro lo stesso bersaglio o un altro entro portata, senza spendere Azioni. Una volta per Round. Il Boss non moltiplica questo attacco con la propria AzP in più.
 
 **Veleno.** Un attacco naturale scelto alla costruzione applica il veleno quando infligge almeno 1 danno dopo l’Armatura. Il bersaglio effettua una PS di Tempra: con successo dimezza per eccesso il danno periodico (Giocatore §5.18, «Avvelenato»). Il veleno è Avvelenato per 1+1d3 Round, con 1d4 danni all’Iniziativa della creatura, che ignorano l’Armatura; dal grado Medio 1d6. Modificatore alla PS: 0; −2 dal grado Potente. Antidoto: un kit di pronto soccorso e una Prova di Medicina con 1 AzP termina lo Stato.
 
-**Rigenerazione.** All’inizio della propria Iniziativa recupera PV se ne ha almeno 1: 1 PV per Minore e Semplice, 2 per Medio, 3 per Potente e Molto potente. Il danno da Fuoco o Corrosivo subito nel Round precedente impedisce la rigenerazione per quel Round. Non si somma con Carne che ricorda (§4.2.4): si usa la maggiore.
+**Rigenerazione.** All’inizio della propria Iniziativa recupera PV se ne ha almeno 1: 2 PV per il Minore, 3 per il Semplice, 5 per il Medio, 10 per il Potente, 15 per il Molto potente (circa un ventesimo dei PV del grado). Il danno da Fuoco o Corrosivo subito nel Round precedente impedisce la rigenerazione per quel Round. Non si somma con Carne che ricorda (§4.2.4): si usa la maggiore.
 
 **Sangue acido.** Quando un attacco ravvicinato le infligge almeno 1 danno dopo l’Armatura, l’attaccante adiacente subisce 1d4 danni Naturali con la proprietà Corrosivo (Giocatore §5.24); l’arma usata effettua invece la PS Integrità del Corrosivo (Manuale degli Armamenti, §7.2.1). Una volta per attaccante e per Round.
 
@@ -520,7 +615,7 @@ L’esposizione non modifica i danni né gli Stati dell’attacco. Gli esiti e l
 | Potente | Armatura civile pesante | 5 | Mitragliatore leggero, Spadone | 1d8+2, 2d6+1 |
 | Molto potente | Armatura civile pesante e scudo medio | 5–7 | Mitragliatore pesante, Ascia bipenne | 1d10+3, 2d6+1 |
 
-I danni indicati sono quelli del catalogo, prima del bonus di Caratteristica; nelle schede i bonus sono già compresi negli attacchi (Giocatore §5.13). I requisiti di Forza delle armature e degli scudi valgono anche per le creature (Manuale degli Armamenti, §7.1.6).
+I danni indicati sono quelli del catalogo, prima del bonus di Caratteristica e del bonus di grado (§3.2): nelle schede entrambi sono già compresi negli attacchi (Giocatore §5.13). I requisiti di Forza delle armature e degli scudi valgono anche per le creature (Manuale degli Armamenti, §7.1.6).
 
 | Equipaggiamento | Costo |
 | :---- | :---: |
@@ -528,7 +623,7 @@ I danni indicati sono quelli del catalogo, prima del bonus di Caratteristica; ne
 | Della fascia del grado successivo | +½ |
 | Di due fasce sopra, oppure un’arma con Fuoco, Plasma o Laser in un grado Minore o Semplice | +1 |
 
-**Umanoide mostruoso con equipaggiamento.** Usa le armi ravvicinate con il VA degli Artigli e conserva gli Artigli come seconda arma naturale. Con le armi a distanza subisce −2 VA. Un’armatura sostituisce l’AR naturale se è maggiore; altrimenti l’AR naturale aumenta di 1. Gli umani usano l’equipaggiamento dei personaggi senza limitazioni.
+**Umanoide mostruoso con equipaggiamento.** Usa le armi ravvicinate con il VA degli Artigli e conserva gli Artigli come seconda arma naturale; il danno dell’arma riceve il bonus di grado del §3.2. Con le armi a distanza subisce −2 VA. Un’armatura sostituisce l’AR naturale se è maggiore; altrimenti l’AR naturale aumenta di 1. Gli umani usano l’equipaggiamento dei personaggi senza limitazioni.
 
 ## **4.5 Stati, nature e proprietà impiegati**
 
@@ -546,6 +641,7 @@ I moduli e le basi usano soltanto Stati, nature del danno e proprietà del Manua
 | Danno Magico ed Etereo | Posseduto, Consacrato | Giocatore §5.24 |
 | Corrosivo, Gelo, Fuoco, Sbalzante, Sbilanciante | Sangue acido, Manifestazioni, Artigli, Balzo | Giocatore §5.24 |
 | Esposizione alla Corruzione | Corrotto | Giocatore §5.20.1 |
+| Ferite e Menomazioni | Tutte le creature | Giocatore §5.14, §5.14.1 |
 
 **Nessuno Stato nuovo.** Arrampicata, Vibrazioni, Visione al buio, Olfatto, Sensi oscuri e Scavo sono capacità delle creature, non Stati: si applicano soltanto a chi le possiede.
 
@@ -561,7 +657,12 @@ I moduli e le basi usano soltanto Stati, nature del danno e proprietà del Manua
 
 ## **A.1 Metodo**
 
-I valori della scala vengono da personaggi di riferimento costruiti con le regole del Giocatore 0.45 dal motore dell’app SIMPLY RPG, e misurati come li misura il convertitore «PG → nemico» del Tavolo del Master. Per ogni personaggio si considerano:
+I valori della scala vengono da due misure, dichiarate qui perché il Direttore possa giudicarle:
+
+* **i personaggi di riferimento**, costruiti con le regole del Giocatore 0.45 dal motore dell’app SIMPLY RPG e misurati come li misura il convertitore «PG → nemico» del Tavolo del Master (A.2);
+* **un modello dello scontro** contro un gruppo di sette di quei personaggi (A.3).
+
+Per ogni personaggio si considerano:
 
 * PV massimi, AR, VA delle Difese e Iniziativa con una sessione nuova: PV pieni, nessuno Stato;
 * VA e danno dell’arma in mano, con il bonus di Caratteristica;
@@ -574,7 +675,7 @@ Gli archetipi sono quattro combattenti del bestiario umano: Fante Capitol (Solda
 * Talenti scelti da una lista di preferenza del ruolo;
 * dado dei PV dei Gradi al valore medio arrotondato per eccesso.
 
-Lo script tools/taratura_bestiario.mjs ripete la misura con le regole correnti. Ai livelli 2°, 5° e 8° i valori coincidono con quelli del bestiario umano del Tavolo del Master.
+Il gruppo di sette personaggi è composto dai quattro archetipi in parti uguali. Lo script tools/taratura_bestiario.mjs ripete la misura e il modello con le regole correnti. Ai livelli 2°, 5° e 8° i valori dei personaggi coincidono con quelli del bestiario umano del Tavolo del Master.
 
 ## **A.2 Personaggi di riferimento**
 
@@ -607,46 +708,91 @@ Valori dei singoli archetipi ai livelli di riferimento (PV · arma VA danno · V
 | 16 | 58 · M40 19 1d6+2 · 17 · 3 | 60 · Spada lunga 19 1d8+4 · 17 · 5 | 48 · P500 17 1d6+3 · 17 · 1 | 58 · Fucile d’assalto 20 1d6+4 · 17 · 1 |
 | 20 | 67 · M40 21 1d6+2 · 19 · 3 | 76 · Spada lunga 21 1d8+4 · 19 · 5 | 56 · P500 19 1d6+3 · 19 · 1 | 67 · Fucile d’assalto 22 1d6+4 · 19 · 1 |
 
-I valori della tabella del §2.1 sono quelli del livello di riferimento, arrotondati: AR 2,5 diventa 3, il danno medio è indicato con una formula di media vicina. Il grado Molto potente copre fino al 20° livello con i valori del 16°: al 20° i personaggi hanno circa 10 PV e 2 VA in più.
+Il grado Molto potente copre fino al 20° livello con i valori del 16°: al 20° i personaggi hanno circa 10 PV e 2 VA in più.
 
 ## **A.3 Modello dello scontro**
 
-La tabella del §2.3 usa un modello semplice, dichiarato qui perché il Direttore possa giudicarlo.
-
 | Voce | Formula |
 | :---- | :---- |
-| Probabilità di colpire | VA / 20, con l’1 che riesce e il 20 che fallisce sempre; VA 20 o più successo automatico (Giocatore §1.6–1.7). |
-| Danno per Round | AzP × probabilità di colpire × (danno medio − AR del bersaglio, almeno 1). |
-| Forza | PV × danno per Round contro l’avversario. |
-| Scontro equilibrato | N creature con N × √Forza(creatura) = √0,6 × 4 × √Forza(personaggio). |
+| Probabilità di colpire | VA / 20, con l’1 che riesce e il 20 che fallisce sempre; gli attacchi si tirano anche con VA 20 o più (Giocatore §1.6–1.7, A.78), quindi al massimo 19/20. |
+| Danno dopo l’Armatura | Media di (danno − AR del bersaglio, mai sotto 0) sui risultati dei dadi, colpo per colpo (Giocatore §5.13). Per esempio 2d6+2 contro AR 3: 6; 1d6+1 contro AR 5: 0,5. |
+| Parata | Il bersaglio tiene un’AzP e para il primo colpo del Round: con una Prova di Difese riuscita (probabilità VA Difese / 20) il danno di quel colpo è dimezzato per eccesso prima dell’Armatura (Giocatore §5.9). |
+| Danno del gruppo per Round | (7 × AzP dei personaggi − 1) × probabilità di colpire × danno dopo l’AR della creatura: il personaggio bersaglio para e non attacca. Le creature non parano; il Boss para il primo colpo del Round. |
+| Round di resistenza | PV della creatura / danno del gruppo per Round. |
+| Danno della creatura per Round | AzP × probabilità × danno dopo l’AR del personaggio, meno il risparmio della Parata sul primo colpo. |
+| Round per abbattere un PG | PV del personaggio / danno della creatura per Round, media sui quattro archetipi. |
+| Forza (bilancio del §2.3) | PV × danno per Round contro l’avversario, senza Difese: nello scontro di gruppo le Azioni vanno agli attacchi, per entrambe le parti. |
+| Facile, normale, duro | N creature con N × √Forza(creatura) = √r × 7 × √Forza(personaggio), con r = 0,3, 0,6 e 1 (legge del quadrato di Lanchester). |
 
-**Le Difese non entrano nel conto.** Costano un’Azione Principale (Giocatore §5.9): nel modello le Azioni vanno agli attacchi, per entrambe le parti. Il valore 0,6 dice che le creature hanno il 60% della forza del gruppo: il gruppo vince consumando risorse. La legge del quadrato (Lanchester) conta il vantaggio del numero: raddoppiare le creature quadruplica la loro forza complessiva.
+Il danno dopo l’Armatura colpo per colpo è più basso del «danno medio meno AR»: un 1d6+1 contro AR 5 fa danno soltanto con 5 o 6. Il modello conta anche questo.
 
-Valori calcolati, prima dell’arrotondamento del §2.3:
+Valori calcolati dallo script, prima dell’arrotondamento del §2.1:
+
+| Grado | PV | VA | VA Difese | AR | Danno | AzP | Round di resistenza contro 7 PG | Obiettivo | Round per abbattere un PG | senza Parata |
+| :---- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| Minore | 21 | 11 | 9 | 1 | 1d8+2 | 1 | 1,5 | 1–2 | 8,9 | 6,5 |
+| Semplice | 42 | 13 | 11 | 2 | 1d8+3 | 2 | 2,9 | 2–4 | 7 | 4,9 |
+| Medio | 65 | 15 | 13 | 3 | 2d6+2 | 2 | 4,5 | 3–6 | 6 | 4,2 |
+| Potente | 180 | 17 | 15 | 4 | 2d8+2 | 2 | 7 | 5–10 | 4,8 | 3,4 |
+| Molto potente | 265 | 19 | 17 | 5 | 2d8+3 | 2 | 10,1 | 6–15 | 4,6 | 3,2 |
+
+| Boss di grado | PV | Round di resistenza | Round per abbattere un PG | senza Parata | PG a terra in quei Round, con Parata | senza Parata |
+| :---- | :---: | :---: | :---: | :---: | :---: | :---: |
+| Minore | 160 | 12,1 | 8,9 | 6,5 | 1,4 | 1,9 |
+| Semplice | 160 | 12,1 | 7 | 4,9 | 1,7 | 2,5 |
+| Medio | 155 | 12,1 | 6 | 4,2 | 2 | 2,9 |
+| Potente | 290 | 12,1 | 4,8 | 3,4 | 2,5 | 3,5 |
+| Molto potente | 295 | 12,1 | 4,6 | 3,2 | 2,6 | 3,7 |
+
+| Grado | Facile | Normale | Duro |
+| :---- | :---: | :---: | :---: |
+| Minore | 3,3 | 4,7 | 6 |
+| Semplice | 1,9 | 2,7 | 3,5 |
+| Medio | 1,5 | 2,1 | 2,7 |
+| Potente | 1 | 1,5 | 1,9 |
+| Molto potente | 0,8 | 1,2 | 1,5 |
+
+Creature per uno scontro normale contro sette personaggi di ogni livello di riferimento:
 
 | Livello dei PG | Minore | Semplice | Medio | Potente | Molto potente |
 | :---: | :---: | :---: | :---: | :---: | :---: |
-| 2 | 3,1 | 1,7 | 1,2 | 0,7 | 0,6 |
-| 5 | 4,9 | 2,8 | 2 | 1,2 | 0,9 |
-| 8 | 6,5 | 3,9 | 2,7 | 1,6 | 1,2 |
-| 12 | 11 | 6,5 | 4,6 | 2,7 | 2,1 |
-| 16 | 13,6 | 8,4 | 5,9 | 3,5 | 2,7 |
+| 2 | 4,7 | 1,7 | 1 | 0,4 | 0,2 |
+| 5 | 7,3 | 2,7 | 1,5 | 0,6 | 0,4 |
+| 8 | 9,6 | 3,6 | 2,1 | 0,9 | 0,5 |
+| 12 | 16,1 | 6 | 3,5 | 1,5 | 0,9 |
+| 16 | 19,8 | 7,5 | 4,4 | 1,9 | 1,2 |
 
-**Boss.** Perché un’unica creatura valga lo scontro equilibrato serve una Forza pari a circa 9,6 volte quella di un personaggio. Triplicando le Azioni Principali e i PV la Forza cresce di 9 volte: il resto lo danno la resistenza agli Stati e il cambio di fase (§2.5).
+Nel §2.3 un valore sotto 0,75 diventa un trattino.
+
+**Che cosa il modello non conta.** Copertura, distanza, Manovre, Talenti situazionali, Stati, Ferite oltre gli 0 PV, cure e Punti Eroe. Sono il margine del Direttore: tutti, tranne le Ferite delle creature, accorciano lo scontro a favore del gruppo che gioca bene.
 
 ## **A.4 Peso delle basi**
 
-Rapporto fra la forza di una base e quella del suo grado, contro i personaggi del livello di riferimento (1 = uguale).
+Rapporto fra la forza di una base e quella del suo grado, contro i personaggi del livello di riferimento (1 = uguale), con le due misure della base.
 
 | Base | Minore | Semplice | Medio | Potente | Molto potente |
 | :---- | :---: | :---: | :---: | :---: | :---: |
 | Umano | 1 | 1 | 1 | 1 | 1 |
-| Insettoide | 0,8 | 0,9 | 0,9 | 0,9 | 0,9 |
-| Aracnoide | 0,8 | 0,9 | 0,9 | 0,9 | 0,9 |
-| Umanoide mostruoso | 1,1 | 1,1 | 1,1 | 1,1 | 1,1 |
+| Insettoide | 0,98 | 0,99 | 1,03 | 1,08 | 1,10 |
+| Aracnoide | 0,86 | 0,86 | 0,95 | 0,95 | 0,95 |
+| Umanoide mostruoso | 1,14 | 1,02 | 0,99 | 0,94 | 0,93 |
 
-L’Insettoide compensa con il numero e con il Movimento; l’Aracnoide con la Ragnatela e l’Iniziativa, che il modello non conta. L’Umanoide mostruoso è un poco più forte, ma ha le Difese più basse della scala.
+| Base | Round di resistenza (Minore · Semplice · Medio · Potente · Molto potente) | Round per abbattere un PG |
+| :---- | :---- | :---- |
+| Insettoide | 1,7 · 3,5 · 5,7 · 9,3 · 13,6 | 11,1 · 9,3 · 7,4 · 5,6 · 5,2 |
+| Aracnoide | 1,3 · 2,6 · 4,1 · 6,3 · 9,1 | 11,2 · 9,3 · 6 · 4,8 · 4,6 |
+| Umanoide mostruoso | 1,6 · 2,5 · 3,8 · 5,6 · 7,9 | 7,4 · 5,4 · 5 · 4,2 · 4,1 |
+
+L’Insettoide resiste più a lungo grazie alla chitina e colpisce più piano; l’Aracnoide compensa con la Ragnatela e l’Iniziativa, che il modello non conta; l’Umanoide mostruoso colpisce più forte ma ha le Difese più basse della scala.
 
 ## **A.5 Riprodurre la taratura**
 
-Con l’app installata: node tools/taratura_bestiario.mjs. Lo script ricostruisce i personaggi con le regole correnti e stampa le tabelle A.2, A.3 e A.4. Se le regole cambiano, si ripete la misura e si aggiornano le tabelle dei Capitoli 2 e 3.
+Con l’app installata: node tools/taratura_bestiario.mjs. Lo script ricostruisce i personaggi con le regole correnti e stampa:
+
+* la tabella A.2 e i valori dei singoli archetipi;
+* per grado i Round di resistenza contro sette personaggi e i Round per abbattere un personaggio, con e senza Parata;
+* i Boss, il bilancio facile, normale e duro e la tabella dei gruppi misti;
+* le basi, con il peso e le due misure;
+* il bestiario umano scalato: moltiplicatore dei PV e bonus di grado al danno.
+
+Esce con errore se un grado o un Boss cade fuori dall’intervallo dei Round di resistenza. Se le regole cambiano, si ripete la misura e si aggiornano le tabelle dei Capitoli 2 e 3.
