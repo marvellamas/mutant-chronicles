@@ -2210,6 +2210,11 @@
     "senz_armi": "FOR",
     "magia": "SAG",
     "proprieta_escluse": ["Danno calibrato"],
+    "esplosivi": {
+      "senza_bonus": true,
+      "TODO(Davide)": "per-davide A.86: il danno di granate e razzi (Armamenti §7.20.3, §7.20.4; munizioni di riferimento dei lanciatori, §7.8) riceve il bonus di Caratteristica del §5.13? Il §7.20.3 dice che con un lanciagranate «la granata stabilisce danno, AC, RS e proprietà», e il danno è Naturale e si tira una volta per esplosione. Nel frattempo: danno della tabella, senza bonus.",
+      "_nota": "Munizioni esplosive: granate e razzi, con lanciatore (armi con danno_da_munizione) e a mano (granate con «esplosivo»). Con «senza_bonus» il danno è quello della tabella della munizione, senza il bonus di Caratteristica (src/equipaggiamento.js → profiloArma)."
+    },
     "fonte": "Giocatore §5.13 (28/09); Magia sez. 7 (SAG per il danno degli Incantesimi, stessi tetti); E&L del 29/09, risposta 12 (A.22)",
     "_nota": "Bonus = minore fra la fascia del valore della Caratteristica e il tetto del livello del personaggio; mai sotto 0. Si applica a ogni colpo o applicazione di danno, prima del moltiplicatore, delle Difese e dell’Armatura. Caratteristica: quella dell’Abilità dell’arma (§4.3; FOR per Armi da guerra e Corpo a corpo, DES per Armi da mischia, da lancio e leggere, INT per Armi medie), salvo «caratteristica_per_abilita» (Armi pesanti: INT, mentre la Prova per colpire conserva FOR); FOR senz’armi; SAG per la magia e le Risorse Interiori. Il §5.13 dice «FOR o DES secondo l’arma ravvicinata; DES o INT secondo l’arma a distanza» senza tabella: la Caratteristica dell’Abilità ne dà esattamente le coppie. «proprieta_escluse»: le esclusioni espresse delle schede (Danno calibrato, SA30 e SA50F)."
   },

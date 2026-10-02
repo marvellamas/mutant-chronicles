@@ -72,7 +72,9 @@ export function infoRicarica(voci, dati) {
       // prima le munizioni ordinarie, poi le speciali (l'ordine d'inserimento lo sceglie il giocatore al tavolo)
       .sort((x, y) => Number(x.def.famiglia !== 'Munizioni ordinarie') - Number(y.def.famiglia !== 'Munizioni ordinarie') || Number(!riferimento(x)) - Number(!riferimento(y)))
       .map((m) => ({ uid: m.uid, nome: m.nome, quantita: m.voce.quantita, rif: m.def.rif, ...(eGranata(m.def) || m.def.esplosivo ? { granata: true } : {}), ...(riferimento(m) ? { riferimento: true } : {}) }));
-    out[uid] = { ...info, capacita: def.munizioni?.capacita ?? null, scorte, ...(scorte.some((x) => x.granata) ? { granate: true } : {}) };
+    // §7.8: la munizione di riferimento nel catalogo (le granate caricate in partenza sono quella munizione)
+    const rifRiferimento = def.munizioni?.riferimento ? cat.oggetti.find((o) => eScorta(o) && [o.nome, ...(o.nomi_alternativi ?? [])].includes(def.munizioni.riferimento))?.rif ?? null : null;
+    out[uid] = { ...info, capacita: def.munizioni?.capacita ?? null, scorte, ...(scorte.some((x) => x.granata) || (rifRiferimento && eGranata(cat.perRif.get(rifRiferimento))) ? { granate: true, rifRiferimento } : {}) };
   };
   // le granate da lancio non hanno caricatore: si lanciano dalla quantità della voce (src/sessione.js → consumaColpi)
   for (const a of risolte.filter((x) => x.tipo === 'arma_distanza' && x.def && !eGranata(x.def))) perArma(a.uid, a.def);

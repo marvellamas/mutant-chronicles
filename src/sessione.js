@@ -391,9 +391,22 @@ export function consumaColpi(sessione, uid, n, m) {
 }
 
 /**
+ * Granate della carica di partenza che tornano nell'Inventario cambiando tipo (§7.20.3): il lanciatore le ha
+ * dall'acquisto, sono la sua munizione di riferimento (§7.8) e non vengono da una voce. { rif, quantita } o null.
+ * Le aggiunge alle scelte src/equipaggiamento.js → restituisciGranate.
+ */
+export function granateDiPartenza(sessione, uid, voceUid, m) {
+  const s = allineaSessione(sessione, m);
+  const info = m.ricarica?.[uid];
+  const x = s.munizioni[uid];
+  if (!info?.granate || !info.rifRiferimento || !x || x.tipo || x.colpi <= 0 || x.tipo === voceUid) return null;
+  return { rif: info.rifRiferimento, quantita: x.colpi };
+}
+
+/**
  * Granata da caricare in un lanciagranate (§7.20.3; un tipo alla volta). Cambiare tipo scarica il lanciatore:
- * le granate dentro tornano alla loro voce dell'Inventario; quelle della carica di partenza (la munizione di
- * riferimento, che non viene da una voce) si tolgono. Poi «Ricarica» inserisce il tipo scelto.
+ * le granate dentro tornano alla loro voce dell'Inventario; quelle della carica di partenza tornano come munizione
+ * di riferimento (granateDiPartenza, nelle scelte). Poi «Ricarica» inserisce il tipo scelto.
  */
 export function scegliGranata(sessione, uid, voceUid, m) {
   const s = allineaSessione(sessione, m);

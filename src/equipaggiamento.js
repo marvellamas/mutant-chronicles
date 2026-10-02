@@ -400,6 +400,19 @@ export function applicaMunizione(w, mun) {
 }
 
 /**
+ * Granate della carica di partenza di un lanciatore che tornano nell'Inventario (src/sessione.js →
+ * granateDiPartenza): si aggiungono alla prima voce di quella munizione (non nel deposito), altrimenti a una voce
+ * nuova con `uidNuovo`. Restituisce la lista nuova.
+ */
+export function restituisciGranate(voci, { rif, quantita }, uidNuovo, dati) {
+  const lista = normalizzaEquipaggiamento(voci);
+  const i = lista.findIndex((v) => v.rif === rif && v.stato !== STATO_DEPOSITO);
+  if (i >= 0) return lista.map((v, j) => (j === i ? { ...v, quantita: (Number.isInteger(v.quantita) ? v.quantita : 1) + quantita } : v));
+  const def = catalogo(dati).perRif.get(rif);
+  return [...lista, { uid: uidNuovo, rif, stato: statoIniziale(def?.tipo, lista, dati), quantita, note: '' }];
+}
+
+/**
  * Granate da lancio della lista (§7.20.3): uid → quantità della voce. Non hanno caricatore: un lancio a mano
  * consuma una granata della voce (sessione → scorte), come una ricarica di un lanciagranate.
  */
@@ -1060,7 +1073,11 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     const dannoBase = d?.danno ?? (o.voce.personalizzato?.danno ? { una_mano: o.voce.personalizzato.danno, due_mani: null } : null);
     // §5.13: bonus di Caratteristica al danno (Caratteristica dell'Abilità dell'arma, Armi pesanti INT),
     // salvo le esclusioni espresse delle schede (Danno calibrato)
-    const bonusCaratteristica = bonusCaratteristicaArma(nomeAbilita, d?.proprieta ?? []);
+    // munizioni esplosive (granate e razzi, Armamenti §7.20.3–7.20.4): regole.json → danno_caratteristica.esplosivi,
+    // in attesa di Davide (A.86) danno della tabella senza bonus di Caratteristica
+    const esplosiva = !!(d?.danno_da_munizione || d?.esplosivo) && regoleCar?.esplosivi?.senza_bonus === true;
+    const bonusCar0 = bonusCaratteristicaArma(nomeAbilita, d?.proprieta ?? []);
+    const bonusCaratteristica = bonusCar0 && esplosiva ? { ...bonusCar0, bonus: 0, esclusoDa: 'Munizione esplosiva (danno della tabella, A.86)' } : bonusCar0;
     const dannoCar = bonusCaratteristica?.bonus ?? 0;
     const proprietaParata = (d?.proprieta ?? []).filter((p) => p.effetto?.parata_va);
     const parataVa = proprietaParata.reduce((s, p) => s + p.effetto.parata_va, 0);

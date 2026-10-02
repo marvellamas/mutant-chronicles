@@ -5,7 +5,7 @@
 import { caricaDati } from '../rules.js';
 import { formattaErrore, trovaTodo } from '../validate.js';
 import { calcolaScheda, validaLivello } from '../calc.js';
-import { separaEsemplare } from '../equipaggiamento.js';
+import { separaEsemplare, restituisciGranate } from '../equipaggiamento.js';
 import {
   nuoveScelte, normalizza, applicaModifica, anteprima, serializza, nomeFileEsportazione, nomeFileCalendario, deserializzaPersonaggio, applicaLivello, annullaUltimoLivello,
   CAMPI_ANAGRAFICA,
@@ -26,7 +26,7 @@ import { preparaStampa, preparaTab, normalizzaOpzioniStampa } from '../stampa.js
 import { renderTab, tabFissi, ALIAS_TAB } from './tab.js';
 import {
   massimiSessione, allineaSessione, variaSessione, modificaSessione, commutaStato, commutaCondizioneOggetto, commutaTalento, commutaBonusTalenti, impostaCondizioneArma, riparaOggetto, spendiPmLancio, ricaricaMatrice, attivaArtefatto, attivaTecnicaSessione, nuovoRoundSessione, terminaTecnicaSessione, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
-  penalitaSessione, variaMunizioni, consumaColpi, scegliGranata, ricaricaArma, variaChroma, variaIntegrita, variaNec,
+  penalitaSessione, variaMunizioni, consumaColpi, scegliGranata, granateDiPartenza, ricaricaArma, variaChroma, variaIntegrita, variaNec,
 } from '../sessione.js';
 import { conOrdinale } from '../lingua.js';
 import { normalizzaCalendario, calendarioAttivo, attivaCalendario, disattivaCalendario, contaNote, fileCalendario, leggiFileCalendario } from '../calendario.js';
@@ -840,7 +840,15 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       munizioni: (uid, campo, delta) => cambiaSessione(variaMunizioni(stato.sessione, uid, campo, delta, massimi)),
       ricarica: (uid) => cambiaSessione(ricaricaArma(stato.sessione, uid, massimi)),
       // §7.20.3: granata da caricare in un lanciagranate (un tipo alla volta)
-      scegliGranata: (uid, voceUid) => cambiaSessione(scegliGranata(stato.sessione, uid, voceUid, massimi)),
+      // le granate della carica di partenza tornano nell'Inventario come munizione di riferimento (§7.8)
+      scegliGranata: (uid, voceUid) => {
+        const ritorno = granateDiPartenza(stato.sessione, uid, voceUid, massimi);
+        if (!ritorno) { cambiaSessione(scegliGranata(stato.sessione, uid, voceUid, massimi)); return; }
+        stato.sessione = scegliGranata(stato.sessione, uid, voceUid, massimi);
+        stato.scelte = applicaModifica(stato.scelte, { equipaggiamento: restituisciGranate(stato.scelte.equipaggiamento, ritorno, `e${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`, dati) }, dati).scelte;
+        persisti();
+        renderScheda({ mantieniScorrimento: true });
+      },
       chroma: (uid, delta) => cambiaSessione(variaChroma(stato.sessione, uid, delta, massimi)),
       integrita: (uid, delta) => cambiaSessione(variaIntegrita(stato.sessione, uid, delta, massimi)),
       // riserva di un NEC (Equipaggiamento §5.4): ore, usi o Lx

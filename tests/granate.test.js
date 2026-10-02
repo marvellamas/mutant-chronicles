@@ -136,3 +136,58 @@ test('collaudo: chi non ha lanciagranate non cambia; la SS della Punisher tiene 
   assert.equal(Object.keys(solo.m.granate).length, 0);
   assert.deepEqual(Object.keys(solo.m.ricarica), ['x']);
 });
+
+test('A.86, nel frattempo: danno della tabella senza bonus di Caratteristica (lanciatore e lancio a mano); flag nei dati', () => {
+  assert.equal(dati.regole.danno_caratteristica.esplosivi.senza_bonus, true);
+  const armaDi = (rif, uid, d = dati) => {
+    const { creazione, s: ses } = prepara([voce(uid, rif, 'impugnata', 2)]);
+    return calcolaScheda({ creazione, livelli: [], sessione: ses }, d).equipaggiamento.armi.find((x) => x.uid === uid);
+  };
+  // modulo della Punisher e granata lanciata a mano: danno della tabella, il bonus escluso con il motivo
+  const mod = armaDi('armi_distanza_corporative:carabina-punisher', 'p');
+  assert.equal(mod.uid, 'p');
+  const modulo = calcolaScheda({ creazione: { ...MISHIMA_AGENTE, equipaggiamento: [voce('p', 'armi_distanza_corporative:carabina-punisher', 'impugnata')] }, livelli: [] }, dati).equipaggiamento.armi.find((x) => x.uid === MOD);
+  assert.deepEqual([modulo.danno.una_mano, modulo.bonusCaratteristica?.bonus ?? 0], ['1d6+1', 0]);
+  const g = armaDi(STD, 'g');
+  assert.deepEqual([g.danno.una_mano, g.bonusCaratteristica.bonus], ['1d6+1', 0]);
+  assert.match(g.bonusCaratteristica.esclusoDa, /A.86/);
+  // il lanciarazzi: danno del razzo di riferimento senza bonus
+  const lr = armaDi('armi_distanza:lanciarazzi', 'r');
+  assert.equal(lr.danno.una_mano, lr.munizioneRiferimento.danno);
+  // senza il flag torna il bonus del §5.13 (DES 7 del Mishima: +1 alle Armi da lancio)
+  const d2 = structuredClone(dati);
+  d2.regole.danno_caratteristica.esplosivi.senza_bonus = false;
+  assert.equal(armaDi(STD, 'g', d2).danno.una_mano, '1d6+2');
+});
+
+test('Lucas (collaudo): il modulo della Punisher torna a 1d6+1', async () => {
+  const { readFileSync } = await import('node:fs');
+  const { deserializzaPersonaggio } = await import('../src/character.js');
+  const { calcolaSchedaPersonaggio } = await import('../src/avanzamento.js');
+  const p = deserializzaPersonaggio(readFileSync(new URL('./collaudo/Lucas_liv6_2026-09-28 (2).json', import.meta.url), 'utf8'));
+  const w = calcolaSchedaPersonaggio(p, dati).equipaggiamento.armi.find((x) => x.nome === 'Lanciagranate Carabina Punisher');
+  assert.deepEqual(w.danno, { una_mano: '1d6+1', due_mani: '1d6+1' });
+});
+
+test('cambio di tipo: le 2 granate di partenza tornano nell’Inventario come standard (5 comprate + 2 = 7)', async () => {
+  const { granateDiPartenza } = await import('../src/sessione.js');
+  const { restituisciGranate } = await import('../src/equipaggiamento.js');
+  let { creazione, m, s } = prepara([voce('p', 'armi_distanza_corporative:carabina-punisher', 'impugnata'), voce('g', STD, 'zaino', 5)]);
+  assert.equal(s.munizioni[MOD].colpi, 2);
+  const ritorno = granateDiPartenza(s, MOD, 'g', m);
+  assert.deepEqual(ritorno, { rif: STD, quantita: 2 });
+  s = scegliGranata(s, MOD, 'g', m);
+  const voci = restituisciGranate(creazione.equipaggiamento, ritorno, 'nuova', dati);
+  assert.deepEqual(voci.map((v) => [v.uid, v.quantita]), [['p', 1], ['g', 7]]);
+  // con le scelte nuove: 7 disponibili, poi la ricarica ne inserisce 2
+  const c2 = { ...creazione, equipaggiamento: voci };
+  const m2 = massimiSessione(calcolaScheda({ creazione: c2, livelli: [] }, dati), c2, dati);
+  s = ricaricaArma(s, MOD, m2);
+  assert.deepEqual([s.munizioni[MOD].colpi, m2.ricarica[MOD].scorte[0].quantita - s.scorte.g], [2, 5]);
+  // dopo una ricarica il tipo è una voce: niente carica di partenza da restituire
+  assert.equal(granateDiPartenza(s, MOD, 'g', m2), null);
+  // senza granate nell'Inventario, le 2 di partenza diventano una voce nuova
+  const { creazione: c3, m: m3, s: s3 } = prepara([voce('p', 'armi_distanza_corporative:carabina-punisher', 'impugnata'), voce('f', FUMO, 'zaino', 1)]);
+  const r3 = granateDiPartenza(s3, MOD, 'f', m3);
+  assert.deepEqual(restituisciGranate(c3.equipaggiamento, r3, 'nuova', dati).map((v) => [v.uid, v.rif, v.quantita]), [['p', 'armi_distanza_corporative:carabina-punisher', 1], ['f', FUMO, 1], ['nuova', STD, 2]]);
+});
