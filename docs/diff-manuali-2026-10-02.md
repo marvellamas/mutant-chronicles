@@ -126,6 +126,13 @@ Due punti di contorno, senza effetto oggi:
   - Nuova domanda A.74 (quattro punti) nel pacchetto per il Doc.
   - Collaudo: cambia solo il testo di Rigenerazione nel foglio 5 di Sorella Ilaria Venn (tempo, «Lancio diretto», PM). Nessun valore numerico.
 
+- ✔ **Lotto 4** (02/10): batterie oltre i 5 PM (Magia §24.7, Armamenti §7.5).
+  - 19 voci nuove in `artefatti.json`: Rosse, Blu e Verdi da 10, 15, 20, 25 e 30 PM; Bianche da 10, 15, 20 e 25 PM. Le taglie sono quelle della tabella del §24.7 (multipli di 5). La Bianca da 30 PM è «Fuori scala ordinaria» («Ricetta eccezionale») e non entra nel catalogo.
+  - Prezzo della batteria finita: 200 crediti per PM colorato (2.000–6.000), 1.000 per PM Bianco (10.000–25.000). Grado dalla tabella (colorate II–VI, Bianche III–VI), potenza dal Grado e SnT pari al Grado («Una batteria autonoma ha SnT pari al proprio Grado», §24.2). Reperibilità Molto rara per le colorate, Leggendaria per le Bianche.
+  - Peso, Qualità, PS Integrità e PI non sono indicati per le capacità superiori: valgono quelli del supporto di base (0,2 kg, Comune, PS 10, 3 PI), con TODO(Davide) A.75.
+  - Si comprano dall'Inventario come quelle da 5 PM («Compra (−6000 crediti)» per la Verde da 30); al tavolo sono piene all'acquisto; nel foglio 5 della SS i quadratini seguono la regola esistente (righe da 10; 25 PM: la terza riga con 5 caselle grigie).
+  - Collaudo: nessun valore cambia.
+
 ### SnT del catalogo, voce per voce (Armamenti §7.10 e §7.5.1 del 01/10 sera)
 
 | Voce | Proprietà | SnT prima → dopo |
