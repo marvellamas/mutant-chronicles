@@ -1,0 +1,10 @@
+Tavolo del Master: chi e' al tavolo
+===================================
+
+Qui il server di Mutant (avvia-server.bat, cioe' node server.mjs) salva la selezione "Chi e' al
+tavolo" della plancia del Tavolo del Master (sessione.json): quali personaggi di personaggi/ sono
+in gioco nella sessione.
+
+- Senza il server (avvia.bat) la cartella non si usa.
+- I file di questa cartella non vanno su GitHub (.gitignore): sono dati di gioco. Si traccia solo
+  questo LEGGIMI.
