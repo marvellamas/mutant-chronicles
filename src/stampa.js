@@ -871,8 +871,13 @@ export function inventarioStampa(s, dati, creditiIniziali = null) {
     creditiIniziali,
     carico: c ? { peso: kg(c.peso), parziale: c.parziale, senzaPeso: c.senzaPeso.length, ordinario: kg(c.soglie.ordinario), massimo: kg(c.soglie.massimo) } : null,
     stati: STATI_INVENTARIO_STAMPA.map(({ id, sigla, nome }) => ({ id, sigla, nome })),
-    sezioni: SEZIONI_INVENTARIO.map((x) => ({ id: x.id, titolo: x.titolo, colore: x.colore, righe: righe.filter((r) => r.sezione === x.id) }))
-      .filter((x) => x.righe.length),
+    // stesso ordine e stessa divisione in due colonne della tab (richiesta di Davide del 02/10)
+    // le sottosezioni (Rinforzi, NEC) stanno dentro la loro sezione, con un sottotitolo: risparmiano
+    // l'intestazione e il margine di un riquadro
+    sezioni: SEZIONI_INVENTARIO.filter((x) => !x.sottosezioneDi).map((x) => ({
+      id: x.id, titolo: x.titolo, colore: x.colore, colonna: x.colonna ?? 'destra', righe: righe.filter((r) => r.sezione === x.id),
+      sottosezioni: SEZIONI_INVENTARIO.filter((y) => y.sottosezioneDi === x.id).map((y) => ({ id: y.id, titolo: y.titolo, righe: righe.filter((r) => r.sezione === y.id) })).filter((y) => y.righe.length),
+    })).filter((x) => x.righe.length || x.sottosezioni.length),
   };
 }
 

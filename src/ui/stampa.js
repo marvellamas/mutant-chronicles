@@ -736,7 +736,7 @@ function impaginaCibernetica(foglio, d, piede) {
 
 const COLONNE_INVENTARIO = (d) => ['Oggetto', 'Costo', 'Qualità', 'Peso', ...d.stati.map((x) => x.sigla), 'PS'];
 
-function tabellaInventario(d, righe, { vuote = 0 } = {}) {
+function tabellaInventario(d, righe, { vuote = 0, sottosezioni = [] } = {}) {
   const n = COLONNE_INVENTARIO(d).length;
   const caselle = (stato) => d.stati.map((x) => h('td', { class: 'stato-inv', title: x.nome }, h('span', { class: `casella${x.id === stato ? ' piena' : ''}` })));
   const voce = (r) => h('tbody', { class: 'oggetto-inv' },
@@ -759,12 +759,14 @@ function tabellaInventario(d, righe, { vuote = 0 } = {}) {
     t.dataset.vuota = '1';
     return t;
   };
+  // sottosezioni (Rinforzi sotto Armature, NEC sotto Munizioni): un sottotitolo nella stessa tabella
+  const sotto = (x) => [h('tbody', { class: 'oggetto-inv sottotitolo-inv' }, h('tr', { class: 'categoria' }, h('th', { colspan: n }, `${x.titolo} (${x.righe.length})`))), x.righe.map(voce)];
   return h('table', { class: 'tabella-stampa inventario-stampa' },
     h('thead', {}, h('tr', {}, COLONNE_INVENTARIO(d).map((c, i) => h('th', { class: i >= 4 && i < 4 + d.stati.length ? 'stato-inv' : null }, c)))),
-    righe.map(voce), Array.from({ length: vuote }, vuota));
+    righe.map(voce), sottosezioni.map(sotto), Array.from({ length: vuote }, vuota));
 }
 
-const sezioneInventario = (d, s) => box({ titolo: `${s.titolo} (${s.righe.length})`, classe: `inv-sezione tinta-${s.colore}` }, tabellaInventario(d, s.righe));
+const sezioneInventario = (d, s) => box({ titolo: `${s.titolo} (${s.righe.length})`, classe: `inv-sezione tinta-${s.colore}` }, tabellaInventario(d, s.righe, { sottosezioni: s.sottosezioni ?? [] }));
 
 function testaInventario(d) {
   const c = d.carico;
@@ -777,7 +779,13 @@ function testaInventario(d) {
 }
 
 function foglioInventario(d) {
-  return [testaInventario(d), h('div', { class: 'inv-colonne' }, d.sezioni.map((s) => sezioneInventario(d, s)))];
+  // la colonna destra della tab (Sanitario, Artefatti…) comincia in cima alla seconda colonna
+  const primaDestra = d.sezioni.find((s) => s.colonna === 'destra');
+  return [testaInventario(d), h('div', { class: 'inv-colonne' }, d.sezioni.map((s) => {
+    const el = sezioneInventario(d, s);
+    if (s === primaDestra) el.classList.add('inv-inizio-destra');
+    return el;
+  }))];
 }
 
 /**
@@ -789,37 +797,56 @@ function foglioInventario(d) {
  * @returns {{ pagine, troppoLunghe: string[] }}
  */
 function impaginaInventario(foglio, d, piede) {
-  let colonne = foglio.querySelector('.inv-colonne');
-  const sezioni = [...colonne.children];
-  sezioni.forEach((s) => s.remove());
-  let ultima = foglio;
-  let pagine = 1;
-  const nuovaPagina = () => {
-    const f = creaFoglio('inventario', 'Inventario (continua)', d, piede, () => h('div', { class: 'inv-colonne' }));
-    f.classList.add('seguito');
-    // lo stesso piè di pagina del foglio (si riscrive alla fine): misurando, l'altezza del corpo è già quella vera
-    f.querySelector('.foglio-piede').textContent = foglio.querySelector('.foglio-piede').textContent;
-    ultima.after(f);
-    ultima = f;
-    pagine++;
-    return f.querySelector('.inv-colonne');
-  };
-  const troppoLunghe = [];
-  for (const s of sezioni) {
-    colonne.append(s);
-    if (trabocca(colonne) && colonne.children.length > 1) {
-      colonne = nuovaPagina();
+  // le sezioni come le ha disegnate foglioInventario: si riparte da loro a ogni prova
+  const modelli = [...foglio.querySelector('.inv-colonne').children].map((s) => s.cloneNode(true));
+  // con la divisione della tab (la colonna destra comincia in cima alla seconda colonna); se costa una
+  // pagina in più, le sezioni scorrono nello stesso ordine senza la divisione
+  const prova = (divisione) => {
+    let colonne = foglio.querySelector('.inv-colonne');
+    colonne.replaceChildren();
+    const sezioni = modelli.map((s) => s.cloneNode(true));
+    if (!divisione) sezioni.forEach((s) => s.classList.remove('inv-inizio-destra'));
+    let ultima = foglio;
+    const nuove = [];
+    const nuovaPagina = () => {
+      const f = creaFoglio('inventario', 'Inventario (continua)', d, piede, () => h('div', { class: 'inv-colonne' }));
+      f.classList.add('seguito');
+      // lo stesso piè di pagina del foglio (si riscrive alla fine): misurando, l'altezza del corpo è già quella vera
+      f.querySelector('.foglio-piede').textContent = foglio.querySelector('.foglio-piede').textContent;
+      ultima.after(f);
+      ultima = f;
+      nuove.push(f);
+      return f.querySelector('.inv-colonne');
+    };
+    const troppoLunghe = [];
+    for (const s of sezioni) {
+      // in cima a una pagina nuova la colonna destra non deve lasciare vuota la sinistra
+      if (!colonne.children.length) s.classList.remove('inv-inizio-destra');
       colonne.append(s);
+      if (trabocca(colonne) && colonne.children.length > 1) {
+        colonne = nuovaPagina();
+        s.classList.remove('inv-inizio-destra');
+        colonne.append(s);
+      }
+      if (trabocca(colonne)) troppoLunghe.push(s.querySelector('h2')?.textContent ?? '?');
     }
-    if (trabocca(colonne)) troppoLunghe.push(s.querySelector('h2')?.textContent ?? '?');
+    // riempitivo: righe vuote finché entrano; con meno di due righe libere non si stampa
+    const extra = box({ titolo: 'Da aggiungere', classe: 'inv-sezione inv-da-aggiungere' }, tabellaInventario(d, [], { vuote: 30 }));
+    colonne.append(extra);
+    const vuote = () => [...extra.querySelectorAll('tbody[data-vuota]')];
+    while (trabocca(colonne) && vuote().length) vuote().at(-1).remove();
+    if (vuote().length < 2) extra.remove();
+    return { pagine: 1 + nuove.length, troppoLunghe, nuove };
+  };
+  let r = prova(true);
+  if (r.pagine > 1) {
+    r.nuove.forEach((f) => f.remove());
+    const libera = prova(false);
+    if (libera.pagine < r.pagine) return { pagine: libera.pagine, troppoLunghe: libera.troppoLunghe, divisione: false };
+    libera.nuove.forEach((f) => f.remove());
+    r = prova(true);
   }
-  // riempitivo: righe vuote finché entrano; con meno di due righe libere non si stampa
-  const extra = box({ titolo: 'Da aggiungere', classe: 'inv-sezione inv-da-aggiungere' }, tabellaInventario(d, [], { vuote: 30 }));
-  colonne.append(extra);
-  const vuote = () => [...extra.querySelectorAll('tbody[data-vuota]')];
-  while (trabocca(colonne) && vuote().length) vuote().at(-1).remove();
-  if (vuote().length < 2) extra.remove();
-  return { pagine, troppoLunghe };
+  return { pagine: r.pagine, troppoLunghe: r.troppoLunghe, divisione: true };
 }
 
 // ---------------------------------------------------------------------------

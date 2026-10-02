@@ -141,3 +141,15 @@ test('Inventario su due colonne (richiesta di Davide del 02/10): sezioni nell’
   // sottosezioni: Rinforzi sotto Armature, NEC sotto Munizioni
   assert.deepEqual(SEZIONI_INVENTARIO.filter((s) => s.sottosezioneDi).map((s) => [s.id, s.sottosezioneDi]), [['rinforzi', 'protezioni'], ['nec', 'munizioni']]);
 });
+
+test('SS, foglio 4: stesso ordine e colonna della tab; Rinforzi e NEC come sottotitoli della loro sezione', async () => {
+  const { preparaStampa } = await import('../src/stampa.js');
+  const { MISHIMA_AGENTE } = await import('./personaggi.js');
+  const v = (uid, rif, stato, extra = {}) => ({ uid, rif, stato, quantita: 1, note: '', ...extra });
+  const equip = [v('a', 'armature:armatura-civile-leggera', 'indossata'), v('r', 'rinforzi:soprabito-balistico', 'in_uso', { montato_su: 'a' }), v('k', 'sanitario:kit-di-pronto-soccorso', 'zaino')];
+  const inv = preparaStampa({ creazione: { ...MISHIMA_AGENTE, equipaggiamento: equip }, livelli: [] }, dati).fogli.find((f) => f.id === 'inventario').dati;
+  assert.ok(!inv.sezioni.some((s) => s.id === 'rinforzi'));
+  const prot = inv.sezioni.find((s) => s.id === 'protezioni');
+  assert.deepEqual([prot.colonna, prot.sottosezioni.map((x) => [x.id, x.righe.length])], ['sinistra', [['rinforzi', 1]]]);
+  assert.equal(inv.sezioni.find((s) => s.id === 'sanitario')?.colonna ?? 'destra', 'destra');
+});

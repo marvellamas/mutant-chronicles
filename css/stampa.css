@@ -455,6 +455,8 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 /* una sezione va intera nella colonna dopo se ci sta; se è più alta di una colonna si divide fra le
    due (mai dentro la riga di un oggetto). «Da aggiungere» riempie il fondo e continua nella colonna dopo */
 .inv-colonne > .inv-da-aggiungere { break-inside: auto; }
+/* la colonna destra della tab comincia in cima alla seconda colonna (richiesta di Davide del 02/10) */
+.inv-colonne > .inv-inizio-destra { break-before: column; }
 .inv-sezione > .contenuto { padding: 0.6mm 1.2mm; }
 .inventario-stampa { width: 100%; }
 .inventario-stampa thead th { white-space: nowrap; }
