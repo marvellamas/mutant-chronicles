@@ -322,6 +322,14 @@ dl.voci.in-linea dt::after { content: ":"; }
 .macro-mentale { --macro: var(--mentale); --macro-tenue: var(--mentale-tenue); --macro-testo: var(--mentale-testo); }
 .macro-spirituale { --macro: var(--spirituale); --macro-tenue: var(--spirituale-tenue); --macro-testo: var(--spirituale-testo); }
 /* Tecniche Interiori (tab Poteri, src/ui/tecniche.js): stessa scheda degli incantesimi, colore proprio */
+/* Inventario su due colonne (richiesta di Davide del 02/10): ognuna scorre per conto suo solo se serve;
+   in uno spazio stretto una colonna sola, prima la sinistra e poi la destra */
+.inventario-colonne { container-type: inline-size; }
+@container (min-width: 46rem) {
+  .inventario-colonne { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 1rem; align-items: start; }
+  .colonna-inventario { max-height: calc(100vh - 10rem); overflow-y: auto; overscroll-behavior: contain; padding-right: 0.25rem; }
+}
+.gruppo-equip.sottosezione { margin-left: 0.75rem; }
 .macro-tecnica { --macro: var(--tecnica); --macro-tenue: var(--tecnica-tenue); --macro-testo: var(--tecnica-testo); }
 .voci-tecnica { margin: 0.3rem 0; }
 .testo-tecnica summary { cursor: pointer; font-size: 0.85rem; color: var(--tenue); }

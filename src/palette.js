@@ -34,24 +34,29 @@ export const GRUPPI_EQUIPAGGIAMENTO = [
  * dell'Equipaggiamento). «Strumenti professionali» e «Razioni» arriveranno con i loro capitoli.
  */
 export const SEZIONI_INVENTARIO = [
-  { id: 'armi', titolo: 'Armi', colore: 'cat-ravvicinate', tipi: ['arma_ravvicinata', 'arma_distanza'] },
-  { id: 'accessori', titolo: 'Accessori (armi ed elmetti)', colore: 'cat-accessori', tipi: ['accessorio'] },
-  { id: 'protezioni', titolo: 'Armature, scudi ed elmetti', colore: 'cat-armature', tipi: ['armatura', 'scudo', 'elmetto'] },
+  // colonna sinistra (richiesta di Davide del 02/10): Armi, Armature con i Rinforzi, Munizioni (con i
+  // NEC), Strumenti professionali, Comunicazione
+  { id: 'armi', titolo: 'Armi', colore: 'cat-ravvicinate', tipi: ['arma_ravvicinata', 'arma_distanza'], colonna: 'sinistra' },
+  { id: 'protezioni', titolo: 'Armature, scudi ed elmetti', colore: 'cat-armature', tipi: ['armatura', 'scudo', 'elmetto'], colonna: 'sinistra' },
   // sottocategoria delle armature (richiesta di Davide del 02/10): soprabiti, mantelli, piastre (§7.23)
-  { id: 'rinforzi', titolo: 'Rinforzi', colore: 'cat-armature', tipi: ['rinforzo'], sottosezioneDi: 'protezioni' },
-  { id: 'munizioni', titolo: 'Munizioni e caricatori', colore: 'cat-munizioni', tipi: ['munizioni'] },
-  // Equipaggiamento 0.5, §5.4: energia tecnologica in Lx, distinta dalle riserve mistiche in PM (§5.4.10)
-  { id: 'nec', titolo: 'NEC e stazioni di ricarica', colore: 'cat-munizioni', tipi: ['altro'], cataloghi: ['nec'] },
-  { id: 'dotazioni_personali', titolo: 'Dotazioni personali', colore: 'cat-altro', tipi: ['altro'], cataloghi: ['dotazioni_personali'] },
-  { id: 'esplorazione', titolo: 'Esplorazione e sopravvivenza', colore: 'cat-altro', tipi: ['altro'], cataloghi: ['esplorazione'] },
-  { id: 'comunicazione', titolo: 'Comunicazione e rilevamento', colore: 'cat-altro', tipi: ['altro'], cataloghi: ['comunicazione'] },
-  { id: 'strumenti', titolo: 'Strumenti professionali', colore: 'cat-altro', tipi: ['altro'], cataloghi: ['strumenti_professionali'] },
-  { id: 'sanitario', titolo: 'Sanitario', colore: 'cat-sanitario', tipi: ['sanitario'] },
-  { id: 'artefatti', titolo: 'Artefatti, cristalli e contenitori di Chroma', colore: 'cat-artefatti', tipi: ['artefatto'] },
+  { id: 'rinforzi', titolo: 'Rinforzi', colore: 'cat-armature', tipi: ['rinforzo'], sottosezioneDi: 'protezioni', colonna: 'sinistra' },
+  { id: 'munizioni', titolo: 'Munizioni e caricatori', colore: 'cat-munizioni', tipi: ['munizioni'], colonna: 'sinistra' },
+  // Equipaggiamento 0.5, §5.4: energia tecnologica in Lx, distinta dalle riserve mistiche in PM (§5.4.10);
+  // sotto le Munizioni, come l'alimentazione delle armi
+  { id: 'nec', titolo: 'NEC e stazioni di ricarica', colore: 'cat-munizioni', tipi: ['altro'], cataloghi: ['nec'], sottosezioneDi: 'munizioni', colonna: 'sinistra' },
+  { id: 'strumenti', titolo: 'Strumenti professionali', colore: 'cat-altro', tipi: ['altro'], cataloghi: ['strumenti_professionali'], colonna: 'sinistra' },
+  { id: 'comunicazione', titolo: 'Comunicazione e rilevamento', colore: 'cat-altro', tipi: ['altro'], cataloghi: ['comunicazione'], colonna: 'sinistra' },
+  // colonna destra: Sanitario, Artefatti, Accessori, Esplorazione, Dotazione personale; in fondo gli
+  // Impianti cibernetici e chip e, per ultimo, Altro
+  { id: 'sanitario', titolo: 'Sanitario', colore: 'cat-sanitario', tipi: ['sanitario'], colonna: 'destra' },
+  { id: 'artefatti', titolo: 'Artefatti, cristalli e contenitori di Chroma', colore: 'cat-artefatti', tipi: ['artefatto'], colonna: 'destra' },
+  { id: 'accessori', titolo: 'Accessori (armi ed elmetti)', colore: 'cat-accessori', tipi: ['accessorio'], colonna: 'destra' },
+  { id: 'esplorazione', titolo: 'Esplorazione e sopravvivenza', colore: 'cat-altro', tipi: ['altro'], cataloghi: ['esplorazione'], colonna: 'destra' },
+  { id: 'dotazioni_personali', titolo: 'Dotazioni personali', colore: 'cat-altro', tipi: ['altro'], cataloghi: ['dotazioni_personali'], colonna: 'destra' },
   // Equipaggiamento 0.5, cap. 7: impianti (installati o no) e chip del Processore; si comprano qui, la tab
   // Cibernetica mostra quelli installati
-  { id: 'impianti', titolo: 'Impianti cibernetici e chip', colore: 'cat-impianti', tipi: ['impianto', 'altro'], cataloghi: ['impianti'] },
-  { id: 'altro', titolo: 'Altro equipaggiamento', colore: 'cat-altro', tipi: ['altro'] },
+  { id: 'impianti', titolo: 'Impianti cibernetici e chip', colore: 'cat-impianti', tipi: ['impianto', 'altro'], cataloghi: ['impianti'], colonna: 'destra' },
+  { id: 'altro', titolo: 'Altro equipaggiamento', colore: 'cat-altro', tipi: ['altro'], colonna: 'destra' },
 ];
 
 /** Sezione dell'Inventario di una voce risolta (risolvi() in src/equipaggiamento.js). */

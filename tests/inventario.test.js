@@ -130,3 +130,14 @@ test('SS: il foglio 3 stampa con lo stato unico; l’oggetto nel deposito è seg
   const testo = JSON.stringify(fogli.find((f) => f.id === 'combattimento').dati);
   assert.match(testo, /tenda \(deposito comune\)/);
 });
+
+test('Inventario su due colonne (richiesta di Davide del 02/10): sezioni nell’ordine di Davide, a sinistra e a destra', async () => {
+  const { SEZIONI_INVENTARIO } = await import('../src/palette.js');
+  const lato = (c) => SEZIONI_INVENTARIO.filter((s) => s.colonna === c).map((s) => s.id);
+  assert.deepEqual(lato('sinistra'), ['armi', 'protezioni', 'rinforzi', 'munizioni', 'nec', 'strumenti', 'comunicazione']);
+  assert.deepEqual(lato('destra'), ['sanitario', 'artefatti', 'accessori', 'esplorazione', 'dotazioni_personali', 'impianti', 'altro']);
+  // su telefono una colonna sola: l'ordine dei dati è prima tutta la sinistra, poi la destra
+  assert.deepEqual(SEZIONI_INVENTARIO.map((s) => s.id), [...lato('sinistra'), ...lato('destra')]);
+  // sottosezioni: Rinforzi sotto Armature, NEC sotto Munizioni
+  assert.deepEqual(SEZIONI_INVENTARIO.filter((s) => s.sottosezioneDi).map((s) => [s.id, s.sottosezioneDi]), [['rinforzi', 'protezioni'], ['nec', 'munizioni']]);
+});

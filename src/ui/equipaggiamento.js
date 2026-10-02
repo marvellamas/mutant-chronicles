@@ -43,14 +43,14 @@ function elencoVoci(ctx) {
   const chiave = ctx.inventario ? 'sezioniInventarioChiuse' : 'gruppiEquipChiusi';
   const chiusi = new Set(leggiImpostazioni()[chiave] ?? []);
   const gruppi = ctx.inventario
-    ? SEZIONI_INVENTARIO.map((s) => ({ id: s.id, titolo: s.titolo, colore: s.colore, voci: risolte.filter((r) => sezioneInventario(r)?.id === s.id) }))
+    ? SEZIONI_INVENTARIO.map((s) => ({ id: s.id, titolo: s.titolo, colore: s.colore, colonna: s.colonna, sotto: !!s.sottosezioneDi, voci: risolte.filter((r) => sezioneInventario(r)?.id === s.id) }))
     : GRUPPI_EQUIPAGGIAMENTO.map((g) => ({ id: g.tipo, titolo: g.titolo, colore: g.colore, voci: risolte.filter((r) => (TIPI.includes(r.tipo) ? r.tipo : 'altro') === g.tipo) }));
-  return h('div', { class: 'gruppi-equip' }, gruppi.map((g) => {
+  const sezione = (g) => {
     const delGruppo = g.voci;
     if (!delGruppo.length) return null;
     const aperto = !chiusi.has(g.id);
     const attivi = delGruppo.filter((r) => r.attivo);
-    return h('section', { class: `gruppo-equip${aperto ? '' : ' chiuso'}` },
+    return h('section', { class: `gruppo-equip${aperto ? '' : ' chiuso'}${g.sotto ? ' sottosezione' : ''}` },
       h('details', {
         open: aperto,
         ontoggle: (e) => {
@@ -65,7 +65,15 @@ function elencoVoci(ctx) {
       h('ul', { class: 'elenco-equip' }, delGruppo.map((r) => voceEquip(ctx, r, risolte, cambia)))),
       !aperto && attivi.length ? h('ul', { class: 'elenco-compatto', 'aria-label': `${g.titolo}: oggetti attivi` }, attivi.map((r) => h('li', {},
         h('strong', {}, r.nome), h('small', { class: 'sigla' }, ` · ${NOMI_STATI[r.voce.stato] ?? ''}${r.voce.quantita > 1 ? ` · ×${r.voce.quantita}` : ''}`)))) : null);
-  }));
+  };
+  // Inventario (richiesta di Davide del 02/10): due colonne con le sezioni nell'ordine dei dati
+  // (src/palette.js → SEZIONI_INVENTARIO, «colonna»); su schermi stretti una colonna sola, prima la
+  // sinistra poi la destra. Nel wizard i gruppi restano in una colonna.
+  if (ctx.inventario) {
+    const colonna = (lato) => h('div', { class: `colonna-inventario ${lato}` }, gruppi.filter((g) => (g.colonna ?? 'destra') === lato).map(sezione));
+    return h('div', { class: 'gruppi-equip inventario-colonne' }, colonna('sinistra'), colonna('destra'));
+  }
+  return h('div', { class: 'gruppi-equip' }, gruppi.map(sezione));
 }
 
 /**
@@ -79,7 +87,8 @@ function montataSu(ctx, r, risolte, cambia) {
   const armature = risolte.filter((t) => t.tipo === 'armatura' && t.uid !== r.uid);
   const compatibili = armature.filter((t) => t.attivo && rinforzoCompatibile(r, t));
   const su = v.stato === 'in_uso' && v.montato_su ? armature.find((t) => t.uid === v.montato_su) ?? null : null;
-  const valore = su ? `arm:${su.uid}` : v.stato === 'indossata' ? 'da-solo' : v.stato === 'deposito' ? 'deposito' : 'zaino';
+  // «in uso» senza armatura (salvataggi in cui il rinforzo non era stato montato): da scegliere
+  const valore = su ? `arm:${su.uid}` : v.stato === 'in_uso' ? 'scegli' : v.stato === 'indossata' ? 'da-solo' : v.stato === 'deposito' ? 'deposito' : 'zaino';
   const scelte = [...compatibili, ...(su && !compatibili.includes(su) ? [su] : [])];
   const scegli = (x) => {
     if (x.startsWith('arm:')) cambia(v.uid, { stato: 'in_uso', montato_su: x.slice(4) });
@@ -92,6 +101,7 @@ function montataSu(ctx, r, risolte, cambia) {
   return h('div', { class: 'montata-su' },
     h('label', { class: 'campo-inline' }, 'Montata su: ',
       h('select', { onchange: (e) => scegli(e.target.value), 'aria-label': `${r.nome}: montata su` },
+        valore === 'scegli' ? h('option', { value: '', disabled: true, selected: true }, '— scegli l’armatura —') : null,
         scelte.map((a) => h('option', { value: `arm:${a.uid}`, selected: valore === `arm:${a.uid}` }, `${a.nome}${a.attivo ? '' : ' (non indossata)'}`)),
         r.def?.indossabile_da_solo ? h('option', { value: 'da-solo', selected: valore === 'da-solo' }, 'Indossato da solo') : null,
         h('option', { value: 'zaino', selected: valore === 'zaino' }, NOMI_STATI.zaino),
