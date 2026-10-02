@@ -50,8 +50,9 @@ test('§8.9.1: una sola attivazione per Round; «Nuovo Round» la sblocca', () =
   const sc = scheda(['aura-di-resistenza', 'salto-della-tigre']);
   const s1 = attivaTecnica(sc, sessione(), T('salto-della-tigre'), dati);
   assert.deepEqual(s1.ultimaTecnica, { id: 'salto-della-tigre', round: 1 });
-  // istantanea: non resta attiva, ma conta per il limite del Round
-  assert.deepEqual(s1.tecnicheAttive, []);
+  // istantanea: resta in corso fino alla fine del Round (la finestra del colpo o della reazione) e conta per il limite
+  assert.deepEqual(s1.tecnicheAttive, [{ id: 'salto-della-tigre', dal: 1, al: 1 }]);
+  assert.deepEqual(nuovoRound(s1).tecnicheAttive, []);
   const bloccata = statoAttivazione(sc, s1, T('aura-di-resistenza'), dati);
   assert.equal(bloccata.possibile, false);
   assert.match(bloccata.motivo, /già attivata una Tecnica in questo Round \(Salto della Tigre\)/);

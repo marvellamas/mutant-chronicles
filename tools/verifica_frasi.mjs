@@ -43,6 +43,17 @@ export function frasiEffetti() {
       (t.effetti?.valori ?? []).forEach((e, i) => { for (const k of ['condizione', 'nota']) if (e[k]) out.push({ dove: `classi:${c.nome}/${t.nome} effetti.valori[${i}].${k}`, frase: e[k] }); });
     }
   }
+  // Tecniche Interiori: effetti delle schede (tools/effetti_tecniche.mjs), frasi copiate dal §8.9
+  for (const t of leggi('data/tecniche_interiori.json').tecniche) {
+    const E = t.effetti ?? {};
+    (E.valori ?? []).forEach((e, i) => { if (e.condizione) out.push({ dove: `tecniche:${t.id} effetti.valori[${i}]`, frase: e.condizione }); });
+    for (const k of ['promemoria', 'frasi']) (E[k] ?? []).forEach((f, i) => out.push({ dove: `tecniche:${t.id} effetti.${k}[${i}]`, frase: f }));
+    const A = E.attacco ?? {};
+    (A.frasi ?? []).forEach((f, i) => out.push({ dove: `tecniche:${t.id} effetti.attacco.frasi[${i}]`, frase: f }));
+    (A.dopo_armatura ?? []).forEach((x, i) => out.push({ dove: `tecniche:${t.id} effetti.attacco.dopo_armatura[${i}]`, frase: x.testo }));
+    (A.onda?.frasi ?? []).forEach((f, i) => out.push({ dove: `tecniche:${t.id} effetti.attacco.onda.frasi[${i}]`, frase: f }));
+    for (const k of ['manovre_forza', 'carica']) if (A[k]?.frase) out.push({ dove: `tecniche:${t.id} effetti.attacco.${k}`, frase: A[k].frase });
+  }
   // regole.json → attacco_distanza: ogni «frasi» del blocco, a ogni profondità
   const visita = (v, dove) => {
     if (Array.isArray(v)) v.forEach((x, i) => visita(x, `${dove}[${i}]`));

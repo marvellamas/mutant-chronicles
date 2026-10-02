@@ -18,7 +18,7 @@ export const provenienza = (righe, totale = sommaRighe(righe)) => ({ totale, rig
 // categoria della voce di una scomposizione (src/condizioni.js, src/attacco.js, src/lancio.js) → nota della riga
 const NOTE = {
   equipaggiamento: 'equipaggiamento', oggetto: 'condizione accesa', ferite: 'Ferite (§5.14)', affaticamento: 'Affaticamento (§5.19)', corruzione: 'Corruzione Oscura (§5.20)',
-  stato: 'Stato (§5.18)', talento: 'Talento', carico: 'carico (§5.2.6)', condizione: 'condizione dell’arma (§5.17)',
+  stato: 'Stato (§5.18)', talento: 'Talento', tecnica: 'Tecnica Interiore (§8.9)', carico: 'carico (§5.2.6)', condizione: 'condizione dell’arma (§5.17)',
   movimento: 'movimento', bersaglio: 'bersaglio', copertura: 'Copertura', distanza: 'distanza', mirino: 'mirino',
   modalita: 'modalità di fuoco', 'modalità': 'modalità di fuoco', manovra: 'manovra', talento: 'Talento', situazione: 'situazione',
   livello: 'livello dell’incantesimo', componenti: 'componenti', circostanze: 'circostanze', magia: 'effetto magico',

@@ -12,9 +12,16 @@
 //   recupero di almeno 1 PM; con PM insufficienti la Tecnica non si attiva;
 // - a Umanità 0 niente Tecniche dipendenti da Risorse Interiori (Giocatore §5.21);
 // - nessuna Prova di Potere, salvo le eccezioni (Silenzio Mentale: promemoria, la PS è al tavolo).
-// Sessione: round (≥ 1), ultimaTecnica { id, round } | null, tecnicheAttive [{ id, dal, al }]
+// Sessione: round (≥ 1), ultimaTecnica { id, round } | null, tecnicheAttive [{ id, dal, al, opzione? }]
 // (al = ultimo Round in cui vale; null = finché non la si termina). «Annulla» è quello della
 // sessione (l'ultima modifica): l'attivazione è una modifica sola.
+//
+// Effetti (tecniche_interiori.json → effetti, scritti da tools/effetti_tecniche.mjs): finché la Tecnica
+// è in corso, i suoi «valori» entrano nei valori effettivi come quelli dei Talenti (src/condizioni.js),
+// con la provenienza «Tecnica: Nome (fino al Round N)»; «attacco» lo legge «Attacca!» (src/attacco.js).
+// Le istantanee restano in corso fino alla fine del Round di attivazione: è la finestra in cui
+// «Attacca!» ne usa l'effetto (un colpo, una reazione); si possono terminare prima a mano.
+// L'interruttore «Bonus dei Talenti» non le spegne: sono attivazioni pagate, non Talenti passivi.
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const ARTICOLI_SCUOLE = { Sole: 'del Sole', Luna: 'della Luna', Terra: 'della Terra' };
@@ -96,12 +103,17 @@ export function attivaTecnica(scheda, sessione, t, dati, opz = {}) {
   if (!st.possibile) return null;
   const round = st.round;
   const attive = (Array.isArray(sessione?.tecnicheAttive) ? sessione.tecnicheAttive : []).filter((x) => x.id !== t.id);
-  // più applicazioni della stessa Tecnica non si sommano: la nuova sostituisce quella in corso
-  if (t.durata_tipo !== 'istantanea') attive.push({ id: t.id, dal: round, al: fineTecnica(t, round) });
+  // più applicazioni della stessa Tecnica non si sommano: la nuova sostituisce quella in corso.
+  // Le istantanee restano in corso fino alla fine del Round (la finestra del colpo o della reazione)
+  const cura = curaTecnica(scheda, sessione, t, opz.opzione ?? 0, dati, opz.cura);
+  if (cura && !cura.pronto) return null;
+  const al = cura?.al ?? fineTecnica(t, round) ?? (t.durata_tipo === 'istantanea' ? round : null);
+  attive.push({ id: t.id, dal: round, al, ...(Array.isArray(t.opzioni_costo) ? { opzione: opz.opzione ?? 0 } : {}) });
   const stato = dati.tecniche_interiori?.attivazione?.stato_a_zero_pm;
-  const stati = Array.isArray(sessione?.statiAttivi) ? sessione.statiAttivi : [];
+  const dopo = cura?.applica ? cura.applica(sessione) : sessione;
+  const stati = Array.isArray(dopo?.statiAttivi) ? dopo.statiAttivi : [];
   return {
-    ...sessione,
+    ...dopo,
     pmAttuali: st.pmDopo,
     ultimaTecnica: { id: t.id, round },
     tecnicheAttive: attive,
@@ -133,8 +145,134 @@ export function allineaTecnicheAttive(v, idAmmessi = null) {
   const visti = new Set();
   return (Array.isArray(v) ? v : []).filter((x) => isOggetto(x) && typeof x.id === 'string' && Number.isInteger(x.dal) && x.dal >= 1
     && (x.al === null || (Number.isInteger(x.al) && x.al >= x.dal)) && (!idAmmessi || idAmmessi.includes(x.id)) && !visti.has(x.id) && visti.add(x.id))
-    .map((x) => ({ id: x.id, dal: x.dal, al: x.al }));
+    .map((x) => ({ id: x.id, dal: x.dal, al: x.al, ...(Number.isInteger(x.opzione) ? { opzione: x.opzione } : {}) }));
 }
 
 /** Chiavi «tecnica:<id>» delle Tecniche attive, per gli effetti al tavolo (AR di Aura e Pelle, A.48). */
 export const chiaviTecnicheAttive = (sessione) => (Array.isArray(sessione?.tecnicheAttive) ? sessione.tecnicheAttive : []).map((x) => `tecnica:${x.id}`);
+
+/** Provenienza di una Tecnica in corso: «Tecnica: Aura di Resistenza (fino al Round 4)». */
+export const etichettaInCorso = (t, x) => `Tecnica: ${t.nome} (${x.al === null ? 'finché è attiva' : `fino al Round ${x.al}`})`;
+
+/** Tecniche in corso (sessione → tecnicheAttive), con la scheda e l'etichetta: [{ id, dal, al, opzione?, t, etichetta }]. */
+export function tecnicheInCorso(sessione, dati) {
+  return (Array.isArray(sessione?.tecnicheAttive) ? sessione.tecnicheAttive : []).map((x) => {
+    const t = tecnicaDi(x.id, dati);
+    return t ? { ...x, t, etichetta: etichettaInCorso(t, x) } : null;
+  }).filter(Boolean);
+}
+
+/**
+ * Effetti delle Tecniche in corso, nello schema degli effetti dei Talenti (docs/effetti-oggetti.md):
+ * [{ chiave: 'tecnica:<id>', talento: etichetta, tecnica: true, ...effetto }]. Valgono anche con
+ * «Bonus dei Talenti» spento (src/condizioni.js).
+ */
+export function effettiTecniche(sessione, dati) {
+  return tecnicheInCorso(sessione, dati).flatMap((c) => (c.t.effetti?.valori ?? [])
+    .map((e) => ({ chiave: `tecnica:${c.id}`, talento: c.etichetta, tecnica: true, ...e, fonte: e.fonte ?? `${c.t.effetti.fonte ?? 'Giocatore §8.9'}, ${c.t.nome}` })));
+}
+
+/** Tecniche in corso con un effetto sull'attacco, per «Attacca!»: [{ id, nome, etichetta, breve, e }]. */
+export function tecnicheAttacco(sessione, dati) {
+  return tecnicheInCorso(sessione, dati).filter((c) => c.t.effetti?.attacco)
+    .map((c) => ({ id: c.id, nome: c.t.nome, etichetta: c.etichetta, breve: c.t.effetti.breve ?? null, e: c.t.effetti.attacco }));
+}
+
+/** La Tecnica vale con quest'arma? Senz'armi, armi ravvicinate o le armi nominate dalla scheda (Cobra, Vipera). */
+export function mezzoAmmesso(e, arma) {
+  if (!e.mezzi && !e.armi) return true;
+  if (arma?.senzArmi) return (e.mezzi ?? []).includes('senz_armi');
+  if ((e.mezzi ?? []).includes('ravvicinate') && arma?.tipo === 'arma_ravvicinata') return true;
+  const nome = String(arma?.nome ?? '').toLowerCase();
+  return (e.armi ?? []).some((a) => nome === a.toLowerCase() || nome.startsWith(`${a.toLowerCase()} `));
+}
+
+/** Riduzione calcolata (Corpo Infrangibile): «1d4 + 2 (Mod COS), minimo 1». */
+export function testoRiduzione(e, scheda) {
+  const mod = scheda?.caratteristiche?.[e.caratteristica]?.mod ?? 0;
+  return `${e.dado} ${mod < 0 ? '−' : '+'} ${Math.abs(mod)} (Mod ${e.caratteristica}), minimo ${e.minimo}`;
+}
+
+/**
+ * Righe di una Tecnica in corso (riquadro delle Tecniche attive, «Attacca!»): riduzioni calcolate,
+ * sospensione del Sanguinamento e frasi delle regole che non sono un numero.
+ */
+export function righeInCorso(c, scheda) {
+  const E = c.t.effetti ?? {};
+  const righe = [];
+  for (const e of (E.valori ?? []).filter((x) => x.tipo === 'riduzione_danno')) righe.push(`Riduce ${e.uso} di ${testoRiduzione(e, scheda)}.`);
+  if (E.cura && Number.isInteger(c.opzione) && E.cura[c.opzione]?.effetto === 'sospendi_sanguinamento' && c.al > c.dal) righe.push(`Sanguinamento sospeso fino alla fine del Round ${c.al}.`);
+  righe.push(...(E.promemoria ?? []));
+  return righe;
+}
+
+/** Numero principale in forma breve (SS, riquadro): «+1 AR rav., +2 danno rav., +3 FOR»; null se non ce n'è. */
+export const sintesiTecnica = (t) => t?.effetti?.breve ?? null;
+
+const formaDado = (dado) => { const m = /^(\d*)d(\d+)$/.exec(String(dado)); return m ? { n: Number(m[1] || 1), facce: Number(m[2]) } : null; };
+
+/**
+ * Cura di Imposizione della Mano Curativa (effetti.cura, in ordine con opzioni_costo; Giocatore
+ * §8.9.2), sul proprio personaggio o, per un altro, come promemoria. Nessun tiro: il dado lo tira il
+ * giocatore e lo scrive (`cura.dado`). null se la Tecnica non cura.
+ * @returns {{ opzione, sul: 'se'|'altro', righe: string[], avvisi: string[], pronto: boolean, al?: number, applica: ((s) => object)|null }}
+ */
+export function curaTecnica(scheda, sessione, t, opzione, dati, cura = {}) {
+  const o = t?.effetti?.cura?.[opzione];
+  if (!o) return null;
+  const sul = cura?.bersaglio === 'altro' ? 'altro' : 'se';
+  const round = roundAttuale(sessione);
+  const stati = Array.isArray(sessione?.statiAttivi) ? sessione.statiAttivi : [];
+  const sospensione = (x) => x.id === t.id && t.effetti.cura[x.opzione]?.effetto === 'sospendi_sanguinamento';
+  const sospeso = (Array.isArray(sessione?.tecnicheAttive) ? sessione.tecnicheAttive : []).some((x) => sospensione(x) && (x.al === null || x.al >= round));
+  const sanguina = stati.includes('sanguinamento') && !sospeso;
+  const righe = [];
+  const avvisi = [];
+  let applica = null;
+  let al;
+  let pronto = true;
+  if (o.effetto === 'sospendi_sanguinamento') {
+    righe.push(`Sanguinamento sospeso per ${o.round} Round: fino alla fine del Round ${round + o.round}.`);
+    if (sul === 'se') al = round + o.round;
+    if (sul === 'se' && !stati.includes('sanguinamento')) avvisi.push('Il personaggio non ha il Sanguinamento attivo: la sospensione non ha effetto.');
+  } else if (o.effetto === 'arresta_sanguinamento') {
+    righe.push('Il Sanguinamento si arresta.');
+    if (sul === 'se') {
+      if (!stati.includes('sanguinamento')) avvisi.push('Il personaggio non ha il Sanguinamento attivo.');
+      applica = (s) => ({ ...s, statiAttivi: (s.statiAttivi ?? []).filter((x) => x !== 'sanguinamento'), tecnicheAttive: (s.tecnicheAttive ?? []).filter((x) => !sospensione(x)) });
+    }
+  } else if (o.effetto === 'pv') {
+    const mod = scheda?.caratteristiche?.[o.caratteristica]?.mod ?? 0;
+    const d = formaDado(o.dado);
+    const dado = Number.isInteger(cura?.dado) && d && cura.dado >= d.n && cura.dado <= d.n * d.facce ? cura.dado : null;
+    const recupero = dado === null ? null : Math.max(o.minimo ?? 0, dado + mod);
+    righe.push(`Recupera ${o.dado} ${mod < 0 ? '−' : '+'} ${Math.abs(mod)} (Mod ${o.caratteristica}) PV, minimo ${o.minimo ?? 0}${recupero === null ? '' : `: ${recupero} PV`}.`);
+    if (dado === null) { pronto = false; avvisi.push(`Tira ${o.dado} e scrivi il risultato.`); }
+    if (sul === 'se') {
+      if (sanguina) avvisi.push('Sanguinamento attivo: il recupero non avviene (§8.9.2). Prima arrestalo o sospendilo.');
+      const max = scheda?.pv ?? Infinity;
+      const ora = Number.isInteger(sessione?.pvAttuali) ? sessione.pvAttuali : max;
+      if (recupero !== null && !sanguina) {
+        const dopo = Math.min(max, ora + recupero);
+        righe.push(`PV ${ora} → ${dopo}${dopo - ora < recupero ? ' (non oltre i PV massimi)' : ''}.`);
+        applica = (s) => ({ ...s, pvAttuali: Math.min(max, (Number.isInteger(s.pvAttuali) ? s.pvAttuali : max) + recupero) });
+      }
+    }
+  } else if (o.effetto === 'ferita') {
+    righe.push('La Ferita migliora di uno stato; una Superficiale guarisce.');
+    if (sul === 'se') {
+      const f = Number.isInteger(sessione?.ferite) ? sessione.ferite : 0;
+      const nomi = dati.regole.ferite.stati.map((x) => x.nome);
+      if (!f) avvisi.push('Il personaggio non ha Ferite.');
+      else {
+        righe.push(`Ferita ${nomi[f - 1] ?? 'oltre Grave'} → ${f - o.gradini > 0 ? nomi[f - o.gradini - 1] : 'nessuna'}.`);
+        applica = (s) => ({ ...s, ferite: Math.max(0, (Number.isInteger(s.ferite) ? s.ferite : 0) - o.gradini) });
+      }
+    }
+  }
+  if (sul === 'altro') {
+    righe.push('Su un altro personaggio: applica l’effetto sulla sua scheda; qui si scalano solo i tuoi PM.');
+    applica = null;
+  }
+  return { opzione, sul, righe, avvisi, pronto, ...(al !== undefined ? { al } : {}), applica };
+}

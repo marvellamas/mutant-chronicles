@@ -41,8 +41,9 @@ test('i TODO(Davide) sono elencabili', () => {
   assert.ok(todo.filter((t) => t.percorso.startsWith('regole.json')).every((t) => (/^regole\.json\.rituali/.test(t.percorso) && /A\.74/.test(t.testo)) || (/^regole\.json\.prova/.test(t.percorso) && /A\.78/.test(t.testo))
     // rinforzi indossati da soli e armatura tolta (richiesta di Davide del 02/10, per-davide A.80)
     || (/^regole\.json\.rinforzi/.test(t.percorso) && /A.80/.test(t.testo))));
-  // durate delle Tecniche Interiori: decise dal master il 26/09/2026 (A.4 del Doc E&L)
-  assert.equal(todo.some((t) => t.percorso.startsWith('tecniche_interiori.json')), false);
+  // durate delle Tecniche Interiori: decise dal master il 26/09/2026 (A.4 del Doc E&L); restano gli
+  // effetti di Pelle di Rinoceronte (A.81) e di Onda Interiore (A.82)
+  assert.deepEqual(todo.filter((t) => t.percorso.startsWith('tecniche_interiori.json')).map((t) => /A.8[12]/.test(t.testo ?? t.valore ?? '')), [true, true]);
 });
 
 test('risposte del master: Specializzazioni dei Talenti dell’Esploratore', () => {

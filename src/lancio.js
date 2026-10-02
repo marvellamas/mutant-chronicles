@@ -5,7 +5,7 @@
 // 1–3, 5–7, 12.3; Giocatore §1.4, §1.7); dati di ogni scheda in incantesimi.json → meccanica;
 // Talenti con effetti.lancio (e effetti.magia già calcolati nella scheda: Focalizzazione, Ingaggio,
 // tiro con Armi da lancio).
-import { voce, somma, talentiAttacco, promemoriaMagistraleNaturale } from './attacco.js';
+import { voce, somma, talentiAttacco, promemoriaMagistraleNaturale, rigaTecnicheAttive } from './attacco.js';
 import { avvisiStati } from './condizioni.js';
 import { provenienza, righeDaScomposizione, rigaConDettaglio } from './provenienza.js';
 import { bonusDannoCaratteristica } from './calc.js';
@@ -358,6 +358,9 @@ export function calcolaLancio(personaggio, incantesimo, dichiarazione, dati) {
     promemoria.push(`Talenti: ${soloTesto.map((t) => `${t.nome} — ${String(t.testo ?? '').split(/(?<=\.)\s/)[0]}${numeri[t.nome] ? ` (${numeri[t.nome]})` : ''}`).join(' · ')}`);
   }
   // Controllo Arcano: oltre al +1 danno, l'esclusione di 1 + Mod INT creature dagli Incantesimi ad Area
+  // Tecniche Interiori in corso (§8.9): la stessa riga di «Attacca!» (src/attacco.js)
+  const tecRiga = rigaTecnicheAttive(personaggio.sessione, dati);
+  if (tecRiga) promemoria.push(tecRiga);
   if (adArea && T.some((t) => t.nome === 'Controllo Arcano')) promemoria.push(`Controllo Arcano: puoi escludere fino a ${1 + Math.max(0, scheda?.caratteristiche?.INT?.mod ?? 0)} creature dall’Area.`);
 
   return {

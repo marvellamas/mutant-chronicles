@@ -14,6 +14,7 @@ import { aggiungiDanno } from './equipaggiamento.js';
 import { bonusDannoCaratteristica } from './calc.js';
 import { avvisiStati, limitiStati } from './condizioni.js';
 import { riga, provenienza, righeDaScomposizione, righeBase, rigaConDettaglio, rigaBonusCaratteristica } from './provenienza.js';
+import { tecnicheAttacco, tecnicheInCorso, mezzoAmmesso } from './tecniche.js';
 
 export const voce = (etichetta, valore, fonte, paragrafo = null) => ({ etichetta, valore, fonte, paragrafo });
 export const somma = (voci) => voci.reduce((s, x) => s + x.valore, 0);
@@ -30,6 +31,17 @@ export function talentiAttacco(scheda, dati, chiave = 'attacco_distanza') {
   const classe = (scheda?.classi ?? []).flatMap((c) => c.talenti ?? []);
   return [...liberi, ...classe].filter((t) => t.effetti?.[chiave] !== undefined)
     .map((t) => ({ nome: t.parametroNome ? `${t.nome} (${t.parametroNome})` : t.nome, testo: t.testo, e: t.effetti[chiave] }));
+}
+
+/**
+ * Riga «Tecniche attive: …» del risultato di «Attacca!»: le Tecniche Interiori in corso con il loro
+ * effetto in breve o la prima regola (§8.9). null se non ce ne sono.
+ */
+export function rigaTecnicheAttive(sessione, dati) {
+  const c = tecnicheInCorso(sessione, dati);
+  if (!c.length) return null;
+  const parte = (x) => `${x.t.nome} (${x.al === null ? 'finché è attiva' : `fino al Round ${x.al}`})${x.t.effetti?.breve ? ` — ${x.t.effetti.breve}` : x.t.effetti?.promemoria?.[0] ? ` — ${x.t.effetti.promemoria[0]}` : ''}`;
+  return `Tecniche attive: ${c.map(parte).join(' · ')}`;
 }
 
 /** Danno di un colpo in testo: «1d6+3», «(1d6+1) ×2». */
@@ -527,6 +539,8 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
     return quando === 'sempre' || (quando === 'ignaro' && b.ignaro) || (quando === 'raffica' && ['RM', 'RL'].includes(m));
   });
   if (testuali.length) promemoria.push(`Talenti: ${testuali.map((t) => `${t.nome} — ${primaFrase(t.testo)}`).join(' · ')}`);
+  const tecRiga = rigaTecnicheAttive(personaggio.sessione, dati);
+  if (tecRiga) promemoria.push(tecRiga);
 
   // 8. Azioni (§5.11): distanza e mirino, Mira Rapida (minimo 1), poi Tiro Mirato e Movimento Evasivo
   let azioni = Math.max(azioniDistanza(d.distanza, dati), azioniMinime);
@@ -579,6 +593,8 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
 // §5.13, Prova o Salvezza del bersaglio, effetti, promemoria. Nessun tiro, nessun consumo.
 
 export const SENZ_ARMI = 'senz_armi';
+/** uid del profilo d'attacco di Onda Interiore (§8.9.4), finché la Tecnica è in corso. */
+export const ONDA = 'tecnica:onda-interiore';
 const numeroTesto = (n) => (n < 0 ? `−${-n}` : `+${n}`);
 
 /** Valore massimo di un danno «XdY+Z», per scegliere il dado più alto (Arti Marziali, §8.6.1). */
@@ -594,25 +610,28 @@ function massimoDanno(testo) {
  * (§5.13; E&L 12, A.22): 1d4 di base, oppure il dado più alto dei Talenti (Arti Marziali 1d6, §8.6.1;
  * Disciplina del Lottatore al suo Grado, §3.5.5), più il bonus di FOR al danno e gli altri bonus.
  */
-export function profiloSenzArmi(scheda, dati) {
+export function profiloSenzArmi(scheda, dati, { onda = null } = {}) {
   const S = dati.regole.attacco_ravvicinato.senz_armi;
   const a = (scheda?.abilita ?? []).find((x) => x.nome === S.abilita) ?? null;
   // effetti «attacco» e «danno» dell'equipaggiamento che valgono anche senz'armi (Assistenza offensiva
-  // dell'elmetto: «comprese armi da lancio e attacchi senz’armi», §7.21.2)
+  // dell'elmetto: «comprese armi da lancio e attacchi senz’armi», §7.21.2). Onda Interiore ha Vettore
+  // Distanza (§8.9.4): solo i bonus per tutti gli attacchi, non quelli dei soli ravvicinati
   const eq = scheda?.equipaggiamento ?? {};
-  const ravv = (b) => b.attacchi === 'tutti' || b.attacchi === 'ravvicinati';
+  const ravv = (b) => b.attacchi === 'tutti' || (!onda && b.attacchi === 'ravvicinati');
   const bonusVa = (eq.bonusAttacco ?? []).filter(ravv).map((b) => voce(b.nome, b.valore, 'equipaggiamento'));
   const bonusDannoEq = (eq.bonusDanno ?? []).filter(ravv).reduce((s, b) => s + b.valore, 0);
+  // Tecniche in corso con un bonus al danno (Pelle di Rinoceronte: +2 al danno Ravvicinato, §8.9.3)
+  const dannoTec = (scheda?.effettiTecniche ?? []).filter((e) => e.tipo === 'danno' && e.ambito === 'generale' && ravv(e));
   const T = talentiAttacco(scheda, dati, 'attacco_ravvicinato');
   // il dado di un Talento vale solo se più alto della base (Lottatore: «si usa il dado più alto applicabile»)
-  const daDati = T.filter((t) => t.e.senz_armi?.danno && massimoDanno(t.e.senz_armi.danno) > massimoDanno(S.danno))
+  const daDati = onda ? null : T.filter((t) => t.e.senz_armi?.danno && massimoDanno(t.e.senz_armi.danno) > massimoDanno(S.danno))
     .sort((x, y) => massimoDanno(y.e.senz_armi.danno) - massimoDanno(x.e.senz_armi.danno))[0] ?? null;
-  const dannoBase = daDati?.e.senz_armi.danno ?? S.danno ?? null;
-  // §5.13: bonus di FOR al danno, limitato dal livello
-  const sigla = dati.regole.danno_caratteristica?.senz_armi ?? null;
+  const dannoBase = onda ? onda.dado : daDati?.e.senz_armi.danno ?? S.danno ?? null;
+  // §5.13: bonus di FOR al danno, limitato dal livello (Onda Interiore: TODO(Davide) A.82, nei dati)
+  const sigla = onda && !onda.bonusCaratteristica ? null : dati.regole.danno_caratteristica?.senz_armi ?? null;
   const valoreCar = sigla ? scheda?.caratteristiche?.[sigla]?.valore ?? null : null;
   const bonusCaratteristica = sigla && valoreCar !== null ? { sigla, valore: valoreCar, bonus: bonusDannoCaratteristica(valoreCar, scheda?.livello ?? 1, dati.regole), esclusoDa: null } : null;
-  const extra = bonusDannoEq + (bonusCaratteristica?.bonus ?? 0);
+  const extra = bonusDannoEq + (bonusCaratteristica?.bonus ?? 0) + dannoTec.reduce((s, e) => s + e.valore, 0);
   const danno = dannoBase && extra ? aggiungiDanno(dannoBase, extra) : dannoBase;
   const scomposizione = a ? [...(a.scomposizione ?? [voce('Valore da regole', a.totale, 'regole')]), ...bonusVa] : [];
   const vaEffettivo = a ? (a.effettivo ?? a.totale) + somma(bonusVa) : null;
@@ -620,10 +639,22 @@ export function profiloSenzArmi(scheda, dati) {
   // dell'equipaggiamento; danno: dado, bonus di FOR (tetto del livello), bonus dell'equipaggiamento
   const prov = a ? provenienza([rigaConDettaglio(`VA ${S.abilita}`, a.effettivo ?? a.totale, a.provenienza), ...righeDaScomposizione(bonusVa)], vaEffettivo) : null;
   const righeDanno = dannoBase ? [
-    riga('Danno senz’armi', dannoBase, daDati ? `dado di ${daDati.nome}, il più alto (§5.13)` : 'base (§5.13)'),
+    onda ? riga('Danno di Onda Interiore', dannoBase, onda.nota) : riga('Danno senz’armi', dannoBase, daDati ? `dado di ${daDati.nome}, il più alto (§5.13)` : 'base (§5.13)'),
     ...(bonusCaratteristica ? [rigaBonusCaratteristica(bonusCaratteristica, bonusDannoCaratteristica(valoreCar, Number.MAX_SAFE_INTEGER, dati.regole), scheda?.livello)] : []),
     ...(eq.bonusDanno ?? []).filter(ravv).map((b) => riga(b.nome, b.valore, 'effetto dell’oggetto')),
+    ...dannoTec.map((e) => riga(e.talento, e.valore, 'Tecnica Interiore (§8.9)')),
   ] : null;
+  if (onda) {
+    return {
+      uid: ONDA, rif: null, nome: 'Onda Interiore', tipo: 'arma_ravvicinata', senzArmi: true, onda: true, abilita: S.abilita,
+      va: a?.totale ?? null, vaEffettivo: a ? (a.effettivo ?? a.totale) + somma(bonusVa) : null,
+      provenienza: a ? provenienza([rigaConDettaglio(`VA ${S.abilita}`, a.effettivo ?? a.totale, a.provenienza), ...righeDaScomposizione(bonusVa)], (a.effettivo ?? a.totale) + somma(bonusVa)) : null,
+      provenienzaDanno: righeDanno ? provenienza(righeDanno, danno) : null,
+      scomposizione: (a ? [...(a.scomposizione ?? [voce('Valore da regole', a.totale, 'regole')]), ...bonusVa] : []).map((x, i) => (i === 0 && x.fonte === 'regole' ? { ...x, etichetta: `VA ${S.abilita}` } : x)),
+      danno: { una_mano: danno, due_mani: null }, dannoBase, dannoOrigine: onda.nota, dannoDaDati: true, bonusCaratteristica,
+      mani: 1, portataQ: onda.gittataQ, manovre: [], natura: onda.natura, tecnica: onda.tecnica,
+    };
+  }
   return {
     uid: SENZ_ARMI, rif: null, nome: 'Senz’armi', tipo: 'arma_ravvicinata', senzArmi: true, abilita: S.abilita,
     va: a?.totale ?? null, vaEffettivo, provenienza: prov,
@@ -632,6 +663,26 @@ export function profiloSenzArmi(scheda, dati) {
     danno: { una_mano: danno, due_mani: null }, dannoBase, dannoOrigine: daDati ? daDati.nome : 'base', dannoDaDati: true, bonusCaratteristica,
     mani: 1, portataQ: S.portata_q, manovre: [],
   };
+}
+
+/**
+ * Profilo d'attacco di Onda Interiore (Giocatore §8.9.4), solo mentre la Tecnica è in corso: Prova di
+ * Corpo a corpo, gittata 6 Q, Vettore Distanza, danno Magico; dado dalla tabella della scheda per la
+ * Disciplina e il Grado nella Classe Lottatore (tecniche_interiori.json → effetti.attacco.onda), più i
+ * bonus pertinenti al singolo attacco. null se Onda Interiore non è in corso.
+ */
+export function profiloOndaInteriore(scheda, sessione, dati) {
+  const c = tecnicheAttacco(sessione, dati).find((x) => x.e.onda);
+  if (!c) return null;
+  const O = c.e.onda;
+  const lot = (scheda?.classi ?? []).find((x) => x.nome === 'Lottatore');
+  const t = lot?.talenti?.find((x) => x.sceltaParametro) ?? null;
+  const tabella = O.danno_per_disciplina[t?.sceltaParametro] ?? null;
+  const grado = lot?.grado ?? 1;
+  const chiave = Object.keys(tabella ?? {}).map(Number).filter((k) => k <= grado).sort((a, b) => b - a)[0];
+  const dado = tabella?.[chiave] ?? null;
+  const nota = dado ? `${t.parametroNome ?? t.sceltaParametro}, Grado ${grado} di Lottatore (§8.9.4)` : 'Disciplina del Lottatore non scelta';
+  return profiloSenzArmi(scheda, dati, { onda: { dado, nota, gittataQ: O.gittata_q, natura: O.natura, bonusCaratteristica: O.bonus_caratteristica !== false, tecnica: c } });
 }
 
 /** «Senz'armi» compare fra le armi se il personaggio non impugna nulla, ha Arti Marziali o è Lottatore. */
@@ -949,6 +1000,19 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
       if (!annullata) promemoria.push(`${t.nome}: dopo l’attacco senz’armi ${numeroTesto(t.e.dopo_attacco_senz_armi.difese)} VA a Difese fino alla tua Iniziativa successiva.`);
     }
   }
+  // Tecniche Interiori in corso (§8.9, tecniche_interiori.json → effetti.attacco): lette da qui come i Talenti
+  const TEC = tecnicheAttacco(personaggio.sessione, dati);
+  const tecVale = TEC.filter((c) => mezzoAmmesso(c.e, arma));
+  for (const c of TEC.filter((x) => (x.e.mezzi || x.e.armi) && !mezzoAmmesso(x.e, arma) && !x.e.onda)) {
+    avvisi.push(`${c.nome}: non vale con ${arma.senzArmi ? 'un attacco senz’armi' : arma.nome}${c.e.armi ? ` (senz’armi o ${c.e.armi.join(', ')})` : ''}.`);
+  }
+  // Presa dell'Anima: +3 VA alla prova senz'armi per Immobilizzare, Sbilanciare, Disarmare
+  for (const c of tecVale.filter((x) => (x.e.manovre ?? []).includes(id))) aggiungi(situazione, c.etichetta, c.e.va, 'tecnica', 'Giocatore §8.9.4');
+  // Onda Interiore: un singolo attacco normale a distanza (§8.9.4)
+  if (arma.onda) {
+    if (id !== 'normale' || m.attacchi || d.dueArmi || d.carica || d.controcarica) blocca(`Onda Interiore: ${arma.tecnica.e.onda.frasi.at(-1)}`);
+    promemoria.push(...arma.tecnica.e.onda.frasi.slice(0, 3));
+  }
   if (d.circostanza) aggiungi(situazione, 'Circostanza del Direttore', d.circostanza, 'situazione', 'Giocatore §1.4');
   // §5.3 (E&L 14): Superiorità numerica, secondo gli attaccanti che partecipano davvero
   const SN = R.superiorita_numerica;
@@ -989,11 +1053,22 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
     }
     const formula = baseDanno ? aggiungiDanno(baseDanno, dannoBonus) : null;
     const mm = moltiplicatoreMagistrale(moltiplicatore, dati);
+    // Salto della Rana in Carica (§8.9.3): +3 danni dopo il moltiplicatore e prima dell'AR, non moltiplicati
+    const rana = d.carica ? tecVale.find((c) => c.e.carica) : null;
+    const dopoMolt = rana?.e.carica.danno_dopo_moltiplicatore ?? 0;
+    const conDopo = (t) => (t && dopoMolt ? `${t} +${dopoMolt}` : t);
+    if (rana) promemoria.push(`${rana.nome}: ${rana.e.carica.frase}`);
+    // natura del danno: Colpo Interiore lo rende Etereo, Onda Interiore è Magico (§8.9.2, §8.9.4)
+    const natura = tecVale.find((c) => c.e.natura)?.e.natura ?? mezzoDanno.natura ?? null;
     danno = {
       base: baseDanno, bonus: dannoBonus, formula, moltiplicatore, moltiplicatore_magistrale: mm,
-      testo: formula ? testoDanno(formula, moltiplicatore) : null, testo_magistrale: formula ? testoDanno(formula, mm) : null,
+      testo: formula ? conDopo(testoDanno(formula, moltiplicatore)) : null, testo_magistrale: formula ? conDopo(testoDanno(formula, mm)) : null,
       origine: mezzoDanno.senzArmi ? mezzoDanno.dannoOrigine : null,
+      ...(dopoMolt ? { dopo_moltiplicatore: dopoMolt } : {}), ...(natura ? { natura } : {}),
     };
+    for (const c of tecVale.filter((x) => x.e.natura)) promemoria.push(`${c.nome}: ${c.e.frasi[0]}`);
+    // Colpo del Cobra, Vipera dal Cappuccio, Pugno di Pietra: righe dopo l'Armatura
+    for (const c of tecVale) for (const x of c.e.dopo_armatura ?? []) dopo.push({ etichetta: x.etichetta, testo: `${c.nome}: ${x.testo}` });
     if (m.dopo_armatura?.stato && !m.dopo_armatura.salvezza) {
       const v = migE.dopo_armatura ?? m.dopo_armatura.valore;
       dopo.push({ etichetta: `${m.dopo_armatura.stato} ${v}`, testo: `Se almeno 1 danno supera l’Armatura: ${m.dopo_armatura.stato} ${v} (§5.15).` });
@@ -1019,6 +1094,12 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
       testo: `Prova contrapposta: ${chi} contro ${scelta ?? m.prova.contro.join(' o ')} del bersaglio${m.prova.scelta_bersaglio ? (scelta ? ' (scelta dal bersaglio prima del tiro)' : ' (la sceglie il bersaglio prima del tiro)') : ''}.` };
   } else prova = { tipo: 'per_colpire', testo: `Il bersaglio si difende con le Difese (Parata o Schivata, §5.9)${m.dopo_armatura?.salvezza ? `, poi PS ${m.dopo_armatura.salvezza}` : ''}.` };
   if (id === 'incalzare') prova.testo += ' Incalzare: normale Prova per colpire, non contrapposta (§5.5).';
+  // Vipera dal Cappuccio (§8.9.3), Onda Interiore (§8.9.4): non parabili con un'arma
+  for (const c of tecVale.filter((x) => x.e.non_parabile)) prova.testo += ` ${c.nome}: ${c.e.frasi[0]}`;
+  if (arma.onda) prova.testo = `Il bersaglio si difende con le Difese. ${arma.tecnica.e.onda.frasi[2]}`;
+  for (const c of tecVale.filter((x) => x.e.dopo_armatura && x.e.frasi?.length && !x.e.non_parabile)) promemoria.push(`${c.nome}: ${c.e.frasi.join(' ')}`);
+  // Pelle di Rinoceronte: +3 nelle manovre di forza, da decidere al tavolo (TODO(Davide) A.81)
+  for (const c of TEC.filter((x) => x.e.manovre_forza)) promemoria.push(`${c.nome}: +${c.e.manovre_forza.va} alle prove di Corpo a corpo nelle manovre in cui si impiega direttamente la forza fisica, se la Manovra lo è (non sommato qui). ${c.e.manovre_forza.frase}`);
 
   // 9. Talenti senza numero: una riga con la prima frase (come in «Lancia!»)
   const testuali = con('promemoria').filter((t) => {
@@ -1026,6 +1107,8 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
     return q === 'sempre' || (q === 'senz_armi' && arma.senzArmi) || (q === 'immobilizzare' && id === 'immobilizzare');
   });
   if (testuali.length) promemoria.push(`Talenti: ${testuali.map((t) => `${t.nome} — ${primaFrase(t.testo)}`).join(' · ')}`);
+  const tecRiga = rigaTecnicheAttive(personaggio.sessione, dati);
+  if (tecRiga) promemoria.push(tecRiga);
 
   const mn = promemoriaMagistraleNaturale(attacchi[0]?.va ?? somma(scomposizione), dati);
   if (mn) promemoria.push(mn);
