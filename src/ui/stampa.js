@@ -581,7 +581,8 @@ function schedaArtefatto(d, a) {
   return h('article', { class: 'scheda-artefatto riquadro-stampa' },
     h('h2', {}, a.nome, h('span', { class: 'sigla' }, ` · ${a.tipologia} · ${a.potenza}`)),
     h('div', { class: 'contenuto' },
-      h('p', {}, casellaSi(a.sintonizzato), h('strong', {}, ' Sintonizzato'), ` · occupa ${a.costo}`,
+      // §7.10: con sole proprietà passive SnT 0, nessuna casella da sintonizzare
+      a.sintonizzabile === false ? h('p', {}, h('strong', {}, 'Sole proprietà passive'), ' · SnT 0, senza sintonizzazione') : h('p', {}, casellaSi(a.sintonizzato), h('strong', {}, ' Sintonizzato'), ` · SnT ${a.costo}`,
         h('span', { class: 'sigla' }, ` · nell’Inventario: ${a.stato}${a.deposito ? ' (non sintonizzabile)' : ''}`)),
       a.arma ? h('p', {}, h('strong', {}, `VA ${a.arma.va}`), ` · danno ${a.arma.danno}`,
         a.arma.provenienzaVa ? h('span', { class: 'piccolo provenienza-art' }, ` (${a.arma.provenienzaVa})`) : null,
@@ -596,7 +597,7 @@ function schedaArtefatto(d, a) {
 function rigaRiserva(d, r) {
   return h('div', { class: 'riserva-art' },
     h('p', {}, casellaSi(r.sintonizzato), ' ', puntoChroma(r.energia), h('strong', {}, r.nome),
-      h('span', { class: 'sigla' }, ` · ${r.energia} · ${r.capacita} PM · ${r.potenza} · occupa ${r.costo}${r.deposito ? ' · deposito comune' : ''}${d.pmQui ? '' : ` · ${rimandoPM(d)}`}`)),
+      h('span', { class: 'sigla' }, ` · ${r.energia} · ${r.capacita} PM · ${r.potenza} · SnT ${r.costo}${r.deposito ? ' · deposito comune' : ''}${d.pmQui ? '' : ` · ${rimandoPM(d)}`}`)),
     d.pmQui ? quadratini(r.capacita, { compatto: true }) : null);
 }
 
@@ -612,7 +613,7 @@ function foglioArtefatti(d) {
             s.umanita ? `, ${segno(s.umanita)} per l’Umanità (§5.21${d.foglioCibernetica ? `, foglio ${d.foglioCibernetica}` : ''}).` : ', prima dell’eventuale riduzione per Umanità (§5.21).'),
           h('p', { class: 'piccolo' }, `Occupati ora: ${s.usata} (caselle piene: Artefatti segnati «sintonizzato»).`),
           quadratini(s.capacita, { compatto: true, pieni: s.usata })),
-        h('ul', { class: 'elenco-sintonie-stampa' }, s.elenco.map((x) => h('li', {}, casellaSi(x.sintonizzato), ` ${x.nome} · ${x.costo}${x.deposito ? ' · deposito comune' : ''}`))))),
+        h('ul', { class: 'elenco-sintonie-stampa' }, s.elenco.map((x) => h('li', {}, casellaSi(x.sintonizzato), ` ${x.nome} · SnT ${x.costo}${x.deposito ? ' · deposito comune' : ''}`))))),
     h('div', { class: 'art-colonne' },
       d.schede.map((a) => schedaArtefatto(d, a)),
       d.riserve.length ? box({ titolo: 'Riserve di Chroma', classe: 'art-riserve' }, d.riserve.map((r) => rigaRiserva(d, r))) : null),
@@ -913,7 +914,7 @@ function foglioMagia(d) {
         d.riserve.map((r) => h('div', { class: 'f5-riserva' },
           h('span', { class: `chroma-punto chroma-${String(r.energia).toLowerCase()}`, 'aria-hidden': 'true' }),
           h('span', { class: 'f5-riserva-nome' }, h('strong', {}, abbreviaSS(r.nome)),
-            h('span', { class: 'sigla' }, abbreviaSS(` · ${r.energia} · ${r.integrato ? 'attivazioni (A.18)' : r.regoleRimandate ? 'regole rimandate' : r.macrofamiglie.length >= 3 ? 'tutte le macrofamiglie' : r.macrofamiglie.join(', ') || '—'} · ${r.sintonizzato ? 'sintonizzato' : 'da sintonizzare'} (${r.costo})`))),
+            h('span', { class: 'sigla' }, abbreviaSS(` · ${r.energia} · ${r.integrato ? 'solo l’oggetto (A.18)' : r.regoleRimandate ? 'regole rimandate' : r.macrofamiglie.length >= 3 ? 'tutte le macrofamiglie' : r.macrofamiglie.join(', ') || '—'} · ${r.sintonizzato ? 'sintonizzato' : 'da sintonizzare'} (SnT ${r.costo})`))),
           quadratini(r.capacita, { compatto: true }))),
         conversione ? h('p', { class: 'piccolo f5-conversione' }, conversione) : null) : null,
       box({ titolo: 'Lancio', classe: 'f5-lancio' },

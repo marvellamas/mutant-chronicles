@@ -2067,7 +2067,7 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Passivo. Nessun prerequisito. Acquisibile una sola volta.\nConsente di apprendere ed eseguire Rituali di Grado I–III come Officiante oppure di contribuire come Canale, secondo la procedura del singolo Rituale. Non richiede l’Addestramento Taumaturgo e non concede accesso agli Incantesimi.\nIl Talento non fa conoscere automaticamente tutti i Rituali dei Gradi accessibili. Occorre apprendere ciascuna procedura e rispettarne requisiti, tempi, materiali e costi.\nIl contributo del Canale segue la procedura del Rituale; il Talento non assegna un bonus numerico automatico.",
-      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32). Requisito dell’Officiante per i Gradi I–III (Minore) e IV–VI (Maggiore) nelle procedure della Magia §24.1 e §25.1 (Google Doc del 01/10/2026 sera; docs/risposte-master.md, decisione 69)"
     },
     {
       "id": "ritualista-maggiore",
@@ -2080,7 +2080,7 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Passivo. Requisito: Ritualista Minore. Acquisibile una sola volta.\nEstende ai Rituali di Grado IV–VI la possibilità di apprendimento ed esecuzione come Officiante o di partecipazione come Canale. Mantiene l’accesso ai Gradi I–III.\nNon concede automaticamente la conoscenza delle procedure né accesso agli Incantesimi. Per ciascun Rituale restano necessari apprendimento, requisiti, tempi, materiali e costi.\nIl contributo del Canale segue la procedura del Rituale; il Talento non assegna un bonus numerico automatico.",
-      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32)"
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32). Requisito dell’Officiante per i Gradi I–III (Minore) e IV–VI (Maggiore) nelle procedure della Magia §24.1 e §25.1 (Google Doc del 01/10/2026 sera; docs/risposte-master.md, decisione 69)"
     }
   ],
   "condizioni_prerequisiti": {

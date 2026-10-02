@@ -1060,6 +1060,7 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
   const rimandiArtefatti = []; // [file, chiave, riferimento] di «artefatti_catalogo» (§7.5.1)
   const artefattiDaControllare = []; // [file, chiave, dati] di Artefatto: potenza e costo (§7.10)
   let potenzeArtefatti = null;
+  let sntSoloPassive = null; // §7.10: SnT degli Artefatti con sole proprietà passive
   const rimandiArmi = []; // [file, chiave, riferimento] di «sin_armi» (§7.15.1): devono essere armi
   // [file, chiave, riferimento, tipi ammessi] di «compatibile_con»: armature per gli accessori
   // (moduli IAS §7.15.4, soprabiti §7.11.2), armi per munizioni, celle e serbatoi (§7.20)
@@ -1088,6 +1089,9 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
       if (!isOggetto(s?.talento) || !isTesto(s.talento.nome) || !isIntero(s.talento.bonus)) err(F, 'sintonizzazione.talento', 'serve { nome, bonus }');
       if (!isOggetto(s?.potenze) || Object.values(s.potenze).some((x) => !isIntero(x) || x < 1)) err(F, 'sintonizzazione.potenze', 'serve { potenza: costo intero ≥ 1 }');
       else potenzeArtefatti = s.potenze;
+      // Armamenti §7.10 (01/10 sera): «Un Artefatto con sole proprietà passive ha SnT 0, qualunque sia la sua potenza.»
+      if (!isOggetto(s?.solo_passive) || !isIntero(s.solo_passive.snt) || s.solo_passive.snt < 0 || !Array.isArray(s.solo_passive.frasi)) err(F, 'sintonizzazione.solo_passive', 'serve { snt: intero ≥ 0, frasi: [...] , fonte }');
+      else sntSoloPassive = s.solo_passive.snt;
     }
     for (const [j, a] of (f.artefatti_catalogo ?? []).entries()) {
       artefattiDaControllare.push([F, `artefatti_catalogo[${j}]`, a]);
@@ -1400,6 +1404,14 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
   for (const [F, k, r] of rimandiArtefatti) if (!rif.has(r)) err(F, k, `"${r}" non è un oggetto del catalogo (formato "file:id")`);
   for (const [F, k, a] of artefattiDaControllare) {
     if (!isOggetto(a) || !isTesto(a.tipologia) || !isTesto(a.potenza) || !isIntero(a.sintonizzazione)) { err(F, k, 'serve { tipologia, potenza, sintonizzazione, sintonizzabile, contenitore? }'); continue; }
+    // §7.10: con almeno una proprietà attiva SnT della potenza e sintonizzazione; con sole passive SnT 0, senza
+    if (typeof a.proprieta_attive !== 'boolean') err(F, `${k}.proprieta_attive`, 'true o false: con sole proprietà passive la SnT è 0 (§7.10)');
+    if (a.proprieta_attive === false) {
+      if (a.sintonizzabile !== false) err(F, `${k}.sintonizzabile`, 'con sole proprietà passive deve valere false (§7.10)');
+      if (sntSoloPassive !== null && a.sintonizzazione !== sntSoloPassive) err(F, `${k}.sintonizzazione`, `con sole proprietà passive la SnT è ${sntSoloPassive} (§7.10), trovato ${a.sintonizzazione}`);
+      if (a.contenitore !== undefined) err(F, `${k}.contenitore`, 'una riserva serve a proprietà attive: con sole passive non c’è (Magia §24.2)');
+      continue;
+    }
     if (a.sintonizzabile !== true) err(F, `${k}.sintonizzabile`, 'deve valere true: le proprietà attive richiedono sintonizzazione (§7.10)');
     if (a.riserva !== undefined) err(F, `${k}.riserva`, 'campo sostituito da "contenitore": { energia, capacita_pm, integrato? }');
     if (potenzeArtefatti && potenzeArtefatti[a.potenza] !== a.sintonizzazione) err(F, `${k}.sintonizzazione`, `potenza ${a.potenza}: il costo di sintonizzazione è ${potenzeArtefatti[a.potenza] ?? 'sconosciuto'} (§7.10), trovato ${a.sintonizzazione}`);
@@ -1932,6 +1944,23 @@ function validaMeccanicaIncantesimi(dati, err) {
     if (!isOggetto(m)) return err(F, K, 'campi del lancio mancanti (tools/estrai_lancio.py)');
     // E&L 18: un incantesimo solo rituale con procedura non definita non ha ancora questi campi
     const todo = Object.keys(m).some((x) => x.startsWith('TODO(')) || m.procedura_rituale?.stato === 'non_definita';
+    // Magia sez. 25: Rituale definito (Rigenerazione); «L’Anticipazione ordinaria non si applica» (§25.3)
+    const rituale = m.procedura_rituale?.stato === 'definita';
+    if (rituale) {
+      const P = m.procedura_rituale;
+      const livelli = new Set((i.versioni ?? []).map((r) => Number(r.Livello)));
+      if (!Array.isArray(P.versioni) || !P.versioni.length) err(F, `${K}.procedura_rituale.versioni`, 'tabella del Rituale mancante');
+      else P.versioni.forEach((x, j) => {
+        const KV = `${K}.procedura_rituale.versioni[${j}]`;
+        if (!['livello', 'grado', 'va', 'ore', 'pm', 'reagenti'].every((c) => isIntero(x?.[c])) || !isTesto(x?.rigenerazione)) err(F, KV, 'servono livello, grado, va, ore, pm, reagenti interi e rigenerazione');
+        else {
+          if (!livelli.has(x.livello)) err(F, `${KV}.livello`, `${x.livello} non è una versione della scheda`);
+          if (x.grado < 1 || x.grado > 6) err(F, `${KV}.grado`, 'Grado da 1 a 6');
+          if (isIntero(P.reagenti_per_grado) && x.reagenti !== P.reagenti_per_grado * x.grado) err(F, `${KV}.reagenti`, `${P.reagenti_per_grado} per Grado: atteso ${P.reagenti_per_grado * x.grado}`);
+        }
+      });
+      if (!isOggetto(dati.regole?.rituali)) err('regole', 'rituali', 'regole dei Rituali mancanti (Magia §24.6), richieste da un Rituale definito');
+    }
     if (!isOggetto(m.azioni) || (!isIntero(m.azioni.azioni_principali) && !isTesto(m.azioni.tempo))) err(F, `${K}.azioni`, '{ azioni_principali } oppure { tempo } atteso');
     if (!Array.isArray(m.componenti) || m.componenti.some((c) => !COMPONENTI.includes(c))) err(F, `${K}.componenti`, `lista fra ${COMPONENTI.join(', ')}`);
     if (m.concentrazione !== null && !CONCENTRAZIONE.includes(m.concentrazione)) err(F, `${K}.concentrazione`, `uno fra ${CONCENTRAZIONE.join(', ')}`);
@@ -1963,7 +1992,7 @@ function validaMeccanicaIncantesimi(dati, err) {
         } else err(F, `${KA}.scala.tipo`, 'sequenza, incremento o riga_successiva');
         if (x?.conseguenze !== undefined && !(Array.isArray(x.conseguenze) && x.conseguenze.every(isTesto))) err(F, `${KA}.conseguenze`, 'frasi della scheda');
       });
-    } else if (!todo) err(F, `${K}.anticipazione`, 'mancante: serve un TODO(Davide)');
+    } else if (!todo && !rituale) err(F, `${K}.anticipazione`, 'mancante: serve un TODO(Davide)');
   });
   const talenti = [
     ...(dati.talenti_liberi?.talenti ?? []).map((t) => ['talenti_liberi', t.id, t]),

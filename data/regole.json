@@ -1094,6 +1094,81 @@
     "fonte": "Magia sez. 2 («Durante l’Ingaggio richiede sempre Potere, anche ai livelli 1–3, con un ulteriore −2 VA»; Focalizzazione «+4 VA a Potere»; Contromagia «un ulteriore −2 VA») e sez. 3 («si tira Armi da lancio +2»); utility «Lancia un incantesimo» (src/lancio.js): sez. 1, 2, 3, 5, 6, 7, 12.3; Giocatore §1.4 e §1.7",
     "_nota": "Valori base; i Talenti di magia li cambiano con effetti.magia: focalizzazione_va e penalita_ingaggio e penalita_contromagia sostituiscono il valore base, tiro_armi_da_lancio si aggiunge (master, 26/09/2026). I blocchi con «frasi» sono verificati da tools/verifica_frasi.mjs."
   },
+  "rituali": {
+    "paragrafo": "Magia §24.1, §24.6, sez. 25 (Google Doc del 01/10/2026, 21:50 UTC)",
+    "abilita": "Rituali",
+    "_nota": "Regole comuni dei Rituali con Officiante e Canali (Magia §24.6, richiamate dal §25.1 per Rigenerazione). accesso: Talenti che danno accesso ai Gradi (Ritualista Minore I–III, Maggiore IV–VI; Magia §24.1, §25.1). canali.aiuto_va: aiuto al VA dell’Officiante secondo il VA pertinente del Canale, fino a «aiuto_massimo». officiante.pm_minimo «grado»: PM personali almeno pari al Grado. magistrale: totale dei PM dimezzato per eccesso una sola volta, minimo dell’Officiante metà Grado per eccesso. Usati da src/lancio.js (Rigenerazione come Rituale).",
+    "accesso": [
+      {
+        "gradi": [
+          1,
+          2,
+          3
+        ],
+        "talenti": [
+          "ritualista-minore",
+          "ritualista-maggiore"
+        ]
+      },
+      {
+        "gradi": [
+          4,
+          5,
+          6
+        ],
+        "talenti": [
+          "ritualista-maggiore"
+        ]
+      }
+    ],
+    "canali": {
+      "massimo": "grado",
+      "abilita_va": "Rituali",
+      "aiuto_va": [
+        {
+          "fino_a": 0,
+          "aiuto": 0
+        },
+        {
+          "fino_a": 8,
+          "aiuto": 1
+        },
+        {
+          "fino_a": 14,
+          "aiuto": 2
+        },
+        {
+          "fino_a": 19,
+          "aiuto": 3
+        },
+        {
+          "fino_a": null,
+          "aiuto": 4
+        }
+      ],
+      "aiuto_massimo": 5,
+      "pm_minimo_se_energia": 1
+    },
+    "officiante": {
+      "pm_minimo": "grado"
+    },
+    "magistrale": {
+      "pm": "meta_per_eccesso",
+      "officiante_minimo": "meta_grado_per_eccesso"
+    },
+    "frasi": [
+      "Oltre all’Officiante possono partecipare al massimo tanti Canali quanto il Grado del rituale.",
+      "Ogni Canale deve avere accesso a quel Grado e partecipare per l’intera celebrazione.",
+      "L’Officiante versa normalmente almeno tanti PM personali quanto il Grado.",
+      "I Canali non effettuano tiri separati.",
+      "Si sommano gli aiuti fino a un massimo complessivo di +5 VA.",
+      "Con un Successo Magistrale si dimezza il totale dei PM una sola volta, arrotondando per eccesso, poi si ripartisce il consumo effettivo senza aumentare la quota dichiarata di alcun partecipante."
+    ],
+    "TODO(Davide)": [
+      "A.74 punto 1: «VA pertinente del Canale» (Magia §24.6): quale Abilità? Nel frattempo il VA di Rituali del Canale.",
+      "A.74 punto 2: Successo Magistrale con i Canali (Magia §24.6, §25.2): come si ripartisce la metà dei PM? Nel frattempo i Canali tengono le quote dichiarate (al massimo il nuovo totale) e l’Officiante paga il resto, almeno metà Grado per eccesso."
+    ]
+  },
   "meditazione": {
     "pm_per_ora": { "fisso": 3, "caratteristiche": ["SAG"], "minimo": 3 },
     "ore_al_giorno": { "fisso": 2, "caratteristiche": ["SAG", "COS"], "minimo": 1 },

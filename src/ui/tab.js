@@ -25,7 +25,7 @@ import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 import { pannelloAttacco } from './attacco.js';
 import { profiloSenzArmi, senzArmiDisponibile, SENZ_ARMI, talentiAttacco, valoriDisciplina } from '../attacco.js';
 import { pannelloLancio } from './lancio.js';
-import { statoPulsanteLancio } from '../lancio.js';
+import { statoPulsanteLancio, attivazioneInfusa } from '../lancio.js';
 import { tabCalendario, pannelloAttivazione, pannelloImportaCalendario, pulsanteImportaCalendario } from './calendario.js';
 import { conOrdinale } from '../lingua.js';
 import { regoleRiparazione, esitoRiparazione, vaRiparazione, riparabile } from '../riparazione.js';
@@ -1512,8 +1512,8 @@ const AGGETTIVI_MACRO = { Fisica: 'Fisici', Mentale: 'Mentali', Spirituale: 'Spi
 /** Quali Incantesimi può alimentare un contenitore, dal colore (regole.json → chroma.colori). */
 function testoAlimenta(c) {
   if (c.regoleRimandate) return `Chroma ${c.energia} (energia ${c.energiaNome ?? '—'}): regole di impiego rimandate (Magia sez. 6).`;
-  // §7.5.1: la riserva integrata alimenta le attivazioni; per i lanci si attende Davide (per-davide A.18)
-  if (c.integrato) return `Energia ${c.energiaNome}: alimenta le attivazioni dell’oggetto (§7.5.1); se alimenti anche gli Incantesimi è da confermare (per-davide A.18).`;
+  // risposta A.18 (Magia §24.2, §24.7): la riserva integrata alimenta soltanto le funzioni del proprio Artefatto
+  if (c.integrato) return `Energia ${c.energiaNome}: alimenta soltanto le attivazioni dell’oggetto (§7.5.1); non paga Incantesimi e non si preleva (Magia §24.2, §24.7).`;
   if (!c.macrofamiglie.length) return 'Non alimenta Incantesimi.';
   if (c.macrofamiglie.length >= 3) return `Energia ${c.energiaNome}: alimenta Incantesimi di ogni macrofamiglia.`;
   return `Energia ${c.energiaNome}: alimenta Incantesimi ${c.macrofamiglie.map((m) => AGGETTIVI_MACRO[m] ?? m).join(' e ')}.`;
@@ -1563,7 +1563,7 @@ function schedaContenitore(ctx, c) {
   return h('article', { class: 'arma-tab contenitore-tab' },
     h('h3', {}, c.nome, h('small', { class: 'sigla' }, c.integrato ? ' · riserva integrata nell’oggetto' : ` · ${c.potenza}`)),
     h('p', { class: 'nota' },
-      c.sintonizzato ? `✔ Sintonizzato (costo ${c.costo}, §7.10)` : `○ Non sintonizzato (costo ${c.costo}): senza sintonizzazione non alimenta lanci`,
+      c.sintonizzato ? `✔ Sintonizzato (SnT ${c.costo}, §7.10)` : `○ Non sintonizzato (SnT ${c.costo}): senza sintonizzazione non alimenta lanci`,
       ' · ', c.trasportato ? 'trasportato' : c.integrato ? `oggetto ${NOMI_STATI[c.stato]?.toLowerCase() ?? 'non trasportato'}` : 'nello zaino'),
     // vista estesa, in sola lettura: i PM si modificano nel riquadro Punti Magia
     pannelloChroma(ctx, c, { conPulsanti: false }));
@@ -1631,7 +1631,8 @@ function sezioneDaArtefatti(ctx) {
   if (!st) return null;
   const cat = catalogo(ctx.dati);
   const perUid = new Map((ctx.scelte.equipaggiamento ?? []).map((v) => [v.uid, risolvi(v, cat)]));
-  const conPotere = st.artefatti.map((x) => ({ x, r: perUid.get(x.uid) })).filter(({ r }) => r?.def?.attivazione || infoArtefattoVoce(r, ctx.dati)?.contenitore?.integrato);
+  const conPotere = st.artefatti.map((x) => ({ x, r: perUid.get(x.uid) })).filter(({ r }) => r?.def?.attivazione || infoArtefattoVoce(r, ctx.dati)?.contenitore?.integrato || infoArtefattoVoce(r, ctx.dati)?.infuso);
+  const contenitori = ctx.tab.scheda.equipaggiamento?.contenitori ?? [];
   if (!conPotere.length) return null;
   return sezione('Da artefatti',
     h('ul', { class: 'elenco-da-artefatti' }, conPotere.map(({ x, r }) => {
@@ -1640,7 +1641,8 @@ function sezioneDaArtefatti(ctx) {
       return h('li', {},
         h('strong', {}, x.nome), h('small', { class: 'sigla' }, ` · ${x.sintonizzato ? 'sintonizzato' : 'non sintonizzato'}${r.deposito ? ' · nel deposito comune' : ''}`),
         at ? h('p', { class: 'nota' }, `Attivazione: +${at.danno_extra} ${at.natura}${at.anche ? ` e ${at.anche}` : ''} al danno del colpo (§7.1.4)${at.sintonizzazione ? `, Sintonizzazione ${at.sintonizzazione}` : ''}.`) : null,
-        ris ? h('p', { class: 'nota' }, `Riserva integrata di Chroma ${ris.energia}, ${ris.capacita_pm} PM (§7.5.1).`) : null);
+        ris ? h('p', { class: 'nota' }, `Riserva integrata di Chroma ${ris.energia}, ${ris.capacita_pm} PM (§7.5.1).`) : null,
+        attivazioneInfusaUi(ctx, x, r, contenitori.find((c) => c.uid === x.uid && c.integrato), { conPulsante: false }));
     })),
     h('p', { class: 'nota' }, 'Sola lettura: sintonizzazione e riserve si gestiscono nella tab Artefatti.'));
 }
@@ -1681,10 +1683,12 @@ function tabArtefatti(ctx) {
     return h('article', { class: `arma-tab artefatto-scheda${x.sintonizzato ? ' sintonizzato' : ''}${x.deposito ? ' in-deposito' : ''}` },
       h('div', { class: 'arma-testa' },
         h('h3', {}, def ? info('oggetto', def.rif, x.nome) : x.nome, h('small', { class: 'sigla' }, ` · ${x.tipologia ?? 'Artefatto'} · ${x.potenza}`))),
-      h('p', { class: 'nota' }, `Nell’Inventario: ${NOMI_STATI[r?.voce.stato] ?? 'con sé'}. Sintonizzazione ${x.costo}.`),
-      h('label', { class: `stato-tavolo${x.sintonizzato ? ' attivo' : ''}`, title: x.deposito ? 'Nel deposito comune un Artefatto non è sintonizzabile.' : null },
-        h('input', { type: 'checkbox', checked: x.sintonizzato, disabled: !!x.deposito, onchange: (e) => sintonizza(x.uid, e.target.checked) }),
-        h('span', {}, h('strong', {}, 'Sintonizzato'), h('small', {}, x.deposito ? ' · nel deposito comune: non sintonizzabile' : ` · occupa ${x.costo}`))),
+      h('p', { class: 'nota' }, `Nell’Inventario: ${NOMI_STATI[r?.voce.stato] ?? 'con sé'}. SnT ${x.costo}.`),
+      // §7.10: con sole proprietà passive SnT 0, nessuna sintonizzazione
+      !x.sintonizzabile ? h('p', { class: 'nota' }, 'Sole proprietà passive: SnT 0, si usano senza sintonizzazione (Armamenti §7.10).')
+        : h('label', { class: `stato-tavolo${x.sintonizzato ? ' attivo' : ''}`, title: x.deposito ? 'Nel deposito comune un Artefatto non è sintonizzabile.' : null },
+          h('input', { type: 'checkbox', checked: x.sintonizzato, disabled: !!x.deposito, onchange: (e) => sintonizza(x.uid, e.target.checked) }),
+          h('span', {}, h('strong', {}, 'Sintonizzato'), h('small', {}, x.deposito ? ' · nel deposito comune: non sintonizzabile' : ` · SnT ${x.costo}`))),
       // effetti con la provenienza, dove entrano: l'arma in mano, la protezione indossata
       arma ? h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA per colpire '),
         valoreEffettivo(`VA per colpire (${arma.nome})`, arma.vaEffettivo ?? arma.va, arma.vaDaRegole ?? arma.va, arma.scomposizione, { pillola: true, provenienza: arma.provenienza }),
@@ -1694,6 +1698,7 @@ function tabArtefatti(ctx) {
         h('strong', {}, 'Attivazione: '), `+${def.attivazione.danno_extra} ${def.attivazione.natura}${def.attivazione.anche ? ` e ${def.attivazione.anche}` : ''} al danno del colpo`) : null,
       !arma && !prot && (r?.tipo === 'arma_ravvicinata' || r?.tipo === 'arma_distanza' || ['armatura', 'scudo'].includes(r?.tipo))
         ? h('p', { class: 'nota' }, 'Non è in mano né indossato: i suoi effetti non contano ora.') : null,
+      attivazioneInfusaUi(ctx, x, r, riserva, { conPulsante: true }),
       riserva ? pannelloChroma(ctx, riserva, { conPulsanti: true }) : null);
   };
   return [
@@ -1704,7 +1709,7 @@ function tabArtefatti(ctx) {
           st.talento ? `, +${rs.talento.bonus} da ${st.talento}` : null,
           st.umanita ? [', ', infoValore(`${segno(st.umanita)} per l’Umanità`, { titolo: `Capacità di Sintonizzazione: ${st.capacita}`, sottotitolo: 'Armamenti §7.10, Giocatore §5.21', provenienza: st.provenienza }), ' (tab Cibernetica).'] : '.'),
         st.usata > st.capacita ? h('p', { class: 'avviso-carico' }, `Oltre la capacità: il personaggio sceglie quali sintonizzazioni interrompere (§7.10).`) : null,
-        h('ul', { class: 'elenco-sintonie' }, st.artefatti.map((x) => h('li', {}, `${x.sintonizzato ? '✔' : '○'} ${x.nome} · ${x.costo}${x.deposito ? ' · deposito comune' : ''}`))))),
+        h('ul', { class: 'elenco-sintonie' }, st.artefatti.map((x) => h('li', {}, `${x.sintonizzato ? '✔' : '○'} ${x.nome} · SnT ${x.costo}${x.deposito ? ' · deposito comune' : ''}`))))),
     sezione('Artefatti posseduti', h('div', { class: 'armi-tab' }, st.artefatti.map(scheda))),
     esterni.length ? sezione('Riserve di Chroma',
       h('p', { class: 'nota' }, 'Cristalli, batterie e contenitori: i PM si modificano anche nel riquadro Punti Magia. Un contenitore alimenta un lancio se trasportato, sintonizzato e compatibile (Magia sez. 6).'),
@@ -1878,7 +1883,7 @@ function tabMagia(ctx, d) {
             (() => {
               // senza versioni accessibili il pulsante resta, disabilitato con il motivo (mai un pulsante muto)
               const inc = ctx.dati.incantesimi.incantesimi.find((x) => x.nome === i.nome);
-              const st = inc ? statoPulsanteLancio(inc, ctx.tab.scheda) : { disabilitato: true, motivo: 'incantesimo non più nel catalogo' };
+              const st = inc ? statoPulsanteLancio(inc, ctx.tab.scheda, ctx.dati) : { disabilitato: true, motivo: 'incantesimo non più nel catalogo' };
               return h('button', { type: 'button', class: 'btn primario btn-attacca', disabled: st.disabilitato, title: st.motivo,
                 onclick: () => { ctx.ui.lancio = { nome: i.nome, passo: 0 }; ctx.azioni.ridisegna(); } }, 'Lancia!');
             })()),
@@ -1890,4 +1895,22 @@ function tabMagia(ctx, d) {
             : h('p', { class: 'nota' }, `Tabella non disponibile: Manuale della Magia, scheda ${i.scheda}.`)))))))
       : sezione('Incantesimi', h('p', { class: 'vuoto' }, 'Nessun incantesimo scelto.')),
   ];
+}
+
+/**
+ * Attivazione di un incantesimo infuso (Magia §24.2; Rigenerazione §25.4): costo in PM della versione
+ * dalla riserva integrata, senza Prove; tempo di attivazione. Nella tab Artefatti con il pulsante
+ * «Attiva» (scala la riserva, annullabile); in Poteri «Da artefatti» in sola lettura.
+ */
+function attivazioneInfusaUi(ctx, x, r, riserva, { conPulsante }) {
+  const info = r ? infoArtefattoVoce(r, ctx.dati) : null;
+  if (!info?.infuso) return null;
+  const pm = riserva ? ctx.sessione.chroma?.[riserva.uid]?.pmAttuali ?? 0 : 0;
+  const a = attivazioneInfusa(info.infuso, riserva ?? null, { pm, sintonizzato: x.sintonizzato, deposito: x.deposito }, ctx.dati);
+  if (!a) return h('p', { class: 'nota motivo' }, `Incantesimo infuso «${info.infuso.incantesimo}» non trovato fra gli incantesimi.`);
+  return h('div', { class: 'attivazione-infusa' },
+    h('p', {}, h('strong', {}, `${a.incantesimo} ${a.livello}: `), `${a.pm} PM dalla riserva dell’Artefatto · ${a.tempo} · nessuna Prova (Magia §24.2${a.energie ? ', §25.4' : ''}).`),
+    a.motivo ? h('p', { class: 'nota motivo' }, `Non attivabile ora: ${a.motivo}.`) : null,
+    conPulsante ? h('button', { type: 'button', class: 'btn', disabled: !!a.motivo, title: a.motivo ?? 'Scala i PM dalla riserva; «Annulla» li restituisce',
+      onclick: () => ctx.azioni.chroma(riserva.uid, -a.pm) }, `Attiva (−${a.pm} PM dalla riserva)`) : null);
 }

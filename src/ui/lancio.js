@@ -26,14 +26,15 @@ function corpo(ctx, inc, intestazione) {
   const m = inc.meccanica ?? {};
   const personaggio = { scheda: ctx.tab.scheda, sessione: ctx.sessione };
   const d = dichiarazioneLancio(ctx.sessione.lanci?.[inc.nome] ?? {});
-  const versioni = versioniLancio(inc, ctx.tab.scheda);
+  const versioni = versioniLancio(inc, ctx.tab.scheda, ctx.dati);
   if (d.versione === null || !versioni.some((v) => v.livello === d.versione && !v.motivo)) d.versione = [...versioni].reverse().find((v) => !v.motivo)?.livello ?? versioni[0]?.livello ?? null;
   const imposta = (modifica) => ctx.azioni.ricordaLancio(inc.nome, { ...d, ...modifica });
   const r = calcolaLancio(personaggio, inc, d, ctx.dati);
   const contenitori = contenitoriLancio(personaggio, inc);
   const stato = (ctx.ui.lancio ??= { nome: inc.nome, passo: 0 });
   const conAnticipazione = !!m.anticipazione?.aspetti?.length;
-  const titoli = ['Versione', ...(conAnticipazione ? ['Anticipazione'] : []), 'Condizioni', 'PM', 'Risultato'];
+  // Magia sez. 25: un Rituale (Rigenerazione) ha i Canali al posto di condizioni e fonte dei PM
+  const titoli = r.rituale ? ['Versione', 'Rituale', 'Risultato'] : ['Versione', ...(conAnticipazione ? ['Anticipazione'] : []), 'Condizioni', 'PM', 'Risultato'];
   const componentiRichieste = [...(m.componenti ?? []), ...(m.invocazione_obbligatoria ? ['invocazione'] : [])];
   const bozza = (ctx.ui.effettoMagico ??= { nome: '', valore: 2 });
   // numeri di regola dai dati (regole.json → lancio) e dai Talenti del personaggio (scheda.magia)
@@ -106,7 +107,8 @@ function corpo(ctx, inc, intestazione) {
         d.quotaContenitore, (x) => imposta({ quotaContenitore: x })) : null,
       contenitori.length ? null : h('p', { class: 'nota' }, 'Nessun contenitore di Chroma nell’inventario.'),
     ],
-    Risultato: risultato(ctx, inc, r),
+    Rituale: r.rituale ? passoRituale(ctx, d, r, imposta) : [],
+    Risultato: r.rituale ? risultatoRituale(ctx, inc, r) : risultato(ctx, inc, r),
   };
 
   return pannelloPassi({ ...intestazione, passi: titoli.map((t) => ({ titolo: t, contenuto: passi[t] })), stato, ridisegna: ctx.azioni.ridisegna });
@@ -183,5 +185,63 @@ function risultato(ctx, inc, r) {
           onclick: () => ctx.azioni.lancia({ personali: f.personali, contenitore: f.contenitore }),
         }, `Lancia (−${r.pm_costo} PM)`),
         h('small', { class: 'nota' }, 'Tira 1d20 al tavolo, se serve la Prova. «Annulla» nell’intestazione annulla la spesa; il pannello resta aperto per rilanciare.'))),
+  ];
+}
+
+/**
+ * Rituale (Magia §24.6, sez. 25: Rigenerazione): i Canali, ciascuno con il VA pertinente e i PM che
+ * versa; l'aiuto al VA dell'Officiante viene dalla tabella (src/lancio.js → aiutoCanale).
+ */
+function passoRituale(ctx, d, r, imposta) {
+  const R = r.rituale;
+  const C = ctx.dati.regole.lancio.circostanze;
+  const circostanze = Array.from({ length: (C.massimo - C.minimo) / C.passo + 1 }, (_, i) => C.minimo + i * C.passo);
+  const bozza = (ctx.ui.canale ??= { va: 8, pm: 0 });
+  return [
+    h('p', { class: 'nota' }, `Rituale di Grado ${R.grado_romano}: fino a ${R.canali_massimo} Canali oltre all’Officiante. Ogni Canale partecipa per tutta la celebrazione, non tira e aiuta il VA secondo il proprio VA di ${R.abilita} (fino a +${R.aiuto_massimo} in tutto); chi versa energia dà almeno 1 PM (Magia §24.6).`),
+    d.canali.length ? h('ul', { class: 'effetti-magici' }, r.rituale.canali.map((c, i) => h('li', {}, `Canale ${i + 1}: VA ${c.va} → aiuto ${segno(c.aiuto)}, ${c.pm} PM `,
+      h('button', { type: 'button', class: 'btn piccolo', onclick: () => imposta({ canali: d.canali.filter((_, j) => j !== i) }) }, 'Togli')))) : h('p', { class: 'nota' }, 'Nessun Canale: l’Officiante celebra da solo.'),
+    d.canali.length < R.canali_massimo ? h('div', { class: 'distanza-riga' },
+      h('label', {}, `VA di ${R.abilita} del Canale `, h('input', { type: 'number', step: 1, class: 'input-d10', value: bozza.va, oninput: (e) => { bozza.va = Number(e.target.value); } })),
+      h('label', {}, ' PM che versa ', h('input', { type: 'number', step: 1, min: 0, class: 'input-d10', value: bozza.pm, oninput: (e) => { bozza.pm = Number(e.target.value); } })),
+      h('button', { type: 'button', class: 'btn', onclick: () => {
+        if (!Number.isInteger(bozza.va) || !Number.isInteger(bozza.pm) || bozza.pm < 0) return;
+        imposta({ canali: [...d.canali, { va: bozza.va, pm: bozza.pm }] });
+      } }, 'Aggiungi Canale')) : null,
+    h('p', { class: 'nota' }, `PM: ${r.pm_costo} in tutto · Officiante ${R.officiante} (almeno ${R.officiante_minimo}) · Canali ${R.pm_canali}. Personali: ${ctx.sessione.pmAttuali} / ${ctx.massimi.pm}.`),
+    rigaScelte('Circostanza del Direttore (§1.4)', circostanze.map((x) => ({ valore: x, etichetta: x ? segno(x) : 'Normale' })), d.circostanza, (x) => imposta({ circostanza: x })),
+  ];
+}
+
+/** Risultato del Rituale: requisiti, Prova di Rituali con la provenienza, PM e pulsanti per l'esito. */
+function risultatoRituale(ctx, inc, r) {
+  const R = r.rituale;
+  const M = R.magistrale;
+  return [
+    r.impossibile ? h('div', { class: 'riquadro errore', role: 'alert' }, h('p', {}, h('strong', {}, 'Rituale non possibile. '), r.impossibile.motivo)) : null,
+    r.avvisi?.length ? h('div', { class: 'riquadro attenzione' }, r.avvisi.map((x) => h('p', {}, x))) : null,
+    h('div', { class: 'attacco-risultato' },
+      h('p', { class: 'costo-lancio' }, h('strong', {}, `${r.pm_costo} PM`), ` · Officiante ${R.officiante}${R.pm_canali ? ` + Canali ${R.pm_canali}` : ''}`,
+        h('small', { class: 'nota' }, ' (totale del Rituale, Magia 21.10)')),
+      h('p', { class: 'va-attacco' }, `Prova di ${R.abilita} `, pillola(inc.nome, r.va_potere_finale, r.provenienza), h('small', { class: 'nota' }, ` · ${r.motivi_prova.join('; ')}`)),
+      h('div', { class: 'provenienza-attacco' }, listaProvenienza(r.provenienza, `VA di ${R.abilita}`)),
+      h('dl', { class: 'voci griglia-voci' },
+        h('div', {}, h('dt', {}, 'Grado'), h('dd', {}, R.grado_romano)),
+        h('div', {}, h('dt', {}, 'Celebrazione'), h('dd', {}, `${R.ore} ore, contatto continuo`)),
+        h('div', {}, h('dt', {}, 'Reagenti'), h('dd', {}, `${R.reagenti.toLocaleString('it-IT')} cr`)),
+        h('div', {}, h('dt', {}, 'Canali'), h('dd', {}, `${R.canali.length} su ${R.canali_massimo}${R.aiuto ? ` · aiuto ${segno(R.aiuto)}` : ''}`)),
+        h('div', {}, h('dt', {}, 'Rigenerazione'), h('dd', {}, `${R.rigenerazione} dopo il successo`)),
+        h('div', {}, h('dt', {}, 'Successo Magistrale'), h('dd', {}, `${M.totale} PM (Officiante ${M.officiante}${M.canali ? `, Canali ${M.canali}` : ''}), metà dei reagenti`))),
+      r.promemoria.length ? h('ul', { class: 'promemoria-attacco' }, r.promemoria.map((p) => h('li', {}, p))) : null,
+      h('div', { class: 'attacco-azioni' },
+        h('button', {
+          type: 'button', class: 'btn primario btn-grande', disabled: !!r.impossibile, title: r.impossibile?.motivo ?? 'Successo o fallimento: i PM si consumano comunque',
+          onclick: () => ctx.azioni.lancia({ personali: R.officiante, contenitore: null }),
+        }, `Rituale concluso (−${R.officiante} PM)`),
+        h('button', {
+          type: 'button', class: 'btn btn-grande', disabled: !!r.impossibile,
+          onclick: () => ctx.azioni.lancia({ personali: M.officiante, contenitore: null }),
+        }, `Con Successo Magistrale (−${M.officiante} PM)`),
+        h('small', { class: 'nota' }, 'Tira 1d20 al tavolo alla fine della celebrazione. Successo o fallimento consumano i PM; se la celebrazione si interrompe prima della Prova non si spendono. «Annulla» nell’intestazione annulla la spesa.'))),
   ];
 }

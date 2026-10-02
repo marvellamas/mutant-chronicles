@@ -1,7 +1,7 @@
 {
-  "versione_manuale": "Armamenti 0.50",
-  "fonte": "Manuale degli Armamenti v0.50, §7.5 Artefatti (pp. 30–31) e §7.10 Artefatti e sintonizzazione (pp. 58–60); lotto 12",
-  "_nota": "Generato da tools/lotti/lotto12_artefatti.mjs; da qui in poi si modifica questo file. «sintonizzazione» contiene le regole del §7.10: capacità per Gradi complessivi (indice 0 = Grado I), bonus del Talento, costo per potenza. «artefatti_catalogo» dà tipologia e potenza agli Artefatti già presenti in altri file. «contenitore» descrive la riserva di Chroma (Magia sez. 6): energia (colore di regole.json → chroma.colori), capacita_pm; «integrato»: true quando la riserva è dentro l'oggetto (§7.5.1: Bordone Templare, Spade Vindicator e Deliverer, Lancia Castigator, Lama Demontooth, Scudo delle Guardie Sacre), con un solo costo di sintonizzazione. «sintonizzabile»: le proprietà attive richiedono sintonizzazione (§7.10). Batterie da 5 PM: profilo della risposta di Davide A.14 (28/09/2026); i vecchi valori provvisori (500 e 1.000 crediti, reperibilità Non comune e Rara) non valgono più.",
+  "versione_manuale": "Armamenti 0.58 (Google Doc del 01/10/2026, 21:26 UTC)",
+  "fonte": "Manuale degli Armamenti v0.50, §7.5 Artefatti (pp. 30–31) e §7.10 Artefatti e sintonizzazione (pp. 58–60); lotto 12; prezzi delle batterie e SnT dei soli passivi dal Doc del 01/10/2026 sera (Armamenti §7.5, §7.10; Magia §24.2, §24.7; docs/diff-manuali-2026-10-02.md, lotto 2)",
+  "_nota": "Generato da tools/lotti/lotto12_artefatti.mjs; da qui in poi si modifica questo file. «sintonizzazione» contiene le regole del §7.10: capacità per Gradi complessivi (indice 0 = Grado I), bonus del Talento, costo per potenza. «artefatti_catalogo» dà tipologia e potenza agli Artefatti già presenti in altri file. «contenitore» descrive la riserva di Chroma (Magia sez. 6): energia (colore di regole.json → chroma.colori), capacita_pm; «integrato»: true quando la riserva è dentro l'oggetto (§7.5.1: Bordone Templare, Spade Vindicator e Deliverer, Lancia Castigator, Lama Demontooth, Scudo delle Guardie Sacre), con un solo costo di sintonizzazione. «sintonizzabile»: le proprietà attive richiedono sintonizzazione (§7.10). Batterie da 5 PM: profilo della risposta di Davide A.14 (28/09/2026) con i prezzi indicativi del 01/10/2026 sera, 1.000 crediti le colorate e 5.000 la Bianca (Armamenti §7.5; Magia §24.7: 200 e 1.000 crediti per PM; E&L, «Regole consolidate»); i 10.000 e 50.000 di A.14 non valgono più. «proprieta_attive»: true se l’Artefatto ha almeno una proprietà attiva, e allora la SnT è quella della potenza (il Grado finale, Magia §24.2); false con sole proprietà passive, e allora SnT 0 e niente sintonizzazione (Armamenti §7.10). Controllo voce per voce del 02/10: tutte le voci del catalogo hanno proprietà attive (attivazione offensiva o Scudo Magico, §7.5.1) oppure sono batterie autonome (SnT pari al Grado).",
   "sintonizzazione": {
     "capacita_per_gradi": [
       4,
@@ -29,7 +29,14 @@
       "Batterie e contenitori": "Oggetti che conservano PM nel Chroma, indipendentemente da forma e materiale.",
       "Accessori": "Strumenti, dispositivi, impianti e altri oggetti Mistici o TecnoMistici."
     },
-    "regola": "La capacità di sintonizzazione è un unico budget del personaggio, non un numero fisso di oggetti né un limite separato per ciascuna Classe. Parte da 4 al I Grado complessivo e aumenta di 1 per ogni Grado complessivo successivo, fino a 9 al VI. L’Addestramento Taumaturgo segue la medesima progressione. Architetto TecnoMistico aggiunge +2 una sola volta: da 6 al I Grado complessivo a 11 al VI. Il Tecnomante non possiede più una capacità illimitata. I valori della tabella precedono l’eventuale riduzione dovuta all’Umanità (§5.21), applicata dopo i bonus e fino a un minimo di 0. Si sommano i costi di sintonizzazione degli Artefatti attualmente sintonizzati: la somma non può superare la capacità del personaggio. La potenza non impone da sola un livello minimo; un Tecnomante con capacità 6 può quindi sintonizzarsi con un Artefatto Leggendario da costo 6, se lo possiede e ne rispetta i requisiti. Disponibilità e ritrovamento degli oggetti potenti dipendono dall’ambientazione e dal Direttore. Se l’Umanità diminuisce e i costi degli Artefatti già sintonizzati superano la nuova capacità, il personaggio sceglie immediatamente quali sintonizzazioni interrompere per rispettare il limite. Quando la capacità aumenta, gli eventuali legami interrotti si ristabiliscono seguendo la procedura ordinaria."
+    "regola": "La capacità di sintonizzazione è un unico budget del personaggio, non un numero fisso di oggetti né un limite separato per ciascuna Classe. Parte da 4 al I Grado complessivo e aumenta di 1 per ogni Grado complessivo successivo, fino a 9 al VI. L’Addestramento Taumaturgo segue la medesima progressione. Architetto TecnoMistico aggiunge +2 una sola volta: da 6 al I Grado complessivo a 11 al VI. Il Tecnomante non possiede più una capacità illimitata. I valori della tabella precedono l’eventuale riduzione dovuta all’Umanità (§5.21), applicata dopo i bonus e fino a un minimo di 0. Si sommano i costi di sintonizzazione degli Artefatti attualmente sintonizzati: la somma non può superare la capacità del personaggio. La potenza non impone da sola un livello minimo; un Tecnomante con capacità 6 può quindi sintonizzarsi con un Artefatto Leggendario da costo 6, se lo possiede e ne rispetta i requisiti. Disponibilità e ritrovamento degli oggetti potenti dipendono dall’ambientazione e dal Direttore. Se l’Umanità diminuisce e i costi degli Artefatti già sintonizzati superano la nuova capacità, il personaggio sceglie immediatamente quali sintonizzazioni interrompere per rispettare il limite. Quando la capacità aumenta, gli eventuali legami interrotti si ristabiliscono seguendo la procedura ordinaria.",
+    "solo_passive": {
+      "snt": 0,
+      "frasi": [
+        "Un Artefatto con sole proprietà passive ha SnT 0, qualunque sia la sua potenza."
+      ],
+      "fonte": "Armamenti 0.58, §7.10 «Classificazione di potenza» (Google Doc del 01/10/2026 sera); Magia §24.2"
+    }
   },
   "artefatti_catalogo": [
     {
@@ -38,6 +45,7 @@
       "potenza": "Non Comune",
       "sintonizzazione": 2,
       "sintonizzabile": true,
+      "proprieta_attive": true,
       "contenitore": {
         "energia": "Rosso",
         "capacita_pm": 5,
@@ -50,6 +58,7 @@
       "potenza": "Non Comune",
       "sintonizzazione": 2,
       "sintonizzabile": true,
+      "proprieta_attive": true,
       "contenitore": {
         "energia": "Rosso",
         "capacita_pm": 5,
@@ -62,6 +71,7 @@
       "potenza": "Non Comune",
       "sintonizzazione": 2,
       "sintonizzabile": true,
+      "proprieta_attive": true,
       "contenitore": {
         "energia": "Rosso",
         "capacita_pm": 5,
@@ -74,6 +84,7 @@
       "potenza": "Non Comune",
       "sintonizzazione": 2,
       "sintonizzabile": true,
+      "proprieta_attive": true,
       "contenitore": {
         "energia": "Rosso",
         "capacita_pm": 5,
@@ -86,6 +97,7 @@
       "potenza": "Non Comune",
       "sintonizzazione": 2,
       "sintonizzabile": true,
+      "proprieta_attive": true,
       "contenitore": {
         "energia": "Rosso",
         "capacita_pm": 5,
@@ -98,6 +110,7 @@
       "potenza": "Rara",
       "sintonizzazione": 3,
       "sintonizzabile": true,
+      "proprieta_attive": true,
       "contenitore": {
         "energia": "Rosso",
         "capacita_pm": 5,
@@ -113,15 +126,16 @@
       "catalogo": "Commerciale",
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
-      "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche NEC usano Lx, non richiedono Sintonizzazione e seguono i §§7.1.4 e 7.20.5. Esempi: le Batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni e costano 1 punto di sintonizzazione; quella con Chroma Bianco è Non Comune e costa 2 punti. Profilo approvato da Davide (A.14, 28/09/2026): capacità 5 PM, Qualità costruttiva Comune, PS Integrità 10, PI 3, peso 0,2 kg; Rosso, Blu e Verde reperibilità Molto rara e valore indicativo 10.000 crediti, Bianco Leggendaria e 50.000. Si acquistano cariche (5/5 PM). Potenza mistica e costo di Sintonizzazione restano quelli del §7.10.",
+      "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche NEC usano Lx, non richiedono Sintonizzazione e seguono i §§7.1.4 e 7.20.5. Le batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni, con SnT 1; quella con Chroma Bianco è Non Comune, con SnT 2. Le batterie mistiche Rosse, Blu e Verdi da 5 PM hanno ciascuna prezzo indicativo di 1.000 crediti, REP Molto rara, potenza Comune e SnT 1. Quella Bianca da 5 PM ha prezzo indicativo di 5.000 crediti, REP Leggendaria, potenza Non Comune e SnT 2. Tutte pesano 0,2 kg, hanno Qualità Comune, PS Integrità 10 e 3 PI; all’acquisto contengono 5/5 PM. Per le capacità superiori, fino a 30 PM colorati e 25 PM Bianchi nella scala ordinaria, vedere il Manuale della Magia, §24.7. I prezzi restano soggetti al playtest e non garantiscono la reperibilità.",
       "paragrafo": "§7.10",
-      "versione_manuale": "Armamenti 0.58",
-      "costo": 10000,
+      "versione_manuale": "Armamenti 0.58 (Google Doc del 01/10/2026, 21:26 UTC)",
+      "costo": 1000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Comune",
         "sintonizzazione": 1,
         "sintonizzabile": true,
+        "proprieta_attive": true,
         "contenitore": {
           "energia": "Rosso",
           "capacita_pm": 5
@@ -141,15 +155,16 @@
       "catalogo": "Commerciale",
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
-      "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche NEC usano Lx, non richiedono Sintonizzazione e seguono i §§7.1.4 e 7.20.5. Esempi: le Batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni e costano 1 punto di sintonizzazione; quella con Chroma Bianco è Non Comune e costa 2 punti. Profilo approvato da Davide (A.14, 28/09/2026): capacità 5 PM, Qualità costruttiva Comune, PS Integrità 10, PI 3, peso 0,2 kg; Rosso, Blu e Verde reperibilità Molto rara e valore indicativo 10.000 crediti, Bianco Leggendaria e 50.000. Si acquistano cariche (5/5 PM). Potenza mistica e costo di Sintonizzazione restano quelli del §7.10.",
+      "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche NEC usano Lx, non richiedono Sintonizzazione e seguono i §§7.1.4 e 7.20.5. Le batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni, con SnT 1; quella con Chroma Bianco è Non Comune, con SnT 2. Le batterie mistiche Rosse, Blu e Verdi da 5 PM hanno ciascuna prezzo indicativo di 1.000 crediti, REP Molto rara, potenza Comune e SnT 1. Quella Bianca da 5 PM ha prezzo indicativo di 5.000 crediti, REP Leggendaria, potenza Non Comune e SnT 2. Tutte pesano 0,2 kg, hanno Qualità Comune, PS Integrità 10 e 3 PI; all’acquisto contengono 5/5 PM. Per le capacità superiori, fino a 30 PM colorati e 25 PM Bianchi nella scala ordinaria, vedere il Manuale della Magia, §24.7. I prezzi restano soggetti al playtest e non garantiscono la reperibilità.",
       "paragrafo": "§7.10",
-      "versione_manuale": "Armamenti 0.58",
-      "costo": 10000,
+      "versione_manuale": "Armamenti 0.58 (Google Doc del 01/10/2026, 21:26 UTC)",
+      "costo": 1000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Comune",
         "sintonizzazione": 1,
         "sintonizzabile": true,
+        "proprieta_attive": true,
         "contenitore": {
           "energia": "Blu",
           "capacita_pm": 5
@@ -169,15 +184,16 @@
       "catalogo": "Commerciale",
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
-      "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche NEC usano Lx, non richiedono Sintonizzazione e seguono i §§7.1.4 e 7.20.5. Esempi: le Batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni e costano 1 punto di sintonizzazione; quella con Chroma Bianco è Non Comune e costa 2 punti. Profilo approvato da Davide (A.14, 28/09/2026): capacità 5 PM, Qualità costruttiva Comune, PS Integrità 10, PI 3, peso 0,2 kg; Rosso, Blu e Verde reperibilità Molto rara e valore indicativo 10.000 crediti, Bianco Leggendaria e 50.000. Si acquistano cariche (5/5 PM). Potenza mistica e costo di Sintonizzazione restano quelli del §7.10.",
+      "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche NEC usano Lx, non richiedono Sintonizzazione e seguono i §§7.1.4 e 7.20.5. Le batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni, con SnT 1; quella con Chroma Bianco è Non Comune, con SnT 2. Le batterie mistiche Rosse, Blu e Verdi da 5 PM hanno ciascuna prezzo indicativo di 1.000 crediti, REP Molto rara, potenza Comune e SnT 1. Quella Bianca da 5 PM ha prezzo indicativo di 5.000 crediti, REP Leggendaria, potenza Non Comune e SnT 2. Tutte pesano 0,2 kg, hanno Qualità Comune, PS Integrità 10 e 3 PI; all’acquisto contengono 5/5 PM. Per le capacità superiori, fino a 30 PM colorati e 25 PM Bianchi nella scala ordinaria, vedere il Manuale della Magia, §24.7. I prezzi restano soggetti al playtest e non garantiscono la reperibilità.",
       "paragrafo": "§7.10",
-      "versione_manuale": "Armamenti 0.58",
-      "costo": 10000,
+      "versione_manuale": "Armamenti 0.58 (Google Doc del 01/10/2026, 21:26 UTC)",
+      "costo": 1000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Comune",
         "sintonizzazione": 1,
         "sintonizzabile": true,
+        "proprieta_attive": true,
         "contenitore": {
           "energia": "Verde",
           "capacita_pm": 5
@@ -197,15 +213,16 @@
       "catalogo": "Commerciale",
       "famiglia": "Batterie e contenitori",
       "nomi_alternativi": [],
-      "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche NEC usano Lx, non richiedono Sintonizzazione e seguono i §§7.1.4 e 7.20.5. Esempi: le Batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni e costano 1 punto di sintonizzazione; quella con Chroma Bianco è Non Comune e costa 2 punti. Profilo approvato da Davide (A.14, 28/09/2026): capacità 5 PM, Qualità costruttiva Comune, PS Integrità 10, PI 3, peso 0,2 kg; Rosso, Blu e Verde reperibilità Molto rara e valore indicativo 10.000 crediti, Bianco Leggendaria e 50.000. Si acquistano cariche (5/5 PM). Potenza mistica e costo di Sintonizzazione restano quelli del §7.10.",
+      "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche NEC usano Lx, non richiedono Sintonizzazione e seguono i §§7.1.4 e 7.20.5. Le batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni, con SnT 1; quella con Chroma Bianco è Non Comune, con SnT 2. Le batterie mistiche Rosse, Blu e Verdi da 5 PM hanno ciascuna prezzo indicativo di 1.000 crediti, REP Molto rara, potenza Comune e SnT 1. Quella Bianca da 5 PM ha prezzo indicativo di 5.000 crediti, REP Leggendaria, potenza Non Comune e SnT 2. Tutte pesano 0,2 kg, hanno Qualità Comune, PS Integrità 10 e 3 PI; all’acquisto contengono 5/5 PM. Per le capacità superiori, fino a 30 PM colorati e 25 PM Bianchi nella scala ordinaria, vedere il Manuale della Magia, §24.7. I prezzi restano soggetti al playtest e non garantiscono la reperibilità.",
       "paragrafo": "§7.10",
-      "versione_manuale": "Armamenti 0.58",
-      "costo": 50000,
+      "versione_manuale": "Armamenti 0.58 (Google Doc del 01/10/2026, 21:26 UTC)",
+      "costo": 5000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Non Comune",
         "sintonizzazione": 2,
         "sintonizzabile": true,
+        "proprieta_attive": true,
         "contenitore": {
           "energia": "Bianco",
           "capacita_pm": 5
@@ -217,6 +234,576 @@
       "ps_int": 10,
       "pi": 3,
       "peso": 0.2
+    },
+    {
+      "id": "batteria-da-10-pm-chroma-rosso",
+      "nome": "Batteria da 10 PM (Chroma Rosso)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
+      "paragrafo": "Magia §24.7",
+      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "costo": 2000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Non Comune",
+        "sintonizzazione": 2,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Rosso",
+          "capacita_pm": 10
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2,
+      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+    },
+    {
+      "id": "batteria-da-15-pm-chroma-rosso",
+      "nome": "Batteria da 15 PM (Chroma Rosso)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
+      "paragrafo": "Magia §24.7",
+      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "costo": 3000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Rara",
+        "sintonizzazione": 3,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Rosso",
+          "capacita_pm": 15
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2,
+      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+    },
+    {
+      "id": "batteria-da-20-pm-chroma-rosso",
+      "nome": "Batteria da 20 PM (Chroma Rosso)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
+      "paragrafo": "Magia §24.7",
+      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "costo": 4000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Molto Rara",
+        "sintonizzazione": 4,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Rosso",
+          "capacita_pm": 20
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2,
+      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+    },
+    {
+      "id": "batteria-da-25-pm-chroma-rosso",
+      "nome": "Batteria da 25 PM (Chroma Rosso)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
+      "paragrafo": "Magia §24.7",
+      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "costo": 5000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Epica",
+        "sintonizzazione": 5,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Rosso",
+          "capacita_pm": 25
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2,
+      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+    },
+    {
+      "id": "batteria-da-30-pm-chroma-rosso",
+      "nome": "Batteria da 30 PM (Chroma Rosso)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
+      "paragrafo": "Magia §24.7",
+      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "costo": 6000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Leggendaria",
+        "sintonizzazione": 6,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Rosso",
+          "capacita_pm": 30
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2,
+      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+    },
+    {
+      "id": "batteria-da-10-pm-chroma-blu",
+      "nome": "Batteria da 10 PM (Chroma Blu)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
+      "paragrafo": "Magia §24.7",
+      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "costo": 2000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Non Comune",
+        "sintonizzazione": 2,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Blu",
+          "capacita_pm": 10
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2,
+      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+    },
+    {
+      "id": "batteria-da-15-pm-chroma-blu",
+      "nome": "Batteria da 15 PM (Chroma Blu)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
+      "paragrafo": "Magia §24.7",
+      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "costo": 3000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Rara",
+        "sintonizzazione": 3,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Blu",
+          "capacita_pm": 15
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2,
+      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+    },
+    {
+      "id": "batteria-da-20-pm-chroma-blu",
+      "nome": "Batteria da 20 PM (Chroma Blu)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
+      "paragrafo": "Magia §24.7",
+      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "costo": 4000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Molto Rara",
+        "sintonizzazione": 4,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Blu",
+          "capacita_pm": 20
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2,
+      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+    },
+    {
+      "id": "batteria-da-25-pm-chroma-blu",
+      "nome": "Batteria da 25 PM (Chroma Blu)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
+      "paragrafo": "Magia §24.7",
+      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "costo": 5000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Epica",
+        "sintonizzazione": 5,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Blu",
+          "capacita_pm": 25
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2,
+      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+    },
+    {
+      "id": "batteria-da-30-pm-chroma-blu",
+      "nome": "Batteria da 30 PM (Chroma Blu)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
+      "paragrafo": "Magia §24.7",
+      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "costo": 6000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Leggendaria",
+        "sintonizzazione": 6,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Blu",
+          "capacita_pm": 30
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2,
+      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+    },
+    {
+      "id": "batteria-da-10-pm-chroma-verde",
+      "nome": "Batteria da 10 PM (Chroma Verde)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
+      "paragrafo": "Magia §24.7",
+      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "costo": 2000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Non Comune",
+        "sintonizzazione": 2,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Verde",
+          "capacita_pm": 10
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2,
+      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+    },
+    {
+      "id": "batteria-da-15-pm-chroma-verde",
+      "nome": "Batteria da 15 PM (Chroma Verde)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
+      "paragrafo": "Magia §24.7",
+      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "costo": 3000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Rara",
+        "sintonizzazione": 3,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Verde",
+          "capacita_pm": 15
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2,
+      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+    },
+    {
+      "id": "batteria-da-20-pm-chroma-verde",
+      "nome": "Batteria da 20 PM (Chroma Verde)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
+      "paragrafo": "Magia §24.7",
+      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "costo": 4000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Molto Rara",
+        "sintonizzazione": 4,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Verde",
+          "capacita_pm": 20
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2,
+      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+    },
+    {
+      "id": "batteria-da-25-pm-chroma-verde",
+      "nome": "Batteria da 25 PM (Chroma Verde)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
+      "paragrafo": "Magia §24.7",
+      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "costo": 5000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Epica",
+        "sintonizzazione": 5,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Verde",
+          "capacita_pm": 25
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2,
+      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+    },
+    {
+      "id": "batteria-da-30-pm-chroma-verde",
+      "nome": "Batteria da 30 PM (Chroma Verde)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
+      "paragrafo": "Magia §24.7",
+      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "costo": 6000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Leggendaria",
+        "sintonizzazione": 6,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Verde",
+          "capacita_pm": 30
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "MR",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2,
+      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+    },
+    {
+      "id": "batteria-da-10-pm-chroma-bianco",
+      "nome": "Batteria da 10 PM (Chroma Bianco)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
+      "paragrafo": "Magia §24.7",
+      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "costo": 10000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Rara",
+        "sintonizzazione": 3,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Bianco",
+          "capacita_pm": 10
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "LE",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2,
+      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+    },
+    {
+      "id": "batteria-da-15-pm-chroma-bianco",
+      "nome": "Batteria da 15 PM (Chroma Bianco)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
+      "paragrafo": "Magia §24.7",
+      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "costo": 15000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Molto Rara",
+        "sintonizzazione": 4,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Bianco",
+          "capacita_pm": 15
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "LE",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2,
+      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+    },
+    {
+      "id": "batteria-da-20-pm-chroma-bianco",
+      "nome": "Batteria da 20 PM (Chroma Bianco)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
+      "paragrafo": "Magia §24.7",
+      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "costo": 20000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Epica",
+        "sintonizzazione": 5,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Bianco",
+          "capacita_pm": 20
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "LE",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2,
+      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
+    },
+    {
+      "id": "batteria-da-25-pm-chroma-bianco",
+      "nome": "Batteria da 25 PM (Chroma Bianco)",
+      "tipo": "artefatto",
+      "catalogo": "Commerciale",
+      "famiglia": "Batterie e contenitori",
+      "nomi_alternativi": [],
+      "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
+      "paragrafo": "Magia §24.7",
+      "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC), §24.7",
+      "costo": 25000,
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Leggendaria",
+        "sintonizzazione": 6,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "contenitore": {
+          "energia": "Bianco",
+          "capacita_pm": 25
+        }
+      },
+      "proprieta": [],
+      "reperibilita": "LE",
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 3,
+      "peso": 0.2,
+      "TODO(Davide)": "A.75: peso, Qualità, PS Integrità e PI delle batterie oltre i 5 PM non sono indicati (Magia §24.7 li dà per il supporto di base). Nel frattempo quelli del supporto di base: 0,2 kg, Comune, PS 10, 3 PI."
     },
     {
       "id": "chroma-viola-frammento",

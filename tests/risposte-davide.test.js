@@ -105,8 +105,9 @@ test('A.10: Scudo delle Guardie Sacre, lama ritratta 1d6+1 e lama estratta 1d6+1
 
 // --- A.14: batterie da 5 PM e disponibilità degli Artefatti Mistici -------------------------
 
+// prezzi indicativi del 01/10 sera (Armamenti §7.5, Magia §24.7, E&L «Regole consolidate»): 200 e 1.000 crediti per PM
 test('A.14: batterie da 5 PM con i valori approvati, cariche all’acquisto; scala di reperibilità fino a Leggendaria', () => {
-  for (const [c, rep, costo, pot, sint] of [['rosso', 'MR', 10000, 'Comune', 1], ['blu', 'MR', 10000, 'Comune', 1], ['verde', 'MR', 10000, 'Comune', 1], ['bianco', 'LE', 50000, 'Non Comune', 2]]) {
+  for (const [c, rep, costo, pot, sint] of [['rosso', 'MR', 1000, 'Comune', 1], ['blu', 'MR', 1000, 'Comune', 1], ['verde', 'MR', 1000, 'Comune', 1], ['bianco', 'LE', 5000, 'Non Comune', 2]]) {
     const b = def(`artefatti:batteria-da-5-pm-chroma-${c}`);
     assert.deepEqual([b.reperibilita, b.costo, b.qualita, b.ps_int, b.pi, b.peso, b.artefatto.contenitore.capacita_pm], [rep, costo, 'Comune', 10, 3, 0.2, 5], c);
     assert.deepEqual([b.artefatto.potenza, b.artefatto.sintonizzazione], [pot, sint], c); // invariati (§7.10)

@@ -1,6 +1,8 @@
 # E&L – Risposte e correzioni approvate
 
-Copia del Google Doc del master «E&L – Risposte e correzioni approvate» (Davide), letta il 26 settembre 2026 e riletta alle versioni del 27/09 (A.4, A.5–A.5.31, A.6) e, il 1° ottobre 2026, alla versione del 01/10 alle 07:25:47 UTC, salvata per intera con la sezione «Risposte ai 19 quesiti dell’app». Testo del documento, non riscritto: è la fonte delle decisioni registrate in `docs/risposte-master.md` (A.1–A.6: 7–23; le 19 risposte: 44–61).
+Copia del Google Doc del master «E&L – Risposte e correzioni approvate» (Davide), letta il 26 settembre 2026 e riletta alle versioni del 27/09, del 01/10 07:25:47 UTC e, il 2 ottobre 2026, alla versione del 01/10 alle 21:38:42 UTC. Testo del documento, non riscritto: è la fonte delle decisioni registrate in `docs/risposte-master.md`.
+
+# E\&L – Risposte e correzioni approvate
 
 Decisioni approvate e aggiornamenti dei manuali condivisi.
 
@@ -988,11 +990,11 @@ Riferimenti: Manuale della Magia, §§12.1–12.2 e 13.1.
 
 Campo dell’app: incantesimi.json.incantesimi\[69\].meccanica.TODO(Davide)  
 Riferimento storico: A.39  
-Rigenerazione può essere lanciata soltanto mediante Rituale. Componenti, procedura di esecuzione e costo finale restano da completare con le regole generali dei Rituali: l’app non deve trattarla come un normale lancio né inventare questi dati.  
-I PM della tabella costituiscono la base per il costo rituale, non un costo finale già completo. I tempi della tabella decorrono dalla conclusione del Rituale e indicano la rigenerazione, non il tempo di esecuzione del Rituale.  
+Rigenerazione eseguita direttamente richiede il Rituale definito nel Manuale della Magia, sezione 25\. Un Artefatto sintonizzato può riprodurne l’effetto senza richiedere all’utilizzatore il talento Ritualista o la conoscenza della procedura, secondo il §25.4.  
+Per le versioni 9, 10, 12, 15 e 18 il Rituale richiede rispettivamente 9, 10, 12, 15 e 18 PM totali e 3, 3, 4, 6 e 8 ore di celebrazione. I reagenti costano 500 cr per Grado e per celebrazione, per tutti i beneficiari ammessi. Successo Magistrale, Canali, interruzioni e nuovi tentativi seguono la sezione 25\. I tempi di guarigione della scheda decorrono dal completamento della celebrazione.  
 Il contatto è necessario durante il Rituale. Il bersaglio deve essere vivente e consenziente, oppure incosciente e soccorso; non effettua una Prova Salvezza. Dopo il Rituale, la ricrescita non richiede Concentrazione, contatto o permanenza entro una distanza.  
-L’Anticipazione ordinaria non si applica; le amplificazioni rituali restano da definire. L’app deve segnalare la procedura rituale come non ancora completata.  
-Riferimenti: Manuale della Magia, §§21.10 e 12.4.
+L’Anticipazione ordinaria non si applica; le amplificazioni rituali restano da definire. La procedura base è ora completa. L’app dovrà recepire la sezione 25 e distinguere il Rituale diretto dall’attivazione automatica di un Artefatto: nessuna Prova, nessun reagente per utilizzo e tutti i PM dalla riserva dell’oggetto. L’aggiornamento dei manuali e del calcolatore non attesta l’implementazione nell’app.  
+Riferimenti: Manuale della Magia, §§12.4, 21.10 e 25\.
 
 ## 19\. Ricarica di doppiette e fucili a pompa
 
@@ -1003,4 +1005,25 @@ Le doppiette si caricano inserendo direttamente le cartucce nelle canne. I fucil
 M310 (capacità 20\) e SA SG2001 (capacità 10\) usano invece caricatori amovibili specifici: la sostituzione con un caricatore pronto richiede normalmente 1 Azione Principale. Questa distinzione è già approvata in A.37 e va esplicitata nelle relative schede di catalogo.  
 Nell’inserimento singolo, una normale operazione di ricarica inserisce 1 cartuccia e richiede 1 Azione Principale. Ricarica Migliorata permette di inserire fino a 3 cartucce nella stessa operazione; non accelera lo scambio di un caricatore completo, di una cella o di un serbatoio.  
 Ricarica Rapida concede una sola operazione di ricarica gratuita per round, nella propria iniziativa. Può combinarsi con Ricarica Migliorata per inserire fino a 3 cartucce quando il modello prevede l’inserimento singolo.  
-Riferimenti: Manuale del Giocatore, §§5.1.1 e 8.6.4; approvazione A.37.  
+Riferimenti: Manuale del Giocatore, §§5.1.1 e 8.6.4; approvazione A.37.
+
+# Regole consolidate — creazione di artefatti, batterie e Rigenerazione
+
+Riferimento operativo: Manuale della Magia, sezioni 24 e 25\. Queste decisioni recepiscono le approvazioni della stesura e sostituiscono le precedenti indicazioni provvisorie sulla creazione e sull’accesso a Rigenerazione tramite Artefatto. Costi e prezzi restano una base da verificare nel playtest.
+
+## Progetto, costruzione e infusione
+
+Artefatti serve al progetto obbligatorio, Tecnologia alla costruzione e Rituali all’infusione. Progetto e supporto possono essere forniti da altri. Il progetto è permanente, riutilizzabile, copiabile e commerciabile; un Magistrale conserva per sempre \+2 a Tecnologia. La progettazione consuma le risorse previste. Un Magistrale nella costruzione concede invece \+2 all’infusione dello specifico supporto.  
+La scheda deriva dalle versioni complete degli Incantesimi e dalla configurazione costruita. Livelli 1–3, 4–8, 9–11, 12–14, 15–17 e 18 corrispondono ai Gradi I–VI: Comune, Non Comune, Rara, Molto Rara, Epica e Leggendaria. Più proprietà portano al Grado della più alta più una per ogni ulteriore proprietà; il Grado finale considera anche la riserva. Oltre VI occorre una ricetta eccezionale. Non si applica un aumento fisso di \+3 agli effetti permanenti.  
+SnT indica la Sintonizzazione e resta distinta da SIN, l’interfaccia neurale. Un oggetto con sole proprietà passive ha SnT 0; con almeno una proprietà attiva ha SnT pari al Grado finale. La permanenza deve essere compatibile con l’uso naturale del supporto. Per Arma Mistica e Armatura Mistica si usano le versioni minime utili, evitando di aumentare il Grado per soli incrementi di Durata.
+
+## Partecipazione e risorse
+
+L’infusione ammette un numero di Canali pari al Grado, oltre all’Officiante. I Canali possono fornire PM e contribuire al VA finale secondo la tabella del §24.6, fino a \+5 complessivo; non effettuano una Prova separata. L’Officiante deve fornire almeno un numero di PM personali pari al Grado. Con un Magistrale si dimezza il totale prima della ripartizione, arrotondando per eccesso, e il minimo personale diventa metà Grado arrotondata per eccesso.  
+Le batterie pure hanno reagenti d’infusione pari a 50 cr per Grado. Il Chroma grezzo costa 100 cr/PM colorato o 400 cr/PM Bianco. Il prezzo indicativo della batteria finita è 200 cr/PM colorato o 1.000 cr/PM Bianco; REP Molto rara per le colorate e Leggendaria per le Bianche. Le riserve appena create sono vuote; quelle acquistate sono piene. La ricarica non richiede un pagamento in crediti. I rapporti di conversione e i limiti d’uso restano quelli approvati.
+
+## Rigenerazione tramite Artefatto
+
+Qualunque PG che soddisfi la SnT può usare un Artefatto di Rigenerazione. Non occorrono Ritualista, conoscenza della procedura, Prova di Potere o Prova di Rituali. I costi di creazione seguono le regole generali. L’attivazione non consuma i reagenti da 500 cr per Grado previsti per la celebrazione diretta.  
+L’attivazione continua dura 3 ore per le versioni 9 e 10, 4 ore per la 12, 6 ore per la 15 e 8 ore per la 18, mantenendo il contatto e le condizioni dei beneficiari. Al completamento l’oggetto paga tutto il costo in PM dalla riserva Verde o Bianca compatibile; un’interruzione precedente non consuma PM e non avvia l’effetto. Seguono i normali tempi di rigenerazione della scheda. L’attivazione automatica non genera Magistrali o Maldestri e non usa Canali.  
+Esempio: Rigenerazione 9 con riserva Verde da 10 PM produce, come unica proprietà attiva, un Artefatto di Grado III e SnT 3\. L’attivazione dura 3 ore, consuma 9 PM e avvia il processo di 5 giorni. Restano i limiti della versione, una sola Rigenerazione attiva per beneficiario, nessuna resurrezione e nessun recupero automatico di Umanità.  

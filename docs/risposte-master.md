@@ -256,7 +256,7 @@ UTC); i paragrafi corrispondenti sono nel Manuale del Giocatore §2.16.1–§2.1
     → `data/regole.json` → `artefatti_mistici.disponibilita`, mostrato nel tooltip di ogni Artefatto
     (`src/descrizioni.js`).
 
-31. **Batterie da 5 PM e scala di reperibilità** (A.14; Armamenti §7.10). Rosso, Blu e Verde:
+31. **Batterie da 5 PM e scala di reperibilità** (A.14; Armamenti §7.10; prezzi superati dalla decisione 66 del 02/10). Rosso, Blu e Verde:
     reperibilità Molto rara, valore indicativo 10.000 crediti; Bianco: Leggendaria, 50.000. Tutte:
     capacità 5 PM, Qualità Comune, PS Integrità 10, PI 3, peso 0,2 kg, cariche all'acquisto (5/5,
     come A.19). Potenza mistica e costo di Sintonizzazione invariati (Comune 1, Bianco Non comune 2);
@@ -533,3 +533,51 @@ Non sono risposte a domande dell'app ma cambi di regola nei manuali, applicati c
     Scelte provvisorie dell'app, in attesa di Davide: A.56 (vale il manuale del 29/09), A.57 (i punti già spesi
     che non aumentano più il VA si riassegnano, finché non si riassegnano non contano e l'avanzamento è bloccato),
     A.58 (il +1 di Corporazione sta sotto il limite).
+
+## 2 ottobre 2026 — manuali ed E&L del 01/10 sera (21:25–21:50 UTC)
+
+Ricognizione in `docs/diff-manuali-2026-10-02.md`; qui i lotti 1 e 2. Le decisioni 66 e 67 vengono dall'E&L
+(«Regole consolidate — creazione di artefatti, batterie e Rigenerazione») e dai manuali; la 68 è testo dei
+manuali; la 69 chiude in parte una domanda.
+
+66. **Prezzi delle batterie mistiche** (A.14, già chiusa con 10.000 e 50.000; Armamenti §7.5, Magia §24.7,
+    Equipaggiamento §9.3, E&L «Partecipazione e risorse»). Batterie da 5 PM: prezzo indicativo **1.000 crediti**
+    le Rosse, Blu e Verdi, **5.000** la Bianca (200 e 1.000 crediti per PM; Chroma grezzo 100 e 400 per PM).
+    Reperibilità, Qualità, PS, PI, peso, potenza e SnT restano quelli della decisione 31. «I prezzi restano
+    soggetti al playtest e non garantiscono la reperibilità.» → `artefatti.json` (costo delle quattro batterie,
+    `note_manuale`). Effetto: prezzo in Inventario e SS, materiali di «Ripara» (5% del prezzo per PI).
+
+67. **Riserve integrate** (A.18; Magia §24.2 e §24.7, Armamenti §7.5). La riserva integrata di un Artefatto
+    alimenta soltanto le funzioni di quell'Artefatto: «non permette di prelevare PM né di alimentare gli
+    incantesimi personali». Conferma il «Nel frattempo». → `src/lancio.js` (`contenitoriLancio`: la riserva
+    integrata non è più fra le fonti di PM di «Lancia!»; prima veniva offerta per un incantesimo della stessa
+    macrofamiglia), testo della riserva nella tab Poteri e nella SS.
+
+68. **SnT 0 con sole proprietà passive** (Armamenti 0.58 §7.10 e Magia §24.2 del 01/10 sera). «Un Artefatto con
+    sole proprietà passive ha SnT 0, qualunque sia la sua potenza»; con almeno una proprietà attiva la SnT è il
+    Grado finale (la tabella delle potenze). SnT è la sigla del costo di Sintonizzazione, distinta da SIN
+    (interfaccia neurale). Controllo voce per voce: tutte le voci del catalogo hanno proprietà attive
+    (attivazione offensiva o Scudo Magico, §7.5.1) o sono batterie autonome (SnT = Grado): nessuna SnT cambia.
+    → `artefatti.json` → `sintonizzazione.solo_passive` e `proprieta_attive` per voce, validatore, Artefatto
+    personalizzato con «Sole proprietà passive (SnT 0)», tab Artefatti e foglio 6 della SS.
+
+69. **Ritualista Minore e Maggiore** (A.32, in parte; Magia §24.1 e §25.1). Diventano i requisiti operativi
+    dell'Officiante: Ritualista Minore per i Gradi I–III, Maggiore per i Gradi IV–VI (infusione degli Artefatti
+    Mistici e delle batterie autonome, Rituale di Rigenerazione). Conferma indiretta che i due Talenti sono
+    definitivi; A.32 resta aperta per gli altri 16 Talenti. → `talenti_liberi.json` (fonte dei due Talenti;
+    il testo aveva già i Gradi I–III e IV–VI).
+
+70. **Rigenerazione: Rituale della sez. 25 e attivazione da Artefatto** (A.39 punto 3, già chiuso con
+    «procedura non ancora definita»: supera la decisione E&L 18; E&L del 01/10 sera, Magia 21.10, sez. 25,
+    §24.6, Armamenti §7.10). Esecuzione diretta: Rituale con un'unica Prova di Rituali dell'Officiante al
+    termine (penalità del Grado: −4 per III, −6, −8, −10), Ritualista Minore per il Grado III, Maggiore per
+    IV–VI; PM della tabella = **costo totale** (9, 10, 12, 15, 18), l'Officiante ne versa almeno il Grado;
+    Canali fino al Grado, con aiuto al VA da +0 a +4 e massimo +5; celebrazione di 3, 3, 4, 6, 8 ore con
+    contatto; reagenti 500 cr per Grado; Magistrale a metà PM e reagenti; Maldestro: niente nuovo Rituale per
+    24 ore; interruzione: reagenti persi, PM no. Da Artefatto (§25.4): chi soddisfa la SnT lo attiva senza
+    Ritualista, senza Prove e senza Canali; l'intero costo dalla riserva integrata Verde o Bianca; l'attivazione
+    continua dura quanto la celebrazione. → `incantesimi.json` (Rigenerazione: `procedura_rituale`),
+    `regole.json` → `rituali` (§24.6), `src/lancio.js` (`calcolaRituale`, `attivazioneInfusa`), «Lancia!»
+    (passi Versione, Rituale, Risultato), tab Artefatti e «Da artefatti», Artefatto personalizzato con
+    «Incantesimo infuso». Scelte provvisorie nella nuova domanda **A.74** (VA del Canale = Rituali;
+    Magistrale: i Canali tengono la quota; PM solo personali; conta Ritualista, non il livello massimo).

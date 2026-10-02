@@ -55,10 +55,13 @@ export function frasiEffetti() {
   };
   visita(leggi('data/regole.json').attacco_distanza ?? {}, 'regole:attacco_distanza');
   visita(leggi('data/regole.json').lancio ?? {}, 'regole:lancio');
+  visita(leggi('data/regole.json').rituali ?? {}, 'regole:rituali');
   visita(leggi('data/regole.json').attacco_ravvicinato ?? {}, 'regole:attacco_ravvicinato');
   visita(leggi('data/regole.json').elmetti ?? {}, 'regole:elmetti');
   visita(leggi('data/regole.json').dotazioni_iniziali ?? {}, 'regole:dotazioni_iniziali');
   visita(leggi('data/regole.json').nec ?? {}, 'regole:nec');
+  // Armamenti §7.10: SnT 0 per gli Artefatti con sole proprietà passive (docs/diff-manuali-2026-10-02.md)
+  visita(leggi('data/equipaggiamento/artefatti.json').sintonizzazione ?? {}, 'artefatti:sintonizzazione');
   // regole.json → stati: la «condizione» degli effetti e il testo dei limiti (docs/ricognizione-stati.md)
   for (const s of leggi('data/regole.json').stati?.elenco ?? []) {
     (s.effetti ?? []).forEach((e, i) => out.push({ dove: `regole:stati ${s.nome} effetti[${i}]`, frase: e.condizione }));
@@ -74,6 +77,8 @@ export function frasiEffetti() {
     // conseguenze legate a un aspetto (tools/scale_anticipazione.mjs): frasi del paragrafo, una per una
     (m.anticipazione?.aspetti ?? []).forEach((x, k) => (x.conseguenze ?? []).forEach((f, j) => out.push({ dove: `${dove} anticipazione.aspetti[${k}].conseguenze[${j}]`, frase: f })));
     (m.frasi ?? []).forEach((f, k) => out.push({ dove: `${dove} frasi[${k}]`, frase: f }));
+    // Magia §25.4: attivazione da Artefatto
+    (m.procedura_rituale?.artefatto?.frasi ?? []).forEach((f, k) => out.push({ dove: `${dove} procedura_rituale.artefatto.frasi[${k}]`, frase: f }));
   }
   return out;
 }

@@ -47,11 +47,13 @@ test('Anticipazione: ogni aspetto ha un nome breve; il gradino intero resta per 
     'origini naturale → naturale e artificiale → naturale, artificiale e mistica → universale');
 });
 
-test('casi non estratti: nessun TODO(Davide) (E&L 17–18); Rigenerazione con la procedura rituale non definita', () => {
+test('casi non estratti: nessun TODO(Davide) (E&L 17–18); Rigenerazione con la procedura rituale della sez. 25', () => {
   const conTodo = dati.incantesimi.incantesimi.filter((i) => Object.keys(i.meccanica).some((k) => k.startsWith('TODO('))).map((i) => i.nome);
   assert.deepEqual(conTodo, []);
   const rig = dati.incantesimi.incantesimi.find((i) => i.nome === 'Rigenerazione');
-  assert.equal(rig.meccanica.procedura_rituale.stato, 'non_definita');
+  // E&L del 01/10 sera e Magia sez. 25: la procedura è definita (A.39 punto 3)
+  assert.equal(rig.meccanica.procedura_rituale.stato, 'definita');
+  assert.deepEqual(rig.meccanica.procedura_rituale.versioni.map((v) => [v.livello, v.grado, v.ore, v.pm, v.reagenti]), [[9, 3, 3, 9, 1500], [10, 3, 3, 10, 1500], [12, 4, 4, 12, 2000], [15, 5, 6, 15, 2500], [18, 6, 8, 18, 3000]]);
 });
 
 test('regole.json → lancio: scala del Potere e Anticipazione (sez. 1 e 12.3)', () => {

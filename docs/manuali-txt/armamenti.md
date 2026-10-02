@@ -1160,13 +1160,13 @@ Esempio: armatura AR 3 e Scudo Medio AR \+2 forniscono AR totale 5\. Contro 10 d
 
 ## **7.5 Artefatti**
 
-Le proprietà passive sono utilizzabili da tutti nei normali limiti dell’oggetto; le proprietà attive richiedono sintonizzazione e, una volta sintonizzati, si attivano automaticamente senza Componenti, rispettando costi e condizioni. Soltanto le proprietà che lo prevedono espressamente richiedono una Prova di attivazione. Il §7.10 distingue tipologia, classificazione di potenza e costo di sintonizzazione. La capacità ordinaria va da 4 a 9 secondo i Gradi complessivi; Architetto TecnoMistico aggiunge \+2 una sola volta. Al totale si applica la riduzione dovuta all’Umanità, fino a un minimo di 0 (§5.21); l’eventuale eccesso di sintonizzazioni si risolve secondo il §7.10. Ogni scheda deve riportare proprietà passive e attive, effetti, costo di sintonizzazione, eventuali PM, Azioni e requisiti; per le proprietà che richiedono una Prova di attivazione, ne specifica l’Abilità e le modalità di risoluzione. Il Rituale finale di creazione sarà integrato successivamente.
+Le proprietà passive sono utilizzabili da tutti nei normali limiti dell’oggetto; le proprietà attive richiedono sintonizzazione e, una volta sintonizzati, si attivano automaticamente senza Componenti, rispettando costi e condizioni. Soltanto le proprietà che lo prevedono espressamente richiedono una Prova di attivazione. Il §7.10 distingue tipologia, classificazione di potenza e costo di sintonizzazione. La capacità ordinaria va da 4 a 9 secondo i Gradi complessivi; Architetto TecnoMistico aggiunge \+2 una sola volta. Al totale si applica la riduzione dovuta all’Umanità, fino a un minimo di 0 (§5.21); l’eventuale eccesso di sintonizzazioni si risolve secondo il §7.10. Ogni scheda deve riportare proprietà passive e attive, effetti, costo di sintonizzazione, eventuali PM, Azioni e requisiti; per le proprietà che richiedono una Prova di attivazione, ne specifica l’Abilità e le modalità di risoluzione. Progetto, costruzione e infusione seguono il Manuale della Magia, sezione 24\. SnT indica il costo di Sintonizzazione; SIN resta la sigla dell’interfaccia neurale.
 
 Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le celle tecnologiche NEC usano Lx, non richiedono Sintonizzazione e seguono i §§7.1.4 e 7.20.5. Non esiste una conversione automatica fra Lx e PM.
 
 Le riserve integrate in un Artefatto alimentano soltanto quell’Artefatto: non possono pagare Incantesimi personali né essere prelevate o convertite nella riserva personale. Un oggetto acquistato viene consegnato con la riserva piena; per uno trovato il Direttore stabilisce i PM residui secondo le circostanze.
 
-Le regole di impiego degli Artefatti sono nel Manuale della Magia e nel §7.10 di questo volume; Architetto TecnoMistico e gli altri Talenti del Tecnomante sono nel Manuale del Giocatore, §3.9.5. Il catalogo ravvicinato e il §7.5.1 comprendono i profili con riserva mistica. La creazione rituale e i raccordi con costruzione e riparazione saranno integrati successivamente.
+Le regole di impiego degli Artefatti sono nel Manuale della Magia e nel §7.10 di questo volume; Architetto TecnoMistico e gli altri Talenti del Tecnomante sono nel Manuale del Giocatore, §3.9.5. Il catalogo ravvicinato e il §7.5.1 comprendono i profili con riserva mistica. Progettazione, costruzione, infusione, riparazioni e modifiche seguono il Manuale della Magia, sezione 24\.
 
 ### **Reperibilità degli Artefatti e batterie mistiche**
 
@@ -1174,7 +1174,7 @@ Gli Artefatti Mistici e TecnoMistici sono pochi e non hanno un normale mercato o
 
 La Reperibilità degli Artefatti è Molto rara; per le batterie universali è Leggendaria. I prezzi sono valori indicativi per scambi o commissioni, non garantiscono l’acquisto. Oratoria non crea un’offerta inesistente. Reperibilità, Qualità costruttiva e potenza mistica restano dati distinti.
 
-Le batterie mistiche Rosse, Blu e Verdi da 5 PM hanno ciascuna costo 10.000 crediti, REP Molto rara, potenza Comune e Sintonizzazione 1\. Quella Bianca da 5 PM ha costo 50.000 crediti, REP Leggendaria, potenza Non comune e Sintonizzazione 2\. Tutte pesano 0,2 kg, hanno Qualità Comune, PS Integrità 10 e 3 PI; all’acquisto contengono 5/5 PM. Il Chroma Viola non è in commercio.
+Le batterie mistiche Rosse, Blu e Verdi da 5 PM hanno ciascuna prezzo indicativo di 1.000 crediti, REP Molto rara, potenza Comune e SnT 1\. Quella Bianca da 5 PM ha prezzo indicativo di 5.000 crediti, REP Leggendaria, potenza Non Comune e SnT 2\. Tutte pesano 0,2 kg, hanno Qualità Comune, PS Integrità 10 e 3 PI; all’acquisto contengono 5/5 PM. Per le capacità superiori, fino a 30 PM colorati e 25 PM Bianchi nella scala ordinaria, vedere il Manuale della Magia, §24.7. Il Chroma Viola non è in commercio. I prezzi restano soggetti al playtest e non garantiscono la reperibilità.
 
 ### **7.5.1 Profili con riserva mistica**
 
@@ -2501,7 +2501,7 @@ Se una specifica proprietà richiede una Prova di attivazione, la scheda dell’
 
 ### **Artefatti che riproducono Incantesimi**
 
-Un Artefatto può riprodurre l’effetto di un Incantesimo nella versione indicata dalla propria scheda. La scheda stabilisce Azioni richieste, costo, alimentazione, Gittata, bersagli, Durata ed eventuali Prove. L’utilizzatore deve essere sintonizzato e rispettare i requisiti dell’oggetto. Non deve conoscere personalmente l’Incantesimo né possedere l’Addestramento Taumaturgo, salvo un requisito esplicito dell’Artefatto.
+Un Artefatto può riprodurre l’effetto di un Incantesimo nella versione indicata dalla propria scheda. La scheda stabilisce Azioni richieste, costo, alimentazione, Gittata, bersagli, Durata ed eventuali Prove. L’utilizzatore deve essere sintonizzato e rispettare i requisiti dell’oggetto. Non deve conoscere personalmente l’Incantesimo né possedere l’Addestramento Taumaturgo, salvo un requisito esplicito dell’Artefatto. Un Artefatto di Rigenerazione segue questo principio: non richiede Ritualista né conoscenza della procedura, si attiva senza Prove e usa la propria riserva; tempi e condizioni sono nel Manuale della Magia, §25.4.
 
 **La versione disponibile dipende dall’Artefatto:** il livello dell’utilizzatore non ne aumenta automaticamente la potenza. Usare l’oggetto non permette di apprendere l’Incantesimo o di lanciarlo autonomamente. Riprodurre un Incantesimo non aggiunge una Prova di Potere all’attivazione.
 
@@ -2533,7 +2533,7 @@ Il bonus di Focalizzazione, essendo riservato al lancio personale, non migliora 
 
 ### **Tipologie e potenza**
 
-La tipologia indica la funzione dell’oggetto; la classificazione di potenza ne indica il costo di sintonizzazione. Le due indicazioni sono distinte: una Batteria e un’arma non diventano equivalenti soltanto perché appartengono alla stessa fascia di potenza.
+La tipologia indica la funzione dell’oggetto. La classificazione di potenza e il costo SnT derivano dalla configurazione costruita: versioni degli Incantesimi infusi, numero di proprietà ed eventuale riserva, secondo il Manuale della Magia, §24.2. Una Batteria e un’arma della stessa fascia conservano funzioni e requisiti distinti.
 
 | Tipologia | Oggetti compresi |
 | :---- | :---- |
@@ -2553,7 +2553,7 @@ La tipologia indica la funzione dell’oggetto; la classificazione di potenza ne
 | Epica | 5 |
 | Leggendaria | 6 |
 
-**Esempi:** le Batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni e costano 1 punto di sintonizzazione; quella con Chroma Bianco è Non Comune e costa 2 punti. La scheda di ciascun oggetto stabilisce le sue proprietà effettive: la fascia non assegna automaticamente danni, riserve o funzioni identiche.
+**La tabella riporta il costo SnT degli Artefatti con proprietà attive e delle batterie. Un Artefatto con sole proprietà passive ha SnT 0, qualunque sia la sua potenza. Le batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni, con SnT 1; quella con Chroma Bianco è Non Comune, con SnT 2\. La fascia non assegna automaticamente danni, riserve o funzioni identiche. SnT non va confuso con SIN, la sigla dell’interfaccia neurale.**
 
 ### **Analizzare e identificare**
 
@@ -2568,7 +2568,7 @@ Per analizzare un Artefatto mediante una Prova di Artefatti occorre possedere l�
 
 L’Analisi avanzata richiede 10 minuti e una Prova di Artefatti, con obiettivo e modificatori stabiliti prima del tiro. Il testo completo, comprese informazioni ottenibili, limiti ed esempio, è nel §3.9.5. Un Successo Magistrale non trasforma l’analisi in Identificazione. La sintonizzazione automatica del Tecnomante non concede automaticamente queste informazioni.
 
-La creazione degli Artefatti richiede procedure di costruzione e un Rituale finale, che saranno integrati successivamente. Architetto TecnoMistico conserva l’accesso esclusivo alla creazione degli Artefatti TecnoMistici.
+La creazione degli Artefatti comprende un progetto obbligatorio con Artefatti, la costruzione con Tecnologia e l’infusione con Rituali (Manuale della Magia, sezione 24). Progetto e costruzione possono essere forniti da altri; i progetti sono permanenti, riutilizzabili e commerciabili. Architetto TecnoMistico conserva l’accesso esclusivo al progetto e alla responsabilità dell’infusione TecnoMistica entro il proprio Grado di Classe. La semplice costruzione fisica può essere affidata a un tecnico competente.
 
 ## **7.11 Armature e rinforzi**
 

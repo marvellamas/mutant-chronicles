@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026)",
+  "versione_manuale": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC)",
   "fonte": "Manuale della Magia: sezione 11 (indice), sezioni 13 e 16–23 (schede)",
   "_nota": "Schede estratte dal PDF. «versioni» è la tabella principale (una riga per livello, chiavi = intestazioni della scheda); «altre_tabelle» contiene le tabelle successive; «regole» il testo dopo la tabella principale.",
   "macrofamiglie": [
@@ -11317,7 +11317,7 @@
       "livello_base": 9,
       "pagina": 122,
       "intestazione": "Scheda 21.10 • Macrofamiglia Spirituale • Specializzazione Esorcismo • Rituale: obbligatorio; nessuna versione ordinaria • PM utilizzabili: universali o spirituali.",
-      "lancio": "Lancio: esclusivamente mediante Rituale, con contatto durante la procedura. Beneficiari viventi consenzienti; è consentito il soccorso a chi è incosciente. Nessuna PS. Procedure, Prove e costo di esecuzione verranno integrati successivamente con le regole dei Rituali nel Manuale della Magia. L’esecuzione richiede tali regole.",
+      "lancio": "Lancio diretto: esclusivamente mediante il Rituale della sezione 25, con contatto durante la procedura. Beneficiari viventi consenzienti; è consentito il soccorso a chi è incosciente. Nessuna PS. Un Artefatto sintonizzato può riprodurre l’effetto secondo il §25.4, senza richiedere all’utilizzatore il talento Ritualista o la conoscenza della procedura.",
       "descrizione": "Ripara Menomazioni permanenti e, alle versioni appropriate, rigenera parti mancanti. Il tempo in tabella decorre dal completamento del Rituale, non ne rappresenta il tempo di esecuzione.",
       "versioni": [
         {
@@ -11356,7 +11356,7 @@
           "Tempo dopo il Rituale": "12 ore"
         }
       ],
-      "regole": "PM base: il valore in tabella è la base per il costo rituale. Il costo di esecuzione verrà integrato successivamente con le regole dei Rituali. La versione di livello 10 conserva capacità, beneficiari e Menomazioni del livello 9 e riduce il tempo di rigenerazione.\nProcesso di rigenerazione e limiti\nDopo il Rituale: il processo prosegue per il tempo fissato senza Concentrazione. Il Taumaturgo è libero di agire; non occorre mantenere contatto o gittata. Penalità e impedimenti delle Menomazioni restano fino al completamento, quando le parti curate recuperano interamente la funzione, senza dover passare prima per gli stadi temporanei.\nConteggio: si considerano le Menomazioni registrate nella scheda; per esempio, due gambe menomate contano come due Menomazioni. Le lesioni nuove non sono automaticamente comprese nel processo già avviato. Un beneficiario può avere una sola Rigenerazione attiva; dopo la sua conclusione si può eseguire un nuovo Rituale per altre Menomazioni.\nSensi e cause: ripristina i sensi perduti per lesione anatomica curabile, non quelli impediti da una sostanza o da una magia ancora attiva. Non guarisce Ferite, Sanguinamento, Affaticamento, malattie, avvelenamenti o Corruzione e non elimina automaticamente mutazioni e altre conseguenze speciali. Non recupera normalmente PV o PM.\nAnatomia e vita: non resuscita, non ricrea creature morte e non aggiunge arti o capacità oltre la normale anatomia del beneficiario.\nProtesi e impianti: non vengono rimossi automaticamente. La sostituzione con parti rigenerate richiede una procedura compatibile; il recupero di Umanità non è automatico e segue il Manuale del Giocatore, §5.21. Le regole specifiche per un eventuale recupero di Umanità dopo Rigenerazione verranno integrate successivamente nel Manuale della Magia.\nInterruzione: Negare Potere può interrompere il processo ancora in corso secondo la propria scheda. Una ricostruzione già completata è fisicamente reale e non viene annullata retroattivamente.\nTalenti: Canale Vitale concede 1 PV per beneficiario, una sola volta al completamento della rigenerazione.\nFlusso Sacro non si applica.\nAnticipazione e amplificazioni rituali: le relative regole verranno integrate successivamente nel Manuale della Magia. Non si applica l’Anticipazione ordinaria; il divieto di resurrezione rimane assoluto.",
+      "regole": "PM: il valore in tabella è il costo totale della versione, prima dell’eventuale Successo Magistrale del Rituale. Tempi di celebrazione, reagenti ed esiti sono nella sezione 25. La versione di livello 10 conserva capacità, beneficiari e Menomazioni del livello 9 e riduce il tempo di rigenerazione. L’Artefatto paga tutti i PM con la propria riserva, secondo il §25.4.\nProcesso di rigenerazione e limiti\nDopo il Rituale: il processo prosegue per il tempo fissato senza Concentrazione. Il Taumaturgo è libero di agire; non occorre mantenere contatto o gittata. Penalità e impedimenti delle Menomazioni restano fino al completamento, quando le parti curate recuperano interamente la funzione, senza dover passare prima per gli stadi temporanei.\nConteggio: si considerano le Menomazioni registrate nella scheda; per esempio, due gambe menomate contano come due Menomazioni. Le lesioni nuove non sono automaticamente comprese nel processo già avviato. Un beneficiario può avere una sola Rigenerazione attiva; dopo la sua conclusione si può eseguire un nuovo Rituale per altre Menomazioni.\nSensi e cause: ripristina i sensi perduti per lesione anatomica curabile, non quelli impediti da una sostanza o da una magia ancora attiva. Non guarisce Ferite, Sanguinamento, Affaticamento, malattie, avvelenamenti o Corruzione e non elimina automaticamente mutazioni e altre conseguenze speciali. Non recupera normalmente PV o PM.\nAnatomia e vita: non resuscita, non ricrea creature morte e non aggiunge arti o capacità oltre la normale anatomia del beneficiario.\nProtesi e impianti: non vengono rimossi automaticamente. La sostituzione con parti rigenerate richiede una procedura compatibile; il recupero di Umanità non è automatico e segue il Manuale del Giocatore, §5.21. Le regole specifiche per un eventuale recupero di Umanità dopo Rigenerazione verranno integrate successivamente nel Manuale della Magia.\nInterruzione: Negare Potere può interrompere il processo ancora in corso secondo la propria scheda. Una ricostruzione già completata è fisicamente reale e non viene annullata retroattivamente.\nTalenti: Canale Vitale concede 1 PV per beneficiario, una sola volta al completamento della rigenerazione.\nFlusso Sacro non si applica.\nAnticipazione e amplificazioni rituali: le relative regole verranno integrate successivamente nel Manuale della Magia. Non si applica l’Anticipazione ordinaria; il divieto di resurrezione rimane assoluto.",
       "altre_tabelle": [
         {
           "righe": [
@@ -11381,7 +11381,7 @@
       ],
       "meccanica": {
         "azioni": {
-          "tempo": "esclusivamente mediante Rituale"
+          "tempo": "Rituale di 3–8 ore (sez. 25)"
         },
         "componenti": [],
         "richiede_colpire": false,
@@ -11390,7 +11390,7 @@
           "tipi": [],
           "testo": "Nessuna PS."
         },
-        "concentrazione": null,
+        "concentrazione": "no",
         "rituale": "obbligatorio",
         "pm_utilizzabili": [
           "universali",
@@ -11398,13 +11398,86 @@
         ],
         "anticipazione": null,
         "procedura_rituale": {
-          "stato": "non_definita",
-          "testo": "Procedura rituale non ancora definita: componenti, esecuzione e costo finale arriveranno con le regole generali dei Rituali (E&L 18). I PM della tabella sono la base del costo rituale, non il costo finale; i tempi indicano la rigenerazione dopo il Rituale. Contatto durante il Rituale; bersaglio vivente e consenziente, oppure incosciente e soccorso, senza PS. Anticipazione ordinaria non applicabile."
+          "stato": "definita",
+          "paragrafo": "Magia sez. 25 (Google Doc del 01/10/2026, 21:50 UTC)",
+          "versioni": [
+            {
+              "livello": 9,
+              "grado": 3,
+              "va": -4,
+              "ore": 3,
+              "pm": 9,
+              "reagenti": 1500,
+              "rigenerazione": "5 giorni"
+            },
+            {
+              "livello": 10,
+              "grado": 3,
+              "va": -4,
+              "ore": 3,
+              "pm": 10,
+              "reagenti": 1500,
+              "rigenerazione": "3 giorni"
+            },
+            {
+              "livello": 12,
+              "grado": 4,
+              "va": -6,
+              "ore": 4,
+              "pm": 12,
+              "reagenti": 2000,
+              "rigenerazione": "2 giorni"
+            },
+            {
+              "livello": 15,
+              "grado": 5,
+              "va": -8,
+              "ore": 6,
+              "pm": 15,
+              "reagenti": 2500,
+              "rigenerazione": "1 giorno"
+            },
+            {
+              "livello": 18,
+              "grado": 6,
+              "va": -10,
+              "ore": 8,
+              "pm": 18,
+              "reagenti": 3000,
+              "rigenerazione": "12 ore"
+            }
+          ],
+          "reagenti_per_grado": 500,
+          "contatto": true,
+          "testo": "Rituale della sezione 25: un’unica Prova di Rituali dell’Officiante al termine della celebrazione, con la penalità del Grado e l’aiuto dei Canali (§24.6). I PM della tabella sono il totale del Rituale; i reagenti si predispongono all’inizio. Contatto con i beneficiari per tutta la celebrazione; nessuna PS.",
+          "artefatto": {
+            "paragrafo": "Magia §25.4",
+            "energie": [
+              "Verde",
+              "Bianco"
+            ],
+            "frasi": [
+              "Qualsiasi personaggio che soddisfi la SnT dell’artefatto può utilizzarne la funzione, senza Ritualista, senza conoscere l’incantesimo e senza apprendere la procedura.",
+              "L’attivazione è automatica, senza Prove di Potere o Rituali e senza Canali.",
+              "L’intero costo in PM della versione viene pagato dalla riserva integrata, compatibile Verde o Bianca.",
+              "Un’interruzione precedente impedisce l’effetto senza consumare PM."
+            ]
+          },
+          "TODO(Davide)": [
+            "A.74 punto 3: i PM del Rituale possono venire anche da una batteria Verde o Bianca (la scheda dice «PM utilizzabili: universali o spirituali»), o solo dalle quote personali dell’Officiante e dei Canali (§25.1)? Nel frattempo solo personali.",
+            "A.74 punto 4: il livello massimo degli Incantesimi dell’Officiante limita le versioni del Rituale, o conta solo Ritualista (Minore per il Grado III, Maggiore per IV–VI)? Nel frattempo conta solo Ritualista."
+          ]
         },
         "frasi": [
-          "La voce Rituale indica l’ammissibilità di una versione rituale."
+          "La voce Rituale indica l’ammissibilità di una versione rituale.",
+          "L’Officiante deve conoscere la procedura e possedere Ritualista Minore per le versioni di Grado III oppure Ritualista Maggiore per quelle di Grado IV–VI.",
+          "I reagenti costano 500 cr per Grado e coprono tutti i beneficiari consentiti dalla versione.",
+          "Il costo in PM della tabella è il totale del rituale: non si aggiungono i PM dell’infusione.",
+          "L’Officiante effettua un’unica Prova di Rituali al termine.",
+          "Fallimento: nessuna rigenerazione, PM e reagenti interamente consumati.",
+          "Se la celebrazione viene interrotta prima della Prova finale, i reagenti sono interamente consumati, i PM non vengono spesi e la rigenerazione non inizia."
         ],
-        "_nota": "E&L del 29/09, risposta 18 (A.39.3): solo mediante Rituale; l’app non lo tratta come un lancio normale e non inventa costi o componenti.",
+        "_nota": "E&L del 01/10 sera («Riferimento storico: A.39» e «Regole consolidate»; A.39 punto 3) e Magia sez. 25: Rigenerazione si esegue con il Rituale della sez. 25 («procedura_rituale.versioni»: Grado, penalità, ore, PM totali, reagenti, rigenerazione successiva) oppure si attiva da un Artefatto sintonizzato (§25.4: senza Prove, PM dalla riserva Verde o Bianca). Supera la decisione E&L 18 («procedura non ancora definita»).",
         "da_verificare": [
           "componenti",
           "concentrazione",
@@ -12379,7 +12452,7 @@
       "pagina": 131,
       "intestazione": "Scheda 22.6 • Macrofamiglia Spirituale • Specializzazione Incantamento • Livello base 3 • Rituale: consentito • PM utilizzabili: universali o spirituali.",
       "lancio": "Lancio: 1 minuto; Focus, Gesto e Invocazione. Normali regole Potere. Gittata Contatto; un contenitore mistico con Chroma. Nessuna PS o Concentrazione.",
-      "descrizione": "Espande temporaneamente la capacità di una batteria esistente. La capacità aggiuntiva è inizialmente vuota: l’incantesimo non crea PM e non ricarica automaticamente il contenitore. Le procedure rituali per la creazione di batterie permanenti verranno integrate successivamente nel Manuale della Magia; le procedure di costruzione verranno integrate successivamente nel Manuale dell’Equipaggiamento.",
+      "descrizione": "Espande temporaneamente la capacità di una batteria esistente. La capacità aggiuntiva è inizialmente vuota: l’incantesimo non crea PM e non ricarica automaticamente il contenitore. La creazione di batterie permanenti segue la sezione 24 e non è un effetto di questo incantesimo; costruzione, infusione e ricarica restano operazioni distinte.",
       "versioni": [
         {
           "Livello": "3",
@@ -12557,7 +12630,7 @@
           "Gittata": "15 Q",
           "Bersagli": "2",
           "Livello massimo": "15",
-          "Rarità massima": "Leggendario"
+          "Rarità massima": "Epico"
         },
         {
           "Livello": "18",
@@ -12565,7 +12638,7 @@
           "Gittata": "20 Q",
           "Bersagli": "3",
           "Livello massimo": "18",
-          "Rarità massima": "Unico"
+          "Rarità massima": "Leggendario"
         }
       ],
       "regole": "Bersagli: oggetti o singoli effetti attivi, anche applicati a creature, percepibili o già localizzati e in gittata; per quelli multipli vale la concatenazione entro 2 Q. Non effettua una ricerca nell’area circostante. Il contatto della versione base può comunque attivare una trappola; le versioni a distanza permettono l’esame senza toccare.\nLimite: ogni versione identifica tutte le fasce inferiori. Il limite si applica separatamente a ciascun bersaglio, senza sommarne i livelli. Se l’oggetto supera il limite, non viene identificato e non si ottengono schede parziali; ripetere il lancio allo stesso livello non permette di scoprire progressivamente le proprietà.\nInformazioni complete: proprietà passive, attive e dormienti, effetti dannosi, maledizioni e vincoli; danni, guarigione, AR, natura del danno, elementi, bonus, penalità e Stati; costi, requisiti, modalità di attivazione, condizioni di sblocco e limiti; gittata, area, bersagli, durata, PS e Contromisure; energia, PM disponibili, capacità e ricarica; costo e requisiti di sintonizzazione. Il Direttore può consegnare la scheda completa delle proprietà dell’oggetto.\nIncantesimi attivi: il livello massimo identificabile deve essere almeno pari a quello dell’effetto. Si apprendono anche categoria, famiglia, livello attivo, eventuale aspetto anticipato, durata residua e condizioni di cessazione. Un incantesimo temporaneo applicato a un oggetto si valuta secondo il proprio livello, separatamente dalle proprietà dell’oggetto.\nSigilli e trappole: a livello sufficiente se ne identificano effetto, condizioni di attivazione e restrizioni.\nComprendere che occorre una parola d’accesso non rivela automaticamente la parola. L’esame non disattiva la protezione e non concede un’autorizzazione.\nConfini: non legge pensieri, non individua persone nascoste da Velo Psichico e non rivela automaticamente identità, intenzioni o posizione del creatore. La storia, i precedenti proprietari e la formula costruttiva restano informazioni distinte. Non insegna l’incantesimo analizzato né concede sintonizzazione. Le informazioni descrivono il momento del lancio e non si aggiornano automaticamente.\nInterazione con Artefatti: l’analisi del Tecnomante rivela struttura, proprietà e riserva energetica secondo il Manuale del Giocatore, §3.9.5, «Architetto TecnoMistico», e il Manuale degli Armamenti, §7.10, «Analizzare e identificare». Identificare Potere rende disponibili tutti i dati esatti della scheda quando il livello è sufficiente, senza richiedere l’analisi preventiva.\nAnticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie livello massimo identificabile 3 → 6 → 9 → 12 → 15 → 18; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 Q; oppure bersagli 1 → 2 → 3 → 4. Al livello 3, spendendo 6 PM per anticipare il limite a 6, si identifica completamente un oggetto Non Comune mantenendo Contatto e un bersaglio.",
@@ -12760,7 +12833,7 @@
           "Potere di rottura": "18"
         }
       ],
-      "regole": "Bersagli: oggetti percepibili in gittata, concatenati entro 2 Q se multipli. Per ciascuno si sceglie un vincolo conosciuto oppure tutti quelli presenti, confrontandoli separatamente con il potere di rottura.\nParità: una sola PS Volontà del Taumaturgo per lancio vale per tutti i vincoli di pari livello, distinta dalla Prova Potere. Proprietario, creatore del vincolo e persona vincolata non tirano.\nLivello del vincolo: per un incantesimo applicato all’oggetto vale il livello dell’effetto attivo; per una proprietà incorporata vale quello della rarità dell’oggetto, da Comune 3 a Unico 18. Un vincolo di livello 15 applicato successivamente a un oggetto Comune rimane di livello 15. Sono disponibili tutti i livelli interi da 6 a 18: PM e Potere di rottura sono pari al livello, mentre gittata e oggetti conservano l’ultima soglia raggiunta.\nUn’Anticipazione di un singolo parametro avversario non aumenta il livello del vincolo da confrontare.\nLegami rimovibili: Vincolo Spirituale; maledizioni che vietano di togliere, abbandonare o cedere un oggetto o puniscono la separazione; vincoli mistici fra oggetti o fra oggetto e proprietario.\nMaledizione vincolante: rimuove tutti gli effetti appartenenti a quella maledizione, preservando le altre proprietà dell’oggetto. La rottura non attiva le punizioni previste per il tentativo di infrangere il legame. Restano danni, Ferite e conseguenze permanenti già prodotti.\nCessazione: il vincolo non ricompare con il tempo; un nuovo incantesimo o una procedura valida può ricrearlo.\nLiberare una spada dalla maledizione che impedisce di abbandonarla ne conserva i bonus al VA e al danno.\nInterazioni: non concede sintonizzazione né aggira i requisiti dell’oggetto. Possessione e Mente Disincarnata restano nell’ambito di Esorcizzare Possessione. Sigillo, Trappola Mistica e gli altri effetti attivi che non costituiscono legami seguono le proprie rimozioni e Negare Potere. Pesi, costi e svantaggi funzionali dell’equipaggiamento non sono maledizioni. Rimuovere una maledizione dell’oggetto non termina automaticamente una Possessione autonoma coesistente: si identificano e risolvono gli effetti distinti.\nAnticipazione: un solo aspetto di un gradino, PM raddoppiati e Potere più difficile di una categoria. Si sceglie Potere di rottura +3, massimo 21, anche ai livelli intermedi; gittata Contatto → 3 → 6 → 10 → 15 → 20 Q; oppure oggetti 1 → 2 → 3 → 4. Il potere anticipato vale soltanto per il confronto e non aumenta il livello dichiarato.\nEsempio: una maledizione vincolante incorporata in una spada Rara ha livello 9. Rompere Vincolo 9 richiede la PS Volontà; già la versione 10 la rimuove automaticamente dopo il normale lancio riuscito, preservando le proprietà estranee e senza attivare la punizione del vincolo.",
+      "regole": "Bersagli: oggetti percepibili in gittata, concatenati entro 2 Q se multipli. Per ciascuno si sceglie un vincolo conosciuto oppure tutti quelli presenti, confrontandoli separatamente con il potere di rottura.\nParità: una sola PS Volontà del Taumaturgo per lancio vale per tutti i vincoli di pari livello, distinta dalla Prova Potere. Proprietario, creatore del vincolo e persona vincolata non tirano.\nLivello del vincolo: per un incantesimo applicato all’oggetto vale il livello dell’effetto attivo; per una proprietà incorporata vale quello della rarità dell’oggetto, da Comune 3 a Leggendario 18. Un vincolo di livello 15 applicato successivamente a un oggetto Comune rimane di livello 15. Sono disponibili tutti i livelli interi da 6 a 18: PM e Potere di rottura sono pari al livello, mentre gittata e oggetti conservano l’ultima soglia raggiunta.\nUn’Anticipazione di un singolo parametro avversario non aumenta il livello del vincolo da confrontare.\nLegami rimovibili: Vincolo Spirituale; maledizioni che vietano di togliere, abbandonare o cedere un oggetto o puniscono la separazione; vincoli mistici fra oggetti o fra oggetto e proprietario.\nMaledizione vincolante: rimuove tutti gli effetti appartenenti a quella maledizione, preservando le altre proprietà dell’oggetto. La rottura non attiva le punizioni previste per il tentativo di infrangere il legame. Restano danni, Ferite e conseguenze permanenti già prodotti.\nCessazione: il vincolo non ricompare con il tempo; un nuovo incantesimo o una procedura valida può ricrearlo.\nLiberare una spada dalla maledizione che impedisce di abbandonarla ne conserva i bonus al VA e al danno.\nInterazioni: non concede sintonizzazione né aggira i requisiti dell’oggetto. Possessione e Mente Disincarnata restano nell’ambito di Esorcizzare Possessione. Sigillo, Trappola Mistica e gli altri effetti attivi che non costituiscono legami seguono le proprie rimozioni e Negare Potere. Pesi, costi e svantaggi funzionali dell’equipaggiamento non sono maledizioni. Rimuovere una maledizione dell’oggetto non termina automaticamente una Possessione autonoma coesistente: si identificano e risolvono gli effetti distinti.\nAnticipazione: un solo aspetto di un gradino, PM raddoppiati e Potere più difficile di una categoria. Si sceglie Potere di rottura +3, massimo 21, anche ai livelli intermedi; gittata Contatto → 3 → 6 → 10 → 15 → 20 Q; oppure oggetti 1 → 2 → 3 → 4. Il potere anticipato vale soltanto per il confronto e non aumenta il livello dichiarato.\nEsempio: una maledizione vincolante incorporata in una spada Rara ha livello 9. Rompere Vincolo 9 richiede la PS Volontà; già la versione 10 la rimuove automaticamente dopo il normale lancio riuscito, preservando le proprietà estranee e senza attivare la punizione del vincolo.",
       "altre_tabelle": [
         {
           "righe": [
@@ -13098,12 +13171,12 @@
             },
             {
               "Livello dell’impronta": "15",
-              "Classificazione temporanea": "Leggendario",
+              "Classificazione temporanea": "Epico",
               "Costo di sintonizzazione": "5"
             },
             {
               "Livello dell’impronta": "18",
-              "Classificazione temporanea": "Unico",
+              "Classificazione temporanea": "Leggendario",
               "Costo di sintonizzazione": "6"
             }
           ]
@@ -14752,7 +14825,7 @@
           "Durata fissa": "10 minuti"
         }
       ],
-      "regole": "Livelli intermedi: tutti gli interi da 6 a 18 sono disponibili. Potere di Rilevazione e PM corrispondono al livello dichiarato. Raggio, gittata, area, durate e informazioni mantengono il valore della soglia precedente fino alla successiva.\nPercezione: aura centrata sul Taumaturgo e mobile con lui. Segnala genericamente presenza e direzione delle emanazioni, anche sopra o sotto, nonché movimenti, ingressi e uscite. Emanazioni vicine o sovrapposte possono apparire come una sola fonte. Non fornisce conteggio preciso, tipo della fonte, livello o Q esatto.\nAnalisi: si selezionano i Q dell’area entro la gittata indicata, in posizioni visibili o note. Il valore è il numero totale di Q, non un raggio né il lato di un quadrato. I Q devono essere contigui per lato e tutti in gittata; 4 Q possono formare un quadrato 2 × 2 oppure una fila 1 × 4.\nEsame: nell’area si localizzano esattamente e si distinguono le emanazioni già dal livello 6. Ogni RND si analizza una fonte in una delle categorie Aura, Incantesimi o Artefatti. La prima analisi è compresa nel lancio se si inizia in questa modalità. L’area può essere riposizionata all’inizio del proprio turno senza AP o PM aggiuntivi. Individuare e informazioni di analisi\nLe informazioni sono cumulative: ogni soglia aggiunge i propri dettagli a quelli precedenti. Il livello del lancio determina la precisione, non il livello massimo di una fonte non protetta che può essere percepita.\nLivello 6\nAura: localizza la fonte e distingue una creatura corporea da una presenza spirituale incorporea. Incantesimi: localizza e distingue gli effetti magici attivi, anche sovrapposti. Artefatti: localizza emanazioni magiche associate a oggetti.\nOscura Simmetria: in tutte e tre le categorie riconosce già l’impronta dell’Oscura Simmetria. Questa segnala origine o affinità e non prova automaticamente una Corruzione personale: per esempio, può appartenere a un artefatto trasportato.\nLivello 9\nAura: presenza o assenza di un potenziale magico proprio. Incantesimi: macrofamiglia Fisica, Mentale o Spirituale. Artefatti: distingue proprietà magiche intrinseche da incantesimi applicati all’oggetto.\nLivello 12\nAura: potenziale magico nelle fasce di livello 1–6, 7–12 o 13–18; rileva inoltre presenza o assenza di Corruzione Oscura, senza determinarne lo stato. Incantesimi: livello esatto dell’effetto attivo. Artefatti: fascia di rarità Comune o Non Comune, Raro o Molto Raro, Leggendario o Unico.\nLivello 15\nAura: massimo livello di incantesimo effettivamente accessibile, ricavato dai Gradi da Taumaturgo o dalle capacità innate definite nel Bestiario del Manuale del Direttore. La Corruzione viene distinta in fasce informative: iniziale per Esposto, Contagiato e Infetto; avanzata per Corrotto ed Eretico; estrema per Caotico e Oscuro. Queste fasce non sono nuovi stati meccanici.\nIncantesimi: funzione generale, come protezione, controllo, occultamento o evocazione. Artefatti: rarità esatta. Livello 18\nAura: stato CROS esatto fra Umano, Esposto, Contagiato, Infetto, Corrotto, Eretico, Caotico e Oscuro.\nIncantesimi: distingue mantenimento a Concentrazione, durata fissa o effetto dormiente; per gli effetti a durata fissa conosce il tempo residuo. Artefatti: rileva la presenza di riserve di PM e il loro tipo Universale, Fisico, Mentale o Spirituale, senza conoscerne automaticamente la quantità.\nLimite dell’identificazione: non rivela tutte le proprietà di un oggetto, formule, parole d’accesso, cariche, condizioni d’attivazione o costi. L’identificazione completa resta a Identificare Potere. Non legge pensieri e non produce una visione fisica delle creature o degli ambienti.\nIndividuare e modalità operative\nCambio di modalità: si dichiara all’inizio del proprio turno, senza AP o nuovi PM. Nel RND di passaggio non si ricevono aggiornamenti; la nuova modalità fornisce informazioni dall’inizio del turno successivo. Durata e limiti di Concentrazione continuano normalmente. Cambiare categoria di Analisi nel RND successivo non richiede questo intervallo: rimane il limite di una fonte e una categoria per RND.\nFonti rilevabili: aure, presenze spirituali incorporee, emanazioni spirituali di incantesimi attivi di tutte e tre le macrofamiglie, artefatti anche inattivi, Sigilli, Trappole e Impronte ancora presenti. Un Individuare di livello 6 può percepire una fonte non protetta di livello 18 senza conoscerne tutti i dettagli.\nOstacoli e bersagli: gli ostacoli solidi ordinari non bloccano la percezione mistica, che non rende però trasparenti le pareti. Un effetto esattamente localizzato può essere bersaglio di Negare Potere o di altre capacità che ammettono questa localizzazione, rispettando gittata e ostacoli propri. Non soddisfa il requisito di vedere fisicamente un bersaglio. Gli attacchi verso un Q noto ma occultato seguono la normale penalità di −4.\nOccultamenti: Nascondere Aura blocca completamente Individuare, anche se di livello superiore; Velo Psichico non lo ostacola. Contro Mimetismo si confrontano Potere di Rilevazione e Potere di Occultamento: inferiore non supera, superiore supera, parità richiede PS Magia dell’osservatore. Una sola PS per osservatore e coppia di lanci vale per tutti i beneficiari: uscire, rientrare o cambiare modalità non consente di ripeterla. La rilevazione resta spirituale e non ripristina i sensi ordinari.\nAlterare Aura: si confronta il Potere di Rilevazione con il Potere di Falsificazione, con la stessa procedura inferiore / parità / superiore. Se non lo supera, si leggono le informazioni false; se lo supera, si legge il profilo reale e si riconosce l’alterazione entro i limiti informativi della versione. La falsificazione è distinta dagli occultamenti: non si ottengono informazioni su una fonte che questi impediscono di rilevare.\nAltre protezioni: nessuna rilevazione dissolve Mimetismo o Velo Psichico. Barriera Mentale non blocca la lettura spirituale. La sovrapposizione dei tre occultamenti segue la matrice della sezione 8. Negare Potere può terminare Individuare; Occhio Interiore si applica al lancio secondo le proprie regole.\nAnticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie raggio di Percezione 10 → 15 → 20 → 25 → 30 → 40 Q; gittata di Analisi con la stessa scala; area totale di Analisi 1 → 2 → 4 → 6 → 8 Q; informazioni della soglia successiva in una sola categoria scelta, fino al livello 18; Concentrazione 10 minuti → 30 minuti → 1 → 2 → 4 → 8 ore; durata fissa 5 RND → 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti; oppure Potere di Rilevazione aumentato di 3, anche ai livelli intermedi. L’area non può superare 8 Q. Raggio, gittata, area, informazioni e potere di confronto sono aspetti distinti.",
+      "regole": "Livelli intermedi: tutti gli interi da 6 a 18 sono disponibili. Potere di Rilevazione e PM corrispondono al livello dichiarato. Raggio, gittata, area, durate e informazioni mantengono il valore della soglia precedente fino alla successiva.\nPercezione: aura centrata sul Taumaturgo e mobile con lui. Segnala genericamente presenza e direzione delle emanazioni, anche sopra o sotto, nonché movimenti, ingressi e uscite. Emanazioni vicine o sovrapposte possono apparire come una sola fonte. Non fornisce conteggio preciso, tipo della fonte, livello o Q esatto.\nAnalisi: si selezionano i Q dell’area entro la gittata indicata, in posizioni visibili o note. Il valore è il numero totale di Q, non un raggio né il lato di un quadrato. I Q devono essere contigui per lato e tutti in gittata; 4 Q possono formare un quadrato 2 × 2 oppure una fila 1 × 4.\nEsame: nell’area si localizzano esattamente e si distinguono le emanazioni già dal livello 6. Ogni RND si analizza una fonte in una delle categorie Aura, Incantesimi o Artefatti. La prima analisi è compresa nel lancio se si inizia in questa modalità. L’area può essere riposizionata all’inizio del proprio turno senza AP o PM aggiuntivi. Individuare e informazioni di analisi\nLe informazioni sono cumulative: ogni soglia aggiunge i propri dettagli a quelli precedenti. Il livello del lancio determina la precisione, non il livello massimo di una fonte non protetta che può essere percepita.\nLivello 6\nAura: localizza la fonte e distingue una creatura corporea da una presenza spirituale incorporea. Incantesimi: localizza e distingue gli effetti magici attivi, anche sovrapposti. Artefatti: localizza emanazioni magiche associate a oggetti.\nOscura Simmetria: in tutte e tre le categorie riconosce già l’impronta dell’Oscura Simmetria. Questa segnala origine o affinità e non prova automaticamente una Corruzione personale: per esempio, può appartenere a un artefatto trasportato.\nLivello 9\nAura: presenza o assenza di un potenziale magico proprio. Incantesimi: macrofamiglia Fisica, Mentale o Spirituale. Artefatti: distingue proprietà magiche intrinseche da incantesimi applicati all’oggetto.\nLivello 12\nAura: potenziale magico nelle fasce di livello 1–6, 7–12 o 13–18; rileva inoltre presenza o assenza di Corruzione Oscura, senza determinarne lo stato. Incantesimi: livello esatto dell’effetto attivo. Artefatti: fascia di rarità Comune o Non Comune, Raro o Molto Raro, Epico o Leggendario.\nLivello 15\nAura: massimo livello di incantesimo effettivamente accessibile, ricavato dai Gradi da Taumaturgo o dalle capacità innate definite nel Bestiario del Manuale del Direttore. La Corruzione viene distinta in fasce informative: iniziale per Esposto, Contagiato e Infetto; avanzata per Corrotto ed Eretico; estrema per Caotico e Oscuro. Queste fasce non sono nuovi stati meccanici.\nIncantesimi: funzione generale, come protezione, controllo, occultamento o evocazione. Artefatti: rarità esatta. Livello 18\nAura: stato CROS esatto fra Umano, Esposto, Contagiato, Infetto, Corrotto, Eretico, Caotico e Oscuro.\nIncantesimi: distingue mantenimento a Concentrazione, durata fissa o effetto dormiente; per gli effetti a durata fissa conosce il tempo residuo. Artefatti: rileva la presenza di riserve di PM e il loro tipo Universale, Fisico, Mentale o Spirituale, senza conoscerne automaticamente la quantità.\nLimite dell’identificazione: non rivela tutte le proprietà di un oggetto, formule, parole d’accesso, cariche, condizioni d’attivazione o costi. L’identificazione completa resta a Identificare Potere. Non legge pensieri e non produce una visione fisica delle creature o degli ambienti.\nIndividuare e modalità operative\nCambio di modalità: si dichiara all’inizio del proprio turno, senza AP o nuovi PM. Nel RND di passaggio non si ricevono aggiornamenti; la nuova modalità fornisce informazioni dall’inizio del turno successivo. Durata e limiti di Concentrazione continuano normalmente. Cambiare categoria di Analisi nel RND successivo non richiede questo intervallo: rimane il limite di una fonte e una categoria per RND.\nFonti rilevabili: aure, presenze spirituali incorporee, emanazioni spirituali di incantesimi attivi di tutte e tre le macrofamiglie, artefatti anche inattivi, Sigilli, Trappole e Impronte ancora presenti. Un Individuare di livello 6 può percepire una fonte non protetta di livello 18 senza conoscerne tutti i dettagli.\nOstacoli e bersagli: gli ostacoli solidi ordinari non bloccano la percezione mistica, che non rende però trasparenti le pareti. Un effetto esattamente localizzato può essere bersaglio di Negare Potere o di altre capacità che ammettono questa localizzazione, rispettando gittata e ostacoli propri. Non soddisfa il requisito di vedere fisicamente un bersaglio. Gli attacchi verso un Q noto ma occultato seguono la normale penalità di −4.\nOccultamenti: Nascondere Aura blocca completamente Individuare, anche se di livello superiore; Velo Psichico non lo ostacola. Contro Mimetismo si confrontano Potere di Rilevazione e Potere di Occultamento: inferiore non supera, superiore supera, parità richiede PS Magia dell’osservatore. Una sola PS per osservatore e coppia di lanci vale per tutti i beneficiari: uscire, rientrare o cambiare modalità non consente di ripeterla. La rilevazione resta spirituale e non ripristina i sensi ordinari.\nAlterare Aura: si confronta il Potere di Rilevazione con il Potere di Falsificazione, con la stessa procedura inferiore / parità / superiore. Se non lo supera, si leggono le informazioni false; se lo supera, si legge il profilo reale e si riconosce l’alterazione entro i limiti informativi della versione. La falsificazione è distinta dagli occultamenti: non si ottengono informazioni su una fonte che questi impediscono di rilevare.\nAltre protezioni: nessuna rilevazione dissolve Mimetismo o Velo Psichico. Barriera Mentale non blocca la lettura spirituale. La sovrapposizione dei tre occultamenti segue la matrice della sezione 8. Negare Potere può terminare Individuare; Occhio Interiore si applica al lancio secondo le proprie regole.\nAnticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie raggio di Percezione 10 → 15 → 20 → 25 → 30 → 40 Q; gittata di Analisi con la stessa scala; area totale di Analisi 1 → 2 → 4 → 6 → 8 Q; informazioni della soglia successiva in una sola categoria scelta, fino al livello 18; Concentrazione 10 minuti → 30 minuti → 1 → 2 → 4 → 8 ore; durata fissa 5 RND → 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti; oppure Potere di Rilevazione aumentato di 3, anche ai livelli intermedi. L’area non può superare 8 Q. Raggio, gittata, area, informazioni e potere di confronto sono aspetti distinti.",
       "meccanica": {
         "azioni": {
           "azioni_principali": 1
