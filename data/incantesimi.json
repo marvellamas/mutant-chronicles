@@ -11463,9 +11463,9 @@
               "Un’interruzione precedente impedisce l’effetto senza consumare PM."
             ]
           },
-          "TODO(Davide)": [
-            "A.74 punto 3: i PM del Rituale possono venire anche da una batteria Verde o Bianca (la scheda dice «PM utilizzabili: universali o spirituali»), o solo dalle quote personali dell’Officiante e dei Canali (§25.1)? Nel frattempo solo personali.",
-            "A.74 punto 4: il livello massimo degli Incantesimi dell’Officiante limita le versioni del Rituale, o conta solo Ritualista (Minore per il Grado III, Maggiore per IV–VI)? Nel frattempo conta solo Ritualista."
+          "decisioni": [
+            "A.74 punto 3 (E&L del 02/10/2026, decisione 12): il Rituale diretto si paga interamente con i PM personali dell’Officiante e dei Canali; le batterie Verdi o Bianche non pagano alcuna parte. L’attivazione da Artefatto segue Esclusiva/Universale (Magia §26.2).",
+            "A.74 punto 4 (E&L del 02/10/2026, decisione 13): le versioni 9 e 10 (Grado III) richiedono Ritualista Minore, la 12, la 15 e la 18 (Gradi IV–VI) Ritualista Maggiore, con la conoscenza della procedura; non conta il livello massimo degli Incantesimi ordinari."
           ]
         },
         "frasi": [

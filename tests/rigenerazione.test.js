@@ -3,7 +3,7 @@
 // A.39 punto 3): senza Prove, l'intero costo dalla riserva integrata, che non paga altri Incantesimi (A.18).
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { calcolaLancio, versioniLancio, aiutoCanale, attivazioneInfusa, contenitoriLancio } from '../src/lancio.js';
+import { calcolaLancio, versioniLancio, aiutoCanale, attivazioneInfusa, contenitoriLancio, ripartizioneMagistrale } from '../src/lancio.js';
 import { calcolaScheda } from '../src/calc.js';
 import { normalizzaEquipaggiamento, infoArtefattoVoce, risolvi, catalogo } from '../src/equipaggiamento.js';
 import { preparaStampa } from '../src/stampa.js';
@@ -36,8 +36,8 @@ test('Canali (§24.6): aiuto per VA fino a +5, al massimo tanti quanto il Grado,
   assert.deepEqual([0, 1, 8, 9, 14, 15, 19, 20].map((va) => aiutoCanale(va, dati)), [0, 1, 1, 2, 2, 3, 3, 4]);
   const r = calcolaLancio(officiante(), rig, { versione: 9, canali: [{ va: 20, pm: 3 }, { va: 15, pm: 0 }] }, dati);
   assert.deepEqual([r.rituale.aiuto, r.va_potere_finale, r.rituale.officiante, r.rituale.pm_canali], [5, 13, 6, 3]);
-  // Successo Magistrale: metà dei PM per eccesso (5); i Canali tengono la quota, l'Officiante almeno metà Grado
-  assert.deepEqual(r.rituale.magistrale, { totale: 5, officiante: 2, canali: 3 });
+  // Successo Magistrale: metà dei PM per eccesso (5); proposta valida: Canali fino alla quota, l'Officiante almeno metà Grado
+  assert.deepEqual(r.rituale.magistrale, { totale: 5, officiante: 2, canali: [3, 0], errori: [], proposta: true, canaliTotale: 3 });
   assert.match(calcolaLancio(officiante(), rig, { versione: 9, canali: [{ va: 5, pm: 7 }] }, dati).impossibile.motivo, /almeno 3 PM personali/);
   const troppi = calcolaLancio(officiante(), rig, { versione: 9, canali: [1, 2, 3, 4].map(() => ({ va: 5, pm: 0 })) }, dati);
   assert.match(troppi.impossibile.motivo, /Al massimo 3 Canali/);
@@ -72,4 +72,23 @@ test('la riserva dell’Artefatto di Rigenerazione non è una fonte di PM di «L
   assert.deepEqual(contenitoriLancio({ scheda: s, sessione: {} }, cura), []);
   const d = preparaStampa({ creazione, livelli: [] }, dati);
   assert.match(JSON.stringify(d.fogli), /Rigenerazione 9: 9 PM dalla riserva, 3 ore di attivazione continua, con contatto, nessuna Prova/);
+});
+
+test('A.74 punto 2 (E&L del 02/10): dopo il Magistrale ripartizione libera entro i limiti', () => {
+  // esempio della decisione 2: Grado III da 9 PM, quote 3 + 3 + 3; il Magistrale porta a 5; 2 + 2 + 1 è valida
+  const base = { pm: 9, grado: 3, officiante: 3, canali: [3, 3] };
+  assert.deepEqual(ripartizioneMagistrale(base, { officiante: 2, canali: [2, 1] }, dati).errori, []);
+  const prop = ripartizioneMagistrale(base, null, dati);
+  assert.deepEqual([prop.totale, prop.errori, prop.officiante + prop.canali[0] + prop.canali[1]], [5, [], 5]);
+  const err = (s) => ripartizioneMagistrale(base, s, dati).errori.join(' | ');
+  assert.match(err({ officiante: 1, canali: [2, 2] }), /almeno metà del Grado, 2 PM/);
+  assert.match(err({ officiante: 4, canali: [1, 0] }), /non paga più della quota dichiarata \(3 PM\).*almeno 1 PM/);
+  assert.match(err({ officiante: 2, canali: [2, 2] }), /fanno 6 PM, il costo dimezzato è 5/);
+  // un Canale presente solo per l'aiuto (quota 0) resta a 0
+  assert.match(ripartizioneMagistrale({ pm: 9, grado: 3, officiante: 6, canali: [3, 0] }, { officiante: 2, canali: [2, 1] }, dati).errori.join(), /Canale 2 non aveva dichiarato PM/);
+  // nel Rituale: la scelta dichiarata passa nel risultato
+  const r = calcolaLancio(officiante(), rig, { versione: 9, canali: [{ va: 20, pm: 3 }], magistrale: { officiante: 3, canali: [2] } }, dati);
+  assert.deepEqual([r.rituale.magistrale.officiante, r.rituale.magistrale.canali, r.rituale.magistrale.errori], [3, [2], []]);
+  assert.equal(dati.regole.rituali['TODO(Davide)'], undefined);
+  assert.equal(rig.meccanica.procedura_rituale['TODO(Davide)'], undefined);
 });

@@ -1154,7 +1154,18 @@
     },
     "magistrale": {
       "pm": "meta_per_eccesso",
-      "officiante_minimo": "meta_grado_per_eccesso"
+      "officiante_minimo": "meta_grado_per_eccesso",
+      "ripartizione": "libera",
+      "massimo_per_partecipante": "quota_dichiarata",
+      "canale_minimo_se_contributo": 1,
+      "decisione": "Con un Successo Magistrale si dimezza una sola volta il costo totale in PM del Rituale, arrotondando per eccesso. Dopo l’esito, i partecipanti scelgono liberamente come ripartire il costo ridotto: la somma delle quote coincide con il nuovo costo; nessuno paga più della quota dichiarata prima della Prova; l’Officiante paga almeno metà del Grado, per eccesso; ogni Canale che aveva dichiarato un contributo energetico spende almeno 1 PM, uno con quota 0 spende 0.",
+      "fonte": "E&L del 02/10/2026, decisione 2 (per-davide A.74 punto 2); docs/risposte-master.md, decisione 81"
+    },
+    "bonus_costruzione_magistrale": {
+      "va": 2,
+      "nel_limite_dei_canali": false,
+      "decisione": "Il +2 all’infusione ottenuto con un Successo Magistrale nella costruzione del supporto resta un beneficio distinto: non consuma il limite di +5 dei Canali.",
+      "fonte": "E&L del 02/10/2026, decisione 1 (per-davide A.74 punto 1)"
     },
     "frasi": [
       "Oltre all’Officiante possono partecipare al massimo tanti Canali quanto il Grado del rituale.",
@@ -1164,9 +1175,9 @@
       "Si sommano gli aiuti fino a un massimo complessivo di +5 VA.",
       "Con un Successo Magistrale si dimezza il totale dei PM una sola volta, arrotondando per eccesso, poi si ripartisce il consumo effettivo senza aumentare la quota dichiarata di alcun partecipante."
     ],
-    "TODO(Davide)": [
-      "A.74 punto 1: «VA pertinente del Canale» (Magia §24.6): quale Abilità? Nel frattempo il VA di Rituali del Canale.",
-      "A.74 punto 2: Successo Magistrale con i Canali (Magia §24.6, §25.2): come si ripartisce la metà dei PM? Nel frattempo i Canali tengono le quote dichiarate (al massimo il nuovo totale) e l’Officiante paga il resto, almeno metà Grado per eccesso."
+    "decisioni": [
+      "A.74 punto 1 (E&L del 02/10/2026, decisione 1): il «VA pertinente del Canale» è il VA di Rituali del Canale; il Canale non effettua una Prova separata.",
+      "A.74 punto 2 (E&L del 02/10/2026, decisione 2): dopo un Successo Magistrale la ripartizione del costo dimezzato è libera entro i limiti («magistrale»)."
     ]
   },
   "meditazione": {

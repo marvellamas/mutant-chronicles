@@ -625,3 +625,14 @@ manuali; la 69 chiude in parte una domanda.
 80. **Cartuccia chirurgica e set chirurgico** (A.71; decisione 17). Un solo consumabile, «Cartuccia chirurgica —
     set sterile monouso», 500 cr o 2.500 per cinque, consumato all'inizio di ogni procedura. → `sanitario.json`
     (una voce, con la confezione), voci del set tolte con migrazione (la confezione diventa cinque cartucce).
+81. **Rituale di Rigenerazione: i quattro punti** (A.74; E&L del 02/10/2026, decisioni 1, 2, 12, 13). 1. Il VA
+    pertinente del Canale è il suo VA di Rituali (contributo +0…+4 per fascia, massimo +5 in tutto; il +2 della
+    costruzione Magistrale del supporto è a parte e non consuma il limite). 2. Dopo un Successo Magistrale il
+    costo si dimezza una volta (per eccesso) e la ripartizione è libera: somma uguale al nuovo costo, nessuno
+    oltre la quota dichiarata, Officiante almeno metà Grado, ogni Canale con un contributo almeno 1 PM, quello con
+    quota 0 resta a 0 (supera la scelta provvisoria «i Canali tengono la quota»). 3. Il Rituale diretto si paga
+    solo con PM personali di Officiante e Canali; l'attivazione da Artefatto segue Esclusiva/Universale (§26.2).
+    4. Le versioni dipendono da Ritualista (Minore 9–10, Maggiore 12–18) e dalla procedura, non dal livello
+    massimo degli Incantesimi. → `regole.json` → `rituali` (`magistrale`, `bonus_costruzione_magistrale`,
+    `decisioni`; TODO tolti), `incantesimi.json` (Rigenerazione: `decisioni`), `src/lancio.js` →
+    `ripartizioneMagistrale`, passo Risultato del Rituale in «Lancia!» con le quote modificabili.

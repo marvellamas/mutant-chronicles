@@ -95,6 +95,9 @@ export function dichiarazioneLancio(d = {}) {
     talentiLancio: Array.isArray(d.talentiLancio) ? d.talentiLancio.filter((x) => typeof x === 'string') : [],
     // Rituale (Magia §24.6): i Canali, ciascuno con il VA pertinente e i PM che versa
     canali: Array.isArray(d.canali) ? d.canali.filter((c) => c && Number.isInteger(c.va) && Number.isInteger(c.pm) && c.pm >= 0).slice(0, 6).map((c) => ({ va: c.va, pm: c.pm })) : [],
+    // A.74 punto 2: ripartizione del costo dimezzato dopo un Successo Magistrale, scelta dopo l'esito
+    magistrale: d.magistrale && typeof d.magistrale === 'object' && Number.isInteger(d.magistrale.officiante) && Array.isArray(d.magistrale.canali) && d.magistrale.canali.every(Number.isInteger)
+      ? { officiante: d.magistrale.officiante, canali: [...d.magistrale.canali] } : null,
   };
 }
 
@@ -433,6 +436,41 @@ export function accessoRituale(grado, scheda, dati) {
 }
 
 /** Aiuto al VA dell'Officiante dato da un Canale (Magia §24.6, tabella «VA pertinente del Canale»). */
+/**
+ * Ripartizione del costo dopo un Successo Magistrale (A.74 punto 2, E&L del 02/10; regole.json → rituali.magistrale):
+ * costo totale dimezzato per eccesso; la somma delle quote coincide con il nuovo costo; nessuno oltre la quota
+ * dichiarata; l'Officiante almeno metà Grado per eccesso; ogni Canale con un contributo almeno 1 PM, quello con
+ * quota 0 resta a 0. Senza una scelta propone una ripartizione valida: i Canali almeno 1 PM e poi fino alla
+ * quota, l'Officiante il resto (al minimo metà Grado).
+ * @returns {{ totale, officiante, canali: number[], errori: string[], proposta: boolean }}
+ */
+export function ripartizioneMagistrale({ pm, grado, officiante, canali }, scelta, dati) {
+  const M = dati.regole.rituali.magistrale;
+  const totale = Math.ceil(pm / 2);
+  const minimo = Math.ceil(grado / 2);
+  const minC = M.canale_minimo_se_contributo ?? 1;
+  let o; let c;
+  const proposta = !scelta || scelta.canali.length !== canali.length;
+  if (!proposta) { o = scelta.officiante; c = [...scelta.canali]; } else {
+    o = Math.min(officiante, Math.max(minimo, totale - canali.reduce((s, x) => s + x, 0)));
+    let resto = totale - o;
+    c = canali.map((q) => { const v = q > 0 ? Math.min(minC, resto) : 0; resto -= v; return v; });
+    c = c.map((v, i) => { const piu = Math.min(canali[i] - v, resto); resto -= piu; return v + piu; });
+    const piuO = Math.min(officiante - o, resto); o += piuO;
+  }
+  const errori = [];
+  const somma = o + c.reduce((s, x) => s + x, 0);
+  if (somma !== totale) errori.push(`le quote fanno ${somma} PM, il costo dimezzato è ${totale}`);
+  if (o < minimo) errori.push(`l’Officiante paga almeno metà del Grado, ${minimo} PM`);
+  if (o > officiante) errori.push(`l’Officiante non paga più della quota dichiarata (${officiante} PM)`);
+  c.forEach((v, i) => {
+    if (v > canali[i]) errori.push(`il Canale ${i + 1} non paga più della quota dichiarata (${canali[i]} PM)`);
+    if (canali[i] > 0 && v < minC) errori.push(`il Canale ${i + 1} aveva dichiarato un contributo: almeno ${minC} PM`);
+    if (canali[i] === 0 && v !== 0) errori.push(`il Canale ${i + 1} non aveva dichiarato PM: resta a 0`);
+  });
+  return { totale, officiante: o, canali: c, errori, proposta };
+}
+
 export function aiutoCanale(va, dati) {
   const fasce = dati.regole.rituali.canali.aiuto_va;
   return (fasce.find((f) => f.fino_a === null || va <= f.fino_a) ?? fasce.at(-1)).aiuto;
@@ -443,9 +481,9 @@ export function aiutoCanale(va, dati) {
  * Rituali dell'Officiante al termine, con la penalità del Grado e l'aiuto dei Canali (fino a +5);
  * PM totali della versione ripartiti fra l'Officiante (almeno il Grado) e i Canali; reagenti, ore e
  * rigenerazione successiva dalla tabella. Stessa forma del risultato di calcolaLancio, più «rituale».
- * Scelte provvisorie in attesa di Davide (per-davide A.74, TODO nei dati): VA pertinente del Canale =
- * Rituali; PM solo personali (niente batterie); conta Ritualista, non il livello massimo degli Incantesimi;
- * con il Magistrale i Canali tengono le quote e l'Officiante paga il resto, almeno metà Grado.
+ * Decisioni di Davide (A.74, E&L del 02/10/2026): VA pertinente del Canale = Rituali; PM solo personali
+ * (niente batterie); conta Ritualista, non il livello massimo degli Incantesimi; con il Magistrale la
+ * ripartizione del costo dimezzato è libera entro i limiti (ripartizioneMagistrale).
  */
 function calcolaRituale(personaggio, incantesimo, d, dati) {
   const R = dati.regole.rituali;
@@ -483,10 +521,8 @@ function calcolaRituale(personaggio, incantesimo, d, dati) {
   if (officiante < grado) blocca(`L’Officiante versa almeno ${grado} PM personali (Magia §24.6): i Canali possono dare al massimo ${pv.pm - grado} PM.`);
   const personali = sessione?.pmAttuali ?? scheda?.pm ?? 0;
   if (officiante > personali) blocca(`PM personali insufficienti: ${personali}, ne servono ${officiante}.`);
-  // Successo Magistrale: metà del totale per eccesso; i Canali tengono le quote, l'Officiante il resto (A.74)
-  const totaleMagistrale = Math.ceil(pv.pm / 2);
-  const minimoMagistrale = Math.ceil(grado / 2);
-  const officianteMagistrale = Math.min(Math.max(officiante, 0), Math.max(minimoMagistrale, totaleMagistrale - pmCanali));
+  // Successo Magistrale (A.74 punto 2): costo dimezzato, ripartizione libera entro i limiti
+  const magistrale = ripartizioneMagistrale({ pm: pv.pm, grado, officiante: Math.max(officiante, 0), canali: canali.map((c) => c.pm) }, d.magistrale, dati);
 
   const ritualista = (dati.talenti_liberi?.talenti ?? []).filter((t) => R.accesso.find((a) => a.gradi.includes(grado))?.talenti.includes(t.id)).map((t) => t.nome);
   promemoria.push(
@@ -496,7 +532,7 @@ function calcolaRituale(personaggio, incantesimo, d, dati) {
     'Interruzione prima della Prova finale: reagenti consumati, PM non spesi, la rigenerazione non inizia.',
     `Rigenerazione completa ${pv.rigenerazione} dopo il successo. Un beneficiario può avere una sola Rigenerazione attiva.`,
     `Officiante: conoscere la procedura e possedere ${ritualista.join(' o ')}.`,
-    'Scelte provvisorie (per-davide A.74): VA dei Canali = Rituali; PM solo personali; conta Ritualista, non il livello massimo degli Incantesimi.',
+    'PM solo personali dell’Officiante e dei Canali: le batterie non pagano il Rituale diretto (A.74, E&L del 02/10). Conta Ritualista, non il livello massimo degli Incantesimi.',
   );
 
   return {
@@ -521,7 +557,7 @@ function calcolaRituale(personaggio, incantesimo, d, dati) {
       grado, grado_romano: GRADI_ROMANI[grado], ore: pv.ore, reagenti: pv.reagenti, rigenerazione: pv.rigenerazione,
       canali, canali_massimo: grado, aiuto, aiuto_massimo: R.canali.aiuto_massimo, pm_canali: pmCanali,
       officiante, officiante_minimo: grado, abilita: R.abilita,
-      magistrale: { totale: totaleMagistrale, officiante: officianteMagistrale, canali: totaleMagistrale - officianteMagistrale },
+      magistrale: { ...magistrale, canaliTotale: magistrale.canali.reduce((s, x) => s + x, 0) },
     },
     azioni: { tempo: `${pv.ore} ore di celebrazione continua`, focalizzazione: 0 },
     concentrazione: null,
