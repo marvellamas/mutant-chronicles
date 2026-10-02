@@ -134,12 +134,13 @@ export function statoPulsanteLancio(incantesimo, scheda, dati = null) {
 
 /**
  * Contenitori per il lancio: compatibilità con la macrofamiglia e con i PM utilizzabili della scheda.
- * Risposta A.18 (Magia §24.2, §24.7): la riserva integrata di un Artefatto alimenta soltanto le sue
- * funzioni, «non permette di prelevare PM né di alimentare gli incantesimi personali»: non è una fonte.
+ * Magia §26.2 (Doc del 02/10): sono fonti le Batterie, a sé o integrate in un Artefatto; le Cariche
+ * alimentano soltanto il proprio Artefatto (le riserve integrate delle armi del §7.5.1: risposta A.18).
+ * Un solo contenitore per lancio, eventualmente con PM personali (regole.json → chroma.riserve).
  */
 export function contenitoriLancio(personaggio, incantesimo) {
   const m = incantesimo.meccanica ?? {};
-  return (personaggio.scheda?.equipaggiamento?.contenitori ?? []).filter((c) => !c.integrato).map((c) => {
+  return (personaggio.scheda?.equipaggiamento?.contenitori ?? []).filter((c) => c.fontePg ?? !c.integrato).map((c) => {
     const pm = personaggio.sessione?.chroma?.[c.uid]?.pmAttuali ?? c.capacita ?? 0;
     const tipoPm = PM_DI_ENERGIA[c.energiaNome];
     const motivo = !c.trasportato ? 'non trasportato' : !c.sintonizzato ? 'non sintonizzato'
@@ -511,12 +512,15 @@ function calcolaRituale(personaggio, incantesimo, d, dati) {
 
 /**
  * Attivazione di un incantesimo infuso in un Artefatto (Magia §24.2; per Rigenerazione §25.4): dopo la
- * Sintonizzazione è automatica, senza Prove di Potere o Rituali, senza Componenti e senza Canali; l'intero
- * costo in PM della versione si paga dalla riserva integrata, che alimenta solo l'Artefatto (A.18).
+ * Sintonizzazione è automatica, senza Prove di Potere o Rituali, senza Componenti e senza Canali.
+ * Magia §26.2: una proprietà Esclusiva si paga soltanto con la riserva interna; una Universale anche con PM
+ * personali (qui: la riserva interna per quanto ha, il resto con i PM personali; la riserva dell'Artefatto
+ * è già la fonte esterna del pagamento, quindi niente altre Batterie).
  * @param infuso { incantesimo, livello } dell'Artefatto
- * @param riserva contenitore integrato dell'Artefatto ({ energia, energiaNome, macrofamiglie, capacita }) o null
- * @param stato { pm: PM nella riserva, sintonizzato, deposito }
- * @returns {{ incantesimo, livello, pm, tempo, prova: false, energie, motivo: string|null, frasi: string[] }|null}
+ * @param riserva contenitore integrato dell'Artefatto ({ energia, energiaNome, macrofamiglie, capacita, alimentazione }) o null
+ * @param stato { pm: PM nella riserva, personali: PM personali attuali, sintonizzato, deposito }
+ * @returns {{ incantesimo, livello, pm, tempo, prova: false, energie, alimentazione, pagamento: { interna, personali }|null,
+ *   motivo: string|null, frasi: string[] }|null}
  */
 export function attivazioneInfusa(infuso, riserva, stato, dati) {
   const inc = (dati.incantesimi?.incantesimi ?? []).find((i) => i.nome === infuso?.incantesimo);
@@ -531,10 +535,17 @@ export function attivazioneInfusa(infuso, riserva, stato, dati) {
   // energia: quella che la scheda ammette (§25.4: Verde o Bianca), altrimenti la macrofamiglia dell'incantesimo
   const energie = P?.artefatto?.energie ?? null;
   const compatibile = riserva ? (energie ? energie.includes(riserva.energia) : (riserva.macrofamiglie ?? []).includes(inc.macrofamiglia)) : false;
+  const alim = riserva?.alimentazione ?? dati?.regole?.chroma?.riserve?.proprieta_predefinita ?? 'esclusiva';
+  const universale = alim === 'universale';
+  // Universale: la riserva interna per quanto ha, il resto dai PM personali (una sola fonte esterna, §26.2)
+  const interna = riserva && Number.isInteger(pm) ? Math.min(stato.pm ?? 0, pm) : 0;
+  const personali = universale && Number.isInteger(pm) ? pm - interna : 0;
   const motivo = !riga ? `la scheda di ${inc.nome} non ha la versione di livello ${infuso.livello}`
-    : !riserva ? 'nessuna riserva integrata: l’intero costo si paga dalla riserva dell’Artefatto (Magia §25.4)'
-      : !compatibile ? `riserva ${riserva.energia} non compatibile${energie ? ` (serve ${energie.join(' o ')}, Magia §25.4)` : ` con un incantesimo ${inc.macrofamiglia}`}`
+    : !riserva && !universale ? 'nessuna riserva integrata: l’intero costo si paga dalla riserva dell’Artefatto (Magia §25.4)'
+      : riserva && !compatibile ? `riserva ${riserva.energia} non compatibile${energie ? ` (serve ${energie.join(' o ')}, Magia §25.4)` : ` con un incantesimo ${inc.macrofamiglia}`}`
         : stato.deposito ? 'nel deposito comune' : !stato.sintonizzato ? 'non sintonizzato'
-          : stato.pm < pm ? `la riserva ha ${stato.pm} PM, ne servono ${pm}` : null;
-  return { incantesimo: inc.nome, livello: infuso.livello, pm, tempo, prova: false, energie, motivo, frasi: P?.artefatto?.frasi ?? [] };
+          : !universale && stato.pm < pm ? `la riserva ha ${stato.pm} PM, ne servono ${pm} (proprietà Esclusiva: solo la riserva interna, Magia §26.2)`
+            : universale && personali > (stato.personali ?? 0) ? `servono ${pm} PM: ${interna} dalla riserva e ${personali} personali, ne hai ${stato.personali ?? 0}` : null;
+  return { incantesimo: inc.nome, livello: infuso.livello, pm, tempo, prova: false, energie, alimentazione: alim,
+    pagamento: Number.isInteger(pm) ? { interna, personali } : null, motivo, frasi: P?.artefatto?.frasi ?? [] };
 }

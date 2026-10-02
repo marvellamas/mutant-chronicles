@@ -14,6 +14,7 @@ import {
 import { pesoVoce } from '../carico.js';
 
 import { GRUPPI_EQUIPAGGIAMENTO, SEZIONI_INVENTARIO, sezioneInventario } from '../palette.js';
+import { tipoRiserva, alimentazione as alimentazioneRiserva, nomeRiserva, nomeAlimentazione } from '../fonti.js';
 import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 
 const nuovoUid = () => `e${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
@@ -155,7 +156,7 @@ function voceEquip(ctx, r, risolte, cambia) {
       : art ? h('label', { class: 'campo-inline' },
         h('input', { type: 'checkbox', checked: v.sintonizzato === true, onchange: (e) => cambia(v.uid, { sintonizzato: e.target.checked || undefined }) }),
         ` Sintonizzato (SnT ${art.sintonizzazione}, §7.10)`) : null,
-    art?.contenitore ? h('p', { class: 'nota' }, `Chroma ${art.contenitore.energia}, ${art.contenitore.capacita_pm} PM${art.contenitore.integrato ? ', riserva integrata' : ''}.`) : null,
+    art?.contenitore ? h('p', { class: 'nota' }, `Chroma ${art.contenitore.energia}, ${art.contenitore.capacita_pm} PM${art.contenitore.integrato ? `, riserva integrata: ${nomeRiserva(tipoRiserva(art.contenitore, dati), dati)}, proprietà ${nomeAlimentazione(alimentazioneRiserva(art.contenitore, dati), dati)} (Magia §26.2)` : ''}.`) : null,
     // E&L 2 (A.19): acquistato pieno; trovato con la carica stabilita dal Direttore
     contenitoreSingolo ? h('div', { class: 'campo-inline' },
       h('label', {}, h('input', { type: 'checkbox', checked: Number.isInteger(v.pm_iniziali), onchange: (e) => cambia(v.uid, { pm_iniziali: e.target.checked ? 0 : undefined }) }),
@@ -353,6 +354,16 @@ function pannelloAggiungi(ctx) {
             colori.map((x) => h('option', { value: x, selected: p.energia === x }, x)))) : null,
         p.tipo === 'artefatto' ? h('label', { class: 'campo' }, h('span', {}, 'Capacità (PM)'),
           h('input', { type: 'number', min: 1, step: 1, value: p.capacita, oninput: (e) => { p.capacita = e.target.value; } })) : null,
+        // Magia §26.2: con un incantesimo infuso la riserva è integrata; il progetto dice se è Batteria o
+        // Cariche e se la proprietà è Esclusiva o Universale (predefiniti: Cariche, Esclusiva)
+        p.tipo === 'artefatto' ? h('label', { class: 'campo', title: dati.regole.chroma.riserve?.tipi ? Object.values(dati.regole.chroma.riserve.tipi).map((x) => `${x.nome}: ${x.testo}`).join(' · ') : null },
+          h('span', {}, 'Riserva integrata (con incantesimo infuso)'),
+          h('select', { onchange: (e) => { p.riserva = e.target.value; } },
+            Object.entries(dati.regole.chroma.riserve?.tipi ?? {}).map(([k, x]) => h('option', { value: k, selected: (p.riserva || dati.regole.chroma.riserve.integrata_predefinita) === k }, x.nome)))) : null,
+        p.tipo === 'artefatto' ? h('label', { class: 'campo', title: dati.regole.chroma.riserve?.alimentazioni ? Object.values(dati.regole.chroma.riserve.alimentazioni).map((x) => `${x.nome}: ${x.testo}`).join(' · ') : null },
+          h('span', {}, 'Proprietà infusa'),
+          h('select', { onchange: (e) => { p.alimentazione = e.target.value; } },
+            Object.entries(dati.regole.chroma.riserve?.alimentazioni ?? {}).map(([k, x]) => h('option', { value: k, selected: (p.alimentazione || dati.regole.chroma.riserve.proprieta_predefinita) === k }, x.nome)))) : null,
         // Equipaggiamento §1.6: peso per unità, per il carico della modalità tavolo
         h('label', { class: 'campo' }, h('span', {}, 'Peso (kg per unità)'),
           h('input', { type: 'number', min: 0, step: 0.1, value: p.peso ?? '', oninput: (e) => { p.peso = e.target.value; } }))),
@@ -386,9 +397,14 @@ function pannelloAggiungi(ctx) {
               const capacita = Number(p.capacita);
               if (!Number.isInteger(capacita) || capacita < 1) { alert('Indica la capacità del contenitore in PM (intero ≥ 1).'); return; }
               Object.assign(personalizzato, { energia: p.energia, capacita_pm: capacita });
+              // Magia §26.2: tipo di riserva e alimentazione, solo per la riserva integrata di un incantesimo infuso
+              if (personalizzato.infuso) {
+                if (p.riserva) personalizzato.riserva = p.riserva;
+                if (p.alimentazione) personalizzato.alimentazione = p.alimentazione;
+              }
             }
           }
-          Object.assign(p, { nome: '', abilita: '', danno: '', ar: '', potenza: '', energia: '', capacita: '', peso: '', soloPassive: false, infuso: '', livelloInfuso: '' });
+          Object.assign(p, { nome: '', abilita: '', danno: '', ar: '', potenza: '', energia: '', capacita: '', peso: '', soloPassive: false, infuso: '', livelloInfuso: '', riserva: '', alimentazione: '' });
           aggiungiVoce({ uid: nuovoUid(), rif: null, personalizzato, stato: statoIniziale(personalizzato.tipo, ctx.voci, dati), quantita: 1, note: '' });
         },
       }, 'Aggiungi oggetto personalizzato')));

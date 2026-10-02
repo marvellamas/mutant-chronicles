@@ -65,6 +65,10 @@ export function frasiEffetti() {
     }
   };
   visita(leggi('data/regole.json').attacco_distanza ?? {}, 'regole:attacco_distanza');
+  // Magia §26.2: riserve Batteria/Cariche e alimentazione Esclusiva/Universale (frasi e testi delle tabelle)
+  const RIS = leggi('data/regole.json').chroma?.riserve ?? {};
+  visita(RIS, 'regole:chroma.riserve');
+  for (const g of ['tipi', 'alimentazioni']) for (const [k, x] of Object.entries(RIS[g] ?? {})) if (x.testo) out.push({ dove: `regole:chroma.riserve.${g}.${k}`, frase: x.testo });
   visita(leggi('data/regole.json').lancio ?? {}, 'regole:lancio');
   visita(leggi('data/regole.json').rituali ?? {}, 'regole:rituali');
   visita(leggi('data/regole.json').danno_applicato ?? {}, 'regole:danno_applicato');

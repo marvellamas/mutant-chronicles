@@ -19,6 +19,7 @@
 import { bonusDannoCaratteristica, caratteristicaDanno } from './calc.js';
 import { riga, provenienza, rigaBonusCaratteristica as rigaBonus } from './provenienza.js';
 import { calcolaAR, oggettiConPi, oggettiSenzaPi } from './protezione.js';
+import { tipoRiserva, alimentazione as alimentazioneRiserva, fontePerPg } from './fonti.js';
 
 export const TIPI = ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'rinforzo', 'elmetto', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'impianto', 'altro'];
 
@@ -216,7 +217,9 @@ export function infoArtefattoVoce(r, dati) {
   // Magia §24.2: un incantesimo infuso è una proprietà attiva; la riserva, se c'è, è integrata e alimenta solo l'Artefatto (A.18)
   const infuso = p.infuso && typeof p.infuso.incantesimo === 'string' && Number.isInteger(p.infuso.livello) ? { incantesimo: p.infuso.incantesimo, livello: p.infuso.livello } : null;
   if (infuso) {
-    const riserva = p.energia && Number.isInteger(p.capacita_pm) ? { energia: p.energia, capacita_pm: p.capacita_pm, integrato: true } : undefined;
+    // Magia §26.2: tipo di riserva e alimentazione scelti nel progetto (predefiniti: Cariche, Esclusiva)
+    const riserva = p.energia && Number.isInteger(p.capacita_pm) ? { energia: p.energia, capacita_pm: p.capacita_pm, integrato: true,
+      ...(p.riserva ? { riserva: p.riserva } : {}), ...(p.alimentazione ? { alimentazione: p.alimentazione } : {}) } : undefined;
     return { tipologia: 'Accessori', potenza: p.potenza, sintonizzazione: costo, sintonizzabile: true, proprieta_attive: true, infuso, ...(riserva ? { contenitore: riserva } : {}) };
   }
   const contenitore = p.energia && Number.isInteger(p.capacita_pm) ? { energia: p.energia, capacita_pm: p.capacita_pm } : undefined;
@@ -336,6 +339,8 @@ function contenitoriRisolti(oggetti, dati) {
     const colore = colori[c.energia] ?? {};
     out.push({
       uid: r.uid, nome: r.nome, tipo: r.tipo, integrato: !!c.integrato,
+      // Magia §26.2: Batteria (fonte anche per il personaggio) o Cariche (solo l'oggetto); proprietà Esclusive o Universali
+      riserva: tipoRiserva(c, dati), alimentazione: alimentazioneRiserva(c, dati), fontePg: fontePerPg(c, dati),
       energia: c.energia, energiaNome: colore.energia ?? null, macrofamiglie: colore.macrofamiglie ?? [], regoleRimandate: !!colore.regole_rimandate,
       capacita: c.capacita_pm, potenza: a.potenza, costo: a.sintonizzazione,
       // nel deposito comune non è sintonizzabile (docs/layout-sd.md, pezzo 4): la scelta resta nella voce
@@ -504,6 +509,9 @@ export function normalizzaEquipaggiamento(valore) {
         // Magia §24.2, §25.4: incantesimo infuso (proprietà attiva), pagato dalla riserva integrata
         ...(isOggetto(p.infuso) && testo(p.infuso.incantesimo) && Number.isInteger(p.infuso.livello) ? { infuso: { incantesimo: p.infuso.incantesimo, livello: p.infuso.livello } } : {}),
         ...(testo(p.energia) ? { energia: p.energia } : {}),
+        // Magia §26.2: riserva integrata Batteria o Cariche, proprietà Esclusiva o Universale
+        ...(['batteria', 'cariche'].includes(p.riserva) ? { riserva: p.riserva } : {}),
+        ...(['esclusiva', 'universale'].includes(p.alimentazione) ? { alimentazione: p.alimentazione } : {}),
         ...(Number.isInteger(p.capacita_pm) && p.capacita_pm >= 1 ? { capacita_pm: p.capacita_pm } : {}),
         // §1.6: peso in kg per unità, per il carico
         ...(typeof p.peso === 'number' && Number.isFinite(p.peso) && p.peso >= 0 ? { peso: Math.round(p.peso * 100) / 100 } : {}),

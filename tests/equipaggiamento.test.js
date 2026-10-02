@@ -922,7 +922,7 @@ test('lotto 12: regole di sintonizzazione, profili con riserva mistica, batterie
   assert.equal(f.artefatti_catalogo.length, 6);
   assert.deepEqual(f.artefatti_catalogo.find((a) => a.rif === 'scudi:scudo-delle-guardie-sacre'), {
     rif: 'scudi:scudo-delle-guardie-sacre', tipologia: 'Protezioni', potenza: 'Rara', sintonizzazione: 3, sintonizzabile: true, proprieta_attive: true,
-    contenitore: { energia: 'Rosso', capacita_pm: 5, integrato: true },
+    contenitore: { energia: 'Rosso', capacita_pm: 5, integrato: true, riserva: 'cariche', alimentazione: 'esclusiva' }, // Magia §26.2, Armamenti §7.5.1
   });
   const b = catalogo(dati).perRif.get('artefatti:batteria-da-5-pm-chroma-bianco');
   assert.deepEqual(b.artefatto, { tipologia: 'Batterie e contenitori', potenza: 'Non Comune', sintonizzazione: 2, sintonizzabile: true, proprieta_attive: true, contenitore: { energia: 'Bianco', capacita_pm: 5 } });

@@ -56,7 +56,9 @@
       "contenitore": {
         "energia": "Rosso",
         "capacita_pm": 5,
-        "integrato": true
+        "integrato": true,
+        "riserva": "cariche",
+        "alimentazione": "esclusiva"
       }
     },
     {
@@ -69,7 +71,9 @@
       "contenitore": {
         "energia": "Rosso",
         "capacita_pm": 5,
-        "integrato": true
+        "integrato": true,
+        "riserva": "cariche",
+        "alimentazione": "esclusiva"
       }
     },
     {
@@ -82,7 +86,9 @@
       "contenitore": {
         "energia": "Rosso",
         "capacita_pm": 5,
-        "integrato": true
+        "integrato": true,
+        "riserva": "cariche",
+        "alimentazione": "esclusiva"
       }
     },
     {
@@ -95,7 +101,9 @@
       "contenitore": {
         "energia": "Rosso",
         "capacita_pm": 5,
-        "integrato": true
+        "integrato": true,
+        "riserva": "cariche",
+        "alimentazione": "esclusiva"
       }
     },
     {
@@ -108,7 +116,9 @@
       "contenitore": {
         "energia": "Rosso",
         "capacita_pm": 5,
-        "integrato": true
+        "integrato": true,
+        "riserva": "cariche",
+        "alimentazione": "esclusiva"
       }
     },
     {
@@ -121,7 +131,9 @@
       "contenitore": {
         "energia": "Rosso",
         "capacita_pm": 5,
-        "integrato": true
+        "integrato": true,
+        "riserva": "cariche",
+        "alimentazione": "esclusiva"
       }
     }
   ],

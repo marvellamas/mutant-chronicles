@@ -1005,6 +1005,14 @@ function validaChroma(dati, err) {
   }
   if (!isIntero(c.contenitori_per_lancio) || c.contenitori_per_lancio < 1) err(F, 'chroma.contenitori_per_lancio', 'intero ≥ 1 mancante');
   if (!['pieno', 'vuoto'].includes(c.contenitore_nuovo)) err(F, 'chroma.contenitore_nuovo', 'deve essere "pieno" o "vuoto"');
+  // Magia §26.2: riserve Batteria/Cariche, alimentazione Esclusiva/Universale, una fonte esterna per pagamento
+  const R = c.riserve;
+  if (!isOggetto(R)) { err(F, 'chroma.riserve', 'manca { tipi, alimentazioni, integrata_predefinita, proprieta_predefinita, fonti_esterne_per_pagamento }'); return; }
+  for (const k of ['batteria', 'cariche']) if (!isOggetto(R.tipi?.[k]) || typeof R.tipi[k].fonte_per_pg !== 'boolean') err(F, `chroma.riserve.tipi.${k}`, 'serve { nome, fonte_per_pg: vero o falso, testo }');
+  for (const k of ['esclusiva', 'universale']) if (!isOggetto(R.alimentazioni?.[k]) || !Array.isArray(R.alimentazioni[k].fonti) || !R.alimentazioni[k].fonti.every((x) => ['interna', 'personali', 'esterna'].includes(x))) err(F, `chroma.riserve.alimentazioni.${k}`, 'serve { nome, fonti: ["interna" | "personali" | "esterna"], testo }');
+  if (!R.tipi?.[R.integrata_predefinita]) err(F, 'chroma.riserve.integrata_predefinita', `"${R.integrata_predefinita}" non è un tipo di riserva`);
+  if (!R.alimentazioni?.[R.proprieta_predefinita]) err(F, 'chroma.riserve.proprieta_predefinita', `"${R.proprieta_predefinita}" non è un'alimentazione`);
+  if (!isIntero(R.fonti_esterne_per_pagamento) || R.fonti_esterne_per_pagamento < 1) err(F, 'chroma.riserve.fonti_esterne_per_pagamento', 'intero ≥ 1 mancante');
 }
 
 /**
@@ -1434,7 +1442,11 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
         if (coloriChroma.length && !coloriChroma.includes(c.energia)) err(F, `${k}.contenitore.energia`, `"${c.energia}" non è un colore del Chroma (${coloriChroma.join(', ')})`);
         if (!isIntero(c.capacita_pm) || c.capacita_pm < 1) err(F, `${k}.contenitore.capacita_pm`, 'intero ≥ 1 atteso');
         if (c.integrato !== undefined && typeof c.integrato !== 'boolean') err(F, `${k}.contenitore.integrato`, 'vero o falso');
-        for (const x of Object.keys(c)) if (!['energia', 'capacita_pm', 'integrato'].includes(x)) err(F, `${k}.contenitore.${x}`, 'campo sconosciuto');
+        // Magia §26.2: tipo di riserva e alimentazione delle proprietà (solo per le riserve integrate)
+        if (c.riserva !== undefined && !['batteria', 'cariche'].includes(c.riserva)) err(F, `${k}.contenitore.riserva`, '"batteria" o "cariche"');
+        if (c.alimentazione !== undefined && !['esclusiva', 'universale'].includes(c.alimentazione)) err(F, `${k}.contenitore.alimentazione`, '"esclusiva" o "universale"');
+        if ((c.riserva !== undefined || c.alimentazione !== undefined) && c.integrato !== true) err(F, `${k}.contenitore`, 'riserva e alimentazione si indicano per le riserve integrate in un Artefatto');
+        for (const x of Object.keys(c)) if (!['energia', 'capacita_pm', 'integrato', 'riserva', 'alimentazione'].includes(x)) err(F, `${k}.contenitore.${x}`, 'campo sconosciuto');
       }
     }
   }

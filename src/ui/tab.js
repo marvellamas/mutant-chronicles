@@ -28,6 +28,7 @@ import { pannelloLancio } from './lancio.js';
 import { sezioneRisorseInteriori, pannelloTecnica } from './tecniche.js';
 import { tecnicaDi, testoFine } from '../tecniche.js';
 import { statoPulsanteLancio, attivazioneInfusa } from '../lancio.js';
+import { nomeRiserva, nomeAlimentazione } from '../fonti.js';
 import { tabCalendario, pannelloAttivazione, pannelloImportaCalendario, pulsanteImportaCalendario } from './calendario.js';
 import { conOrdinale } from '../lingua.js';
 import { regoleRiparazione, esitoRiparazione, vaRiparazione, riparabile } from '../riparazione.js';
@@ -1538,8 +1539,9 @@ const AGGETTIVI_MACRO = { Fisica: 'Fisici', Mentale: 'Mentali', Spirituale: 'Spi
 /** Quali Incantesimi può alimentare un contenitore, dal colore (regole.json → chroma.colori). */
 function testoAlimenta(c) {
   if (c.regoleRimandate) return `Chroma ${c.energia} (energia ${c.energiaNome ?? '—'}): regole di impiego rimandate (Magia sez. 6).`;
-  // risposta A.18 (Magia §24.2, §24.7): la riserva integrata alimenta soltanto le funzioni del proprio Artefatto
-  if (c.integrato) return `Energia ${c.energiaNome}: alimenta soltanto le attivazioni dell’oggetto (§7.5.1); non paga Incantesimi e non si preleva (Magia §24.2, §24.7).`;
+  // Magia §26.2: le Cariche alimentano soltanto il proprio Artefatto (le armi del §7.5.1, risposta A.18);
+  // una Batteria integrata è anche una fonte per gli Incantesimi compatibili
+  if (c.integrato && !c.fontePg) return `Cariche, energia ${c.energiaNome}: alimentano soltanto le attivazioni dell’oggetto; non pagano Incantesimi e non si prelevano (Magia §26.2).`;
   if (!c.macrofamiglie.length) return 'Non alimenta Incantesimi.';
   if (c.macrofamiglie.length >= 3) return `Energia ${c.energiaNome}: alimenta Incantesimi di ogni macrofamiglia.`;
   return `Energia ${c.energiaNome}: alimenta Incantesimi ${c.macrofamiglie.map((m) => AGGETTIVI_MACRO[m] ?? m).join(' e ')}.`;
@@ -1587,7 +1589,7 @@ function pannelloChroma(ctx, c, { conPulsanti = true } = {}) {
 /** Scheda di un contenitore: nome, colore, PM, sintonizzazione, trasporto. */
 function schedaContenitore(ctx, c) {
   return h('article', { class: 'arma-tab contenitore-tab' },
-    h('h3', {}, c.nome, h('small', { class: 'sigla' }, c.integrato ? ' · riserva integrata nell’oggetto' : ` · ${c.potenza}`)),
+    h('h3', {}, c.nome, h('small', { class: 'sigla' }, c.integrato ? ` · riserva integrata nell’oggetto: ${nomeRiserva(c.riserva, ctx.dati)}, proprietà ${nomeAlimentazione(c.alimentazione, ctx.dati)}` : ` · ${c.potenza}`)),
     h('p', { class: 'nota' },
       c.sintonizzato ? `✔ Sintonizzato (SnT ${c.costo}, §7.10)` : `○ Non sintonizzato (SnT ${c.costo}): senza sintonizzazione non alimenta lanci`,
       ' · ', c.trasportato ? 'trasportato' : c.integrato ? `oggetto ${NOMI_STATI[c.stato]?.toLowerCase() ?? 'non trasportato'}` : 'nello zaino'),
@@ -1672,7 +1674,7 @@ function sezioneDaArtefatti(ctx) {
       return h('li', {},
         h('strong', {}, x.nome), h('small', { class: 'sigla' }, ` · ${x.sintonizzato ? 'sintonizzato' : 'non sintonizzato'}${r.deposito ? ' · nel deposito comune' : ''}`),
         at ? h('p', { class: 'nota' }, `Attivazione: +${at.danno_extra} ${at.natura}${at.anche ? ` e ${at.anche}` : ''} al danno del colpo (§7.1.4)${at.sintonizzazione ? `, Sintonizzazione ${at.sintonizzazione}` : ''}.`) : null,
-        ris ? h('p', { class: 'nota' }, `Riserva integrata di Chroma ${ris.energia}, ${ris.capacita_pm} PM (§7.5.1).`) : null,
+        ris ? h('p', { class: 'nota' }, `Riserva integrata di Chroma ${ris.energia}, ${ris.capacita_pm} PM: ${nomeRiserva(ris.riserva ?? ctx.dati.regole.chroma.riserve?.integrata_predefinita, ctx.dati)}, proprietà ${nomeAlimentazione(ris.alimentazione ?? ctx.dati.regole.chroma.riserve?.proprieta_predefinita, ctx.dati)} (Magia §26.2).`) : null,
         attivazioneInfusaUi(ctx, x, r, contenitori.find((c) => c.uid === x.uid && c.integrato), { conPulsante: false }));
     })),
     h('p', { class: 'nota' }, 'Sola lettura: sintonizzazione e riserve si gestiscono nella tab Artefatti.'));
@@ -1937,11 +1939,16 @@ function attivazioneInfusaUi(ctx, x, r, riserva, { conPulsante }) {
   const info = r ? infoArtefattoVoce(r, ctx.dati) : null;
   if (!info?.infuso) return null;
   const pm = riserva ? ctx.sessione.chroma?.[riserva.uid]?.pmAttuali ?? 0 : 0;
-  const a = attivazioneInfusa(info.infuso, riserva ?? null, { pm, sintonizzato: x.sintonizzato, deposito: x.deposito }, ctx.dati);
+  const a = attivazioneInfusa(info.infuso, riserva ?? null, { pm, personali: ctx.sessione.pmAttuali, sintonizzato: x.sintonizzato, deposito: x.deposito }, ctx.dati);
   if (!a) return h('p', { class: 'nota motivo' }, `Incantesimo infuso «${info.infuso.incantesimo}» non trovato fra gli incantesimi.`);
+  // Magia §26.2: Esclusiva solo dalla riserva interna; Universale anche con PM personali, una sola fonte esterna
+  const universale = a.alimentazione === 'universale';
+  const quote = a.pagamento && universale && a.pagamento.personali ? `${a.pagamento.interna} dalla riserva e ${a.pagamento.personali} personali` : `${a.pm} PM dalla riserva dell’Artefatto`;
   return h('div', { class: 'attivazione-infusa' },
-    h('p', {}, h('strong', {}, `${a.incantesimo} ${a.livello}: `), `${a.pm} PM dalla riserva dell’Artefatto · ${a.tempo} · nessuna Prova (Magia §24.2${a.energie ? ', §25.4' : ''}).`),
+    h('p', {}, h('strong', {}, `${a.incantesimo} ${a.livello}: `), `${quote} · ${a.tempo} · nessuna Prova (Magia §24.2${a.energie ? ', §25.4' : ''}) · proprietà ${nomeAlimentazione(a.alimentazione, ctx.dati)} (§26.2).`),
     a.motivo ? h('p', { class: 'nota motivo' }, `Non attivabile ora: ${a.motivo}.`) : null,
-    conPulsante ? h('button', { type: 'button', class: 'btn', disabled: !!a.motivo, title: a.motivo ?? 'Scala i PM dalla riserva; «Annulla» li restituisce',
-      onclick: () => ctx.azioni.chroma(riserva.uid, -a.pm) }, `Attiva (−${a.pm} PM dalla riserva)`) : null);
+    conPulsante ? h('button', { type: 'button', class: 'btn', disabled: !!a.motivo, title: a.motivo ?? 'Scala i PM; «Annulla» li restituisce',
+      onclick: () => (universale && a.pagamento?.personali
+        ? ctx.azioni.lancia({ personali: a.pagamento.personali, contenitore: riserva && a.pagamento.interna ? { uid: riserva.uid, pm: a.pagamento.interna } : null })
+        : ctx.azioni.chroma(riserva.uid, -a.pm)) }, `Attiva (−${a.pm} PM)`) : null);
 }

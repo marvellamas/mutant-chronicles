@@ -135,6 +135,8 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 
 - Rinforzi come sottocategoria delle armature (richiesta di Davide del 02/10): tipo `rinforzo` (`rinforzi.json`, lotto `tools/lotti/lotto_rinforzi_armature.mjs`), «Montata su:» con le armature indossate compatibili e, per soprabiti e mantelli (`indossabile_da_solo`), «Indossato da solo»; regole da solo e ad armatura tolta in `regole.json` → `rinforzi`, con TODO(Davide) A.80.
 
+- Manuali del 02/10 (`docs/diff-manuali-2026-10-02-sera.md`), lotti 1–3: capacità di sintonizzazione 8–13 (Architetto 10–15, `artefatti.json` → `sintonizzazione`); A.78, attacchi e Difese si tirano anche con VA ≥ 20 (`regole.json` → `prova.tiro_sempre`, `magistrale_migliorato`; `src/prova.js`); riserve Batteria/Cariche e proprietà Esclusive/Universali con una sola fonte esterna per pagamento (`regole.json` → `chroma.riserve`, `src/fonti.js`; le armi del §7.5.1 restano a Cariche).
+
 Fuori perimetro per ora: tiri automatici, gestione dei bersagli e dei danni, veicoli.
 
 ## Riferimenti
