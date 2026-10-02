@@ -30,7 +30,7 @@ Q indica un quadrato di 1,5 metri; RND un round; AP un’Azione Principale; AC u
 
 I rimandi esterni indicano il nome del manuale e il paragrafo da consultare. I rimandi alle sezioni di questo volume riguardano il Manuale della Magia. Il sommario e le pagine del repertorio sono collegamenti interni utilizzabili nella versione digitale.
 
-La voce Rituale indica l’ammissibilità di una versione rituale. La creazione degli Artefatti e delle batterie è disciplinata dalla sezione 24; Rigenerazione dalla sezione 25\. Le altre conversioni rituali richiedono una procedura espressamente definita. Gli impieghi specifici concessi dai Talenti seguono le rispettive descrizioni nel Manuale del Giocatore, capitolo 3 e §8.6.
+La voce Rituale indica l’ammissibilità di una versione rituale. La creazione degli Artefatti e delle batterie è disciplinata dalla sezione 24; Rigenerazione dalla sezione 25\. Cristalli Matrice, Batterie Matrice, Schegge instabili, tipi di riserva e Artefatti di campagna sono nella sezione 26\. Le altre conversioni rituali richiedono una procedura espressamente definita. Gli impieghi specifici concessi dai Talenti seguono le rispettive descrizioni nel Manuale del Giocatore, capitolo 3 e §8.6.
 
 **Sommario**
 
@@ -556,7 +556,7 @@ Movimenti forzati e A Terra non interrompono da soli Concentrazione o Focalizzaz
 
 Il personaggio possiede una sola riserva personale di PM universali. I PM attuali non possono superare il massimo e non scendono sotto 0\. I cristalli e gli altri contenitori conservano riserve esterne: non introducono riserve personali Fisiche, Mentali o Spirituali.
 
-L’Umanità può ridurre i PM Massimi personali secondo il Manuale del Giocatore, §5.21, «Umanità», fino a un minimo di 1\. I PM Attuali eccedenti il nuovo massimo vengono abbassati; un aumento del massimo non ripristina PM Attuali. Le riserve esterne mantengono la propria capacità, ma il loro impiego richiede la sintonizzazione entro la capacità risultante dopo la riduzione per UMN. Potere Mistico aumenta la riserva personale di 5 PM Massimi per acquisizione, fino a tre acquisizioni: questi incrementi si applicano prima della riduzione dovuta all’Umanità e non recuperano PM Attuali.
+L’Umanità può ridurre i PM Massimi personali secondo il Manuale del Giocatore, §5.21, «Umanità», fino a un minimo di 1\. I PM Attuali eccedenti il nuovo massimo vengono abbassati; un aumento del massimo non ripristina PM Attuali. Le riserve esterne mantengono la propria capacità, ma l’uso delle Batterie richiede la sintonizzazione entro la capacità risultante dopo la riduzione per UMN. Le Schegge instabili costituiscono l’eccezione senza SnT e seguono il §26.5. Potere Mistico aumenta la riserva personale di 5 PM Massimi per acquisizione, fino a tre acquisizioni: questi incrementi si applicano prima della riduzione dovuta all’Umanità e non recuperano PM Attuali.
 
 Se, al termine della risoluzione completa di un’azione, il personaggio rimane a 0 PM personali, sviene finché non recupera almeno 1 PM. Prima si risolvono gli effetti dell’azione, gli eventuali rimborsi e la tabella del Fallimento Maldestro. Possedere PM in un contenitore esterno non impedisce lo svenimento.
 
@@ -573,7 +573,7 @@ Un cristallo esausto conserva un alone del colore originario e mantiene capacit�
 
 Contenitore indica qualunque oggetto che racchiuda un Chroma, indipendentemente da forma e materiale. La scheda riporta tipo di energia, PM attuali e capacità massima: per esempio «Chroma Rosso, 6/10 PM».
 
-Le riserve integrate in un Artefatto alimentano soltanto le sue proprietà, senza pagare Incantesimi personali o consentire prelievi e conversioni nella riserva personale. Questa limitazione non riguarda i contenitori autonomi destinati a fornire PM. Un oggetto acquistato ha la riserva piena; per un oggetto trovato il Direttore decide secondo le circostanze.
+Una riserva integrata di tipo Batteria alimenta le proprietà dell’Artefatto e può fornire PM agli Incantesimi personali compatibili secondo le normali regole. Una riserva di tipo Cariche alimenta soltanto il proprio Artefatto e non consente prelievi o conversioni in PM personali. Ogni proprietà è inoltre Esclusiva oppure Universale, come definito nel §26.2. Un oggetto acquistato ha la riserva piena; per un oggetto trovato il Direttore decide secondo le circostanze.
 
 ## **Utilizzare una riserva esterna**
 
@@ -5275,7 +5275,7 @@ Durante l’infusione deve essere presente chi conosce e può utilizzare ciascun
 
 ## **24.2 Effetti, Grado e sintonizzazione**
 
-Si parte dagli incantesimi esistenti: ciascuna proprietà riproduce una versione completa della relativa scheda. Un insieme di bonus appartenenti alla stessa versione conta come una sola proprietà. Non si combinano liberamente valori presi da righe diverse.
+Si parte dagli incantesimi esistenti: ciascuna proprietà riproduce una versione completa della relativa scheda. Un insieme di bonus appartenenti alla stessa versione conta come una sola proprietà. Non si combinano liberamente valori presi da righe diverse. Le ricette specifiche espressamente approvate, come i Guanti da Combattimento Mistico (§26.6.2), riportano il proprio Grado senza introdurre una facoltà generale di scomporre gli Incantesimi.
 
 | Livello della versione | Grado | Potenza |
 | :---- | :---- | :---- |
@@ -5292,7 +5292,7 @@ SnT indica il costo di Sintonizzazione ed è distinta da SIN, Sistema di Interfa
 
 Una proprietà ad attivazione conserva effetti, PM, tempo di esecuzione, gittata, bersagli, durata, Concentrazione, Prove Salvezza, cumuli e limitazioni della versione infusa. Dopo la Sintonizzazione l’attivazione è automatica e non richiede Potere né Componenti, salvo un’eccezione espressamente prevista dalla specifica proprietà. Restano le eventuali Prove per colpire, Difese e Salvezze. L’utilizzatore non deve conoscere l’incantesimo. Per Rigenerazione infusa si applica il §25.4.
 
-La riserva integrata deve essere compatibile e contenere almeno il costo di un utilizzo della versione più costosa. Alimenta esclusivamente le funzioni dell’artefatto: non permette di prelevare PM né di alimentare gli incantesimi personali. Più proprietà di macrofamiglie differenti richiedono energia compatibile con tutte, normalmente Chroma Bianco.
+Una riserva integrata deve essere compatibile con gli effetti che alimenta. Per una proprietà Esclusiva deve contenere almeno il costo di un utilizzo; una proprietà Universale può essere alimentata anche con PM personali o una fonte esterna compatibile, rispettando il limite di una fonte esterna per pagamento. Il progetto distingue la riserva Batteria o Cariche e l’alimentazione Esclusiva o Universale di ogni proprietà (§26.2). Effetti di macrofamiglie differenti richiedono fonti compatibili con ciascun effetto, normalmente Chroma Bianco se si vuole usare un’unica riserva per tutti.
 
 Una proprietà permanente migliora l’uso o la natura del supporto al quale viene vincolata. Non richiede una riserva, non consuma PM durante l’uso e non aggiunge un sovrapprezzo automatico in Gradi. Cure istantanee, attacchi separati, teletrasporti ed evocazioni mantengono il funzionamento ad attivazione; la permanenza non li rende ripetibili gratuitamente.
 
@@ -5401,7 +5401,7 @@ Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, P
 
 La ricarica delle riserve colorate usa normalmente 3 PM personali per ottenere 1 PM immagazzinato. Ricarica Efficiente oppure Conversione Migliorata porta il rapporto a 2:1; entrambe lo portano a 1:1. Il Chroma Bianco conserva il rapporto 2:1 in entrambi i sensi. La ricarica non richiede una nuova spesa in crediti e rispetta accesso, compatibilità e procedure del §6. Il recupero dei PM personali non ricarica automaticamente le riserve esterne.
 
-Per un singolo incantesimo si può usare un solo contenitore esterno insieme agli eventuali PM personali. Una batteria autonoma conserva i normali usi consentiti; una riserva integrata alimenta soltanto le funzioni del proprio artefatto. Arrivare a 0 PM personali provoca Svenuto dopo la risoluzione dell’azione anche se una riserva esterna contiene ancora energia.
+Per un singolo Incantesimo o attivazione si può usare una sola riserva esterna, eventualmente integrata con PM personali. Una Batteria, autonoma o integrata, conserva i normali usi consentiti; le Cariche alimentano soltanto il proprio Artefatto. Una proprietà Esclusiva usa soltanto la riserva interna, una Universale ammette le altre fonti compatibili (§26.2). Arrivare a 0 PM personali provoca Svenuto dopo la risoluzione dell’azione anche se una riserva esterna contiene ancora energia.
 
 ## **24.8 Riparazioni e modifiche**
 
@@ -5413,7 +5413,7 @@ Aggiungere o potenziare una proprietà, oppure aumentare la capacità della rise
 
 ## **24.9 Scheda del manufatto**
 
-La scheda riporta nome e natura del supporto; progetto e sua qualità; proprietà con riferimento all’incantesimo e versione; impiego permanente o attivo; Grado delle proprietà, Grado della riserva e Grado finale; SnT; Chroma, capacità e PM presenti; tempi, costi e condizioni d’attivazione; effetti e limitazioni; valore fisico rilevante per le riparazioni; PI e componenti da preservare. I dati derivano dalle scelte del progetto e dalle normali schede di incantesimi e oggetti.
+La scheda riporta nome e natura del supporto; progetto e sua qualità; proprietà con riferimento all’incantesimo e versione; impiego permanente o attivo; Grado delle proprietà, Grado della riserva e Grado finale; SnT; Chroma, capacità e PM presenti; tipo di riserva Batteria o Cariche e alimentazione Esclusiva o Universale di ogni proprietà; eventuale Matrice d’origine; tempi, costi e condizioni d’attivazione; effetti e limitazioni; valore fisico rilevante per le riparazioni; PI e componenti da preservare. I dati derivano dalle scelte del progetto e dalle normali schede di incantesimi e oggetti.
 
 Esempio: una spada con Arma Mistica 3 permanente riceve danno Magico, \+1 VA agli attacchi e \+1 danno come un’unica proprietà di Grado I, con SnT 0 e nessuna riserva. Con supporto e progetto già disponibili, l’adattamento esemplificativo di 200 cr e i reagenti di 250 cr danno 450 cr di creazione; sviluppare il progetto aggiunge 100 cr. Se si aggiunge una funzione separata di Cura Ferite 3, il Grado delle proprietà diventa II; una riserva Verde da 5 PM è di Grado I e il manufatto finale ha Grado II e SnT 2\.
 
@@ -5457,11 +5457,175 @@ Le versioni 9–10 riparano una Menomazione permanente quando la parte è ancora
 
 Le competenze per infondere Rigenerazione riguardano il creatore. Qualsiasi personaggio che soddisfi la SnT dell’artefatto può utilizzarne la funzione, senza Ritualista, senza conoscere l’incantesimo e senza apprendere la procedura. L’attivazione è automatica, senza Prove di Potere o Rituali e senza Canali.
 
-L’intero costo in PM della versione viene pagato dalla riserva integrata, compatibile Verde o Bianca. Non sono richiesti PM personali. La creazione segue le normali tre fasi e i costi del §24; i 500 cr per Grado sono reagenti dell’esecuzione diretta del rituale e non un costo per utilizzare l’artefatto.
+Se Rigenerazione è infusa come proprietà Esclusiva, l’intero costo viene pagato dalla riserva interna compatibile Verde o Bianca e non servono PM personali. Se è Universale, si possono usare anche PM personali o un’altra fonte esterna compatibile, secondo il §26.2. La creazione segue le normali tre fasi e i costi del §24; i 500 cr per Grado sono reagenti dell’esecuzione diretta del rituale e non un costo per utilizzare l’Artefatto.
 
 La durata della celebrazione diventa il tempo di attivazione continua dell’oggetto: 3 ore per le versioni 9–10, 4 ore per la 12, 6 ore per la 15 e 8 ore per la 18\. Per tutto il tempo si devono rispettare contatto e condizioni della versione. Al completamento si consumano i PM e inizia il processo autonomo di rigenerazione. Un’interruzione precedente impedisce l’effetto senza consumare PM.
 
 Beneficiari, capacità, tempi successivi e limiti restano quelli della versione infusa. L’attivazione automatica non genera Successi Magistrali, fallimenti di prova o Fallimenti Maldestri; gli esiti del §25.2 appartengono al rituale eseguito direttamente da un Officiante.
 
-Esempio: un anello con la sola Rigenerazione 9 e Chroma Verde da 10 PM è di Grado III, con SnT 3\. Ogni utilizzo consuma 9 PM dalla riserva dopo 3 ore di attivazione continua e avvia la riparazione di una Menomazione permanente quando la parte è ancora presente; il completamento richiede ulteriori 5 giorni. Il personaggio sintonizzato non deve essere un Ritualista.
+Esempio: un anello con la sola Rigenerazione 9 Esclusiva e Cariche Verdi da 10 PM è di Grado III, con SnT 3\. Ogni utilizzo consuma 9 PM dalla riserva dopo 3 ore di attivazione continua e avvia la riparazione di una Menomazione permanente quando la parte è ancora presente; il completamento richiede ulteriori 5 giorni. Il personaggio sintonizzato non deve essere un Ritualista.
+
+# **26 Cristalli Matrice e riserve mistiche**
+
+Queste regole completano la creazione degli Artefatti del §24 e disciplinano la capacità di sintonizzazione, le fonti energetiche e i cristalli non lavorati. Le schede commerciali sono nel Manuale dell’Equipaggiamento, capitolo 10\. Livello di un Incantesimo, livello di un Cristallo Matrice, Grado dell’Artefatto, Qualità fisica e Reperibilità sono valori distinti.
+
+## **26.1 Capacità di sintonizzazione**
+
+La capacità complessiva dipende dai Gradi complessivi del personaggio ed è uguale per tutti gli Addestramenti. Architetto TecnoMistico aggiunge \+2 una sola volta. Si applicano poi le riduzioni dovute all’Umanità, fino a un minimo di 0\. Questa progressione sostituisce la precedente capacità ordinaria da 4 a 9\.
+
+| Grado complessivo | Capacità ordinaria | Con Architetto TecnoMistico |
+| :---- | ----- | ----- |
+| I | 8 | 10 |
+| II | 9 | 11 |
+| III | 10 | 12 |
+| IV | 11 | 13 |
+| V | 12 | 14 |
+| VI | 13 | 15 |
+
+Il costo SnT del singolo oggetto non cambia: è pari al suo Grado quando occorre sintonizzarsi per usarne le funzioni attive; un oggetto soltanto passivo ha SnT 0\. Le proprietà passive restano utilizzabili senza sintonizzazione anche negli oggetti che possiedono proprietà attive. La somma degli SnT degli oggetti sintonizzati non può superare la capacità effettiva. Non occorre possedere il medesimo Grado dell’oggetto: anche un personaggio di basso Grado può usare un Artefatto potente se ne soddisfa i requisiti e dispone di sufficiente capacità.
+
+La sintonizzazione richiede un minuto a contatto e una Prova di Artefatti; Architetto TecnoMistico rende automatica la Prova, non elimina il tempo né il limite. Una Batteria Matrice Rossa da 10 PM (SnT 3), la Pietra della Vigilanza (SnT 3\) e i Guanti da Combattimento Mistico (SnT 2\) occupano insieme 8 punti: sono utilizzabili contemporaneamente al I Grado, in assenza di riduzioni della capacità.
+
+## **26.2 Riserve e alimentazione delle proprietà**
+
+Il progetto e la scheda indicano due scelte indipendenti: il tipo di riserva dell’oggetto e il tipo di alimentazione di ogni proprietà infusa. Queste etichette non costituiscono da sole Incantesimi aggiuntivi e non aggiungono Gradi. Devono però essere previste nel progetto; trasformare un oggetto già costruito segue le regole di modifica del §24.8.
+
+| Tipo di riserva | Impiego |
+| :---- | :---- |
+| Batteria | Alimenta l’Artefatto ed è una fonte esterna per gli Incantesimi compatibili del personaggio; segue le normali regole di conversione. |
+| Cariche | Alimenta soltanto il proprio Artefatto. Non si possono prelevare PM per Incantesimi personali o convertirli in PM personali. |
+
+Sia Batterie sia Cariche si misurano in PM. Si registra sempre una sola coppia PM attuali/PM massimi. Le Cariche si ricaricano con la procedura ordinaria del colore pertinente, salvo eccezioni espresse nella scheda.
+
+| Proprietà infusa | Fonti ammesse |
+| :---- | :---- |
+| Esclusiva | Soltanto la riserva interna del medesimo oggetto, sia essa Batteria o Cariche. |
+| Universale | Riserva interna, PM personali oppure un’altra fonte esterna compatibile, secondo i limiti ordinari. |
+
+Universale descrive l’accesso alle fonti, non un cambiamento di colore: Rosso per energia Fisica, Blu per Mentale, Verde per Spirituale; Bianco e PM personali sono universali. In un singolo lancio o attivazione si usa al massimo una riserva esterna, eventualmente integrata con PM personali. La riserva dell’Artefatto è esterna rispetto al personaggio: non può essere sommata a un’altra Batteria nello stesso pagamento.
+
+L’Artefatto resta necessario e deve essere sintonizzato per la sua proprietà attiva. L’attivazione ordinaria è automatica e non richiede conoscenza dell’Incantesimo né una Prova di Potere. Restano i requisiti della fonte: una Batteria esterna deve essere sintonizzata e una Scheggia instabile richiede la Prova di estrazione. Dopo un’estrazione riuscita si attiva normalmente la proprietà; non si aggiunge una Prova di lancio all’attivazione automatica dell’Artefatto.
+
+Le schede anteriori a questa distinzione che prevedono una riserva utilizzabile soltanto dall’oggetto conservano quel funzionamento: si registrano come Cariche e le relative proprietà come Esclusive, finché una scheda specifica dispone diversamente. La Pietra della Vigilanza è espressamente una Batteria con proprietà Universali; i Guanti usano Cariche e una proprietà Esclusiva.
+
+## **26.3 Cristalli Matrice**
+
+I Cristalli Matrice sono cristalli puri Bianchi, Rossi, Verdi o Blu, dotati di proprietà leggendarie. Il loro controllo e la loro realizzazione non sono attualmente accessibili ai personaggi. Ciò non impedisce ai PG di beneficiare della loro influenza o di utilizzare schegge ricevute in gioco. Il livello da 1 a 20 indica dimensioni e raggio di influenza e non coincide con il Grado I–VI degli Artefatti.
+
+| Livello | Altezza m | Larghezza m | Raggio |
+| ----- | ----- | ----- | ----- |
+| 1 | 1 | 0,4 | 100 m |
+| 2 | 1,5 | 0,6 | 500 m |
+| 3 | 2 | 0,8 | 1 km |
+| 4 | 3 | 1,2 | 5 km |
+| 5 | 4,5 | 1,8 | 10 km |
+| 6 | 6 | 2,5 | 15 km |
+| 7 | 9 | 3,6 | 20 km |
+| 8 | 12 | 4,8 | 30 km |
+| 9 | 18 | 7,2 | 50 km |
+| 10 | 25 | 10 | 75 km |
+| 11 | 35 | 14 | 100 km |
+| 12 | 50 | 20 | 150 km |
+| 13 | 70 | 28 | 200 km |
+| 14 | 100 | 40 | 300 km |
+| 15 | 150 | 60 | 500 km |
+| 16 | 200 | 80 | 1.000 km |
+| 17 | 300 | 120 | 2.000 km |
+| 18 | 450 | 180 | 5.000 km |
+| 19 | 650 | 260 | 10.000 km |
+| 20 | 1.000 | 400 | 20.000 km |
+
+Il Cristallo Matrice Rosso della chiesa di Sant’Elias è di livello 1: altezza 1 m, larghezza 0,4 m e raggio 100 m. Quello di Rettungsanker, richiamato anche come Rettung o Rutteng nelle note di campagna, è Rosso di livello 6: circa 6 m per 2,5 m, raggio 15 km. Le dimensioni sono misure di riferimento; il raggio è quello indicato dal livello.
+
+## **26.4 Batterie Matrice**
+
+Una Batteria Matrice è una Batteria costruita con schegge di un Cristallo Matrice. Conserva il colore e l’identità della Matrice d’origine. A parità di colore e capacità, il suo Grado e il suo SnT sono superiori di uno rispetto a una Batteria Mistica ordinaria. La potenza segue il nuovo Grado; la Reperibilità sale di una fascia. La Qualità fisica del contenitore non aumenta automaticamente.
+
+Le Batterie colorate passano da REP Molto Rara a Epica. Le Bianche, già Leggendarie, richiedono una disponibilità eccezionale stabilita dal Direttore di Gioco: non si crea una fascia commerciale ordinaria oltre Leggendaria. Quando il \+1 porta oltre il Grado VI, la configurazione richiede una ricetta eccezionale; non si arrotonda al VI e non si applicano automaticamente le normali tabelle di creazione.
+
+Entro il raggio della propria Matrice d’origine, la Batteria recupera automaticamente 2 PM all’ora. Entro quello di un’altra Matrice dello stesso colore recupera 1 PM all’ora. Una Matrice di colore diverso non la ricarica: anche il Bianco ricarica soltanto Batterie Matrice Bianche. Il recupero non richiede Prove, spesa di PM personali o sintonizzazione e non supera la capacità massima. In zone sovrapposte si applica soltanto la velocità migliore, senza sommare le fonti. Il livello della Matrice modifica il raggio, non la velocità.
+
+La ricarica automatica si aggiunge alle normali possibilità di ricarica della Batteria. L’origine di Matrice e la lavorazione sono caratteristiche distinte: una scheggia di Matrice ancora grezza può essere instabile, ma la ricarica automatica descritta qui è una proprietà delle Batterie Matrice finite e non si trasferisce automaticamente alle schegge grezze.
+
+## **26.5 Schegge instabili di Chroma**
+
+Le Schegge instabili sono frammenti di Chroma non ancora lavorati per l’inserimento negli Artefatti e nelle Batterie. Possono già immagazzinare PM, ma estrarli e ricaricarle è più difficile. Ogni scheggia ha un colore, una capacità e PM attuali propri. Non richiedono sintonizzazione (SnT 0), non concedono la capacità di lanciare Incantesimi e non eliminano i requisiti ordinari di accesso alla magia, ricarica e conversione. La loro capacità non aumenta i PM massimi personali.
+
+### **26.5.1 Estrarre PM**
+
+Prima di prelevare PM si dichiara quanti prelevarne, senza superare quelli presenti. Si effettua una Prova di Potere obbligatoria, con penalità determinata dai soli PM estratti dalla scheggia, non dall’intero costo dell’Incantesimo se integrato con PM personali.
+
+| PM estratti | Modificatore a Potere |
+| ----- | ----- |
+| 1–3 | −2 VA |
+| 4–6 | −4 VA |
+| 7–9 | −6 VA |
+| 10–12 | −8 VA |
+| 13–15 | −10 VA |
+| 16–18 | −12 VA |
+| 19–21 | −14 VA |
+| 22–24 | −16 VA |
+| 25–27 | −18 VA |
+| 28–30 | −20 VA |
+
+La penalità prosegue di −2 VA per ogni ulteriore gruppo di 3 PM o frazione. Se la Prova fallisce, i PM dichiarati vengono dispersi dalla scheggia: l’Incantesimo non viene lanciato e non si effettua la Prova di lancio. Gli altri PM della scheggia restano disponibili; i PM personali che si intendeva aggiungere non sono ancora spesi.
+
+Se l’estrazione riesce, si passa separatamente alla Prova di Potere per lanciare l’Incantesimo personale. In questa procedura le due Prove sono distinte e obbligatorie, anche quando il normale lancio sarebbe automatico; alla seconda si applicano i modificatori ordinari dell’Incantesimo, senza ripetere la penalità di estrazione. Se la seconda fallisce, il lancio fallisce e i PM impegnati sono consumati secondo le regole del lancio. I PM già estratti non vengono sottratti una seconda volta. Per alimentare invece una proprietà Universale di un Artefatto, dopo l’estrazione si segue l’attivazione della scheda, normalmente automatica (§26.2).
+
+Non si possono sommare più schegge per pagare uno stesso lancio: vale il limite di una sola fonte esterna, eventualmente integrata con PM personali. La Prova di estrazione non aggiunge di per sé un’azione separata ai tempi dell’Incantesimo o dell’attivazione.
+
+### **26.5.2 Ricaricare una scheggia**
+
+Si applica la normale procedura di ricarica del colore, compresi requisiti, tempo e rapporti di conversione. La Prova di Potere è sempre obbligatoria, anche per 1 PM, e subisce un ulteriore −2 VA rispetto alla normale ricarica. Questa scala è diversa da quella dell’estrazione.
+
+| PM da immagazzinare | Modificatore a Potere |
+| ----- | ----- |
+| 1 | −2 VA |
+| 2 | −2 VA |
+| 3 | −4 VA |
+| 4 | −6 VA |
+| 5 | −8 VA |
+| 6 | −10 VA |
+
+Oltre 6 PM la penalità peggiora di −2 VA per ogni PM aggiuntivo. I PM della tabella sono quelli da immagazzinare, dopo la conversione. Per le schegge colorate resta il rapporto ordinario 3 PM personali per 1 PM immagazzinato, ridotto a 2:1 con uno dei Talenti pertinenti e a 1:1 con entrambi; per il Bianco resta 2:1 in entrambi i sensi. I requisiti di Addestramento e Talenti restano quelli della ricarica delle Batterie.
+
+Se la ricarica fallisce, tutti i PM personali impegnati vengono consumati e dispersi e la scheggia non riceve PM. È un’eccezione al fallimento ordinario della ricarica di una Batteria lavorata. Un fallimento non svuota i PM già presenti e non distrugge automaticamente il cristallo.
+
+## **26.6 Artefatti di campagna**
+
+### **26.6.1 Pietra della Vigilanza**
+
+La Pietra della Vigilanza è un Artefatto Mistico e una Batteria Mistica Verde da 10 PM. Possiede due proprietà attive Universali: Individuare 6 ed Esorcizzare Corruzione 6\. Entrambe richiedono la sintonizzazione alla Pietra, ma non la conoscenza degli Incantesimi né una Prova di Potere per attivarle.
+
+Potenza Rara, Grado III, SnT 3 complessivi. I due effetti di Grado II portano le proprietà al Grado III; la riserva da 10 PM è di Grado II e non aggiunge un costo separato di SnT. Qualità fisica Non Comune, PS Integrità 12, 4 PI, peso 0,2 kg. Prezzo indicativo 4.000 cr; REP Molto Rara. Prezzo e profilo fisico sono parametri di catalogo da verificare in playtest.
+
+Individuare 6\. Attivazione 1 AzP, costo 6 PM. Potenza di individuazione 6; percezione entro 10 Q (15 m) oppure analisi di una zona di 1 Q entro tale portata. Si sceglie una modalità alla volta. Durata: Concentrazione fino a 10 minuti oppure durata fissa di 5 RND. La percezione segnala presenza e direzione; l’analisi localizza ed esamina una fonte e una categoria per RND. Può riconoscere una firma della Simmetria Oscura, ma non certifica lo Stato personale di CROS: la diagnosi di Corruzione richiede Individuare 12\.
+
+Esorcizzare Corruzione 6\. Costo 6 PM pagati all’inizio; 10 minuti fuori dal combattimento, Concentrazione e contatto con una creatura vivente consenziente o incapacitata. Riduce di uno Stato la CROS, fino allo Stato iniziale Corrotto incluso: Corrotto passa a Infetto. Può avere effetto una sola volta ogni 24 ore sul medesimo destinatario, considerando insieme tutti gli utilizzatori e le fonti. Un’interruzione impedisce l’effetto senza restituire i PM. Non cura lo Stato Oscuro, non rimuove mutazioni permanenti e non espelle possessioni.
+
+Riserva e alimentazione. I 10 PM sono condivisi fra le due proprietà e gli altri impieghi della Batteria. La Pietra può alimentare gli Incantesimi spirituali del personaggio secondo le regole ordinarie. Le proprietà Universali possono usare PM personali, la riserva interna oppure un’altra fonte esterna compatibile; per ogni attivazione resta il limite di una fonte esterna, eventualmente integrata con PM personali. Esempio: 4 PM dalla Pietra e 2 PM personali pagano un’attivazione da 6 PM. Non si possono combinare nello stesso pagamento i PM della Pietra e quelli di un’altra Batteria.
+
+Creazione. Supporto fisico 100 cr, Chroma Verde da 10 PM 1.000 cr, reagenti di Artefatto di Grado III 1.000 cr: 2.100 cr con progetto posseduto; 2.500 cr progettando un nuovo schema, comprese 400 cr di risorse. Il progetto standard acquistato costa invece 2.000 cr e sostituisce la progettazione. Costruzione Semplice: Tecnologia senza modificatore, 4 ore. Infusione: Rituali −4 VA, 9 PM e 3 ore; si applicano gli aiuti e gli esiti del §24 del Manuale della Magia. La riserva appena creata è vuota. La lavorazione del supporto comprende la predisposizione dei due effetti e non duplica il costo del Chroma.
+
+### **26.6.2 Guanti da Combattimento Mistico**
+
+I Guanti da Combattimento Mistico sono una coppia di guanti e costituiscono un unico Artefatto Mistico da indossare sulle mani. Potenza Non Comune, Grado II, SnT 2 complessivi. Qualità fisica Non Comune, PS Integrità 12, 4 PI, peso complessivo 0,5 kg. Prezzo indicativo 3.000 cr; REP Molto Rara. Prezzo e profilo fisico sono parametri di catalogo da verificare in playtest.
+
+Proprietà passiva. Conferiscono \+1 VA alle Prove per colpire con i pugni e alle Prove per colpire in corpo a corpo richieste dagli Incantesimi. Il beneficio passivo funziona anche senza sintonizzazione. Non concede danno passivo aggiuntivo e non si applica a calci, armi impugnate, attacchi a distanza, Prove di Potere per lanciare Incantesimi o danni degli Incantesimi.
+
+Riserva. Cariche Verdi da 10 PM, utilizzabili soltanto per alimentare i Guanti. Non sono una Batteria per il personaggio. La parola Cariche indica una riserva in PM: non significa dieci attivazioni.
+
+Proprietà attiva Esclusiva. Spendendo 3 PM dalla riserva interna e 1 AzP, per 5 RND i danni dei pugni diventano Magici e ottengono \+1 al danno. L’attivazione richiede sintonizzazione, è automatica e non richiede Concentrazione. Non cambia il bonus passivo di \+1 a colpire. L’effetto non potenzia il danno degli Incantesimi e non si cumula con ulteriori attivazioni della stessa proprietà; una nuova attivazione rinnova la durata. I Guanti pieni consentono tre attivazioni e conservano 1 PM.
+
+Ricarica. Le Cariche si ricaricano con la normale procedura delle riserve Verdi: stessi requisiti, rapporti di conversione e Prove delle Batterie Mistiche. L’utilizzatore non può pagare l’attivazione Esclusiva con PM personali o Batterie esterne.
+
+Creazione. La ricetta approvata tratta il beneficio passivo come Grado I e l’attivazione come Grado I; la combinazione porta le proprietà al Grado II. Anche la riserva da 10 PM è di Grado II: il risultato resta Grado II e SnT 2\. Questa ricetta specifica non autorizza a scomporre liberamente altri Incantesimi per abbassarne il Grado. Supporto 100 cr, adattamento 200 cr, Chroma Verde 1.000 cr e reagenti 500 cr: 1.800 cr con progetto posseduto; 2.000 cr progettando un nuovo schema, comprese 200 cr di risorse. Un progetto standard acquistato costa invece 1.000 cr. Costruzione Ordinaria: Tecnologia −2 VA, 8 ore. Infusione: Rituali −2 VA, 6 PM e 2 ore; valgono gli aiuti e gli esiti ordinari. La riserva appena creata è vuota.
+
+## **26.7 Registrazione delle dotazioni**
+
+Il gruppo possiede due Batterie Matrice Rosse da 10 PM, create con le schegge del Cristallo Matrice di Rettungsanker donate da Sorella Iolanda. Ognuna ha Grado III, potenza Rara e SnT 3\. Da vuota a piena impiega 5 ore presso la Matrice d’origine oppure 10 ore presso quella di Sant’Elias. Le due Batterie si ricaricano contemporaneamente e restano due riserve distinte.
+
+Il gruppo possiede inoltre quattro Schegge instabili Verdi da 5 PM ciascuna: SnT 0 e capacità complessiva 20 PM, distribuita in quattro oggetti separati. Il totale non permette di prelevare 20 PM da una singola fonte. I PM attuali delle Batterie, delle Schegge e degli Artefatti posseduti si registrano secondo lo stato effettivo in campagna, senza presumere che siano pieni.
+
+Ogni oggetto ha un’unica scheda e un’unica istanza nell’inventario. La stessa voce può apparire nelle categorie Armamenti, Artefatti e Batterie secondo le sue funzioni. Quantità, peso, PM e SnT si conteggiano una sola volta; una coppia di Guanti costituisce un solo oggetto. Il catalogo completo è nel Manuale dell’Equipaggiamento, capitolo 10; la scheda di combattimento dei Guanti è nel Manuale degli Armamenti, §7.24.
 

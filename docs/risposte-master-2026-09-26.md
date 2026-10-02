@@ -1,6 +1,6 @@
 # E&L – Risposte e correzioni approvate
 
-Copia del Google Doc del master «E&L – Risposte e correzioni approvate» (Davide), letta il 26 settembre 2026 e riletta alle versioni del 27/09, del 01/10 07:25:47 UTC e, il 2 ottobre 2026, alla versione del 01/10 alle 21:38:42 UTC. Testo del documento, non riscritto: è la fonte delle decisioni registrate in `docs/risposte-master.md`.
+Copia del Google Doc del master «E&L – Risposte e correzioni approvate» (Davide), letta il 26 settembre 2026 e riletta alle versioni del 27/09, del 01/10 07:25:47 UTC e, il 2 ottobre 2026, alle versioni del 01/10 alle 21:38:42 UTC e del 02/10 alle 15:52:58 UTC. Testo del documento, non riscritto: è la fonte delle decisioni registrate in `docs/risposte-master.md`.
 
 # E\&L – Risposte e correzioni approvate
 
@@ -1026,4 +1026,431 @@ Le batterie pure hanno reagenti d’infusione pari a 50 cr per Grado. Il Chroma 
 
 Qualunque PG che soddisfi la SnT può usare un Artefatto di Rigenerazione. Non occorrono Ritualista, conoscenza della procedura, Prova di Potere o Prova di Rituali. I costi di creazione seguono le regole generali. L’attivazione non consuma i reagenti da 500 cr per Grado previsti per la celebrazione diretta.  
 L’attivazione continua dura 3 ore per le versioni 9 e 10, 4 ore per la 12, 6 ore per la 15 e 8 ore per la 18, mantenendo il contatto e le condizioni dei beneficiari. Al completamento l’oggetto paga tutto il costo in PM dalla riserva Verde o Bianca compatibile; un’interruzione precedente non consuma PM e non avvia l’effetto. Seguono i normali tempi di rigenerazione della scheda. L’attivazione automatica non genera Magistrali o Maldestri e non usa Canali.  
-Esempio: Rigenerazione 9 con riserva Verde da 10 PM produce, come unica proprietà attiva, un Artefatto di Grado III e SnT 3\. L’attivazione dura 3 ore, consuma 9 PM e avvia il processo di 5 giorni. Restano i limiti della versione, una sola Rigenerazione attiva per beneficiario, nessuna resurrezione e nessun recupero automatico di Umanità.  
+Esempio: Rigenerazione 9 con riserva Verde da 10 PM produce, come unica proprietà attiva, un Artefatto di Grado III e SnT 3\. L’attivazione dura 3 ore, consuma 9 PM e avvia il processo di 5 giorni. Restano i limiti della versione, una sola Rigenerazione attiva per beneficiario, nessuna resurrezione e nessun recupero automatico di Umanità.
+
+# **Regole consolidate di Artefatti e riserve mistiche**
+
+La capacità ordinaria di sintonizzazione ai Gradi complessivi I–VI è 8, 9, 10, 11, 12, 13\. Architetto TecnoMistico aggiunge \+2 una sola volta: 10, 11, 12, 13, 14, 15\. Si applicano poi le riduzioni UMN fino a 0\. Questa regola sostituisce le precedenti progressioni da 4 a 9 e da 6 a 11\. Il costo SnT dei singoli oggetti resta invariato e le proprietà passive non richiedono sintonizzazione.
+
+Riserve: Batteria utilizzabile dall’oggetto e come fonte per il PG; Cariche utilizzabili soltanto dall’oggetto. Entrambe misurate in PM. Proprietà Esclusiva alimentata soltanto dalla riserva interna; Universale anche da PM personali o da una fonte esterna compatibile. Una sola fonte esterna per singolo pagamento, eventualmente integrata da PM personali. Tipi di riserva e alimentazione si dichiarano nel progetto e non aggiungono da soli Gradi.
+
+Cristalli Matrice nei quattro colori, livelli 1–20 e dimensioni/raggi del Manuale della Magia §26.3. Sant’Elias Rosso livello 1; Rettungsanker Rosso livello 6\. Batterie Matrice: \+1 Grado e \+1 SnT rispetto alle ordinarie; REP superiore di una fascia, disponibilità eccezionale oltre Leggendaria. Ricarica 2 PM/ora nella Matrice d’origine, 1 PM/ora presso altra Matrice dello stesso colore, nessuna da colori diversi; automatica, senza sintonizzazione, senza cumulo e fino alla capacità.
+
+Schegge instabili: SnT 0\. Estrazione con Potere obbligatorio −2 VA ogni 3 PM o frazione; in caso di fallimento si disperdono i PM dichiarati e non si effettua la Prova di lancio. In caso di successo segue una Prova distinta per il lancio personale. Per una proprietà Universale di Artefatto segue invece la normale attivazione. Ricarica con la normale scala e ulteriore −2 VA, sempre obbligatoria; un fallimento consuma i PM personali impegnati e non carica la scheggia.
+
+Pietra della Vigilanza: Batteria Verde 10 PM, Individuare 6 ed Esorcizzare Corruzione 6 Universali, Grado III Rara, SnT 3\. Guanti da Combattimento Mistico: \+1 passivo a colpire con pugni e Incantesimi con Prova per colpire in corpo a corpo, nessun danno passivo aggiuntivo; Cariche Verdi 10 PM, attivazione Esclusiva da 3 PM e 1 AzP, pugni Magici con \+1 al danno per 5 RND, Grado II Non Comune, SnT 2\. Una coppia è un oggetto.
+
+Dotazione del gruppo: due Batterie Matrice Rosse da 10 PM di origine Rettungsanker, schegge donate da Sorella Iolanda; quattro Schegge instabili Verdi da 5 PM. Le riserve sono separate, i PM attuali non sono presunti pieni. Il kit individuale con una Batteria Matrice, Pietra e Guanti occupa 8 SnT.
+
+Cataloghi aggiornati con 69 profili energetici: 23 Batterie Mistiche, 23 Batterie Matrice e 23 Schegge instabili. I prezzi già stabiliti di Batterie ordinarie e Chroma grezzo restano invariati. Il sovrapprezzo delle Batterie Matrice, i prezzi dei due Artefatti e i dati fisici non fissati in precedenza sono valori iniziali di catalogo, da verificare in playtest. Non rappresentano ulteriori decisioni di bilanciamento già testate.
+
+Oggetti con più funzioni compaiono in più categorie ma condividono una sola istanza, una sola riserva e un solo costo SnT. Riferimenti consolidati: Manuale della Magia §26; Manuale dell’Equipaggiamento §10; Manuale degli Armamenti §§7.10 e 7.24; Manuale del Giocatore §§3.9.5, 4.4 e 5.21.3.
+
+# Risposte approvate ai 52 riferimenti dell’app — 21 quesiti distinti
+
+Aggiornamento del: ott 2, 2026
+
+**Stato: decisioni approvate, pronte per il recepimento nell’app.**
+
+Questo blocco risponde al secondo elenco del collaboratore: una voce iniziale non numerata più le voci 1–51, per 52 riferimenti complessivi. Le ripetizioni sono riunite in 21 decisioni. La numerazione delle risposte qui sotto è autonoma; «voce» rimanda sempre alla numerazione originale del collaboratore.
+
+Per gli argomenti trattati, queste risposte sostituiscono i comportamenti provvisori indicati nei TODO e prevalgono sulle precedenti formulazioni incompatibili del documento o dei manuali. Non sostituiscono il precedente blocco di risposte ai 19 quesiti dell’app.
+
+I percorsi JSON riportati identificano i punti da aggiornare. La registrazione delle decisioni in questo documento non attesta che siano già state implementate nell’app o recepite in tutti i manuali.
+
+## 1\. A.74, punto 1 — VA pertinente del Canale
+
+*Riferimenti dell’elenco originale: Voce iniziale non numerata.*
+
+Campo dell’app: regole.json.rituali.TODO(Davide)\[0\]
+
+Il «VA pertinente del Canale» è il VA di Rituali del Canale. Il Canale non effettua una Prova separata.
+
+Contributo al VA dell’Officiante: VA del Canale ≤ 0: \+0; VA 1–8: \+1; VA 9–14: \+2; VA 15–19: \+3; VA ≥ 20: \+4. Il contributo complessivo dei Canali non può superare \+5.
+
+Il \+2 all’infusione ottenuto con un Successo Magistrale nella costruzione del supporto resta un beneficio distinto: non consuma il limite di \+5 dei Canali.
+
+Applicazione nell’app: usare Rituali del singolo Canale e applicare la tabella e il limite complessivo. Riferimento: Manuale della Magia, §24.6.
+
+## 2\. A.74, punto 2 — Ripartizione dei PM dopo un Magistrale
+
+*Riferimenti dell’elenco originale: Voce 1\.*
+
+Campo dell’app: regole.json.rituali.TODO(Davide)\[1\]
+
+Con un Successo Magistrale si dimezza una sola volta il costo totale in PM del Rituale, arrotondando per eccesso. Dopo l’esito, i partecipanti scelgono liberamente come ripartire il costo ridotto, rispettando tutti i limiti seguenti.
+
+La somma delle quote deve coincidere con il nuovo costo totale; nessun partecipante può pagare più della propria quota dichiarata prima della Prova; l’Officiante deve pagare almeno metà del Grado, arrotondata per eccesso.
+
+Ogni Canale che aveva dichiarato un contributo energetico deve spendere almeno 1 PM. Un Canale presente soltanto per aiutare il VA, con quota dichiarata pari a 0, continua a spendere 0 PM.
+
+Esempio: Rituale di Grado III da 9 PM, con quote dichiarate Officiante 3, Canale A 3 e Canale B 3\. Il Magistrale riduce il costo a 5 PM; è valida la ripartizione 2 \+ 2 \+ 1\.
+
+Applicazione nell’app: proporre quote modificabili e convalidare somma, massimi dichiarati e minimi. Non imporre che i Canali conservino le quote iniziali e che l’Officiante paghi automaticamente il resto. Riferimenti: Manuale della Magia, §§24.6 e 25.2.
+
+## 3\. A.78 — Tiro con VA finale 20 o superiore e Magistrale Migliorato
+
+*Riferimenti dell’elenco originale: Voce 2\.*
+
+Campo dell’app: regole.json.prova.TODO(Davide)
+
+Gli attacchi e le Difese attive richiedono il tiro anche quando il VA finale è 20 o superiore. Si applicano prima tutti i modificatori e poi si determina il VA finale. Restano valide le eccezioni esplicite che colpiscono automaticamente, come Colpo Elementale.
+
+Senza il talento Successo Magistrale Migliorato: con VA finale 20, il risultato naturale 1 è Magistrale, 2–19 sono successi normali e 20 è Maldestro; con VA finale 21 o superiore, 1–2 sono Magistrali, 3–19 successi normali e 20 Maldestro.
+
+Con Successo Magistrale Migliorato: con VA finale 20, sono Magistrali 1–2; da VA finale 21 sono Magistrali 1–2–3. Il 20 naturale rimane Maldestro.
+
+**Correzione espressamente approvata: con il talento, il 3 naturale diventa Magistrale già da VA 21\. Questa decisione sostituisce la frase precedente del manuale che escludeva il 3\.**
+
+Applicazione nell’app: eliminare il successo automatico senza tiro per attacchi e Difese attive con VA ≥ 20; mantenere le eccezioni esplicite. Questa modifica non impone il tiro per ogni altra Prova non di combattimento che beneficia di un automatismo.
+
+## 4\. Capolavoro del Corazzaio — Bonus a una Contromisura
+
+*Riferimenti dell’elenco originale: Voce 3\.*
+
+Campo dell’app: classi.json.classi\[11\].talenti\_a\_scelta\[1\].TODO(Davide)
+
+Il beneficio provvisorio «+1 Protezione» dell’armatura Capolavoro diventa \+1 a una sola Contromisura numerica, scelta al momento della costruzione.
+
+Le scelte ammesse sono Ignifugo, Termico, Isolante, Dissipante, Imbottita e Anticorrosivo. Se la Contromisura scelta è assente, assume valore 1; se ha già valore X, passa a X \+ 1\.
+
+Il beneficio non aumenta l’AR e non sottrae direttamente 1 ai danni ai PV: si applica la normale regola della Contromisura scelta. Riflettente è esclusa perché non è numerica. Gli altri benefici di Capolavoro restano invariati.
+
+Applicazione nell’app: memorizzare la Contromisura scelta e il relativo incremento, sostituendo il generico «+1 Protezione».
+
+## 5\. A.73 — Formato comune dei nemici
+
+*Riferimenti dell’elenco originale: Voce 4\.*
+
+Campo dell’app: formato\_nemici.json.TODO(Davide)\[0\]
+
+Il formato dei nemici usa valori di gioco già calcolati ed è comune all’app e al futuro bestiario. Il bestiario può avere un’impaginazione e descrizioni proprie, mantenendo gli stessi campi meccanici.
+
+Sono confermati: nome; PV; eventuali PM; AR totale e componente magica; Difese; Iniziativa; movimento (Passo, Corsa e Scatto); quattro Prove Salvezza; attacchi; Stati iniziali; immunità agli Stati; incantesimi; note; Caratteristiche.
+
+Ogni attacco riporta nome, tipo ravvicinato o a distanza, VA, danno, Natura (Naturale, Magica o Eterea), proprietà, portata, modalità di fuoco e AC, quando pertinenti.
+
+Si aggiungono quattro campi: azioni per turno (AzP e AzM, con eventuali eccezioni); Contromisure con nomi e valori; Abilità rilevanti con VA; talenti e capacità speciali con effetto, costo e limiti d’uso.
+
+Le decisioni 6–9 precisano Caratteristiche, PV e Ferite, incantesimi e movimento. I valori già calcolati non vanno ricostruiti automaticamente da dati incompleti.
+
+## 6\. A.73 — Caratteristiche dei nemici e parità d’Iniziativa
+
+*Riferimenti dell’elenco originale: Voci 5 e 9\.*
+
+Campo dell’app: formato\_nemici.json.TODO(Davide)\[1\]
+
+Campo dell’app: formato\_nemici.json.campi.caratteristiche.descrizione
+
+Le schede del bestiario riportano tutte e sei le Caratteristiche: FOR, DES, COS, INT, SAG e CAR. Nell’app le Caratteristiche restano facoltative per consentire l’inserimento rapido di un nemico.
+
+Un valore mancante non equivale a 0\. L’inserimento delle Caratteristiche non ricalcola automaticamente VA, danni, PV o gli altri valori già definiti nella scheda.
+
+In caso di parità d’Iniziativa si confronta prima DES e, se necessario, INT. Se manca una Caratteristica necessaria al confronto, si passa allo spareggio con 1d10; si ripete il tiro se permane la parità.
+
+Applicazione nell’app: aggiornare sia la regola sia la descrizione del campo, distinguendo dati assenti e valori numerici effettivi. Riferimento: Manuale del Giocatore, §5.1.
+
+## 7\. A.73 — PV e Ferite dei nemici; nessun campo Affaticamento
+
+*Riferimenti dell’elenco originale: Voce 6\.*
+
+Campo dell’app: formato\_nemici.json.TODO(Davide)\[2\]
+
+La plancia dei nemici deve registrare PV attuali, PV massimi e Stato di Ferita. Si registrano anche le eventuali Menomazioni secondo le regole ordinarie.
+
+Salvo un’eccezione esplicita della scheda, i nemici seguono la procedura dei PG: raggiungere 0 PV non causa automaticamente svenimento o morte; i danni subiti quando si è già a 0 PV attivano le regole di Tempra e Ferite, con le successive eventuali Menomazioni.
+
+**Non si introduce un campo o un tracciato dedicato all’Affaticamento dei nemici. Questa è la correzione approvata alla proposta iniziale: per la normale gestione dell’incontro si tengono PV, Ferite e Stati pertinenti.**
+
+L’assenza del tracciato non conferisce immunità all’Affaticamento: un effetto eccezionale che lo imponga può essere gestito nelle note e con i modificatori necessari. Riferimenti: Manuale del Giocatore, §§5.14 e 5.19.
+
+## 8\. A.73 — Incantesimi dei nemici utilizzabili dall’app
+
+*Riferimenti dell’elenco originale: Voci 7 e 11\.*
+
+Campo dell’app: formato\_nemici.json.TODO(Davide)\[3\]
+
+Campo dell’app: formato\_nemici.json.campi.incantesimi.descrizione
+
+Gli incantesimi dei nemici possono essere lanciati dall’app con la stessa procedura dei PG quando sono presenti i dati necessari.
+
+Per ciascun incantesimo occorrono nome e versione utilizzabile; VA di lancio già calcolato per quella versione, prima dei modificatori temporanei; costo in PM; azioni e durata del lancio; riferimento alla scheda dell’effetto ed eventuali eccezioni specifiche del nemico.
+
+Il comando «Lancia\!» risolve il tiro e il consumo di PM secondo le regole ordinarie, usando la riserva del nemico. Si applicano soltanto le eccezioni esplicitamente indicate.
+
+Una voce incompleta può restare un promemoria da gestire manualmente; non si inventano VA, costi o altri valori mancanti. Aggiornare anche la descrizione del campo, eliminando il divieto generale di «Lancia\!».
+
+## 9\. A.73 — Passo, Corsa e Scatto dei nemici
+
+*Riferimenti dell’elenco originale: Voci 8 e 10\.*
+
+Campo dell’app: formato\_nemici.json.TODO(Davide)\[4\]
+
+Campo dell’app: formato\_nemici.json.campi.movimento.descrizione
+
+Il Passo è obbligatorio ed è espresso in Q. Se non sono indicati valori specifici, Corsa \= 2 × Passo e Scatto \= 3 × Passo. I valori esplicitamente presenti nella scheda prevalgono.
+
+Esempio: Passo 4 Q comporta Corsa 8 Q e Scatto 12 Q quando questi ultimi valori non sono specificati.
+
+L’app deve distinguere «valore mancante» da «movimento non consentito»: un nemico che non può correre o scattare non riceve automaticamente quella modalità di movimento. Aggiornare sia la regola sia la descrizione del campo. Riferimento: Manuale del Giocatore, §2.14.
+
+## 10\. A.65 — Corredo agricolo Standard per allevamento
+
+*Riferimenti dell’elenco originale: Voce 12\.*
+
+Campo dell’app: dotazioni.json.oggetti\_dotazione.corredo-agricolo.TODO(Davide)
+
+Si aggiunge la scheda «Corredo agricolo Standard — Allevamento»: peso 2 kg; prezzo 200 cr; REP Comune (CO); modificatore degli strumenti \+0 al VA.
+
+Comprende longhina, cavezza regolabile, spazzole, striglia, cesoie e piccoli attrezzi per la cura ordinaria di animali di taglia compatibile. Mangimi e medicinali si acquistano separatamente; non sostituisce gli strumenti veterinari.
+
+La scelta iniziale «allevamento» usa questa nuova scheda. Il Corredo dell’allevatore già presente nel catalogo resta la versione superiore: 3 kg, 800 cr, REP Non Comune (NC), \+2 al VA negli impieghi previsti.
+
+La scelta «coltivazione» continua a usare gli Attrezzi agricoli di base: 5 kg, 200 cr, REP Comune, modificatore \+0.
+
+Riferimenti: Manuale dell’Equipaggiamento, §5.3; nella versione attuale del Manuale del Giocatore la dotazione pertinente è al §2.16.12, non al vecchio §2.16.23 citato nel quesito.
+
+## 11\. A.65 — Strumento musicale portatile iniziale
+
+*Riferimenti dell’elenco originale: Voce 13\.*
+
+Campo dell’app: dotazioni.json.oggetti\_dotazione.strumento-musicale-portatile.TODO(Davide)
+
+Per la dotazione iniziale si sceglie liberamente uno strumento portatile acustico o elettronico, senza sovrapprezzo iniziale. Entrambi sono strumenti Standard, con modificatore \+0 al VA.
+
+Acustico: peso 2 kg, prezzo di catalogo 400 cr, REP Comune (CO). Elettronico: peso 3 kg, prezzo di catalogo 800 cr, REP Non Comune (NC).
+
+La versione elettronica comprende un NEC Verde compatto carico da 100 Lx, consumo 2 Lx/ora e autonomia 50 ore, oltre a cavo e caricatore.
+
+Per entrambi valgono Qualità fisica Comune, PS Integrità 10 e 4 PI. L’app assegna la scheda scelta con peso, prezzo e alimentazione pertinenti. Riferimento: Manuale dell’Equipaggiamento, §5.8.
+
+## 12\. A.74, punto 3 — PM personali per il Rituale diretto di Rigenerazione
+
+*Riferimenti dell’elenco originale: Voce 14\.*
+
+Campo dell’app: incantesimi.json.incantesimi\[69\].meccanica.procedura\_rituale.TODO(Davide)\[0\]
+
+Il costo del Rituale diretto di Rigenerazione deve provenire interamente dai PM personali dell’Officiante e dei Canali. Le batterie Verdi o Bianche non possono pagare alcuna parte del costo, neppure la quota che eccede il minimo obbligatorio dell’Officiante.
+
+L’indicazione «PM utilizzabili: universali o spirituali» esprime la compatibilità energetica e non annulla il requisito delle quote personali. Restano i minimi di partecipazione e la ripartizione dopo un Magistrale precisata nella decisione 2\.
+
+L’attivazione di Rigenerazione tramite Artefatto è distinta dal Rituale diretto. Una proprietà Esclusiva usa soltanto la riserva interna Verde o Bianca compatibile; una proprietà Universale segue le normali regole delle fonti ammesse, compresi i PM personali e una sola fonte esterna compatibile per pagamento, eventualmente integrata dai PM personali.
+
+Applicazione nell’app: impedire il pagamento del Rituale diretto con batterie, senza estendere il divieto alle proprietà Universali degli Artefatti. Riferimento: Manuale della Magia, §25.1 e regole delle riserve.
+
+## 13\. A.74, punto 4 — Versioni di Rigenerazione e talenti Ritualista
+
+*Riferimenti dell’elenco originale: Voce 15\.*
+
+Campo dell’app: incantesimi.json.incantesimi\[69\].meccanica.procedura\_rituale.TODO(Davide)\[1\]
+
+L’accesso alle versioni del Rituale diretto di Rigenerazione dipende dal talento Ritualista appropriato e dalla conoscenza della procedura, non dal livello massimo degli Incantesimi ordinari dell’Officiante.
+
+Le versioni 9 e 10, di Grado III, richiedono Ritualista Minore. La versione 12, di Grado IV, la 15, di Grado V, e la 18, di Grado VI, richiedono Ritualista Maggiore. Ritualista Maggiore richiede Ritualista Minore.
+
+Restano obbligatori conoscenza della procedura, risorse, tempi e Prova di Rituali. Non è richiesto l’Addestramento Taumaturgo; il talento Ritualista non concede automaticamente la conoscenza degli incantesimi o delle procedure.
+
+Applicazione nell’app: non filtrare queste versioni rituali in base al livello massimo degli Incantesimi ordinari. Questa decisione riguarda il Rituale diretto e non elimina il requisito di conoscenza della versione per l’infusione di un Artefatto previsto dal §24.1.
+
+## 14\. A.67 — Modulo Blu del Gehemmapuker e divieto di travaso NEC
+
+*Riferimenti dell’elenco originale: Voce 16\.*
+
+Campo dell’app: equipaggiamento.json.file.munizioni.oggetti\[27\].TODO(Davide)
+
+Il Gehemmapuker usa lo stesso Modulo NEC Blu del catalogo identificato da nec:modulo-blu. Il modulo fisico è intercambiabile fra dispositivi che accettano espressamente quel formato.
+
+Profilo: riserva 2.500 Lx, peso 2 kg, prezzo 2.100 cr carico, REP Non Comune (NC). Il Gehemmapuker consuma 50 Lx per attacco: 50 getti con un modulo pieno. AC 1d3 non moltiplica il consumo energetico.
+
+La sostituzione con un modulo compatibile pronto richiede 1 AzP, entrambe le mani e nessuna Prova. Ricarica completa: 1 ora alla stazione per moduli oppure 2,5 ore con caricatore portatile a piena potenza; costo previsto 25 cr.
+
+Applicazione nell’app: una sola voce di catalogo, richiamata anche dalle munizioni; una sola istanza fisica e una sola riserva. I getti disponibili sono la parte intera di Lx residui / 50\.
+
+**Regola generale NEC espressamente aggiunta: le cariche o l’energia residue non possono essere riversate o trasferite in un altro NEC. È consentito spostare fisicamente lo stesso NEC fra dispositivi compatibili, conservandone la riserva residua.**
+
+Il divieto riguarda i NEC e l’energia in Lx: non modifica le regole del Chroma, dei PM o delle loro conversioni. Riferimenti: Manuale degli Armamenti, §7.20.6; Manuale dell’Equipaggiamento, §§5.4.4–5.4.5.
+
+## 15\. A.62 — Ryūjin: Natura del danno e proprietà Plasma
+
+*Riferimenti dell’elenco originale: Voce 17\.*
+
+Campo dell’app: equipaggiamento.json.file.armi\_corporative.oggetti\[32\].TODO(Davide)
+
+La Natura del danno e le proprietà dell’attacco sono dati distinti. La Ryūjin inattiva infligge 1d8 \+ 1 danni di Natura Naturale, senza la proprietà Plasma.
+
+Quando è attiva infligge 1d8 \+ 1 \+ 1d6 danni di Natura Naturale e possiede la proprietà Plasma. Si risolve un solo colpo: si sommano i dadi e si applicano Difese e AR una sola volta. Il d6 aggiuntivo non è un secondo colpo.
+
+L’effetto secondario del Plasma si applica secondo la sua regola ordinaria: occorre danno residuo, si considera Dissipante quando pertinente e si effettua la prevista Prova Salvezza Tempra. Le altre proprietà, fra cui Precisa 1, restano invariate.
+
+Applicazione nell’app: mantenere Natura \= Naturale e attivare la proprietà Plasma insieme all’arma; non introdurre «Plasma» come Natura. Riferimenti: Manuale degli Armamenti, scheda Ryūjin e §7.5.1; Manuale del Giocatore, §5.24.
+
+## 16\. A.75 — Dati fisici delle batterie oltre 5 PM
+
+*Riferimenti dell’elenco originale: Voci 18–36: 19 riferimenti alla stessa decisione.*
+
+Campo dell’app: equipaggiamento.json.file.artefatti.oggetti\[4\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.artefatti.oggetti\[5\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.artefatti.oggetti\[6\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.artefatti.oggetti\[7\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.artefatti.oggetti\[8\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.artefatti.oggetti\[9\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.artefatti.oggetti\[10\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.artefatti.oggetti\[11\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.artefatti.oggetti\[12\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.artefatti.oggetti\[13\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.artefatti.oggetti\[14\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.artefatti.oggetti\[15\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.artefatti.oggetti\[16\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.artefatti.oggetti\[17\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.artefatti.oggetti\[18\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.artefatti.oggetti\[19\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.artefatti.oggetti\[20\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.artefatti.oggetti\[21\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.artefatti.oggetti\[22\].TODO(Davide)
+
+Quesito già risolto dal Manuale dell’Equipaggiamento, §10.1: per le batterie del catalogo che usano il supporto di base valgono peso 0,2 kg, Qualità fisica Comune, PS Integrità 10 e 3 PI, anche quando la capacità supera 5 PM. Il supporto di base costa 100 cr.
+
+La maggiore capacità o purezza non impone una crescita lineare del peso. Qualità fisica, Grado mistico e REP sono grandezze distinte e non vanno fatte coincidere.
+
+Il profilo si applica anche alle Batterie Matrice che usano quel supporto. Non sovrascrive i profili fisici propri di Artefatti diversi, come Pietra della Vigilanza o Guanti da Combattimento Mistico.
+
+Applicazione nell’app: chiudere tutti i 19 TODO indicati recependo il profilo già definito; mantenere capacità, Grado, REP, prezzo dell’oggetto finito e altre differenze delle singole schede.
+
+## 17\. A.71 — Cartuccia chirurgica e set chirurgico
+
+*Riferimenti dell’elenco originale: Voce 37\.*
+
+Campo dell’app: equipaggiamento.json.file.sanitario.oggetti\[32\].TODO(Davide)
+
+Il set chirurgico e la cartuccia chirurgica sono lo stesso consumabile, intercambiabile fra Kit chirurgico, Postazione medica da campo e postazioni medicochirurgiche compatibili.
+
+Nome unificato di catalogo: «Cartuccia chirurgica — set sterile monouso». Prezzo 500 cr per unità oppure 2.500 cr per cinque unità.
+
+Si consuma un’unità all’inizio di ogni procedura, anche se la procedura fallisce o viene interrotta. I dispositivi mantengono i propri requisiti, bonus, tempi e consumi energetici.
+
+Applicazione nell’app: unificare le due voci in una sola voce di catalogo e in un’unica scorta d’inventario. Riferimenti: Manuale dell’Equipaggiamento, §§6.5 e 6.8.7.
+
+## 18\. A.63 — Alimentazione di esoscheletri e armature servoassistite
+
+*Riferimenti dell’elenco originale: Voci 38–43 e 45: 7 riferimenti.*
+
+Campo dell’app: equipaggiamento.json.file.armature\_corporative.oggetti\[13\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.armature\_corporative.oggetti\[14\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.armature\_corporative.oggetti\[41\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.armature\_corporative.oggetti\[66\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.armature\_corporative.oggetti\[67\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.armature\_corporative.oggetti\[68\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.corredi\_dispositivi.oggetti\[47\].TODO(Davide)
+
+Le «batterie» di questi modelli sono NEC Rossi in formato dedicato al rispettivo modello. Restano le autonomie, i tempi di ricarica e i prezzi già previsti dalle schede:
+
+XO-102 Steel Strider: autonomia 8 ore; ricarica 8 ore; ricambio 1.500 cr.
+
+Vulkan: autonomia 8 ore; ricarica 8 ore; ricambio 3.000 cr.
+
+APE Capitol: autonomia 6 ore; ricarica 6 ore; ricambio 2.000 cr.
+
+Mk IV Felis Pattern: autonomia 8 ore; ricarica 8 ore; ricambio 2.000 cr.
+
+Powersuit: autonomia 8 ore; ricarica 8 ore; ricambio 2.000 cr.
+
+Shoa Ace Custom: autonomia 6 ore; ricarica 6 ore; ricambio 2.500 cr.
+
+Demonhunter: autonomia 6 ore; ricarica 6 ore; ricambio 2.500 cr.
+
+La sostituzione richiede 1 minuto; restano le condizioni di spegnimento previste dalla singola scheda. Non si applicano automaticamente lo scambio da 1 AzP o la ricarica da 1 ora dei moduli commerciali.
+
+Ogni modello richiede il proprio formato dedicato. L’intercambiabilità fra modelli deve essere esplicita e non si deduce dall’uguaglianza di colore, autonomia o prezzo.
+
+Applicazione nell’app: aggiornare la denominazione dell’alimentazione e gestire le ore operative residue. Non inventare capacità o consumi in Lx non definiti. Vale il divieto generale di trasferire energia fra NEC della decisione 14\.
+
+## 19\. A.66 — Preparazione del pasto con il kit da campo
+
+*Riferimenti dell’elenco originale: Voce 44\.*
+
+Campo dell’app: equipaggiamento.json.file.esplorazione.oggetti\[9\].TODO(Davide)
+
+La preparazione di un pasto semplice per un massimo di quattro persone richiede 30 minuti. Non occorre una Prova con ingredienti commestibili e adatti.
+
+Il kit usa un NEC Rosso standard da 500 Lx. Ogni preparazione consuma 50 Lx anche se le persone sono meno di quattro: 10 preparazioni con un NEC pieno. Il consumo operativo equivale a 100 Lx/ora.
+
+La sostituzione con un NEC pronto e accessibile richiede 1 AzP. Ricarica completa con fonte adatta: 1 ora, costo 5 cr. Il kit pesa 1 kg e costa 150 cr, con il primo NEC Rosso carico incluso.
+
+Correzioni al testo del §3.2: mantenere 30 minuti ed eliminare l’indicazione concorrente di 15 minuti; sostituire i riferimenti alla vecchia «cartuccia» energetica con NEC Rosso.
+
+La sostituzione del filtro del depuratore rimane un’operazione distinta da 1 minuto: non va confusa con il cambio del NEC. Riferimenti: Manuale dell’Equipaggiamento, §§3.2 e 5.4.5.
+
+## 20\. A.64 — Riserva e consumi del NEC Blu IAS
+
+*Riferimenti dell’elenco originale: Voci 46–50: 5 riferimenti.*
+
+Campo dell’app: equipaggiamento.json.file.corredi\_dispositivi.oggetti\[53\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.corredi\_dispositivi.oggetti\[54\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.corredi\_dispositivi.oggetti\[55\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.corredi\_dispositivi.oggetti\[56\].TODO(Davide)
+
+Campo dell’app: equipaggiamento.json.file.corredi\_dispositivi.oggetti\[57\].TODO(Davide)
+
+Il NEC Blu specialistico IAS contiene 1.000 Lx, equivalenti a 20 cariche IAS. Una carica IAS equivale a 50 Lx; questa equivalenza non definisce una «carica» universale per ogni dispositivo.
+
+Blink: 50 Lx per trasferimento, quindi 20 trasferimenti; Power Blink: 100 Lx per trasferimento, quindi 10 trasferimenti.
+
+Antigrav: 50 Lx per Round, quindi 20 Round.
+
+Mirrorshard: 50 Lx al minuto, quindi 20 minuti.
+
+Disturbatore metafisico: 50 Lx per Round, quindi 20 Round.
+
+Silent: 50 Lx al minuto, quindi 20 minuti.
+
+Il formato IAS supporta i prelievi rapidi richiesti da questi impieghi, incluso l’impulso da 100 Lx del Power Blink. Non si applica automaticamente il limite di erogazione continua del normale NEC Blu commerciale.
+
+Ricambio carico: 1.000 cr. Servizio di ricarica specialistico: 50 cr, tempo 1 ora. Sostituzione: 1 minuto a sistema spento.
+
+Applicazione nell’app: cariche e Lx rappresentano la stessa riserva e non si sommano. Conservare le autonomie sopra indicate e applicare il divieto di travaso fra NEC. Riferimento: Manuale degli Armamenti, §7.15.4.
+
+## 21\. A.68 — Interfaccia neurale standard
+
+*Riferimenti dell’elenco originale: Voce 51\.*
+
+Campo dell’app: equipaggiamento.json.file.impianti.oggetti\[0\].TODO(Davide)
+
+Interfaccia neurale standard: prezzo dell’impianto 3.500 cr, installazione 2.000 cr, totale 5.500 cr; costo di Umanità 2 UMN.
+
+Interfaccia CYBERTRONIC: restano 5.000 cr per l’impianto e 2.000 cr per l’installazione, totale 7.000 cr; costo 1 UMN.
+
+Entrambe hanno Qualità Non Comune, PS Integrità 12, 4 PI e REP Rara. Consentono l’uso delle funzioni SIN dell’equipaggiamento: un solo bonus pertinente, fino a \+2, esclusivamente negli impieghi dichiarati dalla relativa scheda.
+
+L’alimentazione è bioenergetica: nessun NEC, nessun consumo di una risorsa e nessun tracciato di autonomia.
+
+L’interfaccia CYBERTRONIC si associa automaticamente all’equipaggiamento CYBERTRONIC. L’associazione di un’interfaccia standard a equipaggiamento CYBERTRONIC richiede 1 minuto e una Prova di Tecnologia; dopo il successo l’associazione resta memorizzata e non si ripete la Prova a ogni utilizzo.
+
+A 0 PI si applicano le normali regole degli impianti. Applicazione nell’app: rendere acquistabile l’interfaccia standard con il proprio prezzo, mantenendo distinti costo UMN e prezzo della versione CYBERTRONIC. Riferimenti: Manuale dell’Equipaggiamento, §§7.1 e 7.3.
+

@@ -19,9 +19,9 @@ Rispondere a queste per prime: senza, la seconda sessione dei Chroma resta ferma
 
 ### **Chroma (sessione 2: Convertire Potere, ricarica, prelievo)**
 
-> * **A.18 — Riserve integrate nelle armi**: alimentano soltanto le funzioni del proprio Artefatto, non pagano Incantesimi e non si prelevano (Magia §24.2 e §24.7, Doc del 01/10); «Lancia\!» non le offre più come fonte di PM — implementata il 02/10.
+> * **A.18 — Riserve integrate nelle armi**: alimentano soltanto le funzioni del proprio Artefatto, non pagano Incantesimi e non si prelevano (Magia §24.2 e §24.7, Doc del 01/10); «Lancia\!» non le offre più come fonte di PM — implementata il 02/10.  
+> * **A.20 — Prelievo dal Chroma Bianco senza Addestramento Taumaturgo.**
 
-**A.20 — Prelievo dal Chroma Bianco senza Addestramento Taumaturgo.**  
 “Un personaggio cosciente può prelevare PM da un contenitore Bianco sintonizzato”: vale per chiunque, anche un Combattente senza magia? O serve almeno l’accesso alla magia?  
 *Nel frattempo:* non ancora implementato; è la domanda che decide come.
 
@@ -183,6 +183,13 @@ Hai chiesto che soprabiti e mantelli si possano indossare da soli. Il §7.23.4 d
 (3) Oltre a soprabiti e mantelli, quali altri rinforzi si possono indossare da soli (per esempio Tabardo consacrato, Sottogiacca IES, rivestimenti)?  
 (4) Che cosa succede a un rinforzo montato quando si toglie l'armatura su cui è montato?  
 *Nel frattempo:* si indossano da soli solo i 14 soprabiti e mantelli; da soli danno AR 0 e nessuna proprietà; indossati da soli sopra un'armatura non contano e vanno montati; ad armatura tolta restano montati ma senza effetto.
+
+**A.81 — Pelle di Rinoceronte: manovre di forza (Giocatore §8.9.3)**  
+La scheda concede «+3 ad Atletica e alle prove di Corpo a Corpo nelle manovre in cui si impiega direttamente la forza fisica». Quali Manovre del §5.12 sono «di forza»: Immobilizzare, Sbilanciare, Disarmare, Incalzare? Il \+3 ad Atletica vale per ogni uso di Atletica o solo quando si usa la forza?  
+*Nel frattempo:* \+3 ad Atletica e a Corpo a corpo come usi specifici «manovre di forza», mostrati a parte; in «Attacca\!» un promemoria, senza somma automatica.  
+**A.82 — Onda Interiore: bonus pertinenti (Giocatore §8.9.4)**  
+«Infligge il danno senz'armi della propria Disciplina e del Grado nella Classe, più i bonus pertinenti al singolo attacco.» Il bonus di FOR al danno senz'armi (§5.13) è fra questi? E il \+2 al danno Ravvicinato di Pelle di Rinoceronte vale, visto che Onda ha Vettore Distanza?  
+*Nel frattempo:* il bonus di FOR sì, Pelle di R
 
 ### **Manovre ravvicinate**
 

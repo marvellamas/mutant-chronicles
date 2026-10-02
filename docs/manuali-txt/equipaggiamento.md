@@ -31,8 +31,9 @@ Ogni oggetto produce gli effetti indicati dalla propria scheda. Quando una sched
 | 7 Dispositivi specialistici | Impianti cibernetici, benefici, Umanità, Integrità e chip di Abilità. |
 | 8 Cataloghi e dotazioni iniziali | Prodotti commerciali, modelli corporativi e corredi per attività. |
 | 9 Lavorazione di artefatti e batterie mistiche | Progetto, preventivo, costruzione, batterie, riparazioni e modifiche; rimando alla procedura mistica. |
+| 10 Artefatti e riserve mistiche | Campionario completo di Batterie Mistiche, Batterie Matrice e Schegge instabili; Pietra della Vigilanza e Guanti da Combattimento Mistico. |
 
-Questa edizione comprende le regole generali, le dotazioni personali, l’esplorazione, la comunicazione, gli strumenti professionali, i Nuclei Energetici Cromatici, l’equipaggiamento sanitario, il catalogo degli impianti cibernetici singoli e le regole di assegnazione delle dotazioni iniziali.
+Questa edizione comprende le regole generali, le dotazioni personali, l’esplorazione, la comunicazione, gli strumenti professionali, i Nuclei Energetici Cromatici, l’equipaggiamento sanitario, il catalogo degli impianti cibernetici singoli le regole di assegnazione delle dotazioni iniziali, la lavorazione degli Artefatti e il catalogo di Batterie Mistiche, Batterie Matrice, Schegge instabili e Artefatti di campagna.
 
 ## **Rimandi agli altri manuali**
 
@@ -1486,4 +1487,155 @@ Il contenitore base pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e 3 PI. Il
 Una riparazione richiede 1 ora e una Prova di Tecnologia: \+1 PI con successo, \+2 PI con un Magistrale, nessun recupero con fallimento, perdita di 1 PI con un Maldestro, fino al minimo di 0\. Il costo è il 5% del valore fisico per ogni PI effettivamente ripristinato, escludendo progetto, Chroma e infusione. A 0 PI l’oggetto è inutilizzabile, ma le componenti mistiche non sono automaticamente perdute.
 
 Se le parti mistiche rimangono integre basta la riparazione fisica. Sostituire una componente mistica o il Chroma richiede il progetto pertinente, il lavoro necessario e una nuova infusione completa. Aggiungere proprietà o capacità richiede il progetto della nuova configurazione e l’infusione dell’intero Grado finale, riusando le parti compatibili. Esiti, costi e casi particolari sono nel Manuale della Magia, §24.8.
+
+# **10 Artefatti e riserve mistiche**
+
+Questo catalogo raccoglie 69 profili energetici e i due Artefatti di campagna. Le regole d’impiego sono nel Manuale della Magia, §26; la creazione ordinaria segue il suo §24 e il capitolo 9 di questo manuale. I prezzi indicano valori di catalogo, non garantiscono un venditore e non stabiliscono automaticamente quanto si ottiene rivendendo un oggetto.
+
+## **10.1 Come leggere il catalogo**
+
+Il Grado determina la potenza magica: I Comune, II Non Comune, III Rara, IV Molto Rara, V Epica, VI Leggendaria. SnT è il costo di sintonizzazione. La Qualità fisica determina le caratteristiche del supporto e resta distinta da potenza e REP. Una Batteria molto rara da reperire può quindi avere un contenitore di Qualità Comune.
+
+Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI. Tutte le Schegge instabili sono presentate con Qualità fisica Comune, PS Integrità 10, 1 PI e peso indicativo 0,05 kg per scheggia; questi dati fisici e la loro REP sono parametri iniziali di playtest. Capacità diverse possono dipendere dalla purezza, senza imporre una crescita lineare del peso.
+
+Le Batterie Mistiche conservano i prezzi già stabiliti: 200 cr per PM colorato e 1.000 cr per PM Bianco. Le Schegge instabili usano il valore già stabilito del Chroma grezzo: 100 cr per PM colorato e 400 cr per PM Bianco. Per le Batterie Matrice si adotta un valore indicativo da playtest di 300 cr per PM colorato e 1.500 cr per PM Bianco; il relativo materiale di Matrice vale indicativamente 200 o 800 cr per PM. Il sovrapprezzo non cambia i rapporti di ricarica.
+
+La colonna Creazione indica supporto \+ Chroma \+ reagenti, con progetto già posseduto, senza compensi per manodopera esterna. Per progettare un nuovo schema si aggiungono le risorse del Grado: I 100 cr, II 200, III 400, IV 800, V 1.600, VI 3.200. Un progetto standard acquistato costa cinque volte tali risorse, un Magistrale tre volte il prezzo standard. Il progetto è permanente e non si ricompra a ogni costruzione. Il Grado VII\* indica un risultato oltre la scala ordinaria: la creazione non è prezzata automaticamente e richiede una ricetta eccezionale.
+
+Una riserva appena costruita è vuota; una Batteria finita acquistata è piena. Per reperti, doni e Schegge si annotano i PM effettivamente presenti, definiti dal Direttore di Gioco. REP eccezionale indica un accesso di campagna, non una nuova fascia della normale tabella commerciale.
+
+## **10.2 Batterie Mistiche**
+
+Rosso alimenta gli impieghi Fisici, Blu i Mentali, Verde gli Spirituali; Bianco è universale. Le capacità ordinarie sono 5–30 PM per Rosso, Blu e Verde e 5–25 PM per Bianco. La capacità Bianco 30 PM non fa parte della scala ordinaria già definita. Ogni Batteria è una singola fonte esterna e richiede sintonizzazione.
+
+| Colore | PM | Grado / SnT | Prezzo cr | Creazione cr | REP |
+| :---- | ----- | ----- | ----- | ----- | :---- |
+| Rosso | 5 | I / 1 | 1.000 | 650 | Molto Rara |
+| Rosso | 10 | II / 2 | 2.000 | 1.200 | Molto Rara |
+| Rosso | 15 | III / 3 | 3.000 | 1.750 | Molto Rara |
+| Rosso | 20 | IV / 4 | 4.000 | 2.300 | Molto Rara |
+| Rosso | 25 | V / 5 | 5.000 | 2.850 | Molto Rara |
+| Rosso | 30 | VI / 6 | 6.000 | 3.400 | Molto Rara |
+| Blu | 5 | I / 1 | 1.000 | 650 | Molto Rara |
+| Blu | 10 | II / 2 | 2.000 | 1.200 | Molto Rara |
+| Blu | 15 | III / 3 | 3.000 | 1.750 | Molto Rara |
+| Blu | 20 | IV / 4 | 4.000 | 2.300 | Molto Rara |
+| Blu | 25 | V / 5 | 5.000 | 2.850 | Molto Rara |
+| Blu | 30 | VI / 6 | 6.000 | 3.400 | Molto Rara |
+| Verde | 5 | I / 1 | 1.000 | 650 | Molto Rara |
+| Verde | 10 | II / 2 | 2.000 | 1.200 | Molto Rara |
+| Verde | 15 | III / 3 | 3.000 | 1.750 | Molto Rara |
+| Verde | 20 | IV / 4 | 4.000 | 2.300 | Molto Rara |
+| Verde | 25 | V / 5 | 5.000 | 2.850 | Molto Rara |
+| Verde | 30 | VI / 6 | 6.000 | 3.400 | Molto Rara |
+| Bianco | 5 | II / 2 | 5.000 | 2.200 | Leggendaria |
+| Bianco | 10 | III / 3 | 10.000 | 4.250 | Leggendaria |
+| Bianco | 15 | IV / 4 | 15.000 | 6.300 | Leggendaria |
+| Bianco | 20 | V / 5 | 20.000 | 8.350 | Leggendaria |
+| Bianco | 25 | VI / 6 | 25.000 | 10.400 | Leggendaria |
+
+## **10.3 Batterie Matrice**
+
+Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede.
+
+Grado e SnT aumentano di uno rispetto alla Batteria Mistica equivalente. Le colorate ordinarie passano a REP Epica. Le Bianche e le configurazioni oltre Grado VI sono di disponibilità eccezionale; i prezzi sono valori di confronto, non offerte di mercato. Le Batterie Matrice colorate da 30 PM e la Bianca da 25 PM richiedono una ricetta eccezionale.
+
+| Colore | PM | Grado / SnT | Prezzo cr | Creazione cr | REP |
+| :---- | ----- | ----- | ----- | ----- | :---- |
+| Rosso | 5 | II / 2 | 1.500 | 1.200 | Epica |
+| Rosso | 10 | III / 3 | 3.000 | 2.250 | Epica |
+| Rosso | 15 | IV / 4 | 4.500 | 3.300 | Epica |
+| Rosso | 20 | V / 5 | 6.000 | 4.350 | Epica |
+| Rosso | 25 | VI / 6 | 7.500 | 5.400 | Epica |
+| Rosso | 30 | VII\* / 7 | 9.000 | Ricetta speciale | Eccezionale |
+| Blu | 5 | II / 2 | 1.500 | 1.200 | Epica |
+| Blu | 10 | III / 3 | 3.000 | 2.250 | Epica |
+| Blu | 15 | IV / 4 | 4.500 | 3.300 | Epica |
+| Blu | 20 | V / 5 | 6.000 | 4.350 | Epica |
+| Blu | 25 | VI / 6 | 7.500 | 5.400 | Epica |
+| Blu | 30 | VII\* / 7 | 9.000 | Ricetta speciale | Eccezionale |
+| Verde | 5 | II / 2 | 1.500 | 1.200 | Epica |
+| Verde | 10 | III / 3 | 3.000 | 2.250 | Epica |
+| Verde | 15 | IV / 4 | 4.500 | 3.300 | Epica |
+| Verde | 20 | V / 5 | 6.000 | 4.350 | Epica |
+| Verde | 25 | VI / 6 | 7.500 | 5.400 | Epica |
+| Verde | 30 | VII\* / 7 | 9.000 | Ricetta speciale | Eccezionale |
+| Bianco | 5 | III / 3 | 7.500 | 4.250 | Eccezionale |
+| Bianco | 10 | IV / 4 | 15.000 | 8.300 | Eccezionale |
+| Bianco | 15 | V / 5 | 22.500 | 12.350 | Eccezionale |
+| Bianco | 20 | VI / 6 | 30.000 | 16.400 | Eccezionale |
+| Bianco | 25 | VII\* / 7 | 37.500 | Ricetta speciale | Eccezionale |
+
+## **10.4 Schegge instabili**
+
+Le Schegge non hanno un Grado di Artefatto e non richiedono sintonizzazione: SnT 0 per tutte. Il colore limita gli impieghi come per le Batterie. Non si possono sommare più Schegge nello stesso lancio. Sono materiali di costruzione riutilizzabili finché integri: lavorarle trasforma il frammento nel componente dell’oggetto, senza duplicarlo nell’inventario.
+
+Estrarre PM richiede Potere −2 VA per ogni gruppo di 3 PM o frazione. Per un Incantesimo personale segue una seconda Prova distinta di lancio; se l’estrazione fallisce, i PM estratti sono dispersi e non si lancia. Ricaricare richiede la normale Prova di ricarica con ulteriore −2 VA e, in caso di fallimento, disperde i PM personali impegnati. Le due scale complete e le conversioni sono nel Manuale della Magia, §26.5.
+
+| Colore | PM | SnT | Prezzo cr | REP |
+| :---- | ----- | ----- | ----- | :---- |
+| Rosso | 5 | 0 | 500 | Rara |
+| Rosso | 10 | 0 | 1.000 | Rara |
+| Rosso | 15 | 0 | 1.500 | Rara |
+| Rosso | 20 | 0 | 2.000 | Rara |
+| Rosso | 25 | 0 | 2.500 | Rara |
+| Rosso | 30 | 0 | 3.000 | Rara |
+| Blu | 5 | 0 | 500 | Rara |
+| Blu | 10 | 0 | 1.000 | Rara |
+| Blu | 15 | 0 | 1.500 | Rara |
+| Blu | 20 | 0 | 2.000 | Rara |
+| Blu | 25 | 0 | 2.500 | Rara |
+| Blu | 30 | 0 | 3.000 | Rara |
+| Verde | 5 | 0 | 500 | Rara |
+| Verde | 10 | 0 | 1.000 | Rara |
+| Verde | 15 | 0 | 1.500 | Rara |
+| Verde | 20 | 0 | 2.000 | Rara |
+| Verde | 25 | 0 | 2.500 | Rara |
+| Verde | 30 | 0 | 3.000 | Rara |
+| Bianco | 5 | 0 | 2.000 | Molto Rara |
+| Bianco | 10 | 0 | 4.000 | Molto Rara |
+| Bianco | 15 | 0 | 6.000 | Molto Rara |
+| Bianco | 20 | 0 | 8.000 | Molto Rara |
+| Bianco | 25 | 0 | 10.000 | Molto Rara |
+
+## **10.5 Pietra della Vigilanza**
+
+La Pietra della Vigilanza è un Artefatto Mistico e una Batteria Mistica Verde da 10 PM. Possiede due proprietà attive Universali: Individuare 6 ed Esorcizzare Corruzione 6\. Entrambe richiedono la sintonizzazione alla Pietra, ma non la conoscenza degli Incantesimi né una Prova di Potere per attivarle.
+
+Potenza Rara, Grado III, SnT 3 complessivi. I due effetti di Grado II portano le proprietà al Grado III; la riserva da 10 PM è di Grado II e non aggiunge un costo separato di SnT. Qualità fisica Non Comune, PS Integrità 12, 4 PI, peso 0,2 kg. Prezzo indicativo 4.000 cr; REP Molto Rara. Prezzo e profilo fisico sono parametri di catalogo da verificare in playtest.
+
+Individuare 6\. Attivazione 1 AzP, costo 6 PM. Potenza di individuazione 6; percezione entro 10 Q (15 m) oppure analisi di una zona di 1 Q entro tale portata. Si sceglie una modalità alla volta. Durata: Concentrazione fino a 10 minuti oppure durata fissa di 5 RND. La percezione segnala presenza e direzione; l’analisi localizza ed esamina una fonte e una categoria per RND. Può riconoscere una firma della Simmetria Oscura, ma non certifica lo Stato personale di CROS: la diagnosi di Corruzione richiede Individuare 12\.
+
+Esorcizzare Corruzione 6\. Costo 6 PM pagati all’inizio; 10 minuti fuori dal combattimento, Concentrazione e contatto con una creatura vivente consenziente o incapacitata. Riduce di uno Stato la CROS, fino allo Stato iniziale Corrotto incluso: Corrotto passa a Infetto. Può avere effetto una sola volta ogni 24 ore sul medesimo destinatario, considerando insieme tutti gli utilizzatori e le fonti. Un’interruzione impedisce l’effetto senza restituire i PM. Non cura lo Stato Oscuro, non rimuove mutazioni permanenti e non espelle possessioni.
+
+Riserva e alimentazione. I 10 PM sono condivisi fra le due proprietà e gli altri impieghi della Batteria. La Pietra può alimentare gli Incantesimi spirituali del personaggio secondo le regole ordinarie. Le proprietà Universali possono usare PM personali, la riserva interna oppure un’altra fonte esterna compatibile; per ogni attivazione resta il limite di una fonte esterna, eventualmente integrata con PM personali. Esempio: 4 PM dalla Pietra e 2 PM personali pagano un’attivazione da 6 PM. Non si possono combinare nello stesso pagamento i PM della Pietra e quelli di un’altra Batteria.
+
+Creazione. Supporto fisico 100 cr, Chroma Verde da 10 PM 1.000 cr, reagenti di Artefatto di Grado III 1.000 cr: 2.100 cr con progetto posseduto; 2.500 cr progettando un nuovo schema, comprese 400 cr di risorse. Il progetto standard acquistato costa invece 2.000 cr e sostituisce la progettazione. Costruzione Semplice: Tecnologia senza modificatore, 4 ore. Infusione: Rituali −4 VA, 9 PM e 3 ore; si applicano gli aiuti e gli esiti del §24 del Manuale della Magia. La riserva appena creata è vuota. La lavorazione del supporto comprende la predisposizione dei due effetti e non duplica il costo del Chroma.
+
+## **10.6 Guanti da Combattimento Mistico**
+
+I Guanti da Combattimento Mistico sono una coppia di guanti e costituiscono un unico Artefatto Mistico da indossare sulle mani. Potenza Non Comune, Grado II, SnT 2 complessivi. Qualità fisica Non Comune, PS Integrità 12, 4 PI, peso complessivo 0,5 kg. Prezzo indicativo 3.000 cr; REP Molto Rara. Prezzo e profilo fisico sono parametri di catalogo da verificare in playtest.
+
+Proprietà passiva. Conferiscono \+1 VA alle Prove per colpire con i pugni e alle Prove per colpire in corpo a corpo richieste dagli Incantesimi. Il beneficio passivo funziona anche senza sintonizzazione. Non concede danno passivo aggiuntivo e non si applica a calci, armi impugnate, attacchi a distanza, Prove di Potere per lanciare Incantesimi o danni degli Incantesimi.
+
+Riserva. Cariche Verdi da 10 PM, utilizzabili soltanto per alimentare i Guanti. Non sono una Batteria per il personaggio. La parola Cariche indica una riserva in PM: non significa dieci attivazioni.
+
+Proprietà attiva Esclusiva. Spendendo 3 PM dalla riserva interna e 1 AzP, per 5 RND i danni dei pugni diventano Magici e ottengono \+1 al danno. L’attivazione richiede sintonizzazione, è automatica e non richiede Concentrazione. Non cambia il bonus passivo di \+1 a colpire. L’effetto non potenzia il danno degli Incantesimi e non si cumula con ulteriori attivazioni della stessa proprietà; una nuova attivazione rinnova la durata. I Guanti pieni consentono tre attivazioni e conservano 1 PM.
+
+Ricarica. Le Cariche si ricaricano con la normale procedura delle riserve Verdi: stessi requisiti, rapporti di conversione e Prove delle Batterie Mistiche. L’utilizzatore non può pagare l’attivazione Esclusiva con PM personali o Batterie esterne.
+
+Creazione. La ricetta approvata tratta il beneficio passivo come Grado I e l’attivazione come Grado I; la combinazione porta le proprietà al Grado II. Anche la riserva da 10 PM è di Grado II: il risultato resta Grado II e SnT 2\. Questa ricetta specifica non autorizza a scomporre liberamente altri Incantesimi per abbassarne il Grado. Supporto 100 cr, adattamento 200 cr, Chroma Verde 1.000 cr e reagenti 500 cr: 1.800 cr con progetto posseduto; 2.000 cr progettando un nuovo schema, comprese 200 cr di risorse. Un progetto standard acquistato costa invece 1.000 cr. Costruzione Ordinaria: Tecnologia −2 VA, 8 ore. Infusione: Rituali −2 VA, 6 PM e 2 ore; valgono gli aiuti e gli esiti ordinari. La riserva appena creata è vuota.
+
+## **10.7 Inventario e dotazioni di campagna**
+
+La Pietra compare sia fra gli Artefatti sia fra le Batterie; i Guanti sia fra gli Armamenti sia fra gli Artefatti. Si tratta di viste della stessa scheda: non duplicano quantità, peso, PM o costo SnT. In App la riserva appartiene all’istanza dell’oggetto; i campi di categoria possono contenere più valori. La sintonizzazione si gestisce soltanto per le istanze con SnT maggiore di zero.
+
+| Dotazione del gruppo | Quantità | Dati da registrare |
+| :---- | ----- | :---- |
+| Batteria Matrice Rossa 10 PM | 2 | Origine Rettungsanker; dono di Sorella Iolanda; SnT 3 ciascuna; PM attuali da stato di campagna. |
+| Scheggia instabile Verde 5 PM | 4 | Quattro riserve distinte; SnT 0; PM attuali da stato di campagna. |
+| Pietra della Vigilanza | 1 | Batteria Verde 10 PM; Universali; SnT 3\. |
+| Guanti da Combattimento Mistico | 1 coppia | Cariche Verdi 10 PM; Esclusiva; SnT 2\. |
+
+Il kit individuale formato da una Batteria Matrice Rossa da 10 PM, Pietra e Guanti occupa 8 punti di SnT; il secondo esemplare di Batteria appartiene alla dotazione complessiva del gruppo e non viene assegnato automaticamente allo stesso personaggio. I valori commerciali non costituiscono nuovi crediti assegnati ai PG.
 

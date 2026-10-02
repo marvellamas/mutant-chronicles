@@ -22,7 +22,7 @@ Il Manuale del Giocatore raccoglie personaggi e regole comuni; il Manuale della 
 
 ## **Numerazione e rimandi**
 
-Questo volume comprende i Capitoli 1–5 e 8\. I rimandi ai paragrafi di questo volume ne riportano il numero; per i contenuti esterni è indicato il manuale da consultare. Le regole di Sintonizzazione si trovano nel manuale dedicato agli Artefatti; natura e proprietà del danno sono nel §5.24.
+Questo volume comprende i Capitoli 1–5 e 8\. I rimandi ai paragrafi di questo volume ne riportano il numero; per i contenuti esterni è indicato il manuale da consultare. Le regole di Sintonizzazione si trovano nel Manuale degli Armamenti, §7.10, e nel Manuale della Magia, §26.1; natura e proprietà del danno sono nel §5.24.
 
 ## **Consultazione**
 
@@ -3448,7 +3448,7 @@ Si applicano le regole generali delle Prove Aperte, dei nuovi tentativi, del Suc
 
 Sintonizzazione automatica. Il Tecnomante completa la preparazione di un minuto a contatto con l’Artefatto senza effettuare la Prova di Artefatti. Rispetta normalmente capacità di sintonizzazione, requisiti, costi e le eventuali Prove di attivazione espressamente richieste dalle proprietà (Manuale degli Armamenti, §7.10). La sintonizzazione non concede l’identificazione completa.
 
-Capacità superiore. Il Tecnomante ottiene \+2 alla capacità complessiva di sintonizzazione, una sola volta. Con un Grado complessivo parte da 6; con sei Gradi complessivi arriva a 11\. Nel multiclasse il \+2 si aggiunge alla capacità già determinata dai Gradi complessivi, senza ricominciare la progressione e senza concedere una capacità separata. A questo totale si applica la riduzione dovuta all’Umanità, fino a un minimo di 0; la sintonizzazione automatica rispetta la capacità risultante (§§5.21 e 6.12).
+Capacità superiore. Il Tecnomante ottiene \+2 alla capacità complessiva di sintonizzazione, una sola volta. Con un Grado complessivo parte da 10; con sei Gradi complessivi arriva a 15\. Nel multiclasse il \+2 si aggiunge alla capacità già determinata dai Gradi complessivi, senza ricominciare la progressione e senza concedere una capacità separata. A questo totale si applica la riduzione dovuta all’Umanità, fino a un minimo di 0; la sintonizzazione automatica rispetta la capacità risultante (§5.21 e Manuale degli Armamenti, §7.10).
 
 Creazione TecnoMistica. Il Talento concede l’accesso esclusivo al progetto e alla responsabilità dell’infusione degli Artefatti TecnoMistici entro il proprio Grado di Classe. La creazione comprende Artefatti per il progetto obbligatorio, Tecnologia per la costruzione e Rituali per l’infusione (Manuale della Magia, sezione 24). Il progetto può essere già disponibile e la costruzione fisica può essere affidata a un altro tecnico; il Talento non sostituisce le tre fasi con una singola Prova.
 
@@ -3606,7 +3606,7 @@ Comprende schivare, parare, deviare un colpo, utilizzare uno scudo e reagire a u
 
 Artefatti (Saggezza) permette di comprendere e utilizzare artefatti, reliquie, sigilli e dispositivi dotati di proprietà mistiche, nei limiti delle rispettive caratteristiche.
 
-Le proprietà passive non richiedono sintonizzazione. Per utilizzare le proprietà attive occorre sintonizzarsi mediante una Prova di Artefatti, salvo quanto previsto da specifici Talenti (Manuale degli Armamenti, §7.10). Una volta sintonizzati, l’attivazione è automatica e non richiede Componenti; si rispettano costi e condizioni. Soltanto una proprietà che lo specifichi nella propria scheda richiede una Prova di attivazione (Manuale degli Armamenti, §7.10).
+Le proprietà passive non richiedono sintonizzazione. Per utilizzare le proprietà attive occorre sintonizzarsi mediante una Prova di Artefatti, salvo quanto previsto da specifici Talenti (Manuale degli Armamenti, §7.10). Una volta sintonizzati, l’attivazione è automatica e non richiede Componenti; si rispettano costi e condizioni. Soltanto una proprietà che lo specifichi nella propria scheda richiede una Prova di attivazione (Manuale degli Armamenti, §7.10). La capacità ordinaria ai Gradi complessivi I–VI è 8, 9, 10, 11, 12, 13, uguale per tutti gli Addestramenti; Architetto TecnoMistico aggiunge \+2 una sola volta, poi si applica UMN. Non esiste un requisito automatico di Grado del personaggio pari al Grado dell’oggetto. Le riserve Batteria alimentano anche Incantesimi personali compatibili; le Cariche soltanto l’oggetto. Le proprietà Esclusive usano la riserva interna, le Universali anche PM personali o un’altra fonte esterna compatibile; una sola fonte esterna per pagamento (§26.2 del Manuale della Magia). Le Schegge instabili hanno SnT 0 ma richiedono Prove distinte di estrazione e lancio (§26.5). Schede e cataloghi sono nel capitolo 10 del Manuale dell’Equipaggiamento.
 
 L’**analisi mistica** mediante questa Abilità richiede l’**Addestramento Taumaturgo oppure almeno un Grado in una Classe taumaturgica**. Una Prova riuscita permette di ricavare informazioni sulla **Struttura** dell’oggetto. Gli altri personaggi possono rilevare gli indizi apertamente osservabili, ma non effettuare un’analisi mistica tramite una Prova di Artefatti.
 
@@ -4683,7 +4683,7 @@ La riduzione indicata nella tabella si applica alla Capacità complessiva di Sin
 
 Se la capacità diminuisce e non basta più per gli Artefatti sintonizzati, il personaggio **sceglie immediatamente quali sintonizzazioni interrompere**, finché la somma dei costi rispetta il nuovo limite. Un successivo aumento della capacità permette di sintonizzarsi nuovamente secondo la procedura ordinaria.
 
-**Esempio.** Al I Grado complessivo, UMN 8 porta la capacità ordinaria da 4 a 0; con Architetto TecnoMistico la porta da 6 a 2\. Al VI Grado complessivo, un Tecnomante con UMN 0 conserva capacità 1: 9 \+ 2 − 10\.
+**Esempio. Al I Grado complessivo, UMN 8 porta la capacità ordinaria da 8 a 4; con Architetto TecnoMistico la porta da 10 a 6\. Al VI Grado complessivo, un Tecnomante con UMN 0 conserva capacità 5: 13 \+ 2 − 10\.**
 
 La riduzione limita il totale degli Artefatti sintonizzati, non il Valore della Prova di Artefatti. Le proprietà passive seguono i normali requisiti dell’oggetto. La disciplina del Focus resta quella del Manuale della Magia; eventuali proprietà attive del Focus come Artefatto richiedono la normale capacità.
 
