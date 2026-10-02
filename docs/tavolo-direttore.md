@@ -231,6 +231,68 @@ Ogni pezzo ha test sulle funzioni pure e una prova nel browser; i primi due non 
    - la pulizia dei LEGGIMI tracciati solo qui (`personaggi/`, `scontri/`, `nemici/`) e del pulsante «Carica esempi», da decidere se restano su `main`;
    - il merge su `main` con i test e la prova dell'app senza server.
 
+## Bestiario proposto (2 ottobre 2026)
+
+Davide non ha ancora un bestiario. Questi nemici umani sono **proposte, da validare con lui** (per-davide A.79). Sono costruiti con le regole di creazione e avanzamento dei PG (Giocatore 0.45), così i numeri vengono dal motore e non da stime. Ogni file lo dice nella fonte («costruito come PG (…)») e nelle note («Proposta, da validare con Davide»).
+
+**Convertitore «PG → nemico»** (`src/nemico-da-pg.js` → `nemicoDaPg`, funzione pura).
+- Prende il file di un personaggio e produce un nemico nel formato di `data/formato_nemici.json`, con i numeri di `calcolaScheda` e una sessione nuova (PV pieni, nessuno Stato): PV, PM, AR «totale, di cui magica», Difese, Iniziativa e Movimento al tavolo, le quattro Salvezze, le Caratteristiche.
+- Gli attacchi vengono dalle armi addosso (impugnate o pronte), dalla stessa voce di `scheda.equipaggiamento.armi` che usa «Attacca!»: VA effettivo, danno con il bonus di Caratteristica (o quello della munizione), natura, proprietà, portata o gittata, modalità, AC, `rif` del catalogo. Un'arma non in mano si misura mettendola in mano in una copia del personaggio.
+- Nelle note restano i Talenti, come promemoria: gli effetti generali sono già nei numeri, quelli situazionali e le opzioni di «Attacca!» legate ai Talenti si applicano a mano. Gli incantesimi dei Taumaturghi restano un promemoria (A.73).
+- Nessun dato di gioco nuovo: la regola 3 non è servita.
+
+**«Crea da un PG»**, nel Bestiario della plancia. Sceglie un personaggio (l'ultimo file di ognuno in `personaggi/`, o un file dal computer) e apre l'editor del nemico già compilato, con gli eventuali avvisi. Si rinomina il tipo (l'identificativo segue il nome) e si salva in `nemici/`. Il file del PG si legge soltanto.
+
+**Il set** (`esempi/nemici/umani/`, 30 file, scritti da `tools/genera_nemici_umani.mjs`).
+- Dieci tipi in tre gradi: Recluta (2° livello), Veterano (5°), Élite (8°). Nome «Tipo — Grado».
+- Ogni nemico è un PG costruito con `tools/genera_esempi.mjs` → `costruisci`, poi passato al convertitore. «Carica esempi» li copia in `nemici/` senza sovrascrivere.
+- Scelte comuni, non vincolate dal manuale:
+  - Caratteristiche e Punti Abilità uno alla volta in un ordine di preferenza del ruolo, solo dove il motore li accetta; dopo le Abilità preferite, tutte le altre nell'ordine del manuale, così i punti si assegnano tutti.
+  - Ai livelli con le Caratteristiche: le prime due della lista del ruolo che il motore accetta.
+  - Talenti liberi (3°, 5°, 7° livello) e Talento a scelta di Classe (Grado II, 4° livello) da una lista di preferenza, con ripiego sul primo valido; tutte le preferenze sono state accettate.
+  - Dado dei PV (e dei PM) dei Gradi al valore medio arrotondato per eccesso: d8 → 5, d6 → 4, d4 → 3.
+  - Equipaggiamento iniziale del §2.16 con il modello corporativo: alla Recluta le prime opzioni; dal Veterano il fucile d'assalto e l'armatura media, dove la Classe le offre. Nessun acquisto in più.
+  - Taumaturghi: incantesimi in ordine di livello e di nome, come per i PG d'esempio.
+- Una riga per tipo (Corporazione, Addestramento e Classe; arma in mano; Talenti liberi e di Classe preferiti):
+  - **Fante Capitol**: Capitol, Combattente, Soldato. Carabina CAR10, dal Veterano fucile d'assalto M40 e armatura media. Mira Rapida, Raffica Breve Migliorata, Copertura Migliorata; Supporto d'Attacco.
+  - **Soldato Bauhaus**: Bauhaus, Combattente, Soldato. Carabina KR10, poi fucile d'assalto STG10 e armatura media. Copertura Migliorata, Mira Rapida, Buona Costituzione; Supporto di Difesa.
+  - **Guerriero Mishima**: Mishima, Combattente, Assaltatore. Spada leggera e scudo piccolo, poi spada lunga, scudo medio e armatura media; pistola Ronin 25AP pronta. Affondo Migliorato, Parata Migliorata, Iniziativa Migliorata; Carica Brutale.
+  - **Agente Cybertronic**: Cybertronic, Avventuriero, Agente. Pistola P500 e coltello. Pistolero, Estrazione Rapida, Schivata Migliorata; Mira Selettiva.
+  - **Soldato Imperiale**: Imperiali, Combattente, Soldato. Carabina Defender, poi fucile d'assalto Conqueror 10 e armatura media. Mira Rapida, Sempre Allerta, Raffica Breve Migliorata; Supporto d'Attacco.
+  - **Inquisitore della Fratellanza**: Fratellanza, Taumaturgo, Custode. Spada leggera, scudo dell'accolito, pistola Nemesis 100, una batteria da 5 PM; incantesimi come promemoria. Resistenza alla Corruzione, Lancio in Combattimento, Resistenza alla Paura; Fenditura Mistica.
+  - **Guardia di sicurezza**: Freelance, Combattente, Soldato. Carabina sempre, dal Veterano armatura media. Sempre Allerta, Copertura Migliorata, Visione Perfetta; Supporto di Difesa.
+  - **Criminale di strada**: Freelance, Avventuriero, Lestofante. Pistola semiautomatica e pugnale. Estrazione Rapida, Pistolero, Ritirata Migliorata; Fuga tra la Folla.
+  - **Mercenario**: Freelance, Combattente, Artigliere. Fucile d'assalto con mirino reflex e bipiede, coltello. Raffica Breve Migliorata, Mira Rapida, Ricarica Rapida; Raffica Estesa.
+  - **Eretico**: Freelance, Combattente, Incursore. Pistola semiautomatica con silenziatore e pugnale da combattimento. Imboscata Migliorata, Resistenza alla Corruzione, Affondo Migliorato; Attacco Silenzioso. Solo la parte umana: nelle note un `TODO(Davide)` per i Doni dell'Oscura Simmetria, nessun potere inventato.
+- PV / VA dell'arma in mano / AR ai tre gradi (Recluta · Veterano · Élite):
+
+  | Tipo | Arma | Recluta | Veterano | Élite |
+  |---|---|---|---|---|
+  | Fante Capitol | CAR10 → M40 | 20 / 11 / 1 | 29 / 13 / 3 | 39 / 15 / 3 |
+  | Soldato Bauhaus | KR10 → STG10 | 20 / 13 / 1 | 29 / 14 / 3 | 44 / 16 / 3 |
+  | Guerriero Mishima | spada leggera → spada lunga | 19 / 12 / 2 | 29 / 13 / 5 | 39 / 15 / 5 |
+  | Agente Cybertronic | P500 | 16 / 9 / 1 | 24 / 11 / 1 | 32 / 13 / 1 |
+  | Soldato Imperiale | Defender → Conqueror 10 | 20 / 10 / 1 | 29 / 12 / 3 | 39 / 14 / 3 |
+  | Inquisitore della Fratellanza | spada leggera | 16 / 10 / 2 | 23 / 14 / 2 | 31 / 16 / 2 |
+  | Guardia di sicurezza | carabina | 20 / 11 / 1 | 29 / 13 / 3 | 39 / 15 / 3 |
+  | Criminale di strada | pistola semiautomatica | 15 / 7 / 1 | 22 / 9 / 1 | 29 / 11 / 1 |
+  | Mercenario | fucile d'assalto | 20 / 12 / 1 | 29 / 14 / 1 | 39 / 16 / 1 |
+  | Eretico | pistola semiautomatica | 17 / 7 / 1 | 25 / 9 / 1 | 33 / 11 / 1 |
+
+**Test.** `tests/nemici-umani.test.js` controlla:
+- il convertitore su Torvald, con PV, AR, Difese, Iniziativa, Salvezze, VA e danno uguali a quelli della sua scheda;
+- lo stesso VA finale e lo stesso danno in «Attacca!» per il PG e per il nemico convertito;
+- il PG d'origine, che resta com'era;
+- i 30 nemici: validi, senza problemi di costruzione e in sincronia con il generatore;
+- i tre gradi, che crescono in PV, VA e Difese.
+
+`tests/esempi.test.js` controlla anche la copia del bestiario umano con «Carica esempi».
+
+**Prova nel browser.** Server sulla porta 3001 con cartelle temporanee:
+- «Carica esempi»: 36 file copiati, 32 tipi validi nel Bestiario.
+- «Crea da un PG» su Rhea: editor compilato (PV 28, AR 1, Difese 11, SR20 VA 14 1d6+4), rinominato «Tiratrice Capitol» e salvato; il file di Rhea non cambia.
+- Scontro con i quattro PG d'esempio contro due «Fante Capitol — Recluta» e un «Agente Cybertronic — Veterano». L'Agente spara a Rhea con la P500 (VA 11), la colpisce, e «Colpito» precompilata porta Rhea da 28 a 23 PV.
+
 ## 6. Rischi e domande aperte
 
 **Rischi**
