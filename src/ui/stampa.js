@@ -956,13 +956,58 @@ function elencoTecniche(d) {
   const righe = [];
   let gruppo = null;
   for (const x of d.tecniche) {
-    if (x.gruppo !== gruppo) { gruppo = x.gruppo; righe.push(h('tr', { class: 'macro-riga tinta-tecnica' }, h('th', { colspan: 5 }, gruppo))); }
-    righe.push(h('tr', { class: 'tinta-tecnica' }, h('th', { scope: 'row' }, x.nome), h('td', {}, x.costo), h('td', {}, x.azione), h('td', {}, x.durata), h('td', {}, x.bersaglio)));
+    if (x.gruppo !== gruppo) { gruppo = x.gruppo; righe.push(h('tr', { class: 'macro-riga tinta-tecnica' }, h('th', { colspan: 6 }, gruppo))); }
+    righe.push(h('tr', { class: 'tinta-tecnica' }, h('th', { scope: 'row' }, x.nome), h('td', { class: 'effetto-tecnica' }, x.effetto ?? ''), h('td', {}, x.costo), h('td', {}, x.azione), h('td', {}, x.durata), h('td', {}, x.bersaglio)));
   }
   return box({ titolo: `Tecniche Interiori (${d.tecniche.length} / ${d.tecnicheAmmesse})`, tinta: 'tecnica', classe: 'f5-elenco f5-tecniche' },
     h('table', { class: 'tabella-stampa tecniche-stampa' },
-      h('thead', {}, h('tr', {}, ['Tecnica', 'Costo', 'Azione', 'Durata', 'Bersaglio'].map((c) => h('th', {}, c)))),
+      h('thead', {}, h('tr', {}, ['Tecnica', 'Effetto', 'Costo', 'Azione', 'Durata', 'Bersaglio'].map((c) => h('th', {}, c)))),
       h('tbody', {}, righe)));
+}
+
+/**
+ * Impagina l'elenco delle Tecniche del foglio 5 senza magia, misurando nel DOM: la colonna «Effetto»
+ * resta solo se tutto l'elenco entra nella colonna destra (altrimenti si toglie); le righe che non
+ * entrano continuano sotto, nella colonna sinistra, e poi in una pagina in più.
+ * @returns pagine del foglio
+ */
+function impaginaTecniche(foglio, d, piede) {
+  const elenco = foglio.querySelector('.f5-tecniche');
+  const tbody = elenco?.querySelector('.tecniche-stampa tbody');
+  if (!tbody) return 1;
+  const contenuto = (b) => b.querySelector(':scope > .contenuto');
+  if (righeOltre(tbody, contenuto(elenco)).length) {
+    for (const tr of elenco.querySelectorAll('.tecniche-stampa thead tr')) tr.cells[1]?.remove();
+    elenco.querySelectorAll('td.effetto-tecnica').forEach((x) => x.remove());
+    elenco.querySelectorAll('tr.macro-riga > th[colspan]').forEach((x) => { x.colSpan -= 1; });
+  }
+  // righe spostate, con l'intestazione del gruppo ripetuta («(continua)»)
+  const sposta = (righe) => {
+    if (!righe.length || righe[0].classList.contains('macro-riga')) return righe;
+    let g = righe[0].previousElementSibling;
+    while (g && !g.classList.contains('macro-riga')) g = g.previousElementSibling;
+    const testa = g?.cloneNode(true);
+    if (testa) testa.cells[0].textContent += ' (continua)';
+    return testa ? [testa, ...righe] : righe;
+  };
+  const tabella = (righe) => {
+    const t = elenco.querySelector('.tecniche-stampa').cloneNode(false);
+    t.append(elenco.querySelector('.tecniche-stampa thead').cloneNode(true), h('tbody', {}, righe));
+    return t;
+  };
+  let fuori = sposta(righeOltre(tbody, contenuto(elenco)));
+  if (!fuori.length) return 1;
+  fuori.forEach((r) => r.remove());
+  const sinistra = foglio.querySelector('.f5-sinistra');
+  const seguito = box({ titolo: 'Tecniche Interiori (continua)', tinta: 'tecnica', classe: 'f5-elenco-seguito f5-tecniche' }, tabella(fuori));
+  sinistra.insertBefore(seguito, sinistra.querySelector(':scope > .f5-coda'));
+  fuori = sposta(righeOltre(seguito.querySelector('tbody'), contenuto(seguito)));
+  if (!fuori.length) return 1;
+  fuori.forEach((r) => r.remove());
+  const f = creaFoglio('poteri', 'Poteri (continua)', d, piede, () => [box({ titolo: 'Tecniche Interiori (continua)', tinta: 'tecnica', classe: 'f5-tecniche' }, tabella(fuori))]);
+  f.classList.add('seguito');
+  foglio.after(f);
+  return 2;
 }
 
 /** «Solo elenco»: in fondo all'indice, perché mancano le schede. */
@@ -1040,6 +1085,7 @@ function impaginaElenco(foglio, d) {
  * @returns {{ pagine, pagineSchede }} pagine stampate e pagine che aggiungono le schede complete
  */
 function impaginaMagia(contenitore, foglio, d, piede) {
+  if (d.conMagia === false) return { pagine: impaginaTecniche(foglio, d, piede), pagineSchede: 0 };
   const incantesimi = elencoIncantesimi(d);
   // 1. elenco: colonna destra, poi sotto la colonna sinistra, poi la pagina dopo
   const resto = impaginaElenco(foglio, d);

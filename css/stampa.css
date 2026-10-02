@@ -151,6 +151,8 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 /* due colonne fisse: le «Azioni» delle Tecniche sono lunghe e la tabella andrebbe a capo male in max-content */
 .f5-griglia.f5-griglia-tecniche { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }  /* sinistra ~136 mm: i PM in righe da 25 */
 .tecniche-stampa td { font-size: var(--ss-font); }
+/* «Effetto» in breve (tecniche_interiori.json → effetti.breve): mini-colonna, a capo dentro la cella */
+.tecniche-stampa td.effetto-tecnica { width: 22mm; font-weight: 600; }
 .tecniche-stampa tbody th { font-size: 11pt; }
 .tecniche-stampa tr.macro-riga > th { font-size: var(--ss-font); text-transform: uppercase; letter-spacing: 0.05em; color: var(--tinta); background: #fff; border-bottom: 1pt solid var(--tinta); }
 /* sezioni dell'Inventario: il colore della categoria (src/palette.js → SEZIONI_INVENTARIO) */

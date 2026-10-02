@@ -17,7 +17,7 @@ import { modoRicarica } from './ricarica.js';
 import { calcolaCarico, pesoVoce } from './carico.js';
 import { testoProvenienza } from './provenienza.js';
 import { attivazioneInfusa } from './lancio.js';
-import { gruppoTecnica, ordineGruppo } from './tecniche.js';
+import { gruppoTecnica, ordineGruppo, tecnicaDi, sintesiTecnica } from './tecniche.js';
 
 /** Limiti di impaginazione (non regole di gioco): lunghezze massime dei testi stampati. */
 export const LIMITI_STAMPA = {
@@ -130,13 +130,14 @@ function daArtefattiStampa(s, c, dati) {
 
 /**
  * Tecniche Interiori del foglio Poteri (Giocatore §8.9): nell'ordine del manuale, con Costo,
- * Azione, Durata e Bersaglio; le regole comuni del §8.9.1 in breve. Vuoto senza Tecniche.
+ * Azione, Durata e Bersaglio e l'effetto in breve; le regole comuni del §8.9.1 in breve. Vuoto senza Tecniche.
  */
 function tecnicheStampa(s, dati) {
   const tecniche = [...(s.tecniche ?? [])].sort((a, b) => ordineGruppo(a.gruppo) - ordineGruppo(b.gruppo) || String(a.gruppo).localeCompare(b.gruppo));
   if (!tecniche.length) return { tecniche: [], tecnicheAmmesse: s.tecnicheAmmesse ?? 0, regoleTecniche: [] };
   return {
-    tecniche: tecniche.map((t) => ({ nome: t.nome, gruppo: gruppoTecnica(t.gruppo).etichetta, costo: t.costo, azione: t.azione, durata: t.durata, bersaglio: t.bersaglio })),
+    // «Effetto»: il numero principale in breve (tecniche_interiori.json → effetti.breve), se c'è
+    tecniche: tecniche.map((t) => ({ nome: t.nome, gruppo: gruppoTecnica(t.gruppo).etichetta, costo: t.costo, azione: t.azione, durata: t.durata, bersaglio: t.bersaglio, effetto: sintesiTecnica(tecnicaDi(t.id, dati)) })),
     tecnicheAmmesse: s.tecnicheAmmesse ?? tecniche.length,
     regoleTecniche: dati.tecniche_interiori?.attivazione?.frasi ?? [],
   };
