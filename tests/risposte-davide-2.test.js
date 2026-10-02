@@ -80,11 +80,13 @@ test('A.48: Corazza Potenziata solo con protezione Artefatto (Guardie Sacre sì,
   assert.equal(calcolaAR(eq, dati, { accesi, tecniche: [] }).totale, 2);
 });
 
-test('A.48: la Tecnica posseduta diventa un interruttore della sessione', () => {
+test('A.48: la Tecnica posseduta si accende con «Attiva» (§8.9.1), non con un interruttore', () => {
   const creazione = { ...MISHIMA_AGENTE, equipaggiamento: [] };
   const scheda = { ...calcolaScheda({ creazione, livelli: [] }, dati), tecniche: [{ id: 'aura-di-resistenza' }] };
-  assert.ok(massimiSessione(scheda, creazione, dati).oggettiSituazionali.includes('tecnica:aura-di-resistenza'));
-  assert.ok(!massimiSessione(scheda, creazione, dati).oggettiSituazionali.includes('tecnica:pelle-di-rinoceronte'));
+  const m = massimiSessione(scheda, creazione, dati);
+  // niente più chiavi «tecnica:<id>» fra le condizioni degli oggetti: la sessione le scarta
+  assert.ok(!m.oggettiSituazionali.some((x) => x.startsWith('tecnica:')));
+  assert.deepEqual(m.tecniche, ['aura-di-resistenza']);
 });
 
 // --- A.49 -----------------------------------------------------------------------------------

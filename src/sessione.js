@@ -7,7 +7,12 @@
 //              affaticamento, munizioni: { uid: { colpi, riserve, parziali, vuoti } }, scorte: { uid: consumate },
 //              chroma: { uid: { pmAttuali, iniziale? } } (iniziale: PM impostati per un contenitore trovato, E&L 2),
 //              caricoExtra, crediti, creditiIniziali, condizioniOggetti: [uid], attacchi: { uid: scelte },
-//              lanci: { incantesimo: scelte }, integrita: { uid: piAttuali }, nec: { chiave: attuale }, note }
+//              lanci: { incantesimo: scelte }, integrita: { uid: piAttuali }, nec: { chiave: attuale },
+//              round, ultimaTecnica, tecnicheAttive, note }
+// round, ultimaTecnica, tecnicheAttive: Tecniche Interiori al tavolo (Giocatore §8.9.1, src/tecniche.js):
+// contatore dei Round della sessione («Nuovo Round»), l'ultima attivazione { id, round } per il limite
+// di una per Round, gli effetti attivi [{ id, dal, al }] con la loro durata (al = ultimo Round, null =
+// finché non si termina). «Nuova sessione» li riporta al Round 1, senza Tecniche attive.
 // nec: riserva attuale dei NEC (Equipaggiamento 0.5, §5.4; src/equipaggiamento.js → riserveNec): Lx di celle e
 // pacchi, ore o usi degli apparecchi che li comprendono; i nuovi partono carichi («I prezzi … comprendono la
 // prima carica», §5.4.4); «Nuova sessione» non li ricarica (serve caricatore e fonte, §5.4.6).
@@ -39,6 +44,7 @@ import { saldoIniziale } from './dotazioni.js';
 import { infoRicarica, eseguiRicarica, perOperazione } from './ricarica.js';
 import { caricatori, contenitori, normalizzaEquipaggiamento, catalogo, risolvi, riserveNec } from './equipaggiamento.js';
 import { oggettiConPi } from './protezione.js';
+import { attivaTecnica, nuovoRound, terminaTecnica, allineaTecnicheAttive, tecnicaDi } from './tecniche.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const limita = (v, min, max) => Math.min(max, Math.max(min, v));
@@ -83,6 +89,8 @@ export function massimiSessione(scheda, creazione, dati) {
     condizioniArmi: (dati.regole.condizioni_armi?.elenco ?? []).map((c) => c.id),
     // PI massimi degli oggetti con PI (uid → PI), Armamenti §7.2.1
     integrita: dati.equipaggiamento && dati.regole.integrita ? piMassimi(creazione, dati) : null,
+    // Tecniche Interiori apprese (id): solo queste possono essere attive (src/tecniche.js)
+    tecniche: (scheda?.tecniche ?? []).map((t) => t.id),
     // riserve dei NEC (chiave → massimo in Lx, ore o usi), Equipaggiamento §5.4
     nec: dati.equipaggiamento && dati.regole.nec ? Object.fromEntries(riserveNec(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati).map((x) => [x.chiave, x.massimo])) : null,
   };
@@ -129,15 +137,13 @@ export function variaIntegrita(sessione, uid, delta, m) {
  */
 function oggettiSituazionali(creazione, dati, scheda = null) {
   if (!dati.equipaggiamento) return null;
-  // A.48: Tecniche Interiori che danno AR, per chi le possiede («tecnica:<id>»)
-  const tecniche = new Set((scheda?.tecniche ?? []).map((t) => t.id));
-  const tecnicheAR = (dati.regole.ar?.tecniche ?? []).filter((t) => tecniche.has(t.tecnica)).map((t) => `tecnica:${t.tecnica}`);
+  // Aura di Resistenza e Pelle di Rinoceronte non sono più interruttori: le accende «Attiva» con la
+  // durata (sessione.tecnicheAttive); le vecchie chiavi «tecnica:<id>» fra le condizioni cadono qui
   const cat = catalogo(dati);
   const risolti = normalizzaEquipaggiamento(creazione?.equipaggiamento).map((v) => risolvi(v, cat));
   return [
     ...risolti.filter((r) => r.effetti.some((e) => e.ambito === 'situazionale')).map((r) => r.uid),
     ...risolti.filter((r) => r.def?.attacco?.stato).map((r) => `${r.uid}:${r.def.attacco.stato.id}`),
-    ...tecnicheAR,
   ];
 }
 
@@ -287,6 +293,9 @@ export function inizializzaSessione(m) {
     integrita: allineaIntegrita({}, m),
     nec: allineaNec({}, m),
     condizioniArmi: {},
+    round: 1,
+    ultimaTecnica: null,
+    tecnicheAttive: [],
     note: '',
   };
 }
@@ -323,6 +332,11 @@ export function allineaSessione(sessione, m) {
     // condizione di ogni arma (uid → id; «integra» non si salva)
     condizioniArmi: Object.fromEntries(Object.entries(isOggetto(sessione.condizioniArmi) ? sessione.condizioniArmi : {})
       .filter(([uid, id]) => id !== 'integra' && (m.condizioniArmi ?? []).includes(id) && (!m.oggetti || m.oggetti.includes(uid)))),
+    // Tecniche Interiori (§8.9.1, src/tecniche.js)
+    round: Number.isInteger(sessione.round) && sessione.round >= 1 ? sessione.round : 1,
+    ultimaTecnica: isOggetto(sessione.ultimaTecnica) && typeof sessione.ultimaTecnica.id === 'string' && Number.isInteger(sessione.ultimaTecnica.round)
+      ? { id: sessione.ultimaTecnica.id, round: sessione.ultimaTecnica.round } : null,
+    tecnicheAttive: allineaTecnicheAttive(sessione.tecnicheAttive, m.tecniche ?? null),
     note: typeof sessione.note === 'string' ? sessione.note : '',
   };
 }
@@ -412,7 +426,28 @@ export function commutaStato(sessione, id, m) {
  * Corruzione (§5.20.2: si recupera solo con la purificazione).
  */
 export function nuovaSessione(sessione, m) {
-  return { ...allineaSessione(sessione, m), pvAttuali: m.pv, pmAttuali: m.pm, statiAttivi: [], ferite: 0, affaticamento: 0 };
+  return { ...allineaSessione(sessione, m), pvAttuali: m.pv, pmAttuali: m.pm, statiAttivi: [], ferite: 0, affaticamento: 0, round: 1, ultimaTecnica: null, tecnicheAttive: [] };
+}
+
+/**
+ * «Attiva» una Tecnica Interiore (Giocatore §8.9.1, src/tecniche.js): PM personali scalati, limite di
+ * una per Round, effetto attivo con la durata, Svenuto se la riserva resta a 0. null se non si può.
+ */
+export function attivaTecnicaSessione(sessione, scheda, id, dati, opz, m) {
+  const t = tecnicaDi(id, dati);
+  if (!t) return null;
+  const nuova = attivaTecnica(scheda, allineaSessione(sessione, m), t, dati, opz);
+  return nuova ? allineaSessione(nuova, m) : null;
+}
+
+/** «Nuovo Round»: avanza il contatore e fa scadere le Tecniche finite (§8.9.1). */
+export function nuovoRoundSessione(sessione, m) {
+  return allineaSessione(nuovoRound(allineaSessione(sessione, m)), m);
+}
+
+/** Termina a mano una Tecnica attiva (durate in minuti, ore, fino all'interruzione). */
+export function terminaTecnicaSessione(sessione, id, m) {
+  return allineaSessione(terminaTecnica(allineaSessione(sessione, m), id), m);
 }
 
 /** §1.8.3: 5 Distintivi diventano 1 Punto Eroe, senza superare la riserva massima. null se non si può. */

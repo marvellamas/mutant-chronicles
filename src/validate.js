@@ -857,7 +857,18 @@ function validaTecniche(t, err) {
     ids.add(x.id);
     if (!/^(generica|lottatore|scuola:.+)$/.test(x.gruppo ?? '')) err(F, `${k}.gruppo`, 'atteso "generica", "lottatore" o "scuola:<nome>"');
     for (const c of ['costo', 'azione', 'bersaglio', 'durata', 'testo']) if (!isTesto(x[c])) err(F, `${k}.${c}`, 'campo mancante o vuoto');
+    // «Attiva» (§8.9.1, src/tecniche.js): costo in PM fisso, oppure una tabella di costi a scelta
+    const opzioni = Array.isArray(x.opzioni_costo) ? x.opzioni_costo : null;
+    if (opzioni) {
+      if (!opzioni.length) err(F, `${k}.opzioni_costo`, 'tabella dei costi vuota');
+      opzioni.forEach((o, j) => { if (!isIntero(o?.pm) || o.pm < 0 || !isTesto(o?.effetto)) err(F, `${k}.opzioni_costo[${j}]`, 'servono "pm" intero ≥ 0 ed "effetto"'); });
+    } else if (!isIntero(x.costo_pm) || x.costo_pm < 0) err(F, `${k}.costo_pm`, 'costo in PM intero ≥ 0 (o "opzioni_costo")');
+    if (!['round', 'tempo', 'istantanea'].includes(x.durata_tipo)) err(F, `${k}.durata_tipo`, 'atteso "round", "tempo" o "istantanea"');
+    if (x.durata_tipo === 'round' && (!isIntero(x.durata_round) || x.durata_round < 0)) err(F, `${k}.durata_round`, 'numero di Round intero ≥ 0 (la durata finisce alla fine del Round R + N)');
   });
+  const a = t.attivazione;
+  if (!isOggetto(a)) err(F, 'attivazione', 'regole dell’attivazione (§8.9.1) mancanti');
+  else if (!isTesto(a.stato_a_zero_pm)) err(F, 'attivazione.stato_a_zero_pm', 'id dello Stato a 0 PM (Svenuto) mancante');
 }
 
 function validaDadi(F, chiave, v, err) {
