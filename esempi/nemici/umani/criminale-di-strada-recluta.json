@@ -1,0 +1,63 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "criminale-di-strada-recluta",
+  "nome": "Criminale di strada — Recluta",
+  "fonte": "costruito come PG (Freelance, Lestofante 1, 2° livello)",
+  "caratteristiche": {
+    "FOR": 5,
+    "COS": 6,
+    "DES": 8,
+    "INT": 7,
+    "SAG": 5,
+    "CAR": 8
+  },
+  "pv": 15,
+  "pm": 7,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 5,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 12,
+    "volonta": 11,
+    "magia": 8
+  },
+  "attacchi": [
+    {
+      "nome": "Pistola semiautomatica",
+      "tipo": "distanza",
+      "va": 7,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "gittata_q": 30,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "ac": 1,
+      "rif": "armi_distanza:pistola-semiautomatica",
+      "note": "caricatore 15 colpi"
+    },
+    {
+      "nome": "Pugnale",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d4+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "rif": "armi:pugnale",
+      "note": "Manovre: Affondo"
+    }
+  ],
+  "stati": [],
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Criminale di strada Recluta, Freelance Avventuriero, Lestofante 1, 2° livello. Talenti (gli effetti situazionali si applicano a mano): Colpo Sleale."
+}

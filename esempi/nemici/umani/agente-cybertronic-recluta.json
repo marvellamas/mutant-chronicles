@@ -1,0 +1,63 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "agente-cybertronic-recluta",
+  "nome": "Agente Cybertronic — Recluta",
+  "fonte": "costruito come PG (Cybertronic, Agente 1, 2° livello)",
+  "caratteristiche": {
+    "FOR": 4,
+    "COS": 6,
+    "DES": 8,
+    "INT": 8,
+    "SAG": 7,
+    "CAR": 5
+  },
+  "pv": 16,
+  "pm": 9,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 6,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 11,
+    "volonta": 9,
+    "magia": 10
+  },
+  "attacchi": [
+    {
+      "nome": "P500",
+      "tipo": "distanza",
+      "va": 9,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "gittata_q": 30,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "ac": 1,
+      "rif": "armi_distanza_corporative:p500",
+      "note": "caricatore 12 colpi"
+    },
+    {
+      "nome": "Coltello",
+      "tipo": "ravvicinato",
+      "va": 7,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "rif": "armi:coltello",
+      "note": "Manovre: Affondo"
+    }
+  ],
+  "stati": [],
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Agente Cybertronic Recluta, Cybertronic Avventuriero, Agente 1, 2° livello. Talenti (gli effetti situazionali si applicano a mano): Fuoco Controllato."
+}

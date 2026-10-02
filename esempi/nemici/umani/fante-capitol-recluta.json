@@ -1,0 +1,63 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "fante-capitol-recluta",
+  "nome": "Fante Capitol — Recluta",
+  "fonte": "costruito come PG (Capitol, Soldato 1, 2° livello)",
+  "caratteristiche": {
+    "FOR": 7,
+    "COS": 8,
+    "DES": 8,
+    "INT": 5,
+    "SAG": 4,
+    "CAR": 6
+  },
+  "pv": 20,
+  "pm": 6,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 3,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 12,
+    "volonta": 10,
+    "magia": 7
+  },
+  "attacchi": [
+    {
+      "nome": "CAR10",
+      "tipo": "distanza",
+      "va": 11,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "gittata_q": 80,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "ac": 1,
+      "rif": "armi_distanza_corporative:car10",
+      "note": "caricatore 15 colpi"
+    },
+    {
+      "nome": "Coltello",
+      "tipo": "ravvicinato",
+      "va": 7,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "rif": "armi:coltello",
+      "note": "Manovre: Affondo"
+    }
+  ],
+  "stati": [],
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Fante Capitol Recluta, Capitol Combattente, Soldato 1, 2° livello. Talenti (gli effetti situazionali si applicano a mano): Addestramento Militare."
+}

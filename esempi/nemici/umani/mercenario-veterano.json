@@ -1,0 +1,67 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "mercenario-veterano",
+  "nome": "Mercenario — Veterano",
+  "fonte": "costruito come PG (Freelance, Artigliere 2, 5° livello)",
+  "caratteristiche": {
+    "FOR": 5,
+    "COS": 8,
+    "DES": 8,
+    "INT": 7,
+    "SAG": 5,
+    "CAR": 6
+  },
+  "pv": 29,
+  "pm": 9,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 11,
+  "iniziativa": 5,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 13,
+    "volonta": 10,
+    "magia": 9
+  },
+  "attacchi": [
+    {
+      "nome": "Fucile d’assalto",
+      "tipo": "distanza",
+      "va": 14,
+      "danno": "1d6+3",
+      "natura": "Naturale",
+      "gittata_q": 160,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "RL",
+        "TR",
+        "FS"
+      ],
+      "ac": 1,
+      "rif": "armi_distanza:fucile-d-assalto",
+      "note": "caricatore 30 colpi"
+    },
+    {
+      "nome": "Coltello",
+      "tipo": "ravvicinato",
+      "va": 8,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "rif": "armi:coltello",
+      "note": "Manovre: Affondo"
+    }
+  ],
+  "stati": [],
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Mercenario Veterano, Freelance Combattente, Artigliere 2, 5° livello. Talenti (gli effetti situazionali si applicano a mano): Ottimizzare Gittata, Raffica Estesa, Raffica Breve Migliorata, Mira Rapida."
+}

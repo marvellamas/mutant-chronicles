@@ -171,7 +171,7 @@ async function apiNemici(req, res, percorso, nemici, radice) {
 
 /**
  * «Carica esempi» (Tavolo del Master): i personaggi d'esempio del repo (esempi/) nella cartella dei
- * personaggi e i nemici d'esempio (esempi/nemici/) nel bestiario. Non sovrascrive mai: un file con lo
+ * personaggi e i nemici d'esempio (esempi/nemici/ ed esempi/nemici/umani/) nel bestiario. Non sovrascrive mai: un file con lo
  * stesso nome già presente si salta e si segnala (COPYFILE_EXCL, anche fra due richieste contemporanee).
  */
 async function caricaEsempi(radice, cartella, nemici) {
@@ -189,6 +189,8 @@ async function caricaEsempi(radice, cartella, nemici) {
   };
   await copia(join(radice, 'esempi'), cartella, (f) => NOME_FILE.test(f));
   await copia(join(radice, 'esempi', NEMICI), nemici, (f) => f.endsWith('.json') && ID_NEMICO.test(f.slice(0, -5)));
+  // bestiario umano proposto (tools/genera_nemici_umani.mjs): nella stessa cartella nemici/ del server
+  await copia(join(radice, 'esempi', NEMICI, 'umani'), nemici, (f) => f.endsWith('.json') && ID_NEMICO.test(f.slice(0, -5)));
   return { copiati, saltati };
 }
 

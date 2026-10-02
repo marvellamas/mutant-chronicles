@@ -1,0 +1,63 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "soldato-bauhaus-recluta",
+  "nome": "Soldato Bauhaus — Recluta",
+  "fonte": "costruito come PG (Bauhaus, Soldato 1, 2° livello)",
+  "caratteristiche": {
+    "FOR": 7,
+    "COS": 8,
+    "DES": 8,
+    "INT": 6,
+    "SAG": 5,
+    "CAR": 4
+  },
+  "pv": 20,
+  "pm": 7,
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 9,
+  "iniziativa": 4,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 11,
+    "volonta": 8,
+    "magia": 8
+  },
+  "attacchi": [
+    {
+      "nome": "KR10",
+      "tipo": "distanza",
+      "va": 13,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "gittata_q": 60,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "ac": 1,
+      "rif": "armi_distanza_corporative:kr10",
+      "note": "caricatore 10 colpi"
+    },
+    {
+      "nome": "Coltello",
+      "tipo": "ravvicinato",
+      "va": 7,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "rif": "armi:coltello",
+      "note": "Manovre: Affondo"
+    }
+  ],
+  "stati": [],
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Soldato Bauhaus Recluta, Bauhaus Combattente, Soldato 1, 2° livello. Talenti (gli effetti situazionali si applicano a mano): Addestramento Militare."
+}

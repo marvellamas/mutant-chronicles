@@ -65,12 +65,14 @@ test('«Carica esempi»: copia nelle cartelle attive, non sovrascrive mai, segna
   writeFileSync(join(cPersonaggi, 'Rhea-Valdis_liv5_2026-10-02.json'), 'IL MIO FILE');
   const r = await (await fetch(`${base}/api/esempi`, { method: 'POST' })).json();
   assert.deepEqual(r.saltati, ['Rhea-Valdis_liv5_2026-10-02.json']);
-  assert.deepEqual(r.copiati.sort(), ['Fratello-Anselmo-Viri_liv3_2026-10-02.json', 'Nadia-Ferro_liv4_2026-10-02.json', 'Torvald-Krane_liv6_2026-10-02.json', 'legionario-oscuro.json', 'predone-delle-lande.json']);
+  const umani = readdirSync(new URL('nemici/umani/', cartellaEsempi)).filter((f) => f.endsWith('.json'));
+  assert.equal(umani.length, 30);
+  assert.deepEqual(r.copiati.sort(), ['Fratello-Anselmo-Viri_liv3_2026-10-02.json', 'Nadia-Ferro_liv4_2026-10-02.json', 'Torvald-Krane_liv6_2026-10-02.json', 'legionario-oscuro.json', 'predone-delle-lande.json', ...umani].sort());
   assert.equal(readFileSync(join(cPersonaggi, 'Rhea-Valdis_liv5_2026-10-02.json'), 'utf8'), 'IL MIO FILE');
-  assert.deepEqual(readdirSync(cNemici).sort(), ['legionario-oscuro.json', 'predone-delle-lande.json']);
+  assert.deepEqual(readdirSync(cNemici).sort(), ['legionario-oscuro.json', 'predone-delle-lande.json', ...umani].sort());
   // seconda volta: tutto già presente, nulla copiato
   const r2 = await (await fetch(`${base}/api/esempi`, { method: 'POST' })).json();
-  assert.deepEqual([r2.copiati, r2.saltati.length], [[], 6]);
+  assert.deepEqual([r2.copiati, r2.saltati.length], [[], 36]);
   assert.equal((await fetch(`${base}/api/esempi`)).status, 405);
   // i PG copiati si leggono dall'elenco della cartella
   const elenco = await (await fetch(`${base}/api/personaggi`)).json();

@@ -1,0 +1,63 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "guardia-di-sicurezza-elite",
+  "nome": "Guardia di sicurezza — Élite",
+  "fonte": "costruito come PG (Freelance, Soldato 3, 8° livello)",
+  "caratteristiche": {
+    "FOR": 5,
+    "COS": 9,
+    "DES": 9,
+    "INT": 5,
+    "SAG": 7,
+    "CAR": 6
+  },
+  "pv": 39,
+  "pm": 13,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 13,
+  "iniziativa": 4,
+  "movimento": {
+    "passo": 5,
+    "corsa": 11,
+    "scatto": 17
+  },
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 13,
+    "volonta": 10,
+    "magia": 10
+  },
+  "attacchi": [
+    {
+      "nome": "Carabina",
+      "tipo": "distanza",
+      "va": 15,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "gittata_q": 80,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "ac": 1,
+      "rif": "armi_distanza:carabina",
+      "note": "caricatore 15 colpi"
+    },
+    {
+      "nome": "Coltello",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d4+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "rif": "armi:coltello",
+      "note": "Manovre: Affondo"
+    }
+  ],
+  "stati": [],
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Guardia di sicurezza Élite, Freelance Combattente, Soldato 3, 8° livello. Talenti (gli effetti situazionali si applicano a mano): Addestramento Militare, Supporto di Difesa, Coordinamento di Squadra, Sempre Allerta, Copertura Migliorata, Visione Perfetta."
+}

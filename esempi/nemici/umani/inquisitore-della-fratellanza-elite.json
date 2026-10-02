@@ -1,0 +1,100 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "inquisitore-della-fratellanza-elite",
+  "nome": "Inquisitore della Fratellanza — Élite",
+  "fonte": "costruito come PG (Fratellanza, Custode 3, 8° livello)",
+  "caratteristiche": {
+    "FOR": 7,
+    "COS": 9,
+    "DES": 4,
+    "INT": 5,
+    "SAG": 9,
+    "CAR": 6
+  },
+  "pv": 31,
+  "pm": 28,
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 16,
+  "iniziativa": -1,
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 8,
+    "volonta": 12,
+    "magia": 13
+  },
+  "attacchi": [
+    {
+      "nome": "Spada leggera",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "rif": "armi:spada-leggera",
+      "note": "Manovre: Affondo, Spazzata"
+    },
+    {
+      "nome": "Nemesis 100",
+      "tipo": "distanza",
+      "va": 4,
+      "danno": "1d6",
+      "natura": "Naturale",
+      "proprieta": [
+        "Purificatrice 1"
+      ],
+      "gittata_q": 15,
+      "modalita": [
+        "S",
+        "TR"
+      ],
+      "ac": 1,
+      "rif": "armi_distanza_corporative:nemesis-100",
+      "note": "caricatore 8 colpi"
+    }
+  ],
+  "stati": [],
+  "incantesimi": [
+    {
+      "nome": "Agilità Mutata",
+      "note": "promemoria: si lancia come per i PG (per-davide A.73)"
+    },
+    {
+      "nome": "Alterare Immagine",
+      "note": "promemoria: si lancia come per i PG (per-davide A.73)"
+    },
+    {
+      "nome": "Ampliare Sensi",
+      "note": "promemoria: si lancia come per i PG (per-davide A.73)"
+    },
+    {
+      "nome": "Arma Mistica",
+      "note": "promemoria: si lancia come per i PG (per-davide A.73)"
+    },
+    {
+      "nome": "Armatura di Forza",
+      "note": "promemoria: si lancia come per i PG (per-davide A.73)"
+    },
+    {
+      "nome": "Armatura Mistica",
+      "note": "promemoria: si lancia come per i PG (per-davide A.73)"
+    },
+    {
+      "nome": "Barriera Mentale",
+      "note": "promemoria: si lancia come per i PG (per-davide A.73)"
+    },
+    {
+      "nome": "Colpo Elementale",
+      "note": "promemoria: si lancia come per i PG (per-davide A.73)"
+    }
+  ],
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Inquisitore della Fratellanza Élite, Fratellanza Taumaturgo, Custode 3, 8° livello. Talenti (gli effetti situazionali si applicano a mano): Arma Astrale, Fenditura Mistica, Maestro d’Arma, Resistenza alla Corruzione, Lancio in Combattimento, Resistenza alla Paura."
+}

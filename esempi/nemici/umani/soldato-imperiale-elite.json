@@ -1,0 +1,67 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "soldato-imperiale-elite",
+  "nome": "Soldato Imperiale — Élite",
+  "fonte": "costruito come PG (Imperiali, Soldato 3, 8° livello)",
+  "caratteristiche": {
+    "FOR": 7,
+    "COS": 9,
+    "DES": 9,
+    "INT": 4,
+    "SAG": 6,
+    "CAR": 5
+  },
+  "pv": 39,
+  "pm": 12,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 13,
+  "iniziativa": 3,
+  "movimento": {
+    "passo": 5,
+    "corsa": 11,
+    "scatto": 17
+  },
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 12,
+    "volonta": 10,
+    "magia": 10
+  },
+  "attacchi": [
+    {
+      "nome": "Conqueror 10",
+      "tipo": "distanza",
+      "va": 14,
+      "danno": "1d6+3",
+      "natura": "Naturale",
+      "gittata_q": 120,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "RL",
+        "TR",
+        "FS"
+      ],
+      "ac": 1,
+      "rif": "armi_distanza_corporative:conqueror-10",
+      "note": "caricatore 20 colpi"
+    },
+    {
+      "nome": "Coltello",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d4+2",
+      "natura": "Naturale",
+      "portata_q": 1,
+      "rif": "armi:coltello",
+      "note": "Manovre: Affondo"
+    }
+  ],
+  "stati": [],
+  "note": "Proposta, da validare con Davide (bestiario umano del Tavolo del Master, per-davide A.79). Costruito come PG: Soldato Imperiale Élite, Imperiali Combattente, Soldato 3, 8° livello. Talenti (gli effetti situazionali si applicano a mano): Addestramento Militare, Supporto d’Attacco, Coordinamento di Squadra, Mira Rapida, Sempre Allerta, Raffica Breve Migliorata."
+}

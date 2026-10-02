@@ -9,6 +9,9 @@ Personaggi e nemici inventati per provare il Tavolo del Master senza toccare i p
 - Nadia Ferro (Cybertronic, Tecnico, 4o livello): impianti cibernetici e un chip.
 - nemici/predone-delle-lande.json: nemico debole, da gruppo.
 - nemici/legionario-oscuro.json: nemico forte.
+- nemici/umani/: bestiario umano proposto, 10 tipi in tre gradi (Recluta 2o livello, Veterano 5o,
+  Elite 8o), costruiti come PG e convertiti in nemici. Proposte da validare con Davide.
+  Li scrive tools/genera_nemici_umani.mjs (scelte in docs/tavolo-direttore.md, "Bestiario proposto").
 
 Nella plancia, "Carica esempi" copia questi file in personaggi/ e in nemici/ del server: un file con
 lo stesso nome gia' presente non viene mai sovrascritto (lo segnala come saltato).
