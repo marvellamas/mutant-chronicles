@@ -8,7 +8,7 @@
 // copiata qui perché main non ha quei file (il branch non si tocca). Il controllo finale confronta i numeri
 // con i file del bestiario umano del branch (git show origin/tavolo-direttore:esempi/nemici/umani/…): devono
 // coincidere.
-//   node tools/taratura_bestiario.mjs        → tabelle per livello e per archetipo, in Markdown
+//   node tools/taratura_bestiario.mjs        → tabelle per livello e per archetipo, scontri e basi, in Markdown
 //   node tools/taratura_bestiario.mjs --json → gli stessi numeri in JSON
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -266,6 +266,55 @@ export function confrontoConBranch(righe) {
   return out;
 }
 
+// --- modello degli scontri (Bestiario, §2.3 e Appendice A.3) ----------------------------------------------------
+
+/**
+ * Gradi della scala (Bestiario, §2.1): valori arrotondati della taratura al livello di riferimento. Se cambia la
+ * tabella del manuale, si cambia qui (e viceversa).
+ */
+export const GRADI = [
+  { nome: 'Minore', livello: 2, pv: 19, va: 11, difese: 9, ar: 1, danno: '1d6+2', azioni: 1 },
+  { nome: 'Semplice', livello: 5, pv: 28, va: 13, difese: 11, ar: 3, danno: '1d8+1', azioni: 1 },
+  { nome: 'Medio', livello: 8, pv: 37, va: 15, difese: 13, ar: 3, danno: '1d8+2', azioni: 1 },
+  { nome: 'Potente', livello: 12, pv: 47, va: 17, difese: 15, ar: 3, danno: '1d8+2', azioni: 2 },
+  { nome: 'Molto potente', livello: 16, pv: 56, va: 19, difese: 17, ar: 3, danno: '1d10+2', azioni: 2 },
+];
+
+/** Basi del Bestiario (§3): PV, AR, Difese e danno dell'attacco principale per grado, come nelle tabelle del manuale. */
+export const BASI = {
+  Umano: GRADI.map((g) => ({ ...g })),
+  Insettoide: GRADI.map((g, i) => ({ ...g, pv: [17, 25, 33, 42, 50][i], ar: [2, 4, 4, 4, 4][i], danno: ['1d6+1', '1d8+1', '1d8+2', '1d8+2', '1d10+2'][i] })),
+  Aracnoide: GRADI.map((g, i) => ({ ...g, pv: [17, 25, 33, 42, 50][i], difese: g.difese + 1, ar: [1, 2, 2, 2, 2][i], danno: ['1d6+1', '1d6+2', '1d8+2', '1d8+2', '1d10+2'][i] })),
+  'Umanoide mostruoso': GRADI.map((g, i) => ({ ...g, pv: [23, 34, 45, 56, 67][i], difese: g.difese - 2, ar: [1, 2, 2, 2, 2][i], danno: ['1d6+2', '1d8+1', '1d8+2', '1d8+2', '1d10+2'][i] })),
+};
+
+// Prova d20 ≤ VA: l'1 riesce e il 20 fallisce sempre; con VA 20 o più successo automatico (Giocatore §1.6–1.7)
+const probabilita = (va) => (va >= 20 ? 1 : Math.min(19, Math.max(1, Math.floor(va))) / 20);
+/**
+ * Danno atteso per Round di `a` contro `d`: Azioni Principali × probabilità di colpire × (danno medio − AR del
+ * bersaglio, almeno 1). Le Difese non contano: costano un'Azione Principale (Giocatore §5.9) e nel conto le
+ * Azioni vanno agli attacchi, per entrambe le parti.
+ */
+export const dannoPerRound = (a, d) => a.azioni * probabilita(a.va) * Math.max(1, (a.dannoMedio ?? dannoMedio(a.danno)) - d.ar);
+/** Forza di un combattente contro un avversario: PV × danno per Round (legge del quadrato di Lanchester). */
+export const forza = (a, d) => a.pv * dannoPerRound(a, d);
+/** Rapporto con cui si definisce «equilibrato»: il gruppo vince spendendo risorse (forza nemica = 60% della sua). */
+export const EQUILIBRIO = 0.6;
+/**
+ * Quanti nemici del grado valgono uno scontro equilibrato contro 4 PG di livello `livello`:
+ * N · √forza(nemico) = √EQUILIBRIO · 4 · √forza(PG).
+ */
+export function quanti(grado, pg) {
+  const n = { ...grado, dannoMedio: dannoMedio(grado.danno) };
+  return (Math.sqrt(EQUILIBRIO) * 4 * Math.sqrt(forza(pg, n))) / Math.sqrt(forza(n, pg));
+}
+/** Peso di una base rispetto al suo grado contro i PG del livello di riferimento: √forza(base) / √forza(grado). */
+export function pesoBase(base, grado, pg) {
+  const b = { ...base, dannoMedio: dannoMedio(base.danno) };
+  const g = { ...grado, dannoMedio: dannoMedio(grado.danno) };
+  return Math.sqrt(forza(b, pg)) / Math.sqrt(forza(g, pg));
+}
+
 const uno = (x) => (Number.isInteger(x) ? String(x) : x.toFixed(1)).replace('.', ',');
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
@@ -286,6 +335,16 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
     for (const r of righe) {
       console.log(`${r.livello}° livello: ${r.archetipi.map((a) => `${a.tipo} PV ${a.pv} · ${a.arma} VA ${a.va} ${a.danno} · Difese ${a.difese} · AR ${a.ar}${a.problemi.length ? ` · PROBLEMI: ${a.problemi.join('; ')}` : ''}`).join(' | ')}`);
     }
+    console.log('');
+    const media = Object.fromEntries(righe.map((r) => [r.livello, r.media]));
+    console.log('');
+    console.log('Quanti nemici per grado valgono uno scontro equilibrato contro 4 PG del livello (§2.3):');
+    console.log(`| Livello dei PG | ${GRADI.map((g) => g.nome).join(' | ')} |`);
+    console.log(`| :---: | ${GRADI.map(() => ':---:').join(' | ')} |`);
+    for (const g of GRADI) console.log(`| ${g.livello} | ${GRADI.map((x) => uno(Math.round(quanti(x, media[g.livello]) * 10) / 10)).join(' | ')} |`);
+    console.log('');
+    console.log('Peso delle basi rispetto al grado, contro i PG del livello di riferimento (§3, 1 = uguale):');
+    for (const [n, gradi] of Object.entries(BASI)) console.log(`| ${n} | ${gradi.map((b, i) => uno(Math.round(pesoBase(b, GRADI[i], media[GRADI[i].livello]) * 100) / 100)).join(' | ')} |`);
     console.log('');
     console.log(confronto === null ? 'Confronto con il branch: origin/tavolo-direttore non raggiungibile.'
       : `Confronto con il bestiario umano del branch: ${confronto.filter((c) => c.uguale).length} su ${confronto.length} uguali${confronto.some((c) => !c.uguale) ? ` (diversi: ${confronto.filter((c) => !c.uguale).map((c) => c.file).join(', ')})` : ''}.`);
