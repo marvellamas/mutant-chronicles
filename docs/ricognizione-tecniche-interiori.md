@@ -113,3 +113,24 @@ né `docs/per-davide.md`.
 | Equipaggiamento | 09:12 | non esaminato |
 | E&L | 09:02 | per le Tecniche valgono A.3 e A.4 |
 | per-davide | 09:29 | il pacchetto di Marcello: A.18 risolta, A.74 (Rituale di Rigenerazione) e A.75 (batterie oltre 5 PM) nuove; nessuna risposta sulle Tecniche |
+
+## 6. Stato (02/10/2026, sera)
+
+Fatto il **prompt 1** della proposta, con la richiesta di Davide («Risorse Interiori nel tab Poteri, Tecniche come incantesimi, “Attiva” che scala i PM fissi, avviso se i PM personali non bastano»):
+
+- **SD:** sezione «Risorse Interiori» nella tab Poteri (`src/ui/tecniche.js`), visibile a chi ha Risorse Interiori (Talento Libero o di Classe del Lottatore).
+  - Una scheda per Tecnica, raggruppate in generiche / Scuola / Lottatore, colore proprio `--tecnica` (bronzo, `docs/palette.md`).
+  - «Attiva» apre il pannello a due passi; Round con «Nuovo Round»; riquadro delle Tecniche attive con lo scadere e «Termina».
+  - Nella tab Abilità resta il rimando «Tecniche Interiori: vedi Poteri».
+- **Motore:** `src/tecniche.js` (regole comuni del §8.9.1), test in `tests/tecniche.test.js`.
+  - Sessione: `round`, `ultimaTecnica`, `tecnicheAttive`.
+  - Aura di Resistenza e Pelle di Rinoceronte non sono più interruttori: valgono nell'AR finché sono attive.
+- **Dati:** `costo_pm` (Imposizione della Mano Curativa: `opzioni_costo` dalla tabella), `durata_tipo` e `durata_round`, `attivazione`; testi 0.45 di Aura di Resistenza e Pelle di Rinoceronte.
+- **SS:** le Tecniche lasciano il foglio 2 (che torna alle Annotazioni) e vanno nel foglio 5 (Poteri), che si stampa anche per chi ha solo le Tecniche. In quel caso a sinistra ci sono PM e regole comuni, a destra l'elenco con Costo, Azione, Durata e Bersaglio.
+- **Verifica:** nessun valore calcolato cambia rispetto a `main` (a, b, c, Lucas, d; a riposo e con una Ferita e Rallentato).
+
+Resta per il **prompt 2**:
+- gli effetti numerici delle altre Tecniche nello schema degli oggetti (VA, danno, movimento), applicati finché sono attive, a cominciare dal resto di Pelle di Rinoceronte (+3 FOR, +3 Atletica e Corpo a corpo nelle manovre di forza, +2 danno ravvicinato);
+- i dadi di Onda Interiore per Disciplina e Grado;
+- Durata e Bersaglio anche nella SD per le Tecniche già attive al tavolo, dove servono.
+

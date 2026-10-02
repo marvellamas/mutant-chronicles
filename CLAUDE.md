@@ -23,9 +23,9 @@ Drive si usa **in sola lettura**: mai scrivere nei Doc di Davide, nemmeno commen
 
 - **SD** = scheda digitale: la scheda a tab dell'app, con la modalità tavolo (`src/ui/tab.js`). Otto tab in una riga in alto (branch `layout-sd`, esito in `docs/layout-sd.md`), con Punti Eroe, PV e PM nella colonna di sinistra:
   - **Identità:** anagrafica, Caratteristiche, Prove Salvezza, Distintivi, vantaggio, note;
-  - **Abilità:** tabella compatta, colonna Condizioni attive, Talenti, Specializzazioni, Tecniche Interiori;
+  - **Abilità:** tabella compatta, colonna Condizioni attive, Talenti, Specializzazioni; per le Tecniche Interiori solo il rimando a Poteri;
   - **Combattimento:** valori e Prove Salvezza, armi in mano per mano («Attacca!», «Ricarica»), armi disponibili, Protezioni; a destra Ferite, Affaticamento, Corruzione, Stati;
-  - **Poteri:** la Magia («Lancia!», PM, cristalli) o «Nessun potere»; «Da artefatti»;
+  - **Poteri:** la Magia («Lancia!», PM, cristalli); Risorse Interiori (le Tecniche Interiori come gli incantesimi, «Attiva», Round e Tecniche attive); «Nessun potere» senza l'una e l'altra; «Da artefatti»;
   - **Artefatti:** sintonizzazione, schede degli Artefatti, riserve di Chroma;
   - **Cibernetica:** Umanità con la provenienza e gli effetti della fascia, impianti installati per famiglia, chip, perdite e recuperi;
   - **Veicoli:** in attesa del manuale;
@@ -74,6 +74,7 @@ src/
   ricarica.js   ricarica delle armi a distanza dalle riserve
   dotazioni.js  equipaggiamento iniziale (§2.16): scelte, crediti, acquisti, voci della dotazione
   sessione.js   valori attuali di sessione (modalità tavolo)
+  tecniche.js   «Attiva» delle Tecniche Interiori (§8.9.1): solo PM personali, una per Round, durata R+N, Svenuto, Umanità 0
   umanita.js    Umanità (Giocatore §5.21): registro delle installazioni, valore con provenienza, fascia
   versione.js   confronto fra versione caricata e versione.json; ui/aggiornamento.js la barra «Nuova versione»
   provenienza.js  righe { fonte, valore, nota? } dei valori calcolati (AR, VA, Salvezze, Iniziativa, Movimento, danno): le stampano i tooltip della SD e la SS
@@ -116,6 +117,8 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 - tab Combattimento (`docs/layout-sd.md`, pezzo 3): colonna sinistra con valori, Prove Salvezza, armi in mano per mano (Ricarica e «Attacca!»), armi disponibili e Protezioni; colonna destra con Ferite, Affaticamento, Corruzione Oscura (§5.20, `regole.json` → `corruzione.stati`, `sessione.corruzione`, nei valori effettivi) e Stati. Caricatori di riserva, condizione delle armi e applicazioni sanitarie si cambiano nell'Inventario.
 
 - tab Poteri e Artefatti (`docs/layout-sd.md`, pezzo 4): Poteri per tutti (la Magia di prima, o «Nessun potere» da `regole.json` → `poteri`; «Da artefatti» in sola lettura); Artefatti con sintonizzazione, schede degli Artefatti ed effetti con provenienza, riserve di Chroma. Un Artefatto nel deposito comune non è sintonizzabile.
+
+- Tecniche Interiori al tavolo (richiesta di Davide del 02/10, `docs/ricognizione-tecniche-interiori.md`): sezione «Risorse Interiori» della tab Poteri per chi ha Risorse Interiori, una scheda per Tecnica con «Attiva» (`src/ui/tecniche.js`, pannello come «Lancia!»); motore puro `src/tecniche.js` sulle regole comuni del §8.9.1 (solo PM personali, avviso se non bastano, conferma e Svenuto se la riserva resta a 0, una per Round con «Nuovo Round», durata dal Round R alla fine di R + N, durate a tempo terminate a mano, blocco a Umanità 0, nessuna Prova di Potere salvo Silenzio Mentale); sessione `round`, `ultimaTecnica`, `tecnicheAttive`; costi e durate numerici in `tecniche_interiori.json` (`costo_pm`, `opzioni_costo`, `durata_tipo`, `durata_round`, `attivazione`). Aura di Resistenza e Pelle di Rinoceronte danno AR finché sono attive. SS: elenco delle Tecniche nel foglio 5 (Poteri), che si stampa anche senza magia.
 
 - Talenti nei valori effettivi (`docs/censimento-talenti.md`): `effetti.valori` delle voci dei Talenti nello schema degli oggetti (scritti da `tools/effetti_talenti.py`), applicati al tavolo da `src/talenti.js` e `src/condizioni.js` (generali, situazionali con interruttore, usi specifici a parte); interruttore globale «Bonus dei Talenti» in `sessione.bonusTalenti` (Combattimento e Poteri), che spegne anche i Talenti di «Attacca!» e «Lancia!».
 
