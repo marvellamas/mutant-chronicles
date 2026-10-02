@@ -15,12 +15,12 @@ const creazione = normalizza(p.creazione, dati).scelte;
 const scheda = (c) => calcolaScheda({ creazione: c, livelli: p.livelli }, dati);
 const bordoneUid = creazione.equipaggiamento.find((v) => /bordone/.test(v.rif ?? '')).uid;
 
-test('Artefatto sintonizzato: stessi valori del collaudo b (Bordone Templare, sintonizzazione 4 su 7)', () => {
+test('Artefatto sintonizzato: stessi valori del collaudo b (Bordone Templare, sintonizzazione 4 su 11)', () => {
   const s = scheda(creazione);
   const [bordone] = s.equipaggiamento.armi;
   // come in tests/collaudo.test.js, collaudo b
   assert.deepEqual([bordone.va, bordone.danno.due_mani, bordone.attivazione.danno_extra], [2, '1d8+1', '1d6']);
-  assert.deepEqual([s.equipaggiamento.sintonizzazione.capacita, s.equipaggiamento.sintonizzazione.usata], [7, 4]);
+  assert.deepEqual([s.equipaggiamento.sintonizzazione.capacita, s.equipaggiamento.sintonizzazione.usata], [11, 4]);
   assert.ok(s.equipaggiamento.sintonizzazione.artefatti.find((x) => x.uid === bordoneUid).sintonizzato);
 });
 

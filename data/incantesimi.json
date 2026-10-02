@@ -11459,7 +11459,7 @@
             "frasi": [
               "Qualsiasi personaggio che soddisfi la SnT dell’artefatto può utilizzarne la funzione, senza Ritualista, senza conoscere l’incantesimo e senza apprendere la procedura.",
               "L’attivazione è automatica, senza Prove di Potere o Rituali e senza Canali.",
-              "L’intero costo in PM della versione viene pagato dalla riserva integrata, compatibile Verde o Bianca.",
+              "Se Rigenerazione è infusa come proprietà Esclusiva, l’intero costo viene pagato dalla riserva interna compatibile Verde o Bianca e non servono PM personali.",
               "Un’interruzione precedente impedisce l’effetto senza consumare PM."
             ]
           },

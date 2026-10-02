@@ -915,7 +915,8 @@ test('validatore del sanitario', () => {
 
 test('lotto 12: regole di sintonizzazione, profili con riserva mistica, batterie', () => {
   const f = dati.equipaggiamento.file.artefatti;
-  assert.deepEqual(f.sintonizzazione.capacita_per_gradi, [4, 5, 6, 7, 8, 9]);
+  // Armamenti §7.10 e Magia §26.1 (Doc del 02/10): 8–13, uguale per tutti gli Addestramenti
+  assert.deepEqual(f.sintonizzazione.capacita_per_gradi, [8, 9, 10, 11, 12, 13]);
   assert.deepEqual(f.sintonizzazione.talento, { nome: 'Architetto TecnoMistico', bonus: 2 });
   assert.equal(f.sintonizzazione.potenze.Leggendaria, 6);
   assert.equal(f.artefatti_catalogo.length, 6);
@@ -935,20 +936,24 @@ test('lotto 12: regole di sintonizzazione, profili con riserva mistica, batterie
 
 test('sintonizzazione: capacità per Gradi e Talento, somma dei costi, avviso oltre il limite, riserve di PM', () => {
   const art = (uid, rif, extra = {}) => voce(uid, rif, null, { sintonizzato: true, ...extra });
-  // Agente al 1° Grado: capacità 4 (§7.10)
+  // Agente al 1° Grado: capacità 8 (§7.10, Magia §26.1)
   let eq = scheda(MISHIMA_AGENTE, [art('v', 'armi_corporative:spada-vindicator', { stato: 'pronta' }), art('b', 'artefatti:batteria-da-5-pm-chroma-bianco')]).equipaggiamento;
-  assert.deepEqual([eq.sintonizzazione.capacita, eq.sintonizzazione.usata, eq.sintonizzazione.gradi], [4, 4, 1]);
+  assert.deepEqual([eq.sintonizzazione.capacita, eq.sintonizzazione.usata, eq.sintonizzazione.gradi], [8, 4, 1]);
   assert.ok(!eq.avvisi.some((a) => /Sintonizzazioni oltre/.test(a)));
+  // nessun requisito di Grado (Magia §26.1): una batteria Leggendaria (SnT 6) al I Grado; oltre la capacità, avviso
   eq = scheda(MISHIMA_AGENTE, [art('v', 'armi_corporative:spada-vindicator', { stato: 'pronta' }), art('s', 'scudi:scudo-delle-guardie-sacre', { stato: 'pronta' })]).equipaggiamento;
-  assert.equal(eq.sintonizzazione.usata, 5);
-  assert.ok(eq.avvisi.some((a) => /Sintonizzazioni oltre la capacità: 5 su 4/.test(a)));
+  assert.deepEqual([eq.sintonizzazione.usata, eq.avvisi.some((a) => /Sintonizzazioni oltre/.test(a))], [5, false]);
+  eq = scheda(MISHIMA_AGENTE, [art('v', 'armi_corporative:spada-vindicator', { stato: 'pronta' }), art('l', 'artefatti:batteria-da-25-pm-chroma-bianco')]).equipaggiamento;
+  assert.deepEqual([eq.sintonizzazione.usata, eq.avvisi.some((a) => /Sintonizzazioni oltre/.test(a))], [8, false]);
+  eq = scheda(MISHIMA_AGENTE, [art('s', 'scudi:scudo-delle-guardie-sacre', { stato: 'pronta' }), art('l', 'artefatti:batteria-da-25-pm-chroma-bianco')]).equipaggiamento;
+  assert.ok(eq.avvisi.some((a) => /Sintonizzazioni oltre la capacità: 9 su 8/.test(a)));
   // un Artefatto non sintonizzato non occupa capacità
   eq = scheda(MISHIMA_AGENTE, [voce('b', 'artefatti:batteria-da-5-pm-chroma-rosso', null)]).equipaggiamento;
   assert.deepEqual([eq.sintonizzazione.usata, eq.sintonizzazione.artefatti[0].sintonizzato], [0, false]);
-  // Architetto TecnoMistico e 3 Gradi complessivi: 6 + 2 = 8
+  // Architetto TecnoMistico e 3 Gradi complessivi: 10 + 2 = 12
   const s = scheda(MISHIMA_AGENTE, []);
   const base = { caratteristiche: s.caratteristiche, abilita: s.abilita, specializzazioni: [], gradiComplessivi: 3, talenti: ['Architetto TecnoMistico'] };
-  assert.equal(calcolaEquipaggiamento(base, [art('b', 'artefatti:batteria-da-5-pm-chroma-verde')], dati).sintonizzazione.capacita, 8);
+  assert.equal(calcolaEquipaggiamento(base, [art('b', 'artefatti:batteria-da-5-pm-chroma-verde')], dati).sintonizzazione.capacita, 12);
   // la scelta «sintonizzato» si conserva; le riserve di PM sono contenitori di Chroma, non caricatori
   assert.equal(normalizzaEquipaggiamento([art('b', 'artefatti:batteria-da-5-pm-chroma-verde')])[0].sintonizzato, true);
   const creazione = { ...MISHIMA_AGENTE, equipaggiamento: [art('b', 'artefatti:batteria-da-5-pm-chroma-verde'), art('s', 'scudi:scudo-delle-guardie-sacre', { stato: 'pronta' }), art('v', 'armi_corporative:spada-vindicator', { stato: 'pronta' })] };

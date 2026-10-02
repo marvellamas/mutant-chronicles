@@ -5,6 +5,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { calcolaScheda } from '../src/calc.js';
+import { calcolaEquipaggiamento } from '../src/equipaggiamento.js';
 import { normalizza, serializza, deserializzaPersonaggio, VERSIONE_FORMATO } from '../src/character.js';
 import { umanita, fasciaUmanita, annullaPerdita, aggiungiRecupero } from '../src/umanita.js';
 import { calcolaCarico } from '../src/carico.js';
@@ -57,23 +58,22 @@ test('un impianto installato riduce l’Umanità, con la provenienza; toglierlo 
 });
 
 test('fasce del §5.21: sintonizzazione, PM Massimi e PS di Magia contro la Corruzione', () => {
-  assert.deepEqual([riposoB.pm, riposoB.equipaggiamento.sintonizzazione.capacita, riposoB.umanita.valore], [41, 7, 20]);
+  assert.deepEqual([riposoB.pm, riposoB.equipaggiamento.sintonizzazione.capacita, riposoB.umanita.valore], [41, 11, 20]);
   // UMN 14 (Potenziato): PM −1, sintonizzazione −1, PS Magia contro la Corruzione −2
   let s = schedaB(conVoci([voce('br', 'impianti:braccio-potenziato', 'installato')]));
-  assert.deepEqual([s.umanita.valore, s.pm, s.pmUmanita, s.equipaggiamento.sintonizzazione.capacita], [14, 40, -1, 6]);
-  assert.deepEqual(s.equipaggiamento.sintonizzazione.provenienza.righe.map((r) => [r.fonte, r.valore]), [['4 Gradi complessivi', 7], ['Umanità 14 (Potenziato)', -1]]);
+  assert.deepEqual([s.umanita.valore, s.pm, s.pmUmanita, s.equipaggiamento.sintonizzazione.capacita], [14, 40, -1, 10]);
+  assert.deepEqual(s.equipaggiamento.sintonizzazione.provenienza.righe.map((r) => [r.fonte, r.valore]), [['4 Gradi complessivi', 11], ['Umanità 14 (Potenziato)', -1]]);
   const ps = s.equipaggiamento.effettiOggetti.find((e) => e.umanita);
   assert.deepEqual([ps.salvezza, ps.valore, ps.uso, ps.oggetto], ['magia', -2, 'contro la Corruzione', 'Umanità 14 (Potenziato)']);
   // la Salvezza di Magia ordinaria non cambia
   assert.equal(s.salvezze.magia.totale, riposoB.salvezze.magia.totale);
-  // UMN 4 (Transumano): sintonizzazione 7 − 6 = 1, sotto le sintonie in corso (4): avviso
+  // UMN 4 (Transumano): sintonizzazione 11 − 6 = 5, sopra le sintonie in corso (4): nessun avviso
   s = schedaB(conVoci([voce('br', 'impianti:braccio-potenziato', 'installato'), voce('ga', 'impianti:gambe-potenziate-in-coppia', 'installato')]));
-  assert.deepEqual([s.umanita.valore, s.equipaggiamento.sintonizzazione.capacita, s.pm], [4, 1, 33]);
-  assert.ok(s.equipaggiamento.avvisi.some((a) => /Sintonizzazioni oltre la capacità: 4 su 1/.test(a)));
-  // UMN 0 (Macchina): sintonizzazione al minimo 0, PM −20, niente Risorse Interiori
+  assert.deepEqual([s.umanita.valore, s.equipaggiamento.sintonizzazione.capacita, s.pm], [4, 5, 33]);
+  assert.ok(!s.equipaggiamento.avvisi.some((a) => /Sintonizzazioni oltre la capacità/.test(a)));
+  // UMN 0 (Macchina): sintonizzazione 11 − 10 = 1, PM −20, niente Risorse Interiori
   s = schedaB(conVoci([voce('g1', 'impianti:gambe-potenziate-in-coppia', 'installato'), voce('g2', 'impianti:gambe-potenziate-in-coppia', 'installato')]));
-  assert.deepEqual([s.umanita.valore, s.umanita.condizione, s.equipaggiamento.sintonizzazione.capacita, s.pm, s.umanita.risorseInteriori], [0, 'Macchina', 0, 21, false]);
-  assert.match(s.equipaggiamento.sintonizzazione.provenienza.righe.at(-1).nota, /minimo di 0/);
+  assert.deepEqual([s.umanita.valore, s.umanita.condizione, s.equipaggiamento.sintonizzazione.capacita, s.pm, s.umanita.risorseInteriori], [0, 'Macchina', 1, 21, false]);
   assert.ok(s.annotazioni.some((a) => /non può utilizzare Risorse Interiori/.test(a)));
 });
 
@@ -198,4 +198,18 @@ test('personaggi senza impianti: c, b e Lucas invariati, nessun campo Umanità n
     assert.ok(!s.equipaggiamento.effettiOggetti.some((e) => e.umanita), f);
     assert.equal(s.equipaggiamento.sintonizzazione?.umanita ?? 0, 0, f);
   }
+});
+
+test('§5.21, esempio del Doc del 02/10: UMN 8 al I Grado porta la capacità da 8 a 4 (Architetto da 10 a 6); al VI Grado un Tecnomante con UMN 0 conserva 5', () => {
+  const s = calcolaScheda({ creazione: MISHIMA_AGENTE, livelli: [] }, dati);
+  // la fascia di Umanità come la costruisce src/umanita.js (modificatori della fascia, minimo 0)
+  const conUmn = (valore) => ({ valore, condizione: fasciaUmanita(valore, dati).condizione, modificatori: { sintonizzazione: fasciaUmanita(valore, dati).sintonizzazione }, sintonizzazioneMinimo: dati.regole.umanita.sintonizzazione_minimo ?? 0 });
+  const art = [voce('b', 'artefatti:batteria-da-5-pm-chroma-verde', null, { sintonizzato: true })];
+  const cap = (gradiComplessivi, talenti, valore) => calcolaEquipaggiamento({ caratteristiche: s.caratteristiche, abilita: s.abilita, specializzazioni: [], gradiComplessivi, talenti, umanita: conUmn(valore) }, art, dati).sintonizzazione.capacita;
+  assert.deepEqual([cap(1, [], 8), cap(1, ['Architetto TecnoMistico'], 8), cap(6, ['Architetto TecnoMistico'], 0)], [4, 6, 5]);
+  // fino a un minimo di 0: I Grado, UMN 0 (8 − 10)
+  assert.equal(cap(1, [], 0), 0);
+  // l'esempio del manuale è nei dati (tools/lotti/lotto_sintonizzazione_0210.mjs)
+  const art2 = JSON.parse(readFileSync(new URL('../data/equipaggiamento/artefatti.json', import.meta.url), 'utf8'));
+  assert.match(art2.sintonizzazione.esempio_umanita, /da 8 a 4.*da 10 a 6.*13 \+ 2 − 10/);
 });

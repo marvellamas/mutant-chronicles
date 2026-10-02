@@ -1117,7 +1117,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     const modUmn = umn?.modificatori?.sintonizzazione ?? 0;
     const capacita = modUmn ? Math.max(umn.sintonizzazioneMinimo ?? 0, daGradi + modUmn) : daGradi;
     const righe = [
-      riga(`${gradi} Grad${gradi === 1 ? 'o' : 'i'} complessiv${gradi === 1 ? 'o' : 'i'}`, rs.capacita_per_gradi[gradi - 1], 'Armamenti §7.10'),
+      riga(`${gradi} Grad${gradi === 1 ? 'o' : 'i'} complessiv${gradi === 1 ? 'o' : 'i'}`, rs.capacita_per_gradi[gradi - 1], 'Armamenti §7.10, Magia §26.1'),
       ...(talento ? [riga(rs.talento.nome, rs.talento.bonus, 'Talento')] : []),
       ...(modUmn ? [riga(`Umanità ${umn.valore} (${umn.condizione})`, capacita - daGradi, capacita - daGradi !== modUmn ? `${modUmn}, fino a un minimo di ${umn.sintonizzazioneMinimo ?? 0} (Giocatore §5.21)` : 'Giocatore §5.21')] : []),
     ];

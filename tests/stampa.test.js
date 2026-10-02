@@ -389,7 +389,7 @@ test('foglio Artefatti (docs/layout-ss.md, pezzo 5): sintonizzazione, schede, ri
   // Lucas: solo batterie, foglio 6 con le riserve e nessuna scheda
   const al = foglio(prepara(leggi('Lucas_liv6_2026-09-28 (2).json')), 'artefatti');
   assert.deepEqual([al.numero, al.dati.schede.length, al.dati.riserve.length], [6, 0, 2]);
-  assert.deepEqual([al.dati.sintonizzazione.capacita, al.dati.sintonizzazione.usata], [5, 1]);
+  assert.deepEqual([al.dati.sintonizzazione.capacita, al.dati.sintonizzazione.usata], [9, 1]);
   // la SD ha la sua tab Artefatti: il foglio di stampa non diventa una tab
   const pb = leggi('b_fratellanza_arcanista_l12.json');
   assert.ok(!preparaTab({ creazione: pb.creazione, livelli: pb.livelli }, dati).tab.some((t) => t.id === 'artefatti'));
