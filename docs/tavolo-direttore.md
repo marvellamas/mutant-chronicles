@@ -1,6 +1,6 @@
 # Tavolo del Master: piano di fattibilità
 
-Branch `tavolo-direttore`, 1° ottobre 2026. Piano di fattibilità; sono fatti il pezzo 1 (plancia dei PG in sola lettura), il pezzo 2 (scontro e Iniziativa), il pezzo 3 (nemici), il pezzo 4 (danno applicato), il pezzo 5 (attacchi dei nemici) e il pezzo 6 (giocatori collegati), più gli esempi del 2 ottobre. Resta il pezzo 7.
+Branch `tavolo-direttore`, 1° ottobre 2026. Piano di fattibilità; sono fatti il pezzo 1 (plancia dei PG in sola lettura), il pezzo 2 (scontro e Iniziativa), il pezzo 3 (nemici), il pezzo 4 (danno applicato), il pezzo 5 (attacchi dei nemici) e il pezzo 6 (giocatori collegati), più gli esempi del 2 ottobre e i nemici secondo le risposte di Davide ad A.73 (lotto 8). Resta il pezzo 7.
 
 La visione di partenza è in `docs/backlog.md`, voce 14, su `main`. Al tavolo molti giocatori usano la scheda di carta. Il master tiene lo stato della scena su una plancia con PG e nemici:
 
@@ -103,7 +103,7 @@ PC del master (server.mjs --rete)
    - Sono numeri «già fatti», come li scrive il master: non serve ricostruire un nemico con Caratteristiche e Classi.
    - Le armi possono puntare al catalogo (`"rif": "armi:spada-lunga"`), e allora il danno viene dalla scheda dell'arma.
    - **Chi lo inserisce:** il master, con un piccolo editor nella plancia (pezzo 3) o copiando file JSON. Davide decide se alcuni nemici diventano «ufficiali» (allora su `main`, in `data/`, con il validatore).
-2. **Valori dei nemici al tavolo:** PV attuali, Stati, Ferite, Sanguinamento. Il formato può essere quello di `sessione` dei PG (`src/sessione.js`), con i massimi presi dal nemico e non da `calcolaScheda`.
+2. **Valori dei nemici al tavolo:** PV attuali, Stati, Ferite, Sanguinamento. Fatto: PV attuali e massimi, Ferite, Menomazioni, PM e Stati stanno nel partecipante dello scontro (A.73, decisione 7; sezione «Nemici secondo A.73»).
 3. **Iniziativa:** la regola c'è (Giocatore §2.14: «Mod DES + Mod INT; in combattimento si aggiunge 1d10»; parità nel §5.1, «Parità di Iniziativa»). Va solo applicata: valore della scheda o del nemico + d10 dal vivo o dell'app, ordine e spareggi.
 4. **Danno ricevuto:** la sequenza c'è (Giocatore §5.13–5.15).
    - Si applicano Difesa e Armatura, separatamente per ogni applicazione (AC), poi PV, PS Tempra per le Ferite e Sanguinamento.
@@ -201,7 +201,7 @@ Ogni pezzo ha test sulle funzioni pure e una prova nel browser; i primi due non 
    - **Scelta.** Attacco del tipo di nemico (dal formato) e bersaglio fra i PG al tavolo e gli altri nemici dello scontro, con PV, Difese e AR (per i PG dalla vista della plancia, cioè da `calcolaScheda`; per i nemici dal formato). Nemico contro nemico funziona allo stesso modo.
    - **Adattatore** (`src/nemico-attacco.js`, funzioni pure). Il nemico diventa un «personaggio» senza Talenti né equipaggiamento, con i suoi Stati; l'attacco diventa un'arma di «Attacca!» con VA, danno, AC, modalità, gittata o portata e proprietà del formato, e l'Abilità dall'arma del catalogo se c'è `rif`. `src/attacco.js` non cambia: VA finale e danno vengono dagli stessi `calcolaAttaccoDistanza` e `calcolaAttaccoRavvicinato` dei PG, con la provenienza.
    - **Pannello** (`src/ui/attacco-nemico.js`). È il pannello «Attacca!» dell'app (`src/ui/attacco.js` → `pannelloAttacco`) con un contesto che presenta il nemico. Valgono movimento, Copertura, Circostanze, Superiorità numerica, distanza e fasce, modalità di fuoco, Tiro Mirato, le Manovre del §5.12 (anche Magistrale e Carica). Non si mostrano le opzioni che dipendono dal PG: Combattere con due armi, Solo la mano non dominante, la nota sul mirino (arma `esterno`); le opzioni dei Talenti spariscono da sole perché il nemico non ne ha. Munizioni e «Spara» non contano: la riga finale del pannello (gancio `ctx.azioni.finale`) diventa tiro per colpire, esito e registro.
-   - **Tiro ed esito** (`src/prova.js` → `esitoProva`, `regole.json` → `prova`, Giocatore §1.6–1.7). d20 dal vivo («Inserisci») o «Tira 1d20 con l'app», uno per tiro delle raffiche e per attacco delle Manovre con più attacchi. 1 Successo Magistrale, 20 Fallimento Maldestro, 2 Magistrale con VA almeno 21 solo dove si tira comunque; VA 20 o più successo automatico senza tiro (A.78), VA 0 o meno impossibile; nelle Prove contrapposte si tira sempre e il confronto con il bersaglio si fa al tavolo.
+   - **Tiro ed esito** (`src/prova.js` → `esitoProva`, `regole.json` → `prova`, Giocatore §1.6–1.7). d20 dal vivo («Inserisci») o «Tira 1d20 con l'app», uno per tiro delle raffiche e per attacco delle Manovre con più attacchi. 1 Successo Magistrale, 20 Fallimento Maldestro, 2 Magistrale con VA almeno 21; dal lotto 8 gli attacchi si tirano anche con VA 20 o più (A.78, `tipo: 'attacco'`), VA 0 o meno impossibile; nelle Prove contrapposte si tira sempre e il confronto con il bersaglio si fa al tavolo.
    - **Registro e danno.** «Registra l'attacco» scrive una riga (chi, chi, con che cosa, VA, tiro, esito). Se colpisce, «Applica danno» scrive la stessa riga e apre «Colpito» del pezzo 4 sul bersaglio, già compilata con formula, natura, tipo, AC (per i colpi a segno delle raffiche riuscite) e proprietà; «Tira con l'app» applica i moltiplicatori dell'attacco (Bruciapelo, Carica…) e, con il Magistrale, quello della sola prima applicazione (§1.6). Il master conferma e lì valgono Difesa, AR, PV, Ferite e Tempra come nel pezzo 4.
    - **Test.** `tests/attacco-nemico.test.js`: VA e danno dal formato, distanza che cambia il VA, esiti del d20, «Colpito» precompilata per Legionario Oscuro → Torvald e Predone → Rhea, nemico contro nemico con attacco e colpo nel registro, partecipante a mano con attacco.
    - **Prova nel browser.** Server sulla porta 3001 con cartelle temporanee e gli esempi. Legionario Oscuro 1 → Torvald con la Lama nefaria: tiro 7 dal vivo, colpito; «Colpito» con 1d10+3 Magico e Perforante 1, tirato dall'app 6 − AR 4 = 2, PV 32 → 30. Predone delle Lande 1 → Rhea col fucile a canne mozze a 5 Q: 2 tirato dall'app, colpito; 6 dal vivo − AR 1 = 5, PV 28 → 23. Poi Legionario → Predone con un 20 (Maldestro, solo registro) e un Sicario a mano con una pistola.
@@ -238,7 +238,7 @@ Davide non ha ancora un bestiario. Questi nemici umani sono **proposte, da valid
 **Convertitore «PG → nemico»** (`src/nemico-da-pg.js` → `nemicoDaPg`, funzione pura).
 - Prende il file di un personaggio e produce un nemico nel formato di `data/formato_nemici.json`, con i numeri di `calcolaScheda` e una sessione nuova (PV pieni, nessuno Stato): PV, PM, AR «totale, di cui magica», Difese, Iniziativa e Movimento al tavolo, le quattro Salvezze, le Caratteristiche.
 - Gli attacchi vengono dalle armi addosso (impugnate o pronte), dalla stessa voce di `scheda.equipaggiamento.armi` che usa «Attacca!»: VA effettivo, danno con il bonus di Caratteristica (o quello della munizione), natura, proprietà, portata o gittata, modalità, AC, `rif` del catalogo. Un'arma non in mano si misura mettendola in mano in una copia del personaggio.
-- Nelle note restano i Talenti, come promemoria: gli effetti generali sono già nei numeri, quelli situazionali e le opzioni di «Attacca!» legate ai Talenti si applicano a mano. Gli incantesimi dei Taumaturghi restano un promemoria (A.73).
+- I Talenti diventano capacità speciali (nome e prima frase del testo), come promemoria: gli effetti generali sono già nei numeri, quelli situazionali e le opzioni di «Attacca!» legate ai Talenti si applicano a mano. Dal lotto 8 anche Azioni, Contromisure, Abilità e incantesimi completi (sezione «Nemici secondo A.73»).
 - Nessun dato di gioco nuovo: la regola 3 non è servita.
 
 **«Crea da un PG»**, nel Bestiario della plancia. Sceglie un personaggio (l'ultimo file di ognuno in `personaggi/`, o un file dal computer) e apre l'editor del nemico già compilato, con gli eventuali avvisi. Si rinomina il tipo (l'identificativo segue il nome) e si salva in `nemici/`. Il file del PG si legge soltanto.
@@ -259,7 +259,7 @@ Davide non ha ancora un bestiario. Questi nemici umani sono **proposte, da valid
   - **Guerriero Mishima**: Mishima, Combattente, Assaltatore. Spada leggera e scudo piccolo, poi spada lunga, scudo medio e armatura media; pistola Ronin 25AP pronta. Affondo Migliorato, Parata Migliorata, Iniziativa Migliorata; Carica Brutale.
   - **Agente Cybertronic**: Cybertronic, Avventuriero, Agente. Pistola P500 e coltello. Pistolero, Estrazione Rapida, Schivata Migliorata; Mira Selettiva.
   - **Soldato Imperiale**: Imperiali, Combattente, Soldato. Carabina Defender, poi fucile d'assalto Conqueror 10 e armatura media. Mira Rapida, Sempre Allerta, Raffica Breve Migliorata; Supporto d'Attacco.
-  - **Inquisitore della Fratellanza**: Fratellanza, Taumaturgo, Custode. Spada leggera, scudo dell'accolito, pistola Nemesis 100, una batteria da 5 PM; incantesimi come promemoria. Resistenza alla Corruzione, Lancio in Combattimento, Resistenza alla Paura; Fenditura Mistica.
+  - **Inquisitore della Fratellanza**: Fratellanza, Taumaturgo, Custode. Spada leggera, scudo dell'accolito, pistola Nemesis 100, una batteria da 5 PM; incantesimi completi per «Lancia!» (lotto 8). Resistenza alla Corruzione, Lancio in Combattimento, Resistenza alla Paura; Fenditura Mistica.
   - **Guardia di sicurezza**: Freelance, Combattente, Soldato. Carabina sempre, dal Veterano armatura media. Sempre Allerta, Copertura Migliorata, Visione Perfetta; Supporto di Difesa.
   - **Criminale di strada**: Freelance, Avventuriero, Lestofante. Pistola semiautomatica e pugnale. Estrazione Rapida, Pistolero, Ritirata Migliorata; Fuga tra la Folla.
   - **Mercenario**: Freelance, Combattente, Artigliere. Fucile d'assalto con mirino reflex e bipiede, coltello. Raffica Breve Migliorata, Mira Rapida, Ricarica Rapida; Raffica Estesa.
@@ -292,6 +292,58 @@ Davide non ha ancora un bestiario. Questi nemici umani sono **proposte, da valid
 - «Carica esempi»: 36 file copiati, 32 tipi validi nel Bestiario.
 - «Crea da un PG» su Rhea: editor compilato (PV 28, AR 1, Difese 11, SR20 VA 14 1d6+4), rinominato «Tiratrice Capitol» e salvato; il file di Rhea non cambia.
 - Scontro con i quattro PG d'esempio contro due «Fante Capitol — Recluta» e un «Agente Cybertronic — Veterano». L'Agente spara a Rhea con la P500 (VA 11), la colpisce, e «Colpito» precompilata porta Rhea da 28 a 23 PV.
+
+## Nemici secondo A.73 (lotto 8, 2 ottobre 2026)
+
+Davide ha risposto ad A.73 (E&L del 02/10, decisioni 5–9; `docs/risposte-master.md`, decisione 83). Il formato è su `main` (`data/formato_nemici.json`, `validaNemico`), portato qui con il merge.
+
+**Formato.**
+- Campi nuovi: `azioni` (Principali e di Movimento per Round, eccezioni), `contromisure` (nome del §5.24 e valore), `abilita` (nome e VA), `capacita` (nome, effetto, costo, limiti).
+- Le sei Caratteristiche restano facoltative; una mancante non vale 0 e non ricalcola nulla.
+- Movimento: Passo obbligatorio; Corsa e Scatto mancanti valgono 2× e 3× il Passo; `"non_consentito"` è diverso da «mancante».
+- Incantesimi: completi con nome, livello, VA di lancio e costo in PM; incompleti restano un promemoria.
+
+**Plancia.**
+- **Ferite e Menomazioni** (decisione 7). Il nemico entra nello scontro con `ferite: 0`, `menomazioni: []` e i PM del tipo (`src/scontro.js` → `aggiungiNemici`). «Colpito» segue la procedura dei PG: a 0 PV il danno finale chiede la PS di Tempra e dà Ferite per fascia (§5.14). Le Menomazioni raggiunte per la prima volta (Profonda, Seria, Grave) si registrano con il promemoria della PS (§5.14.1; `src/danno.js` → `applicaColpo`, campo `menomazioni`). Nessun Affaticamento. `registraColpo` e `annullaUltimoColpo` salvano e ripristinano anche Ferite e Menomazioni. La carta mostra «Ferita Profonda (−4)» e le Menomazioni come la carta dei PG.
+- **«Lancia!»** (decisione 8). Adattatore `src/nemico-lancio.js`, come `src/nemico-attacco.js` per «Attacca!»:
+  - il nemico è un lanciatore senza Talenti né contenitori, con il VA della voce come Potere;
+  - la scheda dell'incantesimo è ristretta alla versione del nemico, con il suo costo;
+  - `src/lancio.js` non cambia: valgono Anticipazione, Focalizzazione, Ingaggio, componenti, circostanze e cumulo;
+  - il VA della voce è «già calcolato per quella versione», perciò la base è VA − penalità di livello della sez. 1 e il totale torna il VA del nemico;
+  - il danno è quello della versione, senza bonus di SAG, con un promemoria;
+  - la Prova segue le regole del Taumaturgo (livelli 1–3 senza Prova), con un promemoria per chi non lo è.
+
+  Il pannello è quello dei PG (`src/ui/lancio.js`, con il gancio `ctx.calcola`), aperto da `src/ui/lancio-nemico.js`. «Lancia» scrive il lancio nel registro e scala i PM del nemico (`registraLancioNemico`). Se l'incantesimo ha danno, si sceglie il bersaglio e si apre «Colpito» già compilata (`propostaLancio`): formula della versione, natura, Colpi come applicazioni. PM con − e + sulla carta (`variaPmNemico`). Un incantesimo incompleto, senza scheda o che si esegue con un Rituale resta un promemoria con il motivo.
+- **Campi nuovi sulla carta e nell'editor.**
+  - Sulla carta: Azioni per Round; Contromisure accanto alle Immunità; Abilità con il VA; capacità speciali in un riquadro richiudibile.
+  - L'editor si genera dal formato: i campi nuovi compaiono da soli. Le scelte di Contromisure e Abilità usano le stesse fonti del validatore (`sorgentiNemico`). Corsa e Scatto hanno la casella «non consentito».
+- **Movimento** (decisione 9; `src/nemici.js` → `movimentoNemico`, `testoMovimento`): «Passo 6 Q · Corsa 12 Q* · Scatto 18 Q* (* dal Passo)», oppure «Scatto non consentito», senza calcolo.
+- **Parità d'Iniziativa** (decisione 6). Si confrontano DES, poi INT. Se a uno dei due manca la Caratteristica da confrontare, si va subito allo spareggio con 1d10, ripetuto finché c'è parità: non si passa a INT (`confrontoCar` in `src/scontro.js`).
+- **A.78 negli attacchi dei nemici**: `esitoAttacco` passa `tipo: 'attacco'` a `esitoProva`, quindi con VA 20 o più si tira comunque.
+
+**Esempi.**
+- Il Legionario Oscuro e il Predone delle Lande hanno tutte e sei le Caratteristiche, Azioni, Abilità e capacità.
+- Il Legionario ha anche Contromisura Imbottita 2, Scatto «non consentito», Dardo Psichico completo (livello 3, VA 10, 3 PM) e un rituale senza scheda come promemoria.
+- I 30 umani sono rigenerati con `tools/genera_nemici_umani.mjs`. Il convertitore aggiunge sei Caratteristiche, Azioni, Contromisure delle protezioni in uso, le Abilità di Classe più Percezione, Furtività e Atletica, e i Talenti come capacità. Per gli incantesimi dei Taumaturghi prende la versione più alta accessibile, con VA e costo calcolati da «Lancia!» del PG.
+
+**Test.**
+- `tests/nemici-a73.test.js`: Ferita e Menomazione su un nemico, registrate e annullate; «Lancia!» con dati completi, Ingaggio, PM scalati e insufficienti, voci incomplete; movimento non consentito; parità con una Caratteristica mancante; A.78; esempi aggiornati.
+- `tests/nemici-umani.test.js`: campi nuovi del convertitore su Torvald, e gli incantesimi dell'Inquisitore Veterano, con lo stesso VA e lo stesso costo in «Lancia!».
+- `tests/danno.test.js`: Menomazioni come dato.
+
+**Prova nel browser.** Server sulla porta 3007 con cartelle temporanee e gli esempi, cancellate alla fine.
+- Scontro con Torvald, «Inquisitore della Fratellanza — Veterano 1» e «Legionario Oscuro 1».
+- Carta dell'Inquisitore: PM 21/21, Azioni, Contromisure Imbottita 1, Abilità, otto incantesimi con «Lancia!». Carta del Legionario: «Scatto non consentito», un promemoria.
+- L'Inquisitore lancia Colpo Elementale livello 8, VA 8 (10 − 2 di livello):
+  - con l'Ingaggio, VA 6 e PM 21 → 13;
+  - di nuovo senza Ingaggio, PM 13 → 5;
+  - bersaglio Torvald, «Colpito» precompilata 3d6+5 Magico, 14 − AR 5 = 9, PV 32 → 23.
+- Il Legionario prende 50 (PV 38 → 0), poi 17 − AR 5 = 12 a 0 PV. Si apre la PS di Tempra: fallimento, Ferite 0 → 3. La carta mostra «Ferita Profonda (−4)» e la Menomazione temporanea leggera.
+- Larghezza del telefono: nessuno scorrimento orizzontale.
+
+**Da segnalare a Davide** (nuove voci dopo A.83):
+- Prova di Potere dei nemici: il formato non dice se un nemico è Taumaturgo, e la plancia applica le regole del Taumaturgo.
+- Bonus di SAG al danno degli incantesimi dei nemici: il formato non lo prevede, e la plancia non lo aggiunge.
 
 ## 6. Rischi e domande aperte
 
