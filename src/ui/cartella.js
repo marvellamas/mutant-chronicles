@@ -38,6 +38,15 @@ export async function leggiCartella(file) {
   return r.text();
 }
 
+/** «Aggiungi PG al tavolo»: scrive il file solo se non c'è già. { scritto: true } oppure { esiste: true }. */
+export async function creaInCartella(file, testo) {
+  const r = await fetch(`api/personaggi/${encodeURIComponent(file)}`, { method: 'PUT', body: testo, headers: { 'Content-Type': 'application/json', 'X-Mutant-Nuovo': '1' } });
+  const j = await r.json().catch(() => ({}));
+  if (r.status === 409 && j.esiste) return { esiste: true };
+  if (!r.ok) throw new Error(j.errore ?? `errore ${r.status}`);
+  return { scritto: true, ...j };
+}
+
 /** Testo di un file con la sua revisione (data di modifica sul server): { testo, mtime }. */
 export async function leggiCartellaConRevisione(file) {
   const r = await fetch(`api/personaggi/${encodeURIComponent(file)}`, { cache: 'no-store' });

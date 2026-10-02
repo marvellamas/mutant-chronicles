@@ -12,7 +12,9 @@
 //   GET /api/personaggi/<file>         il file com'è (testo dell'export, byte per byte)
 //   PUT /api/personaggi/<file>         scrive il file (corpo = testo dell'export); risponde { file, mtime }.
 //                                      Con l'intestazione X-Mutant-Mtime (la data letta) scrive solo se il file
-//                                      non è cambiato nel frattempo, altrimenti 409 con la data attuale (plancia)
+//                                      non è cambiato nel frattempo, altrimenti 409 con la data attuale (plancia).
+//                                      Con X-Mutant-Nuovo: 1 scrive solo se il file non c'è ancora, altrimenti
+//                                      409 con { esiste: true } («Aggiungi PG al tavolo»: non sovrascrive mai)
 //   GET /api/tavolo                    selezione del Tavolo del Master: { versione, personaggi: [nomi] }
 //   PUT /api/tavolo                    la salva in tavolo/sessione.json (fuori da git come personaggi/)
 //   GET /api/scontri                   scontri aperti in scontri/: [{ id, nome, stato, round, revisione, mtime }]
@@ -31,6 +33,7 @@ import { readFile, writeFile, readdir, stat, mkdir, rename, copyFile, constants 
 import { extname, join, normalize, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { validaScontro } from './src/scontro.js';
+import { NOME_FILE } from './src/cartella.js';
 import { caricaDati } from './src/rules.js';
 import { validaNemico, formattaErrore } from './src/validate.js';
 
@@ -52,9 +55,8 @@ const TIPI = {
 // come serve.json: «**/*.@(js|css|json|html)» → Cache-Control: no-cache (docs/cache.md)
 const NO_CACHE = new Set(['.js', '.mjs', '.css', '.json', '.html']);
 
-/** Nome di un file personaggio: lo stesso dell'export, «Nome_livN_AAAA-MM-GG.json» (src/character.js). */
-// maiuscole, accenti e apostrofi restano; niente separatori di cartella né caratteri vietati da Windows
-export const NOME_FILE = /^(?![.-])[^\\/:*?"<>|\s\u0000-\u001f\u007f]{1,120}_liv\d{1,2}_\d{4}-\d{2}-\d{2}\.json$/u;
+/** Nome di un file personaggio: lo stesso dell'export (src/cartella.js → NOME_FILE, condiviso con la plancia). */
+export { NOME_FILE };
 const MASSIMO = 10 * 1024 * 1024; // un ritratto grande resta ben sotto
 
 const json = (res, codice, corpo) => {
@@ -248,6 +250,10 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
       return json(res, 400, { errore: `contenuto non valido: ${e.message}` });
     }
     // revisione (Tavolo del Master, pezzo 4): la plancia scrive solo se il file è quello che ha letto
+    // «Aggiungi PG al tavolo»: un file nuovo non sovrascrive mai quello che c'è già
+    if (req.headers['x-mutant-nuovo'] === '1' && await stat(dove).then(() => true, () => false)) {
+      return json(res, 409, { errore: 'esiste già un file con questo nome: non sovrascritto', esiste: true });
+    }
     const attesa = req.headers['x-mutant-mtime'];
     if (attesa !== undefined) {
       const attuale = await stat(dove).then((s) => String(s.mtimeMs), () => null);

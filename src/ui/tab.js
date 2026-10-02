@@ -102,6 +102,8 @@ export function renderTab(ctx) {
         barraRisorsa(ctx, 'PV', ctx.sessione.pvAttuali, ctx.massimi.pv, { classe: 'risorsa-pv' }),
         ctx.massimi.pm ? barraRisorsa(ctx, 'PM', ctx.sessione.pmAttuali, ctx.massimi.pm, { classe: 'risorsa-pm' }) : null)),
     h('div', { class: 'barra-azioni' },
+      // aperta dalla plancia del Tavolo del Master (src/ui/ritorno.js)
+      ctx.tornaAlTavolo ? h('button', { type: 'button', class: 'btn btn-torna-tavolo', onclick: ctx.tornaAlTavolo, title: 'Torna alla plancia del Tavolo del Master, allo stesso punto' }, '← Torna al tavolo') : null,
       ctx.puoAnnullareSessione ? h('button', { type: 'button', class: 'btn', onclick: azioni.annullaSessione, title: 'Annulla l’ultima modifica ai valori di sessione o al calendario' }, '↶ Annulla') : null,
       id.livello < livelloMax
         ? h('button', { type: 'button', class: 'btn primario', disabled: !!ctx.motivoNoSalita, title: ctx.motivoNoSalita, onclick: azioni.sali }, `Sali al livello ${id.livello + 1}`)

@@ -7,9 +7,9 @@ import { h, svuota } from './dom.js';
 import { infoValore, nascondiTooltip } from './tooltip.js';
 import { iconaPagina } from './immagini.js';
 import { riempimento } from '../interfaccia.js';
-import { vistaPlancia, testoConSessione } from '../tavolo.js';
+import { vistaPlancia, testoConSessione, pgDaAggiungere } from '../tavolo.js';
 import { ultimiPerPersonaggio, chiaveDaFile } from '../cartella.js';
-import { elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella } from './cartella.js';
+import { elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, creaInCartella } from './cartella.js';
 import { apriColpo } from './colpo.js';
 import { testoColpo } from '../danno.js';
 import { pannelloScontro, leggiScontroAperto, leggiScontro, salvaScontro } from './scontro.js';
@@ -105,6 +105,8 @@ export function renderTavolo(radice, ctx) {
         h('div', { class: 'riga-azioni' },
           h('span', { class: 'nota plancia-aggiornato', 'aria-live': 'polite' }, stato.errore ?? testoAggiornato(stato.ultimo)),
           h('button', { type: 'button', class: `btn${stato.sceltaAperta ? ' primario' : ''}`, 'aria-expanded': String(stato.sceltaAperta), onclick: () => { stato.sceltaAperta = !stato.sceltaAperta; disegna(); } }, 'Chi è al tavolo'),
+          h('button', { type: 'button', class: 'btn', title: 'Sceglie uno o più file JSON di «SALVA PG», li controlla come «Importa», li scrive in personaggi/ senza mai sovrascrivere e li mette al tavolo', onclick: () => sceltaFile.click() }, 'Aggiungi PG al tavolo'),
+          sceltaFile,
           h('button', { type: 'button', class: 'btn', title: 'Copia i personaggi e i nemici d’esempio del repo (esempi/) nelle cartelle del server; non sovrascrive mai un file già presente', onclick: caricaEsempi }, 'Carica esempi'),
           h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.personaggi() }, 'Personaggi'))),
       stato.esitoEsempi ? h('p', { class: 'riquadro attenzione', role: 'status' }, stato.esitoEsempi) : null,
@@ -203,6 +205,33 @@ export function renderTavolo(radice, ctx) {
     await aggiorna(true);
   };
   ctx.scontroAperto = () => !!stato.scontro;
+  // «Aggiungi PG al tavolo»: file dal computer → controllo come «Importa» → personaggi/ (mai sovrascritti) → al tavolo
+  const sceltaFile = h('input', { type: 'file', accept: '.json,application/json', multiple: true, hidden: true, onchange: async (e) => {
+    const files = [...e.target.files];
+    e.target.value = '';
+    if (files.length) await aggiungiPg(files);
+  } });
+  const aggiungiPg = async (files) => {
+    const righe = [];
+    const alTavolo = [];
+    for (const f of files) {
+      const pg = pgDaAggiungere(f.name, await f.text(), ctx.dati);
+      if (pg.errore) { righe.push(`${f.name}: non valido (${pg.errore}), non scritto`); continue; }
+      try {
+        const r = await creaInCartella(pg.file, pg.testo);
+        const rinomina = pg.rinominato ? ` (rinominato da ${f.name})` : '';
+        righe.push(r.esiste ? `${pg.file}${rinomina}: esiste già, non sovrascritto; messo al tavolo` : `${pg.file}${rinomina}: aggiunto e messo al tavolo`);
+        alTavolo.push(chiaveDaFile(pg.file));
+      } catch (err) {
+        righe.push(`${f.name}: non scritto (${err.message})`);
+      }
+    }
+    if (alTavolo.length) {
+      try { stato.selezione = await scriviSelezione([...new Set([...stato.selezione, ...alTavolo])]); } catch (err) { righe.push(`Selezione «al tavolo» non salvata: ${err.message}`); }
+    }
+    stato.esitoEsempi = `Aggiungi PG al tavolo: ${righe.join(' · ')}.`;
+    await aggiorna(true);
+  };
   const nemiciInScontro = () => (stato.scontro?.partecipanti ?? []).filter((p) => p.tipo === 'nemico');
 
   // bestiario: si rilegge a ogni giro, si rivalida solo se un file è cambiato (nome e mtime)
@@ -270,7 +299,8 @@ export function renderTavolo(radice, ctx) {
   };
 
   disegna();
-  aggiorna().then(disegna);
+  // tornando da una scheda («← Torna al tavolo»): lo stesso punto di prima, a plancia completa
+  aggiorna().then(() => { disegna(); if (Number.isFinite(ctx.scorrimento)) window.scrollTo(0, ctx.scorrimento); });
   const giro = setInterval(() => aggiorna(), INTERVALLO_MS);
   const orologio = setInterval(aggiornaIndicatore, 1000);
   return () => { stato.attivo = false; clearInterval(giro); clearInterval(orologio); };

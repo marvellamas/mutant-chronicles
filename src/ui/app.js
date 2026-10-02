@@ -15,6 +15,7 @@ import * as archivio from './storage.js';
 import { serverCartella, elencoCartella, leggiCartella, scriviCartella } from './cartella.js';
 import { elencoUnito, confronta, chiaveDaFile, chiavePersonaggio } from '../cartella.js';
 import { renderTavolo } from './tavolo.js';
+import { segnaDalTavolo, arrivoDalTavolo, tornaAlTavolo, scorrimentoDaRimettere, dimenticaTavolo } from './ritorno.js';
 import { PASSI, passoVisibile, requisitoPasso } from './passi.js';
 import { inizializzaTooltip, nascondiTooltip } from './tooltip.js';
 import { renderRiepilogo } from './riepilogo.js';
@@ -158,7 +159,9 @@ function daIndirizzo() {
       return vai('#/');
     }
     document.title = 'Tavolo del Master · Mutant';
-    stato.fermaTavolo = renderTavolo(radice, { dati: stato.dati, azioni: { personaggi: () => vai('#/'), apri: apriDaCartella } });
+    // «← Torna al tavolo» da una scheda: la plancia rimette lo scorrimento di prima (src/ui/ritorno.js)
+    const scorrimento = scorrimentoDaRimettere(sessionStorage);
+    stato.fermaTavolo = renderTavolo(radice, { dati: stato.dati, scorrimento, azioni: { personaggi: () => vai('#/'), apri: (r) => apriDaCartella(r, { dalTavolo: true }) } });
     return;
   }
   const sali = location.hash.match(/^#\/p\/([\w-]+)\/sali\/(\d+)$/);
@@ -180,6 +183,8 @@ function daIndirizzo() {
     stato.id = null;
     stato.scelte = null;
     stato.livelli = [];
+    // la pagina iniziale: le schede aperte da qui non hanno «Torna al tavolo»
+    dimenticaTavolo(sessionStorage);
     return renderHome();
   }
   const [, id, passoTesto] = m;
@@ -430,7 +435,7 @@ function rigaPersonaggio(p, origine = 'browser') {
  * sincronizzano browser e cartella (vince il più recente), poi si apre la copia del browser; se il
  * personaggio è solo nella cartella lo si porta nel browser.
  */
-async function apriDaCartella(r) {
+async function apriDaCartella(r, { dalTavolo = false } = {}) {
   try {
     await sincronizzaCartella();
     const locale = elencoUnito(archivio.elenco(), [r]).find((x) => x.origine === 'entrambi')?.voce ?? null;
@@ -443,6 +448,8 @@ async function apriDaCartella(r) {
       if (nuovo.avvisi.length) stato.messaggioScheda = { tipo: 'attenzione', testo: nuovo.avvisi.join(' ') };
     }
     const p = archivio.carica(id);
+    // aperta dalla plancia: la scheda mostra «← Torna al tavolo» (anche dopo F5)
+    if (dalTavolo) segnaDalTavolo(sessionStorage, id, window.scrollY);
     vai(p.passo === PASSO_SCHEDA ? `#/p/${id}` : `#/p/${id}/${p.passo ?? 0}`);
   } catch (e) {
     stato.messaggioHome = { tipo: 'errore', testo: `Apertura di ${r.file} non riuscita: ${e.message}` };
@@ -834,6 +841,8 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
     ritrattoIntestazione: impostazioni.ritrattoIntestazione,
     filigrana: impostazioni.filigranaCorporazione,
     puoAnnullareSessione: !!stato.precedenteTavolo,
+    // scheda aperta dalla plancia del Tavolo del Master: il pulsante per tornarci (src/ui/ritorno.js)
+    tornaAlTavolo: arrivoDalTavolo(sessionStorage, stato.id) ? () => { tornaAlTavolo(sessionStorage); vai('#/tavolo'); } : null,
     calendario: stato.calendario,
     spazioQuasiEsaurito: archivio.spazioQuasiEsaurito(),
     motivoNoSalita: tab.scheda.completamenti?.length ? motivoCompletamento(tab.scheda.completamenti)

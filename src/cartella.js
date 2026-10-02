@@ -12,6 +12,9 @@
 import { nomeFileEsportazione } from './character.js';
 
 const SUFFISSO = /_liv(\d+)_(\d{4}-\d{2}-\d{2})\.json$/;
+/** Nome di un file personaggio: lo stesso dell'export, «Nome_livN_AAAA-MM-GG.json» (src/character.js). */
+// maiuscole, accenti e apostrofi restano; niente separatori di cartella né caratteri vietati da Windows
+export const NOME_FILE = /^(?![.-])[^\\/:*?"<>|\s\u0000-\u001f\u007f]{1,120}_liv\d{1,2}_\d{4}-\d{2}-\d{2}\.json$/u;
 /** Nome del personaggio nel nome del file: «Lucas_liv6_2026-09-28.json» → «Lucas». */
 export const chiaveDaFile = (file) => String(file).replace(SUFFISSO, '');
 /** Chiave di un personaggio del browser: il «Nome» del file che l'export gli darebbe. */

@@ -1599,3 +1599,6 @@ body.con-sfondo::before {
 .anteprima-colpo ol { margin: 0.3rem 0; padding-left: 1.4rem; }
 .anteprima-colpo li { margin: 0.25rem 0; }
 .tempra-colpo select { font-size: 0.9rem; }
+
+/* «← Torna al tavolo» nella barra della scheda aperta dalla plancia (src/ui/ritorno.js) */
+.btn-torna-tavolo { font-weight: 700; border-color: var(--accento); color: var(--accento); }

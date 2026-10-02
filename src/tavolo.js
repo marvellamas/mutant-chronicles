@@ -1,12 +1,12 @@
 // Tavolo del Master, pezzo 1 (docs/tavolo-direttore.md): i dati di una scheda compatta della plancia
 // a partire dal file di un personaggio in personaggi/. Funzione pura e nessun calcolo nuovo: valori
 // effettivi e provenienze vengono da calcolaScheda con la sessione del file, come nella scheda digitale.
-import { deserializzaPersonaggio, normalizza, serializza } from './character.js';
+import { deserializzaPersonaggio, normalizza, serializza, nomeFileEsportazione, FORMATO_FILE, VERSIONE_FORMATO } from './character.js';
 import { calcolaScheda } from './calc.js';
 import { massimiSessione, allineaSessione, descriviFerite } from './sessione.js';
 import { testoDanno } from './stampa.js';
 import { aggiungiDanno } from './equipaggiamento.js';
-import { chiaveDaFile } from './cartella.js';
+import { chiaveDaFile, NOME_FILE } from './cartella.js';
 
 /**
  * Scheda compatta di un PG per la plancia.
@@ -76,4 +76,31 @@ export function testoConSessione(testo, valori, dati) {
   const riposo = calcolaScheda({ creazione: scelte, livelli: p.livelli ?? [] }, dati);
   const sessione = allineaSessione({ ...allineaSessione(p.sessione, massimiSessione(riposo, scelte, dati)), ...valori }, massimiSessione(riposo, scelte, dati));
   return serializza(scelte, { versioniDati: file.versioni_dati, livelli: p.livelli ?? [], sessione, calendario: p.calendario });
+}
+
+/**
+ * «Aggiungi PG al tavolo»: un file scelto dal master (quello di «SALVA PG») validato come fa «Importa»
+ * (src/character.js → deserializzaPersonaggio, normalizza). Il nome del file resta se segue il formato
+ * dell'export; altrimenti si rifà dal nome e dal livello nel JSON (con la data di oggi). Il testo resta
+ * quello del file se è già nel formato attuale; un formato precedente si migra con la serializzazione dell'app.
+ * @returns {{ file, testo, nome, livello, rinominato: boolean } | { errore: string }}
+ */
+export function pgDaAggiungere(nomeFile, testo, dati, adesso = new Date()) {
+  let p;
+  try {
+    p = deserializzaPersonaggio(testo);
+  } catch (e) {
+    return { errore: e.message };
+  }
+  const { scelte } = normalizza(p.creazione, dati);
+  const nome = String(scelte.nome ?? '').trim();
+  if (!nome) return { errore: 'Il personaggio non ha un nome.' };
+  const livelli = p.livelli ?? [];
+  const livello = 1 + livelli.length;
+  const obj = JSON.parse(testo);
+  const attuale = obj.formato === FORMATO_FILE && obj.versione === VERSIONE_FORMATO;
+  const versioniDati = obj.versioni_dati ?? Object.fromEntries(Object.entries(dati).map(([k, v]) => [k, v?.versione_manuale]));
+  const testoFinale = attuale ? testo : serializza(scelte, { versioniDati, livelli, sessione: p.sessione, calendario: p.calendario });
+  const buono = NOME_FILE.test(nomeFile) && chiaveDaFile(nomeFile) === chiaveDaFile(nomeFileEsportazione(nome, livello, adesso));
+  return { file: buono ? nomeFile : nomeFileEsportazione(nome, livello, adesso), testo: testoFinale, nome, livello, rinominato: !buono };
 }
