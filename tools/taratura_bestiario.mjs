@@ -8,8 +8,12 @@
 // copiata qui perché main non ha quei file (il branch non si tocca). Il controllo finale confronta i numeri
 // con i file del bestiario umano del branch (git show origin/tavolo-direttore:esempi/nemici/umani/…): devono
 // coincidere.
-//   node tools/taratura_bestiario.mjs        → tabelle per livello e per archetipo, scontri e basi, in Markdown
-//   node tools/taratura_bestiario.mjs --json → gli stessi numeri in JSON
+// Il modello dello scontro (Appendice A.3) misura per ogni grado, contro un gruppo di 7 PG del livello di
+// riferimento, i Round di resistenza della creatura e i Round che le servono per abbattere un PG; esce con errore se
+// un grado o un Boss cade fuori dagli intervalli decisi da Marcello il 2 ottobre 2026 (OBIETTIVI).
+//   node tools/taratura_bestiario.mjs        → tabelle per livello e per archetipo, scala, Boss, bilancio, basi e
+//                                              bestiario umano scalato, in Markdown
+//   node tools/taratura_bestiario.mjs --json → personaggi, confronto e scala in JSON
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
@@ -267,64 +271,156 @@ export function confrontoConBranch(righe) {
 }
 
 // --- modello degli scontri (Bestiario, §2.3 e Appendice A.3) ----------------------------------------------------
+//
+// Ritaratura del 2 ottobre 2026 (decisione di Marcello): gruppo di 7 PG. Per ogni grado due misure:
+// - Round di resistenza: quanti Round un singolo nemico del grado resiste contro 7 PG del livello di riferimento
+//   che attaccano con le loro armi e i loro VA; il PG bersaglio tiene la propria AzP per la Parata e non attacca;
+// - Round per abbattere un PG: quanti Round il nemico, da solo, impiega a portare a 0 PV un PG del livello di
+//   riferimento, che para il primo colpo di ogni Round con le sue Difese (Giocatore §5.9).
+// Obiettivi dei Round di resistenza: Minore 1–2, Semplice 2–4, Medio 3–6, Potente 5–10, Molto potente 6–15, Boss 10–20.
+
+/** Gradi della scala (Bestiario, §2.1). Se cambia la tabella del manuale, si cambia qui (e viceversa). */
+export const GRADI = [
+  { nome: 'Minore', livello: 2, pv: 21, va: 11, difese: 9, ar: 1, danno: '1d8+2', azioni: 1 },
+  { nome: 'Semplice', livello: 5, pv: 42, va: 13, difese: 11, ar: 2, danno: '1d8+3', azioni: 2 },
+  { nome: 'Medio', livello: 8, pv: 65, va: 15, difese: 13, ar: 3, danno: '2d6+2', azioni: 2 },
+  { nome: 'Potente', livello: 12, pv: 180, va: 17, difese: 15, ar: 4, danno: '2d8+2', azioni: 2 },
+  { nome: 'Molto potente', livello: 16, pv: 265, va: 19, difese: 17, ar: 5, danno: '2d8+3', azioni: 2 },
+];
+/** Obiettivi dei Round di resistenza contro 7 PG, per grado e per il Boss. */
+export const OBIETTIVI = { Minore: [1, 2], Semplice: [2, 4], Medio: [3, 6], Potente: [5, 10], 'Molto potente': [6, 15], Boss: [10, 20] };
+/** PG del gruppo. */
+export const N_PG = 7;
+/** Round di resistenza a cui si tara il Boss (dentro 10–20). */
+export const ROUND_BOSS = 12;
+/** Bilancio «Equilibrato» (§2.3): forza delle creature rispetto a quella del gruppo (legge del quadrato). */
+export const DIFFICOLTA = { facile: 0.3, normale: 0.6, duro: 1 };
 
 /**
- * Gradi della scala (Bestiario, §2.1): valori arrotondati della taratura al livello di riferimento. Se cambia la
- * tabella del manuale, si cambia qui (e viceversa).
+ * Basi del Bestiario (§3) come modifiche del grado: PV moltiplicati (arrotondati a 1), AR e Difese sommate,
+ * danno dell'attacco principale per grado. Il peso resta vicino a 1 (Appendice A.4).
  */
-export const GRADI = [
-  { nome: 'Minore', livello: 2, pv: 19, va: 11, difese: 9, ar: 1, danno: '1d6+2', azioni: 1 },
-  { nome: 'Semplice', livello: 5, pv: 28, va: 13, difese: 11, ar: 3, danno: '1d8+1', azioni: 1 },
-  { nome: 'Medio', livello: 8, pv: 37, va: 15, difese: 13, ar: 3, danno: '1d8+2', azioni: 1 },
-  { nome: 'Potente', livello: 12, pv: 47, va: 17, difese: 15, ar: 3, danno: '1d8+2', azioni: 2 },
-  { nome: 'Molto potente', livello: 16, pv: 56, va: 19, difese: 17, ar: 3, danno: '1d10+2', azioni: 2 },
-];
-
-/** Basi del Bestiario (§3): PV, AR, Difese e danno dell'attacco principale per grado, come nelle tabelle del manuale. */
+export const MOD_BASI = {
+  Insettoide: { pv: 0.9, ar: 1, difese: 0, danni: ['1d8+1', '1d8+2', '2d6+1', '2d8+1', '2d8+2'] },
+  Aracnoide: { pv: 0.9, ar: 0, difese: 1, danni: ['1d6+2', '1d8+2', '2d6+2', '2d8+2', '2d8+3'] },
+  'Umanoide mostruoso': { pv: 1.1, ar: -1, difese: -2, danni: ['1d8+3', '1d10+3', '2d6+3', '2d8+3', '2d8+4'] },
+};
 export const BASI = {
   Umano: GRADI.map((g) => ({ ...g })),
-  Insettoide: GRADI.map((g, i) => ({ ...g, pv: [17, 25, 33, 42, 50][i], ar: [2, 4, 4, 4, 4][i], danno: ['1d6+1', '1d8+1', '1d8+2', '1d8+2', '1d10+2'][i] })),
-  Aracnoide: GRADI.map((g, i) => ({ ...g, pv: [17, 25, 33, 42, 50][i], difese: g.difese + 1, ar: [1, 2, 2, 2, 2][i], danno: ['1d6+1', '1d6+2', '1d8+2', '1d8+2', '1d10+2'][i] })),
-  'Umanoide mostruoso': GRADI.map((g, i) => ({ ...g, pv: [23, 34, 45, 56, 67][i], difese: g.difese - 2, ar: [1, 2, 2, 2, 2][i], danno: ['1d6+2', '1d8+1', '1d8+2', '1d8+2', '1d10+2'][i] })),
+  ...Object.fromEntries(Object.entries(MOD_BASI).map(([n, m]) => [n, GRADI.map((g, i) => ({
+    ...g, pv: Math.round(g.pv * m.pv), ar: Math.max(1, g.ar + m.ar), difese: g.difese + m.difese, danno: m.danni[i],
+  }))])),
 };
 
-// Prova d20 ≤ VA: l'1 riesce e il 20 fallisce sempre; con VA 20 o più successo automatico (Giocatore §1.6–1.7)
-const probabilita = (va) => (va >= 20 ? 1 : Math.min(19, Math.max(1, Math.floor(va))) / 20);
-/**
- * Danno atteso per Round di `a` contro `d`: Azioni Principali × probabilità di colpire × (danno medio − AR del
- * bersaglio, almeno 1). Le Difese non contano: costano un'Azione Principale (Giocatore §5.9) e nel conto le
- * Azioni vanno agli attacchi, per entrambe le parti.
- */
-export const dannoPerRound = (a, d) => a.azioni * probabilita(a.va) * Math.max(1, (a.dannoMedio ?? dannoMedio(a.danno)) - d.ar);
-/** Forza di un combattente contro un avversario: PV × danno per Round (legge del quadrato di Lanchester). */
-export const forza = (a, d) => a.pv * dannoPerRound(a, d);
-/** Rapporto con cui si definisce «equilibrato»: il gruppo vince spendendo risorse (forza nemica = 60% della sua). */
-export const EQUILIBRIO = 0.6;
-/**
- * Quanti nemici del grado valgono uno scontro equilibrato contro 4 PG di livello `livello`:
- * N · √forza(nemico) = √EQUILIBRIO · 4 · √forza(PG).
- */
-export function quanti(grado, pg) {
-  const n = { ...grado, dannoMedio: dannoMedio(grado.danno) };
-  return (Math.sqrt(EQUILIBRIO) * 4 * Math.sqrt(forza(pg, n))) / Math.sqrt(forza(n, pg));
+/** Distribuzione di un danno «2d6+3»: Map valore → probabilità. */
+export function distribuzione(formula) {
+  let d = new Map([[0, 1]]);
+  const s = String(formula).replace(/\s+/g, '');
+  for (const [, n, f] of s.matchAll(/(\d+)d(\d+)/g)) {
+    for (let k = 0; k < Number(n); k++) {
+      const nd = new Map();
+      for (const [v, p] of d) for (let x = 1; x <= Number(f); x++) nd.set(v + x, (nd.get(v + x) ?? 0) + p / Number(f));
+      d = nd;
+    }
+  }
+  const fisso = /d\d+([+-]\d+)$/.exec(s);
+  return new Map([...d].map(([v, p]) => [v + (fisso ? Number(fisso[1]) : 0), p]));
 }
-/** Peso di una base rispetto al suo grado contro i PG del livello di riferimento: √forza(base) / √forza(grado). */
-export function pesoBase(base, grado, pg) {
-  const b = { ...base, dannoMedio: dannoMedio(base.danno) };
-  const g = { ...grado, dannoMedio: dannoMedio(grado.danno) };
-  return Math.sqrt(forza(b, pg)) / Math.sqrt(forza(g, pg));
+/**
+ * Danno medio dopo l'Armatura, colpo per colpo: media di max(0, danno − AR) sui risultati dei dadi (Giocatore
+ * §5.13: mai sotto 0). Con `parato` il danno è dimezzato per eccesso prima dell'Armatura (Parata, §5.9).
+ */
+export function dannoDopoAR(formula, ar, parato = false) {
+  let e = 0;
+  for (const [v, p] of distribuzione(formula)) e += p * Math.max(0, (parato ? Math.ceil(v / 2) : v) - ar);
+  return e;
+}
+/**
+ * Probabilità di colpire: d20 ≤ VA; l'1 riesce e il 20 fallisce sempre. Gli attacchi si tirano anche con VA 20 o
+ * più (A.78, regole.json → prova.tiro_sempre), quindi il massimo è 19/20.
+ */
+export const probabilita = (va) => Math.min(19, Math.max(1, Math.floor(va))) / 20;
+/**
+ * Danno atteso per Round di `k` attacchi (VA, formula) contro un bersaglio con AR `ar` che para il primo colpo
+ * del Round con probabilità `q` (una sola AzP per la Parata): k · p · E − P(almeno un colpo) · q · (E − E½).
+ */
+export function dannoPerRound(k, va, formula, ar, q = 0) {
+  const p = probabilita(va);
+  const pieno = dannoDopoAR(formula, ar);
+  const mezzo = dannoDopoAR(formula, ar, true);
+  return k * p * pieno - (1 - (1 - p) ** k) * q * (pieno - mezzo);
+}
+
+/**
+ * Le due misure di un nemico `n` contro i PG `pg` (archetipi del livello di riferimento, mescolati in parti uguali).
+ * @param opzioni { nPg, para: il PG bersaglio para (gioca bene), bossPara: il nemico para il primo colpo del Round }
+ */
+export function misureScontro(n, pg, { nPg = N_PG, para = true, bossPara = false } = {}) {
+  const azioniPg = pg.reduce((s, a) => s + a.azioni, 0) / pg.length;
+  // AzP d'attacco del gruppo: il PG bersaglio tiene un'AzP per la Parata
+  const attacchi = nPg * azioniPg - (para ? 1 : 0);
+  const colpo = pg.map((a) => ({ p: probabilita(a.va), pieno: dannoDopoAR(a.danno, n.ar), mezzo: dannoDopoAR(a.danno, n.ar, true) }));
+  const perAttacco = colpo.reduce((s, x) => s + x.p * x.pieno, 0) / colpo.length;
+  const nessunColpo = colpo.reduce((s, x) => s * (1 - x.p) ** (attacchi / colpo.length), 1);
+  const risparmio = colpo.reduce((s, x) => s + (x.pieno - x.mezzo), 0) / colpo.length;
+  const gruppo = attacchi * perAttacco - (1 - nessunColpo) * (bossPara ? probabilita(n.difese) : 0) * risparmio;
+  const abbatte = (q) => pg.reduce((s, a) => s + a.pv / dannoPerRound(n.azioni, n.va, n.danno, a.ar, q ? probabilita(a.difese) : 0), 0) / pg.length;
+  return { resistenza: n.pv / gruppo, gruppo, abbatte: abbatte(para), abbatteSenzaParata: abbatte(false) };
+}
+
+/**
+ * Boss del grado (§2.5): stessi valori e attacchi, para il primo colpo di ogni Round (un'AzP in più) e ha i PV per
+ * resistere ROUND_BOSS Round contro 7 PG, arrotondati a 5.
+ */
+export function boss(grado, pg) {
+  const perPv = misureScontro({ ...grado, pv: 1 }, pg, { bossPara: true }).resistenza;
+  const pv = Math.round(ROUND_BOSS / perPv / 5) * 5;
+  const b = { ...grado, pv, azioni: grado.azioni, bossPara: true };
+  const m = misureScontro(b, pg, { bossPara: true });
+  return { ...b, ...m, pgGiuBene: m.resistenza / m.abbatte, pgGiuMale: m.resistenza / m.abbatteSenzaParata };
+}
+
+/** Forza nella legge del quadrato: PV × danno per Round contro l'avversario, senza Difese (costano Azioni a entrambi). */
+const forzaNemico = (n, pg) => n.pv * pg.reduce((s, a) => s + dannoPerRound(n.azioni, n.va, n.danno, a.ar), 0) / pg.length;
+const forzaPg = (pg, n) => pg.reduce((s, a) => s + a.pv * a.azioni * probabilita(a.va) * dannoDopoAR(a.danno, n.ar), 0) / pg.length;
+/** Quanti nemici `n` per uno scontro con il rapporto di forza `r` contro 7 PG: N · √F(nemico) = √r · 7 · √F(PG). */
+export const quanti = (n, pg, r) => (Math.sqrt(r) * N_PG * Math.sqrt(forzaPg(pg, n))) / Math.sqrt(forzaNemico(n, pg));
+/** Peso di una base rispetto al suo grado: √F(base) / √F(grado), contro i PG del livello di riferimento. */
+export const pesoBase = (b, g, pg) => Math.sqrt(forzaNemico(b, pg) / forzaPg(pg, b)) / Math.sqrt(forzaNemico(g, pg) / forzaPg(pg, g));
+
+/**
+ * Bestiario umano scalato (§3.2): PV del convertitore × moltiplicatore (a quarti), AzP del grado, arma propria con
+ * il bonus di grado al danno. Il moltiplicatore porta i Round di resistenza a quelli del grado, il bonus i Round per
+ * abbattere un PG; misure medie con le armi e le protezioni dei quattro archetipi.
+ */
+export function umaniScalati(grado, pg) {
+  const conBonus = (f, bonus) => `${f}+${bonus}`.replace(/([+-]\d+)\+(\d+)$/, (_, x, y) => `+${Number(x) + Number(y)}`);
+  const medie = (molt, bonus) => {
+    const prove = pg.map((a) => misureScontro({ pv: Math.round(a.pv * molt), va: a.va, difese: a.difese, ar: a.ar, azioni: grado.azioni, danno: conBonus(a.danno, bonus) }, pg));
+    return { resistenza: prove.reduce((t, x) => t + x.resistenza, 0) / prove.length, abbatte: prove.reduce((t, x) => t + x.abbatte, 0) / prove.length };
+  };
+  const g = misureScontro(grado, pg);
+  let molt = 1;
+  for (let m = 1; m <= 10; m += 0.25) if (Math.abs(medie(m, 0).resistenza - g.resistenza) < Math.abs(medie(molt, 0).resistenza - g.resistenza)) molt = m;
+  let bonus = 0;
+  for (let x = 0; x <= 8; x++) if (Math.abs(medie(molt, x).abbatte - g.abbatte) < Math.abs(medie(molt, bonus).abbatte - g.abbatte)) bonus = x;
+  return { molt, bonus, ...medie(molt, bonus) };
 }
 
 const uno = (x) => (Number.isInteger(x) ? String(x) : x.toFixed(1)).replace('.', ',');
+const due = (x) => x.toFixed(2).replace('.', ',');
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const { dati, errori } = await datiReali();
   if (errori.length) throw new Error(`dati non validi: ${errori.length} errori`);
   const righe = taratura(dati);
   const confronto = confrontoConBranch(righe);
+  const pgDi = Object.fromEntries(righe.map((r) => [r.livello, r.archetipi]));
+  const scala = GRADI.map((g) => ({ ...g, ...misureScontro(g, pgDi[g.livello]), boss: boss(g, pgDi[g.livello]) }));
   if (process.argv.includes('--json')) {
-    console.log(JSON.stringify({ righe, confronto }, null, 2));
+    console.log(JSON.stringify({ righe, confronto, scala }, null, 2));
   } else {
+    console.log('A.2 — Media dei quattro archetipi:');
     console.log('| Livello | PV | VA | Difese | AR | Danno medio | Iniziativa | Salvezze | AzP |');
     console.log('| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |');
     for (const r of righe) {
@@ -336,19 +432,48 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
       console.log(`${r.livello}° livello: ${r.archetipi.map((a) => `${a.tipo} PV ${a.pv} · ${a.arma} VA ${a.va} ${a.danno} · Difese ${a.difese} · AR ${a.ar}${a.problemi.length ? ` · PROBLEMI: ${a.problemi.join('; ')}` : ''}`).join(' | ')}`);
     }
     console.log('');
-    const media = Object.fromEntries(righe.map((r) => [r.livello, r.media]));
+    console.log(`Scala contro ${N_PG} PG del livello di riferimento (§2.1, Appendice A.3):`);
+    console.log('| Grado | Livello | PV | VA | Difese | AR | Danno | Danno medio | AzP | Round di resistenza | Obiettivo | Round per abbattere un PG | senza Parata |');
+    console.log('| :---- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |');
+    for (const s of scala) {
+      const o = OBIETTIVI[s.nome];
+      console.log(`| ${s.nome} | ${s.livello}° | ${s.pv} | ${s.va} | ${s.difese} | ${s.ar} | ${s.danno} | ${uno(dannoDopoAR(s.danno, 0))} | ${s.azioni} | ${uno(Math.round(s.resistenza * 10) / 10)} | ${o.join('–')}${s.resistenza < o[0] || s.resistenza > o[1] ? ' FUORI' : ''} | ${uno(Math.round(s.abbatte * 10) / 10)} | ${uno(Math.round(s.abbatteSenzaParata * 10) / 10)} |`);
+    }
     console.log('');
-    console.log('Quanti nemici per grado valgono uno scontro equilibrato contro 4 PG del livello (§2.3):');
+    console.log(`Boss del grado (PV per ${ROUND_BOSS} Round, Parata del primo colpo del Round):`);
+    console.log('| Grado | PV | ×PV del grado | Round di resistenza | Round per abbattere un PG | senza Parata | PG a terra in Round di resistenza (Parata) | (senza Parata) |');
+    console.log('| :---- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |');
+    for (const s of scala) {
+      const b = s.boss;
+      console.log(`| ${s.nome} | ${b.pv} | ${due(b.pv / s.pv)} | ${uno(Math.round(b.resistenza * 10) / 10)} | ${uno(Math.round(b.abbatte * 10) / 10)} | ${uno(Math.round(b.abbatteSenzaParata * 10) / 10)} | ${uno(Math.round(b.pgGiuBene * 10) / 10)} | ${uno(Math.round(b.pgGiuMale * 10) / 10)} |`);
+    }
+    console.log('');
+    console.log(`Equilibrato contro ${N_PG} PG del livello di riferimento: creature del grado per facile / normale / duro (§2.3):`);
+    console.log('| Grado | Facile | Normale | Duro |');
+    console.log('| :---- | :---: | :---: | :---: |');
+    for (const s of scala) console.log(`| ${s.nome} | ${Object.values(DIFFICOLTA).map((r) => uno(Math.round(quanti(s, pgDi[s.livello], r) * 10) / 10)).join(' | ')} |`);
+    console.log('');
+    console.log(`Creature per uno scontro normale contro ${N_PG} PG di ogni livello di riferimento (gruppi misti, §2.3):`);
     console.log(`| Livello dei PG | ${GRADI.map((g) => g.nome).join(' | ')} |`);
     console.log(`| :---: | ${GRADI.map(() => ':---:').join(' | ')} |`);
-    for (const g of GRADI) console.log(`| ${g.livello} | ${GRADI.map((x) => uno(Math.round(quanti(x, media[g.livello]) * 10) / 10)).join(' | ')} |`);
+    for (const g of GRADI) console.log(`| ${g.livello} | ${GRADI.map((x) => uno(Math.round(quanti(x, pgDi[g.livello], DIFFICOLTA.normale) * 10) / 10)).join(' | ')} |`);
     console.log('');
-    console.log('Peso delle basi rispetto al grado, contro i PG del livello di riferimento (§3, 1 = uguale):');
-    for (const [n, gradi] of Object.entries(BASI)) console.log(`| ${n} | ${gradi.map((b, i) => uno(Math.round(pesoBase(b, GRADI[i], media[GRADI[i].livello]) * 100) / 100)).join(' | ')} |`);
+    console.log('Basi (§3): PV, AR, Difese, danno per grado; peso rispetto al grado (1 = uguale); Round di resistenza e per abbattere un PG:');
+    for (const [n, gradi] of Object.entries(BASI)) {
+      console.log(`| ${n} | ${gradi.map((b, i) => `PV ${b.pv} AR ${b.ar} Dif ${b.difese} ${b.danno} · peso ${due(pesoBase(b, GRADI[i], pgDi[GRADI[i].livello]))} · res ${uno(Math.round(misureScontro(b, pgDi[GRADI[i].livello]).resistenza * 10) / 10)} · abb ${uno(Math.round(misureScontro(b, pgDi[GRADI[i].livello]).abbatte * 10) / 10)}`).join(' | ')} |`);
+    }
+    console.log('');
+    console.log('Bestiario umano scalato (§3.2): moltiplicatore dei PV e bonus di grado al danno, con le AzP del grado:');
+    for (const g of GRADI) {
+      const u = umaniScalati(g, pgDi[g.livello]);
+      console.log(`| ${g.nome} | PV ×${String(u.molt).replace('.', ',')} | danno +${u.bonus} | AzP ${g.azioni} | res ${uno(Math.round(u.resistenza * 10) / 10)} | abb ${uno(Math.round(u.abbatte * 10) / 10)} |`);
+    }
     console.log('');
     console.log(confronto === null ? 'Confronto con il branch: origin/tavolo-direttore non raggiungibile.'
       : `Confronto con il bestiario umano del branch: ${confronto.filter((c) => c.uguale).length} su ${confronto.length} uguali${confronto.some((c) => !c.uguale) ? ` (diversi: ${confronto.filter((c) => !c.uguale).map((c) => c.file).join(', ')})` : ''}.`);
   }
-  const ko = righe.flatMap((r) => r.archetipi).filter((a) => a.problemi.length).length + (confronto?.filter((c) => !c.uguale).length ?? 0);
+  const fuori = scala.filter((s) => s.resistenza < OBIETTIVI[s.nome][0] || s.resistenza > OBIETTIVI[s.nome][1]).length
+    + scala.filter((s) => s.boss.resistenza < OBIETTIVI.Boss[0] || s.boss.resistenza > OBIETTIVI.Boss[1]).length;
+  const ko = righe.flatMap((r) => r.archetipi).filter((a) => a.problemi.length).length + (confronto?.filter((c) => !c.uguale).length ?? 0) + fuori;
   process.exitCode = ko ? 1 : 0;
 }

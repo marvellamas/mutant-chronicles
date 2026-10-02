@@ -514,6 +514,17 @@ function tavoloRigaInventario(ctx, r) {
       'aria-label': `${d > 0 ? 'Aggiungi' : 'Togli'} un caricatore di riserva a ${r.nome}`, onclick: () => ctx.azioni.munizioni(r.uid, 'riserve', d) }, d > 0 ? '+' : '−');
     nodi.push(h('div', { class: 'pi-voce' }, h('span', {}, info?.modo === 'caricatore' ? 'Caricatori pieni di riserva ' : 'Riserve '), h('strong', {}, String(m.riserve ?? 0)), h('span', { class: 'pi-comandi' }, b(-1), b(1))));
   }
+  // §7.8: moduli integrati con alimentazione distinta (lanciagranate della Punisher…): colpi del modulo e
+  // munizioni compatibili dell'Inventario; la ricarica e la scelta della granata sono nella tab Combattimento
+  for (const uid of Object.keys(ctx.massimi.caricatori ?? {}).filter((k) => k.startsWith(`${r.uid}:`))) {
+    const info = ctx.massimi.ricarica?.[uid];
+    const prof = (ctx.tab.scheda.equipaggiamento?.armi ?? []).find((w) => w.uid === uid);
+    const m = ctx.sessione.munizioni?.[uid] ?? { colpi: 0 };
+    nodi.push(h('div', { class: 'pi-voce modulo-munizioni' },
+      h('span', {}, `${prof?.nome ?? 'Modulo'}: `, h('strong', {}, `${m.colpi}`), ` / ${ctx.massimi.caricatori[uid] ?? '—'} colpi`,
+        prof?.granataCaricata ? ` · ${prof.granataCaricata.nome}` : ''),
+      info ? h('small', { class: 'nota' }, info.scorte.length ? ` · compatibili: ${info.scorte.map((x) => `${x.nome} ×${disponibili(x, ctx.sessione.scorte)}`).join(', ')}` : ' · nessuna munizione compatibile nell’Inventario') : null));
+  }
   // NEC (Equipaggiamento 0.5, §5.4): riserva attuale come i PM dei contenitori, con − e + e la provenienza
   for (const x of riserveNec([r.voce], ctx.dati)) nodi.push(rigaNec(ctx, r, x));
   const kit = consumabili([r.voce], ctx.dati)[0];
@@ -1493,6 +1504,11 @@ const MODI_RICARICA = {
  * con il motivo, se non c'è niente di compatibile. Le altre riserve si contano a mano.
  */
 function pannelloMunizioni(ctx, a, { riserveModificabili = true } = {}) {
+  // Armamenti §7.20.3: una granata da lancio non ha caricatore; ogni lancio consuma una granata della voce
+  if (a.granata) {
+    return h('div', { class: 'munizioni-tavolo' }, h('div', { class: 'riga-munizioni' }, h('span', {}, 'Granate ', h('strong', {}, String(a.granata.disponibili ?? a.granata.quantita)), ` / ${a.granata.quantita}`)),
+      h('small', { class: 'nota' }, 'Ogni lancio («Attacca!») ne consuma una. La stessa granata si carica nei lanciagranate compatibili (§7.20.3); la quantità si cambia nell’Inventario.'));
+  }
   const m = ctx.sessione.munizioni[a.uid] ?? { colpi: 0, riserve: 0 };
   const capacita = a.munizioni?.capacita ?? null;
   const info = a.tipo === 'arma_distanza' ? ctx.massimi.ricarica?.[a.uid] ?? null : null;
@@ -1521,6 +1537,12 @@ function pannelloMunizioni(ctx, a, { riserveModificabili = true } = {}) {
       m.parziali?.length ? `Caricatori parziali: ${m.parziali.map((n) => `${n} colpi`).join(', ')}` : null,
       m.parziali?.length && m.vuoti ? ' · ' : null,
       m.vuoti ? `${info.vuoto?.nome ?? 'Caricatori vuoti'}: ×${m.vuoti}` : null) : null,
+    // §7.20.3: un lanciagranate tiene un tipo di granata alla volta; cambiare tipo lo scarica (le granate tornano nell’Inventario)
+    info?.granate && info.scorte.length ? h('label', { class: 'riga-munizioni campo-inline' }, h('span', {}, 'Granata caricata '),
+      h('select', { 'aria-label': `Granata caricata in ${a.nome}`, onchange: (e) => ctx.azioni.scegliGranata(a.uid, e.target.value) },
+        a.granataCaricata && !a.granataCaricata.uid ? h('option', { value: '', selected: true, disabled: true }, `${a.granataCaricata.nome} (di partenza)`) : null,
+        info.scorte.map((x) => h('option', { value: x.uid, selected: a.granataCaricata?.uid === x.uid }, `${x.nome} ×${disponibili(x, ctx.sessione.scorte)}`))),
+      h('small', { class: 'sigla' }, ' cambiare tipo scarica il lanciatore')) : null,
     info && info.modo !== 'caricatore' && info.modo !== null ? h('p', { class: 'nota riga-munizioni' },
       info.scorte.length ? `${info.modo === 'cella' ? 'Celle' : 'Munizioni sciolte'}: ${info.scorte.map((x) => `${x.nome} ×${disponibili(x, ctx.sessione.scorte)}`).join(', ')}`
         : `Nessuna ${info.modo === 'cella' ? 'cella' : 'munizione'} compatibile nell’inventario.`) : null,

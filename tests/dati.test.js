@@ -38,7 +38,9 @@ test('i TODO(Davide) sono elencabili', () => {
   assert.equal(todo.some((t) => t.percorso.startsWith('classi.json')), false);
   // tutte chiuse dalle risposte ai 19 quesiti (E&L del 29/09); restano le scelte sui Rituali (per-davide A.74); A.78 chiusa il 02/10 (decisione 71)
   assert.ok(todo.filter((t) => t.percorso.startsWith('regole.json')).every((t) => (/^regole\.json\.rituali/.test(t.percorso) && /A\.74/.test(t.testo))    // rinforzi indossati da soli e armatura tolta (richiesta di Davide del 02/10, per-davide A.80)
-    || (/^regole\.json\.rinforzi/.test(t.percorso) && /A.80/.test(t.testo))));
+    || (/^regole\.json\.rinforzi/.test(t.percorso) && /A.80/.test(t.testo))
+    // bonus di Caratteristica al danno di granate e razzi (per-davide A.86, 02/10)
+    || (/^regole\.json\.danno_caratteristica\.esplosivi/.test(t.percorso) && /A\.86/.test(t.testo))));
   // durate delle Tecniche Interiori: decise dal master il 26/09/2026 (A.4 del Doc E&L); restano gli
   // effetti di Pelle di Rinoceronte (A.81) e di Onda Interiore (A.82)
   assert.deepEqual(todo.filter((t) => t.percorso.startsWith('tecniche_interiori.json')).map((t) => /A.8[12]/.test(t.testo ?? t.valore ?? '')), [true, true]);

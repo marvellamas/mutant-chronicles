@@ -42,7 +42,7 @@ import { valoreTiro } from './tiri.js';
 import { SENZ_ARMI } from './attacco.js';
 import { saldoIniziale } from './dotazioni.js';
 import { infoRicarica, eseguiRicarica, perOperazione } from './ricarica.js';
-import { caricatori, contenitori, normalizzaEquipaggiamento, catalogo, risolvi, riserveNec } from './equipaggiamento.js';
+import { caricatori, contenitori, normalizzaEquipaggiamento, catalogo, risolvi, riserveNec, granateDaLancio } from './equipaggiamento.js';
 import { oggettiConPi } from './protezione.js';
 import { attivaTecnica, nuovoRound, terminaTecnica, allineaTecnicheAttive, tecnicaDi } from './tecniche.js';
 
@@ -76,6 +76,8 @@ export function massimiSessione(scheda, creazione, dati) {
     // inserimento singolo: 1 munizione per operazione, 3 con Ricarica Migliorata (E&L 19)
     ricarica: dati.equipaggiamento ? Object.fromEntries(Object.entries(infoRicarica(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati))
       .map(([uid, x]) => [uid, x.singolo ? { ...x, perOperazione: perOperazione(x, (scheda?.talentiLiberi ?? []).map((t) => t.id), dati) } : x])) : {},
+    // granate da lancio della lista (uid → quantità): un lancio a mano consuma una granata (Armamenti §7.20.3)
+    granate: dati.equipaggiamento ? granateDaLancio(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati) : {},
     // capacità di ogni contenitore di Chroma (uid → PM)
     contenitori: Object.fromEntries(contenitori(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati).map((c) => [c.uid, c.capacita])),
     // E&L 2 (A.19): acquistato pieno (regole.json → chroma); trovato con i PM impostati nella voce
@@ -235,6 +237,8 @@ function voceMunizioni(v) {
   const parziali = Array.isArray(v.parziali) ? v.parziali.filter((n) => Number.isInteger(n) && n > 0) : [];
   if (parziali.length) out.parziali = parziali;
   if (Number.isInteger(v.vuoti) && v.vuoti > 0) out.vuoti = v.vuoti;
+  // §7.20.3: granata caricata in un lanciagranate (uid della voce)
+  if (typeof v.tipo === 'string' && v.tipo) out.tipo = v.tipo;
   return out;
 }
 
@@ -242,7 +246,7 @@ function voceMunizioni(v) {
 function allineaScorte(v, m) {
   const src = isOggetto(v) ? v : {};
   if (!m.ricarica) return Object.fromEntries(Object.entries(src).filter(([, n]) => Number.isInteger(n) && n > 0));
-  const quantita = new Map(Object.values(m.ricarica).flatMap((x) => x.scorte.map((s) => [s.uid, s.quantita])));
+  const quantita = new Map([...Object.values(m.ricarica).flatMap((x) => x.scorte.map((s) => [s.uid, s.quantita])), ...Object.entries(m.granate ?? {})]);
   const out = {};
   for (const [uid, n] of Object.entries(src)) if (quantita.has(uid) && Number.isInteger(n) && n > 0) out[uid] = Math.min(n, quantita.get(uid));
   return out;
@@ -371,6 +375,48 @@ export function variaMunizioni(sessione, uid, campo, delta, m) {
   const s = allineaSessione(sessione, m);
   const x = s.munizioni[uid] ?? { colpi: 0, riserve: 0 };
   return modificaSessione(s, { munizioni: { ...s.munizioni, [uid]: { ...x, [campo]: Math.max(0, x[campo] + delta) } } }, m);
+}
+
+/**
+ * Colpi sparati da «Attacca!»: dal caricatore dell'arma; per una granata da lancio (Armamenti §7.20.3) dalla
+ * quantità della voce, come le munizioni sciolte (sessione → scorte), entro la quantità.
+ */
+export function consumaColpi(sessione, uid, n, m) {
+  const s = allineaSessione(sessione, m);
+  if (m.granate?.[uid] !== undefined && m.caricatori?.[uid] === undefined) {
+    const usate = Math.min(m.granate[uid], (s.scorte[uid] ?? 0) + n);
+    return modificaSessione(s, { scorte: { ...s.scorte, [uid]: usate } }, m);
+  }
+  return variaMunizioni(s, uid, 'colpi', -n, m);
+}
+
+/**
+ * Granate della carica di partenza che tornano nell'Inventario cambiando tipo (§7.20.3): il lanciatore le ha
+ * dall'acquisto, sono la sua munizione di riferimento (§7.8) e non vengono da una voce. { rif, quantita } o null.
+ * Le aggiunge alle scelte src/equipaggiamento.js → restituisciGranate.
+ */
+export function granateDiPartenza(sessione, uid, voceUid, m) {
+  const s = allineaSessione(sessione, m);
+  const info = m.ricarica?.[uid];
+  const x = s.munizioni[uid];
+  if (!info?.granate || !info.rifRiferimento || !x || x.tipo || x.colpi <= 0 || x.tipo === voceUid) return null;
+  return { rif: info.rifRiferimento, quantita: x.colpi };
+}
+
+/**
+ * Granata da caricare in un lanciagranate (§7.20.3; un tipo alla volta). Cambiare tipo scarica il lanciatore:
+ * le granate dentro tornano alla loro voce dell'Inventario; quelle della carica di partenza tornano come munizione
+ * di riferimento (granateDiPartenza, nelle scelte). Poi «Ricarica» inserisce il tipo scelto.
+ */
+export function scegliGranata(sessione, uid, voceUid, m) {
+  const s = allineaSessione(sessione, m);
+  const info = m.ricarica?.[uid];
+  if (!info?.granate || !info.scorte.some((x) => x.uid === voceUid)) return s;
+  const x = s.munizioni[uid] ?? { colpi: 0, riserve: 0 };
+  if (x.tipo === voceUid) return s;
+  const scorte = { ...s.scorte };
+  if (x.colpi > 0 && x.tipo) scorte[x.tipo] = Math.max(0, (scorte[x.tipo] ?? 0) - x.colpi);
+  return modificaSessione(s, { munizioni: { ...s.munizioni, [uid]: { ...x, colpi: 0, tipo: voceUid } }, scorte }, m);
 }
 
 /** PM di un contenitore di Chroma: solo +/− manuali, entro 0 e la capacità (Magia sez. 6). */

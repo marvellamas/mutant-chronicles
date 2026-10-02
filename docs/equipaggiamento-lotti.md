@@ -774,3 +774,15 @@ Fonte: Equipaggiamento 0.5 (Google Doc del 01/10/2026, 08:32 UTC) letto con il G
   - Nessuna regola nuova nel wizard; in `regole.json` → `dotazioni_iniziali.paragrafo` c'è il rimando al cap. 8.
 
 **Stato:** con il lotto 4 tutti i capitoli dell'Equipaggiamento 0.5 sono nel catalogo (cap. 1–8). Lotti 1–4 dell'aggiornamento del 01/10 chiusi.
+
+## Granate come munizioni dei lanciagranate (correzione di Davide, 02/10/2026)
+
+Segnalazione: «Non ci sono le granate normali tra le riserve. Non riesco a dare le munizioni al lanciagranate della Carabina Punisher». Lotto `tools/lotti/lotto_granate_0210.mjs` (Armamenti §7.20.3, §7.14.7, §7.8), 64 controlli sul testo del Doc.
+
+- **Causa.** La standard, la Fumogena e l'Elettroshock erano soltanto armi da lancio: la ricarica cerca le scorte fra le munizioni con `compatibile_con`, e nessuna granata dichiarava i lanciatori. In più la ricarica dei moduli integrati non aveva dati: «Ricarica» riempiva il modulo senza scalare niente.
+- **Modello dei dati.** Una granata è un oggetto solo. Le tre schede da lancio ricevono `esplosivo` (danno, AC, RS, proprietà), `compatibile_con` (i 18 lanciatori della tabella «Compatibilità del formato standard») e `confezione` (5, senza sconto). La pesante resta una munizione, solo per il Deathlock Drum. La stessa voce dell'Inventario si lancia a mano o si carica.
+- **Motore.** `src/ricarica.js`: le granate sono scorte; i moduli hanno la loro ricarica (`uid:modulo`); un lanciagranate tiene un tipo alla volta (`munizioni[uid].tipo`). `src/sessione.js`: `consumaColpi` (il lancio a mano scala la voce) e `scegliGranata` (cambiare tipo scarica il lanciatore). `src/equipaggiamento.js` → `applicaMunizione` e `src/condizioni.js`: la granata caricata dà danno, AC, RS e proprietà.
+- **SD e SS.** Combattimento: «Granata caricata» e «Ricarica» del modulo; Inventario: colpi del modulo e granate compatibili, «Compra 5». SS foglio 3 invariata («car. 1/2» per il modulo della Punisher).
+- **Ritocchi del 02/10 sera.**
+  - Il danno di granate e razzi non riceve il bonus di Caratteristica, né con il lanciatore né a mano. Il flag è `regole.json` → `danno_caratteristica.esplosivi.senza_bonus`, con TODO(Davide) A.86; in attesa della risposta si usa il danno della tabella.
+  - Cambiando tipo in «Granata caricata», le granate della carica di partenza tornano nell'Inventario come munizione di riferimento (`granateDiPartenza`, `restituisciGranate`).

@@ -904,7 +904,10 @@
       "tipo": "arma_distanza",
       "catalogo": "Commerciale",
       "famiglia": "Granate",
-      "nomi_alternativi": [],
+      "nomi_alternativi": [
+        "Granata standard a frammentazione",
+        "Frammentazione standard"
+      ],
       "note_manuale": "Granata a frammentazione. Proprietà: RS 1; Sbilanciante; Sbalzante 1. Attivare e lanciare una granata già pronta costa 1 AzP. Si distrugge all’esplosione. Fallimento ordinario: Scarto; Maldestro: Inceppamento con INC 8.",
       "paragrafo": "§7.7",
       "versione_manuale": "Armamenti 0.50",
@@ -950,7 +953,41 @@
           "nome": "Sbalzante 1",
           "testo": "Spostamento forzato immediato di X Q dopo un colpo penetrante. Istantaneo; PS Riflessi prima di un pericolo letale (Giocatore §5.24)."
         }
-      ]
+      ],
+      "esplosivo": {
+        "danno": "1d6+1",
+        "ac": "1d3",
+        "rs_q": 1,
+        "proprieta": [
+          "Sbilanciante",
+          "Sbalzante 1"
+        ]
+      },
+      "compatibile_con": [
+        "armi_distanza:lanciagranate",
+        "armi_distanza_corporative:lanciagranate-alleanza",
+        "armi_distanza_corporative:lanciagranate-carabina-punisher",
+        "armi_distanza_corporative:lanciagranate-mp105gw",
+        "armi_distanza_corporative:lanciagranate-panzerknacker",
+        "armi_distanza_corporative:lanciagranate-bolter-20",
+        "armi_distanza_corporative:lanciagranate-ironfist-15",
+        "armi_distanza_corporative:lanciagranate-car24",
+        "armi_distanza_corporative:lanciagranate-m50",
+        "armi_distanza_corporative:lanciagranate-caw2000",
+        "armi_distanza_corporative:lanciagranate-ar3000",
+        "armi_distanza_corporative:lanciagranate-nemesis-221",
+        "armi_distanza_corporative:lanciagranate-volcano",
+        "corredi_dispositivi:howler",
+        "armi_distanza_corporative:lanciagranate-interceptor",
+        "armi_distanza_corporative:lanciagranate-invader",
+        "armi_distanza_corporative:lanciagranate-windrider-n4",
+        "armi_distanza_corporative:lanciagranate-shogun"
+      ],
+      "confezione": {
+        "quantita": 5,
+        "costo": 400
+      },
+      "fonte_munizione": "Armamenti §7.20.3 (Granate; Compatibilità del formato standard), §7.14.7; correzione di Davide del 02/10/2026; lotto tools/lotti/lotto_granate_0210.mjs"
     }
   ]
 }

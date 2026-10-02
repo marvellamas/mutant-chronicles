@@ -381,6 +381,51 @@ export function consumabili(voci, dati) {
  * integrato, §7.5.1) non sono caricatori: non si ricaricano sostituendo la cella, ma solo
  * convertendo PM (Magia sez. 6). Stanno in contenitori().
  */
+/** Una granata da lancio che è anche munizione dei lanciagranate (Armamenti §7.20.3: «esplosivo», «compatibile_con»). */
+export const eGranata = (o) => o?.tipo === 'arma_distanza' && !!o?.esplosivo && Array.isArray(o?.compatibile_con);
+
+/**
+ * Munizione caricata in un lanciatore (§7.20.3: «Con lanciagranate si usano Abilità, VA, FOR, gittata, INC, CC e
+ * modalità dell'arma; la granata stabilisce danno, AC, RS e proprietà»): sul profilo d'attacco `w` imposta
+ * munizione (danno, AC, RS, proprietà), danno con i bonus fissi del profilo e AC. `mun`: { nome, danno, ac,
+ * rs_q, proprieta } (una granata della lista o la munizione di riferimento del §7.8). Modifica `w`.
+ */
+export function applicaMunizione(w, mun) {
+  if (!w?.dannoDaMunizione || !mun) return w;
+  w.munizioneRiferimento = mun;
+  const f = mun.danno ? aggiungiDanno(mun.danno, w.bonusDannoMunizione ?? 0) : null;
+  w.danno = f ? { una_mano: f, due_mani: f } : null;
+  w.ac = mun.ac ?? null;
+  return w;
+}
+
+/**
+ * Granate della carica di partenza di un lanciatore che tornano nell'Inventario (src/sessione.js →
+ * granateDiPartenza): si aggiungono alla prima voce di quella munizione (non nel deposito), altrimenti a una voce
+ * nuova con `uidNuovo`. Restituisce la lista nuova.
+ */
+export function restituisciGranate(voci, { rif, quantita }, uidNuovo, dati) {
+  const lista = normalizzaEquipaggiamento(voci);
+  const i = lista.findIndex((v) => v.rif === rif && v.stato !== STATO_DEPOSITO);
+  if (i >= 0) return lista.map((v, j) => (j === i ? { ...v, quantita: (Number.isInteger(v.quantita) ? v.quantita : 1) + quantita } : v));
+  const def = catalogo(dati).perRif.get(rif);
+  return [...lista, { uid: uidNuovo, rif, stato: statoIniziale(def?.tipo, lista, dati), quantita, note: '' }];
+}
+
+/**
+ * Granate da lancio della lista (§7.20.3): uid → quantità della voce. Non hanno caricatore: un lancio a mano
+ * consuma una granata della voce (sessione → scorte), come una ricarica di un lanciagranate.
+ */
+export function granateDaLancio(voci, dati) {
+  const cat = catalogo(dati);
+  const out = {};
+  for (const v of voci ?? []) {
+    const r = risolvi(v, cat);
+    if (eGranata(r.def) && !r.deposito) out[v.uid] = Number.isInteger(v.quantita) ? v.quantita : 1;
+  }
+  return out;
+}
+
 export function caricatori(voci, dati) {
   const cat = catalogo(dati);
   const out = {};
@@ -388,7 +433,8 @@ export function caricatori(voci, dati) {
     const r = risolvi(v, cat);
     // armi a distanza (caricatore) e armi ravvicinate con cariche a cella (§7.1.4)
     const integrato = !!infoArtefatto(r.def, dati)?.contenitore?.integrato;
-    if (!integrato && (r.tipo === 'arma_distanza' || (r.tipo === 'arma_ravvicinata' && r.def?.munizioni?.capacita))) out[v.uid] = r.def?.munizioni?.capacita ?? null;
+    // le granate da lancio non hanno caricatore (§7.20.3: si lanciano dalla quantità della voce)
+    if (!integrato && !eGranata(r.def) && (r.tipo === 'arma_distanza' || (r.tipo === 'arma_ravvicinata' && r.def?.munizioni?.capacita))) out[v.uid] = r.def?.munizioni?.capacita ?? null;
     // §7.8: i moduli integrati hanno un'alimentazione separata dall'arma principale
     for (const m of moduliDi(r.def, cat)) out[`${v.uid}:${m.id}`] = m.munizioni?.capacita ?? null;
   }
@@ -968,6 +1014,10 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   // compatibilità espressa (razzi, celle, serbatoi, dardi)
   const famigliaMunizioni = tabellaMunizioniArmi(dati);
   const munizioniInLista = oggetti.filter((x) => x.tipo === 'munizioni' && x.def && !x.deposito);
+  // §7.20.3: granate della lista (munizioni o armi da lancio) che un lanciatore può caricare
+  const granateInLista = oggetti.filter((x) => x.def?.esplosivo && x.def?.compatibile_con && !x.deposito);
+  const granateDi = (rif) => granateInLista.filter((x) => x.def.compatibile_con.includes(rif))
+    .map((x) => ({ uid: x.uid, nome: x.nome, rif: x.def.rif, esplosivo: { nome: x.def.nome, ...x.def.esplosivo } }));
   const scorteDi = (rif) => {
     const fam = famigliaMunizioni.get(rif) ?? null;
     return {
@@ -1023,7 +1073,11 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     const dannoBase = d?.danno ?? (o.voce.personalizzato?.danno ? { una_mano: o.voce.personalizzato.danno, due_mani: null } : null);
     // §5.13: bonus di Caratteristica al danno (Caratteristica dell'Abilità dell'arma, Armi pesanti INT),
     // salvo le esclusioni espresse delle schede (Danno calibrato)
-    const bonusCaratteristica = bonusCaratteristicaArma(nomeAbilita, d?.proprieta ?? []);
+    // munizioni esplosive (granate e razzi, Armamenti §7.20.3–7.20.4): regole.json → danno_caratteristica.esplosivi,
+    // in attesa di Davide (A.86) danno della tabella senza bonus di Caratteristica
+    const esplosiva = !!(d?.danno_da_munizione || d?.esplosivo) && regoleCar?.esplosivi?.senza_bonus === true;
+    const bonusCar0 = bonusCaratteristicaArma(nomeAbilita, d?.proprieta ?? []);
+    const bonusCaratteristica = bonusCar0 && esplosiva ? { ...bonusCar0, bonus: 0, esclusoDa: 'Munizione esplosiva (danno della tabella, A.86)' } : bonusCar0;
     const dannoCar = bonusCaratteristica?.bonus ?? 0;
     const proprietaParata = (d?.proprieta ?? []).filter((p) => p.effetto?.parata_va);
     const parataVa = proprietaParata.reduce((s, p) => s + p.effetto.parata_va, 0);
@@ -1065,6 +1119,11 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       condizionali: va === null ? [] : acc.filter((x) => x.def?.bonus_condizionato).map((x) => ({ nome: x.nome, va: x.def.bonus_condizionato.va, vaTotale: va + x.def.bonus_condizionato.va, condizione: x.def.bonus_condizionato.condizione })),
       dannoDaMunizione: !!d?.danno_da_munizione,
       munizioneRiferimento: d?.danno_da_munizione ? munizioneDiRiferimento(d.munizioni?.riferimento, dati) : null,
+      // §7.20.3: granate compatibili nella lista; quella caricata (sessione) cambia danno, AC, RS e proprietà
+      // (src/condizioni.js → applicaGranata). Bonus fissi al danno della munizione, come nella SD.
+      ...(d?.danno_da_munizione && d.rif ? { granate: granateDi(d.rif), bonusDannoMunizione: bonusDanno + dannoCar } : {}),
+      // granata da lancio: la quantità della voce sono le granate da lanciare
+      ...(eGranata(d) ? { granata: { quantita: Number.isInteger(o.voce.quantita) ? o.voce.quantita : 1 } } : {}),
       bonusDanno, mani: d?.mani ?? null, portataQ: d?.portata_q ?? null, gittataQ,
       gittataFormula: d?.gittata_per_for ? `FOR ${FOR} × ${d.gittata_per_for}` : null,
       ac: d?.ac ?? null, inc: d?.inc ?? null, mov: d?.mov ?? 0, modalita: d?.modalita ?? [],
@@ -1080,12 +1139,14 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   };
   for (const o of oggetti.filter((x) => x.attivo && (x.tipo === 'arma_ravvicinata' || x.tipo === 'arma_distanza'))) {
     profiloArma(o, o.def);
+    applicaMunizione(armi.at(-1), armi.at(-1).munizioneRiferimento);
     // §7.7: le penalità MOV delle armi impugnate si sottraggono una sola volta al budget di movimento
     if (o.def?.mov) movimentoQ += o.def.mov;
     // §7.8: un modulo integrato usa la propria Abilità, gittata, INC, capacità e modalità; si sceglie
     // il profilo prima di ogni attacco. PI, Qualità e MOV sono quelli dell'arma principale.
     for (const m of moduliDi(o.def, cat)) {
       profiloArma({ ...o, uid: `${o.uid}:${m.id}`, nome: m.nome, tipo: m.tipo, personalizzato: false }, m, { moduloDi: o.nome, mov: 0 });
+      applicaMunizione(armi.at(-1), armi.at(-1).munizioneRiferimento);
     }
   }
 

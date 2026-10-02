@@ -145,7 +145,13 @@ function tooltipOggetto(rif, dati) {
     riga.Confezione = `${o.munizione.confezione.quantita} × ${o.munizione.confezione.costo.toLocaleString('it-IT')}`;
     sezioni.push({ etichetta: 'Famiglia', testo: `${NOMI_FAMIGLIE_MUNIZIONI[o.munizione.famiglia]}${o.munizione.variante ? `, variante ${o.munizione.variante}` : ''}` });
   }
-  if (o.esplosivo) sezioni.push({ etichetta: 'Carico', testo: `danno ${o.esplosivo.danno}, AC ${o.esplosivo.ac}, RS ${o.esplosivo.rs_q} Q; ${o.esplosivo.proprieta.join(', ')}` });
+  if (o.esplosivo) sezioni.push({ etichetta: o.tipo === 'arma_distanza' ? 'Nel lanciagranate' : 'Carico', testo: `${o.esplosivo.danno ? `danno ${o.esplosivo.danno}, AC ${o.esplosivo.ac}` : 'nessun danno'}, RS ${o.esplosivo.rs_q} Q${o.esplosivo.proprieta.length ? `; ${o.esplosivo.proprieta.join(', ')}` : ''}${o.tipo === 'arma_distanza' ? '; Abilità, VA, gittata e INC del lanciatore (§7.20.3)' : ''}` });
+  // §7.20.3: lanciatori che la caricano e confezione da cinque, senza sconto
+  if (o.esplosivo && o.compatibile_con?.length) {
+    const cat = catalogo(dati);
+    sezioni.push({ etichetta: 'Lanciatori', testo: o.compatibile_con.map((r) => cat.perRif.get(r)?.nome ?? r).join(', ') });
+  }
+  if (o.confezione) riga.Confezione = `${o.confezione.quantita} × ${o.confezione.costo.toLocaleString('it-IT')}`;
   if (o.cella) sezioni.push({ etichetta: 'Capacità', testo: `${o.cella.capacita} ${o.cella.unita}; riempirla o ricaricarla costa ${o.cella.ricarica_costo.toLocaleString('it-IT')}` });
   const art = infoArtefatto(o, dati);
   if (art) sezioni.push({ etichetta: 'Artefatto', testo: `${art.tipologia}; potenza ${art.potenza}, SnT ${art.sintonizzazione} (costo di Sintonizzazione)${art.contenitore ? `; ${art.contenitore.integrato ? 'riserva integrata' : 'contenitore'} di ${art.contenitore.capacita_pm} PM (Chroma ${art.contenitore.energia})` : ''} (§7.10).` });

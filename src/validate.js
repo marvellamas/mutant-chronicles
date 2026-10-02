@@ -1196,8 +1196,14 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
       }
       if (o.esplosivo !== undefined) {
         const x = o.esplosivo;
-        if (!isOggetto(x) || !DADI.test(String(x.danno)) || !(isIntero(x.ac) || DADI.test(String(x.ac))) || !(isIntero(x.rs_q) && x.rs_q >= 0) || !Array.isArray(x.proprieta)) err(F, `${k}.esplosivo`, 'serve { danno, ac, rs_q, proprieta }');
+        // §7.20.3: la Fumogena non fa danno (danno e AC null)
+        const senzaDanno = isOggetto(x) && x.danno === null && x.ac === null;
+        if (!isOggetto(x) || !(senzaDanno || (DADI.test(String(x.danno)) && (isIntero(x.ac) || DADI.test(String(x.ac))))) || !(isIntero(x.rs_q) && x.rs_q >= 0) || !Array.isArray(x.proprieta)) err(F, `${k}.esplosivo`, 'serve { danno, ac, rs_q, proprieta } (danno e ac null per una granata senza danno)');
+        // una granata che è anche arma da lancio (§7.20.3): esplosivo e lanciatori compatibili insieme
+        if (o.tipo === 'arma_distanza' && !Array.isArray(o.compatibile_con)) err(F, `${k}.compatibile_con`, 'una granata da lancio con «esplosivo» indica i lanciatori compatibili');
       }
+      // §7.20.3: confezione di più unità (granate da cinque, senza sconto)
+      if (o.confezione !== undefined && !(isOggetto(o.confezione) && isIntero(o.confezione.quantita) && o.confezione.quantita >= 2 && isIntero(o.confezione.costo) && o.confezione.costo >= 0)) err(F, `${k}.confezione`, 'serve { quantita ≥ 2, costo }');
       // §7.20.5–7.20.6 (Armamenti 0.58): NEC Blu con riserva in Lx; la ricarica costa 0,01 cr/Lx (anche 2,5 cr)
       if (o.cella !== undefined && !(isOggetto(o.cella) && isIntero(o.cella.capacita) && o.cella.capacita >= 1 && ['cariche', 'colpi', 'getti'].includes(o.cella.unita)
         && Number.isFinite(o.cella.ricarica_costo) && o.cella.ricarica_costo >= 0 && (o.cella.riserva_lx === undefined || (isIntero(o.cella.riserva_lx) && o.cella.riserva_lx >= 1)))) {
@@ -1252,7 +1258,7 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
       if (o.cartucce !== undefined && !(isIntero(o.cartucce) && o.cartucce >= 1)) err(F, `${k}.cartucce`, 'intero ≥ 1');
       if (o.compatibile_con !== undefined) {
         if (!Array.isArray(o.compatibile_con) || !o.compatibile_con.length) err(F, `${k}.compatibile_con`, 'elenco di riferimenti "file:id"');
-        else o.compatibile_con.forEach((r, j) => rimandiCompatibili.push([F, `${k}.compatibile_con[${j}]`, r, o.tipo === 'munizioni' || o.cella ? ['arma_ravvicinata', 'arma_distanza'] : ['armatura']]));
+        else o.compatibile_con.forEach((r, j) => rimandiCompatibili.push([F, `${k}.compatibile_con[${j}]`, r, o.tipo === 'munizioni' || o.cella || o.esplosivo ? ['arma_ravvicinata', 'arma_distanza'] : ['armatura']]));
       }
       // §7.23.10: Abbinamenti ottimizzati, fra le armature compatibili del rinforzo
       if (o.abbinamento_ottimizzato !== undefined) {

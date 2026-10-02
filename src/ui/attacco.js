@@ -172,7 +172,8 @@ function corpoDistanza(ctx, a, intestazione) {
   const T = talentiAttacco(ctx.tab.scheda, ctx.dati);
   const r = calcolaAttaccoDistanza(personaggio, a, d, ctx.dati);
   const MF = ctx.dati.regole.modalita_di_fuoco;
-  const colpi = ctx.sessione.munizioni?.[a.uid]?.colpi ?? null;
+  // granate da lancio (§7.20.3): quelle rimaste nella voce dell’Inventario
+  const colpi = a.granata ? a.granata.disponibili ?? null : ctx.sessione.munizioni?.[a.uid]?.colpi ?? null;
   const stato = (ctx.ui.attacco ??= { uid: a.uid, passo: 0 });
   const R = ctx.dati.regole.attacco_distanza;
   const M = R.manovre;
@@ -297,7 +298,7 @@ function risultato(ctx, a, r, colpi, imposta) {
       h('div', { class: 'provenienza-attacco' }, listaProvenienza(r.provenienza, 'VA finale')),
       h('dl', { class: 'voci griglia-voci' },
         h('div', {}, h('dt', {}, 'Azioni'), h('dd', {}, `${r.azioni_principali} ${r.azioni_principali === 1 ? 'Principale' : 'Principali'}${r.azioni_movimento ? ` + ${r.azioni_movimento} di Movimento` : ''}`)),
-        h('div', {}, h('dt', {}, 'Munizioni'), h('dd', {}, `${r.munizioni}${colpi !== null ? ` (nel caricatore ${colpi})` : ''}`)),
+        h('div', {}, h('dt', {}, 'Munizioni'), h('dd', {}, `${r.munizioni}${colpi !== null ? (a.granata ? ` (granate ${colpi})` : ` (nel caricatore ${colpi})`) : ''}`)),
         h('div', {}, h('dt', {}, 'Colpi a segno'), h('dd', {}, r.colpi_a_segno ? `${r.colpi_a_segno}${r.tiri > 1 ? ' per tiro riuscito' : ' con la Prova riuscita'}` : 'nessuno: effetto ad Area')),
         h('div', {}, h('dt', {}, 'Danno per colpo'), h('dd', {}, r.danno_per_colpo ?? '—', r.applicazioni !== 1 ? ` · ${r.applicazioni} applicazioni` : '',
           r.danno_magistrale && r.danno_magistrale !== r.danno_per_colpo ? h('small', { class: 'nota' }, ` · Magistrale ${r.danno_magistrale}`) : null)),
