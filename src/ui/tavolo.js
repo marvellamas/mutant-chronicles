@@ -23,6 +23,7 @@ import { creaCustode } from './ridisegno.js';
 import { avviso, avvisoErrore } from './avvisi.js';
 import { apriCreaNemico, apriDaBestiario } from './crea-nemico.js';
 import { apriPreparazione } from './preparazione.js';
+import { riquadroCollega, leggiRete } from './collega.js';
 
 const INTERVALLO_MS = 3000;
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
@@ -67,6 +68,9 @@ export function renderTavolo(radice, ctx) {
     firmaBestiario: null,
     bestiarioAperto: false,
     bozzaNemici: null,
+    // «Collega i giocatori»: indirizzi della rete (server.mjs → /api/rete), riquadro aperto finché non lo si chiude
+    rete: null,
+    collegaAperto: true,
   };
 
   // salva una modifica dello scontro; con una revisione vecchia (altra finestra) ricarica quello attuale
@@ -135,6 +139,7 @@ export function renderTavolo(radice, ctx) {
           h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.personaggi() }, 'Personaggi'))),
       stato.esitoEsempi ? h('p', { class: 'riquadro attenzione', role: 'status' }, stato.esitoEsempi) : null,
       h('p', { class: 'nota' }, 'Sola lettura: i valori sono quelli delle schede in personaggi/, ricalcolati con le regole attuali. Per cambiarli si apre il personaggio (clic sulla carta).'),
+      riquadroCollega(stato.rete, { aperto: stato.collegaAperto, onToggle: (v) => { stato.collegaAperto = v; } }),
       stato.sceltaAperta ? sceltaAlTavolo(stato, ultimi, async (nuova) => {
         try {
           stato.selezione = await scriviSelezione(nuova);
@@ -386,6 +391,7 @@ export function renderTavolo(radice, ctx) {
   };
 
   disegna();
+  leggiRete().then((r) => { stato.rete = r; if (custode.puoRidisegnare()) disegna(); });
   // tornando da una scheda («← Torna al tavolo»): lo stesso punto di prima, a plancia completa
   aggiorna().then(() => { disegna(); if (Number.isFinite(ctx.scorrimento)) window.scrollTo(0, ctx.scorrimento); });
   const giro = setInterval(() => aggiorna(), INTERVALLO_MS);

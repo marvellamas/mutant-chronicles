@@ -27,6 +27,18 @@ pubblico.
 - **`avvia.bat`**: l'app come prima, i personaggi salvati nel browser.
 - **`avvia-server.bat`**: l'app con il Tavolo del Master (plancia, scontri, nemici): i personaggi stanno nella cartella `personaggi/` del PC che fa da server.
 
+**Si apre uno solo dei due.** `avvia-server.bat` basta per tutto, anche per le schede: `avvia.bat` non va aperto insieme e resta com'è, per chi usa l'app senza server.
+
+**Collegare i giocatori.** Con `avvia-server.bat` il server è raggiungibile da telefoni e PC della stessa rete Wi-Fi:
+- la finestra del server scrive in evidenza «Giocatori: aprite http://<indirizzo>:3000 dalla stessa rete Wi-Fi», con l'indirizzo di questo PC;
+- la plancia ha il riquadro «Collega i giocatori» con lo stesso indirizzo, il pulsante «Copia» e un codice QR da inquadrare con il telefono.
+
+**Firewall di Windows.** Alla prima accensione Windows può chiedere il permesso per Node.js: va consentito per le **reti private**. Se i giocatori non si collegano:
+- la rete Wi-Fi del PC deve essere impostata come **privata**, non pubblica (Impostazioni > Rete e Internet > Wi-Fi > proprietà della rete);
+- il firewall deve consentire Node.js.
+
+Per tenere il server chiuso agli altri dispositivi: `node server.mjs --solo-locale`.
+
 ### Avvio diretto dal repo: avvia.bat
 
 Chi lavora sul repo può fare doppio clic su **`avvia.bat`**, nella cartella principale:

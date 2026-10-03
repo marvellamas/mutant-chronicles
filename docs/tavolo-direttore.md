@@ -45,7 +45,7 @@ Regole del branch:
 - Espone `/api/ping` e `/api/personaggi` (elenco, lettura, scrittura) sulla cartella `personaggi/`.
 - I file hanno il nome e il contenuto dell'export («Nome_livN_AAAA-MM-GG.json», byte per byte).
 - Non cancella mai nulla e scrive in modo atomico.
-- Ascolta solo su localhost; con `--rete` si apre agli altri dispositivi della rete locale.
+- Ascoltava solo su localhost (con `--rete` si apriva alla rete locale). Dal 3 ottobre 2026 ascolta su tutte le interfacce: vedi «Collegare i giocatori».
 - Si avvia con `avvia-server.bat`.
 
 **L'app** rileva il server con `/api/ping`.
@@ -265,6 +265,24 @@ Ritocchi segnalati da Marcello dopo la prima prova della plancia.
   
   Senza server l'app è invariata: nessuna etichetta, nessuna richiesta `/api`, console pulita.
 
+## Collegare i giocatori (3 ottobre 2026)
+
+Marcello aveva avviato solo `avvia-server.bat` e non vedeva a quale indirizzo dovevano collegarsi i giocatori: il server ascoltava solo su `127.0.0.1`, salvo `--rete`.
+
+- **Interfacce.** `server.mjs` ascolta su tutte le interfacce (`0.0.0.0`); `--solo-locale` lo tiene chiuso a questo computer, `--rete` è ancora accettato ma non serve più.
+- **Finestra del server.** In evidenza fra due righe di uguali stampa «Giocatori: aprite http://<IP>:<porta> dalla stessa rete Wi-Fi», una riga per indirizzo IPv4 della rete locale, e sotto:
+  - l'indirizzo per questo computer;
+  - le reti virtuali escluse;
+  - la nota sul firewall (permesso a Node.js per le «reti private»);
+  - cosa fare se i giocatori non si collegano (rete «privata» e non «pubblica», firewall).
+- **Indirizzi.** Li sceglie `src/rete.js` → `indirizziRete`: solo IPv4, niente loopback né 169.254.x. Le interfacce virtuali evidenti (WSL, Hyper-V, VirtualBox, VMware, Docker, VPN…) si riconoscono dal nome e si escludono; se non ne resta nessuna vera, si mostrano tutte con il nome.
+- **Plancia.** Il riquadro «Collega i giocatori» (`src/ui/collega.js`, dati da `GET /api/rete`) mostra gli stessi indirizzi, con «Copia» e un codice QR per ciascuno. Il QR è generato in locale da `src/qr.js`, scritto per l'app senza librerie né servizi esterni: modalità byte, livello M, versioni 1–6.
+- **avvia.bat.** Resta com'è e non va aperto insieme ad `avvia-server.bat`, che basta per tutto: è l'avvio di chi usa l'app senza server.
+- **Test.**
+  - `tests/qr.test.js`: vettore Reed–Solomon noto, bit di formato dello standard, decodifica di controllo di ogni versione, indirizzi con interfacce finte, testo della finestra;
+  - `tests/rete-server.test.js`: il server risponde su un indirizzo della rete locale.
+- **Prova.** Plancia aperta da `http://192.168.1.57:3017` (porta di prova, cartelle temporanee), «Copia» funzionante anche fuori da localhost. Senza server l'app è invariata.
+
 ## «Crea nemico» e «Prepara scontro» (3 ottobre 2026)
 
 Richiesta di Marcello del 3 ottobre: due funzioni nuove della plancia, raggiungibili anche senza scontro aperto, basate sul Bestiario proposto (`docs/bestiario/bestiario.md`, cap. 2–6). L'editor manuale dei nemici resta com'è.
@@ -445,7 +463,7 @@ Davide ha risposto ad A.73 (E&L del 02/10, decisioni 5–9; `docs/risposte-maste
 - **R1. Scritture incrociate.** Giocatore e master cambiano lo stesso PG insieme. Oggi vince il più recente, ma si può perdere una modifica.
   - Proposta per il pezzo 6: il master scrive solo la `sessione`, il giocatore solo le scelte. Il server unisce i due blocchi, con una versione per blocco.
   - È l'unica «unione», ed è per blocchi interi.
-- **R2. Rete e sicurezza.** Con `--rete` chiunque sulla rete locale può scrivere in `personaggi/` e `scontri/`.
+- **R2. Rete e sicurezza.** Dal 3 ottobre il server ascolta sempre sulla rete locale (prima solo con `--rete`): chiunque sulla rete locale può scrivere in `personaggi/` e `scontri/`.
   - Va bene a casa, non su una rete pubblica.
   - Rimedio semplice, se serve: un codice di sessione da inserire una volta, controllato dal server.
 - **R3. Orologi diversi fra i PC.** Il confronto «più recente» usa l'ora del server per i file e quella del browser per la copia locale.

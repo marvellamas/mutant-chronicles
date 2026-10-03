@@ -1681,3 +1681,12 @@ body.con-sfondo::before {
 .riquadro.difficolta-normale { border-left-color: var(--bordo); }
 .riquadro.difficolta-duro, .riquadro.difficolta-mortale { border-left-color: var(--attenzione); background: var(--attenzione-tenue); }
 @media (max-width: 46rem) { .campo-nemico input[type="text"] { min-width: 0; width: 100%; } }
+
+/* «Collega i giocatori» (src/ui/collega.js): indirizzi della rete con il codice QR */
+.collega-giocatori > summary { cursor: pointer; }
+.collega-elenco { list-style: none; padding: 0; margin: 0.5rem 0; display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; }
+.collega-voce { display: flex; align-items: center; gap: 0.8rem; }
+.collega-voce p { margin: 0 0 0.4rem; }
+.collega-url { font-size: 1.25rem; font-family: ui-monospace, monospace; overflow-wrap: anywhere; }
+.qr-collega { display: inline-block; line-height: 0; border-radius: 4px; overflow: hidden; }
+.qr-collega svg { width: 132px; height: auto; }

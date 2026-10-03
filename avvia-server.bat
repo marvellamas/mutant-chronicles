@@ -26,6 +26,10 @@ echo.
 echo  Mutant e' acceso con la cartella personaggi: il browser si apre su http://localhost:3000
 echo  I personaggi si salvano anche in %~dp0personaggi
 echo  Se la pagina resta vuota, aspetta qualche secondo e premi F5.
+echo  Gli indirizzi per i giocatori (telefoni e PC sulla stessa Wi-Fi) compaiono qui sotto,
+echo  fra le righe di uguali, e nella plancia nel riquadro "Collega i giocatori".
+echo  Se Windows chiede il permesso per Node.js: consenti le "reti private".
+echo  avvia.bat non serve: questa finestra basta per tutto.
 echo  Per spegnere Mutant chiudi questa finestra.
 echo.
 start "" http://localhost:3000
