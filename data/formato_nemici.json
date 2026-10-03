@@ -53,9 +53,11 @@
       "campi": {
         "passo": { "tipo": "intero", "min": 0, "obbligatorio": true },
         "corsa": { "tipo": "intero", "min": 0, "oppure": ["non_consentito"], "obbligatorio": false },
-        "scatto": { "tipo": "intero", "min": 0, "oppure": ["non_consentito"], "obbligatorio": false }
+        "scatto": { "tipo": "intero", "min": 0, "oppure": ["non_consentito"], "obbligatorio": false },
+        "volo": { "tipo": "intero", "min": 1, "obbligatorio": false, "descrizione": "Passo in volo in Q, solo per chi vola (Giocatore §5.2.3; Bestiario §3.1.1): Corsa e Scatto in volo sono il doppio e il triplo. Chi lo attacca mentre vola subisce −2 VA (Bestiario §3.1.1, proposta da confermare)." }
       }
     },
+    "taglia": { "tipo": "scelta", "valori": ["normale", "grande"], "obbligatorio": false, "descrizione": "Normale se manca. Grande: occupa 2 × 2 Q o più, chi lo attacca ottiene +2 VA, Sbalzante non lo sposta (Bestiario §3.1.1, proposta da confermare)." },
     "salvezze": {
       "tipo": "mappa", "chiavi_da": "salvezze", "tutte": true, "obbligatorio": true,
       "valore": { "tipo": "intero", "min": 0 },

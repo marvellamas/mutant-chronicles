@@ -100,9 +100,11 @@ function base(titolo) {
       continue;
     }
     if (['FOR', 'COS', 'DES', 'INT', 'SAG', 'CAR'].includes(r[0])) { v.forEach((x, i) => { per[i].caratteristiche[r[0]] = num(x); }); continue; }
-    const mappa = { PV: 'pv', AR: 'ar', 'VA Difese': 'difese', Iniziativa: 'iniziativa', 'Passo Q': 'passo', AzP: 'azp' };
+    const mappa = { PV: 'pv', AR: 'ar', 'VA Difese': 'difese', Iniziativa: 'iniziativa', 'Passo Q': 'passo', 'Passo in volo Q': 'volo', AzP: 'azp' };
     if (mappa[r[0]]) { v.forEach((x, i) => { per[i][mappa[r[0]]] = num(x); }); continue; }
     if (r[0] === 'Spazio occupato') { v.forEach((x, i) => { per[i].spazio = x; }); continue; }
+    // §3.1.1: taglia Grande (proposta), nel formato dei nemici in minuscolo
+    if (r[0] === 'Taglia') { v.forEach((x, i) => { per[i].taglia = x.toLowerCase(); }); continue; }
     if (r[0] === 'Natura AR') continue;
     const ps = /^PS (Tempra|Riflessi|Volontà|Magia)$/.exec(r[0]);
     if (ps) { const k = { Tempra: 'tempra', Riflessi: 'riflessi', Volontà: 'volonta', Magia: 'magia' }[ps[1]]; v.forEach((x, i) => { per[i].salvezze[k] = num(x); }); continue; }
@@ -154,12 +156,59 @@ const basi = {
     immunita: [],
     comportamento: 'Carica il bersaglio più vicino o quello che lo ha ferito per ultimo; non usa le Difese se può attaccare.',
   },
+  // basi del 03/10/2026 (richiesta di Marcello), con le regole del §3.1.1: volo e Carica dal Giocatore §5.2 e §5.6,
+  // Spazzata dal §5.12, Sorpresa e Imboscata dal §5.1 e §5.4; bersaglio in volo e taglia Grande sono proposte (TODO(Davide))
+  quadrupede: {
+    nome: 'Quadrupede', paragrafo: '§3.6', natura: 'Comune', per_grado: base('3.6 Quadrupede'),
+    capacita: [
+      { nome: 'Carica del branco', effetto: 'Carica del Giocatore §5.6 (almeno 3 Q in linea retta, danno ×2) senza la penalità al VA per chi carica; il bersaglio colpito effettua una PS di Riflessi o cade A Terra (§5.5).' },
+      { nome: 'Olfatto', effetto: 'Segue una traccia fino a un giorno di età; +2 alle Prove di Percezione basate sull’odore entro 30 Q.' },
+    ],
+    immunita: [],
+    comportamento: 'In branco circonda il gruppo, carica chi si stacca e applica la Superiorità numerica. Fugge quando il capobranco va a 0 PV.',
+  },
+  alato: {
+    nome: 'Alato', paragrafo: '§3.7', natura: 'Comune', per_grado: base('3.7 Alato'), va_contro: -2,
+    capacita: [
+      { nome: 'Volo', effetto: 'Volo del Giocatore §5.2.3–5.2.5 con il Passo in volo della scheda; Corsa e Scatto il doppio e il triplo. Non resta sospeso fermo. Chi lo attacca mentre vola subisce −2 VA (Bestiario §3.1.1, proposta).' },
+      { nome: 'Picchiata', effetto: 'Carica in volo (Giocatore §5.2.4, §5.6) da almeno 3 Q più in alto del bersaglio; dopo l’attacco riprende quota con il movimento che resta, senza Attacchi di Opportunità dal bersaglio.' },
+      { nome: 'Vista acuta', effetto: '+2 alle Prove di Percezione basate sulla vista.' },
+    ],
+    immunita: [],
+    danno_ricevuto: 'A 0 PV in volo precipita (Giocatore §5.22).',
+    comportamento: 'Gira in alto fuori portata, sceglie chi non ha armi a distanza e piomba con la Picchiata; risale e ripete. Fugge a metà dei PV.',
+  },
+  strisciante: {
+    nome: 'Strisciante', paragrafo: '§3.8', natura: 'Comune', per_grado: base('3.8 Strisciante'),
+    capacita: [
+      { nome: 'Spire', effetto: 'Se le Spire infliggono almeno 1 danno dopo l’Armatura il bersaglio è Immobilizzato, salvo una PS di Riflessi. Liberarsi: 1 AzP e Atletica o Corpo a corpo contro il VA delle Spire. Un solo bersaglio alla volta; mentre lo trattiene morde solo lui.' },
+      { nome: 'Agguato dal basso', effetto: 'Sepolto nel terreno sciolto o nelle macerie: +4 a Furtività. Se esce attaccando senza essere individuato, il bersaglio è Sorpreso (Giocatore §5.1) e il primo attacco segue l’Imboscata (§5.4) senza penalità.' },
+      { nome: 'Scavo', effetto: 'Scava con Passo 4 Q nel terreno sciolto e nelle macerie, senza Corsa né Scatto; non nella roccia o nel cemento.' },
+      { nome: 'Vibrazioni', effetto: 'Percepisce entro 9 Q le creature che si muovono a contatto con il suolo anche senza vederle.' },
+    ],
+    immunita: [],
+    comportamento: 'Aspetta sepolto sotto il passaggio, esce sul primo che passa, lo avvolge e lo trascina verso il cunicolo. Si rintana sotto un quarto dei PV.',
+  },
+  gigante: {
+    nome: 'Gigante', paragrafo: '§3.9', natura: 'Comune', per_grado: base('3.9 Gigante'), va_contro: 2, massimo_per_scontro: { sotto: 'potente', numero: 1 },
+    capacita: [
+      { nome: 'Taglia Grande', effetto: 'Chi lo attacca ottiene +2 VA; Sbalzante non lo sposta (Bestiario §3.1.1, proposta).' },
+      { nome: 'Spazzata del gigante', effetto: 'Spazzata del Giocatore §5.12 come con Spazzata Migliorata: −2 VA contro due bersagli, −4 contro tre, entro la portata di 2 Q. Con una Carica riuscita lo Schianto applica Sbalzante 1.' },
+      { nome: 'Raro', effetto: 'Al massimo un Gigante per scontro sotto il grado Potente.' },
+    ],
+    immunita: [],
+    comportamento: 'Avanza verso il gruppo più folto per colpirne più d’uno con la Spazzata; abbatte le Coperture leggere. Non fugge.',
+  },
 };
 // moltiplicatori della base rispetto al grado (§3.1), usati per i PV del Boss (§2.5.1)
 basi.umano.pv_molt_boss = 1;
 basi.insettoide.pv_molt_boss = 0.9;
 basi.aracnoide.pv_molt_boss = 0.9;
 basi['umanoide-mostruoso'].pv_molt_boss = 1.1;
+basi.quadrupede.pv_molt_boss = 1;
+basi.alato.pv_molt_boss = 0.85;
+basi.strisciante.pv_molt_boss = 1.2;
+basi.gigante.pv_molt_boss = 1.25;
 // controllo: i PV delle basi sono quelli del grado × il moltiplicatore, arrotondati
 for (const [id, b] of Object.entries(basi)) if (!b.umano) for (const g of gradi) verifica(b.per_grado[g.id].pv === Math.round(g.pv * b.pv_molt_boss), `${id} ${g.nome}: PV = grado × ${b.pv_molt_boss}`);
 
@@ -198,7 +247,7 @@ const EFFETTI_MANIFESTAZIONE = {
 const manifestazioni = (t) => t.righe.map((r) => ({ id: idDa(r[0]), nome: r[0], effetto: r[1], ...(EFFETTI_MANIFESTAZIONE[idDa(r[0])] ? { effetti: EFFETTI_MANIFESTAZIONE[idDa(r[0])] } : {}) }));
 corrotto.manifestazioni_minori = manifestazioni(tMin);
 corrotto.manifestazioni_maggiori = manifestazioni(tMag);
-const BASI_ID = { Tutte: ['umano', 'insettoide', 'aracnoide', 'umanoide-mostruoso'] };
+const BASI_ID = { Tutte: Object.keys(basi) };
 const EFFETTI_MUTAZIONE = {
   carapace: { ar: 1, passo_da_8: 6 },
   'arti-in-piu': {},
@@ -307,7 +356,7 @@ verifica(tabelleCasuali.equipaggiamento.righe.every((r, i) => r.id === equipaggi
 const bestiario = {
   versione_manuale: 'Bestiario, proposta (bozza 0.2, docs/bestiario/bestiario.md, 02/10/2026)',
   fonte: 'Bestiario, proposta: docs/bestiario/bestiario.md, cap. 2–6 e Appendice A; lotto tools/lotti/lotto_bestiario_dati.mjs. Le tabelle si leggono dal documento; effetti dei moduli e ricette delle creature pronte dal testo dei paragrafi.',
-  'TODO(Davide)': 'Bestiario proposto, in attesa di Davide: scala tarata su 7 PG, costi dei moduli, Boss, creature pronte e tabelle casuali (docs/bestiario/domande-per-davide.md).',
+  'TODO(Davide)': 'Bestiario proposto, in attesa di Davide: scala tarata su 7 PG, costi dei moduli, Boss, creature pronte e tabelle casuali; basi del §3.6–3.9 con le proposte su bersaglio in volo (−2 VA) e taglia Grande (+2 VA), che il Giocatore non ha (docs/bestiario/domande-per-davide.md).',
   gruppo_pg: 7,
   gradi,
   boss: { round_resistenza: 12, azp_in_piu: 1, riduzione_pv_per_ar: 0.7, paragrafo: '§2.5' },

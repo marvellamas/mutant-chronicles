@@ -298,17 +298,23 @@ export const DIFFICOLTA = { facile: 0.3, normale: 0.6, duro: 1 };
 
 /**
  * Basi del Bestiario (§3) come modifiche del grado: PV moltiplicati (arrotondati a 1), AR e Difese sommate,
- * danno dell'attacco principale per grado. Il peso resta vicino a 1 (Appendice A.4).
+ * danno dell'attacco principale per grado. Il peso resta vicino a 1 (Appendice A.4). `vaContro`: modificatore al
+ * VA di chi attacca la creatura (§3.1 del Bestiario, proposta): −2 contro l'Alato in volo, +2 contro il Gigante
+ * (bersaglio grande).
  */
 export const MOD_BASI = {
   Insettoide: { pv: 0.9, ar: 1, difese: 0, danni: ['1d8+1', '1d8+2', '2d6+1', '2d8+1', '2d8+2'] },
   Aracnoide: { pv: 0.9, ar: 0, difese: 1, danni: ['1d6+2', '1d8+2', '2d6+2', '2d8+2', '2d8+3'] },
   'Umanoide mostruoso': { pv: 1.1, ar: -1, difese: -2, danni: ['1d8+3', '1d10+3', '2d6+3', '2d8+3', '2d8+4'] },
+  Quadrupede: { pv: 1, ar: 0, difese: -1, danni: ['1d8+2', '1d8+3', '2d6+2', '2d8+2', '2d8+3'] },
+  Alato: { pv: 0.85, ar: 0, difese: 2, vaContro: -2, danni: ['1d6+2', '1d8+2', '2d6+2', '2d8+2', '2d8+3'] },
+  Strisciante: { pv: 1.2, ar: 0, difese: -2, danni: ['1d8+1', '1d8+2', '2d6+1', '2d8+1', '2d8+2'] },
+  Gigante: { pv: 1.25, ar: 0, difese: -4, vaContro: 2, danni: ['1d8+2', '1d8+3', '2d6+2', '2d8+2', '2d8+3'] },
 };
 export const BASI = {
   Umano: GRADI.map((g) => ({ ...g })),
   ...Object.fromEntries(Object.entries(MOD_BASI).map(([n, m]) => [n, GRADI.map((g, i) => ({
-    ...g, pv: Math.round(g.pv * m.pv), ar: Math.max(1, g.ar + m.ar), difese: g.difese + m.difese, danno: m.danni[i],
+    ...g, pv: Math.round(g.pv * m.pv), ar: Math.max(1, g.ar + m.ar), difese: g.difese + m.difese, danno: m.danni[i], vaContro: m.vaContro ?? 0,
   }))])),
 };
 
@@ -359,7 +365,7 @@ export function misureScontro(n, pg, { nPg = N_PG, para = true, bossPara = false
   const azioniPg = pg.reduce((s, a) => s + a.azioni, 0) / pg.length;
   // AzP d'attacco del gruppo: il PG bersaglio tiene un'AzP per la Parata
   const attacchi = nPg * azioniPg - (para ? 1 : 0);
-  const colpo = pg.map((a) => ({ p: probabilita(a.va), pieno: dannoDopoAR(a.danno, n.ar), mezzo: dannoDopoAR(a.danno, n.ar, true) }));
+  const colpo = pg.map((a) => ({ p: probabilita(a.va + (n.vaContro ?? 0)), pieno: dannoDopoAR(a.danno, n.ar), mezzo: dannoDopoAR(a.danno, n.ar, true) }));
   const perAttacco = colpo.reduce((s, x) => s + x.p * x.pieno, 0) / colpo.length;
   const nessunColpo = colpo.reduce((s, x) => s * (1 - x.p) ** (attacchi / colpo.length), 1);
   const risparmio = colpo.reduce((s, x) => s + (x.pieno - x.mezzo), 0) / colpo.length;
@@ -382,7 +388,7 @@ export function boss(grado, pg) {
 
 /** Forza nella legge del quadrato: PV × danno per Round contro l'avversario, senza Difese (costano Azioni a entrambi). */
 const forzaNemico = (n, pg) => n.pv * pg.reduce((s, a) => s + dannoPerRound(n.azioni, n.va, n.danno, a.ar), 0) / pg.length;
-const forzaPg = (pg, n) => pg.reduce((s, a) => s + a.pv * a.azioni * probabilita(a.va) * dannoDopoAR(a.danno, n.ar), 0) / pg.length;
+const forzaPg = (pg, n) => pg.reduce((s, a) => s + a.pv * a.azioni * probabilita(a.va + (n.vaContro ?? 0)) * dannoDopoAR(a.danno, n.ar), 0) / pg.length;
 /** Quanti nemici `n` per uno scontro con il rapporto di forza `r` contro 7 PG: N · √F(nemico) = √r · 7 · √F(PG). */
 export const quanti = (n, pg, r) => (Math.sqrt(r) * N_PG * Math.sqrt(forzaPg(pg, n))) / Math.sqrt(forzaNemico(n, pg));
 /** Peso di una base rispetto al suo grado: √F(base) / √F(grado), contro i PG del livello di riferimento. */

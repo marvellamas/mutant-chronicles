@@ -40,7 +40,7 @@ Capitolo 2 — Scala di potenza
 
 Capitolo 3 — Basi
 
-3.1 Lettura di una base · 3.2 Umano · 3.3 Insettoide · 3.4 Aracnoide · 3.5 Umanoide mostruoso
+3.1 Lettura di una base · 3.2 Umano · 3.3 Insettoide · 3.4 Aracnoide · 3.5 Umanoide mostruoso · 3.6 Quadrupede · 3.7 Alato · 3.8 Strisciante · 3.9 Gigante
 
 Capitolo 4 — Moduli
 
@@ -310,8 +310,25 @@ Una base descrive la forma di una creatura a ogni grado: Caratteristiche tipiche
 | Insettoide | Grado × 0,9 | Grado + 1 | Grado | Mandibole |
 | Aracnoide | Grado × 0,9 | Grado | Grado + 1 | Morso, Ragnatela |
 | Umanoide mostruoso | Grado × 1,1 | Grado − 1 (minimo 1) | Grado − 2 | Artigli |
+| Quadrupede | Grado | Grado | Grado − 1 | Morso, Artigli; Carica del branco |
+| Alato | Grado × 0,85 | Grado | Grado + 2 | Artigli; vola, −2 VA a chi lo attacca in volo |
+| Strisciante | Grado × 1,2 | Grado | Grado − 2 | Morso, Spire; scava e tende agguati |
+| Gigante | Grado × 1,25 | Grado | Grado − 4 | Schianto con Spazzata; +2 VA a chi lo attacca |
 
 Le Caratteristiche tipiche servono alle Prove di Caratteristica e all’uso di armi: i valori derivati della scheda non si ricalcolano da esse.
+
+### **3.1.1 Volo, scavo, taglia e attacchi ampi**
+
+Le basi dal §3.6 al §3.9 si muovono e combattono in modi che i personaggi conoscono solo in parte. Dove il Manuale del Giocatore ha una regola, il Bestiario la usa; dove manca, propone la regola più semplice, da confermare con il Direttore.
+
+* **Volo.** Si applicano le regole del Giocatore §5.2.3–5.2.5: Volo con l’AzM, Corsa e Scatto con Atletica a −2 e −4, percorsi misti, Stati in volo; anche la Carica in volo segue il §5.2.4. La scheda indica il Passo in volo; Corsa e Scatto sono il doppio e il triplo. Una creatura che vola senza sostegno magico non resta sospesa ferma: se non percorre almeno 1 Q nella propria Iniziativa scende a terra a fine Round, senza danni (come le Ali membranose, §4.3).
+* **Bersaglio in volo (proposta).** Chi attacca una creatura che si trova in volo subisce −2 VA, a distanza e in mischia, perché il bersaglio cambia quota e direzione di continuo. TODO(Davide): il Giocatore non ha una penalità per i bersagli in volo; la proposta vale solo per le creature del Bestiario, non per i personaggi che volano con Incantesimi o dispositivi.
+* **Scavo e strisciare.** Lo scavo usa la regola della Mutazione Scavatore (§4.3): terreno sciolto, sabbia e macerie, senza Corsa né Scatto, mai nella roccia o nel cemento. Strisciare A Terra segue il Giocatore §5.5.
+* **Agguato.** Una creatura nascosta che attacca per prima usa la Sorpresa (Giocatore §5.1: Furtività contrapposta a Percezione) e l’Imboscata (§5.4). Il Bestiario non aggiunge vantaggi nuovi: le basi che vivono di agguati hanno un bonus a Furtività scritto nella scheda.
+* **Taglia grande (proposta).** Una creatura di taglia Grande occupa 2 × 2 Q, o 3 × 3 Q quando la scheda lo indica, e chi la attacca ottiene +2 VA, a distanza e in mischia. Per le spinte e le prese conta come un veicolo leggero: Sbalzante non la sposta (Giocatore §5.24), come la Mole (§4.3). TODO(Davide): il Giocatore non ha regole sulla taglia; anche la Mole potrebbe dare taglia Grande, ma qui resta com’è per non cambiare le creature già tarate.
+* **Attacchi ampi in mischia.** Si usa la Manovra Spazzata del Giocatore §5.12 (due o tre bersagli adiacenti fra loro ed entro portata, −4 o −6 VA, una Prova e un colpo per bersaglio). Il Gigante la esegue come con Spazzata Migliorata. Il Giocatore non ha attacchi ad Area in mischia e il Bestiario non ne aggiunge.
+
+Nella scheda di un nemico del Tavolo del Master il volo è il campo «Passo in volo» del Movimento e la taglia il campo «Taglia» (data/formato_nemici.json).
 
 ## **3.2 Umano**
 
@@ -492,6 +509,216 @@ I tipi sono: Fante Capitol, Soldato Bauhaus, Guerriero Mishima, Agente Cybertron
 
 **Comportamento.** Carica il bersaglio più vicino o quello che lo ha ferito per ultimo; non usa le Difese se può attaccare. Usa le armi che trova, con i limiti del §4.4.
 
+## **3.6 Quadrupede**
+
+**Natura Comune, salvo moduli.** Cani da guardia, bestie da soma e predatori delle discariche che l’Oscura Simmetria ha allungato e scarnificato: zampe troppo lunghe, schiene ossute, fauci che si aprono fino alle orecchie. Cacciano in branco, coprono una strada in pochi secondi e scelgono il bersaglio rimasto indietro. Gli allevatori dei quartieri bassi li riconoscono dal silenzio: non abbaiano mai.
+
+| Caratteristica | Minore | Semplice | Medio | Potente | Molto potente |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| FOR | 6 | 7 | 7 | 8 | 9 |
+| COS | 6 | 6 | 7 | 8 | 8 |
+| DES | 7 | 7 | 8 | 9 | 10 |
+| INT | 2 | 2 | 2 | 3 | 3 |
+| SAG | 6 | 6 | 7 | 7 | 8 |
+| CAR | 2 | 2 | 2 | 2 | 3 |
+| PV | 21 | 42 | 65 | 180 | 265 |
+| AR | 1 | 2 | 3 | 4 | 5 |
+| Natura AR | Naturale | Naturale | Naturale | Naturale | Naturale |
+| VA Morso | 11 | 13 | 15 | 17 | 19 |
+| VA Artigli | 11 | 13 | 15 | 17 | 19 |
+| VA Difese | 8 | 10 | 12 | 14 | 16 |
+| PS Tempra | 10 | 11 | 11 | 12 | 13 |
+| PS Riflessi | 12 | 13 | 13 | 15 | 15 |
+| PS Volontà | 7 | 8 | 8 | 9 | 10 |
+| PS Magia | 10 | 11 | 11 | 12 | 13 |
+| Iniziativa | 6 | 6 | 8 | 10 | 12 |
+| Passo Q | 10 | 10 | 10 | 10 | 10 |
+| Spazio occupato | 1 Q | 1 Q | 1 Q | 1 Q | 1 Q |
+| AzP | 1 | 2 | 2 | 2 | 2 |
+| **Attacco** | **Minore** | **Semplice** | **Medio** | **Potente** | **Molto potente** |
+| Morso | 1d8+2 | 1d8+3 | 2d6+2 | 2d8+2 | 2d8+3 |
+| Natura | Naturale | Naturale | Naturale | Naturale | Naturale |
+| Portata Q | 1 | 1 | 1 | 1 | 1 |
+| AC | 1 | 1 | 1 | 1 | 1 |
+| Artigli | 1d6+2 | 1d8+2 | 2d6+1 | 2d8+1 | 2d8+2 |
+| Natura | Naturale | Naturale | Naturale | Naturale | Naturale |
+| Portata Q | 1 | 1 | 1 | 1 | 1 |
+| AC | 1 | 1 | 1 | 1 | 1 |
+| **Abilità** | **Minore** | **Semplice** | **Medio** | **Potente** | **Molto potente** |
+| Atletica | 11 | 13 | 15 | 17 | 19 |
+| Percezione | 9 | 11 | 13 | 15 | 17 |
+| Sopravvivenza | 9 | 11 | 13 | 15 | 17 |
+
+**Azioni.** AzP della tabella e 1 Azione di Movimento.
+
+**Morso e Artigli.** Due attacchi naturali: con un’AzP il Quadrupede usa l’uno o l’altro. Gli Artigli servono soprattutto alla Carica.
+
+**Carica del branco.** La Carica del Quadrupede segue il Giocatore §5.6 (almeno 3 Q in linea retta, danno ×2), ma senza la penalità al VA per chi carica; il bersaglio colpito effettua una PS di Riflessi o cade A Terra (Giocatore §5.5).
+
+**Movimento.** Passo 10 Q, Corsa 20 Q, Scatto 30 Q. Non si arrampica; nuota come un personaggio.
+
+**Sensi.** **Olfatto** come l’Umanoide mostruoso (§3.5).
+
+**Contromisure.** Nessuna. **Danno ricevuto.** Normale.
+
+**Comportamento.** In branco circonda il gruppo, carica chi si stacca e applica la Superiorità numerica come gli Insettoidi. Fugge quando il capobranco, il più forte, va a 0 PV.
+
+## **3.7 Alato**
+
+**Natura Comune, salvo moduli.** Uccelli delle ciminiere, pipistrelli dei condotti e cose che non erano né l’uno né l’altro, cresciute fra i fumi delle raffinerie dove l’Oscura Simmetria filtra nell’aria. Ali di pelle tesa su ossa cave, corpo leggero, artigli ricurvi. A terra sono goffe e lente; in volo cambiano direzione prima che un’arma le segua.
+
+| Caratteristica | Minore | Semplice | Medio | Potente | Molto potente |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| FOR | 4 | 5 | 5 | 6 | 7 |
+| COS | 5 | 5 | 6 | 6 | 7 |
+| DES | 8 | 8 | 9 | 10 | 10 |
+| INT | 3 | 3 | 3 | 4 | 4 |
+| SAG | 7 | 7 | 8 | 8 | 9 |
+| CAR | 2 | 2 | 2 | 3 | 3 |
+| PV | 18 | 36 | 55 | 153 | 225 |
+| AR | 1 | 2 | 3 | 4 | 5 |
+| Natura AR | Naturale | Naturale | Naturale | Naturale | Naturale |
+| VA Artigli | 11 | 13 | 15 | 17 | 19 |
+| VA Difese | 11 | 13 | 15 | 17 | 19 |
+| PS Tempra | 7 | 8 | 8 | 9 | 10 |
+| PS Riflessi | 12 | 13 | 13 | 15 | 15 |
+| PS Volontà | 10 | 11 | 11 | 12 | 13 |
+| PS Magia | 10 | 11 | 11 | 12 | 13 |
+| Iniziativa | 6 | 6 | 8 | 10 | 12 |
+| Passo Q | 3 | 3 | 3 | 3 | 3 |
+| Passo in volo Q | 8 | 8 | 8 | 8 | 8 |
+| Spazio occupato | 1 Q | 1 Q | 1 Q | 1 Q | 1 Q |
+| AzP | 1 | 2 | 2 | 2 | 2 |
+| **Attacco** | **Minore** | **Semplice** | **Medio** | **Potente** | **Molto potente** |
+| Artigli | 1d6+2 | 1d8+2 | 2d6+2 | 2d8+2 | 2d8+3 |
+| Natura | Naturale | Naturale | Naturale | Naturale | Naturale |
+| Portata Q | 1 | 1 | 1 | 1 | 1 |
+| AC | 1 | 1 | 1 | 1 | 1 |
+| **Abilità** | **Minore** | **Semplice** | **Medio** | **Potente** | **Molto potente** |
+| Percezione | 11 | 13 | 15 | 17 | 19 |
+| Atletica | 9 | 11 | 13 | 15 | 17 |
+| Furtività | 9 | 11 | 13 | 15 | 17 |
+
+**Azioni.** AzP della tabella e 1 Azione di Movimento.
+
+**Volo.** Passo in volo 8 Q, Corsa 16 Q, Scatto 24 Q (§3.1.1); a terra Passo 3 Q, senza Corsa né Scatto. Chi la attacca mentre vola subisce −2 VA (§3.1.1, proposta). Non resta sospesa ferma.
+
+**Picchiata.** Una Carica in volo (Giocatore §5.2.4 e §5.6) che parte almeno 3 Q più in alto del bersaglio. Dopo l’attacco l’Alato riprende quota con il movimento della Carica che gli resta, e uscire dalla portata del bersaglio non gli provoca Attacchi di Opportunità.
+
+**Sensi.** Vista acuta: +2 alle Prove di Percezione basate sulla vista.
+
+**Contromisure.** Nessuna. **Danno ricevuto.** Normale; a 0 PV in volo precipita (Giocatore §5.22).
+
+**Comportamento.** Gira in alto fuori portata, sceglie chi non ha armi a distanza e piomba con la Picchiata; risale e ripete. Fugge quando ha perso metà dei PV.
+
+## **3.8 Strisciante**
+
+**Natura Comune, salvo moduli.** Corpi lunghi come un vagone, ad anelli, senza zampe o con file di monconi: vermi delle fogne, serpi delle macerie, larve cresciute troppo sotto le fondamenta delle città-bunker. Vivono sepolti nei detriti e sentono i passi da lontano. In campo aperto sono lente e impacciate; sotto terra si muovono più veloci di quanto si scavi una trincea.
+
+| Caratteristica | Minore | Semplice | Medio | Potente | Molto potente |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| FOR | 6 | 7 | 7 | 8 | 9 |
+| COS | 7 | 7 | 8 | 9 | 9 |
+| DES | 5 | 5 | 6 | 6 | 7 |
+| INT | 2 | 2 | 2 | 2 | 3 |
+| SAG | 6 | 6 | 7 | 7 | 8 |
+| CAR | 1 | 1 | 1 | 1 | 1 |
+| PV | 25 | 50 | 78 | 216 | 318 |
+| AR | 1 | 2 | 3 | 4 | 5 |
+| Natura AR | Naturale | Naturale | Naturale | Naturale | Naturale |
+| VA Morso | 11 | 13 | 15 | 17 | 19 |
+| VA Spire | 11 | 13 | 15 | 17 | 19 |
+| VA Difese | 7 | 9 | 11 | 13 | 15 |
+| PS Tempra | 12 | 13 | 13 | 15 | 15 |
+| PS Riflessi | 7 | 8 | 8 | 9 | 10 |
+| PS Volontà | 10 | 11 | 11 | 12 | 13 |
+| PS Magia | 10 | 11 | 11 | 12 | 13 |
+| Iniziativa | 3 | 3 | 5 | 7 | 9 |
+| Passo Q | 4 | 4 | 4 | 4 | 4 |
+| Spazio occupato | 1 Q | 1 Q | 1 Q | 1 Q | 1 Q |
+| AzP | 1 | 2 | 2 | 2 | 2 |
+| **Attacco** | **Minore** | **Semplice** | **Medio** | **Potente** | **Molto potente** |
+| Morso | 1d8+1 | 1d8+2 | 2d6+1 | 2d8+1 | 2d8+2 |
+| Natura | Naturale | Naturale | Naturale | Naturale | Naturale |
+| Portata Q | 1 | 1 | 1 | 1 | 1 |
+| AC | 1 | 1 | 1 | 1 | 1 |
+| Spire | 1d6 | 1d6+1 | 1d8+1 | 2d6+1 | 2d6+2 |
+| Natura | Naturale | Naturale | Naturale | Naturale | Naturale |
+| Portata Q | 1 | 1 | 1 | 1 | 1 |
+| AC | 1 | 1 | 1 | 1 | 1 |
+| **Abilità** | **Minore** | **Semplice** | **Medio** | **Potente** | **Molto potente** |
+| Furtività | 11 | 13 | 15 | 17 | 19 |
+| Atletica | 9 | 11 | 13 | 15 | 17 |
+| Percezione | 9 | 11 | 13 | 15 | 17 |
+
+**Azioni.** AzP della tabella e 1 Azione di Movimento.
+
+**Spire.** Attacco ravvicinato che avvolge: se infligge almeno 1 danno dopo l’Armatura il bersaglio è Immobilizzato (Giocatore §5.18), salvo una PS di Riflessi riuscita. Liberarsi costa 1 AzP e una Prova di Atletica o Corpo a corpo contro il VA delle Spire. Le Spire trattengono un solo bersaglio alla volta; mentre lo trattengono, lo Strisciante può mordere solo lui.
+
+**Agguato dal basso.** Sepolto nel terreno sciolto o nelle macerie ottiene +4 alle Prove di Furtività. Se esce attaccando senza essere stato individuato, il bersaglio è Sorpreso (Giocatore §5.1) e il primo attacco segue l’Imboscata (§5.4) senza penalità.
+
+**Movimento.** Passo 4 Q, Corsa 8 Q, Scatto 12 Q; **Scavo** 4 Q nel terreno sciolto e nelle macerie, con la regola del §3.1.1. Non si arrampica.
+
+**Sensi.** **Vibrazioni** come l’Insettoide (§3.3), entro 9 Q.
+
+**Contromisure.** Nessuna. **Danno ricevuto.** Normale.
+
+**Comportamento.** Aspetta sepolto sotto il passaggio, esce sul primo che passa, lo avvolge e lo trascina verso il cunicolo. Si rintana quando è sotto un quarto dei PV.
+
+## **3.9 Gigante**
+
+**Natura Comune, salvo moduli.** Uomini, bestie o macchine di carne gonfiati dall’Oscura Simmetria fino a sfondare i soffitti: tre, quattro metri di muscoli, ossa che crescono storte, una forza che piega le travi. Sono lenti a capire e a muoversi, ma ogni colpo spazza via chi gli sta attorno. Sono rari: dove ne compare uno, di solito qualcuno lo ha nutrito apposta.
+
+| Caratteristica | Minore | Semplice | Medio | Potente | Molto potente |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| FOR | 8 | 9 | 10 | 11 | 12 |
+| COS | 8 | 9 | 9 | 10 | 11 |
+| DES | 4 | 4 | 5 | 5 | 6 |
+| INT | 2 | 2 | 3 | 3 | 3 |
+| SAG | 5 | 5 | 6 | 6 | 7 |
+| CAR | 2 | 2 | 2 | 2 | 2 |
+| PV | 26 | 53 | 81 | 225 | 331 |
+| AR | 1 | 2 | 3 | 4 | 5 |
+| Natura AR | Naturale | Naturale | Naturale | Naturale | Naturale |
+| VA Schianto | 11 | 13 | 15 | 17 | 19 |
+| VA Difese | 5 | 7 | 9 | 11 | 13 |
+| PS Tempra | 12 | 13 | 13 | 15 | 15 |
+| PS Riflessi | 7 | 8 | 8 | 9 | 10 |
+| PS Volontà | 10 | 11 | 11 | 12 | 13 |
+| PS Magia | 10 | 11 | 11 | 12 | 13 |
+| Iniziativa | 2 | 2 | 4 | 6 | 8 |
+| Passo Q | 6 | 6 | 6 | 6 | 6 |
+| Spazio occupato | 2 × 2 Q | 2 × 2 Q | 2 × 2 Q | 3 × 3 Q | 3 × 3 Q |
+| Taglia | Grande | Grande | Grande | Grande | Grande |
+| AzP | 1 | 2 | 2 | 2 | 2 |
+| **Attacco** | **Minore** | **Semplice** | **Medio** | **Potente** | **Molto potente** |
+| Schianto | 1d8+2 | 1d8+3 | 2d6+2 | 2d8+2 | 2d8+3 |
+| Natura | Naturale | Naturale | Naturale | Naturale | Naturale |
+| Portata Q | 2 | 2 | 2 | 2 | 2 |
+| AC | 1 | 1 | 1 | 1 | 1 |
+| **Abilità** | **Minore** | **Semplice** | **Medio** | **Potente** | **Molto potente** |
+| Atletica | 11 | 13 | 15 | 17 | 19 |
+| Percezione | 7 | 9 | 11 | 13 | 15 |
+| Sopravvivenza | 7 | 9 | 11 | 13 | 15 |
+
+**Azioni.** AzP della tabella e 1 Azione di Movimento.
+
+**Taglia Grande.** Occupa 2 × 2 Q, 3 × 3 Q dal Potente; chi lo attacca ottiene +2 VA; Sbalzante non lo sposta (§3.1.1, proposta).
+
+**Schianto.** Pugni, zampe o un tronco di metallo: portata 2 Q. Con una Carica riuscita applica Sbalzante 1 (Giocatore §5.24).
+
+**Spazzata del gigante.** Esegue la Spazzata del Giocatore §5.12 come con Spazzata Migliorata: −2 VA contro due bersagli, −4 contro tre, tutti entro la portata di 2 Q.
+
+**Raro.** Al massimo un Gigante per scontro sotto il grado Potente; dal Potente due solo come Boss e scorta.
+
+**Movimento.** Passo 6 Q, Corsa 12 Q, Scatto 18 Q. Non passa dove lo spazio è più stretto della sua taglia senza abbattere qualcosa.
+
+**Sensi.** Vista ordinaria.
+
+**Contromisure.** Nessuna. **Danno ricevuto.** Normale.
+
+**Comportamento.** Avanza verso il gruppo più folto per colpirne più d’uno con la Spazzata; ignora le Coperture leggere, che abbatte. Non fugge.
+
 # **Capitolo 4 — Moduli**
 
 ## **4.1 Regole dei moduli**
@@ -568,7 +795,7 @@ L’esposizione non modifica i danni né gli Stati dell’attacco. Gli esiti e l
 
 ## **4.3 Mutazioni**
 
-**Basi:** tutte, salvo indicazione. Le Mutazioni sono alterazioni del corpo, spesso prodotte dall’Oscura Simmetria; non cambiano da sole la Natura della creatura.
+**Basi:** tutte, salvo indicazione; «Tutte» comprende anche le basi del §3.6–3.9. Le Mutazioni sono alterazioni del corpo, spesso prodotte dall’Oscura Simmetria; non cambiano da sole la Natura della creatura. Non servono Mutazioni nuove per le basi del §3.6–3.9: le loro capacità (Volo, Spire, Scavo, Spazzata del gigante) stanno nella base, e le Mutazioni esistenti le completano. Le Manifestazioni oscure (§4.2.4) sono ammesse su tutte le basi.
 
 | Mutazione | Costo | Basi | Effetto in breve |
 | :---- | :---: | :---- | :---- |
@@ -579,11 +806,11 @@ L’esposizione non modifica i danni né gli Stati dell’attacco. Gli esiti e l
 | Sangue acido | +½ | Tutte | Chi la ferisce in mischia subisce danno Corrosivo. |
 | Sensi oscuri | +0 | Tutte | Percepisce i viventi senza vista entro 12 Q. |
 | Aculei | +½ | Tutte | Gli attacchi naturali hanno Sanguinante 1; chi la colpisce senz’armi subisce 1d4. |
-| Mole | +1 | Insettoide, Aracnoide, Umanoide mostruoso | Spazio 2 × 2 Q, PV × 1,5, portata 2 Q, −2 VA Difese. |
-| Ali membranose | +½ | Insettoide, Umanoide mostruoso | Volo con Passo 6 Q (Giocatore §5.2.3). |
-| Scavatore | +0 | Insettoide, Aracnoide, Umanoide mostruoso | Scava nel terreno sciolto con Passo 2 Q. |
+| Mole | +1 | Insettoide, Aracnoide, Umanoide mostruoso, Quadrupede, Strisciante | Spazio 2 × 2 Q, PV × 1,5, portata 2 Q, −2 VA Difese. |
+| Ali membranose | +½ | Insettoide, Umanoide mostruoso, Quadrupede | Volo con Passo 6 Q (Giocatore §5.2.3). |
+| Scavatore | +0 | Insettoide, Aracnoide, Umanoide mostruoso, Quadrupede | Scava nel terreno sciolto con Passo 2 Q. |
 | Mimetismo | +½ | Tutte | +4 Furtività; colpisce per primo in un’Imboscata. |
-| Balzo | +½ | Insettoide, Aracnoide, Umanoide mostruoso | Carica fino a 12 Q con Sbilanciante. |
+| Balzo | +½ | Insettoide, Aracnoide, Umanoide mostruoso, Quadrupede | Carica fino a 12 Q con Sbilanciante. |
 
 **Carapace.** L’AR naturale aumenta di 1, sempre non magica. Le basi con Passo 8 Q scendono a 6 Q.
 
@@ -1201,14 +1428,28 @@ Rapporto fra la forza di una base e quella del suo grado, contro i personaggi de
 | Insettoide | 0,98 | 0,99 | 1,03 | 1,08 | 1,10 |
 | Aracnoide | 0,86 | 0,86 | 0,95 | 0,95 | 0,95 |
 | Umanoide mostruoso | 1,14 | 1,02 | 0,99 | 0,94 | 0,93 |
+| Quadrupede | 1,00 | 1,00 | 1,00 | 1,00 | 1,00 |
+| Alato | 0,92 | 0,91 | 0,99 | 0,98 | 0,97 |
+| Strisciante | 0,98 | 0,98 | 1,01 | 1,03 | 1,04 |
+| Gigante | 1,03 | 1,05 | 1,05 | 1,07 | 1,11 |
 
 | Base | Round di resistenza (Minore · Semplice · Medio · Potente · Molto potente) | Round per abbattere un PG |
 | :---- | :---- | :---- |
 | Insettoide | 1,7 · 3,5 · 5,7 · 9,3 · 13,6 | 11,1 · 9,3 · 7,4 · 5,6 · 5,2 |
 | Aracnoide | 1,3 · 2,6 · 4,1 · 6,3 · 9,1 | 11,2 · 9,3 · 6 · 4,8 · 4,6 |
 | Umanoide mostruoso | 1,6 · 2,5 · 3,8 · 5,6 · 7,9 | 7,4 · 5,4 · 5 · 4,2 · 4,1 |
+| Quadrupede | 1,5 · 2,9 · 4,5 · 7 · 10,1 | 8,9 · 7 · 6 · 4,8 · 4,6 |
+| Alato | 1,5 · 2,9 · 4,4 · 6,8 · 9,5 | 11,2 · 9,3 · 6 · 4,8 · 4,6 |
+| Strisciante | 1,8 · 3,4 · 5,4 · 8,4 · 12,1 | 11,1 · 9,3 · 7,4 · 5,6 · 5,2 |
+| Gigante | 1,5 · 3,1 · 4,9 · 8 · 12,4 | 8,9 · 7 · 6 · 4,8 · 4,6 |
 
 L’Insettoide resiste più a lungo grazie alla chitina e colpisce più piano; l’Aracnoide compensa con la Ragnatela e l’Iniziativa, che il modello non conta; l’Umanoide mostruoso colpisce più forte ma ha le Difese più basse della scala.
+
+Per le basi del §3.6–3.9 il modello conta anche il modificatore al VA di chi le attacca (§3.1.1): −2 contro l’Alato in volo, +2 contro il Gigante. Gli intervalli dei Round di resistenza del §2.1 valgono per tutte e quattro.
+* Il Quadrupede ha i valori del grado: la Carica del branco, che il modello non conta, è il suo vantaggio.
+* L’Alato ha l’85% dei PV del grado, ma i colpi a −2 VA lo riportano alla resistenza del grado; Difese + 2 servono alla Parata del Boss.
+* Lo Strisciante ha il 20% di PV in più e colpisce un po’ più piano; lento in campo aperto, vale soprattutto nell’agguato.
+* Il Gigante ha il 25% di PV in più, ma i colpi a +2 VA ne tolgono quasi tutto il vantaggio; con AR + 1 usciva dagli intervalli dal Medio in su, per questo la sua AR resta quella del grado. La Spazzata, che il modello non conta, lo rende più pericoloso contro un gruppo serrato.
 
 ## **A.5 Riprodurre la taratura**
 

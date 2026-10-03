@@ -56,7 +56,8 @@ test('scala dei gradi: PV, VA, Difese, AR, danno e AzP come il §2.1; Boss come 
 });
 
 test('basi per grado (cap. 3): PV, VA dell’attacco, Difese, AR e danno come il documento', () => {
-  for (const [id, titolo, attacco] of [['insettoide', '3.3 Insettoide', 'Mandibole'], ['aracnoide', '3.4 Aracnoide', 'Morso'], ['umanoide-mostruoso', '3.5 Umanoide mostruoso', 'Artigli']]) {
+  for (const [id, titolo, attacco] of [['insettoide', '3.3 Insettoide', 'Mandibole'], ['aracnoide', '3.4 Aracnoide', 'Morso'], ['umanoide-mostruoso', '3.5 Umanoide mostruoso', 'Artigli'],
+    ['quadrupede', '3.6 Quadrupede', 'Morso'], ['alato', '3.7 Alato', 'Artigli'], ['strisciante', '3.8 Strisciante', 'Morso'], ['gigante', '3.9 Gigante', 'Schianto']]) {
     const t = perRiga(tabella(titolo));
     B.gradi.forEach((g, i) => {
       const c = B.basi[id].per_grado[g.id];
@@ -65,6 +66,9 @@ test('basi per grado (cap. 3): PV, VA dell’attacco, Difese, AR e danno come il
         [numero(t.get('PV')[i]), numero(t.get(`VA ${attacco}`)[i]), numero(t.get('VA Difese')[i]), numero(t.get('AR')[i]), t.get(attacco)[i], numero(t.get('AzP')[i])],
         `${id} ${g.nome}`,
       );
+      // basi del §3.6–3.9: Passo in volo e taglia (§3.1.1)
+      assert.equal(c.volo ?? null, t.has('Passo in volo Q') ? numero(t.get('Passo in volo Q')[i]) : null, `${id} ${g.nome}: volo`);
+      assert.equal(c.taglia ?? null, t.has('Taglia') ? t.get('Taglia')[i].toLowerCase() : null, `${id} ${g.nome}: taglia`);
     });
   }
   // umani (§3.2): moltiplicatore, AzP e bonus al danno
@@ -83,3 +87,21 @@ test('tabelle casuali (cap. 6): stessi intervalli e stessi id del documento', ()
   }
 });
 
+
+test('basi nuove (§3.6–3.9): profili validi nel formato A.73 a ogni grado, con volo e taglia', async () => {
+  const { profiloNemico } = await import('../src/crea-nemico.js');
+  const { validaNemico } = await import('../src/validate.js');
+  for (const base of ['quadrupede', 'alato', 'strisciante', 'gigante']) {
+    for (const g of B.gradi) {
+      const r = profiloNemico({ base, grado: g.id, mutazioni: [] }, dati);
+      assert.deepEqual([r.errori, validaNemico(r.nemico, dati, base)], [[], []], `${base} ${g.nome}`);
+    }
+  }
+  const alato = profiloNemico({ base: 'alato', grado: 'medio', mutazioni: [] }, dati).nemico;
+  assert.deepEqual([alato.movimento.passo, alato.movimento.volo, alato.taglia], [3, 8, undefined]);
+  const gigante = profiloNemico({ base: 'gigante', grado: 'potente', mutazioni: [] }, dati).nemico;
+  assert.deepEqual([gigante.taglia, gigante.pv, gigante.attacchi[0].portata_q], ['grande', 225, 2]);
+  assert.match(gigante.capacita.find((c) => c.nome === 'Spazio').effetto, /3 × 3 Q/);
+  // le Ali membranose danno il Passo in volo anche a un Quadrupede
+  assert.equal(profiloNemico({ base: 'quadrupede', grado: 'medio', mutazioni: ['ali-membranose'] }, dati).nemico.movimento.volo, 6);
+});

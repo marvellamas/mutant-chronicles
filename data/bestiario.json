@@ -1,7 +1,7 @@
 {
   "versione_manuale": "Bestiario, proposta (bozza 0.2, docs/bestiario/bestiario.md, 02/10/2026)",
   "fonte": "Bestiario, proposta: docs/bestiario/bestiario.md, cap. 2–6 e Appendice A; lotto tools/lotti/lotto_bestiario_dati.mjs. Le tabelle si leggono dal documento; effetti dei moduli e ricette delle creature pronte dal testo dei paragrafi.",
-  "TODO(Davide)": "Bestiario proposto, in attesa di Davide: scala tarata su 7 PG, costi dei moduli, Boss, creature pronte e tabelle casuali (docs/bestiario/domande-per-davide.md).",
+  "TODO(Davide)": "Bestiario proposto, in attesa di Davide: scala tarata su 7 PG, costi dei moduli, Boss, creature pronte e tabelle casuali; basi del §3.6–3.9 con le proposte su bersaglio in volo (−2 VA) e taglia Grande (+2 VA), che il Giocatore non ha (docs/bestiario/domande-per-davide.md).",
   "gruppo_pg": 7,
   "gradi": [
     {
@@ -1129,6 +1129,1139 @@
       "immunita": [],
       "comportamento": "Carica il bersaglio più vicino o quello che lo ha ferito per ultimo; non usa le Difese se può attaccare.",
       "pv_molt_boss": 1.1
+    },
+    "quadrupede": {
+      "nome": "Quadrupede",
+      "paragrafo": "§3.6",
+      "natura": "Comune",
+      "per_grado": {
+        "minore": {
+          "caratteristiche": {
+            "FOR": 6,
+            "COS": 6,
+            "DES": 7,
+            "INT": 2,
+            "SAG": 6,
+            "CAR": 2
+          },
+          "salvezze": {
+            "tempra": 10,
+            "riflessi": 12,
+            "volonta": 7,
+            "magia": 10
+          },
+          "attacchi": [
+            {
+              "nome": "Morso",
+              "danno": "1d8+2",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 11
+            },
+            {
+              "nome": "Artigli",
+              "danno": "1d6+2",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 11
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Atletica",
+              "va": 11
+            },
+            {
+              "nome": "Percezione",
+              "va": 9
+            },
+            {
+              "nome": "Sopravvivenza",
+              "va": 9
+            }
+          ],
+          "pv": 21,
+          "ar": 1,
+          "difese": 8,
+          "iniziativa": 6,
+          "passo": 10,
+          "spazio": "1 Q",
+          "azp": 1
+        },
+        "semplice": {
+          "caratteristiche": {
+            "FOR": 7,
+            "COS": 6,
+            "DES": 7,
+            "INT": 2,
+            "SAG": 6,
+            "CAR": 2
+          },
+          "salvezze": {
+            "tempra": 11,
+            "riflessi": 13,
+            "volonta": 8,
+            "magia": 11
+          },
+          "attacchi": [
+            {
+              "nome": "Morso",
+              "danno": "1d8+3",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 13
+            },
+            {
+              "nome": "Artigli",
+              "danno": "1d8+2",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 13
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Atletica",
+              "va": 13
+            },
+            {
+              "nome": "Percezione",
+              "va": 11
+            },
+            {
+              "nome": "Sopravvivenza",
+              "va": 11
+            }
+          ],
+          "pv": 42,
+          "ar": 2,
+          "difese": 10,
+          "iniziativa": 6,
+          "passo": 10,
+          "spazio": "1 Q",
+          "azp": 2
+        },
+        "medio": {
+          "caratteristiche": {
+            "FOR": 7,
+            "COS": 7,
+            "DES": 8,
+            "INT": 2,
+            "SAG": 7,
+            "CAR": 2
+          },
+          "salvezze": {
+            "tempra": 11,
+            "riflessi": 13,
+            "volonta": 8,
+            "magia": 11
+          },
+          "attacchi": [
+            {
+              "nome": "Morso",
+              "danno": "2d6+2",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 15
+            },
+            {
+              "nome": "Artigli",
+              "danno": "2d6+1",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 15
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Atletica",
+              "va": 15
+            },
+            {
+              "nome": "Percezione",
+              "va": 13
+            },
+            {
+              "nome": "Sopravvivenza",
+              "va": 13
+            }
+          ],
+          "pv": 65,
+          "ar": 3,
+          "difese": 12,
+          "iniziativa": 8,
+          "passo": 10,
+          "spazio": "1 Q",
+          "azp": 2
+        },
+        "potente": {
+          "caratteristiche": {
+            "FOR": 8,
+            "COS": 8,
+            "DES": 9,
+            "INT": 3,
+            "SAG": 7,
+            "CAR": 2
+          },
+          "salvezze": {
+            "tempra": 12,
+            "riflessi": 15,
+            "volonta": 9,
+            "magia": 12
+          },
+          "attacchi": [
+            {
+              "nome": "Morso",
+              "danno": "2d8+2",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 17
+            },
+            {
+              "nome": "Artigli",
+              "danno": "2d8+1",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 17
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Atletica",
+              "va": 17
+            },
+            {
+              "nome": "Percezione",
+              "va": 15
+            },
+            {
+              "nome": "Sopravvivenza",
+              "va": 15
+            }
+          ],
+          "pv": 180,
+          "ar": 4,
+          "difese": 14,
+          "iniziativa": 10,
+          "passo": 10,
+          "spazio": "1 Q",
+          "azp": 2
+        },
+        "molto-potente": {
+          "caratteristiche": {
+            "FOR": 9,
+            "COS": 8,
+            "DES": 10,
+            "INT": 3,
+            "SAG": 8,
+            "CAR": 3
+          },
+          "salvezze": {
+            "tempra": 13,
+            "riflessi": 15,
+            "volonta": 10,
+            "magia": 13
+          },
+          "attacchi": [
+            {
+              "nome": "Morso",
+              "danno": "2d8+3",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 19
+            },
+            {
+              "nome": "Artigli",
+              "danno": "2d8+2",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 19
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Atletica",
+              "va": 19
+            },
+            {
+              "nome": "Percezione",
+              "va": 17
+            },
+            {
+              "nome": "Sopravvivenza",
+              "va": 17
+            }
+          ],
+          "pv": 265,
+          "ar": 5,
+          "difese": 16,
+          "iniziativa": 12,
+          "passo": 10,
+          "spazio": "1 Q",
+          "azp": 2
+        }
+      },
+      "capacita": [
+        {
+          "nome": "Carica del branco",
+          "effetto": "Carica del Giocatore §5.6 (almeno 3 Q in linea retta, danno ×2) senza la penalità al VA per chi carica; il bersaglio colpito effettua una PS di Riflessi o cade A Terra (§5.5)."
+        },
+        {
+          "nome": "Olfatto",
+          "effetto": "Segue una traccia fino a un giorno di età; +2 alle Prove di Percezione basate sull’odore entro 30 Q."
+        }
+      ],
+      "immunita": [],
+      "comportamento": "In branco circonda il gruppo, carica chi si stacca e applica la Superiorità numerica. Fugge quando il capobranco va a 0 PV.",
+      "pv_molt_boss": 1
+    },
+    "alato": {
+      "nome": "Alato",
+      "paragrafo": "§3.7",
+      "natura": "Comune",
+      "per_grado": {
+        "minore": {
+          "caratteristiche": {
+            "FOR": 4,
+            "COS": 5,
+            "DES": 8,
+            "INT": 3,
+            "SAG": 7,
+            "CAR": 2
+          },
+          "salvezze": {
+            "tempra": 7,
+            "riflessi": 12,
+            "volonta": 10,
+            "magia": 10
+          },
+          "attacchi": [
+            {
+              "nome": "Artigli",
+              "danno": "1d6+2",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 11
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Percezione",
+              "va": 11
+            },
+            {
+              "nome": "Atletica",
+              "va": 9
+            },
+            {
+              "nome": "Furtività",
+              "va": 9
+            }
+          ],
+          "pv": 18,
+          "ar": 1,
+          "difese": 11,
+          "iniziativa": 6,
+          "passo": 3,
+          "volo": 8,
+          "spazio": "1 Q",
+          "azp": 1
+        },
+        "semplice": {
+          "caratteristiche": {
+            "FOR": 5,
+            "COS": 5,
+            "DES": 8,
+            "INT": 3,
+            "SAG": 7,
+            "CAR": 2
+          },
+          "salvezze": {
+            "tempra": 8,
+            "riflessi": 13,
+            "volonta": 11,
+            "magia": 11
+          },
+          "attacchi": [
+            {
+              "nome": "Artigli",
+              "danno": "1d8+2",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 13
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Percezione",
+              "va": 13
+            },
+            {
+              "nome": "Atletica",
+              "va": 11
+            },
+            {
+              "nome": "Furtività",
+              "va": 11
+            }
+          ],
+          "pv": 36,
+          "ar": 2,
+          "difese": 13,
+          "iniziativa": 6,
+          "passo": 3,
+          "volo": 8,
+          "spazio": "1 Q",
+          "azp": 2
+        },
+        "medio": {
+          "caratteristiche": {
+            "FOR": 5,
+            "COS": 6,
+            "DES": 9,
+            "INT": 3,
+            "SAG": 8,
+            "CAR": 2
+          },
+          "salvezze": {
+            "tempra": 8,
+            "riflessi": 13,
+            "volonta": 11,
+            "magia": 11
+          },
+          "attacchi": [
+            {
+              "nome": "Artigli",
+              "danno": "2d6+2",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 15
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Percezione",
+              "va": 15
+            },
+            {
+              "nome": "Atletica",
+              "va": 13
+            },
+            {
+              "nome": "Furtività",
+              "va": 13
+            }
+          ],
+          "pv": 55,
+          "ar": 3,
+          "difese": 15,
+          "iniziativa": 8,
+          "passo": 3,
+          "volo": 8,
+          "spazio": "1 Q",
+          "azp": 2
+        },
+        "potente": {
+          "caratteristiche": {
+            "FOR": 6,
+            "COS": 6,
+            "DES": 10,
+            "INT": 4,
+            "SAG": 8,
+            "CAR": 3
+          },
+          "salvezze": {
+            "tempra": 9,
+            "riflessi": 15,
+            "volonta": 12,
+            "magia": 12
+          },
+          "attacchi": [
+            {
+              "nome": "Artigli",
+              "danno": "2d8+2",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 17
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Percezione",
+              "va": 17
+            },
+            {
+              "nome": "Atletica",
+              "va": 15
+            },
+            {
+              "nome": "Furtività",
+              "va": 15
+            }
+          ],
+          "pv": 153,
+          "ar": 4,
+          "difese": 17,
+          "iniziativa": 10,
+          "passo": 3,
+          "volo": 8,
+          "spazio": "1 Q",
+          "azp": 2
+        },
+        "molto-potente": {
+          "caratteristiche": {
+            "FOR": 7,
+            "COS": 7,
+            "DES": 10,
+            "INT": 4,
+            "SAG": 9,
+            "CAR": 3
+          },
+          "salvezze": {
+            "tempra": 10,
+            "riflessi": 15,
+            "volonta": 13,
+            "magia": 13
+          },
+          "attacchi": [
+            {
+              "nome": "Artigli",
+              "danno": "2d8+3",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 19
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Percezione",
+              "va": 19
+            },
+            {
+              "nome": "Atletica",
+              "va": 17
+            },
+            {
+              "nome": "Furtività",
+              "va": 17
+            }
+          ],
+          "pv": 225,
+          "ar": 5,
+          "difese": 19,
+          "iniziativa": 12,
+          "passo": 3,
+          "volo": 8,
+          "spazio": "1 Q",
+          "azp": 2
+        }
+      },
+      "va_contro": -2,
+      "capacita": [
+        {
+          "nome": "Volo",
+          "effetto": "Volo del Giocatore §5.2.3–5.2.5 con il Passo in volo della scheda; Corsa e Scatto il doppio e il triplo. Non resta sospeso fermo. Chi lo attacca mentre vola subisce −2 VA (Bestiario §3.1.1, proposta)."
+        },
+        {
+          "nome": "Picchiata",
+          "effetto": "Carica in volo (Giocatore §5.2.4, §5.6) da almeno 3 Q più in alto del bersaglio; dopo l’attacco riprende quota con il movimento che resta, senza Attacchi di Opportunità dal bersaglio."
+        },
+        {
+          "nome": "Vista acuta",
+          "effetto": "+2 alle Prove di Percezione basate sulla vista."
+        }
+      ],
+      "immunita": [],
+      "danno_ricevuto": "A 0 PV in volo precipita (Giocatore §5.22).",
+      "comportamento": "Gira in alto fuori portata, sceglie chi non ha armi a distanza e piomba con la Picchiata; risale e ripete. Fugge a metà dei PV.",
+      "pv_molt_boss": 0.85
+    },
+    "strisciante": {
+      "nome": "Strisciante",
+      "paragrafo": "§3.8",
+      "natura": "Comune",
+      "per_grado": {
+        "minore": {
+          "caratteristiche": {
+            "FOR": 6,
+            "COS": 7,
+            "DES": 5,
+            "INT": 2,
+            "SAG": 6,
+            "CAR": 1
+          },
+          "salvezze": {
+            "tempra": 12,
+            "riflessi": 7,
+            "volonta": 10,
+            "magia": 10
+          },
+          "attacchi": [
+            {
+              "nome": "Morso",
+              "danno": "1d8+1",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 11
+            },
+            {
+              "nome": "Spire",
+              "danno": "1d6",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 11
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Furtività",
+              "va": 11
+            },
+            {
+              "nome": "Atletica",
+              "va": 9
+            },
+            {
+              "nome": "Percezione",
+              "va": 9
+            }
+          ],
+          "pv": 25,
+          "ar": 1,
+          "difese": 7,
+          "iniziativa": 3,
+          "passo": 4,
+          "spazio": "1 Q",
+          "azp": 1
+        },
+        "semplice": {
+          "caratteristiche": {
+            "FOR": 7,
+            "COS": 7,
+            "DES": 5,
+            "INT": 2,
+            "SAG": 6,
+            "CAR": 1
+          },
+          "salvezze": {
+            "tempra": 13,
+            "riflessi": 8,
+            "volonta": 11,
+            "magia": 11
+          },
+          "attacchi": [
+            {
+              "nome": "Morso",
+              "danno": "1d8+2",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 13
+            },
+            {
+              "nome": "Spire",
+              "danno": "1d6+1",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 13
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Furtività",
+              "va": 13
+            },
+            {
+              "nome": "Atletica",
+              "va": 11
+            },
+            {
+              "nome": "Percezione",
+              "va": 11
+            }
+          ],
+          "pv": 50,
+          "ar": 2,
+          "difese": 9,
+          "iniziativa": 3,
+          "passo": 4,
+          "spazio": "1 Q",
+          "azp": 2
+        },
+        "medio": {
+          "caratteristiche": {
+            "FOR": 7,
+            "COS": 8,
+            "DES": 6,
+            "INT": 2,
+            "SAG": 7,
+            "CAR": 1
+          },
+          "salvezze": {
+            "tempra": 13,
+            "riflessi": 8,
+            "volonta": 11,
+            "magia": 11
+          },
+          "attacchi": [
+            {
+              "nome": "Morso",
+              "danno": "2d6+1",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 15
+            },
+            {
+              "nome": "Spire",
+              "danno": "1d8+1",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 15
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Furtività",
+              "va": 15
+            },
+            {
+              "nome": "Atletica",
+              "va": 13
+            },
+            {
+              "nome": "Percezione",
+              "va": 13
+            }
+          ],
+          "pv": 78,
+          "ar": 3,
+          "difese": 11,
+          "iniziativa": 5,
+          "passo": 4,
+          "spazio": "1 Q",
+          "azp": 2
+        },
+        "potente": {
+          "caratteristiche": {
+            "FOR": 8,
+            "COS": 9,
+            "DES": 6,
+            "INT": 2,
+            "SAG": 7,
+            "CAR": 1
+          },
+          "salvezze": {
+            "tempra": 15,
+            "riflessi": 9,
+            "volonta": 12,
+            "magia": 12
+          },
+          "attacchi": [
+            {
+              "nome": "Morso",
+              "danno": "2d8+1",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 17
+            },
+            {
+              "nome": "Spire",
+              "danno": "2d6+1",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 17
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Furtività",
+              "va": 17
+            },
+            {
+              "nome": "Atletica",
+              "va": 15
+            },
+            {
+              "nome": "Percezione",
+              "va": 15
+            }
+          ],
+          "pv": 216,
+          "ar": 4,
+          "difese": 13,
+          "iniziativa": 7,
+          "passo": 4,
+          "spazio": "1 Q",
+          "azp": 2
+        },
+        "molto-potente": {
+          "caratteristiche": {
+            "FOR": 9,
+            "COS": 9,
+            "DES": 7,
+            "INT": 3,
+            "SAG": 8,
+            "CAR": 1
+          },
+          "salvezze": {
+            "tempra": 15,
+            "riflessi": 10,
+            "volonta": 13,
+            "magia": 13
+          },
+          "attacchi": [
+            {
+              "nome": "Morso",
+              "danno": "2d8+2",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 19
+            },
+            {
+              "nome": "Spire",
+              "danno": "2d6+2",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 19
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Furtività",
+              "va": 19
+            },
+            {
+              "nome": "Atletica",
+              "va": 17
+            },
+            {
+              "nome": "Percezione",
+              "va": 17
+            }
+          ],
+          "pv": 318,
+          "ar": 5,
+          "difese": 15,
+          "iniziativa": 9,
+          "passo": 4,
+          "spazio": "1 Q",
+          "azp": 2
+        }
+      },
+      "capacita": [
+        {
+          "nome": "Spire",
+          "effetto": "Se le Spire infliggono almeno 1 danno dopo l’Armatura il bersaglio è Immobilizzato, salvo una PS di Riflessi. Liberarsi: 1 AzP e Atletica o Corpo a corpo contro il VA delle Spire. Un solo bersaglio alla volta; mentre lo trattiene morde solo lui."
+        },
+        {
+          "nome": "Agguato dal basso",
+          "effetto": "Sepolto nel terreno sciolto o nelle macerie: +4 a Furtività. Se esce attaccando senza essere individuato, il bersaglio è Sorpreso (Giocatore §5.1) e il primo attacco segue l’Imboscata (§5.4) senza penalità."
+        },
+        {
+          "nome": "Scavo",
+          "effetto": "Scava con Passo 4 Q nel terreno sciolto e nelle macerie, senza Corsa né Scatto; non nella roccia o nel cemento."
+        },
+        {
+          "nome": "Vibrazioni",
+          "effetto": "Percepisce entro 9 Q le creature che si muovono a contatto con il suolo anche senza vederle."
+        }
+      ],
+      "immunita": [],
+      "comportamento": "Aspetta sepolto sotto il passaggio, esce sul primo che passa, lo avvolge e lo trascina verso il cunicolo. Si rintana sotto un quarto dei PV.",
+      "pv_molt_boss": 1.2
+    },
+    "gigante": {
+      "nome": "Gigante",
+      "paragrafo": "§3.9",
+      "natura": "Comune",
+      "per_grado": {
+        "minore": {
+          "caratteristiche": {
+            "FOR": 8,
+            "COS": 8,
+            "DES": 4,
+            "INT": 2,
+            "SAG": 5,
+            "CAR": 2
+          },
+          "salvezze": {
+            "tempra": 12,
+            "riflessi": 7,
+            "volonta": 10,
+            "magia": 10
+          },
+          "attacchi": [
+            {
+              "nome": "Schianto",
+              "danno": "1d8+2",
+              "natura": "Naturale",
+              "portata_q": 2,
+              "ac": 1,
+              "va": 11
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Atletica",
+              "va": 11
+            },
+            {
+              "nome": "Percezione",
+              "va": 7
+            },
+            {
+              "nome": "Sopravvivenza",
+              "va": 7
+            }
+          ],
+          "pv": 26,
+          "ar": 1,
+          "difese": 5,
+          "iniziativa": 2,
+          "passo": 6,
+          "spazio": "2 × 2 Q",
+          "taglia": "grande",
+          "azp": 1
+        },
+        "semplice": {
+          "caratteristiche": {
+            "FOR": 9,
+            "COS": 9,
+            "DES": 4,
+            "INT": 2,
+            "SAG": 5,
+            "CAR": 2
+          },
+          "salvezze": {
+            "tempra": 13,
+            "riflessi": 8,
+            "volonta": 11,
+            "magia": 11
+          },
+          "attacchi": [
+            {
+              "nome": "Schianto",
+              "danno": "1d8+3",
+              "natura": "Naturale",
+              "portata_q": 2,
+              "ac": 1,
+              "va": 13
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Atletica",
+              "va": 13
+            },
+            {
+              "nome": "Percezione",
+              "va": 9
+            },
+            {
+              "nome": "Sopravvivenza",
+              "va": 9
+            }
+          ],
+          "pv": 53,
+          "ar": 2,
+          "difese": 7,
+          "iniziativa": 2,
+          "passo": 6,
+          "spazio": "2 × 2 Q",
+          "taglia": "grande",
+          "azp": 2
+        },
+        "medio": {
+          "caratteristiche": {
+            "FOR": 10,
+            "COS": 9,
+            "DES": 5,
+            "INT": 3,
+            "SAG": 6,
+            "CAR": 2
+          },
+          "salvezze": {
+            "tempra": 13,
+            "riflessi": 8,
+            "volonta": 11,
+            "magia": 11
+          },
+          "attacchi": [
+            {
+              "nome": "Schianto",
+              "danno": "2d6+2",
+              "natura": "Naturale",
+              "portata_q": 2,
+              "ac": 1,
+              "va": 15
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Atletica",
+              "va": 15
+            },
+            {
+              "nome": "Percezione",
+              "va": 11
+            },
+            {
+              "nome": "Sopravvivenza",
+              "va": 11
+            }
+          ],
+          "pv": 81,
+          "ar": 3,
+          "difese": 9,
+          "iniziativa": 4,
+          "passo": 6,
+          "spazio": "2 × 2 Q",
+          "taglia": "grande",
+          "azp": 2
+        },
+        "potente": {
+          "caratteristiche": {
+            "FOR": 11,
+            "COS": 10,
+            "DES": 5,
+            "INT": 3,
+            "SAG": 6,
+            "CAR": 2
+          },
+          "salvezze": {
+            "tempra": 15,
+            "riflessi": 9,
+            "volonta": 12,
+            "magia": 12
+          },
+          "attacchi": [
+            {
+              "nome": "Schianto",
+              "danno": "2d8+2",
+              "natura": "Naturale",
+              "portata_q": 2,
+              "ac": 1,
+              "va": 17
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Atletica",
+              "va": 17
+            },
+            {
+              "nome": "Percezione",
+              "va": 13
+            },
+            {
+              "nome": "Sopravvivenza",
+              "va": 13
+            }
+          ],
+          "pv": 225,
+          "ar": 4,
+          "difese": 11,
+          "iniziativa": 6,
+          "passo": 6,
+          "spazio": "3 × 3 Q",
+          "taglia": "grande",
+          "azp": 2
+        },
+        "molto-potente": {
+          "caratteristiche": {
+            "FOR": 12,
+            "COS": 11,
+            "DES": 6,
+            "INT": 3,
+            "SAG": 7,
+            "CAR": 2
+          },
+          "salvezze": {
+            "tempra": 15,
+            "riflessi": 10,
+            "volonta": 13,
+            "magia": 13
+          },
+          "attacchi": [
+            {
+              "nome": "Schianto",
+              "danno": "2d8+3",
+              "natura": "Naturale",
+              "portata_q": 2,
+              "ac": 1,
+              "va": 19
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Atletica",
+              "va": 19
+            },
+            {
+              "nome": "Percezione",
+              "va": 15
+            },
+            {
+              "nome": "Sopravvivenza",
+              "va": 15
+            }
+          ],
+          "pv": 331,
+          "ar": 5,
+          "difese": 13,
+          "iniziativa": 8,
+          "passo": 6,
+          "spazio": "3 × 3 Q",
+          "taglia": "grande",
+          "azp": 2
+        }
+      },
+      "va_contro": 2,
+      "massimo_per_scontro": {
+        "sotto": "potente",
+        "numero": 1
+      },
+      "capacita": [
+        {
+          "nome": "Taglia Grande",
+          "effetto": "Chi lo attacca ottiene +2 VA; Sbalzante non lo sposta (Bestiario §3.1.1, proposta)."
+        },
+        {
+          "nome": "Spazzata del gigante",
+          "effetto": "Spazzata del Giocatore §5.12 come con Spazzata Migliorata: −2 VA contro due bersagli, −4 contro tre, entro la portata di 2 Q. Con una Carica riuscita lo Schianto applica Sbalzante 1."
+        },
+        {
+          "nome": "Raro",
+          "effetto": "Al massimo un Gigante per scontro sotto il grado Potente."
+        }
+      ],
+      "immunita": [],
+      "comportamento": "Avanza verso il gruppo più folto per colpirne più d’uno con la Spazzata; abbatte le Coperture leggere. Non fugge.",
+      "pv_molt_boss": 1.25
     }
   },
   "moduli": {
@@ -1320,7 +2453,11 @@
           "umano",
           "insettoide",
           "aracnoide",
-          "umanoide-mostruoso"
+          "umanoide-mostruoso",
+          "quadrupede",
+          "alato",
+          "strisciante",
+          "gigante"
         ],
         "breve": "+1 AR naturale; −2 Passo per le basi con Passo 8 Q.",
         "effetto": "L’AR naturale aumenta di 1, sempre non magica. Le basi con Passo 8 Q scendono a 6 Q.",
@@ -1337,7 +2474,11 @@
           "umano",
           "insettoide",
           "aracnoide",
-          "umanoide-mostruoso"
+          "umanoide-mostruoso",
+          "quadrupede",
+          "alato",
+          "strisciante",
+          "gigante"
         ],
         "breve": "Un attacco naturale aggiuntivo per Round, senza AzP, con −2 VA.",
         "effetto": "Dopo aver attaccato con un’AzP, la creatura effettua un attacco naturale aggiuntivo con −2 VA contro lo stesso bersaglio o un altro entro portata, senza spendere Azioni. Una volta per Round. Il Boss non moltiplica questo attacco con la propria AzP in più.",
@@ -1351,7 +2492,11 @@
           "umano",
           "insettoide",
           "aracnoide",
-          "umanoide-mostruoso"
+          "umanoide-mostruoso",
+          "quadrupede",
+          "alato",
+          "strisciante",
+          "gigante"
         ],
         "breve": "Un attacco naturale applica Avvelenato.",
         "effetto": "Un attacco naturale scelto alla costruzione applica il veleno quando infligge almeno 1 danno dopo l’Armatura. Il bersaglio effettua una PS di Tempra: con successo dimezza per eccesso il danno periodico (Giocatore §5.18, «Avvelenato»). Il veleno è Avvelenato per 1+1d3 Round, con 1d4 danni all’Iniziativa della creatura, che ignorano l’Armatura; dal grado Medio 1d6. Modificatore alla PS: 0; −2 dal grado Potente. Antidoto: un kit di pronto soccorso e una Prova di Medicina con 1 AzP termina lo Stato.",
@@ -1373,7 +2518,11 @@
           "umano",
           "insettoide",
           "aracnoide",
-          "umanoide-mostruoso"
+          "umanoide-mostruoso",
+          "quadrupede",
+          "alato",
+          "strisciante",
+          "gigante"
         ],
         "breve": "Recupera PV all’inizio della propria Iniziativa.",
         "effetto": "All’inizio della propria Iniziativa recupera PV se ne ha almeno 1: 2 PV per il Minore, 3 per il Semplice, 5 per il Medio, 10 per il Potente, 15 per il Molto potente (circa un ventesimo dei PV del grado). Il danno da Fuoco o Corrosivo subito nel Round precedente impedisce la rigenerazione per quel Round. Non si somma con Carne che ricorda (§4.2.4): si usa la maggiore.",
@@ -1396,7 +2545,11 @@
           "umano",
           "insettoide",
           "aracnoide",
-          "umanoide-mostruoso"
+          "umanoide-mostruoso",
+          "quadrupede",
+          "alato",
+          "strisciante",
+          "gigante"
         ],
         "breve": "Chi la ferisce in mischia subisce danno Corrosivo.",
         "effetto": "Quando un attacco ravvicinato le infligge almeno 1 danno dopo l’Armatura, l’attaccante adiacente subisce 1d4 danni Naturali con la proprietà Corrosivo (Giocatore §5.24); l’arma usata effettua invece la PS Integrità del Corrosivo (Manuale degli Armamenti, §7.2.1). Una volta per attaccante e per Round.",
@@ -1410,7 +2563,11 @@
           "umano",
           "insettoide",
           "aracnoide",
-          "umanoide-mostruoso"
+          "umanoide-mostruoso",
+          "quadrupede",
+          "alato",
+          "strisciante",
+          "gigante"
         ],
         "breve": "Percepisce i viventi senza vista entro 12 Q.",
         "effetto": "Percepisce la posizione delle creature viventi entro 12 Q attraverso il buio, il fumo e gli ostacoli sottili; contro di loro non subisce le penalità di Accecato per individuarle. Non attraversa le pareti spesse né rivela creature prive di vita.",
@@ -1424,7 +2581,11 @@
           "umano",
           "insettoide",
           "aracnoide",
-          "umanoide-mostruoso"
+          "umanoide-mostruoso",
+          "quadrupede",
+          "alato",
+          "strisciante",
+          "gigante"
         ],
         "breve": "Gli attacchi naturali hanno Sanguinante 1; chi la colpisce senz’armi subisce 1d4.",
         "effetto": "Gli attacchi naturali ottengono Sanguinante 1. Chi la colpisce senz’armi o la Immobilizza subisce 1d4 danni Naturali che ignorano l’Armatura, una volta per Round.",
@@ -1441,7 +2602,9 @@
         "basi": [
           "insettoide",
           "aracnoide",
-          "umanoide-mostruoso"
+          "umanoide-mostruoso",
+          "quadrupede",
+          "strisciante"
         ],
         "breve": "Spazio 2 × 2 Q, PV × 1,5, portata 2 Q, −2 VA Difese.",
         "effetto": "La creatura occupa 2 × 2 Q, i PV aumentano della metà, la portata degli attacchi naturali diventa 2 Q e il VA delle Difese scende di 2. Per le Prove di Forza contro spinte e prese conta come un veicolo leggero: Sbalzante non la sposta (Giocatore §5.24). Un Aracnoide Potente o Molto potente ha già lo Spazio 2 × 2 Q: per lui la Mole vale soltanto PV e portata, con costo +½.",
@@ -1472,7 +2635,8 @@
         "costo": 0.5,
         "basi": [
           "insettoide",
-          "umanoide-mostruoso"
+          "umanoide-mostruoso",
+          "quadrupede"
         ],
         "breve": "Volo con Passo 6 Q (Giocatore §5.2.3).",
         "effetto": "La creatura vola con Passo 6 Q, Corsa 12 Q, Scatto 18 Q (Giocatore §5.2.3). Non può restare sospesa senza muoversi: se non percorre almeno 1 Q nella propria Iniziativa, scende a terra a fine Round senza danni.",
@@ -1487,7 +2651,8 @@
         "basi": [
           "insettoide",
           "aracnoide",
-          "umanoide-mostruoso"
+          "umanoide-mostruoso",
+          "quadrupede"
         ],
         "breve": "Scava nel terreno sciolto con Passo 2 Q.",
         "effetto": "Si muove nel terreno sciolto, nella sabbia e nelle macerie con Passo 2 Q, senza Corsa né Scatto, lasciando un cunicolo percorribile da creature della sua taglia. Non scava nella roccia o nel cemento.",
@@ -1503,7 +2668,11 @@
           "umano",
           "insettoide",
           "aracnoide",
-          "umanoide-mostruoso"
+          "umanoide-mostruoso",
+          "quadrupede",
+          "alato",
+          "strisciante",
+          "gigante"
         ],
         "breve": "+4 Furtività; colpisce per primo in un’Imboscata.",
         "effetto": "+4 alle Prove di Furtività quando è ferma o si muove al Passo. Se agisce in un’Imboscata riuscita, attacca prima di ogni personaggio sorpreso (Giocatore §5.4).",
@@ -1520,7 +2689,8 @@
         "basi": [
           "insettoide",
           "aracnoide",
-          "umanoide-mostruoso"
+          "umanoide-mostruoso",
+          "quadrupede"
         ],
         "breve": "Carica fino a 12 Q con Sbilanciante.",
         "effetto": "La Carica può coprire fino a 12 Q anche in salto, superando ostacoli e dislivelli fino a 3 Q senza Prova. Il colpo della Carica ha la proprietà Sbilanciante (Giocatore §5.24), con un solo colpo invece di due.",

@@ -26,7 +26,7 @@
 <p>Capitolo 2 — Scala di potenza</p>
 <p>2.1 I sei gradi · 2.2 Valori derivati per grado · 2.3 Bilancio dello scontro · 2.4 Costo dei moduli e grado effettivo · 2.5 Boss</p>
 <p>Capitolo 3 — Basi</p>
-<p>3.1 Lettura di una base · 3.2 Umano · 3.3 Insettoide · 3.4 Aracnoide · 3.5 Umanoide mostruoso</p>
+<p>3.1 Lettura di una base · 3.2 Umano · 3.3 Insettoide · 3.4 Aracnoide · 3.5 Umanoide mostruoso · 3.6 Quadrupede · 3.7 Alato · 3.8 Strisciante · 3.9 Gigante</p>
 <p>Capitolo 4 — Moduli</p>
 <p>4.1 Regole dei moduli · 4.2 Corrotto dall’Oscura Simmetria · 4.3 Mutazioni · 4.4 Equipaggiamento · 4.5 Stati, nature e proprietà impiegati</p>
 <p>Capitolo 5 — Creature pronte</p>
@@ -228,8 +228,23 @@
 <tr><td>Insettoide</td><td>Grado × 0,9</td><td>Grado + 1</td><td>Grado</td><td>Mandibole</td></tr>
 <tr><td>Aracnoide</td><td>Grado × 0,9</td><td>Grado</td><td>Grado + 1</td><td>Morso, Ragnatela</td></tr>
 <tr><td>Umanoide mostruoso</td><td>Grado × 1,1</td><td>Grado − 1 (minimo 1)</td><td>Grado − 2</td><td>Artigli</td></tr>
+<tr><td>Quadrupede</td><td>Grado</td><td>Grado</td><td>Grado − 1</td><td>Morso, Artigli; Carica del branco</td></tr>
+<tr><td>Alato</td><td>Grado × 0,85</td><td>Grado</td><td>Grado + 2</td><td>Artigli; vola, −2 VA a chi lo attacca in volo</td></tr>
+<tr><td>Strisciante</td><td>Grado × 1,2</td><td>Grado</td><td>Grado − 2</td><td>Morso, Spire; scava e tende agguati</td></tr>
+<tr><td>Gigante</td><td>Grado × 1,25</td><td>Grado</td><td>Grado − 4</td><td>Schianto con Spazzata; +2 VA a chi lo attacca</td></tr>
 </table>
 <p>Le Caratteristiche tipiche servono alle Prove di Caratteristica e all’uso di armi: i valori derivati della scheda non si ricalcolano da esse.</p>
+<h3>3.1.1 Volo, scavo, taglia e attacchi ampi</h3>
+<p>Le basi dal §3.6 al §3.9 si muovono e combattono in modi che i personaggi conoscono solo in parte. Dove il Manuale del Giocatore ha una regola, il Bestiario la usa; dove manca, propone la regola più semplice, da confermare con il Direttore.</p>
+<ul>
+<li><b>Volo.</b> Si applicano le regole del Giocatore §5.2.3–5.2.5: Volo con l’AzM, Corsa e Scatto con Atletica a −2 e −4, percorsi misti, Stati in volo; anche la Carica in volo segue il §5.2.4. La scheda indica il Passo in volo; Corsa e Scatto sono il doppio e il triplo. Una creatura che vola senza sostegno magico non resta sospesa ferma: se non percorre almeno 1 Q nella propria Iniziativa scende a terra a fine Round, senza danni (come le Ali membranose, §4.3).</li>
+<li><b>Bersaglio in volo (proposta).</b> Chi attacca una creatura che si trova in volo subisce −2 VA, a distanza e in mischia, perché il bersaglio cambia quota e direzione di continuo. TODO(Davide): il Giocatore non ha una penalità per i bersagli in volo; la proposta vale solo per le creature del Bestiario, non per i personaggi che volano con Incantesimi o dispositivi.</li>
+<li><b>Scavo e strisciare.</b> Lo scavo usa la regola della Mutazione Scavatore (§4.3): terreno sciolto, sabbia e macerie, senza Corsa né Scatto, mai nella roccia o nel cemento. Strisciare A Terra segue il Giocatore §5.5.</li>
+<li><b>Agguato.</b> Una creatura nascosta che attacca per prima usa la Sorpresa (Giocatore §5.1: Furtività contrapposta a Percezione) e l’Imboscata (§5.4). Il Bestiario non aggiunge vantaggi nuovi: le basi che vivono di agguati hanno un bonus a Furtività scritto nella scheda.</li>
+<li><b>Taglia grande (proposta).</b> Una creatura di taglia Grande occupa 2 × 2 Q, o 3 × 3 Q quando la scheda lo indica, e chi la attacca ottiene +2 VA, a distanza e in mischia. Per le spinte e le prese conta come un veicolo leggero: Sbalzante non la sposta (Giocatore §5.24), come la Mole (§4.3). TODO(Davide): il Giocatore non ha regole sulla taglia; anche la Mole potrebbe dare taglia Grande, ma qui resta com’è per non cambiare le creature già tarate.</li>
+<li><b>Attacchi ampi in mischia.</b> Si usa la Manovra Spazzata del Giocatore §5.12 (due o tre bersagli adiacenti fra loro ed entro portata, −4 o −6 VA, una Prova e un colpo per bersaglio). Il Gigante la esegue come con Spazzata Migliorata. Il Giocatore non ha attacchi ad Area in mischia e il Bestiario non ne aggiunge.</li>
+</ul>
+<p>Nella scheda di un nemico del Tavolo del Master il volo è il campo «Passo in volo» del Movimento e la taglia il campo «Taglia» (data/formato_nemici.json).</p>
 <h2>3.2 Umano</h2>
 <p><b>Natura Comune.</b> Combattenti, guardie, criminali, mercenari ed eretici al servizio dell’Oscura Simmetria. Gli umani si costruiscono come personaggi (Giocatore, Capitoli 2 e 8) e si convertono in nemici con il convertitore del Tavolo del Master (§1.6). Il bestiario umano già preparato per il Tavolo del Master comprende dieci tipi in tre gradi e resta la base: non si ricostruisce.</p>
 <p><b>Portare un umano al grado.</b> Un personaggio convertito ha i PV e l’attacco di un singolo personaggio: contro sette personaggi cadrebbe troppo in fretta. Per portarlo al grado si applicano tre modifiche, e soltanto queste:</p>
@@ -379,6 +394,179 @@
 <p><b>Sensi.</b> <b>Olfatto:</b> segue una traccia fino a un giorno di età; +2 alle Prove di Percezione basate sull’odore entro 30 Q.</p>
 <p><b>Contromisure.</b> Nessuna. <b>Danno ricevuto.</b> Normale.</p>
 <p><b>Comportamento.</b> Carica il bersaglio più vicino o quello che lo ha ferito per ultimo; non usa le Difese se può attaccare. Usa le armi che trova, con i limiti del §4.4.</p>
+<h2>3.6 Quadrupede</h2>
+<p><b>Natura Comune, salvo moduli.</b> Cani da guardia, bestie da soma e predatori delle discariche che l’Oscura Simmetria ha allungato e scarnificato: zampe troppo lunghe, schiene ossute, fauci che si aprono fino alle orecchie. Cacciano in branco, coprono una strada in pochi secondi e scelgono il bersaglio rimasto indietro. Gli allevatori dei quartieri bassi li riconoscono dal silenzio: non abbaiano mai.</p>
+<table border="1">
+<tr><th>Caratteristica</th><th>Minore</th><th>Semplice</th><th>Medio</th><th>Potente</th><th>Molto potente</th></tr>
+<tr><td>FOR</td><td>6</td><td>7</td><td>7</td><td>8</td><td>9</td></tr>
+<tr><td>COS</td><td>6</td><td>6</td><td>7</td><td>8</td><td>8</td></tr>
+<tr><td>DES</td><td>7</td><td>7</td><td>8</td><td>9</td><td>10</td></tr>
+<tr><td>INT</td><td>2</td><td>2</td><td>2</td><td>3</td><td>3</td></tr>
+<tr><td>SAG</td><td>6</td><td>6</td><td>7</td><td>7</td><td>8</td></tr>
+<tr><td>CAR</td><td>2</td><td>2</td><td>2</td><td>2</td><td>3</td></tr>
+<tr><td>PV</td><td>21</td><td>42</td><td>65</td><td>180</td><td>265</td></tr>
+<tr><td>AR</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+<tr><td>Natura AR</td><td>Naturale</td><td>Naturale</td><td>Naturale</td><td>Naturale</td><td>Naturale</td></tr>
+<tr><td>VA Morso</td><td>11</td><td>13</td><td>15</td><td>17</td><td>19</td></tr>
+<tr><td>VA Artigli</td><td>11</td><td>13</td><td>15</td><td>17</td><td>19</td></tr>
+<tr><td>VA Difese</td><td>8</td><td>10</td><td>12</td><td>14</td><td>16</td></tr>
+<tr><td>PS Tempra</td><td>10</td><td>11</td><td>11</td><td>12</td><td>13</td></tr>
+<tr><td>PS Riflessi</td><td>12</td><td>13</td><td>13</td><td>15</td><td>15</td></tr>
+<tr><td>PS Volontà</td><td>7</td><td>8</td><td>8</td><td>9</td><td>10</td></tr>
+<tr><td>PS Magia</td><td>10</td><td>11</td><td>11</td><td>12</td><td>13</td></tr>
+<tr><td>Iniziativa</td><td>6</td><td>6</td><td>8</td><td>10</td><td>12</td></tr>
+<tr><td>Passo Q</td><td>10</td><td>10</td><td>10</td><td>10</td><td>10</td></tr>
+<tr><td>Spazio occupato</td><td>1 Q</td><td>1 Q</td><td>1 Q</td><td>1 Q</td><td>1 Q</td></tr>
+<tr><td>AzP</td><td>1</td><td>2</td><td>2</td><td>2</td><td>2</td></tr>
+<tr><td><b>Attacco</b></td><td><b>Minore</b></td><td><b>Semplice</b></td><td><b>Medio</b></td><td><b>Potente</b></td><td><b>Molto potente</b></td></tr>
+<tr><td>Morso</td><td>1d8+2</td><td>1d8+3</td><td>2d6+2</td><td>2d8+2</td><td>2d8+3</td></tr>
+<tr><td>Natura</td><td>Naturale</td><td>Naturale</td><td>Naturale</td><td>Naturale</td><td>Naturale</td></tr>
+<tr><td>Portata Q</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+<tr><td>AC</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+<tr><td>Artigli</td><td>1d6+2</td><td>1d8+2</td><td>2d6+1</td><td>2d8+1</td><td>2d8+2</td></tr>
+<tr><td>Natura</td><td>Naturale</td><td>Naturale</td><td>Naturale</td><td>Naturale</td><td>Naturale</td></tr>
+<tr><td>Portata Q</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+<tr><td>AC</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+<tr><td><b>Abilità</b></td><td><b>Minore</b></td><td><b>Semplice</b></td><td><b>Medio</b></td><td><b>Potente</b></td><td><b>Molto potente</b></td></tr>
+<tr><td>Atletica</td><td>11</td><td>13</td><td>15</td><td>17</td><td>19</td></tr>
+<tr><td>Percezione</td><td>9</td><td>11</td><td>13</td><td>15</td><td>17</td></tr>
+<tr><td>Sopravvivenza</td><td>9</td><td>11</td><td>13</td><td>15</td><td>17</td></tr>
+</table>
+<p><b>Azioni.</b> AzP della tabella e 1 Azione di Movimento.</p>
+<p><b>Morso e Artigli.</b> Due attacchi naturali: con un’AzP il Quadrupede usa l’uno o l’altro. Gli Artigli servono soprattutto alla Carica.</p>
+<p><b>Carica del branco.</b> La Carica del Quadrupede segue il Giocatore §5.6 (almeno 3 Q in linea retta, danno ×2), ma senza la penalità al VA per chi carica; il bersaglio colpito effettua una PS di Riflessi o cade A Terra (Giocatore §5.5).</p>
+<p><b>Movimento.</b> Passo 10 Q, Corsa 20 Q, Scatto 30 Q. Non si arrampica; nuota come un personaggio.</p>
+<p><b>Sensi.</b> <b>Olfatto</b> come l’Umanoide mostruoso (§3.5).</p>
+<p><b>Contromisure.</b> Nessuna. <b>Danno ricevuto.</b> Normale.</p>
+<p><b>Comportamento.</b> In branco circonda il gruppo, carica chi si stacca e applica la Superiorità numerica come gli Insettoidi. Fugge quando il capobranco, il più forte, va a 0 PV.</p>
+<h2>3.7 Alato</h2>
+<p><b>Natura Comune, salvo moduli.</b> Uccelli delle ciminiere, pipistrelli dei condotti e cose che non erano né l’uno né l’altro, cresciute fra i fumi delle raffinerie dove l’Oscura Simmetria filtra nell’aria. Ali di pelle tesa su ossa cave, corpo leggero, artigli ricurvi. A terra sono goffe e lente; in volo cambiano direzione prima che un’arma le segua.</p>
+<table border="1">
+<tr><th>Caratteristica</th><th>Minore</th><th>Semplice</th><th>Medio</th><th>Potente</th><th>Molto potente</th></tr>
+<tr><td>FOR</td><td>4</td><td>5</td><td>5</td><td>6</td><td>7</td></tr>
+<tr><td>COS</td><td>5</td><td>5</td><td>6</td><td>6</td><td>7</td></tr>
+<tr><td>DES</td><td>8</td><td>8</td><td>9</td><td>10</td><td>10</td></tr>
+<tr><td>INT</td><td>3</td><td>3</td><td>3</td><td>4</td><td>4</td></tr>
+<tr><td>SAG</td><td>7</td><td>7</td><td>8</td><td>8</td><td>9</td></tr>
+<tr><td>CAR</td><td>2</td><td>2</td><td>2</td><td>3</td><td>3</td></tr>
+<tr><td>PV</td><td>18</td><td>36</td><td>55</td><td>153</td><td>225</td></tr>
+<tr><td>AR</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+<tr><td>Natura AR</td><td>Naturale</td><td>Naturale</td><td>Naturale</td><td>Naturale</td><td>Naturale</td></tr>
+<tr><td>VA Artigli</td><td>11</td><td>13</td><td>15</td><td>17</td><td>19</td></tr>
+<tr><td>VA Difese</td><td>11</td><td>13</td><td>15</td><td>17</td><td>19</td></tr>
+<tr><td>PS Tempra</td><td>7</td><td>8</td><td>8</td><td>9</td><td>10</td></tr>
+<tr><td>PS Riflessi</td><td>12</td><td>13</td><td>13</td><td>15</td><td>15</td></tr>
+<tr><td>PS Volontà</td><td>10</td><td>11</td><td>11</td><td>12</td><td>13</td></tr>
+<tr><td>PS Magia</td><td>10</td><td>11</td><td>11</td><td>12</td><td>13</td></tr>
+<tr><td>Iniziativa</td><td>6</td><td>6</td><td>8</td><td>10</td><td>12</td></tr>
+<tr><td>Passo Q</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td></tr>
+<tr><td>Passo in volo Q</td><td>8</td><td>8</td><td>8</td><td>8</td><td>8</td></tr>
+<tr><td>Spazio occupato</td><td>1 Q</td><td>1 Q</td><td>1 Q</td><td>1 Q</td><td>1 Q</td></tr>
+<tr><td>AzP</td><td>1</td><td>2</td><td>2</td><td>2</td><td>2</td></tr>
+<tr><td><b>Attacco</b></td><td><b>Minore</b></td><td><b>Semplice</b></td><td><b>Medio</b></td><td><b>Potente</b></td><td><b>Molto potente</b></td></tr>
+<tr><td>Artigli</td><td>1d6+2</td><td>1d8+2</td><td>2d6+2</td><td>2d8+2</td><td>2d8+3</td></tr>
+<tr><td>Natura</td><td>Naturale</td><td>Naturale</td><td>Naturale</td><td>Naturale</td><td>Naturale</td></tr>
+<tr><td>Portata Q</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+<tr><td>AC</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+<tr><td><b>Abilità</b></td><td><b>Minore</b></td><td><b>Semplice</b></td><td><b>Medio</b></td><td><b>Potente</b></td><td><b>Molto potente</b></td></tr>
+<tr><td>Percezione</td><td>11</td><td>13</td><td>15</td><td>17</td><td>19</td></tr>
+<tr><td>Atletica</td><td>9</td><td>11</td><td>13</td><td>15</td><td>17</td></tr>
+<tr><td>Furtività</td><td>9</td><td>11</td><td>13</td><td>15</td><td>17</td></tr>
+</table>
+<p><b>Azioni.</b> AzP della tabella e 1 Azione di Movimento.</p>
+<p><b>Volo.</b> Passo in volo 8 Q, Corsa 16 Q, Scatto 24 Q (§3.1.1); a terra Passo 3 Q, senza Corsa né Scatto. Chi la attacca mentre vola subisce −2 VA (§3.1.1, proposta). Non resta sospesa ferma.</p>
+<p><b>Picchiata.</b> Una Carica in volo (Giocatore §5.2.4 e §5.6) che parte almeno 3 Q più in alto del bersaglio. Dopo l’attacco l’Alato riprende quota con il movimento della Carica che gli resta, e uscire dalla portata del bersaglio non gli provoca Attacchi di Opportunità.</p>
+<p><b>Sensi.</b> Vista acuta: +2 alle Prove di Percezione basate sulla vista.</p>
+<p><b>Contromisure.</b> Nessuna. <b>Danno ricevuto.</b> Normale; a 0 PV in volo precipita (Giocatore §5.22).</p>
+<p><b>Comportamento.</b> Gira in alto fuori portata, sceglie chi non ha armi a distanza e piomba con la Picchiata; risale e ripete. Fugge quando ha perso metà dei PV.</p>
+<h2>3.8 Strisciante</h2>
+<p><b>Natura Comune, salvo moduli.</b> Corpi lunghi come un vagone, ad anelli, senza zampe o con file di monconi: vermi delle fogne, serpi delle macerie, larve cresciute troppo sotto le fondamenta delle città-bunker. Vivono sepolti nei detriti e sentono i passi da lontano. In campo aperto sono lente e impacciate; sotto terra si muovono più veloci di quanto si scavi una trincea.</p>
+<table border="1">
+<tr><th>Caratteristica</th><th>Minore</th><th>Semplice</th><th>Medio</th><th>Potente</th><th>Molto potente</th></tr>
+<tr><td>FOR</td><td>6</td><td>7</td><td>7</td><td>8</td><td>9</td></tr>
+<tr><td>COS</td><td>7</td><td>7</td><td>8</td><td>9</td><td>9</td></tr>
+<tr><td>DES</td><td>5</td><td>5</td><td>6</td><td>6</td><td>7</td></tr>
+<tr><td>INT</td><td>2</td><td>2</td><td>2</td><td>2</td><td>3</td></tr>
+<tr><td>SAG</td><td>6</td><td>6</td><td>7</td><td>7</td><td>8</td></tr>
+<tr><td>CAR</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+<tr><td>PV</td><td>25</td><td>50</td><td>78</td><td>216</td><td>318</td></tr>
+<tr><td>AR</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+<tr><td>Natura AR</td><td>Naturale</td><td>Naturale</td><td>Naturale</td><td>Naturale</td><td>Naturale</td></tr>
+<tr><td>VA Morso</td><td>11</td><td>13</td><td>15</td><td>17</td><td>19</td></tr>
+<tr><td>VA Spire</td><td>11</td><td>13</td><td>15</td><td>17</td><td>19</td></tr>
+<tr><td>VA Difese</td><td>7</td><td>9</td><td>11</td><td>13</td><td>15</td></tr>
+<tr><td>PS Tempra</td><td>12</td><td>13</td><td>13</td><td>15</td><td>15</td></tr>
+<tr><td>PS Riflessi</td><td>7</td><td>8</td><td>8</td><td>9</td><td>10</td></tr>
+<tr><td>PS Volontà</td><td>10</td><td>11</td><td>11</td><td>12</td><td>13</td></tr>
+<tr><td>PS Magia</td><td>10</td><td>11</td><td>11</td><td>12</td><td>13</td></tr>
+<tr><td>Iniziativa</td><td>3</td><td>3</td><td>5</td><td>7</td><td>9</td></tr>
+<tr><td>Passo Q</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td></tr>
+<tr><td>Spazio occupato</td><td>1 Q</td><td>1 Q</td><td>1 Q</td><td>1 Q</td><td>1 Q</td></tr>
+<tr><td>AzP</td><td>1</td><td>2</td><td>2</td><td>2</td><td>2</td></tr>
+<tr><td><b>Attacco</b></td><td><b>Minore</b></td><td><b>Semplice</b></td><td><b>Medio</b></td><td><b>Potente</b></td><td><b>Molto potente</b></td></tr>
+<tr><td>Morso</td><td>1d8+1</td><td>1d8+2</td><td>2d6+1</td><td>2d8+1</td><td>2d8+2</td></tr>
+<tr><td>Natura</td><td>Naturale</td><td>Naturale</td><td>Naturale</td><td>Naturale</td><td>Naturale</td></tr>
+<tr><td>Portata Q</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+<tr><td>AC</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+<tr><td>Spire</td><td>1d6</td><td>1d6+1</td><td>1d8+1</td><td>2d6+1</td><td>2d6+2</td></tr>
+<tr><td>Natura</td><td>Naturale</td><td>Naturale</td><td>Naturale</td><td>Naturale</td><td>Naturale</td></tr>
+<tr><td>Portata Q</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+<tr><td>AC</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+<tr><td><b>Abilità</b></td><td><b>Minore</b></td><td><b>Semplice</b></td><td><b>Medio</b></td><td><b>Potente</b></td><td><b>Molto potente</b></td></tr>
+<tr><td>Furtività</td><td>11</td><td>13</td><td>15</td><td>17</td><td>19</td></tr>
+<tr><td>Atletica</td><td>9</td><td>11</td><td>13</td><td>15</td><td>17</td></tr>
+<tr><td>Percezione</td><td>9</td><td>11</td><td>13</td><td>15</td><td>17</td></tr>
+</table>
+<p><b>Azioni.</b> AzP della tabella e 1 Azione di Movimento.</p>
+<p><b>Spire.</b> Attacco ravvicinato che avvolge: se infligge almeno 1 danno dopo l’Armatura il bersaglio è Immobilizzato (Giocatore §5.18), salvo una PS di Riflessi riuscita. Liberarsi costa 1 AzP e una Prova di Atletica o Corpo a corpo contro il VA delle Spire. Le Spire trattengono un solo bersaglio alla volta; mentre lo trattengono, lo Strisciante può mordere solo lui.</p>
+<p><b>Agguato dal basso.</b> Sepolto nel terreno sciolto o nelle macerie ottiene +4 alle Prove di Furtività. Se esce attaccando senza essere stato individuato, il bersaglio è Sorpreso (Giocatore §5.1) e il primo attacco segue l’Imboscata (§5.4) senza penalità.</p>
+<p><b>Movimento.</b> Passo 4 Q, Corsa 8 Q, Scatto 12 Q; <b>Scavo</b> 4 Q nel terreno sciolto e nelle macerie, con la regola del §3.1.1. Non si arrampica.</p>
+<p><b>Sensi.</b> <b>Vibrazioni</b> come l’Insettoide (§3.3), entro 9 Q.</p>
+<p><b>Contromisure.</b> Nessuna. <b>Danno ricevuto.</b> Normale.</p>
+<p><b>Comportamento.</b> Aspetta sepolto sotto il passaggio, esce sul primo che passa, lo avvolge e lo trascina verso il cunicolo. Si rintana quando è sotto un quarto dei PV.</p>
+<h2>3.9 Gigante</h2>
+<p><b>Natura Comune, salvo moduli.</b> Uomini, bestie o macchine di carne gonfiati dall’Oscura Simmetria fino a sfondare i soffitti: tre, quattro metri di muscoli, ossa che crescono storte, una forza che piega le travi. Sono lenti a capire e a muoversi, ma ogni colpo spazza via chi gli sta attorno. Sono rari: dove ne compare uno, di solito qualcuno lo ha nutrito apposta.</p>
+<table border="1">
+<tr><th>Caratteristica</th><th>Minore</th><th>Semplice</th><th>Medio</th><th>Potente</th><th>Molto potente</th></tr>
+<tr><td>FOR</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td></tr>
+<tr><td>COS</td><td>8</td><td>9</td><td>9</td><td>10</td><td>11</td></tr>
+<tr><td>DES</td><td>4</td><td>4</td><td>5</td><td>5</td><td>6</td></tr>
+<tr><td>INT</td><td>2</td><td>2</td><td>3</td><td>3</td><td>3</td></tr>
+<tr><td>SAG</td><td>5</td><td>5</td><td>6</td><td>6</td><td>7</td></tr>
+<tr><td>CAR</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td></tr>
+<tr><td>PV</td><td>26</td><td>53</td><td>81</td><td>225</td><td>331</td></tr>
+<tr><td>AR</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+<tr><td>Natura AR</td><td>Naturale</td><td>Naturale</td><td>Naturale</td><td>Naturale</td><td>Naturale</td></tr>
+<tr><td>VA Schianto</td><td>11</td><td>13</td><td>15</td><td>17</td><td>19</td></tr>
+<tr><td>VA Difese</td><td>5</td><td>7</td><td>9</td><td>11</td><td>13</td></tr>
+<tr><td>PS Tempra</td><td>12</td><td>13</td><td>13</td><td>15</td><td>15</td></tr>
+<tr><td>PS Riflessi</td><td>7</td><td>8</td><td>8</td><td>9</td><td>10</td></tr>
+<tr><td>PS Volontà</td><td>10</td><td>11</td><td>11</td><td>12</td><td>13</td></tr>
+<tr><td>PS Magia</td><td>10</td><td>11</td><td>11</td><td>12</td><td>13</td></tr>
+<tr><td>Iniziativa</td><td>2</td><td>2</td><td>4</td><td>6</td><td>8</td></tr>
+<tr><td>Passo Q</td><td>6</td><td>6</td><td>6</td><td>6</td><td>6</td></tr>
+<tr><td>Spazio occupato</td><td>2 × 2 Q</td><td>2 × 2 Q</td><td>2 × 2 Q</td><td>3 × 3 Q</td><td>3 × 3 Q</td></tr>
+<tr><td>Taglia</td><td>Grande</td><td>Grande</td><td>Grande</td><td>Grande</td><td>Grande</td></tr>
+<tr><td>AzP</td><td>1</td><td>2</td><td>2</td><td>2</td><td>2</td></tr>
+<tr><td><b>Attacco</b></td><td><b>Minore</b></td><td><b>Semplice</b></td><td><b>Medio</b></td><td><b>Potente</b></td><td><b>Molto potente</b></td></tr>
+<tr><td>Schianto</td><td>1d8+2</td><td>1d8+3</td><td>2d6+2</td><td>2d8+2</td><td>2d8+3</td></tr>
+<tr><td>Natura</td><td>Naturale</td><td>Naturale</td><td>Naturale</td><td>Naturale</td><td>Naturale</td></tr>
+<tr><td>Portata Q</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td></tr>
+<tr><td>AC</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+<tr><td><b>Abilità</b></td><td><b>Minore</b></td><td><b>Semplice</b></td><td><b>Medio</b></td><td><b>Potente</b></td><td><b>Molto potente</b></td></tr>
+<tr><td>Atletica</td><td>11</td><td>13</td><td>15</td><td>17</td><td>19</td></tr>
+<tr><td>Percezione</td><td>7</td><td>9</td><td>11</td><td>13</td><td>15</td></tr>
+<tr><td>Sopravvivenza</td><td>7</td><td>9</td><td>11</td><td>13</td><td>15</td></tr>
+</table>
+<p><b>Azioni.</b> AzP della tabella e 1 Azione di Movimento.</p>
+<p><b>Taglia Grande.</b> Occupa 2 × 2 Q, 3 × 3 Q dal Potente; chi lo attacca ottiene +2 VA; Sbalzante non lo sposta (§3.1.1, proposta).</p>
+<p><b>Schianto.</b> Pugni, zampe o un tronco di metallo: portata 2 Q. Con una Carica riuscita applica Sbalzante 1 (Giocatore §5.24).</p>
+<p><b>Spazzata del gigante.</b> Esegue la Spazzata del Giocatore §5.12 come con Spazzata Migliorata: −2 VA contro due bersagli, −4 contro tre, tutti entro la portata di 2 Q.</p>
+<p><b>Raro.</b> Al massimo un Gigante per scontro sotto il grado Potente; dal Potente due solo come Boss e scorta.</p>
+<p><b>Movimento.</b> Passo 6 Q, Corsa 12 Q, Scatto 18 Q. Non passa dove lo spazio è più stretto della sua taglia senza abbattere qualcosa.</p>
+<p><b>Sensi.</b> Vista ordinaria.</p>
+<p><b>Contromisure.</b> Nessuna. <b>Danno ricevuto.</b> Normale.</p>
+<p><b>Comportamento.</b> Avanza verso il gruppo più folto per colpirne più d’uno con la Spazzata; ignora le Coperture leggere, che abbatte. Non fugge.</p>
 <h1>Capitolo 4 — Moduli</h1>
 <h2>4.1 Regole dei moduli</h2>
 <p>Un modulo si somma a una base e ne modifica i valori o aggiunge capacità. Ogni modulo indica:</p>
@@ -435,7 +623,7 @@
 </table>
 <p>L’esposizione non modifica i danni né gli Stati dell’attacco. Gli esiti e la purificazione seguono il Giocatore §5.20.</p>
 <h2>4.3 Mutazioni</h2>
-<p><b>Basi:</b> tutte, salvo indicazione. Le Mutazioni sono alterazioni del corpo, spesso prodotte dall’Oscura Simmetria; non cambiano da sole la Natura della creatura.</p>
+<p><b>Basi:</b> tutte, salvo indicazione; «Tutte» comprende anche le basi del §3.6–3.9. Le Mutazioni sono alterazioni del corpo, spesso prodotte dall’Oscura Simmetria; non cambiano da sole la Natura della creatura. Non servono Mutazioni nuove per le basi del §3.6–3.9: le loro capacità (Volo, Spire, Scavo, Spazzata del gigante) stanno nella base, e le Mutazioni esistenti le completano. Le Manifestazioni oscure (§4.2.4) sono ammesse su tutte le basi.</p>
 <table border="1">
 <tr><th>Mutazione</th><th>Costo</th><th>Basi</th><th>Effetto in breve</th></tr>
 <tr><td>Carapace</td><td>+½</td><td>Tutte</td><td>+1 AR naturale; −2 Passo per le basi con Passo 8 Q.</td></tr>
@@ -445,11 +633,11 @@
 <tr><td>Sangue acido</td><td>+½</td><td>Tutte</td><td>Chi la ferisce in mischia subisce danno Corrosivo.</td></tr>
 <tr><td>Sensi oscuri</td><td>+0</td><td>Tutte</td><td>Percepisce i viventi senza vista entro 12 Q.</td></tr>
 <tr><td>Aculei</td><td>+½</td><td>Tutte</td><td>Gli attacchi naturali hanno Sanguinante 1; chi la colpisce senz’armi subisce 1d4.</td></tr>
-<tr><td>Mole</td><td>+1</td><td>Insettoide, Aracnoide, Umanoide mostruoso</td><td>Spazio 2 × 2 Q, PV × 1,5, portata 2 Q, −2 VA Difese.</td></tr>
-<tr><td>Ali membranose</td><td>+½</td><td>Insettoide, Umanoide mostruoso</td><td>Volo con Passo 6 Q (Giocatore §5.2.3).</td></tr>
-<tr><td>Scavatore</td><td>+0</td><td>Insettoide, Aracnoide, Umanoide mostruoso</td><td>Scava nel terreno sciolto con Passo 2 Q.</td></tr>
+<tr><td>Mole</td><td>+1</td><td>Insettoide, Aracnoide, Umanoide mostruoso, Quadrupede, Strisciante</td><td>Spazio 2 × 2 Q, PV × 1,5, portata 2 Q, −2 VA Difese.</td></tr>
+<tr><td>Ali membranose</td><td>+½</td><td>Insettoide, Umanoide mostruoso, Quadrupede</td><td>Volo con Passo 6 Q (Giocatore §5.2.3).</td></tr>
+<tr><td>Scavatore</td><td>+0</td><td>Insettoide, Aracnoide, Umanoide mostruoso, Quadrupede</td><td>Scava nel terreno sciolto con Passo 2 Q.</td></tr>
 <tr><td>Mimetismo</td><td>+½</td><td>Tutte</td><td>+4 Furtività; colpisce per primo in un’Imboscata.</td></tr>
-<tr><td>Balzo</td><td>+½</td><td>Insettoide, Aracnoide, Umanoide mostruoso</td><td>Carica fino a 12 Q con Sbilanciante.</td></tr>
+<tr><td>Balzo</td><td>+½</td><td>Insettoide, Aracnoide, Umanoide mostruoso, Quadrupede</td><td>Carica fino a 12 Q con Sbilanciante.</td></tr>
 </table>
 <p><b>Carapace.</b> L’AR naturale aumenta di 1, sempre non magica. Le basi con Passo 8 Q scendono a 6 Q.</p>
 <p><b>Arti in più.</b> Dopo aver attaccato con un’AzP, la creatura effettua un attacco naturale aggiuntivo con −2 VA contro lo stesso bersaglio o un altro entro portata, senza spendere Azioni. Una volta per Round. Il Boss non moltiplica questo attacco con la propria AzP in più.</p>
@@ -953,14 +1141,29 @@
 <tr><td>Insettoide</td><td>0,98</td><td>0,99</td><td>1,03</td><td>1,08</td><td>1,10</td></tr>
 <tr><td>Aracnoide</td><td>0,86</td><td>0,86</td><td>0,95</td><td>0,95</td><td>0,95</td></tr>
 <tr><td>Umanoide mostruoso</td><td>1,14</td><td>1,02</td><td>0,99</td><td>0,94</td><td>0,93</td></tr>
+<tr><td>Quadrupede</td><td>1,00</td><td>1,00</td><td>1,00</td><td>1,00</td><td>1,00</td></tr>
+<tr><td>Alato</td><td>0,92</td><td>0,91</td><td>0,99</td><td>0,98</td><td>0,97</td></tr>
+<tr><td>Strisciante</td><td>0,98</td><td>0,98</td><td>1,01</td><td>1,03</td><td>1,04</td></tr>
+<tr><td>Gigante</td><td>1,03</td><td>1,05</td><td>1,05</td><td>1,07</td><td>1,11</td></tr>
 </table>
 <table border="1">
 <tr><th>Base</th><th>Round di resistenza (Minore · Semplice · Medio · Potente · Molto potente)</th><th>Round per abbattere un PG</th></tr>
 <tr><td>Insettoide</td><td>1,7 · 3,5 · 5,7 · 9,3 · 13,6</td><td>11,1 · 9,3 · 7,4 · 5,6 · 5,2</td></tr>
 <tr><td>Aracnoide</td><td>1,3 · 2,6 · 4,1 · 6,3 · 9,1</td><td>11,2 · 9,3 · 6 · 4,8 · 4,6</td></tr>
 <tr><td>Umanoide mostruoso</td><td>1,6 · 2,5 · 3,8 · 5,6 · 7,9</td><td>7,4 · 5,4 · 5 · 4,2 · 4,1</td></tr>
+<tr><td>Quadrupede</td><td>1,5 · 2,9 · 4,5 · 7 · 10,1</td><td>8,9 · 7 · 6 · 4,8 · 4,6</td></tr>
+<tr><td>Alato</td><td>1,5 · 2,9 · 4,4 · 6,8 · 9,5</td><td>11,2 · 9,3 · 6 · 4,8 · 4,6</td></tr>
+<tr><td>Strisciante</td><td>1,8 · 3,4 · 5,4 · 8,4 · 12,1</td><td>11,1 · 9,3 · 7,4 · 5,6 · 5,2</td></tr>
+<tr><td>Gigante</td><td>1,5 · 3,1 · 4,9 · 8 · 12,4</td><td>8,9 · 7 · 6 · 4,8 · 4,6</td></tr>
 </table>
 <p>L’Insettoide resiste più a lungo grazie alla chitina e colpisce più piano; l’Aracnoide compensa con la Ragnatela e l’Iniziativa, che il modello non conta; l’Umanoide mostruoso colpisce più forte ma ha le Difese più basse della scala.</p>
+<p>Per le basi del §3.6–3.9 il modello conta anche il modificatore al VA di chi le attacca (§3.1.1): −2 contro l’Alato in volo, +2 contro il Gigante. Gli intervalli dei Round di resistenza del §2.1 valgono per tutte e quattro.</p>
+<ul>
+<li>Il Quadrupede ha i valori del grado: la Carica del branco, che il modello non conta, è il suo vantaggio.</li>
+<li>L’Alato ha l’85% dei PV del grado, ma i colpi a −2 VA lo riportano alla resistenza del grado; Difese + 2 servono alla Parata del Boss.</li>
+<li>Lo Strisciante ha il 20% di PV in più e colpisce un po’ più piano; lento in campo aperto, vale soprattutto nell’agguato.</li>
+<li>Il Gigante ha il 25% di PV in più, ma i colpi a +2 VA ne tolgono quasi tutto il vantaggio; con AR + 1 usciva dagli intervalli dal Medio in su, per questo la sua AR resta quella del grado. La Spazzata, che il modello non conta, lo rende più pericoloso contro un gruppo serrato.</li>
+</ul>
 <h2>A.5 Riprodurre la taratura</h2>
 <p>Con l’app installata: node tools/taratura_bestiario.mjs. Lo script ricostruisce i personaggi con le regole correnti e stampa:</p>
 <ul>

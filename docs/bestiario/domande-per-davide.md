@@ -35,6 +35,19 @@ Le scelte più discutibili della bozza 0.2 di docs/bestiario/bestiario.md, una p
 - Prove della creatura non in scheda: VA delle Difese come riferimento, ±2 secondo la natura. Va bene una regola così generica, ora che le schede hanno una riga Abilità?
 - Armatura: ogni punto di AR in più allunga di circa un terzo la resistenza di una creatura contro le armi dei PG. Per questo Carapace scende a +1 AR (costo +½), Pelle di cenere aggiunge +½ al costo del Corrotto e i PV del Boss calano del 30% per ogni punto di AR oltre il grado. Ti sembra giusto, o l'AR delle creature va tenuta più bassa in generale?
 
+## Basi nuove: Quadrupede, Alato, Strisciante, Gigante (3 ottobre 2026)
+
+Regole già nel Giocatore e usate così come sono: Volo (§5.2.3–5.2.5), Carica (§5.6), Spazzata (§5.12), Sorpresa (§5.1) e Imboscata (§5.4), A Terra e strisciare (§5.5). Mancano regole sulla taglia e sui bersagli in volo: il Bestiario propone le più semplici (§3.1.1).
+
+- **Bersaglio in volo.** Chi attacca una creatura in volo subisce −2 VA, a distanza e in mischia. Ti va bene? Vale solo per le creature del Bestiario o anche per i personaggi che volano con Incantesimi, Artefatti o il Propulsore Banshee?
+- **Taglia Grande.** Una creatura Grande occupa 2 × 2 Q (3 × 3 Q dal Potente per il Gigante); chi la attacca ottiene +2 VA; Sbalzante non la sposta. Va bene? La Mutazione Mole deve dare anche la taglia Grande (oggi no, per non cambiare le creature già tarate)?
+- **Armatura del Gigante.** Con AR + 1 rispetto al grado il Gigante usciva dagli intervalli dei Round di resistenza dal Medio in su; ora ha PV × 1,25 e l’AR del grado, ed è più facile da colpire. Preferisci un Gigante con più AR e meno PV?
+- **Carica del branco del Quadrupede.** Carica del §5.6 senza la penalità al VA per chi carica e PS di Riflessi o A Terra per il bersaglio colpito: è troppo forte per un branco di Minori?
+- **Spire dello Strisciante.** Se infliggono almeno 1 danno: Immobilizzato salvo PS di Riflessi; liberarsi con 1 AzP e Atletica o Corpo a corpo contro il VA delle Spire. Ti va bene, o preferisci la presa del Lottatore?
+- **Agguato dal basso.** Sepolto: +4 a Furtività; se esce senza essere visto il bersaglio è Sorpreso (§5.1) e il primo attacco segue l’Imboscata senza penalità. Il vantaggio è giusto?
+- **Giganti per scontro.** Al massimo un Gigante per scontro sotto il grado Potente. Va bene come limite, o meglio un costo in grado (§2.4)?
+- **Formato dei nemici.** Due campi facoltativi nuovi: «Passo in volo» nel Movimento e «Taglia» (normale o grande). Vanno bene, o il volo deve avere anche Corsa e Scatto propri?
+
 ## Creature pronte (cap. 5)
 
 - Sette creature originali (Scavafosse, Regina della Covata, Tessitrice d’Ombra, Madre dei Fili Neri, Squarciatore, Bruto della Breccia, Eretico corrotto): i nomi e le descrizioni sono nel tono che vuoi per l’ambientazione?

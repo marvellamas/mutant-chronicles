@@ -155,7 +155,9 @@ export function profiloNemico(scelte, dati, { umani = {} } = {}) {
       formato: 'mutant-nemico', versione: 1, id: 'x', nome: 'x',
       caratteristiche: clona(c.caratteristiche),
       pv: c.pv, ar: { totale: c.ar, magica: 0 }, difese: c.difese, iniziativa: c.iniziativa,
-      movimento: { passo: c.passo, corsa: c.passo * 2, scatto: c.passo * 3 },
+      movimento: { passo: c.passo, corsa: c.passo * 2, scatto: c.passo * 3, ...(c.volo ? { volo: c.volo } : {}) },
+      // §3.1.1 del Bestiario: taglia Grande (proposta), nel formato dei nemici
+      ...(c.taglia && c.taglia !== 'normale' ? { taglia: c.taglia } : {}),
       salvezze: clona(c.salvezze),
       azioni: { principali: c.azp, movimento: 1 },
       attacchi: c.attacchi.map((a) => ({ nome: a.nome, tipo: 'ravvicinato', va: a.va, danno: a.danno, natura: a.natura, portata_q: a.portata_q, ac: a.ac })),
@@ -167,6 +169,7 @@ export function profiloNemico(scelte, dati, { umani = {} } = {}) {
     prov('difese', fonteBase, c.difese);
     prov('iniziativa', fonteBase, c.iniziativa);
     prov('passo', fonteBase, c.passo);
+    if (c.volo) prov('volo', fonteBase, c.volo);
     prov('azioni', fonteBase, c.azp);
     for (const k of Object.keys(c.salvezze)) prov(`salvezze.${k}`, fonteBase, c.salvezze[k]);
     n.attacchi.forEach((a, i) => { prov(`attacchi.${i}.va`, fonteBase, a.va); prov(`attacchi.${i}.danno`, fonteBase, a.danno); });
@@ -235,7 +238,7 @@ export function profiloNemico(scelte, dati, { umani = {} } = {}) {
     const fonte = `${m.nome} (§4.3)`;
     const ecc = (m.eccezioni ?? []).find((x) => x.base === scelte.base && x.gradi.includes(g.id));
     if (e.ar) ar(fonte, e.ar);
-    if (e.passo_da_8 && n.movimento.passo === 8) { prov('passo', fonte, e.passo_da_8 - 8); n.movimento = { passo: e.passo_da_8, corsa: e.passo_da_8 * 2, scatto: e.passo_da_8 * 3 }; }
+    if (e.passo_da_8 && n.movimento.passo === 8) { prov('passo', fonte, e.passo_da_8 - 8); n.movimento = { ...n.movimento, passo: e.passo_da_8, corsa: e.passo_da_8 * 2, scatto: e.passo_da_8 * 3 }; }
     if (e.pv_molt) {
       const pv = Math.round(n.pv * e.pv_molt);
       prov('pv', `${fonte}: PV × ${String(e.pv_molt).replace('.', ',')}`, pv - n.pv);
@@ -243,6 +246,8 @@ export function profiloNemico(scelte, dati, { umani = {} } = {}) {
     }
     if (e.difese && !ecc?.senza?.includes('difese')) { n.difese += e.difese; prov('difese', fonte, e.difese); }
     if (e.portata_q) for (const a of naturali(n, umano)) if ((a.portata_q ?? 1) < e.portata_q) a.portata_q = e.portata_q;
+    // Ali membranose: Passo in volo (Giocatore §5.2.3), nel campo del formato
+    if (e.volo_q && !n.movimento.volo) { n.movimento.volo = e.volo_q; prov('volo', fonte, e.volo_q); }
     if (e.spazio && !ecc?.senza?.includes('spazio')) { n.capacita = n.capacita.filter((x) => x.nome !== 'Spazio'); capacita('Spazio', `Occupa ${e.spazio}.`); }
     if (e.proprieta_naturali) for (const a of naturali(n, umano)) for (const p of e.proprieta_naturali) aggiungiProprieta(a, p);
     if (e.abilita) for (const [nome, v] of Object.entries(e.abilita)) {
