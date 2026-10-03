@@ -78,7 +78,7 @@ export function oggettiRotti(sessione, dati) {
  * `provenienza` (src/provenienza.js): i contributi di ogni valore, uno per riga, anche quelli a 0
  * (elmetto) o che non contano (Rotto, non cumulabile, «solo ravvicinato»).
  */
-export function calcolaAR(equip, dati, { talenti = [], accesi = new Set(), rotti = new Set(), tecniche = [] } = {}) {
+export function calcolaAR(equip, dati, { talenti = [], accesi = new Set(), rotti = new Set(), tecniche = [], incantesimi = [] } = {}) {
   const R = dati.regole.ar ?? {};
   const voci = [];
   const esclusi = [];
@@ -151,12 +151,25 @@ export function calcolaAR(equip, dati, { talenti = [], accesi = new Set(), rotti
     }
     return true;
   }).map((p) => ({ p, a: arDi(p) }));
+  // incantesimi in corso su sé stessi (src/durate-incantesimi.js; regole.json → ar.incantesimi): Scudo vale come uno
+  // scudo («per ciascun attacco si sceglie un solo scudo»), solo finché dura
+  const finoA = (x) => (x.al === null || x.al === undefined ? 'incantesimo in corso' : `incantesimo, fino alla fine del Round ${x.al}`);
+  for (const x of incantesimi.filter((y) => y.gruppo === 'scudo')) scudi.push({ p: { nome: x.nome, uid: null }, a: { totale: x.totale, magica: x.magica }, incantesimo: x });
   const scudiScelti = scegli(scudi, R.cumulo?.scudo);
   for (const x of scudi) {
     const { p, a } = x;
     if (!scudiScelti.includes(x)) { righe.push(...nonConta(righeProtezione(p, a, null), 'due scudi non si sommano: vale il maggiore (§7.4)')); continue; }
-    voci.push({ etichetta: p.nome, ...a, fonte: 'scudo', uid: p.uid });
-    righe.push(...righeProtezione(p, a, 'scudo imbracciato (§7.4)'));
+    voci.push({ etichetta: p.nome, ...a, fonte: x.incantesimo ? 'incantesimo' : 'scudo', uid: p.uid });
+    righe.push(...righeProtezione(p, a, x.incantesimo ? finoA(x.incantesimo) : 'scudo imbracciato (§7.4)'));
+  }
+  // Pelle Corazzata e Armatura di Forza: vale il maggiore; gli altri incantesimi con AR si sommano
+  const pelleForza = incantesimi.filter((y) => y.gruppo === 'pelle_o_forza');
+  const maggiore = pelleForza.reduce((m, y) => (!m || y.totale > m.totale ? y : m), null);
+  for (const x of incantesimi.filter((y) => y.gruppo !== 'scudo')) {
+    const r = riga(x.nome, x.totale, finoA(x), x.magica ? { magica: x.magica } : {});
+    if (x.gruppo === 'pelle_o_forza' && x !== maggiore) { righe.push({ ...r, escluso: true, nota: 'Pelle Corazzata e Armatura di Forza non si sommano: vale il maggiore' }); continue; }
+    voci.push({ etichetta: `${x.nome} (incantesimo)`, totale: x.totale, magica: x.magica, fonte: 'incantesimo', uid: null });
+    righe.push(r);
   }
 
   // effetti «ar» degli oggetti in uso: generali sempre, situazionali con la condizione accesa

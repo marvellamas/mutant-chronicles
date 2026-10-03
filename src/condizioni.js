@@ -9,6 +9,7 @@ import { aggiungiDanno, infoArtefatto, applicaMunizione } from './equipaggiament
 import { effettiTalenti, bonusTalentiAccesi } from './talenti.js';
 import { calcolaAR, oggettiRotti } from './protezione.js';
 import { chiaviTecnicheAttive, effettiTecniche } from './tecniche.js';
+import { arIncantesimiInCorso } from './durate-incantesimi.js';
 import { riga, provenienza, righeDaScomposizione, righeRegoleAbilita, righeRegoleSalvezza } from './provenienza.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
@@ -425,7 +426,7 @@ export function applicaCondizioni(scheda, sessione, dati) {
     const talenti = (scheda.classi ?? []).flatMap((c) => (c.talenti ?? []).map((t) => t.nome));
     // A.48: Aura di Resistenza e Pelle di Rinoceronte valgono finché sono attive («Attiva», §8.9.1)
     const conTecniche = new Set([...accesi, ...chiaviTecnicheAttive(sessione)]);
-    eq.arEffettiva = calcolaAR(eq, dati, { talenti, accesi: conTecniche, rotti, tecniche: (scheda.tecniche ?? []).map((t) => t.id) });
+    eq.arEffettiva = calcolaAR(eq, dati, { talenti, accesi: conTecniche, rotti, tecniche: (scheda.tecniche ?? []).map((t) => t.id), incantesimi: arIncantesimiInCorso(sessione) });
     eq.rotti = [...rotti];
     for (const w of eq.armi) w.rotta = rotti.has(String(w.uid).split(':')[0]);
     for (const p of eq.protezioni) p.rotta = rotti.has(String(p.uid).split(':')[0]);

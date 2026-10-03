@@ -25,6 +25,7 @@ import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 import { pannelloAttacco } from './attacco.js';
 import { profiloSenzArmi, profiloOndaInteriore, senzArmiDisponibile, SENZ_ARMI, ONDA, talentiAttacco, valoriDisciplina } from '../attacco.js';
 import { pannelloLancio } from './lancio.js';
+import { riquadroIncantesimiInCorso } from './incantesimi-in-corso.js';
 import { sezioneRisorseInteriori, pannelloTecnica } from './tecniche.js';
 import { tecnicaDi, testoFine } from '../tecniche.js';
 import { statoPulsanteLancio, attivazioneInfusa } from '../lancio.js';
@@ -1988,7 +1989,9 @@ function tabMagia(ctx, d) {
           const usi = (potere?.usiSpecifici ?? []).filter((u) => u.uso === 'lancio');
           return usi.length ? h('p', { class: 'lancio-potere' }, 'Potere per lanciare: ', valoriUso('Potere', usi)) : null;
         })(),
-        rigaGradiTaumaturgici(ctx))),
+        rigaGradiTaumaturgici(ctx)),
+      // incantesimi lanciati con una durata (src/durate-incantesimi.js)
+      riquadroIncantesimiInCorso(ctx)),
     sezione(`Prove di Potere (scala ${d.scalaPotere})`,
       h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },
         h('thead', {}, h('tr', {}, h('th', {}, 'Livello'), h('th', {}, 'Prova'))),

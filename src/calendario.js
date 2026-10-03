@@ -268,3 +268,10 @@ export function leggiFileCalendario(testo, dati) {
   if (!c) return { ok: false, errore: 'Il file calendario di Mutant non contiene un calendario leggibile: nessuna modifica.' };
   return { ok: true, calendario: { ...c, attivo: true }, da: typeof f.da === 'string' ? f.da : '', esportato: typeof f.esportato === 'string' ? f.esportato : null };
 }
+
+/** Il momento di «oggi» in testo, per i promemoria delle durate a tempo (src/durate-incantesimi.js): «gio 3 ott 2026, sera». */
+export function momentoCalendario(c, dati) {
+  if (!c?.oggi?.data) return null;
+  const fascia = fasce(dati).find((f) => f.id === c.oggi.fascia)?.nome ?? c.oggi.fascia;
+  return `${nomeData(c.oggi.data, { breve: true })} ${parti(c.oggi.data)[0]}, ${String(fascia).toLowerCase()}`;
+}

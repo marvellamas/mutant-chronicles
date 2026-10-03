@@ -21,6 +21,7 @@ import { renderTavolo } from './tavolo.js';
 import { avviso, avvisoErrore } from './avvisi.js';
 import { controlloInUso } from './ridisegno.js';
 import { alRound, collegamentoScontro, tecnicheScadute, statiScaduti, durateCarta, testoDurata } from '../round-scontro.js';
+import { registraIncantesimo, terminaIncantesimo, concentrazioniInterrotte } from '../durate-incantesimi.js';
 import { segnaDalTavolo, arrivoDalTavolo, tornaAlTavolo, scorrimentoDaRimettere, dimenticaTavolo } from './ritorno.js';
 import { PASSI, passoVisibile, requisitoPasso } from './passi.js';
 import { inizializzaTooltip, nascondiTooltip } from './tooltip.js';
@@ -39,7 +40,7 @@ import {
   penalitaSessione, variaMunizioni, consumaColpi, scegliGranata, granateDiPartenza, ricaricaArma, variaChroma, variaIntegrita, variaNec,
 } from '../sessione.js';
 import { conOrdinale } from '../lingua.js';
-import { normalizzaCalendario, calendarioAttivo, attivaCalendario, disattivaCalendario, contaNote, fileCalendario, leggiFileCalendario } from '../calendario.js';
+import { normalizzaCalendario, calendarioAttivo, attivaCalendario, disattivaCalendario, contaNote, fileCalendario, leggiFileCalendario, momentoCalendario } from '../calendario.js';
 import { testoNote } from './calendario.js';
 
 // Dopo la creazione si possono ancora cambiare solo i campi descrittivi: le altre scelte
@@ -403,7 +404,7 @@ async function aggiornaRoundScontro() {
     const ancora = durateCarta(alRound(stato.sessione, prima.round), null, dati);
     avviso([`Lo scontro «${prima.nome}» è finito: il contatore dei Round torna alla scheda (Round ${prima.round}).`,
       ancora.length ? `Durate ancora attive, con i Round che restano: ${ancora.map(testoDurata).join(', ')}.` : null].filter(Boolean), { tipo: 'info', durata: 9000, chiave: 'round-scontro' });
-  } else if (!(prima && coll && JSON.stringify(prima.durate) !== JSON.stringify(coll.durate))) return;
+  } else if (!(prima && coll && JSON.stringify([prima.durate, prima.effetti]) !== JSON.stringify([coll.durate, coll.effetti]))) return;
   ridisegnaSchedaQuandoLibera();
 }
 
@@ -1119,8 +1120,10 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       tieni: () => sceltaConflitto('tieni'),
     } : null,
     calendario: stato.calendario,
-    // Round dello scontro (src/round-scontro.js): { id, nome, round, durate } o null
+    // Round dello scontro (src/round-scontro.js): { id, nome, round, durate, effetti, partecipanti } o null
     roundScontro: stato.scontroPg,
+    // bersagli di un incantesimo con durata, nel pannello «Lancia!»: gli altri partecipanti dello scontro
+    partecipanti: stato.scontroPg?.partecipanti ?? [],
     spazioQuasiEsaurito: archivio.spazioQuasiEsaurito(),
     motivoNoSalita: tab.scheda.completamenti?.length ? motivoCompletamento(tab.scheda.completamenti)
       : !schedaCreazione.completa ? 'Completa la creazione prima di salire di livello.'
@@ -1173,7 +1176,21 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
         persisti();
         renderScheda({ mantieniScorrimento: true });
       },
-      lancia: (fonte) => cambiaSessione(spendiPmLancio(stato.sessione, fonte, massimi)),
+      // «Lancia!»: PM spesi e, se l'incantesimo ha una durata, fra gli incantesimi in corso (src/durate-incantesimi.js); in
+      // uno scontro il Round è quello del server al momento del lancio
+      lancia: async (fonte, registrazione = null) => {
+        if (stato.scontroPg && registrazione) { await aggiornaRoundScontro(); stato.sessione = sessioneVista(); }
+        let nuova = spendiPmLancio(stato.sessione, fonte, massimi);
+        if (nuova && registrazione) {
+          const quando = calendarioAttivo(stato.calendario) ? momentoCalendario(stato.calendario, dati) : null;
+          const con = registraIncantesimo(nuova, { ...registrazione, ...(quando ? { quando } : {}) }, dati);
+          const interrotte = concentrazioniInterrotte(nuova, con);
+          if (interrotte.length) avviso(`Concentrazione interrotta: ${interrotte.join(', ')} (si mantiene un solo incantesimo).`, { tipo: 'info' });
+          nuova = modificaSessione(con, {}, massimi);
+        }
+        cambiaSessione(nuova);
+      },
+      terminaIncantesimo: (uid) => cambiaSessione(modificaSessione(terminaIncantesimo(stato.sessione, uid), {}, massimi)),
       // Batteria Matrice (Magia §26.4) e Artefatti con attivazione a durata (Armamenti §7.24): modifiche annullabili
       ricaricaMatrice: (uid, ore, presso) => cambiaSessione(ricaricaMatrice(stato.sessione, uid, ore, presso, dati, massimi)),
       attivaArtefatto: (uid, pm) => cambiaSessione(attivaArtefatto(stato.sessione, uid, pm, massimi)),
@@ -1186,7 +1203,14 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
         cambiaSessione(nuova);
       },
       // con lo scontro il Round lo fa avanzare la plancia: il pulsante è disattivato (src/ui/tecniche.js)
-      nuovoRound: () => { if (!stato.scontroPg) cambiaSessione(nuovoRoundSessione(stato.sessione, massimi)); },
+      nuovoRound: () => {
+        if (stato.scontroPg) return;
+        const prima = stato.sessione;
+        const dopo = nuovoRoundSessione(prima, massimi);
+        const scadute = tecnicheScadute(prima, prima.round ?? 1, dopo.round, dati);
+        if (scadute.length) avviso(`Round ${dopo.round}. Scadut${scadute.length === 1 ? 'a' : 'e'}: ${scadute.join(', ')}.`, { chiave: 'round-scheda' });
+        cambiaSessione(dopo);
+      },
       terminaTecnica: (id) => cambiaSessione(terminaTecnicaSessione(stato.sessione, id, massimi)),
       convertiDistintivi: () => cambiaSessione(convertiDistintivi(stato.sessione, massimi)),
       // le note si salvano a ogni tasto; l'annullamento riporta al testo di prima della modifica

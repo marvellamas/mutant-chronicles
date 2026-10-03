@@ -130,11 +130,16 @@ export function attivaTecnica(scheda, sessione, t, dati, opz = {}) {
   };
 }
 
-/** «Nuovo Round»: il contatore avanza e le Tecniche finite nel Round appena chiuso scadono. */
+/** «Nuovo Round»: il contatore avanza e le Tecniche e gli incantesimi finiti nel Round appena chiuso scadono. */
 export function nuovoRound(sessione) {
   const round = roundAttuale(sessione) + 1;
   const attive = Array.isArray(sessione?.tecnicheAttive) ? sessione.tecnicheAttive : [];
-  return { ...sessione, round, tecnicheAttive: attive.filter((x) => x.al === null || x.al >= round) };
+  const vale = (x) => x.al === null || x.al >= round;
+  return {
+    ...sessione, round, tecnicheAttive: attive.filter(vale),
+    // incantesimi lanciati con una durata in Round (src/durate-incantesimi.js)
+    ...(Array.isArray(sessione?.incantesimiAttivi) ? { incantesimiAttivi: sessione.incantesimiAttivi.filter(vale) } : {}),
+  };
 }
 
 /** Tecniche che scadono passando al Round successivo (per l'avviso del pulsante). */

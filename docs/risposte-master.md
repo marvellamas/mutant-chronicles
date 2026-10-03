@@ -655,3 +655,26 @@ manuali; la 69 chiude in parte una domanda.
     campi `azioni`, `contromisure`, `abilita`, `capacita`, incantesimi con `livello`, movimento «non_consentito»),
     `src/validate.js` (`oppure`, sorgenti `abilita` e `contromisure`). Il Tavolo del Master (branch
     `tavolo-direttore`) applica Ferite, «Lancia!» e i campi nuovi.
+
+## 3 ottobre 2026 — durate degli Incantesimi lanciati: domande aperte
+
+Lavoro sulle durate degli Incantesimi (`tools/durate_incantesimi.mjs` → `incantesimi.json` → `meccanica.durata`,
+`src/durate-incantesimi.js`). Una domanda nuova, nel pacchetto per il Doc «per-davide.md»:
+
+- **A.87 — Durata a Concentrazione di Individuare** (Magia, scheda di Individuare). *In attesa.* La scheda fa
+  scegliere fra Concentrazione e durata fissa, ma la tabella delle versioni dà solo la durata fissa: qual è la durata
+  massima a Concentrazione di ogni versione? Nel frattempo l'app usa la durata fissa anche con Concentrazione e mostra
+  la domanda nel riquadro «Durata e bersagli» di «Lancia!» (TODO(Davide) in `meccanica.durata`).
+
+Scelte prese senza domanda, perché il manuale le dice:
+
+- Scadenza: dal Round del lancio alla fine del Round R + N, il Round del lancio non conta (Magia, «Scadenze e
+  interruzione degli effetti»: 5 RND lanciato nel Round 2 termina alla fine del Round 7), come `regole.json` →
+  `durate_round`.
+- Concentrazione: un solo incantesimo mantenuto; avviarne un altro a Concentrazione termina il precedente (Magia,
+  «Durata e Concentrazione»).
+- Scudo: con Concentrazione la durata massima è il doppio della durata fissa (`concentrazione_doppia`).
+- Incantesimi Estesi non allunga da sé la durata: toglie il raddoppio dei PM quando si Anticipa la Durata, e la
+  durata passa al gradino successivo della scala della scheda (sez. 12.3, `src/anticipazione.js`).
+- Marchio Psichico: le durate per inseguimento e combattimento della seconda tabella della scheda mancavano nei
+  dati; ora sono le colonne «Durata inseguimento» e «Durata combattimento» delle versioni.

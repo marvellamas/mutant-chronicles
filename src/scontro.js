@@ -148,14 +148,25 @@ export function variaPmNemico(s, id, delta, adesso) {
  * scontro, con una riga di registro. Errore se i PM non bastano.
  * @param l { id, incantesimo, livello, pm, testo? }
  */
-export function registraLancioNemico(s, l, adesso) {
+export function registraLancioNemico(s, l, adesso, dati = null) {
   const p = s.partecipanti.find((x) => x.id === l.id);
   if (p?.tipo !== 'nemico' || !p.pm) throw new Error('nemico senza PM');
   if (!Number.isInteger(l.pm) || l.pm < 0) throw new Error('costo in PM non valido');
   if (l.pm > p.pm.attuali) throw new Error(`${p.nome}: ${p.pm.attuali} PM, ne servono ${l.pm}`);
   const attuali = p.pm.attuali - l.pm;
-  const t = { ...s, partecipanti: s.partecipanti.map((x) => (x.id === l.id ? { ...x, pm: { ...x.pm, attuali } } : x)) };
-  return conRiga(t, `${p.nome} lancia ${l.incantesimo} (livello ${l.livello}): PM ${p.pm.attuali} → ${attuali}${l.testo ? `; ${l.testo}` : ''}${attuali === 0 ? '; a 0 PM: sviene finché non recupera almeno 1 PM (Magia sez. 6)' : ''}.`, adesso);
+  let t = { ...s, partecipanti: s.partecipanti.map((x) => (x.id === l.id ? { ...x, pm: { ...x.pm, attuali } } : x)) };
+  // durata dell'incantesimo (src/durate-incantesimi.js): fra gli effetti dello scontro, dal Round del lancio alla fine
+  // del Round R + N (regole.json → durate_round); a tempo o fino a una condizione: promemoria senza Round
+  const d = l.durata?.durata;
+  let durata = '';
+  if (d && ['round', 'tempo', 'condizione'].includes(d.tipo)) {
+    const al = d.tipo === 'round' ? fineDurata(s.round, d.round, dati) : null;
+    const bersagli = (l.durata.bersagli ?? []).map((b) => ({ ...(b.id ? { id: b.id } : {}), nome: b.nome }));
+    const uid = `eff:${l.id}:${s.registro.length}`;
+    t = { ...t, effetti: [...(s.effetti ?? []), { uid, nome: l.incantesimo, livello: l.livello, da: l.id, daNome: p.nome, dal: s.round, al, testo: d.testo, concentrazione: !!d.concentrazione, bersagli }] };
+    durata = `; dura ${d.tipo === 'round' ? `fino alla fine del Round ${al}` : d.testo}${bersagli.length ? `, su ${bersagli.map((b) => b.nome).join(', ')}` : ''}`;
+  }
+  return conRiga(t, `${p.nome} lancia ${l.incantesimo} (livello ${l.livello}): PM ${p.pm.attuali} → ${attuali}${l.testo ? `; ${l.testo}` : ''}${durata}${attuali === 0 ? '; a 0 PM: sviene finché non recupera almeno 1 PM (Magia sez. 6)' : ''}.`, adesso);
 }
 
 /**
@@ -306,6 +317,12 @@ export function avanti(s, adesso) {
   const finite = conFine.filter((d) => d.al < t.round);
   t.durate = conFine.filter((d) => d.al >= t.round);
   t = conRiga(t, `Round ${t.round}. Tocca a ${ordinati[0].nome}.`, adesso);
+  // incantesimi lanciati dai nemici: finiscono alla fine del Round R + N
+  const effettiFiniti = (s.effetti ?? []).filter((e) => e.al !== null && e.al !== undefined && e.al < t.round);
+  if (effettiFiniti.length) {
+    t = { ...t, effetti: s.effetti.filter((e) => !effettiFiniti.includes(e)) };
+    for (const e of effettiFiniti) t = conRiga(t, `${e.nome} di ${e.daNome} è finito.`, adesso);
+  }
   for (const d of finite) {
     const p = s.partecipanti.find((x) => x.id === d.partecipante);
     if (p?.tipo === 'nemico') {

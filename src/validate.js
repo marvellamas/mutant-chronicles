@@ -72,6 +72,7 @@ export function validaDati(dati) {
   if (dati.incantesimi?.incantesimi?.some((i) => i.meccanica)) validaMeccanicaIncantesimi(dati, err);
   if (isOggetto(dati.formato_nemici)) validaFormatoNemici(dati, err);
   if (isOggetto(dati.bestiario)) validaBestiario(dati, err);
+  if (dati.incantesimi?.incantesimi?.length) validaDurateIncantesimi(dati, err);
   // durate in Round (Giocatore §8.9.1, §5.18): il Round di attivazione conta o no (src/tecniche.js → fineDurata)
   if (dati.regole?.durate_round !== undefined && typeof dati.regole.durate_round?.round_attivazione_conta !== 'boolean') err('regole', 'durate_round.round_attivazione_conta', 'vero o falso: il Round di attivazione conta nella durata?');
 
@@ -2323,4 +2324,26 @@ function validaBestiario(dati, err) {
     }
     if (atteso !== facce + 1) err(F, k, `le righe non coprono le ${facce} facce del ${t.dado}`);
   }
+}
+
+// Durata degli incantesimi (incantesimi.json → meccanica.durata, tools/durate_incantesimi.mjs; «Lancia!» registra le
+// durate in Round come le Tecniche, src/durate-incantesimi.js): tipo noto, colonne presenti in ogni versione, valori
+// riconosciuti («N RND», «N minuti», «N ore», «Istantanea», «—»).
+const TIPI_DURATA_INCANTESIMO = ['durata', 'istantanea', 'procedura', 'condizione'];
+const VALORE_DURATA = /^(\d+ (RND|min|minuti|minuto|ora|ore|giorno|giorni|anno|anni)|Istantanea|Istantanea con risposta|—)$/;
+function validaDurateIncantesimi(dati, err) {
+  const F = 'incantesimi';
+  (dati.incantesimi?.incantesimi ?? []).forEach((inc, i) => {
+    const d = inc?.meccanica?.durata;
+    const k = `incantesimi[${i}] (${inc?.nome}).meccanica.durata`;
+    if (!isOggetto(d)) { err(F, k, 'manca la durata (tools/durate_incantesimi.mjs)'); return; }
+    if (!TIPI_DURATA_INCANTESIMO.includes(d.tipo)) { err(F, `${k}.tipo`, `uno fra ${TIPI_DURATA_INCANTESIMO.join(', ')}`); return; }
+    const colonne = [d.colonna, d.concentrazione, ...(d.modalita ?? []).map((m) => m?.colonna)].filter(Boolean);
+    if (d.tipo === 'durata' && !colonne.length) err(F, k, 'una durata senza colonna');
+    (d.modalita ?? []).forEach((m, j) => { if (!isTesto(m?.id) || !isTesto(m?.nome) || !isTesto(m?.colonna)) err(F, `${k}.modalita[${j}]`, 'id, nome e colonna'); });
+    for (const v of inc.versioni ?? []) for (const c of colonne) {
+      if (!(c in v)) err(F, k, `colonna «${c}» assente in una versione`);
+      else if (!VALORE_DURATA.test(String(v[c]).trim())) err(F, k, `«${c}» = «${v[c]}»: valore non riconosciuto`);
+    }
+  });
 }

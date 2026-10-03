@@ -38,14 +38,16 @@ export function apriLancioNemico(ctx, p, indice, { bersagli = [], registra }) {
         return r;
       },
       ui: st.ui,
+      // bersagli di un incantesimo con durata: il nemico stesso e gli altri partecipanti (src/ui/lancio.js → bloccoDurata)
+      partecipanti: [{ id: p.id, nome: `${p.nome} (sé)` }, ...bersagli.map((b) => ({ id: b.id, nome: b.nome }))],
       azioni: {
         ridisegna: disegna,
         ricordaLancio: (nome, d) => { st.dichiarazione = d; disegna(); },
-        lancia: async ({ personali }) => {
+        lancia: async ({ personali }, durata = null) => {
           const r = calcolaLancioNemico(p, indice, st.dichiarazione, ctx.dati).risultato;
           const testo = r.prova_richiesta ? `Prova di Potere VA ${r.va_potere_finale}` : 'Prova di Potere non richiesta';
           try {
-            const ok = await registra({ id: p.id, incantesimo: x.voce.nome, livello: x.voce.livello, pm: personali, testo });
+            const ok = await registra({ id: p.id, incantesimo: x.voce.nome, livello: x.voce.livello, pm: personali, testo, ...(durata ? { durata } : {}) });
             if (!ok) throw new Error('lancio non registrato (scontro cambiato o chiuso): riprova.');
             const proposta = propostaLancio(x.inc, r, ctx.dati);
             if (proposta && bersagli.length) sceltaBersaglio(proposta); else chiudi();

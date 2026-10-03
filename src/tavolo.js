@@ -8,6 +8,7 @@ import { testoDanno } from './stampa.js';
 import { aggiungiDanno } from './equipaggiamento.js';
 import { chiaveDaFile, NOME_FILE } from './cartella.js';
 import { versioniPersonaggio } from './rules.js';
+import { alRound } from './round-scontro.js';
 
 /**
  * Scheda compatta di un PG per la plancia.
@@ -16,18 +17,20 @@ import { versioniPersonaggio } from './rules.js';
  * @returns {{ file, nome, ritratto, livello, corporazione, classi, completa, pv, pm, pe, ar, difese,
  *   ferite, affaticamento, corruzione, stati, armi, scheda, sessione, massimi }}
  */
-export function vistaPlancia(testo, dati, file = null) {
+export function vistaPlancia(testo, dati, file = null, round = null) {
   const p = deserializzaPersonaggio(testo);
   const { scelte } = normalizza(p.creazione, dati);
   const livelli = p.livelli ?? [];
   const nome = scelte.nome?.trim() || 'Senza nome';
   // chiaveCartella: il nome del personaggio nei file di personaggi/ (src/cartella.js), che lo identifica al tavolo
-  const base = { file, chiaveCartella: file ? chiaveDaFile(file) : null, nome, ritratto: scelte.ritratto ?? null, livello: 1 + livelli.length };
+  const base = { file, roundVista: round, chiaveCartella: file ? chiaveDaFile(file) : null, nome, ritratto: scelte.ritratto ?? null, livello: 1 + livelli.length };
   const riposo = calcolaScheda({ creazione: scelte, livelli }, dati);
   if (!riposo.caratteristiche) return { ...base, completa: false, classi: [], corporazione: scelte.corporazione ?? null };
   // la sessione del file, allineata ai massimi attuali (come all'apertura della scheda digitale)
   const massimi = massimiSessione(riposo, scelte, dati);
-  const sessione = allineaSessione(p.sessione, massimi);
+  // in uno scontro, la sessione vista al Round dello scontro (src/round-scontro.js): Tecniche e incantesimi finiti
+  // non danno più effetti (AR di Armatura di Forza…), come nella scheda collegata; il file non si tocca
+  const sessione = round ? alRound(allineaSessione(p.sessione, massimi), round) : allineaSessione(p.sessione, massimi);
   const scheda = calcolaScheda({ creazione: scelte, livelli, sessione }, dati);
   const r = dati.regole;
   const eq = scheda.equipaggiamento ?? {};

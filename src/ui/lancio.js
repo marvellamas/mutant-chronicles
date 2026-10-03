@@ -9,11 +9,12 @@ import { rigaScelte, interruttore, pannelloPassi } from './pannello-passi.js';
 import { calcolaLancio, dichiarazioneLancio, versioniLancio, contenitoriLancio } from '../lancio.js';
 import { classeMacrofamiglia } from '../palette.js';
 import { avviso } from './avvisi.js';
+import { durataLancio, opzioniDurata, arIncantesimo } from '../durate-incantesimi.js';
 
 // conferma visibile del lancio (src/ui/avvisi.js); i nemici (ctx.calcola) la hanno dal registro dello scontro
-function lanciaConAvviso(ctx, nome, fonte) {
+function lanciaConAvviso(ctx, nome, fonte, registrazione = null) {
   const prima = ctx.sessione.pmAttuali;
-  ctx.azioni.lancia(fonte);
+  ctx.azioni.lancia(fonte, registrazione);
   if (ctx.calcola || !Number.isInteger(prima)) return;
   const dove = fonte.contenitore ? `; ${fonte.contenitore.pm} PM da ${fonte.contenitore.nome}` : '';
   avviso(`Incantesimo lanciato: ${nome} (PM ${prima} → ${Math.max(0, prima - (fonte.personali ?? 0))}${dove}).`);
@@ -155,6 +156,7 @@ function risultato(ctx, inc, r) {
   const f = r.fonte_pm;
   const doveSpesa = [f.personali ? `${f.personali} personali` : null, f.contenitore ? `${f.contenitore.pm} da ${f.contenitore.nome}` : null].filter(Boolean).join(' + ');
   const azioni = r.azioni.azioni_principali ? `${r.azioni.azioni_principali} ${r.azioni.azioni_principali === 1 ? 'Azione Principale' : 'Azioni Principali'}` : r.azioni.tempo;
+  const durataEBersagli = bloccoDurata(ctx, inc, r);
   return [
     r.impossibile ? h('div', { class: 'riquadro errore', role: 'alert' }, h('p', {}, h('strong', {}, 'Lancio non possibile. '), r.impossibile.motivo)) : null,
     r.avvisi?.length ? h('div', { class: 'riquadro attenzione' }, r.avvisi.map((x) => h('p', {}, x))) : null,
@@ -190,15 +192,61 @@ function risultato(ctx, inc, r) {
       // note del manuale dei Talenti sotto il danno («una sola volta per bersaglio, al primo colpo»)
       r.danno?.note?.length ? h('ul', { class: 'note-danno nota' }, r.danno.note.map((n) => h('li', {}, n))) : null,
       r.promemoria.length ? h('ul', { class: 'promemoria-attacco' }, r.promemoria.map((p) => h('li', {}, p))) : null,
+      durataEBersagli.elemento,
       h('div', { class: 'attacco-azioni' },
         h('button', {
           type: 'button', class: 'btn primario btn-grande', disabled: !!r.impossibile, title: r.impossibile?.motivo ?? null,
-          onclick: () => lanciaConAvviso(ctx, inc.nome, { personali: f.personali, contenitore: f.contenitore }),
+          onclick: () => lanciaConAvviso(ctx, inc.nome, { personali: f.personali, contenitore: f.contenitore }, durataEBersagli.registrazione()),
         }, `Lancia (−${r.pm_costo} PM)`),
         h('small', { class: 'nota' }, ctx.calcola
           ? 'Tira 1d20 al tavolo, se serve la Prova. Il lancio va nel registro dello scontro; i PM si correggono con − e + sulla carta.'
           : 'Tira 1d20 al tavolo, se serve la Prova. «Annulla» nell’intestazione annulla la spesa; il pannello resta aperto per rilanciare.'))),
   ];
+}
+
+/**
+ * «Durata e bersagli» del Risultato (richiesta di Marcello del 03/10, src/durate-incantesimi.js): la durata della
+ * versione (con l'Anticipazione), la modalità e la Concentrazione se la scheda le prevede, i bersagli (sé stessi, gli
+ * altri partecipanti dello scontro, altri a parole). «Lancia» registra l'incantesimo fra gli effetti in corso.
+ * @returns {{ elemento, registrazione: () => { nome, livello, durata, bersagli, ar } | null }}
+ */
+function bloccoDurata(ctx, inc, r) {
+  const op = opzioniDurata(inc);
+  const u = (ctx.ui.durataLancio ??= { nome: inc.nome, modalita: null, concentrazione: false, se: null, ids: [], altri: '' });
+  if (u.nome !== inc.nome) Object.assign(u, { nome: inc.nome, modalita: null, concentrazione: false, se: null, ids: [], altri: '' });
+  const durata = durataLancio(inc, r.livello, { modalita: u.modalita, concentrazione: u.concentrazione, anticipazione: r.anticipazione?.valore });
+  // «Personale» o un lanciatore che è un PG: di solito su di sé; i nemici scelgono fra i partecipanti
+  const personale = (inc.versioni ?? []).some((v) => /personale/i.test(String(v.Gittata ?? '')));
+  if (u.se === null) u.se = !ctx.calcola && (personale || !!arIncantesimo(inc, r.livello, ctx.dati));
+  const partecipanti = ctx.partecipanti ?? [];
+  const ridisegna = () => ctx.azioni.ridisegna();
+  const conDurata = ['round', 'tempo', 'condizione'].includes(durata.tipo);
+  const testo = durata.tipo === 'round' ? `${durata.round} RND, fino alla fine del Round R + ${durata.round} (il Round del lancio non conta)`
+    : durata.tipo === 'tempo' ? `${durata.testo}, promemoria senza contatore` : durata.testo;
+  const elemento = h('div', { class: 'riquadro durata-lancio' },
+    h('p', {}, h('strong', {}, 'Durata: '), testo, durata.anticipata ? h('small', { class: 'nota' }, ' (anticipata)') : null,
+      durata.concentrazione ? h('small', { class: 'nota' }, ' · a Concentrazione: si mantiene un solo incantesimo') : null),
+    op.modalita.length ? rigaScelte('Modalità', op.modalita.map((m) => ({ valore: m.id, etichetta: m.nome })), durata.modalita ?? op.modalita[0].id, (v) => { u.modalita = v; ridisegna(); }) : null,
+    op.concentrazioneAScelta ? interruttore('Con Concentrazione', u.concentrazione, (v) => { u.concentrazione = v; ridisegna(); }, { mod: 'durata massima' }) : null,
+    op.todo ? h('p', { class: 'nota' }, `Da chiarire con Davide: ${op.todo.replace(/\s*\((A\.\d+, )?docs.*$/, '')}`) : null,
+    conDurata ? [
+      h('p', { class: 'scelta-titolo' }, 'Bersagli'),
+      h('div', { class: 'caselle-nemico' },
+        ctx.calcola ? null : h('label', {}, h('input', { type: 'checkbox', checked: !!u.se, onchange: (e) => { u.se = e.target.checked; } }), ' su di me'),
+        partecipanti.map((p) => h('label', {}, h('input', { type: 'checkbox', checked: u.ids.includes(p.id), onchange: (e) => { u.ids = e.target.checked ? [...u.ids, p.id] : u.ids.filter((x) => x !== p.id); } }), ` ${p.nome}`))),
+      h('label', { class: 'campo-nemico' }, h('span', {}, 'Altri bersagli (a parole)'), h('input', { type: 'text', maxlength: 80, value: u.altri, placeholder: 'es. la porta, un alleato fuori scena', oninput: (e) => { u.altri = e.target.value; } })),
+    ] : null);
+  const registrazione = () => {
+    if (!conDurata) return null;
+    const bersagli = [
+      ...(u.se && !ctx.calcola ? [{ nome: 'sé', se: true }] : []),
+      ...partecipanti.filter((p) => u.ids.includes(p.id)).map((p) => ({ id: p.id, nome: p.nome })),
+      ...u.altri.split(',').map((x) => x.trim()).filter(Boolean).map((nome) => ({ nome })),
+    ];
+    const ar = u.se ? arIncantesimo(inc, r.livello, ctx.dati, r.anticipazione?.valore) : null;
+    return { nome: inc.nome, livello: r.livello, durata, bersagli, ...(ar ? { ar } : {}) };
+  };
+  return { elemento, registrazione };
 }
 
 /**

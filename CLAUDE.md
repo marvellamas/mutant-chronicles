@@ -143,6 +143,8 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 
 - Tavolo del Master (su main dal 02/10; solo con `avvia-server.bat`, `docs/tavolo-direttore.md`): plancia con i PG al tavolo in sola lettura, scontro con Iniziativa e parità, Round e durate degli Stati, nemici dal bestiario (`data/formato_nemici.json`, A.73) con Ferite, Menomazioni, PM e «Lancia!», danno applicato («Colpito»), «Attacca» dei nemici con il pannello dei PG, giocatori collegati con revisione; convertitore «PG → nemico» (`src/nemico-da-pg.js`); «Crea nemico» (procedura guidata o tutto a caso dal Bestiario, `src/crea-nemico.js`) e «Prepara scontro» (bozze in `scontri/` con stato «bozza», `src/preparazione.js`) del 03/10. Round della scheda collegato allo scontro (`src/round-scontro.js`, regole in `regole.json` → `durate_round`): con il PG in uno scontro aperto il Round lo fa avanzare la plancia. Bestiario proposto in `docs/bestiario/` (`bestiario.md`, `bestiario.html` per Google Doc, `tools/taratura_bestiario.mjs`).
 
+- Durate degli Incantesimi lanciati (03/10, `docs/tavolo-direttore.md`): `incantesimi.json` → `meccanica.durata` (`tools/durate_incantesimi.mjs`, validatore), «Lancia!» con «Durata e bersagli», «Incantesimi in corso» nella tab Poteri (`src/durate-incantesimi.js`, sessione `incantesimiAttivi`): Round con `durate_round`, a tempo come promemoria, «Termina», AR di Scudo, Armatura di Forza e Pelle Corazzata finché durano (`regole.json` → `ar.incantesimi`); in scontro col Round dello scontro, nella plancia e per i nemici (`scontro.effetti`).
+
 Fuori perimetro per ora: tiri automatici fuori dalla plancia, veicoli.
 
 ## Riferimenti

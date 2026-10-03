@@ -320,7 +320,65 @@ Aggiornati i test degli Stati in `tests/scontro.test.js` e `tests/nemici-scontro
 - con il campo delle note in uso la scheda non si ridisegna, poi si aggiorna;
 - senza server la scheda è invariata.
 
-**Resta fuori.** Le durate degli Incantesimi nella scheda: oggi «Lancia!» non le registra (backlog).
+**Resta fuori.** Le durate degli Incantesimi nella scheda: fatte il 3 ottobre 2026, sezione seguente.
+
+## Durate degli Incantesimi lanciati (3 ottobre 2026)
+
+Richiesta di Marcello: «Lancia!» non registrava durate; ora gli Incantesimi si contano come le Tecniche Interiori.
+
+**Ricognizione** (Manuale della Magia, `docs/manuali-txt/`; dati in `incantesimi.json` → `versioni`). Le durate stanno nelle colonne delle versioni («Durata», «Durata fissa», «Durata max», «Durata Con», «Con/Senza Concentrazione», «Durata A/B»…). Sui 90 incantesimi:
+
+| Tipo | Incantesimi |
+|---|---|
+| istantanea (nessuna durata) | 15 |
+| durata fissa | 50 |
+| durata fissa o a Concentrazione, a scelta | 12 |
+| solo a Concentrazione | 2 |
+| durata per modalità (Resistenza Fisica, Efficienza, Marchio Psichico) | 3 |
+| fino a una condizione (Comando) | 1 |
+| procedura (cure, Psicometria, Rigenerazione, Impronta Mistica…) | 7 |
+
+Valori per versione: 189 in Round, 318 in minuti, ore o giorni, 4 altri. Mancava nei dati la seconda tabella di Marchio Psichico (inseguimento e combattimento): aggiunta. Ambigua Individuare (Concentrazione senza durata massima in tabella): TODO(Davide) A.87, `docs/risposte-master.md`.
+
+**Dati.** `tools/durate_incantesimi.mjs --scrivi` → `meccanica.durata` di ogni incantesimo: `tipo` (durata, istantanea, procedura, condizione), `colonna`, `concentrazione`, `concentrazione_doppia` (Scudo: a Concentrazione il doppio della durata fissa), `modalita`. Il validatore (`validaDurateIncantesimi`) controlla tipi, colonne in ogni versione e valori leggibili. Scadenza con `regole.json` → `durate_round` (la stessa delle Tecniche). Allungare la durata: Anticipazione della Durata (gradino successivo della scala, sez. 12.3); Incantesimi Estesi toglie il raddoppio dei PM (`anticipazione_senza_raddoppio`), come già in «Lancia!». AR degli incantesimi già calcolata dalla scheda: `regole.json` → `ar.incantesimi` (Scudo, Armatura di Forza, Pelle Corazzata), con le frasi verificate.
+
+**Scheda** (`src/durate-incantesimi.js`, `src/ui/incantesimi-in-corso.js`):
+- nel pannello di «Lancia!» il riquadro «Durata e bersagli»: la durata della versione (anticipata se si anticipa la Durata), la modalità, «Con Concentrazione» dove si sceglie, i bersagli («su di me», gli altri partecipanti dello scontro, «Altri bersagli» a parole);
+- dopo il lancio, nella tab Poteri «Incantesimi in corso»: Round rimasti, Concentrazione, bersagli, «AR +N nella scheda», «Termina»; le durate a tempo sono promemoria con il testo e l'ora del calendario, se attivo;
+- un nuovo incantesimo a Concentrazione termina quello mantenuto prima (avviso);
+- scadenza con «Nuovo Round» della scheda o, in scontro, con il Round dello scontro; avviso «Scaduta: …»;
+- AR di Scudo, Armatura di Forza e Pelle Corazzata su di sé solo finché la durata è attiva, con la riga «incantesimo, fino alla fine del Round N» nella provenienza;
+- «Su di te, dai nemici»: gli incantesimi dei nemici sul PG, con l'avviso quando finiscono;
+- sessione `incantesimiAttivi`, scritta solo se non vuota: i file senza incantesimi lanciati non cambiano; «Nuova sessione» la chiude.
+
+**Plancia:**
+- carta del PG: «Incantesimi in corso: Nome · N Round (su di sé / bersagli)» e «Su di lui» con gli incantesimi di nemici e altri PG;
+- carta del nemico: i suoi incantesimi in corso e quelli che ha addosso;
+- valori della carta del PG (AR compresa) calcolati al Round dello scontro (`vistaPlancia(…, round)`), come nella scheda;
+- «Termina le durate» chiude Tecniche e incantesimi nelle schede e gli incantesimi dei nemici nello scontro.
+
+**Nemici.** «Lancia!» del nemico con lo stesso riquadro: la durata va in `scontro.effetti` (`registraLancioNemico`), con la riga nel registro «dura fino alla fine del Round N, su …»; a «Avanti» scade («… è finito.»).
+
+**Stampa.** Invariata: l'elenco degli incantesimi del foglio 5 mostra già la durata.
+
+**Correzioni nate dalla prova:** «Termina le durate» non chiudeva gli incantesimi nel file del PG (la sessione nuova si unisce a quella del file: ora scrive una lista vuota); la carta della plancia mostrava l'AR dell'incantesimo anche dopo la scadenza.
+
+**Test** (`tests/durate-incantesimi.test.js`):
+- dati e validatore;
+- 3 Round al Round 2, che scade alla fine del Round 5 in scheda e in scontro;
+- durata in minuti come promemoria;
+- Anticipazione con Incantesimi Estesi (10 → 20 Round);
+- «Termina» e «Termina le durate»;
+- AR di Armatura di Forza fino alla scadenza, anche nella carta della plancia;
+- incantesimo di un nemico su un PG;
+- collaudo: i PG d'esempio a riposo invariati.
+
+**Prova** (porta 3017, cartelle temporanee e una copia di Fratello Anselmo Viri, poi cancellate), con plancia e scheda in due finestre:
+- Armatura di Forza al Round 2: AR 1 → 3 con la provenienza; carta «11 Round»; al Round 13 AR 1 in scheda e plancia, avviso «Scaduta»;
+- «Termina» nella scheda; Alterare Immagine 5 minuti come promemoria; «Termina le durate» dalla plancia;
+- Catene di Forza di un nemico su Anselmo: su entrambe le carte e nella scheda, fine al Round 22, registro;
+- senza server (porta 8017): contatore della scheda, scadenza al Round 7.
+
 
 ## Basi nuove del Bestiario nella plancia (3 ottobre 2026)
 

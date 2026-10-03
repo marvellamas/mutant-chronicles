@@ -9,6 +9,7 @@ import { iconaPagina } from './immagini.js';
 import { riempimento } from '../interfaccia.js';
 import { vistaPlancia, testoConSessione, sessioneDaFile, pgDaAggiungere } from '../tavolo.js';
 import { riallinea, alRound, terminaDurate, collegamentoScontro, durateCarta, testoDurata } from '../round-scontro.js';
+import { rigaDurate } from './durate.js';
 import { ultimiPerPersonaggio, chiaveDaFile } from '../cartella.js';
 import { elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, creaInCartella } from './cartella.js';
 import { apriColpo } from './colpo.js';
@@ -18,7 +19,7 @@ import { attacchiDi } from '../nemico-attacco.js';
 import { testoColpo } from '../danno.js';
 import { pannelloScontro, leggiScontroAperto, leggiScontro, salvaScontro } from './scontro.js';
 import { pannelloBestiario, elencoNemici, cartaNemico } from './nemici.js';
-import { diTurno, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico, aggiungiNemici } from '../scontro.js';
+import { diTurno, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico, aggiungiNemici, registraRiga } from '../scontro.js';
 import { vociBestiario } from '../nemici.js';
 import { creaCustode } from './ridisegno.js';
 import { avviso, avvisoErrore } from './avvisi.js';
@@ -53,7 +54,8 @@ export function renderTavolo(radice, ctx) {
   const stato = {
     elenco: [], // file della cartella (server)
     selezione: [], // nomi «al tavolo»
-    viste: new Map(), // file → vista calcolata
+    viste: new Map(), // file → vista calcolata (al Round dello scontro, se il PG è in uno scontro aperto)
+    testi: new Map(), // file → testo letto, per ricalcolare la vista quando cambia il Round dello scontro
     errori: new Map(), // file → messaggio
     ultimo: null, // ms dell'ultimo aggiornamento riuscito
     errore: null,
@@ -154,9 +156,12 @@ export function renderTavolo(radice, ctx) {
   };
   // «Termina le durate»: chiude le Tecniche in corso di tutti i PG al tavolo (durate rimaste dopo uno scontro)
   const terminaTutte = async (pgConDurate) => {
-    if (!confirm(`Terminare tutte le durate in corso di ${pgConDurate.map((v) => v.nome).join(', ')}?`)) return;
+    const nomi = [...pgConDurate.map((v) => v.nome), ...((stato.scontro?.effetti ?? []).length ? ['nemici nello scontro'] : [])];
+    if (!confirm(`Terminare tutte le durate in corso (${nomi.join(', ')})?`)) return;
     for (const v of pgConDurate) await aggiornaPg(v.chiaveCartella, terminaDurate);
-    avviso(`Durate terminate: ${pgConDurate.map((v) => v.nome).join(', ')}.`);
+    // incantesimi dei nemici nello scontro
+    if ((stato.scontro?.effetti ?? []).length) await modifica((x) => registraRiga({ ...x, effetti: [] }, 'Durate degli incantesimi dei nemici terminate dal master.'));
+    avviso(`Durate terminate: ${nomi.join(', ')}.`);
     await aggiorna(true);
   };
 
@@ -175,7 +180,21 @@ export function renderTavolo(radice, ctx) {
 
   // il ridisegno periodico non chiude le tendine né toglie il focus ai campi in uso (src/ui/ridisegno.js)
   const custode = creaCustode(radice, { ridisegna: () => disegna() });
+  // vista del PG al Round dello scontro in cui si trova (durate di Tecniche e incantesimi finite: niente effetti)
+  const roundDi = (v) => (v?.chiaveCartella ? collegamentoScontro(stato.scontro, v.chiaveCartella)?.round ?? null : null);
+  const vistaAlRound = (file, testo) => {
+    const v = vistaPlancia(testo, ctx.dati, file);
+    const round = v.completa ? roundDi(v) : null;
+    return round ? vistaPlancia(testo, ctx.dati, file, round) : v;
+  };
+  const allineaViste = () => {
+    for (const [file, v] of stato.viste) {
+      if (!v?.completa || !stato.testi.has(file) || (roundDi(v) ?? null) === (v.roundVista ?? null)) continue;
+      try { stato.viste.set(file, vistaAlRound(file, stato.testi.get(file))); } catch { /* resta la vista di prima */ }
+    }
+  };
   const disegna = () => {
+    allineaViste();
     if (!stato.attivo) return;
     nascondiTooltip();
     const foto = custode.fotografa();
@@ -213,7 +232,7 @@ export function renderTavolo(radice, ctx) {
         : h('p', { class: 'vuoto' }, 'Nessun personaggio al tavolo: sceglili con «Chi è al tavolo».'),
       nemiciInScontro().length ? [
         h('h2', { class: 'plancia-sezione' }, 'Nemici nello scontro'),
-        h('div', { class: 'plancia-griglia' }, nemiciInCarta().map((p) => cartaNemico(ctx, p, { modifica, diTurnoOra: diTurno(stato.scontro)?.id === p.id, onColpito: () => colpitoNemico(p), onAttacca: attacchiDi(p).length ? () => attacca(p, alTavolo) : null, onLancia: (i) => lancia(p, i, alTavolo), onRiduci: (v) => modifica((x) => riduciNemico(x, p.id, v)) }))),
+        h('div', { class: 'plancia-griglia' }, nemiciInCarta().map((p) => cartaNemico(ctx, p, { modifica, durate: durateNemico(p), diTurnoOra: diTurno(stato.scontro)?.id === p.id, onColpito: () => colpitoNemico(p), onAttacca: attacchiDi(p).length ? () => attacca(p, alTavolo) : null, onLancia: (i) => lancia(p, i, alTavolo), onRiduci: (v) => modifica((x) => riduciNemico(x, p.id, v)) }))),
       ] : null,
       pannelloBestiario(ctx, stato.bestiario, {
         aperto: stato.bestiarioAperto,
@@ -324,7 +343,7 @@ export function renderTavolo(radice, ctx) {
   // dopo il lancio di un incantesimo con danno si sceglie il bersaglio e si apre «Colpito», come per «Attacca»
   const lancia = (p, indice, alTavolo) => {
     if (!stato.scontro) return;
-    apriLancioNemico(ctx, p, indice, { bersagli: bersagliPer(p, alTavolo), registra: (l) => modifica((x) => registraLancioNemico(x, l)) });
+    apriLancioNemico(ctx, p, indice, { bersagli: bersagliPer(p, alTavolo), registra: (l) => modifica((x) => registraLancioNemico(x, l, undefined, ctx.dati)) });
   };
   // «Annulla ultimo colpo»: per un PG si rimettono nel file PV, Ferite e Stati di prima (con la revisione)
   const annullaColpo = async () => {
@@ -381,13 +400,31 @@ export function renderTavolo(radice, ctx) {
     await aggiorna(true);
   };
   // durate di un PG per la sua carta: Round dello scontro se ci è, altrimenti quello della sua scheda
-  const durateDi = (v) => (v?.completa ? durateCarta(v.sessione, collegamentoScontro(stato.scontro, v.chiaveCartella), ctx.dati) : []);
+  const durateDi = (v) => (v?.completa ? [...durateCarta(v.sessione, collegamentoScontro(stato.scontro, v.chiaveCartella), ctx.dati), ...dagliAltriPg(`pg:${v.chiaveCartella}`, v.chiaveCartella)] : []);
+  // incantesimi lanciati dai PG su un partecipante (PG o nemico): dalle loro schede, con il Round dello scontro
+  const dagliAltriPg = (id, salta = null) => [...stato.viste.values()].filter((w) => w?.completa && w.chiaveCartella !== salta).flatMap((w) => {
+    const r = collegamentoScontro(stato.scontro, w.chiaveCartella)?.round ?? w.sessione.round ?? 1;
+    return (w.sessione.incantesimiAttivi ?? []).filter((x) => (x.al === null || x.al >= r) && (x.bersagli ?? []).some((b) => b.id === id))
+      .map((x) => ({ nome: `${x.nome} (da ${w.nome})`, tipo: 'subito', al: x.al, rimasti: x.al === null ? null : x.al - r + 1, testo: x.testo }));
+  });
+  // durate di un nemico: i suoi incantesimi in corso, quelli subiti dai nemici e dai PG
+  const durateNemico = (p) => {
+    const r = stato.scontro?.round ?? 1;
+    const effetti = (stato.scontro?.effetti ?? []).filter((e) => e.al === null || e.al === undefined || e.al >= r);
+    const dura = (e) => ({ al: e.al, rimasti: e.al === null || e.al === undefined ? null : e.al - r + 1, testo: e.testo });
+    return [
+      ...effetti.filter((e) => e.da === p.id).map((e) => ({ nome: e.nome, tipo: 'incantesimo', bersagli: e.bersagli, ...dura(e) })),
+      ...effetti.filter((e) => e.da !== p.id && (e.bersagli ?? []).some((b) => b.id === p.id)).map((e) => ({ nome: `${e.nome} (da ${e.daNome})`, tipo: 'subito', ...dura(e) })),
+      ...dagliAltriPg(p.id),
+    ];
+  };
   const barraDurate = (alTavolo) => {
-    const conDurate = alTavolo.map((r) => stato.viste.get(r.file)).filter((v) => v?.completa && durateDi(v).some((d) => d.tipo === 'tecnica'));
-    if (!conDurate.length) return null;
+    const conDurate = alTavolo.map((r) => stato.viste.get(r.file)).filter((v) => v?.completa && durateDi(v).some((d) => d.tipo === 'tecnica' || d.tipo === 'incantesimo'));
+    const nemici = (stato.scontro?.effetti ?? []).length;
+    if (!conDurate.length && !nemici) return null;
     return h('p', { class: 'riga-azioni barra-durate' },
-      h('span', { class: 'nota' }, `Tecniche in corso nelle schede: ${conDurate.map((v) => v.nome).join(', ')}.`),
-      h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Chiude tutte le Tecniche in corso dei PG al tavolo (scrive nei loro file)', onclick: () => terminaTutte(conDurate) }, 'Termina le durate'));
+      h('span', { class: 'nota' }, [conDurate.length ? `Tecniche e incantesimi in corso nelle schede: ${conDurate.map((v) => v.nome).join(', ')}.` : null, nemici ? ` Incantesimi dei nemici nello scontro: ${nemici}.` : null].filter(Boolean).join('')),
+      h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Chiude tutte le Tecniche e gli incantesimi in corso dei PG al tavolo (scrive nei loro file) e quelli dei nemici nello scontro', onclick: () => terminaTutte(conDurate) }, 'Termina le durate'));
   };
   const nemiciInScontro = () => (stato.scontro?.partecipanti ?? []).filter((p) => p.tipo === 'nemico');
   // nella plancia i nemici a 0 PV vanno in fondo, dopo tutti gli altri (l'ordine dei turni non cambia)
@@ -423,7 +460,9 @@ export function renderTavolo(radice, ctx) {
       const r = ultimi.get(k);
       if (!r || visti.get(r.file) === r.mtime) continue;
       try {
-        stato.viste.set(r.file, vistaPlancia(await leggiCartella(r.file), ctx.dati, r.file));
+        const testo = await leggiCartella(r.file);
+        stato.testi.set(r.file, testo);
+        stato.viste.set(r.file, vistaAlRound(r.file, testo));
         stato.errori.delete(r.file);
       } catch (e) {
         stato.errori.set(r.file, e.message);
@@ -525,9 +564,10 @@ function cartaPg(ctx, v, r, diTurnoOra = false, colpito = null, durate = []) {
         const d = durate.find((x) => x.tipo === 'stato' && x.nome === s.nome);
         return h('span', { class: 'etichetta stato-plancia', title: d ? `fino alla fine del Round ${d.al}` : null }, d ? `${s.nome} · ${d.rimasti} Round` : s.nome);
       })) : null,
-      // durate delle Tecniche attivate dalla scheda, con i Round che restano (src/round-scontro.js)
-      durate.some((x) => x.tipo === 'tecnica') ? h('p', { class: 'plancia-durate' }, 'Tecniche in corso: ', durate.filter((x) => x.tipo === 'tecnica').map((d, i) => [i ? ', ' : '',
-        h('span', { class: 'etichetta durata-plancia', title: d.al === null ? 'a tempo: si termina dalla scheda' : `fino alla fine del Round ${d.al}` }, testoDurata(d))])) : null,
+      // durate di Tecniche e incantesimi attivati dalla scheda, incantesimi subiti, con i Round che restano (src/round-scontro.js)
+      rigaDurate(durate, 'tecnica', 'Tecniche in corso'),
+      rigaDurate(durate, 'incantesimo', 'Incantesimi in corso'),
+      rigaDurate(durate, 'subito', 'Su di lui'),
       v.armi.length ? h('ul', { class: 'plancia-armi' }, v.armi.map((a) => h('li', {},
         h('span', {}, a.moduloDi ? `↳ ${a.nome}` : a.nome, a.rotta ? h('small', { class: 'motivo' }, ' (Rotta)') : null),
         h('span', {}, ' VA ', pillola(`VA ${a.nome}`, a.va, a.provenienza), ' · danno ',

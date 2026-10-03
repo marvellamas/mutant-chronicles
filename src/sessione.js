@@ -45,6 +45,7 @@ import { infoRicarica, eseguiRicarica, perOperazione } from './ricarica.js';
 import { caricatori, contenitori, normalizzaEquipaggiamento, catalogo, risolvi, riserveNec, granateDaLancio } from './equipaggiamento.js';
 import { oggettiConPi } from './protezione.js';
 import { attivaTecnica, nuovoRound, terminaTecnica, allineaTecnicheAttive, tecnicaDi } from './tecniche.js';
+import { allineaIncantesimiAttivi } from './durate-incantesimi.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const limita = (v, min, max) => Math.min(max, Math.max(min, v));
@@ -343,6 +344,9 @@ export function allineaSessione(sessione, m) {
     ultimaTecnica: isOggetto(sessione.ultimaTecnica) && typeof sessione.ultimaTecnica.id === 'string' && Number.isInteger(sessione.ultimaTecnica.round)
       ? { id: sessione.ultimaTecnica.id, round: sessione.ultimaTecnica.round } : null,
     tecnicheAttive: allineaTecnicheAttive(sessione.tecnicheAttive, m.tecniche ?? null),
+    // incantesimi lanciati con una durata (src/durate-incantesimi.js): la chiave c'è solo se ce ne sono, così le
+    // sessioni di sempre restano identiche
+    ...(() => { const inc = allineaIncantesimiAttivi(sessione.incantesimiAttivi); return inc.length ? { incantesimiAttivi: inc } : {}; })(),
     note: typeof sessione.note === 'string' ? sessione.note : '',
   };
 }
@@ -503,7 +507,9 @@ export function attivaArtefatto(sessione, uid, pm, m) {
 }
 
 export function nuovaSessione(sessione, m) {
-  return { ...allineaSessione(sessione, m), pvAttuali: m.pv, pmAttuali: m.pm, statiAttivi: [], ferite: 0, affaticamento: 0, round: 1, ultimaTecnica: null, tecnicheAttive: [] };
+  // «Nuova sessione»: anche gli incantesimi in corso finiscono
+  const { incantesimiAttivi: _inc, ...resto } = allineaSessione(sessione, m);
+  return { ...resto, pvAttuali: m.pv, pmAttuali: m.pm, statiAttivi: [], ferite: 0, affaticamento: 0, round: 1, ultimaTecnica: null, tecnicheAttive: [] };
 }
 
 /**

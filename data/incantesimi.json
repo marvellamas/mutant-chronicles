@@ -296,7 +296,10 @@
           ],
           "testo": "Colpisce automaticamente, rispettando gittata, visibilità e ostacoli; il bersaglio può usare Parata e Schivata, non Elusione."
         },
-        "_nota": "E&L del 29/09, risposta 17 (A.39.2): colpisce automaticamente; «Mod PS» riguarda soltanto gli effetti secondari."
+        "_nota": "E&L del 29/09, risposta 17 (A.39.2): colpisce automaticamente; «Mod PS» riguarda soltanto gli effetti secondari.",
+        "durata": {
+          "tipo": "istantanea"
+        }
       }
     },
     {
@@ -591,7 +594,12 @@
         "frasi": [
           "Un comportamento semplice dichiarato al lancio può proseguire senza Concentrazione.",
           "Modificare attivamente l’effetto richiede Concentrazione."
-        ]
+        ],
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Senza Concentrazione",
+          "concentrazione": "Con Concentrazione"
+        }
       }
     },
     {
@@ -784,7 +792,11 @@
         },
         "frasi": [
           "Durata fissa senza Concentrazione."
-        ]
+        ],
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
+        }
       }
     },
     {
@@ -927,7 +939,11 @@
         },
         "frasi": [
           "Durata fissa senza Concentrazione."
-        ]
+        ],
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
+        }
       }
     },
     {
@@ -1108,7 +1124,11 @@
         },
         "frasi": [
           "Durata fissa senza Concentrazione."
-        ]
+        ],
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
+        }
       }
     },
     {
@@ -1281,7 +1301,10 @@
         "frasi": [
           "La tabella modifica Elusione e le PS secondarie.",
           "Ogni versione persistente riporta la Durata."
-        ]
+        ],
+        "durata": {
+          "tipo": "istantanea"
+        }
       }
     },
     {
@@ -1444,7 +1467,10 @@
         "frasi": [
           "Consente soltanto Elusione: il modificatore PS si applica a questa prova e alle eventuali PS secondarie.",
           "Ogni versione persistente riporta la Durata."
-        ]
+        ],
+        "durata": {
+          "tipo": "istantanea"
+        }
       }
     },
     {
@@ -1588,7 +1614,11 @@
         },
         "frasi": [
           "La durata è fissa e non richiede Concentrazione."
-        ]
+        ],
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
+        }
       }
     },
     {
@@ -1742,7 +1772,11 @@
         "frasi": [
           "Durata fissa senza Concentrazione.",
           "Bersaglio e gittata Personale; nessuna PS per trasformarsi."
-        ]
+        ],
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
+        }
       }
     },
     {
@@ -1929,7 +1963,11 @@
         "frasi": [
           "L’origine è un punto visibile entro gittata; l’area è una sfera immobile, senza Concentrazione.",
           "Il modificatore PS si applica a Elusione e alle PS secondarie che prevedono una prova."
-        ]
+        ],
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
+        }
       }
     },
     {
@@ -2083,6 +2121,10 @@
             }
           ],
           "frase": "Anticipazione: un solo gradino nella quantità di PV temporanei oppure nella durata; costo base raddoppiato e Potere più difficile di una categoria. Livello e altri parametri restano invariati."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -2231,6 +2273,10 @@
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 Q al Passo, un ulteriore −1 al VA degli attaccanti oppure la durata successiva. Oltre i massimi ordinari si può raggiungere +5 Q al Passo oppure −4 al VA degli attaccanti. Scala della durata: 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -2362,6 +2408,21 @@
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 al bonus Tempra selezionato oppure un gradino nella durata della modalità attiva. Durata A: 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore → 12 ore → 24 ore. Durata B: 1 → 2 → 3 → 4 → 5 giorni. Le righe con la stessa durata non costituiscono un nuovo gradino."
+        },
+        "durata": {
+          "tipo": "durata",
+          "modalita": [
+            {
+              "id": "A",
+              "nome": "Tempra",
+              "colonna": "Durata A"
+            },
+            {
+              "id": "B",
+              "nome": "Privazioni",
+              "colonna": "Durata B"
+            }
+          ]
         }
       }
     },
@@ -2473,6 +2534,10 @@
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. È consentita soltanto la durata: 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore → 12 ore → 24 ore."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -2619,6 +2684,21 @@
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 al bonus operativo, +1 al VA degli attacchi, +1 al danno oppure un gradino nella durata attiva. Durata A: 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore → 12 ore. Durata B: 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore."
+        },
+        "durata": {
+          "tipo": "durata",
+          "modalita": [
+            {
+              "id": "A",
+              "nome": "Operativa",
+              "colonna": "Durata A"
+            },
+            {
+              "id": "B",
+              "nome": "Combattiva",
+              "colonna": "Durata B"
+            }
+          ]
         }
       }
     },
@@ -2756,6 +2836,10 @@
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 AR, fino a 9 con l’Anticipazione della versione massima, oppure un gradino di durata: 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore. Se aumenta l’AR si ricalcola la penalità al Passo. La natura dell’AR non può essere anticipata a Magica."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -2893,6 +2977,10 @@
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 all’Iniziativa, +1 al bonus Schivata oppure un gradino di durata: 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -3008,6 +3096,10 @@
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 PV recuperabile per RND oppure la durata da 10 a 15 RND. Restano le stesse regole per Sanguinamento, limite dei PV e inizio del recupero."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -3135,6 +3227,11 @@
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie un ulteriore −2 alla Percezione, +1 Azione consentita oppure un gradino della durata scelta. Concentrazione: 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore. Fissa: 10 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata fissa",
+          "concentrazione": "Durata con Conc"
         }
       }
     },
@@ -3250,6 +3347,10 @@
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 al bonus fisico, +1 al bonus al danno oppure un gradino di durata: 5 → 10 → 15 RND. Restano +1 AFT al termine e il contraccolpo −3 per 10 RND."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -3427,6 +3528,11 @@
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie il peso successivo della tabella (oltre 100 kg: 200 kg), il danno successivo (oltre 1d10+3: 1d10+4), il modificatore PS (0 → −2 → −4 → −6) oppure la durata della modalità scelta. Si usa il valore distinto successivo; oltre 12 ore in Concentrazione si arriva a 24 ore, oltre 2 ore a durata fissa a 4 ore."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata fissa",
+          "concentrazione": "Durata Con"
         }
       }
     },
@@ -3573,6 +3679,11 @@
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 AR, fino a un massimo di 4, +1 al bonus Parata oppure un gradino della durata scelta. Durata fissa: 5 RND → 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore. In Concentrazione si raddoppiano questi valori, fino a 4 ore con Anticipazione. L’AR rimane Naturale e non può essere anticipata a Magica."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata fissa",
+          "concentrazione_doppia": true
         }
       }
     },
@@ -3703,6 +3814,10 @@
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 AR, fino a un massimo di 8, oppure un gradino nella durata: 5 RND → 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -3859,6 +3974,9 @@
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie il danno della riga successiva (oltre 1d8+4: 1d8+5), +1 Q alla spinta con Tempra fallita oppure un gradino del modificatore PS (0 → −2 → −4 → −6). La spinta con Tempra riuscita rimane sempre 1 Q."
+        },
+        "durata": {
+          "tipo": "istantanea"
         }
       }
     },
@@ -4017,6 +4135,10 @@
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie il valore successivo di PV per segmento (oltre 180: 220), lunghezza (oltre 15 Q: 18 Q), durata (oltre 1 ora: 2 ore) oppure interferenza magica, da −2 a −4 a Potere. L’altezza rimane 2 Q."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -4171,6 +4293,10 @@
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie lo Stato da Rallentato a Immobilizzato, la durata (3 → 5 → 10 → 20 → 30 RND) oppure il modificatore PS (0 → −2 → −4 → −6), applicato a Tempra iniziale, Tempra per liberarsi e Riflessi per mantenere l’equilibrio."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata max"
         }
       }
     },
@@ -4356,6 +4482,11 @@
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie il carico successivo (oltre 1.200 kg: 1.600 kg), le dimensioni (1 × 1 → 2 × 1 → 2 × 2 → 3 × 2 → 3 × 3 → 4 × 3 Q), il budget di movimento da 6 a 8 Q, +1 al bonus stabilità oppure la durata scelta (oltre 8 ore Con: 12 ore; oltre 1 ora fissa: 2 ore). Il movimento verticale costa sempre 2; dimensioni e carico restano aspetti distinti."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata fissa",
+          "concentrazione": "Durata Con"
         }
       }
     },
@@ -4512,6 +4643,10 @@
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie la dimensione cubica successiva (oltre 6 × 6 × 6 Q: 7 × 7 × 7 Q), durata (5 → 10 → 20 → 30 RND), modificatore Tempra (0 → −2 → −4 → −6) oppure interferenza magica da −4 a −6. Restano due turni per attraversare e il dimezzamento del danno pertinente. Magia conservata: l’interferenza non introduce una Prova Potere nell’attivazione di Impronta Mistica o Trappola Mistica già caricata che non la richiede. Restano blocchi, assorbimenti e interdizioni della barriera. Per i normali lanci l’interferenza può rendere necessaria Potere anche ai livelli 1–3; fra penalità magiche concorrenti vale la maggiore, secondo le sezioni 7 e 9."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -4666,6 +4801,9 @@
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie peso (5 → 10 → 25 → 50 → 100 → 200 kg), gittata (10 → 15 → 20 → 25 → 30 → 40 Q), trasporto di creature (nessuno → solo Taumaturgo → +1 → +2 → +3 → +4 passeggeri) oppure PS Magia (0 → −2 → −4 → −6). Esempio: la versione di livello 6 anticipata sul trasporto costa 12 PM e permette al Taumaturgo di trasferirsi entro 10 Q, con Potere più difficile di una categoria e gli altri parametri invariati."
+        },
+        "durata": {
+          "tipo": "istantanea"
         }
       }
     },
@@ -4791,6 +4929,10 @@
             }
           ],
           "frase": "Anticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie il numero massimo di bersagli (1 → 2 → 3), la durata della prigionia (3 → 5 → 10 RND) oppure il modificatore PS Magia (0 → −2 → −4 → −6). Disorientato dura sempre 1+1d3 RND e non può essere anticipato."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -4921,6 +5063,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 al bonus, fino a +7, oppure un gradino di durata: 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore. Gittata e beneficiari non cambiano."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -5051,6 +5197,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un gradino, PM raddoppiati e Potere più difficile di una categoria. Si sceglie +1 al bonus PS, massimo +7, oppure durata 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore. Non si ampliano le categorie protette."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -5220,6 +5370,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie effetti 1 → 2 (massimo 2), durata 3 → 5 → 10 → 20 → 30 RND, modificatore PS 0 → −2 → −4 → −6 oppure Dolore da −3 a −4. Affaticamento resta +1 AFT."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -5417,6 +5571,9 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie il danno della successiva voce distinta in tabella (oltre 10d4+5: 12d4+5), bersagli 1 → 2 → 3 → 5 → 6 oppure modificatore PS 0 → −1 → −2 → −4 → −6 → −8 → −10. La penalità anticipata vale per entrambe le PS. Svenuto resta 1+1d4 RND; l’immunità di Barriera Mentale non viene superata."
+        },
+        "durata": {
+          "tipo": "istantanea"
         }
       }
     },
@@ -5601,6 +5758,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie PV alla riga successiva (oltre 40: 50), +1 VA operativo (massimo 14), +1 al danno che resta Naturale, carico 10 → 20 → 40 → 70 → 100 → 150 → 200 kg oppure durata 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore. Numero di servitori, Movimento, azioni e natura del danno non aumentano."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -5744,6 +5905,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie durata 5 → 10 → 20 RND → 5 → 10 → 30 minuti → 1 ora, bersagli 1 → 2 → 3 → 4 oppure modificatore PS 0 → −2 → −4 → −6. Le condizioni di risveglio non cambiano."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -5866,6 +6031,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 PV per RND, fino a 7 al livello 18, oppure durata periodica da 5 a 10 RND. Il recupero immediato resta pari alla COS, non è anticipabile e si applica una sola volta per lancio."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata periodica"
         }
       }
     },
@@ -6000,6 +6169,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie dispositivi 1 → 2 → 3 → 4, bonus utilizzo +1 → +2 → +3 → +4 → +6 → +8 oppure durata 10 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore. Numero di azioni ed esclusioni restano invariati."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -6132,6 +6305,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 al danno iniziale oppure modificatore PS 0 → −2 → −4 → −6. Durata, numero di bersagli e passaggi fra gli stati non sono anticipabili."
+        },
+        "durata": {
+          "tipo": "durata",
+          "concentrazione": "Durata max Con"
         }
       }
     },
@@ -6284,6 +6461,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un gradino, PM raddoppiati e Potere più difficile di una categoria. Si sceglie distanza dal corpo oppure durata, usando la voce successiva della tabella quando presente. All’ultima riga questi aspetti non sono anticipabili: non è definito un ulteriore gradino. Non si introduce interazione fisica."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -6466,6 +6647,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie durata 10 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore; beneficiari 1 → 2 → 3 → 4; Mod. PS 0 → −2 → −4 → −6; oppure capacità volto generico → identità precisa → voce e postura → equipaggiamento."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -6676,6 +6861,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie bersagli 1 → 2 → 3 → 4 → 5 → 6; Mod. PS 0 → −2 → −4 → −6; oppure parole 1 → 2 → 3 → 4 → 5 → breve frase. La durata non può essere anticipata."
+        },
+        "durata": {
+          "tipo": "condizione",
+          "testo": "fino alla fine del primo turno del bersaglio successivo al lancio, senza Concentrazione"
         }
       }
     },
@@ -6836,6 +7025,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie un ulteriore −1 alla penalità al VA, fino a −7; durata 3 → 5 → 10 → 20 RND; oppure Mod. PS 0 → −2 → −4 → −6."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -7019,6 +7212,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie raggio 2 → 3 → 4 → 5 → 6 Q; durata 10 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore; Mod. PS 0 → −2 → −4 → −6; oppure un grado di complessità della tabella."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -7239,6 +7436,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie periodo modificabile 1 ora → 2 ore → 3 ore → 4 ore → 5 ore → 6 ore → 12 ore → 1 giorno → 3 giorni → 7 giorni; durata dell’alterazione 1 → 2 → 3 → 4 → 5 → 7 → 15 → 30 → 90 → 180 giorni; bersagli 1 → 2 → 3 → 4; oppure Mod. PS 0 → −2 → −4 → −6. Il tempo di lancio resta quello della versione base e non può essere anticipato."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata alterazione"
         }
       }
     },
@@ -7405,6 +7606,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie durata 3 → 5 → 7 → 10 → 15 RND; bersagli 1 → 2 → 3 → 4; Mod. PS 0 → −2 → −4 → −6; oppure penalità a Potere −1 → −2 → −3 → −4 → −6 → −8 → −10."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -7568,6 +7773,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie bersagli mirati 1 → 2 → 3 → 4; raggio aura 1 → 2 → 3 → 4 → 5 → 6 Q; durata 1 → 3 → 5 → 7 → 10 RND; oppure un ulteriore −2 alla PS della modalità scelta, fino a −8 per la mirata o −6 per l’aura. La penalità dello stato resta −4 e non può essere anticipata."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -7750,6 +7959,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie condizionamenti 1 → 2 → 3 → 4; bersagli 1 → 2 → 3 → 4; durata 1 → 3 → 7 → 15 → 30 → 60 giorni; oppure Mod. PS 0 → −2 → −4 → −6. Il tempo di lancio resta quello della versione base."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -7963,6 +8176,11 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie raggio 6 → 10 → 15 → 20 → 25 → 30 Q; presenze occultate 1 → 2 → 4 → 6 → 8 → 10; durata a Concentrazione 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore; durata fissa 10 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore; oppure Mod. PS 0 → −2 → −4 → −6. La durata anticipata riguarda soltanto la modalità scelta."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata fissa",
+          "concentrazione": "Durata max Con"
         }
       }
     },
@@ -8119,6 +8337,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie bersagli 1 → 2 → 3 → 4; durata massima a Concentrazione 3 → 5 → 7 → 10 RND; oppure Mod. PS −2 → −4 → −6. Non può diventare un incantesimo a durata senza Concentrazione."
+        },
+        "durata": {
+          "tipo": "durata",
+          "concentrazione": "Durata max Con"
         }
       }
     },
@@ -8298,6 +8520,11 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie bersagli 1 → 2 → 3 → 4; durata a Concentrazione 5 → 10 → 30 minuti → 1 → 2 → 4 → 8 → 12 ore; durata fissa 10 → 20 RND → 5 → 10 → 30 minuti → 1 → 2 → 4 ore; oppure Mod. PS 0 → −2 → −4 → −6. L’accesso ai pensieri superficiali dal livello 9 non è anticipabile."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata fissa",
+          "concentrazione": "Durata max Con"
         }
       }
     },
@@ -8480,7 +8707,11 @@
         },
         "frasi": [
           "Durata fissa."
-        ]
+        ],
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
+        }
       }
     },
     {
@@ -8719,6 +8950,11 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie raggio 6 → 10 → 15 → 20 → 25 → 30 → 40 Q; precisione del numero Approssimata → Generica → Precisa → Esatta; profondità delle informazioni individuali alla riga successiva, mantenendo quelle già accessibili; durata a Concentrazione 5 → 10 → 30 minuti → 1 → 2 → 4 → 8 → 12 ore; oppure durata fissa 10 → 20 RND → 5 → 10 → 30 minuti → 1 → 2 → 4 ore. Il conteggio esatto e le informazioni individuali del livello 18 sono i rispettivi limiti. Il Mod. PS non è anticipabile. Esempio: Presenza 6 può anticipare il conteggio esatto oppure le fasce di livello di 2, senza ottenere entrambi."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata fissa",
+          "concentrazione": "Durata max Con"
         }
       }
     },
@@ -8948,6 +9184,11 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie destinatari 1 → 2 → 4 → 6 → 8 → 10; durata continuativa a Concentrazione 10 → 30 minuti → 1 → 2 → 4 → 8 ore; durata fissa 10 RND → 5 → 10 → 30 minuti → 1 → 2 ore; oppure Mod. PS 0 → −2 → −4 → −6. Non anticipa portata, capacità sbloccate o ritardi; non concede il collegamento continuativo prima del livello 6."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata fissa",
+          "concentrazione": "Durata max Con"
         }
       }
     },
@@ -9097,7 +9338,11 @@
         },
         "frasi": [
           "Durata fissa."
-        ]
+        ],
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
+        }
       }
     },
     {
@@ -9220,7 +9465,11 @@
         },
         "frasi": [
           "Durata fissa dopo il completamento."
-        ]
+        ],
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
+        }
       }
     },
     {
@@ -9367,6 +9616,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie passato massimo alla riga successiva, senza superare 1 anno, oppure un’impressione massima aggiuntiva, fino a 11. Il tempo di lettura rimane quello della versione effettivamente lanciata. Non si anticipano raggio o velocità di lettura. Esempio: livello 8 con passato anticipato costa 16 PM, richiede 10 RND ed esplora gli ultimi 7 giorni per un massimo di 5 impressioni."
+        },
+        "durata": {
+          "tipo": "procedura",
+          "testo": "effetto alla fine della procedura descritta nella scheda; nessuna durata da contare"
         }
       }
     },
@@ -9386,35 +9639,45 @@
           "PM": "6",
           "Gittata di lancio": "6Q",
           "Bersagli": "1",
-          "Mod. PS": "0"
+          "Mod. PS": "0",
+          "Durata inseguimento": "1 ora",
+          "Durata combattimento": "5 RND"
         },
         {
           "Livello": "9",
           "PM": "9",
           "Gittata di lancio": "10 Q",
           "Bersagli": "1",
-          "Mod. PS": "−2"
+          "Mod. PS": "−2",
+          "Durata inseguimento": "2 ore",
+          "Durata combattimento": "5 RND"
         },
         {
           "Livello": "12",
           "PM": "12",
           "Gittata di lancio": "15 Q",
           "Bersagli": "2",
-          "Mod. PS": "−2"
+          "Mod. PS": "−2",
+          "Durata inseguimento": "4 ore",
+          "Durata combattimento": "7 RND"
         },
         {
           "Livello": "15",
           "PM": "15",
           "Gittata di lancio": "20 Q",
           "Bersagli": "2",
-          "Mod. PS": "−4"
+          "Mod. PS": "−4",
+          "Durata inseguimento": "8 ore",
+          "Durata combattimento": "7 RND"
         },
         {
           "Livello": "18",
           "PM": "18",
           "Gittata di lancio": "25 Q",
           "Bersagli": "3",
-          "Mod. PS": "−4"
+          "Mod. PS": "−4",
+          "Durata inseguimento": "24 ore",
+          "Durata combattimento": "10 RND"
         }
       ],
       "regole": "Acquisizione: i bersagli devono essere visibili, entro gittata e concatenati entro 2 Q. Ciascuno effettua la propria PS quando richiesta. Chi riesce blocca il marchio e avverte un’intrusione, senza identificare automaticamente il Taumaturgo. Chi fallisce non si accorge automaticamente del marchio, ma può avere notato il lancio.\nModalità e beneficiario del marchio\nInseguimento: indica direzione e distanza approssimativa di ciascun marchiato, anche attraverso ostacoli ordinari o mentre dorme o è incosciente. Non rivela il Q esatto, non concede visione e non mostra pensieri o salute. Oltre la portata il segnale si sospende e riprende al ritorno; la durata continua a trascorrere. La morte termina il marchio, senza rivelare automaticamente perché il segnale è scomparso.\nCombattimento: il Taumaturgo riceve il bonus al VA e al danno per attacchi con armi o Corpo a corpo diretti contro un marchiato. Il bonus al danno si applica una volta per bersaglio e per attacco, anche se colpisce più AC; conserva la natura del danno e segue le normali protezioni. Non vale per esplosioni, danni ambientali o danni degli incantesimi.\nLimiti: restano necessari normali visibilità, gittata e possibilità di attaccare; Copertura e Difese continuano ad applicarsi. Non concede attacchi aggiuntivi. Mimetismo e Velo Psichico mantengono le proprie regole: il marchio non li supera automaticamente.\nInterazioni: Barriera Mentale concede il bonus alla PS Volontà. Più marchi non sommano i bonus del medesimo beneficiario contro lo stesso bersaglio.\nAnticipazione e beneficiario alternativo\nAnticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie bersagli 1 → 2 → 3 → 4; durata di inseguimento 1 → 2 → 4 → 8 → 24 → 48 ore; durata di combattimento 5 → 7 → 10 → 15 RND; Mod. PS 0 → −2 → −4 → −6; entrambe le modalità contemporaneamente; oppure un alleato come beneficiario al posto del Taumaturgo.\nEntrambe le modalità: è un singolo aspetto anticipato. Inseguimento e combattimento iniziano insieme, ciascuno con la propria durata della versione lanciata.\nBeneficiario alternativo: si designa un alleato consenziente, visibile e nella gittata al lancio. Non conta fra i bersagli marchiati. Riceve i benefici della modalità scelta al posto del Taumaturgo; la portata dell’inseguimento viene misurata da lui. Il Taumaturgo paga i PM ed effettua Potere, ma non riceve gli stessi benefici. La scelta dura per tutto il lancio.\nUn solo aspetto: assegnare il beneficio a un alleato occupa l’intera Anticipazione e non si combina con entrambe le modalità o con altri aumenti. Esempio: livello 9, 18 PM, un alleato riceve +2 VA e +2 danno contro il marchiato per 5 RND.",
@@ -9511,16 +9774,34 @@
               "gradino": "durata di inseguimento 1 → 2 → 4 → 8 → 24 → 48 ore",
               "categoria": "durata",
               "nome": "Durata di inseguimento",
-              "scala": null,
-              "scala_motivo": "i valori della tabella non compaiono nella scala della scheda"
+              "scala": {
+                "tipo": "sequenza",
+                "colonna": "Durata inseguimento",
+                "valori": [
+                  "1 ora",
+                  "2 ore",
+                  "4 ore",
+                  "8 ore",
+                  "24 ore",
+                  "48 ore"
+                ]
+              }
             },
             {
               "etichetta": "durata di combattimento",
               "gradino": "durata di combattimento 5 → 7 → 10 → 15 RND",
               "categoria": "durata",
               "nome": "Durata di combattimento",
-              "scala": null,
-              "scala_motivo": "i valori della tabella non compaiono nella scala della scheda"
+              "scala": {
+                "tipo": "sequenza",
+                "colonna": "Durata combattimento",
+                "valori": [
+                  "5 RND",
+                  "7 RND",
+                  "10 RND",
+                  "15 RND"
+                ]
+              }
             },
             {
               "etichetta": "Mod. PS",
@@ -9556,6 +9837,22 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie bersagli 1 → 2 → 3 → 4; durata di inseguimento 1 → 2 → 4 → 8 → 24 → 48 ore; durata di combattimento 5 → 7 → 10 → 15 RND; Mod. PS 0 → −2 → −4 → −6; entrambe le modalità contemporaneamente; oppure un alleato come beneficiario al posto del Taumaturgo."
+        },
+        "durata": {
+          "tipo": "durata",
+          "modalita": [
+            {
+              "id": "inseguimento",
+              "nome": "Inseguimento",
+              "colonna": "Durata inseguimento"
+            },
+            {
+              "id": "combattimento",
+              "nome": "Combattimento",
+              "colonna": "Durata combattimento"
+            }
+          ],
+          "fonte": "Magia, scheda 20.8 (seconda tabella)"
         }
       }
     },
@@ -9679,6 +9976,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie +1 al bonus INI, una difesa automatica totale aggiuntiva oppure durata 5 → 7 → 10 → 15 RND. Il limite di una difesa automatica per RND e il bonus fisso +2 a Elusione rimangono invariati."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -9828,6 +10129,11 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie portata 6 → 10 → 15 → 20 → 25 Q; spessore solido 30 cm → 50 cm → 1 m → 2 m → 3 m; durata a Concentrazione 5 → 10 → 30 minuti → 1 → 2 ore; oppure durata fissa 10 → 20 RND → 5 → 10 → 30 minuti. Anticipare lo spessore solido aggiorna anche la colonna derivata di fumo e nebbia al medesimo gradino: 1 → 2 → 3 → 7 → 10 Q. Questo aggiornamento derivato non è un secondo aspetto anticipato."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata fissa",
+          "concentrazione": "Durata max Con"
         }
       }
     },
@@ -10007,6 +10313,9 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie guarigione alla riga immediatamente successiva, con 8d4+5 come gradino aggiuntivo dopo il livello 12; gittata Contatto → 3 → 6 → 10 → 15 Q; oppure beneficiari da 1 a 2."
+        },
+        "durata": {
+          "tipo": "istantanea"
         }
       }
     },
@@ -10173,6 +10482,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e gli altri parametri rimangono invariati. Si sceglie Pericolosità I → II → III → IV → V → VI; origini naturale → naturale e artificiale → naturale, artificiale e mistica → universale; numero di malattie 1 → 2 → tutte; beneficiari 1 → 2 → 3; oppure gittata Contatto → 3 → 6 → 10 Q. Aumentare un limite non aumenta gli altri."
+        },
+        "durata": {
+          "tipo": "procedura",
+          "testo": "effetto alla fine della procedura descritta nella scheda; nessuna durata da contare"
         }
       }
     },
@@ -10339,6 +10652,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e gli altri parametri rimangono invariati. Si sceglie Pericolosità I → II → III → IV → V → VI; origini naturale → naturale e artificiale → naturale, artificiale e mistica → universale; numero di sostanze 1 → 2 → tutte; beneficiari 1 → 2 → 3; oppure gittata Contatto → 3 → 6 → 10 Q. Aumentare un limite non aumenta gli altri."
+        },
+        "durata": {
+          "tipo": "procedura",
+          "testo": "effetto alla fine della procedura descritta nella scheda; nessuna durata da contare"
         }
       }
     },
@@ -10512,6 +10829,9 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e gli altri parametri rimangono invariati. Si sceglie beneficiari 1 → 2 → 4 → 6 → 8 (massimo 8); numero di Stati 1 → 2 → 3 → tutti consentiti; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 → 30 Q; oppure gruppo di capacità livello 1 → livello 3 → livello 6. Aumentare il numero non sblocca contemporaneamente nuovi tipi di Stato."
+        },
+        "durata": {
+          "tipo": "istantanea"
         }
       }
     },
@@ -10669,6 +10989,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e gli altri parametri rimangono invariati. Si sceglie massimo stato curabile Infetto → Corrotto → Eretico → Caotico; passaggi rimossi 1 → 2 → 3 → 4 → 5; beneficiari 1 → 2 → 3 → 4; oppure gittata Contatto → 3 → 6 → 10 → 15 → 20 Q. Restano invariati i 10 minuti e il limite delle 24 ore."
+        },
+        "durata": {
+          "tipo": "procedura",
+          "testo": "effetto alla fine della procedura descritta nella scheda; nessuna durata da contare"
         }
       }
     },
@@ -10797,6 +11121,9 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e gli altri parametri rimangono invariati. Si sceglie passaggi rimossi 1 → 2 → 3 → 4 → 5, senza superare cinque; gittata Contatto → 3 → 6 → 10 → 15 Q; oppure beneficiari 1 → 2. Entrambi ricevono l’intera cura, rispettando gittata, visibilità, contatto quando necessario e concatenazione entro 2 Q; il limite delle 24 ore resta individuale. Esempio: Guarigione di livello 9 porta una creatura Grave a Importante e, se era a 0 PV, a 1 PV. Un’eventuale Menomazione al braccio rimane."
+        },
+        "durata": {
+          "tipo": "istantanea"
         }
       }
     },
@@ -10944,6 +11271,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e gli altri parametri rimangono invariati. Si sceglie passaggi per Menomazione 1 → 2; Menomazioni trattate 1 → 2 → 3 → tutte temporanee; beneficiari 1 → 2 → 3 → 4 → 6; oppure gittata Contatto → 3 → 6 → 10 → 15 → 20 Q. I 10 minuti e il limite delle 24 ore rimangono invariati."
+        },
+        "durata": {
+          "tipo": "procedura",
+          "testo": "effetto alla fine della procedura descritta nella scheda; nessuna durata da contare"
         }
       }
     },
@@ -11103,7 +11434,10 @@
         },
         "frasi": [
           "Gittata personale; esplosione sferica istantanea."
-        ]
+        ],
+        "durata": {
+          "tipo": "istantanea"
+        }
       }
     },
     {
@@ -11306,6 +11640,9 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un gradino, PM raddoppiati e Potere più difficile di una categoria. Si sceglie Potere di esorcismo +3, massimo 21, anche ai livelli intermedi; gittata Contatto → 3 → 6 → 10 → 15 → 20 Q; oppure bersagli 1 → 2 → 3 → 4. Se il Potere di esorcismo è già 21 non si può anticipare questo aspetto, ma restano quelli consentiti non al massimo. Il potere non aumenta il livello dichiarato dell’incantesimo."
+        },
+        "durata": {
+          "tipo": "istantanea"
         }
       }
     },
@@ -11482,7 +11819,11 @@
           "componenti",
           "concentrazione",
           "anticipazione"
-        ]
+        ],
+        "durata": {
+          "tipo": "procedura",
+          "testo": "effetto alla fine della procedura descritta nella scheda; nessuna durata da contare"
+        }
       }
     },
     {
@@ -11681,6 +12022,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie armi 1 → 2 → 3 → 4; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 Q; durata al gradino successivo della progressione; bonus VA 0 → +1 → +2 → +3 → +4; oppure bonus danno con la stessa scala. VA e danno sono aspetti distinti. La natura Magico → Etereo è anticipabile soltanto dal livello 12, spendendo 24 PM."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -11861,6 +12206,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie bonus AR 0 → +1 → +2 → +3 → +4; armature 1 → 2 → 3 → 4; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 Q; oppure durata 3 → 5 → 10 → 15 → 20 → 30 → 40 → 60 RND. La natura dell’AR resta Magica."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -12032,6 +12381,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie un sigillo aggiuntivo; durata 1 → 2 → 3 → 7 → 15 → 30 → 90 → 180 giorni; penalità FOR 0 → −1 → −2 → −3 → −4 → −6 → −8 → −10; combinazione Avviso e Blocco prima del livello 6; oppure portata 1 → 3 → 10 → 30 → 100 → 300 → 1000 → 3000 km."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -12250,6 +12603,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie una trappola aggiuntiva entro il limite SAG; attesa al gradino successivo fino a 180 giorni; danno proprio alla riga successiva, massimo il valore di livello 18; penalità di Interferenza peggiorata di 1, massimo −5; durata di Interferenza 3 → 5 → 7 → 10 → 15 RND; Mod. PS 0 → −2 → −4 → −6; oppure, dal livello 6, livello massimo caricabile 3 → 6 → 9 → 12 → 15 → 18. Il raddoppio riguarda soltanto il costo della trappola; il caricamento si paga separatamente."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata interfer."
         }
       }
     },
@@ -12440,6 +12797,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie raggio 2 → 3 → 4 → 5 → 6 → 7 Q; durata 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore; malus Potere −2 → −3 → −4 → −5 → −6 → −8 → −10; assorbimento 3 → 4 → 5 → 6 → 8 → 10 → 12; oppure Mod. PS d’ingresso 0 → −2 → −4 → −6."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -12578,6 +12939,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie capacità aggiuntiva +5 → +8 → +12 → +16 → +20 → +25 → +30 PM; oppure durata 3 → 5 → 7 → 15 → 30 → 60 → 90 giorni."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -12727,6 +13092,9 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie livello massimo identificabile 3 → 6 → 9 → 12 → 15 → 18; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 Q; oppure bersagli 1 → 2 → 3 → 4. Al livello 3, spendendo 6 PM per anticipare il limite a 6, si identifica completamente un oggetto Non Comune mantenendo Contatto e un bersaglio."
+        },
+        "durata": {
+          "tipo": "istantanea"
         }
       }
     },
@@ -12929,6 +13297,9 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un gradino, PM raddoppiati e Potere più difficile di una categoria. Si sceglie Potere di rottura +3, massimo 21, anche ai livelli intermedi; gittata Contatto → 3 → 6 → 10 → 15 → 20 Q; oppure oggetti 1 → 2 → 3 → 4. Il potere anticipato vale soltanto per il confronto e non aumenta il livello dichiarato."
+        },
+        "durata": {
+          "tipo": "istantanea"
         }
       }
     },
@@ -13104,6 +13475,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie oggetti 1 → 2 → 3 → 4; gittata Contatto → 3 → 6 → 10 → 15 → 20 Q; durata 1 → 3 → 7 → 15 → 30 → 60 giorni; danno 1d6 → 1d6+1 → 1d6+2 → 2d6+2 → 3d6+2 → 4d6+2; oppure Mod. PS 0 → −2 → −4 → −6. Anticipare un aspetto non aumenta il livello del vincolo per Identificare Potere o Rompere Vincolo."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -13289,6 +13664,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie oggetti 1 → 2 → 3 → 4; conservazione Memoria 1 mese → 3 mesi → 6 mesi → 1 anno → 2 anni; conservazione dell’incantesimo 7 → 15 → 30 → 60 → 90 giorni; durata del contenuto Memoria 1 → 5 → 10 → 30 → 60 minuti; oppure livello massimo caricabile 6 → 9 → 12 → 15 → 18."
+        },
+        "durata": {
+          "tipo": "procedura",
+          "testo": "effetto alla fine della procedura descritta nella scheda; nessuna durata da contare"
         }
       }
     },
@@ -13438,6 +13817,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie bonus PS aumentato di 1, massimo +7; protezione PM aumentata di 1, massimo 5; oppure durata 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -13608,6 +13991,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie raggio 3 → 4 → 5 → 6 → 7 Q; penalità −1 → −2 → −3 → −4 → −5; Mod. PS 0 → −2 → −4 → −6; durata al gradino successivo fino a 4 ore; oppure sorgente su un oggetto toccato, anziché sul Taumaturgo."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -13776,6 +14163,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie bonus aumentato di 1, massimo +5; beneficiari 1 → 2 → 3 → 4 → 5 → 6 → 8 → 10; gittata 6 → 10 → 15 → 20 → 25 → 30 → 40 Q; oppure durata 5 → 10 → 15 → 20 → 30 → 40 → 60 RND."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -13965,6 +14356,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie penalità aumentata di 1, massimo −5; bersagli 1 → 2 → 3 → 4; gittata 6 → 10 → 15 → 20 → 25 → 30 → 40 Q; durata 5 → 10 → 15 → 20 → 30 → 40 → 60 RND; oppure Mod. PS 0 → −2 → −4 → −6."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -14162,6 +14557,9 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie danno ai PV al successivo valore distinto della tabella, fino a 6d4+5 oltre il livello 18; perdita di PM aumentata di 1, massimo 7; bersagli 1 → 2 → 3 → 4; oppure Mod. PS 0 → −2 → −4 → −6. Danno ai PV e perdita di PM sono aspetti separati."
+        },
+        "durata": {
+          "tipo": "istantanea"
         }
       }
     },
@@ -14381,6 +14779,9 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie Potere di Negazione aumentato di 3, anche ai livelli intermedi, massimo 21; numero di effetti 1 → 2 → 3 → 4; oppure gittata 6 → 10 → 15 → 20 → 25 → 30 → 40 Q."
+        },
+        "durata": {
+          "tipo": "istantanea"
         }
       }
     },
@@ -14558,6 +14959,11 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie beneficiari 1 → 2 → 3 → 4 → 6 → 8 → 10; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 Q; Concentrazione 10 minuti → 30 minuti → 1 → 2 → 4 → 8 → 12 ore; durata fissa 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore; oppure Potere di Occultamento 3 → 6 → 9 → 12 → 15 → 18 → 21. Quest’ultimo modifica soltanto il confronto con le rilevazioni, non il livello contro Negare Potere."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata fissa",
+          "concentrazione": "Concentrazione massima"
         }
       }
     },
@@ -14693,6 +15099,10 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie un utilizzo aggiuntivo, massimo 7; durata 5 → 7 → 10 → 15 RND; possibilità di scegliere il risultato preferito già ai livelli 6 o 9; oppure gittata Personale → Contatto → 3 Q → 6 Q → 10 Q. Non aumenta mai il limite di un utilizzo per RND."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata"
         }
       }
     },
@@ -14977,6 +15387,11 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie raggio di Percezione 10 → 15 → 20 → 25 → 30 → 40 Q; gittata di Analisi con la stessa scala; area totale di Analisi 1 → 2 → 4 → 6 → 8 Q; informazioni della soglia successiva in una sola categoria scelta, fino al livello 18; Concentrazione 10 minuti → 30 minuti → 1 → 2 → 4 → 8 ore; durata fissa 5 RND → 10 RND → 20 RND → 5 minuti → 10 minuti → 30 minuti; oppure Potere di Rilevazione aumentato di 3, anche ai livelli intermedi. L’area non può superare 8 Q. Raggio, gittata, area, informazioni e potere di confronto sono aspetti distinti."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata fissa",
+          "TODO(Davide)": "Si sceglie Concentrazione o durata fissa, ma la tabella ha solo la durata fissa: qual è la durata massima a Concentrazione di ogni versione? (A.87, docs/risposte-master.md, domanda del 03/10/2026)"
         }
       }
     },
@@ -15200,6 +15615,11 @@
             }
           ],
           "frase": "Anticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie Potere di Falsificazione aumentato di 3, anche ai livelli intermedi, massimo 21; massimo potenziale magico apparente aumentato di 3, fino a 18; beneficiari 1 → 2 → 3 → 4; gittata Personale → Contatto → 3 Q → 6 Q → 10 Q → 15 Q; Concentrazione 2 → 4 → 8 → 16 → 24 ore; oppure durata fissa 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore. Il Potere di Falsificazione anticipato non aumenta il livello dell’effetto ai fini di Negare Potere."
+        },
+        "durata": {
+          "tipo": "durata",
+          "colonna": "Durata fissa",
+          "concentrazione": "Concentrazione massima"
         }
       }
     }

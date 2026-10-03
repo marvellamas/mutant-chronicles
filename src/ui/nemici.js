@@ -12,6 +12,7 @@ import { nomeFerita } from '../danno.js';
 import { nemicoDaPg } from '../nemico-da-pg.js';
 import { elencoCartella, leggiCartella } from './cartella.js';
 import { ultimiPerPersonaggio } from '../cartella.js';
+import { rigaDurate } from './durate.js';
 
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
 
@@ -250,7 +251,7 @@ function testoAzioni(a) {
  * Difese, Azioni, Movimento, Resistenze (Immunità e Contromisure), Abilità, attacchi, incantesimi con «Lancia!»
  * (decisione 8) e capacità come promemoria.
  */
-export function cartaNemico(ctx, p, { modifica, diTurnoOra = false, onColpito = null, onAttacca = null, onLancia = null, onRiduci = null }) {
+export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false, onColpito = null, onAttacca = null, onLancia = null, onRiduci = null }) {
   const n = p.scheda;
   const dati = ctx.dati;
   // a 0 PV la carta si riduce a una riga (nome, PV, Ferita) e va in fondo; un clic la riapre (src/scontro.js → conPv)
@@ -314,6 +315,9 @@ export function cartaNemico(ctx, p, { modifica, diTurnoOra = false, onColpito = 
     n.movimento?.volo || n.taglia === 'grande' ? h('p', { class: 'plancia-condizioni tratti-nemico' },
       n.movimento?.volo ? h('span', { class: 'etichetta tratto-nemico', title: dati.formato_nemici.campi.movimento.campi.volo?.descrizione ?? null }, `Vola · Passo in volo ${n.movimento.volo} Q · −2 VA a chi lo attacca in volo`) : null,
       n.taglia === 'grande' ? [' ', h('span', { class: 'etichetta tratto-nemico', title: dati.formato_nemici.campi.taglia?.descrizione ?? null }, 'Taglia Grande · +2 VA a chi lo attacca')] : null) : null,
+    // incantesimi in corso del nemico e quelli che ha addosso (src/durate-incantesimi.js, src/ui/tavolo.js → rigaDurate)
+    rigaDurate(durate, 'incantesimo', 'Incantesimi in corso'),
+    rigaDurate(durate, 'subito', 'Su di lui'),
     n.azioni ? h('p', { class: 'nota azioni-nemico' }, `Azioni per Round: ${testoAzioni(n.azioni)}`) : null,
     h('p', { class: 'nota' }, `Salvezze: ${salvezze} · ${testoMovimento(n, dati)}`),
     h('p', { class: 'plancia-stati' },
