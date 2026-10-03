@@ -678,3 +678,56 @@ Scelte prese senza domanda, perché il manuale le dice:
   durata passa al gradino successivo della scala della scheda (sez. 12.3, `src/anticipazione.js`).
 - Marchio Psichico: le durate per inseguimento e combattimento della seconda tabella della scheda mancavano nei
   dati; ora sono le colonne «Durata inseguimento» e «Durata combattimento» delle versioni.
+
+## 3 ottobre 2026 — risposte ai 6 quesiti dell'app e 5 punti Abilità liberi (E&L del 03/10/2026)
+
+Doc «E&L – Risposte e correzioni approvate», versione del 03/10/2026 14:13 UTC, blocco «Risposte approvate ai 6
+nuovi quesiti dell’app e punti Abilità liberi» (testo in `docs/risposte-master-2026-09-26.md`).
+
+84. **Pelle di Rinoceronte: manovre di forza** (A.81, risposta 1). Il +3 vale solo nelle Prove già previste da
+    Immobilizzare (Corpo a corpo o Atletica per afferrare, resistere, mantenere la presa o liberarsi), Sbilanciare
+    (Prova offensiva di Corpo a corpo e opposizione con Atletica), Disarmare (Prove offensive o difensive con Corpo a
+    corpo) e Incalzare (Prova offensiva di Corpo a corpo); fuori dalle manovre, +3 ad Atletica solo per uno sforzo di
+    forza (sollevare, spingere, trascinare, forzare un’apertura). Mai a Difese o all’Abilità dell’arma; nessun tiro in
+    più; non a Attacchi normali, Stordire, Affondo, Spazzata, Colpo Mirato. → `tecniche_interiori.json`
+    (`tools/effetti_tecniche.mjs`: usi specifici «Sforzo di forza», «Immobilizzare e opposizione a Sbilanciare»,
+    «Immobilizzare, Sbilanciare, Disarmare, Incalzare»; `attacco.manovre_forza.manovre`), `src/attacco.js` (+3
+    sommato in «Attacca!» quando la Prova usa Corpo a corpo, promemoria altrimenti). TODO tolto.
+85. **Onda Interiore: bonus di SAG al danno** (A.82, risposta 2). Dado della Disciplina e del Grado, più il bonus di
+    SAG del §5.13 (tetti +1/+2/+3 per livello), non FOR; Prova di Corpo a corpo, Vettore Distanza, danno Magico; il +2
+    Ravvicinato di Pelle di Rinoceronte non si applica. → `tecniche_interiori.json` (`onda.bonus_caratteristica: "SAG"`),
+    `src/attacco.js` → `profiloSenzArmi`. Corregge il provvisorio «bonus di FOR sì».
+86. **Rinforzi indossati da soli e armatura tolta** (A.80, risposta 3). Indossabili da soli: tutti i soprabiti e
+    mantelli, Tabardo consacrato e Sottogiacca protettiva IES; gli altri (kit, piastre, inserti, Rivestimento CS-R10,
+    Rivestimento flessibile Ghost, Rinforzo flessibile Mortificator) solo montati. Profilo autonomo approvato: Rinforzo
+    Leggero, AR 1 ordinaria, FOR 3, categoria Leggera (−1 VA al lancio con Potere, normali penalità per FOR
+    insufficiente); PI, Qualità, PS, prezzo e proprietà della scheda, che valgono anche da soli. Con un’armatura
+    compatibile il capo si usa come rinforzo e il profilo autonomo non si somma; togliendo l’armatura un rinforzo
+    strutturale resta montato e non dà nulla, un capo autonomo che resta indossato usa il proprio profilo; più capi
+    sovrapposti non aggirano i limiti. → `regole.json` → `rinforzi` (`da_solo.ar: "profilo_autonomo"`,
+    `profilo_autonomo`, `uno_solo`, `decisione`; TODO tolto), `rinforzi.json` (`tools/lotti/lotto_rinforzi_armature.mjs`:
+    16 indossabili da soli), `src/equipaggiamento.js` (penalità della categoria), `src/protezione.js` (AR).
+87. **Granate e razzi senza bonus di Caratteristica** (A.86, risposta 4). Confermato il provvisorio: danno completo
+    della munizione con i bonus fissi della scheda (Granata standard a frammentazione 1d6+1 a qualsiasi livello), per
+    granate a mano, lanciagranate anche integrati e lanciarazzi. → `regole.json` → `danno_caratteristica.esplosivi`
+    (`decisione`, TODO tolto).
+88. **Individuare a Concentrazione** (A.88, risposta 5). La scheda 23.9 ha già la colonna «Concentrazione massima»
+    (nei dati «Concentr. massima»): 6–8 10 minuti, 9–11 30 minuti, 12–14 1 ora, 15–17 2 ore, 18 4 ore; durata fissa
+    5 RND, 10 RND, 20 RND, 5 minuti, 10 minuti. La modalità si sceglie al lancio; l’Anticipazione alza di un gradino
+    solo la durata scelta. → `tools/durate_incantesimi.mjs` riconosce la colonna, `incantesimi.json` →
+    `meccanica.durata.concentrazione` (TODO tolto).
+89. **Reperibilità Epica** (A.83, risposta 6). EP fra Molto Rara e Leggendaria: ricerca con Oratoria −6 VA, se il
+    Direttore stabilisce che esiste una possibilità concreta di reperimento (per gli Artefatti un’offerta o una
+    commissione); un successo non obbliga a vendere né toglie prezzo, autorizzazioni o tempi. Batterie Matrice colorate
+    Epiche, Bianche Leggendarie. → `equipaggiamento/index.json` → `reperibilita.EP` (TODO tolto).
+90. **5 Punti Abilità Liberi a ogni Grado, compreso il primo** («Correzione aggiuntiva»). Sostituisce i 10 del §2.13 e
+    del §8.3 (Doc del 27/09, per-davide A.52): 5 alla creazione e ai livelli 4, 8, 12, 16 e 20. → `regole.json` →
+    `creazione.punti_abilita_liberi: 5`, `avanzamento.eventi` → `punti_abilita:5`. I personaggi salvati con 10 per
+    Grado hanno punti in eccesso: la scheda resta utilizzabile, l’avviso «Con la nuova regola di Davide hai X punti
+    Abilità liberi in più del consentito: togline X» (`regole.json` → `regole_aggiornate.eccesso`) compare in testa
+    alla SD, nella tab Abilità (con le Abilità che hanno ricevuto punti liberi), nella stampa e all’import; «Togli»
+    toglie i punti un evento alla volta (`src/avanzamento.js` → `avvisoPuntiEccesso`, `statoRimozione`,
+    `validaRimozione`, `applicaRimozione`; `src/ui/completa.js` → `renderTogli`). I PG d’esempio e il bestiario umano
+    sono rigenerati con 5 punti. Il testo del Giocatore (§2.0, §2.13 con l’esempio dell’Agente, §2.17, §8.1, §8.3)
+    dice ancora 10: errata proposta A.89. Nell’esempio del §2.13 Percezione 2 + Raggirare 4 non stanno più in 5 punti:
+    i test usano Percezione 2 + Raggirare 3 (Percezione VA 12, Raggirare VA 11) finché Davide non rifà l’esempio.

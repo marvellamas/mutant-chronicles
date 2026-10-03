@@ -637,8 +637,8 @@ export function profiloSenzArmi(scheda, dati, { onda = null } = {}) {
   const daDati = onda ? null : T.filter((t) => t.e.senz_armi?.danno && massimoDanno(t.e.senz_armi.danno) > massimoDanno(S.danno))
     .sort((x, y) => massimoDanno(y.e.senz_armi.danno) - massimoDanno(x.e.senz_armi.danno))[0] ?? null;
   const dannoBase = onda ? onda.dado : daDati?.e.senz_armi.danno ?? S.danno ?? null;
-  // §5.13: bonus di FOR al danno, limitato dal livello (Onda Interiore: TODO(Davide) A.82, nei dati)
-  const sigla = onda && !onda.bonusCaratteristica ? null : dati.regole.danno_caratteristica?.senz_armi ?? null;
+  // §5.13: bonus di FOR al danno, limitato dal livello; Onda Interiore: SAG (A.82, E&L del 03/10/2026)
+  const sigla = onda ? (typeof onda.bonusCaratteristica === 'string' ? onda.bonusCaratteristica : null) : dati.regole.danno_caratteristica?.senz_armi ?? null;
   const valoreCar = sigla ? scheda?.caratteristiche?.[sigla]?.valore ?? null : null;
   const bonusCaratteristica = sigla && valoreCar !== null ? { sigla, valore: valoreCar, bonus: bonusDannoCaratteristica(valoreCar, scheda?.livello ?? 1, dati.regole), esclusoDa: null } : null;
   const extra = bonusDannoEq + (bonusCaratteristica?.bonus ?? 0) + dannoTec.reduce((s, e) => s + e.valore, 0) + attivazioni.reduce((s, x) => s + (x.danno ?? 0), 0);
@@ -695,7 +695,7 @@ export function profiloOndaInteriore(scheda, sessione, dati) {
   const chiave = Object.keys(tabella ?? {}).map(Number).filter((k) => k <= grado).sort((a, b) => b - a)[0];
   const dado = tabella?.[chiave] ?? null;
   const nota = dado ? `${t.parametroNome ?? t.sceltaParametro}, Grado ${grado} di Lottatore (§8.9.4)` : 'Disciplina del Lottatore non scelta';
-  return profiloSenzArmi(scheda, dati, { onda: { dado, nota, gittataQ: O.gittata_q, natura: O.natura, bonusCaratteristica: O.bonus_caratteristica !== false, tecnica: c } });
+  return profiloSenzArmi(scheda, dati, { onda: { dado, nota, gittataQ: O.gittata_q, natura: O.natura, bonusCaratteristica: O.bonus_caratteristica ?? null, tecnica: c } });
 }
 
 /** «Senz'armi» compare fra le armi se il personaggio non impugna nulla, ha Arti Marziali o è Lottatore. */
@@ -1040,6 +1040,12 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
   }
   // Presa dell'Anima: +3 VA alla prova senz'armi per Immobilizzare, Sbilanciare, Disarmare
   for (const c of tecVale.filter((x) => (x.e.manovre ?? []).includes(id))) aggiungi(situazione, c.etichetta, c.e.va, 'tecnica', 'Giocatore §8.9.4');
+  // Pelle di Rinoceronte (§8.9.3; A.81, E&L del 03/10/2026): +3 alla Prova offensiva di Corpo a corpo di
+  // Immobilizzare, Sbilanciare, Disarmare e Incalzare; non con l'Abilità dell'arma, non a Difese
+  for (const c of TEC.filter((x) => x.e.manovre_forza?.manovre?.includes(id))) {
+    if (usaCorpo) aggiungi(situazione, c.etichetta, c.e.manovre_forza.va, 'tecnica', 'Giocatore §8.9.3');
+    promemoria.push(`${c.nome}: ${c.e.manovre_forza.frase} ${c.e.manovre_forza.decisione ?? ''}${usaCorpo ? '' : ' Con quest’arma la Prova usa la sua Abilità: nessun +3.'}`);
+  }
   // Onda Interiore: un singolo attacco normale a distanza (§8.9.4)
   if (arma.onda) {
     if (id !== 'normale' || m.attacchi || d.dueArmi || d.carica || d.controcarica) blocca(`Onda Interiore: ${arma.tecnica.e.onda.frasi.at(-1)}`);
@@ -1130,8 +1136,6 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
   for (const c of tecVale.filter((x) => x.e.non_parabile)) prova.testo += ` ${c.nome}: ${c.e.frasi[0]}`;
   if (arma.onda) prova.testo = `Il bersaglio si difende con le Difese. ${arma.tecnica.e.onda.frasi[2]}`;
   for (const c of tecVale.filter((x) => x.e.dopo_armatura && x.e.frasi?.length && !x.e.non_parabile)) promemoria.push(`${c.nome}: ${c.e.frasi.join(' ')}`);
-  // Pelle di Rinoceronte: +3 nelle manovre di forza, da decidere al tavolo (TODO(Davide) A.81)
-  for (const c of TEC.filter((x) => x.e.manovre_forza)) promemoria.push(`${c.nome}: +${c.e.manovre_forza.va} alle prove di Corpo a corpo nelle manovre in cui si impiega direttamente la forza fisica, se la Manovra lo è (non sommato qui). ${c.e.manovre_forza.frase}`);
 
   // 9. Talenti senza numero: una riga con la prima frase (come in «Lancia!»)
   const testuali = con('promemoria').filter((t) => {

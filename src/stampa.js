@@ -215,6 +215,8 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
   };
 
   const abilita = {
+    // punti liberi in eccesso (E&L del 03/10/2026): l'avviso si stampa sotto la tabella delle Abilità
+    avvisoPunti: s.avvisoPunti ?? null,
     categorie: dati.abilita.categorie.map((cat) => ({
       nome: cat,
       abilita: s.abilita.filter((a) => a.categoria === cat).map((a) => ({
@@ -496,6 +498,7 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
 
   return {
     completa: s.completa,
+    avvisoPunti: s.avvisoPunti ?? null,
     errori: s.errori,
     scheda: s,
     fogli: ordinati,

@@ -15391,7 +15391,7 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata fissa",
-          "TODO(Davide)": "Si sceglie Concentrazione o durata fissa, ma la tabella ha solo la durata fissa: qual è la durata massima a Concentrazione di ogni versione? (A.88, docs/risposte-master.md, domanda del 03/10/2026)"
+          "concentrazione": "Concentr. massima"
         }
       }
     },

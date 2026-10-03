@@ -12,3 +12,15 @@ export async function datiReali() {
 
 /** Copia profonda, per modificare i dati in un test senza toccare gli altri. */
 export const copia = (x) => structuredClone(x);
+
+/**
+ * Copia dei dati con `n` Punti Abilità Liberi alla creazione e a ogni Grado (regole.json → creazione e
+ * avanzamento.eventi). Dal 03/10/2026 sono 5 (E&L); i test del completamento e della riassegnazione
+ * simulano le regole a 10 (27/09–02/10) con cui sono stati salvati i file di collaudo.
+ */
+export function conPuntiLiberi(dati, n) {
+  const d = copia(dati);
+  d.regole.creazione.punti_abilita_liberi = n;
+  for (const x of d.regole.avanzamento.eventi) x.eventi = x.eventi.map((e) => e.replace(/^punti_abilita:\d+$/, `punti_abilita:${n}`));
+  return d;
+}

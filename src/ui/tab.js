@@ -155,7 +155,8 @@ export function renderTab(ctx) {
     badge ? h('div', { class: 'titolo-tab' }, badge, h('h2', {}, corrente.titolo)) : null,
     ctx.messaggio ? h('p', { class: `riquadro ${ctx.messaggio.tipo}`, role: 'status' }, ctx.messaggio.testo) : null,
     avvisoMaster(ctx.avvisoMaster),
-    avvisoRegoleAggiornate(ctx, tab.scheda),
+    // punti liberi in eccesso: nella tab Abilità l'avviso sta sopra la tabella, con le Abilità segnate
+    avvisoRegoleAggiornate(ctx, tab.scheda, { eccesso: corrente.id !== 'abilita' }),
     tab.errori?.length ? h('div', { class: 'riquadro attenzione' },
       h('p', {}, h('strong', {}, 'Scheda non ancora completa:')),
       h('ul', {}, tab.errori.slice(0, 6).map((e) => h('li', {}, e.livello > 1 ? `${e.livello}° livello: ${e.problema}` : e.problema)))) : null,
@@ -195,19 +196,39 @@ export function renderTab(ctx) {
  * riassegnare (punti che non aumentano più il VA personale) negli eventi passati, con «Assegna» (un
  * evento alla volta, dal più vecchio), e punti in eccesso, soltanto segnalati.
  */
-function avvisoRegoleAggiornate(ctx, scheda) {
+function avvisoRegoleAggiornate(ctx, scheda, { eccesso = true } = {}) {
   const da = scheda?.completamenti ?? [];
-  const ecc = scheda?.eccessi ?? [];
-  if (!da.length && !ecc.length) return null;
+  const ecc = eccesso ? scheda?.avvisoPunti ?? null : null;
+  if (!da.length && !ecc) return null;
   const n = da.reduce((s, c) => s + c.mancanti, 0);
   const r = da.reduce((s, c) => s + Object.values(c.inattivi ?? {}).reduce((t, v) => t + v, 0), 0);
   const dove = (c, k) => `${k} ${c.livello === 1 ? 'della creazione' : `${conOrdinale('del', c.livello)} livello`}`;
-  return h('div', { class: 'riquadro attenzione avviso-regole', role: 'status' },
-    da.length ? h('p', {}, h('strong', {}, `${ctx.avvisoRegole}: hai ${n} Punti Abilità da assegnare`),
+  const assegna = da.length ? h('div', { class: 'riquadro attenzione avviso-regole', role: 'status' },
+    h('p', {}, h('strong', {}, `${ctx.avvisoRegole}: hai ${n} Punti Abilità da assegnare`),
       ` (${da.map((c) => dove(c, c.mancanti)).join(', ')}). `,
       r ? `${r === n ? 'Sono' : `${r} sono`} punti già spesi che non aumentano più il VA personale (limiti delle categorie di competenza, §8.3): si riassegnano, gli altri restano. ` : null,
-      h('button', { type: 'button', class: 'btn primario', onclick: ctx.azioni.completaPunti }, 'Assegna')) : null,
-    ecc.length ? h('p', {}, `${ctx.avvisoRegole}: ${ecc.map((c) => `${c.eccesso} ${c.eccesso === 1 ? 'punto' : 'punti'} in eccesso rispetto alle regole correnti (${c.livello === 1 ? 'creazione' : `${c.livello}° livello`})`).join('; ')}.`) : null);
+      h('button', { type: 'button', class: 'btn primario', onclick: ctx.azioni.completaPunti }, 'Assegna'))) : null;
+  // i due avvisi sono indipendenti: riquadri separati, quello dell'eccesso per primo (si toglie prima)
+  return h('div', { class: 'avvisi-regole' }, ecc ? avvisoPuntiEccesso(ctx, ecc) : null, assegna);
+}
+
+/**
+ * Punti Abilità Liberi in eccesso (correzione di Davide del 03/10/2026, E&L: 5 per Grado anziché 10): testo
+ * di regole.json → regole_aggiornate.eccesso, gli eventi con le Abilità che hanno ricevuto punti liberi e
+ * «Togli». La scheda resta utilizzabile: finché non si tolgono, i punti contano nei VA.
+ */
+function avvisoPuntiEccesso(ctx, a) {
+  return h('div', { class: 'riquadro errore avviso-eccesso', role: 'alert' },
+    h('p', {}, h('strong', {}, a.testo), ' ',
+      ctx.azioni.togliPunti ? h('button', { type: 'button', class: 'btn primario', onclick: ctx.azioni.togliPunti }, 'Togli') : null),
+    h('ul', {}, a.eventi.map((e) => h('li', {}, e.testo))),
+    h('p', { class: 'nota' }, 'Finché non li togli, i punti contano ancora nei VA della scheda.'));
+}
+
+/** Punti liberi degli eventi in eccesso ricevuti da un'Abilità: «creazione 2, 4° livello 1», o null. */
+function liberiInEccesso(avviso, nome) {
+  const voci = (avviso?.eventi ?? []).filter((e) => e.abilita?.[nome]).map((e) => `${e.livello === 1 ? 'creazione' : `${e.livello}° livello`} ${e.abilita[nome]}`);
+  return voci.length ? voci.join(', ') : null;
 }
 
 function menuAzioni(ctx) {
@@ -1029,6 +1050,7 @@ function tabIdentita(ctx, d) {
 
 function tabAbilita(ctx, d) {
   const meta = Math.ceil(d.categorie.length / 2);
+  const eccesso = ctx.tab.scheda?.avvisoPunti ?? null;
   // sul telefono le colonne di dettaglio si nascondono e la formula va sotto il nome (come nel wizard)
   const tabella = (categorie) => h('table', { class: 'tabella compatta abilita-tab' },
     h('thead', {}, h('tr', {}, ['Abilità', 'Mod', 'Base', 'Corp', 'Avanz', 'Equip', 'VA'].map((c, i) => h('th', { class: i && i < 6 ? 'dettaglio' : null }, c)))),
@@ -1039,6 +1061,8 @@ function tabAbilita(ctx, d) {
           a.competenza ? h('span', { class: 'sigla', title: `Competenza ${a.competenza} (prima Classe, §2.3)` }, ` ${a.competenza}`) : null, a.diClasse ? ' •' : null,
           // §8.3: VA grezzo oltre il limite del VA personale
           a.limite !== null && a.grezzo > a.limite ? h('span', { class: 'al-limite', title: `VA grezzo ${a.grezzo} oltre il limite ${a.limite} (§8.3): conta ${a.limite}` }, ' ⚑') : null,
+          // punti liberi ricevuti in un evento con punti in eccesso (E&L del 03/10/2026)
+          liberiInEccesso(eccesso, a.nome) ? h('span', { class: 'liberi-eccesso', title: `Punti liberi: ${liberiInEccesso(eccesso, a.nome)}. ${eccesso.testo}` }, ` ✱ liberi: ${liberiInEccesso(eccesso, a.nome)}`) : null,
           h('small', { class: 'formula' }, `${segno(a.mod)} Mod + ${a.base} Base + ${a.corporazione} Corp + ${a.avanzamento} Avanz${a.limite !== null ? `, limite ${a.limite}` : ''}${a.equip ? ` ${segno(a.equip)} Equip` : ''}`)),
         h('td', { class: 'dettaglio' }, segno(a.mod)), h('td', { class: 'dettaglio' }, String(a.base)), h('td', { class: 'dettaglio' }, String(a.corporazione)),
         h('td', { class: 'dettaglio' }, String(a.avanzamento)), h('td', { class: 'dettaglio', title: a.equip ? 'Equipaggiamento indossato (§7.11.1)' : null }, a.equip ? segno(a.equip) : '0'),
@@ -1059,8 +1083,9 @@ function tabAbilita(ctx, d) {
     h('div', { class: 'abilita-layout' },
       h('div', { class: 'abilita-principale' },
         sezione('Abilità',
+          eccesso ? avvisoPuntiEccesso(ctx, eccesso) : null,
           h('div', { class: 'abilita-affiancate' }, tabella(d.categorie.slice(0, meta)), tabella(d.categorie.slice(meta))),
-          h('p', { class: 'nota' }, '• Abilità di Classe. S / P / G / N: competenza nella prima Classe (§2.3). VA = Mod + Base + Corp + Avanz, al massimo il limite della categoria (⚑: oltre il limite, §8.3), + Equip (equipaggiamento indossato), più le condizioni della sessione (▼/▲ rispetto al valore da regole).'))),
+          h('p', { class: 'nota' }, `• Abilità di Classe. S / P / G / N: competenza nella prima Classe (§2.3). VA = Mod + Base + Corp + Avanz, al massimo il limite della categoria (⚑: oltre il limite, §8.3), + Equip (equipaggiamento indossato), più le condizioni della sessione (▼/▲ rispetto al valore da regole).${eccesso ? ' ✱: punti liberi ricevuti in un evento con punti in eccesso.' : ''}`))),
       h('aside', { class: 'colonna-condizioni', 'aria-label': 'Condizioni attive' },
         h('section', { class: 'riquadro condizioni-attive' },
           h('h2', {}, 'Condizioni attive'),

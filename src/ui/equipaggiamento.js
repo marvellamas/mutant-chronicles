@@ -111,7 +111,7 @@ function montataSu(ctx, r, risolte, cambia) {
     if (x.startsWith('arm:')) cambia(v.uid, { stato: 'in_uso', montato_su: x.slice(4) });
     else cambia(v.uid, { stato: x === 'da-solo' ? 'indossata' : x, montato_su: undefined });
   };
-  const nota = su && !su.attivo ? `Resta montato su ${su.nome}, che non è indossata: nessun effetto finché non la indossi (regole.json → rinforzi).`
+  const nota = su && !su.attivo ? `Resta montato su ${su.nome}, che non è indossata: nessun effetto finché non la indossi${r.def?.indossabile_da_solo ? ', oppure scegli «Indossato da solo» per il profilo autonomo (A.80)' : ''}.`
     : su && !rinforzoCompatibile(r, su) ? `${su.nome} non ammette questo rinforzo: nessun effetto (§7.11.2).`
       : v.stato === 'in_uso' && !su ? 'Scegli l’armatura su cui è montato.'
         : !compatibili.length && !r.def?.indossabile_da_solo ? 'Nessuna armatura indossata lo ammette: indossane una compatibile per montarlo.' : null;
@@ -130,7 +130,9 @@ function montataSu(ctx, r, risolte, cambia) {
 /** Che cosa dà un rinforzo indossato da solo, dalla regola nei dati (regole.json → rinforzi.da_solo). */
 function testoDaSolo(dati) {
   const d = dati.regole?.rinforzi?.da_solo ?? {};
-  return d.ar === 'propria' ? 'Da solo: AR del rinforzo, senza armatura.' : 'Da solo: nessuna AR (§7.23.4: non è un profilo autonomo di armatura), in attesa di Davide (A.80).';
+  const P = d.ar === 'profilo_autonomo' ? d.profilo_autonomo : null;
+  if (P) return `Da solo: profilo autonomo, AR ${P.ar}, armatura ${P.categoria.toLowerCase()} (penalità della categoria), FOR ${P.for_richiesta}; le proprietà della scheda valgono (A.80).`;
+  return d.ar === 'propria' ? 'Da solo: AR del rinforzo, senza armatura.' : 'Da solo: nessuna AR (§7.23.4: non è un profilo autonomo di armatura).';
 }
 
 /** Una voce dell'elenco, completa di stato, quantità, peso e note. */

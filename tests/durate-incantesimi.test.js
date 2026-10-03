@@ -31,9 +31,14 @@ test('dati: ogni incantesimo ha la sua durata; tipi e valori riconosciuti', () =
   const m = I('Marchio Psichico');
   assert.deepEqual(opzioniDurata(m).modalita.map((x) => x.id), ['inseguimento', 'combattimento']);
   assert.deepEqual([durataLancio(m, 6, { modalita: 'combattimento' }).round, durataLancio(m, 6, { modalita: 'inseguimento' }).testo], [5, '1 ora']);
-  // Scudo: con Concentrazione il doppio della durata fissa; Individuare: da chiarire con Davide
+  // Scudo: con Concentrazione il doppio della durata fissa
   assert.deepEqual([durataLancio(I('Scudo'), 1).round, durataLancio(I('Scudo'), 1, { concentrazione: true }).round], [5, 10]);
-  assert.match(opzioniDurata(I('Individuare')).todo, /durata massima a Concentrazione/);
+  // Individuare (A.88, E&L del 03/10/2026): le due colonne della scheda 23.9, a scelta al lancio
+  const ind = I('Individuare');
+  assert.deepEqual([opzioniDurata(ind).concentrazioneAScelta, opzioniDurata(ind).todo], [true, null]);
+  assert.deepEqual([durataLancio(ind, 6).round, durataLancio(ind, 6, { concentrazione: true }).testo], [5, '10 minuti']);
+  assert.deepEqual([durataLancio(ind, 15).testo, durataLancio(ind, 18, { concentrazione: true }).testo], ['5 minuti', '4 ore']);
+  assert.equal(durataLancio(ind, 6, { concentrazione: true }).concentrazione, true);
   assert.equal(durataLancio(I('Colpo Elementale'), 1).tipo, 'istantanea');
 });
 

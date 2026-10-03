@@ -27,8 +27,8 @@ import { PASSI, passoVisibile, requisitoPasso } from './passi.js';
 import { inizializzaTooltip, nascondiTooltip } from './tooltip.js';
 import { renderRiepilogo } from './riepilogo.js';
 import { renderSali } from './sali.js';
-import { renderCompleta } from './completa.js';
-import { validaCompletamento, applicaCompletamento, puntiDaCompletare, motivoCompletamento } from '../avanzamento.js';
+import { renderCompleta, renderTogli } from './completa.js';
+import { validaCompletamento, applicaCompletamento, puntiDaCompletare, motivoCompletamento, statoRimozione, validaRimozione, applicaRimozione } from '../avanzamento.js';
 import { renderStampa, esciDallaStampa } from './stampa.js';
 import { barraPassi, barraFondoSeServe } from './navigazione.js';
 import { cercaSfondi, applicaSfondo } from './sfondi.js';
@@ -186,8 +186,8 @@ function daIndirizzo() {
     }
     stato.sali = null;
   }
-  const completa = location.hash.match(/^#\/p\/([\w-]+)\/(completa)$/);
-  if (stato.completa && !(completa && completa[1] === stato.id)) stato.completa = null;
+  const completa = location.hash.match(/^#\/p\/([\w-]+)\/(completa|togli)$/);
+  if (stato.completa && !(completa && completa[1] === stato.id && completa[2] === stato.completa.modo)) stato.completa = null;
   const stampa = location.hash.match(/^#\/p\/([\w-]+)\/(stampa)$/);
   const scheda = location.hash.match(/^#\/p\/([\w-]+)(?:\/t\/(\w+))?$/);
   const m = sali ?? completa ?? stampa ?? scheda ?? location.hash.match(/^#\/p\/([\w-]+)\/(\d+)$/);
@@ -227,7 +227,7 @@ function daIndirizzo() {
     if (avvisi.length) persisti();
   }
   if (sali) return apriSali(Number(passoTesto));
-  if (completa) return apriCompleta();
+  if (completa) return completa[2] === 'togli' ? apriTogli() : apriCompleta();
   if (stampa) return apriStampa();
   if (scheda) return apriScheda(TAB.includes(passoTesto) ? (ALIAS_TAB[passoTesto] ?? passoTesto) : null);
   const passo = Math.min(Number(passoTesto), PASSI.length - 1);
@@ -558,6 +558,9 @@ function salvaDaTesto(testo, id = archivio.nuovoId(), passo = null) {
   const { scelte, avvisi } = normalizza(creazione, stato.dati);
   const errLivelli = livelli.length ? calcolaScheda({ creazione: scelte, livelli }, stato.dati).errori.filter((e) => e.campo.startsWith('livelli')) : [];
   if (errLivelli.length) avvisi.push(`Livelli con errori rispetto ai dati attuali: ${errLivelli[0].problema}`);
+  // punti liberi in eccesso con le regole correnti (5 per Grado, E&L del 03/10/2026): si segnalano all'import
+  const eccesso = calcolaScheda({ creazione: scelte, livelli }, stato.dati).avvisoPunti;
+  if (eccesso) avvisi.push(`${eccesso.testo} (${eccesso.eventi.map((e) => e.testo).join('; ')}).`);
   const sessione = sessioneAllineata(scelte, livelli, sessioneFile);
   const calendario = normalizzaCalendario(calendarioFile, stato.dati);
   if (!archivio.salva({ id, scelte, livelli, sessione, calendario, passo: passo ?? (livelli.length || calcolaScheda(scelte, stato.dati).completa ? PASSO_SCHEDA : 0) })) {
@@ -919,7 +922,7 @@ function annullaLivello() {
 // bozza in memoria, salvata nell'evento a cui appartiene solo con «Conferma»
 
 function apriCompleta() {
-  if (!stato.completa) stato.completa = { punti: {} };
+  if (!stato.completa) stato.completa = { modo: 'completa', punti: {} };
   renderCompletaPagina();
   window.scrollTo(0, 0);
 }
@@ -950,6 +953,51 @@ function renderCompletaPagina() {
       const restano = puntiDaCompletare(personaggio(), dati).reduce((s, c) => s + c.mancanti, 0);
       stato.messaggioScheda = { tipo: 'ok', testo: `Punti Abilità ${ev.livello === 1 ? 'della creazione' : `${conOrdinale('del', ev.livello)} livello`} ${ev.riassegna ? 'riassegnati' : 'assegnati'}.${restano ? ` Ne restano ${restano} da assegnare.` : ''}` };
       if (!stato.salvataggioOk) alert(`Punti assegnati, ma non salvati nel browser. ${testoSalvataggioFallito()}`);
+      vai(`#/p/${stato.id}`);
+    },
+    esci() {
+      stato.completa = null;
+      vai(`#/p/${stato.id}`);
+    },
+  }));
+  const fondo = radice.querySelector('.barra-fondo');
+  if (fondo) barraFondoSeServe(fondo, radice);
+}
+
+// Punti Abilità Liberi in eccesso (correzione di Davide del 03/10/2026, E&L: 5 per Grado anziché 10): bozza
+// in memoria, tolta dall'evento a cui appartiene solo con «Conferma»
+function apriTogli() {
+  if (!stato.completa) stato.completa = { modo: 'togli', punti: {} };
+  renderTogliPagina();
+  window.scrollTo(0, 0);
+}
+
+function renderTogliPagina() {
+  nascondiTooltip();
+  const { dati } = stato;
+  const bozza = stato.completa;
+  const avviso = calcolaScheda(personaggio(), dati).avvisoPunti;
+  document.title = `${stato.scelte.nome.trim() || 'Personaggio'} — Punti Abilità in eccesso · Mutant`;
+  svuota(radice, ...renderTogli({
+    dati,
+    personaggio: personaggio(),
+    bozza: bozza.punti,
+    testoAvviso: avviso?.testo ?? (dati.regole.regole_aggiornate?.punti_abilita ?? 'Regole aggiornate'),
+    aggiornaBozza(punti) {
+      bozza.punti = punti;
+      renderTogliPagina();
+    },
+    conferma() {
+      const ev = statoRimozione(personaggio(), {}, dati);
+      if (!ev || validaRimozione(personaggio(), ev.livello, bozza.punti, dati).length) return renderTogliPagina();
+      const p = applicaRimozione(personaggio(), ev.livello, bozza.punti);
+      stato.scelte = p.creazione;
+      stato.livelli = p.livelli;
+      stato.completa = null;
+      persisti();
+      const restano = calcolaScheda(personaggio(), dati).avvisoPunti?.totale ?? 0;
+      stato.messaggioScheda = { tipo: 'ok', testo: `Tolti ${ev.eccesso} Punti Abilità ${ev.livello === 1 ? 'della creazione' : `${conOrdinale('del', ev.livello)} livello`}.${restano ? ` Ne restano ${restano} da togliere.` : ''}` };
+      if (!stato.salvataggioOk) alert(`Punti tolti, ma non salvati nel browser. ${testoSalvataggioFallito()}`);
       vai(`#/p/${stato.id}`);
     },
     esci() {
@@ -1137,6 +1185,7 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       vaiTab,
       sali: saliDiLivello,
       completaPunti: () => vai(`#/p/${stato.id}/completa`),
+      togliPunti: () => vai(`#/p/${stato.id}/togli`),
       annullaLivello,
       stampa: () => vai(`#/p/${stato.id}/stampa`),
       esporta: () => esporta(stato.scelte, stato.livelli, stato.sessione, stato.calendario),

@@ -54,7 +54,7 @@
     {
       "nome": "Coltello",
       "tipo": "ravvicinato",
-      "va": 9,
+      "va": 8,
       "danno": "1d4+2",
       "natura": "Naturale",
       "portata_q": 1,
@@ -89,7 +89,7 @@
     },
     {
       "nome": "Sopravvivenza",
-      "va": 16
+      "va": 13
     }
   ],
   "capacita": [

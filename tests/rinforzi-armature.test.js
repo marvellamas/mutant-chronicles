@@ -17,16 +17,16 @@ const CIVILE = 'armature:armatura-civile-leggera'; // AR 1, ammette Rinforzi Leg
 const SOPRABITO = 'rinforzi:soprabito-balistico'; // Leggero, indossabile da solo
 const PIASTRE = 'rinforzi:kit-di-piastre-supplementari-leggere'; // Leggero, solo montato
 
-test('dati: 32 rinforzi di tipo «rinforzo»; soprabiti e mantelli indossabili da soli; regola in regole.json', () => {
+test('dati: 32 rinforzi di tipo «rinforzo»; soprabiti, mantelli, Tabardo e Sottogiacca indossabili da soli (A.80)', () => {
   const r = catalogo(dati).oggetti.filter((o) => o.rinforzo);
   assert.equal(r.length, 32);
   assert.ok(r.every((o) => o.tipo === 'rinforzo'));
   assert.ok(TIPI.includes('rinforzo'));
-  assert.deepEqual(r.filter((o) => o.indossabile_da_solo).every((o) => /^(Soprabito|Mantello)/.test(o.nome)), true);
-  assert.equal(r.filter((o) => o.indossabile_da_solo).length, 14);
-  // §7.23.4: «non costituiscono un profilo autonomo di armatura»; il resto con Davide (A.80)
-  assert.equal(dati.regole.rinforzi.da_solo.ar, 'nessuna');
-  assert.match(dati.regole.rinforzi['TODO(Davide)'], /A.80/);
+  assert.deepEqual(r.filter((o) => o.indossabile_da_solo).every((o) => /^(Soprabito|Mantello|Tabardo consacrato|Sottogiacca protettiva IES)/.test(o.nome)), true);
+  assert.equal(r.filter((o) => o.indossabile_da_solo).length, 16);
+  // A.80 (E&L del 03/10/2026): profilo autonomo di Rinforzo Leggero; nessun TODO
+  assert.deepEqual(dati.regole.rinforzi.da_solo.profilo_autonomo, { ar: 1, magica: 0, categoria: 'Leggera', for_richiesta: 3 });
+  assert.equal(dati.regole.rinforzi['TODO(Davide)'], undefined);
 });
 
 test('montato su un’armatura compatibile: AR dell’armatura più il kit (§7.23.5: civile leggera + soprabito = AR 2)', () => {
@@ -39,15 +39,24 @@ test('montato su un’armatura compatibile: AR dell’armatura più il kit (§7.
   assert.equal(rinforzoCompatibile(risolvi(voce('r', SOPRABITO, 'zaino'), cat), risolvi(voce('p', 'armature:armatura-civile-pesante', 'indossata'), cat)), false);
 });
 
-test('indossato da solo: con la regola del manuale nessuna AR (riga a 0 nella provenienza); con «propria» l’AR del kit', () => {
+test('indossato da solo: profilo autonomo AR 1, armatura Leggera (−1 al lancio con Potere), FOR 3 (A.80)', () => {
+  const nudo = scheda([]);
   const s = scheda([voce('r', SOPRABITO, 'indossata')]);
-  assert.equal(ar(s).totale, 0);
+  assert.equal(ar(s).totale, 1);
   const riga = ar(s).valori[0].provenienza.righe.find((x) => x.fonte === 'Soprabito balistico');
-  assert.deepEqual([riga.valore, /§7\.23\.4/.test(riga.nota)], [0, true]);
-  // se Davide decide che da solo vale la sua AR (regole.json → rinforzi.da_solo.ar «propria»)
+  assert.deepEqual([riga.valore, /A\.80/.test(riga.nota)], [1, true]);
+  assert.equal(s.equipaggiamento.lancioPotere - nudo.equipaggiamento.lancioPotere, -1);
+  // il Tabardo consacrato si indossa da solo; due capi sovrapposti non si sommano
+  assert.equal(ar(scheda([voce('t', 'rinforzi:tabardo-consacrato', 'indossata')])).totale, 1);
+  assert.equal(ar(scheda([voce('r', SOPRABITO, 'indossata'), voce('m', 'rinforzi:mantello-balistico', 'indossata')])).totale, 1);
+  // FOR insufficiente: le normali penalità (con un requisito più alto della FOR del personaggio)
+  const d3 = copia(dati);
+  d3.regole.rinforzi.da_solo.profilo_autonomo.for_richiesta = 9;
+  assert.ok(scheda([voce('r', SOPRABITO, 'indossata')], d3).equipaggiamento.forMancanteArmature > 0);
+  // con la regola «nessuna» (il manuale prima di A.80) resta la riga a 0
   const d2 = copia(dati);
-  d2.regole.rinforzi.da_solo.ar = 'propria';
-  assert.equal(ar(scheda([voce('r', SOPRABITO, 'indossata')], d2)).totale, 1);
+  d2.regole.rinforzi.da_solo.ar = 'nessuna';
+  assert.equal(ar(scheda([voce('r', SOPRABITO, 'indossata')], d2)).totale, 0);
   // le piastre non si indossano da sole: lo stato «indossata» non è ammesso e non conta
   const p = risolvi(voce('p', PIASTRE, 'indossata'), catalogo(dati));
   assert.deepEqual([p.stati, p.attivo], [['in_uso', 'zaino'], false]);

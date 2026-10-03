@@ -173,6 +173,11 @@ main:has(> .scheda-tab.larghezza-piena) { max-width: 1650px; }
 .riquadro.ok { border-left-color: var(--ok); background: var(--ok-tenue); }
 .riquadro.attenzione { border-left-color: var(--attenzione); background: var(--attenzione-tenue); }
 .riquadro.errore { border-left-color: var(--errore); background: var(--errore-tenue); }
+/* Punti Abilità Liberi in eccesso (E&L del 03/10/2026): avviso e Abilità segnate nella tab Abilità */
+.avviso-eccesso { border-left-width: 6px; }
+.avviso-eccesso > p:first-child strong { font-size: 1.05rem; }
+.avviso-eccesso ul { margin: 0.3rem 0; padding-left: 1.2rem; }
+.liberi-eccesso { color: var(--errore); font-size: 0.85em; font-weight: 600; white-space: nowrap; }
 
 .contatore { display: inline-block; padding: 0.35rem 0.8rem; border-radius: 999px; margin: 0.25rem 0.5rem 0.25rem 0; background: var(--superficie); border: 1px solid var(--bordo); }
 .contatore strong { font-size: 1.15rem; }

@@ -94,6 +94,7 @@ export function renderStampa({ stampa, torna, opzioni = null, cambiaOpzioni = nu
     return [barra, h('p', { class: 'nota errore' }, 'La scheda non si può calcolare: correggi prima le scelte segnalate nella vista digitale.')];
   }
   if (!stampa.completa) avvisi.append(h('p', {}, 'Scheda non ancora completa: alcuni valori possono mancare.'));
+  if (stampa.avvisoPunti) avvisi.append(h('p', { class: 'motivo' }, `${stampa.avvisoPunti.testo}. ${stampa.avvisoPunti.eventi.map((e) => e.testo).join('; ')}.`));
 
   const contenitore = h('div', { class: 'fogli' }, fogli.map((f) => {
     const foglio = creaFoglio(f.id, f.titolo, { ...f.dati, ...(f.id === 'poteri' ? { soloElenco: opz.magia === 'elenco' } : {}) }, stampa.piede);
@@ -302,7 +303,9 @@ function foglioAbilita(d) {
   return h('div', { class: 'f2-griglia' },
     box({ titolo: 'Abilità', tinta: 'accento', forte: true, classe: 'f2-abilita' },
       h('div', { class: 'abilita-affiancate' }, tabellaAbilita(d.categorie.slice(0, meta)), tabellaAbilita(d.categorie.slice(meta))),
-      h('p', { class: 'piccolo' }, '• Abilità di Classe. S / P / G / N: competenza (§2.3). VA = Mod + Base + Corp + Avanz, al massimo il limite (⚑: VA grezzo oltre il limite, §8.3), + Equip (equipaggiamento indossato).')),
+      h('p', { class: 'piccolo' }, '• Abilità di Classe. S / P / G / N: competenza (§2.3). VA = Mod + Base + Corp + Avanz, al massimo il limite (⚑: VA grezzo oltre il limite, §8.3), + Equip (equipaggiamento indossato).'),
+      // punti liberi in eccesso (E&L del 03/10/2026): l'avviso resta sulla carta finché non si tolgono
+      d.avvisoPunti ? h('p', { class: 'piccolo avviso-eccesso-stampa' }, h('strong', {}, `${d.avvisoPunti.testo}.`), ` ${d.avvisoPunti.eventi.map((e) => e.testo).join('; ')}.`) : null),
     h('div', { class: 'colonna' },
       box({ titolo: 'Talenti di Classe' }, h('ul', { class: 'elenco-talenti-stampa' }, d.talentiClasse.map((t) =>
         talento(t, h('span', { class: 'sigla' }, ` ${t.classe} ${t.grado}${t.scelto ? ', a scelta' : ''}`))))),

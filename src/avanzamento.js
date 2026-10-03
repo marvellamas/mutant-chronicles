@@ -673,11 +673,14 @@ const nomeEvento = (livello) => (livello === 1 ? 'creazione' : `${livello}° liv
 
 /** Eventi di punti liberi del personaggio: creazione (livello 1) e livelli con «punti_abilita:N». */
 function eventiPuntiLiberi(p, finoA, dati) {
-  const validi = (o) => Object.values(isOggetto(o) ? o : {}).filter((v) => Number.isInteger(v) && v > 0).reduce((s, v) => s + v, 0);
-  const out = [{ livello: 1, campo: 'creazione.puntiAbilitaLiberi', previsti: dati.regole.creazione.punti_abilita_liberi, assegnati: validi(p.creazione.puntiAbilitaLiberi) }];
+  // punti liberi dell'evento per Abilità: nei file sono sempre separati dai +1 di Classe e dalle basi
+  // (creazione.puntiAbilitaLiberi, livelli[i].puntiAbilita), quindi la provenienza non va ricostruita
+  const perAbilita = (o) => Object.fromEntries(Object.entries(isOggetto(o) ? o : {}).filter(([, v]) => Number.isInteger(v) && v > 0));
+  const validi = (o) => Object.values(perAbilita(o)).reduce((s, v) => s + v, 0);
+  const out = [{ livello: 1, campo: 'creazione.puntiAbilitaLiberi', previsti: dati.regole.creazione.punti_abilita_liberi, assegnati: validi(p.creazione.puntiAbilitaLiberi), punti: perAbilita(p.creazione.puntiAbilitaLiberi) }];
   p.livelli.slice(0, finoA).forEach((v, i) => {
     const previsti = puntiEvento('punti_abilita', i + 2, dati);
-    if (previsti) out.push({ livello: i + 2, campo: `livelli[${i}].puntiAbilita`, previsti, assegnati: validi(v.puntiAbilita) });
+    if (previsti) out.push({ livello: i + 2, campo: `livelli[${i}].puntiAbilita`, previsti, assegnati: validi(v.puntiAbilita), punti: perAbilita(v.puntiAbilita) });
   });
   return out;
 }
@@ -704,7 +707,7 @@ function separaPuntiLiberi(p, errori, finoA, dati, stato = null) {
     }
     // i punti inattivi di un evento chiuso non sono errori: si riassegnano (o, oltre i previsti, sono eccesso)
     for (const a of Object.keys(inattivi)) togli.add(`${ev.campo}.${a}|inattivi`);
-    if (assegnati > previsti) eccessi.push({ livello, evento: nomeEvento(livello), previsti, assegnati, eccesso: assegnati - previsti });
+    if (assegnati > previsti) eccessi.push({ livello, evento: nomeEvento(livello), previsti, assegnati, eccesso: assegnati - previsti, abilita: ev.punti });
     togli.add(`${ev.campo}|eccesso`);
   }
   return { errori: errori.filter((e) => !togli.has(`${e.campo}|${e.inattivi ? 'inattivi' : e.tipo}`)), completamenti, eccessi };
@@ -825,6 +828,88 @@ export function motivoCompletamento(completamenti) {
   const dove = completamenti.map((c) => `${c.mancanti} ${c.livello === 1 ? 'della creazione' : `${conOrdinale('del', c.livello)} livello`}`).join(', ');
   const verbo = completamenti.some((c) => c.riassegna) ? 'assegna o riassegna' : 'assegna';
   return `Regole aggiornate: prima di salire di livello ${verbo} ${n} Punti Abilità (${dove}) con «Assegna» in cima alla scheda.`;
+}
+
+// ---------------------------------------------------------------------------
+// Punti Abilità Liberi in eccesso (correzione di Davide del 03/10/2026, E&L: 5 punti a ogni Grado, compreso
+// il primo, anziché 10). Un evento già registrato con più punti liberi di quelli previsti dalle regole
+// correnti resta valido e la scheda utilizzabile, ma il giocatore deve togliere i punti in più: un evento
+// alla volta, dal più vecchio, scegliendo da quali Abilità dei punti liberi di quell'evento.
+
+/**
+ * Avviso dei punti in eccesso, con il testo di regole.json → regole_aggiornate.eccesso ({n} = punti in più).
+ * @returns {null|{ totale, testo, eventi: { livello, evento, previsti, assegnati, eccesso, abilita, testo }[] }}
+ */
+export function avvisoPuntiEccesso(eccessi, dati) {
+  const lista = (eccessi ?? []).filter((e) => e.eccesso > 0);
+  if (!lista.length) return null;
+  const totale = lista.reduce((s, e) => s + e.eccesso, 0);
+  const modello = dati.regole.regole_aggiornate?.eccesso ?? 'Hai {n} Punti Abilità Liberi in più del consentito: togline {n}';
+  const elencoAbilita = (o) => Object.entries(o ?? {}).map(([n, v]) => `${n} ${v}`).join(', ');
+  return {
+    totale,
+    testo: modello.replaceAll('{n}', String(totale)),
+    eventi: lista.map((e) => ({
+      ...e,
+      testo: `${e.livello === 1 ? 'Creazione' : `${e.livello}° livello`}: ${e.assegnati} punti liberi su ${e.previsti} consentiti, ${e.eccesso} da togliere`
+        + (Object.keys(e.abilita ?? {}).length ? ` (punti liberi a ${elencoAbilita(e.abilita)})` : ''),
+    })),
+  };
+}
+
+/** Toglie i punti all'evento a cui appartengono (livello 1 = creazione). */
+export function applicaRimozione(personaggio, livello, togli) {
+  return applicaCompletamento(personaggio, livello, {}, togli);
+}
+
+/**
+ * Valida i punti da togliere al primo evento in eccesso: solo punti liberi di quell'evento, esattamente
+ * l'eccesso; togliendoli i livelli successivi non devono diventare irregolari (VA ≥ 1 prima dei punti
+ * liberi, §2.13; punti che non aumentano il VA, §8.3).
+ * @returns {{campo, problema, tipo: 'violazione'|'incompleto'}[]}
+ */
+export function validaRimozione(personaggio, livello, togli, dati) {
+  const errori = [];
+  const err = (campo, problema, tipo = 'violazione') => errori.push({ campo, problema, tipo });
+  const prima = ricalcola(personaggio, dati);
+  const ev = prima.eccessi[0];
+  if (!ev) return [{ campo: 'puntiAbilita', problema: 'nessun Punto Abilità Libero in eccesso', tipo: 'violazione' }];
+  if (ev.livello !== livello) return [{ campo: 'puntiAbilita', problema: `si tolgono un evento alla volta, dal più vecchio: prima ${ev.livello === 1 ? 'la creazione' : `il ${ev.evento}`}`, tipo: 'violazione' }];
+  const t = isOggetto(togli) ? togli : {};
+  for (const [a, x] of Object.entries(t)) {
+    if (!Number.isInteger(x) || x < 0) err(`puntiAbilita.${a}`, 'i punti devono essere interi ≥ 0');
+    else if (x > (ev.abilita[a] ?? 0)) err(`puntiAbilita.${a}`, `${a} ha ${ev.abilita[a] ?? 0} punti liberi ${ev.livello === 1 ? 'della creazione' : `${conOrdinale('del', ev.livello)} livello`}`);
+  }
+  if (errori.length) return errori;
+  const n = somma(t);
+  if (n > ev.eccesso) err('puntiAbilita', `tolti ${n} punti, ne bastano ${ev.eccesso}`);
+  const dopo = ricalcola(applicaRimozione(personaggio, livello, t), dati);
+  const chiave = (e) => `${e.campo}|${e.problema}`;
+  const giaPrima = new Set(prima.errori.map(chiave));
+  for (const e of dopo.errori.filter((x) => x.tipo === 'violazione' && !giaPrima.has(chiave(x)))) {
+    err('puntiAbilita', e.livello && e.livello !== livello ? `${conOrdinale('al', e.livello)} livello: ${e.problema}` : e.problema);
+  }
+  if (n < ev.eccesso) err('puntiAbilita', `tolti ${n} punti su ${ev.eccesso}`, 'incompleto');
+  return errori;
+}
+
+/**
+ * Dati del pannello «Togli» per il primo evento in eccesso, con la bozza dei punti da togliere.
+ * @returns {null|{ livello, evento, previsti, assegnati, eccesso, rimasti, errori, abilita: { nome, punti, togli, motivoPiu }[] }}
+ */
+export function statoRimozione(personaggio, bozza, dati) {
+  const p = migraPersonaggio(personaggio);
+  const ev = ricalcola(p, dati).eccessi[0];
+  if (!ev) return null;
+  const t = isOggetto(bozza) ? bozza : {};
+  const rimasti = ev.eccesso - somma(t);
+  const abilita = Object.entries(ev.abilita).map(([nome, punti]) => {
+    const togli = t[nome] ?? 0;
+    const motivoPiu = rimasti <= 0 ? 'Hai già scelto tutti i punti da togliere.' : togli >= punti ? 'Nessun altro punto libero di questo evento.'
+      : validaRimozione(p, ev.livello, { ...t, [nome]: togli + 1 }, dati).find((e) => e.tipo === 'violazione')?.problema ?? null;
+    return { nome, punti, togli, motivoPiu };
+  });
+  return { ...ev, rimasti, errori: validaRimozione(p, ev.livello, t, dati), abilita };
 }
 
 /**
@@ -1104,6 +1189,8 @@ function schedaARiposo(personaggio, dati) {
     // regole aggiornate: punti liberi da completare (bloccano solo l'avanzamento) e in eccesso (avviso)
     completamenti,
     eccessi,
+    // punti liberi in eccesso (5 per Grado, E&L del 03/10/2026): avviso col testo, la scheda resta utilizzabile
+    avvisoPunti: avvisoPuntiEccesso(eccessi, dati),
     completa: errori.length === 0,
   };
 }

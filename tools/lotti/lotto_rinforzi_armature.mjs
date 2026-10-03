@@ -6,7 +6,8 @@
 //   mantello) possono essere indossati autonomamente»). Il manuale non ne parla: §7.23.4 dice che i
 //   valori «descrivono l'impiego insieme a un'armatura compatibile; non costituiscono un profilo
 //   autonomo di armatura». Che cosa valga indossato da solo sta in regole.json → rinforzi
-//   (TODO(Davide), per-davide A.79). Tabardo, rivestimenti, sottogiacca e piastre restano solo montati.
+//   (per-davide A.80). A.80 (E&L del 03/10/2026): indossabili da soli anche il Tabardo consacrato e la
+//   Sottogiacca protettiva IES; kit, piastre, inserti e rivestimenti restano solo montati.
 import { readFileSync, writeFileSync } from 'node:fs';
 
 const RADICE = new URL('../../', import.meta.url);
@@ -14,7 +15,7 @@ const scrivi = process.argv.includes('--scrivi');
 const p = new URL('data/equipaggiamento/rinforzi.json', RADICE);
 const j = JSON.parse(readFileSync(p, 'utf8'));
 // forma del capo: soprabito o mantello (nome del modello, §7.23.2, §7.23.3, §7.23.6, §7.23.10, §7.23.11)
-const DA_SOLO = /^(Soprabito|Mantello)\b/;
+const DA_SOLO = /^(Soprabito\b|Mantello\b|Tabardo consacrato$|Sottogiacca protettiva IES$)/;
 let n = 0;
 for (const o of j.oggetti) {
   o.tipo = 'rinforzo';

@@ -19,9 +19,7 @@ Rispondere a queste per prime: senza, la seconda sessione dei Chroma resta ferma
 
 ### **Chroma (sessione 2: Convertire Potere, ricarica, prelievo)**
 
-> * **A.18 — Riserve integrate nelle armi**: alimentano soltanto le funzioni del proprio Artefatto, non pagano Incantesimi e non si prelevano (Magia §24.2 e §24.7, Doc del 01/10); «Lancia\!» non le offre più come fonte di PM — implementata il 02/10.  
-> * **A.20 — Prelievo dal Chroma Bianco senza Addestramento Taumaturgo.**
-
+**A.20 — Prelievo dal Chroma Bianco senza Addestramento Taumaturgo.**  
 “Un personaggio cosciente può prelevare PM da un contenitore Bianco sintonizzato”: vale per chiunque, anche un Combattente senza magia? O serve almeno l’accesso alla magia?  
 *Nel frattempo:* non ancora implementato; è la domanda che decide come.
 
@@ -166,6 +164,21 @@ Per i PG il danno di un incantesimo riceve il bonus di SAG, con il tetto del liv
 Il §7.20.3 dice che con un lanciagranate «la granata stabilisce danno, AC, RS e proprietà», e le munizioni di riferimento dei lanciatori hanno danno Naturale tirato una sola volta per esplosione. Il bonus di Caratteristica al danno (§5.13) si aggiunge anche alle granate (lanciate a mano o con lanciagranate) e ai razzi, oppure il danno dell'esplosione è sempre quello della tabella?  
 *Nel frattempo:* l'app usa il danno della tabella, senza bonus di Caratteristica.
 
+**A.87 — Dotazione del gruppo: chi prende cosa? (Equipaggiamento cap. 10\)**  
+Nel cap. 10 c'è la dotazione Artefatti/batterie del gruppo. Per caricarla nelle schede ci serve sapere a quale personaggio va ciascun oggetto, e con quanti PM attuali:
+
+> * 2 Batterie Matrice Rosse da 10 PM (Matrice d'origine Rettungsanker, dono di Sorella Iolanda), SnT 3 ciascuna;  
+> * 4 Schegge instabili Verdi da 5 PM;  
+> * Pietra della Vigilanza;  
+> * Guanti da Combattimento Mistico (una coppia).
+
+Nota: il kit di un personaggio (una Batteria Matrice \+ Pietra \+ Guanti) occupa 8 SnT, quindi la seconda Batteria deve andare a un altro PG, e chi riceve oggetti da sintonizzare deve avere capacità sufficiente (8–13). Ci scrivi, per ogni oggetto, il nome del PG e i PM attuali? Se preferisci, i PG possono anche tenerli «nel deposito comune» del gruppo finché non decidete.  
+*Nel frattempo:* gli oggetti sono nel catalogo dell'app; nessuno li ha ancora in scheda.
+
+**A.88 — Individuare a Concentrazione: durata massima.**  
+Individuare si può lanciare a Concentrazione, ma la tabella delle versioni dà soltanto la durata fissa. Qual è la durata massima a Concentrazione di ogni versione?  
+*Nel frattempo:* l’app usa la durata fissa della tabella.
+
 ### **Manovre ravvicinate**
 
 **A.40 — Carica oltre 12 Q (§5.6).** La tabella della Carica si ferma a 7–12 Q e la Carica «non può superare la Corsa». Chi ha una Corsa oltre 12 Q (Talenti di movimento) può caricare più lontano, e con quali penalità?  
@@ -252,6 +265,7 @@ Voci con risposta recepita e funzione implementata nell’app. La data è quella
 > * **A.11 — Specializzazioni delle 16 armi a distanza corporative** (Panzerknacker nei Fucili d’Assalto) — implementata il 28/09.  
 > * **A.12 — Specializzazioni delle altre armi corporative per analogia**; SA30 a dardi con solo \+1 VA (Danno calibrato) — implementata il 28/09.  
 > * **A.14 — Batterie da 5 PM** (Rosso, Blu, Verde Molto rara; Bianco Leggendaria), scala di reperibilità fino a Leggendaria, disponibilità degli Artefatti Mistici — implementata il 28/09. Prezzi aggiornati il 02/10 a 1.000 crediti (Rosso, Blu, Verde) e 5.000 (Bianco), come nell'Armamenti §7.5, nella Magia §24.7 e nell'E\&L del 01/10.  
+> * **A.18 — Riserve integrate nelle armi**: alimentano soltanto le funzioni del proprio Artefatto, non pagano Incantesimi e non si prelevano (Magia §24.2 e §24.7, Doc del 01/10); «Lancia\!» non le offre più come fonte di PM — implementata il 02/10.  
 > * **A.21 — Chroma Viola come fonte di Corruzione passiva**: fasce, frequenza ed esiti nell’app; il frammento si registra nell’inventario senza PM; il conteggio dell’esposizione arriverà insieme a Corruzione e Umanità — implementata il 28/09.  
 > * **A.52 — Addestramenti a 76 punti e 10 Punti Abilità Liberi**: confermati da Davide; nessun cambio alle regole dell’app, l’avviso ai personaggi esistenti lo cita — implementata il 28/09.  
 > * **A.51 — Categorie di Prove degli Stati**: Percezione tolta da «vista», Assordato come valore a parte, nei promemoria la frase sull’azione esclusivamente visiva o uditiva che fallisce — implementata il 28/09.  

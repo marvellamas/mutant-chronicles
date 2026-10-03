@@ -1,15 +1,15 @@
 {
-  "versione_manuale": "Giocatore 0.45; Magia 1.3; Equipaggiamento 0.1",
+  "versione_manuale": "Giocatore 0.45; Magia 1.3; Equipaggiamento 0.1; E&L del 03/10/2026",
   "fonte": "Giocatore §1.2.3, §2.1, §2.3, §2.10, §2.12–2.15, §3.3, §1.8.3, §5.2.6, §5.5, §5.9, §5.14, §5.18, §5.19, cap. 8; Magia sezioni 1 e 11; Equipaggiamento §1.6, §1.7; docs/risposte-master.md",
   "creazione": {
     "punti_caratteristica": 5,
     "massimo_caratteristica": 7,
-    "punti_abilita_liberi": 10,
+    "punti_abilita_liberi": 5,
     "va_minimo_per_punti_liberi": 1,
     "bonus_classe_per_grado": 1,
     "dado_pv_massimizzato": true,
     "dado_pm_massimizzato": true,
-    "_nota": "§2.1: 5 punti, nessuna Caratteristica oltre 7 alla creazione, i valori iniziali non si riducono. §2.13 (Giocatore del 29/09): ogni punto libero deve aumentare il VA personale, entro il limite della categoria di competenza al I Grado (regole.json → competenze); l'Abilità deve avere VA almeno 1 prima dei punti liberi (i punti di Classe si assegnano prima, §3.1). Al 1° livello sono massimizzati il dado dei PV e quello dei PM: il §2.12 e il §3.3 indicano solo i PV, il master ha corretto (docs/risposte-master.md, decisione 6). Dal Grado successivo i dadi si tirano."
+    "_nota": "§2.1: 5 punti, nessuna Caratteristica oltre 7 alla creazione, i valori iniziali non si riducono. Punti Abilità Liberi: 5 alla creazione e a ogni Grado successivo (correzione di Davide del 03/10/2026, E&L, «5 punti Abilità liberi a ogni Grado, compreso il primo»: sostituisce i 10 del §2.13 e del §8.3; avanzamento.eventi → punti_abilita:5). §2.13 (Giocatore del 29/09): ogni punto libero deve aumentare il VA personale, entro il limite della categoria di competenza al I Grado (regole.json → competenze); l'Abilità deve avere VA almeno 1 prima dei punti liberi (i punti di Classe si assegnano prima, §3.1). Al 1° livello sono massimizzati il dado dei PV e quello dei PM: il §2.12 e il §3.3 indicano solo i PV, il master ha corretto (docs/risposte-master.md, decisione 6). Dal Grado successivo i dadi si tirano."
   },
   "salvezze": {
     "base": 8,
@@ -193,8 +193,9 @@
     "_nota": "Tab Cibernetica e Veicoli della scheda digitale (docs/layout-sd.md, pezzo 5): una riga e i rimandi ai paragrafi che ne parlano già. Nessun dato e nessun campo nel salvataggio."
   },
   "regole_aggiornate": {
-    "punti_abilita": "Regole aggiornate (Giocatore del 27/09 e del 29/09)",
-    "_nota": "Titolo dell'avviso in cima alla SD quando un evento già registrato (creazione o livello) ha meno Punti Abilità Liberi di quelli previsti dalle regole correnti, o più, o punti che non aumentano più il VA personale: Giocatore, Doc del 27/09/2026 (10 punti invece di 5, per-davide A.52) e Doc del 29/09/2026 (categorie di competenza e limiti del VA personale, §2.13, §8.3). Se le regole cambiano ancora, si aggiorna qui la data."
+    "punti_abilita": "Regole aggiornate (Giocatore del 29/09; E&L del 03/10)",
+    "eccesso": "Con la nuova regola di Davide hai {n} punti Abilità liberi in più del consentito: togline {n}",
+    "_nota": "«punti_abilita»: titolo dell'avviso in cima alla SD quando un evento già registrato (creazione o livello) ha meno Punti Abilità Liberi di quelli previsti dalle regole correnti o punti che non aumentano più il VA personale: Giocatore, Doc del 27/09/2026 (per-davide A.52) e Doc del 29/09/2026 (categorie di competenza e limiti del VA personale, §2.13, §8.3). «eccesso»: avviso dei punti liberi oltre quelli previsti ({n} = punti in più in tutti gli eventi), in testa alla SD, nella tab Abilità, nella stampa e all'import; correzione di Davide del 03/10/2026 (E&L): 5 punti a ogni Grado, compreso il primo, anziché 10. Se le regole cambiano ancora, si aggiornano qui i testi."
   },
   "competenze": {
     "paragrafo": "Giocatore §§1.2.1, 2.3, 2.12, 2.13, 4.2, 8.3, 8.7 (Doc del 29/09/2026, 23:45)",
@@ -316,7 +317,7 @@
         "livello": 4,
         "eventi": [
           "grado_classe",
-          "punti_abilita:10"
+          "punti_abilita:5"
         ]
       },
       {
@@ -341,7 +342,7 @@
         "livello": 8,
         "eventi": [
           "grado_classe",
-          "punti_abilita:10"
+          "punti_abilita:5"
         ]
       },
       {
@@ -367,7 +368,7 @@
         "livello": 12,
         "eventi": [
           "grado_classe",
-          "punti_abilita:10",
+          "punti_abilita:5",
           "azione_principale:+1"
         ]
       },
@@ -393,7 +394,7 @@
         "livello": 16,
         "eventi": [
           "grado_classe",
-          "punti_abilita:10"
+          "punti_abilita:5"
         ]
       },
       {
@@ -419,7 +420,7 @@
         "livello": 20,
         "eventi": [
           "grado_classe",
-          "punti_abilita:10"
+          "punti_abilita:5"
         ]
       }
     ],
@@ -1918,14 +1919,16 @@
       "I valori aggiuntivi descrivono l’impiego insieme a un’armatura compatibile; non costituiscono un profilo autonomo di armatura."
     ],
     "da_solo": {
-      "ar": "nessuna",
-      "proprieta": false,
+      "ar": "profilo_autonomo",
+      "profilo_autonomo": { "ar": 1, "magica": 0, "categoria": "Leggera", "for_richiesta": 3 },
+      "proprieta": true,
       "con_armatura_indossata": "nessun_effetto",
-      "_nota": "Rinforzo con «indossabile_da_solo» (rinforzi.json: soprabiti e mantelli, richiesta di Davide del 02/10) portato senza montarlo su un’armatura. «ar»: «nessuna» (§7.23.4: nessun profilo autonomo di armatura) oppure «propria» (il +AR del kit come AR ordinaria). «proprieta»: se valgono le proprietà ed effetti del rinforzo (Contromisure, Mimetismo, Protezione occulta…). «con_armatura_indossata»: indossato da solo mentre si porta un’armatura non conta (va montato, §7.11.2: un solo rinforzo compatibile)."
+      "uno_solo": true,
+      "_nota": "Rinforzo con «indossabile_da_solo» (rinforzi.json: soprabiti e mantelli, Tabardo consacrato e Sottogiacca protettiva IES) portato senza armatura. A.80 (E&L del 03/10/2026): profilo autonomo di Rinforzo Leggero, AR 1 ordinaria, requisito FOR 3, categoria Leggera con le sue penalità (armature.json → categorie: 0 ad attacchi, Agilità e Movimento, −1 VA al lancio con Potere) e le normali penalità per FOR insufficiente; PI, Qualità, PS Integrità, prezzo e proprietà della scheda, che funzionano anche da solo (Feldmantel Ignifuga 2, Mantello Venusiano Mimetica ambientale 2, Tabardo Protezione occulta 1, solo come beneficio alle PS). Con un’armatura indossata il capo va montato come rinforzo: indossato da solo non conta e il profilo autonomo non si somma al bonus del rinforzo. «uno_solo»: più capi sovrapposti non aggirano i limiti, conta il primo."
     },
     "armatura_tolta": "resta_montato",
-    "_nota_armatura_tolta": "Se l’armatura su cui è montato non è più indossata, il rinforzo resta montato su di lei e non dà nulla; l’Inventario lo dice. Il manuale non ne parla.",
-    "TODO(Davide)": "per-davide A.80: il manuale (§7.23.4) dice che i rinforzi non hanno un profilo autonomo; soprabiti e mantelli indossati da soli danno AR, le loro proprietà valgono, e quali altri rinforzi si possono indossare da soli? Che cosa succede al rinforzo quando si toglie l’armatura su cui è montato?"
+    "_nota_armatura_tolta": "A.80 (E&L del 03/10/2026): togliendo l’armatura, un rinforzo strutturale resta montato su di lei e non dà nulla; un capo indossabile da solo che resta indossato usa il profilo autonomo («Indossato da solo» nell’Inventario), se lo si toglie non dà nulla.",
+    "decisione": "A.80 (E&L del 03/10/2026, risposta 3): si distinguono i capi indossabili autonomamente (tutti i soprabiti e mantelli, Tabardo consacrato, Sottogiacca protettiva IES) dai rinforzi strutturali (kit, piastre, inserti, Rivestimento CS-R10, Rivestimento flessibile Ghost, Rinforzo flessibile Mortificator), che richiedono l’armatura di supporto. La frase assoluta del §7.23.4 va raccordata a questa distinzione; il profilo autonomo è un’integrazione approvata."
   },
   "integrita": {
     "versione_manuale": "Equipaggiamento 0.1",
@@ -2232,7 +2235,7 @@
     "proprieta_escluse": ["Danno calibrato"],
     "esplosivi": {
       "senza_bonus": true,
-      "TODO(Davide)": "per-davide A.86: il danno di granate e razzi (Armamenti §7.20.3, §7.20.4; munizioni di riferimento dei lanciatori, §7.8) riceve il bonus di Caratteristica del §5.13? Il §7.20.3 dice che con un lanciagranate «la granata stabilisce danno, AC, RS e proprietà», e il danno è Naturale e si tira una volta per esplosione. Nel frattempo: danno della tabella, senza bonus.",
+      "decisione": "A.86 (E&L del 03/10/2026): il danno dell’esplosione di granate e razzi non riceve il bonus di Caratteristica del §5.13, eccezione esplicita alla regola generale; vale per granate a mano, granate sparate con lanciagranate (anche integrati) e razzi dei lanciarazzi. Si usa il danno completo della munizione con i bonus fissi della scheda (Granata standard a frammentazione 1d6+1 a qualsiasi livello).",
       "_nota": "Munizioni esplosive: granate e razzi, con lanciatore (armi con danno_da_munizione) e a mano (granate con «esplosivo»). Con «senza_bonus» il danno è quello della tabella della munizione, senza il bonus di Caratteristica (src/equipaggiamento.js → profiloArma)."
     },
     "fonte": "Giocatore §5.13 (28/09); Magia sez. 7 (SAG per il danno degli Incantesimi, stessi tetti); E&L del 29/09, risposta 12 (A.22)",

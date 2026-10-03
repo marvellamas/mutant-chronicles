@@ -19,9 +19,9 @@ const MISHIMA_AGENTE = {
   puntiCaratteristica: { FOR: 1, COS: 2, DES: 1, SAG: 1 },
   addestramento: 'Avventuriero',
   classe: 'Agente',
-  // §2.13 del Giocatore del 29/09
+  // §2.13 del Giocatore del 29/09, ridotto ai 5 punti per Grado (E&L del 03/10/2026)
   puntiAbilitaLiberi: {
-    'Percezione': 2, 'Tecnologia': 2, 'Cultura': 2, 'Raggirare': 4,
+    'Percezione': 2, 'Raggirare': 3,
   },
   puntiEroe: { valore: 5, origine: 'manuale' },
 };
@@ -34,7 +34,7 @@ const ARCANISTA = {
   puntiCaratteristica: { INT: 2, SAG: 1, COS: 2 },
   addestramento: 'Taumaturgo',
   classe: 'Arcanista',
-  puntiAbilitaLiberi: { 'Potere': 2, 'Rituali': 2, 'Cultura': 1, 'Difese': 2, 'Armi da lancio': 2, 'Intrattenere': 1 },
+  puntiAbilitaLiberi: { 'Potere': 2, 'Rituali': 2, 'Cultura': 1 }, // 5 punti per Grado, E&L del 03/10/2026
   puntiEroe: { valore: 6, origine: 'app' },
 };
 
@@ -85,14 +85,14 @@ test('cambio di Corporazione: i Punti Caratteristica che superano 7 vengono rido
 });
 
 test('cambio di Classe: i punti liberi che diventano inattivi restano nelle scelte e si segnalano (§2.13 del 29/09)', () => {
-  // Raggirare +4 va bene per l'Agente (S: 0 + 7 + 1 + 4 = 12), non per il Paramedico (G: 0 + 5 + 4, limite 7)
+  // Raggirare +3 va bene per l'Agente (S: 0 + 7 + 1 + 3 = 11), non per il Paramedico (G: 0 + 5 + 3, limite 7)
   const s = MISHIMA_AGENTE;
   assert.deepEqual(normalizza(s, dati).avvisi, []);
   const r = applicaModifica(s, { classe: 'Paramedico' }, dati);
-  assert.equal(r.scelte.puntiAbilitaLiberi.Raggirare, 4); // nessuna scelta persa
+  assert.equal(r.scelte.puntiAbilitaLiberi.Raggirare, 3); // nessuna scelta persa
   assert.deepEqual(r.avvisi, []);
   const e = validaScelte(r.scelte, dati).find((x) => x.campo === 'puntiAbilitaLiberi.Raggirare');
-  assert.deepEqual([e.tipo, e.inattivi], ['violazione', 2]);
+  assert.deepEqual([e.tipo, e.inattivi], ['violazione', 1]);
 });
 
 test('cambio di Corporazione: punti liberi su un’Abilità che scende sotto VA 1 vengono tolti', () => {
@@ -105,7 +105,7 @@ test('cambio di Corporazione: punti liberi su un’Abilità che scende sotto VA 
   const s = {
     ...nuoveScelte(), corporazione: 'Cybertronic', puntiCaratteristica: { FOR: 1, DES: 2, SAG: 2 },
     addestramento: 'Combattente', classe: 'Soldato',
-    puntiAbilitaLiberi: { 'Rituali': 1, 'Difese': 2, 'Percezione': 2, 'Armi leggere': 2, 'Armi medie': 2, 'Atletica': 1 },
+    puntiAbilitaLiberi: { 'Rituali': 1, 'Difese': 2, 'Percezione': 2 }, // 5 punti per Grado, E&L del 03/10/2026
   };
   assert.deepEqual(normalizza(s, d).avvisi, []);
   const r = applicaModifica(s, { corporazione: 'Capitol' }, d);

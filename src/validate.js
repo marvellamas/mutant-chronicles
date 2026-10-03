@@ -435,6 +435,10 @@ function validaRegole(r, err, dati = {}) {
   if (r.regole_aggiornate !== undefined && !(isOggetto(r.regole_aggiornate) && isTesto(r.regole_aggiornate.punti_abilita))) {
     err(F, 'regole_aggiornate.punti_abilita', 'testo dell’avviso mancante');
   }
+  // avviso dei Punti Abilità Liberi in eccesso (E&L del 03/10/2026): «{n}» è il numero dei punti in più
+  if (r.regole_aggiornate?.eccesso !== undefined && !(isTesto(r.regole_aggiornate.eccesso) && r.regole_aggiornate.eccesso.includes('{n}'))) {
+    err(F, 'regole_aggiornate.eccesso', 'testo dell’avviso dei punti in eccesso mancante o senza «{n}» (il numero dei punti in più)');
+  }
   // calendario di gioco della scheda (src/calendario.js): fasce in ordine e le tre bandierine
   const cal = r.calendario;
   const listaIdNome = (v) => Array.isArray(v) && v.length > 0 && v.every((x) => isOggetto(x) && isTesto(x.id) && isTesto(x.nome))

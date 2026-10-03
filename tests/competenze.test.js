@@ -7,9 +7,10 @@ import { calcolaScheda } from '../src/calc.js';
 import { deserializzaPersonaggio, normalizza, serializza } from '../src/character.js';
 import { applicaCompletamento, validaCompletamento, puntiDaCompletare } from '../src/avanzamento.js';
 import { competenzaDi, baseIniziale, limiteAbilita, vaPersonale, puntiUtili } from '../src/competenze.js';
-import { datiReali } from './helpers.js';
+import { datiReali, conPuntiLiberi } from './helpers.js';
 
 const { dati } = await datiReali();
+const R0 = dati;
 const R = dati.regole;
 const classe = (nome) => dati.classi.classi.find((c) => c.nome === nome);
 const lim = (abilita, ...classi) => limiteAbilita(abilita, classi.map(([n, grado]) => ({ def: classe(n), grado })), R);
@@ -68,6 +69,8 @@ test('§8.4: progressione massima di un’Abilità Specializzata, VA grezzo e VA
 });
 
 test('file salvato con le regole del 27/09: si apre senza perdere scelte, i punti inattivi si riassegnano con «Assegna»', () => {
+  // regole a 10 punti per Grado, quelle del file di collaudo corrente (dal 03/10 sono 5: E&L)
+  const dati = conPuntiLiberi(R0, 10);
   const testo = readFileSync(new URL('collaudo/regole-27-09/b_fratellanza_arcanista_l12.json', import.meta.url), 'utf8');
   const p = deserializzaPersonaggio(testo);
   const { scelte, avvisi } = normalizza(p.creazione, dati);

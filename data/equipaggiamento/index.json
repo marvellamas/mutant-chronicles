@@ -20,9 +20,8 @@
     },
     "EP": {
       "nome": "Epica",
-      "ricerca": "Disponibilità stabilita dal Direttore di Gioco.",
-      "fonte": "Le Batterie colorate passano da REP Molto Rara a Epica.",
-      "TODO(Davide)": "per-davide A.83: la REP Epica (Batterie Matrice colorate, Magia §26.4) ha una Prova di ricerca (Oratoria con quale penalità) o è come Leggendaria? Nel frattempo la disponibilità la stabilisce il Direttore, senza Prova."
+      "ricerca": "Oratoria −6 VA, se il Direttore di Gioco stabilisce che esiste una possibilità concreta di reperimento (per gli Artefatti un’offerta o una commissione, per esempio un raro tecnomistico indipendente). Un successo non obbliga a vendere e non toglie prezzo, autorizzazioni o tempi di produzione.",
+      "fonte": "Le Batterie colorate passano da REP Molto Rara a Epica. A.83 (E&L del 03/10/2026): EP fra Molto Rara e Leggendaria, ricerca con Oratoria −6 VA; le Batterie Matrice Bianche restano Leggendarie (Equipaggiamento §1.8, §10.3; Armamenti §7.1.8; Magia §26.4)."
     },
     "LE": {
       "nome": "Leggendaria",

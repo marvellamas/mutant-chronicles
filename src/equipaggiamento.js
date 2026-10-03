@@ -796,6 +796,27 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   let lancioPotere = 0;
   let forMancanteArmature = 0;
   const rinforziValidi = new Set();
+  // §7.11.1: penalità di categoria e FOR mancante di un'armatura indossata (anche il profilo autonomo di un
+  // rinforzo indossato da solo, A.80)
+  const penalitaArmatura = (nome, penalita, forMancante) => {
+    for (const a of agilitaAbilita) {
+      aggiungi(a, penalita.agilita ?? 0, `Agilità (${nome})`);
+      aggiungi(a, -forMancante, `FOR insufficiente (${nome})`);
+    }
+    for (const a of new Set([...agilitaAbilita, difeseAbilita].filter(Boolean))) {
+      const tocca = (a !== difeseAbilita || agilitaAbilita.includes(a) ? penalita.agilita ?? 0 : 0) || forMancante || penalita.abilita?.[a];
+      if (!tocca) (zeriEquip[a] ??= []).push({ etichetta: nome, valore: 0, nota: 'armatura: nessuna penalità (§7.11.1)' });
+    }
+    // penalità proprie del modello su singole Abilità (APE: Furtività −2, §7.13.6)
+    for (const [a, v] of Object.entries(penalita.abilita ?? {})) aggiungi(a, v, nome);
+    aggiungi(difeseAbilita, -forMancante, `FOR insufficiente (${nome})`);
+    attacchiRavv += (penalita.attacchi_ravvicinati ?? 0) - forMancante;
+    attacchiDist += (penalita.attacchi_distanza ?? 0) - forMancante;
+    movimentoQ += penalita.movimento_q ?? 0;
+    movimentoQProtezioni += penalita.movimento_q ?? 0;
+    lancioPotere += penalita.lancio_potere ?? 0;
+    forMancanteArmature += forMancante;
+  };
   for (const o of oggetti.filter((x) => x.attivo && (x.tipo === 'armatura' || x.tipo === 'scudo' || x.tipo === 'elmetto'))) {
     const d = o.def;
     let penalita = d ? { ...(fileArmature.categorie?.[d.categoria] ?? {}), ...(d.penalita ?? {}) } : {};
@@ -851,23 +872,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       continue;
     }
     // §7.11.1: armature — penalità di categoria e FOR mancante su Agilità, Difese e attacchi
-    for (const a of agilitaAbilita) {
-      aggiungi(a, penalita.agilita ?? 0, `Agilità (${o.nome})`);
-      aggiungi(a, -forMancante, `FOR insufficiente (${o.nome})`);
-    }
-    for (const a of new Set([...agilitaAbilita, difeseAbilita].filter(Boolean))) {
-      const tocca = (a !== difeseAbilita || agilitaAbilita.includes(a) ? penalita.agilita ?? 0 : 0) || forMancante || penalita.abilita?.[a];
-      if (!tocca) (zeriEquip[a] ??= []).push({ etichetta: o.nome, valore: 0, nota: 'armatura: nessuna penalità (§7.11.1)' });
-    }
-    // penalità proprie del modello su singole Abilità (APE: Furtività −2, §7.13.6)
-    for (const [a, v] of Object.entries(penalita.abilita ?? {})) aggiungi(a, v, o.nome);
-    aggiungi(difeseAbilita, -forMancante, `FOR insufficiente (${o.nome})`);
-    attacchiRavv += (penalita.attacchi_ravvicinati ?? 0) - forMancante;
-    attacchiDist += (penalita.attacchi_distanza ?? 0) - forMancante;
-    movimentoQ += penalita.movimento_q ?? 0;
-    movimentoQProtezioni += penalita.movimento_q ?? 0;
-    lancioPotere += penalita.lancio_potere ?? 0;
-    forMancanteArmature += forMancante;
+    penalitaArmatura(o.nome, penalita, forMancante);
   }
   // Effetti degli oggetti in uso (docs/effetti-oggetti.md). I generali entrano nel VA con
   // l'equipaggiamento, come le penalità delle armature; situazionali e d'uso specifico si raccolgono
@@ -881,8 +886,20 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   // rinforzi indossati da soli (indossabile_da_solo; regole.json → rinforzi.da_solo, per-davide A.80)
   const regoleDaSolo = dati.regole?.rinforzi?.da_solo ?? {};
   const armaturaIndossata = oggetti.some((x) => x.attivo && x.tipo === 'armatura');
+  // A.80 (E&L del 03/10/2026): senza armatura indossata vale il profilo autonomo (AR, categoria e FOR
+  // richiesta di regole.json → rinforzi.da_solo.profilo_autonomo), con le penalità della categoria; più capi
+  // sovrapposti non si sommano («uno_solo»: conta il primo)
+  const profiloDaSolo = regoleDaSolo.ar === 'profilo_autonomo' ? regoleDaSolo.profilo_autonomo ?? null : null;
   const rinforziDaSoli = oggetti.filter((x) => x.attivo && x.tipo === 'rinforzo' && x.voce.stato === 'indossata' && x.def?.rinforzo)
-    .map((x) => ({ uid: x.uid, nome: x.nome, ar: x.def.rinforzo.ar, kit: x.def.rinforzo.kit, conArmatura: armaturaIndossata }));
+    .map((x, i) => {
+      const conta = !armaturaIndossata && !(regoleDaSolo.uno_solo && i > 0);
+      const forMancante = profiloDaSolo && conta ? Math.max(0, profiloDaSolo.for_richiesta - FOR) : 0;
+      return { uid: x.uid, nome: x.nome, ar: profiloDaSolo ? profiloDaSolo.ar : x.def.rinforzo.ar, kit: x.def.rinforzo.kit, conArmatura: armaturaIndossata,
+        ...(profiloDaSolo ? { categoria: profiloDaSolo.categoria, forRichiesta: profiloDaSolo.for_richiesta, forMancante, sovrapposto: !armaturaIndossata && !conta } : {}) };
+    });
+  for (const x of rinforziDaSoli.filter((y) => profiloDaSolo && !y.conArmatura && !y.sovrapposto)) {
+    penalitaArmatura(x.nome, fileArmature.categorie?.[x.categoria] ?? {}, x.forMancante);
+  }
   const daSoloOperativo = (o) => o.voce.stato === 'indossata' && regoleDaSolo.proprieta === true
     && !(armaturaIndossata && regoleDaSolo.con_armatura_indossata !== 'vale');
   const modificaOperativa = (o) => {
@@ -1074,7 +1091,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     // §5.13: bonus di Caratteristica al danno (Caratteristica dell'Abilità dell'arma, Armi pesanti INT),
     // salvo le esclusioni espresse delle schede (Danno calibrato)
     // munizioni esplosive (granate e razzi, Armamenti §7.20.3–7.20.4): regole.json → danno_caratteristica.esplosivi,
-    // in attesa di Davide (A.86) danno della tabella senza bonus di Caratteristica
+    // A.86 (E&L del 03/10/2026): danno della tabella senza bonus di Caratteristica
     const esplosiva = !!(d?.danno_da_munizione || d?.esplosivo) && regoleCar?.esplosivi?.senza_bonus === true;
     const bonusCar0 = bonusCaratteristicaArma(nomeAbilita, d?.proprieta ?? []);
     const bonusCaratteristica = bonusCar0 && esplosiva ? { ...bonusCar0, bonus: 0, esclusoDa: 'Munizione esplosiva (danno della tabella, A.86)' } : bonusCar0;

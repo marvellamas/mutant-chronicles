@@ -127,13 +127,18 @@ export function calcolaAR(equip, dati, { talenti = [], accesi = new Set(), rotti
   // A.61 (E&L del 02/10): l'armatura Capolavoro del Corazzaio migliora una Contromisura, non l'AR
   for (const p of armature.filter((x) => x.capolavoro)) righe.push({ ...riga(`${p.nome}: Capolavoro, ${p.capolavoro.capolavoro} ${p.capolavoro.valore}`, 0, `Contromisura contro ${p.capolavoro.effetto}, non AR (A.61): vedi Resistenze`), escluso: true });
 
-  // rinforzi indossati da soli (soprabiti e mantelli, richiesta di Davide del 02/10; regole.json →
-  // rinforzi.da_solo, TODO(Davide) A.80): §7.23.4 «non costituiscono un profilo autonomo di armatura»
+  // rinforzi indossati da soli (soprabiti, mantelli, Tabardo consacrato, Sottogiacca IES; regole.json →
+  // rinforzi.da_solo): A.80 (E&L del 03/10/2026), profilo autonomo di Rinforzo Leggero, AR 1 ordinaria
   const RD = dati.regole?.rinforzi?.da_solo ?? {};
   for (const x of equip?.rinforziDaSoli ?? []) {
     if (rotti.has(x.uid)) { righe.push({ ...riga(x.nome, x.ar, ROTTO), escluso: true, barrato: true }); continue; }
     if (x.conArmatura && RD.con_armatura_indossata !== 'vale') {
       righe.push({ ...riga(x.nome, x.ar, 'indossato da solo con un’armatura: non conta, va montato (§7.11.2)'), escluso: true });
+    } else if (x.sovrapposto) {
+      righe.push({ ...riga(x.nome, x.ar, 'più capi indossati da soli non si sommano: conta il primo (A.80)'), escluso: true });
+    } else if (RD.ar === 'profilo_autonomo') {
+      voci.push({ etichetta: `${x.nome} (da solo)`, totale: x.ar, magica: 0, fonte: 'rinforzo', uid: x.uid });
+      righe.push(riga(x.nome, x.ar, `indossato da solo: profilo autonomo, ${x.categoria}, FOR ${x.forRichiesta} (A.80)`));
     } else if (RD.ar === 'propria') {
       voci.push({ etichetta: `${x.nome} (da solo)`, totale: x.ar, magica: 0, fonte: 'rinforzo', uid: x.uid });
       righe.push(riga(x.nome, x.ar, 'rinforzo indossato da solo (regole.json → rinforzi)'));
