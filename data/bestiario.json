@@ -262,6 +262,18 @@
         "mercenario",
         "eretico"
       ],
+      "nomi_tipi": {
+        "fante-capitol": "Fante Capitol",
+        "soldato-bauhaus": "Soldato Bauhaus",
+        "guerriero-mishima": "Guerriero Mishima",
+        "agente-cybertronic": "Agente Cybertronic",
+        "soldato-imperiale": "Soldato Imperiale",
+        "inquisitore-della-fratellanza": "Inquisitore della Fratellanza",
+        "guardia-di-sicurezza": "Guardia di sicurezza",
+        "criminale-di-strada": "Criminale di strada",
+        "mercenario": "Mercenario",
+        "eretico": "Eretico"
+      },
       "per_grado": {
         "minore": {
           "tipo": "Recluta",

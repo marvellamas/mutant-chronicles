@@ -2,7 +2,7 @@
 // livello" o stampa. Stato: le scelte della creazione, i livelli acquisiti (cap. 8) e i valori
 // di sessione (modalità tavolo) del personaggio aperto; tutto il resto si ricalcola a ogni
 // disegno con calcolaScheda / anteprima.
-import { caricaDati, versioniPersonaggio } from '../rules.js';
+import { caricaDati, versioniPersonaggio, FILE_SOLO_TAVOLO } from '../rules.js';
 import { formattaErrore, trovaTodo } from '../validate.js';
 import { calcolaScheda, validaLivello } from '../calc.js';
 import { separaEsemplare, restituisciGranate } from '../equipaggiamento.js';
@@ -549,7 +549,8 @@ function renderHome(unito = null) {
   nascondiTooltip();
   document.title = 'Mutant — Creazione personaggio';
   const righe = unito?.righe ?? elencoUnito(archivio.elenco(), null);
-  const todo = trovaTodo(stato.dati);
+  // i punti da chiarire delle regole del personaggio: il Bestiario proposto (solo Tavolo del Master) ha i suoi
+  const todo = trovaTodo(Object.fromEntries(Object.entries(stato.dati).filter(([k]) => !FILE_SOLO_TAVOLO.includes(k))));
   const msg = stato.messaggioHome ?? (unito?.avvisi.length ? { tipo: 'attenzione', testo: 'Cartella personaggi/', dettagli: unito.avvisi } : null);
   stato.messaggioHome = null;
   if (stato.cartella && !unito) {

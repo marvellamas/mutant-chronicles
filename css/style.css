@@ -1655,3 +1655,29 @@ body.con-sfondo::before {
 .carta-nemico.carta-ridotta { padding: 0.35rem 0.6rem; opacity: 0.75; }
 .carta-ridotta .riga-ridotta { display: block; width: 100%; text-align: left; color: inherit; text-decoration: none; }
 .ordine-iniziativa tr.a-zero { color: var(--tenue); opacity: 0.65; }
+
+/* «Crea nemico» e «Prepara scontro» (src/ui/crea-nemico.js, src/ui/preparazione.js): finestre più larghe */
+.pannello-scheda.crea-nemico, .pannello-scheda.preparazione { width: min(980px, calc(100vw - 16px)); }
+.passi-crea { display: flex; flex-wrap: wrap; gap: 0.3rem; margin: 0.2rem 0 0.5rem; }
+.tutto-caso { border-bottom: 1px solid var(--bordo); padding-bottom: 0.5rem; }
+.passo-crea { margin: 0.6rem 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.passo-crea .scelta-pulsanti { flex-wrap: wrap; }
+.griglia-interruttori { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(15rem, 100%), 1fr)); gap: 0.35rem 0.6rem; }
+.crea-nav { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: space-between; position: sticky; bottom: 0; background: var(--superficie); padding: 0.5rem 0 0; border-top: 1px solid var(--bordo); }
+.griglia-ritocchi { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(12rem, 100%), 1fr)); gap: 0.4rem 0.8rem; }
+.campo-ritocco { display: flex; align-items: center; gap: 0.3rem; font-size: 0.92rem; }
+.campo-ritocco > span { flex: 0 0 5.5rem; font-weight: 600; }
+.campo-ritocco input { width: 4.5rem; min-width: 0; }
+.attacchi-crea input { max-width: 7rem; }
+.casuale .passi-casuali { margin: 0.4rem 0; padding-left: 1.4rem; }
+.casuale .passi-casuali li { margin: 0.3rem 0; }
+.casuale .ritirato { text-decoration: line-through; color: var(--tenue); }
+.voci-bozza { list-style: none; padding: 0; margin: 0.3rem 0; }
+.voce-bozza { border: 1px solid var(--bordo); border-radius: var(--raggio); padding: 0.3rem 0.6rem; margin: 0.35rem 0; }
+.voce-bozza .scheda-breve { font-size: 0.92rem; border-top: 1px dashed var(--bordo); margin-top: 0.3rem; }
+.voce-bozza .scheda-breve p, .voce-bozza .scheda-breve ul { margin: 0.25rem 0; }
+.azioni-bozza { border-top: 1px solid var(--bordo); padding-top: 0.6rem; margin-top: 0.8rem; }
+.riquadro.difficolta-facile { border-left-color: var(--ok); background: var(--ok-tenue); }
+.riquadro.difficolta-normale { border-left-color: var(--bordo); }
+.riquadro.difficolta-duro, .riquadro.difficolta-mortale { border-left-color: var(--attenzione); background: var(--attenzione-tenue); }
+@media (max-width: 46rem) { .campo-nemico input[type="text"] { min-width: 0; width: 100%; } }

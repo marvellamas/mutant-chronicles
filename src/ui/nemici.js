@@ -22,7 +22,7 @@ export async function elencoNemici() {
   return r.json();
 }
 
-async function salvaNemico(n) {
+export async function salvaNemico(n) {
   const r = await fetch(`api/nemici/${encodeURIComponent(n.id)}`, { method: 'PUT', body: JSON.stringify(n), headers: { 'Content-Type': 'application/json' } });
   const j = await r.json().catch(() => ({}));
   if (!r.ok) throw Object.assign(new Error(j.errore ?? `errore ${r.status}`), { errori: j.errori });
@@ -56,7 +56,7 @@ function valoriAmmessi(s, dati) {
  * Riquadro del bestiario: tipi validi con «Modifica», file non validi con gli errori, «Nuovo tipo».
  * @param voci src/nemici.js → vociBestiario
  */
-export function pannelloBestiario(ctx, voci, { aperto, onToggle, salvato }) {
+export function pannelloBestiario(ctx, voci, { aperto, onToggle, salvato, procedura = null }) {
   const validi = voci.filter((v) => v.nemico);
   const rotti = voci.filter((v) => !v.nemico);
   return h('details', { class: 'riquadro bestiario', open: aperto, ontoggle: (e) => onToggle(e.target.open) },
@@ -68,7 +68,9 @@ export function pannelloBestiario(ctx, voci, { aperto, onToggle, salvato }) {
     validi.length ? h('ul', { class: 'bestiario-elenco' }, validi.map((v) => h('li', {},
       h('strong', {}, v.nemico.nome), h('small', { class: 'nota' }, ` ${v.file}`), ' · ',
       `PV ${v.nemico.pv} · AR ${v.nemico.ar.totale} · Difese ${v.nemico.difese} · Iniziativa ${numero(v.nemico.iniziativa)} · ${v.nemico.attacchi.length} attacc${v.nemico.attacchi.length === 1 ? 'o' : 'hi'} `,
-      h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => apriEditorNemico(ctx, v.nemico, voci, salvato) }, 'Modifica'))))
+      h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => apriEditorNemico(ctx, v.nemico, voci, salvato) }, 'Modifica'),
+      // creato con «Crea nemico»: si riapre nella procedura guidata, con le scelte e i ritocchi
+      procedura && v.nemico._bestiario?.scelte ? [' ', h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Riapre il riepilogo di «Crea nemico» con le scelte di questo nemico', onclick: () => procedura(v.nemico) }, 'Procedura')] : null)))
       : h('p', { class: 'vuoto' }, 'Nessun tipo di nemico: «Nuovo tipo» ne crea uno.'),
     rotti.length ? h('div', { class: 'riquadro attenzione' },
       h('p', {}, h('strong', {}, 'File non validi: '), 'restano fuori dagli scontri finché non si correggono (a mano o salvandoli dall’editor).'),
@@ -79,7 +81,7 @@ export function pannelloBestiario(ctx, voci, { aperto, onToggle, salvato }) {
  * Editor di un tipo di nemico in una finestra modale (fuori dalla plancia, che si ridisegna ogni pochi
  * secondi): un modulo generato dal formato, la validazione e il salvataggio in nemici/.
  */
-export function apriEditorNemico(ctx, nemico, voci, salvato, { modello = null, origine = null, avvisi = [] } = {}) {
+export function apriEditorNemico(ctx, nemico, voci, salvato, { modello = null, origine = null, avvisi = [], titolo = null, titoloSalva = 'Salva in nemici/', salva: salvaAltrove = null } = {}) {
   const dati = ctx.dati;
   const formato = dati.formato_nemici;
   const nomi = nomiValori(dati);
@@ -185,7 +187,7 @@ export function apriEditorNemico(ctx, nemico, voci, salvato, { modello = null, o
   const disegna = () => {
     finestra.replaceChildren(h('form', { class: 'pannello-contenuto', method: 'dialog', onsubmit: (e) => e.preventDefault() },
       h('header', { class: 'pannello-testa' },
-        h('h2', { id: 'editor-nemico-titolo' }, nuovo ? (origine ? `Nuovo tipo di nemico da ${origine}` : 'Nuovo tipo di nemico') : `Modifica: ${nemico.nome}`),
+        h('h2', { id: 'editor-nemico-titolo' }, titolo ?? (nuovo ? (origine ? `Nuovo tipo di nemico da ${origine}` : 'Nuovo tipo di nemico') : `Modifica: ${nemico.nome}`)),
         h('button', { type: 'button', class: 'btn tondo chiudi', 'aria-label': 'Chiudi', onclick: () => finestra.close() }, '×')),
       h('p', { class: 'nota' }, 'Campi di data/formato_nemici.json (* obbligatori): numeri già fatti, nessun calcolo; Corsa e Scatto vuoti si calcolano dal Passo (per-davide A.73). Tieni il puntatore su un campo per la sua descrizione.'),
       origine ? h('p', { class: 'riquadro ok' }, `Numeri calcolati dalla scheda di ${origine} con le regole attuali (PV pieni, nessuno Stato). Dai un nome al tipo e salvalo: il personaggio non cambia.`) : null,
@@ -194,7 +196,7 @@ export function apriEditorNemico(ctx, nemico, voci, salvato, { modello = null, o
         h('ul', {}, errori.map((e) => h('li', {}, formattaErrore({ ...e, file: '' }).replace(/^ › /, ''))))) : null,
       campiOggetto({ campi: formato.campi }, bozza, '', disegna),
       h('div', { class: 'riga-azioni' },
-        h('button', { type: 'button', class: 'btn primario', onclick: salva }, 'Salva in nemici/'),
+        h('button', { type: 'button', class: 'btn primario', onclick: salva }, titoloSalva),
         h('button', { type: 'button', class: 'btn', onclick: () => finestra.close() }, 'Annulla'))));
   };
   const salva = async () => {
@@ -204,7 +206,8 @@ export function apriEditorNemico(ctx, nemico, voci, salvato, { modello = null, o
     if (!errori.length && nuovo && voci.some((v) => v.file === `${n.id}.json`) && !confirm(`In nemici/ c’è già ${n.id}.json: sostituirlo?`)) return;
     if (errori.length) { disegna(); finestra.querySelector('[role="alert"]')?.scrollIntoView({ block: 'nearest' }); return; }
     try {
-      await salvaNemico(n);
+      // «Prepara scontro» → «Ritocca»: la scheda cambia solo nella bozza, non nel bestiario
+      if (salvaAltrove) await salvaAltrove(n); else await salvaNemico(n);
       finestra.close();
       salvato(n);
     } catch (e) {

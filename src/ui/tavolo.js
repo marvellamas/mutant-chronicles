@@ -17,10 +17,11 @@ import { attacchiDi } from '../nemico-attacco.js';
 import { testoColpo } from '../danno.js';
 import { pannelloScontro, leggiScontroAperto, leggiScontro, salvaScontro } from './scontro.js';
 import { pannelloBestiario, elencoNemici, cartaNemico } from './nemici.js';
-import { diTurno, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico } from '../scontro.js';
+import { diTurno, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico, aggiungiNemici } from '../scontro.js';
 import { vociBestiario } from '../nemici.js';
 import { creaCustode } from './ridisegno.js';
 import { avviso, avvisoErrore } from './avvisi.js';
+import { apriCreaNemico, apriDaBestiario } from './crea-nemico.js';
 
 const INTERVALLO_MS = 3000;
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
@@ -127,6 +128,8 @@ export function renderTavolo(radice, ctx) {
           h('button', { type: 'button', class: 'btn', title: 'Sceglie uno o più file JSON di «SALVA PG», li controlla come «Importa», li scrive in personaggi/ senza mai sovrascrivere e li mette al tavolo', onclick: () => sceltaFile.click() }, 'Aggiungi PG al tavolo'),
           sceltaFile,
           h('button', { type: 'button', class: 'btn', title: 'Copia i personaggi e i nemici d’esempio del repo (esempi/) nelle cartelle del server; non sovrascrive mai un file già presente', onclick: caricaEsempi }, 'Carica esempi'),
+          // richiesta di Marcello del 03/10: nemici dal Bestiario, anche senza scontro aperto
+          h('button', { type: 'button', class: 'btn', title: 'Procedura guidata dal Bestiario (base, grado, moduli), oppure tutto a caso', onclick: () => creaNemico() }, 'Crea nemico'),
           h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.personaggi() }, 'Personaggi'))),
       stato.esitoEsempi ? h('p', { class: 'riquadro attenzione', role: 'status' }, stato.esitoEsempi) : null,
       h('p', { class: 'nota' }, 'Sola lettura: i valori sono quelli delle schede in personaggi/, ricalcolati con le regole attuali. Per cambiarli si apre il personaggio (clic sulla carta).'),
@@ -151,8 +154,21 @@ export function renderTavolo(radice, ctx) {
         aperto: stato.bestiarioAperto,
         onToggle: (v) => { stato.bestiarioAperto = v; },
         salvato: async (n) => { avviso(`Tipo di nemico salvato: ${n?.nome ?? ''} (nemici/${n?.id ?? '…'}.json).`); stato.firmaBestiario = null; await aggiornaBestiario(); disegna(); },
+        procedura: (n) => creaNemico(n),
       })));
     custode.ripristina(foto);
+  };
+  // «Crea nemico» (src/ui/crea-nemico.js): con uno scontro aperto il nemico può entrare subito nello scontro;
+  // con un nemico del bestiario creato dalla procedura, la riapre sul suo riepilogo
+  const pgAlTavolo = () => stato.selezione.map((k) => ultimiPerPersonaggio(stato.elenco).get(k)).filter(Boolean).map((r) => stato.viste.get(r.file)).filter((v) => v?.completa);
+  const livelloTavolo = () => { const l = pgAlTavolo().map((v) => v.livello); return l.length ? Math.round(l.reduce((a, b) => a + b, 0) / l.length) : 8; };
+  const bestiarioSalvato = async () => { stato.firmaBestiario = null; await aggiornaBestiario(); disegna(); };
+  const creaNemico = (riapri = null) => {
+    const opzioni = {
+      voci: stato.bestiario, livello: livelloTavolo(), salvato: bestiarioSalvato,
+      destinazione: stato.scontro ? { etichetta: 'Aggiungi allo scontro', aggiungi: (n, { quanti, lato }) => modifica((x) => aggiungiNemici(x, n, quanti, { lato })) } : null,
+    };
+    if (riapri) apriDaBestiario(ctx, riapri, opzioni); else apriCreaNemico(ctx, opzioni);
   };
   // «Carica esempi»: copia esempi/ nelle cartelle del server senza sovrascrivere (server.mjs → /api/esempi)
   const caricaEsempi = async () => {

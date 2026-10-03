@@ -7,7 +7,7 @@
 //   testo dei paragrafi; il motore (src/crea-nemico.js) calcola i profili e il test li confronta con il cap. 5.
 //   node tools/lotti/lotto_bestiario_dati.mjs           → controlli e prova a vuoto
 //   node tools/lotti/lotto_bestiario_dati.mjs --scrivi  → scrive data/bestiario.json
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 
 const R = new URL('../../', import.meta.url);
 const md = readFileSync(new URL('docs/bestiario/bestiario.md', R), 'utf8').split(/\r?\n/);
@@ -72,7 +72,11 @@ const umano = Object.fromEntries(t32.righe.map((r) => [idGrado(r[2]), {
   tipo: r[0].replace(/ \(da preparare\)$/, ''), da_preparare: /da preparare/.test(r[0]), livello: num(r[1]),
   pv_molt: num(r[3]), azp: num(r[4]), bonus_danno: num(r[5]), round_resistenza: num(r[6]), round_abbattere: num(r[7]),
 }]));
-const TIPI_UMANI = ['fante-capitol', 'soldato-bauhaus', 'guerriero-mishima', 'agente-cybertronic', 'soldato-imperiale', 'inquisitore-della-fratellanza', 'guardia-di-sicurezza', 'criminale-di-strada', 'mercenario', 'eretico'];
+// i dieci tipi del bestiario umano, con il nome del §3.2 («I tipi sono: …»); l'id è quello dei file esempi/nemici/umani/
+const frase = md.find((r) => r.startsWith('I tipi sono: '));
+const NOMI_UMANI = frase.replace('I tipi sono: ', '').split('.')[0].split(', ');
+const TIPI_UMANI = NOMI_UMANI.map((nome) => nome.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-'));
+verifica(TIPI_UMANI.length === 10 && TIPI_UMANI.every((t) => ['recluta', 'veterano', 'elite'].every((g) => existsSync(new URL(`esempi/nemici/umani/${t}-${g}.json`, R)))), 'tipi del bestiario umano e loro file');
 
 /** Tabella di una base: righe per Caratteristica e valori, poi «Attacco» e «Abilità». */
 function base(titolo) {
@@ -116,7 +120,7 @@ function base(titolo) {
 }
 const basi = {
   umano: {
-    nome: 'Umano', paragrafo: '§3.2', natura: 'Comune', umano: true, tipi: TIPI_UMANI, per_grado: umano,
+    nome: 'Umano', paragrafo: '§3.2', natura: 'Comune', umano: true, tipi: TIPI_UMANI, nomi_tipi: Object.fromEntries(TIPI_UMANI.map((t, i) => [t, NOMI_UMANI[i]])), per_grado: umano,
     nota: 'Gli umani vengono dal bestiario umano del Tavolo del Master (esempi/nemici/umani/), portati al grado con PV × moltiplicatore, AzP del grado e bonus di grado al danno. Comandante (12°) e Campione (16°) sono da preparare.',
   },
   insettoide: {
