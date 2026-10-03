@@ -169,11 +169,8 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
           if (e.target.checked) await vista(k);
           modifica((x) => cambiaBozza(x, { pg: e.target.checked ? [...(x.pg ?? []), k] : (x.pg ?? []).filter((y) => y !== k) }));
         } }), ` ${k.replace(/-/g, ' ')}`))) : h('p', { class: 'nota' }, 'Nessun personaggio in personaggi/.')),
-      h('p', { class: `riquadro difficolta-${d.id}`, role: 'status' },
-        h('strong', {}, `Difficoltà per ${d.pg} PG di ${liv.valore}° livello: ${d.nome}`), ` (somma delle frazioni ${virgola(d.somma)}; tabella dei gruppi misti del §2.3, riga dei PG di ${d.livello}° livello)`,
-        d.stime ? ` · ${d.stime} nemic${d.stime === 1 ? 'o' : 'i'} senza grado del Bestiario: grado stimato dai PV` : '',
-        '. Solo indicativa. Livello: ', liv.fonte, ' ',
-        h('input', { type: 'number', min: 1, max: 20, step: 1, class: 'input-d10', 'aria-label': 'Livello dei PG per la difficoltà', placeholder: String(liv.valore), value: Number.isInteger(b.livello) ? b.livello : '', onchange: (e) => modifica((x) => cambiaBozza(x, { livello: e.target.value === '' ? null : Number(e.target.value) })) })),
+      riquadroDifficolta(b, d, liv),
+      avvisoRari(b),
       h('h3', {}, `Nemici (${b.nemici.reduce((s, v) => s + v.quanti, 0)})`),
       b.nemici.length ? h('ul', { class: 'voci-bozza' }, b.nemici.map(voce)) : h('p', { class: 'vuoto' }, 'Nessun nemico: aggiungili qui sotto.'),
       h('div', { class: 'aggiungi-nemici' },
@@ -204,6 +201,37 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
         h('button', { type: 'button', class: 'btn', onclick: () => duplica(b.id) }, 'Duplica'),
         h('button', { type: 'button', class: 'btn', onclick: () => elimina(b.id) }, 'Elimina')),
     ];
+  };
+  // difficoltà in parole semplici; i dettagli del calcolo nel suggerimento (richiesta di Marcello del 03/10)
+  const delLivello = (l) => (l === 8 || l === 11 ? `dell’${l}°` : `del ${l}°`);
+  const riquadroDifficolta = (b, d, liv) => {
+    const vuota = !b.nemici.length;
+    const soglie = BE.equilibrato.soglie.map((x) => (x.fino_a === null ? `oltre: ${x.nome}` : `fino a ${virgola(x.fino_a)}: ${x.nome}`)).join('; ');
+    const dettagli = vuota ? 'Aggiungi almeno un nemico: la difficoltà si calcola dai loro gradi.'
+      : `Somma delle frazioni: ${virgola(d.somma)} (${soglie}). Ogni nemico vale 1 diviso il numero di creature di uno scontro normale per il suo grado effettivo, nella tabella dei gruppi misti del Bestiario (§2.3), riga dei PG ${delLivello(d.livello)} livello; un Boss vale 1 contro i PG del suo livello. Solo indicativa.`;
+    return h('div', { class: `riquadro difficolta-${vuota ? 'facile' : d.id}`, role: 'status', title: dettagli },
+      h('p', {}, vuota ? h('strong', {}, 'Difficoltà: nessun nemico.')
+        : [h('strong', {}, `Difficoltà per ${d.pg} PG di ${liv.valore}° livello: ${d.nome}.`),
+          d.livello !== liv.valore ? ` Calcolata sulla riga ${delLivello(d.livello)} livello, la più vicina nella tabella del Bestiario.` : ` Calcolata sulla riga ${delLivello(d.livello)} livello della tabella del Bestiario.`,
+          d.stime ? ` Per ${d.stime} nemic${d.stime === 1 ? 'o' : 'i'} il grado è stimato dai PV.` : '']),
+      h('p', { class: 'nota' }, 'Livello dei PG: ',
+        h('input', { type: 'number', min: 1, max: 20, step: 1, class: 'input-d10', 'aria-label': 'Livello dei PG per la difficoltà', placeholder: String(liv.valore), value: Number.isInteger(b.livello) ? b.livello : '', onchange: (e) => modifica((x) => cambiaBozza(x, { livello: e.target.value === '' ? null : Number(e.target.value) })) }),
+        ` (${liv.fonte}). Passa sopra il riquadro per i dettagli del calcolo.`));
+  };
+  // Bestiario §3.9: una base rara (il Gigante) al massimo una per scontro sotto il grado indicato nei dati
+  const avvisoRari = (b) => {
+    const indice = (g) => BE.gradi.findIndex((x) => x.id === g);
+    const perBase = new Map();
+    for (const v of b.nemici) {
+      const bb = v.nemico._bestiario;
+      const m = bb?.scelte && BE.basi[bb.scelte.base]?.massimo_per_scontro;
+      if (m && indice(bb.grado) < indice(m.sotto)) perBase.set(bb.scelte.base, (perBase.get(bb.scelte.base) ?? 0) + v.quanti);
+    }
+    const troppi = [...perBase].filter(([base, n]) => n > BE.basi[base].massimo_per_scontro.numero);
+    return troppi.length ? h('p', { class: 'riquadro attenzione', role: 'status' }, troppi.map(([base, n]) => {
+      const m = BE.basi[base].massimo_per_scontro;
+      return `${BE.basi[base].nome}: al massimo ${m.numero} per scontro sotto il grado ${BE.gradi.find((g) => g.id === m.sotto).nome} (Bestiario ${BE.basi[base].paragrafo}); qui ce ne sono ${n}.`;
+    }).join(' ')) : null;
   };
   const quantiLato = (o) => [
     h('label', {}, ' Quanti ', h('input', { type: 'number', min: 1, max: 30, step: 1, class: 'input-d10', value: o.quanti, oninput: (e) => { o.quanti = e.target.value; } })),

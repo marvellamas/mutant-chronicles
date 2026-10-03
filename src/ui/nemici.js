@@ -310,6 +310,10 @@ export function cartaNemico(ctx, p, { modifica, diTurnoOra = false, onColpito = 
         n.ar.magica !== n.ar.totale ? h('small', { class: 'nota' }, ' · contro Etereo ', h('strong', { class: 'pillola-plancia' }, String(n.ar.magica))) : null),
       h('span', {}, ' · Difese ', h('strong', { class: 'pillola-plancia' }, numero(n.difese))),
       h('span', {}, ' · Iniziativa ', h('strong', { class: 'pillola-plancia' }, numero(n.iniziativa)))),
+    // Bestiario §3.1.1: volo e taglia Grande, con la regola nel suggerimento (data/formato_nemici.json)
+    n.movimento?.volo || n.taglia === 'grande' ? h('p', { class: 'plancia-condizioni tratti-nemico' },
+      n.movimento?.volo ? h('span', { class: 'etichetta tratto-nemico', title: dati.formato_nemici.campi.movimento.campi.volo?.descrizione ?? null }, `Vola · Passo in volo ${n.movimento.volo} Q · −2 VA a chi lo attacca in volo`) : null,
+      n.taglia === 'grande' ? [' ', h('span', { class: 'etichetta tratto-nemico', title: dati.formato_nemici.campi.taglia?.descrizione ?? null }, 'Taglia Grande · +2 VA a chi lo attacca')] : null) : null,
     n.azioni ? h('p', { class: 'nota azioni-nemico' }, `Azioni per Round: ${testoAzioni(n.azioni)}`) : null,
     h('p', { class: 'nota' }, `Salvezze: ${salvezze} · ${testoMovimento(n, dati)}`),
     h('p', { class: 'plancia-stati' },

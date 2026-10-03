@@ -12,6 +12,7 @@ import { salvaNemico } from './nemici.js';
 import { validaNemico, formattaErrore } from '../validate.js';
 import { provenienza, riga } from '../provenienza.js';
 import { catalogo } from '../equipaggiamento.js';
+import { testoMovimento } from '../nemici.js';
 import {
   profiloNemico, scelteCreatura, fileUmano, SUFFISSO_UMANO, aCaso, ritiraPasso, mutazioniAmmesse, costoMutazione,
   costoModuli, gradoEffettivo, roundResistenza, testoCosto, proponiNome, proponiDescrizione, idDaNome,
@@ -209,6 +210,7 @@ export function apriCreaNemico(ctx, { voci = [], salvato = () => {}, destinazion
       r.avvisi.length ? h('div', { class: 'riquadro attenzione' }, h('ul', {}, r.avvisi.map((x) => h('li', {}, x)))) : null,
       h('div', { class: 'griglia-ritocchi' }, CAMPI_RITOCCO.map(([p, e]) => cella(p, e))),
       h('p', { class: 'nota' }, `Caratteristiche: ${Object.entries(n.caratteristiche ?? {}).map(([k, v]) => `${k} ${v}`).join(' · ')}.`),
+      h('p', { class: 'nota' }, `Movimento: ${testoMovimento(n, dati)}${n.taglia === 'grande' ? ' · Taglia Grande (+2 VA a chi lo attacca)' : ''}${n.movimento?.volo ? ' · −2 VA a chi lo attacca in volo' : ''}.`),
       h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta attacchi-crea' },
         h('thead', {}, h('tr', {}, ['Attacco', 'Tipo', 'VA', 'Danno', 'Natura', 'Proprietà'].map((x) => h('th', {}, x)))),
         h('tbody', {}, n.attacchi.map((a, i) => h('tr', {},

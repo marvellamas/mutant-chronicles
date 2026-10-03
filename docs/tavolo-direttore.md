@@ -265,6 +265,16 @@ Ritocchi segnalati da Marcello dopo la prima prova della plancia.
   
   Senza server l'app è invariata: nessuna etichetta, nessuna richiesta `/api`, console pulita.
 
+## Basi nuove del Bestiario nella plancia (3 ottobre 2026)
+
+Quadrupede, Alato, Strisciante e Gigante (Bestiario §3.6–3.9) e le loro creature pronte arrivano in «Crea nemico» e «Prepara scontro» dai dati (`data/bestiario.json`), senza codice nuovo per le basi.
+- **Formato dei nemici.** Due campi facoltativi: «Passo in volo» (`movimento.volo`) e «Taglia» (`taglia`: normale o grande). L'editor li mostra da sé; la carta del nemico li segnala con un'etichetta e la regola nel suggerimento (−2 VA a chi attacca in volo, +2 VA contro la taglia Grande: proposte del Bestiario §3.1.1).
+- **Riepilogo di «Crea nemico».** Mostra anche Movimento, volo e taglia.
+- **«Prepara scontro».**
+  - Il riquadro della difficoltà è in parole semplici («Difficoltà per 7 PG di 6° livello: facile. Calcolata sulla riga del 5° livello, la più vicina nella tabella del Bestiario»), con i dettagli del calcolo nel suggerimento; senza nemici dice «Difficoltà: nessun nemico».
+  - Avvisa se nella bozza ci sono più Giganti di quanti ne ammette il Bestiario sotto il grado Potente (`massimo_per_scontro` della base).
+- **Prova.** Su porta di prova e cartelle temporanee: un Gigante Potente e due Alati Medi creati con «Crea nemico», messi in una bozza e avviati con «Inizia», con Iniziativa e Round 1; sulle carte compaiono «Taglia Grande» e «Vola · Passo in volo 8 Q». Senza server l'app è invariata.
+
 ## Collegare i giocatori (3 ottobre 2026)
 
 Marcello aveva avviato solo `avvia-server.bat` e non vedeva a quale indirizzo dovevano collegarsi i giocatori: il server ascoltava solo su `127.0.0.1`, salvo `--rete`.

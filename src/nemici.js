@@ -97,5 +97,9 @@ export function movimentoNemico(n, dati) {
 export function testoMovimento(n, dati) {
   const m = movimentoNemico(n, dati);
   const v = (nome, k, nonConsentito) => (m[k] === null ? `${nome} ${nonConsentito}` : `${nome} ${m[k]} Q${m.calcolati.includes(k) ? '*' : ''}`);
-  return [v('Passo', 'passo'), v('Corsa', 'corsa', 'non consentita'), v('Scatto', 'scatto', 'non consentito')].join(' · ') + (m.calcolati.length ? ' (* dal Passo)' : '');
+  const terra = [v('Passo', 'passo'), v('Corsa', 'corsa', 'non consentita'), v('Scatto', 'scatto', 'non consentito')].join(' · ') + (m.calcolati.length ? ' (* dal Passo)' : '');
+  // Bestiario §3.1.1: volo con Corsa e Scatto il doppio e il triplo del Passo in volo (Giocatore §5.2.3)
+  const volo = n?.movimento?.volo;
+  const M = dati.formato_nemici.campi.movimento.moltiplicatori;
+  return volo ? `${terra} · Volo ${volo} Q (Corsa ${volo * M.corsa} Q, Scatto ${volo * M.scatto} Q)` : terra;
 }
