@@ -78,45 +78,12 @@ L'app oggi non lo conta nella capacità di sintonizzazione (§7.10) e la sua ris
 Otto tab (ARTEFATTI a sé). I Crediti stanno nell'Inventario, dove si comprano gli oggetti al tavolo. Le Tecniche Interiori restano nella tab Abilità. L'app non registra quale mano tiene un oggetto: destra e sinistra seguono l'ordine dell'Inventario, con un riquadro «Due mani» per le armi a due mani. I rinforzi si montano sull'armatura dall'Inventario. Nell'Inventario, Strumenti professionali e Razioni arriveranno con i loro capitoli; lo stato di un oggetto tiene quelli del tipo (Impugnata, Addosso, Imbracciato, Indossata, Nello zaino…) più «Deposito comune». Poteri Sciamanici, Cibernetica e Veicoli aspettano il manuale. Va bene così?  
 *Nel frattempo:* come descritto (dettaglio in docs/layout-sd.md, «Esito»).
 
-**A.61 — Talenti con valori ancora da definire (censimento dei Talenti)**  
-Corazzaio: un'armatura realizzata come Capolavoro ottiene \+1 Protezione contro una tipologia di danno scelta, ma il manuale dice che «questo beneficio resta da raccordare alle regole definitive delle protezioni». Come si applica? Come AR aggiuntiva contro quel tipo di danno, come le proprietà delle armature?  
-*Nel frattempo:* l'app applica i \+3 VA di Corazzaio (per costruire o riparare protezioni) e lascia il beneficio del Capolavoro come testo.
-
-**A.62 — Katana Ryūjin: natura del danno attivato (Armamenti 0.58, §7.1.9)**  
-Attivata, la Ryūjin infligge 1d8+1+1d6 «risolto come un unico colpo Naturale», ma lo stesso paragrafo dice che aggiunge \+1d6 Plasma e che l'effetto Plasma segue il §7.5.1. Il danno attivato è Naturale con l'effetto secondario del Plasma, oppure di natura Plasma?  
-*Nel frattempo:* l'app la tratta come la Lancia Duskdealer (+1d6 Plasma) e riporta la frase del manuale.
-
-**A.63 — Esoscheletri: batteria o NEC? (Armamenti 0.58, §§7.11.6, 7.15, 7.16, 7.18)**  
-La 0.58 porta ai NEC celle d'arma, accessori, elmetti, robot (NEC Rosso dedicato) e mezzi. Powersuit, Shoa Ace Custom, Demonhunter, Felis, Juggernaut, Vulkan e APE Capitol scrivono ancora «batteria». Sono NEC (quale colore e formato) o restano batterie dedicate con l'autonomia della scheda?  
-*Nel frattempo:* l'app tiene il testo della scheda.
-
-**A.64 —Moduli IAS: riserva e consumo in Lx (Armamenti 0.58, §7.15.4)**  
-Il NEC Blu IAS contiene 20 cariche, ma «il consumo in Lx resta da dimensionare per il modello». Quanti Lx ha la riserva e quanti ne consuma una carica?  
-*Nel frattempo:* l'app conta le 20 cariche e il servizio di ricarica da 50\.
-
-**A.65 — Dotazioni con più di una scheda possibile (Equipaggiamento 0.5, §§5.3 e 5.8)**  
-Il Corredo agricolo Standard si sceglie fra coltivazione e allevamento (Giocatore §2.16.23): per la coltivazione c'è la scheda Standard degli Attrezzi agricoli di base, per l'allevamento solo il Corredo dell'allevatore (+2, 800). Quale scheda vale per la versione «allevamento»? E lo Strumento musicale portatile della dotazione è quello acustico (400) o quello elettronico (800)?  
-*Nel frattempo:* le due voci restano senza scheda (peso e prezzo da definire).  
-**A.66 — Fornello del Corredo da cucina: tempi e «cartuccia» (Equipaggiamento 0.5, §3.2)**  
-La tabella e il paragrafo sul NEC dicono una preparazione da 30 minuti e 50 Lx; «Preparazione e limiti» dice ancora 15 minuti, «un uso della cartuccia» e sostituzione in 1 minuto, mentre il NEC si sostituisce in 1 AzP (§5.4.5). Quali valgono?  
-*Nel frattempo:* l'app conta 10 preparazioni da 50 Lx e riporta la tabella.  
-**A.67 — Il Modulo Blu del Gehemmapuker (Armamenti §7.20.6, Equipaggiamento §5.4.4–5.4.5)**  
-Il Gehemmapuker «usa un Modulo Blu» da 2.500 Lx e 2.100 cr, gli stessi valori del Modulo Blu del catalogo NEC. È lo stesso Modulo (intercambiabile) o un formato d'arma dedicato (§5.4.5: formato d'arma e Modulo non sono automaticamente intercambiabili)?  
-*Nel frattempo:* due voci con gli stessi valori, il pacco del lanciafiamme (per la ricarica al tavolo) e il Modulo Blu.
-
-**A.68 — Interfaccia neurale standard: prezzo e profilo (Equipaggiamento 0.5, §7.3)**  
-Il capitolo 7 descrive l'Interfaccia neurale standard ma non ne dà il prezzo (la CYBERTRONIC sì). Quanto costa, e ha un profilo suo (PI, reperibilità) o vale quello della CYBERTRONIC senza lo sconto UMN?  
-*Nel frattempo:* la voce esiste in catalogo ma senza prezzo, quindi non si può comprare; chi la riceve dal Direttore la segna a mano.  
 **A.69 — Installare, togliere e reinstallare un impianto (Equipaggiamento 0.5 §7.1, Giocatore §5.21.4)**  
 Il manuale non definisce la procedura: dove si installa (serve una postazione medicochirurgica del cap. 6?), con quali costi, tempi e Prove, e cosa succede togliendo o reinstallando lo stesso impianto.  
 *Nel frattempo:* installare e togliere sono cambi di stato fatti a mano nell'app; il costo d'installazione è mostrato ma non scalato dai crediti; l'UMN si perde alla prima installazione e lo stesso esemplare non si conta due volte; la perdita resta anche togliendo l'impianto.  
 **A.70 — Procedure di recupero dell'Umanità (Giocatore §5.21.4)**  
 Il §5.21.4 accenna al recupero dell'Umanità ma non dà procedure, costi o limiti. Come si recupera?  
 *Nel frattempo:* l'app registra i recuperi solo come «concessi dal Direttore», con un modulo nella tab Cibernetica che tiene l'elenco di perdite e recuperi.
-
-**A.71 — Cartuccia chirurgica e set chirurgico (Equipaggiamento §6.5, §6.8.7)**  
-La cartuccia chirurgica delle postazioni medicochirurgiche (500 cr, «una operazione») e il set chirurgico del Kit chirurgico e della Postazione medica da campo (500 cr, un set per procedura) hanno lo stesso contenuto (anestetici, disinfettanti, suture, materiali) e lo stesso prezzo. Sono lo stesso consumabile, intercambiabile fra kit e postazioni, oppure due formati distinti?  
-*Nel frattempo:* due voci distinte allo stesso prezzo, ciascuna per i propri dispositivi.
 
 **A.72 — Anticipazione senza scala leggibile in alcune schede (Magia sez. 12.3)**  
 La sez. 12.3 dice «le altre scale e i massimi sono specificati nelle schede», ma in 29 schede (46 aspetti) i gradini non sono scritti. Gli esempi principali:
@@ -130,10 +97,6 @@ La sez. 12.3 dice «le altre scale e i massimi sono specificati nelle schede», 
 
 Quali sono i gradini di questi aspetti? (L'elenco completo dei 46 è in docs nel repo, \`docs/\` censimento Anticipazione.)  
 *Nel frattempo:* l'app mostra «valore da definire al tavolo» con il motivo; PM e Prova si calcolano comunque.
-
-**A.73 — Formato dei nemici per il Tavolo del Master**  
-Per la plancia del master proponiamo un formato dei nemici con i numeri già fatti: nome; PV; PM se ne ha; AR totale e di cui magica; Difese; Iniziativa; Movimento (Passo, Corsa, Scatto); le quattro Prove Salvezza; attacchi (nome, ravvicinato o a distanza, VA, danno, natura Naturale, Magico o Etereo, proprietà, portata o gittata, modalità di fuoco, AC); Stati con cui entra in scena; immunità agli Stati; incantesimi; note; Caratteristiche facoltative. Manca qualcosa, o il bestiario avrà un formato suo? In particolare: i nemici hanno Ferite e Affaticamento come i PG (§5.14)? Come lanciano gli incantesimi (VA, costo in PM)?  
-*Nel frattempo:* questo formato. Le Caratteristiche sono facoltative: servono DES e INT per la parità d'Iniziativa; senza, si fa lo spareggio col dado. Se mancano Corsa e Scatto valgono il doppio e il triplo del Passo. Dei nemici la plancia tiene solo PV e Stati. Gli incantesimi sono un promemoria, senza «Lancia\!».
 
 **A.74 — Rituale di Rigenerazione: quattro punti non scritti (Magia §24.6, sez. 25\)**  
 1\. «VA pertinente del Canale» (tabella del §24.6): quale Abilità del Canale conta?  
@@ -153,10 +116,6 @@ Un colpo con la proprietà Sanguinante X che supera l'Armatura applica Sanguinam
 **A.77 — Perforante con più applicazioni (AC) (Giocatore §5.10, §5.24)**  
 «Perforante X sottrae X una sola volta alla componente non magica del colpo.» Con AC 2 o più, l'AR si sottrae separatamente a ogni applicazione (§5.13). Perforante riduce l'AR di ogni applicazione, oppure di una sola per colpo?  
 *Nel frattempo:* l'app la riduce in ogni applicazione.
-
-**A.78 — Attacco con VA finale 20 o più (Giocatore §1.6, §1.7)**  
-Il §1.7 dice che con valore 20 o superiore il successo è automatico, senza tiro: niente Successo Magistrale né Fallimento Maldestro. Il §1.6 però rende Magistrale il 2 naturale con VA finale almeno 21 «nelle Prove di Abilità effettivamente richieste». Fuori da un tiro imposto (§1.7.1) o da una Prova contrapposta quella soglia non si raggiunge mai. Un attacco con VA finale 20 o più (per esempio un nemico forte che colpisce un bersaglio Ignaro o A Terra) è un successo automatico senza tiro, e quindi senza Magistrale? Oppure per gli attacchi si tira comunque, con 1, 2 e 20 naturali?  
-*Nel frattempo:* l'app applica il successo automatico senza tiro.
 
 **A.79 — Bestiario umano proposto per il Tavolo del Master**  
 **Metodo.** Non c'è ancora un bestiario. Per avere subito nemici umani con numeri coerenti, ognuno è costruito come un PG con le regole del Giocatore 0.45: creazione completa, equipaggiamento iniziale del §2.16 con il modello corporativo, avanzamento del cap. 8\. L'app lo converte poi in un nemico, con PV, AR, Difese, Iniziativa, Movimento, Salvezze e attacchi calcolati dal motore. Ci sono tre gradi: Recluta (2° livello), Veterano (5°) ed Élite (8°). Le scelte che il manuale lascia libere sono le più ovvie per il ruolo: Talenti, ordine di Caratteristiche e Abilità, dado dei PV dei Gradi al valore medio arrotondato per eccesso, opzioni migliori di arma e armatura dal Veterano in su. Ogni file è marcato «Proposta, da validare con Davide».  
@@ -191,6 +150,22 @@ La scheda concede «+3 ad Atletica e alle prove di Corpo a Corpo nelle manovre i
 «Infligge il danno senz'armi della propria Disciplina e del Grado nella Classe, più i bonus pertinenti al singolo attacco.» Il bonus di FOR al danno senz'armi (§5.13) è fra questi? E il \+2 al danno Ravvicinato di Pelle di Rinoceronte vale, visto che Onda ha Vettore Distanza?  
 *Nel frattempo:* il bonus di FOR sì, Pelle di R
 
+**A.83 — Reperibilità Epica (Magia §26.4, Equipaggiamento §10.3)**  
+Le Batterie Matrice colorate passano da REP Molto Rara a Epica, ma la scala delle reperibilità (Comune, Non comune, Rara, Molto rara, Leggendaria) non dice come si cerca un oggetto di REP Epica. C'è una Prova di Oratoria, e con quale penalità, oppure vale come Leggendaria (disponibilità decisa dal Direttore)?  
+*Nel frattempo:* la disponibilità la stabilisce il Direttore, senza Prova.
+
+**A.84 — Prova di Potere dei nemici: Taumaturgo o no?**  
+Il formato dei nemici dà il VA di lancio, ma non dice se il nemico è Taumaturgo. Per un Taumaturgo, ai livelli 1–3, la Prova non serve (Magia sez. 1); per gli altri utilizzatori si tira sempre. Serve un campo nel formato, oppure vale una regola unica per tutti i nemici?  
+*Nel frattempo:* la plancia applica le regole del Taumaturgo e mostra il promemoria «se il nemico non è Taumaturgo, la Prova si tira comunque».
+
+**A.85 — Bonus di SAG al danno degli incantesimi dei nemici**  
+Per i PG il danno di un incantesimo riceve il bonus di SAG, con il tetto del livello (Magia sez. 7, Giocatore §5.13). Il formato dei nemici non ha né il livello né questo bonus. Si aggiunge, o il danno della versione si intende già completo?  
+*Nel frattempo:* il danno è quello della versione, senza bonus, con un promemoria.
+
+**A.86 — Bonus di Caratteristica al danno delle granate (Armamenti §7.20.3, Giocatore §5.13)**  
+Il §7.20.3 dice che con un lanciagranate «la granata stabilisce danno, AC, RS e proprietà», e le munizioni di riferimento dei lanciatori hanno danno Naturale tirato una sola volta per esplosione. Il bonus di Caratteristica al danno (§5.13) si aggiunge anche alle granate (lanciate a mano o con lanciagranate) e ai razzi, oppure il danno dell'esplosione è sempre quello della tabella?  
+*Nel frattempo:* l'app usa il danno della tabella, senza bonus di Caratteristica.
+
 ### **Manovre ravvicinate**
 
 **A.40 — Carica oltre 12 Q (§5.6).** La tabella della Carica si ferma a 7–12 Q e la Carica «non può superare la Corsa». Chi ha una Corsa oltre 12 Q (Talenti di movimento) può caricare più lontano, e con quali penalità?  
@@ -214,7 +189,8 @@ Decisioni già prese o errori evidenti: l’app segue la decisione, il testo sta
 > * ~~§2.10, §3.8: “minimo 1” ai “2 \+ Mod INT incantesimi”~~ — fatto nel Google Doc (verificato il 28/09).  
 > * §3.5.3 Bersaglio Designato: impaginazione rotta nel PDF.  
 > * §8.6 Attivazione Tempestiva: sta prima del §8.6.1, fuori da ogni sottosezione.  
-> * §2.16.3 (Cacciatore) e §2.16.4 (Esploratore): «Il binocolo non richiede batterie.» Nel §2.16.2 (Agente) il testo 0.45 dice già «Il binocolo non richiede NEC.»: uniformare a «non richiede NEC».
+> * §2.16.3 (Cacciatore) e §2.16.4 (Esploratore): «Il binocolo non richiede batterie.» Nel §2.16.2 (Agente) il testo 0.45 dice già «Il binocolo non richiede NEC.»: uniformare a «non richiede NEC».  
+> * Giocatore §8.6.1 e §1.6: con Successo Magistrale Migliorato il 3 naturale è Magistrale da VA finale 21 (correzione approvata il 02/10, E\&L decisione 3).
 
 **Manuale della Magia**
 
@@ -307,7 +283,21 @@ Voci con risposta recepita e funzione implementata nell’app. La data è quella
 > * **A.37 — Ricarica**: doppiette e pompa una cartuccia per operazione (3 con Ricarica Migliorata); M310 e SA SG2001 a caricatore — implementata il 29/09.  
 > * **A.39, punti 1–3** — Anticipazione senza Addestramento (colonna «altri» −2), Colpo Elementale (PS solo per gli effetti secondari, per elemento), Rigenerazione (procedura rituale non ancora definita) — implementata il 29/09.  
 > * **A.41 — Sbilanciare e Disarmare con l’Abilità del mezzo dichiarato**, non il VA maggiore — implementata il 29/09.  
-> * **A.42 — Spazzata anche senz’armi**, con Corpo a corpo — implementata il 29/09.
+> * **A.42 — Spazzata anche senz’armi**, con Corpo a corpo — implementata il 29/09.  
+> * **A.78 — Attacco con VA finale 20 o più**: gli attacchi e le Difese attive si tirano anche con VA finale 20 o più (salvo le eccezioni esplicite, come Colpo Elementale); Magistrale con 1 a VA 20 e con 1–2 da VA 21; con Successo Magistrale Migliorato 1–2 a VA 20 e 1–3 da VA 21; il 20 resta Maldestro. Le altre Prove seguono il §1.7. Risposta del 02/10 (E\&L, decisione 3\) — implementata il 02/10.  
+> * **A.61 — Capolavoro del Corazzaio**: \+1 a una sola Contromisura numerica scelta alla costruzione (Ignifugo, Termico, Isolante, Dissipante, Imbottita, Anticorrosivo); assente vale 1, con valore X diventa X \+ 1; non aumenta l'AR; Riflettente esclusa. Risposta del 02/10 (E\&L, decisione 4\) — implementata il 02/10.  
+> * **A.62 — Katana Ryūjin**: natura Naturale; attiva 1d8 \+ 1 \+ 1d6 con la proprietà Plasma, un solo colpo. Risposta del 02/10 (decisione 15\) — implementata il 02/10.  
+> * **A.63 — Esoscheletri**: NEC Rossi di formato dedicato al modello, con autonomia, ricarica e ricambio della scheda; sostituzione 1 minuto. Risposta del 02/10 (decisione 18\) — implementata il 02/10.  
+> * **A.64 — Moduli IAS**: NEC Blu IAS da 1.000 Lx \= 20 cariche da 50 Lx (Power Blink 2); ricambio 1.000 cr, ricarica 50 cr in 1 ora. Risposta del 02/10 (decisione 20\) — implementata il 02/10.  
+> * **A.65 — Dotazioni con più schede**: nuova scheda «Corredo agricolo Standard — Allevamento» (2 kg, 200 cr, CO, \+0); strumento musicale acustico o elettronico a scelta, senza sovrapprezzo. Risposta del 02/10 (decisioni 10 e 11\) — implementata il 02/10.  
+> * **A.66 — Corredo da cucina**: 30 minuti per fino a quattro persone, NEC Rosso da 500 Lx, 50 Lx a preparazione. Risposta del 02/10 (decisione 19\) — implementata il 02/10.  
+> * **A.67 — Modulo Blu del Gehemmapuker**: è il Modulo Blu del catalogo NEC, una voce sola; regola generale: niente travaso di energia fra NEC. Risposta del 02/10 (decisione 14\) — implementata il 02/10.  
+> * **A.68 — Interfaccia neurale standard**: 3.500 cr \+ 2.000 di installazione, 2 UMN, acquistabile. Risposta del 02/10 (decisione 21\) — implementata il 02/10.  
+> * **A.71 — Cartuccia chirurgica**: un solo consumabile, «Cartuccia chirurgica — set sterile monouso», 500 cr o 2.500 per cinque. Risposta del 02/10 (decisione 17\) — implementata il 02/10.  
+> * **A.74 — Rituale di Rigenerazione**: VA del Canale \= Rituali; dopo il Magistrale ripartizione libera entro i limiti; Rituale diretto solo PM personali; versioni per Ritualista. Risposta del 02/10 (decisioni 1, 2, 12, 13\) — implementata il 02/10.  
+> * **A.75 — Batterie oltre i 5 PM**: supporto base per tutte (0,2 kg, Comune, PS 10, 3 PI), anche Matrice. Risposta del 02/10 (decisione 16; Equipaggiamento §10.1) — implementata il 02/10.  
+> * **A.73 — Formato dei nemici per il Tavolo del Master** (E\&L del 02/10, decisioni 5–9). Formato con valori già calcolati, comune all'app e al futuro bestiario. Campi nuovi: azioni per Round, Contromisure, Abilità rilevanti con VA, talenti e capacità speciali. Sei Caratteristiche nel bestiario, facoltative nell'app; un valore mancante non vale 0\. Parità d'Iniziativa DES → INT → 1d10. I nemici seguono la procedura dei PG per PV, Ferite e Menomazioni, senza Affaticamento. Incantesimi completi con «Lancia\!» e PM scalati; incompleti come promemoria. Passo obbligatorio; Corsa e Scatto 2× e 3× se mancano; «non consentito» è diverso da «mancante». Formato implementato il 02/10 su main; plancia del Tavolo del Master implementata il 02/10 sul branch.  
+> * 
 
 ## ---
 
