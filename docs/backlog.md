@@ -92,6 +92,8 @@ Richiesta del 29/09/2026. Sviluppato sul branch `tavolo-direttore` (piano ed esi
 - ✔ **Round collegato fra scheda e tavolo**: fatto il 3 ottobre 2026. Con il server e il PG in uno scontro il Round della scheda segue lo scontro, le durate di Tecniche e Stati scadono al Round giusto in scheda e plancia, «Termina le durate» a fine scontro; esito in `docs/tavolo-direttore.md`.
 - ✔ **Durate degli Incantesimi nella scheda**: fatto il 3 ottobre 2026. «Lancia!» registra la durata (Round, a tempo come promemoria), con bersagli, «Termina», AR finché dura; scadenza con la scheda o lo scontro, anche per i nemici; esito in `docs/tavolo-direttore.md`.
 - ✔ **generatore di nemici dal Bestiario**: fatto il 3 ottobre 2026 con «Crea nemico» (procedura guidata o tutto a caso, dalle tabelle del cap. 6) e «Prepara scontro» (bozze di scontro con difficoltà per 7 PG e «Inizia»); esito in `docs/tavolo-direttore.md`, sezione «Crea nemico» e «Prepara scontro». Il Bestiario resta una proposta per Davide.
+- ✔ **Creature pronte, tre per base**: fatto il 3 ottobre 2026 (sera). Undici creature nuove nel cap. 5 del Bestiario (22 in tutto, tre per ogni base non umana con ruoli diversi, tabella nel §5.1), tarate con `tools/taratura_bestiario.mjs` (Appendice A.6); tendine delle creature raggruppate per base in «Crea nemico» e «Prepara scontro»; negli attacchi dei nemici gli attacchi naturali ammettono le Manovre consentite senz’armi e la Spazzata del gigante vale come Spazzata Migliorata. Restano per Davide nomi, tono e capacità dei Boss nuovi (`docs/bestiario/domande-per-davide.md`).
+- **tabella casuale delle creature pronte** (cap. 6): non c’è; se Davide la vuole, una tabella per contesto (pattuglia, scontro, tana) con i pesi per ruolo.
 
 La richiesta di partenza era questa:
 

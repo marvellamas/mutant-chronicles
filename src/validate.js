@@ -2293,6 +2293,11 @@ function validaBestiario(dati, err) {
     if (rif.size) for (const r of e.armi ?? []) if (!rif.has(r)) err(F, `moduli.equipaggiamento.per_grado.${g}.armi`, `arma non nel catalogo: ${r}`);
   }
   const fasce = (E?.fasce ?? []).map((f) => f?.id);
+  // capacità che in «Attacca!» valgono come Talenti (src/nemico-attacco.js): Talenti esistenti
+  for (const [nome, ids] of Object.entries(b.capacita_come_talenti ?? {})) {
+    if (!Array.isArray(ids)) { err(F, `capacita_come_talenti.${nome}`, 'elenco di id di Talenti'); continue; }
+    for (const id of ids) if (!(dati.talenti_liberi?.talenti ?? []).some((t) => t.id === id)) err(F, `capacita_come_talenti.${nome}`, `Talento sconosciuto: ${id}`);
+  }
   // creature pronte
   (b.creature ?? []).forEach((c, i) => {
     const k = `creature[${i}]`;

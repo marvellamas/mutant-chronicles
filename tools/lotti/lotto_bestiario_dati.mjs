@@ -388,6 +388,8 @@ const bestiario = {
   basi,
   moduli: { corrotto, mutazioni, equipaggiamento },
   creature,
+  // capacità delle basi che in «Attacca!» valgono come un Talento (src/nemico-attacco.js): §3.9, «come con Spazzata Migliorata»
+  capacita_come_talenti: { 'Spazzata del gigante': ['spazzata-migliorata'] },
   tabelle: tabelleCasuali,
 };
 

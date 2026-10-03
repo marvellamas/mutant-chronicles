@@ -3363,6 +3363,11 @@
       "paragrafo": "§5.9.3"
     }
   ],
+  "capacita_come_talenti": {
+    "Spazzata del gigante": [
+      "spazzata-migliorata"
+    ]
+  },
   "tabelle": {
     "base": {
       "dado": "d20",

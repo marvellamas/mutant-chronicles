@@ -7,7 +7,7 @@ import { h } from './dom.js';
 import { nascondiTooltip } from './tooltip.js';
 import { avviso, avvisoErrore } from './avvisi.js';
 import { apriEditorNemico } from './nemici.js';
-import { apriCreaNemico, caricaUmano } from './crea-nemico.js';
+import { apriCreaNemico, caricaUmano, tendinaCreature } from './crea-nemico.js';
 import { leggiScontro, salvaScontro, idNuovo, pgDaVista } from './scontro.js';
 import { elencoCartella, leggiCartella } from './cartella.js';
 import { ultimiPerPersonaggio } from '../cartella.js';
@@ -184,7 +184,7 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
           ] : h('span', { class: 'nota' }, 'il bestiario è vuoto')),
         h('div', { class: 'riga-aggiungi' },
           h('strong', {}, 'Creatura pronta '),
-          h('select', { 'aria-label': 'Creatura pronta', onchange: (e) => { dC.id = e.target.value; dC.boss = false; disegna(); } }, BE.creature.map((c) => h('option', { value: c.id, selected: c.id === dC.id }, c.nome))),
+          tendinaCreature(BE, dC.id, (v) => { dC.id = v; dC.boss = false; disegna(); }),
           h('select', { 'aria-label': 'Grado della creatura', onchange: (e) => { dC.grado = e.target.value; } }, (creatura?.gradi ?? []).map((g) => h('option', { value: g, selected: g === dC.grado }, BE.gradi.find((x) => x.id === g).nome))),
           creatura?.boss ? h('label', {}, h('input', { type: 'checkbox', checked: dC.boss, onchange: (e) => { dC.boss = e.target.checked; } }), ` Boss (${BE.gradi.find((x) => x.id === creatura.boss.grado).nome})`) : null,
           quantiLato(dC),

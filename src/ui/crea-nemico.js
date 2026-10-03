@@ -97,8 +97,12 @@ export function apriCreaNemico(ctx, { voci = [], salvato = () => {}, destinazion
         (v) => cambia((x) => { Object.assign(x, { base: v, creatura: undefined, mutazioni: x.mutazioni.filter((m) => mutazioniAmmesse(v, dati).some((y) => y.id === m)) }); if (BE.basi[v].umano) { x.tipoUmano ??= BE.basi.umano.tipi[0]; if (!SUFFISSO_UMANO[x.grado]) x.grado = 'medio'; } else delete x.tipoUmano; if (!BE.moduli.equipaggiamento.basi.includes(v)) x.equipaggiamento = null; })),
       base?.umano && !s.creatura ? rigaScelte('Tipo umano (bestiario umano del Tavolo del Master)', base.tipi.map((t) => ({ valore: t, etichetta: base.nomi_tipi?.[t] ?? t })), s.tipoUmano,
         (v) => cambia((x) => { x.tipoUmano = v; })) : null,
-      rigaScelte('Oppure una creatura pronta (cap. 5)', BE.creature.map((c) => ({ valore: c.id, etichetta: c.nome, riga: `${BE.basi[c.base].nome} · ${c.gradi.map((g) => BE.gradi.find((y) => y.id === g).nome).join(', ')}${c.boss ? ' · Boss' : ''}` })), s.creatura ?? null,
-        (v) => cambia((x) => { const c = BE.creature.find((y) => y.id === v); Object.assign(x, scelteCreatura(v, c.gradi.includes(x.grado) ? x.grado : c.gradi[0], {}, dati)); })),
+      h('label', { class: 'scelta-creatura' }, h('span', { class: 'scelta-titolo' }, 'Oppure una creatura pronta (cap. 5) '),
+        tendinaCreature(BE, s.creatura ?? '', (v) => cambia((x) => {
+          if (!v) { delete x.creatura; return; }
+          const c = BE.creature.find((y) => y.id === v);
+          Object.assign(x, scelteCreatura(v, c.gradi.includes(x.grado) ? x.grado : c.gradi[0], {}, dati));
+        }), { vuota: '— nessuna: la base scelta sopra —' })),
       h('p', { class: 'nota' }, s.creatura ? BE.creature.find((c) => c.id === s.creatura)?.descrizione : base?.umano ? base.nota : `${base?.nome}: ${base?.comportamento ?? ''}`),
     ];
   };
@@ -350,3 +354,17 @@ export function apriDaBestiario(ctx, nemico, opzioni) {
   return true;
 }
 
+
+/**
+ * Tendina delle creature pronte (cap. 5) raggruppate per base, nell'ordine delle basi del cap. 3 (<optgroup>):
+ * nome, gradi della scheda e «Boss» se ne ha la colonna. `vuota`: testo di una prima voce senza creatura.
+ */
+export function tendinaCreature(BE, attuale, scegli, { vuota = null, etichetta = 'Creatura pronta' } = {}) {
+  const gradi = (c) => c.gradi.map((g) => BE.gradi.find((y) => y.id === g).nome).join(', ');
+  return h('select', { 'aria-label': etichetta, onchange: (e) => scegli(e.target.value) },
+    vuota !== null ? h('option', { value: '', selected: !attuale }, vuota) : null,
+    Object.entries(BE.basi).map(([id, b]) => {
+      const lista = BE.creature.filter((c) => c.base === id);
+      return lista.length ? h('optgroup', { label: b.nome }, lista.map((c) => h('option', { value: c.id, selected: c.id === attuale }, `${c.nome} · ${gradi(c)}${c.boss ? ' · Boss' : ''}`))) : null;
+    }));
+}

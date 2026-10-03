@@ -21,6 +21,10 @@ export function attacchiDi(p) {
 export function armaDaAttacco(attacco, uid, dati) {
   const def = attacco.rif ? catalogo(dati).perRif.get(attacco.rif) : null;
   const distanza = attacco.tipo === 'distanza';
+  // Manovre compatibili (Armamenti §7.1.7): quelle dell'arma del catalogo; un attacco naturale ravvicinato (artigli,
+  // morso, schianto) ha quelle consentite anche senz'armi (Giocatore §5.12: Spazzata «consentita a tutti anche
+  // senz'armi»), come gli Artigli dell'Umanoide mostruoso (Bestiario §3.5)
+  const manovre = def?.manovre ?? (distanza ? [] : Object.values(dati.regole.attacco_ravvicinato.manovre).filter((m) => m.compatibilita === 'arma' && m.senz_armi).map((m) => m.nome_catalogo));
   return {
     uid,
     nome: attacco.nome,
@@ -38,17 +42,24 @@ export function armaDaAttacco(attacco, uid, dati) {
     portataQ: distanza ? null : attacco.portata_q ?? 1,
     portata_q: distanza ? null : attacco.portata_q ?? 1,
     proprieta: (attacco.proprieta ?? []).map((nome) => ({ nome })),
+    manovre,
     // arma di un attaccante esterno: «Attacca!» non mostra le opzioni di mani ed equipaggiamento del PG
     esterno: true,
   };
 }
 
-/** Il partecipante come attaccante: nessun Talento, nessun equipaggiamento, i suoi Stati per i divieti. */
-export function attaccanteDa(p) {
+/**
+ * Il partecipante come attaccante: nessun equipaggiamento, i suoi Stati per i divieti. Talenti solo dalle capacità
+ * che il Bestiario dichiara equivalenti (data/bestiario.json → capacita_come_talenti: la Spazzata del gigante come
+ * Spazzata Migliorata, §3.9).
+ */
+export function attaccanteDa(p, dati = null) {
+  const mappa = dati?.bestiario?.capacita_come_talenti ?? {};
+  const talenti = [...new Set((p?.scheda?.capacita ?? []).flatMap((c) => mappa[c.nome] ?? []))].map((id) => ({ id }));
   const car = p?.scheda?.caratteristiche ?? {};
   return {
     scheda: {
-      talentiLiberi: [], classi: [], abilita: [], bonusTalenti: false,
+      talentiLiberi: talenti, classi: [], abilita: [], bonusTalenti: talenti.length > 0,
       caratteristiche: Object.fromEntries(Object.entries(car).map(([k, v]) => [k, { valore: v }])),
       azioni: { principali: 1, movimento: 1 },
       equipaggiamento: { armi: [] },
@@ -62,7 +73,7 @@ export function calcolaAttaccoNemico(p, indice, dichiarazione, dati) {
   const attacco = attacchiDi(p)[indice];
   if (!attacco) return null;
   const arma = armaDaAttacco(attacco, `${p.id}:${indice}`, dati);
-  const chi = attaccanteDa(p);
+  const chi = attaccanteDa(p, dati);
   const r = arma.tipo === 'arma_distanza'
     ? calcolaAttaccoDistanza(chi, arma, dichiarazioneDistanza(dichiarazione), dati)
     : calcolaAttaccoRavvicinato(chi, arma, dichiarazioneRavvicinato(dichiarazione), dati);

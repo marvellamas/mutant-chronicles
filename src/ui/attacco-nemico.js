@@ -133,7 +133,7 @@ export function apriAttaccoNemico(ctx, p, { bersagli, registra }) {
     const attacco = attacchi[st.indice];
     const b = bersagli.find((x) => x.id === st.bersaglio);
     const arma = armaDaAttacco(attacco, `${p.id}:${st.indice}`, ctx.dati);
-    const chi = attaccanteDa(p);
+    const chi = attaccanteDa(p, ctx.dati);
     // il pannello chiude mettendo ctx.ui.attacco a null
     if (st.ui.aperto && st.ui.attacco === null) { chiudi(); return; }
     st.ui.aperto = true;

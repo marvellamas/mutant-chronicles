@@ -120,3 +120,22 @@ test('partecipante a mano: l’attacco scritto si registra e si usa; senza attac
 test('armaDaAttacco: con «rif» del catalogo l’Abilità viene dall’arma, senza resta nulla', () => {
   assert.equal(armaDaAttacco({ nome: 'X', tipo: 'ravvicinato', va: 5, danno: '1d6' }, 'u', dati).abilita, null);
 });
+
+test('attacco naturale: Manovre consentite senz’armi (Spazzata); la Spazzata del gigante vale come Spazzata Migliorata', async () => {
+  const { profiloNemico, scelteCreatura } = await import('../src/crea-nemico.js');
+  const { vincoliRavvicinato, calcolaAttaccoRavvicinato, dichiarazioneRavvicinato } = await import('../src/attacco.js');
+  const { attaccanteDa } = await import('../src/nemico-attacco.js');
+  const gigante = { id: 'nem:mietitore:1', tipo: 'nemico', scheda: profiloNemico(scelteCreatura('mietitore-delle-serre', 'medio', { boss: true }, dati), dati).nemico };
+  const arma = armaDaAttacco(gigante.scheda.attacchi[0], 'u', dati);
+  const chi = attaccanteDa(gigante, dati);
+  const v = vincoliRavvicinato(chi, arma, dichiarazioneRavvicinato({}), dati);
+  assert.equal(v.manovre.spazzata.nascosta, false);
+  // −2 VA contro due bersagli (Spazzata Migliorata), non −4
+  const due = calcolaAttaccoRavvicinato(chi, arma, dichiarazioneRavvicinato({ manovra: ['spazzata'], bersagli: 2 }), dati);
+  assert.equal(due.va_finale, arma.va - 2, JSON.stringify(due.provenienza));
+  // senza la capacità (un Levriero): Spazzata ammessa, ma −4
+  const levriero = { id: 'nem:levriero:1', tipo: 'nemico', scheda: profiloNemico(scelteCreatura('levriero-delle-discariche', 'minore', {}, dati), dati).nemico };
+  const a2 = armaDaAttacco(levriero.scheda.attacchi[0], 'u2', dati);
+  const r2 = calcolaAttaccoRavvicinato(attaccanteDa(levriero, dati), a2, dichiarazioneRavvicinato({ manovra: ['spazzata'], bersagli: 2 }), dati);
+  assert.equal(r2.va_finale, a2.va - 4);
+});
