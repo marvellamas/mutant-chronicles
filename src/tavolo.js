@@ -105,3 +105,23 @@ export function pgDaAggiungere(nomeFile, testo, dati, adesso = new Date()) {
   const buono = NOME_FILE.test(nomeFile) && chiaveDaFile(nomeFile) === chiaveDaFile(nomeFileEsportazione(nome, livello, adesso));
   return { file: buono ? nomeFile : nomeFileEsportazione(nome, livello, adesso), testo: testoFinale, nome, livello, rinominato: !buono };
 }
+
+/**
+ * Round collegato allo scontro (src/round-scontro.js): il testo del file di un PG con la sessione cambiata da `fn`
+ * (riallinea all'inizio dello scontro, Stati scaduti, Round finale alla fine, «Termina le durate»), oppure null se
+ * la sessione non cambia (nessuna scrittura inutile).
+ */
+export function testoConSessioneDa(testo, fn, dati) {
+  return sessioneDaFile(testo, fn, dati).testo;
+}
+
+/** Come testoConSessioneDa, con anche la sessione che ne risulta: { testo (null se non cambia), sessione }. */
+export function sessioneDaFile(testo, fn, dati) {
+  const p = deserializzaPersonaggio(testo);
+  const { scelte } = normalizza(p.creazione, dati);
+  const riposo = calcolaScheda({ creazione: scelte, livelli: p.livelli ?? [] }, dati);
+  const prima = allineaSessione(p.sessione, massimiSessione(riposo, scelte, dati));
+  const dopo = fn(prima);
+  if (!dopo || JSON.stringify(dopo) === JSON.stringify(prima)) return { testo: null, sessione: prima };
+  return { testo: testoConSessione(testo, dopo, dati), sessione: dopo };
+}

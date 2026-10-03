@@ -110,6 +110,9 @@ export function renderTab(ctx) {
       // Tavolo del Master, pezzo 6: solo con il server di Mutant
       ctx.collegamento ? h('span', { class: `indicatore-collegamento ${ctx.collegamento.stato}`, role: 'status', title: ctx.collegamento.titolo },
         ctx.collegamento.testo) : null,
+      // Round collegato allo scontro (src/round-scontro.js): in ogni tab
+      ctx.roundScontro ? h('span', { class: 'etichetta round-scontro-testa', role: 'status', title: `Scontro «${ctx.roundScontro.nome}»: il Round lo fa avanzare il master dalla plancia; le durate di Tecniche e Stati scadono con quel Round.` },
+        `Round ${ctx.roundScontro.round} · dallo scontro`) : null,
       ctx.puoAnnullareSessione ? h('button', { type: 'button', class: 'btn', onclick: azioni.annullaSessione, title: 'Annulla l’ultima modifica ai valori di sessione o al calendario' }, '↶ Annulla') : null,
       id.livello < livelloMax
         ? h('button', { type: 'button', class: 'btn primario', disabled: !!ctx.motivoNoSalita, title: ctx.motivoNoSalita, onclick: azioni.sali }, `Sali al livello ${id.livello + 1}`)
@@ -1332,9 +1335,12 @@ function tabCombattimento(ctx, d) {
             h('span', { class: `grado-attuale${s.statiAttivi.length ? ' con-penalita' : ''}` }, s.statiAttivi.length ? `${s.statiAttivi.length} attiv${s.statiAttivi.length === 1 ? 'o' : 'i'}` : 'nessuno')),
           h('ul', { class: 'stati-compatti' }, d.stati.map((st) => {
             const attivo = s.statiAttivi.includes(st.id);
+            // durata registrata nella plancia dello scontro (src/round-scontro.js)
+            const durata = attivo ? ctx.roundScontro?.durate?.find((d) => d.stato === st.id) : null;
             return h('li', {}, h('label', { class: `stato-compatto${attivo ? ' attivo' : ''}` },
               h('input', { type: 'checkbox', checked: attivo, onchange: () => ctx.azioni.commutaStato(st.id) }),
-              h('span', {}, st.nome)),
+              h('span', {}, st.nome),
+              durata ? h('small', { class: 'nota', title: `fino alla fine del Round ${durata.al}, dallo scontro` }, ` · ${durata.rimasti} Round`) : null),
             infoValore('?', { titolo: st.nome, sottotitolo: st.durata, sezioni: [{ testo: `${st.promemoria}${st.riassunto ? ' (riassunto, non testo del manuale)' : ''}` }] }, { classe: 'info-gradi' }));
           }))))),
   ];

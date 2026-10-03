@@ -86,7 +86,7 @@ test('partecipante scritto a mano: provvisorio, entra nell’ordine; si può tog
   assert.ok(!nomi(s).includes('Non Morto'));
 });
 
-test('turni e Round: «Avanti» passa al successivo; dopo l’ultimo nuovo Round; le durate scalano', () => {
+test('turni e Round: «Avanti» passa al successivo; dopo l’ultimo nuovo Round; le durate finiscono alla fine del Round R + N (§5.18)', () => {
   let s = conTiri(tre(), { 'pg:Ada': 5, 'pg:Bea': 9, 'pg:Cleo': 1 });
   const stordito = dati.regole.stati.elenco.find((x) => x.id === 'stordito');
   s = registraDurata(s, 'pg:Ada', stordito, vivo(2), T0);
@@ -94,12 +94,18 @@ test('turni e Round: «Avanti» passa al successivo; dopo l’ultimo nuovo Round
   s = avanti(s, T0); assert.equal(diTurno(s).nome, 'Ada');
   s = avanti(s, T0); assert.equal(diTurno(s).nome, 'Cleo');
   s = avanti(s, T0);
-  assert.deepEqual([s.round, diTurno(s).nome, s.durate[0].rimasti], [2, 'Bea', 1]);
+  // applicato nel Round 1 per 2 Round: vale fino alla fine del Round 3 (il Round di applicazione non conta, §5.18)
+  assert.deepEqual([s.round, diTurno(s).nome, s.durate[0].rimasti, s.durate[0].al], [2, 'Bea', 2, 3]);
   assert.match(s.registro.at(-1).testo, /Round 2\. Tocca a Bea/);
   for (let i = 0; i < 3; i++) s = avanti(s, T0);
-  assert.equal(s.round, 3);
+  assert.deepEqual([s.round, s.durate[0].rimasti], [3, 1]);
+  for (let i = 0; i < 3; i++) s = avanti(s, T0);
+  assert.equal(s.round, 4);
   assert.deepEqual(s.durate, []);
-  assert.match(s.registro.at(-1).testo, /Stordito di Ada è finito: toglilo dalla scheda/);
+  assert.match(s.registro.at(-1).testo, /Stordito di Ada è finito\./);
+  // un file di prima, con i soli Round rimasti, finisce come allora
+  const vecchio = { ...s, durate: [{ partecipante: 'pg:Ada', stato: 'stordito', nome: 'Stordito', rimasti: 1 }] };
+  assert.deepEqual(avanti(avanti(avanti(vecchio, T0), T0), T0).durate, []);
   // una durata non in Round («fino a quando si rialza») non si registra: solo promemoria
   assert.throws(() => registraDurata(s, 'pg:Ada', dati.regole.stati.elenco.find((x) => x.id === 'a-terra'), vivo(1)), /solo promemoria/);
   // registro: ora e Round per ogni evento

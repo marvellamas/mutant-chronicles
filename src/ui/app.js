@@ -18,6 +18,9 @@ import { leggiScontroAperto, leggiScontro, salvaScontro } from './scontro.js';
 import { registraRiga } from '../scontro.js';
 import { elencoUnito, confronta, chiaveDaFile, chiavePersonaggio } from '../cartella.js';
 import { renderTavolo } from './tavolo.js';
+import { avviso, avvisoErrore } from './avvisi.js';
+import { controlloInUso } from './ridisegno.js';
+import { alRound, collegamentoScontro, tecnicheScadute, statiScaduti, durateCarta, testoDurata } from '../round-scontro.js';
 import { segnaDalTavolo, arrivoDalTavolo, tornaAlTavolo, scorrimentoDaRimettere, dimenticaTavolo } from './ritorno.js';
 import { PASSI, passoVisibile, requisitoPasso } from './passi.js';
 import { inizializzaTooltip, nascondiTooltip } from './tooltip.js';
@@ -335,7 +338,7 @@ function mostraCollegamento(nuovo) {
   el.title = i.titolo;
 }
 
-/** Un giro di controllo: il file del personaggio è cambiato sul server? */
+/** Un giro di controllo: il file del personaggio è cambiato sul server? E il Round dello scontro? */
 async function controllaScheda() {
   if (!inScheda() || stato.collegamento.scrivendo) return;
   const id = stato.id;
@@ -346,6 +349,81 @@ async function controllaScheda() {
   const { azione } = controllaRemoto(voce, lista, !!stato.collegamento.conflitto, improntaLocale(id));
   if (azione === 'ricarica') await ricaricaDaCartella();
   else if (azione === 'conflitto') await apriConflitto();
+  await aggiornaRoundScontro();
+}
+
+// Round collegato fra scheda e tavolo (richiesta di Marcello del 03/10, src/round-scontro.js): con il server e il PG
+// in uno scontro aperto il Round è quello dello scontro, che fa avanzare solo la plancia. La scheda mostra la sua
+// sessione vista a quel Round (Tecniche finite, limite di una per Round) senza scriverla: la scrive solo quando il
+// giocatore fa qualcosa. Fuori da uno scontro, o senza server, il contatore è quello della scheda, come prima.
+// stato.scontroPg: { id, nome, round, durate } | null; stato.roundFinale: { id, round } dopo la fine dello scontro.
+
+/** Chiave del personaggio aperto nella cartella del server (src/cartella.js), o null se non c'è. */
+function chiaveCartellaAperta() {
+  const f = archivio.carica(stato.id)?.cartella?.file;
+  return f ? chiaveDaFile(f) : null;
+}
+
+/** Sessione della scheda vista al Round dello scontro (o al Round finale, finché il file non lo riporta). */
+function sessioneVista() {
+  const s = stato.sessione;
+  if (stato.scontroPg) return alRound(s, stato.scontroPg.round);
+  if (stato.roundFinale?.id === stato.id) return alRound(s, stato.roundFinale.round);
+  return s;
+}
+
+let ultimoScontroLetto = null; // { id, revisione, scontro }
+/** Legge lo scontro aperto (solo con il server) e confronta il Round con quello visto prima: avvisi e ridisegno. */
+async function aggiornaRoundScontro() {
+  if (!stato.cartella || !stato.id || !stato.sessione) return;
+  const chiave = chiaveCartellaAperta();
+  let coll = null;
+  try {
+    const aperto = chiave ? await leggiScontroAperto() : null;
+    if (aperto) {
+      if (ultimoScontroLetto?.id !== aperto.id || ultimoScontroLetto?.revisione !== aperto.revisione) {
+        ultimoScontroLetto = { ...aperto, scontro: await leggiScontro(aperto.id) };
+      }
+      coll = collegamentoScontro(ultimoScontroLetto.scontro, chiave);
+    }
+  } catch {
+    return; // server spento: resta quello che c'era, l'indicatore del collegamento lo dice
+  }
+  const prima = stato.scontroPg;
+  stato.scontroPg = coll;
+  const dati = stato.dati;
+  if (!prima && coll) {
+    stato.roundFinale = null;
+    avviso(`Sei nello scontro «${coll.nome}»: il Round lo fa avanzare il master dalla plancia (Round ${coll.round}).`, { tipo: 'info', chiave: 'round-scontro' });
+  } else if (prima && coll && coll.round !== prima.round) {
+    const scadute = [...tecnicheScadute(alRound(stato.sessione, prima.round), prima.round, coll.round, dati), ...statiScaduti(prima, coll)];
+    avviso([`Round ${coll.round} (dallo scontro).`, scadute.length ? `Scadut${scadute.length === 1 ? 'a' : 'e'}: ${scadute.join(', ')}.` : null].filter(Boolean), { tipo: scadute.length ? 'ok' : 'info', chiave: 'round-scontro' });
+  } else if (prima && !coll) {
+    stato.roundFinale = { id: stato.id, round: prima.round };
+    const ancora = durateCarta(alRound(stato.sessione, prima.round), null, dati);
+    avviso([`Lo scontro «${prima.nome}» è finito: il contatore dei Round torna alla scheda (Round ${prima.round}).`,
+      ancora.length ? `Durate ancora attive, con i Round che restano: ${ancora.map(testoDurata).join(', ')}.` : null].filter(Boolean), { tipo: 'info', durata: 9000, chiave: 'round-scontro' });
+  } else if (!(prima && coll && JSON.stringify(prima.durate) !== JSON.stringify(coll.durate))) return;
+  ridisegnaSchedaQuandoLibera();
+}
+
+/**
+ * Ridisegno della scheda dopo un aggiornamento periodico: se il giocatore sta usando un controllo (tendina, campo,
+ * pannello «Attiva» o «Lancia!» aperto) si rinvia, come nella plancia (src/ui/ridisegno.js).
+ */
+function ridisegnaSchedaQuandoLibera() {
+  if (!inScheda()) return;
+  const occupato = controlloInUso(radice, document.activeElement) || !!stato.ui?.tecnica || !!document.querySelector('.attacco-sfondo');
+  if (!occupato) { renderScheda({ mantieniScorrimento: true }); return; }
+  if (stato.ridisegnoRinviato) return;
+  stato.ridisegnoRinviato = true;
+  const riprova = () => {
+    if (!stato.ridisegnoRinviato) return;
+    if (controlloInUso(radice, document.activeElement) || !!stato.ui?.tecnica || !!document.querySelector('.attacco-sfondo')) { setTimeout(riprova, 1000); return; }
+    stato.ridisegnoRinviato = false;
+    if (inScheda()) renderScheda({ mantieniScorrimento: true });
+  };
+  setTimeout(riprova, 1000);
 }
 
 /** Impronta del testo che l'export (e la cartella) darebbe oggi al personaggio. */
@@ -970,6 +1048,10 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
   nascondiTooltip();
   const y = window.scrollY;
   const { dati } = stato;
+  // Round collegato allo scontro (src/round-scontro.js): la sessione vista al Round dello scontro, in memoria; si
+  // salva solo con la prossima modifica del giocatore
+  if (stato.sessione) stato.sessione = sessioneVista();
+  if (stato.roundFinale && (stato.roundFinale.id !== stato.id || (stato.sessione?.round ?? 1) >= stato.roundFinale.round)) stato.roundFinale = null;
   // le tab mostrano i valori effettivi con le condizioni della sessione; la stampa no
   const tab = preparaTab(personaggio(), dati, { sessione: stato.sessione });
   // quinta tab, solo con il calendario attivo (non tocca preparaTab: la stampa resta com'è)
@@ -1037,6 +1119,8 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       tieni: () => sceltaConflitto('tieni'),
     } : null,
     calendario: stato.calendario,
+    // Round dello scontro (src/round-scontro.js): { id, nome, round, durate } o null
+    roundScontro: stato.scontroPg,
     spazioQuasiEsaurito: archivio.spazioQuasiEsaurito(),
     motivoNoSalita: tab.scheda.completamenti?.length ? motivoCompletamento(tab.scheda.completamenti)
       : !schedaCreazione.completa ? 'Completa la creazione prima di salire di livello.'
@@ -1094,8 +1178,15 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       ricaricaMatrice: (uid, ore, presso) => cambiaSessione(ricaricaMatrice(stato.sessione, uid, ore, presso, dati, massimi)),
       attivaArtefatto: (uid, pm) => cambiaSessione(attivaArtefatto(stato.sessione, uid, pm, massimi)),
       // Tecniche Interiori (Giocatore §8.9.1, src/tecniche.js): ogni passo è una modifica annullabile
-      attivaTecnica: (id, opz) => cambiaSessione(attivaTecnicaSessione(stato.sessione, tab.scheda, id, dati, opz, massimi)),
-      nuovoRound: () => cambiaSessione(nuovoRoundSessione(stato.sessione, massimi)),
+      // in uno scontro il Round è quello del server al momento dell'attivazione: si rilegge prima (vale l'ordine del server)
+      attivaTecnica: async (id, opz) => {
+        if (stato.scontroPg) { await aggiornaRoundScontro(); stato.sessione = sessioneVista(); }
+        const nuova = attivaTecnicaSessione(stato.sessione, tab.scheda, id, dati, opz, massimi);
+        if (!nuova) { avvisoErrore('Tecnica non attivata: il Round o i PM sono cambiati nel frattempo (una sola Tecnica per Round, §8.9.1).'); renderScheda({ mantieniScorrimento: true }); return; }
+        cambiaSessione(nuova);
+      },
+      // con lo scontro il Round lo fa avanzare la plancia: il pulsante è disattivato (src/ui/tecniche.js)
+      nuovoRound: () => { if (!stato.scontroPg) cambiaSessione(nuovoRoundSessione(stato.sessione, massimi)); },
       terminaTecnica: (id) => cambiaSessione(terminaTecnicaSessione(stato.sessione, id, massimi)),
       convertiDistintivi: () => cambiaSessione(convertiDistintivi(stato.sessione, massimi)),
       // le note si salvano a ogni tasto; l'annullamento riporta al testo di prima della modifica

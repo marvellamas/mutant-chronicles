@@ -265,6 +265,63 @@ Ritocchi segnalati da Marcello dopo la prima prova della plancia.
   
   Senza server l'app è invariata: nessuna etichetta, nessuna richiesta `/api`, console pulita.
 
+## Round collegato fra scheda e tavolo (3 ottobre 2026)
+
+Richiesta di Marcello: il contatore dei Round della scheda e il Round dello scontro della plancia erano separati.
+
+**Com'era.**
+- **Scheda.** Il contatore stava in `sessione.round`, avanzato a mano con «Nuovo Round» (tab Poteri). Contava solo le Tecniche Interiori:
+  - `tecnicheAttive` con dal/al;
+  - il limite «una per Round» (`ultimaTecnica`).
+- **Incantesimi.** «Lancia!» non registra durate.
+- **Stati.** Gli Stati della scheda (`statiAttivi`) non hanno durata.
+- **Plancia.** Il Round dello scontro avanza con «Avanti» dopo l'ultimo dell'ordine. La plancia legge gli Stati del PG dal suo file. Le durate degli Stati dei PG le registra lei (`scontro.durate`) e, a scadenza, scriveva «toglilo dalla scheda».
+
+**Come è ora** (`src/round-scontro.js`, funzioni pure):
+- **Durate assolute.** Durate e Round sono numeri assoluti (dal, al). La regola «dal Round R alla fine del Round R + N, il Round di attivazione non conta» sta in `data/regole.json` → `durate_round` (Giocatore §8.9.1 e §5.18; Magia, «Scadenze e interruzione degli effetti»), con le frasi controllate da `tools/verifica_frasi.mjs`. La usano Tecniche (`fineTecnica`) e Stati dello scontro (`registraDurata`).
+  - Correzione: gli Stati dello scontro finivano un Round prima del §5.18. Ora hanno `al` e finiscono alla fine del Round R + N.
+  - I file di prima, con i soli Round rimasti, finiscono come allora.
+- **Con il server e il PG in uno scontro aperto** (partecipante `pg:<nome>`):
+  - la scheda legge il Round dello scontro a ogni controllo (3 secondi) e mostra la sua sessione vista a quel Round (`alRound`: Tecniche finite tolte, limite di una per Round su quel Round);
+  - non scrive niente a ogni Round: la vista diventa sessione salvata solo alla prossima azione del giocatore;
+  - prima di «Attiva» rilegge il Round dal server, quindi vale l'ordine del server;
+  - etichetta «Round N · dallo scontro» in testa a ogni tab e nel contatore della tab Poteri;
+  - «Nuovo Round» disattivato, con il suggerimento che spiega perché;
+  - Round rimasti accanto agli Stati con durata (tab Combattimento);
+  - avvisi (`src/ui/avvisi.js`): ingresso nello scontro, nuovo Round con le scadenze, fine dello scontro con le durate ancora attive;
+  - il ridisegno si rinvia finché il giocatore usa un campo o ha aperto il pannello «Attiva» o «Lancia!».
+- **La plancia scrive nel file del PG solo in tre momenti**, con la revisione e fino a tre tentativi:
+  - **all'inizio dello scontro** le durate in corso passano sul Round 1 con i Round che restano (`riallinea`);
+  - **a ogni nuovo Round** toglie gli Stati la cui durata è finita;
+  - **alla fine dello scontro** porta la sessione al Round finale (`alRound`): la scheda riprende il suo contatore da lì e le durate restano con i Round rimasti (avviso nella plancia e nella scheda).
+- **Plancia, carta del PG.** «Tecniche in corso: Nome · N Round» e gli Stati con i Round rimasti. Con Tecniche in corso c'è «Termina le durate», che le chiude in tutte le schede dei PG al tavolo.
+- **Senza server, o con il PG non in uno scontro.** Nessuna differenza: contatore e «Nuovo Round» della scheda come prima.
+- **Concorrenza.** Due «Avanti» sulla stessa revisione: il secondo riceve 409 e ricarica, il Round avanza una volta. La vista al Round è idempotente: nessuna durata si conta due volte.
+
+**Test** (`tests/round-scontro.test.js`):
+- regola nei dati;
+- Tecnica attivata al Round 2 con R + 3 che scade al Round 6;
+- seconda attivazione nello stesso Round rifiutata;
+- fine dello scontro con durata attiva;
+- inizio dello scontro;
+- Stati con durata;
+- senza server invariato;
+- vista idempotente;
+- due «Avanti» concorrenti sul server;
+- file del PG.
+
+Aggiornati i test degli Stati in `tests/scontro.test.js` e `tests/nemici-scontro.test.js`.
+
+**Prova** (porta 3017, cartelle temporanee e una copia di Aiko Tenzan, poi cancellate), con plancia e scheda in due finestre:
+- «Attiva» Radici della Montagna al Round 2 (fino al Round 5); la carta mostra 4, 3, 2, 1 Round; al Round 6 scade nella plancia e nella scheda;
+- Aura di Resistenza al Round 6: la seconda Tecnica è bloccata nello stesso Round; al Round 10 la scheda avvisa «Scaduta: Aura di Resistenza»;
+- «Fine scontro» con Radici ancora attiva: avvisi in entrambe le finestre, la scheda riprende dal Round finale con la durata intatta; «Termina le durate» la chiude;
+- un nuovo scontro riallinea la durata al Round 1;
+- con il campo delle note in uso la scheda non si ridisegna, poi si aggiorna;
+- senza server la scheda è invariata.
+
+**Resta fuori.** Le durate degli Incantesimi nella scheda: oggi «Lancia!» non le registra (backlog).
+
 ## Basi nuove del Bestiario nella plancia (3 ottobre 2026)
 
 Quadrupede, Alato, Strisciante e Gigante (Bestiario §3.6–3.9) e le loro creature pronte arrivano in «Crea nemico» e «Prepara scontro» dai dati (`data/bestiario.json`), senza codice nuovo per le basi.

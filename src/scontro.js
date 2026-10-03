@@ -19,6 +19,10 @@
 // l'Iniziativa è quella del tipo più il dado, con le stesse regole di parità (DES e INT dalle Caratteristiche
 // del tipo; se una manca, spareggio con 1d10: A.73, decisione 6).
 import { specTiro, motivoFuoriIntervallo } from './tiri.js';
+import { fineDurata } from './tecniche.js';
+
+/** Ultimo Round di una durata registrata (`al`); i file di prima hanno solo i Round rimasti. */
+const fineDi = (d, round) => (Number.isInteger(d.al) ? d.al : round + (d.rimasti ?? 1) - 1);
 
 export const FORMATO_SCONTRO = 'mutant-scontro';
 export const VERSIONE_SCONTRO = 1;
@@ -272,19 +276,22 @@ export function diTurno(s) {
  * Durata di uno Stato di un partecipante, in Round (tirata o scritta): scala a fine Round.
  * @param stato voce di regole.json → stati.elenco
  */
-export function registraDurata(s, partecipante, stato, tiro, adesso) {
+export function registraDurata(s, partecipante, stato, tiro, adesso, dati = null) {
   const spec = durataStato(stato);
   if (!spec) throw new Error(`${stato.nome}: durata non in Round (${stato.durata}), solo promemoria`);
   const motivo = motivoFuoriIntervallo(tiro?.valore, spec);
   if (motivo) throw new Error(motivo);
   const p = s.partecipanti.find((x) => x.id === partecipante);
-  const durate = [...s.durate.filter((d) => !(d.partecipante === partecipante && d.stato === stato.id)), { partecipante, stato: stato.id, nome: stato.nome, rimasti: tiro.valore }];
-  return conRiga({ ...s, durate }, `${stato.nome} di ${p?.nome ?? partecipante}: ${tiro.valore} Round (${spec.formula}, ${tiro.origine === 'app' ? 'tirato dall’app' : 'dal vivo'}).`, adesso);
+  // Giocatore §5.18: il Round di applicazione non conta, lo Stato finisce alla fine del Round R + N (regole.json → durate_round)
+  const al = fineDurata(s.round, tiro.valore, dati);
+  const durate = [...s.durate.filter((d) => !(d.partecipante === partecipante && d.stato === stato.id)), { partecipante, stato: stato.id, nome: stato.nome, al, rimasti: al - s.round + 1 }];
+  return conRiga({ ...s, durate }, `${stato.nome} di ${p?.nome ?? partecipante}: ${tiro.valore} Round (${spec.formula}, ${tiro.origine === 'app' ? 'tirato dall’app' : 'dal vivo'}), fino alla fine del Round ${al}.`, adesso);
 }
 
 /**
- * «Avanti»: il turno passa al successivo; dopo l'ultimo comincia un nuovo Round e le durate scalano di
- * 1 (a 0 lo Stato è finito: promemoria per toglierlo dalla scheda).
+ * «Avanti»: il turno passa al successivo; dopo l'ultimo comincia un nuovo Round e finiscono le durate degli Stati
+ * il cui ultimo Round (`al`) è passato. Lo Stato di un nemico si toglie qui; quello di un PG lo toglie la plancia dal
+ * suo file (src/ui/tavolo.js), che segue lo scontro (src/round-scontro.js).
  */
 export function avanti(s, adesso) {
   if (s.stato !== 'aperto') return s;
@@ -295,9 +302,9 @@ export function avanti(s, adesso) {
     return conRiga(t, `Tocca a ${ordinati[t.turno].nome}.`, adesso);
   }
   let t = { ...s, round: s.round + 1, turno: 0 };
-  const scalate = s.durate.map((d) => ({ ...d, rimasti: d.rimasti - 1 }));
-  const finite = scalate.filter((d) => d.rimasti <= 0);
-  t.durate = scalate.filter((d) => d.rimasti > 0);
+  const conFine = s.durate.map((d) => { const al = fineDi(d, s.round); return { ...d, al, rimasti: al - t.round + 1 }; });
+  const finite = conFine.filter((d) => d.al < t.round);
+  t.durate = conFine.filter((d) => d.al >= t.round);
   t = conRiga(t, `Round ${t.round}. Tocca a ${ordinati[0].nome}.`, adesso);
   for (const d of finite) {
     const p = s.partecipanti.find((x) => x.id === d.partecipante);
@@ -305,7 +312,7 @@ export function avanti(s, adesso) {
       // lo Stato di un nemico sta nello scontro: finisce da sé
       t = { ...t, partecipanti: t.partecipanti.map((x) => (x.id === p.id ? { ...x, stati: x.stati.filter((y) => y !== d.stato) } : x)) };
       t = conRiga(t, `${d.nome} di ${p.nome} è finito.`, adesso);
-    } else t = conRiga(t, `${d.nome} di ${p?.nome ?? d.partecipante} è finito: toglilo dalla scheda.`, adesso);
+    } else t = conRiga(t, `${d.nome} di ${p?.nome ?? d.partecipante} è finito.`, adesso);
   }
   return t;
 }

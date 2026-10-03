@@ -117,8 +117,8 @@ export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaCol
     if (reg) return h('li', {}, `${p.nome}: ${stato.nome} — `, h('strong', {}, `${reg.rimasti} Round`), ' rimasti');
     const input = h('input', { type: 'number', min: spec.minimo, max: spec.massimo, step: 1, class: 'input-d10', 'aria-label': `Durata di ${stato.nome} di ${p.nome}` });
     return h('li', {}, `${p.nome}: ${stato.nome} — ${stato.durata}: `, input,
-      h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => modifica((x) => registraDurata(x, p.id, stato, dalVivo(Number(input.value), spec))) }, 'Inserisci'),
-      h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => modifica((x) => registraDurata(x, p.id, stato, tira(spec).tiro)) }, `Tira ${spec.formula}`));
+      h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => modifica((x) => registraDurata(x, p.id, stato, dalVivo(Number(input.value), spec), undefined, ctx.dati)) }, 'Inserisci'),
+      h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => modifica((x) => registraDurata(x, p.id, stato, tira(spec).tiro, undefined, ctx.dati)) }, `Tira ${spec.formula}`));
   };
 
   const b = (st.bozza ??= { nome: '', base: '', lato: 'avversario', des: '', int: '', aNome: '', aTipo: 'ravvicinato', aVa: '', aDanno: '', aNatura: 'Naturale' });

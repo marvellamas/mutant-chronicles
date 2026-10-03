@@ -7,7 +7,8 @@ import { h, svuota } from './dom.js';
 import { infoValore, nascondiTooltip } from './tooltip.js';
 import { iconaPagina } from './immagini.js';
 import { riempimento } from '../interfaccia.js';
-import { vistaPlancia, testoConSessione, pgDaAggiungere } from '../tavolo.js';
+import { vistaPlancia, testoConSessione, sessioneDaFile, pgDaAggiungere } from '../tavolo.js';
+import { riallinea, alRound, terminaDurate, collegamentoScontro, durateCarta, testoDurata } from '../round-scontro.js';
 import { ultimiPerPersonaggio, chiaveDaFile } from '../cartella.js';
 import { elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, creaInCartella } from './cartella.js';
 import { apriColpo } from './colpo.js';
@@ -88,6 +89,8 @@ export function renderTavolo(radice, ctx) {
         stato.avvisoScontro = r.scontro.stato === 'chiuso' ? `«${r.scontro.nome}» chiuso e archiviato in scontri/archivio/.` : null;
         stato.scontro = r.scontro.stato === 'aperto' ? r.scontro : null;
         const righe = conferme ? righeNuove(prima, r.scontro) : [];
+        // Round collegato (src/round-scontro.js): i file dei PG seguono lo scontro (inizio, Stati scaduti, fine)
+        seguiScontro(prima, r.scontro);
         // − e + dei PV e dei PM: un avviso per nemico, che si aggiorna ai clic successivi
         for (const x of righe.filter((y) => y.chiave)) avviso(x.testo, { chiave: x.chiave });
         const altre = righe.filter((y) => !y.chiave).map((y) => y.testo);
@@ -103,6 +106,60 @@ export function renderTavolo(radice, ctx) {
       return false;
     }
   };
+  // Round collegato fra scheda e tavolo (richiesta di Marcello del 03/10, src/round-scontro.js): la plancia scrive
+  // nel file del PG solo in tre momenti, con la revisione e un nuovo tentativo se il giocatore ha appena salvato:
+  // all'inizio dello scontro le durate in corso passano sul Round dello scontro; quando un nuovo Round chiude la durata
+  // di uno Stato del PG, lo Stato si toglie; alla fine dello scontro la sessione passa al Round finale, e la scheda
+  // riprende il suo contatore da lì con le durate ancora attive. Fra un momento e l'altro la scheda legge il Round
+  // dello scontro e non scrive nulla.
+  const aggiornaPg = async (chiave, fn) => {
+    const r = ultimiPerPersonaggio(stato.elenco).get(chiave);
+    if (!r) return null;
+    for (let tentativo = 0; tentativo < 3; tentativo++) {
+      try {
+        const { testo, mtime } = await leggiCartellaConRevisione(r.file);
+        const { testo: nuovo, sessione } = sessioneDaFile(testo, fn, ctx.dati);
+        if (nuovo) await scriviCartella(r.file, nuovo, { mtime });
+        return sessione;
+      } catch (e) {
+        if (!e.conflitto) { avvisoErrore(`Scheda di ${chiave.replace(/-/g, ' ')} non aggiornata: ${e.message}`); return null; }
+      }
+    }
+    avvisoErrore(`Scheda di ${chiave.replace(/-/g, ' ')} non aggiornata: è cambiata tre volte di fila. Riprova.`);
+    return null;
+  };
+  const seguiScontro = async (prima, dopo) => {
+    const pg = (dopo?.partecipanti ?? []).filter((p) => p.tipo === 'pg');
+    if (!pg.length) return;
+    const nuovo = dopo.stato === 'aperto' && (!prima || prima.id !== dopo.id);
+    const fine = dopo.stato === 'chiuso' && prima?.stato === 'aperto';
+    if (nuovo) for (const p of pg) await aggiornaPg(p.chiave, (x) => riallinea(x, dopo.round));
+    else if (fine) {
+      // le durate rimaste si leggono dalle sessioni appena scritte nei file
+      const ancora = [];
+      for (const p of pg) {
+        const sessione = await aggiornaPg(p.chiave, (x) => alRound(x, dopo.round));
+        if (sessione) ancora.push(...durateCarta(sessione, null, ctx.dati).map((d) => `${p.nome}: ${testoDurata(d)}`));
+      }
+      if (ancora.length) avviso(`Durate ancora attive nelle schede, che riprendono il loro contatore dal Round ${dopo.round}: ${ancora.join('; ')}. «Termina le durate» le chiude.`, { tipo: 'info', durata: 9000 });
+    } else if (prima && dopo.stato === 'aperto' && dopo.round > prima.round) {
+      // Stati dei PG la cui durata è finita con il nuovo Round (Giocatore §5.18): si tolgono dalla scheda
+      const restano = new Set(dopo.durate.map((d) => `${d.partecipante}|${d.stato}`));
+      for (const p of pg) {
+        const finiti = prima.durate.filter((d) => d.partecipante === p.id && !restano.has(`${d.partecipante}|${d.stato}`)).map((d) => d.stato);
+        if (finiti.length) await aggiornaPg(p.chiave, (x) => ({ ...x, statiAttivi: (x.statiAttivi ?? []).filter((y) => !finiti.includes(y)) }));
+      }
+    } else return;
+    await aggiorna(true);
+  };
+  // «Termina le durate»: chiude le Tecniche in corso di tutti i PG al tavolo (durate rimaste dopo uno scontro)
+  const terminaTutte = async (pgConDurate) => {
+    if (!confirm(`Terminare tutte le durate in corso di ${pgConDurate.map((v) => v.nome).join(', ')}?`)) return;
+    for (const v of pgConDurate) await aggiornaPg(v.chiaveCartella, terminaDurate);
+    avviso(`Durate terminate: ${pgConDurate.map((v) => v.nome).join(', ')}.`);
+    await aggiorna(true);
+  };
+
   // le modifiche si mettono in fila: ognuna parte dallo scontro salvato dalla precedente (clic rapidi su − e +)
   let coda = Promise.resolve(true);
   const modifica = (fn) => {
@@ -149,9 +206,10 @@ export function renderTavolo(radice, ctx) {
       }) : null,
       pannelloScontro(ctx, Object.assign(stato, { pgAlTavolo: alTavolo.map((r) => stato.viste.get(r.file)).filter((v) => v?.completa) }),
         { modifica, crea: (s) => salva(s), ridisegna: disegna, annullaColpo, attacca: (p) => attacca(p, alTavolo) }),
+      barraDurate(alTavolo),
       alTavolo.length
         ? h('div', { class: 'plancia-griglia' }, alTavolo.map((r) => (r.mancante ? cartaMancante(r.mancante)
-          : stato.viste.get(r.file) ? cartaPg(ctx, stato.viste.get(r.file), r, turnoDi(r), colpitoPg) : cartaErrore(r, stato.errori.get(r.file)))))
+          : stato.viste.get(r.file) ? cartaPg(ctx, stato.viste.get(r.file), r, turnoDi(r), colpitoPg, durateDi(stato.viste.get(r.file))) : cartaErrore(r, stato.errori.get(r.file)))))
         : h('p', { class: 'vuoto' }, 'Nessun personaggio al tavolo: sceglili con «Chi è al tavolo».'),
       nemiciInScontro().length ? [
         h('h2', { class: 'plancia-sezione' }, 'Nemici nello scontro'),
@@ -322,6 +380,15 @@ export function renderTavolo(radice, ctx) {
     stato.esitoEsempi = `Aggiungi PG al tavolo: ${righe.join(' · ')}.`;
     await aggiorna(true);
   };
+  // durate di un PG per la sua carta: Round dello scontro se ci è, altrimenti quello della sua scheda
+  const durateDi = (v) => (v?.completa ? durateCarta(v.sessione, collegamentoScontro(stato.scontro, v.chiaveCartella), ctx.dati) : []);
+  const barraDurate = (alTavolo) => {
+    const conDurate = alTavolo.map((r) => stato.viste.get(r.file)).filter((v) => v?.completa && durateDi(v).some((d) => d.tipo === 'tecnica'));
+    if (!conDurate.length) return null;
+    return h('p', { class: 'riga-azioni barra-durate' },
+      h('span', { class: 'nota' }, `Tecniche in corso nelle schede: ${conDurate.map((v) => v.nome).join(', ')}.`),
+      h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Chiude tutte le Tecniche in corso dei PG al tavolo (scrive nei loro file)', onclick: () => terminaTutte(conDurate) }, 'Termina le durate'));
+  };
   const nemiciInScontro = () => (stato.scontro?.partecipanti ?? []).filter((p) => p.tipo === 'nemico');
   // nella plancia i nemici a 0 PV vanno in fondo, dopo tutti gli altri (l'ordine dei turni non cambia)
   const nemiciInCarta = () => [...nemiciInScontro().filter((p) => p.pv.attuali > 0), ...nemiciInScontro().filter((p) => p.pv.attuali === 0)];
@@ -430,7 +497,7 @@ const pillola = (titolo, valore, provenienza, classe = '') => (provenienza
   : h('strong', { class: `pillola-plancia ${classe}`.trim() }, numero(valore)));
 
 /** Scheda compatta di un PG: risorse, AR e Difese, condizioni, Stati, armi in mano; evidenziata se è di turno. */
-function cartaPg(ctx, v, r, diTurnoOra = false, colpito = null) {
+function cartaPg(ctx, v, r, diTurnoOra = false, colpito = null, durate = []) {
   const apri = () => ctx.azioni.apri(r);
   const condizioni = [
     v.ferite?.grado ? `Ferita ${v.ferite.nome}` : null,
@@ -454,7 +521,13 @@ function cartaPg(ctx, v, r, diTurnoOra = false, colpito = null) {
           ...v.ar.valori.filter((x) => x !== arPrincipale).map((x) => h('small', { class: 'nota' }, ' · ', x.etichetta, ' ', pillola(`AR ${x.etichetta}`, x.valore, x.provenienza)))) : null,
         v.difese ? h('span', {}, ' · Difese ', pillola('Difese', v.difese.valore, v.difese.provenienza)) : null),
       h('p', { class: 'plancia-condizioni' }, condizioni.length ? condizioni.map((c) => h('span', { class: 'etichetta condizione-plancia' }, c)) : h('span', { class: 'nota' }, 'Nessuna Ferita, Affaticamento o Corruzione')),
-      v.stati.length ? h('p', { class: 'plancia-stati' }, v.stati.map((s) => h('span', { class: 'etichetta stato-plancia' }, s.nome))) : null,
+      v.stati.length ? h('p', { class: 'plancia-stati' }, v.stati.map((s) => {
+        const d = durate.find((x) => x.tipo === 'stato' && x.nome === s.nome);
+        return h('span', { class: 'etichetta stato-plancia', title: d ? `fino alla fine del Round ${d.al}` : null }, d ? `${s.nome} · ${d.rimasti} Round` : s.nome);
+      })) : null,
+      // durate delle Tecniche attivate dalla scheda, con i Round che restano (src/round-scontro.js)
+      durate.some((x) => x.tipo === 'tecnica') ? h('p', { class: 'plancia-durate' }, 'Tecniche in corso: ', durate.filter((x) => x.tipo === 'tecnica').map((d, i) => [i ? ', ' : '',
+        h('span', { class: 'etichetta durata-plancia', title: d.al === null ? 'a tempo: si termina dalla scheda' : `fino alla fine del Round ${d.al}` }, testoDurata(d))])) : null,
       v.armi.length ? h('ul', { class: 'plancia-armi' }, v.armi.map((a) => h('li', {},
         h('span', {}, a.moduloDi ? `↳ ${a.nome}` : a.nome, a.rotta ? h('small', { class: 'motivo' }, ' (Rotta)') : null),
         h('span', {}, ' VA ', pillola(`VA ${a.nome}`, a.va, a.provenienza), ' · danno ',

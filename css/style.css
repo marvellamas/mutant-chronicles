@@ -1693,3 +1693,10 @@ body.con-sfondo::before {
 
 /* Bestiario §3.1.1: volo e taglia sulla carta del nemico */
 .tratto-nemico { margin-left: 0; cursor: help; font-size: 0.8rem; }
+
+/* Round collegato allo scontro (src/round-scontro.js): scheda e carta del PG nella plancia */
+.round-scontro { font-size: 0.85rem; font-weight: 600; color: var(--accento); }
+.round-scontro-testa { margin-left: 0; font-size: 0.8rem; align-self: center; }
+.plancia-durate { margin: 0.2rem 0; font-size: 0.9rem; }
+.durata-plancia { margin-left: 0; cursor: help; }
+.barra-durate { margin: 0.4rem 0; }

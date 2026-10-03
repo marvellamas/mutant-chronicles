@@ -106,7 +106,9 @@ test('Stati dei nemici: immunità, durata in Round che finisce da sé', () => {
   s = registraDurata(s, id, stato('stordito'), vivo(2), T0);
   s = avanti(avanti(s, T0), T0); // Round 2
   assert.deepEqual([s.round, nemici(s)[0].stati], [2, ['stordito']]);
-  s = avanti(avanti(s, T0), T0); // Round 3: finito
+  s = avanti(avanti(s, T0), T0); // Round 3: ancora (fine del Round R + N = 3, §5.18)
+  assert.deepEqual(nemici(s)[0].stati, ['stordito']);
+  s = avanti(avanti(s, T0), T0); // Round 4: finito
   assert.deepEqual(nemici(s)[0].stati, []);
   assert.ok(s.registro.some((r) => r.testo === 'Stordito di Legionario Non Morto 1 è finito.'));
   // spegnere uno Stato toglie la sua durata

@@ -33,13 +33,15 @@ export function sezioneRisorseInteriori(ctx) {
     h('h2', {}, `Risorse Interiori · Tecniche Interiori (${apprese.length} / ${scheda.tecnicheAmmesse ?? apprese.length})`),
     h('div', { class: 'griglia-tavolo tecniche-testa' },
       h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Round'),
-        h('p', { class: 'valore-tavolo' }, h('strong', {}, String(round))),
+        // con il server e il PG in uno scontro aperto il Round è quello dello scontro (src/round-scontro.js)
+        h('p', { class: 'valore-tavolo' }, h('strong', {}, String(round)), ctx.roundScontro ? h('span', { class: 'round-scontro' }, ' · dallo scontro') : null),
         h('button', {
-          type: 'button', class: 'btn', onclick: ctx.azioni.nuovoRound,
-          title: scadono.length ? `Scadono: ${scadono.join(', ')}` : 'Passa al Round successivo: si può attivare un’altra Tecnica',
+          type: 'button', class: 'btn', onclick: ctx.azioni.nuovoRound, disabled: !!ctx.roundScontro,
+          title: ctx.roundScontro ? `Sei nello scontro «${ctx.roundScontro.nome}»: il Round lo fa avanzare il master dalla plancia, così le durate scadono per tutti allo stesso momento. Il contatore torna alla scheda quando lo scontro finisce.`
+            : scadono.length ? `Scadono: ${scadono.join(', ')}` : 'Passa al Round successivo: si può attivare un’altra Tecnica',
         }, 'Nuovo Round'),
         h('p', { class: 'nota' }, ultima ? `Questo Round: ${ultima.nome}. La prossima Tecnica dal Round ${round + 1} (§8.9.1).` : 'Nessuna Tecnica attivata in questo Round: se ne può attivare una (§8.9.1).',
-          scadono.length ? ` Con «Nuovo Round» scade: ${scadono.join(', ')}.` : null)),
+          scadono.length ? (ctx.roundScontro ? ` Al prossimo Round dello scontro scade: ${scadono.join(', ')}.` : ` Con «Nuovo Round» scade: ${scadono.join(', ')}.`) : null)),
       h('div', { class: 'contatore-tavolo riquadro-pm' }, h('h3', {}, 'PM personali'),
         h('p', { class: 'valore-tavolo' }, h('strong', {}, String(s.pmAttuali)), h('span', {}, ` / ${ctx.massimi.pm}`)),
         h('p', { class: 'nota' }, 'Le Tecniche si pagano solo con i PM personali, non con batterie o riserve di Chroma (§8.9.1).')),
@@ -75,7 +77,7 @@ function schedaTecnica(ctx, t) {
     h('div', { class: 'arma-testa' },
       h('h4', {}, info('tecnica', t.id, t.nome), ' ', etichettaTecnica(t.gruppo), h('span', { class: 'sigla' }, ` · ${testoCosto(t)}`)),
       h('button', {
-        type: 'button', class: 'btn primario btn-attacca', disabled: !st.possibile, title: st.motivo,
+        type: 'button', class: 'btn primario btn-attacca', disabled: !st.possibile, title: ctx.roundScontro && st.motivo ? st.motivo.replace('«Nuovo Round» per la prossima', 'la prossima quando il master passa al Round dopo, dalla plancia') : st.motivo,
         onclick: () => { ctx.ui.tecnica = { id: t.id, passo: 0, opzione: minima, silenzio: false, conferma: false }; ctx.azioni.ridisegna(); },
       }, 'Attiva')),
     st.motivo ? h('p', { class: 'nota motivo' }, `Non attivabile ora: ${st.motivo}.`) : null,

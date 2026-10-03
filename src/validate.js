@@ -72,6 +72,8 @@ export function validaDati(dati) {
   if (dati.incantesimi?.incantesimi?.some((i) => i.meccanica)) validaMeccanicaIncantesimi(dati, err);
   if (isOggetto(dati.formato_nemici)) validaFormatoNemici(dati, err);
   if (isOggetto(dati.bestiario)) validaBestiario(dati, err);
+  // durate in Round (Giocatore §8.9.1, §5.18): il Round di attivazione conta o no (src/tecniche.js → fineDurata)
+  if (dati.regole?.durate_round !== undefined && typeof dati.regole.durate_round?.round_attivazione_conta !== 'boolean') err('regole', 'durate_round.round_attivazione_conta', 'vero o falso: il Round di attivazione conta nella durata?');
 
   return errori;
 }

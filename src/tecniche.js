@@ -53,9 +53,18 @@ export function costoTecnica(t, opzione = 0) {
 /** Round attuale della sessione (≥ 1). */
 export const roundAttuale = (sessione) => (Number.isInteger(sessione?.round) && sessione.round >= 1 ? sessione.round : 1);
 
+/**
+ * Ultimo Round in cui vale una durata di N Round iniziata nel Round `dal`: alla fine del Round R + N, il Round
+ * dell'attivazione non conta (regole.json → durate_round; Giocatore §8.9.1, §5.18).
+ */
+export function fineDurata(dal, n, dati) {
+  const conta = dati?.regole?.durate_round?.round_attivazione_conta === true;
+  return dal + n - (conta ? 1 : 0);
+}
+
 /** Ultimo Round in cui vale una Tecnica attivata nel Round `dal` (null: finché non la si termina). */
-export function fineTecnica(t, dal) {
-  if (t.durata_tipo === 'round') return dal + (t.durata_round ?? 0);
+export function fineTecnica(t, dal, dati = null) {
+  if (t.durata_tipo === 'round') return fineDurata(dal, t.durata_round ?? 0, dati);
   return null;
 }
 
@@ -107,7 +116,7 @@ export function attivaTecnica(scheda, sessione, t, dati, opz = {}) {
   // Le istantanee restano in corso fino alla fine del Round (la finestra del colpo o della reazione)
   const cura = curaTecnica(scheda, sessione, t, opz.opzione ?? 0, dati, opz.cura);
   if (cura && !cura.pronto) return null;
-  const al = cura?.al ?? fineTecnica(t, round) ?? (t.durata_tipo === 'istantanea' ? round : null);
+  const al = cura?.al ?? fineTecnica(t, round, dati) ?? (t.durata_tipo === 'istantanea' ? round : null);
   attive.push({ id: t.id, dal: round, al, ...(Array.isArray(t.opzioni_costo) ? { opzione: opz.opzione ?? 0 } : {}) });
   const stato = dati.tecniche_interiori?.attivazione?.stato_a_zero_pm;
   const dopo = cura?.applica ? cura.applica(sessione) : sessione;

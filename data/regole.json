@@ -87,6 +87,16 @@
     "dado_in_combattimento": "1d10",
     "_nota": "§2.14: usa i modificatori ordinari."
   },
+  "durate_round": {
+    "_nota": "Durate in Round di Tecniche Interiori, Incantesimi e Stati: valgono dal Round R dell'attivazione (o del lancio, o dell'applicazione) alla fine del Round R + N. Con il server e il PG in uno scontro aperto il Round è quello dello scontro (src/round-scontro.js, docs/tavolo-direttore.md); altrimenti il contatore della scheda.",
+    "round_attivazione_conta": false,
+    "paragrafi": "Giocatore §8.9.1 (Tecniche), §5.18 (Stati); Magia, «Scadenze e interruzione degli effetti» (Incantesimi)",
+    "frasi": [
+      "Le durate in Round iniziano all’attivazione e terminano alla fine del Round R + N: una Tecnica attivata nel Round 2 con durata 3 Round termina alla fine del Round 5.",
+      "Il Round di applicazione non viene conteggiato: con durata N, uno Stato applicato nel Round R termina alla fine del Round R + N (Manuale della Magia).",
+      "Salvo una scadenza specifica nella scheda, il RND del lancio non si conta nella durata e l’effetto termina alla fine dell’ultimo RND previsto."
+    ]
+  },
   "artefatti_mistici": {
     "disponibilita": "Gli Artefatti Mistici sono generalmente pochi e non commercializzati; non esistono normali negozi che li vendano. La Fratellanza è l’unica a produrne in quantità, ma non li commercializza al di fuori della propria congrega. Bauhaus, Imperiali e Mishima ne producono quantità molto inferiori. Nei sistemi esterni, poco controllati dall’Imperium, si può trovare qualche Tecnomistico indipendente che li produce e li vende a prezzi elevati.",
     "fonte": "Risposta di Davide A.14 (28/09/2026), docs/risposte-master.md decisione 30.",
