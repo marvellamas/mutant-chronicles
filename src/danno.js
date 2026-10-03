@@ -150,5 +150,8 @@ export function applicaColpo(bersaglio, colpo, dati) {
 export function testoColpo(nome, colpo, r) {
   const danni = r.applicazioni.map((a) => `${a.tirato}${a.dopoDifesa !== a.tirato ? `→${a.dopoDifesa}` : ''} − AR ${a.ar.valore} = ${a.finale}`).join('; ');
   const ferite = r.ferite && r.ferite.dopo !== r.ferite.prima ? `, Ferite ${r.ferite.prima} → ${r.ferite.dopo} (${r.ferite.nome})` : '';
-  return `${nome} colpito (${colpo.natura}${r.difesa.id !== 'nessuna' ? `, ${r.difesa.nome}` : ''}${colpo.proprieta?.length ? `, ${colpo.proprieta.join(', ')}` : ''}): ${danni}; PV ${r.pv.prima} → ${r.pv.dopo}${ferite}${r.morte ? ', MORTE' : ''}.`;
+  // a 0 PV e Menomazioni nella stessa riga: la riga del registro è anche la conferma della plancia (src/ui/avvisi.js)
+  const zero = r.pv.dopo === 0 && r.pv.prima > 0 ? ', a 0 PV' : '';
+  const menomazioni = (r.menomazioni ?? []).length ? `; PS di Tempra per la Menomazione: ${r.menomazioni.map((m) => `${m.stato} (${m.testo})`).join(', ')}` : '';
+  return `${nome} colpito (${colpo.natura}${r.difesa.id !== 'nessuna' ? `, ${r.difesa.nome}` : ''}${colpo.proprieta?.length ? `, ${colpo.proprieta.join(', ')}` : ''}): ${danni}; PV ${r.pv.prima} → ${r.pv.dopo}${zero}${ferite}${r.morte ? ', MORTE' : ''}${menomazioni}.`;
 }

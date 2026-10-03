@@ -86,7 +86,8 @@ export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaCol
   const riga = (p, i) => {
     const inSpareggio = spareggi.some((g) => g.includes(p.id));
     const gruppoAlleati = scelteAlleati.find((g) => g.includes(p.id));
-    return h('tr', { class: `${diT?.id === p.id ? 'di-turno' : ''}${p.provvisorio ? ' provvisorio' : ''}`.trim(), 'aria-current': diT?.id === p.id ? 'true' : null },
+    // un nemico a 0 PV resta nella tabella, in grigio, al suo posto: saltarlo o no lo decide il master
+    return h('tr', { class: `${diT?.id === p.id ? 'di-turno' : ''}${p.provvisorio ? ' provvisorio' : ''}${p.tipo === 'nemico' && p.pv.attuali === 0 ? ' a-zero' : ''}`.trim(), 'aria-current': diT?.id === p.id ? 'true' : null },
       h('td', { class: 'pos-scontro' }, diT?.id === p.id ? '▶' : String(i + 1)),
       h('th', { scope: 'row', class: p.tipo === 'nemico' ? `lato-${p.lato}` : null }, p.nome, p.provvisorio ? h('span', { class: 'etichetta' }, 'provvisorio') : null,
         p.lato === 'avversario' || p.tipo === 'nemico' ? h('small', { class: 'nota nome-lato' }, ` ${p.lato}`) : null,
@@ -128,17 +129,18 @@ export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaCol
   const aggiungiNemiciRiga = h('div', { class: 'aggiungi-nemici' },
     h('h3', {}, 'Aggiungi nemici'),
     tipi.length ? h('div', { class: 'riga-aggiungi' },
-      h('label', {}, 'Tipo ', h('select', { onchange: (e) => { bn.tipo = e.target.value; } },
+      // data-chiave: il ridisegno periodico rimette scelte e focus nel controllo giusto (src/ui/ridisegno.js)
+      h('label', {}, 'Tipo ', h('select', { dataset: { chiave: 'nemici-tipo' }, onchange: (e) => { bn.tipo = e.target.value; } },
         tipi.map((v) => h('option', { value: v.id, selected: v.id === bn.tipo }, `${v.nemico.nome} (Iniziativa ${numero(v.nemico.iniziativa)}, PV ${v.nemico.pv})`)))),
-      h('label', {}, 'Quanti ', h('input', { type: 'number', min: 1, max: 30, step: 1, class: 'input-d10', value: bn.quante, oninput: (e) => { bn.quante = e.target.value; } })),
-      h('label', {}, 'Lato ', h('select', { onchange: (e) => { bn.lato = e.target.value; } },
+      h('label', {}, 'Quanti ', h('input', { type: 'number', min: 1, max: 30, step: 1, class: 'input-d10', value: bn.quante, dataset: { chiave: 'nemici-quanti' }, oninput: (e) => { bn.quante = e.target.value; } })),
+      h('label', {}, 'Lato ', h('select', { dataset: { chiave: 'nemici-lato' }, onchange: (e) => { bn.lato = e.target.value; } },
         h('option', { value: 'avversario', selected: bn.lato === 'avversario' }, 'avversario'), h('option', { value: 'alleato', selected: bn.lato === 'alleato' }, 'alleato'))),
       h('button', { type: 'button', class: 'btn', onclick: () => {
         const tipo = tipi.find((v) => v.id === bn.tipo)?.nemico;
         modifica((x) => aggiungiNemici(x, tipo, Number(bn.quante), { lato: bn.lato }));
       } }, 'Aggiungi'))
       : h('p', { class: 'nota' }, 'Nessun tipo valido nel bestiario: crealo con «Nuovo tipo» (riquadro Bestiario, in fondo alla plancia).'));
-  const campo = (k, attr) => h('input', { ...attr, value: b[k], oninput: (e) => { b[k] = e.target.value; } });
+  const campo = (k, attr) => h('input', { ...attr, value: b[k], dataset: { chiave: `manuale-${k}` }, oninput: (e) => { b[k] = e.target.value; } });
   const intero = (v) => (v === '' ? null : Number(v));
 
   return h('section', { class: 'riquadro scontro-pannello' },
@@ -159,22 +161,23 @@ export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaCol
       h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => modifica((x) => daTirare.reduce((acc, p) => registraTiro(acc, p.id, 'd10', tira(dado).tiro, ctx.dati), x)) }, 'Tira per tutti con l’app'),
       h('ul', {}, daTirare.map((p) => h('li', {}, h('strong', {}, p.nome), p.provvisorio ? h('span', { class: 'etichetta' }, 'provvisorio') : null, ' · Iniziativa ', baseConProvenienza(p), ' + ', tiroDalVivo(p, 'd10'))))) : null,
     aggiungiNemiciRiga,
-    h('details', { class: 'aggiungi-partecipante' }, h('summary', {}, 'Aggiungi partecipante a mano (provvisorio, senza scheda)'),
+    // aperto o chiuso resta com'era dopo il ridisegno periodico
+    h('details', { class: 'aggiungi-partecipante', open: !!st.manualeAperto, ontoggle: (e) => { st.manualeAperto = e.target.open; } }, h('summary', {}, 'Aggiungi partecipante a mano (provvisorio, senza scheda)'),
       h('div', { class: 'riga-aggiungi' },
         h('label', {}, 'Nome ', campo('nome', { type: 'text', maxlength: 60 })),
         h('label', {}, 'Iniziativa ', campo('base', { type: 'number', step: 1, class: 'input-d10' })),
-        h('label', {}, 'Lato ', h('select', { onchange: (e) => { b.lato = e.target.value; } },
+        h('label', {}, 'Lato ', h('select', { dataset: { chiave: 'manuale-lato' }, onchange: (e) => { b.lato = e.target.value; } },
           h('option', { value: 'avversario', selected: b.lato === 'avversario' }, 'avversario'), h('option', { value: 'alleato', selected: b.lato === 'alleato' }, 'alleato'))),
         h('label', { title: 'Per la parità (§5.1): facoltativo' }, 'DES ', campo('des', { type: 'number', step: 1, class: 'input-d10' })),
         h('label', { title: 'Per la parità (§5.1): facoltativo' }, 'INT ', campo('int', { type: 'number', step: 1, class: 'input-d10' }))),
       // pezzo 5: attacco facoltativo (senza, il pulsante «Attacca» non c'è)
       h('div', { class: 'riga-aggiungi' },
         h('label', { title: 'Facoltativo: con un attacco il partecipante può usare «Attacca»' }, 'Attacco ', campo('aNome', { type: 'text', maxlength: 60, placeholder: 'es. Pistola' })),
-        h('label', {}, 'Tipo ', h('select', { onchange: (e) => { b.aTipo = e.target.value; } },
+        h('label', {}, 'Tipo ', h('select', { dataset: { chiave: 'manuale-tipo' }, onchange: (e) => { b.aTipo = e.target.value; } },
           h('option', { value: 'ravvicinato', selected: b.aTipo === 'ravvicinato' }, 'ravvicinato'), h('option', { value: 'distanza', selected: b.aTipo === 'distanza' }, 'a distanza'))),
         h('label', {}, 'VA ', campo('aVa', { type: 'number', step: 1, class: 'input-d10' })),
         h('label', {}, 'Danno ', campo('aDanno', { type: 'text', maxlength: 20, class: 'input-formula', placeholder: '1d8+2' })),
-        h('label', {}, 'Natura ', h('select', { onchange: (e) => { b.aNatura = e.target.value; } },
+        h('label', {}, 'Natura ', h('select', { dataset: { chiave: 'manuale-natura' }, onchange: (e) => { b.aNatura = e.target.value; } },
           ['Naturale', 'Magico', 'Etereo'].map((n) => h('option', { value: n, selected: b.aNatura === n }, n)))),
         h('button', { type: 'button', class: 'btn', onclick: () => {
           const attacco = (b.aNome ?? '').trim() ? { nome: b.aNome, tipo: b.aTipo, va: intero(b.aVa), danno: b.aDanno, natura: b.aNatura } : null;

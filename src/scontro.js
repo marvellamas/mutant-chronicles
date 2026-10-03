@@ -93,6 +93,24 @@ export function aggiungiNemici(s, nemico, quante = 1, { lato = 'avversario' } = 
 }
 
 /**
+ * PV attuali di un nemico, con la carta ridotta della plancia (richiesta di Marcello dopo la prima prova): quando
+ * arriva a 0 PV la carta si riduce a una riga e va in fondo; riaperta resta aperta finché è a 0; sopra 0 torna
+ * al suo posto, aperta. L'ordine dei turni non cambia (lo decide il master).
+ */
+function conPv(p, attuali) {
+  const ridotta = attuali === 0 ? (p.pv.attuali > 0 ? true : !!p.ridotta) : false;
+  const { ridotta: _, ...resto } = p;
+  return { ...resto, pv: { ...p.pv, attuali }, ...(ridotta ? { ridotta: true } : {}) };
+}
+
+/** Carta di un nemico a 0 PV ridotta a una riga o riaperta (si salva con lo scontro, senza riga di registro). */
+export function riduciNemico(s, id, ridotta) {
+  const p = s.partecipanti.find((x) => x.id === id);
+  if (p?.tipo !== 'nemico' || p.pv.attuali > 0 || !!p.ridotta === !!ridotta) return s;
+  return { ...s, partecipanti: s.partecipanti.map((x) => { if (x.id !== id) return x; const { ridotta: _, ...resto } = x; return ridotta ? { ...resto, ridotta: true } : resto; }) };
+}
+
+/**
  * PV di un nemico: −/+ a mano (il danno applicato è il pezzo 4). Fra 0 e il massimo. Più clic di fila
  * sullo stesso nemico nello stesso Round fanno una sola riga di registro («PV 22 → 17»).
  */
@@ -101,7 +119,7 @@ export function variaPvNemico(s, id, delta, adesso) {
   if (p?.tipo !== 'nemico') throw new Error('partecipante non trovato fra i nemici');
   const attuali = Math.max(0, Math.min(p.pv.massimo, p.pv.attuali + delta));
   if (attuali === p.pv.attuali) return s;
-  const t = { ...s, partecipanti: s.partecipanti.map((x) => (x.id === id ? { ...x, pv: { ...x.pv, attuali } } : x)) };
+  const t = { ...s, partecipanti: s.partecipanti.map((x) => (x.id === id ? conPv(x, attuali) : x)) };
   const ultima = s.registro.at(-1);
   const daPrima = ultima?.pv?.id === id && ultima.round === s.round ? ultima.pv.da : p.pv.attuali;
   const diff = attuali - daPrima;
@@ -118,7 +136,7 @@ export function variaPmNemico(s, id, delta, adesso) {
   const attuali = Math.max(0, Math.min(p.pm.massimo, p.pm.attuali + delta));
   if (attuali === p.pm.attuali) return s;
   const t = { ...s, partecipanti: s.partecipanti.map((x) => (x.id === id ? { ...x, pm: { ...x.pm, attuali } } : x)) };
-  return conRiga(t, `${p.nome}: PM ${p.pm.attuali} → ${attuali}.`, adesso);
+  return { ...t, registro: [...t.registro, { ora: ora(adesso), round: t.round, pm: { id }, testo: `${p.nome}: PM ${p.pm.attuali} → ${attuali}.` }] };
 }
 
 /**
@@ -330,7 +348,7 @@ export function registraColpo(s, colpo, adesso) {
 /** Valori di un nemico dopo (o prima di) un colpo: PV, Ferite, Menomazioni e Stati (A.73, decisione 7). */
 function statoNemico(p, v) {
   return {
-    ...p, pv: { ...p.pv, attuali: v.pv }, stati: v.stati ?? p.stati,
+    ...conPv(p, v.pv), stati: v.stati ?? p.stati,
     ...(Number.isInteger(v.ferite) ? { ferite: v.ferite } : {}),
     ...(Array.isArray(v.menomazioni) ? { menomazioni: v.menomazioni } : {}),
   };
@@ -375,6 +393,19 @@ export function registraAttacco(s, a, adesso) {
 }
 
 /** Una riga di registro scritta da fuori della plancia (pezzo 6: la scelta di un giocatore nella sua scheda). */
+/**
+ * Righe del registro aggiunte (o riscritte: i clic ripetuti su − e + dei PV) fra due stati dello stesso scontro;
+ * per uno scontro nuovo, tutte. Le usa la plancia per le conferme delle azioni (src/ui/avvisi.js).
+ * @returns {{ testo, chiave: 'pv:<id>' | 'pm:<id>' | null }[]} (chiave: righe dei clic su − e +, un avviso per nemico)
+ */
+export function righeNuove(prima, dopo) {
+  if (!dopo?.registro) return [];
+  const vecchie = prima?.id === dopo.id ? prima.registro ?? [] : [];
+  let k = 0;
+  while (k < vecchie.length && k < dopo.registro.length && vecchie[k].ora === dopo.registro[k].ora && vecchie[k].testo === dopo.registro[k].testo) k++;
+  return dopo.registro.slice(k).map((r) => ({ testo: r.testo, chiave: r.pv ? `pv:${r.pv.id}` : r.pm ? `pm:${r.pm.id}` : null }));
+}
+
 export function registraRiga(s, testo, adesso) {
   if (!String(testo ?? '').trim()) throw new Error('riga di registro vuota');
   return conRiga(s, String(testo).trim(), adesso);

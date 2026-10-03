@@ -1638,3 +1638,20 @@ body.con-sfondo::before {
 .indicatore-collegamento.collegato { color: var(--ok); border-color: var(--ok); background: var(--ok-tenue); }
 .indicatore-collegamento.non_collegato { color: var(--tenue); }
 .avviso-master .riga-azioni { margin: 0.4rem 0; }
+
+/* Avvisi brevi (src/ui/avvisi.js): conferme delle azioni ed errori, in basso a destra, fuori dalla plancia */
+.avvisi { position: fixed; right: 1rem; bottom: 1rem; z-index: 1000; display: flex; flex-direction: column; gap: 0.5rem; max-width: min(28rem, calc(100vw - 2rem)); pointer-events: none; }
+.avviso { pointer-events: auto; cursor: pointer; padding: 0.6rem 0.8rem; border-radius: 6px; border: 1px solid var(--bordo); border-left-width: 5px; background: var(--sfondo); color: var(--testo); box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18); font-size: 0.95rem; animation: avviso-entra 0.18s ease-out; }
+.avviso p { margin: 0; }
+.avviso p + p { margin-top: 0.2rem; }
+.avviso-ok { border-left-color: var(--ok); background: var(--ok-tenue); }
+.avviso-info { border-left-color: var(--attenzione); background: var(--attenzione-tenue); }
+.avviso-errore { border-left-color: var(--errore); background: var(--errore-tenue); font-weight: 600; }
+@keyframes avviso-entra { from { opacity: 0; transform: translateY(0.4rem); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .avviso { animation: none; } }
+@media print { .avvisi { display: none; } }
+
+/* Tavolo del Master: nemico a 0 PV, carta ridotta a una riga in fondo e riga d'Iniziativa in grigio */
+.carta-nemico.carta-ridotta { padding: 0.35rem 0.6rem; opacity: 0.75; }
+.carta-ridotta .riga-ridotta { display: block; width: 100%; text-align: left; color: inherit; text-decoration: none; }
+.ordine-iniziativa tr.a-zero { color: var(--tenue); opacity: 0.65; }

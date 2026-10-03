@@ -231,6 +231,40 @@ Ogni pezzo ha test sulle funzioni pure e una prova nel browser; i primi due non 
    - la pulizia dei LEGGIMI tracciati solo qui (`personaggi/`, `scontri/`, `nemici/`) e del pulsante «Carica esempi», da decidere se restano su `main`;
    - il merge su `main` con i test e la prova dell'app senza server.
 
+## Dopo la prima prova (3 ottobre 2026)
+
+Ritocchi segnalati da Marcello dopo la prima prova della plancia.
+
+- **Tendina che si richiudeva.** L'aggiornamento periodico (ogni 3 secondi) ridisegnava tutta la plancia quando trovava novità, e sempre con «Chi è al tavolo» aperto: la tendina «Tipo» di «Aggiungi nemici», aperta, veniva sostituita da una nuova e chiusa. Ora il custode dei controlli (`src/ui/ridisegno.js`) vale per tutti i controlli della plancia e delle carte:
+  - mentre una tendina, un campo o un'area di testo hanno il focus, il ridisegno periodico si rinvia, e si fa appena il focus esce;
+  - i valori scritti o scelti e non ancora confermati («bozze») tornano nei controlli dopo un ridisegno, così come il focus;
+  - i controlli senza aria-label hanno una `data-chiave` stabile;
+  - «Aggiungi partecipante a mano», aperto o chiuso, resta com'era.
+- **Avvisi** (`src/ui/avvisi.js`). Una funzione unica, `avviso` e `avvisoErrore`: avvisi brevi in basso a destra, che si chiudono da soli; gli errori sono rossi e restano 10 secondi. Nella plancia la conferma di ogni azione salvata è la riga nuova del registro dello scontro (`src/scontro.js` → `righeNuove`), e i clic ripetuti su − e + dei PV e dei PM aggiornano un solo avviso per nemico. Avvisi presenti:
+  - nemici entrati, Iniziativa tirata, di turno e nuovo Round, durate degli Stati, fine scontro;
+  - colpo applicato a un nemico o a un PG con danni e PV, «a 0 PV», Ferite e Menomazioni (`testoColpo`);
+  - attacco di un nemico, incantesimo di un nemico con i PM, PV e PM cambiati a mano;
+  - «Chi è al tavolo» salvato, tipo di nemico salvato;
+  - errori: conflitto di revisione, server spento, azione non possibile, annullamento non fatto, esempi non caricati.
+  
+  Nella scheda: «Spara» («Colpo effettuato: Lucas, Carabina Punisher. Colpi: 30 → 29.») e «Lancia» («Incantesimo lanciato: … (PM 14 → 10)»). Il PG attacca dalla sua scheda e il danno si applica dalla plancia, quindi le conferme sono due: una per l'attacco e una per il danno.
+- **Nemico a 0 PV.** La carta si riduce a una riga (nome, PV 0, Ferita) e va in fondo dopo gli altri nemici; un clic la riapre, e «Riduci» la richiude. Sopra 0 PV torna al suo posto, aperta. Nella tabella dell'Iniziativa resta al suo posto, in grigio: saltarlo o no lo decide il master. Il campo è `ridotta` del partecipante, salvato con lo scontro (`src/scontro.js` → `conPv`, `riduciNemico`).
+- **Pagina iniziale.** Le etichette «solo browser», «cartella e browser» e «solo cartella» hanno un suggerimento al passaggio del mouse.
+- **Test.** `tests/ridisegno.test.js`:
+  - dieci giri di polling con una tendina aperta, senza ridisegno né cambio di valore o di focus;
+  - bozze e focus dopo un ridisegno;
+  - righe nuove del registro;
+  - testo del colpo con 0 PV, Ferite e Menomazione;
+  - carta ridotta a 0 PV.
+- **Prova nel browser.** Server sulla porta 3017 con cartelle temporanee, poi cancellate:
+  - tendina «Tipo» aperta 10 secondi mentre il server cambiava «Chi è al tavolo» ogni 2 secondi: stesso elemento, sempre con il focus;
+  - Lucas spara con la Carabina Punisher, con l'avviso dei colpi;
+  - «Colpito» sull'Eretico Veterano: 7 − AR 1 = 6, PV 25 → 19, con l'avviso;
+  - con 30 danni l'Eretico va a 0 PV: carta ridotta in fondo, riga grigia nell'Iniziativa;
+  - riaperto e curato a 1 PV, torna primo e aperto.
+  
+  Senza server l'app è invariata: nessuna etichetta, nessuna richiesta `/api`, console pulita.
+
 ## Bestiario proposto (2 ottobre 2026)
 
 Davide non ha ancora un bestiario. Questi nemici umani sono **proposte, da validare con lui** (per-davide A.79). Sono costruiti con le regole di creazione e avanzamento dei PG (Giocatore 0.45), così i numeri vengono dal motore e non da stime. Ogni file lo dice nella fonte («costruito come PG (…)») e nelle note («Proposta, da validare con Davide»).

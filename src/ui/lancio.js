@@ -8,6 +8,16 @@ import { listaProvenienza } from './tooltip.js';
 import { rigaScelte, interruttore, pannelloPassi } from './pannello-passi.js';
 import { calcolaLancio, dichiarazioneLancio, versioniLancio, contenitoriLancio } from '../lancio.js';
 import { classeMacrofamiglia } from '../palette.js';
+import { avviso } from './avvisi.js';
+
+// conferma visibile del lancio (src/ui/avvisi.js); i nemici (ctx.calcola) la hanno dal registro dello scontro
+function lanciaConAvviso(ctx, nome, fonte) {
+  const prima = ctx.sessione.pmAttuali;
+  ctx.azioni.lancia(fonte);
+  if (ctx.calcola || !Number.isInteger(prima)) return;
+  const dove = fonte.contenitore ? `; ${fonte.contenitore.pm} PM da ${fonte.contenitore.nome}` : '';
+  avviso(`Incantesimo lanciato: ${nome} (PM ${prima} → ${Math.max(0, prima - (fonte.personali ?? 0))}${dove}).`);
+}
 
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
 const segno = (n) => (n > 0 ? `+${n}` : numero(n));
@@ -183,7 +193,7 @@ function risultato(ctx, inc, r) {
       h('div', { class: 'attacco-azioni' },
         h('button', {
           type: 'button', class: 'btn primario btn-grande', disabled: !!r.impossibile, title: r.impossibile?.motivo ?? null,
-          onclick: () => ctx.azioni.lancia({ personali: f.personali, contenitore: f.contenitore }),
+          onclick: () => lanciaConAvviso(ctx, inc.nome, { personali: f.personali, contenitore: f.contenitore }),
         }, `Lancia (−${r.pm_costo} PM)`),
         h('small', { class: 'nota' }, ctx.calcola
           ? 'Tira 1d20 al tavolo, se serve la Prova. Il lancio va nel registro dello scontro; i PM si correggono con − e + sulla carta.'
@@ -248,11 +258,11 @@ function risultatoRituale(ctx, inc, r, d, imposta) {
       h('div', { class: 'attacco-azioni' },
         h('button', {
           type: 'button', class: 'btn primario btn-grande', disabled: !!r.impossibile, title: r.impossibile?.motivo ?? 'Successo o fallimento: i PM si consumano comunque',
-          onclick: () => ctx.azioni.lancia({ personali: R.officiante, contenitore: null }),
+          onclick: () => lanciaConAvviso(ctx, inc.nome, { personali: R.officiante, contenitore: null }),
         }, `Rituale concluso (−${R.officiante} PM)`),
         h('button', {
           type: 'button', class: 'btn btn-grande', disabled: !!r.impossibile || M.errori.length > 0, title: M.errori[0] ?? null,
-          onclick: () => ctx.azioni.lancia({ personali: M.officiante, contenitore: null }),
+          onclick: () => lanciaConAvviso(ctx, inc.nome, { personali: M.officiante, contenitore: null }),
         }, `Con Successo Magistrale (−${M.officiante} PM)`),
         h('small', { class: 'nota' }, 'Tira 1d20 al tavolo alla fine della celebrazione. Successo o fallimento consumano i PM; se la celebrazione si interrompe prima della Prova non si spendono. «Annulla» nell’intestazione annulla la spesa.'))),
   ];

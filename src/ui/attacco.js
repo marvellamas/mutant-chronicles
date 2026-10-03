@@ -12,6 +12,7 @@ import {
   modificatoriDistanza, vaDueArmi,
 } from '../attacco.js';
 import { rigaScelte, interruttore, pannelloPassi } from './pannello-passi.js';
+import { avviso } from './avvisi.js';
 
 const PASSI = ['Il tuo movimento', 'Il bersaglio', 'Distanza', 'Tipo di tiro', 'Risultato'];
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
@@ -287,7 +288,13 @@ function promemoriaAR(ctx, a) {
 }
 
 function risultato(ctx, a, r, colpi, imposta) {
-  const spara = () => ctx.azioni.spara(a.uid, r.munizioni);
+  // conferma visibile del colpo (src/ui/avvisi.js): chi spara, con che cosa, munizioni prima e dopo
+  const spara = () => {
+    ctx.azioni.spara(a.uid, r.munizioni);
+    const chi = ctx.scelte?.nome ? `${ctx.scelte.nome}, ` : '';
+    const conto = colpi !== null ? ` ${a.granata ? 'Granate' : 'Colpi'}: ${colpi} → ${Math.max(0, colpi - r.munizioni)}.` : ` ${r.munizioni} ${r.munizioni === 1 ? 'munizione' : 'munizioni'}.`;
+    avviso(`Colpo effettuato: ${chi}${a.nome}.${conto}`);
+  };
   return [
     r.impossibile ? h('div', { class: 'riquadro errore', role: 'alert' },
       h('p', {}, h('strong', {}, 'Attacco non possibile. '), r.impossibile.motivo),

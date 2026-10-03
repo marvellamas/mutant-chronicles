@@ -247,9 +247,16 @@ function testoAzioni(a) {
  * Difese, Azioni, Movimento, Resistenze (Immunità e Contromisure), Abilità, attacchi, incantesimi con «Lancia!»
  * (decisione 8) e capacità come promemoria.
  */
-export function cartaNemico(ctx, p, { modifica, diTurnoOra = false, onColpito = null, onAttacca = null, onLancia = null }) {
+export function cartaNemico(ctx, p, { modifica, diTurnoOra = false, onColpito = null, onAttacca = null, onLancia = null, onRiduci = null }) {
   const n = p.scheda;
   const dati = ctx.dati;
+  // a 0 PV la carta si riduce a una riga (nome, PV, Ferita) e va in fondo; un clic la riapre (src/scontro.js → conPv)
+  if (p.pv.attuali === 0 && p.ridotta) {
+    const fer = p.ferite ? ` · Ferita ${nomeFerita(p.ferite, dati)}` : '';
+    return h('article', { class: `carta-plancia carta-nemico carta-ridotta lato-${p.lato} a-zero`, 'aria-label': `${p.nome}, a 0 PV` },
+      h('button', { type: 'button', class: 'btn-link riga-ridotta', 'aria-expanded': 'false', title: 'Riapri la carta', onclick: () => onRiduci?.(false) },
+        h('span', { class: 'freccia' }, '▸ '), h('strong', {}, p.nome), ` · PV 0 / ${p.pv.massimo}${fer}`));
+  }
   const stati = dati.regole.stati?.elenco ?? [];
   const nomeStato = (id) => stati.find((s) => s.id === id)?.nome ?? id;
   const salvezze = dati.caratteristiche.salvezze.map((s) => `${s.nome.slice(0, 3)} ${n.salvezze?.[s.id] ?? '—'}`).join(' · ');
@@ -285,6 +292,7 @@ export function cartaNemico(ctx, p, { modifica, diTurnoOra = false, onColpito = 
       h('p', { class: 'nota' }, h('span', { class: 'nome-lato' }, p.lato), ` · ${n.nome}`, n.fonte ? ` · ${n.fonte}` : '')),
       // pezzo 4: «Colpito» (src/ui/colpo.js)
       h('span', { class: 'pulsanti-carta' },
+        p.pv.attuali === 0 && onRiduci ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Riduci la carta a una riga, in fondo', onclick: () => onRiduci(true) }, 'Riduci') : null,
         // pezzo 5: «Attacca» (src/ui/attacco-nemico.js)
         onAttacca ? h('button', { type: 'button', class: 'btn btn-piccolo btn-attacca', onclick: onAttacca }, 'Attacca') : null,
         onColpito ? h('button', { type: 'button', class: 'btn btn-piccolo btn-colpito', onclick: onColpito }, 'Colpito') : null)),

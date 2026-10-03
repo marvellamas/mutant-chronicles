@@ -587,6 +587,12 @@ function renderHome(unito = null) {
 
 // origine di un personaggio nella pagina iniziale, con il server della cartella
 const ORIGINI = { browser: 'solo browser', entrambi: 'cartella e browser', cartella: 'solo cartella' };
+// suggerimenti al passaggio del mouse: che cosa vuol dire l'etichetta e che cosa si può fare
+const SPIEGA_ORIGINI = {
+  browser: 'Solo browser: il personaggio è salvato in questo browser ma non nella cartella personaggi/ del server. Aprilo e salvalo per metterne una copia nella cartella.',
+  entrambi: 'Cartella e browser: il file è in personaggi/ ed è aperto anche in questo browser. Le modifiche fatte qui si salvano anche nella cartella.',
+  cartella: 'Solo cartella: il file è in personaggi/ ma non è mai stato aperto in questo browser. Aprilo per lavorarci.',
+};
 
 function rigaPersonaggio(p, origine = 'browser') {
   const s = p.scelte ?? {};
@@ -594,7 +600,7 @@ function rigaPersonaggio(p, origine = 'browser') {
   const data = p.aggiornato ? new Date(p.aggiornato).toLocaleString('it-IT', { dateStyle: 'short', timeStyle: 'short' }) : '';
   return h('li', { class: 'carta personaggio' },
     h('div', {},
-      h('h2', {}, s.nome?.trim() || 'Senza nome', stato.cartella ? h('span', { class: 'etichetta origine-personaggio' }, ORIGINI[origine]) : null),
+      h('h2', {}, s.nome?.trim() || 'Senza nome', stato.cartella ? h('span', { class: 'etichetta origine-personaggio', title: SPIEGA_ORIGINI[origine] }, ORIGINI[origine]) : null),
       h('p', {}, h('strong', {}, `Livello ${1 + livelli.length}`), ' · ', [s.corporazione, s.addestramento, s.classe].filter(Boolean).join(' · ') || 'Appena iniziato'),
       h('p', { class: 'nota' }, `Modificato ${data}`, p.cartella?.file ? ` · cartella: ${p.cartella.file}` : '')),
     h('div', { class: 'riga-azioni' },
@@ -641,7 +647,7 @@ function rigaCartella(r) {
   const apri = () => apriDaCartella(r);
   return h('li', { class: 'carta personaggio' },
     h('div', {},
-      h('h2', {}, r.nome.replace(/-/g, ' '), h('span', { class: 'etichetta origine-personaggio' }, ORIGINI.cartella)),
+      h('h2', {}, r.nome.replace(/-/g, ' '), h('span', { class: 'etichetta origine-personaggio', title: SPIEGA_ORIGINI.cartella }, ORIGINI.cartella)),
       h('p', {}, h('strong', {}, `Livello ${r.livello}`), ' · ', r.file),
       h('p', { class: 'nota' }, `Modificato ${data}`)),
     h('div', { class: 'riga-azioni' }, h('button', { type: 'button', class: 'btn primario', onclick: apri }, 'Apri')));

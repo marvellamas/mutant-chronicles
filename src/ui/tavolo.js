@@ -17,8 +17,10 @@ import { attacchiDi } from '../nemico-attacco.js';
 import { testoColpo } from '../danno.js';
 import { pannelloScontro, leggiScontroAperto, leggiScontro, salvaScontro } from './scontro.js';
 import { pannelloBestiario, elencoNemici, cartaNemico } from './nemici.js';
-import { diTurno, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico } from '../scontro.js';
+import { diTurno, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico } from '../scontro.js';
 import { vociBestiario } from '../nemici.js';
+import { creaCustode } from './ridisegno.js';
+import { avviso, avvisoErrore } from './avvisi.js';
 
 const INTERVALLO_MS = 3000;
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
@@ -66,20 +68,31 @@ export function renderTavolo(radice, ctx) {
   };
 
   // salva una modifica dello scontro; con una revisione vecchia (altra finestra) ricarica quello attuale
+  // dopo il salvataggio riuscito la conferma dell'azione: le righe nuove del registro (src/ui/avvisi.js); gli
+  // errori (conflitto di revisione, server spento) in rosso
   const salva = async (nuovo) => {
+    const prima = stato.scontro;
     try {
       const r = await salvaScontro(nuovo);
       if (r.conflitto !== undefined) {
         stato.scontro = r.conflitto?.stato === 'aperto' ? r.conflitto : null;
         stato.avvisoScontro = 'Lo scontro è stato cambiato in un’altra finestra: ho ricaricato lo stato attuale. Ripeti l’ultima azione se serve ancora.';
+        avvisoErrore(`Non salvato: ${stato.avvisoScontro}`);
       } else {
         stato.avvisoScontro = r.scontro.stato === 'chiuso' ? `«${r.scontro.nome}» chiuso e archiviato in scontri/archivio/.` : null;
         stato.scontro = r.scontro.stato === 'aperto' ? r.scontro : null;
+        const righe = righeNuove(prima, r.scontro);
+        // − e + dei PV e dei PM: un avviso per nemico, che si aggiorna ai clic successivi
+        for (const x of righe.filter((y) => y.chiave)) avviso(x.testo, { chiave: x.chiave });
+        const altre = righe.filter((y) => !y.chiave).map((y) => y.testo);
+        if (r.scontro.stato === 'chiuso') altre.push(stato.avvisoScontro);
+        if (altre.length) avviso(altre);
       }
       disegna();
       return r.conflitto === undefined;
     } catch (e) {
       stato.avvisoScontro = `Scontro non salvato: ${e.message}`;
+      avvisoErrore(`${stato.avvisoScontro}. Controlla che la finestra di avvia-server.bat sia aperta.`);
       disegna();
       return false;
     }
@@ -90,16 +103,19 @@ export function renderTavolo(radice, ctx) {
     coda = coda.then(async () => {
       if (!stato.scontro) return false;
       let nuovo;
-      try { nuovo = fn(stato.scontro); } catch (e) { stato.avvisoScontro = e.message; disegna(); return false; }
+      try { nuovo = fn(stato.scontro); } catch (e) { stato.avvisoScontro = e.message; avvisoErrore(e.message); disegna(); return false; }
       if (nuovo === stato.scontro) return true;
       return salva(nuovo);
     });
     return coda;
   };
 
+  // il ridisegno periodico non chiude le tendine né toglie il focus ai campi in uso (src/ui/ridisegno.js)
+  const custode = creaCustode(radice, { ridisegna: () => disegna() });
   const disegna = () => {
     if (!stato.attivo) return;
     nascondiTooltip();
+    const foto = custode.fotografa();
     const ultimi = ultimiPerPersonaggio(stato.elenco);
     const alTavolo = stato.selezione.map((k) => ultimi.get(k) ?? { mancante: k });
     svuota(radice, h('section', { class: 'plancia' },
@@ -115,7 +131,10 @@ export function renderTavolo(radice, ctx) {
       stato.esitoEsempi ? h('p', { class: 'riquadro attenzione', role: 'status' }, stato.esitoEsempi) : null,
       h('p', { class: 'nota' }, 'Sola lettura: i valori sono quelli delle schede in personaggi/, ricalcolati con le regole attuali. Per cambiarli si apre il personaggio (clic sulla carta).'),
       stato.sceltaAperta ? sceltaAlTavolo(stato, ultimi, async (nuova) => {
-        try { stato.selezione = await scriviSelezione(nuova); } catch (e) { alert(`Selezione non salvata: ${e.message}`); }
+        try {
+          stato.selezione = await scriviSelezione(nuova);
+          avviso(`Al tavolo: ${stato.selezione.length ? stato.selezione.map((k) => k.replace(/-/g, ' ')).join(', ') : 'nessuno'}.`, { chiave: 'al-tavolo' });
+        } catch (e) { avvisoErrore(`Selezione non salvata: ${e.message}`); }
         await aggiorna(true);
       }) : null,
       pannelloScontro(ctx, Object.assign(stato, { pgAlTavolo: alTavolo.map((r) => stato.viste.get(r.file)).filter((v) => v?.completa) }),
@@ -126,13 +145,14 @@ export function renderTavolo(radice, ctx) {
         : h('p', { class: 'vuoto' }, 'Nessun personaggio al tavolo: sceglili con «Chi è al tavolo».'),
       nemiciInScontro().length ? [
         h('h2', { class: 'plancia-sezione' }, 'Nemici nello scontro'),
-        h('div', { class: 'plancia-griglia' }, nemiciInScontro().map((p) => cartaNemico(ctx, p, { modifica, diTurnoOra: diTurno(stato.scontro)?.id === p.id, onColpito: () => colpitoNemico(p), onAttacca: attacchiDi(p).length ? () => attacca(p, alTavolo) : null, onLancia: (i) => lancia(p, i, alTavolo) }))),
+        h('div', { class: 'plancia-griglia' }, nemiciInCarta().map((p) => cartaNemico(ctx, p, { modifica, diTurnoOra: diTurno(stato.scontro)?.id === p.id, onColpito: () => colpitoNemico(p), onAttacca: attacchiDi(p).length ? () => attacca(p, alTavolo) : null, onLancia: (i) => lancia(p, i, alTavolo), onRiduci: (v) => modifica((x) => riduciNemico(x, p.id, v)) }))),
       ] : null,
       pannelloBestiario(ctx, stato.bestiario, {
         aperto: stato.bestiarioAperto,
         onToggle: (v) => { stato.bestiarioAperto = v; },
-        salvato: async () => { stato.firmaBestiario = null; await aggiornaBestiario(); disegna(); },
+        salvato: async (n) => { avviso(`Tipo di nemico salvato: ${n?.nome ?? ''} (nemici/${n?.id ?? '…'}.json).`); stato.firmaBestiario = null; await aggiornaBestiario(); disegna(); },
       })));
+    custode.ripristina(foto);
   };
   // «Carica esempi»: copia esempi/ nelle cartelle del server senza sovrascrivere (server.mjs → /api/esempi)
   const caricaEsempi = async () => {
@@ -145,6 +165,7 @@ export function renderTavolo(radice, ctx) {
       stato.esitoEsempi = `Esempi: ${copiati.length ? `copiati ${elenco(copiati)}` : 'nessun file nuovo'}${saltati.length ? `; saltati perché già presenti (non sovrascritti): ${elenco(saltati)}` : ''}. I personaggi si mettono al tavolo con «Chi è al tavolo»; i nemici sono nel Bestiario.`;
     } catch (e) {
       stato.esitoEsempi = `Esempi non caricati: ${e.message}`;
+      avvisoErrore(stato.esitoEsempi);
     }
     stato.firmaBestiario = null;
     await aggiorna(true);
@@ -215,7 +236,7 @@ export function renderTavolo(radice, ctx) {
   // «Annulla ultimo colpo»: per un PG si rimettono nel file PV, Ferite e Stati di prima (con la revisione)
   const annullaColpo = async () => {
     let esito;
-    try { esito = annullaUltimoColpo(stato.scontro); } catch (e) { stato.avvisoScontro = e.message; disegna(); return; }
+    try { esito = annullaUltimoColpo(stato.scontro); } catch (e) { stato.avvisoScontro = e.message; avvisoErrore(e.message); disegna(); return; }
     const { colpo } = esito;
     if (colpo.tipo === 'pg' && colpo.file) {
       try {
@@ -223,12 +244,14 @@ export function renderTavolo(radice, ctx) {
         const ora = vistaPlancia(testo, ctx.dati, colpo.file);
         if (ora.pv.attuali !== colpo.dopo.pv || ora.ferite.grado !== colpo.dopo.ferite) {
           stato.avvisoScontro = `${colpo.nome} è cambiato dopo il colpo (PV ${ora.pv.attuali}): annullamento non fatto, correggi dalla sua scheda.`;
+          avvisoErrore(stato.avvisoScontro);
           disegna();
           return;
         }
         await scriviCartella(colpo.file, testoConSessione(testo, { pvAttuali: colpo.prima.pv, ferite: colpo.prima.ferite, statiAttivi: colpo.prima.stati }, ctx.dati), { mtime });
       } catch (e) {
         stato.avvisoScontro = `Annullamento non fatto: ${e.message}`;
+        avvisoErrore(stato.avvisoScontro);
         disegna();
         return;
       }
@@ -265,6 +288,8 @@ export function renderTavolo(radice, ctx) {
     await aggiorna(true);
   };
   const nemiciInScontro = () => (stato.scontro?.partecipanti ?? []).filter((p) => p.tipo === 'nemico');
+  // nella plancia i nemici a 0 PV vanno in fondo, dopo tutti gli altri (l'ordine dei turni non cambia)
+  const nemiciInCarta = () => [...nemiciInScontro().filter((p) => p.pv.attuali > 0), ...nemiciInScontro().filter((p) => p.pv.attuali === 0)];
 
   // bestiario: si rilegge a ogni giro, si rivalida solo se un file è cambiato (nome e mtime)
   const aggiornaBestiario = async () => {
@@ -322,7 +347,7 @@ export function renderTavolo(radice, ctx) {
     }
     if (!stato.attivo) return;
     stato.ultimo = Date.now();
-    if (cambiato || stato.sceltaAperta) disegna();
+    if ((cambiato || stato.sceltaAperta) && custode.puoRidisegnare()) disegna();
     else aggiornaIndicatore();
   };
   const aggiornaIndicatore = () => {
@@ -335,7 +360,7 @@ export function renderTavolo(radice, ctx) {
   aggiorna().then(() => { disegna(); if (Number.isFinite(ctx.scorrimento)) window.scrollTo(0, ctx.scorrimento); });
   const giro = setInterval(() => aggiorna(), INTERVALLO_MS);
   const orologio = setInterval(aggiornaIndicatore, 1000);
-  return () => { stato.attivo = false; clearInterval(giro); clearInterval(orologio); };
+  return () => { stato.attivo = false; clearInterval(giro); clearInterval(orologio); custode.smonta(); };
 }
 
 function testoAggiornato(ms) {
