@@ -17,11 +17,11 @@
 //                                      409 con { esiste: true } («Aggiungi PG al tavolo»: non sovrascrive mai)
 //   GET /api/tavolo                    selezione del Tavolo del Master: { versione, personaggi: [nomi] }
 //   PUT /api/tavolo                    la salva in tavolo/sessione.json (fuori da git come personaggi/)
-//   GET /api/scontri                   scontri aperti in scontri/: [{ id, nome, stato, round, revisione, mtime }]
-//   GET /api/scontri/<id>              lo scontro (src/scontro.js)
+//   GET /api/scontri                   scontri e bozze in scontri/: [{ id, nome, stato, round, revisione, mtime, nemici? }]
+//   GET /api/scontri/<id>              lo scontro (src/scontro.js) o la bozza (src/preparazione.js, stato «bozza»)
 //   PUT /api/scontri/<id>              lo salva se `revisione` è quella del file (altrimenti 409 con lo
-//                                      scontro attuale) e porta la revisione a +1; uno scontro «chiuso»
-//                                      passa in scontri/archivio/ (non si cancella)
+//                                      scontro attuale) e porta la revisione a +1; uno scontro «chiuso» o
+//                                      una bozza eliminata passa in scontri/archivio/ (non si cancella)
 //   GET /api/nemici                    bestiario in nemici/: [{ file, mtime, nemico } | { file, mtime, errore }]
 //   POST /api/esempi                   copia esempi/ (PG) in personaggi/ ed esempi/nemici/ in nemici/, solo i
 //                                      file che lì non ci sono: { copiati: [...], saltati: [...] }
@@ -33,6 +33,7 @@ import { readFile, writeFile, readdir, stat, mkdir, rename, copyFile, constants 
 import { extname, join, normalize, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { validaScontro } from './src/scontro.js';
+import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
 import { NOME_FILE } from './src/cartella.js';
 import { caricaDati } from './src/rules.js';
 import { validaNemico, formattaErrore } from './src/validate.js';
@@ -98,7 +99,7 @@ async function apiScontri(req, res, percorso, scontri) {
     for (const f of nomi) {
       try {
         const s = await leggiJson(join(scontri, f));
-        lista.push({ id: s.id, nome: s.nome, stato: s.stato, round: s.round, revisione: s.revisione, mtime: (await stat(join(scontri, f))).mtimeMs });
+        lista.push({ id: s.id, nome: s.nome, stato: s.stato, round: s.round, revisione: s.revisione, mtime: (await stat(join(scontri, f))).mtimeMs, ...(Array.isArray(s.nemici) ? { nemici: s.nemici.reduce((n, v) => n + (v?.quanti ?? 0), 0) } : {}) });
       } catch { /* file rovinato: non si elenca */ }
     }
     return json(res, 200, lista.sort((a, b) => b.mtime - a.mtime));
@@ -113,7 +114,8 @@ async function apiScontri(req, res, percorso, scontri) {
   if (req.method !== 'PUT') return json(res, 405, { errore: 'metodo non ammesso' });
   let s;
   try { s = JSON.parse((await leggiCorpo(req)).toString('utf8')); } catch (e) { return json(res, 400, { errore: `contenuto non valido: ${e.message}` }); }
-  const errore = validaScontro(s) ?? (s.id !== id ? 'l’id non corrisponde al file' : null);
+  // «Prepara scontro»: le bozze stanno accanto agli scontri, con stato «bozza» (src/preparazione.js)
+  const errore = (String(s?.stato ?? '').startsWith('bozza') ? validaBozza(s) : validaScontro(s)) ?? (s.id !== id ? 'l’id non corrisponde al file' : null);
   if (errore) return json(res, 400, { errore });
   let attuale = null;
   try { attuale = await leggiJson(dove); } catch { /* nuovo */ }
@@ -122,7 +124,7 @@ async function apiScontri(req, res, percorso, scontri) {
   }
   const nuovo = { ...s, revisione: s.revisione + 1 };
   await mkdir(scontri, { recursive: true });
-  if (nuovo.stato === 'chiuso') {
+  if (nuovo.stato === 'chiuso' || nuovo.stato === STATO_BOZZA_ELIMINATA) {
     // archivio: il file esce dagli scontri aperti ma resta, in scontri/archivio/
     const archivio = join(scontri, 'archivio');
     await mkdir(archivio, { recursive: true });

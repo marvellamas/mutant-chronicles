@@ -265,6 +265,66 @@ Ritocchi segnalati da Marcello dopo la prima prova della plancia.
   
   Senza server l'app è invariata: nessuna etichetta, nessuna richiesta `/api`, console pulita.
 
+## «Crea nemico» e «Prepara scontro» (3 ottobre 2026)
+
+Richiesta di Marcello del 3 ottobre: due funzioni nuove della plancia, raggiungibili anche senza scontro aperto, basate sul Bestiario proposto (`docs/bestiario/bestiario.md`, cap. 2–6). L'editor manuale dei nemici resta com'è.
+
+**Il Bestiario come dati** (`data/bestiario.json`):
+- lo scrive `tools/lotti/lotto_bestiario_dati.mjs --scrivi`, che legge le tabelle del documento:
+  - scala dei gradi, Boss, equilibrio (A.3) e gruppi misti;
+  - basi del cap. 3 ed equipaggiamento del §4.4, con le armi del catalogo;
+  - tabelle casuali del cap. 6;
+- effetti numerici dei moduli (cap. 4) e ricette delle creature pronte (cap. 5) sono scritti nel lotto dal testo dei paragrafi;
+- fonte «Bestiario, proposta» e `TODO(Davide)`: è una proposta in attesa di Davide;
+- validatore `validaBestiario` (`src/validate.js`): Stati, Abilità, nature, armi del catalogo, facce dei dadi, id delle tabelle;
+- `tests/bestiario.test.js` rilegge il documento e confronta PV, VA, Difese, AR, danno, Boss e tabelle;
+- il Bestiario non entra nelle versioni dei dati del personaggio né nei punti da chiarire della pagina iniziale (`src/rules.js` → `FILE_SOLO_TAVOLO`, `versioniPersonaggio`): l'app senza server resta com'era.
+- `bestiario.md`: PV del Bruto della Breccia Boss 171 (155 × 1,1 arrotondato come le basi; prima 170).
+
+**«Crea nemico»** (motore `src/crea-nemico.js`, finestra `src/ui/crea-nemico.js`). Un passo per schermata con «Indietro», «Avanti» e «A caso», che usa le tabelle del cap. 6 e lascia com'erano gli altri passi:
+1. base (Umano con il tipo del bestiario umano, Insettoide, Aracnoide, Umanoide mostruoso) oppure una delle 7 creature pronte;
+2. grado (Minore → Molto potente, e Boss), con i Round di resistenza attesi contro 7 PG;
+3. moduli: Corrotto con livello e Manifestazioni, Mutazioni ammesse per la base, Equipaggiamento con le armi del catalogo; costo e grado effettivo (§2.4) sempre in vista;
+4. nome, descrizione e identificativo, con una proposta modificabile;
+5. riepilogo: profilo completo nel formato A.73, provenienza di ogni valore (base, grado, moduli, ritocco a mano) nei tooltip, valori modificabili a mano.
+
+In fondo:
+- «Salva nel bestiario» scrive in `nemici/`; con lo scontro aperto c'è anche «Aggiungi allo scontro», da «Prepara scontro» «Aggiungi alla preparazione»;
+- «Tutto a caso» fa i 5 passi del §6.6 in un clic, con i tiri a vista e «Ritira» per ogni passo (per esempio una sola Mutazione), poi lo stesso riepilogo;
+- un nemico salvato dalla procedura ha il blocco `_bestiario` (scelte, grado, costo, grado effettivo, ritocchi) e nel Bestiario il pulsante «Procedura», che lo riapre sul riepilogo.
+
+**«Prepara scontro»** (modello `src/preparazione.js`, finestra `src/ui/preparazione.js`):
+- **Bozze.** Stanno in `scontri/` con stato «bozza», accanto agli scontri, che le ignorano. Il server le valida con `validaBozza`; «Elimina» e «Inizia e consuma la bozza» le spostano in `scontri/archivio/`, senza cancellarle.
+- **Contenuto.** Nome, note per il master e nemici con «Quanti» e lato. I nemici vengono dal bestiario salvato, dalle creature pronte o da «Crea nemico»; ognuno si guarda e si ritocca con l'editor dei nemici, solo nella bozza.
+- **PG.** Sono facoltativi: senza scelta, quelli al tavolo alla partenza.
+- **Difficoltà per 7 PG.** È solo informativa, da 1 / numero della tabella dei gruppi misti (§2.3), con i mezzi gradi e il Boss. Per un nemico del bestiario senza `_bestiario` il grado si stima dai PV, e la difficoltà lo dice.
+- **Salvataggio.** Ogni modifica si salva con la revisione, in fila.
+- **«Inizia».** Rifiuta se c'è già uno scontro aperto. Mette al tavolo i PG scelti e crea lo scontro: PG, copie numerate dei nemici, Iniziativa tirata dall'app per tutti, Round 1, note e la riga «Dalla preparazione …».
+
+**Decisioni prese:**
+- le creature pronte sono ricette calcolate dal motore; il test le confronta con le tabelle del cap. 5, e coincidono tutte;
+- la Ragnatela è una capacità, con VA e gittata nel testo: il formato A.73 vuole i dadi negli attacchi;
+- PV arrotondati all'unità;
+- il Boss è «Boss di grado X»;
+- Umani:
+  - vengono dai file del bestiario umano (`esempi/nemici/umani/`), letti come file statici;
+  - Potente e Molto potente non ci sono per gli umani (Comandante e Campione sono da preparare);
+  - l'equipaggiamento di un umano prende le armi della fascia con il VA delle sue armi dello stesso tipo e l'armatura se è migliore;
+- Mimetismo su una base senza Furtività: avviso, il +4 si applica a mano;
+- nomi proposti senza virgola («Scavafosse Semplice»): le copie nello scontro aggiungono il numero;
+- a «Inizia» i PG scelti si aggiungono a quelli già al tavolo, senza toglierne.
+
+**Test e prova:**
+- test: `tests/bestiario.test.js`, `tests/crea-nemico.test.js` (creature del cap. 5, Insettoide Medio con 2 Mutazioni, Umano Corrotto livello 2, «a caso» con seme fisso e ritiro, 100 semi validi), `tests/preparazione.test.js` (modello, «Inizia», server con cartelle temporanee);
+- prova nel browser: server sulla porta 3017 con cartelle temporanee, poi cancellate, e un PG di prova «Lucas» copiato da un esempio:
+  - Aracnoide Potente con Veleno e Toccato (Sangue fermo) creato con la procedura, salvato e riaperto con «Procedura»;
+  - tutto a caso con una Mutazione ritirata (Mimetismo → Sensi oscuri);
+  - bozza «Imboscata al porto» con 3 nemici (Ragno delle cisterne e 2 Scavafosse ritoccati) e Lucas: scheda chiusa e riaperta, bozza ritrovata, «Inizia» con Iniziativa e Round 1 corretti;
+  - «Duplica» e «Inizia e consuma la bozza», con l'archiviazione;
+  - «Aggiungi allo scontro» dalla procedura;
+  - telefono senza scorrimento orizzontale;
+- senza server l'app è invariata: console pulita, nessuna richiesta `/api`.
+
 ## Bestiario proposto (2 ottobre 2026)
 
 Davide non ha ancora un bestiario. Questi nemici umani sono **proposte, da validare con lui** (per-davide A.79). Sono costruiti con le regole di creazione e avanzamento dei PG (Giocatore 0.45), così i numeri vengono dal motore e non da stime. Ogni file lo dice nella fonte («costruito come PG (…)») e nelle note («Proposta, da validare con Davide»).

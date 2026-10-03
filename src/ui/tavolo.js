@@ -22,6 +22,7 @@ import { vociBestiario } from '../nemici.js';
 import { creaCustode } from './ridisegno.js';
 import { avviso, avvisoErrore } from './avvisi.js';
 import { apriCreaNemico, apriDaBestiario } from './crea-nemico.js';
+import { apriPreparazione } from './preparazione.js';
 
 const INTERVALLO_MS = 3000;
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
@@ -71,7 +72,7 @@ export function renderTavolo(radice, ctx) {
   // salva una modifica dello scontro; con una revisione vecchia (altra finestra) ricarica quello attuale
   // dopo il salvataggio riuscito la conferma dell'azione: le righe nuove del registro (src/ui/avvisi.js); gli
   // errori (conflitto di revisione, server spento) in rosso
-  const salva = async (nuovo) => {
+  const salva = async (nuovo, { conferme = true } = {}) => {
     const prima = stato.scontro;
     try {
       const r = await salvaScontro(nuovo);
@@ -82,7 +83,7 @@ export function renderTavolo(radice, ctx) {
       } else {
         stato.avvisoScontro = r.scontro.stato === 'chiuso' ? `«${r.scontro.nome}» chiuso e archiviato in scontri/archivio/.` : null;
         stato.scontro = r.scontro.stato === 'aperto' ? r.scontro : null;
-        const righe = righeNuove(prima, r.scontro);
+        const righe = conferme ? righeNuove(prima, r.scontro) : [];
         // − e + dei PV e dei PM: un avviso per nemico, che si aggiorna ai clic successivi
         for (const x of righe.filter((y) => y.chiave)) avviso(x.testo, { chiave: x.chiave });
         const altre = righe.filter((y) => !y.chiave).map((y) => y.testo);
@@ -128,7 +129,8 @@ export function renderTavolo(radice, ctx) {
           h('button', { type: 'button', class: 'btn', title: 'Sceglie uno o più file JSON di «SALVA PG», li controlla come «Importa», li scrive in personaggi/ senza mai sovrascrivere e li mette al tavolo', onclick: () => sceltaFile.click() }, 'Aggiungi PG al tavolo'),
           sceltaFile,
           h('button', { type: 'button', class: 'btn', title: 'Copia i personaggi e i nemici d’esempio del repo (esempi/) nelle cartelle del server; non sovrascrive mai un file già presente', onclick: caricaEsempi }, 'Carica esempi'),
-          // richiesta di Marcello del 03/10: nemici dal Bestiario, anche senza scontro aperto
+          // richiesta di Marcello del 03/10: bozze di scontro e nemici dal Bestiario, anche senza scontro aperto
+          h('button', { type: 'button', class: 'btn', title: 'Bozze di scontro: nemici, quanti, note, difficoltà; «Inizia» le apre con l’Iniziativa tirata', onclick: preparaScontro }, 'Prepara scontro'),
           h('button', { type: 'button', class: 'btn', title: 'Procedura guidata dal Bestiario (base, grado, moduli), oppure tutto a caso', onclick: () => creaNemico() }, 'Crea nemico'),
           h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.personaggi() }, 'Personaggi'))),
       stato.esitoEsempi ? h('p', { class: 'riquadro attenzione', role: 'status' }, stato.esitoEsempi) : null,
@@ -170,6 +172,18 @@ export function renderTavolo(radice, ctx) {
     };
     if (riapri) apriDaBestiario(ctx, riapri, opzioni); else apriCreaNemico(ctx, opzioni);
   };
+  // «Prepara scontro» (src/ui/preparazione.js): «Inizia» mette al tavolo i PG scelti nella bozza e apre lo scontro
+  const preparaScontro = () => apriPreparazione(ctx, {
+    bestiario: () => stato.bestiario, alTavolo: pgAlTavolo, scontroAperto: () => !!stato.scontro, salvatoBestiario: bestiarioSalvato,
+    inizia: async (scontro, chiaviPg) => {
+      if (chiaviPg.length) {
+        try { stato.selezione = await scriviSelezione([...new Set([...stato.selezione, ...chiaviPg])]); } catch (e) { avvisoErrore(`Selezione «al tavolo» non salvata: ${e.message}`); }
+      }
+      const ok = await salva(scontro, { conferme: false });
+      await aggiorna(true);
+      return ok;
+    },
+  });
   // «Carica esempi»: copia esempi/ nelle cartelle del server senza sovrascrivere (server.mjs → /api/esempi)
   const caricaEsempi = async () => {
     try {

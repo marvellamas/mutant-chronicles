@@ -38,7 +38,7 @@ export async function salvaScontro(s) {
   return { scontro: j };
 }
 
-const idNuovo = (d = new Date()) => {
+export const idNuovo = (d = new Date()) => {
   const p = (n) => String(n).padStart(2, '0');
   return `scontro-${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`;
 };
@@ -192,7 +192,7 @@ export function pannelloScontro(ctx, st, { modifica, crea, ridisegna, annullaCol
 }
 
 /** PG per un nuovo scontro, dalla vista della plancia (Iniziativa effettiva, Caratteristiche per la parità). */
-function pgDaVista(v) {
+export function pgDaVista(v) {
   const [des, int] = Object.values(v.caratteristichePerParita ?? {});
   return { chiave: v.chiaveCartella, nome: v.nome, iniziativa: v.iniziativa?.valore ?? 0, des: des ?? null, int: int ?? null };
 }

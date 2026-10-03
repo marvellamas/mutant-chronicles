@@ -89,7 +89,7 @@ Richiesta del 29/09/2026. Sviluppato sul branch `tavolo-direttore` (piano ed esi
 
 **Resta da fare:**
 - **pezzo 7: sessione di prova vera**, con i giocatori collegati in rete (`--rete`) e su carta: tempi dei controlli, avvisi, registro con più persone; R2 (codice di sessione su reti non di casa) e R3 (date dei file fra PC diversi) del piano;
-- **poi il generatore di nemici dal Bestiario** nella plancia, dalle tabelle del cap. 6 di `docs/bestiario/bestiario.md` (formato regolare, colonna «id»).
+- ✔ **generatore di nemici dal Bestiario**: fatto il 3 ottobre 2026 con «Crea nemico» (procedura guidata o tutto a caso, dalle tabelle del cap. 6) e «Prepara scontro» (bozze di scontro con difficoltà per 7 PG e «Inizia»); esito in `docs/tavolo-direttore.md`, sezione «Crea nemico» e «Prepara scontro». Il Bestiario resta una proposta per Davide.
 
 La richiesta di partenza era questa:
 
