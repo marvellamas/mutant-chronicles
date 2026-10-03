@@ -311,6 +311,14 @@ const creature = [
     moduli: { corrotto: { livello: 'posseduto', minori: ['sussurro-continuo'], maggiori: ['sguardo-del-vuoto'] } },
     moduli_per_grado: { minore: { corrotto: { livello: 'toccato', minori: ['sussurro-continuo'], maggiori: [] } } },
     boss: { grado: 'medio', moduli: { corrotto: { livello: 'consacrato', minori: ['sussurro-continuo'], maggiori: ['sguardo-del-vuoto', 'grido-dell-oscura-simmetria'] } } } },
+  // creature delle basi del §3.6–3.9 (03/10/2026)
+  { id: 'levriero-delle-discariche', nome: 'Levriero delle Discariche', titolo: '5.6.1 Levriero delle Discariche', famiglia: 'quadrupedi', base: 'quadrupede', gradi: ['minore', 'semplice', 'medio'],
+    moduli: { mutazioni: ['sensi-oscuri'], corrotto: { livello: 'toccato', minori: ['occhi-senza-luce'], maggiori: [] } } },
+  { id: 'gracchia-di-ruggine', nome: 'Gracchia di Ruggine', titolo: '5.7.1 Gracchia di Ruggine', famiglia: 'alati', base: 'alato', gradi: ['minore', 'semplice', 'medio'], moduli: { mutazioni: ['aculei'] } },
+  { id: 'verme-dei-crolli', nome: 'Verme dei Crolli', titolo: '5.8.1 Verme dei Crolli', famiglia: 'striscianti', base: 'strisciante', gradi: ['semplice', 'medio', 'potente'], moduli: { mutazioni: ['carapace'] } },
+  { id: 'colosso-delle-fonderie', nome: 'Colosso delle Fonderie', titolo: '5.9.1 Colosso delle Fonderie', famiglia: 'giganti', base: 'gigante', gradi: ['medio', 'potente', 'molto-potente'],
+    moduli: { corrotto: { livello: 'posseduto', minori: ['sussurro-continuo'], maggiori: ['fiamma-nera'] } },
+    boss: { grado: 'potente', capacita: { nome: 'Colata', effetto: 'Alla soglia di fase la crosta si spacca: ogni personaggio entro 2 Q effettua una PS di Riflessi o è Incendiato, e il Colosso recupera 20 PV.' } } },
 ].map((c) => ({ ...c, descrizione: descr(c.titolo), comportamento: comport(c.titolo), paragrafo: `§${c.titolo.split(' ')[0]}` }));
 for (const c of creature) { verifica(c.descrizione.length > 80, `${c.nome}: descrizione`); delete c.titolo; }
 

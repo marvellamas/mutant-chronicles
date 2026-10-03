@@ -511,7 +511,10 @@ export function aCaso({ seme = 1, livello = 8, contesto = 'scontro', semi = {}, 
   // 5. Scheda e numero (§2.3 con il fattore della difficoltà; un Boss è uno solo)
   const eff = scelte.boss ? null : gradoEffettivo(scelte.grado, costoDi(), dati);
   const fr = frazioneScontro({ grado: scelte.grado, boss: scelte.boss, grado_effettivo: eff?.valore ?? iG }, livello, dati);
-  const numero = scelte.boss ? 1 : Math.max(1, Math.round((1 / fr.frazione) * rd.fattore));
+  let numero = scelte.boss ? 1 : Math.max(1, Math.round((1 / fr.frazione) * rd.fattore));
+  // §3.9: una base rara (il Gigante) è una sola per scontro sotto il grado indicato nei dati
+  const raro = BE.basi[scelte.base]?.massimo_per_scontro;
+  if (raro && indiceGrado(dati, scelte.grado) < indiceGrado(dati, raro.sotto)) numero = Math.min(numero, raro.numero);
   return { scelte, passi, difficolta: rd.id, numero, costo, livello, contesto, seme, fissa, semi: Object.fromEntries(passi.map((p) => [p.id, S(p.id)])) };
 }
 

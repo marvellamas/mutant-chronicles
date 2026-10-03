@@ -2988,6 +2988,102 @@
       "descrizione": "L’Eretico del bestiario umano (§3.2) è un uomo comune che ha scelto l’Oscura Simmetria; l’Eretico corrotto è quello che ne ha ricevuto i doni. Parla piano, e chi gli sta accanto sente un sussurro sotto le sue parole; quando guarda qualcuno negli occhi, quello resta fermo un istante di troppo. I più devoti portano una lama rituale che non trova ostacoli nell’acciaio.",
       "comportamento": "Apre con l’Imboscata e lo Sguardo del vuoto sul personaggio più pericoloso, poi attacca con il pugnale chi è Stordito. Il Boss usa il Grido appena è ingaggiato da più di due personaggi e alla soglia di fase prova a fuggire per tornare con altri Eretici.",
       "paragrafo": "§5.5.1"
+    },
+    {
+      "id": "levriero-delle-discariche",
+      "nome": "Levriero delle Discariche",
+      "famiglia": "quadrupedi",
+      "base": "quadrupede",
+      "gradi": [
+        "minore",
+        "semplice",
+        "medio"
+      ],
+      "moduli": {
+        "mutazioni": [
+          "sensi-oscuri"
+        ],
+        "corrotto": {
+          "livello": "toccato",
+          "minori": [
+            "occhi-senza-luce"
+          ],
+          "maggiori": []
+        }
+      },
+      "descrizione": "Ai margini delle discariche delle città-bunker, dove si gettano i rifiuti dei laboratori e dei reparti chiusi, i cani randagi nascono già sbagliati: senza occhi, con le costole fuori dalla pelle, sempre in branco. I Levrieri delle Discariche non abbaiano e non mangiano carne fresca finché non ha smesso di muoversi. Trovano chi si nasconde nel buio come se lo vedessero.",
+      "comportamento": "Il branco, da tre a sei, segue la preda al buio con i Sensi oscuri e la circonda; carica chi resta indietro o porta una luce. Fugge quando il capobranco va a 0 PV.",
+      "paragrafo": "§5.6.1"
+    },
+    {
+      "id": "gracchia-di-ruggine",
+      "nome": "Gracchia di Ruggine",
+      "famiglia": "alati",
+      "base": "alato",
+      "gradi": [
+        "minore",
+        "semplice",
+        "medio"
+      ],
+      "moduli": {
+        "mutazioni": [
+          "aculei"
+        ]
+      },
+      "descrizione": "Sopra le ciminiere delle raffinerie volano stormi di uccelli dal becco di ferro e dalle penne incrostate di ruggine e catrame. Le Gracchie di Ruggine nidificano nei camini spenti e tagliano con gli artigli spinati chi sale sui tetti. Il loro verso, un raschio metallico, si sente prima che si vedano.",
+      "comportamento": "Lo stormo piomba sul personaggio più esposto con la Picchiata, risale e torna su chi sanguina. Si disperde quando metà dello stormo è a 0 PV.",
+      "paragrafo": "§5.7.1"
+    },
+    {
+      "id": "verme-dei-crolli",
+      "nome": "Verme dei Crolli",
+      "famiglia": "striscianti",
+      "base": "strisciante",
+      "gradi": [
+        "semplice",
+        "medio",
+        "potente"
+      ],
+      "moduli": {
+        "mutazioni": [
+          "carapace"
+        ]
+      },
+      "descrizione": "Sotto i quartieri crollati, dove i palazzi sono caduti uno sull’altro, si scava il Verme dei Crolli: un corpo ad anelli lungo quanto un vagone, coperto di placche di cemento e chitina, con una bocca circolare piena di denti. Sente i passi attraverso le macerie e sale a prendere chi si ferma troppo a lungo nello stesso punto.",
+      "comportamento": "Aspetta sotto le macerie, esce sul personaggio isolato con l’Agguato dal basso, lo avvolge con le Spire e lo morde finché è Immobilizzato. Si rintana sotto un quarto dei PV.",
+      "paragrafo": "§5.8.1"
+    },
+    {
+      "id": "colosso-delle-fonderie",
+      "nome": "Colosso delle Fonderie",
+      "famiglia": "giganti",
+      "base": "gigante",
+      "gradi": [
+        "medio",
+        "potente",
+        "molto-potente"
+      ],
+      "moduli": {
+        "corrotto": {
+          "livello": "posseduto",
+          "minori": [
+            "sussurro-continuo"
+          ],
+          "maggiori": [
+            "fiamma-nera"
+          ]
+        }
+      },
+      "boss": {
+        "grado": "potente",
+        "capacita": {
+          "nome": "Colata",
+          "effetto": "Alla soglia di fase la crosta si spacca: ogni personaggio entro 2 Q effettua una PS di Riflessi o è Incendiato, e il Colosso recupera 20 PV."
+        }
+      },
+      "descrizione": "Nelle fonderie abbandonate qualcosa ha fuso insieme carne, scorie e metallo in una figura alta come due uomini, che cammina con la schiena curva sotto i soffitti. Il Colosso delle Fonderie ha la pelle di crosta nera e fessure da cui cola un fuoco che non scalda. Una voce che non è la sua sussurra a chi gli sta vicino.",
+      "comportamento": "Avanza verso il gruppo più folto e usa la Spazzata appena ha due personaggi a portata; abbatte le Coperture leggere. Non fugge. Al massimo un Colosso per scontro sotto il grado Potente (§3.9).",
+      "paragrafo": "§5.9.1"
     }
   ],
   "tabelle": {
@@ -2996,27 +3092,51 @@
       "righe": [
         {
           "da": 1,
-          "a": 6,
+          "a": 5,
           "id": "umano",
           "nome": "Umano"
         },
         {
-          "da": 7,
-          "a": 11,
+          "da": 6,
+          "a": 8,
           "id": "insettoide",
           "nome": "Insettoide"
         },
         {
-          "da": 12,
-          "a": 15,
+          "da": 9,
+          "a": 10,
           "id": "aracnoide",
           "nome": "Aracnoide"
         },
         {
-          "da": 16,
-          "a": 20,
+          "da": 11,
+          "a": 12,
           "id": "umanoide-mostruoso",
           "nome": "Umanoide mostruoso"
+        },
+        {
+          "da": 13,
+          "a": 15,
+          "id": "quadrupede",
+          "nome": "Quadrupede"
+        },
+        {
+          "da": 16,
+          "a": 17,
+          "id": "alato",
+          "nome": "Alato"
+        },
+        {
+          "da": 18,
+          "a": 19,
+          "id": "strisciante",
+          "nome": "Strisciante"
+        },
+        {
+          "da": 20,
+          "a": 20,
+          "id": "gigante",
+          "nome": "Gigante"
         }
       ]
     },

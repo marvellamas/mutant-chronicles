@@ -55,9 +55,11 @@ Regole già nel Giocatore e usate così come sono: Volo (§5.2.3–5.2.5), Caric
 - Eretico corrotto: le Manifestazioni oscure del cap. 4 (Sussurro continuo, Sguardo del vuoto, Grido dell’Oscura Simmetria) sostituiscono i «Doni dell’Oscura Simmetria» lasciati in sospeso nel bestiario umano. Ti va bene come soluzione, o hai in mente poteri dell’ambientazione con un nome?
 - L’Eretico corrotto è più fragile del suo grado (1,2–2,6 Round di resistenza invece di 1,5–4,5), perché combatte da Incursore. Lo lasciamo così, da usare con l’Imboscata o in gruppo, o gli diamo PV in più?
 - Capacità dei Boss nelle creature pronte (Covata, Tela che beve la luce, Non si ferma): sono nel tono giusto per la seconda fase?
+- Quattro creature nuove per le basi del 3 ottobre (Levriero delle Discariche, Gracchia di Ruggine, Verme dei Crolli, Colosso delle Fonderie, con il Boss «Colata»): nomi e tono vanno bene?
 
 ## Generazione casuale (cap. 6)
 
 - Pesi delle tabelle (base, grado per pattuglia, scontro e tana, numero di moduli, livello di Corruzione): riflettono quello che vuoi incontrare più spesso? Per esempio un Boss esce con 1 su 20 negli scontri e 3 su 20 nelle tane, il Consacrato con 1 su 10.
 - Difficoltà a caso (facile 1–2, normale 3–5, duro 6 su d6) con i fattori 0,7 e 1,3 sul numero di creature: va bene tirarla, o la difficoltà la sceglie sempre il Direttore?
+- Base a caso con otto basi (d20): Umano 1–5, Insettoide 6–8, Aracnoide 9–10, Umanoide mostruoso 11–12, Quadrupede 13–15, Alato 16–17, Strisciante 18–19, Gigante 20, con un solo Gigante sotto il Potente. I pesi ti vanno bene?
 - Formato delle tabelle con la colonna «id» per il generatore del Tavolo del Master: ti sta bene che le tabelle del manuale abbiano questa colonna, o la teniamo solo nei dati dell’app?

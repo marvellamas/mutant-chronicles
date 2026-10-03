@@ -48,7 +48,7 @@ Capitolo 4 — Moduli
 
 Capitolo 5 — Creature pronte
 
-5.1 Lettura delle creature pronte · 5.2 Insettoidi: Scavafosse, Regina della Covata · 5.3 Aracnoidi: Tessitrice d’Ombra, Madre dei Fili Neri · 5.4 Umanoidi mostruosi: Squarciatore, Bruto della Breccia · 5.5 Umani corrotti: Eretico corrotto
+5.1 Lettura delle creature pronte · 5.2 Insettoidi: Scavafosse, Regina della Covata · 5.3 Aracnoidi: Tessitrice d’Ombra, Madre dei Fili Neri · 5.4 Umanoidi mostruosi: Squarciatore, Bruto della Breccia · 5.5 Umani corrotti: Eretico corrotto · 5.6 Quadrupedi: Levriero delle Discariche · 5.7 Alati: Gracchia di Ruggine · 5.8 Striscianti: Verme dei Crolli · 5.9 Giganti: Colosso delle Fonderie
 
 Capitolo 6 — Generazione casuale
 
@@ -889,7 +889,7 @@ Le creature di questo capitolo sono costruite con il procedimento del §1.7: una
 * la scheda, con una colonna per grado e, per una creatura di ogni famiglia, la colonna del Boss (§2.5);
 * le due misure della taratura contro sette personaggi del livello del grado (Appendice A.3): Round di resistenza e Round per abbattere un personaggio che para.
 
-Le misure tengono conto di PV, VA, Difese, AR e danno; non contano Veleno, Ragnatela, Rigenerazione, Stati e Manifestazioni, che rendono la creatura più pericolosa di quanto dica la colonna. Le famiglie sono quattro: insettoidi (§5.2), aracnoidi (§5.3), umanoidi mostruosi (§5.4) e umani corrotti (§5.5).
+Le misure tengono conto di PV, VA, Difese, AR e danno; non contano Veleno, Ragnatela, Rigenerazione, Stati e Manifestazioni, che rendono la creatura più pericolosa di quanto dica la colonna. Per le basi del §3.6–3.9 contano anche il −2 o +2 al VA di chi le attacca (§3.1.1). Le famiglie sono otto: insettoidi (§5.2), aracnoidi (§5.3), umanoidi mostruosi (§5.4), umani corrotti (§5.5), quadrupedi (§5.6), alati (§5.7), striscianti (§5.8) e giganti (§5.9).
 
 ## **5.2 Insettoidi**
 
@@ -1122,6 +1122,142 @@ I valori umani vengono dal convertitore (Eretico Recluta, Veterano ed Élite del
 
 **Comportamento.** Apre con l’Imboscata e lo Sguardo del vuoto sul personaggio più pericoloso, poi attacca con il pugnale chi è Stordito. Il Boss usa il Grido appena è ingaggiato da più di due personaggi e alla soglia di fase prova a fuggire per tornare con altri Eretici.
 
+## **5.6 Quadrupedi**
+
+### **5.6.1 Levriero delle Discariche**
+
+Ai margini delle discariche delle città-bunker, dove si gettano i rifiuti dei laboratori e dei reparti chiusi, i cani randagi nascono già sbagliati: senza occhi, con le costole fuori dalla pelle, sempre in branco. I Levrieri delle Discariche non abbaiano e non mangiano carne fresca finché non ha smesso di muoversi. Trovano chi si nasconde nel buio come se lo vedessero.
+
+**Base:** Quadrupede. **Moduli:** Corrotto, Toccato (+½); Sensi oscuri (+0). **Grado effettivo:** mezzo grado sopra quello della colonna. **Manifestazione:** Occhi senza luce (minore).
+
+| Valore | Minore | Semplice | Medio |
+| :---- | :---: | :---: | :---: |
+| Natura | Oscura Simmetria | Oscura Simmetria | Oscura Simmetria |
+| FOR · COS · DES | 6 · 6 · 7 | 7 · 6 · 7 | 7 · 7 · 8 |
+| INT · SAG · CAR | 2 · 6 · 2 | 2 · 6 · 2 | 2 · 7 · 2 |
+| PV | 21 | 42 | 65 |
+| AR (di cui magica) | 1 (0) | 2 (0) | 3 (0) |
+| Morso: VA, danno | 11, 1d8+2 | 13, 1d8+3 | 15, 2d6+2 |
+| Artigli: VA, danno | 11, 1d6+2 | 13, 1d8+2 | 15, 2d6+1 |
+| VA Difese | 8 | 10 | 12 |
+| PS Tempra · Riflessi · Volontà · Magia | 10 · 12 · 9 · 10 | 11 · 13 · 10 · 11 | 11 · 13 · 10 · 11 |
+| Iniziativa | 6 | 6 | 8 |
+| Movimento | Passo 10 Q | Passo 10 Q | Passo 10 Q |
+| Spazio | 1 Q | 1 Q | 1 Q |
+| Taglia | Normale | Normale | Normale |
+| Azioni | 1 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento |
+| Abilità | Atletica 11, Percezione 9, Sopravvivenza 9 | Atletica 13, Percezione 11, Sopravvivenza 11 | Atletica 15, Percezione 13, Sopravvivenza 13 |
+| Contromisure | — | — | — |
+| Capacità | Carica del branco, Olfatto, Sensi oscuri, Occhi senza luce | Come a sinistra | Come a sinistra |
+| Immunità | — | — | — |
+| Round di resistenza · Round per abbattere un PG | 1,5 · 8,9 | 2,9 · 7 | 4,5 · 6 |
+
+Morso e Artigli: natura Naturale, portata 1 Q, AC 1. Carica del branco come la base (§3.6). Chi è ferito da un Levriero è esposto alla Corruzione Oscura con intensità Flebile (§4.2.5). Le misure non contano la Carica del branco.
+
+**Comportamento.** Il branco, da tre a sei, segue la preda al buio con i Sensi oscuri e la circonda; carica chi resta indietro o porta una luce. Fugge quando il capobranco va a 0 PV.
+
+## **5.7 Alati**
+
+### **5.7.1 Gracchia di Ruggine**
+
+Sopra le ciminiere delle raffinerie volano stormi di uccelli dal becco di ferro e dalle penne incrostate di ruggine e catrame. Le Gracchie di Ruggine nidificano nei camini spenti e tagliano con gli artigli spinati chi sale sui tetti. Il loro verso, un raschio metallico, si sente prima che si vedano.
+
+**Base:** Alato. **Moduli:** Aculei (+½). **Grado effettivo:** mezzo grado sopra quello della colonna.
+
+| Valore | Minore | Semplice | Medio |
+| :---- | :---: | :---: | :---: |
+| Natura | Comune | Comune | Comune |
+| FOR · COS · DES | 4 · 5 · 8 | 5 · 5 · 8 | 5 · 6 · 9 |
+| INT · SAG · CAR | 3 · 7 · 2 | 3 · 7 · 2 | 3 · 8 · 2 |
+| PV | 18 | 36 | 55 |
+| AR (di cui magica) | 1 (0) | 2 (0) | 3 (0) |
+| Artigli: VA, danno | 11, 1d6+2 | 13, 1d8+2 | 15, 2d6+2 |
+| VA Difese | 11 | 13 | 15 |
+| PS Tempra · Riflessi · Volontà · Magia | 7 · 12 · 10 · 10 | 8 · 13 · 11 · 11 | 8 · 13 · 11 · 11 |
+| Iniziativa | 6 | 6 | 8 |
+| Movimento | Passo 3 Q; volo 8 Q | Passo 3 Q; volo 8 Q | Passo 3 Q; volo 8 Q |
+| Spazio | 1 Q | 1 Q | 1 Q |
+| Taglia | Normale | Normale | Normale |
+| Azioni | 1 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento |
+| Abilità | Percezione 11, Atletica 9, Furtività 9 | Percezione 13, Atletica 11, Furtività 11 | Percezione 15, Atletica 13, Furtività 13 |
+| Contromisure | — | — | — |
+| Capacità | Volo, Picchiata, Vista acuta, Aculei | Come a sinistra | Come a sinistra |
+| Immunità | — | — | — |
+| Round di resistenza · Round per abbattere un PG | 1,5 · 11,2 | 2,9 · 9,3 | 4,4 · 6 |
+
+Artigli: natura Naturale, Sanguinante 1, portata 1 Q, AC 1. Chi la colpisce senz’armi subisce 1d4 (Aculei). Volo e Picchiata come la base (§3.7); chi la attacca mentre vola subisce −2 VA (§3.1.1).
+
+**Comportamento.** Lo stormo piomba sul personaggio più esposto con la Picchiata, risale e torna su chi sanguina. Si disperde quando metà dello stormo è a 0 PV.
+
+## **5.8 Striscianti**
+
+### **5.8.1 Verme dei Crolli**
+
+Sotto i quartieri crollati, dove i palazzi sono caduti uno sull’altro, si scava il Verme dei Crolli: un corpo ad anelli lungo quanto un vagone, coperto di placche di cemento e chitina, con una bocca circolare piena di denti. Sente i passi attraverso le macerie e sale a prendere chi si ferma troppo a lungo nello stesso punto.
+
+**Base:** Strisciante. **Moduli:** Carapace (+½). **Grado effettivo:** mezzo grado sopra quello della colonna.
+
+| Valore | Semplice | Medio | Potente |
+| :---- | :---: | :---: | :---: |
+| Natura | Comune | Comune | Comune |
+| FOR · COS · DES | 7 · 7 · 5 | 7 · 8 · 6 | 8 · 9 · 6 |
+| INT · SAG · CAR | 2 · 6 · 1 | 2 · 7 · 1 | 2 · 7 · 1 |
+| PV | 50 | 78 | 216 |
+| AR (di cui magica) | 3 (0) | 4 (0) | 5 (0) |
+| Morso: VA, danno | 13, 1d8+2 | 15, 2d6+1 | 17, 2d8+1 |
+| Spire: VA, danno | 13, 1d6+1 | 15, 1d8+1 | 17, 2d6+1 |
+| VA Difese | 9 | 11 | 13 |
+| PS Tempra · Riflessi · Volontà · Magia | 13 · 8 · 11 · 11 | 13 · 8 · 11 · 11 | 15 · 9 · 12 · 12 |
+| Iniziativa | 3 | 5 | 7 |
+| Movimento | Passo 4 Q | Passo 4 Q | Passo 4 Q |
+| Spazio | 1 Q | 1 Q | 1 Q |
+| Taglia | Normale | Normale | Normale |
+| Azioni | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento |
+| Abilità | Furtività 13, Atletica 11, Percezione 11 | Furtività 15, Atletica 13, Percezione 13 | Furtività 17, Atletica 15, Percezione 15 |
+| Contromisure | — | — | — |
+| Capacità | Spire, Agguato dal basso, Scavo, Vibrazioni, Carapace | Come a sinistra | Come a sinistra |
+| Immunità | — | — | — |
+| Round di resistenza · Round per abbattere un PG | 4,6 · 9,3 | 7,5 · 7,4 | 12,5 · 5,6 |
+
+Morso e Spire: natura Naturale, portata 1 Q, AC 1; le Spire Immobilizzano come la base (§3.8). Agguato dal basso e Scavo come la base. Le misure non contano l’agguato né le Spire.
+
+**Comportamento.** Aspetta sotto le macerie, esce sul personaggio isolato con l’Agguato dal basso, lo avvolge con le Spire e lo morde finché è Immobilizzato. Si rintana sotto un quarto dei PV.
+
+## **5.9 Giganti**
+
+### **5.9.1 Colosso delle Fonderie**
+
+Nelle fonderie abbandonate qualcosa ha fuso insieme carne, scorie e metallo in una figura alta come due uomini, che cammina con la schiena curva sotto i soffitti. Il Colosso delle Fonderie ha la pelle di crosta nera e fessure da cui cola un fuoco che non scalda. Una voce che non è la sua sussurra a chi gli sta vicino.
+
+**Base:** Gigante. **Moduli:** Corrotto, Posseduto (+1). **Grado effettivo:** un grado sopra quello della colonna. **Manifestazioni:** Sussurro continuo (minore), Fiamma nera (maggiore).
+
+| Valore | Medio | Potente | Molto potente | Boss (Potente) |
+| :---- | :---: | :---: | :---: | :---: |
+| Natura | Oscura Simmetria | Oscura Simmetria | Oscura Simmetria | Oscura Simmetria |
+| FOR · COS · DES | 10 · 9 · 5 | 11 · 10 · 5 | 12 · 11 · 6 | 11 · 10 · 5 |
+| INT · SAG · CAR | 3 · 6 · 2 | 3 · 6 · 2 | 3 · 7 · 2 | 3 · 6 · 2 |
+| PV | 81 | 225 | 331 | 254 |
+| AR (di cui magica) | 4 (1) | 5 (1) | 6 (1) | 5 (1) |
+| Schianto: VA, danno | 15, 2d6+2 Magico | 17, 2d8+2 Magico | 19, 2d8+3 Magico | 17, 2d8+2 Magico |
+| VA Difese | 9 | 11 | 13 | 11 |
+| PS Tempra · Riflessi · Volontà · Magia | 13 · 8 · 13 · 11 | 15 · 9 · 14 · 12 | 15 · 10 · 15 · 13 | 15 · 9 · 14 · 12 |
+| Iniziativa | 4 | 6 | 8 | 6 |
+| Movimento | Passo 6 Q | Passo 6 Q | Passo 6 Q | Passo 6 Q |
+| Spazio | 2 × 2 Q | 3 × 3 Q | 3 × 3 Q | 3 × 3 Q |
+| Taglia | Grande | Grande | Grande | Grande |
+| Azioni | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 2 AzP, 1 Movimento | 3 AzP (2 d’attacco), 1 Movimento |
+| Abilità | Atletica 15, Percezione 11, Sopravvivenza 11 | Atletica 17, Percezione 13, Sopravvivenza 13 | Atletica 19, Percezione 15, Sopravvivenza 15 | Atletica 17, Percezione 13, Sopravvivenza 13 |
+| Contromisure | — | — | — | — |
+| Capacità | Taglia Grande, Spazzata del gigante, Raro, Presenza terrificante, Sussurro continuo, Fiamma nera | Come a sinistra | Come a sinistra | Come a sinistra, più Colata |
+| Immunità | — | — | — | — |
+| Round di resistenza · Round per abbattere un PG | 6,8 · 6 | 11,8 · 4,8 | 18,5 · 4,6 | 13,9 · 4,8 |
+
+Schianto: natura Magico, proprietà Fuoco (Fiamma nera), portata 2 Q, AC 1; Spazzata del gigante come la base (§3.9). Taglia Grande: chi lo attacca ottiene +2 VA (§3.1.1). Chi è ferito dal Colosso è esposto alla Corruzione Oscura con intensità Debole (§4.2.5). Le misure non contano la Spazzata né il Fuoco.
+
+**Colata (Boss).** Alla soglia di fase (§2.5.3) la crosta del Colosso si spacca: ogni personaggio entro 2 Q effettua una PS di Riflessi o è Incendiato (Giocatore §5.18), e il Colosso recupera 20 PV.
+
+**Comportamento.** Avanza verso il gruppo più folto e usa la Spazzata appena ha due personaggi a portata; abbatte le Coperture leggere. Non fugge. Al massimo un Colosso per scontro sotto il grado Potente (§3.9).
+
 # **Capitolo 6 — Generazione casuale**
 
 ## **6.1 Formato delle tabelle**
@@ -1139,10 +1275,16 @@ Un risultato non ammesso (una Mutazione che la base non può avere, un modulo gi
 
 | d20 | Base | id | Paragrafo |
 | :---: | :---- | :---- | :---: |
-| 1–6 | Umano | umano | §3.2 |
-| 7–11 | Insettoide | insettoide | §3.3 |
-| 12–15 | Aracnoide | aracnoide | §3.4 |
-| 16–20 | Umanoide mostruoso | umanoide-mostruoso | §3.5 |
+| 1–5 | Umano | umano | §3.2 |
+| 6–8 | Insettoide | insettoide | §3.3 |
+| 9–10 | Aracnoide | aracnoide | §3.4 |
+| 11–12 | Umanoide mostruoso | umanoide-mostruoso | §3.5 |
+| 13–15 | Quadrupede | quadrupede | §3.6 |
+| 16–17 | Alato | alato | §3.7 |
+| 18–19 | Strisciante | strisciante | §3.8 |
+| 20 | Gigante | gigante | §3.9 |
+
+Il Gigante esce 1 volta su 20 ed è uno solo per scontro sotto il grado Potente (§3.9): quando il numero di creature del §6.3.4 darebbe di più, se ne usa uno. Gli umani restano i più frequenti; le basi del §3.6–3.9 prendono insieme 8 facce su 20.
 
 ## **6.3 Grado**
 
@@ -1227,11 +1369,11 @@ Il Corrotto si prende una sola volta: se esce di nuovo vale Mutazione. L’Equip
 | 9–10 | Sangue acido | sangue-acido | +½ | Tutte |
 | 11 | Sensi oscuri | sensi-oscuri | +0 | Tutte |
 | 12–13 | Aculei | aculei | +½ | Tutte |
-| 14 | Mole | mole | +1 | Insettoide, Aracnoide, Umanoide mostruoso |
-| 15 | Ali membranose | ali-membranose | +½ | Insettoide, Umanoide mostruoso |
-| 16 | Scavatore | scavatore | +0 | Insettoide, Aracnoide, Umanoide mostruoso |
+| 14 | Mole | mole | +1 | Insettoide, Aracnoide, Umanoide mostruoso, Quadrupede, Strisciante |
+| 15 | Ali membranose | ali-membranose | +½ | Insettoide, Umanoide mostruoso, Quadrupede |
+| 16 | Scavatore | scavatore | +0 | Insettoide, Aracnoide, Umanoide mostruoso, Quadrupede |
 | 17–18 | Mimetismo | mimetismo | +½ | Tutte |
-| 19–20 | Balzo | balzo | +½ | Insettoide, Aracnoide, Umanoide mostruoso |
+| 19–20 | Balzo | balzo | +½ | Insettoide, Aracnoide, Umanoide mostruoso, Quadrupede |
 
 Effetti nel §4.3. Una Mutazione già presa o non ammessa per la base si ritira.
 
@@ -1298,7 +1440,7 @@ Le Manifestazioni non si ripetono: un risultato già preso si ritira. Effetti ne
 Sette personaggi di 8° livello entrano in un deposito sotterraneo: il grado del gruppo è Medio e il contesto è uno scontro.
 
 1. **Grado e difficoltà.** Tabella 6.3.2, d20 = 12: grado del gruppo, quindi Medio. Tabella 6.3.4, d6 = 4: normale, fattore 1.
-2. **Base.** Tabella 6.2, d20 = 13: Aracnoide. Colonna Medio del §3.4: PV 59, AR 3, Morso VA 15 2d6+2, Ragnatela VA 14 a 9 Q, Difese 14, 2 AzP.
+2. **Base.** Tabella 6.2, d20 = 10: Aracnoide. Colonna Medio del §3.4: PV 59, AR 3, Morso VA 15 2d6+2, Ragnatela VA 14 a 9 Q, Difese 14, 2 AzP.
 3. **Moduli.** Tabella 6.4.1, d6 = 4: un modulo. Tabella 6.4.2, d6 = 5: Corrotto.
 4. **Corruzione.** Tabella 6.5.1, d10 = 8: Posseduto (+1), una Manifestazione minore e una maggiore. Tabella 6.5.2, d6 = 1: Occhi senza luce, che l’Aracnoide ha già come Visione al buio: si ritira, d6 = 3, Sangue fermo. Tabella 6.5.3, d6 = 3: Sguardo del vuoto.
 5. **Scheda e numero.** Natura Oscura Simmetria; AR 4, di cui 1 magica; Morso di danno Magico; PS di Volontà 13; Presenza terrificante, Sangue fermo, Sguardo del vuoto; chi è ferito è esposto alla Corruzione con intensità Debole. Il costo è +1: grado effettivo Potente. Nella tabella dei gruppi misti del §2.3, contro personaggi di 8° livello, il Potente vale 1: **una creatura**.

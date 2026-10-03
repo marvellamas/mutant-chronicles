@@ -40,6 +40,8 @@ const CREATURE = [
   ['tessitrice-d-ombra', '5.3.1 Tessitrice', 'Morso'], ['madre-dei-fili-neri', '5.3.2 Madre dei Fili Neri', 'Morso'],
   ['squarciatore', '5.4.1 Squarciatore', 'Artigli'], ['bruto-della-breccia', '5.4.2 Bruto della Breccia', 'Artigli'],
   ['eretico-corrotto', '5.5.1 Eretico corrotto', 'Pugnale da combattimento'],
+  ['levriero-delle-discariche', '5.6.1 Levriero delle Discariche', 'Morso'], ['gracchia-di-ruggine', '5.7.1 Gracchia di Ruggine', 'Artigli'],
+  ['verme-dei-crolli', '5.8.1 Verme dei Crolli', 'Morso'], ['colosso-delle-fonderie', '5.9.1 Colosso delle Fonderie', 'Schianto'],
 ];
 for (const [id, titolo, attacco] of CREATURE) {
   test(`creatura pronta: ${titolo} come la tabella del cap. 5 (PV, AR, attacco, Difese, PS, Iniziativa, AzP)`, () => {
@@ -139,11 +141,11 @@ test('Equipaggiamento (§4.4): l’Umanoide Medio con la fascia successiva usa i
 });
 
 test('«a caso» con un seme fisso: sempre lo stesso nemico; ritirare un modulo cambia solo quel passo', () => {
-  const a = aCaso({ seme: 42, livello: 8 }, dati);
-  assert.deepEqual(aCaso({ seme: 42, livello: 8 }, dati), a);
-  assert.deepEqual(a.scelte, { base: 'insettoide', grado: 'semplice', boss: false, mutazioni: ['mimetismo', 'carapace', 'arti-in-piu'], corrotto: null, equipaggiamento: null });
+  const a = aCaso({ seme: 1944, livello: 8 }, dati);
+  assert.deepEqual(aCaso({ seme: 1944, livello: 8 }, dati), a);
+  assert.deepEqual(a.scelte, { base: 'quadrupede', grado: 'potente', boss: false, mutazioni: ['mimetismo', 'rigenerazione', 'sensi-oscuri'], corrotto: null, equipaggiamento: null });
   assert.deepEqual(a.passi.map((p) => p.id), ['grado', 'base', 'moduli', 'modulo-1', 'modulo-2', 'modulo-3']);
-  // §6.4.2: Equipaggiamento per un Insettoide vale Mutazione; §6.4.3: una Mutazione già presa si ritira
+  // §6.4.2: Equipaggiamento per un Quadrupede vale Mutazione; §6.4.3: una Mutazione già presa si ritira
   assert.equal(a.passi[3].tiri[0].nota, 'vale Mutazione (§6.4.2)');
   assert.ok(a.passi[4].tiri.some((t) => t.ritirato));
   const r = profiloNemico(a.scelte, dati);
@@ -177,4 +179,15 @@ test('difficoltà per 7 PG (§2.3, solo informativa): frazioni, mezzo grado, Bos
   // un nemico del bestiario senza _bestiario: grado stimato dai PV, segnalato
   const d = difficolta([{ nemico: umano('eretico-elite'), quanti: 3 }], 9, dati);
   assert.deepEqual([d.stime, d.livello], [1, 8]);
+});
+
+test('«a caso»: il Gigante è uno solo per scontro sotto il grado Potente (§3.9)', () => {
+  let visti = 0;
+  for (let s = 1; s <= 2000 && visti < 5; s++) {
+    const x = aCaso({ seme: s, livello: 5, contesto: 'pattuglia' }, dati);
+    if (x.scelte.base !== 'gigante') continue;
+    visti++;
+    if (!['potente', 'molto-potente'].includes(x.scelte.grado)) assert.equal(x.numero, 1, `seme ${s}`);
+  }
+  assert.ok(visti > 0);
 });
