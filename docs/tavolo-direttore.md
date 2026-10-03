@@ -338,7 +338,7 @@ Richiesta di Marcello: «Lancia!» non registrava durate; ora gli Incantesimi si
 | fino a una condizione (Comando) | 1 |
 | procedura (cure, Psicometria, Rigenerazione, Impronta Mistica…) | 7 |
 
-Valori per versione: 189 in Round, 318 in minuti, ore o giorni, 4 altri. Mancava nei dati la seconda tabella di Marchio Psichico (inseguimento e combattimento): aggiunta. Ambigua Individuare (Concentrazione senza durata massima in tabella): TODO(Davide) A.87, `docs/risposte-master.md`.
+Valori per versione: 189 in Round, 318 in minuti, ore o giorni, 4 altri. Mancava nei dati la seconda tabella di Marchio Psichico (inseguimento e combattimento): aggiunta. Ambigua Individuare (Concentrazione senza durata massima in tabella): TODO(Davide) A.88, `docs/risposte-master.md`.
 
 **Dati.** `tools/durate_incantesimi.mjs --scrivi` → `meccanica.durata` di ogni incantesimo: `tipo` (durata, istantanea, procedura, condizione), `colonna`, `concentrazione`, `concentrazione_doppia` (Scudo: a Concentrazione il doppio della durata fissa), `modalita`. Il validatore (`validaDurateIncantesimi`) controlla tipi, colonne in ogni versione e valori leggibili. Scadenza con `regole.json` → `durate_round` (la stessa delle Tecniche). Allungare la durata: Anticipazione della Durata (gradino successivo della scala, sez. 12.3); Incantesimi Estesi toglie il raddoppio dei PM (`anticipazione_senza_raddoppio`), come già in «Lancia!». AR degli incantesimi già calcolata dalla scheda: `regole.json` → `ar.incantesimi` (Scudo, Armatura di Forza, Pelle Corazzata), con le frasi verificate.
 

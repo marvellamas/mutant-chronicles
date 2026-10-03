@@ -76,7 +76,7 @@ for (const inc of dati.incantesimi) {
       // Scudo: «la durata massima è il doppio della durata fissa in tabella»
       if (!con && m.concentrazione === 'a_scelta' && /durata massima è il doppio della durata fissa/.test(regole)) durata.concentrazione_doppia = true;
       if (!con && m.concentrazione === 'a_scelta' && !durata.concentrazione_doppia) {
-        durata['TODO(Davide)'] = 'Si sceglie Concentrazione o durata fissa, ma la tabella ha solo la durata fissa: qual è la durata massima a Concentrazione di ogni versione? (A.87, docs/risposte-master.md, domanda del 03/10/2026)';
+        durata['TODO(Davide)'] = 'Si sceglie Concentrazione o durata fissa, ma la tabella ha solo la durata fissa: qual è la durata massima a Concentrazione di ogni versione? (A.88, docs/risposte-master.md, domanda del 03/10/2026)';
       }
     } else if (SENZA_COLONNA.istantanea.includes(inc.nome)) {
       durata = { tipo: 'istantanea' };

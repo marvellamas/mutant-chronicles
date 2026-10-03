@@ -661,7 +661,7 @@ manuali; la 69 chiude in parte una domanda.
 Lavoro sulle durate degli Incantesimi (`tools/durate_incantesimi.mjs` → `incantesimi.json` → `meccanica.durata`,
 `src/durate-incantesimi.js`). Una domanda nuova, nel pacchetto per il Doc «per-davide.md»:
 
-- **A.87 — Durata a Concentrazione di Individuare** (Magia, scheda di Individuare). *In attesa.* La scheda fa
+- **A.88 — Durata a Concentrazione di Individuare** (Magia, scheda di Individuare). *In attesa.* La scheda fa
   scegliere fra Concentrazione e durata fissa, ma la tabella delle versioni dà solo la durata fissa: qual è la durata
   massima a Concentrazione di ogni versione? Nel frattempo l'app usa la durata fissa anche con Concentrazione e mostra
   la domanda nel riquadro «Durata e bersagli» di «Lancia!» (TODO(Davide) in `meccanica.durata`).
