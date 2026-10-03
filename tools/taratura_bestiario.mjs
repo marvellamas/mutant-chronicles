@@ -16,6 +16,7 @@
 //   node tools/taratura_bestiario.mjs --json → personaggi, confronto e scala in JSON
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { readdirSync, readFileSync } from 'node:fs';
 
 const u = (p) => new URL(`../${p}`, import.meta.url).href;
 const { datiReali } = await import(u('tests/helpers.js'));
@@ -26,6 +27,7 @@ const { dotazioneVuota, opzioniEffettive, sottoScelteRichieste, vociDotazione, a
 const { validaLivello, applicaLivello, calcolaSchedaPersonaggio, puntiDaCompletare } = await import(u('src/avanzamento.js'));
 const { massimiSessione, inizializzaSessione } = await import(u('src/sessione.js'));
 const { calcolaScheda } = await import(u('src/calc.js'));
+const { profiloNemico, scelteCreatura } = await import(u('src/crea-nemico.js'));
 const { catalogo, risolvi, statoIniziale } = await import(u('src/equipaggiamento.js'));
 
 const RADICE = fileURLToPath(new URL('..', import.meta.url)).replace(/[\\/]$/, '');
@@ -413,6 +415,33 @@ export function umaniScalati(grado, pg) {
   return { molt, bonus, ...medie(molt, bonus) };
 }
 
+/**
+ * Creature pronte (cap. 5, data/bestiario.json → creature): le due misure per ogni colonna della scheda, contro i PG
+ * del livello del grado della colonna. L'intervallo va dal minimo del grado della colonna (i valori sono quelli del
+ * grado) al massimo del grado effettivo (§2.4: i moduli valgono gradi in più nel bilancio); oltre il Molto potente
+ * ogni grado effettivo in più vale una creatura in più (intervallo moltiplicato). Il Boss ha l'intervallo del Boss.
+ * «centro»: dentro l'intervallo del grado della colonna.
+ */
+// fuori dall'intervallo per scelta dichiarata nel testo della creatura: si stampano, non fanno fallire lo script
+export const ECCEZIONI = { 'eretico-corrotto': 'più fragile del grado, combatte da Incursore (§5.5.1)' };
+export function creaturePronte(dati, pgDi, umani = {}) {
+  const B = dati.bestiario;
+  const nomi = GRADI.map((g) => g.nome);
+  const alto = (v) => (v > nomi.length - 1 ? OBIETTIVI['Molto potente'][1] * (1 + v - (nomi.length - 1)) : OBIETTIVI[nomi[Math.ceil(v)]][1]);
+  return B.creature.flatMap((c) => [...c.gradi.map((g) => ({ g, boss: false })), ...(c.boss ? [{ g: c.boss.grado, boss: true }] : [])].map(({ g, boss }) => {
+    const r = profiloNemico(scelteCreatura(c.id, g, { boss }, dati), dati, { umani });
+    const n = r.nemico;
+    const grado = GRADI.find((x) => x.nome === B.gradi.find((y) => y.id === g).nome);
+    // l'attacco migliore della scheda (per l'Eretico il pugnale, non la pistola)
+    const a = n.attacchi.filter((x) => x.danno).reduce((m, x) => (probabilita(x.va) * dannoDopoAR(x.danno, 0) > probabilita(m.va) * dannoDopoAR(m.danno, 0) ? x : m));
+    const m = misureScontro({ pv: n.pv, va: a.va, difese: n.difese, ar: n.ar.totale, danno: a.danno, azioni: boss ? n.azioni.principali - 1 : n.azioni.principali, vaContro: B.basi[c.base].va_contro ?? 0 }, pgDi[grado.livello], { bossPara: boss });
+    const intervallo = boss ? OBIETTIVI.Boss : [OBIETTIVI[grado.nome][0], alto(r.effettivo.valore)];
+    const centro = boss ? OBIETTIVI.Boss : OBIETTIVI[grado.nome];
+    return { id: c.id, nome: c.nome, colonna: boss ? `Boss ${grado.nome}` : grado.nome, effettivo: r.effettivo.nome, resistenza: m.resistenza, abbatte: m.abbatte, intervallo,
+      fuori: m.resistenza < intervallo[0] || m.resistenza > intervallo[1], eccezione: ECCEZIONI[c.id] ?? null, centro: m.resistenza >= centro[0] && m.resistenza <= centro[1] };
+  }));
+}
+
 const uno = (x) => (Number.isInteger(x) ? String(x) : x.toFixed(1)).replace('.', ',');
 const due = (x) => x.toFixed(2).replace('.', ',');
 
@@ -423,8 +452,10 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const confronto = confrontoConBranch(righe);
   const pgDi = Object.fromEntries(righe.map((r) => [r.livello, r.archetipi]));
   const scala = GRADI.map((g) => ({ ...g, ...misureScontro(g, pgDi[g.livello]), boss: boss(g, pgDi[g.livello]) }));
+  const umani = Object.fromEntries(readdirSync(new URL('../esempi/nemici/umani/', import.meta.url)).filter((x) => x.endsWith('.json')).map((x) => [x.replace(/.json$/, ''), JSON.parse(readFileSync(new URL(`../esempi/nemici/umani/${x}`, import.meta.url), 'utf8'))]));
+  const creature = creaturePronte(dati, pgDi, umani);
   if (process.argv.includes('--json')) {
-    console.log(JSON.stringify({ righe, confronto, scala }, null, 2));
+    console.log(JSON.stringify({ righe, confronto, scala, creature }, null, 2));
   } else {
     console.log('A.2 — Media dei quattro archetipi:');
     console.log('| Livello | PV | VA | Difese | AR | Danno medio | Iniziativa | Salvezze | AzP |');
@@ -475,11 +506,17 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
       console.log(`| ${g.nome} | PV ×${String(u.molt).replace('.', ',')} | danno +${u.bonus} | AzP ${g.azioni} | res ${uno(Math.round(u.resistenza * 10) / 10)} | abb ${uno(Math.round(u.abbatte * 10) / 10)} |`);
     }
     console.log('');
+    console.log(`Creature pronte (cap. 5): Round di resistenza contro ${N_PG} PG del livello della colonna, intervallo dal grado della colonna al grado effettivo:`);
+    console.log('| Creatura | Colonna | Grado effettivo | Round di resistenza | Intervallo | Round per abbattere un PG |');
+    console.log('| :---- | :---- | :---- | :---: | :---: | :---: |');
+    for (const c of creature) console.log(`| ${c.nome} | ${c.colonna} | ${c.effettivo} | ${uno(Math.round(c.resistenza * 10) / 10)}${c.fuori ? (c.eccezione ? ` (fuori: ${c.eccezione})` : ' FUORI') : c.centro ? '' : ' *'} | ${c.intervallo.map((x) => uno(x)).join('–')} | ${uno(Math.round(c.abbatte * 10) / 10)} |`);
+    console.log('');
     console.log(confronto === null ? 'Confronto con il branch: origin/tavolo-direttore non raggiungibile.'
       : `Confronto con il bestiario umano del branch: ${confronto.filter((c) => c.uguale).length} su ${confronto.length} uguali${confronto.some((c) => !c.uguale) ? ` (diversi: ${confronto.filter((c) => !c.uguale).map((c) => c.file).join(', ')})` : ''}.`);
   }
   const fuori = scala.filter((s) => s.resistenza < OBIETTIVI[s.nome][0] || s.resistenza > OBIETTIVI[s.nome][1]).length
     + scala.filter((s) => s.boss.resistenza < OBIETTIVI.Boss[0] || s.boss.resistenza > OBIETTIVI.Boss[1]).length;
-  const ko = righe.flatMap((r) => r.archetipi).filter((a) => a.problemi.length).length + (confronto?.filter((c) => !c.uguale).length ?? 0) + fuori;
+  const fuoriCreature = creature.filter((c) => c.fuori && !c.eccezione).length;
+  const ko = fuoriCreature + righe.flatMap((r) => r.archetipi).filter((a) => a.problemi.length).length + (confronto?.filter((c) => !c.uguale).length ?? 0) + fuori;
   process.exitCode = ko ? 1 : 0;
 }

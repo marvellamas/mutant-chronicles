@@ -2831,6 +2831,26 @@
       "paragrafo": "§5.2.2"
     },
     {
+      "id": "pungiglione-dei-condotti",
+      "nome": "Pungiglione dei Condotti",
+      "famiglia": "insettoidi",
+      "base": "insettoide",
+      "gradi": [
+        "semplice",
+        "medio",
+        "potente"
+      ],
+      "moduli": {
+        "mutazioni": [
+          "ali-membranose",
+          "veleno"
+        ]
+      },
+      "descrizione": "Nei condotti di ventilazione delle città-alveare, dove l’aria sale calda e sporca dalle fonderie ai piani alti, ronzano insetti grandi come un cane, con ali di membrana grigia e un pungiglione cavo fra le mandibole. I Pungiglioni dei Condotti seguono le correnti e cacciano da soli o in coppia: scendono su chi lavora nei pozzi, mordono e risalgono prima che la vittima capisca da dove sono venuti. Il loro veleno annebbia la vista e fa tremare le mani.",
+      "comportamento": "Vola lungo i soffitti dei condotti, sceglie chi lavora o ripara qualcosa, morde e si allontana in volo; torna su chi è Avvelenato. Fugge in un condotto sotto metà dei PV.",
+      "paragrafo": "§5.2.3"
+    },
+    {
       "id": "tessitrice-d-ombra",
       "nome": "Tessitrice d’Ombra",
       "famiglia": "aracnoidi",
@@ -2882,6 +2902,26 @@
       "descrizione": "Alcune Tessitrici, nutrite troppo a lungo nei luoghi dove la Corruzione Oscura ristagna, diventano qualcosa di diverso. La Madre dei Fili Neri tesse una tela che trattiene la luce; il suo morso attraversa l’acciaio come se non ci fosse e lascia un freddo che non passa. Gli eretici la chiamano per nome e le portano offerte vive.",
       "comportamento": "Usa lo Sguardo del vuoto sul personaggio più armato, la Ragnatela su chi si avvicina e morde chi è Immobilizzato o Stordito. Fugge nel buio sotto un quarto dei PV e torna nella Scena successiva.",
       "paragrafo": "§5.3.2"
+    },
+    {
+      "id": "rodiroccia",
+      "nome": "Rodiroccia",
+      "famiglia": "aracnoidi",
+      "base": "aracnoide",
+      "gradi": [
+        "semplice",
+        "medio",
+        "potente"
+      ],
+      "moduli": {
+        "mutazioni": [
+          "mole",
+          "sangue-acido"
+        ]
+      },
+      "descrizione": "Nelle miniere delle colonie di Mercurio, dove le gallerie scendono per chilometri nel buio caldo, i minatori parlano di ragni grandi come un carrello da trasporto che mangiano la roccia per il metallo che contiene. Il Rodiroccia scava con le zampe anteriori e digerisce il minerale con un sangue così acido da corrodere le punte delle trivelle. Non caccia: difende la vena che sta mangiando, e chiunque arrivi con un piccone per lui è un rivale.",
+      "comportamento": "Si mette di traverso nella galleria, usa la Ragnatela su chi si avvicina e morde chi resta impigliato; non insegue oltre la propria vena. Si ritira in un cunicolo laterale sotto un quarto dei PV.",
+      "paragrafo": "§5.3.3"
     },
     {
       "id": "squarciatore",
@@ -2936,6 +2976,31 @@
       "descrizione": "Le squadre di demolizione delle zone di confine conoscono il rumore che fa un Bruto contro una paratia: colpi lenti, regolari, che non si fermano. La pelle gli si indurisce in placche, le ferite si richiudono mentre le guardi, e negli occhi c’è appena un riflesso di qualcosa che lo spinge avanti. Chi lo ha visto rialzarsi dice che non sente il dolore; i medici dicono che lo sente, ma non gli importa.",
       "comportamento": "Avanza verso il nemico più vicino, sfonda Coperture e porte e non usa le Difese se può attaccare. Non fugge.",
       "paragrafo": "§5.4.2"
+    },
+    {
+      "id": "cantore-sfigurato",
+      "nome": "Cantore Sfigurato",
+      "famiglia": "umanoidi mostruosi",
+      "base": "umanoide-mostruoso",
+      "gradi": [
+        "semplice",
+        "medio",
+        "potente"
+      ],
+      "moduli": {
+        "corrotto": {
+          "livello": "posseduto",
+          "minori": [
+            "sussurro-continuo"
+          ],
+          "maggiori": [
+            "sguardo-del-vuoto"
+          ]
+        }
+      },
+      "descrizione": "Nelle cappelle abusive dei livelli bassi, dove gli eretici cantano preghiere rovesciate, a volte qualcosa risponde. Il Cantore Sfigurato era un uomo; ora ha la gola aperta in tre bocche che cantano insieme, braccia lunghe fino alle ginocchia e occhi che non si chiudono mai. Non comanda nessuno, ma chi gli sta vicino perde la voglia di combattere, e le creature attorno a lui attaccano come se seguissero il ritmo del suo canto.",
+      "comportamento": "Resta dietro le altre creature, a 6 Q dal gruppo: usa lo Sguardo del vuoto sul personaggio che ha appena colpito e avanza solo quando i compagni sono a terra, per tenere gli avversari dentro il Sussurro. Fugge quando resta solo.",
+      "paragrafo": "§5.4.3"
     },
     {
       "id": "eretico-corrotto",
@@ -3016,6 +3081,61 @@
       "paragrafo": "§5.6.1"
     },
     {
+      "id": "cornofango",
+      "nome": "Cornofango",
+      "famiglia": "quadrupedi",
+      "base": "quadrupede",
+      "gradi": [
+        "medio",
+        "potente",
+        "molto-potente"
+      ],
+      "moduli": {
+        "mutazioni": [
+          "mole",
+          "carapace"
+        ]
+      },
+      "descrizione": "Sulle piantagioni di Venere i coloni usavano bestie da tiro grosse come un camion leggero, dalla pelle a scaglie e dalle corna basse. Nelle paludi abbandonate dalle corporazioni quelle mandrie sono tornate selvatiche e sono cresciute ancora: la pelle si è fatta spessa come lamiera, le corna sono diventate arieti. Il Cornofango non mangia carne, ma travolge qualunque cosa si muova nel suo territorio, veicoli compresi.",
+      "comportamento": "Carica il bersaglio più grosso o più rumoroso, di solito un veicolo o chi spara, si allontana e torna a caricare in linea retta. Non insegue fuori dalla palude; la mandria, da uno a tre, si disperde quando il più grosso va a 0 PV.",
+      "paragrafo": "§5.6.2"
+    },
+    {
+      "id": "lupo-senz-ombra",
+      "nome": "Lupo senz’Ombra",
+      "famiglia": "quadrupedi",
+      "base": "quadrupede",
+      "gradi": [
+        "semplice",
+        "medio",
+        "potente"
+      ],
+      "moduli": {
+        "mutazioni": [
+          "balzo"
+        ],
+        "corrotto": {
+          "livello": "posseduto",
+          "minori": [
+            "gelo-dell-abisso"
+          ],
+          "maggiori": [
+            "ritorno"
+          ]
+        }
+      },
+      "boss": {
+        "grado": "medio",
+        "capacita": {
+          "nome": "Branco",
+          "effetto": "Alla soglia di fase 1d4+1 Levrieri delle Discariche Minori arrivano di corsa entro 12 Q e agiscono alla sua Iniziativa del Round successivo."
+        }
+      },
+      "descrizione": "Nelle zone di quarantena attorno ai laboratori profanati si parla di un lupo che non proietta ombra e non lascia orme nella neve sporca. Il Lupo senz’Ombra guida i branchi di Levrieri delle Discariche come un pastore guida il gregge: li manda avanti, sceglie la preda, aspetta. Il suo morso porta il freddo dell’abisso, e chi lo ha abbattuto una volta lo ha visto rialzarsi prima di potergli voltare le spalle.",
+      "comportamento": "Manda avanti il branco e resta fuori dalla luce; carica con il Balzo il personaggio che si stacca o che ha ferito un Levriero. Dopo il Ritorno attacca chi lo aveva abbattuto. Fugge soltanto se resta senza branco e sotto metà dei PV.",
+      "paragrafo": "§5.6.3"
+    },
+    {
       "id": "gracchia-di-ruggine",
       "nome": "Gracchia di Ruggine",
       "famiglia": "alati",
@@ -3035,6 +3155,58 @@
       "paragrafo": "§5.7.1"
     },
     {
+      "id": "lamentatrice",
+      "nome": "Lamentatrice",
+      "famiglia": "alati",
+      "base": "alato",
+      "gradi": [
+        "semplice",
+        "medio",
+        "potente"
+      ],
+      "moduli": {
+        "corrotto": {
+          "livello": "posseduto",
+          "minori": [
+            "occhi-senza-luce"
+          ],
+          "maggiori": [
+            "grido-dell-oscura-simmetria"
+          ]
+        }
+      },
+      "descrizione": "Sui campanili delle cattedrali sventrate dai bombardamenti nidificano creature dalle ali di pelle grigia e dal volto quasi umano, che piangono con la voce di chi è morto lì sotto. Le Lamentatrici non hanno fame: seguono i vivi e gridano, e il loro grido svuota il coraggio anche dei soldati più duri. I predicatori della Fratellanza le considerano un presagio, e non sbagliano: dove volano, qualcos’altro arriva presto.",
+      "comportamento": "Gira sopra il gruppo fuori portata e grida appena lo scontro comincia; poi piomba con la Picchiata sui personaggi Terrorizzati. Accompagna altre creature; da sola fugge sotto metà dei PV.",
+      "paragrafo": "§5.7.2"
+    },
+    {
+      "id": "falco-dei-tralicci",
+      "nome": "Falco dei Tralicci",
+      "famiglia": "alati",
+      "base": "alato",
+      "gradi": [
+        "medio",
+        "potente",
+        "molto-potente"
+      ],
+      "moduli": {
+        "mutazioni": [
+          "arti-in-piu",
+          "veleno"
+        ]
+      },
+      "boss": {
+        "grado": "potente",
+        "capacita": {
+          "nome": "Vento delle ali",
+          "effetto": "Alla soglia di fase scende a terra battendo le ali: ogni personaggio entro 3 Q effettua una PS di Riflessi o cade A Terra; poi riprende quota con l’Azione di Movimento."
+        }
+      },
+      "descrizione": "Sulle linee dell’alta tensione che portano l’energia delle centrali alle città-bunker caccia un rapace grande come un uomo, con quattro zampe artigliate e penne nere che sfrigolano di scintille. Il Falco dei Tralicci si posa sui piloni, aspetta che una squadra di manutenzione salga e la stacca dal traliccio uno alla volta. I suoi artigli lasciano nella carne un veleno che brucia come una scossa.",
+      "comportamento": "Caccia da solo: piomba con la Picchiata sul personaggio più in alto o più isolato e risale fuori portata delle armi ravvicinate. Il Boss resta in quota fino alla soglia di fase, poi combatte a terra fra i personaggi caduti. Fugge sotto un quarto dei PV.",
+      "paragrafo": "§5.7.3"
+    },
+    {
       "id": "verme-dei-crolli",
       "nome": "Verme dei Crolli",
       "famiglia": "striscianti",
@@ -3052,6 +3224,59 @@
       "descrizione": "Sotto i quartieri crollati, dove i palazzi sono caduti uno sull’altro, si scava il Verme dei Crolli: un corpo ad anelli lungo quanto un vagone, coperto di placche di cemento e chitina, con una bocca circolare piena di denti. Sente i passi attraverso le macerie e sale a prendere chi si ferma troppo a lungo nello stesso punto.",
       "comportamento": "Aspetta sotto le macerie, esce sul personaggio isolato con l’Agguato dal basso, lo avvolge con le Spire e lo morde finché è Immobilizzato. Si rintana sotto un quarto dei PV.",
       "paragrafo": "§5.8.1"
+    },
+    {
+      "id": "lamprede-di-sentina",
+      "nome": "Lamprede di Sentina",
+      "famiglia": "striscianti",
+      "base": "strisciante",
+      "gradi": [
+        "minore",
+        "semplice",
+        "medio"
+      ],
+      "moduli": {
+        "mutazioni": [
+          "veleno",
+          "sensi-oscuri"
+        ]
+      },
+      "descrizione": "Nelle sentine allagate dei quartieri portuali e nelle cisterne delle fogne vivono a centinaia vermi lunghi come un uomo, con una bocca a ventosa piena di denti uncinati. Le Lamprede di Sentina sentono il calore dei corpi attraverso l’acqua torbida e il fango, salgono in massa e si avvolgono alle gambe. Il loro morso lascia una febbre che piega anche chi le ha strappate via.",
+      "comportamento": "Escono a sciame dall’acqua bassa o dal fango attorno al gruppo, cinque, otto o più, e si avvolgono a chi è già Immobilizzato o Avvelenato. Si ritirano nell’acqua quando metà dello sciame è a 0 PV.",
+      "paragrafo": "§5.8.2"
+    },
+    {
+      "id": "serpe-del-reliquiario",
+      "nome": "Serpe del Reliquiario",
+      "famiglia": "striscianti",
+      "base": "strisciante",
+      "gradi": [
+        "medio",
+        "potente",
+        "molto-potente"
+      ],
+      "moduli": {
+        "corrotto": {
+          "livello": "consacrato",
+          "minori": [
+            "occhi-senza-luce"
+          ],
+          "maggiori": [
+            "ferite-che-non-si-chiudono",
+            "carne-che-ricorda"
+          ]
+        }
+      },
+      "boss": {
+        "grado": "potente",
+        "capacita": {
+          "nome": "Ritorno nella cripta",
+          "effetto": "Alla soglia di fase si inabissa nelle macerie con lo Scavo, senza Attacchi di Opportunità, e nel Round successivo riemerge con l’Agguato dal basso contro un personaggio a sua scelta entro 8 Q."
+        }
+      },
+      "descrizione": "Sotto le cripte profanate, dove gli eretici hanno distrutto le reliquie della Fratellanza, vive una serpe lunga come un treno merci e bianca come le ossa che ha mangiato. La Serpe del Reliquiario si nutre dei morti consacrati e di chi viene a riprenderli: le ferite che apre non si chiudono, le sue si richiudono da sole. Il suo morso passa attraverso le corazze come se non esistessero.",
+      "comportamento": "Resta sepolta sotto il pavimento della cripta finché qualcuno tocca le ossa; esce con l’Agguato dal basso, avvolge chi porta una reliquia o un simbolo della Fratellanza e lo trascina sotto. Non fugge: difende la cripta.",
+      "paragrafo": "§5.8.3"
     },
     {
       "id": "colosso-delle-fonderie",
@@ -3084,6 +3309,58 @@
       "descrizione": "Nelle fonderie abbandonate qualcosa ha fuso insieme carne, scorie e metallo in una figura alta come due uomini, che cammina con la schiena curva sotto i soffitti. Il Colosso delle Fonderie ha la pelle di crosta nera e fessure da cui cola un fuoco che non scalda. Una voce che non è la sua sussurra a chi gli sta vicino.",
       "comportamento": "Avanza verso il gruppo più folto e usa la Spazzata appena ha due personaggi a portata; abbatte le Coperture leggere. Non fugge. Al massimo un Colosso per scontro sotto il grado Potente (§3.9).",
       "paragrafo": "§5.9.1"
+    },
+    {
+      "id": "sgorbio-delle-vasche",
+      "nome": "Sgorbio delle Vasche",
+      "famiglia": "giganti",
+      "base": "gigante",
+      "gradi": [
+        "minore",
+        "semplice",
+        "medio"
+      ],
+      "moduli": {
+        "mutazioni": [
+          "sangue-acido"
+        ]
+      },
+      "descrizione": "Nei complessi chimici delle corporazioni, quando una vasca di reagenti si rompe, gli operai che non fanno in tempo a scappare non sempre muoiono. Lo Sgorbio delle Vasche è uno di loro, o più d’uno fusi insieme: tre metri di carne gonfia e lucida, braccia come pistoni, un sangue giallo che fuma all’aria. Vaga nei reparti chiusi colpendo i macchinari e chi ci lavora, come se cercasse di spegnere un dolore che non passa.",
+      "comportamento": "Avanza in linea retta verso il rumore più forte e colpisce con la Spazzata chiunque gli stia attorno; abbatte Coperture e macchinari. Non fugge. Al massimo uno Sgorbio per scontro (Raro, §3.9).",
+      "paragrafo": "§5.9.2"
+    },
+    {
+      "id": "mietitore-delle-serre",
+      "nome": "Mietitore delle Serre",
+      "famiglia": "giganti",
+      "base": "gigante",
+      "gradi": [
+        "semplice",
+        "medio",
+        "potente"
+      ],
+      "moduli": {
+        "mutazioni": [
+          "arti-in-piu"
+        ],
+        "corrotto": {
+          "livello": "toccato",
+          "minori": [
+            "sangue-fermo"
+          ],
+          "maggiori": []
+        }
+      },
+      "boss": {
+        "grado": "medio",
+        "capacita": {
+          "nome": "Mietitura",
+          "effetto": "Alla soglia di fase esegue subito, fuori dall’Iniziativa, una Spazzata del gigante contro fino a tre personaggi entro portata."
+        }
+      },
+      "descrizione": "Le serre idroponiche che nutrono le città-bunker sono enormi e silenziose, e di notte restano vuote. In alcune ha preso casa il Mietitore: un gigante storto con quattro braccia, due delle quali finiscono in lame d’osso ricurve come falci. Chi lo ha visto lavorare dice che miete le file di piante con cura, come un contadino; poi miete chi entra, con la stessa cura. Il sangue che gli cola addosso si secca subito, e nessuna ferita gli resta aperta.",
+      "comportamento": "Aspetta fra le file delle piante, dove la Copertura nasconde la sua mole, e colpisce con la Spazzata chi si avvicina. Insegue soltanto dentro la serra. Non fugge; al massimo un Mietitore per scontro (Raro, §3.9).",
+      "paragrafo": "§5.9.3"
     }
   ],
   "tabelle": {

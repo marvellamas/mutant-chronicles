@@ -35,14 +35,20 @@ const perRiga = (t) => new Map(t.righe.map((r) => [r[0], r.slice(1)]));
 
 // --- creature pronte: il motore contro le tabelle del cap. 5 ----------------------------------------------
 const umani = Object.fromEntries(['recluta', 'veterano', 'elite'].map((s) => [`eretico-${s}`, JSON.parse(readFileSync(new URL(`../esempi/nemici/umani/eretico-${s}.json`, import.meta.url), 'utf8'))]));
-const CREATURE = [
-  ['scavafosse', '5.2.1 Scavafosse', 'Mandibole'], ['regina-della-covata', '5.2.2 Regina della Covata', 'Mandibole'],
-  ['tessitrice-d-ombra', '5.3.1 Tessitrice', 'Morso'], ['madre-dei-fili-neri', '5.3.2 Madre dei Fili Neri', 'Morso'],
-  ['squarciatore', '5.4.1 Squarciatore', 'Artigli'], ['bruto-della-breccia', '5.4.2 Bruto della Breccia', 'Artigli'],
-  ['eretico-corrotto', '5.5.1 Eretico corrotto', 'Pugnale da combattimento'],
-  ['levriero-delle-discariche', '5.6.1 Levriero delle Discariche', 'Morso'], ['gracchia-di-ruggine', '5.7.1 Gracchia di Ruggine', 'Artigli'],
-  ['verme-dei-crolli', '5.8.1 Verme dei Crolli', 'Morso'], ['colosso-delle-fonderie', '5.9.1 Colosso delle Fonderie', 'Schianto'],
-];
+// tutte le creature dei dati (cap. 5): il paragrafo e il primo attacco della scheda
+const BE_ATTACCO = (c) => profiloNemico(scelteCreatura(c.id, c.gradi[0], {}, dati), dati, { umani }).nemico.attacchi[0].nome;
+const ATTACCO = { 'eretico-corrotto': 'Pugnale da combattimento' };
+const CREATURE = B.creature.map((c) => [c.id, `${c.paragrafo.slice(1)} ${c.nome}`, ATTACCO[c.id] ?? BE_ATTACCO(c)]);
+test('creature pronte: tre per ogni base non umana, ruoli nel §5.1, almeno una Corrotta e una con il Boss', () => {
+  const perBase = Object.groupBy(B.creature.filter((c) => c.base !== 'umano'), (c) => c.base);
+  for (const [base, lista] of Object.entries(perBase)) {
+    assert.ok(lista.length >= 3, base);
+    assert.ok(lista.some((c) => c.moduli.corrotto || c.boss?.moduli?.corrotto), `${base}: Corrotta`);
+    assert.ok(lista.some((c) => c.boss), `${base}: Boss`);
+  }
+  const ruoli = tabella('5.1 Lettura delle creature pronte');
+  assert.deepEqual(ruoli.righe.map((r) => pulisci(r[0]).replace(/ \(§.*$/, '')), B.creature.map((c) => c.nome));
+});
 for (const [id, titolo, attacco] of CREATURE) {
   test(`creatura pronta: ${titolo} come la tabella del cap. 5 (PV, AR, attacco, Difese, PS, Iniziativa, AzP)`, () => {
     const t = tabella(titolo);

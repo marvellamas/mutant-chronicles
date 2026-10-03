@@ -30,7 +30,7 @@
 <p>Capitolo 4 — Moduli</p>
 <p>4.1 Regole dei moduli · 4.2 Corrotto dall’Oscura Simmetria · 4.3 Mutazioni · 4.4 Equipaggiamento · 4.5 Stati, nature e proprietà impiegati</p>
 <p>Capitolo 5 — Creature pronte</p>
-<p>5.1 Lettura delle creature pronte · 5.2 Insettoidi: Scavafosse, Regina della Covata · 5.3 Aracnoidi: Tessitrice d’Ombra, Madre dei Fili Neri · 5.4 Umanoidi mostruosi: Squarciatore, Bruto della Breccia · 5.5 Umani corrotti: Eretico corrotto · 5.6 Quadrupedi: Levriero delle Discariche · 5.7 Alati: Gracchia di Ruggine · 5.8 Striscianti: Verme dei Crolli · 5.9 Giganti: Colosso delle Fonderie</p>
+<p>5.1 Lettura delle creature pronte · 5.2 Insettoidi: Scavafosse, Regina della Covata, Pungiglione dei Condotti · 5.3 Aracnoidi: Tessitrice d’Ombra, Madre dei Fili Neri, Rodiroccia · 5.4 Umanoidi mostruosi: Squarciatore, Bruto della Breccia, Cantore Sfigurato · 5.5 Umani corrotti: Eretico corrotto · 5.6 Quadrupedi: Levriero delle Discariche, Cornofango, Lupo senz’Ombra · 5.7 Alati: Gracchia di Ruggine, Lamentatrice, Falco dei Tralicci · 5.8 Striscianti: Verme dei Crolli, Lamprede di Sentina, Serpe del Reliquiario · 5.9 Giganti: Colosso delle Fonderie, Sgorbio delle Vasche, Mietitore delle Serre</p>
 <p>Capitolo 6 — Generazione casuale</p>
 <p>6.1 Formato delle tabelle · 6.2 Base · 6.3 Grado · 6.4 Moduli · 6.5 Corruzione · 6.6 Crea un nemico a caso</p>
 <p>Appendice A — Taratura</p>
@@ -692,10 +692,36 @@
 <ul>
 <li>una breve descrizione per il Direttore;</li>
 <li>la base, i moduli con il loro costo e il grado effettivo (§2.4);</li>
-<li>la scheda, con una colonna per grado e, per una creatura di ogni famiglia, la colonna del Boss (§2.5);</li>
+<li>la scheda, con una colonna per grado e, per almeno una creatura di ogni famiglia, la colonna del Boss (§2.5);</li>
 <li>le due misure della taratura contro sette personaggi del livello del grado (Appendice A.3): Round di resistenza e Round per abbattere un personaggio che para.</li>
 </ul>
 <p>Le misure tengono conto di PV, VA, Difese, AR e danno; non contano Veleno, Ragnatela, Rigenerazione, Stati e Manifestazioni, che rendono la creatura più pericolosa di quanto dica la colonna. Per le basi del §3.6–3.9 contano anche il −2 o +2 al VA di chi le attacca (§3.1.1). Le famiglie sono otto: insettoidi (§5.2), aracnoidi (§5.3), umanoidi mostruosi (§5.4), umani corrotti (§5.5), quadrupedi (§5.6), alati (§5.7), striscianti (§5.8) e giganti (§5.9).</p>
+<p>Ogni famiglia di creature non umane ne ha tre, con ruoli diversi al tavolo e almeno una creatura Corrotta e una adatta a Boss.</p>
+<table border="1">
+<tr><th>Creatura</th><th>Famiglia</th><th>Ruolo al tavolo</th><th>Gradi</th><th>Boss</th></tr>
+<tr><td>Scavafosse (§5.2.1)</td><td>Insettoidi</td><td>Sciame che esce dal terreno</td><td>Minore, Semplice, Medio</td><td>—</td></tr>
+<tr><td>Regina della Covata (§5.2.2)</td><td>Insettoidi</td><td>Creatura da tana, Corrotta</td><td>Medio, Potente, Molto potente</td><td>Potente</td></tr>
+<tr><td>Pungiglione dei Condotti (§5.2.3)</td><td>Insettoidi</td><td>Cacciatore in volo, velenoso</td><td>Semplice, Medio, Potente</td><td>—</td></tr>
+<tr><td>Tessitrice d’Ombra (§5.3.1)</td><td>Aracnoidi</td><td>Cacciatrice d’agguato</td><td>Minore, Semplice, Medio</td><td>—</td></tr>
+<tr><td>Madre dei Fili Neri (§5.3.2)</td><td>Aracnoidi</td><td>Creatura da tana con Manifestazioni, Corrotta</td><td>Medio, Potente, Molto potente</td><td>Potente</td></tr>
+<tr><td>Rodiroccia (§5.3.3)</td><td>Aracnoidi</td><td>Bruto da galleria</td><td>Semplice, Medio, Potente</td><td>—</td></tr>
+<tr><td>Squarciatore (§5.4.1)</td><td>Umanoidi mostruosi</td><td>Cacciatore dai tetti</td><td>Minore, Semplice, Medio</td><td>—</td></tr>
+<tr><td>Bruto della Breccia (§5.4.2)</td><td>Umanoidi mostruosi</td><td>Bruto da prima linea, Corrotto</td><td>Semplice, Medio, Potente</td><td>Medio</td></tr>
+<tr><td>Cantore Sfigurato (§5.4.3)</td><td>Umanoidi mostruosi</td><td>Supporto con Manifestazioni, Corrotto</td><td>Semplice, Medio, Potente</td><td>—</td></tr>
+<tr><td>Eretico corrotto (§5.5.1)</td><td>Umani corrotti</td><td>Incursore, Corrotto</td><td>Minore, Semplice, Medio</td><td>Medio</td></tr>
+<tr><td>Levriero delle Discariche (§5.6.1)</td><td>Quadrupedi</td><td>Branco, Corrotto</td><td>Minore, Semplice, Medio</td><td>—</td></tr>
+<tr><td>Cornofango (§5.6.2)</td><td>Quadrupedi</td><td>Bruto che carica</td><td>Medio, Potente, Molto potente</td><td>—</td></tr>
+<tr><td>Lupo senz’Ombra (§5.6.3)</td><td>Quadrupedi</td><td>Capobranco, Corrotto</td><td>Semplice, Medio, Potente</td><td>Medio</td></tr>
+<tr><td>Gracchia di Ruggine (§5.7.1)</td><td>Alati</td><td>Stormo</td><td>Minore, Semplice, Medio</td><td>—</td></tr>
+<tr><td>Lamentatrice (§5.7.2)</td><td>Alati</td><td>Supporto con Manifestazioni, Corrotta</td><td>Semplice, Medio, Potente</td><td>—</td></tr>
+<tr><td>Falco dei Tralicci (§5.7.3)</td><td>Alati</td><td>Cacciatore solitario</td><td>Medio, Potente, Molto potente</td><td>Potente</td></tr>
+<tr><td>Verme dei Crolli (§5.8.1)</td><td>Striscianti</td><td>Agguato dal basso</td><td>Semplice, Medio, Potente</td><td>—</td></tr>
+<tr><td>Lamprede di Sentina (§5.8.2)</td><td>Striscianti</td><td>Sciame velenoso</td><td>Minore, Semplice, Medio</td><td>—</td></tr>
+<tr><td>Serpe del Reliquiario (§5.8.3)</td><td>Striscianti</td><td>Creatura da tana, Corrotta</td><td>Medio, Potente, Molto potente</td><td>Potente</td></tr>
+<tr><td>Colosso delle Fonderie (§5.9.1)</td><td>Giganti</td><td>Bruto da prima linea, Corrotto</td><td>Medio, Potente, Molto potente</td><td>Potente</td></tr>
+<tr><td>Sgorbio delle Vasche (§5.9.2)</td><td>Giganti</td><td>Bruto corrosivo</td><td>Minore, Semplice, Medio</td><td>—</td></tr>
+<tr><td>Mietitore delle Serre (§5.9.3)</td><td>Giganti</td><td>Creatura da tana, Corrotta</td><td>Semplice, Medio, Potente</td><td>Medio</td></tr>
+</table>
 <h2>5.2 Insettoidi</h2>
 <h3>5.2.1 Scavafosse</h3>
 <p>Nelle fosse comuni ai margini delle città-bunker, dove la Corruzione Oscura filtra fra i cadaveri, la chitina degli insetti diventa nera e spessa come ardesia. Gli Scavafosse scavano cunicoli sotto i cimiteri e le discariche, attratti dai morti e da chi li maneggia. Escono dal terreno a gruppi, quando le vibrazioni dei passi si fermano sopra di loro.</p>
@@ -718,7 +744,7 @@
 <tr><td>Contromisure</td><td>—</td><td>—</td><td>—</td></tr>
 <tr><td>Capacità</td><td>Arrampicata, Vibrazioni, Scavatore</td><td>Arrampicata, Vibrazioni, Scavatore</td><td>Arrampicata, Vibrazioni, Scavatore</td></tr>
 <tr><td>Immunità</td><td>Terrorizzato</td><td>Terrorizzato</td><td>Terrorizzato</td></tr>
-<tr><td>Round di resistenza · Round per abbattere un PG</td><td>2,4 · 11</td><td>5 · 9,5</td><td>8,5 · 7,5</td></tr>
+<tr><td>Round di resistenza · Round per abbattere un PG</td><td>2,4 · 11,1</td><td>5 · 9,3</td><td>8,4 · 7,4</td></tr>
 </table>
 <p>Mandibole: natura Naturale, portata 1 Q, AC 1. Arrampicata e Vibrazioni come la base (§3.3); Scavatore come il §4.3.</p>
 <p><b>Comportamento.</b> Attendono sotto il terreno sciolto e escono tutti insieme accanto al bersaglio fermo più vicino. Fuggono sottoterra quando metà del gruppo è a 0 PV; a 0 PV un Scavafosse che non muore si trascina nel proprio cunicolo.</p>
@@ -743,11 +769,37 @@
 <tr><td>Contromisure</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
 <tr><td>Capacità</td><td>Presenza terrificante, Sussurro continuo, Grido dell’Oscura Simmetria, Vibrazioni, Arrampicata</td><td>Come a sinistra</td><td>Come a sinistra</td><td>Come a sinistra, più Covata</td></tr>
 <tr><td>Immunità</td><td>Terrorizzato</td><td>Terrorizzato</td><td>Terrorizzato</td><td>Terrorizzato</td></tr>
-<tr><td>Round di resistenza · Round per abbattere un PG</td><td>12,5 · 7,5</td><td>22,5 · 5,5</td><td>33 · 5</td><td>12,5 · 5,5</td></tr>
+<tr><td>Round di resistenza · Round per abbattere un PG</td><td>12,6 · 7,4</td><td>22,7 · 5,6</td><td>33,3 · 5,2</td><td>12,7 · 5,6</td></tr>
 </table>
 <p>Mandibole: natura Magico, portata 2 Q, AC 1. Chi è ferito dalla Regina è esposto alla Corruzione Oscura con intensità Debole (§4.2.5). I Round di resistenza oltre i 10 del grado sono quelli di una creatura che vale due gradi in più: nel bilancio la Regina Potente vale come due Molto potenti (§2.4).</p>
 <p><b>Covata (Boss).</b> Alla soglia di fase (§2.5.3) 1d6 Scavafosse Minori escono dal terreno entro 6 Q dalla Regina e agiscono alla sua Iniziativa del Round successivo. Il Boss non usa la Mole per i PV (§2.5.1).</p>
 <p><b>Comportamento.</b> Resta al centro del nido e lancia il Grido appena vede più di tre nemici; poi carica chi è Terrorizzato. Non fugge: difende il nido fino a 0 PV e oltre.</p>
+<h3>5.2.3 Pungiglione dei Condotti</h3>
+<p>Nei condotti di ventilazione delle città-alveare, dove l’aria sale calda e sporca dalle fonderie ai piani alti, ronzano insetti grandi come un cane, con ali di membrana grigia e un pungiglione cavo fra le mandibole. I Pungiglioni dei Condotti seguono le correnti e cacciano da soli o in coppia: scendono su chi lavora nei pozzi, mordono e risalgono prima che la vittima capisca da dove sono venuti. Il loro veleno annebbia la vista e fa tremare le mani.</p>
+<p><b>Base:</b> Insettoide. <b>Moduli:</b> Ali membranose (+½), Veleno sulle Mandibole (+½). <b>Grado effettivo:</b> un grado sopra quello della colonna.</p>
+<table border="1">
+<tr><th>Valore</th><th>Semplice</th><th>Medio</th><th>Potente</th></tr>
+<tr><td>Natura</td><td>Comune</td><td>Comune</td><td>Comune</td></tr>
+<tr><td>FOR · COS · DES</td><td>6 · 6 · 8</td><td>6 · 7 · 8</td><td>7 · 7 · 9</td></tr>
+<tr><td>INT · SAG · CAR</td><td>2 · 5 · 1</td><td>2 · 6 · 1</td><td>3 · 6 · 1</td></tr>
+<tr><td>PV</td><td>38</td><td>59</td><td>162</td></tr>
+<tr><td>AR (di cui magica)</td><td>3 (0)</td><td>4 (0)</td><td>5 (0)</td></tr>
+<tr><td>Mandibole: VA, danno</td><td>13, 1d8+2</td><td>15, 2d6+1</td><td>17, 2d8+1</td></tr>
+<tr><td>VA Difese</td><td>11</td><td>13</td><td>15</td></tr>
+<tr><td>PS Tempra · Riflessi · Volontà · Magia</td><td>11 · 13 · 8 · 11</td><td>11 · 13 · 8 · 11</td><td>12 · 15 · 9 · 12</td></tr>
+<tr><td>Iniziativa</td><td>5</td><td>7</td><td>9</td></tr>
+<tr><td>Movimento</td><td>Passo 8 Q; volo 6 Q</td><td>Passo 8 Q; volo 6 Q</td><td>Passo 8 Q; volo 6 Q</td></tr>
+<tr><td>Spazio</td><td>1 Q</td><td>1 Q</td><td>1 Q</td></tr>
+<tr><td>Taglia</td><td>Normale</td><td>Normale</td><td>Normale</td></tr>
+<tr><td>Azioni</td><td>2 AzP, 1 Movimento</td><td>2 AzP, 1 Movimento</td><td>2 AzP, 1 Movimento</td></tr>
+<tr><td>Abilità</td><td>Atletica 13, Percezione 11, Furtività 9</td><td>Atletica 15, Percezione 13, Furtività 11</td><td>Atletica 17, Percezione 15, Furtività 13</td></tr>
+<tr><td>Contromisure</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Capacità</td><td>Arrampicata, Vibrazioni, Ali membranose, Veleno</td><td>Come a sinistra</td><td>Come a sinistra</td></tr>
+<tr><td>Immunità</td><td>Terrorizzato</td><td>Terrorizzato</td><td>Terrorizzato</td></tr>
+<tr><td>Round di resistenza · Round per abbattere un PG</td><td>3,5 · 9,3</td><td>5,7 · 7,4</td><td>9,3 · 5,6</td></tr>
+</table>
+<p>Mandibole: natura Naturale, portata 1 Q, AC 1; applicano il Veleno (§4.3) quando feriscono. Vola con le Ali membranose (§4.3, §3.1.1) e si arrampica come la base (§3.3). Le misure non contano il Veleno.</p>
+<p><b>Comportamento.</b> Vola lungo i soffitti dei condotti, sceglie chi lavora o ripara qualcosa, morde e si allontana in volo; torna su chi è Avvelenato. Fugge in un condotto sotto metà dei PV.</p>
 <h2>5.3 Aracnoidi</h2>
 <h3>5.3.1 Tessitrice d’Ombra</h3>
 <p>Nelle condotte abbandonate e nei piani sventrati degli alveari urbani le Tessitrici tendono fili quasi invisibili fra i tubi. La pelle cambia colore come la ruggine e il cemento su cui riposa, e il morso porta un veleno che intorpidisce prima di bruciare. Chi lavora nei sotterranei impara a gettare un tizzone davanti a sé prima di ogni passo.</p>
@@ -771,7 +823,7 @@
 <tr><td>Contromisure</td><td>—</td><td>—</td><td>—</td></tr>
 <tr><td>Capacità</td><td>Ragnatela, Veleno 1d4, Mimetismo, Arrampicata, Visione al buio, Vibrazioni nella tela</td><td>Come a sinistra</td><td>Ragnatela, Veleno 1d6, Mimetismo, Arrampicata, Visione al buio, Vibrazioni nella tela</td></tr>
 <tr><td>Immunità</td><td>—</td><td>—</td><td>—</td></tr>
-<tr><td>Round di resistenza · Round per abbattere un PG</td><td>1,3 · 11</td><td>2,6 · 9,5</td><td>4 · 6</td></tr>
+<tr><td>Round di resistenza · Round per abbattere un PG</td><td>1,3 · 11,2</td><td>2,6 · 9,3</td><td>4,1 · 6</td></tr>
 </table>
 <p>Morso: natura Naturale, portata 1 Q, AC 1; applica il Veleno (§4.3) quando ferisce. Ragnatela come la base (§3.4). Le misure non contano Veleno e Ragnatela: una Tessitrice che Immobilizza e avvelena abbatte un personaggio molto prima.</p>
 <p><b>Comportamento.</b> Colpisce per prima dall’Imboscata (Mimetismo), immobilizza il bersaglio più isolato e lo morde finché è avvelenato. Si ritira lungo il soffitto sotto un quarto dei PV.</p>
@@ -797,11 +849,38 @@
 <tr><td>Contromisure</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
 <tr><td>Capacità</td><td>Presenza terrificante, Ragnatela, Sguardo del vuoto, Gelo dell’abisso, Ferite che non si chiudono, Arrampicata, Visione al buio</td><td>Come a sinistra</td><td>Come a sinistra</td><td>Come a sinistra, più Tela che beve la luce</td></tr>
 <tr><td>Immunità</td><td>Terrorizzato</td><td>Terrorizzato</td><td>Terrorizzato</td><td>Terrorizzato</td></tr>
-<tr><td>Round di resistenza · Round per abbattere un PG</td><td>8,5 · 6</td><td>15 · 5</td><td>22 · 4,5</td><td>13 · 5</td></tr>
+<tr><td>Round di resistenza · Round per abbattere un PG</td><td>8,4 · 6</td><td>15,1 · 4,8</td><td>22,2 · 4,6</td><td>12,9 · 4,8</td></tr>
 </table>
 <p>Morso: natura <b>Etereo</b> (§4.2.3), proprietà Gelo e Sanguinante 1 (Sanguinante 2 dal Potente), portata 1 Q (2 Q dal Potente), AC 1. Chi è ferito dalla Madre è esposto alla Corruzione Oscura con intensità Normale (§4.2.5). Contro un personaggio senza AR magica il morso Etereo ignora l’Armatura: le misure, che usano l’AR dei personaggi, sottostimano il suo danno.</p>
 <p><b>Tela che beve la luce (Boss).</b> Alla soglia di fase (§2.5.3) la Madre spegne ogni luce non magica entro 12 Q fino alla fine della Scena; i personaggi senza Visione al buio subiscono le penalità dell’oscurità.</p>
 <p><b>Comportamento.</b> Usa lo Sguardo del vuoto sul personaggio più armato, la Ragnatela su chi si avvicina e morde chi è Immobilizzato o Stordito. Fugge nel buio sotto un quarto dei PV e torna nella Scena successiva.</p>
+<h3>5.3.3 Rodiroccia</h3>
+<p>Nelle miniere delle colonie di Mercurio, dove le gallerie scendono per chilometri nel buio caldo, i minatori parlano di ragni grandi come un carrello da trasporto che mangiano la roccia per il metallo che contiene. Il Rodiroccia scava con le zampe anteriori e digerisce il minerale con un sangue così acido da corrodere le punte delle trivelle. Non caccia: difende la vena che sta mangiando, e chiunque arrivi con un piccone per lui è un rivale.</p>
+<p><b>Base:</b> Aracnoide. <b>Moduli:</b> Mole (+1; +½ al Potente, che ha già lo Spazio 2 × 2 Q), Sangue acido (+½). <b>Grado effettivo:</b> uno e mezzo sopra quello della colonna; uno al Potente.</p>
+<table border="1">
+<tr><th>Valore</th><th>Semplice</th><th>Medio</th><th>Potente</th></tr>
+<tr><td>Natura</td><td>Comune</td><td>Comune</td><td>Comune</td></tr>
+<tr><td>FOR · COS · DES</td><td>6 · 6 · 8</td><td>7 · 6 · 9</td><td>8 · 7 · 9</td></tr>
+<tr><td>INT · SAG · CAR</td><td>3 · 6 · 1</td><td>3 · 7 · 1</td><td>4 · 7 · 2</td></tr>
+<tr><td>PV</td><td>57</td><td>89</td><td>243</td></tr>
+<tr><td>AR (di cui magica)</td><td>2 (0)</td><td>3 (0)</td><td>4 (0)</td></tr>
+<tr><td>Morso: VA, danno</td><td>13, 1d8+2</td><td>15, 2d6+2</td><td>17, 2d8+2</td></tr>
+<tr><td>Ragnatela: VA, gittata</td><td>12, 6 Q</td><td>14, 9 Q</td><td>16, 9 Q</td></tr>
+<tr><td>VA Difese</td><td>10</td><td>12</td><td>16</td></tr>
+<tr><td>PS Tempra · Riflessi · Volontà · Magia</td><td>11 · 13 · 11 · 8</td><td>11 · 13 · 11 · 8</td><td>12 · 15 · 12 · 9</td></tr>
+<tr><td>Iniziativa</td><td>6</td><td>8</td><td>10</td></tr>
+<tr><td>Movimento</td><td>Passo 6 Q</td><td>Passo 6 Q</td><td>Passo 6 Q</td></tr>
+<tr><td>Spazio</td><td>2 × 2 Q</td><td>2 × 2 Q</td><td>2 × 2 Q</td></tr>
+<tr><td>Taglia</td><td>Normale</td><td>Normale</td><td>Normale</td></tr>
+<tr><td>Azioni</td><td>2 AzP, 1 Movimento</td><td>2 AzP, 1 Movimento</td><td>2 AzP, 1 Movimento</td></tr>
+<tr><td>Abilità</td><td>Furtività 14, Atletica 12, Percezione 12</td><td>Furtività 16, Atletica 14, Percezione 14</td><td>Furtività 18, Atletica 16, Percezione 16</td></tr>
+<tr><td>Contromisure</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Capacità</td><td>Ragnatela, Arrampicata, Visione al buio, Vibrazioni nella tela, Mole, Sangue acido</td><td>Come a sinistra</td><td>Come a sinistra</td></tr>
+<tr><td>Immunità</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Round di resistenza · Round per abbattere un PG</td><td>3,9 · 9,3</td><td>6,1 · 6</td><td>9,5 · 4,8</td></tr>
+</table>
+<p>Morso: natura Naturale, portata 2 Q (Mole), AC 1. Ragnatela come la base (§3.4). Chi lo ferisce in mischia subisce 1d4 danni Corrosivi e l’arma effettua la PS Integrità (Sangue acido, §4.3); Sbalzante non lo sposta (Mole). Le misure non contano il Sangue acido.</p>
+<p><b>Comportamento.</b> Si mette di traverso nella galleria, usa la Ragnatela su chi si avvicina e morde chi resta impigliato; non insegue oltre la propria vena. Si ritira in un cunicolo laterale sotto un quarto dei PV.</p>
 <h2>5.4 Umanoidi mostruosi</h2>
 <h3>5.4.1 Squarciatore</h3>
 <p>Nei quartieri dove l’acqua delle cisterne è passata vicino a qualcosa di sbagliato nascono bambini con le dita troppo lunghe. Crescendo, alcuni diventano Squarciatori: schiene coperte di spine ossee, artigli uncinati, un salto che attraversa una strada. Cacciano di notte, dai tetti, e lasciano bersagli che non smettono di sanguinare.</p>
@@ -824,7 +903,7 @@
 <tr><td>Contromisure</td><td>—</td><td>—</td><td>—</td></tr>
 <tr><td>Capacità</td><td>Aculei, Balzo, Olfatto</td><td>Aculei, Balzo, Olfatto</td><td>Aculei, Balzo, Olfatto</td></tr>
 <tr><td>Immunità</td><td>—</td><td>—</td><td>—</td></tr>
-<tr><td>Round di resistenza · Round per abbattere un PG</td><td>1,6 · 7,5</td><td>2,5 · 5,5</td><td>4 · 5</td></tr>
+<tr><td>Round di resistenza · Round per abbattere un PG</td><td>1,6 · 7,4</td><td>2,5 · 5,4</td><td>3,8 · 5</td></tr>
 </table>
 <p>Artigli: natura Naturale, Sanguinante 1, portata 1 Q, AC 1; con la Carica, Sbalzante 1 come la base (§3.5) e Sbilanciante con il Balzo (§4.3). Chi lo colpisce senz’armi subisce 1d4 (Aculei).</p>
 <p><b>Comportamento.</b> Apre lo scontro con il Balzo dall’alto sul bersaglio più lontano dal gruppo; poi resta addosso a chi sanguina. Fugge saltando sui tetti a metà PV, se ha una via.</p>
@@ -849,11 +928,37 @@
 <tr><td>Contromisure</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
 <tr><td>Capacità</td><td>Rigenerazione 3, Sangue fermo, Olfatto</td><td>Rigenerazione 5, Sangue fermo, Olfatto</td><td>Rigenerazione 10, Sangue fermo, Olfatto</td><td>Rigenerazione 5, Sangue fermo, Olfatto, Non si ferma</td></tr>
 <tr><td>Immunità</td><td>Sanguinamento</td><td>Sanguinamento</td><td>Sanguinamento</td><td>Sanguinamento</td></tr>
-<tr><td>Round di resistenza · Round per abbattere un PG</td><td>3 · 5,5</td><td>5 · 5</td><td>7,5 · 4</td><td>13 · 5</td></tr>
+<tr><td>Round di resistenza · Round per abbattere un PG</td><td>3,2 · 5,4</td><td>5 · 5</td><td>7,7 · 4,2</td><td>13,1 · 5</td></tr>
 </table>
 <p>Artigli: natura Naturale, portata 1 Q, AC 1; con la Carica, Sbalzante 1 (§3.5). Chi è ferito dal Bruto è esposto alla Corruzione Oscura con intensità Flebile (§4.2.5). Rigenerazione come il §4.3: Fuoco e Corrosivo la interrompono per un Round. Le misure non contano la Rigenerazione.</p>
 <p><b>Non si ferma (Boss).</b> Alla soglia di fase (§2.5.3) il Bruto termina gli Stati, recupera 15 PV e per il resto della Scena non subisce le penalità degli Stati di Ferita.</p>
 <p><b>Comportamento.</b> Avanza verso il nemico più vicino, sfonda Coperture e porte e non usa le Difese se può attaccare. Non fugge.</p>
+<h3>5.4.3 Cantore Sfigurato</h3>
+<p>Nelle cappelle abusive dei livelli bassi, dove gli eretici cantano preghiere rovesciate, a volte qualcosa risponde. Il Cantore Sfigurato era un uomo; ora ha la gola aperta in tre bocche che cantano insieme, braccia lunghe fino alle ginocchia e occhi che non si chiudono mai. Non comanda nessuno, ma chi gli sta vicino perde la voglia di combattere, e le creature attorno a lui attaccano come se seguissero il ritmo del suo canto.</p>
+<p><b>Base:</b> Umanoide mostruoso. <b>Moduli:</b> Corrotto, Posseduto (+1). <b>Grado effettivo:</b> un grado sopra quello della colonna. <b>Manifestazioni:</b> Sussurro continuo (minore), Sguardo del vuoto (maggiore).</p>
+<table border="1">
+<tr><th>Valore</th><th>Semplice</th><th>Medio</th><th>Potente</th></tr>
+<tr><td>Natura</td><td>Oscura Simmetria</td><td>Oscura Simmetria</td><td>Oscura Simmetria</td></tr>
+<tr><td>FOR · COS · DES</td><td>8 · 8 · 5</td><td>8 · 8 · 6</td><td>9 · 9 · 6</td></tr>
+<tr><td>INT · SAG · CAR</td><td>3 · 5 · 3</td><td>4 · 5 · 3</td><td>4 · 6 · 3</td></tr>
+<tr><td>PV</td><td>46</td><td>72</td><td>198</td></tr>
+<tr><td>AR (di cui magica)</td><td>2 (1)</td><td>3 (1)</td><td>4 (1)</td></tr>
+<tr><td>Artigli: VA, danno</td><td>13, 1d10+3 Magico</td><td>15, 2d6+3 Magico</td><td>17, 2d8+3 Magico</td></tr>
+<tr><td>VA Difese</td><td>9</td><td>11</td><td>13</td></tr>
+<tr><td>PS Tempra · Riflessi · Volontà · Magia</td><td>13 · 8 · 13 · 11</td><td>13 · 8 · 13 · 11</td><td>15 · 9 · 14 · 12</td></tr>
+<tr><td>Iniziativa</td><td>3</td><td>5</td><td>7</td></tr>
+<tr><td>Movimento</td><td>Passo 6 Q</td><td>Passo 6 Q</td><td>Passo 6 Q</td></tr>
+<tr><td>Spazio</td><td>1 Q</td><td>1 Q</td><td>1 Q</td></tr>
+<tr><td>Taglia</td><td>Normale</td><td>Normale</td><td>Normale</td></tr>
+<tr><td>Azioni</td><td>2 AzP, 1 Movimento</td><td>2 AzP, 1 Movimento</td><td>2 AzP, 1 Movimento</td></tr>
+<tr><td>Abilità</td><td>Atletica 13, Percezione 11, Sopravvivenza 11</td><td>Atletica 15, Percezione 13, Sopravvivenza 13</td><td>Atletica 17, Percezione 15, Sopravvivenza 15</td></tr>
+<tr><td>Contromisure</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Capacità</td><td>Artigli, Olfatto, Presenza terrificante, Sussurro continuo, Sguardo del vuoto</td><td>Come a sinistra</td><td>Come a sinistra</td></tr>
+<tr><td>Immunità</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Round di resistenza · Round per abbattere un PG</td><td>3,2 · 5,4</td><td>5 · 5</td><td>7,7 · 4,2</td></tr>
+</table>
+<p>Artigli: natura Magico, portata 1 Q, AC 1; con la Carica, Sbalzante 1 (§3.5). Chi è ferito dal Cantore è esposto alla Corruzione Oscura con intensità Debole (§4.2.5). Le misure non contano Sguardo del vuoto, Sussurro continuo e Presenza terrificante: il Cantore vale soprattutto accanto ad altre creature, che colpiscono i personaggi Storditi e Terrorizzati.</p>
+<p><b>Comportamento.</b> Resta dietro le altre creature, a 6 Q dal gruppo: usa lo Sguardo del vuoto sul personaggio che ha appena colpito e avanza solo quando i compagni sono a terra, per tenere gli avversari dentro il Sussurro. Fugge quando resta solo.</p>
 <h2>5.5 Umani corrotti</h2>
 <h3>5.5.1 Eretico corrotto</h3>
 <p>L’Eretico del bestiario umano (§3.2) è un uomo comune che ha scelto l’Oscura Simmetria; l’Eretico corrotto è quello che ne ha ricevuto i doni. Parla piano, e chi gli sta accanto sente un sussurro sotto le sue parole; quando guarda qualcuno negli occhi, quello resta fermo un istante di troppo. I più devoti portano una lama rituale che non trova ostacoli nell’acciaio.</p>
@@ -878,7 +983,7 @@
 <tr><td>Contromisure</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
 <tr><td>Capacità</td><td>Sussurro continuo; Movimento Tattico</td><td>Presenza terrificante, Sussurro continuo, Sguardo del vuoto; Movimento Tattico, Attacco Silenzioso, Imboscata Migliorata, Resistenza alla Corruzione</td><td>Come il Semplice, più Rapidità Operativa e Affondo Migliorato</td><td>Come il Medio, più Grido dell’Oscura Simmetria</td></tr>
 <tr><td>Immunità</td><td>—</td><td>—</td><td>—</td><td>Terrorizzato</td></tr>
-<tr><td>Round di resistenza · Round per abbattere un PG</td><td>1,2 · 9</td><td>1,7 · 9</td><td>2,6 · 6,5</td><td>12 · 6,5</td></tr>
+<tr><td>Round di resistenza · Round per abbattere un PG</td><td>1,2 · 9</td><td>1,7 · 8,9</td><td>2,6 · 6,6</td><td>12,1 · 6,6</td></tr>
 </table>
 <p>I valori umani vengono dal convertitore (Eretico Recluta, Veterano ed Élite del Tavolo del Master) con il moltiplicatore e il bonus di grado del §3.2; i Talenti restano capacità da applicare a mano. Chi è ferito dall’Eretico è esposto alla Corruzione Oscura: Flebile al Minore, Debole al Semplice e al Medio, Normale al Boss (§4.2.5).</p>
 <p><b>Più fragile del grado.</b> Combatte da Incursore, con armi leggere e armatura leggera: i suoi Round di resistenza sono sotto quelli del grado. Il Direttore lo usa con l’Imboscata e la Furtività, dietro altre creature o con un gruppo di Eretici, oppure come Boss.</p>
@@ -911,6 +1016,61 @@
 </table>
 <p>Morso e Artigli: natura Naturale, portata 1 Q, AC 1. Carica del branco come la base (§3.6). Chi è ferito da un Levriero è esposto alla Corruzione Oscura con intensità Flebile (§4.2.5). Le misure non contano la Carica del branco.</p>
 <p><b>Comportamento.</b> Il branco, da tre a sei, segue la preda al buio con i Sensi oscuri e la circonda; carica chi resta indietro o porta una luce. Fugge quando il capobranco va a 0 PV.</p>
+<h3>5.6.2 Cornofango</h3>
+<p>Sulle piantagioni di Venere i coloni usavano bestie da tiro grosse come un camion leggero, dalla pelle a scaglie e dalle corna basse. Nelle paludi abbandonate dalle corporazioni quelle mandrie sono tornate selvatiche e sono cresciute ancora: la pelle si è fatta spessa come lamiera, le corna sono diventate arieti. Il Cornofango non mangia carne, ma travolge qualunque cosa si muova nel suo territorio, veicoli compresi.</p>
+<p><b>Base:</b> Quadrupede. <b>Moduli:</b> Mole (+1), Carapace (+½). <b>Grado effettivo:</b> uno e mezzo sopra quello della colonna.</p>
+<table border="1">
+<tr><th>Valore</th><th>Medio</th><th>Potente</th><th>Molto potente</th></tr>
+<tr><td>Natura</td><td>Comune</td><td>Comune</td><td>Comune</td></tr>
+<tr><td>FOR · COS · DES</td><td>7 · 7 · 8</td><td>8 · 8 · 9</td><td>9 · 8 · 10</td></tr>
+<tr><td>INT · SAG · CAR</td><td>2 · 7 · 2</td><td>3 · 7 · 2</td><td>3 · 8 · 3</td></tr>
+<tr><td>PV</td><td>98</td><td>270</td><td>398</td></tr>
+<tr><td>AR (di cui magica)</td><td>4 (0)</td><td>5 (0)</td><td>6 (0)</td></tr>
+<tr><td>Morso: VA, danno</td><td>15, 2d6+2</td><td>17, 2d8+2</td><td>19, 2d8+3</td></tr>
+<tr><td>Artigli: VA, danno</td><td>15, 2d6+1</td><td>17, 2d8+1</td><td>19, 2d8+2</td></tr>
+<tr><td>VA Difese</td><td>10</td><td>12</td><td>14</td></tr>
+<tr><td>PS Tempra · Riflessi · Volontà · Magia</td><td>11 · 13 · 8 · 11</td><td>12 · 15 · 9 · 12</td><td>13 · 15 · 10 · 13</td></tr>
+<tr><td>Iniziativa</td><td>8</td><td>10</td><td>12</td></tr>
+<tr><td>Movimento</td><td>Passo 10 Q</td><td>Passo 10 Q</td><td>Passo 10 Q</td></tr>
+<tr><td>Spazio</td><td>2 × 2 Q</td><td>2 × 2 Q</td><td>2 × 2 Q</td></tr>
+<tr><td>Taglia</td><td>Normale</td><td>Normale</td><td>Normale</td></tr>
+<tr><td>Azioni</td><td>2 AzP, 1 Movimento</td><td>2 AzP, 1 Movimento</td><td>2 AzP, 1 Movimento</td></tr>
+<tr><td>Abilità</td><td>Atletica 15, Percezione 13, Sopravvivenza 13</td><td>Atletica 17, Percezione 15, Sopravvivenza 15</td><td>Atletica 19, Percezione 17, Sopravvivenza 17</td></tr>
+<tr><td>Contromisure</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Capacità</td><td>Carica del branco, Olfatto, Mole, Carapace</td><td>Come a sinistra</td><td>Come a sinistra</td></tr>
+<tr><td>Immunità</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Round di resistenza · Round per abbattere un PG</td><td>9,4 · 6</td><td>15,6 · 4,8</td><td>22,7 · 4,6</td></tr>
+</table>
+<p>Morso e Artigli (corna e zoccoli): natura Naturale, portata 2 Q (Mole), AC 1. Carica del branco come la base (§3.6): il bersaglio colpito effettua una PS di Riflessi o cade A Terra. Sbalzante non lo sposta (Mole). Le misure non contano la Carica.</p>
+<p><b>Comportamento.</b> Carica il bersaglio più grosso o più rumoroso, di solito un veicolo o chi spara, si allontana e torna a caricare in linea retta. Non insegue fuori dalla palude; la mandria, da uno a tre, si disperde quando il più grosso va a 0 PV.</p>
+<h3>5.6.3 Lupo senz’Ombra</h3>
+<p>Nelle zone di quarantena attorno ai laboratori profanati si parla di un lupo che non proietta ombra e non lascia orme nella neve sporca. Il Lupo senz’Ombra guida i branchi di Levrieri delle Discariche come un pastore guida il gregge: li manda avanti, sceglie la preda, aspetta. Il suo morso porta il freddo dell’abisso, e chi lo ha abbattuto una volta lo ha visto rialzarsi prima di potergli voltare le spalle.</p>
+<p><b>Base:</b> Quadrupede. <b>Moduli:</b> Corrotto, Posseduto (+1); Balzo (+½). <b>Grado effettivo:</b> uno e mezzo sopra quello della colonna. <b>Manifestazioni:</b> Gelo dell’abisso (minore), Ritorno (maggiore).</p>
+<table border="1">
+<tr><th>Valore</th><th>Semplice</th><th>Medio</th><th>Potente</th><th>Boss (Medio)</th></tr>
+<tr><td>Natura</td><td>Oscura Simmetria</td><td>Oscura Simmetria</td><td>Oscura Simmetria</td><td>Oscura Simmetria</td></tr>
+<tr><td>FOR · COS · DES</td><td>7 · 6 · 7</td><td>7 · 7 · 8</td><td>8 · 8 · 9</td><td>7 · 7 · 8</td></tr>
+<tr><td>INT · SAG · CAR</td><td>2 · 6 · 2</td><td>2 · 7 · 2</td><td>3 · 7 · 2</td><td>2 · 7 · 2</td></tr>
+<tr><td>PV</td><td>42</td><td>65</td><td>180</td><td>109</td></tr>
+<tr><td>AR (di cui magica)</td><td>3 (1)</td><td>4 (1)</td><td>5 (1)</td><td>4 (1)</td></tr>
+<tr><td>Morso: VA, danno</td><td>13, 1d8+3 Magico</td><td>15, 2d6+2 Magico</td><td>17, 2d8+2 Magico</td><td>15, 2d6+2 Magico</td></tr>
+<tr><td>Artigli: VA, danno</td><td>13, 1d8+2 Magico</td><td>15, 2d6+1 Magico</td><td>17, 2d8+1 Magico</td><td>15, 2d6+1 Magico</td></tr>
+<tr><td>VA Difese</td><td>10</td><td>12</td><td>14</td><td>12</td></tr>
+<tr><td>PS Tempra · Riflessi · Volontà · Magia</td><td>11 · 13 · 10 · 11</td><td>11 · 13 · 10 · 11</td><td>12 · 15 · 11 · 12</td><td>11 · 13 · 10 · 11</td></tr>
+<tr><td>Iniziativa</td><td>6</td><td>8</td><td>10</td><td>8</td></tr>
+<tr><td>Movimento</td><td>Passo 10 Q</td><td>Passo 10 Q</td><td>Passo 10 Q</td><td>Passo 10 Q</td></tr>
+<tr><td>Spazio</td><td>1 Q</td><td>1 Q</td><td>1 Q</td><td>1 Q</td></tr>
+<tr><td>Taglia</td><td>Normale</td><td>Normale</td><td>Normale</td><td>Normale</td></tr>
+<tr><td>Azioni</td><td>2 AzP, 1 Movimento</td><td>2 AzP, 1 Movimento</td><td>2 AzP, 1 Movimento</td><td>3 AzP (2 d’attacco), 1 Movimento</td></tr>
+<tr><td>Abilità</td><td>Atletica 13, Percezione 11, Sopravvivenza 11</td><td>Atletica 15, Percezione 13, Sopravvivenza 13</td><td>Atletica 17, Percezione 15, Sopravvivenza 15</td><td>Atletica 15, Percezione 13, Sopravvivenza 13</td></tr>
+<tr><td>Contromisure</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Capacità</td><td>Carica del branco, Olfatto, Balzo, Presenza terrificante, Gelo dell’abisso, Ritorno</td><td>Come a sinistra</td><td>Come a sinistra</td><td>Come a sinistra, più Branco</td></tr>
+<tr><td>Immunità</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Round di resistenza · Round per abbattere un PG</td><td>3,9 · 7</td><td>6,2 · 6</td><td>10,4 · 4,8</td><td>11,9 · 6</td></tr>
+</table>
+<p>Morso e Artigli: natura Magico, proprietà Gelo, portata 1 Q, AC 1. Carica del branco (§3.6) fino a 12 Q con il Balzo, con Sbilanciante (§4.3). Chi è ferito dal Lupo è esposto alla Corruzione Oscura con intensità Debole (§4.2.5). Le misure non contano Carica, Gelo e Ritorno.</p>
+<p><b>Branco (Boss).</b> Alla soglia di fase (§2.5.3) 1d4+1 Levrieri delle Discariche Minori (§5.6.1) arrivano di corsa entro 12 Q dal Lupo e agiscono alla sua Iniziativa del Round successivo.</p>
+<p><b>Comportamento.</b> Manda avanti il branco e resta fuori dalla luce; carica con il Balzo il personaggio che si stacca o che ha ferito un Levriero. Dopo il Ritorno attacca chi lo aveva abbattuto. Fugge soltanto se resta senza branco e sotto metà dei PV.</p>
 <h2>5.7 Alati</h2>
 <h3>5.7.1 Gracchia di Ruggine</h3>
 <p>Sopra le ciminiere delle raffinerie volano stormi di uccelli dal becco di ferro e dalle penne incrostate di ruggine e catrame. Le Gracchie di Ruggine nidificano nei camini spenti e tagliano con gli artigli spinati chi sale sui tetti. Il loro verso, un raschio metallico, si sente prima che si vedano.</p>
@@ -938,6 +1098,59 @@
 </table>
 <p>Artigli: natura Naturale, Sanguinante 1, portata 1 Q, AC 1. Chi la colpisce senz’armi subisce 1d4 (Aculei). Volo e Picchiata come la base (§3.7); chi la attacca mentre vola subisce −2 VA (§3.1.1).</p>
 <p><b>Comportamento.</b> Lo stormo piomba sul personaggio più esposto con la Picchiata, risale e torna su chi sanguina. Si disperde quando metà dello stormo è a 0 PV.</p>
+<h3>5.7.2 Lamentatrice</h3>
+<p>Sui campanili delle cattedrali sventrate dai bombardamenti nidificano creature dalle ali di pelle grigia e dal volto quasi umano, che piangono con la voce di chi è morto lì sotto. Le Lamentatrici non hanno fame: seguono i vivi e gridano, e il loro grido svuota il coraggio anche dei soldati più duri. I predicatori della Fratellanza le considerano un presagio, e non sbagliano: dove volano, qualcos’altro arriva presto.</p>
+<p><b>Base:</b> Alato. <b>Moduli:</b> Corrotto, Posseduto (+1). <b>Grado effettivo:</b> un grado sopra quello della colonna. <b>Manifestazioni:</b> Occhi senza luce (minore), Grido dell’Oscura Simmetria (maggiore).</p>
+<table border="1">
+<tr><th>Valore</th><th>Semplice</th><th>Medio</th><th>Potente</th></tr>
+<tr><td>Natura</td><td>Oscura Simmetria</td><td>Oscura Simmetria</td><td>Oscura Simmetria</td></tr>
+<tr><td>FOR · COS · DES</td><td>5 · 5 · 8</td><td>5 · 6 · 9</td><td>6 · 6 · 10</td></tr>
+<tr><td>INT · SAG · CAR</td><td>3 · 7 · 2</td><td>3 · 8 · 2</td><td>4 · 8 · 3</td></tr>
+<tr><td>PV</td><td>36</td><td>55</td><td>153</td></tr>
+<tr><td>AR (di cui magica)</td><td>3 (1)</td><td>4 (1)</td><td>5 (1)</td></tr>
+<tr><td>Artigli: VA, danno</td><td>13, 1d8+2 Magico</td><td>15, 2d6+2 Magico</td><td>17, 2d8+2 Magico</td></tr>
+<tr><td>VA Difese</td><td>13</td><td>15</td><td>17</td></tr>
+<tr><td>PS Tempra · Riflessi · Volontà · Magia</td><td>8 · 13 · 13 · 11</td><td>8 · 13 · 13 · 11</td><td>9 · 15 · 14 · 12</td></tr>
+<tr><td>Iniziativa</td><td>6</td><td>8</td><td>10</td></tr>
+<tr><td>Movimento</td><td>Passo 3 Q; volo 8 Q</td><td>Passo 3 Q; volo 8 Q</td><td>Passo 3 Q; volo 8 Q</td></tr>
+<tr><td>Spazio</td><td>1 Q</td><td>1 Q</td><td>1 Q</td></tr>
+<tr><td>Taglia</td><td>Normale</td><td>Normale</td><td>Normale</td></tr>
+<tr><td>Azioni</td><td>2 AzP, 1 Movimento</td><td>2 AzP, 1 Movimento</td><td>2 AzP, 1 Movimento</td></tr>
+<tr><td>Abilità</td><td>Percezione 13, Atletica 11, Furtività 11</td><td>Percezione 15, Atletica 13, Furtività 13</td><td>Percezione 17, Atletica 15, Furtività 15</td></tr>
+<tr><td>Contromisure</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Capacità</td><td>Volo, Picchiata, Vista acuta, Presenza terrificante, Occhi senza luce, Grido dell’Oscura Simmetria</td><td>Come a sinistra</td><td>Come a sinistra</td></tr>
+<tr><td>Immunità</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Round di resistenza · Round per abbattere un PG</td><td>3,9 · 9,3</td><td>6,1 · 6</td><td>10 · 4,8</td></tr>
+</table>
+<p>Artigli: natura Magico, portata 1 Q, AC 1. Volo e Picchiata come la base (§3.7); chi la attacca mentre vola subisce −2 VA (§3.1.1). Chi è ferito dalla Lamentatrice è esposto alla Corruzione Oscura con intensità Debole (§4.2.5). Le misure non contano il Grido e la Presenza terrificante.</p>
+<p><b>Comportamento.</b> Gira sopra il gruppo fuori portata e grida appena lo scontro comincia; poi piomba con la Picchiata sui personaggi Terrorizzati. Accompagna altre creature; da sola fugge sotto metà dei PV.</p>
+<h3>5.7.3 Falco dei Tralicci</h3>
+<p>Sulle linee dell’alta tensione che portano l’energia delle centrali alle città-bunker caccia un rapace grande come un uomo, con quattro zampe artigliate e penne nere che sfrigolano di scintille. Il Falco dei Tralicci si posa sui piloni, aspetta che una squadra di manutenzione salga e la stacca dal traliccio uno alla volta. I suoi artigli lasciano nella carne un veleno che brucia come una scossa.</p>
+<p><b>Base:</b> Alato. <b>Moduli:</b> Arti in più (+1), Veleno sugli Artigli (+½). <b>Grado effettivo:</b> uno e mezzo sopra quello della colonna.</p>
+<table border="1">
+<tr><th>Valore</th><th>Medio</th><th>Potente</th><th>Molto potente</th><th>Boss (Potente)</th></tr>
+<tr><td>Natura</td><td>Comune</td><td>Comune</td><td>Comune</td><td>Comune</td></tr>
+<tr><td>FOR · COS · DES</td><td>5 · 6 · 9</td><td>6 · 6 · 10</td><td>7 · 7 · 10</td><td>6 · 6 · 10</td></tr>
+<tr><td>INT · SAG · CAR</td><td>3 · 8 · 2</td><td>4 · 8 · 3</td><td>4 · 9 · 3</td><td>4 · 8 · 3</td></tr>
+<tr><td>PV</td><td>55</td><td>153</td><td>225</td><td>247</td></tr>
+<tr><td>AR (di cui magica)</td><td>3 (0)</td><td>4 (0)</td><td>5 (0)</td><td>4 (0)</td></tr>
+<tr><td>Artigli: VA, danno</td><td>15, 2d6+2</td><td>17, 2d8+2</td><td>19, 2d8+3</td><td>17, 2d8+2</td></tr>
+<tr><td>VA Difese</td><td>15</td><td>17</td><td>19</td><td>17</td></tr>
+<tr><td>PS Tempra · Riflessi · Volontà · Magia</td><td>8 · 13 · 11 · 11</td><td>9 · 15 · 12 · 12</td><td>10 · 15 · 13 · 13</td><td>9 · 15 · 12 · 12</td></tr>
+<tr><td>Iniziativa</td><td>8</td><td>10</td><td>12</td><td>10</td></tr>
+<tr><td>Movimento</td><td>Passo 3 Q; volo 8 Q</td><td>Passo 3 Q; volo 8 Q</td><td>Passo 3 Q; volo 8 Q</td><td>Passo 3 Q; volo 8 Q</td></tr>
+<tr><td>Spazio</td><td>1 Q</td><td>1 Q</td><td>1 Q</td><td>1 Q</td></tr>
+<tr><td>Taglia</td><td>Normale</td><td>Normale</td><td>Normale</td><td>Normale</td></tr>
+<tr><td>Azioni</td><td>2 AzP, 1 Movimento</td><td>2 AzP, 1 Movimento</td><td>2 AzP, 1 Movimento</td><td>3 AzP (2 d’attacco), 1 Movimento</td></tr>
+<tr><td>Abilità</td><td>Percezione 15, Atletica 13, Furtività 13</td><td>Percezione 17, Atletica 15, Furtività 15</td><td>Percezione 19, Atletica 17, Furtività 17</td><td>Percezione 17, Atletica 15, Furtività 15</td></tr>
+<tr><td>Contromisure</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Capacità</td><td>Volo, Picchiata, Vista acuta, Arti in più, Veleno</td><td>Come a sinistra</td><td>Come a sinistra</td><td>Come a sinistra, più Vento delle ali</td></tr>
+<tr><td>Immunità</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Round di resistenza · Round per abbattere un PG</td><td>4,4 · 6</td><td>6,8 · 4,8</td><td>9,5 · 4,6</td><td>11,9 · 4,8</td></tr>
+</table>
+<p>Artigli: natura Naturale, portata 1 Q, AC 1; applicano il Veleno (§4.3) quando feriscono. Arti in più: dopo l’attacco con un’AzP, un attacco di Artigli in più con −2 VA (§4.3). Volo e Picchiata come la base (§3.7); chi lo attacca mentre vola subisce −2 VA (§3.1.1). Le misure non contano Arti in più e Veleno: il Falco abbatte un personaggio prima di quanto dicano i numeri.</p>
+<p><b>Vento delle ali (Boss).</b> Alla soglia di fase (§2.5.3) scende a terra battendo le ali: ogni personaggio entro 3 Q effettua una PS di Riflessi o cade A Terra (Giocatore §5.5); poi riprende quota con l’Azione di Movimento.</p>
+<p><b>Comportamento.</b> Caccia da solo: piomba con la Picchiata sul personaggio più in alto o più isolato e risale fuori portata delle armi ravvicinate. Il Boss resta in quota fino alla soglia di fase, poi combatte a terra fra i personaggi caduti. Fugge sotto un quarto dei PV.</p>
 <h2>5.8 Striscianti</h2>
 <h3>5.8.1 Verme dei Crolli</h3>
 <p>Sotto i quartieri crollati, dove i palazzi sono caduti uno sull’altro, si scava il Verme dei Crolli: un corpo ad anelli lungo quanto un vagone, coperto di placche di cemento e chitina, con una bocca circolare piena di denti. Sente i passi attraverso le macerie e sale a prendere chi si ferma troppo a lungo nello stesso punto.</p>
@@ -966,6 +1179,61 @@
 </table>
 <p>Morso e Spire: natura Naturale, portata 1 Q, AC 1; le Spire Immobilizzano come la base (§3.8). Agguato dal basso e Scavo come la base. Le misure non contano l’agguato né le Spire.</p>
 <p><b>Comportamento.</b> Aspetta sotto le macerie, esce sul personaggio isolato con l’Agguato dal basso, lo avvolge con le Spire e lo morde finché è Immobilizzato. Si rintana sotto un quarto dei PV.</p>
+<h3>5.8.2 Lamprede di Sentina</h3>
+<p>Nelle sentine allagate dei quartieri portuali e nelle cisterne delle fogne vivono a centinaia vermi lunghi come un uomo, con una bocca a ventosa piena di denti uncinati. Le Lamprede di Sentina sentono il calore dei corpi attraverso l’acqua torbida e il fango, salgono in massa e si avvolgono alle gambe. Il loro morso lascia una febbre che piega anche chi le ha strappate via.</p>
+<p><b>Base:</b> Strisciante. <b>Moduli:</b> Veleno sul Morso (+½), Sensi oscuri (+0). <b>Grado effettivo:</b> mezzo grado sopra quello della colonna.</p>
+<table border="1">
+<tr><th>Valore</th><th>Minore</th><th>Semplice</th><th>Medio</th></tr>
+<tr><td>Natura</td><td>Comune</td><td>Comune</td><td>Comune</td></tr>
+<tr><td>FOR · COS · DES</td><td>6 · 7 · 5</td><td>7 · 7 · 5</td><td>7 · 8 · 6</td></tr>
+<tr><td>INT · SAG · CAR</td><td>2 · 6 · 1</td><td>2 · 6 · 1</td><td>2 · 7 · 1</td></tr>
+<tr><td>PV</td><td>25</td><td>50</td><td>78</td></tr>
+<tr><td>AR (di cui magica)</td><td>1 (0)</td><td>2 (0)</td><td>3 (0)</td></tr>
+<tr><td>Morso: VA, danno</td><td>11, 1d8+1</td><td>13, 1d8+2</td><td>15, 2d6+1</td></tr>
+<tr><td>Spire: VA, danno</td><td>11, 1d6</td><td>13, 1d6+1</td><td>15, 1d8+1</td></tr>
+<tr><td>VA Difese</td><td>7</td><td>9</td><td>11</td></tr>
+<tr><td>PS Tempra · Riflessi · Volontà · Magia</td><td>12 · 7 · 10 · 10</td><td>13 · 8 · 11 · 11</td><td>13 · 8 · 11 · 11</td></tr>
+<tr><td>Iniziativa</td><td>3</td><td>3</td><td>5</td></tr>
+<tr><td>Movimento</td><td>Passo 4 Q</td><td>Passo 4 Q</td><td>Passo 4 Q</td></tr>
+<tr><td>Spazio</td><td>1 Q</td><td>1 Q</td><td>1 Q</td></tr>
+<tr><td>Taglia</td><td>Normale</td><td>Normale</td><td>Normale</td></tr>
+<tr><td>Azioni</td><td>1 AzP, 1 Movimento</td><td>2 AzP, 1 Movimento</td><td>2 AzP, 1 Movimento</td></tr>
+<tr><td>Abilità</td><td>Furtività 11, Atletica 9, Percezione 9</td><td>Furtività 13, Atletica 11, Percezione 11</td><td>Furtività 15, Atletica 13, Percezione 13</td></tr>
+<tr><td>Contromisure</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Capacità</td><td>Spire, Agguato dal basso, Scavo, Vibrazioni, Veleno, Sensi oscuri</td><td>Come a sinistra</td><td>Come a sinistra</td></tr>
+<tr><td>Immunità</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Round di resistenza · Round per abbattere un PG</td><td>1,8 · 11,1</td><td>3,4 · 9,3</td><td>5,4 · 7,4</td></tr>
+</table>
+<p>Morso: natura Naturale, portata 1 Q, AC 1; applica il Veleno (§4.3) quando ferisce. Spire, Agguato dal basso e Scavo come la base (§3.8), anche nel fango. Le misure non contano Veleno, Spire e agguato.</p>
+<p><b>Comportamento.</b> Escono a sciame dall’acqua bassa o dal fango attorno al gruppo, cinque, otto o più, e si avvolgono a chi è già Immobilizzato o Avvelenato. Si ritirano nell’acqua quando metà dello sciame è a 0 PV.</p>
+<h3>5.8.3 Serpe del Reliquiario</h3>
+<p>Sotto le cripte profanate, dove gli eretici hanno distrutto le reliquie della Fratellanza, vive una serpe lunga come un treno merci e bianca come le ossa che ha mangiato. La Serpe del Reliquiario si nutre dei morti consacrati e di chi viene a riprenderli: le ferite che apre non si chiudono, le sue si richiudono da sole. Il suo morso passa attraverso le corazze come se non esistessero.</p>
+<p><b>Base:</b> Strisciante. <b>Moduli:</b> Corrotto, Consacrato (+2). <b>Grado effettivo:</b> due gradi sopra quello della colonna. <b>Manifestazioni:</b> Occhi senza luce (minore), Ferite che non si chiudono e Carne che ricorda (maggiori).</p>
+<table border="1">
+<tr><th>Valore</th><th>Medio</th><th>Potente</th><th>Molto potente</th><th>Boss (Potente)</th></tr>
+<tr><td>Natura</td><td>Oscura Simmetria</td><td>Oscura Simmetria</td><td>Oscura Simmetria</td><td>Oscura Simmetria</td></tr>
+<tr><td>FOR · COS · DES</td><td>7 · 8 · 6</td><td>8 · 9 · 6</td><td>9 · 9 · 7</td><td>8 · 9 · 6</td></tr>
+<tr><td>INT · SAG · CAR</td><td>2 · 7 · 1</td><td>2 · 7 · 1</td><td>3 · 8 · 1</td><td>2 · 7 · 1</td></tr>
+<tr><td>PV</td><td>78</td><td>216</td><td>318</td><td>171</td></tr>
+<tr><td>AR (di cui magica)</td><td>5 (2)</td><td>6 (2)</td><td>7 (2)</td><td>6 (2)</td></tr>
+<tr><td>Morso: VA, danno</td><td>15, 2d6+1 Etereo</td><td>17, 2d8+1 Etereo</td><td>19, 2d8+2 Etereo</td><td>17, 2d8+1 Etereo</td></tr>
+<tr><td>Spire: VA, danno</td><td>15, 1d8+1 Magico</td><td>17, 2d6+1 Magico</td><td>19, 2d6+2 Magico</td><td>17, 2d6+1 Magico</td></tr>
+<tr><td>VA Difese</td><td>11</td><td>13</td><td>15</td><td>13</td></tr>
+<tr><td>PS Tempra · Riflessi · Volontà · Magia</td><td>13 · 8 · 13 · 11</td><td>15 · 9 · 14 · 12</td><td>15 · 10 · 15 · 13</td><td>15 · 9 · 14 · 12</td></tr>
+<tr><td>Iniziativa</td><td>5</td><td>7</td><td>9</td><td>7</td></tr>
+<tr><td>Movimento</td><td>Passo 4 Q</td><td>Passo 4 Q</td><td>Passo 4 Q</td><td>Passo 4 Q</td></tr>
+<tr><td>Spazio</td><td>1 Q</td><td>1 Q</td><td>1 Q</td><td>1 Q</td></tr>
+<tr><td>Taglia</td><td>Normale</td><td>Normale</td><td>Normale</td><td>Normale</td></tr>
+<tr><td>Azioni</td><td>2 AzP, 1 Movimento</td><td>2 AzP, 1 Movimento</td><td>2 AzP, 1 Movimento</td><td>3 AzP (2 d’attacco), 1 Movimento</td></tr>
+<tr><td>Abilità</td><td>Furtività 15, Atletica 13, Percezione 13</td><td>Furtività 17, Atletica 15, Percezione 15</td><td>Furtività 19, Atletica 17, Percezione 17</td><td>Furtività 17, Atletica 15, Percezione 15</td></tr>
+<tr><td>Contromisure</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Capacità</td><td>Spire, Agguato dal basso, Scavo, Vibrazioni, Presenza terrificante, Occhi senza luce, Ferite che non si chiudono, Carne che ricorda 3</td><td>Spire, Agguato dal basso, Scavo, Vibrazioni, Presenza terrificante, Occhi senza luce, Ferite che non si chiudono, Carne che ricorda 10</td><td>Spire, Agguato dal basso, Scavo, Vibrazioni, Presenza terrificante, Occhi senza luce, Ferite che non si chiudono, Carne che ricorda 10</td><td>Spire, Agguato dal basso, Scavo, Vibrazioni, Presenza terrificante, Occhi senza luce, Ferite che non si chiudono, Carne che ricorda 10, Ritorno nella cripta</td></tr>
+<tr><td>Immunità</td><td>Terrorizzato</td><td>Terrorizzato</td><td>Terrorizzato</td><td>Terrorizzato</td></tr>
+<tr><td>Round di resistenza · Round per abbattere un PG</td><td>11,1 · 7,4</td><td>20,2 · 5,6</td><td>29,5 · 5,2</td><td>17 · 5,6</td></tr>
+</table>
+<p>Morso: natura <b>Etereo</b> (§4.2.3), Sanguinante 1 (Sanguinante 2 dal Potente), portata 1 Q, AC 1. Spire: natura Magico, Sanguinante come il Morso; Immobilizzano come la base (§3.8). Carne che ricorda: 3 PV all’inizio della propria Iniziativa, 10 dal Potente (§4.2.4). Chi è ferito dalla Serpe è esposto alla Corruzione Oscura con intensità Normale (§4.2.5). I Round di resistenza oltre quelli del grado sono quelli di una creatura che vale due gradi in più (§2.4); le misure non contano il Morso Etereo, che contro chi non ha AR magica ignora l’Armatura, né Carne che ricorda.</p>
+<p><b>Ritorno nella cripta (Boss).</b> Alla soglia di fase (§2.5.3) si inabissa nelle macerie con lo Scavo, senza Attacchi di Opportunità, e nel Round successivo riemerge con l’Agguato dal basso contro un personaggio a sua scelta entro 8 Q.</p>
+<p><b>Comportamento.</b> Resta sepolta sotto il pavimento della cripta finché qualcuno tocca le ossa; esce con l’Agguato dal basso, avvolge chi porta una reliquia o un simbolo della Fratellanza e lo trascina sotto. Non fugge: difende la cripta.</p>
 <h2>5.9 Giganti</h2>
 <h3>5.9.1 Colosso delle Fonderie</h3>
 <p>Nelle fonderie abbandonate qualcosa ha fuso insieme carne, scorie e metallo in una figura alta come due uomini, che cammina con la schiena curva sotto i soffitti. Il Colosso delle Fonderie ha la pelle di crosta nera e fessure da cui cola un fuoco che non scalda. Una voce che non è la sua sussurra a chi gli sta vicino.</p>
@@ -994,6 +1262,59 @@
 <p>Schianto: natura Magico, proprietà Fuoco (Fiamma nera), portata 2 Q, AC 1; Spazzata del gigante come la base (§3.9). Taglia Grande: chi lo attacca ottiene +2 VA (§3.1.1). Chi è ferito dal Colosso è esposto alla Corruzione Oscura con intensità Debole (§4.2.5). Le misure non contano la Spazzata né il Fuoco.</p>
 <p><b>Colata (Boss).</b> Alla soglia di fase (§2.5.3) la crosta del Colosso si spacca: ogni personaggio entro 2 Q effettua una PS di Riflessi o è Incendiato (Giocatore §5.18), e il Colosso recupera 20 PV.</p>
 <p><b>Comportamento.</b> Avanza verso il gruppo più folto e usa la Spazzata appena ha due personaggi a portata; abbatte le Coperture leggere. Non fugge. Al massimo un Colosso per scontro sotto il grado Potente (§3.9).</p>
+<h3>5.9.2 Sgorbio delle Vasche</h3>
+<p>Nei complessi chimici delle corporazioni, quando una vasca di reagenti si rompe, gli operai che non fanno in tempo a scappare non sempre muoiono. Lo Sgorbio delle Vasche è uno di loro, o più d’uno fusi insieme: tre metri di carne gonfia e lucida, braccia come pistoni, un sangue giallo che fuma all’aria. Vaga nei reparti chiusi colpendo i macchinari e chi ci lavora, come se cercasse di spegnere un dolore che non passa.</p>
+<p><b>Base:</b> Gigante. <b>Moduli:</b> Sangue acido (+½). <b>Grado effettivo:</b> mezzo grado sopra quello della colonna.</p>
+<table border="1">
+<tr><th>Valore</th><th>Minore</th><th>Semplice</th><th>Medio</th></tr>
+<tr><td>Natura</td><td>Comune</td><td>Comune</td><td>Comune</td></tr>
+<tr><td>FOR · COS · DES</td><td>8 · 8 · 4</td><td>9 · 9 · 4</td><td>10 · 9 · 5</td></tr>
+<tr><td>INT · SAG · CAR</td><td>2 · 5 · 2</td><td>2 · 5 · 2</td><td>3 · 6 · 2</td></tr>
+<tr><td>PV</td><td>26</td><td>53</td><td>81</td></tr>
+<tr><td>AR (di cui magica)</td><td>1 (0)</td><td>2 (0)</td><td>3 (0)</td></tr>
+<tr><td>Schianto: VA, danno</td><td>11, 1d8+2</td><td>13, 1d8+3</td><td>15, 2d6+2</td></tr>
+<tr><td>VA Difese</td><td>5</td><td>7</td><td>9</td></tr>
+<tr><td>PS Tempra · Riflessi · Volontà · Magia</td><td>12 · 7 · 10 · 10</td><td>13 · 8 · 11 · 11</td><td>13 · 8 · 11 · 11</td></tr>
+<tr><td>Iniziativa</td><td>2</td><td>2</td><td>4</td></tr>
+<tr><td>Movimento</td><td>Passo 6 Q</td><td>Passo 6 Q</td><td>Passo 6 Q</td></tr>
+<tr><td>Spazio</td><td>2 × 2 Q</td><td>2 × 2 Q</td><td>2 × 2 Q</td></tr>
+<tr><td>Taglia</td><td>Grande</td><td>Grande</td><td>Grande</td></tr>
+<tr><td>Azioni</td><td>1 AzP, 1 Movimento</td><td>2 AzP, 1 Movimento</td><td>2 AzP, 1 Movimento</td></tr>
+<tr><td>Abilità</td><td>Atletica 11, Percezione 7, Sopravvivenza 7</td><td>Atletica 13, Percezione 9, Sopravvivenza 9</td><td>Atletica 15, Percezione 11, Sopravvivenza 11</td></tr>
+<tr><td>Contromisure</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Capacità</td><td>Taglia Grande, Spazzata del gigante, Raro, Sangue acido</td><td>Come a sinistra</td><td>Come a sinistra</td></tr>
+<tr><td>Immunità</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Round di resistenza · Round per abbattere un PG</td><td>1,5 · 8,9</td><td>3,1 · 7</td><td>4,9 · 6</td></tr>
+</table>
+<p>Schianto: natura Naturale, portata 2 Q, AC 1; Spazzata del gigante come la base (§3.9). Taglia Grande: chi lo attacca ottiene +2 VA (§3.1.1). Chi lo ferisce in mischia subisce 1d4 danni Corrosivi e l’arma effettua la PS Integrità (Sangue acido, §4.3). Le misure non contano Spazzata e Sangue acido.</p>
+<p><b>Comportamento.</b> Avanza in linea retta verso il rumore più forte e colpisce con la Spazzata chiunque gli stia attorno; abbatte Coperture e macchinari. Non fugge. Al massimo uno Sgorbio per scontro (Raro, §3.9).</p>
+<h3>5.9.3 Mietitore delle Serre</h3>
+<p>Le serre idroponiche che nutrono le città-bunker sono enormi e silenziose, e di notte restano vuote. In alcune ha preso casa il Mietitore: un gigante storto con quattro braccia, due delle quali finiscono in lame d’osso ricurve come falci. Chi lo ha visto lavorare dice che miete le file di piante con cura, come un contadino; poi miete chi entra, con la stessa cura. Il sangue che gli cola addosso si secca subito, e nessuna ferita gli resta aperta.</p>
+<p><b>Base:</b> Gigante. <b>Moduli:</b> Corrotto, Toccato (+½); Arti in più (+1). <b>Grado effettivo:</b> uno e mezzo sopra quello della colonna. <b>Manifestazione:</b> Sangue fermo (minore).</p>
+<table border="1">
+<tr><th>Valore</th><th>Semplice</th><th>Medio</th><th>Potente</th><th>Boss (Medio)</th></tr>
+<tr><td>Natura</td><td>Oscura Simmetria</td><td>Oscura Simmetria</td><td>Oscura Simmetria</td><td>Oscura Simmetria</td></tr>
+<tr><td>FOR · COS · DES</td><td>9 · 9 · 4</td><td>10 · 9 · 5</td><td>11 · 10 · 5</td><td>10 · 9 · 5</td></tr>
+<tr><td>INT · SAG · CAR</td><td>2 · 5 · 2</td><td>3 · 6 · 2</td><td>3 · 6 · 2</td><td>3 · 6 · 2</td></tr>
+<tr><td>PV</td><td>53</td><td>81</td><td>225</td><td>194</td></tr>
+<tr><td>AR (di cui magica)</td><td>2 (0)</td><td>3 (0)</td><td>4 (0)</td><td>3 (0)</td></tr>
+<tr><td>Schianto: VA, danno</td><td>13, 1d8+3</td><td>15, 2d6+2</td><td>17, 2d8+2</td><td>15, 2d6+2</td></tr>
+<tr><td>VA Difese</td><td>7</td><td>9</td><td>11</td><td>9</td></tr>
+<tr><td>PS Tempra · Riflessi · Volontà · Magia</td><td>13 · 8 · 13 · 11</td><td>13 · 8 · 13 · 11</td><td>15 · 9 · 14 · 12</td><td>13 · 8 · 13 · 11</td></tr>
+<tr><td>Iniziativa</td><td>2</td><td>4</td><td>6</td><td>4</td></tr>
+<tr><td>Movimento</td><td>Passo 6 Q</td><td>Passo 6 Q</td><td>Passo 6 Q</td><td>Passo 6 Q</td></tr>
+<tr><td>Spazio</td><td>2 × 2 Q</td><td>2 × 2 Q</td><td>3 × 3 Q</td><td>2 × 2 Q</td></tr>
+<tr><td>Taglia</td><td>Grande</td><td>Grande</td><td>Grande</td><td>Grande</td></tr>
+<tr><td>Azioni</td><td>2 AzP, 1 Movimento</td><td>2 AzP, 1 Movimento</td><td>2 AzP, 1 Movimento</td><td>3 AzP (2 d’attacco), 1 Movimento</td></tr>
+<tr><td>Abilità</td><td>Atletica 13, Percezione 9, Sopravvivenza 9</td><td>Atletica 15, Percezione 11, Sopravvivenza 11</td><td>Atletica 17, Percezione 13, Sopravvivenza 13</td><td>Atletica 15, Percezione 11, Sopravvivenza 11</td></tr>
+<tr><td>Contromisure</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Capacità</td><td>Taglia Grande, Spazzata del gigante, Raro, Arti in più, Sangue fermo</td><td>Come a sinistra</td><td>Come a sinistra</td><td>Come a sinistra, più Mietitura</td></tr>
+<tr><td>Immunità</td><td>Sanguinamento</td><td>Sanguinamento</td><td>Sanguinamento</td><td>Sanguinamento</td></tr>
+<tr><td>Round di resistenza · Round per abbattere un PG</td><td>3,1 · 7</td><td>4,9 · 6</td><td>8 · 4,8</td><td>12,7 · 6</td></tr>
+</table>
+<p>Schianto (le lame d’osso): natura Naturale, portata 2 Q, AC 1. Arti in più: dopo l’attacco con un’AzP, uno Schianto in più con −2 VA (§4.3). Spazzata del gigante come la base (§3.9); Taglia Grande, chi lo attacca ottiene +2 VA (§3.1.1). Chi è ferito dal Mietitore è esposto alla Corruzione Oscura con intensità Flebile (§4.2.5). Le misure non contano Arti in più e Spazzata.</p>
+<p><b>Mietitura (Boss).</b> Alla soglia di fase (§2.5.3) esegue subito, fuori dall’Iniziativa, una Spazzata del gigante contro fino a tre personaggi entro portata.</p>
+<p><b>Comportamento.</b> Aspetta fra le file delle piante, dove la Copertura nasconde la sua mole, e colpisce con la Spazzata chi si avvicina. Insegue soltanto dentro la serra. Non fugge; al massimo un Mietitore per scontro (Raro, §3.9).</p>
 <h1>Capitolo 6 — Generazione casuale</h1>
 <h2>6.1 Formato delle tabelle</h2>
 <p>Le tabelle di questo capitolo hanno tutte la stessa forma, perché si possano usare al tavolo e leggere da un programma (il generatore del Tavolo del Master):</p>
@@ -1287,8 +1608,38 @@
 <li>per grado i Round di resistenza contro sette personaggi e i Round per abbattere un personaggio, con e senza Parata;</li>
 <li>i Boss, il bilancio facile, normale e duro e la tabella dei gruppi misti;</li>
 <li>le basi, con il peso e le due misure;</li>
-<li>il bestiario umano scalato: moltiplicatore dei PV e bonus di grado al danno.</li>
+<li>il bestiario umano scalato: moltiplicatore dei PV e bonus di grado al danno;</li>
+<li>le creature pronte del Capitolo 5 con i loro intervalli (A.6).</li>
 </ul>
 <p>Esce con errore se un grado o un Boss cade fuori dall’intervallo dei Round di resistenza. Se le regole cambiano, si ripete la misura e si aggiornano le tabelle dei Capitoli 2 e 3.</p>
+<h2>A.6 Creature pronte</h2>
+<p>Le due misure delle creature del Capitolo 5, colonna per colonna, contro sette personaggi del livello del grado della colonna. I valori della scheda sono quelli del grado della colonna, mentre i moduli valgono gradi in più nel bilancio (§2.4): l’intervallo va quindi dal minimo dei Round di resistenza del grado della colonna al massimo del grado effettivo, e oltre il Molto potente ogni grado effettivo in più vale una creatura in più (§2.4). Il Boss ha l’intervallo del Boss (§2.1).</p>
+<table border="1">
+<tr><th>Creatura</th><th>Colonne</th><th>Round di resistenza</th><th>Intervallo</th><th>Round per abbattere un PG</th></tr>
+<tr><td>Scavafosse</td><td>Minore · Semplice · Medio</td><td>2,4 · 5 · 8,4</td><td>1–4 · 2–6 · 3–10</td><td>11,1 · 9,3 · 7,4</td></tr>
+<tr><td>Regina della Covata</td><td>Medio · Potente · Molto potente · Boss Potente</td><td>12,6 · 22,7 · 33,3 · 12,7</td><td>3–15 · 5–30 · 6–45 · 10–20</td><td>7,4 · 5,6 · 5,2 · 5,6</td></tr>
+<tr><td>Pungiglione dei Condotti</td><td>Semplice · Medio · Potente</td><td>3,5 · 5,7 · 9,3</td><td>2–6 · 3–10 · 5–15</td><td>9,3 · 7,4 · 5,6</td></tr>
+<tr><td>Tessitrice d’Ombra</td><td>Minore · Semplice · Medio</td><td>1,3 · 2,6 · 4,1</td><td>1–4 · 2–6 · 3–10</td><td>11,2 · 9,3 · 6</td></tr>
+<tr><td>Madre dei Fili Neri</td><td>Medio · Potente · Molto potente · Boss Potente</td><td>8,4 · 15,1 · 22,2 · 12,9</td><td>3–15 · 5–30 · 6–45 · 10–20</td><td>6 · 4,8 · 4,6 · 4,8</td></tr>
+<tr><td>Rodiroccia</td><td>Semplice · Medio · Potente</td><td>3,9 · 6,1 · 9,5</td><td>2–10 · 3–15 · 5–15</td><td>9,3 · 6 · 4,8</td></tr>
+<tr><td>Squarciatore</td><td>Minore · Semplice · Medio</td><td>1,6 · 2,5 · 3,8</td><td>1–4 · 2–6 · 3–10</td><td>7,4 · 5,4 · 5</td></tr>
+<tr><td>Bruto della Breccia</td><td>Semplice · Medio · Potente · Boss Medio</td><td>3,2 · 5 · 7,7 · 13,1</td><td>2–10 · 3–15 · 5–30 · 10–20</td><td>5,4 · 5 · 4,2 · 5</td></tr>
+<tr><td>Cantore Sfigurato</td><td>Semplice · Medio · Potente</td><td>3,2 · 5 · 7,7</td><td>2–6 · 3–10 · 5–15</td><td>5,4 · 5 · 4,2</td></tr>
+<tr><td>Eretico corrotto</td><td>Minore · Semplice · Medio · Boss Medio</td><td>1,2 · 1,7† · 2,6† · 12,1</td><td>1–4 · 2–6 · 3–10 · 10–20</td><td>9 · 8,9 · 6,6 · 6,6</td></tr>
+<tr><td>Levriero delle Discariche</td><td>Minore · Semplice · Medio</td><td>1,5 · 2,9 · 4,5</td><td>1–4 · 2–6 · 3–10</td><td>8,9 · 7 · 6</td></tr>
+<tr><td>Cornofango</td><td>Medio · Potente · Molto potente</td><td>9,4 · 15,6 · 22,7</td><td>3–15 · 5–22,5 · 6–37,5</td><td>6 · 4,8 · 4,6</td></tr>
+<tr><td>Lupo senz’Ombra</td><td>Semplice · Medio · Potente · Boss Medio</td><td>3,9 · 6,2 · 10,4 · 11,9</td><td>2–10 · 3–15 · 5–22,5 · 10–20</td><td>7 · 6 · 4,8 · 6</td></tr>
+<tr><td>Gracchia di Ruggine</td><td>Minore · Semplice · Medio</td><td>1,5 · 2,9 · 4,4</td><td>1–4 · 2–6 · 3–10</td><td>11,2 · 9,3 · 6</td></tr>
+<tr><td>Lamentatrice</td><td>Semplice · Medio · Potente</td><td>3,9 · 6,1 · 10</td><td>2–6 · 3–10 · 5–15</td><td>9,3 · 6 · 4,8</td></tr>
+<tr><td>Falco dei Tralicci</td><td>Medio · Potente · Molto potente · Boss Potente</td><td>4,4 · 6,8 · 9,5 · 11,9</td><td>3–15 · 5–22,5 · 6–37,5 · 10–20</td><td>6 · 4,8 · 4,6 · 4,8</td></tr>
+<tr><td>Verme dei Crolli</td><td>Semplice · Medio · Potente</td><td>4,6 · 7,5 · 12,5</td><td>2–6 · 3–10 · 5–15</td><td>9,3 · 7,4 · 5,6</td></tr>
+<tr><td>Lamprede di Sentina</td><td>Minore · Semplice · Medio</td><td>1,8 · 3,4 · 5,4</td><td>1–4 · 2–6 · 3–10</td><td>11,1 · 9,3 · 7,4</td></tr>
+<tr><td>Serpe del Reliquiario</td><td>Medio · Potente · Molto potente · Boss Potente</td><td>11,1 · 20,2 · 29,5 · 17</td><td>3–15 · 5–30 · 6–45 · 10–20</td><td>7,4 · 5,6 · 5,2 · 5,6</td></tr>
+<tr><td>Colosso delle Fonderie</td><td>Medio · Potente · Molto potente · Boss Potente</td><td>6,8 · 11,8 · 18,5 · 13,9</td><td>3–10 · 5–15 · 6–30 · 10–20</td><td>6 · 4,8 · 4,6 · 4,8</td></tr>
+<tr><td>Sgorbio delle Vasche</td><td>Minore · Semplice · Medio</td><td>1,5 · 3,1 · 4,9</td><td>1–4 · 2–6 · 3–10</td><td>8,9 · 7 · 6</td></tr>
+<tr><td>Mietitore delle Serre</td><td>Semplice · Medio · Potente · Boss Medio</td><td>3,1 · 4,9 · 8 · 12,7</td><td>2–10 · 3–15 · 5–22,5 · 10–20</td><td>7 · 6 · 4,8 · 6</td></tr>
+</table>
+<p>† Fuori dall’intervallo per scelta: l’Eretico corrotto combatte da Incursore ed è più fragile del grado (§5.5.1).</p>
+<p>Lo script tools/taratura_bestiario.mjs stampa questa tabella con le regole correnti ed esce con errore se una creatura cade fuori dal proprio intervallo senza un’eccezione dichiarata nel testo.</p>
 </body>
 </html>
