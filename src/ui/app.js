@@ -2,7 +2,7 @@
 // livello" o stampa. Stato: le scelte della creazione, i livelli acquisiti (cap. 8) e i valori
 // di sessione (modalità tavolo) del personaggio aperto; tutto il resto si ricalcola a ogni
 // disegno con calcolaScheda / anteprima.
-import { caricaDati } from '../rules.js';
+import { caricaDati, versioniPersonaggio } from '../rules.js';
 import { formattaErrore, trovaTodo } from '../validate.js';
 import { calcolaScheda, validaLivello } from '../calc.js';
 import { separaEsemplare, restituisciGranate } from '../equipaggiamento.js';
@@ -113,8 +113,8 @@ async function avvia() {
 
 function versioniDati(dati) {
   const v = new Set();
-  for (const f of Object.values(dati)) {
-    for (const parte of String(f?.versione_manuale ?? '').split(';')) if (parte.trim()) v.add(parte.trim());
+  for (const versione of Object.values(versioniPersonaggio(dati))) {
+    for (const parte of String(versione ?? '').split(';')) if (parte.trim()) v.add(parte.trim());
   }
   return [...v].join(', ');
 }
@@ -262,7 +262,7 @@ function persisti() {
 
 /** Nome e testo dell'export di un personaggio: gli stessi per «SALVA PG» e per la cartella. */
 function fileEsportazione(scelte, livelli = [], sessione = null, calendario = null) {
-  const versioniDatiFile = Object.fromEntries(Object.entries(stato.dati).map(([k, v]) => [k, v.versione_manuale]));
+  const versioniDatiFile = versioniPersonaggio(stato.dati);
   return { file: nomeFileEsportazione(scelte.nome, 1 + livelli.length), testo: serializza(scelte, { versioniDati: versioniDatiFile, livelli, sessione, calendario }) };
 }
 

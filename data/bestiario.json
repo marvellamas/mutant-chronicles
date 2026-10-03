@@ -1,0 +1,2272 @@
+{
+  "versione_manuale": "Bestiario, proposta (bozza 0.2, docs/bestiario/bestiario.md, 02/10/2026)",
+  "fonte": "Bestiario, proposta: docs/bestiario/bestiario.md, cap. 2–6 e Appendice A; lotto tools/lotti/lotto_bestiario_dati.mjs. Le tabelle si leggono dal documento; effetti dei moduli e ricette delle creature pronte dal testo dei paragrafi.",
+  "TODO(Davide)": "Bestiario proposto, in attesa di Davide: scala tarata su 7 PG, costi dei moduli, Boss, creature pronte e tabelle casuali (docs/bestiario/domande-per-davide.md).",
+  "gruppo_pg": 7,
+  "gradi": [
+    {
+      "id": "minore",
+      "nome": "Minore",
+      "livelli": "1–3",
+      "livello_rif": 2,
+      "pv": 21,
+      "va": 11,
+      "difese": 9,
+      "ar": 1,
+      "danno_medio": 6.5,
+      "danno": "1d8+2",
+      "azp": 1,
+      "round_resistenza": 1.5,
+      "round_abbattere": 9,
+      "iniziativa": 4,
+      "ps": {
+        "forte": 12,
+        "media": 10,
+        "debole": 7
+      },
+      "passo": 6,
+      "spazio": "1 Q",
+      "boss": {
+        "pv": 160,
+        "azp": 2,
+        "round_resistenza": 12
+      },
+      "equilibrato": {
+        "facile": 3.3,
+        "normale": 4.7,
+        "duro": 6
+      }
+    },
+    {
+      "id": "semplice",
+      "nome": "Semplice",
+      "livelli": "4–7",
+      "livello_rif": 5,
+      "pv": 42,
+      "va": 13,
+      "difese": 11,
+      "ar": 2,
+      "danno_medio": 7.5,
+      "danno": "1d8+3",
+      "azp": 2,
+      "round_resistenza": 3,
+      "round_abbattere": 7,
+      "iniziativa": 4,
+      "ps": {
+        "forte": 13,
+        "media": 11,
+        "debole": 8
+      },
+      "passo": 6,
+      "spazio": "1 Q",
+      "boss": {
+        "pv": 160,
+        "azp": 3,
+        "round_resistenza": 12
+      },
+      "equilibrato": {
+        "facile": 1.9,
+        "normale": 2.7,
+        "duro": 3.5
+      }
+    },
+    {
+      "id": "medio",
+      "nome": "Medio",
+      "livelli": "8–11",
+      "livello_rif": 8,
+      "pv": 65,
+      "va": 15,
+      "difese": 13,
+      "ar": 3,
+      "danno_medio": 9,
+      "danno": "2d6+2",
+      "azp": 2,
+      "round_resistenza": 4.5,
+      "round_abbattere": 6,
+      "iniziativa": 6,
+      "ps": {
+        "forte": 13,
+        "media": 11,
+        "debole": 8
+      },
+      "passo": 6,
+      "spazio": "1 Q",
+      "boss": {
+        "pv": 155,
+        "azp": 3,
+        "round_resistenza": 12
+      },
+      "equilibrato": {
+        "facile": 1.5,
+        "normale": 2.1,
+        "duro": 2.7
+      }
+    },
+    {
+      "id": "potente",
+      "nome": "Potente",
+      "livelli": "12–15",
+      "livello_rif": 12,
+      "pv": 180,
+      "va": 17,
+      "difese": 15,
+      "ar": 4,
+      "danno_medio": 11,
+      "danno": "2d8+2",
+      "azp": 2,
+      "round_resistenza": 7,
+      "round_abbattere": 5,
+      "iniziativa": 8,
+      "ps": {
+        "forte": 15,
+        "media": 12,
+        "debole": 9
+      },
+      "passo": 6,
+      "spazio": "1 Q",
+      "boss": {
+        "pv": 290,
+        "azp": 3,
+        "round_resistenza": 12
+      },
+      "equilibrato": {
+        "facile": 1,
+        "normale": 1.5,
+        "duro": 1.9
+      }
+    },
+    {
+      "id": "molto-potente",
+      "nome": "Molto potente",
+      "livelli": "16–20",
+      "livello_rif": 16,
+      "pv": 265,
+      "va": 19,
+      "difese": 17,
+      "ar": 5,
+      "danno_medio": 12,
+      "danno": "2d8+3",
+      "azp": 2,
+      "round_resistenza": 10,
+      "round_abbattere": 4.5,
+      "iniziativa": 10,
+      "ps": {
+        "forte": 15,
+        "media": 13,
+        "debole": 10
+      },
+      "passo": 6,
+      "spazio": "1 Q",
+      "boss": {
+        "pv": 295,
+        "azp": 3,
+        "round_resistenza": 12
+      },
+      "equilibrato": {
+        "facile": 0.8,
+        "normale": 1.2,
+        "duro": 1.5
+      }
+    }
+  ],
+  "boss": {
+    "round_resistenza": 12,
+    "azp_in_piu": 1,
+    "riduzione_pv_per_ar": 0.7,
+    "paragrafo": "§2.5"
+  },
+  "equilibrato": {
+    "paragrafo": "§2.3",
+    "gruppi_misti": [
+      {
+        "livello": 2,
+        "minore": 4.7,
+        "semplice": 1.7,
+        "medio": 1,
+        "potente": 0.4,
+        "molto-potente": 0.2
+      },
+      {
+        "livello": 5,
+        "minore": 7.3,
+        "semplice": 2.7,
+        "medio": 1.5,
+        "potente": 0.6,
+        "molto-potente": 0.4
+      },
+      {
+        "livello": 8,
+        "minore": 9.6,
+        "semplice": 3.6,
+        "medio": 2.1,
+        "potente": 0.9,
+        "molto-potente": 0.5
+      },
+      {
+        "livello": 12,
+        "minore": 16.1,
+        "semplice": 6,
+        "medio": 3.5,
+        "potente": 1.5,
+        "molto-potente": 0.9
+      },
+      {
+        "livello": 16,
+        "minore": 19.8,
+        "semplice": 7.5,
+        "medio": 4.4,
+        "potente": 1.9,
+        "molto-potente": 1.2
+      }
+    ],
+    "soglie": [
+      {
+        "fino_a": 0.75,
+        "id": "facile",
+        "nome": "facile"
+      },
+      {
+        "fino_a": 1.25,
+        "id": "normale",
+        "nome": "normale"
+      },
+      {
+        "fino_a": 1.75,
+        "id": "duro",
+        "nome": "duro"
+      },
+      {
+        "fino_a": null,
+        "id": "mortale",
+        "nome": "mortale"
+      }
+    ]
+  },
+  "costo_massimo": 2,
+  "basi": {
+    "umano": {
+      "nome": "Umano",
+      "paragrafo": "§3.2",
+      "natura": "Comune",
+      "umano": true,
+      "tipi": [
+        "fante-capitol",
+        "soldato-bauhaus",
+        "guerriero-mishima",
+        "agente-cybertronic",
+        "soldato-imperiale",
+        "inquisitore-della-fratellanza",
+        "guardia-di-sicurezza",
+        "criminale-di-strada",
+        "mercenario",
+        "eretico"
+      ],
+      "per_grado": {
+        "minore": {
+          "tipo": "Recluta",
+          "da_preparare": false,
+          "livello": 2,
+          "pv_molt": 1,
+          "azp": 1,
+          "bonus_danno": 2,
+          "round_resistenza": 1.4,
+          "round_abbattere": 8
+        },
+        "semplice": {
+          "tipo": "Veterano",
+          "da_preparare": false,
+          "livello": 5,
+          "pv_molt": 1,
+          "azp": 2,
+          "bonus_danno": 2,
+          "round_resistenza": 2.8,
+          "round_abbattere": 7.5
+        },
+        "medio": {
+          "tipo": "Élite",
+          "da_preparare": false,
+          "livello": 8,
+          "pv_molt": 1.5,
+          "azp": 2,
+          "bonus_danno": 3,
+          "round_resistenza": 4.3,
+          "round_abbattere": 6
+        },
+        "potente": {
+          "tipo": "Comandante",
+          "da_preparare": true,
+          "livello": 12,
+          "pv_molt": 5,
+          "azp": 2,
+          "bonus_danno": 5,
+          "round_resistenza": 7.2,
+          "round_abbattere": 5
+        },
+        "molto-potente": {
+          "tipo": "Campione",
+          "da_preparare": true,
+          "livello": 16,
+          "pv_molt": 8.25,
+          "azp": 2,
+          "bonus_danno": 6,
+          "round_resistenza": 10.2,
+          "round_abbattere": 4.3
+        }
+      },
+      "nota": "Gli umani vengono dal bestiario umano del Tavolo del Master (esempi/nemici/umani/), portati al grado con PV × moltiplicatore, AzP del grado e bonus di grado al danno. Comandante (12°) e Campione (16°) sono da preparare.",
+      "pv_molt_boss": 1
+    },
+    "insettoide": {
+      "nome": "Insettoide",
+      "paragrafo": "§3.3",
+      "natura": "Comune",
+      "per_grado": {
+        "minore": {
+          "caratteristiche": {
+            "FOR": 5,
+            "COS": 5,
+            "DES": 7,
+            "INT": 2,
+            "SAG": 5,
+            "CAR": 1
+          },
+          "salvezze": {
+            "tempra": 10,
+            "riflessi": 12,
+            "volonta": 7,
+            "magia": 10
+          },
+          "attacchi": [
+            {
+              "nome": "Mandibole",
+              "danno": "1d8+1",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 11
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Atletica",
+              "va": 11
+            },
+            {
+              "nome": "Percezione",
+              "va": 9
+            },
+            {
+              "nome": "Furtività",
+              "va": 7
+            }
+          ],
+          "pv": 19,
+          "ar": 2,
+          "difese": 9,
+          "iniziativa": 5,
+          "passo": 8,
+          "spazio": "1 Q",
+          "azp": 1
+        },
+        "semplice": {
+          "caratteristiche": {
+            "FOR": 6,
+            "COS": 6,
+            "DES": 8,
+            "INT": 2,
+            "SAG": 5,
+            "CAR": 1
+          },
+          "salvezze": {
+            "tempra": 11,
+            "riflessi": 13,
+            "volonta": 8,
+            "magia": 11
+          },
+          "attacchi": [
+            {
+              "nome": "Mandibole",
+              "danno": "1d8+2",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 13
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Atletica",
+              "va": 13
+            },
+            {
+              "nome": "Percezione",
+              "va": 11
+            },
+            {
+              "nome": "Furtività",
+              "va": 9
+            }
+          ],
+          "pv": 38,
+          "ar": 3,
+          "difese": 11,
+          "iniziativa": 5,
+          "passo": 8,
+          "spazio": "1 Q",
+          "azp": 2
+        },
+        "medio": {
+          "caratteristiche": {
+            "FOR": 6,
+            "COS": 7,
+            "DES": 8,
+            "INT": 2,
+            "SAG": 6,
+            "CAR": 1
+          },
+          "salvezze": {
+            "tempra": 11,
+            "riflessi": 13,
+            "volonta": 8,
+            "magia": 11
+          },
+          "attacchi": [
+            {
+              "nome": "Mandibole",
+              "danno": "2d6+1",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 15
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Atletica",
+              "va": 15
+            },
+            {
+              "nome": "Percezione",
+              "va": 13
+            },
+            {
+              "nome": "Furtività",
+              "va": 11
+            }
+          ],
+          "pv": 59,
+          "ar": 4,
+          "difese": 13,
+          "iniziativa": 7,
+          "passo": 8,
+          "spazio": "1 Q",
+          "azp": 2
+        },
+        "potente": {
+          "caratteristiche": {
+            "FOR": 7,
+            "COS": 7,
+            "DES": 9,
+            "INT": 3,
+            "SAG": 6,
+            "CAR": 1
+          },
+          "salvezze": {
+            "tempra": 12,
+            "riflessi": 15,
+            "volonta": 9,
+            "magia": 12
+          },
+          "attacchi": [
+            {
+              "nome": "Mandibole",
+              "danno": "2d8+1",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 17
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Atletica",
+              "va": 17
+            },
+            {
+              "nome": "Percezione",
+              "va": 15
+            },
+            {
+              "nome": "Furtività",
+              "va": 13
+            }
+          ],
+          "pv": 162,
+          "ar": 5,
+          "difese": 15,
+          "iniziativa": 9,
+          "passo": 8,
+          "spazio": "1 Q",
+          "azp": 2
+        },
+        "molto-potente": {
+          "caratteristiche": {
+            "FOR": 8,
+            "COS": 8,
+            "DES": 9,
+            "INT": 3,
+            "SAG": 7,
+            "CAR": 1
+          },
+          "salvezze": {
+            "tempra": 13,
+            "riflessi": 15,
+            "volonta": 10,
+            "magia": 13
+          },
+          "attacchi": [
+            {
+              "nome": "Mandibole",
+              "danno": "2d8+2",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 19
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Atletica",
+              "va": 19
+            },
+            {
+              "nome": "Percezione",
+              "va": 17
+            },
+            {
+              "nome": "Furtività",
+              "va": 15
+            }
+          ],
+          "pv": 239,
+          "ar": 6,
+          "difese": 17,
+          "iniziativa": 11,
+          "passo": 8,
+          "spazio": "1 Q",
+          "azp": 2
+        }
+      },
+      "movimento": {
+        "arrampicata": "pareti al Passo senza Prova; soffitti a Passo dimezzato"
+      },
+      "capacita": [
+        {
+          "nome": "Arrampicata",
+          "effetto": "Si muove su pareti verticali al Passo, senza Prova; sui soffitti con Passo dimezzato. Non nuota."
+        },
+        {
+          "nome": "Vibrazioni",
+          "effetto": "Percepisce entro 6 Q le creature che si muovono a contatto con il suolo anche senza vederle; contro di loro niente penalità di Accecato o dell’oscurità."
+        }
+      ],
+      "immunita": [
+        "terrorizzato"
+      ],
+      "immunita_nota": "salvo effetti magici",
+      "comportamento": "Attacca in gruppo il bersaglio più vicino; ogni Insettoide oltre il primo ingaggiato con lo stesso bersaglio applica la Superiorità numerica. Fugge quando metà del gruppo è a 0 PV.",
+      "pv_molt_boss": 0.9
+    },
+    "aracnoide": {
+      "nome": "Aracnoide",
+      "paragrafo": "§3.4",
+      "natura": "Comune",
+      "per_grado": {
+        "minore": {
+          "caratteristiche": {
+            "FOR": 5,
+            "COS": 5,
+            "DES": 8,
+            "INT": 3,
+            "SAG": 6,
+            "CAR": 1
+          },
+          "salvezze": {
+            "tempra": 10,
+            "riflessi": 12,
+            "volonta": 10,
+            "magia": 7
+          },
+          "attacchi": [
+            {
+              "nome": "Morso",
+              "danno": "1d6+2",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 11
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Furtività",
+              "va": 12
+            },
+            {
+              "nome": "Atletica",
+              "va": 10
+            },
+            {
+              "nome": "Percezione",
+              "va": 10
+            }
+          ],
+          "pv": 19,
+          "ar": 1,
+          "difese": 10,
+          "iniziativa": 6,
+          "passo": 6,
+          "spazio": "1 Q",
+          "azp": 1,
+          "ragnatela": {
+            "gittata_q": 6,
+            "va": 10
+          }
+        },
+        "semplice": {
+          "caratteristiche": {
+            "FOR": 6,
+            "COS": 6,
+            "DES": 8,
+            "INT": 3,
+            "SAG": 6,
+            "CAR": 1
+          },
+          "salvezze": {
+            "tempra": 11,
+            "riflessi": 13,
+            "volonta": 11,
+            "magia": 8
+          },
+          "attacchi": [
+            {
+              "nome": "Morso",
+              "danno": "1d8+2",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 13
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Furtività",
+              "va": 14
+            },
+            {
+              "nome": "Atletica",
+              "va": 12
+            },
+            {
+              "nome": "Percezione",
+              "va": 12
+            }
+          ],
+          "pv": 38,
+          "ar": 2,
+          "difese": 12,
+          "iniziativa": 6,
+          "passo": 6,
+          "spazio": "1 Q",
+          "azp": 2,
+          "ragnatela": {
+            "gittata_q": 6,
+            "va": 12
+          }
+        },
+        "medio": {
+          "caratteristiche": {
+            "FOR": 7,
+            "COS": 6,
+            "DES": 9,
+            "INT": 3,
+            "SAG": 7,
+            "CAR": 1
+          },
+          "salvezze": {
+            "tempra": 11,
+            "riflessi": 13,
+            "volonta": 11,
+            "magia": 8
+          },
+          "attacchi": [
+            {
+              "nome": "Morso",
+              "danno": "2d6+2",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 15
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Furtività",
+              "va": 16
+            },
+            {
+              "nome": "Atletica",
+              "va": 14
+            },
+            {
+              "nome": "Percezione",
+              "va": 14
+            }
+          ],
+          "pv": 59,
+          "ar": 3,
+          "difese": 14,
+          "iniziativa": 8,
+          "passo": 6,
+          "spazio": "1 Q",
+          "azp": 2,
+          "ragnatela": {
+            "gittata_q": 9,
+            "va": 14
+          }
+        },
+        "potente": {
+          "caratteristiche": {
+            "FOR": 8,
+            "COS": 7,
+            "DES": 9,
+            "INT": 4,
+            "SAG": 7,
+            "CAR": 2
+          },
+          "salvezze": {
+            "tempra": 12,
+            "riflessi": 15,
+            "volonta": 12,
+            "magia": 9
+          },
+          "attacchi": [
+            {
+              "nome": "Morso",
+              "danno": "2d8+2",
+              "natura": "Naturale",
+              "portata_q": 2,
+              "ac": 1,
+              "va": 17
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Furtività",
+              "va": 18
+            },
+            {
+              "nome": "Atletica",
+              "va": 16
+            },
+            {
+              "nome": "Percezione",
+              "va": 16
+            }
+          ],
+          "pv": 162,
+          "ar": 4,
+          "difese": 16,
+          "iniziativa": 10,
+          "passo": 6,
+          "spazio": "2 × 2 Q",
+          "azp": 2,
+          "ragnatela": {
+            "gittata_q": 9,
+            "va": 16
+          }
+        },
+        "molto-potente": {
+          "caratteristiche": {
+            "FOR": 9,
+            "COS": 8,
+            "DES": 10,
+            "INT": 4,
+            "SAG": 8,
+            "CAR": 2
+          },
+          "salvezze": {
+            "tempra": 13,
+            "riflessi": 15,
+            "volonta": 13,
+            "magia": 10
+          },
+          "attacchi": [
+            {
+              "nome": "Morso",
+              "danno": "2d8+3",
+              "natura": "Naturale",
+              "portata_q": 2,
+              "ac": 1,
+              "va": 19
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Furtività",
+              "va": 20
+            },
+            {
+              "nome": "Atletica",
+              "va": 18
+            },
+            {
+              "nome": "Percezione",
+              "va": 18
+            }
+          ],
+          "pv": 239,
+          "ar": 5,
+          "difese": 18,
+          "iniziativa": 12,
+          "passo": 6,
+          "spazio": "2 × 2 Q",
+          "azp": 2,
+          "ragnatela": {
+            "gittata_q": 12,
+            "va": 18
+          }
+        }
+      },
+      "capacita": [
+        {
+          "nome": "Ragnatela",
+          "effetto": "Attacco a distanza con 1 AzP, senza danno: PS di Riflessi o Immobilizzato. Liberarsi: 1 AzP e Atletica o Forza contro il VA della Ragnatela; il fuoco libera. Una sola Ragnatela per bersaglio."
+        },
+        {
+          "nome": "Arrampicata",
+          "effetto": "Si muove su pareti e soffitti al Passo, senza Prova, anche capovolto."
+        },
+        {
+          "nome": "Visione al buio",
+          "effetto": "Non subisce le penalità dell’oscurità ordinaria."
+        },
+        {
+          "nome": "Vibrazioni nella tela",
+          "effetto": "Percepisce ogni creatura che tocca i propri fili entro 12 Q."
+        }
+      ],
+      "immunita": [],
+      "danno_ricevuto": "Il Fuoco gli applica sempre la PS per Incendiato anche quando il danno non supera l’Armatura, senza perdita di PV.",
+      "comportamento": "Prepara la zona con i fili, attende in alto, usa la Ragnatela sul bersaglio più pericoloso e morde quello Immobilizzato. Si ritira sotto un quarto dei PV.",
+      "pv_molt_boss": 0.9
+    },
+    "umanoide-mostruoso": {
+      "nome": "Umanoide mostruoso",
+      "paragrafo": "§3.5",
+      "natura": "Comune",
+      "per_grado": {
+        "minore": {
+          "caratteristiche": {
+            "FOR": 7,
+            "COS": 7,
+            "DES": 5,
+            "INT": 3,
+            "SAG": 5,
+            "CAR": 3
+          },
+          "salvezze": {
+            "tempra": 12,
+            "riflessi": 7,
+            "volonta": 10,
+            "magia": 10
+          },
+          "attacchi": [
+            {
+              "nome": "Artigli",
+              "danno": "1d8+3",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 11
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Atletica",
+              "va": 11
+            },
+            {
+              "nome": "Percezione",
+              "va": 9
+            },
+            {
+              "nome": "Sopravvivenza",
+              "va": 9
+            }
+          ],
+          "pv": 23,
+          "ar": 1,
+          "difese": 7,
+          "iniziativa": 3,
+          "passo": 6,
+          "spazio": "1 Q",
+          "azp": 1
+        },
+        "semplice": {
+          "caratteristiche": {
+            "FOR": 8,
+            "COS": 8,
+            "DES": 5,
+            "INT": 3,
+            "SAG": 5,
+            "CAR": 3
+          },
+          "salvezze": {
+            "tempra": 13,
+            "riflessi": 8,
+            "volonta": 11,
+            "magia": 11
+          },
+          "attacchi": [
+            {
+              "nome": "Artigli",
+              "danno": "1d10+3",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 13
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Atletica",
+              "va": 13
+            },
+            {
+              "nome": "Percezione",
+              "va": 11
+            },
+            {
+              "nome": "Sopravvivenza",
+              "va": 11
+            }
+          ],
+          "pv": 46,
+          "ar": 1,
+          "difese": 9,
+          "iniziativa": 3,
+          "passo": 6,
+          "spazio": "1 Q",
+          "azp": 2
+        },
+        "medio": {
+          "caratteristiche": {
+            "FOR": 8,
+            "COS": 8,
+            "DES": 6,
+            "INT": 4,
+            "SAG": 5,
+            "CAR": 3
+          },
+          "salvezze": {
+            "tempra": 13,
+            "riflessi": 8,
+            "volonta": 11,
+            "magia": 11
+          },
+          "attacchi": [
+            {
+              "nome": "Artigli",
+              "danno": "2d6+3",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 15
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Atletica",
+              "va": 15
+            },
+            {
+              "nome": "Percezione",
+              "va": 13
+            },
+            {
+              "nome": "Sopravvivenza",
+              "va": 13
+            }
+          ],
+          "pv": 72,
+          "ar": 2,
+          "difese": 11,
+          "iniziativa": 5,
+          "passo": 6,
+          "spazio": "1 Q",
+          "azp": 2
+        },
+        "potente": {
+          "caratteristiche": {
+            "FOR": 9,
+            "COS": 9,
+            "DES": 6,
+            "INT": 4,
+            "SAG": 6,
+            "CAR": 3
+          },
+          "salvezze": {
+            "tempra": 15,
+            "riflessi": 9,
+            "volonta": 12,
+            "magia": 12
+          },
+          "attacchi": [
+            {
+              "nome": "Artigli",
+              "danno": "2d8+3",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 17
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Atletica",
+              "va": 17
+            },
+            {
+              "nome": "Percezione",
+              "va": 15
+            },
+            {
+              "nome": "Sopravvivenza",
+              "va": 15
+            }
+          ],
+          "pv": 198,
+          "ar": 3,
+          "difese": 13,
+          "iniziativa": 7,
+          "passo": 6,
+          "spazio": "1 Q",
+          "azp": 2
+        },
+        "molto-potente": {
+          "caratteristiche": {
+            "FOR": 10,
+            "COS": 10,
+            "DES": 7,
+            "INT": 5,
+            "SAG": 6,
+            "CAR": 4
+          },
+          "salvezze": {
+            "tempra": 15,
+            "riflessi": 10,
+            "volonta": 13,
+            "magia": 13
+          },
+          "attacchi": [
+            {
+              "nome": "Artigli",
+              "danno": "2d8+4",
+              "natura": "Naturale",
+              "portata_q": 1,
+              "ac": 1,
+              "va": 19
+            }
+          ],
+          "abilita": [
+            {
+              "nome": "Atletica",
+              "va": 19
+            },
+            {
+              "nome": "Percezione",
+              "va": 17
+            },
+            {
+              "nome": "Sopravvivenza",
+              "va": 17
+            }
+          ],
+          "pv": 292,
+          "ar": 4,
+          "difese": 15,
+          "iniziativa": 9,
+          "passo": 6,
+          "spazio": "1 Q",
+          "azp": 2
+        }
+      },
+      "equipaggiabile": true,
+      "capacita": [
+        {
+          "nome": "Artigli",
+          "effetto": "Arma ravvicinata leggera; consentono le Manovre del §5.12 che non richiedono lama o asta. Con una Carica riuscita il colpo applica Sbalzante 1."
+        },
+        {
+          "nome": "Olfatto",
+          "effetto": "Segue una traccia fino a un giorno di età; +2 alle Prove di Percezione basate sull’odore entro 30 Q."
+        }
+      ],
+      "immunita": [],
+      "comportamento": "Carica il bersaglio più vicino o quello che lo ha ferito per ultimo; non usa le Difese se può attaccare.",
+      "pv_molt_boss": 1.1
+    }
+  },
+  "moduli": {
+    "corrotto": {
+      "paragrafo": "§4.2",
+      "livelli": [
+        {
+          "id": "toccato",
+          "nome": "Toccato",
+          "costo": 0.5,
+          "effetto": "+2 PS Volontà. Esposizione Flebile per chi ne è ferito (§4.2.5).",
+          "manifestazioni": {
+            "minori": 1,
+            "maggiori": 0
+          },
+          "esposizione": {
+            "nome": "Flebile",
+            "modificatore": "+4",
+            "intensita": 1
+          },
+          "effetti": {
+            "volonta": 2,
+            "natura": "Oscura Simmetria"
+          }
+        },
+        {
+          "id": "posseduto",
+          "nome": "Posseduto",
+          "costo": 1,
+          "effetto": "+1 AR magica (AR totale +1, di cui 1 magica). Attacchi naturali di danno Magico. Presenza terrificante. Esposizione Debole.",
+          "manifestazioni": {
+            "minori": 1,
+            "maggiori": 1
+          },
+          "esposizione": {
+            "nome": "Debole",
+            "modificatore": "+2",
+            "intensita": 1
+          },
+          "effetti": {
+            "volonta": 2,
+            "natura": "Oscura Simmetria",
+            "ar_magica": 1,
+            "attacchi_naturali": "Magico",
+            "capacita": [
+              "Presenza terrificante"
+            ]
+          }
+        },
+        {
+          "id": "consacrato",
+          "nome": "Consacrato",
+          "costo": 2,
+          "effetto": "+2 AR magica in totale. Un attacco di danno Etereo. Immune a Terrorizzato. Esposizione Normale.",
+          "manifestazioni": {
+            "minori": 1,
+            "maggiori": 2
+          },
+          "esposizione": {
+            "nome": "Normale",
+            "modificatore": "0",
+            "intensita": 1
+          },
+          "effetti": {
+            "volonta": 2,
+            "natura": "Oscura Simmetria",
+            "ar_magica": 2,
+            "attacchi_naturali": "Magico",
+            "attacco_etereo": true,
+            "immunita": [
+              "terrorizzato"
+            ],
+            "capacita": [
+              "Presenza terrificante"
+            ]
+          }
+        }
+      ],
+      "presenza_terrificante": "La prima volta in una Scena che un personaggio vede la creatura agire in combattimento: PS di Volontà o Terrorizzato. Una volta per personaggio e per Scena.",
+      "manifestazioni_minori": [
+        {
+          "id": "occhi-senza-luce",
+          "nome": "Occhi senza luce",
+          "effetto": "Visione al buio: non subisce le penalità dell’oscurità ordinaria."
+        },
+        {
+          "id": "pelle-di-cenere",
+          "nome": "Pelle di cenere",
+          "effetto": "+1 AR magica, compresa nella AR totale; +½ al costo del modulo (§4.1). Non si somma con Pelle di cenere di altre fonti.",
+          "effetti": {
+            "ar_magica": 1,
+            "costo": 0.5
+          }
+        },
+        {
+          "id": "sangue-fermo",
+          "nome": "Sangue fermo",
+          "effetto": "Immune a Sanguinamento.",
+          "effetti": {
+            "immunita": [
+              "sanguinamento"
+            ]
+          }
+        },
+        {
+          "id": "sussurro-continuo",
+          "nome": "Sussurro continuo",
+          "effetto": "Chi è adiacente alla creatura subisce −2 alle PS di Volontà."
+        },
+        {
+          "id": "gelo-dell-abisso",
+          "nome": "Gelo dell’abisso",
+          "effetto": "Gli attacchi naturali hanno la proprietà Gelo (Giocatore §5.24).",
+          "effetti": {
+            "proprieta_naturali": [
+              "Gelo"
+            ]
+          }
+        },
+        {
+          "id": "passo-senza-peso",
+          "nome": "Passo senza peso",
+          "effetto": "Arrampicata come l’Insettoide (§3.3); se la possiede già, anche sui soffitti al Passo intero."
+        }
+      ],
+      "manifestazioni_maggiori": [
+        {
+          "id": "ferite-che-non-si-chiudono",
+          "nome": "Ferite che non si chiudono",
+          "effetto": "Gli attacchi naturali hanno Sanguinante 1; dal grado Potente Sanguinante 2.",
+          "effetti": {
+            "proprieta_naturali": [
+              "Sanguinante 1"
+            ],
+            "dal_potente": {
+              "proprieta_naturali": [
+                "Sanguinante 2"
+              ]
+            }
+          }
+        },
+        {
+          "id": "fiamma-nera",
+          "nome": "Fiamma nera",
+          "effetto": "Gli attacchi naturali hanno la proprietà Fuoco: PS di Riflessi o Incendiato (Giocatore §5.24).",
+          "effetti": {
+            "proprieta_naturali": [
+              "Fuoco"
+            ]
+          }
+        },
+        {
+          "id": "sguardo-del-vuoto",
+          "nome": "Sguardo del vuoto",
+          "effetto": "1 AzP, un bersaglio entro 6 Q che lo veda: PS di Volontà o Stordito (Giocatore §5.18). Una volta per Round."
+        },
+        {
+          "id": "carne-che-ricorda",
+          "nome": "Carne che ricorda",
+          "effetto": "All’inizio della propria Iniziativa recupera 3 PV, 10 dal grado Potente, se ha almeno 1 PV. Non recupera nel Round in cui ha subito danno Magico, Etereo o da un’arma Purificatrice.",
+          "effetti": {
+            "recupero_pv": {
+              "minore": 3,
+              "semplice": 3,
+              "medio": 3,
+              "potente": 10,
+              "molto-potente": 10
+            }
+          }
+        },
+        {
+          "id": "grido-dell-oscura-simmetria",
+          "nome": "Grido dell’Oscura Simmetria",
+          "effetto": "1 AzP, una volta per Scena: ogni personaggio entro 9 Q effettua una PS di Volontà; con fallimento è Terrorizzato. Chi è già Terrorizzato è anche Assordato."
+        },
+        {
+          "id": "ritorno",
+          "nome": "Ritorno",
+          "effetto": "La prima volta in una Scena che arriva a 0 PV, all’Iniziativa successiva si rialza con PV pari a un terzo dei massimi, senza le Ferite di quell’ultimo colpo. Non si attiva se l’ultimo danno era Magico, Etereo o da un’arma Purificatrice."
+        }
+      ]
+    },
+    "mutazioni": [
+      {
+        "id": "carapace",
+        "nome": "Carapace",
+        "costo": 0.5,
+        "basi": [
+          "umano",
+          "insettoide",
+          "aracnoide",
+          "umanoide-mostruoso"
+        ],
+        "breve": "+1 AR naturale; −2 Passo per le basi con Passo 8 Q.",
+        "effetto": "L’AR naturale aumenta di 1, sempre non magica. Le basi con Passo 8 Q scendono a 6 Q.",
+        "effetti": {
+          "ar": 1,
+          "passo_da_8": 6
+        }
+      },
+      {
+        "id": "arti-in-piu",
+        "nome": "Arti in più",
+        "costo": 1,
+        "basi": [
+          "umano",
+          "insettoide",
+          "aracnoide",
+          "umanoide-mostruoso"
+        ],
+        "breve": "Un attacco naturale aggiuntivo per Round, senza AzP, con −2 VA.",
+        "effetto": "Dopo aver attaccato con un’AzP, la creatura effettua un attacco naturale aggiuntivo con −2 VA contro lo stesso bersaglio o un altro entro portata, senza spendere Azioni. Una volta per Round. Il Boss non moltiplica questo attacco con la propria AzP in più.",
+        "effetti": {}
+      },
+      {
+        "id": "veleno",
+        "nome": "Veleno",
+        "costo": 0.5,
+        "basi": [
+          "umano",
+          "insettoide",
+          "aracnoide",
+          "umanoide-mostruoso"
+        ],
+        "breve": "Un attacco naturale applica Avvelenato.",
+        "effetto": "Un attacco naturale scelto alla costruzione applica il veleno quando infligge almeno 1 danno dopo l’Armatura. Il bersaglio effettua una PS di Tempra: con successo dimezza per eccesso il danno periodico (Giocatore §5.18, «Avvelenato»). Il veleno è Avvelenato per 1+1d3 Round, con 1d4 danni all’Iniziativa della creatura, che ignorano l’Armatura; dal grado Medio 1d6. Modificatore alla PS: 0; −2 dal grado Potente. Antidoto: un kit di pronto soccorso e una Prova di Medicina con 1 AzP termina lo Stato.",
+        "effetti": {
+          "veleno": {
+            "minore": "1d4",
+            "semplice": "1d4",
+            "medio": "1d6",
+            "potente": "1d6",
+            "molto-potente": "1d6"
+          }
+        }
+      },
+      {
+        "id": "rigenerazione",
+        "nome": "Rigenerazione",
+        "costo": 0.5,
+        "basi": [
+          "umano",
+          "insettoide",
+          "aracnoide",
+          "umanoide-mostruoso"
+        ],
+        "breve": "Recupera PV all’inizio della propria Iniziativa.",
+        "effetto": "All’inizio della propria Iniziativa recupera PV se ne ha almeno 1: 2 PV per il Minore, 3 per il Semplice, 5 per il Medio, 10 per il Potente, 15 per il Molto potente (circa un ventesimo dei PV del grado). Il danno da Fuoco o Corrosivo subito nel Round precedente impedisce la rigenerazione per quel Round. Non si somma con Carne che ricorda (§4.2.4): si usa la maggiore.",
+        "effetti": {
+          "recupero_pv": {
+            "minore": 2,
+            "semplice": 3,
+            "medio": 5,
+            "potente": 10,
+            "molto-potente": 15
+          },
+          "costo_dal_potente": 1
+        }
+      },
+      {
+        "id": "sangue-acido",
+        "nome": "Sangue acido",
+        "costo": 0.5,
+        "basi": [
+          "umano",
+          "insettoide",
+          "aracnoide",
+          "umanoide-mostruoso"
+        ],
+        "breve": "Chi la ferisce in mischia subisce danno Corrosivo.",
+        "effetto": "Quando un attacco ravvicinato le infligge almeno 1 danno dopo l’Armatura, l’attaccante adiacente subisce 1d4 danni Naturali con la proprietà Corrosivo (Giocatore §5.24); l’arma usata effettua invece la PS Integrità del Corrosivo (Manuale degli Armamenti, §7.2.1). Una volta per attaccante e per Round.",
+        "effetti": {}
+      },
+      {
+        "id": "sensi-oscuri",
+        "nome": "Sensi oscuri",
+        "costo": 0,
+        "basi": [
+          "umano",
+          "insettoide",
+          "aracnoide",
+          "umanoide-mostruoso"
+        ],
+        "breve": "Percepisce i viventi senza vista entro 12 Q.",
+        "effetto": "Percepisce la posizione delle creature viventi entro 12 Q attraverso il buio, il fumo e gli ostacoli sottili; contro di loro non subisce le penalità di Accecato per individuarle. Non attraversa le pareti spesse né rivela creature prive di vita.",
+        "effetti": {}
+      },
+      {
+        "id": "aculei",
+        "nome": "Aculei",
+        "costo": 0.5,
+        "basi": [
+          "umano",
+          "insettoide",
+          "aracnoide",
+          "umanoide-mostruoso"
+        ],
+        "breve": "Gli attacchi naturali hanno Sanguinante 1; chi la colpisce senz’armi subisce 1d4.",
+        "effetto": "Gli attacchi naturali ottengono Sanguinante 1. Chi la colpisce senz’armi o la Immobilizza subisce 1d4 danni Naturali che ignorano l’Armatura, una volta per Round.",
+        "effetti": {
+          "proprieta_naturali": [
+            "Sanguinante 1"
+          ]
+        }
+      },
+      {
+        "id": "mole",
+        "nome": "Mole",
+        "costo": 1,
+        "basi": [
+          "insettoide",
+          "aracnoide",
+          "umanoide-mostruoso"
+        ],
+        "breve": "Spazio 2 × 2 Q, PV × 1,5, portata 2 Q, −2 VA Difese.",
+        "effetto": "La creatura occupa 2 × 2 Q, i PV aumentano della metà, la portata degli attacchi naturali diventa 2 Q e il VA delle Difese scende di 2. Per le Prove di Forza contro spinte e prese conta come un veicolo leggero: Sbalzante non la sposta (Giocatore §5.24). Un Aracnoide Potente o Molto potente ha già lo Spazio 2 × 2 Q: per lui la Mole vale soltanto PV e portata, con costo +½.",
+        "effetti": {
+          "pv_molt": 1.5,
+          "difese": -2,
+          "portata_q": 2,
+          "spazio": "2 × 2 Q"
+        },
+        "eccezioni": [
+          {
+            "base": "aracnoide",
+            "gradi": [
+              "potente",
+              "molto-potente"
+            ],
+            "costo": 0.5,
+            "senza": [
+              "difese",
+              "spazio"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ali-membranose",
+        "nome": "Ali membranose",
+        "costo": 0.5,
+        "basi": [
+          "insettoide",
+          "umanoide-mostruoso"
+        ],
+        "breve": "Volo con Passo 6 Q (Giocatore §5.2.3).",
+        "effetto": "La creatura vola con Passo 6 Q, Corsa 12 Q, Scatto 18 Q (Giocatore §5.2.3). Non può restare sospesa senza muoversi: se non percorre almeno 1 Q nella propria Iniziativa, scende a terra a fine Round senza danni.",
+        "effetti": {
+          "volo_q": 6
+        }
+      },
+      {
+        "id": "scavatore",
+        "nome": "Scavatore",
+        "costo": 0,
+        "basi": [
+          "insettoide",
+          "aracnoide",
+          "umanoide-mostruoso"
+        ],
+        "breve": "Scava nel terreno sciolto con Passo 2 Q.",
+        "effetto": "Si muove nel terreno sciolto, nella sabbia e nelle macerie con Passo 2 Q, senza Corsa né Scatto, lasciando un cunicolo percorribile da creature della sua taglia. Non scava nella roccia o nel cemento.",
+        "effetti": {
+          "scavo_q": 2
+        }
+      },
+      {
+        "id": "mimetismo",
+        "nome": "Mimetismo",
+        "costo": 0.5,
+        "basi": [
+          "umano",
+          "insettoide",
+          "aracnoide",
+          "umanoide-mostruoso"
+        ],
+        "breve": "+4 Furtività; colpisce per primo in un’Imboscata.",
+        "effetto": "+4 alle Prove di Furtività quando è ferma o si muove al Passo. Se agisce in un’Imboscata riuscita, attacca prima di ogni personaggio sorpreso (Giocatore §5.4).",
+        "effetti": {
+          "abilita": {
+            "Furtività": 4
+          }
+        }
+      },
+      {
+        "id": "balzo",
+        "nome": "Balzo",
+        "costo": 0.5,
+        "basi": [
+          "insettoide",
+          "aracnoide",
+          "umanoide-mostruoso"
+        ],
+        "breve": "Carica fino a 12 Q con Sbilanciante.",
+        "effetto": "La Carica può coprire fino a 12 Q anche in salto, superando ostacoli e dislivelli fino a 3 Q senza Prova. Il colpo della Carica ha la proprietà Sbilanciante (Giocatore §5.24), con un solo colpo invece di due.",
+        "effetti": {
+          "proprieta_carica": [
+            "Sbilanciante"
+          ]
+        }
+      }
+    ],
+    "equipaggiamento": {
+      "paragrafo": "§4.4",
+      "basi": [
+        "umano",
+        "umanoide-mostruoso"
+      ],
+      "per_grado": {
+        "minore": {
+          "protezione": "Armatura civile leggera",
+          "ar": 1,
+          "armi": [
+            "armi_distanza:pistola-semiautomatica",
+            "armi_distanza:carabina",
+            "armi:coltello"
+          ]
+        },
+        "semplice": {
+          "protezione": "Armatura civile media",
+          "ar": 3,
+          "armi": [
+            "armi_distanza:fucile-d-assalto",
+            "armi_distanza:revolver",
+            "armi:spada-leggera"
+          ]
+        },
+        "medio": {
+          "protezione": "Armatura civile media e scudo piccolo",
+          "ar": 3,
+          "armi": [
+            "armi_distanza:fucile-d-assalto",
+            "armi:spada-lunga"
+          ]
+        },
+        "potente": {
+          "protezione": "Armatura civile pesante",
+          "ar": 5,
+          "armi": [
+            "armi_distanza:mitragliatore-leggero",
+            "armi:spadone"
+          ]
+        },
+        "molto-potente": {
+          "protezione": "Armatura civile pesante e scudo medio",
+          "ar": 5,
+          "armi": [
+            "armi_distanza:mitragliatore-pesante",
+            "armi:ascia-bipenne"
+          ]
+        }
+      },
+      "fasce": [
+        {
+          "id": "del-grado",
+          "nome": "Della fascia del grado o inferiore",
+          "costo": 0,
+          "salto": 0
+        },
+        {
+          "id": "grado-successivo",
+          "nome": "Della fascia del grado successivo",
+          "costo": 0.5,
+          "salto": 1
+        },
+        {
+          "id": "due-fasce-sopra",
+          "nome": "Di due fasce sopra, oppure un’arma con Fuoco, Plasma o Laser in un grado Minore o Semplice",
+          "costo": 1,
+          "salto": 2
+        }
+      ],
+      "distanza_va": -2
+    }
+  },
+  "creature": [
+    {
+      "id": "scavafosse",
+      "nome": "Scavafosse",
+      "famiglia": "insettoidi",
+      "base": "insettoide",
+      "gradi": [
+        "minore",
+        "semplice",
+        "medio"
+      ],
+      "moduli": {
+        "mutazioni": [
+          "carapace",
+          "scavatore"
+        ]
+      },
+      "descrizione": "Nelle fosse comuni ai margini delle città-bunker, dove la Corruzione Oscura filtra fra i cadaveri, la chitina degli insetti diventa nera e spessa come ardesia. Gli Scavafosse scavano cunicoli sotto i cimiteri e le discariche, attratti dai morti e da chi li maneggia. Escono dal terreno a gruppi, quando le vibrazioni dei passi si fermano sopra di loro.",
+      "comportamento": "Attendono sotto il terreno sciolto e escono tutti insieme accanto al bersaglio fermo più vicino. Fuggono sottoterra quando metà del gruppo è a 0 PV; a 0 PV un Scavafosse che non muore si trascina nel proprio cunicolo.",
+      "paragrafo": "§5.2.1"
+    },
+    {
+      "id": "regina-della-covata",
+      "nome": "Regina della Covata",
+      "famiglia": "insettoidi",
+      "base": "insettoide",
+      "gradi": [
+        "medio",
+        "potente",
+        "molto-potente"
+      ],
+      "moduli": {
+        "mutazioni": [
+          "mole"
+        ],
+        "corrotto": {
+          "livello": "posseduto",
+          "minori": [
+            "sussurro-continuo"
+          ],
+          "maggiori": [
+            "grido-dell-oscura-simmetria"
+          ]
+        }
+      },
+      "boss": {
+        "grado": "potente",
+        "capacita": {
+          "nome": "Covata",
+          "effetto": "Alla soglia di fase 1d6 Scavafosse Minori escono dal terreno entro 6 Q e agiscono alla sua Iniziativa del Round successivo."
+        }
+      },
+      "descrizione": "Dove gli Scavafosse si moltiplicano troppo a lungo, uno di loro smette di scavare e cresce. La Regina della Covata è gonfia, lenta a decidere e rapidissima a colpire; una volontà che non è sua la guida verso i luoghi in cui la Corruzione Oscura è più forte. Il suo ronzio basso si sente nelle ossa prima che nelle orecchie.",
+      "comportamento": "Resta al centro del nido e lancia il Grido appena vede più di tre nemici; poi carica chi è Terrorizzato. Non fugge: difende il nido fino a 0 PV e oltre.",
+      "paragrafo": "§5.2.2"
+    },
+    {
+      "id": "tessitrice-d-ombra",
+      "nome": "Tessitrice d’Ombra",
+      "famiglia": "aracnoidi",
+      "base": "aracnoide",
+      "gradi": [
+        "minore",
+        "semplice",
+        "medio"
+      ],
+      "moduli": {
+        "mutazioni": [
+          "mimetismo",
+          "veleno"
+        ]
+      },
+      "descrizione": "Nelle condotte abbandonate e nei piani sventrati degli alveari urbani le Tessitrici tendono fili quasi invisibili fra i tubi. La pelle cambia colore come la ruggine e il cemento su cui riposa, e il morso porta un veleno che intorpidisce prima di bruciare. Chi lavora nei sotterranei impara a gettare un tizzone davanti a sé prima di ogni passo.",
+      "comportamento": "Colpisce per prima dall’Imboscata (Mimetismo), immobilizza il bersaglio più isolato e lo morde finché è avvelenato. Si ritira lungo il soffitto sotto un quarto dei PV.",
+      "paragrafo": "§5.3.1"
+    },
+    {
+      "id": "madre-dei-fili-neri",
+      "nome": "Madre dei Fili Neri",
+      "famiglia": "aracnoidi",
+      "base": "aracnoide",
+      "gradi": [
+        "medio",
+        "potente",
+        "molto-potente"
+      ],
+      "moduli": {
+        "corrotto": {
+          "livello": "consacrato",
+          "minori": [
+            "gelo-dell-abisso"
+          ],
+          "maggiori": [
+            "ferite-che-non-si-chiudono",
+            "sguardo-del-vuoto"
+          ]
+        }
+      },
+      "boss": {
+        "grado": "potente",
+        "capacita": {
+          "nome": "Tela che beve la luce",
+          "effetto": "Alla soglia di fase spegne ogni luce non magica entro 12 Q fino alla fine della Scena; chi non ha Visione al buio subisce le penalità dell’oscurità."
+        }
+      },
+      "descrizione": "Alcune Tessitrici, nutrite troppo a lungo nei luoghi dove la Corruzione Oscura ristagna, diventano qualcosa di diverso. La Madre dei Fili Neri tesse una tela che trattiene la luce; il suo morso attraversa l’acciaio come se non ci fosse e lascia un freddo che non passa. Gli eretici la chiamano per nome e le portano offerte vive.",
+      "comportamento": "Usa lo Sguardo del vuoto sul personaggio più armato, la Ragnatela su chi si avvicina e morde chi è Immobilizzato o Stordito. Fugge nel buio sotto un quarto dei PV e torna nella Scena successiva.",
+      "paragrafo": "§5.3.2"
+    },
+    {
+      "id": "squarciatore",
+      "nome": "Squarciatore",
+      "famiglia": "umanoidi mostruosi",
+      "base": "umanoide-mostruoso",
+      "gradi": [
+        "minore",
+        "semplice",
+        "medio"
+      ],
+      "moduli": {
+        "mutazioni": [
+          "aculei",
+          "balzo"
+        ]
+      },
+      "descrizione": "Nei quartieri dove l’acqua delle cisterne è passata vicino a qualcosa di sbagliato nascono bambini con le dita troppo lunghe. Crescendo, alcuni diventano Squarciatori: schiene coperte di spine ossee, artigli uncinati, un salto che attraversa una strada. Cacciano di notte, dai tetti, e lasciano bersagli che non smettono di sanguinare.",
+      "comportamento": "Apre lo scontro con il Balzo dall’alto sul bersaglio più lontano dal gruppo; poi resta addosso a chi sanguina. Fugge saltando sui tetti a metà PV, se ha una via.",
+      "paragrafo": "§5.4.1"
+    },
+    {
+      "id": "bruto-della-breccia",
+      "nome": "Bruto della Breccia",
+      "famiglia": "umanoidi mostruosi",
+      "base": "umanoide-mostruoso",
+      "gradi": [
+        "semplice",
+        "medio",
+        "potente"
+      ],
+      "moduli": {
+        "mutazioni": [
+          "carapace",
+          "rigenerazione"
+        ],
+        "corrotto": {
+          "livello": "toccato",
+          "minori": [
+            "sangue-fermo"
+          ],
+          "maggiori": []
+        }
+      },
+      "boss": {
+        "grado": "medio",
+        "capacita": {
+          "nome": "Non si ferma",
+          "effetto": "Alla soglia di fase termina gli Stati, recupera 15 PV e per il resto della Scena non subisce le penalità degli Stati di Ferita."
+        }
+      },
+      "descrizione": "Le squadre di demolizione delle zone di confine conoscono il rumore che fa un Bruto contro una paratia: colpi lenti, regolari, che non si fermano. La pelle gli si indurisce in placche, le ferite si richiudono mentre le guardi, e negli occhi c’è appena un riflesso di qualcosa che lo spinge avanti. Chi lo ha visto rialzarsi dice che non sente il dolore; i medici dicono che lo sente, ma non gli importa.",
+      "comportamento": "Avanza verso il nemico più vicino, sfonda Coperture e porte e non usa le Difese se può attaccare. Non fugge.",
+      "paragrafo": "§5.4.2"
+    },
+    {
+      "id": "eretico-corrotto",
+      "nome": "Eretico corrotto",
+      "famiglia": "umani corrotti",
+      "base": "umano",
+      "tipo_umano": "eretico",
+      "gradi": [
+        "minore",
+        "semplice",
+        "medio"
+      ],
+      "moduli": {
+        "corrotto": {
+          "livello": "posseduto",
+          "minori": [
+            "sussurro-continuo"
+          ],
+          "maggiori": [
+            "sguardo-del-vuoto"
+          ]
+        }
+      },
+      "moduli_per_grado": {
+        "minore": {
+          "corrotto": {
+            "livello": "toccato",
+            "minori": [
+              "sussurro-continuo"
+            ],
+            "maggiori": []
+          }
+        }
+      },
+      "boss": {
+        "grado": "medio",
+        "moduli": {
+          "corrotto": {
+            "livello": "consacrato",
+            "minori": [
+              "sussurro-continuo"
+            ],
+            "maggiori": [
+              "sguardo-del-vuoto",
+              "grido-dell-oscura-simmetria"
+            ]
+          }
+        }
+      },
+      "descrizione": "L’Eretico del bestiario umano (§3.2) è un uomo comune che ha scelto l’Oscura Simmetria; l’Eretico corrotto è quello che ne ha ricevuto i doni. Parla piano, e chi gli sta accanto sente un sussurro sotto le sue parole; quando guarda qualcuno negli occhi, quello resta fermo un istante di troppo. I più devoti portano una lama rituale che non trova ostacoli nell’acciaio.",
+      "comportamento": "Apre con l’Imboscata e lo Sguardo del vuoto sul personaggio più pericoloso, poi attacca con il pugnale chi è Stordito. Il Boss usa il Grido appena è ingaggiato da più di due personaggi e alla soglia di fase prova a fuggire per tornare con altri Eretici.",
+      "paragrafo": "§5.5.1"
+    }
+  ],
+  "tabelle": {
+    "base": {
+      "dado": "d20",
+      "righe": [
+        {
+          "da": 1,
+          "a": 6,
+          "id": "umano",
+          "nome": "Umano"
+        },
+        {
+          "da": 7,
+          "a": 11,
+          "id": "insettoide",
+          "nome": "Insettoide"
+        },
+        {
+          "da": 12,
+          "a": 15,
+          "id": "aracnoide",
+          "nome": "Aracnoide"
+        },
+        {
+          "da": 16,
+          "a": 20,
+          "id": "umanoide-mostruoso",
+          "nome": "Umanoide mostruoso"
+        }
+      ]
+    },
+    "grado_pattuglia": {
+      "dado": "d20",
+      "righe": [
+        {
+          "da": 1,
+          "a": 6,
+          "id": "due-sotto",
+          "nome": "Due gradi sotto",
+          "scarto": -2
+        },
+        {
+          "da": 7,
+          "a": 14,
+          "id": "uno-sotto",
+          "nome": "Un grado sotto",
+          "scarto": -1
+        },
+        {
+          "da": 15,
+          "a": 19,
+          "id": "pari",
+          "nome": "Grado del gruppo",
+          "scarto": 0
+        },
+        {
+          "da": 20,
+          "a": 20,
+          "id": "uno-sopra",
+          "nome": "Un grado sopra",
+          "scarto": 1
+        }
+      ]
+    },
+    "grado_scontro": {
+      "dado": "d20",
+      "righe": [
+        {
+          "da": 1,
+          "a": 3,
+          "id": "due-sotto",
+          "nome": "Due gradi sotto",
+          "scarto": -2
+        },
+        {
+          "da": 4,
+          "a": 9,
+          "id": "uno-sotto",
+          "nome": "Un grado sotto",
+          "scarto": -1
+        },
+        {
+          "da": 10,
+          "a": 17,
+          "id": "pari",
+          "nome": "Grado del gruppo",
+          "scarto": 0
+        },
+        {
+          "da": 18,
+          "a": 19,
+          "id": "uno-sopra",
+          "nome": "Un grado sopra",
+          "scarto": 1
+        },
+        {
+          "da": 20,
+          "a": 20,
+          "id": "boss",
+          "nome": "Boss del grado del gruppo",
+          "scarto": 0
+        }
+      ]
+    },
+    "grado_tana": {
+      "dado": "d20",
+      "righe": [
+        {
+          "da": 1,
+          "a": 2,
+          "id": "due-sotto",
+          "nome": "Due gradi sotto",
+          "scarto": -2
+        },
+        {
+          "da": 3,
+          "a": 6,
+          "id": "uno-sotto",
+          "nome": "Un grado sotto",
+          "scarto": -1
+        },
+        {
+          "da": 7,
+          "a": 13,
+          "id": "pari",
+          "nome": "Grado del gruppo",
+          "scarto": 0
+        },
+        {
+          "da": 14,
+          "a": 17,
+          "id": "uno-sopra",
+          "nome": "Un grado sopra",
+          "scarto": 1
+        },
+        {
+          "da": 18,
+          "a": 20,
+          "id": "boss",
+          "nome": "Boss del grado del gruppo",
+          "scarto": 0
+        }
+      ]
+    },
+    "difficolta": {
+      "dado": "d6",
+      "righe": [
+        {
+          "da": 1,
+          "a": 2,
+          "id": "facile",
+          "nome": "Facile",
+          "fattore": 0.7
+        },
+        {
+          "da": 3,
+          "a": 5,
+          "id": "normale",
+          "nome": "Normale",
+          "fattore": 1
+        },
+        {
+          "da": 6,
+          "a": 6,
+          "id": "duro",
+          "nome": "Duro",
+          "fattore": 1.3
+        }
+      ]
+    },
+    "numero_moduli": {
+      "dado": "d6",
+      "righe": [
+        {
+          "da": 1,
+          "a": 2,
+          "id": "nessuno",
+          "nome": "Nessuno",
+          "numero": 0
+        },
+        {
+          "da": 3,
+          "a": 4,
+          "id": "uno",
+          "nome": "Uno",
+          "numero": 1
+        },
+        {
+          "da": 5,
+          "a": 5,
+          "id": "due",
+          "nome": "Due",
+          "numero": 2
+        },
+        {
+          "da": 6,
+          "a": 6,
+          "id": "tre",
+          "nome": "Tre",
+          "numero": 3
+        }
+      ]
+    },
+    "tipo_modulo": {
+      "dado": "d6",
+      "righe": [
+        {
+          "da": 1,
+          "a": 3,
+          "id": "mutazione",
+          "nome": "Mutazione"
+        },
+        {
+          "da": 4,
+          "a": 5,
+          "id": "corrotto",
+          "nome": "Corrotto dall’Oscura Simmetria"
+        },
+        {
+          "da": 6,
+          "a": 6,
+          "id": "equipaggiamento",
+          "nome": "Equipaggiamento"
+        }
+      ]
+    },
+    "mutazione": {
+      "dado": "d20",
+      "righe": [
+        {
+          "da": 1,
+          "a": 2,
+          "id": "carapace",
+          "nome": "Carapace",
+          "costo": 0.5
+        },
+        {
+          "da": 3,
+          "a": 4,
+          "id": "arti-in-piu",
+          "nome": "Arti in più",
+          "costo": 1
+        },
+        {
+          "da": 5,
+          "a": 6,
+          "id": "veleno",
+          "nome": "Veleno",
+          "costo": 0.5
+        },
+        {
+          "da": 7,
+          "a": 8,
+          "id": "rigenerazione",
+          "nome": "Rigenerazione",
+          "costo": 0.5
+        },
+        {
+          "da": 9,
+          "a": 10,
+          "id": "sangue-acido",
+          "nome": "Sangue acido",
+          "costo": 0.5
+        },
+        {
+          "da": 11,
+          "a": 11,
+          "id": "sensi-oscuri",
+          "nome": "Sensi oscuri",
+          "costo": 0
+        },
+        {
+          "da": 12,
+          "a": 13,
+          "id": "aculei",
+          "nome": "Aculei",
+          "costo": 0.5
+        },
+        {
+          "da": 14,
+          "a": 14,
+          "id": "mole",
+          "nome": "Mole",
+          "costo": 1
+        },
+        {
+          "da": 15,
+          "a": 15,
+          "id": "ali-membranose",
+          "nome": "Ali membranose",
+          "costo": 0.5
+        },
+        {
+          "da": 16,
+          "a": 16,
+          "id": "scavatore",
+          "nome": "Scavatore",
+          "costo": 0
+        },
+        {
+          "da": 17,
+          "a": 18,
+          "id": "mimetismo",
+          "nome": "Mimetismo",
+          "costo": 0.5
+        },
+        {
+          "da": 19,
+          "a": 20,
+          "id": "balzo",
+          "nome": "Balzo",
+          "costo": 0.5
+        }
+      ]
+    },
+    "equipaggiamento": {
+      "dado": "d6",
+      "righe": [
+        {
+          "da": 1,
+          "a": 4,
+          "id": "del-grado",
+          "nome": "Della fascia del grado",
+          "costo": 0
+        },
+        {
+          "da": 5,
+          "a": 5,
+          "id": "grado-successivo",
+          "nome": "Della fascia del grado successivo",
+          "costo": 0.5
+        },
+        {
+          "da": 6,
+          "a": 6,
+          "id": "due-fasce-sopra",
+          "nome": "Di due fasce sopra",
+          "costo": 1
+        }
+      ]
+    },
+    "corruzione": {
+      "dado": "d10",
+      "righe": [
+        {
+          "da": 1,
+          "a": 6,
+          "id": "toccato",
+          "nome": "Toccato",
+          "costo": 0.5
+        },
+        {
+          "da": 7,
+          "a": 9,
+          "id": "posseduto",
+          "nome": "Posseduto",
+          "costo": 1
+        },
+        {
+          "da": 10,
+          "a": 10,
+          "id": "consacrato",
+          "nome": "Consacrato",
+          "costo": 2
+        }
+      ]
+    },
+    "manifestazione_minore": {
+      "dado": "d6",
+      "righe": [
+        {
+          "da": 1,
+          "a": 1,
+          "id": "occhi-senza-luce",
+          "nome": "Occhi senza luce",
+          "costo": 0
+        },
+        {
+          "da": 2,
+          "a": 2,
+          "id": "pelle-di-cenere",
+          "nome": "Pelle di cenere",
+          "costo": 0.5
+        },
+        {
+          "da": 3,
+          "a": 3,
+          "id": "sangue-fermo",
+          "nome": "Sangue fermo",
+          "costo": 0
+        },
+        {
+          "da": 4,
+          "a": 4,
+          "id": "sussurro-continuo",
+          "nome": "Sussurro continuo",
+          "costo": 0
+        },
+        {
+          "da": 5,
+          "a": 5,
+          "id": "gelo-dell-abisso",
+          "nome": "Gelo dell’abisso",
+          "costo": 0
+        },
+        {
+          "da": 6,
+          "a": 6,
+          "id": "passo-senza-peso",
+          "nome": "Passo senza peso",
+          "costo": 0
+        }
+      ]
+    },
+    "manifestazione_maggiore": {
+      "dado": "d6",
+      "righe": [
+        {
+          "da": 1,
+          "a": 1,
+          "id": "ferite-che-non-si-chiudono",
+          "nome": "Ferite che non si chiudono",
+          "costo": 0
+        },
+        {
+          "da": 2,
+          "a": 2,
+          "id": "fiamma-nera",
+          "nome": "Fiamma nera",
+          "costo": 0
+        },
+        {
+          "da": 3,
+          "a": 3,
+          "id": "sguardo-del-vuoto",
+          "nome": "Sguardo del vuoto",
+          "costo": 0
+        },
+        {
+          "da": 4,
+          "a": 4,
+          "id": "carne-che-ricorda",
+          "nome": "Carne che ricorda",
+          "costo": 0
+        },
+        {
+          "da": 5,
+          "a": 5,
+          "id": "grido-dell-oscura-simmetria",
+          "nome": "Grido dell’Oscura Simmetria",
+          "costo": 0
+        },
+        {
+          "da": 6,
+          "a": 6,
+          "id": "ritorno",
+          "nome": "Ritorno",
+          "costo": 0
+        }
+      ]
+    }
+  }
+}

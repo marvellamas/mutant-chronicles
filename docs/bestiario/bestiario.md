@@ -296,7 +296,7 @@ La soglia si verifica dopo il colpo che la supera: gli effetti di quel colpo si 
 
 ### **2.5.4 Esempio**
 
-Un Boss Medio per sette personaggi di 8° livello ha PV 155, 3 AzP, VA 15, Difese 13, AR 3 e attacchi da 2d6+2. Alla propria Iniziativa usa 1 AzP; un secondo attacco lo porta al termine dell’Iniziativa di un personaggio, la terza AzP la tiene per la Parata. A 77 PV cambia fase. Con la base Umanoide mostruoso i PV diventano 170 (× 1,1), le Difese 11 e gli Artigli 2d6+3.
+Un Boss Medio per sette personaggi di 8° livello ha PV 155, 3 AzP, VA 15, Difese 13, AR 3 e attacchi da 2d6+2. Alla propria Iniziativa usa 1 AzP; un secondo attacco lo porta al termine dell’Iniziativa di un personaggio, la terza AzP la tiene per la Parata. A 77 PV cambia fase. Con la base Umanoide mostruoso i PV diventano 171 (155 × 1,1, arrotondato), le Difese 11 e gli Artigli 2d6+3.
 
 # **Capitolo 3 — Basi**
 
@@ -837,7 +837,7 @@ Le squadre di demolizione delle zone di confine conoscono il rumore che fa un Br
 | Natura | Oscura Simmetria | Oscura Simmetria | Oscura Simmetria | Oscura Simmetria |
 | FOR · COS · DES | 8 · 8 · 5 | 8 · 8 · 6 | 9 · 9 · 6 | 8 · 8 · 6 |
 | INT · SAG · CAR | 3 · 5 · 3 | 4 · 5 · 3 | 4 · 6 · 3 | 4 · 5 · 3 |
-| PV | 46 | 72 | 198 | 170 |
+| PV | 46 | 72 | 198 | 171 |
 | AR (di cui magica) | 2 (0) | 3 (0) | 4 (0) | 3 (0) |
 | Artigli: VA, danno | 13, 1d10+3 | 15, 2d6+3 | 17, 2d8+3 | 15, 2d6+3 |
 | VA Difese | 9 | 11 | 13 | 11 |

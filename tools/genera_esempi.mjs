@@ -9,6 +9,7 @@ import { fileURLToPath } from 'node:url';
 
 const u = (p) => new URL(`../${p}`, import.meta.url).href;
 const { datiReali } = await import(u('tests/helpers.js'));
+const { versioniPersonaggio } = await import(u('src/rules.js'));
 const { nuoveScelte, normalizza, serializza, nomeFileEsportazione } = await import(u('src/character.js'));
 const { checklist } = await import(u('src/checklist.js'));
 const { statoIncantesimi, motivoBloccoIncantesimo } = await import(u('src/incantesimi.js'));
@@ -193,7 +194,7 @@ export function costruisci(spec, dati) {
   for (const x of scheda.equipaggiamento?.avvisi ?? []) problemi.push(`equipaggiamento: ${x}`);
   if (scheda.caratteristiche) for (const x of avvisiForza(scelte.equipaggiamento, scheda.caratteristiche.FOR.valore, dati)) problemi.push(`FOR: ${x}`);
   const sessione = scheda.caratteristiche ? inizializzaSessione(massimiSessione(scheda, scelte, dati)) : null;
-  const versioniDati = Object.fromEntries(Object.entries(dati).map(([k, v]) => [k, v.versione_manuale]));
+  const versioniDati = versioniPersonaggio(dati);
   const livello = 1 + personaggio.livelli.length;
   return { personaggio, scheda, file: nomeFileEsportazione(scelte.nome, livello, DATA), testo: serializza(scelte, { versioniDati, livelli: personaggio.livelli, sessione }), problemi };
 }

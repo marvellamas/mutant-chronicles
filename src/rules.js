@@ -2,7 +2,7 @@
 import { validaDati, avvisiDati } from './validate.js';
 
 export const FILE_DATI = ['caratteristiche', 'abilita', 'corporazioni', 'addestramenti', 'classi', 'incantesimi', 'regole',
-  'talenti_liberi', 'specializzazioni', 'tecniche_interiori', 'dotazioni', 'formato_nemici'];
+  'talenti_liberi', 'specializzazioni', 'tecniche_interiori', 'dotazioni', 'formato_nemici', 'bestiario'];
 
 /** Lettore per il browser: scarica data/<nome>.json accanto a index.html. */
 export function lettoreFetch(base = 'data/') {
@@ -65,4 +65,13 @@ async function caricaEquipaggiamento(leggi, dati, erroriLettura) {
     if (contenuto) file[voce.id] = contenuto;
   }));
   dati.equipaggiamento = { versione_manuale: indice.versione_manuale, indice, file };
+}
+
+// Dati del solo Tavolo del Master (Bestiario proposto): non sono regole del personaggio, quindi non entrano nelle
+// versioni dei dati scritte nel file del personaggio né nel piede della stampa.
+export const FILE_SOLO_TAVOLO = ['bestiario'];
+
+/** Versione del manuale di ogni file dati che riguarda il personaggio: { file: versione_manuale }. */
+export function versioniPersonaggio(dati) {
+  return Object.fromEntries(Object.entries(dati ?? {}).filter(([k]) => !FILE_SOLO_TAVOLO.includes(k)).map(([k, v]) => [k, v?.versione_manuale]));
 }

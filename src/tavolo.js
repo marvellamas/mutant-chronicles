@@ -7,6 +7,7 @@ import { massimiSessione, allineaSessione, descriviFerite } from './sessione.js'
 import { testoDanno } from './stampa.js';
 import { aggiungiDanno } from './equipaggiamento.js';
 import { chiaveDaFile, NOME_FILE } from './cartella.js';
+import { versioniPersonaggio } from './rules.js';
 
 /**
  * Scheda compatta di un PG per la plancia.
@@ -99,7 +100,7 @@ export function pgDaAggiungere(nomeFile, testo, dati, adesso = new Date()) {
   const livello = 1 + livelli.length;
   const obj = JSON.parse(testo);
   const attuale = obj.formato === FORMATO_FILE && obj.versione === VERSIONE_FORMATO;
-  const versioniDati = obj.versioni_dati ?? Object.fromEntries(Object.entries(dati).map(([k, v]) => [k, v?.versione_manuale]));
+  const versioniDati = obj.versioni_dati ?? versioniPersonaggio(dati);
   const testoFinale = attuale ? testo : serializza(scelte, { versioniDati, livelli, sessione: p.sessione, calendario: p.calendario });
   const buono = NOME_FILE.test(nomeFile) && chiaveDaFile(nomeFile) === chiaveDaFile(nomeFileEsportazione(nome, livello, adesso));
   return { file: buono ? nomeFile : nomeFileEsportazione(nome, livello, adesso), testo: testoFinale, nome, livello, rinominato: !buono };

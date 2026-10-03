@@ -19,7 +19,7 @@ const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v
 const isTodo = (v) => typeof v === 'string' && v.startsWith('TODO(');
 
 const FILE_VALIDATI = ['caratteristiche', 'abilita', 'corporazioni', 'addestramenti', 'classi', 'incantesimi', 'regole',
-  'talenti_liberi', 'specializzazioni', 'tecniche_interiori', 'dotazioni', 'formato_nemici'];
+  'talenti_liberi', 'specializzazioni', 'tecniche_interiori', 'dotazioni', 'formato_nemici', 'bestiario'];
 
 /** Formatta un errore come riga leggibile. */
 export function formattaErrore(e) {
@@ -71,6 +71,7 @@ export function validaDati(dati) {
   if (dati.regole?.attacco_ravvicinato !== undefined) validaAttaccoRavvicinato(dati, err);
   if (dati.incantesimi?.incantesimi?.some((i) => i.meccanica)) validaMeccanicaIncantesimi(dati, err);
   if (isOggetto(dati.formato_nemici)) validaFormatoNemici(dati, err);
+  if (isOggetto(dati.bestiario)) validaBestiario(dati, err);
 
   return errori;
 }
@@ -2199,4 +2200,125 @@ export function validaNemico(nemico, dati, file = 'nemico') {
   };
   controlla('', { tipo: 'oggetto', campi: formato.campi }, nemico);
   return errori;
+}
+
+// Bestiario proposto (data/bestiario.json, docs/bestiario/bestiario.md; «Crea nemico» e «Prepara scontro» del
+// Tavolo del Master). Controlli: gradi e scala (§2.1–2.5), basi per grado (cap. 3), moduli (cap. 4) con Stati,
+// Abilità e armi del catalogo esistenti, creature pronte (cap. 5) e tabelle casuali (cap. 6: ogni faccia del
+// dado una volta sola, in ordine; gli id dei risultati sono quelli dei dati).
+function validaBestiario(dati, err) {
+  const b = dati.bestiario;
+  const F = 'bestiario';
+  const S = sorgentiNemico(dati);
+  const num = (v) => typeof v === 'number' && Number.isFinite(v);
+  if (!isTesto(b.versione_manuale)) err(F, 'versione_manuale', 'manca (es. «Bestiario, proposta»)');
+  if (!Array.isArray(b.gradi) || !b.gradi.length) { err(F, 'gradi', 'elenco dei gradi (§2.1)'); return; }
+  const gradi = b.gradi.map((g) => g?.id);
+  b.gradi.forEach((g, i) => {
+    const k = `gradi[${i}]`;
+    if (!isTesto(g?.id) || !isTesto(g?.nome)) err(F, k, 'id e nome');
+    for (const c of ['pv', 'va', 'difese', 'ar', 'azp', 'iniziativa', 'passo']) if (!isIntero(g?.[c])) err(F, `${k}.${c}`, 'intero');
+    if (!(typeof g?.danno === 'string' && DADI.test(g.danno))) err(F, `${k}.danno`, 'dadi come «2d6+2»');
+    if (!num(g?.round_resistenza)) err(F, `${k}.round_resistenza`, 'numero');
+    if (!/^\d+–\d+$/.test(g?.livelli ?? '')) err(F, `${k}.livelli`, 'intervallo «a–b»');
+    if (!isIntero(g?.boss?.pv) || !isIntero(g?.boss?.azp)) err(F, `${k}.boss`, 'PV e AzP del Boss (§2.5.1)');
+    for (const c of ['facile', 'normale', 'duro']) if (!(num(g?.equilibrato?.[c]) && g.equilibrato[c] > 0)) err(F, `${k}.equilibrato.${c}`, 'numero positivo (A.3)');
+  });
+  (b.equilibrato?.gruppi_misti ?? []).forEach((r, i) => {
+    if (!isIntero(r?.livello)) err(F, `equilibrato.gruppi_misti[${i}].livello`, 'intero');
+    for (const g of gradi) if (!(num(r?.[g]) && r[g] > 0)) err(F, `equilibrato.gruppi_misti[${i}].${g}`, 'numero positivo (§2.3)');
+  });
+  if (!(b.equilibrato?.gruppi_misti ?? []).length) err(F, 'equilibrato.gruppi_misti', 'tabella dei gruppi misti (§2.3)');
+  if (!Array.isArray(b.equilibrato?.soglie) || b.equilibrato.soglie.at(-1)?.fino_a !== null) err(F, 'equilibrato.soglie', 'soglie in ordine, l’ultima con fino_a null');
+  if (!num(b.costo_massimo)) err(F, 'costo_massimo', 'numero (§2.4: +2)');
+  if (!num(b.boss?.riduzione_pv_per_ar) || !isIntero(b.boss?.azp_in_piu)) err(F, 'boss', 'riduzione_pv_per_ar e azp_in_piu (§2.5.1)');
+  // basi
+  const basi = Object.keys(b.basi ?? {});
+  if (!basi.length) err(F, 'basi', 'mancanti (cap. 3)');
+  for (const [id, base] of Object.entries(b.basi ?? {})) {
+    const k = `basi.${id}`;
+    if (!isTesto(base?.nome)) err(F, `${k}.nome`, 'testo');
+    if (!num(base?.pv_molt_boss)) err(F, `${k}.pv_molt_boss`, 'moltiplicatore dei PV del Boss (§3.1)');
+    for (const s of base?.immunita ?? []) if (!S.stati.includes(s)) err(F, `${k}.immunita`, `Stato sconosciuto: ${s}`);
+    for (const g of gradi) {
+      const c = base?.per_grado?.[g];
+      const kg = `${k}.per_grado.${g}`;
+      if (!isOggetto(c)) { err(F, kg, 'colonna del grado mancante'); continue; }
+      if (base.umano) {
+        for (const x of ['pv_molt', 'azp', 'bonus_danno']) if (!num(c[x])) err(F, `${kg}.${x}`, 'numero (§3.2)');
+        continue;
+      }
+      for (const s of S.caratteristiche) if (!isIntero(c.caratteristiche?.[s])) err(F, `${kg}.caratteristiche.${s}`, 'intero');
+      for (const s of S.salvezze) if (!isIntero(c.salvezze?.[s])) err(F, `${kg}.salvezze.${s}`, 'intero');
+      for (const x of ['pv', 'ar', 'difese', 'iniziativa', 'passo', 'azp']) if (!isIntero(c[x])) err(F, `${kg}.${x}`, 'intero');
+      if (!(c.attacchi ?? []).length) err(F, `${kg}.attacchi`, 'almeno un attacco');
+      (c.attacchi ?? []).forEach((a, i) => {
+        if (!isIntero(a?.va)) err(F, `${kg}.attacchi[${i}].va`, 'intero');
+        if (!(typeof a?.danno === 'string' && DADI.test(a.danno))) err(F, `${kg}.attacchi[${i}].danno`, `dadi, non ${JSON.stringify(a?.danno)}`);
+        if (!S.nature_danno.includes(a?.natura)) err(F, `${kg}.attacchi[${i}].natura`, `una fra ${S.nature_danno.join(', ')}`);
+      });
+      for (const a of c.abilita ?? []) if (!S.abilita.includes(a?.nome) || !isIntero(a?.va)) err(F, `${kg}.abilita`, `Abilità sconosciuta o VA non intero: ${a?.nome}`);
+    }
+    if (base?.umano && !(Array.isArray(base.tipi) && base.tipi.length && base.tipi.every(isTesto))) err(F, `${k}.tipi`, 'tipi del bestiario umano');
+  }
+  // moduli
+  const M = b.moduli ?? {};
+  const mut = (M.mutazioni ?? []).map((m) => m?.id);
+  (M.mutazioni ?? []).forEach((m, i) => {
+    const k = `moduli.mutazioni[${i}]`;
+    if (!isTesto(m?.id) || !isTesto(m?.nome) || !num(m?.costo)) err(F, k, 'id, nome e costo');
+    for (const x of m?.basi ?? []) if (!basi.includes(x)) err(F, `${k}.basi`, `base sconosciuta: ${x}`);
+  });
+  const livelli = (M.corrotto?.livelli ?? []).map((l) => l?.id);
+  (M.corrotto?.livelli ?? []).forEach((l, i) => {
+    const k = `moduli.corrotto.livelli[${i}]`;
+    if (!num(l?.costo) || !isIntero(l?.manifestazioni?.minori) || !isIntero(l?.manifestazioni?.maggiori)) err(F, k, 'costo e numero di Manifestazioni');
+    for (const s of l?.effetti?.immunita ?? []) if (!S.stati.includes(s)) err(F, `${k}.effetti.immunita`, `Stato sconosciuto: ${s}`);
+    if (l?.effetti?.attacchi_naturali && !S.nature_danno.includes(l.effetti.attacchi_naturali)) err(F, `${k}.effetti.attacchi_naturali`, 'natura del danno');
+  });
+  const minori = (M.corrotto?.manifestazioni_minori ?? []).map((x) => x?.id);
+  const maggiori = (M.corrotto?.manifestazioni_maggiori ?? []).map((x) => x?.id);
+  for (const x of [...(M.corrotto?.manifestazioni_minori ?? []), ...(M.corrotto?.manifestazioni_maggiori ?? [])]) {
+    for (const s of x?.effetti?.immunita ?? []) if (!S.stati.includes(s)) err(F, `moduli.corrotto.${x.id}`, `Stato sconosciuto: ${s}`);
+  }
+  const E = M.equipaggiamento;
+  const rif = new Set();
+  for (const [fid, f] of Object.entries(dati.equipaggiamento?.file ?? {})) for (const o of f?.oggetti ?? []) rif.add(`${fid}:${o.id}`);
+  for (const g of gradi) {
+    const e = E?.per_grado?.[g];
+    if (!isOggetto(e) || !isIntero(e.ar)) { err(F, `moduli.equipaggiamento.per_grado.${g}`, 'protezione, AR e armi (§4.4)'); continue; }
+    if (rif.size) for (const r of e.armi ?? []) if (!rif.has(r)) err(F, `moduli.equipaggiamento.per_grado.${g}.armi`, `arma non nel catalogo: ${r}`);
+  }
+  const fasce = (E?.fasce ?? []).map((f) => f?.id);
+  // creature pronte
+  (b.creature ?? []).forEach((c, i) => {
+    const k = `creature[${i}]`;
+    if (!isTesto(c?.id) || !isTesto(c?.nome) || !isTesto(c?.descrizione)) err(F, k, 'id, nome e descrizione');
+    if (!basi.includes(c?.base)) err(F, `${k}.base`, `base sconosciuta: ${c?.base}`);
+    for (const g of [...(c?.gradi ?? []), ...(c?.boss ? [c.boss.grado] : [])]) if (!gradi.includes(g)) err(F, `${k}.gradi`, `grado sconosciuto: ${g}`);
+    for (const m of [c?.moduli, c?.boss?.moduli, ...Object.values(c?.moduli_per_grado ?? {})].filter(Boolean)) {
+      for (const x of m.mutazioni ?? []) if (!mut.includes(x)) err(F, `${k}.moduli`, `Mutazione sconosciuta: ${x}`);
+      if (m.corrotto) {
+        if (!livelli.includes(m.corrotto.livello)) err(F, `${k}.moduli.corrotto`, `livello sconosciuto: ${m.corrotto.livello}`);
+        for (const x of m.corrotto.minori ?? []) if (!minori.includes(x)) err(F, `${k}.moduli.corrotto`, `Manifestazione minore sconosciuta: ${x}`);
+        for (const x of m.corrotto.maggiori ?? []) if (!maggiori.includes(x)) err(F, `${k}.moduli.corrotto`, `Manifestazione maggiore sconosciuta: ${x}`);
+      }
+    }
+  });
+  // tabelle casuali
+  const idAmmessi = {
+    base: basi, mutazione: mut, corruzione: livelli, manifestazione_minore: minori, manifestazione_maggiore: maggiori, equipaggiamento: fasce,
+  };
+  for (const [nome, t] of Object.entries(b.tabelle ?? {})) {
+    const k = `tabelle.${nome}`;
+    const facce = Number(/^d(\d+)$/.exec(t?.dado ?? '')?.[1]);
+    if (!facce) { err(F, `${k}.dado`, 'dado come «d20»'); continue; }
+    let atteso = 1;
+    for (const [i, r] of (t.righe ?? []).entries()) {
+      if (r?.da !== atteso || !(r.a >= r.da)) err(F, `${k}.righe[${i}]`, `intervallo che parte da ${atteso}`);
+      atteso = (r?.a ?? atteso) + 1;
+      if (idAmmessi[nome] && !idAmmessi[nome].includes(r?.id)) err(F, `${k}.righe[${i}].id`, `«${r?.id}» non è nei dati`);
+    }
+    if (atteso !== facce + 1) err(F, k, `le righe non coprono le ${facce} facce del ${t.dado}`);
+  }
 }
