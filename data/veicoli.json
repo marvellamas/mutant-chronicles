@@ -1,0 +1,562 @@
+{
+  "versione_manuale": "Veicoli 0.2 (Google Doc del 02/10/2026, 13:31 UTC); scheda ASA Scout MK4 0.2 (Doc del 02/10/2026, 13:32 UTC)",
+  "fonte": "Manuale dei Veicoli v0.2, cap. 1-10; docs/manuali-txt/veicoli.md e docs/manuali-txt/asa-scout-mk4.md",
+  "_nota": "Lotto 2 di docs/ricognizione-2026-10-03.md: regole e profili dei veicoli. Motore in src/veicoli.js (funzioni pure). Niente interfaccia e niente campi nel personaggio finché Davide non dice di chi è il veicolo (A.100). La PS Integrità per Qualità non sta qui: è quella di regole.json → integrita, condivisa con gli oggetti. Le penalità dell'andatura a chi attacca entrano in «Attacca!» quando arriverà la tab.",
+
+  "misure": {
+    "paragrafo": "§1.1",
+    "round_secondi": 6,
+    "quadretto_m": 1.5,
+    "km_h_per_q_round": 0.9,
+    "frasi": [
+      "Un Round dura 6 secondi. Un quadretto (Q) equivale a 1,5 metri.",
+      "Una velocità di 1 Q per Round corrisponde a 0,9 km/h; questa equivalenza serve a leggere i profili, senza cambiare la sequenza delle Iniziative."
+    ]
+  },
+
+  "pilotare": {
+    "paragrafo": "§1.2",
+    "abilita": "Pilotare",
+    "caratteristica": "INT",
+    "prova_per_guida_ordinaria": false,
+    "frasi": [
+      "Pilotare utilizza Intelligenza.",
+      "La guida ordinaria, su un percorso libero e in condizioni sicure, non richiede una Prova.",
+      "Una singola manovra richiede una sola Prova, con tutti i modificatori pertinenti."
+    ]
+  },
+
+  "azioni": {
+    "paragrafo": "§1.3",
+    "iniziativa": "del conducente",
+    "iniziativa_propria": false,
+    "costi": [
+      { "operazione": "Condurre e muovere il veicolo", "azioni_movimento": 1, "azioni_principali": 0 },
+      { "operazione": "Eseguire una manovra complessa volontaria", "azioni_movimento": 1, "azioni_principali": 1 },
+      { "operazione": "Prendere i comandi da una postazione accessibile", "azioni_movimento": 0, "azioni_principali": 1 }
+    ],
+    "frasi": [
+      "Un veicolo condotto direttamente da un personaggio si muove all’Iniziativa del conducente. Non possiede un’Iniziativa indipendente e non concede Azioni aggiuntive.",
+      "Passeggeri, artiglieri e altri occupanti agiscono alle proprie Iniziative; essere trasportati non consuma la loro AzM.",
+      "Curve ordinarie e normali regolazioni dell’andatura sono comprese nella conduzione.",
+      "L’AzM impiegata per guidare non può essere utilizzata anche per spostarsi personalmente a piedi."
+    ]
+  },
+
+  "manovrabilita": {
+    "paragrafo": "§1.4",
+    "minimo": -2,
+    "massimo": 2,
+    "fasce": [
+      { "man": 2, "nome": "Molto agile" },
+      { "man": 1, "nome": "Maneggevole" },
+      { "man": 0, "nome": "Ordinaria" },
+      { "man": -1, "nome": "Poco maneggevole" },
+      { "man": -2, "nome": "Difficile da manovrare" }
+    ],
+    "non_si_applica_a": ["speronamento", "mov", "attacchi", "pi", "ps_integrita", "tecnologia"],
+    "frasi": [
+      "La Manovrabilità (MAN) descrive quanto il veicolo facilita o ostacola il controllo fisico. Si somma al VA delle Prove di Pilotare pertinenti, insieme ai modificatori di andatura, manovra, ambiente e danni.",
+      "Non introduce una Prova per la guida ordinaria e non modifica MOV, attacchi, PI, PS Integrità, Tecnologia o le Prove per orientarsi e scegliere un percorso. Lo Speronamento è un attacco e non riceve MAN."
+    ]
+  },
+
+  "andature": {
+    "paragrafo": "§2.1, §2.2, §3.1",
+    "elenco": [
+      { "id": "fermo", "nome": "Fermo", "moltiplicatore": 0, "pilotare": 0, "attacco_da_bordo": 0, "attacco_contro": 0 },
+      { "id": "controllata", "nome": "Controllata", "moltiplicatore": 1, "pilotare": 0, "attacco_da_bordo": 0, "attacco_contro": 0 },
+      { "id": "veloce", "nome": "Veloce", "moltiplicatore": 2, "pilotare": -2, "attacco_da_bordo": -2, "attacco_contro": -2 },
+      { "id": "massima", "nome": "Massima", "moltiplicatore": 3, "pilotare": -4, "attacco_da_bordo": -4, "attacco_contro": -4 }
+    ],
+    "fasce_per_azione": 1,
+    "bonus_q_dopo_moltiplicatore": true,
+    "frasi": [
+      "Il veicolo possiede un MOV proprio, espresso in Q. Ogni andatura richiede 1 AzM e stabilisce il movimento massimo disponibile nel Round.",
+      "I bonus fissi in Q si aggiungono dopo il moltiplicatore dell’andatura e prima del costo del terreno.",
+      "Con una normale AzM di conduzione si cambia al massimo una fascia, nella sequenza Fermo, Controllata, Veloce, Massima.",
+      "Si considera l’andatura effettiva. Le penalità del mezzo da cui si attacca e di quello bersaglio si sommano, insieme a gittata, Copertura e altri modificatori pertinenti.",
+      "Combattendo fra occupanti del medesimo veicolo non si applicano le due penalità dovute alla velocità condivisa; sobbalzi e spazio ristretto possono comunque creare difficoltà reali."
+    ]
+  },
+
+  "terreno": {
+    "paragrafo": "§2.3",
+    "difficile_costo_q": 2,
+    "frasi": [
+      "Il Terreno Difficile costa 2 Q di movimento per ogni Q attraversato. La difficoltà dipende dal mezzo: una superficie può essere agevole per un cingolato e difficile per un’automobile.",
+      "Volo, immersione e capacità anfibie devono essere previste dalla scheda. Passare da una modalità di movimento a un’altra non concede un’altra AzM e non ripristina il Movimento già utilizzato."
+    ]
+  },
+
+  "manovre": {
+    "paragrafo": "§2.4, §2.5",
+    "azioni_principali": 1,
+    "azioni_movimento": 1,
+    "azioni_consumate_anche_fallendo": true,
+    "elenco": [
+      { "id": "sterzata-stretta", "nome": "Sterzata stretta", "va": -2, "andatura_di_riferimento": "mantenuta", "effetto": "Svolta accentuata o aggiramento di un ostacolo, mantenendo l’andatura" },
+      { "id": "passaggio-difficile", "nome": "Passaggio difficile", "va": -2, "andatura_di_riferimento": "mantenuta", "effetto": "Attraversamento preciso di un passaggio ristretto materialmente praticabile" },
+      { "id": "frenata-emergenza", "nome": "Frenata d’emergenza", "va": -2, "andatura_di_riferimento": "iniziale", "frenata_frazione": 0.5, "effetto": "Riduzione di più fasce, fino all’arresto, rispettando lo spazio di frenata" },
+      { "id": "accelerazione-forzata", "nome": "Accelerazione forzata", "va": -2, "andatura_di_riferimento": "da_raggiungere", "fasce": 2, "effetto": "Aumento di due fasce di andatura invece di una" },
+      { "id": "inversione-rapida", "nome": "Inversione rapida", "va": -4, "andatura_di_riferimento": "mantenuta", "effetto": "Inversione della direzione, se mezzo e spazio lo permettono" }
+    ],
+    "esiti": [
+      { "id": "magistrale", "nome": "Successo Magistrale", "riesce": true, "va_prossima_prova": 2, "testo": "La manovra riesce; +2 VA alla successiva Prova di Pilotare effettuata entro la fine del Round seguente" },
+      { "id": "successo", "nome": "Successo", "riesce": true, "testo": "La manovra riesce" },
+      { "id": "fallimento", "nome": "Fallimento", "riesce": false, "testo": "La manovra fallisce; si conservano andatura e traiettoria precedenti per il Movimento residuo" },
+      { "id": "maldestro", "nome": "Fallimento Maldestro", "riesce": false, "va_fino_a_iniziativa": -2, "testo": "Come il fallimento; inoltre −2 VA a Pilotare fino all’arrivo della propria Iniziativa successiva" }
+    ],
+    "frasi": [
+      "Una manovra complessa volontaria si dichiara prima del Movimento interessato e costa 1 AzP oltre all’AzM. Le Azioni vengono consumate anche se la Prova fallisce.",
+      "Per la frenata si considera l’andatura iniziale; per l’accelerazione quella da raggiungere; per le altre manovre quella mantenuta.",
+      "Con successo, per fermarsi percorre metà del movimento massimo dell’andatura iniziale, arrotondata per eccesso. Questa distanza costituisce il movimento di frenata e non si aggiunge a un altro spostamento.",
+      "Un fallimento non infligge automaticamente danni."
+    ]
+  },
+
+  "copertura": {
+    "paragrafo": "§3.2",
+    "fasce": [
+      { "id": "leggera", "nome": "Copertura Leggera", "va": -2 },
+      { "id": "media", "nome": "Copertura Media", "va": -4 },
+      { "id": "totale", "nome": "Copertura Totale", "va": null, "impedisce": true }
+    ],
+    "frasi": [
+      "Prima dell’attacco si dichiara se si mira al veicolo oppure a un occupante direttamente raggiungibile.",
+      "Copertura Leggera impone −2 VA, Media −4 VA; la Copertura Totale impedisce l’attacco diretto. Una cabina non costituisce automaticamente Copertura Totale: contano aperture, materiali e posizione.",
+      "Le armi installate mantengono danni, modalità di fuoco, munizioni, Abilità e costi in Azioni. Più armi montate non concedono ulteriori attacchi.",
+      "Un supporto di tiro adeguato e compatibile soddisfa l’Imbracciatura. Non elimina le penalità dell’andatura, salvo una stabilizzazione che lo preveda."
+    ]
+  },
+
+  "manovra_evasiva": {
+    "paragrafo": "§3.3",
+    "talento": "Manovra Evasiva",
+    "azioni_principali": 1,
+    "fuori_iniziativa": true,
+    "va": -4,
+    "raffica_va": -2,
+    "maldestro_va_fino_a_iniziativa": -2,
+    "contro_magistrale": "serve un Magistrale",
+    "frasi": [
+      "Il Talento Manovra Evasiva del Pilota permette, dopo che un attacco ha colpito il veicolo e prima del danno, di spendere 1 AzP disponibile anche fuori dalla propria Iniziativa e tirare Pilotare −4.",
+      "Contro una Raffica si applica un ulteriore −2 VA e una sola Prova riuscita evita tutti i colpi.",
+      "Il Talento non evita effetti ad Area, inevitabili o non percepiti e non permette una seconda Difesa contro lo stesso attacco."
+    ]
+  },
+
+  "strutture": {
+    "paragrafo": "§4.1, §4.4",
+    "elenco": [
+      { "id": "corpo", "nome": "Corpo principale", "fuori_uso_a_zero": true },
+      { "id": "propulsione", "nome": "Propulsione", "fuori_uso_a_zero": false, "va_a_zero": -8 },
+      { "id": "motore", "nome": "Motore", "fuori_uso_a_zero": true }
+    ],
+    "stati": [
+      { "id": "integro", "nome": "Integro", "da_frazione": 1, "a_frazione": 1, "penalita": { "corpo": 0, "propulsione": 0, "motore": 0 } },
+      { "id": "operativo", "nome": "Operativo", "oltre_frazione": 0.6666666666666666, "sotto_massimo": true, "penalita": { "corpo": 0, "propulsione": -2, "motore": -2 } },
+      { "id": "colpito", "nome": "Colpito", "oltre_frazione": 0.3333333333333333, "fino_a_frazione": 0.6666666666666666, "penalita": { "corpo": -2, "propulsione": -4, "motore": -4 } },
+      { "id": "danneggiato", "nome": "Danneggiato", "oltre_frazione": 0, "fino_a_frazione": 0.3333333333333333, "penalita": { "corpo": -4, "propulsione": -6, "motore": -8 } },
+      { "id": "rotto", "nome": "Rotto", "pi": 0, "penalita": { "corpo": null, "propulsione": -8, "motore": null } }
+    ],
+    "solo_penalita_peggiore": true,
+    "frasi": [
+      "Ogni veicolo possiede tre strutture con PI attuali e massimi distinti: Corpo principale, Propulsione e Motore. Gli occupanti usano i propri PV e le proprie Ferite; non costituiscono una quarta riserva di PI del veicolo.",
+      "A PI pieni ogni struttura è integra e non applica penalità. Dopo almeno una perdita, ciascuna usa le proprie soglie, calcolate sui propri PI massimi.",
+      "Le penalità riguardano Pilotare. Fra quelle strutturali si applica soltanto la peggiore, senza sommarle; restano gli altri modificatori di andatura, manovra e ambiente.",
+      "Propulsione a 0 PI rappresenta un funzionamento residuo gravemente compromesso, con −8 VA; costituisce l’eccezione alla normale inutilizzabilità di un oggetto Rotto.",
+      "Corpo principale o Motore a 0 PI rendono il veicolo fuori uso. Il mezzo non esplode automaticamente e il suo movimento non si annulla istantaneamente (§5.5).",
+      "Perdere PI non infligge automaticamente danni agli occupanti, salvo un colpo che li interessi o un incidente effettivo.",
+      "Gli esoscheletri indossabili mantengono i propri profili e le proprie regole nel Manuale degli Armamenti; non ricevono automaticamente queste tre riserve."
+    ]
+  },
+
+  "localizzazione": {
+    "paragrafo": "§4.2",
+    "dado": "1d20",
+    "prima_delle_protezioni": true,
+    "righe": [
+      { "da": 8, "a": 20, "bersaglio": "corpo", "accurata_va": -2 },
+      { "da": 4, "a": 7, "bersaglio": "propulsione", "accurata_va": -4 },
+      { "da": 2, "a": 3, "bersaglio": "motore", "accurata_va": -6 },
+      { "da": 1, "a": 1, "bersaglio": "occupanti", "accurata_va": -8 }
+    ],
+    "occupanti_non_esposti": "motore",
+    "frasi": [
+      "Per ogni colpo riuscito contro il veicolo si tira 1d20, prima di applicare le protezioni. Le diverse applicazioni di danno dello stesso colpo interessano la stessa struttura. Colpi distinti di una Raffica ricevono localizzazioni distinte.",
+      "La selezione accurata si dichiara prima della Prova per Colpire. Tutti i colpi prodotti dalla stessa Prova interessano la selezione dichiarata. La scelta non concede automaticamente i benefici del Tiro Mirato.",
+      "Se il risultato casuale indica gli Occupanti ma nessuno è esposto o raggiungibile dal colpo, viene colpito il Motore.",
+      "Un occupante colpito risolve il danno con le proprie protezioni, PV, Ferite e Salvezze. Corazzato del veicolo non viene sottratto dal danno personale."
+    ]
+  },
+
+  "danno": {
+    "paragrafo": "§4.3",
+    "danni_per_pi": 5,
+    "arrotondamento_pi": "per eccesso",
+    "ps_per_colpo_e_struttura": 1,
+    "ps_riuscita": "dimezza_per_eccesso",
+    "ps_minimo_pi": 1,
+    "corazzato_dopo_ps": true,
+    "ar_per_natura": { "Naturale": "totale", "Magico": "totale", "Etereo": "magica" },
+    "magistrale_pi": 1,
+    "ordine": [
+      "danno del colpo con i moltiplicatori, meno l’AR applicabile alla struttura",
+      "ogni applicazione residua in PI, separatamente: 1 PI ogni 5 danni o frazione",
+      "PI aggiuntivi del Magistrale e delle proprietà pertinenti",
+      "una sola PS Integrità per struttura e per colpo: riuscita dimezza per eccesso, minimo 1",
+      "Corazzato X riduce di X i PI da perdere, anche fino a 0"
+    ],
+    "frasi": [
+      "Ogni applicazione di danno residuo viene convertita separatamente: 1 PI ogni 5 danni o frazione.",
+      "Si effettua una sola PS Integrità per struttura e per colpo, riunendo le cause presenti: con successo si dimezza la perdita totale di PI, arrotondando per eccesso e con minimo 1; con fallimento si applica la perdita intera.",
+      "Corazzato X riduce ulteriormente di X i PI da perdere, anche fino a 0.",
+      "Il minimo di 1 si applica soltanto se esiste una perdita potenziale. Se l’AR annulla il danno e non intervengono altre cause strutturali, non si perde automaticamente 1 PI.",
+      "Un Magistrale può imporre il proprio PI aggiuntivo anche quando il danno viene interamente assorbito.",
+      "Il danno Naturale e quello Magico incontrano l’AR pertinente completa; il danno Etereo incontra soltanto la componente magica.",
+      "Il moltiplicatore di danno del Magistrale si applica prima dell’AR: non raddoppia nuovamente i PI già calcolati.",
+      "Corrosivo conserva il limite di una applicazione per protezione, bersaglio e attacco; non viene ripetuto su ogni colpo della stessa Raffica."
+    ],
+    "esempio": {
+      "testo": "Una struttura rischia 5 PI e possiede Corazzato 2. Con PS riuscita perde 1 PI: metà di 5 arrotondata per eccesso è 3, poi si sottrae 2. Con PS fallita perde 3 PI: 5 meno 2.",
+      "pi_potenziali": 5,
+      "corazzato": 2,
+      "ps_riuscita_pi": 1,
+      "ps_fallita_pi": 3
+    }
+  },
+
+  "collisioni": {
+    "paragrafo": "§5.1, §5.2, §5.3, §5.4",
+    "dado": "1d6",
+    "q_per_dado": 10,
+    "struttura_predefinita": "corpo",
+    "tiro_unico": true,
+    "magistrale": false,
+    "riferimento": [
+      { "id": "ostacolo-fermo", "nome": "Contro un ostacolo fisso o un veicolo fermo", "formula": "andatura_in_movimento" },
+      { "id": "frontale", "nome": "Frontale fra mezzi in movimento opposto", "formula": "somma" },
+      { "id": "tamponamento", "nome": "Tamponamento nella stessa direzione", "formula": "differenza" },
+      { "id": "laterale", "nome": "Laterale o con traiettorie incrociate", "formula": "maggiore" }
+    ],
+    "occupanti": {
+      "danno": "base dell’urto, indipendente dai PI persi dal mezzo",
+      "armatura_personale_riduce": false,
+      "cintura_dimezza_per_eccesso": true,
+      "salvezza": "Tempra",
+      "salvezza_riuscita": "dimezza_per_eccesso",
+      "espulsione_salvezza": "Riflessi",
+      "esempio": { "testo": "Un urto da 15 danni infligge 8 danni dopo la cintura; con Tempra riuscita ne rimangono 4.", "danno": 15, "dopo_cintura": 8, "dopo_tempra": 4 }
+    },
+    "caduta": {
+      "paragrafo": "§5.4",
+      "dado": "1d6",
+      "q_per_dado": 2,
+      "ar_riduce": false,
+      "frasi": [
+        "La caduta infligge 1d6 di danno Naturale ogni 2 Q completi di dislivello verticale. Una frazione inferiore a 2 Q non aggiunge un dado.",
+        "L’AR non riduce il danno da caduta. Si converte il danno in PI e si applicano PS Integrità e Corazzato.",
+        "Se caduta e collisione descrivono il medesimo impatto finale, si usa il calcolo che produce più dadi, con le protezioni proprie di quel tipo di evento. A parità di dadi si applica la caduta."
+      ]
+    },
+    "frasi": [
+      "La velocità di riferimento usa il movimento massimo dell’andatura effettiva, non i Q percorsi prima di incontrare l’ostacolo.",
+      "Si infligge 1d6 di danno Naturale ogni 10 Q di riferimento o frazione. Una differenza pari a 0 nella stessa direzione indica semplice contatto, senza danno da collisione.",
+      "Si tira il danno una sola volta e ciascun veicolo applica al medesimo risultato le proprie protezioni e la propria procedura strutturale.",
+      "Una collisione accidentale non è un attacco magistrale e non aggiunge il relativo PI.",
+      "Gli occupanti subiscono il danno base tirato per l’urto, indipendentemente dai PI persi dal mezzo. L’Armatura personale ordinaria non lo riduce; si applicano le protezioni specificamente adatte all’impatto.",
+      "Una cintura o un’imbracatura correttamente utilizzata dimezza il danno per eccesso e impedisce la normale espulsione. Ogni occupante effettua inoltre una PS di Tempra senza spendere Azioni: con successo dimezza nuovamente per eccesso, con fallimento non ottiene questa riduzione. Si applicano poi eventuali ulteriori benefici pertinenti.",
+      "Il ribaltamento usa il danno da collisione dell’andatura corrente, normalmente contro il Corpo principale. Il mezzo non può muoversi normalmente finché non viene raddrizzato, anche se conserva PI.",
+      "Collisione e ribaltamento appartenenti al medesimo incidente producono una sola applicazione di danno, senza ripeterla per ogni contatto col suolo.",
+      "Il danno dell’incidente comprende l’espulsione e l’atterraggio ordinario sul terreno circostante. Non si aggiunge un secondo danno per il medesimo impatto."
+    ]
+  },
+
+  "fuori_uso": {
+    "paragrafo": "§5.5, §5.6",
+    "scende_una_fascia_per_iniziativa": true,
+    "ambienti": [
+      { "id": "terra", "nome": "Terra", "conseguenza": "Il mezzo prosegue per inerzia; a ogni successiva Iniziativa del conducente scende automaticamente di una fascia fino all’arresto, salvo urti, pendenze o altri impedimenti" },
+      { "id": "acqua", "nome": "Acqua", "conseguenza": "Il mezzo può andare alla deriva; l’affondamento dipende da galleggiamento e condizioni dello scafo" },
+      { "id": "aria", "nome": "Aria", "conseguenza": "Discesa controllata soltanto con capacità e sistemi superstiti adatti, come la planata; altrimenti il mezzo precipita" },
+      { "id": "spazio", "nome": "Spazio con attrito trascurabile", "conseguenza": "Si conserva il movimento inerziale; cambiare velocità o traiettoria richiede spinta ancora disponibile o un intervento esterno" }
+    ],
+    "passaggio_comandi": { "azioni_principali": 1, "prova": false, "secondo_movimento": false },
+    "frasi": [
+      "Corpo principale o Motore a 0 PI impediscono il normale funzionamento. Propulsione a 0 PI conserva l’eccezione di funzionamento parziale a −8 VA. La perdita del funzionamento non cancella il movimento già in corso.",
+      "Il movimento residuo si risolve all’Iniziativa del conducente e non concede un secondo Movimento nello stesso Round.",
+      "Quando il conducente perde conoscenza, abbandona i comandi o non può più guidare, il mezzo non si arresta immediatamente.",
+      "Un altro personaggio può subentrare alla propria Iniziativa se raggiunge e può utilizzare materialmente i comandi. Raggiungere la postazione richiede il normale Movimento; prendere il controllo da una postazione accessibile costa 1 AzP; guidare e muovere il mezzo richiede 1 AzM. Prendere i comandi in condizioni ordinarie non richiede una Prova. Recuperare un mezzo instabile richiede Pilotare con MAN e gli altri modificatori pertinenti.",
+      "Il cambio non concede un secondo Movimento nel Round, neppure se quello precedente era un movimento residuo senza controllo.",
+      "La perdita del conducente non provoca direttamente perdite di PI."
+    ]
+  },
+
+  "inseguimento": {
+    "paragrafo": "§6.1, §6.2",
+    "talento": "Inseguimento",
+    "talento_va": 2,
+    "con_specializzazione_va": 4,
+    "prova_ogni_round": false,
+    "frasi": [
+      "L’inseguimento usa Iniziativa, Movimento e manovre ordinarie. La distanza dipende dagli spostamenti effettivamente compiuti: curve, ostacoli, terreno e deviazioni modificano il percorso percorribile. Una Prova riuscita non concede Q aggiuntivi senza una regola specifica.",
+      "Una Prova riuscita non concede Q aggiuntivi senza una regola specifica.",
+      "Non si tira automaticamente ogni Round. Un conducente effettua le Prove richieste dalle difficoltà che affronta; chi percorre in seguito lo stesso passaggio tira con i propri modificatori.",
+      "Il contatto è perso quando l’inseguitore non riesce più a individuare il mezzo né a determinarne il percorso: deve allora cercarlo nuovamente.",
+      "Il Talento Libero Inseguimento concede +2 VA a Pilotare per inseguire o seminare un mezzo e si somma alla Specializzazione pertinente per +4 complessivi derivanti dai due Talenti."
+    ]
+  },
+
+  "speronamento": {
+    "paragrafo": "§6.3",
+    "azioni_principali": 1,
+    "azioni_movimento": 1,
+    "prova": "Pilotare",
+    "man": false,
+    "penalita_propria": 0,
+    "moltiplicatore_magistrale": 2,
+    "magistrale_pi": 1,
+    "esiti": [
+      { "id": "magistrale", "nome": "Successo Magistrale", "colpisce": true, "testo": "Colpisce; danno alla struttura bersaglio raddoppiato e +1 PI potenziale secondo gli attacchi magistrali" },
+      { "id": "successo", "nome": "Successo", "colpisce": true, "testo": "Colpisce; si risolve la collisione" },
+      { "id": "fallimento", "nome": "Fallimento", "colpisce": false, "testo": "Non sperona; Azioni e Movimento impiegati restano consumati" },
+      { "id": "maldestro", "nome": "Fallimento Maldestro", "colpisce": false, "va_fino_a_iniziativa": -2, "testo": "Non sperona; inoltre −2 VA a Pilotare fino all’arrivo della propria Iniziativa successiva" }
+    ],
+    "frasi": [
+      "Lo Speronamento si dichiara prima del Movimento con cui si tenta l’urto e costa 1 AzM + 1 AzP. Utilizza Pilotare come Prova per Colpire contro un veicolo materialmente raggiungibile con il Movimento disponibile.",
+      "Si applicano la penalità della propria andatura, quella per colpire il bersaglio in movimento e le penalità strutturali e ambientali pertinenti. Non si aggiunge una penalità fissa propria della manovra. MAN non modifica questo attacco.",
+      "Si tira una sola volta il danno base dell’urto. Entrambi i veicoli lo subiscono, applicando separatamente protezioni, conversione in PI, PS Integrità e Corazzato.",
+      "Con un Magistrale il raddoppio e il PI aggiuntivo riguardano soltanto la struttura bersaglio.",
+      "Lo Speronamento non provoca automaticamente un ribaltamento o l’arresto del bersaglio."
+    ],
+    "esempio": {
+      "testo": "B, Pilotare 10, MOV 20, procede a Massima 60 Q; A, MOV 20, procede a Veloce 40 Q nella stessa direzione. Se B può raggiungerlo, tira con VA 10 −4 −2 = 4. Un 3 colpisce, salvo evasione riuscita. L’urto usa 60 − 40 = 20 Q e infligge 2d6.",
+      "va_finale": 4,
+      "q_riferimento": 20,
+      "dadi": 2
+    }
+  },
+
+  "riparazione": {
+    "paragrafo": "§7.1, §7.2, §7.3",
+    "abilita": "Tecnologia",
+    "minuti": 60,
+    "strutture_per_intervento": 1,
+    "esiti": [
+      { "id": "magistrale", "nome": "Successo Magistrale", "pi": 2 },
+      { "id": "successo", "nome": "Successo", "pi": 1 },
+      { "id": "fallimento", "nome": "Fallimento", "pi": 0 },
+      { "id": "maldestro", "nome": "Fallimento Maldestro", "pi": -1 }
+    ],
+    "maldestro_senza_ps": true,
+    "strumenti_improvvisati_va": -2,
+    "tempo_minimo_frazione": 0.5,
+    "capacita": [
+      { "nome": "Meccanico di Bordo", "applicazione": "+2 Tecnologia e tempo dimezzato nelle riparazioni pertinenti: 30 minuti per intervento ordinario", "tecnologia": 2, "minuti": 30 },
+      { "nome": "Duro Lavoro", "applicazione": "+3 VA nelle riparazioni strutturali e meccaniche comprese nel Talento", "tecnologia": 3 },
+      { "nome": "Mani Esperte", "applicazione": "+3 Tecnologia per macchinari e dispositivi previsti dal Talento", "tecnologia": 3 },
+      { "nome": "Addestramento di Bottega", "applicazione": "Valutazione di materiali, difetti e interventi; riduzione delle penalità degli attrezzi secondo il Talento" },
+      { "nome": "Specializzazioni dell’Artigiano", "applicazione": "Benefici sui componenti pertinenti, come armi di bordo per Armaiolo e protezioni per Corazzaio" },
+      { "nome": "Cannibalizzazione", "applicazione": "Un solo beneficio: ricambi mancanti, costo dei materiali dimezzato oppure tempo dimezzato" },
+      { "nome": "Intervento Rapido", "applicazione": "Semplici interazioni tecniche; non riparazioni complete o recuperi istantanei di PI" },
+      { "nome": "Manutenzione Preventiva", "applicazione": "Protezione pertinente contro la perdita di PI provocata dal fallimento della riparazione", "riduce_perdita_pi": 1 }
+    ],
+    "emergenza": {
+      "talento": "Riparazione d’Emergenza",
+      "una_volta_per": "scena",
+      "minuti": 1,
+      "pi": 0,
+      "va_temporaneo": -2,
+      "frasi": [
+        "Non recupera PI. Ripristina temporaneamente una sola struttura, anche a 0 PI, se l’intervento è materialmente possibile con strumenti e componenti disponibili.",
+        "Per la struttura interessata si applica temporaneamente −2 VA a Pilotare al posto della sua penalità o dell’impedimento al funzionamento.",
+        "Il ripristino termina alla fine della scena oppure quando la struttura interessata subisce una nuova perdita di PI."
+      ]
+    },
+    "rinforzo_regola_arte": { "talento": "Lavoro a Regola d’Arte", "pi": 1, "unico_per_mezzo": true, "si_consuma": true },
+    "frasi": [
+      "Una riparazione richiede Tecnologia, attrezzi, ricambi e accesso adeguati. Ogni intervento riguarda una sola struttura, dura 1 ora e si risolve con una sola Prova al termine del lavoro.",
+      "La perdita da Fallimento Maldestro non richiede PS Integrità e non viene ridotta da AR o Corazzato.",
+      "Si impiegano i ricambi necessari per ogni PI effettivamente recuperato, al costo specifico della struttura indicato nel profilo.",
+      "Gli strumenti improvvisati impongono −2 VA quando il lavoro è materialmente possibile; non sostituiscono attrezzature o componenti indispensabili.",
+      "Le penalità strutturali a Pilotare non diventano automaticamente penalità a Tecnologia.",
+      "Le riduzioni combinate non portano il tempo sotto metà di quello ordinario.",
+      "Una struttura Rotta a 0 PI è riparabile se i componenti sono recuperabili o sostituibili."
+    ]
+  },
+
+  "spinta_al_limite": {
+    "paragrafo": "§7.4",
+    "talento": "Spinta al Limite",
+    "una_volta_per": "scena",
+    "azioni": 0,
+    "movimento_q": 2,
+    "va_evasive": 2,
+    "prova_alla_scadenza": { "abilita": "Pilotare", "va": -4, "successo_pi": 0, "fallimento_pi": 1, "maldestro_pi": 2, "struttura": "motore" },
+    "perdita_senza_ps": true,
+    "frasi": [
+      "Spinta al Limite del Pilota si attiva una volta per scena, alla propria Iniziativa e senza Azioni. Fino all’arrivo dell’Iniziativa successiva concede +2 Q di Movimento e +2 VA a Pilotare per manovre evasive.",
+      "Alla scadenza si effettua Pilotare −4: con successo nessuna perdita; con fallimento il Motore perde 1 PI; con Fallimento Maldestro ne perde 2.",
+      "La perdita è diretta, senza PS Integrità e senza riduzioni dovute ad AR o Corazzato.",
+      "Il bonus in Q si aggiunge dopo il moltiplicatore dell’andatura."
+    ]
+  },
+
+  "sovraccarico_tecnico": {
+    "paragrafo": "§7.4",
+    "talento": "Sovraccarico Tecnico",
+    "una_volta_per": "scena",
+    "azioni_principali": 1,
+    "pi_spesi": 1,
+    "pi_minimi_richiesti": 2,
+    "durata_round": 10,
+    "benefici": [
+      "+2 Q per motore o propulsione",
+      "+2 VA a una funzione scelta per sensori o strumenti",
+      "+2 VA alle operazioni fisiche assistite da servomeccanismi",
+      "+1 danno a una sola istanza per attacco di un’arma installata",
+      "alimentazione di una funzione già presente ma normalmente inattiva per insufficiente potenza disponibile"
+    ],
+    "riserve": [
+      { "sistema": "Motore o impianto energetico principale", "struttura": "motore" },
+      { "sistema": "Ruote, cingoli, eliche, rotori e organi propulsivi", "struttura": "propulsione" },
+      { "sistema": "Sensori, comunicazioni, comandi e servomeccanismi integrati", "struttura": "corpo" },
+      { "sistema": "Arma o dispositivo con Integrità autonoma", "struttura": "oggetto" }
+    ],
+    "frasi": [
+      "Sovraccarico Tecnico si usa una volta per scena e costa 1 AzP. Richiede accesso fisico o un collegamento autorizzato al dispositivo. Il dispositivo perde immediatamente 1 PI e riceve per 10 Round uno dei benefici previsti dal Talento:",
+      "Si sottrae da una sola riserva, senza duplicare il costo su dispositivo e veicolo. Non si sommano i PI delle tre strutture per soddisfare il requisito.",
+      "La perdita non richiede PS e non è ridotta da AR o Corazzato. Le nuove penalità strutturali si applicano subito, anche mentre il beneficio rimane attivo.",
+      "Il Talento non concede Azioni, non si ripete sullo stesso dispositivo nella stessa scena e richiede almeno 2 PI nella riserva interessata prima dell’attivazione."
+    ],
+    "esempio": {
+      "testo": "Corpo 18/18, Propulsione 10/10, Motore 5/12. Sovraccaricare il Motore senza rinforzo lo porta a 4/12 PI: passa da Colpito a Danneggiato e impone −8 VA a Pilotare, mentre il +2 Q rimane attivo.",
+      "motore_prima": 5,
+      "motore_dopo": 4,
+      "massimo": 12,
+      "stato_prima": "colpito",
+      "stato_dopo": "danneggiato",
+      "va": -8
+    }
+  },
+
+  "profili": [
+    {
+      "id": "autovettura-civile",
+      "nome": "Autovettura civile",
+      "paragrafo": "§9",
+      "tipo": "terrestre",
+      "descrizione": "Autovettura chiusa a quattro ruote per strade e percorsi carrabili. È il riferimento per le successive varianti commerciali e corporative.",
+      "equipaggio": { "conducente": 1, "passeggeri": 4, "posti": 5, "minimo": 1 },
+      "dimensioni": { "lunghezza_m": 4.5, "larghezza_m": 1.8, "ingombro_q": "3 × 2" },
+      "massa_kg": 1300,
+      "carico_kg": 500,
+      "mov_q": 40,
+      "man": 0,
+      "qualita": "Comune",
+      "ps_integrita": 10,
+      "ar": { "totale": 1, "magica": 0 },
+      "corazzato": 0,
+      "pi": { "corpo": 12, "propulsione": 8, "motore": 8 },
+      "ricambi_cr_per_pi": { "corpo": 250, "propulsione": 150, "motore": 200 },
+      "officina_cr_per_ora": 100,
+      "alimentazione": { "nec": "1 Banco Rosso", "capacita_lx": 50000, "erogazione_lx_h": 10000, "consumo_lx_km": 50, "autonomia_km": 1000, "ricarica_cr": 500, "ricarica_ore": 1, "sostituzione_minuti": 1 },
+      "prezzo_cr": 20000,
+      "reperibilita": null,
+      "TODO(Davide)": "Reperibilità «da definire nel catalogo» (§9): A.102.",
+      "armi": [],
+      "proprieta": [],
+      "dotazione": "Cinque sedili con cinture, abitacolo chiuso, vano bagagli, fari, indicatori, strumentazione e alloggiamento per il Banco Rosso.",
+      "ambiente": "Strade e piste carrabili compatte. Fango profondo, macerie, forti dislivelli e passaggi stretti possono rallentare o impedire il transito. Nessuna capacità anfibia."
+    },
+    {
+      "id": "asa-scout-mk4",
+      "nome": "ASA Scout MK4",
+      "paragrafo": "§10; scheda del veicolo 0.2",
+      "tipo": "terrestre",
+      "descrizione": "Ricognitore della Neverlost preparato da Petra. Quattro grandi ruote rinforzate, carrozzeria corazzata a pannelli modulari, cabina chiusa con vetri rinforzati e mitragliatore leggero su rotaia presso la botola superiore.",
+      "equipaggio": { "conducente": 1, "passeggeri": 7, "posti": 8, "minimo": 1 },
+      "dimensioni": { "lunghezza_m": 6, "larghezza_m": 2.6, "ingombro_q": "4 × 2" },
+      "carico_kg": 1500,
+      "mov_q": 30,
+      "man": 0,
+      "qualita": "Non comune",
+      "ps_integrita": 12,
+      "ar": { "totale": 4, "magica": 0 },
+      "corazzato": 1,
+      "pi": { "corpo": 60, "propulsione": 36, "motore": 24 },
+      "prezzo_cr": 109000,
+      "prezzo_parziale": true,
+      "valore_telaio_cr": 90000,
+      "reperibilita": "Rara",
+      "TODO(Davide)": "La scheda lascia «da definire»: formato e numero delle bombole del supporto vitale, consumo e autonomia di viaggio, scorte energetiche di partenza, prezzo completo e costi di riparazione specifici (A.101).",
+      "alimentazione": { "nec": "2 Banchi Rossi ricaricabili", "capacita_lx": 100000, "erogazione_lx_h": 20000, "consumo_lx_km": null, "autonomia_km": null, "sostituzione_minuti": 1, "riserva_verde": "Supporto vitale, riserva separata: formato e capacità da definire" },
+      "armi": [
+        {
+          "nome": "Mitragliatore leggero Capitol M606",
+          "rif": null,
+          "operatore": "artigliere, uno degli occupanti",
+          "postazione": "Postazione manuale presso la botola",
+          "arco_di_tiro": "360°, limitato dagli ostacoli reali",
+          "abilita": "Armi pesanti",
+          "danno": "1d8+3",
+          "ac": 1,
+          "va_arma": 0,
+          "forza": 6,
+          "gittata_q": 600,
+          "capacita": 400,
+          "munizioni_per_colpo": 3,
+          "inc": 6,
+          "mani": 2,
+          "modalita": ["Raffica Media", "Raffica Lunga", "Fuoco di Soppressione"],
+          "pi": 8,
+          "qualita_arma": "Comune",
+          "ps_integrita_arma": 10,
+          "imbracciata_dal_supporto": true
+        }
+      ],
+      "proprieta": [
+        { "nome": "Assetto fuoristrada", "testo": "Riduce di 2, fino a 0, le penalità a Pilotare per fondo sconnesso, fango e terreno accidentato percorribile. Non riduce penalità di velocità o avarie e non modifica il costo di movimento del terreno.", "pilotare_terreno": 2 },
+        { "nome": "Ignifugo 1", "testo": "Contromisura del veicolo agli effetti secondari del Fuoco, secondo il Manuale degli Armamenti. Non sottrae ulteriori danni e non consente di attraversare la lava.", "valore": 1 },
+        { "nome": "Abitacolo e botola", "testo": "La carrozzeria concede Copertura Media quando scherma parte di un occupante visibile. L’artigliere alla botola è esposto, con Copertura Media dove il bordo e il tetto lo schermano. Aprire o chiudere la botola richiede 1 AzP.", "copertura": "media" },
+        { "nome": "Navigatore e ambiente", "testo": "Il navigatore indica la direzione generale e non sceglie un percorso sicuro né concede bonus automatici. Climatizzazione, raffreddamento e sensori ambientali permettono l’impiego previsto nella spedizione." }
+      ],
+      "rinforzi": [
+        {
+          "id": "copriruote-petra",
+          "nome": "Copriruote di Petra",
+          "testo": "Rinforzi improvvisati e rimovibili, simili a catene da neve, preparati da Petra per proteggere i pneumatici nelle Terre del Fuoco.",
+          "struttura": "propulsione",
+          "complessivi": 6,
+          "installati": 4,
+          "ricambi": 2,
+          "pi_per_pezzo": 3,
+          "ps_integrita": 12,
+          "protezione_iniziale_pi": 12,
+          "pi_nelle_scorte": 6,
+          "assorbe_in_successione": true,
+          "aumenta_pi_massimi": false,
+          "bonus_ps": 0,
+          "sostituzione_minuti": 30,
+          "sostituzione_prova": "Tecnologia",
+          "sollecitazioni": { "oltre_q": 30, "ps_integrita": 12, "fallimento_pi": 1, "ar_riduce": false, "corazzato_riduce": false, "ambiente": "Terre del Fuoco" },
+          "frasi": [
+            "Le perdite alla Propulsione interessano in successione i quattro copriruote montati. Per ogni colpo si applica la normale procedura strutturale con AR 4, una sola PS Integrità 12 del copriruota attivo e Corazzato 1.",
+            "La perdita finale esaurisce il primo copriruota, poi i successivi; l’eccedenza oltre i quattro passa ai PI reali della Propulsione, senza ulteriori PS per lo stesso colpo.",
+            "I copriruote non concedono +1 alla PS e non aumentano i 36 PI massimi della Propulsione.",
+            "Nelle Terre del Fuoco, se lo Scout percorre più di 30 Q effettivi nello stesso Round, al termine del movimento si effettua una sola PS Integrità 12. Esattamente 30 Q non richiedono questo controllo.",
+            "La perdita da sollecitazione non è ridotta da AR o Corazzato e non concede una seconda PS."
+          ],
+          "esempio": { "testo": "Esempio: il primo copriruota ha 1 PI e il secondo è integro. Una perdita finale di 3 PI esaurisce il primo e lascia il secondo a 1 PI. Le ruote non perdono Integrità.", "primo_pi": 1, "perdita": 3, "secondo_dopo": 1 }
+        }
+      ],
+      "sistemi": [
+        { "nome": "Supporto vitale e bombole supplementari", "testo": "Abitacolo sigillato con riserva respiratoria e ricircolo. Le bombole supplementari portano l’autonomia complessiva a 24 ore con 8 occupanti, anche non consecutive. Si conta soltanto il tempo effettivo di funzionamento; la ricarica del NEC non ripristina le riserve respiratorie.", "ore": 24, "occupanti": 8 },
+        { "nome": "Comunicatore ponte", "testo": "Ritrasmette le comunicazioni della squadra verso la Neverlost o altre stazioni compatibili. La tratta fra stazioni adeguate raggiunge 50 km in condizioni favorevoli; ogni tratto deve funzionare.", "km": 50 }
+      ],
+      "dotazione": "Kit di riparazione del veicolo, cric, 2 ruote di ricambio, cavo di traino, 2 estintori, kit medico, 8 razioni di emergenza, 2 × 20 L d’acqua, comunicatore ponte, lampada portatile, pala pieghevole, 2 teli mimetici, 1 set di adattatori di ricarica, 4 copriruote montati + 2 ricambi, bombole supplementari.",
+      "ambiente": "Terre del Fuoco: oltre 30 Q effettivi nel Round si effettua la PS Integrità dei copriruote. Le medie di viaggio restano quelle dei singoli settori."
+    }
+  ]
+}

@@ -84,6 +84,11 @@ export function frasiEffetti() {
   (leggi('data/regole.json').ar?.frasi_incantesimi ?? []).forEach((f, i) => out.push({ dove: `regole:ar.frasi_incantesimi[${i}]`, frase: f }));
   // Armamenti §7.10: SnT 0 per gli Artefatti con sole proprietà passive (docs/diff-manuali-2026-10-02.md)
   visita(leggi('data/equipaggiamento/artefatti.json').sintonizzazione ?? {}, 'artefatti:sintonizzazione');
+  // veicoli.json: ogni «frasi» del file, a ogni profondità, più i testi degli esempi del manuale
+  visita(leggi('data/veicoli.json'), 'veicoli');
+  for (const v of leggi('data/veicoli.json').profili ?? []) {
+    for (const r of v.rinforzi ?? []) if (r.esempio?.testo) out.push({ dove: `veicoli:${v.id} rinforzi ${r.id} esempio`, frase: r.esempio.testo });
+  }
   // regole.json → stati: la «condizione» degli effetti e il testo dei limiti (docs/ricognizione-stati.md)
   for (const s of leggi('data/regole.json').stati?.elenco ?? []) {
     (s.effetti ?? []).forEach((e, i) => out.push({ dove: `regole:stati ${s.nome} effetti[${i}]`, frase: e.condizione }));

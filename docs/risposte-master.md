@@ -743,3 +743,30 @@ nuovi quesiti dell’app e punti Abilità liberi» (testo in `docs/risposte-mast
     combattimento cala di 2 a ogni grado (9/11/13 → 7/9/11) e i «Round per abbattere un PG» della taratura salgono
     (9 → 11,6; 8,9 → 11,2; 6,6 → 8). Esempi e bestiario umano rigenerati, `docs/bestiario/bestiario.md` e `.html`
     aggiornati.
+
+## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
+
+Il Manuale dei Veicoli 0.2 è completo di numeri e il lotto 2 (dati e motore) non ha dovuto inventare nulla. Restano
+questi punti, con un `TODO(Davide)` dove serve; nel pacchetto per il Doc «per-davide.md» sono A.100–A.105.
+
+- **A.100 — Di chi è il veicolo.** L'ASA Scout è «il vostro Scout»: un mezzo per tutta la squadra. Scheda del gruppo,
+  come il deposito comune, o voce del personaggio che lo possiede? E PI, andatura e autonomia li tiene il Direttore o
+  il giocatore? Finché non si sa, i veicoli non entrano nel file del personaggio (`src/rules.js` → `FILE_SOLO_TAVOLO`)
+  e la tab resta «in attesa». Il modello dati di `src/veicoli.js` va bene in entrambi i casi.
+- **A.101 — I «da definire» della scheda dello Scout.** Formato e numero delle bombole del supporto vitale, consumo in
+  Lx/km e autonomia di viaggio, scorte energetiche di partenza, prezzo completo e costi di riparazione per PI delle
+  tre strutture. Nei dati sono `null` con il `TODO(Davide)`: «un dato indicato come da definire non vale 0 e non
+  costituisce una dotazione gratuita» (§8.1).
+- **A.102 — Reperibilità dell'autovettura civile.** Il §9 dice «Da definire nel catalogo». Le altre voci del catalogo
+  hanno una Reperibilità (`equipaggiamento/index.json` → `reperibilita`): quale ha l'autovettura?
+- **A.103 — Esempio del §4.3 e Corazzato dello Scout.** L'esempio della procedura usa Corazzato 2, mentre lo Scout ha
+  Corazzato 1: è solo un esempio generico o un mezzo diverso? Nei test ho verificato la procedura con entrambi i
+  valori, e torna; serve solo sapere se la scheda dello Scout è giusta.
+- **A.104 — Collisione contro un bersaglio che deve ancora muoversi.** Il §6.3 dice che «A conserva l'andatura anche
+  se deve ancora muoversi alla propria Iniziativa», e il §2.2 che «un veicolo che deve ancora muoversi alla propria
+  Iniziativa conserva l'andatura corrente ai fini di attacchi e collisioni». Quindi per i Q di riferimento vale
+  l'andatura *dichiarata* anche se il mezzo in quel Round non si è ancora mosso: confermi?
+- **A.105 — Veicoli in uno scontro della plancia.** Il mezzo non ha Iniziativa propria (§1.3), quindi non è un
+  partecipante dello scontro, ma ha tre riserve di PI e una procedura di danno sua. Nella plancia lo mettiamo come
+  carta collegata al conducente (si muove alla sua Iniziativa) o come partecipante a sé con l'Iniziativa del
+  conducente? È il lotto 4 della ricognizione, serve prima di scrivere l'interfaccia.

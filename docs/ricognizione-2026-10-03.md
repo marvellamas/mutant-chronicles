@@ -261,7 +261,7 @@ Nessuno di questi è iniziato. Stime in sessioni di lavoro, come le precedenti.
 | # | Lotto | Che cosa comprende | Stima | Dipendenze |
 |---|---|---|---|---|
 | **1** | **Giocatore del 03/10** | Punti liberi 10 → 7 **oppure** 5 (dopo la risposta ad A.90): `regole.json` → `creazione` e `avanzamento.eventi`, avviso dei punti in eccesso, test di collaudo, esempio del §2.13 nei test; profilo dell'Incursore in `classi.json` → `competenze` (indipendente, si può fare subito). | ½ sessione (Incursore: 1 ora) | **A.90** per i punti; l'Incursore no |
-| **2** | **Veicoli, dati e motore** | `data/veicoli.json` (regole dei cap. 1–7 + profili Autovettura e ASA Scout MK4), validatore, `src/veicoli.js` puro (andature, Pilotare con MAN e stati, danno → PI con PS e Corazzato, riparazioni, autonomia), test con gli esempi numerici del manuale (§4.3, §4.4, §7.4, §9.1). | 2 sessioni | A.91 (veicolo del gruppo o del PG) per la forma del salvataggio |
+| **2** | **Veicoli, dati e motore** — **fatto il 04/10** | `data/veicoli.json` (regole dei cap. 1–7 + profili Autovettura e ASA Scout MK4), validatore, `src/veicoli.js` puro (andature, Pilotare con MAN e stati, danno → PI con PS e Corazzato, riparazioni, autonomia), test con gli esempi numerici del manuale (§4.3, §4.4, §7.4, §9.1). Esito nel §8. | 2 sessioni | A.100 (veicolo del gruppo o del PG) per la forma del salvataggio |
 | **3** | **Veicoli, scheda e stampa** | Tab Veicoli della SD (mezzo, tre riserve con − e +, andatura, autonomia, armi di bordo, avarie), foglio Veicoli della SS, uscita da `tab_in_arrivo`. | 1 sessione e ½ | lotto 2 |
 | **4** | **Veicoli al Tavolo del Master** | Carta del veicolo nella plancia, «Colpito» con localizzazione 1d20 e PS Integrità per struttura, armi di bordo in «Attacca!», penalità dell'andatura per chi attacca il mezzo, collisioni e speronamento come promemoria. | 2 sessioni | lotti 2–3 |
 | **5** | **Cibernetica, completamento** | Solo dopo le risposte: catalogo dei recuperi di UMN (A.92), corpi cyborg (A.93), innesti dell'equipaggiamento (A.94). Senza risposte non c'è lavoro: l'app è già allineata ai manuali. | ½ sessione per risposta | **A.92–A.94** |
@@ -305,3 +305,76 @@ Da incollare nel Doc «per-davide.md» con il prossimo pacchetto (`docs/protocol
   Interiori): servono i dati.
 - **A.99 — Prontuario del Combattimento v1.3 (PDF del 26/09).** È un riassunto per il tavolo o una fonte da
   seguire quando diverge dai manuali? Lo mettiamo nel registro come riferimento, senza estrarne dati.
+
+## 8. Lotto 2 dei Veicoli: fatto il 4 ottobre 2026
+
+Dati e motore, senza interfaccia e senza campi nel personaggio. Letti integralmente anche i capitoli 5 e 6
+(collisioni, incidenti, inseguimenti, speronamento), che in questa ricognizione erano stati visti solo per
+sommi capi.
+
+**`data/veicoli.json`** (versione «Veicoli 0.2», con la scheda dello Scout): misure del §1.1; Pilotare su INT
+(§1.2); Azioni e Iniziativa del conducente (§1.3); le cinque fasce di MAN (§1.4); le quattro andature con
+moltiplicatore, penalità a Pilotare e penalità agli attacchi da bordo e contro il mezzo (§2.1, §3.1); terreno
+difficile (§2.3); le cinque manovre complesse con l'andatura di riferimento e i quattro esiti (§2.4, §2.5);
+Copertura (§3.2) e Manovra Evasiva (§3.3); le tre strutture con i cinque stati e le soglie di 1/3 e 2/3 (§4.1,
+§4.4); localizzazione 1d20 con le penalità della selezione accurata (§4.2); conversione del danno in PI con
+PS Integrità e Corazzato, e l'esempio del manuale (§4.3); collisioni, danni agli occupanti, ribaltamento e
+caduta (§5.1–5.4); veicolo fuori uso e passaggio dei comandi (§5.5, §5.6); inseguimento (§6.1) e Speronamento
+con il suo esempio (§6.3); riparazioni con le otto capacità professionali, Riparazione d'Emergenza, Spinta al
+Limite e Sovraccarico Tecnico (§7.1–7.4); i due profili completi, con i **Copriruote di Petra** come rinforzo
+della Propulsione. La PS Integrità per Qualità **non** è duplicata: il validatore controlla che quella del
+profilo coincida con `regole.json` → `integrita.ps_per_qualita`.
+
+**Validatore** (`src/validate.js` → `validaVeicoli`): andature nell'ordine giusto con i moltiplicatori 0–3,
+MAN da +2 a −2, le tre strutture, i cinque stati con le penalità per struttura, le righe della localizzazione
+che coprono le 20 facce del d20, la conversione del danno e i suoi invarianti (una PS per colpo, minimo 1,
+Corazzato dopo la PS), l'AR per natura uguale a quella dei personaggi, gli esiti della riparazione da +2 a
+−1 PI, lo Speronamento senza MAN e con il moltiplicatore del Magistrale preso da `regole.json` → `magistrale`,
+e per ogni profilo: PI ≥ 1 per struttura, AR magica ≤ AR totale, posti = conducente + passeggeri, Abilità
+delle armi di bordo esistente, e i conti dei rinforzi (installati + ricambi = complessivi, PI × pezzi). Gli
+esempi numerici del manuale sono **controllati nei dati**: se Davide cambia i numeri dell'esempio del §4.3 o
+del §5.2 senza cambiare la procedura, il validatore lo dice.
+
+**`src/veicoli.js`** (puro, nessuna interfaccia): `profiloVeicolo`, `andaturaDi`, `manovraDi`,
+`movimentoMassimo`, `statoStruttura`, `soglieStruttura`, `vistaVeicolo`, `penalitaAttacco`, `localizza`,
+`arVeicolo`, `piDaDanno`, `applicaColpoVeicolo`, `assorbiConRinforzi`, `dadiCollisione`, `qCollisione`,
+`dannoOccupante`, `riparaVeicolo`, `conPi`, `andaturaResidua`.
+
+**Modello dati proposto (A.100).** Un mezzo in gioco è un oggetto che **non** dipende da chi lo possiede: la
+risposta di Davide cambia solo *dove* si salva (nel file del personaggio, in un file del gruppo accanto a
+`personaggi/`, o nello scontro della plancia), non la forma.
+
+```json
+{ "profilo": "asa-scout-mk4",
+  "nome": "ASA Scout",
+  "pi": { "corpo": 54, "propulsione": 36, "motore": 24 },
+  "andatura": "veloce",
+  "conducente": "pg:Lucas-Vane",
+  "rinforzi": { "copriruote-petra": { "montati": [3, 3, 1, 0], "ricambi": [3, 3] } },
+  "nec": { "rosso_lx": 84000, "verde_ore": 21 },
+  "ripristini": [{ "struttura": "motore", "fino_a": "fine_scena" }],
+  "avarie": "ruota posteriore destra cerchiata" }
+```
+
+Solo `profilo` è obbligatorio: tutto il resto lo riempie `vistaVeicolo` dal catalogo (mezzo integro, fermo,
+senza conducente). `profilo` è l'id del catalogo; un mezzo scritto a mano usa `scheda` con gli stessi campi
+di un profilo, come i nemici fuori dal bestiario. I PI stanno in `pi` perché sono l'unica cosa che cambia
+spesso; `conducente` è l'id di un partecipante dello scontro oppure la chiave di un PG, così vale sia nella
+plancia sia nella scheda. Nessuna funzione modifica il mezzo: `conPi` restituisce un oggetto nuovo, come fa
+`src/sessione.js` con la sessione.
+
+**Test** (`tests/veicoli.test.js`, 31): un test per ogni esempio numerico del manuale — andature con MOV 20
+(§2.1), tabella delle andature dell'autovettura (§9), frenata d'emergenza (§2.4), VA di Pilotare
+dell'inseguimento (§6.2), penalità incrociate degli attacchi (§3.1, §6.2), stati con 12 PI massimi e il
+passaggio del Motore da −4 a −8 (§4.4, §7.4), esempio della procedura di danno con Corazzato 2 (§4.3),
+esempio dei Copriruote (scheda), Q di riferimento e dadi delle collisioni (§5.1), esempio dello Speronamento
+(§6.3), esempio degli occupanti con cintura e Tempra (§5.2), caduta (§5.4), passaggio dei comandi (§5.6),
+costi di riparazione (§7.1, §9.1), Meccanico di Bordo (§7.2), Riparazione d'Emergenza (§7.3), esempio del
+Sovraccarico Tecnico (§7.4), Spinta al Limite (§7.4), i due profili. **Tutti gli esempi del manuale tornano**:
+nessuna discrepanza fra i numeri scritti e la procedura. In più i casi limite chiesti: PI a 0 per struttura
+(Corpo e Motore fuori uso, Propulsione a −8 VA), Corazzato contro danno basso (1 PI potenziale e PS riuscita
+→ 0 PI persi), e un colpo che attraversa due soglie (11 → 3 PI: lo stato finale è Danneggiato, non Colpito).
+
+**Fuori dal lotto**, come previsto: nessuna interfaccia (la tab Veicoli resta «in attesa»), nessun campo nel
+file del personaggio, niente plancia. `src/rules.js` carica `veicoli.json` e lo tiene fra i dati che non
+entrano nelle versioni scritte nel personaggio (`FILE_SOLO_TAVOLO`), finché A.100 non dice di chi è il mezzo.

@@ -2,7 +2,7 @@
 import { validaDati, avvisiDati } from './validate.js';
 
 export const FILE_DATI = ['caratteristiche', 'abilita', 'corporazioni', 'addestramenti', 'classi', 'incantesimi', 'regole',
-  'talenti_liberi', 'specializzazioni', 'tecniche_interiori', 'dotazioni', 'formato_nemici', 'bestiario'];
+  'talenti_liberi', 'specializzazioni', 'tecniche_interiori', 'dotazioni', 'formato_nemici', 'bestiario', 'veicoli'];
 
 /** Lettore per il browser: scarica data/<nome>.json accanto a index.html. */
 export function lettoreFetch(base = 'data/') {
@@ -67,9 +67,10 @@ async function caricaEquipaggiamento(leggi, dati, erroriLettura) {
   dati.equipaggiamento = { versione_manuale: indice.versione_manuale, indice, file };
 }
 
-// Dati del solo Tavolo del Master (Bestiario proposto): non sono regole del personaggio, quindi non entrano nelle
-// versioni dei dati scritte nel file del personaggio né nel piede della stampa.
-export const FILE_SOLO_TAVOLO = ['bestiario'];
+// Dati che non riguardano (ancora) il personaggio: non entrano nelle versioni dei dati scritte nel suo file né
+// nel piede della stampa. Il Bestiario proposto è del Tavolo del Master; i veicoli ci restano finché Davide non
+// dice di chi è il mezzo e la tab Veicoli esce dall'attesa (docs/ricognizione-2026-10-03.md, A.100).
+export const FILE_SOLO_TAVOLO = ['bestiario', 'veicoli'];
 
 /** Versione del manuale di ogni file dati che riguarda il personaggio: { file: versione_manuale }. */
 export function versioniPersonaggio(dati) {

@@ -72,6 +72,7 @@ export function validaDati(dati) {
   if (dati.incantesimi?.incantesimi?.some((i) => i.meccanica)) validaMeccanicaIncantesimi(dati, err);
   if (isOggetto(dati.formato_nemici)) validaFormatoNemici(dati, err);
   if (isOggetto(dati.bestiario)) validaBestiario(dati, err);
+  if (isOggetto(dati.veicoli)) validaVeicoli(dati, err);
   if (dati.incantesimi?.incantesimi?.length) validaDurateIncantesimi(dati, err);
   // durate in Round (Giocatore §8.9.1, §5.18): il Round di attivazione conta o no (src/tecniche.js → fineDurata)
   if (dati.regole?.durate_round !== undefined && typeof dati.regole.durate_round?.round_attivazione_conta !== 'boolean') err('regole', 'durate_round.round_attivazione_conta', 'vero o falso: il Round di attivazione conta nella durata?');
@@ -2387,4 +2388,182 @@ function validaDurateIncantesimi(dati, err) {
       else if (!VALORE_DURATA.test(String(v[c]).trim())) err(F, k, `«${c}» = «${v[c]}»: valore non riconosciuto`);
     }
   });
+}
+
+// Veicoli (veicoli.json, Manuale dei Veicoli 0.2): regole dei cap. 1–7 e profili dei mezzi. La PS Integrità per
+// Qualità non si duplica qui: ogni profilo deve riportare quella della sua Qualità in regole.json → integrita.
+function validaVeicoli(dati, err) {
+  const F = 'veicoli';
+  const v = dati.veicoli;
+  const S = ['corpo', 'propulsione', 'motore'];
+  // §1.2: Pilotare su INT, nessuna Prova per la guida ordinaria
+  if (v.pilotare?.abilita !== 'Pilotare') err(F, 'pilotare.abilita', '«Pilotare» atteso (§1.2)');
+  if (!(dati.abilita?.abilita ?? []).some((a) => a.nome === 'Pilotare' && a.caratteristica === v.pilotare?.caratteristica)) {
+    err(F, 'pilotare.caratteristica', `l’Abilità Pilotare di abilita.json non usa ${v.pilotare?.caratteristica} (§1.2: INT)`);
+  }
+  // §1.4: MAN da −2 a +2, una fascia per valore
+  const man = v.manovrabilita;
+  if (!Array.isArray(man?.fasce) || man.fasce.length !== 5) err(F, 'manovrabilita.fasce', 'cinque fasce da +2 a −2 attese (§1.4)');
+  else {
+    const valori = man.fasce.map((f) => f.man);
+    if (valori.join() !== '2,1,0,-1,-2') err(F, 'manovrabilita.fasce', `valori da +2 a −2 attesi, trovati ${valori.join(', ')}`);
+    for (const [i, f] of man.fasce.entries()) if (!isTesto(f.nome)) err(F, `manovrabilita.fasce[${i}].nome`, 'nome mancante');
+  }
+  // §2.1 e §3.1: quattro andature, moltiplicatore e penalità a Pilotare e agli attacchi
+  const A = v.andature?.elenco;
+  if (!Array.isArray(A) || A.length !== 4) err(F, 'andature.elenco', 'quattro andature attese: Fermo, Controllata, Veloce, Massima (§2.1)');
+  else {
+    if (A.map((x) => x.id).join() !== 'fermo,controllata,veloce,massima') err(F, 'andature.elenco', 'ordine atteso: fermo, controllata, veloce, massima');
+    for (const [i, x] of A.entries()) {
+      const k = `andature.elenco[${i}] (${x?.nome})`;
+      if (!isIntero(x?.moltiplicatore) || x.moltiplicatore !== i) err(F, `${k}.moltiplicatore`, `${i} atteso (MOV ×${i})`);
+      for (const c of ['pilotare', 'attacco_da_bordo', 'attacco_contro']) {
+        if (!isIntero(x?.[c]) || x[c] > 0) err(F, `${k}.${c}`, 'modificatore intero ≤ 0 atteso (§2.1, §3.1)');
+      }
+    }
+  }
+  // §2.4: manovre complesse, con la penalità propria e l'andatura di riferimento
+  const RIF = ['mantenuta', 'iniziale', 'da_raggiungere'];
+  for (const [i, m] of (v.manovre?.elenco ?? []).entries()) {
+    const k = `manovre.elenco[${i}] (${m?.nome})`;
+    if (!isTesto(m?.id) || !isTesto(m?.nome)) err(F, k, 'id e nome mancanti');
+    if (!isIntero(m?.va) || m.va > 0) err(F, `${k}.va`, 'penalità intera ≤ 0 attesa');
+    if (!RIF.includes(m?.andatura_di_riferimento)) err(F, `${k}.andatura_di_riferimento`, `uno fra ${RIF.join(', ')} (§2.4)`);
+    if (!isTesto(m?.effetto)) err(F, `${k}.effetto`, 'effetto del successo mancante');
+  }
+  if (!Array.isArray(v.manovre?.esiti) || v.manovre.esiti.length !== 4) err(F, 'manovre.esiti', 'quattro esiti attesi (§2.5)');
+  // §4.1 e §4.4: tre strutture e i loro stati, con le soglie di 1/3 e 2/3
+  const st = v.strutture;
+  if ((st?.elenco ?? []).map((x) => x.id).join() !== S.join()) err(F, 'strutture.elenco', `le tre strutture del §4.1: ${S.join(', ')}`);
+  const stati = st?.stati ?? [];
+  if (stati.length !== 5) err(F, 'strutture.stati', 'cinque stati attesi: integro, operativo, colpito, danneggiato, rotto (§4.4)');
+  for (const [i, s] of stati.entries()) {
+    const k = `strutture.stati[${i}] (${s?.nome})`;
+    if (!isOggetto(s?.penalita)) { err(F, `${k}.penalita`, 'penalità per struttura attese'); continue; }
+    for (const x of S) {
+      const p = s.penalita[x];
+      if (p !== null && (!isIntero(p) || p > 0)) err(F, `${k}.penalita.${x}`, 'intero ≤ 0, oppure null se la struttura è fuori uso');
+    }
+  }
+  if (st?.solo_penalita_peggiore !== true) err(F, 'strutture.solo_penalita_peggiore', 'true atteso (§4.4: si applica soltanto la peggiore)');
+  if ((st?.elenco ?? []).find((x) => x.id === 'propulsione')?.va_a_zero !== -8) err(F, 'strutture.elenco', 'Propulsione a 0 PI: −8 VA, eccezione del §4.4');
+  // §4.2: localizzazione con 1d20, righe contigue che coprono le 20 facce
+  const L = v.localizzazione;
+  if (L?.dado !== '1d20') err(F, 'localizzazione.dado', '«1d20» atteso (§4.2)');
+  let atteso = 20;
+  for (const [i, r] of (L?.righe ?? []).entries()) {
+    const k = `localizzazione.righe[${i}]`;
+    if (r?.a !== atteso || !(r.da <= r.a)) err(F, k, `intervallo che finisce a ${atteso} (le righe scendono da 20 a 1)`);
+    atteso = (r?.da ?? atteso) - 1;
+    if (![...S, 'occupanti'].includes(r?.bersaglio)) err(F, `${k}.bersaglio`, `uno fra ${[...S, 'occupanti'].join(', ')}`);
+    if (!isIntero(r?.accurata_va) || r.accurata_va > 0) err(F, `${k}.accurata_va`, 'penalità intera ≤ 0 per la selezione accurata');
+  }
+  if (atteso !== 0) err(F, 'localizzazione.righe', 'le righe non coprono le 20 facce del d20');
+  if (!S.includes(L?.occupanti_non_esposti)) err(F, 'localizzazione.occupanti_non_esposti', 'struttura colpita quando nessun occupante è esposto (§4.2: Motore)');
+  // §4.3: conversione del danno in PI, PS e Corazzato
+  const D = v.danno;
+  if (!isIntero(D?.danni_per_pi) || D.danni_per_pi < 1) err(F, 'danno.danni_per_pi', 'intero ≥ 1 atteso (§4.3: 1 PI ogni 5 danni o frazione)');
+  if (D?.ps_per_colpo_e_struttura !== 1) err(F, 'danno.ps_per_colpo_e_struttura', '1 atteso (§4.3: una sola PS per struttura e per colpo)');
+  if (D?.ps_riuscita !== 'dimezza_per_eccesso') err(F, 'danno.ps_riuscita', '«dimezza_per_eccesso» atteso (§4.3)');
+  if (D?.ps_minimo_pi !== 1) err(F, 'danno.ps_minimo_pi', '1 atteso (§4.3: minimo 1 se esiste una perdita potenziale)');
+  if (D?.corazzato_dopo_ps !== true) err(F, 'danno.corazzato_dopo_ps', 'true atteso (§4.3: Corazzato riduce dopo la PS)');
+  if (JSON.stringify(D?.ar_per_natura) !== JSON.stringify(dati.regole?.danno_applicato?.ar_per_natura)) {
+    err(F, 'danno.ar_per_natura', 'deve coincidere con regole.json → danno_applicato.ar_per_natura (§4.3: stessa regola dei personaggi)');
+  }
+  // l'esempio del manuale è un test dei dati: 5 PI potenziali e Corazzato 2 → 1 con PS riuscita, 3 con PS fallita
+  const E = D?.esempio;
+  if (E) {
+    const riuscita = Math.max(0, Math.ceil(E.pi_potenziali / 2) - E.corazzato);
+    const fallita = Math.max(0, E.pi_potenziali - E.corazzato);
+    if (riuscita !== E.ps_riuscita_pi) err(F, 'danno.esempio.ps_riuscita_pi', `${riuscita} atteso dalla procedura del §4.3`);
+    if (fallita !== E.ps_fallita_pi) err(F, 'danno.esempio.ps_fallita_pi', `${fallita} atteso dalla procedura del §4.3`);
+  }
+  // §5.1 e §5.4: collisioni e caduta, un dado ogni N Q
+  const C = v.collisioni;
+  if (!isIntero(C?.q_per_dado) || C.q_per_dado < 1) err(F, 'collisioni.q_per_dado', 'intero ≥ 1 atteso (§5.1: 1d6 ogni 10 Q o frazione)');
+  if (!S.includes(C?.struttura_predefinita)) err(F, 'collisioni.struttura_predefinita', 'struttura colpita di norma (§5.1: Corpo principale)');
+  const FORMULE = ['andatura_in_movimento', 'somma', 'differenza', 'maggiore'];
+  for (const [i, r] of (C?.riferimento ?? []).entries()) {
+    if (!FORMULE.includes(r?.formula)) err(F, `collisioni.riferimento[${i}].formula`, `una fra ${FORMULE.join(', ')} (§5.1)`);
+  }
+  if (!isIntero(C?.caduta?.q_per_dado) || C.caduta.q_per_dado < 1) err(F, 'collisioni.caduta.q_per_dado', 'intero ≥ 1 atteso (§5.4: 1d6 ogni 2 Q completi)');
+  if (C?.caduta?.ar_riduce !== false) err(F, 'collisioni.caduta.ar_riduce', 'false atteso (§5.4: l’AR non riduce il danno da caduta)');
+  if (C?.occupanti?.armatura_personale_riduce !== false) err(F, 'collisioni.occupanti.armatura_personale_riduce', 'false atteso (§5.2)');
+  if (C?.occupanti?.salvezza !== 'Tempra' || C?.occupanti?.espulsione_salvezza !== 'Riflessi') {
+    err(F, 'collisioni.occupanti', 'Tempra riduce il danno, Riflessi decide l’espulsione (§5.2, §5.3)');
+  }
+  const O = C?.occupanti?.esempio;
+  if (O) {
+    const dopoCintura = Math.ceil(O.danno / 2);
+    if (dopoCintura !== O.dopo_cintura) err(F, 'collisioni.occupanti.esempio.dopo_cintura', `${dopoCintura} atteso (cintura: dimezza per eccesso)`);
+    if (Math.ceil(dopoCintura / 2) !== O.dopo_tempra) err(F, 'collisioni.occupanti.esempio.dopo_tempra', `${Math.ceil(dopoCintura / 2)} atteso (Tempra: dimezza per eccesso)`);
+  }
+  // §6.3: lo Speronamento è un attacco, quindi senza MAN e senza penalità propria
+  if (v.speronamento?.man !== false) err(F, 'speronamento.man', 'false atteso (§1.4, §6.3: MAN non modifica questo attacco)');
+  if (v.speronamento?.penalita_propria !== 0) err(F, 'speronamento.penalita_propria', '0 atteso (§6.3: nessuna penalità fissa propria)');
+  if (v.speronamento?.moltiplicatore_magistrale !== dati.regole?.magistrale?.raddoppio) {
+    err(F, 'speronamento.moltiplicatore_magistrale', 'deve coincidere con regole.json → magistrale.raddoppio (§1.6)');
+  }
+  // §7.1: riparazione, un'ora e una Prova di Tecnologia; gli esiti vanno da +2 a −1 PI
+  const RIP = v.riparazione;
+  if (RIP?.abilita !== 'Tecnologia') err(F, 'riparazione.abilita', '«Tecnologia» atteso (§7.1)');
+  if (RIP?.minuti !== 60) err(F, 'riparazione.minuti', '60 atteso (§7.1: 1 ora)');
+  if ((RIP?.esiti ?? []).map((x) => x.pi).join() !== '2,1,0,-1') err(F, 'riparazione.esiti', 'PI attesi: Magistrale 2, Successo 1, Fallimento 0, Maldestro −1 (§7.1)');
+  // §7.4: Sovraccarico Tecnico, 1 PI speso e almeno 2 nella riserva
+  const SO = v.sovraccarico_tecnico;
+  if (SO?.pi_spesi !== 1 || SO?.pi_minimi_richiesti !== 2) err(F, 'sovraccarico_tecnico', '1 PI speso e almeno 2 PI nella riserva (§7.4)');
+  for (const [i, r] of (SO?.riserve ?? []).entries()) {
+    if (![...S, 'oggetto'].includes(r?.struttura)) err(F, `sovraccarico_tecnico.riserve[${i}].struttura`, `una fra ${[...S, 'oggetto'].join(', ')}`);
+  }
+  const SP = v.spinta_al_limite?.prova_alla_scadenza;
+  if (!S.includes(SP?.struttura) || SP?.fallimento_pi !== 1 || SP?.maldestro_pi !== 2) {
+    err(F, 'spinta_al_limite.prova_alla_scadenza', 'Motore, 1 PI col fallimento e 2 col Maldestro (§7.4)');
+  }
+  // profili dei mezzi (§9, §10)
+  const qualita = dati.regole?.integrita?.ps_per_qualita ?? {};
+  const ids = new Set();
+  (v.profili ?? []).forEach((p, i) => {
+    const k = `profili[${i}] (${p?.nome})`;
+    if (!isTesto(p?.id) || !isTesto(p?.nome)) err(F, k, 'id e nome mancanti');
+    else if (ids.has(p.id)) err(F, `${k}.id`, `id «${p.id}» ripetuto`);
+    else ids.add(p.id);
+    if (!isIntero(p?.mov_q) || p.mov_q < 1) err(F, `${k}.mov_q`, 'MOV intero ≥ 1 atteso');
+    if (!isIntero(p?.man) || p.man < -2 || p.man > 2) err(F, `${k}.man`, 'MAN intero fra −2 e +2');
+    // la PS Integrità viene dalla Qualità (regole.json → integrita): nel profilo si ricopia, e deve coincidere
+    const ps = qualita[p?.qualita];
+    if (ps === undefined) err(F, `${k}.qualita`, `«${p?.qualita}» non è una Qualità di regole.json → integrita.ps_per_qualita`);
+    else if (p.ps_integrita !== ps) err(F, `${k}.ps_integrita`, `${ps} atteso per la Qualità ${p.qualita} (regole.json → integrita.ps_per_qualita)`);
+    if (!isIntero(p?.ar?.totale) || p.ar.totale < 0) err(F, `${k}.ar.totale`, 'AR intera ≥ 0 attesa');
+    if (!isIntero(p?.ar?.magica) || p.ar.magica < 0 || p.ar.magica > p?.ar?.totale) err(F, `${k}.ar.magica`, 'componente magica fra 0 e l’AR totale');
+    if (!isIntero(p?.corazzato) || p.corazzato < 0) err(F, `${k}.corazzato`, 'Corazzato intero ≥ 0 atteso');
+    for (const s of S) {
+      if (!isIntero(p?.pi?.[s]) || p.pi[s] < 1) err(F, `${k}.pi.${s}`, 'PI massimi interi ≥ 1 attesi (§4.1)');
+    }
+    if (p?.equipaggio && p.equipaggio.posti !== (p.equipaggio.conducente ?? 0) + (p.equipaggio.passeggeri ?? 0)) {
+      err(F, `${k}.equipaggio.posti`, `${(p.equipaggio.conducente ?? 0) + (p.equipaggio.passeggeri ?? 0)} atteso (conducente + passeggeri)`);
+    }
+    // armi di bordo: l'Abilità esiste e il profilo dice chi le usa
+    (p?.armi ?? []).forEach((a, j) => {
+      const ka = `${k}.armi[${j}] (${a?.nome})`;
+      if (!isTesto(a?.nome)) err(F, ka, 'nome mancante');
+      if (!(dati.abilita?.abilita ?? []).some((x) => x.nome === a?.abilita)) err(F, `${ka}.abilita`, `«${a?.abilita}» non è un'Abilità esistente (§3.1)`);
+      if (!isTesto(a?.operatore)) err(F, `${ka}.operatore`, 'chi usa l’arma (§3.1: operatore, postazione, arco di tiro)');
+      if (!isTesto(a?.danno)) err(F, `${ka}.danno`, 'danno mancante');
+    });
+    // rinforzi di una struttura (Copriruote di Petra): struttura esistente e numeri coerenti
+    (p?.rinforzi ?? []).forEach((r, j) => {
+      const kr = `${k}.rinforzi[${j}] (${r?.nome})`;
+      if (!S.includes(r?.struttura)) err(F, `${kr}.struttura`, `una fra ${S.join(', ')}`);
+      if (!isIntero(r?.pi_per_pezzo) || r.pi_per_pezzo < 1) err(F, `${kr}.pi_per_pezzo`, 'PI per pezzo interi ≥ 1');
+      if ((r?.installati ?? 0) + (r?.ricambi ?? 0) !== r?.complessivi) err(F, `${kr}.complessivi`, 'installati + ricambi devono fare i complessivi');
+      if (r?.protezione_iniziale_pi !== (r?.installati ?? 0) * (r?.pi_per_pezzo ?? 0)) {
+        err(F, `${kr}.protezione_iniziale_pi`, `${(r?.installati ?? 0) * (r?.pi_per_pezzo ?? 0)} atteso (installati × PI per pezzo)`);
+      }
+      if (r?.pi_nelle_scorte !== (r?.ricambi ?? 0) * (r?.pi_per_pezzo ?? 0)) {
+        err(F, `${kr}.pi_nelle_scorte`, `${(r?.ricambi ?? 0) * (r?.pi_per_pezzo ?? 0)} atteso (ricambi × PI per pezzo)`);
+      }
+      if (r?.aumenta_pi_massimi !== false) err(F, `${kr}.aumenta_pi_massimi`, 'false atteso: i rinforzi non aumentano i PI massimi della struttura');
+    });
+  });
+  if (!ids.has('autovettura-civile') || !ids.has('asa-scout-mk4')) err(F, 'profili', 'i due profili del manuale: autovettura-civile (§9) e asa-scout-mk4 (§10)');
 }
