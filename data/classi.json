@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Giocatore 0.45 (Google Doc del 01/10/2026, 21:25 UTC)",
+  "versione_manuale": "Giocatore 0.45 (Google Doc del 03/10/2026, 19:16 UTC)",
   "fonte": "§3.4, §3.6, §3.8 (profili); §3.5.2–3.5.11, §3.7, §3.9 (Talenti)",
   "_nota": "PV e PM per Grado: fisso + 1d<dado> (dado 0 = nessun dado). Al 1° livello il dado dei PV è massimizzato (§2.12, §3.3). Le quote incantesimi valgono per le Classi taumaturgiche (§3.8).",
   "classi": [
@@ -1008,7 +1008,7 @@
         "P": [
           "Armi da lancio",
           "Armi leggere",
-          "Armi da mischia",
+          "Armi da guerra",
           "Difese",
           "Atletica",
           "Percezione"
@@ -1016,7 +1016,7 @@
         "G": [
           "Armi medie",
           "Armi pesanti",
-          "Armi da guerra",
+          "Armi da mischia",
           "Corpo a corpo",
           "Pilotare",
           "Sopravvivenza",

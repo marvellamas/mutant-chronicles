@@ -54,7 +54,7 @@
     {
       "nome": "Pugnale da combattimento",
       "tipo": "ravvicinato",
-      "va": 9,
+      "va": 7,
       "danno": "1d6+2",
       "natura": "Naturale",
       "portata_q": 1,
@@ -69,7 +69,7 @@
     },
     {
       "nome": "Armi da mischia",
-      "va": 9
+      "va": 7
     },
     {
       "nome": "Atletica",

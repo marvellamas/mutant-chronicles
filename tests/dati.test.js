@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { validaDati, formattaErrore, trovaTodo, avvisiDati } from '../src/validate.js';
 import { caricaDati } from '../src/rules.js';
+import { competenzaDi, baseIniziale, limiteAbilita } from '../src/competenze.js';
 import { datiReali, leggiDaDisco, copia } from './helpers.js';
 
 const { dati, errori } = await datiReali();
@@ -77,6 +78,22 @@ test('validatore: le 25 Classi coprono le 24 Abilità una volta ciascuna, 2 S / 
   }
   // gli Addestramenti non hanno più i valori base
   for (const a of dati.addestramenti.addestramenti) assert.equal(a.valori_base, undefined, a.nome);
+});
+
+test('Incursore §3.7 (Giocatore del 03/10): Armi da guerra Professionale, Armi da mischia Generica', () => {
+  const inc = dati.classi.classi.find((c) => c.nome === 'Incursore');
+  assert.equal(competenzaDi(inc, 'Armi da guerra'), 'P');
+  assert.equal(competenzaDi(inc, 'Armi da mischia'), 'G');
+  assert.equal(baseIniziale(inc, 'Armi da guerra', dati.regole), 6);
+  assert.equal(baseIniziale(inc, 'Armi da mischia', dati.regole), 5);
+  // il limite del VA personale segue la categoria (§8.3): P più alto di G a ogni Grado
+  const uno = [{ def: inc, grado: 1 }];
+  assert.equal(limiteAbilita('Armi da guerra', uno, dati.regole).valore, 9);
+  assert.equal(limiteAbilita('Armi da mischia', uno, dati.regole).valore, 7);
+  // Armi da mischia resta una delle cinque Abilità di Classe (+1 per Grado) pur essendo Generica:
+  // i +1 si registrano sempre, ma oltre il limite G restano inattivi (§8.3; src/competenze.js → puntiUtili)
+  assert.ok(inc.abilita.includes('Armi da mischia'));
+  assert.ok(!inc.abilita.includes('Armi da guerra'));
 });
 
 test('validatore: Classe con categoria di competenza sbagliata, Abilità ripetuta, mancante o inesistente', () => {

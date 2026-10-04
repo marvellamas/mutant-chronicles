@@ -1223,7 +1223,7 @@ Le Manifestazioni del §4.2.4 sono i poteri dell’Eretico: sostituiscono i «Do
 | INT · SAG · CAR | 5 · 5 · 7 | 5 · 5 · 7 | 5 · 5 · 7 | 5 · 5 · 7 |
 | PV | 17 | 25 | 50 | 155 |
 | AR (di cui magica) | 1 (0) | 2 (1) | 2 (1) | 3 (2) |
-| Pugnale da combattimento: VA, danno | 9, 1d6+4 | 11, 1d6+4 Magico | 13, 1d6+6 Magico | 13, 1d6+6 Etereo |
+| Pugnale da combattimento: VA, danno | 7, 1d6+4 | 9, 1d6+4 Magico | 11, 1d6+6 Magico | 11, 1d6+6 Etereo |
 | Pistola semiautomatica: VA, danno, gittata | 7, 1d6+2, 30 Q | 9, 1d6+2, 30 Q | 11, 1d6+4, 30 Q | 11, 1d6+4, 30 Q |
 | VA Difese | 9 | 11 | 13 | 13 |
 | PS Tempra · Riflessi · Volontà · Magia | 11 · 12 · 11 · 8 | 12 · 13 · 12 · 9 | 12 · 13 · 12 · 9 | 12 · 13 · 12 · 9 |
@@ -1235,7 +1235,7 @@ Le Manifestazioni del §4.2.4 sono i poteri dell’Eretico: sostituiscono i «Do
 | Contromisure | — | — | — | — |
 | Capacità | Sussurro continuo; Movimento Tattico | Presenza terrificante, Sussurro continuo, Sguardo del vuoto; Movimento Tattico, Attacco Silenzioso, Imboscata Migliorata, Resistenza alla Corruzione | Come il Semplice, più Rapidità Operativa e Affondo Migliorato | Come il Medio, più Grido dell’Oscura Simmetria |
 | Immunità | — | — | — | Terrorizzato |
-| Round di resistenza · Round per abbattere un PG | 1,2 · 9 | 1,7 · 8,9 | 2,6 · 6,6 | 12,1 · 6,6 |
+| Round di resistenza · Round per abbattere un PG | 1,2 · 11,6 | 1,7 · 11,2 | 2,6 · 8 | 12,1 · 8 |
 
 I valori umani vengono dal convertitore (Eretico Recluta, Veterano ed Élite del Tavolo del Master) con il moltiplicatore e il bonus di grado del §3.2; i Talenti restano capacità da applicare a mano. Chi è ferito dall’Eretico è esposto alla Corruzione Oscura: Flebile al Minore, Debole al Semplice e al Medio, Normale al Boss (§4.2.5).
 

@@ -731,3 +731,15 @@ nuovi quesiti dell’app e punti Abilità liberi» (testo in `docs/risposte-mast
     sono rigenerati con 5 punti. Il testo del Giocatore (§2.0, §2.13 con l’esempio dell’Agente, §2.17, §8.1, §8.3)
     dice ancora 10: errata proposta A.89. Nell’esempio del §2.13 Percezione 2 + Raggirare 4 non stanno più in 5 punti:
     i test usano Percezione 2 + Raggirare 3 (Percezione VA 12, Raggirare VA 11) finché Davide non rifà l’esempio.
+91. **Incursore: Armi da guerra Professionale, Armi da mischia Generica** (Manuale del Giocatore §3.7, Doc del
+    03/10/2026 19:16). Nel profilo di competenza dell'Incursore le due Abilità si scambiano di categoria; i conteggi
+    2 S / 6 P / 12 G / 4 N e le basi 7/6/5/3 restano. → `classi.json` → Incursore `competenze` (`versione_manuale`
+    aggiornata al Doc del 03/10). Conseguenze: *Armi da guerra* guadagna +1 di base (5 → 6) e il limite del VA
+    personale sale alla fascia P (9 al I Grado, 19 al VI); *Armi da mischia* perde 1 di base (6 → 5) e scende alla
+    fascia G (7 al I Grado, 17 al VI), **pur restando una delle cinque Abilità di Classe** che ricevono +1 per Grado:
+    quei +1 si registrano sempre ma, oltre il limite G, restano inattivi (§8.3, `src/competenze.js` → `puntiUtili`),
+    e i punti liberi già spesi che non aumentano più il VA si riassegnano con «Assegna». I tre Eretici del bestiario
+    umano e l'Eretico corrotto del Bestiario proposto (§5.5.1) combattono da Incursore: il VA del Pugnale da
+    combattimento cala di 2 a ogni grado (9/11/13 → 7/9/11) e i «Round per abbattere un PG» della taratura salgono
+    (9 → 11,6; 8,9 → 11,2; 6,6 → 8). Esempi e bestiario umano rigenerati, `docs/bestiario/bestiario.md` e `.html`
+    aggiornati.
