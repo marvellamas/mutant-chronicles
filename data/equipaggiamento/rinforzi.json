@@ -709,7 +709,7 @@
           "proprieta": "Protezione occulta 1"
         }
       ],
-      "indossabile_da_solo": false
+      "indossabile_da_solo": true
     },
     {
       "id": "mantello-del-pellegrino",
@@ -1086,7 +1086,7 @@
       "abbinamento_ottimizzato": [
         "armature_corporative:abito-degli-agenti-ies"
       ],
-      "indossabile_da_solo": false
+      "indossabile_da_solo": true
     },
     {
       "id": "inserti-articolati-delle-ombre",

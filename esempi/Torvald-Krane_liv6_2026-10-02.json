@@ -41,8 +41,7 @@
       "Armi da guerra": 1,
       "Armi da mischia": 2,
       "Corpo a corpo": 1,
-      "Percezione": 3,
-      "Sopravvivenza": 3
+      "Percezione": 1
     },
     "incantesimi": [],
     "puntiEroe": {
@@ -277,10 +276,7 @@
         "Armi da mischia": 1,
         "Difese": 1,
         "Corpo a corpo": 1,
-        "Percezione": 2,
-        "Sopravvivenza": 2,
-        "Armi leggere": 1,
-        "Medicina": 2
+        "Percezione": 2
       }
     },
     {

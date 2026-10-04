@@ -53,7 +53,7 @@ test('collaudo a: Imperiali Combattente Assaltatore, 8° livello', () => {
   assert.equal(va(s, 'Atletica').totale, 13); // P: 3 + 6 + 1 + 3 = 13, al limite
   assert.equal(va(s, 'Atletica').vaEquip, 12); // armatura Media: Agilità −1 (Armamenti §7.11.1)
   assert.equal(va(s, 'Sopravvivenza').totale, 12); // P: 2 + 6 + 1 + 3
-  assert.equal(va(s, 'Furtività').vaEquip, 8); // G: 3 + 5 + 0 + 1 = 9, poi −1 di Agilità
+  assert.equal(va(s, 'Furtività').vaEquip, 7); // G: 3 + 5 + 0 + 0 = 8 (5 punti liberi per Grado, E&L del 03/10), poi −1 di Agilità
   // Spadone Claymore a due mani: Armi da guerra 15 + Specializzazione in Spade +1 (§8.8.1, dopo il limite);
   // Highland Clan Warriors: Articolazione d'assalto porta a 0 la penalità ravvicinata (Armamenti §7.14.2)
   const [claymore] = s.equipaggiamento.armi;

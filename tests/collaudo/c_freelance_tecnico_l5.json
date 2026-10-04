@@ -39,10 +39,7 @@
       "Tecnologia": 2,
       "Scienza": 1,
       "Medicina": 1,
-      "Cultura": 2,
-      "Oratoria": 1,
-      "Corpo a corpo": 2,
-      "Artefatti": 1
+      "Cultura": 1
     },
     "incantesimi": [],
     "puntiEroe": {
@@ -161,10 +158,7 @@
       "puntiAbilita": {
         "Scienza": 1,
         "Percezione": 2,
-        "Furtività": 2,
-        "Medicina": 2,
-        "Sopravvivenza": 2,
-        "Atletica": 1
+        "Furtività": 2
       }
     },
     {

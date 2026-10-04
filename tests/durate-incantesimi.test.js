@@ -31,9 +31,8 @@ test('dati: ogni incantesimo ha la sua durata; tipi e valori riconosciuti', () =
   const m = I('Marchio Psichico');
   assert.deepEqual(opzioniDurata(m).modalita.map((x) => x.id), ['inseguimento', 'combattimento']);
   assert.deepEqual([durataLancio(m, 6, { modalita: 'combattimento' }).round, durataLancio(m, 6, { modalita: 'inseguimento' }).testo], [5, '1 ora']);
-  // Scudo: con Concentrazione il doppio della durata fissa; Individuare: da chiarire con Davide
+  // Scudo: con Concentrazione il doppio della durata fissa
   assert.deepEqual([durataLancio(I('Scudo'), 1).round, durataLancio(I('Scudo'), 1, { concentrazione: true }).round], [5, 10]);
-  assert.match(opzioniDurata(I('Individuare')).todo, /durata massima a Concentrazione/);
   assert.equal(durataLancio(I('Colpo Elementale'), 1).tipo, 'istantanea');
 });
 
@@ -83,6 +82,28 @@ test('Talento che allunga la durata: Anticipazione della durata (con Incantesimi
   assert.deepEqual([d.round, d.anticipata], [20, true]);
   const s = registraIncantesimo(sessione({ round: 2 }), { nome: inc.nome, livello: 6, durata: d, bersagli: [] }, dati);
   assert.equal(s.incantesimiAttivi[0].al, 22);
+});
+
+test('A.88 (E&L del 03/10): Individuare con le due colonne del manuale, livelli 6–18, Anticipazione solo sulla durata scelta', () => {
+  const ind = I('Individuare');
+  const op = opzioniDurata(ind);
+  assert.deepEqual([op.concentrazioneAScelta, op.todo], [true, null]);
+  const attese = { 6: ['10 minuti', '5 RND'], 8: ['10 minuti', '5 RND'], 9: ['30 minuti', '10 RND'], 12: ['1 ora', '20 RND'], 14: ['1 ora', '20 RND'], 15: ['2 ore', '5 minuti'], 18: ['4 ore', '10 minuti'] };
+  for (const [l, [con, fissa]] of Object.entries(attese)) {
+    assert.equal(durataLancio(ind, Number(l), { concentrazione: true }).testo, con, `livello ${l}, Concentrazione`);
+    assert.equal(durataLancio(ind, Number(l)).testo, fissa, `livello ${l}, durata fissa`);
+  }
+  assert.equal(ind.versioni.length, 13); // tutti i livelli interi da 6 a 18
+  const aspetto = (nome) => ind.meccanica.anticipazione.aspetti.find((a) => a.nome === nome);
+  const versione = { livello: 9, pm: 9, riga: ind.versioni.find((v) => v['Livello e PM'] === '9') };
+  const nessuno = () => [];
+  const antCon = regoleAnticipazione(ind.meccanica, aspetto('Durata a Concentrazione'), versione, nessuno, dati);
+  // a Concentrazione: 30 minuti → 1 ora; la durata fissa resta 10 RND
+  assert.equal(durataLancio(ind, 9, { concentrazione: true, anticipazione: antCon.valore }).testo, '1 ora');
+  const fissa = durataLancio(ind, 9, { anticipazione: antCon.valore });
+  assert.deepEqual([fissa.testo, fissa.anticipata, fissa.anticipazioneAltraDurata], ['10 RND', false, true]);
+  const antFissa = regoleAnticipazione(ind.meccanica, aspetto('Durata fissa'), versione, nessuno, dati);
+  assert.equal(durataLancio(ind, 9, { anticipazione: antFissa.valore }).testo, '20 RND');
 });
 
 test('«Termina» a mano e «Termina le durate» della plancia; «Nuova sessione» li chiude', () => {

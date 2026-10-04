@@ -38,10 +38,7 @@
     "classe": "Arcanista",
     "puntiAbilitaLiberi": {
       "Potere": 2,
-      "Difese": 3,
-      "Atletica": 2,
-      "Corpo a corpo": 2,
-      "Armi da mischia": 1
+      "Difese": 3
     },
     "incantesimi": [
       "Colpo Elementale",
@@ -137,10 +134,7 @@
         "Rituali": 1,
         "Medicina": 2,
         "Scienza": 1,
-        "Oratoria": 1,
-        "Tecnologia": 1,
-        "Difese": 2,
-        "Atletica": 2
+        "Oratoria": 1
       }
     },
     {
@@ -188,11 +182,7 @@
       "puntiAbilita": {
         "Artefatti": 2,
         "Cultura": 1,
-        "Oratoria": 2,
-        "Scienza": 1,
-        "Tecnologia": 1,
-        "Intrattenere": 1,
-        "Difese": 2
+        "Oratoria": 2
       }
     },
     {
@@ -239,10 +229,7 @@
       "puntiAbilita": {
         "Medicina": 2,
         "Cultura": 2,
-        "Oratoria": 1,
-        "Scienza": 1,
-        "Tecnologia": 1,
-        "Intrattenere": 3
+        "Oratoria": 1
       }
     }
   ],

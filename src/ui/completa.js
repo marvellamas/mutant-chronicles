@@ -6,8 +6,8 @@
 // nessun'altra scelta. Fino alla conferma i punti restano in una bozza.
 // Controlli: statoCompletamento() e validaCompletamento() del motore (src/avanzamento.js).
 import { h } from './dom.js';
-import { statoCompletamento } from '../avanzamento.js';
-import { contatore } from './passi.js';
+import { statoCompletamento, statoRiduzione } from '../avanzamento.js';
+import { contatore, stepper } from './passi.js';
 import { tabellaPuntiAbilita } from './sali.js';
 import { conOrdinale } from '../lingua.js';
 import { barraPassi } from './navigazione.js';
@@ -52,6 +52,59 @@ export function renderCompleta(ctx) {
         + `compresi i +1 di Classe già applicati; ogni punto deve aumentare il VA personale e l’Abilità deve avere VA almeno ${minimo} prima dei punti liberi. I punti di Classe e le altre scelte non cambiano.`),
       contatore(st.rimasti, st.mancanti, 'Punti Abilità'),
       tabellaPuntiAbilita({ dati, abilita: st.abilita, rimasti: st.rimasti, imposta }),
+      bloccanti.length ? h('div', { class: 'riquadro attenzione' },
+        h('ul', {}, bloccanti.map((e) => h('li', { class: 'motivo' }, e.problema)))) : null,
+      barra('fondo'))),
+  ];
+}
+
+/**
+ * Punti Abilità Liberi in eccesso (E&L del 03/10/2026: 5 punti a ogni Grado, compreso il primo, invece di 10). Un
+ * evento alla volta, dal più vecchio: per ogni Abilità dell'evento i punti assegnati e quanti toglierne; i punti
+ * che non aumentano più il VA personale (§8.3) sono indicati per primi. Controlli: statoRiduzione() del motore.
+ * Contesto come renderCompleta.
+ */
+export function renderTogli(ctx) {
+  const { dati, personaggio, bozza } = ctx;
+  const st = statoRiduzione(personaggio, bozza, dati);
+  if (!st) {
+    return [h('section', { class: 'passo' }, h('h1', {}, 'Punti Abilità da togliere'),
+      h('p', { class: 'riquadro ok' }, 'Nessun Punto Abilità in eccesso: il personaggio è in regola.'),
+      h('button', { type: 'button', class: 'btn', onclick: ctx.esci }, '← Torna alla scheda'))];
+  }
+  const dell = st.livello === 1 ? 'della creazione' : `${conOrdinale('del', st.livello)} livello`;
+  const imposta = (nome, v) => {
+    const nuovo = { ...bozza, [nome]: v };
+    if (v <= 0) delete nuovo[nome];
+    ctx.aggiornaBozza(nuovo);
+  };
+  const bloccanti = st.errori.filter((e) => e.tipo === 'violazione');
+  const barra = (posizione) => barraPassi({
+    posizione,
+    indietro: { etichetta: '← Esci senza salvare', onclick: ctx.esci },
+    avanti: { etichetta: `Togli i punti ${dell}`, corta: 'Conferma', disabilitato: st.errori.length > 0,
+      motivo: st.rimasti > 0 ? `${st.rimasti} ${st.rimasti === 1 ? 'punto' : 'punti'} ancora da togliere` : bloccanti[0]?.problema ?? null, onclick: ctx.conferma },
+  });
+  const inattivi = st.abilita.filter((a) => a.inattivi);
+  return [h('div', { class: 'wizard sali completa togli' },
+    h('section', { class: 'passo', 'aria-labelledby': 'titolo-passo' },
+      h('header', { class: 'passo-testa' },
+        h('p', { class: 'sopratitolo' }, `${ctx.titoloAvviso} · ${st.livello === 1 ? '§2.13' : '§8.3'}`),
+        h('h1', { id: 'titolo-passo' }, `Punti Abilità ${dell}: togline ${st.eccesso}`)),
+      barra('cima'),
+      h('p', { class: 'guida' }, `Le regole correnti prevedono ${st.previsti} Punti Abilità Liberi ${dell}: ne erano stati assegnati ${st.assegnati}. `
+        + `Togline ${st.eccesso}, dalle Abilità che preferisci; i +1 di Classe e le altre scelte non cambiano.`
+        + (inattivi.length ? ` Conviene partire da quelli che non aumentano più il VA personale (${inattivi.map((a) => `${a.nome} ${a.inattivi}`).join(', ')}; §8.3).` : '')),
+      h('p', { class: `contatore ${st.rimasti === 0 ? 'ok' : st.rimasti < 0 ? 'errore' : 'attenzione'}`, role: 'status' }, h('strong', {}, String(st.rimasti)), ` Punti Abilità ancora da togliere su ${st.eccesso}`),
+      h('table', { class: 'tabella-togli' },
+        h('thead', {}, h('tr', {}, h('th', {}, 'Abilità'), h('th', {}, 'Punti liberi dell’evento'), h('th', {}, 'Da togliere'))),
+        h('tbody', {}, st.abilita.map((a) => h('tr', {},
+          h('td', {}, a.nome, a.inattivi ? h('small', { class: 'nota' }, ` · ${a.inattivi} non aumentano il VA`) : null),
+          h('td', {}, String(a.punti)),
+          h('td', {}, stepper(a.togli, {
+            meno: () => imposta(a.nome, a.togli - 1), piu: () => imposta(a.nome, a.togli + 1),
+            motivoMeno: a.togli <= 0 ? 'Nessun punto da rimettere.' : null, motivoPiu: a.motivoMeno, etichetta: a.nome,
+          })))))),
       bloccanti.length ? h('div', { class: 'riquadro attenzione' },
         h('ul', {}, bloccanti.map((e) => h('li', { class: 'motivo' }, e.problema)))) : null,
       barra('fondo'))),

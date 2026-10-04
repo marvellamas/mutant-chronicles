@@ -175,24 +175,24 @@ const MULTI = [
   { livello: 3, talentoLibero: { id: 'sempre-allerta' } },
   {
     livello: 4, grado: { classe: 'Soldato' }, tiroPV: tiro(5), // Combattente: nuova Classe di altro Addestramento
-    puntiAbilita: { 'Medicina': 1, 'Atletica': 2, 'Sopravvivenza': 5, 'Difese': 2 }, // Sopravvivenza S per il Soldato (§8.7)
+    puntiAbilita: { 'Sopravvivenza': 5 }, // Sopravvivenza S per il Soldato (§8.7); 5 punti (E&L del 03/10/2026)
   },
   { livello: 5, talentoLibero: { id: 'mulo-da-soma' } },
   { livello: 6, caratteristiche: { SAG: 2 } },
   { livello: 7, talentoLibero: { id: 'sonno-leggero' } },
-  { livello: 8, grado: { classe: 'Accademico' }, tiroPV: tiro(2), puntiAbilita: { 'Scienza': 3, 'Cultura': 2, 'Tecnologia': 3, 'Oratoria': 2 } },
+  { livello: 8, grado: { classe: 'Accademico' }, tiroPV: tiro(2), puntiAbilita: { 'Scienza': 3, 'Tecnologia': 2 } },
   { livello: 9, talentoLibero: { id: 'visione-perfetta' } },
   { livello: 10, caratteristiche: { INT: 2 } },
   { livello: 11, talentoLibero: { id: 'guarigione-migliorata' } },
   {
     livello: 12, grado: { classe: 'Agente' }, tiroPV: tiro(3), talentoClasse: 'Mira Selettiva',
-    puntiAbilita: { 'Furtività': 2, 'Scienza': 2, 'Raggirare': 2, 'Medicina': 2, 'Difese': 2 },
+    puntiAbilita: { 'Furtività': 2, 'Scienza': 2, 'Raggirare': 1 },
   },
   { livello: 13, talentoLibero: { id: 'struttura-robusta' } },
   { livello: 14, caratteristiche: { CAR: 2 } },
   { livello: 15, talentoLibero: { id: 'duro-a-morire' } },
   { livello: 16, grado: { classe: 'Soldato' }, tiroPV: tiro(4), talentoClasse: 'Supporto d’Attacco',
-    puntiAbilita: { 'Armi medie': 3, 'Difese': 2, 'Atletica': 3, 'Tecnologia': 2 },
+    puntiAbilita: { 'Armi medie': 3, 'Difese': 2 },
   },
   { livello: 17, talentoLibero: { id: 'autosufficiente' } },
   { livello: 18, caratteristiche: { FOR: 2 } },
@@ -233,7 +233,7 @@ test('multiclasse: al 4° una nuova Classe di un altro Addestramento, al 20° la
   assert.equal(info.classi.find((c) => c.nome === 'Soldato').ammessa, true);
   // al Grado III del Soldato il Talento è fisso
   assert.deepEqual(validaLivello(p19, { grado: { classe: 'Soldato' }, tiroPV: tiro(8),
-    puntiAbilita: { 'Armi medie': 2, 'Armi leggere': 2, 'Pilotare': 3, 'Tecnologia': 2, 'Atletica': 1 } }, dati), []);
+    puntiAbilita: { 'Armi medie': 2, 'Pilotare': 3 } }, dati), []);
 });
 
 test('Talento di Classe con requisito: Supporto Avanzato richiede un Supporto', () => {
@@ -299,7 +299,7 @@ test('Specializzazione: un Talento Libero acquisibile una volta', () => {
 // --- incompatibilità magia / Risorse Interiori (§8.6.10) ------------------------------------
 
 /** 10 punti del 4° livello per l'Agente che prende un Grado di Arcanista: limite 4, Medicina già a 3. */
-const PUNTI_4_ARCANISTA = { 'Medicina': 1, 'Sopravvivenza': 2, 'Atletica': 2, 'Tecnologia': 2, 'Difese': 1, 'Oratoria': 2 };
+const PUNTI_4_ARCANISTA = { 'Medicina': 1, 'Sopravvivenza': 2, 'Atletica': 2 }; // 5 punti (E&L del 03/10/2026)
 
 const TECNICHE_4 = ['meditazione-profonda', 'vista-felina', 'aura-di-resistenza', 'salto-della-tigre'];
 
@@ -390,7 +390,7 @@ test('decisione 5 del master: al Grado II di Arcanista il livello massimo è 8, 
   const p3 = fino(ARCANISTA, liv, 2);
   const voce4 = {
     grado: { classe: 'Arcanista' }, tiroPV: tiro(2), tiroPM: tiro(3), talentoClasse: 'Riserva Tecnica',
-    puntiAbilita: { 'Artefatti': 1, 'Cultura': 2, 'Medicina': 2, 'Scienza': 2, 'Difese': 3 },
+    puntiAbilita: { 'Artefatti': 1, 'Cultura': 2, 'Medicina': 2 },
     // +2 per macrofamiglia; Evoca Elementale ha livello base 6
     incantesimi: ['Evoca Elementale', 'Irrobustire', 'Distrazione', 'Empatia', 'Cura Spirituale', 'Arma Mistica'],
   };
@@ -424,7 +424,7 @@ test('passiDelLivello: un passo per evento di regole.json, gli eventi automatici
 
   const l4 = passiDelLivello(agente(3), {}, dati);
   assert.deepEqual(idPassi(l4), ['grado', 'abilita', 'riepilogo']);
-  assert.equal(l4.passi.find((p) => p.id === 'abilita').punti, 10);
+  assert.equal(l4.passi.find((p) => p.id === 'abilita').punti, 5); // E&L del 03/10/2026: 5 Punti Abilità Liberi per Grado
 
   const l12 = passiDelLivello(agente(11), {}, dati);
   assert.deepEqual(idPassi(l12), ['grado', 'abilita', 'riepilogo']);
@@ -462,7 +462,7 @@ test('descriviVoce e progressione: una riga leggibile per scelta e per livello',
   assert.match(r5[0], /^Talento Libero: .+ \(Tempra\)$/);
   const r4 = descriviVoce(voce(4), dati, { Agente: 1 });
   assert.match(r4[0], /^Grado: Agente II — Talento a scelta Reazione Operativa; PV 1d6 = 4/);
-  assert.equal(r4[1], 'Punti Abilità: Medicina +1, Cultura +1, Raggirare +1, Sopravvivenza +2, Atletica +2, Difese +1, Tecnologia +2');
+  assert.equal(r4[1], 'Punti Abilità: Medicina +1, Raggirare +1, Atletica +2, Tecnologia +1');
 
   const pr = progressione(agente(4), dati);
   assert.deepEqual(pr.map((x) => x.livello), [1, 2, 3, 4]);

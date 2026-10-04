@@ -19,9 +19,9 @@ const MISHIMA_AGENTE = {
   puntiCaratteristica: { FOR: 1, COS: 2, DES: 1, SAG: 1 },
   addestramento: 'Avventuriero',
   classe: 'Agente',
-  // §2.13 del Giocatore del 29/09
+  // §2.13 del Giocatore del 29/09, con i 5 punti dell'E&L del 03/10/2026
   puntiAbilitaLiberi: {
-    'Percezione': 2, 'Tecnologia': 2, 'Cultura': 2, 'Raggirare': 4,
+    'Percezione': 1, 'Raggirare': 4,
   },
   puntiEroe: { valore: 5, origine: 'manuale' },
 };
@@ -34,7 +34,7 @@ const ARCANISTA = {
   puntiCaratteristica: { INT: 2, SAG: 1, COS: 2 },
   addestramento: 'Taumaturgo',
   classe: 'Arcanista',
-  puntiAbilitaLiberi: { 'Potere': 2, 'Rituali': 2, 'Cultura': 1, 'Difese': 2, 'Armi da lancio': 2, 'Intrattenere': 1 },
+  puntiAbilitaLiberi: { 'Potere': 2, 'Rituali': 2, 'Difese': 1 },
   puntiEroe: { valore: 6, origine: 'app' },
 };
 
@@ -105,7 +105,7 @@ test('cambio di Corporazione: punti liberi su un’Abilità che scende sotto VA 
   const s = {
     ...nuoveScelte(), corporazione: 'Cybertronic', puntiCaratteristica: { FOR: 1, DES: 2, SAG: 2 },
     addestramento: 'Combattente', classe: 'Soldato',
-    puntiAbilitaLiberi: { 'Rituali': 1, 'Difese': 2, 'Percezione': 2, 'Armi leggere': 2, 'Armi medie': 2, 'Atletica': 1 },
+    puntiAbilitaLiberi: { 'Rituali': 1, 'Difese': 2, 'Percezione': 2 },
   };
   assert.deepEqual(normalizza(s, d).avvisi, []);
   const r = applicaModifica(s, { corporazione: 'Capitol' }, d);

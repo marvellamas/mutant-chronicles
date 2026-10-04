@@ -1,17 +1,23 @@
 // Regole aggiornate: completamento dei punti negli eventi già registrati (Giocatore, Doc del 27/09/2026:
 // 10 Punti Abilità Liberi invece di 5, per-davide A.52) e riassegnazione dei punti che con i limiti del
 // VA personale (Doc del 29/09/2026: categorie di competenza, §2.13, §8.3; per-davide A.57) non
-// aumentano più il VA.
+// aumentano più il VA. E&L del 03/10/2026: 5 punti a ogni Grado, compreso il primo; i punti in più si tolgono con
+// «Togli» (puntiDaTogliere, statoRiduzione, validaRiduzione, applicaRiduzione).
+// Il completamento si prova con le regole del 29/09 (10 punti, copia dei dati): il meccanismo non dipende dal numero.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda, validaLivello } from '../src/calc.js';
 import { deserializzaPersonaggio, normalizza, annullaUltimoLivello } from '../src/character.js';
-import { puntiDaCompletare, applicaCompletamento, validaCompletamento, statoCompletamento } from '../src/avanzamento.js';
+import { puntiDaCompletare, applicaCompletamento, validaCompletamento, statoCompletamento, puntiDaTogliere, statoRiduzione, validaRiduzione, applicaRiduzione } from '../src/avanzamento.js';
 import { preparaStampa } from '../src/stampa.js';
 import { datiReali, copia } from './helpers.js';
 import { MISHIMA_AGENTE, tiro } from './personaggi.js';
 
-const { dati } = await datiReali();
+const { dati: DATI } = await datiReali();
+// regole del 29/09: 10 Punti Abilità Liberi per Grado
+const dati = copia(DATI);
+dati.regole.creazione.punti_abilita_liberi = 10;
+for (const x of dati.regole.avanzamento.eventi) x.eventi = x.eventi.map((e) => e.replace(/^punti_abilita:\d+$/, 'punti_abilita:10'));
 
 // Mishima Avventuriero Agente al 5° livello, esportato con le regole di prima (formato 6, 5 punti
 // liberi alla creazione e al 4° livello)
@@ -114,26 +120,46 @@ test('riassegnazione: i punti nuovi non devono rendere inattivi quelli dei livel
   assert.ok(validaCompletamento(oltre, 1, { 'Tecnologia': 2 }, dati).some((x) => /renderebbe inattivi 1 punti di Tecnologia del 4° livello/.test(x.problema)));
 });
 
-test('punti in eccesso rispetto alle regole correnti: non si tolgono, si segnalano', () => {
-  const d = copia(dati);
-  d.regole.creazione.punti_abilita_liberi = 5;
-  for (const x of d.regole.avanzamento.eventi) x.eventi = x.eventi.map((e) => e.replace(/^punti_abilita:\d+$/, 'punti_abilita:5'));
+test('E&L del 03/10/2026: 5 punti per Grado; i punti in più non si tolgono da soli, si segnalano e si tolgono con «Togli»', () => {
+  assert.equal(DATI.regole.creazione.punti_abilita_liberi, 5);
+  assert.ok(DATI.regole.avanzamento.eventi.filter((x) => x.eventi.some((e) => e.startsWith('punti_abilita:'))).every((x) => x.eventi.includes('punti_abilita:5')));
   const livelli = [
     { livello: 2, caratteristiche: { DES: 2 } },
     { livello: 3, talentoLibero: { id: 'iniziativa-migliorata' } },
     { livello: 4, grado: { classe: 'Agente' }, tiroPV: tiro(4), talentoClasse: 'Reazione Operativa', puntiAbilita: { 'Medicina': 1, 'Sopravvivenza': 3, 'Atletica': 3, 'Tecnologia': 3 } },
   ];
-  const creazione = normalizza(MISHIMA_AGENTE, d).scelte;
-  assert.equal(Object.values(creazione.puntiAbilitaLiberi).reduce((s, v) => s + v, 0), 10); // nulla tolto
-  const p = { creazione, livelli };
-  const s = calcolaScheda(p, d);
-  assert.deepEqual(s.eccessi.map((c) => [c.livello, c.eccesso]), [[1, 5], [4, 5]]);
-  assert.deepEqual([s.errori, s.completamenti], [[], []]);
-  assert.equal(calcolaScheda(creazione, d).completa, true);
-  assert.deepEqual(validaLivello(p, { talentoLibero: { id: 'sempre-allerta' } }, d), []);
+  const vecchia = { ...MISHIMA_AGENTE, puntiAbilitaLiberi: { 'Percezione': 2, 'Tecnologia': 2, 'Cultura': 2, 'Raggirare': 4 } };
+  const creazione = normalizza(vecchia, DATI).scelte;
+  assert.equal(Object.values(creazione.puntiAbilitaLiberi).reduce((t, v) => t + v, 0), 10); // nulla tolto al caricamento
+  let p = { creazione, livelli };
+  const s0 = calcolaScheda(p, DATI);
+  assert.deepEqual(s0.eccessi.map((c) => [c.livello, c.eccesso]), [[1, 5], [4, 5]]);
+  assert.deepEqual([s0.errori, s0.completamenti], [[], []]);
+  // l'avanzamento è bloccato con l'avviso di Davide
+  const blocco = validaLivello(p, { talentoLibero: { id: 'sempre-allerta' } }, DATI);
+  assert.match(blocco[0].problema, /^Con la nuova regola di Davide hai 10 punti Abilità liberi in più del consentito: togline 10/);
+  // «Togli»: un evento alla volta dal più vecchio, esattamente i punti in eccesso, non più di quelli assegnati
+  assert.match(validaRiduzione(p, 4, { 'Tecnologia': 3, 'Atletica': 2 }, DATI)[0].problema, /prima la creazione/);
+  assert.ok(validaRiduzione(p, 1, { 'Cultura': 3 }, DATI).some((e) => /Cultura: in questo evento ha 2 punti liberi/.test(e.problema)));
+  assert.deepEqual(validaRiduzione(p, 1, { 'Cultura': 2 }, DATI).map((e) => e.tipo), ['incompleto']);
+  const st = statoRiduzione(p, { 'Cultura': 2 }, DATI);
+  assert.deepEqual([st.livello, st.eccesso, st.rimasti], [1, 5, 3]);
+  assert.deepEqual(st.abilita.map((a) => [a.nome, a.punti, a.togli]), [['Percezione', 2, 0], ['Tecnologia', 2, 0], ['Cultura', 2, 2], ['Raggirare', 4, 0]]);
+  const togli1 = { 'Cultura': 2, 'Tecnologia': 2, 'Raggirare': 1 };
+  assert.deepEqual(validaRiduzione(p, 1, togli1, DATI), []);
+  p = applicaRiduzione(p, 1, togli1);
+  assert.deepEqual(p.creazione.puntiAbilitaLiberi, { 'Percezione': 2, 'Raggirare': 3 });
+  assert.deepEqual(puntiDaTogliere(p, DATI).map((c) => [c.livello, c.eccesso]), [[4, 5]]);
+  // al 4° livello Sopravvivenza e Atletica hanno un punto che non aumenta il VA (§8.3): «Togli» lo indica e conviene toglierlo
+  assert.deepEqual(statoRiduzione(p, {}, DATI).abilita.filter((x) => x.inattivi).map((x) => [x.nome, x.inattivi]), [['Sopravvivenza', 1], ['Atletica', 1]]);
+  p = applicaRiduzione(p, 4, { 'Sopravvivenza': 1, 'Atletica': 3, 'Tecnologia': 1 });
+  const s1 = calcolaScheda(p, DATI);
+  assert.deepEqual([s1.errori, s1.completamenti, s1.eccessi], [[], [], []]);
+  assert.deepEqual(validaLivello(p, { talentoLibero: { id: 'sempre-allerta' } }, DATI), []);
 });
 
 test('personaggio nuovo con le regole correnti: nessun avviso', () => {
+  const dati = DATI;
   const s = calcolaScheda({ creazione: MISHIMA_AGENTE, livelli: [] }, dati);
   assert.deepEqual([s.completamenti, s.eccessi, s.errori], [[], [], []]);
   // creazione in corso (altre scelte mancanti): resta un normale «incompleto» del wizard

@@ -6,7 +6,8 @@
 //   mantello) possono essere indossati autonomamente»). Il manuale non ne parla: §7.23.4 dice che i
 //   valori «descrivono l'impiego insieme a un'armatura compatibile; non costituiscono un profilo
 //   autonomo di armatura». Che cosa valga indossato da solo sta in regole.json → rinforzi
-//   (TODO(Davide), per-davide A.79). Tabardo, rivestimenti, sottogiacca e piastre restano solo montati.
+//   (E&L del 03/10/2026, A.80: profilo autonomo Rinforzo Leggero). Indossabili da soli anche il Tabardo consacrato e
+//   la Sottogiacca protettiva IES (A.80); kit, piastre, inserti e rivestimenti restano solo montati.
 import { readFileSync, writeFileSync } from 'node:fs';
 
 const RADICE = new URL('../../', import.meta.url);
@@ -15,10 +16,12 @@ const p = new URL('data/equipaggiamento/rinforzi.json', RADICE);
 const j = JSON.parse(readFileSync(p, 'utf8'));
 // forma del capo: soprabito o mantello (nome del modello, §7.23.2, §7.23.3, §7.23.6, §7.23.10, §7.23.11)
 const DA_SOLO = /^(Soprabito|Mantello)\b/;
+// E&L A.80: indossabili da soli anche questi due, che non sono soprabiti né mantelli
+const DA_SOLO_ALTRI = ['Tabardo consacrato', 'Sottogiacca protettiva IES'];
 let n = 0;
 for (const o of j.oggetti) {
   o.tipo = 'rinforzo';
-  o.indossabile_da_solo = DA_SOLO.test(o.nome);
+  o.indossabile_da_solo = DA_SOLO.test(o.nome) || DA_SOLO_ALTRI.includes(o.nome);
   if (o.indossabile_da_solo) n++;
 }
 console.log(`${j.oggetti.length} rinforzi, tipo «rinforzo»; indossabili da soli ${n}: ${j.oggetti.filter((o) => o.indossabile_da_solo).map((o) => o.nome).join(', ')}`);

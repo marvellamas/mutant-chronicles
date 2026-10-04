@@ -435,6 +435,8 @@ function validaRegole(r, err, dati = {}) {
   if (r.regole_aggiornate !== undefined && !(isOggetto(r.regole_aggiornate) && isTesto(r.regole_aggiornate.punti_abilita))) {
     err(F, 'regole_aggiornate.punti_abilita', 'testo dell’avviso mancante');
   }
+  // E&L del 03/10/2026: avviso dei punti liberi in eccesso, con {n} per i punti da togliere
+  if (r.regole_aggiornate?.eccesso !== undefined && !(isTesto(r.regole_aggiornate.eccesso) && r.regole_aggiornate.eccesso.includes('{n}'))) err(F, 'regole_aggiornate.eccesso', 'testo dell’avviso con {n} (i punti da togliere)');
   // calendario di gioco della scheda (src/calendario.js): fasce in ordine e le tre bandierine
   const cal = r.calendario;
   const listaIdNome = (v) => Array.isArray(v) && v.length > 0 && v.every((x) => isOggetto(x) && isTesto(x.id) && isTesto(x.nome))
@@ -1062,8 +1064,14 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
   }
   const ind = eq.indice;
   if (!isTesto(ind.versione_manuale)) err(FI, 'versione_manuale', 'campo mancante o vuoto');
-  const rep = isOggetto(ind.reperibilita) ? Object.keys(ind.reperibilita) : [];
+  const rep = isOggetto(ind.reperibilita) ? Object.keys(ind.reperibilita).filter((k) => !k.startsWith('_')) : [];
   if (!rep.length) err(FI, 'reperibilita', 'tabella delle sigle di reperibilità mancante (§7.1.8)');
+  // E&L A.83: la Prova di ricerca dell'offerta per sigla (null = nessuna Prova)
+  for (const k of rep) {
+    const r = ind.reperibilita[k];
+    if (!isTesto(r?.nome) || !isTesto(r?.ricerca)) err(FI, `reperibilita.${k}`, 'servono nome e ricerca');
+    if (r?.prova !== undefined && r.prova !== null && !(isTesto(r.prova.abilita) && isIntero(r.prova.va) && r.prova.va <= 0)) err(FI, `reperibilita.${k}.prova`, 'null oppure { abilita, va intero ≤ 0 }');
+  }
   if (!Array.isArray(ind.file) || !ind.file.length) {
     err(FI, 'file', 'elenco dei file mancante');
     return;

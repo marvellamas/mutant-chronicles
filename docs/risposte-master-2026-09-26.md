@@ -1,6 +1,6 @@
 # E&L – Risposte e correzioni approvate
 
-Copia del Google Doc del master «E&L – Risposte e correzioni approvate» (Davide), letta il 26 settembre 2026 e riletta alle versioni del 27/09, del 01/10 07:25:47 UTC e, il 2 ottobre 2026, alle versioni del 01/10 alle 21:38:42 UTC e del 02/10 alle 15:52:58 UTC. Testo del documento, non riscritto: è la fonte delle decisioni registrate in `docs/risposte-master.md`.
+Copia del Google Doc del master «E&L – Risposte e correzioni approvate» (Davide), letta il 26 settembre 2026 e riletta alle versioni del 27/09, del 01/10 07:25:47 UTC e, il 2 ottobre 2026, alle versioni del 01/10 alle 21:38:42 UTC e del 02/10 alle 15:52:58 UTC e, il 3 ottobre 2026, alla versione del 03/10 alle 14:13:17 UTC (risposte ai 6 quesiti dell’app e punti Abilità liberi). Testo del documento, non riscritto: è la fonte delle decisioni registrate in `docs/risposte-master.md`.
 
 # E\&L – Risposte e correzioni approvate
 
@@ -1453,4 +1453,163 @@ L’alimentazione è bioenergetica: nessun NEC, nessun consumo di una risorsa e 
 L’interfaccia CYBERTRONIC si associa automaticamente all’equipaggiamento CYBERTRONIC. L’associazione di un’interfaccia standard a equipaggiamento CYBERTRONIC richiede 1 minuto e una Prova di Tecnologia; dopo il successo l’associazione resta memorizzata e non si ripete la Prova a ogni utilizzo.
 
 A 0 PI si applicano le normali regole degli impianti. Applicazione nell’app: rendere acquistabile l’interfaccia standard con il proprio prezzo, mantenendo distinti costo UMN e prezzo della versione CYBERTRONIC. Riferimenti: Manuale dell’Equipaggiamento, §§7.1 e 7.3.
+
+# Risposte approvate ai 6 nuovi quesiti dell’app e punti Abilità liberi
+
+Approvazioni consolidate il: ott 3, 2026
+
+Stato: sei quesiti chiusi; correzione aggiuntiva dei punti Abilità liberi approvata.
+
+Questo blocco risponde ai sei nuovi quesiti dell’app A.81, A.82, A.80, A.86, A.88 e A.83, nell’ordine discusso, e registra la successiva correzione dei punti Abilità liberi. Per questi argomenti prevale sui comportamenti provvisori dei TODO e sulle formulazioni precedenti incompatibili.
+
+Le indicazioni operative sono destinate al collaboratore per l’aggiornamento dell’app. La registrazione in questo documento non attesta l’avvenuta modifica dell’app o di tutti i manuali.
+
+## 1\. A.81 — Pelle di Rinoceronte: manovre di forza
+
+Campo dell’app: tecniche\_interiori.json.tecniche\[14\].effetti.TODO(Davide)
+
+Il \+3 si applica agli impieghi di forza indicati di seguito e non è un bonus generale alle Prove per colpire.
+
+Immobilizzare: \+3 alle Prove di Corpo a corpo o Atletica già previste per afferrare, resistere, mantenere la presa o liberarsi.
+
+Sbilanciare: \+3 alla Prova offensiva di Corpo a corpo e all’opposizione effettuata con Atletica.
+
+Disarmare: \+3 alle Prove offensive o difensive effettuate con Corpo a corpo.
+
+Incalzare: \+3 alla Prova offensiva effettuata con Corpo a corpo.
+
+Il beneficio non si trasferisce a Difese o all’Abilità dell’arma. Si effettuano soltanto le Prove già previste dalle manovre: la Tecnica non introduce tiri aggiuntivi.
+
+Fuori dalle manovre, il \+3 ad Atletica vale quando la Prova riguarda uno sforzo di forza, come sollevare, spingere, trascinare o forzare un’apertura. Non è un bonus automatico a tutti gli usi di Atletica, quali equilibrio o coordinazione. Non aumenta FOR e non modifica le soglie di carico.
+
+Attacchi normali, Stordire, Affondo, Spazzata e Colpo Mirato non ricevono questo \+3. Il distinto \+2 al danno Ravvicinato e gli altri benefici di Pelle di Rinoceronte restano validi nei rispettivi ambiti.
+
+Applicazione nell’app: sommare automaticamente il \+3 soltanto alle manovre e alle Abilità ammesse sopra; per gli altri impieghi di Atletica prevedere l’opzione «Sforzo di forza». Sostituire il solo promemoria provvisorio di «Attacca\!» con queste condizioni esplicite.
+
+Riferimenti: Manuale del Giocatore, §§5.5, 5.12 e 8.9.3.
+
+## 2\. A.82 — Onda Interiore: bonus di SAG al danno
+
+Campo dell’app: tecniche\_interiori.json.tecniche\[24\].effetti.TODO(Davide)
+
+Onda Interiore usa il dado di danno senz’armi della Disciplina e del Grado nella Classe, ma il suo bonus di Caratteristica al danno è SAG, secondo la regola delle Risorse Interiori. Non si aggiunge FOR.
+
+Il bonus di SAG segue il §5.13: massimo \+1 ai livelli 1–7, \+2 ai livelli 8–14 e \+3 dal livello 15; si usa il minore fra il bonus spettante alla Caratteristica e il tetto del livello, senza valori negativi.
+
+La Prova per colpire continua a usare Corpo a corpo. Il Vettore resta Distanza e la Natura del danno resta Magica.
+
+Il \+2 al danno Ravvicinato di Pelle di Rinoceronte non si applica. Gli altri bonus si applicano soltanto quando il loro testo comprende questo attacco e ne sono soddisfatti i requisiti.
+
+Applicazione nell’app: partire dal dado della Disciplina, aggiungere una sola volta il bonus di SAG e gli eventuali bonus compatibili. Non copiare il danno completo del pugno, che potrebbe già comprendere FOR e benefici esclusivamente ravvicinati.
+
+Questa decisione corregge il comportamento provvisorio «bonus di FOR sì»: il bonus corretto è SAG. Riferimenti: Manuale del Giocatore, §§5.13 e 8.9.4.
+
+## 3\. A.80 — Rinforzi indossati da soli e rimozione dell’armatura
+
+Campo dell’app: regole.json.rinforzi.TODO(Davide)
+
+Si distinguono i capi indossabili autonomamente dai rinforzi strutturali che richiedono un’armatura di supporto. La frase assoluta del §7.23.4 secondo cui i rinforzi non hanno un profilo autonomo va raccordata a questa distinzione.
+
+Indossabili da soli: tutti i soprabiti e mantelli del catalogo, il Tabardo consacrato e la Sottogiacca protettiva IES.
+
+I soprabiti e mantelli attuali sono: Soprabito balistico; Mantello balistico; Soprabito blu d’ordinanza BLEU; Soprabito ASA base; Soprabito Feldmantel; Mantello Ranger; Soprabito Trenchcoat; Mantello Kasumi; Mantello del Pellegrino; Soprabito ASA riservato; Mantello da giungla Kommando; Mantello Panther; Mantello Pathfinder; Mantello Venusiano.
+
+Non indossabili autonomamente: kit e piastre, inserti, Rivestimento CS-R10, Rivestimento flessibile Ghost e Rinforzo flessibile Mortificator. Richiedono l’armatura di supporto compatibile.
+
+Profilo autonomo approvato per i capi ammessi, tutti Rinforzi Leggeri: AR 1 ordinaria, requisito FOR 3 e categoria Leggera. Penalità ordinarie: 0 ad attacchi ravvicinati, attacchi a distanza, Agilità e Movimento; −1 VA al lancio con Potere. Restano le normali penalità per FOR insufficiente.
+
+PI, Qualità, PS Integrità, prezzo e proprietà proprie rimangono quelli della singola scheda. Le proprietà funzionano anche nell’uso autonomo, rispettandone le condizioni: Feldmantel conserva Ignifuga 2; Mantello Venusiano conserva Mimetica ambientale 2 nell’ambiente previsto; Tabardo consacrato conserva Protezione occulta 1\.
+
+Protezione occulta 1 concede soltanto il beneficio alle PS previsto dalla scheda: non diventa AR magica e non assorbe i danni Eterei. Il capo non acquisisce le proprietà dell’armatura con cui viene normalmente abbinato.
+
+Con un’armatura compatibile, indossare e assicurare correttamente il capo basta per usarlo come rinforzo; non occorre trattarlo come un kit di piastre da installare. Restano un solo rinforzo complessivo, compatibilità, incremento del requisito FOR, PI separati e regole degli Abbinamenti ottimizzati. Il profilo autonomo non si somma una seconda volta al bonus del rinforzo.
+
+Togliendo l’armatura, un rinforzo strutturale resta montato sull’armatura rimossa e non concede benefici al personaggio. Un capo autonomo, se rimane correttamente indossato, usa invece il proprio profilo autonomo; se viene tolto anch’esso, cessa di concedere benefici.
+
+Non si possono aggirare incompatibilità o limiti sovrapponendo più capi. Un capo usato autonomamente non può ricevere altri rinforzi.
+
+Applicazione nell’app: distinguere «indossabile autonomamente», «indossato» e «abbinato a un’armatura»; aggiornare AR e proprietà quando cambia la configurazione. Sostituire il comportamento provvisorio AR 0 e nessuna proprietà per i capi ammessi.
+
+Riferimenti: Manuale degli Armamenti, §§7.11.1–7.11.2 e 7.23. Il profilo autonomo è una nuova integrazione approvata.
+
+## 4\. A.86 — Granate e razzi: nessun bonus di Caratteristica al danno
+
+Campo dell’app: regole.json.danno\_caratteristica.esplosivi.TODO(Davide)
+
+Il danno dell’esplosione di granate e razzi non riceve il bonus di Caratteristica del §5.13. È un’eccezione esplicita alla regola generale.
+
+La decisione vale per granate lanciate a mano, granate sparate con lanciagranate anche integrati in altre armi e razzi sparati con lanciarazzi.
+
+Si usa il danno completo della munizione, conservando i bonus fissi stampati nella scheda. La Granata standard a frammentazione resta quindi 1d6+1, senza aggiungere bonus personali di FOR, DES o INT, a qualsiasi livello.
+
+Caratteristiche, Abilità e requisiti mantengono il proprio funzionamento per il lancio o il tiro. Restano gli altri modificatori effettivamente applicabili secondo le rispettive regole.
+
+Applicazione nell’app: contributo di Caratteristica al danno pari a 0 per queste munizioni. Non modificare danno tabellare, AC, difese, armature o proprietà.
+
+Riferimenti: Manuale del Giocatore, §5.13; Manuale degli Armamenti, §7.8 e §§7.20.3–7.20.4.
+
+## 5\. A.88 — Individuare: durata massima a Concentrazione
+
+Campo dell’app: incantesimi.json.incantesimi\[88\].meccanica.durata.TODO(Davide)
+
+La scheda §23.9 del Manuale della Magia v1.3 verificato contiene già la colonna «Concentrazione massima» oltre alla «Durata fissa». Si recepiscono i valori esistenti, senza introdurre una nuova progressione.
+
+**Durate ordinarie di Individuare:**
+
+| Livello | Concentrazione massima | Durata fissa |
+| :---- | :---- | :---- |
+| 6–8 | 10 minuti | 5 Round |
+| 9–11 | 30 minuti | 10 Round |
+| 12–14 | 1 ora | 20 Round |
+| 15–17 | 2 ore | 5 minuti |
+| 18 | 4 ore | 10 minuti |
+
+Tutti i livelli interi da 6 a 18 sono disponibili. Ai livelli intermedi le durate restano quelle della soglia precedente.
+
+L’Anticipazione della durata aumenta di un gradino la sola durata scelta. Concentrazione: 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore → 8 ore. Durata fissa: 5 Round → 10 Round → 20 Round → 5 minuti → 10 minuti → 30 minuti.
+
+L’Anticipazione raddoppia il costo in PM e rende Potere più difficile di una categoria. Non aumenta contemporaneamente entrambe le durate né gli altri parametri.
+
+Applicazione nell’app: recepire entrambe le colonne, far scegliere la modalità al lancio e applicare alla modalità a Concentrazione le normali regole di mantenimento e interruzione. Non usare la durata fissa come limite della Concentrazione.
+
+Riferimenti: Manuale della Magia, sezione 2 e scheda 23.9. Quesito chiuso mediante recepimento del manuale e conferma dei valori.
+
+## 6\. A.83 — Reperibilità Epica e ricerca con Oratoria
+
+Campo dell’app: equipaggiamento.json.indice.reperibilita.EP.TODO(Davide)
+
+La Reperibilità Epica (EP) si colloca fra Molto Rara e Leggendaria. La ricerca usa Oratoria con −6 VA, quando esiste una possibilità concreta di reperimento.
+
+**Scala della ricerca dell’offerta:**
+
+| REP | Reperibilità | Ricerca dell’offerta |
+| :---- | :---- | :---- |
+| CO | Comune | Nessuna Prova presso un venditore appropriato. |
+| NC | Non Comune | Oratoria senza penalità. |
+| RA | Rara | Oratoria −2 VA. |
+| MR | Molto Rara | Oratoria −4 VA. |
+| EP | Epica | Oratoria −6 VA, se esiste una possibilità concreta di reperimento. |
+| LE | Leggendaria | Disponibilità eccezionale stabilita dal Direttore; nessuna penalità standard di ricerca. |
+
+Per gli Artefatti non esistono normali negozi che li vendano. Il Direttore deve prima stabilire che sia possibile trovare un’offerta o una commissione, per esempio attraverso un raro tecnomistico indipendente; soltanto allora la Prova serve a individuare quel contatto.
+
+Un successo non obbliga una congrega a vendere, non crea un oggetto indisponibile e non elimina prezzo, autorizzazioni o tempi di produzione.
+
+Le Batterie Matrice colorate restano Epiche. Le Bianche mantengono la disponibilità eccezionale già prevista, senza introdurre un’ulteriore fascia commerciale oltre Leggendaria.
+
+Applicazione nell’app: EP \= −6 VA alla ricerca con Oratoria, subordinata alla disponibilità stabilita dal Direttore. Sostituire la gestione provvisoria indistinta da Leggendaria; quest’ultima non ha una penalità standard di ricerca. La REP non modifica automaticamente Qualità, Integrità o Grado mistico.
+
+Riferimenti: Manuale dell’Equipaggiamento, §§1.8 e 10.3; Manuale degli Armamenti, §7.1.8; Manuale della Magia, §26.4.
+
+## Correzione aggiuntiva — 5 punti Abilità liberi a ogni Grado, compreso il primo
+
+**I punti Abilità liberi assegnati a ogni Grado diventano 5 anziché 10\. La quantità di 5 punti si applica anche al primo Grado, in fase di creazione del personaggio.**
+
+La nuova quantità sostituisce la precedente assegnazione di 10 punti: non è un’aggiunta e non è limitata ai soli Gradi successivi al primo. La cadenza resta a ogni Grado.
+
+La correzione riguarda il contingente di punti Abilità liberi; non modifica, da sola, la distribuzione base dell’Addestramento né gli altri limiti di assegnazione e Avanzamento già stabiliti.
+
+Applicazione nell’app: aggiornare a 5 l’assegnazione libera nella creazione al primo Grado e a ogni successiva acquisizione di Grado, compresi i relativi riepiloghi e controlli dei punti disponibili. Il percorso JSON specifico non è indicato nell’elenco del collaboratore.
+
+Questa decisione prevale sulle precedenti indicazioni che assegnavano 10 punti Abilità liberi per Grado.
 

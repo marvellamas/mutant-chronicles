@@ -39,10 +39,7 @@
     "classe": "Artigliere",
     "puntiAbilitaLiberi": {
       "Armi medie": 2,
-      "Armi pesanti": 3,
-      "Percezione": 3,
-      "Difese": 1,
-      "Furtività": 1
+      "Armi pesanti": 3
     },
     "incantesimi": [],
     "puntiEroe": {
@@ -300,11 +297,7 @@
       "talentoClasse": "Occhio del Tiratore",
       "puntiAbilita": {
         "Armi pesanti": 2,
-        "Percezione": 1,
-        "Difese": 1,
-        "Furtività": 1,
-        "Atletica": 3,
-        "Tecnologia": 2
+        "Percezione": 3
       }
     },
     {

@@ -39,10 +39,7 @@
     "classe": "Custode",
     "puntiAbilitaLiberi": {
       "Armi da mischia": 3,
-      "Difese": 3,
-      "Artefatti": 1,
-      "Occultismo": 2,
-      "Corpo a corpo": 1
+      "Difese": 2
     },
     "incantesimi": [
       "Agilità Mutata",

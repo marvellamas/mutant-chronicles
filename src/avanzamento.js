@@ -819,6 +819,90 @@ export function statoCompletamento(personaggio, bozza, dati) {
   return { ...ev, rimasti, errori: validaCompletamento(p, ev.livello, pa, dati), abilita };
 }
 
+// ---------------------------------------------------------------------------
+// Punti Abilità Liberi in eccesso (E&L del 03/10/2026: 5 punti a ogni Grado, anche al primo, invece di 10). I punti
+// già assegnati in più non si tolgono da soli: il giocatore li toglie, un evento alla volta dal più vecchio, finché
+// l'evento non ha i punti previsti; nel frattempo la scheda lo avvisa e non si sale di livello.
+
+/** Punti in eccesso da togliere, dal più vecchio: [{ livello, evento, previsti, assegnati, eccesso }]. */
+export function puntiDaTogliere(personaggio, dati) {
+  return ricalcola(personaggio, dati).eccessi;
+}
+
+/**
+ * Valida i punti da togliere dal primo evento in eccesso: { Abilità: punti }. Si tolgono esattamente i punti in
+ * eccesso, al massimo quelli assegnati a ciascuna Abilità in quell'evento, e senza rendere irregolari i livelli
+ * successivi (VA almeno 1 prima dei punti liberi, §2.13; limiti, §8.3).
+ * @returns {{campo, problema, tipo: 'violazione'|'incompleto'}[]}
+ */
+export function validaRiduzione(personaggio, livello, togli, dati) {
+  const errori = [];
+  const err = (campo, problema, tipo = 'violazione') => errori.push({ campo, problema, tipo });
+  const p = migraPersonaggio(personaggio);
+  const prima = ricalcola(p, dati);
+  const ev = prima.eccessi[0];
+  if (!ev) return [{ campo: 'puntiAbilita', problema: 'nessun Punto Abilità Libero in eccesso', tipo: 'violazione' }];
+  if (ev.livello !== livello) return [{ campo: 'puntiAbilita', problema: `si tolgono i punti un evento alla volta, dal più vecchio: prima ${ev.evento === 'creazione' ? 'la creazione' : `il ${ev.evento}`}`, tipo: 'violazione' }];
+  const assegnati = puntiEventoAssegnati(p, livello);
+  const t = isOggetto(togli) ? togli : {};
+  for (const [a, x] of Object.entries(t)) {
+    if (!Number.isInteger(x) || x < 0) err(`puntiAbilita.${a}`, 'i punti devono essere interi ≥ 0');
+    else if (x > (assegnati[a] ?? 0)) err(`puntiAbilita.${a}`, `${a}: in questo evento ha ${assegnati[a] ?? 0} punti liberi, non se ne tolgono ${x}`);
+  }
+  if (errori.length) return errori;
+  const tolti = somma(t);
+  if (tolti > ev.eccesso) err('puntiAbilita', `tolti ${tolti} punti, quelli in eccesso sono ${ev.eccesso}`);
+  const dopo = ricalcola(applicaCompletamento(p, livello, {}, t), dati);
+  const chiave = (e) => `${e.campo}|${e.problema}`;
+  const giaPrima = new Set(prima.errori.map(chiave));
+  for (const e of dopo.errori.filter((x) => x.tipo === 'violazione' && !giaPrima.has(chiave(x)))) {
+    err('puntiAbilita', e.livello === livello ? e.problema : `${conOrdinale('al', e.livello)} livello: ${e.problema}`);
+  }
+  if (tolti < ev.eccesso) err('puntiAbilita', `tolti ${tolti} punti su ${ev.eccesso}`, 'incompleto');
+  return errori;
+}
+
+/** Punti liberi assegnati in un evento (livello 1 = creazione): { Abilità: punti }. */
+function puntiEventoAssegnati(p, livello) {
+  const o = livello === 1 ? p.creazione.puntiAbilitaLiberi : p.livelli[livello - 2]?.puntiAbilita;
+  return Object.fromEntries(Object.entries(isOggetto(o) ? o : {}).filter(([, v]) => Number.isInteger(v) && v > 0));
+}
+
+/** Toglie i punti dall'evento (livello 1 = creazione). */
+export function applicaRiduzione(personaggio, livello, togli) {
+  return applicaCompletamento(personaggio, livello, {}, togli);
+}
+
+/**
+ * Dati della pagina «Togli» per il primo evento in eccesso, con la bozza dei punti da togliere.
+ * @returns {null|{ livello, evento, previsti, assegnati, eccesso, rimasti, errori, abilita: [{ nome, punti, togli, inattivi, motivoMeno }] }}
+ */
+export function statoRiduzione(personaggio, bozza, dati) {
+  const p = migraPersonaggio(personaggio);
+  const r = ricalcola(p, dati);
+  const ev = r.eccessi[0];
+  if (!ev) return null;
+  const t = isOggetto(bozza) ? bozza : {};
+  const assegnati = puntiEventoAssegnati(p, ev.livello);
+  // i punti che non aumentano il VA personale (§8.3) sono i primi da togliere
+  const inattivi = Object.fromEntries((r.stato?.inattivi ?? []).filter((x) => x.livello === ev.livello).map((x) => [x.abilita, x.punti]));
+  const rimasti = ev.eccesso - somma(t);
+  const abilita = Object.entries(assegnati).map(([nome, punti]) => {
+    const togli = t[nome] ?? 0;
+    const motivoMeno = rimasti <= 0 ? 'Hai già tolto tutti i punti in eccesso.' : togli >= punti ? 'Non ci sono altri punti di questa Abilità in questo evento.'
+      : validaRiduzione(p, ev.livello, { ...t, [nome]: togli + 1 }, dati).find((e) => e.tipo === 'violazione')?.problema ?? null;
+    return { nome, punti, togli, inattivi: inattivi[nome] ?? 0, motivoMeno };
+  });
+  return { ...ev, rimasti, errori: validaRiduzione(p, ev.livello, t, dati), abilita };
+}
+
+/** Testo dell'avviso dei punti in eccesso (regole.json → regole_aggiornate.eccesso, con {n}). */
+export function testoEccesso(eccessi, dati) {
+  const n = eccessi.reduce((s, c) => s + c.eccesso, 0);
+  const modello = dati.regole.regole_aggiornate?.eccesso ?? 'Hai {n} punti Abilità liberi in più del consentito: togline {n}';
+  return modello.replaceAll('{n}', String(n));
+}
+
 /** Perché non si sale di livello finché ci sono punti da completare o da riassegnare (regole aggiornate). */
 export function motivoCompletamento(completamenti) {
   const n = completamenti.reduce((s, c) => s + c.mancanti, 0);
@@ -834,8 +918,10 @@ export function motivoCompletamento(completamenti) {
 export function validaLivello(personaggio, scelte, dati) {
   const { stato, errori } = ricalcola(personaggio, dati);
   if (!stato) return [{ campo: 'creazione', problema: 'la creazione non si può calcolare: correggila prima di salire di livello', tipo: 'violazione' }];
-  const { completamenti } = ricalcola(personaggio, dati);
+  const { completamenti, eccessi } = ricalcola(personaggio, dati);
   if (completamenti.length) return [{ campo: 'livelli', problema: motivoCompletamento(completamenti), tipo: 'violazione' }];
+  // E&L del 03/10/2026: con punti liberi in eccesso non si sale di livello finché non si tolgono
+  if (eccessi.length) return [{ campo: 'livelli', problema: `${testoEccesso(eccessi, dati)}, con «Togli» in cima alla scheda, prima di salire di livello.`, tipo: 'violazione' }];
   const bloccanti = errori.filter((e) => e.tipo === 'violazione');
   if (bloccanti.length) {
     return [{ campo: 'livelli', problema: `i livelli già acquisiti contengono errori (${bloccanti[0].problema}): annulla l’ultimo livello e correggilo`, tipo: 'violazione' }];

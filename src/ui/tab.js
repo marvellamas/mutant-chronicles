@@ -32,6 +32,7 @@ import { statoPulsanteLancio, attivazioneInfusa } from '../lancio.js';
 import { nomeRiserva, nomeAlimentazione } from '../fonti.js';
 import { tabCalendario, pannelloAttivazione, pannelloImportaCalendario, pulsanteImportaCalendario } from './calendario.js';
 import { conOrdinale } from '../lingua.js';
+import { testoEccesso } from '../avanzamento.js';
 import { regoleRiparazione, esitoRiparazione, vaRiparazione, riparabile } from '../riparazione.js';
 import { annullaPerdita, aggiungiRecupero, togliRecupero } from '../umanita.js';
 
@@ -207,7 +208,10 @@ function avvisoRegoleAggiornate(ctx, scheda) {
       ` (${da.map((c) => dove(c, c.mancanti)).join(', ')}). `,
       r ? `${r === n ? 'Sono' : `${r} sono`} punti già spesi che non aumentano più il VA personale (limiti delle categorie di competenza, §8.3): si riassegnano, gli altri restano. ` : null,
       h('button', { type: 'button', class: 'btn primario', onclick: ctx.azioni.completaPunti }, 'Assegna')) : null,
-    ecc.length ? h('p', {}, `${ctx.avvisoRegole}: ${ecc.map((c) => `${c.eccesso} ${c.eccesso === 1 ? 'punto' : 'punti'} in eccesso rispetto alle regole correnti (${c.livello === 1 ? 'creazione' : `${c.livello}° livello`})`).join('; ')}.`) : null);
+    // E&L del 03/10/2026 (5 punti per Grado): i punti in più si tolgono con «Togli», un evento alla volta
+    ecc.length ? h('p', {}, h('strong', {}, `${testoEccesso(ecc, ctx.dati)}.`),
+      ` (${ecc.map((c) => `${c.eccesso} ${c.livello === 1 ? 'della creazione' : `${conOrdinale('del', c.livello)} livello`}`).join(', ')}). Finché non li togli non si sale di livello. `,
+      h('button', { type: 'button', class: 'btn primario', onclick: ctx.azioni.togliPunti }, 'Togli')) : null);
 }
 
 function menuAzioni(ctx) {

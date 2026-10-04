@@ -55,7 +55,9 @@ export function durataLancio(incantesimo, livello, { modalita = null, concentraz
   let val = leggiDurata(testo);
   if (conCon && d.concentrazione_doppia && val?.round) val = { round: val.round * 2, testo: `${val.round * 2} RND` };
   const obbligatoria = !d.colonna && !!d.concentrazione;
-  const base = { colonna, ...(mod ? { modalita: mod.id, nomeModalita: mod.nome } : {}), concentrazione: !!conCon || obbligatoria, anticipata: !!ant?.a };
+  // E&L A.88: l'Anticipazione sale di un gradino solo sulla durata scelta; quella dell'altra modalità non vale
+  const altra = !ant && (anticipazione?.righe ?? []).some((x) => x.colonna !== colonna && [d.colonna, d.concentrazione, ...(d.modalita ?? []).map((m) => m.colonna)].includes(x.colonna));
+  const base = { colonna, ...(mod ? { modalita: mod.id, nomeModalita: mod.nome } : {}), concentrazione: !!conCon || obbligatoria, anticipata: !!ant?.a, ...(altra ? { anticipazioneAltraDurata: true } : {}) };
   if (!val) return { ...base, tipo: 'istantanea', testo: String(testo ?? 'istantanea') };
   return val.round ? { ...base, tipo: 'round', round: val.round, testo: val.testo } : { ...base, tipo: 'tempo', testo: val.testo };
 }

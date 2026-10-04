@@ -41,9 +41,7 @@
       "Tecnologia": 1,
       "Scienza": 1,
       "Furtività": 1,
-      "Atletica": 3,
-      "Cultura": 3,
-      "Raggirare": 1
+      "Atletica": 2
     },
     "incantesimi": [],
     "puntiEroe": {
@@ -348,10 +346,7 @@
       "puntiAbilita": {
         "Percezione": 1,
         "Furtività": 1,
-        "Atletica": 3,
-        "Cultura": 2,
-        "Raggirare": 2,
-        "Armi leggere": 1
+        "Atletica": 3
       }
     }
   ],

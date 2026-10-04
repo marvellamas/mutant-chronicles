@@ -27,8 +27,8 @@ import { PASSI, passoVisibile, requisitoPasso } from './passi.js';
 import { inizializzaTooltip, nascondiTooltip } from './tooltip.js';
 import { renderRiepilogo } from './riepilogo.js';
 import { renderSali } from './sali.js';
-import { renderCompleta } from './completa.js';
-import { validaCompletamento, applicaCompletamento, puntiDaCompletare, motivoCompletamento } from '../avanzamento.js';
+import { renderCompleta, renderTogli } from './completa.js';
+import { validaCompletamento, applicaCompletamento, puntiDaCompletare, motivoCompletamento, puntiDaTogliere, validaRiduzione, applicaRiduzione, testoEccesso } from '../avanzamento.js';
 import { renderStampa, esciDallaStampa } from './stampa.js';
 import { barraPassi, barraFondoSeServe } from './navigazione.js';
 import { cercaSfondi, applicaSfondo } from './sfondi.js';
@@ -62,6 +62,7 @@ const stato = {
   livelli: [], // scelte dei livelli dal 2° in poi (cap. 8)
   sali: null, // bozza del livello successivo: { voce, passo, ui }. Non si salva fino alla conferma.
   completa: null, // bozza dei Punti Abilità da completare (regole aggiornate): { punti }. Come «sali».
+  togli: null, // bozza dei Punti Abilità in eccesso da togliere (E&L del 03/10/2026): { punti }
   sessione: null, // valori attuali della modalità tavolo (src/sessione.js); null finché non si apre la scheda
   calendario: null, // calendario di gioco (src/calendario.js); null = mai attivato
   // per «Annulla ultima modifica» (una sola, in memoria): { sessione, calendario } di prima
@@ -188,9 +189,11 @@ function daIndirizzo() {
   }
   const completa = location.hash.match(/^#\/p\/([\w-]+)\/(completa)$/);
   if (stato.completa && !(completa && completa[1] === stato.id)) stato.completa = null;
+  const togli = location.hash.match(/^#\/p\/([\w-]+)\/(togli)$/);
+  if (stato.togli && !(togli && togli[1] === stato.id)) stato.togli = null;
   const stampa = location.hash.match(/^#\/p\/([\w-]+)\/(stampa)$/);
   const scheda = location.hash.match(/^#\/p\/([\w-]+)(?:\/t\/(\w+))?$/);
-  const m = sali ?? completa ?? stampa ?? scheda ?? location.hash.match(/^#\/p\/([\w-]+)\/(\d+)$/);
+  const m = sali ?? completa ?? togli ?? stampa ?? scheda ?? location.hash.match(/^#\/p\/([\w-]+)\/(\d+)$/);
   if (!m) {
     stato.id = null;
     stato.scelte = null;
@@ -228,6 +231,7 @@ function daIndirizzo() {
   }
   if (sali) return apriSali(Number(passoTesto));
   if (completa) return apriCompleta();
+  if (togli) return apriTogli();
   if (stampa) return apriStampa();
   if (scheda) return apriScheda(TAB.includes(passoTesto) ? (ALIAS_TAB[passoTesto] ?? passoTesto) : null);
   const passo = Math.min(Number(passoTesto), PASSI.length - 1);
@@ -756,6 +760,7 @@ function contesto() {
     schedaPersonaggio,
     livelli: stato.livelli,
     motivoNoSalita: schedaPersonaggio.completamenti?.length ? motivoCompletamento(schedaPersonaggio.completamenti)
+      : schedaPersonaggio.eccessi?.length ? `${testoEccesso(schedaPersonaggio.eccessi, stato.dati)}, con «Togli» in cima alla scheda, prima di salire di livello.`
       : !scheda.completa ? 'Completa la creazione (passi precedenti) prima di salire di livello.'
         : schedaPersonaggio.errori.length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
     saliDiLivello,
@@ -917,6 +922,45 @@ function annullaLivello() {
 // ---------------------------------------------------------------------------
 // Completamento dei Punti Abilità di un evento passato (regole aggiornate, per-davide A.52):
 // bozza in memoria, salvata nell'evento a cui appartiene solo con «Conferma»
+
+// Punti Abilità Liberi in eccesso (E&L del 03/10/2026, 5 punti per Grado): si tolgono un evento alla volta, con la
+// stessa bozza e la stessa conferma di «Assegna»
+function apriTogli() {
+  if (!stato.togli) stato.togli = { punti: {} };
+  renderTogliPagina();
+  window.scrollTo(0, 0);
+}
+
+function renderTogliPagina() {
+  nascondiTooltip();
+  const { dati } = stato;
+  const bozza = stato.togli;
+  document.title = `${stato.scelte.nome.trim() || 'Personaggio'} — Punti Abilità da togliere · Mutant`;
+  svuota(radice, ...renderTogli({
+    dati,
+    personaggio: personaggio(),
+    bozza: bozza.punti,
+    titoloAvviso: dati.regole.regole_aggiornate?.punti_abilita ?? 'Regole aggiornate',
+    aggiornaBozza(punti) { bozza.punti = punti; renderTogliPagina(); },
+    conferma() {
+      const ev = puntiDaTogliere(personaggio(), dati)[0];
+      if (!ev || validaRiduzione(personaggio(), ev.livello, bozza.punti, dati).length) return renderTogliPagina();
+      const p = applicaRiduzione(personaggio(), ev.livello, bozza.punti);
+      stato.scelte = p.creazione;
+      stato.livelli = p.livelli;
+      stato.togli = null;
+      persisti();
+      const restano = puntiDaTogliere(personaggio(), dati);
+      const n = restano.reduce((s, c) => s + c.eccesso, 0);
+      stato.messaggioScheda = { tipo: 'ok', testo: `Punti Abilità ${ev.livello === 1 ? 'della creazione' : `${conOrdinale('del', ev.livello)} livello`} tolti.${n ? ` Ne restano ${n} da togliere.` : ''}` };
+      if (!stato.salvataggioOk) alert(`Punti tolti, ma non salvati nel browser. ${testoSalvataggioFallito()}`);
+      vai(`#/p/${stato.id}`);
+    },
+    esci() { stato.togli = null; vai(`#/p/${stato.id}`); },
+  }));
+  const fondo = radice.querySelector('.barra-fondo');
+  if (fondo) barraFondoSeServe(fondo, radice);
+}
 
 function apriCompleta() {
   if (!stato.completa) stato.completa = { punti: {} };
@@ -1126,6 +1170,7 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
     partecipanti: stato.scontroPg?.partecipanti ?? [],
     spazioQuasiEsaurito: archivio.spazioQuasiEsaurito(),
     motivoNoSalita: tab.scheda.completamenti?.length ? motivoCompletamento(tab.scheda.completamenti)
+      : tab.scheda.eccessi?.length ? `${testoEccesso(tab.scheda.eccessi, dati)}, con «Togli» in cima alla scheda, prima di salire di livello.`
       : !schedaCreazione.completa ? 'Completa la creazione prima di salire di livello.'
         : tab.errori.length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
     // regole aggiornate (regole.json → regole_aggiornate): punti da completare e in eccesso
@@ -1137,6 +1182,7 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       vaiTab,
       sali: saliDiLivello,
       completaPunti: () => vai(`#/p/${stato.id}/completa`),
+      togliPunti: () => vai(`#/p/${stato.id}/togli`),
       annullaLivello,
       stampa: () => vai(`#/p/${stato.id}/stampa`),
       esporta: () => esporta(stato.scelte, stato.livelli, stato.sessione, stato.calendario),

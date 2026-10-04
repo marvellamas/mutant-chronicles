@@ -17,9 +17,10 @@ const MISHIMA_AGENTE = {
   puntiCaratteristica: { FOR: 1, COS: 2, DES: 1, SAG: 1 },
   addestramento: 'Avventuriero',
   classe: 'Agente',
-  // §2.13 del Giocatore del 29/09: Percezione 2, Tecnologia 2, Cultura 2, Raggirare 4
+  // §2.13 del Giocatore del 29/09: Percezione 2, Tecnologia 2, Cultura 2, Raggirare 4 (10 punti); con i 5 punti
+  // dell'E&L del 03/10/2026: Percezione 2, Raggirare 3
   puntiAbilitaLiberi: {
-    'Percezione': 2, 'Tecnologia': 2, 'Cultura': 2, 'Raggirare': 4,
+    'Percezione': 2, 'Raggirare': 3,
   },
 };
 
@@ -69,10 +70,10 @@ test('esempio del manuale: Mishima Avventuriero Agente (§2.14, §2.17)', () => 
   );
   // §2.13 (tabella dell'esempio): Avanzamento = Classe + punti liberi; VA del testo
   const ab = (n) => s.abilita.find((a) => a.nome === n);
-  assert.deepEqual(['Furtività', 'Percezione', 'Tecnologia', 'Armi leggere', 'Cultura', 'Raggirare'].map((n) => ab(n).avanzamento), [1, 3, 2, 1, 3, 5]);
-  // «Percezione: 2 + 7 + 0 + 3 = VA 12; Raggirare: 0 + 7 + 0 + 5 = VA 12; Tecnologia: 0 + 6 + 0 + 2 = VA 8;
-  // Cultura: 0 + 6 + 0 + 3 = VA 9 […] Medicina è G e parte da 2 + 5 = VA 7»
-  assert.deepEqual(['Percezione', 'Raggirare', 'Tecnologia', 'Cultura', 'Armi leggere', 'Medicina'].map((n) => ab(n).totale), [12, 12, 8, 9, 9, 7]);
+  assert.deepEqual(['Furtività', 'Percezione', 'Tecnologia', 'Armi leggere', 'Cultura', 'Raggirare'].map((n) => ab(n).avanzamento), [1, 3, 0, 1, 1, 4]);
+  // «Percezione: 2 + 7 + 0 + 3 = VA 12 […] Medicina è G e parte da 2 + 5 = VA 7»; con 5 punti (E&L del 03/10/2026)
+  // Raggirare 0 + 7 + 0 + 4 = VA 11, Tecnologia 0 + 6 = VA 6, Cultura 0 + 6 + 0 + 1 = VA 7 (errata del §2.13 per Davide)
+  assert.deepEqual(['Percezione', 'Raggirare', 'Tecnologia', 'Cultura', 'Armi leggere', 'Medicina'].map((n) => ab(n).totale), [12, 11, 6, 7, 9, 7]);
   assert.deepEqual(['Percezione', 'Raggirare', 'Tecnologia', 'Medicina', 'Potere'].map((n) => ab(n).competenza), ['S', 'S', 'P', 'G', 'N']);
   // §2.17 (Giocatore del 29/09): Mishima riceve +1 ad Armi da guerra, non più ad Armi da mischia.
   assert.equal(s.abilita.find((a) => a.nome === 'Armi da guerra').corporazione, 1);
@@ -89,7 +90,7 @@ test('§1.2.3: Bauhaus Assaltatore con COS 7 ha Tempra 11', () => {
     addestramento: 'Combattente',
     classe: 'Assaltatore',
     // limiti del I Grado (§2.13 del 29/09): ogni punto aumenta il VA personale
-    puntiAbilitaLiberi: { 'Armi da guerra': 1, 'Armi da mischia': 2, 'Corpo a corpo': 1, 'Percezione': 3, 'Sopravvivenza': 3 },
+    puntiAbilitaLiberi: { 'Armi da guerra': 1, 'Armi da mischia': 2, 'Percezione': 2 },
   }, dati);
   assert.deepEqual(s.errori, []);
   assert.equal(s.caratteristiche.COS.valore, 7);
@@ -120,15 +121,15 @@ test('§2.1: i punti Caratteristica non possono essere negativi né superare 5',
 
 test('§2.13 (29/09): ogni punto libero deve aumentare il VA personale, entro il limite della categoria al I Grado', () => {
   // Furtività (P) è già a 9 = limite P del I Grado con il solo +1 di Classe: nessun punto la aumenta
-  const e = validaScelte({ ...MISHIMA_AGENTE, puntiAbilitaLiberi: { 'Percezione': 2, 'Tecnologia': 2, 'Cultura': 2, 'Raggirare': 2, 'Furtività': 2 } }, dati);
+  const e = validaScelte({ ...MISHIMA_AGENTE, puntiAbilitaLiberi: { 'Percezione': 2, 'Raggirare': 1, 'Furtività': 2 } }, dati);
   const furt = e.find((x) => x.campo === 'puntiAbilitaLiberi.Furtività');
   assert.deepEqual([furt.tipo, furt.inattivi], ['violazione', 2]);
   assert.match(furt.problema, /limite 9/);
   // Percezione (S): 2 + 7 + 0 + 1 = 10, due punti portano a 12 = limite S; il terzo non conta
-  const p3 = validaScelte({ ...MISHIMA_AGENTE, puntiAbilitaLiberi: { 'Percezione': 3, 'Tecnologia': 2, 'Cultura': 1, 'Raggirare': 4 } }, dati);
+  const p3 = validaScelte({ ...MISHIMA_AGENTE, puntiAbilitaLiberi: { 'Percezione': 3, 'Raggirare': 2 } }, dati);
   assert.deepEqual(p3.filter((x) => x.inattivi).map((x) => [x.campo, x.inattivi]), [['puntiAbilitaLiberi.Percezione', 1]]);
   // il punto inattivo non entra nel VA (non si accantona)
-  assert.equal(calcolaScheda({ ...MISHIMA_AGENTE, puntiAbilitaLiberi: { 'Percezione': 3, 'Tecnologia': 2, 'Cultura': 1, 'Raggirare': 4 } }, dati).abilita.find((a) => a.nome === 'Percezione').liberi, 2);
+  assert.equal(calcolaScheda({ ...MISHIMA_AGENTE, puntiAbilitaLiberi: { 'Percezione': 3, 'Raggirare': 2 } }, dati).abilita.find((a) => a.nome === 'Percezione').liberi, 2);
   assert.deepEqual(validaScelte(MISHIMA_AGENTE, dati), []);
 });
 
@@ -139,7 +140,7 @@ test('§2.13: niente punti liberi su un\'Abilità con VA < 1', () => {
   d.regole.competenze.categorie.N.base = 0;
   // Mishima Agente (N: Armi pesanti, Armi da guerra, Potere, Rituali): Armi pesanti = FOR 6 (+1) + 0 = 1
   // → ammessa; Rituali = INT 5 (0) + 0 = 0 → vietata; Potere = SAG 7 (+2) + 0 = 2 → ammessa.
-  const puntiAbilitaLiberi = { 'Rituali': 1, 'Armi pesanti': 1, 'Potere': 1, 'Percezione': 2, 'Tecnologia': 2, 'Raggirare': 3 };
+  const puntiAbilitaLiberi = { 'Rituali': 1, 'Armi pesanti': 1, 'Potere': 1, 'Percezione': 2 };
   const e = validaScelte({ ...MISHIMA_AGENTE, puntiAbilitaLiberi }, d);
   assert.deepEqual(e.map((x) => x.campo), ['puntiAbilitaLiberi.Rituali']);
   assert.match(e[0].problema, /VA 0/);
@@ -154,7 +155,7 @@ test('§2.13: il VA per i punti liberi include il +1 di Classe (§3.1: prima i p
   // Atletica = FOR 0 + base 0, ma è Abilità di Classe (+1) → VA 1 → ammessa;
   // Armi pesanti = FOR 0 + base 0, non di Classe → VA 0 → vietata.
   const base = { corporazione: 'Capitol', puntiCaratteristica: { INT: 2, SAG: 2, CAR: 1 }, addestramento: 'Taumaturgo', classe: 'Custode' };
-  const altri = { 'Armi da mischia': 2, 'Difese': 2, 'Occultismo': 3, 'Artefatti': 2 };
+  const altri = { 'Armi da mischia': 2, 'Difese': 2 };
   const ok = validaScelte({ ...base, puntiAbilitaLiberi: { 'Atletica': 1, ...altri } }, d);
   assert.deepEqual(ok, []);
   const no = validaScelte({ ...base, puntiAbilitaLiberi: { 'Armi pesanti': 1, ...altri } }, d);
@@ -182,7 +183,7 @@ test('Taumaturgo: PM con il dado massimizzato, incantesimi liberi 2 + Mod INT, q
     puntiCaratteristica: { INT: 2, SAG: 1, COS: 2 },
     addestramento: 'Taumaturgo',
     classe: 'Arcanista',
-    puntiAbilitaLiberi: { 'Potere': 2, 'Rituali': 2, 'Cultura': 1, 'Difese': 2, 'Armi da lancio': 2, 'Intrattenere': 1 },
+    puntiAbilitaLiberi: { 'Potere': 2, 'Rituali': 2, 'Difese': 1 },
   };
   const s = calcolaScheda(scelte, dati);
   assert.deepEqual(s.errori, []);

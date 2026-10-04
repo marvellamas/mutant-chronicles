@@ -137,8 +137,9 @@ test('collaudo: chi non ha lanciagranate non cambia; la SS della Punisher tiene 
   assert.deepEqual(Object.keys(solo.m.ricarica), ['x']);
 });
 
-test('A.86, nel frattempo: danno della tabella senza bonus di Caratteristica (lanciatore e lancio a mano); flag nei dati', () => {
+test('A.86 (E&L del 03/10): granate e razzi senza bonus di Caratteristica (lanciatore, modulo integrato, lancio a mano, lanciarazzi)', () => {
   assert.equal(dati.regole.danno_caratteristica.esplosivi.senza_bonus, true);
+  assert.equal(dati.regole.danno_caratteristica.esplosivi['TODO(Davide)'], undefined);
   const armaDi = (rif, uid, d = dati) => {
     const { creazione, s: ses } = prepara([voce(uid, rif, 'impugnata', 2)]);
     return calcolaScheda({ creazione, livelli: [], sessione: ses }, d).equipaggiamento.armi.find((x) => x.uid === uid);
@@ -154,6 +155,12 @@ test('A.86, nel frattempo: danno della tabella senza bonus di Caratteristica (la
   // il lanciarazzi: danno del razzo di riferimento senza bonus
   const lr = armaDi('armi_distanza:lanciarazzi', 'r');
   assert.equal(lr.danno.una_mano, lr.munizioneRiferimento.danno);
+  // tutti i lanciarazzi, anche corporativi: danno del razzo, bonus 0
+  for (const rif of ['armi_distanza_corporative:lanciarazzi-deuce', 'armi_distanza_corporative:lanciarazzi-ssw5500', 'armi_distanza_corporative:lanciarazzi-southpaw', 'armi_distanza_corporative:lanciarazzi-daimyo']) {
+    const a = armaDi(rif, 'z');
+    assert.ok(a, rif);
+    assert.deepEqual([a.danno.una_mano, a.bonusCaratteristica?.bonus ?? 0], [a.munizioneRiferimento?.danno ?? a.danno.una_mano, 0], rif);
+  }
   // senza il flag torna il bonus del §5.13 (DES 7 del Mishima: +1 alle Armi da lancio)
   const d2 = structuredClone(dati);
   d2.regole.danno_caratteristica.esplosivi.senza_bonus = false;

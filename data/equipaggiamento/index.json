@@ -4,29 +4,48 @@
   "reperibilita": {
     "CO": {
       "nome": "Comune",
-      "ricerca": "Disponibile presso un venditore appropriato; nessuna Prova."
+      "ricerca": "Nessuna Prova presso un venditore appropriato.",
+      "prova": null
     },
     "NC": {
       "nome": "Non comune",
-      "ricerca": "Oratoria senza penalità."
+      "ricerca": "Oratoria senza penalità.",
+      "prova": {
+        "abilita": "Oratoria",
+        "va": 0
+      }
     },
     "RA": {
       "nome": "Rara",
-      "ricerca": "Oratoria −2 VA."
+      "ricerca": "Oratoria −2 VA.",
+      "prova": {
+        "abilita": "Oratoria",
+        "va": -2
+      }
     },
     "MR": {
       "nome": "Molto rara",
-      "ricerca": "Oratoria −4 VA."
+      "ricerca": "Oratoria −4 VA.",
+      "prova": {
+        "abilita": "Oratoria",
+        "va": -4
+      }
     },
     "EP": {
       "nome": "Epica",
-      "ricerca": "Disponibilità stabilita dal Direttore di Gioco.",
-      "fonte": "Le Batterie colorate passano da REP Molto Rara a Epica.",
-      "TODO(Davide)": "per-davide A.83: la REP Epica (Batterie Matrice colorate, Magia §26.4) ha una Prova di ricerca (Oratoria con quale penalità) o è come Leggendaria? Nel frattempo la disponibilità la stabilisce il Direttore, senza Prova."
+      "ricerca": "Oratoria −6 VA, se esiste una possibilità concreta di reperimento.",
+      "prova": {
+        "abilita": "Oratoria",
+        "va": -6,
+        "condizione": "se il Direttore stabilisce che esiste una possibilità concreta di reperimento"
+      },
+      "fonte": "E&L del 03/10/2026, A.83; Equipaggiamento §§1.8 e 10.3, Armamenti §7.1.8, Magia §26.4"
     },
     "LE": {
       "nome": "Leggendaria",
-      "ricerca": "Nessuna Prova la rende disponibile: riservata a disponibilità eccezionali introdotte dal Direttore di Gioco."
+      "ricerca": "Disponibilità eccezionale stabilita dal Direttore; nessuna penalità standard di ricerca.",
+      "prova": null,
+      "fonte": "E&L del 03/10/2026, A.83; Equipaggiamento §§1.8 e 10.3, Armamenti §7.1.8, Magia §26.4"
     }
   },
   "file": [
@@ -180,5 +199,6 @@
       "quantita_per": 5
     }
   },
-  "_nota_rif_sostituiti": "Voci di catalogo uscite perché sostituite da un’altra scheda: al caricamento di un personaggio (src/character.js → normalizza) la voce passa al rif nuovo, con lo stato tradotto se indicato."
+  "_nota_rif_sostituiti": "Voci di catalogo uscite perché sostituite da un’altra scheda: al caricamento di un personaggio (src/character.js → normalizza) la voce passa al rif nuovo, con lo stato tradotto se indicato.",
+  "_nota_ricerca": "E&L A.83: per gli Artefatti non esistono normali negozi; il Direttore stabilisce prima che sia possibile trovare un’offerta o una commissione, poi la Prova serve a individuare quel contatto. Un successo non obbliga a vendere, non crea un oggetto indisponibile e non elimina prezzo, autorizzazioni o tempi di produzione. La REP non modifica Qualità, Integrità o Grado mistico."
 }

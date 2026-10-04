@@ -796,15 +796,28 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   let lancioPotere = 0;
   let forMancanteArmature = 0;
   const rinforziValidi = new Set();
-  for (const o of oggetti.filter((x) => x.attivo && (x.tipo === 'armatura' || x.tipo === 'scudo' || x.tipo === 'elmetto'))) {
-    const d = o.def;
+  // E&L A.80 (03/10/2026; regole.json → rinforzi): un capo «indossabile_da_solo» senza armatura indossata usa il
+  // profilo autonomo (Rinforzo Leggero: AR, FOR, categoria e penalità dai dati) e vale come un'armatura; lo stesso
+  // se era montato su un'armatura che si è tolta o se è «in uso» senza armatura (armatura_tolta_capo_autonomo). Un solo
+  // capo conta, come le armature
+  const RD = dati.regole?.rinforzi ?? {};
+  const profiloDaSolo = RD.da_solo?.profilo ?? null;
+  const conArmatura = oggetti.some((x) => x.attivo && x.tipo === 'armatura');
+  const perUidTutti = new Map(oggetti.map((o) => [o.uid, o]));
+  const capoAutonomo = (x) => x.tipo === 'rinforzo' && x.def?.indossabile_da_solo && profiloDaSolo && !conArmatura
+    && (x.voce.stato === 'indossata' || (x.voce.stato === 'in_uso' && RD.armatura_tolta_capo_autonomo === 'profilo_autonomo'
+      && !perUidTutti.get(x.voce.montato_su)?.attivo));
+  const capiDaSoli = oggetti.filter(capoAutonomo).map((x) => ({ ...x, tipo: 'armatura', daSolo: true }));
+  for (const o of [...oggetti.filter((x) => x.attivo && (x.tipo === 'armatura' || x.tipo === 'scudo' || x.tipo === 'elmetto')), ...capiDaSoli]) {
+    const d = o.daSolo ? { ...o.def, categoria: profiloDaSolo.categoria, ar: { totale: profiloDaSolo.ar, magica: profiloDaSolo.magica ?? 0 }, for_richiesta: profiloDaSolo.for_richiesta, penalita: profiloDaSolo.penalita } : o.def;
+    if (o.daSolo) rinforziValidi.add(o.uid);
     let penalita = d ? { ...(fileArmature.categorie?.[d.categoria] ?? {}), ...(d.penalita ?? {}) } : {};
     let ar = d?.ar ?? (Number.isInteger(o.voce.personalizzato?.ar) ? { totale: o.voce.personalizzato.ar, magica: 0 } : null);
     let forRichiesta = d?.for_richiesta ?? null;
     let categoria = d?.categoria ?? null;
     // §7.11.2: un solo kit di rinforzo compatibile; aumenta AR e FOR richiesta. Una Leggera portata
     // fisicamente ad AR 3 o più usa le penalità della Media; le proprietà native restano applicabili
-    const kit = o.tipo === 'armatura' && d ? rinforzoValido(o, montatiSu(o.uid).filter((x) => x.def?.rinforzo && puoMontare(x, o)), avvisi) : null;
+    const kit = o.tipo === 'armatura' && d && !o.daSolo ? rinforzoValido(o, montatiSu(o.uid).filter((x) => x.def?.rinforzo && puoMontare(x, o)), avvisi) : null;
     if (kit) {
       const k = kit.def.rinforzo;
       ar = { totale: (ar?.totale ?? 0) + k.ar, magica: ar?.magica ?? 0 };
@@ -823,7 +836,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     }
     const forMancante = forRichiesta ? Math.max(0, forRichiesta - FOR) : 0;
     protezioni.push({
-      uid: o.uid, nome: o.nome, tipo: o.tipo, categoria, taglia: d?.taglia ?? null,
+      uid: o.uid, nome: o.daSolo ? `${o.nome} (da solo)` : o.nome, tipo: o.tipo, categoria, ...(o.daSolo ? { daSolo: true } : {}), taglia: d?.taglia ?? null,
       categoriaBase: d?.categoria ?? null, rinforzo: kit ? { nome: kit.nome, kit: kit.def.rinforzo.kit, uid: kit.uid } : null,
       arKit: kit ? kit.def.rinforzo.ar : 0,
       // A.48: protezione classificata Artefatto Mistico o TecnoMistico (Corazza Potenziata)
@@ -881,7 +894,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   // rinforzi indossati da soli (indossabile_da_solo; regole.json → rinforzi.da_solo, per-davide A.80)
   const regoleDaSolo = dati.regole?.rinforzi?.da_solo ?? {};
   const armaturaIndossata = oggetti.some((x) => x.attivo && x.tipo === 'armatura');
-  const rinforziDaSoli = oggetti.filter((x) => x.attivo && x.tipo === 'rinforzo' && x.voce.stato === 'indossata' && x.def?.rinforzo)
+  const rinforziDaSoli = oggetti.filter((x) => x.attivo && x.tipo === 'rinforzo' && x.voce.stato === 'indossata' && x.def?.rinforzo && !capoAutonomo(x))
     .map((x) => ({ uid: x.uid, nome: x.nome, ar: x.def.rinforzo.ar, kit: x.def.rinforzo.kit, conArmatura: armaturaIndossata }));
   const daSoloOperativo = (o) => o.voce.stato === 'indossata' && regoleDaSolo.proprieta === true
     && !(armaturaIndossata && regoleDaSolo.con_armatura_indossata !== 'vale');
@@ -1074,7 +1087,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     // §5.13: bonus di Caratteristica al danno (Caratteristica dell'Abilità dell'arma, Armi pesanti INT),
     // salvo le esclusioni espresse delle schede (Danno calibrato)
     // munizioni esplosive (granate e razzi, Armamenti §7.20.3–7.20.4): regole.json → danno_caratteristica.esplosivi,
-    // in attesa di Davide (A.86) danno della tabella senza bonus di Caratteristica
+    // E&L A.86 (03/10/2026): danno della munizione, senza bonus di Caratteristica (granate a mano o da lanciagranate, razzi)
     const esplosiva = !!(d?.danno_da_munizione || d?.esplosivo) && regoleCar?.esplosivi?.senza_bonus === true;
     const bonusCar0 = bonusCaratteristicaArma(nomeAbilita, d?.proprieta ?? []);
     const bonusCaratteristica = bonusCar0 && esplosiva ? { ...bonusCar0, bonus: 0, esclusoDa: 'Munizione esplosiva (danno della tabella, A.86)' } : bonusCar0;
@@ -1211,10 +1224,12 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   for (const x of rinforziDaSoli.filter((r) => r.conArmatura && regoleDaSolo.con_armatura_indossata !== 'vale')) {
     avvisi.push(`${x.nome} è indossato da solo, ma c’è un’armatura indossata: per contare va montato su di lei («Montata su:»), un solo rinforzo compatibile (§7.11.2).`);
   }
+  for (const x of capiDaSoli.filter((c) => c.voce.stato === 'in_uso' && !c.voce.montato_su)) avvisi.push(`${x.nome} è in uso senza un’armatura su cui montarlo: lo porti da solo, con il profilo autonomo (E&L A.80).`);
   for (const x of accessoriMontati) {
     const su = perUid.get(x.voce.montato_su);
     if (!su) avvisi.push(`${x.nome} è montato su un oggetto che non è più nella lista.`);
     else if (!puoMontare(x, su)) avvisi.push(`${x.nome} non si monta su ${su.nome}: nessun effetto.`);
+    else if (!operativo(su) && capiDaSoli.some((c) => c.uid === x.uid)) avvisi.push(`${x.nome} era montato su ${su.nome}, che non è indossata: lo porti da solo, con il profilo autonomo (E&L A.80).`);
     else if (!operativo(su)) avvisi.push(`${x.nome} è montato su ${su.nome}, che non è ${NON_ATTIVO[su.tipo] ?? 'impugnata'}: nessun effetto.`);
   }
 

@@ -5,12 +5,17 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { calcolaScheda } from '../src/calc.js';
 import { deserializzaPersonaggio, normalizza, serializza } from '../src/character.js';
-import { applicaCompletamento, validaCompletamento, puntiDaCompletare } from '../src/avanzamento.js';
+import { applicaCompletamento, validaCompletamento, puntiDaCompletare, puntiDaTogliere } from '../src/avanzamento.js';
 import { competenzaDi, baseIniziale, limiteAbilita, vaPersonale, puntiUtili } from '../src/competenze.js';
 import { datiReali } from './helpers.js';
 
 const { dati } = await datiReali();
+// le regole del 29/09 (10 Punti Abilità Liberi per Grado), prima della correzione dell'E&L del 03/10/2026
+const dati10 = structuredClone(dati);
+dati10.regole.creazione.punti_abilita_liberi = 10;
+for (const x of dati10.regole.avanzamento.eventi) x.eventi = x.eventi.map((e) => e.replace(/^punti_abilita:\d+$/, 'punti_abilita:10'));
 const R = dati.regole;
+const DATI = dati;
 const classe = (nome) => dati.classi.classi.find((c) => c.nome === nome);
 const lim = (abilita, ...classi) => limiteAbilita(abilita, classi.map(([n, grado]) => ({ def: classe(n), grado })), R);
 
@@ -67,7 +72,8 @@ test('§8.4: progressione massima di un’Abilità Specializzata, VA grezzo e VA
   assert.deepEqual(puntiUtili(16, 14, 1), { utili: 0, inattivi: 1 });
 });
 
-test('file salvato con le regole del 27/09: si apre senza perdere scelte, i punti inattivi si riassegnano con «Assegna»', () => {
+test('file salvato con le regole del 27/09: si apre senza perdere scelte, i punti inattivi si riassegnano con «Assegna» (regole del 29/09, 10 punti)', () => {
+  const dati = dati10;
   const testo = readFileSync(new URL('collaudo/regole-27-09/b_fratellanza_arcanista_l12.json', import.meta.url), 'utf8');
   const p = deserializzaPersonaggio(testo);
   const { scelte, avvisi } = normalizza(p.creazione, dati);
@@ -89,7 +95,7 @@ test('file salvato con le regole del 27/09: si apre senza perdere scelte, i punt
     [12, 1, { 'Artefatti': 1 }],
   ]);
   // riassegnazione come nel file di collaudo corrente, un evento alla volta dal più vecchio
-  const corrente = deserializzaPersonaggio(readFileSync(new URL('collaudo/b_fratellanza_arcanista_l12.json', import.meta.url), 'utf8'));
+  const corrente = deserializzaPersonaggio(readFileSync(new URL('collaudo/regole-29-09/b_fratellanza_arcanista_l12.json', import.meta.url), 'utf8'));
   const dopo = { 1: corrente.creazione.puntiAbilitaLiberi, ...Object.fromEntries(corrente.livelli.filter((v) => v.puntiAbilita).map((v) => [v.livello, v.puntiAbilita])) };
   while (puntiDaCompletare(pg, dati).length) {
     const [ev] = puntiDaCompletare(pg, dati);
@@ -104,4 +110,9 @@ test('file salvato con le regole del 27/09: si apre senza perdere scelte, i punt
   assert.deepEqual(pg.livelli, corrente.livelli);
   const fine = calcolaScheda(pg, dati);
   assert.deepEqual([fine.errori, fine.completamenti], [[], []]);
+  // con le regole correnti (E&L del 03/10/2026: 5 punti per Grado) lo stesso personaggio ha 5 punti in eccesso
+  // per evento, da togliere con «Togli»; il file di collaudo corrente è quello già portato a 5
+  assert.deepEqual(puntiDaTogliere(pg, DATI).map((c) => [c.livello, c.eccesso]), [[1, 5], [4, 5], [8, 5], [12, 5]]);
+  const b = deserializzaPersonaggio(readFileSync(new URL('collaudo/b_fratellanza_arcanista_l12.json', import.meta.url), 'utf8'));
+  assert.deepEqual(puntiDaTogliere({ creazione: b.creazione, livelli: b.livelli }, DATI), []);
 });

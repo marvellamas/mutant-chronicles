@@ -42,11 +42,7 @@
       "Corpo a corpo": 1,
       "Difese": 2,
       "Furtività": 1,
-      "Medicina": 1,
-      "Sopravvivenza": 1,
-      "Cultura": 2,
-      "Occultismo": 1,
-      "Oratoria": 1
+      "Medicina": 1
     },
     "incantesimi": [],
     "puntiEroe": {
@@ -306,10 +302,7 @@
         "Corpo a corpo": 1,
         "Furtività": 1,
         "Medicina": 1,
-        "Sopravvivenza": 1,
-        "Cultura": 2,
-        "Occultismo": 2,
-        "Oratoria": 2
+        "Sopravvivenza": 2
       }
     },
     {

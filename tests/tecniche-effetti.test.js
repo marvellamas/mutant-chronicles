@@ -27,12 +27,12 @@ const ab = (s, n) => s.abilita.find((a) => a.nome === n);
 const uso = (s, abilita, u) => ab(s, abilita).usiSpecifici.find((x) => x.uso === u) ?? null;
 const avanti = (sess, n) => Array.from({ length: n }).reduce((s) => nuovoRound(s), sess);
 
-test('dati: 28 Tecniche con effetti; numeri in breve, frasi controllate, TODO solo A.81 e A.82', () => {
+test('dati: 28 Tecniche con effetti; numeri in breve, frasi controllate; A.81 e A.82 chiuse (E&L del 03/10)', () => {
   const t = dati.tecniche_interiori.tecniche;
   assert.equal(t.filter((x) => x.effetti).length, 28);
   assert.equal(sintesiTecnica(T('pelle-di-rinoceronte')), '+1 AR rav., +2 danno rav., +3 FOR');
   assert.equal(sintesiTecnica(T('volonta-adamantina')), null);
-  assert.deepEqual(t.filter((x) => x.effetti['TODO(Davide)']).map((x) => x.id), ['pelle-di-rinoceronte', 'onda-interiore']);
+  assert.deepEqual(t.filter((x) => x.effetti['TODO(Davide)']).map((x) => x.id), []);
   // ogni numero della forma breve è nel testo della scheda
   for (const x of t.filter((y) => y.effetti.breve)) {
     for (const n of x.effetti.breve.match(/\d+/g) ?? []) assert.ok(x.testo.includes(n) || JSON.stringify(x.altri_campi ?? {}).includes(n), `${x.id}: ${n}`);
@@ -43,25 +43,46 @@ test('Pelle di Rinoceronte: +2 danno ravvicinato, +3 FOR e manovre di forza solo
   const s0 = riposo();
   const a0 = scheda(s0);
   const dannoRiposo = profiloSenzArmi(a0, dati).danno.una_mano;
-  assert.equal(uso(a0, 'Atletica', 'manovre di forza'), null);
+  assert.equal(uso(a0, 'Atletica', 'Sforzo di forza'), null);
   const s1 = attiva(s0, 'pelle-di-rinoceronte');
   assert.ok(s1);
   const a1 = scheda(s1);
   const senz = profiloSenzArmi(a1, dati);
   assert.notEqual(senz.danno.una_mano, dannoRiposo);
   assert.ok(senz.provenienzaDanno.righe.some((r) => r.fonte === 'Tecnica: Pelle di Rinoceronte (fino al Round 4)' && r.valore === 2));
-  assert.equal(uso(a1, 'Atletica', 'manovre di forza').modificatore, 3);
-  assert.equal(uso(a1, 'Corpo a corpo', 'manovre di forza').modificatore, 3);
+  assert.equal(uso(a1, 'Atletica', 'Sforzo di forza').modificatore, 3);
+  assert.equal(uso(a1, 'Corpo a corpo', 'Immobilizzare, Sbilanciare, Disarmare, Incalzare').modificatore, 3);
+  assert.equal(uso(a1, 'Atletica', 'Immobilizzare e Sbilanciare').modificatore, 3);
+  // nessun +3 generale ad Atletica e Corpo a corpo (A.81)
+  assert.equal(ab(a1, 'Atletica').effettivo, ab(a0, 'Atletica').effettivo);
+  assert.equal(ab(a1, 'Corpo a corpo').effettivo, ab(a0, 'Corpo a corpo').effettivo);
   assert.deepEqual(a1.usiCaratteristicheTalenti.map((x) => [x.caratteristiche, x.valore, x.uso]), [[['FOR'], 3, 'prove di FOR']]);
   // «Bonus dei Talenti» spento: le Tecniche restano (sono attivazioni, non Talenti passivi)
   assert.equal(profiloSenzArmi(scheda({ ...s1, bonusTalenti: false }), dati).provenienzaDanno.righe.some((r) => /Pelle di Rinoceronte/.test(r.fonte)), true);
   // in corso fino alla fine del Round 4; dal Round 5 i valori tornano quelli a riposo
   const s4 = avanti(s1, 3);
-  assert.equal(uso(scheda(s4), 'Atletica', 'manovre di forza').modificatore, 3);
+  assert.equal(uso(scheda(s4), 'Atletica', 'Sforzo di forza').modificatore, 3);
   const a5 = scheda(avanti(s1, 4));
   assert.equal(profiloSenzArmi(a5, dati).danno.una_mano, dannoRiposo);
-  assert.equal(uso(a5, 'Atletica', 'manovre di forza'), null);
+  assert.equal(uso(a5, 'Atletica', 'Sforzo di forza'), null);
   assert.deepEqual(a5.usiCaratteristicheTalenti, []);
+});
+
+test('A.81 (E&L del 03/10): in «Attacca!» il +3 di Pelle di Rinoceronte solo a Immobilizzare, Sbilanciare, Disarmare e Incalzare con Corpo a corpo', () => {
+  const s1 = attiva(riposo(), 'pelle-di-rinoceronte');
+  const pg = { scheda: scheda(s1), sessione: s1 };
+  const pg0 = { scheda: scheda(riposo()), sessione: riposo() };
+  const senz = profiloSenzArmi(pg.scheda, dati);
+  const va = (p, manovra, arma = profiloSenzArmi(p.scheda, dati)) => calcolaAttaccoRavvicinato(p, arma, { manovra: [manovra] }, dati).va_finale;
+  for (const m of ['immobilizzare', 'sbilanciare', 'disarmare', 'incalzare']) assert.equal(va(pg, m) - va(pg0, m), 3, m);
+  for (const m of ['normale', 'stordire', 'mirato']) assert.equal(va(pg, m) - va(pg0, m), 0, m);
+  const r = calcolaAttaccoRavvicinato(pg, senz, { manovra: ['sbilanciare'] }, dati);
+  assert.ok(r.provenienza.righe.some((x) => /Pelle di Rinoceronte .*: manovra di forza/.test(x.fonte) && x.valore === 3));
+  // con un'arma d'altra Abilità niente +3, con il promemoria
+  const katana = { uid: 'x', nome: 'Katana', tipo: 'arma_ravvicinata', abilita: 'Armi da guerra', va: 10, vaEffettivo: 10, danno: { una_mano: '1d8', due_mani: null }, portataQ: 1, manovre: ['Disarmare'], mani: 1 };
+  const k = calcolaAttaccoRavvicinato(pg, katana, { manovra: ['disarmare'] }, dati);
+  assert.equal(k.va_finale, calcolaAttaccoRavvicinato(pg0, katana, { manovra: ['disarmare'] }, dati).va_finale);
+  assert.ok(k.promemoria.some((p) => /soltanto con una Prova di Corpo a corpo/.test(p)));
 });
 
 test('Aura di Resistenza: +1 AR magica solo finché è in corso (A.48), con la provenienza della Tecnica', () => {
@@ -106,8 +127,10 @@ test('Onda Interiore: profilo d’attacco solo nel Round dell’attivazione, dad
   const s1 = attiva(s0, 'onda-interiore');
   const a1 = scheda(s1);
   const o = profiloOndaInteriore(a1, s1, dati);
-  // Controllo, Grado II di Lottatore: 1d4 (§8.9.4), più il bonus di FOR (A.82)
+  // Controllo, Grado II di Lottatore: 1d4 (§8.9.4), più il bonus di SAG con il tetto del livello (E&L A.82), niente FOR
   assert.equal(o.dannoBase, '1d4');
+  assert.equal(o.bonusCaratteristica.sigla, 'SAG');
+  assert.ok(o.provenienzaDanno.righe.every((x) => !/FOR/.test(x.fonte)));
   assert.equal(o.portataQ, 6);
   assert.equal(o.vaEffettivo, ab(a1, 'Corpo a corpo').effettivo);
   const pg = { scheda: a1, sessione: s1 };

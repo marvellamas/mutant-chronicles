@@ -661,7 +661,7 @@ manuali; la 69 chiude in parte una domanda.
 Lavoro sulle durate degli Incantesimi (`tools/durate_incantesimi.mjs` → `incantesimi.json` → `meccanica.durata`,
 `src/durate-incantesimi.js`). Una domanda nuova, nel pacchetto per il Doc «per-davide.md»:
 
-- **A.88 — Durata a Concentrazione di Individuare** (Magia, scheda di Individuare). *In attesa.* La scheda fa
+- **A.88 — Durata a Concentrazione di Individuare** (Magia, scheda di Individuare). *Risolta il 3 ottobre (decisione 89).* La scheda fa
   scegliere fra Concentrazione e durata fissa, ma la tabella delle versioni dà solo la durata fissa: qual è la durata
   massima a Concentrazione di ogni versione? Nel frattempo l'app usa la durata fissa anche con Concentrazione e mostra
   la domanda nel riquadro «Durata e bersagli» di «Lancia!» (TODO(Davide) in `meccanica.durata`).
@@ -678,3 +678,61 @@ Scelte prese senza domanda, perché il manuale le dice:
   durata passa al gradino successivo della scala della scheda (sez. 12.3, `src/anticipazione.js`).
 - Marchio Psichico: le durate per inseguimento e combattimento della seconda tabella della scheda mancavano nei
   dati; ora sono le colonne «Durata inseguimento» e «Durata combattimento» delle versioni.
+
+## 3 ottobre 2026 — risposte ai 6 nuovi quesiti dell'app e punti Abilità liberi (Doc E&L, blocco del 03/10)
+
+Blocco «Risposte approvate ai 6 nuovi quesiti dell’app e punti Abilità liberi» del Doc E&L, approvato il 3 ottobre
+2026 (versione del 03/10 14:13 UTC, testo in `docs/risposte-master-2026-09-26.md`). Prevale sui comportamenti
+provvisori dei TODO e sulle formulazioni precedenti incompatibili.
+
+84. **Pelle di Rinoceronte: manovre di forza** (A.81). Il +3 vale soltanto negli impieghi di forza: Immobilizzare
+    (Corpo a corpo o Atletica per afferrare, resistere, mantenere la presa, liberarsi), Sbilanciare (Prova offensiva
+    di Corpo a corpo e opposizione con Atletica), Disarmare (Prove offensive o difensive con Corpo a corpo),
+    Incalzare (Prova offensiva con Corpo a corpo); fuori dalle manovre, ad Atletica solo per uno sforzo di forza.
+    Niente +3 ad attacchi normali, Stordire, Affondo, Spazzata, Colpo Mirato, Difese o all’Abilità dell’arma; il +2
+    al danno Ravvicinato resta. → `tecniche_interiori.json` (`tools/effetti_tecniche.mjs`): usi specifici
+    «Sforzo di forza» e «Immobilizzare e Sbilanciare» per Atletica, «Immobilizzare, Sbilanciare, Disarmare,
+    Incalzare» per Corpo a corpo; `attacco.manovre_forza` con le quattro Manovre, che «Attacca!» somma solo con
+    Corpo a corpo (`src/attacco.js`). L’«opzione Sforzo di forza» è un uso specifico con nome: la soluzione più
+    semplice nello schema degli effetti. TODO tolto.
+85. **Onda Interiore: bonus di SAG al danno** (A.82). Dado senz’armi della Disciplina e del Grado più il bonus di
+    SAG (Risorse Interiori) con il tetto del livello del §5.13; niente FOR, niente +2 di Pelle di Rinoceronte;
+    Prova di Corpo a corpo, Vettore Distanza, danno Magico. Corregge il provvisorio «bonus di FOR sì». →
+    `onda.bonus_caratteristica: "SAG"`, `profiloSenzArmi`. TODO tolto.
+86. **Rinforzi indossati da soli e armatura tolta** (A.80). Indossabili da soli i 14 soprabiti e mantelli, il
+    Tabardo consacrato e la Sottogiacca protettiva IES, con il profilo autonomo approvato (Rinforzo Leggero: AR 1
+    ordinaria, FOR 3, categoria Leggera, −1 VA al lancio con Potere, nessun’altra penalità; restano quelle per FOR
+    insufficiente) e le proprie proprietà (Ignifuga, Mimetica ambientale, Protezione occulta: non diventa AR
+    magica). Kit, piastre, inserti e rivestimenti richiedono l’armatura. Togliendo l’armatura il rinforzo
+    strutturale resta montato e non dà nulla; il capo autonomo ancora indossato usa il suo profilo. Un solo capo
+    conta, nessun doppio conteggio, un capo usato da solo non riceve rinforzi. → `rinforzi.json`
+    (`tools/lotti/lotto_rinforzi_armature.mjs`: 16 indossabili da soli), `regole.json` → `rinforzi.da_solo.profilo`,
+    `armatura_tolta_capo_autonomo`; `src/equipaggiamento.js` (il capo vale come un’armatura Leggera),
+    `src/protezione.js`. Sostituisce il provvisorio «AR 0». TODO tolto.
+87. **Granate e razzi senza bonus di Caratteristica** (A.86). Confermato: nessun bonus di Caratteristica al danno
+    dell’esplosione, per granate a mano, da lanciagranate (anche integrati) e razzi dei lanciarazzi; danno completo
+    della munizione con i bonus fissi della scheda. Tutti i lanciarazzi del catalogo usano il danno della munizione
+    (`danno_da_munizione`), quindi la regola vale anche per loro. → `regole.json` → `danno_caratteristica.esplosivi`
+    (decisione al posto del TODO).
+88. **Reperibilità Epica** (A.83). EP fra Molto Rara e Leggendaria: Oratoria −6 VA quando il Direttore stabilisce
+    che esiste una possibilità concreta di reperimento; Leggendaria senza penalità standard (disponibilità
+    eccezionale del Direttore). Le Batterie Matrice colorate restano Epiche. Scala completa della ricerca nei dati:
+    `index.json` → `reperibilita[REP].prova` ({ abilita, va } o null), dal lotto
+    `tools/lotti/lotto_risposte_0310.mjs`; nota sugli Artefatti in `_nota_ricerca`. TODO tolto.
+89. **Individuare: durata massima a Concentrazione** (A.88). La scheda 23.9 ha già la colonna «Concentrazione
+    massima» (nei dati «Concentr. massima», abbreviata): la ricognizione delle durate l’aveva persa per il nome
+    abbreviato. Recepite entrambe le colonne per i livelli 6–18 (le soglie intermedie ereditano la precedente),
+    scelta della modalità al lancio, Anticipazione di un gradino solo sulla durata scelta (avviso in «Lancia!» se
+    si anticipa l’altra). Nessun altro incantesimo ha una colonna di Concentrazione persa (controllo su tutte le
+    colonne delle versioni). → `tools/durate_incantesimi.mjs`, `incantesimi.json`, `src/durate-incantesimi.js`.
+    TODO tolto.
+90. **5 Punti Abilità Liberi a ogni Grado, compreso il primo** (correzione aggiuntiva). Sostituisce i 10 punti per
+    Grado (A.52). → `regole.json` → `creazione.punti_abilita_liberi: 5` e `punti_abilita:5` ai livelli 4, 8, 12,
+    16, 20; creazione, «Sali di livello», riepiloghi e controlli leggono i dati. I punti già assegnati in più non si
+    tolgono da soli: l’avviso in cima alla scheda dice «Con la nuova regola di Davide hai X punti Abilità liberi in
+    più del consentito: togline X» (`regole.json` → `regole_aggiornate.eccesso`), «Togli» li fa togliere un evento
+    alla volta (`src/avanzamento.js` → `statoRiduzione`, `validaRiduzione`, `applicaRiduzione`; `src/ui/completa.js`
+    → `renderTogli`) e finché restano non si sale di livello. PG d’esempio aggiornati: i generatori e
+    `tools/togli_punti_eccesso.mjs`. Il manuale (Giocatore §2.13, tabella del §2.0 e cap. 8) dice ancora 10 punti:
+    l’esempio del §2.13 (Percezione 2, Tecnologia 2, Cultura 2, Raggirare 4) va riscritto con 5 punti
+    (errata nel pacchetto per il Doc); nei test l’Agente usa Percezione 2 e Raggirare 3.

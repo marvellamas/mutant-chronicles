@@ -105,14 +105,20 @@ export const EFFETTI = {
         condizione: 'Concede +1 AR non magica contro attacchi Ravvicinati Naturali o Magici, +3 alle prove di FOR, +3 ad Atletica e alle prove di Corpo a Corpo nelle manovre in cui si impiega direttamente la forza fisica, e +2 al danno Ravvicinato.' },
       { tipo: 'caratteristica', caratteristiche: ['FOR'], valore: 3, ambito: 'uso_specifico', uso: 'prove di FOR',
         condizione: 'Concede +1 AR non magica contro attacchi Ravvicinati Naturali o Magici, +3 alle prove di FOR, +3 ad Atletica e alle prove di Corpo a Corpo nelle manovre in cui si impiega direttamente la forza fisica, e +2 al danno Ravvicinato.' },
-      { abilita: 'Atletica', valore: 3, ambito: 'uso_specifico', uso: 'manovre di forza',
+      // E&L A.81 (03/10/2026): Atletica solo per uno sforzo di forza (sollevare, spingere, trascinare, forzare) e per
+      // Immobilizzare e Sbilanciare (afferrare, resistere, mantenere la presa, liberarsi; opposizione a Sbilanciare)
+      { abilita: 'Atletica', valore: 3, ambito: 'uso_specifico', uso: 'Sforzo di forza',
         condizione: 'Concede +1 AR non magica contro attacchi Ravvicinati Naturali o Magici, +3 alle prove di FOR, +3 ad Atletica e alle prove di Corpo a Corpo nelle manovre in cui si impiega direttamente la forza fisica, e +2 al danno Ravvicinato.' },
-      { abilita: 'Corpo a corpo', valore: 3, ambito: 'uso_specifico', uso: 'manovre di forza',
+      { abilita: 'Atletica', valore: 3, ambito: 'uso_specifico', uso: 'Immobilizzare e Sbilanciare',
+        condizione: 'Concede +1 AR non magica contro attacchi Ravvicinati Naturali o Magici, +3 alle prove di FOR, +3 ad Atletica e alle prove di Corpo a Corpo nelle manovre in cui si impiega direttamente la forza fisica, e +2 al danno Ravvicinato.' },
+      // Corpo a corpo nelle quattro Manovre di forza, comprese le Prove difensive di Disarmare e la presa
+      { abilita: 'Corpo a corpo', valore: 3, ambito: 'uso_specifico', uso: 'Immobilizzare, Sbilanciare, Disarmare, Incalzare',
         condizione: 'Concede +1 AR non magica contro attacchi Ravvicinati Naturali o Magici, +3 alle prove di FOR, +3 ad Atletica e alle prove di Corpo a Corpo nelle manovre in cui si impiega direttamente la forza fisica, e +2 al danno Ravvicinato.' },
     ],
-    attacco: { manovre_forza: { va: 3, frase: 'Il +3 alle manovre non è un bonus generale alle prove per colpire.' } },
+    // E&L A.81: in «Attacca!» il +3 si somma soltanto a queste Manovre con Corpo a corpo; non ad attacchi normali,
+    // Stordire, Affondo, Spazzata e Colpo Mirato, né alle Difese o all'Abilità dell'arma
+    attacco: { manovre_forza: { va: 3, manovre: ['immobilizzare', 'sbilanciare', 'disarmare', 'incalzare'], abilita: 'Corpo a corpo', frase: 'Il +3 alle manovre non è un bonus generale alle prove per colpire.' } },
     promemoria: ['Non aumenta FOR e non ricalcola modificatori o capacità di carico.'],
-    'TODO(Davide)': 'per-davide A.81: quali Manovre «impiegano direttamente la forza fisica» (Immobilizzare, Sbilanciare, Disarmare, Incalzare?) e il +3 ad Atletica vale per ogni uso o solo per la forza? Nel frattempo +3 ad Atletica e Corpo a corpo come usi specifici «manovre di forza», e in «Attacca!» un promemoria senza somma automatica.',
     breve: '+1 AR rav., +2 danno rav., +3 FOR',
   },
   'vipera-dal-cappuccio': {
@@ -176,7 +182,8 @@ export const EFFETTI = {
           controllo: { 1: '1d4', 3: '1d6', 5: '1d8' },
           guardia: { 1: '1d6', 3: '1d8', 5: '1d10' },
         },
-        bonus_caratteristica: true,
+        // E&L A.82 (03/10/2026): bonus di SAG al danno (Risorse Interiori), con il tetto per livello del §5.13; niente FOR
+        bonus_caratteristica: 'SAG',
         frasi: [
           'Entro 6 Q nessuna penalità propria di Gittata; restano copertura e altri modificatori.',
           'Vettore Distanza, danno Magico assorbito normalmente, non Etereo.',
@@ -185,7 +192,6 @@ export const EFFETTI = {
         ],
       },
     },
-    'TODO(Davide)': 'per-davide A.82: «più i bonus pertinenti al singolo attacco» comprende il bonus di FOR al danno senz’armi (§5.13)? E il +2 al danno Ravvicinato di Pelle di Rinoceronte, visto che il Vettore è Distanza? Nel frattempo il bonus di FOR sì, Pelle di Rinoceronte no.',
     breve: 'pugno a 6 Q, dado della Disciplina',
   },
   'presa-dell-anima': {

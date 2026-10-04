@@ -38,11 +38,7 @@
     "classe": "Invocatore",
     "puntiAbilitaLiberi": {
       "Potere": 2,
-      "Occultismo": 2,
-      "Artefatti": 1,
-      "Medicina": 1,
-      "Scienza": 1,
-      "Armi medie": 1,
+      "Occultismo": 1,
       "Difese": 2
     },
     "incantesimi": [
@@ -358,11 +354,9 @@
         "Forma Elementale"
       ],
       "puntiAbilita": {
-        "Artefatti": 1,
-        "Armi medie": 2,
+        "Armi medie": 1,
         "Difese": 2,
-        "Medicina": 3,
-        "Percezione": 1,
+        "Medicina": 1,
         "Atletica": 1
       }
     },

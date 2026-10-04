@@ -130,7 +130,9 @@ function montataSu(ctx, r, risolte, cambia) {
 /** Che cosa dà un rinforzo indossato da solo, dalla regola nei dati (regole.json → rinforzi.da_solo). */
 function testoDaSolo(dati) {
   const d = dati.regole?.rinforzi?.da_solo ?? {};
-  return d.ar === 'propria' ? 'Da solo: AR del rinforzo, senza armatura.' : 'Da solo: nessuna AR (§7.23.4: non è un profilo autonomo di armatura), in attesa di Davide (A.80).';
+  const p = d.profilo;
+  // E&L A.80: profilo autonomo dai dati
+  return p ? `Da solo, senza armatura: profilo ${p.nome} (AR ${p.ar}, FOR ${p.for_richiesta}, categoria ${p.categoria}${p.penalita?.lancio_potere ? `, ${p.penalita.lancio_potere} VA al lancio con Potere` : ''}), con le proprietà del capo. Con un’armatura va montato.` : 'Da solo: nessun profilo autonomo.';
 }
 
 /** Una voce dell'elenco, completa di stato, quantità, peso e note. */
