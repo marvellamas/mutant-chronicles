@@ -1,6 +1,6 @@
 # Backlog — richieste raccolte, in attesa di implementazione
 
-Aggiornato al 26 settembre 2026. Ogni voce riporta la fonte nel manuale, la difficoltà stimata e cosa manca per farla. Le voci "facili" si possono lanciare subito; le altre aspettano il collaudo o dati mancanti.
+Aggiornato al 4 ottobre 2026. Ogni voce riporta la fonte nel manuale, la difficoltà stimata e cosa manca per farla. Le voci "facili" si possono lanciare subito; le altre aspettano il collaudo o dati mancanti.
 
 ## 1. Nome file di esportazione con nome e livello — FACILE
 
@@ -170,3 +170,15 @@ Piano di partenza:
 
 - Cap. 8: assegnazione e registrazione, crediti, acquisti e assegnazioni di missione; confronto con `dotazioni.json` e `src/dotazioni.js`.
 - Cap. 6: naniti medici (una dose ogni 24 ore, fuori dal tentativo settimanale) e postazioni medicochirurgiche (§6.8), che toccano anche le cure del Giocatore (§5.15–5.16).
+
+## 24. ✔ Veicoli, lotto 3: tab Veicoli e foglio Veicoli — fatto il 4 ottobre 2026
+
+Manuale dei Veicoli 0.2; dati e motore del lotto 2 (`data/veicoli.json`, `src/veicoli.js`), modello del §8 di `docs/ricognizione-2026-10-03.md`.
+
+- Dove sta il veicolo: decisione provvisoria di Marcello in attesa di A.91, nel file del PG che lo possiede (`scelte.veicoli`, scritto solo se non vuoto; formato 8 invariato), con la casella «Veicolo del gruppo» solo informativa (`data/veicoli.json` → `personaggio`).
+- Tab Veicoli (`src/ui/veicoli.js`): «Aggiungi veicolo» dal catalogo o scritto a mano, più veicoli, nome, «Lo guido io», «Rimuovi»; profilo con i «da definire», Pilotare del conducente con la provenienza, andature, tre strutture con PI a quadratini, soglie e stato, Copriruote con i pezzi e «Monta un ricambio», NEC; «Colpito» e «Ripara» con il calcolo in anteprima; PI a mano.
+- Combattimento: promemoria del conducente (andatura, Pilotare, attacchi da bordo e contro il mezzo), senza cambiare i VA.
+- SS: foglio Veicoli dopo gli altri, una pagina per veicolo (proprietà e sistemi in una pagina «(continua)» se non entrano), nessun foglio senza veicoli.
+- Il veicolo non pesa sul carico del PG.
+
+Restano: A.91 (di chi è il veicolo), A.101–A.105; manovre, inseguimenti, collisioni e sovraccarico tecnico al tavolo (il motore c'è, l'interfaccia no); veicoli dei nemici nel Tavolo del Master.

@@ -1,7 +1,15 @@
 {
   "versione_manuale": "Veicoli 0.2 (Google Doc del 02/10/2026, 13:31 UTC); scheda ASA Scout MK4 0.2 (Doc del 02/10/2026, 13:32 UTC)",
   "fonte": "Manuale dei Veicoli v0.2, cap. 1-10; docs/manuali-txt/veicoli.md e docs/manuali-txt/asa-scout-mk4.md",
-  "_nota": "Lotto 2 di docs/ricognizione-2026-10-03.md: regole e profili dei veicoli. Motore in src/veicoli.js (funzioni pure). Niente interfaccia e niente campi nel personaggio finché Davide non dice di chi è il veicolo (A.91). La PS Integrità per Qualità non sta qui: è quella di regole.json → integrita, condivisa con gli oggetti. Le penalità dell'andatura a chi attacca entrano in «Attacca!» quando arriverà la tab.",
+  "_nota": "Lotto 2 di docs/ricognizione-2026-10-03.md: regole e profili dei veicoli; lotto 3 (04/10/2026): tab Veicoli della scheda e foglio Veicoli della stampa. Motore in src/veicoli.js (funzioni pure). La PS Integrità per Qualità non è duplicata: regole.json → integrita.ps_per_qualita.",
+  "personaggio": {
+    "possesso": "personaggio",
+    "veicolo_del_gruppo": "informativo",
+    "sincronizzazione": false,
+    "nessun_veicolo": "I veicoli sono esclusi dalle dotazioni iniziali: il Direttore di Gioco decide se e quali fornire al gruppo (Giocatore §2.16.30). Con «Aggiungi veicolo» scegli un mezzo del catalogo o ne scrivi uno a mano; il veicolo non pesa sul carico del personaggio.",
+    "TODO(Davide)": "A.91: di chi è il veicolo? Decisione provvisoria (Marcello, 04/10/2026): il veicolo sta nel file del personaggio che lo possiede, con una casella «Veicolo del gruppo» che lo segnala come condiviso, solo informativa (nessuna sincronizzazione fra le schede); PI, andatura e NEC li aggiorna chi ha la scheda. Se Davide sceglie una scheda del gruppo, cambia solo dove si salva (src/veicoli.js: stessa forma).",
+    "_nota": "Scheda digitale, tab Veicoli: «Aggiungi veicolo» dal catalogo (profili) o scritto a mano, più veicoli per personaggio, «Colpito», «Ripara», PI a mano. Il veicolo non pesa sul carico del personaggio. Nel file: scelte.veicoli, scritto solo se non vuoto (src/character.js)."
+  },
 
   "misure": {
     "paragrafo": "§1.1",

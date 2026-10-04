@@ -8,6 +8,7 @@
 import { h, segno } from './dom.js';
 import { stemma, iconaPagina } from './immagini.js';
 import { pallini } from './tooltip.js';
+import { testoProvenienza } from '../provenienza.js';
 import { crediti } from '../dotazioni.js';
 import { COLORI_MACROFAMIGLIE } from '../palette.js';
 import { normalizzaOpzioniStampa, fogliDaStampare, numeraPagine, testoPiede, iconaFoglio, schemaQuadratini, righeElencoIncantesimi, abbreviaSS } from '../stampa.js';
@@ -30,7 +31,7 @@ export function esciDallaStampa() {
   document.getElementById('stile-stampa')?.remove();
 }
 
-const corpi = { identita: foglioIdentita, abilita: foglioAbilita, combattimento: foglioCombattimento, inventario: foglioInventario, poteri: foglioMagia, artefatti: foglioArtefatti, cibernetica: foglioCibernetica };
+const corpi = { identita: foglioIdentita, abilita: foglioAbilita, combattimento: foglioCombattimento, inventario: foglioInventario, poteri: foglioMagia, artefatti: foglioArtefatti, cibernetica: foglioCibernetica, veicoli: foglioVeicolo };
 
 function creaFoglio(id, titolo, dati, piede, corpo = corpi[id]) {
   return h('section', { class: `foglio foglio-${id}`, 'aria-label': titolo, dataset: { foglio: id } },
@@ -97,6 +98,14 @@ export function renderStampa({ stampa, torna, opzioni = null, cambiaOpzioni = nu
   if (stampa.avvisoPunti) avvisi.append(h('p', { class: 'motivo' }, `${stampa.avvisoPunti.testo}. ${stampa.avvisoPunti.eventi.map((e) => e.testo).join('; ')}.`));
 
   const contenitore = h('div', { class: 'fogli' }, fogli.map((f) => {
+    // foglio Veicoli: una pagina per veicolo, le successive «(segue)» dello stesso foglio
+    if (f.id === 'veicoli') {
+      return f.dati.veicoli.map((v, i) => {
+        const pagina = creaFoglio(f.id, `Veicoli · ${v.nome}`, v, stampa.piede);
+        if (i) pagina.classList.add('seguito');
+        return pagina;
+      });
+    }
     const foglio = creaFoglio(f.id, f.titolo, { ...f.dati, ...(f.id === 'poteri' ? { soloElenco: opz.magia === 'elenco' } : {}) }, stampa.piede);
     if (f.id !== 'combattimento') return foglio;
     // foglio 3 su due pagine fisse (docs/layout-ss.md, ritocchi post-stampa): Armi, poi Condizione
@@ -153,6 +162,9 @@ export function renderStampa({ stampa, torna, opzioni = null, cambiaOpzioni = nu
         if (pagine > 2) avvisi.append(h('p', {}, `Il foglio Combattimento è su ${pagine} pagine (le armi continuano).`));
       }
       if (f.classList.contains('f3-pagina-condizione')) impaginaCondizione(f);
+      if (f.classList.contains('foglio-veicoli') && !f.classList.contains('vei-continua') && impaginaVeicolo(f, stampa.piede) > 1) {
+        avvisi.append(h('p', {}, `${f.querySelector('.foglio-titolo').textContent}: proprietà e sistemi nella pagina dopo.`));
+      }
       riempiRighe(f);
       if (eccede(f.querySelector('.foglio-corpo'))) {
         f.dataset.fuori = '1'; // lo legge tools/collaudo_pdf.mjs
@@ -727,6 +739,78 @@ function impaginaCibernetica(foglio, d, piede) {
   foglio.after(f);
   f.querySelector('.foglio-corpo').append(note);
   for (let giro = 0; giro < 50 && eccede(corpo) && colonne.children.length > 1; giro++) seguito.prepend(colonne.lastElementChild);
+  return 2;
+}
+
+// ---------------------------------------------------------------------------
+// Foglio Veicoli (Manuale dei Veicoli 0.2, lotto 3): una pagina per veicolo, solo se il personaggio ne
+// ha. A sinistra profilo, Pilotare del conducente, andature, armi di bordo e proprietà; a destra le tre
+// strutture con i PI a quadratini (pieni = PI persi), le soglie già calcolate (§4.4) e lo stato, i
+// rinforzi, l'alimentazione e le note. Le pagine dopo la prima sono «(segue)» dello stesso foglio.
+
+const numeroIt = (n) => (Number.isInteger(n) ? n.toLocaleString('it-IT') : '—');
+const daDefinireSS = () => h('em', {}, 'da definire');
+
+function foglioVeicolo(v) {
+  const p = v.profilo;
+  const voce = (etichetta, ...valore) => h('p', {}, h('strong', {}, `${etichetta} `), ...valore);
+  const profilo = box({ titolo: v.manuale ? 'Profilo (scritto a mano)' : `Profilo · ${p.nome}`, classe: 'vei-profilo' },
+    h('div', { class: 'vei-valori' },
+      [['MOV', `${numeroIt(p.mov_q)} Q`], ['MAN', `${segno(p.man ?? 0)}${v.fascia ? ` ${v.fascia.nome}` : ''}`], ['Corazzato', String(p.corazzato ?? 0)],
+        ['AR', `${p.ar?.totale ?? 0}${p.ar?.magica ? ` (${p.ar.magica} mag.)` : ''}`], ['PS Integrità', p.ps_integrita ?? '—']]
+        .map(([e, x]) => h('div', { class: 'massimo' }, h('span', {}, e), h('span', { class: 'valore' }, String(x))))),
+    voce('Posti:', p.equipaggio?.posti ? `${p.equipaggio.posti}${p.equipaggio.passeggeri !== undefined ? ` (conducente + ${p.equipaggio.passeggeri})` : ''}` : '—',
+      p.carico_kg ? ` · Carico ${numeroIt(p.carico_kg)} kg` : null, p.qualita ? ` · Qualità ${p.qualita}` : null),
+    voce('Prezzo:', v.daDefinire.prezzo ? [Number.isInteger(p.prezzo_cr) ? `${numeroIt(p.prezzo_cr)} cr, parziale · ` : null, daDefinireSS()] : `${numeroIt(p.prezzo_cr)} cr`,
+      ' · ', h('strong', {}, 'REP '), v.daDefinire.reperibilita ? daDefinireSS() : p.reperibilita),
+    h('p', { class: 'piccolo' }, [v.gruppo ? 'Veicolo del gruppo (informativo, A.91). ' : null, v.conducente ? 'Conducente: questo personaggio.' : 'Conducente: ________________']));
+  const pilotare = v.pilotare
+    ? box({ titolo: 'Pilotare da conducente', classe: 'vei-pilotare' },
+      h('p', {}, h('strong', { class: 'vei-va' }, v.pilotare.valore < 0 ? `−${-v.pilotare.valore}` : String(v.pilotare.valore)), h('span', { class: 'piccolo' }, ` ${testoProvenienza(v.pilotare.provenienza, { totale: null, separatore: ' · ', note: false })}`)),
+      h('p', { class: 'piccolo' }, 'Con andatura e danni alla stampa: al tavolo valgono quelli del momento.'))
+    : box({ titolo: 'Pilotare', classe: 'vei-pilotare' }, h('p', {}, v.pilotarePersonale ? `VA personale ${v.pilotarePersonale.va} + MAN ${segno(p.man ?? 0)} + andatura + danni (solo la penalità peggiore, §4.4)` : 'Il personaggio non ha l’Abilità Pilotare.'));
+  const andature = box({ titolo: 'Andature (§2.1, §3.1)', classe: 'vei-andature' },
+    tabella(['Andatura', 'Q', 'Pilotare', 'Da bordo', 'Contro'], v.andature.map((a) => [`${a.nome}${a.attuale ? ' ●' : ''}`, numeroIt(a.q), a.pilotare ? segno(a.pilotare) : '0', a.attacco_da_bordo ? segno(a.attacco_da_bordo) : '0', a.attacco_contro ? segno(a.attacco_contro) : '0'])),
+    h('p', { class: 'piccolo' }, '● andatura alla stampa. Da bordo: attacchi di chi spara dal mezzo; Contro: attacchi contro il mezzo.'));
+  const armi = (p.armi ?? []).length ? box({ titolo: 'Armi di bordo', classe: 'vei-armi' },
+    p.armi.map((a) => h('p', {}, h('strong', {}, a.nome), ` · ${[a.abilita, a.danno, Number.isInteger(a.gittata_q) ? `${numeroIt(a.gittata_q)} Q` : null, (a.modalita ?? []).join(', '), a.operatore].filter(Boolean).join(' · ')}`))) : null;
+  const proprieta = [...(p.proprieta ?? []), ...(p.sistemi ?? [])];
+  const strutture = v.strutture.map((s) => box({ titolo: s.nome, classe: `vei-struttura stato-${s.stato}` },
+    h('div', { class: 'vei-pi' }, h('span', { class: 'etichetta-colpi' }, 'PI'), quadratini(s.massimi, { compatto: true, pieni: s.massimi - s.pi, perRiga: s.massimi > 30 ? 15 : 10 }),
+      h('span', { class: 'sigla' }, ` ${s.pi}/${s.massimi}`)),
+    h('p', {}, h('strong', {}, `Stato: ${s.statoNome ?? '—'}`), s.fuoriUso ? ' · fuori uso' : s.penalita ? ` · Pilotare ${segno(s.penalita)}` : s.parziale ? ` · Pilotare ${segno(s.parziale)}` : ' · nessuna penalità'),
+    h('p', { class: 'piccolo vei-soglie' }, s.soglie.map((x) => `${x.nome} ${x.da === x.a ? x.da : `${x.da}–${x.a}`}${x.penalita === null ? ' fuori uso' : x.penalita ? ` ${segno(x.penalita)}` : ''}`).join(' · '))));
+  const rinforzi = v.rinforzi.map((r) => box({ titolo: `${r.nome} (${r.struttura})`, classe: 'vei-rinforzo' },
+    h('div', { class: 'vei-pezzi' }, r.montati.map((n, i) => h('div', { class: 'vei-pezzo' }, h('span', { class: 'sigla' }, `pezzo ${i + 1}`), quadratini(r.piPerPezzo, { compatto: true, pieni: r.piPerPezzo - n })))),
+    h('p', { class: 'piccolo' }, `Ricambi: ${r.ricambi.length ? r.ricambi.map((n) => `${n}/${r.piPerPezzo}`).join(', ') : 'nessuno'}. PS Integrità ${r.ps ?? '—'}. I pezzi montati assorbono in successione, l’eccedenza va ai PI.`)));
+  const n = v.nec;
+  const alimentazione = n ? box({ titolo: 'Alimentazione', classe: 'vei-nec' },
+    h('p', {}, `${n.nec}: ${Number.isInteger(n.capacita_lx) ? `${numeroIt(n.lx)} / ${numeroIt(n.capacita_lx)} Lx alla stampa · residui ________` : ''}`, Number.isInteger(n.capacita_lx) ? null : daDefinireSS()),
+    h('p', { class: 'piccolo' }, 'Consumo ', Number.isInteger(n.consumo_lx_km) ? `${n.consumo_lx_km} Lx/km` : daDefinireSS(), ' · autonomia ', Number.isInteger(n.autonomia_km) ? `${numeroIt(n.autonomia_km)} km` : daDefinireSS(), n.riserva_verde ? ` · ${n.riserva_verde}` : null)) : null;
+  return [
+    v.vista.fuoriUso ? h('p', { class: 'vei-fuori-uso' }, 'Fuori uso: Corpo principale o Motore a 0 PI. Non funziona, non esplode; il movimento residuo prosegue (§5.5).') : null,
+    h('div', { class: 'vei-colonne' },
+      h('div', { class: 'colonna vei-sinistra' }, profilo, pilotare, andature),
+      h('div', { class: 'colonna vei-centro' }, strutture),
+      h('div', { class: 'colonna vei-destra' }, rinforzi, armi, alimentazione,
+        box({ titolo: 'Avarie e note', riempitivo: true, classe: 'vei-note' }, v.avarie ? h('p', {}, v.avarie) : null, righeGuida()))),
+    proprieta.length ? box({ titolo: 'Proprietà e sistemi', classe: 'vei-proprieta' }, h('ul', { class: 'piccolo' }, proprieta.map((x) => h('li', {}, h('strong', {}, `${x.nome}: `), x.testo)))) : null,
+  ];
+}
+
+/**
+ * Impagina la pagina di un veicolo: se non entra, «Proprietà e sistemi» passa a una pagina «(continua)»
+ * dello stesso veicolo, subito dopo. Restituisce le pagine del veicolo.
+ */
+function impaginaVeicolo(foglio, piede) {
+  const corpo = foglio.querySelector('.foglio-corpo');
+  const proprieta = corpo.querySelector(':scope > .vei-proprieta');
+  if (!eccede(corpo) || !proprieta) return 1;
+  const titolo = foglio.querySelector('.foglio-titolo').textContent;
+  const f = creaFoglio('veicoli', `${titolo} (continua)`, null, piede, () => []);
+  f.classList.add('seguito', 'vei-continua');
+  foglio.after(f);
+  f.querySelector('.foglio-corpo').append(proprieta);
   return 2;
 }
 

@@ -18,6 +18,7 @@ import { calcolaCarico, pesoVoce } from './carico.js';
 import { testoProvenienza } from './provenienza.js';
 import { attivazioneInfusa } from './lancio.js';
 import { gruppoTecnica, ordineGruppo, tecnicaDi, sintesiTecnica } from './tecniche.js';
+import { vistaVeicoloPersonaggio, pilotareDelPersonaggio } from './veicoli.js';
 
 /** Limiti di impaginazione (non regole di gioco): lunghezze massime dei testi stampati. */
 export const LIMITI_STAMPA = {
@@ -482,6 +483,9 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
   // Umanità ridotta; chi non ne ha non stampa il foglio e gli altri fogli non cambiano
   const cib = ciberneticaStampa(s, c, dati);
   if (cib) fogli.push({ id: 'cibernetica', titolo: 'Cibernetica', dati: cib });
+  // foglio Veicoli (Manuale dei Veicoli 0.2, lotto 3): una pagina per veicolo, solo se il personaggio ne ha
+  const veicoli = veicoliStampa(s, c, dati);
+  if (veicoli) fogli.push({ id: 'veicoli', titolo: 'Veicoli', dati: veicoli });
 
   const ordinati = ordinaFogli(fogli, dati);
   // rimandi fra i fogli 5 e 6 (decisione 5: i PM delle riserve stanno nel foglio Poteri)
@@ -664,6 +668,18 @@ export function artefattiStampa(s, creazione, dati, { conPoteri = false } = {}) 
     // decisione 5: i PM delle riserve si segnano nel foglio Poteri; senza foglio Poteri, qui
     pmQui: !conPoteri,
   };
+}
+
+/**
+ * Foglio Veicoli: i mezzi del personaggio (scelte.veicoli, A.91 provvisoria) con la vista di src/veicoli.js
+ * (profilo, strutture con PI e soglie, andature, rinforzi, NEC). Pilotare a riposo, se è il conducente.
+ * null se il personaggio non ha veicoli o i dati dei veicoli non ci sono.
+ */
+export function veicoliStampa(s, creazione, dati) {
+  if (!dati.veicoli || !Array.isArray(creazione.veicoli) || !creazione.veicoli.length) return null;
+  const pilotare = pilotareDelPersonaggio(s.abilita, dati, { scheda: s });
+  const veicoli = creazione.veicoli.map((v) => vistaVeicoloPersonaggio(v, dati, { pilotare })).filter(Boolean);
+  return veicoli.length ? { veicoli } : null;
 }
 
 /**
@@ -924,8 +940,8 @@ export function schemaQuadratini(massimo, { compatto = false, bloccoInPiu = fals
  * presenti (numero fisso 1–4), poi quelli che si stampano solo con un contenuto. `presente`
  * (scheda, dati) dice se il foglio ha contenuto; `icona`: immagine del tab della SD (img/pagine/).
  * Inventario e Artefatti arrivano con i pezzi 1 e 5; Cibernetica con il lotto 3 dell'Equipaggiamento
- * 0.5 (solo con impianti installati o Umanità ridotta); Veicoli resta fuori finché il tab è «In attesa
- * del manuale» (regole.json → tab_in_arrivo).
+ * 0.5 (solo con impianti installati o Umanità ridotta); Veicoli con il lotto 3 dei Veicoli (solo con
+ * almeno un veicolo nella scheda).
  */
 export const FOGLI = [
   { id: 'identita', sempre: true },
@@ -935,7 +951,7 @@ export const FOGLI = [
   { id: 'poteri', icona: 'magia' },
   { id: 'artefatti' },
   { id: 'cibernetica' },
-  { id: 'veicoli', presente: (s, dati) => !dati.regole?.tab_in_arrivo?.veicoli },
+  { id: 'veicoli' },
 ];
 const ID_FOGLI = FOGLI.map((f) => f.id);
 /** Vecchi id dei fogli nelle preferenze salvate: il foglio Magia è diventato Poteri. */
@@ -945,8 +961,7 @@ const ALIAS_FOGLI = { magia: 'poteri' };
 export const iconaFoglio = (id) => FOGLI.find((f) => f.id === id)?.icona ?? id;
 
 /**
- * Fogli preparati → nell'ordine di FOGLI, senza quelli vuoti (Cibernetica e Veicoli finché i tab
- * sono in attesa del manuale), con il numero fisso: posizione fra i fogli del personaggio.
+ * Fogli preparati → nell'ordine di FOGLI, senza quelli vuoti, con il numero fisso: posizione fra i fogli del personaggio.
  */
 export function ordinaFogli(fogli, dati) {
   const ordinati = ID_FOGLI.map((id) => fogli.find((f) => f.id === id)).filter(Boolean)

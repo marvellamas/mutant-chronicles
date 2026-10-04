@@ -16,7 +16,7 @@
 //     avarie: 'ruota posteriore destra cerchiata' }     // note del Direttore
 //
 // Tutto è facoltativo salvo «profilo»: `vistaVeicolo` riempie i valori mancanti dal profilo (mezzo integro).
-import { provenienza, riga } from './provenienza.js';
+import { provenienza, riga, righeRegoleAbilita } from './provenienza.js';
 
 const lista = (v) => (Array.isArray(v) ? v : []);
 const intero = (v, d = 0) => (Number.isInteger(v) ? v : d);
@@ -222,6 +222,8 @@ export function applicaColpoVeicolo(mezzo, struttura, colpo, dati) {
     applicazioni,
     piPotenziali: potenziali,
     piPersi: prima - dopo,
+    // PI da perdere dopo PS e Corazzato, prima del limite dei PI attuali: servono ai rinforzi (Copriruote)
+    piDaPerdere: persi,
     pi: { prima, dopo, massimi },
     stato: statoStruttura(struttura, dopo, massimi, dati),
     psRichiesta,
@@ -353,4 +355,239 @@ export function andaturaResidua(idAndatura, ambiente, dati) {
   const amb = (dati.veicoli.fuori_uso.ambienti ?? []).find((x) => x.id === ambiente) ?? null;
   if (ambiente !== 'terra') return { andatura: A[Math.max(0, i)], scesa: false, conseguenza: amb?.conseguenza ?? null };
   return { andatura: A[Math.max(0, i - 1)], scesa: i > 0, conseguenza: amb?.conseguenza ?? null };
+}
+
+// ---------------------------------------------------------------------------
+// Veicoli nel file del personaggio (lotto 3 dei Veicoli; decisione provvisoria in attesa di A.91, dati in
+// veicoli.json → personaggio): il mezzo sta nelle scelte del PG che lo possiede (`scelte.veicoli`, scritto solo
+// se non vuoto) con la forma del modello in testa al file, più `uid`, `gruppo` (casella «Veicolo del gruppo»,
+// solo informativa) e `conducente` (true se lo guida il personaggio). Nessuna sincronizzazione fra schede.
+
+const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
+const testo = (v) => (typeof v === 'string' ? v.trim() : '');
+let progressivo = 0;
+const nuovoUid = () => `vei${Date.now().toString(36)}${(progressivo++).toString(36)}`;
+
+/** Gli id delle tre strutture (§4.1). */
+export const struttureVeicolo = (dati) => dati.veicoli.strutture.elenco.map((s) => s.id);
+
+/**
+ * Profilo di un mezzo scritto a mano (come i nemici fuori dal bestiario): gli stessi campi di un profilo del
+ * catalogo, con i valori minimi sensati. La PS Integrità, se manca, viene dalla Qualità (regole.json → integrita).
+ */
+export function schedaManuale(x, dati) {
+  const s = isOggetto(x) ? x : {};
+  const qualita = testo(s.qualita) || 'Comune';
+  const psQ = dati.regole?.integrita?.ps_per_qualita?.[qualita] ?? null;
+  const M = dati.veicoli.manovrabilita.fasce.map((f) => f.man);
+  const pi = Object.fromEntries(struttureVeicolo(dati).map((k) => [k, Math.max(1, intero(s.pi?.[k], 1))]));
+  const arTot = Math.max(0, intero(s.ar?.totale, 0));
+  return {
+    id: null, nome: testo(s.nome) || 'Veicolo', manuale: true, tipo: testo(s.tipo) || 'terrestre',
+    mov_q: Math.max(0, intero(s.mov_q, 0)),
+    man: Math.min(Math.max(...M), Math.max(Math.min(...M), intero(s.man, 0))),
+    ar: { totale: arTot, magica: Math.max(0, Math.min(arTot, intero(s.ar?.magica, 0))) },
+    corazzato: Math.max(0, intero(s.corazzato, 0)),
+    pi, qualita, ps_integrita: Number.isInteger(s.ps_integrita) ? s.ps_integrita : psQ,
+    equipaggio: { posti: Math.max(1, intero(s.equipaggio?.posti, 1)) },
+    armi: [], proprieta: [], rinforzi: [],
+    prezzo_cr: Number.isInteger(s.prezzo_cr) ? s.prezzo_cr : null, reperibilita: testo(s.reperibilita) || null,
+    note: testo(s.note),
+  };
+}
+
+/** Profilo di un mezzo del personaggio: dal catalogo, dalla scheda scritta a mano, oppure null. */
+export function profiloDi(mezzo, dati) {
+  if (mezzo?.profilo) return profiloVeicolo(mezzo.profilo, dati);
+  return isOggetto(mezzo?.scheda) ? schedaManuale(mezzo.scheda, dati) : null;
+}
+
+/** Rinforzi del profilo con tutti i pezzi montati e di ricambio integri (scheda dello Scout: Copriruote). */
+function rinforziIniziali(profilo) {
+  return Object.fromEntries(lista(profilo.rinforzi).map((r) => [r.id, {
+    montati: Array(intero(r.installati)).fill(intero(r.pi_per_pezzo)),
+    ricambi: Array(intero(r.ricambi)).fill(intero(r.pi_per_pezzo)),
+  }]));
+}
+
+/**
+ * Un mezzo nuovo per la scheda: integro, fermo, nessun conducente, NEC carico.
+ * @param origine id del catalogo (veicoli.json → profili) oppure i campi di una scheda scritta a mano
+ */
+export function nuovoVeicolo(origine, dati, { uid = null, nome = null } = {}) {
+  const catalogo = typeof origine === 'string';
+  const profilo = catalogo ? profiloVeicolo(origine, dati) : schedaManuale(origine, dati);
+  if (!profilo) return null;
+  const capacita = profilo.alimentazione?.capacita_lx;
+  const { id: _id, manuale: _m, ...scheda } = profilo;
+  return {
+    uid: uid ?? nuovoUid(),
+    ...(catalogo ? { profilo: origine } : { scheda }),
+    nome: testo(nome) || profilo.nome,
+    gruppo: false,
+    conducente: false,
+    andatura: 'fermo',
+    pi: { ...profilo.pi },
+    rinforzi: rinforziIniziali(profilo),
+    nec: Number.isInteger(capacita) ? { lx: capacita } : null,
+    avarie: '',
+  };
+}
+
+/**
+ * Normalizza i veicoli salvati nelle scelte: PI fra 0 e i massimi, andatura esistente, pezzi dei rinforzi fra 0
+ * e i loro PI. Un mezzo con un profilo non più nel catalogo resta com'è (con l'avviso): niente si perde.
+ */
+export function normalizzaVeicoli(veicoli, dati, avvisi = []) {
+  const andature = dati.veicoli.andature.elenco.map((a) => a.id);
+  return lista(veicoli).filter(isOggetto).map((v) => {
+    const profilo = profiloDi(v, dati);
+    if (!profilo) {
+      avvisi.push(`Veicolo «${testo(v.nome) || v.profilo || 'senza nome'}»: profilo «${v.profilo ?? '—'}» non più nel catalogo dei veicoli; resta nel file, senza scheda.`);
+      return { ...v, uid: testo(v.uid) || nuovoUid() };
+    }
+    const pi = Object.fromEntries(struttureVeicolo(dati).map((k) => [k, Math.max(0, Math.min(profilo.pi[k], intero(v.pi?.[k], profilo.pi[k])))]));
+    const rinforzi = Object.fromEntries(lista(profilo.rinforzi).map((r) => {
+      const x = isOggetto(v.rinforzi?.[r.id]) ? v.rinforzi[r.id] : {};
+      const pezzo = (n) => Math.max(0, Math.min(intero(r.pi_per_pezzo), intero(n, intero(r.pi_per_pezzo))));
+      const montati = Array.from({ length: intero(r.installati) }, (_, i) => pezzo(lista(x.montati)[i]));
+      const ricambi = (Array.isArray(x.ricambi) ? x.ricambi : Array(intero(r.ricambi)).fill(intero(r.pi_per_pezzo))).slice(0, intero(r.complessivi)).map(pezzo);
+      return [r.id, { montati, ricambi }];
+    }));
+    const capacita = profilo.alimentazione?.capacita_lx;
+    const out = {
+      uid: testo(v.uid) || nuovoUid(),
+      ...(v.profilo ? { profilo: v.profilo } : { scheda: v.scheda }),
+      nome: testo(v.nome) || profilo.nome,
+      gruppo: v.gruppo === true,
+      conducente: v.conducente === true,
+      andatura: andature.includes(v.andatura) ? v.andatura : 'fermo',
+      pi,
+      rinforzi,
+      nec: Number.isInteger(capacita) ? { lx: Math.max(0, Math.min(capacita, intero(v.nec?.lx, capacita))) } : null,
+      avarie: testo(v.avarie),
+    };
+    if (Array.isArray(v.ripristini) && v.ripristini.length) out.ripristini = v.ripristini.filter((r) => struttureVeicolo(dati).includes(r?.struttura));
+    return out;
+  });
+}
+
+/**
+ * Un colpo contro il mezzo del personaggio (§4.2, §4.3): localizzazione con il d20 o la struttura scelta
+ * (selezione accurata), procedura del danno, rinforzi della struttura (i pezzi montati assorbono in successione,
+ * l'eccedenza va ai PI), fine del ripristino temporaneo se la struttura perde PI (§7.3). Non tocca il mezzo.
+ * @param scelta { d20 } oppure { struttura }; colpo come applicaColpoVeicolo
+ * @returns {{ mezzo, localizzazione, occupanti, esito, rinforzi, piPersi, prima, dopo, avviso }}
+ */
+export function colpisciVeicolo(mezzo, scelta, colpo, dati, { occupantiEsposti = true } = {}) {
+  const profilo = profiloDi(mezzo, dati);
+  const loc = scelta?.struttura ? localizza(null, dati, { accurata: scelta.struttura }) : localizza(intero(scelta?.d20), dati, { occupantiEsposti });
+  if (loc.bersaglio === 'occupanti') {
+    return { mezzo, localizzazione: loc, occupanti: true, esito: null, rinforzi: null, piPersi: 0,
+      avviso: `${mezzo.nome}: il colpo raggiunge un occupante esposto, che lo risolve con le proprie protezioni, PV, Ferite e Salvezze, senza il Corazzato del veicolo (§4.2).` };
+  }
+  const s = loc.bersaglio;
+  const nomeStr = dati.veicoli.strutture.elenco.find((x) => x.id === s)?.nome ?? s;
+  const base = { ...mezzo, profilo: undefined, scheda: profilo };
+  const esito = applicaColpoVeicolo(base, s, colpo, dati);
+  const prima = statoStruttura(s, esito.pi.prima, profilo.pi[s], dati);
+  let allaStruttura = esito.piDaPerdere;
+  let rinforzi = null;
+  let nuovo = mezzo;
+  const r = lista(profilo.rinforzi).find((x) => x.struttura === s);
+  if (r && esito.piDaPerdere > 0) {
+    const montati = mezzo.rinforzi?.[r.id]?.montati ?? Array(intero(r.installati)).fill(intero(r.pi_per_pezzo));
+    const a = assorbiConRinforzi(montati, esito.piDaPerdere, dati);
+    rinforzi = { id: r.id, nome: r.nome, ...a };
+    allaStruttura = a.allaStruttura;
+    nuovo = { ...nuovo, rinforzi: { ...(mezzo.rinforzi ?? {}), [r.id]: { ...(mezzo.rinforzi?.[r.id] ?? {}), montati: a.montati } } };
+  }
+  const dopoPi = Math.max(0, esito.pi.prima - allaStruttura);
+  nuovo = conPi(nuovo, s, dopoPi);
+  const piPersi = esito.pi.prima - dopoPi;
+  // §7.3: il ripristino temporaneo termina quando la struttura subisce una nuova perdita di PI
+  if (piPersi > 0 && lista(nuovo.ripristini).some((x) => x.struttura === s)) nuovo = { ...nuovo, ripristini: nuovo.ripristini.filter((x) => x.struttura !== s) };
+  const dopo = statoStruttura(s, dopoPi, profilo.pi[s], dati);
+  const meno = (n) => (n < 0 ? `−${-n}` : `+${n}`);
+  const pen = (x) => (x.fuoriUso ? 'fuori uso' : x.penalita ? `Pilotare ${meno(x.penalita)}` : 'nessuna penalità');
+  const parti = [`${mezzo.nome}, ${nomeStr}: ${piPersi} PI persi (${esito.pi.prima} → ${dopoPi} su ${profilo.pi[s]})`];
+  if (rinforzi?.assorbiti) parti.push(`${rinforzi.nome}: ${rinforzi.assorbiti} PI assorbiti dai pezzi montati`);
+  if (prima.stato !== dopo.stato) parti.push(`stato ${prima.statoNome} → ${dopo.statoNome} (${pen(dopo)})`);
+  if (dopo.fuoriUso) parti.push('il veicolo è fuori uso: non funziona, ma non esplode e il movimento residuo prosegue (§5.5)');
+  return { mezzo: nuovo, localizzazione: loc, occupanti: false, esito, rinforzi, piPersi, prima, dopo, avviso: `${parti.join('; ')}.` };
+}
+
+/** Una riparazione ordinaria applicata al mezzo (§7.1): il risultato di riparaVeicolo e il mezzo nuovo. */
+export function applicaRiparazione(mezzo, struttura, esito, dati, opzioni = {}) {
+  const profilo = profiloDi(mezzo, dati);
+  const r = riparaVeicolo({ ...mezzo, profilo: undefined, scheda: profilo }, struttura, esito, dati, opzioni);
+  // costo dei ricambi «da definire» se il profilo non lo dice (A.101: lo Scout non ha i costi per PI)
+  const costoDaDefinire = !Number.isInteger(profilo.ricambi_cr_per_pi?.[struttura]);
+  return { mezzo: conPi(mezzo, struttura, r.pi.dopo), riparazione: { ...r, costoDaDefinire } };
+}
+
+/** Monta un pezzo di ricambio di un rinforzo al posto del primo pezzo montato esaurito. null se non si può. */
+export function montaRicambio(mezzo, idRinforzo) {
+  const x = mezzo.rinforzi?.[idRinforzo];
+  const i = lista(x?.montati).findIndex((n) => n === 0);
+  if (i < 0 || !lista(x?.ricambi).length) return null;
+  const ricambi = [...x.ricambi];
+  const pezzo = ricambi.shift();
+  const montati = [...x.montati];
+  montati[i] = pezzo;
+  return { ...mezzo, rinforzi: { ...mezzo.rinforzi, [idRinforzo]: { montati, ricambi } } };
+}
+
+/**
+ * Vista di un mezzo del personaggio per la scheda e la stampa: profilo, PI e stato delle tre strutture con le
+ * soglie già calcolate (§4.4), tabella delle andature (§2.1, §3.1), Pilotare del personaggio se è il conducente,
+ * rinforzi, NEC, campi «da definire» del profilo. null se il profilo non c'è più.
+ * @param pilotare { va, provenienza } del personaggio (VA effettivo di Pilotare), oppure null
+ */
+export function vistaVeicoloPersonaggio(mezzo, dati, { pilotare = null } = {}) {
+  const profilo = profiloDi(mezzo, dati);
+  if (!profilo) return null;
+  const conducente = mezzo.conducente === true && pilotare !== null;
+  const vista = vistaVeicolo({ ...mezzo, profilo: undefined, scheda: profilo }, dati, { pilotareVa: conducente ? pilotare.va : null });
+  // la riga del VA personale porta con sé la provenienza dell'Abilità (tooltip della SD)
+  if (vista.pilotare && pilotare?.provenienza?.righe?.length) vista.pilotare.provenienza.righe[0] = { ...vista.pilotare.provenienza.righe[0], dettaglio: pilotare.provenienza.righe };
+  return {
+    uid: mezzo.uid,
+    nome: mezzo.nome || profilo.nome,
+    gruppo: mezzo.gruppo === true,
+    conducente,
+    manuale: !mezzo.profilo,
+    profilo,
+    fascia: dati.veicoli.manovrabilita.fasce.find((f) => f.man === profilo.man) ?? null,
+    vista,
+    strutture: vista.strutture.map((s) => ({ ...s, soglie: soglieStruttura(s.struttura, s.massimi, dati) })),
+    andature: dati.veicoli.andature.elenco.map((a) => ({ ...a, q: intero(profilo.mov_q) * a.moltiplicatore, attuale: a.id === vista.andatura.id })),
+    rinforzi: lista(profilo.rinforzi).map((r) => ({ id: r.id, nome: r.nome, struttura: r.struttura, piPerPezzo: intero(r.pi_per_pezzo), ps: r.ps_integrita ?? null,
+      montati: mezzo.rinforzi?.[r.id]?.montati ?? [], ricambi: mezzo.rinforzi?.[r.id]?.ricambi ?? [], frasi: r.frasi ?? [] })),
+    nec: profilo.alimentazione ? { ...profilo.alimentazione, lx: mezzo.nec?.lx ?? profilo.alimentazione.capacita_lx ?? null } : null,
+    pilotare: conducente ? vista.pilotare : null,
+    pilotarePersonale: pilotare,
+    daDefinire: {
+      prezzo: !Number.isInteger(profilo.prezzo_cr) || !!profilo.prezzo_parziale,
+      reperibilita: !profilo.reperibilita,
+      autonomia: profilo.alimentazione ? profilo.alimentazione.autonomia_km === null : false,
+      ricambi: !profilo.ricambi_cr_per_pi,
+    },
+    todo: profilo['TODO(Davide)'] ?? null,
+    avarie: mezzo.avarie ?? '',
+  };
+}
+
+/**
+ * Pilotare del personaggio: VA (effettivo al tavolo, se c'è) con la provenienza dell'Abilità.
+ * @param abilita le Abilità della tab Abilità (con effettivo e provenienza) o quelle della scheda a riposo
+ * @param scheda la scheda calcolata, per ricostruire la provenienza da regole quando l'Abilità non la porta
+ */
+export function pilotareDelPersonaggio(abilita, dati, { scheda = null } = {}) {
+  const nome = dati.veicoli.pilotare?.abilita ?? 'Pilotare';
+  const a = lista(abilita).find((x) => x?.nome === nome);
+  if (!a) return null;
+  const va = a.effettivo ?? a.totale;
+  const prov = a.provenienza ?? (scheda ? provenienza(righeRegoleAbilita(a, scheda), a.totale) : null);
+  return { va, provenienza: prov, nome: a.nome };
 }

@@ -1379,6 +1379,14 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
         renderScheda({ mantieniScorrimento: true });
       },
       ridisegna: () => renderScheda({ mantieniScorrimento: true }),
+      // tab Veicoli: i mezzi del personaggio (scelte.veicoli, decisione provvisoria A.91), con il messaggio dell'azione
+      veicoli: (lista, messaggio = null) => {
+        const { scelte, avvisi } = applicaModifica(stato.scelte, { veicoli: lista }, dati);
+        stato.scelte = scelte;
+        stato.messaggioScheda = avvisi.length ? { tipo: 'attenzione', testo: avvisi.join(' ') } : messaggio ? { tipo: 'ok', testo: messaggio } : null;
+        persisti();
+        renderScheda({ mantieniScorrimento: true });
+      },
       // tab Cibernetica: perdite annullate per errore e recuperi concessi dal Direttore (Giocatore §5.21)
       umanita: (blocco) => {
         stato.scelte = applicaModifica(stato.scelte, { umanita: blocco }, dati).scelte;

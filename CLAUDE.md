@@ -28,12 +28,12 @@ Drive si usa **in sola lettura**: mai scrivere nei Doc di Davide, nemmeno commen
   - **Poteri:** la Magia («Lancia!», PM, cristalli); Risorse Interiori (le Tecniche Interiori come gli incantesimi, «Attiva», Round e Tecniche attive); «Nessun potere» senza l'una e l'altra; «Da artefatti»;
   - **Artefatti:** sintonizzazione, schede degli Artefatti, riserve di Chroma;
   - **Cibernetica:** Umanità con la provenienza e gli effetti della fascia, impianti installati per famiglia, chip, perdite e recuperi;
-  - **Veicoli:** in attesa del manuale;
+  - **Veicoli:** i veicoli del PG (`src/ui/veicoli.js`): «Aggiungi veicolo», profilo, Pilotare del conducente, andature, Corpo, Propulsione e Motore con PI e stato, rinforzi, NEC, «Colpito», «Ripara»;
   - **Inventario:** Carico e Crediti, Integrità, oggetti per sezione con stato (anche deposito comune), PI e Ripara, condizione delle armi, caricatori di riserva, applicazioni sanitarie, catalogo con «Compra»;
   - Calendario in coda, se attivo.
 - **SS** = scheda da stampare: la vista di stampa A4 orizzontale (`#/p/<id>/stampa`, `src/ui/stampa.js`, `css/stampa.css`). Fogli come i tab della SD (branch `layout-ss`, esito in `docs/layout-ss.md`):
   - 1 Identità, 2 Abilità, 3 Combattimento (due pagine fisse: Armi; Condizione ed equipaggiamento indossato), 4 Inventario sempre;
-  - 5 Poteri con la magia; 6 Artefatti con Artefatti o riserve di Chroma;
+  - 5 Poteri con la magia; 6 Artefatti con Artefatti o riserve di Chroma; poi Cibernetica e Veicoli (una pagina per veicolo) se ci sono;
   - piè di pagina «foglio N · pagina P di T»; nel foglio 3 «foglio 3 · pagina 1/2 · P di T».
 
 ## Stack (deciso)
@@ -43,7 +43,7 @@ Drive si usa **in sola lettura**: mai scrivere nei Doc di Davide, nemmeno commen
 - Avvio con e senza server: `avvia.bat` (e `npm start`, `npx serve`, GitHub Pages) è l'app di sempre, con i personaggi nel browser; `avvia-server.bat` (`node server.mjs`, porta 3000, in ascolto su tutte le interfacce: indirizzi per i giocatori nella finestra e nel riquadro «Collega i giocatori», `src/rete.js`, QR da `src/qr.js`; `--solo-locale` per chiuderlo) aggiunge il Tavolo del Master e la cartella dei personaggi; non va aperto insieme ad `avvia.bat`. L'app riconosce il server dall'intestazione `X-Mutant-Server` su `versione.json` (`src/ui/cartella.js`): senza server nessuna richiesta a `/api`. Piano ed esito in `docs/tavolo-direttore.md`; resta il pezzo 7 (sessione di prova vera).
 - Cartelle del server, fuori da git salvo il `LEGGIMI.txt`: `personaggi/` (file dei PG), `tavolo/` (chi è al tavolo), `scontri/` (scontri e archivio), `nemici/` (bestiario della campagna). `esempi/` (tracciata): PG d'esempio, `esempi/nemici/` e il bestiario umano `esempi/nemici/umani/`, copiati da «Carica esempi» della plancia senza sovrascrivere.
 - Test: Node (`node --test`, cioè `npm test`) sulle funzioni pure del motore. I test non richiedono browser.
-- File del personaggio esportato: formato 8 (`VERSIONE_FORMATO` in `src/character.js`): `{ formato, versione, versioni_dati, scelte, livelli, sessione, calendario? }`, con i PI attuali degli oggetti in `sessione.integrita` e l'Umanità in `scelte.umanita` (scritta solo se non vuota). I formati precedenti si importano e si migrano (senza `calendario`: non attivo; senza `integrita`: oggetti ai PI massimi; senza `umanita`: si registrano gli impianti già installati).
+- File del personaggio esportato: formato 8 (`VERSIONE_FORMATO` in `src/character.js`): `{ formato, versione, versioni_dati, scelte, livelli, sessione, calendario? }`, con i PI attuali degli oggetti in `sessione.integrita`, l'Umanità in `scelte.umanita` (scritta solo se non vuota) e i veicoli in `scelte.veicoli` (scritti solo se ce ne sono). I formati precedenti si importano e si migrano (senza `calendario`: non attivo; senza `integrita`: oggetti ai PI massimi; senza `umanita`: si registrano gli impianti già installati).
 - File del solo calendario: `calendario_<nome>_<data>.json`, `{ tipo: "calendario", versione: 1, app: "mutant", esportato, da, calendario }` con il blocco com'è nel salvataggio (`src/calendario.js` → `fileCalendario`, `leggiFileCalendario`); l'import sostituisce l'intero blocco dopo una conferma. L'export del personaggio non cambia.
 
 ## Principi non negoziabili
@@ -78,6 +78,7 @@ src/
   sessione.js   valori attuali di sessione (modalità tavolo)
   tecniche.js   «Attiva» delle Tecniche Interiori (§8.9.1): solo PM personali, una per Round, durata R+N, Svenuto, Umanità 0
   umanita.js    Umanità (Giocatore §5.21): registro delle installazioni, valore con provenienza, fascia
+  veicoli.js    veicoli (Manuale dei Veicoli 0.2): strutture, colpi, riparazioni, mezzi del PG; ui/veicoli.js la tab
   versione.js   confronto fra versione caricata e versione.json; ui/aggiornamento.js la barra «Nuova versione»
   provenienza.js  righe { fonte, valore, nota? } dei valori calcolati (AR, VA, Salvezze, Iniziativa, Movimento, danno): le stampano i tooltip della SD e la SS
   stampa.js     dati dei fogli di stampa e delle tab
@@ -146,7 +147,9 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 
 - Durate degli Incantesimi lanciati (03/10, `docs/tavolo-direttore.md`): `incantesimi.json` → `meccanica.durata` (`tools/durate_incantesimi.mjs`, validatore), «Lancia!» con «Durata e bersagli», «Incantesimi in corso» nella tab Poteri (`src/durate-incantesimi.js`, sessione `incantesimiAttivi`): Round con `durate_round`, a tempo come promemoria, «Termina», AR di Scudo, Armatura di Forza e Pelle Corazzata finché durano (`regole.json` → `ar.incantesimi`); in scontro col Round dello scontro, nella plancia e per i nemici (`scontro.effetti`).
 
-Fuori perimetro per ora: tiri automatici fuori dalla plancia, veicoli.
+- Veicoli, lotto 3 (04/10, backlog 24; Manuale dei Veicoli 0.2): dati in `data/veicoli.json`, motore puro in `src/veicoli.js`; il veicolo sta nel file del PG che lo possiede (`scelte.veicoli`, decisione provvisoria in attesa di A.91, `veicoli.json` → `personaggio`), casella «Veicolo del gruppo» solo informativa; tab Veicoli con «Colpito» (localizzazione, AR, PS, Corazzato, Copriruote) e «Ripara», promemoria del conducente in Combattimento, foglio Veicoli della SS. Non pesa sul carico.
+
+Fuori perimetro per ora: tiri automatici fuori dalla plancia; manovre, inseguimenti e collisioni dei veicoli al tavolo.
 
 ## Riferimenti
 

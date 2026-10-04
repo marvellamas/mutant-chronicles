@@ -629,7 +629,7 @@ dl.voci.in-linea dt::after { content: ":"; }
 }
 .voce-talento > div { min-width: 0; }
 .voce-talento .motivo { display: block; }
-.voce-talento.bloccato { opacity: 0.75; }
+.voce-talento.bloccato { color: var(--tenue); }
 .voce-talento.selezionata { border-color: var(--ok); box-shadow: 0 0 0 2px var(--ok-tenue); }
 .voce-talento details { margin: 0; }
 .confronto td, .confronto th { text-align: left; }
@@ -907,7 +907,7 @@ details.sezione-tab > summary { font-weight: 700; cursor: pointer; min-height: 4
 .pi-riga { display: grid; gap: 0.35rem; }
 .pi-voce { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.6rem; font-size: 0.9rem; }
 .pi-voce .pi-comandi { display: inline-flex; align-items: center; gap: 0.3rem; }
-.pi-voce.danneggiato .pi-valore { color: var(--attenzione, inherit); }
+.pi-voce.danneggiato .pi-valore { color: var(--attenzione); }
 .pi-voce.rotto .pi-valore { color: var(--errore, inherit); }
 .testa-inventario { grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
 .riquadro-carico .valore-carico { font-size: inherit; }
@@ -1662,7 +1662,7 @@ body.con-sfondo::before {
 @media print { .avvisi { display: none; } }
 
 /* Tavolo del Master: nemico a 0 PV, carta ridotta a una riga in fondo e riga d'Iniziativa in grigio */
-.carta-nemico.carta-ridotta { padding: 0.35rem 0.6rem; opacity: 0.75; }
+.carta-nemico.carta-ridotta { padding: 0.35rem 0.6rem; color: var(--tenue); }
 .carta-ridotta .riga-ridotta { display: block; width: 100%; text-align: left; color: inherit; text-decoration: none; }
 .ordine-iniziativa tr.a-zero { color: var(--tenue); opacity: 0.65; }
 
@@ -1710,3 +1710,37 @@ body.con-sfondo::before {
 .plancia-durate { margin: 0.2rem 0; font-size: 0.9rem; }
 .durata-plancia { margin-left: 0; cursor: help; }
 .barra-durate { margin: 0.4rem 0; }
+
+/* Tab Veicoli (Manuale dei Veicoli 0.2, lotto 3): una sezione per veicolo, PI a quadratini (pieni = persi) */
+.scheda-veicolo { display: flex; flex-direction: column; gap: 0.6rem; }
+.scheda-veicolo.fuori-uso { border-left: 4px solid var(--errore); }
+.testa-veicolo { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1rem; }
+.testa-veicolo h2 { margin: 0; flex: 1 1 14rem; }
+.nome-veicolo { font: inherit; width: 100%; max-width: 22rem; }
+.casella-veicolo { display: inline-flex; align-items: center; gap: 0.3rem; margin-right: 0.8rem; }
+.veicolo-colonne { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem; }
+@media (max-width: 46rem) { .veicolo-colonne { grid-template-columns: minmax(0, 1fr); } }
+.profilo-veicolo { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr)); gap: 0.3rem 0.8rem; margin: 0; }
+.voce-profilo dt { font-size: 0.8rem; color: var(--tenue); }
+.voce-profilo dd { margin: 0; font-weight: 600; }
+.todo-veicolo { grid-column: 1 / -1; }
+.da-definire { color: var(--attenzione); }
+.tabella-andature tr.attuale { font-weight: 700; }
+.struttura-veicolo h3 { margin: 0.4rem 0 0.2rem; font-size: 1rem; }
+.riga-pi { display: flex; align-items: center; gap: 0.4rem; margin: 0.2rem 0; }
+.quadratini-pi { display: grid; grid-template-columns: repeat(12, 0.9rem); gap: 3px; margin: 0.3rem 0; }
+.quadratini-pi .casella { width: 0.9rem; height: 0.9rem; border: 1.5px solid var(--accento); border-radius: 2px; background: var(--superficie); }
+.quadratini-pi .casella.persa { background: var(--accento); }
+.stato-struttura.stato-danneggiato, .stato-struttura.stato-rotto { color: var(--errore); }
+.soglie-veicolo .attuale { font-weight: 700; }
+.pezzo-rinforzo.esaurito { text-decoration: line-through; }
+.input-lx { width: 7rem; }
+.campi-veicolo { display: grid; grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); gap: 0.4rem 0.8rem; margin: 0.5rem 0; }
+.campo-veicolo { display: flex; align-items: center; gap: 0.3rem; flex-wrap: wrap; margin: 0.3rem 0; }
+.pannello-veicolo h3 { margin-top: 0; }
+.dettaglio-colpo ul, .dettaglio-ripara { margin: 0.3rem 0; padding-left: 1.2rem; }
+.capacita-riparazione { border: 1px solid var(--bordo); border-radius: 4px; margin: 0.5rem 0; }
+.note-veicolo { display: flex; flex-direction: column; gap: 0.2rem; }
+.note-veicolo textarea { width: 100%; }
+.proprieta-veicolo { margin: 0.3rem 0; padding-left: 1.2rem; font-size: 0.9rem; }
+.promemoria-conducente p { margin: 0.2rem 0; }

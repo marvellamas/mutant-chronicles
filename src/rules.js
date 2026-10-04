@@ -68,8 +68,9 @@ async function caricaEquipaggiamento(leggi, dati, erroriLettura) {
 }
 
 // Dati che non riguardano (ancora) il personaggio: non entrano nelle versioni dei dati scritte nel suo file né
-// nel piede della stampa. Il Bestiario proposto è del Tavolo del Master; i veicoli ci restano finché Davide non
-// dice di chi è il mezzo e la tab Veicoli esce dall'attesa (docs/ricognizione-2026-10-03.md, A.91).
+// nel piede della stampa. Il Bestiario proposto è del Tavolo del Master. I veicoli (lotto 3) stanno nel file del PG
+// che li possiede (A.91, decisione provvisoria), ma veicoli.json resta qui: così le versioni dei dati scritte nei
+// file dei PG senza veicoli non cambiano.
 export const FILE_SOLO_TAVOLO = ['bestiario', 'veicoli'];
 
 /** Versione del manuale di ogni file dati che riguarda il personaggio: { file: versione_manuale }. */

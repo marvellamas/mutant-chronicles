@@ -34,6 +34,7 @@ import { tabCalendario, pannelloAttivazione, pannelloImportaCalendario, pulsante
 import { conOrdinale } from '../lingua.js';
 import { regoleRiparazione, esitoRiparazione, vaRiparazione, riparabile } from '../riparazione.js';
 import { annullaPerdita, aggiungiRecupero, togliRecupero } from '../umanita.js';
+import { tabVeicoli, promemoriaConducente } from './veicoli.js';
 
 export const POSIZIONI_TAB = [
   { id: 'alto', etichetta: 'In alto, con Punti Eroe, PV e PM a sinistra (predefinita)' },
@@ -144,7 +145,7 @@ export function renderTab(ctx) {
     artefatti: (c) => tabArtefatti(c),
     cibernetica: (c) => tabCibernetica(c),
     inventario: (c) => tabInventario(c),
-    veicoli: (c) => tabInArrivo(c, 'veicoli'),
+    veicoli: (c) => tabVeicoli(c),
   };
   // badge della pagina accanto al titolo della tab (solo con l'immagine: senza, il titolo è già nella barra delle tab)
   const badge = iconaPagina(corrente.icona ?? corrente.id, '96', { classe: 'badge-pagina', lato: 48 });
@@ -1276,6 +1277,8 @@ function tabCombattimento(ctx, d) {
   return [
     interruttoreTalenti(ctx),
     promemoriaPenalita(ctx),
+    // conducente di un veicolo: andatura e penalità come promemoria, senza cambiare i VA (Veicoli §2.1, §3.1)
+    promemoriaConducente(ctx),
     d.avvisiEquipaggiamento.length ? h('div', { class: 'riquadro attenzione' },
       h('p', {}, h('strong', {}, 'Equipaggiamento da controllare (avvisi, non blocchi: decide il master):')),
       h('ul', {}, d.avvisiEquipaggiamento.map((a) => h('li', {}, a)))) : null,
@@ -1743,18 +1746,6 @@ function etichettaModalita(ctx, sigla, nomeCatalogo) {
  * manuale (regole.json → poteri.nessuno). Poi gli Artefatti con poteri, in sola lettura, e le sezioni
  * future chiuse (regole.json → poteri.in_arrivo).
  */
-/**
- * Tab Cibernetica e Veicoli (docs/layout-sd.md, pezzo 5): lo stesso riquadro di «Nessun potere», con
- * la riga «In attesa del manuale» e i rimandi ai paragrafi che ne parlano (regole.json → tab_in_arrivo).
- */
-function tabInArrivo(ctx, id) {
-  const x = ctx.dati.regole.tab_in_arrivo?.[id];
-  return [h('section', { class: 'riquadro nessun-potere tab-in-arrivo' },
-    h('h2', {}, 'In attesa del manuale'),
-    x?.testo ? h('p', { class: 'nota' }, x.testo) : null,
-    x?.rimandi?.length ? h('ul', { class: 'rimandi' }, x.rimandi.map((r) => h('li', {}, r))) : null)];
-}
-
 function tabPoteri(ctx, d) {
   const p = ctx.dati.regole.poteri ?? {};
   const risorse = sezioneRisorseInteriori(ctx);

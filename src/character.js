@@ -11,6 +11,7 @@ import { normalizzaEquipaggiamento, catalogo, risolvi, STATI, NOMI_TIPI, infoArt
 import { ritrattoValido } from './ritratto.js';
 import { normalizzaDotazione } from './dotazioni.js';
 import { registraInstallazioni } from './umanita.js';
+import { normalizzaVeicoli } from './veicoli.js';
 
 // Personaggio a livelli { creazione, livelli } (cap. 8): modello e funzioni in avanzamento.js.
 export {
@@ -78,6 +79,10 @@ export function nuoveScelte() {
     parametriTalenti: {},
     // Giocatore §5.21: { perdite: [{ uid, rif, nome, umn }], recuperi: [{ punti, nota }] } (src/umanita.js)
     umanita: null,
+    // Veicoli posseduti (lotto 3 dei Veicoli; A.91 provvisoria: nel file del PG che li possiede, veicoli.json →
+    // personaggio): [{ uid, profilo | scheda, nome, gruppo, conducente, andatura, pi, rinforzi, nec, avarie }]
+    // (src/veicoli.js). Nel file solo se non vuoto: i personaggi senza veicoli restano identici.
+    veicoli: [],
   };
 }
 
@@ -206,6 +211,7 @@ export function normalizza(scelteIn, dati) {
   s.equipaggiamento = dividiContenitori(s.equipaggiamento, dati, avvisi);
   // Equipaggiamento §7.1: il costo UMN si registra all'installazione e non si restituisce
   s.umanita = registraInstallazioni(s.umanita, s.equipaggiamento, dati, avvisi);
+  s.veicoli = dati.veicoli ? normalizzaVeicoli(s.veicoli, dati, avvisi) : (Array.isArray(s.veicoli) ? s.veicoli : []);
   // Anagrafica: facoltativa; i personaggi salvati prima l'hanno vuota.
   for (const { campo } of CAMPI_ANAGRAFICA) {
     if (typeof s[campo] !== 'string') s[campo] = '';
@@ -438,6 +444,7 @@ export function serializza(scelte, { versioniDati, livelli, sessione, calendario
   if (pulite.ritratto === null) delete pulite.ritratto;
   if (pulite.dotazione === null) delete pulite.dotazione;
   if (pulite.umanita === null) delete pulite.umanita;
+  if (!Array.isArray(pulite.veicoli) || !pulite.veicoli.length) delete pulite.veicoli;
   if (!Object.keys(pulite.parametriTalenti ?? {}).length) delete pulite.parametriTalenti;
   const file = { formato: FORMATO_FILE, versione: VERSIONE_FORMATO };
   // in ordine alfabetico: l'ordine di caricamento dei file dati varia, il file esportato no

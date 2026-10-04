@@ -751,8 +751,11 @@ questi punti, con un `TODO(Davide)` dove serve; nel pacchetto per il Doc «per-d
 
 - **A.91 — Di chi è il veicolo** (unificata il 04/10: era anche A.100, doppione). L'ASA Scout è «il vostro Scout»: un mezzo per tutta la squadra. Scheda del gruppo,
   come il deposito comune, o voce del personaggio che lo possiede? E PI, andatura e autonomia li tiene il Direttore o
-  il giocatore? Finché non si sa, i veicoli non entrano nel file del personaggio (`src/rules.js` → `FILE_SOLO_TAVOLO`)
-  e la tab resta «in attesa». Il modello dati di `src/veicoli.js` va bene in entrambi i casi.
+  il giocatore? Il modello dati di `src/veicoli.js` va bene in entrambi i casi. **Decisione provvisoria di Marcello
+  (04/10/2026, lotto 3), finché Davide non risponde:** il veicolo sta nel file del personaggio che lo possiede
+  (`scelte.veicoli`, scritto solo se non vuoto), con una casella «Veicolo del gruppo» solo informativa: nessuna
+  sincronizzazione fra le schede, PI, andatura e NEC li aggiorna chi ha la scheda (`data/veicoli.json` → `personaggio`,
+  con il `TODO(Davide)`). Se Davide sceglie la scheda del gruppo cambia solo dove si salva.
 - **A.101 — I «da definire» della scheda dello Scout.** Formato e numero delle bombole del supporto vitale, consumo in
   Lx/km e autonomia di viaggio, scorte energetiche di partenza, prezzo completo e costi di riparazione per PI delle
   tre strutture. Nei dati sono `null` con il `TODO(Davide)`: «un dato indicato come da definire non vale 0 e non

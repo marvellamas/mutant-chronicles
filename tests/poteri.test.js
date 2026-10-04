@@ -43,10 +43,9 @@ test('validatore: testo di «Nessun potere» mancante, sezione in arrivo senza n
   assert.match(e, /poteri\.in_arrivo\[1\]: servono nome e nota/);
 });
 
-test('Veicoli (pezzo 5): tab vuoto con testo e rimandi, nessun dato; la Cibernetica non è più in attesa', () => {
+test('Veicoli (lotto 3): la tab non è più in attesa; senza veicoli il riquadro rimanda al §2.16.30', () => {
   const tab = tabFissi(preparaTab({ creazione: MISHIMA_AGENTE, livelli: [] }, dati).tab);
-  assert.equal(tab.find((t) => t.id === 'veicoli').dati, null);
-  assert.ok(dati.regole.tab_in_arrivo.veicoli.testo.length > 20);
-  assert.equal(dati.regole.tab_in_arrivo.cibernetica, undefined); // Equipaggiamento 0.5, cap. 7
-  assert.match(dati.regole.tab_in_arrivo.veicoli.rimandi[0], /§2\.16\.30/);
+  assert.ok(tab.find((t) => t.id === 'veicoli'));
+  assert.equal(dati.regole.tab_in_arrivo, undefined);
+  assert.match(dati.veicoli.personaggio.nessun_veicolo, /§2\.16\.30/);
 });
