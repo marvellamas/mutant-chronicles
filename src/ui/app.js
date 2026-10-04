@@ -17,7 +17,7 @@ import { serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevision
 import { controllaRemoto, revisioneDaScrivere, differenzeSessione, testoScelta, indicatoreCollegamento, impronta } from '../collegamento.js';
 import { leggiScontroAperto, leggiScontro, salvaScontro } from './scontro.js';
 import { registraRiga } from '../scontro.js';
-import { elencoUnito, confronta, chiaveDaFile, messaggioSalvataggio, attesaRitentativo, nomeFileLibero } from '../cartella.js';
+import { elencoUnito, confronta, chiaveDaFile, messaggioSalvataggio, attesaRitentativo, nomeFileLibero, haNome, fileProvvisorio } from '../cartella.js';
 import { renderTavolo } from './tavolo.js';
 import { avviso, avvisoErrore } from './avvisi.js';
 import { controlloInUso } from './ridisegno.js';
@@ -351,6 +351,8 @@ function programmaCartella(id) {
  */
 async function scriviInCartella(id, { revisione = false, mtime = null } = {}) {
   if (!archivio.carica(id)) return null;
+  // un PG senza nome resta nel browser (05/10/2026): nella cartella va un solo file, con il nome giusto
+  if (!haNome(archivio.carica(id).scelte)) return null;
   // il nome del file è unico per personaggio (src/cartella.js → nomeFileLibero): serve l'elenco della cartella
   let elenco = null;
   try { elenco = await elencoCartella(); } catch { elenco = null; }
@@ -803,9 +805,13 @@ async function apriDaCartella(r, { dalTavolo = false } = {}) {
 function rigaCartella(r) {
   const data = new Date(r.mtime).toLocaleString('it-IT', { dateStyle: 'short', timeStyle: 'short' });
   const apri = () => apriDaCartella(r);
+  // file provvisorio di un PG senza nome (versioni precedenti): «senza nome», con che cosa fare
+  const provvisorio = fileProvvisorio(r.file);
   return h('li', { class: 'carta personaggio' },
     h('div', {},
-      h('h2', {}, r.nome.replace(/-/g, ' '), h('span', { class: 'etichetta origine-personaggio', title: SPIEGA_ORIGINI.cartella }, ORIGINI.cartella)),
+      h('h2', {}, provvisorio ? 'Senza nome' : r.nome.replace(/-/g, ' '), provvisorio
+        ? h('span', { class: 'etichetta origine-personaggio', title: 'File provvisorio di un personaggio salvato prima di avere un nome (versioni precedenti): aprilo e dagli un nome, e il file prende il nome giusto; se non serve, toglilo dalla cartella personaggi/.' }, 'senza nome')
+        : h('span', { class: 'etichetta origine-personaggio', title: SPIEGA_ORIGINI.cartella }, ORIGINI.cartella)),
       h('p', {}, h('strong', {}, `Livello ${r.livello}`), ' · ', r.file),
       h('p', { class: 'nota' }, `Modificato ${data}`)),
     h('div', { class: 'riga-azioni' }, h('button', { type: 'button', class: 'btn primario', onclick: apri }, 'Apri')));

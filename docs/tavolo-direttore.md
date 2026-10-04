@@ -445,6 +445,7 @@ Bug segnalato da Marcello. Un PG nuovo («LUCAS») creato con il server, mentre 
 - **Server.** L'elenco riporta il «pg» di ogni file. Una scrittura su un file (o su uno con lo stesso nome a meno di maiuscole e accenti) che contiene un altro personaggio è rifiutata con 409 e il messaggio «il file … contiene un altro personaggio (…): non sovrascritto». La scheda non lo tratta come un conflitto di revisione.
 - **PG di prima.** I PG senza identificativo lo ricevono alla prima apertura, o entrando al tavolo con «Aggiungi PG al tavolo», senza cambiare altro. Con il server si prende quello del loro file, se c'è già. Finché non lo hanno si riconoscono dal «Nome», come prima.
 - **Nomi che si confondono.** Se due file vecchi hanno nomi che si confondono («Lucas» e «LUCAS»), la plancia lo segnala in «Chi è al tavolo».
+- **Primo salvataggio** (5 ottobre 2026). Un PG senza nome resta nel browser e non va nella cartella. Quando prende il nome si scrive un solo file con il nome giusto. Se dalle versioni precedenti esiste un file provvisorio «personaggio_liv1_….json» dello stesso PG (stesso identificativo), il server lo toglie dopo aver scritto quello nuovo: è una rinomina (`src/cartella.js` → `fileProvvisorio`, `haNome`). I provvisori orfani compaiono nella pagina iniziale come «Senza nome».
 - **Riquadro del conflitto.** Quando il conflitto riguarda davvero lo stesso PG, dice quale PG e quale file: «Il master ha aggiornato la scheda di Lucas (file Lucas_liv6_2026-10-04.json) alle …».
 
 ## Collegare i giocatori (3 ottobre 2026)

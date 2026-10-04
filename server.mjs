@@ -32,14 +32,14 @@
 //                                      src/validate.js → validaNemico); altrimenti 400 con gli errori
 // Nessuna cancellazione dal server: i file vecchi si tolgono a mano dalla cartella.
 import { createServer } from 'node:http';
-import { readFile, writeFile, readdir, stat, mkdir, rename, copyFile, constants } from 'node:fs/promises';
+import { readFile, writeFile, readdir, stat, mkdir, rename, copyFile, unlink, constants } from 'node:fs/promises';
 import { extname, join, normalize, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { networkInterfaces } from 'node:os';
 import { indirizziRete, testoAvvio } from './src/rete.js';
 import { validaScontro } from './src/scontro.js';
 import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
-import { NOME_FILE } from './src/cartella.js';
+import { NOME_FILE, fileProvvisorio } from './src/cartella.js';
 import { caricaDati } from './src/rules.js';
 import { validaNemico, formattaErrore } from './src/validate.js';
 
@@ -319,7 +319,15 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
     await writeFile(tmp, corpo);
     await rename(tmp, dove);
     const s = await stat(dove);
-    return json(res, 200, { file, mtime: s.mtimeMs });
+    // il PG ha preso il nome: i suoi file provvisori «personaggio_…» (versioni precedenti) diventano questo, non restano accanto
+    const rinominati = [];
+    if (typeof o.pg === 'string' && !fileProvvisorio(file)) {
+      for (const x of (await readdir(cartella)).filter((n) => n !== file && NOME_FILE.test(n) && fileProvvisorio(n))) {
+        if ((await personaggioDelFile(join(cartella, x))).pg !== o.pg) continue;
+        try { await unlink(join(cartella, x)); cacheFile.delete(join(cartella, x)); rinominati.push(x); } catch { /* resta: niente di grave */ }
+      }
+    }
+    return json(res, 200, { file, mtime: s.mtimeMs, ...(rinominati.length ? { rinominati } : {}) });
   }
   return json(res, 405, { errore: 'metodo non ammesso' });
 }

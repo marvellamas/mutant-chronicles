@@ -99,6 +99,16 @@ export function nomiCheSiConfondono(lista) {
   return out;
 }
 
+/**
+ * File provvisorio: un PG senza nome salvato nella cartella dalle versioni precedenti («personaggio_liv1_….json»,
+ * il nome che l'export dà a un PG senza nome, anche con il suffisso «-2»). Dal 05/10/2026 un PG senza nome resta
+ * nel browser; quando prende il nome, il server toglie il provvisorio dello stesso PG (server.mjs).
+ */
+export const NOME_PROVVISORIO = chiavePersonaggio('');
+export const fileProvvisorio = (file) => chiaveDaFile(file).replace(/-\d+$/, '') === NOME_PROVVISORIO;
+/** Il personaggio ha un nome? Senza nome non si salva nella cartella. */
+export const haNome = (scelte) => String(scelte?.nome ?? '').trim() !== '';
+
 /** Per ogni personaggio della cartella il file più recente: Map chiave → voce dell'elenco del server. */
 export function ultimiPerPersonaggio(lista) {
   const out = new Map();
