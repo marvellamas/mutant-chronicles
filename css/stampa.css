@@ -103,6 +103,8 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
   border-top: 0.5pt solid var(--ss-linea);
   padding-top: 0.8mm; margin-top: 1.5mm;
   font-size: var(--ss-font-small); color: var(--ss-grigio);
+  /* dentro i margini a qualunque lunghezza: va a capo, anche dentro una voce lunga */
+  min-width: 0; max-width: 100%; white-space: normal; overflow-wrap: anywhere;
 }
 
 /* filigrana (solo foglio 1): stemma della Corporazione, in grigio, sotto tutto */
@@ -281,7 +283,7 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 
 /* Foglio 2 — Abilità */
 .f2-griglia { flex: 1; min-height: 0; display: grid; grid-template-columns: 180mm 1fr; gap: 3mm; }
-.abilita-affiancate { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5mm; }
+.abilita-affiancate { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2.5mm; }
 .f2-abilita > .contenuto { flex: 1; }
 /* Annotazioni, riempitivo della colonna destra: si restringe fino a tre righe guida (7 mm l'una) più
    l'intestazione; sotto questa altezza i riquadri della colonna passano alla continuazione */
@@ -297,10 +299,11 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .f2-seguito > .f2-annotazioni { flex: 1 1 0; min-width: 0; }
 .f2-seguito.sotto { flex-direction: column; }
 .f2-seguito.sotto > .f2-seguito-riquadri { width: 100%; }
-.abilita-stampa { height: 100%; }
+.abilita-stampa { height: 100%; table-layout: fixed; }
 .abilita-stampa th, .abilita-stampa td { padding-left: 0.6mm; padding-right: 0.6mm; }
 .abilita-stampa th, .abilita-stampa td { vertical-align: middle; }
-.abilita-stampa tbody th[scope] { white-space: nowrap; }
+/* colonne dei numeri a larghezza fissa (colgroup), il nome va a capo se serve: la tabella sta nella sua metà */
+.abilita-stampa tbody th[scope] { overflow-wrap: anywhere; }
 .abilita-stampa thead th { text-align: center; }
 .abilita-stampa thead th:first-child { text-align: left; }
 .abilita-stampa td.va { font-weight: 800; font-size: 12pt; color: var(--ss-accento); }
@@ -462,18 +465,26 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 /* la colonna destra della tab comincia in cima alla seconda colonna (richiesta di Davide del 02/10) */
 .inv-colonne > .inv-inizio-destra { break-before: column; }
 .inv-sezione > .contenuto { padding: 0.6mm 1.2mm; }
-.inventario-stampa { width: 100%; }
-.inventario-stampa thead th { white-space: nowrap; }
+.inventario-stampa { width: 100%; table-layout: fixed; }
+.inventario-stampa thead th { white-space: nowrap; overflow: hidden; }
+.inventario-stampa thead th.num-inv { padding-left: 0.4mm; padding-right: 0.4mm; text-align: right; }
+/* il nome lungo va a capo nella sua cella, non allarga la tabella */
+.inventario-stampa tbody th { overflow-wrap: anywhere; }
+.inventario-stampa .costo-inv, .inventario-stampa .peso-inv, .inventario-stampa .qualita-inv { padding-left: 0.4mm; padding-right: 0.4mm; }
 .inventario-stampa tbody.oggetto-inv { break-inside: avoid; }
 .inventario-stampa tbody.oggetto-inv > tr:first-child > * { border-top: 0.5pt solid var(--ss-linea-tenue); }
 .inventario-stampa tbody th { font-weight: 500; }
 .inventario-stampa .costo-inv, .inventario-stampa .peso-inv { white-space: nowrap; text-align: right; }
 .inventario-stampa .qualita-inv { white-space: nowrap; }
-.inventario-stampa .stato-inv { width: 6mm; text-align: center; padding-left: 0.3mm; padding-right: 0.3mm; }
-.inventario-stampa .ps-inv { width: 7mm; text-align: center; }
+.inventario-stampa .stato-inv { text-align: center; padding-left: 0.2mm; padding-right: 0.2mm; }
+.inventario-stampa .qualita-inv { text-align: center; }
+.inventario-stampa .ps-inv { text-align: center; padding-left: 0.2mm; padding-right: 0.2mm; }
 .inventario-stampa .riga-pi td { padding-top: 0; padding-bottom: 0.6mm; }
 .inventario-stampa tbody.da-compilare tr:first-child > * { height: 6mm; }
-.pi-inv { display: flex; align-items: center; gap: 2mm; padding-left: 4mm; }
+/* riga PI compatta: l'etichetta subito prima dei quadratini; NEC e note vanno a capo dentro la cella */
+.pi-inv { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6mm 1mm; padding-left: 1mm; min-width: 0; }
+.pi-inv > .etichetta-colpi { min-width: 0; }
+.pi-inv > .sigla { overflow-wrap: anywhere; min-width: 0; }
 .condizioni-inv { margin: 0.3mm 0 0 4mm; }
 
 /* Foglio 6 — Artefatti (docs/layout-ss.md, pezzo 5) */

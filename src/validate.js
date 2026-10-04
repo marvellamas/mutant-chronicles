@@ -317,6 +317,13 @@ function validaIntegrita(dati, err) {
   if (!isOggetto(ps) || !Object.keys(ps).length) { err(F, 'integrita.ps_per_qualita', 'tabella Qualità → PS Integrità mancante'); return; }
   const valori = Object.values(ps);
   if (!valori.every((v, i) => isIntero(v) && v > 0 && (i === 0 || v > valori[i - 1]))) err(F, 'integrita.ps_per_qualita', 'PS intere positive e crescenti con la Qualità');
+  // sigle per la SS (foglio 4): una per Qualità, brevi e diverse fra loro
+  const sigle = t.sigle_qualita;
+  if (sigle !== undefined) {
+    const mancanti = Object.keys(ps).filter((q) => !(typeof sigle?.[q] === 'string' && /^[A-Z]{1,3}$/.test(sigle[q])));
+    if (mancanti.length) err(F, 'integrita.sigle_qualita', `sigla di 1–3 maiuscole mancante per: ${mancanti.join(', ')}`);
+    if (new Set(Object.values(sigle ?? {})).size !== Object.keys(sigle ?? {}).length) err(F, 'integrita.sigle_qualita', 'sigle ripetute');
+  }
   for (const [id, f] of Object.entries(dati.equipaggiamento?.file ?? {})) {
     (f.oggetti ?? []).forEach((o, i) => {
       if (o?.qualita === undefined || o.qualita === null) return;

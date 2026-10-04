@@ -2005,6 +2005,15 @@
       "Molto rara": 16,
       "Leggendaria": 18
     },
+    "sigle_qualita": {
+      "Scarsa": "SC",
+      "Comune": "CO",
+      "Non comune": "NC",
+      "Rara": "RA",
+      "Molto rara": "MR",
+      "Leggendaria": "LE"
+    },
+    "_nota_sigle_qualita": "Sigle della Qualità costruttiva nella scheda stampata (foglio 4, Inventario), con la legenda in testa al foglio. Il manuale non ha sigle per la Qualità: sono le stesse della Reperibilità (Armamenti §7.1.8: CO, NC, RA, MR, LE), che usa la stessa scala di parole; «Scarsa», che la Reperibilità non ha, è SC.",
     "_nota": "La Qualità costruttiva determina la PS Integrità dell’oggetto, separata dalle Salvezze del personaggio. Il validatore controlla che «ps_int» di ogni oggetto del catalogo corrisponda alla sua «qualita». A 0 PI un oggetto ordinario è Rotto (§1.7, §7.2.1).",
     "paragrafo_pi": "Armamenti §7.2.1, §7.21.3; Equipaggiamento §1.7",
     "frasi_pi": [

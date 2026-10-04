@@ -308,6 +308,7 @@ function foglioAbilita(d) {
   // due tabelle affiancate, metà delle categorie ciascuna, alte quanto la pagina
   const meta = Math.ceil(d.categorie.length / 2);
   const tabellaAbilita = (categorie) => h('table', { class: 'tabella-stampa numeri abilita-stampa' },
+    h('colgroup', {}, [null, '7mm', '8mm', '8mm', '10mm', '9.5mm', '9mm'].map((w) => h('col', w ? { style: `width: ${w}` } : {}))),
     h('thead', {}, h('tr', {}, ['Abilità', 'Mod', 'Base', 'Corp', 'Avanz', 'Equip', 'VA'].map((c) => h('th', {}, c)))),
     categorie.map((cat) => h('tbody', {},
       h('tr', { class: 'categoria' }, h('th', { colspan: 7 }, cat.nome)),
@@ -831,7 +832,10 @@ function impaginaVeicolo(foglio, piede) {
 // caselle di stato (l'attuale prestampata piena), PS Integrità e, sotto, i PI a quadratini. In fondo
 // il riempitivo «Da aggiungere». Le sezioni che non entrano passano alla pagina dopo, intere.
 
-const COLONNE_INVENTARIO = (d) => ['Oggetto', 'Costo', 'Qualità', 'Peso', ...d.stati.map((x) => x.sigla), 'PS'];
+// unità nell'intestazione (cr, kg) e Qualità in sigla (legenda in testa al foglio): colonne strette, il nome va a capo
+const COLONNE_INVENTARIO = (d) => ['Oggetto', 'Costo cr', 'Q.', 'Peso kg', ...d.stati.map((x) => x.sigla), 'PS'];
+// larghezze fisse (table-layout: fixed): la tabella non supera mai il riquadro, a qualunque lunghezza del nome
+const LARGHEZZE_INVENTARIO = (d) => [null, '13mm', '7mm', '12mm', ...d.stati.map(() => '6mm'), '6mm'];
 
 function tabellaInventario(d, righe, { vuote = 0, sottosezioni = [] } = {}) {
   const n = COLONNE_INVENTARIO(d).length;
@@ -859,7 +863,8 @@ function tabellaInventario(d, righe, { vuote = 0, sottosezioni = [] } = {}) {
   // sottosezioni (Rinforzi sotto Armature, NEC sotto Munizioni): un sottotitolo nella stessa tabella
   const sotto = (x) => [h('tbody', { class: 'oggetto-inv sottotitolo-inv' }, h('tr', { class: 'categoria' }, h('th', { colspan: n }, `${x.titolo} (${x.righe.length})`))), x.righe.map(voce)];
   return h('table', { class: 'tabella-stampa inventario-stampa' },
-    h('thead', {}, h('tr', {}, COLONNE_INVENTARIO(d).map((c, i) => h('th', { class: i >= 4 && i < 4 + d.stati.length ? 'stato-inv' : null }, c)))),
+    h('colgroup', {}, LARGHEZZE_INVENTARIO(d).map((w) => h('col', w ? { style: `width: ${w}` } : {}))),
+    h('thead', {}, h('tr', {}, COLONNE_INVENTARIO(d).map((c, i) => h('th', { class: i >= 4 && i < 4 + d.stati.length ? 'stato-inv' : i > 0 ? 'num-inv' : null }, c)))),
     righe.map(voce), sottosezioni.map(sotto), Array.from({ length: vuote }, vuota));
 }
 
@@ -872,7 +877,9 @@ function testaInventario(d) {
       d.creditiIniziali !== null ? h('span', { class: 'sigla' }, ` saldo iniziale ${crediti(d.creditiIniziali)}`) : null),
     c ? h('p', {}, h('strong', {}, 'Carico '), h('span', { class: 'casella-lunga corta' }), ' kg',
       h('span', { class: 'sigla' }, ` · noto ${c.peso}${c.parziale ? ` (${c.senzaPeso} da definire)` : ''} · Ordinario ≤ ${c.ordinario} · Sovraccarico ≤ ${c.massimo} (§5.2.6)`)) : null,
-    h('p', { class: 'sigla legenda-stati' }, 'Stato: ', d.stati.map((x, i) => [i ? ' · ' : null, h('strong', {}, x.sigla), ` ${x.nome}`]), ' — la casella piena è lo stato salvato.'));
+    h('p', { class: 'sigla legenda-stati' }, 'Stato: ', d.stati.map((x, i) => [i ? ' · ' : null, h('strong', {}, x.sigla), ` ${x.nome}`]), ' — la casella piena è lo stato salvato.'),
+    // sigle della Qualità costruttiva (regole.json → integrita.sigle_qualita), una volta per foglio
+    d.qualita?.length ? h('p', { class: 'sigla legenda-qualita' }, 'Qualità (Q.): ', d.qualita.map((x, i) => [i ? ' · ' : null, h('strong', {}, x.sigla), ` ${x.nome}`])) : null);
 }
 
 function foglioInventario(d) {

@@ -142,6 +142,23 @@ function controllaFogli() {
       if ([...c.querySelectorAll('tbody > tr')].some((r) => !r.dataset.vuota && r.getBoundingClientRect().bottom > fondo)) out.push(`${titolo}: righe tagliate in un riempitivo`);
     }
   }
+  // ogni tabella sta dentro il suo riquadro (Inventario, Combattimento, Artefatti, Cibernetica, Veicoli…): una tabella
+  // più larga del contenuto del riquadro sconfina nella colonna accanto, anche se il riquadro non «trabocca»
+  for (const f of document.querySelectorAll('.foglio')) {
+    const titolo = f.querySelector('.foglio-titolo')?.textContent ?? '?';
+    for (const t of f.querySelectorAll('.riquadro-stampa table')) {
+      const box = t.closest('.contenuto') ?? t.closest('.riquadro-stampa');
+      const rb = box.getBoundingClientRect();
+      const rt = t.getBoundingClientRect();
+      if (rt.right > rb.right + 1 || rt.left < rb.left - 1) {
+        out.push(`${titolo}: tabella più larga del riquadro «${t.closest('.riquadro-stampa')?.querySelector('h2')?.textContent ?? '?'}» (${Math.round(rt.width)} px su ${Math.round(rb.width)})`);
+      }
+    }
+    // piè di pagina dentro i margini della pagina
+    const piede = f.querySelector('.foglio-piede');
+    const pagina = f.querySelector('.pagina') ?? f;
+    if (piede && (piede.scrollWidth > piede.clientWidth + 1 || piede.getBoundingClientRect().right > pagina.getBoundingClientRect().right + 1)) out.push(`${titolo}: piè di pagina oltre il margine`);
+  }
   const primo = document.querySelector('.foglio-combattimento:not(.seguito)');
   if (primo && !primo.querySelector('.f3-pv')) out.push('Combattimento: manca il riquadro Punti Vita nella prima pagina');
   if (primo && !primo.querySelector('.f3-sintesi')) out.push('Combattimento: manca la sintesi nella prima pagina');

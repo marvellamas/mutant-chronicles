@@ -34,7 +34,7 @@ import { renderStampa, esciDallaStampa } from './stampa.js';
 import { barraPassi, barraFondoSeServe } from './navigazione.js';
 import { cercaSfondi, applicaSfondo } from './sfondi.js';
 import { caricaImmagini, iconaPagina } from './immagini.js';
-import { preparaStampa, preparaTab, normalizzaOpzioniStampa } from '../stampa.js';
+import { preparaStampa, preparaTab, normalizzaOpzioniStampa, versioniCompatte } from '../stampa.js';
 import { renderTab, tabFissi, ALIAS_TAB } from './tab.js';
 import {
   massimiSessione, allineaSessione, variaSessione, modificaSessione, commutaStato, commutaCondizioneOggetto, commutaTalento, commutaBonusTalenti, impostaCondizioneArma, riparaOggetto, spendiPmLancio, ricaricaMatrice, attivaArtefatto, attivaTecnicaSessione, nuovoRoundSessione, terminaTecnicaSessione, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
@@ -116,12 +116,9 @@ async function avvia() {
   daIndirizzo();
 }
 
+// piè di pagina della stampa: ogni manuale una volta, con la versione più recente (src/stampa.js → versioniCompatte)
 function versioniDati(dati) {
-  const v = new Set();
-  for (const versione of Object.values(versioniPersonaggio(dati))) {
-    for (const parte of String(versione ?? '').split(';')) if (parte.trim()) v.add(parte.trim());
-  }
-  return [...v].join(', ');
+  return versioniCompatte(Object.values(versioniPersonaggio(dati)));
 }
 
 function mostraErroriDati(errori) {

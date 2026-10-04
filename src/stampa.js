@@ -877,6 +877,9 @@ export function quadratiniNec(r, nomeOggetto = r.nome) {
   return { etichetta, caselle: 10, perCasella, unita: r.unita, massimo: r.massimo };
 }
 
+/** Sigla della Qualità costruttiva per la SS (regole.json → integrita.sigle_qualita); senza sigla il nome. */
+export const siglaQualita = (qualita, dati) => (qualita ? dati.regole.integrita?.sigle_qualita?.[qualita] ?? qualita : '—');
+
 export function inventarioStampa(s, dati, creditiIniziali = null) {
   const eq = s.equipaggiamento;
   const integrita = new Map((eq?.integrita ?? []).map((x) => [x.uid, x]));
@@ -891,10 +894,11 @@ export function inventarioStampa(s, dati, creditiIniziali = null) {
       sezione: sezioneInventario(o)?.id ?? 'altro',
       nome: `${o.nome}${q > 1 ? ` ×${q}` : ''}`,
       note: tronca(String(o.voce.note ?? '').trim(), LIMITI_STAMPA.frase),
-      costo: Number.isInteger(o.def?.costo) ? crediti(o.def.costo) : '—',
-      qualita: x?.qualita ?? o.def?.qualita ?? '—',
+      // unità nell'intestazione della colonna (Costo cr, Peso kg): numeri soli, colonne strette
+      costo: Number.isInteger(o.def?.costo) ? crediti(o.def.costo).replace(/ cr$/, '') : '—',
+      qualita: siglaQualita(x?.qualita ?? o.def?.qualita, dati),
       // Equipaggiamento §7.1: l'impianto installato è parte del corpo, fuori dal carico
-      peso: o.voce.stato === 'installato' ? 'corpo' : p === null ? 'da def.' : kg(p * q),
+      peso: o.voce.stato === 'installato' ? 'corpo' : p === null ? 'da def.' : kg(p * q).replace(/ kg$/, ''),
       stato: statoInventarioStampa(o.voce.stato),
       piMax: x?.piMax ?? null,
       ps: x?.ps ?? null,
@@ -908,6 +912,8 @@ export function inventarioStampa(s, dati, creditiIniziali = null) {
     creditiIniziali,
     carico: c ? { peso: kg(c.peso), parziale: c.parziale, senzaPeso: c.senzaPeso.length, ordinario: kg(c.soglie.ordinario), massimo: kg(c.soglie.massimo) } : null,
     stati: STATI_INVENTARIO_STAMPA.map(({ id, sigla, nome }) => ({ id, sigla, nome })),
+    // legenda delle sigle della Qualità (regole.json → integrita.sigle_qualita), una volta in testa al foglio
+    qualita: Object.entries(dati.regole.integrita?.sigle_qualita ?? {}).map(([nome, sigla]) => ({ sigla, nome })),
     // stesso ordine e stessa divisione in due colonne della tab (richiesta di Davide del 02/10)
     // le sottosezioni (Rinforzi, NEC) stanno dentro la loro sezione, con un sottotitolo: risparmiano
     // l'intestazione e il margine di un riquadro
@@ -1008,6 +1014,31 @@ export function numeraPagine(pagine, fogli) {
  * Testo del piè di pagina: «Nome · 8° livello · foglio 3 (segue) · pagina 4 di 9 · Dati: …»; per i
  * fogli a pagine proprie «foglio 3 · pagina 1/2 · 4 di 9».
  */
+/**
+ * Versioni dei manuali per il piè di pagina: ogni manuale una volta sola, con la versione più recente fra quelle
+ * dei file dati (numero di versione, poi data del Doc). Le voci sono le parti di versione_manuale (separate da
+ * «;»): «Giocatore 0.45 (Google Doc del 03/10/2026, 19:16 UTC)», «E&L del 03/10/2026», «Armamenti 0.52».
+ * @param versioni elenco di versione_manuale (anche con più parti)
+ * @returns testo «Giocatore 0.45 (03/10/2026), Magia 1.3 (01/10/2026), E&L del 03/10/2026, …», nell'ordine di prima comparsa
+ */
+export function versioniCompatte(versioni) {
+  const perManuale = new Map();
+  for (const parte of (versioni ?? []).flatMap((v) => String(v ?? '').split(';')).map((x) => x.trim()).filter(Boolean)) {
+    const nome = /^(E&L|[^\s\d(]+)/.exec(parte)?.[1] ?? parte;
+    const numero = /\b(\d+)\.(\d+)\b/.exec(parte);
+    const data = /(\d{2})\/(\d{2})\/(\d{4})(?:,\s*(\d{2}):(\d{2}))?/.exec(parte);
+    // chiave d'ordine: versione, poi data e ora del Doc (assenti = 0)
+    const chiave = [numero ? Number(numero[1]) : 0, numero ? Number(numero[2]) : 0,
+      data ? Number(`${data[3]}${data[2]}${data[1]}${data[4] ?? '00'}${data[5] ?? '00'}`) : 0];
+    const testo = nome === 'E&L' ? (data ? `E&L del ${data[0].slice(0, 10)}` : parte)
+      : `${nome}${numero ? ` ${numero[0]}` : ''}${data ? ` (${data[0].slice(0, 10)})` : ''}`;
+    const prima = perManuale.get(nome);
+    const confronto = prima ? chiave.map((x, i) => x - prima.chiave[i]).find((d) => d !== 0) ?? 0 : 1;
+    if (confronto > 0) perManuale.set(nome, { chiave, testo });
+  }
+  return [...perManuale.values()].map((x) => x.testo).join(', ');
+}
+
 export function testoPiede(piede, n) {
   const foglio = n.parti ? `foglio ${n.foglio ?? '—'} · pagina ${n.parte}/${n.parti}` : `foglio ${n.foglio ?? '—'}${n.seguito ? ' (segue)' : ''}`;
   const pagina = n.parti ? `${n.pagina} di ${n.totale}` : `pagina ${n.pagina} di ${n.totale}`;

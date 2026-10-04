@@ -286,7 +286,7 @@ test('foglio Inventario (docs/layout-ss.md, pezzo 1): sezioni della tab, stato p
   assert.equal(statoInventarioStampa('zaino'), 'zaino');
   // costo, Qualità, PI e PS Integrità; quantità nel nome
   assert.equal(riga('t').nome, 'Torcia elettrica ×2');
-  assert.equal(riga('a').costo, '4.000 cr');
+  assert.equal(riga('a').costo, '4.000'); // unità nell'intestazione «Costo cr»
   assert.ok(riga('a').piMax > 0 && riga('a').ps > 0);
   assert.ok(riga('p').condizioni.includes('Integra')); // condizione dell'arma (A.49), solo per le armi
   assert.equal(riga('t').condizioni, null);
