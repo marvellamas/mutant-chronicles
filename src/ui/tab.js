@@ -34,6 +34,7 @@ import { tabCalendario, pannelloAttivazione, pannelloImportaCalendario, pulsante
 import { conOrdinale } from '../lingua.js';
 import { regoleRiparazione, esitoRiparazione, vaRiparazione, riparabile } from '../riparazione.js';
 import { annullaPerdita, aggiungiRecupero, togliRecupero } from '../umanita.js';
+import { impiantiAttivabili, cartucceDi, impostaCartucce, somministra, statoProcessore, attivaChip, terminaChip, nuovoIntervalloChip } from '../impianti.js';
 import { tabVeicoli, promemoriaConducente } from './veicoli.js';
 
 export const POSIZIONI_TAB = [
@@ -720,7 +721,8 @@ function riquadroPM(ctx) {
  * scheda dell'arma (tab Combattimento).
  */
 function condizioniOggetti(ctx) {
-  const effetti = (ctx.tab.scheda.equipaggiamento?.effettiOggetti ?? []).filter((e) => e.ambito === 'situazionale');
+  // i chip del Processore si accendono con «Attiva» (tab Cibernetica, §7.10: durata e limite di 24 ore)
+  const effetti = (ctx.tab.scheda.equipaggiamento?.effettiOggetti ?? []).filter((e) => e.ambito === 'situazionale' && e.beneficio !== 'chip_processore');
   if (!effetti.length) return null;
   const perUid = new Map();
   for (const e of effetti) (perUid.get(e.uid) ?? perUid.set(e.uid, []).get(e.uid)).push(e);
@@ -919,6 +921,29 @@ function dannoConProvenienza(a, testo) {
  * Valori d'uso specifico accanto alla pillola (docs/effetti-oggetti.md): «tracce 12 ▲», «lancio 8 ▼».
  * Il VA generale non cambia; il tooltip spiega base, modificatore, oggetto, condizione e paragrafo.
  */
+/**
+ * Bonus condizionali accanto al valore (docs/censimento-impianti.md): «+2 se con la vista» per gli effetti
+ * situazionali di oggetti e Talenti su quell'Abilità, spenti o accesi; la casella accende o spegne la
+ * condizione (sessione → condizioniOggetti / talentiAccesi), i chip del Processore passano da «Attiva»
+ * (src/impianti.js). La frase del manuale nel tooltip.
+ */
+function condizionaliValore(ctx, nome, disponibili = []) {
+  const s = ctx.tab.scheda;
+  const accesiOgg = (s.oggettiAccesi ?? []).filter((e) => (e.tipo ?? 'va') === 'va' && e.abilita === nome);
+  const talAccesi = new Set(s.talentiAccesi ?? []);
+  const accesiTal = (s.effettiTalenti ?? []).filter((e) => (e.tipo ?? 'va') === 'va' && e.abilita === nome && e.ambito === 'situazionale' && talAccesi.has(e.chiave))
+    .map((e) => ({ uid: e.chiave, oggetto: e.talento, valore: e.valore, condizione: e.condizione, se: e.se ?? null, talento: true }));
+  const voci = [...disponibili.map((e) => ({ ...e, acceso: false })), ...accesiOgg.map((e) => ({ ...e, acceso: true })), ...accesiTal.map((e) => ({ ...e, acceso: true }))];
+  if (!voci.length) return null;
+  const commuta = (e) => (e.talento ? ctx.azioni.talento(e.uid) : e.beneficio === 'chip_processore' ? ctx.azioni.chip(e.uid) : ctx.azioni.condizioneOggetto(e.uid));
+  return h('span', { class: 'condizionali-valore' }, voci.map((e) => {
+    const testo = `${segno(e.valore)} ${e.se ? `se ${e.se}` : '(a condizione)'}`;
+    const completo = `${e.oggetto}: ${testo}.${e.condizione ? ` ${e.condizione}` : ''}${e.acceso ? ' Accesa: già nel VA.' : ''}`;
+    return h('label', { class: `condizionale-valore${e.acceso ? ' attivo' : ''}`, title: completo },
+      h('input', { type: 'checkbox', checked: e.acceso, 'aria-label': completo, onchange: () => commuta(e) }), ' ', testo);
+  }));
+}
+
 function valoriUso(nome, usi = []) {
   return usi.map((u) => {
     const verso = u.modificatore < 0 ? 'malus' : u.modificatore > 0 ? 'bonus' : '';
@@ -1070,7 +1095,7 @@ function tabAbilita(ctx, d) {
         h('td', { class: 'cella-va' }, h('span', { class: 'va-con-usi' }, valoreEffettivo(a.nome, a.effettivo, a.totale, a.scomposizione, {
           pillola: true, dettaglio: a.provenienza ? null : `${segno(a.mod)} Mod + ${a.base} Base + ${a.corporazione} Corp + ${a.avanzamento} Avanz = ${a.grezzo}${a.grezzo !== a.totale ? `, limite ${a.totale}` : ''}`,
           disponibili: a.disponibili, nonCumulati: a.nonCumulati, provenienza: a.provenienza,
-        }), valoriUso(a.nome, a.usiSpecifici))))))));
+        }), valoriUso(a.nome, a.usiSpecifici), condizionaliValore(ctx, a.nome, a.disponibili))))))));
   const tutte = condizioniAttiveAbilita(ctx.tab.scheda, ctx.dati);
   const condizioni = tutte.filter((c) => c.fonte !== 'uso');
   const usi = tutte.filter((c) => c.fonte === 'uso');
@@ -1289,7 +1314,8 @@ function tabCombattimento(ctx, d) {
           // con la colonna delle risorse i PV sono già lì: qui non si ripetono (css/style.css)
           contatoreTavolo(ctx, { titolo: 'Punti Vita', campo: 'pvAttuali', attuale: s.pvAttuali, massimo: m.pv, barra: true, classe: 'riquadro-pv pv-pm-identita', extra: pilloleAR(ctx) }),
           d.difese ? h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Difese'),
-            h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), valoreEffettivo('Difese', d.difese.effettivo, d.difese.totale, d.difese.scomposizione, { pillola: true, provenienza: d.difese.provenienza })),
+            h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), valoreEffettivo('Difese', d.difese.effettivo, d.difese.totale, d.difese.scomposizione, { pillola: true, provenienza: d.difese.provenienza }),
+              condizionaliValore(ctx, 'Difese', (ctx.tab.scheda.abilita ?? []).find((x) => x.nome === 'Difese')?.disponibili ?? [])),
             // §3.5.5, Disciplina Guardia: bonus a Difese contro gli attacchi ravvicinati (con Padronanza
             // della Disciplina anche a distanza); Controllo con Padronanza: resistere alle Manovre
             ...valoriDisciplina(ctx.tab.scheda, ctx.dati).map((t) => h('p', { class: 'nota' },
@@ -1866,6 +1892,46 @@ function tabArtefatti(ctx) {
  * impianti si comprano e si installano nell'Inventario (sezione «Impianti cibernetici e chip»): lo stato
  * «Installato» registra il costo UMN (src/umanita.js).
  */
+/**
+ * Parte «al tavolo» della scheda di un impianto attivabile (docs/censimento-impianti.md, src/impianti.js):
+ * iniettori con le cartucce e «Somministra» (§7.9); Processore con i chip, «Attiva», «Termina» e «Passate
+ * le 24 ore» (§7.10); per gli altri l'Azione per attivarli, come promemoria. Le frasi del manuale nel tooltip.
+ */
+function attivabile(ctx, imp, mieiChip = []) {
+  if (!imp) return null;
+  const frasi = imp.frasi.join(' ');
+  if (imp.tipo === 'cariche') {
+    const n = cartucceDi(ctx.sessione, imp.uid);
+    const max = imp.cartucce;
+    return h('div', { class: 'attivabile-impianto' },
+      h('p', {}, h('strong', {}, 'Cartucce caricate: '),
+        h('button', { type: 'button', class: 'btn tondo', 'aria-label': 'Una cartuccia in meno', disabled: n <= 0, onclick: () => ctx.azioni.impianto((s) => impostaCartucce(s, imp.uid, n - 1, max)) }, '−'),
+        h('span', { class: 'conteggio-cartucce' }, ` ${n} / ${max} `),
+        h('button', { type: 'button', class: 'btn tondo', 'aria-label': 'Una cartuccia in più', disabled: n >= max, onclick: () => ctx.azioni.impianto((s) => impostaCartucce(s, imp.uid, n + 1, max)) }, '+'),
+        ' ', h('button', { type: 'button', class: 'btn primario', disabled: n <= 0, title: frasi, onclick: () => ctx.azioni.impianto((s) => somministra(s, imp.uid), 'Caricatore vuoto: rifornirlo richiede un minuto (§7.9).') }, `Somministra (${imp.azione})`)),
+      h('p', { class: 'nota' }, `Una cartuccia del §6.2 o dei naniti del §6.7, con i loro effetti; venduto senza cartucce, rifornimento in un minuto (§7.9). La cartuccia somministrata si toglie dall’Inventario a mano.`));
+  }
+  if (imp.tipo === 'chip') {
+    const st = statoProcessore(ctx.sessione, imp, ctx.dati);
+    const nomi = new Map(mieiChip.map((c) => [c.uid, c]));
+    return h('div', { class: 'chip-processore attivabile-impianto' },
+      h('h4', {}, 'Chip'),
+      st.chip.length ? h('ul', {}, st.chip.map((c) => h('li', {},
+        nomi.get(c.uid)?.def ? info('oggetto', nomi.get(c.uid).def.rif, c.nome) : c.nome,
+        ` · ${c.acceso ? 'attivo' : c.inserito ? 'inserito' : NOMI_STATI[nomi.get(c.uid)?.voce.stato] ?? 'con sé'}`, ' ',
+        c.acceso ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Interrompe l’effetto: il conteggio delle 24 ore resta (§7.10).', onclick: () => ctx.azioni.impianto((s) => terminaChip(s, imp)) }, 'Termina')
+          : h('button', { type: 'button', class: 'btn btn-piccolo primario', disabled: !!c.motivo, title: c.motivo ?? frasi, onclick: () => ctx.azioni.impianto((s) => attivaChip(s, imp, c.uid, ctx.dati), c.motivo) }, `Attiva (${imp.azione})`),
+        c.motivo && c.inserito ? h('small', { class: 'motivo' }, ` ${c.motivo}`) : null)))
+        : h('p', { class: 'nota' }, 'Nessun chip: si comprano nell’Inventario.'),
+      st.attivo ? h('p', { class: 'nota' }, `Chip attivo per ${st.durataMinuti} minuti consecutivi: il bonus è nel VA dell’Abilità. Terminalo a mano quando la durata finisce.`) : null,
+      st.usato ? h('p', {}, h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => ctx.azioni.impianto((s) => nuovoIntervalloChip(s, imp)) }, `Passate le ${st.intervalloOre} ore`),
+        h('small', { class: 'nota' }, ` attivazione già usata: una ogni ${st.intervalloOre} ore dal momento dell’attivazione (§7.10)`)) : null,
+      h('p', { class: 'nota' }, `Un solo chip alla volta, ${st.durataMinuti} minuti, una attivazione ogni ${st.intervalloOre} ore; il bonus non vale per combattimento, Incantesimi, Risorse Interiori e Sintonizzazione (§7.10).`));
+  }
+  return h('p', { class: 'nota attivabile-impianto', title: frasi }, h('strong', {}, `Attivare: ${imp.azione}. `), imp.frasi[0],
+    imp.todo ? h('span', { class: 'etichetta', title: imp.todo }, ' da chiarire con Davide') : null);
+}
+
 function tabCibernetica(ctx) {
   const scheda = ctx.tab.scheda;
   const u = scheda.umanita;
@@ -1904,6 +1970,8 @@ function tabCibernetica(ctx) {
 
   // schede degli impianti installati, per famiglia del manuale (ordine del catalogo)
   const famiglie = [...new Set(installati.map((r) => r.def?.famiglia ?? 'Impianti personalizzati'))];
+  // impianti attivabili (src/impianti.js): iniettori, Processore, promemoria dell'Azione
+  const attivabili = impiantiAttivabili(ctx.scelte.equipaggiamento, ctx.dati);
   const effettiDi = (uid) => (eq?.effettiOggetti ?? []).filter((e) => e.uid === uid);
   const schedaImpianto = (r) => {
     const def = r.def;
@@ -1919,15 +1987,10 @@ function tabCibernetica(ctx) {
           h('small', { class: 'sigla' }, ` · ${def?.catalogo === 'Cybertronic' ? 'CYBERTRONIC' : 'standard'} · UMN ${def?.umn ?? r.voce.personalizzato?.umn ?? 0}${def?.paragrafo ? ` · ${def.paragrafo}` : ''}`))),
       def?.effetto_breve ? h('p', { class: 'nota' }, def.effetto_breve) : null,
       miei.length ? h('ul', { class: 'effetti-impianto' }, miei.map((e) => h('li', { title: [e.condizione, e.fonte].filter(Boolean).join(' — ') },
-        h('strong', {}, testoEffettoOggetto(e)), e.ambito === 'situazionale' ? ' · interruttore al tavolo (Abilità, Combattimento)' : null))) : null,
+        h('strong', {}, testoEffettoOggetto(e)), e.ambito === 'situazionale' ? (e.beneficio === 'chip_processore' ? ' · con «Attiva» del Processore' : ` · casella accanto al valore${e.se ? ` («${segno(e.valore)} se ${e.se}»)` : ''}`) : null))) : null,
       scartati.length ? h('p', { class: 'nota' }, `Non si somma con un beneficio equivalente già attivo (§7.1, «Cumulo»): ${scartati.map((e) => testoEffettoOggetto(e)).join('; ')}.`) : null,
       def?.innesto === 'interfaccia_neurale' ? h('p', { class: 'nota' }, 'Le armi e i dispositivi con SIN in mano ricevono il bonus indicato dalla loro scheda (tab Combattimento).') : null,
-      def?.cartucce ? h('p', { class: 'nota' }, `Cartucce: ${def.cartucce}, vendute a parte (Equipaggiamento §7.9).`) : null,
-      def?.innesto === 'processore' ? h('div', { class: 'chip-processore' },
-        h('h4', {}, 'Chip'),
-        mieiChip.length ? h('ul', {}, mieiChip.map((c) => h('li', {}, info('oggetto', c.def.rif, c.nome), ` · ${c.voce.stato === 'in_uso' ? 'inserito' : NOMI_STATI[c.voce.stato] ?? 'con sé'}`)))
-          : h('p', { class: 'nota' }, 'Nessun chip: si comprano nell’Inventario.'),
-        h('p', { class: 'nota' }, `Un solo chip alla volta, ${ctx.dati.regole.impianti?.chip?.durata_minuti ?? 30} minuti, una attivazione ogni ${ctx.dati.regole.impianti?.chip?.intervallo_ore ?? 24} ore; il bonus non vale per combattimento, Incantesimi, Risorse Interiori e Sintonizzazione (§7.10).`)) : null,
+      attivabile(ctx, attivabili.find((x) => x.uid === r.uid) ?? null, mieiChip),
       h('p', { class: 'nota' }, [pi !== null ? `PI ${pi} / ${piMax} (Ripara nell’Inventario)` : null, def?.installazione_costo ? `installazione ${def.installazione_costo.toLocaleString('it-IT')} cr` : null].filter(Boolean).join(' · ')));
   };
 

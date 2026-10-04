@@ -104,6 +104,37 @@ export function dichiarazioneDistanza(d = {}) {
     // §5.7: Combattere con due armi (due Armi leggere a distanza o combinazione mista), mano non dominante
     dueArmi: !!d.dueArmi,
     manoNonDominante: !!d.manoNonDominante && !d.dueArmi,
+    // effetti situazionali degli oggetti accesi con la casella (effettiSituazionaliAttacco)
+    oggetti: Array.isArray(d.oggetti) ? d.oggetti.filter((x) => typeof x === 'string') : [],
+  };
+}
+
+/**
+ * Effetti situazionali degli oggetti sul tiro per colpire o sul danno (docs/censimento-impianti.md; Braccio
+ * potenziato, Equipaggiamento §7.5: «+1 danno agli attacchi ravvicinati effettuati con quell’arto»): una casella
+ * per oggetto in «Attacca!» (dichiarazione → oggetti). Non entrano nel VA dell'arma a riposo.
+ * @param tipo 'ravvicinati' | 'distanza'
+ * @returns {{ uid, oggetto, se, condizione, attacco, danno }[]} un elemento per oggetto, con i valori sommati per tipo
+ */
+export function effettiSituazionaliAttacco(scheda, tipo, { senzArmi = false } = {}) {
+  const vale = (a) => a === 'tutti' || a === tipo || (senzArmi && a === 'senz_armi');
+  const perUid = new Map();
+  for (const e of scheda?.equipaggiamento?.effettiOggetti ?? []) {
+    if (e.ambito !== 'situazionale' || !['attacco', 'danno'].includes(e.tipo) || !vale(e.attacchi)) continue;
+    const x = perUid.get(e.uid) ?? perUid.set(e.uid, { uid: e.uid, oggetto: e.oggetto, se: e.se ?? null, condizione: e.condizione ?? null, attacco: 0, danno: 0 }).get(e.uid);
+    x[e.tipo] += e.valore;
+  }
+  return [...perUid.values()];
+}
+
+/** Gli effetti situazionali accesi con la casella di «Attacca!»: voci del VA, bonus al danno, promemoria. */
+function situazionaliAccesi(personaggio, tipo, d, arma) {
+  const accesi = effettiSituazionaliAttacco(personaggio.scheda, tipo, { senzArmi: !!arma?.senzArmi }).filter((x) => d.oggetti.includes(x.uid));
+  const etichetta = (x) => (x.se ? `${x.oggetto} (${x.se})` : `${x.oggetto} (condizione attiva)`);
+  return {
+    voci: accesi.filter((x) => x.attacco).map((x) => voce(etichetta(x), x.attacco, 'oggetto')),
+    danno: accesi.reduce((t, x) => t + x.danno, 0),
+    promemoria: accesi.filter((x) => x.danno).map((x) => `${etichetta(x)}: ${numeroTesto(x.danno)} al danno, già nella formula.`),
   };
 }
 
@@ -515,6 +546,12 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
       dopo.push({ etichetta: `+${v} dopo l’Armatura`, testo: `${designato.nome}: ${azioniPrep} ${azioniPrep === 1 ? 'Azione Principale' : 'Azioni Principali'} di preparazione, +${v} danni dopo l’Armatura se almeno 1 danno l’ha superata.` });
     }
   }
+  // effetti situazionali degli oggetti con la casella accesa (docs/censimento-impianti.md)
+  const sit = situazionaliAccesi(personaggio, 'distanza', d, arma);
+  scomposizione.push(...sit.voci);
+  dannoBonus += sit.danno;
+  promemoria.push(...sit.promemoria);
+
   // §5.7: Combattere con due armi e mano non dominante (regole in attacco_ravvicinato, valgono per ogni
   // attacco; Talenti in effetti.attacco_ravvicinato: Pistolero, Duellante, Ambidestro)
   const R7 = dati.regole.attacco_ravvicinato;
@@ -736,6 +773,8 @@ export function dichiarazioneRavvicinato(d = {}) {
     // §5.3 (E&L 14): attaccanti in ravvicinato contro lo stesso bersaglio, compreso il personaggio
     attaccanti: Number.isInteger(d.attaccanti) && d.attaccanti >= 1 ? d.attaccanti : 1,
     circostanza: Number.isInteger(d.circostanza) ? d.circostanza : 0,
+    // effetti situazionali degli oggetti accesi con la casella (effettiSituazionaliAttacco)
+    oggetti: Array.isArray(d.oggetti) ? d.oggetti.filter((x) => typeof x === 'string') : [],
   };
 }
 
@@ -1049,6 +1088,11 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
     promemoria.push(...arma.tecnica.e.onda.frasi.slice(0, 3));
   }
   if (d.circostanza) aggiungi(situazione, 'Circostanza del Direttore', d.circostanza, 'situazione', 'Giocatore §1.4');
+  // effetti situazionali degli oggetti con la casella accesa (Braccio potenziato: +1 danno con quell'arto, §7.5)
+  const sit = situazionaliAccesi(personaggio, 'ravvicinati', d, arma);
+  situazione.push(...sit.voci);
+  dannoBonus += sit.danno;
+  promemoria.push(...sit.promemoria);
   // §5.3 (E&L 14): Superiorità numerica, secondo gli attaccanti che partecipano davvero
   const SN = R.superiorita_numerica;
   if (SN && d.attaccanti > 1) {

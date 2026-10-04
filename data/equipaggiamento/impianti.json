@@ -72,7 +72,8 @@
           "ambito": "situazionale",
           "condizione": "+2 VA a Percezione tramite la vista per individuare movimenti, esaminare particolari e riconoscere dettagli visibili.",
           "beneficio": "sensori_vista",
-          "fonte": "Equipaggiamento §7.4"
+          "fonte": "Equipaggiamento §7.4",
+          "se": "con la vista"
         }
       ]
     },
@@ -102,7 +103,8 @@
           "ambito": "situazionale",
           "condizione": "+2 VA a Percezione tramite la vista per individuare movimenti, esaminare particolari e riconoscere dettagli visibili.",
           "beneficio": "sensori_vista",
-          "fonte": "Equipaggiamento §7.4"
+          "fonte": "Equipaggiamento §7.4",
+          "se": "con la vista"
         }
       ]
     },
@@ -124,7 +126,16 @@
       "umn": 2,
       "installazione_costo": 1000,
       "proprieta": [],
-      "effetto_breve": "Entro 80 Q elimina le penalità per scarsa illuminazione."
+      "effetto_breve": "Entro 80 Q elimina le penalità per scarsa illuminazione.",
+      "attivabile": {
+        "tipo": "promemoria",
+        "azione": "1 AzP",
+        "frasi": [
+          "Entro 80 Q elimina le penalità per scarsa illuminazione. Richiede luce ambientale residua.",
+          "Attivare, disattivare o cambiare una modalità di visione richiede 1 AzP; mantenerla non richiede Azioni."
+        ],
+        "TODO(Davide)": "A.106: il Manuale del Giocatore non dà un valore per le penalità da scarsa illuminazione; finché manca, la visione notturna resta un promemoria senza numero."
+      }
     },
     {
       "id": "visione-notturna-cybertronic",
@@ -144,7 +155,16 @@
       "umn": 1,
       "installazione_costo": 1000,
       "proprieta": [],
-      "effetto_breve": "Entro 80 Q elimina le penalità per scarsa illuminazione."
+      "effetto_breve": "Entro 80 Q elimina le penalità per scarsa illuminazione.",
+      "attivabile": {
+        "tipo": "promemoria",
+        "azione": "1 AzP",
+        "frasi": [
+          "Entro 80 Q elimina le penalità per scarsa illuminazione. Richiede luce ambientale residua.",
+          "Attivare, disattivare o cambiare una modalità di visione richiede 1 AzP; mantenerla non richiede Azioni."
+        ],
+        "TODO(Davide)": "A.106: il Manuale del Giocatore non dà un valore per le penalità da scarsa illuminazione; finché manca, la visione notturna resta un promemoria senza numero."
+      }
     },
     {
       "id": "visione-termica",
@@ -164,7 +184,16 @@
       "umn": 2,
       "installazione_costo": 1000,
       "proprieta": [],
-      "effetto_breve": "Entro 40 Q osserva e prende di mira bersagli con contrasto termico, anche al buio."
+      "effetto_breve": "Entro 40 Q osserva e prende di mira bersagli con contrasto termico, anche al buio.",
+      "attivabile": {
+        "tipo": "promemoria",
+        "azione": "1 AzP",
+        "frasi": [
+          "Entro 40 Q osserva e prende di mira bersagli con sufficiente contrasto termico, anche nel buio naturale completo.",
+          "La termica ignora il −4 VA della Fumogena standard se distingue il bersaglio, ma non vede attraverso coperture solide e non identifica automaticamente persone o creature nascoste.",
+          "Attivare, disattivare o cambiare una modalità di visione richiede 1 AzP; mantenerla non richiede Azioni."
+        ]
+      }
     },
     {
       "id": "visione-termica-cybertronic",
@@ -184,7 +213,16 @@
       "umn": 1,
       "installazione_costo": 1000,
       "proprieta": [],
-      "effetto_breve": "Entro 40 Q osserva e prende di mira bersagli con contrasto termico, anche al buio."
+      "effetto_breve": "Entro 40 Q osserva e prende di mira bersagli con contrasto termico, anche al buio.",
+      "attivabile": {
+        "tipo": "promemoria",
+        "azione": "1 AzP",
+        "frasi": [
+          "Entro 40 Q osserva e prende di mira bersagli con sufficiente contrasto termico, anche nel buio naturale completo.",
+          "La termica ignora il −4 VA della Fumogena standard se distingue il bersaglio, ma non vede attraverso coperture solide e non identifica automaticamente persone o creature nascoste.",
+          "Attivare, disattivare o cambiare una modalità di visione richiede 1 AzP; mantenerla non richiede Azioni."
+        ]
+      }
     },
     {
       "id": "potenziamento-uditivo",
@@ -212,7 +250,8 @@
           "ambito": "situazionale",
           "condizione": "+2 VA a Percezione tramite l’udito per distinguere passi, voci e suoni effettivamente percepibili.",
           "beneficio": "sensori_udito",
-          "fonte": "Equipaggiamento §7.4"
+          "fonte": "Equipaggiamento §7.4",
+          "se": "con l’udito"
         }
       ]
     },
@@ -242,7 +281,8 @@
           "ambito": "situazionale",
           "condizione": "+2 VA a Percezione tramite l’udito per distinguere passi, voci e suoni effettivamente percepibili.",
           "beneficio": "sensori_udito",
-          "fonte": "Equipaggiamento §7.4"
+          "fonte": "Equipaggiamento §7.4",
+          "se": "con l’udito"
         }
       ]
     },
@@ -331,10 +371,11 @@
           "tipo": "danno",
           "attacchi": "ravvicinati",
           "valore": 1,
-          "ambito": "generale",
+          "ambito": "situazionale",
           "condizione": "Come il sostitutivo; +2 VA a Forza o Atletica per sollevare, spingere, trascinare o sfondare usando il braccio; +1 danno agli attacchi ravvicinati effettuati con quell’arto.",
           "beneficio": "colpo_assistito",
-          "fonte": "Equipaggiamento §7.5"
+          "fonte": "Equipaggiamento §7.5",
+          "se": "con il braccio potenziato"
         }
       ]
     },
@@ -383,10 +424,11 @@
           "tipo": "danno",
           "attacchi": "ravvicinati",
           "valore": 1,
-          "ambito": "generale",
+          "ambito": "situazionale",
           "condizione": "Come il sostitutivo; +2 VA a Forza o Atletica per sollevare, spingere, trascinare o sfondare usando il braccio; +1 danno agli attacchi ravvicinati effettuati con quell’arto.",
           "beneficio": "colpo_assistito",
-          "fonte": "Equipaggiamento §7.5"
+          "fonte": "Equipaggiamento §7.5",
+          "se": "con il braccio potenziato"
         }
       ]
     },
@@ -992,7 +1034,14 @@
       "umn": 2,
       "installazione_costo": 1000,
       "proprieta": [],
-      "effetto_breve": "Comunicazioni vocali entro 10 km, senza impugnare dispositivi."
+      "effetto_breve": "Comunicazioni vocali entro 10 km, senza impugnare dispositivi.",
+      "attivabile": {
+        "tipo": "promemoria",
+        "azione": "1 AzP",
+        "frasi": [
+          "Accendere, spegnere o cambiare canale richiede 1 AzP."
+        ]
+      }
     },
     {
       "id": "comunicatore-impiantato-cybertronic",
@@ -1012,7 +1061,14 @@
       "umn": 1,
       "installazione_costo": 1000,
       "proprieta": [],
-      "effetto_breve": "Comunicazioni vocali entro 10 km, senza impugnare dispositivi."
+      "effetto_breve": "Comunicazioni vocali entro 10 km, senza impugnare dispositivi.",
+      "attivabile": {
+        "tipo": "promemoria",
+        "azione": "1 AzP",
+        "frasi": [
+          "Accendere, spegnere o cambiare canale richiede 1 AzP."
+        ]
+      }
     },
     {
       "id": "registratore-audiovisivo-impiantato",
@@ -1032,7 +1088,14 @@
       "umn": 2,
       "installazione_costo": 1000,
       "proprieta": [],
-      "effetto_breve": "Registra immagini e suoni dal punto di vista del portatore."
+      "effetto_breve": "Registra immagini e suoni dal punto di vista del portatore.",
+      "attivabile": {
+        "tipo": "promemoria",
+        "azione": "1 AzP",
+        "frasi": [
+          "Avviare o interrompere una registrazione richiede 1 AzP."
+        ]
+      }
     },
     {
       "id": "registratore-audiovisivo-impiantato-cybertronic",
@@ -1052,7 +1115,14 @@
       "umn": 1,
       "installazione_costo": 1000,
       "proprieta": [],
-      "effetto_breve": "Registra immagini e suoni dal punto di vista del portatore."
+      "effetto_breve": "Registra immagini e suoni dal punto di vista del portatore.",
+      "attivabile": {
+        "tipo": "promemoria",
+        "azione": "1 AzP",
+        "frasi": [
+          "Avviare o interrompere una registrazione richiede 1 AzP."
+        ]
+      }
     },
     {
       "id": "microattrezzi-integrati",
@@ -1072,7 +1142,14 @@
       "umn": 2,
       "installazione_costo": 1000,
       "proprieta": [],
-      "effetto_breve": "Utensili retrattili: strumenti Standard, modificatore 0."
+      "effetto_breve": "Utensili retrattili: strumenti Standard, modificatore 0.",
+      "attivabile": {
+        "tipo": "promemoria",
+        "azione": "1 AzP",
+        "frasi": [
+          "Estrarli o riporli richiede 1 AzP. Durante il lavoro la mano è impegnata; Prove e tempi dell’intervento restano ordinari."
+        ]
+      }
     },
     {
       "id": "microattrezzi-integrati-cybertronic",
@@ -1092,7 +1169,14 @@
       "umn": 1,
       "installazione_costo": 1000,
       "proprieta": [],
-      "effetto_breve": "Utensili retrattili: strumenti Standard, modificatore 0."
+      "effetto_breve": "Utensili retrattili: strumenti Standard, modificatore 0.",
+      "attivabile": {
+        "tipo": "promemoria",
+        "azione": "1 AzP",
+        "frasi": [
+          "Estrarli o riporli richiede 1 AzP. Durante il lavoro la mano è impegnata; Prove e tempi dell’intervento restano ordinari."
+        ]
+      }
     },
     {
       "id": "iniettore-sanitario-impiantato",
@@ -1113,7 +1197,15 @@
       "installazione_costo": 2000,
       "cartucce": 5,
       "proprieta": [],
-      "effetto_breve": "Somministra una cartuccia con 1 AzP, senza mani; 5 cartucce."
+      "effetto_breve": "Somministra una cartuccia con 1 AzP, senza mani; 5 cartucce.",
+      "attivabile": {
+        "tipo": "cariche",
+        "azione": "1 AzP",
+        "frasi": [
+          "Somministra al portatore una cartuccia scelta con 1 AzP, senza Prova e senza usare le mani. Richiede che il personaggio sia cosciente.",
+          "Il caricatore contiene una combinazione libera fino a cinque cartucce. Rifornirlo richiede un minuto, con impianto disattivato e sportello accessibile, senza chirurgia."
+        ]
+      }
     },
     {
       "id": "iniettore-sanitario-impiantato-cybertronic",
@@ -1134,7 +1226,15 @@
       "installazione_costo": 2000,
       "cartucce": 5,
       "proprieta": [],
-      "effetto_breve": "Somministra una cartuccia con 1 AzP, senza mani; 5 cartucce."
+      "effetto_breve": "Somministra una cartuccia con 1 AzP, senza mani; 5 cartucce.",
+      "attivabile": {
+        "tipo": "cariche",
+        "azione": "1 AzP",
+        "frasi": [
+          "Somministra al portatore una cartuccia scelta con 1 AzP, senza Prova e senza usare le mani. Richiede che il personaggio sia cosciente.",
+          "Il caricatore contiene una combinazione libera fino a cinque cartucce. Rifornirlo richiede un minuto, con impianto disattivato e sportello accessibile, senza chirurgia."
+        ]
+      }
     },
     {
       "id": "iniettore-sanitario-d-emergenza",
@@ -1155,7 +1255,16 @@
       "installazione_costo": 2000,
       "cartucce": 5,
       "proprieta": [],
-      "effetto_breve": "Come l’iniettore impiantato; emostatica o coagulante automatica contro il Sanguinamento."
+      "effetto_breve": "Come l’iniettore impiantato; emostatica o coagulante automatica contro il Sanguinamento.",
+      "attivabile": {
+        "tipo": "cariche",
+        "azione": "1 AzP",
+        "frasi": [
+          "Comprende la funzione precedente e somministra automaticamente un’emostatica o una coagulante quando il portatore subisce Sanguinamento.",
+          "Somministra al portatore una cartuccia scelta con 1 AzP, senza Prova e senza usare le mani. Richiede che il personaggio sia cosciente.",
+          "Il caricatore contiene una combinazione libera fino a cinque cartucce. Rifornirlo richiede un minuto, con impianto disattivato e sportello accessibile, senza chirurgia."
+        ]
+      }
     },
     {
       "id": "iniettore-sanitario-d-emergenza-cybertronic",
@@ -1176,7 +1285,16 @@
       "installazione_costo": 2000,
       "cartucce": 5,
       "proprieta": [],
-      "effetto_breve": "Come l’iniettore impiantato; emostatica o coagulante automatica contro il Sanguinamento."
+      "effetto_breve": "Come l’iniettore impiantato; emostatica o coagulante automatica contro il Sanguinamento.",
+      "attivabile": {
+        "tipo": "cariche",
+        "azione": "1 AzP",
+        "frasi": [
+          "Comprende la funzione precedente e somministra automaticamente un’emostatica o una coagulante quando il portatore subisce Sanguinamento.",
+          "Somministra al portatore una cartuccia scelta con 1 AzP, senza Prova e senza usare le mani. Richiede che il personaggio sia cosciente.",
+          "Il caricatore contiene una combinazione libera fino a cinque cartucce. Rifornirlo richiede un minuto, con impianto disattivato e sportello accessibile, senza chirurgia."
+        ]
+      }
     },
     {
       "id": "processore-neurale-di-abilita",
@@ -1197,7 +1315,15 @@
       "installazione_costo": 2000,
       "innesto": "processore",
       "proprieta": [],
-      "effetto_breve": "Alloggia un chip: +2 o +4 VA a un’Abilità per 30 minuti, una volta ogni 24 ore."
+      "effetto_breve": "Alloggia un chip: +2 o +4 VA a un’Abilità per 30 minuti, una volta ogni 24 ore.",
+      "attivabile": {
+        "tipo": "chip",
+        "azione": "1 AzP",
+        "frasi": [
+          "Un solo chip attivo alla volta. Attivarlo richiede 1 AzP e il bonus dura 30 minuti consecutivi. Sostituirlo con un ricambio accessibile richiede 1 AzP; rimuoverlo interrompe l’effetto e fa perdere la durata restante.",
+          "Il Processore consente una sola attivazione ogni 24 ore, conteggiate dal momento dell’attivazione precedente. Cambiare chip o interrompere anticipatamente l’effetto non azzera il conteggio. Trascorse le 24 ore torna utilizzabile, senza condizioni legate al riposo."
+        ]
+      }
     },
     {
       "id": "processore-neurale-di-abilita-cybertronic",
@@ -1218,7 +1344,15 @@
       "installazione_costo": 2000,
       "innesto": "processore",
       "proprieta": [],
-      "effetto_breve": "Alloggia un chip: +2 o +4 VA a un’Abilità per 30 minuti, una volta ogni 24 ore."
+      "effetto_breve": "Alloggia un chip: +2 o +4 VA a un’Abilità per 30 minuti, una volta ogni 24 ore.",
+      "attivabile": {
+        "tipo": "chip",
+        "azione": "1 AzP",
+        "frasi": [
+          "Un solo chip attivo alla volta. Attivarlo richiede 1 AzP e il bonus dura 30 minuti consecutivi. Sostituirlo con un ricambio accessibile richiede 1 AzP; rimuoverlo interrompe l’effetto e fa perdere la durata restante.",
+          "Il Processore consente una sola attivazione ogni 24 ore, conteggiate dal momento dell’attivazione precedente. Cambiare chip o interrompere anticipatamente l’effetto non azzera il conteggio. Trascorse le 24 ore torna utilizzabile, senza condizioni legate al riposo."
+        ]
+      }
     },
     {
       "id": "chip-assistenza-atletica",
@@ -1242,7 +1376,8 @@
           "ambito": "situazionale",
           "condizione": "+2 VA all’Abilità indicata",
           "beneficio": "chip_processore",
-          "fonte": "Equipaggiamento §7.10"
+          "fonte": "Equipaggiamento §7.10",
+          "se": "con il chip attivo"
         }
       ]
     },
@@ -1268,7 +1403,8 @@
           "ambito": "situazionale",
           "condizione": "+4 VA all’Abilità indicata",
           "beneficio": "chip_processore",
-          "fonte": "Equipaggiamento §7.10"
+          "fonte": "Equipaggiamento §7.10",
+          "se": "con il chip attivo"
         }
       ]
     },
@@ -1294,7 +1430,8 @@
           "ambito": "situazionale",
           "condizione": "+2 VA all’Abilità indicata",
           "beneficio": "chip_processore",
-          "fonte": "Equipaggiamento §7.10"
+          "fonte": "Equipaggiamento §7.10",
+          "se": "con il chip attivo"
         }
       ]
     },
@@ -1320,7 +1457,8 @@
           "ambito": "situazionale",
           "condizione": "+4 VA all’Abilità indicata",
           "beneficio": "chip_processore",
-          "fonte": "Equipaggiamento §7.10"
+          "fonte": "Equipaggiamento §7.10",
+          "se": "con il chip attivo"
         }
       ]
     },
@@ -1346,7 +1484,8 @@
           "ambito": "situazionale",
           "condizione": "+2 VA all’Abilità indicata",
           "beneficio": "chip_processore",
-          "fonte": "Equipaggiamento §7.10"
+          "fonte": "Equipaggiamento §7.10",
+          "se": "con il chip attivo"
         }
       ]
     },
@@ -1372,7 +1511,8 @@
           "ambito": "situazionale",
           "condizione": "+4 VA all’Abilità indicata",
           "beneficio": "chip_processore",
-          "fonte": "Equipaggiamento §7.10"
+          "fonte": "Equipaggiamento §7.10",
+          "se": "con il chip attivo"
         }
       ]
     },
@@ -1398,7 +1538,8 @@
           "ambito": "situazionale",
           "condizione": "+2 VA all’Abilità indicata",
           "beneficio": "chip_processore",
-          "fonte": "Equipaggiamento §7.10"
+          "fonte": "Equipaggiamento §7.10",
+          "se": "con il chip attivo"
         }
       ]
     },
@@ -1424,7 +1565,8 @@
           "ambito": "situazionale",
           "condizione": "+4 VA all’Abilità indicata",
           "beneficio": "chip_processore",
-          "fonte": "Equipaggiamento §7.10"
+          "fonte": "Equipaggiamento §7.10",
+          "se": "con il chip attivo"
         }
       ]
     },
@@ -1450,7 +1592,8 @@
           "ambito": "situazionale",
           "condizione": "+2 VA all’Abilità indicata",
           "beneficio": "chip_processore",
-          "fonte": "Equipaggiamento §7.10"
+          "fonte": "Equipaggiamento §7.10",
+          "se": "con il chip attivo"
         }
       ]
     },
@@ -1476,7 +1619,8 @@
           "ambito": "situazionale",
           "condizione": "+4 VA all’Abilità indicata",
           "beneficio": "chip_processore",
-          "fonte": "Equipaggiamento §7.10"
+          "fonte": "Equipaggiamento §7.10",
+          "se": "con il chip attivo"
         }
       ]
     },
@@ -1502,7 +1646,8 @@
           "ambito": "situazionale",
           "condizione": "+2 VA all’Abilità indicata",
           "beneficio": "chip_processore",
-          "fonte": "Equipaggiamento §7.10"
+          "fonte": "Equipaggiamento §7.10",
+          "se": "con il chip attivo"
         }
       ]
     },
@@ -1528,7 +1673,8 @@
           "ambito": "situazionale",
           "condizione": "+4 VA all’Abilità indicata",
           "beneficio": "chip_processore",
-          "fonte": "Equipaggiamento §7.10"
+          "fonte": "Equipaggiamento §7.10",
+          "se": "con il chip attivo"
         }
       ]
     },
@@ -1554,7 +1700,8 @@
           "ambito": "situazionale",
           "condizione": "+2 VA all’Abilità indicata",
           "beneficio": "chip_processore",
-          "fonte": "Equipaggiamento §7.10"
+          "fonte": "Equipaggiamento §7.10",
+          "se": "con il chip attivo"
         }
       ]
     },
@@ -1580,7 +1727,8 @@
           "ambito": "situazionale",
           "condizione": "+4 VA all’Abilità indicata",
           "beneficio": "chip_processore",
-          "fonte": "Equipaggiamento §7.10"
+          "fonte": "Equipaggiamento §7.10",
+          "se": "con il chip attivo"
         }
       ]
     },
@@ -1606,7 +1754,8 @@
           "ambito": "situazionale",
           "condizione": "+2 VA all’Abilità indicata",
           "beneficio": "chip_processore",
-          "fonte": "Equipaggiamento §7.10"
+          "fonte": "Equipaggiamento §7.10",
+          "se": "con il chip attivo"
         }
       ]
     },
@@ -1632,7 +1781,8 @@
           "ambito": "situazionale",
           "condizione": "+4 VA all’Abilità indicata",
           "beneficio": "chip_processore",
-          "fonte": "Equipaggiamento §7.10"
+          "fonte": "Equipaggiamento §7.10",
+          "se": "con il chip attivo"
         }
       ]
     },
@@ -1658,7 +1808,8 @@
           "ambito": "situazionale",
           "condizione": "+2 VA all’Abilità indicata",
           "beneficio": "chip_processore",
-          "fonte": "Equipaggiamento §7.10"
+          "fonte": "Equipaggiamento §7.10",
+          "se": "con il chip attivo"
         }
       ]
     },
@@ -1684,7 +1835,8 @@
           "ambito": "situazionale",
           "condizione": "+4 VA all’Abilità indicata",
           "beneficio": "chip_processore",
-          "fonte": "Equipaggiamento §7.10"
+          "fonte": "Equipaggiamento §7.10",
+          "se": "con il chip attivo"
         }
       ]
     },
@@ -1710,7 +1862,8 @@
           "ambito": "situazionale",
           "condizione": "+2 VA all’Abilità indicata",
           "beneficio": "chip_processore",
-          "fonte": "Equipaggiamento §7.10"
+          "fonte": "Equipaggiamento §7.10",
+          "se": "con il chip attivo"
         }
       ]
     },
@@ -1736,7 +1889,8 @@
           "ambito": "situazionale",
           "condizione": "+4 VA all’Abilità indicata",
           "beneficio": "chip_processore",
-          "fonte": "Equipaggiamento §7.10"
+          "fonte": "Equipaggiamento §7.10",
+          "se": "con il chip attivo"
         }
       ]
     },
@@ -1762,7 +1916,8 @@
           "ambito": "situazionale",
           "condizione": "+2 VA all’Abilità indicata",
           "beneficio": "chip_processore",
-          "fonte": "Equipaggiamento §7.10"
+          "fonte": "Equipaggiamento §7.10",
+          "se": "con il chip attivo"
         }
       ]
     },
@@ -1788,7 +1943,8 @@
           "ambito": "situazionale",
           "condizione": "+4 VA all’Abilità indicata",
           "beneficio": "chip_processore",
-          "fonte": "Equipaggiamento §7.10"
+          "fonte": "Equipaggiamento §7.10",
+          "se": "con il chip attivo"
         }
       ]
     },
@@ -1814,7 +1970,8 @@
           "ambito": "situazionale",
           "condizione": "+2 VA all’Abilità indicata",
           "beneficio": "chip_processore",
-          "fonte": "Equipaggiamento §7.10"
+          "fonte": "Equipaggiamento §7.10",
+          "se": "con il chip attivo"
         }
       ]
     },
@@ -1840,7 +1997,8 @@
           "ambito": "situazionale",
           "condizione": "+4 VA all’Abilità indicata",
           "beneficio": "chip_processore",
-          "fonte": "Equipaggiamento §7.10"
+          "fonte": "Equipaggiamento §7.10",
+          "se": "con il chip attivo"
         }
       ]
     }

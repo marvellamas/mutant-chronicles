@@ -528,3 +528,7 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .vei-proprieta li { break-inside: avoid; }
 .vei-fuori-uso { flex: none; font-weight: 700; color: var(--ss-accento); border: 1pt solid var(--ss-accento); border-radius: 1mm; padding: 0.8mm 2mm; }
 .vei-note { min-height: 15mm; }
+
+/* Foglio 2: bonus condizionali accanto al VA (docs/censimento-impianti.md) */
+.abilita-stampa td.va .cond-stampa { font-size: 6pt; font-weight: 600; color: var(--ss-grigio); line-height: 0; margin-left: 0.3mm; }
+.cond-legenda { margin: 0.6mm 0 0; }

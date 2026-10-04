@@ -167,6 +167,18 @@ function effettoSpecializzazione(e) {
 }
 
 /**
+ * Effetti situazionali di oggetti e Talenti su un'Abilità, per la nota accanto al VA della SS (a riposo: tutti,
+ * accesi o no). { valore, se, oggetto } in ordine di valore.
+ */
+export function condizionaliAbilita(scheda, nome) {
+  const ogg = (scheda.equipaggiamento?.effettiOggetti ?? []).filter((e) => e.ambito === 'situazionale' && (e.tipo ?? 'va') === 'va' && e.abilita === nome)
+    .map((e) => ({ valore: e.valore, se: e.se ?? null, oggetto: e.oggetto }));
+  const tal = (scheda.effettiTalenti ?? []).filter((e) => e.ambito === 'situazionale' && (e.tipo ?? 'va') === 'va' && e.abilita === nome)
+    .map((e) => ({ valore: e.valore, se: e.se ?? null, oggetto: e.talento }));
+  return [...ogg, ...tal].sort((x, y) => y.valore - x.valore);
+}
+
+/**
  * Prepara i fogli da stampare. Con `completo: true` (le tab della scheda digitale) i testi non si
  * troncano: Background, Talenti ed equipaggiamento restano interi.
  * @param personaggio { creazione, livelli } oppure le sole scelte della creazione
@@ -228,6 +240,8 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
         totale: a.totale, effettivo: a.effettivo ?? a.vaEquip ?? a.totale, scomposizione: a.scomposizione ?? [], provenienza: a.provenienza ?? null,
         // effetti degli oggetti (docs/effetti-oggetti.md): situazionali spenti e valori d'uso specifico
         disponibili: a.disponibili ?? [], nonCumulati: a.nonCumulati ?? [], usiSpecifici: a.usiSpecifici ?? [],
+        // bonus condizionali accanto al VA (docs/censimento-impianti.md): «+2 se con la vista», accesi o no
+        condizionali: condizionaliAbilita(s, a.nome),
       })),
     })),
     talentiClasse: s.classi.flatMap((cl) => cl.talenti.map((t) => ({

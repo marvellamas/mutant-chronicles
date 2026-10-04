@@ -773,3 +773,13 @@ questi punti, con un `TODO(Davide)` dove serve; nel pacchetto per il Doc «per-d
   partecipante dello scontro, ma ha tre riserve di PI e una procedura di danno sua. Nella plancia lo mettiamo come
   carta collegata al conducente (si muove alla sua Iniziativa) o come partecipante a sé con l'Iniziativa del
   conducente? È il lotto 4 della ricognizione, serve prima di scrivere l'interfaccia.
+
+## Domande aperte sugli impianti (censimento del 04/10/2026)
+
+Il censimento degli impianti (`docs/censimento-impianti.md`) ha trovato i numeri del manuale già nei dati, salvo il +1 danno del Braccio potenziato. Era generale e il §7.5 lo limita «agli attacchi ravvicinati effettuati con quell’arto»: è stato corretto senza domanda, perché il testo è chiaro. Resta un punto, con il `TODO(Davide)` in `data/equipaggiamento/impianti.json`:
+
+- **A.106 — Penalità per scarsa illuminazione.** La Visione notturna «entro 80 Q elimina le penalità per scarsa
+  illuminazione» (Equipaggiamento §7.4); lo stesso fanno il visore dell'elmetto e il modulo del mirino (Armamenti).
+  Il Manuale del Giocatore non dà un valore per queste penalità, quindi la scheda non ha un numero da togliere e
+  l'impianto resta un promemoria. Quanto vale la penalità (per esempio −2 in penombra, −4 al buio con luce residua)
+  e a quali Prove si applica: Percezione, attacchi, altro?

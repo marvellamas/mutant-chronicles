@@ -1299,6 +1299,18 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
       if (o.tipo !== 'impianto' && o.umn !== undefined) err(F, `${k}.umn`, 'solo per il tipo "impianto"');
       if (o.installazione_costo !== undefined && !(o.tipo === 'impianto' && isIntero(o.installazione_costo) && o.installazione_costo >= 0)) err(F, `${k}.installazione_costo`, 'crediti interi ≥ 0, solo per il tipo "impianto"');
       if (o.cartucce !== undefined && !(isIntero(o.cartucce) && o.cartucce >= 1)) err(F, `${k}.cartucce`, 'intero ≥ 1');
+      // impianti attivabili («attivabile», docs/censimento-impianti.md): cariche (iniettori, §7.9), chip del Processore (§7.10,
+      // durata in regole.json → impianti.chip), promemoria dell'Azione (§7.4, §7.8); frasi del manuale
+      if (o.attivabile !== undefined) {
+        const a = o.attivabile;
+        if (o.tipo !== 'impianto' || !isOggetto(a) || !ATTIVAZIONI_IMPIANTO.includes(a.tipo)) err(F, `${k}.attivabile`, `solo per gli impianti: tipo fra ${ATTIVAZIONI_IMPIANTO.join(', ')}`);
+        else {
+          if (!isTesto(a.azione)) err(F, `${k}.attivabile.azione`, 'Azione richiesta (es. "1 AzP")');
+          if (!Array.isArray(a.frasi) || !a.frasi.length || !a.frasi.every(isTesto)) err(F, `${k}.attivabile.frasi`, 'frasi del manuale (tools/verifica_frasi.mjs)');
+          if (a.tipo === 'cariche' && !(isIntero(o.cartucce) && o.cartucce >= 1)) err(F, `${k}.cartucce`, 'le cariche dell’attivazione: intero ≥ 1');
+          if (a.tipo === 'chip' && o.innesto !== 'processore') err(F, `${k}.attivabile`, 'il tipo "chip" è del Processore neurale (innesto "processore")');
+        }
+      }
       if (o.compatibile_con !== undefined) {
         if (!Array.isArray(o.compatibile_con) || !o.compatibile_con.length) err(F, `${k}.compatibile_con`, 'elenco di riferimenti "file:id"');
         else o.compatibile_con.forEach((r, j) => rimandiCompatibili.push([F, `${k}.compatibile_con[${j}]`, r, o.tipo === 'munizioni' || o.cella || o.esplosivo ? ['arma_ravvicinata', 'arma_distanza'] : ['armatura']]));
@@ -1812,17 +1824,19 @@ function validaDotazioni(dati, err) {
 const INNESTI = ['interfaccia_neurale', 'processore'];
 const AMBITI_EFFETTO = ['generale', 'situazionale', 'uso_specifico'];
 const TIPI_EFFETTO = {
-  va: null, attacco: 'generale', danno: 'generale', iniziativa: 'generale', salvezza: 'uso_specifico',
+  va: null, attacco: null, danno: null, iniziativa: 'generale', salvezza: 'uso_specifico',
   caratteristica: 'uso_specifico', contromisura: 'generale', ar_contro: 'generale', ar: null, movimento: 'generale',
 };
 // «senz_armi»: solo i pugni («Senz'armi» in «Attacca!»); «contatto_incantesimi»: Prove per colpire in corpo a
 // corpo richieste dagli Incantesimi (Guanti da Combattimento Mistico, Armamenti §7.24)
+// impianti attivabili (impianti.json → attivabile, src/impianti.js)
+const ATTIVAZIONI_IMPIANTO = ['cariche', 'chip', 'promemoria'];
 const ATTACCHI_EFFETTO = ['tutti', 'ravvicinati', 'distanza', 'senz_armi', 'contatto_incantesimi'];
 // Talenti (docs/censimento-talenti.md): in più il tipo «parata», le Salvezze anche generali o
 // situazionali (Scudo Spirituale), «resistenza», il danno per le armi Artefatto e la scelta del
 // giocatore («{parametro}», «{annotazione}»)
 const TIPI_EFFETTO_TALENTO = {
-  ...TIPI_EFFETTO, salvezza: null, parata: 'generale', danno: null, dado_danno: null, cura: null, massimizza: null,
+  ...TIPI_EFFETTO, attacco: 'generale', salvezza: null, parata: 'generale', danno: null, dado_danno: null, cura: null, massimizza: null,
   // riduzione della penalità al VA di uno Stato (Combattere alla Cieca, Sangue Freddo); riduzione della
   // penalità MOV di armatura e scudo (Assalto Armato)
   riduzione_stato: null, movimento_armatura: 'generale',
@@ -1842,7 +1856,10 @@ function validaEffettiOggetto(effetti, F, K, nomiAbilita, err, ctx = {}) {
     if (tipo !== 'va' && e.abilita !== undefined) err(F, `${KE}.abilita`, 'solo per il tipo "va"');
     if (TIPI[tipo] && e.ambito !== TIPI[tipo]) err(F, `${KE}.ambito`, `il tipo "${tipo}" ha ambito "${TIPI[tipo]}"`);
     if ((tipo === 'attacco' || tipo === 'danno') && e.incantesimi === undefined && !ATTACCHI_EFFETTO.includes(e.attacchi)) err(F, `${KE}.attacchi`, `uno fra ${ATTACCHI_EFFETTO.join(', ')}`);
-    if (tipo === 'danno' && e.incantesimi === undefined && e.ambito !== 'generale') err(F, `${KE}.ambito`, 'il danno delle armi è generale');
+    // il danno e l'attacco degli oggetti: generali, o situazionali con la casella in «Attacca!» (Braccio potenziato, §7.5)
+    if ((tipo === 'danno' || tipo === 'attacco') && e.incantesimi === undefined && e.ambito === 'uso_specifico') err(F, `${KE}.ambito`, 'danno e attacco: generale o situazionale (casella in «Attacca!»)');
+    if (ctx.talento && tipo === 'danno' && e.incantesimi === undefined && e.ambito !== 'generale') err(F, `${KE}.ambito`, 'il danno dei Talenti è generale');
+    if (e.se !== undefined && !(e.ambito === 'situazionale' && isTesto(e.se) && e.se.length <= 40)) err(F, `${KE}.se`, 'forma breve della condizione (al più 40 caratteri), solo per gli effetti situazionali');
     // effetti per «Lancia!»: incantesimi, valore per Grado di una Classe, nota del manuale
     if (['dado_danno', 'cura', 'massimizza'].includes(tipo) && e.incantesimi === undefined) err(F, `${KE}.incantesimi`, 'a quali Incantesimi vale: ' + INCANTESIMI_EFFETTO.join(', '));
     if (e.incantesimi !== undefined && !(ctx.talento && INCANTESIMI_EFFETTO.includes(e.incantesimi))) err(F, `${KE}.incantesimi`, `uno fra ${INCANTESIMI_EFFETTO.join(', ')} (solo Talenti)`);

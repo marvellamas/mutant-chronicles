@@ -29,6 +29,8 @@ export function frasiEffetti() {
   for (const { id, file } of indice.file) {
     for (const o of leggi(`data/equipaggiamento/${file}`).oggetti ?? []) {
       (o.effetti ?? []).forEach((e, i) => { if (e.condizione) out.push({ dove: `${id}:${o.id} effetti[${i}]`, frase: e.condizione }); });
+      // impianti attivabili (docs/censimento-impianti.md): frasi dell'Azione, delle cartucce e del Processore
+      (o.attivabile?.frasi ?? []).forEach((f, i) => out.push({ dove: `${id}:${o.id} attivabile.frasi[${i}]`, frase: f }));
     }
   }
   for (const [id, o] of Object.entries(leggi('data/dotazioni.json').oggetti_dotazione)) {

@@ -298,6 +298,12 @@ function foglioIdentita(d) {
 // Foglio 2 — Abilità: la tabella occupa tutta l'altezza a sinistra; a destra i Talenti (prima
 // frase) e le Annotazioni come riempitivo. Specializzazioni e Tecniche stanno nel foglio 3.
 
+/** Legenda dei bonus condizionali del foglio 2: «Percezione +2 se con la vista (Potenziamento visivo)». */
+function condizionaliStampa(categorie) {
+  const voci = categorie.flatMap((c) => c.abilita).flatMap((a) => (a.condizionali ?? []).map((x) => `${a.nome} ${segno(x.valore)} se ${x.se ?? 'a condizione'} (${x.oggetto})`));
+  return voci.length ? h('p', { class: 'piccolo cond-legenda' }, h('strong', {}, 'Bonus condizionali (in apice, fuori dal VA): '), `${voci.join('; ')}.`) : null;
+}
+
 function foglioAbilita(d) {
   // due tabelle affiancate, metà delle categorie ciascuna, alte quanto la pagina
   const meta = Math.ceil(d.categorie.length / 2);
@@ -310,12 +316,16 @@ function foglioAbilita(d) {
           a.limite !== null && a.grezzo > a.limite ? ' ⚑' : null),
         h('td', {}, segno(a.mod)), h('td', {}, String(a.base)), h('td', {}, String(a.corporazione)),
         h('td', {}, String(a.avanzamento)), h('td', { title: a.equip ? 'Equipaggiamento indossato (§7.11.1)' : null }, a.equip ? segno(a.equip) : '0'),
-        h('td', { class: 'va' }, String(a.va)))))));
+        h('td', { class: 'va' }, String(a.va),
+          // bonus condizionali (docs/censimento-impianti.md): il valore in apice accanto al VA, la condizione sotto la tabella
+          a.condizionali?.length ? h('sup', { class: 'cond-stampa' }, a.condizionali.map((c) => segno(c.valore)).join('/')) : null))))));
   const talento = (t, dettagli) => h('li', {}, h('strong', {}, t.nome), dettagli, ` — ${t.frase}`);
   return h('div', { class: 'f2-griglia' },
     box({ titolo: 'Abilità', tinta: 'accento', forte: true, classe: 'f2-abilita' },
       h('div', { class: 'abilita-affiancate' }, tabellaAbilita(d.categorie.slice(0, meta)), tabellaAbilita(d.categorie.slice(meta))),
       h('p', { class: 'piccolo' }, '• Abilità di Classe. S / P / G / N: competenza (§2.3). VA = Mod + Base + Corp + Avanz, al massimo il limite (⚑: VA grezzo oltre il limite, §8.3), + Equip (equipaggiamento indossato).'),
+      // bonus condizionali accanto al VA (in apice): fuori dal valore, con la condizione
+      condizionaliStampa(d.categorie),
       // punti liberi in eccesso (E&L del 03/10/2026): l'avviso resta sulla carta finché non si tolgono
       d.avvisoPunti ? h('p', { class: 'piccolo avviso-eccesso-stampa' }, h('strong', {}, `${d.avvisoPunti.testo}.`), ` ${d.avvisoPunti.eventi.map((e) => e.testo).join('; ')}.`) : null),
     h('div', { class: 'colonna' },

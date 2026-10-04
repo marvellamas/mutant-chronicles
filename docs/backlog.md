@@ -182,3 +182,20 @@ Manuale dei Veicoli 0.2; dati e motore del lotto 2 (`data/veicoli.json`, `src/ve
 - Il veicolo non pesa sul carico del PG.
 
 Restano: A.91 (di chi è il veicolo), A.101–A.105; manovre, inseguimenti, collisioni e sovraccarico tecnico al tavolo (il motore c'è, l'interfaccia no); veicoli dei nemici nel Tavolo del Master.
+
+## 25. ✔ Effetti degli impianti al tavolo — fatto il 4 ottobre 2026
+
+Segnalazione di Marcello: il Potenziamento visivo CYBERTRONIC non mostrava il +2 a Percezione. Il dato c'era, ma un bonus situazionale si vedeva solo come interruttore laterale e nel tooltip. Censimento in `docs/censimento-impianti.md`.
+
+- Casella «+2 se …» accanto al valore in Abilità e alle Difese.
+- Casella in «Attacca!» per attacco e danno situazionali (Braccio potenziato).
+- Apice e legenda nel foglio 2 della SS.
+- Iniettori e Processore attivabili nella tab Cibernetica.
+- A.106 (penalità per scarsa illuminazione).
+
+Restano, dalla verifica sulle altre categorie (solo elenco):
+- Martello Spaccateste (Stordire +1);
+- IAS3200 (Pilotare −2/−4);
+- IAS3100 (SIN 2 a Pilotare);
+- APE Capitol (Schivare con Pilotare −1);
+- Utensile multiuso (Improvvisato −2).

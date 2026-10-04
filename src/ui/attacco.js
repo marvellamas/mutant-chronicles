@@ -9,7 +9,7 @@ import { infoValore, listaProvenienza } from './tooltip.js';
 import {
   calcolaAttaccoDistanza, vincoliDistanza, dichiarazioneDistanza, richiedeImbracciatura, talentiAttacco, descriviModalita, descriviManovraDistanza,
   calcolaAttaccoRavvicinato, vincoliRavvicinato, dichiarazioneRavvicinato, manovreRavvicinate, descriviManovraRavvicinata,
-  modificatoriDistanza, vaDueArmi,
+  modificatoriDistanza, vaDueArmi, effettiSituazionaliAttacco,
 } from '../attacco.js';
 import { rigaScelte, interruttore, pannelloPassi } from './pannello-passi.js';
 import { avviso } from './avvisi.js';
@@ -17,6 +17,19 @@ import { avviso } from './avvisi.js';
 const PASSI = ['Il tuo movimento', 'Il bersaglio', 'Distanza', 'Tipo di tiro', 'Risultato'];
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
 const RAPIDE = [3, 10, 20, 40, 80, 160, 300, 500, 750, 1000, 1500];
+
+/**
+ * Caselle degli effetti situazionali degli oggetti sul tiro o sul danno (Braccio potenziato, Equipaggiamento
+ * §7.5): «Nome · +1 danno se con il braccio potenziato», con la frase del manuale nel tooltip.
+ */
+function caselleOggetti(ctx, a, tipo, d, imposta) {
+  return effettiSituazionaliAttacco(ctx.tab.scheda, tipo, { senzArmi: !!a.senzArmi }).map((x) => {
+    const acceso = d.oggetti.includes(x.uid);
+    const effetto = [x.attacco ? `${segno(x.attacco)} VA` : null, x.danno ? `${segno(x.danno)} danno` : null].filter(Boolean).join(', ');
+    return interruttore(x.oggetto, acceso, (on) => imposta({ oggetti: on ? [...d.oggetti, x.uid] : d.oggetti.filter((u) => u !== x.uid) }),
+      { mod: `${effetto}${x.se ? ` se ${x.se}` : ''}`, info: x.condizione ? { titolo: x.oggetto, sezioni: [{ testo: x.condizione }] } : null });
+  });
+}
 
 /**
  * Pannello d'attacco per l'arma `a` (voce di scheda.equipaggiamento.armi).
@@ -81,6 +94,7 @@ function corpoRavvicinato(ctx, a, intestazione) {
       interruttore('Attacco di Opportunità', d.opportunita, (x) => imposta({ opportunita: x, ...(x ? { manovra: 'normale' } : {}) }),
         { mod: 'gratuito · solo attacco normale', info: infoRegola('Attacco di Opportunità', R.opportunita) }),
       ha('primo_attacco') ? interruttore('Primo attacco del combattimento', d.primoAttacco, (x) => imposta({ primoAttacco: x }), { mod: `${segno(ha('primo_attacco').e.primo_attacco.va)} (${ha('primo_attacco').nome})` }) : null,
+      ...caselleOggetti(ctx, a, 'ravvicinati', d, imposta),
     ] },
     { titolo: 'Il bersaglio', contenuto: [
       interruttore('A Terra', d.bersaglio.aTerra, (x) => b({ aTerra: x }), { mod: segno(R.a_terra.bersaglio) }),
@@ -208,6 +222,7 @@ function corpoDistanza(ctx, a, intestazione) {
         { motivo: v.dueArmi, mod: `${v.secondaArma ? `con ${v.secondaArma.nome} · ` : ''}${numero(due.va)} a ciascuno${conTal(due.talento)}` }),
       !d.dueArmi && !a.esterno ? interruttore('Solo la mano non dominante', d.manoNonDominante, (x) => imposta({ manoNonDominante: x }),
         { mod: T7.some((t) => t.e.mano_non_dominante) ? '0 (Ambidestro)' : numero(R7.mano_non_dominante.va) }) : null,
+      ...caselleOggetti(ctx, a, 'distanza', d, imposta),
     ],
     [
       rigaScelte('Movimento del bersaglio', [

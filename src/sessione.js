@@ -46,6 +46,7 @@ import { caricatori, contenitori, normalizzaEquipaggiamento, catalogo, risolvi, 
 import { oggettiConPi } from './protezione.js';
 import { attivaTecnica, nuovoRound, terminaTecnica, allineaTecnicheAttive, tecnicaDi } from './tecniche.js';
 import { allineaIncantesimiAttivi } from './durate-incantesimi.js';
+import { allineaImpianti } from './impianti.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const limita = (v, min, max) => Math.min(max, Math.max(min, v));
@@ -347,6 +348,8 @@ export function allineaSessione(sessione, m) {
     // incantesimi lanciati con una durata (src/durate-incantesimi.js): la chiave c'è solo se ce ne sono, così le
     // sessioni di sempre restano identiche
     ...(() => { const inc = allineaIncantesimiAttivi(sessione.incantesimiAttivi); return inc.length ? { incantesimiAttivi: inc } : {}; })(),
+    // impianti attivabili (src/impianti.js): cartucce degli iniettori e Processore; la chiave c'è solo se serve
+    ...(() => { const imp = allineaImpianti(sessione.impianti, m.oggetti ?? null); return imp ? { impianti: imp } : {}; })(),
     note: typeof sessione.note === 'string' ? sessione.note : '',
   };
 }

@@ -3,6 +3,7 @@
 // di sessione (modalità tavolo) del personaggio aperto; tutto il resto si ricalcola a ogni
 // disegno con calcolaScheda / anteprima.
 import { caricaDati, versioniPersonaggio, FILE_SOLO_TAVOLO } from '../rules.js';
+import { impiantiAttivabili, statoProcessore, attivaChip, terminaChip } from '../impianti.js';
 import { formattaErrore, trovaTodo } from '../validate.js';
 import { calcolaScheda, validaLivello } from '../calc.js';
 import { separaEsemplare, restituisciGranate } from '../equipaggiamento.js';
@@ -1252,6 +1253,22 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       imposta: (campo, valore) => cambiaSessione(modificaSessione(stato.sessione, { [campo]: valore }, massimi)),
       commutaStato: (id) => cambiaSessione(commutaStato(stato.sessione, id, massimi)),
       condizioneOggetto: (uid) => cambiaSessione(commutaCondizioneOggetto(stato.sessione, uid, massimi)),
+      // impianti attivabili (src/impianti.js): «Somministra», cartucce, «Attiva» dei chip; null = non si può
+      impianto: (fn, motivo = null) => {
+        const nuova = fn(modificaSessione(stato.sessione, {}, massimi));
+        if (!nuova) { stato.messaggioScheda = { tipo: 'attenzione', testo: motivo ?? 'Azione non possibile.' }; renderScheda({ mantieniScorrimento: true }); return; }
+        cambiaSessione(modificaSessione(nuova, {}, massimi));
+      },
+      // chip del Processore dalla nota «+4 se con il chip attivo» (tab Abilità): «Attiva» o «Termina»
+      chip: (uid) => {
+        const imp = impiantiAttivabili(stato.scelte.equipaggiamento, dati).find((x) => x.chip.some((c) => c.uid === uid));
+        if (!imp) { stato.messaggioScheda = { tipo: 'attenzione', testo: 'Il chip conta solo con un Processore neurale di Abilità installato (Equipaggiamento §7.10).' }; renderScheda({ mantieniScorrimento: true }); return; }
+        const st = statoProcessore(stato.sessione, imp, dati);
+        const c = st.chip.find((x) => x.uid === uid);
+        const nuova = c.acceso ? terminaChip(stato.sessione, imp) : attivaChip(stato.sessione, imp, uid, dati);
+        if (!nuova) { stato.messaggioScheda = { tipo: 'attenzione', testo: `${c.nome}: ${c.motivo ?? 'non si può attivare'}.` }; renderScheda({ mantieniScorrimento: true }); return; }
+        cambiaSessione(modificaSessione(nuova, {}, massimi));
+      },
       // Talenti (docs/censimento-talenti.md): situazionali e interruttore globale
       talento: (chiave) => cambiaSessione(commutaTalento(stato.sessione, chiave, massimi)),
       bonusTalenti: () => cambiaSessione(commutaBonusTalenti(stato.sessione, massimi)),

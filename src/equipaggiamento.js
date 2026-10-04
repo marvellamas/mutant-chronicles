@@ -937,8 +937,10 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     if (tipo === 'va') {
       if (!nomiAbilita.has(e.abilita)) { avvisi.push(`${o.nome}: «${e.abilita}» non è un’Abilità, effetto ignorato.`); continue; }
       if (e.ambito === 'generale') aggiungi(e.abilita, e.valore, o.nome, { uid: o.uid, effetto: true });
-    } else if (tipo === 'attacco') bonusAttacco.push({ nome: o.nome, valore: e.valore, attacchi: e.attacchi });
-    else if (tipo === 'danno') dannoEquip.push({ nome: o.nome, valore: e.valore, attacchi: e.attacchi });
+    // attacco e danno situazionali (Braccio potenziato, Equipaggiamento §7.5): solo con la casella di «Attacca!»
+    // (src/attacco.js → effettiSituazionaliAttacco), restano in effettiOggetti
+    } else if (tipo === 'attacco' && e.ambito === 'generale') bonusAttacco.push({ nome: o.nome, valore: e.valore, attacchi: e.attacchi });
+    else if (tipo === 'danno' && e.ambito === 'generale') dannoEquip.push({ nome: o.nome, valore: e.valore, attacchi: e.attacchi });
     else if (tipo === 'iniziativa') iniziativaEquip.push({ etichetta: o.nome, valore: e.valore });
     // Equipaggiamento §7.5: Q in più al Movimento (gambe potenziate)
     else if (tipo === 'movimento') movimentoEquip.push({ etichetta: o.nome, valore: e.valore });

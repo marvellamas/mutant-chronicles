@@ -1744,3 +1744,10 @@ body.con-sfondo::before {
 .note-veicolo textarea { width: 100%; }
 .proprieta-veicolo { margin: 0.3rem 0; padding-left: 1.2rem; font-size: 0.9rem; }
 .promemoria-conducente p { margin: 0.2rem 0; }
+
+/* Bonus condizionali accanto al valore (docs/censimento-impianti.md): «+2 se con la vista», casella per accenderli */
+.condizionali-valore { display: inline-flex; flex-wrap: wrap; gap: 0.2rem 0.4rem; margin-left: 0.3rem; }
+.condizionale-valore { display: inline-flex; align-items: center; gap: 0.15rem; font-size: 0.8rem; color: var(--tenue); cursor: pointer; white-space: nowrap; }
+.condizionale-valore.attivo { color: var(--accento); font-weight: 600; }
+.attivabile-impianto { margin: 0.4rem 0; }
+.conteggio-cartucce { font-weight: 700; }

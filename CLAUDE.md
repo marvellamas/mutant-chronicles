@@ -135,7 +135,8 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
   - impianti in `data/equipaggiamento/impianti.json`: tipo `impianto`, stati «installato» e «zaino», con UMN e chip del Processore; regole in `regole.json` → `umanita` e → `impianti`;
   - `src/umanita.js`: la perdita si registra all'installazione (`normalizza`) e resta se l'impianto si toglie; i recuperi li concede il Direttore;
   - la fascia riduce PM Massimi, capacità di Sintonizzazione e PS di Magia contro la Corruzione;
-  - tab Cibernetica della SD e foglio Cibernetica della SS, che si stampa solo con impianti installati o Umanità ridotta.
+  - tab Cibernetica della SD e foglio Cibernetica della SS, che si stampa solo con impianti installati o Umanità ridotta;
+  - effetti al tavolo (censimento del 04/10, `docs/censimento-impianti.md`, lotto `tools/lotti/lotto_effetti_impianti.mjs`): bonus condizionali con la casella «+2 se …» accanto al valore (campo `se` degli effetti situazionali; in «Attacca!» per attacco e danno situazionali, `dichiarazione.oggetti`; in stampa in apice con la legenda); impianti `attivabile` in `src/impianti.js`: iniettori con le cartucce e «Somministra», Processore con «Attiva» del chip (durata e limite di 24 ore da `regole.json` → `impianti.chip`), promemoria dell'Azione; sessione `impianti` solo se serve.
 
 - Equipaggiamento 0.5, cap. 6 ampliato e cap. 8 (lotto 4 del 01/10): naniti medici e postazioni medicochirurgiche in `sanitario.json`, campo `cura` con i numeri delle cure (`src/equipaggiamento.js` → `testoCura`, tooltip e Inventario), `alimentazione` anche come elenco di NEC; il cap. 8 riassume il §2.16 del Giocatore, controllato da `tools/lotti/lotto_equipaggiamento_08.mjs`. Tutti i capitoli dell'Equipaggiamento 0.5 sono nel catalogo.
 

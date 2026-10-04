@@ -11,13 +11,14 @@ Stato al 27 settembre 2026. Dati: campo `effetti` degli oggetti del catalogo (`d
 
 - `tipo` (facoltativo, predefinito `va`). Dal 27 settembre 2026 (elmetti §7.21, proprietà delle armature corporative §7.11–§7.17) lo schema ha anche i tipi della tabella qui sotto. Solo `va` ha `abilita`.
 - `beneficio` (facoltativo): chiave di un beneficio che **non si somma** con le sue copie (Armamenti §7.21.1: «copie dello stesso beneficio non si sommano»). Fra gli effetti attivi con la stessa chiave vale il maggiore, gli altri non contano. Esempio: Filtro respiratorio 2 di un'armatura e Maschera filtrante dell'elmetto: +2, non +4.
+- `se` (facoltativo, solo situazionale, al più 40 caratteri): forma breve della condizione per la nota «+2 se con la vista» accanto al valore (tab Abilità, Difese in Combattimento, «Attacca!», foglio 2 della SS); la frase intera resta in `condizione` (censimento degli impianti del 04/10/2026, `docs/censimento-impianti.md`).
 - `proprieta` (facoltativo): nome della proprietà del manuale che l'effetto traduce («Imbottita 1»). Le proprietà di un oggetto senza effetto e non già gestite altrove compaiono nella SD come **promemoria**.
 
 | tipo | Campi propri | Ambito | Dove entra |
 |---|---|---|---|
 | `va` | `abilita` | generale, situazionale, uso_specifico | VA dell'Abilità (come sopra) |
-| `attacco` | `attacchi`: `tutti`, `ravvicinati`, `distanza` | generale | VA per colpire delle armi impugnate e di «Senz'armi», quindi anche in «Attacca!» |
-| `danno` | `attacchi`: `tutti`, `ravvicinati`, `distanza` | generale | danno delle armi (bonus ordinario, prima dei moltiplicatori, §5.13) |
+| `attacco` | `attacchi`: `tutti`, `ravvicinati`, `distanza` | generale, situazionale | VA per colpire delle armi impugnate e di «Senz'armi»; situazionale solo con la casella in «Attacca!» (`dichiarazione.oggetti`) |
+| `danno` | `attacchi`: `tutti`, `ravvicinati`, `distanza` | generale, situazionale | danno delle armi (bonus ordinario, prima dei moltiplicatori, §5.13); situazionale solo con la casella in «Attacca!» (Braccio potenziato, «con quell’arto», Equipaggiamento §7.5) |
 | `iniziativa` | — | generale | Iniziativa effettiva (pillola della SD) e stampa |
 | `salvezza` | `salvezza`: id di una Prova Salvezza, oppure `null` = «la PS già prevista dall'effetto»; `uso` | uso_specifico | righe «solo per un uso» sotto le Prove Salvezza (tab Identità) |
 | `caratteristica` | `caratteristiche`: sigle; `uso` | uso_specifico | righe «solo per un uso» nella tab Combattimento, sezione Protezioni |
@@ -56,7 +57,7 @@ Gli impianti cibernetici (Equipaggiamento 0.5, cap. 7) usano lo stesso schema qu
 | Ambito | Esempio | Nel VA | Nella SD | Nella SS |
 |---|---|---|---|---|
 | **generale**: ogni uso dell'Abilità | penalità d'armatura; oggetto personalizzato | sì, con l'equipaggiamento | pillola rossa/verde; tooltip con scomposizione e fonte | sì (a riposo, come l'armatura) |
-| **situazionale**: circostanza della scena, decide il giocatore | corredo di sopravvivenza nell'ambiente scelto, abiti eleganti, binocolo | solo con la condizione accesa | interruttore in Abilità → «Condizioni degli oggetti»; spento: «Disponibile: … attiva la condizione» nel tooltip | no |
+| **situazionale**: circostanza della scena, decide il giocatore | corredo di sopravvivenza nell'ambiente scelto, abiti eleganti, binocolo | solo con la condizione accesa | casella «+N se …» accanto al valore (e interruttore in Abilità → «Condizioni degli oggetti»); i chip del Processore con «Attiva» nella tab Cibernetica | no: nota in apice accanto al VA del foglio 2 e legenda sotto la tabella |
 | **uso_specifico**: un tipo di Prova nominato dal manuale | valigetta «tracce», kit «pronto soccorso», armatura «lancio» | no, il VA generale non cambia | valore a parte accanto alla pillola («tracce 9 ▲»), con tooltip: base, modificatore, oggetto, frase, paragrafo; «lancio» anche nella tab Magia | solo se permanente: Potere per lanciare con l'armatura indossata, nel foglio Magia |
 
 Il riquadro «Condizioni attive» (tab Abilità) elenca generali e situazionali accesi; gli usi specifici stanno in righe a parte: «(solo per <uso>: vedi <tab>)».
