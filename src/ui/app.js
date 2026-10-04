@@ -299,7 +299,18 @@ function fineRitentativo(id) {
   ritentativo.opzioni = null;
   const m = messaggioSalvataggio({ riuscito: true, ritentato: true }, stato.dati);
   stato.messaggioScheda = { tipo: m.tipo, testo: m.testo };
-  if (id === stato.id) renderWizard();
+  mostraMessaggioScheda(id);
+}
+
+/**
+ * Mostra subito `stato.messaggioScheda` nella scheda aperta: il salvataggio nella cartella gira da sé un
+ * secondo e mezzo dopo l'ultima modifica, quindi senza questo il messaggio si vedrebbe solo al ridisegno
+ * successivo. Usa lo stesso ridisegno prudente dell'aggiornamento periodico, che rinvia se il giocatore sta
+ * usando un controllo.
+ */
+function mostraMessaggioScheda(id) {
+  if (id !== stato.id) return;
+  ridisegnaSchedaQuandoLibera();
 }
 
 const attesaCartella = new Map();
@@ -342,7 +353,12 @@ async function scriviInCartella(id, { revisione = false, mtime = null } = {}) {
     // richiesta di Davide del 04/10: col server spento un messaggio comprensibile, e si ritenta da soli
     const m = messaggioSalvataggio({ errore: e }, stato.dati);
     if (m.tecnico) console.warn(`Salvataggio nella cartella non riuscito (${file}):`, m.tecnico);
+    const nuovo = stato.messaggioScheda?.testo !== m.testo;
     stato.messaggioScheda = { tipo: m.tipo, testo: m.testo };
+    // il salvataggio gira da sé un secondo e mezzo dopo l'ultima modifica: il messaggio va mostrato subito,
+    // altrimenti si vedrebbe solo al ridisegno successivo. Si ridisegna una volta sola (non a ogni
+    // ritentativo) e mai mentre si sta scrivendo in un campo, per non far perdere il segno.
+    if (nuovo) mostraMessaggioScheda(id);
     if (m.ritenta) programmaRitentativo(id, { mtime });
     return null;
   } finally {
