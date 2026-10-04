@@ -69,3 +69,47 @@ export function elencoUnito(locali, remoti) {
   for (const [k, remoto] of ultimi) if (!usati.has(k)) out.push({ voce: null, origine: 'cartella', remoto });
   return out;
 }
+
+// ---------------------------------------------------------------------------
+// Messaggi del salvataggio nella cartella (richiesta di Davide del 04/10/2026). Davanti a
+// «NetworkError when attempting to fetch resource» non si capisce che va riaperta la finestra del
+// server: il messaggio lo dice in parole semplici e l'app ritenta da sé. Testi e tempi in
+// regole.json → interfaccia.salvataggio; il testo tecnico resta nella console del browser.
+
+/**
+ * L'errore dice che il server non risponde? Sono gli errori di `fetch` quando non c'è nessuno in
+ * ascolto o la richiesta è stata interrotta: il browser li presenta come TypeError con messaggi
+ * diversi («NetworkError when attempting to fetch resource» su Firefox, «Failed to fetch» su Chrome,
+ * «Load failed» su Safari). Un errore del server (file non valido, permessi) non è di rete: ha un
+ * messaggio nostro e ritentare non lo risolve.
+ */
+export function erroreDiRete(e) {
+  if (!e) return false;
+  if (e.conflitto) return false; // 409: il server ha risposto, è un conflitto di revisione
+  if (e.name === 'AbortError' || e.name === 'TimeoutError') return true;
+  if (e.name !== 'TypeError' && e.name !== 'Error') return false;
+  const m = String(e.message ?? '');
+  // «errore 500» e simili vengono dal server, che quindi risponde
+  if (/^errore \d{3}$/.test(m)) return false;
+  return /networkerror|failed to fetch|load failed|network request failed|fetch failed|connessione/i.test(m) || e.name === 'TypeError';
+}
+
+/**
+ * Messaggio da mostrare dopo un tentativo di salvataggio nella cartella.
+ * @param esito { errore } fallito, oppure { riuscito: true, ritentato: boolean }
+ * @returns {{ tipo: 'ok'|'attenzione', testo, tecnico: string|null, ritenta: boolean }}
+ *   `tecnico` va nella console, non nella pagina; `ritenta` dice se conviene riprovare da soli.
+ */
+export function messaggioSalvataggio(esito, dati) {
+  const T = dati.regole.interfaccia.salvataggio;
+  if (esito?.riuscito) return { tipo: 'ok', testo: T.riuscito, tecnico: null, ritenta: false };
+  const e = esito?.errore;
+  if (erroreDiRete(e)) return { tipo: 'attenzione', testo: T.server_non_risponde, tecnico: String(e?.message ?? e), ritenta: true };
+  return { tipo: 'attenzione', testo: T.non_riuscito.replace('{errore}', e?.message ?? String(e)), tecnico: String(e?.stack ?? e?.message ?? e), ritenta: false };
+}
+
+/** Millisecondi fra un tentativo di salvataggio e il successivo (regole.json → interfaccia.salvataggio). */
+export function attesaRitentativo(dati) {
+  const s = dati.regole.interfaccia.salvataggio.ritenta_ogni_s;
+  return Math.max(1, Number(s) || 5) * 1000;
+}

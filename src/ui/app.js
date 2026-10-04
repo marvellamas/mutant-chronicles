@@ -16,7 +16,7 @@ import { serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevision
 import { controllaRemoto, revisioneDaScrivere, differenzeSessione, testoScelta, indicatoreCollegamento, impronta } from '../collegamento.js';
 import { leggiScontroAperto, leggiScontro, salvaScontro } from './scontro.js';
 import { registraRiga } from '../scontro.js';
-import { elencoUnito, confronta, chiaveDaFile, chiavePersonaggio } from '../cartella.js';
+import { elencoUnito, confronta, chiaveDaFile, chiavePersonaggio, messaggioSalvataggio, attesaRitentativo } from '../cartella.js';
 import { renderTavolo } from './tavolo.js';
 import { avviso, avvisoErrore } from './avvisi.js';
 import { controlloInUso } from './ridisegno.js';
@@ -277,6 +277,31 @@ function esporta(scelte, livelli = [], sessione = null, calendario = null) {
 
 // Cartella dei personaggi (server.mjs, src/cartella.js): dopo ogni salvataggio nel browser il personaggio
 // si scrive anche in personaggi/, con il testo dell'export; le scritture ravvicinate si raccolgono
+// Ritentativo del salvataggio quando il server non risponde (richiesta di Davide del 04/10/2026):
+// si riprova ogni «ritenta_ogni_s» secondi (regole.json → interfaccia.salvataggio) finché il server
+// torna; appena scrive, l'avviso diventa «Salvato nella cartella personaggi/». Un solo ritentativo
+// alla volta, per il personaggio aperto: le modifiche successive aggiornano il contenuto da scrivere.
+const ritentativo = { id: null, timer: null, opzioni: null };
+function programmaRitentativo(id, opzioni = {}) {
+  if (ritentativo.id === id && ritentativo.timer) { ritentativo.opzioni = opzioni; return; }
+  clearTimeout(ritentativo.timer);
+  ritentativo.id = id;
+  ritentativo.opzioni = opzioni;
+  ritentativo.timer = setTimeout(() => {
+    ritentativo.timer = null;
+    scriviInCartella(id, { revisione: id === stato.id, ...ritentativo.opzioni });
+  }, attesaRitentativo(stato.dati));
+}
+function fineRitentativo(id) {
+  clearTimeout(ritentativo.timer);
+  ritentativo.id = null;
+  ritentativo.timer = null;
+  ritentativo.opzioni = null;
+  const m = messaggioSalvataggio({ riuscito: true, ritentato: true }, stato.dati);
+  stato.messaggioScheda = { tipo: m.tipo, testo: m.testo };
+  if (id === stato.id) renderWizard();
+}
+
 const attesaCartella = new Map();
 function programmaCartella(id) {
   clearTimeout(attesaCartella.get(id));
@@ -309,10 +334,16 @@ async function scriviInCartella(id, { revisione = false, mtime = null } = {}) {
     }
     const r = await scriviCartella(file, testo, { mtime: rev });
     archivio.segnaCartella(id, { file: r.file, mtime: r.mtime, salvato: p.aggiornato, impronta: impronta(testo) });
+    // il server è tornato dopo un salvataggio fallito: lo si dice, e il ritentativo si ferma
+    if (ritentativo.id === id) fineRitentativo(id);
     return r;
   } catch (e) {
     if (conRevisione && e.conflitto) { stato.collegamento.scrivendo = false; await apriConflitto(); return null; }
-    stato.messaggioScheda = { tipo: 'attenzione', testo: `Salvataggio nella cartella personaggi/ non riuscito: ${e.message}. Il personaggio resta salvato nel browser.` };
+    // richiesta di Davide del 04/10: col server spento un messaggio comprensibile, e si ritenta da soli
+    const m = messaggioSalvataggio({ errore: e }, stato.dati);
+    if (m.tecnico) console.warn(`Salvataggio nella cartella non riuscito (${file}):`, m.tecnico);
+    stato.messaggioScheda = { tipo: m.tipo, testo: m.testo };
+    if (m.ritenta) programmaRitentativo(id, { mtime });
     return null;
   } finally {
     if (conRevisione) stato.collegamento.scrivendo = false;
