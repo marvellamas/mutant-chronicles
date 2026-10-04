@@ -2141,7 +2141,9 @@ function avvisoMaster(a) {
   if (!a) return null;
   const ora = a.ora.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
   return h('div', { class: 'riquadro attenzione avviso-master', role: 'alert' },
-    h('p', {}, h('strong', {}, 'Il master ha aggiornato la tua scheda'), ` (alle ${ora}) mentre avevi una modifica non ancora salvata nella cartella.`),
+    // quale PG e quale file: chi legge capisce se è davvero il suo personaggio (bug del 04/10/2026)
+    h('p', {}, h('strong', {}, `Il master ha aggiornato la scheda di ${a.nome ?? 'questo personaggio'}`), a.file ? ` (file ${a.file})` : null,
+      ` alle ${ora}, mentre avevi una modifica non ancora salvata nella cartella.`),
     a.differenze.length ? h('p', {}, 'Nella versione del master: ', a.differenze.join('; '), '.') : null,
     h('div', { class: 'riga-azioni' },
       h('button', { type: 'button', class: 'btn primario', onclick: a.aggiorna, title: 'Prende la versione del master; la tua ultima modifica si perde' }, 'Aggiorna'),

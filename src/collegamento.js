@@ -7,14 +7,18 @@
 //   scrittura, «aggiornato» della voce in quel momento e l'impronta del testo esportato (`impronta`).
 // - La scheda ha una modifica da scrivere se il suo testo esportato non è più quello dell'impronta: si
 //   confronta il contenuto, non le date, perché aprire la scheda risalva la voce anche senza cambiarla.
-// - Il file del personaggio sul server è il più recente con il suo «Nome» (src/cartella.js).
+// - Il file del personaggio sul server è il più recente con il suo identificativo «pg» (src/cartella.js →
+//   fileDelPg); per i file di prima senza identificativo, con il «Nome» dell'ultima sincronizzazione.
 // - Se il file non è più quello ricordato, l'ha cambiato qualcun altro (il master). Se la scheda non ha
 //   modifiche locali da scrivere, si ricarica da sola; altrimenti è un conflitto e il giocatore sceglie.
-import { chiavePersonaggio, ultimiPerPersonaggio } from './cartella.js';
+import { fileDelPg } from './cartella.js';
 
-/** Il file del personaggio sul server (il più recente con il suo nome), o null. */
-export function fileRemoto(nome, lista) {
-  return ultimiPerPersonaggio(lista).get(chiavePersonaggio(nome)) ?? null;
+/**
+ * Il file del personaggio sul server (il più recente con il suo identificativo), o null. Mai quello di un altro
+ * PG con un nome simile: era il bug del 04/10/2026 («Lucas» al tavolo e «LUCAS» appena creato).
+ */
+export function fileRemoto(voce, lista) {
+  return fileDelPg(voce, lista);
 }
 
 /** Impronta di un testo (FNV-1a a 32 bit, in esadecimale): basta a dire se il testo esportato è cambiato. */
@@ -52,7 +56,7 @@ export function modificaLocale(voce, inAttesa = false, improntaLocale = null) {
  *   conflitto: il file è cambiato e la scheda ha modifiche non ancora scritte.
  */
 export function controllaRemoto(voce, lista, inAttesa = false, improntaLocale = null) {
-  const remoto = fileRemoto(voce?.scelte?.nome, lista);
+  const remoto = fileRemoto(voce, lista);
   const c = voce?.cartella;
   if (!remoto || !c) return { azione: 'niente', remoto };
   if (remoto.file === c.file && remoto.mtime === c.mtime) return { azione: 'niente', remoto };

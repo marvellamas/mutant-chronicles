@@ -65,6 +65,41 @@ const NO_CACHE = new Set(['.js', '.mjs', '.css', '.json', '.html']);
 export { NOME_FILE };
 const MASSIMO = 10 * 1024 * 1024; // un ritratto grande resta ben sotto
 
+// Identità dei personaggi (bug del 04/10/2026, «Lucas» e «LUCAS»): ogni file porta l'identificativo «pg» del suo
+// personaggio (src/character.js → nuovoPg). L'elenco lo riporta, così la scheda riconosce il suo file dal «pg» e non
+// dal nome; una scrittura non va mai su un file che contiene un altro personaggio.
+const cacheFile = new Map();
+/** { pg, nome } del personaggio in un file (letto una volta per data e dimensione del file). */
+async function personaggioDelFile(dove, s = null) {
+  const st = s ?? await stat(dove);
+  const c = cacheFile.get(dove);
+  if (c && c.mtime === st.mtimeMs && c.dimensione === st.size) return c.pg;
+  let pg = { pg: null, nome: null };
+  try {
+    const o = JSON.parse(await readFile(dove, 'utf8'));
+    pg = { pg: typeof o?.pg === 'string' ? o.pg : null, nome: typeof o?.scelte?.nome === 'string' ? o.scelte.nome.trim() : null };
+  } catch { /* file illeggibile: senza identificativo */ }
+  cacheFile.set(dove, { mtime: st.mtimeMs, dimensione: st.size, pg });
+  return pg;
+}
+/** Nome di file per il confronto: Windows non distingue le maiuscole; gli accenti confondono chi legge. */
+const formaFile = (f) => String(f).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+/**
+ * Motivo per non scrivere il personaggio `pg` nel file `file`, o null. Il file (o uno con lo stesso nome a meno
+ * di maiuscole e accenti, che su Windows è lo stesso file) contiene un altro personaggio: identificativo diverso,
+ * oppure un file di prima senza identificativo con un nome scritto diversamente.
+ */
+async function altroPersonaggio(cartella, file, pg) {
+  let nomi;
+  try { nomi = await readdir(cartella); } catch { return null; }
+  for (const x of nomi.filter((n) => formaFile(n) === formaFile(file))) {
+    const suo = await personaggioDelFile(join(cartella, x));
+    const diverso = suo.pg ? suo.pg !== pg : x !== file;
+    if (diverso) return `il file ${x} contiene un altro personaggio${suo.nome ? ` (${suo.nome})` : ''}: non sovrascritto. Ricarica la pagina: il personaggio verrà salvato in un file con un altro nome.`;
+  }
+  return null;
+}
+
 const json = (res, codice, corpo) => {
   res.writeHead(codice, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-cache' });
   res.end(JSON.stringify(corpo));
@@ -232,7 +267,9 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
     const lista = await Promise.all(nomi.map(async (file) => {
       const s = await stat(join(cartella, file));
       const m = /^(.*)_liv(\d+)_(\d{4}-\d{2}-\d{2})\.json$/.exec(file);
-      return { file, nome: m[1], livello: Number(m[2]), data: m[3], mtime: s.mtimeMs, dimensione: s.size };
+      // `pg`: identificativo del personaggio nel file (null nei file di prima)
+      const { pg } = await personaggioDelFile(join(cartella, file), s);
+      return { file, nome: m[1], livello: Number(m[2]), data: m[3], mtime: s.mtimeMs, dimensione: s.size, pg };
     }));
     return json(res, 200, lista.sort((a, b) => b.mtime - a.mtime));
   }
@@ -256,12 +293,16 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
     let corpo;
     try { corpo = await leggiCorpo(req); } catch (e) { return json(res, e.codice ?? 400, { errore: e.message }); }
     // si scrive solo un personaggio esportato dall'app (src/character.js → serializza)
+    let o;
     try {
-      const o = JSON.parse(corpo.toString('utf8'));
+      o = JSON.parse(corpo.toString('utf8'));
       if (o?.formato !== 'mutant-personaggio') throw new Error('non è un personaggio di Mutant');
     } catch (e) {
       return json(res, 400, { errore: `contenuto non valido: ${e.message}` });
     }
+    // mai sopra un altro personaggio (bug del 04/10/2026): identificativo diverso, o un file scritto diversamente
+    const altro = await altroPersonaggio(cartella, file, typeof o.pg === 'string' ? o.pg : null);
+    if (altro) return json(res, 409, { errore: altro, altroPersonaggio: true });
     // revisione (Tavolo del Master, pezzo 4): la plancia scrive solo se il file è quello che ha letto
     // «Aggiungi PG al tavolo»: un file nuovo non sovrascrive mai quello che c'è già
     if (req.headers['x-mutant-nuovo'] === '1' && await stat(dove).then(() => true, () => false)) {

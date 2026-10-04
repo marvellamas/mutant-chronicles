@@ -436,7 +436,21 @@ function giornoFile(data) {
   return `${data.getFullYear()}-${due(data.getMonth() + 1)}-${due(data.getDate())}`;
 }
 
-export function serializza(scelte, { versioniDati, livelli, sessione, calendario } = {}) {
+/**
+ * Identificativo del personaggio, creato alla nascita e scritto nel file («pg»): non dipende dal nome. La
+ * cartella del server e la scheda riconoscono un PG da questo, non dal nome del file (due PG «Lucas» e «LUCAS»
+ * sono due personaggi anche se su Windows i loro file si chiamerebbero allo stesso modo). Casuale, 96 bit:
+ * crypto.getRandomValues c'è anche fuori dai contesti sicuri (un giocatore collegato via IP in http).
+ */
+export function nuovoPg() {
+  const b = new Uint8Array(12);
+  globalThis.crypto.getRandomValues(b);
+  return `pg-${[...b].map((x) => x.toString(16).padStart(2, '0')).join('')}`;
+}
+/** Un identificativo di personaggio valido (quello di nuovoPg, o simile): stringa breve senza spazi. */
+export const isPg = (v) => typeof v === 'string' && /^[\w-]{6,64}$/.test(v);
+
+export function serializza(scelte, { versioniDati, livelli, sessione, calendario, pg = null } = {}) {
   const pulite = {};
   for (const k of CAMPI) pulite[k] = scelte?.[k] ?? nuoveScelte()[k];
   // senza ritratto e senza dotazione iniziale i campi non si scrivono: i file di prima restano
@@ -447,6 +461,8 @@ export function serializza(scelte, { versioniDati, livelli, sessione, calendario
   if (!Array.isArray(pulite.veicoli) || !pulite.veicoli.length) delete pulite.veicoli;
   if (!Object.keys(pulite.parametriTalenti ?? {}).length) delete pulite.parametriTalenti;
   const file = { formato: FORMATO_FILE, versione: VERSIONE_FORMATO };
+  // identificativo del personaggio (nuovoPg): scritto solo se c'è, così i file di prima restano identici
+  if (isPg(pg)) file.pg = pg;
   // in ordine alfabetico: l'ordine di caricamento dei file dati varia, il file esportato no
   if (versioniDati) file.versioni_dati = Object.fromEntries(Object.entries(versioniDati).sort(([a], [b]) => a.localeCompare(b)));
   file.scelte = pulite;
@@ -469,7 +485,8 @@ export function deserializzaPersonaggio(testo) {
   if (!Array.isArray(livelli) || !livelli.every(isOggetto)) throw new Error('I livelli del personaggio nel file non sono validi.');
   const sessione = obj?.formato === FORMATO_FILE && isOggetto(obj.sessione) ? obj.sessione : null;
   const calendario = obj?.formato === FORMATO_FILE && isOggetto(obj.calendario) ? obj.calendario : null;
-  return { creazione, livelli, sessione, calendario };
+  const pg = obj?.formato === FORMATO_FILE && isPg(obj.pg) ? obj.pg : null;
+  return { creazione, livelli, sessione, calendario, pg };
 }
 
 /**

@@ -10,7 +10,7 @@ import { riempimento } from '../interfaccia.js';
 import { vistaPlancia, testoConSessione, sessioneDaFile, pgDaAggiungere } from '../tavolo.js';
 import { riallinea, alRound, terminaDurate, collegamentoScontro, durateCarta, testoDurata } from '../round-scontro.js';
 import { rigaDurate } from './durate.js';
-import { ultimiPerPersonaggio, chiaveDaFile } from '../cartella.js';
+import { ultimiPerPersonaggio, chiaveDaFile, nomiCheSiConfondono } from '../cartella.js';
 import { elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, creaInCartella } from './cartella.js';
 import { apriColpo, specDaFormula } from './colpo.js';
 import { tira } from '../tiri.js';
@@ -663,8 +663,14 @@ function testoAggiornato(ms) {
 function sceltaAlTavolo(stato, ultimi, salva) {
   const scelti = new Set(stato.selezione);
   const nomi = [...ultimi.keys()].sort((a, b) => a.localeCompare(b, 'it'));
+  // file di personaggi diversi con nomi che si confondono (bug del 04/10/2026): su Windows «Lucas» e «LUCAS» possono
+  // finire nello stesso file; i PG nuovi prendono un suffisso, quelli di prima vanno controllati a mano
+  const confusi = nomiCheSiConfondono(stato.elenco);
   return h('section', { class: 'riquadro plancia-scelta', 'aria-label': 'Chi è al tavolo' },
     h('h2', {}, 'Chi è al tavolo'),
+    confusi.length ? h('div', { class: 'riquadro attenzione' }, confusi.map((c) => h('p', {},
+      h('strong', {}, `Da controllare: ${c.nomi.map((x) => x.replace(/-/g, ' ')).join(' e ')}`),
+      ` — ${c.motivo}. Su Windows i loro file possono finire nello stesso file: apri ciascuno e controlla che siano personaggi diversi. I PG nuovi prendono un nome di file con un suffisso («-2»).`))) : null,
     nomi.length ? h('ul', { class: 'plancia-scelta-elenco' }, nomi.map((k) => h('li', {},
       h('label', {}, h('input', {
         type: 'checkbox', checked: scelti.has(k),

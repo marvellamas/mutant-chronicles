@@ -20,7 +20,8 @@ const voce = (cartella, aggiornato = cartella?.salvato ?? null) => ({ scelte: { 
 
 test('controllaRemoto: niente se il file è quello ricordato, ricarica se l’ha cambiato il master', () => {
   const lista = [{ file: FILE, mtime: 1000 }, { file: 'Rhea-Valdis_liv5_2026-10-02.json', mtime: 5000 }, { file: 'Torvald-Krane_liv6_2026-10-01.json', mtime: 10 }];
-  assert.equal(fileRemoto('Torvald Krane', lista).file, FILE);
+  // voce di prima, senza identificativo: il file del suo nome, come prima
+  assert.equal(fileRemoto(voce(null), lista).file, FILE);
   const c = { file: FILE, mtime: 1000, salvato: 'A' };
   assert.equal(controllaRemoto(voce(c), lista).azione, 'niente');
   assert.equal(controllaRemoto(voce(c), [{ file: FILE, mtime: 2000 }]).azione, 'ricarica');

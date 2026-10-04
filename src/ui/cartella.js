@@ -62,12 +62,15 @@ export async function leggiCartellaConRevisione(file) {
 
 /**
  * Scrive un file nella cartella: { file, mtime }. Con `mtime` (la revisione letta) il server rifiuta la
- * scrittura se il file è cambiato nel frattempo: errore con `conflitto: true`.
+ * scrittura se il file è cambiato nel frattempo: errore con `conflitto: true`. Se il file contiene un altro
+ * personaggio il server rifiuta: errore con `altroPersonaggio: true`.
  */
 export async function scriviCartella(file, testo, { mtime } = {}) {
   const headers = { 'Content-Type': 'application/json', ...(mtime ? { 'X-Mutant-Mtime': String(mtime) } : {}) };
   const r = await fetch(`api/personaggi/${encodeURIComponent(file)}`, { method: 'PUT', body: testo, headers });
   const j = await r.json().catch(() => ({}));
-  if (!r.ok) throw Object.assign(new Error(j.errore ?? `errore ${r.status}`), { conflitto: r.status === 409 });
+  // `altroPersonaggio`: il file contiene un altro PG (bug del 04/10/2026): non è un conflitto di revisione, il
+  // riquadro «Il master ha aggiornato» non si apre; il messaggio del server dice che cosa fare
+  if (!r.ok) throw Object.assign(new Error(j.errore ?? `errore ${r.status}`), { conflitto: r.status === 409 && !j.altroPersonaggio, altroPersonaggio: !!j.altroPersonaggio });
   return j;
 }

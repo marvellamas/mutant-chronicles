@@ -65,12 +65,14 @@ export function carica(id) {
  * dell'avanzamento non hanno "livelli": si leggono come personaggi al 1° livello.
  * @returns {boolean} false se il salvataggio non è riuscito
  */
-export function salva({ id, scelte, livelli = [], sessione = null, calendario = null, stampa = null, passo }) {
+export function salva({ id, scelte, livelli = [], sessione = null, calendario = null, stampa = null, passo, pg = null }) {
   const tutti = leggiTutti();
+  // `pg`: identificativo del personaggio (src/character.js → nuovoPg), si conserva come la cartella
+  const idPg = pg ?? tutti[id]?.pg ?? null;
   // stampa: preferenze di stampa (src/stampa.js → normalizzaOpzioniStampa), non regole
   // `cartella`: ultima sincronizzazione con la cartella dei personaggi (src/cartella.js), si conserva
   const cartella = tutti[id]?.cartella;
-  tutti[id] = { id, scelte, livelli, sessione, ...(calendario ? { calendario } : {}), ...(stampa ? { stampa } : {}), passo, aggiornato: new Date().toISOString(), ...(cartella ? { cartella } : {}) };
+  tutti[id] = { id, scelte, livelli, sessione, ...(calendario ? { calendario } : {}), ...(stampa ? { stampa } : {}), passo, aggiornato: new Date().toISOString(), ...(cartella ? { cartella } : {}), ...(idPg ? { pg: idPg } : {}) };
   return scriviTutti(tutti);
 }
 
@@ -82,6 +84,14 @@ export function segnaCartella(id, cartella) {
   const tutti = leggiTutti();
   if (!tutti[id]) return false;
   tutti[id] = { ...tutti[id], cartella };
+  return scriviTutti(tutti);
+}
+
+/** Dà alla voce l'identificativo del personaggio (src/character.js → nuovoPg), senza toccare «aggiornato». */
+export function segnaPg(id, pg) {
+  const tutti = leggiTutti();
+  if (!tutti[id]) return false;
+  tutti[id] = { ...tutti[id], pg };
   return scriviTutti(tutti);
 }
 

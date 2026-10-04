@@ -9,7 +9,7 @@ import { calcolaScheda, validaLivello } from '../calc.js';
 import { separaEsemplare, restituisciGranate } from '../equipaggiamento.js';
 import {
   nuoveScelte, normalizza, applicaModifica, anteprima, serializza, nomeFileEsportazione, nomeFileCalendario, deserializzaPersonaggio, applicaLivello, annullaUltimoLivello,
-  CAMPI_ANAGRAFICA,
+  CAMPI_ANAGRAFICA, nuovoPg,
 } from '../character.js';
 import { h, svuota, scaricaFile } from './dom.js';
 import * as archivio from './storage.js';
@@ -17,7 +17,7 @@ import { serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevision
 import { controllaRemoto, revisioneDaScrivere, differenzeSessione, testoScelta, indicatoreCollegamento, impronta } from '../collegamento.js';
 import { leggiScontroAperto, leggiScontro, salvaScontro } from './scontro.js';
 import { registraRiga } from '../scontro.js';
-import { elencoUnito, confronta, chiaveDaFile, chiavePersonaggio, messaggioSalvataggio, attesaRitentativo } from '../cartella.js';
+import { elencoUnito, confronta, chiaveDaFile, messaggioSalvataggio, attesaRitentativo, nomeFileLibero } from '../cartella.js';
 import { renderTavolo } from './tavolo.js';
 import { avviso, avvisoErrore } from './avvisi.js';
 import { controlloInUso } from './ridisegno.js';
@@ -207,6 +207,12 @@ function daIndirizzo() {
     }
     const { scelte, avvisi } = normalizza(salvato.scelte, stato.dati);
     stato.id = id;
+    // un PG di prima riceve l'identificativo alla prima apertura (bug del 04/10/2026), senza cambiare altro: con il
+    // server si prende quello del suo file, se c'è già, e il file lo registra subito
+    if (!salvato.pg) {
+      if (!stato.cartella) assicuraPg(id);
+      else elencoCartella().then((lista) => { if (!archivio.carica(id)?.pg && lista) { assicuraPg(id, lista); scriviInCartella(id, { revisione: id === stato.id }); } }, () => {});
+    }
     stato.scelte = scelte;
     stato.livelli = Array.isArray(salvato.livelli) ? salvato.livelli : [];
     stato.sessione = salvato.sessione ?? null;
@@ -262,14 +268,33 @@ function persisti() {
   if (stato.cartella) programmaCartella(stato.id);
 }
 
-/** Nome e testo dell'export di un personaggio: gli stessi per «SALVA PG» e per la cartella. */
-function fileEsportazione(scelte, livelli = [], sessione = null, calendario = null) {
+/**
+ * Nome e testo dell'export di un personaggio: gli stessi per «SALVA PG» e per la cartella. `pg`: identificativo
+ * del personaggio (src/character.js → nuovoPg), scritto nel file. `radice`: il «Nome» del file, quando non è
+ * quello del nome del PG (nella cartella, con il suffisso di src/cartella.js → nomeFileLibero).
+ */
+function fileEsportazione(scelte, livelli = [], sessione = null, calendario = null, pg = null, radice = null) {
   const versioniDatiFile = versioniPersonaggio(stato.dati);
-  return { file: nomeFileEsportazione(scelte.nome, 1 + livelli.length), testo: serializza(scelte, { versioniDati: versioniDatiFile, livelli, sessione, calendario }) };
+  return { file: nomeFileEsportazione(radice ?? scelte.nome, 1 + livelli.length), testo: serializza(scelte, { versioniDati: versioniDatiFile, livelli, sessione, calendario, pg }) };
 }
 
-function esporta(scelte, livelli = [], sessione = null, calendario = null) {
-  const { file, testo } = fileEsportazione(scelte, livelli, sessione, calendario);
+/**
+ * L'identificativo del personaggio della voce `id`: quello che ha, oppure quello del suo file nella cartella
+ * (un PG di prima la cui copia è già stata scritta altrove con l'identificativo), oppure uno nuovo. Si dà alla
+ * voce senza cambiare altro (prima apertura di un PG di prima, bug del 04/10/2026).
+ */
+function assicuraPg(id, lista = null) {
+  const p = archivio.carica(id);
+  if (!p) return null;
+  if (p.pg) return p.pg;
+  const delFile = p.cartella?.file ? (lista ?? []).find((x) => x.file === p.cartella.file)?.pg ?? null : null;
+  const pg = delFile ?? nuovoPg();
+  archivio.segnaPg(id, pg);
+  return pg;
+}
+
+function esporta(scelte, livelli = [], sessione = null, calendario = null, pg = null) {
+  const { file, testo } = fileEsportazione(scelte, livelli, sessione, calendario, pg);
   scaricaFile(file, testo);
 }
 
@@ -325,10 +350,15 @@ function programmaCartella(id) {
  * `mtime`: revisione da usare al posto di quella ricordata («Tieni la mia»).
  */
 async function scriviInCartella(id, { revisione = false, mtime = null } = {}) {
+  if (!archivio.carica(id)) return null;
+  // il nome del file è unico per personaggio (src/cartella.js → nomeFileLibero): serve l'elenco della cartella
+  let elenco = null;
+  try { elenco = await elencoCartella(); } catch { elenco = null; }
+  assicuraPg(id, elenco);
   const p = archivio.carica(id);
-  if (!p) return null;
   const { scelte } = normalizza(p.scelte, stato.dati);
-  const { file, testo } = fileEsportazione(scelte, p.livelli ?? [], p.sessione ?? null, normalizzaCalendario(p.calendario, stato.dati));
+  const radice = elenco ? nomeFileLibero({ ...p, scelte }, elenco) : null;
+  const { file, testo } = fileEsportazione(scelte, p.livelli ?? [], p.sessione ?? null, normalizzaCalendario(p.calendario, stato.dati), p.pg, radice);
   const conRevisione = revisione && p.cartella;
   // pezzo 6: il contenuto è quello già nella cartella (la scheda si è solo riaperta): niente da scrivere
   if (conRevisione && !mtime && p.cartella.file === file && p.cartella.impronta === impronta(testo)) return null;
@@ -476,7 +506,7 @@ function ridisegnaSchedaQuandoLibera() {
 function improntaLocale(id) {
   const p = archivio.carica(id);
   if (!p) return null;
-  return impronta(fileEsportazione(normalizza(p.scelte, stato.dati).scelte, p.livelli ?? [], p.sessione ?? null, normalizzaCalendario(p.calendario, stato.dati)).testo);
+  return impronta(fileEsportazione(normalizza(p.scelte, stato.dati).scelte, p.livelli ?? [], p.sessione ?? null, normalizzaCalendario(p.calendario, stato.dati), p.pg ?? null).testo);
 }
 
 /** Registra la sincronizzazione con il file `file` alla revisione `mtime`, con l'impronta del contenuto attuale. */
@@ -493,7 +523,7 @@ async function versioneRemota() {
   const { testo, mtime } = await leggiCartellaConRevisione(remoto.file);
   const p = deserializzaPersonaggio(testo);
   const { scelte } = normalizza(p.creazione, stato.dati);
-  return { file: remoto.file, mtime: Number(mtime), testo, sessione: sessioneAllineata(scelte, p.livelli ?? [], p.sessione) };
+  return { file: remoto.file, mtime: Number(mtime), testo, nome: String(scelte.nome ?? '').trim() || 'Senza nome', sessione: sessioneAllineata(scelte, p.livelli ?? [], p.sessione) };
 }
 
 /**
@@ -599,7 +629,7 @@ function sessioneAllineata(creazione, livelli, sessione) {
  * `id` (nuovo se manca). @returns {{ id, scelte, avvisi }}
  */
 function salvaDaTesto(testo, id = archivio.nuovoId(), passo = null) {
-  const { creazione, livelli, sessione: sessioneFile, calendario: calendarioFile } = deserializzaPersonaggio(testo);
+  const { creazione, livelli, sessione: sessioneFile, calendario: calendarioFile, pg } = deserializzaPersonaggio(testo);
   const { scelte, avvisi } = normalizza(creazione, stato.dati);
   const errLivelli = livelli.length ? calcolaScheda({ creazione: scelte, livelli }, stato.dati).errori.filter((e) => e.campo.startsWith('livelli')) : [];
   if (errLivelli.length) avvisi.push(`Livelli con errori rispetto ai dati attuali: ${errLivelli[0].problema}`);
@@ -608,7 +638,7 @@ function salvaDaTesto(testo, id = archivio.nuovoId(), passo = null) {
   if (eccesso) avvisi.push(`${eccesso.testo} (${eccesso.eventi.map((e) => e.testo).join('; ')}).`);
   const sessione = sessioneAllineata(scelte, livelli, sessioneFile);
   const calendario = normalizzaCalendario(calendarioFile, stato.dati);
-  if (!archivio.salva({ id, scelte, livelli, sessione, calendario, passo: passo ?? (livelli.length || calcolaScheda(scelte, stato.dati).completa ? PASSO_SCHEDA : 0) })) {
+  if (!archivio.salva({ id, scelte, livelli, sessione, calendario, pg, passo: passo ?? (livelli.length || calcolaScheda(scelte, stato.dati).completa ? PASSO_SCHEDA : 0) })) {
     throw new Error(archivio.erroreSalvataggio() === 'quota' ? 'spazio del browser esaurito: esporta e rimuovi personaggi vecchi, poi riprova.' : 'il browser non permette di salvare (navigazione privata o permessi).');
   }
   return { id, scelte, avvisi };
@@ -644,8 +674,8 @@ async function sincronizzaCartella() {
   }
   // personaggi del browser mai salvati nella cartella (creati prima del server): ci vanno ora; chi è già
   // stato sincronizzato e non ha più il file è stato tolto a mano dalla cartella, e non si ricrea
-  for (const r of elencoUnito(archivio.elenco(), remoti).filter((x) => x.origine === 'browser' && !x.voce.cartella
-    && !remoti.some((f) => chiaveDaFile(f.file) === chiavePersonaggio(x.voce.scelte?.nome)))) await scriviInCartella(r.voce.id);
+  // (l'abbinamento ai file è per identificativo: un PG nuovo non prende mai il file di un altro con un nome simile)
+  for (const r of elencoUnito(archivio.elenco(), remoti).filter((x) => x.origine === 'browser' && !x.voce.cartella)) await scriviInCartella(r.voce.id);
   return { righe: elencoUnito(archivio.elenco(), await elencoCartella()), avvisi };
 }
 
@@ -733,7 +763,7 @@ function rigaPersonaggio(p, origine = 'browser') {
       h('p', { class: 'nota' }, `Modificato ${data}`, p.cartella?.file ? ` · cartella: ${p.cartella.file}` : '')),
     h('div', { class: 'riga-azioni' },
       h('button', { type: 'button', class: 'btn primario', onclick: () => vai(p.passo === PASSO_SCHEDA ? `#/p/${p.id}` : `#/p/${p.id}/${p.passo ?? 0}`) }, 'Apri'),
-      h('button', { type: 'button', class: 'btn', onclick: () => esporta(normalizza(s, stato.dati).scelte, livelli, p.sessione ?? null, normalizzaCalendario(p.calendario, stato.dati)) }, 'SALVA PG (Esporta JSON)'),
+      h('button', { type: 'button', class: 'btn', onclick: () => esporta(normalizza(s, stato.dati).scelte, livelli, p.sessione ?? null, normalizzaCalendario(p.calendario, stato.dati), assicuraPg(p.id)) }, 'SALVA PG (Esporta JSON)'),
       h('button', { type: 'button', class: 'btn pericolo', onclick: () => {
         if (confirm(`Eliminare «${s.nome?.trim() || 'Senza nome'}» da questo browser? L’operazione non si annulla (esporta prima il file se vuoi conservarlo).`)) {
           archivio.elimina(p.id);
@@ -783,7 +813,8 @@ function rigaCartella(r) {
 
 function nuovoPersonaggio() {
   const id = archivio.nuovoId();
-  if (!archivio.salva({ id, scelte: nuoveScelte(), passo: 0 })) {
+  // l'identificativo nasce con il personaggio (src/character.js → nuovoPg): non dipende dal nome
+  if (!archivio.salva({ id, scelte: nuoveScelte(), passo: 0, pg: nuovoPg() })) {
     stato.messaggioHome = { tipo: 'attenzione', testo: 'Il browser non permette di salvare: il personaggio andrà perso chiudendo la pagina. Usa Esporta per conservarlo.' };
   }
   stato.id = null;
@@ -813,7 +844,7 @@ function contesto() {
     ui: stato.ui,
     versioni: stato.versioni,
     aggiorna,
-    esporta: () => esporta(stato.scelte, stato.livelli, stato.sessione, stato.calendario),
+    esporta: () => esporta(stato.scelte, stato.livelli, stato.sessione, stato.calendario, assicuraPg(stato.id)),
     ridisegnaRiepilogo,
     ridisegna: () => renderWizard(),
   };
@@ -1209,6 +1240,9 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
     avvisoMaster: stato.cartella && stato.collegamento.conflitto ? {
       differenze: differenzeSessione(stato.sessione, stato.collegamento.conflitto.sessione, nomeStato),
       ora: new Date(stato.collegamento.conflitto.mtime),
+      // quale PG e quale file (bug del 04/10/2026): chi legge capisce se è davvero il suo
+      nome: stato.collegamento.conflitto.nome ?? null,
+      file: stato.collegamento.conflitto.file ?? null,
       aggiorna: () => sceltaConflitto('aggiorna'),
       tieni: () => sceltaConflitto('tieni'),
     } : null,
@@ -1233,7 +1267,7 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
       togliPunti: () => vai(`#/p/${stato.id}/togli`),
       annullaLivello,
       stampa: () => vai(`#/p/${stato.id}/stampa`),
-      esporta: () => esporta(stato.scelte, stato.livelli, stato.sessione, stato.calendario),
+      esporta: () => esporta(stato.scelte, stato.livelli, stato.sessione, stato.calendario, assicuraPg(stato.id)),
       modificaCreazione: (passo = 0) => vaiAlPasso(passo),
       nuovaSessione: () => {
         if (!confirm('Nuova sessione: PV e PM tornano ai massimi, Stati, Ferite e Affaticamento si azzerano, il Round torna a 1 senza Tecniche attive. Note, Punti Eroe e Distintivi restano. Procedere?')) return;

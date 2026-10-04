@@ -54,7 +54,13 @@ test('«Torna al tavolo» è cablato: la plancia segna, la pagina iniziale dimen
 test('pgDaAggiungere: nome dell’export tenuto, nome diverso rinominato, file non valido rifiutato', () => {
   const testo = esempio(RHEA);
   const ok = pgDaAggiungere(RHEA, testo, dati);
-  assert.deepEqual([ok.file, ok.rinominato, ok.testo === testo, ok.livello], [RHEA, false, true, 5]);
+  // il file d'esempio non ha l'identificativo: entrando nella cartella lo riceve (bug del 04/10/2026), il resto è uguale
+  assert.deepEqual([ok.file, ok.rinominato, ok.livello], [RHEA, false, 5]);
+  const conPg = JSON.parse(ok.testo);
+  assert.match(conPg.pg, /^pg-[0-9a-f]{24}$/);
+  assert.deepEqual({ ...conPg, pg: undefined }, { ...JSON.parse(testo), pg: undefined });
+  // un file che lo ha già resta identico
+  assert.equal(pgDaAggiungere(RHEA, ok.testo, dati).testo, ok.testo);
   // download doppio del browser, «(2)»: rinominato dal nome e dal livello nel JSON, con la data di oggi
   const oggi = new Date(2026, 9, 3);
   const dl = pgDaAggiungere('Rhea-Valdis_liv5_2026-10-02 (2).json', testo, dati, oggi);

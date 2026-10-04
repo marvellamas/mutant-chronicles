@@ -212,7 +212,7 @@ test('serializza con i livelli → deserializzaPersonaggio restituisce creazione
   const obj = JSON.parse(testo);
   assert.equal(obj.versione, VERSIONE_FORMATO);
   assert.deepEqual(obj.livelli, livelli);
-  assert.deepEqual(deserializzaPersonaggio(testo), { creazione: deserializza(testo), livelli, sessione: null, calendario: null });
+  assert.deepEqual(deserializzaPersonaggio(testo), { creazione: deserializza(testo), livelli, sessione: null, calendario: null, pg: null });
   // al 1° livello il file non ha "livelli"; i file vecchi si leggono con livelli vuoti
   assert.equal('livelli' in JSON.parse(serializza(MISHIMA_AGENTE, { livelli: [] })), false);
   assert.deepEqual(deserializzaPersonaggio(JSON.stringify(MISHIMA_AGENTE)).livelli, []);

@@ -1,7 +1,7 @@
 // Tavolo del Master, pezzo 1 (docs/tavolo-direttore.md): i dati di una scheda compatta della plancia
 // a partire dal file di un personaggio in personaggi/. Funzione pura e nessun calcolo nuovo: valori
 // effettivi e provenienze vengono da calcolaScheda con la sessione del file, come nella scheda digitale.
-import { deserializzaPersonaggio, normalizza, serializza, nomeFileEsportazione, FORMATO_FILE, VERSIONE_FORMATO } from './character.js';
+import { deserializzaPersonaggio, normalizza, serializza, nomeFileEsportazione, nuovoPg, FORMATO_FILE, VERSIONE_FORMATO } from './character.js';
 import { calcolaScheda } from './calc.js';
 import { massimiSessione, allineaSessione, descriviFerite } from './sessione.js';
 import { testoDanno } from './stampa.js';
@@ -79,7 +79,8 @@ export function testoConSessione(testo, valori, dati) {
   const { scelte } = normalizza(p.creazione, dati);
   const riposo = calcolaScheda({ creazione: scelte, livelli: p.livelli ?? [] }, dati);
   const sessione = allineaSessione({ ...allineaSessione(p.sessione, massimiSessione(riposo, scelte, dati)), ...valori }, massimiSessione(riposo, scelte, dati));
-  return serializza(scelte, { versioniDati: file.versioni_dati, livelli: p.livelli ?? [], sessione, calendario: p.calendario });
+  // l'identificativo del personaggio resta (src/character.js → nuovoPg): la plancia non lo cambia mai
+  return serializza(scelte, { versioniDati: file.versioni_dati, livelli: p.livelli ?? [], sessione, calendario: p.calendario, pg: p.pg });
 }
 
 /**
@@ -104,7 +105,8 @@ export function pgDaAggiungere(nomeFile, testo, dati, adesso = new Date()) {
   const obj = JSON.parse(testo);
   const attuale = obj.formato === FORMATO_FILE && obj.versione === VERSIONE_FORMATO;
   const versioniDati = obj.versioni_dati ?? versioniPersonaggio(dati);
-  const testoFinale = attuale ? testo : serializza(scelte, { versioniDati, livelli, sessione: p.sessione, calendario: p.calendario });
+  // un PG senza identificativo (file di prima) lo riceve entrando nella cartella: è la sua prima apertura
+  const testoFinale = attuale && p.pg ? testo : serializza(scelte, { versioniDati, livelli, sessione: p.sessione, calendario: p.calendario, pg: p.pg ?? nuovoPg() });
   const buono = NOME_FILE.test(nomeFile) && chiaveDaFile(nomeFile) === chiaveDaFile(nomeFileEsportazione(nome, livello, adesso));
   return { file: buono ? nomeFile : nomeFileEsportazione(nome, livello, adesso), testo: testoFinale, nome, livello, rinominato: !buono };
 }

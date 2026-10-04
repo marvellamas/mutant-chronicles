@@ -436,6 +436,17 @@ Quadrupede, Alato, Strisciante e Gigante (Bestiario §3.6–3.9) e le loro creat
   - Avvisa se nella bozza ci sono più Giganti di quanti ne ammette il Bestiario sotto il grado Potente (`massimo_per_scontro` della base).
 - **Prova.** Su porta di prova e cartelle temporanee: un Gigante Potente e due Alati Medi creati con «Crea nemico», messi in una bozza e avviati con «Inizia», con Iniziativa e Round 1; sulle carte compaiono «Taglia Grande» e «Vola · Passo in volo 8 Q». Senza server l'app è invariata.
 
+## Identità dei personaggi nella cartella (4 ottobre 2026)
+
+Bug segnalato da Marcello. Un PG nuovo («LUCAS») creato con il server, mentre «Lucas» era al tavolo, all'ultimo passo mostrava «Il master ha aggiornato la tua scheda…». La scheda riconosceva il suo file dal «Nome» del file. Quando la plancia riscriveva il file dell'altro, quello diventava il file più recente con la stessa chiave. Su Windows, inoltre, «Lucas_…» e «LUCAS_…» sono lo stesso file.
+
+- **Identificativo.** Ogni PG ha un identificativo «pg» creato alla nascita (`src/character.js` → `nuovoPg`), scritto nel file (campo facoltativo, formato 8 invariato) e nella voce del browser. La scheda e la pagina iniziale riconoscono il file dal «pg» (`src/cartella.js` → `fileDelPg`; `src/collegamento.js` → `fileRemoto`). La plancia lo conserva nelle sue riscritture.
+- **Nome del file.** Resta leggibile e diventa unico per PG (`nomeFileLibero`). Se un altro PG ha già un file con lo stesso nome, anche solo a meno di maiuscole, accenti o spazi, il PG nuovo prende un suffisso («LUCAS-2_liv1_…json»). La plancia continua a usare il «Nome».
+- **Server.** L'elenco riporta il «pg» di ogni file. Una scrittura su un file (o su uno con lo stesso nome a meno di maiuscole e accenti) che contiene un altro personaggio è rifiutata con 409 e il messaggio «il file … contiene un altro personaggio (…): non sovrascritto». La scheda non lo tratta come un conflitto di revisione.
+- **PG di prima.** I PG senza identificativo lo ricevono alla prima apertura, o entrando al tavolo con «Aggiungi PG al tavolo», senza cambiare altro. Con il server si prende quello del loro file, se c'è già. Finché non lo hanno si riconoscono dal «Nome», come prima.
+- **Nomi che si confondono.** Se due file vecchi hanno nomi che si confondono («Lucas» e «LUCAS»), la plancia lo segnala in «Chi è al tavolo».
+- **Riquadro del conflitto.** Quando il conflitto riguarda davvero lo stesso PG, dice quale PG e quale file: «Il master ha aggiornato la scheda di Lucas (file Lucas_liv6_2026-10-04.json) alle …».
+
 ## Collegare i giocatori (3 ottobre 2026)
 
 Marcello aveva avviato solo `avvia-server.bat` e non vedeva a quale indirizzo dovevano collegarsi i giocatori: il server ascoltava solo su `127.0.0.1`, salvo `--rete`.
