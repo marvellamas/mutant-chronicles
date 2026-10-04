@@ -257,7 +257,7 @@ test('Giocatore 0.45 §2.16: la dotazione si riceve una sola volta, alla creazio
   const livelli = [
     { livello: 2, caratteristiche: { FOR: 1, COS: 1 } },
     { livello: 3, talentoLibero: { id: 'sempre-allerta' } },
-    { livello: 4, grado: { classe: 'Soldato' }, tiroPV: tiro(5), puntiAbilita: { 'Sopravvivenza': 5 } }, // 5 punti per Grado, E&L del 03/10/2026
+    { livello: 4, grado: { classe: 'Soldato' }, tiroPV: tiro(5), puntiAbilita: { 'Sopravvivenza': 5, 'Atletica': 2 } }, // 7 punti per Grado (A.90)
   ];
   const s1 = calcolaScheda({ versione: 2, creazione, livelli: [] }, dati);
   const s4 = calcolaScheda({ versione: 2, creazione, livelli }, dati);

@@ -444,6 +444,9 @@ function validaRegole(r, err, dati = {}) {
     err(F, 'regole_aggiornate.punti_abilita', 'testo dell’avviso mancante');
   }
   // avviso dei Punti Abilità Liberi in eccesso (E&L del 03/10/2026): «{n}» è il numero dei punti in più
+  if (r.regole_aggiornate?.mancanti !== undefined && !(isTesto(r.regole_aggiornate.mancanti) && r.regole_aggiornate.mancanti.includes('{n}'))) {
+    err(F, 'regole_aggiornate.mancanti', 'testo dell’avviso dei punti da assegnare mancante o senza «{n}» (il numero dei punti)');
+  }
   if (r.regole_aggiornate?.eccesso !== undefined && !(isTesto(r.regole_aggiornate.eccesso) && r.regole_aggiornate.eccesso.includes('{n}'))) {
     err(F, 'regole_aggiornate.eccesso', 'testo dell’avviso dei punti in eccesso mancante o senza «{n}» (il numero dei punti in più)');
   }

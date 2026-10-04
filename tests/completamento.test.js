@@ -14,8 +14,8 @@ import { MISHIMA_AGENTE, tiro } from './personaggi.js';
 
 const { dati: reali } = await datiReali();
 // il meccanismo del completamento è nato con le regole del 27/09 (da 5 a 10 punti per Grado): i test del
-// completamento e della riassegnazione simulano le regole a 10; dal 03/10/2026 i punti sono 5 (E&L) e i
-// file salvati con 10 hanno punti in eccesso (in fondo)
+// completamento e della riassegnazione simulano le regole a 10; dal 04/10/2026 i punti sono 7 (Giocatore del 03/10 sera,
+// confermato da Davide, A.90): i file salvati con 10 hanno punti in eccesso, quelli con 5 punti da assegnare (in fondo)
 const dati = conPuntiLiberi(reali, 10);
 
 // Mishima Avventuriero Agente al 5° livello, esportato con le regole di prima (formato 6, 5 punti
@@ -135,10 +135,40 @@ const caricaDieci = () => {
   return { creazione: normalizza(creazione, reali).scelte, livelli };
 };
 
-test('regole correnti: 5 Punti Abilità Liberi alla creazione e a ogni Grado (E&L del 03/10/2026)', () => {
-  assert.equal(reali.regole.creazione.punti_abilita_liberi, 5);
+test('regole correnti: 7 Punti Abilità Liberi alla creazione e a ogni Grado (Giocatore del 03/10 sera, A.90)', () => {
+  assert.equal(reali.regole.creazione.punti_abilita_liberi, 7);
   const eventi = reali.regole.avanzamento.eventi.flatMap((x) => x.eventi.filter((e) => e.startsWith('punti_abilita:')).map((e) => [x.livello, e]));
-  assert.deepEqual(eventi, [4, 8, 12, 16, 20].map((l) => [l, 'punti_abilita:5']));
+  assert.deepEqual(eventi, [4, 8, 12, 16, 20].map((l) => [l, 'punti_abilita:7']));
+  // le frasi del Giocatore copiate nei dati (verificate da tools/verifica_frasi.mjs) dicono lo stesso numero
+  for (const f of reali.regole.creazione.frasi) assert.match(f, /\b7 (Punti|punti)/);
+});
+
+// salvato con la regola del 03/10 (5 per Grado, E&L): con 7 ha 2 punti da assegnare per evento, nulla si aggiunge da solo
+const FILE_CINQUE = serializza({ ...MISHIMA_AGENTE, puntiAbilitaLiberi: { 'Percezione': 2, 'Raggirare': 3 } }, {
+  livelli: [
+    { livello: 2, caratteristiche: { DES: 2 } },
+    { livello: 3, talentoLibero: { id: 'iniziativa-migliorata' } },
+    { livello: 4, grado: { classe: 'Agente' }, tiroPV: tiro(4), talentoClasse: 'Reazione Operativa', puntiAbilita: { 'Medicina': 1, 'Sopravvivenza': 2, 'Atletica': 2 } },
+    { livello: 5, talentoLibero: { id: 'prova-salvezza-migliorata', parametro: 'tempra' } },
+  ],
+});
+
+test('PG salvato con 5 punti per Grado: 2 punti da assegnare per evento, con «Assegna»; nulla aggiunto da solo', () => {
+  const { creazione, livelli } = deserializzaPersonaggio(FILE_CINQUE);
+  const p = { creazione: normalizza(creazione, reali).scelte, livelli };
+  assert.deepEqual(p.creazione.puntiAbilitaLiberi, { 'Percezione': 2, 'Raggirare': 3 });
+  const s = calcolaScheda(p, reali);
+  assert.deepEqual(s.completamenti.map((c) => [c.livello, c.mancanti]), [[1, 2], [4, 2]]);
+  assert.equal(s.avvisoPunti, null);
+  // testo dell'avviso dai dati, con il numero dei punti (src/ui/tab.js)
+  assert.equal(reali.regole.regole_aggiornate.mancanti.replaceAll('{n}', '4'), 'Con la regola aggiornata di Davide hai 4 punti Abilità liberi ancora da assegnare');
+  // finché mancano, l'avanzamento è bloccato con il rimando ad «Assegna»
+  assert.ok(validaLivello(p, { caratteristiche: { FOR: 1, COS: 1 } }, reali).some((e) => /assegna 4 Punti Abilità/.test(e.problema)));
+  // «Assegna»: la creazione, poi il 4° livello
+  assert.deepEqual(validaCompletamento(p, 1, { 'Tecnologia': 1, 'Cultura': 1 }, reali), []);
+  const dopo = applicaCompletamento(applicaCompletamento(p, 1, { 'Tecnologia': 1, 'Cultura': 1 }), 4, { 'Tecnologia': 2 });
+  const s2 = calcolaScheda(dopo, reali);
+  assert.deepEqual([s2.completamenti, s2.errori, s2.avvisoPunti], [[], [], null]);
 });
 
 test('PG salvato con la regola vecchia (10 per Grado): avviso con il numero esatto e le Abilità, scheda utilizzabile', () => {
@@ -146,22 +176,22 @@ test('PG salvato con la regola vecchia (10 per Grado): avviso con il numero esat
   // nulla tolto al caricamento: i punti liberi sono nel file, separati dai +1 di Classe
   assert.equal(Object.values(p.creazione.puntiAbilitaLiberi).reduce((t, v) => t + v, 0), 10);
   const s = calcolaScheda(p, reali);
-  assert.deepEqual(s.eccessi.map((c) => [c.livello, c.previsti, c.assegnati, c.eccesso]), [[1, 5, 10, 5], [4, 5, 10, 5]]);
+  assert.deepEqual(s.eccessi.map((c) => [c.livello, c.previsti, c.assegnati, c.eccesso]), [[1, 7, 10, 3], [4, 7, 10, 3]]);
   const a = s.avvisoPunti;
   assert.ok(a, 'manca l’avviso dei punti in eccesso');
-  assert.equal(a.totale, 10);
-  assert.equal(a.testo, 'Con la nuova regola di Davide hai 10 punti Abilità liberi in più del consentito: togline 10');
+  assert.equal(a.totale, 6);
+  assert.equal(a.testo, 'Con la regola aggiornata di Davide hai 6 punti Abilità liberi in più del consentito: togline 6');
   assert.deepEqual(a.eventi[0].abilita, { 'Percezione': 2, 'Tecnologia': 2, 'Cultura': 2, 'Raggirare': 4 });
-  assert.equal(a.eventi[1].testo, '4° livello: 10 punti liberi su 5 consentiti, 5 da togliere (punti liberi a Medicina 1, Sopravvivenza 3, Atletica 3, Tecnologia 3)');
+  assert.equal(a.eventi[1].testo, '4° livello: 10 punti liberi su 7 consentiti, 3 da togliere (punti liberi a Medicina 1, Sopravvivenza 3, Atletica 3, Tecnologia 3)');
   // la scheda resta utilizzabile: nessun errore, nessun completamento, si sale di livello, si stampa
   assert.deepEqual([s.errori, s.completamenti], [[], []]);
   assert.deepEqual(validaLivello(p, { caratteristiche: { FOR: 1, COS: 1 } }, reali), []);
   const st = preparaStampa(p, reali);
-  assert.equal(st.avvisoPunti.totale, 10);
+  assert.equal(st.avvisoPunti.totale, 6);
   assert.equal(st.fogli.find((f) => f.id === 'abilita').dati.avvisoPunti.testo, a.testo);
   // la creazione da sola (wizard): il validatore delle scelte segnala l'eccesso, senza bloccare
   const sc = calcolaScheda(p.creazione, reali);
-  assert.ok(sc.errori.some((e) => e.campo === 'puntiAbilitaLiberi' && e.tipo === 'eccesso' && /5 punti in eccesso/.test(e.problema)));
+  assert.ok(sc.errori.some((e) => e.campo === 'puntiAbilitaLiberi' && e.tipo === 'eccesso' && /3 punti in eccesso/.test(e.problema)));
   assert.equal(sc.completa, true);
 });
 
@@ -170,19 +200,19 @@ test('«Togli»: un evento alla volta dal più vecchio, solo punti liberi di que
   assert.match(validaRimozione(p, 4, { 'Atletica': 3, 'Sopravvivenza': 2 }, reali)[0].problema, /prima la creazione/);
   assert.match(validaRimozione(p, 1, { 'Medicina': 1 }, reali)[0].problema, /Medicina ha 0 punti liberi della creazione/);
   assert.deepEqual(validaRimozione(p, 1, { 'Raggirare': 2 }, reali).map((e) => e.tipo), ['incompleto']);
-  assert.match(validaRimozione(p, 1, { 'Raggirare': 4, 'Cultura': 2 }, reali)[0].problema, /ne bastano 5/);
-  const st = statoRimozione(p, { 'Raggirare': 3 }, reali);
-  assert.deepEqual([st.livello, st.eccesso, st.rimasti], [1, 5, 2]);
-  assert.deepEqual(st.abilita.map((x) => [x.nome, x.punti, x.togli]), [['Percezione', 2, 0], ['Tecnologia', 2, 0], ['Cultura', 2, 0], ['Raggirare', 4, 3]]);
-  const creazione = { 'Raggirare': 3, 'Cultura': 2 };
+  assert.match(validaRimozione(p, 1, { 'Raggirare': 4, 'Cultura': 2 }, reali)[0].problema, /ne bastano 3/);
+  const st = statoRimozione(p, { 'Raggirare': 2 }, reali);
+  assert.deepEqual([st.livello, st.eccesso, st.rimasti], [1, 3, 1]);
+  assert.deepEqual(st.abilita.map((x) => [x.nome, x.punti, x.togli]), [['Percezione', 2, 0], ['Tecnologia', 2, 0], ['Cultura', 2, 0], ['Raggirare', 4, 2]]);
+  const creazione = { 'Raggirare': 2, 'Cultura': 1 };
   assert.deepEqual(validaRimozione(p, 1, creazione, reali), []);
   p = applicaRimozione(p, 1, creazione);
-  assert.deepEqual(p.creazione.puntiAbilitaLiberi, { 'Percezione': 2, 'Tecnologia': 2, 'Raggirare': 1 });
-  assert.equal(calcolaScheda(p, reali).avvisoPunti.testo, 'Con la nuova regola di Davide hai 5 punti Abilità liberi in più del consentito: togline 5');
-  const quarto = { 'Sopravvivenza': 2, 'Atletica': 2, 'Tecnologia': 1 };
+  assert.deepEqual(p.creazione.puntiAbilitaLiberi, { 'Percezione': 2, 'Tecnologia': 2, 'Cultura': 1, 'Raggirare': 2 });
+  assert.equal(calcolaScheda(p, reali).avvisoPunti.testo, 'Con la regola aggiornata di Davide hai 3 punti Abilità liberi in più del consentito: togline 3');
+  const quarto = { 'Sopravvivenza': 2, 'Atletica': 1 };
   assert.deepEqual(validaRimozione(p, 4, quarto, reali), []);
   p = applicaRimozione(p, 4, quarto);
-  assert.deepEqual(p.livelli[2].puntiAbilita, { 'Medicina': 1, 'Sopravvivenza': 1, 'Atletica': 1, 'Tecnologia': 2 });
+  assert.deepEqual(p.livelli[2].puntiAbilita, { 'Medicina': 1, 'Sopravvivenza': 1, 'Atletica': 2, 'Tecnologia': 3 });
   const s = calcolaScheda(p, reali);
   assert.deepEqual([s.avvisoPunti, s.eccessi, s.errori, s.completamenti], [null, [], [], []]);
   assert.equal(statoRimozione(p, {}, reali), null);

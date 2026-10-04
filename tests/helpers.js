@@ -15,7 +15,7 @@ export const copia = (x) => structuredClone(x);
 
 /**
  * Copia dei dati con `n` Punti Abilità Liberi alla creazione e a ogni Grado (regole.json → creazione e
- * avanzamento.eventi). Dal 03/10/2026 sono 5 (E&L); i test del completamento e della riassegnazione
+ * avanzamento.eventi). Dal 04/10/2026 sono 7 (Giocatore del 03/10 sera, A.90); i test del completamento e della riassegnazione
  * simulano le regole a 10 (27/09–02/10) con cui sono stati salvati i file di collaudo.
  */
 export function conPuntiLiberi(dati, n) {

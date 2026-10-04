@@ -75,7 +75,7 @@
     },
     {
       "nome": "Atletica",
-      "va": 10
+      "va": 11
     },
     {
       "nome": "Furtività",
@@ -91,7 +91,7 @@
     },
     {
       "nome": "Raggirare",
-      "va": 10
+      "va": 15
     }
   ],
   "capacita": [

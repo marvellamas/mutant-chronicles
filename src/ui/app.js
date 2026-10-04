@@ -635,7 +635,7 @@ function salvaDaTesto(testo, id = archivio.nuovoId(), passo = null) {
   const { scelte, avvisi } = normalizza(creazione, stato.dati);
   const errLivelli = livelli.length ? calcolaScheda({ creazione: scelte, livelli }, stato.dati).errori.filter((e) => e.campo.startsWith('livelli')) : [];
   if (errLivelli.length) avvisi.push(`Livelli con errori rispetto ai dati attuali: ${errLivelli[0].problema}`);
-  // punti liberi in eccesso con le regole correnti (5 per Grado, E&L del 03/10/2026): si segnalano all'import
+  // punti liberi in eccesso con le regole correnti (7 per Grado dal 04/10/2026, A.90): si segnalano all'import
   const eccesso = calcolaScheda({ creazione: scelte, livelli }, stato.dati).avvisoPunti;
   if (eccesso) avvisi.push(`${eccesso.testo} (${eccesso.eventi.map((e) => e.testo).join('; ')}).`);
   const sessione = sessioneAllineata(scelte, livelli, sessioneFile);
@@ -1263,6 +1263,7 @@ function renderScheda({ mantieniScorrimento = false } = {}) {
         : tab.errori.length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.' : null,
     // regole aggiornate (regole.json → regole_aggiornate): punti da completare e in eccesso
     avvisoRegole: dati.regole.regole_aggiornate?.punti_abilita ?? 'Regole aggiornate',
+    avvisoMancanti: dati.regole.regole_aggiornate?.mancanti ?? null,
     messaggio: messaggio ?? (stato.salvataggioOk ? null : { tipo: 'errore', testo: testoSalvataggioFallito() }),
     passi: { background: 0, equipaggiamento: PASSO_EQUIPAGGIAMENTO },
     ui: stato.ui,

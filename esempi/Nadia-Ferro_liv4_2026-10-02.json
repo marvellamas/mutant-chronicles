@@ -11,7 +11,7 @@
     "equipaggiamento": "Armamenti 0.52",
     "formato_nemici": "Giocatore 0.45 (Google Doc del 01/10/2026); E&L del 02/10/2026, decisioni 5–9 (A.73)",
     "incantesimi": "Magia 1.3 (Google Doc del 01/10/2026, 21:50 UTC)",
-    "regole": "Giocatore 0.45; Magia 1.3; Equipaggiamento 0.1; E&L del 03/10/2026",
+    "regole": "Giocatore 0.45 (Google Doc del 03/10/2026, 19:16 UTC); Magia 1.3; Equipaggiamento 0.1; E&L del 03/10/2026",
     "specializzazioni": "Giocatore 0.43",
     "talenti_liberi": "Giocatore 0.43; Magia 1.1 + Google Doc del 27/09/2026",
     "tecniche_interiori": "Giocatore 0.45"
@@ -41,7 +41,8 @@
       "Tecnologia": 1,
       "Scienza": 1,
       "Furtività": 1,
-      "Atletica": 2
+      "Atletica": 3,
+      "Cultura": 1
     },
     "incantesimi": [],
     "puntiEroe": {
@@ -346,7 +347,8 @@
       "puntiAbilita": {
         "Percezione": 1,
         "Furtività": 1,
-        "Atletica": 3
+        "Atletica": 3,
+        "Cultura": 2
       }
     }
   ],

@@ -12,10 +12,10 @@ export const MISHIMA_AGENTE = {
   puntiCaratteristica: { FOR: 1, COS: 2, DES: 1, SAG: 1 },
   addestramento: 'Avventuriero',
   classe: 'Agente',
-  // §2.13 del Giocatore del 29/09: esempio dell'Agente (Percezione 2, Tecnologia 2, Cultura 2, Raggirare 4),
-  // ridotto ai 5 punti della correzione di Davide del 03/10/2026 (E&L): Percezione 2, Raggirare 3
+  // §2.13 del Giocatore del 03/10/2026 sera (7 punti per Grado, confermati da Davide il 04/10, A.90):
+  // Percezione 2, Tecnologia 1, Cultura 1, Raggirare 3
   puntiAbilitaLiberi: {
-    'Percezione': 2, 'Raggirare': 3,
+    'Percezione': 2, 'Tecnologia': 1, 'Cultura': 1, 'Raggirare': 3,
   },
   puntiEroe: tiro(5),
 };
@@ -29,8 +29,8 @@ export const ARCANISTA = {
   puntiCaratteristica: { INT: 2, SAG: 1, COS: 2 },
   addestramento: 'Taumaturgo',
   classe: 'Arcanista',
-  // limiti del I Grado (§2.13 del 29/09): ogni punto aumenta il VA personale
-  puntiAbilitaLiberi: { 'Potere': 2, 'Rituali': 2, 'Cultura': 1 },
+  // limiti del I Grado (§2.13 del 29/09): ogni punto aumenta il VA personale; 7 punti per Grado (A.90)
+  puntiAbilitaLiberi: { 'Potere': 2, 'Rituali': 2, 'Cultura': 1, 'Difese': 2 },
   puntiEroe: tiro(6),
   incantesimi: ['Colpo Elementale', 'Controllo Elementale', 'Muro Elementale', 'Ampliare Sensi', 'Barriera Mentale',
     'Biomanipolazione', 'Cura Ferite', 'Cura Malattie', 'Cura Avvelenamenti', 'Dardo Psichico', 'Scudo',
@@ -47,34 +47,34 @@ export const LIVELLI_AGENTE = [
   {
     livello: 4, grado: { classe: 'Agente' }, tiroPV: tiro(4), talentoClasse: 'Reazione Operativa',
     // limiti del VA personale del Grado II (§8.3 del 29/09): ogni punto aumenta il VA
-    puntiAbilita: { 'Medicina': 1, 'Sopravvivenza': 2, 'Atletica': 2 },
+    puntiAbilita: { 'Medicina': 1, 'Sopravvivenza': 2, 'Atletica': 2, 'Cultura': 1, 'Raggirare': 1 },
   },
   { livello: 5, talentoLibero: { id: 'prova-salvezza-migliorata', parametro: 'tempra' } },
   { livello: 6, caratteristiche: { DES: 1, COS: 1 } }, // DES 10; il secondo punto va altrove
   { livello: 7, talentoLibero: { id: 'buona-costituzione' } },
   {
     livello: 8, grado: { classe: 'Agente' }, tiroPV: tiro(3, 'app'),
-    puntiAbilita: { 'Sopravvivenza': 1, 'Atletica': 2, 'Pilotare': 2 },
+    puntiAbilita: { 'Sopravvivenza': 1, 'Atletica': 2, 'Pilotare': 2, 'Medicina': 1, 'Tecnologia': 1 },
   },
   { livello: 9, talentoLibero: { id: 'sempre-allerta' } },
   { livello: 10, caratteristiche: { SAG: 2 } },
   { livello: 11, talentoLibero: { id: 'specializzazione-spionaggio' } },
   {
     livello: 12, grado: { classe: 'Agente' }, tiroPV: tiro(5), talentoClasse: 'Analisi Rapida',
-    puntiAbilita: { 'Pilotare': 2, 'Tecnologia': 2, 'Difese': 1 },
+    puntiAbilita: { 'Pilotare': 2, 'Tecnologia': 2, 'Difese': 1, 'Medicina': 1, 'Atletica': 1 },
   },
   { livello: 13, talentoLibero: { id: 'schivata-istintiva' } },
   { livello: 14, caratteristiche: { SAG: 1, INT: 1 } },
   { livello: 15, talentoLibero: { id: 'schivata-multipla' } },
   {
     livello: 16, grado: { classe: 'Agente' }, tiroPV: tiro(6),
-    puntiAbilita: { 'Atletica': 2, 'Pilotare': 2, 'Difese': 1 },
+    puntiAbilita: { 'Atletica': 2, 'Pilotare': 2, 'Difese': 1, 'Medicina': 1, 'Sopravvivenza': 1 },
   },
   { livello: 17, talentoLibero: { id: 'prova-salvezza-migliorata', parametro: 'tempra' } },
   { livello: 18, caratteristiche: { FOR: 2 } },
   { livello: 19, talentoLibero: { id: 'duro-a-morire' } },
   {
     livello: 20, grado: { classe: 'Agente' }, tiroPV: tiro(2), talentoClasse: 'Doppia Identità',
-    puntiAbilita: { 'Tecnologia': 2, 'Difese': 1, 'Armi medie': 2 },
+    puntiAbilita: { 'Tecnologia': 2, 'Difese': 1, 'Armi medie': 2, 'Medicina': 1, 'Sopravvivenza': 1 },
   },
 ];

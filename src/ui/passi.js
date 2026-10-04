@@ -312,6 +312,10 @@ function passoClasse(ctx) {
         h('header', {}, h('h3', {}, c.nome), bottoneScelta(sel, () => ctx.aggiorna({ classe: c.nome, parametriTalenti: {} }))),
         h('p', { class: 'identita' }, c.specializzazioni.join(' / ')),
         h('p', {}, h('strong', {}, 'Abilità di Classe: '), elencoInfo('abilita', c.abilita)),
+        // §2.3: le categorie che distinguono le Classi si vedono senza aprire il riquadro (04/10/2026: Davide non
+        // vedeva il profilo nuovo dell'Incursore, che stava solo nel riquadro chiuso)
+        ['S', 'P'].map((cat) => h('p', { class: 'competenze-in-vista' },
+          h('strong', {}, `${dati.regole.competenze.categorie[cat]?.nome ?? cat}: `), elencoInfo('abilita', c.competenze?.[cat] ?? []))),
         dettagli(ctx, `comp:${c.nome}`, 'Competenze: basi e limiti delle 24 Abilità', competenzeClasse(ctx, c)),
         h('dl', { class: 'voci in-linea' },
           h('div', {}, h('dt', {}, 'PV/Grado'), h('dd', {}, dadi(c.pv_per_grado),

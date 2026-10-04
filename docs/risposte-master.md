@@ -720,7 +720,8 @@ nuovi quesiti dell’app e punti Abilità liberi» (testo in `docs/risposte-mast
     Direttore stabilisce che esiste una possibilità concreta di reperimento (per gli Artefatti un’offerta o una
     commissione); un successo non obbliga a vendere né toglie prezzo, autorizzazioni o tempi. Batterie Matrice colorate
     Epiche, Bianche Leggendarie. → `equipaggiamento/index.json` → `reperibilita.EP` (TODO tolto).
-90. **5 Punti Abilità Liberi a ogni Grado, compreso il primo** («Correzione aggiuntiva»). Sostituisce i 10 del §2.13 e
+90. **5 Punti Abilità Liberi a ogni Grado, compreso il primo** («Correzione aggiuntiva»). *Superata dalla decisione 92
+    (7 punti, 04/10/2026).* Sostituisce i 10 del §2.13 e
     del §8.3 (Doc del 27/09, per-davide A.52): 5 alla creazione e ai livelli 4, 8, 12, 16 e 20. → `regole.json` →
     `creazione.punti_abilita_liberi: 5`, `avanzamento.eventi` → `punti_abilita:5`. I personaggi salvati con 10 per
     Grado hanno punti in eccesso: la scheda resta utilizzabile, l’avviso «Con la nuova regola di Davide hai X punti
@@ -743,6 +744,22 @@ nuovi quesiti dell’app e punti Abilità liberi» (testo in `docs/risposte-mast
     combattimento cala di 2 a ogni grado (9/11/13 → 7/9/11) e i «Round per abbattere un PG» della taratura salgono
     (9 → 11,6; 8,9 → 11,2; 6,6 → 8). Esempi e bestiario umano rigenerati, `docs/bestiario/bestiario.md` e `.html`
     aggiornati.
+
+## 4 ottobre 2026 — 7 Punti Abilità Liberi (Davide a Marcello, risposta alla A.90)
+
+Messaggio di Davide a Marcello del 04/10/2026, in risposta alla A.90 («Punti Abilità Liberi: 5 o 7?»): «non vedo le
+modifiche che ho fatto ieri, quelle delle abilità (7 punti invece che 5) e della modifica dell'incursore».
+
+92. **7 Punti Abilità Liberi a ogni Grado, compreso il primo** (A.90; fonte: Davide a Marcello, 04/10/2026). Vale il
+    Manuale del Giocatore del 03/10/2026 sera (§2.0 passo 5, §2.13, §2.18, §8.1, §8.3, §8.7): 7 alla creazione e ai
+    livelli 4, 8, 12, 16 e 20. L'E&L del 03/10 con 5 punti (decisione 90) e il Manuale dei Mostri §5.2 sono superati.
+    → `regole.json` → `creazione.punti_abilita_liberi: 7`, `avanzamento.eventi` → `punti_abilita:7`. Personaggi
+    salvati: chi ha 5 punti per Grado ha 2 punti da assegnare per evento, con l'avviso «Con la regola aggiornata di
+    Davide hai X punti Abilità liberi ancora da assegnare» (`regole.json` → `regole_aggiornate.mancanti`) e
+    «Assegna»; chi ne ha 10 ha 3 punti in eccesso per evento, con l'avviso e «Togli» già esistenti (testo
+    `regole_aggiornate.eccesso`, ora «Con la regola aggiornata di Davide…»). Nessun punto si toglie o si aggiunge da
+    solo. L'esempio del Mishima Agente del §2.13 torna quello del manuale (Percezione 2, Tecnologia 1, Cultura 1,
+    Raggirare 3): i test lo usano. PG d'esempio e bestiario umano rigenerati con 7 punti.
 
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 

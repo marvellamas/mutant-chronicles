@@ -831,8 +831,8 @@ export function motivoCompletamento(completamenti) {
 }
 
 // ---------------------------------------------------------------------------
-// Punti Abilità Liberi in eccesso (correzione di Davide del 03/10/2026, E&L: 5 punti a ogni Grado, compreso
-// il primo, anziché 10). Un evento già registrato con più punti liberi di quelli previsti dalle regole
+// Punti Abilità Liberi in eccesso (7 a ogni Grado, compreso il primo: Giocatore del 03/10/2026 sera, confermato
+// da Davide il 04/10, A.90; prima 10, poi 5). Un evento già registrato con più punti liberi di quelli previsti dalle regole
 // correnti resta valido e la scheda utilizzabile, ma il giocatore deve togliere i punti in più: un evento
 // alla volta, dal più vecchio, scegliendo da quali Abilità dei punti liberi di quell'evento.
 
@@ -1189,7 +1189,7 @@ function schedaARiposo(personaggio, dati) {
     // regole aggiornate: punti liberi da completare (bloccano solo l'avanzamento) e in eccesso (avviso)
     completamenti,
     eccessi,
-    // punti liberi in eccesso (5 per Grado, E&L del 03/10/2026): avviso col testo, la scheda resta utilizzabile
+    // punti liberi in eccesso (7 per Grado dal 04/10/2026, A.90): avviso col testo, la scheda resta utilizzabile
     avvisoPunti: avvisoPuntiEccesso(eccessi, dati),
     completa: errori.length === 0,
   };

@@ -73,6 +73,8 @@ export function frasiEffetti() {
   // Magia §26.3–26.5: Batterie Matrice, Cristalli Matrice, Schegge instabili
   for (const k of ['matrice', 'cristalli_matrice', 'schegge']) visita(leggi('data/regole.json').chroma?.[k] ?? {}, `regole:chroma.${k}`);
   for (const g of ['tipi', 'alimentazioni']) for (const [k, x] of Object.entries(RIS[g] ?? {})) if (x.testo) out.push({ dove: `regole:chroma.riserve.${g}.${k}`, frase: x.testo });
+  // Giocatore §2.13, §8.3 (03/10/2026 sera, A.90): i 7 Punti Abilità Liberi per Grado
+  visita(leggi('data/regole.json').creazione ?? {}, 'regole:creazione');
   visita(leggi('data/regole.json').lancio ?? {}, 'regole:lancio');
   visita(leggi('data/regole.json').rituali ?? {}, 'regole:rituali');
   visita(leggi('data/regole.json').danno_applicato ?? {}, 'regole:danno_applicato');

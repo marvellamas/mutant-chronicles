@@ -15,7 +15,7 @@ const LOTTATORE = {
   ...nuoveScelte(), nome: 'Brutus', corporazione: 'Bauhaus', puntiCaratteristica: { FOR: 2, COS: 1, DES: 2 },
   addestramento: 'Combattente', classe: 'Lottatore', puntiEroe: tiro(5),
   // §2.13 del 29/09: ogni punto aumenta il VA personale entro i limiti del I Grado
-  puntiAbilitaLiberi: { 'Corpo a corpo': 2, 'Percezione': 2, 'Medicina': 1 }, // 5 punti per Grado, E&L del 03/10/2026
+  puntiAbilitaLiberi: { 'Corpo a corpo': 2, 'Percezione': 2, 'Medicina': 1, 'Sopravvivenza': 2 }, // 7 punti per Grado (A.90)
 };
 const con = (disciplina) => ({ ...LOTTATORE, parametriTalenti: { [N]: disciplina } });
 const scheda = (creazione, livelli = []) => calcolaScheda({ creazione, livelli }, dati);
@@ -73,7 +73,7 @@ test('la Disciplina non si cambia dopo la conferma: un livello successivo non pu
   const p = { creazione: con('potenza'), livelli };
   assert.equal(scheda(p.creazione, livelli).errori.length, 0);
   const aScelta = lottatore.talenti_a_scelta.find((t) => !t.requisito && !/Tecniche Interiori Supplementari|Risorse Interiori/.test(t.nome)).nome;
-  const voce = { grado: { classe: 'Lottatore' }, tiroPV: tiro(4), talentoClasse: aScelta, puntiAbilita: { 'Armi da guerra': 3, 'Armi leggere': 2 }, // 5 punti per Grado, E&L del 03/10/2026
+  const voce = { grado: { classe: 'Lottatore' }, tiroPV: tiro(4), talentoClasse: aScelta, puntiAbilita: { 'Armi da guerra': 3, 'Armi leggere': 2, 'Tecnologia': 2 }, // 7 punti per Grado (A.90)
   };
   const cambio = validaLivello(p, { ...voce, parametriTalenti: { [N]: 'rapidita' } }, dati);
   assert.ok(cambio.some((e) => e.tipo === 'violazione' && /una sola volta/.test(e.problema)), JSON.stringify(cambio));

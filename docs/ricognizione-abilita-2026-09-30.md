@@ -74,6 +74,8 @@ Le Generiche sono le 12 Abilità restanti. In ogni Classe le cinque Abilità di 
 | Mistico | Taumaturgo | Potere, Medicina | Difese, Artefatti, Occultismo, Rituali, Percezione, Oratoria | Armi medie, Armi pesanti, Armi da guerra, Tecnologia | Medicina (S), Occultismo (P), Percezione (P), Potere (S), Rituali (P) |
 | Tecnomante | Taumaturgo | Artefatti, Tecnologia | Armi leggere, Difese, Potere, Rituali, Percezione, Scienza | Armi da lancio, Armi pesanti, Armi da guerra, Sopravvivenza | Artefatti (S), Potere (P), Rituali (P), Scienza (P), Tecnologia (S) |
 
+*Nota del 04/10/2026:* il profilo dell'Incursore in questa tabella è quello del 29/09. Dal Giocatore del 03/10 sera (§3.7) *Armi da guerra* è Professionale e *Armi da mischia* Generica (`data/classi.json`, `docs/risposte-master.md`, decisione 91).
+
 ### 1.4 Limite del VA personale per Grado (§8.3) e nel multiclasse (§8.7)
 
 | Grado | S | P | G | N |

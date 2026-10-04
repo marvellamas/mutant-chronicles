@@ -206,7 +206,8 @@ function avvisoRegoleAggiornate(ctx, scheda, { eccesso = true } = {}) {
   const r = da.reduce((s, c) => s + Object.values(c.inattivi ?? {}).reduce((t, v) => t + v, 0), 0);
   const dove = (c, k) => `${k} ${c.livello === 1 ? 'della creazione' : `${conOrdinale('del', c.livello)} livello`}`;
   const assegna = da.length ? h('div', { class: 'riquadro attenzione avviso-regole', role: 'status' },
-    h('p', {}, h('strong', {}, `${ctx.avvisoRegole}: hai ${n} Punti Abilità da assegnare`),
+    // testo di regole.json → regole_aggiornate.mancanti (A.90, 7 punti per Grado dal 04/10/2026)
+    h('p', {}, h('strong', {}, ctx.avvisoMancanti ? ctx.avvisoMancanti.replaceAll('{n}', String(n)) : `${ctx.avvisoRegole}: hai ${n} Punti Abilità da assegnare`),
       ` (${da.map((c) => dove(c, c.mancanti)).join(', ')}). `,
       r ? `${r === n ? 'Sono' : `${r} sono`} punti già spesi che non aumentano più il VA personale (limiti delle categorie di competenza, §8.3): si riassegnano, gli altri restano. ` : null,
       h('button', { type: 'button', class: 'btn primario', onclick: ctx.azioni.completaPunti }, 'Assegna'))) : null;

@@ -18,7 +18,7 @@
     "totale": 2,
     "magica": 0
   },
-  "difese": 12,
+  "difese": 14,
   "iniziativa": -1,
   "movimento": {
     "passo": 6,
@@ -78,7 +78,7 @@
     },
     {
       "nome": "Difese",
-      "va": 12
+      "va": 14
     },
     {
       "nome": "Potere",

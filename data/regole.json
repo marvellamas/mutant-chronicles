@@ -1,15 +1,21 @@
 {
-  "versione_manuale": "Giocatore 0.45; Magia 1.3; Equipaggiamento 0.1; E&L del 03/10/2026",
+  "versione_manuale": "Giocatore 0.45 (Google Doc del 03/10/2026, 19:16 UTC); Magia 1.3; Equipaggiamento 0.1; E&L del 03/10/2026",
   "fonte": "Giocatore §1.2.3, §2.1, §2.3, §2.10, §2.12–2.15, §3.3, §1.8.3, §5.2.6, §5.5, §5.9, §5.14, §5.18, §5.19, cap. 8; Magia sezioni 1 e 11; Equipaggiamento §1.6, §1.7; docs/risposte-master.md",
   "creazione": {
     "punti_caratteristica": 5,
     "massimo_caratteristica": 7,
-    "punti_abilita_liberi": 5,
+    "punti_abilita_liberi": 7,
     "va_minimo_per_punti_liberi": 1,
     "bonus_classe_per_grado": 1,
     "dado_pv_massimizzato": true,
     "dado_pm_massimizzato": true,
-    "_nota": "§2.1: 5 punti, nessuna Caratteristica oltre 7 alla creazione, i valori iniziali non si riducono. Punti Abilità Liberi: 5 alla creazione e a ogni Grado successivo (correzione di Davide del 03/10/2026, E&L, «5 punti Abilità liberi a ogni Grado, compreso il primo»: sostituisce i 10 del §2.13 e del §8.3; avanzamento.eventi → punti_abilita:5). §2.13 (Giocatore del 29/09): ogni punto libero deve aumentare il VA personale, entro il limite della categoria di competenza al I Grado (regole.json → competenze); l'Abilità deve avere VA almeno 1 prima dei punti liberi (i punti di Classe si assegnano prima, §3.1). Al 1° livello sono massimizzati il dado dei PV e quello dei PM: il §2.12 e il §3.3 indicano solo i PV, il master ha corretto (docs/risposte-master.md, decisione 6). Dal Grado successivo i dadi si tirano."
+    "frasi": [
+      "Alla creazione distribuisci 7 Punti Abilità Liberi.",
+      "I 7 punti liberi sono assegnati a Percezione (2), Tecnologia (1), Cultura (1) e Raggirare (3).",
+      "I 7 punti della creazione costituiscono l’assegnazione del 1° livello. Altri 7 Punti Abilità Liberi vengono assegnati ai livelli 4, 8, 12, 16 e 20, secondo il Capitolo 8; non si aggiunge un secondo gruppo di punti al 1° livello.",
+      "Si distribuiscono 7 Punti Abilità Liberi ai livelli 1, 4, 8, 12, 16 e 20."
+    ],
+    "_nota": "§2.1: 5 punti, nessuna Caratteristica oltre 7 alla creazione, i valori iniziali non si riducono. Punti Abilità Liberi: 7 alla creazione e a ogni Grado successivo (Giocatore del 03/10/2026 sera, §2.0 passo 5, §2.13, §2.18, §8.1, §8.3, §8.7; confermato da Davide a Marcello il 04/10/2026, per-davide A.90: supera i 5 dell’E&L del 03/10 e i 10 di prima; avanzamento.eventi → punti_abilita:7). §2.13 (Giocatore del 29/09): ogni punto libero deve aumentare il VA personale, entro il limite della categoria di competenza al I Grado (regole.json → competenze); l'Abilità deve avere VA almeno 1 prima dei punti liberi (i punti di Classe si assegnano prima, §3.1). Al 1° livello sono massimizzati il dado dei PV e quello dei PM: il §2.12 e il §3.3 indicano solo i PV, il master ha corretto (docs/risposte-master.md, decisione 6). Dal Grado successivo i dadi si tirano."
   },
   "salvezze": {
     "base": 8,
@@ -186,9 +192,10 @@
     "_nota": "Tab Poteri della scheda digitale (docs/layout-sd.md, pezzo 4): testo per chi non ha poteri, dal Manuale della Magia sez. 1 («Conoscenza e livello massimo», «Usufruitore di Magia»), e le sezioni future, chiuse e vuote finché il manuale non c’è."
   },
   "regole_aggiornate": {
-    "punti_abilita": "Regole aggiornate (Giocatore del 29/09; E&L del 03/10)",
-    "eccesso": "Con la nuova regola di Davide hai {n} punti Abilità liberi in più del consentito: togline {n}",
-    "_nota": "«punti_abilita»: titolo dell'avviso in cima alla SD quando un evento già registrato (creazione o livello) ha meno Punti Abilità Liberi di quelli previsti dalle regole correnti o punti che non aumentano più il VA personale: Giocatore, Doc del 27/09/2026 (per-davide A.52) e Doc del 29/09/2026 (categorie di competenza e limiti del VA personale, §2.13, §8.3). «eccesso»: avviso dei punti liberi oltre quelli previsti ({n} = punti in più in tutti gli eventi), in testa alla SD, nella tab Abilità, nella stampa e all'import; correzione di Davide del 03/10/2026 (E&L): 5 punti a ogni Grado, compreso il primo, anziché 10. Se le regole cambiano ancora, si aggiornano qui i testi."
+    "punti_abilita": "Regole aggiornate (Giocatore del 29/09 e del 03/10)",
+    "eccesso": "Con la regola aggiornata di Davide hai {n} punti Abilità liberi in più del consentito: togline {n}",
+    "mancanti": "Con la regola aggiornata di Davide hai {n} punti Abilità liberi ancora da assegnare",
+    "_nota": "«punti_abilita»: titolo dell'avviso in cima alla SD quando un evento già registrato (creazione o livello) ha meno Punti Abilità Liberi di quelli previsti dalle regole correnti o punti che non aumentano più il VA personale: Giocatore, Doc del 27/09/2026 (per-davide A.52) e Doc del 29/09/2026 (categorie di competenza e limiti del VA personale, §2.13, §8.3). «eccesso»: avviso dei punti liberi oltre quelli previsti ({n} = punti in più in tutti gli eventi), in testa alla SD, nella tab Abilità, nella stampa e all'import; Giocatore del 03/10/2026 sera, confermato da Davide il 04/10 (A.90): 7 punti a ogni Grado, compreso il primo (prima 10, poi 5 per l’E&L del 03/10). «mancanti»: avviso dei punti liberi ancora da assegnare ({n}), con «Assegna»: chi ha 5 punti per Grado ne ha 2 da assegnare per evento. Se le regole cambiano ancora, si aggiornano qui i testi."
   },
   "competenze": {
     "paragrafo": "Giocatore §§1.2.1, 2.3, 2.12, 2.13, 4.2, 8.3, 8.7 (Doc del 29/09/2026, 23:45)",
@@ -310,7 +317,7 @@
         "livello": 4,
         "eventi": [
           "grado_classe",
-          "punti_abilita:5"
+          "punti_abilita:7"
         ]
       },
       {
@@ -335,7 +342,7 @@
         "livello": 8,
         "eventi": [
           "grado_classe",
-          "punti_abilita:5"
+          "punti_abilita:7"
         ]
       },
       {
@@ -361,7 +368,7 @@
         "livello": 12,
         "eventi": [
           "grado_classe",
-          "punti_abilita:5",
+          "punti_abilita:7",
           "azione_principale:+1"
         ]
       },
@@ -387,7 +394,7 @@
         "livello": 16,
         "eventi": [
           "grado_classe",
-          "punti_abilita:5"
+          "punti_abilita:7"
         ]
       },
       {
@@ -413,7 +420,7 @@
         "livello": 20,
         "eventi": [
           "grado_classe",
-          "punti_abilita:5"
+          "punti_abilita:7"
         ]
       }
     ],
