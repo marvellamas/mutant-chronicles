@@ -913,7 +913,8 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   const conInnesto = (o) => !o.def?.richiede_innesto || innesti.has(o.def.richiede_innesto);
   const candidati = [];
   for (const o of oggetti.filter((x) => x.attivo && x.effetti.length && modificaOperativa(x) && conInnesto(x))) {
-    for (const e of o.effetti) candidati.push({ o, e });
+    // un effetto può richiedere un innesto (SIN con l'Interfaccia neurale, Equipaggiamento §7.3: «Un oggetto privo di SIN non riceve il bonus»)
+    for (const e of o.effetti) if (!e.richiede_innesto || innesti.has(e.richiede_innesto)) candidati.push({ o, e });
   }
   // A.61 (E&L del 02/10): armatura Capolavoro del Corazzaio, +1 alla Contromisura scelta (assente: 1; X: X + 1),
   // come copia dello stesso beneficio, quindi vale la maggiore; non tocca l'AR

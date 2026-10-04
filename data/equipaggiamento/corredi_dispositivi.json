@@ -1855,7 +1855,18 @@
         "descrizione": "NEC Rosso di formato dedicato (APE Capitol): ricarica 6 ore, ricambio 2000 cr, sostituzione 1 minuto",
         "autonomia_ore": 6,
         "paragrafo": "§7.13.6; E&L del 02/10/2026, decisione 18"
-      }
+      },
+      "effetti": [
+        {
+          "abilita": "Pilotare",
+          "valore": -1,
+          "ambito": "uso_specifico",
+          "uso": "Schivare con l’APE",
+          "se": "per Schivare con l’APE",
+          "condizione": "Schivare usa Pilotare −1 VA.",
+          "fonte": "Armamenti §7.13.6"
+        }
+      ]
     },
     {
       "id": "iron-mastiff",
@@ -2443,7 +2454,19 @@
         "unita_usi": "cariche (Blink 1, Power Blink 2)",
         "lx_per_uso": 50,
         "paragrafo": "§7.15.4; E&L del 02/10/2026, decisione 20"
-      }
+      },
+      "effetti": [
+        {
+          "abilita": "Pilotare",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "Power Blink",
+          "se": "Power Blink, con l’Interfaccia neurale",
+          "richiede_innesto": "interfaccia_neurale",
+          "condizione": "SIN 2 concede +2 VA alle Prove di Pilotare del dispositivo, compensando la penalità di Power Blink; non aumenta il Blink ordinario, che è automatico.",
+          "fonte": "Armamenti §7.15.4; Equipaggiamento §7.3"
+        }
+      ]
     },
     {
       "id": "ias3200-imbracatura-antigravita",
@@ -2472,7 +2495,27 @@
         "unita_usi": "Round di volo",
         "lx_per_uso": 50,
         "paragrafo": "§7.15.4; E&L del 02/10/2026, decisione 20"
-      }
+      },
+      "effetti": [
+        {
+          "abilita": "Pilotare",
+          "valore": -2,
+          "ambito": "uso_specifico",
+          "uso": "volo in Corsa",
+          "se": "in volo, in Corsa",
+          "condizione": "Pilotare sostituisce Atletica: automatico al Passo in condizioni ordinarie, −2 VA in Corsa, −4 VA in Scatto.",
+          "fonte": "Armamenti §7.15.4"
+        },
+        {
+          "abilita": "Pilotare",
+          "valore": -4,
+          "ambito": "uso_specifico",
+          "uso": "volo in Scatto",
+          "se": "in volo, in Scatto",
+          "condizione": "Pilotare sostituisce Atletica: automatico al Passo in condizioni ordinarie, −2 VA in Corsa, −4 VA in Scatto.",
+          "fonte": "Armamenti §7.15.4"
+        }
+      ]
     },
     {
       "id": "ias3300-mirrorshard",

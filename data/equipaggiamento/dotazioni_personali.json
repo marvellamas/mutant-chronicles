@@ -359,7 +359,18 @@
       "peso": 0.2,
       "reperibilita": "CO",
       "costo": 50,
-      "proprieta": []
+      "proprieta": [],
+      "effetti": [
+        {
+          "abilita": "Tecnologia",
+          "valore": -2,
+          "ambito": "uso_specifico",
+          "uso": "lavori specialistici",
+          "se": "come strumento Improvvisato",
+          "condizione": "Per lavori specialistici l’utensile multiuso vale come strumento Improvvisato (−2 VA) solo se concretamente adeguato.",
+          "fonte": "Equipaggiamento §2.5"
+        }
+      ]
     }
   ]
 }

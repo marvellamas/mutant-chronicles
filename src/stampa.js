@@ -171,7 +171,8 @@ function effettoSpecializzazione(e) {
  * accesi o no). { valore, se, oggetto } in ordine di valore.
  */
 export function condizionaliAbilita(scheda, nome) {
-  const ogg = (scheda.equipaggiamento?.effettiOggetti ?? []).filter((e) => e.ambito === 'situazionale' && (e.tipo ?? 'va') === 'va' && e.abilita === nome)
+  // situazionali e, se hanno la forma breve «se», d'uso specifico (Utensile multiuso, APE Capitol, moduli IAS)
+  const ogg = (scheda.equipaggiamento?.effettiOggetti ?? []).filter((e) => (e.ambito === 'situazionale' || (e.ambito === 'uso_specifico' && e.se)) && (e.tipo ?? 'va') === 'va' && e.abilita === nome)
     .map((e) => ({ valore: e.valore, se: e.se ?? null, oggetto: e.oggetto }));
   const tal = (scheda.effettiTalenti ?? []).filter((e) => e.ambito === 'situazionale' && (e.tipo ?? 'va') === 'va' && e.abilita === nome)
     .map((e) => ({ valore: e.valore, se: e.se ?? null, oggetto: e.talento }));

@@ -120,7 +120,7 @@ export function effettiSituazionaliAttacco(scheda, tipo, { senzArmi = false } = 
   const vale = (a) => a === 'tutti' || a === tipo || (senzArmi && a === 'senz_armi');
   const perUid = new Map();
   for (const e of scheda?.equipaggiamento?.effettiOggetti ?? []) {
-    if (e.ambito !== 'situazionale' || !['attacco', 'danno'].includes(e.tipo) || !vale(e.attacchi)) continue;
+    if (e.ambito !== 'situazionale' || !['attacco', 'danno'].includes(e.tipo) || !vale(e.attacchi) || e.manovra) continue;
     const x = perUid.get(e.uid) ?? perUid.set(e.uid, { uid: e.uid, oggetto: e.oggetto, se: e.se ?? null, condizione: e.condizione ?? null, attacco: 0, danno: 0 }).get(e.uid);
     x[e.tipo] += e.valore;
   }
@@ -1088,6 +1088,10 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
     promemoria.push(...arma.tecnica.e.onda.frasi.slice(0, 3));
   }
   if (d.circostanza) aggiungi(situazione, 'Circostanza del Direttore', d.circostanza, 'situazione', 'Giocatore §1.4');
+  // effetti dell'arma per una Manovra (Martello Spaccateste, «Stordire +1», Armamenti §7.1.9): da sé, senza casella
+  for (const e of (personaggio.scheda?.equipaggiamento?.effettiOggetti ?? []).filter((x) => x.tipo === 'attacco' && x.manovra === id && x.uid === arma.uid)) {
+    aggiungi(situazione, `${e.oggetto} (${e.proprieta ?? e.se ?? m.nome})`, e.valore, 'oggetto', e.fonte ?? null);
+  }
   // effetti situazionali degli oggetti con la casella accesa (Braccio potenziato: +1 danno con quell'arto, §7.5)
   const sit = situazionaliAccesi(personaggio, 'ravvicinati', d, arma);
   situazione.push(...sit.voci);

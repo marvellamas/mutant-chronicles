@@ -107,14 +107,14 @@ test('PG salvato prima della correzione (Nadia Ferro d’esempio): gli impianti 
   assert.ok(st.condizionali.some((c) => c.se === 'con la vista'));
 });
 
-test('validatore: «se» breve e solo situazionale; «attivabile» solo per gli impianti', () => {
+test('validatore: «se» breve e solo per situazionali e usi specifici; «attivabile» solo per gli impianti', () => {
   const d = copia(dati);
   const imp = d.equipaggiamento.file.impianti.oggetti;
   imp.find((o) => o.id === 'potenziamento-visivo').effetti[0].se = 'x'.repeat(41);
-  imp.find((o) => o.id === 'filtro-ematico').effetti[0].se = 'contro i veleni';
+  imp.find((o) => o.id === 'rinforzo-sottocutaneo').effetti[0].se = 'sempre';
   d.equipaggiamento.file.armi.oggetti[0].attivabile = { tipo: 'promemoria', azione: '1 AzP', frasi: ['x'] };
   const e = validaDati(d).map((x) => `${x.chiave}: ${x.problema}`).join('\n');
   assert.match(e, /\(Potenziamento visivo\)\.effetti\[0\]\.se/);
-  assert.match(e, /\(Filtro ematico\)\.effetti\[0\]\.se/);
+  assert.match(e, /\(Rinforzo sottocutaneo\)\.effetti\[0\]\.se/);
   assert.match(e, /\.attivabile: solo per gli impianti/);
 });

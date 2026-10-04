@@ -193,9 +193,4 @@ Segnalazione di Marcello: il Potenziamento visivo CYBERTRONIC non mostrava il +2
 - Iniettori e Processore attivabili nella tab Cibernetica.
 - A.106 (penalità per scarsa illuminazione).
 
-Restano, dalla verifica sulle altre categorie (solo elenco):
-- Martello Spaccateste (Stordire +1);
-- IAS3200 (Pilotare −2/−4);
-- IAS3100 (SIN 2 a Pilotare);
-- APE Capitol (Schivare con Pilotare −1);
-- Utensile multiuso (Improvvisato −2).
+I cinque bonus rimasti dalla verifica sulle altre categorie sono nei dati dal 5 ottobre 2026 (`tools/lotti/lotto_bonus_equipaggiamento.mjs`): Martello Spaccateste, IAS3200, IAS3100, APE Capitol, Utensile multiuso.

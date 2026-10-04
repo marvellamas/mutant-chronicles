@@ -298,9 +298,13 @@ function foglioIdentita(d) {
 // Foglio 2 — Abilità: la tabella occupa tutta l'altezza a sinistra; a destra i Talenti (prima
 // frase) e le Annotazioni come riempitivo. Specializzazioni e Tecniche stanno nel foglio 3.
 
-/** Legenda dei bonus condizionali del foglio 2: «Percezione +2 se con la vista (Potenziamento visivo)». */
+/**
+ * Legenda dei bonus condizionali del foglio 2, una voce per Abilità: «Tecnologia +4 con il chip attivo, −2 come
+ * strumento Improvvisato». L'oggetto non si ripete: è nel foglio 4 e nel tooltip della scheda digitale.
+ */
 function condizionaliStampa(categorie) {
-  const voci = categorie.flatMap((c) => c.abilita).flatMap((a) => (a.condizionali ?? []).map((x) => `${a.nome} ${segno(x.valore)} se ${x.se ?? 'a condizione'} (${x.oggetto})`));
+  const voci = categorie.flatMap((c) => c.abilita).filter((a) => a.condizionali?.length)
+    .map((a) => `${a.nome} ${a.condizionali.map((x) => `${segno(x.valore)} ${x.se ?? 'a condizione'}`).join(', ')}`);
   return voci.length ? h('p', { class: 'piccolo cond-legenda' }, h('strong', {}, 'Bonus condizionali (in apice, fuori dal VA): '), `${voci.join('; ')}.`) : null;
 }
 
@@ -308,8 +312,9 @@ function foglioAbilita(d) {
   // due tabelle affiancate, metà delle categorie ciascuna, alte quanto la pagina
   const meta = Math.ceil(d.categorie.length / 2);
   const tabellaAbilita = (categorie) => h('table', { class: 'tabella-stampa numeri abilita-stampa' },
-    h('colgroup', {}, [null, '7mm', '8mm', '8mm', '10mm', '9.5mm', '9mm'].map((w) => h('col', w ? { style: `width: ${w}` } : {}))),
-    h('thead', {}, h('tr', {}, ['Abilità', 'Mod', 'Base', 'Corp', 'Avanz', 'Equip', 'VA'].map((c) => h('th', {}, c)))),
+    // colonne dei numeri strette (Av. e Eq. abbreviati, spiegati sotto), la VA larga per l'apice dei condizionali
+    h('colgroup', {}, [null, '7.5mm', '7.5mm', '7.5mm', '6.5mm', '6.5mm', '11mm'].map((w) => h('col', w ? { style: `width: ${w}` } : {}))),
+    h('thead', {}, h('tr', {}, ['Abilità', 'Mod', 'Base', 'Corp', 'Av.', 'Eq.', 'VA'].map((c) => h('th', {}, c)))),
     categorie.map((cat) => h('tbody', {},
       h('tr', { class: 'categoria' }, h('th', { colspan: 7 }, cat.nome)),
       cat.abilita.map((a) => h('tr', {},
@@ -324,7 +329,7 @@ function foglioAbilita(d) {
   return h('div', { class: 'f2-griglia' },
     box({ titolo: 'Abilità', tinta: 'accento', forte: true, classe: 'f2-abilita' },
       h('div', { class: 'abilita-affiancate' }, tabellaAbilita(d.categorie.slice(0, meta)), tabellaAbilita(d.categorie.slice(meta))),
-      h('p', { class: 'piccolo' }, '• Abilità di Classe. S / P / G / N: competenza (§2.3). VA = Mod + Base + Corp + Avanz, al massimo il limite (⚑: VA grezzo oltre il limite, §8.3), + Equip (equipaggiamento indossato).'),
+      h('p', { class: 'piccolo' }, '• Abilità di Classe. S / P / G / N: competenza (§2.3). VA = Mod + Base + Corp + Av. (Avanzamento), al massimo il limite (⚑: VA grezzo oltre il limite, §8.3), + Eq. (equipaggiamento indossato).'),
       // bonus condizionali accanto al VA (in apice): fuori dal valore, con la condizione
       condizionaliStampa(d.categorie),
       // punti liberi in eccesso (E&L del 03/10/2026): l'avviso resta sulla carta finché non si tolgono

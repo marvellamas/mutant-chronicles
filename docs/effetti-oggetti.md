@@ -11,7 +11,9 @@ Stato al 27 settembre 2026. Dati: campo `effetti` degli oggetti del catalogo (`d
 
 - `tipo` (facoltativo, predefinito `va`). Dal 27 settembre 2026 (elmetti §7.21, proprietà delle armature corporative §7.11–§7.17) lo schema ha anche i tipi della tabella qui sotto. Solo `va` ha `abilita`.
 - `beneficio` (facoltativo): chiave di un beneficio che **non si somma** con le sue copie (Armamenti §7.21.1: «copie dello stesso beneficio non si sommano»). Fra gli effetti attivi con la stessa chiave vale il maggiore, gli altri non contano. Esempio: Filtro respiratorio 2 di un'armatura e Maschera filtrante dell'elmetto: +2, non +4.
-- `se` (facoltativo, solo situazionale, al più 40 caratteri): forma breve della condizione per la nota «+2 se con la vista» accanto al valore (tab Abilità, Difese in Combattimento, «Attacca!», foglio 2 della SS); la frase intera resta in `condizione` (censimento degli impianti del 04/10/2026, `docs/censimento-impianti.md`).
+- `manovra` (facoltativo, solo `attacco` situazionale): id di una Manovra ravvicinata (`regole.json` → `attacco_ravvicinato.manovre`); l'effetto vale da sé in «Attacca!» con quell'arma e quella Manovra, senza casella (Martello Spaccateste, «Stordire +1», Armamenti §7.1.9).
+- `richiede_innesto` (facoltativo): l'effetto vale solo con quell'innesto installato (SIN 2 dell'IAS3100 con l'Interfaccia neurale, Equipaggiamento §7.3).
+- `se` (facoltativo, situazionale o d'uso specifico, al più 40 caratteri): forma breve della condizione per la nota «+2 se con la vista» accanto al valore (tab Abilità, Difese in Combattimento, «Attacca!», foglio 2 della SS); la frase intera resta in `condizione` (censimento degli impianti del 04/10/2026, `docs/censimento-impianti.md`).
 - `proprieta` (facoltativo): nome della proprietà del manuale che l'effetto traduce («Imbottita 1»). Le proprietà di un oggetto senza effetto e non già gestite altrove compaiono nella SD come **promemoria**.
 
 | tipo | Campi propri | Ambito | Dove entra |

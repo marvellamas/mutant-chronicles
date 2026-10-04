@@ -129,8 +129,20 @@ Ho cercato nel testo di ogni oggetto un bonus o un malus numerico («+2 VA», «
 
 | Categoria | Con un numero nel testo | Bonus del personaggio non nei dati |
 |---|---|---|
-| Equipaggiamento (armi, accessori, munizioni, corredi, dotazioni, sanitario, comunicazione) | 117 | **5**: Martello Spaccateste a due mani (Stordire +1 alla Manovra); IAS3200 Imbracatura antigravità (Pilotare −2 in Corsa, −4 in Scatto); IAS3100 Generatore Blink (SIN 2 a Pilotare del dispositivo); APE Capitol (Schivare con Pilotare −1); Utensile multiuso (strumento Improvvisato −2). Più 6 promemoria senza numero calcolabile: i tre visori termici e il modulo (−4 della Fumogena), i due kit di pronto soccorso (intensità del Sanguinamento) |
+| Equipaggiamento (armi, accessori, munizioni, corredi, dotazioni, sanitario, comunicazione) | 117 | **0** dal 5 ottobre (erano 5, ora nei dati con `tools/lotti/lotto_bonus_equipaggiamento.mjs`, test in `tests/bonus-equipaggiamento.test.js`): Martello Spaccateste a due mani (Stordire +1 alla Manovra); IAS3200 Imbracatura antigravità (Pilotare −2 in Corsa, −4 in Scatto); IAS3100 Generatore Blink (SIN 2 a Pilotare del dispositivo); APE Capitol (Schivare con Pilotare −1); Utensile multiuso (strumento Improvvisato −2). Più 6 promemoria senza numero calcolabile: i tre visori termici e il modulo (−4 della Fumogena), i due kit di pronto soccorso (intensità del Sanguinamento) |
 | Rinforzi, armature, elmetti, scudi | 127 | **0** (il visore termico dell'elmetto è un promemoria come sopra) |
 | Artefatti | 24 | **0** (le 23 Schegge: il −2 per 3 PM è in `regole.json` → `chroma.schegge`) |
 | Talenti | 58 | **0** (6 segnalati: Ricarica Migliorata è applicata in `src/ricarica.js`, gli altri 5 danno penalità all'avversario, già testuali nel censimento dei Talenti) |
 | Tecniche Interiori | 11 | **0** |
+
+### I cinque bonus dell'equipaggiamento (5 ottobre 2026)
+
+| Oggetto | Effetto nei dati | Come si vede |
+|---|---|---|
+| Martello Spaccateste a due mani | +1 VA alla Manovra Stordire (`manovra: "stordire"`, Armamenti §7.1.9) | in «Attacca!» da sé, con quell'arma e la Manovra Stordire (−6 → −5); niente casella |
+| IAS3200 Imbracatura antigravità | Pilotare −2 in volo in Corsa, −4 in Scatto (valori d'uso, §7.15.4) | accanto a Pilotare («volo in Corsa», «volo in Scatto»); in stampa in apice con la legenda |
+| IAS3100 Generatore Blink | Pilotare +2 per Power Blink, solo con l'Interfaccia neurale (`richiede_innesto`, SIN 2) | accanto a Pilotare («Power Blink»); senza Interfaccia niente bonus (Equipaggiamento §7.3) |
+| APE Capitol | Pilotare −1 per Schivare con l'esoscheletro (§7.13.6) | accanto a Pilotare («Schivare con l'APE») |
+| Utensile multiuso | Tecnologia −2 come strumento Improvvisato nei lavori specialistici (Equipaggiamento §2.5) | accanto a Tecnologia; in stampa in apice; il VA generale non cambia |
+
+Gli usi specifici con la forma breve «se» compaiono ora anche in stampa, in apice accanto al VA del foglio 2, come i condizionali.

@@ -1257,7 +1257,20 @@
         "ricarica": "sostituire la cella pronta richiede 1 AzP (§7.1.4)",
         "consumo": "una carica per attivazione (§7.1.4)",
         "riferimento": "cella energetica sostituibile (§7.20.5)"
-      }
+      },
+      "effetti": [
+        {
+          "tipo": "attacco",
+          "attacchi": "ravvicinati",
+          "valore": 1,
+          "ambito": "situazionale",
+          "manovra": "stordire",
+          "se": "con la Manovra Stordire",
+          "condizione": "Stordire +1 del Martello Spaccateste a due mani concede +1 VA alla Manovra Stordire: la penalità ordinaria diventa −5 VA, quella di Stordire Migliorato −3 VA.",
+          "proprieta": "Stordire +1",
+          "fonte": "Armamenti §7.1.9"
+        }
+      ]
     },
     {
       "id": "spada-violator",

@@ -1866,7 +1866,11 @@ function validaEffettiOggetto(effetti, F, K, nomiAbilita, err, ctx = {}) {
     // il danno e l'attacco degli oggetti: generali, o situazionali con la casella in «Attacca!» (Braccio potenziato, §7.5)
     if ((tipo === 'danno' || tipo === 'attacco') && e.incantesimi === undefined && e.ambito === 'uso_specifico') err(F, `${KE}.ambito`, 'danno e attacco: generale o situazionale (casella in «Attacca!»)');
     if (ctx.talento && tipo === 'danno' && e.incantesimi === undefined && e.ambito !== 'generale') err(F, `${KE}.ambito`, 'il danno dei Talenti è generale');
-    if (e.se !== undefined && !(e.ambito === 'situazionale' && isTesto(e.se) && e.se.length <= 40)) err(F, `${KE}.se`, 'forma breve della condizione (al più 40 caratteri), solo per gli effetti situazionali');
+    if (e.se !== undefined && !(['situazionale', 'uso_specifico'].includes(e.ambito) && isTesto(e.se) && e.se.length <= 40)) err(F, `${KE}.se`, 'forma breve della condizione (al più 40 caratteri), per gli effetti situazionali o d’uso specifico');
+    // effetto legato a una Manovra ravvicinata dell'arma stessa (Martello Spaccateste, «Stordire +1», Armamenti §7.1.9)
+    if (e.manovra !== undefined && !(tipo === 'attacco' && e.ambito === 'situazionale' && (ctx.manovre ?? new Set()).has(e.manovra))) err(F, `${KE}.manovra`, 'id di una Manovra di regole.json → attacco_ravvicinato.manovre, per un attacco situazionale');
+    // effetto che vale solo con un innesto installato (SIN dei dispositivi con l'Interfaccia neurale, Equipaggiamento §7.3)
+    if (e.richiede_innesto !== undefined && !INNESTI.includes(e.richiede_innesto)) err(F, `${KE}.richiede_innesto`, `innesto sconosciuto (ammessi: ${INNESTI.join(', ')})`);
     // effetti per «Lancia!»: incantesimi, valore per Grado di una Classe, nota del manuale
     if (['dado_danno', 'cura', 'massimizza'].includes(tipo) && e.incantesimi === undefined) err(F, `${KE}.incantesimi`, 'a quali Incantesimi vale: ' + INCANTESIMI_EFFETTO.join(', '));
     if (e.incantesimi !== undefined && !(ctx.talento && INCANTESIMI_EFFETTO.includes(e.incantesimi))) err(F, `${KE}.incantesimi`, `uno fra ${INCANTESIMI_EFFETTO.join(', ')} (solo Talenti)`);
@@ -1909,6 +1913,7 @@ const ctxEffetti = (dati) => ({
   sigle: new Set((dati.caratteristiche?.caratteristiche ?? []).map((c) => c.sigla)),
   stati: new Set((dati.regole?.stati?.elenco ?? []).map((s) => s.id)),
   gruppiProve: new Set(Object.keys(dati.regole?.categorie_prove ?? {}).filter((k) => !k.startsWith('_'))),
+  manovre: new Set(Object.keys(dati.regole?.attacco_ravvicinato?.manovre ?? {})),
 });
 
 // Ricarica delle armi a distanza (munizioni.json → ricarica, src/ricarica.js; Armamenti §7.20.2)

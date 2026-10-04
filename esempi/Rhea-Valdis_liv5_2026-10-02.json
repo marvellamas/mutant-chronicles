@@ -141,7 +141,7 @@
       {
         "uid": "dot-comune-8",
         "rif": null,
-        "stato": null,
+        "stato": "in_uso",
         "quantita": 1,
         "note": "",
         "personalizzato": {
