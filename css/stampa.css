@@ -429,6 +429,10 @@ body.vista-stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exa
 .scala-verticale { width: auto; }
 .scala-verticale td, .scala-verticale th { text-align: left !important; padding: 0.1mm 2mm; }
 .scala-verticale td:first-child { white-space: nowrap; }
+/* foglio 5, colonna sinistra lunga: la scala in orizzontale, celle a larghezza uguale con il testo a capo */
+.scala-orizzontale { table-layout: fixed; }
+.scala-orizzontale td, .scala-orizzontale tbody th { white-space: normal; overflow-wrap: anywhere; vertical-align: top; padding: 0.3mm 0.6mm; }
+.scala-orizzontale thead th:first-child, .scala-orizzontale tbody th { width: 22mm; text-align: left; white-space: normal; }
 .nota-solo-elenco { margin: 1mm 0 0; }
 .colonne-schede { flex: 1; min-height: 0; overflow: hidden; column-count: 3; column-gap: 4mm; column-fill: auto; }
 .scheda-incantesimo {

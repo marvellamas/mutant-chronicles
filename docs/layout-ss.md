@@ -605,5 +605,5 @@ Dopo la prova su carta cambia solo la prima pagina del foglio 5; le schede compl
   - Lancio: «Focalizz.», «Anticip.», «Incant.», «Gradi taum.», «liv. max», «Potere più diff. di una categ.»;
   - PM e conversione: «Recupero (Meditaz.) … ore/g.», «Conv. Potere e ricarica … nei due sensi».
   - L'energia resta scritta per intero nella sigla accanto al pallino.
-- **Lancio:** una voce per riga quando supera 38 caratteri; scala della Prova di Potere in verticale (Livello | Prova).
+- **Lancio:** una voce per riga quando supera 38 caratteri; scala della Prova di Potere in verticale (Livello | Prova). Se la colonna sinistra non entra nella pagina (molti PM, molte batterie: Lucas del 03/10/2026), la scala passa in orizzontale, due righe con le stesse frasi a capo nelle celle (`scalaOrizzontale`, 5 ottobre 2026): il «di base» resta nella prima pagina.
 - **Esito:** b 31 su 31 e Lucas 15 su 15 nella prima pagina, foglio 5 di una pagina con «solo elenco»; pagine invariate (c 6, b 8 e 35, Lucas 8 e 21); nessuno sbordo.

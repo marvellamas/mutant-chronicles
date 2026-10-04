@@ -1117,6 +1117,16 @@ function impaginaTecniche(foglio, d, piede) {
 /** «Solo elenco»: in fondo all'indice, perché mancano le schede. */
 const notaSoloElenco = () => h('p', { class: 'piccolo nota-solo-elenco' }, 'Schede complete non stampate: testo nel Manuale della Magia.');
 
+/**
+ * Scala della Prova di Potere in orizzontale (foglio 5, quando la colonna sinistra non entra): una colonna per
+ * fascia di livello, le frasi della scala che vanno a capo nella cella; il carattere non si riduce.
+ */
+function scalaOrizzontale(d) {
+  return h('table', { class: 'tabella-stampa scala scala-orizzontale' },
+    h('thead', {}, h('tr', {}, h('th', {}, `Livello (${d.scalaPotere})`), d.scala.map((r) => h('th', {}, r.livelli)))),
+    h('tbody', {}, h('tr', {}, h('th', { scope: 'row' }, 'Prova di Potere'), d.scala.map((r) => h('td', {}, r.prova)))));
+}
+
 function foglioMagia(d) {
   // senza magia, con le sole Tecniche Interiori: la forma del foglio per le Tecniche
   if (d.conMagia === false) return foglioTecniche(d);
@@ -1190,6 +1200,11 @@ function impaginaElenco(foglio, d) {
  */
 function impaginaMagia(contenitore, foglio, d, piede) {
   if (d.conMagia === false) return { pagine: impaginaTecniche(foglio, d, piede), pagineSchede: 0 };
+  // 0. il «di base» sta sempre nella prima pagina (docs/layout-ss.md): se la colonna sinistra non entra (molti PM,
+  // molte batterie), la scala della Prova di Potere passa in orizzontale, due righe invece di sei, stesse frasi
+  const corpo = foglio.querySelector('.foglio-corpo');
+  const verticale = foglio.querySelector('.scala-verticale');
+  if (verticale && eccede(corpo)) verticale.replaceWith(scalaOrizzontale(d));
   const incantesimi = elencoIncantesimi(d);
   // 1. elenco: colonna destra, poi sotto la colonna sinistra, poi la pagina dopo
   const resto = impaginaElenco(foglio, d);
