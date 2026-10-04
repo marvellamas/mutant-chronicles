@@ -3,7 +3,7 @@
 // integrita. Niente tiri di dado qui: i valori tirati arrivano da fuori, come in src/danno.js e src/attacco.js.
 //
 // Modello dei dati di un mezzo in gioco (lo stesso sia che il veicolo appartenga a un personaggio sia che sia
-// del gruppo: la domanda A.100 cambia solo dove si salva, non la forma):
+// del gruppo: la domanda A.91 cambia solo dove si salva, non la forma):
 //
 //   { profilo: 'asa-scout-mk4',            // id del catalogo, oppure «scheda» scritta a mano
 //     nome: 'ASA Scout',                   // nome al tavolo, facoltativo

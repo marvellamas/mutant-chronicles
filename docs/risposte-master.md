@@ -747,9 +747,9 @@ nuovi quesiti dell’app e punti Abilità liberi» (testo in `docs/risposte-mast
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 
 Il Manuale dei Veicoli 0.2 è completo di numeri e il lotto 2 (dati e motore) non ha dovuto inventare nulla. Restano
-questi punti, con un `TODO(Davide)` dove serve; nel pacchetto per il Doc «per-davide.md» sono A.100–A.105.
+questi punti, con un `TODO(Davide)` dove serve; nel pacchetto per il Doc «per-davide.md» sono A.91 e A.101–A.105 (la domanda «di chi è il veicolo», chiamata prima A.100, è un doppione di A.91 ed è unificata lì: il numero A.100 resta inutilizzato).
 
-- **A.100 — Di chi è il veicolo.** L'ASA Scout è «il vostro Scout»: un mezzo per tutta la squadra. Scheda del gruppo,
+- **A.91 — Di chi è il veicolo** (unificata il 04/10: era anche A.100, doppione). L'ASA Scout è «il vostro Scout»: un mezzo per tutta la squadra. Scheda del gruppo,
   come il deposito comune, o voce del personaggio che lo possiede? E PI, andatura e autonomia li tiene il Direttore o
   il giocatore? Finché non si sa, i veicoli non entrano nel file del personaggio (`src/rules.js` → `FILE_SOLO_TAVOLO`)
   e la tab resta «in attesa». Il modello dati di `src/veicoli.js` va bene in entrambi i casi.

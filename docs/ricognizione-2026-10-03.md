@@ -261,7 +261,7 @@ Nessuno di questi è iniziato. Stime in sessioni di lavoro, come le precedenti.
 | # | Lotto | Che cosa comprende | Stima | Dipendenze |
 |---|---|---|---|---|
 | **1** | **Giocatore del 03/10** | Punti liberi 10 → 7 **oppure** 5 (dopo la risposta ad A.90): `regole.json` → `creazione` e `avanzamento.eventi`, avviso dei punti in eccesso, test di collaudo, esempio del §2.13 nei test; profilo dell'Incursore in `classi.json` → `competenze` (indipendente, si può fare subito). | ½ sessione (Incursore: 1 ora) | **A.90** per i punti; l'Incursore no |
-| **2** | **Veicoli, dati e motore** — **fatto il 04/10** | `data/veicoli.json` (regole dei cap. 1–7 + profili Autovettura e ASA Scout MK4), validatore, `src/veicoli.js` puro (andature, Pilotare con MAN e stati, danno → PI con PS e Corazzato, riparazioni, autonomia), test con gli esempi numerici del manuale (§4.3, §4.4, §7.4, §9.1). Esito nel §8. | 2 sessioni | A.100 (veicolo del gruppo o del PG) per la forma del salvataggio |
+| **2** | **Veicoli, dati e motore** — **fatto il 04/10** | `data/veicoli.json` (regole dei cap. 1–7 + profili Autovettura e ASA Scout MK4), validatore, `src/veicoli.js` puro (andature, Pilotare con MAN e stati, danno → PI con PS e Corazzato, riparazioni, autonomia), test con gli esempi numerici del manuale (§4.3, §4.4, §7.4, §9.1). Esito nel §8. | 2 sessioni | A.91 (veicolo del gruppo o del PG) per la forma del salvataggio |
 | **3** | **Veicoli, scheda e stampa** | Tab Veicoli della SD (mezzo, tre riserve con − e +, andatura, autonomia, armi di bordo, avarie), foglio Veicoli della SS, uscita da `tab_in_arrivo`. | 1 sessione e ½ | lotto 2 |
 | **4** | **Veicoli al Tavolo del Master** | Carta del veicolo nella plancia, «Colpito» con localizzazione 1d20 e PS Integrità per struttura, armi di bordo in «Attacca!», penalità dell'andatura per chi attacca il mezzo, collisioni e speronamento come promemoria. | 2 sessioni | lotti 2–3 |
 | **5** | **Cibernetica, completamento** | Solo dopo le risposte: catalogo dei recuperi di UMN (A.92), corpi cyborg (A.93), innesti dell'equipaggiamento (A.94). Senza risposte non c'è lavoro: l'app è già allineata ai manuali. | ½ sessione per risposta | **A.92–A.94** |
@@ -340,7 +340,7 @@ del §5.2 senza cambiare la procedura, il validatore lo dice.
 `arVeicolo`, `piDaDanno`, `applicaColpoVeicolo`, `assorbiConRinforzi`, `dadiCollisione`, `qCollisione`,
 `dannoOccupante`, `riparaVeicolo`, `conPi`, `andaturaResidua`.
 
-**Modello dati proposto (A.100).** Un mezzo in gioco è un oggetto che **non** dipende da chi lo possiede: la
+**Modello dati proposto (A.91).** Un mezzo in gioco è un oggetto che **non** dipende da chi lo possiede: la
 risposta di Davide cambia solo *dove* si salva (nel file del personaggio, in un file del gruppo accanto a
 `personaggi/`, o nello scontro della plancia), non la forma.
 
@@ -377,4 +377,4 @@ nessuna discrepanza fra i numeri scritti e la procedura. In più i casi limite c
 
 **Fuori dal lotto**, come previsto: nessuna interfaccia (la tab Veicoli resta «in attesa»), nessun campo nel
 file del personaggio, niente plancia. `src/rules.js` carica `veicoli.json` e lo tiene fra i dati che non
-entrano nelle versioni scritte nel personaggio (`FILE_SOLO_TAVOLO`), finché A.100 non dice di chi è il mezzo.
+entrano nelle versioni scritte nel personaggio (`FILE_SOLO_TAVOLO`), finché A.91 non dice di chi è il mezzo.

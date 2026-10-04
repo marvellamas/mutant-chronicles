@@ -1,7 +1,7 @@
 {
   "versione_manuale": "Veicoli 0.2 (Google Doc del 02/10/2026, 13:31 UTC); scheda ASA Scout MK4 0.2 (Doc del 02/10/2026, 13:32 UTC)",
   "fonte": "Manuale dei Veicoli v0.2, cap. 1-10; docs/manuali-txt/veicoli.md e docs/manuali-txt/asa-scout-mk4.md",
-  "_nota": "Lotto 2 di docs/ricognizione-2026-10-03.md: regole e profili dei veicoli. Motore in src/veicoli.js (funzioni pure). Niente interfaccia e niente campi nel personaggio finché Davide non dice di chi è il veicolo (A.100). La PS Integrità per Qualità non sta qui: è quella di regole.json → integrita, condivisa con gli oggetti. Le penalità dell'andatura a chi attacca entrano in «Attacca!» quando arriverà la tab.",
+  "_nota": "Lotto 2 di docs/ricognizione-2026-10-03.md: regole e profili dei veicoli. Motore in src/veicoli.js (funzioni pure). Niente interfaccia e niente campi nel personaggio finché Davide non dice di chi è il veicolo (A.91). La PS Integrità per Qualità non sta qui: è quella di regole.json → integrita, condivisa con gli oggetti. Le penalità dell'andatura a chi attacca entrano in «Attacca!» quando arriverà la tab.",
 
   "misure": {
     "paragrafo": "§1.1",
