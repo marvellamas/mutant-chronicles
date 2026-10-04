@@ -228,6 +228,7 @@ function bloccoDurata(ctx, inc, r) {
       durata.concentrazione ? h('small', { class: 'nota' }, ' · a Concentrazione: si mantiene un solo incantesimo') : null),
     op.modalita.length ? rigaScelte('Modalità', op.modalita.map((m) => ({ valore: m.id, etichetta: m.nome })), durata.modalita ?? op.modalita[0].id, (v) => { u.modalita = v; ridisegna(); }) : null,
     op.concentrazioneAScelta ? interruttore('Con Concentrazione', u.concentrazione, (v) => { u.concentrazione = v; ridisegna(); }, { mod: 'durata massima' }) : null,
+    durata.anticipazioneAltraDurata ? h('p', { class: 'nota attenzione' }, 'L’Anticipazione riguarda la durata dell’altra modalità: sale di un gradino soltanto la durata scelta (E&L A.88). Scegli l’aspetto della durata che usi.') : null,
     op.todo ? h('p', { class: 'nota' }, `Da chiarire con Davide: ${op.todo.replace(/\s*\((A\.\d+, )?docs.*$/, '')}`) : null,
     conDurata ? [
       h('p', { class: 'scelta-titolo' }, 'Bersagli'),

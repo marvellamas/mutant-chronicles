@@ -185,3 +185,18 @@ test('plancia: la carta del PG in uno scontro mostra l’AR al Round dello scont
   const ar = (round) => vistaPlancia(testo, dati, 'Fratello-Anselmo-Viri_liv3_2026-10-02.json', round).ar.totale;
   assert.deepEqual([ar(null) - ar(8), ar(7) - ar(8)], [2, 2]);
 });
+
+test('A.88: l’Anticipazione sale di un gradino solo sulla durata scelta; anticipare l’altra si segnala', () => {
+  const ind = I('Individuare');
+  const aspetto = (nome) => ind.meccanica.anticipazione.aspetti.find((a) => a.nome === nome);
+  const versione = { livello: 9, pm: 9, riga: ind.versioni.find((v) => v['Livello e PM'] === '9') };
+  const antCon = regoleAnticipazione(ind.meccanica, aspetto('Durata a Concentrazione'), versione, () => [], dati);
+  // a Concentrazione: 30 minuti → 1 ora
+  assert.equal(durataLancio(ind, 9, { concentrazione: true, anticipazione: antCon.valore }).testo, '1 ora');
+  // durata fissa con l'Anticipazione della Concentrazione: resta 10 RND, con l'avviso
+  const fissa = durataLancio(ind, 9, { anticipazione: antCon.valore });
+  assert.deepEqual([fissa.testo, fissa.anticipata, fissa.anticipazioneAltraDurata], ['10 RND', false, true]);
+  const antFissa = regoleAnticipazione(ind.meccanica, aspetto('Durata fissa'), versione, () => [], dati);
+  const f2 = durataLancio(ind, 9, { anticipazione: antFissa.valore });
+  assert.deepEqual([f2.testo, f2.anticipazioneAltraDurata], ['20 RND', undefined]);
+});

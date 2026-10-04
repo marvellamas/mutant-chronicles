@@ -187,7 +187,9 @@ const EPICA = frase(testoMag, 'Le Batterie colorate passano da REP Molto Rara a 
 const nuovaRep = {};
 for (const [k, v] of Object.entries(ind.reperibilita)) {
   if (k === 'EP') continue;
-  if (k === 'LE') nuovaRep.EP = { nome: 'Epica', ricerca: 'Disponibilità stabilita dal Direttore di Gioco.', fonte: EPICA, 'TODO(Davide)': 'per-davide A.83: la REP Epica (Batterie Matrice colorate, Magia §26.4) ha una Prova di ricerca (Oratoria con quale penalità) o è come Leggendaria? Nel frattempo la disponibilità la stabilisce il Direttore, senza Prova.' };
+  // E&L A.83 (03/10/2026): se la scala ha già EP con la decisione di Davide, si conserva (rieseguire il lotto non
+  // rimette il TODO)
+  if (k === 'LE') nuovaRep.EP = ind.reperibilita.EP ?? { nome: 'Epica', ricerca: 'Disponibilità stabilita dal Direttore di Gioco.', fonte: EPICA, 'TODO(Davide)': 'per-davide A.83: la REP Epica (Batterie Matrice colorate, Magia §26.4) ha una Prova di ricerca (Oratoria con quale penalità) o è come Leggendaria? Nel frattempo la disponibilità la stabilisce il Direttore, senza Prova.' };
   nuovaRep[k] = v;
 }
 ind.reperibilita = nuovaRep;
