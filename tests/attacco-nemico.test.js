@@ -73,11 +73,12 @@ test('esito dell’attacco: colpito, mancato, Magistrale, Maldestro; raffiche co
 test('«Colpito» precompilata: Legionario Oscuro contro Torvald, corpo a corpo, danno Magico', () => {
   const { attacco, risultato } = calcolaAttaccoNemico(leg, indice(leg, 'Lama nefaria'), {}, dati);
   const p = propostaColpo(attacco, risultato, { magistrale: false });
-  assert.deepEqual({ formula: p.formula, natura: p.natura, tipo: p.tipo, ac: p.ac, proprieta: p.proprieta, m: p.moltiplicatore, m1: p.moltiplicatorePrimo },
-    { formula: '1d10+3', natura: 'Magico', tipo: 'ravvicinato', ac: 1, proprieta: ['Perforante 1'], m: 1, m1: 1 });
+  assert.deepEqual({ formula: p.formula, natura: p.natura, tipo: p.tipo, ac: p.ac, proprieta: p.proprieta, m: p.moltiplicatore, magi: p.magistrale },
+    { formula: '1d10+3', natura: 'Magico', tipo: 'ravvicinato', ac: 1, proprieta: ['Perforante 1'], m: 1, magi: false });
+  // il raddoppio del Magistrale lo applica applicaColpo (§1.6): la proposta porta solo l'esito
   const magi = propostaColpo(attacco, risultato, { magistrale: true });
-  assert.equal(magi.moltiplicatorePrimo, risultato.danno.moltiplicatore_magistrale);
-  assert.ok(magi.moltiplicatorePrimo > 1);
+  assert.equal(magi.magistrale, true);
+  assert.equal(magi.moltiplicatore, 1);
   // la proposta va in applicaColpo come nella finestra: danno 10 Magico con Perforante 1 su Torvald
   const torvald = vistaPlancia(readFileSync(new URL('../esempi/Torvald-Krane_liv6_2026-10-02.json', import.meta.url), 'utf8'), dati, 'Torvald-Krane_liv6_2026-10-02.json');
   const r = applicaColpo({ nome: torvald.nome, pv: torvald.pv, ferite: torvald.ferite.grado, ar: torvald.ar }, { danni: [10], natura: p.natura, tipo: p.tipo, difesa: 'nessuna', proprieta: p.proprieta }, dati);

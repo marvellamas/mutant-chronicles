@@ -12,14 +12,16 @@ import { riallinea, alRound, terminaDurate, collegamentoScontro, durateCarta, te
 import { rigaDurate } from './durate.js';
 import { ultimiPerPersonaggio, chiaveDaFile } from '../cartella.js';
 import { elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, creaInCartella } from './cartella.js';
-import { apriColpo } from './colpo.js';
+import { apriColpo, specDaFormula } from './colpo.js';
+import { tira } from '../tiri.js';
 import { apriAttaccoNemico } from './attacco-nemico.js';
 import { apriLancioNemico } from './lancio-nemico.js';
 import { attacchiDi } from '../nemico-attacco.js';
 import { testoColpo } from '../danno.js';
+import { perditeDovute, applicaPerdita, registraPeriodico, togliPeriodici, allineaPeriodici, periodicoDi, pvDopoPerdita } from '../periodici.js';
 import { pannelloScontro, leggiScontroAperto, leggiScontro, salvaScontro } from './scontro.js';
 import { pannelloBestiario, elencoNemici, cartaNemico } from './nemici.js';
-import { diTurno, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico, aggiungiNemici, registraRiga } from '../scontro.js';
+import { diTurno, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico, aggiungiNemici, registraRiga, cambiaStatoNemico } from '../scontro.js';
 import { vociBestiario } from '../nemici.js';
 import { creaCustode } from './ridisegno.js';
 import { avviso, avvisoErrore } from './avvisi.js';
@@ -29,6 +31,8 @@ import { riquadroCollega, leggiRete } from './collega.js';
 
 const INTERVALLO_MS = 3000;
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
+/** Nome di un partecipante dello scontro (fonte di una perdita periodica), o null se non c'è. */
+const nomePartecipante = (s, id) => (id ? (s?.partecipanti ?? []).find((p) => p.id === id)?.nome ?? null : null);
 
 async function leggiSelezione() {
   try {
@@ -154,6 +158,76 @@ export function renderTavolo(radice, ctx) {
     } else return;
     await aggiorna(true);
   };
+  // Perdite periodiche degli Stati (Giocatore §5.15 Sanguinamento, §5.18 Incendiato e Avvelenato;
+  // src/periodici.js). La plancia le applica da sé quando il turno arriva alla fonte, al massimo una volta
+  // per Round: per un nemico i PV stanno nello scontro, per un PG nel suo file, scritto con la revisione
+  // come le durate. Il campo `ultimo` della perdita rende l'applicazione idempotente, così due «Avanti» in
+  // due finestre non la contano due volte. A 0 PV serve una Prova: si segnala e non si applica nulla.
+  // bersagli dello scontro con i loro Stati attivi, per l'allineamento delle perdite periodiche
+  const bersagliPeriodici = (alTavolo) => [
+    ...alTavolo.filter((r) => !r.mancante && stato.viste.get(r.file)?.completa).map((r) => {
+      const v = stato.viste.get(r.file);
+      return { bersaglio: `pg:${v.chiaveCartella}`, nome: v.nome, tipo: 'pg', chiave: v.chiaveCartella, stati: (v.stati ?? []).map((s) => s.id) };
+    }),
+    ...nemiciInScontro().map((p) => ({ bersaglio: p.id, nome: p.nome, tipo: 'nemico', stati: p.stati ?? [] })),
+  ];
+  let periodiciInCorso = false;
+  const applicaPeriodici = async () => {
+    if (periodiciInCorso || !stato.scontro) return;
+    // Stato periodico non più attivo (fermato con Medicina, un Incantesimo, o spento): la perdita si chiude;
+    // Stato attivo senza una perdita registrata (messo a mano dalla scheda o sulla carta): serve il valore
+    const ultimi = ultimiPerPersonaggio(stato.elenco);
+    const alTavolo = stato.selezione.map((k) => ultimi.get(k) ?? { mancante: k });
+    const { daRegistrare, daChiudere } = allineaPeriodici(stato.scontro, bersagliPeriodici(alTavolo), ctx.dati);
+    if (daChiudere.length) {
+      periodiciInCorso = true;
+      try {
+        for (const p of daChiudere) await modifica((x) => togliPeriodici(x, p.bersaglio, [p.stato], undefined, ctx.dati));
+      } finally { periodiciInCorso = false; }
+    }
+    for (const d of daRegistrare) {
+      avviso(`${d.nomeStato} di ${d.nome} è attivo ma non toglie PV: manca il valore. Usa «Sanguinamento» nella barra degli Stati periodici (§5.15).`, { chiave: `periodico-manca-${d.bersaglio}-${d.stato}`, tipo: 'info' });
+    }
+    const dovute = perditeDovute(stato.scontro, ctx.dati);
+    if (!dovute.length) return;
+    periodiciInCorso = true;
+    try {
+      for (const d of dovute) {
+        // Incendiato e i veleni hanno una formula: il valore lo tira l'app, e la riga del registro lo dice
+        let valore = d.valore;
+        let tiro = null;
+        if (valore === null && d.formula) {
+          const spec = specDaFormula(d.formula);
+          if (!spec) { avvisoErrore(`${d.nomeStato} di ${d.nome}: formula «${d.formula}» non riconosciuta, applicala a mano.`); continue; }
+          tiro = { valore: tira(spec).tiro.valore, origine: 'app' };
+          valore = tiro.valore;
+        }
+        if (!Number.isInteger(valore) || valore < 1) { avvisoErrore(`${d.nomeStato} di ${d.nome}: manca il valore della perdita.`); continue; }
+        if (d.tipo === 'nemico') {
+          await modifica((x) => applicaPerdita(x, { ...d, valore, tiro }, null, undefined, ctx.dati));
+          continue;
+        }
+        // PG: i PV stanno nel suo file. Si legge, si scrive, poi si registra la perdita nello scontro.
+        const r = ultimiPerPersonaggio(stato.elenco).get(d.chiave);
+        if (!r) { avvisoErrore(`${d.nomeStato} di ${d.nome}: scheda non trovata in personaggi/, applicala a mano.`); continue; }
+        let pv = null;
+        try {
+          const { testo, mtime } = await leggiCartellaConRevisione(r.file);
+          const v = vistaPlancia(testo, ctx.dati, r.file);
+          pv = { pvPrima: v.pv.attuali, pvDopo: pvDopoPerdita(v.pv.attuali, valore) };
+          // §5.15: già a 0 PV non si tolgono PV, serve la PS di Tempra: la riga del registro la chiede
+          if (pv.pvPrima > 0) await scriviCartella(r.file, testoConSessione(testo, { pvAttuali: pv.pvDopo }, ctx.dati), { mtime });
+        } catch (e) {
+          avvisoErrore(`${d.nomeStato} di ${d.nome}: PV non aggiornati (${e.message}). Riprovo al prossimo Round.`);
+          continue;
+        }
+        await modifica((x) => applicaPerdita(x, { ...d, valore, tiro }, pv, undefined, ctx.dati));
+      }
+    } finally {
+      periodiciInCorso = false;
+    }
+    await aggiorna(true);
+  };
   // «Termina le durate»: chiude le Tecniche in corso di tutti i PG al tavolo (durate rimaste dopo uno scontro)
   const terminaTutte = async (pgConDurate) => {
     const nomi = [...pgConDurate.map((v) => v.nome), ...((stato.scontro?.effetti ?? []).length ? ['nemici nello scontro'] : [])];
@@ -175,7 +249,11 @@ export function renderTavolo(radice, ctx) {
       if (nuovo === stato.scontro) return true;
       return salva(nuovo);
     });
-    return coda;
+    const esito = coda;
+    // perdite periodiche degli Stati (§5.15, §5.18): si controllano dopo ogni modifica dello scontro, fuori
+    // dalla coda (applicaPeriodici usa a sua volta modifica, e dentro la coda si bloccherebbe con sé stessa)
+    esito.then(() => applicaPeriodici()).catch(() => {});
+    return esito;
   };
 
   // il ridisegno periodico non chiude le tendine né toglie il focus ai campi in uso (src/ui/ridisegno.js)
@@ -226,6 +304,7 @@ export function renderTavolo(radice, ctx) {
       pannelloScontro(ctx, Object.assign(stato, { pgAlTavolo: alTavolo.map((r) => stato.viste.get(r.file)).filter((v) => v?.completa) }),
         { modifica, crea: (s) => salva(s), ridisegna: disegna, annullaColpo, attacca: (p) => attacca(p, alTavolo) }),
       barraDurate(alTavolo),
+      barraPeriodici(alTavolo),
       alTavolo.length
         ? h('div', { class: 'plancia-griglia' }, alTavolo.map((r) => (r.mancante ? cartaMancante(r.mancante)
           : stato.viste.get(r.file) ? cartaPg(ctx, stato.viste.get(r.file), r, turnoDi(r), colpitoPg, durateDi(stato.viste.get(r.file))) : cartaErrore(r, stato.errori.get(r.file)))))
@@ -285,12 +364,21 @@ export function renderTavolo(radice, ctx) {
   // Pezzo 4: «Colpito» (src/danno.js → applicaColpo, finestra src/ui/colpo.js). Serve uno scontro aperto:
   // il colpo va nel registro e si può annullare. Il PG si scrive nel suo file con la revisione (mtime).
   const statiValidi = (ids, immuni = []) => ids.filter((id) => !immuni.includes(id));
+  // fonti possibili delle perdite periodiche (§5.15: l'Iniziativa di chi le ha procurate): chi è di turno
+  // per primo, poi gli altri partecipanti dello scontro
+  const fontiPeriodiche = () => {
+    const p = stato.scontro?.partecipanti ?? [];
+    const turno = diTurno(stato.scontro)?.id ?? null;
+    const voce = (x) => ({ id: x.id, nome: x.id === turno ? `${x.nome} (di turno)` : x.nome });
+    return [...p.filter((x) => x.id === turno).map(voce), ...p.filter((x) => x.id !== turno).map(voce)];
+  };
   const colpitoPg = (v, r, proposta = {}) => {
     if (!stato.scontro) return;
     const bersaglio = { nome: v.nome, pv: v.pv, ferite: v.ferite.grado, ar: v.ar };
     apriColpo(ctx, bersaglio, {
       proposta,
-      applica: async (ris, colpo, stati) => {
+      fonti: fontiPeriodiche(),
+      applica: async (ris, colpo, stati, periodici = []) => {
         const { testo, mtime } = await leggiCartellaConRevisione(r.file);
         const ora = vistaPlancia(testo, ctx.dati, r.file);
         if (ora.pv.attuali !== v.pv.attuali || ora.ferite.grado !== v.ferite.grado) throw new Error(`${v.nome} è cambiato nel frattempo (PV ${ora.pv.attuali}, Ferite ${ora.ferite.grado}): chiudi e riapri «Colpito».`);
@@ -301,7 +389,12 @@ export function renderTavolo(radice, ctx) {
         } catch (e) {
           throw new Error(e.conflitto ? `${v.nome} è stato salvato altrove proprio ora: chiudi e riapri «Colpito».` : e.message);
         }
-        const ok = await modifica((x) => registraColpo(x, { bersaglio: `pg:${v.chiaveCartella}`, nome: v.nome, tipo: 'pg', file: r.file, testo: testoColpo(v.nome, colpo, ris), prima, dopo }));
+        const ok = await modifica((x) => {
+          let t = registraColpo(x, { bersaglio: `pg:${v.chiaveCartella}`, nome: v.nome, tipo: 'pg', file: r.file, testo: testoColpo(v.nome, colpo, ris), prima, dopo });
+          // §5.15: la perdita immediata l'ha già fatta il colpo; qui si registra quella periodica, con la fonte
+          for (const p of periodici) t = registraPeriodico(t, { ...p, bersaglio: `pg:${v.chiaveCartella}`, nome: v.nome, tipo: 'pg', chiave: v.chiaveCartella, fonteNome: nomePartecipante(t, p.fonte) }, undefined, ctx.dati);
+          return t;
+        });
         await aggiorna(true);
         return ok;
       },
@@ -313,13 +406,20 @@ export function renderTavolo(radice, ctx) {
     const bersaglio = { nome: p.nome, pv: p.pv, ferite: p.ferite ?? 0, ar: p.scheda.ar };
     apriColpo(ctx, bersaglio, {
       proposta,
-      applica: async (ris, colpo, stati) => modifica((x) => {
+      fonti: fontiPeriodiche(),
+      applica: async (ris, colpo, stati, periodici = []) => modifica((x) => {
         const q = x.partecipanti.find((y) => y.id === p.id);
         if (!q || q.pv.attuali !== p.pv.attuali || (q.ferite ?? 0) !== (p.ferite ?? 0)) throw new Error(`${p.nome} è cambiato nel frattempo: chiudi e riapri «Colpito».`);
-        const dopoStati = [...new Set([...q.stati, ...statiValidi(stati, q.scheda?.immunita ?? [])])];
+        const ammessi = statiValidi(stati, q.scheda?.immunita ?? []);
+        const dopoStati = [...new Set([...q.stati, ...ammessi])];
         const prima = { pv: q.pv.attuali, ferite: q.ferite ?? 0, menomazioni: q.menomazioni ?? [], stati: q.stati };
         const dopo = { pv: ris.pv.dopo, ferite: ris.ferite?.dopo ?? prima.ferite, menomazioni: [...prima.menomazioni, ...(ris.menomazioni ?? [])], stati: dopoStati };
-        return registraColpo(x, { bersaglio: p.id, nome: p.nome, tipo: 'nemico', testo: testoColpo(p.nome, colpo, ris), prima, dopo });
+        let t = registraColpo(x, { bersaglio: p.id, nome: p.nome, tipo: 'nemico', testo: testoColpo(p.nome, colpo, ris), prima, dopo });
+        // §5.15: perdita periodica dei soli Stati applicati davvero (un nemico immune non la prende)
+        for (const y of periodici.filter((z) => ammessi.includes(z.stato))) {
+          t = registraPeriodico(t, { ...y, bersaglio: p.id, nome: p.nome, tipo: 'nemico', fonteNome: nomePartecipante(t, y.fonte) }, undefined, ctx.dati);
+        }
+        return t;
       }),
     });
   };
@@ -426,6 +526,52 @@ export function renderTavolo(radice, ctx) {
       h('span', { class: 'nota' }, [conDurate.length ? `Tecniche e incantesimi in corso nelle schede: ${conDurate.map((v) => v.nome).join(', ')}.` : null, nemici ? ` Incantesimi dei nemici nello scontro: ${nemici}.` : null].filter(Boolean).join('')),
       h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Chiude tutte le Tecniche e gli incantesimi in corso dei PG al tavolo (scrive nei loro file) e quelli dei nemici nello scontro', onclick: () => terminaTutte(conDurate) }, 'Termina le durate'));
   };
+  /**
+   * Barra degli Stati che togliono PV a ogni Round (§5.15 Sanguinamento, §5.18 Incendiato e Avvelenato):
+   * quelli in corso con valore e fonte, e quelli attivi che non hanno ancora un valore, da registrare.
+   * Le perdite si applicano da sé all'Iniziativa della fonte: qui si vedono e si fermano.
+   */
+  const barraPeriodici = (alTavolo) => {
+    if (!stato.scontro) return null;
+    const inCorso = stato.scontro.periodici ?? [];
+    const { daRegistrare } = allineaPeriodici(stato.scontro, bersagliPeriodici(alTavolo), ctx.dati);
+    if (!inCorso.length && !daRegistrare.length) return null;
+    const fonte = (p) => (p.fonte ? `fonte ${p.fonteNome ?? p.fonte}` : 'fine del Round');
+    return h('div', { class: 'riga-azioni barra-durate barra-periodici' },
+      h('span', { class: 'nota' }, 'Stati che togliono PV ogni Round (§5.15, §5.18): '),
+      inCorso.map((p) => h('span', { class: 'periodico-voce' },
+        `${nomeStatoPlancia(p.stato)} ${p.valore ?? p.formula} di ${p.nome} (${fonte(p)}) `,
+        h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Lo Stato è stato fermato (Medicina §5.15, un Incantesimo, un antidoto): non toglie più PV', onclick: () => fermaPeriodico(p) }, 'Ferma'))),
+      daRegistrare.map((d) => h('span', { class: 'periodico-voce motivo' },
+        `${d.nomeStato} di ${d.nome}: manca il valore `,
+        h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => registraAMano(d) }, 'Registra'))));
+  };
+  const nomeStatoPlancia = (id) => ctx.dati.regole.stati.elenco.find((s) => s.id === id)?.nome ?? id;
+  // §5.15: arrestare il Sanguinamento (Medicina, un Incantesimo, un antidoto, spegnere le fiamme) fa finire
+  // lo Stato: si toglie anche dalla scheda del PG o dalla carta del nemico, non solo la perdita
+  const fermaPeriodico = async (p) => {
+    if (!confirm(`${nomeStatoPlancia(p.stato)} di ${p.nome}: fermato? Non toglierà più PV a ogni Round e lo Stato si toglie.`)) return;
+    await modifica((x) => {
+      const t = togliPeriodici(x, p.bersaglio, [p.stato], undefined, ctx.dati);
+      return p.tipo === 'nemico' ? cambiaStatoNemico(t, p.bersaglio, ctx.dati.regole.stati.elenco.find((s) => s.id === p.stato), false) : t;
+    });
+    if (p.tipo === 'pg' && p.chiave) await aggiornaPg(p.chiave, (s) => ({ ...s, statiAttivi: (s.statiAttivi ?? []).filter((y) => y !== p.stato) }));
+    await aggiorna(true);
+  };
+  // Stato periodico messo a mano (dalla scheda del giocatore o sulla carta del nemico): valore e fonte
+  const registraAMano = async (d) => {
+    const per = periodicoDi(d.stato, ctx.dati);
+    const atteso = per.danno === 'valore' ? 'quanti PV per Round (per esempio 1)' : `quanti PV per Round, o una formula (per esempio ${per.danno === 'dalla_fonte' ? '1d4' : per.danno})`;
+    const scritto = (prompt(`${d.nomeStato} di ${d.nome}: ${atteso}?`, per.danno === 'valore' ? '1' : per.danno === 'dalla_fonte' ? '1d4' : per.danno) ?? '').trim();
+    if (!scritto) return;
+    const numero = Number(scritto);
+    const valore = Number.isInteger(numero) && numero > 0 ? numero : null;
+    const formula = valore === null && /^\d+d\d+([+-]\d+)?$/.test(scritto) ? scritto : null;
+    if (valore === null && !formula) { avvisoErrore(`«${scritto}» non è un numero di PV né una formula come «1d4».`); return; }
+    const t = diTurno(stato.scontro);
+    const fonte = t && confirm(`La fonte è ${t.nome} (di turno)? La perdita si applicherà alla sua Iniziativa. Annulla per metterla alla fine del Round.`) ? t.id : null;
+    await modifica((x) => registraPeriodico(x, { ...d, ...(valore ? { valore } : {}), ...(formula ? { formula } : {}), fonte, fonteNome: nomePartecipante(x, fonte) }, undefined, ctx.dati));
+  };
   const nemiciInScontro = () => (stato.scontro?.partecipanti ?? []).filter((p) => p.tipo === 'nemico');
   // nella plancia i nemici a 0 PV vanno in fondo, dopo tutti gli altri (l'ordine dei turni non cambia)
   const nemiciInCarta = () => [...nemiciInScontro().filter((p) => p.pv.attuali > 0), ...nemiciInScontro().filter((p) => p.pv.attuali === 0)];
@@ -490,6 +636,8 @@ export function renderTavolo(radice, ctx) {
     stato.ultimo = Date.now();
     if ((cambiato || stato.sceltaAperta) && custode.puoRidisegnare()) disegna();
     else aggiornaIndicatore();
+    // anche quando il Round lo fa avanzare un'altra finestra della plancia (§5.18: una volta per Round)
+    void applicaPeriodici();
   };
   const aggiornaIndicatore = () => {
     const el = radice.querySelector('.plancia-aggiornato');

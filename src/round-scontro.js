@@ -69,9 +69,10 @@ export function terminaDurate(sessione) {
 export const idPg = (chiave) => `pg:${chiave}`;
 
 /**
- * Il PG è in questo scontro aperto? { id, nome, round, durate, effetti, partecipanti } oppure null.
- * durate: gli Stati del PG registrati nella plancia; effetti: gli incantesimi lanciati dai nemici su di lui
- * (scontro → effetti); partecipanti: gli altri, per scegliere i bersagli di un lancio.
+ * Il PG è in questo scontro aperto? { id, nome, round, durate, periodici, effetti, partecipanti } oppure null.
+ * durate: gli Stati del PG registrati nella plancia; periodici: gli Stati che gli togliono PV a ogni Round, con
+ * il valore e la fonte (§5.15, §5.18), così la scheda mostra «Sanguinamento · 1 PV per Round»; effetti: gli
+ * incantesimi lanciati dai nemici su di lui (scontro → effetti); partecipanti: gli altri, per i bersagli di un lancio.
  */
 export function collegamentoScontro(scontro, chiave) {
   if (!scontro || scontro.stato !== 'aperto' || !chiave) return null;
@@ -81,9 +82,11 @@ export function collegamentoScontro(scontro, chiave) {
     const al = fineStato(d, scontro.round);
     return { stato: d.stato, nome: d.nome, al, rimasti: roundRimasti(al, scontro.round) };
   });
+  const periodici = lista(scontro.periodici).filter((p) => p.bersaglio === id)
+    .map((p) => ({ stato: p.stato, valore: p.valore ?? null, formula: p.formula ?? null, fonte: p.fonteNome ?? null, ultimo: p.ultimo ?? p.dal }));
   const effetti = effettiSu(scontro, id);
   const partecipanti = lista(scontro.partecipanti).filter((p) => p.id !== id).map((p) => ({ id: p.id, nome: p.nome, tipo: p.tipo }));
-  return { id: scontro.id, nome: scontro.nome, round: scontro.round, durate, effetti, partecipanti };
+  return { id: scontro.id, nome: scontro.nome, round: scontro.round, durate, periodici, effetti, partecipanti };
 }
 
 /** Incantesimi lanciati nello scontro (dai nemici) che hanno per bersaglio il partecipante `id`, ancora in corso. */

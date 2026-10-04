@@ -1744,7 +1744,22 @@
         "nome": "Avvelenato",
         "durata": "1+1d3 Round, salvo la fonte",
         "promemoria": "Effetti, danno e frequenza indicati dal veleno; l’antidoto adeguato lo termina.",
-        "riassunto": true
+        "riassunto": true,
+        "periodico": {
+          "paragrafo": "Giocatore §5.18 («Avvelenato»)",
+          "danno": "dalla_fonte",
+          "ignora": ["armatura"],
+          "non_sotto_zero": true,
+          "ferita_quando_azzera": false,
+          "a_zero_pv": { "salvezza": "Tempra", "testo": "Già a 0 PV: PS di Tempra e nuove Ferite per fascia di danno (§5.14; «a 0 PV applica normalmente le fasce delle Ferite»)." },
+          "non_si_somma": "nuove esposizioni allo stesso veleno rinnovano la durata senza sommare il danno; veleni differenti coesistono",
+          "fine": "alla fine della durata del veleno, oppure con un antidoto adeguato",
+          "_nota": "Danno e frequenza li indica il veleno: la perdita si registra scrivendo il valore o la formula (per esempio «1d4», il veleno delle creature del Bestiario: data/bestiario.json → moduli.mutazioni, «veleno», effetti.veleno per grado). Senza un valore resta un promemoria.",
+          "frasi": [
+            "Il veleno indica modificatore, danno e frequenza, durata, penalità o Stati e antidoto.",
+            "Il veleno ignora l’Armatura; a 0 PV applica normalmente le fasce delle Ferite."
+          ]
+        }
       },
       {
         "id": "immobilizzato",
@@ -1765,7 +1780,23 @@
         "riassunto": true,
         "effetti": [
           {"tipo": "va", "prove": "tutte", "valore": -2, "ambito": "generale", "condizione": "Subisce immediatamente 1d4 danni da fuoco ai PV ignorando l’Armatura ordinaria e −2 VA alle Prove di Abilità, non alle Prove Salvezza.", "fonte": "Giocatore §5.18"}
-        ]
+        ],
+        "periodico": {
+          "paragrafo": "Giocatore §5.18 («Incendiato»)",
+          "danno": "1d4",
+          "ignora": ["armatura_non_magica"],
+          "non_sotto_zero": true,
+          "ferita_quando_azzera": false,
+          "a_zero_pv": { "salvezza": "Tempra", "testo": "Già a 0 PV: PS di Tempra e nuove Ferite per fascia di danno (§5.14)." },
+          "non_si_somma": "nuove applicazioni non sommano il danno e mantengono la durata maggiore",
+          "fine": "alla fine della durata, oppure spegnendosi (1 AzP e PS di Riflessi, o un mezzo adeguato)",
+          "frasi": [
+            "Subisce immediatamente 1d4 danni da fuoco ai PV ignorando l’Armatura ordinaria e −2 VA alle Prove di Abilità, non alle Prove Salvezza.",
+            "Nei Round successivi il danno si ripete all’Iniziativa di chi ha procurato lo Stato, al massimo una volta per Round; il −2 VA rimane continuo fino al termine dello Stato.",
+            "Il danno immediato e quello periodico di Incendiato ignorano tutta l’AR non magica generica, comprese Pelle Corazzata e Scudo.",
+            "L’AR magica pertinente lo riduce fino a 0, come le protezioni specifiche contro il fuoco secondo la propria scheda."
+          ]
+        }
       },
       {
         "id": "rallentato",
@@ -1783,7 +1814,24 @@
         "nome": "Sanguinamento",
         "durata": "fino a quando viene fermato",
         "promemoria": "Perde PV secondo il §5.15, all’Iniziativa della fonte, finché non viene fermato.",
-        "riassunto": true
+        "riassunto": true,
+        "periodico": {
+          "paragrafo": "Giocatore §5.15",
+          "danno": "valore",
+          "ignora": ["armatura", "parata", "schivata"],
+          "non_sotto_zero": true,
+          "ferita_quando_azzera": false,
+          "a_zero_pv": { "salvezza": "Tempra", "successo": "nessuna nuova Ferita", "fallimento": "1 Ferita diretta", "testo": "Già a 0 PV: PS di Tempra. Con successo nessuna nuova Ferita, con fallimento 1 Ferita diretta (§5.15)." },
+          "non_si_somma": "si usa il valore più alto",
+          "fine": "solo quando viene fermato (Medicina §5.15, Incantesimi, Talenti)",
+          "frasi": [
+            "Alla prima applicazione il personaggio perde immediatamente X PV ignorando Armatura, Parata e Schivata; le applicazioni successive avvengono all’Iniziativa di chi lo ha procurato, al massimo una volta per Round.",
+            "Questa perdita non porta i PV sotto 0 e, quando li riduce a 0, non produce immediatamente una Ferita.",
+            "Se al momento dell’applicazione si trova già a 0 PV, il personaggio effettua Tempra: con successo non subisce nuove Ferite, con fallimento subisce direttamente una Ferita.",
+            "Più Sanguinamenti non si sommano: si usa il valore più alto.",
+            "Sanguinamento non ha una scadenza automatica in Round e termina con le procedure previste per fermarlo."
+          ]
+        }
       },
       {
         "id": "stordito",
@@ -1816,6 +1864,22 @@
         "limiti": { "solo_azioni_difensive": true, "testo": "Le Azioni Principali possono essere usate soltanto per difendersi, nascondersi, aiutare la fuga o rimuovere lo Stato.", "fonte": "Giocatore §5.18" }
       }
     ],
+    "periodici": {
+      "paragrafi": "Giocatore §5.15 (Sanguinamento), §5.18 (Stati, «Durate e tempi di risoluzione»); Manuale della Magia, applicazioni periodiche",
+      "quando": "iniziativa_fonte",
+      "senza_fonte": "fine_round",
+      "fonte_uscita_di_scena": "conserva_iniziativa",
+      "max_per_round": 1,
+      "prima_applicazione": "immediata",
+      "avviso": "{stato}: {nome} perde {valore} PV (PV {prima} → {dopo})",
+      "_nota": "Perdite periodiche di PV applicate dalla plancia (src/periodici.js, src/ui/tavolo.js). Ogni perdita in corso sta nello scontro, in «periodici»: bersaglio, Stato, valore o formula, fonte e l’ultimo Round in cui è stata applicata, così due «Avanti» non la contano due volte. «quando»: al turno della fonte nell’ordine di Iniziativa; «senza_fonte»: con una fonte priva di Iniziativa, alla fine del Round (Magia); «fonte_uscita_di_scena»: la fonte che esce di scena conserva la sua Iniziativa. La prima applicazione la fa «Colpito» insieme al colpo (§5.15), quindi la perdita si registra con l’ultimo Round già a quello dell’applicazione. A 0 PV serve una Prova («a_zero_pv»): la plancia lo segnala e non applica nulla da sé. Gli Stati senza «periodico» restano promemoria.",
+      "frasi": [
+        "La prima conseguenza si applica immediatamente; le ricorrenze seguono l’Iniziativa di chi ha procurato l’effetto, al massimo una volta per Round.",
+        "Penalità e Stati continuativi rimangono attivi fra le Iniziative.",
+        "In assenza di un momento specifico, seguono l’Iniziativa della fonte; una fonte priva di Iniziativa usa la fine del RND. Se la fonte esce di scena, si conserva la sua Iniziativa."
+      ]
+    },
+    "_nota_periodici": "«periodico» di una voce di «elenco» (§5.15, §5.18): perdita di PV che si ripete all’Iniziativa della fonte. «danno»: «valore» (il valore X dello Stato: Sanguinamento), una formula di dadi («1d4»: Incendiato) o «dalla_fonte» (Avvelenato: lo dice il veleno). «ignora»: che cosa non riduce la perdita. «non_sotto_zero» e «ferita_quando_azzera»: §5.15. «a_zero_pv»: la Prova richiesta quando il bersaglio è già a 0 PV. Le regole comuni stanno in «periodici».",
     "_nota_effetti": "«effetti»: lista nello schema degli effetti degli oggetti (docs/effetti-oggetti.md). tipo «va»: «abilita» (una Abilità) oppure «prove» (una categoria di regole.json → categorie_prove, o «tutte»); ambito «generale» entra nel VA effettivo, «uso_specifico» dà un valore a parte per quell'uso. tipo «salvezza» con «salvezza»: id oppure «tutte». Le armi ricevono le penalità della loro Abilità, quindi anche «Attacca!»; «Lancia!» quelle di Potere. Più Stati attivi si sommano (il §5.18 non dà un'altra regola). «limiti»: divieti e avvisi nelle utility (manovre_vietate, solo_azioni_difensive); «azioni» e «movimento» restano blocchi a parte. Gli Stati senza effetti restano promemoria. La stampa non li applica.",
     "_nota": "§5.18, tabella «Durate e tempi di risoluzione»: gli Stati sono undici. «promemoria» (con \"riassunto\": true) riassume gli effetti descritti nel §5.18 (A Terra: §5.5) per la scheda e la modalità tavolo; il testo del manuale resta quello di riferimento."
   },
@@ -2022,6 +2086,24 @@
   "difese": {
     "parata_distanza_arma": -8,
     "_nota": "Giocatore §5.9, Parata a distanza: «Penalità −8 VA con un’arma e −4 VA con uno scudo». Gli scudi hanno i propri modificatori nel catalogo (Armamenti §7.4.11)."
+  },
+  "magistrale": {
+    "paragrafo": "Giocatore §1.6 («Effetti del Successo Magistrale», riga «Combattimento»), §5.13 (ordine del danno)",
+    "raddoppio": 2,
+    "da_x2": 3,
+    "massimo": 3,
+    "solo_prima_applicazione": true,
+    "prima_di": ["difesa", "armatura"],
+    "non_moltiplicati": ["dopo_armatura", "periodici"],
+    "_nota": "E&L del 29/09, risposta 11 (A.29): i bonus ordinari (Colpo Mirato, Affondo, Carica Brutale, Caratteristica) si sommano prima del moltiplicatore e si moltiplicano; quelli espressamente dopo l’Armatura no e richiedono almeno 1 danno residuo; ×2 diventa ×3, ×3 resta ×3; nelle applicazioni multiple solo la prima (§1.6). Il §1.6 è una regola generale, non del solo corpo a corpo: la applica src/danno.js → applicaColpo (moltiplicatore prima della Difesa e dell’Armatura, §5.13 passo 3) a ogni colpo del tavolo, con lo stesso calcolo per i PG e per i nemici, sia che il danno sia tirato dall’app sia che venga scritto dal vivo.",
+    "promemoria": "Magistrale: i bonus ordinari al danno sono già nella formula e si moltiplicano; quelli dopo l’Armatura no. Nelle applicazioni multiple di danno il moltiplicatore vale solo per la prima (§1.6, §5.13).",
+    "frasi": [
+      "L’attacco colpisce e il danno viene raddoppiato; un danno già ×2 diventa ×3. Si applica prima della Parata e dell’Armatura, alla sola prima istanza secondo il testo seguente.",
+      "Normalmente il Magistrale raddoppia il danno; se una regola prevede già danno ×2, con il Magistrale si applica ×3, non ×4.",
+      "Gli altri moltiplicatori non si sommano né si moltiplicano tra loro: si utilizza il più alto.",
+      "Negli attacchi che producono più istanze di danno, il beneficio del Successo Magistrale riguarda soltanto la prima: il primo colpo di una Raffica, il bersaglio principale di un’Area o, se non esiste, il bersaglio dichiarato prima del danno.",
+      "Danni persistenti, Sanguinamento ed effetti secondari successivi non vengono moltiplicati dal Magistrale."
+    ]
   },
   "magistrale_naturale": {
     "paragrafo": "Giocatore §1.6",
@@ -2565,18 +2647,6 @@
       "frasi": [
         "Se l’evento si verifica prima della propria Iniziativa successiva, l’Azione si risolve immediatamente con −2 VA e senza consumare un’altra Azione.",
         "Imboscata Migliorata elimina la penalità."
-      ]
-    },
-    "magistrale": {
-      "paragrafo": "Giocatore §1.6",
-      "raddoppio": 2,
-      "da_x2": 3,
-      "massimo": 3,
-      "_nota": "E&L del 29/09, risposta 11 (A.29): i bonus ordinari (Colpo Mirato, Affondo, Carica Brutale, Caratteristica) si sommano prima del moltiplicatore e si moltiplicano; quelli espressamente dopo l’Armatura no e richiedono almeno 1 danno residuo; ×2 diventa ×3, ×3 resta ×3; nelle applicazioni multiple solo la prima (§1.6).",
-      "promemoria": "Magistrale: i bonus ordinari al danno sono già nella formula e si moltiplicano; quelli dopo l’Armatura no. Nelle applicazioni multiple di danno il moltiplicatore vale solo per la prima (§1.6, §5.13).",
-      "frasi": [
-        "Normalmente il Magistrale raddoppia il danno; se una regola prevede già danno ×2, con il Magistrale si applica ×3, non ×4.",
-        "Gli altri moltiplicatori non si sommano né si moltiplicano tra loro: si utilizza il più alto."
       ]
     },
     "danno": {

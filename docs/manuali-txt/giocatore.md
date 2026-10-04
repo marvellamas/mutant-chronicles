@@ -624,7 +624,7 @@ Compila la Scheda seguendo questa sequenza. I rimandi indicano dove trovare i va
 | 2 | Distribuire 5 Punti Caratteristica | 2.1 |
 | 3 | Scegliere l’Addestramento | 2.2–2.8, 2.10–2.11 |
 | 4 | Scegliere la prima Classe al I Grado | 2.12 |
-| 5 | Distribuire 10 Punti Abilità Liberi | 2.13 |
+| 5 | Distribuire 7 Punti Abilità Liberi | 2.13 |
 | 6 | Calcolare i valori derivati | 2.14 |
 | 7 | Determinare i Punti Eroe | 2.15 |
 | 8 | Equipaggiamento iniziale | 2.16 |
@@ -896,7 +896,7 @@ I tre Talenti fissi si ottengono ai Gradi I, III e V. Ai Gradi II, IV e VI si ac
 
 ## **2.13 Punti Abilità Liberi iniziali**
 
-Alla creazione distribuisci 10 Punti Abilità Liberi. Ogni punto aggiunge \+1 all’Avanzamento dell’Abilità scelta, sia essa di Classe oppure no. L’Abilità deve avere VA almeno 1 prima dell’assegnazione dei punti liberi.
+Alla creazione distribuisci 7 Punti Abilità Liberi. Ogni punto aggiunge \+1 all’Avanzamento dell’Abilità scelta, sia essa di Classe oppure no. L’Abilità deve avere VA almeno 1 prima dell’assegnazione dei punti liberi.
 
 Puoi assegnare più punti alla stessa Abilità soltanto quando ogni punto aumenta effettivamente il VA personale, senza superare il limite della sua categoria al I Grado: S 12, P 9, G 7, N 5\. Il limite comprende Modificatore, Base iniziale, Corporazione e Avanzamento. Non si possono accantonare punti liberi inattivi oltre il limite. I punti non cambiano la Base iniziale o il bonus della Corporazione.
 
@@ -906,14 +906,14 @@ Puoi assegnare più punti alla stessa Abilità soltanto quando ogni punto aument
 | :---: | :---: | :---: | :---: |
 | Furtività | \+1 | 0 | 1 |
 | Percezione | \+1 | \+2 | 3 |
-| Tecnologia | 0 | \+2 | 2 |
+| Tecnologia | 0 | \+1 | 1 |
 | Armi leggere | \+1 | 0 | 1 |
-| Cultura | \+1 | \+2 | 3 |
-| Raggirare | \+1 | \+4 | 5 |
+| Cultura | \+1 | \+1 | 2 |
+| Raggirare | \+1 | \+3 | 4 |
 
-L’esempio usa il Mishima Agente del paragrafo 2.1, con modificatori DES \+2, SAG \+2, INT 0 e CAR 0\. I 10 punti liberi sono assegnati a Percezione (2), Tecnologia (2), Cultura (2) e Raggirare (4). Percezione: 2 \+ 7 \+ 0 \+ 3 \= VA 12; Raggirare: 0 \+ 7 \+ 0 \+ 5 \= VA 12; Tecnologia: 0 \+ 6 \+ 0 \+ 2 \= VA 8; Cultura: 0 \+ 6 \+ 0 \+ 3 \= VA 9\. Furtività e Armi leggere sono già al limite P: 2 \+ 6 \+ 0 \+ 1 \= VA 9\. Medicina è G e parte da 2 \+ 5 \= VA 7\. Tutti i punti spesi aumentano il VA personale e rispettano il limite della categoria.
+L’esempio usa il Mishima Agente del paragrafo 2.1, con modificatori DES \+2, SAG \+2, INT 0 e CAR 0\. I 7 punti liberi sono assegnati a Percezione (2), Tecnologia (1), Cultura (1) e Raggirare (3). Percezione: 2 \+ 7 \+ 0 \+ 3 \= VA 12; Raggirare: 0 \+ 7 \+ 0 \+ 4 \= VA 11; Tecnologia: 0 \+ 6 \+ 0 \+ 1 \= VA 7; Cultura: 0 \+ 6 \+ 0 \+ 2 \= VA 8\. Furtività e Armi leggere sono già al limite P: 2 \+ 6 \+ 0 \+ 1 \= VA 9\. Medicina è G e parte da 2 \+ 5 \= VA 7\. Tutti i punti spesi aumentano il VA personale e rispettano il limite della categoria.
 
-I 10 punti della creazione costituiscono l’assegnazione del 1° livello. Altri 10 Punti Abilità Liberi vengono assegnati ai livelli 4, 8, 12, 16 e 20, secondo il Capitolo 8; non si aggiunge un secondo gruppo di punti al 1° livello.
+I 7 punti della creazione costituiscono l’assegnazione del 1° livello. Altri 7 Punti Abilità Liberi vengono assegnati ai livelli 4, 8, 12, 16 e 20, secondo il Capitolo 8; non si aggiunge un secondo gruppo di punti al 1° livello.
 
 ## **2.14 Valori derivati iniziali**
 
@@ -1831,7 +1831,7 @@ Prima di iniziare a giocare, verifica le voci seguenti:
 * Tutti i 5 Punti Caratteristica assegnati, nessun valore iniziale superiore a 7 e modificatori calcolati come valore meno 5\.  
 * Uno dei cinque Addestramenti scelto, con il vantaggio e i bonus alle Salvezze corretti.  
 * Prima Classe appartenente all’Addestramento, registrata al I Grado: profilo completo 2 S / 6 P / 12 G / 4 N, basi 7 / 6 / 5 / 3, \+1 nelle cinque Abilità di Classe, Talento fisso iniziale e contributi a PV e PM. Nessun bonus automatico alle Salvezze dalla Classe.  
-* Tutti i 10 Punti Abilità Liberi assegnati ad Abilità ammesse, aumentando effettivamente il VA personale entro i limiti del I Grado.  
+* Tutti i 7 Punti Abilità Liberi assegnati ad Abilità ammesse, aumentando effettivamente il VA personale entro i limiti del I Grado.  
 * Per ogni Abilità, componenti e totale distinti: Modificatore \+ Base iniziale \+ Corporazione \+ Avanzamento; applicare il limite di categoria al VA personale prima dei modificatori alla Prova.  
 * PV, PM, quattro Salvezze, bonus Iniziativa, Movimento e Azioni calcolati. Per le Salvezze: base 8, modificatore specifico, bonus di Addestramento e Corporazione, Avanzamento 0 al 1° livello.  
 * Punti Eroe iniziali determinati e spazio dedicato ai Distintivi.  
@@ -2197,9 +2197,9 @@ Non si applica agli attacchi ad Area o inevitabili. Le eventuali Difese richiedo
 
 **Specializzate (S, base 7):** Furtività, Tecnologia.
 
-**Professionali (P, base 6):** Armi da lancio, Armi leggere, Armi da mischia, Difese, Atletica, Percezione.
+**Professionali (P, base 6):** Armi da lancio, Armi leggere, Armi da guerra, Difese, Atletica, Percezione.
 
-**Generiche (G, base 5):** Armi medie, Armi pesanti, Armi da guerra, Corpo a corpo, Pilotare, Sopravvivenza, Cultura, Medicina, Scienza, Intrattenere, Oratoria, Raggirare.
+**Generiche (G, base 5):** Armi medie, Armi pesanti, Armi da mischia, Corpo a corpo, Pilotare, Sopravvivenza, Cultura, Medicina, Scienza, Intrattenere, Oratoria, Raggirare.
 
 **Non competenti (N, base 3):** Artefatti, Occultismo, Potere, Rituali.
 
@@ -4882,28 +4882,28 @@ SIMPLY RPG prevede venti livelli. Alla creazione si acquisisce il primo Grado di
 
 | Livello | Avanzamento |
 | :---- | :---- |
-| 1 | **Creazione:** I Grado di Classe e 10 Punti Abilità Liberi iniziali |
+| 1 | **Creazione:** I Grado di Classe e 7 Punti Abilità Liberi iniziali |
 | 2 | \+2 Punti Caratteristica |
 | 3 | Un Talento Libero; \+1 a tutte le Prove Salvezza |
-| 4 | Un Grado di Classe e 10 Punti Abilità Liberi |
+| 4 | Un Grado di Classe e 7 Punti Abilità Liberi |
 | 5 | Un Talento Libero |
 | 6 | \+2 Punti Caratteristica |
 | 7 | Un Talento Libero |
-| 8 | Un Grado di Classe e 10 Punti Abilità Liberi |
+| 8 | Un Grado di Classe e 7 Punti Abilità Liberi |
 | 9 | Un Talento Libero |
 | 10 | \+2 Punti Caratteristica |
 | 11 | Un Talento Libero; \+1 a tutte le Prove Salvezza |
-| 12 | Un Grado di Classe e 10 Punti Abilità Liberi; seconda Azione Principale per Round |
+| 12 | Un Grado di Classe e 7 Punti Abilità Liberi; seconda Azione Principale per Round |
 | 13 | Un Talento Libero |
 | 14 | \+2 Punti Caratteristica |
 | 15 | Un Talento Libero |
-| 16 | Un Grado di Classe e 10 Punti Abilità Liberi |
+| 16 | Un Grado di Classe e 7 Punti Abilità Liberi |
 | 17 | Un Talento Libero |
 | 18 | \+2 Punti Caratteristica |
 | 19 | Un Talento Libero; \+1 a tutte le Prove Salvezza |
-| 20 | Un Grado di Classe e 10 Punti Abilità Liberi |
+| 20 | Un Grado di Classe e 7 Punti Abilità Liberi |
 
-Nel percorso completo si ricevono sei Gradi di Classe, 60 Punti Abilità Liberi, 10 Punti Caratteristica dopo la creazione e nove Talenti Liberi. Ogni Grado concede inoltre \+1 a ciascuna delle cinque Abilità della Classe, per 30 punti automatici complessivi; quelli oltre il limite del VA personale restano registrati, temporaneamente inattivi. Ai livelli 3, 11 e 19 si aggiunge inoltre \+1 a tutte le Salvezze, fino a \+3 complessivo.
+Nel percorso completo si ricevono sei Gradi di Classe, 42 Punti Abilità Liberi, 10 Punti Caratteristica dopo la creazione e nove Talenti Liberi. Ogni Grado concede inoltre \+1 a ciascuna delle cinque Abilità della Classe, per 30 punti automatici complessivi; quelli oltre il limite del VA personale restano registrati, temporaneamente inattivi. Ai livelli 3, 11 e 19 si aggiunge inoltre \+1 a tutte le Salvezze, fino a \+3 complessivo.
 
 ### 8.1.1 Avanzamento delle Prove Salvezza
 
@@ -4929,7 +4929,7 @@ Una Caratteristica iniziale a 7 può salire a 9 al 2° livello e a 10 al 6° liv
 
 ## **8.3 Punti Abilità e limiti del VA personale**
 
-Si distribuiscono 10 Punti Abilità Liberi ai livelli 1, 4, 8, 12, 16 e 20\. I punti del 1° livello sono quelli della creazione, non un’assegnazione aggiuntiva. Ogni punto aggiunge \+1 all’Avanzamento di un’Abilità ammessa (§2.13), purché aumenti effettivamente il VA personale. Si registrano prima i punti automatici della Classe e poi si spendono quelli liberi. La tabella riporta i limiti del VA personale per un personaggio con una sola Classe; il multiclasse usa il §8.7.
+Si distribuiscono 7 Punti Abilità Liberi ai livelli 1, 4, 8, 12, 16 e 20\. I punti del 1° livello sono quelli della creazione, non un’assegnazione aggiuntiva. Ogni punto aggiunge \+1 all’Avanzamento di un’Abilità ammessa (§2.13), purché aumenti effettivamente il VA personale. Si registrano prima i punti automatici della Classe e poi si spendono quelli liberi. La tabella riporta i limiti del VA personale per un personaggio con una sola Classe; il multiclasse usa il §8.7.
 
 | Grado | Specializzate | Professionali | Generiche | Non competenti |
 | :---- | :---- | :---- | :---- | :---- |
@@ -5629,7 +5629,7 @@ Esempio: Pilota I \+ Agente I ha G \= 2\. Pilotare è S per il Pilota e G per l�
 
 Esempio: Pilota V \+ Agente I ha G \= 6\. Cultura è G per il Pilota e P per l’Agente: limite G 17, limite P 7 \+ 6 \+ 1 \= 14; si usa 17\. Le categorie si confrontano per il risultato numerico, senza imporre la precedenza della Professionale sulla Generica.
 
-Con una sola Classe, gS oppure gP coincide con G e le formule restituiscono esattamente la tabella del §8.3. Dopo ogni Grado acquisito ricalcola i limiti, aggiungi i cinque incrementi automatici della Classe e assegna i 10 punti liberi soltanto dove aumentano il VA personale.
+Con una sola Classe, gS oppure gP coincide con G e le formule restituiscono esattamente la tabella del §8.3. Dopo ogni Grado acquisito ricalcola i limiti, aggiungi i cinque incrementi automatici della Classe e assegna i 7 punti liberi soltanto dove aumentano il VA personale.
 
 ## 8.8 Specializzazioni nelle Abilità
 

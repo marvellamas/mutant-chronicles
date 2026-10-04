@@ -87,22 +87,26 @@ export function leggiDanno(testo) {
 }
 
 /**
- * Proposta per la finestra «Colpito» (pezzo 4) dopo un attacco riuscito: formula, moltiplicatore di ogni
- * applicazione (Bruciapelo, Carica…), quello della prima con il Magistrale (§1.6: solo la prima istanza),
- * natura, tipo, applicazioni (AC, e i colpi a segno delle raffiche) e proprietà dell'attacco.
+ * Proposta per la finestra «Colpito» (pezzo 4) dopo un attacco riuscito: formula del danno (dadi e bonus
+ * ordinari), moltiplicatore di ogni applicazione (Bruciapelo, Carica…), Successo Magistrale, natura, tipo,
+ * applicazioni (AC, e i colpi a segno delle raffiche) e proprietà dell'attacco.
+ *
+ * Il raddoppio del Magistrale non sta qui: lo applica src/danno.js → applicaColpo sulla prima applicazione
+ * (§1.6, §5.13 passo 3), così vale anche con il danno scritto dal vivo. Qui si passa solo «magistrale».
  * @param colpiASegno colpi a segno dei tiri riusciti (1 per un attacco normale)
  */
 export function propostaColpo(attacco, risultato, { magistrale = false, colpiASegno = 1 } = {}) {
   const dist = attacco.tipo === 'distanza';
   const base = dist ? leggiDanno(risultato.danno_per_colpo) : { formula: risultato.danno?.formula ?? attacco.danno, moltiplicatore: risultato.danno?.moltiplicatore ?? 1 };
-  const magi = dist ? leggiDanno(risultato.danno_magistrale ?? risultato.danno_per_colpo).moltiplicatore : risultato.danno?.moltiplicatore_magistrale ?? base.moltiplicatore;
   return {
     formula: base.formula,
     moltiplicatore: base.moltiplicatore,
-    moltiplicatorePrimo: magistrale ? magi : base.moltiplicatore,
+    magistrale: !!magistrale,
     natura: attacco.natura,
     tipo: dist ? 'distanza' : 'ravvicinato',
     ac: Math.max(1, (risultato.applicazioni ?? attacco.ac ?? 1) * Math.max(1, colpiASegno)),
     proprieta: [...(attacco.proprieta ?? [])],
+    // fonte degli Stati periodici che il colpo può applicare (Sanguinante X: §5.15, all'Iniziativa della fonte)
+    ...(attacco.fonte ? { fonte: attacco.fonte, fonteNome: attacco.fonteNome } : {}),
   };
 }

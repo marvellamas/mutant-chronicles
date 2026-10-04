@@ -1620,6 +1620,11 @@ body.con-sfondo::before {
 .finestra-colpo .input-formula { width: 7rem; }
 .anteprima-colpo ol { margin: 0.3rem 0; padding-left: 1.4rem; }
 .anteprima-colpo li { margin: 0.25rem 0; }
+/* Successo Magistrale (§1.6): il raddoppio si vede nell'anteprima e l'interruttore è in evidenza */
+.finestra-colpo .interruttore-magistrale { display: inline-flex; align-items: center; gap: 0.35rem; font-weight: 700; }
+.anteprima-colpo .danno-magistrale { color: var(--accento); }
+.finestra-colpo .stato-colpo + .stato-colpo { margin-top: 0.3rem; }
+.finestra-colpo .periodico-colpo { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem 0.7rem; margin: 0 0 0.3rem 1.4rem; }
 
 /* Tavolo del Master, pezzo 5: «Attacca» dei nemici (src/ui/attacco-nemico.js) */
 .pulsanti-carta { margin-left: auto; align-self: flex-start; display: flex; gap: 0.3rem; }

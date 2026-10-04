@@ -19,6 +19,12 @@ Link: `https://docs.google.com/document/d/<ID>/edit`
 
 La colonna "Ultima modifica vista" è la data di modifica del Doc (`modifiedTime`) all'ultimo controllo. **Si aggiorna solo dopo aver esaminato le differenze e aggiornato dati e documenti.**
 
+**4 ottobre 2026, mattina:** controllo di inizio sessione. Invariati Magia, Armamenti, Equipaggiamento, E&L e «per-davide.md». **Cambiato il Manuale del Giocatore** (2026-10-03T19:16:29Z, dopo l'E&L delle 14:13): testo scaricato in `docs/manuali-txt/giocatore.md`. Due differenze, non ancora applicate:
+- **regola:** i Punti Abilità Liberi passano da 10 a **7** per Grado (§2.0 passo 5, §2.13 con l'esempio del Mishima Agente rifatto — 2 Percezione, 1 Tecnologia, 1 Cultura, 3 Raggirare —, §2.18, §8.1, §8.3, §8.7: 42 nel percorso completo). **In conflitto con l'E&L del 03/10 alle 14:13, che ne fissa 5** (decisione 90, applicata nei dati con il commit f55e08d). Il manuale è posteriore di cinque ore e rifà l'esempio con 7, quindi probabilmente è la versione buona, ma `docs/risposte-master.md` ha la precedenza sui manuali (CLAUDE.md): serve una parola di Davide prima di toccare `regole.json`. Domanda nel prossimo pacchetto.
+- **regola:** profilo di competenza dell'**Incursore** (§3.7): *Armi da guerra* passa da Generica a Professionale e *Armi da mischia* da Professionale a Generica (i conteggi 2 S / 6 P / 12 G / 4 N restano). Da applicare in `data/classi.json` → `competenze`.
+
+Data vista non aggiornata finché le due differenze non sono applicate.
+
 ## Procedura di controllo (all'inizio di ogni sessione, o su richiesta)
 
 1. Per ognuno dei sei Doc del registro (quattro manuali, E&L e per-davide.md) leggere `modifiedTime` e confrontarlo con il registro.

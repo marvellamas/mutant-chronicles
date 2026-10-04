@@ -90,7 +90,8 @@ export function apriAttaccoNemico(ctx, p, { bersagli, registra }) {
         });
         if (!ok) throw new Error('attacco non registrato (scontro cambiato o chiuso): riprova.');
         chiudi();
-        if (applica) b.colpito(propostaColpo(attacco, r, { magistrale: e.magistrale, colpiASegno: e.riusciti * (attacco.tipo === 'distanza' ? Math.max(1, r.colpi_a_segno ?? 1) : 1) }));
+        // la fonte degli Stati periodici è chi attacca: le ricorrenze vanno alla sua Iniziativa (§5.15)
+        if (applica) b.colpito(propostaColpo({ ...attacco, fonte: p.id, fonteNome: p.nome }, r, { magistrale: e.magistrale, colpiASegno: e.riusciti * (attacco.tipo === 'distanza' ? Math.max(1, r.colpi_a_segno ?? 1) : 1) }));
       } catch (err) {
         st.errore = err.message; st.inCorso = false; disegna();
       }

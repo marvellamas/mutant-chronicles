@@ -380,6 +380,52 @@ Valori per versione: 189 in Round, 318 in minuti, ore o giorni, 4 altri. Mancava
 - senza server (porta 8017): contatore della scheda, scadenza al Round 7.
 
 
+## Due bug della prima prova di scontro (4 ottobre 2026)
+
+Marcello e Davide, in un piccolo scontro di prova sulla plancia, hanno trovato due cose che non funzionavano.
+
+### 1. Il Magistrale di un nemico non raddoppiava il danno
+
+**Regola.** Giocatore §1.6, «Effetti del Successo Magistrale», riga *Combattimento*: «L'attacco colpisce e il danno viene raddoppiato; un danno già ×2 diventa ×3. Si applica **prima della Parata e dell'Armatura**, alla sola prima istanza». Il §5.13 mette il moltiplicatore al passo 3, dopo i dadi e i bonus ordinari e prima di Difese e Armatura; il §1.6 aggiunge che «danni persistenti, Sanguinamento ed effetti secondari successivi non vengono moltiplicati».
+
+**Causa.** La catena del tiro era giusta (`esitoAttacco` riconosceva il Magistrale, `propostaColpo` calcolava il moltiplicatore), ma il raddoppio lo applicava **solo il pulsante «Tira con l'app»** della finestra «Colpito»: moltiplicava il numero appena tirato. Al tavolo i dadi sono veri e il danno si scrive a mano, e quel numero arrivava intatto in `applicaColpo`, che di moltiplicatori non sapeva nulla. Stesso buco per un PG che colpiva un nemico dalla plancia: «Colpito» si apriva senza alcun modo di dire che il colpo era Magistrale.
+
+**Correzione.** Il moltiplicatore è passato nel motore:
+- `regole.json` → **`magistrale`** (chiave di primo livello, spostata da `attacco_ravvicinato.magistrale`: il §1.6 è una regola generale del danno, non del solo corpo a corpo), con `raddoppio`, `da_x2`, `massimo`, `solo_prima_applicazione` e `prima_di: [difesa, armatura]`; validatore in `src/validate.js`;
+- `src/danno.js` → `moltiplicatoreMagistrale` (×1 → ×2, ×2 → ×3, ×3 resta ×3) e `applicaColpo`, che ora accetta `moltiplicatore` e `magistrale` nel colpo e applica il moltiplicatore **prima di Difesa e Armatura**, alla sola prima applicazione, con la provenienza di ogni passo. Il danno del colpo sono i dadi con i bonus ordinari, scritti dal vivo o tirati dall'app: il numero arriva dallo stesso punto in entrambi i casi;
+- `src/attacco.js` importa la funzione da `danno.js` (una sola fonte per la regola);
+- `src/nemico-attacco.js` → `propostaColpo` passa `magistrale` (non più un moltiplicatore già calcolato) e la **fonte** dell'attacco, per gli Stati periodici;
+- `src/ui/colpo.js`: interruttore **«Successo Magistrale: danno ×N sulla prima applicazione»**, acceso da un attacco Magistrale e accendibile a mano (un PG che colpisce un nemico, un colpo scritto a mano); scelta del moltiplicatore dell'attacco; anteprima che mostra `10 ×2 = 20 (Magistrale) − AR 4 = 16`;
+- registro dello scontro: «Torvald Krane colpito (Magico, **Successo Magistrale**, Perforante 1): 10 ×2 = 20 − AR 4 = 16; PV 32 → 16».
+
+Vale per ravvicinato e distanza, armi e attacchi naturali, Spazzata compresa (un «Colpito» per bersaglio, ognuno col suo esito) e per i PG che colpiscono i nemici: è lo stesso `applicaColpo`.
+
+### 2. Il Sanguinamento non toglieva PV
+
+**Regola.** Giocatore §5.15: «Sanguinamento possiede un valore X. Alla prima applicazione il personaggio perde **immediatamente X PV ignorando Armatura, Parata e Schivata**; le applicazioni successive avvengono **all'Iniziativa di chi lo ha procurato, al massimo una volta per Round**. Questa perdita non porta i PV sotto 0 e, quando li riduce a 0, non produce immediatamente una Ferita. Se al momento dell'applicazione si trova già a 0 PV, il personaggio effettua Tempra: con successo non subisce nuove Ferite, con fallimento subisce direttamente una Ferita. Più Sanguinamenti non si sommano: si usa il valore più alto.» Non scade da sé: finisce solo con le procedure per fermarlo (Medicina, Incantesimi). Il §5.18 ripete la regola per tutti gli Stati e la Magia aggiunge che «una fonte priva di Iniziativa usa la fine del RND» e che «se la fonte esce di scena, si conserva la sua Iniziativa».
+
+**Causa.** Lo Stato veniva applicato correttamente (proprietà `Sanguinante X` del §5.24), ma **nessuno lo faceva valere**: `avanti()` scalava solo le durate in Round, e il Sanguinamento non ha una durata in Round. Mancavano anche il valore X (lo Stato si salvava come semplice id, senza numero) e la fonte, che dice a quale Iniziativa tocca.
+
+**Correzione.** Perdite periodiche come meccanismo a sé, con gli stessi criteri delle durate:
+- **dati**: `regole.json` → `stati.periodici` (regole comuni: `quando: iniziativa_fonte`, `senza_fonte: fine_round`, `max_per_round: 1`, testo dell'avviso) e `periodico` sulle voci di `stati.elenco`: **Sanguinamento** (`danno: valore`, ignora armatura, parata e schivata), **Incendiato** (`1d4`, ignora l'AR non magica) e **Avvelenato** (`dalla_fonte`: il valore lo dà il veleno). Validatore in `src/validate.js`;
+- **motore**: `src/periodici.js`, funzioni pure (`registraPeriodico`, `perditeDovute`, `applicaPerdita`, `togliPeriodici`, `allineaPeriodici`, `pvDopoPerdita`). Ogni perdita in corso sta nello scontro, in `periodici`: bersaglio, Stato, valore o formula, fonte e `ultimo` (ultimo Round applicato), che rende l'applicazione **idempotente**: due «Avanti» in due finestre non la contano due volte (la seconda applicazione dà errore e `perditeDovute` non la propone più);
+- **prima applicazione**: `applicaColpo` accetta `periodiciImmediati` e toglie subito X PV dopo il danno, ignorando AR e Difese, **senza** il moltiplicatore del Magistrale (§1.6). Nel registro: «Sanguinamento 1: −1 PV subito (PV 16 → 15)»;
+- **applicazioni successive**: la plancia (`src/ui/tavolo.js` → `applicaPeriodici`) le applica da sé quando il turno arriva alla fonte, al massimo una volta per Round. Per un nemico i PV stanno nello scontro; per un PG si scrive nel suo file con la revisione, come già fanno le durate. Avviso e riga di registro: «**Sanguinamento: Torvald Krane perde 1 PV (PV 15 → 14)**». Per Incendiato e i veleni la formula la tira l'app e la riga lo dice;
+- **a 0 PV** non si applica nulla da sé: serve la PS di Tempra, e il registro la chiede (§5.15);
+- **barra «Stati che togliono PV ogni Round»** nella plancia: le perdite in corso con valore e fonte e il pulsante **«Ferma»** (lo Stato è stato arrestato: si toglie anche dalla scheda del PG o dalla carta del nemico); gli Stati periodici attivi senza valore — messi a mano dalla scheda — hanno **«Registra»**, che chiede valore e fonte;
+- **finestra «Colpito»**: per uno Stato periodico si scelgono il valore X (proposto dalla proprietà) e la fonte fra i partecipanti dello scontro, con «nessuna Iniziativa (fine del Round)» per le fonti che non ne hanno;
+- **scheda del PG**: `collegamentoScontro` porta anche i periodici, e la tab Combattimento scrive «Sanguinamento **· 1 PV per Round**» accanto allo Stato, con la fonte nel suggerimento. I PV aggiornati arrivano dal file, come per gli altri cambiamenti della plancia.
+
+**Altri Stati periodici.** Dei undici Stati del §5.18 solo tre togliono PV a ogni Round e sono tutti automatici: Sanguinamento (valore X), Incendiato (1d4, l'app tira) e Avvelenato (valore o formula del veleno, da scrivere: il manuale non dà numeri fissi — quelli dei veleni del Bestiario stanno in `data/bestiario.json` → `mutazioni.veleno`). Gli altri otto non hanno effetti periodici sui PV e restano promemoria con i loro effetti sui valori, come prima.
+
+**Prova** (porta 3177, cartelle temporanee e una copia di Torvald Krane, poi cancellate), con plancia e scheda in due finestre:
+- Legionario Oscuro, Lama nefaria, tiro 1 naturale → «Colpito: Successo Magistrale»; «Colpito» con l'interruttore già acceso, danno 10 scritto dal vivo, proprietà «Perforante 1, Sanguinante 1» → anteprima `10 ×2 = 20 − AR 4 = 16`, totale PV 32 → 15 (16 del colpo più 1 di Sanguinamento immediato); prima della correzione il danno restava 10 e i PV scendevano a 22;
+- fonte proposta: «Legionario Oscuro 1», cioè chi ha attaccato;
+- Round 2, all'Iniziativa del Legionario: avviso «Sanguinamento: Torvald Krane perde 1 PV (PV 15 → 14)», carta e scheda a 14; Round 3: 14 → 13; nessuna doppia applicazione nello stesso Round;
+- «Ferma»: al Round 4 i PV restano 13 e lo Stato si toglie anche dalla scheda; «Registra» (valore 1, fonte di turno) lo rimette, e il Round 5 torna a togliere 1 PV;
+- la scheda nella seconda finestra mostra PV 12/32, Round 5 e «Sanguinamento · 1 PV per Round»;
+- senza server (porta 8178, server statico): app invariata, nessun errore in console.
+
 ## Basi nuove del Bestiario nella plancia (3 ottobre 2026)
 
 Quadrupede, Alato, Strisciante e Gigante (Bestiario §3.6–3.9) e le loro creature pronte arrivano in «Crea nemico» e «Prepara scontro» dai dati (`data/bestiario.json`), senza codice nuovo per le basi.

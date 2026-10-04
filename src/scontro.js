@@ -351,6 +351,14 @@ export function validaScontro(s) {
   const nemicoRotto = s.partecipanti.find((p) => p?.tipo === 'nemico'
     && !(Number.isInteger(p.pv?.attuali) && Number.isInteger(p.pv?.massimo) && Array.isArray(p.stati) && p.scheda && typeof p.scheda === 'object'));
   if (nemicoRotto) return `nemico ${nemicoRotto.nome ?? nemicoRotto.id}: PV, Stati o scheda mancanti`;
+  // perdite periodiche degli Stati (§5.15, §5.18; src/periodici.js): presenti solo dal 04/10/2026
+  if (s.periodici !== undefined) {
+    if (!Array.isArray(s.periodici)) return 'periodici non valido';
+    const rotta = s.periodici.find((p) => !(p && typeof p.bersaglio === 'string' && typeof p.stato === 'string'
+      && (Number.isInteger(p.valore) || typeof p.formula === 'string')
+      && Number.isInteger(p.dal) && Number.isInteger(p.ultimo)));
+    if (rotta) return `perdita periodica di ${rotta?.nome ?? rotta?.bersaglio ?? '?'}: bersaglio, Stato, valore o Round mancanti`;
+  }
   return null;
 }
 

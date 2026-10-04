@@ -1363,9 +1363,12 @@ function tabCombattimento(ctx, d) {
             const attivo = s.statiAttivi.includes(st.id);
             // durata registrata nella plancia dello scontro (src/round-scontro.js)
             const durata = attivo ? ctx.roundScontro?.durate?.find((d) => d.stato === st.id) : null;
+            // perdita di PV a ogni Round registrata nella plancia (§5.15, §5.18): valore e fonte
+            const perdita = attivo ? ctx.roundScontro?.periodici?.find((p) => p.stato === st.id) : null;
             return h('li', {}, h('label', { class: `stato-compatto${attivo ? ' attivo' : ''}` },
               h('input', { type: 'checkbox', checked: attivo, onchange: () => ctx.azioni.commutaStato(st.id) }),
               h('span', {}, st.nome),
+              perdita ? h('small', { class: 'nota motivo', title: `${st.periodico?.paragrafo ?? '§5.18'}: la perdita la applica la plancia all’Iniziativa della fonte${perdita.fonte ? ` (${perdita.fonte})` : ' (alla fine del Round)'}, una volta per Round` }, ` · ${perdita.valore ?? perdita.formula} PV per Round`) : null,
               durata ? h('small', { class: 'nota', title: `fino alla fine del Round ${durata.al}, dallo scontro` }, ` · ${durata.rimasti} Round`) : null),
             infoValore('?', { titolo: st.nome, sottotitolo: st.durata, sezioni: [{ testo: `${st.promemoria}${st.riassunto ? ' (riassunto, non testo del manuale)' : ''}` }] }, { classe: 'info-gradi' }));
           }))))),

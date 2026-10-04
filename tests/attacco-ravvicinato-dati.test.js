@@ -22,7 +22,12 @@ test('Manovre del §5.12 con Azioni, VA, danno e Prova del bersaglio', () => {
   assert.deepEqual(R.manovre.immobilizzare.prova, { tipo: 'contrapposta', abilita: ['Corpo a corpo'], contro: ['Corpo a corpo', 'Atletica'] });
   assert.equal(R.manovre.stordire.dopo_armatura.salvezza, 'Tempra');
   assert.deepEqual(R.carica.fasce.map((f) => [f.da, f.a, f.va, f.avversari]), [[3, 6, -2, -4], [7, 12, -4, -6]]);
-  assert.deepEqual([R.magistrale.raddoppio, R.magistrale.da_x2, R.magistrale.massimo], [2, 3, 3]);
+  // §1.6 è una regola generale del danno: sta in regole.json → magistrale (src/danno.js), non sotto attacco_ravvicinato
+  assert.equal(R.magistrale, undefined);
+  const MG = dati.regole.magistrale;
+  assert.deepEqual([MG.raddoppio, MG.da_x2, MG.massimo], [2, 3, 3]);
+  assert.equal(MG.solo_prima_applicazione, true);
+  assert.deepEqual(MG.prima_di, ['difesa', 'armatura']);
 });
 
 test('Talenti: versioni Migliorate e Talenti di Classe con un numero come effetti strutturati', () => {

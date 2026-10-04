@@ -16,6 +16,7 @@ import { avvisiStati, limitiStati } from './condizioni.js';
 import { riga, provenienza, righeDaScomposizione, righeBase, rigaConDettaglio, rigaBonusCaratteristica } from './provenienza.js';
 import { tecnicheAttacco, tecnicheInCorso, mezzoAmmesso } from './tecniche.js';
 import { limiteMagistrale } from './prova.js';
+import { moltiplicatoreMagistrale } from './danno.js';
 
 export const voce = (etichetta, valore, fonte, paragrafo = null) => ({ etichetta, valore, fonte, paragrafo });
 export const somma = (voci) => voci.reduce((s, x) => s + x.valore, 0);
@@ -565,7 +566,7 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
   if (mun) promemoria.push(`Munizione caricata: ${mun.nome}${mun.danno ? `, danno ${mun.danno}, AC ${mun.ac}` : ', nessun danno'}, RS ${mun.rs_q} Q${mun.proprieta?.length ? `; ${mun.proprieta.join(', ')}` : ''} (§7.20.3). Un colpo consuma una munizione.`);
   else if (arma.dannoDaMunizione) promemoria.push('Il danno dipende dalla munizione caricata.');
   const formula = base ? aggiungiDanno(base, dannoBonus) : null;
-  const G = dati.regole.attacco_ravvicinato?.magistrale;
+  const G = dati.regole.magistrale;
   if (formula && G?.promemoria) promemoria.push(G.promemoria);
   // A.78: gli attacchi si tirano anche con VA finale 20 o più
   const mn = promemoriaMagistraleNaturale(somma(scomposizione), dati, { tiroSempre: true, magistraleMigliorato: haMagistraleMigliorato(personaggio.scheda, dati) });
@@ -879,13 +880,9 @@ export function promemoriaMagistraleNaturale(va, dati, { tiroSempre = false, mag
   return parti.length ? parti.join(' ') : null;
 }
 
-/** §1.6: moltiplicatore con il Magistrale (×1 → ×2, ×2 → ×3, ×3 resta ×3). */
-export function moltiplicatoreMagistrale(m, dati) {
-  const G = dati.regole.attacco_ravvicinato.magistrale;
-  if (m <= 1) return G.raddoppio;
-  if (m === 2) return G.da_x2;
-  return Math.min(m, G.massimo);
-}
+// §1.6: il moltiplicatore con il Magistrale sta in src/danno.js (regola del danno, non del solo
+// corpo a corpo: regole.json → magistrale), e lo usa anche il danno applicato al tavolo
+export { moltiplicatoreMagistrale };
 
 /**
  * Attacco ravvicinato o senz'armi.
@@ -1114,7 +1111,7 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
     if (m.dopo_armatura?.salvezza) dopo.push({ etichetta: `PS ${m.dopo_armatura.salvezza}`, testo: `Se almeno 1 danno supera l’Armatura, il bersaglio fa una PS ${m.dopo_armatura.salvezza}; se fallisce è ${m.dopo_armatura.stato} per ${m.dopo_armatura.durata} (§5.18).` });
     if (migE.dopo_armatura && !m.dopo_armatura) dopo.push({ etichetta: `+${migE.dopo_armatura} dopo l’Armatura`, testo: `${mig.nome}: +${migE.dopo_armatura} danni ai PV dopo l’Armatura, solo se almeno 1 danno la supera; non si moltiplica.` });
     if (moltiplicatore > 1) promemoria.push(`Con un Successo Magistrale il danno ×${moltiplicatore} diventa ×${mm} (§1.6).`);
-    if (R.magistrale.promemoria) promemoria.push(R.magistrale.promemoria);
+    if (dati.regole.magistrale.promemoria) promemoria.push(dati.regole.magistrale.promemoria);
   }
   const effetti = [];
   if (m.effetto) effetti.push(`Con successo: ${m.effetto}.`);

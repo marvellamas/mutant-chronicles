@@ -506,8 +506,42 @@ function validaRegole(r, err, dati = {}) {
       else ids.add(x.id);
       // i promemoria sono riassunti nostri, non testo del manuale: va dichiarato
       if (x?.promemoria !== undefined && x.riassunto !== true) err(F, `stati.elenco[${i}].riassunto`, 'il promemoria è un riassunto: serve "riassunto": true');
+      // §5.15, §5.18: Stati con una perdita periodica di PV (src/periodici.js)
+      if (x?.periodico !== undefined) {
+        const P = `stati.elenco[${i}] (${x?.nome}).periodico`;
+        const p = x.periodico;
+        if (!isOggetto(p)) err(F, P, 'oggetto atteso');
+        else {
+          const d = p.danno;
+          if (d !== 'valore' && d !== 'dalla_fonte' && !/^\d+d\d+([+-]\d+)?$/.test(String(d ?? ''))) err(F, `${P}.danno`, '«valore» (il valore X dello Stato), «dalla_fonte» o una formula di dadi («1d4»)');
+          if (!Array.isArray(p.ignora) || !p.ignora.length) err(F, `${P}.ignora`, 'elenco di che cosa non riduce la perdita (armatura, parata, schivata, armatura_non_magica)');
+          if (p.non_sotto_zero !== true) err(F, `${P}.non_sotto_zero`, 'true atteso: la perdita non porta i PV sotto 0 (§5.15)');
+          if (typeof p.ferita_quando_azzera !== 'boolean') err(F, `${P}.ferita_quando_azzera`, 'booleano atteso (§5.15: arrivando a 0 PV non produce subito una Ferita)');
+          if (!isTesto(p.a_zero_pv?.salvezza) || !isTesto(p.a_zero_pv?.testo)) err(F, `${P}.a_zero_pv`, 'servono «salvezza» e «testo»: a 0 PV la perdita richiede una Prova');
+          if (!isTesto(p.fine)) err(F, `${P}.fine`, 'come finisce la perdita periodica');
+          if (!isTesto(p.paragrafo)) err(F, `${P}.paragrafo`, 'paragrafo del manuale mancante');
+          if (!Array.isArray(p.frasi) || !p.frasi.length) err(F, `${P}.frasi`, 'frasi del manuale mancanti');
+        }
+      }
     });
+    // regole comuni delle perdite periodiche (§5.15, §5.18; Magia)
+    const PR = r.stati?.periodici;
+    if (!isOggetto(PR)) err(F, 'stati.periodici', 'regole comuni delle perdite periodiche mancanti (§5.18)');
+    else {
+      if (PR.quando !== 'iniziativa_fonte') err(F, 'stati.periodici.quando', '«iniziativa_fonte» atteso (§5.18: le ricorrenze seguono l’Iniziativa di chi ha procurato l’effetto)');
+      if (PR.senza_fonte !== 'fine_round') err(F, 'stati.periodici.senza_fonte', '«fine_round» atteso (Magia: una fonte priva di Iniziativa usa la fine del RND)');
+      if (PR.max_per_round !== 1) err(F, 'stati.periodici.max_per_round', '1 atteso (§5.18: al massimo una volta per Round)');
+      if (!isTesto(PR.avviso) || !PR.avviso.includes('{valore}')) err(F, 'stati.periodici.avviso', 'testo dell’avviso con {stato}, {nome}, {valore}, {prima} e {dopo}');
+      if (!Array.isArray(PR.frasi) || !PR.frasi.length) err(F, 'stati.periodici.frasi', 'frasi del manuale mancanti');
+    }
   }
+  // §1.6: moltiplicatori del danno con il Successo Magistrale (src/danno.js, usato anche da «Attacca!»)
+  const MG = r.magistrale;
+  if (!isIntero(MG?.raddoppio) || !isIntero(MG?.da_x2) || !isIntero(MG?.massimo)) err(F, 'magistrale', 'raddoppio, da_x2 e massimo interi attesi (§1.6)');
+  else if (!(MG.raddoppio <= MG.da_x2 && MG.da_x2 <= MG.massimo)) err(F, 'magistrale', `raddoppio ≤ da_x2 ≤ massimo atteso (${MG.raddoppio}, ${MG.da_x2}, ${MG.massimo})`);
+  if (MG?.solo_prima_applicazione !== true) err(F, 'magistrale.solo_prima_applicazione', 'true atteso (§1.6: solo la prima istanza di danno)');
+  if (!Array.isArray(MG?.prima_di) || !MG.prima_di.includes('armatura')) err(F, 'magistrale.prima_di', '«difesa» e «armatura» attesi (§1.6: si applica prima della Parata e dell’Armatura)');
+  if (!isTesto(MG?.promemoria)) err(F, 'magistrale.promemoria', 'promemoria per «Attacca!» mancante');
   // §5.19: Affaticamento, un unico Stato con la sua penalità
   const aft = r.affaticamento?.stati;
   if (!Array.isArray(aft) || !aft.length) err(F, 'affaticamento.stati', 'elenco {nome, penalita} mancante');
@@ -1943,8 +1977,6 @@ function validaAttaccoRavvicinato(dati, err) {
   const C = a.carica;
   if (!isOggetto(C) || !Array.isArray(C.fasce) || !C.fasce.every((f) => isIntero(f.da) && isIntero(f.a) && isIntero(f.va) && isIntero(f.avversari))) err(F, 'attacco_ravvicinato.carica.fasce', 'fasce { da, a, va, avversari } attese (§5.6)');
   if (!isIntero(a.due_armi?.va) || !isIntero(a.due_armi?.attacchi)) err(F, 'attacco_ravvicinato.due_armi', 'va e attacchi interi attesi (§5.7)');
-  const M = a.magistrale;
-  if (!isIntero(M?.raddoppio) || !isIntero(M?.da_x2) || !isIntero(M?.massimo)) err(F, 'attacco_ravvicinato.magistrale', 'raddoppio, da_x2 e massimo interi attesi (§1.6)');
   if (!isTesto(a.senz_armi?.abilita)) err(F, 'attacco_ravvicinato.senz_armi.abilita', 'Abilità degli attacchi senz’armi mancante');
   // effetti.attacco_ravvicinato dei Talenti (Liberi e di Classe)
   const talenti = [

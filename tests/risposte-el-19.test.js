@@ -111,8 +111,8 @@ test('E&L 11: Magistrale ×2 → ×3, ×3 resta ×3; la regola dei bonus nel ris
   assert.deepEqual([1, 2, 3].map((m) => moltiplicatoreMagistrale(m, dati)), [2, 3, 3]);
   const s = conSpada();
   const r = attacca(s, s.equipaggiamento.armi[0], { manovra: 'affondo' });
-  assert.ok(r.promemoria.includes(dati.regole.attacco_ravvicinato.magistrale.promemoria));
-  assert.equal(dati.regole.attacco_ravvicinato.magistrale['TODO(Davide)'], undefined);
+  assert.ok(r.promemoria.includes(dati.regole.magistrale.promemoria));
+  assert.equal(dati.regole.magistrale['TODO(Davide)'], undefined);
 });
 
 test('E&L 13: Copertura nel ravvicinato: −2 / −4, Migliorata −4 / −6, Totale impedisce l’attacco (A.25)', () => {
