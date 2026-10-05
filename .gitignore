@@ -31,8 +31,8 @@ Claude outputs/
 
 # Personaggi salvati dal server di Mutant (server.mjs): dati dei giocatori, non codice.
 # Si traccia solo il LEGGIMI che spiega la cartella.
-personaggi/*
-!personaggi/LEGGIMI.txt
+#personaggi/*
+#!personaggi/LEGGIMI.txt
 
 # Selezione «al tavolo» e stato del Tavolo del Master (server.mjs): dati di gioco; si traccia solo il LEGGIMI
 tavolo/*
