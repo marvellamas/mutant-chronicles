@@ -1814,7 +1814,7 @@ function ricaricaMatriceUi(ctx, c) {
 /** Scheda di un contenitore: nome, colore, PM, sintonizzazione, trasporto. */
 function schedaContenitore(ctx, c) {
   return h('article', { class: 'arma-tab contenitore-tab' },
-    h('h3', {}, c.nome, h('small', { class: 'sigla' }, c.integrato ? ` · riserva integrata nell’oggetto: ${nomeRiserva(c.riserva, ctx.dati)}, proprietà ${nomeAlimentazione(c.alimentazione, ctx.dati)}` : ` · ${c.potenza}`)),
+    h('h3', {}, c.nome, h('small', { class: 'sigla' }, c.integrato ? ` · riserva integrata nell’oggetto: ${nomeRiserva(c.riserva, ctx.dati)}, proprietà ${nomeAlimentazione(c.alimentazione, ctx.dati)}` : c.potenza ? ` · ${c.potenza}` : '')),
     h('p', { class: 'nota' },
       c.scheggia ? 'Scheggia instabile: SnT 0, non si sintonizza; ogni prelievo richiede una Prova di Potere di estrazione (Magia §26.5)'
         : c.sintonizzato ? `✔ Sintonizzato (SnT ${c.costo}, §7.10)` : `○ Non sintonizzato (SnT ${c.costo}): senza sintonizzazione non alimenta lanci`,
@@ -1930,7 +1930,7 @@ function tabArtefatti(ctx) {
     const riserva = contenitori.find((c) => c.uid === x.uid && c.integrato);
     return h('article', { class: `arma-tab artefatto-scheda${x.sintonizzato ? ' sintonizzato' : ''}${x.deposito ? ' in-deposito' : ''}` },
       h('div', { class: 'arma-testa' },
-        h('h3', {}, def ? info('oggetto', def.rif, x.nome) : x.nome, h('small', { class: 'sigla' }, ` · ${x.tipologia ?? 'Artefatto'} · ${x.potenza}`))),
+        h('h3', {}, def ? info('oggetto', def.rif, x.nome) : x.nome, h('small', { class: 'sigla' }, ` · ${x.tipologia ?? 'Artefatto'}${x.potenza ? ` · ${x.potenza}` : ''}`))),
       h('p', { class: 'nota' }, `Nell’Inventario: ${NOMI_STATI[r?.voce.stato] ?? 'con sé'}. SnT ${x.costo}.`),
       // §7.10: con sole proprietà passive SnT 0, nessuna sintonizzazione; Magia §26.5: Schegge instabili SnT 0
       !x.sintonizzabile ? h('p', { class: 'nota' }, def?.artefatto?.scheggia ? 'Scheggia instabile: SnT 0, non si sintonizza; estrarre PM richiede una Prova di Potere (Magia §26.5).' : 'Sole proprietà passive: SnT 0, si usano senza sintonizzazione (Armamenti §7.10).')
