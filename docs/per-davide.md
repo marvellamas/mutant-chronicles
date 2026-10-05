@@ -117,21 +117,38 @@ Un colpo con la proprietà Sanguinante X che supera l'Armatura applica Sanguinam
 
 **A.79 — Bestiario umano proposto per il Tavolo del Master**  
 **Metodo.** Non c'è ancora un bestiario. Per avere subito nemici umani con numeri coerenti, ognuno è costruito come un PG con le regole del Giocatore 0.45: creazione completa, equipaggiamento iniziale del §2.16 con il modello corporativo, avanzamento del cap. 8\. L'app lo converte poi in un nemico, con PV, AR, Difese, Iniziativa, Movimento, Salvezze e attacchi calcolati dal motore. Ci sono tre gradi: Recluta (2° livello), Veterano (5°) ed Élite (8°). Le scelte che il manuale lascia libere sono le più ovvie per il ruolo: Talenti, ordine di Caratteristiche e Abilità, dado dei PV dei Gradi al valore medio arrotondato per eccesso, opzioni migliori di arma e armatura dal Veterano in su. Ogni file è marcato «Proposta, da validare con Davide».  
-**Tipi, arma principale, PV Recluta / Veterano / Élite:**
-
-> * Fante Capitol (Soldato): carabina CAR10, poi fucile d'assalto M40. PV 20 / 29 / 39\.  
-> * Soldato Bauhaus (Soldato): carabina KR10, poi fucile d'assalto STG10. PV 20 / 29 / 44\.  
-> * Guerriero Mishima (Assaltatore): spada leggera e scudo, poi spada lunga. PV 19 / 29 / 39\.  
-> * Agente Cybertronic (Agente): pistola P500. PV 16 / 24 / 32\.  
-> * Soldato Imperiale (Soldato): carabina Defender, poi fucile d'assalto Conqueror 10\. PV 20 / 29 / 39\.  
-> * Inquisitore della Fratellanza (Custode): spada leggera e incantesimi. PV 16 / 23 / 31\.  
-> * Guardia di sicurezza (Freelance, Soldato): carabina. PV 20 / 29 / 39\.  
-> * Criminale di strada (Freelance, Lestofante): pistola semiautomatica e pugnale. PV 15 / 22 / 29\.  
-> * Mercenario (Freelance, Artigliere): fucile d'assalto con mirino. PV 20 / 29 / 39\.  
-> * Eretico (Freelance, Incursore): pistola silenziata e pugnale; solo la parte umana, nessun potere dell'Oscura Legione. PV 17 / 25 / 33\.
-
+**Tipi, arma principale, PV Recluta / Veterano / Élite:**  
+Fante Capitol (Soldato): carabina CAR10, poi fucile d'assalto M40. PV 20 / 29 / 39\.  
+Soldato Bauhaus (Soldato): carabina KR10, poi fucile d'assalto STG10. PV 20 / 29 / 44\.  
+Guerriero Mishima (Assaltatore): spada leggera e scudo, poi spada lunga. PV 19 / 29 / 39\.  
+Agente Cybertronic (Agente): pistola P500. PV 16 / 24 / 32\.  
+Soldato Imperiale (Soldato): carabina Defender, poi fucile d'assalto Conqueror 10\. PV 20 / 29 / 39\.  
+Inquisitore della Fratellanza (Custode): spada leggera e incantesimi. PV 16 / 23 / 31\.  
+Guardia di sicurezza (Freelance, Soldato): carabina. PV 20 / 29 / 39\.  
+Criminale di strada (Freelance, Lestofante): pistola semiautomatica e pugnale. PV 15 / 22 / 29\.  
+Mercenario (Freelance, Artigliere): fucile d'assalto con mirino. PV 20 / 29 / 39\.  
+Eretico (Freelance, Incursore): pistola silenziata e pugnale; solo la parte umana, nessun potere dell'Oscura Legione. PV 17 / 25 / 33\.  
 **Domanda.** Vanno bene come base per i PNG umani? Oppure il tuo bestiario avrà regole diverse per loro, per esempio PNG semplificati, gradi diversi o altri livelli di riferimento? E per l'Eretico: quali poteri dell'Oscura Simmetria vanno aggiunti, e con quali regole?  
 *Nel frattempo:* questi, marcati co
+
+**A.80 — Rinforzi indossati da soli e ad armatura tolta (Armamenti §7.23, §7.11.2)**  
+Hai chiesto che soprabiti e mantelli si possano indossare da soli. Il §7.23.4 dice però che i valori dei rinforzi «descrivono l'impiego insieme a un'armatura compatibile; non costituiscono un profilo autonomo di armatura». Domande:  
+(1) Un soprabito o un mantello indossato da solo dà AR? Se sì, quale?  
+(2) Le sue proprietà (per esempio contro Etereo o le Qualità) valgono anche da solo?  
+(3) Oltre a soprabiti e mantelli, quali altri rinforzi si possono indossare da soli (per esempio Tabardo consacrato, Sottogiacca IES, rivestimenti)?  
+(4) Che cosa succede a un rinforzo montato quando si toglie l'armatura su cui è montato?  
+*Nel frattempo:* si indossano da soli solo i 14 soprabiti e mantelli; da soli danno AR 0 e nessuna proprietà; indossati da soli sopra un'armatura non contano e vanno montati; ad armatura tolta restano montati ma senza effetto.  
+>   
+**A.81 — Pelle di Rinoceronte: manovre di forza (Giocatore §8.9.3)**  
+La scheda concede «+3 ad Atletica e alle prove di Corpo a Corpo nelle manovre in cui si impiega direttamente la forza fisica». Quali Manovre del §5.12 sono «di forza»: Immobilizzare, Sbilanciare, Disarmare, Incalzare? Il \+3 ad Atletica vale per ogni uso di Atletica o solo quando si usa la forza?  
+*Nel frattempo:* \+3 ad Atletica e a Corpo a corpo come usi specifici «manovre di forza», mostrati a parte; in «Attacca\!» un promemoria, senza somma automatica.  
+>   
+**A.82 — Onda Interiore: bonus pertinenti (Giocatore §8.9.4)**  
+«Infligge il danno senz'armi della propria Disciplina e del Grado nella Classe, più i bonus pertinenti al singolo attacco.» Il bonus di FOR al danno senz'armi (§5.13) è fra questi? E il \+2 al danno Ravvicinato di Pelle di Rinoceronte vale, visto che Onda ha Vettore Distanza?  
+*Nel frattempo:* il bonus di FOR sì, Pelle di R  
+>   
+**A.83 — Reperibilità Epica (Magia §26.4, Equipaggiamento §10.3)**  
+Le Batterie Matrice colorate passano da REP Molto Rara a Epica, ma la scala delle reperibilità (Comune, Non comune, Rara, Molto rara, Leggendaria) non dice come si cerca un oggetto di REP Epica. C'è una Prova di Oratoria, e con quale penalità, oppure vale come Leggendaria (disponibilità decisa dal Direttore)?
 
 **A.84 — Prova di Potere dei nemici: Taumaturgo o no?**  
 Il formato dei nemici dà il VA di lancio, ma non dice se il nemico è Taumaturgo. Per un Taumaturgo, ai livelli 1–3, la Prova non serve (Magia sez. 1); per gli altri utilizzatori si tira sempre. Serve un campo nel formato, oppure vale una regola unica per tutti i nemici?  
@@ -140,6 +157,10 @@ Il formato dei nemici dà il VA di lancio, ma non dice se il nemico è Taumaturg
 **A.85 — Bonus di SAG al danno degli incantesimi dei nemici**  
 Per i PG il danno di un incantesimo riceve il bonus di SAG, con il tetto del livello (Magia sez. 7, Giocatore §5.13). Il formato dei nemici non ha né il livello né questo bonus. Si aggiunge, o il danno della versione si intende già completo?  
 *Nel frattempo:* il danno è quello della versione, senza bonus, con un promemoria.
+
+**A.86 — Bonus di Caratteristica al danno delle granate (Armamenti §7.20.3, Giocatore §5.13)**  
+Il §7.20.3 dice che con un lanciagranate «la granata stabilisce danno, AC, RS e proprietà», e le munizioni di riferimento dei lanciatori hanno danno Naturale tirato una sola volta per esplosione. Il bonus di Caratteristica al danno (§5.13) si aggiunge anche alle granate (lanciate a mano o con lanciagranate) e ai razzi, oppure il danno dell'esplosione è sempre quello della tabella?  
+*Nel frattempo:* l'app usa il danno della tabella, senza bonus di Caratteristica.
 
 **A.87 — Dotazione del gruppo: chi prende cosa? (Equipaggiamento cap. 10\)**  
 Nel cap. 10 c'è la dotazione Artefatti/batterie del gruppo. Per caricarla nelle schede ci serve sapere a quale personaggio va ciascun oggetto, e con quanti PM attuali:
@@ -152,12 +173,15 @@ Nel cap. 10 c'è la dotazione Artefatti/batterie del gruppo. Per caricarla nelle
 Nota: il kit di un personaggio (una Batteria Matrice \+ Pietra \+ Guanti) occupa 8 SnT, quindi la seconda Batteria deve andare a un altro PG, e chi riceve oggetti da sintonizzare deve avere capacità sufficiente (8–13). Ci scrivi, per ogni oggetto, il nome del PG e i PM attuali? Se preferisci, i PG possono anche tenerli «nel deposito comune» del gruppo finché non decidete.  
 *Nel frattempo:* gli oggetti sono nel catalogo dell'app; nessuno li ha ancora in scheda.
 
-**A.90 — Punti Abilità liberi: 5 o 7 per Grado?**  
-Il 03/10 tre fonti dicono cose diverse: l’E\&L (ore 16:13) e il Manuale dei Mostri §5.2 (ore 17:02) dicono 5; il Manuale del Giocatore modificato alle 21:16 dice 7 (§2.0, §2.13, §2.18, §8.1, §8.3, §8.7, con l’esempio del Mishima Agente rifatto su 7). Qual è il valore giusto?  
-*Nel frattempo:* l’app usa 5, come da E\&L, e segnala ai PG i punti in eccesso.  
+**A.88 — Individuare a Concentrazione: durata massima.**  
+Individuare si può lanciare a Concentrazione, ma la tabella delle versioni dà soltanto la durata fissa. Qual è la durata massima a Concentrazione di ogni versione?  
+*Nel frattempo:* l’app usa la durata fissa della tabella.
+
+.  
 **A.91 — Veicoli: di chi sono?**  
 Un veicolo appartiene al gruppo o a un singolo personaggio? Chi tiene i PI (Corpo, Propulsione, Motore) e l’autonomia: la scheda del proprietario, una scheda del gruppo o il Tavolo del Master?  
-*Nel frattempo:* la tab Veicoli resta in attesa.  
+*Nel frattempo:* la tab Veicoli c’è. Il veicolo sta nel file del PG che lo possiede, con la casella «Veicolo del gruppo» (solo informativa: le schede non si sincronizzano). Se scegli la scheda del gruppo, cambia solo dove si salva.
+
 **A.92 — Recuperi di Umanità.**  
 Il cap. 7 dell’Equipaggiamento dice che il catalogo dei recuperi di UMN «resta da sviluppare». È previsto? Con quali voci?  
 *Nel frattempo:* nessun recupero nell’app.  
@@ -257,6 +281,9 @@ Decisioni già prese o errori evidenti: l’app segue la decisione, il testo sta
 
 > * §4.1 Comunicatori: «Ogni modello comprende microfono, auricolare, batteria carica, cavo e alimentatore» — con la 0.5 l'alimentazione è un NEC Verde (compatto per il comunicatore personale, standard per quello da squadra e per la stazione radio), come dice il paragrafo «Alimentazione e riservatezza» dello stesso §4.1. Sostituire «batteria carica» con «NEC Verde carico».
 
+**Manuale dei Mostri**   
+**§5.2**: dice ancora «5 punti Abilità liberi a ogni Grado»; dopo la A.90 va portato a 7\.
+
 ## ---
 
 **4\. Da rileggere (testi scritti da noi, non dal manuale)**
@@ -340,30 +367,9 @@ Voci con risposta recepita e funzione implementata nell’app. La data è quella
 > * **A.74 — Rituale di Rigenerazione**: VA del Canale \= Rituali; dopo il Magistrale ripartizione libera entro i limiti; Rituale diretto solo PM personali; versioni per Ritualista. Risposta del 02/10 (decisioni 1, 2, 12, 13\) — implementata il 02/10.  
 > * **A.75 — Batterie oltre i 5 PM**: supporto base per tutte (0,2 kg, Comune, PS 10, 3 PI), anche Matrice. Risposta del 02/10 (decisione 16; Equipaggiamento §10.1) — implementata il 02/10.  
 > * **A.73 — Formato dei nemici per il Tavolo del Master** (E\&L del 02/10, decisioni 5–9). Formato con valori già calcolati, comune all'app e al futuro bestiario. Campi nuovi: azioni per Round, Contromisure, Abilità rilevanti con VA, talenti e capacità speciali. Sei Caratteristiche nel bestiario, facoltative nell'app; un valore mancante non vale 0\. Parità d'Iniziativa DES → INT → 1d10. I nemici seguono la procedura dei PG per PV, Ferite e Menomazioni, senza Affaticamento. Incantesimi completi con «Lancia\!» e PM scalati; incompleti come promemoria. Passo obbligatorio; Corsa e Scatto 2× e 3× se mancano; «non consentito» è diverso da «mancante». Formato implementato il 02/10 su main; plancia del Tavolo del Master implementata il 02/10 sul branch.  
-> * **A.80 — Rinforzi indossati da soli e ad armatura tolta (Armamenti §7.23, §7.11.2)**  
-> * Hai chiesto che soprabiti e mantelli si possano indossare da soli. Il §7.23.4 dice però che i valori dei rinforzi «descrivono l'impiego insieme a un'armatura compatibile; non costituiscono un profilo autonomo di armatura». Domande:  
-> * (1) Un soprabito o un mantello indossato da solo dà AR? Se sì, quale?  
-> * (2) Le sue proprietà (per esempio contro Etereo o le Qualità) valgono anche da solo?  
-> * (3) Oltre a soprabiti e mantelli, quali altri rinforzi si possono indossare da soli (per esempio Tabardo consacrato, Sottogiacca IES, rivestimenti)?  
-> * (4) Che cosa succede a un rinforzo montato quando si toglie l'armatura su cui è montato?  
-> * *Nel frattempo:* si indossano da soli solo i 14 soprabiti e mantelli; da soli danno AR 0 e nessuna proprietà; indossati da soli sopra un'armatura non contano e vanno montati; ad armatura tolta restano montati ma senza effetto.  
 > *   
-> * **A.81 — Pelle di Rinoceronte: manovre di forza (Giocatore §8.9.3)**  
-> * La scheda concede «+3 ad Atletica e alle prove di Corpo a Corpo nelle manovre in cui si impiega direttamente la forza fisica». Quali Manovre del §5.12 sono «di forza»: Immobilizzare, Sbilanciare, Disarmare, Incalzare? Il \+3 ad Atletica vale per ogni uso di Atletica o solo quando si usa la forza?  
-> * *Nel frattempo:* \+3 ad Atletica e a Corpo a corpo come usi specifici «manovre di forza», mostrati a parte; in «Attacca\!» un promemoria, senza somma automatica.  
-> * **A.82 — Onda Interiore: bonus pertinenti (Giocatore §8.9.4)**  
-> * «Infligge il danno senz'armi della propria Disciplina e del Grado nella Classe, più i bonus pertinenti al singolo attacco.» Il bonus di FOR al danno senz'armi (§5.13) è fra questi? E il \+2 al danno Ravvicinato di Pelle di Rinoceronte vale, visto che Onda ha Vettore Distanza?  
-> * *Nel frattempo:* il bonus di FOR sì, Pelle di R  
-> *   
-> * **A.83 — Reperibilità Epica (Magia §26.4, Equipaggiamento §10.3)**  
-> * Le Batterie Matrice colorate passano da REP Molto Rara a Epica, ma la scala delle reperibilità (Comune, Non comune, Rara, Molto rara, Leggendaria) non dice come si cerca un oggetto di REP Epica. C'è una Prova di Oratoria, e con quale penalità, oppure vale come Leggendaria (disponibilità decisa dal Direttore)?  
 > * *Nel frattempo:* la disponibilità la stabilisce il Direttore, senza Prova.  
-> * **A.86 — Bonus di Caratteristica al danno delle granate (Armamenti §7.20.3, Giocatore §5.13)**  
-> * Il §7.20.3 dice che con un lanciagranate «la granata stabilisce danno, AC, RS e proprietà», e le munizioni di riferimento dei lanciatori hanno danno Naturale tirato una sola volta per esplosione. Il bonus di Caratteristica al danno (§5.13) si aggiunge anche alle granate (lanciate a mano o con lanciagranate) e ai razzi, oppure il danno dell'esplosione è sempre quello della tabella?  
-> * *Nel frattempo:* l'app usa il danno della tabella, senza bonus di Caratteristica.  
-> * **A.88 — Individuare a Concentrazione: durata massima.**  
-> * Individuare si può lanciare a Concentrazione, ma la tabella delle versioni dà soltanto la durata fissa. Qual è la durata massima a Concentrazione di ogni versione?  
-> * *Nel frattempo:* l’app usa la durata fissa della tabella.  
+> * **A.90 — Punti Abilità liberi**: vale il Manuale del Giocatore del 03/10 sera, 7 punti alla creazione e a ogni Grado (livelli 4, 8, 12, 16, 20); l’E\&L con 5 è superato. Chi ne ha assegnati 5 per Grado ha 2 punti da assegnare per evento («Assegna»); chi ne ha 10 ne ha 3 in eccesso per evento («Togli»). Nessun punto cambia da solo — implementata il 04/10.  
 > * 
 
 ## ---

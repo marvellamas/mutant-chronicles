@@ -1,6 +1,6 @@
 # E&L – Risposte e correzioni approvate
 
-Copia del Google Doc del master «E&L – Risposte e correzioni approvate» (Davide), letta il 26 settembre 2026 e riletta alle versioni del 27/09, del 01/10 07:25:47 UTC e, il 2 ottobre 2026, alle versioni del 01/10 alle 21:38:42 UTC e del 02/10 alle 15:52:58 UTC, e il 3 ottobre 2026 alla versione del 03/10 alle 14:13:17 UTC («Risposte approvate ai 6 nuovi quesiti dell’app e punti Abilità liberi»). Testo del documento, non riscritto: è la fonte delle decisioni registrate in `docs/risposte-master.md`.
+Copia del Google Doc del master «E&L – Risposte e correzioni approvate» (Davide), letta il 26 settembre 2026 e riletta alle versioni del 27/09, del 01/10 07:25:47 UTC e, il 2 ottobre 2026, alle versioni del 01/10 alle 21:38:42 UTC e del 02/10 alle 15:52:58 UTC, e il 3 ottobre 2026 alla versione del 03/10 alle 14:13:17 UTC («Risposte approvate ai 6 nuovi quesiti dell’app e punti Abilità liberi») e il 5 ottobre 2026 alla versione del 05/10 alle 01:07:32 UTC («Risposte approvate — aggiornamento dei quesiti aperti»). Testo del documento, non riscritto: è la fonte delle decisioni registrate in `docs/risposte-master.md`.
 
 # E\&L – Risposte e correzioni approvate
 
@@ -1603,6 +1603,8 @@ Riferimenti: Manuale dell’Equipaggiamento, §§1.8 e 10.3; Manuale degli Armam
 
 ## Correzione aggiuntiva — 5 punti Abilità liberi a ogni Grado, compreso il primo
 
+**DECISIONE SUPERATA: il contingente vigente è di 7 punti Abilità liberi per Grado, compreso il primo. Si vedano A.56 e A.90 nel successivo aggiornamento. Il testo seguente è conservato come decisione precedente.**
+
 **I punti Abilità liberi assegnati a ogni Grado diventano 5 anziché 10\. La quantità di 5 punti si applica anche al primo Grado, in fase di creazione del personaggio.**
 
 La nuova quantità sostituisce la precedente assegnazione di 10 punti: non è un’aggiunta e non è limitata ai soli Gradi successivi al primo. La cadenza resta a ogni Grado.
@@ -1612,4 +1614,400 @@ La correzione riguarda il contingente di punti Abilità liberi; non modifica, da
 Applicazione nell’app: aggiornare a 5 l’assegnazione libera nella creazione al primo Grado e a ogni successiva acquisizione di Grado, compresi i relativi riepiloghi e controlli dei punti disponibili. Il percorso JSON specifico non è indicato nell’elenco del collaboratore.
 
 Questa decisione prevale sulle precedenti indicazioni che assegnavano 10 punti Abilità liberi per Grado.
+
+# Risposte approvate — aggiornamento dei quesiti aperti
+
+Data di registrazione: ott 5, 2026
+
+Le risposte seguenti raccolgono le decisioni approvate nella sessione di revisione di per-davide.md. La data di questo blocco si applica a tutte le risposte sottostanti. Le precedenti risposte restano valide, salvo le modifiche espressamente indicate; in particolare, il contingente vigente è di 7 punti Abilità liberi per Grado. Le indicazioni per l’app sono specifiche da recepire, non dichiarazioni di avvenuta implementazione.
+
+## A.32 — Talenti magici e Concentrazione
+
+Sono confermati i 18 Talenti segnalati dal collaboratore: Potere Mistico, Recupero Mistico, Escludere la Componente Somatica, Escludere l’Invocazione, Escludere il Focus, Concentrazione Migliorata, Concentrazione Operativa, Incantesimi Ampliati, Estesi, Proiettati, Plurimi e Intensificati, Anticipazione Migliorata, Incantesimi Inarrestabili, Incantesimi Massimizzati, Manifestazioni Occultate, Ritualista Minore e Ritualista Maggiore, secondo le rispettive schede aggiornate.
+
+Potere Mistico concede \+5 PM massimi per acquisizione, fino a tre acquisizioni. Potere Mistico e Recupero Mistico richiedono una riserva personale di PM e non conferiscono da soli accesso al lancio degli Incantesimi.
+
+Il mantenimento della Concentrazione usa la PS Volontà su CAR. Il \+3 di Concentrazione Migliorata si applica soltanto alle Prove per mantenere la Concentrazione.
+
+Concentrazione Operativa permette le normali azioni e il movimento mantenendo un solo Incantesimo; non permette di lanciare un altro Incantesimo. Sono ammesse le eccezioni espresse di Contromagia e Convertire Potere, con i loro normali requisiti e costi. Questa precisazione prevale sulla precedente formulazione generica «solo azioni non di magia».
+
+## A.34 — Dotazioni e schede degli oggetti
+
+Collegare gli oggetti delle dotazioni alle schede del catalogo aggiornato dell’Equipaggiamento, senza mantenerli come voci personalizzate prive dei dati ormai disponibili. I NEC compresi negli oggetti si conteggiano una sola volta.
+
+Il Corredo agricolo Standard per allevamento resta quello già approvato: 2 kg, 200 crediti, REP Comune, nessun bonus. Per lo Strumento musicale portatile iniziale si può scegliere la versione acustica o elettronica senza sovrapprezzo nella dotazione iniziale.
+
+Cassetta degli attrezzi, Attrezzi agricoli di base e Corredo per allevamento Standard: Qualità Comune, PS Integrità 10, 4 PI. Corredo artigianale professionale e Corredo di analisi da campo: Qualità Non comune, PS Integrità 12, 4 PI. Per le voci del §5.8: Qualità Comune, PS Integrità 10, 4 PI, salvo Testo dottrinale e simbolo e Focus personale, con 2 PI.
+
+Lo scambio al 100% del valore per gli acquisti iniziali resta limitato agli armamenti ammessi dalla relativa regola; l’esistenza di una scheda di catalogo non rende automaticamente cedibili tutti gli oggetti della dotazione.
+
+## A.36 — Bonus degli strumenti e impieghi pertinenti
+
+I bonus degli oggetti si applicano alla Prova pertinente quando l’oggetto è effettivamente utilizzato; non aumentano permanentemente il VA personale. Per la stessa Prova si usa soltanto il maggiore bonus degli strumenti, includendo abiti, binocolo e corredi; le altre fonti seguono le proprie regole di cumulo.
+
+Binocolo: \+1 alle osservazioni di dettagli lontani attraverso le ottiche. Corredo da ricognizione: \+2 alle osservazioni attraverso le ottiche con illuminazione e linea di visuale adeguate. Corredo di orientamento: \+1 a Sopravvivenza per orientarsi con riferimenti utilizzabili. Corredo di sopravvivenza: \+2 nell’ambiente scelto e per gli impieghi pertinenti. Abiti eleganti: \+1 a Oratoria in contesti formali appropriati. Kit trauma: \+2 a Medicina per gli impieghi pertinenti del kit, come pronto soccorso, medicazioni e diagnosi; non a qualsiasi uso di Medicina.
+
+## A.38 — Attacco a distanza: sette chiarimenti
+
+1\. Movimento Tattico e Movimento Fluido si sommano, fino ad annullare la penalità pertinente. Movimento Tattico riduce di 2 la penalità del proprio movimento; Movimento Fluido riduce di 2 il totale pertinente di movimento, terreno e posizione instabile. Considerando il solo movimento: Passo/Corsa/Scatto \= 0/−2/−6; con uno dei due Talenti \= 0/0/−4; con entrambi \= 0/0/−2. Non cambiano le penalità di chi spara contro il personaggio.
+
+2\. Attaccare dalla Copertura costa 1 AzM e 1 AzP, comprendendo il tiro. Uscita e rientro non possono superare complessivamente 6 Q. Dal livello 12 le due AzP possono essere usate prima di completare lo stesso movimento e rientrare.
+
+3\. La seconda Prova per evitare di colpire un altro soggetto, dopo un tiro fallito contro un bersaglio impegnato o protetto, usa il VA dell’Abilità dell’arma a −4, con i modificatori personali pertinenti come Ferite e Affaticamento. Non si applicano nuovamente distanza, Copertura, movimento o modalità di fuoco del tiro originario. Successo: nessun altro soggetto colpito; fallimento: viene colpito il bersaglio secondario. Fuoco di Precisione porta il −4 a −2. Fuoco Controllato dell’Agente elimina questa seconda Prova e il rischio correlato previsto dalla regola.
+
+4\. Mira Selettiva richiede Tiro Mirato e immobilità per l’intero Round: anche il Passo la fa perdere. Copertura leggera da −2 a 0; media da −4 a −2; totale continua a impedire il tiro.
+
+5\. Imbracciare costa 1 AzM, senza Prova. Un’arma già imbracciata non richiede di pagare di nuovo. Qualsiasi movimento, anche forzato, la caduta o il rilascio fanno perdere l’Imbracciatura. Un’arma che la richiede, usata senza, impone −4 VA. Imbracciatura Rapida permette di imbracciare gratuitamente una volta per Round alla propria INI; non conserva l’Imbracciatura durante il movimento.
+
+6\. Tiro a Bruciapelo Migliorato contro un bersaglio consapevole che impegna il tiratore al Contatto mantiene le penalità del Tiro Ravvicinato: −2 con armi leggere e −4 con armi medie; con Tiro Istintivo diventano 0 e −2. Ogni colpo infligge danno ×2 prima di Difese e AR, senza aggiungere i precedenti \+3/+5. Si applicano le normali Difese. Sono ammessi i modi previsti, colpo singolo e Raffica Breve, con armi leggere o medie.
+
+7\. Movimento Evasivo richiede almeno 1 Q realmente percorso e costa 1 AzM \+ 1 AzP. Non è compatibile con «Fermo». L’app deve registrarlo esplicitamente, senza dedurlo automaticamente dal Passo; la fine dello spostamento non fa cessare anticipatamente il beneficio previsto.
+
+## A.40 — Carica oltre 12 Q
+
+Il Manuale del Giocatore aggiornato ha già risolto il punto: la Carica arriva fino alla propria Corsa massima, con almeno 3 Q di percorso sufficientemente rettilineo e costo di 1 AzM \+ 1 AzP. Fascia 3–6 Q: −2 al proprio VA, −4 al VA degli avversari, danno ×2. Fascia da 7 Q fino alla propria Corsa massima: −4 al proprio VA, −6 al VA degli avversari, danno ×2. Le penalità durano fino alla successiva propria INI.
+
+Rimuovere dall’app il limite rigido di 12 Q: oltre tale distanza non si introduce una terza fascia né una penalità aggiuntiva. Restano le altre regole e le eccezioni dei Talenti di Carica.
+
+## A.53 — AR magica propria e Corazza Potenziata
+
+La sola presenza di una componente magica nell’AR non rende una protezione un Artefatto. Corazza Potenziata richiede un’armatura indossata o uno scudo impugnato esplicitamente classificato come Artefatto Mistico o TecnoMistico, utilizzabile e con almeno 1 PI.
+
+Le 14 armature segnalate nella domanda non acquisiscono automaticamente questa classificazione. Lo Scudo delle Guardie Sacre soddisfa il requisito anche con Scudo Magico inattivo o riserva vuota; altri oggetti possono soddisfarlo se la loro scheda li classifica esplicitamente come Artefatti. L’app deve verificare la classificazione, non fissare un’eccezione valida per sempre per un unico modello.
+
+Il beneficio concede \+1 all’AR totale e alla componente magica, una sola volta anche con armatura e scudo idonei insieme. È personale e passivo; non richiede Azioni, PM o Sintonizzazione. Le proprietà attive degli oggetti conservano i propri requisiti. Tecnologia avanzata, provenienza corporativa e Incantesimi temporanei non bastano a rendere un oggetto un Artefatto.
+
+## A.54 — Ricarica dei revolver
+
+Per i revolver commerciali e corporativi, salvo una diversa regola espressa della scheda, una ricarica di 1 AzP permette di riempire il tamburo con munizioni pronte e una mano libera. Si possono inserire anche meno cartucce; si sottraggono dalle riserve soltanto quelle effettivamente inserite.
+
+Ricarica Rapida permette questa operazione gratuitamente una volta per Round alla propria INI. Ricarica Migliorata non concede un ulteriore vantaggio sul tamburo: il suo beneficio riguarda le armi con inserimento singolo. Restano le eccezioni già definite per le armi con caricatore amovibile.
+
+## A.55 — Caratteristica del bonus al danno
+
+Corrispondenze: FOR per Corpo a corpo, attacchi senz’armi e Armi da guerra; DES per Armi da mischia, Armi da lancio e Armi leggere; INT per Armi medie e Armi pesanti; SAG per Magia e Risorse Interiori. Per le Armi pesanti la Prova di attacco usa FOR, ma il bonus al danno usa INT.
+
+Il bonus al danno non scende sotto 0 e ha tetto \+1 ai livelli 1–7, \+2 ai livelli 8–14, \+3 dal livello 15\. Si applica a ogni singolo colpo prima dei moltiplicatori e delle riduzioni di Difese e AR. Resta l’eccezione A.86: esplosioni di granate e razzi senza bonus di Caratteristica.
+
+## A.56 e A.90 — Distribuzione e 7 punti Abilità liberi
+
+Si applica la riforma delle categorie del Manuale del Giocatore aggiornato: le basi dipendono dalla prima Classe, con 2 Abilità Specializzate a 7, 6 Professionali a 6, 12 Generiche a 5 e 4 Non competenti a 3, per 122 punti complessivi. Sono superate le vecchie distribuzioni degli Addestramenti e il limite generale di Avanzamento 3 alla creazione.
+
+Al I Grado i limiti del VA personale sono 12/9/7/5 per Specializzate/Professionali/Generiche/Non competenti; gli incrementi successivi seguono il §8.3 e il multiclasse il §8.7.
+
+Il contingente vigente è di 7 punti Abilità liberi al primo livello e ai livelli 4, 8, 12, 16 e 20\. L’assegnazione iniziale avviene una sola volta. Ogni punto libero deve aumentare effettivamente il VA entro il limite applicabile al momento dell’assegnazione.
+
+Questa decisione sostituisce espressamente sia la vecchia assegnazione di 10 sia il precedente blocco di questo documento che ne indicava 5\. Adeguare anche il §5.2 del Manuale dei Mostri, dove è rimasto il valore 5\.
+
+## A.57 — Migrazione dei punti liberi dei personaggi esistenti
+
+Ricostruire il personaggio in ordine cronologico, evento per evento, applicando prima gli incrementi automatici e poi i punti liberi entro i limiti vigenti in quel momento. Conservare le assegnazioni valide e riassegnare quelle che non potevano aumentare il VA al momento in cui furono effettuate.
+
+Gli incrementi automatici oltre il limite restano nei valori di calcolo e diventano efficaci quando il limite lo consente. Un punto libero assegnato legalmente non viene rimborsato solo perché un successivo incremento automatico, di Caratteristica o di Classe, porta il valore oltre il limite.
+
+L’app segnala la necessità della ricostruzione e impedisce nuovi avanzamenti di livello finché la migrazione non è completata.
+
+## A.58 — Bonus di Corporazione e limite personale
+
+Il \+1 di Corporazione è compreso nel VA personale e può risultare inefficace quando il valore supera il limite della categoria. Il bonus resta nel calcolo originario, non viene riassegnato e torna efficace quando il limite sale. I modificatori circostanziali si applicano dopo il limite.
+
+## A.59 — Deposito e Sintonizzazione
+
+Depositare un Artefatto non interrompe automaticamente la Sintonizzazione: l’oggetto continua a occupare la relativa capacità. È possibile interromperla volontariamente per liberare capacità. Riprendere un oggetto ancora sintonizzato non richiede una nuova procedura; dopo l’interruzione, per sintonizzarlo di nuovo servono 1 minuto di contatto e la normale Prova di Artefatti. L’automatismo dell’Architetto elimina la Prova, non il tempo.
+
+Una batteria depositata non alimenta a distanza gli Incantesimi del personaggio: deve essere portata con sé. L’app tiene distinti collocazione fisica e stato di Sintonizzazione.
+
+## A.60 — Struttura della scheda digitale
+
+Le schede principali diventano otto: Identità, Abilità, Combattimento, Poteri, Artefatti, Cibernetica, Inventario e Veicoli. Poteri raccoglie Incantesimi e Tecniche Interiori posseduti; Artefatti resta distinto. I crediti sono nell’Inventario.
+
+Registrare mano dominante, mano destra, mano sinistra e impiego a due mani. Lo scudo occupa la mano pertinente; equipaggiare due armi non attiva automaticamente la Manovra Combattere con due armi. Le viste condividono le stesse istanze di oggetti, munizioni e Azioni, senza copie indipendenti.
+
+Nel Combattimento mostrare rapidamente armatura, rinforzi, scudo ed elmetto, con i normali costi per indossare o rimuovere. I rinforzi montati appartengono alla configurazione dell’armatura; soprabiti e mantelli autonomi seguono la propria scheda. Peso, prezzo e PI restano consultabili nell’Inventario.
+
+Nelle schede Abilità e Combattimento: colonna destra con Ferite, Affaticamento, Corruzione e Stati modificabili, spiegazioni e modificatori condivisi. Punti Eroe a sinistra sopra i PV; Umanità nella Cibernetica.
+
+Recepire i cataloghi aggiornati dell’Equipaggiamento, compresi §§3.2, capitoli 5 e 7, e il Manuale dei Veicoli v0.2. Rune e Tatuaggi rimangono uno sviluppo futuro. Queste sono specifiche approvate per il collaboratore, non attestazioni di funzionalità già implementate.
+
+## A.69 — Installare, rimuovere e reinstallare impianti
+
+Il servizio acquistato presso una clinica idonea riesce automaticamente: non richiede una Prova né un tiro di rigetto. Acquisto e installazione sono costi distinti; un impianto non installato non consuma UMN.
+
+Tempi per ogni voce completa di catalogo: installazione 4 ore, rimozione 2 ore, reinstallazione 4 ore; sostituzione con un altro impianto 6 ore. Chirurgia Precisa riduce del 20% il tempo operativo.
+
+Un intervento eseguito da un personaggio richiede almeno Medico I e una struttura attrezzata; una Postazione medica da campo può essere idonea agli interventi compatibili, mentre il solo Kit chirurgico non equivale a una struttura completa. Si effettua una sola Prova di Medicina; Tecnologia riguarda eventuali operazioni tecniche distinte. Un set chirurgico da 500 crediti viene consumato all’inizio di ogni tentativo.
+
+Successo: intervento completato. Magistrale: completato in metà tempo; sommando le riduzioni non si supera il 50%. Fallimento: intervento incompleto, impianto recuperabile e situazione precedente conservata, con tempo e materiali spesi; nessun costo UMN per un’installazione non riuscita. Maldestro: inoltre peggioramento di uno Stato di Ferita.
+
+Alle postazioni si aggiunge il programma specifico di chirurgia cibernetica. Una postazione semiautomatica usa Medicina dell’operatore con \+3, anche senza Medico; le automatiche usano il proprio VA 12/15/18, già comprensivo degli strumenti. Si sceglie una sola Prova, senza sommare i due modi. L’operazione consuma una cartuccia chirurgica e il relativo ciclo di funzionamento.
+
+Tariffe: installazione secondo catalogo; rimozione al 50% della tariffa di installazione; reinstallazione al 100%. Il servizio ordinario comprende i consumabili di routine; un personaggio che opera personalmente paga materiali ed energia effettivamente consumati.
+
+L’impianto rimosso rimane nell’inventario e la rimozione non restituisce automaticamente UMN. Reinstallare lo stesso esemplare nello stesso soggetto non fa pagare di nuovo la perdita di UMN ancora non recuperata; gli UMN recuperati e associati a quell’impianto vengono nuovamente consumati. Per un nuovo portatore vale il costo normale completo. L’app conserva il legame fra impianto, portatore, perdita UMN e recuperi successivi.
+
+## A.70 e A.92 — Recupero dell’Umanità
+
+L’UMN si recupera soltanto mediante una procedura espressamente prevista. Rimuovere un impianto rende recuperabile la perdita associata, senza restituirla automaticamente. Gli impianti ancora installati mantengono il proprio costo. Ogni perdita può essere recuperata una sola volta e non si supera UMN 20; perdite dovute ad altre trasformazioni richiedono una procedura propria.
+
+Nuova procedura approvata: Riabilitazione dopo rimozione di un impianto. Richiede Medico e struttura attrezzata; un ciclo dura 7 giorni, un ciclo alla volta per paziente.
+
+Esecuzione da parte di un personaggio: materiali 500 crediti per ciclo e Prova di Medicina al termine. Magistrale: \+2 UMN; successo: \+1 UMN; fallimento: nessun recupero; Maldestro: nessun recupero e peggioramento di uno Stato di Ferita. Recupero limitato alla perdita eleggibile e al massimo 20\.
+
+Servizio acquistato in clinica: 1.000 crediti complessivi, materiali inclusi, per \+1 UMN automatico al termine del ciclo. Chirurgia Precisa non abbrevia i 7 giorni. La procedura non fa ricrescere parti del corpo e non introduce automaticamente un programma autonomo delle postazioni mediche.
+
+## A.72 — Anticipazione: esempi approvati; quesito parzialmente risolto
+
+L’Anticipazione modifica un solo aspetto, di un solo gradino espressamente previsto, senza cambiare la versione dell’Incantesimo. Il costo base in PM raddoppia e Potere diventa più difficile di una categoria; la Prova è sempre richiesta.
+
+Incantesimi Ampliati, Estesi, Proiettati, Plurimi e Intensificati eliminano il raddoppio del costo per il rispettivo aspetto: Area, Durata, Gittata, Bersagli e incrementi numerici ammessi. Plurimi non aumenta i Colpi; Intensificati non modifica i modificatori delle PS. Anticipazione Migliorata elimina soltanto l’aumento di difficoltà, non il costo raddoppiato; non confonderla con Calcolo Arcano. Non inventare versioni o gradini intermedi o superiori a quelli previsti.
+
+Irrobustire (§16.1): PV temporanei 4 → 5 → 6 → 7 → 8 → 10 → 11 → 12 → 14 → 16 → 20 → 24 → 28\. Durata: 10 Round → 20 Round → 5 minuti → 10 minuti → 30 minuti → 1 ora → 2 ore → 4 ore. Si anticipa una sola scala.
+
+Telecinesi (§17.1): scegliere Concentrazione oppure durata fissa. Versione 1: Concentrazione 10 → 30 minuti, fissa 10 → 20 Round. Versione 3: 30 minuti → 1 ora, fissa 20 Round → 5 minuti. Versione 6: 1 → 2 ore, fissa 5 → 10 minuti. Versione 9: 2 → 4 ore, fissa 10 → 30 minuti. Versione 12: 4 → 8 ore, fissa 30 minuti → 1 ora. Versione 15: 8 → 12 ore, fissa 1 → 2 ore. Versione 18: 12 → 24 ore, fissa 2 → 4 ore.
+
+Mente Disincarnata (§18.10): distanza dal corpo attuale. Versione 9: 1 → 3 km; versione 12: 3 → 6 km; versione 15: 6 → 10 km. La versione 18 è al massimo di 10 km e non ha un ulteriore gradino definito né per distanza né per durata.
+
+Illusione (§19.4): quattro livelli di complessità. Versione 1, stimolo semplice non figurativo → versione 3, immagine semplice statica → versione 6, immagine complessa statica → versione 9, immagine animata. Dalla versione 9 la complessità è al massimo; le versioni 12, 15 e 18 non introducono altri gradini.
+
+Muro, Armatura, Esplosione e Cono Elementale: natura del danno Naturale → Magico → Etereo, un passaggio alla volta, massimo Etereo. Per Armatura Elementale cambia soltanto la natura del danno reattivo, non il valore o la natura dell’AR. Per Muro Elementale non cambia la struttura del Muro.
+
+Resistenza Fisica (§16.3): modalità A, scegliere il bonus generale a Tempra oppure quello mirato alla categoria prevista; l’Anticipazione aggiunge \+1 soltanto al valore scelto. Nella modalità B relativa alle privazioni si anticipa solo la durata, senza bonus a Tempra.
+
+Efficienza (§16.5): modalità A, \+1 al bonus operativo pertinente, senza estenderlo a combattimento, PS o Potere. Modalità B: l’effetto base comprende VA d’attacco e danno, ma l’Anticipazione aumenta uno solo dei due; \+2/+3 diventa \+3/+3 oppure \+2/+4. Riguarda attacchi diretti con armi o senz’armi, non esplosioni, danni periodici o Incantesimi. La durata non aumenta se si anticipa il bonus.
+
+STATO APERTO: approvati questi esempi e il criterio generale. Non è ancora verificato l’intero censimento delle 29 schede e dei 46 aspetti citato dal collaboratore in docs/. Occorre recuperare quell’elenco per completare la A.72; non dichiarare risolte automaticamente le altre voci.
+
+## A.74 e A.75 — Conferma delle risposte già registrate
+
+Restano valide le risposte già presenti. Il VA pertinente del Canale è Rituali, senza Prova separata: VA fino a 0 dà \+0; 1–8 dà \+1; 9–14 \+2; 15–19 \+3; almeno 20 \+4, con limite complessivo \+5 al contributo dei Canali. Il \+2 per un Magistrale nella costruzione resta distinto.
+
+Nel Rituale, un Magistrale dimezza i PM totali una volta sola per eccesso. I partecipanti possono ridistribuire il nuovo totale senza superare la quota originariamente dichiarata da ciascuno; l’Officiante paga almeno metà del Grado per eccesso e un Canale che contribuisce energia almeno 1 PM. Un Canale che offre soltanto VA può restare a 0 PM. Le quote devono sommare esattamente il nuovo totale.
+
+Il Rituale diretto di Rigenerazione usa soltanto PM personali dell’Officiante e dei Canali. Le regole di attivazione tramite Artefatto e relativa riserva Verde o Bianca restano separate. L’accesso alle versioni rituali dipende da conoscenza e Ritualista: Minore per il Grado III, versioni 9–10; Maggiore per i Gradi IV–VI, versioni 12/15/18, senza il normale limite di livello degli Incantesimi.
+
+Per le batterie con supporto base, anche oltre 5 PM e comprese le Matrice, restano 0,2 kg, Qualità Comune, PS Integrità 10, 3 PI e supporto da 100 crediti. Non applicare automaticamente questo profilo a Pietra della Vigilanza o Guanti. Qualità, Reperibilità e Grado mistico sono distinti.
+
+## A.76 — Sanguinante X causato da un attacco
+
+Si applica se almeno 1 danno del colpo supera l’AR. Risolvere prima il danno dell’attacco, poi perdere immediatamente altri X PV ignorando AR, Parata e Schivata. Questa perdita iniziale avviene una sola volta per bersaglio per attacco, anche con più colpi.
+
+Il danno periodico si applica all’INI della fonte, al massimo una volta per Round; la perdita iniziale conta già per quel Round, senza un secondo addebito. Fra più sanguinamenti si usa il maggiore, senza sommarli.
+
+Arrivare a 0 PV per sanguinamento non causa di per sé una Ferita immediata; se si è già a 0 PV si applica la relativa PS Tempra. L’app applica perdita iniziale e Stato senza duplicare l’evento periodico. Esempio: 20 PV, 5 danni del colpo e Sanguinante 2 → 13 PV.
+
+## A.77 — Perforante e più applicazioni di danno
+
+Perforante X riduce, fino a 0, il totale dell’AR non magica applicabile a ciascuna applicazione di danno; l’AR magica non viene ridotta. Si applica una sola volta al totale delle protezioni, non separatamente ad armatura, scudo e rinforzi. Si ricalcola per ogni applicazione, senza accumularsi come erosione dell’AR e senza causare di per sé perdita di PI.
+
+Esempio: AR 6, di cui 4 non magica e 2 magica, contro Perforante 2 → AR applicabile 4 per ciascuna applicazione. Due applicazioni da 8 danni causano 4 \+ 4 danni.
+
+## A.79 — Bestiario umano e variante dell’Eretico
+
+Gli avversari umani si costruiscono con le regole aggiornate dei PG, rispettando categorie, limiti, requisiti, Talenti ed equipaggiamento. Fasce approvate: Recluta livello 2, Veterano livello 5, Élite livello 8\. Quando la procedura richiede un tiro per i PV, usare la media del dado arrotondata per eccesso. Scelte coerenti con il ruolo e 7 punti Abilità liberi per Grado, non 5\.
+
+Numero dei PG ed etichette Élite o Boss non concedono automaticamente PV, danni o Azioni aggiuntive. Sono approvati metodo e fasce, non indistintamente tutti i valori numerici proposti: i profili vanno ricalcolati.
+
+L’Eretico base è un umano Freelance Incursore, con normali Talenti e armi; non riceve automaticamente poteri di Oscura Simmetria a nessuna fascia. Eventuali poteri richiedono future varianti complete e specifiche del Bestiario. Il nome Eretico non assegna automaticamente lo Stato di Corruzione Eretico né il relativo −6. Natura e Corruzione sono dati espliciti e distinti. Nell’app: «Eretico — profilo umano senza poteri oscuri».
+
+## A.84 — Regime di lancio degli Incantesimi dei nemici
+
+Inserire Regime di lancio: Taumaturgo; altro utilizzatore autorizzato; capacità specifica. Per gli umani deriva dall’Addestramento effettivo; una creatura capace di magia non è automaticamente un Taumaturgo.
+
+Colonna Taumaturgo: versioni 1–3 senza Prova, salvo condizioni che la impongono; 4–6 modificatore 0; 7–9 −2; 10–12 −4; 13–15 −6; 16–18 −8. Gli altri utilizzatori autorizzati tirano sempre Potere: versioni 1–3 modificatore 0; 4–6 −2; 7–9 −4; 10–12 −6; 13–15 −8; 16–18 −10. Le fasce indicano la versione dell’Incantesimo, non il livello del nemico.
+
+Ingaggio, Anticipazione e componenti obbligatorie mancanti mantengono le proprie regole e possono imporre la Prova. Le capacità specifiche seguono il profilo. Se il regime manca, completare la scheda prima di automatizzare il lancio: eliminare l’assunzione che tutti siano Taumaturghi.
+
+## A.85 — Bonus di SAG al danno magico dei nemici
+
+Il danno base dell’Incantesimo nel catalogo non comprende il bonus individuale di SAG. Per gli umani costruiti come PG si calcola normalmente, con tetto \+1 ai livelli 1–7, \+2 ai livelli 8–14, \+3 dal livello 15\.
+
+Per creature prive di livello, il profilo deve specificare un bonus al danno magico verificato; non ricavarlo automaticamente dalla fascia di potenza. Aggiungerlo una sola volta: una formula già completa del Bestiario lo contiene già. Se mancano dati necessari, la scheda è incompleta e non va assunto arbitrariamente bonus zero.
+
+Esempio: umano livello 8 con bonus grezzo SAG \+3 → bonus applicabile \+2; 2d6 diventa 2d6+2 prima di moltiplicatori e riduzioni.
+
+## A.87 — Assegnazione degli Artefatti del gruppo
+
+Le assegnazioni sono già state effettuate e sono nei file di ciascun PG. Recuperare da quei file proprietario, collocazione e cariche residue effettive. È respinta la proposta di creare un deposito comune provvisorio per questi oggetti; non inventare destinatari né riportare automaticamente le riserve al massimo.
+
+Oggetti da riconciliare: 2 Batterie Matrice Rosse da 10 PM, SnT 3 ciascuna; 4 Schegge instabili Verdi da 5 PM, SnT 0; 1 Pietra della Vigilanza Verde da 10 PM a impiego universale, SnT 3; 1 paio di Guanti da combattimento Verdi da 10 PM con riserva esclusiva, SnT 2\.
+
+Ogni esemplare è unico anche se compare in più viste. La distribuzione e i residui restano da leggere nei file personali: questa risposta non certifica una verifica già eseguita delle assegnazioni.
+
+## A.91 — Proprietà e scheda unica dei veicoli
+
+Un veicolo può appartenere a un singolo PG o al gruppo secondo la campagna. Ha una scheda autonoma unica, con PI attuali e massimi di Carrozzeria, Propulsione e Motore, energia e autonomie. Il conducente attuale è distinto dal proprietario.
+
+Schede dei PG e Tavolo del Master si riferiscono allo stesso veicolo, senza copie modificabili indipendenti. L’indicazione «Veicolo del gruppo» non realizza questa sincronizzazione: implementare il collegamento alla stessa scheda. Fino ad allora usare un unico registro autorevole del mezzo.
+
+## A.93 — Corpi cyborg completi
+
+Non sono attualmente un’opzione acquistabile o selezionabile per i PG. Restano gli impianti singoli del catalogo. Un PNG può avere un corpo completo soltanto con un profilo specifico che definisca protezioni, risorse, energia, manutenzione e capacità.
+
+Un’eventuale opzione futura per i PG richiederà regole dedicate. La fascia UMN «Cyborg» 12–7 non conferisce automaticamente un corpo artificiale completo, capacità aggiuntive o la trasformazione del PG in PNG.
+
+## A.94 — Interfaccia SIN standard
+
+Già risolto dalla A.68, che prevale sull’omissione del catalogo: standard 3.500 crediti \+ 2.000 installazione \= 5.500, costo 2 UMN. CYBERTRONIC 5.000 \+ 2.000 \= 7.000, costo 1 UMN.
+
+Entrambe: Qualità Non comune, PS Integrità 12, 4 PI, REP Rara; bioenergia, senza NEC. La standard richiede 1 minuto e Tecnologia per abbinarsi a equipaggiamento CYBERTRONIC; quella CYBERTRONIC effettua automaticamente l’abbinamento. Un abbinamento riuscito resta memorizzato. Nessun ulteriore costo UMN per ciascun oggetto collegato.
+
+## A.95 — Volo e taglia nel Bestiario
+
+Eliminare il −2 VA generico per attaccare qualsiasi creatura volante e il \+2 VA generico per colpire qualsiasi creatura grande. Restano i modificatori ordinari delle andature, le capacità espresse del profilo e le altre regole specifiche di taglia, massa e spazio, per esempio quelle di Sbalzante. Nessun bonus o penalità universale soltanto dall’etichetta di volo o taglia.
+
+## A.96 — Etichetta Boss
+
+Boss non aumenta automaticamente i PV e non concede Azioni Principali aggiuntive. Il nemico usa PV e Azioni del proprio profilo, comprese le capacità legittime derivanti da livello, Talenti o regole espresse. Nell’app Boss è una classificazione, non un moltiplicatore delle statistiche. Il numero dei PG non aumenta automaticamente i valori del nemico.
+
+## A.97 — Scala di potenza e moduli
+
+La calibrazione proposta resta una stima provvisoria in Prepara scontro. Le cinque fasce sono orientative, senza modifiche automatiche alle statistiche. Dopo la rimozione dei bonus generici di volo, taglia e Boss, riconsiderare i valori che li includevano.
+
+Il gruppo reale di 7 PG è il riferimento iniziale del playtest, non un modificatore alle creature. Nessun costo universale approvato di mezzo Grado per modulo: valutare profilo completo e combinazioni di capacità.
+
+Registrare durata dello scontro, Ferite, risorse consumate e Azioni negate; 0 PV non è l’unico indicatore di sconfitta. Mostrare «Stima sperimentale, da verificare al tavolo». Nessuna taratura numerica definitiva è attestata dall’approvazione.
+
+## A.98 — Rune e Tatuaggi
+
+Restano un ampliamento futuro dei Poteri Sciamanici nel Manuale della Magia. Servono regole di accesso, effetti, costi, attivazione, durata, cumulo e limiti prima dell’implementazione. Non aggiungere adesso una sezione vuota o bonus automatici nell’app.
+
+## A.99 — Gerarchia delle fonti e Prontuario
+
+Sul medesimo argomento prevale la decisione esplicita approvata più recente; segue il manuale aggiornato competente. Il Prontuario è una sintesi operativa, non una fonte indipendente.
+
+Le abbreviazioni non eliminano condizioni né creano eccezioni. Correggere le divergenze nel riepilogo; l’app segue manuali e successive approvazioni. Per questo l’assegnazione vigente è di 7 punti Abilità liberi, nonostante precedenti testi con 5 o 10\.
+
+## A.101 — ASA Scout MK4: profilo e dotazione approvati
+
+La scheda di riferimento è il Manuale dei Veicoli v0.2, integrata dalle decisioni seguenti. Valori della dotazione completa iniziale; durante la campagna si conservano consumi, danni e residui effettivi, senza ripristino automatico.
+
+Configurazione: mezzo terrestre ASA a quattro ruote, 8 occupanti totali, conducente compreso; il mitragliere occupa uno degli altri 7 posti. Dimensioni 6 × 2,6 m, ingombro tattico 4 × 2 Q; carico utile 1.500 kg comprendendo persone ed equipaggiamento. MOV 30 Q, MAN 0\. Controllata 30 Q/27 km/h; Veloce 60 Q/54 km/h; Massima 90 Q/81 km/h.
+
+AR 4, componente magica 0, Corazzato 1; Qualità Non comune, PS Integrità 12, REP Rara. PI massimi: Carrozzeria 60, Propulsione 36, Motore 24\. Telaio e sistemi fissi descritti: 90.000 crediti, comprendendo la riserva respiratoria ordinaria da 8 ore, senza contare due volte le dotazioni separate sotto elencate.
+
+Arma installata: Capitol M606, 19.000 crediti. Armi pesanti, danno base 1d8+3, AC 1, VA 0, requisito FOR 6, gittata 600 Q, capacità 400, INC 6, 8 PI, Qualità Comune, PS Integrità 10\. Raffica Media, Raffica Lunga e Soppressione; munizioni ordinarie da fucile a 3 crediti per colpo. Si usa a due mani; l’affusto mantiene l’Imbracciatura. Restano i normali costi in Azioni, senza attacchi gratuiti o bonus ulteriori.
+
+Munizioni iniziali: 400 caricate e 800 di riserva, totale 1.200 cartucce e 3.600 crediti. La riserva permette due ricariche complete dopo il caricamento iniziale. Caricate e riserva restano distinte; la ricarica trasferisce le cartucce secondo la normale procedura.
+
+## A.101 — Copriruote Petra e Terre del Fuoco
+
+Sei copriruote Petra: quattro montati e due di ricambio; 3 PI e PS Integrità 12 ciascuno, 150 crediti ciascuno, totale 900\. Sostituzione: 30 minuti e Prova di Tecnologia con strumenti adeguati.
+
+I quattro montati assorbono in sequenza le perdite di PI destinate alla Propulsione; esaurito uno si passa al successivo, poi ai veri PI della Propulsione quando sono esauriti tutti e quattro. Non si sommano quattro riduzioni e non si effettuano PS aggiuntive per ogni copriruota attraversato. Si risolve la normale PS strutturale del colpo con AR 4 e Corazzato 1, quindi si distribuisce la perdita risultante.
+
+Nelle Terre del Fuoco, se il mezzo percorre più di 30 Q effettivi nello stesso Round, effettua una sola PS Integrità 12 a fine movimento. Con fallimento perde 1 PI sul copriruota attivo, oppure sulla Propulsione se non restano copriruote utilizzabili. Questa perdita ignora AR e Corazzato e non genera un’altra PS. Fino a 30 Q non si effettua questa Prova.
+
+## A.101 — Supporto vitale, aria ed energia Verde
+
+Autonomia respiratoria iniziale con 8 occupanti: 24 ore di utilizzo effettivo, anche non consecutive. È composta da riserva fissa ordinaria di 8 ore e due bombole supplementari, ciascuna da altre 8 ore; le due bombole sono già collegate, non ricambi ulteriori non conteggiati.
+
+Ogni bombola supplementare: 20 kg piena, 1.000 crediti piena, ricarica 100 crediti, REP Non comune, Qualità Comune, PS Integrità 10, 4 PI. Coppia: 40 kg e 2.000 crediti. Sostituzione in 1 minuto a veicolo fermo, con accesso ai raccordi; normalmente senza Prova, salvo danni o complicazioni che richiedano Tecnologia. Sono riutilizzabili e richiedono un servizio compatibile; non sono automaticamente intercambiabili con le bombole dei respiratori personali.
+
+Modulo Verde commerciale installato: 10.000 Lx, erogazione massima 500 Lx/ora, 2 kg, 1.100 crediti. Il supporto vitale consuma 200 Lx/ora mentre è acceso, per un massimo di 8 occupanti. Autonomia elettrica: 50 ore; il limite iniziale complessivo è però la riserva d’aria di 24 ore. Dopo 24 ore restano 5.200 Lx, sufficienti per altre 26 ore elettriche soltanto se si ripristina l’aria.
+
+Il supporto vitale è indipendente dalla trazione Rossa e può funzionare a mezzo parcheggiato. La cabina deve essere chiusa e sigillata; aprire portiere o portelli interrompe la protezione. I NEC non ricaricano automaticamente l’aria. Non è stata approvata una formula di aumento dell’autonomia respiratoria con meno occupanti.
+
+## A.101 — Trazione Rossa, consumi e riserve NEC
+
+Due Banchi Rossi installati: capacità totale 100.000 Lx, erogazione massima complessiva 20.000 Lx/ora, peso 40 kg, valore 12.000 crediti.
+
+Consumo approvato: 200 Lx/km a tutte e tre le andature, comprendendo trazione e servizi ordinari durante il movimento. Autonomia nominale a piena carica: 500 km prima dei consumi da fermo. A 27/54/81 km/h i consumi sono rispettivamente 5.400/10.800/16.200 Lx/ora, entro l’erogazione disponibile.
+
+A mezzo fermo, servizi ordinari accesi: 100 Lx/ora. Non aggiungere questo consumo una seconda volta durante la marcia. Il supporto vitale Verde resta separato. L’app sottrae dalla stessa riserva Rossa i chilometri percorsi e le ore di servizi da fermo; restano i limiti di erogazione dei NEC effettivamente utilizzabili.
+
+Ricambi energetici iniziali, pieni ma non collegati finché non installati: 1 Banco Rosso da 50.000 Lx, 20 kg, 6.000 crediti; 1 Modulo Verde da 10.000 Lx, 2 kg, 1.100 crediti. Totale ricambi 22 kg e 7.100 crediti. La disponibilità complessiva Rossa sale a 150.000 Lx, cioè 750 km nominali prima dei consumi da fermo, rispettando installazione ed erogazione. Il Verde di ricambio non aumenta da solo le 24 ore d’aria. Resta il divieto già approvato di travasare direttamente le cariche residue da un NEC all’altro.
+
+## A.101 — Riparazioni e corredo tecnico
+
+Materiali per ogni PI recuperato: Carrozzeria 300 crediti, Propulsione 250, Motore 500\. Riportare da 0 al massimo tutte e tre le strutture, quando recuperabili, richiede materiali per 18.000 \+ 9.000 \+ 12.000 \= 39.000 crediti.
+
+Intervento ordinario: 1 ora sulla struttura interessata e Prova di Tecnologia; successo \+1 PI, Magistrale \+2 PI, senza superare il massimo. Si pagano i materiali corrispondenti ai PI effettivamente recuperati. Officina: 100 crediti per ora realmente lavorata, comprese le ore dei tentativi falliti, oltre ai materiali. Riparazione eseguita dai PG: materiali, purché strumenti e condizioni siano adeguati. Parti mancanti o distrutte richiedono ricambi separati.
+
+Kit tecnico dello Scout: Corredo di manutenzione da campo configurato per il mezzo, 2.000 crediti, 5 kg, \+2 a Tecnologia per diagnosi e riparazioni compatibili di tutte e tre le strutture. Materiali e ricambi non sono inclusi. Il corredo comprende già il proprio NEC Verde da 1.000 Lx, consumo 25 Lx/ora e autonomia 40 ore; Qualità Non comune, PS Integrità 12, 6 PI. Non addebitare il NEC una seconda volta.
+
+## A.101 — Dotazione sanitaria e cura delle Ferite
+
+Kit trauma professionale: 3.000 crediti, 5 applicazioni, \+2 a Medicina per gli impieghi pertinenti; rifornimento di 5 applicazioni a 300 crediti. Si usa con la normale procedura di 1 minuto e consuma l’applicazione all’inizio del tentativo. Cura dei PV e gestione del sanguinamento secondo la scheda; non cura da solo gli Stati di Ferita.
+
+Aggiunta richiesta e approvata per curare le Ferite: Pistola sanitaria da 3.500 crediti e 10 cartucce di naniti medici da 5.000 crediti ciascuna, per 53.500 crediti complessivi. La quantità definitiva è 10, sostituendo la precedente proposta di 5\.
+
+Caricamento iniziale: 5 cartucce nella pistola, che è la capacità massima, e 5 di riserva. Somministrazione al Contatto: 1 AzP, senza Prova. Inserimento di una cartuccia: 1 AzP; ricarica completa del contenitore: 1 minuto.
+
+Una dose di naniti riduce di uno lo Stato di Ferita al termine del trattamento: Superficiale 10 minuti, Importante 20, Profonda 30, Seria 40, Grave 50\. Massimo una dose ogni 24 ore per paziente; non consuma il tentativo medico settimanale. Non restituisce PV, non arresta di per sé il sanguinamento e non cura Menomazioni. La dotazione approvata non comprende un Kit chirurgico aggiuntivo.
+
+## A.101 — Altri accessori e valore complessivo
+
+Accessori approvati, con quantità e valore totale: 1 cric adatto allo Scout, 400 crediti; 2 ruote complete di ricambio a 1.200 ciascuna, 2.400; 1 cavo da traino, 200; 2 estintori a 200 ciascuno, 400; 1 comunicatore ponte di bordo, 3.500; 1 lanterna elettrica con NEC compreso, 200; 1 pala pieghevole, 100; 2 teli mimetici a 250 ciascuno, 500; 1 set di cavi e adattatori di ricarica, 300; 6 copriruote Petra a 150 ciascuno, 900; 8 razioni da viaggio a 20 ciascuna, 160; 2 taniche da 20 litri piene alla partenza a 80 ciascuna, acqua iniziale compresa, 160\. Totale di questo gruppo: 9.220 crediti.
+
+Valore totale della configurazione approvata: 202.520 crediti. Riepilogo: telaio 90.000; M606 19.000; Rossi installati 12.000; Verde installato 1.100; Rosso di ricambio 6.000; Verde di ricambio 1.100; bombole supplementari 2.000; munizioni 3.600; corredo tecnico 2.000; Kit trauma 3.000; Pistola sanitaria 3.500; 10 cartucce di naniti 50.000; altri accessori sopra elencati 9.220.
+
+I copriruote e gli altri componenti descritti nelle sezioni precedenti sono inclusi una sola volta nel totale. È una valorizzazione della dotazione, non una nuova somma da sottrarre ai PG per un veicolo già ricevuto. Non è stata completata la verifica del peso totale del carico: alcuni accessori non hanno ancora un peso definito.
+
+## A.102 — Reperibilità dell’autovettura civile
+
+Il modello civile ordinario del §9 ha REP Comune. Non richiede una Prova di Oratoria presso un venditore appropriato in un mercato ordinario; in luoghi isolati la disponibilità effettiva è stabilita dal Direttore. Restano il prezzo di 20.000 crediti con Banco Rosso pieno e il resto della scheda. Eventuali varianti speciali hanno la propria REP.
+
+## A.103 — Corazzato e esempio dei danni strutturali
+
+L’esempio del §4.3 con Corazzato 2 è generico e non modifica lo Scout, che mantiene Corazzato 1\. Applicare prima la PS Integrità, poi Corazzato, con perdita finale minima 0\.
+
+Esempio con 5 PI potenziali: con PS riuscita si dimezza per eccesso a 3, poi Corazzato 2 lascia 1 PI perso oppure Corazzato 1 lascia 2\. Con PS fallita: 5 − 2 \= 3 oppure 5 − 1 \= 4\. Chiarire il carattere generico dell’esempio nel manuale.
+
+## A.104 — Andatura attuale e collisioni
+
+Per la collisione conta l’andatura effettiva attuale, anche prima che il veicolo abbia agito nel Round. Un veicolo già in marcia mantiene l’andatura precedente finché non la cambia legalmente; un mezzo realmente fermo contribuisce 0 Q al movimento relativo. Un’accelerazione soltanto dichiarata per dopo non si applica in anticipo.
+
+Durante il movimento e lo Speronamento si usa il massimo in Q dell’andatura effettivamente adottata in modo legale, non soltanto i Q percorsi prima dell’urto. Cambi ordinari: una fascia per AzM, Fermo → Controllata → Veloce → Massima. Il salto di due fasce richiede la manovra di accelerazione forzata prevista.
+
+L’app conserva l’andatura attuale separatamente dalla selezione futura e la aggiorna quando il cambio viene eseguito. Uno Scout già a Veloce conta 60 Q anche prima della propria INI; uno parcheggiato conta 0 Q, ma può comunque subire una collisione provocata da un altro mezzo. Restano le normali regole del movimento relativo e dello Speronamento.
+
+## A.105 — Scheda del veicolo nel Tavolo del Master
+
+Usare una scheda autonoma collegata al conducente e allo stesso record unico della A.91. Mostrare i tre gruppi di PI e le condizioni, AR, Corazzato, andatura attuale, energia e autonomie, conducente e mitragliere, oltre all’indicazione del movimento già eseguito nel Round.
+
+Il mezzo non ha un’Iniziativa propria né Azioni aggiuntive: si muove all’INI del conducente pagando le normali Azioni di quest’ultimo. Mitragliere e passeggeri agiscono alla propria INI. Il cambio di conducente aggiorna il collegamento ma non concede un secondo movimento nello stesso Round.
+
+Se il conducente diventa incapace, il movimento residuo segue il §5.6 all’INI precedente finché interviene un nuovo conducente o il mezzo si arresta.
+
+## A.106 — Illuminazione e penalità visive
+
+Illuminazione sufficiente: nessuna penalità. Penombra: −2 VA, con bersagli visibili ma dettagli difficili. Luce molto scarsa: −4 VA, quando si distinguono appena sagome o movimenti. Buio totale: conseguenze sensoriali di Accecato, compreso −8 VA.
+
+Le penalità riguardano Percezione visiva, attacchi, Difese dipendenti dalla vista e attività pratiche che richiedono visione, come guida o lavoro su un meccanismo. Non si estendono all’udito, agli usi non visivi né automaticamente a Potere o PS.
+
+Al buio totale le azioni puramente visive falliscono automaticamente; Tiro Mirato e Colpo Mirato non sono utilizzabili. Si può attaccare soltanto conoscendo almeno approssimativamente la posizione del bersaglio; restano i limiti sensoriali di Accecato, compreso il \+4 dell’avversario non percepito. La mancanza di visibilità ambientale dura finché persiste la condizione, non 1+1d3 Round. Non sommare penalità di luce e Accecato per la medesima impossibilità di vedere.
+
+Valutare la luce sull’oggetto osservato: un osservatore nell’oscurità può vedere normalmente un bersaglio illuminato. Visione notturna elimina −2/−4 entro la propria portata, ma richiede luce residua e non funziona nel buio assoluto. Impianto notturno: 80 Q; termico: 40 Q, con contrasto termico e senza vedere attraverso pareti opache. Vista Felina: 20 Q nell’oscurità naturale, forme ma non colori. Ogni capacità conserva i propri limiti.
+
+Visione Perfetta riduce di 3, fino a 0, il totale delle penalità alle Prove di Percezione visiva; non migliora gli attacchi e non concede vista nel buio assoluto.
+
+## Errata — Manutenzione semplice
+
+Uniformare «Manutenzione agevolata» a «Manutenzione semplice», anche per Armatura Ashigaru leggera e Corazza Ashigaru media. È la stessa proprietà: \+1 VA a Tecnologia per riparare la protezione con strumenti e materiali adeguati. Non riduce automaticamente tempi o costi, non aumenta i PI recuperati e non sostituisce la riparazione. Nell’app deve essere una sola proprietà.
+
+## Errata — Taglia dello Scudo Punisher
+
+Uniformare la denominazione a Scudo Medio. Il §7.4.2 considera già Medio e Grande equivalenti: è una correzione terminologica, non una modifica del profilo. Restano una mano, AR \+2, FOR 5, 8 PI, nessuna penalità propria al MOV e Difensiva 1 alle Parate ravvicinate e a distanza.
+
+## Errata — Articolazione di tiro
+
+Uniformare «Articolazione da tiro» e «Articolazione di tiro» al nome Articolazione di tiro. Riduce di 1, fino ad annullarla, la penalità propria dell’armatura agli attacchi a distanza: −2 diventa −1; −1 diventa 0\. Non concede un bonus se la penalità è già nulla e non riduce altre penalità, comprese quelle per FOR insufficiente. Nell’app le denominazioni corrispondono alla stessa proprietà.
+
+## Stampa — Sintesi operative dei Talenti
+
+Sostituire la stampa automatica della sola prima frase con una sintesi dedicata per ciascun Talento. La sintesi deve riportare effetto e valori, condizioni d’uso, eventuali costi in Azioni o PM, limiti di frequenza e riferimento al manuale. Il testo completo rimane consultabile nell’app.
+
+Quando un Talento non può essere riassunto integralmente, la sintesi lo segnala e rimanda al testo completo, senza presentare come incondizionato un beneficio soggetto a limiti. È approvata l’impostazione; le singole sintesi devono ancora essere redatte e verificate.
+
+## Punti da riprendere — nessuna nuova decisione
+
+Promemoria degli Stati: servono le 11 righe effettivamente utilizzate nell’app, citate ma non trascritte in per-davide.md. Non sono ancora state revisionate né approvate nel loro testo.
+
+A.72: recuperare il censimento completo delle 29 schede e dei 46 aspetti dell’Anticipazione; restano approvati i casi esplicitati sopra.
+
+A.87: recuperare dai file dei PG le assegnazioni già effettuate e i residui, senza riaprire la scelta dei destinatari.
+
+Rune e Tatuaggi, corpi cyborg completi per PG e calibrazione definitiva del Bestiario mantengono lo stato futuro o sperimentale descritto nelle rispettive risposte.
+
+Questo aggiornamento registra le decisioni nel documento condiviso. L’implementazione nell’app, il recepimento nei manuali e le verifiche operative restano attività distinte: i quesiti non devono essere segnati come implementati soltanto perché la risposta è stata registrata.
 
