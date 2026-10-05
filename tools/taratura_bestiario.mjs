@@ -10,9 +10,13 @@
 // coincidere.
 // Il modello dello scontro (Appendice A.3) misura per ogni grado, contro un gruppo di 7 PG del livello di
 // riferimento, i Round di resistenza della creatura e i Round che le servono per abbattere un PG; esce con errore se
-// un grado o un Boss cade fuori dagli intervalli decisi da Marcello il 2 ottobre 2026 (OBIETTIVI).
-//   node tools/taratura_bestiario.mjs        → tabelle per livello e per archetipo, scala, Boss, bilancio, basi e
-//                                              bestiario umano scalato, in Markdown
+// un grado cade fuori dagli intervalli decisi da Marcello il 2 ottobre 2026 (OBIETTIVI).
+// A.95–A.97 e A.79 (E&L del 05/10/2026, decisioni 107 e 108): niente ±2 VA per volo e taglia, il Boss è
+// un'etichetta (nessuna tabella dei Boss), i moduli non hanno costo in grado (le creature pronte con moduli possono
+// superare l'intervallo del grado: si stampa «oltre», stima sperimentale, senza errore), il bestiario umano è
+// costruito come PG senza moltiplicatori (nessuna tabella del bestiario umano scalato).
+//   node tools/taratura_bestiario.mjs        → tabelle per livello e per archetipo, scala, bilancio, basi e
+//                                              creature pronte, in Markdown
 //   node tools/taratura_bestiario.mjs --json → personaggi, confronto e scala in JSON
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -428,8 +432,6 @@ export function umaniScalati(grado, pg) {
 export const ECCEZIONI = { 'eretico-corrotto': 'più fragile del grado, combatte da Incursore (§5.5.1)' };
 export function creaturePronte(dati, pgDi, umani = {}) {
   const B = dati.bestiario;
-  const nomi = GRADI.map((g) => g.nome);
-  const alto = (v) => (v > nomi.length - 1 ? OBIETTIVI['Molto potente'][1] * (1 + v - (nomi.length - 1)) : OBIETTIVI[nomi[Math.ceil(v)]][1]);
   return B.creature.flatMap((c) => [...c.gradi.map((g) => ({ g, boss: false })), ...(c.boss ? [{ g: c.boss.grado, boss: true }] : [])].map(({ g, boss }) => {
     const r = profiloNemico(scelteCreatura(c.id, g, { boss }, dati), dati, { umani });
     const n = r.nemico;
@@ -439,7 +441,7 @@ export function creaturePronte(dati, pgDi, umani = {}) {
     // A.96–A.97 (E&L del 05/10/2026): il Boss è un'etichetta (PV e Azioni del profilo) e i moduli non hanno costo:
     // l'intervallo è quello del grado, la misura una stima sperimentale
     const m = misureScontro({ pv: n.pv, va: a.va, difese: n.difese, ar: n.ar.totale, danno: a.danno, azioni: n.azioni.principali }, pgDi[grado.livello]);
-    const intervallo = [OBIETTIVI[grado.nome][0], alto(B.gradi.findIndex((y) => y.id === g))];
+    const intervallo = OBIETTIVI[grado.nome];
     const centro = OBIETTIVI[grado.nome];
     return { id: c.id, nome: c.nome, colonna: boss ? `Boss ${grado.nome}` : grado.nome, effettivo: grado.nome, resistenza: m.resistenza, abbatte: m.abbatte, intervallo,
       fuori: m.resistenza < intervallo[0] || m.resistenza > intervallo[1], eccezione: ECCEZIONI[c.id] ?? null, centro: m.resistenza >= centro[0] && m.resistenza <= centro[1] };
@@ -481,14 +483,6 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
       console.log(`| ${s.nome} | ${s.livello}° | ${s.pv} | ${s.va} | ${s.difese} | ${s.ar} | ${s.danno} | ${uno(dannoDopoAR(s.danno, 0))} | ${s.azioni} | ${uno(Math.round(s.resistenza * 10) / 10)} | ${o.join('–')}${s.resistenza < o[0] || s.resistenza > o[1] ? ' FUORI' : ''} | ${uno(Math.round(s.abbatte * 10) / 10)} | ${uno(Math.round(s.abbatteSenzaParata * 10) / 10)} |`);
     }
     console.log('');
-    console.log(`Boss del grado (PV per ${ROUND_BOSS} Round, Parata del primo colpo del Round):`);
-    console.log('| Grado | PV | ×PV del grado | Round di resistenza | Round per abbattere un PG | senza Parata | PG a terra in Round di resistenza (Parata) | (senza Parata) |');
-    console.log('| :---- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |');
-    for (const s of scala) {
-      const b = s.boss;
-      console.log(`| ${s.nome} | ${b.pv} | ${due(b.pv / s.pv)} | ${uno(Math.round(b.resistenza * 10) / 10)} | ${uno(Math.round(b.abbatte * 10) / 10)} | ${uno(Math.round(b.abbatteSenzaParata * 10) / 10)} | ${uno(Math.round(b.pgGiuBene * 10) / 10)} | ${uno(Math.round(b.pgGiuMale * 10) / 10)} |`);
-    }
-    console.log('');
     console.log(`Equilibrato contro ${N_PG} PG del livello di riferimento: creature del grado per facile / normale / duro (§2.3):`);
     console.log('| Grado | Facile | Normale | Duro |');
     console.log('| :---- | :---: | :---: | :---: |');
@@ -504,23 +498,18 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
       console.log(`| ${n} | ${gradi.map((b, i) => `PV ${b.pv} AR ${b.ar} Dif ${b.difese} ${b.danno} · peso ${due(pesoBase(b, GRADI[i], pgDi[GRADI[i].livello]))} · res ${uno(Math.round(misureScontro(b, pgDi[GRADI[i].livello]).resistenza * 10) / 10)} · abb ${uno(Math.round(misureScontro(b, pgDi[GRADI[i].livello]).abbatte * 10) / 10)}`).join(' | ')} |`);
     }
     console.log('');
-    console.log('Bestiario umano scalato (§3.2): moltiplicatore dei PV e bonus di grado al danno, con le AzP del grado:');
-    for (const g of GRADI) {
-      const u = umaniScalati(g, pgDi[g.livello]);
-      console.log(`| ${g.nome} | PV ×${String(u.molt).replace('.', ',')} | danno +${u.bonus} | AzP ${g.azioni} | res ${uno(Math.round(u.resistenza * 10) / 10)} | abb ${uno(Math.round(u.abbatte * 10) / 10)} |`);
-    }
-    console.log('');
-    console.log(`Creature pronte (cap. 5): Round di resistenza contro ${N_PG} PG del livello della colonna, intervallo dal grado della colonna al grado effettivo:`);
-    console.log('| Creatura | Colonna | Grado effettivo | Round di resistenza | Intervallo | Round per abbattere un PG |');
-    console.log('| :---- | :---- | :---- | :---: | :---: | :---: |');
-    for (const c of creature) console.log(`| ${c.nome} | ${c.colonna} | ${c.effettivo} | ${uno(Math.round(c.resistenza * 10) / 10)}${c.fuori ? (c.eccezione ? ` (fuori: ${c.eccezione})` : ' FUORI') : c.centro ? '' : ' *'} | ${c.intervallo.map((x) => uno(x)).join('–')} | ${uno(Math.round(c.abbatte * 10) / 10)} |`);
+    console.log(`Creature pronte (cap. 5): Round di resistenza contro ${N_PG} PG del livello della colonna, intervallo del grado della colonna (moduli senza costo, A.97: «oltre» è una stima sperimentale):`);
+    console.log('| Creatura | Colonna | Round di resistenza | Intervallo del grado | Round per abbattere un PG |');
+    console.log('| :---- | :---- | :---: | :---: | :---: |');
+    for (const c of creature) console.log(`| ${c.nome} | ${c.colonna} | ${uno(Math.round(c.resistenza * 10) / 10)}${c.fuori ? (c.eccezione ? ` (fuori: ${c.eccezione})` : c.resistenza > c.intervallo[1] ? ' oltre' : ' sotto') : ''} | ${c.intervallo.map((x) => uno(x)).join('–')} | ${uno(Math.round(c.abbatte * 10) / 10)} |`);
     console.log('');
     console.log(confronto === null ? 'Confronto con il branch: origin/tavolo-direttore non raggiungibile.'
       : `Confronto con il bestiario umano del branch: ${confronto.filter((c) => c.uguale).length} su ${confronto.length} uguali${confronto.some((c) => !c.uguale) ? ` (diversi: ${confronto.filter((c) => !c.uguale).map((c) => c.file).join(', ')})` : ''}.`);
   }
-  const fuori = scala.filter((s) => s.resistenza < OBIETTIVI[s.nome][0] || s.resistenza > OBIETTIVI[s.nome][1]).length
-    + scala.filter((s) => s.boss.resistenza < OBIETTIVI.Boss[0] || s.boss.resistenza > OBIETTIVI.Boss[1]).length;
-  const fuoriCreature = creature.filter((c) => c.fuori && !c.eccezione).length;
+  const fuori = scala.filter((s) => s.resistenza < OBIETTIVI[s.nome][0] || s.resistenza > OBIETTIVI[s.nome][1]).length;
+  // A.97: le creature pronte con moduli possono stare oltre l'intervallo del grado (stima sperimentale); sotto
+  // l'intervallo è un errore, salvo le eccezioni dichiarate nel testo
+  const fuoriCreature = creature.filter((c) => c.fuori && !c.eccezione && c.resistenza < c.intervallo[0]).length;
   const ko = fuoriCreature + righe.flatMap((r) => r.archetipi).filter((a) => a.problemi.length).length + (confronto?.filter((c) => !c.uguale).length ?? 0) + fuori;
   process.exitCode = ko ? 1 : 0;
 }

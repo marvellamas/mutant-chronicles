@@ -1776,7 +1776,7 @@ Con il modello dell’Appendice A questa creatura resiste circa 5,5 Round contro
 
 # **Appendice A — Taratura**
 
-**Nota del 05/10/2026.** Le misure di questa Appendice precedono le decisioni A.95–A.97 dell’E&L: il Boss non ha più PV né Azioni propri, i moduli non hanno un costo in grado e non ci sono più il −2 VA contro chi vola e il +2 VA contro le creature grandi (l’Alato ora ha i PV del grado, il Gigante × 1,1). Le tabelle restano come documentazione del metodo: la taratura definitiva è sperimentale e si verifica al tavolo.
+**Stato al 05/10/2026.** Questa Appendice segue le decisioni A.95–A.97 e A.79 dell’E&L: niente −2 VA contro chi vola né +2 VA contro le creature grandi; il Boss è un’etichetta, senza PV, Azioni o Parata propri; i moduli non hanno un costo in grado; gli umani si costruiscono come personaggi, senza moltiplicatori. Le misure che seguono sono una **stima sperimentale, da verificare al tavolo**: servono al Direttore per orientarsi, non fissano la difficoltà di uno scontro.
 
 ## **A.1 Metodo**
 
@@ -1840,7 +1840,7 @@ Il grado Molto potente copre fino al 20° livello con i valori del 16°: al 20°
 | Probabilità di colpire | VA / 20, con l’1 che riesce e il 20 che fallisce sempre; gli attacchi si tirano anche con VA 20 o più (Giocatore §1.6–1.7, A.78), quindi al massimo 19/20. |
 | Danno dopo l’Armatura | Media di (danno − AR del bersaglio, mai sotto 0) sui risultati dei dadi, colpo per colpo (Giocatore §5.13). Per esempio 2d6+2 contro AR 3: 6; 1d6+1 contro AR 5: 0,5. |
 | Parata | Il bersaglio tiene un’AzP e para il primo colpo del Round: con una Prova di Difese riuscita (probabilità VA Difese / 20) il danno di quel colpo è dimezzato per eccesso prima dell’Armatura (Giocatore §5.9). |
-| Danno del gruppo per Round | (7 × AzP dei personaggi − 1) × probabilità di colpire × danno dopo l’AR della creatura: il personaggio bersaglio para e non attacca. Le creature non parano; il Boss para il primo colpo del Round. |
+| Danno del gruppo per Round | (7 × AzP dei personaggi − 1) × probabilità di colpire × danno dopo l’AR della creatura: il personaggio bersaglio para e non attacca. Le creature non parano. |
 | Round di resistenza | PV della creatura / danno del gruppo per Round. |
 | Danno della creatura per Round | AzP × probabilità × danno dopo l’AR del personaggio, meno il risparmio della Parata sul primo colpo. |
 | Round per abbattere un PG | PV del personaggio / danno della creatura per Round, media sui quattro archetipi. |
@@ -1859,13 +1859,9 @@ Valori calcolati dallo script, prima dell’arrotondamento del §2.1:
 | Potente | 180 | 17 | 15 | 4 | 2d8+2 | 2 | 7 | 5–10 | 4,8 | 3,4 |
 | Molto potente | 265 | 19 | 17 | 5 | 2d8+3 | 2 | 10,1 | 6–15 | 4,6 | 3,2 |
 
-| Boss di grado | PV | Round di resistenza | Round per abbattere un PG | senza Parata | PG a terra in quei Round, con Parata | senza Parata |
-| :---- | :---: | :---: | :---: | :---: | :---: | :---: |
-| Minore | 160 | 12,1 | 8,9 | 6,5 | 1,4 | 1,9 |
-| Semplice | 160 | 12,1 | 7 | 4,9 | 1,7 | 2,5 |
-| Medio | 155 | 12,1 | 6 | 4,2 | 2 | 2,9 |
-| Potente | 290 | 12,1 | 4,8 | 3,4 | 2,5 | 3,5 |
-| Molto potente | 295 | 12,1 | 4,6 | 3,2 | 2,6 | 3,7 |
+Il Boss (§2.5) ha i valori del suo grado: nel modello vale come una creatura di quel grado. Le capacità proprie di una creatura pronta che porta l’etichetta Boss restano il suo vantaggio, che il modello non conta.
+
+Creature del grado per uno scontro facile, normale e duro contro sette personaggi del livello di riferimento (§2.3):
 
 | Grado | Facile | Normale | Duro |
 | :---- | :---: | :---: | :---: |
@@ -1887,22 +1883,22 @@ Creature per uno scontro normale contro sette personaggi di ogni livello di rife
 
 Nel §2.3 un valore sotto 0,75 diventa un trattino.
 
-**Che cosa il modello non conta.** Copertura, distanza, Manovre, Talenti situazionali, Stati, Ferite oltre gli 0 PV, cure e Punti Eroe. Sono il margine del Direttore: tutti, tranne le Ferite delle creature, accorciano lo scontro a favore del gruppo che gioca bene.
+**Che cosa il modello non conta.** Copertura, distanza, Manovre, Talenti situazionali, Stati, Ferite oltre gli 0 PV, cure, Punti Eroe, moduli e capacità speciali delle creature. Sono il margine del Direttore: tutti, tranne le Ferite e le capacità delle creature, accorciano lo scontro a favore del gruppo che gioca bene.
 
 ## **A.4 Peso delle basi**
 
-Rapporto fra la forza di una base e quella del suo grado, contro i personaggi del livello di riferimento (1 = uguale), con le due misure della base.
+Rapporto fra la forza di una base e quella del suo grado, contro i personaggi del livello di riferimento (1 = uguale), con le due misure della base. Nessuna base modifica il VA di chi la attacca (A.95): volo e taglia valgono per le andature e per le regole proprie della base, come la Spazzata del Gigante.
 
 | Base | Minore | Semplice | Medio | Potente | Molto potente |
 | :---- | :---: | :---: | :---: | :---: | :---: |
-| Umano | 1 | 1 | 1 | 1 | 1 |
+| Umano | 1,00 | 1,00 | 1,00 | 1,00 | 1,00 |
 | Insettoide | 0,98 | 0,99 | 1,03 | 1,08 | 1,10 |
 | Aracnoide | 0,86 | 0,86 | 0,95 | 0,95 | 0,95 |
 | Umanoide mostruoso | 1,14 | 1,02 | 0,99 | 0,94 | 0,93 |
 | Quadrupede | 1,00 | 1,00 | 1,00 | 1,00 | 1,00 |
-| Alato | 0,92 | 0,91 | 0,99 | 0,98 | 0,97 |
+| Alato | 0,90 | 0,90 | 1,00 | 1,00 | 1,00 |
 | Strisciante | 0,98 | 0,98 | 1,01 | 1,03 | 1,04 |
-| Gigante | 1,03 | 1,05 | 1,05 | 1,07 | 1,11 |
+| Gigante | 1,05 | 1,05 | 1,05 | 1,05 | 1,05 |
 
 | Base | Round di resistenza (Minore · Semplice · Medio · Potente · Molto potente) | Round per abbattere un PG |
 | :---- | :---- | :---- |
@@ -1910,17 +1906,16 @@ Rapporto fra la forza di una base e quella del suo grado, contro i personaggi de
 | Aracnoide | 1,3 · 2,6 · 4,1 · 6,3 · 9,1 | 11,2 · 9,3 · 6 · 4,8 · 4,6 |
 | Umanoide mostruoso | 1,6 · 2,5 · 3,8 · 5,6 · 7,9 | 7,4 · 5,4 · 5 · 4,2 · 4,1 |
 | Quadrupede | 1,5 · 2,9 · 4,5 · 7 · 10,1 | 8,9 · 7 · 6 · 4,8 · 4,6 |
-| Alato | 1,5 · 2,9 · 4,4 · 6,8 · 9,5 | 11,2 · 9,3 · 6 · 4,8 · 4,6 |
+| Alato | 1,5 · 2,9 · 4,5 · 7 · 10,1 | 11,2 · 9,3 · 6 · 4,8 · 4,6 |
 | Strisciante | 1,8 · 3,4 · 5,4 · 8,4 · 12,1 | 11,1 · 9,3 · 7,4 · 5,6 · 5,2 |
-| Gigante | 1,5 · 3,1 · 4,9 · 8 · 12,4 | 8,9 · 7 · 6 · 4,8 · 4,6 |
+| Gigante | 1,6 · 3,2 · 5 · 7,7 · 11,1 | 8,9 · 7 · 6 · 4,8 · 4,6 |
 
 L’Insettoide resiste più a lungo grazie alla chitina e colpisce più piano; l’Aracnoide compensa con la Ragnatela e l’Iniziativa, che il modello non conta; l’Umanoide mostruoso colpisce più forte ma ha le Difese più basse della scala.
 
-Per le basi del §3.6–3.9 il modello conta anche il modificatore al VA di chi le attacca (§3.1.1): −2 contro l’Alato in volo, +2 contro il Gigante. Gli intervalli dei Round di resistenza del §2.1 valgono per tutte e quattro.
 * Il Quadrupede ha i valori del grado: la Carica del branco, che il modello non conta, è il suo vantaggio.
-* L’Alato ha l’85% dei PV del grado, ma i colpi a −2 VA lo riportano alla resistenza del grado; Difese + 2 servono alla Parata del Boss.
+* L’Alato ha i PV del grado (A.95) e Difese + 2; ai gradi bassi colpisce più piano, e il volo vale per le andature.
 * Lo Strisciante ha il 20% di PV in più e colpisce un po’ più piano; lento in campo aperto, vale soprattutto nell’agguato.
-* Il Gigante ha il 25% di PV in più, ma i colpi a +2 VA ne tolgono quasi tutto il vantaggio; con AR + 1 usciva dagli intervalli dal Medio in su, per questo la sua AR resta quella del grado. La Spazzata, che il modello non conta, lo rende più pericoloso contro un gruppo serrato.
+* Il Gigante ha il 10% di PV in più (A.95) e Difese − 4; la Spazzata, che il modello non conta, lo rende più pericoloso contro un gruppo serrato.
 
 ## **A.5 Riprodurre la taratura**
 
@@ -1928,42 +1923,46 @@ Con l’app installata: node tools/taratura_bestiario.mjs. Lo script ricostruisc
 
 * la tabella A.2 e i valori dei singoli archetipi;
 * per grado i Round di resistenza contro sette personaggi e i Round per abbattere un personaggio, con e senza Parata;
-* i Boss, il bilancio facile, normale e duro e la tabella dei gruppi misti;
+* il bilancio facile, normale e duro e la tabella dei gruppi misti;
 * le basi, con il peso e le due misure;
-* il bestiario umano scalato: moltiplicatore dei PV e bonus di grado al danno;
-* le creature pronte del Capitolo 5 con i loro intervalli (A.6).
+* le creature pronte del Capitolo 5 (A.6).
 
-Esce con errore se un grado o un Boss cade fuori dall’intervallo dei Round di resistenza. Se le regole cambiano, si ripete la misura e si aggiornano le tabelle dei Capitoli 2 e 3.
+Esce con errore se un grado cade fuori dall’intervallo dei Round di resistenza o se una creatura pronta resta sotto quello del suo grado senza un’eccezione dichiarata nel testo. Se le regole cambiano, si ripete la misura e si aggiornano le tabelle dei Capitoli 2 e 3.
 
 ## **A.6 Creature pronte**
 
-Le due misure delle creature del Capitolo 5, colonna per colonna, contro sette personaggi del livello del grado della colonna. I valori della scheda sono quelli del grado della colonna, mentre i moduli valgono gradi in più nel bilancio (§2.4): l’intervallo va quindi dal minimo dei Round di resistenza del grado della colonna al massimo del grado effettivo, e oltre il Molto potente ogni grado effettivo in più vale una creatura in più (§2.4). Il Boss ha l’intervallo del Boss (§2.1).
+Le due misure delle creature del Capitolo 5, colonna per colonna, contro sette personaggi del livello del grado della colonna. Ogni colonna ha i valori del suo grado; i moduli non hanno un costo in grado (A.97), quindi non spostano l’intervallo: una creatura con moduli può restare in campo più a lungo del suo grado («oltre»). Il Boss ha i valori del suo grado (A.96).
 
-| Creatura | Colonne | Round di resistenza | Intervallo | Round per abbattere un PG |
+| Creatura | Colonne | Round di resistenza | Intervallo del grado | Round per abbattere un PG |
 | :---- | :---- | :---- | :---- | :---- |
-| Scavafosse | Minore · Semplice · Medio | 2,4 · 5 · 8,4 | 1–4 · 2–6 · 3–10 | 11,1 · 9,3 · 7,4 |
-| Regina della Covata | Medio · Potente · Molto potente · Boss Potente | 12,6 · 22,7 · 33,3 · 12,7 | 3–15 · 5–30 · 6–45 · 10–20 | 7,4 · 5,6 · 5,2 · 5,6 |
-| Pungiglione dei Condotti | Semplice · Medio · Potente | 3,5 · 5,7 · 9,3 | 2–6 · 3–10 · 5–15 | 9,3 · 7,4 · 5,6 |
-| Tessitrice d’Ombra | Minore · Semplice · Medio | 1,3 · 2,6 · 4,1 | 1–4 · 2–6 · 3–10 | 11,2 · 9,3 · 6 |
-| Madre dei Fili Neri | Medio · Potente · Molto potente · Boss Potente | 8,4 · 15,1 · 22,2 · 12,9 | 3–15 · 5–30 · 6–45 · 10–20 | 6 · 4,8 · 4,6 · 4,8 |
-| Rodiroccia | Semplice · Medio · Potente | 3,9 · 6,1 · 9,5 | 2–10 · 3–15 · 5–15 | 9,3 · 6 · 4,8 |
-| Squarciatore | Minore · Semplice · Medio | 1,6 · 2,5 · 3,8 | 1–4 · 2–6 · 3–10 | 7,4 · 5,4 · 5 |
-| Bruto della Breccia | Semplice · Medio · Potente · Boss Medio | 3,2 · 5 · 7,7 · 13,1 | 2–10 · 3–15 · 5–30 · 10–20 | 5,4 · 5 · 4,2 · 5 |
-| Cantore Sfigurato | Semplice · Medio · Potente | 3,2 · 5 · 7,7 | 2–6 · 3–10 · 5–15 | 5,4 · 5 · 4,2 |
-| Eretico corrotto | Minore · Semplice · Medio · Boss Medio | 1,2 · 1,7† · 2,6† · 12,1 | 1–4 · 2–6 · 3–10 · 10–20 | 9 · 8,9 · 6,6 · 6,6 |
-| Levriero delle Discariche | Minore · Semplice · Medio | 1,5 · 2,9 · 4,5 | 1–4 · 2–6 · 3–10 | 8,9 · 7 · 6 |
-| Cornofango | Medio · Potente · Molto potente | 9,4 · 15,6 · 22,7 | 3–15 · 5–22,5 · 6–37,5 | 6 · 4,8 · 4,6 |
-| Lupo senz’Ombra | Semplice · Medio · Potente · Boss Medio | 3,9 · 6,2 · 10,4 · 11,9 | 2–10 · 3–15 · 5–22,5 · 10–20 | 7 · 6 · 4,8 · 6 |
-| Gracchia di Ruggine | Minore · Semplice · Medio | 1,5 · 2,9 · 4,4 | 1–4 · 2–6 · 3–10 | 11,2 · 9,3 · 6 |
-| Lamentatrice | Semplice · Medio · Potente | 3,9 · 6,1 · 10 | 2–6 · 3–10 · 5–15 | 9,3 · 6 · 4,8 |
-| Falco dei Tralicci | Medio · Potente · Molto potente · Boss Potente | 4,4 · 6,8 · 9,5 · 11,9 | 3–15 · 5–22,5 · 6–37,5 · 10–20 | 6 · 4,8 · 4,6 · 4,8 |
-| Verme dei Crolli | Semplice · Medio · Potente | 4,6 · 7,5 · 12,5 | 2–6 · 3–10 · 5–15 | 9,3 · 7,4 · 5,6 |
-| Lamprede di Sentina | Minore · Semplice · Medio | 1,8 · 3,4 · 5,4 | 1–4 · 2–6 · 3–10 | 11,1 · 9,3 · 7,4 |
-| Serpe del Reliquiario | Medio · Potente · Molto potente · Boss Potente | 11,1 · 20,2 · 29,5 · 17 | 3–15 · 5–30 · 6–45 · 10–20 | 7,4 · 5,6 · 5,2 · 5,6 |
-| Colosso delle Fonderie | Medio · Potente · Molto potente · Boss Potente | 6,8 · 11,8 · 18,5 · 13,9 | 3–10 · 5–15 · 6–30 · 10–20 | 6 · 4,8 · 4,6 · 4,8 |
-| Sgorbio delle Vasche | Minore · Semplice · Medio | 1,5 · 3,1 · 4,9 | 1–4 · 2–6 · 3–10 | 8,9 · 7 · 6 |
-| Mietitore delle Serre | Semplice · Medio · Potente · Boss Medio | 3,1 · 4,9 · 8 · 12,7 | 2–10 · 3–15 · 5–22,5 · 10–20 | 7 · 6 · 4,8 · 6 |
+| Scavafosse | Minore · Semplice · Medio | 2,4 oltre · 5 oltre · 8,4 oltre | 1–2 · 2–4 · 3–6 | 11,1 · 9,3 · 7,4 |
+| Regina della Covata | Medio · Potente · Molto potente · Boss Potente | 12,6 oltre · 22,7 oltre · 33,3 oltre · 22,7 oltre | 3–6 · 5–10 · 6–15 · 5–10 | 7,4 · 5,6 · 5,2 · 5,6 |
+| Pungiglione dei Condotti | Semplice · Medio · Potente | 3,5 · 5,7 · 9,3 | 2–4 · 3–6 · 5–10 | 9,3 · 7,4 · 5,6 |
+| Tessitrice d’Ombra | Minore · Semplice · Medio | 1,3 · 2,6 · 4,1 | 1–2 · 2–4 · 3–6 | 11,2 · 9,3 · 6 |
+| Madre dei Fili Neri | Medio · Potente · Molto potente · Boss Potente | 8,4 oltre · 15,1 oltre · 22,2 oltre · 15,1 oltre | 3–6 · 5–10 · 6–15 · 5–10 | 6 · 4,8 · 4,6 · 4,8 |
+| Rodiroccia | Semplice · Medio · Potente | 3,9 · 6,1 oltre · 9,5 | 2–4 · 3–6 · 5–10 | 9,3 · 6 · 4,8 |
+| Squarciatore | Minore · Semplice · Medio | 1,6 · 2,5 · 3,8 | 1–2 · 2–4 · 3–6 | 7,4 · 5,4 · 5 |
+| Bruto della Breccia | Semplice · Medio · Potente · Boss Medio | 3,2 · 5 · 7,7 · 5 | 2–4 · 3–6 · 5–10 · 3–6 | 5,4 · 5 · 4,2 · 5 |
+| Cantore Sfigurato | Semplice · Medio · Potente | 3,2 · 5 · 7,7 | 2–4 · 3–6 · 5–10 | 5,4 · 5 · 4,2 |
+| Eretico corrotto | Minore · Semplice · Medio · Boss Medio | 1,2 · 1,7† · 1,7† · 2,3† | 1–2 · 2–4 · 3–6 · 3–6 | 17,6 · 57,5 · 50,2 · 50,2 |
+| Levriero delle Discariche | Minore · Semplice · Medio | 1,5 · 2,9 · 4,5 | 1–2 · 2–4 · 3–6 | 8,9 · 7 · 6 |
+| Cornofango | Medio · Potente · Molto potente | 9,4 oltre · 15,6 oltre · 22,7 oltre | 3–6 · 5–10 · 6–15 | 6 · 4,8 · 4,6 |
+| Lupo senz’Ombra | Semplice · Medio · Potente · Boss Medio | 3,9 · 6,2 oltre · 10,4 oltre · 6,2 oltre | 2–4 · 3–6 · 5–10 · 3–6 | 7 · 6 · 4,8 · 6 |
+| Gracchia di Ruggine | Minore · Semplice · Medio | 1,5 · 2,9 · 4,5 | 1–2 · 2–4 · 3–6 | 11,2 · 9,3 · 6 |
+| Lamentatrice | Semplice · Medio · Potente | 3,9 · 6,2 oltre · 10,4 oltre | 2–4 · 3–6 · 5–10 | 9,3 · 6 · 4,8 |
+| Falco dei Tralicci | Medio · Potente · Molto potente · Boss Potente | 4,5 · 7 · 10,1 · 7 | 3–6 · 5–10 · 6–15 · 5–10 | 6 · 4,8 · 4,6 · 4,8 |
+| Verme dei Crolli | Semplice · Medio · Potente | 4,6 oltre · 7,5 oltre · 12,5 oltre | 2–4 · 3–6 · 5–10 | 9,3 · 7,4 · 5,6 |
+| Lamprede di Sentina | Minore · Semplice · Medio | 1,8 · 3,4 · 5,4 | 1–2 · 2–4 · 3–6 | 11,1 · 9,3 · 7,4 |
+| Serpe del Reliquiario | Medio · Potente · Molto potente · Boss Potente | 11,1 oltre · 20,2 oltre · 29,5 oltre · 20,2 oltre | 3–6 · 5–10 · 6–15 · 5–10 | 7,4 · 5,6 · 5,2 · 5,6 |
+| Colosso delle Fonderie | Medio · Potente · Molto potente · Boss Potente | 6,9 oltre · 11,4 oltre · 16,6 oltre · 11,4 oltre | 3–6 · 5–10 · 6–15 · 5–10 | 6 · 4,8 · 4,6 · 4,8 |
+| Sgorbio delle Vasche | Minore · Semplice · Medio | 1,6 · 3,2 · 5 | 1–2 · 2–4 · 3–6 | 8,9 · 7 · 6 |
+| Mietitore delle Serre | Semplice · Medio · Potente · Boss Medio | 3,2 · 5 · 7,7 · 5 | 2–4 · 3–6 · 5–10 · 3–6 | 7 · 6 · 4,8 · 6 |
 
+«oltre»: sopra l’intervallo del grado per effetto dei moduli; il Direttore ne tiene conto scegliendo quante creature mettere in campo (§2.4).
 † Fuori dall’intervallo per scelta: l’Eretico corrotto combatte da Incursore ed è più fragile del grado (§5.5.1).
 
-Lo script tools/taratura_bestiario.mjs stampa questa tabella con le regole correnti ed esce con errore se una creatura cade fuori dal proprio intervallo senza un’eccezione dichiarata nel testo.
+## **A.7 Bestiario umano**
+
+Gli avversari umani si costruiscono come personaggi (A.79, §3.2): Recluta al 2° livello, Veterano al 5°, Élite all’8°, con le regole correnti dei personaggi, i PV dei Gradi alla media del dado arrotondata per eccesso e 7 Punti Abilità liberi per Grado. Il convertitore «PG → nemico» del Tavolo del Master li usa come sono: nessun moltiplicatore dei PV, nessun bonus di grado al danno, nessuna Azione in più; il bonus di grado resta solo per l’equipaggiamento dell’Umanoide mostruoso (§4.4). Le etichette Recluta, Veterano, Élite e Boss non cambiano i valori.
+
+Gli archetipi della tabella A.2 coincidono con i file del bestiario umano del Tavolo del Master (esempi/nemici/umani/): lo script li confronta a ogni esecuzione. Il numero di avversari umani resta una scelta del Direttore: la stima dello scontro è sperimentale (A.97).
