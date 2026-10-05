@@ -127,6 +127,7 @@ export function renderStampa({ stampa, torna, opzioni = null, cambiaOpzioni = nu
         const { pagine, pagineSchede } = impaginaMagia(contenitore, f, { ...stampa.fogli.find((x) => x.id === 'poteri').dati, soloElenco: opz.magia === 'elenco' }, stampa.piede);
         stimaSchede.textContent = pagineSchede ? ` (≈ ${pagineSchede} ${pagineSchede === 1 ? 'pagina' : 'pagine'} in più)` : ' (nessuna pagina in più)';
         if (pagine > 1) avvisi.append(h('p', {}, `Il foglio Poteri è su ${pagine} pagine.`));
+        if (eccede(f.querySelector('.foglio-corpo'))) { f.dataset.fuori = '1'; fuori.push('Poteri'); }
         continue;
       }
       if (f.classList.contains('foglio-abilita') && !f.classList.contains('seguito')) {
@@ -1229,10 +1230,23 @@ function impaginaMagia(contenitore, foglio, d, piede) {
   const corpo = foglio.querySelector('.foglio-corpo');
   const verticale = foglio.querySelector('.scala-verticale');
   if (verticale && eccede(corpo)) verticale.replaceWith(scalaOrizzontale(d));
+  // se la colonna sinistra non entra neppure così (molte batterie e Schegge: collaudo di Lucas del 05/10/2026), il
+  // riquadro delle riserve passa a una pagina «Poteri (continua)» dopo le altre, con un rimando al suo posto
+  const spostaRiserve = () => {
+    const ris = eccede(corpo) ? corpo.querySelector('.f5-riserve') : null;
+    if (!ris) return 0;
+    let ultimaPoteri = foglio;
+    while (ultimaPoteri.nextElementSibling?.classList.contains('foglio-poteri') && ultimaPoteri.nextElementSibling.classList.contains('seguito')) ultimaPoteri = ultimaPoteri.nextElementSibling;
+    ris.replaceWith(h('p', { class: 'piccolo rimando-riserve' }, 'Batterie e riserve di Chroma: nella pagina «Poteri (continua)».'));
+    const f = creaFoglio('poteri', 'Poteri (continua)', d, piede, () => [ris]);
+    f.classList.add('seguito');
+    ultimaPoteri.after(f);
+    return 1;
+  };
   const incantesimi = elencoIncantesimi(d);
   // 1. elenco: colonna destra, poi sotto la colonna sinistra, poi la pagina dopo
   const resto = impaginaElenco(foglio, d);
-  if (!incantesimi.length) return { pagine: 1, pagineSchede: 0 };
+  if (!incantesimi.length) return { pagine: 1 + spostaRiserve(), pagineSchede: 0 };
   // la nota di «Solo elenco» va in fondo all'elenco: se l'elenco continua, la porta la pagina dopo
   if (resto.length) foglio.querySelector('.f5-coda .nota-solo-elenco')?.remove();
 
@@ -1281,7 +1295,7 @@ function impaginaMagia(contenitore, foglio, d, piede) {
       else f.remove();
       f = dopo;
     }
-    return { pagine: pagineElenco, pagineSchede: pagine - pagineElenco };
+    return { pagine: pagineElenco + spostaRiserve(), pagineSchede: pagine - pagineElenco };
   }
-  return { pagine, pagineSchede: pagine - pagineElenco };
+  return { pagine: pagine + spostaRiserve(), pagineSchede: pagine - pagineElenco };
 }
