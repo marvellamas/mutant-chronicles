@@ -570,6 +570,8 @@ export function normalizzaEquipaggiamento(valore) {
       if (effetti.length) out.personalizzato.effetti = effetti;
     }
     if (typeof v.montato_su === 'string' && v.montato_su) out.montato_su = v.montato_su;
+    // A.60 (E&L del 05/10/2026): mano registrata per un'arma impugnata o uno scudo imbracciato; senza, l'ordine
+    if (['destra', 'sinistra'].includes(v.mano)) out.mano = v.mano;
     if (v.sintonizzato === true) out.sintonizzato = true; // §7.10: scelta del giocatore
     // A.61: armatura Capolavoro del Corazzaio, con la Contromisura scelta alla costruzione
     if (isOggetto(v.capolavoro) && testo(v.capolavoro.contromisura)) out.capolavoro = { contromisura: v.capolavoro.contromisura };
@@ -582,6 +584,33 @@ export function normalizzaEquipaggiamento(valore) {
     if (out.rif && testo(v.nome_dotazione)) out.nome_dotazione = v.nome_dotazione.trim().slice(0, 120);
     return out;
   });
+}
+
+/**
+ * A.60 (E&L del 05/10/2026): assegna gli oggetti in mano ai riquadri delle mani. Un oggetto a due mani occupa
+ * «Due mani» (gli altri vanno oltre le due mani); altrimenti la mano registrata sulla voce (`mano`) vale per
+ * prima, poi l'ordine dell'Inventario riempie le mani libere, destra prima della sinistra.
+ * @param oggetti [{ mani: 1|2, … }] nell'ordine dell'Inventario
+ * @param manoDi (o) → 'destra' | 'sinistra' | null
+ * @returns {{ slot: { due, destra, sinistra }, oltre: [] }}
+ */
+export function assegnaMani(oggetti, manoDi = () => null) {
+  const slot = { due: null, destra: null, sinistra: null };
+  const oltre = [];
+  const due = oggetti.find((o) => o.mani === 2);
+  if (due) return { slot: { ...slot, due }, oltre: oggetti.filter((o) => o !== due) };
+  const liberi = [];
+  for (const o of oggetti) {
+    const m = manoDi(o);
+    if ((m === 'destra' || m === 'sinistra') && !slot[m]) slot[m] = o;
+    else liberi.push(o);
+  }
+  for (const o of liberi) {
+    if (!slot.destra) slot.destra = o;
+    else if (!slot.sinistra) slot.sinistra = o;
+    else oltre.push(o);
+  }
+  return { slot, oltre };
 }
 
 /**

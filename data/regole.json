@@ -2936,6 +2936,15 @@
       "Indossare o togliere un elmetto richiede 1 AzP ed entrambe le mani libere."
     ]
   },
+  "protezioni_rapide": {
+    "_nota": "A.60 (E&L del 05/10/2026): vista rapida nella tab Combattimento di armatura (con i rinforzi montati), scudo ed elmetto, con il costo in Azioni per indossarli o toglierli. L'elmetto prende il costo da elmetti.azioni_indossare (Armamenti §7.21.1); per armatura, rinforzi e scudo il manuale non lo scrive.",
+    "TODO(Davide)": "A.110: quante Azioni costano indossare e togliere armatura, rinforzi e scudo? Intanto la vista rapida scrive «costo da definire».",
+    "voci": [
+      { "tipo": "armatura", "nome": "Armatura", "vuoto": "nessuna", "azioni": null },
+      { "tipo": "scudo", "nome": "Scudo", "vuoto": "nessuno", "azioni": null },
+      { "tipo": "elmetto", "nome": "Elmetto", "vuoto": "nessuno", "azioni": "elmetti", "condizione": "entrambe le mani libere" }
+    ]
+  },
   "calendario": {
     "_nota": "Calendario di gioco della scheda digitale (src/calendario.js): non è una regola dei manuali, è un aiuto per le note di campagna. Le fasce sono in ordine: «+ fascia» dopo l’ultima passa alla prima del giorno dopo. Le bandierine danno l’importanza di una nota; «M» (da ricordare) si combina con qualunque bandierina.",
     "fasce": [

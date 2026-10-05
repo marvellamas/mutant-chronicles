@@ -16,7 +16,7 @@ import { descriviFerite } from '../sessione.js';
 import { statoIntegrita } from '../protezione.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
 import { testoDanno } from '../stampa.js';
-import { legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto, catalogo, risolvi, infoArtefattoVoce, infusiDi, regoleSintonizzazione, rapportoConversione, riserveNec } from '../equipaggiamento.js';
+import { assegnaMani, legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto, catalogo, risolvi, infoArtefattoVoce, infusiDi, regoleSintonizzazione, rapportoConversione, riserveNec } from '../equipaggiamento.js';
 import { dotazioneApplicata, crediti } from '../dotazioni.js';
 import { provenienzaCarico } from '../carico.js';
 import { talentiSituazionali } from '../talenti.js';
@@ -1117,9 +1117,11 @@ function tabAbilita(ctx, d) {
       h('aside', { class: 'colonna-condizioni', 'aria-label': 'Condizioni attive' },
         h('section', { class: 'riquadro condizioni-attive' },
           h('h2', {}, 'Condizioni attive'),
-          condizioni.length ? h('ul', {}, condizioni.map(rigaCondizione)) : h('p', { class: 'nota' }, 'Nessuna: Ferite, Affaticamento e Stati si segnano nella tab Combattimento, il carico nell’Inventario.'),
+          condizioni.length ? h('ul', {}, condizioni.map(rigaCondizione)) : h('p', { class: 'nota' }, 'Nessuna: Ferite, Affaticamento e Stati si segnano qui sotto o nel Combattimento, il carico nell’Inventario.'),
           usi.length ? h('ul', { class: 'usi-specifici', 'aria-label': 'Solo per un uso specifico' }, usi.map(rigaCondizione)) : null),
         selettoreLuce(ctx),
+        // A.60: Ferite, Affaticamento, Corruzione e Stati modificabili anche qui, come nel Combattimento
+        ...(() => { const dc = ctx.tab.tab.find((x) => x.id === 'combattimento')?.dati; return dc ? condizioniModificabili(ctx, dc) : []; })(),
         condizioniOggetti(ctx),
         condizioniTalenti(ctx),
         promemoriaPenalita(ctx, { soloSenzaEffetto: true }))),
@@ -1204,9 +1206,11 @@ const statoRiposto = (stati) => (stati.includes('pronta') ? 'pronta' : 'zaino');
 
 /**
  * Armi impugnate e scudo imbracciato nei riquadri delle mani (docs/layout-sd.md, pezzo 3): un riquadro
- * «Due mani» per un'arma a due mani, altrimenti mano destra e mano sinistra nell'ordine dell'Inventario
- * (l'app non registra quale mano: è solo l'ordine). Oltre le due mani un riquadro a parte (l'avviso
- * sta sopra). I moduli integrati e l'attacco dello scudo stanno con il loro oggetto.
+ * «Due mani» per un'arma a due mani, altrimenti mano destra e mano sinistra. A.60 (E&L del 05/10/2026): la mano
+ * si registra sulla voce (`mano`: destra o sinistra, «Cambia mano»); senza, vale l'ordine dell'Inventario. Lo
+ * scudo occupa la sua mano; due armi in mano non attivano da sole «Combattere con due armi» (casella in
+ * «Attacca!»). Oltre le due mani un riquadro a parte (l'avviso sta sopra). I moduli integrati e l'attacco dello
+ * scudo stanno con il loro oggetto.
  */
 function riquadriMani(ctx, d) {
   const cat = catalogo(ctx.dati);
@@ -1220,19 +1224,28 @@ function riquadriMani(ctx, d) {
     return r ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => cambiaStato(ctx, uid, statoRiposto(r.stati)), title: `Toglie ${nome} di mano (${NOMI_STATI[statoRiposto(r.stati)]}).` }, 'Riponi') : null;
   };
   const oggetti = [
-    ...armi.map((a) => ({ mani: a.mani === 2 ? 2 : 1, nodi: [schedaArma(ctx, a), ...figli(a.uid).map((x) => schedaArma(ctx, x))], riponi: riponi(a.uid, a.nome) })),
-    ...scudi.map((p) => ({ mani: 1, nodi: [schedaScudoInMano(ctx, p), ...figli(base(p.uid)).map((x) => schedaArma(ctx, x))], riponi: riponi(p.uid, p.nome) })),
+    ...armi.map((a) => ({ uid: base(a.uid), mani: a.mani === 2 ? 2 : 1, nodi: [schedaArma(ctx, a), ...figli(a.uid).map((x) => schedaArma(ctx, x))], riponi: riponi(a.uid, a.nome) })),
+    ...scudi.map((p) => ({ uid: base(p.uid), mani: 1, nodi: [schedaScudoInMano(ctx, p), ...figli(base(p.uid)).map((x) => schedaArma(ctx, x))], riponi: riponi(p.uid, p.nome) })),
   ];
   if (!oggetti.length) return [];
+  const { slot, oltre } = assegnaMani(oggetti, (o) => perUid.get(o.uid)?.voce.mano ?? null);
+  // «Cambia mano»: registra la mano sulla voce (A.60); con due oggetti a una mano li scambia
+  const registra = (assegnazioni) => ctx.azioni.equipaggiamento((ctx.scelte.equipaggiamento ?? []).map((v) => (assegnazioni[v.uid] ? { ...v, mano: assegnazioni[v.uid] } : v)));
+  const cambia = (o, lato) => {
+    const altro = lato === 'destra' ? slot.sinistra : slot.destra;
+    const nuovo = lato === 'destra' ? 'sinistra' : 'destra';
+    return h('button', { type: 'button', class: 'btn btn-piccolo', title: altro ? 'Scambia gli oggetti fra le due mani' : `Passa alla mano ${nuovo}`,
+      onclick: () => registra({ [o.uid]: nuovo, ...(altro ? { [altro.uid]: lato } : {}) }) }, altro ? '⇄ Scambia mani' : `→ mano ${nuovo}`);
+  };
+  const riquadro = (titolo, o, lato = null) => h('section', { class: `riquadro-mano${titolo === 'Due mani' ? ' due-mani' : ''}${titolo === 'Oltre le due mani' ? ' oltre' : ''}`, 'aria-label': titolo },
+    h('header', { class: 'testa-mano' }, h('h3', {}, titolo), lato && !(lato === 'sinistra' && slot.destra) ? cambia(o, lato) : null, o.riponi), ...o.nodi);
   const riquadri = [];
-  let libere = 2;
-  for (const o of oggetti) {
-    const titolo = o.mani === 2 && libere === 2 ? 'Due mani' : libere === 2 ? 'Mano destra' : libere === 1 ? 'Mano sinistra' : 'Oltre le due mani';
-    libere = Math.max(0, libere - o.mani);
-    riquadri.push(h('section', { class: `riquadro-mano${titolo === 'Due mani' ? ' due-mani' : ''}${titolo === 'Oltre le due mani' ? ' oltre' : ''}`, 'aria-label': titolo },
-      h('header', { class: 'testa-mano' }, h('h3', {}, titolo), o.riponi), ...o.nodi));
+  if (slot.due) riquadri.push(riquadro('Due mani', slot.due));
+  else {
+    riquadri.push(slot.destra ? riquadro('Mano destra', slot.destra, 'destra') : h('section', { class: 'riquadro-mano libera', 'aria-label': 'Mano destra' }, h('header', { class: 'testa-mano' }, h('h3', {}, 'Mano destra')), h('p', { class: 'vuoto' }, 'Libera.')));
+    riquadri.push(slot.sinistra ? riquadro('Mano sinistra', slot.sinistra, 'sinistra') : h('section', { class: 'riquadro-mano libera', 'aria-label': 'Mano sinistra' }, h('header', { class: 'testa-mano' }, h('h3', {}, 'Mano sinistra')), h('p', { class: 'vuoto' }, 'Libera.')));
   }
-  if (libere === 1) riquadri.push(h('section', { class: 'riquadro-mano libera', 'aria-label': 'Mano sinistra' }, h('header', { class: 'testa-mano' }, h('h3', {}, 'Mano sinistra')), h('p', { class: 'vuoto' }, 'Libera.')));
+  for (const o of oltre) riquadri.push(riquadro('Oltre le due mani', o));
   return riquadri;
 }
 
@@ -1298,8 +1311,6 @@ function tabCombattimento(ctx, d) {
   // Parata e Schivata Istintiva (§8.6.7): la «Parata/Schivata Libera» della proposta di Davide
   const istintive = (ctx.dati.talenti_liberi?.talenti ?? []).filter((t) => talenti.has(t.id)
     && (['parata-istintiva', 'schivata-istintiva'].includes(t.id) || (t.prerequisiti ?? []).some((p) => ['parata-istintiva', 'schivata-istintiva'].includes(p))));
-  const ferite = Array.from({ length: m.ferite + 1 }, (_, n) => ({ n, ...descriviFerite(n, ctx.dati) }))
-    .map((g) => ({ nome: g.nome, breve: g.n === 0 ? 'Nessuna' : g.n > ctx.dati.regole.ferite.stati.length ? 'Oltre' : g.nome, penalita: g.penalita, descrizione: g.menomazione ?? null }));
   const mani = riquadriMani(ctx, d);
   const sanitari = consumabili(normalizzaEquipaggiamento(ctx.scelte.equipaggiamento), ctx.dati).filter((c) => c.gruppo === 'sanitario');
   return [
@@ -1342,6 +1353,7 @@ function tabCombattimento(ctx, d) {
             ?? h('p', { class: 'vuoto' }, 'Nessun’altra arma con sé.')),
 
       sezione('Protezioni',
+        vistaRapidaProtezioni(ctx, d),
         oggettiDisponibili(ctx, ['armatura', 'scudo', 'elmetto'], { verbo: (r) => (r.tipo === 'scudo' ? 'Imbraccia' : 'Indossa'), statoAttivo: (r) => ['indossata', 'imbracciato'].find((x) => r.stati.includes(x)) ?? null }),
         d.protezioniCalcolate.length
         ? h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },
@@ -1382,6 +1394,21 @@ function tabCombattimento(ctx, d) {
 
       h('aside', { class: 'colonna-stati', 'aria-label': 'Ferite, Affaticamento, Corruzione e Stati' },
         selettoreLuce(ctx),
+        ...condizioniModificabili(ctx, d))),
+  ];
+}
+
+/**
+ * Ferite, Affaticamento, Corruzione e Stati modificabili: la colonna destra del Combattimento e, per A.60 (E&L del
+ * 05/10/2026), anche della tab Abilità, con gli stessi campi della sessione.
+ * @param d dati della tab Combattimento (affaticamento, corruzione, stati)
+ */
+function condizioniModificabili(ctx, d) {
+  const s = ctx.sessione;
+  const m = ctx.massimi;
+  const ferite = Array.from({ length: m.ferite + 1 }, (_, n) => ({ n, ...descriviFerite(n, ctx.dati) }))
+    .map((g) => ({ nome: g.nome, breve: g.n === 0 ? 'Nessuna' : g.n > ctx.dati.regole.ferite.stati.length ? 'Oltre' : g.nome, penalita: g.penalita, descrizione: g.menomazione ?? null }));
+  return [
         gradiCompatti(ctx, { titolo: 'Ferite (§5.14)', campo: 'ferite', attuale: s.ferite, gradi: ferite,
           nota: 'Ogni nuova Ferita fa avanzare di un gradino. La penalità è cumulativa a VA e Prove Salvezza.' }),
         gradiCompatti(ctx, { titolo: 'Affaticamento (§5.19)', campo: 'affaticamento', attuale: s.affaticamento, gradi: d.affaticamento,
@@ -1404,8 +1431,32 @@ function tabCombattimento(ctx, d) {
               perdita ? h('small', { class: 'nota motivo', title: `${st.periodico?.paragrafo ?? '§5.18'}: la perdita la applica la plancia all’Iniziativa della fonte${perdita.fonte ? ` (${perdita.fonte})` : ' (alla fine del Round)'}, una volta per Round` }, ` · ${perdita.valore ?? perdita.formula} PV per Round`) : null,
               durata ? h('small', { class: 'nota', title: `fino alla fine del Round ${durata.al}, dallo scontro` }, ` · ${durata.rimasti} Round`) : null),
             infoValore('?', { titolo: st.nome, sottotitolo: st.durata, sezioni: [{ testo: `${st.promemoria}${st.riassunto ? ' (riassunto, non testo del manuale)' : ''}` }] }, { classe: 'info-gradi' }));
-          }))))),
+          }))),
   ];
+}
+
+/** Costo per indossare o togliere (A.60): elmetto da regole.json → elmetti (§7.21.1); gli altri A.110. */
+function costoIndossare(x, regole) {
+  const n = x.azioni === 'elmetti' ? regole.elmetti?.azioni_indossare : x.azioni;
+  return Number.isInteger(n) ? `${n} AzP${x.condizione ? `, ${x.condizione}` : ''}` : 'costo da definire (A.110)';
+}
+
+/**
+ * A.60: vista rapida di armatura, rinforzi, scudo ed elmetto indossati, con il costo per indossare o togliere
+ * dove i dati lo danno (elmetto 1 AzP); per armatura, rinforzi e scudo il costo è ancora da definire (TODO(Davide)
+ * A.110, regole.json → protezioni_rapide).
+ */
+function vistaRapidaProtezioni(ctx, d) {
+  const P = ctx.dati.regole.protezioni_rapide;
+  if (!P) return null;
+  const righe = P.voci.map((x) => {
+    const presenti = d.protezioniCalcolate.filter((p) => p.tipo === x.tipo && !p.rinforzo);
+    const rinforzi = x.tipo === 'armatura' ? d.protezioniCalcolate.filter((p) => p.rinforzo).map((p) => p.rinforzo.nome) : [];
+    const testo = presenti.length ? presenti.map((p) => `${p.nome}${p.tipo !== 'elmetto' && p.ar ? ` (AR ${testoAr(p.ar)})` : ''}`).join(', ') : x.vuoto ?? '—';
+    return h('li', {}, h('strong', {}, `${x.nome}: `), testo, rinforzi.length ? h('span', { class: 'nota' }, ` · rinforzi: ${rinforzi.join(', ')}`) : null,
+      h('small', { class: 'nota' }, ` · indossare o togliere: ${costoIndossare(x, ctx.dati.regole)}`));
+  });
+  return h('div', { class: 'riquadro vista-protezioni' }, h('h3', {}, 'Protezioni addosso'), h('ul', {}, righe));
 }
 
 /**

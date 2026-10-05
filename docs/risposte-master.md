@@ -914,6 +914,14 @@ le altre si registrano lotto per lotto.
     → `tools/anticipazione_approvate.json` (rispettato da `tools/scale_anticipazione.mjs --scrivi`, `approvata:
     "A.72"`), nuovi tipi `scelta`, `per_versione` e `incremento` con `parte` in `src/anticipazione.js`. Gli altri 32
     aspetti, compreso il Mod. PS di Armatura Elementale, restano «da definire al tavolo» con `TODO(Davide)` A.109.
+114. **Struttura della scheda digitale** (A.60, E&L del 05/10/2026), parti decise. Otto schede (già così). Mani
+    registrate: campo facoltativo `mano` (destra o sinistra) sulla voce dell'arma o dello scudo, «Cambia mano» e «Scambia
+    mani» nei riquadri della tab Combattimento; senza il campo vale l'ordine dell'Inventario; un'arma a due mani occupa
+    «Due mani»; due armi in mano non attivano da sole «Combattere con due armi» (`src/equipaggiamento.js` →
+    `assegnaMani`). Vista rapida «Protezioni addosso» (armatura con i rinforzi, scudo, elmetto) con il costo per
+    indossare o togliere: elmetto 1 AzP a mani libere (Armamenti §7.21.1); armatura, rinforzi e scudo «costo da definire»
+    (`regole.json` → `protezioni_rapide`, `TODO(Davide)` A.110). Ferite, Affaticamento, Corruzione e Stati modificabili
+    anche nella tab Abilità, sugli stessi campi della sessione.
 
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 
