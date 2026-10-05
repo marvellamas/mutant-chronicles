@@ -29,59 +29,11 @@ Rispondere a queste per prime: senza, la seconda sessione dei Chroma resta ferma
 
 ### **Regole generali**
 
-**A.32 — 18 nuovi Talenti magici e mistici (Magia sez. 1, Giocatore §8.6.8, Doc del 27/09).** Nella copia condivisa sono comparse 18 schede nuove (Potere Mistico, Recupero Mistico, Escludere la Componente Somatica / l’Invocazione / il Focus, Concentrazione Migliorata e Operativa, Incantesimi Ampliati, Estesi, Proiettati, Plurimi, Intensificati, Anticipazione Migliorata, Incantesimi Inarrestabili e Massimizzati, Manifestazioni Occultate, Ritualista Minore e Maggiore) e la Concentrazione su un Incantesimo passa dalla Prova di Potere alla PS di Volontà. Non sono fra le risposte approvate del Doc E\&L: sono definitive?  
-*Nel frattempo:* l’app le recepisce dal manuale condiviso (fonte corrente): Talenti acquisibili con il testo della scheda, Potere Mistico \+5 PM Massimi per acquisizione; «possedere una riserva personale di PM» vale per tutti.  
-*Nota del 02/10:* Ritualista Minore e Ritualista Maggiore sono ora i requisiti dell'Officiante per i Gradi I–III e IV–VI (Magia §24.1 e §25.1): l'app li considera definitivi. La domanda resta aperta per gli altri 16 Talenti.
-
 **A.35 — Acquisti iniziali: valore ceduto maggiore del prezzo (§2.16.29).** Il paragrafo dice che si paga la differenza; se gli armamenti ceduti valgono più del nuovo oggetto (per esempio si cede l’armatura da 1.500 per un’arma da 800), la differenza torna in crediti o si perde?  
 *Nel frattempo:* il conguaglio non scende sotto zero (la differenza si perde) e l’app lo segnala accanto all’acquisto.
 
 **A.39, punti 1–3** — Anticipazione senza Addestramento (colonna «altri» −2), Colpo Elementale (PS solo per gli effetti secondari, per elemento) — implementata il 29/09. Punto 3, Rigenerazione: procedura completa (Magia sez. 25, E\&L del 01/10): Rituale con Prova di Rituali, PM totali, ore, reagenti e Canali; da Artefatto sintonizzato senza Prove, con i PM dalla riserva Verde o Bianca (§25.4) — implementata il 02/10.  
 *Nel frattempo:* le scelte sopra.
-
-**A.38 — Attacco a distanza: punti da confermare (Giocatore §5.2, §5.8, §5.10, §5.11).** L’utility «Attacca\!» applica il testo; dove non è esplicito ha scelto così:
-
-> 1. *Movimento Tattico (Incursore) e Movimento Fluido* riducono entrambi di 2 le penalità del proprio movimento: si sommano? L’app usa una sola riduzione (Scatto −6 → −4).  
-> 2. *Attaccare dalla Copertura* «consuma l’Azione di Movimento e un’Azione Principale»: l’Azione Principale è quella del tiro, o una in più? L’app conta solo l’AzM in più.  
-> 3. *Seconda Prova contro un bersaglio impegnato o protetto* («con la stessa Abilità a −4 VA»): è il VA per colpire dell’arma −4, o con anche distanza, Copertura e gli altri modificatori del tiro? L’app usa il VA dell’arma −4.  
-> 4. *Mira Selettiva* vale «se rimane fermo per tutto il Round»: basta il Passo per perderla? L’app la applica solo scegliendo «Fermo».  
-> 5. *Imbracciatura*: con l’arma già imbracciata si spara senza costo; se va imbracciata nel Round costa 1 AzM, che l’app ricorda ma non aggiunge. Muoversi (Passo compreso) fa perdere l’Imbracciatura, salvo Imbracciatura Rapida: corretto?  
-> 6. *Tiro Ravvicinato obbligatorio e Tiro a Bruciapelo* (bersaglio che ti impegna, al Contatto, con Tiro a Bruciapelo Migliorato): l’app applica la penalità del Tiro Ravvicinato e il danno ×2 senza il \+3. È così?  
-> 7. *Movimento Evasivo del bersaglio fermo*: il Movimento Evasivo si fa muovendosi; se il giocatore lo indica per un bersaglio «fermo», l’app usa le penalità del Passo.
-
-*Nel frattempo:* le scelte sopra; Tiratore Imboscato, Rapidità Operativa, Punto Vitale e Raffica Estesa compaiono come promemoria nel risultato.  
-**A.36 — Effetti degli oggetti: situazionali o per un uso specifico?** La scheda distingue i bonus che il giocatore accende al tavolo quando ricorre una circostanza (corredo di sopravvivenza nell’ambiente scelto, abiti eleganti in un ambiente formale) da quelli che valgono solo per un tipo di Prova (valigetta: esaminare tracce; kit: pronto soccorso), mostrati a parte. Casi da confermare: Binocolo e corredi da ricognizione («dettagli lontani», «osservazioni attraverso le ottiche») trattati come situazionali; Corredo di orientamento come uso specifico; il «+2 VA a Medicina» dei Kit trauma limitato al pronto soccorso. Inoltre: fra i bonus degli oggetti per la stessa Prova vale solo il maggiore (Giocatore §1.4.1, «un solo modificatore complessivo per la qualità degli strumenti»), anche per abiti e binocolo: va bene?  
-*Nel frattempo:* classificazione e regola come descritto; nessun effetto cambia il totale da regole né la stampa, tranne la penalità dell’armatura al lancio con Potere, che compare nel foglio Magia. Dal 29/09 il Binocolo segue il §4.2 dell’Equipaggiamento (uso specifico).  
-**A.34 — Oggetti della dotazione senza scheda di catalogo (§2.16).** *Aggiornamento del 29/09:* 28 delle 44 voci hanno la scheda nei capitoli 2, 3, 4 e 6 del Manuale dell’Equipaggiamento 0.3 (o, per il Corredo di manutenzione da campo, nel §7.13.7 degli Armamenti) e sono nell’app. Restano senza peso, prezzo e Qualità 16 voci: i Corredi da scasso, da camuffamento, agricolo, artigianale professionale, elettronico e informatico, di ricerca documentale, di analisi da campo, amministrativo, scenico e rituale; Cassetta degli attrezzi; Strumento musicale portatile; Terminale per produzione multimediale; Testo dottrinale e simbolo; Focus personale. Arriveranno con i capitoli 5 e 7?  
-*Nel frattempo:* entrano nell’inventario come voci personalizzate senza peso né prezzo (il carico non li conta) e non si possono cedere negli acquisti iniziali.  
-**A.54 — Ricarica del revolver (E\&L 19, Giocatore §5.1.1).** La risposta dice «Il Revolver usa il tamburo» senza il costo. L’app applica la regola generale: una operazione di ricarica (1 AzP) riempie il tamburo con munizioni pronte, come scritto per la Colt Hammershot (Armamenti 0.54). Doppiette e fucili a pompa invece inseriscono una cartuccia per operazione. È corretto anche per il revolver commerciale e per i revolver corporativi?  
-*Nel frattempo:* tamburo pieno in 1 AzP.  
-**A.55 — Caratteristica del bonus al danno (Giocatore §5.13).** Il paragrafo dice «FOR o DES secondo l’arma ravvicinata; DES o INT secondo l’arma a distanza». L’app usa la Caratteristica dell’Abilità dell’arma: FOR per Armi da guerra e Corpo a corpo; DES per Armi da mischia, da lancio e leggere; INT per Armi medie; Armi pesanti INT, come scritto. Va bene?  
-*Nel frattempo:* questa corrispondenza.  
-**A.56 — La riforma delle categorie di competenza supera la decisione del 28/09 sugli Addestramenti a 76 punti?** Il 28/09 hai confermato gli Addestramenti a 76 punti (basi 2–4) e il limite di Avanzamento 3 alla creazione. Il Doc del Giocatore del 29/09 (23:45) dà le basi alla prima Classe (7/6/5/3, 122 punti) e sostituisce il limite 3 con i limiti per categoria (§2.3, §2.13, §8.3). Vale il testo del 29/09?
-
-*Nel frattempo:* vale il testo del 29/09; dei 76 punti resta solo la conferma dei 10 Punti Abilità Liberi.  
-**A.57 — Personaggi già creati: punti liberi che non aumentano più il VA (§8.3).** Con i limiti nuovi, ogni personaggio già creato ha punti già spesi che oggi non aumenterebbero il VA personale (da 6 a 15 punti nei nostri personaggi di prova). Si riassegnano, evento per evento con i limiti di quel momento, oppure restano dove sono e tornano efficaci quando il limite sale?  
-*Nel frattempo:* si riassegnano dall’avviso in cima alla scheda; finché non si riassegnano non contano e non si sale di livello.  
-**A.58 — Il \+1 di Corporazione può essere annullato dal limite (§1.2.1).** Il bonus di Corporazione sta dentro il VA personale: un’Abilità Non competente con Caratteristica 7 e bonus di Corporazione fa 2 \+ 3 \+ 1 \= 6 contro il limite 5 del I Grado, e il \+1 non conta finché il limite non sale. Capita anche con le Generiche: 2 \+ 5 \+ 1 \= 8 contro 7\. È voluto?  
-*Nel frattempo:* sì, come dice il testo; il \+1 resta e conta quando il limite sale.
-
-**A.59 — Artefatto nel deposito comune: resta sintonizzato?**
-
-L'app oggi non lo conta nella capacità di sintonizzazione (§7.10) e la sua riserva non alimenta, ma ricorda la scelta e la riattiva quando l'oggetto torna con sé. Va bene così, o un Artefatto lasciato in deposito perde la sintonizzazione?
-
-*Nel frattempo:* come descritto; la sintonizzazione si gestisce nella nuova tab Artefatti.
-
-**A.60 — Scheda digitale: dove l'app fa diversamente dalla tua proposta «Modifiche Layout APP»**  
-Otto tab (ARTEFATTI a sé). I Crediti stanno nell'Inventario, dove si comprano gli oggetti al tavolo. Le Tecniche Interiori restano nella tab Abilità. L'app non registra quale mano tiene un oggetto: destra e sinistra seguono l'ordine dell'Inventario, con un riquadro «Due mani» per le armi a due mani. I rinforzi si montano sull'armatura dall'Inventario. Nell'Inventario, Strumenti professionali e Razioni arriveranno con i loro capitoli; lo stato di un oggetto tiene quelli del tipo (Impugnata, Addosso, Imbracciato, Indossata, Nello zaino…) più «Deposito comune». Poteri Sciamanici, Cibernetica e Veicoli aspettano il manuale. Va bene così?  
-*Nel frattempo:* come descritto (dettaglio in docs/layout-sd.md, «Esito»).
-
-**A.69 — Installare, togliere e reinstallare un impianto (Equipaggiamento 0.5 §7.1, Giocatore §5.21.4)**  
-Il manuale non definisce la procedura: dove si installa (serve una postazione medicochirurgica del cap. 6?), con quali costi, tempi e Prove, e cosa succede togliendo o reinstallando lo stesso impianto.  
-*Nel frattempo:* installare e togliere sono cambi di stato fatti a mano nell'app; il costo d'installazione è mostrato ma non scalato dai crediti; l'UMN si perde alla prima installazione e lo stesso esemplare non si conta due volte; la perdita resta anche togliendo l'impianto.  
-**A.70 — Procedure di recupero dell'Umanità (Giocatore §5.21.4)**  
-Il §5.21.4 accenna al recupero dell'Umanità ma non dà procedure, costi o limiti. Come si recupera?  
-*Nel frattempo:* l'app registra i recuperi solo come «concessi dal Direttore», con un modulo nella tab Cibernetica che tiene l'elenco di perdite e recuperi.
 
 **A.72 — Anticipazione senza scala leggibile in alcune schede (Magia sez. 12.3)**  
 La sez. 12.3 dice «le altre scale e i massimi sono specificati nelle schede», ma in 29 schede (46 aspetti) i gradini non sono scritti. Gli esempi principali:
@@ -95,41 +47,6 @@ La sez. 12.3 dice «le altre scale e i massimi sono specificati nelle schede», 
 
 Quali sono i gradini di questi aspetti? (L'elenco completo dei 46 è in docs nel repo, \`docs/\` censimento Anticipazione.)  
 *Nel frattempo:* l'app mostra «valore da definire al tavolo» con il motivo; PM e Prova si calcolano comunque.
-
-**A.74 — Rituale di Rigenerazione: quattro punti non scritti (Magia §24.6, sez. 25\)**  
-1\. «VA pertinente del Canale» (tabella del §24.6): quale Abilità del Canale conta?  
-2\. Successo Magistrale con i Canali: il totale dei PM si dimezza e le quote si ripartiscono «senza aumentare la quota dichiarata di alcun partecipante». Chi risparmia?  
-3\. La scheda dice «PM utilizzabili: universali o spirituali»: i PM del Rituale possono venire anche da una batteria Verde o Bianca, o solo dalle quote personali dell'Officiante e dei Canali?  
-4\. Il livello massimo degli Incantesimi dell'Officiante limita le versioni del Rituale, o conta solo Ritualista (Minore per il Grado III, Maggiore per IV–VI)?  
-*Nel frattempo:* 1\. il VA di Rituali del Canale; 2\. i Canali tengono la quota dichiarata e l'Officiante paga il resto, almeno metà Grado; 3\. solo PM personali; 4\. conta solo Ritualista.
-
-**A.75 — Batterie oltre i 5 PM: peso, Qualità e PI (Magia §24.7)**  
-La tabella del §24.7 dà Grado e prezzo delle batterie da 10 a 30 PM, ma peso, Qualità, PS Integrità e PI solo per il supporto di base (0,2 kg, Comune, PS 10, 3 PI). Valgono anche per le batterie più grandi?  
-*Nel frattempo:* sì, tutte come il supporto di base.
-
-**A.76 — Sanguinante X portato da un colpo (Giocatore §5.15, §5.24)**  
-Un colpo con la proprietà Sanguinante X che supera l'Armatura applica Sanguinamento X. Il §5.15 dice che «alla prima applicazione» si perdono subito X PV, ignorando Armatura, Parata e Schivata. Questa perdita si aggiunge al danno dello stesso colpo, oppure arriva solo all'Iniziativa successiva di chi l'ha procurato?  
-*Nel frattempo:* la plancia applica lo Stato Sanguinamento al bersaglio e lascia al master la perdita degli X PV immediati.
-
-**A.77 — Perforante con più applicazioni (AC) (Giocatore §5.10, §5.24)**  
-«Perforante X sottrae X una sola volta alla componente non magica del colpo.» Con AC 2 o più, l'AR si sottrae separatamente a ogni applicazione (§5.13). Perforante riduce l'AR di ogni applicazione, oppure di una sola per colpo?  
-*Nel frattempo:* l'app la riduce in ogni applicazione.
-
-**A.79 — Bestiario umano proposto per il Tavolo del Master**  
-**Metodo.** Non c'è ancora un bestiario. Per avere subito nemici umani con numeri coerenti, ognuno è costruito come un PG con le regole del Giocatore 0.45: creazione completa, equipaggiamento iniziale del §2.16 con il modello corporativo, avanzamento del cap. 8\. L'app lo converte poi in un nemico, con PV, AR, Difese, Iniziativa, Movimento, Salvezze e attacchi calcolati dal motore. Ci sono tre gradi: Recluta (2° livello), Veterano (5°) ed Élite (8°). Le scelte che il manuale lascia libere sono le più ovvie per il ruolo: Talenti, ordine di Caratteristiche e Abilità, dado dei PV dei Gradi al valore medio arrotondato per eccesso, opzioni migliori di arma e armatura dal Veterano in su. Ogni file è marcato «Proposta, da validare con Davide».  
-**Tipi, arma principale, PV Recluta / Veterano / Élite:**  
-Fante Capitol (Soldato): carabina CAR10, poi fucile d'assalto M40. PV 20 / 29 / 39\.  
-Soldato Bauhaus (Soldato): carabina KR10, poi fucile d'assalto STG10. PV 20 / 29 / 44\.  
-Guerriero Mishima (Assaltatore): spada leggera e scudo, poi spada lunga. PV 19 / 29 / 39\.  
-Agente Cybertronic (Agente): pistola P500. PV 16 / 24 / 32\.  
-Soldato Imperiale (Soldato): carabina Defender, poi fucile d'assalto Conqueror 10\. PV 20 / 29 / 39\.  
-Inquisitore della Fratellanza (Custode): spada leggera e incantesimi. PV 16 / 23 / 31\.  
-Guardia di sicurezza (Freelance, Soldato): carabina. PV 20 / 29 / 39\.  
-Criminale di strada (Freelance, Lestofante): pistola semiautomatica e pugnale. PV 15 / 22 / 29\.  
-Mercenario (Freelance, Artigliere): fucile d'assalto con mirino. PV 20 / 29 / 39\.  
-Eretico (Freelance, Incursore): pistola silenziata e pugnale; solo la parte umana, nessun potere dell'Oscura Legione. PV 17 / 25 / 33\.  
-**Domanda.** Vanno bene come base per i PNG umani? Oppure il tuo bestiario avrà regole diverse per loro, per esempio PNG semplificati, gradi diversi o altri livelli di riferimento? E per l'Eretico: quali poteri dell'Oscura Simmetria vanno aggiunti, e con quali regole?  
-*Nel frattempo:* questi, marcati co
 
 **A.80 — Rinforzi indossati da soli e ad armatura tolta (Armamenti §7.23, §7.11.2)**  
 Hai chiesto che soprabiti e mantelli si possano indossare da soli. Il §7.23.4 dice però che i valori dei rinforzi «descrivono l'impiego insieme a un'armatura compatibile; non costituiscono un profilo autonomo di armatura». Domande:  
@@ -150,97 +67,40 @@ La scheda concede «+3 ad Atletica e alle prove di Corpo a Corpo nelle manovre i
 **A.83 — Reperibilità Epica (Magia §26.4, Equipaggiamento §10.3)**  
 Le Batterie Matrice colorate passano da REP Molto Rara a Epica, ma la scala delle reperibilità (Comune, Non comune, Rara, Molto rara, Leggendaria) non dice come si cerca un oggetto di REP Epica. C'è una Prova di Oratoria, e con quale penalità, oppure vale come Leggendaria (disponibilità decisa dal Direttore)?
 
-**A.84 — Prova di Potere dei nemici: Taumaturgo o no?**  
-Il formato dei nemici dà il VA di lancio, ma non dice se il nemico è Taumaturgo. Per un Taumaturgo, ai livelli 1–3, la Prova non serve (Magia sez. 1); per gli altri utilizzatori si tira sempre. Serve un campo nel formato, oppure vale una regola unica per tutti i nemici?  
-*Nel frattempo:* la plancia applica le regole del Taumaturgo e mostra il promemoria «se il nemico non è Taumaturgo, la Prova si tira comunque».
-
-**A.85 — Bonus di SAG al danno degli incantesimi dei nemici**  
-Per i PG il danno di un incantesimo riceve il bonus di SAG, con il tetto del livello (Magia sez. 7, Giocatore §5.13). Il formato dei nemici non ha né il livello né questo bonus. Si aggiunge, o il danno della versione si intende già completo?  
-*Nel frattempo:* il danno è quello della versione, senza bonus, con un promemoria.
-
 **A.86 — Bonus di Caratteristica al danno delle granate (Armamenti §7.20.3, Giocatore §5.13)**  
 Il §7.20.3 dice che con un lanciagranate «la granata stabilisce danno, AC, RS e proprietà», e le munizioni di riferimento dei lanciatori hanno danno Naturale tirato una sola volta per esplosione. Il bonus di Caratteristica al danno (§5.13) si aggiunge anche alle granate (lanciate a mano o con lanciagranate) e ai razzi, oppure il danno dell'esplosione è sempre quello della tabella?  
 *Nel frattempo:* l'app usa il danno della tabella, senza bonus di Caratteristica.
-
-**A.87 — Dotazione del gruppo: chi prende cosa? (Equipaggiamento cap. 10\)**  
-Nel cap. 10 c'è la dotazione Artefatti/batterie del gruppo. Per caricarla nelle schede ci serve sapere a quale personaggio va ciascun oggetto, e con quanti PM attuali:
-
-> * 2 Batterie Matrice Rosse da 10 PM (Matrice d'origine Rettungsanker, dono di Sorella Iolanda), SnT 3 ciascuna;  
-> * 4 Schegge instabili Verdi da 5 PM;  
-> * Pietra della Vigilanza;  
-> * Guanti da Combattimento Mistico (una coppia).
-
-Nota: il kit di un personaggio (una Batteria Matrice \+ Pietra \+ Guanti) occupa 8 SnT, quindi la seconda Batteria deve andare a un altro PG, e chi riceve oggetti da sintonizzare deve avere capacità sufficiente (8–13). Ci scrivi, per ogni oggetto, il nome del PG e i PM attuali? Se preferisci, i PG possono anche tenerli «nel deposito comune» del gruppo finché non decidete.  
-*Nel frattempo:* gli oggetti sono nel catalogo dell'app; nessuno li ha ancora in scheda.
 
 **A.88 — Individuare a Concentrazione: durata massima.**  
 Individuare si può lanciare a Concentrazione, ma la tabella delle versioni dà soltanto la durata fissa. Qual è la durata massima a Concentrazione di ogni versione?  
 *Nel frattempo:* l’app usa la durata fissa della tabella.
 
-.  
-**A.91 — Veicoli: di chi sono?**  
-Un veicolo appartiene al gruppo o a un singolo personaggio? Chi tiene i PI (Corpo, Propulsione, Motore) e l’autonomia: la scheda del proprietario, una scheda del gruppo o il Tavolo del Master?  
-*Nel frattempo:* la tab Veicoli c’è. Il veicolo sta nel file del PG che lo possiede, con la casella «Veicolo del gruppo» (solo informativa: le schede non si sincronizzano). Se scegli la scheda del gruppo, cambia solo dove si salva.
+.
 
 **A.92 — Recuperi di Umanità.**  
 Il cap. 7 dell’Equipaggiamento dice che il catalogo dei recuperi di UMN «resta da sviluppare». È previsto? Con quali voci?  
 *Nel frattempo:* nessun recupero nell’app.  
-**A.93 — Corpi cyborg completi.**  
-Il cap. 7 li esclude. Saranno disponibili per i PG o solo per i PNG?  
-*Nel frattempo:* non presenti.  
-**A.94 — Innesto SIN dell’equipaggiamento: costo.**  
-Armamenti §7.10/§7.23 e il cap. 7 dell’Equipaggiamento si rimandano a vicenda senza dare il costo in UMN e in crediti dell’innesto SIN. Quali sono?  
-*Nel frattempo:* costo da definire, segnalato nella scheda.  
-**A.95 — Bestiario: volo e taglia.**  
-Il Manuale dei Mostri non prevede −2 VA contro chi vola né \+2 VA contro le creature grandi, che la nostra proposta di Bestiario usava. Confermi che vanno tolti dall’app?  
-*Nel frattempo:* restano attivi solo nelle creature della proposta.  
-**A.96 — Boss.**  
-Nel Manuale dei Mostri il Boss non riceve nulla automaticamente. Togliamo dall’app l’Azione Principale in più e i PV calcolati del Boss?  
-*Nel frattempo:* l’app applica ancora le regole della proposta.  
-**A.97 — Scala di potenza e costo dei moduli.**  
-Le tue cinque fasce sono «orientative» e non assegnano PV né costi dei moduli. Usiamo la nostra taratura su 7 PG come base, la rifai tu, o resta una stima provvisoria per «Prepara scontro»?  
-*Nel frattempo:* la taratura della proposta resta, segnata come provvisoria.  
-**A.98 — Rune e Tatuaggi dei Poteri Sciamanici.**  
-In «Modifiche Layout APP» li indicavi come «in sviluppo». Sono ancora in programma?  
-*Nel frattempo:* nessuna sezione nell’app.  
-**A.99 — Prontuario del Combattimento v1.3.**  
-Il PDF del 26/09 è un riassunto del Giocatore o una fonte di regole a sé? In caso di differenze, quale vale?  
-*Nel frattempo:* l’app segue il Manuale del Giocatore.  
-   
-**A.101 — ASA Scout MK4: valori «da definire».**  
-Nella scheda v0.2 mancano: bombole, consumo e autonomia, scorte, prezzo completo, costo dei ricambi per PI. Quali sono?  
-*Nel frattempo:* l’app li mostra come «da definire».
+*Nel frattempo:* la taratura della proposta resta, segnata come provvisoria.
 
-**A.102 — Autovettura civile: Reperibilità.**  
-Il profilo non indica la Reperibilità. Quale vale?  
-*Nel frattempo:* non indicata.
+**A.107 — Ricostruzione dei punti, effetto all'indietro.** Se si corregge un evento vecchio e un punto di un livello successivo, legale quando fu assegnato, smette di aumentare il VA: si conserva o si riassegna? *Nel frattempo:* l'app vieta la correzione che lo renderebbe inutile.
 
-**A.103 — Corazzato nell’esempio del §4.3.**  
-L’esempio usa Corazzato 2, mentre lo Scout ha Corazzato 1\. È un esempio generico o la scheda dello Scout va corretta?  
-*Nel frattempo:* lo Scout resta Corazzato 1\.
+**A.108 — Punti in eccesso e blocco.** I punti in eccesso (10 per Grado salvati prima del 03/10) bloccano la salita di livello come i punti da riassegnare? *Nel frattempo:* danno solo l'avviso.
 
-**A.104 — Q di riferimento con il mezzo fermo.**  
-Per collisioni e Speronamento (§2.2, §6.3) vale l’andatura dichiarata anche se nel Round il mezzo non si è ancora mosso?  
-*Nel frattempo:* l’app usa l’andatura dichiarata.
+**A.109 — Anticipazione, aspetti senza gradino.** Oggi sono 44 aspetti su 29 schede (non più 46). Gli esempi approvati ne coprono 13: per gli altri 31 (elenco allegato) quale gradino si usa? *Nel frattempo:* «da definire al tavolo».
 
-**A.105 — Veicoli negli scontri del Tavolo del Master.**  
-Il veicolo non ha Iniziativa propria e si muove con il conducente. Al tavolo va mostrato come carta a sé (con PI e stato) agganciata al conducente, o solo dentro la carta del conducente?  
-*Nel frattempo:* i veicoli non entrano ancora negli scontri.  
-*Nota: la domanda «di chi è il veicolo» è già la A.91.*
+**A.110 — Indossare e togliere le protezioni.** Quanto costano in Azioni armatura, rinforzi e scudo? Che cosa intendi con «Combattimento con armatura»? *Nel frattempo:* solo l'elmetto, 1 AzP.
 
-**A.106 — Penalità per scarsa illuminazione.**  
-Gli impianti di Visione notturna «eliminano la penalità per scarsa illuminazione», ma il Manuale del Giocatore non dice quanto vale. Quanto vale la penalità (al buio, in penombra) e a quali Prove si applica?  
-*Nel frattempo:* la Visione notturna resta un promemoria, senza numeri.
+**A.111 — Recuperi di Umanità e impianti tolti.** Che cosa facciamo dei recuperi già registrati senza una rimozione? Pablo Zaion ha una perdita di 2 UMN per l'Interfaccia neurale, ma l'impianto non è più nel suo inventario: era stato rimosso o venduto?
 
-### **Manovre ravvicinate**
+**A.112 — Artefatti del gruppo, residui.** Nei file di Lucas e Dimitri tutte le riserve sono al massimo (Guanti 10, Pietra 10, Matrici 10 e 10, Schegge 5 ×4): sono i residui veri?
 
-**A.40 — Carica oltre 12 Q (§5.6).** La tabella della Carica si ferma a 7–12 Q e la Carica «non può superare la Corsa». Chi ha una Corsa oltre 12 Q (Talenti di movimento) può caricare più lontano, e con quali penalità?  
-*Nel frattempo:* oltre 12 Q l’app non ammette la Carica e lo dice.
+**A.113 — Veicoli, permessi e nomi.** Il Master può modificare anche un mezzo di un singolo PG? Senza il server il veicolo del gruppo si vede in sola lettura: va bene? La struttura si chiama «Carrozzeria» o «Corpo principale»?
 
-### **AR e PI**
+**A.114 — Chip e strumenti sulla stessa Prova.** Un chip del Processore è uno strumento (vale solo il maggiore) o un'altra fonte che si somma? *Nel frattempo:* vale il maggiore.
 
-**A.53 — Armature con AR magica propria e Corazza Potenziata (A.48).** Corazza Potenziata richiede una protezione Artefatto. Nel catalogo l’unico Artefatto fra le protezioni è lo Scudo delle Guardie Sacre. Queste 14 armature hanno una parte di AR magica propria ma non sono Artefatti: Armatura Marte, Vulcano e Mercurio (Alleanza); Demonhunter (Mishima); Corazza del Soldato d’élite, Armatura dell’Inquisitore, Armatura del Mistico, Corazza delle Furie, Corazza dei Sacri Guerrieri, Armatura delle Valchirie, Tuta del Mortificator, Corazza del Custode dell’Arte, Corazza degli Arcivescovi, Armatura della Sentinella (Fratellanza). Contano come protezione Artefatto per Corazza Potenziata?  
-*Nel frattempo:* no, Corazza Potenziata vale solo con lo Scudo delle Guardie Sacre.
+**A.115 — Nemici con «capacità specifica».** L'app deve solo mostrare il testo della capacità, o ci sono Prova e costo da calcolare?
+
+**A.116 — Luce e attività pratiche visive.** Oltre a Percezione visiva, attacchi e Difese, quali Abilità prendono le penalità di luce: Pilotare, Tecnologia, Medicina, altre?
 
 ## ---
 
@@ -370,7 +230,48 @@ Voci con risposta recepita e funzione implementata nell’app. La data è quella
 > *   
 > * *Nel frattempo:* la disponibilità la stabilisce il Direttore, senza Prova.  
 > * **A.90 — Punti Abilità liberi**: vale il Manuale del Giocatore del 03/10 sera, 7 punti alla creazione e a ogni Grado (livelli 4, 8, 12, 16, 20); l’E\&L con 5 è superato. Chi ne ha assegnati 5 per Grado ha 2 punti da assegnare per evento («Assegna»); chi ne ha 10 ne ha 3 in eccesso per evento («Togli»). Nessun punto cambia da solo — implementata il 04/10.  
-> * 
+> * **A.32** — Confermati i 18 Talenti magici; Potere Mistico \+5 PM per acquisizione fino a tre; Potere e Recupero Mistico richiedono una riserva personale; Concentrazione: PS Volontà su CAR, \+3 di Concentrazione Migliorata solo per mantenerla; Concentrazione Operativa senza altri lanci, salvo Contromagia e Convertire Potere. *App: già conforme.*  
+> * **A.34** — Oggetti delle dotazioni collegati alle schede del catalogo, NEC contati una volta; Qualità, PS e PI approvati per cassetta, attrezzi e corredi; scambio al 100% solo per gli armamenti ammessi. *App: applicata il 05/10.*  
+> * **A.36** — Bonus degli oggetti solo quando si usano; per la stessa Prova vale il maggiore degli strumenti; valori di binocolo, corredi, abiti eleganti e kit trauma approvati. *App: già conforme.*  
+> * **A.38** — Sette chiarimenti sull'attacco a distanza (Movimento Tattico e Fluido si sommano, Copertura, seconda Prova a −4, Mira Selettiva, Imbracciare, Bruciapelo Migliorato, Movimento Evasivo). *App: da applicare.*  
+> * **A.40** — Carica fino alla Corsa massima: 3–6 Q −2/−4, da 7 Q −4/−6, danno ×2; tolto il limite di 12 Q. *App: da applicare.*  
+> * **A.53** — Corazza Potenziata solo con armatura o scudo classificati come Artefatto e con almeno 1 PI; \+1 all'AR una sola volta. *App: già conforme.*  
+> * **A.54** — Revolver: 1 AzP riempie il tamburo, anche in parte; Ricarica Rapida gratuita una volta per Round. *App: già conforme.*  
+> * **A.55** — Caratteristica del bonus al danno per Abilità (pesanti: attacco con FOR, danno con INT), tetto \+1/+2/+3, prima dei moltiplicatori; granate e razzi esclusi. *App: già conforme.*  
+> * **A.56** — Basi dalla prima Classe (7/6/5/3, 122 punti), limiti al I Grado 12/9/7/5, 7 punti liberi per Grado. *App: già conforme.*  
+> * **A.57** — Punti liberi ricostruiti evento per evento, con i limiti del momento; i punti legali non si rimborsano; avanzamento bloccato finché la ricostruzione non è completa. *App: da applicare, dopo A.107 e A.108.*  
+> * **A.58** — Il \+1 di Corporazione resta nel calcolo e torna utile quando il limite sale; i modificatori circostanziali vengono dopo il limite. *App: già conforme.*  
+> * **A.59** — Depositare un Artefatto non interrompe la Sintonizzazione; una batteria depositata non alimenta. *App: da applicare.*  
+> * **A.60** — Otto schede; mani registrate; vista rapida delle protezioni; condizioni modificabili anche nella tab Abilità. *App: in parte, il resto dopo A.110.*  
+> * **A.69** — Installazione, rimozione e reinstallazione degli impianti: clinica sicura, tempi, Prova, postazioni, tariffe, legame impianto–perdita–recuperi. *App: da applicare.*  
+> * **A.70 e A.92** — L'Umanità si recupera solo con una procedura: Riabilitazione a cicli di 7 giorni dopo una rimozione (500 cr e Prova, oppure clinica 1.000 cr per \+1), massimo 20\. *App: da applicare.*  
+> * **A.74 e A.75** — Confermate le risposte su Canali, Rituali, Ritualista e batterie con supporto base. *App: già conforme.*  
+> * **A.76** — Sanguinante: perdita iniziale una volta per attacco se almeno 1 danno supera l'AR; poi all'INI della fonte; fra più sanguinamenti vale il maggiore. *App: quasi conforme.*  
+> * **A.77** — Perforante riduce l'AR non magica totale a ogni applicazione di danno, senza erosione. *App: già conforme.*  
+> * **A.79** — Umani costruiti come PG (livelli 2/5/8, media del dado arrotondata per eccesso, 7 punti); le etichette non danno PV, danni o Azioni; Eretico senza poteri oscuri. *App: da applicare.*  
+> * **A.84** — Regime di lancio dei nemici (Taumaturgo, altro utilizzatore, capacità specifica) con le due colonne di modificatori. *App: da applicare.*  
+> * **A.85** — Bonus di SAG al danno magico: calcolato per gli umani, dichiarato nel profilo per le creature, mai due volte. *App: da applicare.*  
+> * **A.87** — Artefatti del gruppo già assegnati nei file dei PG, niente deposito comune: Lucas ha Guanti, Pietra, una Batteria Matrice e due Schegge; Dimitri Orlav una Batteria Matrice e due Schegge. *App: nessuna modifica (residui: A.112).*  
+> * **A.91** — Scheda unica del veicolo condivisa fra PG e Tavolo, proprietario distinto dal conducente. *App: da applicare (registro sul server).*  
+> * **A.93** — Corpi cyborg completi non disponibili ai PG. *App: già conforme.*  
+> * **A.94** — Interfaccia SIN: standard 5.500 cr e 2 UMN, CYBERTRONIC 7.000 cr e 1 UMN. *App: già conforme.*  
+> * **A.95, A.96 e A.97** — Via il −2 per il volo e il \+2 per la taglia; Boss solo come etichetta; calibrazione solo come «Stima sperimentale, da verificare al tavolo», senza costo universale dei moduli. *App: da applicare.*  
+> * **A.98** — Rune e Tatuaggi: sviluppo futuro, nessuna sezione nell'app. *App: da togliere la sezione vuota.*  
+> * **A.99** — Prevale la decisione approvata più recente; il Prontuario è solo un riassunto. *App: nessun codice.*  
+> * **A.101** — ASA Scout MK4 approvato (valore 202.520 cr, M606, copriruote, energia, aria, riparazioni, dotazione sanitaria). *App: applicata il 05/10.*  
+> * **A.102** — Autovettura civile: REP Comune. *App: applicata il 05/10.*  
+> * **A.103** — Esempio del §4.3 generico; lo Scout resta Corazzato 1\. *App: applicata il 05/10.*  
+> * **A.104** — Per le collisioni conta l'andatura attuale, distinta da quella scelta per dopo. *App: applicata il 05/10.*  
+> * **A.105** — Veicolo nel Tavolo del Master: si muove all'INI del conducente, senza INI propria. *App: da applicare, dopo A.91.*  
+> * **A.106** — Penombra −2, luce molto scarsa −4, buio come Accecato; Visione notturna e Visione Perfetta con i loro limiti. *App: da applicare.*  
+> * **A.80** — Si indossano da soli soprabiti, mantelli, Tabardo consacrato e Sottogiacca IES, con il profilo autonomo AR 1, Leggera, FOR 3 e le proprietà della scheda; su un'armatura compatibile valgono come rinforzo; togliendo l'armatura un rinforzo strutturale resta montato senza effetto. *Implementata il 03/10.*  
+> * **A.81** — Pelle di Rinoceronte: \+3 solo nelle Prove di Immobilizzare, Sbilanciare, Disarmare e Incalzare, e ad Atletica per uno sforzo di forza; mai a Difese o all'Abilità dell'arma. *Implementata il 03/10.*  
+> * **A.82** — Onda Interiore: dado della Disciplina e del Grado più il bonus di SAG (tetti \+1/+2/+3), non FOR; il \+2 Ravvicinato di Pelle di Rinoceronte non si applica. *Implementata il 03/10.*  
+> * **A.83** — REP Epica: ricerca con Oratoria −6, se il Direttore ammette una possibilità concreta; Batterie Matrice colorate Epiche, Bianche Leggendarie. *Implementata il 03/10.*  
+> * **A.86** — Granate e razzi: danno completo della munizione, senza bonus di Caratteristica. *Implementata il 03/10.*  
+> * **A.88** — Individuare a Concentrazione: 10 min / 30 min / 1 h / 2 h / 4 h per le versioni 6–8 / 9–11 / 12–14 / 15–17 / 18\. *Implementata il 03/10.*
+
+> 
 
 ## ---
 

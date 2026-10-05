@@ -713,6 +713,7 @@ export function veicoliStampa(s, creazione, dati, registro = null) {
   });
   // anche quello che guida o che possiede senza riferimento nel file; un veicolo del gruppo si stampa solo nelle
   // schede che lo hanno nel file (altrimenti due pagine in più in ogni scheda del gruppo: collaudo del 05/10/2026)
+  // TODO(Davide) A.118: in quali schede si stampa un veicolo del gruppo? Oggi in quelle che lo hanno nel file.
   const mio = (p) => p && (stessaChiave(p.chiave, registro.chi?.chiave) || (registro.chi?.pg && p.pg === registro.chi.pg));
   for (const rec of record) if (!visti.has(rec.id) && (mio(rec.conducente) || (rec.proprietario?.tipo === 'pg' && mio(rec.proprietario)))) veicoli.push(daRecord(rec));
   const fine = veicoli.filter(Boolean);
