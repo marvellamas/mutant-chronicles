@@ -616,7 +616,7 @@ const rimandoPM = (d) => (d.foglioPoteri ? `PM: vedi foglio ${d.foglioPoteri}` :
 
 function schedaArtefatto(d, a) {
   return h('article', { class: 'scheda-artefatto riquadro-stampa' },
-    h('h2', {}, a.nome, h('span', { class: 'sigla' }, ` · ${a.tipologia} · ${a.potenza}`)),
+    h('h2', {}, a.nome, h('span', { class: 'sigla' }, ` · ${a.tipologia}${a.potenza ? ` · ${a.potenza}` : ''}`)),
     h('div', { class: 'contenuto' },
       // §7.10: con sole proprietà passive SnT 0, nessuna casella da sintonizzare
       a.sintonizzabile === false ? h('p', {}, h('strong', {}, 'Sole proprietà passive'), ' · SnT 0, senza sintonizzazione') : h('p', {}, casellaSi(a.sintonizzato), h('strong', {}, ' Sintonizzato'), ` · SnT ${a.costo}`,
@@ -634,7 +634,7 @@ function schedaArtefatto(d, a) {
 function rigaRiserva(d, r) {
   return h('div', { class: 'riserva-art' },
     h('p', {}, casellaSi(r.sintonizzato), ' ', puntoChroma(r.energia), h('strong', {}, r.nome),
-      h('span', { class: 'sigla' }, ` · ${r.energia} · ${r.capacita} PM · ${r.potenza} · SnT ${r.costo}${r.deposito ? ' · deposito comune' : ''}${d.pmQui ? '' : ` · ${rimandoPM(d)}`}`)),
+      h('span', { class: 'sigla' }, ` · ${r.energia} · ${r.capacita} PM${r.potenza ? ` · ${r.potenza}` : ''} · SnT ${r.costo}${r.deposito ? ' · deposito comune' : ''}${d.pmQui ? '' : ` · ${rimandoPM(d)}`}`)),
     d.pmQui ? quadratini(r.capacita, { compatto: true }) : null);
 }
 
