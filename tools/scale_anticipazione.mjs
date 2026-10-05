@@ -6,12 +6,16 @@
 //   node tools/scale_anticipazione.mjs            prova a vuoto, con il riepilogo
 //   node tools/scale_anticipazione.mjs --scrivi   scrive data/incantesimi.json
 //   node tools/scale_anticipazione.mjs --elenco   elenca gli aspetti «da definire»
+// Le scale approvate da Davide (A.72) stanno in tools/anticipazione_approvate.json e prevalgono su quelle estratte;
+// gli aspetti rimasti senza scala ricevono il TODO(Davide) A.109.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { normValore, valoreAnticipato } from '../src/anticipazione.js';
 
 const RADICE = new URL('../', import.meta.url);
 const PERCORSO = new URL('data/incantesimi.json', RADICE);
+const APPROVATE = JSON.parse(readFileSync(new URL('tools/anticipazione_approvate.json', RADICE), 'utf8'));
+const TODO_A109 = 'A.109: gradino non scritto nella scheda né fra gli esempi approvati (A.72); intanto «da definire al tavolo».';
 
 const TOGLI = new Set(['di', 'del', 'della', 'dei', 'delle', 'al', 'alla', 'ai', 'a', 'il', 'la', 'le', 'lo', 'gli', 'i', 'un', 'una', 'da', 'e', 'per', 'con', 'fino', 'successivo', 'successiva',
   'gradino', 'riga', 'valore', 'ulteriore', 'massimo', 'max', 'nella', 'nel', 'aumentato', 'aumentata', 'scelta', 'propria', 'colonna', 'dal', 'sola', 'due', 'delle', 'dell']);
@@ -163,8 +167,10 @@ export function applicaScale(dati) {
     const dopo = conseguenze(a);
     a.aspetti.forEach((x, j) => {
       riepilogo.aspetti++;
-      delete x.scala; delete x.scala_motivo; delete x.conseguenze;
-      Object.assign(x, scalaAspetto(x, inc.versioni ?? [], a.aspetti[j - 1]));
+      delete x.scala; delete x.scala_motivo; delete x.conseguenze; delete x['TODO(Davide)'];
+      const approvata = APPROVATE[inc.nome]?.[x.nome];
+      if (approvata) { x.scala = { ...approvata, approvata: 'A.72' }; riepilogo.approvate = (riepilogo.approvate ?? 0) + 1; }
+      else Object.assign(x, scalaAspetto(x, inc.versioni ?? [], a.aspetti[j - 1]));
       // una conseguenza vale per l'aspetto che nomina (es. «Se aumenta l’AR si ricalcola la penalità al Passo»)
       const mie = dopo.filter((f) => tokens(x.nome).some((t) => t.length >= 2 && tokens(f).some((y) => affine(t, y))));
       if (mie.length) x.conseguenze = mie;
@@ -174,7 +180,8 @@ export function applicaScale(dati) {
         if (!prova.length) { x.scala_motivo = `i valori della tabella non compaiono nella scala (${x.scala.tipo})`; x.scala = null; }
       }
       if (x.scala) riepilogo.conScala++;
-      else riepilogo.daDefinire.push(`${inc.scheda} ${inc.nome} — ${x.nome}: ${x.scala_motivo}`);
+      else x['TODO(Davide)'] = TODO_A109;
+      if (!x.scala) riepilogo.daDefinire.push(`${inc.scheda} ${inc.nome} — ${x.nome}: ${x.scala_motivo}`);
     });
   }
   return riepilogo;
@@ -184,7 +191,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const testo = readFileSync(PERCORSO, 'utf8');
   const dati = JSON.parse(testo);
   const r = applicaScale(dati);
-  console.log(`${r.schede} schede, ${r.aspetti} aspetti: ${r.conScala} con la scala, ${r.daDefinire.length} da definire al tavolo`);
+  console.log(`${r.schede} schede, ${r.aspetti} aspetti: ${r.conScala} con la scala (${r.approvate ?? 0} approvate, A.72), ${r.daDefinire.length} da definire al tavolo`);
   if (process.argv.includes('--elenco')) for (const x of r.daDefinire) console.log(`- ${x}`);
   if (process.argv.includes('--scrivi')) writeFileSync(PERCORSO, `${JSON.stringify(dati, null, 2)}\n`);
 }

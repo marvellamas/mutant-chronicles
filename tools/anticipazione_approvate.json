@@ -1,0 +1,49 @@
+{
+  "_nota": "Scale dell'Anticipazione approvate da Davide (A.72, E&L del 05/10/2026; decisione 113 in docs/risposte-master.md). tools/scale_anticipazione.mjs --scrivi le applica sopra quelle estratte dalle schede, con approvata: \"A.72\". Chiave: nome dell'Incantesimo, poi nome dell'aspetto (meccanica.anticipazione.aspetti[].nome). Gli aspetti senza scala restano «da definire al tavolo» con TODO(Davide) A.109.",
+  "Irrobustire": {
+    "PV temporanei": { "tipo": "sequenza", "colonna": "PV temporanei ciascuno", "valori": ["4", "5", "6", "7", "8", "10", "11", "12", "14", "16", "20", "24", "28"] },
+    "Durata": { "tipo": "sequenza", "colonna": "Durata", "valori": ["10 RND", "20 RND", "5 minuti", "10 minuti", "30 minuti", "1 ora", "2 ore", "4 ore"] }
+  },
+  "Telecinesi": {
+    "Durata": { "tipo": "scelta", "parti": [
+      { "nome": "Concentrazione", "scala": { "tipo": "sequenza", "colonna": "Durata Con", "valori": ["10 minuti", "30 minuti", "1 ora", "2 ore", "4 ore", "8 ore", "12 ore", "24 ore"] } },
+      { "nome": "Durata fissa", "scala": { "tipo": "sequenza", "colonna": "Durata fissa", "valori": ["10 RND", "20 RND", "5 minuti", "10 minuti", "30 minuti", "1 ora", "2 ore", "4 ore"] } }
+    ] }
+  },
+  "Mente Disincarnata": {
+    "Distanza dal corpo": { "tipo": "sequenza", "colonna": "Distanza max dal corpo", "valori": ["1 km", "3 km", "6 km", "10 km"] }
+  },
+  "Illusione": {
+    "Complessità": { "tipo": "per_versione", "versioni": {
+      "1": { "da": "stimolo semplice non figurativo", "a": "immagine semplice statica" },
+      "3": { "da": "immagine semplice statica", "a": "immagine complessa statica" },
+      "6": { "da": "immagine complessa statica", "a": "immagine animata" },
+      "9": { "da": "immagine animata", "a": null },
+      "12": { "da": "immagine animata", "a": null },
+      "15": { "da": "immagine animata", "a": null },
+      "18": { "da": "immagine animata", "a": null }
+    } }
+  },
+  "Muro Elementale": {
+    "Natura del danno": { "tipo": "sequenza", "colonna": "Natura", "valori": ["Naturale", "Magico", "Etereo"] }
+  },
+  "Esplosione Elementale": {
+    "Natura del danno": { "tipo": "sequenza", "colonna": "Natura", "valori": ["Naturale", "Magico", "Etereo"] }
+  },
+  "Cono Elementale": {
+    "Natura del danno": { "tipo": "sequenza", "colonna": "Natura", "valori": ["Naturale", "Magico", "Etereo"] }
+  },
+  "Armatura Elementale": {
+    "Natura del danno reattivo": { "tipo": "sequenza", "colonna": null, "valori": ["Naturale", "Magico", "Etereo"] }
+  },
+  "Resistenza Fisica": {
+    "Bonus Tempra +1": { "tipo": "scelta", "parti": [
+      { "nome": "Tempra generale", "scala": { "tipo": "incremento", "colonna": "Tempra generale o mirata", "passo": 1, "parte": 0 } },
+      { "nome": "Tempra mirata", "scala": { "tipo": "incremento", "colonna": "Tempra generale o mirata", "passo": 1, "parte": 1 } }
+    ] }
+  },
+  "Efficienza": {
+    "VA degli attacchi +1": { "tipo": "incremento", "colonna": "Attacco e danno B", "passo": 1, "parte": 0, "nota": "modalità B: solo il VA; la durata non aumenta" },
+    "Danno +1": { "tipo": "incremento", "colonna": "Attacco e danno B", "passo": 1, "parte": 1, "nota": "modalità B: solo il danno; la durata non aumenta" }
+  }
+}

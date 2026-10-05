@@ -903,6 +903,17 @@ le altre si registrano lotto per lotto.
     `talenti_liberi.json` (validatore). Scritte il 05/10 le 41 sintesi dei Talenti dei sette PG reali e dei PG
     d'esempio (`tools/lotti/lotto_sintesi_talenti.mjs`), tutte `da_verificare` (asterisco in stampa, elenco in
     `docs/sintesi-talenti-da-approvare.md`); gli altri Talenti stampano la prima frase con «sintesi da redigere».
+113. **Anticipazione: esempi approvati** (A.72, E&L del 05/10/2026). Criterio: un solo aspetto, un solo gradino
+    previsto, versione invariata; costo base raddoppiato e Potere più difficile di una categoria, Prova sempre; i
+    cinque Talenti degli aspetti tolgono il raddoppio, Anticipazione Migliorata solo la difficoltà; nessun gradino
+    inventato. Scale approvate (12 aspetti): Irrobustire PV temporanei 4 → … → 28 e Durata 10 Round → … → 4 ore (una
+    sola scala); Telecinesi Durata per versione, Concentrazione oppure fissa; Mente Disincarnata 1 → 3 → 6 → 10 km
+    (alla versione 18 nessun gradino); Illusione, complessità per versione, massimo dalla 9; natura del danno di Muro,
+    Esplosione e Cono Elementale e natura del danno reattivo di Armatura Elementale Naturale → Magico → Etereo;
+    Resistenza Fisica +1 al solo bonus scelto (generale o mirato); Efficienza modalità B, +1 al VA oppure al danno.
+    → `tools/anticipazione_approvate.json` (rispettato da `tools/scale_anticipazione.mjs --scrivi`, `approvata:
+    "A.72"`), nuovi tipi `scelta`, `per_versione` e `incremento` con `parte` in `src/anticipazione.js`. Gli altri 32
+    aspetti, compreso il Mod. PS di Armatura Elementale, restano «da definire al tavolo» con `TODO(Davide)` A.109.
 
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 

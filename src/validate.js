@@ -2113,19 +2113,29 @@ function validaMeccanicaIncantesimi(dati, err) {
         const KA = `${K}.anticipazione.aspetti[${j}]`;
         // con la tabella marcata TODO non si controllano le colonne
         const colonne = Array.isArray(i.versioni) ? new Set(Object.keys(i.versioni[0] ?? {})) : null;
-        const s = x?.scala;
-        if (s === undefined) err(F, `${KA}.scala`, 'mancante: rilanciare tools/scale_anticipazione.mjs --scrivi');
-        else if (s === null) { if (!isTesto(x.scala_motivo)) err(F, `${KA}.scala_motivo`, 'senza scala serve il motivo («da definire al tavolo»)'); }
-        else if (s.tipo === 'sequenza') {
+        const scala = x?.scala;
+        if (scala === undefined) err(F, `${KA}.scala`, 'mancante: rilanciare tools/scale_anticipazione.mjs --scrivi');
+        else if (scala === null) { if (!isTesto(x.scala_motivo)) err(F, `${KA}.scala_motivo`, 'senza scala serve il motivo («da definire al tavolo»)'); }
+        else controllaScala(scala, `${KA}.scala`);
+        function controllaScala(s, KS) {
+        // A.72: scelta fra scale alternative e gradini scritti per versione (tools/anticipazione_approvate.json)
+        if (s.tipo === 'scelta') {
+          if (!(Array.isArray(s.parti) && s.parti.length >= 2)) err(F, `${KS}.parti`, 'almeno due scelte');
+          else s.parti.forEach((q, k) => { if (!isTesto(q?.nome) || !q?.scala) err(F, `${KS}.parti[${k}]`, 'nome e scala attesi'); else controllaScala(q.scala, `${KS}.parti[${k}].scala`); });
+        } else if (s.tipo === 'per_versione') {
+          if (!s.versioni || typeof s.versioni !== 'object' || !Object.values(s.versioni).every((g) => isTesto(g?.da) && (g.a === null || isTesto(g.a)))) err(F, `${KS}.versioni`, 'per ogni versione { da, a } (a null: massimo)');
+        } else if (s.tipo === 'sequenza') {
           if (!(Array.isArray(s.valori) && s.valori.length >= 2 && s.valori.every(isTesto))) err(F, `${KA}.scala.valori`, 'almeno due voci');
           if (colonne && s.colonna !== null && !colonne.has(s.colonna)) err(F, `${KA}.scala.colonna`, `"${s.colonna}" non è una colonna della tabella`);
         } else if (s.tipo === 'incremento') {
           if (colonne && !colonne.has(s.colonna)) err(F, `${KA}.scala.colonna`, `"${s.colonna}" non è una colonna della tabella`);
           if (!(isIntero(s.passo) && s.passo !== 0)) err(F, `${KA}.scala.passo`, 'intero diverso da 0');
           if (s.massimo !== undefined && !isIntero(s.massimo)) err(F, `${KA}.scala.massimo`, 'intero');
+          if (s.parte !== undefined && !(isIntero(s.parte) && s.parte >= 0)) err(F, `${KA}.scala.parte`, 'indice della parte (0, 1…)');
         } else if (s.tipo === 'riga_successiva') {
           if (!(Array.isArray(s.colonne) && s.colonne.length && s.colonne.every((c) => !colonne || colonne.has(c)))) err(F, `${KA}.scala.colonne`, 'colonne della tabella');
-        } else err(F, `${KA}.scala.tipo`, 'sequenza, incremento o riga_successiva');
+        } else err(F, `${KS}.tipo`, 'sequenza, incremento, riga_successiva, per_versione o scelta');
+        }
         if (x?.conseguenze !== undefined && !(Array.isArray(x.conseguenze) && x.conseguenze.every(isTesto))) err(F, `${KA}.conseguenze`, 'frasi della scheda');
       });
     } else if (!todo && !rituale) err(F, `${K}.anticipazione`, 'mancante: serve un TODO(Davide)');

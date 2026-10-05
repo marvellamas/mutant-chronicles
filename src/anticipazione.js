@@ -8,6 +8,12 @@
 // - incremento { colonna, passo, massimo? }: valore della versione + passo, fino al massimo;
 // - riga_successiva { colonne: [...], oltre?: [{ da, a }], oltre_ultima? }: il valore distinto della
 //   versione successiva nella stessa colonna; oltre l'ultima riga solo se la scheda lo scrive.
+// Scale approvate da Davide (A.72, E&L del 05/10/2026; tools/anticipazione_approvate.json):
+// - sequenza senza colonna con più di due valori: la natura (o il grado) attuale avanza di un passaggio;
+// - incremento { …, parte, parti }: colonna con più valori «+2 / +3», si aumenta solo la parte indicata;
+// - per_versione { versioni: { <livello>: { da, a|null } } }: il gradino scritto per ogni versione (a null: massimo);
+// - scelta { parti: [{ nome, scala }] }: più scale alternative (es. Concentrazione oppure durata fissa), se ne
+//   anticipa una sola.
 // Senza scala (null) l'aspetto resta «valore da definire al tavolo», con il motivo.
 import { aggiungiDanno } from './equipaggiamento.js';
 
@@ -56,7 +62,9 @@ export function valoreAnticipato(aspetto, versione, righe = []) {
     const valori = sc.valori;
     if (!sc.colonna) {
       // «da A a B» senza colonna nella tabella: il gradino è B
-      return valori.length === 2 ? { righe: [{ colonna: aspetto.nome ?? aspetto.etichetta, da: valori[0], a: valori[1] }], daDefinire: null }
+      if (valori.length === 2) return { righe: [{ colonna: aspetto.nome ?? aspetto.etichetta, da: valori[0], a: valori[1] }], daDefinire: null };
+      // A.72: scala approvata senza colonna (natura del danno reattivo): un passaggio dal valore attuale
+      return sc.approvata ? { righe: [{ colonna: aspetto.nome ?? aspetto.etichetta, da: 'valore attuale', a: 'gradino successivo', nota: `${valori.join(' → ')}, un passaggio alla volta; massimo ${valori.at(-1)}` }], daDefinire: null }
         : daDefinire('la scala della scheda non indica da quale valore si parte');
     }
     const attuale = versione?.[sc.colonna];
@@ -64,6 +72,30 @@ export function valoreAnticipato(aspetto, versione, righe = []) {
     if (i < 0) return daDefinire(`il valore della versione (${attuale ?? '—'}) non compare nella scala della scheda`);
     if (i === valori.length - 1) return { righe: [{ colonna: sc.colonna, da: attuale, a: attuale, nota: 'già al massimo della scala: nessun gradino ulteriore (sez. 12.3)' }], daDefinire: null };
     return { righe: [{ colonna: sc.colonna, da: attuale, a: valori[i + 1] }], daDefinire: null };
+  }
+  if (sc.tipo === 'incremento' && Number.isInteger(sc.parte)) {
+    // A.72: colonna con più valori («+2 / +3»): +passo solo alla parte scelta
+    const attuale = versione?.[sc.colonna];
+    const parti = String(attuale ?? '').split('/').map((x) => x.trim());
+    const r = parti.length > sc.parte ? incrementaValore(parti[sc.parte], sc.passo) : null;
+    if (!r) return daDefinire(`il valore della versione (${attuale ?? '—'}) non ha la parte da aumentare`);
+    parti[sc.parte] = r.testo;
+    return { righe: [{ colonna: sc.colonna, da: attuale, a: parti.join(' / '), ...(sc.nota ? { nota: sc.nota } : {}) }], daDefinire: null };
+  }
+  if (sc.tipo === 'per_versione') {
+    const liv = String(Object.values(versione ?? {})[0] ?? '').trim();
+    const g = sc.versioni?.[liv];
+    if (!g) return daDefinire(`nessun gradino scritto per la versione ${liv || '—'}`);
+    const colonna = aspetto.nome ?? aspetto.etichetta;
+    return { righe: [g.a === null ? { colonna, da: g.da, a: g.da, nota: g.nota ?? 'già al massimo: nessun gradino ulteriore (sez. 12.3)' } : { colonna, da: g.da, a: g.a }], daDefinire: null };
+  }
+  if (sc.tipo === 'scelta') {
+    // scale alternative: si mostrano tutte, se ne anticipa una sola
+    const out = sc.parti.flatMap((x) => {
+      const v = valoreAnticipato({ ...aspetto, scala: x.scala }, versione, righe);
+      return v.daDefinire ? [] : v.righe.map((r) => ({ ...r, colonna: x.nome, nota: [r.nota, 'oppure l’altra scelta, una sola'].filter(Boolean).join('; ') }));
+    });
+    return out.length ? { righe: out, daDefinire: null } : daDefinire('nessuna delle scelte ha un gradino per questa versione');
   }
   if (sc.tipo === 'incremento') {
     const attuale = versione?.[sc.colonna];

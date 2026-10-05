@@ -80,12 +80,37 @@ test('Bersagli anticipati con Incantesimi Plurimi: niente raddoppio e numero nuo
   assert.equal(r.anticipazione.regole[0].testo, `Incantesimi Plurimi: niente raddoppio PM (${v} PM).`);
 });
 
-test('aspetto senza scala chiara: «da definire», nessun numero', () => {
+test('aspetto senza scala chiara: «da definire», nessun numero, TODO(Davide) A.109', () => {
+  const x = inc('Sigillo').meccanica.anticipazione.aspetti.find((y) => y.nome === 'Sigilli +1');
+  const v = valoreAnticipato(x, inc('Sigillo').versioni[0], inc('Sigillo').versioni);
+  assert.deepEqual(v.righe, []);
+  assert.match(v.daDefinire, /senza scrivere la scala/);
+  assert.match(x['TODO(Davide)'], /^A.109/);
+});
+
+test('A.72: scale approvate (Irrobustire, Telecinesi, Illusione, Natura, Resistenza Fisica, Efficienza)', () => {
   const nome = 'Irrobustire';
   const r = calcolaLancio(lucas, inc(nome), { versione: 3, anticipazione: aspetto(nome, 'Durata') }, dati);
-  assert.deepEqual(r.anticipazione.valore.righe, []);
-  assert.match(r.anticipazione.valore.daDefinire, /senza scrivere la scala/);
-  assert.equal(r.pm_costo, 3); // Incantesimi Estesi vale comunque per la Durata
+  assert.deepEqual(r.anticipazione.valore.righe, [{ colonna: 'Durata', da: '20 RND', a: '5 minuti' }]);
+  assert.equal(r.pm_costo, 3); // Incantesimi Estesi: nessun raddoppio per la Durata
+  const val = (n, a, liv) => {
+    const i = inc(n);
+    return valoreAnticipato(i.meccanica.anticipazione.aspetti.find((x) => x.nome === a), i.versioni.find((v) => String(Object.values(v)[0]) === String(liv)), i.versioni);
+  };
+  assert.deepEqual(val('Irrobustire', 'PV temporanei', 18).righe[0], { colonna: 'PV temporanei ciascuno', da: '24', a: '28' });
+  // Telecinesi: Concentrazione oppure durata fissa, una sola
+  assert.deepEqual(val('Telecinesi', 'Durata', 6).righe.map((x) => [x.colonna, x.da, x.a]), [['Concentrazione', '1 ora', '2 ore'], ['Durata fissa', '5 minuti', '10 minuti']]);
+  assert.deepEqual(val('Telecinesi', 'Durata', 18).righe.map((x) => x.a), ['24 ore', '4 ore']);
+  // Illusione: dalla versione 9 la complessità è al massimo
+  assert.equal(val('Illusione', 'Complessità', 3).righe[0].a, 'immagine complessa statica');
+  assert.match(val('Illusione', 'Complessità', 12).righe[0].nota, /massimo/);
+  assert.equal(val('Mente Disincarnata', 'Distanza dal corpo', 12).righe[0].a, '6 km');
+  assert.equal(val('Cono Elementale', 'Natura del danno', 9).righe[0].a, 'Etereo');
+  assert.match(val('Armatura Elementale', 'Natura del danno reattivo', 3).righe[0].nota, /Naturale → Magico → Etereo/);
+  // una sola parte della colonna doppia
+  assert.deepEqual(val('Resistenza Fisica', 'Bonus Tempra +1', 1).righe.map((x) => x.a), ['+2 / +3', '+1 / +4']);
+  assert.equal(val('Efficienza', 'VA degli attacchi +1', 6).righe[0].a, '+2 / +2');
+  assert.equal(val('Efficienza', 'Danno +1', 6).righe[0].a, '+1 / +3');
 });
 
 test('scale dei dati: generate dal testo e coerenti con lo strumento; normalizzazione dei valori', () => {
