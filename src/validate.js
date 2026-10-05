@@ -2008,7 +2008,7 @@ function validaAttaccoRavvicinato(dati, err) {
     if (!Array.isArray(m?.frasi) || !m.frasi.length) err(F, `${P}.frasi`, 'frasi del manuale mancanti');
   }
   const C = a.carica;
-  if (!isOggetto(C) || !Array.isArray(C.fasce) || !C.fasce.every((f) => isIntero(f.da) && isIntero(f.a) && isIntero(f.va) && isIntero(f.avversari))) err(F, 'attacco_ravvicinato.carica.fasce', 'fasce { da, a, va, avversari } attese (§5.6)');
+  if (!isOggetto(C) || !Array.isArray(C.fasce) || !C.fasce.every((f, k) => isIntero(f.da) && (isIntero(f.a) || (f.a === null && k === C.fasce.length - 1)) && isIntero(f.va) && isIntero(f.avversari))) err(F, 'attacco_ravvicinato.carica.fasce', 'fasce { da, a, va, avversari } attese (§5.6); «a»: null solo nell’ultima (fino alla Corsa, A.40)');
   if (!isIntero(a.due_armi?.va) || !isIntero(a.due_armi?.attacchi)) err(F, 'attacco_ravvicinato.due_armi', 'va e attacchi interi attesi (§5.7)');
   if (!isTesto(a.senz_armi?.abilita)) err(F, 'attacco_ravvicinato.senz_armi.abilita', 'Abilità degli attacchi senz’armi mancante');
   // effetti.attacco_ravvicinato dei Talenti (Liberi e di Classe)

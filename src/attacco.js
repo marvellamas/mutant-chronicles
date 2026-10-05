@@ -139,6 +139,11 @@ function situazionaliAccesi(personaggio, tipo, d, arma) {
   };
 }
 
+/** §5.6, A.40: fascia della Carica per il percorso; «a» null = fino alla Corsa massima (nessun limite di 12 Q). */
+export function fasciaCarica(q, C) {
+  return C.fasce.find((f) => q >= f.da && (f.a === null || q <= f.a)) ?? null;
+}
+
 /** §5.11: penalità della fascia di distanza e indice della fascia (le fasce oltre l'ultima si contano). */
 export function fasciaDistanza(q, dati) {
   const D = dati.regole.attacco_distanza.distanza;
@@ -895,14 +900,12 @@ export function vincoliRavvicinato(personaggio, arma, dichiarazione, dati) {
     manovre[id] = { motivo, nascosta };
   }
   const corsa = personaggio.scheda?.tavolo?.movimento?.corsa?.effettivo ?? personaggio.scheda?.movimento?.corsa ?? null;
-  const ultima = R.carica.fasce.at(-1).a;
   const s = secondaArma(personaggio.scheda, arma);
   return {
     manovre,
     portata,
     carica: d.percorsoQ < R.carica.percorso_min_q ? `servono almeno ${R.carica.percorso_min_q} Q di percorso (§5.6)`
-      : corsa !== null && d.percorsoQ > corsa ? `il percorso non può superare la Corsa (${corsa} Q, §5.6)`
-        : d.percorsoQ > ultima ? `oltre ${ultima} Q la tabella della Carica non dà valori (§5.6)` : null,
+      : corsa !== null && d.percorsoQ > corsa ? `il percorso non può superare la Corsa (${corsa} Q, §5.6)` : null,
     controcarica: d.bersaglio.distanza < R.controcarica.distanza_min_q ? `serve una distanza di almeno ${R.controcarica.distanza_min_q} Q (§5.6)` : null,
     dueArmi: arma.senzArmi ? 'serve un’arma in ciascuna mano' : !s.arma ? 'serve una seconda arma impugnata' : !s.combinazione ? 'combinazione di armi non ammessa (§5.7)' : null,
     secondaArma: s.arma,
@@ -1016,7 +1019,7 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
   if (d.carica) {
     const C = R.carica;
     if (vincoli.carica) blocca(`Carica non possibile: ${vincoli.carica}.`);
-    const f = C.fasce.find((x) => d.percorsoQ >= x.da && d.percorsoQ <= x.a) ?? C.fasce[0];
+    const f = fasciaCarica(d.percorsoQ, C) ?? C.fasce[0];
     aggiungi(situazione, `Carica (${d.percorsoQ} Q)`, f.va, 'manovra', C.paragrafo);
     moltiplicatore = Math.max(moltiplicatore, cm ? cm.e.carica.moltiplicatore : C.moltiplicatore);
     const brutale = con('carica').find((t) => t.e.carica.danno);

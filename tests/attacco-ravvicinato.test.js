@@ -151,3 +151,14 @@ test('riga compatta delle Manovre per il pannello', () => {
   assert.equal(descriviManovraRavvicinata('stordire', s, dati).riga, '−6 VA · PS Tempra');
   assert.equal(descriviManovraRavvicinata('affondo', pg({ liberi: ['affondo-migliorato'] }).scheda, dati).riga, '−4 VA · +2 danno · Sanguinamento 2');
 });
+
+test('A.40: la Carica arriva fino alla Corsa massima, senza il limite di 12 Q', () => {
+  const veloce = pg();
+  veloce.scheda.movimento = { passo: 8, corsa: 16, scatto: 24 };
+  const lunga = attacca(veloce, arma(), { carica: true, percorsoQ: 15 });
+  assert.equal(lunga.impossibile, null);
+  assert.equal(lunga.va_finale, attacca(veloce, arma(), { carica: true, percorsoQ: 9 }).va_finale, 'da 7 Q alla Corsa: stessa fascia (−4)');
+  assert.match(lunga.promemoria.join(' '), /−6 VA/);
+  assert.match(attacca(veloce, arma(), { carica: true, percorsoQ: 17 }).impossibile.motivo, /non può superare la Corsa \(16 Q/);
+  assert.equal(dati.regole.attacco_ravvicinato.carica.fasce.at(-1).a, null);
+});

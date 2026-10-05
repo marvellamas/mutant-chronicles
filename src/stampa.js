@@ -798,7 +798,7 @@ export function azioniCombattimento(dati, armi = []) {
     const va = (m) => (m.va_per_bersagli ? Object.entries(m.va_per_bersagli).map(([n, v]) => `${valoreAzione(v)} (${n})`).join(' / ') : valoreAzione(m.va));
     const righe = Object.values(A.manovre).map((m) => [m.nome, String(m.azioni_principali), va(m), m.danno === null ? '—' : valoreAzione(m.danno), m.prova?.tipo === 'contrapposta' ? 'contrapposta' : 'per colpire', effetto(m)]);
     if (A.carica) righe.push(['Carica', `${A.carica.azioni_principali} + ${A.carica.azioni_movimento} AzM`,
-      A.carica.fasce.map((f) => `${valoreAzione(f.va)} (${f.da}–${f.a} Q)`).join(' / '), `×${A.carica.moltiplicatore}`, 'per colpire', '—']);
+      A.carica.fasce.map((f) => `${valoreAzione(f.va)} (${f.a === null ? `da ${f.da} Q alla Corsa` : `${f.da}–${f.a} Q`})`).join(' / '), `×${A.carica.moltiplicatore}`, 'per colpire', '—']);
     gruppi.ravvicinato.push({ id: 'manovre-ravvicinate', titolo: `Manovre corpo a corpo (${(A.paragrafo ?? '§5.12').replace(/^Giocatore\s+/, '')})`, colonne: ['Manovra', 'AzP', 'VA', 'Danno', 'Prova', 'Effetto'], righe });
   }
   return codici.length ? [...gruppi.distanza, ...gruppi.ravvicinato] : [...gruppi.ravvicinato, ...gruppi.distanza];

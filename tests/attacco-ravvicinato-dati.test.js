@@ -21,7 +21,7 @@ test('Manovre del §5.12 con Azioni, VA, danno e Prova del bersaglio', () => {
   assert.deepEqual(R.manovre.spazzata.va_per_bersagli, { 2: -4, 3: -6 });
   assert.deepEqual(R.manovre.immobilizzare.prova, { tipo: 'contrapposta', abilita: ['Corpo a corpo'], contro: ['Corpo a corpo', 'Atletica'] });
   assert.equal(R.manovre.stordire.dopo_armatura.salvezza, 'Tempra');
-  assert.deepEqual(R.carica.fasce.map((f) => [f.da, f.a, f.va, f.avversari]), [[3, 6, -2, -4], [7, 12, -4, -6]]);
+  assert.deepEqual(R.carica.fasce.map((f) => [f.da, f.a, f.va, f.avversari]), [[3, 6, -2, -4], [7, null, -4, -6]]); // A.40: da 7 Q fino alla Corsa massima
   // §1.6 è una regola generale del danno: sta in regole.json → magistrale (src/danno.js), non sotto attacco_ravvicinato
   assert.equal(R.magistrale, undefined);
   const MG = dati.regole.magistrale;

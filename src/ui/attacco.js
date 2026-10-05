@@ -9,7 +9,7 @@ import { infoValore, listaProvenienza } from './tooltip.js';
 import {
   calcolaAttaccoDistanza, vincoliDistanza, dichiarazioneDistanza, richiedeImbracciatura, talentiAttacco, descriviModalita, descriviManovraDistanza,
   calcolaAttaccoRavvicinato, vincoliRavvicinato, dichiarazioneRavvicinato, manovreRavvicinate, descriviManovraRavvicinata,
-  modificatoriDistanza, vaDueArmi, effettiSituazionaliAttacco,
+  modificatoriDistanza, vaDueArmi, effettiSituazionaliAttacco, fasciaCarica,
 } from '../attacco.js';
 import { rigaScelte, interruttore, pannelloPassi } from './pannello-passi.js';
 import { avviso } from './avvisi.js';
@@ -57,7 +57,9 @@ function corpoRavvicinato(ctx, a, intestazione) {
   const stato = (ctx.ui.attacco ??= { uid: a.uid, passo: 0 });
   const manovraScelta = d.manovra[0];
   const statoATerra = (ctx.sessione.statiAttivi ?? []).includes(R.a_terra.stato);
-  const carica = R.carica.fasce.find((f) => d.percorsoQ >= f.da && d.percorsoQ <= f.a);
+  const carica = fasciaCarica(d.percorsoQ, R.carica);
+  // A.40: l'ultima fascia arriva alla Corsa massima del personaggio
+  const corsaQ = a.corsaQ ?? ctx.tab?.scheda?.tavolo?.movimento?.corsa?.effettivo ?? ctx.tab?.scheda?.movimento?.corsa ?? null;
   const cm = T.find((t) => t.e.carica?.moltiplicatore);
   const molt = cm ? cm.e.carica.moltiplicatore : R.carica.moltiplicatore;
   // §5.7: il VA della coppia in mano, con il Talento di quella combinazione (lo stesso del calcolo)
@@ -78,8 +80,8 @@ function corpoRavvicinato(ctx, a, intestazione) {
         h('label', { class: 'scelta-titolo', for: `percorso-${a.uid}` }, 'Percorso della Carica in Q'),
         h('div', { class: 'distanza-riga' },
           h('input', { id: `percorso-${a.uid}`, type: 'number', min: 1, step: 1, inputmode: 'numeric', value: d.percorsoQ, class: 'input-distanza', onchange: (e) => { const n = Number(e.target.value); if (Number.isFinite(n) && n >= 0) imposta({ percorsoQ: Math.round(n) }); } }),
-          h('span', { class: `fascia${carica ? ' malus' : ''}` }, carica ? `${carica.da}–${carica.a} Q: ${numero(carica.va)}, chi ti attacca ${numero(carica.avversari)}` : 'fuori tabella')),
-        h('div', { class: 'scelta-pulsanti' }, [...new Set(R.carica.fasce.flatMap((f) => [f.da, f.a]))].map((q) => h('button', { type: 'button', class: `btn scelta-btn${d.percorsoQ === q ? ' scelta' : ''}`, onclick: () => imposta({ percorsoQ: q }) }, String(q))))) : null,
+          h('span', { class: `fascia${carica ? ' malus' : ''}` }, carica ? `${carica.da}–${carica.a ?? 'Corsa'} Q: ${numero(carica.va)}, chi ti attacca ${numero(carica.avversari)}` : 'fuori tabella')),
+        h('div', { class: 'scelta-pulsanti' }, [...new Set([...R.carica.fasce.flatMap((f) => [f.da, f.a]).filter(Number.isInteger), ...(Number.isInteger(corsaQ) ? [corsaQ] : [])])].sort((x, y) => x - y).map((q) => h('button', { type: 'button', class: `btn scelta-btn${d.percorsoQ === q ? ' scelta' : ''}`, onclick: () => imposta({ percorsoQ: q }) }, q === corsaQ ? `${q} (Corsa)` : String(q))))) : null,
       interruttore('Controcarica (al posto delle Difese)', d.controcarica, (x) => imposta({ controcarica: x, ...(x ? { carica: false, manovra: 'normale' } : {}) }),
         { motivo: d.controcarica ? v.controcarica : null, mod: `${numero(R.controcarica.va)} · danno ×${molt}`, info: infoRegola('Controcarica', R.controcarica) }),
       interruttore('Sei A Terra', d.aTerra || statoATerra, (x) => imposta({ aTerra: x }),

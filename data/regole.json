@@ -2586,6 +2586,7 @@
       "azioni_movimento": 1,
       "azioni_principali": 1,
       "percorso_min_q": 3,
+      "decisione": "A.40 (E&L del 05/10/2026): la Carica arriva fino alla propria Corsa massima, con almeno 3 Q di percorso sufficientemente rettilineo; da 3 a 6 Q −2 al proprio VA e −4 agli avversari, da 7 Q fino alla Corsa massima −4 e −6, danno ×2. Nessun limite di 12 Q né terza fascia («a»: null = fino alla Corsa).",
       "fasce": [
         {
           "da": 3,
@@ -2595,7 +2596,7 @@
         },
         {
           "da": 7,
-          "a": 12,
+          "a": null,
           "va": -4,
           "avversari": -6
         }

@@ -799,6 +799,11 @@ le altre si registrano lotto per lotto.
     `imbracciatura.azioni_movimento`, `testo_a38`), `src/attacco.js`, `src/ui/attacco.js` («Imbracciatura»: già,
     ora, senza).
 
+99. **Carica fino alla Corsa massima** (A.40). Almeno 3 Q di percorso rettilineo, 1 AzM + 1 AzP; da 3 a 6 Q −2 al
+    proprio VA e −4 agli avversari, da 7 Q fino alla Corsa massima −4 e −6, danno ×2; tolto il limite di 12 Q, nessuna
+    terza fascia. → `regole.json` → `attacco_ravvicinato.carica.fasce` (ultima fascia con `a: null`, `decisione`),
+    `src/attacco.js` → `fasciaCarica`, pulsanti dei Q in «Attacca!» con la Corsa, testo della SS.
+
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 
 Il Manuale dei Veicoli 0.2 è completo di numeri e il lotto 2 (dati e motore) non ha dovuto inventare nulla. Restano
