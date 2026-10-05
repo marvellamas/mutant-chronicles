@@ -72,7 +72,7 @@ test('attivabili: iniettore con le cartucce e «Somministra»; Processore con «
     voce('c1', 'chip-assistenza-percezione', 'in_uso'), voce('c2', 'chip-assistenza-furtivita', 'zaino'), voce('vn', 'visione-notturna')]);
   const att = impiantiAttivabili(creazione.equipaggiamento, dati);
   assert.deepEqual(att.map((x) => [x.uid, x.tipo]), [['inj', 'cariche'], ['proc', 'chip'], ['vn', 'promemoria']]);
-  assert.match(att[2].todo, /A\.106/);
+  assert.equal(att[2].todo, null); // A.106 decisa il 05/10/2026: regole.json → illuminazione
   let s = inizializzaSessione(m);
   assert.equal('impianti' in s, false, 'sessioni di prima identiche');
   // iniettore: venduto senza cartucce, caricatore fino a 5

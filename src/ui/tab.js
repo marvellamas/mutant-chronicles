@@ -9,7 +9,8 @@ import { h, segno } from './dom.js';
 import { info, infoValore, etichettaMacro, pallini } from './tooltip.js';
 import { stemma, iconaPagina } from './immagini.js';
 import { classeMacrofamiglia } from '../palette.js';
-import { formulaScomposizione } from '../condizioni.js';
+import { formulaScomposizione, visioniPersonaggio } from '../condizioni.js';
+import { rigaScelte } from './pannello-passi.js';
 import { colore, riempimento, condizioniAttiveAbilita } from '../interfaccia.js';
 import { descriviFerite } from '../sessione.js';
 import { statoIntegrita } from '../protezione.js';
@@ -1118,6 +1119,7 @@ function tabAbilita(ctx, d) {
           h('h2', {}, 'Condizioni attive'),
           condizioni.length ? h('ul', {}, condizioni.map(rigaCondizione)) : h('p', { class: 'nota' }, 'Nessuna: Ferite, Affaticamento e Stati si segnano nella tab Combattimento, il carico nell’Inventario.'),
           usi.length ? h('ul', { class: 'usi-specifici', 'aria-label': 'Solo per un uso specifico' }, usi.map(rigaCondizione)) : null),
+        selettoreLuce(ctx),
         condizioniOggetti(ctx),
         condizioniTalenti(ctx),
         promemoriaPenalita(ctx, { soloSenzaEffetto: true }))),
@@ -1379,6 +1381,7 @@ function tabCombattimento(ctx, d) {
         sanitari.length ? h('p', { class: 'nota' }, `Kit e dispositivi sanitari (${sanitari.map((c) => c.nome).join(', ')}): le applicazioni si contano nella tab Inventario (§7.19).`) : null),
 
       h('aside', { class: 'colonna-stati', 'aria-label': 'Ferite, Affaticamento, Corruzione e Stati' },
+        selettoreLuce(ctx),
         gradiCompatti(ctx, { titolo: 'Ferite (§5.14)', campo: 'ferite', attuale: s.ferite, gradi: ferite,
           nota: 'Ogni nuova Ferita fa avanzare di un gradino. La penalità è cumulativa a VA e Prove Salvezza.' }),
         gradiCompatti(ctx, { titolo: 'Affaticamento (§5.19)', campo: 'affaticamento', attuale: s.affaticamento, gradi: d.affaticamento,
@@ -1403,6 +1406,28 @@ function tabCombattimento(ctx, d) {
             infoValore('?', { titolo: st.nome, sottotitolo: st.durata, sezioni: [{ testo: `${st.promemoria}${st.riassunto ? ' (riassunto, non testo del manuale)' : ''}` }] }, { classe: 'info-gradi' }));
           }))))),
   ];
+}
+
+/**
+ * A.106 (E&L del 05/10/2026): luce sul bersaglio o sull'oggetto osservato, nella sessione (regole.json →
+ * illuminazione). Penombra e luce molto scarsa entrano nei VA effettivi di attacchi e Difese e nella Percezione
+ * visiva (valore a parte); il buio vale Accecato. Con una visione del personaggio, la casella la applica.
+ */
+export function selettoreLuce(ctx, { compatto = false } = {}) {
+  const L = ctx.dati.regole.illuminazione;
+  if (!L) return null;
+  const s = ctx.sessione ?? {};
+  const attuale = L.livelli.some((x) => x.id === s.luce) ? s.luce : L.livelli.find((x) => x.base)?.id;
+  const liv = L.livelli.find((x) => x.id === attuale);
+  const visioni = visioniPersonaggio(ctx.scelte?.equipaggiamento, s, ctx.dati);
+  const contenuto = [
+    rigaScelte('Luce sul bersaglio (A.106)', L.livelli.map((x) => ({ valore: x.id, etichetta: x.nome, riga: x.riga })), attuale, (x) => ctx.azioni.imposta('luce', x)),
+    !compatto && liv?.descrizione ? h('p', { class: 'nota' }, liv.descrizione) : null,
+    visioni.length && (L.visione?.elimina ?? []).includes(attuale)
+      ? h('label', { class: 'casella-luce', title: L.visione.testo }, h('input', { type: 'checkbox', checked: s.luceVisione === true, onchange: (e) => ctx.azioni.imposta('luceVisione', e.target.checked) }),
+        ` La tua visione copre il bersaglio (entro ${visioni.map((v) => `${v.portata_q} Q`).join(' o ')}): nessuna penalità`) : null,
+  ];
+  return compatto ? h('div', { class: 'scelta-luce' }, contenuto) : h('section', { class: 'riquadro riquadro-luce', 'aria-label': 'Luce' }, contenuto);
 }
 
 function testoPenalitaTab(pen = {}) {

@@ -350,6 +350,9 @@ export function allineaSessione(sessione, m) {
     ...(() => { const inc = allineaIncantesimiAttivi(sessione.incantesimiAttivi); return inc.length ? { incantesimiAttivi: inc } : {}; })(),
     // impianti attivabili (src/impianti.js): cartucce degli iniettori e Processore; la chiave c'è solo se serve
     ...(() => { const imp = allineaImpianti(sessione.impianti, m.oggetti ?? null); return imp ? { impianti: imp } : {}; })(),
+    // A.106: luce della scena (regole.json → illuminazione) e visione che copre il bersaglio; solo se servono
+    ...(typeof sessione.luce === 'string' && sessione.luce && sessione.luce !== 'sufficiente' ? { luce: sessione.luce } : {}),
+    ...(sessione.luceVisione === true ? { luceVisione: true } : {}),
     note: typeof sessione.note === 'string' ? sessione.note : '',
   };
 }

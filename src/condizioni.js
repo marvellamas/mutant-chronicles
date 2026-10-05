@@ -20,6 +20,30 @@ const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v
  * Gli Stati senza `effetto` nei dati non compaiono: restano promemoria. Con la scheda (per il peso
  * dell'equipaggiamento e FOR) si aggiunge il carico, se supera la soglia ordinaria.
  */
+/** A.106: livello di luce della sessione (regole.json → illuminazione), null con luce sufficiente o ignoto. */
+export function luceAttiva(sessione, dati) {
+  return dati.regole.illuminazione?.livelli?.find((x) => x.id === sessione?.luce && !x.base) ?? null;
+}
+
+/** Stati attivi, più quello imposto dalla luce (buio totale: Accecato, senza sommarli, A.106). */
+export function statiEffettivi(sessione, dati) {
+  const s = new Set(isOggetto(sessione) && Array.isArray(sessione.statiAttivi) ? sessione.statiAttivi : []);
+  const l = luceAttiva(sessione, dati);
+  if (l?.stato) s.add(l.stato);
+  return s;
+}
+
+/**
+ * A.106: le visioni del personaggio che eliminano le penalità di luce entro la portata (impianti installati,
+ * Tecniche in corso), dai dati (regole.json → illuminazione.visione.fonti).
+ */
+export function visioniPersonaggio(equipaggiamento, sessione, dati) {
+  const F = dati.regole.illuminazione?.visione?.fonti ?? [];
+  const voci = Array.isArray(equipaggiamento) ? equipaggiamento : [];
+  const tecniche = new Set((Array.isArray(sessione?.tecnicheAttive) ? sessione.tecnicheAttive : []).map((x) => x.id));
+  return F.filter((f) => (f.rif ? voci.some((v) => v.rif === f.rif && v.stato === 'installato') : f.tecnica ? tecniche.has(f.tecnica) : false));
+}
+
 export function condizioniAttive(sessione, dati, scheda = null) {
   if (!isOggetto(sessione)) return [];
   const r = dati.regole;
@@ -33,8 +57,8 @@ export function condizioniAttive(sessione, dati, scheda = null) {
   // §5.20: solo la penalità dello Stato di Corruzione attuale, a tutte le Prove (Oscuro: nessuna, è un PNG)
   const cros = r.corruzione?.stati?.[sessione.corruzione ?? 0];
   if (cros?.penalita) out.push({ etichetta: cros.nome, fonte: 'corruzione', effetto: perAmbiti(r.corruzione.si_applica_a, cros.penalita) });
-  // §5.18: solo gli Stati con effetti numerici nei dati; più Stati si sommano
-  const attivi = new Set(Array.isArray(sessione.statiAttivi) ? sessione.statiAttivi : []);
+  // §5.18: solo gli Stati con effetti numerici nei dati; più Stati si sommano (il buio totale vale Accecato, A.106)
+  const attivi = statiEffettivi(sessione, dati);
   // Talenti che riducono la penalità al VA di uno Stato, fino ad annullarla (effetti.valori
   // «riduzione_stato»): Combattere alla Cieca (Accecato), Sangue Freddo (Terrorizzato, situazionale).
   // Con l'interruttore «Bonus dei Talenti» spento non contano.
@@ -62,6 +86,17 @@ export function condizioniAttive(sessione, dati, scheda = null) {
       for (const [a, v] of Object.entries(effetto.va_abilita ?? {})) if (meno(v)) perAbilita([a], v);
       if (Object.keys(ridotto).length) out.push({ etichetta: `${t.talento} (${s.nome})`, fonte: 'talento', effetto: ridotto });
     }
+  }
+  // A.106: penombra e luce molto scarsa (il buio è Accecato, sopra); la visione che copre il bersaglio le elimina;
+  // Visione Perfetta riduce di 3, fino a 0, la penalità alla Percezione visiva
+  const luce = luceAttiva(sessione, dati);
+  if (luce?.effetti?.length && !(sessione.luceVisione === true && (r.illuminazione.visione?.elimina ?? []).includes(luce.id))) {
+    const VP = r.illuminazione.visione_perfetta;
+    const perfetta = VP && scheda && (scheda.talentiLiberi ?? []).some((t) => (t.id ?? t) === VP.talento);
+    const usi = luce.effetti.filter((e) => e.ambito === 'uso_specifico')
+      .map((e) => (perfetta && e.uso === VP.uso ? { ...e, valore: Math.min(0, e.valore + VP.riduzione), condizione: `${e.condizione} Visione Perfetta: −${VP.riduzione} alla penalità.` } : e))
+      .filter((e) => e.valore < 0);
+    out.push({ etichetta: `Luce: ${luce.nome}`, fonte: 'stato', effetto: effettoDaEffetti(luce.effetti), usi });
   }
   // §5.2.6: il Sovraccarico penalizza le Prove fisiche, compresi attacchi e Difese
   if (scheda && r.carico) {
@@ -94,7 +129,7 @@ export function effettoDaEffetti(effetti) {
  * - soloDifensive: Stati che lasciano le Azioni Principali solo per difendersi (Terrorizzato).
  */
 export function limitiStati(sessione, dati) {
-  const attivi = new Set(isOggetto(sessione) && Array.isArray(sessione.statiAttivi) ? sessione.statiAttivi : []);
+  const attivi = statiEffettivi(sessione, dati);
   const stati = dati.regole.stati.elenco.filter((s) => attivi.has(s.id));
   const manovreVietate = new Map();
   for (const s of stati) for (const m of s.limiti?.manovre_vietate ?? []) manovreVietate.set(m, { nome: s.nome, testo: s.limiti.testo, fonte: s.limiti.fonte });
@@ -451,7 +486,7 @@ const d0 = (perNome, eq) => perNome.get(eq.abilitaDifese ?? 'Difese') ?? null;
  */
 export function valoriTavolo(scheda, sessione, dati) {
   const r = dati.regole;
-  const attivi = new Set(isOggetto(sessione) && Array.isArray(sessione.statiAttivi) ? sessione.statiAttivi : []);
+  const attivi = statiEffettivi(sessione, dati);
   const stati = r.stati.elenco.filter((s) => attivi.has(s.id));
 
   // con l'interruttore «Bonus dei Talenti» spento le voci dei Talenti (Iniziativa Migliorata…) non contano

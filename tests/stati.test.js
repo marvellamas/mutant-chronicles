@@ -5,6 +5,7 @@ import { calcolaScheda } from '../src/calc.js';
 import { inizializzaSessione } from '../src/sessione.js';
 import { calcolaAttaccoDistanza, calcolaAttaccoRavvicinato } from '../src/attacco.js';
 import { calcolaLancio } from '../src/lancio.js';
+import { condizioniAttive } from '../src/condizioni.js';
 import { datiReali } from './helpers.js';
 import { MISHIMA_AGENTE } from './personaggi.js';
 
@@ -82,4 +83,35 @@ test('due Stati insieme si sommano (il §5.18 non dà un’altra regola)', () =>
   assert.equal(arma(p, 'p').vaEffettivo, arma(riposo, 'p').vaEffettivo - 8);
   const incendiatoRallentato = al(['incendiato', 'rallentato']);
   assert.equal(va(incendiatoRallentato, 'Atletica'), va(riposo, 'Atletica') - 4);
+});
+
+// A.106 (E&L del 05/10/2026): luce della scena nella sessione (regole.json → illuminazione)
+const conLuce = (luce, extra = {}, creazione = CREAZIONE, stati = []) => {
+  const s = { ...sessione(stati), luce, ...extra };
+  return { scheda: calcolaScheda({ creazione, livelli: [], sessione: s }, dati), sessione: s };
+};
+const usoVisiva = (p) => p.scheda.abilita.find((a) => a.nome === 'Percezione').usiSpecifici?.find((u) => u.uso === 'visiva')?.modificatore ?? 0;
+
+test('A.106: penombra −2 e luce molto scarsa −4 ad attacchi e Difese; Percezione visiva a parte; buio come Accecato', () => {
+  const pen = conLuce('penombra');
+  assert.equal(arma(pen, 'p').vaEffettivo, arma(riposo, 'p').vaEffettivo - 2);
+  assert.equal(va(pen, 'Difese'), va(riposo, 'Difese') - 2);
+  assert.equal(va(pen, 'Percezione'), va(riposo, 'Percezione'), 'Percezione: nessuna penalità generale');
+  assert.ok(usoVisiva(pen) < 0, 'Percezione visiva: valore a parte');
+  assert.equal(va(pen, 'Potere'), va(riposo, 'Potere'), 'non Potere');
+  const scarsa = conLuce('scarsa');
+  assert.equal(distanza(scarsa).va_finale, distanza(riposo).va_finale - 4);
+  // buio totale = Accecato (−8, niente Tiro Mirato), non sommato a un Accecato già attivo
+  const buio = conLuce('buio');
+  assert.equal(arma(buio, 'p').vaEffettivo, arma(riposo, 'p').vaEffettivo - 8);
+  assert.match(distanza(buio, { mirato: true }).impossibile?.motivo ?? '', /Accecato/);
+  assert.equal(arma(conLuce('buio', {}, CREAZIONE, ['accecato']), 'p').vaEffettivo, arma(riposo, 'p').vaEffettivo - 8);
+  // la visione che copre il bersaglio elimina −2/−4, non il buio
+  assert.equal(arma(conLuce('scarsa', { luceVisione: true }), 'p').vaEffettivo, arma(riposo, 'p').vaEffettivo);
+  assert.equal(arma(conLuce('buio', { luceVisione: true }), 'p').vaEffettivo, arma(riposo, 'p').vaEffettivo - 8);
+  // Visione Perfetta: −3 alla penalità della Percezione visiva, non agli attacchi
+  const usi = (scheda) => condizioniAttive({ ...sessione(), luce: 'scarsa' }, dati, scheda).find((c) => c.etichetta === 'Luce: Luce molto scarsa');
+  const perfetta = usi({ talentiLiberi: [{ id: 'visione-perfetta' }] });
+  assert.deepEqual([usi({ talentiLiberi: [] }).usi[0].valore, perfetta.usi[0].valore], [-4, -1]);
+  assert.equal(perfetta.effetto.va_gruppi.luce, -4, 'gli attacchi non migliorano');
 });

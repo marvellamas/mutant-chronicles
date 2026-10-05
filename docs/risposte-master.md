@@ -831,6 +831,16 @@ le altre si registrano lotto per lotto.
     `sintonizzazione.deposito` (`interrompe: false`), `src/equipaggiamento.js` (capacità e contenitori), tab Artefatti.
     Sostituisce la regola provvisoria del pezzo 4 del layout (`docs/layout-sd.md`).
 
+104. **Illuminazione e penalità visive** (A.106). Luce sufficiente nessuna penalità; penombra −2 VA; luce molto scarsa
+    −4 VA; buio totale come Accecato (−8, niente Tiro o Colpo Mirato), senza sommare luce e Accecato. Riguarda la
+    Percezione visiva (valore a parte), gli attacchi e le Difese che dipendono dalla vista; non udito, Potere o PS. La
+    visione notturna (impianto 80 Q, termica 40 Q, Vista Felina 20 Q) elimina −2/−4 entro la portata, mai nel buio
+    assoluto; Visione Perfetta riduce di 3, fino a 0, la penalità alla Percezione visiva. → `regole.json` →
+    `illuminazione` e `categorie_prove.luce`; `src/condizioni.js` (`luceAttiva`, `statiEffettivi`,
+    `visioniPersonaggio`); sessione `luce` e `luceVisione` (scritte solo se servono); «Luce sul bersaglio» nelle tab
+    Combattimento e Abilità e in «Attacca!». Tolti i TODO A.106 degli impianti. Resta il `TODO(Davide)` A.116: quali
+    Abilità sono «attività pratiche che richiedono visione» (per ora solo attacchi e Difese).
+
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 
 Il Manuale dei Veicoli 0.2 è completo di numeri e il lotto 2 (dati e motore) non ha dovuto inventare nulla. Restano

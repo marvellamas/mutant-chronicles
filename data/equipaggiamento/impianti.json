@@ -134,7 +134,7 @@
           "Entro 80 Q elimina le penalità per scarsa illuminazione. Richiede luce ambientale residua.",
           "Attivare, disattivare o cambiare una modalità di visione richiede 1 AzP; mantenerla non richiede Azioni."
         ],
-        "TODO(Davide)": "A.106: il Manuale del Giocatore non dà un valore per le penalità da scarsa illuminazione; finché manca, la visione notturna resta un promemoria senza numero."
+        "decisione": "A.106 (E&L del 05/10/2026): penombra −2, luce molto scarsa −4; entro 80 Q la visione notturna le elimina (casella «la tua visione copre il bersaglio» accanto alla Luce), non nel buio assoluto (regole.json → illuminazione)."
       }
     },
     {
@@ -163,7 +163,7 @@
           "Entro 80 Q elimina le penalità per scarsa illuminazione. Richiede luce ambientale residua.",
           "Attivare, disattivare o cambiare una modalità di visione richiede 1 AzP; mantenerla non richiede Azioni."
         ],
-        "TODO(Davide)": "A.106: il Manuale del Giocatore non dà un valore per le penalità da scarsa illuminazione; finché manca, la visione notturna resta un promemoria senza numero."
+        "decisione": "A.106 (E&L del 05/10/2026): penombra −2, luce molto scarsa −4; entro 80 Q la visione notturna le elimina (casella «la tua visione copre il bersaglio» accanto alla Luce), non nel buio assoluto (regole.json → illuminazione)."
       }
     },
     {

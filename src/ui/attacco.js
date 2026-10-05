@@ -12,6 +12,7 @@ import {
   modificatoriDistanza, vaDueArmi, effettiSituazionaliAttacco, fasciaCarica,
 } from '../attacco.js';
 import { rigaScelte, interruttore, pannelloPassi } from './pannello-passi.js';
+import { selettoreLuce } from './tab.js';
 import { avviso } from './avvisi.js';
 
 const PASSI = ['Il tuo movimento', 'Il bersaglio', 'Distanza', 'Tipo di tiro', 'Risultato'];
@@ -227,6 +228,7 @@ function corpoDistanza(ctx, a, intestazione) {
       ...caselleOggetti(ctx, a, 'distanza', d, imposta),
     ],
     [
+      selettoreLuce(ctx, { compatto: true }),
       rigaScelte('Movimento del bersaglio', [
         { valore: 'fermo', etichetta: 'Fermo' }, { valore: 'passo', etichetta: 'Passo' }, { valore: 'corsa', etichetta: `Corsa ${numero(R.movimento.bersaglio.corsa)}` }, { valore: 'scatto', etichetta: `Scatto ${numero(R.movimento.bersaglio.scatto)}` },
       ], d.bersaglio.movimento, (x) => b({ movimento: x })),
