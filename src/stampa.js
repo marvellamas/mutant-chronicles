@@ -19,7 +19,7 @@ import { testoProvenienza } from './provenienza.js';
 import { attivazioneInfusa } from './lancio.js';
 import { gruppoTecnica, ordineGruppo, tecnicaDi, sintesiTecnica } from './tecniche.js';
 import { vistaVeicoloPersonaggio, pilotareDelPersonaggio } from './veicoli.js';
-import { eRiferimento, vede, stessaChiave } from './veicoli-registro.js';
+import { eRiferimento, stessaChiave } from './veicoli-registro.js';
 
 /** Limiti di impaginazione (non regole di gioco): lunghezze massime dei testi stampati. */
 export const LIMITI_STAMPA = {
@@ -711,8 +711,10 @@ export function veicoliStampa(s, creazione, dati, registro = null) {
     const rec = record.find((x) => x.id === v.rif);
     return rec ? daRecord(rec) : { nonRaggiungibile: true, nome: v.nome, rif: v.rif, motivo: registro?.errore ?? (registro ? 'non è nel registro di questo server' : 'serve il server di Mutant (avvia-server.bat)') };
   });
-  // come la tab: anche i veicoli del gruppo e quello che guida, se non sono già nel file
-  for (const rec of record) if (!visti.has(rec.id) && vede(rec, registro.chi)) veicoli.push(daRecord(rec));
+  // anche quello che guida o che possiede senza riferimento nel file; un veicolo del gruppo si stampa solo nelle
+  // schede che lo hanno nel file (altrimenti due pagine in più in ogni scheda del gruppo: collaudo del 05/10/2026)
+  const mio = (p) => p && (stessaChiave(p.chiave, registro.chi?.chiave) || (registro.chi?.pg && p.pg === registro.chi.pg));
+  for (const rec of record) if (!visti.has(rec.id) && (mio(rec.conducente) || (rec.proprietario?.tipo === 'pg' && mio(rec.proprietario)))) veicoli.push(daRecord(rec));
   const fine = veicoli.filter(Boolean);
   return fine.length ? { veicoli: fine } : null;
 }
