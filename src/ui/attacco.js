@@ -226,7 +226,7 @@ function corpoDistanza(ctx, a, intestazione) {
     ],
     [
       rigaScelte('Movimento del bersaglio', [
-        { valore: 'fermo', etichetta: 'Fermo o Passo' }, { valore: 'corsa', etichetta: `Corsa ${numero(R.movimento.bersaglio.corsa)}` }, { valore: 'scatto', etichetta: `Scatto ${numero(R.movimento.bersaglio.scatto)}` },
+        { valore: 'fermo', etichetta: 'Fermo' }, { valore: 'passo', etichetta: 'Passo' }, { valore: 'corsa', etichetta: `Corsa ${numero(R.movimento.bersaglio.corsa)}` }, { valore: 'scatto', etichetta: `Scatto ${numero(R.movimento.bersaglio.scatto)}` },
       ], d.bersaglio.movimento, (x) => b({ movimento: x })),
       rigaScelte('Movimento Evasivo del bersaglio', [
         { valore: 'no', etichetta: 'No' }, { valore: 'si', etichetta: 'Sì' }, { valore: 'migliorato', etichetta: 'Sì, Migliorato' },
@@ -272,7 +272,10 @@ function corpoDistanza(ctx, a, intestazione) {
           { motivo: d.bersaglio.tiImpegna ? 'obbligatorio: il bersaglio ti impegna' : v.ravvicinato, mod: man('ravvicinato').riga, info: man('ravvicinato').info }) : null,
       d.distanza <= M.bruciapelo.distanza_max_q
         ? interruttore(`${M.bruciapelo.nome} (Contatto)`, d.bruciapelo, (x) => imposta({ bruciapelo: x }), { motivo: v.bruciapelo, mod: man('bruciapelo').riga, info: man('bruciapelo').info }) : null,
-      richiedeImbracciatura(a, ctx.dati) ? interruttore('Arma Imbracciata (1 AzM)', d.imbracciata, (x) => imposta({ imbracciata: x }), { mod: `senza: ${numero(R.imbracciatura.va)}` }) : null,
+      // A.38: già imbracciata (non si paga di nuovo), imbracciata in questo Round (1 AzM) o senza Imbracciatura (−4)
+      richiedeImbracciatura(a, ctx.dati) ? rigaScelte('Imbracciatura', [
+        { valore: 'gia', etichetta: 'Già imbracciata' }, { valore: 'ora', etichetta: 'Imbraccio ora (1 AzM)' }, { valore: 'no', etichetta: `Senza ${numero(R.imbracciatura.va)}` },
+      ], d.imbracciaOra ? 'ora' : d.imbracciata ? 'gia' : 'no', (x) => imposta({ imbracciata: x !== 'no', imbracciaOra: x === 'ora' })) : null,
     ],
     risultato(ctx, a, r, colpi, imposta),
   ];

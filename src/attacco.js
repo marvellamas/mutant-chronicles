@@ -80,7 +80,7 @@ export function dichiarazioneDistanza(d = {}) {
     evasivo: !!d.evasivo,
     coperturaPropria: ['leggera', 'media'].includes(d.coperturaPropria) ? d.coperturaPropria : 'nessuna',
     bersaglio: {
-      movimento: ['fermo', 'corsa', 'scatto'].includes(b.movimento) ? b.movimento : 'fermo',
+      movimento: ['fermo', 'passo', 'corsa', 'scatto'].includes(b.movimento) ? b.movimento : 'fermo',
       evasivo: !!b.evasivo,
       evasivoMigliorato: !!b.evasivoMigliorato,
       copertura: ['leggera', 'media', 'totale'].includes(b.copertura) ? b.copertura : 'nessuna',
@@ -95,6 +95,7 @@ export function dichiarazioneDistanza(d = {}) {
     ravvicinato: !!d.ravvicinato,
     bruciapelo: !!d.bruciapelo,
     imbracciata: d.imbracciata !== false,
+    imbracciaOra: !!d.imbracciaOra, // A.38: imbracciare in questo Round costa 1 AzM
     analisiRapida: !!d.analisiRapida,
     // Talenti con una condizione dichiarata: Rapidità Operativa (primo attacco del combattimento),
     // Tiratore Imboscato (nascosto), Bersaglio Designato (Azioni Principali di preparazione)
@@ -281,7 +282,9 @@ export function modificatoriDistanza(scheda, dati) {
   const A = dati.regole.attacco_distanza;
   const T = talentiAttacco(scheda, dati);
   const con = (k) => T.filter((t) => t.e[k] !== undefined);
-  const ridMov = con('movimento_proprio').reduce((best, t) => (t.e.movimento_proprio.riduzione > (best?.e.movimento_proprio.riduzione ?? 0) ? t : best), null);
+  // A.38: Movimento Tattico e Movimento Fluido si sommano, fino ad annullare la penalità
+  const rid = con('movimento_proprio');
+  const ridMov = rid.length ? { nome: rid.map((t) => t.nome).join(' + '), e: { movimento_proprio: { riduzione: rid.reduce((n, t) => n + (t.e.movimento_proprio.riduzione ?? 0), 0) } } } : null;
   const ct = con('copertura_propria')[0] ?? null;
   const imp = con('impegnato').sort((x, y) => (y.e.impegnato.va ?? -99) - (x.e.impegnato.va ?? -99))[0] ?? null;
   const conRid = (pen, r) => (pen < 0 && r ? pen + Math.min(r, -pen) : pen);
@@ -425,8 +428,10 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
   if (d.evasivo && vincoli.evasivo) blocca(`Movimento Evasivo non possibile: ${vincoli.evasivo}.`);
   const penMov = d.evasivo ? EV.proprio[d.movimento] ?? 0 : A.movimento.proprio[d.movimento];
   aggiungi(`Tuo movimento: ${d.movimento}${d.evasivo ? ' evasivo' : ''}`, penMov, 'movimento', d.evasivo ? EV.paragrafo : A.movimento.paragrafo);
-  const ridMov = con('movimento_proprio').reduce((best, t) => (t.e.movimento_proprio.riduzione > (best?.e.movimento_proprio.riduzione ?? 0) ? t : best), null);
-  if (penMov < 0 && ridMov) aggiungi(ridMov.nome, Math.min(ridMov.e.movimento_proprio.riduzione, -penMov), 'talento', A.movimento.paragrafo);
+  // A.38 (E&L del 05/10/2026): Movimento Tattico e Movimento Fluido si sommano, fino ad annullare la penalità
+  const ridMovT = con('movimento_proprio');
+  const ridMovTot = ridMovT.reduce((n, t) => n + (t.e.movimento_proprio.riduzione ?? 0), 0);
+  if (penMov < 0 && ridMovTot) aggiungi(ridMovT.map((t) => t.nome).join(' + '), Math.min(ridMovTot, -penMov), 'talento', A.movimento.paragrafo);
   if (d.evasivo) { azioniExtra.push(EV.azioni.principali); azioniMovimento = Math.max(azioniMovimento, EV.azioni.movimento); }
   if (d.coperturaPropria !== 'nessuna') {
     if (vincoli.coperturaPropria) blocca(`Attacco dalla Copertura non possibile: ${vincoli.coperturaPropria}.`);
@@ -435,15 +440,20 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
     const ct = con('copertura_propria')[0];
     if (ct) aggiungi(ct.nome, Math.min(ct.e.copertura_propria.riduzione, -pen), 'talento', A.copertura.paragrafo);
     azioniMovimento = Math.max(azioniMovimento, A.copertura.propria_azioni_movimento);
+    // A.38: dal livello 12 le due AzP si possono usare prima di completare lo stesso movimento e rientrare
+    if (Number.isInteger(A.copertura.due_azp_dal_livello) && (personaggio.scheda?.livello ?? 0) >= A.copertura.due_azp_dal_livello) promemoria.push(`Dal livello ${A.copertura.due_azp_dal_livello}: le due Azioni Principali si possono usare prima di completare l’uscita e rientrare (uscita e rientro entro 6 Q, A.38).`);
   }
 
   // 4. il bersaglio: movimento (§5.2), Copertura (§5.8), impegnato o protetto (§5.10)
   const b = d.bersaglio;
-  if (b.evasivo) {
+  // A.38: il Movimento Evasivo richiede almeno 1 Q percorso: non è compatibile con «Fermo»
+  if (b.evasivo && b.movimento !== 'fermo') {
     const tab = b.evasivoMigliorato ? EV.bersaglio_migliorato : EV.bersaglio;
-    const mov = b.movimento === 'fermo' ? 'passo' : b.movimento;
-    aggiungi(`Bersaglio in Movimento Evasivo${b.evasivoMigliorato ? ' Migliorato' : ''} (${mov})`, tab[mov], 'bersaglio', EV.paragrafo);
-  } else aggiungi(`Bersaglio in ${b.movimento}`, A.movimento.bersaglio[b.movimento], 'bersaglio', A.movimento.paragrafo);
+    aggiungi(`Bersaglio in Movimento Evasivo${b.evasivoMigliorato ? ' Migliorato' : ''} (${b.movimento})`, tab[b.movimento], 'bersaglio', EV.paragrafo);
+  } else {
+    if (b.evasivo) promemoria.push('Movimento Evasivo del bersaglio ignorato: richiede almeno 1 Q percorso, non è compatibile con «Fermo» (A.38).');
+    aggiungi(`Bersaglio in ${b.movimento}`, A.movimento.bersaglio[b.movimento], 'bersaglio', A.movimento.paragrafo);
+  }
   let penCopertura = 0;
   if (b.copertura === 'totale') blocca('Il bersaglio in Copertura Totale non può essere attaccato direttamente (§5.8).');
   else if (b.copertura !== 'nessuna') {
@@ -495,12 +505,17 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
   if (richiedeImbracciatura(arma, dati)) {
     const I = A.imbracciatura;
     const postura = con('postura_assedio')[0];
-    let imbracciata = d.imbracciata;
+    let imbracciata = d.imbracciata || d.imbracciaOra;
+    if (d.imbracciaOra) {
+      // A.38: imbracciare costa 1 AzM; con Imbracciatura Rapida è gratuito una volta per Round
+      if (con('imbracciatura').length) promemoria.push(`${con('imbracciatura')[0].nome}: imbracci senza spendere Azioni, una volta per Round alla tua Iniziativa.`);
+      else azioniMovimento += I.azioni_movimento ?? 1;
+    }
     if (postura && d.movimento === 'fermo') {
       imbracciata = true;
       dannoBonus += postura.e.postura_assedio.danno;
       promemoria.push(`${postura.nome}: senza usare l’Azione di Movimento l’arma è Imbracciata e infligge +${postura.e.postura_assedio.danno} danno.`);
-    } else if (imbracciata && d.movimento !== 'fermo' && !con('imbracciatura').length) {
+    } else if (imbracciata && !d.imbracciaOra && d.movimento !== 'fermo' && !con('imbracciatura').length) {
       imbracciata = false;
       promemoria.push(`Muovendoti perdi l’Imbracciatura: ${I.frasi[3]}`);
     }

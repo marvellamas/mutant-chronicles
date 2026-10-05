@@ -212,3 +212,38 @@ test('tooltip delle modalità e delle manovre: riga compatta e regola dai dati (
   assert.equal(descriviManovraDistanza('bruciapelo', null, d).riga, 'danno ×2');
   assert.match(descriviManovraDistanza('mirato', null, d).info.sezioni.find((s) => s.etichetta === 'Non si combina con').testo, /Tiro Ravvicinato/);
 });
+
+// A.38 (E&L del 05/10/2026): sette chiarimenti sull'attacco a distanza
+test('A.38: Movimento Tattico e Movimento Fluido si sommano (Scatto −6 → −4 → −2)', () => {
+  const tattico = classeTalento('Incursore', 'Movimento Tattico');
+  const fermo = attacca(pg(), arma(), { distanza: 10 }).va_finale;
+  assert.equal(attacca(pg(), arma(), { distanza: 10, movimento: 'scatto' }).va_finale, fermo - 6);
+  assert.equal(attacca(pg({ liberi: ['movimento-fluido'] }), arma(), { distanza: 10, movimento: 'scatto' }).va_finale, fermo - 4);
+  assert.equal(attacca(pg({ liberi: ['movimento-fluido'], classe: [tattico] }), arma(), { distanza: 10, movimento: 'scatto' }).va_finale, fermo - 2);
+  assert.equal(attacca(pg({ liberi: ['movimento-fluido'], classe: [tattico] }), arma(), { distanza: 10, movimento: 'corsa' }).va_finale, fermo, 'mai un bonus');
+});
+
+test('A.38: Movimento Evasivo del bersaglio non con «Fermo»; Passo del bersaglio senza penalità', () => {
+  const fermo = attacca(pg(), arma(), { distanza: 10 }).va_finale;
+  assert.equal(attacca(pg(), arma(), { distanza: 10, bersaglio: { movimento: 'passo' } }).va_finale, fermo);
+  const ignorato = attacca(pg(), arma(), { distanza: 10, bersaglio: { evasivo: true } });
+  assert.equal(ignorato.va_finale, fermo);
+  assert.ok(ignorato.promemoria.some((p) => /non è compatibile con «Fermo»/.test(p)));
+  assert.equal(attacca(pg(), arma(), { distanza: 10, bersaglio: { movimento: 'passo', evasivo: true } }).va_finale, fermo - 2);
+});
+
+test('A.38: imbracciare in questo Round costa 1 AzM; con Imbracciatura Rapida è gratuito', () => {
+  const pesante = arma({ abilita: 'Armi pesanti' });
+  const ora = attacca(pg(), pesante, { distanza: 10, imbracciata: false, imbracciaOra: true });
+  assert.equal(ora.azioni_movimento, 1);
+  assert.equal(ora.va_finale, attacca(pg(), pesante, { distanza: 10 }).va_finale, 'imbracciata: niente −4');
+  assert.equal(attacca(pg({ liberi: ['imbracciatura-rapida'] }), pesante, { distanza: 10, imbracciaOra: true }).azioni_movimento, 0);
+  assert.equal(attacca(pg(), pesante, { distanza: 10, imbracciata: false }).va_finale, ora.va_finale - 4);
+});
+
+test('A.38: attacco dalla Copertura al 12° livello, promemoria delle due Azioni Principali', () => {
+  const p = pg();
+  p.scheda.livello = 12;
+  assert.ok(attacca(p, arma(), { distanza: 10, coperturaPropria: 'leggera' }).promemoria.some((x) => /Dal livello 12/.test(x)));
+  assert.ok(!attacca(pg(), arma(), { distanza: 10, coperturaPropria: 'leggera' }).promemoria.some((x) => /Dal livello 12/.test(x)));
+});

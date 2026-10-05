@@ -617,6 +617,7 @@
     },
     "movimento_evasivo": {
       "paragrafo": "Giocatore §5.2, Movimento Evasivo",
+      "testo_a38": "A.38 (E&L del 05/10/2026): il Movimento Evasivo richiede almeno 1 Q realmente percorso e costa 1 AzM + 1 AzP; non è compatibile con «Fermo» e si registra esplicitamente.",
       "frasi": [
         "Consuma l’Azione di Movimento e un’Azione Principale, senza una Prova aggiuntiva per la manovra.",
         "Con Passo gli avversari subiscono −2 VA; con Corsa il personaggio subisce −2 VA e gli avversari −4 VA; con Scatto il personaggio subisce −6 VA e gli avversari −6 VA.",
@@ -665,6 +666,8 @@
         "media": -4
       },
       "propria_azioni_movimento": 1,
+      "due_azp_dal_livello": 12,
+      "testo_a38": "A.38 (E&L del 05/10/2026): attaccare dalla Copertura costa 1 AzM e 1 AzP, tiro compreso; uscita e rientro non superano complessivamente 6 Q. Dal livello 12 le due AzP possono essere usate prima di completare lo stesso movimento e rientrare.",
       "propria_movimenti": [
         "fermo",
         "passo"
@@ -898,6 +901,8 @@
     },
     "imbracciatura": {
       "paragrafo": "Giocatore §5.10",
+      "azioni_movimento": 1,
+      "testo_a38": "A.38 (E&L del 05/10/2026): imbracciare costa 1 AzM, senza Prova; un’arma già imbracciata non si paga di nuovo. Qualsiasi movimento, anche forzato, la caduta o il rilascio fanno perdere l’Imbracciatura. Imbracciatura Rapida: gratuita una volta per Round alla propria Iniziativa, non conserva l’Imbracciatura durante il movimento.",
       "frasi": [
         "Le Armi Pesanti e i lanciagranate, compresi quelli integrati e quelli appartenenti alle Armi Medie, richiedono Imbracciatura.",
         "Imbracciare costa 1 AzM e non richiede una Prova.",

@@ -788,6 +788,17 @@ le altre si registrano lotto per lotto.
 97. **Andatura attuale e scelta** (A.104): `andatura` è quella attuale, `andatura_scelta` quella da adottare;
     «Esegui il cambio» sposta l'attuale di una fascia (1 AzM), fuori dal Round si può impostare subito.
 
+98. **Attacco a distanza: sette chiarimenti** (A.38). (1) Movimento Tattico e Movimento Fluido si sommano fino ad
+    annullare la penalità del proprio movimento (Scatto −6 → −4 → −2). (2) Attaccare dalla Copertura: 1 AzM + 1 AzP,
+    uscita e rientro entro 6 Q; dal livello 12 le due AzP prima di completare il movimento (promemoria). (3) Seconda
+    Prova a −4 con i soli modificatori personali, Fuoco di Precisione −2, Fuoco Controllato la elimina: già così.
+    (4) Mira Selettiva: già così. (5) Imbracciare costa 1 AzM, senza Prova; Imbracciatura Rapida gratuita una volta
+    per Round; il movimento la fa perdere. (6) Tiro a Bruciapelo Migliorato contro chi impegna al Contatto: penalità del
+    Tiro Ravvicinato e danno ×2 senza +3/+5: già così. (7) Movimento Evasivo: almeno 1 Q, non con «Fermo»; il bersaglio
+    ha anche il Passo. → `regole.json` → `attacco_distanza` (`copertura.due_azp_dal_livello`,
+    `imbracciatura.azioni_movimento`, `testo_a38`), `src/attacco.js`, `src/ui/attacco.js` («Imbracciatura»: già,
+    ora, senza).
+
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 
 Il Manuale dei Veicoli 0.2 è completo di numeri e il lotto 2 (dati e motore) non ha dovuto inventare nulla. Restano
