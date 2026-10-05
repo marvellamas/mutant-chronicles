@@ -848,6 +848,9 @@ le altre si registrano lotto per lotto.
     che lo scrive nello scontro con una riga di registro; nulla cambia da solo. → `src/nemico-lancio.js` →
     `regimeProposto`, `src/scontro.js` → `confermaRegimeNemico`, `src/ui/nemici.js`, `src/ui/tavolo.js`.
 
+106. **Rune e Tatuaggi** (A.98). Ampliamento futuro dei Poteri Sciamanici: nessuna sezione vuota né bonus nell'app. →
+    tolta la sezione chiusa della tab Poteri (`regole.json` → `poteri.in_arrivo` vuoto); voce 26 di `docs/backlog.md`.
+
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 
 Il Manuale dei Veicoli 0.2 è completo di numeri e il lotto 2 (dati e motore) non ha dovuto inventare nulla. Restano

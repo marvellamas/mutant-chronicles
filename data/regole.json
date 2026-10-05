@@ -186,10 +186,8 @@
   },
   "poteri": {
     "nessuno": "I poteri magici si acquisiscono con l’Addestramento Taumaturgo o, per gli altri personaggi, con il Talento Libero Usufruitore di Magia (Manuale della Magia, sez. 1).",
-    "in_arrivo": [
-      { "nome": "Poteri Sciamanici (Rune e Tatuaggi)", "nota": "In attesa del manuale: Davide li sta scrivendo (proposta «Modifiche Layout APP»)." }
-    ],
-    "_nota": "Tab Poteri della scheda digitale (docs/layout-sd.md, pezzo 4): testo per chi non ha poteri, dal Manuale della Magia sez. 1 («Conoscenza e livello massimo», «Usufruitore di Magia»), e le sezioni future, chiuse e vuote finché il manuale non c’è."
+    "in_arrivo": [],
+    "_nota": "Tab Poteri della scheda digitale (docs/layout-sd.md, pezzo 4): testo per chi non ha poteri, dal Manuale della Magia sez. 1 («Conoscenza e livello massimo», «Usufruitore di Magia»), e le sezioni future, chiuse e vuote finché il manuale non c’è (nessuna oggi: A.98, E&L del 05/10/2026, Rune e Tatuaggi restano uno sviluppo futuro senza sezione nell’app; docs/backlog.md)."
   },
   "regole_aggiornate": {
     "punti_abilita": "Regole aggiornate (Giocatore del 29/09 e del 03/10)",

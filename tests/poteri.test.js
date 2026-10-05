@@ -30,8 +30,8 @@ test('senza magia: nessun dato, e la riga del manuale per il riquadro «Nessun p
   assert.equal(poteri(MISHIMA_AGENTE).dati, null);
   assert.match(dati.regole.poteri.nessuno, /Addestramento Taumaturgo/);
   assert.match(dati.regole.poteri.nessuno, /Usufruitore di Magia/);
-  // le sezioni future sono segnaposto con la nota «in attesa del manuale»
-  for (const x of dati.regole.poteri.in_arrivo) assert.match(x.nota, /In attesa del manuale/);
+  // A.98 (E&L del 05/10/2026): nessuna sezione vuota per Rune e Tatuaggi, sviluppo futuro
+  assert.deepEqual(dati.regole.poteri.in_arrivo, []);
 });
 
 test('validatore: testo di «Nessun potere» mancante, sezione in arrivo senza nota', () => {
@@ -40,7 +40,7 @@ test('validatore: testo di «Nessun potere» mancante, sezione in arrivo senza n
   d.regole.poteri.in_arrivo.push({ nome: 'Rune' });
   const e = validaDati(d).map((x) => `${x.chiave}: ${x.problema}`).join('\n');
   assert.match(e, /poteri\.nessuno: testo mancante/);
-  assert.match(e, /poteri\.in_arrivo\[1\]: servono nome e nota/);
+  assert.match(e, /poteri\.in_arrivo\[0\]: servono nome e nota/);
 });
 
 test('Veicoli (lotto 3): la tab non è più in attesa; senza veicoli il riquadro rimanda al §2.16.30', () => {

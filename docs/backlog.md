@@ -194,3 +194,10 @@ Segnalazione di Marcello: il Potenziamento visivo CYBERTRONIC non mostrava il +2
 - A.106 (penalità per scarsa illuminazione).
 
 I cinque bonus rimasti dalla verifica sulle altre categorie sono nei dati dal 5 ottobre 2026 (`tools/lotti/lotto_bonus_equipaggiamento.mjs`): Martello Spaccateste, IAS3200, IAS3100, APE Capitol, Utensile multiuso.
+
+## 26. Poteri Sciamanici: Rune e Tatuaggi — SVILUPPO FUTURO
+
+Fonte: E&L del 05/10/2026, A.98: restano un ampliamento futuro dei Poteri Sciamanici del Manuale della Magia. Prima
+dell'implementazione servono regole di accesso, effetti, costi, attivazione, durata, cumulo e limiti. Nell'app nessuna
+sezione vuota e nessun bonus automatico: la sezione chiusa «in arrivo» della tab Poteri è stata tolta il 5 ottobre 2026
+(`regole.json` → `poteri.in_arrivo` vuoto; il meccanismo resta per un manuale futuro).
