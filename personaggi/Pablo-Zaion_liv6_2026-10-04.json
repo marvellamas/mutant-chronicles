@@ -336,34 +336,8 @@
     "veicoli": [
       {
         "uid": "veimuu14mqa0",
-        "profilo": "asa-scout-mk4",
-        "nome": "ASA Scout MK4",
-        "gruppo": true,
-        "conducente": false,
-        "andatura": "fermo",
-        "pi": {
-          "corpo": 60,
-          "propulsione": 36,
-          "motore": 24
-        },
-        "rinforzi": {
-          "copriruote-petra": {
-            "montati": [
-              3,
-              3,
-              3,
-              3
-            ],
-            "ricambi": [
-              3,
-              3
-            ]
-          }
-        },
-        "nec": {
-          "lx": 100000
-        },
-        "avarie": ""
+        "rif": "veimuu14mqa0",
+        "nome": "ASA Scout MK4"
       }
     ]
   },
