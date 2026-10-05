@@ -4,7 +4,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';
 import { contenitoriLancio, penalitaEstrazione, calcolaLancio } from '../src/lancio.js';
-import { profiloSenzArmi, calcolaAttaccoRavvicinato } from '../src/attacco.js';
+import { profiloSenzArmi, calcolaAttaccoRavvicinato, senzArmiDisponibile } from '../src/attacco.js';
 import { massimiSessione, inizializzaSessione, ricaricaMatrice, attivaArtefatto, modificaSessione } from '../src/sessione.js';
 import { datiReali } from './helpers.js';
 import { MISHIMA_AGENTE } from './personaggi.js';
@@ -95,4 +95,16 @@ test('Pietra della Vigilanza: Batteria Verde 10 PM con due proprietà Universali
   // il kit individuale (Batteria Matrice 10 PM, Pietra, Guanti) occupa 8 SnT (Magia §26.1)
   const kit = pg([voce('bm', 'artefatti:batteria-matrice-da-10-pm-chroma-rosso', 'trasportato', { sintonizzato: true }), voce('p', 'artefatti:pietra-della-vigilanza', 'trasportato', { sintonizzato: true }), voce('g', 'artefatti:guanti-da-combattimento-mistico', 'indossata', { sintonizzato: true })]);
   assert.deepEqual([kit.s.equipaggiamento.sintonizzazione.usata, kit.s.equipaggiamento.sintonizzazione.capacita], [8, 8]);
+});
+
+test('Guanti indossati: i pugni compaiono fra le armi anche con altre armi impugnate (pugni potenziati)', () => {
+  const arma = voce('p', 'armi:pugnale-da-combattimento', 'impugnata');
+  const conArma = pg([arma, voce('g', 'artefatti:guanti-da-combattimento-mistico', 'trasportato')]);
+  assert.equal(senzArmiDisponibile(conArma.s, dati), false);
+  const indossati = pg([arma, voce('g', 'artefatti:guanti-da-combattimento-mistico', 'indossata')]);
+  assert.equal(senzArmiDisponibile(indossati.s, dati), true);
+  const a = profiloSenzArmi(indossati.s, dati);
+  assert.equal(a.nome, 'Pugni (Guanti da Combattimento Mistico)');
+  assert.equal(a.abilita, 'Corpo a corpo');
+  assert.equal(a.dannoBase, dati.regole.attacco_ravvicinato.senz_armi.danno); // §5.13, E&L 12 (A.22)
 });

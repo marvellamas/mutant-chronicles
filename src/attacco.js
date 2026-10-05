@@ -670,6 +670,9 @@ function massimoDanno(testo) {
   return Number(m[1]) * Number(m[2]) + extra;
 }
 
+/** Oggetto indossato che potenzia i pugni (effetto «attacco» sugli attacchi senz'armi), o null. */
+export const pugniPotenziati = (scheda) => (scheda?.equipaggiamento?.bonusAttacco ?? []).find((b) => b.attacchi === 'senz_armi') ?? null;
+
 /**
  * Profilo «Senz'armi»: Abilità Corpo a corpo (VA effettivo con le condizioni), portata 1 Q. Danno
  * (§5.13; E&L 12, A.22): 1d4 di base, oppure il dado più alto dei Talenti (Arti Marziali 1d6, §8.6.1;
@@ -725,7 +728,8 @@ export function profiloSenzArmi(scheda, dati, { onda = null } = {}) {
     };
   }
   return {
-    uid: SENZ_ARMI, rif: null, nome: 'Senz’armi', tipo: 'arma_ravvicinata', senzArmi: true, abilita: S.abilita,
+    // con i Guanti indossati: pugni potenziati, stesso profilo (Abilità, Manovre e danno senz'armi, §5.13)
+    uid: SENZ_ARMI, rif: null, nome: pugniPotenziati(scheda) ? `Pugni (${pugniPotenziati(scheda).nome})` : 'Senz’armi', tipo: 'arma_ravvicinata', senzArmi: true, abilita: S.abilita,
     va: a?.totale ?? null, vaEffettivo, provenienza: prov,
     provenienzaDanno: righeDanno ? provenienza(righeDanno, danno) : null,
     scomposizione: scomposizione.map((x, i) => (i === 0 && x.fonte === 'regole' ? { ...x, etichetta: `VA ${S.abilita}` } : x)),
@@ -756,9 +760,13 @@ export function profiloOndaInteriore(scheda, sessione, dati) {
   return profiloSenzArmi(scheda, dati, { onda: { dado, nota, gittataQ: O.gittata_q, natura: O.natura, bonusCaratteristica: O.bonus_caratteristica ?? null, tecnica: c } });
 }
 
-/** «Senz'armi» compare fra le armi se il personaggio non impugna nulla, ha Arti Marziali o è Lottatore. */
+/**
+ * «Senz'armi» compare fra le armi se il personaggio non impugna nulla, ha Arti Marziali o è Lottatore, oppure indossa
+ * un oggetto che potenzia i pugni (Guanti da Combattimento Mistico, Armamenti §7.24: «pugni potenziati»).
+ */
 export function senzArmiDisponibile(scheda, dati) {
   if (!(scheda?.equipaggiamento?.armi ?? []).length) return true;
+  if (pugniPotenziati(scheda)) return true;
   if (talentiAttacco(scheda, dati, 'attacco_ravvicinato').some((t) => t.e.senz_armi)) return true;
   return (scheda?.classi ?? []).some((c) => c.nome === 'Lottatore');
 }

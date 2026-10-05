@@ -24,7 +24,7 @@ import { gradiTaumaturgici } from '../incantesimi.js';
 import { statoRicarica, disponibili } from '../ricarica.js';
 import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 import { pannelloAttacco } from './attacco.js';
-import { profiloSenzArmi, profiloOndaInteriore, senzArmiDisponibile, SENZ_ARMI, ONDA, talentiAttacco, valoriDisciplina } from '../attacco.js';
+import { pugniPotenziati, profiloSenzArmi, profiloOndaInteriore, senzArmiDisponibile, SENZ_ARMI, ONDA, talentiAttacco, valoriDisciplina } from '../attacco.js';
 import { pannelloLancio } from './lancio.js';
 import { riquadroIncantesimiInCorso } from './incantesimi-in-corso.js';
 import { sezioneRisorseInteriori, pannelloTecnica } from './tecniche.js';
@@ -1266,10 +1266,10 @@ function schedaScudoInMano(ctx, p) {
  * Oggetti disponibili da impugnare o da indossare (non nel deposito comune): una riga ciascuno con lo
  * stato attuale e il pulsante che lo cambia. Lo stesso campo della riga dell'Inventario.
  */
-function oggettiDisponibili(ctx, tipi, { verbo, statoAttivo, soloNonAttivi = false }) {
+function oggettiDisponibili(ctx, tipi, { verbo, statoAttivo, soloNonAttivi = false, filtro = () => true }) {
   const cat = catalogo(ctx.dati);
   const voci = (ctx.scelte.equipaggiamento ?? []).map((v) => risolvi(v, cat))
-    .filter((r) => tipi.includes(r.tipo) && !r.deposito && !r.fuoriCatalogo && !(soloNonAttivi && r.attivo));
+    .filter((r) => tipi.includes(r.tipo) && filtro(r) && !r.deposito && !r.fuoriCatalogo && !(soloNonAttivi && r.attivo));
   if (!voci.length) return null;
   return h('ul', { class: 'elenco-disponibili' }, voci.map((r) => {
     const attivo = statoAttivo(r);
@@ -1350,7 +1350,10 @@ function tabCombattimento(ctx, d) {
 
         sezione('Armi disponibili',
           oggettiDisponibili(ctx, ['arma_ravvicinata', 'arma_distanza'], { verbo: () => 'Impugna', statoAttivo: (r) => (r.stati.includes('impugnata') ? 'impugnata' : null), soloNonAttivi: true })
-            ?? h('p', { class: 'vuoto' }, 'Nessun’altra arma con sé.')),
+            ?? h('p', { class: 'vuoto' }, 'Nessun’altra arma con sé.'),
+          // Artefatti che potenziano i pugni (Guanti da Combattimento Mistico, Armamenti §7.24): si indossano da qui
+          oggettiDisponibili(ctx, ['artefatto'], { verbo: () => 'Indossa', statoAttivo: (r) => (r.stati.includes('indossata') ? 'indossata' : null), soloNonAttivi: true,
+            filtro: (r) => (r.def?.effetti ?? []).some((e) => e.attacchi === 'senz_armi') })),
 
       sezione('Protezioni',
         vistaRapidaProtezioni(ctx, d),
@@ -1529,6 +1532,7 @@ function schedaSenzArmi(ctx) {
       h('p', {}, h('span', { class: 'sigla' }, 'Danno '), dannoConProvenienza(a, a.danno.una_mano ?? '—'),
         h('small', { class: 'sigla' }, ` (${a.dannoOrigine === 'base' ? 'base' : a.dannoOrigine}${a.bonusCaratteristica?.bonus ? `, ${a.bonusCaratteristica.sigla} ${segno(a.bonusCaratteristica.bonus)}` : ''})${a.natura ? ` · ${a.natura}` : ''}`)),
       h('p', {}, h('span', { class: 'sigla' }, 'Portata '), `${a.portataQ} Q`)),
+    pugniPotenziati(ctx.tab.scheda) ? h('p', { class: 'nota' }, `${pugniPotenziati(ctx.tab.scheda).nome}: +1 VA sempre; l’attivazione (PM della riserva interna) si accende nella tab Artefatti e vale qui finché dura.`) : null,
     ultima ? h('p', { class: 'nota' }, `Ultima Manovra: ${ultima.nome}`) : null);
 }
 
