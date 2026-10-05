@@ -8,7 +8,8 @@ import { infoValore } from './tooltip.js';
 import { rigaScelte } from './pannello-passi.js';
 import {
   nuovoVeicolo, vistaVeicoloPersonaggio, pilotareDelPersonaggio, colpisciVeicolo, applicaRiparazione, conPi,
-  montaRicambio, struttureVeicolo, profiloDi,
+  montaRicambio, struttureVeicolo, profiloDi, consumaRisorse, installaRicambioEnergia, munizioniArmaVeicolo,
+  sollecitazioneFallita, eseguiCambioAndatura,
 } from '../veicoli.js';
 
 const numero = (n) => (Number.isInteger(n) ? n.toLocaleString('it-IT') : '—');
@@ -99,11 +100,11 @@ function schedaVeicolo(ctx, mezzo, pilotare) {
     v.gruppo ? h('p', { class: 'nota' }, 'Veicolo del gruppo: le modifiche restano in questa scheda (nessuna sincronizzazione con le altre, A.91).') : null,
     h('div', { class: 'veicolo-colonne' },
       h('div', {}, profiloVeicolo(v, d), pilotareVeicolo(v, d), andatureVeicolo(ctx, mezzo, v, aggiorna)),
-      h('div', {}, struttureVeicoloUi(ctx, mezzo, v, aggiorna), rinforziVeicolo(mezzo, v, aggiorna), necVeicolo(mezzo, v, aggiorna))),
+      h('div', {}, struttureVeicoloUi(ctx, mezzo, v, aggiorna), rinforziVeicolo(mezzo, v, aggiorna, ctx), necVeicolo(ctx, mezzo, v, aggiorna), munizioniVeicolo(ctx, mezzo, v, aggiorna))),
     armiEProprieta(v),
     h('div', { class: 'riga-azioni azioni-veicolo' },
       h('button', { type: 'button', class: 'btn', onclick: () => { const u = statoUi(ctx); u.colpo[mezzo.uid] = u.colpo[mezzo.uid] ? null : { modo: 'd20', d20: 10, struttura: 'corpo', danni: '', natura: 'Naturale', magistrale: false, piAggiuntivi: 0, ps: 'fallita', esposti: true }; ctx.azioni.ridisegna(); } }, 'Colpito'),
-      h('button', { type: 'button', class: 'btn', onclick: () => { const u = statoUi(ctx); u.ripara[mezzo.uid] = u.ripara[mezzo.uid] ? null : { struttura: v.strutture.find((s) => s.pi < s.massimi)?.struttura ?? 'corpo', esito: 'successo', capacita: [], improvvisati: false }; ctx.azioni.ridisegna(); } }, 'Ripara')),
+      h('button', { type: 'button', class: 'btn', onclick: () => { const u = statoUi(ctx); u.ripara[mezzo.uid] = u.ripara[mezzo.uid] ? null : { struttura: v.strutture.find((s) => s.pi < s.massimi)?.struttura ?? 'corpo', esito: 'successo', capacita: [], improvvisati: false, kit: false }; ctx.azioni.ridisegna(); } }, 'Ripara')),
     statoUi(ctx).colpo[mezzo.uid] ? pannelloColpo(ctx, mezzo, v, aggiorna) : null,
     statoUi(ctx).ripara[mezzo.uid] ? pannelloRipara(ctx, mezzo, v, aggiorna) : null,
     h('label', { class: 'note-veicolo' }, 'Avarie e note ', h('textarea', { rows: 2, value: mezzo.avarie ?? '', onchange: (e) => aggiorna({ ...mezzo, avarie: e.target.value }) })));
@@ -150,8 +151,16 @@ function pilotareVeicolo(v, d) {
 
 function andatureVeicolo(ctx, mezzo, v, aggiorna) {
   const A = v.andature;
+  const attuale = v.vista.andatura;
+  const scelta = v.andaturaScelta;
+  // A.104: la scelta è l'andatura che si vuole adottare; l'attuale cambia solo quando il cambio è eseguito
   return h('div', { class: 'andature-veicolo' },
-    rigaScelte('Andatura (1 AzM cambia una fascia, §2.1)', A.map((a) => ({ valore: a.id, etichetta: a.nome, riga: `${numero(a.q)} Q` })), v.vista.andatura.id, (x) => aggiorna({ ...mezzo, andatura: x })),
+    rigaScelte('Andatura scelta (1 AzM cambia una fascia, §2.1)', A.map((a) => ({ valore: a.id, etichetta: a.nome, riga: `${numero(a.q)} Q` })), scelta?.id ?? attuale.id,
+      (x) => aggiorna({ ...mezzo, andatura_scelta: x === mezzo.andatura ? null : x })),
+    h('p', { class: 'riga-andatura' }, h('strong', {}, `Attuale: ${attuale.nome}`), scelta ? ` · scelta: ${scelta.nome} ` : ' ',
+      scelta ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Una fascia verso quella scelta (1 AzM); il salto di due fasce richiede l’accelerazione forzata', onclick: () => { const n = eseguiCambioAndatura(mezzo, ctx.dati); aggiorna(n, `${v.nome}: andatura ${A.find((a) => a.id === n.andatura)?.nome}.`); } }, 'Esegui il cambio (1 AzM)') : null,
+      scelta ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Fuori dal Round: l’andatura scelta diventa subito quella attuale', onclick: () => aggiorna({ ...mezzo, andatura: scelta.id, andatura_scelta: null }) }, 'Fuori dal Round: subito') : null),
+    h('p', { class: 'nota' }, 'Per collisioni e attacchi conta l’andatura attuale, anche prima che il mezzo agisca nel Round; un mezzo fermo conta 0 Q (A.104).'),
     h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta tabella-andature' },
       h('thead', {}, h('tr', {}, ['Andatura', 'Q nel Round', 'Pilotare', 'Attacchi da bordo', 'Attacchi contro il mezzo'].map((c) => h('th', {}, c)))),
       h('tbody', {}, A.map((a) => h('tr', { class: a.attuale ? 'attuale' : null },
@@ -182,7 +191,7 @@ function struttureVeicoloUi(ctx, mezzo, v, aggiorna) {
   }));
 }
 
-function rinforziVeicolo(mezzo, v, aggiorna) {
+function rinforziVeicolo(mezzo, v, aggiorna, ctx) {
   if (!v.rinforzi.length) return null;
   return h('div', { class: 'rinforzi-veicolo' }, v.rinforzi.map((r) => {
     const nuovo = montaRicambio(mezzo, r.id);
@@ -190,22 +199,64 @@ function rinforziVeicolo(mezzo, v, aggiorna) {
       h('h3', {}, r.nome, h('small', { class: 'nota' }, ` · ${r.struttura}, PS Integrità ${r.ps ?? '—'}`)),
       h('p', {}, 'Montati: ', r.montati.map((n, i) => h('span', { class: `pezzo-rinforzo${n === 0 ? ' esaurito' : ''}` }, `${i ? ' · ' : ''}${n}/${r.piPerPezzo}`)),
         ` · ricambi: ${r.ricambi.length ? r.ricambi.map((n) => `${n}/${r.piPerPezzo}`).join(', ') : 'nessuno'} `,
-        h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !nuovo, title: nuovo ? 'Sostituisce il primo pezzo esaurito con un ricambio (30 minuti e una Prova di Tecnologia, dalla scheda)' : 'Serve un pezzo esaurito e un ricambio', onclick: () => aggiorna(nuovo, `${r.nome}: montato un ricambio.`) }, 'Monta un ricambio')),
+        h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !nuovo, title: nuovo ? 'Sostituisce il primo pezzo esaurito con un ricambio (30 minuti e una Prova di Tecnologia, dalla scheda)' : 'Serve un pezzo esaurito e un ricambio', onclick: () => aggiorna(nuovo, `${r.nome}: montato un ricambio.`) }, 'Monta un ricambio'), ' ',
+        // A.101: Terre del Fuoco, oltre 30 Q effettivi nel Round una PS Integrità 12; fallita: −1 PI
+        r.sollecitazioni ? h('button', { type: 'button', class: 'btn btn-piccolo', title: `${r.sollecitazioni.ambiente}: oltre ${r.sollecitazioni.oltre_q} Q effettivi nel Round, una PS Integrità ${r.sollecitazioni.ps_integrita} a fine movimento. Fallita: −1 PI al copriruota attivo, o alla Propulsione; ignora AR e Corazzato.`, onclick: () => { const x = sollecitazioneFallita(mezzo, ctx.dati); aggiorna(x.mezzo, x.avviso); } }, 'Sollecitazione: PS fallita') : null),
       h('p', { class: 'nota' }, r.frasi[1] ?? ''));
   }));
 }
 
-function necVeicolo(mezzo, v, aggiorna) {
+function necVeicolo(ctx, mezzo, v, aggiorna) {
   const n = v.nec;
-  if (!n) return null;
-  const cambia = (lx) => aggiorna({ ...mezzo, nec: { lx: Math.max(0, Math.min(n.capacita_lx ?? lx, lx)) } });
+  const r = v.risorse;
+  if (!n && !r?.verde && !r?.aria) return null;
+  const u = statoUi(ctx);
+  const c = (u.consumi ??= {})[mezzo.uid] ??= { km: '', fermo: '', supporto: '' };
+  const numeroDa = (x) => Math.max(0, Number.parseFloat(String(x).replace(',', '.')) || 0);
+  const applica = () => {
+    const esito = consumaRisorse(mezzo, { km: numeroDa(c.km), oreFermo: numeroDa(c.fermo), oreSupporto: numeroDa(c.supporto) }, ctx.dati);
+    u.consumi[mezzo.uid] = { km: '', fermo: '', supporto: '' };
+    aggiorna(esito.mezzo, [...esito.righe, ...esito.avvisi].join('; ') || null);
+  };
+  const banco = (lista, cap, colore, etichetta) => lista.map((lx, i) => h('label', { class: 'campo-veicolo' }, `${etichetta} ${lista.length > 1 ? i + 1 : ''} `,
+    h('input', { type: 'number', class: 'input-lx', min: 0, max: cap, step: 100, value: lx, 'aria-label': `Lx residui, ${etichetta} ${i + 1}`,
+      onchange: (e) => { const nuovi = [...lista]; nuovi[i] = Math.max(0, Math.min(cap, intero(e.target.value, lx))); aggiorna({ ...mezzo, energia: { ...mezzo.energia, [colore]: nuovi } }); } }), ` / ${numero(cap)} Lx `));
+  const ricambio = (colore, ric) => h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !ric?.length, title: 'Installa il ricambio al posto del NEC più scarico; quello tolto resta fra i ricambi con il suo residuo (niente travaso)',
+    onclick: () => { const x = installaRicambioEnergia(mezzo, colore, ctx.dati); if (x) aggiorna(x, `${v.nome}: installato il ricambio ${colore === 'rosso' ? 'Rosso' : 'Verde'}.`); } }, 'Installa il ricambio');
   return h('div', { class: 'nec-veicolo' },
-    h('h3', {}, 'Alimentazione'),
-    h('p', {}, `${n.nec}: `, Number.isInteger(n.capacita_lx)
-      ? [h('input', { type: 'number', class: 'input-lx', min: 0, max: n.capacita_lx, step: 1000, value: n.lx, 'aria-label': 'Lx residui', onchange: (e) => cambia(intero(e.target.value, n.lx)) }), ` / ${numero(n.capacita_lx)} Lx`]
-      : daDefinire()),
-    h('p', { class: 'nota' }, 'Consumo ', Number.isInteger(n.consumo_lx_km) ? `${n.consumo_lx_km} Lx/km` : daDefinire(), ' · autonomia ', Number.isInteger(n.autonomia_km) ? `${numero(n.autonomia_km)} km` : daDefinire(),
-      n.riserva_verde ? ` · ${n.riserva_verde}` : null));
+    h('h3', {}, 'Energia e supporto vitale'),
+    r?.rosso ? [
+      h('p', {}, h('strong', {}, `${r.rosso.nome}: ${numero(r.rosso.totale)} / ${numero(r.rosso.capacita)} Lx`), r.rosso.autonomiaKm !== null ? ` · ${numero(r.rosso.autonomiaKm)} km di autonomia` : ''),
+      h('p', {}, banco(r.rosso.banchi, r.rosso.capacitaBanco, 'rosso', 'Banco')),
+      h('p', { class: 'nota' }, `Ricambi: ${r.rosso.ricambi.length ? r.rosso.ricambi.map((x) => `${numero(x)} Lx`).join(', ') : 'nessuno'} `, ricambio('rosso', r.rosso.ricambi)),
+      h('p', { class: 'nota' }, 'Consumo ', Number.isInteger(r.rosso.consumoKm) ? `${r.rosso.consumoKm} Lx/km` : daDefinire(), r.rosso.consumoFermo ? ` · da fermo con i servizi ${r.rosso.consumoFermo} Lx/ora` : '', r.rosso.erogazione ? ` · erogazione massima ${numero(r.rosso.erogazione)} Lx/ora` : ''),
+    ] : n ? h('p', {}, `${n.nec}: `, daDefinire()) : null,
+    r?.verde ? [
+      h('p', {}, h('strong', {}, `${r.verde.nome}: ${numero(r.verde.totale)} / ${numero(r.verde.capacita)} Lx`), ` · supporto vitale ${r.verde.consumoOra} Lx/ora, ${r.verde.ore} ore`),
+      h('p', {}, banco(r.verde.moduli, r.verde.capacita, 'verde', 'Modulo')),
+      h('p', { class: 'nota' }, `Ricambi: ${r.verde.ricambi.length ? r.verde.ricambi.map((x) => `${numero(x)} Lx`).join(', ') : 'nessuno'} `, ricambio('verde', r.verde.ricambi)),
+    ] : null,
+    r?.aria ? h('p', {}, h('strong', {}, `Aria: ${r.aria.ore} / ${r.aria.massimo} ore`), ` · riserva fissa ${r.aria.fissa} h, bombole ${r.aria.bombole.map((x) => `${x} h`).join(', ') || 'nessuna'}`) : null,
+    r?.rosso || r?.verde ? h('div', { class: 'consumi-veicolo' },
+      h('label', { class: 'campo-veicolo' }, 'Viaggio (km) ', h('input', { type: 'text', inputmode: 'decimal', class: 'input-d10', value: c.km, onchange: (e) => { c.km = e.target.value; } })),
+      h('label', { class: 'campo-veicolo' }, 'Da fermo con i servizi (ore) ', h('input', { type: 'text', inputmode: 'decimal', class: 'input-d10', value: c.fermo, onchange: (e) => { c.fermo = e.target.value; } })),
+      r?.verde ? h('label', { class: 'campo-veicolo' }, 'Supporto vitale (ore) ', h('input', { type: 'text', inputmode: 'decimal', class: 'input-d10', value: c.supporto, onchange: (e) => { c.supporto = e.target.value; } })) : null,
+      h('button', { type: 'button', class: 'btn btn-piccolo', onclick: applica }, 'Consuma')) : null,
+    r?.aria?.testo ? h('p', { class: 'nota' }, r.aria.testo) : null);
+}
+
+function munizioniVeicolo(ctx, mezzo, v, aggiorna) {
+  const m = v.risorse?.munizioni;
+  if (!m) return null;
+  return h('div', { class: 'munizioni-veicolo' }, (v.profilo.armi ?? []).map((a, i) => {
+    const x = m[i];
+    if (!x) return null;
+    const spara = (n) => aggiorna(munizioniArmaVeicolo(mezzo, i, { sparati: n }, ctx.dati));
+    return h('p', {}, h('strong', {}, `${a.nome}: `), `${x.caricate} / ${a.capacita} caricate · riserva ${x.riserva} `,
+      h('label', {}, 'colpi sparati ', h('input', { type: 'number', min: 1, class: 'input-d10', value: '', onchange: (e) => spara(intero(e.target.value, 0)) })), ' ',
+      h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !x.riserva || x.caricate >= a.capacita, onclick: () => aggiorna(munizioniArmaVeicolo(mezzo, i, { ricarica: true }, ctx.dati), `${a.nome}: ricaricata dalla riserva.`) }, 'Ricarica'),
+      Number.isInteger(a.cr_per_colpo) ? h('small', { class: 'nota' }, ` · ${a.cr_per_colpo} cr a colpo`) : null);
+  }));
 }
 
 function armiEProprieta(v) {
@@ -265,7 +316,7 @@ function pannelloRipara(ctx, mezzo, v, aggiorna) {
   const R = d.veicoli.riparazione;
   const p = statoUi(ctx).ripara[mezzo.uid];
   const ridisegna = () => ctx.azioni.ridisegna();
-  const { mezzo: nuovo, riparazione: r } = applicaRiparazione(mezzo, p.struttura, p.esito, d, { capacita: p.capacita, strumentiImprovvisati: p.improvvisati });
+  const { mezzo: nuovo, riparazione: r } = applicaRiparazione(mezzo, p.struttura, p.esito, d, { capacita: p.capacita, strumentiImprovvisati: p.improvvisati, kit: p.kit });
   const capacitaNomi = R.capacita.map((c) => (typeof c === 'string' ? c : c.nome));
   return h('section', { class: 'riquadro pannello-veicolo pannello-ripara' },
     h('h3', {}, `Ripara: ${v.nome}`),
@@ -274,7 +325,8 @@ function pannelloRipara(ctx, mezzo, v, aggiorna) {
     rigaScelte('Esito della Prova di Tecnologia', R.esiti.map((e) => ({ valore: e.id, etichetta: e.nome, riga: `${segno(e.pi)} PI` })), p.esito, (x) => { p.esito = x; ridisegna(); }),
     h('fieldset', { class: 'capacita-riparazione' }, h('legend', {}, 'Capacità professionali (§7.2)'),
       capacitaNomi.map((n) => h('label', { class: 'casella-veicolo' }, h('input', { type: 'checkbox', checked: p.capacita.includes(n), onchange: (e) => { p.capacita = e.target.checked ? [...p.capacita, n] : p.capacita.filter((x) => x !== n); ridisegna(); } }), ` ${n}`)),
-      h('label', { class: 'casella-veicolo' }, h('input', { type: 'checkbox', checked: p.improvvisati, onchange: (e) => { p.improvvisati = e.target.checked; ridisegna(); } }), ' Strumenti improvvisati')),
+      h('label', { class: 'casella-veicolo' }, h('input', { type: 'checkbox', checked: p.improvvisati, onchange: (e) => { p.improvvisati = e.target.checked; ridisegna(); } }), ' Strumenti improvvisati'),
+      v.profilo.kit_riparazione ? h('label', { class: 'casella-veicolo', title: v.profilo.kit_riparazione.testo }, h('input', { type: 'checkbox', checked: p.kit, onchange: (e) => { p.kit = e.target.checked; ridisegna(); } }), ` ${v.profilo.kit_riparazione.nome} (+${v.profilo.kit_riparazione.tecnologia})`) : null),
     h('ul', { class: 'dettaglio-ripara' },
       h('li', {}, `PI: ${r.pi.prima} → ${r.pi.dopo} su ${r.pi.massimi} (${r.stato.statoNome})`),
       h('li', {}, `Tempo: ${r.minuti} minuti${r.va ? ` · Tecnologia ${segno(r.va)}` : ''}`),

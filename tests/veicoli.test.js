@@ -2,6 +2,7 @@
 // motore puro in src/veicoli.js. Un test per ogni esempio numerico del manuale, più i casi limite:
 // PI a 0 per struttura, Corazzato contro danno basso, doppia soglia nello stesso colpo.
 import { test } from 'node:test';
+import { catalogo } from '../src/equipaggiamento.js';
 import assert from 'node:assert/strict';
 import {
   profiloVeicolo, andaturaDi, movimentoMassimo, statoStruttura, soglieStruttura, vistaVeicolo,
@@ -399,19 +400,29 @@ test('§10: il profilo dell’ASA Scout MK4 è quello della sua scheda', () => {
   assert.equal(scout.equipaggio.posti, 8);
   assert.equal(scout.qualita, 'Non comune');
   assert.equal(scout.reperibilita, 'Rara');
-  // telaio 90.000 + M606 19.000 = 109.000 cr, prezzo ancora parziale
-  assert.equal(scout.prezzo_cr, 109000);
-  assert.equal(scout.prezzo_parziale, true);
+  // A.101 (E&L del 05/10/2026): valore della configurazione approvata 202.520 cr, somma delle voci
+  assert.equal(scout.prezzo_cr, 202520);
+  assert.equal(scout.valore_voci.reduce((t, x) => t + x.cr, 0), 202520);
+  assert.deepEqual(scout.ricambi_cr_per_pi, { corpo: 300, propulsione: 250, motore: 500 });
+  assert.equal(scout.officina_cr_per_ora, 100);
+  assert.equal(scout.corazzato, 1); // A.103: l'esempio del §4.3 con Corazzato 2 è generico
   // le andature: 30, 60, 90 Q (27, 54, 81 km/h)
   const q = ['controllata', 'veloce', 'massima'].map((a) => movimentoMassimo(scout, a, dati).q);
   assert.deepEqual(q, [30, 60, 90]);
   assert.deepEqual(q.map((x) => Math.round(x * V.misure.km_h_per_q_round)), [27, 54, 81]);
-  // il mitragliatore M606: Armi pesanti, 1d8+3, 600 Q, 400 colpi, 3 per colpo
+  // il mitragliatore M606: Armi pesanti, 1d8+3, 600 Q, 400 colpi, 3 cr a colpo, 400 + 800 iniziali (A.101)
   const m606 = scout.armi[0];
-  assert.deepEqual([m606.abilita, m606.danno, m606.gittata_q, m606.capacita, m606.munizioni_per_colpo], ['Armi pesanti', '1d8+3', 600, 400, 3]);
+  assert.deepEqual([m606.abilita, m606.danno, m606.gittata_q, m606.capacita, m606.cr_per_colpo, m606.prezzo_cr], ['Armi pesanti', '1d8+3', 600, 400, 3, 19000]);
+  assert.deepEqual(m606.munizioni_iniziali, { caricate: 400, riserva: 800 });
+  assert.ok(catalogo(dati).perRif.get(m606.rif), 'la M606 è la scheda del catalogo');
   assert.ok(m606.operatore.includes('artigliere'));
   // le due riserve Rosse: 100.000 Lx e 20.000 Lx/h
   assert.deepEqual([scout.alimentazione.capacita_lx, scout.alimentazione.erogazione_lx_h], [100000, 20000]);
+  // A.101: 200 Lx/km a ogni andatura, 500 km nominali; supporto vitale Verde 200 Lx/h; aria 8 + 8 + 8 ore
+  assert.equal(scout.alimentazione.capacita_lx / scout.alimentazione.consumo_lx_km, scout.alimentazione.autonomia_km);
+  assert.equal(scout.supporto_vitale.verde.consumo_lx_h, 200);
+  assert.equal(scout.supporto_vitale.aria.riserva_fissa_ore + scout.supporto_vitale.aria.bombole_ore.reduce((t, x) => t + x, 0), 24);
+  assert.equal(profiloVeicolo('autovettura-civile', dati).reperibilita, 'Comune'); // A.102
 });
 
 test('la vista di un mezzo integro riempie i valori dal profilo e non tocca i dati del mezzo', () => {

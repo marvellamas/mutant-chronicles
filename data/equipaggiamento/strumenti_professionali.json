@@ -16,7 +16,11 @@
       "peso": 3,
       "reperibilita": "CO",
       "costo": 300,
-      "proprieta": []
+      "proprieta": [],
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 4,
+      "decisione_integrita": "Qualità, PS Integrità e PI: E&L del 05/10/2026 (A.34)."
     },
     {
       "id": "corredo-artigianale-professionale",
@@ -42,7 +46,11 @@
           "condizione": "+2 VA a Tecnologia per lavorare e riparare prodotti del mestiere scelto all’acquisto.",
           "fonte": "Equipaggiamento §5.1"
         }
-      ]
+      ],
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "pi": 4,
+      "decisione_integrita": "Qualità, PS Integrità e PI: E&L del 05/10/2026 (A.34)."
     },
     {
       "id": "postazione-di-lavoro-specializzata",
@@ -122,7 +130,11 @@
           "condizione": "+2 VA a Scienza per analisi preliminari nel campo scelto all’acquisto.",
           "fonte": "Equipaggiamento §5.2"
         }
-      ]
+      ],
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "pi": 4,
+      "decisione_integrita": "Qualità, PS Integrità e PI: E&L del 05/10/2026 (A.34)."
     },
     {
       "id": "laboratorio-da-campo-specializzato",
@@ -170,7 +182,11 @@
       "peso": 5,
       "reperibilita": "CO",
       "costo": 200,
-      "proprieta": []
+      "proprieta": [],
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 4,
+      "decisione_integrita": "Qualità, PS Integrità e PI: E&L del 05/10/2026 (A.34)."
     },
     {
       "id": "corredo-agricolo-standard-allevamento",
@@ -185,7 +201,11 @@
       "peso": 2,
       "reperibilita": "CO",
       "costo": 200,
-      "proprieta": []
+      "proprieta": [],
+      "qualita": "Comune",
+      "ps_int": 10,
+      "pi": 4,
+      "decisione_integrita": "Qualità, PS Integrità e PI: E&L del 05/10/2026 (A.34)."
     },
     {
       "id": "corredo-del-coltivatore",

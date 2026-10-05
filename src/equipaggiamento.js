@@ -575,7 +575,9 @@ export function normalizzaEquipaggiamento(valore) {
     if (Number.isInteger(v.pm_iniziali) && v.pm_iniziali >= 0) out.pm_iniziali = v.pm_iniziali; // E&L 2 (A.19): contenitore trovato
     if (testo(v.matrice)) out.matrice = v.matrice.trim().slice(0, 80); // Magia §26.4: Matrice d'origine di una Batteria Matrice
     if (v.dotazione_iniziale === true) out.dotazione_iniziale = true; // §2.16: voce della dotazione iniziale (src/dotazioni.js)
-    if (!out.rif && testo(v.dotazione_id)) out.dotazione_id = v.dotazione_id; // oggetto di dotazione: effetti dai dati
+    if (testo(v.dotazione_id)) out.dotazione_id = v.dotazione_id; // oggetto di dotazione (§2.16)
+    // A.34: nome della dotazione quando differisce dalla scheda (ambiente scelto, calzature comprese)
+    if (out.rif && testo(v.nome_dotazione)) out.nome_dotazione = v.nome_dotazione.trim().slice(0, 120);
     return out;
   });
 }
@@ -616,6 +618,23 @@ export function schedaDiDotazione(o, nome) {
   return (scelta && o.rif_per_sotto[scelta]) ?? null;
 }
 
+/**
+ * A.34 (E&L del 05/10/2026): un oggetto di dotazione salvato come voce personalizzata collegata alla
+ * scheda (rif null + dotazione_id) diventa la voce di catalogo della sua scheda: stessi uid, stato,
+ * quantità e note (quindi stessi PI attuali in sessione.integrita); il nome della dotazione resta in
+ * «nome_dotazione» se differisce. Senza scheda la voce resta com'è.
+ */
+export function migraVociDotazione(voci, cat) {
+  return voci.map((v) => {
+    if (v.rif || !v.dotazione_id || !v.personalizzato) return v;
+    const rif = schedaDiDotazione(cat.dotazione?.[v.dotazione_id], v.personalizzato.nome);
+    const def = rif ? cat.perRif.get(rif) : null;
+    if (!def) return v;
+    const { personalizzato, ...resto } = v;
+    return { ...resto, rif, ...(personalizzato.nome && personalizzato.nome !== def.nome ? { nome_dotazione: personalizzato.nome } : {}) };
+  });
+}
+
 export function risolvi(voce, cat) {
   // oggetto di dotazione con scheda di catalogo (Equipaggiamento 0.3, oggetti_dotazione[id].rif): peso,
   // prezzo, Qualità, PI ed effetti dalla scheda, anche per le voci salvate prima; il nome resta
@@ -624,7 +643,7 @@ export function risolvi(voce, cat) {
   const def = voce.rif ? cat.perRif.get(voce.rif) ?? null : schedaDotazione ? cat.perRif.get(schedaDotazione) ?? null : null;
   const fuoriCatalogo = !!voce.rif && !def;
   const tipo = def?.tipo ?? voce.personalizzato?.tipo ?? 'altro';
-  const nome = (schedaDotazione ? voce.personalizzato?.nome : null) ?? def?.nome ?? voce.personalizzato?.nome ?? (fuoriCatalogo ? voce.rif : 'Oggetto');
+  const nome = (schedaDotazione ? voce.personalizzato?.nome : null) ?? (def ? voce.nome_dotazione : null) ?? def?.nome ?? voce.personalizzato?.nome ?? (fuoriCatalogo ? voce.rif : 'Oggetto');
   const effetti = fuoriCatalogo ? [] : def?.effetti ?? cat.dotazione?.[voce.dotazione_id]?.effetti ?? voce.personalizzato?.effetti ?? [];
   // un rinforzo si indossa da solo solo se la sua voce lo consente (rinforzi.json → indossabile_da_solo)
   const stati0 = statiPer(tipo, effetti).filter((s) => !(tipo === 'rinforzo' && s === 'indossata' && !def?.indossabile_da_solo));

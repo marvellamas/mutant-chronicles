@@ -6,7 +6,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   nuovoVeicolo, normalizzaVeicoli, colpisciVeicolo, applicaRiparazione, vistaVeicoloPersonaggio,
-  pilotareDelPersonaggio, montaRicambio, schedaManuale,
+  pilotareDelPersonaggio, montaRicambio, schedaManuale, consumaRisorse, installaRicambioEnergia, munizioniArmaVeicolo,
+  sollecitazioneFallita, eseguiCambioAndatura,
 } from '../src/veicoli.js';
 import { normalizza, serializza, deserializza, applicaModifica } from '../src/character.js';
 import { calcolaScheda } from '../src/calc.js';
@@ -21,7 +22,7 @@ test('aggiunta e rimozione: catalogo e scritto a mano, più veicoli, nome, salva
   const a = nuovoVeicolo('autovettura-civile', dati, { uid: 'a', nome: 'La Grigia' });
   assert.equal(a.nome, 'La Grigia');
   assert.deepEqual(a.pi, { corpo: 12, propulsione: 8, motore: 8 });
-  assert.deepEqual(a.nec, { lx: 50000 });
+  assert.deepEqual(a.energia, { rosso: [50000], rosso_ricambi: [] });
   const s = scout();
   assert.equal(s.nome, 'ASA Scout MK4');
   assert.deepEqual(s.rinforzi['copriruote-petra'], { montati: [3, 3, 3, 3], ricambi: [3, 3] });
@@ -85,7 +86,9 @@ test('riparazione: esito, capacità, costo dei ricambi o «da definire»', () =>
   assert.equal(mezzo.pi.motore, 8);
   assert.equal(r.minuti, 30);
   assert.equal(r.va, 2);
-  assert.equal(r.costoDaDefinire, true, 'lo Scout non ha i costi per PI (A.101)');
+  assert.equal(r.costoDaDefinire, false); // A.101: 500 cr per PI del Motore
+  assert.equal(r.costoRicambi, 1000);
+  assert.equal(applicaRiparazione(m, 'motore', 'successo', dati, { kit: true }).riparazione.va, 2, 'corredo di manutenzione: +2 a Tecnologia');
   const a = nuovoVeicolo('autovettura-civile', dati, { uid: 'a' });
   const ra = applicaRiparazione({ ...a, pi: { ...a.pi, corpo: 5 } }, 'corpo', 'successo', dati).riparazione;
   assert.equal(ra.costoDaDefinire, false);
@@ -139,4 +142,36 @@ test('migrazione: un personaggio senza veicoli si salva e si calcola come prima'
   assert.deepEqual(conVeicolo.abilita, senza.abilita);
   assert.deepEqual(conVeicolo.salvezze, senza.salvezze);
   assert.deepEqual(conVeicolo.carico, senza.carico);
+});
+
+test('A.101–A.104: riserve dello Scout, consumi, ricambi, munizioni, sollecitazione e andatura scelta', () => {
+  const s = scout();
+  assert.deepEqual(s.energia, { rosso: [50000, 50000], rosso_ricambi: [50000], verde: [10000], verde_ricambi: [10000], aria: { fissa: 8, bombole: [8, 8] } });
+  assert.deepEqual(s.munizioni, [{ caricate: 400, riserva: 800 }]);
+  // il vecchio «nec: { lx }» riempie i banchi in ordine; le altre riserve partono dalla dotazione approvata
+  const vecchio = normalizzaVeicoli([{ uid: 'x', profilo: 'asa-scout-mk4', andatura: 'fermo', pi: { corpo: 60, propulsione: 36, motore: 24 }, nec: { lx: 70000 } }], dati)[0];
+  assert.deepEqual(vecchio.energia.rosso, [50000, 20000]);
+  assert.equal(vecchio.nec, undefined);
+  // 24 ore d'aria e Verde: dopo 24 ore restano 5.200 Lx (A.101)
+  const c = consumaRisorse(s, { km: 100, oreFermo: 10, oreSupporto: 24 }, dati).mezzo;
+  assert.deepEqual(c.energia.rosso, [29000, 50000]); // 100 km × 200 + 10 h × 100 = 21.000 Lx
+  assert.deepEqual(c.energia.verde, [5200]);
+  assert.deepEqual(c.energia.aria, { fissa: 0, bombole: [0, 0] });
+  // il ricambio prende il posto del NEC più scarico, che resta fra i ricambi (niente travaso)
+  const r = installaRicambioEnergia(c, 'rosso', dati);
+  assert.deepEqual([r.energia.rosso, r.energia.rosso_ricambi], [[50000, 50000], [29000]]);
+  // munizioni: sparati e ricarica dalla riserva fino a 400
+  const m = munizioniArmaVeicolo(munizioniArmaVeicolo(s, 0, { sparati: 150 }, dati), 0, { ricarica: true }, dati);
+  assert.deepEqual(m.munizioni, [{ caricate: 400, riserva: 650 }]);
+  // Terre del Fuoco: PS fallita, −1 PI al copriruota attivo; senza copriruote alla Propulsione
+  assert.deepEqual(sollecitazioneFallita(s, dati).mezzo.rinforzi['copriruote-petra'].montati, [2, 3, 3, 3]);
+  const nudo = { ...s, rinforzi: { 'copriruote-petra': { montati: [0, 0, 0, 0], ricambi: [] } } };
+  assert.equal(sollecitazioneFallita(nudo, dati).mezzo.pi.propulsione, 35);
+  // A.104: la scelta non cambia l'andatura attuale finché il cambio non è eseguito, una fascia per volta
+  const a = { ...s, andatura: 'fermo', andatura_scelta: 'veloce' };
+  assert.equal(normalizzaVeicoli([a], dati)[0].andatura, 'fermo');
+  const a1 = eseguiCambioAndatura(a, dati);
+  assert.deepEqual([a1.andatura, a1.andatura_scelta], ['controllata', 'veloce']);
+  const a2 = eseguiCambioAndatura(a1, dati);
+  assert.deepEqual([a2.andatura, a2.andatura_scelta], ['veloce', null]);
 });

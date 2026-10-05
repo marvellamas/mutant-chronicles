@@ -9,7 +9,7 @@ import {
 import { tira } from '../src/tiri.js';
 import { nuoveScelte, normalizza, serializza, deserializza } from '../src/character.js';
 import { massimiSessione, allineaSessione, variaSessione } from '../src/sessione.js';
-import { normalizzaEquipaggiamento, catalogo } from '../src/equipaggiamento.js';
+import { normalizzaEquipaggiamento, catalogo, risolvi } from '../src/equipaggiamento.js';
 
 const { dati } = await datiReali();
 const tiro = (valore) => ({ valore, origine: 'manuale' });
@@ -19,22 +19,24 @@ const AGENTE = {
 };
 const perNome = (voci, rif) => voci.filter((v) => v.rif === rif);
 
+const nomeV = (v) => risolvi(v, catalogo(dati)).nome;
+
 test('dotazione comune: gli 11 oggetti del §2.16.1 con le quantità, marcati come dotazione iniziale', () => {
   const voci = vociDotazione(AGENTE, 'Agente', 'Mishima', dati);
   const comune = voci.filter((v) => v.uid.startsWith('dot-comune-'));
   assert.equal(comune.length, 11);
   assert.ok(voci.every((v) => v.dotazione_iniziale === true));
-  const borraccia = comune.find((v) => v.personalizzato.nome.startsWith('Borraccia'));
+  const borraccia = comune.find((v) => nomeV(v).startsWith('Borraccia'));
   assert.equal(borraccia.quantita, 2);
-  assert.equal(comune.find((v) => v.personalizzato.nome === 'Razione da viaggio').quantita, 3);
+  assert.equal(comune.find((v) => nomeV(v) === 'Razione da viaggio').quantita, 3);
 });
 
 test('un oggetto della Classe sostituisce quello comune (Comunicatore da squadra, Lampada frontale)', () => {
   const d = { opzioni: { arma_principale: 'armi_distanza:carabina' }, crediti: tiro(2) };
-  const nomi = vociDotazione(d, 'Soldato', 'Freelance', dati).filter((v) => v.personalizzato).map((v) => v.personalizzato.nome);
+  const nomi = vociDotazione(d, 'Soldato', 'Freelance', dati).filter((v) => v.dotazione_id).map(nomeV);
   assert.ok(nomi.includes('Comunicatore da squadra'));
   assert.ok(!nomi.includes('Comunicatore personale'));
-  const tecnico = vociDotazione({ opzioni: {} }, 'Tecnico', 'Freelance', dati).filter((v) => v.personalizzato).map((v) => v.personalizzato.nome);
+  const tecnico = vociDotazione({ opzioni: {} }, 'Tecnico', 'Freelance', dati).filter((v) => v.dotazione_id).map(nomeV);
   assert.ok(tecnico.includes('Lampada frontale') && !tecnico.includes('Torcia elettrica'));
 });
 
@@ -124,7 +126,7 @@ test('rifare la dotazione sostituisce le voci, non le somma; gli altri oggetti r
   assert.equal(dopo.filter((v) => v.uid === 'e9').length, 1);
   assert.equal(perNome(dopo, 'armi_distanza:pistola-semiautomatica').length, 0);
   assert.equal(perNome(dopo, 'armi_distanza:revolver').length, 1);
-  assert.equal(dopo.filter((v) => v.personalizzato?.nome === 'Sacco a pelo').length, 1);
+  assert.equal(dopo.filter((v) => v.dotazione_id && nomeV(v) === 'Sacco a pelo').length, 1);
   // il marcatore sopravvive alla normalizzazione e al salvataggio
   assert.ok(normalizzaEquipaggiamento(dopo).filter((v) => v.dotazione_iniziale).length === dopo.length - 1);
   const s = normalizza({ ...nuoveScelte(), corporazione: 'Freelance', addestramento: 'Avventuriero', classe: 'Agente', equipaggiamento: dopo, dotazione: AGENTE }, dati).scelte;
@@ -180,12 +182,13 @@ test('sotto-scelte: l’ambiente del corredo è richiesto ed entra nel nome, con
   const d = { opzioni: { arma_da_fuoco: 'armi_distanza:carabina', arma_da_mischia: 'armi:pugnale' }, crediti: tiro(4) };
   assert.ok(mancanzeDotazione(d, 'Cacciatore', 'Freelance', dati).some((m) => /Corredo di sopravvivenza ambientale/.test(m)));
   const voci = vociDotazione({ ...d, sotto: { 'corredo-sopravvivenza-ambientale': 'Artico' } }, 'Cacciatore', 'Freelance', dati);
-  const c = voci.find((v) => v.personalizzato?.nome.startsWith('Corredo di sopravvivenza'));
-  assert.equal(c.personalizzato.nome, 'Corredo di sopravvivenza ambientale (Artico)');
+  const c = voci.find((v) => v.dotazione_id && nomeV(v).startsWith('Corredo di sopravvivenza'));
+  assert.equal(nomeV(c), 'Corredo di sopravvivenza ambientale (Artico)');
+  assert.ok(c.rif && !c.personalizzato); // A.34: voce della scheda di catalogo
   // l'effetto non si copia nella voce: si legge dai dati attraverso dotazione_id; l'oggetto parte «in uso»
   assert.equal(c.dotazione_id, 'corredo-sopravvivenza-ambientale');
   assert.equal(c.stato, 'in_uso');
-  assert.equal(c.personalizzato.testo, undefined);
+  assert.equal(c.testo, undefined);
   assert.deepEqual(mancanzeDotazione({ ...d, sotto: { 'corredo-sopravvivenza-ambientale': 'Artico' } }, 'Cacciatore', 'Freelance', dati), []);
 });
 
@@ -266,7 +269,7 @@ test('Giocatore 0.45 §2.16: la dotazione si riceve una sola volta, alla creazio
   // stessa dotazione: nessuna voce del Soldato, le stesse armi e protezioni
   const nomi = (s) => [...(s.equipaggiamento?.armi ?? []), ...(s.equipaggiamento?.protezioni ?? [])].map((x) => x.nome).sort();
   assert.deepEqual(nomi(s4), nomi(s1));
-  const chiave = (v) => v.rif ?? v.personalizzato?.nome;
+  const chiave = (v) => v.dotazione_id ? nomeV(v) : v.rif;
   const soloSoldato = vociDotazione(AGENTE, 'Soldato', 'Mishima', dati).map(chiave).filter((k) => !equipaggiamento.some((e) => chiave(e) === k));
   assert.deepEqual(soloSoldato, ['Comunicatore da squadra']); // la voce del Soldato che l'Agente non ha non arriva
 });
@@ -277,7 +280,7 @@ test('Magia 1.3 sez. 2: il Focus personale della dotazione è già sintonizzato,
   const scelte = { opzioni: {}, sotto: {}, crediti: tiro(7), acquisti: [] };
   const voci = vociDotazione(scelte, 'Arcanista', 'Fratellanza', dati);
   const focus = voci.find((v) => v.dotazione_id === 'focus-personale');
-  assert.ok(focus && !focus.rif && !dati.dotazioni.oggetti_dotazione['focus-personale'].effetti);
+  assert.ok(focus && !dati.dotazioni.oggetti_dotazione['focus-personale'].effetti);
   const senza = calcolaScheda({ ...ARCANISTA, corporazione: 'Fratellanza' }, dati);
   const con = calcolaScheda({ ...ARCANISTA, corporazione: 'Fratellanza', dotazione: scelte, equipaggiamento: applicaDotazione([], voci) }, dati);
   assert.equal(con.pm, senza.pm);

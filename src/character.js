@@ -7,7 +7,7 @@ import {
 } from './calc.js';
 import { statoIncantesimi } from './incantesimi.js';
 import { specTiro, migraTiro, motivoFuoriIntervallo } from './tiri.js';
-import { normalizzaEquipaggiamento, catalogo, risolvi, STATI, NOMI_TIPI, infoArtefattoVoce } from './equipaggiamento.js';
+import { normalizzaEquipaggiamento, catalogo, risolvi, STATI, NOMI_TIPI, infoArtefattoVoce, migraVociDotazione } from './equipaggiamento.js';
 import { ritrattoValido } from './ritratto.js';
 import { normalizzaDotazione } from './dotazioni.js';
 import { registraInstallazioni } from './umanita.js';
@@ -194,6 +194,8 @@ export function normalizza(scelteIn, dati) {
     if (Number.isInteger(x.quantita_per) && x.quantita_per > 1) v.quantita = (Number.isInteger(v.quantita) ? v.quantita : 1) * x.quantita_per;
   }
   const cat = catalogo(dati);
+  // A.34: oggetti di dotazione come voci della loro scheda di catalogo (PS Integrità e PI dalla scheda)
+  s.equipaggiamento = migraVociDotazione(s.equipaggiamento, cat);
   for (const v of s.equipaggiamento) {
     const r = risolvi(v, cat);
     if (r.fuoriCatalogo) continue; // resta com'è: «non più in catalogo», senza effetti

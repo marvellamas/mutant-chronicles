@@ -54,144 +54,103 @@
     "equipaggiamento": [
       {
         "uid": "dot-comune-1",
-        "rif": null,
+        "rif": "dotazioni_personali:abiti-comuni",
         "stato": null,
         "quantita": 1,
         "note": "",
-        "personalizzato": {
-          "nome": "Abiti comuni, comprese le calzature",
-          "tipo": "altro"
-        },
         "dotazione_iniziale": true,
-        "dotazione_id": "abiti-comuni"
+        "dotazione_id": "abiti-comuni",
+        "nome_dotazione": "Abiti comuni, comprese le calzature"
       },
       {
         "uid": "dot-comune-2",
-        "rif": null,
+        "rif": "dotazioni_personali:zaino-da-viaggio",
         "stato": null,
         "quantita": 1,
         "note": "",
-        "personalizzato": {
-          "nome": "Zaino da viaggio",
-          "tipo": "altro"
-        },
         "dotazione_iniziale": true,
         "dotazione_id": "zaino-da-viaggio"
       },
       {
         "uid": "dot-comune-3",
-        "rif": null,
+        "rif": "dotazioni_personali:cintura-attrezzata",
         "stato": null,
         "quantita": 1,
         "note": "",
-        "personalizzato": {
-          "nome": "Cintura attrezzata",
-          "tipo": "altro"
-        },
         "dotazione_iniziale": true,
         "dotazione_id": "cintura-attrezzata"
       },
       {
         "uid": "dot-comune-4",
-        "rif": null,
+        "rif": "dotazioni_personali:borraccia-da-un-litro",
         "stato": null,
         "quantita": 2,
         "note": "",
-        "personalizzato": {
-          "nome": "Borraccia da un litro, piena d’acqua",
-          "tipo": "altro"
-        },
         "dotazione_iniziale": true,
-        "dotazione_id": "borraccia"
+        "dotazione_id": "borraccia",
+        "nome_dotazione": "Borraccia da un litro, piena d’acqua"
       },
       {
         "uid": "dot-comune-5",
-        "rif": null,
+        "rif": "dotazioni_personali:torcia-elettrica",
         "stato": null,
         "quantita": 1,
         "note": "",
-        "personalizzato": {
-          "nome": "Torcia elettrica",
-          "tipo": "altro"
-        },
         "dotazione_iniziale": true,
         "dotazione_id": "torcia-elettrica"
       },
       {
         "uid": "dot-comune-6",
-        "rif": null,
+        "rif": "comunicazione:comunicatore-personale",
         "stato": null,
         "quantita": 1,
         "note": "",
-        "personalizzato": {
-          "nome": "Comunicatore personale",
-          "tipo": "altro"
-        },
         "dotazione_iniziale": true,
         "dotazione_id": "comunicatore-personale"
       },
       {
         "uid": "dot-comune-7",
-        "rif": null,
+        "rif": "dotazioni_personali:corredo-personale",
         "stato": null,
         "quantita": 1,
         "note": "",
-        "personalizzato": {
-          "nome": "Corredo personale per igiene e piccoli rammendi",
-          "tipo": "altro"
-        },
         "dotazione_iniziale": true,
-        "dotazione_id": "corredo-igiene"
+        "dotazione_id": "corredo-igiene",
+        "nome_dotazione": "Corredo personale per igiene e piccoli rammendi"
       },
       {
         "uid": "dot-comune-8",
-        "rif": null,
+        "rif": "dotazioni_personali:utensile-multiuso",
         "stato": "in_uso",
         "quantita": 1,
         "note": "",
-        "personalizzato": {
-          "nome": "Utensile multiuso",
-          "tipo": "altro"
-        },
         "dotazione_iniziale": true,
         "dotazione_id": "utensile-multiuso"
       },
       {
         "uid": "dot-comune-9",
-        "rif": null,
+        "rif": "dotazioni_personali:accendino",
         "stato": null,
         "quantita": 1,
         "note": "",
-        "personalizzato": {
-          "nome": "Accendino",
-          "tipo": "altro"
-        },
         "dotazione_iniziale": true,
         "dotazione_id": "accendino"
       },
       {
         "uid": "dot-comune-10",
-        "rif": null,
+        "rif": "esplorazione:sacco-a-pelo",
         "stato": null,
         "quantita": 1,
         "note": "",
-        "personalizzato": {
-          "nome": "Sacco a pelo",
-          "tipo": "altro"
-        },
         "dotazione_iniziale": true,
         "dotazione_id": "sacco-a-pelo"
       },
       {
         "uid": "dot-comune-11",
-        "rif": null,
+        "rif": "esplorazione:razione-da-viaggio",
         "stato": null,
         "quantita": 3,
         "note": "",
-        "personalizzato": {
-          "nome": "Razione da viaggio",
-          "tipo": "altro"
-        },
         "dotazione_iniziale": true,
         "dotazione_id": "razione-da-viaggio"
       },
@@ -229,16 +188,13 @@
       },
       {
         "uid": "dot-abbigliamento_aggiuntivo-1",
-        "rif": null,
+        "rif": "dotazioni_personali:abiti-da-viaggio",
         "stato": "in_uso",
         "quantita": 1,
         "note": "",
-        "personalizzato": {
-          "nome": "Abiti da viaggio, comprese le calzature (completo aggiuntivo)",
-          "tipo": "altro"
-        },
         "dotazione_iniziale": true,
-        "dotazione_id": "abiti-da-viaggio"
+        "dotazione_id": "abiti-da-viaggio",
+        "nome_dotazione": "Abiti da viaggio, comprese le calzature (completo aggiuntivo)"
       },
       {
         "uid": "dot-pronto_soccorso-1",

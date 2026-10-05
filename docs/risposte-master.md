@@ -761,6 +761,33 @@ modifiche che ho fatto ieri, quelle delle abilità (7 punti invece che 5) e dell
     solo. L'esempio del Mishima Agente del §2.13 torna quello del manuale (Percezione 2, Tecnologia 1, Cultura 1,
     Raggirare 3): i test lo usano. PG d'esempio e bestiario umano rigenerati con 7 punti.
 
+## 5 ottobre 2026 — risposte in blocco (E&L del 05/10/2026), primo lotto applicato
+
+Fonte: E&L del 05/10/2026, «Risposte approvate — aggiornamento dei quesiti aperti» (testo in
+`docs/risposte-master-2026-09-26.md`, ricognizione in `docs/ricognizione-2026-10-05.md`). Qui le voci applicate;
+le altre si registrano lotto per lotto.
+
+93. **Dotazioni collegate alle schede del catalogo** (A.34). Gli oggetti della dotazione sono voci della loro scheda
+    di catalogo (con il nome della dotazione in `nome_dotazione` se differisce), non voci personalizzate; i PG salvati
+    si migrano all'apertura (`migraVociDotazione`, stessi uid, stato, quantità e PI attuali). Cassetta degli attrezzi,
+    Attrezzi agricoli di base, Corredo agricolo Standard per allevamento: Comune, PS 10, 4 PI; Corredo artigianale
+    professionale e Corredo di analisi da campo: Non comune, PS 12, 4 PI (`strumenti_professionali.json`). Lo
+    scambio al 100% resta solo per gli armamenti ammessi.
+94. **ASA Scout MK4: profilo e dotazione approvati** (A.101). Valore 202.520 cr con le voci; M606 dal catalogo
+    (19.000 cr, 3 cr a colpo, 400 caricate + 800 di riserva); copriruote 150 cr e sollecitazione delle Terre del
+    Fuoco (PS fallita: −1 PI al copriruota attivo o alla Propulsione); trazione Rossa in due banchi da 50.000 Lx,
+    200 Lx/km, 100 Lx/ora da fermo, ricambio da 50.000; Modulo Verde 10.000 Lx con supporto vitale 200 Lx/ora e
+    ricambio; aria 8 ore fisse + 2 bombole da 8; riparazioni 300/250/500 cr per PI, officina 100 cr/ora, corredo di
+    manutenzione +2 a Tecnologia; dotazione sanitaria e accessori nel testo della dotazione. → `data/veicoli.json`,
+    `src/veicoli.js` (`energia`, `munizioni`, `consumaRisorse`, `installaRicambioEnergia`,
+    `munizioniArmaVeicolo`, `sollecitazioneFallita`), tab Veicoli e foglio Veicoli della SS. Il vecchio
+    `nec: { lx }` riempie i banchi in ordine; le riserve che il file non aveva partono dalla dotazione approvata.
+95. **Autovettura civile: REP Comune** (A.102).
+96. **Esempio del §4.3 generico** (A.103): lo Scout resta Corazzato 1; prima la PS, poi Corazzato, minimo 0
+    (`veicoli.json` → `danno.esempio.nota`; motore già conforme).
+97. **Andatura attuale e scelta** (A.104): `andatura` è quella attuale, `andatura_scelta` quella da adottare;
+    «Esegui il cambio» sposta l'attuale di una fascia (1 AzM), fuori dal Round si può impostare subito.
+
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 
 Il Manuale dei Veicoli 0.2 è completo di numeri e il lotto 2 (dati e motore) non ha dovuto inventare nulla. Restano

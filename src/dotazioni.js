@@ -209,6 +209,8 @@ export function vociDotazione(dotazione, classe, corporazione, dati) {
     const scheda = rifScheda ? cat.perRif.get(rifScheda) : null;
     const effetti = scheda?.effetti ?? o.effetti;
     const stato = effetti?.length ? statoIniziale(scheda?.tipo ?? 'altro', [], null, effetti) : null;
+    // A.34 (E&L del 05/10/2026): con la scheda di catalogo la voce è quella della scheda, col nome della dotazione
+    if (scheda) return { uid, rif: rifScheda, ...(personalizzato.nome !== scheda.nome ? { nome_dotazione: personalizzato.nome } : {}), stato, quantita: quantita ?? 1, note: '', dotazione_iniziale: true, dotazione_id: id };
     return { uid, rif: null, personalizzato, stato, quantita: quantita ?? 1, note: '', dotazione_iniziale: true, dotazione_id: id };
   };
   const voceCatalogo = (uid, rif, quantita, note = '') => {
