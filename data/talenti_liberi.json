@@ -146,6 +146,11 @@
             "fonte": "Giocatore §8.6.1"
           }
         ]
+      },
+      "sintesi": {
+        "testo": "+3 VA a Percezione contro imboscate, aggressori nascosti e pericoli improvvisi, anche senza cercare, se la minaccia è percepibile. Nessuna immunità alla Sorpresa.",
+        "rif": "Giocatore §8.6.1",
+        "stato": "da_verificare"
       }
     },
     {
@@ -215,6 +220,11 @@
             "fonte": "Giocatore §8.6.1"
           }
         ]
+      },
+      "sintesi": {
+        "testo": "A 0 PV: +3 alle PS di Tempra contro nuove Ferite (da danno o Sanguinamento). Non sulla PS contro le Menomazioni.",
+        "rif": "Giocatore §8.6.1",
+        "stato": "da_verificare"
       }
     },
     {
@@ -496,6 +506,11 @@
             "fonte": "Giocatore §8.6.3"
           }
         ]
+      },
+      "sintesi": {
+        "testo": "+2 alle PS per non acquisire Corruzione Oscura o limitarne il peggioramento (di norma Magia, §5.20).",
+        "rif": "Giocatore §8.6.3",
+        "stato": "da_verificare"
       }
     },
     {
@@ -704,6 +719,11 @@
             "va": -2
           }
         }
+      },
+      "sintesi": {
+        "testo": "Arma ravvicinata a una mano più Arma leggera a distanza: Combattere con due armi a −2 VA per attacco invece di −4. 1 AzP, Prove separate; Tiro Ravvicinato se impegnato; non si somma ad Ambidestro (§5.7).",
+        "rif": "Giocatore §8.6.5",
+        "stato": "da_verificare"
       }
     },
     {
@@ -868,6 +888,11 @@
             "danno": 4
           }
         }
+      },
+      "sintesi": {
+        "testo": "Tiro Mirato a +4 VA e +4 danni invece di +2. Stesse Azioni e condizioni di Tiro Mirato (+1 AzP); solo Tiro Singolo o Raffica Breve (§5.10).",
+        "rif": "Giocatore §8.6.5",
+        "stato": "da_verificare"
       }
     },
     {
@@ -886,6 +911,11 @@
             "riduzione": 2
           }
         }
+      },
+      "sintesi": {
+        "testo": "Oltre 80 Q: −2 alla penalità di distanza. Si cumula con mirini e Ottimizzare Gittata fino a 0, mai bonus; non estende la gittata né riduce le Azioni (§5.11).",
+        "rif": "Giocatore §8.6.5",
+        "stato": "da_verificare"
       }
     },
     {
@@ -901,6 +931,11 @@
         "attacco_distanza": {
           "azioni_distanza": -1
         }
+      },
+      "sintesi": {
+        "testo": "−1 (minimo 1) alle AzP richieste da distanza e mirino; non tocca l’AzP di Tiro Mirato. Esempio: a 800 Q da 3 AzP a 2 (§5.11).",
+        "rif": "Giocatore §8.6.5",
+        "stato": "da_verificare"
       }
     },
     {
@@ -937,6 +972,11 @@
             "va": -2
           }
         }
+      },
+      "sintesi": {
+        "testo": "Due armi ravvicinate a una mano: Combattere con due armi a −2 VA per attacco invece di −4. 1 AzP, Prove distinte; non si somma ad Ambidestro (§5.7).",
+        "rif": "Giocatore §8.6.6",
+        "stato": "da_verificare"
       }
     },
     {
@@ -984,6 +1024,11 @@
             "danno": "1d6"
           }
         }
+      },
+      "sintesi": {
+        "testo": "Danno base senz’armi 1d6. Con la Disciplina del Lottatore si usa il dado più alto, senza sommarli.",
+        "rif": "Giocatore §8.6.6",
+        "stato": "da_verificare"
       }
     },
     {
@@ -1256,7 +1301,12 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Una volta per Round effettua una Parata senza spendere Azioni, anche prima o dopo la propria Iniziativa. Restano Prova, requisiti, penalità e limiti della Parata."
+      "testo": "Una volta per Round effettua una Parata senza spendere Azioni, anche prima o dopo la propria Iniziativa. Restano Prova, requisiti, penalità e limiti della Parata.",
+      "sintesi": {
+        "testo": "1 volta per Round: una Parata senza spendere Azioni, anche fuori dalla propria Iniziativa. Restano Prova, requisiti, penalità e limiti della Parata.",
+        "rif": "Giocatore §8.6.7",
+        "stato": "da_verificare"
+      }
     },
     {
       "id": "parata-migliorata",
@@ -1266,7 +1316,12 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Dopo una Parata riuscita con un’arma, dimezza per eccesso il danno e lo riduce di altri 2 punti, fino a un minimo di 0, prima di applicare l’AR. Il Magistrale continua ad annullare il danno. Non si applica alla Parata con scudo."
+      "testo": "Dopo una Parata riuscita con un’arma, dimezza per eccesso il danno e lo riduce di altri 2 punti, fino a un minimo di 0, prima di applicare l’AR. Il Magistrale continua ad annullare il danno. Non si applica alla Parata con scudo.",
+      "sintesi": {
+        "testo": "Dopo una Parata riuscita con un’arma: danno dimezzato per eccesso e −2 (minimo 0) prima dell’AR; il Magistrale annulla. Non con lo scudo.",
+        "rif": "Giocatore §8.6.7",
+        "stato": "da_verificare"
+      }
     },
     {
       "id": "parata-multipla",
@@ -1332,6 +1387,11 @@
             "fonte": "Giocatore §8.6.9"
           }
         ]
+      },
+      "sintesi": {
+        "testo": "1 volta per sessione per sistema, dichiarato prima della Prova: +2 VA a Tecnologia per intrusione o sorveglianza elettronica (+4 con Informatica). Si consuma anche se fallisce.",
+        "rif": "Giocatore §8.6.9",
+        "stato": "da_verificare"
       }
     },
     {
@@ -1436,7 +1496,12 @@
       "prerequisiti": [],
       "molteplicita": "una",
       "parametro": null,
-      "testo": "Riduce di 2 punti complessivi per Prova, fino a 0, le penalità a Pilotare dovute a maltempo, turbolenze, visibilità, guasti, danni o perdita parziale di controllo. Non riduce le penalità proprie delle manovre o dei Talenti, compreso il −4 di Manovra Evasiva. Se più capacità riducono la stessa penalità, usa la migliore."
+      "testo": "Riduce di 2 punti complessivi per Prova, fino a 0, le penalità a Pilotare dovute a maltempo, turbolenze, visibilità, guasti, danni o perdita parziale di controllo. Non riduce le penalità proprie delle manovre o dei Talenti, compreso il −4 di Manovra Evasiva. Se più capacità riducono la stessa penalità, usa la migliore.",
+      "sintesi": {
+        "testo": "−2 complessivo per Prova (fino a 0) alle penalità a Pilotare da maltempo, turbolenze, visibilità, guasti, danni o perdita di controllo. Non sulle penalità di manovre e Talenti (Manovra Evasiva −4).",
+        "rif": "Giocatore §8.6.9",
+        "stato": "da_verificare"
+      }
     },
     {
       "id": "inseguimento",
@@ -1458,6 +1523,11 @@
             "fonte": "Giocatore §8.6.9"
           }
         ]
+      },
+      "sintesi": {
+        "testo": "+2 VA a Pilotare per inseguire o seminare un mezzo (+4 con la Specializzazione del veicolo). Solo le manovre dell’inseguimento; non cambia Movimento né Percezione (Veicoli §6.1).",
+        "rif": "Giocatore §8.6.9",
+        "stato": "da_verificare"
       }
     },
     {
@@ -1493,7 +1563,12 @@
         "addestramento:taumaturgo",
         "classi:taumaturgiche",
         "talenti:accesso_magia"
-      ]
+      ],
+      "sintesi": {
+        "testo": "Apprende 2 + Mod SAG Tecniche Interiori (minimo 1, contate all’acquisizione), generiche o di Scuole Mishima accessibili. PM personali, la riserva non aumenta (§8.9); incompatibilità del §8.6.10.",
+        "rif": "Giocatore §8.6.10",
+        "stato": "da_verificare"
+      }
     },
     {
       "id": "tecniche-interiori-supplementari",
@@ -1509,6 +1584,11 @@
       "_nota_tipo": "Il manuale non indica Passivo o Attivo: l'intestazione è «Talento Libero. Requisito: Risorse Interiori. Acquisibile più volte.»",
       "effetti": {
         "tecniche": 3
+      },
+      "sintesi": {
+        "testo": "+3 Tecniche Interiori accessibili, diverse a ogni acquisizione. Resta una sola attivazione di Tecnica per Round.",
+        "rif": "Giocatore §8.6.10",
+        "stato": "da_verificare"
       }
     },
     {
@@ -1919,6 +1999,11 @@
         "lancio": {
           "anticipazione_senza_raddoppio": "durata"
         }
+      },
+      "sintesi": {
+        "testo": "Anticipando la Durata non raddoppia il costo base in PM (uno scatto consentito). Prova di Potere obbligatoria e una categoria più difficile; non con Calcolo Arcano; niente su effetti istantanei.",
+        "rif": "Magia, Talenti di magia",
+        "stato": "da_verificare"
       }
     },
     {
@@ -1955,6 +2040,11 @@
         "lancio": {
           "anticipazione_senza_raddoppio": "bersagli"
         }
+      },
+      "sintesi": {
+        "testo": "Anticipando i Bersagli non raddoppia il costo base in PM (uno scatto consentito); non aumenta i Colpi. Prova di Potere obbligatoria e una categoria più difficile; non con Calcolo Arcano.",
+        "rif": "Magia, Talenti di magia",
+        "stato": "da_verificare"
       }
     },
     {
@@ -2067,7 +2157,12 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Passivo. Nessun prerequisito. Acquisibile una sola volta.\nConsente di apprendere ed eseguire Rituali di Grado I–III come Officiante oppure di contribuire come Canale, secondo la procedura del singolo Rituale. Non richiede l’Addestramento Taumaturgo e non concede accesso agli Incantesimi.\nIl Talento non fa conoscere automaticamente tutti i Rituali dei Gradi accessibili. Occorre apprendere ciascuna procedura e rispettarne requisiti, tempi, materiali e costi.\nIl contributo del Canale segue la procedura del Rituale; il Talento non assegna un bonus numerico automatico.",
-      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32). Requisito dell’Officiante per i Gradi I–III (Minore) e IV–VI (Maggiore) nelle procedure della Magia §24.1 e §25.1 (Google Doc del 01/10/2026 sera; docs/risposte-master.md, decisione 69)"
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32). Requisito dell’Officiante per i Gradi I–III (Minore) e IV–VI (Maggiore) nelle procedure della Magia §24.1 e §25.1 (Google Doc del 01/10/2026 sera; docs/risposte-master.md, decisione 69)",
+      "sintesi": {
+        "testo": "Apprende ed esegue Rituali di Grado I–III come Officiante o Canale. Ogni procedura si apprende a parte (requisiti, tempi, materiali, costi); nessun Incantesimo, nessun bonus automatico del Canale.",
+        "rif": "Magia, Talenti di magia",
+        "stato": "da_verificare"
+      }
     },
     {
       "id": "ritualista-maggiore",
@@ -2080,7 +2175,12 @@
       "molteplicita": "una",
       "parametro": null,
       "testo": "Passivo. Requisito: Ritualista Minore. Acquisibile una sola volta.\nEstende ai Rituali di Grado IV–VI la possibilità di apprendimento ed esecuzione come Officiante o di partecipazione come Canale. Mantiene l’accesso ai Gradi I–III.\nNon concede automaticamente la conoscenza delle procedure né accesso agli Incantesimi. Per ciascun Rituale restano necessari apprendimento, requisiti, tempi, materiali e costi.\nIl contributo del Canale segue la procedura del Rituale; il Talento non assegna un bonus numerico automatico.",
-      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32). Requisito dell’Officiante per i Gradi I–III (Minore) e IV–VI (Maggiore) nelle procedure della Magia §24.1 e §25.1 (Google Doc del 01/10/2026 sera; docs/risposte-master.md, decisione 69)"
+      "fonte": "Manuale della Magia, sezione 1 (Google Doc del 27/09/2026): scheda nuova, non annunciata fra le risposte del master (docs/per-davide.md A.32). Requisito dell’Officiante per i Gradi I–III (Minore) e IV–VI (Maggiore) nelle procedure della Magia §24.1 e §25.1 (Google Doc del 01/10/2026 sera; docs/risposte-master.md, decisione 69)",
+      "sintesi": {
+        "testo": "Estende Ritualista Minore ai Rituali di Grado IV–VI (Officiante o Canale). Procedure da apprendere una per una; nessun Incantesimo né bonus automatico.",
+        "rif": "Magia, Talenti di magia",
+        "stato": "da_verificare"
+      }
     }
   ],
   "condizioni_prerequisiti": {

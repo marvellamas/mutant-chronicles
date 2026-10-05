@@ -60,6 +60,7 @@ export function validaDati(dati) {
   const idSpec = validaSpecializzazioni(dati.specializzazioni, nomiAbilita, err);
   validaTalentiLiberi(dati.talenti_liberi, idSpec, err, (dati.addestramenti?.addestramenti ?? []).map((a) => a.nome));
   validaTecniche(dati.tecniche_interiori, err);
+  validaSintesiTalenti(dati, err);
   validaEquipaggiamento(dati.equipaggiamento, [...nomiAbilita], [...(idSpec ?? [])], err, Object.keys(dati.regole?.chroma?.colori ?? {}).filter((c) => !dati.regole.chroma.colori[c]?.esausto && dati.regole.chroma.colori[c]?.contenitore !== false), Object.keys(dati.regole?.corruzione ?? {}));
   if (dati.regole?.chroma !== undefined) validaChroma(dati, err);
   if (dati.equipaggiamento?.file) validaNec(dati, err);
@@ -831,6 +832,18 @@ const EFFETTI_NOTI = new Set(['iniziativa', 'pv', 'pm', 'salvezza', 'movimento',
 // effetti.magia: valori che sostituiscono la base di regole.json → lancio (numeri) o capacità (true)
 const EFFETTI_MAGIA = { focalizzazione_va: 'numero', penalita_ingaggio: 'numero', penalita_contromagia: 'numero', tiro_armi_da_lancio: 'numero', contromagia: 'vero', contromagia_senza_conoscenza: 'vero', occultata: 'vero' };
 const EFFETTI_MEDITAZIONE = { accesso: 'vero', pm_per_ora: 'numero', moltiplicatore_ore: 'numero' };
+
+// Sintesi operative dei Talenti per la SS (decisione 112): { testo, rif, stato } con stato «da_verificare» o «approvata»
+function validaSintesiTalenti(dati, err) {
+  const controlla = (F, k, x) => {
+    if (x === undefined) return;
+    if (!x || typeof x.testo !== 'string' || !x.testo.trim()) err(F, `${k}.sintesi.testo`, 'serve il testo della sintesi');
+    else if (typeof x.rif !== 'string' || !x.rif.trim()) err(F, `${k}.sintesi.rif`, 'serve il riferimento al manuale');
+    else if (!['da_verificare', 'approvata'].includes(x.stato)) err(F, `${k}.sintesi.stato`, `«${x.stato}»: atteso da_verificare o approvata`);
+  };
+  Object.entries(dati.classi?.classi ?? {}).forEach(([i, cl]) => [...(cl?.talenti_fissi ?? []), ...(cl?.talenti_a_scelta ?? [])].forEach((t) => controlla('classi', `classi[${i}] (${cl.nome}) ${t?.nome}`, t?.sintesi)));
+  (dati.talenti_liberi?.talenti ?? []).forEach((t, i) => controlla('talenti_liberi', `talenti[${i}] (${t?.nome})`, t?.sintesi));
+}
 
 function validaTalentiLiberi(t, idSpec, err, addestramenti = []) {
   if (!isOggetto(t)) return;

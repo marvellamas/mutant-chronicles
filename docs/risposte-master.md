@@ -896,6 +896,13 @@ le altre si registrano lotto per lotto.
     residuo del §5.6. Carta del veicolo nella plancia con «Muovi» e «Colpito». → `src/veicoli-registro.js`,
     `src/ui/veicoli-registro.js`, tab Veicoli, `src/ui/tavolo.js`. Permessi e nome della struttura provvisori:
     `TODO(Davide)` A.113 (`veicoli.json` → `personaggio`).
+112. **Sintesi operative dei Talenti in stampa** (E&L del 05/10/2026, impostazione approvata). Nel foglio 2 della SS
+    ogni Talento stampa una sintesi dedicata (effetto e valori, condizioni, costi in Azioni o PM, frequenza,
+    riferimento al manuale) al posto della prima frase; se un Talento non si riassume senza perdere limiti, la sintesi
+    lo dice e rinvia al testo completo. Campo `sintesi` { testo, rif, stato } in `classi.json` e
+    `talenti_liberi.json` (validatore). Scritte il 05/10 le 41 sintesi dei Talenti dei sette PG reali e dei PG
+    d'esempio (`tools/lotti/lotto_sintesi_talenti.mjs`), tutte `da_verificare` (asterisco in stampa, elenco in
+    `docs/sintesi-talenti-da-approvare.md`); gli altri Talenti stampano la prima frase con «sintesi da redigere».
 
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 

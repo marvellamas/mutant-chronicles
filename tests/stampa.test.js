@@ -70,7 +70,9 @@ test('senza accesso alla magia: quattro fogli (con l’Inventario), numerati 1�
   const ab = foglio(st, 'abilita').dati;
   assert.equal(ab.categorie.flatMap((c) => c.abilita).length, 24);
   assert.equal(ab.categorie.flatMap((c) => c.abilita).find((a) => a.nome === 'Furtività').va, 9);
-  assert.ok(ab.talentiClasse.length >= 1 && ab.talentiClasse.every((t) => t.frase.length <= LIMITI_STAMPA.frase));
+  // decisione 112: la sintesi operativa dai dati (con il riferimento), altrimenti la prima frase entro il limite
+  assert.ok(ab.talentiClasse.length >= 1 && ab.talentiClasse.every((t) => (t.rif ? !t.daRedigere : t.daRedigere && t.frase.length <= LIMITI_STAMPA.frase)));
+  assert.ok(ab.talentiClasse.some((t) => t.rif === 'Giocatore §3.5.2' && t.daVerificare), 'Fuoco Controllato dell’Agente ha la sintesi da verificare');
 
   const co = foglio(st, 'combattimento').dati;
   assert.equal(co.armi.righe.length, 0);

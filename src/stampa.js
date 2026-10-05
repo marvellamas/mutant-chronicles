@@ -198,6 +198,8 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
   const pe = valoreTiro(c.puntiEroe);
   const testo = (t) => String(t ?? '').trim();
   const frase = (t) => (completo ? testo(t) : primaFrase(t));
+  // Talenti (decisione 112): la sintesi operativa dai dati; senza, la prima frase con «sintesi da redigere»
+  const talentoSS = (t) => (completo ? { frase: testo(t.testo) } : t.sintesi ? { frase: t.sintesi.testo, rif: t.sintesi.rif, daVerificare: t.sintesi.stato !== 'approvata' } : { frase: primaFrase(t.testo), daRedigere: true });
   const bg = String(c.concetto ?? '').trim().replace(/\s+/g, ' ');
   const equip = elencoZaino(s.equipaggiamento?.zaino ?? []);
 
@@ -247,7 +249,7 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
       })),
     })),
     talentiClasse: s.classi.flatMap((cl) => cl.talenti.map((t) => ({
-      nome: t.parametroNome ? `${t.nome} (${t.parametroNome})` : t.nome, classe: cl.nome, grado: GRADI_ROMANI[t.grado] ?? String(t.grado), scelto: !!t.scelto, frase: frase(t.testo),
+      nome: t.parametroNome ? `${t.nome} (${t.parametroNome})` : t.nome, classe: cl.nome, grado: GRADI_ROMANI[t.grado] ?? String(t.grado), scelto: !!t.scelto, ...talentoSS(t),
     }))),
     talentiLiberi: s.talentiLiberi.map((t) => ({
       id: t.id,
@@ -256,7 +258,7 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
       annotazione: t.annotazione ?? null,
       livello: t.livello,
       provvisorio: t.provvisorio,
-      frase: frase(t.testo),
+      ...talentoSS(t),
     })),
     specializzazioni: s.specializzazioni.map((x) => ({
       id: x.id,

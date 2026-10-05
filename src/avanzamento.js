@@ -1167,7 +1167,7 @@ function schedaARiposo(personaggio, dati) {
     talenti: stato.classi.flatMap((c) => talentiClasse.get(c.nome).map((t) => ({ ...t, classe: c.nome }))),
     talentiLiberi: stato.talentiLiberi.filter((t) => !talentoLiberoDef(t.id, dati).specializzazione).map((t) => {
       const d = talentoLiberoDef(t.id, dati);
-      return { id: t.id, nome: d.nome, parametro: t.parametro, annotazione: t.annotazione ?? null, livello: t.livello, provvisorio: !!d.provvisorio, testo: d.testo };
+      return { id: t.id, nome: d.nome, parametro: t.parametro, annotazione: t.annotazione ?? null, livello: t.livello, provvisorio: !!d.provvisorio, testo: d.testo, sintesi: d.sintesi ?? null };
     }),
     specializzazioni: stato.talentiLiberi.filter((t) => talentoLiberoDef(t.id, dati).specializzazione).map((t) => {
       const d = talentoLiberoDef(t.id, dati);

@@ -325,7 +325,12 @@ function foglioAbilita(d) {
         h('td', { class: 'va' }, String(a.va),
           // bonus condizionali (docs/censimento-impianti.md): il valore in apice accanto al VA, la condizione sotto la tabella
           a.condizionali?.length ? h('sup', { class: 'cond-stampa' }, a.condizionali.map((c) => segno(c.valore)).join('/')) : null))))));
-  const talento = (t, dettagli) => h('li', {}, h('strong', {}, t.nome), dettagli, ` — ${t.frase}`);
+  // sintesi operativa (decisione 112) con il riferimento; * = sintesi da verificare con Davide
+  const talento = (t, dettagli) => h('li', {}, h('strong', {}, t.nome), dettagli, ` — ${t.frase}`,
+    t.rif ? h('span', { class: 'sigla' }, ` (${t.rif})${t.daVerificare ? ' *' : ''}`) : null,
+    t.daRedigere ? h('em', { class: 'sigla' }, ' (sintesi da redigere)') : null);
+  const legendaSintesi = [...d.talentiClasse, ...d.talentiLiberi].some((t) => t.daVerificare)
+    ? h('p', { class: 'piccolo' }, '* sintesi da verificare con il Direttore di Gioco; il testo completo è nel manuale indicato.') : null;
   return h('div', { class: 'f2-griglia' },
     box({ titolo: 'Abilità', tinta: 'accento', forte: true, classe: 'f2-abilita' },
       h('div', { class: 'abilita-affiancate' }, tabellaAbilita(d.categorie.slice(0, meta)), tabellaAbilita(d.categorie.slice(meta))),
@@ -340,6 +345,7 @@ function foglioAbilita(d) {
       d.talentiLiberi.length ? box({ titolo: 'Talenti Liberi' }, h('ul', { class: 'elenco-talenti-stampa' }, d.talentiLiberi.map((t) =>
         talento(t, [t.parametro ? ` (${t.parametro})` : null, t.annotazione ? ` — ${t.annotazione}` : null,
           h('span', { class: 'sigla' }, ` ${t.livello}° liv.`), t.provvisorio ? h('em', {}, ' provvisorio') : null])))) : null,
+      legendaSintesi,
       // dal foglio 3 (pezzo 2): Specializzazioni e Tecniche Interiori, come nella tab Abilità della SD
       d.specializzazioni.length ? box({ titolo: 'Specializzazioni', classe: 'f2-spostabile' }, h('ul', { class: 'elenco-talenti-stampa' }, d.specializzazioni.map((x) => h('li', {},
         h('strong', {}, x.nome), ` — ${x.abilita}; ${x.effetto}`)))) : null,

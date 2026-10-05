@@ -72,6 +72,11 @@
                 "seconda_prova": null
               }
             }
+          },
+          "sintesi": {
+            "testo": "Sparando a un avversario in Ravvicinato, coperto da un alleato o che usa un ostaggio: niente penalità specifica né seconda Prova di controllo; un fallimento non colpisce l’alleato (Maldestro: complicazione). Distanza e Copertura restano.",
+            "rif": "Giocatore §3.5.2",
+            "stato": "da_verificare"
           }
         },
         {
@@ -188,7 +193,12 @@
         {
           "specializzazione": "Comune",
           "nome": "Posizionamento Operativo",
-          "testo": "Una volta per combattimento, dopo l’Iniziativa e prima del primo Round, può spostarsi gratuitamente fino a 3 Q, senza consumare l’Azione di Movimento. Si applicano terreno, ostacoli e Attacchi di Opportunità ordinari. Durante questo spostamento non svolge altri attacchi o azioni. Non può utilizzarlo se è Sorpreso."
+          "testo": "Una volta per combattimento, dopo l’Iniziativa e prima del primo Round, può spostarsi gratuitamente fino a 3 Q, senza consumare l’Azione di Movimento. Si applicano terreno, ostacoli e Attacchi di Opportunità ordinari. Durante questo spostamento non svolge altri attacchi o azioni. Non può utilizzarlo se è Sorpreso.",
+          "sintesi": {
+            "testo": "1 volta per combattimento, dopo l’Iniziativa e prima del Round 1: si sposta gratis fino a 3 Q, senza altre azioni (terreno e Attacchi di Opportunità normali). Non se Sorpreso.",
+            "rif": "Giocatore §3.5.2",
+            "stato": "da_verificare"
+          }
         }
       ]
     },
@@ -729,7 +739,12 @@
         {
           "grado": 1,
           "nome": "Ottimizzare Gittata",
-          "testo": "Con Armi medie o pesanti riduce di 2 la penalità dovuta alla distanza. Si cumula con mirini e Tiro a Lunga Distanza, senza produrre bonus positivo, estendere la gittata massima o ridurre le Azioni richieste."
+          "testo": "Con Armi medie o pesanti riduce di 2 la penalità dovuta alla distanza. Si cumula con mirini e Tiro a Lunga Distanza, senza produrre bonus positivo, estendere la gittata massima o ridurre le Azioni richieste.",
+          "sintesi": {
+            "testo": "Armi medie o pesanti: −2 alla penalità di distanza. Si cumula con mirini e Tiro a Lunga Distanza fino a 0, mai bonus; non estende la gittata né riduce le Azioni.",
+            "rif": "Giocatore §3.5.3",
+            "stato": "da_verificare"
+          }
         },
         {
           "grado": 3,
@@ -798,7 +813,12 @@
         {
           "specializzazione": "Cecchino",
           "nome": "Occhio del Tiratore",
-          "testo": "Se non utilizza l’Azione di Movimento e impiega un mirino, il mirino riduce di altri 2 punti la penalità di distanza."
+          "testo": "Se non utilizza l’Azione di Movimento e impiega un mirino, il mirino riduce di altri 2 punti la penalità di distanza.",
+          "sintesi": {
+            "testo": "Se non usa l’Azione di Movimento e impiega un mirino: il mirino riduce di altri 2 la penalità di distanza.",
+            "rif": "Giocatore §3.5.3",
+            "stato": "da_verificare"
+          }
         },
         {
           "specializzazione": "Cecchino",
@@ -815,6 +835,11 @@
                 ]
               }
             }
+          },
+          "sintesi": {
+            "testo": "Ogni AzP di preparazione prima del tiro: +1 danno dopo l’AR, se almeno 1 danno l’ha superata, massimo +2. Solo Tiro Singolo o Raffica Breve.",
+            "rif": "Giocatore §3.5.3",
+            "stato": "da_verificare"
           }
         },
         {
@@ -898,6 +923,11 @@
                 "fonte": "Giocatore, Assaltatore (§3.4; Talenti §3.5.4)"
               }
             ]
+          },
+          "sintesi": {
+            "testo": "+3 alle Prove e PS per resistere o liberarsi da sbilanciamenti, spinte, spostamenti forzati, immobilizzazioni e disarmi. Spostamento senza Prova: PS Tempra gratuita a +3 (evita solo lo spostamento).",
+            "rif": "Giocatore §3.5.4",
+            "stato": "da_verificare"
           }
         },
         {
@@ -944,6 +974,11 @@
                 "danno": 2
               }
             }
+          },
+          "sintesi": {
+            "testo": "+2 al danno base della Carica, prima del moltiplicatore (si applica il più alto; ×2 diventa ×3 con un Magistrale, §1.6).",
+            "rif": "Giocatore §3.5.4",
+            "stato": "da_verificare"
           }
         },
         {
@@ -964,6 +999,11 @@
             "attacco_ravvicinato": {
               "promemoria": "sempre"
             }
+          },
+          "sintesi": {
+            "testo": "1 volta per Round, dopo un attacco con lo scudo a segno: il bersaglio ha −2 VA alla prossima Prova di Difese prima della successiva Iniziativa dell’Assaltatore. Non si cumula.",
+            "rif": "Giocatore §3.5.4",
+            "stato": "da_verificare"
           }
         },
         {
@@ -1053,6 +1093,11 @@
                 "riduzione": 2
               }
             }
+          },
+          "sintesi": {
+            "testo": "Sempre attivo: −2 (fino a 0) alle penalità delle proprie Prove dovute al tipo di Movimento (Passo 0, Corsa 0, Scatto −4). Restano le altre penalità e quelle degli avversari per colpirlo.",
+            "rif": "Giocatore §3.5.4",
+            "stato": "da_verificare"
           }
         },
         {
@@ -1154,6 +1199,11 @@
                 "fonte": "Giocatore, Incursore (§3.4; Talenti §3.5.4)"
               }
             ]
+          },
+          "sintesi": {
+            "testo": "+2 VA a Tecnologia per sabotare o disattivare dispositivi, allarmi, macchinari e sicurezza; tempo dimezzato (per eccesso, minimo 1 AzP). Servono accesso e strumenti.",
+            "rif": "Giocatore §3.5.4",
+            "stato": "da_verificare"
           }
         },
         {
@@ -1317,6 +1367,11 @@
                 }
               }
             ]
+          },
+          "sintesi": {
+            "testo": "Disciplina permanente. Danno senz’armi ai Gradi I–II / III–IV / V–VI: Potenza 1d8/1d10/1d12 (−1 Difese dopo l’attacco, fino alla propria Iniziativa); Rapidità 1d4/1d6/1d8 (+3 Iniziativa, 1 Q gratis per Round); Controllo 1d4/1d6/1d8 (+2/+4/+6 VA alle Manovre); Guardia 1d6/1d8/1d10 (+1/+2/+3 Difese in mischia).",
+            "rif": "Giocatore §3.5.5",
+            "stato": "da_verificare"
           }
         },
         {
@@ -1385,7 +1440,12 @@
         {
           "specializzazione": "Spirituale",
           "nome": "Risorse Interiori",
-          "testo": "Acquisisce l’accesso alle Risorse Interiori e apprende un numero di Tecniche pari a 2 + Mod SAG, con un minimo di una Tecnica. Può scegliere Tecniche Interiori generiche, Tecniche esclusive del Lottatore e Tecniche di una Scuola Mishima alla quale abbia accesso.\nLe Tecniche Interiori consumano PM personali, ma non sono Incantesimi. Risorse Interiori segue le modalità di acquisizione e le incompatibilità del §8.6.10. Il Lottatore che lo possiede come Talento Libero può scegliere anche le proprie Tecniche esclusive; non può acquisirlo nuovamente come scelta di Classe per ricevere una seconda dotazione iniziale. Le regole comuni e il catalogo sono nel §8.9."
+          "testo": "Acquisisce l’accesso alle Risorse Interiori e apprende un numero di Tecniche pari a 2 + Mod SAG, con un minimo di una Tecnica. Può scegliere Tecniche Interiori generiche, Tecniche esclusive del Lottatore e Tecniche di una Scuola Mishima alla quale abbia accesso.\nLe Tecniche Interiori consumano PM personali, ma non sono Incantesimi. Risorse Interiori segue le modalità di acquisizione e le incompatibilità del §8.6.10. Il Lottatore che lo possiede come Talento Libero può scegliere anche le proprie Tecniche esclusive; non può acquisirlo nuovamente come scelta di Classe per ricevere una seconda dotazione iniziale. Le regole comuni e il catalogo sono nel §8.9.",
+          "sintesi": {
+            "testo": "Accesso alle Risorse Interiori: 2 + Mod SAG Tecniche (minimo 1), generiche, esclusive del Lottatore o di una Scuola Mishima accessibile. PM personali, non sono Incantesimi (§8.6.10, §8.9).",
+            "rif": "Giocatore §3.5.5",
+            "stato": "da_verificare"
+          }
         },
         {
           "specializzazione": "Spirituale",
@@ -2305,7 +2365,12 @@
         {
           "grado": 1,
           "nome": "Pilota Nato",
-          "testo": "Una volta per Round, il Pilota può spendere un’Azione Principale per preparare una correzione di rotta o una manovra del veicolo. Ottiene +2 VA alla successiva Prova di Pilotare o Tecnologia relativa alla manovra preparata, effettuata entro la fine della propria Iniziativa successiva. Il beneficio vale per una sola Prova e non è cumulabile con ulteriori preparazioni dello stesso Talento. La preparazione non sostituisce le Azioni necessarie per eseguire la manovra."
+          "testo": "Una volta per Round, il Pilota può spendere un’Azione Principale per preparare una correzione di rotta o una manovra del veicolo. Ottiene +2 VA alla successiva Prova di Pilotare o Tecnologia relativa alla manovra preparata, effettuata entro la fine della propria Iniziativa successiva. Il beneficio vale per una sola Prova e non è cumulabile con ulteriori preparazioni dello stesso Talento. La preparazione non sostituisce le Azioni necessarie per eseguire la manovra.",
+          "sintesi": {
+            "testo": "1 volta per Round, 1 AzP di preparazione: +2 VA alla successiva Prova di Pilotare o Tecnologia per quella manovra, entro la fine della propria Iniziativa successiva. Una sola Prova; non sostituisce le Azioni della manovra.",
+            "rif": "Giocatore §3.5.10",
+            "stato": "da_verificare"
+          }
         },
         {
           "grado": 3,
@@ -2351,6 +2416,11 @@
                 "fonte": "Giocatore, Pilota (§3.4; Talenti §3.5.10)"
               }
             ]
+          },
+          "sintesi": {
+            "testo": "Sul veicolo in cui si trova: +2 VA a Tecnologia per diagnosi e riparazioni, tempi dimezzati (riparazione di una struttura 30 minuti invece di 1 ora). Improvvisati a −2 VA; non sostituisce componenti mancanti (Veicoli §7.1).",
+            "rif": "Giocatore §3.5.10",
+            "stato": "da_verificare"
           }
         },
         {
@@ -2443,6 +2513,11 @@
                 "fonte": "Giocatore, Tecnico (§3.4; Talenti §3.5.11)"
               }
             ]
+          },
+          "sintesi": {
+            "testo": "+3 VA a Tecnologia per usare, diagnosticare, configurare o riparare macchinari, elettronica, impianti energetici, computer e dispositivi automatizzati.",
+            "rif": "Giocatore §3.5.11",
+            "stato": "da_verificare"
           }
         },
         {
@@ -2470,7 +2545,12 @@
         {
           "specializzazione": "Informatico",
           "nome": "Intrusione Rapida",
-          "testo": "Una volta per scena, il Tecnico può tentare con un’Azione Principale un’intrusione informatica che normalmente richiederebbe alcuni minuti, effettuando una Prova di Tecnologia con −4 VA.\nCon un successo può ottenere un singolo risultato immediato: aprire o bloccare un accesso; disattivare un sistema di sicurezza; ottenere credenziali temporanee; modificare o cancellare un’informazione specifica; impartire un comando a un dispositivo collegato.\nDeve disporre di un punto d’accesso utilizzabile e degli strumenti necessari. Non permette di controllare istantaneamente un’intera rete o di superare protezioni prive di un punto d’accesso utilizzabile."
+          "testo": "Una volta per scena, il Tecnico può tentare con un’Azione Principale un’intrusione informatica che normalmente richiederebbe alcuni minuti, effettuando una Prova di Tecnologia con −4 VA.\nCon un successo può ottenere un singolo risultato immediato: aprire o bloccare un accesso; disattivare un sistema di sicurezza; ottenere credenziali temporanee; modificare o cancellare un’informazione specifica; impartire un comando a un dispositivo collegato.\nDeve disporre di un punto d’accesso utilizzabile e degli strumenti necessari. Non permette di controllare istantaneamente un’intera rete o di superare protezioni prive di un punto d’accesso utilizzabile.",
+          "sintesi": {
+            "testo": "1 volta per scena, 1 AzP: un’intrusione informatica da minuti, con Tecnologia −4 VA; un solo risultato (accesso, sicurezza, credenziali, un dato, un comando). Servono punto d’accesso e strumenti; mai un’intera rete.",
+            "rif": "Giocatore §3.5.11",
+            "stato": "da_verificare"
+          }
         },
         {
           "specializzazione": "Informatico",
@@ -3388,7 +3468,12 @@
         {
           "grado": 1,
           "nome": "Arma Astrale",
-          "testo": "Con un’Azione Principale e 2 PM, il Custode evoca un’Arma Astrale per 10 Round. L’arma usa Armi da mischia, infligge danno Magico e non richiede Concentrazione. Il danno dipende dal Grado di Custode, secondo la tabella seguente.\nNon esiste un limite al numero di evocazioni. Ogni nuova evocazione richiede il costo previsto e ha una nuova durata; il termine della scena o della sessione non costituisce un limite al numero degli utilizzi.\nDanno dell’Arma Astrale per Grado di Custode: I 1d6; II 1d8; III 1d10; IV 1d10 + 1; V 1d10 + 2; VI 1d10 + 3."
+          "testo": "Con un’Azione Principale e 2 PM, il Custode evoca un’Arma Astrale per 10 Round. L’arma usa Armi da mischia, infligge danno Magico e non richiede Concentrazione. Il danno dipende dal Grado di Custode, secondo la tabella seguente.\nNon esiste un limite al numero di evocazioni. Ogni nuova evocazione richiede il costo previsto e ha una nuova durata; il termine della scena o della sessione non costituisce un limite al numero degli utilizzi.\nDanno dell’Arma Astrale per Grado di Custode: I 1d6; II 1d8; III 1d10; IV 1d10 + 1; V 1d10 + 2; VI 1d10 + 3.",
+          "sintesi": {
+            "testo": "1 AzP e 2 PM: Arma Astrale per 10 Round (Armi da mischia, danno Magico, senza Concentrazione); danno ai Gradi I–VI 1d6, 1d8, 1d10, 1d10+1, 1d10+2, 1d10+3. Evocazioni senza limite.",
+            "rif": "Giocatore §3.9.2",
+            "stato": "da_verificare"
+          }
         },
         {
           "grado": 3,
@@ -3525,6 +3610,11 @@
                 "fonte": "Giocatore, Invocatore (§3.8; Talenti §3.9; Talenti §3.9.3)"
               }
             ]
+          },
+          "sintesi": {
+            "testo": "Incantesimi offensivi: +1 danno ai Gradi I–II, +2 ai III–IV, +3 ai V–VI. Una volta per bersaglio, alla prima applicazione del danno; non nei Round successivi di un effetto persistente.",
+            "rif": "Giocatore §3.9.3",
+            "stato": "da_verificare"
           }
         },
         {
@@ -3599,6 +3689,11 @@
             "lancio": {
               "promemoria": "sempre"
             }
+          },
+          "sintesi": {
+            "testo": "1 volta per scena: ripete una Prova di Potere fallita di un Incantesimo offensivo, prima delle conseguenze, senza nuove Azioni o PM; vale il secondo risultato (un 20 naturale conserva il Distintivo). Non per gli attacchi con armi.",
+            "rif": "Giocatore §3.9.3",
+            "stato": "da_verificare"
           }
         }
       ],
@@ -3869,7 +3964,12 @@
         {
           "grado": 1,
           "nome": "Architetto TecnoMistico",
-          "testo": "Il Tecnomante ottiene Analisi avanzata, Sintonizzazione automatica, Capacità superiore e accesso alla Creazione TecnoMistica, descritti di seguito. Tutti i benefici si ottengono anche acquisendo il Tecnomante come ulteriore Classe; il Talento non cambia l’Addestramento originario.\nAnalisi avanzata. Dopo 10 minuti di esame diretto di un Artefatto Mistico o TecnoMistico, il Tecnomante può effettuare una Prova di Artefatti. Prima del tiro si stabiliscono l’obiettivo dell’analisi e gli eventuali modificatori dovuti a complessità e condizioni dell’esame. Con un successo ottiene le informazioni pertinenti all’obiettivo nelle categorie Struttura, Proprietà e Riserva energetica.\nStruttura: tipologia, materiali, componenti, stato di conservazione, anomalie, manomissioni, funzionamento tecnico e procedure, materiali o componenti necessari per le riparazioni.\nProprietà: classificazione di potenza, costo di sintonizzazione, numero delle proprietà, distinzione fra passive e attive, necessità di Prove di attivazione, requisiti e limiti di utilizzo.\nRiserva energetica: presenza, natura dell’energia, capacità massima, PM disponibili e modalità generali di ricarica. Queste informazioni appartengono all’analisi delle Proprietà.\nLe proprietà nascoste, dormienti o bloccate richiedono condizioni e indizi realmente esaminabili e la normale difficoltà pertinente: non vengono rivelate automaticamente. Gli effetti precisi, come danno, guarigione, costo di una singola attivazione, bersagli, Gittata, Area, Durata e altri valori magici, richiedono l’Incantesimo di Identificazione.\nSi applicano le regole generali delle Prove Aperte, dei nuovi tentativi, del Successo Magistrale e del Fallimento Maldestro. Un vantaggio aggiuntivo può fornire ulteriori informazioni nelle categorie accessibili, ma non sostituisce l’Identificazione. L’analisi non attiva o ripara l’oggetto e non rivela automaticamente una formula di creazione.\nEsempio: esaminando un bracciale, il Tecnomante può apprendere che possiede una proprietà passiva e una attiva, che quest’ultima richiede una Prova e che la riserva universale contiene 3 PM su 8. Per sapere che la proprietà crea una barriera con AR 4 per 10 Round al costo di 2 PM occorre identificarne l’effetto.\nSintonizzazione automatica. Il Tecnomante completa la preparazione di un minuto a contatto con l’Artefatto senza effettuare la Prova di Artefatti. Rispetta normalmente capacità di sintonizzazione, requisiti, costi e le eventuali Prove di attivazione espressamente richieste dalle proprietà (Manuale degli Armamenti, §7.10). La sintonizzazione non concede l’identificazione completa.\nCapacità superiore. Il Tecnomante ottiene +2 alla capacità complessiva di sintonizzazione, una sola volta. Con un Grado complessivo parte da 10; con sei Gradi complessivi arriva a 15. Nel multiclasse il +2 si aggiunge alla capacità già determinata dai Gradi complessivi, senza ricominciare la progressione e senza concedere una capacità separata. A questo totale si applica la riduzione dovuta all’Umanità, fino a un minimo di 0; la sintonizzazione automatica rispetta la capacità risultante (§5.21 e Manuale degli Armamenti, §7.10).\nCreazione TecnoMistica. Il Talento concede l’accesso esclusivo al progetto e alla responsabilità dell’infusione degli Artefatti TecnoMistici entro il proprio Grado di Classe. La creazione comprende Artefatti per il progetto obbligatorio, Tecnologia per la costruzione e Rituali per l’infusione (Manuale della Magia, sezione 24). Il progetto può essere già disponibile e la costruzione fisica può essere affidata a un altro tecnico; il Talento non sostituisce le tre fasi con una singola Prova."
+          "testo": "Il Tecnomante ottiene Analisi avanzata, Sintonizzazione automatica, Capacità superiore e accesso alla Creazione TecnoMistica, descritti di seguito. Tutti i benefici si ottengono anche acquisendo il Tecnomante come ulteriore Classe; il Talento non cambia l’Addestramento originario.\nAnalisi avanzata. Dopo 10 minuti di esame diretto di un Artefatto Mistico o TecnoMistico, il Tecnomante può effettuare una Prova di Artefatti. Prima del tiro si stabiliscono l’obiettivo dell’analisi e gli eventuali modificatori dovuti a complessità e condizioni dell’esame. Con un successo ottiene le informazioni pertinenti all’obiettivo nelle categorie Struttura, Proprietà e Riserva energetica.\nStruttura: tipologia, materiali, componenti, stato di conservazione, anomalie, manomissioni, funzionamento tecnico e procedure, materiali o componenti necessari per le riparazioni.\nProprietà: classificazione di potenza, costo di sintonizzazione, numero delle proprietà, distinzione fra passive e attive, necessità di Prove di attivazione, requisiti e limiti di utilizzo.\nRiserva energetica: presenza, natura dell’energia, capacità massima, PM disponibili e modalità generali di ricarica. Queste informazioni appartengono all’analisi delle Proprietà.\nLe proprietà nascoste, dormienti o bloccate richiedono condizioni e indizi realmente esaminabili e la normale difficoltà pertinente: non vengono rivelate automaticamente. Gli effetti precisi, come danno, guarigione, costo di una singola attivazione, bersagli, Gittata, Area, Durata e altri valori magici, richiedono l’Incantesimo di Identificazione.\nSi applicano le regole generali delle Prove Aperte, dei nuovi tentativi, del Successo Magistrale e del Fallimento Maldestro. Un vantaggio aggiuntivo può fornire ulteriori informazioni nelle categorie accessibili, ma non sostituisce l’Identificazione. L’analisi non attiva o ripara l’oggetto e non rivela automaticamente una formula di creazione.\nEsempio: esaminando un bracciale, il Tecnomante può apprendere che possiede una proprietà passiva e una attiva, che quest’ultima richiede una Prova e che la riserva universale contiene 3 PM su 8. Per sapere che la proprietà crea una barriera con AR 4 per 10 Round al costo di 2 PM occorre identificarne l’effetto.\nSintonizzazione automatica. Il Tecnomante completa la preparazione di un minuto a contatto con l’Artefatto senza effettuare la Prova di Artefatti. Rispetta normalmente capacità di sintonizzazione, requisiti, costi e le eventuali Prove di attivazione espressamente richieste dalle proprietà (Manuale degli Armamenti, §7.10). La sintonizzazione non concede l’identificazione completa.\nCapacità superiore. Il Tecnomante ottiene +2 alla capacità complessiva di sintonizzazione, una sola volta. Con un Grado complessivo parte da 10; con sei Gradi complessivi arriva a 15. Nel multiclasse il +2 si aggiunge alla capacità già determinata dai Gradi complessivi, senza ricominciare la progressione e senza concedere una capacità separata. A questo totale si applica la riduzione dovuta all’Umanità, fino a un minimo di 0; la sintonizzazione automatica rispetta la capacità risultante (§5.21 e Manuale degli Armamenti, §7.10).\nCreazione TecnoMistica. Il Talento concede l’accesso esclusivo al progetto e alla responsabilità dell’infusione degli Artefatti TecnoMistici entro il proprio Grado di Classe. La creazione comprende Artefatti per il progetto obbligatorio, Tecnologia per la costruzione e Rituali per l’infusione (Manuale della Magia, sezione 24). Il progetto può essere già disponibile e la costruzione fisica può essere affidata a un altro tecnico; il Talento non sostituisce le tre fasi con una singola Prova.",
+          "sintesi": {
+            "testo": "Quattro benefici: Analisi avanzata (10 minuti e Prova di Artefatti: Struttura, Proprietà, Riserva; non sostituisce l’Identificazione); Sintonizzazione automatica senza Prova; +2 alla capacità di sintonizzazione, una volta; accesso alla Creazione TecnoMistica. Non si riassume senza perdere limiti: vedi il testo completo.",
+            "rif": "Giocatore §3.9.5",
+            "stato": "da_verificare"
+          }
         },
         {
           "grado": 3,
@@ -3919,7 +4019,12 @@
         {
           "specializzazione": "Comune",
           "nome": "Interfaccia Remota",
-          "testo": "Il Tecnomante può attivare a distanza una proprietà di un Artefatto Mistico o TecnoMistico con cui è sintonizzato. La gittata massima è 6 Q; deve percepire l’Artefatto e avere una linea d’effetto libera.\nNon deve toccare, impugnare o indossare l’oggetto, salvo che la proprietà lo richieda espressamente per produrre il proprio effetto. L’attivazione conserva la normale Azione, il costo in PM e le eventuali Prove. L’energia viene prelevata dalla fonte normalmente utilizzata dall’Artefatto.\nIl Talento non permette di muovere l’oggetto, impugnarlo a distanza o effettuare attacchi ordinari attraverso di esso. Può attivare una proprietà esplosiva, accendere una barriera TecnoMistica, comandare l’apertura di un dispositivo sintonizzato o attivare una protezione su un oggetto indossato da un alleato.\nNon permette di sparare con un fucile TecnoMistico abbandonato a terra, a meno che il fucile possieda una specifica proprietà di fuoco remoto. È distinto da Controllo Parallelo del Tecnico: non concede un comando gratuito per Round."
+          "testo": "Il Tecnomante può attivare a distanza una proprietà di un Artefatto Mistico o TecnoMistico con cui è sintonizzato. La gittata massima è 6 Q; deve percepire l’Artefatto e avere una linea d’effetto libera.\nNon deve toccare, impugnare o indossare l’oggetto, salvo che la proprietà lo richieda espressamente per produrre il proprio effetto. L’attivazione conserva la normale Azione, il costo in PM e le eventuali Prove. L’energia viene prelevata dalla fonte normalmente utilizzata dall’Artefatto.\nIl Talento non permette di muovere l’oggetto, impugnarlo a distanza o effettuare attacchi ordinari attraverso di esso. Può attivare una proprietà esplosiva, accendere una barriera TecnoMistica, comandare l’apertura di un dispositivo sintonizzato o attivare una protezione su un oggetto indossato da un alleato.\nNon permette di sparare con un fucile TecnoMistico abbandonato a terra, a meno che il fucile possieda una specifica proprietà di fuoco remoto. È distinto da Controllo Parallelo del Tecnico: non concede un comando gratuito per Round.",
+          "sintesi": {
+            "testo": "Attiva a distanza (massimo 6 Q, percepito e con linea d’effetto libera) una proprietà di un Artefatto sintonizzato: stessa Azione, PM e Prove, energia dalla fonte normale. Non muove né impugna l’oggetto; niente attacchi ordinari.",
+            "rif": "Giocatore §3.9.5",
+            "stato": "da_verificare"
+          }
         }
       ]
     }
