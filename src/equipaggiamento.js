@@ -330,6 +330,7 @@ export function contenitori(voci, dati) {
 
 function contenitoriRisolti(oggetti, dati) {
   const colori = coloriChroma(dati);
+  const rs = regoleSintonizzazione(dati);
   const out = [];
   for (const r of oggetti) {
     if (r.fuoriCatalogo) continue;
@@ -343,8 +344,9 @@ function contenitoriRisolti(oggetti, dati) {
       riserva: tipoRiserva(c, dati), alimentazione: alimentazioneRiserva(c, dati), fontePg: fontePerPg(c, dati),
       energia: c.energia, energiaNome: colore.energia ?? null, macrofamiglie: colore.macrofamiglie ?? [], regoleRimandate: !!colore.regole_rimandate,
       capacita: c.capacita_pm, potenza: a.potenza, costo: a.sintonizzazione,
-      // nel deposito comune non è sintonizzabile (docs/layout-sd.md, pezzo 4): la scelta resta nella voce
-      sintonizzato: r.voce.sintonizzato === true && !r.deposito,
+      // A.59: il deposito non interrompe la Sintonizzazione (artefatti.json → sintonizzazione.deposito); una batteria
+      // depositata non alimenta comunque, perché non è trasportata (sotto)
+      sintonizzato: r.voce.sintonizzato === true && !(r.deposito && rs?.deposito?.interrompe !== false),
       // E&L 2 (A.19): PM di un contenitore trovato, impostati dal giocatore; null = acquistato, pieno
       pmIniziali: !c.integrato && Number.isInteger(r.voce.pm_iniziali) ? Math.min(r.voce.pm_iniziali, c.capacita_pm) : null,
       stato: r.voce.stato,
@@ -1280,9 +1282,9 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       ...(talento ? [riga(rs.talento.nome, rs.talento.bonus, 'Talento')] : []),
       ...(modUmn ? [riga(`Umanità ${umn.valore} (${umn.condizione})`, capacita - daGradi, capacita - daGradi !== modUmn ? `${modUmn}, fino a un minimo di ${umn.sintonizzazioneMinimo ?? 0} (Giocatore §5.21)` : 'Giocatore §5.21')] : []),
     ];
-    // §7.10; un Artefatto nel deposito comune non è sintonizzabile e non occupa capacità (docs/layout-sd.md, pezzo 4)
+    // §7.10; A.59: un Artefatto nel deposito comune resta sintonizzato e occupa la capacità, finché non si interrompe
     // §7.10: un Artefatto con sole proprietà passive (SnT 0) non si sintonizza
-    const elenco = artefatti.map(({ o, a }) => ({ uid: o.uid, nome: o.nome, costo: a.sintonizzazione, potenza: a.potenza, tipologia: a.tipologia, sintonizzabile: a.sintonizzabile !== false, sintonizzato: a.sintonizzabile !== false && o.voce.sintonizzato === true && !o.deposito, deposito: o.deposito }));
+    const elenco = artefatti.map(({ o, a }) => ({ uid: o.uid, nome: o.nome, costo: a.sintonizzazione, potenza: a.potenza, tipologia: a.tipologia, sintonizzabile: a.sintonizzabile !== false, sintonizzato: a.sintonizzabile !== false && o.voce.sintonizzato === true && !(o.deposito && rs.deposito?.interrompe !== false), deposito: o.deposito }));
     const usata = elenco.filter((x) => x.sintonizzato).reduce((s, x) => s + x.costo, 0);
     sintonizzazione = { capacita, usata, gradi, talento: talento ? rs.talento.nome : null, artefatti: elenco, umanita: capacita - daGradi, provenienza: provenienza(righe, capacita) };
     if (usata > capacita) avvisi.push(`Sintonizzazioni oltre la capacità: ${usata} su ${capacita}. Il personaggio sceglie quali interrompere (§7.10).`);

@@ -824,6 +824,13 @@ le altre si registrano lotto per lotto.
     (`bonus_danno_magico`, intero o «incluso» se la formula lo contiene già); si aggiunge una sola volta; se manca, il
     danno lo segnala («bonus di SAG da dichiarare») e non lo assume 0. Bestiario umano rigenerato.
 
+103. **Deposito e Sintonizzazione** (A.59). Depositare un Artefatto non interrompe la Sintonizzazione, che continua a
+    occupare la capacità; si interrompe solo volontariamente (la casella «Sintonizzato», attiva anche nel deposito).
+    Riprendere un oggetto ancora sintonizzato non richiede una nuova procedura. Una batteria depositata non alimenta gli
+    Incantesimi (non è trasportata). Collocazione e Sintonizzazione restano distinte. → `artefatti.json` →
+    `sintonizzazione.deposito` (`interrompe: false`), `src/equipaggiamento.js` (capacità e contenitori), tab Artefatti.
+    Sostituisce la regola provvisoria del pezzo 4 del layout (`docs/layout-sd.md`).
+
 ## Domande aperte sui Veicoli (lotto 2 del 04/10/2026)
 
 Il Manuale dei Veicoli 0.2 è completo di numeri e il lotto 2 (dati e motore) non ha dovuto inventare nulla. Restano

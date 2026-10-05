@@ -24,14 +24,17 @@ test('Artefatto sintonizzato: stessi valori del collaudo b (Bordone Templare, si
   assert.ok(s.equipaggiamento.sintonizzazione.artefatti.find((x) => x.uid === bordoneUid).sintonizzato);
 });
 
-test('deposito comune: l’Artefatto non è sintonizzabile, non occupa capacità e la sua riserva non alimenta; la scelta resta nella voce', () => {
+test('A.59, deposito comune: l’Artefatto resta sintonizzato e occupa la capacità, ma la sua riserva non alimenta', () => {
   const inDeposito = { ...creazione, equipaggiamento: creazione.equipaggiamento.map((v) => (v.uid === bordoneUid ? { ...v, stato: STATO_DEPOSITO } : v)) };
   const s = scheda(inDeposito);
   const x = s.equipaggiamento.sintonizzazione.artefatti.find((a) => a.uid === bordoneUid);
-  assert.deepEqual([x.sintonizzato, x.deposito], [false, true]);
-  assert.equal(s.equipaggiamento.sintonizzazione.usata, 2);
+  assert.deepEqual([x.sintonizzato, x.deposito], [true, true]);
+  assert.equal(s.equipaggiamento.sintonizzazione.usata, 2 + x.costo);
   const c = contenitori(inDeposito.equipaggiamento, dati).find((y) => y.uid === bordoneUid);
-  assert.deepEqual([c.sintonizzato, c.trasportato], [false, false]);
+  assert.deepEqual([c.sintonizzato, c.trasportato], [true, false]); // non trasportata: non è una fonte per «Lancia!»
+  // interrompere la Sintonizzazione (la casella) libera la capacità anche nel deposito
+  const interrotto = { ...inDeposito, equipaggiamento: inDeposito.equipaggiamento.map((v) => (v.uid === bordoneUid ? { ...v, sintonizzato: false } : v)) };
+  assert.equal(scheda(interrotto).equipaggiamento.sintonizzazione.usata, 2);
   // la voce conserva «sintonizzato»: tornando con sé, torna sintonizzato
   assert.equal(inDeposito.equipaggiamento.find((v) => v.uid === bordoneUid).sintonizzato, true);
   // nel deposito non è in mano: nessun VA per colpire

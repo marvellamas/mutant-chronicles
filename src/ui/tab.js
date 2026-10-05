@@ -1854,9 +1854,9 @@ function tabArtefatti(ctx) {
       h('p', { class: 'nota' }, `Nell’Inventario: ${NOMI_STATI[r?.voce.stato] ?? 'con sé'}. SnT ${x.costo}.`),
       // §7.10: con sole proprietà passive SnT 0, nessuna sintonizzazione; Magia §26.5: Schegge instabili SnT 0
       !x.sintonizzabile ? h('p', { class: 'nota' }, def?.artefatto?.scheggia ? 'Scheggia instabile: SnT 0, non si sintonizza; estrarre PM richiede una Prova di Potere (Magia §26.5).' : 'Sole proprietà passive: SnT 0, si usano senza sintonizzazione (Armamenti §7.10).')
-        : h('label', { class: `stato-tavolo${x.sintonizzato ? ' attivo' : ''}`, title: x.deposito ? 'Nel deposito comune un Artefatto non è sintonizzabile.' : null },
-          h('input', { type: 'checkbox', checked: x.sintonizzato, disabled: !!x.deposito, onchange: (e) => sintonizza(x.uid, e.target.checked) }),
-          h('span', {}, h('strong', {}, 'Sintonizzato'), h('small', {}, x.deposito ? ' · nel deposito comune: non sintonizzabile' : ` · SnT ${x.costo}`))),
+        : h('label', { class: `stato-tavolo${x.sintonizzato ? ' attivo' : ''}`, title: x.deposito ? 'Nel deposito comune la Sintonizzazione resta e occupa la capacità; togli la spunta per interromperla (A.59). Una batteria depositata non alimenta.' : null },
+          h('input', { type: 'checkbox', checked: x.sintonizzato, onchange: (e) => sintonizza(x.uid, e.target.checked) }),
+          h('span', {}, h('strong', {}, 'Sintonizzato'), h('small', {}, ` · SnT ${x.costo}${x.deposito ? ' · nel deposito comune: occupa la capacità, non alimenta' : ''}`))),
       // effetti con la provenienza, dove entrano: l'arma in mano, la protezione indossata
       arma ? h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA per colpire '),
         valoreEffettivo(`VA per colpire (${arma.nome})`, arma.vaEffettivo ?? arma.va, arma.vaDaRegole ?? arma.va, arma.scomposizione, { pillola: true, provenienza: arma.provenienza }),

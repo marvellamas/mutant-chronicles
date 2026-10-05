@@ -124,7 +124,7 @@ Tab presenti e vuoti, con la scritta «In arrivo con il manuale».
   - **Da Combattimento** è uscito il blocco «Artefatti e sintonizzazione», con un rimando; armi e protezioni Artefatto mostrano i loro effetti nei valori, come prima.
   - Test in `tests/poteri.test.js` e `tests/artefatti.test.js`. Verificato nel browser a 1280, 800 e 375 px.
   Scostamenti dal piano:
-  - **Regola nuova, chiesta nel prompt del pezzo:** un Artefatto nel deposito comune non è sintonizzabile: non occupa capacità e la sua riserva non alimenta; la scelta «sintonizzato» resta nella voce e torna valida quando l'oggetto torna con sé (`src/equipaggiamento.js`).
+  - **Regola nuova, chiesta nel prompt del pezzo:** un Artefatto nel deposito comune non è sintonizzabile: non occupa capacità e la sua riserva non alimenta; la scelta «sintonizzato» resta nella voce e torna valida quando l'oggetto torna con sé (`src/equipaggiamento.js`). **Superata il 05/10/2026 (A.59, E&L): il deposito non interrompe la Sintonizzazione, che occupa la capacità; la riserva depositata non alimenta.**
   - **Tecniche Interiori:** restano nella tab Abilità dove sono già (§8.9, dati in `tecniche_interiori.json`); il segnaposto chiuso è solo per i Poteri Sciamanici, che Davide sta scrivendo.
   - **PI degli Artefatti:** si tengono nella riga dell'Inventario (pezzo 2), come per gli altri oggetti; la tab Artefatti non li ripete.
   - Le batterie compaiono due volte nella tab Artefatti: fra gli Artefatti posseduti (sintonizzazione) e fra le riserve di Chroma (PM).
@@ -165,7 +165,7 @@ Tab presenti e vuoti, con la scritta «In arrivo con il manuale».
 | 8 | Veicoli (scheda dello Scout) | Rimandato: tab «In attesa del manuale», con il rimando al §2.16.30. |
 
 Scostamenti dei pezzi 2–4 già annotati qui sopra, riassunti:
-- regola nuova del deposito comune: fuori dal carico, senza effetti, fuori dal tavolo; un Artefatto nel deposito non è sintonizzabile (la scelta resta; per-davide A.59);
+- regola nuova del deposito comune: fuori dal carico, senza effetti, fuori dal tavolo; un Artefatto nel deposito resta sintonizzato e occupa la capacità, la sua riserva non alimenta (A.59, E&L del 05/10/2026);
 - Carico e Crediti nell'Inventario; ordine della colonna sinistra di Combattimento (valori, armi in mano, poi disponibili e Protezioni);
 - la SS è invariata: né il deposito né la Corruzione compaiono nei fogli stampati (non previsti dal piano).
 
